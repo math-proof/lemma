@@ -18,7 +18,7 @@ def prove(Eq):
 
     Eq << Set.Mod.In.Range.of.Gt_0.apply(n % 2)
 
-    Eq << Set.Or.of.In_Ico.apply(Eq[-1])
+    Eq << Set.Or_Eq.of.In_Ico.apply(Eq[-1])
 
     Eq << Bool.Cond.of.Or_Not.Cond.apply(Eq[0], Eq[-1])
 

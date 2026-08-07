@@ -69,3 +69,4 @@ from . import Any_UFnNeg
 from . import Imp_Ite
 from . import OrNot
 from . import Ite__IteAndNot
+from . import Imp_AndEq

@@ -70,9 +70,9 @@ def prove(Eq):
 
     Eq << Bool.And_And.given.And.Cond.apply(Eq[-1], slice(None, 2))
 
-    Eq << Bool.Imp_And.given.Imp.And.subst.apply(Eq[-1], 0)
+    Eq << Bool.Imp_AndEq.given.Imp_AndEq.apply(Eq[-1], 0)
 
-    Eq << Bool.Imp_And.given.Imp.And.subst.apply(Eq[-1], 1)
+    Eq << Bool.Imp_AndEq.given.Imp_AndEq.apply(Eq[-1], 1)
 
     Eq << Rat.Ne_0.of.Div1.gt.Zero.apply(Eq[0])
 

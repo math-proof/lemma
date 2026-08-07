@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.lhs.apply(Nat.OddAdd_1.of.Even, ret=0), Eq[-1].this.lhs.apply(Algebra.Eq_even.of.Eq_odd, ret=0)
 
-    Eq <<= Bool.Imp_And.given.Imp.And.subst.apply(Eq[-2], 1), Bool.Imp_And.given.Imp.And.subst.apply(Eq[-1], 1)
+    Eq <<= Bool.Imp_AndEq.given.Imp_AndEq.apply(Eq[-2], 1), Bool.Imp_AndEq.given.Imp_AndEq.apply(Eq[-1], 1)
 
     Eq <<= Bool.Imp_And.given.Imp.delete.apply(Eq[-2]), Bool.Imp_And.given.Imp.delete.apply(Eq[-1])
 

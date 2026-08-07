@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq << Eq[2].this.rhs.lhs.apply(Complex.Expr.eq.AddRe_MulIIm)
 
-    Eq << Bool.Imp_And.given.Imp.And.subst.apply(Eq[-1], 1)
+    Eq << Bool.Imp_AndEq.given.Imp_AndEq.apply(Eq[-1], 1)
 
 
 

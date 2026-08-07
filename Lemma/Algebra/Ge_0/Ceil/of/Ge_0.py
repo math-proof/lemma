@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.args[1].apply(Set.EqCeil.of.In_Ioc)
 
-    Eq << Eq[-1].this.expr.apply(Algebra.GeAdd.of.Eq.Ge)
+    Eq << Eq[-1].this.expr.apply(Nat.GeAddS.of.Eq.Ge)
 
 
 

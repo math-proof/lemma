@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << Imply(a > b, Equal(Min(a, b), b), plausible=True)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.EqMin.of.Gt)
+    Eq << Eq[-1].this.lhs.apply(Nat.EqMin.of.Gt)
 
     Eq <<= Eq[1] & Eq[-1]
 

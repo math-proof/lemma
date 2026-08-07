@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq << GreaterEqual(Eq[-1].lhs, 0, plausible=True)
 
-    Eq << Algebra.GeAdd.of.Eq.Ge.apply(Eq[-2].reversed, Eq[-1])
+    Eq << Nat.GeAddS.of.Eq.Ge.apply(Eq[-2].reversed, Eq[-1])
 
     Eq << ~Eq[-1]
 

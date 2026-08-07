@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Nat.EqMin.of.Lt.apply(Eq[1])
 
-    Eq << Algebra.GeAdd.of.Eq.Ge.apply(Eq[-1], Eq[0])
+    Eq << Nat.GeAddS.of.Eq.Ge.apply(Eq[-1], Eq[0])
 
     Eq << Set.Cup_Ioc.eq.Ioc0.of.Ge_0.apply(Eq[-1], k)
 
@@ -32,7 +32,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq[-2])
 
-    Eq.b_is_nonnegative = Algebra.Ge.of.Ge.Lt.relax.apply(Eq[0], Eq[1])
+    Eq.b_is_nonnegative = Nat.Ge.of.Ge.Gt.apply(Eq[0], Eq[1])
 
     Eq << Set.Cup_Ioc.eq.Ioc0.of.Ge_0.apply(Eq.b_is_nonnegative, k)
 
@@ -45,7 +45,7 @@ def prove(Eq):
 
     Eq << Eq[-2].subs(Eq[-1])
 
-    Eq << Algebra.EqMax.of.Ge.apply(Eq[0])
+    Eq << Nat.EqMax.of.Ge.apply(Eq[0])
 
     Eq.eq_complement = Eq[-2].subs(Eq[-1]).reversed
 
@@ -65,7 +65,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(GreaterEqual).apply(Int.LtSub_1.of.Le, step=1, ret=0)
 
-    Eq << Eq[-1].this.find(Greater).apply(Algebra.EqMin.of.Gt)
+    Eq << Eq[-1].this.find(Greater).apply(Nat.EqMin.of.Gt)
 
     Eq << Eq[-1].this.expr.args[:2].apply(Bool.Cond.of.Eq.Cond.subst)
 
@@ -73,7 +73,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.args[1:].apply(Nat.Ge.of.Ge.Ge, ret=1)
 
-    Eq << Eq[-1].this.expr.args[1].apply(Algebra.EqMax.of.Ge)
+    Eq << Eq[-1].this.expr.args[1].apply(Nat.EqMax.of.Ge)
 
     Eq << Eq[-1].this.expr.args[:2].apply(Bool.Cond.of.Eq.Cond.subst)
 

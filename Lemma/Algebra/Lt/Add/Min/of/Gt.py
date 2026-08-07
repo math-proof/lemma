@@ -9,14 +9,14 @@ def apply(gt):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     a, b, n = Symbol(real=True)
     Eq << apply(a + b > n)
 
     Eq <<= Eq[0] - a, Eq[0] - b
 
-    Eq <<= Algebra.EqMin.of.Gt.apply(Eq[-2]), Algebra.EqMin.of.Gt.apply(Eq[-1])
+    Eq <<= Nat.EqMin.of.Gt.apply(Eq[-2]), Nat.EqMin.of.Gt.apply(Eq[-1])
 
     Eq << Eq[1].subs(Eq[-1], Eq[-2])
 

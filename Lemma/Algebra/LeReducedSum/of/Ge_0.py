@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq << Algebra.Ge_0.Sum.of.Ge_0.apply(Eq[-1], (i, Range(n) - {i}))
 
-    Eq << Algebra.GeAdd.of.Eq.Ge.apply(Eq[-3], Eq[-1])
+    Eq << Nat.GeAddS.of.Eq.Ge.apply(Eq[-3], Eq[-1])
 
     Eq << Bool.AllIn.of.All.apply(Eq[-1], (i, 0, n))
 

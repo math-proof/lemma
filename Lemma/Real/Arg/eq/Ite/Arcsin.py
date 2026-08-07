@@ -37,7 +37,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.find(Or).apply(Real.GtSqrt_0.of.OrNeS_0), Eq[-1].this.find(Or).apply(Real.GtSqrt_0.of.OrNeS_0)
 
-    Eq <<= Eq[-2].this.lhs.apply(Algebra.Ge_0.of.Ge_0.Gt_0), Eq[-1].this.lhs.apply(Rat.GeDivS.of.Ge.Gt_0)
+    Eq <<= Eq[-2].this.lhs.apply(Int.Le0Mul.of.Ge_0.Gt_0), Eq[-1].this.lhs.apply(Rat.GeDivS.of.Ge.Gt_0)
 
     Eq << Algebra.Cond.given.Cond.subst.Cond.apply(Eq.eq, old=Eq.equivalent.lhs, new=Eq.equivalent.rhs)
 

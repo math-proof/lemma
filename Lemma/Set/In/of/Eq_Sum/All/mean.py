@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq.initial = Eq.hypothesis.subs(n, 1)
 
-    Eq << Bool.Imp_And.given.Imp.And.subst.apply(Eq.initial, index=0)
+    Eq << Bool.Imp_AndEq.given.Imp_AndEq.apply(Eq.initial, index=0)
 
     Eq.induct = Eq.hypothesis.subs(n, n + 1)
 
@@ -41,11 +41,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(All[Element]).apply(Algebra.Cond.of.All.subst, i, n)
 
-    Eq << Bool.Imp_And.given.Imp.And.subst.apply(Eq[-1])
+    Eq << Bool.Imp_AndEq.given.Imp_AndEq.apply(Eq[-1])
 
     Eq << Eq[-1].this.find(All).apply(Algebra.Sum.eq.Zero.Mul.of.All_Eq_0, x)
 
-    Eq << Bool.Imp_And.given.Imp.And.subst.apply(Eq[-1], index=1)
+    Eq << Bool.Imp_AndEq.given.Imp_AndEq.apply(Eq[-1], index=1)
 
     Eq << Eq.lt.this.rhs.apply(Bool.Imp.fold)
 

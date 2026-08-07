@@ -33,7 +33,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.lhs.apply(Set.EqAbs.of.IsNegative, ret=0), Eq[-3].this.lhs.apply(Set.EqAbs.of.IsPositive, ret=0)
 
-    Eq <<= Bool.Imp_And.given.Imp.And.subst.apply(Eq[-2]), Bool.Imp_And.given.Imp.And.subst.apply(Eq[-1])
+    Eq <<= Bool.Imp_AndEq.given.Imp_AndEq.apply(Eq[-2]), Bool.Imp_AndEq.given.Imp_AndEq.apply(Eq[-1])
 
     Eq <<= Bool.Imp_And.given.Imp.delete.apply(Eq[-2], 0), Bool.Imp_And.given.Imp.delete.apply(Eq[-1], 0)
 

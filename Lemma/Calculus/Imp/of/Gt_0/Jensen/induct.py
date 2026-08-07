@@ -53,7 +53,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Algebra.EqAll_Eq_0.of.Eq_Sum.Ge.All_Ge_0.squeeze)
 
-    Eq << Bool.Imp_And.given.Imp.And.subst.apply(Eq[-1])
+    Eq << Bool.Imp_AndEq.given.Imp_AndEq.apply(Eq[-1])
 
     Eq << Eq[-1].this.lhs.apply(Bool.Cond.of.And, index=1)
 

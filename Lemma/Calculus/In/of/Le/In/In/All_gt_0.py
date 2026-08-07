@@ -44,7 +44,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Unequal).apply(Set.Ge_0.of.Icc.ne.Empty, simplify=None)
 
-    Eq << Eq[-1].this.expr.apply(Algebra.Ge_0.of.Ge_0.Gt_0)
+    Eq << Eq[-1].this.expr.apply(Int.Le0Mul.of.Ge_0.Gt_0)
 
     Eq << Bool.Any_And.of.Any.All.All_Imp.apply(Eq[-1], Eq.any)
 
