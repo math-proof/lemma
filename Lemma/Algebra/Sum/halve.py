@@ -13,7 +13,7 @@ def apply(self, *, simplify=True):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Nat
+    from Lemma import Algebra, Bool, Nat, Finset
 
     i, a, b = Symbol(integer=True)
     f = Symbol(shape=(oo,), real=True)
@@ -31,9 +31,9 @@ def prove(Eq):
 
     Eq <<= Bool.Imp_And.given.Imp.delete.apply(Eq[-2]), Bool.Imp_And.given.Imp.delete.apply(Eq[-1])
 
-    Eq << Eq[-2].this.lhs.apply(Algebra.EqSum.of.Eq_even, Eq[0].lhs)
+    Eq << Eq[-2].this.lhs.apply(Finset.SumRange.eq.Sum_UFnMul2.of.Even, Eq[0].lhs)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.EqSum.of.Eq_odd, Eq[0].lhs)
+    Eq << Eq[-1].this.lhs.apply(Finset.SumRange.eq.Sum_UFnAddMul2.of.Odd, Eq[0].lhs)
 
 
 

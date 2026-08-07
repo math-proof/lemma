@@ -65,7 +65,7 @@ def prove(Eq):
 
     Eq <<= Eq.suffice & Eq[-1]
 
-    Eq << Algebra.Cond.given.Cond.subst.Cond.apply(Eq.eq, old=Eq[-1].lhs, new=Eq[-1].rhs)
+    Eq << Bool.UFnIte.given.UFnIte.Iff.apply(Eq.eq, old=Eq[-1].lhs, new=Eq[-1].rhs)
 
     Eq << Algebra.Cond.given.Cond.subst.Bool.apply(Eq[-1], cond=Eq[0], invert=True)
 

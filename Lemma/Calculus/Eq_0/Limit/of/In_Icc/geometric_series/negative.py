@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Set.Lt.of.In_Icc.apply(Eq[0])
 
-    Eq << Algebra.EqAbs.of.Lt_0.apply(Eq[-1])
+    Eq << Int.Abs.eq.Neg.of.Lt_0.apply(Eq[-1])
 
     Eq << Eq[-3].subs(Eq[-1].reversed)
 

@@ -32,7 +32,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.rhs.apply(Algebra.Lt_0.Eq.given.And.Div), Eq[-1].this.rhs.apply(Algebra.Gt_0.Eq.given.And.Div)
 
-    Eq <<= Eq[-2].this.lhs.apply(Algebra.EqAbs.of.Lt_0), Eq[-1].this.lhs.apply(Int.EqAbs.of.Gt_0)
+    Eq <<= Eq[-2].this.lhs.apply(Int.Abs.eq.Neg.of.Lt_0), Eq[-1].this.lhs.apply(Int.EqAbs.of.Gt_0)
 
     Eq <<= -Eq[-2].this.lhs, Eq[-1].this.lhs.reversed
 

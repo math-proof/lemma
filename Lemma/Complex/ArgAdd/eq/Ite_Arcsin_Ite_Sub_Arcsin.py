@@ -39,7 +39,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.lhs.apply(Int.Le0Mul.of.Ge_0.Gt_0), Eq[-1].this.lhs.apply(Rat.GeDivS.of.Ge.Gt_0)
 
-    Eq << Algebra.Cond.given.Cond.subst.Cond.apply(Eq.eq, old=Eq.equivalent.lhs, new=Eq.equivalent.rhs)
+    Eq << Bool.UFnIte.given.UFnIte.Iff.apply(Eq.eq, old=Eq.equivalent.lhs, new=Eq.equivalent.rhs)
 
     Eq << Eq[-1].this.lhs.apply(Bool.Ite__IteAndNot.eq.Ite__Ite)
 
@@ -47,7 +47,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Bool.Ite__Ite.eq.Ite__IteAnd_Not, 0, 3)
 
-    Eq << Algebra.Cond.given.Cond.subst.Cond.apply(Eq[-1], old=Eq.equivalent.lhs, new=Eq.equivalent.rhs)
+    Eq << Bool.UFnIte.given.UFnIte.Iff.apply(Eq[-1], old=Eq.equivalent.lhs, new=Eq.equivalent.rhs)
 
     Eq.eq1 = Eq[-1].this.lhs.apply(Bool.Ite__IteAndNot.eq.Ite__Ite, 0, 3)
 
@@ -65,7 +65,7 @@ def prove(Eq):
 
     Eq << Eq.suffice.this.find(Pow).base.apply(Rat.SubDivS1.eq.DivSub.of.Ne_0.Ne_0)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.EqAbs.of.Lt_0)
+    Eq << Eq[-1].this.lhs.apply(Int.Abs.eq.Neg.of.Lt_0)
 
     Eq << Bool.Imp.given.ImpEq.apply(Eq[-1])
 

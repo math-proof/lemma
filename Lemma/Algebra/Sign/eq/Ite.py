@@ -48,7 +48,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.apply(Bool.Imp.flatten)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.EqAbs.of.Lt_0)
+    Eq << Eq[-1].this.lhs.apply(Int.Abs.eq.Neg.of.Lt_0)
 
     Eq << Bool.Imp.given.ImpEq.apply(Eq[-1])
 

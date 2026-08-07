@@ -60,7 +60,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.expr.expr.apply(Algebra.Lt_0.of.Lt.trans, ret=0)
 
-    Eq << Eq[-1].this.find(Expr < 0).apply(Algebra.EqAbs.of.Lt_0)
+    Eq << Eq[-1].this.find(Expr < 0).apply(Int.Abs.eq.Neg.of.Lt_0)
 
     Eq << -Eq[-1].this.find(Equal)
 

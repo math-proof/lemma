@@ -10,7 +10,7 @@ def apply(lt_zero, dist, b=0):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Calculus, Probability, Bool, Complex, Rat
+    from Lemma import Algebra, Calculus, Probability, Bool, Complex, Rat, Int
 
     x = Symbol(real=True, random=True)
     mu, b = Symbol(real=True)
@@ -21,7 +21,7 @@ def prove(Eq):
     y = Symbol(real=True)
     Eq << Probability.Distributed.given.Eq.Pr.apply(Eq[-1], y)
 
-    Eq << Algebra.EqAbs.of.Lt_0.apply(Eq[0])
+    Eq << Int.Abs.eq.Neg.of.Lt_0.apply(Eq[0])
 
     Eq << Eq[-2].this.subs(Eq[-1])
 

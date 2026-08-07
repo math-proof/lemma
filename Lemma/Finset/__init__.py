@@ -83,3 +83,4 @@ from . import SumSetOf
 from . import Ico
 from . import SumSetOf_Odd
 from . import SumSetOf_Even
+from . import SumRange

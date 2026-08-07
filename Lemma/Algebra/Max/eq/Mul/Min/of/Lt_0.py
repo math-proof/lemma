@@ -40,7 +40,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.lhs.apply(Algebra.LeDivS.of.Ge.Lt_0), Eq[-1].this.rhs.apply(Algebra.GeMul.of.Lt_0.Le)
 
-    Eq << Algebra.Cond.given.Cond.subst.Cond.apply(Eq.eq, old=Eq.equivalent.lhs, new=Eq.equivalent.rhs)
+    Eq << Bool.UFnIte.given.UFnIte.Iff.apply(Eq.eq, old=Eq.equivalent.lhs, new=Eq.equivalent.rhs)
 
 
 
