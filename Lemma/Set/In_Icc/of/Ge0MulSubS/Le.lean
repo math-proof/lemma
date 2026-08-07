@@ -1,4 +1,4 @@
-import Lemma.Int.OrAndSLe_0Ge_0.of.Mul.le.Zero
+import Lemma.Int.OrAndSLe_0Ge_0.of.Ge0Mul
 import Lemma.Int.Ge0Sub.is.Le
 import Lemma.Int.Le0Sub.is.Ge
 import Lemma.Set.In_Icc.is.Le.Le
@@ -19,7 +19,7 @@ private lemma main
   x ∈ Icc a b := by
 -- proof
   -- Split the proof into two parts: proving a ≤ x and x ≤ b
-  have h_Or := OrAndSLe_0Ge_0.of.Mul.le.Zero h₀
+  have h_Or := OrAndSLe_0Ge_0.of.Ge0Mul h₀
   obtain h_And | h_And := h_Or
   ·
     let ⟨h_Le, h_Ge⟩ := h_And

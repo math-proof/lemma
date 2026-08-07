@@ -1,6 +1,6 @@
 import Lemma.Nat.Ge.of.Gt
-import Lemma.Nat.Gt_0.of.Gt_0.Gt_0
 import Lemma.Nat.Le.is.Lt.ou.Eq
+import Lemma.Nat.Lt0Mul.of.Gt_0.Gt_0
 open Nat
 
 
@@ -20,8 +20,8 @@ private lemma main
   .
     aesop
   .
-    have := Gt_0.of.Gt_0.Gt_0 hx h₁
+    have := Lt0Mul.of.Gt_0.Gt_0 hx h₁
     exact Ge.of.Gt this
 
 
--- created on 2025-03-23
+-- created on 2018-07-18

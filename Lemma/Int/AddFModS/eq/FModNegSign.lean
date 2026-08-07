@@ -10,7 +10,7 @@ import Lemma.Int.FModNegSign.eq.Sub_Sign
 import Lemma.Int.AddSub.eq.Sub_Sub
 import Lemma.Int.EqSub.is.Eq_Add
 import Lemma.Nat.Add
-import Lemma.Int.EqFMod.of.Mul_Add_Sign.lt.Zero
+import Lemma.Int.EqFMod.of.Ge0Mul_Add_Sign
 import Lemma.Int.Sub_Add.eq.SubSub
 import Lemma.Int.LeSign.of.Gt_0
 import Lemma.Set.MulSubS.le.Zero.of.In_Icc
@@ -58,7 +58,7 @@ private lemma main
       rw [Add.comm]
       apply Eq_Add.of.EqSub
       apply Eq.symm
-      apply EqFMod.of.Mul_Add_Sign.lt.Zero
+      apply EqFMod.of.Ge0Mul_Add_Sign
       rw [SubSub.eq.Sub_Add]
       rw [AddSub.eq.Sub_Sub]
       rw [EqSubAdd.left]

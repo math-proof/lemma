@@ -1,6 +1,4 @@
-import Lemma.Nat.LtMulS.of.Gt_0.Lt
-import Lemma.Nat.EqMul_0'0
-open Nat
+import sympy.Basic
 
 
 @[main]
@@ -11,11 +9,10 @@ private lemma main
   (h₀ : a > 0)
   (h₁ : b > 0) :
 -- imply
-  a * b > 0 := by
+  a * b > 0 :=
 -- proof
-  have h := GtMulS.of.Gt_0.Gt h₀ h₁
-  simp only [EqMul_0'0] at h
-  exact h
+  mul_pos h₀ h₁
 
 
 -- created on 2024-11-25
+-- updated on 2026-08-07

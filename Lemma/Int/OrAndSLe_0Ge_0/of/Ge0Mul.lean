@@ -1,4 +1,4 @@
-import Lemma.Nat.Gt_0.of.Gt_0.Gt_0
+import Lemma.Nat.Lt0Mul.of.Gt_0.Gt_0
 import Lemma.Int.Gt_0.of.Lt_0.Lt_0
 import Lemma.Nat.Le.of.Eq
 import Lemma.Bool.Or.is.NotAndNotS
@@ -36,7 +36,7 @@ private lemma main
   ·
     have := Ge.of.Gt ha
     have := h_!ab this
-    exact Gt_0.of.Gt_0.Gt_0 ha this
+    exact Lt0Mul.of.Gt_0.Gt_0 ha this
   ·
     have ha := ha.symm
     have h_Le_0 := Le.of.Eq ha

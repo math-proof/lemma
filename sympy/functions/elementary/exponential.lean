@@ -1,5 +1,5 @@
 import sympy.sets.fancyset
-import Lemma.Hyperreal.UFn.of.All_Ufn
+import Lemma.Hyperreal.UFn.of.All_UFn
 import Lemma.Int.Abs.eq.Max_Neg
 open Filter Hyperreal Int
 
@@ -27,19 +27,19 @@ noncomputable def Hyperreal.expMonoidHom : MonoidHom (Multiplicative ℝ*) ℝ* 
   }
 
 theorem Hyperreal.exp_neg x : exp (-x) = (exp x)⁻¹ := by
-  apply UFn.of.All_Ufn x
+  apply UFn.of.All_UFn x
   intro x
   apply Germ.coe_eq.mpr ∘ Eventually.of_forall
   simp [Real.exp_neg]
 
 theorem Hyperreal.exp_ne_zero x : exp x ≠ 0 := by
-  apply UFn.of.All_Ufn x
+  apply UFn.of.All_UFn x
   intro x h
   obtain ⟨n, hn⟩ := nonempty_of_mem (Germ.coe_eq.mp h)
   simp at hn
 
 theorem Hyperreal.exp_pos x : exp x > 0 := by
-  apply UFn.of.All_Ufn x
+  apply UFn.of.All_UFn x
   intro x
   apply Germ.coe_lt.mpr ∘ Eventually.of_forall
   simp [Real.exp_pos]
@@ -56,7 +56,7 @@ theorem Real.add_one_le_exp_of_nonneg {x : ℝ} (hx : 0 ≤ x) : x + 1 ≤ exp x
 
 theorem Hyperreal.add_one_le_exp_of_nonneg (hx : 0 ≤ x) : x + 1 ≤ exp x := by
   revert hx
-  apply UFn.of.All_Ufn x
+  apply UFn.of.All_UFn x
   intro x hx
   apply Germ.coe_le.mpr
   filter_upwards [Germ.coe_nonneg.mp hx] with _ hn
@@ -165,7 +165,7 @@ noncomputable instance : Log ℝ* where
     apply Germ.coe_eq.mpr ∘ Eventually.of_forall
     simp [Real.log_one]
   log_div_self x := by
-    apply UFn.of.All_Ufn x
+    apply UFn.of.All_UFn x
     intro x
     apply Germ.coe_eq.mpr ∘ Eventually.of_forall
     simp [Real.log_div_self]
@@ -198,13 +198,13 @@ noncomputable instance : LogPos ℝ* where
     exact Real.log_div hn gn
 
   log_exp x := by
-    apply UFn.of.All_Ufn x
+    apply UFn.of.All_UFn x
     intro x
     apply Germ.coe_eq.mpr ∘ Eventually.of_forall
     simp [Real.log_exp]
 
   exp_log_eq_abs {x} := by
-    apply UFn.of.All_Ufn x
+    apply UFn.of.All_UFn x
     intro x h
     apply Germ.coe_eq.mpr
     filter_upwards [Ultrafilter.eventually_not.mpr (mt Germ.coe_eq.mpr h)] with _ hn

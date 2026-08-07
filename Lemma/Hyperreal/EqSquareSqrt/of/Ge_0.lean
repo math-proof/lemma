@@ -1,4 +1,4 @@
-import Lemma.Hyperreal.UFn.of.All_Ufn
+import Lemma.Hyperreal.UFn.of.All_UFn
 import sympy.polys.polyroots
 open Hyperreal
 
@@ -12,7 +12,7 @@ private lemma main
   (√x)² = x := by
 -- proof
   revert h
-  apply UFn.of.All_Ufn x
+  apply UFn.of.All_UFn x
   intro x h
   simp [Root.sqrt]
   apply Filter.Germ.coe_eq.mpr
