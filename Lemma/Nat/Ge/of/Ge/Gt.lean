@@ -17,4 +17,4 @@ private lemma main
   apply Ge.of.Gt h₀
 
 
--- created on 2025-06-20
+-- created on 2018-09-03

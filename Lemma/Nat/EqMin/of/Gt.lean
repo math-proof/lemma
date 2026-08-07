@@ -15,5 +15,5 @@ private lemma main
   EqMin.of.Ge (Ge.of.Gt h)
 
 
--- created on 2025-06-07
+-- created on 2018-09-09
 -- updated on 2025-10-12

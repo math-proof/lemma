@@ -17,4 +17,4 @@ private lemma main
   exact hab.left ▸ h_And.right
 
 
--- created on 2026-08-07
+-- created on 2018-06-11
