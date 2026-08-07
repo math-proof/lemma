@@ -12,7 +12,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Algebra, Tensor
+    from Lemma import Finset, Algebra, Tensor, Real
 
     r = Symbol(real=True)
     n = Symbol(integer=True, positive=True)
@@ -47,7 +47,7 @@ def prove(Eq):
 
     Eq.eq_block = Eq[-1].this.find(Sum).apply(Finset.Sum.Binom.eq.Pow.Newton)
 
-    Eq << Eq.eq_block.rhs.args[1].expr.this.find(Pow).apply(Algebra.Pow.eq.Mul.split.exponent, simplify=None)
+    Eq << Eq.eq_block.rhs.args[1].expr.this.find(Pow).apply(Real.Pow_Add.eq.MulPowS, simplify=None)
 
     Eq << Eq[-1].this.rhs.apply(Finset.Sum_Mul.eq.Mul_Sum)
 
@@ -59,7 +59,7 @@ def prove(Eq):
 
     Eq.eq_block = Eq.eq_block.subs(Eq[-1])
 
-    Eq << Eq.eq_block.rhs.args[2].expr.this.find(Pow).apply(Algebra.Pow.eq.Mul.split.exponent, simplify=None)
+    Eq << Eq.eq_block.rhs.args[2].expr.this.find(Pow).apply(Real.Pow_Add.eq.MulPowS, simplify=None)
 
     Eq << Eq[-1].this.rhs.apply(Finset.Sum_Mul.eq.Mul_Sum)
 

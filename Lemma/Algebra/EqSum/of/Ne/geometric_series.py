@@ -10,13 +10,13 @@ def apply(ne, self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat, Finset, Fin
+    from Lemma import Algebra, Nat, Finset, Fin, Real
 
     k, n = Symbol(integer=True)
     λ = Symbol(real=True)
     Eq << apply(Unequal(λ, 1), Sum[k:n](λ ** k))
 
-    Eq << (λ ** (k + 1)).this.apply(Algebra.Pow.eq.Mul.split.exponent)
+    Eq << (λ ** (k + 1)).this.apply(Real.Pow_Add.eq.MulPowS)
 
     Eq << Eq[-1] - λ ** k
 

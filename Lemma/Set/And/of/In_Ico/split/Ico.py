@@ -10,13 +10,13 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Bool
+    from Lemma import Bool, Int
 
     x, a, b = Symbol(integer=True)
     d = Symbol(integer=True)
     Eq << apply(Element(x, Range(a, b, d)))
 
-    Eq << Eq[0].this.apply(Set.In_Range.Is.Mod.In_Range)
+    Eq << Eq[0].this.apply(Int.In_Range.Is.Mod.In_Range)
 
     Eq << Bool.And_And.of.And.apply(Eq[-1])
 

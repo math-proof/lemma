@@ -86,3 +86,4 @@ from . import NeSqrt_0
 from . import SubArcsinS
 from . import GtSqrt_0
 from . import AddArcsinS
+from . import Pow_Add

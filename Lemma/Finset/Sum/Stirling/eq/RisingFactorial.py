@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Algebra, Bool, Nat
+    from Lemma import Finset, Bool, Nat, Real
 
     k = Symbol(integer=True)
     n = Symbol(integer=True, nonnegative=True, given=False)
@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Sum).apply(Finset.SumIco.eq.Sum_UFnAdd, 1)
 
-    Eq << Eq[-1].this.find(Sum).find(Pow).apply(Algebra.Pow.eq.Mul.split.exponent)
+    Eq << Eq[-1].this.find(Sum).find(Pow).apply(Real.Pow_Add.eq.MulPowS)
 
     Eq << Eq[-1].this.lhs.apply(Nat.AddMulS.eq.Mul_Add)
 

@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Finset
+    from Lemma import Algebra, Tensor, Finset, Real
 
     r = Symbol(shape=(oo,), real=True, random=True) # rewards
     t, k = Symbol(integer=True) # time counter
@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Finset.SumIco.eq.Sum_UFnAdd, 1)
 
-    Eq << Eq[-1].this.find(Pow[Add]).apply(Algebra.Pow.eq.Mul.split.exponent)
+    Eq << Eq[-1].this.find(Pow[Add]).apply(Real.Pow_Add.eq.MulPowS)
 
     # http://incompleteideas.net/book/bookdraft2017nov5.pdf (3.3 Returns and Episodes: Eq. 3.9)
 

@@ -12,7 +12,7 @@ def apply(given, self):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Finset
+    from Lemma import Finset, Int
 
     i, a, b = Symbol(integer=True)
     f = Symbol(shape=(oo,), real=True)
@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq << Eq[1].lhs.this.apply(Finset.Sum.eq.Sum_MulBool)
 
-    Eq << Eq[-1].this.find(Element).apply(Set.In_Range.Is.Mod.In_Range)
+    Eq << Eq[-1].this.find(Element).apply(Int.In_Range.Is.Mod.In_Range)
 
     Eq << Eq[-1].subs(Eq[0])
 

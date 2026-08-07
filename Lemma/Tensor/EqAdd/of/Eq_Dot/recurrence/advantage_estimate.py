@@ -10,7 +10,7 @@ def apply(eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor
+    from Lemma import Tensor, Real
 
     t, i = Symbol(integer=True) # time step counter
     A, δ = Symbol(shape=(oo,), real=True) # advantages and TD residuals
@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq << Eq[0].this.rhs.apply(Tensor.Dot.eq.Add.shift)
 
-    Eq << Eq[-1].this.find(Pow).apply(Algebra.Pow.eq.Mul.split.exponent)
+    Eq << Eq[-1].this.find(Pow).apply(Real.Pow_Add.eq.MulPowS)
 
     Eq << Eq[-1].this.find(Stack).apply(Tensor.Stack.eq.Pow)
 

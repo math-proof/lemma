@@ -12,12 +12,12 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Real
 
     x, y, t, z = Symbol(real=True)
     Eq << apply(t ** x * t * z)
 
-    Eq << Eq[-1].this.find(Symbol ** Add).apply(Algebra.Pow.eq.Mul.split.exponent)
+    Eq << Eq[-1].this.find(Symbol ** Add).apply(Real.Pow_Add.eq.MulPowS)
 
 
 

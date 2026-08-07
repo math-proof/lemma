@@ -13,7 +13,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Int, Nat, Real, Rat, Complex
+    from Lemma import Bool, Int, Nat, Real, Rat, Complex
 
     x, y = Symbol(real=True)
     Eq << apply(Arg(x + y * S.ImaginaryUnit))

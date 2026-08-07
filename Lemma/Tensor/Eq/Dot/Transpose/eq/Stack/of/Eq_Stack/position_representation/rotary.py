@@ -15,7 +15,7 @@ def apply(eq_R, x):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Tensor, Nat
+    from Lemma import Algebra, Set, Bool, Tensor, Nat, Int
     from Lemma.Tensor.Dot.eq.Stack.of.Eq_Stack.position_representation.rotary import rotary_matrix
     # n denotes sequence length (seq_length)
     # b denotes 10000
@@ -43,8 +43,8 @@ def prove(Eq):
     Eq <<= Eq[-1].find(Element).this.apply(Set.In.Ico.Mul.dilated, 2), \
         Eq[-1].find(Piecewise[2]).find(Element).this.apply(Set.In.Ico.Mul.dilated, 2).this.rhs.apply(Set.In_Icc.Is.InAdd, 1)
 
-    Eq <<= Eq[-2].this.rhs.apply(Set.In_Range.Is.Mod.In_Range),\
-        Eq[-1].this.rhs.apply(Set.In_Range.Is.Mod.In_Range)
+    Eq <<= Eq[-2].this.rhs.apply(Int.In_Range.Is.Mod.In_Range),\
+        Eq[-1].this.rhs.apply(Int.In_Range.Is.Mod.In_Range)
 
     Eq << Eq[-5].subs(*Eq[-2:])
 

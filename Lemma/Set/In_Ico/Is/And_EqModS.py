@@ -11,13 +11,13 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set
+    from Lemma import Set, Int
 
     x, a, b = Symbol(integer=True)
     d = Symbol(integer=True, positive=True)
     Eq << apply(Element(x, Range(a, b, d)))
 
-    Eq << Eq[0].this.lhs.apply(Set.In_Range.Is.Mod.In_Range)
+    Eq << Eq[0].this.lhs.apply(Int.In_Range.Is.Mod.In_Range)
 
     Eq << Eq[-1].this.find(Element).apply(Set.In_Ico.Is.And)
 

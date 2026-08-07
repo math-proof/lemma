@@ -13,7 +13,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset, Bool, Nat
+    from Lemma import Algebra, Finset, Bool, Nat, Real
 
     k = Symbol(integer=True)
     i = Symbol(integer=True, nonnegative=True, given=False)
@@ -33,11 +33,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(~Binomial - Binomial).apply(Finset.Binom.eq.Add.Pascal)
 
-    Eq << Eq[-1].this.find(Pow).apply(Algebra.Pow.eq.Mul.split.exponent, simplify=None)
+    Eq << Eq[-1].this.find(Pow).apply(Real.Pow_Add.eq.MulPowS, simplify=None)
 
     Eq << Eq[-1].this.find(Sum).apply(Finset.Sum_Mul.eq.Mul_Sum)
 
-    Eq << Eq[-1].this.find((-1) ** Add).apply(Algebra.Pow.eq.Mul.split.exponent, simplify=None)
+    Eq << Eq[-1].this.find((-1) ** Add).apply(Real.Pow_Add.eq.MulPowS, simplify=None)
 
     Eq << Eq[-1].this.find(Sum[Mul[~Sum]]).apply(Finset.Sum_Mul.eq.Mul_Sum)
 

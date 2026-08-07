@@ -33,7 +33,7 @@ def apply(initial_condition, recurrence, k=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset, Nat, Fin
+    from Lemma import Finset, Nat, Fin, Real
 
     m, g = Symbol(shape=(oo,), real=True)
     t, k = Symbol(integer=True)
@@ -61,7 +61,7 @@ def prove(Eq):
 
     Eq << Eq[-1] * beta ** k
 
-    Eq << Eq[-1].this.find(Pow[Add]).apply(Algebra.Pow.eq.Mul.split.exponent)
+    Eq << Eq[-1].this.find(Pow[Add]).apply(Real.Pow_Add.eq.MulPowS)
 
     Eq << Eq[-1].this.find(Add).apply(Nat.AddMulS.eq.Mul_Add)
 

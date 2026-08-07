@@ -20,7 +20,7 @@ def apply(self, scale):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Real
 
     i = Symbol(integer=True)
     n = Symbol(integer=True, positive=True, given=False)
@@ -33,7 +33,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Product).apply(Algebra.Prod.eq.Mul.pop)
 
-    Eq << Eq[-1].this.find(Pow).apply(Algebra.Pow.eq.Mul.split.exponent)
+    Eq << Eq[-1].this.find(Pow).apply(Real.Pow_Add.eq.MulPowS)
 
     Eq << Eq[-1].this.rhs.args[::2].simplify()
 

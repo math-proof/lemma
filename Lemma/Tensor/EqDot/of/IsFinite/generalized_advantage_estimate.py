@@ -11,7 +11,7 @@ def apply(lt_r, γ, λ, k=None, i=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Calculus, Set, Tensor, Finset, Nat
+    from Lemma import Algebra, Calculus, Set, Tensor, Finset, Nat, Real
 
     t, k, i = Symbol(integer=True) # time step counter
     δ = Symbol(shape=(oo,), real=True) # TD residual
@@ -28,7 +28,7 @@ def prove(Eq):
     i = Eq[-1].rhs.variable
     Eq << Eq[-1].this.rhs.find(Mul[~Sum]).apply(Finset.SumIco.eq.Sum_UFnAdd, i)
 
-    Eq << Eq[-1].this.find(Pow[Add]).apply(Algebra.Pow.eq.Mul.split.exponent)
+    Eq << Eq[-1].this.find(Pow[Add]).apply(Real.Pow_Add.eq.MulPowS)
 
     Eq << Unequal(λ, 1, plausible=True)
 

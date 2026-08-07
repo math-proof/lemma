@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq << Real.EqCos.of.Eq.apply(Eq[-1])
 
-    Eq << Eq[0].this.find(Equal).apply(Algebra.Eq_0.Is.And.Eq_0)
+    Eq << Eq[0].this.find(Equal).apply(Complex.Eq_0.Is.EqRe_0.EqIm_0)
 
 
 if __name__ == '__main__':

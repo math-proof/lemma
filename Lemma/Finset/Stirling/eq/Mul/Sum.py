@@ -11,7 +11,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Algebra, Bool, Nat, Fin, Rat
+    from Lemma import Finset, Algebra, Bool, Nat, Fin, Rat, Real
 
     k = Symbol(integer=True, nonnegative=True, given=False)
     n = Symbol(integer=True, nonnegative=True)
@@ -61,7 +61,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Sum).apply(Finset.Sum.Binom.eq.Delta.Zero)
 
-    Eq << Eq[-1].this.find((~Pow) / Factorial).apply(Algebra.Pow.eq.Mul.split.exponent, simplify=None)
+    Eq << Eq[-1].this.find((~Pow) / Factorial).apply(Real.Pow_Add.eq.MulPowS, simplify=None)
 
     Eq << Eq[-1].this.find(Mul[Sum]).apply(Finset.Mul_Sum.eq.Sum_Mul)
 

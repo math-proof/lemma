@@ -40,12 +40,12 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Real
 
     x, y, t = Symbol(real=True)
     Eq << apply(t ** x * t ** y)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Pow.eq.Mul.split.exponent)
+    Eq << Eq[-1].this.rhs.apply(Real.Pow_Add.eq.MulPowS)
 
 
 
