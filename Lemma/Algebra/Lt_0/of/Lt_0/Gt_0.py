@@ -17,7 +17,7 @@ def prove(Eq):
 
     Eq << -Eq[0]
 
-    Eq << Nat.Gt_0.of.Gt_0.Gt_0.apply(Eq[-1], Eq[1])
+    Eq << Nat.Lt0Mul.of.Gt_0.Gt_0.apply(Eq[-1], Eq[1])
 
     Eq << -Eq[-1]
 

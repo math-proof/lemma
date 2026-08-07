@@ -18,7 +18,7 @@ def prove(Eq):
     a, b = Symbol(real=True, given=True)
     Eq << apply(a * b > 0)
 
-    Eq << Nat.Gt_0.of.Gt_0.Gt_0.apply(Eq[1], Eq[2])
+    Eq << Nat.Lt0Mul.of.Gt_0.Gt_0.apply(Eq[1], Eq[2])
 
 
 

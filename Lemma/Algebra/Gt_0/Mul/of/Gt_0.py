@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Greater(a, 0, plausible=True)
 
-    Eq << Nat.Gt_0.of.Gt_0.Gt_0.apply(Eq[-1], Eq[0])
+    Eq << Nat.Lt0Mul.of.Gt_0.Gt_0.apply(Eq[-1], Eq[0])
 
 
 if __name__ == '__main__':

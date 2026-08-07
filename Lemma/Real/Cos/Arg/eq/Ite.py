@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Algebra.EqArg.of.Eq.apply(Eq[1])
 
-    Eq << Eq[-1].this.rhs.apply(Real.Arg.eq.Ite.Arccos)
+    Eq << Eq[-1].this.rhs.apply(Complex.ArgAdd.eq.Ite_0Ite_Arccos_NegArccos)
 
     Eq << Real.EqCos.of.Eq.apply(Eq[-1])
 

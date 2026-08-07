@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.args[1].apply(Bool.OrAndS.of.And_Or)
 
-    Eq << Eq[-1].this.args[-1].apply(Nat.Gt_0.of.Gt_0.Gt_0)
+    Eq << Eq[-1].this.args[-1].apply(Nat.Lt0Mul.of.Gt_0.Gt_0)
 
     Eq << Bool.BFn.of.BFnIte.Cond.apply(Eq[0], Eq[-1], invert=True)
 

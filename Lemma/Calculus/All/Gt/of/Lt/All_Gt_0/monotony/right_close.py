@@ -55,7 +55,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Bool.AnySetOf.of.Any_And, index=1)
 
-    Eq << Eq[-1].this.rhs.expr.apply(Nat.Gt_0.of.Gt_0.Gt_0)
+    Eq << Eq[-1].this.rhs.expr.apply(Nat.Lt0Mul.of.Gt_0.Gt_0)
 
     Eq << Eq[-1].this.rhs.apply(Bool.Any_And.of.AnySetOf_AnySetOf)
 

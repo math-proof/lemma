@@ -9,7 +9,7 @@ def apply(is_nonnegative):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool, Nat
+    from Lemma import Set, Bool, Nat
 
     x = Symbol(real=True)
     Eq << apply(x >= 0)

@@ -13,7 +13,7 @@ def apply(is_nonnegative, lt, k=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Nat, Int
+    from Lemma import Set, Bool, Nat, Int
 
     a, b = Symbol(integer=True, given=True)
     k = Symbol(integer=True)
@@ -74,7 +74,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.args[0].apply(Set.Lt.of.Ioc.ne.Empty)
 
-    Eq << Set.Eq.of.Inter.eq.Empty.Eq_SDiff.apply(Eq.is_empty, Eq.eq_complement)
+    Eq << Set.Eq.of.Eq_SDiff.Inter.eq.Empty.apply(Eq.is_empty, Eq.eq_complement)
 
 
 

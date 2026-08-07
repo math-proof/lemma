@@ -32,7 +32,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Element).apply(Set.Gt_0.of.IsPositive)
 
-    Eq << Eq[-1].this.expr.args[1:].apply(Nat.Gt_0.of.Gt_0.Gt_0)
+    Eq << Eq[-1].this.expr.args[1:].apply(Nat.Lt0Mul.of.Gt_0.Gt_0)
 
     a, b = Eq[-1].variables
     c = Symbol(real=True)

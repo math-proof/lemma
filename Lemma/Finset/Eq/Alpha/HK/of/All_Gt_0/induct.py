@@ -49,7 +49,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(K).defun()
 
-    Eq << Eq[-1].this.lhs.apply(Nat.Gt_0.of.Gt_0.Gt_0)
+    Eq << Eq[-1].this.lhs.apply(Nat.Lt0Mul.of.Gt_0.Gt_0)
 
     Eq << Eq[-1].this.lhs + 1
 

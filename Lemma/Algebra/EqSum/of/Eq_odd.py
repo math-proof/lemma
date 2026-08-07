@@ -12,7 +12,7 @@ def apply(given, self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Finset
+    from Lemma import Set, Finset
 
     i, a, b = Symbol(integer=True)
     f = Symbol(shape=(oo,), real=True)
@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Finset.Sum_MulBoolAnd.eq.Sum)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.eq.Sum.odd)
+    Eq << Eq[-1].this.rhs.apply(Finset.SumSetOf_Odd.eq.Sum_UFnAddMul2)
 
 
 if __name__ == '__main__':

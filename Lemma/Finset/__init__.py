@@ -81,3 +81,4 @@ from . import MapRange
 from . import Sum_MulBoolAnd
 from . import SumSetOf
 from . import Ico
+from . import SumSetOf_Odd

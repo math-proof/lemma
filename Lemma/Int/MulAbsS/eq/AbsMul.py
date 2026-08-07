@@ -79,7 +79,7 @@ def prove(Eq):
 
     Eq << Eq[-2].this.lhs.apply(Int.Gt_0.of.Lt_0.Lt_0)
 
-    Eq << Eq[-1].this.lhs.apply(Nat.Gt_0.of.Gt_0.Gt_0)
+    Eq << Eq[-1].this.lhs.apply(Nat.Lt0Mul.of.Gt_0.Gt_0)
 
     Eq << Eq.necessary.this.lhs.apply(Int.AndGtS_0.ou.AndLtS_0.of.Lt0Mul)
 

@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Eq[0] - y
 
-    Eq << Nat.Gt_0.of.Gt_0.Gt_0.apply(Eq[-2], Eq[-1])
+    Eq << Nat.Lt0Mul.of.Gt_0.Gt_0.apply(Eq[-2], Eq[-1])
 
     Eq << Eq[-1].this.lhs.expand()
 

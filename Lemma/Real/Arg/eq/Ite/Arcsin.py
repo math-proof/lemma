@@ -13,12 +13,12 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Int, Nat, Real, Rat
+    from Lemma import Algebra, Bool, Int, Nat, Real, Rat, Complex
 
     x, y = Symbol(real=True)
     Eq << apply(Arg(x + y * S.ImaginaryUnit))
 
-    Eq << Eq[0].this.lhs.apply(Real.Arg.eq.Ite.Arccos)
+    Eq << Eq[0].this.lhs.apply(Complex.ArgAdd.eq.Ite_0Ite_Arccos_NegArccos)
 
     Eq << Eq[-1].this.find(acos).apply(Real.Arccos.eq.Ite_Arcsin_Sub_Arcsin)
 

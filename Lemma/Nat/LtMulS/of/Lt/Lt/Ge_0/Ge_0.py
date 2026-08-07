@@ -31,7 +31,7 @@ def prove(Eq):
 
     Eq << Eq[1] - x
 
-    Eq.is_positive = Nat.Gt_0.of.Gt_0.Gt_0.apply(Eq[-1], Eq[-2])
+    Eq.is_positive = Nat.Lt0Mul.of.Gt_0.Gt_0.apply(Eq[-1], Eq[-2])
 
     Eq << Eq[0] - a
 

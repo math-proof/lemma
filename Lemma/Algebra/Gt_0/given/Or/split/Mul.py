@@ -14,7 +14,7 @@ def prove(Eq):
     x, y = Symbol(real=True, given=True)
     Eq << apply(x * y > 0)
 
-    Eq << Eq[1].this.args[1].apply(Nat.Gt_0.of.Gt_0.Gt_0)
+    Eq << Eq[1].this.args[1].apply(Nat.Lt0Mul.of.Gt_0.Gt_0)
 
     Eq << Eq[-1].this.find(And).apply(Int.Gt_0.of.Lt_0.Lt_0)
 

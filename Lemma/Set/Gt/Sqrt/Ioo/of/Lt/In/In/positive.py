@@ -44,7 +44,7 @@ def prove(Eq):
 
     Eq << Nat.GtSquare_0.of.Gt_0.apply(Eq.x_is_positive)
 
-    Eq << Nat.Gt_0.of.Gt_0.Gt_0.apply(Eq[-1], Eq[-2])
+    Eq << Nat.Lt0Mul.of.Gt_0.Gt_0.apply(Eq[-1], Eq[-2])
 
     Eq << Nat.Ge.of.Gt.apply(Eq[-1])
 

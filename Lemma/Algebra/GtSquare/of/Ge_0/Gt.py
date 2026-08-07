@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq << Algebra.Gt_0.of.Gt.apply(Eq[1])
 
-    Eq << Nat.Gt_0.of.Gt_0.Gt_0.apply(Eq[-1], Eq[-2])
+    Eq << Nat.Lt0Mul.of.Gt_0.Gt_0.apply(Eq[-1], Eq[-2])
 
     Eq << Eq[-1].this.lhs.apply(Nat.Mul_Add.eq.AddMulS, deep=True)
 
