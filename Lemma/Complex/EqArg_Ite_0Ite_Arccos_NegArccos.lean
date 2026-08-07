@@ -1,4 +1,4 @@
-import Lemma.Complex.Arg.eq.Ite__Ite_Arcsin
+import Lemma.Complex.Arg.eq.Ite_Arcsin_Ite_AddIte_Arcsin
 import Lemma.Bool.BFn_Ite.is.OrAndS
 import Lemma.Bool.BFn_Ite.is.Imp.Imp
 import Lemma.Bool.ImpEq.is.ImpEq

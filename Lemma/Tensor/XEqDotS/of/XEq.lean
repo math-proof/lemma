@@ -4,6 +4,7 @@ import Lemma.Hyperreal.NotInfiniteMul.of.NotInfinite.NotInfinite
 import Lemma.Tensor.Coe.eq.Map
 import Lemma.Tensor.DataMul.eq.MulDataS
 import Lemma.Tensor.Dot
+import Lemma.Tensor.GetData.eq.GetDataGet.of.Lt
 import Lemma.Tensor.GetDot.eq.DotGet
 import Lemma.Tensor.GetDot.eq.Dot_GetT
 import Lemma.Tensor.GetMap.eq.MapGet
@@ -16,7 +17,6 @@ import Lemma.Vector.GetMul.eq.MulGetS
 import Lemma.Vector.XEq.is.All_XEqGetS
 import Lemma.Hyperreal.XEqMulS.of.XEq.Imp_XEqInvS
 open Tensor Hyperreal Vector
-set_option maxHeartbeats 4000000
 
 
 private lemma not_infinite_getData
@@ -40,7 +40,6 @@ noncomputable def transpose_col (X : Tensor ℝ [n, m]) (j : Fin m) : Tensor ℝ
   Tensor.map Hyperreal.ofReal (col_real X j)
 
 
-set_option maxHeartbeats 12000000 in
 private lemma col_map_transpose_entry
   (X : Tensor ℝ [n, m]) (j : Fin m) (k : Fin n) :
   (Tensor.map Hyperreal.ofReal X)ᵀ[j][k] = Tensor.map Hyperreal.ofReal (X[k][j]) := by
@@ -52,8 +51,6 @@ private lemma col_map_transpose_entry
   simp [Tensor.map, GetElem.getElem]
 
 
-
-set_option maxHeartbeats 12000000 in
 private lemma col_map_transpose_entry_at
   (X : Tensor ℝ [n, m]) (j : Fin m) (i : Fin n) :
   (Tensor.map Hyperreal.ofReal X)ᵀ[j][i] = (transpose_col X j)[i] := by
@@ -68,7 +65,6 @@ private lemma col_map_transpose_entry_at
   exact h₁.trans h₂
 
 
-set_option maxHeartbeats 12000000 in
 private lemma coerce_transpose_col_entry
   (X : Tensor ℝ [n, m]) (j : Fin m) (i : Fin n) :
   ((X : Tensor ℝ* [n, m])ᵀ)[j][i] = (transpose_col X j)[i] := by
@@ -78,7 +74,21 @@ private lemma coerce_transpose_col_entry
   exact col_map_transpose_entry_at X j i
 
 
-set_option maxHeartbeats 12000000 in
+private lemma fin_tensor_data_get (Y : Tensor ℝ* [n]) (k : Fin [n].prod) (hn : n = [n].prod) :
+  Y.data[k] = Y[Fin.cast hn.symm k].data[0] := by
+  have hi : k.val < n := Nat.lt_of_lt_of_eq k.isLt hn.symm
+  exact GetData.eq.GetDataGet.of.Lt hi Y (i := k.val)
+
+
+private lemma transpose_col_data_entry
+  (X : Tensor ℝ [n, m]) (j : Fin m) (k : Fin [n].prod) (hn : n = [n].prod) :
+  (transpose_col X j).data[k] = ((X : Tensor ℝ* [n, m])ᵀ)[j].data[k] := by
+  let hk : Fin n := Fin.cast hn.symm k
+  rw [fin_tensor_data_get (transpose_col X j) k hn]
+  rw [← coerce_transpose_col_entry X j hk]
+  exact Eq.symm (fin_tensor_data_get (Tensor.map Hyperreal.ofReal X)ᵀ[j] k hn)
+
+
 private lemma transpose_col_eq
   (X : Tensor ℝ [n, m]) (j : Fin m) :
   transpose_col X j = ((X : Tensor ℝ* [n, m])ᵀ)[j] := by
@@ -86,12 +96,7 @@ private lemma transpose_col_eq
   have hn : n = [n].prod := by simp
   refine List.Vector.ext ?_
   intro k
-  convert (coerce_transpose_col_entry X j (Fin.cast hn.symm k)).symm using 1
-  · simp [transpose_col, col_real, GetElem.getElem, hn]
-  · simp [GetElem.getElem, hn]
-  · conv =>
-      erw [← Coe.eq.Map (X := X)]
-      simp [GetElem.getElem, hn]
+  exact transpose_col_data_entry X j k hn
 
 
 noncomputable def row_hr (X : Tensor ℝ [m, n]) (i : Fin m) : Tensor ℝ* [n] :=

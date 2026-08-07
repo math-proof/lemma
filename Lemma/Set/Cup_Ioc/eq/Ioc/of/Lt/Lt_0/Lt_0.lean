@@ -48,4 +48,4 @@ private lemma main
     _ = Ioc (a : R) (b : R) := by grind
 
 
--- created on 2026-08-07
+-- created on 2018-10-15
