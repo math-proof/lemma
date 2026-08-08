@@ -2,7 +2,8 @@ import Lemma.Hyperreal.Infinitesimal.is.All_LtAbs
 import Lemma.Hyperreal.InfiniteNeg.is.All_Lt
 import Lemma.Real.AbsExp.eq.Exp
 import Lemma.Real.LtExpS.is.Lt
-open Hyperreal Real
+import Lemma.Nat.Ne.of.Gt
+open Hyperreal Real Nat
 
 
 /--
@@ -10,9 +11,9 @@ open Hyperreal Real
 | :---: | :---: |
 | main | Hyperreal.InfiniteNeg.is.InfinitesimalExp |
 | comm | Hyperreal.InfinitesimalExp.is.InfiniteNeg |
-| mp   | Hyperreal.InfinitesimalExp.of.InfiniteNeg |
+| mp and | Hyperreal.InfinitesimalExp.of.InfiniteNeg |
 | mpr | Hyperreal.InfiniteNeg.of.InfinitesimalExp |
-| mp.mt   | Hyperreal.NotInfiniteNeg.of.NotInfinitesimalExp |
+| mp.mt | Hyperreal.NotInfiniteNeg.of.NotInfinitesimalExp |
 | mpr.mt | Hyperreal.NotInfinitesimalExp.of.NotInfiniteNeg |
 -/
 @[main, comm, mp and, mpr, mp.mt, mpr.mt]
@@ -38,7 +39,7 @@ private lemma main
     convert this
     have : (Real.log δ : ℝ*) = (log (δ : ℝ*)) := rfl
     rw [this]
-    have hδ := Nat.Ne.of.Gt hδ
+    have hδ := Ne.of.Gt hδ
     have hδ : (δ : ℝ*) ≠ 0 := by simpa
     have hδ := LogPos.exp_log_eq_abs hδ
     simp [show LogPos.exp (Log.log (δ : ℝ*)) = Exp.exp (Log.log (δ : ℝ*)) by rfl] at hδ

@@ -1,4 +1,8 @@
 import sympy.core.power
+import Mathlib.Analysis.Real.Sqrt
+import Mathlib.Data.Complex.Basic
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
+import Mathlib.Analysis.Real.Hyperreal
 
 
 class Root (α : Type _) where

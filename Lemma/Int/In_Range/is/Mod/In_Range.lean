@@ -1,13 +1,20 @@
 import sympy.sets.fancysets
+import Lemma.Int.Abs.eq.Neg.of.Lt_0
 import Lemma.Int.EqSign_1.of.Gt_0
+import Lemma.Int.EqToNat_0.of.Lt_0
+import Lemma.Int.LtToNat.is.Lt.of.Ge_0
 import Lemma.Int.Sign.eq.Neg1.of.Lt_0
 open Int
 
 
+private def rangeLen (start stop step : ℤ) : ℕ :=
+  (((stop - start) * step.sign + |step| - 1) / |step|).toNat
+
+
 private lemma mem_Range_iff {start stop step x : ℤ} :
     x ∈ Range start stop step ↔
-      ∃ k ∈ List.range (Range.length start stop step), x = start + (k : ℤ) * step := by
-  simp [Range, List.mem_map, List.mem_range, eq_comm]
+      ∃ k ∈ List.range (rangeLen start stop step), x = start + (k : ℤ) * step := by
+  simp [Range, rangeLen, List.mem_map, List.mem_range, eq_comm]
 
 
 private lemma int_add_mul_emod (m k d : ℤ) : (m + k * d) % d = m % d := by
@@ -59,14 +66,14 @@ private lemma int_mod_eq_zero_of_add_mod_eq_any
 -- imply
   j % d = 0 := by
 -- proof
-  rcases ne_iff_lt_or_gt.mp hd with hneg | hpos
-  ·
+  if hneg : d < 0 then
     have hd' : 0 < -d := neg_pos.mpr hneg
     have h' : (start + j) % (-d) = start % (-d) := by
       rw [Int.emod_neg, Int.emod_neg, h]
     have hj := int_mod_eq_zero_of_add_mod_eq (start := start) (j := j) (d := -d) hd' h'
     rwa [Int.emod_neg j d] at hj
-  ·
+  else
+    have hpos : 0 < d := lt_of_le_of_ne (not_lt.mp hneg) hd.symm
     exact int_mod_eq_zero_of_add_mod_eq hpos h
 
 
@@ -78,12 +85,11 @@ private lemma exists_eq_mul_of_mod_eq_zero {j d : ℤ} (_hd : d ≠ 0) (h : j % 
 
 private lemma pos_range_len_mem_bounds {a b d : ℤ} {k : ℕ}
     (hd : 0 < d) (hab : a < b)
-    (hk : k ∈ List.range (Range.length a b d)) :
+    (hk : k ∈ List.range (rangeLen a b d)) :
     a ≤ a + (k : ℤ) * d ∧ a + (k : ℤ) * d < b := by
-  have hlen : Range.length a b d = ((b - a + d - 1) / d).toNat := by
-    unfold Range.length
-    simp only [ne_of_gt hd, hd, hab, ite_false, ite_true]
-  rw [hlen] at hk
+  have hsign := EqSign_1.of.Gt_0 hd
+  have habs : |d| = d := abs_of_pos hd
+  simp only [rangeLen, hsign, habs, mul_one] at hk
   have hk_lt := List.mem_range.mp hk
   set q := (b - a + d - 1) / d with hq
   have hlen_nonneg : 0 ≤ q := by
@@ -104,17 +110,22 @@ private lemma pos_range_len_mem_bounds {a b d : ℤ} {k : ℕ}
 
 private lemma neg_range_len_mem_bounds {a b d : ℤ} {k : ℕ}
     (hd : d < 0) (hba : b < a)
-    (hk : k ∈ List.range (Range.length a b d)) :
+    (hk : k ∈ List.range (rangeLen a b d)) :
     b < a + (k : ℤ) * d ∧ a + (k : ℤ) * d ≤ a := by
-  have hlen : Range.length a b d = ((a - b - d - 1) / (-d)).toNat := by
-    unfold Range.length
-    simp only [ne_of_lt hd, not_lt.mpr (le_of_lt hd), hba, ite_false, ite_false, ite_true]
-  rw [hlen] at hk
+  have hsign := Sign.eq.Neg1.of.Lt_0 hd
+  have habs : |d| = -d := Abs.eq.Neg.of.Lt_0 hd
+  simp only [rangeLen, hsign, habs] at hk
+  ring_nf at hk
   have hk_lt := List.mem_range.mp hk
   have hd' : 0 < -d := by omega
-  set q := (a - b - d - 1) / (-d) with hq
+  set q := ((-1 - b + a - d) / -d) with hq
+  have hq_old : (a - b - d - 1) / (-d) = q := by
+    simp [q]
+    congr 1
+    abel
   have hlen_nonneg : 0 ≤ q := by
     have : 0 < a - b := by omega
+    rw [← hq_old]
     omega
   have hk_int : (k : ℤ) < q := by
     rw [← Int.toNat_of_nonneg hlen_nonneg]
@@ -122,6 +133,7 @@ private lemma neg_range_len_mem_bounds {a b d : ℤ} {k : ℕ}
   have hk_le : (k : ℤ) ≤ q - 1 := by omega
   have hmod : 0 ≤ (a - b - d - 1) % (-d) := Int.emod_nonneg (a - b - d - 1) (ne_of_gt hd')
   have h_upper : (q - 1) * (-d) < a - b := by
+    rw [← hq_old]
     have := Int.emod_add_mul_ediv (a - b - d - 1) (-d)
     linarith
   constructor
@@ -129,12 +141,80 @@ private lemma neg_range_len_mem_bounds {a b d : ℤ} {k : ℕ}
   · nlinarith
 
 
+private lemma pos_range_index_lt
+  {a b d k : ℤ}
+  (hd : 0 < d) (hab : a < b)
+  (hk0 : 0 ≤ k) (hlt : a + k * d < b) :
+  k.toNat < rangeLen a b d := by
+  have hsign := EqSign_1.of.Gt_0 hd
+  have habs : |d| = d := abs_of_pos hd
+  simp only [rangeLen, hsign, habs, mul_one]
+  set q := (b - a + d - 1) / d
+  have hq_nonneg : 0 ≤ q := Int.ediv_nonneg (by omega) (le_of_lt hd)
+  have h_emod := Int.emod_add_mul_ediv (b - a + d - 1) d
+  have hr_nonneg : 0 ≤ (b - a + d - 1) % d := Int.emod_nonneg (b - a + d - 1) (ne_of_gt hd)
+  have hr_lt : (b - a + d - 1) % d < d := Int.emod_lt_of_pos (b - a + d - 1) hd
+  have h_upper : (q - 1) * d < b - a := by linarith
+  have hk_lt : k < q := by
+    have hbd : k * d < b - a := by omega
+    by_contra h
+    push Not at h
+    have hk_ge_mul : k * d ≥ q * d := by gcongr
+    have hq_mul : q * d = b - a + d - 1 - (b - a + d - 1) % d := by linarith
+    linarith
+  exact LtToNat.of.Lt.Ge_0 hk0 (by rwa [Int.toNat_of_nonneg hq_nonneg])
+
+
+private lemma neg_range_index_lt
+  {a b d m : ℤ}
+  (hd : d < 0) (hba : b < a)
+  (hm0 : 0 ≤ m) (hgt : b < a + m * d) :
+  m.toNat < rangeLen a b d := by
+  have hsign := Sign.eq.Neg1.of.Lt_0 hd
+  have habs : |d| = -d := Abs.eq.Neg.of.Lt_0 hd
+  set q := (a - b - d - 1) / (-d)
+  let L := -d
+  have hd' : 0 < L := by omega
+  have hq_nonneg : 0 ≤ q := Int.ediv_nonneg (by omega) (le_of_lt hd')
+  have h_emod := Int.emod_add_mul_ediv (a - b - d - 1) L
+  have hr_nonneg : 0 ≤ (a - b - d - 1) % L := Int.emod_nonneg (a - b - d - 1) (ne_of_gt hd')
+  have hr_lt : (a - b - d - 1) % L < L := Int.emod_lt_of_pos (a - b - d - 1) hd'
+  have h_upper : (q - 1) * L < a - b := by linarith
+  have hm_lt : m < q := by
+    have hbd : m * L < a - b := by
+      have h1 : m * d > b - a := by omega
+      calc
+        m * L = m * (-d) := by ring
+        _ = -(m * d) := by ring
+        _ < -(b - a) := by omega
+        _ = a - b := by ring
+    by_contra h
+    push Not at h
+    have hm_ge_mul : m * L ≥ q * L := by gcongr
+    have hq_mul : q * L = a - b - d - 1 - (a - b - d - 1) % L := by linarith
+    linarith [hbd, hq_mul, hm_ge_mul, h_upper, hr_nonneg, hr_lt]
+  have hq_old : q = (-1 - b + a - d) / -d := by
+    simp [q]
+    congr 1
+    abel
+  have hlen : rangeLen a b d = q.toNat := by
+    simp only [rangeLen, hsign, habs]
+    ring_nf
+    simp [q, hq_old]
+  exact LtToNat.of.Lt.Ge_0 hm0 (by
+    have hcast := (Int.toNat_of_nonneg hq_nonneg).symm
+    rw [hlen, ← hcast]
+    exact hm_lt)
+
+
 private lemma mem_Range_one_iff {a b x : ℤ} :
     x ∈ Range a b 1 ↔ a ≤ x ∧ x < b := by
   by_cases hab : a < b
   ·
-    have hlen : Range.length a b 1 = (b - a).toNat := by
-      simp [Range.length, hab]
+    have hlen : rangeLen a b 1 = (b - a).toNat := by
+      simp only [rangeLen, Int.sign_one, abs_one, mul_one]
+      ring_nf
+      rw [Int.ediv_one (b - a), ← Int.toNat_of_nonneg (by omega : 0 ≤ b - a)]
     rw [mem_Range_iff, hlen]
     constructor
     ·
@@ -156,8 +236,14 @@ private lemma mem_Range_one_iff {a b x : ℤ} :
         rw [Int.toNat_of_nonneg hxa]
         ring
   ·
-    have hlen : Range.length a b 1 = 0 := by
-      simp [Range.length, not_lt.mp hab]
+    have hlen : rangeLen a b 1 = 0 := by
+      simp only [rangeLen, Int.sign_one, abs_one, mul_one]
+      ring_nf
+      by_cases hn : b - a < 0
+      · exact EqToNat_0.of.Lt_0 (by omega : (b - a) / 1 < 0)
+      · have heq : b - a = 0 := by omega
+        rw [heq]
+        rfl
     simp only [mem_Range_iff, hlen, List.range_zero, List.not_mem_nil]
     grind
 
@@ -166,8 +252,10 @@ private lemma mem_Range_neg_one_iff {a b x : ℤ} :
     x ∈ Range a b (-1) ↔ b < x ∧ x ≤ a := by
   by_cases hba : b < a
   ·
-    have hlen : Range.length a b (-1) = (a - b).toNat := by
-      simp [Range.length, hba]
+    have hlen : rangeLen a b (-1) = (a - b).toNat := by
+      simp only [rangeLen, Sign.eq.Neg1.of.Lt_0 (by omega : (-1 : ℤ) < 0), abs_neg]
+      ring_nf
+      rw [Int.ediv_one (-b + a), show -b + a = a - b by abel]
     rw [mem_Range_iff, hlen]
     constructor
     ·
@@ -189,10 +277,40 @@ private lemma mem_Range_neg_one_iff {a b x : ℤ} :
         rw [Int.toNat_of_nonneg hxa]
         ring
   ·
-    have hlen : Range.length a b (-1) = 0 := by
-      simp [Range.length, not_lt.mp hba]
+    have hlen : rangeLen a b (-1) = 0 := by
+      simp only [rangeLen, Sign.eq.Neg1.of.Lt_0 (by omega : (-1 : ℤ) < 0), abs_neg]
+      ring_nf
+      by_cases hn : a - b < 0
+      · exact EqToNat_0.of.Lt_0 (by omega : (-b + a) / 1 < 0)
+      · have heq : a - b = 0 := by omega
+        have h0 : -b + a = 0 := by linarith [heq]
+        rw [h0]
+        rfl
     simp only [mem_Range_iff, hlen, List.range_zero, List.not_mem_nil]
     grind
+
+
+private lemma pos_rangeLen_zero {a b d : ℤ} (hd : 0 < d) (hab : ¬a < b) :
+    rangeLen a b d = 0 := by
+  have hsign := EqSign_1.of.Gt_0 hd
+  have habs : |d| = d := abs_of_pos hd
+  simp only [rangeLen, hsign, habs, mul_one]
+  have hlt : b - a + d - 1 < d := by omega
+  by_cases hn : 0 ≤ b - a + d - 1
+  · rw [Int.ediv_eq_zero_of_lt hn hlt, Int.toNat_zero]
+  · rw [EqToNat_0.of.Lt_0 (Int.ediv_neg_of_neg_of_pos (by omega) hd)]
+
+
+private lemma neg_rangeLen_zero {a b d : ℤ} (hd : d < 0) (hba : ¬b < a) :
+    rangeLen a b d = 0 := by
+  have hsign := Sign.eq.Neg1.of.Lt_0 hd
+  have habs : |d| = -d := Abs.eq.Neg.of.Lt_0 hd
+  simp only [rangeLen, hsign, habs]
+  ring_nf
+  have hlt : -1 - b + a - d < -d := by omega
+  by_cases hn : 0 ≤ -1 - b + a - d
+  · rw [Int.ediv_eq_zero_of_lt hn hlt, Int.toNat_zero]
+  · rw [EqToNat_0.of.Lt_0 (Int.ediv_neg_of_neg_of_pos (by omega) (by omega : 0 < -d))]
 
 
 /--
@@ -210,7 +328,13 @@ private lemma main
   x ∈ Range a b d ↔ x % d = a % d ∧ x ∈ Range a b (sign d) := by
 -- proof
   by_cases hd0 : d = 0
-  · simp [hd0, Range, Range.length, sign_zero]
+  · simp only [hd0, Range, Int.sign_zero, abs_zero, Int.ediv_zero, Int.toNat_zero,
+      List.range_zero, List.mem_map, Int.emod_zero]
+    constructor
+    · rintro ⟨_, hk, _⟩
+      simp at hk
+    · rintro ⟨hx, ⟨_, hk, _⟩⟩
+      simp at hk
   ·
     by_cases hpos : 0 < d
     ·
@@ -225,15 +349,14 @@ private lemma main
           rw [hx]
           by_cases hab : a < b
           · exact pos_range_len_mem_bounds hpos hab hk
-          · simp only [Range.length, hpos, hab, ite_false] at hk
-            simpa [List.range_zero] using hk
+          · simp [pos_rangeLen_zero hpos hab] at hk
       ·
         rintro ⟨hmod, ⟨hle, hlt⟩⟩
         by_cases hab : a < b
         ·
           have hj_mod : (x - a) % d = 0 :=
             int_mod_eq_zero_of_add_mod_eq_any hd0 (by
-              calc (a + (x - a)) % d = x % d := by simp [sub_add_cancel]
+              calc (a + (x - a)) % d = x % d := by congr 1; ring
               _ = a % d := hmod)
           obtain ⟨k, hk⟩ := exists_eq_mul_of_mod_eq_zero hd0 hj_mod
           have hk0 : 0 ≤ k := by
@@ -242,30 +365,17 @@ private lemma main
             nlinarith [hpos]
           refine ⟨k.toNat, ?_, ?_⟩
           ·
-            simp only [Range.length, show d ≠ 0 from hd0, hpos, hab, ite_false, ite_true, List.mem_range]
-            have hbound : k * d ≤ b - a - 1 := by rw [← hk]; omega
-            have hk_le : k ≤ (b - a - 1) / d := (Int.le_ediv_iff_mul_le hpos).mpr hbound
-            have hlen_nonneg : 0 ≤ (b - a + d - 1) / d := Int.ediv_nonneg (by omega) (le_of_lt hpos)
-            have hk_lt' : k < (b - a + d - 1) / d := by
-              have hlt_div : (b - a - 1) / d < (b - a + d - 1) / d := by
-                apply (Int.ediv_lt_iff_lt_mul hpos).mpr
-                have := Int.emod_add_mul_ediv (b - a - 1) d
-                linarith
-              omega
-            have hk_nat_lt : k.toNat < ((b - a + d - 1) / d).toNat := by
-              apply (Int.toNat_lt hk0).mpr
-              rw [← Int.toNat_of_nonneg hlen_nonneg]
-              exact hk_lt'
-            exact hk_nat_lt
+            rw [List.mem_range]
+            exact pos_range_index_lt hpos hab hk0 (by rw [← hk]; omega)
           ·
+            show x = a + (k.toNat : ℤ) * d
             calc
               x = a + (x - a) := by ring
-              _ = a + k * d := by rw [hk]
-              _ = a + (k.toNat : ℤ) * d := by
-                conv_lhs => rw [← Int.toNat_of_nonneg hk0]
+              _ = a + k * d := by rw [← hk]
+              _ = a + (k.toNat : ℤ) * d := (Int.toNat_of_nonneg hk0).symm ▸ rfl
         · omega
     ·
-      have hneg : d < 0 := lt_of_le_of_ne (not_lt.mp hpos) hd0
+      have hneg : d < 0 := by omega
       have hsign := Sign.eq.Neg1.of.Lt_0 hneg
       rw [hsign, mem_Range_iff, mem_Range_neg_one_iff]
       constructor
@@ -277,53 +387,34 @@ private lemma main
           rw [hx]
           by_cases hba : b < a
           · exact neg_range_len_mem_bounds hneg hba hk
-          · simp only [Range.length, hpos, hneg, hba, ite_false, ite_false] at hk
-            simpa [List.range_zero] using hk
+          · simp [neg_rangeLen_zero hneg hba] at hk
       ·
         rintro ⟨hmod, ⟨hgt, hle⟩⟩
         by_cases hba : b < a
         ·
           have hj_mod : (a - x) % d = 0 :=
             int_mod_eq_zero_of_add_mod_eq_any hd0 (by
-              calc (x + (a - x)) % d = a % d := by simp [Int.add_sub_cancel]
+              calc (x + (a - x)) % d = a % d := by congr 1; ring
               _ = x % d := hmod.symm)
           obtain ⟨k, hk⟩ := exists_eq_mul_of_mod_eq_zero hd0 hj_mod
           have hk_nonpos : k ≤ 0 := by
-            have : a - x ≥ 0 := by omega
-            rw [hk] at this
+            have hxa : 0 ≤ a - x := by omega
+            rw [hk] at hxa
             nlinarith [hneg]
           refine ⟨(-k).toNat, ?_, ?_⟩
           ·
-            have hk_nat_eq : (-k) = ((-k).toNat : ℤ) :=
-              (Int.toNat_of_nonneg (by linarith : 0 ≤ -k)).symm
-            simp only [Range.length, show d ≠ 0 from hd0, hpos, hneg, hba, ite_false, ite_true, List.mem_range]
-            have hd' : 0 < -d := by omega
-            have hk_le : (-k) ≤ (a - b - 1) / (-d) := by
-              apply (Int.le_ediv_iff_mul_le hd').mpr
-              calc
-                (-k) * (-d) = k * d := by ring
-                _ = a - x := hk.symm
-                _ ≤ a - b - 1 := by omega
-            have hlen_nonneg : 0 ≤ (a - b - d - 1) / (-d) := Int.ediv_nonneg (by omega) (le_of_lt hd')
-            have hk_lt' : -k < (a - b - d - 1) / (-d) := by
-              have hlt_div : (a - b - 1) / (-d) < (a - b - d - 1) / (-d) := by
-                apply (Int.ediv_lt_iff_lt_mul hd').mpr
-                have := Int.emod_add_mul_ediv (a - b - 1) (-d)
-                linarith
-              omega
-            have hk_nat_lt : (-k).toNat < ((a - b - d - 1) / (-d)).toNat := by
-              apply (Int.toNat_lt (by linarith : 0 ≤ -k)).mpr
-              rw [← Int.toNat_of_nonneg hlen_nonneg]
-              exact hk_lt'
-            exact hk_nat_lt
+            rw [List.mem_range]
+            apply neg_range_index_lt hneg hba (by linarith)
+            calc
+              b < x := hgt
+              _ = a - k * d := by grind
+              _ = a + (-k) * d := by ring
           ·
-            have hk_nat_eq : (-k) = ((-k).toNat : ℤ) :=
-              (Int.toNat_of_nonneg (by linarith : 0 ≤ -k)).symm
             calc
               x = a - (a - x) := by ring
               _ = a - k * d := by rw [hk]
               _ = a + (-k) * d := by ring
-              _ = a + ((-k).toNat : ℤ) * d := by rw [← hk_nat_eq]
+              _ = a + ((-k).toNat : ℤ) * d := by rw [Int.toNat_of_nonneg (by linarith : 0 ≤ -k)]
         · omega
 
 
