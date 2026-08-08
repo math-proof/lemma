@@ -1,3 +1,6 @@
+import Lemma.Tensor.NotInfiniteGetData
+import Lemma.Tensor.SEqMapS.of.SEq
+import Lemma.Bool.SEq.is.Eq
 import Lemma.Hyperreal.Any_IsSt.is.NotInfinite
 import Lemma.Hyperreal.Infinitesimal0
 import Lemma.Hyperreal.NotInfiniteMul.of.NotInfinite.NotInfinite
@@ -16,28 +19,7 @@ import Lemma.Tensor.XEqSumS.of.XEq.OrAll_NotInfinite
 import Lemma.Vector.GetMul.eq.MulGetS
 import Lemma.Vector.XEq.is.All_XEqGetS
 import Lemma.Hyperreal.XEqMulS.of.XEq.Imp_XEqInvS
-open Tensor Hyperreal Vector
-
-
-private lemma not_infinite_getData
-  (X : Tensor ℝ [n])
-  (i : Fin n) :
-  ¬((X : Tensor ℝ* [n]).data[i] → ∞) := by
-  rw [← Any_IsSt.is.NotInfinite]
-  refine Exists.intro (X.data[i]) ?_
-  simp [Tensor.map, GetElem.getElem]
-
-
-private def col_real (X : Tensor ℝ [n, m]) (j : Fin m) : Tensor ℝ [n] :=
-  (Xᵀ)[j]
-
-
-private def row_real (X : Tensor ℝ [m, n]) (i : Fin m) : Tensor ℝ [n] :=
-  (X[i] : Tensor ℝ [n])
-
-
-noncomputable def transpose_col (X : Tensor ℝ [n, m]) (j : Fin m) : Tensor ℝ* [n] :=
-  Tensor.map Hyperreal.ofReal (col_real X j)
+open Tensor Hyperreal Vector Bool
 
 
 private lemma col_map_transpose_entry
@@ -53,21 +35,23 @@ private lemma col_map_transpose_entry
 
 private lemma col_map_transpose_entry_at
   (X : Tensor ℝ [n, m]) (j : Fin m) (i : Fin n) :
-  (Tensor.map Hyperreal.ofReal X)ᵀ[j][i] = (transpose_col X j)[i] := by
+  (Tensor.map Hyperreal.ofReal X)ᵀ[j][i] = (let col : Tensor ℝ [n] := Xᵀ[j]; col : Tensor ℝ* [n])[i] := by
   have h₁ := col_map_transpose_entry X j i
-  have h₂ : Tensor.map Hyperreal.ofReal (X[i][j]) = (transpose_col X j)[i] := by
-    dsimp [transpose_col]
+  have h₂ : Tensor.map Hyperreal.ofReal (X[i][j]) = (let col : Tensor ℝ [n] := Xᵀ[j]; col : Tensor ℝ* [n])[i] := by
     simp only [GetElem.getElem]
-    erw [GetMap.eq.MapGet.fin (X := col_real X j) (f := Hyperreal.ofReal) (i := i)]
-    simp only [col_real, GetElem.getElem]
-    erw [← Tensor.GetTranspose.eq.Get.fin (X := X) (i := i) (j := j)]
-    rfl
+    erw [GetMap.eq.MapGet.fin (X := Xᵀ[j]) (f := Hyperreal.ofReal) (i := i)]
+    simp only [GetElem.getElem]
+    simp
+    apply Eq.of.SEq
+    apply SEqMapS.of.SEq
+    apply SEq.of.Eq
+    apply Tensor.Get.eq.GetTranspose.fin
   exact h₁.trans h₂
 
 
 private lemma coerce_transpose_col_entry
   (X : Tensor ℝ [n, m]) (j : Fin m) (i : Fin n) :
-  ((X : Tensor ℝ* [n, m])ᵀ)[j][i] = (transpose_col X j)[i] := by
+  ((X : Tensor ℝ* [n, m])ᵀ)[j][i] = (let col : Tensor ℝ [n] := Xᵀ[j]; col : Tensor ℝ* [n])[i] := by
   conv_lhs =>
     erw [← Coe.eq.Map (X := X)]
     simp only [GetElem.getElem]
@@ -82,16 +66,16 @@ private lemma fin_tensor_data_get (Y : Tensor ℝ* [n]) (k : Fin [n].prod) (hn :
 
 private lemma transpose_col_data_entry
   (X : Tensor ℝ [n, m]) (j : Fin m) (k : Fin [n].prod) (hn : n = [n].prod) :
-  (transpose_col X j).data[k] = ((X : Tensor ℝ* [n, m])ᵀ)[j].data[k] := by
+  (let col : Tensor ℝ [n] := Xᵀ[j]; col : Tensor ℝ* [n]).data[k] = ((X : Tensor ℝ* [n, m])ᵀ)[j].data[k] := by
   let hk : Fin n := Fin.cast hn.symm k
-  rw [fin_tensor_data_get (transpose_col X j) k hn]
+  rw [fin_tensor_data_get (let col : Tensor ℝ [n] := Xᵀ[j]; col : Tensor ℝ* [n]) k hn]
   rw [← coerce_transpose_col_entry X j hk]
   exact Eq.symm (fin_tensor_data_get (Tensor.map Hyperreal.ofReal X)ᵀ[j] k hn)
 
 
 private lemma transpose_col_eq
   (X : Tensor ℝ [n, m]) (j : Fin m) :
-  transpose_col X j = ((X : Tensor ℝ* [n, m])ᵀ)[j] := by
+  (let col : Tensor ℝ [n] := Xᵀ[j]; col : Tensor ℝ* [n]) = ((X : Tensor ℝ* [n, m])ᵀ)[j] := by
   apply Eq.of.EqDataS
   have hn : n = [n].prod := by simp
   refine List.Vector.ext ?_
@@ -99,14 +83,9 @@ private lemma transpose_col_eq
   exact transpose_col_data_entry X j k hn
 
 
-noncomputable def row_hr (X : Tensor ℝ [m, n]) (i : Fin m) : Tensor ℝ* [n] :=
-  (row_real X i : Tensor ℝ* [n])
-
-
 private lemma map_row_get
   (X : Tensor ℝ [m, n]) (i : Fin m) :
-  ((X : Tensor ℝ* [m, n])[i]) = row_hr X i := by
-  dsimp only [row_hr, row_real]
+  ((X : Tensor ℝ* [m, n])[i]) = (let row : Tensor ℝ [n] := X[i]; row : Tensor ℝ* [n]) := by
   apply Eq.of.EqDataS
   apply List.Vector.ext
   intro k
@@ -124,34 +103,31 @@ private lemma mul_entry_not_infinite
   intro h
   rw [DataMul.eq.MulDataS (A := (B : Tensor ℝ* [n])) (B := (col : Tensor ℝ* [n]))] at h
   simp only [GetElem.getElem, Vector.GetMul.eq.MulGetS.fin] at h
-  exact absurd h (NotInfiniteMul.of.NotInfinite.NotInfinite (not_infinite_getData B i) (not_infinite_getData col i))
+  exact absurd h (NotInfiniteMul.of.NotInfinite.NotInfinite (NotInfiniteGetData B ⟨i, by grind⟩) (NotInfiniteGetData col ⟨i, by grind⟩))
 
 
 private lemma not_infinite_transpose_col
   (X : Tensor ℝ [n, m]) (j : Fin m) (i : Fin n) :
-  ¬((transpose_col X j).data[i] → ∞) := by
-  dsimp [transpose_col]
-  exact not_infinite_getData (col_real X j) i
+  ¬((let col : Tensor ℝ [n] := Xᵀ[j]; col : Tensor ℝ* [n]).data[i] → ∞) :=
+  NotInfiniteGetData Xᵀ[j] ⟨i, by simp [List.EqSwap_0'1]⟩
 
 
 private lemma not_infinite_transpose_col_mul
   (B : Tensor ℝ [n]) (X : Tensor ℝ [n, m]) (j : Fin m) (i : Fin n) :
-  ¬(((B : Tensor ℝ* [n]) * transpose_col X j).data[i] → ∞) := by
-  dsimp [transpose_col]
-  exact mul_entry_not_infinite B (col_real X j) i
+  ¬(((B : Tensor ℝ* [n]) * (let col : Tensor ℝ [n] := Xᵀ[j]; col : Tensor ℝ* [n])).data[i] → ∞) := by
+  exact mul_entry_not_infinite B Xᵀ[j] i
 
 
 private lemma not_infinite_row
   (X : Tensor ℝ [m, n]) (i : Fin m) (k : Fin n) :
-  ¬((row_hr X i).data[k] → ∞) := by
-  exact not_infinite_getData (row_real X i) k
+  ¬((let row : Tensor ℝ [n] := X[i]; row : Tensor ℝ* [n]).data[k] → ∞) :=
+  NotInfiniteGetData X[i] ⟨k, by grind⟩
 
 
 private lemma not_infinite_row_mul
   (B : Tensor ℝ [n]) (X : Tensor ℝ [m, n]) (i : Fin m) (k : Fin n) :
-  ¬(((B : Tensor ℝ* [n]) * row_hr X i).data[k] → ∞) := by
-  dsimp [row_hr]
-  exact mul_entry_not_infinite B (row_real X i) k
+  ¬(((B : Tensor ℝ* [n]) * (let row : Tensor ℝ [n] := X[i]; row : Tensor ℝ* [n])).data[k] → ∞) := by
+  exact mul_entry_not_infinite B X[i] k
 
 
 private lemma dot_vec
@@ -193,7 +169,7 @@ private lemma get_dot
   (A : Tensor ℝ* [n]) (X : Tensor ℝ [n, m]) (j : Fin m)
   (hj : j < (A @ (X : Tensor ℝ* [n, m])).length := by simp [matmul_shape]; grind) :
 -- imply
-  (A @ (X : Tensor ℝ* [n, m])).get ⟨j, hj⟩ = A @ transpose_col X j := by
+  (A @ (X : Tensor ℝ* [n, m])).get ⟨j, hj⟩ = A @ (let col : Tensor ℝ [n] := Xᵀ.get j; col : Tensor ℝ* [n]) := by
 -- proof
   rw [GetDot.eq.Dot_GetT.fin A (X : Tensor ℝ* [n, m]) j]
   conv_lhs => simp [GetElem.getElem]
@@ -206,11 +182,11 @@ private lemma get_row
   (X : Tensor ℝ [m, n]) (A : Tensor ℝ* [n]) (i : Fin m)
   (hi : i < ((X : Tensor ℝ* [m, n]) @ A).length := by simp [matmul_shape]; grind) :
 -- imply
-  ((X : Tensor ℝ* [m, n]) @ A).get ⟨i, hi⟩ = (row_hr X i) @ A := by
+  ((X : Tensor ℝ* [m, n]) @ A).get ⟨i, hi⟩ = (let row : Tensor ℝ [n] := X[i]; row : Tensor ℝ* [n]) @ A := by
 -- proof
   have h := GetDot.eq.DotGet.une (X : Tensor ℝ* [m, n]) A i
   conv_lhs => simp [GetElem.getElem]
-  rw [← map_row_get X i]
+  erw [← map_row_get X i]
   exact h
 
 
