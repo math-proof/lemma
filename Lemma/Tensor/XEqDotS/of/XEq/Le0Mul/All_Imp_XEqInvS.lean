@@ -11,25 +11,22 @@ open Hyperreal Nat Tensor Vector
 
 @[main]
 private lemma main
-  {A B X : Tensor ℝ* [n]}
+  {A B C : Tensor ℝ* [n]}
 -- given
-  (h_xinfty : ∀ i : Fin n, (X.data[i] → ∞) → A.data[i]⁻¹ ≈ B.data[i]⁻¹)
-  (h_or :
-    (∀ i : Fin n, ¬((B * X).data[i] → ∞)) ∨
-    (B * X ≥ 0) ∨
-    (B * X ≤ 0))
+  (h_xinfty : ∀ i : Fin n, (C.data[i] → ∞) → A.data[i]⁻¹ ≈ B.data[i]⁻¹)
+  (h_or : (∀ i : Fin n, ¬((B * C).data[i] → ∞)) ∨ B * C ≥ 0 ∨ B * C ≤ 0)
   (h : A ≈ B) :
 -- imply
-  A @ X ≈ B @ X := by
+  A @ C ≈ B @ C := by
 -- proof
   rw [Dot.eq.SumMul__0, Dot.eq.SumMul__0]
-  have h_mul : A * X ≈ B * X := by
+  have h_mul : A * C ≈ B * C := by
     apply XEq.of.XEqDataS
     rw [DataMul.eq.MulDataS, DataMul.eq.MulDataS]
     refine Vector.XEq.of.All_XEqGetS.fin ?_
     intro i
     have hn : n = [n].prod := by simp
-    rw [GetMul.eq.MulGetS.fin A.data X.data i, GetMul.eq.MulGetS.fin B.data X.data i]
+    rw [GetMul.eq.MulGetS.fin A.data C.data i, GetMul.eq.MulGetS.fin B.data C.data i]
     exact XEqMulS.of.XEq.Imp_XEqInvS
       (All_XEqGetS.of.XEq.fin (XEqDataS.of.XEq h) i)
       (h_xinfty (Fin.cast hn.symm i))
@@ -46,18 +43,18 @@ private lemma main
 
 @[main]
 private lemma left
-  {A B X : Tensor ℝ* [n]}
+  {A B C : Tensor ℝ* [n]}
 -- given
-  (h_xinfty : ∀ i : Fin n, (X.data[i] → ∞) → A.data[i]⁻¹ ≈ B.data[i]⁻¹)
-  (h_pos : X * B ≥ 0)
+  (h_xinfty : ∀ i : Fin n, (C.data[i] → ∞) → A.data[i]⁻¹ ≈ B.data[i]⁻¹)
+  (h_pos : C * B ≥ 0)
   (h : A ≈ B) :
 -- imply
-  X @ A ≈ X @ B := by
+  C @ A ≈ C @ B := by
 -- proof
   rw [Dot.comm]
-  conv_rhs =>
-    rw [Dot.comm]
-  apply main h_xinfty (Or.inr (Or.inl (by rw [Mul.comm]; exact h_pos))) h
+  conv_rhs => rw [Dot.comm]
+  apply main h_xinfty _ h
+  grind
 
 
 -- created on 2026-07-29
