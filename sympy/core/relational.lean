@@ -1,100 +1,121 @@
-import Lean
-open Lean Elab Tactic Meta
+import Lemma.Rat.Div.eq.One.of.Ne_0
+import Lemma.Rat.InvDiv.eq.Div
+import Lemma.Rat.MulDivS.eq.Div.of.Ne_0
+import Lemma.Hyperreal.EqSt.of.InfinitesimalSub
+import Lemma.Hyperreal.InfinitesimalSub.of.EqSt.NotInfinite
+import Lemma.Hyperreal.EqSt_0.of.Infinite
+import Lemma.Hyperreal.StInv.eq.Inv.of.EqSt
+import Lemma.Hyperreal.Infinitesimal0
+import Lemma.Hyperreal.Infinitesimal.of.InfinitesimalSubDiv.Infinitesimal
+import Lemma.Nat.NotLt.is.Ge
+open Hyperreal Rat Nat Int
+export Hyperreal (Infinite Infinitesimal IsSt st)
 
+abbrev XEq (α : Sort u) := Setoid α
 
-def Eq.left {a b : α} (_ : a = b) : α := a
-def Eq.right {a b : α} (_ : a = b) : α := b
-
-
-def evalLet (t : Ident) (e : Expr) : TacticM Unit := do
-  let e ← PrettyPrinter.delab e
-  evalTactic (← `(tactic| let $t := $e))
-
-def evalHave (h_t : Ident) (t : Ident) (e : Expr) (reverse : Bool) : TacticM Unit := do
-  let e ← PrettyPrinter.delab e
-  let eq ← if reverse then `($e = $t) else `($t = $e)
-  evalTactic (← `(tactic| have $h_t : $eq := rfl))
-
-def letAssignment (h_t : Ident) (t : Ident) (reverse : Bool) : TacticM Unit := do
-  let mainGoal ← getMainGoal
-  let (fvarId, mainGoal) ← mainGoal.intro t.getId
-  replaceMainGoal [mainGoal]
-  mainGoal.withContext do
-    let some decl ← fvarId.findDecl? | throwError "denote: failed to find the declaration from `let statement "
-    let some e := decl.value? | throwError "denote: failed to find the value from the `let statement"
-    evalHave h_t t e reverse
-
-
-def haveDeclaration (h_t : Ident) (t : Ident) (e : Expr) (reverse : Bool) : TacticM Unit := do
-  let e :=
-    match e with
-    | .app (.app (.app (.app (.const ``Eq.right _) _) _) rhs) _ => rhs
-    | .app (.app (.app (.app (.const ``Eq.left _) _) lhs) _) _ => lhs
-    | e => e
-  evalLet t e
-  evalHave h_t t e reverse
-
+namespace XEq
+export Setoid (symm trans)
+end XEq
 
 /--
-Syntax for `denote` tactic:
-- extract the left hand side of the given hypothesis h
-  - denote h_t : t = h.left
-  - denote h_t : h.left = t
-
-- extract the right hand side of the given hypothesis h
-  - denote h_t : t = h.right
-  - denote h_t : h.right = t
-
-- extract the left hand side of the main goal
-  - denote h_t : t = left
-  - denote h_t : left = t
-
-- extract the right hand side of the main goal
-  - denote h_t : t = right
-  - denote h_t : right = t
-
-- extract the left `let-binding` (which is the `let expression`) of the main goal
-  - denote h_t : t = _
-  - denote h_t : _ = t
-
-wherein:
-* h   is the name of an existing hypothesis h : A = B (an equality)
-* t   is the new name for the right‐hand side of h
-* h_t is the name for the new hypothesis t = h.right
+the approx operator that defines asymptotically equivalence/closeness between hyperreal numbers.
+numerical analogy:
+- [math.isclose][https://docs.python.org/3/library/math.html#math.isclose]
+- [numpy.isclose][https://numpy.org/doc/stable/reference/generated/numpy.isclose.html]
 -/
-syntax (name := denote) "denote" ident ":" term:51 "=" term : tactic
+instance : XEq ℝ* where
+  r a b := (a → 0) ∧ b → 0 ∨ (a / b - 1) → 0 ∧ ¬b → 0
+  iseqv :=
+    { refl x := by
+        simp
+        if h : x → 0 then
+          simp [h]
+        else
+          simp [h]
+          rw [Div.eq.One.of.Ne_0]
+          .
+            simp
+            aesop
+          .
+            contrapose! h
+            subst h
+            apply Infinitesimal0
+      symm {a b} h := by
+        if h_a : a → 0 then
+          simp [h_a] at ⊢ h
+          if h_b : b → 0 then
+            simp [h_b]
+          else
+            obtain h | h := h
+            ·
+              assumption
+            ·
+              have := NotInfinitesimalSubDiv.of.NotInfinitesimal.Infinitesimal h_a h_b (d := 1)
+              aesop
+        else
+          simp [h_a] at ⊢ h
+          if h_b : b → 0 then
+            grind
+          else
+            have h := EqSt.of.InfinitesimalSub h.left
+            have h := StInv.eq.Inv.of.EqSt h
+            rw [InvDiv.eq.Div] at h
+            simp at h
+            apply InfinitesimalSub.of.EqSt.NotInfinite _ h
+            apply NotInfinite.of.NeSt_0
+            linarith
+      trans {a b c} h_ab h_bc:= by
+        if h_a : a → 0 then
+          simp [h_a] at ⊢ h_ab
+          if h_b : b → 0 then
+            simp [h_b] at ⊢ h_ab h_bc
+            if h_c : c → 0 then
+              simp [h_c]
+            else
+              have := NotInfinitesimalSubDiv.of.NotInfinitesimal.Infinitesimal h_b h_c (d := 1)
+              aesop
+          else
+            have := NotInfinitesimalSubDiv.of.NotInfinitesimal.Infinitesimal h_a h_b (d := 1)
+            aesop
+        else
+          simp [h_a] at ⊢ h_ab
+          if h_b : b → 0 then
+            grind
+          else
+            simp [h_b] at ⊢ h_ab h_bc
+            if h_c : c → 0 then
+              grind
+            else
+              have h_ab := EqSt.of.InfinitesimalSub h_ab.left
+              have h_bc := EqSt.of.InfinitesimalSub h_bc.left
+              have h_abc := ArchimedeanClass.stdPart_mul
+                (x := a / b)
+                (y := b / c)
+                (Ge.of.NotLt (NotInfinite.of.NeSt_0 (by linarith)))
+                (Ge.of.NotLt (NotInfinite.of.NeSt_0 (by linarith)))
+              rw [MulDivS.eq.Div.of.Ne_0] at h_abc
+              .
+                constructor
+                .
+                  apply InfinitesimalSub.of.EqSt.NotInfinite
+                  .
+                    apply NotInfinite.of.NeSt_0
+                    simp_all
+                  .
+                    simp_all
+                .
+                  grind
+              .
+                contrapose! h_b
+                subst h_b
+                apply Infinitesimal0
+    }
 
-@[tactic denote]
-def evalDenote : Tactic
-| `(tactic| denote $h_t : $lhs = $rhs) => do
-  withMainContext do
-    match lhs.raw with
-    | .ident _ _ val _ =>
-      match val with
-      | `left =>
-        haveDeclaration h_t ⟨rhs.raw⟩ (← Conv.getLhs) true
-      | `right =>
-        haveDeclaration h_t ⟨rhs.raw⟩ (← Conv.getRhs) true
-      | _ =>
-        match rhs.raw with
-        | .ident _ _ val _ =>
-          let e ←
-            match val with
-            | `left => Conv.getLhs
-            | `right => Conv.getRhs
-            | _ => elabTermForApply rhs
-          haveDeclaration h_t ⟨lhs.raw⟩ e false
-        | .node _ `Lean.Parser.Term.hole #[.atom _ "_"] =>
-          letAssignment h_t ⟨lhs.raw⟩ false
-        | .node .. =>
-          haveDeclaration h_t ⟨lhs.raw⟩ (← elabTermForApply rhs) false
-        | _ =>
-          throwError "denote: invalid syntax, rhs `{rhs}` must be one of left, right, _ or term"
-    | .node _ `Lean.Parser.Term.hole #[.atom _ "_"] =>
-      letAssignment h_t ⟨rhs.raw⟩ true
-    | .node _ _ _ =>
-      haveDeclaration h_t ⟨rhs.raw⟩ (← elabTermForApply lhs) true
-    | _ =>
-      throwError "denote: invalid syntax, lhs `{lhs}` must be one of left, right, _ or term"
-| stx => do
-  throwError "invalid syntax: {stx}"
+noncomputable instance : Coe ℝ ℝ* := ⟨Hyperreal.ofReal⟩
+
+@[symm]
+def HasEquiv.Equiv.symm [XEq α] {a b : α} (h : a ≈ b) : b ≈ a := XEq.symm h
+
+def HasEquiv.Equiv.trans [XEq α] {a b c : α} (h_ab : a ≈ b) (h_bc : b ≈ c) : a ≈ c := XEq.trans h_ab h_bc
+
+def Not.XEq.symm [XEq α] {a b : α} (h : ¬a ≈ b) : ¬b ≈ a := fun h' => h h'.symm

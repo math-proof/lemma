@@ -1,4 +1,4 @@
-import sympy.core.relational
+import sympy.core.logic
 import sympy.core.power
 import Lemma.Nat.Div.of.Eq
 import Lemma.Rat.SquareDiv.eq.DivSquareS

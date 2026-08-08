@@ -1,7 +1,7 @@
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Tensor.EqData0'0
 import Lemma.Vector.EqGet0_0
-import sympy.sets.fancysets
+import sympy.core.relational
 open Tensor Vector
 
 

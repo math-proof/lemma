@@ -1,4 +1,3 @@
-import sympy.sets.fancysets
 import Lemma.Hyperreal.UFn.of.All_UFn
 import Lemma.Int.Abs.eq.Max_Neg
 open Filter Hyperreal Int

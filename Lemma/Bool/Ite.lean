@@ -1,4 +1,4 @@
-import sympy.core.relational
+import sympy.core.logic
 import sympy.Basic
 
 

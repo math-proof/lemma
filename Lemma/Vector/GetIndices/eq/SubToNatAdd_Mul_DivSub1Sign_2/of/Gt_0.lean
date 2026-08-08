@@ -2,7 +2,7 @@ import Lemma.Int.EqToNat
 import Lemma.Nat.EqAdd_Mul_DivSub1Sign_2
 import Lemma.Rat.LeToNatCeil_1.of.Ge_Sub
 import sympy.vector.vector
-open Int List Nat Rat Slice
+open Int Nat Rat Slice
 
 
 private lemma get_sliced_indices_sub

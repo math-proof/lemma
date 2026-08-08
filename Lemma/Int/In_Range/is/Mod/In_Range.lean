@@ -1,7 +1,6 @@
 import sympy.sets.fancysets
 import Lemma.Int.EqSign_1.of.Gt_0
 import Lemma.Int.Sign.eq.Neg1.of.Lt_0
-import sympy.Basic
 open Int
 
 
@@ -71,7 +70,7 @@ private lemma int_mod_eq_zero_of_add_mod_eq_any
     exact int_mod_eq_zero_of_add_mod_eq hpos h
 
 
-private lemma exists_eq_mul_of_mod_eq_zero {j d : ℤ} (hd : d ≠ 0) (h : j % d = 0) :
+private lemma exists_eq_mul_of_mod_eq_zero {j d : ℤ} (_hd : d ≠ 0) (h : j % d = 0) :
     ∃ k, j = k * d := by
   obtain ⟨k, hk⟩ := Int.dvd_of_emod_eq_zero h
   exact ⟨k, by rw [Int.mul_comm, hk]⟩
@@ -239,20 +238,31 @@ private lemma main
           obtain ⟨k, hk⟩ := exists_eq_mul_of_mod_eq_zero hd0 hj_mod
           have hk0 : 0 ≤ k := by
             have hxa : 0 ≤ x - a := by omega
-            rw [← hk] at hxa
+            rw [hk] at hxa
             nlinarith [hpos]
           refine ⟨k.toNat, ?_, ?_⟩
           ·
-            rw [← Int.toNat_of_nonneg hk0]
-            simp only [Range.length, hpos, hab, ite_true, List.mem_range]
-            have : k * d ≤ b - a - 1 := by rw [← hk]; omega
-            have hk_le : k ≤ (b - a - 1) / d := (Int.le_ediv_iff_mul_le hpos).mpr this
-            omega
+            simp only [Range.length, show d ≠ 0 from hd0, hpos, hab, ite_false, ite_true, List.mem_range]
+            have hbound : k * d ≤ b - a - 1 := by rw [← hk]; omega
+            have hk_le : k ≤ (b - a - 1) / d := (Int.le_ediv_iff_mul_le hpos).mpr hbound
+            have hlen_nonneg : 0 ≤ (b - a + d - 1) / d := Int.ediv_nonneg (by omega) (le_of_lt hpos)
+            have hk_lt' : k < (b - a + d - 1) / d := by
+              have hlt_div : (b - a - 1) / d < (b - a + d - 1) / d := by
+                apply (Int.ediv_lt_iff_lt_mul hpos).mpr
+                have := Int.emod_add_mul_ediv (b - a - 1) d
+                linarith
+              omega
+            have hk_nat_lt : k.toNat < ((b - a + d - 1) / d).toNat := by
+              apply (Int.toNat_lt hk0).mpr
+              rw [← Int.toNat_of_nonneg hlen_nonneg]
+              exact hk_lt'
+            exact hk_nat_lt
           ·
             calc
               x = a + (x - a) := by ring
               _ = a + k * d := by rw [hk]
-              _ = a + (k.toNat : ℤ) * d := by rw [← Int.toNat_of_nonneg hk0]
+              _ = a + (k.toNat : ℤ) * d := by
+                conv_lhs => rw [← Int.toNat_of_nonneg hk0]
         · omega
     ·
       have hneg : d < 0 := lt_of_le_of_ne (not_lt.mp hpos) hd0
@@ -278,24 +288,34 @@ private lemma main
               calc (x + (a - x)) % d = a % d := by simp [Int.add_sub_cancel]
               _ = x % d := hmod.symm)
           obtain ⟨k, hk⟩ := exists_eq_mul_of_mod_eq_zero hd0 hj_mod
-          have hk_neg : k < 0 := by
-            have hax : 0 < a - x := by omega
-            have hxa : a - x = k * d := hk
-            rw [hxa] at hax
-            nlinarith
+          have hk_nonpos : k ≤ 0 := by
+            have : a - x ≥ 0 := by omega
+            rw [hk] at this
+            nlinarith [hneg]
           refine ⟨(-k).toNat, ?_, ?_⟩
           ·
             have hk_nat_eq : (-k) = ((-k).toNat : ℤ) :=
               (Int.toNat_of_nonneg (by linarith : 0 ≤ -k)).symm
-            simp only [Range.length, hpos, hneg, hba, ite_false, ite_true, List.mem_range]
+            simp only [Range.length, show d ≠ 0 from hd0, hpos, hneg, hba, ite_false, ite_true, List.mem_range]
             have hd' : 0 < -d := by omega
             have hk_le : (-k) ≤ (a - b - 1) / (-d) := by
               apply (Int.le_ediv_iff_mul_le hd').mpr
-              have : (-k) * (-d) = a - x := by
-                rw [← hk_nat_eq, ← hk]
-                ring
-              linarith
-            omega
+              calc
+                (-k) * (-d) = k * d := by ring
+                _ = a - x := hk.symm
+                _ ≤ a - b - 1 := by omega
+            have hlen_nonneg : 0 ≤ (a - b - d - 1) / (-d) := Int.ediv_nonneg (by omega) (le_of_lt hd')
+            have hk_lt' : -k < (a - b - d - 1) / (-d) := by
+              have hlt_div : (a - b - 1) / (-d) < (a - b - d - 1) / (-d) := by
+                apply (Int.ediv_lt_iff_lt_mul hd').mpr
+                have := Int.emod_add_mul_ediv (a - b - 1) (-d)
+                linarith
+              omega
+            have hk_nat_lt : (-k).toNat < ((a - b - d - 1) / (-d)).toNat := by
+              apply (Int.toNat_lt (by linarith : 0 ≤ -k)).mpr
+              rw [← Int.toNat_of_nonneg hlen_nonneg]
+              exact hk_lt'
+            exact hk_nat_lt
           ·
             have hk_nat_eq : (-k) = ((-k).toNat : ℤ) :=
               (Int.toNat_of_nonneg (by linarith : 0 ≤ -k)).symm
@@ -303,7 +323,7 @@ private lemma main
               x = a - (a - x) := by ring
               _ = a - k * d := by rw [hk]
               _ = a + (-k) * d := by ring
-              _ = a + ((-k).toNat : ℤ) * d := by simp [hk_nat_eq]
+              _ = a + ((-k).toNat : ℤ) * d := by rw [← hk_nat_eq]
         · omega
 
 

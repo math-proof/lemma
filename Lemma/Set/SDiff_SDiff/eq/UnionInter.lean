@@ -1,4 +1,4 @@
-import sympy.core.relational
+import sympy.core.logic
 import Lemma.Set.UnionDiff__Inter
 import Lemma.Set.SDiffUnion.eq.UnionSDiffS
 import Lemma.Set.SubsetInter

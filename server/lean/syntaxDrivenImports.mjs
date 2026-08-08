@@ -48,7 +48,7 @@ export async function mergeSyntaxDrivenImports(imports, leanSource) {
   for (const tac of Object.keys(syntax)) {
     switch (tac) {
       case 'denote':
-        await maybeUnshift('sympy.core.relational');
+        await maybeUnshift('sympy.core.logic');
         break;
       case 'mp':
       case 'mpr':
@@ -92,6 +92,9 @@ export async function mergeSyntaxDrivenImports(imports, leanSource) {
         break;
       case '≃':
         await maybeUnshift('stdlib.SEq');
+        break;
+      case '≈':
+        await maybeUnshift('sympy.core.relational');
         break;
       case 'softmax':
         await maybeUnshift('sympy.tensor.functions');

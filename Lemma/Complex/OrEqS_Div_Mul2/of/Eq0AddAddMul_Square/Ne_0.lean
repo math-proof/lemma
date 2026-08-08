@@ -1,4 +1,4 @@
-import sympy.core.relational
+import sympy.core.logic
 import sympy.polys.polyroots
 import Lemma.Int.SquareSub.eq.SubAddSquareS_MulMul2
 import Lemma.Int.Mul_Sub.eq.SubMulS

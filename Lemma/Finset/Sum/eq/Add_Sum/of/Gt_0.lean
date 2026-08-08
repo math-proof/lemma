@@ -1,4 +1,4 @@
-import sympy.core.relational
+import sympy.core.logic
 import sympy.sets.sets
 import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.Nat.Add

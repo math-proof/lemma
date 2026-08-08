@@ -1,4 +1,3 @@
-import sympy.sets.fancysets
 import sympy.core.power
 
 

@@ -1,4 +1,4 @@
-import sympy.core.relational
+import sympy.core.logic
 import Lemma.Int.EqFloor.is.Le.Lt
 import Lemma.Set.In_Ico.is.Le.Lt
 open Set Int

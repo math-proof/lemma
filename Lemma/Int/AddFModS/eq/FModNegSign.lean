@@ -1,4 +1,4 @@
-import sympy.core.relational
+import sympy.core.logic
 import Lemma.Bool.Ne.is.NotEq
 import Lemma.Int.FModNeg.eq.Ite_0Sub_FMod
 import Lemma.Int.FModNeg.eq.Zero.of.FMod.eq.Zero

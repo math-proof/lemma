@@ -1,4 +1,4 @@
-import sympy.sets.fancysets
+import sympy.core.relational
 import sympy.Basic
 
 

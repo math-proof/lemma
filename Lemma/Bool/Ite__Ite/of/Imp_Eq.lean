@@ -1,4 +1,4 @@
-import sympy.core.relational
+import sympy.core.logic
 import Lemma.Bool.Ite.of.Imp_Eq
 open Bool
 

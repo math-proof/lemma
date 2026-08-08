@@ -13,7 +13,7 @@ import Lemma.Nat.OfNat.eq.Cast
 import Lemma.Rat.EqCeilDivSubMul.of.Lt
 import Lemma.Vector.Get
 import Lemma.List.EqLengthSlice_Mul.of.Lt
-import sympy.core.relational
+import sympy.core.logic
 import sympy.vector.vector
 open Bool Int List Nat Rat Vector
 

@@ -1,4 +1,4 @@
-import sympy.sets.fancysets
+import sympy.core.relational
 import sympy.vector.vector
 import Lemma.Hyperreal.XEqSumS.of.All_XEq.OrAll_NotInfinite
 import Lemma.Vector.EqGet0_0

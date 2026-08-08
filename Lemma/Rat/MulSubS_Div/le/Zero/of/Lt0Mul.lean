@@ -1,4 +1,4 @@
-import sympy.core.relational
+import sympy.core.logic
 import Lemma.Nat.Sub.of.Eq
 import Lemma.Nat.MulAdd.eq.AddMulS
 import Lemma.Nat.Mul_Add.eq.AddMulS

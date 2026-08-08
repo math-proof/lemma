@@ -1,4 +1,3 @@
-import sympy.core.relational
 import sympy.core.logic
 import Lemma.Bool.BFn_Ite.is.OrAndS
 import Lemma.Bool.AndOr.is.OrAndS
