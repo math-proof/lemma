@@ -1,7 +1,7 @@
 import Lemma.Bool.Cond.of.Or_Not.Cond
 import Lemma.Set.Mod.In.Range.of.Gt_0
 import Lemma.Set.Or_Eq.of.In_Ico
-open Int Set
+open Set
 
 
 @[main]

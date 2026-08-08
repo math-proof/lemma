@@ -1,5 +1,6 @@
 import sympy.vector.vector
 import sympy.functions.elementary.exponential
+import sympy.core.relational
 open Vector
 
 namespace List.Vector

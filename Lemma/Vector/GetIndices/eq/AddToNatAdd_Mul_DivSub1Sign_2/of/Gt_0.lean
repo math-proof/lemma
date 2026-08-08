@@ -1,8 +1,9 @@
 import Lemma.Int.EqToNat
 import Lemma.Nat.EqAdd_Mul_DivSub1Sign_2
 import Lemma.Rat.LeToNatCeil_1.of.Le_Add
+import Lemma.List.LengthRange.eq.Length
 import sympy.vector.vector
-open Int Nat Rat Slice
+open Int Nat Rat Slice List
 
 
 private lemma get_sliced_indices_add

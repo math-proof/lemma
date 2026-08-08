@@ -31,6 +31,7 @@ import Lemma.Vector.Head.eq.Get_0
 import Lemma.Vector.XEq.is.All_XEqGetS
 import sympy.tensor.functions
 import sympy.tensor.stack
+import sympy.core.numbers
 open Hyperreal Int Tensor Vector
 set_option maxHeartbeats 1000000
 

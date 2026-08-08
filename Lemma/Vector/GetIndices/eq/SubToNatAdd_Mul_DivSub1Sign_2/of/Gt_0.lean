@@ -1,8 +1,9 @@
 import Lemma.Int.EqToNat
 import Lemma.Nat.EqAdd_Mul_DivSub1Sign_2
 import Lemma.Rat.LeToNatCeil_1.of.Ge_Sub
+import Lemma.List.LengthRange.eq.Length
 import sympy.vector.vector
-open Int Nat Rat Slice
+open Int Nat Rat Slice List
 
 
 private lemma get_sliced_indices_sub
@@ -55,8 +56,7 @@ private lemma main
   (h_d : d > 0)
   (i : Fin _) :
 -- imply
-  ↑(List.Vector.indices ⟨a, b, -(d : ℤ)⟩ N)[i] =
-    (Add_Mul_DivSub1Sign_2 N a + 1).toNat.min N - 1 - d * ↑i := by
+  ↑(List.Vector.indices ⟨a, b, -(d : ℤ)⟩ N)[i] = (Add_Mul_DivSub1Sign_2 N a + 1).toNat.min N - 1 - d * ↑i := by
 -- proof
   match d with
   | 0 => exact absurd h_d (Nat.lt_irrefl 0)

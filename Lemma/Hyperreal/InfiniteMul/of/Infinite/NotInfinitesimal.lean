@@ -5,6 +5,7 @@ import Lemma.Hyperreal.NotInfinitesimal.is.Any_GeAbs
 import Lemma.Nat.Gt.of.Gt.Gt
 import Lemma.Nat.Square.eq.Mul
 import Lemma.Rat.Div.gt.Zero.of.Gt_0.Gt_0
+import Lemma.Rat.EqMulDiv.of.Ne_0
 open Hyperreal Nat Rat
 
 
