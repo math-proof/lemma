@@ -363,7 +363,7 @@ def Tensor.getSlices
 instance [AddSemigroup α] : AddSemigroup (Tensor α s) where
   add_assoc a b c := by
     apply Eq.of.EqDataS
-    repeat rw [DataAdd.eq.AddDataS]
+    simp [DataAdd.eq.AddDataS]
     apply add_assoc
 
 instance [AddZeroClass α] : AddZeroClass (Tensor α s) where
@@ -389,7 +389,7 @@ instance [MulZeroClass α] : MulZeroClass (Tensor α s) where
 instance [AddCommMagma α] : AddCommMagma (Tensor α s) where
   add_comm X Y := by
     apply Eq.of.EqDataS
-    repeat rw [DataAdd.eq.AddDataS]
+    simp [DataAdd.eq.AddDataS]
     apply add_comm
 
 instance [AddMonoid α] : AddMonoid (Tensor α s) where
@@ -417,16 +417,16 @@ instance [AddCommMonoid α] : AddCommMonoid (Tensor α s) where
 instance [Mul α] [Add α] [LeftDistribClass α]: LeftDistribClass (Tensor α n) where
   left_distrib A B C := by
     apply Eq.of.EqDataS
-    repeat rw [DataAdd.eq.AddDataS]
-    repeat rw [DataMul.eq.MulDataS]
+    simp [DataAdd.eq.AddDataS]
+    simp [DataMul.eq.MulDataS]
     rw [DataAdd.eq.AddDataS]
     apply left_distrib
 
 instance [Mul α] [Add α] [RightDistribClass α]: RightDistribClass (Tensor α n) where
   right_distrib A B C := by
     apply Eq.of.EqDataS
-    repeat rw [DataAdd.eq.AddDataS]
-    repeat rw [DataMul.eq.MulDataS]
+    simp [DataAdd.eq.AddDataS]
+    simp [DataMul.eq.MulDataS]
     rw [DataAdd.eq.AddDataS]
     apply right_distrib
 
@@ -443,7 +443,7 @@ instance [NonUnitalNonAssocSemiring α] : NonUnitalNonAssocSemiring (Tensor α s
 instance [Semigroup α] : Semigroup (Tensor α s) where
   mul_assoc A B C := by
     apply Eq.of.EqDataS
-    repeat rw [DataMul.eq.MulDataS]
+    simp [DataMul.eq.MulDataS]
     apply mul_assoc
 
 instance [SemigroupWithZero α] : SemigroupWithZero (Tensor α s) where
@@ -556,5 +556,24 @@ instance [NeZero s.prod] [Nontrivial α] : Nontrivial (Tensor α s) where
 instance [CommMagma α] : CommMagma (Tensor α s) where
   mul_comm X Y := by
     apply Eq.of.EqDataS
-    repeat rw [DataMul.eq.MulDataS]
+    simp [DataMul.eq.MulDataS]
     apply mul_comm
+
+instance [Add α] [IsLeftCancelAdd α] : IsLeftCancelAdd (Tensor α s) where
+  add_left_cancel a := by
+    unfold IsAddLeftRegular Function.Injective
+    intro a₁ a₂ h
+    simp at h
+    apply Eq.of.EqDataS
+    have h := congrArg Tensor.data h
+    simp [DataAdd.eq.AddDataS] at h
+    assumption
+
+instance [AddLeftCancelSemigroup α] : AddLeftCancelSemigroup (Tensor α s) where
+  add_left_cancel := IsLeftCancelAdd.add_left_cancel
+
+instance [AddLeftCancelMonoid α] : AddLeftCancelMonoid (Tensor α s) where
+  add_left_cancel := IsLeftCancelAdd.add_left_cancel
+
+instance [AddCancelCommMonoid α] : AddCancelCommMonoid (Tensor α s) where
+  add_left_cancel := IsLeftCancelAdd.add_left_cancel

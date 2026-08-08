@@ -1,7 +1,7 @@
 import Lemma.Hyperreal.NotInfiniteMul.of.NotInfinite.NotInfinite
 import Lemma.Tensor.DataMul.eq.MulDataS
 import Lemma.Tensor.NotInfiniteGetData
-open Hyperreal Tensor Vector
+open Hyperreal Tensor
 
 
 /--
@@ -20,7 +20,7 @@ private lemma main
 -- proof
   intro h
   rw [DataMul.eq.MulDataS (A := (A : Tensor ℝ* s)) (B := (B : Tensor ℝ* s))] at h
-  simp only [GetElem.getElem, GetMul.eq.MulGetS.fin] at h
+  simp only [GetElem.getElem, Vector.GetMul.eq.MulGetS.fin] at h
   exact absurd h (NotInfiniteMul.of.NotInfinite.NotInfinite (NotInfiniteGetData A i) (NotInfiniteGetData B i))
 
 

@@ -1,3 +1,5 @@
+import Lemma.Tensor.SumMap.eq.MapSum.of.All_EqUFnAdd
+import Lemma.Tensor.XEqDotS.of.XEq
 import Lemma.Tensor.XEq.of.Eq
 import Lemma.Tensor.GtExp_0
 import Lemma.Tensor.Lt0Get.of.Gt_0
@@ -84,6 +86,11 @@ private lemma main
   erw [GetSum.eq.Cast_SumGet.of.GtGet_0.LtAdd_1Length.fin (d := 0) (by grind) (by grind)] at h_zi
   simp at h_zi
   erw [Div_KeepdimSum.eq.Div_Sum] at h_zi
+  have hΞ : Ξ = (1 : Tensor ℝ [n, n]).band_part (l - 1) (u - 1) := by
+    simp [Ξ]
+    erw [Eq1Coe1]
+    rw [MapBandPart.eq.BandPartMap.of.EqUFn0'0]
+    rfl
   have h_Ξᵢ : (exp a').get i / (let den : Tensor ℝ* [] := ((exp a').get i).sum 0; den) ≈ (exp A').get i * Ξ.get i / (let den : Tensor ℝ* [] := ((exp A').get i * Ξ.get i).sum 0; den) := by
     simp
     apply XEqDivS_Sum_0.of.XEq.NotInfinitesimalSum.Ge_0 _ _ h_Ξᵢ
@@ -100,11 +107,6 @@ private lemma main
       dsimp [A']
       rw [ExpMap.eq.MapExp.of.All_EqUFnExp_ExpUFn (by aesop)]
       erw [GetMap.eq.MapGet.fin]
-      have hΞ : Ξ = (1 : Tensor ℝ [n, n]).band_part (l - 1) (u - 1) := by
-        simp [Ξ]
-        erw [Eq1Coe1]
-        rw [MapBandPart.eq.BandPartMap.of.EqUFn0'0]
-        rfl
       rw [hΞ]
       conv =>
         pattern (map _ _).get _
@@ -127,6 +129,18 @@ private lemma main
   have h_zi := Tensor.XEq.of.Eq h_zi
   have h_xeq : ((Exp.exp a').get i / (let den : Tensor ℝ* [] := ((Exp.exp a').get i).sum 0; den)) @ V' ≈ ((exp A').get i * Ξ.get i / (let den : Tensor ℝ* [] := ((exp A').get i * Ξ.get i).sum 0; den)) @ V' := by
     simp
+    rw [h_A', hΞ, h_V']
+    rw [ExpMap.eq.MapExp.of.All_EqUFnExp_ExpUFn (by aesop)]
+    conv_rhs => erw [GetMap.eq.MapGet.fin (i := ⟨i, by grind⟩)]
+    conv_rhs =>
+      pattern (map (band_part _ _ _) _).get _
+      erw [GetMap.eq.MapGet.fin (i := ⟨i, by grind⟩)]
+    conv_rhs =>
+      pattern (map (band_part _ _ _) _).get _
+      erw [GetMap.eq.MapGet.fin (i := ⟨i, by grind⟩)]
+    erw [MulMapS.eq.MapMul.of.All_Eq_Mul (by aesop)]
+    rw [Tensor.SumMap.eq.MapSum.of.All_EqUFnAdd (by aesop)]
+    -- apply XEqDotS.of.XEq
     sorry
   -- rw [EqGetStack.fn.fin]
   let band_A := A'[i, i + 1 - l : n ⊓ i + u]

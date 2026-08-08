@@ -17,9 +17,9 @@ namespace List.Vector
 
 instance [AddSemigroup α] : AddSemigroup (Vector α n) where
   add_assoc a b c := by
-    repeat rw [Add.eq.Map₂]
+    simp [Add.eq.Map₂]
     ext i
-    repeat rw [get_map₂]
+    simp [get_map₂]
     apply AddSemigroup.add_assoc
 
 instance [AddZeroClass α]  : AddZeroClass (Vector α n) where
@@ -44,7 +44,7 @@ instance [MulZeroClass α] : MulZeroClass (Vector α n) where
 
 instance [AddCommMagma α] : AddCommMagma (Vector α n) where
   add_comm a b := by
-    repeat rw [Add.eq.Map₂]
+    simp [Add.eq.Map₂]
     ext i
     simp [AddCommMagma.add_comm]
 
@@ -74,16 +74,16 @@ instance [AddCommMonoid α] : AddCommMonoid (Vector α n) where
 instance [Mul α] [Add α] [LeftDistribClass α]: LeftDistribClass (Vector α n) where
   left_distrib a b c := by
     ext i
-    repeat rw [GetAdd.eq.AddGetS.fin]
-    repeat rw [GetMul.eq.MulGetS.fin]
+    simp [GetAdd.eq.AddGetS.fin]
+    simp [GetMul.eq.MulGetS.fin]
     rw [GetAdd.eq.AddGetS.fin]
     apply LeftDistribClass.left_distrib
 
 instance [Mul α] [Add α] [RightDistribClass α]: RightDistribClass (Vector α n) where
   right_distrib a b c := by
     ext i
-    repeat rw [GetAdd.eq.AddGetS.fin]
-    repeat rw [GetMul.eq.MulGetS.fin]
+    simp [GetAdd.eq.AddGetS.fin]
+    simp [GetMul.eq.MulGetS.fin]
     rw [GetAdd.eq.AddGetS.fin]
     apply RightDistribClass.right_distrib
 
@@ -100,7 +100,7 @@ instance [NonUnitalNonAssocSemiring α] : NonUnitalNonAssocSemiring (Vector α n
 instance [Semigroup α] : Semigroup (Vector α n) where
   mul_assoc a b c := by
     ext i
-    repeat rw [GetMul.eq.MulGetS.fin]
+    simp [GetMul.eq.MulGetS.fin]
     apply Semigroup.mul_assoc
 
 instance [SemigroupWithZero α] : SemigroupWithZero (Vector α n) where
@@ -135,7 +135,7 @@ instance [AddMonoidWithOne α] : AddMonoidWithOne (Vector α n) where
     ext i
     rw [GetAdd.eq.AddGetS.fin]
     rw [EqGet1_1.fin]
-    repeat rw [get_replicate]
+    simp [get_replicate]
 
 instance [AddCommMonoidWithOne α] : AddCommMonoidWithOne (Vector α n) where
   add_comm
@@ -209,8 +209,27 @@ instance [NeZero n] [Nontrivial α] : Nontrivial (Vector α n) where
 
 instance [CommMagma α] : CommMagma (Vector α n) where
   mul_comm a b := by
-    repeat rw [Mul.eq.Map₂]
+    simp [Mul.eq.Map₂]
     ext i
     simp [CommMagma.mul_comm]
+
+instance [Add α] [IsLeftCancelAdd α] : IsLeftCancelAdd (Vector α n) where
+  add_left_cancel a := by
+    unfold IsAddLeftRegular Function.Injective
+    intro a₁ a₂ h
+    simp at h
+    ext i
+    have h := congrArg (·.get i) h
+    simp [GetAdd.eq.AddGetS.fin] at h
+    assumption
+
+instance [AddLeftCancelSemigroup α] : AddLeftCancelSemigroup (Vector α n) where
+  add_left_cancel := IsLeftCancelAdd.add_left_cancel
+
+instance [AddLeftCancelMonoid α] : AddLeftCancelMonoid (Vector α n) where
+  add_left_cancel := IsLeftCancelAdd.add_left_cancel
+
+instance [AddCancelCommMonoid α] : AddCancelCommMonoid (Vector α n) where
+  add_left_cancel := IsLeftCancelAdd.add_left_cancel
 
 end List.Vector

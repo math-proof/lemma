@@ -400,6 +400,7 @@ def main() -> None:
     )
     parser.add_argument(
         "lean_file",
+        nargs="?",
         help="path to a Lemma .lean file (e.g. Lemma/Tensor/Lt0SumMul/of/GtSum_0/Ge_0/Gt_0.lean)",
     )
     parser.add_argument(
@@ -423,7 +424,13 @@ def main() -> None:
         sys.stdout.reconfigure(encoding="utf-8", errors="replace")
         sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
-    lean_file = Path(args.lean_file)
+    lean_file_arg = args.lean_file
+    if not lean_file_arg:
+        lean_file_arg = input("Lean file path: ").strip()
+    if not lean_file_arg:
+        parser.error("no lean file provided")
+
+    lean_file = Path(lean_file_arg)
     if not lean_file.is_absolute():
         lean_file = ROOT / lean_file
     lean_file = lean_file.resolve()
