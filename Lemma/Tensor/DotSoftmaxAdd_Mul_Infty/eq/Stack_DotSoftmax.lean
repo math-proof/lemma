@@ -1,3 +1,4 @@
+import Lemma.Tensor.MapDiv.eq.DivMapS.of.All_Eq_Div
 import Lemma.Tensor.SumMap.eq.MapSum.of.All_EqUFnAdd
 import Lemma.Tensor.XEqDotS.of.XEq
 import Lemma.Tensor.XEq.of.Eq
@@ -34,7 +35,7 @@ import Lemma.Tensor.Softmax.eq.DivExp_KeepdimSumExp
 import Lemma.Tensor.XEqGetS.of.XEq.GtLength
 import sympy.functions.elementary.exponential
 open Tensor Hyperreal
-set_option maxHeartbeats 1000000
+set_option maxHeartbeats 4000000
 
 
 @[main]
@@ -92,7 +93,6 @@ private lemma main
     rw [MapBandPart.eq.BandPartMap.of.EqUFn0'0]
     rfl
   have h_Ξᵢ : (exp a').get i / (let den : Tensor ℝ* [] := ((exp a').get i).sum 0; den) ≈ (exp A').get i * Ξ.get i / (let den : Tensor ℝ* [] := ((exp A').get i * Ξ.get i).sum 0; den) := by
-    simp
     apply XEqDivS_Sum_0.of.XEq.NotInfinitesimalSum.Ge_0 _ _ h_Ξᵢ
     .
       apply Le0Mul.of.Ge_0.Ge_0
@@ -130,7 +130,7 @@ private lemma main
   have h_xeq : ((Exp.exp a').get i / (let den : Tensor ℝ* [] := ((Exp.exp a').get i).sum 0; den)) @ V' ≈ ((exp A').get i * Ξ.get i / (let den : Tensor ℝ* [] := ((exp A').get i * Ξ.get i).sum 0; den)) @ V' := by
     simp
     rw [h_A', hΞ, h_V']
-    rw [ExpMap.eq.MapExp.of.All_EqUFnExp_ExpUFn (by aesop)]
+    conv_rhs => rw [ExpMap.eq.MapExp.of.All_EqUFnExp_ExpUFn (by aesop)]
     conv_rhs => erw [GetMap.eq.MapGet.fin (i := ⟨i, by grind⟩)]
     conv_rhs =>
       pattern (map (band_part _ _ _) _).get _
@@ -138,11 +138,30 @@ private lemma main
     conv_rhs =>
       pattern (map (band_part _ _ _) _).get _
       erw [GetMap.eq.MapGet.fin (i := ⟨i, by grind⟩)]
-    erw [MulMapS.eq.MapMul.of.All_Eq_Mul (by aesop)]
-    rw [Tensor.SumMap.eq.MapSum.of.All_EqUFnAdd (by aesop)]
-    -- apply XEqDotS.of.XEq
-    sorry
-  -- rw [EqGetStack.fn.fin]
+    simp
+    conv_rhs => erw [MulMapS.eq.MapMul.of.All_Eq_Mul (by aesop)]
+    conv_rhs => erw [SumMap.eq.MapSum.of.All_EqUFnAdd (by aesop)]
+    conv_rhs => erw [DivMapS.eq.MapDiv.of.All_Eq_Div.scalar (by aesop)]
+    apply XEqDotS.of.XEq
+    conv_rhs => erw [MapDiv.eq.DivMapS.of.All_Eq_Div.scalar (by aesop)]
+    conv_rhs => erw [MapMul.eq.MulMapS.of.All_Eq_Mul (by aesop)]
+    conv_rhs => erw [MapSum.eq.SumMap.of.All_EqUFnAdd (by aesop)]
+    conv_rhs => erw [MapMul.eq.MulMapS.of.All_Eq_Mul (by aesop)]
+    conv_rhs => erw [MapGet.eq.GetMap.fin (i := ⟨i, by grind⟩)]
+    conv_rhs => rw [MapExp.eq.ExpMap.of.All_EqUFnExp_ExpUFn (by aesop)]
+    conv_rhs =>
+      pattern map (get (band_part _ _) _) _
+      erw [MapGet.eq.GetMap.fin (i := ⟨i, by grind⟩)]
+    conv_rhs =>
+      pattern map (get (band_part _ _) _) _
+      erw [MapGet.eq.GetMap.fin (i := ⟨i, by grind⟩)]
+    simp
+    rw [← hΞ]
+    rwa [← h_A']
+  have h_zi := h_zi.trans h_xeq
+  apply h_zi.trans
+  simp
+  rw [EqGetStack.fn.fin]
   let band_A := A'[i, i + 1 - l : n ⊓ i + u]
   let band_V := V'[i + 1 - l:n ⊓ i + u]
   sorry
