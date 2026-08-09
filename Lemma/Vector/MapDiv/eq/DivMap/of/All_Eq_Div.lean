@@ -1,6 +1,6 @@
 import Lemma.Vector.GetDiv.eq.DivGet
 import sympy.vector.vector
-open Vector Nat
+open Vector
 
 
 @[main, comm]

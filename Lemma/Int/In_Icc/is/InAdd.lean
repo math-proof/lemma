@@ -8,12 +8,12 @@ open Set Nat Int
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Set.In_Icc.is.InAdd |
-| comm | Set.InAdd.is.In_Icc |
-| mp | Set.InAdd.of.In_Icc |
-| mpr | Set.In_Icc.of.InAdd |
-| mp.mt | Set.NotIn_Icc.of.NotInAdd |
-| mpr.mt | Set.NotInAdd.of.NotIn_Icc |
+| main | Int.In_Icc.is.InAdd |
+| comm | Int.InAdd.is.In_Icc |
+| mp | Int.InAdd.of.In_Icc |
+| mpr | Int.In_Icc.of.InAdd |
+| mp.mt | Int.NotIn_Icc.of.NotInAdd |
+| mpr.mt | Int.NotInAdd.of.NotIn_Icc |
 -/
 @[main, comm, mp, mpr, mp.mt, mpr.mt]
 private lemma main

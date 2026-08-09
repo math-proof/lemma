@@ -159,9 +159,15 @@ private lemma main
     rw [← hΞ]
     rwa [← h_A']
   have h_zi := h_zi.trans h_xeq
+  simp at h_zi
+  rw [h_band_part] at h_Ξ_def
+  have h_Ξᵢ := Get.of.Eq.fin h_Ξ_def i
+  rw [EqGetStack.fn.fin] at h_Ξᵢ
+  simp only [Bool.Bool.eq.Ite] at h_Ξᵢ
+  have h_Ξᵢ_sum : ((Exp.exp A').get i * Ξ.get i).sum 0 = ((Exp.exp A').get i * Ξ.get i).sum 0 := by
+    rw [h_Ξᵢ]
   apply h_zi.trans
-  simp
-  rw [EqGetStack.fn.fin]
+  simp [EqGetStack.fn.fin]
   let band_A := A'[i, i + 1 - l : n ⊓ i + u]
   let band_V := V'[i + 1 - l:n ⊓ i + u]
   sorry

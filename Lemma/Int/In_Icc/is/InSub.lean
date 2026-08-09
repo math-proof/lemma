@@ -1,4 +1,4 @@
-import Lemma.Set.In_Icc.is.InAdd
+import Lemma.Int.In_Icc.is.InAdd
 import Lemma.Int.EqAddSub
 open Set Int
 
@@ -6,12 +6,12 @@ open Set Int
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Set.In_Icc.is.InSub |
-| comm | Set.InSub.is.In_Icc |
-| mp | Set.InSub.of.In_Icc |
-| mpr | Set.In_Icc.of.InSub |
-| mp.mt | Set.NotIn_Icc.of.NotInSub |
-| mpr.mt | Set.NotInSub.of.NotIn_Icc |
+| main | Int.In_Icc.is.InSub |
+| comm | Int.InSub.is.In_Icc |
+| mp | Int.InSub.of.In_Icc |
+| mpr | Int.In_Icc.of.InSub |
+| mp.mt | Int.NotIn_Icc.of.NotInSub |
+| mpr.mt | Int.NotInSub.of.NotIn_Icc |
 -/
 @[main, comm, mp, mpr, mp.mt, mpr.mt]
 private lemma main
