@@ -34,7 +34,8 @@ open Bool Int Nat Rat
 @[main]
 private lemma main
   [Field α] [LinearOrder α] [IsStrictOrderedRing α] [FloorRing α]
-  {n d : ℤ} :
+-- given
+  (n d : ℤ) :
 -- imply
   ⌈n / (d : α)⌉ = ⌊(d + n - sign d) / (d : α)⌋ := by
 -- proof

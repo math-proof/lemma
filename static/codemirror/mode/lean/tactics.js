@@ -49,6 +49,7 @@ export const tactics = [
     'intros',
     'left',
     'linarith',
+    'mod_cast',
     'mp',
     'mpr',
     'nlinarith',
