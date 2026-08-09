@@ -9,7 +9,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Nat
+    from Lemma import Algebra, Bool, Nat, Int
 
     n = Symbol(integer=True)
     Eq << apply(Equal(n % 2, 1))
@@ -18,7 +18,7 @@ def prove(Eq):
 
     Eq << Eq[-2].this.lhs.apply(Nat.Ne_0.of.Eq)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Eq_odd.of.Ne_0)
+    Eq << Eq[-1].this.lhs.apply(Int.Odd.of.Ne_0)
 
 
 if __name__ == '__main__':

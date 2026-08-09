@@ -39,7 +39,7 @@ def prove(Eq):
 
     Eq << Bool.OrAndS.of.And_Or.apply(Eq[-1])
 
-    Eq << Eq[-1].this.args[0].apply(Algebra.Eq_odd.of.Ne_0)
+    Eq << Eq[-1].this.args[0].apply(Int.Odd.of.Ne_0)
 
     Eq.all_contains_in_A = All[n:B](Element(n, A), plausible=True)
 

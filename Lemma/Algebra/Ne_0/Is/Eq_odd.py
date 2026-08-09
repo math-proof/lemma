@@ -12,14 +12,14 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Int
     n = Symbol(integer=True)
 
     Eq << apply(Unequal(n % 2, 0))
 
     Eq << Bool.Iff.given.Imp.Imp.apply(Eq[0])
 
-    Eq << Eq[-2].this.lhs.apply(Algebra.Eq_odd.of.Ne_0)
+    Eq << Eq[-2].this.lhs.apply(Int.Odd.of.Ne_0)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Ne_0.given.Eq_odd)
 

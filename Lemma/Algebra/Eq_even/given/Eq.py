@@ -9,7 +9,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Int, Int, Int
 #     n = q * d + r
     n = Symbol(integer=True, given=True)
 
@@ -17,7 +17,7 @@ def prove(Eq):
 
     Eq << ~Eq[0]
 
-    Eq << Algebra.Eq_odd.of.Ne_0.apply(Eq[-1])
+    Eq << Int.Odd.of.Ne_0.apply(Eq[-1])
 
     Eq << Algebra.EqPow.of.Eq_odd.apply(Eq[-1])
 

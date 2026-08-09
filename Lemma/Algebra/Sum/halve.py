@@ -13,7 +13,7 @@ def apply(self, *, simplify=True):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Nat, Finset
+    from Lemma import Algebra, Bool, Nat, Finset, Int
 
     i, a, b = Symbol(integer=True)
     f = Symbol(shape=(oo,), real=True)
@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[0], cond=Equal(a % 2, 0))
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Eq_odd.of.Ne_0)
+    Eq << Eq[-1].this.lhs.apply(Int.Odd.of.Ne_0)
 
     Eq <<= Bool.Imp.given.ImpEq.apply(Eq[-3]), Bool.Imp.given.ImpEq.apply(Eq[-1])
 
