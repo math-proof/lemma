@@ -3,7 +3,7 @@ import Lemma.List.LengthCons.eq.Add1Length
 import Lemma.List.LengthTake.eq.Min_Length
 import Lemma.Nat.Lt.of.Lt.Lt
 import Lemma.Nat.Le.of.Lt
-import Lemma.List.LengthSlice.eq.SubMin
+import Lemma.List.LengthSlice.eq.SubMin_Length
 import Lemma.Nat.AddAdd.eq.Add_Add
 import Lemma.Nat.EqAdd_Sub.of.Ge
 import Lemma.Nat.LeAdd_1.of.Lt
@@ -25,7 +25,7 @@ private lemma main
   rw [LengthTake.eq.Min_Length]
   have h_i := Lt.of.Lt.Lt h₀ h₁
   simp [Le.of.Lt h_i]
-  rw [LengthSlice.eq.SubMin]
+  rw [LengthSlice.eq.SubMin_Length]
   simp [Le.of.Lt h₁]
   rw [Add_Add.eq.AddAdd, Add_Add.eq.AddAdd]
   rw [EqAdd_Sub.of.Ge h₀]

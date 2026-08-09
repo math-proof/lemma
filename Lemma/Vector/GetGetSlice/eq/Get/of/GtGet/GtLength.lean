@@ -22,7 +22,7 @@ private lemma main
     simp_all
   have h_div := DivProdTake.eq.ProdTake.of.Ne_0.GtLength h_d (by grind)
   have h_d := Get.dvd.ProdTake.of.GtLength h_d
-  (v.getSlice ⟨j, (s.take (d + 1)).prod, s[d]⟩).get i = v.get ⟨i * s[d] + j, LtAddMul.of.Lt.Lt_Div.Dvd h_d (by simp_all) h_j⟩ := by
+  v[j: (s.take (d + 1)).prod: s[d]].get i = v.get ⟨i * s[d] + j, LtAddMul.of.Lt.Lt_Div.Dvd h_d (by simp_all) h_j⟩ := by
 -- proof
   intro h_length_slice h_i h_div h_d
   apply GetGetSlice.eq.Get.of.GtGet.GtProdTake.GtLength _ h_i h_j v

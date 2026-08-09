@@ -1,4 +1,4 @@
-import Lemma.Vector.GetGetSlice.eq.Get.of.Lt.Lt.Dvd
+import Lemma.Vector.GetGetSlice.eq.Get_Add.of.GtSub
 import Lemma.Vector.Sum.eq.Sum_Get
 import sympy.vector.vector
 open Vector
@@ -18,6 +18,7 @@ private lemma main
     0) = v[a:b].sum := by
 -- proof
   rw [Sum.eq.Sum_Get.fin]
+  rw [Vector.GetGetSlice.eq.Get_Add.of.GtSub.fin]
   have h_get_slice (i : ℕ) (h_i : i < b):= GetGetSlice.eq.Get.of.Lt.Lt.Dvd (by grind) (by grind) (by grind) v (j := a) (n := b) (d := 1) (i := i)
   conv_rhs =>
     arg 2

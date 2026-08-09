@@ -8,7 +8,7 @@ open Int Nat
 @[main]
 private lemma main
 -- given
-  (n i : Nat) :
+  (n i : ℕ) :
 -- imply
   (⟨i, n + i, 1⟩ : Slice).length (n + i) = n := by
 -- proof
@@ -26,7 +26,7 @@ private lemma main
 @[main]
 private lemma coe
 -- given
-  (n i : Nat) :
+  (n i : ℕ) :
 -- imply
   (⟨i, (n + i:ℕ), 1⟩ : Slice).length (n + i) = n := by
 -- proof

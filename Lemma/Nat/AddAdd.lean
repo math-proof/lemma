@@ -27,4 +27,15 @@ private lemma rotate
   rw [Add.comm]
 
 
+@[main, comm]
+private lemma swap
+  [AddCommSemigroup α]
+-- given
+  (a b c : α) :
+-- imply
+  a + b + c = b + a + c := by
+-- proof
+  grind
+
+
 -- created on 2025-06-06

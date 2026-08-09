@@ -2,8 +2,7 @@ import Lemma.Int.Ceil.eq.FloorDivSub_Sign
 import Lemma.Int.EqSign_1.of.Gt_0
 import Lemma.Nat.Div.eq.FloorDiv
 import Lemma.Nat.Gt_0.of.Ne_0
-import sympy.Basic
-open Int Bool Nat Rat
+open Int Nat
 
 
 @[main]

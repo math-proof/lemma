@@ -6,7 +6,7 @@ open List
 @[main]
 private lemma main
   {s : List α}
-  {i n : Nat} :
+  {i n : ℕ} :
 -- imply
   (s.array_slice i n).length = n ⊓ (s.length - i) := by
 -- proof

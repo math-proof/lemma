@@ -2,7 +2,7 @@ import Lemma.List.GetSwap.eq.Get.of.GtLengthSwap.GtLength
 import Lemma.List.GetAppend.eq.Get.of.GtLength
 import Lemma.List.LengthAppend.eq.AddLengthS
 import Lemma.Nat.Le.of.Lt
-import Lemma.List.LengthSlice.eq.SubMin
+import Lemma.List.LengthSlice.eq.SubMin_Length
 import Lemma.List.LengthCons.eq.Add1Length
 import Lemma.List.GetAppend.eq.Get_Sub_Length.of.GtLengthAppend.GeLength
 import Lemma.List.GetCons.eq.Get_Sub_1.of.Lt_Add_1.Gt_0
@@ -65,7 +65,7 @@ private lemma main
           repeat grind
           rw [LengthAppend.eq.AddLengthS]
           rw [LengthCons.eq.Add1Length]
-          rw [LengthSlice.eq.SubMin]
+          rw [LengthSlice.eq.SubMin_Length]
           grind
         else
           simp at h_tj
@@ -73,7 +73,7 @@ private lemma main
           have h_eq_tj : j + 1 + (t - j - 1) = t := by
             grind
           rw [GetAppend.eq.Get_Sub_Length.of.GtLengthAppend.GeLength]
-          simp [LengthSlice.eq.SubMin]
+          simp [LengthSlice.eq.SubMin_Length]
           simp [h_i, h_j]
           simp [h_eq_ij']
           rw [GetCons.eq.Get_Sub_1.of.Lt_Add_1.Gt_0]
@@ -84,7 +84,7 @@ private lemma main
           ·
             grind
           ·
-            simp [LengthSlice.eq.SubMin]
+            simp [LengthSlice.eq.SubMin_Length]
             grind
 
 

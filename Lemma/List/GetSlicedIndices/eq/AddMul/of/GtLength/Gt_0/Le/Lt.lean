@@ -1,9 +1,9 @@
 import Lemma.List.GetSlicedIndices.eq.AddMul.of.Lt.LeSubAddMul.Lt_SubAddMul
 import Lemma.Nat.MulToNatCeilDivSub.in.Ico
-open List Rat Int Nat Slice
+open List Nat Slice
 
 
-@[main]
+@[main, comm]
 private lemma main
   {start stop step N i : ℕ}
 -- given

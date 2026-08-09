@@ -2,7 +2,7 @@ import Lemma.List.Permute.eq.Ite
 import Lemma.List.GetAppend.eq.Get.of.GtLength
 import Lemma.Nat.EqMin.of.Lt
 import Lemma.List.GetAppend.eq.Get_Sub_Length.of.GtLengthAppend.GeLength
-import Lemma.List.LengthSlice.eq.SubMin
+import Lemma.List.LengthSlice.eq.SubMin_Length
 import Lemma.List.LengthAppend.eq.AddLengthS
 import Lemma.List.LengthCons.eq.Add1Length
 import Lemma.List.Slice.eq.Nil
@@ -41,7 +41,7 @@ private lemma main
     have h_t : t < (s.take (i - d)).length + (s[(i : ℕ)] :: (s.slice (i - d) i ++ s.drop (i + 1))).length := by
       rw [LengthCons.eq.Add1Length]
       rw [LengthAppend.eq.AddLengthS]
-      rw [LengthSlice.eq.SubMin]
+      rw [LengthSlice.eq.SubMin_Length]
       grind
     apply Eq.symm
     split_ifs with h_i h_eq h_1
@@ -62,7 +62,7 @@ private lemma main
       ·
         grind
       ·
-        rw [LengthSlice.eq.SubMin]
+        rw [LengthSlice.eq.SubMin_Length]
         grind
     ·
       simp at h_i h_1 h_eq
@@ -76,7 +76,7 @@ private lemma main
         ·
           rw [GetAppend.eq.Get_Sub_Length.of.GtLengthAppend.GeLength] <;>
           ·
-            simp [LengthSlice.eq.SubMin]
+            simp [LengthSlice.eq.SubMin_Length]
             grind
         ·
           linarith

@@ -1,6 +1,6 @@
 import Lemma.List.LengthAppend.eq.AddLengthS
 import Lemma.List.LengthCons.eq.Add1Length
-import Lemma.List.LengthSlice.eq.SubMin
+import Lemma.List.LengthSlice.eq.SubMin_Length
 open List
 
 /--
@@ -20,7 +20,7 @@ private lemma main
   ·
     repeat rw [LengthAppend.eq.AddLengthS]
     rw [LengthCons.eq.Add1Length]
-    rw [LengthSlice.eq.SubMin]
+    rw [LengthSlice.eq.SubMin_Length]
     grind
 
 

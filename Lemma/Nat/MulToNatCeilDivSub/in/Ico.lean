@@ -3,8 +3,7 @@ import Lemma.Nat.Mul_Div.ge.SubAdd_1.of.Gt_0
 import Lemma.Int.ToNatDiv.eq.DivToNat
 import Lemma.Nat.CoeSub.eq.SubCoeS.of.Gt
 import Lemma.Nat.Ceil.eq.DivAddSub_1
-import sympy.Basic
-open Int Nat Rat
+open Int Nat
 
 
 @[main]

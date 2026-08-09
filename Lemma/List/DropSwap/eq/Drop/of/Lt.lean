@@ -4,7 +4,7 @@ import Lemma.List.EqDropAppend.of.Eq_Length
 import Lemma.List.LengthAppend.eq.AddLengthS
 import Lemma.List.LengthList.eq.One
 import Lemma.Nat.Add.is.Eq
-import Lemma.List.LengthSlice.eq.SubMin
+import Lemma.List.LengthSlice.eq.SubMin_Length
 import Lemma.Nat.Lt.of.Lt.Lt
 import Lemma.Nat.Le.of.Lt
 import Lemma.Nat.Sub_Add.eq.SubSub
@@ -35,7 +35,7 @@ private lemma main
     rw [LengthList.eq.One]
     apply Add.of.Eq
     simp
-    rw [LengthSlice.eq.SubMin]
+    rw [LengthSlice.eq.SubMin_Length]
     have h_i := Lt.of.Lt.Lt h h_j
     simp [Le.of.Lt h_i, Le.of.Lt h_j]
     rw [Sub_Add.eq.SubSub]

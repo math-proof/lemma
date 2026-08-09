@@ -1,20 +1,22 @@
-import Lemma.List.LengthArraySlice.eq.Min_SubLength
-import Lemma.Nat.SubMin.eq.MinSubS
-open List Nat
+import stdlib.Slice
+import Lemma.Nat.EqAdd_Mul_DivSub1Sign_2
+import Lemma.Nat.CoeMin.eq.MinCoeS
+import Lemma.Int.EqToNat
+import Lemma.Nat.EqCeilCoe
+open Int Nat
 
 
 @[main]
 private lemma main
 -- given
-  (s : List α)
-  (i j : Nat) :
+  (n m j : ℕ) :
 -- imply
-  (s.slice i j).length = j ⊓ s.length - i := by
+  (⟨j, n, 1⟩ : Slice).length m = n ⊓ m - j := by
 -- proof
-  unfold List.slice
-  rw [LengthArraySlice.eq.Min_SubLength]
-  rw [MinSubS.eq.SubMin]
+  unfold Slice.length
+  simp [EqAdd_Mul_DivSub1Sign_2]
+  rw [MinCoeS.eq.CoeMin]
+  simp only [EqToNat, EqCeilCoe]
 
 
--- created on 2025-05-13
--- updated on 2025-05-16
+-- created on 2026-08-09

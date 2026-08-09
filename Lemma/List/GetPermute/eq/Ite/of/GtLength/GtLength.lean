@@ -7,7 +7,7 @@ import Lemma.List.GetAppend.eq.Get_Sub_Length.of.GtLengthAppend.GeLength
 import Lemma.List.GetSlice.eq.Get_Add.of.GtLengthSlice
 import Lemma.Nat.SubAdd.eq.Add_Sub.of.Ge
 import Lemma.Nat.Add
-import Lemma.List.LengthSlice.eq.SubMin
+import Lemma.List.LengthSlice.eq.SubMin_Length
 import Lemma.Nat.EqMin.of.Le
 import Lemma.Nat.AddAdd.eq.Add_Add
 import Lemma.Nat.EqSubAdd
@@ -75,7 +75,7 @@ private lemma main
         simp [Add.comm]
         simp [SubAdd.eq.Add_Sub.of.Ge]
       ·
-        rw [LengthSlice.eq.SubMin]
+        rw [LengthSlice.eq.SubMin_Length]
         rw [h_eq_i]
         simp [LtSub.of.Lt_Add.Ge h_i h_1]
       ·
@@ -83,11 +83,11 @@ private lemma main
     ·
       repeat rw [GetAppend.eq.Get_Sub_Length.of.GtLengthAppend.GeLength]
       ·
-        simp [LengthSlice.eq.SubMin]
+        simp [LengthSlice.eq.SubMin_Length]
         simp [h_eq_i]
         simp [h_eq]
       ·
-        rw [LengthSlice.eq.SubMin]
+        rw [LengthSlice.eq.SubMin_Length]
         rw [h_eq_i]
         simp [h_eq]
       ·
@@ -101,7 +101,7 @@ private lemma main
         apply Ge_Add_1.of.Gt
         apply Gt.of.Ge.Ne h_1 h_eq
       repeat rw [GetAppend.eq.Get_Sub_Length.of.GtLengthAppend.GeLength]
-      simp [LengthSlice.eq.SubMin]
+      simp [LengthSlice.eq.SubMin_Length]
       simp [h_eq_i]
       rw [GetCons.eq.Get_Sub_1.of.Lt_Add_1.Gt_0]
       rw [GetDrop.eq.Get_Add.of.GtLength_Add]
@@ -114,7 +114,7 @@ private lemma main
         apply Sub.gt.Zero.of.Gt
         apply Gt.of.Ge.Ne h_1 h_eq
       ·
-        rw [LengthSlice.eq.SubMin]
+        rw [LengthSlice.eq.SubMin_Length]
         rw [h_eq_i]
         simp [GeSub.of.Ge_Add.left h_1]
       ·

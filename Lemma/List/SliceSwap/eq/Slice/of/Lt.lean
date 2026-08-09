@@ -6,7 +6,7 @@ import Lemma.List.AppendAppend.eq.Append_Append
 import Lemma.List.LengthAppend.eq.AddLengthS
 import Lemma.List.EqTakeAppend.of.Eq_Length
 import Lemma.Nat.Le.of.Lt.Lt
-import Lemma.List.LengthSlice.eq.SubMin
+import Lemma.List.LengthSlice.eq.SubMin_Length
 import Lemma.Nat.EqMin.of.Lt
 open List Nat
 
@@ -31,7 +31,7 @@ private lemma main
     rw [SliceAppend.eq.Take_Sub.of.Eq_Length]
     ·
       rw [EqTakeAppend.of.Eq_Length]
-      rw [LengthSlice.eq.SubMin]
+      rw [LengthSlice.eq.SubMin_Length]
       rw [EqMin.of.Lt h_j]
     ·
       rw [LengthAppend.eq.AddLengthS]

@@ -1,15 +1,8 @@
 import Lemma.List.LengthSwap.eq.Length
 import Lemma.List.GetElem.eq.SomeGet.of.GtLength
-import Lemma.Nat.NotLt.is.Ge
-import Lemma.Bool.Ne.is.NotEq
-import Lemma.Nat.Lt.is.Le.Ne
-import Lemma.Nat.NotLt.is.Ge
 import Lemma.List.GetCons.eq.Get_Sub_1.of.Lt_Add_1.Gt_0
-import Lemma.Nat.Sub.gt.Zero.is.Gt
-import Lemma.List.LengthSlice.eq.SubMin
-import Lemma.Nat.Sub_Add.eq.SubSub
 import Lemma.List.Swap
-open List Bool Nat
+open List
 
 
 @[main]
@@ -33,24 +26,20 @@ private lemma main
   ·
     simp
   ·
-    have h_j := Ge.of.NotLt h_j
-    have h_j : j < s.length := by simp
-    contradiction
+    grind
   ·
-    have h_le := Le.of.NotGt h_lt?
-    have h_ne := Ne.of.NotEq h_eq
-    have h_lt := Lt.of.Le.Ne h_le h_ne.symm
+    have h_le := Nat.Le.of.NotGt h_lt?
+    have h_ne := Bool.Ne.of.NotEq h_eq
+    have h_lt := Nat.Lt.of.Le.Ne h_le h_ne.symm
     simp_all
     rw [GetCons.eq.Get_Sub_1.of.Lt_Add_1.Gt_0]
     ·
-      have h_length_slice := LengthSlice.eq.SubMin s (j + 1) i
-      rw [Sub_Add.eq.SubSub] at h_length_slice
-      simp [h_length_slice]
+      have h_length_slice := LengthSlice.eq.SubMin_Length s (j + 1) i
+      grind
     ·
-      apply Sub.gt.Zero.of.Gt h_lt (α := ℕ)
+      grind
   ·
-    have h_i := Ge.of.NotLt h_i
-    linarith
+    grind
 
 
 @[main]
