@@ -2,7 +2,7 @@ import Lemma.Int.In_Icc.is.InAdd
 import Lemma.Int.In_Icc.is.InSub
 import Lemma.Int.EqAddSub
 import Lemma.Int.EqSubAdd
-open Set Int
+open Int
 
 
 /--

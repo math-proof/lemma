@@ -1,6 +1,6 @@
 import Lemma.Int.In_Icc.is.InAdd
 import Lemma.Int.EqAddSub
-open Set Int
+open Int
 
 
 /--

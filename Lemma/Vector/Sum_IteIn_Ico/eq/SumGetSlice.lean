@@ -1,7 +1,7 @@
 import Lemma.Vector.GetGetSlice.eq.Get.of.Lt.Lt.Dvd
 import Lemma.Vector.Sum.eq.Sum_Get
 import sympy.vector.vector
-open Vector Int Set Nat
+open Vector
 set_option maxHeartbeats 1000000
 
 

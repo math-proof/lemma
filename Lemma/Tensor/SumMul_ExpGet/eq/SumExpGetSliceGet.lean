@@ -11,7 +11,7 @@ import Lemma.Tensor.XEqDotS.of.XEq
 import Lemma.Tensor.BandPart.eq.Stack_BoolIn_Icc
 import Lemma.Tensor.Get.of.Eq
 import Lemma.Tensor.ExpAdd_MulInfty.eq.Mul_Stack_Bool
-open Tensor Hyperreal Nat Int
+open Tensor Nat Int
 
 
 @[main]

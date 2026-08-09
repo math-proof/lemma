@@ -1,6 +1,5 @@
 import sympy.Basic
 import sympy.sets.sets
-open Int Set Nat
 
 
 /--

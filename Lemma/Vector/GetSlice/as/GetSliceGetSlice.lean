@@ -1,3 +1,4 @@
+import Lemma.List.LengthSlice.eq.Zero
 import Lemma.Int.EqToNat
 import Lemma.Fin.Eq_Fin.of.EqVal
 import Lemma.List.LengthSlicedIndices.eq.ToNatCeilDivSub.of.Gt_0.Le.Lt
@@ -9,65 +10,34 @@ import Lemma.Vector.GetSlice.eq.MapRange
 import Lemma.Vector.EqGetRange
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import Lemma.Vector.SEq.of.Eq_0.Eq_0
-import stdlib.SEq
-import sympy.vector.vector
 open List Vector Int Nat Rat Slice
 
 
-private lemma length_step_zero
-  (a b : ℕ) :
-  (⟨a, b, 0⟩ : Slice).length n = 0 := by
-  unfold Slice.length
-  simp [EqAdd_Mul_DivSub1Sign_2]
-
-
-private lemma length_inner_step_zero
-  (a b : ℕ) :
-  (⟨a / 0, a / 0 + (⟨a, b, 0⟩ : Slice).length n, 1⟩ : Slice).length
-      ((⟨a % 0, n, 0⟩ : Slice).length n) = 0 := by
-  unfold Slice.length
-  simp [EqAdd_Mul_DivSub1Sign_2]
-
-
-private lemma get_sliced_indices_addd
-  {start stop N d : ℕ}
+private lemma get_sliced_indices_add
+  {start stop N d i : ℕ}
   (h_d : d > 0)
   (h_start_lt : start < stop)
   (h_stop_le : stop ≤ N)
-  {i : ℕ}
-  (h_i :
-    i <
-      (Nat.sliced_indices (step := d) h_start_lt h_stop_le h_d).length) :
-  (Nat.sliced_indices (step := d) h_start_lt h_stop_le h_d)[i].val = start + i * d := by
+  (h_i : i < (Nat.sliced_indices (step := d) h_start_lt h_stop_le h_d).length) :
+  (Nat.sliced_indices (step := d) h_start_lt h_stop_le h_d)[i] = start + i * d := by
   induction i generalizing start stop with
   | zero =>
     unfold Nat.sliced_indices
-    obtain h | h := lt_or_ge (start + d) stop
-    · simp [h]
-    · simp
+    grind
   | succ i ih =>
-    obtain h | h := lt_or_ge (start + d) stop
+    obtain h_start' | h := lt_or_ge (start + d) stop
     ·
-      have h_start' : start + d < stop := h
-      have h_len :
-          (Nat.sliced_indices (step := d) h_start_lt h_stop_le h_d).length =
-            (Nat.sliced_indices (step := d) h_start' h_stop_le h_d).length + 1 := by
-        conv_lhs =>
-          unfold Nat.sliced_indices
-          simp only [h, dite_true, List.length_cons]
-      have ih' := ih h_start' h_stop_le (by omega)
       conv_lhs =>
         unfold Nat.sliced_indices
-        simp only [h, dite_true, List.get_cons_succ]
-      simp [ih']
+        simp only [h_start', dite_true, List.get_cons_succ]
+      erw [ih h_start' h_stop_le]
       ring_nf
     ·
-      have h_len_le :
-          (Nat.sliced_indices (step := d) h_start_lt h_stop_le h_d).length ≤ 1 := by
-        rw [LengthSlicedIndices.eq.ToNatCeilDivSub.of.Gt_0.Le.Lt
-          (start := start) (stop := stop) (n := N) h_start_lt h_stop_le h_d]
-        apply LeToNatCeil_1.of.Le_Add h
-      exact absurd (Nat.succ_le_of_lt h_i) (Nat.not_le_of_gt (by omega))
+      apply absurd (Nat.succ_le_of_lt h_i) (Nat.not_le_of_gt ?_)
+      simp
+      rw [LengthSlicedIndices.eq.ToNatCeilDivSub.of.Gt_0.Le.Lt h_start_lt h_stop_le h_d]
+      apply (LeToNatCeil_1.of.Le_Add h (α := ℚ)).trans
+      omega
 
 
 private lemma sliced_get_lt_stop
@@ -104,7 +74,7 @@ private lemma sliced_get_lt_stop
       conv_lhs =>
         unfold Nat.sliced_indices
         simp only [h, dite_true, List.get_cons_succ]
-      have h_succ := get_sliced_indices_addd h_d h_start' h_stop_le hi_tail
+      have h_succ := get_sliced_indices_add h_d h_start' h_stop_le hi_tail
       simpa [h_succ] using ih_tail
     ·
       have h_len_le :
@@ -117,7 +87,6 @@ private lemma sliced_get_lt_stop
 
 private lemma outer_start_lt_stop
   (a b d n : ℕ)
-  (h_d : d > 0)
   (hLpos : (⟨a, b, d⟩ : Slice).length n > 0) :
   a < min b n := by
   set stop := min b n with hstop
@@ -132,7 +101,8 @@ private lemma outer_start_lt_stop
     omega
   have h_len_zero : (⟨a, b, d⟩ : Slice).length n = 0 := by
     unfold Slice.length
-    simp only [hstop, EqAdd_Mul_DivSub1Sign_2, EqToNat, h_toNat]
+    simp only [EqAdd_Mul_DivSub1Sign_2, EqToNat]
+    grind
   rw [h_len_zero] at hLpos
   exact Nat.lt_irrefl 0 hLpos
 
@@ -145,7 +115,7 @@ private lemma inner_index_lt
   set stop := min b n with hstop
   have hi := i.isLt
   unfold Slice.length at hi ⊢
-  simp only [EqAdd_Mul_DivSub1Sign_2, EqToNat, hstop] at hi ⊢
+  simp only [EqAdd_Mul_DivSub1Sign_2, EqToNat] at hi ⊢
   rcases le_or_gt ⌈((stop : ℚ) - a) / d⌉.toNat 0 with hL0 | hLpos
   ·
     have h_len_zero : (⟨a, b, d⟩ : Slice).length n = 0 := by
@@ -157,9 +127,9 @@ private lemma inner_index_lt
   ·
     have hLpos' : (⟨a, b, d⟩ : Slice).length n > 0 := by
       unfold Slice.length
-      simp only [hstop, EqAdd_Mul_DivSub1Sign_2, EqToNat]
+      simp only [EqAdd_Mul_DivSub1Sign_2, EqToNat]
       exact Nat.pos_of_ne_zero (Nat.ne_of_gt hLpos)
-    have h_start_lt : a < stop := outer_start_lt_stop a b d n h_d hLpos'
+    have h_start_lt : a < stop := outer_start_lt_stop a b d n hLpos'
     have h_stop_le : stop ≤ n := Nat.min_le_right b n
     have h_len :=
       LengthSlicedIndices.eq.ToNatCeilDivSub.of.Gt_0.Le.Lt
@@ -169,7 +139,7 @@ private lemma inner_index_lt
           (Nat.sliced_indices (step := d) h_start_lt h_stop_le h_d).length := by
       simpa [Slice.length, hstop, EqAdd_Mul_DivSub1Sign_2, EqToNat, h_len] using hi
     have h_fin_lt := sliced_get_lt_stop h_d h_start_lt h_stop_le hi'
-    have h_val := get_sliced_indices_addd h_d h_start_lt h_stop_le hi'
+    have h_val := get_sliced_indices_add h_d h_start_lt h_stop_le hi'
     have h_outer_lt : a + i.val * d < stop := by
       rw [← h_val]
       exact h_fin_lt
@@ -197,16 +167,17 @@ private lemma inner_slice_length
   set L := (⟨a, b, d⟩ : Slice).length n with hL
   set len_g := (⟨a % d, n, d⟩ : Slice).length n with hlen_g
   unfold Slice.length
-  simp only [EqAdd_Mul_DivSub1Sign_2, EqToNat, hL, hlen_g]
+  simp only [hL, hlen_g]
   rcases Nat.eq_zero_or_pos L with hL0 | hLpos
-  · omega
+  ·
+    omega
   ·
     have h_upper : a / d + L ≤ len_g := by
       have := inner_index_lt a b d n h_d ⟨L - 1, Nat.sub_one_lt_of_lt hLpos⟩
-      simp only [EqAdd_Mul_DivSub1Sign_2, EqToNat] at this
+      simp at this
       omega
     have h_min : min (a / d + L) len_g = a / d + L := Nat.min_eq_left h_upper
-    simp only [h_min, Nat.div_one, Nat.ceil_one]
+    simp
     omega
 
 
@@ -221,8 +192,10 @@ private lemma main
   if h_d : d = 0 then
     subst h_d
     apply SEq.of.Eq_0.Eq_0
-    · exact length_step_zero a b
-    · exact length_inner_step_zero a b
+    ·
+      apply List.LengthSlice.eq.Zero
+    ·
+      simp [Slice.length]
   else
     have h_d : d > 0 := Nat.pos_of_ne_zero h_d
     set L := (⟨a, b, d⟩ : Slice).length n with hL
@@ -231,17 +204,15 @@ private lemma main
     · intro i
       have h_idx_lt := inner_index_lt a b d n h_d i
       have h_len_eq := inner_slice_length a b d n h_d
-      simp only [GetSlice.eq.MapRange, GetElem.getElem, List.Vector.getSlice, List.Vector.get]
+      simp only [GetElem.getElem, List.Vector.getSlice, List.Vector.get]
       congr 1
       · exact Fin.eq_of_val_eq <|
           calc
-            ↑(List.Vector.indices ⟨a % d, n, d⟩ n)[⟨a / d + i.val, h_idx_lt⟩] =
-                (Add_Mul_DivSub1Sign_2 n (a % d)).toNat + d * (a / d + i.val) := by
-              simpa using
-                GetIndices.eq.AddToNatAdd_Mul_DivSub1Sign_2.of.Gt_0 (N := n) (a := a % d) (b := n) (d := d) h_d
-                  ⟨a / d + i.val, h_idx_lt⟩
+            _ = (Add_Mul_DivSub1Sign_2 n (a % d)).toNat + d * (a / d + i.val) := by
+              simpa using GetIndices.eq.AddToNatAdd_Mul_DivSub1Sign_2.of.Gt_0 (N := n) (a := a % d) (b := n) (d := d) h_d ⟨a / d + i.val, h_idx_lt⟩
             _ = (a / d + i.val) * d + a % d := by
-              simp [EqAdd_Mul_DivSub1Sign_2, EqToNat, Nat.mul_comm, Nat.add_comm]
+              simp [Nat.mul_comm, Nat.add_comm]
+              grind
             _ = a + i.val * d := by
               calc
                 (a / d + i.val) * d + a % d = a / d * d + i.val * d + a % d := by ring
@@ -249,8 +220,7 @@ private lemma main
                   have := Nat.mod_add_div a d
                   omega
             _ = (Add_Mul_DivSub1Sign_2 n a).toNat + d * ↑i := by
-              simpa [EqAdd_Mul_DivSub1Sign_2, EqToNat, Nat.mul_comm] using
-                GetIndices.eq.AddToNatAdd_Mul_DivSub1Sign_2.of.Gt_0 (N := n) (a := a) (b := b) (d := d) h_d i
+              simpa [EqAdd_Mul_DivSub1Sign_2, EqToNat, Nat.mul_comm] using GetIndices.eq.AddToNatAdd_Mul_DivSub1Sign_2.of.Gt_0 (N := n) (a := a) (b := b) (d := d) h_d i
             _ = ↑(List.Vector.indices ⟨a, b, d⟩ n)[i] := by
               simp [EqAdd_Mul_DivSub1Sign_2, EqToNat, Nat.mul_comm]
       · exact Fin.eq_of_val_eq <|
