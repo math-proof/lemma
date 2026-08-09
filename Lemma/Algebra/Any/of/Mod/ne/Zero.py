@@ -12,7 +12,7 @@ def apply(given, k=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat, Int
+    from Lemma import Nat, Int
 #     n = q * d + r
     n = Symbol(integer=True, given=True)
 

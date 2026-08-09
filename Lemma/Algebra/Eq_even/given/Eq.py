@@ -9,7 +9,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Int, Int, Int
+    from Lemma import Algebra, Int
 #     n = q * d + r
     n = Symbol(integer=True, given=True)
 

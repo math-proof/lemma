@@ -16,7 +16,7 @@ def apply(complement):
 
 @prove(proved=False)
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool
+    from Lemma import Set, Bool
     U = Symbol(etype=dtype.integer, given=True)
     n = Symbol(integer=True, given=True)
 
