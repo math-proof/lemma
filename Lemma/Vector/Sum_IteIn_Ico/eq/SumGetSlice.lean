@@ -1,8 +1,7 @@
-import Lemma.Vector.GetGetSlice.eq.Get_Add.of.GtSub
+import Lemma.Fin.In_Ico.is.In_Ico_Min
+import Lemma.Vector.GetGetSlice.eq.Get_Add.of.GtSubMin
 import Lemma.Vector.Sum.eq.Sum_Get
-import sympy.vector.vector
 open Vector
-set_option maxHeartbeats 1000000
 
 
 @[main]
@@ -18,13 +17,20 @@ private lemma main
     0) = v[a:b].sum := by
 -- proof
   rw [Sum.eq.Sum_Get.fin]
-  rw [Vector.GetGetSlice.eq.Get_Add.of.GtSub.fin]
-  have h_get_slice (i : ℕ) (h_i : i < b):= GetGetSlice.eq.Get.of.Lt.Lt.Dvd (by grind) (by grind) (by grind) v (j := a) (n := b) (d := 1) (i := i)
   conv_rhs =>
     arg 2
     ext i
-    -- erw [GetGetSlice.eq.Get.of.Lt.Lt.Dvd (by grind) (by grind) (by grind)]
-  grind
+    rw [Vector.GetGetSlice.eq.Get_Add.of.GtSubMin.fin (by simpa [List.LengthSlice.eq.SubMin] using i.isLt)]
+  conv_lhs =>
+    arg 2
+    ext k
+    simp [Fin.In_Ico.is.In_Ico_Min k a b]
+  rw [← Finset.sum_filter]
+  apply Eq.symm
+  have h_len := List.LengthSlice.eq.SubMin b n a
+  refine Finset.sum_bij (fun (i : Fin ((⟨a, b, 1⟩ : Slice).length n)) _ => (⟨a + ↑i, by grind⟩ : Fin n)) (by grind) (by grind) ?_ (by aesop)
+  intro k hk
+  refine ⟨⟨k.val - a, ?_⟩, Finset.mem_univ _, ?_⟩ <;> grind
 
 
 -- created on 2026-08-08
