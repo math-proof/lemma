@@ -1,4 +1,4 @@
-import Lemma.Set.Cup_Ufn.of.Eq
+import Lemma.Set.Cup_UFn.of.Eq
 import Lemma.Set.Cup.eq.UnionCupS
 import Lemma.Set.Cup_Ioc.eq.Ioc_0.of.Lt_0
 open Set
@@ -41,7 +41,7 @@ private lemma main
             rw [Cup.eq.UnionCupS f (Ico a 0) (Ico b 0)]
             congr 1 <;>
             .
-              apply Cup_Ufn.of.Eq
+              apply Cup_UFn.of.Eq
               grind
           _ = Ioc (a : R) (0 : R) := by simpa [f] using Cup_Ioc.eq.Ioc_0.of.Lt_0 h_a
           _ = Ioc (a : R) (b : R) ∪ Ioc (b : R) (0 : R) := Ioc.eq.UnionIocS.of.Le.Le (by exact_mod_cast h_ab.le) (by exact_mod_cast h_b.le)
