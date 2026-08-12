@@ -1,3 +1,4 @@
+import Lemma.Tensor.SumMulExpGet.eq.SumExpGetSliceGet
 import Lemma.Tensor.MapDiv.eq.DivMapS.of.All_Eq_Div
 import Lemma.Tensor.SumMap.eq.MapSum.of.All_EqUFnAdd
 import Lemma.Tensor.XEqDotS.of.XEq
@@ -160,6 +161,9 @@ private lemma main
     rwa [← h_A']
   have h_zi := h_zi.trans h_xeq
   simp at h_zi
+  have := SumMulExpGet.eq.SumExpGetSliceGet.fin A' i (l := l) (u := u)
+  erw [this] at h_zi
+  clear this
   rw [h_band_part] at h_Ξ_def
   have h_Ξᵢ := Get.of.Eq.fin h_Ξ_def i
   rw [EqGetStack.fn.fin] at h_Ξᵢ

@@ -1,17 +1,18 @@
-import Lemma.Int.ToNatSubCoeS.eq.Sub
-import Lemma.Int.In_Ico.is.In_IcoToNatS
-import Lemma.Int.InSub.is.In_Ico_AddS
-import Lemma.Int.Icc_Sub_1.eq.Ico
-import Lemma.Nat.CoeIte.eq.Ite_CoeS
-import Lemma.Nat.MulIte.eq.Ite_MulS
+import Lemma.Nat.Mul_Ite.eq.Ite_MulS
 import Lemma.Tensor.XEqDotS.of.XEq
+import Lemma.Int.Icc_Sub_1.eq.Ico
+import Lemma.Int.InSub.is.In_Ico_AddS
+import Lemma.Int.In_Ico.is.In_IcoToNatS
+import Lemma.Int.ToNatSubCoeS.eq.Sub
+import Lemma.Nat.CoeIte.eq.Ite_CoeS
 import Lemma.Tensor.BandPart.eq.Stack_BoolIn_Icc
 import Lemma.Tensor.Get.of.Eq
 import Lemma.Tensor.Sum_IteIn_Ico.eq.SumGetSlice
-open Tensor Nat Int
+import Lemma.Tensor.GetExp.eq.ExpGet
+open Int Nat Tensor
 
 
-@[main]
+@[main, fin]
 private lemma main
   [ExpPos α]
   [NeZero (l : ℕ)]
@@ -22,9 +23,10 @@ private lemma main
   (i : Fin n) :
 -- imply
   let Ξ := (1 : Tensor α [n, n]).band_part (l - 1) (u - 1)
-  (Ξ[i] * exp A[i]).sum = (exp A[i])[(i + 1 - l : ℕ) : (i + u : ℕ)].sum := by
+  ((exp A)[i] * Ξ[i]).sum = (exp A[i])[(i + 1 - l : ℕ):(i + u : ℕ)].sum := by
 -- proof
   denote h_Ξ : Ξ = _
+  erw [GetExp.eq.ExpGet]
   have h_Ξᵢ := Get.of.Eq.fin h_Ξ i
   rw [BandPart.eq.Stack_BoolIn_Icc] at h_Ξᵢ
   rw [EqGetStack.fn.fin] at h_Ξᵢ
@@ -37,8 +39,8 @@ private lemma main
     ext j
     arg 1
     arg 1
-    erw [Int.Icc_Sub_1.eq.Ico]
-    rw [Int.InSub.is.In_Ico_AddS.left]
+    erw [Icc_Sub_1.eq.Ico]
+    rw [InSub.is.In_Ico_AddS.left]
     rw [Add_Sub.eq.SubAdd]
     rw [In_Ico.is.In_IcoToNatS]
     rw [Nat.AddCoeS.eq.CoeAdd]
@@ -56,26 +58,25 @@ private lemma main
     arg 2
     ext k
     rw [EqGetStack.fn.fin]
-    rw [Nat.CoeIte.eq.Ite_CoeS]
+    rw [CoeIte.eq.Ite_CoeS]
   conv_lhs =>
     arg 2
     ext k
-    erw [Nat.MulIte.eq.Ite_MulS]
+    erw [Mul_Ite.eq.Ite_MulS]
   conv_lhs =>
     arg 2
     ext k
     arg 2
     simp
-    erw [EqMul1]
+    erw [EqMul_1]
   conv_lhs =>
     arg 2
     ext k
     arg 3
     simp
-    erw [Nat.EqMul0_0]
+    erw [EqMul_0'0]
   erw [Sum_IteIn_Ico.eq.SumGetSlice.fin]
   rfl
 
 
--- created on 2026-08-08
--- updated on 2026-08-11
+-- created on 2026-08-11
