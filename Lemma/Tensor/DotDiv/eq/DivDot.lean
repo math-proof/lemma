@@ -1,32 +1,11 @@
-import Lemma.Nat.EqMulDiv.of.Dvd
-import Lemma.Nat.LtMod.of.Lt_Mul
-import Lemma.List.ProdSet.eq.MulProd_Mul_Prod.of.GtLength
-import Lemma.List.ProdSet__Mul_Get.eq.MulProd_Mul_Prod.of.GtLength
-import Lemma.Tensor.CastDiv.eq.DivCast.of.Eq
 import Lemma.Tensor.Div.eq.Div_GetData_0
 import Lemma.Tensor.Dot.eq.SumMul
 import Lemma.Tensor.Dot.eq.SumMul__0
-import Lemma.Bool.SEq.is.Eq
-import Lemma.Bool.SEqCast.of.Eq
-import Lemma.Bool.SEqUFnS.of.SEq
-import Lemma.List.SetAppend.eq.Append_Set.of.GtLength
-import Lemma.List.Set_0.eq.Cons_Tail.of.GtLength_0
-import Lemma.List.EqSwap_0'1
-import Lemma.List.EqAppendTake__ListGet.of.GeLength_2
-import Lemma.List.EraseIdxAppend.eq.Append_EraseIdx.of.LeLength
-import Lemma.List.InsertIdxAppend.eq.Append_Cons
-import Lemma.List.InsertIdxAppend.eq.Append_InsertIdx
-import Lemma.List.InsertIdxAppend.eq.Append_InsertIdx.of.LeLength
-import Lemma.List.SwapAppend.eq.Append_Swap.of.LeLength.LeLength
 import Lemma.Tensor.Dot.as.SumMul
 import Lemma.Tensor.Dot.eq.GetSumMul
 import Lemma.Tensor.Dot.eq.SumMul.of.Lt
 import Lemma.Tensor.Dot.eq.SumMul.of.Ge
 import Lemma.Tensor.Dot.eq.SelectDot_Unsqueeze_1
-import Lemma.Tensor.Eq.is.All_EqGetS
-import Lemma.Tensor.GetDiv.eq.DivGet
-import Lemma.Tensor.GetFromVector.eq.Get
-import Lemma.Tensor.GetToVector.eq.Get
 import Lemma.Tensor.Einsum.eq.MulGetData_0
 import Lemma.Tensor.Einsum.eq.SumMulDataS.of.Gt
 import Lemma.Tensor.Einsum.eq.SumMulDataS.of.Lt
@@ -37,35 +16,17 @@ import Lemma.Tensor.Einsum.as.SelectBmm.of.EqGet_SubLength_1.GeLength_2
 import Lemma.Tensor.Einsum.as.SelectBmm.of.GeGet_SubLength_1.GeLength_2
 import Lemma.Tensor.Einsum.as.SelectBmm.of.LtGet_SubLength_1.GeLength_2
 import Lemma.Tensor.Einsum.as.Tensordot.of.GeLength_2.GeLength_2
-import Lemma.Tensor.Eq.is.EqDataS
-import Lemma.Tensor.Matmul.as.Bmm
 import Lemma.Tensor.Matmul.as.MatmulResizeS.of.Length.GtLength_0
 import Lemma.Tensor.GetMatmul.as.MatmulGetS.of.Get_0.Length.GtLength_0
-import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
-import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.GtLength_0
-import Lemma.Tensor.SEqMatmulS.of.SEq.SEq
-import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.SelectDiv.eq.DivSelectS
-import Lemma.Tensor.SEqDotS.of.SEq
-import Lemma.Tensor.Tensordot.of.SEq.SEq
 import Lemma.Tensor.SEqTensordotS.of.SEq.SEq.Eq.Eq
-import Lemma.Tensor.SEqResizeS.of.SEq.Val.Eq
-import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.Tensor.SelectTensorReplicateProd.eq.TensorReplicateProdEraseIdx
 import Lemma.Tensor.SumDiv.eq.DivSum
-import Lemma.Tensor.Tensordot.eq.Matmul.of.Length
 import Lemma.Tensor.Tensordot.as.Matmul.of.GeLengthS
 import Lemma.Tensor.Tensordot.as.Matmul.of.LtLengthS
-import Lemma.Vector.Div.eq.Div_Replicate
-import Lemma.Vector.Eq.is.All_EqGetS
 import Lemma.Vector.FlattenMap.eq.MapFlatten
-import Lemma.Vector.GetMap.eq.UFnGet
 import Lemma.Vector.GetMap₂.eq.BFnGetS
-import Lemma.Vector.GetRepeat.eq.Get_Mod.of.Lt_Mul
-import Lemma.Vector.GetResize.eq.Ite_Get_Mod
-import Lemma.Vector.MapMap.eq.Map_Comp
 import Lemma.Vector.SplitAtMap.eq.MapSplitAt
-import sympy.tensor.tensor
 open Nat List Tensor Vector Bool
 
 set_option maxHeartbeats 8000000
@@ -73,9 +34,12 @@ set_option maxHeartbeats 8000000
 
 private lemma mul_div_tensor
   [Semifield α]
+-- given
   (A C : Tensor α s)
   (B : Tensor α []) :
-    (A / B) * C = (A * C) / B := by
+-- imply
+  (A / B) * C = (A * C) / B := by
+-- proof
   apply Eq.of.EqDataS
   apply Vector.Eq.of.All_EqGetS.fin
   intro i
@@ -89,9 +53,12 @@ private lemma mul_div_tensor
 
 private lemma left_scalar_mul_div
   [Semifield α]
+-- given
   (a B : α)
   (C : Tensor α s) :
-    (a / B) * C = (a * C) / B := by
+-- imply
+  (a / B) * C = (a * C) / B := by
+-- proof
   apply Eq.of.EqDataS
   apply Vector.Eq.of.All_EqGetS.fin
   intro i
@@ -104,9 +71,12 @@ private lemma left_scalar_mul_div
 
 private lemma right_mul_div
   [Semifield α]
+-- given
   (A : Tensor α s)
   (b B : α) :
-    (A / B) * b = (A * b) / B := by
+-- imply
+  (A / B) * b = (A * b) / B := by
+-- proof
   apply Eq.of.EqDataS
   apply Vector.Eq.of.All_EqGetS.fin
   intro i
@@ -120,10 +90,13 @@ private lemma right_mul_div
 
 private lemma vector_map_div_repeat
   [DivisionSemiring α]
+-- given
   (v : List.Vector α n)
   (b : α)
   (d : ℕ) :
-    (v.map (· / b)).repeat d = (v.repeat d).map (· / b) := by
+-- imply
+  (v.map (· / b)).repeat d = (v.repeat d).map (· / b) := by
+-- proof
   apply Vector.Eq.of.All_EqGetS.fin
   intro i
   erw [GetMap.eq.UFnGet (i := i)]
@@ -134,10 +107,13 @@ private lemma vector_map_div_repeat
 
 private lemma vector_resize_div
   [Semifield α]
+-- given
   (v : List.Vector α n)
   (c : α)
   (m : ℕ) :
-    (v.map (· / c)).resize m = (v.resize m).map (· / c) := by
+-- imply
+  (v.map (· / c)).resize m = (v.resize m).map (· / c) := by
+-- proof
   apply Vector.Eq.of.All_EqGetS.fin
   intro i
   have hL : ((v.map (· / c)).resize m)[i] =
@@ -154,28 +130,36 @@ private lemma vector_resize_div
     rfl
   rw [hmap, hR]
   split_ifs with h
-  · change List.Vector.get (v.map (· / c)) _ = List.Vector.get v _ / c
+  ·
+    change List.Vector.get (v.map (· / c)) _ = List.Vector.get v _ / c
     rw [List.Vector.get_map]
-  · exact (zero_div c).symm
+  ·
+    exact (zero_div c).symm
 
 
 private lemma cast_map
+-- given
   (h : n = n')
   (v : List.Vector α n)
   (f : α → α) :
-    cast (congrArg (List.Vector α) h) (v.map f) =
-      (cast (congrArg (List.Vector α) h) v).map f := by
+-- imply
+  cast (congrArg (List.Vector α) h) (v.map f) =
+    (cast (congrArg (List.Vector α) h) v).map f := by
+-- proof
   subst h
   rfl
 
 
 private lemma reshape_div
   [Semifield α]
+-- given
   (X : Tensor α s)
   (B : Tensor α [])
   (s' : List ℕ)
   (h : s.prod ∣ s'.prod) :
-    (X / B).reshape s' h = X.reshape s' h / B := by
+-- imply
+  (X / B).reshape s' h = X.reshape s' h / B := by
+-- proof
   apply Eq.of.EqDataS
   unfold Tensor.reshape
   dsimp only [HDiv.hDiv]
@@ -187,21 +171,27 @@ private lemma reshape_div
 
 private lemma unsqueeze_div
   [Semifield α]
+-- given
   (X : Tensor α s)
   (B : Tensor α [])
   (dim : ℕ) :
-    (X / B).unsqueeze dim = X.unsqueeze dim / B := by
+-- imply
+  (X / B).unsqueeze dim = X.unsqueeze dim / B := by
+-- proof
   simp only [Tensor.unsqueeze]
   exact reshape_div X B _ _
 
 
 private lemma repeat_div
   [Semifield α]
+-- given
   (X : Tensor α s)
   (B : Tensor α [])
   (dim : Fin s.length)
   (n : ℕ) :
-    (X / B).repeat dim n = X.repeat dim n / B := by
+-- imply
+  (X / B).repeat dim n = X.repeat dim n / B := by
+-- proof
   apply Eq.of.EqDataS
   unfold Tensor.repeat
   dsimp only [HDiv.hDiv]
@@ -227,7 +217,7 @@ private lemma repeat_div
       arg 1
       rw [show (fun v => (v.repeat n).map fun x => x / b) =
               ((fun w => w.map fun x => x / b) ∘ (List.Vector.repeat · n)) from rfl]
-      rw [← MapMap.eq.Map_Comp]
+      rw [Map_Comp.eq.MapMap]
     rw [FlattenMap.eq.MapFlatten]
   have h_prod := (ProdSet__Mul_Get.eq.MulProd_Mul_Prod.of.GtLength dim.isLt n).symm
   rw [← cast_map h_prod]
@@ -236,11 +226,14 @@ private lemma repeat_div
 
 private lemma resize_div
   [Semifield α]
+-- given
   (X : Tensor α s)
   (B : Tensor α [])
   (dim : Fin s.length)
   (n : ℕ) :
-    (X / B).resize dim n = X.resize dim n / B := by
+-- imply
+  (X / B).resize dim n = X.resize dim n / B := by
+-- proof
   apply Eq.of.EqDataS
   unfold Tensor.resize
   dsimp only [HDiv.hDiv]
@@ -264,7 +257,7 @@ private lemma resize_div
       arg 1
       rw [show (fun v => (v.resize r).map fun x => x / b) =
               ((fun w => w.map fun x => x / b) ∘ (List.Vector.resize · r)) from rfl]
-      rw [← MapMap.eq.Map_Comp]
+      rw [Map_Comp.eq.MapMap]
     rw [FlattenMap.eq.MapFlatten]
   have h_prod := MulProd_Mul_Prod.eq.ProdSet.of.GtLength dim.isLt n
   rw [show r = n * (s.drop dim.succ).prod from rfl] at h_flat
@@ -275,22 +268,28 @@ private lemma resize_div
 private lemma cast_div
   [Div α]
   {s s' : List ℕ}
+-- given
   (h : s = s')
   (X : Tensor α s)
   (B : Tensor α []) :
-    (cast (congrArg (Tensor α) h) (X / B) : Tensor α s') =
-      cast (congrArg (Tensor α) h) X / B := by
+-- imply
+  (cast (congrArg (Tensor α) h) (X / B) : Tensor α s') =
+    cast (congrArg (Tensor α) h) X / B := by
+-- proof
   subst h
   rfl
 
 
 private lemma select_div
   [Div α]
+-- given
   (X : Tensor α s)
   (B : Tensor α [])
   (d : Fin s.length)
   (i : Fin s[d]) :
-    (X / B).select d i = X.select d i / B := by
+-- imply
+  (X / B).select d i = X.select d i / B := by
+-- proof
   let R : Tensor α s := ⟨List.Vector.replicate s.prod B.data[0]⟩
   have hX : X / B = X / R := by
     apply Eq.of.EqDataS
@@ -307,9 +306,12 @@ private lemma select_div
 
 private lemma vector_vector
   [Semifield α]
+-- given
   (A C : Tensor α [n])
   (B : Tensor α []) :
-    (A / B) @ C = A @ C / B := by
+-- imply
+  (A / B) @ C = A @ C / B := by
+-- proof
   repeat rw [Dot.eq.SumMul__0]
   rw [mul_div_tensor]
   exact SumDiv.eq.DivSum (A * C) B 0
@@ -317,11 +319,14 @@ private lemma vector_vector
 
 private lemma vector_vector_lt
   [Semifield α]
+-- given
   (h : n < n')
   (A : Tensor α [n])
   (C : Tensor α [n'])
   (B : Tensor α []) :
-    (A / B) @ C = A @ C / B := by
+-- imply
+  (A / B) @ C = A @ C / B := by
+-- proof
   simp only [Dot.dot]
   rw [Einsum.eq.SumMulDataS.of.Lt h (X := A / B) (Y := C)]
   rw [Einsum.eq.SumMulDataS.of.Lt h (X := A) (Y := C)]
@@ -337,11 +342,14 @@ private lemma vector_vector_lt
 
 private lemma vector_vector_gt
   [Semifield α]
+-- given
   (h : n > n')
   (A : Tensor α [n])
   (C : Tensor α [n'])
   (B : Tensor α []) :
-    (A / B) @ C = A @ C / B := by
+-- imply
+  (A / B) @ C = A @ C / B := by
+-- proof
   simp only [Dot.dot]
   rw [Einsum.eq.SumMulDataS.of.Gt h (X := A / B) (Y := C)]
   rw [Einsum.eq.SumMulDataS.of.Gt h (X := A) (Y := C)]
@@ -355,10 +363,13 @@ private lemma vector_vector_gt
 
 private lemma left_nil
   [Semifield α]
+-- given
   (A : Tensor α [])
   (B : Tensor α [])
   (C : Tensor α s') :
-    (A / B) @ C = A @ C / B := by
+-- imply
+  (A / B) @ C = A @ C / B := by
+-- proof
   simp only [Dot.dot]
   rw [Einsum.eq.MulGetData_0 (X := A / B), Einsum.eq.MulGetData_0 (X := A)]
   have h : (A / B).data[0] = A.data[0] / B.data[0] := by
@@ -371,10 +382,13 @@ private lemma left_nil
 
 private lemma right_nil
   [Semifield α]
+-- given
   (A : Tensor α (n :: s))
   (B : Tensor α [])
   (C : Tensor α []) :
-    (A / B) @ C = A @ C / B := by
+-- imply
+  (A / B) @ C = A @ C / B := by
+-- proof
   simp only [Dot.dot]
   unfold einsum
   simp
@@ -389,10 +403,13 @@ private lemma right_nil
 
 private lemma matrix_matrix
   [Semifield α]
+-- given
   (A : Tensor α [m, k])
   (C : Tensor α [k, n])
   (B : Tensor α []) :
-    (A / B) @ C = A @ C / B := by
+-- imply
+  (A / B) @ C = A @ C / B := by
+-- proof
   let A_div0 : Tensor α [m, 1, k] := (A / B).unsqueeze 1
   let A_div : Tensor α [m, n, k] :=
     cast (congrArg (Tensor α) (by simp)) (A_div0.repeat ⟨1, by grind⟩ n)
@@ -423,11 +440,14 @@ private lemma matrix_matrix
 
 private lemma matrix_matrix_lt
   [Semifield α]
+-- given
   (h : k' < k)
   (A : Tensor α [m, k'])
   (C : Tensor α [k, n])
   (B : Tensor α []) :
-    (A / B) @ C = A @ C / B := by
+-- imply
+  (A / B) @ C = A @ C / B := by
+-- proof
   let A_div_r : Tensor α [m, k] := (A / B).resize ⟨1, by grind⟩ k
   let A_r : Tensor α [m, k] := A.resize ⟨1, by grind⟩ k
   have hr : A_div_r = A_r / B := by
@@ -460,11 +480,14 @@ private lemma matrix_matrix_lt
 
 private lemma matrix_matrix_ge
   [Semifield α]
+-- given
   (h : k ≥ k')
   (A : Tensor α [m, k])
   (C : Tensor α [k', n])
   (B : Tensor α []) :
-    (A / B) @ C = A @ C / B := by
+-- imply
+  (A / B) @ C = A @ C / B := by
+-- proof
   let A_div0 : Tensor α [m, 1, k] := (A / B).unsqueeze 1
   let A0 : Tensor α [m, 1, k] := A.unsqueeze 1
   have h0 : A_div0 = A0 / B := by
@@ -492,10 +515,13 @@ private lemma matrix_matrix_ge
 
 private lemma vector_matrix
   [Semifield α]
+-- given
   (A : Tensor α [n])
   (C : Tensor α [k, d])
   (B : Tensor α []) :
-    (A / B) @ C = A @ C / B := by
+-- imply
+  (A / B) @ C = A @ C / B := by
+-- proof
   let K := n ⊔ k
   let A_div_r : Tensor α [K] := (A / B).resize ⟨0, by grind⟩ K
   let A_r : Tensor α [K] := A.resize ⟨0, by grind⟩ K
@@ -540,10 +566,13 @@ private lemma vector_matrix
 
 private lemma matrix_vector
   [Semifield α]
+-- given
   (A : Tensor α [m, k])
   (C : Tensor α [d])
   (B : Tensor α []) :
-    (A / B) @ C = A @ C / B := by
+-- imply
+  (A / B) @ C = A @ C / B := by
+-- proof
   rw [Dot.eq.SelectDot_Unsqueeze_1 (A / B) C]
   rw [Dot.eq.SelectDot_Unsqueeze_1 A C]
   have h : ((A / B) @ (C.unsqueeze 1)) = (A @ (C.unsqueeze 1)) / B := by
@@ -566,10 +595,13 @@ private lemma matrix_vector
 
 private lemma vector_vector_any
   [Semifield α]
+-- given
   (A : Tensor α [n])
   (C : Tensor α [n'])
   (B : Tensor α []) :
-    (A / B) @ C = A @ C / B := by
+-- imply
+  (A / B) @ C = A @ C / B := by
+-- proof
   if h : n = n' then
     subst h
     exact vector_vector A C B
@@ -582,10 +614,13 @@ private lemma vector_vector_any
 
 private lemma matrix_matrix_any
   [Semifield α]
+-- given
   (A : Tensor α [m, k])
   (C : Tensor α [k', n])
   (B : Tensor α []) :
-    (A / B) @ C = A @ C / B := by
+-- imply
+  (A / B) @ C = A @ C / B := by
+-- proof
   if h : k = k' then
     subst h
     exact matrix_matrix A C B
@@ -599,10 +634,13 @@ private lemma matrix_matrix_any
 /-- Batched matmul with equal batch and matching contract dims. -/
 private lemma batch_matrix_matrix
   [Semifield α]
+-- given
   (A : Tensor α (bz ++ [m, k]))
   (C : Tensor α (bz ++ [k, n]))
   (B : Tensor α []) :
-    (A / B) @ C = A @ C / B := by
+-- imply
+  (A / B) @ C = A @ C / B := by
+-- proof
   let A_div0 : Tensor α (bz ++ [m, 1, k]) :=
     cast (congrArg (Tensor α) (by simp [InsertIdxAppend.eq.Append_InsertIdx]))
       ((A / B).unsqueeze (bz.length + 1))
@@ -653,10 +691,13 @@ private lemma batch_matrix_matrix
 /-- `bmm` distributes over scalar division. -/
 private lemma bmm_div
   [Semifield α]
+-- given
   (A : Tensor α (bz ++ [m, k]))
   (C : Tensor α (bz ++ [k, n]))
   (B : Tensor α []) :
-    (A / B).bmm C = A.bmm C / B := by
+-- imply
+  (A / B).bmm C = A.bmm C / B := by
+-- proof
   let A_div0 : Tensor α (bz ++ [m, 1, k]) :=
     cast (congrArg (Tensor α) (by simp [InsertIdxAppend.eq.Append_InsertIdx]))
       ((A / B).unsqueeze (bz.length + 1))
@@ -709,11 +750,14 @@ private lemma bmm_div
 private lemma matmul_div_eq_len
   [Semifield α]
   {s s' : List ℕ}
+-- given
   (hlen : s.length = s'.length)
   (A : Tensor α (s ++ [m, t]))
   (C : Tensor α (s' ++ [t, k]))
   (B : Tensor α []) :
-    (A / B).matmul C hlen = A.matmul C hlen / B := by
+-- imply
+  (A / B).matmul C hlen = A.matmul C hlen / B := by
+-- proof
   induction s generalizing s' m t k with
   | nil =>
     match s' with
@@ -830,20 +874,26 @@ private lemma matmul_div_eq_len
 private lemma matmul_div
   [Semifield α]
   {s : List ℕ}
+-- given
   (A : Tensor α (s ++ [m, t]))
   (C : Tensor α (s ++ [t, k]))
   (B : Tensor α []) :
-    (A / B).matmul C (by rfl) = A.matmul C (by rfl) / B :=
+-- imply
+  (A / B).matmul C (by rfl) = A.matmul C (by rfl) / B :=
+-- proof
   matmul_div_eq_len (by rfl) A C B
 
 
 /-- Length-1 unequal-batch `matmul`. -/
 private lemma matmul_div_len1
   [Semifield α]
+-- given
   (A : Tensor α ([b] ++ [m, t]))
   (C : Tensor α ([b'] ++ [t, k]))
   (B : Tensor α []) :
-    (A / B).matmul C (by simp) = A.matmul C (by simp) / B :=
+-- imply
+  (A / B).matmul C (by simp) = A.matmul C (by simp) / B :=
+-- proof
   matmul_div_eq_len (by simp) A C B
 
 
@@ -851,10 +901,13 @@ private lemma matmul_div_len1
 private lemma tensordot_div_same
   [Semifield α]
   {s : List ℕ}
+-- given
   (A : Tensor α (s ++ [m, n]))
   (C : Tensor α (s ++ [n, k]))
   (B : Tensor α []) :
-    (A / B).tensordot C = A.tensordot C / B := by
+-- imply
+  (A / B).tensordot C = A.tensordot C / B := by
+-- proof
   have h1 := Tensordot.eq.Matmul.of.Length (by rfl) (A / B) C
   have h2 := Tensordot.eq.Matmul.of.Length (by rfl) A C
   rw [h1, h2]
@@ -864,13 +917,16 @@ private lemma tensordot_div_same
 /-- Both ranks ≥ 2 with equal batch prefixes. -/
 private lemma both_ge_2
   [Semifield α]
+-- given
   (hs : s.length ≥ 2)
   (hs' : s'.length ≥ 2)
   (hb : s.take (s.length - 2) = s'.take (s'.length - 2))
   (A : Tensor α s)
   (C : Tensor α s')
   (B : Tensor α []) :
-    (A / B) @ C = A @ C / B := by
+-- imply
+  (A / B) @ C = A @ C / B := by
+-- proof
   simp only [Dot.dot]
   have hE := Einsum.as.Tensordot.of.GeLength_2.GeLength_2 hs hs' A C
   have hEd := Einsum.as.Tensordot.of.GeLength_2.GeLength_2 hs hs' (A / B) C
@@ -930,10 +986,13 @@ private lemma both_ge_2
 /-- Rank-3 any leading/contract dims. -/
 private lemma rank3_any
   [Semifield α]
+-- given
   (A : Tensor α [b, m, k])
   (C : Tensor α [b', k', n])
   (B : Tensor α []) :
-    (A / B) @ C = A @ C / B := by
+-- imply
+  (A / B) @ C = A @ C / B := by
+-- proof
   if hb : b = b' then
     subst hb
     exact both_ge_2 (by simp) (by simp) (by simp) A C B
@@ -973,11 +1032,14 @@ private lemma rank3_any
 /-- Vector @ rank ≥ 2. -/
 private lemma vector_ge2
   [Semifield α]
+-- given
   (hs' : s'.length ≥ 2)
   (A : Tensor α [n])
   (C : Tensor α s')
   (B : Tensor α []) :
-    (A / B) @ C = A @ C / B := by
+-- imply
+  (A / B) @ C = A @ C / B := by
+-- proof
   simp only [Dot.dot]
   if h_eq : n = s'[s'.length - 2] then
     have hE := Einsum.as.SelectBmm.of.Eq_Get_SubLength.GeLength_2 hs' h_eq A C
@@ -1089,11 +1151,14 @@ private lemma vector_ge2
 /-- Rank ≥ 2 @ vector. -/
 private lemma ge2_vector
   [Semifield α]
+-- given
   (hs : s.length ≥ 2)
   (A : Tensor α s)
   (C : Tensor α [n'])
   (B : Tensor α []) :
-    (A / B) @ C = A @ C / B := by
+-- imply
+  (A / B) @ C = A @ C / B := by
+-- proof
   simp only [Dot.dot]
   if h_eq : s[s.length - 1] = n' then
     have hE := Einsum.as.SelectBmm.of.EqGet_SubLength_1.GeLength_2 hs h_eq A C
@@ -1207,10 +1272,13 @@ private lemma ge2_vector
 private lemma tensordot_div
   [Semifield α]
   {s s' : List ℕ}
+-- given
   (A : Tensor α (s ++ [m, n]))
   (C : Tensor α (s' ++ [n, k]))
   (B : Tensor α []) :
-    (A / B).tensordot C = A.tensordot C / B := by
+-- imply
+  (A / B).tensordot C = A.tensordot C / B := by
+-- proof
   if hlt : s.length < s'.length then
     have hL := Tensordot.as.Matmul.of.LtLengthS hlt (A / B) C
     have hR := Tensordot.as.Matmul.of.LtLengthS hlt A C
@@ -1263,12 +1331,15 @@ private lemma tensordot_div
 /-- Both ranks ≥ 2, possibly unequal batch prefixes. -/
 private lemma both_ge_2_any
   [Semifield α]
+-- given
   (hs : s.length ≥ 2)
   (hs' : s'.length ≥ 2)
   (A : Tensor α s)
   (C : Tensor α s')
   (B : Tensor α []) :
-    (A / B) @ C = A @ C / B := by
+-- imply
+  (A / B) @ C = A @ C / B := by
+-- proof
   if hb : s.take (s.length - 2) = s'.take (s'.length - 2) then
     exact both_ge_2 hs hs' hb A C B
   else
