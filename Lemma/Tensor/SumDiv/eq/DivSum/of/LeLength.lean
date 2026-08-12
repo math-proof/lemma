@@ -17,8 +17,8 @@ private lemma main
 -- proof
   rw [Sum.eq.Cast.of.LeLength (by grind)]
   conv_rhs => rw [Sum.eq.Cast.of.LeLength (by grind)]
-  have h := EqEraseIdx.of.LeLength h
-  rw [CastDiv.eq.DivCast.of.Eq.scalar h.symm X]
+  rw [CastDiv.eq.DivCast.of.Eq]
+  apply Eq_EraseIdx.of.LeLength h
 
 
 -- created on 2025-09-25
