@@ -10,7 +10,6 @@ import Lemma.Tensor.Get.of.Eq.GtLength_0
 import Lemma.Tensor.GetBmm.as.BmmGetS.of.Eq
 import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
 import Lemma.Tensor.GetDot.eq.DotGet
-import Lemma.Tensor.GetDot.eq.DotGet.of.Lt
 import Lemma.Tensor.GetReshape.as.Reshape.of.Prod.GtLength_0
 import Lemma.Tensor.GetResize.as.ResizeGet.of.GtGet_0.GtVal_0
 import Lemma.Tensor.GetSelect.as.SelectGet.of.GtGet_0.GtGet_Add_1.LtAdd_1Length
@@ -93,7 +92,7 @@ private lemma une
   simp [GetElem.getElem]
   match s with
   | [] =>
-    erw [GetDot.eq.DotGet.of.Lt.fin h]
+    erw [GetDot.eq.DotGet.une.fin]
     rfl
   | s₀ :: s =>
     simp [Dot.dot]
