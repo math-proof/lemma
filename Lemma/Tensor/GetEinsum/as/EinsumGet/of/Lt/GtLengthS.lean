@@ -9,7 +9,7 @@ import Lemma.List.TakeCons.eq.Cons_Take.of.Gt_0
 import Lemma.List.TakeTake.eq.Take.of.Gt
 import Lemma.List.ZipWith_Append.eq.AppendZipWithS
 import Lemma.List.ZipWith__Append.eq.AppendZipWithS
-import Lemma.Tensor.Einsum.as.Tensordot.of.LtGetS_SubLength.GeLength_2.GeLength_2
+import Lemma.Tensor.Einsum.as.Tensordot.of.GeLength_2.GeLength_2
 import Lemma.Tensor.Get.of.Eq.GtLength_0
 import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
 import Lemma.Tensor.GetResize.as.ResizeGet.of.GtGet_0.GtVal_0
@@ -46,11 +46,11 @@ private lemma main
     have h_tail : sₜ.length ≥ s'ₜ.length := by omega
     omega
   have h_min_length : sₜ.length ⊓ (sₜ.length + 1 + 1) = sₜ.length := by omega
-  have := Einsum.eq.Cast_Tensordot.of.LtGetS_SubLength.GeLength_2.GeLength_2 (by simp) (by simp) (by simpa) X Y
+  have := Einsum.eq.Cast_Tensordot.of.GeLength_2.GeLength_2 (by simp) (by simp) X Y
   erw [Get.of.Eq.GtLength_0 (by simp [matmul_shape]) this ⟨i, by
     rw [← Length.eq.Get_0.of.GtLength_0 (by simp [matmul_shape])]
     exact GtLengthDot.of.GeLengthS (by grind) X Y i⟩]
-  conv_rhs => erw [Einsum.eq.Cast_Tensordot.of.LtGetS_SubLength.GeLength_2.GeLength_2 (by simp) (by simp) (by simpa)]
+  conv_rhs => erw [Einsum.eq.Cast_Tensordot.of.GeLength_2.GeLength_2 (by simp) (by simp)]
   simp
   apply SEq_Cast.of.SEq.Eq (by simp [matmul_shape, broadcast_shape])
   rw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (i := ⟨i, by simp [broadcast_shape]; split_ifs; repeat grind⟩) (by simp) (by simp [broadcast_shape, matmul_shape])]
@@ -209,12 +209,8 @@ private lemma main
         apply SEq_Cast.of.SEq.Eq (by simp)
         erw [ReshapeCast.eq.Reshape.of.Prod.Eq (by simp) (by simp)]
         apply SEqReshape.of.Eq
-        congr 1
-        ·
-          simp
-          omega
-        ·
-          simp
+        simp
+        omega
 
 
 -- created on 2026-07-16

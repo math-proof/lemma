@@ -8,7 +8,7 @@ import Lemma.List.TakeAppend.eq.Take.of.GeLength
 import Lemma.List.TakeCons.eq.Cons_Take.of.Gt_0
 import Lemma.List.TakeTake.eq.Take.of.Gt
 import Lemma.List.ZipWith__Append.eq.AppendZipWithS
-import Lemma.Tensor.Einsum.as.Tensordot.of.GeGetS_SubLength.GeLength_2.GeLength_2
+import Lemma.Tensor.Einsum.as.Tensordot.of.GeLength_2.GeLength_2
 import Lemma.Tensor.Get.of.Eq.GtLength_0
 import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
 import Lemma.Tensor.GetResize.as.ResizeGet.of.GtGet_0.GtVal_0
@@ -44,11 +44,11 @@ private lemma main
     have h_tail : sₜ.length ≥ s'ₜ.length := by omega
     omega
   have h_min_length : sₜ.length ⊓ (sₜ.length + 1 + 1) = sₜ.length := by omega
-  have := Einsum.eq.Cast_Tensordot.of.GeGetS_SubLength.GeLength_2.GeLength_2 (by simp) (by simp) (by simpa) X Y
+  have := Einsum.eq.Cast_Tensordot.of.GeLength_2.GeLength_2 (by simp) (by simp) X Y
   erw [Get.of.Eq.GtLength_0 (by simp [matmul_shape]) this ⟨i, by
     rw [← Length.eq.Get_0.of.GtLength_0 (by simp [matmul_shape])]
     exact GtLengthDot.of.GeLengthS (by grind) X Y i⟩]
-  conv_rhs => erw [Einsum.eq.Cast_Tensordot.of.GeGetS_SubLength.GeLength_2.GeLength_2 (by simp) (by simp) (by simpa)]
+  conv_rhs => erw [Einsum.eq.Cast_Tensordot.of.GeLength_2.GeLength_2 (by simp) (by simp)]
   simp
   apply SEq_Cast.of.SEq.Eq (by simp [matmul_shape, broadcast_shape])
   rw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (i := ⟨i, by simp [broadcast_shape]; split_ifs; repeat grind⟩) (by simp) (by simp [broadcast_shape, matmul_shape])]
@@ -131,12 +131,22 @@ private lemma main
           omega
       ·
         apply SEqMatmulS.of.SEq.SEq.Eq.Eq (by simp) (by rfl) (by simp; grind)
-        apply SEqCastS.of.SEq.Eq.Eq (by simp) (by simp [← List.Cons_Append_List.eq.AppendTake_Length])
-        erw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (i := ⟨i, by grind⟩) (by simp) (by simp [← List.Cons_Append_List.eq.AppendTake_Length])]
-        apply SEqCast.of.SEq.Eq (by simp [← List.Cons_Append_List.eq.AppendTake_Length])
+        apply SEqCastS.of.SEq.Eq.Eq (by simp) (by simp)
+        rw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (i := ⟨i, by grind⟩) (by simp) (by simp)]
+        apply SEqCast.of.SEq.Eq (by simp)
         simp
-        rfl
-        apply SEqReshapeS.of.Eq.Eq.Dvd (by simp) (by simp) (by rfl)
+        rw [GetResize.eq.Cast_ResizeGet.of.GtGet_0.GtVal_0.fin (by simp) (by grind)]
+        simp
+        apply SEqCast.of.SEq.Eq (by simp)
+        apply SEqResizeS.of.SEq.Val.Eq (by simp) (by simp)
+        have h_cons := Cons_Append_List.eq.AppendTake_Length sₜ sₐ k k
+        erw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (i := ⟨i, by grind⟩) (by grind) (by simpa)]
+        ·
+          simp
+          apply SEqCastS.of.SEq.Eq.Eq (by simpa) (by simpa)
+          rfl
+        ·
+          apply SEqReshapeS.of.Eq.Eq.Dvd (by simp) (by simp) (by rfl)
       ·
         simp
         grind
@@ -179,13 +189,26 @@ private lemma main
     ·
       rw [Tensordot.eq.Matmul.of.Length (by simp [h_s]; omega)]
       apply SEqMatmulS.of.SEq.SEq.Eq.Eq (by simp) (by rfl) (by simp; grind)
-      apply SEqCastS.of.SEq.Eq.Eq (by simp) (by simp [← Cons_Append_List.eq.AppendTake_Length])
-      erw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (i := ⟨i, by grind⟩) (by simp) (by simp [← Cons_Append_List.eq.AppendTake_Length])]
-      apply SEqCast.of.SEq.Eq (by simp [← Cons_Append_List.eq.AppendTake_Length]) (by rfl)
-      rw [Reshape.eq.Cast.of.Eq (by simp; grind)]
+      apply SEqCastS.of.SEq.Eq.Eq (by simp) (by simp)
+      rw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (i := ⟨i, by grind⟩) (by simp) (by simp)]
+      apply SEqCast.of.SEq.Eq (by simp)
       simp
-      apply SEqCastS.of.SEq.Eq.Eq (by simp; grind) (by simp)
-      rfl
+      rw [GetResize.eq.Cast_ResizeGet.of.GtGet_0.GtVal_0.fin (by simp) (by grind) (d := ⟨((n :: sₐ :: (sₜ ++ [k])).take ((sₜ ++ [k]).length + 1 + 1 - 2)).length + 1, by grind⟩)]
+      simp
+      apply SEqCast.of.SEq.Eq (by simp)
+      apply SEqResizeS.of.SEq.Val.Eq (by simp) (by simp)
+      have h_cons := Cons_Append_List.eq.AppendTake_Length sₜ sₐ k k
+      erw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (i := ⟨i, by grind⟩) (by grind) (by simpa)]
+      ·
+        simp
+        apply SEqCastS.of.SEq.Eq.Eq (by simpa) (by simpa)
+        rfl
+      ·
+        apply SEq_Cast.of.SEq.Eq (by simp)
+        erw [ReshapeCast.eq.Reshape.of.Prod.Eq (by simp) (by simp)]
+        apply SEqReshape.of.Eq
+        simp
+        omega
 
 
 -- created on 2026-07-17

@@ -75,6 +75,8 @@ export const tactics = [
     'ring_exp',
     'ring_nf',
     'rintro',
+    'rotate_left',
+    'rotate_right',
     'rw',
     'rwa',
     'set',
