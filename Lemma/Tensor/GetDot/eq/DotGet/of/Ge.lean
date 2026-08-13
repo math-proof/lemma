@@ -1,76 +1,26 @@
 import Lemma.Bool.Cast.of.SEq.Eq
 import Lemma.Bool.SEq.is.Eq
 import Lemma.List.Ne_Nil.is.GeLength_1
-import Lemma.Nat.Mul
-import Lemma.Tensor.Dot.eq.GetSumMul
-import Lemma.Tensor.Dot.eq.SelectSumMul.of.Ge
-import Lemma.Tensor.Dot.eq.SumMul.of.Ge
+import Lemma.Nat.EqMax.of.Ge
+import Lemma.Tensor.Dot.eq.SelectSumMul
 import Lemma.Tensor.Dot.eq.SumMul_Resize_0.of.Ge
 import Lemma.Tensor.EqGetUnsqueeze_0
 import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
 import Lemma.Tensor.GetMul.eq.MulGetS
-import Lemma.Tensor.GetRepeat.as.RepeatGet.of.GtGet_0.GtVal_0
 import Lemma.Tensor.GetRepeat_0.as.Get_Mod_Get.of.GtMul_Get.GtLength_0
+import Lemma.Tensor.GetResize.as.ResizeGet.of.GtGet_0.GtVal_0
 import Lemma.Tensor.GetSelect_1.as.Get.of.Lt.GtGet_0.GtLength_0
 import Lemma.Tensor.GetSum_2.eq.SumGet__0
-import Lemma.Tensor.GetSum_2.eq.SumGet__1
 import Lemma.Tensor.GetUnsqueeze.as.UnsqueezeGet.of.GtGet_0.Gt_0.GtLength_0
 import Lemma.Tensor.GtLengthDot.of.LeLengthS.Ne_Nil
-import Lemma.Tensor.SEqRepeatS.of.SEq
+import Lemma.Tensor.SEqResize_0.of.Eq_Get_0.GtLength_0
 import Lemma.Tensor.SEqSumS.of.SEq
-import Lemma.Tensor.SEqUnsqueezeS.of.SEq
 open Bool List Nat Tensor
-set_option maxHeartbeats 1000000
+set_option maxHeartbeats 500000
 
 
 @[main, fin]
 private lemma main
-  [Mul α] [Add α] [Zero α]
--- given
-  (h : k ≥ n')
-  (X : Tensor α [n, k])
-  (Y : Tensor α [n', k'])
-  (i : Fin n) :
--- imply
-  (X @ Y)[i]'(GtLengthDot.of.LeLengthS.Ne_Nil (by simp) (by apply GeLength_1.of.Ne_Nil (by simp)) X Y i) = X[i] @ Y := by
--- proof
-  simp [GetElem.getElem]
-  rw [Dot.eq.SumMul.of.Ge h]
-  erw [GetSum_2.eq.SumGet__1.fin (i := ⟨i, by grind⟩)]
-  erw [Dot.eq.GetSumMul.resize]
-  erw [GetSum_2.eq.SumGet__1.fin (i := ⟨0, by grind⟩)]
-  apply Eq.of.SEq
-  apply SEqSumS.of.SEq
-  repeat rw [@Tensor.GetMul.eq.MulGetS.fin]
-  apply SEqMulS.of.SEq.SEq
-  <;> erw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (s' := [1, k', k ⊔ n']) (i := ⟨0, by grind⟩) (by grind) (by grind)]
-  <;> conv_lhs => erw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (s' := [n, k', k]) (i := ⟨i, by grind⟩) (by grind) (by grind)];
-  <;> apply SEqCastS.of.SEq.Eq.Eq (by simp) (by simp)
-  ·
-    erw [GetRepeat.eq.Cast_RepeatGet.of.GtGet_0.GtVal_0.fin (by grind) (by grind)]
-    conv_rhs => erw [GetRepeat.eq.Cast_RepeatGet.of.GtGet_0.GtVal_0.fin (by grind) (by grind)]
-    apply SEqCastS.of.SEq.Eq.Eq (by simp) (by simp)
-    apply SEqRepeatS.of.SEq
-    erw [GetUnsqueeze.eq.Cast_UnsqueezeGet.of.GtGet_0.Gt_0.GtLength_0.fin (by grind) (by grind) (by grind)]
-    conv_rhs => erw [GetUnsqueeze.eq.Cast_UnsqueezeGet.of.GtGet_0.Gt_0.GtLength_0.fin (by grind) (by grind) (by grind)]
-    apply SEqCastS.of.SEq.Eq.Eq (by simp) (by simp)
-    apply SEqUnsqueezeS.of.SEq
-    erw [EqGetUnsqueeze_0.fin]
-    symm
-    apply Tensor.SEqResize_0.of.Eq_Get_0.GtLength_0 (by simp) (by grind)
-  ·
-    rw [GetRepeat_0.eq.Cast_Get_Mod_Get.of.GtMul_Get.GtLength_0.fin (by grind) (by grind)]
-    conv_rhs => erw [GetRepeat_0.eq.Cast_Get_Mod_Get.of.GtMul_Get.GtLength_0.fin (by grind) (by grind)]
-    apply SEqCastS.of.SEq.Eq.Eq (by simp) (by simp)
-    erw [Tensor.EqGetUnsqueeze_0.fin]
-    erw [Tensor.EqGetUnsqueeze_0.nat.fin]
-    apply Tensor.SEqTS.of.SEq
-    apply Tensor.SEqResizeS.of.SEq.Val.Eq (by grind) (by grind)
-    rfl
-
-
-@[main, fin]
-private lemma une
   [Mul α] [Add α] [Zero α]
 -- given
   (h : k ≥ n')
@@ -81,7 +31,8 @@ private lemma une
   (X @ Y)[i]'(GtLengthDot.of.LeLengthS.Ne_Nil (by simp) (by simp) X Y i) = X[i] @ Y := by
 -- proof
   simp [GetElem.getElem]
-  rw [Dot.eq.SelectSumMul.of.Ge h]
+  rw [Dot.eq.SelectSumMul.resize]
+  rw [EqMax.of.Ge h]
   erw [GetSelect_1.eq.Cast_Get.of.Lt.GtGet_0.GtLength_0 (by grind) (by grind) (by grind)]
   erw [Dot.eq.SumMul_Resize_0.of.Ge h]
   apply EqCast.of.SEq.Eq (by simp)
@@ -95,6 +46,9 @@ private lemma une
     erw [GetUnsqueeze.eq.Cast_UnsqueezeGet.of.GtGet_0.Gt_0.GtLength_0.fin (by grind) (by grind) (by grind)]
     simp
     erw [EqGetUnsqueeze_0.fin]
+    apply Eq.of.SEq
+    apply SEq.trans (GetResize.as.ResizeGet.of.GtGet_0.GtVal_0 (d := ⟨1, by grind⟩) (by grind) (by grind) X k)
+    apply SEqResize_0.of.Eq_Get_0.GtLength_0 (by simp) (by grind)
   ·
     erw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (s' := [n, 1, k]) (i := ⟨i, by grind⟩) (by grind) (by grind)]
     erw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (s' := [1, k]) (i := ⟨0, by grind⟩) (by grind) (by grind)]
@@ -109,4 +63,4 @@ private lemma une
 
 
 -- created on 2026-01-10
--- updated on 2026-07-14
+-- updated on 2026-08-13

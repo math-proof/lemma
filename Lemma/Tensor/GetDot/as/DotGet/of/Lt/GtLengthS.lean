@@ -4,7 +4,7 @@ import Lemma.List.Cons_Append_List.eq.AppendTake_Length
 import Lemma.Tensor.Einsum.as.Tensordot.of.LtGetS_SubLength.GeLength_2.GeLength_2
 import Lemma.Tensor.Get.of.Eq.GtLength_0
 import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
-import Lemma.Tensor.GetDot.eq.DotGet.of.Lt
+import Lemma.Tensor.GetDot.eq.DotGet
 import Lemma.Tensor.GetEinsum.as.EinsumGet.of.Lt.GtLengthS
 import Lemma.Tensor.GetResize.as.ResizeGet.of.GtGet_0.GtVal_0
 import Lemma.Tensor.GetTensordot.as.MatmulGet.of.GtLength_0
@@ -32,7 +32,7 @@ private lemma main
   simp [GetElem.getElem]
   match s, s' with
   | [], [] =>
-    erw [GetDot.eq.DotGet.of.Lt.fin h]
+    conv_lhs => erw [GetDot.eq.DotGet.fin]
     rfl
   | sₐ :: sₜ, [] =>
     have h_min_length : sₜ.length ⊓ (sₜ.length + 1 + 1) = sₜ.length := by omega

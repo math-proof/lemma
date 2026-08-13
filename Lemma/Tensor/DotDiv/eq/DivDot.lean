@@ -2,13 +2,9 @@ import Lemma.Tensor.Div.eq.Div_GetData_0
 import Lemma.Tensor.Dot.eq.SumMul
 import Lemma.Tensor.Dot.eq.SumMul__0
 import Lemma.Tensor.Dot.eq.GetSumMul
-import Lemma.Tensor.Dot.eq.SumMul.of.Lt
-import Lemma.Tensor.Dot.eq.SumMul.of.Ge
 import Lemma.Tensor.Dot.eq.SelectDot_Unsqueeze_1
-import Lemma.Tensor.DotDiv.eq.DivDot.of.Ge
 import Lemma.Tensor.DotDiv.eq.DivDot.of.GeLength_2
 import Lemma.Tensor.DotDiv.eq.DivDot.of.GeLength_2.GeLength_2
-import Lemma.Tensor.DotDiv.eq.DivDot.of.Lt
 import Lemma.Tensor.Einsum.eq.MulGetData_0
 import Lemma.Tensor.Einsum.eq.SumMulDataS.of.Gt
 import Lemma.Tensor.Einsum.eq.SumMulDataS.of.Lt
@@ -40,39 +36,6 @@ private lemma nil
   simp [matmul_shape]
 
 
-private lemma matrix
-  [Semifield α]
--- given
-  (A : Tensor α [m, k])
-  (C : Tensor α [k, n])
-  (B : Tensor α []) :
--- imply
-  (A / B) @ C = A @ C / B := by
--- proof
-  let A_div0 : Tensor α [m, 1, k] := (A / B).unsqueeze 1
-  let A_div : Tensor α [m, n, k] := cast (congrArg (Tensor α) (by simp)) (A_div0.repeat ⟨1, by grind⟩ n)
-  let A0 : Tensor α [m, 1, k] := A.unsqueeze 1
-  let A' : Tensor α [m, n, k] := cast (congrArg (Tensor α) (by simp)) (A0.repeat ⟨1, by grind⟩ n)
-  let CT : Tensor α [n, k] := Cᵀ
-  let C0 : Tensor α [1, n, k] := CT.unsqueeze 0
-  let C' : Tensor α [m, n, k] := cast (congrArg (Tensor α) (by simp)) (C0.repeat ⟨0, by grind⟩ m)
-  have hL : (A / B) @ C = (A_div * C').sum 2 := by
-    simpa [A_div, A_div0, C', C0, CT] using Dot.eq.SumMul (A / B) C
-  have hR : A @ C = (A' * C').sum 2 := by
-    simpa [A', A0, C', C0, CT] using Dot.eq.SumMul A C
-  rw [hL, hR]
-  have hA : A_div = A' / B := by
-    have h0 : A_div0 = A0 / B := by
-      simp only [A_div0, A0]
-      convert UnsqueezeDiv.eq.DivUnsqueeze A B 1 <;> simp
-    simp only [A_div, A']
-    rw [h0]
-    rw [RepeatDiv.eq.DivRepeat A0 B ⟨1, by grind⟩ n]
-    apply CastDiv.eq.DivCast.of.Eq (by simp)
-  rw [hA, MulDiv.eq.DivMul]
-  apply SumDiv.eq.DivSum
-
-
 private lemma vector
   [Semifield α]
 -- given
@@ -102,7 +65,49 @@ private lemma vector
     apply SumDiv.eq.DivSum
 
 
-/-- Tensor-scalar form: division by a 0-dimensional tensor. -/
+@[main]
+private lemma matrix
+  [Semifield α]
+-- given
+  (A : Tensor α [m, k])
+  (C : Tensor α [k', n])
+  (B : Tensor α []) :
+-- imply
+  (A / B) @ C = A @ C / B := by
+-- proof
+  let K := k ⊔ k'
+  let A_div_r : Tensor α [m, K] := (A / B).resize ⟨1, by grind⟩ K
+  let A_r : Tensor α [m, K] := A.resize ⟨1, by grind⟩ K
+  have hr : A_div_r = A_r / B := by
+    simp only [A_div_r, A_r]
+    exact ResizeDiv.eq.DivResize A B ⟨1, by grind⟩ K
+  let A_div0 : Tensor α [m, 1, K] := A_div_r.unsqueeze 1
+  let A0 : Tensor α [m, 1, K] := A_r.unsqueeze 1
+  have h0 : A_div0 = A0 / B := by
+    simp only [A_div0, A0, hr]
+    convert UnsqueezeDiv.eq.DivUnsqueeze A_r B 1 <;> simp
+  let A_div : Tensor α [m, n, K] :=
+    cast (congrArg (Tensor α) (by simp)) (A_div0.repeat ⟨1, by grind⟩ n)
+  let A' : Tensor α [m, n, K] :=
+    cast (congrArg (Tensor α) (by simp)) (A0.repeat ⟨1, by grind⟩ n)
+  let C_r : Tensor α [K, n] := C.resize ⟨0, by grind⟩ K
+  let CT : Tensor α [n, K] := C_rᵀ
+  let C0 : Tensor α [1, n, K] := CT.unsqueeze 0
+  let C' : Tensor α [m, n, K] :=
+    cast (congrArg (Tensor α) (by simp)) (C0.repeat ⟨0, by grind⟩ m)
+  have hA : A_div = A' / B := by
+    simp only [A_div, A']
+    rw [h0, RepeatDiv.eq.DivRepeat A0 B ⟨1, by grind⟩ n]
+    apply CastDiv.eq.DivCast.of.Eq
+    simp
+  have hL : (A / B) @ C = (A_div * C').sum 2 := by
+    simpa [A_div, A_div0, A_div_r, C', C0, CT, C_r, K] using Dot.eq.SumMul.resize (A / B) C
+  have hR : A @ C = (A' * C').sum 2 := by
+    simpa [A', A0, A_r, C', C0, CT, C_r, K] using Dot.eq.SumMul.resize A C
+  rw [hL, hR, hA, MulDiv.eq.DivMul]
+  apply SumDiv.eq.DivSum
+
+
 @[main]
 private lemma main
   [Semifield α]
@@ -161,26 +166,12 @@ private lemma main
   | [m, k], [d] =>
     repeat rw [Dot.eq.SelectDot_Unsqueeze_1]
     have h : ((A / B) @ (C.unsqueeze 1)) = (A @ (C.unsqueeze 1)) / B := by
-      if h : k = d then
-        subst h
-        apply matrix A
-      else if hlt : d < k then
-        apply DotDiv.eq.DivDot.of.Ge (le_of_lt hlt)
-      else
-        apply DotDiv.eq.DivDot.of.Lt
-        apply Nat.lt_of_le_of_ne (le_of_not_gt hlt) h
+      apply matrix
     have hsel := congrArg (fun t : Tensor α (matmul_shape [m, k] [d, 1]) => t.select ⟨1, by simp [matmul_shape]⟩ ⟨0, by simp [matmul_shape, broadcast_shape]⟩) h
     apply hsel.trans
     apply SelectDiv.eq.DivSelect
   | [m, k], [k', n] =>
-    if h : k = k' then
-      subst h
-      apply matrix
-    else if hlt : k' < k then
-      exact DotDiv.eq.DivDot.of.Ge (le_of_lt hlt) A C B
-    else
-      apply DotDiv.eq.DivDot.of.Lt
-      apply Nat.lt_of_le_of_ne (le_of_not_gt hlt) h
+    apply matrix
   | [b, m, k], [b', k', n] =>
     apply DotDiv.eq.DivDot.of.GeLength_2.GeLength_2 (by simp) (by simp)
   | n :: rest, s' =>
@@ -211,4 +202,4 @@ private lemma main
 
 
 -- created on 2026-08-11
--- updated on 2026-08-12
+-- updated on 2026-08-13
