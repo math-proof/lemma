@@ -3,12 +3,10 @@ import Lemma.Bool.SEqUFnS.of.SEq
 import Lemma.List.EqAppendTake__ListGet.of.GeLength_2
 import Lemma.Tensor.BmmDiv.eq.DivBmm
 import Lemma.Tensor.CastDiv.eq.DivCast.of.Eq
-import Lemma.Tensor.Einsum.as.SelectBmm.of.EqGet_SubLength_1.GeLength_2
 import Lemma.Tensor.Einsum.as.SelectBmm.of.Eq_Get_SubLength.GeLength_2
-import Lemma.Tensor.Einsum.as.SelectBmm.of.GeGet_SubLength_1.GeLength_2
+import Lemma.Tensor.Einsum.as.SelectBmm.of.GeLength_2
 import Lemma.Tensor.Einsum.as.SelectBmm.of.GtGet_SubLength.GeLength_2
 import Lemma.Tensor.Einsum.as.SelectBmm.of.Gt_Get_SubLength.GeLength_2
-import Lemma.Tensor.Einsum.as.SelectBmm.of.LtGet_SubLength_1.GeLength_2
 import Lemma.Tensor.ReshapeDiv.eq.DivReshape.of.Dvd
 import Lemma.Tensor.ResizeDiv.eq.DivResize
 import Lemma.Tensor.SelectDiv.eq.DivSelect
@@ -139,110 +137,45 @@ private lemma left
   (A / B) @ C = A @ C / B := by
 -- proof
   simp only [Dot.dot]
-  if h_eq : s[s.length - 1] = n' then
-    have hE := Einsum.as.SelectBmm.of.EqGet_SubLength_1.GeLength_2 hs h_eq A C
-    have hEd := Einsum.as.SelectBmm.of.EqGet_SubLength_1.GeLength_2 hs h_eq (A / B) C
-    apply Bool.Eq.of.SEq
-    let batch := s.take (s.length - 2)
-    let k := s[s.length - 2]
-    let n := s[s.length - 1]
-    let X0 : Tensor α (batch ++ [k, n]) :=
-      cast (congrArg (Tensor α) (List.EqAppendTake__ListGet.of.GeLength_2 hs).symm) A
-    let Xd0 : Tensor α (batch ++ [k, n]) :=
-      cast (congrArg (Tensor α) (List.EqAppendTake__ListGet.of.GeLength_2 hs).symm) (A / B)
-    have hx0 : Xd0 = X0 / B :=
-      CastDiv.eq.DivCast.of.Eq (List.EqAppendTake__ListGet.of.GeLength_2 hs).symm A B
-    let Y' := C.reshape (batch ++ [n, 1]) (by simp_all [n])
-    have hbmm : Xd0.bmm Y' = X0.bmm Y' / B := by
-      rw [hx0]
-      apply BmmDiv.eq.DivBmm
-    have hsel : (Xd0.bmm Y').select ⟨s.length - 1, by simp [batch]; omega⟩ ⟨0, by grind⟩ = (X0.bmm Y').select ⟨s.length - 1, by simp [batch]; omega⟩ ⟨0, by grind⟩ / B := by
-      rw [hbmm]
-      apply SelectDiv.eq.DivSelect
-    have hL : (A / B).einsum C ≃ (Xd0.bmm Y').select ⟨s.length - 1, by simp [batch]; omega⟩ ⟨0, by grind⟩ := by
-      refine hEd.trans ?_
-      simp only [Xd0, Y', batch, k, n]
-      rfl
-    have hR : A.einsum C ≃
-        (X0.bmm Y').select ⟨s.length - 1, by simp [batch]; omega⟩ ⟨0, by grind⟩ := by
-      refine hE.trans ?_
-      simp only [X0, Y', batch, k, n]
-      rfl
-    exact hL.trans (Bool.SEq.of.Eq hsel) |>.trans
-      (Bool.SEqUFnS.of.SEq hR (fun (t : Tensor α _) => (t / B : Tensor α _))).symm
-  else if hge : s[s.length - 1] ≥ n' then
-    have hE := Einsum.as.SelectBmm.of.GeGet_SubLength_1.GeLength_2 hs hge A C
-    have hEd := Einsum.as.SelectBmm.of.GeGet_SubLength_1.GeLength_2 hs hge (A / B) C
-    apply Bool.Eq.of.SEq
-    let batch := s.take (s.length - 2)
-    let k := s[s.length - 2]
-    let n := s[s.length - 1]
-    let X0 : Tensor α (batch ++ [k, n]) :=
-      cast (congrArg (Tensor α) (List.EqAppendTake__ListGet.of.GeLength_2 hs).symm) A
-    let Xd0 : Tensor α (batch ++ [k, n]) :=
-      cast (congrArg (Tensor α) (List.EqAppendTake__ListGet.of.GeLength_2 hs).symm) (A / B)
-    have hx0 : Xd0 = X0 / B :=
-      CastDiv.eq.DivCast.of.Eq (List.EqAppendTake__ListGet.of.GeLength_2 hs).symm A B
-    let Cr : Tensor α [n] := cast (by simp) (C.resize ⟨0, by grind⟩ n)
-    let Y' := Cr.reshape (batch ++ [n, 1]) (by simp)
-    have hbmm : Xd0.bmm Y' = X0.bmm Y' / B := by
-      rw [hx0]
-      apply BmmDiv.eq.DivBmm
-    have hsel : (Xd0.bmm Y').select ⟨s.length - 1, by simp [batch]; omega⟩ ⟨0, by grind⟩ = (X0.bmm Y').select ⟨s.length - 1, by simp [batch]; omega⟩ ⟨0, by grind⟩ / B := by
-      rw [hbmm]
-      apply SelectDiv.eq.DivSelect
-    have hL : (A / B).einsum C ≃
-        (Xd0.bmm Y').select ⟨s.length - 1, by simp [batch]; omega⟩ ⟨0, by grind⟩ := by
-      refine hEd.trans ?_
-      simp only [Xd0, Y', Cr, batch, k, n]
-      rfl
-    have hR : A.einsum C ≃
-        (X0.bmm Y').select ⟨s.length - 1, by simp [batch]; omega⟩ ⟨0, by grind⟩ := by
-      refine hE.trans ?_
-      simp only [X0, Y', Cr, batch, k, n]
-      rfl
-    exact hL.trans (Bool.SEq.of.Eq hsel) |>.trans
-      (Bool.SEqUFnS.of.SEq hR (fun (t : Tensor α _) => (t / B : Tensor α _))).symm
-  else
-    have hlt : s[s.length - 1] < n' := Nat.lt_of_not_ge hge
-    have hE := Einsum.as.SelectBmm.of.LtGet_SubLength_1.GeLength_2 hs hlt A C
-    have hEd := Einsum.as.SelectBmm.of.LtGet_SubLength_1.GeLength_2 hs hlt (A / B) C
-    apply Bool.Eq.of.SEq
-    let batch := s.take (s.length - 2)
-    let k := s[s.length - 2]
-    let n := s[s.length - 1]
-    let X0 : Tensor α (batch ++ [k, n]) :=
-      cast (congrArg (Tensor α) (List.EqAppendTake__ListGet.of.GeLength_2 hs).symm) A
-    let Xd0 : Tensor α (batch ++ [k, n]) :=
-      cast (congrArg (Tensor α) (List.EqAppendTake__ListGet.of.GeLength_2 hs).symm) (A / B)
-    have hx0 : Xd0 = X0 / B :=
-      CastDiv.eq.DivCast.of.Eq (List.EqAppendTake__ListGet.of.GeLength_2 hs).symm A B
-    let Xr : Tensor α (batch ++ [k, n']) :=
-      cast (by simp) (X0.resize ⟨batch.length + 1, by grind⟩ n')
-    let Xdr : Tensor α (batch ++ [k, n']) :=
-      cast (by simp) (Xd0.resize ⟨batch.length + 1, by grind⟩ n')
-    have hxr : Xdr = Xr / B := by
-      simp only [Xdr, Xr, hx0]
-      rw [ResizeDiv.eq.DivResize X0 B ⟨batch.length + 1, by grind⟩ n']
-      exact CastDiv.eq.DivCast.of.Eq (by simp) _ B
-    let Y' := C.reshape (batch ++ [n', 1]) (by simp)
-    have hbmm : Xdr.bmm Y' = Xr.bmm Y' / B := by
-      rw [hxr]
-      apply BmmDiv.eq.DivBmm
-    have hsel : (Xdr.bmm Y').select ⟨s.length - 1, by simp [batch]; omega⟩ ⟨0, by grind⟩ = (Xr.bmm Y').select ⟨s.length - 1, by simp [batch]; omega⟩ ⟨0, by grind⟩ / B := by
-      rw [hbmm]
-      apply SelectDiv.eq.DivSelect
-    have hL : (A / B).einsum C ≃
-        (Xdr.bmm Y').select ⟨s.length - 1, by simp [batch]; omega⟩ ⟨0, by grind⟩ := by
-      refine hEd.trans ?_
-      simp only [Xdr, Xd0, Y', batch, k, n]
-      rfl
-    have hR : A.einsum C ≃
-        (Xr.bmm Y').select ⟨s.length - 1, by simp [batch]; omega⟩ ⟨0, by grind⟩ := by
-      refine hE.trans ?_
-      simp only [Xr, X0, Y', batch, k, n]
-      rfl
-    exact hL.trans (Bool.SEq.of.Eq hsel) |>.trans (Bool.SEqUFnS.of.SEq hR (fun (t : Tensor α _) => (t / B : Tensor α _))).symm
+  have hE := Einsum.as.SelectBmm.of.GeLength_2 hs A C
+  have hEd := Einsum.as.SelectBmm.of.GeLength_2 hs (A / B) C
+  apply Bool.Eq.of.SEq
+  let batch := s.take (s.length - 2)
+  let k := s[s.length - 2]
+  let n := s[s.length - 1]
+  let K := n ⊔ n'
+  let X0 : Tensor α (batch ++ [k, n]) :=
+    cast (congrArg (Tensor α) (List.EqAppendTake__ListGet.of.GeLength_2 hs).symm) A
+  let Xd0 : Tensor α (batch ++ [k, n]) :=
+    cast (congrArg (Tensor α) (List.EqAppendTake__ListGet.of.GeLength_2 hs).symm) (A / B)
+  have hx0 : Xd0 = X0 / B :=
+    CastDiv.eq.DivCast.of.Eq (List.EqAppendTake__ListGet.of.GeLength_2 hs).symm A B
+  let X : Tensor α (batch ++ [k, K]) :=
+    cast (by simp) (X0.resize ⟨batch.length + 1, by grind⟩ K)
+  let Xd : Tensor α (batch ++ [k, K]) :=
+    cast (by simp) (Xd0.resize ⟨batch.length + 1, by grind⟩ K)
+  have hX : Xd = X / B := by
+    simp only [X, Xd, hx0]
+    rw [ResizeDiv.eq.DivResize X0 B ⟨batch.length + 1, by grind⟩ K]
+    exact CastDiv.eq.DivCast.of.Eq (by simp) _ B
+  let Cr : Tensor α [K] := C.resize ⟨0, by grind⟩ K
+  let Y' := Cr.reshape (batch ++ [K, 1]) (by simp)
+  have hbmm : Xd.bmm Y' = X.bmm Y' / B := by
+    rw [hX]
+    apply BmmDiv.eq.DivBmm
+  have hsel : (Xd.bmm Y').select ⟨s.length - 1, by simp [batch]; omega⟩ ⟨0, by grind⟩ = (X.bmm Y').select ⟨s.length - 1, by simp [batch]; omega⟩ ⟨0, by grind⟩ / B := by
+    rw [hbmm]
+    apply SelectDiv.eq.DivSelect
+  have hL : (A / B).einsum C ≃ (Xd.bmm Y').select ⟨s.length - 1, by simp [batch]; omega⟩ ⟨0, by grind⟩ := by
+    refine hEd.trans ?_
+    simp only [Xd, Xd0, Y', Cr, batch, k, n, K]
+    rfl
+  have hR : A.einsum C ≃ (X.bmm Y').select ⟨s.length - 1, by simp [batch]; omega⟩ ⟨0, by grind⟩ := by
+    refine hE.trans ?_
+    simp only [X, X0, Y', Cr, batch, k, n, K]
+    rfl
+  exact hL.trans (Bool.SEq.of.Eq hsel) |>.trans
+    (Bool.SEqUFnS.of.SEq hR (fun (t : Tensor α _) => (t / B : Tensor α _))).symm
 
 
 -- created on 2026-08-13
