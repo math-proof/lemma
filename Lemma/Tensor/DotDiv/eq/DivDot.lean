@@ -1,3 +1,4 @@
+import Lemma.Tensor.CastDiv.eq.DivCast.of.Eq
 import Lemma.Tensor.Div.eq.Div_GetData_0
 import Lemma.Tensor.Dot.eq.SumMul
 import Lemma.Tensor.Dot.eq.SumMul__0
@@ -8,6 +9,7 @@ import Lemma.Tensor.DotDiv.eq.DivDot.of.GeLength_2.GeLength_2
 import Lemma.Tensor.Einsum.eq.MulGetData_0
 import Lemma.Tensor.Einsum.eq.SumMulDataS.of.Gt
 import Lemma.Tensor.Einsum.eq.SumMulDataS.of.Lt
+import Lemma.Tensor.GetDiv.eq.DivGet
 import Lemma.Tensor.MulDiv.eq.DivMul
 import Lemma.Tensor.RepeatDiv.eq.DivRepeat
 import Lemma.Tensor.ResizeDiv.eq.DivResize
@@ -202,4 +204,4 @@ private lemma main
 
 
 -- created on 2026-08-11
--- updated on 2026-08-13
+-- updated on 2026-08-15

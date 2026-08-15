@@ -66,7 +66,7 @@ def customAttrHead (attr : String) : String :=
 def customAttrHeads : List String :=
   ["main", "comm", "mp", "mpr", "mp.comm", "mpr.comm", "comm.is", "is.comm", "mt", "mp.mt", "mpr.mt",
    "left", "right", "mpr.left", "mpr.right", "fin", "fin.comm", "fin.mp", "fin.mpr",
-   "val", "subst", "cast", "cast.fin", "mp and", "mpr and", "mp.comm and", "mpr.comm and"]
+   "val", "subst", "cast", "cast.fin", "cast.comm", "mp and", "mpr and", "mp.comm and", "mpr.comm and"]
 
 def isCustomAttr (attr : String) : Bool :=
   customAttrHead attr ∈ customAttrHeads
@@ -150,6 +150,8 @@ def attrLemmaName (tokens : List String) (attr : String) : String :=
   | ["cast", "false"] => moduleName (List.castPath tokens false)
   | ["cast.fin"] => moduleName (List.castPath tokens true ++ ["fin"])
   | ["cast", "fin"] => moduleName (List.castPath tokens true ++ ["fin"])
+  | ["cast.comm"] => moduleName (List.comm (List.castPath tokens true) (ofParityFromTokens tokens))
+  | ["cast.comm", n] => moduleName (List.comm (List.castPath tokens true) (parityBits (n.toNat!)))
   | ["left"] => nameToModule (tokens.left : Lean.Name)
   | ["right"] => nameToModule (tokens.right : Lean.Name)
   | ["mpr.left"] => nameToModule ((List.mpr tokens).left : Lean.Name)

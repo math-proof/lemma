@@ -1158,6 +1158,41 @@ initialize registerBuiltinAttribute {
     }
 }
 
+/--
+`@[cast.comm]` generates the commuted cast equality from an `as` / `≃` theorem.
+
+It applies `@[cast]` then `@[comm]`:
+`LHS.as.RHS` → `LHS.eq.Cast_RHS` → `Cast_RHS.eq.LHS`
+
+Usage:
+```lean
+@[cast.comm]
+theorem Section.LHS.as.RHS ... : lhs ≃ rhs := by proof
+-- Generates `Section.Cast_RHS.eq.LHS` : Cast_RHS = LHS
+```
+-/
+initialize registerBuiltinAttribute {
+  name := `cast.comm
+  descr := "Automatically generate the commuted cast equality from an as / ≃ theorem (cast then comm)."
+  applicationTime := .afterCompilation
+  add := fun declName stx kind => do
+    let decl ← getConstInfo declName
+    let levelParams := decl.levelParams
+    let ⟨_, castType, castValue⟩ :=
+      Expr.cast decl.type (.const declName (levelParams.map .param)) 0 true
+    let ⟨parity, type, value⟩ := Expr.comm castType castValue stx.getNum
+    let ⟨_, parity⟩ ← parity.extractParity
+    let name :=
+      ((List.castPath (← getEnv).moduleTokens true |>.comm parity).foldl Name.str default).lemmaName
+        declName
+    addAndCompile <| .thmDecl {
+      name := name
+      levelParams := levelParams
+      type := type
+      value := value
+    }
+}
+
 initialize registerBuiltinAttribute {
   name := `cast.fin
   descr := "Automatically generate the cast.fin equality from an as / ≃ theorem (testing)."

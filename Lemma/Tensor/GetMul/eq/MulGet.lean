@@ -1,11 +1,12 @@
 import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.Eq_Stack
+import Lemma.Tensor.Mul.eq.Mul_GetData_0
 import Lemma.Tensor.MulStack.eq.Stack_Mul
 open Tensor
 
 
 @[main, fin]
-private lemma main
+private lemma scalar
   [Mul α]
 -- given
   (X : Tensor α (n :: s))
@@ -22,4 +23,20 @@ private lemma main
   rw [this]
 
 
+@[main, fin]
+private lemma main
+  [Mul α]
+-- given
+  (X : Tensor α (n :: s))
+  (A : Tensor α [])
+  (i : Fin n) :
+-- imply
+  (X * A)[i] = X[i] * A := by
+-- proof
+  rw [Mul.eq.Mul_GetData_0]
+  rw [scalar]
+  rw [← Mul.eq.Mul_GetData_0]
+
+
 -- created on 2025-12-06
+-- updated on 2026-08-15

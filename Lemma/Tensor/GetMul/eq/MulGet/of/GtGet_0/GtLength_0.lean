@@ -22,7 +22,7 @@ private lemma main
     simp at h
     let i' : Fin s₀ := ⟨i, h_i⟩
     have h_i : i' = i := rfl
-    have := GetMul.eq.MulGet X a i'
+    have := GetMul.eq.MulGet.scalar X a i'
     simp_all
 
 

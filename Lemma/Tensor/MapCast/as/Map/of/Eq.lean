@@ -8,8 +8,9 @@ import sympy.tensor.Basic
 | main | Tensor.MapCast.as.Map.of.Eq |
 | comm 1 | Tensor.Map.as.MapCast.of.Eq |
 | cast | Tensor.MapCast.eq.Cast_Map.of.Eq |
+| cast.comm | Tensor.Cast_Map.eq.MapCast.of.Eq |
 -/
-@[main, comm 1, cast]
+@[main, comm 1, cast, cast.comm]
 private lemma main
 -- given
   (h_s : s = s')
@@ -18,8 +19,7 @@ private lemma main
 -- imply
   (cast (congrArg (Tensor α) h_s) X).map f ≃ X.map f := by
 -- proof
-  subst h_s
-  rfl
+  aesop
 
 
 -- created on 2026-08-07

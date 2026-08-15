@@ -755,6 +755,31 @@ initialize registerBuiltinAttribute {
 }
 
 initialize registerBuiltinAttribute {
+  name := `cast.comm'
+  descr := "Automatically generate the commuted cast equality from an as / ≃ theorem (cast then comm, debug)."
+  applicationTime := .afterCompilation
+  add := fun declName stx kind => do
+    let decl ← getConstInfo declName
+    let levelParams := decl.levelParams
+    let ⟨_, castType, castValue⟩ ←
+      Expr.cast' decl.type (.const declName (levelParams.map .param)) 0 true
+    println! s!"cast.comm' after cast type = {castType}"
+    let ⟨parity, type, value⟩ ← Expr.comm' castType castValue stx.getNum
+    let ⟨_, parity⟩ ← parity.extractParity
+    let name :=
+      ((List.castPath (← getEnv).moduleTokens true |>.comm parity).foldl Name.str default).lemmaName
+        declName
+    println! s!"cast.comm' name = {name}"
+    println! s!"cast.comm' type = {type}"
+    addAndCompile <| .thmDecl {
+      name := name
+      levelParams := levelParams
+      type := type
+      value := value
+    }
+}
+
+initialize registerBuiltinAttribute {
   name := `cast.fin'
   descr := "Automatically generate the cast equality from an as / ≃ theorem (testing)."
   applicationTime := .afterCompilation

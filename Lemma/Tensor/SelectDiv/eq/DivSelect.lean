@@ -1,8 +1,5 @@
-import Lemma.Tensor.Eq.is.EqDataS
-import Lemma.Tensor.SelectDiv.eq.DivSelectS
-import Lemma.Tensor.SelectTensorReplicateProd.eq.TensorReplicateProdEraseIdx
-import Lemma.Vector.Div.eq.Div_Replicate
-open Tensor Vector
+import Lemma.Tensor.SelectBFn.eq.BFnSelect
+open Tensor
 
 
 @[main]
@@ -14,21 +11,10 @@ private lemma main
   (d : Fin s.length)
   (i : Fin s[d]) :
 -- imply
-  (X / B).select d i = X.select d i / B := by
+  (X / B).select d i = X.select d i / B :=
 -- proof
-  let R : Tensor α s := ⟨List.Vector.replicate s.prod B.data[0]⟩
-  have hX : X / B = X / R := by
-    apply Eq.of.EqDataS
-    simp only [HDiv.hDiv, R]
-    apply Div.eq.Div_Replicate
-  rw [hX]
-  simp only [R]
-  rw [SelectDiv.eq.DivSelectS]
-  rw [SelectTensorReplicateProd.eq.TensorReplicateProdEraseIdx]
-  apply Eq.of.EqDataS
-  simp only [HDiv.hDiv]
-  symm
-  apply Div.eq.Div_Replicate
+  SelectBFn.eq.BFnSelect (· / ·) X B d i
 
 
 -- created on 2026-08-12
+-- updated on 2026-08-15

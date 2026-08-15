@@ -1,4 +1,5 @@
-import Lemma.Vector.GetExp.eq.ExpGet
+import Lemma.Vector.MapGetSlice.eq.GetSliceMap
+import sympy.vector.functions
 open Vector
 
 
@@ -11,11 +12,9 @@ private lemma main
 -- imply
   exp (x.getSlice s) = (exp x).getSlice s := by
 -- proof
-  ext t
-  rw [GetExp.eq.ExpGet.fin]
-  unfold List.Vector.getSlice
-  simp [GetElem.getElem, List.Vector.length]
-  rw [← GetExp.eq.ExpGet.fin]
+  simp [Exp.exp]
+  rw [MapGetSlice.eq.GetSliceMap]
 
 
 -- created on 2026-08-14
+-- updated on 2026-08-15

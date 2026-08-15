@@ -1,3 +1,5 @@
+import Lemma.Tensor.Exp.eq.MulSoftmax_SumExp
+import Lemma.Tensor.ExpGetSlice.eq.GetSliceExp
 import Lemma.Tensor.DotMulGetS.eq.DotGetSliceS
 import Lemma.Tensor.DotDiv.eq.DivDot
 import Lemma.Tensor.SumMulGetS.eq.SumGetSliceGet
@@ -167,16 +169,18 @@ private lemma main
   conv_rhs at h_zi => erw [DotDiv.eq.DivDot]
   conv_rhs at h_zi => erw [DotMulGetS.eq.DotGetSliceS.fin (exp A') V' i (l := l) (u := u)]
   conv_rhs at h_zi => erw [GetExp.eq.ExpGet.fin (i := ⟨i, by grind⟩)]
+  conv_rhs at h_zi => erw [GetSliceExp.eq.ExpGetSlice]
+  conv_rhs at h_zi =>
+    arg 1
+    arg 1
+    erw [Exp.eq.MulSoftmax_SumExp]
+  simp at h_zi
   rw [h_band_part] at h_Ξ_def
   have h_Ξᵢ := Get.of.Eq.fin h_Ξ_def i
   rw [EqGetStack.fn.fin] at h_Ξᵢ
   simp only [Bool.Bool.eq.Ite] at h_Ξᵢ
-  have h_Ξᵢ_sum : ((exp A').get i * Ξ.get i).sum 0 = ((exp A').get i * Ξ.get i).sum 0 := by
-    rw [h_Ξᵢ]
   apply h_zi.trans
   simp [EqGetStack.fn.fin]
-  let band_A := A'[i, i + 1 - l : n ⊓ i + u]
-  let band_V := V'[i + 1 - l:n ⊓ i + u]
   sorry
 
 
