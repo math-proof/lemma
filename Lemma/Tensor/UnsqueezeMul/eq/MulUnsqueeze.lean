@@ -1,4 +1,4 @@
-import Lemma.Tensor.ReshapeMul.eq.MulReshape.of.Dvd
+import Lemma.Tensor.UnsqueezeBFn.eq.BFnUnsqueeze
 open Tensor
 
 
@@ -10,10 +10,10 @@ private lemma main
   (B : Tensor α [])
   (dim : ℕ) :
 -- imply
-  (X * B).unsqueeze dim = X.unsqueeze dim * B := by
+  (X * B).unsqueeze dim = X.unsqueeze dim * B :=
 -- proof
-  simp only [Tensor.unsqueeze]
-  apply ReshapeMul.eq.MulReshape.of.Dvd
+  UnsqueezeBFn.eq.BFnUnsqueeze (f := (· * · : α → α → α)) X B dim
 
 
 -- created on 2026-08-15
+-- updated on 2026-08-16

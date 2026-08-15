@@ -5,7 +5,7 @@ import Lemma.List.InsertIdxAppend.eq.Append_InsertIdx.of.LeLength
 import Lemma.List.SwapAppend.eq.Append_Swap.of.LeLength.LeLength
 import Lemma.Tensor.MapCast.as.MapBFn.of.Eq
 import Lemma.Tensor.RepeatBFn.eq.BFnRepeat
-import Lemma.Tensor.ReshapeBFn.eq.BFnReshape.of.Dvd
+import Lemma.Tensor.UnsqueezeBFn.eq.BFnUnsqueeze
 open List Tensor
 
 
@@ -26,21 +26,13 @@ private lemma main
   (A.map (f · B.data[0])).bmm C = (A.bmm C).map (f · B.data[0]) := by
 -- proof
   let F {s} (X : Tensor α s) : Tensor α s := X.map (f · B.data[0])
-  have h_unsqueeze {s : List ℕ} (X : Tensor α s) (dim : ℕ) :
-      (F X).unsqueeze dim = F (X.unsqueeze dim) := by
-    simp only [F, Tensor.unsqueeze]
-    apply ReshapeBFn.eq.BFnReshape.of.Dvd
-  have h_repeat {s : List ℕ} (X : Tensor α s) (dim : Fin s.length) (n : ℕ) :
-      (F X).repeat dim n = F (X.repeat dim n) := by
-    simp only [F]
-    apply RepeatBFn.eq.BFnRepeat
   let A_f0 : Tensor α (bz ++ [m, 1, k]) :=
     cast (congrArg (Tensor α) (by simp [InsertIdxAppend.eq.Append_InsertIdx])) ((F A).unsqueeze (bz.length + 1))
   let A0 : Tensor α (bz ++ [m, 1, k]) :=
     cast (congrArg (Tensor α) (by simp [InsertIdxAppend.eq.Append_InsertIdx])) (A.unsqueeze (bz.length + 1))
   have h0 : A_f0 = F A0 := by
     simp only [A_f0, A0]
-    rw [h_unsqueeze]
+    rw [UnsqueezeBFn.eq.BFnUnsqueeze]
     apply Cast_MapBFn.eq.MapCast.of.Eq
     simp [InsertIdxAppend.eq.Append_InsertIdx]
   let A_f : Tensor α (bz ++ [m, n, k]) :=
@@ -60,7 +52,7 @@ private lemma main
     cast (congrArg (Tensor α) (by simp)) (C0.repeat ⟨bz.length, by grind⟩ m)
   have hA : A_f = F A' := by
     simp only [A_f, A']
-    rw [h0, h_repeat A0 ⟨bz.length + 1, by grind⟩ n]
+    rw [h0, RepeatBFn.eq.BFnRepeat]
     apply Cast_MapBFn.eq.MapCast.of.Eq
     simp
   have hsum : (A_f * C').sum (bz.length + 2) = F ((A' * C').sum (bz.length + 2)) := by
