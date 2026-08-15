@@ -1,3 +1,4 @@
+import Lemma.Tensor.DotMul.eq.MulDot
 import Lemma.Tensor.Exp.eq.MulSoftmax_SumExp
 import Lemma.Tensor.ExpGetSlice.eq.GetSliceExp
 import Lemma.Tensor.DotMulGetS.eq.DotGetSliceS
@@ -175,6 +176,7 @@ private lemma main
     arg 1
     erw [Exp.eq.MulSoftmax_SumExp]
   simp at h_zi
+  conv_rhs at h_zi => erw [DotMul.eq.MulDot]
   rw [h_band_part] at h_Ξ_def
   have h_Ξᵢ := Get.of.Eq.fin h_Ξ_def i
   rw [EqGetStack.fn.fin] at h_Ξᵢ
