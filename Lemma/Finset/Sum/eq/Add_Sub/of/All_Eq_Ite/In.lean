@@ -11,8 +11,9 @@ open Set Nat Finset Int
 @[main]
 private lemma main
   [DecidableEq ι]
+  [AddCommGroup α]
   {i' : ι}
-  {x y y' : ι → ℝ}
+  {x y y' : ι → α}
   {s : Finset ι}
 -- given
   (h₀ : i' ∈ s)
@@ -51,3 +52,4 @@ private lemma main
 
 
 -- created on 2025-04-06
+-- updated on 2026-08-14

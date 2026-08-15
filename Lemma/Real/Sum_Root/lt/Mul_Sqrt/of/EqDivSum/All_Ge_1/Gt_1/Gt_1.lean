@@ -7,7 +7,7 @@ import Lemma.Finset.All_And.of.All.All
 import Lemma.Nat.Eq.of.Le.Ge
 import Lemma.Finset.All.of.All.All_Imp
 import Lemma.Real.All_LeRoot_Sqrt.of.All_Ge_1
-import Lemma.Finset.LtSumS.of.All_Le.Any_Lt
+import Lemma.Finset.LtSumS.of.Any_Lt.All_Le
 import Lemma.Finset.Sum.eq.Add_Sum.of.Gt_0
 import Lemma.Finset.Sum.of.All_Eq
 import Lemma.Real.Sqrt.eq.Root_2
@@ -44,7 +44,7 @@ private lemma main
     rw [Finset.mem_Ico] at h_In
     apply Lt.of.Lt.Le
     .
-      apply LtSumS.of.All_Le.Any_Lt h_All
+      apply LtSumS.of.Any_Lt.All_Le h_All
       use i
       constructor
       ·
@@ -101,4 +101,4 @@ private lemma main
 
 
 -- created on 2025-04-06
--- updated on 2025-06-08
+-- updated on 2026-08-14

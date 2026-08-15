@@ -95,6 +95,7 @@ export const tactics = [
     'swap',
     'symm',
     'tauto',
+    'trans',
     'trivial',
     'try',
     'unfold',

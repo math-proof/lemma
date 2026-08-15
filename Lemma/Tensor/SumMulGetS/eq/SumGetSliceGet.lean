@@ -1,20 +1,22 @@
+import Lemma.Bool.Bool.eq.Ite
 import Lemma.Nat.Mul_Ite.eq.Ite_MulS
-import Lemma.Tensor.XEqDotS.of.XEq
 import Lemma.Int.Icc_Sub_1.eq.Ico
 import Lemma.Int.InSub.is.In_Ico_AddS
 import Lemma.Int.In_Ico.is.In_IcoToNatS
 import Lemma.Int.ToNatSubCoeS.eq.Sub
 import Lemma.Nat.CoeIte.eq.Ite_CoeS
+import Lemma.Nat.EqMul_0'0
+import Lemma.Nat.EqMul_1
 import Lemma.Tensor.BandPart.eq.Stack_BoolIn_Icc
 import Lemma.Tensor.Get.of.Eq
+import Lemma.Tensor.GetMul.eq.MulGetS
 import Lemma.Tensor.Sum_IteIn_Ico.eq.SumGetSlice
-import Lemma.Tensor.GetExp.eq.ExpGet
 open Int Nat Tensor
 
 
 @[main, fin]
 private lemma main
-  [ExpPos α]
+  [Semiring α]
   [NeZero (l : ℕ)]
   [NeZero (u : ℕ)]
   [NeZero (n : ℕ)]
@@ -23,10 +25,9 @@ private lemma main
   (i : Fin n) :
 -- imply
   let Ξ := (1 : Tensor α [n, n]).band_part (l - 1) (u - 1)
-  ((exp A)[i] * Ξ[i]).sum = (exp A[i])[(i + 1 - l : ℕ):(i + u : ℕ)].sum := by
+  (A[i] * Ξ[i]).sum = A[i][(i + 1 - l : ℕ):(i + u : ℕ)].sum := by
 -- proof
   denote h_Ξ : Ξ = _
-  erw [GetExp.eq.ExpGet]
   have h_Ξᵢ := Get.of.Eq.fin h_Ξ i
   rw [BandPart.eq.Stack_BoolIn_Icc] at h_Ξᵢ
   rw [EqGetStack.fn.fin] at h_Ξᵢ
@@ -80,3 +81,4 @@ private lemma main
 
 
 -- created on 2026-08-11
+-- updated on 2026-08-14

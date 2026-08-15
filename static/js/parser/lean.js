@@ -100,7 +100,7 @@ function escapeSpecialsForLatex(token) {
 function leanSubtreeContains(node, target) {
     if (node == null || typeof node !== 'object') return false;
     if (node === target) return true;
-    const o = /** @type {{ args?: unknown[]; arg?: unknown; lhs?: unknown; rhs?: unknown }} */ (node);
+    const o = node;
     if (Array.isArray(o.args)) {
         for (const a of o.args) if (leanSubtreeContains(a, target)) return true;
     }
@@ -256,6 +256,21 @@ export class Lean extends IndentedNode {
 
     insert_end(caret) {
         if (this.parent) return this.parent.insert_end(this);
+    }
+
+    insert_ite(caret) {
+        if (caret instanceof LeanCaret) {
+            this.replace(caret, new LeanIte([caret], caret.indent, caret.level));
+            return caret;
+        }
+        const c = new LeanCaret(caret.indent, caret.level);
+        const ite = new LeanIte([c], caret.indent, caret.level);
+        if (this instanceof LeanArgsSpaceSeparated && this.args[this.args.length - 1] === caret) {
+            this.push(ite);
+            return c;
+        }
+        this.replace(caret, new LeanArgsSpaceSeparated([caret, ite], caret.indent, caret.level));
+        return c;
     }
 
     insert_left(caret, func, prevToken = '') {
@@ -802,9 +817,14 @@ export class Lean extends IndentedNode {
                 return this.parent.insert_only(this);
             case 'if': {
                 let n = this.parent;
-                while (n && typeof n.insert_if !== 'function') n = n.parent;
-                if (!n) throw new Error('insert_if is unexpected');
-                return n.insert_if(this);
+                while (n) {
+                    if (typeof n.insert_if === 'function') {
+                        const next = n.insert_if(this);
+                        if (next !== undefined) return next;
+                    }
+                    n = n.parent;
+                }
+                throw new Error('insert_if is unexpected');
             }
             case 'then':
                 return this.parent.insert_then(this);
@@ -1668,6 +1688,7 @@ export class LeanUnary extends LeanArgs {
             this.arg = new LeanIte([caret], caret.indent, caret.level);
             return caret;
         }
+        if (this.parent && typeof this.parent.insert_if === 'function') return this.parent.insert_if(caret);
         throw new Error(`insert_if is unexpected for ${this.constructor.name}`);
     }
 
@@ -2327,17 +2348,14 @@ export class LeanBinary extends LeanArgs {
     insert_if(caret) {
         if (this instanceof LeanArgsIndented && caret instanceof LeanCaret) {
             const last = this.args[this.args.length - 1];
-            if (last === caret) {
-                this.replace(caret, new LeanIte([caret], caret.indent, caret.level));
-                return caret;
-            }
+            if (last === caret) return caret.parent.insert_ite(caret);
             if (this.parent && typeof this.parent.insert_if === 'function') return this.parent.insert_if(caret);
             throw new Error(`insert_if is unexpected for ${this.constructor.name}`);
         }
-        if (this.rhs === caret && caret instanceof LeanCaret) {
-            this.replace(caret, new LeanIte([caret], caret.indent, caret.level));
-            return caret;
+        if (this.rhs === caret || (this.rhs != null && leanSubtreeContains(this.rhs, caret))) {
+            return caret.parent.insert_ite(caret);
         }
+        if (this.parent && typeof this.parent.insert_if === 'function') return this.parent.insert_if(caret);
         throw new Error(`insert_if is unexpected for ${this.constructor.name}`);
     }
 
@@ -7187,6 +7205,14 @@ export class LeanSyntax extends LeanArgs {
             return newCaret;
         }
         throw new Error(`insert is unexpected for ${this.constructor.name}`);
+    }
+
+    insert_if(caret) {
+        if (this.arg === caret || (this.arg != null && leanSubtreeContains(this.arg, caret))) {
+            return caret.parent.insert_ite(caret);
+        }
+        if (this.parent && typeof this.parent.insert_if === 'function') return this.parent.insert_if(caret);
+        throw new Error(`insert_if is unexpected for ${this.constructor.name}`);
     }
 }
 

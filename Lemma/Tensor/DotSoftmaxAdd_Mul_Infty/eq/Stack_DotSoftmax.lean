@@ -1,4 +1,6 @@
-import Lemma.Tensor.SumMulExpGet.eq.SumExpGetSliceGet
+import Lemma.Tensor.DotMulGetS.eq.DotGetSliceS
+import Lemma.Tensor.DotDiv.eq.DivDot
+import Lemma.Tensor.SumMulGetS.eq.SumGetSliceGet
 import Lemma.Tensor.MapDiv.eq.DivMapS.of.All_Eq_Div
 import Lemma.Tensor.SumMap.eq.MapSum.of.All_EqUFnAdd
 import Lemma.Tensor.XEqDotS.of.XEq
@@ -128,7 +130,7 @@ private lemma main
       .
         apply Lt0SumGetBandPart
   have h_zi := Tensor.XEq.of.Eq h_zi
-  have h_xeq : ((Exp.exp a').get i / (let den : Tensor ℝ* [] := ((Exp.exp a').get i).sum 0; den)) @ V' ≈ ((exp A').get i * Ξ.get i / (let den : Tensor ℝ* [] := ((exp A').get i * Ξ.get i).sum 0; den)) @ V' := by
+  have h_xeq : ((exp a').get i / (let den : Tensor ℝ* [] := ((exp a').get i).sum 0; den)) @ V' ≈ ((exp A').get i * Ξ.get i / (let den : Tensor ℝ* [] := ((exp A').get i * Ξ.get i).sum 0; den)) @ V' := by
     simp
     rw [h_A', hΞ, h_V']
     conv_rhs => rw [ExpMap.eq.MapExp.of.All_EqUFnExp_ExpUFn (by aesop)]
@@ -160,15 +162,16 @@ private lemma main
     rw [← hΞ]
     rwa [← h_A']
   have h_zi := h_zi.trans h_xeq
+  erw [SumMulGetS.eq.SumGetSliceGet.fin (exp A') i (l := l) (u := u)] at h_zi
   simp at h_zi
-  have := SumMulExpGet.eq.SumExpGetSliceGet.fin A' i (l := l) (u := u)
-  erw [this] at h_zi
-  clear this
+  conv_rhs at h_zi => erw [DotDiv.eq.DivDot]
+  conv_rhs at h_zi => erw [DotMulGetS.eq.DotGetSliceS.fin (exp A') V' i (l := l) (u := u)]
+  conv_rhs at h_zi => erw [GetExp.eq.ExpGet.fin (i := ⟨i, by grind⟩)]
   rw [h_band_part] at h_Ξ_def
   have h_Ξᵢ := Get.of.Eq.fin h_Ξ_def i
   rw [EqGetStack.fn.fin] at h_Ξᵢ
   simp only [Bool.Bool.eq.Ite] at h_Ξᵢ
-  have h_Ξᵢ_sum : ((Exp.exp A').get i * Ξ.get i).sum 0 = ((Exp.exp A').get i * Ξ.get i).sum 0 := by
+  have h_Ξᵢ_sum : ((exp A').get i * Ξ.get i).sum 0 = ((exp A').get i * Ξ.get i).sum 0 := by
     rw [h_Ξᵢ]
   apply h_zi.trans
   simp [EqGetStack.fn.fin]

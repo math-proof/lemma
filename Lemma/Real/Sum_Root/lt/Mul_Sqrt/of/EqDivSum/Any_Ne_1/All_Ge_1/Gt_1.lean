@@ -5,7 +5,7 @@ import Lemma.Real.Root_Add_2.lt.Sqrt.of.Gt_1.Gt_0
 import Lemma.Set.Lt.of.In_Range
 import Lemma.Real.Sum_Root.lt.Mul_Sqrt.of.EqDivSum.All_Ge_1.Gt_1.Gt_1
 import Lemma.Real.All_LeRoot_Sqrt.of.All_Ge_1
-import Lemma.Finset.LtSumS.of.All_Le.Any_Lt
+import Lemma.Finset.LtSumS.of.Any_Lt.All_Le
 import Lemma.Real.Sum_Sqrt.le.Mul_Sqrt.of.EqDivSum.All_Ge_1.Ne_0
 import Lemma.Nat.Lt.of.Lt.Le
 open Set Finset Real Nat
@@ -42,10 +42,10 @@ private lemma main
     have h := Root_Add_2.lt.Sqrt.of.Gt_1.Gt_0 h_Gt h
     have h_Any : ∃ i ∈ range n, (x i) ^ (1 / (i + 2) : ℝ) < √(x i) := by
       use i
-    have h_Lt := LtSumS.of.All_Le.Any_Lt h_All h_Any
+    have h_Lt := LtSumS.of.Any_Lt.All_Le h_All h_Any
     have := Sum_Sqrt.le.Mul_Sqrt.of.EqDivSum.All_Ge_1.Ne_0 (by linarith [h₀]) h₁ h₃
     exact Lt.of.Lt.Le h_Lt this
 
 
 -- created on 2025-04-06
--- updated on 2025-04-07
+-- updated on 2026-08-14

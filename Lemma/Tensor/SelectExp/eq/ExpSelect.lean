@@ -6,7 +6,7 @@ import Lemma.Tensor.DataSelect.as.FlattenGetSliceSplitAtData
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Vector.ExpCast.as.Exp.of.Eq
 import Lemma.Vector.ExpFlatten.eq.FlattenExp
-import Lemma.Vector.ExpGetSlice.eq.GetSliceExp.of.Lt.Dvd
+import Lemma.Vector.ExpGetSlice.eq.GetSliceExp
 import Lemma.Vector.ExpSplitAt.eq.SplitAtExp
 import sympy.tensor.functions
 open Bool List Tensor Vector
@@ -36,16 +36,13 @@ private lemma main
       apply SEq.of.Eq
       rw [ExpFlatten.eq.FlattenExp]
       congr
-      rw [ExpGetSlice.eq.GetSliceExp.of.Lt.Dvd _ i.isLt]
-      .
-        congr
-        rw [ExpSplitAt.eq.SplitAtExp]
-        congr
-      .
-        simp [List.ProdTake.eq.MulProdTake.of.GtLength d.isLt]
+      rw [ExpGetSlice.eq.GetSliceExp]
+      congr
+      rw [ExpSplitAt.eq.SplitAtExp]
+      congr
   ·
     simp [h_length_slice]
 
 
 -- created on 2025-11-17
--- updated on 2025-11-29
+-- updated on 2026-08-14
