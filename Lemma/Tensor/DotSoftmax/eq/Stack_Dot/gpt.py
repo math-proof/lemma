@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq << ζ.this.definition
 
-    Eq << Tensor.DotSoftmaxAdd_MulBandPart.eq.Stack_DotSoftmaxDivDot_T.of.Eq_Relu.Eq_Min.apply(*Eq[-2:], Q, K, V)
+    Eq << Tensor.DotSoftmaxAdd_Mul_Infty.eq.Stack_DotSoftmax.of.Eq_Stack_Sub.Eq_Stack_Add.apply(*Eq[-2:], Q, K, V)
 
     Eq << Eq[1].this.rhs().expr.defun()
 
