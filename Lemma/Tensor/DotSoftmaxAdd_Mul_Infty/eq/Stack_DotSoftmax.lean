@@ -1,3 +1,6 @@
+import Lemma.Tensor.Ne.of.Lt.NeProd_0
+import Lemma.Nat.EqMin.of.Ge
+import Lemma.Tensor.EqDivMul.of.Ne_0
 import Lemma.Tensor.DotMul.eq.MulDot
 import Lemma.Tensor.Exp.eq.MulSoftmax_SumExp
 import Lemma.Tensor.ExpGetSlice.eq.GetSliceExp
@@ -57,7 +60,7 @@ private lemma main
   let Ξ := (1 : Tensor ℝ* [n, n]).band_part (l - 1) (u - 1)
   let A : Tensor ℝ* [n, n] := A
   let V : Tensor ℝ* [n, d_z] := V
-  (A + (Ξ - 1) * ∞).softmax @ V ≈ [i < n] A[i, i + 1 - l : n ⊓ i + u].softmax @ V[i + 1 - l:n ⊓ i + u] := by
+  (A + (Ξ - 1) * ∞).softmax @ V ≈ [i < n] A[i, (i + 1 - l : ℕ): (i + u : ℕ)].softmax @ V[(i + 1 - l : ℕ): (i + u : ℕ)] := by
 -- proof
   denote h_Ξ_def : Ξ = _
   denote h_A' : A' = _
@@ -183,7 +186,21 @@ private lemma main
   simp only [Bool.Bool.eq.Ite] at h_Ξᵢ
   apply h_zi.trans
   simp [EqGetStack.fn.fin]
-  sorry
+  erw [EqDivMul.of.Ne_0]
+  .
+    simp [GetElem.getElem]
+    rfl
+  .
+    rw [h_A']
+    conv_lhs => erw [GetMap.eq.MapGet.fin]
+    conv_lhs => erw [GetSliceMap.eq.MapGetSlice]
+    conv_lhs => erw [ExpMap.eq.MapExp.of.All_EqUFnExp_ExpUFn (by aesop)]
+    conv_lhs => erw [SumMap.eq.MapSum.of.All_EqUFnAdd (by aesop)]
+    apply Ne.of.Gt.NeProd_0
+    .
+      simp
+    .
+      sorry
 
 
 -- created on 2020-12-28
