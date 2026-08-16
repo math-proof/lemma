@@ -16,4 +16,4 @@ private lemma main
   rw [Mul_Keepdim.eq.Mul]
 
 
--- created on 2026-08-15
+-- created on 2021-12-14

@@ -24,8 +24,8 @@ lemma SEq.trans
   SEq a c :=
   ⟨h₀.1.trans h₁.1, h₀.2.trans h₁.2⟩
 
-@[refl, match_pattern]
-def SEq.rfl
+@[refl]
+lemma SEq.rfl
   {α : Type u} {Vector : α → Sort v} {n : α}
   (a : Vector n) :
   a ≃ a :=

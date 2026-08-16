@@ -78,17 +78,6 @@ echo 'export PATH="$PATH:~/github/lean-$versionNumber-linux/bin"' >> ~/.bashrc
 source ~/.bashrc
 ```
 
-### build from source
-```bash
-# install prerequisites
-yum install gmp-devel 
-yum install libuv libuv-devel
-git clone https://github.com/leanprover/lean4
-cd lean4
-cmake --preset release
-make -C build/release -j$(nproc || sysctl -n hw.logicalcpu)
-```
-
 ## elan
 check https://github.com/leanprover/elan/tags to see available installer for your system.  
 for linux:  
@@ -134,11 +123,6 @@ bash sh/update.sh
 ```
 ```ps1
 . ps1/update.ps1
-```
-
-## Start lake server manually
-```sh
-lake serve -- yourProjectDir
 ```
 
 # trouble-shooting for VSCode

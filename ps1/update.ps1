@@ -2,7 +2,7 @@
 # .\ps1\update.ps1 -clean
 param(
     [switch]$clean,
-    [String]$version = "v4.31.0"
+    [String]$version = "v4.32.0"
 )
 $versionNumber = $version.Substring(1)
 # cd ~/.elan/toolchains
@@ -104,7 +104,7 @@ else {
     if ($LASTEXITCODE -ne 0) {
         throw "Git fetch failed with exit code $LASTEXITCODE"
     }
-    git -C $packagePath checkout $version
+    git -C $packagePath checkout --force $version
 }
 
 $manifestFile = Join-Path $packagePath "lake-manifest.json"
@@ -151,6 +151,7 @@ foreach ($package in $mathlibManifest.packages) {
     }
 
     $packagePath = ".lake/packages/$name"
+    $url = $package.url
 
     # Check if the package directory exists
     if (Test-Path $packagePath) {
@@ -173,7 +174,7 @@ foreach ($package in $mathlibManifest.packages) {
     if ($LASTEXITCODE -ne 0) {
         throw "Git fetch failed with exit code $LASTEXITCODE"
     }
-    git -C $packagePath checkout $rev
+    git -C $packagePath checkout --force $rev
 }
 
 # Save updated manifest

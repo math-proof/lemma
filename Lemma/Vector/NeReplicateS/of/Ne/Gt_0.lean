@@ -4,6 +4,7 @@ open Vector
 
 @[main]
 private lemma main
+  {x y : α}
 -- given
   (hn : n > 0)
   (h : x ≠ y) :

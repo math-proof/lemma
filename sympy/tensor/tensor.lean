@@ -410,7 +410,7 @@ instance [AddCommMonoid α] : AddCommMonoid (Tensor α s) where
   zero_add
   add_zero
   add_comm
-  nsmul := AddMonoid.nsmul
+  nsmul := NSMul.nsmul
   nsmul_zero := AddMonoid.nsmul_zero
   nsmul_succ := AddMonoid.nsmul_succ
 
@@ -515,22 +515,18 @@ instance [SubNegMonoid α] : SubNegMonoid (Tensor α s) where
   zsmul n v := ⟨n • v.data⟩
   zsmul_zero' x := by
     apply Eq.of.EqDataS
-    simp
-    rfl
+    simp only [HSMul.hSMul, SMul.smul]
+    exact SubNegMonoid.zsmul_zero' x.data
   zsmul_succ' n x := by
     apply Eq.of.EqDataS
     rw [DataAdd.eq.AddDataS]
-    simp
-    have h := SubNegMonoid.zsmul_succ' n x.data
-    simp at h
-    assumption
+    simp only [HSMul.hSMul, SMul.smul]
+    convert SubNegMonoid.zsmul_succ' n x.data using 1 <;> simp only [zsmul_eq_smul]
   zsmul_neg' n x := by
     apply Eq.of.EqDataS
     rw [DataNeg.eq.NegData]
-    simp
-    have h := SubNegMonoid.zsmul_neg' n x.data
-    simp at h
-    rw [h]
+    simp only [HSMul.hSMul, SMul.smul]
+    convert SubNegMonoid.zsmul_neg' n x.data using 1 <;> simp only [zsmul_eq_smul]
 
 instance [AddGroup α] : AddGroup (Tensor α s) where
   neg_add_cancel x := by

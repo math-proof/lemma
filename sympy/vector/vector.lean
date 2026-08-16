@@ -51,12 +51,14 @@ instance [AddCommMagma α] : AddCommMagma (Vector α n) where
 instance [AddMonoid α] : AddMonoid (Vector α n) where
   zero_add
   add_zero
-  nsmul n v := v.map (fun x => n • x)
+  nsmul n v := v.map (n • ·)
   nsmul_zero x := by
     ext i
+    simp only [HSMul.hSMul, SMul.smul]
     simp [Zero.eq.Replicate]
   nsmul_succ n x := by
     ext i
+    simp only [HSMul.hSMul, SMul.smul]
     simp [Add.eq.Map₂]
     apply AddMonoid.nsmul_succ
 
@@ -64,7 +66,7 @@ instance [AddCommSemigroup α] : AddCommSemigroup (Vector α n) where
   add_comm
 
 instance [AddCommMonoid α] : AddCommMonoid (Vector α n) where
-  nsmul := AddMonoid.nsmul
+  nsmul := NSMul.nsmul
   nsmul_zero := AddMonoid.nsmul_zero
   nsmul_succ := AddMonoid.nsmul_succ
   zero_add
@@ -167,24 +169,27 @@ instance [Monoid α] : Monoid (Vector α n) where
   mul_one
 
 instance [SubNegMonoid α] : SubNegMonoid (Vector α n) where
-  zsmul n v := v.map (fun x => n • x)
+  zsmul n v := v.map (n • ·)
   zsmul_zero' x := by
     ext i
+    simp only [HSMul.hSMul, SMul.smul]
     simp [Zero.eq.Replicate]
   zsmul_succ' n x := by
     ext i
-    simp [Add.eq.Map₂]
-    have h := SubNegMonoid.zsmul_succ' n (x.get i)
-    simp at h
-    assumption
+    simp only [HSMul.hSMul, SMul.smul]
+    convert SubNegMonoid.zsmul_succ' n (x.get i) using 1
+    ·
+      simp [get_map]
+    ·
+      simp [Add.eq.Map₂, get_map₂]
   zsmul_neg' n x := by
     ext i
-    simp
-    have h := SubNegMonoid.zsmul_neg' n (x.get i)
-    simp at h
-    rw [h]
+    simp only [HSMul.hSMul, SMul.smul]
     rw [GetNeg.eq.NegGet.fin]
     simp
+    congr 1
+    rw [← Nat.cast_add_one]
+    exact (natCast_zsmul (x.get i) (n + 1)).symm
 
 instance [AddGroup α] : AddGroup (Vector α n) where
   neg_add_cancel x := by
