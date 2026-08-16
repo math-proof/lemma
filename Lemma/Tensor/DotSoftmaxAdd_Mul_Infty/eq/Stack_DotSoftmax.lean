@@ -63,7 +63,10 @@ private lemma main
   let Ξ := (1 : Tensor ℝ* [n, n]).band_part (l - 1) (u - 1)
   let A : Tensor ℝ* [n, n] := A
   let V : Tensor ℝ* [n, d_z] := V
-  (A + (Ξ - 1) * ∞).softmax @ V ≈ [i < n] A[i, (i + 1 - l : ℕ): (i + u : ℕ)].softmax @ V[(i + 1 - l : ℕ): (i + u : ℕ)] := by
+  (A + (Ξ - 1) * ∞).softmax @ V ≈ [i < n]
+    let βᵢ := i + 1 - l
+    let ζᵢ := i + u
+    A[i, βᵢ: ζᵢ].softmax @ V[βᵢ: ζᵢ] := by
 -- proof
   denote h_Ξ_def : Ξ = _
   denote h_A' : A' = _
@@ -85,17 +88,10 @@ private lemma main
   have h_zi := Get.of.Eq.fin h_z i
   simp at h_zi
   rw [Softmax.eq.DivExp_KeepdimSumExp] at h_zi
-  have := GetDot.eq.DotGet.fin (exp a' / ((exp a').sum 1).keepdim) V' i
-  simp at this
-  have h_zi := h_zi.trans this
+  have h_zi := h_zi.trans (GetDot.eq.DotGet.fin (exp a' / ((exp a').sum 1).keepdim) V' i)
   conv_rhs at h_zi => erw [@Tensor.GetDiv.eq.DivGetS.fin]
   simp at h_zi
-  have := GetKeepdim.eq.KeepdimCast_Get.of.GtGet_0.Gt_0.GtLength
-    (i := i)
-    (by grind) (by grind) (by grind)
-    ((exp a').sum 1)
-  simp at this
-  rw [this] at h_zi
+  erw [GetKeepdim.eq.KeepdimCast_Get.of.GtGet_0.Gt_0.GtLength (i := i) (by grind) (by grind) (by grind) ((exp a').sum 1)] at h_zi
   erw [GetSum.eq.Cast_SumGet.of.GtGet_0.LtAdd_1Length.fin (d := 0) (by grind) (by grind)] at h_zi
   simp at h_zi
   erw [Div_KeepdimSum.eq.Div_Sum] at h_zi
@@ -104,7 +100,39 @@ private lemma main
     erw [Eq1Coe1]
     rw [MapBandPart.eq.BandPartMap.of.EqUFn0'0]
     rfl
-  have h_Ξᵢ : (exp a').get i / (let den : Tensor ℝ* [] := ((exp a').get i).sum 0; den) ≈ (exp A').get i * Ξ.get i / (let den : Tensor ℝ* [] := ((exp A').get i * Ξ.get i).sum 0; den) := by
+  apply (Tensor.XEq.of.Eq h_zi).trans
+  apply XEq.trans (b := ((exp A').get i * Ξ.get i / (let den : Tensor ℝ* [] := ((exp A').get i * Ξ.get i).sum 0; den)) @ V')
+  .
+    simp
+    rw [h_A', hΞ, h_V']
+    conv_rhs => rw [ExpMap.eq.MapExp.of.All_EqUFnExp_ExpUFn (by aesop)]
+    conv_rhs => erw [GetMap.eq.MapGet.fin (i := ⟨i, by grind⟩)]
+    conv_rhs =>
+      pattern (map (band_part _ _ _) _).get _
+      erw [GetMap.eq.MapGet.fin (i := ⟨i, by grind⟩)]
+    conv_rhs =>
+      pattern (map (band_part _ _ _) _).get _
+      erw [GetMap.eq.MapGet.fin (i := ⟨i, by grind⟩)]
+    simp
+    conv_rhs => erw [MulMapS.eq.MapMul.of.All_Eq_Mul (by aesop)]
+    conv_rhs => erw [SumMap.eq.MapSum.of.All_EqUFnAdd (by aesop)]
+    conv_rhs => erw [DivMapS.eq.MapDiv.of.All_Eq_Div.scalar (by aesop)]
+    apply XEqDotS.of.XEq
+    conv_rhs => erw [MapDiv.eq.DivMapS.of.All_Eq_Div.scalar (by aesop)]
+    conv_rhs => erw [MapMul.eq.MulMapS.of.All_Eq_Mul (by aesop)]
+    conv_rhs => erw [MapSum.eq.SumMap.of.All_EqUFnAdd (by aesop)]
+    conv_rhs => erw [MapMul.eq.MulMapS.of.All_Eq_Mul (by aesop)]
+    conv_rhs => erw [MapGet.eq.GetMap.fin (i := ⟨i, by grind⟩)]
+    conv_rhs => rw [MapExp.eq.ExpMap.of.All_EqUFnExp_ExpUFn (by aesop)]
+    conv_rhs =>
+      pattern map (get (band_part _ _) _) _
+      erw [MapGet.eq.GetMap.fin (i := ⟨i, by grind⟩)]
+    conv_rhs =>
+      pattern map (get (band_part _ _) _) _
+      erw [MapGet.eq.GetMap.fin (i := ⟨i, by grind⟩)]
+    simp
+    rw [← hΞ]
+    rw [← h_A']
     apply XEqDivS_Sum_0.of.XEq.NotInfinitesimalSum.Ge_0 _ _ h_Ξᵢ
     .
       apply Le0Mul.of.Ge_0.Ge_0
@@ -138,78 +166,45 @@ private lemma main
         apply Le0BandPart
       .
         apply Lt0SumGetBandPart
-  have h_zi := Tensor.XEq.of.Eq h_zi
-  apply h_zi.trans
-  have h_xeq : ((exp a').get i / (let den : Tensor ℝ* [] := ((exp a').get i).sum 0; den)) @ V' ≈ ((exp A').get i * Ξ.get i / (let den : Tensor ℝ* [] := ((exp A').get i * Ξ.get i).sum 0; den)) @ V' := by
-    simp
-    rw [h_A', hΞ, h_V']
-    conv_rhs => rw [ExpMap.eq.MapExp.of.All_EqUFnExp_ExpUFn (by aesop)]
-    conv_rhs => erw [GetMap.eq.MapGet.fin (i := ⟨i, by grind⟩)]
-    conv_rhs =>
-      pattern (map (band_part _ _ _) _).get _
-      erw [GetMap.eq.MapGet.fin (i := ⟨i, by grind⟩)]
-    conv_rhs =>
-      pattern (map (band_part _ _ _) _).get _
-      erw [GetMap.eq.MapGet.fin (i := ⟨i, by grind⟩)]
-    simp
-    conv_rhs => erw [MulMapS.eq.MapMul.of.All_Eq_Mul (by aesop)]
-    conv_rhs => erw [SumMap.eq.MapSum.of.All_EqUFnAdd (by aesop)]
-    conv_rhs => erw [DivMapS.eq.MapDiv.of.All_Eq_Div.scalar (by aesop)]
-    apply XEqDotS.of.XEq
-    conv_rhs => erw [MapDiv.eq.DivMapS.of.All_Eq_Div.scalar (by aesop)]
-    conv_rhs => erw [MapMul.eq.MulMapS.of.All_Eq_Mul (by aesop)]
-    conv_rhs => erw [MapSum.eq.SumMap.of.All_EqUFnAdd (by aesop)]
-    conv_rhs => erw [MapMul.eq.MulMapS.of.All_Eq_Mul (by aesop)]
-    conv_rhs => erw [MapGet.eq.GetMap.fin (i := ⟨i, by grind⟩)]
-    conv_rhs => rw [MapExp.eq.ExpMap.of.All_EqUFnExp_ExpUFn (by aesop)]
-    conv_rhs =>
-      pattern map (get (band_part _ _) _) _
-      erw [MapGet.eq.GetMap.fin (i := ⟨i, by grind⟩)]
-    conv_rhs =>
-      pattern map (get (band_part _ _) _) _
-      erw [MapGet.eq.GetMap.fin (i := ⟨i, by grind⟩)]
-    simp
-    rw [← hΞ]
-    rwa [← h_A']
-  apply h_xeq.trans
-  erw [SumMulGetS.eq.SumGetSliceGet.fin (exp A') i (l := l) (u := u)]
-  simp
-  conv_lhs => erw [DotDiv.eq.DivDot]
-  conv_lhs => erw [DotMulGetS.eq.DotGetSliceS.fin (exp A') V' i (l := l) (u := u)]
-  conv_lhs => erw [GetExp.eq.ExpGet.fin (i := ⟨i, by grind⟩)]
-  conv_lhs => erw [GetSliceExp.eq.ExpGetSlice]
-  conv_lhs =>
-    arg 1
-    arg 1
-    erw [Exp.eq.MulSoftmax_SumExp]
-  simp
-  conv_lhs => erw [DotMul.eq.MulDot]
-  simp [EqGetStack.fn.fin]
-  erw [EqDivMul.of.Ne_0]
   .
-    simp [GetElem.getElem]
-    rfl
-  .
-    rw [h_A']
-    conv_lhs => erw [GetMap.eq.MapGet.fin]
-    conv_lhs => erw [GetSliceMap.eq.MapGetSlice]
-    conv_lhs => erw [ExpMap.eq.MapExp.of.All_EqUFnExp_ExpUFn (by aesop)]
-    conv_lhs => erw [SumMap.eq.MapSum.of.All_EqUFnAdd (by aesop)]
-    apply Ne.of.Gt.NeProd_0
+    erw [SumMulGetS.eq.SumGetSliceGet.fin (exp A') i (l := l) (u := u)]
+    simp
+    conv_lhs => erw [DotDiv.eq.DivDot]
+    conv_lhs => erw [DotMulGetS.eq.DotGetSliceS.fin (exp A') V' i (l := l) (u := u)]
+    conv_lhs => erw [GetExp.eq.ExpGet.fin (i := ⟨i, by grind⟩)]
+    conv_lhs => erw [GetSliceExp.eq.ExpGetSlice]
+    conv_lhs =>
+      arg 1
+      arg 1
+      erw [Exp.eq.MulSoftmax_SumExp]
+    simp
+    conv_lhs => erw [DotMul.eq.MulDot]
+    simp [EqGetStack.fn.fin]
+    erw [EqDivMul.of.Ne_0]
     .
-      simp
+      simp [GetElem.getElem]
+      rfl
     .
-      apply Tensor.GtCoe_0.of.Gt_0
-      apply Tensor.GtSumExp_0.of.Ne_0
-      apply Nat.Ne.of.Gt
-      have := NeZero.pos l
-      apply List.Lt0LengthSlice.of.Lt.Lt
+      rw [h_A']
+      conv_lhs => erw [GetMap.eq.MapGet.fin]
+      conv_lhs => erw [GetSliceMap.eq.MapGetSlice]
+      conv_lhs => erw [ExpMap.eq.MapExp.of.All_EqUFnExp_ExpUFn (by aesop)]
+      conv_lhs => erw [SumMap.eq.MapSum.of.All_EqUFnAdd (by aesop)]
+      apply Ne.of.Gt.NeProd_0
       .
-        simp [Tensor.length]
-        omega
+        simp
       .
-        have := NeZero.pos u
-        omega
+        apply Tensor.GtCoe_0.of.Gt_0
+        apply Tensor.GtSumExp_0.of.Ne_0
+        apply Nat.Ne.of.Gt
+        have := NeZero.pos l
+        apply List.Lt0LengthSlice.of.Lt.Lt
+        .
+          simp [Tensor.length]
+          omega
+        .
+          have := NeZero.pos u
+          omega
 
 
 -- created on 2020-12-28

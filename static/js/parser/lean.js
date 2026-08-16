@@ -4211,9 +4211,6 @@ export class LeanStatements extends LeanMultipleLine(LeanArgs) {
         return `\\begin{align*}\n${stmt}\n\\end{align*}`;
     }
 
-    /**
-     * Port of `LeanStatements::relocate_last_comment`.
-     */
     relocate_last_comment() {
         for (let index = this.args.length - 1; index >= 0; --index) {
             const end = this.args[index];
@@ -6839,7 +6836,6 @@ export class LeanArgsNewLineSeparated extends LeanMultipleLine(LeanArgs) {
         return 47;
     }
 
-    /** Non-last caret: return undefined (see `LeanStatements.insert_if`). */
     insert_if(caret) {
         if (!(caret instanceof LeanCaret)) return undefined;
         const last = this.args[this.args.length - 1];
@@ -6879,9 +6875,10 @@ export class LeanArgsNewLineSeparated extends LeanMultipleLine(LeanArgs) {
     }
 
     latexFormat() {
-        return Array(this.args.length)
-            .fill('{%s}')
-            .join('\n');
+        const n = this.args.length;
+        if (n === 0) return '';
+        const stmt = Array(n).fill('&{%s}&& ').join('\\\\\n');
+        return `\\begin{align*}\n${stmt}\n\\end{align*}`;
     }
 
     push_newlines(newline_count) {
@@ -9159,10 +9156,24 @@ class LeanBigOperator extends LeanArgs {
         return parent instanceof LeanStatements || parent instanceof LeanIte;
     }
 
+    sep() {
+        if (this.scope instanceof LeanArgsNewLineSeparated) return "\n";
+        return ' ';
+    }
+
+    set_line(line) {
+        this.line = line;
+        line = this.bound.set_line(line);
+        const s = this.sep();
+        if (s && s[0] === '\n') line++;
+        return this.scope.set_line(line);
+    }
+
     strFormat() {
         const op = this.operator;
         if (this.args.length === 1) return `${op} %s,`;
-        return `${op} %s, %s`;
+        var sep = this.sep();
+        return `${op} %s,${sep}%s`;
     }
 
     latexFormat() {
@@ -9195,8 +9206,17 @@ class LeanBigOperator extends LeanArgs {
 
     insert_newline(caret, newline_count, indent, next) {
         if (caret === this.scope) {
-            const $new = this.push_args_indented(this.indent + 2, newline_count);
-            if ($new) return $new;
+            if (caret instanceof LeanCaret) {
+                caret.indent = indent;
+                const nl = new LeanArgsNewLineSeparated([caret], indent, caret.level);
+                caret = nl.push_newlines(newline_count - 1);
+                this.scope = nl;
+                return caret;
+            }
+            else {
+                const $new = this.push_args_indented(this.indent + 2, newline_count);
+                if ($new) return $new;
+            }
         }
         return super.insert_newline(caret, newline_count, indent, next);
     }
@@ -9285,7 +9305,8 @@ class LeanStack extends LeanBigOperator {
     push_args_indented(_indent, _newlineCount, _functionCall = true) {}
 
     strFormat() {
-        return '[%s] %s';
+        var sep = this.sep();
+        return `[%s]${sep}%s`;
     }
 }
 
