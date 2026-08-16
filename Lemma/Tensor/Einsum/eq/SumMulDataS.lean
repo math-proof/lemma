@@ -42,5 +42,21 @@ private lemma main
       grind
 
 
+@[main]
+private lemma resize
+  [Mul α] [Add α] [Zero α]
+-- given
+  (X : Tensor α [n])
+  (Y : Tensor α [n']) :
+-- imply
+  let n := n ⊔ n'
+  let X' : Tensor α [n] := X.resize ⟨0, by grind⟩ n
+  let Y' : Tensor α [n] := Y.resize ⟨0, by grind⟩ n
+  X.einsum Y = (X' * Y').sum := by
+-- proof
+  unfold Tensor.einsum
+  simp
+
+
 -- created on 2026-01-05
--- updated on 2026-07-10
+-- updated on 2026-08-17

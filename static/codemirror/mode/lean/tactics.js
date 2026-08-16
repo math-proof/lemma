@@ -33,6 +33,7 @@ export const tactics = [
     'exfalso',
     'exists',
     'ext',
+    'extract_lets',
     'field_simp',
     'filter_upwards',
     'fin_cases',

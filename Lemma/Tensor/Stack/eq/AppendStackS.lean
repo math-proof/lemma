@@ -30,5 +30,5 @@ private lemma main
     simp_all [EqGetStack.fn.fin]
 
 
--- created on 2024-12-22
+-- created on 2019-10-14
 -- updated on 2025-06-14

@@ -270,6 +270,7 @@ Guidelines and prompts for using LLMs to write and refactor Lean 4 proofs in thi
 - default arguments should be put within the `given` section
 - conclusion must be put within the `imply` section
 - proof body must be put within the `proof` section
+- date created must be today, if date updated is the same as date created, it should be omitted.
 
 ### Formatting
 Run `python py/format.py <leanFile>` if necessary. It will:

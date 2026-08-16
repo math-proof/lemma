@@ -1,4 +1,4 @@
-import Lemma.Tensor.DotMap.eq.MapDot.of.All_Eq_Map.All_EqMulMap.All_EqBFn0.All_EqSumMap.All_EqMapS
+import Lemma.Tensor.MapDot.eq.DotMap.of.All_Eq_Map.All_EqMulMap.All_EqBFn0.All_EqSumMap.All_EqMapS
 import Lemma.Tensor.MulMul
 import Lemma.Tensor.SumMul.eq.MulSum
 open Tensor
