@@ -21,7 +21,7 @@ def apply(eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Set, Bool, Nat, Vector
+    from Lemma import Tensor, Algebra, Set, Bool, Nat, Vector, Int
     from sympy import Min
     n = Symbol(domain=Range(2, oo))
     l = Symbol(domain=Range(2, n + 1))
@@ -96,7 +96,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(And).apply(Set.Cond.Cond.Is.In.Ico)
 
-    Eq << Eq[-1].this.find(Element).apply(Set.In_Icc.Is.InSub, i)
+    Eq << Eq[-1].this.find(Element).apply(Int.In_Icc.Is.InSub, i)
 
     Eq << Eq[-1].this.find(Element).apply(Set.In_Icc.Is.InNeg)
 

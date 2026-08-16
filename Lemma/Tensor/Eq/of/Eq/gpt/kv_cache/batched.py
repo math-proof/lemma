@@ -41,16 +41,16 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(n, n + 1)
 
-    Eq << Eq[-1].this.find(Stack).apply(Tensor.Stack.eq.Block.pop)
+    Eq << Eq[-1].this.find(Stack).apply(Tensor.Stack.eq.AppendStackS)
 
     Eq << Algebra.EqTranspose.of.Eq.apply(Eq[2], axis=(0, 1))
 
     Eq << Eq[-2].subs(Eq[-1].reversed)
 
     Eq << Algebra.EqTranspose.of.Eq.apply(Eq[-1], axis=(0, 1))
-    Eq << Eq[-1].this.find(MatMul[Transpose[~Sliced]]).apply(Algebra.Expr.eq.Block, -1, axis=1)
+    Eq << Eq[-1].this.find(MatMul[Transpose[~Sliced]]).apply(Tensor.SEq_Append, -1, axis=1)
 
-    Eq << Eq[-1].this.find(MatMul[~Sliced]).apply(Algebra.Expr.eq.Block, -1, axis=1)
+    Eq << Eq[-1].this.find(MatMul[~Sliced]).apply(Tensor.SEq_Append, -1, axis=1)
 
 
 

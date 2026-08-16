@@ -10,7 +10,7 @@ def apply(eq, infer, L, i, j):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset, Bool
+    from Lemma import Algebra, Finset, Bool, Tensor
 
     n = Symbol(integer=True, positive=True)
     A = Symbol(shape=(n, n), real=True)
@@ -33,7 +33,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this(i).find(Min).simplify(), Bool.Imp.given.Cond.apply(Eq[-1])
 
-    Eq <<= Eq[-2].this(j).expr.args[1].args[0].apply(Algebra.Expr.eq.Block, i + 1), Eq[-1].this(i).apply(Algebra.Any.limits.pop.Slice)
+    Eq <<= Eq[-2].this(j).expr.args[1].args[0].apply(Tensor.SEq_Append, i + 1), Eq[-1].this(i).apply(Algebra.Any.limits.pop.Slice)
 
     Eq <<= Eq[-2].this(j).expr.simplify(), Eq[-1].this.apply(Algebra.Any.limits.swap)
 

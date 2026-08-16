@@ -77,7 +77,7 @@ def prove(Eq):
 
     Eq << Eq.induct.subs(Eq[-1])
 
-    Eq << Eq[-1].this.expr.expr.rhs.args[0].apply(Tensor.Stack.eq.Block.pop)
+    Eq << Eq[-1].this.expr.expr.rhs.args[0].apply(Tensor.Stack.eq.AppendStackS)
 
     Eq << MatMul(*Eq[-1].expr.expr.rhs.args[:2]).this.apply(Tensor.Dot.eq.Block, deep=True)
 
@@ -133,7 +133,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.apply(Algebra.Cond.of.Any.Or, simplify=None)
 
-    Eq << Eq.p_quote_definition.lhs.this.apply(Algebra.Expr.eq.Block, n)
+    Eq << Eq.p_quote_definition.lhs.this.apply(Tensor.SEq_Append, n)
 
     Eq << Algebra.All.Any.And.of.Cond.All_Any.apply(Eq[-1], Eq[-2])
 

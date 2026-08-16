@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << Tensor.EqDot.of.Eq.apply(Eq[-1], Eq[-1].lhs.find(BlockMatrix)).reversed
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Expr.eq.Block, n, n)
+    Eq << Eq[-1].this.rhs.apply(Tensor.SEq_Append, n, n)
 
     Eq << Eq[-1].this.lhs.apply(Tensor.Dot.eq.Block, deep=True)
 

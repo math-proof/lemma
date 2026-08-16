@@ -32,7 +32,7 @@ def apply(self, *indices):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability, Calculus
+    from Lemma import Algebra, Probability, Calculus, Tensor
 
     # this is the proof of the law of iterated expectations
     # https://en.wikipedia.org/wiki/Law_of_total_expectation
@@ -42,7 +42,7 @@ def prove(Eq):
     f = Function(real=True, shape=())
     Eq << apply(Expectation(f(x[:n])), slice(0, i))
 
-    Eq << Eq[-1].this.rhs.find(f[~Sliced]).apply(Algebra.Expr.eq.Block, i)
+    Eq << Eq[-1].this.rhs.find(f[~Sliced]).apply(Tensor.SEq_Append, i)
 
     Eq << Eq[-1].this.rhs.find(Expectation).apply(Probability.Expect.eq.Integral)
 
@@ -60,7 +60,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Probability.Expect.eq.Integral)
 
-    Eq << Eq[-1].this.find(f[~Sliced]).apply(Algebra.Expr.eq.Block, i)
+    Eq << Eq[-1].this.find(f[~Sliced]).apply(Tensor.SEq_Append, i)
 
     # https://spinningup.openai.com/en/latest/spinningup/extra_pg_proof2.html
 

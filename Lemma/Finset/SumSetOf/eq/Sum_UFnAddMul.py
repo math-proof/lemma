@@ -14,7 +14,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Finset
+    from Lemma import Finset, Int
 
     n, a, b, m = Symbol(integer=True)
     f = Symbol(shape=(oo,), real=True)
@@ -29,7 +29,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Finset.SumIco.eq.Sum_UFnAdd, b)
 
-    Eq << Eq[-1].this.find(Element).apply(Set.In_Icc.Is.InSub, b)
+    Eq << Eq[-1].this.find(Element).apply(Int.In_Icc.Is.InSub, b)
 
     Eq << Eq[-1].this.lhs.apply(Finset.Sum_MulBoolAnd.eq.Sum)
 

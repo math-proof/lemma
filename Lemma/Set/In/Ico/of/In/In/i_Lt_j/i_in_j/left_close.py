@@ -22,12 +22,12 @@ def apply(contains_i, contains_j):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Nat
+    from Lemma import Set, Algebra, Nat, Int
 
     a, i, j, n, d = Symbol(integer=True)
     Eq << apply(Element(i, Range(a + d, j + d)), Element(j, Range(a, n)))
 
-    Eq << Set.InSub.of.In_Icc.apply(Eq[0], d)
+    Eq << Int.InSub.of.In_Icc.apply(Eq[0], d)
 
     Eq << Set.In.given.In.Sub.apply(Eq[2], d)
 

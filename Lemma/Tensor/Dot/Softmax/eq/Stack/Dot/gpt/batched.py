@@ -22,7 +22,7 @@ def prove(Eq):
     k = Symbol(domain=Range(m))
     Eq << Tensor.Eq.given.All_EqGetS.apply(Eq[0], k)
 
-    Eq << Eq[-1].this.lhs.apply(Tensor.DotSoftmax.eq.Stack_Dot.gpt, i)
+    Eq << Eq[-1].this.lhs.apply(Tensor.DotSoftmaxAdd_Mul_Infty.eq.Stack_DotSoftmaxDivDot_T.gpt, i)
     # https://s3-us-west-2.amazonaws.com/openai-assets/research-covers/language-unsupervised/language_understanding_paper.pdf
 
 

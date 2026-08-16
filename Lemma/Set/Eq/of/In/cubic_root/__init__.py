@@ -11,14 +11,14 @@ def apply(contains_p):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Nat
+    from Lemma import Set, Algebra, Nat, Int
 
     p = Symbol(complex=True, given=True)
     Eq << apply(Element(Arg(p), Interval(-S.Pi / 3, S.Pi / 3, left_open=True)))
 
     Eq << Set.In.Mul.Icc.of.In.apply(Eq[0], 3)
 
-    Eq << Set.InSub.of.In_Icc.apply(Eq[-1], S.Pi)
+    Eq << Int.InSub.of.In_Icc.apply(Eq[-1], S.Pi)
 
     Eq << Set.InDiv.of.In_Icc.apply(Eq[-1], S.Pi * 2)
 

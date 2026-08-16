@@ -28,7 +28,7 @@ def prove(Eq):
     a, i, j, n, d = Symbol(integer=True)
     Eq << apply(Element(j, Range(i - d + 1, n)), Element(i, Range(a + d, d + n)))
 
-    Eq << Set.InSub.of.In_Icc.apply(Eq[1], d)
+    Eq << Int.InSub.of.In_Icc.apply(Eq[1], d)
 
     Eq << Set.In.given.In.Sub.apply(Eq[2], d)
 

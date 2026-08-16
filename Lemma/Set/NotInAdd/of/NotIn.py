@@ -12,14 +12,14 @@ def apply(given, t):
 
 @prove
 def prove(Eq):
-    from Lemma import Set
+    from Lemma import Int
     x, a, b, t = Symbol(real=True, given=True)
 
     Eq << apply(NotElement(x, Interval(a, b)), t)
 
     Eq << ~Eq[-1]
 
-    Eq << Set.InSub.of.In_Icc.apply(Eq[-1], t)
+    Eq << Int.InSub.of.In_Icc.apply(Eq[-1], t)
 
     Eq <<= Eq[-1] & Eq[0]
 

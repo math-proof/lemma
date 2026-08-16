@@ -12,13 +12,13 @@ def apply(contains):
 
 @prove
 def prove(Eq):
-    from Lemma import Set
+    from Lemma import Set, Int
 
     x = Symbol(real=True)
     a = Symbol(integer=True)
     Eq << apply(Element(x, Interval(a, a + 1, left_open=True)))
 
-    Eq << Set.InSub.of.In_Icc.apply(Eq[0], a + 1)
+    Eq << Int.InSub.of.In_Icc.apply(Eq[0], a + 1)
 
     Eq << Set.EqCeil_0.of.In_Ioc.apply(Eq[-1])
     Eq << Eq[-1].reversed

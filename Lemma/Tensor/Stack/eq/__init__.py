@@ -14,3 +14,4 @@ from . import Add
 from . import Ite
 from . import Eye
 from . import Dot
+from . import AppendStackS

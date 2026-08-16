@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.apply(Bool.Cond.of.Eq.Cond.subst, ret=0)
 
-    Eq << Eq[-1].this.find(Element).apply(Set.InSub.of.In_Icc, 1, simplify=None)
+    Eq << Eq[-1].this.find(Element).apply(Int.InSub.of.In_Icc, 1, simplify=None)
 
     Eq << Eq[-1].this.find(Element).apply(Set.In_IccCeilDiv.of.In_Icc, 2, simplify=None)
 

@@ -51,7 +51,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(t, t + 1)
 
-    Eq << Eq[-1].this.args[1].apply(Set.NotInSub.of.NotIn_Icc, 1)
+    Eq << Eq[-1].this.args[1].apply(Int.NotInSub.of.NotIn_Icc, 1)
 
     Eq << Bool.ImpNot.of.Or.apply(Eq[-1], 0)
 

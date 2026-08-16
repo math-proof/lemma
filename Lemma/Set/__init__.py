@@ -176,7 +176,6 @@ from . import Any_In_Ioc_Add_1
 from . import Imp_In
 from . import In_Ico
 from . import InDiv
-from . import InSub
 from . import Any_In_Ioc
 from . import In_Iio
 from . import OrInS
@@ -188,7 +187,6 @@ from . import SubsetInter
 from . import SubsetInterS
 from . import Cup_Inter_Ite
 from . import Inter_Ite
-from . import NotInSub
 from . import InterSingletonS
 from . import IteAnd
 from . import CupIn_Ico

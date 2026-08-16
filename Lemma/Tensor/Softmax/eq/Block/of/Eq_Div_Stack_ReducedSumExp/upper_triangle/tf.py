@@ -23,7 +23,7 @@ def apply(eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Set, Bool, Nat, Vector
+    from Lemma import Tensor, Algebra, Set, Bool, Nat, Vector, Int
 
     n, u = Symbol(domain=Range(2, oo))
     A = Symbol(shape=(n, n), real=True)
@@ -93,7 +93,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(And).apply(Set.Cond.Cond.Is.In.Ico, simplify=None)
 
-    Eq << Eq[-1].this.find(Element).apply(Set.In_Icc.Is.InSub, i, simplify=None)
+    Eq << Eq[-1].this.find(Element).apply(Int.In_Icc.Is.InSub, i, simplify=None)
 
     Eq << Eq[-1].this.rhs.apply(Bool.Ite_Ite.eq.Ite__Ite)
 

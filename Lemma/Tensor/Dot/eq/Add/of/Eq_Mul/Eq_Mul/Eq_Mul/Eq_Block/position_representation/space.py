@@ -51,7 +51,7 @@ def prove(Eq):
 
     Eq << Eq[3].subs(i, r[h]).subs(j, c[h]).subs(k, z[h]) @ x[t]
 
-    Eq << Eq[-1].this.rhs.args[1].apply(Algebra.Expr.eq.Block, (d_r + d_c + d_z) / 2)
+    Eq << Eq[-1].this.rhs.args[1].apply(Tensor.SEq_Append, (d_r + d_c + d_z) / 2)
 
     Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Block, deep=True)
 

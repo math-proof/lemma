@@ -13,7 +13,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Algebra, Set, Tensor, Nat
+    from Lemma import Finset, Algebra, Tensor, Nat, Int
 
     r = Symbol(real=True)
     n = Symbol(domain=Range(2, oo))
@@ -74,19 +74,19 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(MatMul).apply(Tensor.Dot.eq.Stack_Sum_MulGetS)
 
-    Eq << Eq[-1].this.find(Element).apply(Set.In_Icc.Is.InSub, 1)
+    Eq << Eq[-1].this.find(Element).apply(Int.In_Icc.Is.InSub, 1)
 
     Eq << Eq[-1].this.rhs.find(MatMul).apply(Tensor.Dot.eq.Stack_Sum_MulGetS)
 
     Eq << Eq[-1].this.find(Sum).expr.apply(Nat.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.find(Element).apply(Set.In_Icc.Is.InSub, 1)
+    Eq << Eq[-1].this.find(Element).apply(Int.In_Icc.Is.InSub, 1)
 
     Eq << Eq[-1].this.rhs.find(MatMul).apply(Tensor.Dot.eq.Stack_Sum_MulGetS)
 
     Eq << Eq[-1].this.find(Sum).expr.apply(Nat.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.find(Element).apply(Set.In_Icc.Is.InSub, 1)
+    Eq << Eq[-1].this.find(Element).apply(Int.In_Icc.Is.InSub, 1)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Add.Block.eq.Block)
 
@@ -112,7 +112,7 @@ def prove(Eq):
 
     Eq << Eq[-2].subs(Eq[-1].reversed)
 
-    Eq << Zeros(n).this.apply(Algebra.Expr.eq.Block, 1)
+    Eq << Zeros(n).this.apply(Tensor.SEq_Append, 1)
 
     Eq << Eq[-2].subs(Eq[-1].reversed)
 

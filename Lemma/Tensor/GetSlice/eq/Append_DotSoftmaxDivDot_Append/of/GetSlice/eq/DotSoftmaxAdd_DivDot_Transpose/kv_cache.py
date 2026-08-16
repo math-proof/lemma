@@ -16,7 +16,7 @@ def apply(eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra
+    from Lemma import Tensor
 
     n, d_z = Symbol(integer=True, positive=True)
     i = Symbol(integer=True)
@@ -24,17 +24,17 @@ def prove(Eq):
     Eq << apply(
         Equal(Z[:n], softmax(Q[:n] @ K[:n].T / sqrt(d_z) + (BandPart[n, 0](Ones(n, n)) - 1) * oo) @ V[:n]))
 
-    Eq << Eq[0].this.rhs.apply(Tensor.DotSoftmax.eq.Stack_Dot.gpt, i)
+    Eq << Eq[0].this.rhs.apply(Tensor.DotSoftmaxAdd_Mul_Infty.eq.Stack_DotSoftmaxDivDot_T.gpt, i)
 
     Eq << Eq[-1].subs(n, n + 1)
 
-    Eq << Eq[-1].this.rhs.apply(Tensor.Stack.eq.Block.pop)
+    Eq << Eq[-1].this.rhs.apply(Tensor.Stack.eq.AppendStackS)
 
     Eq << Eq[-1].subs(Eq[2].reversed)
 
-    Eq << Eq[-1].this.find(Transpose[~Sliced]).apply(Algebra.Expr.eq.Block, -1)
+    Eq << Eq[-1].this.find(Transpose[~Sliced]).apply(Tensor.SEq_Append, -1)
 
-    Eq << Eq[-1].this.find(MatMul[~Sliced]).apply(Algebra.Expr.eq.Block, -1)
+    Eq << Eq[-1].this.find(MatMul[~Sliced]).apply(Tensor.SEq_Append, -1)
 
     # http://myhz0606.com/article/kv-cache
 

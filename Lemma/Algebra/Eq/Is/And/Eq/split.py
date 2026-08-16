@@ -4,7 +4,7 @@ from util import *
 @apply
 def apply(given, index=None):
     lhs, rhs = given.of(Equal)
-    from Lemma.Algebra.Expr.eq.Block import split
+    from Lemma.Tensor.SEq_Append import split
     if index is None:
         if lhs.shape[0] == oo:
             index = 1

@@ -10,7 +10,7 @@ def apply(self, t):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Bool
+    from Lemma import Set, Bool, Int
     x = Symbol(integer=True)
     a, b, t = Symbol(real=True)
 
@@ -18,7 +18,7 @@ def prove(Eq):
 
     Eq << Bool.Iff.given.Imp.Imp.apply(Eq[-1])
 
-    Eq << Eq[-2].this.lhs.apply(Set.InSub.of.In_Icc, t)
+    Eq << Eq[-2].this.lhs.apply(Int.InSub.of.In_Icc, t)
 
     Eq << Eq[-1].this.lhs.apply(Set.InAdd.of.In_Icc, t)
 

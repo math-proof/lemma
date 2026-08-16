@@ -9,7 +9,7 @@ def apply(self, index=0, offset=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Bool
+    from Lemma import Bool, Int
 
     n, m = Symbol(integer=True)
     f = Function(integer=True)
@@ -17,7 +17,7 @@ def prove(Eq):
 
     Eq << Bool.Or_NotIn.of.All.apply(Eq[0], n, n + 1)
 
-    Eq << Eq[-1].this.args[1].apply(Set.NotInSub.of.NotIn_Icc, 1)
+    Eq << Eq[-1].this.args[1].apply(Int.NotInSub.of.NotIn_Icc, 1)
 
     Eq << Bool.All.of.All_OrNot.apply(Eq[-1], pivot=1, wrt=n)
 

@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq << Finset.Eq.of.Eq.rmatmul.apply(Eq[0], Eq[0].rhs.find(BlockMatrix))
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Expr.eq.Block, n, n)
+    Eq << Eq[-1].this.rhs.apply(Tensor.SEq_Append, n, n)
 
     Eq << Eq[-1].this.lhs.apply(Tensor.Dot.eq.Block, deep=True)
 

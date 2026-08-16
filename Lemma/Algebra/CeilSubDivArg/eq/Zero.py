@@ -12,7 +12,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Nat
+    from Lemma import Set, Nat, Int
 
     z = Symbol(complex=True)
     n = Symbol(integer=True, positive=True)
@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Set.InDiv.of.In_Icc.apply(Eq[-1], n, simplify=None)
 
-    Eq << Set.InSub.of.In_Icc.apply(Eq[-1], S.Pi, simplify=None)
+    Eq << Int.InSub.of.In_Icc.apply(Eq[-1], S.Pi, simplify=None)
 
     Eq << Set.InDiv.of.In_Icc.apply(Eq[-1], S.Pi * 2, simplify=None)
 

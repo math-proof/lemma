@@ -73,7 +73,7 @@ def prove(Eq):
 
     Eq << Tensor.EqDot.of.EqDot.EqDot.apply(*Eq[-2:])
 
-    Eq << Eq[-1].find(Zeros).this.apply(Algebra.Expr.eq.Block, d_r / 2, d_c / 2)
+    Eq << Eq[-1].find(Zeros).this.apply(Tensor.SEq_Append, d_r / 2, d_c / 2)
 
     Eq << Eq[-1].T
 
@@ -83,15 +83,15 @@ def prove(Eq):
 
     Eq << Tensor.EqDot.of.EqDot.EqDot.apply(*Eq[-2:])
 
-    Eq << Eq[-1].rhs.args[1].find(Zeros).this.apply(Algebra.Expr.eq.Block, d_z / 2, d_r)
+    Eq << Eq[-1].rhs.args[1].find(Zeros).this.apply(Tensor.SEq_Append, d_z / 2, d_r)
 
     Eq << Eq[-1].T
 
-    Eq.rect_r = Eq[-2].rhs.find(Zeros).this.apply(Algebra.Expr.eq.Block, d_r / 2, axis=1)
+    Eq.rect_r = Eq[-2].rhs.find(Zeros).this.apply(Tensor.SEq_Append, d_r / 2, axis=1)
 
     Eq.rect_r_T = Eq.rect_r.T
 
-    Eq.rect_c = Eq[-2].rhs.find(Zeros[2]).this.apply(Algebra.Expr.eq.Block, d_c / 2, axis=1)
+    Eq.rect_c = Eq[-2].rhs.find(Zeros[2]).this.apply(Tensor.SEq_Append, d_c / 2, axis=1)
 
     Eq.rect_c_T = Eq.rect_c.T
 
@@ -155,9 +155,9 @@ def prove(Eq):
 
     Eq.eq_matmul = Bool.Eq.of.Eq.Eq.apply(Eq.eq_matmul, Eq[-1])
 
-    Eq << Eq[3].find(Identity).this.apply(Algebra.Expr.eq.Block, (d_r + d_c) / 2, (d_r + d_c) / 2).this.rhs.find(Identity).apply(Algebra.Expr.eq.Block, d_r / 2, d_r / 2)
+    Eq << Eq[3].find(Identity).this.apply(Tensor.SEq_Append, (d_r + d_c) / 2, (d_r + d_c) / 2).this.rhs.find(Identity).apply(Tensor.SEq_Append, d_r / 2, d_r / 2)
 
-    Eq << Eq[-1].rhs.args[1].find(Zeros).this.apply(Algebra.Expr.eq.Block, d_r / 2, axis=1)
+    Eq << Eq[-1].rhs.args[1].find(Zeros).this.apply(Tensor.SEq_Append, d_r / 2, axis=1)
 
     Eq << Eq[-1].T
 

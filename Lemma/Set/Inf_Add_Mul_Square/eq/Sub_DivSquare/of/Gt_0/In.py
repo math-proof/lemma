@@ -15,7 +15,7 @@ def apply(is_positive, el, fx, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Rat
+    from Lemma import Algebra, Set, Rat, Int
 
     m, M, a, b, c = Symbol(real=True, given=True)
     x = Symbol(real=True)
@@ -33,7 +33,7 @@ def prove(Eq):
 
     Eq << Algebra.Eq.given.Eq.Div.apply(Eq[-1], a)
 
-    Eq << Set.InSub.of.In_Icc.apply(Eq[1], Eq[1].lhs)
+    Eq << Int.InSub.of.In_Icc.apply(Eq[1], Eq[1].lhs)
 
     Eq << Set.Le.Le.of.In_Icc.apply(Eq[-1])
 

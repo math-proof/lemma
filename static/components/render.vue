@@ -153,6 +153,7 @@ export default {
                 pathname = '/lean/';
                 search = search.replace(/(?<=[./\\][A-Z]\w*[./\\])(In|Is)(?=[.\/\\][A-Z])/g, m => m.toLowerCase());
                 search = search.replace(/(?<=[.\/\\])(given)(?=[.\/\\])/g, 'of');
+                host = host.replace(/:\d+$/, '');
             }
 			return `${protocol}\/\/${host}${pathname}${search}${hash}`;
         },

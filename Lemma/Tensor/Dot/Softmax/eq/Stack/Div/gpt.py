@@ -19,7 +19,7 @@ def prove(Eq):
     Q, K, V = Symbol(shape=(n, d_z), real=True)
     Eq << apply(softmax(Q @ K.T / sqrt(d_z) + (BandPart[n, 0](Ones(n, n)) - 1) * oo) @ V, i, j)
 
-    Eq << Eq[0].this.lhs.apply(Tensor.DotSoftmax.eq.Stack_Dot.gpt, i)
+    Eq << Eq[0].this.lhs.apply(Tensor.DotSoftmaxAdd_Mul_Infty.eq.Stack_DotSoftmaxDivDot_T.gpt, i)
 
     Eq << Eq[-1].this.lhs.apply(Tensor.Dot.eq.Sum)
 

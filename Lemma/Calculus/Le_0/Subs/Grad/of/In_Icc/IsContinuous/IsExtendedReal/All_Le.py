@@ -32,7 +32,7 @@ def prove(Eq):
 
     Eq << Bool.Imp.of.AllSetOf.apply(Eq[-1])
 
-    Eq << Set.InSub.of.In_Icc.apply(Eq[0], c)
+    Eq << Int.InSub.of.In_Icc.apply(Eq[0], c)
 
     Eq.gt_zero = Set.Lt.of.In_Icc.apply(Eq[-1]).this.apply(Algebra.Gt_0.of.Lt)
 

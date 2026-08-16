@@ -4,7 +4,7 @@ from util import *
 @apply
 def apply(given, index=-1):
     lhs, rhs = given.of(Equal)
-    from Lemma.Algebra.Expr.eq.Block import split
+    from Lemma.Tensor.SEq_Append import split
 
     lhs = split(lhs, index)
     rhs = split(rhs, index)

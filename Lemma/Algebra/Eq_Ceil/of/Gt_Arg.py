@@ -9,7 +9,7 @@ def apply(gt):
 
 @prove
 def prove(Eq):
-    from Lemma import Set
+    from Lemma import Set, Int
 
     A, B = Symbol(complex=True, given=True)
     Eq << apply(Arg(A) + Arg(B) > S.Pi)
@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq << Set.In_Ioc.of.In_Icc.Gt.apply(Eq[-1], Eq[-2])
 
-    Eq << Set.InSub.of.In_Icc.apply(Eq[-1], S.One / 2)
+    Eq << Int.InSub.of.In_Icc.apply(Eq[-1], S.One / 2)
     Eq << Set.In_Ico.Ceil.of.In_Icc.apply(Eq[-1])
 
 

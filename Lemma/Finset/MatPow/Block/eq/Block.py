@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor
+    from Lemma import Tensor
 
     n = Symbol(integer=True, positive=True)
     A, B, C, D, E, F, G, H, I = Symbol(real=True, shape=(n, n))
@@ -22,13 +22,13 @@ def prove(Eq):
     W = Symbol(Eq[0].lhs.find(BlockMatrix))
     Eq << W.this.definition
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Expr.eq.Block, n, n)
+    Eq << Eq[-1].this.lhs.apply(Tensor.SEq_Append, n, n)
 
-    Eq << W[:n, n:].this.apply(Algebra.Expr.eq.Block, n, axis=1)
+    Eq << W[:n, n:].this.apply(Tensor.SEq_Append, n, axis=1)
 
-    Eq << W[n:, :n].this.apply(Algebra.Expr.eq.Block, n)
+    Eq << W[n:, :n].this.apply(Tensor.SEq_Append, n)
 
-    Eq << W[n:, n:].this.apply(Algebra.Expr.eq.Block, n, n)
+    Eq << W[n:, n:].this.apply(Tensor.SEq_Append, n, n)
 
     Eq << Eq[-4].subs(*Eq[-3:])
 

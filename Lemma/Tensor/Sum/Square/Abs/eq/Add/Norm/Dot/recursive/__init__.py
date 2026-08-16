@@ -16,7 +16,7 @@ def prove(Eq):
     ξ = Symbol(r'{\color{red} {ξ}}', complex=True, shape=(oo,))
     Eq << apply(Norm(BlockMatrix(ξ[k:t],1) @ ~L[k:t + 1, :k]) ** 2)
 
-    Eq << Eq[0].lhs.this.find(Conjugate[~Sliced]).apply(Algebra.Expr.eq.Block, t - k)
+    Eq << Eq[0].lhs.this.find(Conjugate[~Sliced]).apply(Tensor.SEq_Append, t - k)
 
     Eq << Eq[-1].this.rhs.find(MatMul).apply(Tensor.Dot.eq.Block)
 

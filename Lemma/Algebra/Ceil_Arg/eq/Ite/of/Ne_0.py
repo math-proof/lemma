@@ -129,7 +129,7 @@ def prove(Eq):
 
     Eq.arg_p3_w = Eq[-1].this.lhs.find(Exp).apply(Real.ExpMulI.eq.AddCos_MulISin.Euler)
 
-    Eq << Set.InSub.of.In_Icc.apply(Eq.p3_contains, S.Pi * 2, simplify=None)
+    Eq << Int.InSub.of.In_Icc.apply(Eq.p3_contains, S.Pi * 2, simplify=None)
 
     Eq << Set.InDiv.of.In_Icc.apply(Eq[-1], 3, simplify=None)
 

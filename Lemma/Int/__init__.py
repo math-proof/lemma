@@ -41,3 +41,6 @@ from . import FloorDiv_2
 from . import Div_2
 from . import In_Range
 from . import Odd
+from . import InSub
+from . import In_Icc
+from . import NotInSub

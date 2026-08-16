@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set
+    from Lemma import Algebra, Set, Int
 
     x = Symbol(real=True)
     Eq << apply(Element(x, Interval(-S.Pi, S.Pi, left_open=True)))
@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq << Set.InDiv.of.In_Icc.apply(Eq[0], 2 * S.Pi)
 
-    Eq << Set.InSub.of.In_Icc.apply(Eq[-1], S.One / 2)
+    Eq << Int.InSub.of.In_Icc.apply(Eq[-1], S.One / 2)
 
     Eq << Set.EqCeil.of.In_Ioc.apply(Eq[-1])
 

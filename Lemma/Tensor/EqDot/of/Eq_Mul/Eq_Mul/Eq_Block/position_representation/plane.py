@@ -67,7 +67,7 @@ def prove(Eq):
 
     Eq << Tensor.EqDot.of.EqDot.EqDot.apply(*Eq[-2:])
 
-    Eq << Eq[-1].find(Zeros).this.apply(Algebra.Expr.eq.Block, d_r / 2, d_c / 2)
+    Eq << Eq[-1].find(Zeros).this.apply(Tensor.SEq_Append, d_r / 2, d_c / 2)
 
     Eq << Eq[-1].T
 
@@ -121,7 +121,7 @@ def prove(Eq):
 
     Eq << Eq[2].subs(i, i_quote).subs(j, j_quote).T @ Eq[2]
 
-    Eq.identity = Eq[-1].find(Identity).this.apply(Algebra.Expr.eq.Block, d_r / 2, d_r / 2)
+    Eq.identity = Eq[-1].find(Identity).this.apply(Tensor.SEq_Append, d_r / 2, d_r / 2)
 
     Eq <<= Eq[-1].find(cos).this.apply(Real.Cos.eq.Block), Eq[-1].find(sin).this.apply(Real.Sin.eq.Block), \
         Eq[-1].find(BlockMatrix[2]).find(cos).this.apply(Real.Cos.eq.Block), Eq[-1].find(BlockMatrix[2]).find(sin).this.apply(Real.Sin.eq.Block)

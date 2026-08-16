@@ -37,14 +37,14 @@ def apply(self, swap=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor
+    from Lemma import Tensor
 
     t, k = Symbol(integer=True, positive=True)
     L = Symbol(shape=(oo, oo), super_complex=True)
     ξ = Symbol(r'{\color{red} {ξ}}', complex=True, shape=(oo,))
     Eq << apply(ξ[k + 1:t] @ L[k + 1:t, :k] + L[t, :k])
 
-    Eq << Eq[0].this.rhs.args[1].apply(Algebra.Expr.eq.Block, t - k - 1)
+    Eq << Eq[0].this.rhs.args[1].apply(Tensor.SEq_Append, t - k - 1)
 
     Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Block)
 

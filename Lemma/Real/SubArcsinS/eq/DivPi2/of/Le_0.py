@@ -46,7 +46,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.apply(Bool.Cond.of.Eq.Cond.subst, ret=0)
 
-    Eq << Eq[-1].this.find(Element).apply(Set.InSub.of.In_Icc, S.Pi / 2)
+    Eq << Eq[-1].this.find(Element).apply(Int.InSub.of.In_Icc, S.Pi / 2)
 
     Eq << Eq[-1].this.find(Element).apply(Set.InDiv.of.In_Icc, S.Pi)
 

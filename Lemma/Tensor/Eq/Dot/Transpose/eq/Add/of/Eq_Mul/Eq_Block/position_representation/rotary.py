@@ -32,7 +32,7 @@ def prove(Eq):
 
     Eq << Eq[1].T @ x[k]
 
-    Eq << Eq[-1].this.rhs.args[1].apply(Algebra.Expr.eq.Block, d / 2)
+    Eq << Eq[-1].this.rhs.args[1].apply(Tensor.SEq_Append, d / 2)
 
     Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Block, deep=True)
 
