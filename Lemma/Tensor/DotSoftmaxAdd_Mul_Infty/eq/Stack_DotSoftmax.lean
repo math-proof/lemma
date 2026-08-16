@@ -1,5 +1,9 @@
 import Lemma.Tensor.Ne.of.Lt.NeProd_0
+import Lemma.List.Lt0LengthSlice.of.Lt.Lt
 import Lemma.Nat.EqMin.of.Ge
+import Lemma.Nat.Ne.of.Gt
+import Lemma.Tensor.GtCoe_0.is.Gt_0
+import Lemma.Tensor.GtSumExp_0.of.Ne_0
 import Lemma.Tensor.EqDivMul.of.Ne_0
 import Lemma.Tensor.DotMul.eq.MulDot
 import Lemma.Tensor.Exp.eq.MulSoftmax_SumExp
@@ -42,7 +46,6 @@ import Lemma.Tensor.GetSum.as.SumGet.of.GtGet_0.LtAdd_1Length
 import Lemma.Tensor.XEq.is.All_XEqGetS
 import Lemma.Tensor.Softmax.eq.DivExp_KeepdimSumExp
 import Lemma.Tensor.XEqGetS.of.XEq.GtLength
-import sympy.functions.elementary.exponential
 open Tensor Hyperreal
 set_option maxHeartbeats 4000000
 
@@ -136,6 +139,7 @@ private lemma main
       .
         apply Lt0SumGetBandPart
   have h_zi := Tensor.XEq.of.Eq h_zi
+  apply h_zi.trans
   have h_xeq : ((exp a').get i / (let den : Tensor ℝ* [] := ((exp a').get i).sum 0; den)) @ V' ≈ ((exp A').get i * Ξ.get i / (let den : Tensor ℝ* [] := ((exp A').get i * Ξ.get i).sum 0; den)) @ V' := by
     simp
     rw [h_A', hΞ, h_V']
@@ -167,24 +171,19 @@ private lemma main
     simp
     rw [← hΞ]
     rwa [← h_A']
-  have h_zi := h_zi.trans h_xeq
-  erw [SumMulGetS.eq.SumGetSliceGet.fin (exp A') i (l := l) (u := u)] at h_zi
-  simp at h_zi
-  conv_rhs at h_zi => erw [DotDiv.eq.DivDot]
-  conv_rhs at h_zi => erw [DotMulGetS.eq.DotGetSliceS.fin (exp A') V' i (l := l) (u := u)]
-  conv_rhs at h_zi => erw [GetExp.eq.ExpGet.fin (i := ⟨i, by grind⟩)]
-  conv_rhs at h_zi => erw [GetSliceExp.eq.ExpGetSlice]
-  conv_rhs at h_zi =>
+  apply h_xeq.trans
+  erw [SumMulGetS.eq.SumGetSliceGet.fin (exp A') i (l := l) (u := u)]
+  simp
+  conv_lhs => erw [DotDiv.eq.DivDot]
+  conv_lhs => erw [DotMulGetS.eq.DotGetSliceS.fin (exp A') V' i (l := l) (u := u)]
+  conv_lhs => erw [GetExp.eq.ExpGet.fin (i := ⟨i, by grind⟩)]
+  conv_lhs => erw [GetSliceExp.eq.ExpGetSlice]
+  conv_lhs =>
     arg 1
     arg 1
     erw [Exp.eq.MulSoftmax_SumExp]
-  simp at h_zi
-  conv_rhs at h_zi => erw [DotMul.eq.MulDot]
-  rw [h_band_part] at h_Ξ_def
-  have h_Ξᵢ := Get.of.Eq.fin h_Ξ_def i
-  rw [EqGetStack.fn.fin] at h_Ξᵢ
-  simp only [Bool.Bool.eq.Ite] at h_Ξᵢ
-  apply h_zi.trans
+  simp
+  conv_lhs => erw [DotMul.eq.MulDot]
   simp [EqGetStack.fn.fin]
   erw [EqDivMul.of.Ne_0]
   .
@@ -200,8 +199,18 @@ private lemma main
     .
       simp
     .
-      sorry
+      apply Tensor.GtCoe_0.of.Gt_0
+      apply Tensor.GtSumExp_0.of.Ne_0
+      apply Nat.Ne.of.Gt
+      have := NeZero.pos l
+      apply List.Lt0LengthSlice.of.Lt.Lt
+      .
+        simp [Tensor.length]
+        omega
+      .
+        have := NeZero.pos u
+        omega
 
 
 -- created on 2020-12-28
--- updated on 2026-07-21
+-- updated on 2026-08-16
