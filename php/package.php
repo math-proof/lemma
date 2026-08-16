@@ -34,7 +34,7 @@ if (str_ends_with($title, '/'))
 include_once 'script.php';
 ?>
 
-<script>
+<script type=module>
 createApp('axiomContents', {
 	packages: <?php echo std\encode($packages)?>,
 	theorems: <?php echo std\encode($theorems)?>,
