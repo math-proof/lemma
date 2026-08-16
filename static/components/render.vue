@@ -154,7 +154,7 @@ export default {
                 search = search.replace(/(?<=[./\\][A-Z]\w*[./\\])(In|Is)(?=[.\/\\][A-Z])/g, m => m.toLowerCase());
                 search = search.replace(/(?<=[.\/\\])(given)(?=[.\/\\])/g, 'of');
             }
-			return `${protocol}\/\/localhost${pathname}${search}${hash}`;
+			return `${protocol}\/\/${host}${pathname}${search}${hash}`;
         },
     },
 
