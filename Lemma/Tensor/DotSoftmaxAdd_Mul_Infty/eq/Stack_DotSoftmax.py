@@ -88,7 +88,7 @@ def prove(Eq):
 
     Eq << Eq.zi_definition.this.rhs.subs(Eq[-1])
 
-    Eq << Eq[-1].this.find(exp).apply(Tensor.Exp.eq.MulSoftmax_KeepdimSumExp)
+    Eq << Eq[-1].this.find(exp).apply(Tensor.Exp.eq.MulSoftmax_SumExp)
 
     Eq << Tensor.Stack.of.All_Eq.fin.apply(Eq[-1], (i, 0, n))
 

@@ -106,7 +106,7 @@ def prove(Eq):
 
     Eq << Eq.zi_definition.subs(Eq[-1])
 
-    Eq << Eq[-1].this.find(Exp).apply(Tensor.Exp.eq.MulSoftmax_KeepdimSumExp)
+    Eq << Eq[-1].this.find(Exp).apply(Tensor.Exp.eq.MulSoftmax_SumExp)
 
     Eq << Eq[0][i]
 
