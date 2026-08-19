@@ -81,7 +81,7 @@ def Tensor.matmul [Mul α] [Add α] [Zero α] (X : Tensor α (s ++ [m, t])) (Y :
         split_ifs
         repeat simp_all
       )
-      (fromVector (List.Vector.map₂ (fun X Y => matmul X Y h) X.toVector Y.toVector))
+      (OfVector (List.Vector.map₂ (fun X Y => matmul X Y h) X.toVector Y.toVector))
 
 /--
 [torch.tensordot](https://docs.pytorch.org/docs/stable/generated/torch.tensordot.html)

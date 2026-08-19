@@ -16,16 +16,6 @@ private lemma main
   rfl
 
 
-@[main, cast]
-private lemma t
--- given
-  (h : s = s')
-  (X : Tensor α s) :
--- imply
-  (cast (congrArg (Tensor α) h) X)ᵀ ≃ Xᵀ := by
--- proof
-  subst h
-  rfl
-
-
 -- created on 2026-07-11
+-- updated on 2026-08-18
+

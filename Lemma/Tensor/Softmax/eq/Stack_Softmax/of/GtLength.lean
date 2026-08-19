@@ -1,5 +1,5 @@
-import Lemma.Tensor.FromVectorMapToVector.eq.Stack
-import Lemma.Tensor.Softmax.eq.FromVectorMap_FunSoftmax.of.GtLength
+import Lemma.Tensor.OfVectorMapToVector.eq.Stack
+import Lemma.Tensor.Softmax.eq.OfVectorMap_FunSoftmax.of.GtLength
 open Tensor
 
 
@@ -13,8 +13,8 @@ private lemma main
 -- imply
   X.softmax (d + 1) = [i < n] (X[i].softmax d) := by
 -- proof
-  rw [Softmax.eq.FromVectorMap_FunSoftmax.of.GtLength h]
-  apply FromVectorMapToVector.eq.Stack id
+  rw [Softmax.eq.OfVectorMap_FunSoftmax.of.GtLength h]
+  apply OfVectorMapToVector.eq.Stack id
 
 
 -- created on 2025-11-30

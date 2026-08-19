@@ -3,7 +3,7 @@ import Lemma.Bool.SEq.is.Eq
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.Nat.LtDiv.of.Lt_Mul
 import Lemma.Nat.LtMod.of.Lt_Mul
-import Lemma.Tensor.DataFromVector.eq.FlattenMapData
+import Lemma.Tensor.DataOfVector.eq.FlattenMapData
 import Lemma.Tensor.DataGet.as.GetSplitAtData.of.GtLength_0
 import Lemma.Tensor.DataResize.as.FlattenMapSplitAtData
 import Lemma.Nat.EqMax.of.Lt
@@ -12,7 +12,7 @@ import Lemma.Tensor.Einsum.as.Tensordot.of.Get_SubLength.GeLength_2.GeLength_2
 import Lemma.Tensor.SEqResize.of.Eq_Get
 import Lemma.Tensor.Tensordot.of.SEq.SEq
 import Lemma.Tensor.GetToVector.eq.Get
-import Lemma.Tensor.Resize.as.FromVectorMapToVector.of.GtVal_0
+import Lemma.Tensor.Resize.as.OfVectorMapToVector.of.GtVal_0
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Vector.GetFlatten.eq.Get.of.Lt_Mul
@@ -45,7 +45,7 @@ private lemma main
   ·
     simp
     erw [hmax]
-    rw [Resize.eq.Cast_FromVectorMapToVector.of.GtVal_0 _ (by simp)]
+    rw [Resize.eq.Cast_OfVectorMapToVector.of.GtVal_0 _ (by simp)]
     simp
     apply SEq.of.Eq
     apply Tensordot.of.SEq.SEq
@@ -59,7 +59,7 @@ private lemma main
         apply SEq.of.All_EqGetS.Eq.fin (by simp)
         intro t
         have h_t := t.isLt
-        rw [DataFromVector.eq.FlattenMapData]
+        rw [DataOfVector.eq.FlattenMapData]
         repeat erw [GetFlatten.eq.Get.of.Lt_Mul (by grind)]
         simp
         have h_t' : t < X.length * n' := by simpa [Tensor.length] using h_t

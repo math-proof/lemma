@@ -10,7 +10,7 @@ private lemma fin
 -- imply
   ([i < n] f i).length = n := by
 -- proof
-  unfold Stack Tensor.fromVector
+  unfold Stack Tensor.OfVector
   rw [MapMap.eq.Map_Comp]
   unfold Function.comp
   aesop

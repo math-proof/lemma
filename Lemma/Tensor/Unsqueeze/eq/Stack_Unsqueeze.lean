@@ -1,5 +1,5 @@
-import Lemma.Tensor.Unsqueeze.eq.FromVectorMap_FunUnsqueeze
-import Lemma.Tensor.FromVectorMapToVector.eq.Stack
+import Lemma.Tensor.Unsqueeze.eq.OfVectorMap_FunUnsqueeze
+import Lemma.Tensor.OfVectorMapToVector.eq.Stack
 open Tensor
 
 
@@ -11,8 +11,8 @@ private lemma main
 -- imply
   X.unsqueeze (dim + 1) = [i < n] (X[i].unsqueeze dim) := by
 -- proof
-  rw [Unsqueeze.eq.FromVectorMap_FunUnsqueeze]
-  apply FromVectorMapToVector.eq.Stack
+  rw [Unsqueeze.eq.OfVectorMap_FunUnsqueeze]
+  apply OfVectorMapToVector.eq.Stack
 
 
 -- created on 2025-07-13

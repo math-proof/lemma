@@ -150,7 +150,7 @@ instance [LE α] : LE (Tensor α s) where
 instance [LT α] : LT (Tensor α s) where
   lt A B := A.data < B.data
 
-def Tensor.fromVector (X : List.Vector (Tensor α s) n) : Tensor α (n :: s) :=
+def Tensor.OfVector (X : List.Vector (Tensor α s) n) : Tensor α (n :: s) :=
   ⟨(X.map Tensor.data).flatten⟩
 
 /--

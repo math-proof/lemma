@@ -16,7 +16,7 @@ private lemma scalar
 -- imply
   ([i < n] X[i]) * a = [i < n] X[i] * a := by
 -- proof
-  unfold Stack Tensor.fromVector
+  unfold Stack Tensor.OfVector
   simp only [HMul.hMul]
   simp
   ext t

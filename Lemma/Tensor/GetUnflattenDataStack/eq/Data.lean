@@ -12,7 +12,7 @@ private lemma fin
 -- imply
   ([i < n] f i).data.unflatten[i] = (f i).data := by
 -- proof
-  unfold Stack Tensor.fromVector
+  unfold Stack Tensor.OfVector
   erw [← Eq_UnflattenFlatten]
   simp [GetElem.getElem]
   erw [GetMap.eq.UFnGet]

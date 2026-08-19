@@ -13,13 +13,13 @@ import Lemma.List.TailSet.eq.SetTail.of.Gt_0
 import Lemma.Nat.EqSubAdd
 import Lemma.Nat.Gt_0.of.Gt
 import Lemma.Nat.Lt_Sub.of.LtAdd
-import Lemma.Tensor.GetFromVector.eq.Get
+import Lemma.Tensor.GetOfVector.eq.Get
 import Lemma.Tensor.GetResize_0.as.Get.of.GtLength_0
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.Eq
 import Lemma.Tensor.SEqResizeS.of.SEq.Val.Eq
 import Lemma.Tensor.SEqSelectS.of.SEq
-import Lemma.Tensor.Select.as.FromVectorMapToVector.of.GtVal_0
+import Lemma.Tensor.Select.as.OfVectorMapToVector.of.GtVal_0
 import Lemma.Tensor.SelectCast.as.Select.of.Eq
 import Lemma.Tensor.Select_0.as.Get.of.GtGet_0.GtLength_0
 import Lemma.Tensor.ToVector.eq.MapRange_Get.of.GtLength_0
@@ -47,8 +47,8 @@ private lemma main
     simp only [GetElem.getElem]
     apply GetResize_0.as.Get.of.GtLength_0.fin (i := ⟨i, by grind⟩)
   | succ d ih =>
-    rw [Select.eq.Cast_FromVectorMapToVector.of.GtVal_0 (by grind)]
-    conv_rhs => rw [Select.eq.Cast_FromVectorMapToVector.of.GtVal_0 (by grind)]
+    rw [Select.eq.Cast_OfVectorMapToVector.of.GtVal_0 (by grind)]
+    conv_rhs => rw [Select.eq.Cast_OfVectorMapToVector.of.GtVal_0 (by grind)]
     simp
     apply SEqCastS.of.SEq.Eq.Eq
     ·
@@ -80,7 +80,7 @@ private lemma main
           rw [EraseIdxSet.eq.EraseIdx]
         ·
           intro t
-          repeat rw [GetFromVector.eq.Get]
+          repeat rw [GetOfVector.eq.Get]
           simp
           have h_t := t.isLt
           simp only [HeadDSet.eq.Get_0.of.Gt_0.LtLength (s := s) (d := d + 1) (by grind) (by grind)] at h_t

@@ -1,8 +1,8 @@
 import Lemma.Tensor.EqGetUnsqueeze_0
-import Lemma.Tensor.GetFromVector.eq.Get
+import Lemma.Tensor.GetOfVector.eq.Get
 import Lemma.Tensor.GetUnsqueeze.as.UnsqueezeGet.of.GtGet_0.Gt_0.GtLength_0
 import Lemma.Tensor.SEq.of.All_SEqGetS.Eq
-import Lemma.Tensor.Select.as.FromVectorMapToVector.of.GtVal_0
+import Lemma.Tensor.Select.as.OfVectorMapToVector.of.GtVal_0
 import Lemma.Tensor.Select_0.as.Get.of.GtLength_0
 import Lemma.Tensor.ToVector.eq.MapRange_Get.of.GtLength_0
 open Tensor
@@ -33,7 +33,7 @@ private lemma main
     | [] =>
       contradiction
     | s₀ :: s =>
-      rw [Select.eq.Cast_FromVectorMapToVector.of.GtVal_0 (by grind) (i := ⟨0, by grind⟩)]
+      rw [Select.eq.Cast_OfVectorMapToVector.of.GtVal_0 (by grind) (i := ⟨0, by grind⟩)]
       simp
       rw [ToVector.eq.MapRange_Get.of.GtLength_0]
       ·
@@ -43,7 +43,7 @@ private lemma main
           simp
         ·
           intro i
-          rw [GetFromVector.eq.Get]
+          rw [GetOfVector.eq.Get]
           simp
           have h := GetUnsqueeze.eq.Cast_UnsqueezeGet.of.GtGet_0.Gt_0.GtLength_0.fin (by simp) (by simp) (by simp) X (s := s₀ :: s) (d := d + 1) (i := (List.Vector.range s₀)[i])
           simp at h

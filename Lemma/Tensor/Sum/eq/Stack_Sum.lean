@@ -1,5 +1,5 @@
-import Lemma.Tensor.Sum.eq.FromVectorMapToVector
-import Lemma.Tensor.FromVectorMapToVector.eq.Stack
+import Lemma.Tensor.Sum.eq.OfVectorMapToVector
+import Lemma.Tensor.OfVectorMapToVector.eq.Stack
 open Tensor
 
 
@@ -12,8 +12,8 @@ private lemma main
 -- imply
   X.sum (d + 1) = [i < n] (X[i].sum d) := by
 -- proof
-  rw [Sum.eq.FromVectorMapToVector]
-  apply FromVectorMapToVector.eq.Stack (·.eraseIdx d)
+  rw [Sum.eq.OfVectorMapToVector]
+  apply OfVectorMapToVector.eq.Stack (·.eraseIdx d)
 
 
 -- created on 2025-06-24

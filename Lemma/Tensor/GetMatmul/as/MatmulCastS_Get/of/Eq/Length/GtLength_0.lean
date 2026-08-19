@@ -1,8 +1,8 @@
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.List.HeadD.eq.Get_0.of.GtLength_0
 import Lemma.List.TailAppend.eq.AppendTail.of.GtLength_0
-import Lemma.Tensor.Matmul.as.FromVectorMap₂_CastS_ToVector.of.Get_0.Length.GtLength_0
-import Lemma.Tensor.GetFromVector.eq.Get
+import Lemma.Tensor.Matmul.as.OfVectorMap₂_CastS_ToVector.of.Get_0.Length.GtLength_0
+import Lemma.Tensor.GetOfVector.eq.Get
 import Lemma.Tensor.GtLength.of.GtLength_0
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.SEqMatmulS.of.SEq.SEq
@@ -36,12 +36,12 @@ private lemma main
   (X.matmul Y (by grind)).get ⟨i, h_i⟩ ≃ Xi.matmul Yi (by simp; grind) := by
 -- proof
   intro Xi Yi h_i
-  have := Matmul.as.FromVectorMap₂_CastS_ToVector.of.Get_0.Length.GtLength_0 h h_length h_0 X Y
+  have := Matmul.as.OfVectorMap₂_CastS_ToVector.of.Get_0.Length.GtLength_0 h h_length h_0 X Y
   simp at this
   have := SEqGetS.of.SEq.GtLength.fin h_i this (i := i)
   simp at this
   apply this.trans
-  simp [GetFromVector.eq.Get.fin]
+  simp [GetOfVector.eq.Get.fin]
   simp [Xi, Yi]
   apply SEqMatmulS.of.SEq.SEq
   ·

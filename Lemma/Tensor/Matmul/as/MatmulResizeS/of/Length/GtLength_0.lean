@@ -2,7 +2,7 @@ import Lemma.Bool.HEq.of.SEq
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.List.SetAppend.eq.Append_Set.of.GtLength
 import Lemma.List.Set_0.eq.Cons_Tail.of.GtLength_0
-import Lemma.Tensor.SEqFromVectorS.of.SEq
+import Lemma.Tensor.SEqOfVectorS.of.SEq
 import Lemma.Tensor.SEqResize_0.of.Eq_Get_0.GtLength_0
 import Lemma.Tensor.SEqToVectorS.of.SEq
 open Bool List Tensor
@@ -64,7 +64,7 @@ private lemma main
       ·
         simp
     ·
-      apply SEqFromVectorS.of.SEq
+      apply SEqOfVectorS.of.SEq
       constructor
       ·
         simp

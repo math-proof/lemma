@@ -18,7 +18,7 @@ private lemma main
   (([i < n] f i).data.splitAt 1)[i] ≃ (f i).data := by
 -- proof
   simp [SEq]
-  unfold Stack Tensor.fromVector
+  unfold Stack Tensor.OfVector
   simp only [GetElem.getElem]
   have h_i := i.isLt
   have := GetSplitAt_1.eq.GetUnflatten.fin ((List.Vector.map Tensor.data ((List.Vector.range n).map (fun i : Fin n ↦ f i))).flatten) i

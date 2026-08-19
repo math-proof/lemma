@@ -1,6 +1,6 @@
 import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.List.Prod.eq.Foldr
-import Lemma.Tensor.DataFromVector.eq.FlattenMapData
+import Lemma.Tensor.DataOfVector.eq.FlattenMapData
 import Lemma.Vector.EqGetRange
 import Lemma.Vector.GetFlatten_AddMul.eq.Get
 import sympy.tensor.stack
@@ -22,7 +22,7 @@ private lemma main
   unfold Stack
   rw [hDataS]
   intro k
-  rw [DataFromVector.eq.FlattenMapData, DataFromVector.eq.FlattenMapData]
+  rw [DataOfVector.eq.FlattenMapData, DataOfVector.eq.FlattenMapData]
   let h₀ := fun i j => (hDataS (X i) (Y i)).mp (h i) j
   let rangeX := (List.Vector.range n).map X
   let rangeY := (List.Vector.range n).map Y

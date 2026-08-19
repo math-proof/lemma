@@ -102,7 +102,7 @@ def Tensor.aminmax [NeZero s.prod] (X : Tensor α s) (cmp : α → α → Prop) 
       have : NeZero s.tail.prod := ⟨ProdTail.ne.Zero.of.NeProd_0 (NeZero.ne s.prod)⟩
       cast
         (by simp_all [EraseIdx.eq.Cons_EraseIdxTail.of.GtLengthTail h_lt 1])
-        (Tensor.fromVector (X.toVector.map (·.aminmax cmp dim)))
+        (Tensor.OfVector (X.toVector.map (·.aminmax cmp dim)))
   else
     cast (by simp at h_dim; rw [EqEraseIdx.of.LeLength h_dim]) X
 
@@ -137,7 +137,7 @@ def Tensor.argAminmax [NeZero s.prod] (X : Tensor α s) (cmp : α → α → Pro
     have : NeZero s.tail.prod := ⟨ProdTail.ne.Zero.of.NeProd_0 (NeZero.ne s.prod)⟩
     cast
       (by simp_all [EraseIdx.eq.Cons_EraseIdxTail.of.GtLengthTail h_lt 1])
-      (Tensor.fromVector (X.toVector.map (·.argAminmax cmp ⟨dim, h_lt⟩)))
+      (Tensor.OfVector (X.toVector.map (·.argAminmax cmp ⟨dim, h_lt⟩)))
 
 /--
 Returns the indices of the minimum value of a tensor along `dim`.

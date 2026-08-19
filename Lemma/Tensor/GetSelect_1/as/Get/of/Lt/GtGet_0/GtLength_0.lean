@@ -1,9 +1,9 @@
-import Lemma.Tensor.Select.eq.FromVectorMapToVector.of.GtLength
+import Lemma.Tensor.Select.eq.OfVectorMapToVector.of.GtLength
 import Lemma.Tensor.GetToVector.eq.Get
 import Lemma.Vector.Get.of.Eq.Lt
 import Lemma.Tensor.DataGet.as.GetSplitAtData.of.GtLength_0
 import Lemma.Vector.EqUnflattenFlatten
-import Lemma.Tensor.DataFromVector.eq.FlattenMapData
+import Lemma.Tensor.DataOfVector.eq.FlattenMapData
 import Lemma.Tensor.Select_0.as.Get.of.GtGet_0.GtLength_0
 import Lemma.Bool.EqCast.of.SEq
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
@@ -43,8 +43,8 @@ private lemma main
     ·
       simp only [GetElem.getElem]
       erw [GetSplitAt_1.eq.GetUnflatten.of.Lt.fin h_j]
-      erw [Select.eq.FromVectorMapToVector.of.GtLength (by grind) (i := ⟨i, by grind⟩)]
-      simp [DataFromVector.eq.FlattenMapData]
+      erw [Select.eq.OfVectorMapToVector.of.GtLength (by grind) (i := ⟨i, by grind⟩)]
+      simp [DataOfVector.eq.FlattenMapData]
       erw [EqUnflattenFlatten]
       erw [Vector.GetMap.eq.UFnGet]
       erw [Select_0.eq.Cast_Get.of.GtGet_0.GtLength_0]

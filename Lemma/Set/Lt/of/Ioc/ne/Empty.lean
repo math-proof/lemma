@@ -4,7 +4,13 @@ import Lemma.Nat.Lt.of.Lt.Le
 open Set Nat
 
 
-@[main]
+/--
+| attributes | lemma |
+| :---: | :---: |
+| main | Set.Lt.of.Ioc.ne.Empty |
+| comm | Set.Gt.of.Ioc.ne.Empty |
+-/
+@[main, comm]
 private lemma main
   [Preorder α]
   {a b : α}
@@ -18,3 +24,4 @@ private lemma main
 
 
 -- created on 2018-09-16
+-- updated on 2026-08-18

@@ -15,7 +15,7 @@ import Lemma.Tensor.SEqResize_0.of.Eq_Get_0.GtLength_0
 import Lemma.Tensor.SEqSelectS.of.SEq
 import Lemma.Tensor.SEqSumS.of.SEq.Eq
 import Lemma.Tensor.SEqUnsqueezeS.of.SEq.Eq
-import Lemma.Tensor.TransposeCast.as.Transpose.of.Eq
+import Lemma.Tensor.TCast.as.T.of.Eq
 import Lemma.Tensor.TransposeUnsqueeze.eq.Unsqueeze
 open Bool List Nat Tensor
 
@@ -54,7 +54,7 @@ private lemma main
     apply SEqUnsqueezeS.of.SEq.Eq _ (by simp [broadcast_shape])
     apply SEqCast.of.SEq.Eq (by simp [broadcast_shape, EqSwap_0'1])
     erw [Resize_0.eq.Cast.of.Eq_Get_0.GtLength_0 (by simp) (by grind)]
-    erw [TransposeCast.eq.Cast_Transpose.of.Eq.t (by simp [broadcast_shape])]
+    erw [TCast.eq.Cast_T.of.Eq (by simp [broadcast_shape])]
     apply SEqCast.of.SEq.Eq (by simp [broadcast_shape, EqSwap_0'1])
     apply SEq.of.Eq
     apply TransposeUnsqueeze.eq.Unsqueeze

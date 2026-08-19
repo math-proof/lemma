@@ -14,7 +14,7 @@ private lemma main
 -- imply
   ([i < s₀] A[i]) + [i < s₀] B[i] = [i < s₀] (A[i] + B[i]) := by
 -- proof
-  unfold Stack Tensor.fromVector
+  unfold Stack Tensor.OfVector
   simp only [HAdd.hAdd]
   simp only [Add.add]
   apply Eq.of.EqDataS

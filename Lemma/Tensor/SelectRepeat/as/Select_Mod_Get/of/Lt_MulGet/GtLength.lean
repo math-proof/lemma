@@ -1,4 +1,4 @@
-import Lemma.Tensor.Select.as.FromVectorMapToVector.of.GtVal_0
+import Lemma.Tensor.Select.as.OfVectorMapToVector.of.GtVal_0
 import Lemma.Nat.LtMod.of.Lt_Mul
 import Lemma.Tensor.Select_0.as.Get.of.GtGet_0.GtLength_0
 import Lemma.Bool.SEq.of.SEq.SEq
@@ -19,7 +19,7 @@ import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.Eq
 import Lemma.List.TailSet.eq.SetTail.of.Gt_0
 import Lemma.Nat.EqSubAdd
 import Lemma.List.EraseIdxSet.eq.EraseIdx
-import Lemma.Tensor.GetFromVector.eq.Get
+import Lemma.Tensor.GetOfVector.eq.Get
 import Lemma.List.LengthSet.eq.Length
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Vector.EqGetRange
@@ -48,8 +48,8 @@ private lemma main
     apply GetRepeat_0.as.Get_Mod_Get.of.GtMul_Get.GtLength_0.fin
     assumption
   | succ d ih =>
-    rw [Select.eq.Cast_FromVectorMapToVector.of.GtVal_0 (by grind)]
-    conv_rhs => rw [Select.eq.Cast_FromVectorMapToVector.of.GtVal_0 (by grind)]
+    rw [Select.eq.Cast_OfVectorMapToVector.of.GtVal_0 (by grind)]
+    conv_rhs => rw [Select.eq.Cast_OfVectorMapToVector.of.GtVal_0 (by grind)]
     simp
     apply SEqCastS.of.SEq.Eq.Eq
     ·
@@ -81,7 +81,7 @@ private lemma main
           rw [EraseIdxSet.eq.EraseIdx]
         ·
           intro t
-          repeat rw [GetFromVector.eq.Get]
+          repeat rw [GetOfVector.eq.Get]
           simp
           have h_t := t.isLt
           have h_fin := EqGetRange.fin (⟨t, by simp_all⟩ : Fin ((s.set (d + 1) (n * s.get ⟨d + 1, by simpa⟩)).headD 1))

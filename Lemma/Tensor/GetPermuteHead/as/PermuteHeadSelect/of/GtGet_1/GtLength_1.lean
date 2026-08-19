@@ -1,4 +1,4 @@
-import Lemma.Tensor.Select.as.FromVectorMapToVector.of.GtVal_0
+import Lemma.Tensor.Select.as.OfVectorMapToVector.of.GtVal_0
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.List.Drop.eq.Nil.of.LeLength
 import Lemma.List.DropDrop.eq.Drop_Add
@@ -55,7 +55,7 @@ import Lemma.Nat.ModAdd.eq.Mod.of.Dvd
 import Lemma.Nat.MulAdd.eq.AddMulS
 import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Tensor.DataCast.as.Data.of.Eq
-import Lemma.Tensor.DataFromVector.eq.FlattenMapData
+import Lemma.Tensor.DataOfVector.eq.FlattenMapData
 import Lemma.Tensor.DataGet.as.GetSplitAtData.of.GtLength_0
 import Lemma.Tensor.Select_0.as.Get.of.GtGet_0.GtLength_0
 import Lemma.Tensor.LengthPermuteHead.eq.Get_1.of.GtLength_1.Gt_1
@@ -147,13 +147,13 @@ private lemma main
           repeat rw [GetFlatten.eq.Get.of.Eq_AddMul.fin (by assumption)]
           repeat rw [GetTranspose.eq.Get.fin]
           repeat rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
-          rw [Select.eq.Cast_FromVectorMapToVector.of.GtVal_0 (by grind)]
+          rw [Select.eq.Cast_OfVectorMapToVector.of.GtVal_0 (by grind)]
           simp
           rw [DataCast.eq.Cast_Data.of.Eq]
           ·
             rw [GetCast.eq.Get.of.Eq.fin]
             ·
-              rw [DataFromVector.eq.FlattenMapData]
+              rw [DataOfVector.eq.FlattenMapData]
               have h_lt : (↑rₐ * (((s.eraseIdx 1).take d).drop (1 % (d ⊓ (s.eraseIdx 1).length))).prod + ↑qₐ) * ((s.eraseIdx 1).drop d).prod + ↑r < s.headD 1 * (s.tail.eraseIdx 0).prod := by
                 rw [EraseIdxTail.eq.Drop_2]
                 rw [← ProdEraseIdx.eq.Mul_ProdDrop_2]

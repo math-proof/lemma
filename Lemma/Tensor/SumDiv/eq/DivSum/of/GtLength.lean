@@ -8,8 +8,8 @@ import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Tensor.GetDiv.eq.DivGet
 import Lemma.Tensor.GetToVector.eq.Get
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
-import Lemma.Tensor.Sum.as.FromVectorMapToVector.of.GtLength_0
-import Lemma.Tensor.Sum.eq.FromVectorMapToVector
+import Lemma.Tensor.Sum.as.OfVectorMapToVector.of.GtLength_0
+import Lemma.Tensor.Sum.eq.OfVectorMapToVector
 import Lemma.Tensor.ToVectorDiv.eq.DivToVector_Reshape
 import Lemma.Vector.CastSum.eq.DivCastSumSplitAt_1
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
@@ -41,7 +41,7 @@ private lemma main
     simp at this
     simpa
   | succ dim ih =>
-    erw [Sum.eq.Cast_FromVectorMapToVector.of.GtLength_0 (by grind)]
+    erw [Sum.eq.Cast_OfVectorMapToVector.of.GtLength_0 (by grind)]
     apply EqCast.of.SEq
     match s with
     | .nil =>
@@ -60,7 +60,7 @@ private lemma main
         simp
       simp [h_fun]
       simp only [Map_Comp.eq.MapMap]
-      unfold Tensor.fromVector
+      unfold Tensor.OfVector
       simp
       have h_data : (fun x : Tensor α s => (x.sum dim / n).data) =
           (fun x : Tensor α (s.eraseIdx dim) => (x / n).data) ∘ (fun x : Tensor α s => x.sum dim) := by
@@ -84,8 +84,8 @@ private lemma main
       rw [GetDiv.eq.DivGet.fin (a := n.data[0])]
       erw [GetToVector.eq.Get.fin]
       congr 1
-      rw [Sum.eq.FromVectorMapToVector X dim]
-      unfold Tensor.fromVector
+      rw [Sum.eq.OfVectorMapToVector X dim]
+      unfold Tensor.OfVector
       simp
       repeat rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_k]
       simp

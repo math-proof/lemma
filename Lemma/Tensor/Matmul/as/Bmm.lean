@@ -1,6 +1,6 @@
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.Tensor.GetBmm.as.BmmGetS.of.Eq
-import Lemma.Tensor.GetFromVector.eq.Get
+import Lemma.Tensor.GetOfVector.eq.Get
 import Lemma.Tensor.GetResize_0.as.Get.of.GtLength_0
 import Lemma.Tensor.GetToVector.eq.Get
 import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.GtLength_0
@@ -32,7 +32,7 @@ private lemma main
       erw [GetBmm.eq.Cast_BmmGetS.of.Eq.fin (b₀ := h) (b := t) (by simp) (i := ⟨j, by grind⟩)]
       apply SEq_Cast.of.SEq.Eq (by simp)
       ·
-        rw [GetFromVector.eq.Get.fin]
+        rw [GetOfVector.eq.Get.fin]
         simp
         have ih := ih (X.get ⟨j, by grind⟩) (Y.get ⟨j, by grind⟩)
         symm

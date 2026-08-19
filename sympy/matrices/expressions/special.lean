@@ -21,7 +21,7 @@ def Tensor.masked_fill [Zero α] (X : Tensor α s) (d : ℤ) (cmp : ℤ → ℤ 
         rw [HeadD.eq.Get_0.of.NeLength_0 (by linarith)]
         rw [EqCons_Tail.of.NeLength_0 (by linarith)]
       )
-      (Tensor.fromVector (X.toVector.map (·.masked_fill d cmp)))
+      (Tensor.OfVector (X.toVector.map (·.masked_fill d cmp)))
   else if h_s : s.length < 2 then
     X
   else

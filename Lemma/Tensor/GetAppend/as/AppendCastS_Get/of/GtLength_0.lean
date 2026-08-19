@@ -1,6 +1,6 @@
 import Lemma.List.EqGetCons
-import Lemma.Tensor.DataAppend.as.FromVectorMap₂_CastS_ToVector.of.GtLength_0
-import Lemma.Tensor.GetFromVector.eq.Get
+import Lemma.Tensor.DataAppend.as.OfVectorMap₂_CastS_ToVector.of.GtLength_0
+import Lemma.Tensor.GetOfVector.eq.Get
 import Lemma.Tensor.GetToVector.eq.Get
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.GtLength_0
@@ -26,11 +26,11 @@ private lemma main
   | nil =>
     contradiction
   | cons b₀ b =>
-    rw [DataAppend.eq.Cast_FromVectorMap₂_CastS_ToVector.of.GtLength_0 (by grind)]
+    rw [DataAppend.eq.Cast_OfVectorMap₂_CastS_ToVector.of.GtLength_0 (by grind)]
     simp
     let A' : List.Vector (Tensor α (b ++ m :: s)) ((b₀ :: b ++ m :: s).headD 1) := A.toVector
     let B' : List.Vector (Tensor α (b ++ n :: s)) ((b₀ :: b ++ n :: s).headD 1) := B.toVector
-    erw [GetFromVector.eq.Get.fin (Vector.map₂ HAppend.hAppend A' B')]
+    erw [GetOfVector.eq.Get.fin (Vector.map₂ HAppend.hAppend A' B')]
     simp [A', B']
     have := GetToVector.eq.Get.fin A i
     simp at this

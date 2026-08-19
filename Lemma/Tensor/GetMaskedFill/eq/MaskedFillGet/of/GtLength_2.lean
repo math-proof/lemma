@@ -1,4 +1,4 @@
-import Lemma.Tensor.GetFromVector.eq.Get
+import Lemma.Tensor.GetOfVector.eq.Get
 import Lemma.Tensor.GtLength.of.GtLength_0
 import Lemma.Tensor.LengthMaskedFill.eq.Length
 open Tensor
@@ -28,7 +28,7 @@ private lemma main
   | n :: s =>
     rw [Tensor.masked_fill, dif_pos h]
     simp [GetElem.getElem]
-    erw [GetFromVector.eq.Get.fin]
+    erw [GetOfVector.eq.Get.fin]
     simp
     congr 1
 

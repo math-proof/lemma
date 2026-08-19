@@ -6,26 +6,25 @@ open Nat
 @[main, comm]
 private lemma main
   [AddMonoidWithOne α]
-  {a : ℕ} :
+-- given
+  (n : ℕ) :
 -- imply
-  (a + 1 : ℕ) = (a + 1 : α) := by
+  (n + 1 : ℕ) = (n + 1 : α) :=
 -- proof
-  simp
+  Nat.cast_succ n
 
 
 @[main, comm]
 private lemma ring
   [Semiring α]
-  {a : ℕ} :
+-- given
+  (n : ℕ) :
 -- imply
-  (a + 1 : ℕ) = (a + 1 : α) := by
+  (n + 1 : ℕ) = (n + 1 : α) := by
 -- proof
-  -- apply main
   rw [OfNat.eq.Cast (α := α)]
   rw [AddCoeS.eq.CoeAdd]
 
 
-
-
 -- created on 2025-05-23
--- updated on 2025-11-08
+-- updated on 2026-08-19
