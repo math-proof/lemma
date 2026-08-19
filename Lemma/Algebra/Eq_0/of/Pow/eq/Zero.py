@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq.induct = Eq.hypothesis.subs(n, n + 1)
 
-    Eq << Eq.induct.this.lhs.lhs.apply(Real.Pow_Add.eq.MulPowS)
+    Eq << Eq.induct.this.lhs.lhs.apply(Real.Pow_Add.eq.MulPowS.of.Gt_0)
     Eq << Eq[-1].this.lhs.apply(Nat.OrEqS_0.of.Mul.eq.Zero)
 
     Eq << Bool.ImpOr.given.Imp.Imp.apply(Eq[-1])

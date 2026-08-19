@@ -12,13 +12,13 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Int
     x, y = Symbol(real=True)
     Eq << apply(ceil(Max(x, y)))
 
     Eq << Eq[0].apply(Algebra.Eq_Ceil.given.And)
 
-    Eq <<= Algebra.Gt_Sub_.Ceil.One.apply(x), Algebra.Gt_Sub_.Ceil.One.apply(y)
+    Eq <<= Int.LtSubCeil_1.apply(x), Int.LtSubCeil_1.apply(y)
 
     Eq << Algebra.GtMax.of.Gt.Gt.apply(Eq[-2], Eq[-1])
 

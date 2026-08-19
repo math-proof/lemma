@@ -3,7 +3,6 @@ from . import limits
 from . import Mul
 from . import Sum
 from . import cubic
-from . import halve
 from . import Square
 from . import Inv
 from . import eq

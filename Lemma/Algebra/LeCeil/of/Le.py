@@ -9,7 +9,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat, Rat
+    from Lemma import Nat, Rat, Int
 
     x, y = Symbol(real=True, given=True)
     Eq << apply(x <= y)
@@ -18,7 +18,7 @@ def prove(Eq):
 
     Eq << Nat.Ge_Add_1.of.Gt.apply(Eq[-1]) - 1
 
-    Eq << Algebra.Gt_Sub_.Ceil.One.apply(x)
+    Eq << Int.LtSubCeil_1.apply(x)
 
     Eq << Nat.Gt.of.Gt.Ge.apply(Eq[-2], Eq[-1])
 

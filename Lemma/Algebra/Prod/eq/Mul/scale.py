@@ -33,7 +33,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Product).apply(Algebra.Prod.eq.Mul.pop)
 
-    Eq << Eq[-1].this.find(Pow).apply(Real.Pow_Add.eq.MulPowS)
+    Eq << Eq[-1].this.find(Pow).apply(Real.Pow_Add.eq.MulPowS.of.Gt_0)
 
     Eq << Eq[-1].this.rhs.args[::2].simplify()
 

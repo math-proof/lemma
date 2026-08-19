@@ -98,9 +98,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Finset.Sum.eq.AddSumS, cond=Equal(Eq[-1].rhs.variable % 2, 0))
 
-    Eq << Eq[-1].this.rhs.args[0].apply(Algebra.Sum.halve)
+    Eq << Eq[-1].this.rhs.args[0].apply(Finset.SumRange.eq.Sum_UFnAddMul2)
 
-    Eq << Eq[-1].this.rhs.args[1].apply(Algebra.Sum.halve)
+    Eq << Eq[-1].this.rhs.args[1].apply(Finset.SumRange.eq.Sum_UFnAddMul2)
 
     Eq << Eq[-1].this.rhs.apply(Finset.AddSumS.eq.Sum_Add_Sum)
 

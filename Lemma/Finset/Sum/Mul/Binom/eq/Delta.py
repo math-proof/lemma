@@ -33,11 +33,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(~Binomial - Binomial).apply(Finset.Binom.eq.Add.Pascal)
 
-    Eq << Eq[-1].this.find(Pow).apply(Real.Pow_Add.eq.MulPowS, simplify=None)
+    Eq << Eq[-1].this.find(Pow).apply(Real.Pow_Add.eq.MulPowS.of.Gt_0, simplify=None)
 
     Eq << Eq[-1].this.find(Sum).apply(Finset.Sum_Mul.eq.Mul_Sum)
 
-    Eq << Eq[-1].this.find((-1) ** Add).apply(Real.Pow_Add.eq.MulPowS, simplify=None)
+    Eq << Eq[-1].this.find((-1) ** Add).apply(Real.Pow_Add.eq.MulPowS.of.Gt_0, simplify=None)
 
     Eq << Eq[-1].this.find(Sum[Mul[~Sum]]).apply(Finset.Sum_Mul.eq.Mul_Sum)
 

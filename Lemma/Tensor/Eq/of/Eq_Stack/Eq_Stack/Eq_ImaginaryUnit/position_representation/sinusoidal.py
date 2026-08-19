@@ -191,7 +191,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Nat.Mul_Ite.eq.Ite_MulS, simplify=None)
 
-    Eq <<= Real.EqCos.of.Eq.apply(Eq[-1]), Real.EqSin.of.Eq.apply(Eq[-1])
+    Eq <<= Real.Cos.of.Eq.apply(Eq[-1]), Real.Sin.of.Eq.apply(Eq[-1])
 
     Eq << Eq.eq_euler.subs(Eq[-1], Eq[-2])
 

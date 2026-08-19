@@ -226,3 +226,4 @@ from . import SubsetFinset
 from . import In_IccCeilDiv
 from . import In_SetOf_In_IccDiv_2
 from . import Lt_0
+from . import Cup_Ico

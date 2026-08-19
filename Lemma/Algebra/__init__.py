@@ -122,7 +122,6 @@ from . import All_Ge_Minima
 from . import All_Ge_ReducedMin
 from . import Inf_Square
 from . import AbsSubMulS
-from . import Gt_Sub_
 from . import Add_Abs
 from . import All_GeMaxima
 from . import All_Le_Maxima

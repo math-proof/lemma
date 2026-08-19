@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Sum).apply(Finset.SumIco.eq.Sum_UFnAdd, 1)
 
-    Eq << Eq[-1].this.find(Sum).find(Pow).apply(Real.Pow_Add.eq.MulPowS)
+    Eq << Eq[-1].this.find(Sum).find(Pow).apply(Real.Pow_Add.eq.MulPowS.of.Gt_0)
 
     Eq << Eq[-1].this.lhs.apply(Nat.AddMulS.eq.Mul_Add)
 

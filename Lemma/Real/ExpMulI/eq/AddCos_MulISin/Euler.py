@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Algebra, Bool, Finset, Real
+    from Lemma import Calculus, Bool, Finset, Real
 
     x = Symbol(real=True)
     Eq << apply(exp(S.ImaginaryUnit * x))
@@ -20,9 +20,9 @@ def prove(Eq):
     n = Eq[-1].rhs.variable
     Eq << Eq[-1].this.rhs.apply(Finset.Sum.eq.AddSumS, cond=Equal(n % 2, 0))
 
-    Eq << Eq[-1].this.rhs.args[0].apply(Algebra.Sum.halve)
+    Eq << Eq[-1].this.rhs.args[0].apply(Finset.SumRange.eq.Sum_UFnAddMul2)
 
-    Eq << Eq[-1].this.rhs.args[0].apply(Algebra.Sum.halve)
+    Eq << Eq[-1].this.rhs.args[0].apply(Finset.SumRange.eq.Sum_UFnAddMul2)
 
     Eq << Eq[-1].this.rhs.args[0].expr.expand()
 

@@ -12,7 +12,7 @@ def apply(x, k=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Bool, Algebra, Set
+    from Lemma import Bool, Algebra, Set, Int
 
     x = Symbol(real=True, given=True)
     Eq << apply(x)
@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Set.In_Ico.given.Le.Lt.apply(Eq[-1])
 
-    Eq << Algebra.Gt_Sub_.Ceil.One.apply(x)
+    Eq << Int.LtSubCeil_1.apply(x)
 
     Eq << Algebra.Le_Ceil.apply(x)
 

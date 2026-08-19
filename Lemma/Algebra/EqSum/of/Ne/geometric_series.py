@@ -16,7 +16,7 @@ def prove(Eq):
     λ = Symbol(real=True)
     Eq << apply(Unequal(λ, 1), Sum[k:n](λ ** k))
 
-    Eq << (λ ** (k + 1)).this.apply(Real.Pow_Add.eq.MulPowS)
+    Eq << (λ ** (k + 1)).this.apply(Real.Pow_Add.eq.MulPowS.of.Gt_0)
 
     Eq << Eq[-1] - λ ** k
 

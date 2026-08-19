@@ -12,18 +12,18 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Complex, Real
+    from Lemma import Complex, Real
 
     z = Symbol(complex=True, given=True)
     Eq << apply(cos(Arg(z)))
 
     Eq << Complex.Expr.eq.AddRe_MulIIm.apply(z)
 
-    Eq << Algebra.EqArg.of.Eq.apply(Eq[1])
+    Eq << Complex.Arg.of.Eq.apply(Eq[1])
 
     Eq << Eq[-1].this.rhs.apply(Complex.ArgAdd.eq.Ite_0Ite_Arccos_NegArccos)
 
-    Eq << Real.EqCos.of.Eq.apply(Eq[-1])
+    Eq << Real.Cos.of.Eq.apply(Eq[-1])
 
     Eq << Eq[0].this.find(Equal).apply(Complex.Eq_0.Is.EqRe_0.EqIm_0)
 

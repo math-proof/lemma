@@ -34,7 +34,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Piecewise[2]).apply(Bool.Ite.subst, [0, 1])
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.halve)
+    Eq << Eq[-1].this.rhs.apply(Finset.SumRange.eq.Sum_UFnAddMul2)
 
     Eq.el_to_et = Eq[-1].find(Element).this.apply(Set.In_Inter.Is.AndInS)
 
@@ -80,7 +80,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Piecewise[2]).apply(Bool.Ite.subst, [0, 1])
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.halve)
+    Eq << Eq[-1].this.rhs.apply(Finset.SumRange.eq.Sum_UFnAddMul2)
 
     Eq << Eq[-1].this.find(Equal[Symbol + 1, Symbol]) - 1
 

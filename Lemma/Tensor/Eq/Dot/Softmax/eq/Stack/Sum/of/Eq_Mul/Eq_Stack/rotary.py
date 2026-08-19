@@ -50,9 +50,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Sum)
 
-    Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.halve)
+    Eq << Eq[-1].this.find(Sum).apply(Finset.SumRange.eq.Sum_UFnAddMul2)
 
-    Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.halve)
+    Eq << Eq[-1].this.find(Sum).apply(Finset.SumRange.eq.Sum_UFnAddMul2)
 
     Eq << Eq[-1].this.rhs.apply(Finset.AddSumS.eq.Sum_Add_Sum)
 

@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[0], cond=a < b)
 
-    Eq << Eq[-2].this.lhs.apply(Set.Cup.eq.Icc.of.Lt.left_open, k)
+    Eq << Eq[-2].this.lhs.apply(Set.Cup_Ico.eq.Ioc.of.Lt, k)
 
     Eq << (a >= b).this.apply(Set.Eq_Empty.Icc.of.Ge, left_open=True)
 

@@ -4,3 +4,6 @@ from . import Expr
 from . import And_Imp_Or_Or_OrEqS
 from . import Sign
 from . import ArgAdd
+from . import Arg
+from . import Norm
+from . import SinArg

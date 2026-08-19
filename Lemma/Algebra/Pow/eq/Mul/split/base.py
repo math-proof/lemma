@@ -40,11 +40,11 @@ def prove(Eq):
 
     Eq.induct = Eq[0].subs(n, n + 1)
 
-    Eq << Eq.induct.this.lhs.apply(Real.Pow_Add.eq.MulPowS)
+    Eq << Eq.induct.this.lhs.apply(Real.Pow_Add.eq.MulPowS.of.Gt_0)
 
-    Eq << Eq[-1].this.rhs.args[0].apply(Real.Pow_Add.eq.MulPowS)
+    Eq << Eq[-1].this.rhs.args[0].apply(Real.Pow_Add.eq.MulPowS.of.Gt_0)
 
-    Eq << Eq[-1].this.rhs.args[-1].apply(Real.Pow_Add.eq.MulPowS)
+    Eq << Eq[-1].this.rhs.args[-1].apply(Real.Pow_Add.eq.MulPowS.of.Gt_0)
 
     Eq << Eq[0] * a * b
 

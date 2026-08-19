@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat, Real
+    from Lemma import Nat, Real, Complex
 
     z = Symbol(complex=True, given=True)
     Eq << apply(Re(z))
@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Nat.Mul_Ite.eq.Ite_MulS)
 
-    Eq << Eq[-1].this.find(Abs).apply(Algebra.Abs.eq.Sqrt)
+    Eq << Eq[-1].this.find(Abs).apply(Complex.Norm.eq.Sqrt)
 
 
 

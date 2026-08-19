@@ -45,7 +45,7 @@ def prove(Eq):
     x, y, t = Symbol(real=True)
     Eq << apply(t ** x * t ** y)
 
-    Eq << Eq[-1].this.rhs.apply(Real.Pow_Add.eq.MulPowS)
+    Eq << Eq[-1].this.rhs.apply(Real.Pow_Add.eq.MulPowS.of.Gt_0)
 
 
 

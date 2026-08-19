@@ -28,7 +28,7 @@ def prove(Eq):
     i = Eq[-1].rhs.variable
     Eq << Eq[-1].this.rhs.find(Mul[~Sum]).apply(Finset.SumIco.eq.Sum_UFnAdd, i)
 
-    Eq << Eq[-1].this.find(Pow[Add]).apply(Real.Pow_Add.eq.MulPowS)
+    Eq << Eq[-1].this.find(Pow[Add]).apply(Real.Pow_Add.eq.MulPowS.of.Gt_0)
 
     Eq << Unequal(λ, 1, plausible=True)
 

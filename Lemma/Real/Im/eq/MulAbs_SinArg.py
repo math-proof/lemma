@@ -10,16 +10,16 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat, Real
+    from Lemma import Nat, Complex
 
     z = Symbol(complex=True, given=True)
     Eq << apply(Im(z))
 
-    Eq << Eq[0].this.find(sin).apply(Real.Sin.Arg.eq.Ite)
+    Eq << Eq[0].this.find(sin).apply(Complex.SinArg.eq.DivIm_SqrtAddSquareS)
 
     Eq << Eq[-1].this.rhs.apply(Nat.Mul_Ite.eq.Ite_MulS)
 
-    Eq << Eq[-1].this.find(Abs).apply(Algebra.Abs.eq.Sqrt)
+    Eq << Eq[-1].this.find(Abs).apply(Complex.Norm.eq.Sqrt)
 
 
 

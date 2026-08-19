@@ -55,7 +55,6 @@ from . import Eq_Arccos
 from . import Re
 from . import Eq_Arcsec
 from . import Eq_Arctan
-from . import EqCos
 from . import ExpMulI
 from . import Gt_0
 from . import Add_
@@ -66,7 +65,6 @@ from . import Eq_Arcsin
 from . import Eq_Cos
 from . import Eq_Tan
 from . import EqArcsin
-from . import EqSin
 from . import MulSin_Cos
 from . import Sign
 from . import CosAdd

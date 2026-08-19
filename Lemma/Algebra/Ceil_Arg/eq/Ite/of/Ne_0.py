@@ -15,7 +15,7 @@ def apply(is_nonzero, q):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Nat, Int, Real
+    from Lemma import Algebra, Set, Bool, Nat, Int, Real, Complex
 
     p, q = Symbol(complex=True, given=True)
     Eq << apply(Unequal(p, 0), q)
@@ -75,7 +75,7 @@ def prove(Eq):
 
     Eq << Algebra.EqArg.of.Gt_0.apply(Eq.p_is_positive, Eq.p_cubic.find(Exp))
 
-    Eq << Algebra.EqArg.of.Eq.apply(Eq.p_cubic)
+    Eq << Complex.Arg.of.Eq.apply(Eq.p_cubic)
 
     Eq << Bool.Eq.of.Eq.Eq.apply(Eq[-1], Eq[-2])
 
@@ -91,7 +91,7 @@ def prove(Eq):
 
     Eq << Algebra.EqArg.of.Gt_0.apply(Eq.p_is_positive, Mul(*Eq[-1].rhs.args[1:]))
 
-    Eq << Algebra.EqArg.of.Eq.apply(Eq[-2])
+    Eq << Complex.Arg.of.Eq.apply(Eq[-2])
 
     Eq << Bool.Eq.of.Eq.Eq.apply(Eq[-1], Eq[-2])
 
@@ -121,7 +121,7 @@ def prove(Eq):
 
     Eq << Algebra.EqArg.of.Gt_0.apply(Eq.p_is_positive, Mul(*Eq[-1].rhs.args[1:]))
 
-    Eq << Algebra.EqArg.of.Eq.apply(Eq[-2])
+    Eq << Complex.Arg.of.Eq.apply(Eq[-2])
 
     Eq << Bool.Eq.of.Eq.Eq.apply(Eq[-1], Eq[-2])
 

@@ -61,7 +61,7 @@ def prove(Eq):
 
     Eq << Eq[-1] * beta ** k
 
-    Eq << Eq[-1].this.find(Pow[Add]).apply(Real.Pow_Add.eq.MulPowS)
+    Eq << Eq[-1].this.find(Pow[Add]).apply(Real.Pow_Add.eq.MulPowS.of.Gt_0)
 
     Eq << Eq[-1].this.find(Add).apply(Nat.AddMulS.eq.Mul_Add)
 

@@ -61,7 +61,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Sum).apply(Finset.Sum.Binom.eq.Delta.Zero)
 
-    Eq << Eq[-1].this.find((~Pow) / Factorial).apply(Real.Pow_Add.eq.MulPowS, simplify=None)
+    Eq << Eq[-1].this.find((~Pow) / Factorial).apply(Real.Pow_Add.eq.MulPowS.of.Gt_0, simplify=None)
 
     Eq << Eq[-1].this.find(Mul[Sum]).apply(Finset.Mul_Sum.eq.Sum_Mul)
 

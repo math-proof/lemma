@@ -17,7 +17,7 @@ def prove(Eq):
     x, y, t, z = Symbol(real=True)
     Eq << apply(t ** x * t * z)
 
-    Eq << Eq[-1].this.find(Symbol ** Add).apply(Real.Pow_Add.eq.MulPowS)
+    Eq << Eq[-1].this.find(Symbol ** Add).apply(Real.Pow_Add.eq.MulPowS.of.Gt_0)
 
 
 
