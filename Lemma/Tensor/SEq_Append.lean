@@ -1,6 +1,6 @@
 import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.Eq
 import Lemma.Tensor.GetAppend.eq.Get.of.Lt
-import Lemma.Tensor.GetAppend.eq.Get_Sub.of.Lt_Add.Ge
+import Lemma.Tensor.GetAppend.eq.Get_Sub.of.GtAdd.Ge
 import Lemma.Tensor.GetGetSlice.eq.Get.of.Lt_Min
 import Lemma.Tensor.GetGetSlice.eq.Get_Add.of.GtSubMin
 import Lemma.List.LengthSlice.eq.Min
@@ -54,7 +54,7 @@ private lemma main
       have h_lt : (t : ℕ) < (⟨0, (i : ℕ), 1⟩ : Slice).length X.length + (⟨(i : ℕ), X.length, 1⟩ : Slice).length X.length := by
         rw [h_len0, h_len1]
         omega
-      erw [GetAppend.eq.Get_Sub.of.Lt_Add.Ge h_ge h_lt]
+      erw [GetAppend.eq.Get_Sub.of.GtAdd.Ge h_ge h_lt]
       simp [h_len0]
       have h_k : (t : ℕ) - (i : ℕ) < X.length ⊓ n - i := by
         simp [h_Xn]

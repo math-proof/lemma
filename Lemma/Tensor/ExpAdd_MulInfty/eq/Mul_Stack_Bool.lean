@@ -62,7 +62,7 @@ private lemma main
   erw [GetMul.eq.MulGet.scalar.fin (([i<n][j<n]((p i j).toNat : Tensor ℝ* []) - 1).get i) ω j]
   rw [GetSub.eq.SubGetS.fin]
   erw [GetSub.eq.SubGetS.fin (([i<n][j<n]↑(p i j).toNat).get i) (Tensor.get (1 : Tensor ℝ* [n, n]) i) j]
-  repeat rw [EqGetStack.fn.fin]
+  repeat rw [EqGetStack.fin]
   rw [EqGet1_1.fin]
   erw [EqGet1_1.fin (s := [n, n].tail) j (α := ℝ*)]
   rw [DataMul.eq.MulDataS]

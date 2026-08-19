@@ -20,4 +20,4 @@ private lemma main
     apply Cup_Ioc.eq.Ioc.of.Lt_0.Ge_0 (R := R) h_a (Ge.of.NotLt h_b)
 
 
--- created on 2026-08-16
+-- created on 2018-10-15

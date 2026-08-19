@@ -101,7 +101,7 @@ private lemma main
     rw [MapBandPart.eq.BandPartMap.of.EqUFn0'0]
     rfl
   apply (Tensor.XEq.of.Eq h_zi).trans
-  apply XEq.trans (b := ((exp A').get i * Ξ.get i / (let den : Tensor ℝ* [] := ((exp A').get i * Ξ.get i).sum 0; den)) @ V')
+  apply XEq.trans (b := ((exp A').get i * Ξ.get i / id (α := Tensor ℝ* []) (((exp A').get i * Ξ.get i).sum 0)) @ V')
   .
     simp
     rw [h_A', hΞ, h_V']
@@ -179,7 +179,7 @@ private lemma main
       erw [Exp.eq.MulSoftmax_SumExp]
     simp
     conv_lhs => erw [DotMul.eq.MulDot]
-    simp [EqGetStack.fn.fin]
+    simp [EqGetStack.fin]
     erw [EqDivMul.of.Ne_0]
     .
       simp [GetElem.getElem]
@@ -208,4 +208,4 @@ private lemma main
 
 
 -- created on 2020-12-28
--- updated on 2026-08-16
+-- updated on 2026-08-19

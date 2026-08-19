@@ -73,4 +73,4 @@ private lemma main
   rw [h_fin, SumSetOf_Odd.eq.Sum_UFnAddMul2]
 
 
--- created on 2026-08-16
+-- created on 2023-05-30

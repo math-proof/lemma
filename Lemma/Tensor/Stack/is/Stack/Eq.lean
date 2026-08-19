@@ -36,7 +36,7 @@ private lemma main
       apply Tensor.GetSliceStack.as.Stack_UFn g n 1
     ·
       simp only [GetElem.getElem] at h_n
-      simp [Tensor.EqGetStack.fin] at h_n
+      simp [Tensor.EqGetStack.fun.fin] at h_n
       assumption
   ·
     intro ⟨h₀, h₁⟩
@@ -48,7 +48,7 @@ private lemma main
           apply Eq.of.All_EqGetS
           intro i
           fin_cases i
-          repeat rw [EqGetStack.fn]
+          repeat rw [EqGetStack]
           simpa
         rw [this]
       _ = [i < n + 1] g i := (Stack.eq.AppendStackS g).symm

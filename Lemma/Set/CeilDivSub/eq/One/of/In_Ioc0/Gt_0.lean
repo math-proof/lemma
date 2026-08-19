@@ -1,4 +1,3 @@
-import sympy.sets.sets
 import Lemma.Set.In_IocDivS.of.In_Ioc.Gt_0
 import Lemma.Rat.EqDiv0_0
 import Lemma.Rat.Div.eq.One.of.Gt_0

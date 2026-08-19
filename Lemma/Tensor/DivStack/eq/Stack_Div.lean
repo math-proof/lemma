@@ -32,16 +32,14 @@ private lemma main
   (g : Tensor α (n :: s))
   (f : ℕ → Tensor α s) :
 -- imply
-  ([i < n] f i) / g = [i < n] (
-    let gi : Tensor α s := g[i]
-    f i / gi) := by
+  ([i < n] f i) / g = [i < n] (f i / id (α := Tensor α s) g[i]) := by
 -- proof
   simp
   apply Eq.of.All_EqGetS
   intro i
-  rw [EqGetStack.fn]
+  rw [EqGetStack]
   erw [@Tensor.GetDiv.eq.DivGetS]
-  erw [EqGetStack]
+  erw [EqGetStack.fun]
   rfl
 
 
@@ -52,9 +50,7 @@ private lemma fin
   (g : Tensor α (n :: s))
   (f : Fin n → Tensor α s) :
 -- imply
-  ([i < n] f i) / g = [i < n] (
-    let gi : Tensor α s := g[i]
-    f i / gi) := by
+  ([i < n] f i) / g = [i < n] (f i / id (α := Tensor α s) g[i]) := by
 -- proof
   if h : n = 0 then
     subst h
@@ -72,3 +68,4 @@ private lemma fin
 
 
 -- created on 2026-08-15
+-- updated on 2026-08-19

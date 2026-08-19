@@ -33,14 +33,14 @@ private lemma main
   apply XEq.of.Eq
   apply Eq.of.All_EqGetS.fin
   intro i
-  rw [EqGetStack.fn.fin, EqGetStack.fn.fin]
+  simp only [EqGetStack.fin]
   have hβ : (([j < n] ((j.val + 1 - l : ℕ) : Tensor ℕ []))[i]).data[0] = i + 1 - l := by
     simp [GetElem.getElem]
-    erw [EqGetStack.fn.fin]
+    erw [EqGetStack.fin]
     rfl
   have hζ : (([j < n] ((j.val + u : ℕ) : Tensor ℕ []))[i]).data[0] = i + u := by
     simp [GetElem.getElem]
-    erw [EqGetStack.fn.fin]
+    erw [EqGetStack.fin]
     rfl
   rw [hβ, hζ]
 

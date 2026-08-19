@@ -21,7 +21,7 @@ private lemma main
   apply Eq.of.All_EqGetS.fin
   intro i
   erw [GetMaskedFill.eq.MaskedFillGet.of.GtLength_2.fin (by grind)]
-  conv_rhs => erw [EqGetStack.fn.fin (i := ⟨i, by grind⟩)]
+  conv_rhs => erw [EqGetStack.fin (i := ⟨i, by grind⟩)]
   rfl
 
 

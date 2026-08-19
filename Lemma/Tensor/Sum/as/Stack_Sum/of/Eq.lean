@@ -1,4 +1,4 @@
-import Lemma.Tensor.StackUFnGet.of.Eq
+import Lemma.Tensor.SEqStackS_UFnGet.of.Eq
 import Lemma.Tensor.Sum.eq.Stack_Sum
 open Tensor
 
@@ -15,7 +15,7 @@ private lemma main
   X.sum (d + 1) ≃ [i < m] (X[i].sum d) := by
 -- proof
   rw [Sum.eq.Stack_Sum]
-  apply StackUFnGet.of.Eq h (·.eraseIdx d) (·.sum d)
+  apply SEqStackS_UFnGet.of.Eq h (·.eraseIdx d) (·.sum d)
 
 
 -- created on 2025-06-27

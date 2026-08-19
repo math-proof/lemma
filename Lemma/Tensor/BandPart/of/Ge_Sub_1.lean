@@ -16,10 +16,10 @@ private lemma main
   rw [BandPart.eq.Stack_BoolIn_Icc, BandPart.eq.Stack_BoolIn_Icc]
   apply Eq.of.All_EqGetS.fin
   intro i
-  rw [EqGetStack.fn.fin, EqGetStack.fn.fin]
+  simp only [EqGetStack.fin]
   apply Eq.of.All_EqGetS.fin
   intro j
-  rw [EqGetStack.fn.fin, EqGetStack.fn.fin]
+  simp only [EqGetStack.fin]
   have hji : (j - i : ℤ) ≥ -((n - 1 : ℕ) : ℤ) := by
     have : (i : ℤ) ≤ ↑(n - 1) := by
       simp [Nat.cast_le]

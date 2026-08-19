@@ -19,4 +19,4 @@ private lemma main
   Real.rpow_add h a b
 
 
--- created on 2026-08-16
+-- created on 2018-08-19

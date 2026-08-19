@@ -1,4 +1,3 @@
-import sympy.sets.sets
 import Lemma.Set.In_Icc.is.Le.Le
 import Lemma.Int.LeSubS.is.Ge
 open Set Int

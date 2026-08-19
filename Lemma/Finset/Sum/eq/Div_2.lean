@@ -3,7 +3,7 @@ import sympy.Basic
 
 
 @[main]
-private lemma main
+private lemma gauss_summation
 -- given
   (n : ℕ) :
 -- imply

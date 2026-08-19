@@ -1,6 +1,5 @@
 import sympy.sets.sets
-import Lemma.Set.In_Ioi.is.Gt
-open Set
+import sympy.Basic
 
 
 @[main, comm, mp, mpr]
@@ -9,9 +8,9 @@ private lemma main
 -- given
   (x a : α) :
 -- imply
-  x ∈ Ioi a ↔ a < x := by
+  x ∈ Ioi a ↔ a < x :=
 -- proof
-  apply In_Ioi.is.Gt
+  UpperSet.mem_Ioi_iff
 
 
 -- created on 2025-04-27

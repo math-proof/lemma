@@ -25,7 +25,7 @@ private lemma main
   apply Eq.of.SEq
   have := Softmax.as.Stack_Softmax.of.LtAdd_1Length h_d X
   have := SEqGetS.of.SEq.GtLength.fin h_i' this
-  rwa [EqGetStack.fn.fin] at this
+  rwa [EqGetStack.fin] at this
 
 
 -- created on 2025-11-30

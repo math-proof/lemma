@@ -1,4 +1,3 @@
-import sympy.sets.sets
 import Lemma.Set.Any_In.is.Ne_Empty
 import Lemma.Nat.Lt.of.Lt.Le
 open Set Nat
@@ -23,5 +22,5 @@ private lemma main
   apply Lt.of.Lt.Le h_e.left h_e.right
 
 
--- created on 2018-09-16
+-- created on 2018-10-16
 -- updated on 2026-08-18

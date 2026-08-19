@@ -1,5 +1,8 @@
+import Lemma.Bool.SEq.is.Eq
+import Lemma.Tensor.GetAppend.eq.AppendGetS
 import Lemma.Tensor.GetAppend.eq.Get
-open Tensor
+import Lemma.Tensor.SEqGetS.of.SEq.GtLength
+open Bool Tensor
 
 
 @[main, fin]
@@ -18,5 +21,22 @@ private lemma main
   assumption
 
 
+@[main]
+private lemma batch
+-- given
+  (h : j < n)
+  (A : Tensor α ([d] ++ n :: s))
+  (B : Tensor α ([d] ++ m :: s))
+  (i : Fin d) :
+-- imply
+  have : j < n + m := Nat.lt_add_right m h
+  (A ++ B)[i, j] = A[i][j] := by
+-- proof
+  apply Eq.of.SEq
+  apply (SEqGetS.of.SEq.GtLength (i := j) (by grind) (SEq.of.Eq (GetAppend.eq.AppendGetS A B i))).trans
+  apply SEq.of.Eq
+  apply main h
+
+
 -- created on 2025-06-01
--- updated on 2025-06-26
+-- updated on 2026-08-19

@@ -1,4 +1,3 @@
-import sympy.sets.sets
 import Lemma.Set.In_Ico.is.In_IocSubS
 import Lemma.Set.Ioc.eq.Ico
 open Set

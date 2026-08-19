@@ -6,7 +6,7 @@ open Tensor Vector
 
 
 @[main, fin]
-private lemma fn
+private lemma main
 -- given
   (f : Fin n → Tensor α s)
   (i : Fin n) :
@@ -28,14 +28,14 @@ private lemma fn
 
 
 @[main, fin]
-private lemma main
+private lemma Fun
 -- given
   (f : ℕ → Tensor α s)
   (i : Fin n) :
 -- imply
   ([i < n] f i)[i] = f i :=
 -- proof
-  fn _ i
+  main _ i
 
 
 -- created on 2025-05-23

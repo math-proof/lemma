@@ -18,10 +18,10 @@ private lemma main
   simp [Tensor.masked_fill]
   apply Eq.of.All_EqGetS.fin
   intro i
-  repeat rw [EqGetStack.fn.fin]
+  repeat rw [EqGetStack.fin]
   apply Eq.of.All_EqGetS.fin
   intro j
-  repeat rw [EqGetStack.fn.fin]
+  repeat rw [EqGetStack.fin]
   split_ifs with h_l
   ·
     have h_l : ¬(j : ℤ) ≤ d + i := by

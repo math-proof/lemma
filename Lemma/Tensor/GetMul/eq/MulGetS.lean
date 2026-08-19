@@ -17,8 +17,7 @@ private lemma main
     rw [Eq_Stack A]
     rw [Eq_Stack B]
   erw [MulStackS.eq.Stack_Mul]
-  have := EqGetStack.fn fun i : Fin n => A[i] * B[i]
-  erw [this]
+  conv_lhs => erw [EqGetStack fun i : Fin n => A[i] * B[i]]
 
 
 -- created on 2025-07-13

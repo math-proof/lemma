@@ -11,17 +11,15 @@ private lemma main
   (g : Tensor α (m :: s))
   (f : ℕ → Tensor α s) :
 -- imply
-  g + [i < m] f i = [i < m] (
-    let gi : Tensor α s := g[i]
-    gi + f i
-  ) := by
+  g + [i < m] f i = [i < m] (id (α := Tensor α s) g[i] + f i) := by
 -- proof
   apply Eq.of.All_EqGetS
   intro i
-  rw [EqGetStack.fn]
-  rw [GetAdd.eq.AddGetS]
   rw [EqGetStack]
+  rw [GetAdd.eq.AddGetS]
+  rw [EqGetStack.fun]
   rfl
 
 
 -- created on 2018-04-04
+-- updated on 2026-08-19

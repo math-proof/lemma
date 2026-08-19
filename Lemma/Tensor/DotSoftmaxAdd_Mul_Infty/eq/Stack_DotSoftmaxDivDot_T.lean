@@ -58,7 +58,7 @@ private lemma gpt
   ·
     apply Eq.of.All_EqGetS.fin
     intro i
-    rw [EqGetStack.fn.fin, EqGetStack.fn.fin]
+    simp [EqGetStack.fin]
     simp only [V']
     apply Bool.Eq.of.SEq
     apply SEqDotS.of.SEq

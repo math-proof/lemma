@@ -22,7 +22,7 @@ private lemma main
   intro h_i_length h_i
   have := Sum.as.Stack_Sum.of.GtLength (by linarith) X (d := d)
   have := SEqGetS.of.SEq.GtLength.fin h_i this
-  rwa [EqGetStack.fn.fin] at this
+  rwa [EqGetStack.fin] at this
 
 
 -- created on 2025-06-24

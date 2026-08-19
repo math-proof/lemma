@@ -25,9 +25,9 @@ private lemma main
   intro mask
   subst mask
   rw [GetSub.eq.SubGetS.fin]
-  rw [EqGetStack.fn.fin]
+  rw [EqGetStack.fin]
   erw [GetSub.eq.SubGetS.fin]
-  rw [EqGetStack.fn.fin]
+  rw [EqGetStack.fin]
   rw [EqGet1_1.fin]
   erw [EqGet1_1.fin]
   split_ifs with h
@@ -43,3 +43,4 @@ private lemma main
 
 
 -- created on 2025-12-23
+-- updated on 2026-08-19

@@ -17,10 +17,10 @@ private lemma main
   _ = [i < m] [j < n] (((j - i : ℤ) ∈ Icc (-l : ℤ) u) : Bool) := by
     apply Eq.of.All_EqGetS.fin
     intro i
-    repeat rw [EqGetStack.fn.fin]
+    repeat rw [EqGetStack.fin]
     apply Eq.of.All_EqGetS.fin
     intro j
-    repeat rw [EqGetStack.fn.fin]
+    repeat rw [EqGetStack.fin]
     by_cases h : (j - i : ℤ) ∈ Icc (-l : ℤ) u
     · simp [h]
     · simp [h]

@@ -4,7 +4,7 @@ import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Tensor.EqData0'0
 import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.GetMap.eq.MapGet
-import Lemma.Tensor.MapStack.eq.StackMap
+import Lemma.Tensor.MapStack.eq.Stack_Map
 import Lemma.Tensor.MaskedFill.eq.Stack_MaskedFillGet.of.GtLength_2
 open Tensor
 
@@ -35,14 +35,14 @@ private lemma main
   | cons n s ih =>
     if h_len_gt : (n :: s).length > 2 then
       rw [MaskedFill.eq.Stack_MaskedFillGet.of.GtLength_2 (by grind)]
-      erw [MapStack.eq.StackMap]
+      erw [MapStack.eq.Stack_Map]
       apply Eq.of.All_EqGetS.fin
       intro i
-      erw [EqGetStack.fn.fin]
+      erw [EqGetStack.fin]
       simp
       erw [ih (X.get i)]
       rw [MaskedFill.eq.Stack_MaskedFillGet.of.GtLength_2.fin (by grind)]
-      conv_rhs => erw [EqGetStack.fn.fin]
+      conv_rhs => erw [EqGetStack.fin]
       congr 1
       conv_rhs => erw [GetMap.eq.MapGet.fin]
       rfl
@@ -53,14 +53,14 @@ private lemma main
       match s with
       | [m] =>
         repeat rw [Tensor.masked_fill, dif_neg h_len_gt, dif_neg h_len_lt]
-        rw [MapStack.eq.StackMap]
+        rw [MapStack.eq.Stack_Map]
         apply Eq.of.All_EqGetS.fin
         intro i
-        repeat rw [EqGetStack.fn.fin]
-        rw [MapStack.eq.StackMap]
+        repeat rw [EqGetStack.fin]
+        rw [MapStack.eq.Stack_Map]
         apply Eq.of.All_EqGetS.fin
         intro j
-        repeat rw [EqGetStack.fn.fin]
+        repeat rw [EqGetStack.fin]
         split_ifs with h
         · apply Eq.of.EqDataS
           dsimp [Tensor.map]

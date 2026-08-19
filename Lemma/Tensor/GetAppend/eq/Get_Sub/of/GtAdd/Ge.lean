@@ -15,6 +15,8 @@ import Lemma.Vector.GetCast_Map.eq.UFnGet.of.Eq.Lt
 import Lemma.Vector.GetSplitAt_1.eq.GetUnflatten.of.Lt
 import Lemma.Vector.GetSplitAt_1.as.ArraySlice.of.GtGet_0.GtLength_0
 import Lemma.Vector.ArraySlice.as.GetCast_SplitAt_1.of.GtGet_0.GtLength_0.Eq_ProdTail.Eq_Prod
+import Lemma.Tensor.GetAppend.eq.AppendGetS
+import Lemma.Tensor.SEqGetS.of.SEq.GtLength
 open Vector List Bool Nat
 
 
@@ -22,7 +24,7 @@ open Vector List Bool Nat
 private lemma main
 -- given
   (h₀ : i ≥ m)
-  (h₁ : i < m + n)
+  (h₁ : m + n > i)
   (A : Tensor α (m :: s))
   (B : Tensor α (n :: s)) :
 -- imply
@@ -78,5 +80,23 @@ private lemma main
       rfl
 
 
+@[main]
+private lemma batch
+-- given
+  (h₀ : j ≥ n)
+  (h₁ : n + m > j)
+  (A : Tensor α ([d] ++ n :: s))
+  (B : Tensor α ([d] ++ m :: s))
+  (i : Fin d) :
+-- imply
+  let h_j : j - n < m := LtSub.of.Lt_Add.Ge h₀ h₁
+  (A ++ B)[i, j] = B[i][j - n] := by
+-- proof
+  apply Eq.of.SEq
+  apply (Tensor.SEqGetS.of.SEq.GtLength (i := j) (by grind) (SEq.of.Eq (Tensor.GetAppend.eq.AppendGetS A B i))).trans
+  apply SEq.of.Eq
+  apply main h₀ h₁
+
+
 -- created on 2025-06-01
--- updated on 2025-07-17
+-- updated on 2026-08-19

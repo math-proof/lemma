@@ -1,5 +1,5 @@
-import sympy.sets.sets
-import sympy.Basic
+import Lemma.Set.In_Ioi.is.Lt
+open Set
 
 
 @[main, comm, mp, mpr]
@@ -8,10 +8,10 @@ private lemma main
 -- given
   (x a : α) :
 -- imply
-  x ∈ Ioi a ↔ x > a :=
+  x ∈ Ioi a ↔ x > a := by
 -- proof
-  UpperSet.mem_Ioi_iff
+  apply In_Ioi.is.Lt
 
 
 -- created on 2025-04-27
--- updated on 2025-08-02
+-- updated on 2026-08-19

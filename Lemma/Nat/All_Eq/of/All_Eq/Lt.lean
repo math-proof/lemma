@@ -1,4 +1,3 @@
-import sympy.sets.sets
 import Lemma.Set.In_Range.of.Lt
 open Set
 
@@ -8,9 +7,9 @@ private lemma main
   {x y : ℕ → α}
 -- given
   (h₀ : m < n)
-  (h₁ : ∀ i ∈ range n, x i = y i) :
+  (h₁ : ∀ i ∈ Finset.range n, x i = y i) :
 -- imply
-  ∀ i ∈ range m, x i = y i := by
+  ∀ i ∈ Finset.range m, x i = y i := by
 -- proof
   -- Introduce an arbitrary element `i` in the range up to `m`
   intro i hi
@@ -29,9 +28,9 @@ private lemma is_constant
   {a : α}
 -- given
   (h₀ : m<n)
-  (h₁ : ∀ i ∈ range n, x i = a) :
+  (h₁ : ∀ i ∈ Finset.range n, x i = a) :
 -- imply
-  ∀ i ∈ range m, x i = a := by
+  ∀ i ∈ Finset.range m, x i = a := by
 -- proof
   let y := fun _ : ℕ => a
   have := main (y := y) h₀ h₁

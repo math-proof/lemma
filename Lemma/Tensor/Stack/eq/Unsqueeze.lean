@@ -15,7 +15,7 @@ private lemma main
   intro i
   fin_cases i
   erw [EqGetUnsqueeze_0.fin]
-  rw [EqGetStack.fn.fin]
+  rw [EqGetStack.fin]
 
 
 -- created on 2026-07-22

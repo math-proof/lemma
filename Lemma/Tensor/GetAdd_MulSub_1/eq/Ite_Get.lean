@@ -19,7 +19,7 @@ import Lemma.Tensor.GetData.eq.GetDataGet.of.Lt
 import Lemma.Tensor.GetMap.eq.MapGet
 import Lemma.Tensor.GetMul.eq.MulGet.of.GtGet_0.GtLength_0
 import Lemma.Tensor.GetSub.eq.SubGetS
-import Lemma.Tensor.GetSubStackBool.eq.One
+import Lemma.Tensor.GetSubStack_Bool.eq.One
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.XEq.is.XEqDataS
 import Lemma.Vector.EqGet1_1
@@ -76,7 +76,7 @@ private lemma main
     simp at this
     erw [this]
     simp [mask]
-    repeat rw [EqGetStack.fn.fin]
+    repeat rw [EqGetStack.fin]
     simp [h_p]
     apply Hyperreal.XEq.of.Eq
     apply Int.EqAdd.of.Eq_Sub.left
@@ -106,7 +106,7 @@ private lemma main
     have := GetData.eq.GetDataGet.of.Lt.fin (i := j) (by simp) (A.get i)
     simp at this
     simp [← this]
-    erw [GetSubStackBool.eq.One]
+    erw [GetSubStack_Bool.eq.One]
     simp [h_p]
     rw [DataGet.eq.GetUnflattenData.fin A i]
     erw [GetUnflatten.eq.Get_AddMul.fin]

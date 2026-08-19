@@ -30,7 +30,7 @@ private lemma main
   denote h_Ξ : Ξ = _
   have h_Ξᵢ := Get.of.Eq.fin h_Ξ i
   rw [BandPart.eq.Stack_BoolIn_Icc] at h_Ξᵢ
-  rw [EqGetStack.fn.fin] at h_Ξᵢ
+  rw [EqGetStack.fin] at h_Ξᵢ
   simp only [Bool.Bool.eq.Ite] at h_Ξᵢ
   rw [CoeSub.eq.SubCoeS.of.Ge (by grind [NeZero.pos l])] at h_Ξᵢ
   rw [CoeSub.eq.SubCoeS.of.Ge (by grind [NeZero.pos u])] at h_Ξᵢ
@@ -58,7 +58,7 @@ private lemma main
   conv_lhs =>
     arg 2
     ext k
-    rw [EqGetStack.fn.fin]
+    rw [EqGetStack.fin]
     rw [CoeIte.eq.Ite_CoeS]
   conv_lhs =>
     arg 2

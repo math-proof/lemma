@@ -12,7 +12,7 @@ private lemma main
 -- proof
   apply Eq.of.All_EqGetS
   intro i
-  rw [← EqGetStack.fn (fun i : Fin s₀ => X[i])]
+  rw [← EqGetStack (fun i : Fin s₀ => X[i])]
   rfl
 
 

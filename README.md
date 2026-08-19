@@ -265,9 +265,10 @@ Guidelines and prompts for using LLMs to write and refactor Lean 4 proofs in thi
 
 ### Proof style
 - Use `obtain` instead of `rcases`, `if … then … else …` instead of `by_cases`, `have` instead of `haveI`, and `let` instead of `letI`.
+- inline `have` statement as many as possible, e.g.: refer using `apply` instead of `exact` to avoid `have` statements.
 - After a bullet tactic (`·`), put the next statement on a new line when that branch contains more than one step.
 - implicit/instance (instImplicit) arguments should be put before the `given` section
-- default arguments should be put within the `given` section
+- default arguments should be put within the `given` section: propositions come first, expressions come next, unless otherwise specified
 - conclusion must be put within the `imply` section
 - proof body must be put within the `proof` section
 - date created must be today, if date updated is the same as date created, it should be omitted.

@@ -1,5 +1,4 @@
 import sympy.functions.elementary.integers
-import sympy.sets.sets
 import Lemma.Set.NeFrac_0.of.NotIn
 import Lemma.Set.Frac.in.Ico
 import Lemma.Set.In_SDiff.of.In.Ne

@@ -18,8 +18,8 @@ private lemma main
   intro i
   apply Eq.of.All_EqGetS.fin
   intro j
-  conv_rhs => erw [EqGetStack.fn.fin (i := i)]
-  conv_rhs => erw [EqGetStack.fn.fin (i := j)]
+  conv_rhs => erw [EqGetStack.fin (i := i)]
+  conv_rhs => erw [EqGetStack.fin (i := j)]
   apply GetDot.eq.DotGetS.fin
 
 

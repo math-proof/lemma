@@ -25,13 +25,13 @@ private lemma main
   (i : Fin s[0]) :
 -- imply
   let Xi : Tensor α (s.tail ++ [m, n]) := cast (by grind) (X[i]'(GtLength.of.GtLength (by simpa) X ⟨i, by grind⟩ (j := s'.length + 2)))
-  (X.tensordot Y)[i]'(GtLength.of.GtLength (by simp [broadcast_shape]; grind) (X.tensordot Y) ⟨i, by simp [broadcast_shape]; grind⟩ (j := s'.length + 2)) ≃ Xi.matmul (Y.reshape (s.tail.take (s.tail.length - s'.length) ++ s' ++ [n, k]) (by simp)) (by grind) := by
+  (X.tensordot Y)[i]'(GtLength.of.GtLength (by grind [broadcast_shape]) (X.tensordot Y) ⟨i, by grind [broadcast_shape]⟩ (j := s'.length + 2)) ≃ Xi.matmul (Y.reshape (s.tail.take (s.tail.length - s'.length) ++ s' ++ [n, k]) (by simp)) (by grind) := by
 -- proof
   simp only [GetElem.getElem]
   have := Tensordot.as.Matmul.of.GtLengthS h X Y
   have := Eq_Cast.of.SEq this
   rw [this]
-  rw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (i := ⟨i, by simp [broadcast_shape]; grind⟩)]
+  rw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (i := ⟨i, by grind [broadcast_shape]⟩)]
   ·
     simp
     apply SEqCast.of.SEq.Eq

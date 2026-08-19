@@ -1,4 +1,3 @@
-import sympy.sets.sets
 import Lemma.Set.InAdd.of.In_Ico
 import Lemma.Int.Sub.eq.Add_Neg
 open Set Int

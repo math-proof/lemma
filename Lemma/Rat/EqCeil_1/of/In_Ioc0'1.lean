@@ -1,4 +1,3 @@
-import sympy.sets.sets
 import Lemma.Set.EqCeil.of.In_Ioc
 open Set
 

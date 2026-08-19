@@ -1,4 +1,3 @@
-import sympy.sets.sets
 import Lemma.Set.Any_In.is.Ne_Empty
 import Lemma.Nat.Le.of.Le.Le
 open Set Nat

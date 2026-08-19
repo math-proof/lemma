@@ -1,4 +1,3 @@
-import sympy.sets.sets
 import Lemma.Set.IffInS_Ico
 open Set
 

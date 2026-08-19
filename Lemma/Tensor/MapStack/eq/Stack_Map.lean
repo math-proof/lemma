@@ -16,11 +16,12 @@ private lemma main
 -- proof
   apply Eq.of.All_EqGetS.fin
   intro i
-  rw [EqGetStack.fn.fin]
+  rw [EqGetStack.fin]
   erw [GetMap.eq.MapGet.fin (i := ⟨i, by grind⟩)]
   congr 1
-  rw [EqGetStack.fn.fin]
+  rw [EqGetStack.fin]
   rfl
 
 
 -- created on 2026-07-29
+-- updated on 2026-08-19

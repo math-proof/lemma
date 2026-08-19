@@ -2,7 +2,7 @@ import Lemma.Tensor.EqLengthStack
 import Lemma.Tensor.Eq.is.All_EqGetS
 import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.GetAppend.eq.Get.of.Lt
-import Lemma.Tensor.GetAppend.eq.Get_Sub.of.Lt_Add.Ge
+import Lemma.Tensor.GetAppend.eq.Get_Sub.of.GtAdd.Ge
 open Tensor
 
 
@@ -17,17 +17,17 @@ private lemma main
   have h_length := EqLengthStack f (n + j)
   apply Eq.of.All_EqGetS
   intro i
-  rw [EqGetStack]
+  rw [EqGetStack.fun]
   if h : i < n then
     simp
     erw [GetAppend.eq.Get.of.Lt h]
     simp [GetElem.getElem]
-    rw [EqGetStack.fin]
+    rw [EqGetStack.fun.fin]
   else
     simp at h ⊢
-    erw [GetAppend.eq.Get_Sub.of.Lt_Add.Ge (by simp_all) (by simp_all)]
+    erw [GetAppend.eq.Get_Sub.of.GtAdd.Ge (by simp_all) (by simp_all)]
     simp [GetElem.getElem]
-    simp_all [EqGetStack.fn.fin]
+    simp_all [EqGetStack.fin]
 
 
 -- created on 2019-10-14

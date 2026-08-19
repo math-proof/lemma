@@ -30,7 +30,7 @@ private lemma main
   (i : Fin m)
   (j : Fin n) :
 -- imply
-  (A @ B)[i, j] = ∑ k : Fin l, (let a : Tensor α [] := A[i][k]; a) * (let b : Tensor α [] := B[k][j]; b) := by
+  (A @ B)[i, j] = ∑ k : Fin l, id (α := Tensor α []) A[i][k] * id (α := Tensor α []) B[k][j] := by
 -- proof
   rw [GetDot.eq.DotGetS]
   have := Dot.eq.SumMul__0 A[i] Bᵀ[j]
@@ -64,7 +64,7 @@ private lemma une
   (B : Tensor α [l, n])
   (j : Fin n) :
 -- imply
-  (A @ B)[j]'(by simp [matmul_shape]; grind) = ∑ k : Fin l, (let a : Tensor α [] := A[k]; a) * (let b : Tensor α [] := B[k][j]; b) := by
+  (A @ B)[j]'(by grind [matmul_shape]) = ∑ k : Fin l, id (α := Tensor α []) A[k] * id (α := Tensor α []) B[k][j] := by
 -- proof
   have h := Dot.eq.GetDotUnsqueeze_0 A B
   simp [GetElem.getElem]
@@ -78,4 +78,4 @@ private lemma une
 
 
 -- created on 2026-07-31
--- updated on 2026-08-14
+-- updated on 2026-08-19

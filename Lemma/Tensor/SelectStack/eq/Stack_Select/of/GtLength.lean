@@ -17,11 +17,11 @@ private lemma main
 -- proof
   apply Eq.of.All_EqGetS
   intro k
-  rw [EqGetStack.fn]
+  rw [EqGetStack]
   apply Eq.of.SEq
   have := GetSelect.as.SelectGet.of.GtGet_0.GtGet_Add_1.LtAdd_1Length (i := i) (j := k) (d := d) (by grind) (by simp) (by simp) ([k < n] f k)
   apply this.trans
-  rw [EqGetStack.fn.fin]
+  rw [EqGetStack.fin]
   rfl
 
 

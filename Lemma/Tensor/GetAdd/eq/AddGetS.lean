@@ -17,7 +17,7 @@ private lemma main
     rw [Eq_Stack A]
     rw [Eq_Stack B]
   erw [AddStackS.eq.Stack_Add]
-  have := EqGetStack.fn fun i : Fin m => A[i] + B[i]
+  have := EqGetStack fun i : Fin m => A[i] + B[i]
   erw [this]
 
 

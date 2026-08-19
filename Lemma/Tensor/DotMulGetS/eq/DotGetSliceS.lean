@@ -50,7 +50,7 @@ private lemma main
   change (Ai * Ξi) @ V = Ai[(i + 1 - l : ℕ):(i + u : ℕ)] @ V[(i + 1 - l : ℕ):(i + u : ℕ)]
   have h_Ξᵢ := Get.of.Eq.fin h_Ξ i
   rw [BandPart.eq.Stack_BoolIn_Icc] at h_Ξᵢ
-  rw [EqGetStack.fn.fin] at h_Ξᵢ
+  rw [EqGetStack.fin] at h_Ξᵢ
   simp only [Bool.Bool.eq.Ite] at h_Ξᵢ
   rw [CoeSub.eq.SubCoeS.of.Ge (by grind [NeZero.pos l])] at h_Ξᵢ
   rw [CoeSub.eq.SubCoeS.of.Ge (by grind [NeZero.pos u])] at h_Ξᵢ
@@ -72,8 +72,8 @@ private lemma main
   conv_rhs => erw [Dot.eq.Stack_Sum_MulGetS.une]
   apply Eq.of.All_EqGetS.fin
   intro j
-  rw [EqGetStack.fn.fin]
-  rw [EqGetStack.fn.fin]
+  rw [EqGetStack.fin]
+  rw [EqGetStack.fin]
   simp [GetElem.getElem]
   conv_lhs =>
     arg 2
@@ -88,7 +88,7 @@ private lemma main
     ext k
     arg 1
     arg 2
-    erw [EqGetStack.fn.fin]
+    erw [EqGetStack.fin]
   conv_lhs =>
     arg 2
     ext k
@@ -138,7 +138,7 @@ private lemma main
     have hZ : ∀ k : Fin n, Z.get k = mulKV k := by
       intro k
       simp only [Z]
-      erw [EqGetStack.fn.fin]
+      erw [EqGetStack.fin]
     trans ∑ k : Fin n, if ↑k ∈ Ico a0 b0 then Z.get k else 0
     ·
       apply Fin.Sum.of.All_Eq

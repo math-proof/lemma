@@ -18,7 +18,7 @@ private lemma scalar
   conv in (X * a)[i] =>
     rw [Eq_Stack X]
   erw [MulStack.eq.Stack_Mul.scalar]
-  have := EqGetStack.fn.fin fun i : Fin n => X[i] * a
+  have := EqGetStack.fin fun i : Fin n => X[i] * a
   simp [GetElem.getElem] at this ⊢
   rw [this]
 

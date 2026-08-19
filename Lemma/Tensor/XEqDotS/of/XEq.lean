@@ -12,7 +12,7 @@ private lemma get_col
   (A : Tensor ℝ* [n]) (X : Tensor ℝ [n, m])
   (j : Fin m) :
 -- imply
-  (A @ (X : Tensor ℝ* [n, m])).get ⟨j, by simp [matmul_shape]; grind⟩ = A @ (let col : Tensor ℝ [n] := Xᵀ.get j; col : Tensor ℝ* [n]) := by
+  (A @ (X : Tensor ℝ* [n, m])).get ⟨j, by grind [matmul_shape]⟩ = A @ (id (α := Tensor ℝ [n]) (Xᵀ.get j) : Tensor ℝ* [n]) := by
 -- proof
   rw [GetDot.eq.Dot_GetT.fin A (X : Tensor ℝ* [n, m]) j]
   conv_lhs => simp [GetElem.getElem]
@@ -35,7 +35,7 @@ private lemma get_row
   (A : Tensor ℝ* [n])
   (i : Fin m) :
 -- imply
-  ((X : Tensor ℝ* [m, n]) @ A).get ⟨i, by simp [matmul_shape]; grind⟩ = (let row : Tensor ℝ [n] := X[i]; row : Tensor ℝ* [n]) @ A := by
+  ((X : Tensor ℝ* [m, n]) @ A).get ⟨i, by grind [matmul_shape]⟩ = (id (α := Tensor ℝ [n]) X[i] : Tensor ℝ* [n]) @ A := by
 -- proof
   have h := GetDot.eq.DotGet.une.fin (X : Tensor ℝ* [m, n]) A i
   simp at h
@@ -94,3 +94,4 @@ private lemma left
 
 
 -- created on 2026-07-29
+-- updated on 2026-08-19

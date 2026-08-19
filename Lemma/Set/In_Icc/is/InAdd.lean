@@ -3,7 +3,15 @@ import sympy.sets.sets
 open Nat
 
 
-@[main, comm, mp, mpr]
+/--
+| attributes | lemma |
+| :---: | :---: |
+| main | Set.In_Icc.is.InAdd |
+| comm | Set.InAdd.is.In_Icc |
+| mp 8 | Set.InAdd.of.In_Icc |
+| mpr 4 | Set.In_Icc.of.InAdd |
+-/
+@[main, comm, mp 8, mpr 4]
 private lemma main
   [Preorder α]
   [Add α]
@@ -22,3 +30,4 @@ private lemma main
 
 
 -- created on 2020-02-27
+-- updated on 2026-08-19

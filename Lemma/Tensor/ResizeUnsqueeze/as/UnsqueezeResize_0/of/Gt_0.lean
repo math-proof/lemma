@@ -9,7 +9,7 @@ import Lemma.List.TailSet_0.eq.Tail
 import Lemma.Tensor.EqGet0_0
 import Lemma.Tensor.EqUnsqueeze0'0
 import Lemma.Tensor.GetAppend.eq.Get.of.Lt
-import Lemma.Tensor.GetAppend.eq.Get_Sub.of.Lt_Add.Ge
+import Lemma.Tensor.GetAppend.eq.Get_Sub.of.GtAdd.Ge
 import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
 import Lemma.Tensor.GetRepeat_0.as.Get_Mod_Get.of.GtMul_Get.GtLength_0
 import Lemma.Tensor.GetUnsqueeze.as.UnsqueezeGet.of.GtGet_0.Gt_0.GtLength_0
@@ -80,13 +80,13 @@ private lemma main
           ·
             grind
       else
-        rw [GetAppend.eq.Get_Sub.of.Lt_Add.Ge.fin]
+        rw [GetAppend.eq.Get_Sub.of.GtAdd.Ge.fin]
         ·
           simp [h_InsertIdx]
           rw [EqGet0_0.fin]
           conv_rhs => erw [UnsqueezeCast.eq.Cast_Unsqueeze.of.Eq (by rw [Set_0.eq.Cons_Tail.of.GtLength_0 (by grind)]; grind)]
           apply SEq_Cast.of.SEq.Eq (by rw [Set_0.eq.Cons_Tail.of.GtLength_0 (by grind)]; grind)
-          rw [GetAppend.eq.Get_Sub.of.Lt_Add.Ge.fin]
+          rw [GetAppend.eq.Get_Sub.of.GtAdd.Ge.fin]
           ·
             rw [EqGet0_0.fin]
             conv_rhs => erw [EqUnsqueeze0'0]

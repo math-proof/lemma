@@ -16,7 +16,7 @@ private lemma main
   apply Eq.of.All_EqGetS.fin
   intro i
   simp [EqGet1_1.fin]
-  rw [EqGetStack.fn.fin]
+  rw [EqGetStack.fin]
   rfl
 
 

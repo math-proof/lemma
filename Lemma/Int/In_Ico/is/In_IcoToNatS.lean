@@ -5,7 +5,6 @@ import Lemma.Nat.LtCoeS.is.Lt
 import Lemma.Nat.NotLt.of.Ge
 import Lemma.Nat.NotLe.is.Gt
 import Lemma.Set.In_Ico.is.Le.Lt
-import sympy.sets.sets
 open Int Set Nat
 
 

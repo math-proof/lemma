@@ -20,7 +20,7 @@ private lemma main
   have h_i' : j < (X.select ⟨d + 1, h_d⟩ ⟨i, by simpa⟩).length := by
     rwa [LengthSelect.eq.Get_0.of.GtGet.GtLength.Gt_0 (by linarith)]
   have := SEqGetS.of.SEq.GtLength.fin h_i' this
-  rwa [EqGetStack.fn.fin] at this
+  rwa [EqGetStack.fin] at this
 
 
 -- created on 2025-11-07

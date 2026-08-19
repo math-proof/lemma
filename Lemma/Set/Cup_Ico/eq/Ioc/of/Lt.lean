@@ -18,4 +18,4 @@ private lemma main
     apply Cup_Ioc.eq.Ioc.of.Lt.Lt_0 (R := R) (Nat.Lt.of.NotGe h_a) h
 
 
--- created on 2026-08-18
+-- created on 2018-10-16

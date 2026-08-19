@@ -36,7 +36,7 @@ private lemma main
   intros h_X h_Y X' Y' h_i
   simp only [GetElem.getElem]
   have h_tensordot := Tensordot.eq.Matmul.of.Length h_len X Y
-  rw [Get.of.Eq.GtLength_0 (by grind) h_tensordot ⟨i, by simp [broadcast_shape]; grind⟩]
+  rw [Get.of.Eq.GtLength_0 (by grind) h_tensordot ⟨i, by grind [broadcast_shape]⟩]
   rw [Tensordot.eq.Matmul.of.Length (by grind) (X'.get ⟨i, by grind⟩) (Y'.get ⟨i, by grind⟩)]
   apply GetMatmul.as.MatmulGetS.of.Length.GtLength_0.fin h_s h_len
 

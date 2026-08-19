@@ -11,13 +11,13 @@ private lemma main
   (g : Tensor α (n :: s))
   (f : ℕ → Tensor α s) :
 -- imply
-  g * [i < n] f i = [i < n] (let gi : Tensor α s := g[i]; gi * f i) := by
+  g * [i < n] f i = [i < n] (id (α := Tensor α s) g[i] * f i) := by
 -- proof
   apply Eq.of.All_EqGetS
   intro i
-  rw [EqGetStack.fn]
-  rw [GetMul.eq.MulGetS]
   rw [EqGetStack]
+  rw [GetMul.eq.MulGetS]
+  rw [EqGetStack.fun]
   rfl
 
 
@@ -28,7 +28,7 @@ private lemma fin
   (g : Tensor α (n :: s))
   (f : Fin n → Tensor α s) :
 -- imply
-  g * [i < n] f i = [i < n] (let gi : Tensor α s := g[i]; gi * f i) := by
+  g * [i < n] f i = [i < n] (id (α := Tensor α s) g[i] * f i) := by
 -- proof
   if h : n = 0 then
     subst h
@@ -44,3 +44,4 @@ private lemma fin
 
 
 -- created on 2025-07-20
+-- updated on 2026-08-19

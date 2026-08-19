@@ -33,7 +33,7 @@ private lemma main
   (((1 : Tensor α [m, n]).band_part l u d).get i).sum > 0 := by
 -- proof
   let band_row : Fin m → Tensor α [n] := fun i => [j < n] (((j - i : ℤ) ∈ Set.Icc (-l : ℤ) u ∧ (d : ℤ) ∣ (j - i : ℤ) + l) : Bool)
-  suffices h : (band_row i).sum > 0 by rwa [BandPart.eq.Stack_BoolAnd_Dvd m n l u d, EqGetStack.fn.fin band_row i]
+  suffices h : (band_row i).sum > 0 by rwa [BandPart.eq.Stack_BoolAnd_Dvd m n l u d, EqGetStack.fin band_row i]
   let row := band_row i
   have ⟨j, hband, hdvd⟩ := Any_And_Dvd_AddSub.of.LeCeil_Floor (l := l) (u := u) (i := ↑i) h_icc
   have hprod : [n].prod = n := by simp
@@ -72,7 +72,7 @@ private lemma main
   let band_entry : Fin n → Tensor α [] := fun j' => ↑(decide ((j' - i : ℤ) ∈ Set.Icc (-l : ℤ) u ∧ (d : ℤ) ∣ (j' - i : ℤ) + l)).toNat
   have hstack : row[j] = band_entry j := by
     dsimp [row, band_row]
-    exact EqGetStack.fn.fin band_entry j
+    exact EqGetStack.fin band_entry j
   have h_tensor : row[j] = (1 : Tensor α []) := by
     rw [hstack]
     dsimp [band_entry]

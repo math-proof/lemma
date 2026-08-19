@@ -11,7 +11,7 @@ private lemma main
   ([i < n] f i)[i] = f ⟨i, h⟩ := by
 -- proof
   let j : Fin n := ⟨i, by simp_all⟩
-  have := EqGetStack.fn.fin f j
+  have := EqGetStack.fin f j
   simp at this
   have h_j : j = i := rfl
   simp [j] at this

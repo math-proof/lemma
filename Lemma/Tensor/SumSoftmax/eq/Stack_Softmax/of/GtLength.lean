@@ -17,11 +17,11 @@ private lemma main
 -- proof
   apply Eq.of.All_EqGetS
   intro i
-  rw [EqGetStack.fn]
+  rw [EqGetStack]
   apply Eq.of.SEq
   erw [GetSoftmax.eq.SoftmaxGet.of.GtGet_0.LtAdd_1Length (i := i) (d := d) (by simpa) (by simp) ([k < n] f k)]
   simp [GetElem.getElem]
-  rw [EqGetStack.fn.fin]
+  rw [EqGetStack.fin]
 
 
 -- created on 2025-11-30

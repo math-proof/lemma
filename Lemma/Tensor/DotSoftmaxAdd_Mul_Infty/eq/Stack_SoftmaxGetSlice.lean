@@ -17,17 +17,14 @@ private lemma main
 -- imply
   let A : Tensor ℝ* [n, n] := A
   let V : Tensor ℝ* [n, d_z] := V
-  (A + ((1 : Tensor ℝ* [n, n]).band_part n 0 - 1) * ∞).softmax @ V ≈
-    [i < n] A[i][:i + 1].softmax @ V[:i + 1] := by
+  (A + ((1 : Tensor ℝ* [n, n]).band_part n 0 - 1) * ∞).softmax @ V ≈ [i < n] A[i][:i + 1].softmax @ V[:i + 1] := by
 -- proof
   simp only [BandPart.of.Ge_Sub_1 (Nat.sub_le n 1)]
   have h := DotSoftmaxAdd_Mul_Infty.eq.Stack_DotSoftmax (l := n) (u := 1) (n := n) (d_z := d_z) A V
   refine h.trans (XEq.of.Eq ?_)
   apply Eq.of.All_EqGetS.fin
   intro i
-  rw [EqGetStack.fn.fin, EqGetStack.fn.fin]
-  rw [Sub.eq.Zero.of.Le (Nat.succ_le_of_lt i.isLt)]
-  rfl
+  grind [EqGetStack.fin]
 
 
 -- created on 2026-08-17
