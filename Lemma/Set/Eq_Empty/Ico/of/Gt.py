@@ -16,7 +16,7 @@ def prove(Eq):
     Eq << apply(x > y)
 
     Eq << Nat.Ge.of.Gt.apply(Eq[0])
-    Eq << Set.Eq_Empty.Ico.of.Ge.apply(Eq[-1])
+    Eq << Set.Ico.eq.Empty.of.Ge.apply(Eq[-1])
 
 
 if __name__ == '__main__':

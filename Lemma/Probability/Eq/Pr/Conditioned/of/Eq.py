@@ -9,7 +9,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Calculus
+    from Lemma import Probability, Real
 
     x, y = Symbol(real=True, random=True)
     Eq << apply(Equal(Pr(x, y), Piecewise((Exp(-x.var), And(0 < y.var, y.var < x.var)), (0, True))))
@@ -20,9 +20,9 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq[0])
 
-    Eq << Eq[-1].this.find(Integral).apply(Calculus.Integral.limits.swap)
+    Eq << Eq[-1].this.find(Integral).apply(Real.Integral.limits.swap)
 
-    Eq << Eq[-1].this.rhs.apply(Calculus.Integral.limits.separate)
+    Eq << Eq[-1].this.rhs.apply(Real.Integral.limits.separate)
 
     Eq << Eq[-1].this.rhs().find(Min).simplify()
 
@@ -36,21 +36,21 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq[0])
 
-    Eq << Eq[-1].this.find(Integral).apply(Calculus.Integral.limits.swap)
+    Eq << Eq[-1].this.find(Integral).apply(Real.Integral.limits.swap)
 
-    Eq << Eq[-1].this.rhs.apply(Calculus.Integral.limits.separate)
+    Eq << Eq[-1].this.rhs.apply(Real.Integral.limits.separate)
 
-    Eq << Eq[-1].this.rhs.apply(Calculus.Integral.eq.Add.split, 3)
-
-    Eq << Eq[-1].this.find(Integral)().find(Min).simplify()
+    Eq << Eq[-1].this.rhs.apply(Real.Integral.eq.Add.split, 3)
 
     Eq << Eq[-1].this.find(Integral)().find(Min).simplify()
 
-    Eq << Eq[-1].this.find(Integral).apply(Calculus.Integral.eq.Add.split, 0)
+    Eq << Eq[-1].this.find(Integral)().find(Min).simplify()
+
+    Eq << Eq[-1].this.find(Integral).apply(Real.Integral.eq.Add.split, 0)
 
     Eq << Eq[-1].this.find(Integral[2])().find(Interval).simplify()
 
-    Eq << Eq[-1].this.find(Integral).apply(Calculus.Integral.limits.separate, simplify=False)
+    Eq << Eq[-1].this.find(Integral).apply(Real.Integral.limits.separate, simplify=False)
 
     Eq << Eq[-1].this.find(Integral)().find(Integral).simplify()
 

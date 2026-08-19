@@ -10,7 +10,7 @@ def apply(eq, eq1):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Calculus, Finset, Set, Bool, Fin
+    from Lemma import Algebra, Real, Finset, Set, Bool, Fin
 
     n, k = Symbol(integer=True)
     # n = Symbol(integer=True, nonnegative=True)
@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq << Fin.Sum.of.All_Eq.apply(Eq[-1], (n, 0, oo))
 
-    Eq << Calculus.Mul.Sum.eq.Sum.Sum.apply(C, C, n=n, k=k, x=x)
+    Eq << Real.Mul.Sum.eq.Sum.Sum.apply(C, C, n=n, k=k, x=x)
 
     Eq << Bool.Eq.of.Eq.Eq.apply(Eq[-2], Eq[-1])
 
@@ -68,15 +68,15 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.subs(Eq[-2].reversed)
 
-    Eq << Calculus.Gt.of.Lt_0.monotony.apply(Eq[-1])
+    Eq << Real.Gt.of.Lt_0.monotony.apply(Eq[-1])
 
     Eq << Algebra.Any.of.Any_Eq.Cond.subst.apply(Eq.positive_sqrt_quote, Eq[-1], reverse=True)
 
     Eq.any_gt = Algebra.Any.of.Any.limits.relax.subst.apply(Eq[-1], x_quote, x)
 
-    Eq << Calculus.EqGrad.of.Eq.apply(Eq.g_definition, (x,), simplify=None)
+    Eq << Real.EqGrad.of.Eq.apply(Eq.g_definition, (x,), simplify=None)
 
-    Eq << Eq[-1].this.rhs.apply(Calculus.Grad.eq.Sum)
+    Eq << Eq[-1].this.rhs.apply(Real.Grad.eq.Sum)
 
     Eq << Eq[-1].this.rhs.apply(Finset.Sum.eq.AddSumS, cond={0})
 
@@ -90,7 +90,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.subs(Eq.g_derivative.reversed)
 
-    Eq << Calculus.Le.of.Gt_0.monotony.apply(Eq[-1])
+    Eq << Real.Le.of.Gt_0.monotony.apply(Eq[-1])
 
     Eq << Eq.ou.subs(x, S.One / 4)
 
@@ -138,7 +138,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.args[1].apply(Set.NotIn.given.Or.Icc)
 
-    Eq << Calculus.Pow.eq.Sum.Binom.apply((1 - 4 * x) ** (S.One / 2), n=n)
+    Eq << Real.Pow.eq.Sum.Binom.apply((1 - 4 * x) ** (S.One / 2), n=n)
 
     Eq << Eq[-1].this.rhs().find(Binomial).apply(Finset.Binom.eq.Mul.half)
 
@@ -168,7 +168,7 @@ def prove(Eq):
 
     Eq << Bool.Eq.of.Eq.Eq.apply(Eq[-1], Eq.g_definition)
 
-    Eq << Calculus.Eq.series.Infty.of.Eq.coefficient.apply(Eq[-1].reversed, x=x)
+    Eq << Real.Eq.series.Infty.of.Eq.coefficient.apply(Eq[-1].reversed, x=x)
 
 
 if __name__ == '__main__':

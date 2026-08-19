@@ -12,7 +12,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Calculus
+    from Lemma import Probability, Real
 
     b, D = Symbol(domain=Range(2, oo))
     # D denotes the size of the trainable weights
@@ -25,13 +25,13 @@ def prove(Eq):
 
     Eq << Eq[-1].lhs.this.apply(Probability.Expect.eq.Sum)
 
-    Eq << Eq[-1].this.rhs.apply(Calculus.Sum.eq.Integral)
+    Eq << Eq[-1].this.rhs.apply(Real.Sum.eq.Integral)
 
     Eq << Eq[-1].this.find(Sum[Pr]).apply(Probability.Sum.eq.Pr)
 
-    Eq << Eq[-1].this.find(Integral).apply(Calculus.Integral.limits.swap)
+    Eq << Eq[-1].this.find(Integral).apply(Real.Integral.limits.swap)
 
-    Eq << Eq[-1].this.find(Integral).apply(Calculus.Integral.limits.separate)
+    Eq << Eq[-1].this.find(Integral).apply(Real.Integral.limits.separate)
 
     Eq << Eq[-1].this.find(Mul[~Integral]).apply(Probability.Integral.eq.Pr.marginal)
 

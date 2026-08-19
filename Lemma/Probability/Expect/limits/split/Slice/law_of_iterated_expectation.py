@@ -32,7 +32,7 @@ def apply(self, *indices):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability, Calculus, Tensor
+    from Lemma import Algebra, Probability, Real, Tensor
 
     # this is the proof of the law of iterated expectations
     # https://en.wikipedia.org/wiki/Law_of_total_expectation
@@ -50,13 +50,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Probability.Expect.eq.Integral)
 
-    Eq << Eq[-1].this.find(Mul[Integral]).apply(Calculus.Mul.eq.Integral)
+    Eq << Eq[-1].this.find(Mul[Integral]).apply(Real.Mul.eq.Integral)
 
     Eq << Eq[-1].this.find(Pr[Conditioned]).apply(Probability.Pr.eq.Div.Pr.bayes)
 
     Eq << Eq[-1].this.find(And).apply(Algebra.Eq.Eq.Is.Eq.concat)
 
-    Eq << Eq[-1].this.rhs.apply(Calculus.Integral.limits.concat)
+    Eq << Eq[-1].this.rhs.apply(Real.Integral.limits.concat)
 
     Eq << Eq[-1].this.lhs.apply(Probability.Expect.eq.Integral)
 

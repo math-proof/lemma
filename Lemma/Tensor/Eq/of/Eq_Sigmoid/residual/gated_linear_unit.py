@@ -14,18 +14,18 @@ def apply(eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus
+    from Lemma import Real
 
     n = Symbol(integer=True, positive=True)
     x = Symbol(real=True, shape=(n,))
     f, g, h = Function(real=True, shape=(n,))
     Eq << apply(Equal(g(x), x + h(x) * sigmoid(f(x))))
 
-    Eq << Calculus.EqGrad.of.Eq.apply(Eq[0], (x,))
+    Eq << Real.EqGrad.of.Eq.apply(Eq[0], (x,))
 
-    Eq << Eq[-1].this.rhs.apply(Calculus.Grad.eq.Add)
+    Eq << Eq[-1].this.rhs.apply(Real.Grad.eq.Add)
 
-    Eq << Eq[-1].this.find(Derivative[sigmoid]).apply(Calculus.Grad.Sigmoid.eq.Mul.Sigmoid.vector)
+    Eq << Eq[-1].this.find(Derivative[sigmoid]).apply(Real.Grad.Sigmoid.eq.Mul.Sigmoid.vector)
 
 
 

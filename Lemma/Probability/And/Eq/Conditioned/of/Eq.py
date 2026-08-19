@@ -17,7 +17,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Calculus
+    from Lemma import Probability, Real
 
     x, y, z = Symbol(real=True, random=True)
     Eq << apply(Equal(Pr(x & y | z), Pr(x, y)))
@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << Eq[0].this.lhs.apply(Probability.Pr.eq.Div.Pr.bayes)
 
-    Eq <<= Calculus.EqIntegral.of.Eq.apply(Eq[-1], (y.var,)), Calculus.EqIntegral.of.Eq.apply(Eq[-1], (x.var,))
+    Eq <<= Real.EqIntegral.of.Eq.apply(Eq[-1], (y.var,)), Real.EqIntegral.of.Eq.apply(Eq[-1], (x.var,))
 
     Eq <<= Eq[-2].this.rhs.apply(Probability.Integral.eq.Pr.marginal), Eq[-1].this.rhs.apply(Probability.Integral.eq.Pr.marginal)
 

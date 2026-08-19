@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Calculus
+    from Lemma import Probability, Real
 
     x, y, z = Symbol(real=True, random=True)
     f = Function(real=True)
@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.find(Expectation).apply(Probability.Expect.eq.Integral)
 
-    Eq << Eq[-1].this.find(Mul[Integral]).apply(Calculus.Mul.eq.Integral)
+    Eq << Eq[-1].this.find(Mul[Integral]).apply(Real.Mul.eq.Integral)
 
     Eq << Eq[-1].this.find(Pr[Conditioned]).apply(Probability.Pr.eq.Div.Pr.bayes)
 

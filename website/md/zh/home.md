@@ -42,9 +42,9 @@
 [数学归纳法](../?module=Bool.Eq_0.of.Eq_0.All_Imp)的证明；
 * [Set](../?module=Set) 集合论, 即sets theory，集合论是整个数学分析、数学推导系统的理论核心；比如
 [容斥原理](../?module=Set.CardUnion.eq.Sub_.AddCards.CardInter.principle.inclusion_exclusion)的证明。
-* [Calculus](../?module=Calculus) 微积分，主要包含以下内容： 
-[极限定义](../?module=Calculus.Any.All.of.Eq_Limit.limit_definition) 及其理论；
-[分部积分](../?module=Calculus.Integral.eq.Add.by_parts) 定理；
+* [Real](../?module=Real) 实分析，主要包含以下内容： 
+[极限定义](../?module=Real.Any.All.of.Eq_Limit.limit_definition) 及其理论；
+[分部积分](../?module=Real.Integral.eq.Add.by_parts) 定理；
 * [Finset](../?module=Finset) 数论，离散数学，组合数学，线性代数，[第二类Stirling数](../?module=Finset.Stirling.eq.Add.recurrence)的组合学推导，
 [Catalan数](../?module=Finset.Eq.of.Eq.Eq.catalan.recurrence)的推导，[连分数](../?module=Finset.Add.eq.Pow.HK.recurrence)初步理论；[Cholesky矩阵分解](../?module=Finset.Any.Eq.of.Eq_Adjoint.Imp_Gt_0.Cholesky)存在定理。
 * [Probability](../?module=Probability) 概率统计学，比如[Bayes公式](../?module=Probability.Pr.eq.Div.Pr.bayes)，[大数定理](../?module=Probability.Eq.Limit.Pr.of.Eq_Conditioned.Eq_Expect.Eq_Var.law_of_large_numbers)；

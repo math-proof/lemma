@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Calculus
+    from Lemma import Algebra, Real
 
     i = Symbol(integer=True)
     f = Function(real=True)
@@ -18,11 +18,11 @@ def prove(Eq):
     n = Symbol(integer=True, nonnegative=True)
     Eq << Algebra.Sum.limits.Neg.apply(Sum[i:-n:n + 1](f(i)))
 
-    Eq << Calculus.EqLimit.of.Eq.apply(Eq[-1], (n, oo))
+    Eq << Real.EqLimit.of.Eq.apply(Eq[-1], (n, oo))
 
-    Eq << Eq[-1].this.rhs.apply(Calculus.Limit.eq.Sum)
+    Eq << Eq[-1].this.rhs.apply(Real.Limit.eq.Sum)
 
-    Eq << Eq[-1].this.lhs.apply(Calculus.Limit.eq.Sum)
+    Eq << Eq[-1].this.lhs.apply(Real.Limit.eq.Sum)
 
     Eq << Eq[-1].this.lhs.simplify()
 

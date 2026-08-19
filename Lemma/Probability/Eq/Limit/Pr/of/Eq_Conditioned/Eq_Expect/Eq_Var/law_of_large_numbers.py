@@ -15,7 +15,7 @@ def apply(eq_conditioned, eq_expect, eq_var, ε=None, n=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Calculus, Nat, Vector
+    from Lemma import Probability, Algebra, Real, Nat, Vector
 
     x = Symbol(real=True, shape=(oo,), random=True)
     μ = Symbol(real=True)
@@ -50,15 +50,15 @@ def prove(Eq):
 
     Eq << -Eq[-1]
 
-    Eq << Calculus.GeLimit.of.Ge.apply(Eq[-1], (n, oo))
+    Eq << Real.GeLimit.of.Ge.apply(Eq[-1], (n, oo))
 
-    Eq << Eq[-1].this.find(Limit[Mul]).apply(Calculus.Limit.eq.Mul)
+    Eq << Eq[-1].this.find(Limit[Mul]).apply(Real.Limit.eq.Mul)
 
     Eq << Eq[-1].this.rhs.find(Limit).doit()
 
     Eq << LessEqual(Eq[-1].find(Pr), 1, plausible=True)
 
-    Eq << Calculus.LeLimit.of.Le.apply(Eq[-1], (n, oo))
+    Eq << Real.LeLimit.of.Le.apply(Eq[-1], (n, oo))
 
     Eq << Nat.Eq.of.Ge.Le.apply(Eq[-1], Eq[-3])
 

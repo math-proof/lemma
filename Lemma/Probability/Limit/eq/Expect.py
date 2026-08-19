@@ -12,7 +12,7 @@ def apply(self, *, simplify=True):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Calculus
+    from Lemma import Probability, Real
 
     n = Symbol(integer=True)
     f = Function(real=True)
@@ -23,9 +23,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Expectation).apply(Probability.Expect.eq.Integral)
 
-    Eq << Eq[-1].this.lhs.apply(Calculus.Limit.eq.Integral)
+    Eq << Eq[-1].this.lhs.apply(Real.Limit.eq.Integral)
 
-    Eq << Eq[-1].this.lhs.find(Limit).apply(Calculus.Limit.eq.Mul)
+    Eq << Eq[-1].this.lhs.find(Limit).apply(Real.Limit.eq.Mul)
 
 
 if __name__ == '__main__':

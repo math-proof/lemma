@@ -9,7 +9,7 @@ def apply(el):
 
 @prove(proved=False)
 def prove(Eq):
-    from Lemma import Calculus, Bool, Nat
+    from Lemma import Real, Bool, Nat
 
     x = Symbol(real=True)
     Eq << apply(Element(x, Interval(0, S.Pi / 4)))
@@ -34,7 +34,7 @@ def prove(Eq):
 
     Eq << Eq.all_el.subs(Eq.ft)
 
-    Eq << Eq[-1].this.find(Derivative).apply(Calculus.Grad.eq.Add)
+    Eq << Eq[-1].this.find(Derivative).apply(Real.Grad.eq.Add)
 
     Eq << Eq[-1].this().expr.simplify()
 
@@ -44,7 +44,7 @@ def prove(Eq):
 
     Eq << Bool.Eq.of.Eq.Eq.apply(Eq[-2], Eq[-1])
 
-    Eq << Calculus.Any.Eq.Rolle.of.IsContinuous.IsDifferentiable.Eq.apply(Eq.All_Eq, Eq.all_el, Eq[-1])
+    Eq << Real.Any.Eq.Rolle.of.IsContinuous.IsDifferentiable.Eq.apply(Eq.All_Eq, Eq.all_el, Eq[-1])
 
 
 

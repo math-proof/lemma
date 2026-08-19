@@ -11,7 +11,7 @@ def apply(lt_r, γ, λ, k=None, i=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Calculus, Set, Tensor, Finset, Nat, Real
+    from Lemma import Algebra, Real, Set, Tensor, Finset, Nat
 
     t, k, i = Symbol(integer=True) # time step counter
     δ = Symbol(shape=(oo,), real=True) # TD residual
@@ -44,17 +44,17 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Pow * Pow).args[:2].apply(Algebra.Mul.eq.Pow.Mul.base)
 
-    Eq << Calculus.EqLimit.of.Eq.apply(Eq[-1], (n, oo))
+    Eq << Real.EqLimit.of.Eq.apply(Eq[-1], (n, oo))
 
-    Eq << Eq[-1].this.lhs.apply(Calculus.Limit.eq.Mul)
+    Eq << Eq[-1].this.lhs.apply(Real.Limit.eq.Mul)
 
-    Eq << Eq[-1].this.lhs.find(Limit).apply(Calculus.Limit.eq.Sum)
+    Eq << Eq[-1].this.lhs.find(Limit).apply(Real.Limit.eq.Sum)
 
-    Eq << Eq[-1].this.find(Limit).apply(Calculus.Limit.eq.Add)
+    Eq << Eq[-1].this.find(Limit).apply(Real.Limit.eq.Add)
 
-    Eq << Eq[-1].this.find(Limit).apply(Calculus.Limit.eq.Mul)
+    Eq << Eq[-1].this.find(Limit).apply(Real.Limit.eq.Mul)
 
-    Eq.limit = Eq[-1].this.find(Limit).apply(Calculus.Limit.eq.Sum)
+    Eq.limit = Eq[-1].this.find(Limit).apply(Real.Limit.eq.Sum)
 
     i = Eq.limit.rhs.find(Sum).variable
     Eq.lt = Less(Abs(γ, evaluate=False), 1, plausible=True)
@@ -65,15 +65,15 @@ def prove(Eq):
 
     Eq << Set.IsReal.Sum.of.LtAbs.IsFinite.apply(Eq.lt, Eq[-1], simplify=None)
 
-    Eq << Eq[-1].this.lhs.apply(Calculus.Sum.eq.Limit, n)
+    Eq << Eq[-1].this.lhs.apply(Real.Sum.eq.Limit, n)
 
     Eq.lt = Less(Abs(λ, evaluate=False), 1, plausible=True)
 
     Eq << Eq.lt.this.lhs.doit()
 
-    Eq << Calculus.Eq_0.Limit.of.LtAbs.geometric_series.apply(Eq.lt, n)
+    Eq << Real.Eq_0.Limit.of.LtAbs.geometric_series.apply(Eq.lt, n)
 
-    Eq << Calculus.Eq_0.Limit.of.Eq_0.IsLimited.algebraic_limit_theorem.apply(Eq[-1], Eq[-2])
+    Eq << Real.Eq_0.Limit.of.Eq_0.IsLimited.algebraic_limit_theorem.apply(Eq[-1], Eq[-2])
 
     Eq << Eq.limit.subs(Eq[-1])
 

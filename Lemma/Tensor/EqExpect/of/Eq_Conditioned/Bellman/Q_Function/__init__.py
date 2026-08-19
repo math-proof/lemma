@@ -26,7 +26,7 @@ def apply(eq, γ=None, k=None, weights=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Calculus, Tensor, Algebra, Rat
+    from Lemma import Probability, Real, Tensor, Algebra, Rat
 
     b = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), real=True, random=True) # states / observation
@@ -42,7 +42,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Expectation[2]).apply(Probability.Expect.eq.Integral)
 
-    Eq << Eq[-1].this.find(Integral[Mul]).apply(Calculus.Integral.eq.Mul)
+    Eq << Eq[-1].this.find(Integral[Mul]).apply(Real.Integral.eq.Mul)
 
     Eq.final = Eq[-1].this.lhs.apply(Probability.Dot.eq.Expect)
 
@@ -56,13 +56,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Pr).apply(Probability.Pr.eq.Integral.joint, s[t + 1])
 
-    Eq << Eq[-1].this.find(Mul[Integral]).apply(Calculus.Mul.eq.Integral)
+    Eq << Eq[-1].this.find(Mul[Integral]).apply(Real.Mul.eq.Integral)
 
-    Eq << Eq[-1].this.find(Integral).apply(Calculus.Integral.limits.swap)
+    Eq << Eq[-1].this.find(Integral).apply(Real.Integral.limits.swap)
 
     Eq << Eq[-1].this.find(Pr).apply(Probability.Pr.Conditioned.eq.Mul.Pr.Conditioned)
 
-    Eq.eq_expect = Eq[-1].this.rhs.apply(Calculus.Integral.limits.separate)
+    Eq.eq_expect = Eq[-1].this.rhs.apply(Real.Integral.limits.separate)
 
     Eq << Rat.Ne_0.of.Div1.gt.Zero.apply(Eq[0]).subs(t, t + 1)
 

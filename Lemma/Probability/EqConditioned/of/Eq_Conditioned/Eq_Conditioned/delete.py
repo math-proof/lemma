@@ -19,7 +19,7 @@ def apply(eq_x_given_yz, z_given_y):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Calculus, Bool, Nat, Rat
+    from Lemma import Probability, Real, Bool, Nat, Rat
 
     x, y, z = Symbol(real=True, random=True)
     Eq << apply(Equal(x | y & z, x | y), Equal(z | y, z))
@@ -49,7 +49,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Probability.Pr.eq.Mul.Pr.of.Ne_0.bayes.apply(Eq.z_nonzero, x))
 
-    Eq << Calculus.EqIntegral.of.Eq.apply(Eq[-3], (y_,))
+    Eq << Real.EqIntegral.of.Eq.apply(Eq[-3], (y_,))
 
     Eq << Eq[-1].subs(Eq[-2])
 

@@ -37,7 +37,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Calculus
+    from Lemma import Probability, Real
 
     x, y = Symbol(real=True, random=True)
     a, b = Symbol(real=True)
@@ -45,7 +45,7 @@ def prove(Eq):
 
     Eq << Eq[0].this.rhs.apply(Probability.Pr.eq.Integral)
 
-    Eq << Eq[-1].this.rhs.apply(Calculus.Integral.limits.swap)
+    Eq << Eq[-1].this.rhs.apply(Real.Integral.limits.swap)
 
 
 if __name__ == '__main__':

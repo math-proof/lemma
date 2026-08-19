@@ -13,7 +13,7 @@ def apply(eq, Q_def, V_def):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Calculus, Probability, Algebra, Finset, Rat, Nat, Fin
+    from Lemma import Tensor, Real, Probability, Algebra, Finset, Rat, Nat, Fin
 
     b, D = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), integer=True, random=True) # states / observation
@@ -29,7 +29,7 @@ def prove(Eq):
 
     Eq << Tensor.And.Eq.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.Bellman.apply(*Eq[:3])
 
-    Eq << Calculus.EqGrad.of.Eq.apply(Eq[-1], [π])
+    Eq << Real.EqGrad.of.Eq.apply(Eq[-1], [π])
 
     Eq << Eq[-1].this.find(Expectation).apply(Probability.Expect.eq.Sum)
 
@@ -39,28 +39,28 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.limits.separate)
 
-    Eq << Eq[-1].this.find(Sum[Integral]).apply(Calculus.Sum.eq.Integral)
+    Eq << Eq[-1].this.find(Sum[Integral]).apply(Real.Sum.eq.Integral)
 
     Eq << Eq[-1].this.find(Sum[Pr]).apply(Probability.Sum.eq.Pr)
 
     Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.limits.separate)
 
-    Eq << Eq[-1].this.find(Sum[Integral]).apply(Calculus.Sum.eq.Integral)
+    Eq << Eq[-1].this.find(Sum[Integral]).apply(Real.Sum.eq.Integral)
 
     Eq << Eq[-1].this.find(Sum[Pr]).apply(Probability.Sum.eq.Pr)
 
 
     Eq << Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
-    Eq << Eq[-1].this.find(Integral).apply(Calculus.Integral.eq.Add)
+    Eq << Eq[-1].this.find(Integral).apply(Real.Integral.eq.Add)
     Eq << Eq[-1].this.find(Sum).apply(Finset.Sum_Add.eq.AddSumS)
-    Eq << Eq[-1].this.rhs.apply(Calculus.Grad.eq.Add)
-    Eq << Eq[-1].this.find(Derivative[Sum]).apply(Calculus.Grad.eq.Sum)
-    Eq << Eq[-1].this.find(Derivative[Integral]).apply(Calculus.Grad.eq.Integral)
-    Eq << Eq[-1].this.find(Integral[Mul]).apply(Calculus.Integral.eq.Mul)
+    Eq << Eq[-1].this.rhs.apply(Real.Grad.eq.Add)
+    Eq << Eq[-1].this.find(Derivative[Sum]).apply(Real.Grad.eq.Sum)
+    Eq << Eq[-1].this.find(Derivative[Integral]).apply(Real.Grad.eq.Integral)
+    Eq << Eq[-1].this.find(Integral[Mul]).apply(Real.Integral.eq.Mul)
     Eq << Eq[-1].this.find(Integral[Pr]).apply(Probability.Integral.eq.Pr.marginal)
-    Eq << Calculus.EqGrad.of.Eq.apply(Eq[4], [π])
+    Eq << Real.EqGrad.of.Eq.apply(Eq[4], [π])
     Eq << Eq[-1].this.find(Expectation).apply(Probability.Expect.eq.Sum)
-    Eq << Eq[-1].this.rhs.apply(Calculus.Grad.eq.Sum)
+    Eq << Eq[-1].this.rhs.apply(Real.Grad.eq.Sum)
     Eq << Eq[-1].subs(Eq[-4])
     Eq << Eq[-1].this.rhs.apply(Finset.Sum_Add.eq.AddSumS)
     Eq << Eq[-1].this.find(Pr * Sum).apply(Finset.Mul_Sum.eq.Sum_Mul)

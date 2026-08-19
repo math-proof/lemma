@@ -22,7 +22,7 @@ def apply(given, wrt=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Calculus, Nat, Rat
+    from Lemma import Probability, Real, Nat, Rat
 
     x, y, z = Symbol(real=True, random=True)
     Eq << apply(Equal(x | y & z, x))
@@ -39,7 +39,7 @@ def prove(Eq):
 
     Eq <<= Probability.Integral.eq.Pr.marginal.apply(Integral[z.var](Eq[-1].lhs)), \
         Probability.Integral.eq.Pr.marginal.apply(Integral[z.var](Eq[2].lhs)), \
-        Calculus.EqIntegral.of.Eq.apply(Eq[-1], (z.var,))
+        Real.EqIntegral.of.Eq.apply(Eq[-1], (z.var,))
 
     Eq << Eq[-3].subs(Eq.xy_probability)
 

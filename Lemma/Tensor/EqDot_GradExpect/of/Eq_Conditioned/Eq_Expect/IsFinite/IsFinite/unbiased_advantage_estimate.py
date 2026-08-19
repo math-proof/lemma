@@ -15,7 +15,7 @@ def apply(eq, V_def, lt_dV, lt_V):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Calculus, Probability, Tensor, Bool, Finset, Nat
+    from Lemma import Algebra, Real, Probability, Tensor, Bool, Finset, Nat
 
     b, D = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), real=True, random=True) # states / observation
@@ -41,13 +41,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs(t).find(Max).simplify()
 
-    Eq << Calculus.EqLimit.of.Eq.apply(Eq[-1], (k, oo))
+    Eq << Real.EqLimit.of.Eq.apply(Eq[-1], (k, oo))
 
-    Eq << Eq[-1].this.lhs.apply(Calculus.Limit.eq.Sum)
+    Eq << Eq[-1].this.lhs.apply(Real.Limit.eq.Sum)
 
-    Eq << Eq[-1].this.rhs.find(Limit).apply(Calculus.Limit.eq.Add)
+    Eq << Eq[-1].this.rhs.find(Limit).apply(Real.Limit.eq.Add)
 
-    Eq.limit = Eq[-1].this.find(Limit[Sum]).apply(Calculus.Limit.eq.Sum)
+    Eq.limit = Eq[-1].this.find(Limit[Sum]).apply(Real.Limit.eq.Sum)
 
     Eq << Algebra.All_Le_Sup.apply(Eq[3].lhs)
 
@@ -63,7 +63,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.doit()
 
-    Eq << Calculus.Eq_0.Limit.of.LtAbs.IsFinite.apply(Eq[-2], Eq[-1])
+    Eq << Real.Eq_0.Limit.of.LtAbs.IsFinite.apply(Eq[-2], Eq[-1])
 
     Eq << Eq.limit.subs(Eq[-1])
 
@@ -95,7 +95,7 @@ def prove(Eq):
 
     Eq << Eq[2].subs(Eq[1])
 
-    Eq << Eq[-1].this.find(Derivative).apply(Calculus.Grad.Dot.eq.Dot.Grad)
+    Eq << Eq[-1].this.find(Derivative).apply(Real.Grad.Dot.eq.Dot.Grad)
 
     Eq << Tensor.Eq.Dot.Grad.Expect.of.Eq_Conditioned.IsFinite.policy_gradient_theorem.apply(Eq[0], Eq[-1])
 

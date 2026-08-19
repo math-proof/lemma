@@ -24,7 +24,7 @@ def apply(given, wrt=None):
 
 @prove(proved=False)
 def prove(Eq):
-    from Lemma import Probability, Algebra, Calculus
+    from Lemma import Probability, Algebra
 
     x, y, z, w = Symbol(real=True, random=True)
     Eq << apply(Equal(x | y & z & w, x | w), wrt=y)

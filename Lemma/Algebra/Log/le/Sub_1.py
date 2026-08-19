@@ -8,7 +8,7 @@ def apply(x):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Calculus, Nat
+    from Lemma import Algebra, Real, Nat
 
     x = Symbol(real=True)
     Eq << apply(x)
@@ -33,11 +33,11 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.lhs.apply(Nat.Mul_Add.eq.AddMulS), Eq[-1].this.lhs.apply(Nat.Mul_Add.eq.AddMulS)
 
-    Eq << Calculus.Lt.of.Gt_0.monotony.apply(Eq.is_positive)
+    Eq << Real.Lt.of.Gt_0.monotony.apply(Eq.is_positive)
 
     Eq << Nat.Le.of.Lt.apply(Eq[-1])
 
-    Eq << Calculus.Le.of.Le_0.monotony.apply(Eq.is_nonpositive)
+    Eq << Real.Le.of.Le_0.monotony.apply(Eq.is_nonpositive)
 
 
 

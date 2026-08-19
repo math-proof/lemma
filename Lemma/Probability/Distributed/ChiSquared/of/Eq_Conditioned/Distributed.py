@@ -10,7 +10,7 @@ def apply(eq_conditioned, dist):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Calculus, Set, Bool, Nat, Real
+    from Lemma import Probability, Algebra, Real, Set, Bool, Nat
 
     i = Symbol(integer=True)
     x = Symbol(shape=(oo,), real=True, random=True)
@@ -49,27 +49,27 @@ def prove(Eq):
 
     Eq << Eq.eq_grad.subs(Eq[-3], Eq[-1])
 
-    Eq << Eq[-1].this.find(Integral).apply(Calculus.Integral.limits.swap)
+    Eq << Eq[-1].this.find(Integral).apply(Real.Integral.limits.swap)
 
-    Eq.eq_grad = Eq[-1].this.find(Integral).apply(Calculus.Integral.limits.separate)
+    Eq.eq_grad = Eq[-1].this.find(Integral).apply(Real.Integral.limits.separate)
 
     Eq << Eq.eq_grad.find(Mul[~Integral]).this.find(LessEqual).apply(Algebra.Le.transport, lhs=0)
 
     Eq << Eq[-1].this.rhs.find(LessEqual).apply(Set.LeSquare.Is.In.Icc)
 
-    Eq << Eq[-1].this.rhs.apply(Calculus.Integral.limits.absorb)
+    Eq << Eq[-1].this.rhs.apply(Real.Integral.limits.absorb)
 
-    Eq << Eq[-1].this.rhs.apply(Calculus.Integral.eq.Mul.Bool)
+    Eq << Eq[-1].this.rhs.apply(Real.Integral.eq.Mul.Bool)
 
     Eq << Eq[-1].this.rhs.find(LessEqual).apply(Algebra.Le.Is.Ge_0)
 
     Eq << Eq[-1].this.rhs.find(GreaterEqual) / 2
 
-    Eq << Eq[-1].this.rhs.find(Integral).apply(Calculus.Integral.eq.Add.split, 0)
+    Eq << Eq[-1].this.rhs.find(Integral).apply(Real.Integral.eq.Add.split, 0)
 
-    Eq << Eq[-1].this.find(Integral[2]).apply(Calculus.Integral.limits.subst, x.var[k], -x.var[k])
+    Eq << Eq[-1].this.find(Integral[2]).apply(Real.Integral.limits.subst, x.var[k], -x.var[k])
 
-    Eq << Eq[-1].this.find(-~Integral).apply(Calculus.Integral.eq.Neg)
+    Eq << Eq[-1].this.find(-~Integral).apply(Real.Integral.eq.Neg)
 
     Eq << Eq[-1].this.find(Pow >= 0).apply(Algebra.Sqrt.ge.Zero.Is.Ge_0)
 
@@ -83,13 +83,13 @@ def prove(Eq):
 
     Eq << Nat.Eq.UFn.given.Eq.UFn.apply(Eq[-1], Eq[-3])
 
-    Eq << Eq[-1].this.lhs.apply(Calculus.Grad.eq.Integral)
+    Eq << Eq[-1].this.lhs.apply(Real.Grad.eq.Integral)
 
-    Eq << Eq[-1].this.find(Derivative).apply(Calculus.Grad.Mul.eq.Add)
+    Eq << Eq[-1].this.find(Derivative).apply(Real.Grad.Mul.eq.Add)
 
-    Eq << Eq[-1].this.find(Derivative[functions.Bool]).apply(Calculus.Grad.Bool.eq.Zero)
+    Eq << Eq[-1].this.find(Derivative[functions.Bool]).apply(Real.Grad.Bool.eq.Zero)
 
-    Eq << Eq[-1].this.find(Derivative).apply(Calculus.Grad.Integral.eq.Mul.Grad)
+    Eq << Eq[-1].this.find(Derivative).apply(Real.Grad.Integral.eq.Mul.Grad)
 
     Eq << Eq[-1].this.find(functions.Bool ** 2).apply(Bool.SquareBool.eq.Bool)
 
@@ -103,11 +103,11 @@ def prove(Eq):
 
     Eq << Eq[-1] * (sqrt(S.Pi) * Gamma(k / 2))
 
-    Eq << Eq[-1].this.lhs.apply(Calculus.Integral.limits.absorb)
+    Eq << Eq[-1].this.lhs.apply(Real.Integral.limits.absorb)
 
     t = Symbol(domain=Interval(0, pi / 2))
     Y = Eq[-1].lhs.variable
-    Eq << Eq[-1].this.lhs.apply(Calculus.Integral.limits.subst, Y, y * sin(t) ** 2)
+    Eq << Eq[-1].this.lhs.apply(Real.Integral.limits.subst, Y, y * sin(t) ** 2)
 
     Eq << Eq[-1].this.find(-sin ** 2).args[2].apply(Real.Square.Sin.eq.Sub.Square.Cos)
 
@@ -121,7 +121,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(sin * Pow).apply(Algebra.Mul.eq.Pow.Add.exponent)
 
-    Eq << Eq[-1].this.find(Integral).apply(Calculus.Integral.Sin.eq.Mul.gamma.wallis)
+    Eq << Eq[-1].this.find(Integral).apply(Real.Integral.Sin.eq.Mul.gamma.wallis)
 
     Eq << Imply(Eq[2], Eq.induct, plausible=True)
 

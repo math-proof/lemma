@@ -29,7 +29,7 @@ def apply(given, index=-1):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Calculus, Nat
+    from Lemma import Probability, Real, Nat
 
     x, y = Symbol(real=True, random=True)
     Eq << apply(Unequal(Pr(x, y), 0))
@@ -40,8 +40,8 @@ def prove(Eq):
 
     Eq << Nat.Gt_0.of.Ne_0.apply(Eq[0])
 
-    Eq <<= Calculus.GtIntegral.of.All_Gt.apply(Eq[-1], (y.var,)), \
-        Calculus.GtIntegral.of.All_Gt.apply(Eq[-1], (x.var,))
+    Eq <<= Real.GtIntegral.of.All_Gt.apply(Eq[-1], (y.var,)), \
+        Real.GtIntegral.of.All_Gt.apply(Eq[-1], (x.var,))
 
     Eq <<= Eq[-2].subs(Eq.y_marginal_probability), Eq[-1].subs(Eq.x_marginal_probability)
 

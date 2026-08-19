@@ -15,7 +15,7 @@ def apply(eq_given):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Bool, Real
+    from Lemma import Real, Bool
 
     n = Symbol(integer=True, positive=True)
     φ = Function(real=True, shape=(n,))
@@ -29,11 +29,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Real.LogMul.eq.AddLogS.of.Ne_0.Ne_0)
 
-    Eq << Calculus.EqGrad.of.Eq.apply(Eq[-1], [θ])
+    Eq << Real.EqGrad.of.Eq.apply(Eq[-1], [θ])
 
-    Eq << Eq[-1].this.rhs.apply(Calculus.Grad.eq.Add)
+    Eq << Eq[-1].this.rhs.apply(Real.Grad.eq.Add)
 
-    Eq << Eq[-1].this.find(Derivative[MatMul]).apply(Calculus.Grad_Add_Dot.simp)
+    Eq << Eq[-1].this.find(Derivative[MatMul]).apply(Real.Grad_Add_Dot.simp)
 
 
 

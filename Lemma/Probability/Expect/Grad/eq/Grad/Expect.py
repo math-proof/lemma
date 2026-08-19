@@ -13,7 +13,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Calculus
+    from Lemma import Probability, Real
 
     D, n = Symbol(integer=True, positive=True)
     # D denotes the size of the trainable weights
@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Expectation).apply(Probability.Expect.eq.Integral)
 
-    Eq << Eq[-1].this.rhs.apply(Calculus.Grad.eq.Integral)
+    Eq << Eq[-1].this.rhs.apply(Real.Grad.eq.Integral)
 
 
 

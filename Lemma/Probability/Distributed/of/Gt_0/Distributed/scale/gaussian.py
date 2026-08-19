@@ -10,7 +10,7 @@ def apply(gt_zero, dist, b=0):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Calculus, Probability, Bool, Nat, Complex, Int, Rat
+    from Lemma import Algebra, Real, Probability, Bool, Nat, Complex, Int, Rat
 
     x = Symbol(real=True, random=True)
     mu, b = Symbol(real=True)
@@ -37,15 +37,15 @@ def prove(Eq):
 
     Eq << Eq[-2].subs(Eq[-1])
 
-    Eq << Eq[-1].this.find(Integral).apply(Calculus.Integral.eq.Mul)
+    Eq << Eq[-1].this.find(Integral).apply(Real.Integral.eq.Mul)
 
     Eq << Algebra.Iff.of.Gt_0.apply(Eq[0], cond=Eq[-1].find(LessEqual))
 
     Eq << Eq[-2].subs(Eq[-1])
 
-    Eq << Eq[-1].this.find(Integral).apply(Calculus.Integral.doit.Bool)
+    Eq << Eq[-1].this.find(Integral).apply(Real.Integral.doit.Bool)
 
-    Eq << Eq[-1].this.find(Derivative).apply(Calculus.Grad.Integral.eq.Mul.Grad)
+    Eq << Eq[-1].this.find(Derivative).apply(Real.Grad.Integral.eq.Mul.Grad)
 
     Eq << Eq[-1].this.find(Derivative).doit()
 

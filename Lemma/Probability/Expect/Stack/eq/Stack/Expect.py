@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Calculus, Tensor
+    from Lemma import Probability, Algebra, Real, Tensor
 
     n = Symbol(integer=True, positive=True)
     f = Function(real=True)
@@ -25,23 +25,23 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.find(Mul).apply(Tensor.Mul.eq.Stack)
 
-    Eq << Eq[-1].this.lhs.apply(Calculus.Integral.eq.Stack)
+    Eq << Eq[-1].this.lhs.apply(Real.Integral.eq.Stack)
 
     Eq << Eq[-1].this.expr.rhs.find(Pr).apply(Probability.Pr.eq.Integral.joint, x[k + 1:n])
 
     Eq << Eq[-1].this.find(And).apply(Algebra.Eq.Eq.Is.Eq.concat)
 
-    Eq << Eq[-1].this.find(Mul[Integral]).apply(Calculus.Mul.eq.Integral)
+    Eq << Eq[-1].this.find(Mul[Integral]).apply(Real.Mul.eq.Integral)
 
-    Eq << Eq[-1].this.rhs.apply(Calculus.Integral.limits.concat)
+    Eq << Eq[-1].this.rhs.apply(Real.Integral.limits.concat)
 
     Eq << Eq[-1].this.rhs.find(Pr).apply(Probability.Pr.eq.Integral.joint, x[:k])
 
     Eq << Eq[-1].this.find(And).apply(Algebra.Eq.Eq.Is.Eq.concat)
 
-    Eq << Eq[-1].this.find(Mul[Integral]).apply(Calculus.Mul.eq.Integral)
+    Eq << Eq[-1].this.find(Mul[Integral]).apply(Real.Mul.eq.Integral)
 
-    Eq << Eq[-1].this.rhs.apply(Calculus.Integral.limits.concat)
+    Eq << Eq[-1].this.rhs.apply(Real.Integral.limits.concat)
 
 
 if __name__ == '__main__':

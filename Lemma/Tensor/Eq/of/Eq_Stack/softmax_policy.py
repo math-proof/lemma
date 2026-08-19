@@ -11,7 +11,7 @@ def apply(eq_given):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Calculus, Bool, Real, Vector
+    from Lemma import Probability, Algebra, Real, Bool, Vector
 
     m, n = Symbol(integer=True, positive=True)
     φ = Function(real=True, shape=(m, n))
@@ -28,15 +28,15 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Real.LogMul.eq.AddLogS.of.Ne_0.Ne_0)
 
-    Eq << Calculus.EqGrad.of.Eq.apply(Eq[-1], [θ])
+    Eq << Real.EqGrad.of.Eq.apply(Eq[-1], [θ])
 
-    Eq << Eq[-1].this.rhs.apply(Calculus.Grad.eq.Add)
+    Eq << Eq[-1].this.rhs.apply(Real.Grad.eq.Add)
 
-    Eq << Eq[-1].this.find(Derivative[MatMul]).apply(Calculus.Grad_Add_Dot.simp)
+    Eq << Eq[-1].this.find(Derivative[MatMul]).apply(Real.Grad_Add_Dot.simp)
 
-    Eq << Eq[-1].this.find(Derivative[ReducedSum]).apply(Calculus.Grad.eq.ReducedSum)
+    Eq << Eq[-1].this.find(Derivative[ReducedSum]).apply(Real.Grad.eq.ReducedSum)
 
-    Eq << Eq[-1].this.find(Derivative[MatMul]).apply(Calculus.Grad_Add_Dot.simp)
+    Eq << Eq[-1].this.find(Derivative[MatMul]).apply(Real.Grad_Add_Dot.simp)
 
     Eq << Eq[-1].this.find(ReducedSum).apply(Vector.Sum.eq.Sum_Get, a)
 

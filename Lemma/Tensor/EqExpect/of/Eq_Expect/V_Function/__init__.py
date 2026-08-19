@@ -16,7 +16,7 @@ def apply(Q_def):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Calculus, Bool, Rat
+    from Lemma import Probability, Real, Bool, Rat
 
     b, D = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), real=True, random=True) # states / observation
@@ -41,13 +41,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Expectation).apply(Probability.Expect.eq.Sum)
 
-    Eq << Eq[-1].this.find(Sum[Integral]).apply(Calculus.Sum.eq.Integral)
+    Eq << Eq[-1].this.find(Sum[Integral]).apply(Real.Sum.eq.Integral)
 
     Eq << Eq[-1].this.find(Sum[Pr]).apply(Probability.Sum.eq.Pr)
 
-    Eq << Eq[-1].this.find(Pow @ Integral).apply(Calculus.Dot.eq.Integral)
+    Eq << Eq[-1].this.find(Pow @ Integral).apply(Real.Dot.eq.Integral)
 
-    Eq << Eq[-1].this.find(Mul[Integral]).apply(Calculus.Mul.eq.Integral)
+    Eq << Eq[-1].this.find(Mul[Integral]).apply(Real.Mul.eq.Integral)
 
     Eq << Probability.Eq.Pr.Conditioned.eq.Mul.Pr.Conditioned.of.Ne_0.bayes.apply(Eq[2], a[t], r[t:])
 
@@ -55,18 +55,18 @@ def prove(Eq):
 
     Eq << Bool.And_And.given.And.Cond.apply(Eq[-1])
 
-    Eq << Eq[-1].this.rhs.apply(Calculus.Sum.eq.Integral)
+    Eq << Eq[-1].this.rhs.apply(Real.Sum.eq.Integral)
 
     Eq << Eq[-1].this.find(Sum[Pr]).apply(Probability.Sum.eq.Pr)
 
     Eq << Eq[-1].this.find(Expectation).apply(Probability.Expect.eq.Sum)
 
-    Eq << Eq[-1].this.find(Sum).apply(Calculus.Sum.eq.Integral)
+    Eq << Eq[-1].this.find(Sum).apply(Real.Sum.eq.Integral)
 
     Eq << Eq[-1].this.find(Sum[Pr]).apply(Probability.Sum.eq.Pr)
 
 
-    Eq << Eq[-1].this.lhs.apply(Calculus.Dot.eq.Integral)
+    Eq << Eq[-1].this.lhs.apply(Real.Dot.eq.Integral)
     # https://spinningup.openai.com/en/latest/spinningup/rl_intro.html# bellman-equations
     # https://lilianweng.github.io/posts/2018-04-08-policy-gradient/
     # http://incompleteideas.net/book/bookdraft2017nov5.pdf

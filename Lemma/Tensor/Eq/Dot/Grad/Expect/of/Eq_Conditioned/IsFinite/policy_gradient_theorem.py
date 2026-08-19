@@ -13,7 +13,7 @@ def apply(eq, lt):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Tensor, Probability, Bool, Fin
+    from Lemma import Real, Tensor, Probability, Bool, Fin
 
     b, D = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), real=True, random=True) # states / observation
@@ -44,7 +44,7 @@ def prove(Eq):
         return γ ** Stack[t](t) @ Expectation[r[t:], a:π](r[t:] | Equal(s[t], st))
     Eq.V_Function = (V[π] ^ γ)(s[t].var).this.defun()
 
-    Eq << Eq[1].this.find(MatMul).apply(Calculus.Dot.Grad.eq.Grad.Dot)
+    Eq << Eq[1].this.find(MatMul).apply(Real.Dot.Grad.eq.Grad.Dot)
 
     Eq << Eq[-1].subs(Eq.V_Function.reversed)
 

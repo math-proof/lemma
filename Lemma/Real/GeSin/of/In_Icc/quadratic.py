@@ -9,7 +9,7 @@ def apply(el):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Algebra, Set, Bool, Nat, Real, Int
+    from Lemma import Real, Algebra, Set, Bool, Nat, Int
 
     x = Symbol(real=True)
     Eq << apply(Element(x, Interval(0, S.Pi / 2)))
@@ -19,9 +19,9 @@ def prove(Eq):
         return sin(x) - x * (1 - x / S.Pi)
     Eq << f(x).this.defun()
 
-    Eq << Calculus.EqGrad.of.Eq.apply(Eq[-1], (x,))
+    Eq << Real.EqGrad.of.Eq.apply(Eq[-1], (x,))
 
-    Eq << Eq[-1].this.rhs.apply(Calculus.Grad.eq.Add)
+    Eq << Eq[-1].this.rhs.apply(Real.Grad.eq.Add)
 
     Eq << Eq[-1].this.find(cos).apply(Real.Cos.eq.Sub.Square.Sin)
 
@@ -43,7 +43,7 @@ def prove(Eq):
 
     Eq << Bool.AllIn.of.All.apply(Eq[-1], (x, Interval(0, S.Pi / 2)))
 
-    Eq << Calculus.All.Ge.of.All_Ge_0.monotony.right_close.apply(Eq[-1])
+    Eq << Real.All.Ge.of.All_Ge_0.monotony.right_close.apply(Eq[-1])
 
     Eq << Eq[-1].this.find(f).defun()
 

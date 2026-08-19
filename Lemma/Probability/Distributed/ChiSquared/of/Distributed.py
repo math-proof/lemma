@@ -9,7 +9,7 @@ def apply(dist):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Calculus, Set
+    from Lemma import Probability, Real, Set
 
     x = Symbol(real=True, random=True)
     n = Symbol(integer=True, positive=True)
@@ -22,21 +22,21 @@ def prove(Eq):
 
     Eq << Eq[-1].lhs.this.apply(Probability.Pr.eq.Grad)
 
-    Eq << Eq[-1].this.find(Integral).apply(Calculus.Integral.eq.Add.split, 0)
+    Eq << Eq[-1].this.find(Integral).apply(Real.Integral.eq.Add.split, 0)
 
     Eq << Eq[-1].subs(Eq[2])
 
-    Eq << Eq[-1].this.find(Integral[2]).apply(Calculus.Integral.limits.subst, x.var, -x.var)
+    Eq << Eq[-1].this.find(Integral[2]).apply(Real.Integral.limits.subst, x.var, -x.var)
 
-    Eq << Eq[-1].this.find(Mul[~Integral]).apply(Calculus.Integral.eq.Neg)
+    Eq << Eq[-1].this.find(Mul[~Integral]).apply(Real.Integral.eq.Neg)
 
     Eq << Eq[-1].this.find(Integral).simplify()
 
     Eq << Eq[-1].this.find(LessEqual).apply(Set.LeSquare.Is.In.Icc)
 
-    Eq << Eq[-1].this.find(Integral).apply(Calculus.Integral.limits.absorb)
+    Eq << Eq[-1].this.find(Integral).apply(Real.Integral.limits.absorb)
 
-    Eq << Eq[-1].this.find(Derivative).apply(Calculus.Grad.Integral.eq.Mul.Grad)
+    Eq << Eq[-1].this.find(Derivative).apply(Real.Grad.Integral.eq.Mul.Grad)
 
     Eq << Eq[-1].this.find(Derivative).doit()
     # https://www.asmeurer.com/blog/

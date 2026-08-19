@@ -21,7 +21,7 @@ def apply(given, x):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Tensor
+    from Lemma import Real, Tensor
 
     n = Symbol(domain=Range(2, oo))
     t, x = Symbol(shape=(n,), real=True)
@@ -38,21 +38,21 @@ def prove(Eq):
     Eq << Eq[-1].this.find(MatMul).apply(Tensor.Dot.eq.Sum, var=j)
 
     i = Symbol(domain=Range(n))
-    Eq << Eq[-1].apply(Calculus.EqGrad.of.Eq, (x[i],), simplify=False)
+    Eq << Eq[-1].apply(Real.EqGrad.of.Eq, (x[i],), simplify=False)
 
-    Eq << Eq[-1].this.rhs.apply(Calculus.Grad.eq.Mul)
+    Eq << Eq[-1].this.rhs.apply(Real.Grad.eq.Mul)
 
-    Eq.loss = Eq[-1].this.find(Derivative[Sum]).apply(Calculus.Grad.eq.Sum)
+    Eq.loss = Eq[-1].this.find(Derivative[Sum]).apply(Real.Grad.eq.Sum)
 
     Eq << Eq.y_def[i]
 
     Eq << Eq.y_def[j]
 
-    Eq << Eq[-1].apply(Calculus.EqGrad.of.Eq, (x[i],), simplify=False)
+    Eq << Eq[-1].apply(Real.EqGrad.of.Eq, (x[i],), simplify=False)
 
     Eq << Eq[-1].this.rhs.doit(deep=False)
 
-    Eq << Eq[-1].this.rhs.find(Derivative).apply(Calculus.Grad.eq.Mul.Grad)
+    Eq << Eq[-1].this.rhs.find(Derivative).apply(Real.Grad.eq.Mul.Grad)
 
     Eq << Eq[-1].subs(Eq[-4].reversed).subs(Eq[-5].reversed) / Eq[-1].lhs.expr
 

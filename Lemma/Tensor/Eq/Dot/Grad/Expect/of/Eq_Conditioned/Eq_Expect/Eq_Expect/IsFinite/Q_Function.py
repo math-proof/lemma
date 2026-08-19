@@ -11,7 +11,7 @@ def apply(eq, Q_def, V_def, lt):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Calculus, Probability, Algebra, Bool, Nat
+    from Lemma import Tensor, Real, Probability, Algebra, Bool, Nat
 
     b, D = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), real=True, random=True) # states / observation
@@ -30,9 +30,9 @@ def prove(Eq):
     n = Symbol(integer=True, nonnegative=True)
     Eq.expect = Tensor.Eq.Grad.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.policy_gradient.apply(*Eq[:3], n)
 
-    Eq << Calculus.EqLimit.of.Eq.apply(Eq.expect, (n, oo))
+    Eq << Real.EqLimit.of.Eq.apply(Eq.expect, (n, oo))
 
-    Eq.limit = Eq[-1].this.find(Limit).apply(Calculus.Limit.eq.Add)
+    Eq.limit = Eq[-1].this.find(Limit).apply(Real.Limit.eq.Add)
 
     Eq << Probability.AbsExpect.le.ExpectAbs.apply(Eq.limit.find(Expectation[Derivative]).subs(n, t))
 
@@ -60,13 +60,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.doit()
 
-    Eq << Calculus.Eq_0.Limit.of.LtAbs.IsFinite.apply(Eq[-2], Eq[-1])
+    Eq << Real.Eq_0.Limit.of.LtAbs.IsFinite.apply(Eq[-2], Eq[-1])
 
     Eq << Eq.limit.subs(Eq[-1])
 
     Eq << Eq[-1].this.rhs.find(Expectation[Sum]).apply(Probability.Expect.Sum.eq.Sum.Expect)
 
-    Eq << Eq[-1].this.find(Limit).apply(Calculus.Limit.eq.Sum)
+    Eq << Eq[-1].this.find(Limit).apply(Real.Limit.eq.Sum)
 
     Eq << Eq[-1].this.rhs.apply(Probability.Sum.Expect.eq.Expect.Sum)
 

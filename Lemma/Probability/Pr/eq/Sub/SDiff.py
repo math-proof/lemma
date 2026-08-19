@@ -14,7 +14,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Calculus
+    from Lemma import Probability, Algebra, Real
 
     x = Symbol(real=True, random=True)
     Eq << apply(Pr(x >= 0))
@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq << Algebra.Eq.given.Eq.transport.apply(Eq[-1], rhs=1)
 
-    Eq << Eq[-1].this.lhs.apply(Calculus.Add.eq.Integral.concat)
+    Eq << Eq[-1].this.lhs.apply(Real.Add.eq.Integral.concat)
 
     Eq << Eq[-1].this.lhs.apply(Probability.Integral.eq.One)
 

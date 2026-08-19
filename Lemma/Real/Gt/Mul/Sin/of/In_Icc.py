@@ -9,7 +9,7 @@ def apply(el):
 
 @prove(proved=False)
 def prove(Eq):
-    from Lemma import Calculus, Nat, Real, Rat
+    from Lemma import Real, Nat, Rat
 
     x = Symbol(real=True)
     Eq << apply(Element(x, Interval.open(0, S.Pi)))
@@ -19,9 +19,9 @@ def prove(Eq):
         return x ** 2 * (x + sin(x)) / (x - sin(x))
     Eq << g(x).this.defun()
 
-    Eq << Calculus.EqGrad.of.Eq.apply(Eq[-1], (x,))
+    Eq << Real.EqGrad.of.Eq.apply(Eq[-1], (x,))
 
-    Eq << Eq[-1].this.rhs.apply(Calculus.Grad.Mul.eq.Add)
+    Eq << Eq[-1].this.rhs.apply(Real.Grad.Mul.eq.Add)
 
     Eq << Eq[-1].this.rhs.find(Derivative).doit()
 
@@ -41,9 +41,9 @@ def prove(Eq):
         return x ** 2 * (cos(x) + 1) - sin(x) * (x + sin(x))
     Eq << h(x).this.defun()
 
-    Eq << Calculus.EqGrad.of.Eq.apply(Eq[-1], (x,))
+    Eq << Real.EqGrad.of.Eq.apply(Eq[-1], (x,))
 
-    Eq << Eq[-1].this.rhs.apply(Calculus.Grad.eq.Add)
+    Eq << Eq[-1].this.rhs.apply(Real.Grad.eq.Add)
 
     Eq << Eq[-1].this.rhs.expand()
 

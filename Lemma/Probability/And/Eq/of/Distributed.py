@@ -9,7 +9,7 @@ def apply(dist):
 
 @prove(proved=False)
 def prove(Eq):
-    from Lemma import Probability, Calculus, Nat
+    from Lemma import Probability, Real, Nat
 
     n = Symbol(integer=True, positive=True)
     x = Symbol(shape=(n,), random=True)
@@ -23,15 +23,15 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq[-2])
 
-    Eq << Eq[-1].this.rhs.apply(Calculus.Integral.eq.Mul)
+    Eq << Eq[-1].this.rhs.apply(Real.Integral.eq.Mul)
 
-    Eq << Eq[-1].this.find(Integral).apply(Calculus.Integral.limits.offset, μ)
+    Eq << Eq[-1].this.find(Integral).apply(Real.Integral.limits.offset, μ)
 
     Eq << Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.find(Integral).apply(Calculus.Integral.eq.Add)
+    Eq << Eq[-1].this.find(Integral).apply(Real.Integral.eq.Add)
 
-    Eq << Eq[-1].this.find(Integral[2]).apply(Calculus.Integral.eq.Mul)
+    Eq << Eq[-1].this.find(Integral[2]).apply(Real.Integral.eq.Mul)
 
     # https://en.wikipedia.org/wiki/Cholesky_decomposition
 

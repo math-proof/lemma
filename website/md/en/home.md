@@ -33,9 +33,9 @@ It is mainly comprising of :
 * [Set](../?module=Set) refers to Set theory, which is the core foundation of the theories of whole mathematical proving and analysis. It involves lots of propositions using the terminologies like 
 ForAll, Exists, Element, Subset, for example: 
 the proof of [inclusion-exclusion principle](../?module=Set.CardUnion.eq.Sub_.AddCards.CardInter.principle.inclusion_exclusion). It can be so said that: set theory is the fundamental grammar of automatic theorem proving.  
-* [Calculus](../?module=Calculus) comprises :   
-[the definition of limit](../?module=Calculus.Any.All.of.Eq_Limit.limit_definition) and its fundamental theories which is the theoretical basis of Calculus.  
-proof of [integration by parts](../?module=Calculus.Integral.eq.Add.by_parts);  
+* [Real](../?module=Real) comprises :   
+[the definition of limit](../?module=Real.Any.All.of.Eq_Limit.limit_definition) and its fundamental theories which is the theoretical basis of Real analysis.  
+proof of [integration by parts](../?module=Real.Integral.eq.Add.by_parts);  
 determination of some integral for certain transcendental functions;  
 * [Finset](../?module=Finset) section is comprised of number theory, Finset mathematics, combinatorics, linear Algebra, some basic counting techniques involving permutations, such as 
 combinatoric induction for [second Stirling Number](../?module=Finset.Stirling.eq.Add.recurrence),  

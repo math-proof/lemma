@@ -2,3 +2,12 @@ from . import Tan
 from . import Cosh
 from . import Sinh
 from . import Tanh
+from . import Div
+from . import Softmax
+from . import eq
+from . import Integral
+from . import Sigmoid
+from . import Dot
+from . import Min
+from . import Mul
+from . import Bool

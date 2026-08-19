@@ -24,7 +24,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Calculus
+    from Lemma import Probability, Algebra, Real
 
     D = Symbol(integer=True, positive=True)
     θ = Symbol(real=True, shape=(D,))
@@ -40,7 +40,7 @@ def prove(Eq):
 
     Eq << Algebra.GeMul.of.Ge_0.Ge.apply(Eq[-1], Eq[-2])
 
-    Eq << Calculus.GeIntegral.of.Ge.apply(Eq[-1], [x.var])
+    Eq << Real.GeIntegral.of.Ge.apply(Eq[-1], [x.var])
 
     Eq << Eq[-1].this.find(Integral[Pr]).apply(Probability.Integral.eq.One.Conditioned)
 

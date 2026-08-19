@@ -19,7 +19,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Calculus
+    from Lemma import Probability, Real
 
     D = Symbol(integer=True, positive=True)
     θ, θ_quote = Symbol(real=True, shape=(D,))
@@ -29,15 +29,15 @@ def prove(Eq):
 
     Eq << Eq[0].this.find(KL).apply(Probability.KL.eq.Integral)
 
-    Eq << Eq[-1].this.find(Derivative).apply(Calculus.Grad.eq.Integral)
+    Eq << Eq[-1].this.find(Derivative).apply(Real.Grad.eq.Integral)
 
-    Eq << Eq[-1].this.find(Derivative).apply(Calculus.Grad.Mul.eq.Add)
+    Eq << Eq[-1].this.find(Derivative).apply(Real.Grad.Mul.eq.Add)
 
     Eq << Eq[-1].this.find(Derivative).doit()
 
-    Eq << Eq[-1].this.find(Derivative).apply(Calculus.Grad.eq.Mul)
+    Eq << Eq[-1].this.find(Derivative).apply(Real.Grad.eq.Mul)
 
-    Eq << Eq[-1].this.lhs.apply(Calculus.Integral.eq.Grad)
+    Eq << Eq[-1].this.lhs.apply(Real.Integral.eq.Grad)
 
     Eq << Eq[-1].this.find(Integral).apply(Probability.Integral.eq.One.Conditioned)
 

@@ -11,7 +11,7 @@ def apply(ne_zero_lhs, ne_zero_rhs, y):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Calculus, Real, Nat
+    from Lemma import Probability, Algebra, Real, Nat
 
 
     D, m, n = Symbol(integer=True, positive=True)
@@ -35,17 +35,17 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.expr.apply(Nat.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.lhs.apply(Calculus.Integral.eq.Add)
+    Eq << Eq[-1].this.lhs.apply(Real.Integral.eq.Add)
 
-    Eq << Eq[-1].this.lhs.args[1].apply(Calculus.Integral.limits.swap)
+    Eq << Eq[-1].this.lhs.args[1].apply(Real.Integral.limits.swap)
 
-    Eq << Eq[-1].this.lhs.args[1].apply(Calculus.Integral.limits.separate)
+    Eq << Eq[-1].this.lhs.args[1].apply(Real.Integral.limits.separate)
 
     Eq << Eq[-1].this.find(Integral[Pr[Conditioned]]).apply(Probability.Integral.eq.One.Conditioned)
 
-    Eq << Eq[-1].this.lhs.apply(Calculus.Integral.limits.swap)
+    Eq << Eq[-1].this.lhs.apply(Real.Integral.limits.swap)
 
-    Eq << Eq[-1].this.lhs.apply(Calculus.Integral.limits.separate)
+    Eq << Eq[-1].this.lhs.apply(Real.Integral.limits.separate)
 
     Eq << Eq[-1].this.find(Integral[Mul[~Integral]]).apply(Probability.Integral.eq.KL)
 
@@ -53,7 +53,7 @@ def prove(Eq):
 
     Eq << Algebra.Ge_0.Mul.of.Ge_0.apply(Eq[-1], Pr[θ](Equal(x, x.var)))
 
-    Eq << Calculus.Ge_0.Integral.of.Ge_0.apply(Eq[-1], (x.var,))
+    Eq << Real.Ge_0.Integral.of.Ge_0.apply(Eq[-1], (x.var,))
 
 
 

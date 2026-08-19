@@ -11,7 +11,7 @@ def apply(eq_conditioned, dist0, dist1):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Calculus, Algebra
+    from Lemma import Probability, Real, Algebra
 
     x0, x1 = Symbol(real=True, random=True)
     mu0, mu1 = Symbol(real=True)
@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << Eq[-2].subs(Eq[-1])
 
-    Eq << Eq[-1].this.find(Integral).apply(Calculus.Integral.limits.separate)
+    Eq << Eq[-1].this.find(Integral).apply(Real.Integral.limits.separate)
 
 
     Eq << Probability.EqPr.of.Distributed.apply(Eq[1])
@@ -35,19 +35,19 @@ def prove(Eq):
 
     Eq << Eq[-3].subs(Eq[-2], Eq[-1])
 
-    Eq << Eq[-1].this.find(Exp * ~Integral).apply(Calculus.Integral.eq.Mul)
+    Eq << Eq[-1].this.find(Exp * ~Integral).apply(Real.Integral.eq.Mul)
 
-    Eq << Eq[-1].this.find(Integral, Integral).apply(Calculus.Integral.doit.Bool)
+    Eq << Eq[-1].this.find(Integral, Integral).apply(Real.Integral.doit.Bool)
 
-    Eq << Eq[-1].this.find(Derivative).apply(Calculus.Grad.eq.Integral)
+    Eq << Eq[-1].this.find(Derivative).apply(Real.Grad.eq.Integral)
 
-    Eq << Eq[-1].this.find(Derivative).apply(Calculus.Grad.Integral.eq.Mul.Grad)
+    Eq << Eq[-1].this.find(Derivative).apply(Real.Grad.Integral.eq.Mul.Grad)
 
     Eq << Eq[-1].this.find(Derivative).doit()
 
     Eq << Eq[-1].this.find(Exp * Exp).apply(Algebra.Mul.eq.Exp)
 
-    Eq << Eq[-1].this.find(Integral).apply(Calculus.Integral.Exp.eq.Mul.quadratic)
+    Eq << Eq[-1].this.find(Integral).apply(Real.Integral.Exp.eq.Mul.quadratic)
 
     Eq << Eq[-1].this.find(Exp[Mul[~Add]]).apply(Algebra.Add.eq.Add.square_completing, y)
 

@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Eq[-2].this.lhs.apply(Set.Cup.eq.Icc.of.Lt.right_open, k)
 
-    Eq << (a >= b).this.apply(Set.Eq_Empty.Icc.of.Ge, right_open=True)
+    Eq << (a >= b).this.apply(Set.Ioc.eq.Empty.of.Ge, right_open=True)
 
     Eq <<= Eq[-1] & Eq[-2]
 
@@ -31,7 +31,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Cup).apply(Set.Cup.eq.Cup_Ite)
 
-    Eq << (a >= b).this.apply(Set.Eq_Empty.Ico.of.Ge)
+    Eq << (a >= b).this.apply(Set.Ico.eq.Empty.of.Ge)
 
     Eq <<= Eq[-1] & Eq[-2]
 

@@ -9,7 +9,7 @@ def apply(el):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Algebra, Set, Bool, Int, Rat, Real, Nat
+    from Lemma import Real, Algebra, Set, Bool, Int, Rat, Nat
 
     x = Symbol(real=True)
     Eq << apply(Element(x, Interval.open(0, S.Pi)))
@@ -19,9 +19,9 @@ def prove(Eq):
         return x + sin(x) - x ** 2 * cot(x / 2)
     Eq << f(x).this.defun()
 
-    Eq << Calculus.EqGrad.of.Eq.apply(Eq[-1], (x,))
+    Eq << Real.EqGrad.of.Eq.apply(Eq[-1], (x,))
 
-    Eq << Eq[-1].this.rhs.apply(Calculus.Grad.eq.Add)
+    Eq << Eq[-1].this.rhs.apply(Real.Grad.eq.Add)
 
     Eq << Eq[-1].this.find(cot ** 2).apply(Real.Square.Cot.eq.Sub.Square.Csc)
 
@@ -64,7 +64,7 @@ def prove(Eq):
 
     Eq << Bool.AllIn.of.All.apply(Eq[-1], (x, Interval(0, S.Pi, right_open=True)))
 
-    Eq << Calculus.All.Gt.of.All_Gt_0.monotony.right_open.apply(Eq[-1])
+    Eq << Real.All.Gt.of.All_Gt_0.monotony.right_open.apply(Eq[-1])
 
     Eq << Eq[-1].subs(Eq[2])
 

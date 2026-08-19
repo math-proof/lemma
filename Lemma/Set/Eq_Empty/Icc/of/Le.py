@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Eq[0].reversed
 
-    Eq << Set.Eq_Empty.Icc.of.Ge.apply(Eq[-1], right_open=True)
+    Eq << Set.Ioc.eq.Empty.of.Ge.apply(Eq[-1], right_open=True)
 
 
 if __name__ == '__main__':

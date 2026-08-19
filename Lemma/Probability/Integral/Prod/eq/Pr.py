@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Algebra, Probability, Bool
+    from Lemma import Real, Algebra, Probability, Bool
 
     b = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), real=True, random=True) # states / observation
@@ -22,11 +22,11 @@ def prove(Eq):
 
     Eq.induct = Eq.hypothesis.subs(n, n + 1)
 
-    Eq << Eq.induct.this.lhs.apply(Calculus.Integral.limits.pop.Slice)
+    Eq << Eq.induct.this.lhs.apply(Real.Integral.limits.pop.Slice)
 
     Eq << Eq[-1].this.find(Product).apply(Algebra.Prod.eq.Mul.pop)
 
-    Eq << Eq[-1].this.lhs.apply(Calculus.Integral.limits.separate)
+    Eq << Eq[-1].this.lhs.apply(Real.Integral.limits.separate)
 
     Eq << Eq[-1].subs(Eq.hypothesis)
 

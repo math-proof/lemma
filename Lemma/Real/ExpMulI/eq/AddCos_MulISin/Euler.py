@@ -9,13 +9,13 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Bool, Finset, Real
+    from Lemma import Real, Bool, Finset
 
     x = Symbol(real=True)
     Eq << apply(exp(S.ImaginaryUnit * x))
 
     i = S.ImaginaryUnit
-    Eq << Calculus.Exp.eq.Sum.maclaurin.apply(i * x)
+    Eq << Real.Exp.eq.Sum_Div_Factorial.maclaurin.apply(i * x)
 
     n = Eq[-1].rhs.variable
     Eq << Eq[-1].this.rhs.apply(Finset.Sum.eq.AddSumS, cond=Equal(n % 2, 0))

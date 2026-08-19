@@ -9,7 +9,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus
+    from Lemma import Real
     x, a, b = Symbol(real=True)
     f, g = Function(shape=(), real=True)
 
@@ -17,7 +17,7 @@ def prove(Eq):
 
     Eq << Eq[0].reversed
 
-    Eq << Calculus.GtIntegral.of.All_Gt.ioo.apply(Eq[-1])
+    Eq << Real.GtIntegral.of.All_Gt.ioo.apply(Eq[-1])
 
     Eq << Eq[-1].reversed
 

@@ -9,7 +9,7 @@ def apply(x, a):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Calculus, Algebra, Int, Nat, Set
+    from Lemma import Probability, Real, Algebra, Int, Nat, Set
 
     x = Symbol(real=True, random=True)
     a = Symbol(positive=True)
@@ -17,45 +17,45 @@ def prove(Eq):
 
     Eq << Eq[0].find(Expectation).this.apply(Probability.Expect.eq.Integral)
 
-    Eq.eq = Eq[-1].this.rhs.apply(Calculus.Integral.eq.Add.split, 0)
+    Eq.eq = Eq[-1].this.rhs.apply(Real.Integral.eq.Add.split, 0)
 
-    Eq << Eq.eq.find(Integral).this.apply(Calculus.Integral.eq.Add.split, a)
+    Eq << Eq.eq.find(Integral).this.apply(Real.Integral.eq.Add.split, a)
 
     Eq << Algebra.Ge.of.Eq.relax.apply(Eq[-1], Eq[-1].find(Integral[2]))
 
     Eq << Eq[-1].this.rhs.find(Abs).apply(Int.Abs.eq.IteGe_0)
 
-    Eq << Eq[-1].this.rhs.apply(Calculus.Integral.limits.offset, a)
+    Eq << Eq[-1].this.rhs.apply(Real.Integral.limits.offset, a)
 
     Eq << Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.rhs.apply(Calculus.Integral.eq.Add)
+    Eq << Eq[-1].this.rhs.apply(Real.Integral.eq.Add)
 
     Eq << Set.Ge.of.Ge.In_Iic.apply(Eq[-1], Eq[-1].rhs.find(Integral))
 
-    Eq << Eq[-1].this.rhs.apply(Calculus.Integral.eq.Mul)
+    Eq << Eq[-1].this.rhs.apply(Real.Integral.eq.Mul)
 
-    Eq << Eq[-1].this.rhs.find(Integral).apply(Calculus.Integral.limits.offset, -a)
+    Eq << Eq[-1].this.rhs.find(Integral).apply(Real.Integral.limits.offset, -a)
 
     Eq.ge = Eq[-1].this.rhs.find(Integral).apply(Probability.Integral.eq.Pr)
 
-    Eq << Eq.eq.find(Integral[2]).this.apply(Calculus.Integral.eq.Add.split, -a)
+    Eq << Eq.eq.find(Integral[2]).this.apply(Real.Integral.eq.Add.split, -a)
 
     Eq << Algebra.Ge.of.Eq.relax.apply(Eq[-1], Eq[-1].rhs.find(Integral))
 
     Eq << Eq[-1].this.rhs.find(Abs).apply(Int.Abs.eq.IteGe_0)
 
-    Eq << Eq[-1].this.rhs.find(Integral).apply(Calculus.Integral.limits.offset, -a)
+    Eq << Eq[-1].this.rhs.find(Integral).apply(Real.Integral.limits.offset, -a)
 
     Eq << Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.find(-~Integral).apply(Calculus.Integral.eq.Add)
+    Eq << Eq[-1].this.find(-~Integral).apply(Real.Integral.eq.Add)
 
-    Eq << Eq[-1].this.find(Integral[-Expr]).apply(Calculus.Integral.eq.Mul)
+    Eq << Eq[-1].this.find(Integral[-Expr]).apply(Real.Integral.eq.Mul)
 
     Eq << Set.Ge.of.Ge.In_Iic.apply(Eq[-1], Eq[-1].find(Mul[Integral]))
 
-    Eq << Eq[-1].this.find(Mul[~Integral]).apply(Calculus.Integral.limits.offset, a)
+    Eq << Eq[-1].this.find(Mul[~Integral]).apply(Real.Integral.limits.offset, a)
 
     Eq << Eq[-1].this.rhs.find(Integral).apply(Probability.Integral.eq.Pr)
 

@@ -15,7 +15,7 @@ def apply(eq, Q_def, V_def, n=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Calculus, Tensor, Finset, Nat
+    from Lemma import Probability, Real, Tensor, Finset, Nat
 
     b, D = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), real=True, random=True) # states / observation
@@ -41,7 +41,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Probability.Expect.law_of_total_expectation)
 
-    Eq << Calculus.EqGrad.of.Eq.apply(Eq[-1], [π])
+    Eq << Real.EqGrad.of.Eq.apply(Eq[-1], [π])
 
     Eq << Eq[-1].this.lhs.apply(Probability.Grad.Expect.eq.Expect.Grad).reversed
 
@@ -53,39 +53,39 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.rhs.apply(Calculus.Integral.eq.Add)
+    Eq << Eq[-1].this.rhs.apply(Real.Integral.eq.Add)
 
     Eq << Eq[-1].this.find(Mul[Sum]).apply(Finset.Mul_Sum.eq.Sum_Mul)
 
-    Eq << Eq[-1].this.find(Integral[Sum]).apply(Calculus.Integral.eq.Sum)
+    Eq << Eq[-1].this.find(Integral[Sum]).apply(Real.Integral.eq.Sum)
 
-    Eq << Eq[-1].this.find(Integral[Mul]).apply(Calculus.Integral.eq.Mul)
+    Eq << Eq[-1].this.find(Integral[Mul]).apply(Real.Integral.eq.Mul)
 
-    Eq << Eq[-1].this.find(Sum[~Integral[Mul]]).apply(Calculus.Integral.eq.Mul)
+    Eq << Eq[-1].this.find(Sum[~Integral[Mul]]).apply(Real.Integral.eq.Mul)
 
-    Eq << Eq[-1].this.find(Integral[~Mul[Integral]]).apply(Calculus.Mul.eq.Integral)
+    Eq << Eq[-1].this.find(Integral[~Mul[Integral]]).apply(Real.Mul.eq.Integral)
 
-    Eq << Eq[-1].this.find(Integral[~Mul[Integral]]).apply(Calculus.Mul.eq.Integral)
+    Eq << Eq[-1].this.find(Integral[~Mul[Integral]]).apply(Real.Mul.eq.Integral)
 
-    Eq << Eq[-1].this.find(Integral).apply(Calculus.Integral.limits.concat)
+    Eq << Eq[-1].this.find(Integral).apply(Real.Integral.limits.concat)
 
-    Eq << Eq[-1].this.find(Sum[Mul[~Integral]]).apply(Calculus.Integral.limits.concat)
+    Eq << Eq[-1].this.find(Sum[Mul[~Integral]]).apply(Real.Integral.limits.concat)
 
-    Eq << Eq[-1].this.find(Integral).apply(Calculus.Integral.limits.pop.Slice)
+    Eq << Eq[-1].this.find(Integral).apply(Real.Integral.limits.pop.Slice)
 
-    Eq << Eq[-1].this.rhs.find(Sum)().find(Integral).apply(Calculus.Integral.limits.pop.Slice)
+    Eq << Eq[-1].this.rhs.find(Sum)().find(Integral).apply(Real.Integral.limits.pop.Slice)
 
-    Eq << Eq[-1].this.find(Integral).apply(Calculus.Integral.limits.separate)
+    Eq << Eq[-1].this.find(Integral).apply(Real.Integral.limits.separate)
 
     Eq << Eq[-1].this.find(Derivative * ~Integral).apply(Probability.Integral.Prod.eq.Pr)
 
     Eq << Eq[-1].this.find(Integral).apply(Probability.Integral.eq.Expect)
 
-    Eq << Eq[-1].this.find(Integral).apply(Calculus.Integral.limits.separate)
+    Eq << Eq[-1].this.find(Integral).apply(Real.Integral.limits.separate)
 
     Eq << Eq[-1].this.find(Integral[Pr * Product]).apply(Probability.Integral.Prod.eq.Pr)
 
-    Eq << Eq[-1].this.find(Derivative[Pr]).apply(Calculus.Grad.eq.Mul.Grad.Log)
+    Eq << Eq[-1].this.find(Derivative[Pr]).apply(Real.Grad.eq.Mul.Grad.Log)
 
     Eq << Eq[-1].this.find(Pr * ~Sum).apply(Probability.Sum.eq.Expect)
 
@@ -99,7 +99,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.find(Expectation).apply(Probability.Expect.eq.Dot)
 
-    Eq << Eq[-1].this.lhs.apply(Calculus.Grad.Dot.eq.Dot.Grad)
+    Eq << Eq[-1].this.lhs.apply(Real.Grad.Dot.eq.Dot.Grad)
 
     # https://spinningup.openai.com/en/latest/spinningup/rl_intro.html# bellman-equations
     # http://incompleteideas.net/book/bookdraft2017nov5.pdf (Page 47)

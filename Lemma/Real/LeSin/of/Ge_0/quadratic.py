@@ -8,7 +8,7 @@ def apply(le_zero):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Set, Algebra, Bool, Real
+    from Lemma import Real, Set, Algebra, Bool
 
     x = Symbol(real=True)
     Eq << apply(x >= 0)
@@ -18,9 +18,9 @@ def prove(Eq):
         return x * (1 + x / S.Pi) - sin(x)
     Eq << f(x).this.defun()
 
-    Eq << Calculus.EqGrad.of.Eq.apply(Eq[-1], (x,))
+    Eq << Real.EqGrad.of.Eq.apply(Eq[-1], (x,))
 
-    Eq.eq_grad = Eq[-1].this.rhs.apply(Calculus.Grad.eq.Add)
+    Eq.eq_grad = Eq[-1].this.rhs.apply(Real.Grad.eq.Add)
 
     Eq << Real.Cos.In.Icc.apply(x)
 
@@ -36,7 +36,7 @@ def prove(Eq):
 
     Eq << Bool.AllIn.of.All.apply(Eq[-1], (x, Interval(0, oo)))
 
-    Eq << Calculus.All.Ge.of.All_Ge_0.monotony.right_open.apply(Eq[-1])
+    Eq << Real.All.Ge.of.All_Ge_0.monotony.right_open.apply(Eq[-1])
 
     Eq << Eq[-1].this.find(f).defun()
 

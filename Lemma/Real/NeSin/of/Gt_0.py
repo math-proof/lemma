@@ -9,7 +9,7 @@ def apply(gt_zero):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Calculus, Set, Bool, Real, Nat
+    from Lemma import Algebra, Real, Set, Bool, Nat
 
     x = Symbol(real=True, given=True)
     Eq << apply(x > 0)
@@ -41,13 +41,13 @@ def prove(Eq):
 
     Eq << Eq.all_el.subs(Eq.ft)
 
-    Eq << Eq[-1].this.find(Derivative).apply(Calculus.Grad.eq.Add)
+    Eq << Eq[-1].this.find(Derivative).apply(Real.Grad.eq.Add)
 
-    Eq << Calculus.Any.Eq.Rolle.of.Lt.IsContinuous.IsDifferentiable.Eq.apply(Eq.lt, Eq.All_Eq, Eq.all_el, Eq.eq)
+    Eq << Real.Any.Eq.Rolle.of.Lt.IsContinuous.IsDifferentiable.Eq.apply(Eq.lt, Eq.All_Eq, Eq.all_el, Eq.eq)
 
     Eq << Eq[-1].subs(Eq.ft)
 
-    Eq << Eq[-1].this.find(Derivative).apply(Calculus.Grad.eq.Add)
+    Eq << Eq[-1].this.find(Derivative).apply(Real.Grad.eq.Add)
 
     Eq << Bool.Any_And.of.AnySetOf_AnySetOf.apply(Eq[-1], simplify=None)
 

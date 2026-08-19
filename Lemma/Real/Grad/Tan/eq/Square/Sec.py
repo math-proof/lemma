@@ -9,14 +9,14 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Real
+    from Lemma import Real
 
     x = Symbol(real=True)
     Eq << apply(Derivative[x](tan(x)))
 
     Eq << Eq[0].this.find(tan).apply(Real.Tan.eq.Div)
 
-    Eq << Eq[-1].this.lhs.apply(Calculus.Grad.Div.eq.Div.Sub)
+    Eq << Eq[-1].this.lhs.apply(Real.Grad.Div.eq.Div.Sub)
 
     Eq << Eq[-1].this.find(Derivative).doit()
 

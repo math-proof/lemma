@@ -15,7 +15,7 @@ def apply(eq, Q_def, V_def, MDV_def):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Calculus
+    from Lemma import Probability, Real
 
     b, D = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), integer=True, random=True) # states / observation
@@ -36,13 +36,13 @@ def prove(Eq):
 
     Eq << Eq[3].this.find(Expectation).apply(Probability.Expect.Conditioned.importance_sampling, π)
 
-    Eq << Calculus.EqGrad.of.Eq.apply(Eq[-1], (π_quote,))
+    Eq << Real.EqGrad.of.Eq.apply(Eq[-1], (π_quote,))
 
-    Eq << Eq[-1].this.rhs.apply(Calculus.Grad.eq.Add)
+    Eq << Eq[-1].this.rhs.apply(Real.Grad.eq.Add)
 
     Eq << Eq[-1].this.find(Derivative[Expectation]).apply(Probability.Grad.Expect.eq.Expect.Grad)
 
-    Eq << Eq[-1].this.find(Conditioned[~Derivative]).apply(Calculus.Grad.eq.Mul)
+    Eq << Eq[-1].this.find(Conditioned[~Derivative]).apply(Real.Grad.eq.Mul)
 
     Eq << Eq[-1].subs(π_quote, π)
 

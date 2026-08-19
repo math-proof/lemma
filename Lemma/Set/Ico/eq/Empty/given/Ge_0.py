@@ -16,7 +16,7 @@ def prove(Eq):
     Eq << apply(Equal(Range(a, b), a.emptySet))
 
     Eq << Algebra.Ge.of.Ge_0.apply(Eq[-1])
-    Eq << Set.Eq_Empty.Ico.of.Ge.apply(Eq[-1])
+    Eq << Set.Ico.eq.Empty.of.Ge.apply(Eq[-1])
 
 
 if __name__ == '__main__':

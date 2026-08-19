@@ -16,7 +16,7 @@ def prove(Eq):
     a, b = Symbol(real=True, given=True)
     Eq << apply(Equal(Interval(a, b, left_open=True), a.emptySet))
 
-    Eq << Set.Eq_Empty.Icc.of.Ge.apply(Eq[1], left_open=True)
+    Eq << Set.Ioc.eq.Empty.of.Ge.apply(Eq[1], left_open=True)
 
 
 if __name__ == '__main__':

@@ -54,7 +54,7 @@ def apply(sar_independence_assumption, ne, T=None, t=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Calculus, Real
+    from Lemma import Probability, Algebra, Real
 
     b, d, L, D = Symbol(domain=Range(2, oo))
     s = Symbol(shape=(L + 1, b), real=True, random=True)
@@ -82,9 +82,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Log[Mul]).apply(Real.LogMul.eq.AddLogS.of.Ne_0.Ne_0)
 
-    Eq << Calculus.EqGrad.of.Eq.apply(Eq[-1], [π])
+    Eq << Real.EqGrad.of.Eq.apply(Eq[-1], [π])
 
-    Eq << Eq[-1].this.rhs.apply(Calculus.Grad.eq.Add)
+    Eq << Eq[-1].this.rhs.apply(Real.Grad.eq.Add)
 
     Eq << Eq[2].this.find(Sum[~Derivative]).doit()
 

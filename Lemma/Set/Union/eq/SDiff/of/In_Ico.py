@@ -49,7 +49,7 @@ def prove(Eq):
 
     Eq << Set.Ge.Le_Sub_1.of.In_Ico.apply(Eq[0])
 
-    Eq << Set.Eq_Empty.Ico.of.Ge.apply(Eq[-2] + 1)
+    Eq << Set.Ico.eq.Empty.of.Ge.apply(Eq[-2] + 1)
 
     Eq << Nat.Le_Sub_1.of.Lt.apply(Eq[-1])
 
