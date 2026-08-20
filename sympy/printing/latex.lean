@@ -118,10 +118,7 @@ def Expr.asStack? : Expr → Option (String × Expr × Expr)
 def LimTo.latex : LimTo → String
   | inf => "\\infty"
   | ninf => "-\\infty"
-  | zero => "0"
-  | zeroPos => "0^{+}"
-  | zeroNeg => "0^{-}"
-  | nhds _ => ""
+  | nhds _ | nhdsPos _ | nhdsNeg _ => ""
 
 def Expr.asArchimedeanMk? : Expr → Option Expr
   | Basic (.Special ⟨`ArchimedeanClass.mk⟩) (x :: _) _ => some x
@@ -621,6 +618,8 @@ where
             let bound :=
               match dir with
               | .nhds x => x.toLatex
+              | .nhdsPos x => x.toLatex ++ "^{+}"
+              | .nhdsNeg x => x.toLatex ++ "^{-}"
               | d => d.latex
             [n.escape_specials "\\ ", bound, fn.toLatex]
           | none =>

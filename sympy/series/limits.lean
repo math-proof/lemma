@@ -159,58 +159,44 @@ macro:max (priority := 1003) "lim " "[" n:binderIdent " → " "-" "∞" "] " e:t
 macro:max (priority := 1003) "lim " "[" "(" n:ident " : " ty:term ")" " → " "-" "∞" "] " e:term:67 : term =>
   `(Filter.limUnder Filter.atBot fun $n : $ty => $e)
 
-/-- `lim [x → 0] e` — two-sided limit as `x` tends to `0` (`𝓝[≠] 0`).
-The type of `x` is inferred, or written `lim [(x : α) → 0] e`. -/
-macro:max (priority := 1003) "lim " "[" n:binderIdent " → " z:num "] " e:term:67 : term =>
-  match z with
-  | `(num| 0) =>
-    match n with
-    | `(binderIdent| _) => `(Filter.limUnder (nhdsWithin 0 {0}ᶜ) fun _ => $e)
-    | `(binderIdent| $n:ident) => `(Filter.limUnder (nhdsWithin 0 {0}ᶜ) fun $n => $e)
-    | _ => Lean.Macro.throwUnsupported
+/-- Point in `lim [x → x₀]`, `lim [x → x₀⁺]`, `lim [x → x₀⁻]`.
+`ident` covers `x₀`; `num` covers `0`. Kept off `term` so `⁺` / `⁻` are not parsed as `posPart` / `negPart`. -/
+declare_syntax_cat limPt
+syntax ident : limPt
+syntax num : limPt
+
+private def termOfLimPt (x : TSyntax `limPt) : TSyntax `term := ⟨x.raw[0]⟩
+
+/-- `lim [x → x₀⁺] e` — right-hand limit as `x` tends to `x₀` (`𝓝[>] x₀`).
+Also `lim [x → 0⁺] e`. Written `lim [(x : α) → x₀⁺] e` to ascribe the binder. -/
+macro:max (priority := 1003) "lim " "[" n:binderIdent " → " x₀:limPt "⁺" "] " e:term:67 : term =>
+  let x₀ := termOfLimPt x₀
+  match n with
+  | `(binderIdent| _) => `(Filter.limUnder (nhdsWithin $x₀ (Set.Ioi $x₀)) fun _ => $e)
+  | `(binderIdent| $n:ident) => `(Filter.limUnder (nhdsWithin $x₀ (Set.Ioi $x₀)) fun $n => $e)
   | _ => Lean.Macro.throwUnsupported
 
-macro:max (priority := 1003) "lim " "[" "(" n:ident " : " ty:term ")" " → " z:num "] " e:term:67 : term =>
-  match z with
-  | `(num| 0) => `(Filter.limUnder (nhdsWithin (0 : $ty) {(0 : $ty)}ᶜ) fun $n : $ty => $e)
+macro:max (priority := 1003) "lim " "[" "(" n:ident " : " ty:term ")" " → " x₀:limPt "⁺" "] " e:term:67 : term =>
+  let x₀ := termOfLimPt x₀
+  `(Filter.limUnder (nhdsWithin ($x₀ : $ty) (Set.Ioi ($x₀ : $ty))) fun $n : $ty => $e)
+
+/-- `lim [x → x₀⁻] e` — left-hand limit as `x` tends to `x₀` (`𝓝[<] x₀`).
+Also `lim [x → 0⁻] e`. -/
+macro:max (priority := 1003) "lim " "[" n:binderIdent " → " x₀:limPt "⁻" "] " e:term:67 : term =>
+  let x₀ := termOfLimPt x₀
+  match n with
+  | `(binderIdent| _) => `(Filter.limUnder (nhdsWithin $x₀ (Set.Iio $x₀)) fun _ => $e)
+  | `(binderIdent| $n:ident) => `(Filter.limUnder (nhdsWithin $x₀ (Set.Iio $x₀)) fun $n => $e)
   | _ => Lean.Macro.throwUnsupported
 
-/-- `lim [x → 0⁺] e` — right-hand limit as `x` tends to `0` (`𝓝[>] 0`).
-The type of `x` is inferred, or written `lim [(x : α) → 0⁺] e`. -/
-macro:max (priority := 1003) "lim " "[" n:binderIdent " → " z:num "⁺" "] " e:term:67 : term =>
-  match z with
-  | `(num| 0) =>
-    match n with
-    | `(binderIdent| _) => `(Filter.limUnder (nhdsWithin 0 (Set.Ioi 0)) fun _ => $e)
-    | `(binderIdent| $n:ident) => `(Filter.limUnder (nhdsWithin 0 (Set.Ioi 0)) fun $n => $e)
-    | _ => Lean.Macro.throwUnsupported
-  | _ => Lean.Macro.throwUnsupported
-
-macro:max (priority := 1003) "lim " "[" "(" n:ident " : " ty:term ")" " → " z:num "⁺" "] " e:term:67 : term =>
-  match z with
-  | `(num| 0) => `(Filter.limUnder (nhdsWithin (0 : $ty) (Set.Ioi (0 : $ty))) fun $n : $ty => $e)
-  | _ => Lean.Macro.throwUnsupported
-
-/-- `lim [x → 0⁻] e` — left-hand limit as `x` tends to `0` (`𝓝[<] 0`).
-The type of `x` is inferred, or written `lim [(x : α) → 0⁻] e`. -/
-macro:max (priority := 1003) "lim " "[" n:binderIdent " → " z:num "⁻" "] " e:term:67 : term =>
-  match z with
-  | `(num| 0) =>
-    match n with
-    | `(binderIdent| _) => `(Filter.limUnder (nhdsWithin 0 (Set.Iio 0)) fun _ => $e)
-    | `(binderIdent| $n:ident) => `(Filter.limUnder (nhdsWithin 0 (Set.Iio 0)) fun $n => $e)
-    | _ => Lean.Macro.throwUnsupported
-  | _ => Lean.Macro.throwUnsupported
-
-macro:max (priority := 1003) "lim " "[" "(" n:ident " : " ty:term ")" " → " z:num "⁻" "] " e:term:67 : term =>
-  match z with
-  | `(num| 0) => `(Filter.limUnder (nhdsWithin (0 : $ty) (Set.Iio (0 : $ty))) fun $n : $ty => $e)
-  | _ => Lean.Macro.throwUnsupported
+macro:max (priority := 1003) "lim " "[" "(" n:ident " : " ty:term ")" " → " x₀:limPt "⁻" "] " e:term:67 : term =>
+  let x₀ := termOfLimPt x₀
+  `(Filter.limUnder (nhdsWithin ($x₀ : $ty) (Set.Iio ($x₀ : $ty))) fun $n : $ty => $e)
 
 /-- `lim [x → x₀] e` — two-sided limit as `x` tends to `x₀` (`𝓝[≠] x₀`).
-The type of `x` is inferred, or written `lim [(x : α) → x₀] e`.
+Also `lim [x → 0] e`. The type of `x` is inferred, or written `lim [(x : α) → x₀] e`.
 Expands to `Filter.limUnder (nhdsWithin x₀ {x₀}ᶜ) fun x => e`.
-Priority 1002 so `∞` / `0` / `0⁺` / `0⁻` still use the 1003 macros. -/
+Priority 1002 so `∞` / `x₀⁺` / `x₀⁻` still use the 1003 macros. -/
 macro:max (priority := 1002) "lim " "[" n:binderIdent " → " x₀:term "] " e:term:67 : term =>
   match n with
   | `(binderIdent| _) => `(Filter.limUnder (nhdsWithin $x₀ (Set.singleton $x₀)ᶜ) fun _ => $e)
@@ -241,53 +227,35 @@ macro:max (priority := 2001) "lim " "[" n:binderIdent " → " "-" "∞" "] " e:t
 macro:max (priority := 2001) "lim " "[" "(" n:ident " : " ty:term ")" " → " "-" "∞" "] " e:term:67 " = " a:term:50 : term =>
   `(Filter.Tendsto (fun $n : $ty => $e) Filter.atBot (nhds $a))
 
-/-- `lim [x → 0] e = a` stands for `Tendsto (fun x => e) (𝓝[≠] 0) (𝓝 a)`. -/
-macro:max (priority := 2001) "lim " "[" n:binderIdent " → " z:num "] " e:term:67 " = " a:term:50 : term =>
-  match z with
-  | `(num| 0) =>
-    match n with
-    | `(binderIdent| _) => `(Filter.Tendsto (fun _ => $e) (nhdsWithin 0 {0}ᶜ) (nhds $a))
-    | `(binderIdent| $n:ident) => `(Filter.Tendsto (fun $n => $e) (nhdsWithin 0 {0}ᶜ) (nhds $a))
-    | _ => Lean.Macro.throwUnsupported
+/-- `lim [x → x₀⁺] e = a` stands for `Tendsto (fun x => e) (𝓝[>] x₀) (𝓝 a)`.
+Also `lim [x → 0⁺] e = a`. -/
+macro:max (priority := 2001) "lim " "[" n:binderIdent " → " x₀:limPt "⁺" "] " e:term:67 " = " a:term:50 : term =>
+  let x₀ := termOfLimPt x₀
+  match n with
+  | `(binderIdent| _) => `(Filter.Tendsto (fun _ => $e) (nhdsWithin $x₀ (Set.Ioi $x₀)) (nhds $a))
+  | `(binderIdent| $n:ident) => `(Filter.Tendsto (fun $n => $e) (nhdsWithin $x₀ (Set.Ioi $x₀)) (nhds $a))
   | _ => Lean.Macro.throwUnsupported
 
-macro:max (priority := 2001) "lim " "[" "(" n:ident " : " ty:term ")" " → " z:num "] " e:term:67 " = " a:term:50 : term =>
-  match z with
-  | `(num| 0) => `(Filter.Tendsto (fun $n : $ty => $e) (nhdsWithin (0 : $ty) {(0 : $ty)}ᶜ) (nhds $a))
+macro:max (priority := 2001) "lim " "[" "(" n:ident " : " ty:term ")" " → " x₀:limPt "⁺" "] " e:term:67 " = " a:term:50 : term =>
+  let x₀ := termOfLimPt x₀
+  `(Filter.Tendsto (fun $n : $ty => $e) (nhdsWithin ($x₀ : $ty) (Set.Ioi ($x₀ : $ty))) (nhds $a))
+
+/-- `lim [x → x₀⁻] e = a` stands for `Tendsto (fun x => e) (𝓝[<] x₀) (𝓝 a)`.
+Also `lim [x → 0⁻] e = a`. -/
+macro:max (priority := 2001) "lim " "[" n:binderIdent " → " x₀:limPt "⁻" "] " e:term:67 " = " a:term:50 : term =>
+  let x₀ := termOfLimPt x₀
+  match n with
+  | `(binderIdent| _) => `(Filter.Tendsto (fun _ => $e) (nhdsWithin $x₀ (Set.Iio $x₀)) (nhds $a))
+  | `(binderIdent| $n:ident) => `(Filter.Tendsto (fun $n => $e) (nhdsWithin $x₀ (Set.Iio $x₀)) (nhds $a))
   | _ => Lean.Macro.throwUnsupported
 
-/-- `lim [x → 0⁺] e = a` stands for `Tendsto (fun x => e) (𝓝[>] 0) (𝓝 a)`. -/
-macro:max (priority := 2001) "lim " "[" n:binderIdent " → " z:num "⁺" "] " e:term:67 " = " a:term:50 : term =>
-  match z with
-  | `(num| 0) =>
-    match n with
-    | `(binderIdent| _) => `(Filter.Tendsto (fun _ => $e) (nhdsWithin 0 (Set.Ioi 0)) (nhds $a))
-    | `(binderIdent| $n:ident) => `(Filter.Tendsto (fun $n => $e) (nhdsWithin 0 (Set.Ioi 0)) (nhds $a))
-    | _ => Lean.Macro.throwUnsupported
-  | _ => Lean.Macro.throwUnsupported
-
-macro:max (priority := 2001) "lim " "[" "(" n:ident " : " ty:term ")" " → " z:num "⁺" "] " e:term:67 " = " a:term:50 : term =>
-  match z with
-  | `(num| 0) => `(Filter.Tendsto (fun $n : $ty => $e) (nhdsWithin (0 : $ty) (Set.Ioi (0 : $ty))) (nhds $a))
-  | _ => Lean.Macro.throwUnsupported
-
-/-- `lim [x → 0⁻] e = a` stands for `Tendsto (fun x => e) (𝓝[<] 0) (𝓝 a)`. -/
-macro:max (priority := 2001) "lim " "[" n:binderIdent " → " z:num "⁻" "] " e:term:67 " = " a:term:50 : term =>
-  match z with
-  | `(num| 0) =>
-    match n with
-    | `(binderIdent| _) => `(Filter.Tendsto (fun _ => $e) (nhdsWithin 0 (Set.Iio 0)) (nhds $a))
-    | `(binderIdent| $n:ident) => `(Filter.Tendsto (fun $n => $e) (nhdsWithin 0 (Set.Iio 0)) (nhds $a))
-    | _ => Lean.Macro.throwUnsupported
-  | _ => Lean.Macro.throwUnsupported
-
-macro:max (priority := 2001) "lim " "[" "(" n:ident " : " ty:term ")" " → " z:num "⁻" "] " e:term:67 " = " a:term:50 : term =>
-  match z with
-  | `(num| 0) => `(Filter.Tendsto (fun $n : $ty => $e) (nhdsWithin (0 : $ty) (Set.Iio (0 : $ty))) (nhds $a))
-  | _ => Lean.Macro.throwUnsupported
+macro:max (priority := 2001) "lim " "[" "(" n:ident " : " ty:term ")" " → " x₀:limPt "⁻" "] " e:term:67 " = " a:term:50 : term =>
+  let x₀ := termOfLimPt x₀
+  `(Filter.Tendsto (fun $n : $ty => $e) (nhdsWithin ($x₀ : $ty) (Set.Iio ($x₀ : $ty))) (nhds $a))
 
 /-- `lim [x → x₀] e = a` stands for `Tendsto (fun x => e) (𝓝[≠] x₀) (𝓝 a)`.
-Priority 2000 so `∞` / `0` / `0⁺` / `0⁻` still use the 2001 macros. -/
+Also `lim [x → 0] e = a`.
+Priority 2000 so `∞` / `x₀⁺` / `x₀⁻` still use the 2001 macros. -/
 macro:max (priority := 2000) "lim " "[" n:binderIdent " → " x₀:term "] " e:term:67 " = " a:term:50 : term =>
   match n with
   | `(binderIdent| _) => `(Filter.Tendsto (fun _ => $e) (nhdsWithin $x₀ (Set.singleton $x₀)ᶜ) (nhds $a))
@@ -343,70 +311,81 @@ private def asNhdsArg? (stx : Syntax) : Option (TSyntax `term) :=
     if isNhdsIdent? nh then some a else none
   | _ => none
 
+/-- `0` / `x₀` as a `limPt` for `lim [x → x₀⁺]` / `lim [x → x₀⁻]`. -/
+private def asLimPt (x : Syntax) : PrettyPrinter.UnexpandM (TSyntax `limPt) := do
+  match unparenTerm? x with
+  | `($id:ident) => `(limPt| $id:ident)
+  | `($z:num) => `(limPt| $z:num)
+  | `(OfNat.ofNat $_ $z:num $_) => `(limPt| $z:num)
+  | stx =>
+    match stx with
+    | .atom _ "0" => `(limPt| 0)
+    | _ => throw ()
+
+/-- Rebuild `lim [n → x₀] e`, `lim [n → x₀⁺] e`, … (`dir`: 0 two-sided, 1 right, 2 left). -/
+private def dummyLimBinder : TSyntax `ident := ⟨mkIdent `x⟩
+
+private def unexpandLimAt (n : TSyntax `ident) (x e : TSyntax `term) (dir : Nat)
+    (ty? : Option (TSyntax `term) := none) (wild := false) (eq? : Option (TSyntax `term) := none) :
+    PrettyPrinter.UnexpandM (TSyntax `term) := do
+  match dir with
+  | 0 =>
+    match ty?, wild, eq? with
+    | none, false, none => `(lim [$n:ident → $x:term] $e)
+    | none, false, some a => `(lim [$n:ident → $x:term] $e = $a)
+    | none, true, none => `(lim [_ → $x:term] $e)
+    | none, true, some a => `(lim [_ → $x:term] $e = $a)
+    | some ty, false, none => `(lim [($n:ident : $ty) → $x:term] $e)
+    | some ty, false, some a => `(lim [($n:ident : $ty) → $x:term] $e = $a)
+    | _, _, _ => throw ()
+  | 1 =>
+    let pt ← asLimPt x
+    match ty?, wild, eq? with
+    | none, false, none => `(lim [$n:ident → $pt:limPt⁺] $e)
+    | none, false, some a => `(lim [$n:ident → $pt:limPt⁺] $e = $a)
+    | none, true, none => `(lim [_ → $pt:limPt⁺] $e)
+    | none, true, some a => `(lim [_ → $pt:limPt⁺] $e = $a)
+    | some ty, false, none => `(lim [($n:ident : $ty) → $pt:limPt⁺] $e)
+    | some ty, false, some a => `(lim [($n:ident : $ty) → $pt:limPt⁺] $e = $a)
+    | _, _, _ => throw ()
+  | 2 =>
+    let pt ← asLimPt x
+    match ty?, wild, eq? with
+    | none, false, none => `(lim [$n:ident → $pt:limPt⁻] $e)
+    | none, false, some a => `(lim [$n:ident → $pt:limPt⁻] $e = $a)
+    | none, true, none => `(lim [_ → $pt:limPt⁻] $e)
+    | none, true, some a => `(lim [_ → $pt:limPt⁻] $e = $a)
+    | some ty, false, none => `(lim [($n:ident : $ty) → $pt:limPt⁻] $e)
+    | some ty, false, some a => `(lim [($n:ident : $ty) → $pt:limPt⁻] $e = $a)
+    | _, _, _ => throw ()
+  | _ =>
+    throw ()
+
 /-- Infoview: print `Filter.limUnder … fun n ↦ e` as `lim [n → ∞] e`, `lim [x → 0] e`, … -/
 @[app_unexpander Filter.limUnder]
 def limUnder.unexpand : PrettyPrinter.Unexpander
   | `($_ $nw $x $s fun $n:ident => $e) =>
     if isNhdsWithinIdent? nw then
       match limDirOfNhdsSet? s with
-      | some 0 =>
-        if isZeroSyntax? (unparenTerm? x) then
-          `(lim [$n:ident → 0] $e)
-        else
-          `(lim [$n:ident → $x:term] $e)
-      | some 1 =>
-        if isZeroSyntax? (unparenTerm? x) then
-          `(lim [$n:ident → 0⁺] $e)
-        else
-          throw ()
-      | some 2 =>
-        if isZeroSyntax? (unparenTerm? x) then
-          `(lim [$n:ident → 0⁻] $e)
-        else
-          throw ()
-      | _ => throw ()
+      | some dir =>
+        unexpandLimAt n x e dir
+      | none => throw ()
     else
       throw ()
   | `($_ $nw $x $s fun ($n:ident : $ty) => $e) =>
     if isNhdsWithinIdent? nw then
       match limDirOfNhdsSet? s with
-      | some 0 =>
-        if isZeroSyntax? (unparenTerm? x) then
-          `(lim [($n:ident : $ty) → 0] $e)
-        else
-          `(lim [($n:ident : $ty) → $x:term] $e)
-      | some 1 =>
-        if isZeroSyntax? (unparenTerm? x) then
-          `(lim [($n:ident : $ty) → 0⁺] $e)
-        else
-          throw ()
-      | some 2 =>
-        if isZeroSyntax? (unparenTerm? x) then
-          `(lim [($n:ident : $ty) → 0⁻] $e)
-        else
-          throw ()
-      | _ => throw ()
+      | some dir =>
+        unexpandLimAt n x e dir (ty? := some ty)
+      | none => throw ()
     else
       throw ()
   | `($_ $nw $x $s fun _ => $e) =>
     if isNhdsWithinIdent? nw then
       match limDirOfNhdsSet? s with
-      | some 0 =>
-        if isZeroSyntax? (unparenTerm? x) then
-          `(lim [_ → 0] $e)
-        else
-          `(lim [_ → $x:term] $e)
-      | some 1 =>
-        if isZeroSyntax? (unparenTerm? x) then
-          `(lim [_ → 0⁺] $e)
-        else
-          throw ()
-      | some 2 =>
-        if isZeroSyntax? (unparenTerm? x) then
-          `(lim [_ → 0⁻] $e)
-        else
-          throw ()
-      | _ => throw ()
+      | some dir =>
+        unexpandLimAt dummyLimBinder x e dir (wild := true)
+      | none => throw ()
     else
       throw ()
   | `($_ $f fun $n:ident => $e) =>
@@ -416,22 +395,9 @@ def limUnder.unexpand : PrettyPrinter.Unexpander
       `(lim [$n:ident → -∞] $e)
     else if let some (x, s) := asNhdsWithinArgs? f then
       match limDirOfNhdsSet? s with
-      | some 0 =>
-        if isZeroSyntax? (unparenTerm? x) then
-          `(lim [$n:ident → 0] $e)
-        else
-          `(lim [$n:ident → $x:term] $e)
-      | some 1 =>
-        if isZeroSyntax? (unparenTerm? x) then
-          `(lim [$n:ident → 0⁺] $e)
-        else
-          throw ()
-      | some 2 =>
-        if isZeroSyntax? (unparenTerm? x) then
-          `(lim [$n:ident → 0⁻] $e)
-        else
-          throw ()
-      | _ => throw ()
+      | some dir =>
+        unexpandLimAt n x e dir
+      | none => throw ()
     else
       throw ()
   | `($_ $f fun ($n:ident : $ty) => $e) =>
@@ -441,22 +407,9 @@ def limUnder.unexpand : PrettyPrinter.Unexpander
       `(lim [($n:ident : $ty) → -∞] $e)
     else if let some (x, s) := asNhdsWithinArgs? f then
       match limDirOfNhdsSet? s with
-      | some 0 =>
-        if isZeroSyntax? (unparenTerm? x) then
-          `(lim [($n:ident : $ty) → 0] $e)
-        else
-          `(lim [($n:ident : $ty) → $x:term] $e)
-      | some 1 =>
-        if isZeroSyntax? (unparenTerm? x) then
-          `(lim [($n:ident : $ty) → 0⁺] $e)
-        else
-          throw ()
-      | some 2 =>
-        if isZeroSyntax? (unparenTerm? x) then
-          `(lim [($n:ident : $ty) → 0⁻] $e)
-        else
-          throw ()
-      | _ => throw ()
+      | some dir =>
+        unexpandLimAt n x e dir (ty? := some ty)
+      | none => throw ()
     else
       throw ()
   | `($_ $f fun _ => $e) =>
@@ -466,22 +419,9 @@ def limUnder.unexpand : PrettyPrinter.Unexpander
       `(lim [_ → -∞] $e)
     else if let some (x, s) := asNhdsWithinArgs? f then
       match limDirOfNhdsSet? s with
-      | some 0 =>
-        if isZeroSyntax? (unparenTerm? x) then
-          `(lim [_ → 0] $e)
-        else
-          `(lim [_ → $x:term] $e)
-      | some 1 =>
-        if isZeroSyntax? (unparenTerm? x) then
-          `(lim [_ → 0⁺] $e)
-        else
-          throw ()
-      | some 2 =>
-        if isZeroSyntax? (unparenTerm? x) then
-          `(lim [_ → 0⁻] $e)
-        else
-          throw ()
-      | _ => throw ()
+      | some dir =>
+        unexpandLimAt dummyLimBinder x e dir (wild := true)
+      | none => throw ()
     else
       throw ()
   | _ =>
@@ -500,22 +440,9 @@ def tendstoLim.unexpand : PrettyPrinter.Unexpander
           `(lim [$n:ident → -∞] $e = $a)
         else if let some (x, s) := asNhdsWithinArgs? l then
           match limDirOfNhdsSet? s with
-          | some 0 =>
-            if isZeroSyntax? (unparenTerm? x) then
-              `(lim [$n:ident → 0] $e = $a)
-            else
-              `(lim [$n:ident → $x:term] $e = $a)
-          | some 1 =>
-            if isZeroSyntax? (unparenTerm? x) then
-              `(lim [$n:ident → 0⁺] $e = $a)
-            else
-              throw ()
-          | some 2 =>
-            if isZeroSyntax? (unparenTerm? x) then
-              `(lim [$n:ident → 0⁻] $e = $a)
-            else
-              throw ()
-          | _ => throw ()
+          | some dir =>
+            unexpandLimAt n x e dir (eq? := some a)
+          | none => throw ()
         else
           throw ()
       | `(fun ($n:ident : $ty) => $e) =>
@@ -525,22 +452,9 @@ def tendstoLim.unexpand : PrettyPrinter.Unexpander
           `(lim [($n:ident : $ty) → -∞] $e = $a)
         else if let some (x, s) := asNhdsWithinArgs? l then
           match limDirOfNhdsSet? s with
-          | some 0 =>
-            if isZeroSyntax? (unparenTerm? x) then
-              `(lim [($n:ident : $ty) → 0] $e = $a)
-            else
-              `(lim [($n:ident : $ty) → $x:term] $e = $a)
-          | some 1 =>
-            if isZeroSyntax? (unparenTerm? x) then
-              `(lim [($n:ident : $ty) → 0⁺] $e = $a)
-            else
-              throw ()
-          | some 2 =>
-            if isZeroSyntax? (unparenTerm? x) then
-              `(lim [($n:ident : $ty) → 0⁻] $e = $a)
-            else
-              throw ()
-          | _ => throw ()
+          | some dir =>
+            unexpandLimAt n x e dir (ty? := some ty) (eq? := some a)
+          | none => throw ()
         else
           throw ()
       | `(fun _ => $e) =>
@@ -550,22 +464,9 @@ def tendstoLim.unexpand : PrettyPrinter.Unexpander
           `(lim [_ → -∞] $e = $a)
         else if let some (x, s) := asNhdsWithinArgs? l then
           match limDirOfNhdsSet? s with
-          | some 0 =>
-            if isZeroSyntax? (unparenTerm? x) then
-              `(lim [_ → 0] $e = $a)
-            else
-              `(lim [_ → $x:term] $e = $a)
-          | some 1 =>
-            if isZeroSyntax? (unparenTerm? x) then
-              `(lim [_ → 0⁺] $e = $a)
-            else
-              throw ()
-          | some 2 =>
-            if isZeroSyntax? (unparenTerm? x) then
-              `(lim [_ → 0⁻] $e = $a)
-            else
-              throw ()
-          | _ => throw ()
+          | some dir =>
+            unexpandLimAt dummyLimBinder x e dir (wild := true) (eq? := some a)
+          | none => throw ()
         else
           throw ()
       | _ =>

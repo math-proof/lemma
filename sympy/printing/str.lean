@@ -18,10 +18,7 @@ def Expr.is_Propositional : Expr → Bool
 def LimTo.str : LimTo → String
   | inf => "∞"
   | ninf => "-∞"
-  | zero => "0"
-  | zeroPos => "0⁺"
-  | zeroNeg => "0⁻"
-  | nhds _ => ""
+  | nhds _ | nhdsPos _ | nhdsNeg _ => ""
 
 def BinaryInfix.strFormat (op : BinaryInfix) (left right : Expr) : String :=
   let func := op.func
@@ -326,6 +323,8 @@ where
             let bound :=
               match dir with
               | .nhds x => x.toString
+              | .nhdsPos x => s!"{x.toString}⁺"
+              | .nhdsNeg x => s!"{x.toString}⁻"
               | d => d.str
             [" ".intercalate n.normalized, bound, fn.toString]
           | none =>

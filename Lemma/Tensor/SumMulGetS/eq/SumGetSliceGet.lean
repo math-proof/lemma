@@ -19,7 +19,6 @@ private lemma main
   [Semiring α]
   [NeZero (l : ℕ)]
   [NeZero (u : ℕ)]
-  [NeZero (n : ℕ)]
 -- given
   (A : Tensor α [n, n])
   (i : Fin n) :

@@ -98,10 +98,28 @@ example : (lim [(x : ℝ) → x₀] h x) = Filter.limUnder (nhdsWithin x₀ {x�
 example : (lim [(x : ℝ) → 0] h x) = Filter.limUnder (nhdsWithin (0 : ℝ) {(0 : ℝ)}ᶜ) fun x : ℝ => h x :=
   rfl
 
+example : (lim [(x : ℝ) → 0⁺] h x) = Filter.limUnder (nhdsWithin (0 : ℝ) (Set.Ioi (0 : ℝ))) fun x : ℝ => h x :=
+  rfl
+
+example : (lim [(x : ℝ) → 0⁻] h x) = Filter.limUnder (nhdsWithin (0 : ℝ) (Set.Iio (0 : ℝ))) fun x : ℝ => h x :=
+  rfl
+
 example : (lim [x → 0⁺] h x) = Filter.limUnder (nhdsWithin 0 (Set.Ioi 0)) fun x => h x :=
   rfl
 
 example : (lim [x → 0⁻] h x) = Filter.limUnder (nhdsWithin 0 (Set.Iio 0)) fun x => h x :=
+  rfl
+
+example : (lim [x → x₀⁺] h x) = Filter.limUnder (nhdsWithin x₀ (Set.Ioi x₀)) fun x => h x :=
+  rfl
+
+example : (lim [x → x₀⁻] h x) = Filter.limUnder (nhdsWithin x₀ (Set.Iio x₀)) fun x => h x :=
+  rfl
+
+example : (lim [(x : ℝ) → x₀⁺] h x) = Filter.limUnder (nhdsWithin x₀ (Set.Ioi x₀)) fun x : ℝ => h x :=
+  rfl
+
+example : (lim [(x : ℝ) → x₀⁻] h x) = Filter.limUnder (nhdsWithin x₀ (Set.Iio x₀)) fun x : ℝ => h x :=
   rfl
 
 variable (a : ℝ)
@@ -129,6 +147,12 @@ example : lim [x → 0⁺] h x = a ↔ Filter.Tendsto (fun x => h x) (nhdsWithin
   Iff.rfl
 
 example : lim [x → 0⁻] h x = a ↔ Filter.Tendsto (fun x => h x) (nhdsWithin 0 (Set.Iio 0)) (nhds a) :=
+  Iff.rfl
+
+example : lim [x → x₀⁺] h x = a ↔ Filter.Tendsto (fun x => h x) (nhdsWithin x₀ (Set.Ioi x₀)) (nhds a) :=
+  Iff.rfl
+
+example : lim [x → x₀⁻] h x = a ↔ Filter.Tendsto (fun x => h x) (nhdsWithin x₀ (Set.Iio x₀)) (nhds a) :=
   Iff.rfl
 
 /--
@@ -168,10 +192,34 @@ info: lim [x → 0⁻] h x : ℝ
 #check lim [x → 0⁻] h x
 
 /--
+info: lim [x → x₀⁺] h x : ℝ
+-/
+#guard_msgs in
+#check lim [x → x₀⁺] h x
+
+/--
+info: lim [x → x₀⁻] h x : ℝ
+-/
+#guard_msgs in
+#check lim [x → x₀⁻] h x
+
+/--
 info: lim [x → x₀] h x = a : Prop
 -/
 #guard_msgs in
 #check lim [x → x₀] h x = a
+
+/--
+info: lim [x → x₀⁺] h x = a : Prop
+-/
+#guard_msgs in
+#check lim [x → x₀⁺] h x = a
+
+/--
+info: lim [x → x₀⁻] h x = a : Prop
+-/
+#guard_msgs in
+#check lim [x → x₀⁻] h x = a
 
 /--
 info: lim [x → 0] h x = a : Prop

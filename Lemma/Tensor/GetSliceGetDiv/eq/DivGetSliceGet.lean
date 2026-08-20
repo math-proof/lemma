@@ -1,6 +1,5 @@
-import Lemma.Nat.CoeAdd_1.eq.AddCoe_1
 import Lemma.Tensor.GetSliceDiv.eq.DivGetSlice
-open Nat Tensor
+open Tensor
 set_option maxHeartbeats 600000
 
 
@@ -16,15 +15,15 @@ private lemma main
 -- given
   (X : Tensor α [n, m])
   (a : α)
-  (i : Fin n) :
+  (i : Fin n)
+  (j k : ℕ) :
 -- imply
-  (X / a)[i][:i + 1] = X[i][:i + 1] / a := by
+  (X / a)[i][j:k] = X[i][j:k] / a := by
 -- proof
-  rw [AddCoe_1.eq.CoeAdd_1]
   simp [GetElem.getElem]
   rw [GetDiv.eq.DivGet.scalar.fin (X := X) (a := a) (i := i)]
   apply GetSliceDiv.eq.DivGetSlice
 
 
 -- created on 2026-08-18
--- updated on 2026-08-19
+-- updated on 2026-08-20

@@ -3330,6 +3330,10 @@ export class LeanBitOr extends LeanArithmetic {
             this.replace(caret, new LeanBitOr(caret, newCaret, this.indent, caret.level));
             return newCaret;
         }
+        if (caret instanceof LeanCaret) {
+            this.replace(caret, new LeanAbs(caret, this.indent, caret.level));
+            return caret;
+        }
         throw new Error(`LeanBitOr.insert_bar: unexpected for ${this.constructor.name}`);
     }
 

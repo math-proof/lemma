@@ -54,7 +54,6 @@ set_option maxHeartbeats 4000000
 private lemma main
   [NeZero (l : ℕ)]
   [NeZero (u : ℕ)]
-  [NeZero (n : ℕ)]
   {d_z : ℕ}
 -- given
   (A : Tensor ℝ [n, n])

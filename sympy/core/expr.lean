@@ -821,10 +821,9 @@ def Expr.isNatZero : Expr → Bool
 inductive LimTo where
   | inf
   | ninf
-  | zero
-  | zeroPos
-  | zeroNeg
   | nhds (x : Expr)
+  | nhdsPos (x : Expr)
+  | nhdsNeg (x : Expr)
 deriving BEq
 
 /-- `true` = `atTop` (`∞`), `false` = `atBot` (`-∞`). -/
@@ -840,39 +839,6 @@ def Expr.asAtTopBot? : Expr → Option Bool
     | `atBot => some false
     | _ => none
   | _ => none
-
-def Expr.isSingletonZero : Expr → Bool
-  | Basic (.Special ⟨`Singleton.singleton⟩) [x] _ => x.isNatZero
-  | Basic func [x] _ =>
-    func.name.getLast == `singleton && x.isNatZero
-  | _ =>
-    false
-
-def Expr.asIoiIioZero? : Expr → Option LimTo
-  | Basic func [a] _ =>
-    if a.isNatZero then
-      match func.name.getLast with
-      | `Ioi => some .zeroPos
-      | `Iio => some .zeroNeg
-      | _ => none
-    else
-      none
-  | _ =>
-    none
-
-def Expr.isComplSingletonZero : Expr → Bool
-  | Basic func args _ =>
-    let isCompl :=
-      match func.name.getLast with
-      | `compl | `complement => true
-      | _ => false
-    isCompl &&
-      match args with
-      | [s] => s.isSingletonZero
-      | [a, b] => a.isSingletonZero || b.isSingletonZero
-      | _ => false
-  | _ =>
-    false
 
 def Expr.asSingleton? : Expr → Option Expr
   | Basic (.Special ⟨`Singleton.singleton⟩) [x] _ => some x
@@ -896,22 +862,31 @@ def Expr.isComplOfSingleton (s pt : Expr) : Bool :=
   | _ =>
     false
 
-/-- `nhdsWithin x0 {x0}ᶜ` for a general point. -/
+/-- `nhdsWithin x (Ioi x)` / `nhdsWithin x (Iio x)`. -/
+def Expr.asNhdsWithinOneSided? : Expr → Option LimTo
+  | Basic func [x, s] _ =>
+    if func.name.getLast == `nhdsWithin then
+      match s with
+      | Basic sfunc [a] _ =>
+        if a == x then
+          match sfunc.name.getLast with
+          | `Ioi => some (.nhdsPos x)
+          | `Iio => some (.nhdsNeg x)
+          | _ => none
+        else
+          none
+      | _ =>
+        none
+    else
+      none
+  | _ =>
+    none
+
+/-- `nhdsWithin x₀ {x₀}ᶜ` for a general point (including `0`). -/
 def Expr.asNhdsWithinPunctured? : Expr → Option Expr
   | Basic func [x, s] _ =>
     if func.name.getLast == `nhdsWithin && s.isComplOfSingleton x then some x
     else none
-  | _ =>
-    none
-
-/-- `nhdsWithin 0 {0}ᶜ` / `Ioi 0` / `Iio 0`. -/
-def Expr.asNhdsWithinZero? : Expr → Option LimTo
-  | Basic func [x, s] _ =>
-    if func.name.getLast == `nhdsWithin && x.isNatZero then
-      if s.isComplSingletonZero then some .zero
-      else s.asIoiIioZero?
-    else
-      none
   | _ =>
     none
 
@@ -938,7 +913,7 @@ def Expr.asMapAtTopBotLambda? : Expr → Option (Name × LimTo × Expr)
     none
 
 /--
-`limUnder atTop/atBot/nhdsWithin 0 (fun n => e)`.
+`limUnder atTop/atBot/nhdsWithin (fun n => e)`.
 Returns binder name, limit direction, and the body.
 -/
 def Expr.asLimBound? : List Expr → Option (Name × LimTo × Expr)
@@ -947,9 +922,8 @@ def Expr.asLimBound? : List Expr → Option (Name × LimTo × Expr)
     | some true => some (n, .inf, fn)
     | some false => some (n, .ninf, fn)
     | none =>
-      (filt.asNhdsWithinZero?.map fun dir => (n, dir, fn)) <|>
-        (filt.asNhdsWithinPunctured?.map fun x =>
-          (n, if x.isNatZero then LimTo.zero else LimTo.nhds x, fn))
+      (filt.asNhdsWithinOneSided?.map fun dir => (n, dir, fn)) <|>
+        (filt.asNhdsWithinPunctured?.map fun x => (n, LimTo.nhds x, fn))
   | [mapped] =>
     mapped.asMapAtTopBotLambda?
   | _ =>
