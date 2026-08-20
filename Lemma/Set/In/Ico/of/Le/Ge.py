@@ -21,8 +21,6 @@ def prove(Eq):
 
     Eq << Set.In_Ico.given.Ge.Le_Sub_1.apply(Eq[-1])
 
-
-
     Eq << Int.Lt.given.Le_Sub_1.apply(Eq[-1])
 
 
@@ -30,4 +28,3 @@ if __name__ == '__main__':
     run()
 
 # created on 2021-02-25
-from . import In
