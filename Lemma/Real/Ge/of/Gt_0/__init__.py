@@ -1,3 +1,3 @@
 from . import Eq
 from . import monotony
-from . import jensen0
+from . import jensen
