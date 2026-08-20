@@ -12,7 +12,7 @@ def apply(lt_zero, add_ge_zero, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Nat, Int, Int, Int
+    from Lemma import Algebra, Set, Bool, Nat, Int
 
     a, b, c = Symbol(real=True, given=True)
     x = Symbol(real=True)

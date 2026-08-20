@@ -17,7 +17,7 @@ def apply(gt, self, n=None, k=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Real, Nat, Int, Int, Int, Int
+    from Lemma import Algebra, Real, Nat, Int
 
     x, a, b = Symbol(real=True)
     f = Function(real=True, continuous=True)

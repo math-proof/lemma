@@ -12,7 +12,7 @@ def apply(limited_f, limited_g):
 
 @prove
 def prove(Eq):
-    from Lemma import Real, Set, Algebra, Bool, Rat, Nat, Nat, Nat, Nat
+    from Lemma import Real, Set, Algebra, Bool, Rat, Nat
 
     x, x0 = Symbol(real=True)
     f, g = Function(real=True)

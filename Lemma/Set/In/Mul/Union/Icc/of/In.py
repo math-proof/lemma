@@ -15,7 +15,7 @@ def apply(given, d):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Nat, Nat, Nat, Nat
+    from Lemma import Set, Nat
 
     x, a, b, c, d = Symbol(real=True)
     e = Symbol(real=True, positive=True)

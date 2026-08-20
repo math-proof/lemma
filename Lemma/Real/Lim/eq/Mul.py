@@ -15,7 +15,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Real, Algebra, Bool, Nat, Int, Int, Int
+    from Lemma import Real, Bool, Nat, Int
 
     x, x0 = Symbol(real=True)
     y = Symbol(real=True, zero=False)

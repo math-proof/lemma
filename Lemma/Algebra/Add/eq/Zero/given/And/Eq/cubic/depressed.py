@@ -33,7 +33,7 @@ def apply(is_zero, x=None, d=0):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat, Real, Int, Int, Int, Int
+    from Lemma import Algebra, Nat, Real, Int
 
     x, p, q = Symbol(complex=True, given=True)
     Eq << apply(Equal(x ** 3 + p * x + q, 0), x=x, d=1)
