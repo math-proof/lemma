@@ -167,7 +167,7 @@ def prove(Eq):
 
     Eq <<= Eq.suffices & Eq[-1]
 
-    Eq << Eq[-1].this.rhs.rhs.apply(Real.Ge.of.In.In.In.All_Gt_0.Jensen)
+    Eq << Eq[-1].this.rhs.rhs.apply(Real.Ge.of.In.In.In.All_Gt_0.jensen0)
 
     Eq << Eq[-1].this.find(Sum[Mul]).simplify()
 

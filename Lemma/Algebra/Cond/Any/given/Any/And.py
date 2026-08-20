@@ -18,7 +18,7 @@ def prove(Eq):
     f, g = Function(integer=True)
     Eq << apply(f(y) > 0, Any[x:A](g(x) > 0))
 
-    Eq << Algebra.AndAnyS.of.Any_And.apply(Eq[-1])
+    Eq << Bool.Any.Any.of.Any_And.apply(Eq[-1])
     Eq << Bool.And_And.of.And.apply(Eq[-1])
 
 

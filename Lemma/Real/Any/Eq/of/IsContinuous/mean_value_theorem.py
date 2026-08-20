@@ -53,7 +53,7 @@ def prove(Eq):
 
     Eq << Bool.Any_And.of.Any.All.apply(Eq[-1], Eq[-3], simplify=None)
 
-    Eq << Algebra.AndAnyS.of.Any_And.apply(Eq[-1])
+    Eq << Bool.Any.Any.of.Any_And.apply(Eq[-1])
 
     Eq << Eq[-1].this.expr * (b - a)
 

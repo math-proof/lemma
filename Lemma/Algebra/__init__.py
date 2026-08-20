@@ -139,7 +139,6 @@ from . import OrAnyS
 from . import Sup_Square
 from . import Inv
 from . import Sqrt
-from . import AndAnyS
 from . import Lt_Maxima
 from . import Le_1
 from . import LeMinima

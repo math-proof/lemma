@@ -10,7 +10,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Bool
 
     S = Symbol(etype=dtype.real)
     e = Symbol(real=True)
@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Eq[-1].simplify()
 
-    Eq << Algebra.AndAnyS.of.Any_And.apply(Eq[-1])
+    Eq << Bool.Any.Any.of.Any_And.apply(Eq[-1])
 
 
 if __name__ == '__main__':

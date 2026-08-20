@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq << Eq[0].this.find(All).apply(Bool.All.All.of.All_And)
 
-    Eq << Eq[-1].this.expr.apply(Algebra.AndAnyS.of.Any_And)
+    Eq << Eq[-1].this.expr.apply(Bool.Any.Any.of.Any_And)
 
     Eq << Bool.All.of.All_And.apply(Eq[-1], index=0)
 
