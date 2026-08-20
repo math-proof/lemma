@@ -4,7 +4,7 @@ import Lemma.Tensor.SEqAppendS.of.SEq.SEq
 import Lemma.Tensor.Stack.eq.AppendStackS
 import Lemma.Tensor.TAppend.as.AppendTS
 import Lemma.Tensor.XEqAppendS.of.XEq.XEq
-open Bool List Tensor
+open Tensor
 set_option maxHeartbeats 1000000
 
 
@@ -24,8 +24,8 @@ private lemma kv_cache
 -- imply
   let Kn : Tensor ℝ* [n, d_z] := ([i < n] K i : Tensor ℝ [n, d_z])
   let Vn : Tensor ℝ* [n, d_z] := ([i < n] V i : Tensor ℝ [n, d_z])
-  let KT : Tensor ℝ* ([d_z] ++ n :: []) := cast (congrArg (Tensor ℝ*) (EqSwap_0'1 n d_z)) Knᵀ
-  let kT : Tensor ℝ* ([d_z] ++ 1 :: []) := cast (congrArg (Tensor ℝ*) (EqSwap_0'1 1 d_z)) ([_ < 1] (K n : Tensor ℝ* [d_z]))ᵀ
+  let KT : Tensor ℝ* ([d_z] ++ n :: []) := cast (congrArg (Tensor ℝ*) (List.EqSwap_0'1 n d_z)) Knᵀ
+  let kT : Tensor ℝ* ([d_z] ++ 1 :: []) := cast (congrArg (Tensor ℝ*) (List.EqSwap_0'1 1 d_z)) ([_ < 1] (K n : Tensor ℝ* [d_z]))ᵀ
   let row : Tensor ℝ* [d_z] := ((Q n : Tensor ℝ* [d_z]) @ (KT ++ kT) / √(d_z : ℝ*)).softmax @ (Vn ++ [_ < 1] (V n : Tensor ℝ* [d_z]))
   (Z (n + 1) : Tensor ℝ* [n + 1, d_z]) ≈ (Z n : Tensor ℝ* [n, d_z]) ++ [_ < 1] row := by
 -- proof
@@ -62,12 +62,12 @@ private lemma kv_cache
     apply Eq.trans (b := (Qn[i] @ Kn[:i + 1]ᵀ / √(d_z : ℝ*)).softmax @ Vn[:i + 1])
     ·
       simp [f]
-      apply Eq.of.SEq
+      apply Bool.Eq.of.SEq
       apply (SEqDotS.of.SEq _ _).trans (SEqDotS.of.SEq.left _ _)
       ·
-        apply SEqUFnS.of.SEq _ (fun {s} (t : Tensor ℝ* s) => t.softmax)
-        apply SEqUFnS.of.SEq _ (fun {s} (t : Tensor ℝ* s) => t / √(d_z : ℝ*))
-        apply (SEqDotS.of.SEq (SEq.of.Eq _) _).trans (SEqDotS.of.SEq.left _ _)
+        apply Bool.SEqUFnS.of.SEq _ (fun {s} (t : Tensor ℝ* s) => t.softmax)
+        apply Bool.SEqUFnS.of.SEq _ (fun {s} (t : Tensor ℝ* s) => t / √(d_z : ℝ*))
+        apply (SEqDotS.of.SEq (Bool.SEq.of.Eq _) _).trans (SEqDotS.of.SEq.left _ _)
         ·
           simp only [Qs, Qn]
           repeat rw [MapStack.eq.Stack_Map]
@@ -96,12 +96,12 @@ private lemma kv_cache
     trans row
     ·
       simp [f]
-      apply Eq.of.SEq
+      apply Bool.Eq.of.SEq
       apply (SEqDotS.of.SEq _ _).trans (SEqDotS.of.SEq.left _ _)
       ·
-        apply SEqUFnS.of.SEq _ (fun {s} (t : Tensor ℝ* s) => t.softmax)
-        apply SEqUFnS.of.SEq _ (fun {s} (t : Tensor ℝ* s) => t / √(d_z : ℝ*))
-        apply (SEqDotS.of.SEq (SEq.of.Eq _) _).trans (SEqDotS.of.SEq.left _ _)
+        apply Bool.SEqUFnS.of.SEq _ (fun {s} (t : Tensor ℝ* s) => t.softmax)
+        apply Bool.SEqUFnS.of.SEq _ (fun {s} (t : Tensor ℝ* s) => t / √(d_z : ℝ*))
+        apply (SEqDotS.of.SEq (Bool.SEq.of.Eq _) _).trans (SEqDotS.of.SEq.left _ _)
         ·
           simp only [Qs]
           rw [MapStack.eq.Stack_Map]
@@ -116,7 +116,7 @@ private lemma kv_cache
             apply (GetSliceStack.as.Stack_UFn.of.Eq_Add (n + 1).add_zero.symm (fun t => (K t : Tensor ℝ* [d_z]))).trans
             rw [Stack.eq.AppendStackS (fun t => (K t : Tensor ℝ* [d_z]))]
             apply SEqAppendS.of.SEq.SEq (by rfl)
-            apply SEq.of.Eq
+            apply Bool.SEq.of.Eq
             apply Eq.of.All_EqGetS.fin
             intro t
             fin_cases t
@@ -135,7 +135,7 @@ private lemma kv_cache
           rw [MapStack.eq.Stack_Map]
           rw [Stack.eq.AppendStackS (fun t => (V t : Tensor ℝ* [d_z]))]
           apply SEqAppendS.of.SEq.SEq (by rfl)
-          apply SEq.of.Eq
+          apply Bool.SEq.of.Eq
           apply Eq.of.All_EqGetS.fin
           intro t
           fin_cases t
