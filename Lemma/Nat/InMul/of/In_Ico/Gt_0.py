@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2] * d, Eq[-1] * d
 
-    Eq << Set.In.Icc.of.Ge.Lt.apply(Eq[-2], Eq[-1])
+    Eq << Set.In_Ico.of.Le.Lt.apply(Eq[-2], Eq[-1])
 
 
 if __name__ == '__main__':

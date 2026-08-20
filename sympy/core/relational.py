@@ -2078,15 +2078,21 @@ class GreaterEqual(_Greater):
                     b, a = res
                     return (a, b)
             elif cls.is_LessEqual:
-                a, b = cls.args
-                cls = Basic.__new__(GreaterEqual, b, a)
-                res = Boolean.of(self, cls)
-                if b.is_Number:
-                    return res
-                if isinstance(res, tuple):
-                    b, a = res
-                    return (a, b)         
-            
+                if isinstance(cls.args, property):
+                    cls = GreaterEqual
+                    res = Boolean.of(self, cls)
+                    if isinstance(res, tuple):
+                        b, a = res
+                        return a, b
+                else:
+                    a, b = cls.args
+                    cls = Basic.__new__(GreaterEqual, b, a)
+                    res = Boolean.of(self, cls)
+                    if b.is_Number:
+                        return res
+                    if isinstance(res, tuple):
+                        b, a = res
+                        return (a, b)         
         return res
 
     def domain_conditioned(self, var):
@@ -2888,15 +2894,21 @@ class Less(_Less):
                     b, a = res
                     return (a, b)
             elif cls.is_Greater:
-                a, b = cls.args
-                cls = Basic.__new__(Less, b, a)
-                res = Boolean.of(self, cls)
-                if b.is_Number:
-                    return res
-                if isinstance(res, tuple):
-                    b, a = res
-                    return (a, b)         
-            
+                if isinstance(cls.args, property):
+                    cls = Less
+                    res = Boolean.of(self, cls)
+                    if isinstance(res, tuple):
+                        b, a = res
+                        return a, b
+                else:
+                    a, b = cls.args
+                    cls = Basic.__new__(Less, b, a)
+                    res = Boolean.of(self, cls)
+                    if b.is_Number:
+                        return res
+                    if isinstance(res, tuple):
+                        b, a = res
+                        return (a, b)         
         return res
 
     def domain_conditioned(self, var):
