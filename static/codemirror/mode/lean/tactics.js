@@ -38,6 +38,7 @@ export const tactics = [
     'filter_upwards',
     'fin_cases',
     'fin_omega',
+    'first',
     'funext',
     'gcongr',
     'generalize',

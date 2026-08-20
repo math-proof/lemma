@@ -34,151 +34,126 @@ private lemma kv_cache
 -- imply
   let Kn : Tensor ℝ* [n, d_z] := ([i < n] K i : Tensor ℝ [n, d_z])
   let Vn : Tensor ℝ* [n, d_z] := ([i < n] V i : Tensor ℝ [n, d_z])
-  let q : Tensor ℝ* [d_z] := Q n
-  let k : Tensor ℝ* [d_z] := K n
-  let v : Tensor ℝ* [d_z] := V n
   let KT : Tensor ℝ* ([d_z] ++ n :: []) := cast (congrArg (Tensor ℝ*) (EqSwap_0'1 n d_z)) Knᵀ
-  let kT : Tensor ℝ* ([d_z] ++ 1 :: []) := cast (congrArg (Tensor ℝ*) (EqSwap_0'1 1 d_z)) ([_ < 1] k)ᵀ
-  let row : Tensor ℝ* [d_z] := (q @ (KT ++ kT) / √(d_z : ℝ*)).softmax @ (Vn ++ [_ < 1] v)
+  let kT : Tensor ℝ* ([d_z] ++ 1 :: []) := cast (congrArg (Tensor ℝ*) (EqSwap_0'1 1 d_z)) ([_ < 1] (K n : Tensor ℝ* [d_z]))ᵀ
+  let row : Tensor ℝ* [d_z] := ((Q n : Tensor ℝ* [d_z]) @ (KT ++ kT) / √(d_z : ℝ*)).softmax @ (Vn ++ [_ < 1] (V n : Tensor ℝ* [d_z]))
   (Z (n + 1) : Tensor ℝ* [n + 1, d_z]) ≈ (Z n : Tensor ℝ* [n, d_z]) ++ [_ < 1] row := by
 -- proof
-  extract_lets Kn Vn q k v KT kT row
+  extract_lets Kn Vn KT kT row
   let Qn : Tensor ℝ* [n, d_z] := ([i < n] Q i : Tensor ℝ [n, d_z])
   have hn1 := h (n + 1)
-  have hgpt_succ := DotSoftmaxAdd_Mul_Infty.eq.Stack_DotSoftmaxDivDot_T.gpt ([i < n + 1] Q i) ([i < n + 1] K i) ([i < n + 1] V i)
   extract_lets Qs Ks Vs at hn1
-  refine hn1.trans ?_
-  refine hgpt_succ.trans ?_
+  apply hn1.trans
+  apply (DotSoftmaxAdd_Mul_Infty.eq.Stack_DotSoftmaxDivDot_T.gpt ([i < n + 1] Q i) ([i < n + 1] K i) ([i < n + 1] V i)).trans
   let f : ℕ → Tensor ℝ* [d_z] := fun i =>
     if hi : i < n + 1 then
       (Qs[i] @ Ks[:i + 1]ᵀ / √(d_z : ℝ*)).softmax @ Vs[:i + 1]
     else
       0
-  have h_eq_f : [i < n + 1] (Qs[i] @ Ks[:i + 1]ᵀ / √(d_z : ℝ*)).softmax @ Vs[:i + 1] = [i < n + 1] f i := by
-    apply Eq.of.All_EqGetS.fin
-    intro i
-    simp only [EqGetStack.fin]
-    simp [f]
-    split_ifs <;> grind
-  refine (XEq.of.Eq (h_eq_f.trans (Stack.eq.AppendStackS (n := n) (j := 1) f))).trans ?_
+  apply XEq.trans (b := [i < n] f i ++ [i < 1] f (n + i))
+  ·
+    apply XEq.of.Eq
+    apply Eq.trans (b := [i < n + 1] f i)
+    ·
+      apply Eq.of.All_EqGetS.fin
+      intro i
+      simp only [EqGetStack.fin]
+      simp [f]
+      split_ifs <;>
+        first | rfl | omega
+    ·
+      apply Stack.eq.AppendStackS
   apply XEqAppendS.of.XEq.XEq
   ·
-    have hn := h n
     apply XEq.of.All_XEqGetS
     intro i
-    have hi : (i : ℕ) < n + 1 := Nat.lt_succ_of_lt i.isLt
-    have hZ := hn.trans (DotSoftmaxAdd_Mul_Infty.eq.Stack_DotSoftmaxDivDot_T.gpt ([i < n] Q i) ([i < n] K i) ([i < n] V i))
-    have hZi := All_XEqGetS.of.XEq hZ i
-    refine (XEq.of.Eq ?eq).trans hZi.symm
-    have hpre := EqGetStack.fun.fin f i
-    have hgpti := EqGetStack.fin (fun j : Fin n => (Qn[j] @ Kn[:j + 1]ᵀ / √(d_z : ℝ*)).softmax @ Vn[:j + 1]) i
-    have hrow : f i = (Qn[i] @ Kn[:i + 1]ᵀ / √(d_z : ℝ*)).softmax @ Vn[:i + 1] := by
+    apply (XEq.of.Eq _).trans (All_XEqGetS.of.XEq ((h n).trans (DotSoftmaxAdd_Mul_Infty.eq.Stack_DotSoftmaxDivDot_T.gpt ([i < n] Q i) ([i < n] K i) ([i < n] V i))) i).symm
+    apply (EqGetStack.fun.fin f i).trans
+    apply Eq.trans (b := (Qn[i] @ Kn[:i + 1]ᵀ / √(d_z : ℝ*)).softmax @ Vn[:i + 1])
+    ·
       simp [f]
       apply Eq.of.SEq
-      have hQ : Qs[i] = Qn[i] := by
-        simp only [Qs, Qn]
-        rw [MapStack.eq.Stack_Map, MapStack.eq.Stack_Map]
-        have hQs := EqGetStack.fin (fun j : Fin (n + 1) => (Q j : Tensor ℝ* [d_z])) ⟨(i : ℕ), hi⟩
-        have hQn := EqGetStack.fin (fun j : Fin n => (Q j : Tensor ℝ* [d_z])) i
-        simp [GetElem.getElem] at hQs hQn ⊢
-        exact hQs.trans hQn.symm
-      have hK : Ks[:i + 1] ≃ Kn[:i + 1] := by
-        have hKs : Ks = [t < n + 1] (K t : Tensor ℝ* [d_z]) := by
-          simp only [Ks]
-          rw [MapStack.eq.Stack_Map]
-        have hKn : Kn = [t < n] (K t : Tensor ℝ* [d_z]) := by
-          simp only [Kn]
-          rw [MapStack.eq.Stack_Map]
-        rw [hKs, hKn]
-        exact (GetSliceStack.as.Stack_UFn.of.Eq_Add (by omega : n + 1 = ((i : ℕ) + 1) + (n - i)) (fun t => (K t : Tensor ℝ* [d_z]))).trans
-          (GetSliceStack.as.Stack_UFn.of.Eq_Add (by omega : n = ((i : ℕ) + 1) + (n - ((i : ℕ) + 1))) (fun t => (K t : Tensor ℝ* [d_z]))).symm
-      have hV : Vs[:i + 1] ≃ Vn[:i + 1] := by
-        have hVs : Vs = [t < n + 1] (V t : Tensor ℝ* [d_z]) := by
-          simp only [Vs]
-          rw [MapStack.eq.Stack_Map]
-        have hVn : Vn = [t < n] (V t : Tensor ℝ* [d_z]) := by
-          simp only [Vn]
-          rw [MapStack.eq.Stack_Map]
-        rw [hVs, hVn]
-        exact (GetSliceStack.as.Stack_UFn.of.Eq_Add (by omega : n + 1 = ((i : ℕ) + 1) + (n - i)) (fun t => (V t : Tensor ℝ* [d_z]))).trans
-          (GetSliceStack.as.Stack_UFn.of.Eq_Add (by omega : n = ((i : ℕ) + 1) + (n - ((i : ℕ) + 1))) (fun t => (V t : Tensor ℝ* [d_z]))).symm
-      refine (SEqDotS.of.SEq ?scores _).trans (SEqDotS.of.SEq.left hV _)
-      refine SEqUFnS.of.SEq ?_ (fun {s} (t : Tensor ℝ* s) => t.softmax)
-      refine SEqUFnS.of.SEq ?_ (fun {s} (t : Tensor ℝ* s) => t / √(d_z : ℝ*))
-      refine (SEqDotS.of.SEq (SEq.of.Eq hQ) _).trans (SEqDotS.of.SEq.left (SEqTS.of.SEq hK) _)
-    exact hpre.trans (hrow.trans hgpti.symm)
+      apply (SEqDotS.of.SEq _ _).trans (SEqDotS.of.SEq.left _ _)
+      ·
+        apply SEqUFnS.of.SEq _ (fun {s} (t : Tensor ℝ* s) => t.softmax)
+        apply SEqUFnS.of.SEq _ (fun {s} (t : Tensor ℝ* s) => t / √(d_z : ℝ*))
+        apply (SEqDotS.of.SEq (SEq.of.Eq _) _).trans (SEqDotS.of.SEq.left _ _)
+        ·
+          simp only [Qs, Qn]
+          repeat rw [MapStack.eq.Stack_Map]
+          simp [GetElem.getElem, EqGetStack.fin]
+        ·
+          apply SEqTS.of.SEq
+          simp only [Ks, Kn]
+          repeat rw [MapStack.eq.Stack_Map]
+          apply (GetSliceStack.as.Stack_UFn.of.Eq_Add (by omega : n + 1 = ((i : ℕ) + 1) + (n - i)) (fun t => (K t : Tensor ℝ* [d_z]))).trans
+          apply (GetSliceStack.as.Stack_UFn.of.Eq_Add (by omega : n = ((i : ℕ) + 1) + (n - ((i : ℕ) + 1))) (fun t => (K t : Tensor ℝ* [d_z]))).symm
+      ·
+        simp only [Vs, Vn]
+        repeat rw [MapStack.eq.Stack_Map]
+        apply (GetSliceStack.as.Stack_UFn.of.Eq_Add (by omega : n + 1 = ((i : ℕ) + 1) + (n - i)) (fun t => (V t : Tensor ℝ* [d_z]))).trans
+        apply (GetSliceStack.as.Stack_UFn.of.Eq_Add (by omega : n = ((i : ℕ) + 1) + (n - ((i : ℕ) + 1))) (fun t => (V t : Tensor ℝ* [d_z]))).symm
+    ·
+      symm
+      apply EqGetStack.fin
   ·
     apply XEq.of.All_XEqGetS
     intro i
     fin_cases i
-    have hi : n < n + 1 := Nat.lt_succ_self n
-    have hpre := EqGetStack.fin (fun j : Fin 1 => f (n + j)) ⟨0, Nat.zero_lt_one⟩
-    have hrowg := EqGetStack.fin (fun _ : Fin 1 => row) ⟨0, Nat.zero_lt_one⟩
-    have hrow : f n = row := by
+    apply XEq.of.Eq
+    apply (EqGetStack.fin (fun j : Fin 1 => f (n + j)) ⟨0, Nat.zero_lt_one⟩).trans
+    apply (congrArg f (Nat.add_zero n)).trans
+    trans row
+    ·
       simp [f]
       apply Eq.of.SEq
-      have hQ : Qs[n] = q := by
-        simp only [Qs, q]
-        rw [MapStack.eq.Stack_Map]
-        have hQs := EqGetStack.fin (fun j : Fin (n + 1) => (Q j : Tensor ℝ* [d_z])) ⟨n, hi⟩
-        simp [GetElem.getElem] at hQs ⊢
-        exact hQs
-      have hK : Ks[:n + 1]ᵀ ≃ KT ++ kT := by
-        have hKs : Ks = [t < n + 1] (K t : Tensor ℝ* [d_z]) := by
-          simp only [Ks]
+      apply (SEqDotS.of.SEq _ _).trans (SEqDotS.of.SEq.left _ _)
+      ·
+        apply SEqUFnS.of.SEq _ (fun {s} (t : Tensor ℝ* s) => t.softmax)
+        apply SEqUFnS.of.SEq _ (fun {s} (t : Tensor ℝ* s) => t / √(d_z : ℝ*))
+        apply (SEqDotS.of.SEq (SEq.of.Eq _) _).trans (SEqDotS.of.SEq.left _ _)
+        ·
+          simp only [Qs]
           rw [MapStack.eq.Stack_Map]
-        have hslice : Ks[:n + 1] ≃ [t < n + 1] (K t : Tensor ℝ* [d_z]) := by
-          rw [hKs]
-          exact GetSliceStack.as.Stack_UFn.of.Eq_Add (by omega : n + 1 = (n + 1) + 0) (fun t => (K t : Tensor ℝ* [d_z]))
-        have happ : [t < n + 1] (K t : Tensor ℝ* [d_z]) ≃ Kn ++ [_ < 1] k := by
-          have hKn : Kn = [t < n] (K t : Tensor ℝ* [d_z]) := by
-            simp only [Kn]
-            rw [MapStack.eq.Stack_Map]
-          rw [hKn]
-          rw [Stack.eq.AppendStackS (n := n) (j := 1) (fun t => (K t : Tensor ℝ* [d_z]))]
-          apply SEqAppendS.of.SEq.SEq
+          simp [GetElem.getElem]
+          apply EqGetStack.fin
+        ·
+          apply SEq.trans (b := (Kn ++ [_ < 1] (K n : Tensor ℝ* [d_z]))ᵀ)
           ·
-            rfl
-          ·
+            apply SEqTS.of.SEq
+            simp only [Ks, Kn]
+            repeat rw [MapStack.eq.Stack_Map]
+            apply (GetSliceStack.as.Stack_UFn.of.Eq_Add (n + 1).add_zero.symm (fun t => (K t : Tensor ℝ* [d_z]))).trans
+            rw [Stack.eq.AppendStackS (fun t => (K t : Tensor ℝ* [d_z]))]
+            apply SEqAppendS.of.SEq.SEq (by rfl)
             apply SEq.of.Eq
             apply Eq.of.All_EqGetS.fin
             intro t
             fin_cases t
-            simp only [EqGetStack.fin]
-            simp [k]
-        have ht : (Kn ++ [_ < 1] k)ᵀ ≃ KT ++ kT := by
-          simp only [KT, kT]
-          exact TAppend.as.AppendTS Kn ([_ < 1] k)
-        exact (SEqTS.of.SEq (hslice.trans happ)).trans ht
-      have hV : Vs[:n + 1] ≃ Vn ++ [_ < 1] v := by
-        have hVs : Vs = [t < n + 1] (V t : Tensor ℝ* [d_z]) := by
+            simp [EqGetStack.fin]
+          ·
+            simp only [KT, kT]
+            apply TAppend.as.AppendTS
+      ·
+        apply SEq.trans (b := [t < n + 1] (V t : Tensor ℝ* [d_z]))
+        ·
           simp only [Vs]
           rw [MapStack.eq.Stack_Map]
-        have hslice : Vs[:n + 1] ≃ [t < n + 1] (V t : Tensor ℝ* [d_z]) := by
-          rw [hVs]
-          exact GetSliceStack.as.Stack_UFn.of.Eq_Add (by omega : n + 1 = (n + 1) + 0) (fun t => (V t : Tensor ℝ* [d_z]))
-        have happ : [t < n + 1] (V t : Tensor ℝ* [d_z]) ≃ Vn ++ [_ < 1] v := by
-          have hVn : Vn = [t < n] (V t : Tensor ℝ* [d_z]) := by
-            simp only [Vn]
-            rw [MapStack.eq.Stack_Map]
-          rw [hVn]
-          rw [Stack.eq.AppendStackS (n := n) (j := 1) (fun t => (V t : Tensor ℝ* [d_z]))]
-          apply SEqAppendS.of.SEq.SEq
-          ·
-            rfl
-          ·
-            apply SEq.of.Eq
-            apply Eq.of.All_EqGetS.fin
-            intro t
-            fin_cases t
-            simp only [EqGetStack.fin]
-            simp [v]
-        exact hslice.trans happ
-      refine (SEqDotS.of.SEq ?row_scores _).trans (SEqDotS.of.SEq.left hV _)
-      refine SEqUFnS.of.SEq ?_ (fun {s} (t : Tensor ℝ* s) => t.softmax)
-      refine SEqUFnS.of.SEq ?_ (fun {s} (t : Tensor ℝ* s) => t / √(d_z : ℝ*))
-      refine (SEqDotS.of.SEq (SEq.of.Eq hQ) _).trans (SEqDotS.of.SEq.left hK _)
-    exact XEq.of.Eq (hpre.trans ((congrArg f (Nat.add_zero n)).trans (hrow.trans hrowg.symm)))
+          apply GetSliceStack.as.Stack_UFn.of.Eq_Add (n + 1).add_zero.symm (fun t => (V t : Tensor ℝ* [d_z]))
+        ·
+          simp only [Vn]
+          rw [MapStack.eq.Stack_Map]
+          rw [Stack.eq.AppendStackS (fun t => (V t : Tensor ℝ* [d_z]))]
+          apply SEqAppendS.of.SEq.SEq (by rfl)
+          apply SEq.of.Eq
+          apply Eq.of.All_EqGetS.fin
+          intro t
+          fin_cases t
+          simp [EqGetStack.fin]
+    ·
+      symm
+      apply EqGetStack.fin
 
 
 -- created on 2026-08-19
+-- updated on 2026-08-20
