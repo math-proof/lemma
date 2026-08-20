@@ -331,6 +331,10 @@ abstract class Lean extends IndentedNode
                     return $this->parent->insert_word($this, $token);
                 }
                 return $this->append("Lean_$token", "tactic");
+            case 'lim':
+                if ($this instanceof LeanCaret && $this->parent instanceof LeanProperty)
+                    return $this->parent->insert_word($this, $token);
+                return $this->append('Lean_lim', 'operator');
             case 'public':
             case 'private':
             case 'protected':
@@ -495,8 +499,10 @@ abstract class Lean extends IndentedNode
                 if ($tokens[$i + 1] == '=') {
                     ++$i;
                     return $this->push_binary('Lean_ne');
-                } else
+                } elseif ($this instanceof LeanCaret)
                     return $this->parent->insert_unary($this, 'LeanNot');
+                else
+                    return $this->push_post_unary('LeanFactorial');
             case ',':
                 return $this->parent->insert_comma($this);
             case ':':
@@ -1902,6 +1908,12 @@ class LeanBracket extends LeanPairedGroup
             $this->parent->replace($this, $new);
             return $caret;
         }
+        if (get_class($this) == $func && ($lim = $this->parent) instanceof Lean_lim && $lim->bound === $this && !$lim->scope) {
+            $lim->bound = $this->arg;
+            $caret = new LeanCaret($this->indent, $this->level);
+            $lim->scope = $caret;
+            return $caret;
+        }
         return parent::push_right($func);
     }
     public function strArgs()
@@ -2302,6 +2314,8 @@ class LeanProperty extends LeanBinary
                     break;
                 case 'sigmoid':
                     return [$this->lhs->toLatex($syntax)];
+                case 'factorial':
+                    return [$this->lhs->toLatex($syntax)];
             }
         }
         return parent::latexArgs($syntax);
@@ -2343,6 +2357,8 @@ class LeanProperty extends LeanBinary
                         return '\infty';
                 case 'sigmoid':
                     return '{\\color{RoyalBlue}\\sigma}\\left(%s\\right)';
+                case 'factorial':
+                    return '{%s}!';
             }
         }
         return "{%s}$this->command{%s}";
@@ -3678,6 +3694,29 @@ class LeanInv extends LeanUnaryArithmeticPost
     public function strFormat()
     {
         return "%s$this->operator";
+    }
+}
+
+class LeanFactorial extends LeanUnaryArithmeticPost
+{
+    public static $input_priority = 10000;
+    public function __get($vname)
+    {
+        switch ($vname) {
+            case 'operator':
+            case 'command':
+                return '!';
+            default:
+                return parent::__get($vname);
+        }
+    }
+    public function latexFormat()
+    {
+        return '{%s}!';
+    }
+    public function strFormat()
+    {
+        return '%s !';
     }
 }
 
@@ -9262,6 +9301,89 @@ class Lean_sum extends LeanBigOperator
             default:
                 return parent::__get($vname);
         }
+    }
+}
+
+class Lean_lim extends LeanBigOperator
+{
+    public static $input_priority = 67;
+    public function __get($vname)
+    {
+        switch ($vname) {
+            case 'operator':
+                return 'lim';
+            case 'command':
+                return '\\lim';
+            case 'stack_priority':
+                if ($this->scope)
+                    return 67;
+                return LeanColon::$input_priority - 1;
+            default:
+                return parent::__get($vname);
+        }
+    }
+    /** `lim [N → ∞] ∑ n ∈ range N, e` → infinite sum from `n = 0`. */
+    public function asInfiniteRangeSum()
+    {
+        $unwrap = function ($n) {
+            while ($n instanceof LeanParenthesis)
+                $n = $n->arg;
+            return $n;
+        };
+        $isInf = function ($n) use ($unwrap) {
+            $n = $unwrap($n);
+            if ($n instanceof LeanToken)
+                return $n->text === '∞';
+            if ($n instanceof LeanPlus) {
+                $arg = $unwrap($n->arg);
+                return $arg instanceof LeanToken && $arg->text === '∞';
+            }
+            return false;
+        };
+        $isRangeFn = function ($fn) use ($unwrap) {
+            $fn = $unwrap($fn);
+            if ($fn instanceof LeanToken)
+                return $fn->text === 'range';
+            return $fn instanceof LeanProperty && $fn->rhs instanceof LeanToken && $fn->rhs->text === 'range';
+        };
+        $isRangeOf = function ($node, $n) use ($unwrap, $isRangeFn) {
+            $node = $unwrap($node);
+            if (!($node instanceof LeanArgsSpaceSeparated) || count($node->args) !== 2)
+                return false;
+            $arg = $unwrap($node->args[1]);
+            return $isRangeFn($node->args[0]) && $arg instanceof LeanToken && $n instanceof LeanToken && $arg->text === $n->text;
+        };
+        $bound = $unwrap($this->bound);
+        if (!($bound instanceof Lean_rightarrow) || !$isInf($bound->rhs))
+            return null;
+        $nLim = $unwrap($bound->lhs);
+        if (!($nLim instanceof LeanToken))
+            return null;
+        $sum = $unwrap($this->scope);
+        if (!($sum instanceof Lean_sum))
+            return null;
+        $mem = $unwrap($sum->bound);
+        if (!($mem instanceof Lean_in) || !$isRangeOf($mem->rhs, $nLim))
+            return null;
+        return ['index' => $mem->lhs, 'body' => $sum->scope];
+    }
+    public function latexFormat()
+    {
+        if ($this->asInfiniteRangeSum())
+            return '\\sum\\limits_{%s=0}^{\\infty} {%s}';
+        return "$this->command\\limits_{%s} {%s}";
+    }
+    public function latexArgs(&$syntax = null)
+    {
+        if ($inf = $this->asInfiniteRangeSum())
+            return [$inf['index']->toLatex($syntax), $inf['body']->toLatex($syntax)];
+        return parent::latexArgs($syntax);
+    }
+    public function strFormat()
+    {
+        if (count($this->args) == 1)
+            return "$this->operator [%s]";
+        return "$this->operator [%s] %s";
     }
 }
 

@@ -13,7 +13,6 @@ private lemma main
   else
     -x := by
 -- proof
-  -- Split the proof into two cases based on the condition x ≥ 0
   split_ifs with h
   ·
     apply abs_of_nonneg h

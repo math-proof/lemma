@@ -390,6 +390,11 @@ export class Lean extends IndentedNode {
                 if (asPropertyField) return asPropertyField;
                 return this.append(`Lean_${token}`, 'tactic');
             }
+            case 'lim': {
+                const asPropertyField = self.parseKeywordAsPropertyField(this, token);
+                if (asPropertyField) return asPropertyField;
+                return this.append(`Lean_${token}`, 'operator');
+            }
             case 'public':
             case 'private':
             case 'protected':
@@ -580,7 +585,8 @@ export class Lean extends IndentedNode {
                     self.start_idx++;
                     return this.push_binary(Lean_ne);
                 }
-                return this.parent.insert_unary(this, 'LeanNot');
+                if (this instanceof LeanCaret) return this.parent.insert_unary(this, 'LeanNot');
+                return this.push_post_unary('LeanFactorial');
             case ',':
                 return leanInsertComma(this);
             case ':':
@@ -1227,6 +1233,7 @@ export class LeanToken extends Lean {
     }
 
     latexFormat() {
+        if (this.text === '∞') return '\\infty';
         let text = escapeSpecialsForLatex(this.text);
         if (text === this.text) {
             const sk = LeanToken.subscript_keys;
@@ -2169,6 +2176,13 @@ class LeanBracket extends LeanPairedGroup {
                 this.parent.replace(this, stack);
                 return scope;
             }
+            const lim = this.parent;
+            if (lim instanceof Lean_lim && lim.bound === this && !lim.scope) {
+                lim.bound = this.arg;
+                const scope = new LeanCaret(this.indent, this.level);
+                lim.scope = scope;
+                return scope;
+            }
         }
         return super.push_right(funcName);
     }
@@ -2571,6 +2585,8 @@ export class LeanProperty extends LeanBinary {
                     break;
                 case 'sigmoid':
                     return [this.lhs.toLatex(syntax)];
+                case 'factorial':
+                    return [this.lhs.toLatex(syntax)];
             }
         }
         return super.latexArgs(syntax);
@@ -2629,6 +2645,8 @@ export class LeanProperty extends LeanBinary {
                     break;
                 case 'sigmoid':
                     return '{\\color{RoyalBlue}\\sigma}\\left(%s\\right)';
+                case 'factorial':
+                    return '{%s}!';
             }
         }
         return `{%s}${this.command}{%s}`;
@@ -3578,6 +3596,23 @@ class LeanInv extends LeanUnaryArithmeticPost {
     }
     strFormat() {
         return `%s${this.operator}`;
+    }
+}
+
+/** Postfix factorial `n !`. */
+class LeanFactorial extends LeanUnaryArithmeticPost {
+    static input_priority = 10000;
+    get command() {
+        return '!';
+    }
+    latexFormat() {
+        return '{%s}!';
+    }
+    get operator() {
+        return '!';
+    }
+    strFormat() {
+        return '%s !';
     }
 }
 
@@ -9256,6 +9291,70 @@ class Lean_sum extends LeanBigOperator {
     }
 }
 
+class Lean_lim extends LeanBigOperator {
+    static input_priority = 67;
+    get command() {
+        return '\\lim';
+    }
+    /** `lim [N → ∞] ∑ n ∈ range N, e` → infinite sum from `n = 0`. */
+    asInfiniteRangeSum() {
+        const unwrap = (n) => {
+            while (n instanceof LeanParenthesis) n = n.arg;
+            return n;
+        };
+        const isInf = (n) => {
+            n = unwrap(n);
+            if (n instanceof LeanToken) return n.text === '∞';
+            if (n instanceof LeanPlus) {
+                const arg = unwrap(n.arg);
+                return arg instanceof LeanToken && arg.text === '∞';
+            }
+            return false;
+        };
+        const isRangeFn = (fn) => {
+            fn = unwrap(fn);
+            if (fn instanceof LeanToken) return fn.text === 'range';
+            return fn instanceof LeanProperty && fn.rhs instanceof LeanToken && fn.rhs.text === 'range';
+        };
+        const isRangeOf = (node, n) => {
+            node = unwrap(node);
+            if (!(node instanceof LeanArgsSpaceSeparated) || node.args.length !== 2) return false;
+            const arg = unwrap(node.args[1]);
+            return isRangeFn(node.args[0]) && arg instanceof LeanToken && n instanceof LeanToken && arg.text === n.text;
+        };
+        const bound = unwrap(this.bound);
+        if (!(bound instanceof Lean_rightarrow) || !isInf(bound.rhs)) return null;
+        const nLim = unwrap(bound.lhs);
+        if (!(nLim instanceof LeanToken)) return null;
+        const sum = unwrap(this.scope);
+        if (!(sum instanceof Lean_sum)) return null;
+        const mem = unwrap(sum.bound);
+        if (!(mem instanceof Lean_in) || !isRangeOf(mem.rhs, nLim)) return null;
+        return {index: mem.lhs, body: sum.scope};
+    }
+    latexFormat() {
+        if (this.asInfiniteRangeSum()) return '\\sum\\limits_{%s=0}^{\\infty} {%s}';
+        return `${this.command}\\limits_{%s} {%s}`;
+    }
+    latexArgs(syntax) {
+        const inf = this.asInfiniteRangeSum();
+        if (inf) return [inf.index.toLatex(syntax), inf.body.toLatex(syntax)];
+        return super.latexArgs(syntax);
+    }
+    get operator() {
+        return 'lim';
+    }
+    get stack_priority() {
+        if (this.scope) return 67;
+        return LeanColon.input_priority - 1;
+    }
+    strFormat() {
+        const sep = this.sep();
+        if (this.args.length === 1) return `${this.operator} [%s]`;
+        return `${this.operator} [%s]${sep}%s`;
+    }
+}
+
 class Lean_prod extends LeanBigOperator {
     static input_priority = 67;
     get operator() {
@@ -9546,6 +9645,7 @@ const LEAN_CLASSES = {
     Lean_import,
     LeanIn,
     LeanInv,
+    LeanFactorial,
     Lean_lnot,
     Lean_namespace,
     LeanNegPart,
@@ -9558,6 +9658,7 @@ const LEAN_CLASSES = {
     Lean_set_option,
     Lean_show,
     Lean_sum,
+    Lean_lim,
     LeanSquare,
     Lean_sqrt,
     LeanTesseract,

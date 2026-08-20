@@ -172,7 +172,7 @@ inductive ExprWithLimits where
   | Lean_int (name : Name)
   | Lean_bigcap
   | Lean_bigcup
-  | Lean_lim (name : Name)
+  | Lean_lim
   | Lean_sup (name : Name)
   | Lean_inf (name : Name)
   | Lean_max (name : Name)
@@ -190,7 +190,7 @@ def ExprWithLimits.func : ExprWithLimits → Func
   | Lean_int _ => ⟨52, "∫", "\\int"⟩
   | Lean_bigcap => ⟨52, "⋂", "\\bigcap"⟩
   | Lean_bigcup => ⟨51, "⋃", "\\bigcup"⟩
-  | Lean_lim _ => ⟨52, "lim", "\\lim"⟩
+  | Lean_lim => ⟨52, "lim", "\\lim"⟩
   | Lean_sup _ => ⟨52, "sup", "\\sup"⟩
   | Lean_inf _ => ⟨52, "inf", "\\inf"⟩
   | Lean_max _ => ⟨52, "max", "\\max"⟩
@@ -208,7 +208,7 @@ def ExprWithLimits.name : ExprWithLimits → Name
   | Lean_int name
   | Lean_bigcap => `Set.iInter
   | Lean_bigcup => `Set.iUnion
-  | Lean_lim name
+  | Lean_lim => `Filter.limUnder
   | Lean_sup name
   | Lean_inf name
   | Lean_max name
@@ -690,6 +690,8 @@ e = {e}, e = {← ppExpr e}, e.type = {← inferType e}"
       return .Operator (.ExprWithLimits .Lean_sum)
     | `Finset.prod =>
       return .Operator (.ExprWithLimits .Lean_prod)
+    | `Filter.limUnder =>
+      return .Operator (.ExprWithLimits .Lean_lim)
     | `Exists =>
       return .Operator (.ExprWithLimits .Lean_exists)
     | `Set.iUnion =>
@@ -809,3 +811,146 @@ def Binder.mk (binderinfo : BinderInfo) (binderType : Expr) : Binder :=
   | .implicit => .implicit
   | .strictImplicit => .strictImplicit
   | .instImplicit => .instImplicit
+
+
+def Expr.isNatZero : Expr → Bool
+  | const (.natVal 0) => true
+  | _ => false
+
+/-- Direction of `lim [x → …]`. -/
+inductive LimTo where
+  | inf
+  | ninf
+  | zero
+  | zeroPos
+  | zeroNeg
+  | nhds (x : Expr)
+deriving BEq
+
+/-- `true` = `atTop` (`∞`), `false` = `atBot` (`-∞`). -/
+def Expr.asAtTopBot? : Expr → Option Bool
+  | Basic (.ExprWithAttr op) _ _ =>
+    match op.name.getLast with
+    | `atTop => some true
+    | `atBot => some false
+    | _ => none
+  | const (.ident name) =>
+    match name.getLast with
+    | `atTop => some true
+    | `atBot => some false
+    | _ => none
+  | _ => none
+
+def Expr.isSingletonZero : Expr → Bool
+  | Basic (.Special ⟨`Singleton.singleton⟩) [x] _ => x.isNatZero
+  | Basic func [x] _ =>
+    func.name.getLast == `singleton && x.isNatZero
+  | _ =>
+    false
+
+def Expr.asIoiIioZero? : Expr → Option LimTo
+  | Basic func [a] _ =>
+    if a.isNatZero then
+      match func.name.getLast with
+      | `Ioi => some .zeroPos
+      | `Iio => some .zeroNeg
+      | _ => none
+    else
+      none
+  | _ =>
+    none
+
+def Expr.isComplSingletonZero : Expr → Bool
+  | Basic func args _ =>
+    let isCompl :=
+      match func.name.getLast with
+      | `compl | `complement => true
+      | _ => false
+    isCompl &&
+      match args with
+      | [s] => s.isSingletonZero
+      | [a, b] => a.isSingletonZero || b.isSingletonZero
+      | _ => false
+  | _ =>
+    false
+
+def Expr.asSingleton? : Expr → Option Expr
+  | Basic (.Special ⟨`Singleton.singleton⟩) [x] _ => some x
+  | Basic func [x] _ =>
+    if func.name.getLast == `singleton then some x else none
+  | _ =>
+    none
+
+def Expr.isComplOfSingleton (s pt : Expr) : Bool :=
+  match s with
+  | Basic func args _ =>
+    let isCompl :=
+      match func.name.getLast with
+      | `compl | `complement => true
+      | _ => false
+    isCompl &&
+      match args with
+      | [t] => t.asSingleton? == some pt
+      | [a, b] => a.asSingleton? == some pt || b.asSingleton? == some pt
+      | _ => false
+  | _ =>
+    false
+
+/-- `nhdsWithin x0 {x0}ᶜ` for a general point. -/
+def Expr.asNhdsWithinPunctured? : Expr → Option Expr
+  | Basic func [x, s] _ =>
+    if func.name.getLast == `nhdsWithin && s.isComplOfSingleton x then some x
+    else none
+  | _ =>
+    none
+
+/-- `nhdsWithin 0 {0}ᶜ` / `Ioi 0` / `Iio 0`. -/
+def Expr.asNhdsWithinZero? : Expr → Option LimTo
+  | Basic func [x, s] _ =>
+    if func.name.getLast == `nhdsWithin && x.isNatZero then
+      if s.isComplSingletonZero then some .zero
+      else s.asIoiIioZero?
+    else
+      none
+  | _ =>
+    none
+
+/-- `f.map fun n => e` with `f` = `atTop` / `atBot`. -/
+def Expr.asMapAtTopBotLambda? : Expr → Option (Name × LimTo × Expr)
+  | Basic func args _ =>
+    let pair? : Option (Expr × Expr) :=
+      match func, args with
+      | .ExprWithAttr (.LeanMethod `Filter.map _), [fn, filt]
+      | .ExprWithAttr (.Lean_operatorname `Filter.map), [fn, filt]
+      | .ExprWithAttr (.Lean_function `Filter.map), [fn, filt]
+      | .BinaryInfix ⟨`Functor.map⟩, [fn, filt] =>
+        some (fn, filt)
+      | .ExprWithAttr (.LeanMethod name _), [fn, filt] =>
+        if name.getLast == `map then some (fn, filt) else none
+      | _, _ =>
+        none
+    match pair? with
+    | some (Basic (.ExprWithLimits .Lean_lambda) [fn, Binder .default n _ _] _, filt) =>
+      filt.asAtTopBot?.map fun isTop => (n, if isTop then .inf else .ninf, fn)
+    | _ =>
+      none
+  | _ =>
+    none
+
+/--
+`limUnder atTop/atBot/nhdsWithin 0 (fun n => e)`.
+Returns binder name, limit direction, and the body.
+-/
+def Expr.asLimBound? : List Expr → Option (Name × LimTo × Expr)
+  | [filt, Basic (.ExprWithLimits .Lean_lambda) [fn, Binder .default n _ _] _] =>
+    match filt.asAtTopBot? with
+    | some true => some (n, .inf, fn)
+    | some false => some (n, .ninf, fn)
+    | none =>
+      (filt.asNhdsWithinZero?.map fun dir => (n, dir, fn)) <|>
+        (filt.asNhdsWithinPunctured?.map fun x =>
+          (n, if x.isNatZero then LimTo.zero else LimTo.nhds x, fn))
+  | [mapped] =>
+    mapped.asMapAtTopBotLambda?
+  | _ =>
+    none

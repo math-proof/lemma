@@ -15,7 +15,7 @@ import Lemma.Tensor.XEq.is.All_XEqGetS
 import Lemma.Tensor.XEq.of.Eq
 import Lemma.Tensor.XEqAppendS.of.XEq.XEq
 open Bool List Tensor
-set_option maxHeartbeats 800000
+set_option maxHeartbeats 1000000
 
 
 @[main]

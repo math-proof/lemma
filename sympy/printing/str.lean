@@ -15,6 +15,14 @@ def Expr.is_Propositional : Expr → Bool
   | _ => false
 
 
+def LimTo.str : LimTo → String
+  | inf => "∞"
+  | ninf => "-∞"
+  | zero => "0"
+  | zeroPos => "0⁺"
+  | zeroNeg => "0⁻"
+  | nhds _ => ""
+
 def BinaryInfix.strFormat (op : BinaryInfix) (left right : Expr) : String :=
   let func := op.func
   let opStr := func.operator
@@ -128,6 +136,12 @@ def Expr.strFormat : Expr → String
           opStr ++ " %s".repeat (args.length - 1) ++ " ↦ %s"
         | .Lean_let =>
           s!"{opStr} %s; ".repeat (args.length - 1) ++ "%s"
+        | .Lean_lim =>
+          match Expr.asLimBound? args with
+          | some _ =>
+            "lim [%s → %s] %s"
+          | none =>
+            ""
         | _ =>
           ""
       if opStr' == "" then
@@ -306,6 +320,16 @@ where
               "%s : %s := %s".format name.toString, type.toString, value.toString
             else
               "%s".format expr.toString
+        | .Lean_lim =>
+          match Expr.asLimBound? args with
+          | some (n, dir, fn) =>
+            let bound :=
+              match dir with
+              | .nhds x => x.toString
+              | d => d.str
+            [" ".intercalate n.normalized, bound, fn.toString]
+          | none =>
+            []
         | _ =>
           []
       if args' == [] then

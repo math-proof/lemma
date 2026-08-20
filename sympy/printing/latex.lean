@@ -115,9 +115,13 @@ def Expr.asStack? : Expr → Option (String × Expr × Expr)
   | _ =>
     none
 
-def Expr.isNatZero : Expr → Bool
-  | const (.natVal 0) => true
-  | _ => false
+def LimTo.latex : LimTo → String
+  | inf => "\\infty"
+  | ninf => "-\\infty"
+  | zero => "0"
+  | zeroPos => "0^{+}"
+  | zeroNeg => "0^{-}"
+  | nhds _ => ""
 
 def Expr.asArchimedeanMk? : Expr → Option Expr
   | Basic (.Special ⟨`ArchimedeanClass.mk⟩) (x :: _) _ => some x
@@ -341,6 +345,12 @@ def Expr.latexFormat : Expr → String
         | .Lean_bigcup
         | .Lean_bigcap =>
           opStr ++ "\\limits_{\\substack{%s}} {%s}"
+        | .Lean_lim =>
+          match Expr.asLimBound? args with
+          | some _ =>
+            "\\lim\\limits_{%s \\to %s} {%s}"
+          | none =>
+            if args.length == 1 then "\\lim %s" else ""
         | _ =>
           ""
       if opStr' == "" then
@@ -522,6 +532,8 @@ def Expr.latexFormat : Expr → String
           "%s\\ {\\color{blue}\\text{is}}\\ {constant}"
         | `Tensor.T =>
           "{%s}^{\\color{magenta} T}"
+        | `Nat.factorial =>
+          "{%s}!"
         | _ =>
           match args with
           | arg :: _ =>
@@ -602,6 +614,16 @@ where
           | [expr, Binder .default name type nil] =>
             [("{%s : %s}".format name.toString.escape_specials, type.toLatex), expr.toLatex]
           | _ =>
+            []
+        | .Lean_lim =>
+          match Expr.asLimBound? args with
+          | some (n, dir, fn) =>
+            let bound :=
+              match dir with
+              | .nhds x => x.toLatex
+              | d => d.latex
+            [n.escape_specials "\\ ", bound, fn.toLatex]
+          | none =>
             []
         | _ =>
           []
