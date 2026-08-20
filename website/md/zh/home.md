@@ -53,7 +53,8 @@
 * [Finset](../?module=Set) 有限集合论
 * [List](../?module=List) 有限列表定理库
 * [Vector](../?module=Vector) 一维向量定理库
-* [Tensor](../?module=Tensor) 形式化张量演算定理库，概念及其算子与**torch.Tensor**语义上等价，用于深度学习算法形式化验证
+* [Tensor](../?module=Tensor) 形式化张量演算，概念与**torch.Tensor**语义上等价，用于深度学习算法形式化验证，例：
+  - [kv_cache](../?module=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T)
 
 <br><br>
 -------

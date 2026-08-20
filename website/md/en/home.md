@@ -55,7 +55,8 @@ As of this writing, the system has accumulated <label id=count>5000</label> prov
 * [Finset](../?module=Set) – Finite set theory  
 * [List](../?module=List) – Finite list theorem library  
 * [Vector](../?module=Vector) – One-dimensional vector theorem library  
-* [Tensor](../?module=Tensor) – Formal tensor calculus theorem library, where the concepts and operators are semantically equivalent to **torch.Tensor**, used for formal verification of deep learning algorithms
+* [Tensor](../?module=Tensor) – Formal tensor calculus theorem library, where the concepts and operators are semantically equivalent to **torch.Tensor**, used for formal verification of deep learning algorithms, e.g.:
+  - [kv_cache](../?module=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T)
 
 <br><br>
 -------
