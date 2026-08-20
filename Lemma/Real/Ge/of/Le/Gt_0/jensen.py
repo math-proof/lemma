@@ -47,7 +47,7 @@ def prove(Eq):
 
     Eq.ge = Eq[-2].this.rhs.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS, simplify=None)
 
-    Eq.le = Eq[-1].this.lhs.apply(Algebra.Add.collect, factor=x1)
+    Eq.le = Eq[-1].this.lhs.apply(Int.AddAddS.eq.MulAddS, factor=x1)
 
     Eq.all_is_positive = Bool.All.of.Cond.apply(Eq[1], x)
 
@@ -67,9 +67,9 @@ def prove(Eq):
 
     Eq <<= Real.Any.Eq.of.Le.IsContinuous.IsDifferentiable.mean_value_theorem.Lagrange.close.apply(Eq.ge.reversed, Eq[-2], Eq[-4]), Real.Any.Eq.of.Le.IsContinuous.IsDifferentiable.mean_value_theorem.Lagrange.close.apply(Eq.le, Eq[-1], Eq[-3])
 
-    Eq <<= Eq[-2].this.expr.rhs.args[0].apply(Algebra.Add.collect), Eq[-1].this.expr.rhs.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
+    Eq <<= Eq[-2].this.expr.rhs.args[0].apply(Int.AddAddS.eq.MulAddS), Eq[-1].this.expr.rhs.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 
-    Eq <<= Eq[-2].this.expr.rhs.args[0].apply(Algebra.Add.collect, factor=1 - w), Eq[-1].this.expr.rhs.find(Add[Mul]).apply(Nat.AddMulS.eq.Mul_Add)
+    Eq <<= Eq[-2].this.expr.rhs.args[0].apply(Int.AddAddS.eq.MulAddS, factor=1 - w), Eq[-1].this.expr.rhs.find(Add[Mul]).apply(Nat.AddMulS.eq.Mul_Add)
 
     Eq <<= Eq[-2].this.expr * w, Eq[-1].this.expr * (1 - w)
 
@@ -81,8 +81,8 @@ def prove(Eq):
     Eq << Eq[-1].this.expr.lhs.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
     Eq << Eq[-1].this.expr.lhs.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
     Eq << Eq[-1].this.expr.lhs.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
-    Eq << Eq[-1].this.expr.lhs.apply(Algebra.Add.collect, factor=f(x1))
-    Eq.any = Eq[-1].this.expr.rhs.apply(Algebra.Add.collect, factor=w * (1 - w) * (x1 - x0))
+    Eq << Eq[-1].this.expr.lhs.apply(Int.AddAddS.eq.MulAddS, factor=f(x1))
+    Eq.any = Eq[-1].this.expr.rhs.apply(Int.AddAddS.eq.MulAddS, factor=w * (1 - w) * (x1 - x0))
     Eq.suffice = Eq.any.limits_cond.this.apply(Set.Le.of.In.In)
     Eq <<= Set.Subset.Icc.of.In.In.apply(Eq.x0_contains, Eq.x_mean_contains), Set.Subset.Icc.of.In.In.apply(Eq.x_mean_contains, Eq.x1_contains)
     Eq <<= Bool.Imp.of.Cond.apply(Eq[-2], cond=Eq.suffice.lhs.args[0]), Bool.Imp.of.Cond.apply(Eq[-1], cond=Eq.suffice.lhs.args[1])

@@ -15,7 +15,7 @@ def apply(given, d):
 
 @prove
 def prove(Eq):
-    from Lemma import Set
+    from Lemma import Set, Nat, Nat, Nat
     x, a, b = Symbol(real=True, given=True)
 #     t = Symbol(real=True)
     d = Symbol(real=True, given=True, positive=True)
@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq << ~Eq[-1]
 
-    Eq << Set.In.Mul.Icc.of.In.apply(Eq[-1], d)
+    Eq << Nat.InMul.of.In_Ico.Gt_0.apply(Eq[-1], d)
 
     Eq <<= Eq[-1] & Eq[0]
 

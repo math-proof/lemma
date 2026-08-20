@@ -17,7 +17,7 @@ def prove(Eq):
     p = Symbol(complex=True, given=True)
     Eq << apply(Element(Arg(p), Interval(S.Pi / 3, S.Pi, left_open=True)))
 
-    Eq << Set.In.Mul.Icc.of.In.apply(Eq[0], 3)
+    Eq << Nat.InMul.of.In_Ico.Gt_0.apply(Eq[0], 3)
 
     Eq << Int.InSub.of.In_Icc.apply(Eq[-1], S.Pi)
 

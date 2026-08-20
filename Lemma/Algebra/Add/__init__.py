@@ -1,5 +1,4 @@
 from . import principle
-from . import collect
 from . import Mul
 from . import Max
 from . import Square

@@ -12,7 +12,7 @@ def apply(limited_f, limited_g):
 
 @prove
 def prove(Eq):
-    from Lemma import Real, Set, Algebra, Bool, Rat
+    from Lemma import Real, Set, Algebra, Bool, Rat, Nat, Nat, Nat, Nat
 
     x, x0 = Symbol(real=True)
     f, g = Function(real=True)
@@ -36,7 +36,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Abs.eq.Inv, simplify=None)
 
-    Eq.is_positive_real = Set.In.Mul.Icc.of.In.apply(Eq[-1], ε / 2, simplify=None)
+    Eq.is_positive_real = Nat.InMul.of.In_Ico.Gt_0.apply(Eq[-1], ε / 2, simplify=None)
 
     ε_1 = Symbol(real=True, positive=True)
     δ_1 = Symbol(real=True, positive=True)

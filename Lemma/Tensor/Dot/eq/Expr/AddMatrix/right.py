@@ -60,7 +60,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Tensor.Add_Stack.eq.Stack_Add)
 
-    Eq << Eq[-1].this.find(Add[Mul]).apply(Algebra.Add.collect, factor=KroneckerDelta(i, j))
+    Eq << Eq[-1].this.find(Add[Mul]).apply(Int.AddAddS.eq.MulAddS, factor=KroneckerDelta(i, j))
 
     Eq << Eq[-1].this.find(Mul).apply(Algebra.Mul.Delta.eq.Zero)
 

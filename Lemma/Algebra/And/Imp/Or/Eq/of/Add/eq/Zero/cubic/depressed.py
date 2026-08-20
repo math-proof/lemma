@@ -33,7 +33,7 @@ def prove(Eq):
 
     Eq << Set.Arg.In.IocNegPiPi.apply(-p)
 
-    Eq << Set.In.Mul.Icc.of.In.apply(Eq[-1], 3, simplify=None)
+    Eq << Nat.InMul.of.In_Ico.Gt_0.apply(Eq[-1], 3, simplify=None)
 
     Eq << Int.InSub.of.In_Icc.apply(Eq[-1], S.Pi, simplify=None)
 

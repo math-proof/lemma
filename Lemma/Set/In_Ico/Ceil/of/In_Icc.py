@@ -24,7 +24,7 @@ def prove(Eq):
     a, b, x = Symbol(real=True)
     Eq << apply(Element(x, Interval(a, b, left_open=True)))
 
-    Eq << Set.In.of.In.relax.Icc.apply(Eq[0])
+    Eq << Set.In_IocFloor_Ceil.of.In_Ioc.apply(Eq[0])
 
     Eq << Eq[-1].this.rhs.apply(Set.Icc.eq.Cup.left_open)
 

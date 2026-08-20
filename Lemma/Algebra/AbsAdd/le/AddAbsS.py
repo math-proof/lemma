@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Int.GeAbs.apply(x * y)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Abs.eq.Mul)
+    Eq << Eq[-1].this.rhs.apply(Int.Abs.eq.Mul)
 
     Eq << Eq[-1] * 2
 

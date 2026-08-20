@@ -33,7 +33,7 @@ def prove(Eq):
 
     Eq << Algebra.Le.of.Eq.Le.apply(Eq[-2], Eq[-1])
 
-    Eq << Eq[-1].this.find(Abs[Mul]).apply(Algebra.Abs.eq.Mul)
+    Eq << Eq[-1].this.find(Abs[Mul]).apply(Int.Abs.eq.Mul)
 
     Eq << Algebra.All_Le_Maxima.apply(Eq[1].find(Maxima))
 

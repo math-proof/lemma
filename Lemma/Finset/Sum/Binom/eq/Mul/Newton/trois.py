@@ -40,13 +40,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.eq.Sub.unshift)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Add.collect, factor=x)
+    Eq << Eq[-1].this.lhs.apply(Int.AddAddS.eq.MulAddS, factor=x)
 
     Eq << Eq[-1].this.find(Sum).apply(Finset.Sum.Binom.eq.Mul.Newton.deux)
 
     Eq << Int.Eq.given.Sub.eq.Zero.apply(Eq[-1])
 
-    Eq << Eq[-1].this.find(Mul + Mul).apply(Algebra.Add.collect, factor=(x + 1) ** (n - 3))
+    Eq << Eq[-1].this.find(Mul + Mul).apply(Int.AddAddS.eq.MulAddS, factor=(x + 1) ** (n - 3))
 
     Eq << Eq[-1].this.find(1 + ~Mul).expand()
 

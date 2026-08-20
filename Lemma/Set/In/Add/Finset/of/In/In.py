@@ -47,7 +47,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.args[5].apply(Nat.Add.of.Eq.Eq)
 
-    Eq << Set.In.given.Or.split.Finset.apply(Eq[2])
+    Eq << Set.In_Finset.given.OrEqS.apply(Eq[2])
 
 
 

@@ -6,9 +6,14 @@ def apply(le, ge, contains):
     _a, a = le.of(LessEqual)
     _b, b = ge.of(GreaterEqual)
     x, domain = contains.of(Element)
-    S[a], S[b] = domain.of(Interval)
+    if x.is_integer:
+        S[a], S[b] = domain.of(Range)
+        cls = Range
+    else:
+        S[a], S[b] = domain.of(Interval)
+        cls = Interval
 
-    return Element(x, Interval(_a, _b, **domain.kwargs))
+    return Element(x, cls(_a, _b, **domain.kwargs))
 
 
 @prove

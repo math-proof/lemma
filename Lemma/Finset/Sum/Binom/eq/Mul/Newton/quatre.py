@@ -40,31 +40,31 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.eq.Sub.unshift)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Add.collect, factor=x)
+    Eq << Eq[-1].this.lhs.apply(Int.AddAddS.eq.MulAddS, factor=x)
 
-    Eq << Eq[-1].this.find(Add).apply(Algebra.Add.collect, factor=n)
+    Eq << Eq[-1].this.find(Add).apply(Int.AddAddS.eq.MulAddS, factor=n)
 
-    Eq << Eq[-1].this.lhs.find(Add).apply(Algebra.Add.collect, factor=n)
+    Eq << Eq[-1].this.lhs.find(Add).apply(Int.AddAddS.eq.MulAddS, factor=n)
 
-    Eq << Eq[-1].this.find(Add[Pow]).apply(Algebra.Add.collect, factor=(x + 1) ** (n - 2))
+    Eq << Eq[-1].this.find(Add[Pow]).apply(Int.AddAddS.eq.MulAddS, factor=(x + 1) ** (n - 2))
 
     Eq << Eq[-1].this.find(Sum).apply(Finset.Sum.Binom.eq.Mul.Newton.trois)
 
     Eq << Eq[-1].this.find(Sum).apply(Finset.Sum.Binom.eq.Mul.Newton.deux)
 
-    Eq << Eq[-1].this.find(Mul + Mul).apply(Algebra.Add.collect, factor=(x + 1) ** (n - 4))
+    Eq << Eq[-1].this.find(Mul + Mul).apply(Int.AddAddS.eq.MulAddS, factor=(x + 1) ** (n - 4))
 
     Eq << Eq[-1].this.find(1 + ~Mul).expand()
 
     Eq << Eq[-1].this.find(1 + ~Mul[Add]).expand()
 
-    Eq << Eq[-1].this.lhs.find(Add).apply(Algebra.Add.collect, factor=x * (x + 1) ** (n - 4))
+    Eq << Eq[-1].this.lhs.find(Add).apply(Int.AddAddS.eq.MulAddS, factor=x * (x + 1) ** (n - 4))
 
     Eq << Eq[-1].this.rhs.find(Add[Mul]).expand()
 
     Eq << Int.Eq.given.Sub.eq.Zero.apply(Eq[-1])
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Add.collect, factor=(x + 1) ** (n - 4))
+    Eq << Eq[-1].this.lhs.apply(Int.AddAddS.eq.MulAddS, factor=(x + 1) ** (n - 4))
 
     Eq << Eq[-1].this.lhs.args[1].expand()
 

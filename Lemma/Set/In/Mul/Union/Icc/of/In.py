@@ -15,7 +15,7 @@ def apply(given, d):
 
 @prove
 def prove(Eq):
-    from Lemma import Set
+    from Lemma import Set, Nat, Nat, Nat, Nat
 
     x, a, b, c, d = Symbol(real=True)
     e = Symbol(real=True, positive=True)
@@ -23,9 +23,9 @@ def prove(Eq):
 
     Eq << Set.OrInS.of.In_Union.apply(Eq[0])
 
-    Eq << Eq[-1].this.args[0].apply(Set.In.Mul.Icc.of.In, e)
+    Eq << Eq[-1].this.args[0].apply(Nat.InMul.of.In_Ico.Gt_0, e)
 
-    Eq << Eq[-1].this.args[0].apply(Set.In.Mul.Icc.of.In, e)
+    Eq << Eq[-1].this.args[0].apply(Nat.InMul.of.In_Ico.Gt_0, e)
 
 
 

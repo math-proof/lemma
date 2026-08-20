@@ -34,7 +34,7 @@ def prove(Eq):
 
     Eq <<= ~Eq[-1] & Eq[0]
 
-    Eq << Eq[-1].this.args[-1].apply(Set.And.of.NotIn.split.Finset)
+    Eq << Eq[-1].this.args[-1].apply(Set.Ne.Ne.of.NotIn_Finset)
 
 
 if __name__ == '__main__':

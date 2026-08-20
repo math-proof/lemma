@@ -47,7 +47,7 @@ def prove(Eq):
 
     Eq << Int.Abs.of.Eq.apply(Eq[-1])
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Abs.eq.Mul)
+    Eq << Eq[-1].this.rhs.apply(Int.Abs.eq.Mul)
 
     Eq << (alpha * lamda + (1 - lamda) * beta).this.expand()
 

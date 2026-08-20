@@ -12,7 +12,7 @@ def apply(lt_zero, add_ge_zero, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Nat
+    from Lemma import Algebra, Set, Bool, Nat, Int, Int, Int
 
     a, b, c = Symbol(real=True, given=True)
     x = Symbol(real=True)
@@ -45,7 +45,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Expr ** 2).apply(Nat.SquareAdd.eq.AddAdd_SquareS_Mul2Add)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Add.collect)
+    Eq << Eq[-1].this.lhs.apply(Int.AddAddS.eq.MulAddS)
 
     Eq << Eq[-1].this.find(Symbol * Add).apply(Nat.Mul_Add.eq.AddMulS)
 

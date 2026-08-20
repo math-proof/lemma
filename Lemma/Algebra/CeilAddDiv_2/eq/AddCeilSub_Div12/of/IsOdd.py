@@ -11,13 +11,13 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Int, Int, Int, Int
 
     x = Symbol(real=True)
     n = Symbol(integer=True, odd=True, positive=True)
     Eq << apply(Ceil(x + n / 2))
 
-    Eq << Eq[0].this.rhs.apply(Algebra.AddCeil.eq.CeilAdd)
+    Eq << Eq[0].this.rhs.apply(Int.AddCeil.eq.CeilAdd)
 
 
 if __name__ == '__main__':

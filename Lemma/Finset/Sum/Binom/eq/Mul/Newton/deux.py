@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset, Nat, Real
+    from Lemma import Algebra, Finset, Nat, Real, Int, Int, Int
 
     x, k = Symbol(integer=True)
     n = Symbol(integer=True, positive=True)
@@ -35,9 +35,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Sum).apply(Finset.Sum.Binom.eq.Pow.Newton)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Add.collect, factor=x)
+    Eq << Eq[-1].this.lhs.apply(Int.AddAddS.eq.MulAddS, factor=x)
 
-    Eq << Eq[-1].this.find(Add[Pow]).apply(Algebra.Add.collect, factor=(x + 1) ** (n - 2))
+    Eq << Eq[-1].this.find(Add[Pow]).apply(Int.AddAddS.eq.MulAddS, factor=(x + 1) ** (n - 2))
 
     Eq << Eq[-1].this.find(1 + ~Mul).expand()
 

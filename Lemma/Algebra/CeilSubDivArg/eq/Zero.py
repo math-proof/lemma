@@ -40,7 +40,7 @@ def prove(Eq):
 
     Eq << Eq.ge * (2 * n)
 
-    Eq << Set.In.Icc.of.Le.Ge.In.apply(Eq.le, Eq.ge, Eq.contains)
+    Eq << Set.In_Ico.of.In_Ico.Le.Ge.apply(Eq.le, Eq.ge, Eq.contains)
 
     Eq << Set.EqCeil_0.of.In_Ioc.apply(Eq[-1])
 

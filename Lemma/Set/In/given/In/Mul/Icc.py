@@ -17,13 +17,13 @@ def apply(given, d):
 
 @prove
 def prove(Eq):
-    from Lemma import Set
+    from Lemma import Set, Nat, Nat, Nat
 
     x, a, b = Symbol(real=True)
     d = Symbol(real=True, positive=True)
     Eq << apply(Element(x, Interval(a, b, right_open=True)), d)
 
-    Eq << Set.In.Mul.Icc.of.In.apply(Eq[1], 1 / d)
+    Eq << Nat.InMul.of.In_Ico.Gt_0.apply(Eq[1], 1 / d)
 
 
 if __name__ == '__main__':

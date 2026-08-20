@@ -36,7 +36,7 @@ def prove(Eq):
     k = Eq[-1].rhs.variable
     Eq << Eq[-1].this.find(Add).expand()
 
-    Eq << Eq[-1].this.find(Stack[~Add]).apply(Algebra.Add.collect, factor=KroneckerDelta(j, k))
+    Eq << Eq[-1].this.find(Stack[~Add]).apply(Int.AddAddS.eq.MulAddS, factor=KroneckerDelta(j, k))
 
     Eq << Eq[-1].this.find(Mul[Add]).apply(Algebra.Mul.Delta.eq.Zero)
 

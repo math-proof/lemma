@@ -12,7 +12,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Algebra, Tensor, Real
+    from Lemma import Finset, Algebra, Tensor, Real, Int, Int, Int
 
     r = Symbol(real=True)
     n = Symbol(integer=True, positive=True)
@@ -115,7 +115,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Mul[Add ** Add]).powsimp()
 
-    Eq << Eq[-1].rhs.args[0].this.apply(Algebra.Add.collect)
+    Eq << Eq[-1].rhs.args[0].this.apply(Int.AddAddS.eq.MulAddS)
 
     Eq << Eq[-1].this.rhs.args[-1].expand()
 

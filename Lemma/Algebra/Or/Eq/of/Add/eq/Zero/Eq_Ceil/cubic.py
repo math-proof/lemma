@@ -71,9 +71,9 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq.w_square, Eq.mul_ww)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Add.collect, factor=A ** 2)
+    Eq << Eq[-1].this.rhs.apply(Int.AddAddS.eq.MulAddS, factor=A ** 2)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Add.collect, factor=B ** 2)
+    Eq << Eq[-1].this.rhs.apply(Int.AddAddS.eq.MulAddS, factor=B ** 2)
 
     Eq << Eq[-1].subs(Eq.add_ww)
 
@@ -83,9 +83,9 @@ def prove(Eq):
 
     Eq.expand = Eq.expand.subs(Eq[-1])
 
-    Eq << Eq.expand.find(Symbol ** 2 * ~Add).this.apply(Algebra.Add.collect, factor=A)
+    Eq << Eq.expand.find(Symbol ** 2 * ~Add).this.apply(Int.AddAddS.eq.MulAddS, factor=A)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Add.collect, factor=B)
+    Eq << Eq[-1].this.rhs.apply(Int.AddAddS.eq.MulAddS, factor=B)
 
     Eq << Eq[-1].subs(Eq.add_ww)
 
@@ -95,9 +95,9 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq.mul_ww, Eq.w_square)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Add.collect, factor=(A ** 2, B))
+    Eq << Eq[-1].this.rhs.apply(Int.AddAddS.eq.MulAddS, factor=(A ** 2, B))
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Add.collect, factor=(B ** 2, A))
+    Eq << Eq[-1].this.rhs.apply(Int.AddAddS.eq.MulAddS, factor=(B ** 2, A))
 
     Eq << Eq[-1].subs(Eq.add_ww)
 
