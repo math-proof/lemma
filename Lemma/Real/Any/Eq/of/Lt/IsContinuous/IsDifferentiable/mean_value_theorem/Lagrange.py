@@ -49,11 +49,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.rhs.defun()
 
-    Eq << Eq[-1].this.expr.lhs.apply(Real.Limit.eq.Add)
+    Eq << Eq[-1].this.expr.lhs.apply(Real.Lim.eq.Add)
 
-    Eq << Eq[-1].this.expr.lhs.args[0].apply(Real.Limit.eq.Mul)
+    Eq << Eq[-1].this.expr.lhs.args[0].apply(Real.Lim.eq.Mul)
 
-    Eq << Eq[-1].this.find(Limit).apply(Real.Limit.eq.Mul)
+    Eq << Eq[-1].this.find(Limit).apply(Real.Lim.eq.Mul)
 
     Eq <<= Eq[1] & Eq[-1]
 

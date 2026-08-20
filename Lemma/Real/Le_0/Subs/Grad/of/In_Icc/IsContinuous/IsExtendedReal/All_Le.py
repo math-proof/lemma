@@ -28,7 +28,7 @@ def prove(Eq):
         All[x:a:b](Element(Derivative[x + S.Infinitesimal](f(x)), ExtendedReals)),
         All[x:a:b](f(x) <= f(c)))
 
-    Eq <<= Eq[-1].this.find(Derivative).apply(Real.Grad.eq.Limit.one_sided), Int.AllIn_Ico.of.AllIn_Ico.offset.apply(Eq[-2], c)
+    Eq <<= Eq[-1].this.find(Derivative).apply(Real.Grad.eq.Lim.one_sided), Int.AllIn_Ico.of.AllIn_Ico.offset.apply(Eq[-2], c)
 
     Eq << Bool.Imp.of.AllSetOf.apply(Eq[-1])
 
@@ -65,13 +65,13 @@ def prove(Eq):
 
     Eq << Bool.Cond.of.Imp.Cond.apply(Eq[0], Eq[-1])
 
-    Eq << Eq[-1].this.find(Derivative).apply(Real.Grad.eq.Limit.one_sided, simplify=2)
+    Eq << Eq[-1].this.find(Derivative).apply(Real.Grad.eq.Lim.one_sided, simplify=2)
 
     Eq << Eq.Any_All.this.find(All).limits_subs(x, Eq[-1].lhs.variable)
 
     Eq << Bool.Any_And.of.Any.All.apply(Eq[-1], Eq.Any_All, simplify=None)
 
-    Eq << Eq[-1].this.expr.apply(Real.Le_0.Limit.of.IsExtendedReal.All_Le.one_sided)
+    Eq << Eq[-1].this.expr.apply(Real.Le_0.Lim.of.IsExtendedReal.All_Le.one_sided)
 
 
 

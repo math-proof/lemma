@@ -15,13 +15,13 @@ def prove(Eq):
     f = Function(real=True)
     Eq << apply(Equal(Derivative[x](f(x)), y))
 
-    Eq << Eq[0].this.lhs.apply(Real.Grad.eq.Limit)
+    Eq << Eq[0].this.lhs.apply(Real.Grad.eq.Lim)
 
-    Eq << Real.And.Eq_Limit.of.Eq_Limit.apply(Eq[-1])
+    Eq << Real.And.Eq_Lim.of.Eq_Lim.apply(Eq[-1])
 
-    Eq << Eq[1].this.lhs.apply(Real.Grad.eq.Limit.one_sided)
+    Eq << Eq[1].this.lhs.apply(Real.Grad.eq.Lim.one_sided)
 
-    Eq << Eq[2].this.lhs.apply(Real.Grad.eq.Limit.one_sided)
+    Eq << Eq[2].this.lhs.apply(Real.Grad.eq.Lim.one_sided)
 
 
 if __name__ == '__main__':

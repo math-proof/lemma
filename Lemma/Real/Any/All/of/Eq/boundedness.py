@@ -22,7 +22,7 @@ def prove(Eq):
     a = Symbol(real=True, given=True)
     Eq << apply(Equal(Limit[n:oo](x[n]), a))
 
-    Eq << Real.Any.All.of.Eq_Limit.limit_definition.apply(Eq[0])
+    Eq << Real.Any.All.of.Eq_Lim.limit_definition.apply(Eq[0])
 
     ε = Eq[-1].expr.expr.rhs
     Eq << Eq[-1].this.expr.expr.apply(Algebra.Lt.Abs.Max.of.Lt)

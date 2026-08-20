@@ -23,7 +23,7 @@ def prove(Eq):
     is_zero = And(Equal(Eq[0].lhs, 0), Eq[1])
     Eq << Imply(is_zero, is_zero, plausible=True)
 
-    Eq.is_zero = Eq[-1].this.rhs.apply(Real.Eq_0.Limit.of.Eq_0.IsLimited.algebraic_limit_theorem)
+    Eq.is_zero = Eq[-1].this.rhs.apply(Real.Eq_0.Lim.of.Eq_0.IsLimited.algebraic_limit_theorem)
 
     Eq << Eq[-1].this.rhs.args[1].apply(Set.Any_Eq.of.In, var='B', simplify=None)
 

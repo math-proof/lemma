@@ -41,13 +41,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs(t).find(Max).simplify()
 
-    Eq << Real.EqLimit.of.Eq.apply(Eq[-1], (k, oo))
+    Eq << Real.EqLim.of.Eq.apply(Eq[-1], (k, oo))
 
-    Eq << Eq[-1].this.lhs.apply(Real.Limit.eq.Sum)
+    Eq << Eq[-1].this.lhs.apply(Real.Lim.eq.Sum)
 
-    Eq << Eq[-1].this.rhs.find(Limit).apply(Real.Limit.eq.Add)
+    Eq << Eq[-1].this.rhs.find(Limit).apply(Real.Lim.eq.Add)
 
-    Eq.limit = Eq[-1].this.find(Limit[Sum]).apply(Real.Limit.eq.Sum)
+    Eq.limit = Eq[-1].this.find(Limit[Sum]).apply(Real.Lim.eq.Sum)
 
     Eq << Algebra.All_Le_Sup.apply(Eq[3].lhs)
 
@@ -63,7 +63,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.doit()
 
-    Eq << Real.Eq_0.Limit.of.LtAbs.IsFinite.apply(Eq[-2], Eq[-1])
+    Eq << Real.Eq_0.Lim.of.LtAbs.IsFinite.apply(Eq[-2], Eq[-1])
 
     Eq << Eq.limit.subs(Eq[-1])
 

@@ -33,7 +33,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.apply(Bool.Cond.of.Eq.Cond.subst, ret=0)
 
-    Eq << Eq[-1].this.expr.args[1].apply(Real.Any.All.of.Eq_Limit.limit_definition)
+    Eq << Eq[-1].this.expr.args[1].apply(Real.Any.All.of.Eq_Lim.limit_definition)
 
     Eq << Eq[-1].this.expr.apply(Bool.Cond.of.Eq.Cond.subst, reverse=True)
 

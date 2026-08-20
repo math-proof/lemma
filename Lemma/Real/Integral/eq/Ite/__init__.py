@@ -44,5 +44,4 @@ if __name__ == '__main__':
 
 # created on 2020-05-24
 # updated on 2023-08-26
-del Limit
-from . import Limit
+from . import Lim

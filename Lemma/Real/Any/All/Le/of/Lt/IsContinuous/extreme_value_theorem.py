@@ -31,7 +31,7 @@ def prove(Eq):
     ξ = Eq[1].variable
     Eq << Eq[1].subs(Eq[-1], Eq[-1].subs(x, ξ))
 
-    Eq << Eq[-1].this.find(Limit).apply(Real.Limit.eq.Mul)
+    Eq << Eq[-1].this.find(Limit).apply(Real.Lim.eq.Mul)
 
     Eq << Real.Any.All.Ge.of.Lt.IsContinuous.extreme_value_theorem.apply(Eq[0], Eq[-1])
 

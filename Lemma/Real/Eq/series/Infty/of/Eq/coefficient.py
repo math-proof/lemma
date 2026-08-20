@@ -79,11 +79,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Finset.Sum_Mul.eq.Mul_Sum)
 
-    Eq << Real.EqLimit.of.Eq.apply(Eq[-1], (r, 0))
+    Eq << Real.EqLim.of.Eq.apply(Eq[-1], (r, 0))
 
-    Eq << Eq[-1].this.lhs.apply(Real.Limit.eq.Sum)
+    Eq << Eq[-1].this.lhs.apply(Real.Lim.eq.Sum)
 
-    Eq << Eq[-1].this.rhs.apply(Real.Limit.eq.Sum)
+    Eq << Eq[-1].this.rhs.apply(Real.Lim.eq.Sum)
 
     Eq << Eq[-1].this.lhs.apply(Finset.Sum.eq.AddSumS, cond={0})
 

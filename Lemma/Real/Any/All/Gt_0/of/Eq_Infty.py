@@ -32,7 +32,7 @@ def prove(Eq):
 
     epsilon = Symbol(positive=True)
     delta = Eq[-1].variable
-    Eq << Real.Any.All.of.Eq_Limit.limit_definition.apply(Eq[0], epsilon, delta)
+    Eq << Real.Any.All.of.Eq_Lim.limit_definition.apply(Eq[0], epsilon, delta)
 
     Eq << Eq[-1].this.find(Greater).apply(Nat.Gt_Sub_1.of.Gt, lower=0)
 

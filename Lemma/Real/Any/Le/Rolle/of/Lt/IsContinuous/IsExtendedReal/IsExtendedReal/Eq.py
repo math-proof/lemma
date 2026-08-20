@@ -34,9 +34,9 @@ def prove(Eq):
         All[x:a:b](Element(Derivative[x - S.Infinitesimal](f(x)), ExtendedReals)),
         Equal(f(a), f(b)))
 
-    Eq << Eq[2].this.find(Derivative).apply(Real.Grad.eq.Limit.one_sided)
+    Eq << Eq[2].this.find(Derivative).apply(Real.Grad.eq.Lim.one_sided)
 
-    Eq << Eq[3].this.find(Derivative).apply(Real.Grad.eq.Limit.one_sided)
+    Eq << Eq[3].this.find(Derivative).apply(Real.Grad.eq.Lim.one_sided)
 
     Eq << Set.Subset.Finset.of.Lt.apply(Eq[0], simplify=None)
 

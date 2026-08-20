@@ -48,7 +48,7 @@ def prove(Eq):
 
     Eq << Set.Any_Eq.of.In.apply(Eq[0], var='A')
 
-    Eq << Eq[-1].this.expr.apply(Real.Any.All.of.Eq.limit_definition.Limit)
+    Eq << Eq[-1].this.expr.apply(Real.Any.All.of.Eq.limit_definition.Lim)
 
 
 if __name__ == '__main__':

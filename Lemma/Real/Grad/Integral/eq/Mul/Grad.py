@@ -34,26 +34,26 @@ def prove(Eq):
     f, h = Function(real=True, continuous=True)
     Eq << apply(Derivative[x](Integral[t:a:h(x)](f(t))))
 
-    Eq << Eq[0].this.lhs.apply(Real.Grad.eq.Limit)
+    Eq << Eq[0].this.lhs.apply(Real.Grad.eq.Lim)
 
     epsilon = Eq[-1].lhs.variable
     Eq << Eq[-1].this.find(Add).apply(Real.Sub.eq.Integral)
 
-    Eq << Real.All_EqLimit.IsContinuous.Icc.apply(*Eq[-1].find(Integral).args)
+    Eq << Real.All_EqLim.IsContinuous.Icc.apply(*Eq[-1].find(Integral).args)
 
     Eq << Real.Any.Eq.Icc01.of.IsContinuous.mean_value_theorem.apply(Eq[-1], 'lamda')
 
-    Eq.exists = Eq[-1].this.expr.apply(Real.Eq.Limit.Div.of.Eq, epsilon)
+    Eq.exists = Eq[-1].this.expr.apply(Real.Eq.Lim.Div.of.Eq, epsilon)
 
     Eq.Limit_f = Equal(Limit[epsilon:0](Eq.exists.expr.rhs.find(f)), f(h(x)), plausible=True)
 
-    Eq << Eq.Limit_f.this.lhs.apply(Real.Limit.eq.Expr.continuity)
+    Eq << Eq.Limit_f.this.lhs.apply(Real.Lim.eq.Expr.continuity)
 
     Eq << Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[0].rhs.find(Derivative).this.apply(Real.Grad.eq.Limit, epsilon).reversed
+    Eq << Eq[0].rhs.find(Derivative).this.apply(Real.Grad.eq.Lim, epsilon).reversed
 
-    Eq << Real.Eq_Limit.Mul.of.Eq_Limit.Eq_Limit.apply(Eq[-1], Eq.Limit_f)
+    Eq << Real.Eq_Lim.Mul.of.Eq_Lim.Eq_Lim.apply(Eq[-1], Eq.Limit_f)
 
     Eq << Eq.exists.this.expr.subs(Eq[-1])
 

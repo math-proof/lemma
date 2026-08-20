@@ -38,7 +38,7 @@ def prove(Eq):
     ξ = Eq[1].variable
     Eq <<= Eq[1].subs(Eq[-1], Eq[-1].subs(x, ξ)), Eq[2].subs(Eq[-1]), Eq[3].subs(Eq[-1], Eq[-1].subs(x, c))
 
-    Eq <<= Eq[-3].this.expr.lhs.apply(Real.Limit.eq.Mul),\
+    Eq <<= Eq[-3].this.expr.lhs.apply(Real.Lim.eq.Mul),\
         Eq[-2].this.expr.lhs.apply(Real.Grad.eq.Mul, simplify=None),\
         -Eq[-1].this.expr
 

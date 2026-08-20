@@ -2,9 +2,9 @@ from . import given
 from . import Expect
 from . import Conditioned
 from . import of
-from . import Limit
 from . import ArgMax
 from . import Mul
 from . import Sum
 from . import ArgMin
 from . import Pr
+from . import Lim

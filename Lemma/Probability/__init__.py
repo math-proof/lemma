@@ -9,7 +9,6 @@ from . import Sum
 from . import Prod
 from . import Cond
 from . import Grad
-from . import Limit
 from . import Expect
 from . import Cov
 from . import Var
@@ -44,3 +43,4 @@ from . import Imp
 from . import Stack
 from . import Dot
 from . import Conditioned
+from . import Lim

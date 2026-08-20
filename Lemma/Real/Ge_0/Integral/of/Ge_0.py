@@ -28,7 +28,7 @@ def prove(Eq):
     f = Function(real=True, continuous=True)
     Eq << apply(f(x) >= 0, (x, 0, t))
 
-    Eq << Eq[1].this.find(Integral).apply(Real.Integral.eq.Limit.Maxima.Darboux)
+    Eq << Eq[1].this.find(Integral).apply(Real.Integral.eq.Lim.Maxima.Darboux)
 
     Eq << Eq[-1] / t
 
@@ -44,7 +44,7 @@ def prove(Eq):
     [k, S[0], n], = limits
     Eq << Eq[-1] / n
 
-    Eq << Real.GeLimit.of.Ge.apply(Eq[-1], (n, oo))
+    Eq << Real.GeLim.of.Ge.apply(Eq[-1], (n, oo))
 
 
 

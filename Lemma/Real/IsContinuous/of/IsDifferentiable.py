@@ -33,7 +33,7 @@ def prove(Eq):
 
     Eq << Algebra.Cond.given.All.apply(Eq[-1], xi)
 
-    Eq << Eq[-2].this.lhs.apply(Real.Subs.eq.Limit)
+    Eq << Eq[-2].this.lhs.apply(Real.Subs.eq.Lim)
 
     Eq << Element(Limit[x:xi](x - xi), Reals, plausible=True)
 

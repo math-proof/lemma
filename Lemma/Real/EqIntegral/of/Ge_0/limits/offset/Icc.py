@@ -17,9 +17,9 @@ def prove(Eq):
     f = Function(real=True, integrable=True)
     Eq << apply(f(x) >= 0, Integral[x:Interval(a, b)](f(x)), d)
 
-    Eq << Real.Integral.eq.Mul.Limit.Lebesgue.of.Ge_0.apply(Eq[0], Eq[1].lhs)
+    Eq << Real.Integral.eq.Mul.Lim.Lebesgue.of.Ge_0.apply(Eq[0], Eq[1].lhs)
 
-    Eq << Real.Integral.eq.Mul.Limit.Lebesgue.of.Ge_0.apply(Eq[0], Eq[1].rhs)
+    Eq << Real.Integral.eq.Mul.Lim.Lebesgue.of.Ge_0.apply(Eq[0], Eq[1].rhs)
 
     Eq << Eq[-1].find(Sup).this.apply(Algebra.Sup.limits.subst.offset, -d)
 

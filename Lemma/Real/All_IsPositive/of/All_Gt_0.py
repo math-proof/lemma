@@ -26,13 +26,13 @@ def prove(Eq):
 
     Eq << Bool.Any_And.of.Any.All.All_Imp.apply(Eq[-2], Eq[-1])
 
-    Eq << Eq[-1].this.expr.lhs.apply(Real.Grad.eq.Limit)
+    Eq << Eq[-1].this.expr.lhs.apply(Real.Grad.eq.Lim)
 
-    Eq << Eq[-1].this.expr.apply(Real.And.Eq_Limit.of.Eq_Limit)
+    Eq << Eq[-1].this.expr.apply(Real.And.Eq_Lim.of.Eq_Lim)
 
-    Eq << Eq[-1].this.expr.args[0].apply(Real.LtLimit.of.Limit_Eq_Infty)
+    Eq << Eq[-1].this.expr.args[0].apply(Real.LtLim.of.Lim_Eq_Infty)
 
-    Eq << Eq[-1].this.expr.args[1].apply(Real.GtLimit.of.Limit_Eq_Infty)
+    Eq << Eq[-1].this.expr.args[1].apply(Real.GtLim.of.Lim_Eq_Infty)
 
 
 

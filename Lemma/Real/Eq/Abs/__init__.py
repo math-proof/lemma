@@ -1,1 +1,1 @@
-from . import Limit
+from . import Lim

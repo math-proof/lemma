@@ -18,11 +18,11 @@ def prove(Eq):
     n = Symbol(integer=True, nonnegative=True)
     Eq << Algebra.Prod.limits.Neg.apply(Product[i:-n:n + 1](f(i)))
 
-    Eq << Real.EqLimit.of.Eq.apply(Eq[-1], (n, oo))
+    Eq << Real.EqLim.of.Eq.apply(Eq[-1], (n, oo))
 
-    Eq << Eq[-1].this.rhs.apply(Real.Limit.eq.Prod)
+    Eq << Eq[-1].this.rhs.apply(Real.Lim.eq.Prod)
 
-    Eq << Eq[-1].this.lhs.apply(Real.Limit.eq.Prod)
+    Eq << Eq[-1].this.lhs.apply(Real.Lim.eq.Prod)
 
     Eq << Eq[-1].this.lhs.simplify()
 

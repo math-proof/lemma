@@ -26,6 +26,5 @@ if __name__ == '__main__':
 
 
 del Bool
-del Limit
 from . import Bool
-from . import Limit
+from . import Lim

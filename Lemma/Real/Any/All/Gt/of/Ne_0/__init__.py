@@ -1,1 +1,1 @@
-from . import Eq_Limit
+from . import Eq_Lim

@@ -37,7 +37,7 @@ def prove(Eq):
     Eq << Eq[-1].subs(Eq.is_limited)
 
     δ_1 = Symbol(positive=True)
-    Eq << Real.Any.All.Lt.of.Eq_Limit.In.half.apply(Eq.is_limited, Eq.is_nonzero_real, delta=δ_1)
+    Eq << Real.Any.All.Lt.of.Eq_Lim.In.half.apply(Eq.is_limited, Eq.is_nonzero_real, delta=δ_1)
 
     Eq.A_is_positive = Set.Gt_0.Abs.of.IsNotZero.apply(Eq.is_nonzero_real)
 

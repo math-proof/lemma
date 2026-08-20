@@ -53,19 +53,19 @@ def prove(Eq):
 
     Eq << Algebra.And.of.LeAbs.apply(Eq[-1])
 
-    Eq <<= Real.LeLimit.of.Le.apply(Eq[-2], (n, oo)), Real.GeLimit.of.Ge.apply(Eq[-1], (n, oo))
+    Eq <<= Real.LeLim.of.Le.apply(Eq[-2], (n, oo)), Real.GeLim.of.Ge.apply(Eq[-1], (n, oo))
 
-    Eq <<= Eq[-2].this.lhs.apply(Real.Limit.eq.Sum), Eq[-1].this.lhs.apply(Real.Limit.eq.Sum)
+    Eq <<= Eq[-2].this.lhs.apply(Real.Lim.eq.Sum), Eq[-1].this.lhs.apply(Real.Lim.eq.Sum)
 
-    Eq <<= Eq[-2].this.rhs.apply(Real.Limit.eq.Mul), Eq[-1].this.rhs.apply(Real.Limit.eq.Mul)
+    Eq <<= Eq[-2].this.rhs.apply(Real.Lim.eq.Mul), Eq[-1].this.rhs.apply(Real.Lim.eq.Mul)
 
-    Eq.upper_bound, Eq.lower_bound = Eq[-2].this.find(Limit).apply(Real.Limit.eq.Mul), Eq[-1].this.find(Limit).apply(Real.Limit.eq.Mul)
+    Eq.upper_bound, Eq.lower_bound = Eq[-2].this.find(Limit).apply(Real.Lim.eq.Mul), Eq[-1].this.find(Limit).apply(Real.Lim.eq.Mul)
 
     Eq << Nat.Gt_Sub_1.of.Gt.apply(Eq.gt_zero, -1)
 
     Eq << Algebra.LtAbs.of.Gt.Lt.apply(Eq[-1], Eq.lt)
 
-    Eq << Real.Eq_0.Limit.of.LtAbs.geometric_series.apply(Eq[-1], n)
+    Eq << Real.Eq_0.Lim.of.LtAbs.geometric_series.apply(Eq[-1], n)
 
     Eq.upper_bound = Eq.upper_bound.subs(Eq[-1])
 
