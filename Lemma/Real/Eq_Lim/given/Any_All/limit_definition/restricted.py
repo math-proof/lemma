@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(given, epsilon=None, delta=None, upper=1):
-    from Lemma.Real.Eq.Is.Any_All.limit_definition import Any_All
+    from Lemma.Real.EqLim.Is.All_Any_All import Any_All
     upper = sympify(upper)
     return Any_All(given, epsilon, delta, upper)
 

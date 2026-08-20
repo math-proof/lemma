@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(given, epsilon=None, delta=None):
-    from Lemma.Real.Eq.Is.Any_All.limit_definition import Any_All
+    from Lemma.Real.EqLim.Is.All_Any_All import Any_All
     return Any_All(given, epsilon, delta)
 
 
@@ -16,7 +16,7 @@ def prove(Eq):
     f = Function(real=True, shape=())
     Eq << apply(Equal(Limit[x:oo](f(x)), a))
 
-    Eq << Real.Eq.Is.Any_All.limit_definition.apply(Eq[0])
+    Eq << Real.EqLim.Is.All_Any_All.apply(Eq[0])
 
     Eq << Bool.Cond.of.Cond.Iff.apply(Eq[0], Eq[-1])
 

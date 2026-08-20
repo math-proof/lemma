@@ -12,7 +12,7 @@ def apply(is_real, given, epsilon=None, delta=None):
 
     _a = l.generate_var(excludes=l.variable, real=True)
     given = given._subs(a, _a)
-    from Lemma.Real.Eq.Is.Any_All.limit_definition import Any_All
+    from Lemma.Real.EqLim.Is.All_Any_All import Any_All
     given = Any_All(given, epsilon, delta)
     return given._subs(_a, a)
 

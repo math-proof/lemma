@@ -4,7 +4,7 @@ from util import *
 @apply
 def apply(given, delta=None, var=None):
     from Lemma.Real.Any.All.of.IsLimited.limit_definition import of_limited
-    from Lemma.Real.Eq.Is.Any_All.limit_definition import Any_All
+    from Lemma.Real.EqLim.Is.All_Any_All import Any_All
     fn, (x, x0) = of_limited(given, real=True)
 
     M = fn.generate_var(excludes={x}, var=var, positive=True, real=True)

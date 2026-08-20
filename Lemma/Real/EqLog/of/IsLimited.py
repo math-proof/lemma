@@ -34,7 +34,7 @@ def prove(Eq):
 
     Eq << Set.Ne_0.of.In.apply(Eq[0])
 
-    Eq << Eq[-2].this.apply(Real.Eq.Is.Any_All.limit_definition, delta=delta, epsilon=epsilon)
+    Eq << Eq[-2].this.apply(Real.EqLim.Is.All_Any_All, delta=delta, epsilon=epsilon)
 
     Eq << Eq[-1].this.expr.expr.lhs.arg.apply(Algebra.Add.eq.Log)
 

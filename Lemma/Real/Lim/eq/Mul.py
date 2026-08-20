@@ -34,7 +34,7 @@ def prove(Eq):
 
     Eq.lhs = Equal(Eq[0].lhs, A * y, plausible=True)
 
-    Eq << Eq.lhs.this.apply(Real.Eq.Is.Any_All.limit_definition, epsilon=epsilon, delta=delta)
+    Eq << Eq.lhs.this.apply(Real.EqLim.Is.All_Any_All, epsilon=epsilon, delta=delta)
 
     Eq << Eq[-1].this.expr.expr.find(Add).apply(Nat.AddMulS.eq.Mul_Add)
 

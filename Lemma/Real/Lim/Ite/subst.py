@@ -53,7 +53,7 @@ def prove(Eq):
 
     Eq << Eq[0].subs(Eq[1].reversed)
 
-    Eq << Eq[-1].this.apply(Real.Eq.Is.Any_All.limit_definition)
+    Eq << Eq[-1].this.apply(Real.EqLim.Is.All_Any_All)
 
     Eq << Eq[-1].this.find(Less).apply(Bool.BFn_Ite.given.OrAndS)
 

@@ -95,7 +95,7 @@ def prove(Eq):
     epsilon, delta = Symbol(real=True, positive=True)
     Eq << apply(Any[delta](All[x: (abs(x - x0) > 0) & (abs(x - x0) < delta)](abs(f(x) - a) < epsilon)))
 
-    Eq << Eq[1].this.apply(Real.Eq.Is.Any_All.limit_definition)
+    Eq << Eq[1].this.apply(Real.EqLim.Is.All_Any_All)
 
 
 
