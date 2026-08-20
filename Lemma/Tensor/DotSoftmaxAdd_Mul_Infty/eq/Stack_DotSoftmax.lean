@@ -55,7 +55,7 @@ private lemma main
   [NeZero (l : ℕ)]
   [NeZero (u : ℕ)]
   [NeZero (n : ℕ)]
-  [NeZero (d_z : ℕ)]
+  {d_z : ℕ}
 -- given
   (A : Tensor ℝ [n, n])
   (V : Tensor ℝ [n, d_z]) :
@@ -208,4 +208,4 @@ private lemma main
 
 
 -- created on 2020-12-28
--- updated on 2026-08-19
+-- updated on 2026-08-20

@@ -1,18 +1,8 @@
-import Lemma.Bool.SEq.is.Eq
-import Lemma.Bool.SEqUFnS.of.SEq
-import Lemma.List.EqSwap_0'1
 import Lemma.Tensor.DotSoftmaxAdd_Mul_Infty.eq.Stack_DotSoftmaxDivDot_T
-import Lemma.Tensor.Eq.is.All_EqGetS
-import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.GetSliceStack.as.Stack_UFn.of.Eq_Add
-import Lemma.Tensor.MapStack.eq.Stack_Map
 import Lemma.Tensor.SEqAppendS.of.SEq.SEq
-import Lemma.Tensor.SEqDotS.of.SEq
-import Lemma.Tensor.SEqTS.of.SEq
 import Lemma.Tensor.Stack.eq.AppendStackS
 import Lemma.Tensor.TAppend.as.AppendTS
-import Lemma.Tensor.XEq.is.All_XEqGetS
-import Lemma.Tensor.XEq.of.Eq
 import Lemma.Tensor.XEqAppendS.of.XEq.XEq
 open Bool List Tensor
 set_option maxHeartbeats 1000000
@@ -21,10 +11,10 @@ set_option maxHeartbeats 1000000
 @[main]
 private lemma kv_cache
   [NeZero (n : ℕ)]
-  [NeZero (d_z : ℕ)]
+  {d_z : ℕ}
+  {Z : (n : ℕ) → Tensor ℝ [n, d_z]}
+  {Q K V : ℕ → Tensor ℝ [d_z]}
 -- given
-  (Z : (n : ℕ) → Tensor ℝ [n, d_z])
-  (Q K V : ℕ → Tensor ℝ [d_z])
   (h : ∀ (n : ℕ) [NeZero n],
     let Qn : Tensor ℝ* [n, d_z] := ([i < n] Q i : Tensor ℝ [n, d_z])
     let Kn : Tensor ℝ* [n, d_z] := ([i < n] K i : Tensor ℝ [n, d_z])

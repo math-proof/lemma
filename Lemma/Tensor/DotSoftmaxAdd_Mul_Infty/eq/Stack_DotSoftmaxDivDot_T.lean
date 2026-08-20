@@ -22,7 +22,7 @@ set_option maxHeartbeats 500000
 @[main]
 private lemma gpt
   [NeZero (n : ℕ)]
-  [NeZero (d_z : ℕ)]
+  {d_z : ℕ}
 -- given
   (Q K V : Tensor ℝ [n, d_z]) :
 -- imply
@@ -89,4 +89,4 @@ private lemma gpt
 
 
 -- created on 2023-06-18
--- updated on 2026-08-19
+-- updated on 2026-08-20

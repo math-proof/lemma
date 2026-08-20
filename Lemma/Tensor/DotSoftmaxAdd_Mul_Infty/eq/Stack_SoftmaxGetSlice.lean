@@ -10,7 +10,7 @@ open Nat Tensor
 @[main]
 private lemma main
   [NeZero (n : ℕ)]
-  [NeZero (d_z : ℕ)]
+  {d_z : ℕ}
 -- given
   (A : Tensor ℝ [n, n])
   (V : Tensor ℝ [n, d_z]) :
@@ -28,3 +28,4 @@ private lemma main
 
 
 -- created on 2026-08-17
+-- updated on 2026-08-20

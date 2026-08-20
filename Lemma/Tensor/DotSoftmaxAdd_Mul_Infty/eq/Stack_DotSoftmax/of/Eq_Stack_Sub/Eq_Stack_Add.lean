@@ -10,7 +10,7 @@ private lemma main
   [NeZero (l : ℕ)]
   [NeZero (u : ℕ)]
   [NeZero (n : ℕ)]
-  [NeZero (d_z : ℕ)]
+  {d_z : ℕ}
   {β ζ : Tensor ℕ [n]}
 -- given
   (h_β : β = [i < n] (i + 1 - l : ℕ))
@@ -46,3 +46,4 @@ private lemma main
 
 
 -- created on 2022-01-01
+-- updated on 2026-08-20
