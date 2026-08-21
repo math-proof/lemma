@@ -14,7 +14,7 @@ def prove(Eq):
     z = Symbol(complex=True)
     Eq << apply(Arg(exp(S.ImaginaryUnit * Arg(z))))
 
-    Eq << Eq[0].this.lhs.apply(Complex.ArgExpMulI.eq.Sub_MulCeil)
+    Eq << Eq[0].this.lhs.apply(Complex.ArgExpMulI.eq.Sub_Mul_Ceil)
 
     Eq << Eq[-1].this.find(Ceil).apply(Algebra.CeilSubDivArg.eq.Zero)
 

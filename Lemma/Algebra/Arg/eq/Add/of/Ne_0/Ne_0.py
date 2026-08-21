@@ -34,7 +34,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.arg.apply(Algebra.Mul.eq.Exp)
 
-    Eq << Eq[-1].this.rhs.apply(Complex.ArgExpMulI.eq.Sub_MulCeil)
+    Eq << Eq[-1].this.rhs.apply(Complex.ArgExpMulI.eq.Sub_Mul_Ceil)
 
 
 if __name__ == '__main__':

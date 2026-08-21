@@ -15,7 +15,7 @@ def prove(Eq):
     x = Symbol(real=True)
     Eq << apply(Element(x, Interval(-S.Pi, S.Pi, left_open=True)))
 
-    Eq << Eq[1].this.lhs.apply(Complex.ArgExpMulI.eq.Sub_MulCeil)
+    Eq << Eq[1].this.lhs.apply(Complex.ArgExpMulI.eq.Sub_Mul_Ceil)
 
     Eq << Set.InDiv.of.In_Icc.apply(Eq[0], 2 * S.Pi)
 

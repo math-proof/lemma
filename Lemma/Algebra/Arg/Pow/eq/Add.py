@@ -32,7 +32,7 @@ def prove(Eq):
 
     Eq << Bool.Imp.given.ImpEq.apply(Eq[-1])
 
-    Eq << Eq[-1].this.rhs.lhs.apply(Complex.ArgExpMulI.eq.Sub_MulCeil)
+    Eq << Eq[-1].this.rhs.lhs.apply(Complex.ArgExpMulI.eq.Sub_Mul_Ceil)
 
 
 if __name__ == '__main__':

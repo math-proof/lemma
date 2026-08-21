@@ -17,7 +17,7 @@ def prove(Eq):
 
     Eq << Eq[1].subs(Eq[0])
 
-    Eq << Eq[-1].this.find(Arg).apply(Complex.ArgExpMulI.eq.Sub_MulCeil)
+    Eq << Eq[-1].this.find(Arg).apply(Complex.ArgExpMulI.eq.Sub_Mul_Ceil)
 
 
 if __name__ == '__main__':

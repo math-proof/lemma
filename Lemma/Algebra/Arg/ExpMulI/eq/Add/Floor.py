@@ -14,7 +14,7 @@ def prove(Eq):
     x = Symbol(real=True)
     Eq << apply(Arg(exp(S.ImaginaryUnit * x)))
 
-    Eq << Eq[-1].this.lhs.apply(Complex.ArgExpMulI.eq.Sub_MulCeil) / 2
+    Eq << Eq[-1].this.lhs.apply(Complex.ArgExpMulI.eq.Sub_Mul_Ceil) / 2
 
     Eq << Eq[-1].this.rhs.apply(Int.Floor.eq.NegCeilNeg)
 
