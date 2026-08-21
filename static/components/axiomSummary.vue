@@ -185,7 +185,6 @@ limit 1`;
 			var data = await form_post('php/request/execute.php', {sql, resultType: 1});
 			var caller = location.hash;
 			if (caller)
-			    // http://localhost/py/#Complex.And_Imp_Or_Or_OrEqS.of.Eq0AddAddAddAddMul_Pow_4
 				// http://localhost/py/#Finset.AddSumS_SquareSub.eq.AddAddSumS.of.Eq_DivSum.Eq_DivSum.Eq_Sub.Eq_AddDiv_Add.parallel_variance
 				// http://localhost/py/#Set.LeAddSSumS_SquareSub_Sum.of.In.NotIn.LeAbsSSub_Sum
 				// http://localhost/py/#Tensor.Dot.eq.Add.of.Eq_Mul.Eq_Mul.Eq_Block.position_representation.plane

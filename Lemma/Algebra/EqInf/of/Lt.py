@@ -34,7 +34,7 @@ def prove(Eq):
 
     Eq <<= Bool.All.given.Imp.apply(Eq[-3]), Eq[-2].this.rhs * 2, Eq[-1].this.rhs.apply(Set.In.given.In.Mul.Icc, 2)
 
-    Eq <<= Bool.Cond.Imp.given.And.Imp.And.apply(Eq[0], Eq[-3]), Eq[-2].this.rhs - y, Eq[-1].this.rhs.apply(Set.In.given.In.Sub, m)
+    Eq <<= Bool.And_Imp.given.And_ImpAnd.apply(Eq[0], Eq[-3]), Eq[-2].this.rhs - y, Eq[-1].this.rhs.apply(Set.In.given.In.Sub, m)
 
     Eq << Eq[-2].this.lhs.apply(Set.Gt.of.In_Icc)
 

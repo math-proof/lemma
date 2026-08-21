@@ -15,7 +15,7 @@ def prove(Eq):
     f = Function(integer=True)
     Eq << apply(f(e) > 0, cond=e > 0)
 
-    Eq << Bool.And.Imp.of.Cond.split.apply(Eq[0], cond=e > 0)
+    Eq << Bool.Imp.ImpNot.of.Cond.apply(Eq[0], cond=e > 0)
 
     Eq << Bool.Imp_And.of.ImpAnd.apply(Eq[-2])
     Eq << Bool.Imp_And.of.ImpAnd.apply(Eq[-1])

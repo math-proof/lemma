@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Bool.All.given.Imp)
 
-    Eq << Eq[-1].this.apply(Bool.Imp.flatten)
+    Eq << Eq[-1].this.apply(Bool.Imp_Imp.Is.ImpAnd)
 
     Eq << Eq[-1].this.lhs.apply(Set.Eq.of.Ge.In)
 

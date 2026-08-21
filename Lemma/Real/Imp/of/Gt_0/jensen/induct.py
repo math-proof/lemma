@@ -49,7 +49,7 @@ def prove(Eq):
 
     Eq.lt, Eq.ge = Bool.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=w[n] < 1)
 
-    Eq << Eq.ge.this.apply(Bool.Imp.flatten)
+    Eq << Eq.ge.this.apply(Bool.Imp_Imp.Is.ImpAnd)
 
     Eq << Eq[-1].this.lhs.apply(Algebra.EqAll_Eq_0.of.Eq_Sum.Ge.All_Ge_0.squeeze)
 
@@ -74,7 +74,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Nat.Eq.UFn.given.Eq.UFn)
 
-    Eq << Eq.lt.this.apply(Bool.Imp.flatten)
+    Eq << Eq.lt.this.apply(Bool.Imp_Imp.Is.ImpAnd)
 
     Eq << Eq[-1].this.find(Sum).apply(Finset.Sum.eq.AddSumS, cond={n})
 
@@ -92,7 +92,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.apply(Bool.Imp.fold)
 
-    Eq << Eq[-1].this.rhs.apply(Bool.Imp.flatten)
+    Eq << Eq[-1].this.rhs.apply(Bool.Imp_Imp.Is.ImpAnd)
 
     Eq << Eq[-1].this.rhs.apply(Bool.Imp.fold, index=slice(1, None))
 
@@ -100,11 +100,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(And).apply(Rat.GeDivS.of.Ge.Gt_0, ret=0)
 
-    Eq << Eq[-1].this.rhs.apply(Bool.Imp.flatten)
+    Eq << Eq[-1].this.rhs.apply(Bool.Imp_Imp.Is.ImpAnd)
 
     Eq << Eq[-1].this.rhs.apply(Bool.Imp.fold, 1)
 
-    Eq << Eq[-1].this.apply(Bool.Imp.flatten)
+    Eq << Eq[-1].this.apply(Bool.Imp_Imp.Is.ImpAnd)
 
     w_ = Symbol('w', Stack[i:n](w[i] / (1 - w[n])))
     Eq << w_[i].this.definition * (1 - w[n])

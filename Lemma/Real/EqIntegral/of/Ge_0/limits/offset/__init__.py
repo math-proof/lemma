@@ -32,7 +32,7 @@ def prove(Eq):
 
     Eq << -Eq[-2].this.rhs
 
-    Eq << Bool.And.Imp.of.Cond.split.apply(Eq[0], cond=a > b)
+    Eq << Bool.Imp.ImpNot.of.Cond.apply(Eq[0], cond=a > b)
 
     Eq << Eq[-2].this.rhs.apply(Real.EqIntegral.of.Ge_0.limits.offset.Icc, Eq[-3].find(Integral), d)
 

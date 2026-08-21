@@ -30,7 +30,7 @@ def prove(Eq):
 
     Eq << Bool.Iff.given.Imp.Imp.apply(Eq.equivalent)
 
-    Eq <<= Bool.Cond.Imp.given.And.Imp.And.apply(Eq[0], Eq[-2]), Algebra.Given.given.Given_And.apply(Eq[-1], cond=Eq[0])
+    Eq <<= Bool.And_Imp.given.And_ImpAnd.apply(Eq[0], Eq[-2]), Algebra.Given.given.Given_And.apply(Eq[-1], cond=Eq[0])
 
     Eq <<= Eq[-2].this.lhs.apply(Rat.GeDivS.of.Ge.Gt_0), Eq[-1].this.rhs.apply(Nat.GeMulS.of.Ge.Gt_0)
 

@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq <<= Bool.Imp_Ite.given.Imp.apply(Eq[-2]), Bool.Imp_Ite.given.Imp.apply(Eq[-1], invert=True)
 
-    Eq << Bool.Imp.given.And.Imp.split.apply(Eq[-2], cond=A_t > 0)
+    Eq << Bool.Imp.given.ImpAnd.ImpAnd_Not.apply(Eq[-2], cond=A_t > 0)
 
     Eq << Bool.Imp.given.ImpEq.apply(Eq[-1])
 

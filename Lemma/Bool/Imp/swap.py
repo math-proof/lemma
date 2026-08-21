@@ -15,9 +15,9 @@ def prove(Eq):
     A, B, C = Symbol(etype=dtype.real)
     Eq << apply(Imply(Element(x, A), Imply(Element(y, B), Element(z, C))))
 
-    Eq << Eq[-1].this.lhs.apply(Bool.Imp.flatten)
+    Eq << Eq[-1].this.lhs.apply(Bool.Imp_Imp.Is.ImpAnd)
 
-    Eq << Eq[-1].this.rhs.apply(Bool.Imp.flatten)
+    Eq << Eq[-1].this.rhs.apply(Bool.Imp_Imp.Is.ImpAnd)
 
 
 

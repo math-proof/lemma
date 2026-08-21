@@ -34,7 +34,7 @@ def prove(Eq):
 
     Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[3], cond=w < 1)
 
-    Eq.open_Interval, Eq.ge = Eq[-2].this.apply(Bool.Imp.flatten), Eq[-1].this.apply(Bool.Imp.flatten)
+    Eq.open_Interval, Eq.ge = Eq[-2].this.apply(Bool.Imp_Imp.Is.ImpAnd), Eq[-1].this.apply(Bool.Imp_Imp.Is.ImpAnd)
 
     Eq << (w >= 1).this.apply(Algebra.Eq.of.Ge.squeeze)
 

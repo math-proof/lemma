@@ -53,13 +53,13 @@ def prove(Eq):
     x, a, b, c, d = Symbol(complex=True, given=True)
     Eq << apply(Equal(a * x ** 3 + b * x ** 2 + c * x + d, 0), x=x)
 
-    Eq << Bool.And.Imp.of.Cond.split.apply(Eq[0], cond=Equal(a, 0))
+    Eq << Bool.Imp.ImpNot.of.Cond.apply(Eq[0], cond=Equal(a, 0))
 
     Eq <<= Bool.ImpEq.of.ImpEq.subst.apply(Eq[-2]), Bool.Imp_And.of.ImpAnd.apply(Eq[-1])
 
     Eq <<= Eq[-2].this.rhs.apply(Algebra.And_Imp_Or_EqS_Div.of.Add.eq.Zero.quadratic, x=x), Eq[-1].this.rhs.apply(Nat.Div.of.Eq.Ne_0)
 
-    Eq <<= Bool.And.Imp.of.Imp.apply(Eq[-2], None), Bool.And.Imp.of.Imp.apply(Eq[-1].this.rhs.apply(Algebra.And.Imp.Or.Eq.of.Add.eq.Zero.cubic.one_leaded, x), None)
+    Eq <<= Bool.Imp.Imp.of.Imp_And.apply(Eq[-2], None), Bool.Imp.Imp.of.Imp_And.apply(Eq[-1].this.rhs.apply(Algebra.And.Imp.Or.Eq.of.Add.eq.Zero.cubic.one_leaded, x), None)
 
     # Eq <<= Eq[-6].this.apply(Algebra.suffice.flatten), Eq[-5].this.apply(Algebra.suffice.flatten), Eq[-4].this.apply(Algebra.suffice.flatten), Eq[-3].this.apply(Algebra.suffice.flatten), Eq[-2].this.apply(Algebra.suffice.flatten), Eq[-1].this.apply(Algebra.suffice.flatten)
 

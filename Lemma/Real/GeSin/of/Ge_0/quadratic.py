@@ -33,7 +33,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Ge.given.Gt)
 
-    Eq << Bool.Imp.given.And.Imp.split.apply(Eq[3], cond=x > S.Pi / 2)
+    Eq << Bool.Imp.given.ImpAnd.ImpAnd_Not.apply(Eq[3], cond=x > S.Pi / 2)
 
     Eq << Bool.Imp.given.And.Imp.invert.apply(Eq[-1], cond=x >= 0)
 

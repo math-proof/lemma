@@ -87,7 +87,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq.eq_peicewise)
 
-    Eq << Bool.And.Imp.of.Or.apply(Eq[-1])
+    Eq << Bool.Imp_Or_And.Imp_Or_And.of.OrAndS.apply(Eq[-1])
 
     Eq << Eq[1].this.lhs.apply(Algebra.Eq_0.Mod.of.Eq, 3)
 

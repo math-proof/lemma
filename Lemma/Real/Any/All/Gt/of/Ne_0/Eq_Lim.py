@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[2], cond=A > 0)
 
-    Eq.gt, Eq.le = Bool.And.Imp.of.Cond.split.apply(Eq[1], cond=A > 0)
+    Eq.gt, Eq.le = Bool.Imp.ImpNot.of.Cond.apply(Eq[1], cond=A > 0)
 
     Eq << Bool.Imp_And.of.ImpAnd.apply(Eq.gt)
 

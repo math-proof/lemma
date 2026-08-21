@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq << Eq[0].this.rhs.apply(Bool.Ite__Ite.eq.Ite__IteAnd_Not)
 
-    Eq << Bool.And.Imp.of.Cond.split.apply(Eq[-1], cond=Eq[0].find(Element))
+    Eq << Bool.Imp.ImpNot.of.Cond.apply(Eq[-1], cond=Eq[0].find(Element))
 
     Eq << Bool.Imp.of.Imp_Ite.apply(Eq[-2])
 

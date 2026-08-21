@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq << Bool.Imp.given.ImpEq.apply(Eq[-2])
 
-    Eq << Eq[-1].this.apply(Bool.Imp.flatten)
+    Eq << Eq[-1].this.apply(Bool.Imp_Imp.Is.ImpAnd)
 
     Eq << Bool.Imp.of.Cond.apply(Eq[0], cond=Eq[-1].lhs)
 

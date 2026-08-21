@@ -44,9 +44,9 @@ def prove(Eq):
 
     Eq << Bool.Imp_And.given.Imp.Imp.apply(Eq[-1])
 
-    Eq << Eq[-2].this.apply(Bool.Imp.flatten)
+    Eq << Eq[-2].this.apply(Bool.Imp_Imp.Is.ImpAnd)
 
-    Eq << Eq[-1].this.apply(Bool.Imp.flatten)
+    Eq << Eq[-1].this.apply(Bool.Imp_Imp.Is.ImpAnd)
 
     Eq << Eq[-1].this.lhs.apply(Int.Abs.eq.Neg.of.Lt_0)
 

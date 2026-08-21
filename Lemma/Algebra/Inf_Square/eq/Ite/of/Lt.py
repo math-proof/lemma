@@ -36,17 +36,17 @@ def prove(Eq):
 
     Eq <<= Bool.Imp_Ite.given.Imp.apply(Eq[-2]), Bool.Imp_Ite.given.Imp.apply(Eq[-1], invert=True)
 
-    Eq <<= Eq[-2].this.apply(Bool.Imp.flatten), Eq[-1].this.apply(Bool.Imp.flatten)
+    Eq <<= Eq[-2].this.apply(Bool.Imp_Imp.Is.ImpAnd), Eq[-1].this.apply(Bool.Imp_Imp.Is.ImpAnd)
 
     Eq <<= Bool.Cond.given.Imp.ImpNot.apply(Eq[-2], cond=M > 0), Bool.Imp_And.given.Imp.delete.apply(Eq[-1], 1)
 
-    Eq <<= Eq[-3].this.apply(Bool.Imp.flatten), Eq[-2].this.apply(Bool.Imp.flatten), Eq[-1].this.lhs.apply(Nat.Ge.of.Gt)
+    Eq <<= Eq[-3].this.apply(Bool.Imp_Imp.Is.ImpAnd), Eq[-2].this.apply(Bool.Imp_Imp.Is.ImpAnd), Eq[-1].this.lhs.apply(Nat.Ge.of.Gt)
 
     Eq <<= Eq[-2].this.lhs.apply(Algebra.Inf_Square.eq.Zero.of.Gt_0.Le_0), Bool.Imp_AndEq.given.Imp_AndEq.apply(Eq[-1])
 
     Eq << Bool.Imp_And.given.Imp.delete.apply(Eq[-1])
 
-    Eq <<= Bool.Cond.Imp.given.And.Imp.And.apply(Eq[0], Eq[-1])
+    Eq <<= Bool.And_Imp.given.And_ImpAnd.apply(Eq[0], Eq[-1])
 
     Eq <<= Eq[-1].this.lhs.apply(Bool.Cond.of.Eq.Cond.subst)
 

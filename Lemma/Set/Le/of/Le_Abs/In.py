@@ -54,7 +54,7 @@ def prove(Eq):
 
     Eq << Bool.ImpNot.of.Or.apply(Eq[-1], 1)
 
-    Eq << Eq[-1].this.apply(Bool.Imp.flatten)
+    Eq << Eq[-1].this.apply(Bool.Imp_Imp.Is.ImpAnd)
 
     Eq <<= Eq[0] & Eq[1]
 

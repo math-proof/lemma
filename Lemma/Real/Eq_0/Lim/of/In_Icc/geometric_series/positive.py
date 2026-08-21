@@ -49,11 +49,11 @@ def prove(Eq):
 
     Eq << Int.LtSub_1.of.Le.apply(Eq[-1], step=1)
 
-    Eq << Bool.Cond.Imp.given.And.Imp.And.apply(Eq[-1], Eq[-3])
+    Eq << Bool.And_Imp.given.And_ImpAnd.apply(Eq[-1], Eq[-3])
 
     Eq << Eq[-1].this.lhs.apply(Nat.Gt.of.Ge.Gt)
 
-    Eq << Bool.Cond.Imp.given.And.Imp.And.apply(Eq.lt_zero, Eq[-1])
+    Eq << Bool.And_Imp.given.And_ImpAnd.apply(Eq.lt_zero, Eq[-1])
 
     Eq << Eq[-1].this.lhs.apply(Algebra.LtMul.of.Lt_0.Gt)
 

@@ -71,3 +71,5 @@ from . import OrNot
 from . import Ite__IteAndNot
 from . import Imp_AndEq
 from . import UFnIte
+from . import Imp_Or_And
+from . import And_Imp

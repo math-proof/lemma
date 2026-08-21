@@ -132,7 +132,7 @@ def prove(Eq):
 
     Eq << Eq.any_boundary.this.lhs.apply(Bool.Any_And.of.AnySetOf_AnySetOf, simplify=None)
 
-    Eq << Bool.Cond.Imp.given.And.Imp.And.apply(Eq[4], Eq[-1])
+    Eq << Bool.And_Imp.given.And_ImpAnd.apply(Eq[4], Eq[-1])
 
     Eq << Eq[-1].this.lhs.apply(Bool.Any_And.of.Any.All, simplify=None)
 

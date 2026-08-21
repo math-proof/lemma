@@ -24,11 +24,11 @@ def prove(Eq):
 
     Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=a > 0)
 
-    Eq <<= Bool.Cond.Imp.given.And.Imp.And.apply(Eq[0], Eq[-2]), Bool.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=a < 0)
+    Eq <<= Bool.And_Imp.given.And_ImpAnd.apply(Eq[0], Eq[-2]), Bool.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=a < 0)
 
-    Eq <<= Eq[-3].this.lhs.apply(Algebra.Sup.eq.MaxAddS_Mul.of.Gt_0.Lt, a * x + b, x), Eq[-2].this.apply(Bool.Imp.flatten), Eq[-1].this.apply(Bool.Imp.flatten)
+    Eq <<= Eq[-3].this.lhs.apply(Algebra.Sup.eq.MaxAddS_Mul.of.Gt_0.Lt, a * x + b, x), Eq[-2].this.apply(Bool.Imp_Imp.Is.ImpAnd), Eq[-1].this.apply(Bool.Imp_Imp.Is.ImpAnd)
 
-    Eq <<= Bool.Cond.Imp.given.And.Imp.And.apply(Eq[0], Eq[-2]), Bool.Imp.given.ImpEq.apply(Eq[-1])
+    Eq <<= Bool.And_Imp.given.And_ImpAnd.apply(Eq[0], Eq[-2]), Bool.Imp.given.ImpEq.apply(Eq[-1])
 
     Eq <<= Eq[-2].this.lhs.apply(Algebra.Sup.eq.MaxAddS_Mul.of.Lt_0.Lt, a * x + b, x), Bool.Imp.given.Cond.apply(Eq[-1])
 

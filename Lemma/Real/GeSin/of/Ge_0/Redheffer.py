@@ -15,13 +15,13 @@ def prove(Eq):
 
     Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[1], cond=x > 0)
 
-    Eq << Bool.Imp.given.And.Imp.split.apply(Eq[-1], cond=x >= 0)
+    Eq << Bool.Imp.given.ImpAnd.ImpAnd_Not.apply(Eq[-1], cond=x >= 0)
 
     Eq << Bool.Imp.given.ImpEq.apply(Eq[-2])
 
     Eq << Bool.Imp.given.Cond.invert.apply(Eq[-1])
 
-    Eq.lt, Eq.ge = Bool.Imp.given.And.Imp.split.apply(Eq[2], cond=x < S.Pi)
+    Eq.lt, Eq.ge = Bool.Imp.given.ImpAnd.ImpAnd_Not.apply(Eq[2], cond=x < S.Pi)
 
     Eq << Eq.lt.this.lhs.apply(Set.In.Icc.of.Lt.Gt)
 
@@ -29,7 +29,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Nat.Ge.of.Gt)
 
-    Eq << Bool.Imp.given.And.Imp.split.apply(Eq.ge, cond=x > S.Pi)
+    Eq << Bool.Imp.given.ImpAnd.ImpAnd_Not.apply(Eq.ge, cond=x > S.Pi)
 
     Eq << Bool.Imp.given.ImpEq.apply(Eq[-1])
 

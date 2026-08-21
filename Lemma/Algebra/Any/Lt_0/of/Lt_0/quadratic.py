@@ -17,7 +17,7 @@ def prove(Eq):
     x = Symbol(real=True)
     Eq << apply(a < 0, x=x, b=b, c=c)
 
-    Eq << Bool.And.Imp.of.Cond.split.apply(Eq[0], cond=b ** 2 - 4 * a * c >= 0)
+    Eq << Bool.Imp.ImpNot.of.Cond.apply(Eq[0], cond=b ** 2 - 4 * a * c >= 0)
 
     Eq <<= Bool.Imp_And.of.ImpAnd.apply(Eq[-2]), Bool.Imp_And.of.ImpAnd.apply(Eq[-1])
 

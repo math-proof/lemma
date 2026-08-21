@@ -24,7 +24,7 @@ def prove(Eq):
     x, a, b = Symbol(real=True)
     Eq << apply(Equal(a * x + b, 0), x=x)
 
-    Eq << Bool.And.Imp.of.Cond.split.apply(Eq[0], cond=Equal(a, 0))
+    Eq << Bool.Imp.ImpNot.of.Cond.apply(Eq[0], cond=Equal(a, 0))
 
     Eq <<= Bool.Imp_And.of.ImpAnd.apply(Eq[-2]), Eq[-1].this.rhs.apply(Int.EqAdd.Is.Eq_Sub, lhs=0)
 

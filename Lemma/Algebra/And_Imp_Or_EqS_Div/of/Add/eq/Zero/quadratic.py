@@ -20,7 +20,7 @@ def prove(Eq):
     x, a, b, c = Symbol(complex=True, given=True)
     Eq << apply(Equal(a * x ** 2 + b * x + c, 0))
 
-    Eq << Bool.And.Imp.of.Cond.split.apply(Eq[0], cond=Equal(a, 0))
+    Eq << Bool.Imp.ImpNot.of.Cond.apply(Eq[0], cond=Equal(a, 0))
 
     Eq <<= Bool.Imp_And.of.ImpAnd.apply(Eq[-2]), Bool.Imp_And.of.ImpAnd.apply(Eq[-1])
 
@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Algebra.AndImpS_Eq.of.Add.eq.Zero.simple, x=x)
 
-    Eq << Bool.And.Imp.of.Imp.apply(Eq[-1])
+    Eq << Bool.Imp.Imp.of.Imp_And.apply(Eq[-1])
 
     # Eq <<= Eq[-2].this.apply(Algebra.suffice.flatten), Eq[-1].this.apply(Algebra.suffice.flatten)
 

@@ -1,1 +1,1 @@
-from . import EqCeilSubDiv
+from . import EqCeilSubDivS

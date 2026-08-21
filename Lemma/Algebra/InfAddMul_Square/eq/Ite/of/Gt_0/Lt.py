@@ -36,7 +36,7 @@ def prove(Eq):
 
     Eq <<= Bool.Imp_Ite.given.Imp.apply(Eq[-2]), Bool.Imp_Ite.given.Imp.apply(Eq[-1], invert=True)
 
-    Eq <<= Bool.Cond.Imp.given.And.Imp.And.apply(Eq[0], Eq[-2]), Eq[-1].this.lhs.apply(Set.Or.of.NotIn_Icc)
+    Eq <<= Bool.And_Imp.given.And_ImpAnd.apply(Eq[0], Eq[-2]), Eq[-1].this.lhs.apply(Set.Or.of.NotIn_Icc)
 
     Eq <<= Eq[-2].this.lhs.apply(Set.Inf_Add_Mul_Square.eq.Sub_DivSquare.of.Gt_0.In, Eq[-2].find(Inf).expr, x), Bool.ImpOr.given.Imp.Imp.apply(Eq[-1])
 

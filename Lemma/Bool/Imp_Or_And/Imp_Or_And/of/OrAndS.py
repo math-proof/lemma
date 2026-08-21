@@ -91,5 +91,3 @@ if __name__ == '__main__':
 # created on 2018-11-24
 
 
-del Or
-from . import Or

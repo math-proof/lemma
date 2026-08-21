@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq << Eq[-2].this.lhs.apply(Bool.And.Imp.of.Imp.split, cond=Eq[0].find(Greater))
 
-    Eq << Eq[-1].this.rhs.apply(Bool.Imp.given.And.Imp.split, cond=Eq[0].find(Greater))
+    Eq << Eq[-1].this.rhs.apply(Bool.Imp.given.ImpAnd.ImpAnd_Not, cond=Eq[0].find(Greater))
 
 
 if __name__ == '__main__':

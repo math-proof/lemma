@@ -17,15 +17,15 @@ def prove(Eq):
 
     Eq.gt_zero, Eq.le_zero = Bool.Cond.given.Imp.ImpNot.apply(Eq[1], cond=n > 0)
 
-    Eq << Bool.Cond.Imp.given.And.Imp.And.apply(Eq[0], Eq.gt_zero)
+    Eq << Bool.And_Imp.given.And_ImpAnd.apply(Eq[0], Eq.gt_zero)
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Gt_0.Pow.of.Gt_0.Gt_0)
 
-    Eq << Bool.Imp.given.And.Imp.split.apply(Eq.le_zero, cond=n < 0)
+    Eq << Bool.Imp.given.ImpAnd.ImpAnd_Not.apply(Eq.le_zero, cond=n < 0)
 
     Eq << Bool.Imp.given.ImpEq.apply(Eq[-1])
 
-    Eq << Bool.Cond.Imp.given.And.Imp.And.apply(Eq[0], Eq[-2])
+    Eq << Bool.And_Imp.given.And_ImpAnd.apply(Eq[0], Eq[-2])
 
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Gt_0.Pow.of.Lt_0.Gt_0)

@@ -35,7 +35,7 @@ def prove(Eq):
 
     Eq << Eq.ge.this.rhs.apply(Bool.Imp.fold, 2, swap=True)
 
-    Eq << Eq[-1].this.apply(Bool.Imp.flatten)
+    Eq << Eq[-1].this.apply(Bool.Imp_Imp.Is.ImpAnd)
 
     Eq << Eq[-1].this.lhs.apply(Algebra.EqAll_Eq_0.of.Eq_Sum.Ge.All_Ge_0.squeeze)
 
@@ -49,7 +49,7 @@ def prove(Eq):
 
     Eq << Eq.lt.this.rhs.apply(Bool.Imp.fold)
 
-    Eq << Eq[-1].this.apply(Bool.Imp.flatten)
+    Eq << Eq[-1].this.apply(Bool.Imp_Imp.Is.ImpAnd)
 
     Eq << Eq[-1].this.find(Equal[~Sum]).apply(Algebra.Sum.eq.Add.pop)
 
@@ -65,7 +65,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Bool.Imp.fold, 2)
 
-    Eq << Eq[-1].this.apply(Bool.Imp.flatten)
+    Eq << Eq[-1].this.apply(Bool.Imp_Imp.Is.ImpAnd)
 
     Eq << Eq[-1].this.apply(Bool.Imp.fold, slice(1, None))
 
@@ -75,7 +75,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.apply(Bool.Imp.swap)
 
-    Eq << Eq[-1].this.rhs.apply(Bool.Imp.flatten)
+    Eq << Eq[-1].this.rhs.apply(Bool.Imp_Imp.Is.ImpAnd)
 
     Eq << Eq[-1].this.rhs.apply(Bool.Imp.fold, slice(0, 2), swap=True)
 
@@ -85,9 +85,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(All & All).apply(Bool.All_And.of.All.All)
 
-    Eq << Eq[-1].this.apply(Bool.Imp.flatten)
+    Eq << Eq[-1].this.apply(Bool.Imp_Imp.Is.ImpAnd)
 
-    Eq << Eq[-1].this.rhs.apply(Bool.Imp.flatten)
+    Eq << Eq[-1].this.rhs.apply(Bool.Imp_Imp.Is.ImpAnd)
 
     w_ = Symbol('w', Stack[i:n](w[i] / (1 - w[n])))
     Eq << (w_[i].this.definition * (1 - w[n])).reversed

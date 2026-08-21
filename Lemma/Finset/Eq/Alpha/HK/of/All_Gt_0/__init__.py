@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[1], cond=n >= 3)
 
-    Eq.case1, Eq.case2 = Bool.Imp.given.And.Imp.split.apply(Eq[-1], cond=n < 2)
+    Eq.case1, Eq.case2 = Bool.Imp.given.ImpAnd.ImpAnd_Not.apply(Eq[-1], cond=n < 2)
 
     Eq << Eq.case1.this.lhs.apply(Algebra.Lt.Is.Eq.squeeze)
 

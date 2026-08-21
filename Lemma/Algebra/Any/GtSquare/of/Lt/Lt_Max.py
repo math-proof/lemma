@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq <<= Bool.Cond.given.Imp.ImpNot.apply(Eq[-2], cond=m > 0), Bool.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=m > 0)
 
-    Eq <<= Eq[-4].this.apply(Bool.Imp.flatten), Eq[-3].this.apply(Bool.Imp.flatten), Eq[-2].this.apply(Bool.Imp.flatten), Eq[-1].this.apply(Bool.Imp.flatten)
+    Eq <<= Eq[-4].this.apply(Bool.Imp_Imp.Is.ImpAnd), Eq[-3].this.apply(Bool.Imp_Imp.Is.ImpAnd), Eq[-2].this.apply(Bool.Imp_Imp.Is.ImpAnd), Eq[-1].this.apply(Bool.Imp_Imp.Is.ImpAnd)
 
     Eq <<= Bool.Imp_And.of.Cond.apply(Eq[0] & Eq[1], cond=Eq[-4].lhs),\
         Bool.Imp_And.of.Cond.apply(Eq[0] & Eq[1], cond=Eq[-3].lhs),\
@@ -35,7 +35,7 @@ def prove(Eq):
         Eq[-4].this.rhs.args[-1].apply(Nat.Ge.of.Gt), \
         Eq[-2].this.lhs.apply(Nat.Le.of.Lt)
 
-    Eq <<= Bool.And.Imp.of.Imp.apply(Eq[-4], simplify=None), \
+    Eq <<= Bool.Imp.Imp.of.Imp_And.apply(Eq[-4], simplify=None), \
         Eq[-3].this.rhs.args[:4:2].apply(Bool.Cond.of.Eq.Cond.subst, simplify=None), \
         Eq[-2].this.rhs.args[::2].apply(Algebra.EqMax.of.Ge_0.Lt, ret=slice(None)), \
         Eq[-1].this.apply(Bool.Imp.Is.ImpNotS)
@@ -62,11 +62,11 @@ def prove(Eq):
     Eq.is_positive, Eq.is_nonpositive = Eq[-2].this.rhs.rhs.apply(Algebra.Any.GtSquare.of.Le_0.Gt_0.Lt),\
         Eq[-1].this.rhs.apply(Bool.Imp_And.of.ImpAnd)
 
-    Eq <<= Eq.is_nonpositive.this.rhs.rhs.apply(Bool.And.Imp.of.Cond.split, cond=m + M < 0)
+    Eq <<= Eq.is_nonpositive.this.rhs.rhs.apply(Bool.Imp.ImpNot.of.Cond, cond=m + M < 0)
 
-    Eq << Eq[-1].this.rhs.apply(Bool.And.Imp.of.Imp)
+    Eq << Eq[-1].this.rhs.apply(Bool.Imp.Imp.of.Imp_And)
 
-    Eq << Bool.And.Imp.of.Imp.apply(Eq[-1], simplify=None)
+    Eq << Bool.Imp.Imp.of.Imp_And.apply(Eq[-1], simplify=None)
 
     Eq <<= Eq[-1].this.rhs.rhs.apply(Bool.Cond.of.And, index=slice(None, None, 2)), Eq[-2].this.rhs.rhs.apply(Bool.Cond.of.And, index=0)
 

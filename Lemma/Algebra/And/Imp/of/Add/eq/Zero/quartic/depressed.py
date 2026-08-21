@@ -39,13 +39,13 @@ def prove(Eq):
     fx = x ** 4 + alpha * x ** 2 + beta * x + gamma
     Eq << apply(Equal(fx, 0), x=x)
 
-    Eq << Bool.And.Imp.of.Cond.split.apply(Eq[0], cond=Equal(beta, 0))
+    Eq << Bool.Imp.ImpNot.of.Cond.apply(Eq[0], cond=Equal(beta, 0))
 
     Eq <<= Bool.ImpEq.of.ImpEq.subst.apply(Eq[-2]), Bool.Imp_And.of.ImpAnd.apply(Eq[-1])
 
     Eq << Eq[-2].this.rhs.apply(Algebra.Or_Eq.of.Add.eq.Zero.biquadratic, x)
 
-    Eq << Bool.And.Imp.of.Imp.apply(Eq[-1].this.rhs.apply(Algebra.And.Imp.of.Add.eq.Zero.Ne_0.quartic.depressed, x), None)
+    Eq << Bool.Imp.Imp.of.Imp_And.apply(Eq[-1].this.rhs.apply(Algebra.And.Imp.of.Add.eq.Zero.Ne_0.quartic.depressed, x), None)
 
 
 if __name__ == '__main__':

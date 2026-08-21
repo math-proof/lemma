@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq <<= Bool.Cond.given.Imp.ImpNot.apply(Eq[-2], cond=x > 0), Bool.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=x > 0)
 
-    Eq.gt_gt, Eq.le_gt, Eq.gt_le, Eq.le_le = Eq[-4].this.apply(Bool.Imp.flatten), Eq[-3].this.apply(Bool.Imp.flatten), Eq[-2].this.apply(Bool.Imp.flatten), Eq[-1].this.apply(Bool.Imp.flatten)
+    Eq.gt_gt, Eq.le_gt, Eq.gt_le, Eq.le_le = Eq[-4].this.apply(Bool.Imp_Imp.Is.ImpAnd), Eq[-3].this.apply(Bool.Imp_Imp.Is.ImpAnd), Eq[-2].this.apply(Bool.Imp_Imp.Is.ImpAnd), Eq[-1].this.apply(Bool.Imp_Imp.Is.ImpAnd)
 
     Eq << Set.Sqrt.gt.Zero.of.In.apply(Eq[2])
 

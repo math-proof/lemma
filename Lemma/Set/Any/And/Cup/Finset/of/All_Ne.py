@@ -57,7 +57,7 @@ def prove(Eq):
 
     Eq << Bool.Imp_And.given.Imp.Imp.apply(Eq[-1])
 
-    Eq <<= Eq[-2].this.apply(Bool.Imp.flatten), Eq[-1].this.apply(Bool.Imp.flatten)
+    Eq <<= Eq[-2].this.apply(Bool.Imp_Imp.Is.ImpAnd), Eq[-1].this.apply(Bool.Imp_Imp.Is.ImpAnd)
 
     Eq <<= Eq[-2].this.lhs.apply(Set.In.Ico.Inter.of.Lt.In_Ico), Eq[-1].this.lhs.apply(Set.In.Ico.Inter.of.Ge.In_Ico)
 
@@ -79,7 +79,7 @@ def prove(Eq):
 
     Eq << Bool.Imp_And.given.Imp.Imp.apply(Eq[-1])
 
-    Eq <<= Eq[-2].this.apply(Bool.Imp.flatten), Eq[-1].this.apply(Bool.Imp.flatten)
+    Eq <<= Eq[-2].this.apply(Bool.Imp_Imp.Is.ImpAnd), Eq[-1].this.apply(Bool.Imp_Imp.Is.ImpAnd)
 
     Eq <<= Eq[-2].this.lhs.apply(Set.In.Ico.Inter.of.Lt.In_Ico), Eq[-1].this.lhs.apply(Set.In.Ico.Inter.of.Ge.In_Ico)
 
@@ -99,7 +99,7 @@ def prove(Eq):
 
     Eq << Bool.Imp_And.given.Imp.Imp.apply(Eq[-1])
 
-    Eq <<= Eq[-2].this.apply(Bool.Imp.flatten), Eq[-1].this.apply(Bool.Imp.flatten)
+    Eq <<= Eq[-2].this.apply(Bool.Imp_Imp.Is.ImpAnd), Eq[-1].this.apply(Bool.Imp_Imp.Is.ImpAnd)
 
     Eq <<= Eq[-2].this.lhs.args[::2].apply(Set.In.Ico.Inter.of.Lt.In_Ico), Eq[-1].this.lhs.args[::2].apply(Set.In.Ico.Inter.of.Ge.In_Ico)
 
@@ -107,7 +107,7 @@ def prove(Eq):
 
     Eq <<= Bool.Imp_And.given.Imp.Imp.apply(Eq[-2]), Bool.Imp_And.given.Imp.Imp.apply(Eq[-1])
 
-    Eq <<= Eq[-4].this.apply(Bool.Imp.flatten), Eq[-3].this.apply(Bool.Imp.flatten), Eq[-2].this.apply(Bool.Imp.flatten), Eq[-1].this.apply(Bool.Imp.flatten)
+    Eq <<= Eq[-4].this.apply(Bool.Imp_Imp.Is.ImpAnd), Eq[-3].this.apply(Bool.Imp_Imp.Is.ImpAnd), Eq[-2].this.apply(Bool.Imp_Imp.Is.ImpAnd), Eq[-1].this.apply(Bool.Imp_Imp.Is.ImpAnd)
 
     Eq << Eq[-2].this.find(Element[2]).apply(Set.Gt.of.In_Ico.domain)
 

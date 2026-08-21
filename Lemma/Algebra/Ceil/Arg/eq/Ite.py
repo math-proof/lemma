@@ -41,7 +41,7 @@ def prove(Eq):
 
     Eq << Unequal(p, 0).this.apply(Algebra.Ceil_Arg.eq.Ite.of.Ne_0, q)
 
-    Eq << Eq[-1].lhs.this.apply(Bool.Iff.Eq.of.Ne_0, Eq[-1].find(Equal[~Ceil, 0]))
+    Eq << Eq[-1].lhs.this.apply(Nat.Eq_0.Is.EqMul.of.Ne_0, Eq[-1].find(Equal[~Ceil, 0]))
 
     Eq <<= Eq[-1] & Eq[-2]
     Eq << Eq[-1].this.rhs.apply(Bool.Cond.of.Iff.Cond.subst)

@@ -25,7 +25,7 @@ def prove(Eq):
     A, B, C = Symbol(etype=dtype.real)
     Eq << apply(Imply(Element(x, A) & Element(y, B), Element(z, C)), index=0, swap=True)
 
-    Eq << Eq[-1].this.rhs.apply(Bool.Imp.flatten)
+    Eq << Eq[-1].this.rhs.apply(Bool.Imp_Imp.Is.ImpAnd)
 
 
 if __name__ == '__main__':

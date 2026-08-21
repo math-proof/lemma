@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << Bool.OrAndS.of.BFn_Ite.apply(Eq[-1])
 
-    Eq << Bool.And.Imp.of.Or.apply(Eq[-1])
+    Eq << Bool.Imp_Or_And.Imp_Or_And.of.OrAndS.apply(Eq[-1])
 
     Eq <<= Bool.All.of.Imp.single_variable.apply(Eq[-2], simplify=None), Bool.All.of.Imp.single_variable.apply(Eq[-1], simplify=None)
 

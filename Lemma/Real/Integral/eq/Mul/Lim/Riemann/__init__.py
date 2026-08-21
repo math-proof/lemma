@@ -43,7 +43,7 @@ def prove(Eq):
 
     Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[2], cond=a > b)
 
-    Eq <<= Eq[-2].this.apply(Bool.Imp.flatten), Eq[-1].this.apply(Bool.Imp.flatten)
+    Eq <<= Eq[-2].this.apply(Bool.Imp_Imp.Is.ImpAnd), Eq[-1].this.apply(Bool.Imp_Imp.Is.ImpAnd)
 
     Eq << Eq[-2].this.lhs.apply(Real.Integral.eq.Lim.Riemann.of.Gt, Eq[0].lhs)
 

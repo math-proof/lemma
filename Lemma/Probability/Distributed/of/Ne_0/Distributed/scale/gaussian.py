@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Bool.Imp.given.And.Imp.invert.apply(Eq[-1], cond=a < 0)
 
-    Eq <<= Bool.Cond.Imp.given.And.Imp.And.apply(Eq[1], Eq[-3]), Bool.Cond.Imp.given.And.Imp.And.apply(Eq[1], Eq[-1])
+    Eq <<= Bool.And_Imp.given.And_ImpAnd.apply(Eq[1], Eq[-3]), Bool.And_Imp.given.And_ImpAnd.apply(Eq[1], Eq[-1])
 
     Eq << Eq[-2].this.lhs.apply(Probability.Distributed.of.Gt_0.Distributed.scale.gaussian, b)
 

@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq << Bool.Iff.given.Imp.Imp.apply(Eq[1])
 
-    Eq <<= Bool.Cond.Imp.given.And.Imp.And.apply(Eq[0], Eq[-2]), Bool.Cond.Imp.given.And.Imp.And.apply(Eq[0], Eq[-1])
+    Eq <<= Bool.And_Imp.given.And_ImpAnd.apply(Eq[0], Eq[-2]), Bool.And_Imp.given.And_ImpAnd.apply(Eq[0], Eq[-1])
 
     Eq << Eq[-2].this.lhs.apply(Algebra.GtDiv.of.Lt_0.Lt)
 

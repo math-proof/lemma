@@ -41,13 +41,13 @@ def prove(Eq):
 
     Eq << Eq[-1].limits_subs(t, x)
 
-    Eq << Bool.Cond.Imp.given.And.Imp.And.apply(Eq[-1], Eq.infer_is_empty)
+    Eq << Bool.And_Imp.given.And_ImpAnd.apply(Eq[-1], Eq.infer_is_empty)
 
     Eq << Eq[-1].this.lhs.apply(Bool.Any_And.of.Any.All.All_Imp)
 
     Eq << Eq[-1].this.lhs.expr.apply(Algebra.Le.of.Eq.Le)
 
-    Eq << Bool.Cond.Imp.given.And.Imp.And.apply(Eq[0], Eq[-1])
+    Eq << Bool.And_Imp.given.And_ImpAnd.apply(Eq[0], Eq[-1])
 
 
 if __name__ == '__main__':

@@ -35,7 +35,7 @@ def prove(Eq):
 
     Eq <<= Bool.Imp.given.ImpEq.apply(Eq[-2]), Bool.Imp_Ite.given.Imp.apply(Eq[-1], invert=True)
 
-    Eq <<= Eq[-2].this.apply(Bool.Imp.flatten), Eq[-1].this.lhs.apply(Algebra.Or_Eq.Arg.of.Ceil.ne.Zero)
+    Eq <<= Eq[-2].this.apply(Bool.Imp_Imp.Is.ImpAnd), Eq[-1].this.lhs.apply(Algebra.Or_Eq.Arg.of.Ceil.ne.Zero)
 
     Eq << Eq[-2].this.lhs.apply(Algebra.Eq.of.Ne_0.Ne_0.Eq.cubic_root)
 
@@ -45,7 +45,7 @@ def prove(Eq):
 
     Eq <<= Bool.Imp.given.ImpEq.apply(Eq[-2]), Bool.Imp.given.ImpEq.apply(Eq[-1])
 
-    Eq <<= Eq[-2].this.apply(Bool.Imp.flatten), Eq[-1].this.apply(Bool.Imp.flatten)
+    Eq <<= Eq[-2].this.apply(Bool.Imp_Imp.Is.ImpAnd), Eq[-1].this.apply(Bool.Imp_Imp.Is.ImpAnd)
     Eq <<= Eq[-2].this.lhs.apply(Algebra.Eq.of.Ne_0.Ne_0.Eq.cubic_root)
     Eq <<= Eq[-1].this.lhs.apply(Algebra.Eq.of.Ne_0.Ne_0.Eq.cubic_root)
 

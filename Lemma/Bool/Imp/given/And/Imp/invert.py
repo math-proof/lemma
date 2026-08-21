@@ -18,7 +18,7 @@ def prove(Eq):
     x, y = Symbol(integer=True)
     Eq << apply(Imply(Equal(f(x), f(y)), Equal(g(x), g(y))), cond=x > 0)
 
-    Eq << Bool.Imp.given.And.Imp.split.apply(Eq[0], cond=x > 0)
+    Eq << Bool.Imp.given.ImpAnd.ImpAnd_Not.apply(Eq[0], cond=x > 0)
 
     Eq << Bool.Imp.given.Cond.invert.apply(Eq[-1])
 
