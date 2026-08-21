@@ -377,8 +377,11 @@ export class Lean extends IndentedNode {
             case 'set_option':
                 return this.append(`Lean_${token}`, 'delspec');
             case 'fun':
-            case 'match':
+            case 'match': {
+                const asPropertyField = self.parseKeywordAsPropertyField(this, token);
+                if (asPropertyField) return asPropertyField;
                 return this.append(`Lean_${token}`, 'expr');
+            }
             case 'haveI':
             case 'letI':
                 token = token.slice(0, -1);
