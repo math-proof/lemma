@@ -17,5 +17,5 @@ private lemma main :
   tauto
 
 
--- created on 2024-07-01
+-- created on 2018-08-29
 -- updated on 2026-08-21
