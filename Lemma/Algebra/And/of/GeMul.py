@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << LessEqual(Eq[-1].lhs, 1, plausible=True)
 
-    Eq << Nat.Eq.of.Ge.Le.apply(Eq[-2], Eq[-1])
+    Eq << Nat.Eq.of.Le.Le.apply(Eq[-2], Eq[-1])
 
     Eq << Eq[0].subs(Eq[-1])
 

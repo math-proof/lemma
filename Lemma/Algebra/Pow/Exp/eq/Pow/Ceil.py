@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Eq[0].subs(Eq[-1].reversed)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Pow.Exp.eq.Exp)
+    Eq << Eq[-1].this.lhs.apply(Complex.PowExp_Inv.eq.ExpMulIDivArg)
 
 
 if __name__ == '__main__':

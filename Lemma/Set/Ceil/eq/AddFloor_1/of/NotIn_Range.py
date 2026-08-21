@@ -46,7 +46,7 @@ def prove(Eq):
 
     Eq <<= Nat.Ge_Add_1.of.Gt.apply(Eq[-2]), Nat.Le_Sub_1.of.Lt.apply(Eq[-1])
 
-    Eq << Nat.Eq.of.Ge.Le.apply(Eq[-2], Eq[-1])
+    Eq << Nat.Eq.of.Le.Le.apply(Eq[-2], Eq[-1])
     Eq << Eq[-1].this.apply(Int.EqAdd.Is.Eq_Sub)
 
 

@@ -17,7 +17,7 @@ def prove(Eq):
 
     Eq << ~Eq[-1]
 
-    Eq << Eq[-1].this.apply(Nat.Eq.of.Ge.Le)
+    Eq << Eq[-1].this.apply(Nat.Eq.of.Le.Le)
 
     Eq << Eq[-1].reversed
 

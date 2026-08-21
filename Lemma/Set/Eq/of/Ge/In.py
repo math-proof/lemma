@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Nat.Le.of.Ge.Le.apply(Eq[-1], Eq[-2])
 
-    Eq << Nat.Eq.of.Ge.Le.apply(Eq[0], Eq[-1])
+    Eq << Nat.Eq.of.Le.Le.apply(Eq[0], Eq[-1])
 
     Eq << Eq[1].subs(Eq[-1].reversed)
 

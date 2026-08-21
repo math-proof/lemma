@@ -15,3 +15,4 @@ from . import ArgExpMulI
 from . import ArgIte
 from . import GtAddArgS
 from . import Pow_Inv
+from . import PowExp_Inv

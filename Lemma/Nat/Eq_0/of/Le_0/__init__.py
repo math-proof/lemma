@@ -17,7 +17,7 @@ def prove(Eq):
 
     Eq << GreaterEqual(x, 0, plausible=True)
 
-    Eq << Nat.Eq.of.Ge.Le.apply(Eq[-1], Eq[0])
+    Eq << Nat.Eq.of.Le.Le.apply(Eq[-1], Eq[0])
 
 
 

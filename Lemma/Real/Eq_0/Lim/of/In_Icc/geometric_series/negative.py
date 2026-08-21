@@ -35,7 +35,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2].subs(Eq.is_zero), Eq[-1].subs(Eq.is_zero)
 
-    Eq << Nat.Eq.of.Ge.Le.apply(Eq[-1], Eq[-2])
+    Eq << Nat.Eq.of.Le.Le.apply(Eq[-1], Eq[-2])
 
 
 if __name__ == '__main__':

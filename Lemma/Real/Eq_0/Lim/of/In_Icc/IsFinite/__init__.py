@@ -53,7 +53,7 @@ def prove(Eq):
 
     Eq << Real.GeLim.of.Ge.apply(Eq[-1], (n, oo))
 
-    Eq << Nat.Eq.of.Ge.Le.apply(Eq[-1], Eq[-3])
+    Eq << Nat.Eq.of.Le.Le.apply(Eq[-1], Eq[-3])
 
     Eq << Real.Lim.eq.Zero.of.LimAbs.eq.Zero.apply(Eq[-1])
 
