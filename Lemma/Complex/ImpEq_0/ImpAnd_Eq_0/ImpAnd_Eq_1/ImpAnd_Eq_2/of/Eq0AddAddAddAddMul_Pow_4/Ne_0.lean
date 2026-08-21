@@ -2,7 +2,7 @@ import sympy.core.power
 import sympy.core.numbers
 import sympy.polys.polyroots
 import Lemma.Algebra.Or_Eq.of.Add.eq.Zero.biquadratic
-import Lemma.Algebra.And.Imp.Or.Eq.of.Add.eq.Zero.cubic.one_leaded
+import Lemma.Algebra.And.Imp.of.Add.eq.Zero.Ne_0.quartic.depressed
 open Algebra
 
 
@@ -71,31 +71,32 @@ private lemma main
         x = -√(-2 * β / √y0 - y1) / 2 + √y0 / 2 - a' / 4) := by
 -- proof
   intro a' b' c' d' α β γ δ U V A B ar br cr p q δc Ac Bc D ω
+  let z : ℂ := x + a' / 4
+  have hx : x = z - a' / 4 := by
+    simp [z]
+  have hmonic : x ^ 4 + a' * x ^ 3 + b' * x ^ 2 + c' * x + d' = 0 := by
+    have hmul :
+        a * (x ^ 4 + (b / a) * x ^ 3 + (c / a) * x ^ 2 + (d / a) * x + e / a) =
+          a * x ^ 4 + b * x ^ 3 + c * x ^ 2 + d * x + e := by
+      field_simp [ha]
+    have h0 : a * (x ^ 4 + a' * x ^ 3 + b' * x ^ 2 + c' * x + d') = 0 := by
+      simp only [a', b', c', d']
+      rw [hmul, h]
+    exact (mul_eq_zero.mp h0).resolve_left ha
+  have hdep : z ^ 4 + α * z ^ 2 + β * z + γ = 0 := by
+    rw [hx] at hmonic
+    have hexp :
+        (z - a' / 4) ^ 4 + a' * (z - a' / 4) ^ 3 + b' * (z - a' / 4) ^ 2 +
+            c' * (z - a' / 4) + d' =
+          z ^ 4 + α * z ^ 2 + β * z + γ := by
+      simp only [α, β, γ]
+      ring
+    rwa [hexp] at hmonic
   refine ⟨?_, ?_, ?_, ?_⟩
   ·
     intro hβ Δ
-    let z : ℂ := x + a' / 4
-    have hx : x = z - a' / 4 := by
-      simp [z]
     have hz : z ^ 4 + α * z ^ 2 + γ = 0 := by
-      have hmonic : x ^ 4 + a' * x ^ 3 + b' * x ^ 2 + c' * x + d' = 0 := by
-        have hmul :
-            a * (x ^ 4 + (b / a) * x ^ 3 + (c / a) * x ^ 2 + (d / a) * x + e / a) =
-              a * x ^ 4 + b * x ^ 3 + c * x ^ 2 + d * x + e := by
-          field_simp [ha]
-        have h0 : a * (x ^ 4 + a' * x ^ 3 + b' * x ^ 2 + c' * x + d') = 0 := by
-          simp only [a', b', c', d']
-          rw [hmul, h]
-        exact (mul_eq_zero.mp h0).resolve_left ha
-      rw [hx] at hmonic
-      have hexp :
-          (z - a' / 4) ^ 4 + a' * (z - a' / 4) ^ 3 + b' * (z - a' / 4) ^ 2 +
-              c' * (z - a' / 4) + d' =
-            z ^ 4 + α * z ^ 2 + β * z + γ := by
-        simp only [α, β, γ]
-        ring
-      rw [hexp, hβ] at hmonic
-      simpa using hmonic
+      simpa [hβ] using hdep
     have hbi := Or_Eq.of.Add.eq.Zero.biquadratic (x := z) (α := α) (γ := γ) hz
     rcases hbi with hz' | hz' | hz' | hz'
     ·
@@ -107,11 +108,41 @@ private lemma main
     ·
       exact Or.inr (Or.inr (Or.inr (eq_sub_of_add_eq hz')))
   ·
-    sorry
+    intro ⟨hβ, hD⟩ y y0 y1
+    have hfour := (And.Imp.of.Add.eq.Zero.Ne_0.quartic.depressed hdep hβ).1 hD
+    rcases hfour with hz' | hz' | hz' | hz'
+    ·
+      exact Or.inl (hx.trans (hz' ▸ rfl))
+    ·
+      exact Or.inr (Or.inl (hx.trans (hz' ▸ rfl)))
+    ·
+      exact Or.inr (Or.inr (Or.inl (hx.trans (hz' ▸ rfl))))
+    ·
+      exact Or.inr (Or.inr (Or.inr (hx.trans (hz' ▸ rfl))))
   ·
-    sorry
+    intro ⟨hβ, hD⟩ y y0 y1
+    have hfour := (And.Imp.of.Add.eq.Zero.Ne_0.quartic.depressed hdep hβ).2.1 hD
+    rcases hfour with hz' | hz' | hz' | hz'
+    ·
+      exact Or.inl (hx.trans (hz' ▸ rfl))
+    ·
+      exact Or.inr (Or.inl (hx.trans (hz' ▸ rfl)))
+    ·
+      exact Or.inr (Or.inr (Or.inl (hx.trans (hz' ▸ rfl))))
+    ·
+      exact Or.inr (Or.inr (Or.inr (hx.trans (hz' ▸ rfl))))
   ·
-    sorry
+    intro ⟨hβ, hD⟩ y y0 y1
+    have hfour := (And.Imp.of.Add.eq.Zero.Ne_0.quartic.depressed hdep hβ).2.2 hD
+    rcases hfour with hz' | hz' | hz' | hz'
+    ·
+      exact Or.inl (hx.trans (hz' ▸ rfl))
+    ·
+      exact Or.inr (Or.inl (hx.trans (hz' ▸ rfl)))
+    ·
+      exact Or.inr (Or.inr (Or.inl (hx.trans (hz' ▸ rfl))))
+    ·
+      exact Or.inr (Or.inr (Or.inr (hx.trans (hz' ▸ rfl))))
 
 
 -- created on 2018-11-29
