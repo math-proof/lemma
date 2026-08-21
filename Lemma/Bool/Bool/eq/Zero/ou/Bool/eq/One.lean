@@ -1,6 +1,6 @@
 import sympy.core.power
 import Lemma.Set.Bool.in.Finset
-import Lemma.Set.OrEqS.of.In_Finset
+import Lemma.Set.In_Finset.is.OrEqS
 open Set
 
 

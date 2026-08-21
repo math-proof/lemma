@@ -1,17 +1,21 @@
-import Lemma.Bool.Imp.is.OrNot
-import Lemma.Bool.NotAnd.is.OrNotS
-import Lemma.Bool.OrOr.is.Or_Or
-open Bool
+import sympy.Basic
 
 
-@[main]
+/--
+| attributes | lemma |
+| :---: | :---: |
+| main | Bool.Imp_Imp.is.ImpAnd |
+| comm | Bool.ImpAnd.is.Imp_Imp |
+| mp | Bool.ImpAnd.of.Imp_Imp |
+| mpr | Bool.Imp_Imp.of.ImpAnd |
+-/
+@[main, comm, mp, mpr]
 private lemma main :
 -- imply
   p → q → r ↔ p ∧ q → r := by
 -- proof
-  repeat rw [Imp.is.OrNot]
-  rw [NotAnd.is.OrNotS]
-  rw [OrOr.is.Or_Or]
+  tauto
 
 
 -- created on 2024-07-01
+-- updated on 2026-08-21

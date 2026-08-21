@@ -4,7 +4,6 @@ import Lemma.List.LengthInsertIdx.eq.Length.of.LtLength
 import Lemma.Bool.UFn.of.Eq
 import Lemma.List.InsertIdxCons.eq.Cons_InsertIdx.of.Gt_0
 import Lemma.Nat.Ge_1.of.Gt_0
-import Lemma.Nat.Eq.of.Ge.Le
 open Tensor List Bool Nat
 
 

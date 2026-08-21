@@ -856,6 +856,11 @@ export class Lean extends IndentedNode {
         }
     }
 
+    /** Default: leave the node as-is. Colon / `↑` / `(e : T)` override this. */
+    peelLatexCoe() {
+        return this;
+    }
+
     push_accessibility($new, accessibility) {
         if (this.parent) return this.parent.push_accessibility($new, accessibility);
     }
@@ -2038,6 +2043,12 @@ export class LeanParenthesis extends LeanPairedGroup {
         return this.toColor();
     }
 
+    peelLatexCoe() {
+        const inner = this.arg.peelLatexCoe();
+        if (inner !== this.arg) return inner;
+        return this;
+    }
+
     regexp() {
         return this.arg.regexp();
     }
@@ -2722,6 +2733,10 @@ export class LeanColon extends LeanBinary {
         return false;
     }
 
+    peelLatexCoe() {
+        return this.lhs.peelLatexCoe();
+    }
+
     sep() {
         const rhs = this.rhs;
         return rhs instanceof LeanStatements ? '\n' : (rhs instanceof LeanCaret || this.parent instanceof LeanGetElem ? '' : ' ');
@@ -3246,8 +3261,8 @@ export class LeanDiv extends LeanArithmetic {
     }
 
     latexArgs(syntax) {
-        let lhs = this.lhs;
-        let rhs = this.rhs;
+        let lhs = this.lhs.peelLatexCoe();
+        let rhs = this.rhs.peelLatexCoe();
         if (!(lhs instanceof LeanDiv)) {
             if (lhs instanceof LeanParenthesis && !(lhs.arg instanceof LeanColon))
                 lhs = lhs.arg;
@@ -3412,8 +3427,8 @@ export class LeanPow extends LeanArithmetic {
     }
 
     latexArgs(syntax) {
-        let lhs = this.lhs;
-        let rhs = this.rhs;
+        let lhs = this.lhs.peelLatexCoe();
+        let rhs = this.rhs.peelLatexCoe();
         if (lhs instanceof LeanParenthesis) {
             const inner = lhs.arg;
             if (inner instanceof Lean_sqrt || inner instanceof LeanPairedGroup ||
@@ -3592,11 +3607,20 @@ class LeanPlus extends LeanUnaryArithmeticPre {
     }
 }
 
-/** Postfix inverse `⁻¹`. */
+/** Postfix inverse `⁻¹`. Lean `postfix:max` (tighter than `^`). */
 class LeanInv extends LeanUnaryArithmeticPost {
-    static input_priority = 71;
+    static input_priority = 1024;
     get operator() {
         return '⁻¹';
+    }
+    get command() {
+        return '^{-1}';
+    }
+    latexArgs(syntax) {
+        return [this.arg.peelLatexCoe().toLatex(syntax)];
+    }
+    latexFormat() {
+        return `{%s}${this.command}`;
     }
     strFormat() {
         return `%s${this.operator}`;
@@ -3688,6 +3712,9 @@ class Lean_uparrow extends LeanUnaryArithmeticPre {
     }
     get operator() {
         return '↑';
+    }
+    peelLatexCoe() {
+        return this.arg.peelLatexCoe();
     }
     strFormat() {
         return `${this.operator}%s`;

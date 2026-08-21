@@ -48,7 +48,8 @@
 * [Rat](../?module=Rat) 有理数相关初等代数
 * [Real](../?module=Real) 实数相关代数及实变分析
 * [Hyperreal](../?module=Real) 非标准分析
-* [Complex](../?module=Complex) 复数相关代数及复变分析
+* [Complex](../?module=Complex) 复变分析，例：
+  - [一元四次方程](../?module=Complex.ImpEq_0.ImpAnd_Eq_0.ImpAnd_Eq_1.ImpAnd_Eq_2.of.Eq0AddAddAddAddMul_Pow_4.Ne_0)
 * [Set](../?module=Set) 集合论
 * [Finset](../?module=Set) 有限集合论
 * [List](../?module=List) 有限列表定理库

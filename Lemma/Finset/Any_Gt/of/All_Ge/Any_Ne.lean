@@ -2,7 +2,7 @@ import Lemma.Finset.NotAny.is.All_Not
 import Lemma.Finset.All.of.All.All_Imp
 import Lemma.Finset.All_And.of.All.All
 import Lemma.Bool.NotAny_Not.of.All
-import Lemma.Nat.Eq.of.Le.Ge
+import Lemma.Nat.Eq.of.Le.Le
 open Bool Nat Finset
 
 
@@ -21,7 +21,7 @@ private lemma main
   by_contra h
   have : ∀ t : N, t ≥ a ∧ t ≤ a → t = a := by
     intro t ⟨h_ge, h_le⟩
-    apply Eq.of.Le.Ge h_le h_ge
+    apply Eq.of.Le.Le h_le h_ge
   aesop
 
 

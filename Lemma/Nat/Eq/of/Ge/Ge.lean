@@ -1,4 +1,4 @@
-import Lemma.Nat.Eq.of.Le.Ge
+import Lemma.Nat.Eq.of.Le.Le
 open Nat
 
 
@@ -12,7 +12,7 @@ private lemma main
 -- imply
   a = b := 
 -- proof
-  Eq.of.Le.Ge h₀ h₁
+  Eq.of.Le.Le h₀ h₁
 
 
 -- created on 2025-05-17

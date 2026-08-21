@@ -1,5 +1,5 @@
 import Lemma.Int.GeSquare_0
-import Lemma.Nat.Eq.of.Le.Ge
+import Lemma.Nat.Eq.of.Le.Le
 import Lemma.Nat.Eq_0.is.EqSquare_0
 open Nat Int
 
@@ -14,7 +14,7 @@ private lemma main
   x = 0 := by
 -- proof
   have := GeSquare_0 (a := x)
-  have := Eq.of.Le.Ge h this
+  have := Eq.of.Le.Le h this
   apply Eq_0.of.EqSquare_0 this
 
 

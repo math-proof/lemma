@@ -775,6 +775,11 @@ abstract class Lean extends IndentedNode
         }
     }
 
+    public function peelLatexCoe()
+    {
+        return $this;
+    }
+
     public function push_accessibility($new, $accessibility)
     {
         if ($this->parent)
@@ -1809,6 +1814,14 @@ class LeanParenthesis extends LeanPairedGroup
         return $this->toColor();
     }
 
+    public function peelLatexCoe()
+    {
+        $inner = $this->arg->peelLatexCoe();
+        if ($inner !== $this->arg)
+            return $inner;
+        return $this;
+    }
+
     public function regexp()
     {
         return $this->arg->regexp();
@@ -2427,6 +2440,10 @@ class LeanColon extends LeanBinary
     public function is_indented()
     {
         return false;
+    }
+    public function peelLatexCoe()
+    {
+        return $this->lhs->peelLatexCoe();
     }
     public function sep()
     {
@@ -3149,8 +3166,8 @@ class LeanDiv extends LeanArithmetic
 
     public function latexArgs(&$syntax = null)
     {
-        $lhs = $this->lhs;
-        $rhs = $this->rhs;
+        $lhs = $this->lhs->peelLatexCoe();
+        $rhs = $this->rhs->peelLatexCoe();
         if ($lhs instanceof LeanDiv) {
         } else {
             if ($lhs instanceof LeanParenthesis && !($lhs->arg instanceof LeanColon))
@@ -3369,6 +3386,8 @@ class LeanPow extends LeanArithmetic
     public function latexArgs(&$syntax = null)
     {
         [$lhs, $rhs] = $this->args;
+        $lhs = $lhs->peelLatexCoe();
+        $rhs = $rhs->peelLatexCoe();
         if ($lhs instanceof LeanParenthesis) {
             if ($lhs->arg instanceof Lean_sqrt || $lhs->arg instanceof LeanPairedGroup || $lhs->arg instanceof LeanArgsSpaceSeparated && ($lhs->arg->is_Abs() || $lhs->arg->is_Bool()))
                 $lhs = $lhs->arg;
@@ -3674,7 +3693,7 @@ class LeanPlus extends LeanUnaryArithmeticPre
 
 class LeanInv extends LeanUnaryArithmeticPost
 {
-    public static $input_priority = 71;
+    public static $input_priority = 1024;
     public function __get($vname)
     {
         switch ($vname) {
@@ -3685,6 +3704,10 @@ class LeanInv extends LeanUnaryArithmeticPost
             default:
                 return parent::__get($vname);
         }
+    }
+    public function latexArgs(&$syntax = null)
+    {
+        return [$this->arg->peelLatexCoe()->toLatex($syntax)];
     }
     public function latexFormat()
     {
@@ -3892,6 +3915,11 @@ class Lean_uparrow extends LeanUnaryArithmeticPre
     public function latexFormat()
     {
         return "$this->command %s";
+    }
+
+    public function peelLatexCoe()
+    {
+        return $this->arg->peelLatexCoe();
     }
 
     public function strFormat()

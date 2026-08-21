@@ -1,5 +1,4 @@
 import sympy.Basic
-import Mathlib.Algebra.Order.Interval.Finset.SuccPred
 
 
 @[main]

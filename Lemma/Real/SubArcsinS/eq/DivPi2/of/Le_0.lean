@@ -3,7 +3,6 @@ import sympy.core.power
 import sympy.core.numbers
 import sympy.polys.polyroots
 import sympy.functions.elementary.trigonometric
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Inverse
 
 
 @[main]

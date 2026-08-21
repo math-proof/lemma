@@ -1,6 +1,14 @@
 import sympy.Basic
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| main | Set.In_Cup.is.Any_In |
+| comm | Set.Any_In.is.In_Cup |
+| mp | Set.Any_In.of.In_Cup |
+| mpr | Set.In_Cup.of.Any_In |
+-/
 @[main, comm, mp, mpr]
 private lemma main
   {ι : Sort v}
@@ -53,3 +61,4 @@ private lemma set₂
 
 
 -- created on 2025-07-29
+-- updated on 2026-08-21

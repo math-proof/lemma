@@ -1,5 +1,4 @@
-import Lemma.Nat.Eq.of.Le.Ge
-open Nat
+import sympy.Basic
 
 
 @[main]
@@ -7,12 +6,12 @@ private lemma main
   [PartialOrder α]
   {a b : α}
 -- given
-  (h₀ : b ≤ a)
-  (h₁ : a ≤ b) :
+  (h₀ : a ≤ b)
+  (h₁ : a ≥ b) :
 -- imply
   a = b :=
 -- proof
-  Eq.of.Le.Ge h₁ h₀
+  le_antisymm h₀ h₁
 
 
--- created on 2025-05-17
+-- created on 2018-05-16

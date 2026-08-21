@@ -2,7 +2,7 @@ import Lemma.Nat.NotLt.is.Ge
 import Lemma.Set.Icc.eq.Empty.of.Gt
 import Lemma.Set.InterSingletonS.subset.Icc
 import Lemma.Set.EqEmpty.is.Subset_Empty
-import Lemma.Nat.Eq.of.Le.Ge
+import Lemma.Nat.Eq.of.Le.Le
 open Set Nat
 
 
@@ -25,7 +25,7 @@ private lemma main
     aesop
   ·
     have h' := Le.of.NotGt h'
-    have h := Eq.of.Le.Ge h' h
+    have h := Eq.of.Le.Le h' h
     aesop
 
 

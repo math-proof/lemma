@@ -1,4 +1,4 @@
-import Lemma.Nat.Eq.of.Le.Ge
+import Lemma.Nat.Eq.of.Le.Le
 import Lemma.Nat.EqAddSub.of.Gt
 import Lemma.Nat.EqSubAdd
 import Lemma.Int.Sub_Add.eq.SubSub

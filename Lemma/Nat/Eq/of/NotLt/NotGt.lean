@@ -1,4 +1,4 @@
-import Lemma.Nat.Eq.of.Le.Ge
+import Lemma.Nat.Eq.of.Le.Le
 import Lemma.Nat.NotLt.is.Ge
 import Lemma.Nat.NotLt.is.Ge
 open Nat
@@ -14,7 +14,7 @@ private lemma main
 -- imply
   a = b := by
 -- proof
-  apply Eq.of.Le.Ge
+  apply Eq.of.Le.Le
   apply Le.of.NotGt h₁
   apply Ge.of.NotLt h₀
 

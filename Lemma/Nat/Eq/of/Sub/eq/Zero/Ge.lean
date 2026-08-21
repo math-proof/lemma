@@ -1,5 +1,5 @@
 import Lemma.Nat.Le.of.Sub.eq.Zero
-import Lemma.Nat.Eq.of.Le.Ge
+import Lemma.Nat.Eq.of.Le.Le
 open Nat
 
 
@@ -13,7 +13,7 @@ private lemma main
   a = b := by
 -- proof
   have := Le.of.Sub.eq.Zero h_eq
-  apply Eq.of.Le.Ge this h_ge
+  apply Eq.of.Le.Le this h_ge
 
 
 -- created on 2025-04-11

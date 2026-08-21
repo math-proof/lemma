@@ -1,5 +1,4 @@
 import sympy.Basic
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 
 
 @[main]

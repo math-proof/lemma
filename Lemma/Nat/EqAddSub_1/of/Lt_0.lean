@@ -1,5 +1,5 @@
 import sympy.functions.elementary.integers
-import Lemma.Nat.Eq.of.Le.Ge
+import Lemma.Nat.Eq.of.Le.Le
 import Lemma.Nat.GeAddSub_1
 import Lemma.Nat.GeAddSub_1.of.Lt_0
 open Nat
@@ -16,7 +16,7 @@ private lemma main
 -- proof
   have h_ge := GeAddSub_1 n
   have h_le := GeAddSub_1.of.Lt_0 h
-  apply Eq.of.Le.Ge h_ge h_le
+  apply Eq.of.Le.Le h_ge h_le
 
 
 -- created on 2025-08-13

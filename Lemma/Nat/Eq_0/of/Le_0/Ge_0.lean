@@ -1,4 +1,4 @@
-import Lemma.Nat.Eq.of.Ge.Le
+import Lemma.Nat.Eq.of.Le.Le
 open Nat
 
 
@@ -12,7 +12,7 @@ private lemma main
   (h_ge : x ≥ 0) :
 -- imply
   x = 0 :=
-  Eq.of.Ge.Le h_ge h_le
+  Eq.of.Le.Le h_le h_ge
 
 
 -- created on 2018-07-14

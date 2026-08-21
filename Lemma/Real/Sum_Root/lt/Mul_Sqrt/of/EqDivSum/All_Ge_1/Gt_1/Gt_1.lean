@@ -4,7 +4,7 @@ import Lemma.Bool.AndAnd.is.And_And
 import Lemma.Nat.Gt.of.Ge.Gt
 import Lemma.Finset.AllIco.of.AllRange
 import Lemma.Finset.All_And.of.All.All
-import Lemma.Nat.Eq.of.Le.Ge
+import Lemma.Nat.Eq.of.Le.Le
 import Lemma.Finset.All.of.All.All_Imp
 import Lemma.Real.All_LeRoot_Sqrt.of.All_Ge_1
 import Lemma.Finset.LtSumS.of.Any_Lt.All_Le
@@ -66,7 +66,7 @@ private lemma main
     have h_All_And := All_And.of.All.All h_All_Le_1 h_All_Ge_1
     have : ∀ t : ℝ, t ≤ 1 ∧ t ≥ 1 → t = 1 := by
       intro t ht
-      exact Eq.of.Le.Ge ht.left ht.right
+      exact Eq.of.Le.Le ht.left ht.right
     have h_All_Eq := All.of.All.All_Imp this h_All_And
     let f := fun (xi : ℝ) (i : ℕ) => xi ^ (1 / (i + 2) : ℝ)
     have h_All_Eq_Root := All_EqUFnS.of.All_Eq.bin (f := f) h_All_Eq

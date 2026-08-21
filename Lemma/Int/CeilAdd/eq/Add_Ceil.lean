@@ -1,6 +1,6 @@
 import Lemma.Nat.Add
-import Lemma.Rat.CeilAdd.eq.AddCeil
-open Nat Rat
+import Lemma.Int.CeilAdd.eq.AddCeil
+open Nat Int
 
 
 @[main]

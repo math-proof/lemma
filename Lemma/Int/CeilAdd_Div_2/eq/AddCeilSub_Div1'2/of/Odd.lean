@@ -1,4 +1,4 @@
-import Lemma.Rat.CeilAdd.eq.AddCeil
+import Lemma.Int.CeilAdd.eq.AddCeil
 import Lemma.Int.AddSub.eq.Add_Sub
 import Lemma.Nat.Add.is.Eq
 import Lemma.Nat.Odd.is.Any_Eq_AddMul2

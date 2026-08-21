@@ -1,4 +1,3 @@
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Lemma.Nat.Mul.is.Eq.of.Ne_0
 open Nat
 

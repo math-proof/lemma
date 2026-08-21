@@ -3,7 +3,7 @@ import Lemma.Nat.NotLe.is.Gt
 import Lemma.Nat.Le_Sub_1.of.Lt
 import Lemma.Nat.EqSubAdd
 import Lemma.Nat.LeSub_1
-import Lemma.Nat.Eq.of.Le.Ge
+import Lemma.Nat.Eq.of.Le.Le
 import Lemma.Nat.LtSub_1.of.Ne_0
 import Lemma.Nat.Ne.of.Lt
 open Nat
@@ -22,7 +22,7 @@ private lemma main
   have h' := Lt.of.NotGe h'
   have h' := Le_Sub_1.of.Lt h'
   rw [EqSubAdd] at h'
-  have h' := Eq.of.Le.Ge h' (LeSub_1 n)
+  have h' := Eq.of.Le.Le h' (LeSub_1 n)
   have h := LtSub_1.of.Ne_0 (Ne.of.Lt h)
   rw [← h'] at h
   simp at h
