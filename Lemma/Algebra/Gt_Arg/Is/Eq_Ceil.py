@@ -9,7 +9,7 @@ def apply(gt):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Complex
 
     A, B = Symbol(complex=True, given=True)
     Eq << apply(Arg(A) + Arg(B) > S.Pi)
@@ -17,7 +17,7 @@ def prove(Eq):
     Eq << Bool.Iff.given.Imp.Imp.apply(Eq[0])
 
     Eq << Eq[-2].this.lhs.apply(Algebra.Eq_Ceil.of.Gt_Arg)
-    Eq << Eq[-1].this.lhs.apply(Algebra.Gt_Arg.of.Eq_Ceil)
+    Eq << Eq[-1].this.lhs.apply(Complex.GtAddArgS.of.EqCeilSubDiv)
 
 
 if __name__ == '__main__':

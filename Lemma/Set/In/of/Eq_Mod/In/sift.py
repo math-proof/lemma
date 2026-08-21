@@ -37,7 +37,7 @@ def prove(Eq):
 
     Eq << Bool.Cond.of.And.apply(Eq[-1], 1)
 
-    Eq << Set.In.Finset.of.Or_Eq.apply(Eq[-1])
+    Eq << Set.In_Finset.of.OrEqS.apply(Eq[-1])
 
 
 

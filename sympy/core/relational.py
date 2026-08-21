@@ -2908,7 +2908,7 @@ class Less(_Less):
                         return res
                     if isinstance(res, tuple):
                         b, a = res
-                        return (a, b)         
+                        return (a, b)
         return res
 
     def domain_conditioned(self, var):

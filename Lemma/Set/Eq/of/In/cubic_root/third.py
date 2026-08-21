@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Mul).apply(Nat.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[1].this.lhs.apply(Algebra.Root.eq.Mul.ExpI.Arg)
+    Eq << Eq[1].this.lhs.apply(Complex.Pow_Inv.eq.Mul_ExpMulIDivArg)
 
     Eq << Eq[-1].this.find(Arg).apply(Algebra.Arg.Pow.eq.Add)
 

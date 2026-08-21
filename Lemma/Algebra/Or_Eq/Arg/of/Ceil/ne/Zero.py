@@ -10,12 +10,12 @@ def apply(is_nonzero):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Bool, Finset, Int
+    from Lemma import Set, Bool, Finset, Int, Complex
 
     A, B = Symbol(complex=True, given=True)
     Eq << apply(Unequal(Ceil((Arg(A) + Arg(B)) / (S.Pi * 2) - S.One / 2), 0))
 
-    Eq <<= Set.Arg.In.IocNegPiPi.apply(A), Set.Arg.In.IocNegPiPi.apply(B)
+    Eq <<= Complex.Arg.In.IocNegPiPi.apply(A), Complex.Arg.In.IocNegPiPi.apply(B)
 
     Eq << Set.Add.In.Ioc.of.In.In.apply(Eq[-1], Eq[-2], simplify=None)
 

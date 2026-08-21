@@ -16,7 +16,7 @@ def prove(Eq):
 
     Eq << ~Eq[0]
 
-    Eq << Set.In.Finset.of.Eq.apply(Eq[-1])
+    Eq << Set.In_Singleton.of.Eq.apply(Eq[-1])
 
     Eq << ~Eq[-1]
 

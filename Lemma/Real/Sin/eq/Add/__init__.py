@@ -31,4 +31,4 @@ if __name__ == '__main__':
 # created on 2020-11-24
 
 # updated on 2023-11-26
-from . import ExpI
+from . import ExpMulI

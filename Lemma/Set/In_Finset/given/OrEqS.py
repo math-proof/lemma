@@ -15,7 +15,7 @@ def prove(Eq):
     e, a, b, c = Symbol(integer=True, given=True)
     Eq << apply(Element(e, {a, b, c}))
 
-    Eq << Set.In.Finset.of.Or_Eq.apply(Eq[1])
+    Eq << Set.In_Finset.of.OrEqS.apply(Eq[1])
 
 
 

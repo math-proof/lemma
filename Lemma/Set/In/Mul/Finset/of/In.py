@@ -17,7 +17,7 @@ def prove(Eq):
     d = Symbol(real=True, zero=False)
     Eq << apply(Element(x, {a, b}), d)
 
-    Eq << Set.In_Finset.given.Or.Eq.apply(Eq[1])
+    Eq << Set.In_Finset.given.OrEqS.apply(Eq[1])
 
     Eq << Set.Eq.ou.In.of.In_Insert.apply(Eq[0])
 

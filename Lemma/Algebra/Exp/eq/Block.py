@@ -47,7 +47,7 @@ def prove(Eq):
     i = Symbol(domain=Range(a + b))
     Eq << Tensor.Eq.given.All_EqGetS.apply(Eq[0], i)
 
-    Eq << Eq[-1].this.lhs.apply(Real.ExpIte.eq.Ite_ExpS)
+    Eq << Eq[-1].this.lhs.apply(Real.ExpMulIte.eq.Ite_ExpS)
 
 
 

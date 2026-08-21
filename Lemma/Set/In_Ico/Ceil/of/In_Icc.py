@@ -26,15 +26,15 @@ def prove(Eq):
 
     Eq << Set.In_IocFloor_Ceil.of.In_Ioc.apply(Eq[0])
 
-    Eq << Eq[-1].this.rhs.apply(Set.Icc.eq.Cup.left_open)
+    Eq << Eq[-1].this.rhs.apply(Set.Ioc.eq.Cup_Ioc)
 
     Eq << Set.Any_In.of.In_Cup.apply(Eq[-1])
 
     Eq << Eq[-1].this.expr.apply(Set.EqCeil.of.In_Ioc)
 
-    Eq << Eq[-1].this.expr.apply(Set.In.Finset.of.Eq)
+    Eq << Eq[-1].this.expr.apply(Set.In_Singleton.of.Eq)
 
-    Eq << Set.In.Cup.of.Any_In.apply(Eq[-1])
+    Eq << Set.In_Cup.of.Any_In.apply(Eq[-1])
 
     Eq << Eq[-1].this.rhs.apply(Set.CupIn_Ico.eq.Cup_UFnAdd, -1)
 

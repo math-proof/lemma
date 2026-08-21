@@ -46,7 +46,6 @@ from . import All_Any_Eq
 from . import Sum_Sum_CardCap
 from . import EqSwapSwap
 from . import AddClip
-from . import Arg
 from . import Delta
 from . import CardUnion
 from . import CardCup
@@ -229,3 +228,4 @@ from . import Lt_0
 from . import Cup_Ico
 from . import Ioc
 from . import In_IocFloor_Ceil
+from . import In_Singleton

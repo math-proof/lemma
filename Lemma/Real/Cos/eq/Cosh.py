@@ -16,7 +16,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Real.Cosh.eq.AddDivSExp_2)
 
-    Eq << Eq[-1].this.lhs.apply(Real.Cos.eq.Add.ExpI)
+    Eq << Eq[-1].this.lhs.apply(Real.Cos.eq.Add.ExpMulI)
 
 
 if __name__ == '__main__':

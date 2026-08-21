@@ -37,7 +37,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Mul[Piecewise]).apply(Nat.Mul_Ite.eq.Ite_MulS)
 
-    Eq << Eq[-1].this.find(Arg[Piecewise]).apply(Algebra.Arg.Ite.eq.Ite)
+    Eq << Eq[-1].this.find(Arg[Piecewise]).apply(Complex.ArgIte.eq.Ite_ArgS)
 
     Eq << Eq[-1].this.find(Mul[Piecewise]).apply(Nat.Mul_Ite.eq.Ite_MulS)
 
@@ -69,7 +69,7 @@ def prove(Eq):
 
     Eq << Algebra.Cond.given.Cond.subst.Bool.apply(Eq[-1], cond=Eq[0], invert=True)
 
-    Eq.p_cubic = Eq[-1].find(Pow[Mul]).this.apply(Algebra.Root.eq.Mul.ExpI.Arg)
+    Eq.p_cubic = Eq[-1].find(Pow[Mul]).this.apply(Complex.Pow_Inv.eq.Mul_ExpMulIDivArg)
 
     Eq.p_is_positive = Int.GtAbs_0.of.Ne_0.apply(Eq[0])
 
@@ -79,7 +79,7 @@ def prove(Eq):
 
     Eq << Bool.Eq.of.Eq.Eq.apply(Eq[-1], Eq[-2])
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Arg.ExpI.eq.Mul.Arg)
+    Eq << Eq[-1].this.rhs.apply(Algebra.Arg.ExpMulI.eq.Mul.Arg)
 
     Eq << Eq[-1].this.find(Arg[Mul]).apply(Algebra.ArgMulPow.eq.SubMulArgMul)
 
@@ -99,13 +99,13 @@ def prove(Eq):
 
     Eq.arg_p3_w = Eq[-1].this.lhs.find(Exp).apply(Real.ExpMulI.eq.AddCos_MulISin.Euler)
 
-    Eq.p3_contains = Set.Arg.In.IocNegPiPi.apply(-p ** 3)
+    Eq.p3_contains = Complex.Arg.In.IocNegPiPi.apply(-p ** 3)
 
     Eq << Set.InAdd.of.In_Icc.apply(Eq.p3_contains, S.Pi * 2, simplify=None)
 
     Eq << Set.InDiv.of.In_Icc.apply(Eq[-1], 3, simplify=None)
 
-    Eq << Set.Eq.Arg.ExpI.of.In.apply(Eq[-1])
+    Eq << Complex.EqArgExpMulI.of.In_Ioc.apply(Eq[-1])
 
     Eq << Eq.arg_p3_w.subs(Eq[-1])
 
@@ -133,7 +133,7 @@ def prove(Eq):
 
     Eq << Set.InDiv.of.In_Icc.apply(Eq[-1], 3, simplify=None)
 
-    Eq << Set.Eq.Arg.ExpI.of.In.apply(Eq[-1])
+    Eq << Complex.EqArgExpMulI.of.In_Ioc.apply(Eq[-1])
 
     Eq << Eq.arg_p3_w.subs(Eq[-1])
 

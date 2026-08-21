@@ -21,8 +21,8 @@ def prove(Eq):
 
     Eq << Algebra.Eq.given.And.Eq.complex.apply(Eq[-1])
 
-    Eq << Eq[-2].this.lhs.apply(Real.Re.eq.MulAbs_CosArg)
-    Eq << Eq[-1].this.lhs.apply(Real.Im.eq.MulAbs_SinArg)
+    Eq << Eq[-2].this.lhs.apply(Complex.Re.eq.MulNorm_CosArg)
+    Eq << Eq[-1].this.lhs.apply(Complex.Im.eq.MulNorm_SinArg)
 
 
 if __name__ == '__main__':

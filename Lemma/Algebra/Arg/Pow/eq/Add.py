@@ -10,7 +10,7 @@ def apply(pow):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Int
+    from Lemma import Algebra, Bool, Int, Complex
 
     z = Symbol(complex=True, given=True)
     n = Symbol(integer=True, given=True, positive=True)
@@ -32,7 +32,7 @@ def prove(Eq):
 
     Eq << Bool.Imp.given.ImpEq.apply(Eq[-1])
 
-    Eq << Eq[-1].this.rhs.lhs.apply(Algebra.Arg.ExpI.eq.Add.Ceil)
+    Eq << Eq[-1].this.rhs.lhs.apply(Complex.ArgExpMulI.eq.Sub_MulCeil)
 
 
 if __name__ == '__main__':

@@ -39,7 +39,7 @@ def prove(Eq):
 
     Eq << Bool.UFn.of.Eq.apply(Eq[-1], exp)
 
-    Eq << Eq[-1].this.rhs.apply(Real.ExpIte.eq.Ite_ExpS)
+    Eq << Eq[-1].this.rhs.apply(Real.ExpMulIte.eq.Ite_ExpS)
 
     Eq << Eq[-1].this.rhs.apply(Nat.Ite.eq.MulBool)
 

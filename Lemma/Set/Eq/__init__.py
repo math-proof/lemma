@@ -3,7 +3,6 @@ from . import of
 from . import Card
 from . import Square
 from . import Union
-from . import Arg
 from . import Bool
 from . import Cup
 from . import Delta

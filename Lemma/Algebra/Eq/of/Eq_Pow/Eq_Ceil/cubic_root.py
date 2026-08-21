@@ -54,7 +54,7 @@ def apply(eq_pow, eq_ceiling):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Real, Nat
+    from Lemma import Algebra, Real, Nat, Complex
 
     A, B = Symbol(complex=True, given=True)
     Eq << apply(Equal(A ** 3, B ** 3), Equal(Ceil(3 * Arg(A) / (S.Pi * 2) - S.One / 2), Ceil(3 * Arg(B) / (S.Pi * 2) - S.One / 2)))
@@ -65,9 +65,9 @@ def prove(Eq):
 
     Eq << Nat.Pow.of.Eq.apply(Eq[0], exp=S.One / 3)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Root.eq.Mul.ExpI.Arg)
+    Eq << Eq[-1].this.lhs.apply(Complex.Pow_Inv.eq.Mul_ExpMulIDivArg)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Root.eq.Mul.ExpI.Arg)
+    Eq << Eq[-1].this.rhs.apply(Complex.Pow_Inv.eq.Mul_ExpMulIDivArg)
 
     Eq << Eq[-1].this.lhs.find(Arg).apply(Algebra.Arg.Pow.eq.Add)
 

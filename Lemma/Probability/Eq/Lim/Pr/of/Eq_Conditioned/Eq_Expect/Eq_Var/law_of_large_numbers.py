@@ -60,10 +60,7 @@ def prove(Eq):
 
     Eq << Real.LeLim.of.Le.apply(Eq[-1], (n, oo))
 
-    Eq << Nat.Eq.of.Ge.Le.apply(Eq[-1], Eq[-3])
-
-
-
+    Eq << Nat.Eq.of.Ge.Le.apply(Eq[-3], Eq[-1])
 
 
 if __name__ == '__main__':

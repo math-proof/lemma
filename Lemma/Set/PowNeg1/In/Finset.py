@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq << Algebra.Or.of.Eq_Abs.apply(Eq[-1])
 
-    Eq << Set.In.Finset.of.Or_Eq.apply(Eq[-1])
+    Eq << Set.In_Finset.of.OrEqS.apply(Eq[-1])
 
     Eq << Eq[-1].this.lhs.definition
 

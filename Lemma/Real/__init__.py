@@ -1,7 +1,6 @@
 from . import Eq
 from . import LogMul
 from . import ExpAdd
-from . import ExpIte
 from . import Cosh
 from . import Any
 from . import Arcsin
@@ -28,7 +27,6 @@ from . import Block
 from . import Eq_Csc
 from . import EqArccot
 from . import EqCot
-from . import Im
 from . import Le_0
 from . import Tan
 from . import Tanh
@@ -52,7 +50,6 @@ from . import Arctan
 from . import Cot
 from . import Coth
 from . import Eq_Arccos
-from . import Re
 from . import Eq_Arcsec
 from . import Eq_Arctan
 from . import ExpMulI
@@ -134,3 +131,4 @@ from . import GtLim
 from . import LtLim
 from . import LeLim
 from . import EqSub
+from . import ExpMulIte

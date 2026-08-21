@@ -11,13 +11,13 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Complex
 
     x = Symbol(real=True)
     n = Symbol(integer=True, positive=True)
     Eq << apply(exp(S.ImaginaryUnit * x) ** (1 / n))
 
-    Eq << Algebra.Arg.ExpI.eq.Add.Ceil.apply(Arg(Eq[0].lhs.base))
+    Eq << Complex.ArgExpMulI.eq.Sub_MulCeil.apply(Arg(Eq[0].lhs.base))
 
     Eq << Eq[0].subs(Eq[-1].reversed)
 

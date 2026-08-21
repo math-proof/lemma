@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.args[0] + t
 
-    Eq << Set.In.Finset.of.Or_Eq.apply(Eq[-1])
+    Eq << Set.In_Finset.of.OrEqS.apply(Eq[-1])
 
 
 

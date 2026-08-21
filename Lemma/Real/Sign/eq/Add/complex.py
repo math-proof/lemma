@@ -15,7 +15,7 @@ def prove(Eq):
     z = Symbol(complex=True, zero=False)
     Eq << apply(Sign(z))
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sign.eq.ExpI.Arg)
+    Eq << Eq[-1].this.lhs.apply(Algebra.Sign.eq.ExpMulI.Arg)
 
     Eq << Eq[-1].this.lhs.apply(Real.ExpMulI.eq.AddCos_MulISin.Euler)
 

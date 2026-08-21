@@ -26,12 +26,12 @@ def apply(is_zero, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool, Nat, Finset, Int
+    from Lemma import Set, Algebra, Bool, Nat, Finset, Int, Complex
 
     x, p, q = Symbol(complex=True, given=True)
     Eq << apply(Equal(x ** 3 + p * x + q, 0), x=x)
 
-    Eq << Set.Arg.In.IocNegPiPi.apply(-p)
+    Eq << Complex.Arg.In.IocNegPiPi.apply(-p)
 
     Eq << Nat.InMul.of.In_Ico.Gt_0.apply(Eq[-1], 3, simplify=None)
 
@@ -49,7 +49,7 @@ def prove(Eq):
 
     Eq << Set.Neg.In.Icc.of.In_Icc.apply(Eq[-1])
 
-    Eq << Set.In.Add.Finset.of.In.In.apply(Eq[-1], Eq[-3])
+    Eq << Set.InAdd.of.In_Finset.In_Finset.apply(Eq[-1], Eq[-3])
 
     V = Eq[-1].find(Arg[Add]).arg
     U = Eq[-1].find(Arg[2]).arg

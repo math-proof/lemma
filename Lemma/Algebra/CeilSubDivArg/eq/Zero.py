@@ -12,13 +12,13 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Nat, Int
+    from Lemma import Set, Nat, Int, Complex
 
     z = Symbol(complex=True)
     n = Symbol(integer=True, positive=True)
     Eq << apply(Ceil(Arg(z) / (2 * S.Pi) / n - S.One / 2))
 
-    Eq << Set.Arg.In.IocNegPiPi.apply(z)
+    Eq << Complex.Arg.In.IocNegPiPi.apply(z)
 
     Eq << Set.InDiv.of.In_Icc.apply(Eq[-1], n, simplify=None)
 

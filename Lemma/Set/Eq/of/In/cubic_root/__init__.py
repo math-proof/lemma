@@ -11,7 +11,7 @@ def apply(contains_p):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Nat, Int
+    from Lemma import Set, Algebra, Nat, Int, Complex
 
     p = Symbol(complex=True, given=True)
     Eq << apply(Element(Arg(p), Interval(-S.Pi / 3, S.Pi / 3, left_open=True)))
@@ -25,7 +25,7 @@ def prove(Eq):
     Eq << Set.EqCeil_0.of.In_Ioc.apply(Eq[-1])
     Eq << Eq[-1].this.find(Mul).apply(Nat.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[1].this.lhs.apply(Algebra.Root.eq.Mul.ExpI.Arg)
+    Eq << Eq[1].this.lhs.apply(Complex.Pow_Inv.eq.Mul_ExpMulIDivArg)
 
     Eq << Eq[-1].this.find(Arg).apply(Algebra.Arg.Pow.eq.Add)
 

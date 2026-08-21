@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq << Eq[-2].this.lhs.apply(Set.Eq.ou.In.of.In_Insert)
 
-    Eq << Eq[-1].this.rhs.apply(Set.In_Finset.given.Or.Eq)
+    Eq << Eq[-1].this.rhs.apply(Set.In_Finset.given.OrEqS)
 
 
 if __name__ == '__main__':

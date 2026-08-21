@@ -7,7 +7,6 @@ from . import of
 from . import Union
 from . import Add
 from . import CartesianSpace
-from . import Cup
 from . import SDiff
 from . import Sqrt
 from . import Sum

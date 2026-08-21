@@ -151,7 +151,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Tensor.Add_Stack.eq.Stack_Add)
 
-    Eq << Eq[-1].this.find(Add).apply(Real.Add.eq.ExpI.Euler)
+    Eq << Eq[-1].this.find(Add).apply(Real.Add.eq.ExpMulI.Euler)
 
     Eq << Eq.geometric_progression.subs(Eq[-1])
 

@@ -32,12 +32,12 @@ def apply(is_zero, x=None, d=0):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool, Finset, Int
+    from Lemma import Set, Algebra, Bool, Finset, Int, Complex
 
     x, p, q = Symbol(complex=True, given=True)
     Eq << apply(Equal(x ** 3 + p * x + q, 0), x=x, d=1)
 
-    Eq << Set.Arg.In.IocNegPiPi.apply(-p)
+    Eq << Complex.Arg.In.IocNegPiPi.apply(-p)
 
     Eq << Set.InDiv.of.In_Icc.apply(Eq[-1], 2 * S.Pi / 3)
 
@@ -51,7 +51,7 @@ def prove(Eq):
 
     Eq << Set.Neg.In.Icc.of.In_Icc.apply(Eq[-1])
 
-    Eq << Set.In.Add.Finset.of.In.In.apply(Eq[-1], Eq[-3])
+    Eq << Set.InAdd.of.In_Finset.In_Finset.apply(Eq[-1], Eq[-3])
 
     Eq.contains = Set.In.of.Eq_Mod.In.sift.apply(Eq[1], Eq[-1])
 

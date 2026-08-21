@@ -9,12 +9,12 @@ def apply(gt):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Int
+    from Lemma import Set, Int, Complex
 
     A, B = Symbol(complex=True, given=True)
     Eq << apply(Arg(A) + Arg(B) > S.Pi)
 
-    Eq <<= Set.Arg.In.IocNegPiPi.apply(A), Set.Arg.In.IocNegPiPi.apply(B)
+    Eq <<= Complex.Arg.In.IocNegPiPi.apply(A), Complex.Arg.In.IocNegPiPi.apply(B)
 
     Eq << Set.Add.In.Ioc.of.In.In.apply(Eq[-1], Eq[-2], simplify=None)
 

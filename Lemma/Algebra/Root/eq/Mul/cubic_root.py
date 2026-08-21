@@ -9,12 +9,12 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Real, Nat
+    from Lemma import Algebra, Real, Nat, Complex
 
     p = Symbol(complex=True, given=True)
     Eq << apply((p ** 3) ** (S.One / 3))
 
-    Eq << Eq[0].this.lhs.apply(Algebra.Root.eq.Mul.ExpI.Arg)
+    Eq << Eq[0].this.lhs.apply(Complex.Pow_Inv.eq.Mul_ExpMulIDivArg)
 
     Eq << Eq[-1].this.find(Arg).apply(Algebra.Arg.Pow.eq.Add)
 

@@ -41,7 +41,7 @@ def prove(Eq):
 
     Eq.L_is_zero = Bool.Imp.of.Cond_Ite.apply(Eq[2], -1)
 
-    Eq << Eq.L_is_zero.this.rhs.apply(Set.In.Finset.of.Eq)
+    Eq << Eq.L_is_zero.this.rhs.apply(Set.In_Singleton.of.Eq)
 
     Eq << Eq[-1].this.rhs.apply(Set.In_Union.of.In, S.Complexes)
 

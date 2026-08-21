@@ -35,11 +35,11 @@ def prove(Eq):
 
     Eq << Algebra.Eq.given.Eq.Div.apply(Eq[-1], Mul(*Eq[-1].lhs.args[:2]))
 
-    Eq << Eq[-1].this.rhs.args[1].apply(Algebra.Root.eq.Mul.ExpI.Arg)
+    Eq << Eq[-1].this.rhs.args[1].apply(Complex.Pow_Inv.eq.Mul_ExpMulIDivArg)
 
-    Eq << Eq[-1].this.lhs.args[0].apply(Algebra.Root.eq.Mul.ExpI.Arg)
+    Eq << Eq[-1].this.lhs.args[0].apply(Complex.Pow_Inv.eq.Mul_ExpMulIDivArg)
 
-    Eq << Eq[-1].this.lhs.args[1].apply(Algebra.Root.eq.Mul.ExpI.Arg)
+    Eq << Eq[-1].this.lhs.args[1].apply(Complex.Pow_Inv.eq.Mul_ExpMulIDivArg)
 
     Eq << Eq[-1].rhs.find(Arg).this.apply(Algebra.Arg.Mul.eq.Ite)
 
