@@ -12,7 +12,7 @@ def apply(given, reverse=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool, Complex
+    from Lemma import Set, Bool, Complex
 
     x = Symbol(complex=True)
     Eq << apply(Element(x, Interval(-oo, oo)))
