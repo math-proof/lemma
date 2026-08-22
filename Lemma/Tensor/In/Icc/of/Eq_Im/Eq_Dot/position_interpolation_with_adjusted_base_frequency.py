@@ -74,7 +74,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.expr.args[:2].apply(Nat.Mul_Add.eq.AddMulS, deep=True)
 
-    Eq << Eq[-1].this.find(Exp * Exp).args[-2:].apply(Algebra.Mul.eq.Exp)
+    Eq << Eq[-1].this.find(Exp * Exp).args[-2:].apply(Real.MulExpS.eq.ExpAdd)
 
     Eq << Eq[-1].this.find(Exp).arg.apply(Nat.AddMulS.eq.Mul_Add)
 

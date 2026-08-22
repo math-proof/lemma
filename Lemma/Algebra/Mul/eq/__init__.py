@@ -3,7 +3,6 @@ from . import Floor
 from . import Min
 from . import Prod
 from . import Transpose
-from . import Exp
 from . import Im
 from . import Block
 from . import Square

@@ -10,7 +10,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Real
 
     x, y = Symbol(real=True)
     Eq << apply(LessEqual(x, y))
@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq << Eq[-1] / exp(x)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Mul.eq.Exp)
+    Eq << Eq[-1].this.rhs.apply(Real.MulExpS.eq.ExpAdd)
 
     r = Symbol(nonnegative=True)
     Eq << GreaterEqual(exp(r), 1, plausible=True)

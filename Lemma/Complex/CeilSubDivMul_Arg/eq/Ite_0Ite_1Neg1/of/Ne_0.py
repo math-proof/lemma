@@ -95,7 +95,7 @@ def prove(Eq):
 
     Eq << Bool.Eq.of.Eq.Eq.apply(Eq[-1], Eq[-2])
 
-    Eq << Eq[-1].this.rhs.arg.apply(Algebra.Mul.eq.Exp)
+    Eq << Eq[-1].this.rhs.arg.apply(Real.MulExpS.eq.ExpAdd)
 
     Eq.arg_p3_w = Eq[-1].this.lhs.find(Exp).apply(Real.ExpMulI.eq.AddCos_MulISin.Euler)
 
@@ -125,7 +125,7 @@ def prove(Eq):
 
     Eq << Bool.Eq.of.Eq.Eq.apply(Eq[-1], Eq[-2])
 
-    Eq << Eq[-1].this.rhs.arg.apply(Algebra.Mul.eq.Exp)
+    Eq << Eq[-1].this.rhs.arg.apply(Real.MulExpS.eq.ExpAdd)
 
     Eq.arg_p3_w = Eq[-1].this.lhs.find(Exp).apply(Real.ExpMulI.eq.AddCos_MulISin.Euler)
 

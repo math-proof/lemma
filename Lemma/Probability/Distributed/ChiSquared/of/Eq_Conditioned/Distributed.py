@@ -95,7 +95,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Derivative).doit()
 
-    Eq << Eq[-1].this.find(Exp * Exp).args[-2:].apply(Algebra.Mul.eq.Exp)
+    Eq << Eq[-1].this.find(Exp * Exp).args[-2:].apply(Real.MulExpS.eq.ExpAdd)
 
     Eq << Eq[-1] * 2 ** (k / 2 + S.Half)
 

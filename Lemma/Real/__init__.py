@@ -134,3 +134,4 @@ from . import EqSub
 from . import ExpMulIte
 from . import MulPowS
 from . import PowMul
+from . import MulExpS

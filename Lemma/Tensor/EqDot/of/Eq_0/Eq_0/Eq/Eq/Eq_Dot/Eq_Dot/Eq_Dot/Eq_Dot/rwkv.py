@@ -16,7 +16,7 @@ def apply(eq_a, eq_b, eq_a_t, eq_b_t, eq_r, eq_k, eq_v, eq_o, i=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Real
 
     # T is the sequence length
     # d is the embedding size
@@ -49,7 +49,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.find(Exp[~Mul]).apply(Algebra.Mul.Neg), Eq[-1].this.find(Exp[~Mul]).apply(Algebra.Mul.Neg)
 
-    Eq <<= Eq[-2].this.find(Exp * Exp).args[1:].apply(Algebra.Mul.eq.Exp), Eq[-1].this.find(Exp * Exp).apply(Algebra.Mul.eq.Exp)
+    Eq <<= Eq[-2].this.find(Exp * Exp).args[1:].apply(Real.MulExpS.eq.ExpAdd), Eq[-1].this.find(Exp * Exp).apply(Real.MulExpS.eq.ExpAdd)
 
     Eq << Eq[7].subs(Eq[-2], Eq[-1])
 
