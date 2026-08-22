@@ -46,10 +46,7 @@ def prove(Eq):
     Eq << Eq[-1].this.args[0].rhs.expand()
 
 
-
-
-
 if __name__ == '__main__':
     run()
 # created on 2018-08-15
-# updated on 2023-05-20
+# updated on 2026-08-22
