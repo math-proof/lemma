@@ -7,18 +7,22 @@ open Algebra Complex
 
 @[main]
 private lemma main
-  {z : ℂ}
-  {n : ℕ}
 -- given
-  (hn : n > 0) :
+  (z : ℂ)
+  (n : ℕ) :
 -- imply
   arg (z ^ n) = n * arg z - 2 * π * ⌈n * arg z / (2 * π) - 1 / 2⌉ := by
 -- proof
   by_cases hz : z = 0
   ·
-    have hn' : n ≠ 0 := hn.ne'
-    simp [hz, zero_pow hn', arg_zero]
-    norm_num
+    simp [hz, zero_pow_eq]
+    split_ifs
+    ·
+      simp [arg_one]
+      norm_num
+    ·
+      simp [arg_zero]
+      norm_num
   ·
     have hpos : (‖z‖ : ℝ) ^ n > 0 := pow_pos (norm_pos_iff.mpr hz) n
     have hzpow : z ^ n = ↑(‖z‖ ^ n) * (I * (n * arg z)).exp := by

@@ -1,10 +1,10 @@
 import sympy.core.numbers
 import sympy.core.power
 import sympy.polys.polyroots
-import Lemma.Algebra.Ceil_Arg.eq.Ite.of.Ne_0
+import Lemma.Complex.CeilSubDivMul_Arg.eq.Ite_0Ite_1Neg1
 import Lemma.Nat.Eq_0.is.EqMul.of.Ne_0
 import Lemma.Complex.EqSquareSqrt
-open Algebra Complex Nat
+open Complex Nat
 
 
 @[main]
@@ -57,7 +57,7 @@ private lemma main
       simp [hp]
     rw [if_pos hcond]
   ·
-    have h := Ceil_Arg.eq.Ite.of.Ne_0 (p := p) (q := q) hp
+    have h := CeilSubDivMul_Arg.eq.Ite_0Ite_1Neg1 (p := p) (q := q)
     simp only [δ, U, V] at h ⊢
     rw [h]
     refine if_congr ?_ rfl rfl
@@ -66,4 +66,4 @@ private lemma main
 
 
 -- created on 2018-11-09
--- updated on 2026-08-21
+-- updated on 2026-08-22

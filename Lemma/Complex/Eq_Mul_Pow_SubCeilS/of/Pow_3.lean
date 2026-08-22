@@ -1,7 +1,7 @@
 import sympy.core.numbers
-import Lemma.Algebra.Arg.Pow.eq.Add
+import Lemma.Complex.ArgPow.eq.SubMul_Arg
 import Lemma.Complex.Eq_MulNorm_ExpMulIArg
-open Algebra
+open Complex
 
 
 @[main]
@@ -15,10 +15,9 @@ private lemma main
   A = B * ω ^ d := by
 -- proof
   intro ω d
-  have h3 : (3 : ℕ) > 0 := by norm_num
   have harg : arg (A ^ 3) = arg (B ^ 3) := by rw [h]
-  have hA3 := Arg.Pow.eq.Add (z := A) h3
-  have hB3 := Arg.Pow.eq.Add (z := B) h3
+  have hA3 := ArgPow.eq.SubMul_Arg A 3
+  have hB3 := ArgPow.eq.SubMul_Arg B 3
   have hd : (3 : ℝ) * (arg A - arg B) = 2 * π * d := by
     have := harg
     rw [hA3, hB3] at this

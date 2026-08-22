@@ -3,17 +3,17 @@ import sympy.Basic
 
 @[main]
 private lemma main
-  {x : ℝ}
+  {x a : ℝ}
   {n : ℕ}
 -- given
   (h_n : n > 0)
-  (h_x : x > 0) :
+  (h_a : 0 ≤ a)
+  (h : x > a) :
 -- imply
-  x ^ n > 0 := by
+  x ^ n > a ^ n :=
 -- proof
-  have := h_n
-  exact pow_pos h_x n
+  pow_lt_pow_left₀ h h_a h_n.ne'
 
 
 -- created on 2023-04-15
--- updated on 2026-08-20
+-- updated on 2026-08-22
