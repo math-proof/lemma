@@ -9,7 +9,7 @@ def cubic_delta(y, alpha, beta, gamma):
 def apply(is_nonzero, fy, y):
     beta = is_nonzero.of(Unequal[0])
 
-    from Lemma.Algebra.And_Imp_Or_EqS.of.Add.eq.Zero.cubic import cubic_coefficient
+    from Lemma.Complex.ImpEq_0.ImpEq_1.ImpEq_2.of.Eq0AddAddAddMul_Pow_3.Ne_0 import cubic_coefficient
     S[1], a, b, c = cubic_coefficient(fy, y)
 
     alpha = -2 * a

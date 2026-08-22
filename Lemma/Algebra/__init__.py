@@ -269,7 +269,6 @@ from . import EqAll_Eq_0
 from . import EqMaxima
 from . import EqTranspose
 from . import AndImpS_Eq
-from . import And_Imp_Or_EqS
 from . import And_Imp_Or_EqS_Div
 from . import EqFrac
 from . import Frac
