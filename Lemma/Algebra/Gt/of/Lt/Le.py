@@ -12,12 +12,12 @@ def apply(lt, le):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Nat
 
     x, a, b = Symbol(real=True)
     Eq << apply(x < a, b <= x)
 
-    Eq << Algebra.Lt.of.Lt.Le.apply(Eq[0], Eq[1])
+    Eq << Nat.Lt.of.Lt.Le.apply(Eq[0], Eq[1])
 
     Eq << Eq[-1].reversed
 

@@ -62,3 +62,5 @@ from . import EvenAdd_1
 from . import InMul
 from . import Any_Eq
 from . import EqPow0_0
+from . import GtPowS
+from . import ModSub

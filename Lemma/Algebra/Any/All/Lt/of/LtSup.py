@@ -11,7 +11,7 @@ def apply(le, M=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Int
+    from Lemma import Algebra, Set, Bool, Int, Nat
 
     M, M0, x, a, b = Symbol(real=True)
     f = Function(real=True)
@@ -38,7 +38,7 @@ def prove(Eq):
 
     Eq << Int.LtSub_1.of.Le.apply(Eq[-1], -oo)
 
-    Eq << Eq.all.this.expr.apply(Algebra.Lt.of.Lt.Le, ret=1)
+    Eq << Eq.all.this.expr.apply(Nat.Lt.of.Lt.Le, ret=1)
 
     Eq << Eq[-1].this.expr.apply(Algebra.LtAdd.of.Lt.Le)
 

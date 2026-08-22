@@ -32,7 +32,7 @@ def apply(is_zero, eq, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Int, Nat, Complex, Real
+    from Lemma import Int, Nat, Complex, Real
 
     x, p = Symbol(complex=True, given=True)
     q = Symbol(real=True, given=True)
@@ -63,7 +63,7 @@ def prove(Eq):
     Eq.w3_conj = Complex.Conj.of.Eq.apply(Eq.w3)
 
     A_ = A * w
-    Eq << ((x - A_ * ~w - B * w) * (x - A_ * w - B * ~w) * (x - A_ - B)).this.apply(Algebra.Mul.eq.Add.poly, x)
+    Eq << ((x - A_ * ~w - B * w) * (x - A_ * w - B * ~w) * (x - A_ - B)).this.apply(Int.Prod_Sub.eq.Sum_Mul_Pow, x)
 
     Eq << Eq[-1].subs(Eq.w_square)
 

@@ -87,7 +87,7 @@ def prove(Eq):
 
     Eq << Nat.Le0AddAddSquareSMulMul2.apply(x0_ + x1_)
 
-    Eq << Algebra.Lt.of.Lt.Le.apply(Eq.lt, Eq.le)
+    Eq << Nat.Lt.of.Lt.Le.apply(Eq.lt, Eq.le)
 
 
 

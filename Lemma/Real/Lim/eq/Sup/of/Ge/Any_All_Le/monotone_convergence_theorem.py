@@ -59,7 +59,7 @@ def prove(Eq):
 
     Eq << Algebra.Any.All.And.of.All.Any.apply(Eq[-1], Eq.any_lt)
 
-    Eq << Eq[-1].this.expr.expr.apply(Algebra.Lt.of.Lt.Le)
+    Eq << Eq[-1].this.expr.expr.apply(Nat.Lt.of.Lt.Le)
 
     Eq << Algebra.EqAbs.of.Ge.apply(Eq.ge_sup)
 

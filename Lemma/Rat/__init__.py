@@ -13,3 +13,4 @@ from . import Lt0Div
 from . import SubDivS1
 from . import GeDivS
 from . import Eq_DivNeg
+from . import Lt0Pow

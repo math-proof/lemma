@@ -85,13 +85,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Equal[Integer] | Equal[Integer]).apply(Algebra.EqMod.of.Or_Eq)
 
-    Eq << Eq[-1].this.find(Equal[Ceil, Ceil]).apply(Algebra.Eq_0.Mod.of.Eq, 3, swap=True)
+    Eq << Eq[-1].this.find(Equal[Ceil, Ceil]).apply(Nat.ModSub.eq.Zero.of.Eq, 3, swap=True)
 
     Eq << Eq[-1].subs(Eq.eq_peicewise)
 
     Eq << Bool.Imp_Or_And.Imp_Or_And.of.OrAndS.apply(Eq[-1])
 
-    Eq << Eq[1].this.lhs.apply(Algebra.Eq_0.Mod.of.Eq, 3)
+    Eq << Eq[1].this.lhs.apply(Nat.ModSub.eq.Zero.of.Eq, 3)
 
 
 if __name__ == '__main__':

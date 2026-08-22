@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq << LessEqual(Min(x, a), a, plausible=True)
 
-    Eq << Algebra.Lt.of.Lt.Le.apply(Eq[1], Eq[-1])
+    Eq << Nat.Lt.of.Lt.Le.apply(Eq[1], Eq[-1])
 
     Eq << Algebra.LtMin.of.Lt.Lt.apply(Eq[-1], Eq[-3])
 

@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq << Eq[0] * 2
 
-    Eq << Algebra.Lt.of.Lt.Le.apply(Eq[-2], Eq[-1])
+    Eq << Nat.Lt.of.Lt.Le.apply(Eq[-2], Eq[-1])
 
     Eq << Algebra.Lt_0.of.Lt.apply(Eq[1])
 

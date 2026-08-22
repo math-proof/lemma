@@ -41,7 +41,7 @@ def prove(Eq):
 
     Eq <<= Nat.Ge.of.Ge.Ge.apply(Eq.ge, Eq[-2] + d), Nat.Le_Sub_1.of.Lt.apply(Eq[-1])
 
-    Eq << Algebra.Lt.of.Lt.Le.apply(Eq.lt, Eq[-1] + n)
+    Eq << Nat.Lt.of.Lt.Le.apply(Eq.lt, Eq[-1] + n)
 
     Eq << Set.In.Ico.of.Lt.Ge.apply(Eq[-1], Eq[-3])
 

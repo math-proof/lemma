@@ -18,7 +18,7 @@ def quadratic_form(x, c, doit=True):
     return x @ A @ x / 2
 
 def reduced_sum(x, c):
-    from Lemma.Algebra.Mul.eq.Add.poly import generate_combination
+    from Lemma.Int.Prod_Sub.eq.Sum_Mul_Pow import generate_combination
     n, = x.shape
     sgm = 0
     for a, b in generate_combination(n, 2):

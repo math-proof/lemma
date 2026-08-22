@@ -38,7 +38,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.definition
 
-    Eq << Eq.lt.this.expr.expr.apply(Algebra.Lt.of.Lt.Le, Eq[-1])
+    Eq << Eq.lt.this.expr.expr.apply(Nat.Lt.of.Lt.Le, Eq[-1])
 
     Eq.less_than = Eq[-1].this.expr.expr.apply(Nat.Le.of.Lt)
 

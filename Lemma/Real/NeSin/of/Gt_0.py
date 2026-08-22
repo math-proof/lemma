@@ -9,7 +9,7 @@ def apply(gt_zero):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Real, Set, Bool, Nat
+    from Lemma import Real, Set, Bool, Nat
 
     x = Symbol(real=True, given=True)
     Eq << apply(x > 0)
@@ -61,7 +61,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Element).apply(Set.Le.of.In_Icc)
 
-    Eq << Eq[-1].this.expr.args[1::2].apply(Algebra.Lt.of.Lt.Le)
+    Eq << Eq[-1].this.expr.args[1::2].apply(Nat.Lt.of.Lt.Le)
 
     Eq << Eq[-1].this.expr.args[1:].apply(Set.In.Icc.of.Lt.Gt, simplify=None)
 

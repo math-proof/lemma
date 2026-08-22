@@ -143,7 +143,6 @@ from . import Le_1
 from . import LeMinima
 from . import As
 from . import OrEqS_0
-from . import ArgMulPow
 from . import InfAddMul_Square
 from . import LeAddSDivS
 from . import LtAddSDivSquareSub
@@ -162,9 +161,6 @@ from . import InvAdd_Inv
 from . import Ceil
 from . import Eq_Ceil
 from . import CeilSubDivArg
-from . import Ceil_Arg
-from . import GeCeil
-from . import Mul_CeilDiv
 from . import CeilAddDiv_2
 from . import LeDiv
 from . import LeLog
@@ -208,9 +204,6 @@ from . import GtSquare
 from . import GtSub
 from . import GtMax
 from . import GtMul
-from . import GtPow
-from . import GtMaxima
-from . import GtDiv
 from . import GtLog
 from . import GtExp
 from . import GtMin
@@ -282,3 +275,7 @@ from . import GivenAnd
 from . import Mod
 from . import Frac
 from . import EqFrac
+from . import GtDiv
+from . import GtMaxima
+from . import GeCeil
+from . import Mul_CeilDiv

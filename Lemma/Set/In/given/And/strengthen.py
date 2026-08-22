@@ -18,7 +18,7 @@ def apply(imply, lower=None, upper=None, strict=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Nat
 
     x = Symbol(complex=True, given=True)
     a, b, c = Symbol(integer=True, given=True)
@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq << Set.Le.Le.of.In_Icc.apply(Eq[1])
 
-    Eq << Algebra.Lt.of.Lt.Le.apply(Eq[2], Eq[-1])
+    Eq << Nat.Lt.of.Lt.Le.apply(Eq[2], Eq[-1])
 
 
 if __name__ == '__main__':

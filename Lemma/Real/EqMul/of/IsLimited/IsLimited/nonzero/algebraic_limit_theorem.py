@@ -70,7 +70,7 @@ def prove(Eq):
 
     Eq << Algebra.Any.All.And.of.Any_All.Any_All.limits_Inter.apply(Eq.le, Eq[-1])
 
-    Eq << Eq[-1].this.expr.expr.apply(Algebra.Lt.of.Lt.Le)
+    Eq << Eq[-1].this.expr.expr.apply(Nat.Lt.of.Lt.Le)
 
     Eq << Eq[-1].this.expr.apply(Bool.Imp.of.AllSetOf)
 

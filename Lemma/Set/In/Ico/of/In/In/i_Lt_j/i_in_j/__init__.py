@@ -39,7 +39,7 @@ def prove(Eq):
 
     Eq << Nat.Le_Sub_1.of.Lt.apply(Eq[7])
 
-    Eq << Algebra.Lt.of.Lt.Le.apply(Eq[-4], Eq[-1])
+    Eq << Nat.Lt.of.Lt.Le.apply(Eq[-4], Eq[-1])
 
     Eq << Algebra.Ge.given.Gt.relax.apply(Eq[6])
 

@@ -22,3 +22,7 @@ from . import ArgMul
 from . import Eq_Mul_Pow_SubCeilS
 from . import Eq_MulNorm_ExpMulIArg
 from . import MulPowS_Inv3
+from . import Add_MulI
+from . import ArgMulPowS
+from . import ArgPow
+from . import CeilSubDivMul_Arg

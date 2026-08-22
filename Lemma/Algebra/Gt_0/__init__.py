@@ -10,6 +10,5 @@ from . import Div
 from . import of
 from . import Abs
 from . import Mul
-from . import Pow
-from . import Ceil
 from . import Is
+from . import Ceil

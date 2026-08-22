@@ -8,7 +8,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Complex, Real, Nat
+    from Lemma import Complex, Real, Nat
 
     z = Symbol(complex=True, given=True)
     Eq << apply(z)
@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Nat.Mul_Add.eq.AddMulS)
 
-    Eq << Algebra.Eq.given.And.Eq.complex.apply(Eq[-1])
+    Eq << Complex.Add_MulI.given.Eq.Eq.apply(Eq[-1])
 
     Eq << Eq[-2].this.lhs.apply(Complex.Re.eq.MulNorm_CosArg)
     Eq << Eq[-1].this.lhs.apply(Complex.Im.eq.MulNorm_SinArg)
