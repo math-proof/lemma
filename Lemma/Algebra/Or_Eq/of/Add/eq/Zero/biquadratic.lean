@@ -1,8 +1,8 @@
 import sympy.core.power
 import sympy.polys.polyroots
-import Lemma.Algebra.And_Imp_Or_EqS_Div.of.Add.eq.Zero.quadratic
+import Lemma.Complex.OrEqS_Div.of.Eq0AddAddMul_Square.of.Ne_0
 import Lemma.Complex.Or_Eq_NegSqrt.of.EqSquare
-open Algebra Complex
+open Complex
 
 
 @[main]
@@ -21,7 +21,7 @@ private lemma main
   have hy : (1 : ℂ) * (x ^ 2) ^ 2 + α * x ^ 2 + γ = 0 := by
     convert h
     ring
-  have hquad := And_Imp_Or_EqS_Div.of.Add.eq.Zero.quadratic hy
+  have hquad := OrEqS_Div.of.Eq0AddAddMul_Square.of.Ne_0 hy
   have hone : (1 : ℂ) ≠ 0 := one_ne_zero
   obtain ⟨_, _, hroot⟩ := hquad
   have hΔ : (α ^ 2 - 4 * (1 : ℂ) * γ) = Δ := by
