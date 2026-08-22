@@ -10,7 +10,7 @@ def apply(eq, eq1):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Real, Finset, Set, Bool, Fin
+    from Lemma import Algebra, Real, Finset, Set, Bool, Fin, Complex
 
     n, k = Symbol(integer=True)
     # n = Symbol(integer=True, nonnegative=True)
@@ -52,7 +52,7 @@ def prove(Eq):
 
     Eq << Algebra.Eq_0.of.Eq.apply(Eq[-1])
 
-    Eq.ou = Eq[-1].apply(Algebra.And_Imp_Or_EqS_Div.of.Add.eq.Zero.quadratic, x=g(x), simplify=False)
+    Eq.ou = Eq[-1].apply(Complex.OrEqS_Div.of.Eq0AddAddMul_Square.of.Ne_0, x=g(x), simplify=False)
 
     Eq.negative_sqrt = Eq.ou.args[0].copy(plausible=True)
 

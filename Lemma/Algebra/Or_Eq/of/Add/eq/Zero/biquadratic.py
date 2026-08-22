@@ -12,7 +12,7 @@ def apply(fx, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Int, Nat
+    from Lemma import Algebra, Int, Nat, Complex
 
     x, alpha, gamma = Symbol(complex=True, given=True)
     fx = x ** 4 + alpha * x ** 2 + gamma
@@ -21,7 +21,7 @@ def prove(Eq):
     y = Symbol(x ** 2)
     Eq << Eq[0].subs(y.this.definition.reversed)
 
-    Eq << Algebra.And_Imp_Or_EqS_Div.of.Add.eq.Zero.quadratic.apply(Eq[-1], y)
+    Eq << Complex.OrEqS_Div.of.Eq0AddAddMul_Square.of.Ne_0.apply(Eq[-1], y)
 
     Eq << Eq[-1].subs(y.this.definition)
 
