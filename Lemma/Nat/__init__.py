@@ -61,3 +61,4 @@ from . import Lt0Mul
 from . import EvenAdd_1
 from . import InMul
 from . import Any_Eq
+from . import EqPow0_0

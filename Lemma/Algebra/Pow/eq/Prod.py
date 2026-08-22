@@ -11,7 +11,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Finset
+    from Lemma import Bool, Finset, Real
     f = Function(real=True)
     k = Symbol(integer=True)
     n = Symbol(integer=True, given=False, positive=True)
@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Product).apply(Finset.Prod.eq.MulProdS, cond={n})
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Pow.eq.Mul.split.base)
+    Eq << Eq[-1].this.lhs.apply(Real.PowMul.eq.MulPowS)
 
     Eq << Eq[0] * Eq[-1].find(Pow)
 

@@ -11,7 +11,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Algebra
+    from Lemma import Finset, Algebra, Real
 
     n = Symbol(integer=True, nonnegative=True)
     n = Symbol(integer=True, positive=True)
@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Product).apply(Algebra.Prod.eq.Mul.scale, 2)
 
-    Eq << Eq[-1].this.find(Mul).args[:2].apply(Algebra.Mul.eq.Pow.Mul.base)
+    Eq << Eq[-1].this.find(Mul).args[:2].apply(Real.MulPowS.eq.PowMul)
 
     Eq << Eq[-1].this.find(Product).apply(Algebra.Prod.eq.Mul.push)
 

@@ -19,4 +19,5 @@ if __name__ == '__main__':
     run()
 # created on 2018-07-04
 
-del Le
+del Eq
+from . import Eq

@@ -9,7 +9,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Nat, Rat, Int
+    from Lemma import Nat, Int
 
     x, y = Symbol(real=True, given=True)
     Eq << apply(x <= y)

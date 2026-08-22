@@ -17,7 +17,7 @@ def apply(self, swap=None, reverse=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor
+    from Lemma import Tensor, Real
 
     h = Symbol(real=True, shape=(oo,))
     n = Symbol(integer=True, positive=True)
@@ -29,7 +29,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(MatMul).apply(Tensor.Dot.eq.Sum)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Mul.eq.Pow.Mul.base)
+    Eq << Eq[-1].this.rhs.apply(Real.MulPowS.eq.PowMul)
 
 
 

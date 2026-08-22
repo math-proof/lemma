@@ -42,7 +42,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Sum).apply(Finset.Sum_Add.eq.AddSumS)
 
-    Eq << Eq[-1].this.find(Pow * Pow).args[:2].apply(Algebra.Mul.eq.Pow.Mul.base)
+    Eq << Eq[-1].this.find(Pow * Pow).args[:2].apply(Real.MulPowS.eq.PowMul)
 
     Eq << Real.EqLim.of.Eq.apply(Eq[-1], (n, oo))
 

@@ -115,7 +115,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Integral)().find(Abs[Cos]).simplify()
 
-    Eq << Eq[-1].this.find(Mul ** Add).apply(Algebra.Pow.eq.Mul.split.base)
+    Eq << Eq[-1].this.find(Mul ** Add).apply(Real.PowMul.eq.MulPowS)
 
     Eq << Eq[-1].this.find(Integral)().find(Abs).simplify()
 

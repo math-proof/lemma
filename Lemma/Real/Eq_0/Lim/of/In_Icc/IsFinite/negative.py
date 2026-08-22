@@ -17,7 +17,7 @@ def apply(el, is_finite):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Real, Algebra
+    from Lemma import Set, Real
 
     x = Symbol(real=True, shape=(oo,))
     γ = Symbol(real=True)
@@ -39,7 +39,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq.h_def)
 
-    Eq << Eq[-1].this.find(Mul).args[::2].apply(Algebra.Mul.eq.Pow.Mul.base)
+    Eq << Eq[-1].this.find(Mul).args[::2].apply(Real.MulPowS.eq.PowMul)
 
 
 if __name__ == '__main__':

@@ -32,7 +32,7 @@ def apply(is_zero, eq, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Int, Nat, Complex
+    from Lemma import Algebra, Int, Nat, Complex, Real
 
     x, p = Symbol(complex=True, given=True)
     q = Symbol(real=True, given=True)
@@ -125,7 +125,7 @@ def prove(Eq):
 
     Eq <<= Eq.A_def * 2 ** (S.One / 3), Eq.B_def * 2 ** (S.One / 3)
 
-    Eq <<= Eq[-2].this.rhs.apply(Algebra.Mul.eq.Pow.Mul.base), Eq[-1].this.rhs.apply(Algebra.Mul.eq.Pow.Mul.base)
+    Eq <<= Eq[-2].this.rhs.apply(Real.MulPowS.eq.PowMul), Eq[-1].this.rhs.apply(Real.MulPowS.eq.PowMul)
 
     Eq << Eq[1].subs(Eq[-2].reversed, Eq[-1].reversed)
 

@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Nat, Complex
+    from Lemma import Bool, Nat, Complex
 
     x, y = Symbol(complex=True, given=True)
     Eq << apply(Arg(x * y))

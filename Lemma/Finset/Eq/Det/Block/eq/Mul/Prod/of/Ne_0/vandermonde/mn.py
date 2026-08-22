@@ -12,7 +12,7 @@ def apply(is_nonzero, x1, m, d):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset, Tensor, Rat
+    from Lemma import Algebra, Finset, Tensor, Rat, Real
 
     d = Symbol(integer=True, positive=True)
     m = Symbol(domain=Range(d + 1, oo))
@@ -31,7 +31,7 @@ def prove(Eq):
     j, i = Eq[-1].find(Stack[Tuple[2]]).variables
     Eq << (Eq[-1].lhs.arg @ Stack[j:m, i:m](Eq[2].lhs ** j * KroneckerDelta(i, j))).this.apply(Tensor.Dot.eq.Stack_Sum_MulGetS)
 
-    Eq << Eq[-1].this.rhs.find(Mul ** Symbol).apply(Algebra.Pow.eq.Mul.split.base)
+    Eq << Eq[-1].this.rhs.find(Mul ** Symbol).apply(Real.PowMul.eq.MulPowS)
 
     Eq << Eq[-1].this.rhs.apply(Tensor.Stack.Ite.eq.Block)
 
@@ -51,9 +51,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find((~Add) ** Mul).apply(Rat.SubDivS1.eq.DivSub.of.Ne_0.Ne_0)
 
-    Eq << Eq[-1].this.rhs.find(Mul ** Mul).apply(Algebra.Pow.eq.Mul.split.base)
+    Eq << Eq[-1].this.rhs.find(Mul ** Mul).apply(Real.PowMul.eq.MulPowS)
 
-    Eq << Eq[-1].this.rhs.find(Mul ** Binomial).apply(Algebra.Pow.eq.Mul.split.base)
+    Eq << Eq[-1].this.rhs.find(Mul ** Binomial).apply(Real.PowMul.eq.MulPowS)
 
     Eq << Eq[-1].this.find(Symbol ** Add).find(Binomial).apply(Finset.BinomAdd__2.eq.Add_Binom_2, d)
 

@@ -8,7 +8,7 @@ def apply(x, evaluate=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Rat, Int
+    from Lemma import Int
 
     x = Symbol(real=True)
     Eq << apply(x)

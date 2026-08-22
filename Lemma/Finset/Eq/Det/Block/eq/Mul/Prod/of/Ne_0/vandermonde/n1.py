@@ -11,7 +11,7 @@ def apply(is_nonzero, n, x2):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset, Tensor, Nat, Rat
+    from Lemma import Algebra, Finset, Tensor, Nat, Rat, Real
 
     n = Symbol(integer=True, positive=True)
     x1, x2 = Symbol(complex=True)
@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq << Eq.eq.rhs.this.find(Add).apply(Nat.AddMulS.eq.Mul_Add)
 
-    Eq << Eq[-1].this.find(Pow[Mul]).apply(Algebra.Pow.eq.Mul.split.base)
+    Eq << Eq[-1].this.find(Pow[Mul]).apply(Real.PowMul.eq.MulPowS)
 
     Eq << Eq[-1].this.rhs.find(Binomial).apply(Finset.Binom.eq.Div.Binom)
 
@@ -39,7 +39,7 @@ def prove(Eq):
     j, i = Eq[-1].find(Stack[Tuple[2]]).variables
     Eq << (Eq[-1].lhs.arg @ Stack[j:n + 1, i:n + 1](Eq[2].lhs ** j * KroneckerDelta(i, j))).this.apply(Tensor.Dot.eq.Stack_Sum_MulGetS)
 
-    Eq << Eq[-1].this.rhs.find(Mul ** Symbol).apply(Algebra.Pow.eq.Mul.split.base)
+    Eq << Eq[-1].this.rhs.find(Mul ** Symbol).apply(Real.PowMul.eq.MulPowS)
 
     Eq << Eq[-1].this.rhs.apply(Tensor.Stack.Ite.eq.Block)
 
@@ -61,7 +61,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find((~Add) ** Symbol).apply(Rat.SubDivS1.eq.DivSub.of.Ne_0.Ne_0)
 
-    Eq << Eq[-1].this.rhs.find(Mul ** Symbol).apply(Algebra.Pow.eq.Mul.split.base)
+    Eq << Eq[-1].this.rhs.find(Mul ** Symbol).apply(Real.PowMul.eq.MulPowS)
 
 
 

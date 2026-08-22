@@ -132,3 +132,5 @@ from . import LtLim
 from . import LeLim
 from . import EqSub
 from . import ExpMulIte
+from . import MulPowS
+from . import PowMul

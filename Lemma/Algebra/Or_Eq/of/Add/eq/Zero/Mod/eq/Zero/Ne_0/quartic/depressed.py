@@ -48,7 +48,7 @@ def apply(fx, mod_is_zero, is_nonzero, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat, Int, Complex
+    from Lemma import Algebra, Nat, Int, Complex, Real
     from Lemma.Algebra.Add.eq.Zero.given.And.Eq.cubic.one_leaded import cubic_solve
     from Lemma.Algebra.Ne.of.Ne_0.Add.eq.Zero import cubic_delta
 
@@ -92,17 +92,17 @@ def prove(Eq):
 
     Eq << Eq[4] * 6
 
-    Eq << Eq[-1].this.rhs.args[2].apply(Algebra.Mul.eq.Pow.Mul.base)
+    Eq << Eq[-1].this.rhs.args[2].apply(Real.MulPowS.eq.PowMul)
 
-    Eq << (6 * Eq[-1].find(Mul[~Pow])).this.apply(Algebra.Mul.eq.Pow.Mul.base)
+    Eq << (6 * Eq[-1].find(Mul[~Pow])).this.apply(Real.MulPowS.eq.PowMul)
 
     Eq.y = Eq[-2].subs(Eq[-1])
 
-    Eq << Eq.y.find(Integer * Pow[S.One / 2]).this.apply(Algebra.Mul.eq.Pow.Mul.base)
+    Eq << Eq.y.find(Integer * Pow[S.One / 2]).this.apply(Real.MulPowS.eq.PowMul)
 
-    Eq << Eq[-1].this.rhs.find(Mul[Pow]).apply(Algebra.Mul.eq.Pow.Mul.base)
+    Eq << Eq[-1].this.rhs.find(Mul[Pow]).apply(Real.MulPowS.eq.PowMul)
 
-    Eq << Eq[-1].this.rhs.find(Mul[Pow]).apply(Algebra.Mul.eq.Pow.Mul.base)
+    Eq << Eq[-1].this.rhs.find(Mul[Pow]).apply(Real.MulPowS.eq.PowMul)
 
     Eq << Eq[-1].this.rhs.find(Expr ** 3).apply(Algebra.Pow.eq.Mul.Neg)
 
@@ -110,19 +110,19 @@ def prove(Eq):
 
     Eq << Nat.Div.of.Eq.apply(Eq[-1], 3)
 
-    Eq << Eq[-1].this.rhs.args[2].apply(Algebra.Mul.eq.Pow.Mul.base)
+    Eq << Eq[-1].this.rhs.args[2].apply(Real.MulPowS.eq.PowMul)
 
-    Eq << (Eq[-1].find(Mul[~Pow]) / 3).this.apply(Algebra.Mul.eq.Pow.Mul.base)
+    Eq << (Eq[-1].find(Mul[~Pow]) / 3).this.apply(Real.MulPowS.eq.PowMul)
 
     Eq.y = Eq[-2].subs(Eq[-1])
 
-    Eq << Eq.y.find(Mul[Add ** (S.One / 2)]).this.apply(Algebra.Mul.eq.Pow.Mul.base)
+    Eq << Eq.y.find(Mul[Add ** (S.One / 2)]).this.apply(Real.MulPowS.eq.PowMul)
 
-    Eq << Eq[-1].this.rhs.find(Mul[Add ** 2]).apply(Algebra.Mul.eq.Pow.Mul.base)
+    Eq << Eq[-1].this.rhs.find(Mul[Add ** 2]).apply(Real.MulPowS.eq.PowMul)
 
-    Eq << (-Eq[-1].rhs.find(Mul[Add ** 3])).this.apply(Algebra.Mul.eq.Pow.Mul.base) * 27
+    Eq << (-Eq[-1].rhs.find(Mul[Add ** 3])).this.apply(Real.MulPowS.eq.PowMul) * 27
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Mul.eq.Pow.Mul.base)
+    Eq << Eq[-1].this.rhs.apply(Real.MulPowS.eq.PowMul)
 
     Eq << Nat.Div.of.Eq.apply(Eq[-1], 27)
 

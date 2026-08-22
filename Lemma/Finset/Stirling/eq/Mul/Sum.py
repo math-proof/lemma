@@ -65,7 +65,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Mul[Sum]).apply(Finset.Mul_Sum.eq.Sum_Mul)
 
-    Eq << Eq[-1].this.find(Mul ** Symbol).apply(Algebra.Pow.eq.Mul.split.base)
+    Eq << Eq[-1].this.find(Mul ** Symbol).apply(Real.PowMul.eq.MulPowS)
 
     Eq.factor2mul = Finset.Factorial.eq.Mul.apply(factorial(k + 1))
 

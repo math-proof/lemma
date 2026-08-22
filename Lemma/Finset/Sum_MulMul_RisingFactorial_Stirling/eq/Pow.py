@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Algebra
+    from Lemma import Finset, Real
 
     k = Symbol(integer=True)
     n = Symbol(integer=True, nonnegative=True)
@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Finset.Mul_Sum.eq.Sum_Mul)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Mul.eq.Pow.Mul.base)
+    Eq << Eq[-1].this.lhs.apply(Real.MulPowS.eq.PowMul)
 
     Eq << Eq[-1].reversed
 

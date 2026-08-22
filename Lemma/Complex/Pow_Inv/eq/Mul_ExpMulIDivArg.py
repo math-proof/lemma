@@ -13,7 +13,7 @@ def apply(self, *, simplify=True):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Complex
+    from Lemma import Algebra, Complex, Real
 
     z = Symbol(real=True)
     n = Symbol(integer=True, positive=True)
@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.base.apply(Complex.Eq_MulNorm_ExpMulIArg)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Pow.eq.Mul.split.base)
+    Eq << Eq[-1].this.lhs.apply(Real.PowMul.eq.MulPowS)
 
     Eq << Algebra.Eq.given.Eq.Div.apply(Eq[-1], Eq[-1].lhs.args[0])
 

@@ -11,7 +11,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Real
 
     m, n = Symbol(integer=True, positive=True)
     # m indicates batch-size, n indicates seq-length
@@ -21,9 +21,9 @@ def prove(Eq):
     α, β, M = Symbol(real=True, positive=True)
     Eq << apply((M / (n ** α * m ** β)) ** (1 / β))
 
-    Eq << Eq[0].this.lhs.apply(Algebra.Pow.eq.Mul.split.base)
+    Eq << Eq[0].this.lhs.apply(Real.PowMul.eq.MulPowS)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Pow.eq.Mul.split.base)
+    Eq << Eq[-1].this.rhs.apply(Real.PowMul.eq.MulPowS)
 
 
 if __name__ == '__main__':

@@ -10,7 +10,7 @@ def apply(pow):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Int, Complex
+    from Lemma import Algebra, Bool, Int, Complex, Real
 
     z = Symbol(complex=True, given=True)
     n = Symbol(integer=True, given=True, positive=True)
@@ -18,7 +18,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.arg.base.apply(Complex.Eq_MulNorm_ExpMulIArg)
 
-    Eq << Eq[-1].this.lhs.arg.apply(Algebra.Pow.eq.Mul.split.base)
+    Eq << Eq[-1].this.lhs.arg.apply(Real.PowMul.eq.MulPowS)
 
     Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=Unequal(z, 0))
 

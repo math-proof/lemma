@@ -31,7 +31,7 @@ def prove(Eq):
 
     Eq << Eq[1].subs(Eq.U.reversed, Eq.V.reversed)
 
-    Eq << Eq[-1].this.find(Arg[~Mul[Pow]]).apply(Algebra.Mul.Root.eq.Mul.Ite.cubic_root)
+    Eq << Eq[-1].this.find(Arg[~Mul[Pow]]).apply(Complex.MulPowS_Inv3.eq.MulPow_Inv3Ite_1)
 
     Eq << Eq[-1].subs(Eq.UV)
 
@@ -61,7 +61,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs * (-Integer(27) / 4)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Pow.eq.Zero.given.Eq_0)
+    Eq << Eq[-1].this.lhs.apply(Nat.EqPow0_0.given.Gt_0.Eq_0)
 
     Eq <<= Eq.suffice & Eq[-1]
 

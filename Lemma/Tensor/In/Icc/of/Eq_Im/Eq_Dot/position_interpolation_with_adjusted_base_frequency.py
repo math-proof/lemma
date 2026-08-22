@@ -82,7 +82,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Im.eq.Sum)
 
-    Eq << Eq[-1].this.find(Pow * Pow).args[1:].apply(Algebra.Mul.eq.Pow.Mul.base)
+    Eq << Eq[-1].this.find(Pow * Pow).args[1:].apply(Real.MulPowS.eq.PowMul)
 
     Eq << Algebra.EqNorm.of.Eq.apply(Eq.def_RoPE)
 
@@ -119,9 +119,9 @@ def prove(Eq):
 
     Eq << Nat.LeMulS.of.Le.Le.Ge_0.Ge_0.apply(Eq[-1], Eq[-2])
 
-    Eq << Eq[-1].this.find(Pow).apply(Algebra.Pow.eq.Mul.split.base)
+    Eq << Eq[-1].this.find(Pow).apply(Real.PowMul.eq.MulPowS)
 
-    Eq << Eq[-1].this.find(Pow * Pow).args[1:].apply(Algebra.Mul.eq.Pow.Mul.base)
+    Eq << Eq[-1].this.find(Pow * Pow).args[1:].apply(Real.MulPowS.eq.PowMul)
 
     Eq.gt_zero_eta = Greater(α / (b * β) ** (2 * j / d), 0, plausible=True)
 
@@ -174,9 +174,9 @@ def prove(Eq):
 
     Eq << Algebra.LtPow.of.Lt.apply(Eq[-1], 2 / d, evaluate=False)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Pow.eq.Mul.split.base)
+    Eq << Eq[-1].this.lhs.apply(Real.PowMul.eq.MulPowS)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Mul.eq.Pow.Mul.base)
+    Eq << Eq[-1].this.lhs.apply(Real.MulPowS.eq.PowMul)
 
     Eq.gt_zero_2_bβ = Algebra.Gt_0.of.Lt.apply(Eq[-1])
 

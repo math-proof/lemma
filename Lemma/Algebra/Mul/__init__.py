@@ -5,7 +5,6 @@ from . import Sum
 from . import Block
 from . import Conj
 from . import Neg
-from . import Root
-from . import Delta
 from . import eq
+from . import Delta
 from . import gt

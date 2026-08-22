@@ -21,3 +21,4 @@ from . import Conj
 from . import ArgMul
 from . import Eq_Mul_Pow_SubCeilS
 from . import Eq_MulNorm_ExpMulIArg
+from . import MulPowS_Inv3

@@ -58,13 +58,13 @@ def apply(self, *, simplify=True):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Real
 
     x, y = Symbol(real=True)
     t = Symbol(integer=True)
     Eq << apply(x ** t * y ** t)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Pow.eq.Mul.split.base)
+    Eq << Eq[-1].this.rhs.apply(Real.PowMul.eq.MulPowS)
 
 
 

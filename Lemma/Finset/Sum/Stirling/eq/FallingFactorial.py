@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Algebra
+    from Lemma import Finset, Real
 
     k = Symbol(integer=True)
     n = Symbol(integer=True, nonnegative=True)
@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Finset.RisingFactorial.eq.Mul.FallingFactorial)
 
-    Eq << Eq[-1].this.rhs.find(Pow).apply(Algebra.Pow.eq.Mul.split.base)
+    Eq << Eq[-1].this.rhs.find(Pow).apply(Real.PowMul.eq.MulPowS)
 
     Eq << Eq[-1] * (-1) ** n
 
