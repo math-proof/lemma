@@ -1,8 +1,8 @@
 import sympy.core.power
 import sympy.core.numbers
 import sympy.polys.polyroots
-import Lemma.Algebra.Or.Eq.of.Add.eq.Zero.Eq_Ceil.cubic
-open Algebra
+import Lemma.Complex.ImpEq_0.ImpEq_1.ImpEq_2.of.Eq0AddAddPow_3.EqSubCeilSSubDivS
+open Complex
 
 
 @[main]
@@ -43,12 +43,13 @@ private lemma main
     simp only [p, q] at h' ⊢
     convert h' using 1
     ring
-  have hroot := Or.Eq.of.Add.eq.Zero.Eq_Ceil.cubic hz
+  have hroot := ImpEq_0.ImpEq_1.ImpEq_2.of.Eq0AddAddPow_3.EqSubCeilSSubDivS hz
   obtain ⟨h0, h1, h2⟩ := hroot
   refine ⟨?_, ?_, ?_⟩
   ·
     intro hd
-    rcases h0 hd with hz' | hz' | hz'
+    have hmod : d % 3 = 0 := by simp [hd]
+    rcases h0 hmod with hz' | hz' | hz'
     ·
       exact Or.inl (eq_sub_of_add_eq hz')
     ·

@@ -2,8 +2,8 @@ import sympy.core.power
 import sympy.core.numbers
 import sympy.polys.polyroots
 import Lemma.Algebra.And_Imp_Or_EqS_Div.of.Add.eq.Zero.quadratic
-import Lemma.Algebra.And.Imp.Or.Eq.of.Add.eq.Zero.cubic.one_leaded
-open Algebra
+import Lemma.Complex.ImpEq_0.ImpEq_1.ImpEq_2.of.Eq0AddAddAddPow_3
+open Algebra Complex
 
 
 @[main]
@@ -68,7 +68,7 @@ private lemma main
         simp only [a', b', c']
         rw [hmul, h]
       exact (mul_eq_zero.mp h0).resolve_left ha
-    exact And.Imp.Or.Eq.of.Add.eq.Zero.cubic.one_leaded hmonic
+    exact ImpEq_0.ImpEq_1.ImpEq_2.of.Eq0AddAddAddPow_3 hmonic
 
 
 -- created on 2018-11-25

@@ -2,8 +2,8 @@ import sympy.core.power
 import sympy.core.numbers
 import sympy.polys.polyroots
 import Lemma.Algebra.Or_Eq.of.Add.eq.Zero.biquadratic
-import Lemma.Algebra.And.Imp.of.Add.eq.Zero.Ne_0.quartic.depressed
-open Algebra
+import Lemma.Complex.ImpEq_0.ImpAnd_Eq_0.ImpAnd_Eq_1.ImpAnd_Eq_2.of.Eq0AddAddAddMul_Pow_4.Ne_0
+open Algebra Complex
 
 
 @[main]
@@ -109,7 +109,7 @@ private lemma main
       exact Or.inr (Or.inr (Or.inr (eq_sub_of_add_eq hz')))
   ·
     intro ⟨hβ, hD⟩ y y0 y1
-    have hfour := (And.Imp.of.Add.eq.Zero.Ne_0.quartic.depressed hdep hβ).1 hD
+    have hfour := (ImpEq_0.ImpAnd_Eq_0.ImpAnd_Eq_1.ImpAnd_Eq_2.of.Eq0AddAddAddMul_Pow_4.Ne_0 hdep hβ).1 hD
     rcases hfour with hz' | hz' | hz' | hz'
     ·
       exact Or.inl (hx.trans (hz' ▸ rfl))
@@ -121,7 +121,7 @@ private lemma main
       exact Or.inr (Or.inr (Or.inr (hx.trans (hz' ▸ rfl))))
   ·
     intro ⟨hβ, hD⟩ y y0 y1
-    have hfour := (And.Imp.of.Add.eq.Zero.Ne_0.quartic.depressed hdep hβ).2.1 hD
+    have hfour := (ImpEq_0.ImpAnd_Eq_0.ImpAnd_Eq_1.ImpAnd_Eq_2.of.Eq0AddAddAddMul_Pow_4.Ne_0 hdep hβ).2.1 hD
     rcases hfour with hz' | hz' | hz' | hz'
     ·
       exact Or.inl (hx.trans (hz' ▸ rfl))
@@ -133,7 +133,7 @@ private lemma main
       exact Or.inr (Or.inr (Or.inr (hx.trans (hz' ▸ rfl))))
   ·
     intro ⟨hβ, hD⟩ y y0 y1
-    have hfour := (And.Imp.of.Add.eq.Zero.Ne_0.quartic.depressed hdep hβ).2.2 hD
+    have hfour := (ImpEq_0.ImpAnd_Eq_0.ImpAnd_Eq_1.ImpAnd_Eq_2.of.Eq0AddAddAddMul_Pow_4.Ne_0 hdep hβ).2.2 hD
     rcases hfour with hz' | hz' | hz' | hz'
     ·
       exact Or.inl (hx.trans (hz' ▸ rfl))

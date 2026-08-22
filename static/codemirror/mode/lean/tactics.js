@@ -51,6 +51,7 @@ export const tactics = [
     'intros',
     'left',
     'linarith',
+    'linear_combination',
     'mod_cast',
     'mp',
     'mpr',

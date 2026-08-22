@@ -1794,7 +1794,11 @@ class LeanPairedGroup extends Closable(LeanUnary) {
                     this.arg = new LeanStatements([caret], indent, caret.level);
                     return caret;
                 }
-                this.arg = new LeanArgsCommaNewLineSeparated([caret], indent, caret.level);
+                this.arg = new LeanArgsCommaNewLineSeparated(
+                    [new LeanArgsCommaSeparated([caret], indent, caret.level)],
+                    indent,
+                    caret.level,
+                );
                 return caret;
             }
             if (indent === this.indent) return caret;
@@ -7090,13 +7094,37 @@ export class LeanArgsCommaSeparated extends LeanArgs {
         return caret;
     }
 
+    /**
+     * Trailing comma then newline inside `[…]` / `⟨…⟩`: this line stays `LeanArgsCommaSeparated`;
+     * the bracket body becomes (or grows) `LeanArgsCommaNewLineSeparated`.
+     */
+    insert_newline(caret, newline_count, indent, next) {
+        if (caret instanceof LeanCaret && this.args[this.args.length - 1] === caret) {
+            if (this.indent > indent) {
+                return super.insert_newline(caret, newline_count, indent, next);
+            }
+            this.args.pop();
+            if (indent === this.indent) indent = this.indent + 2;
+            const lineCaret = new LeanCaret(indent, caret.level);
+            const line = new LeanArgsCommaSeparated([lineCaret], indent, caret.level);
+            const parent = this.parent;
+            if (parent instanceof LeanArgsCommaNewLineSeparated) {
+                parent.push(line);
+                return lineCaret;
+            }
+            parent.replace(this, new LeanArgsCommaNewLineSeparated([this, line], indent, this.level));
+            return lineCaret;
+        }
+        return super.insert_newline(caret, newline_count, indent, next);
+    }
+
     insert_tactic(caret, token) {
         if (caret instanceof LeanCaret) return this.insert_word(caret, token);
         throw new Error(`LeanArgsCommaSeparated.insert_tactic: unexpected for ${this.constructor.name}`);
     }
 
     is_indented() {
-        return false;
+        return this.parent instanceof LeanArgsCommaNewLineSeparated;
     }
 
     latexFormat() {
@@ -7192,8 +7220,12 @@ export class LeanArgsCommaNewLineSeparated extends LeanMultipleLine(LeanArgs) {
     }
 
     insert_comma(caret) {
-        const c2 = new LeanCaret(this.indent, caret.level);
-        this.push(c2);
+        const c2 = new LeanCaret(caret.indent, caret.level);
+        if (caret instanceof LeanArgsCommaSeparated) {
+            caret.push(c2);
+            return c2;
+        }
+        this.replace(caret, new LeanArgsCommaSeparated([caret, c2], caret.indent, caret.level));
         return c2;
     }
 

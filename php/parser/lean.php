@@ -1606,7 +1606,11 @@ abstract class LeanPairedGroup extends LeanUnary
                 if ($indent == $this->indent)
                     $indent = $this->indent + 2;
                 $caret->indent = $indent;
-                $this->arg = new LeanArgsCommaNewLineSeparated([$caret], $indent, $caret->level);
+                $this->arg = new LeanArgsCommaNewLineSeparated(
+                    [new LeanArgsCommaSeparated([$caret], $indent, $caret->level)],
+                    $indent,
+                    $caret->level
+                );
                 return $caret;
             } else {
                 if ($indent == $this->indent)
@@ -6873,6 +6877,27 @@ class LeanArgsCommaSeparated extends LeanArgs
         return $caret;
     }
 
+    public function insert_newline($caret, $newline_count, $indent, $next)
+    {
+        if ($caret instanceof LeanCaret && end($this->args) === $caret) {
+            if ($this->indent > $indent)
+                return parent::insert_newline($caret, $newline_count, $indent, $next);
+            array_pop($this->args);
+            if ($indent == $this->indent)
+                $indent = $this->indent + 2;
+            $lineCaret = new LeanCaret($indent, $caret->level);
+            $line = new LeanArgsCommaSeparated([$lineCaret], $indent, $caret->level);
+            $parent = $this->parent;
+            if ($parent instanceof LeanArgsCommaNewLineSeparated) {
+                $parent->push($line);
+                return $lineCaret;
+            }
+            $parent->replace($this, new LeanArgsCommaNewLineSeparated([$this, $line], $indent, $this->level));
+            return $lineCaret;
+        }
+        return parent::insert_newline($caret, $newline_count, $indent, $next);
+    }
+
     public function insert_tactic($caret, $token)
     {
         if ($caret instanceof LeanCaret)
@@ -6882,7 +6907,7 @@ class LeanArgsCommaSeparated extends LeanArgs
 
     public function is_indented()
     {
-        return false;
+        return $this->parent instanceof LeanArgsCommaNewLineSeparated;
     }
 
     public function latexFormat()
@@ -6991,9 +7016,13 @@ class LeanArgsCommaNewLineSeparated extends LeanArgs
     }
     public function insert_comma($caret)
     {
-        $caret = new LeanCaret($this->indent, $caret->level);
-        $this->push($caret);
-        return $caret;
+        $c2 = new LeanCaret($caret->indent, $caret->level);
+        if ($caret instanceof LeanArgsCommaSeparated) {
+            $caret->push($c2);
+            return $c2;
+        }
+        $this->replace($caret, new LeanArgsCommaSeparated([$caret, $c2], $caret->indent, $caret->level));
+        return $c2;
     }
 
 
