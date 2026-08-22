@@ -25,6 +25,13 @@ def tokensFromRelPath (rel : String) : List String :=
 def moduleName (ts : List String) : String :=
   String.intercalate "." ts
 
+/-- If the path already has `of`, append `Eq_n`; otherwise append `of.Eq_n`. -/
+def substTokens (tokens : List String) (n : String) : List String :=
+  if tokens.contains "of" then
+    tokens ++ ["Eq_" ++ n]
+  else
+    tokens ++ ["of", "Eq_" ++ n]
+
 def setAt (l : List String) (i : Nat) (x : String) : List String :=
   if _ : i < l.length then
     l.take i ++ [x] ++ l.drop (i + 1)
@@ -163,8 +170,8 @@ def attrLemmaName (tokens : List String) (attr : String) : String :=
   | ["mp.mt", n] => nameToModule (List.mt (List.mp tokens) false (n.toNat!) : Lean.Name)
   | ["mpr.mt"] => nameToModule (List.mt (List.mpr tokens) : Lean.Name)
   | ["mpr.mt", n] => nameToModule (List.mt (List.mpr tokens) false (n.toNat!) : Lean.Name)
-  | ["subst"] => moduleName (tokens ++ ["of", "Eq_1"])
-  | ["subst", n] => moduleName (tokens ++ ["of", "Eq_" ++ n])
+  | ["subst"] => moduleName (substTokens tokens "1")
+  | ["subst", n] => moduleName (substTokens tokens n)
   | _ => panic! s!"unknown attribute: {attr}"
 
 def formatAttrLabel (attr : String) : String :=

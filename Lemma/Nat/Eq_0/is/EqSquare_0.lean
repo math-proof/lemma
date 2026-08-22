@@ -1,5 +1,6 @@
 import sympy.core.power
 import Lemma.Nat.Eq_0.is.Pow.eq.Zero
+import Lemma.Nat.EqPow0_0.of.Gt_0
 open Nat
 
 
@@ -22,7 +23,8 @@ private lemma main
 -- imply
   x = 0 ↔ x² = 0 :=
 -- proof
-  ⟨Pow.eq.Zero.of.Eq_0, Eq_0.of.Pow.eq.Zero⟩
+  ⟨(EqPow0_0.of.Gt_0.Eq_0 · two_pos), Eq_0.of.Pow.eq.Zero⟩
 
 
 -- created on 2025-12-20
+-- updated on 2026-08-22

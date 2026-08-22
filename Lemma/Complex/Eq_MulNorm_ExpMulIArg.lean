@@ -30,4 +30,4 @@ private lemma main
   apply Im.eq.MulNorm_SinArg (z := z)
 
 
--- created on 2025-01-13
+-- created on 2018-07-26

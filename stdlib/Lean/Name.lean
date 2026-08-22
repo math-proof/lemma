@@ -64,4 +64,14 @@ def Lean.Name.lemmaName (path : Name) (declName : Name) : Name :=
   else
     path ++ suffix
 
+/--
+`@[subst n]` lemma path: if the module already contains `of`, append `Eq_n`;
+otherwise append `of.Eq_n`.
+-/
+def Lean.Name.substModule (module : Name) (lit : Nat) : Name :=
+  if module.components.contains `of then
+    module.str s!"Eq_{lit}"
+  else
+    (module.str "of").str s!"Eq_{lit}"
+
 #eval mkCtorName ``Lean.Name

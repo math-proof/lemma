@@ -1019,7 +1019,7 @@ initialize registerBuiltinAttribute {
     let levelParams := decl.levelParams
     let lit := stx.getNum
     let ⟨type, value⟩ ← MetaM.run' <| Expr.substNat decl.type (.const declName (levelParams.map .param)) lit
-    let name := (((← getEnv).module.str "of").str s!"Eq_{lit}").lemmaName declName
+    let name := ((← getEnv).module.substModule lit).lemmaName declName
     addAndCompile <| .thmDecl {
       name := name
       levelParams := levelParams
