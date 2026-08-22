@@ -49,9 +49,15 @@ def prove(Eq):
     A = Symbol(Eq[2].args[0].rhs.args[0].find(Pow))
     Eq.A_def = A.this.definition
 
-    Eq.w, Eq.w_conj, Eq.add_ww, Eq.mul_ww, Eq.w_square, Eq.w_conj_square, Eq.w3 = Algebra.AndEqS.omega.apply('omega')
+    w = Symbol('omega', -S.One / 2 + S.ImaginaryUnit * sqrt(3) / 2)
+    Eq.w = w.this.definition
+    Eq.w_conj = Algebra.EqConj.of.Eq.apply(Eq.w)
+    Eq.add_ww = Eq.w_conj + Eq.w
+    Eq.mul_ww = (Eq.w_conj * Eq.w).this.rhs.apply(Nat.Mul_Add.eq.AddMulS, deep=True)
+    Eq.w_square = (Eq.w ** 2).this.rhs.apply(Nat.SquareAdd.eq.AddAdd_SquareS_Mul2Add)
+    Eq.w_square = Eq.w_square.subs(Eq.w_conj.reversed)
+    Eq.w3 = (Eq.w_square * Eq.w.lhs).subs(Eq.mul_ww)
 
-    w = Eq.w.lhs
     Eq.w_sub = Eq.add_ww.this.apply(Int.EqAdd.Is.Eq_Sub)
 
     Eq.w3_conj = Algebra.EqConj.of.Eq.apply(Eq.w3)

@@ -132,7 +132,6 @@ from . import LeMin
 from . import All_Ge_Inf
 from . import AbsAdd
 from . import AddAbsS
-from . import AndEqS
 from . import SquareReducedSum
 from . import All_LeInf
 from . import OrAnyS

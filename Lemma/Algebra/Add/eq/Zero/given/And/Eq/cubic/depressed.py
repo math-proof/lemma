@@ -38,7 +38,13 @@ def prove(Eq):
     x, p, q = Symbol(complex=True, given=True)
     Eq << apply(Equal(x ** 3 + p * x + q, 0), x=x, d=1)
 
-    Eq.w, Eq.w_conj, Eq.add_ww, Eq.mul_ww, Eq.w_square, Eq.w_conj_square, Eq.w3 = Algebra.AndEqS.omega.apply('omega')
+    w = Symbol('omega', -S.One / 2 + S.ImaginaryUnit * sqrt(3) / 2)
+    Eq.w = w.this.definition
+    Eq.w_conj = Algebra.EqConj.of.Eq.apply(Eq.w)
+    Eq.mul_ww = (Eq.w_conj * Eq.w).this.rhs.apply(Nat.Mul_Add.eq.AddMulS, deep=True)
+    Eq.w_square = (Eq.w ** 2).this.rhs.apply(Nat.SquareAdd.eq.AddAdd_SquareS_Mul2Add)
+    Eq.w_square = Eq.w_square.subs(Eq.w_conj.reversed)
+    Eq.w3 = (Eq.w_square * Eq.w.lhs).subs(Eq.mul_ww)
 
     B, A = Eq[2].rhs.args
     A = Symbol(A)
