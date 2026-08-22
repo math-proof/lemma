@@ -2,7 +2,13 @@ import sympy.functions.elementary.exponential
 import sympy.Basic
 
 
-@[main]
+/--
+| attributes | lemma |
+| :---: | :---: |
+| main | Real.ExpAdd.eq.MulExpS |
+| comm | Real.MulExpS.eq.ExpAdd |
+-/
+@[main, comm]
 private lemma main
   [Exp R]
   {a b : R} :
@@ -13,3 +19,5 @@ private lemma main
 
 
 -- created on 2018-08-28
+-- updated on 2026-08-22
+
