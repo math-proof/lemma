@@ -33,14 +33,14 @@ def apply(is_zero, x=None, d=0):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat, Real, Int
+    from Lemma import Algebra, Nat, Real, Int, Complex
 
     x, p, q = Symbol(complex=True, given=True)
     Eq << apply(Equal(x ** 3 + p * x + q, 0), x=x, d=1)
 
     w = Symbol('omega', -S.One / 2 + S.ImaginaryUnit * sqrt(3) / 2)
     Eq.w = w.this.definition
-    Eq.w_conj = Algebra.EqConj.of.Eq.apply(Eq.w)
+    Eq.w_conj = Complex.Conj.of.Eq.apply(Eq.w)
     Eq.mul_ww = (Eq.w_conj * Eq.w).this.rhs.apply(Nat.Mul_Add.eq.AddMulS, deep=True)
     Eq.w_square = (Eq.w ** 2).this.rhs.apply(Nat.SquareAdd.eq.AddAdd_SquareS_Mul2Add)
     Eq.w_square = Eq.w_square.subs(Eq.w_conj.reversed)

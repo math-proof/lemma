@@ -51,7 +51,7 @@ def prove(Eq):
 
     w = Symbol('omega', -S.One / 2 + S.ImaginaryUnit * sqrt(3) / 2)
     Eq.w = w.this.definition
-    Eq.w_conj = Algebra.EqConj.of.Eq.apply(Eq.w)
+    Eq.w_conj = Complex.Conj.of.Eq.apply(Eq.w)
     Eq.add_ww = Eq.w_conj + Eq.w
     Eq.mul_ww = (Eq.w_conj * Eq.w).this.rhs.apply(Nat.Mul_Add.eq.AddMulS, deep=True)
     Eq.w_square = (Eq.w ** 2).this.rhs.apply(Nat.SquareAdd.eq.AddAdd_SquareS_Mul2Add)
@@ -60,7 +60,7 @@ def prove(Eq):
 
     Eq.w_sub = Eq.add_ww.this.apply(Int.EqAdd.Is.Eq_Sub)
 
-    Eq.w3_conj = Algebra.EqConj.of.Eq.apply(Eq.w3)
+    Eq.w3_conj = Complex.Conj.of.Eq.apply(Eq.w3)
 
     A_ = A * w
     Eq << ((x - A_ * ~w - B * w) * (x - A_ * w - B * ~w) * (x - A_ - B)).this.apply(Algebra.Mul.eq.Add.poly, x)

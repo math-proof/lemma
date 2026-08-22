@@ -18,7 +18,7 @@ def apply(eq_cosine_similarity, eq_rotary_ABF):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Tensor, Nat, Finset, Real
+    from Lemma import Algebra, Set, Bool, Tensor, Nat, Finset, Real, Complex
 
     # N denotes sequence length (seq_length)
     # b denotes 10000 adjusted to 500000
@@ -66,7 +66,7 @@ def prove(Eq):
 
     Eq << Eq.def_RoPE.subs(t, t + 1)
 
-    Eq << Algebra.EqConj.of.Eq.apply(Eq[-1])
+    Eq << Complex.Conj.of.Eq.apply(Eq[-1])
 
     Eq << Eq[-1] @ Eq.def_RoPE
 

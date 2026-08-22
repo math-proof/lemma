@@ -9,7 +9,7 @@ def apply(eq, infer, eq_piece):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Algebra, Set, Bool, Tensor, Nat
+    from Lemma import Finset, Algebra, Set, Bool, Tensor, Nat, Complex
 
     n = Symbol(integer=True, positive=True)
     A = Symbol(shape=(n, n), complex=True)
@@ -57,14 +57,14 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Sum).apply(Tensor.Sum.eq.Dot, simplify=1)
 
-    Eq << Algebra.EqConj.of.Eq.apply(Eq[0][i, j])
+    Eq << Complex.Conj.of.Eq.apply(Eq[0][i, j])
 
     k = Symbol(integer=True)
     Eq << Eq.A_lower.subs(i, k).subs(j, i).subs(k, j)
 
     Eq << Eq[-1].subs(Eq[-2])
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.EqConj.of.Eq)
+    Eq << Eq[-1].this.rhs.apply(Complex.Conj.of.Eq)
 
     Eq << Bool.All.of.Imp.apply(Eq[-1])
 

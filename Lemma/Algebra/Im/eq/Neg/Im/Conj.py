@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Complex
 
     n = Symbol(integer=True, positive=True)
     x, y = Symbol(complex=True, shape=(n,))
@@ -18,7 +18,7 @@ def prove(Eq):
     z = Symbol(x * y)
     Eq << z.this.definition
 
-    Eq << Algebra.EqConj.of.Eq.apply(Eq[-1])
+    Eq << Complex.Conj.of.Eq.apply(Eq[-1])
 
 
     Eq << Eq[0].subs(Eq[1].reversed, Eq[2].reversed)

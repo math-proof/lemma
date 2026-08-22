@@ -10,14 +10,14 @@ def apply(is_complex):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Algebra, Complex
 
     x, y = Symbol(super_complex=True)
     Eq << apply(Element(x, S.Complexes))
 
     Eq << Set.Any_Eq.of.In.apply(Eq[0], var='a')
 
-    Eq << Eq[-1].this.expr.apply(Algebra.EqConj.of.Eq)
+    Eq << Eq[-1].this.expr.apply(Complex.Conj.of.Eq)
 
     a = Eq[-1].variable
 

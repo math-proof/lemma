@@ -17,3 +17,4 @@ from . import GtAddArgS
 from . import Pow_Inv
 from . import PowExp_Inv
 from . import OrEqS_Div
+from . import Conj

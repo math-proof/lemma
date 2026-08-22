@@ -10,12 +10,12 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Complex
 
     x = Symbol(complex=True, given=True)
     Eq << apply(Equal(~x, 0))
 
-    Eq << Algebra.EqConj.of.Eq.apply(Eq[0])
+    Eq << Complex.Conj.of.Eq.apply(Eq[0])
 
 
 if __name__ == '__main__':
