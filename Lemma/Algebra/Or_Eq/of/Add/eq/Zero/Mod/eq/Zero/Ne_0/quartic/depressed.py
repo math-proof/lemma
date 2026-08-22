@@ -48,7 +48,7 @@ def apply(fx, mod_is_zero, is_nonzero, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat, Int, Complex
+    from Lemma import Algebra, Nat, Int
     from Lemma.Algebra.Add.eq.Zero.given.And.Eq.cubic.one_leaded import cubic_solve
     from Lemma.Algebra.Ne.of.Ne_0.Add.eq.Zero import cubic_delta
 
@@ -70,8 +70,6 @@ def prove(Eq):
 
     Eq.eq = Eq[-1].this.apply(Int.EqAdd.Is.Eq_Sub, lhs=slice(0, 3))
 
-    Eq << Equal(Eq[-1].rhs, 0).this.apply(Complex.OrEqS_Div.of.Eq0AddAddMul_Square.of.Ne_0, x)
-
     Eq << Equal(cubic_delta(y, alpha, beta, gamma), 0).this.apply(Algebra.Add.eq.Zero.given.And.Eq.Mod.cubic.one_leaded, y, d=1)
 
     Eq << Eq[-1].subs(Eq[1])
@@ -88,9 +86,9 @@ def prove(Eq):
 
     Eq << Algebra.OrEqS_0.of.Eq_Square.apply(Eq[-1])
 
-    Eq << Eq[-1].this.args[0].apply(Complex.OrEqS_Div.of.Eq0AddAddMul_Square.of.Ne_0)
+    Eq << Eq[-1].this.args[0].apply(Algebra.Or.Eq.of.Ne_0.Eq.quadratic, Unequal(1, 0, evaluate=False))
 
-    Eq.root = Eq[-1].this.args[-1].apply(Complex.OrEqS_Div.of.Eq0AddAddMul_Square.of.Ne_0)
+    Eq.root = Eq[-1].this.args[-1].apply(Algebra.Or.Eq.of.Ne_0.Eq.quadratic, Unequal(1, 0, evaluate=False))
 
     Eq << Eq[4] * 6
 
@@ -143,3 +141,4 @@ def prove(Eq):
 if __name__ == '__main__':
     run()
 # created on 2018-11-26
+# updated on 2026-08-22
