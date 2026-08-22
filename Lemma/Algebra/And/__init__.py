@@ -7,7 +7,6 @@ from . import of
 from . import Ge
 from . import Lt
 from . import All_Any
-from . import Imp
 from . import Is
 from . import Le
 from . import Gt

@@ -30,7 +30,7 @@ def apply(given, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Int, Nat
+    from Lemma import Algebra, Int, Nat, Complex
 
     x, a, b, c = Symbol(complex=True, given=True)
     Eq << apply(Equal(x ** 3 + a * x ** 2 + b * x + c, 0), x=x)
@@ -50,7 +50,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS, simplify=None)
 
-    Eq << Algebra.And.Imp.Or.Eq.of.Add.eq.Zero.cubic.depressed.apply(Eq[-1], x=x)
+    Eq << Complex.ImpEq_0.ImpEq_1.ImpEq_2.of.Eq0AddAddPow_3.apply(Eq[-1], x=x)
 
     Eq <<= Eq[-3].subs(Eq.x_def), Eq[-2].subs(Eq.x_def), Eq[-1].subs(Eq.x_def)
 

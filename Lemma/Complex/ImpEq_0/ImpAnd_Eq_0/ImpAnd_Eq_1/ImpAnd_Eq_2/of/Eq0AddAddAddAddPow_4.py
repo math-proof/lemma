@@ -44,7 +44,7 @@ def apply(given, x=None):
     A = U ** (S.One / 3)
     B = V ** (S.One / 3)
 
-    from Lemma.Algebra.And.Imp.of.Add.eq.Zero.Ne_0.quartic.depressed import solver_set
+    from Lemma.Complex.ImpEq_0.ImpAnd_Eq_0.ImpAnd_Eq_1.ImpAnd_Eq_2.of.Eq0AddAddAddMul_Pow_4.Ne_0 import solver_set
     delta = alpha ** 2 - 4 * gamma
 
     return Imply(Equal(beta, 0), Equal(x, sqrt(sqrt(delta) / 2 - alpha / 2) - a / 4) | Equal(x, -sqrt(sqrt(delta) / 2 - alpha / 2) - a / 4) | Equal(x, sqrt(-sqrt(delta) / 2 - alpha / 2) - a / 4) | Equal(x, -sqrt(-sqrt(delta) / 2 - alpha / 2) - a / 4)),\
@@ -80,7 +80,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS, simplify=None)
 
-    Eq << Algebra.And.Imp.of.Add.eq.Zero.quartic.depressed.apply(Eq[-1], x)
+    Eq << Complex.ImpEq_0.ImpAnd_Eq_0.ImpAnd_Eq_1.ImpAnd_Eq_2.of.Eq0AddAddAddPow_4.apply(Eq[-1], x)
 
     Eq <<= Eq[-4].subs(Eq.x_def), Eq[-3].subs(Eq.x_def), Eq[-2].subs(Eq.x_def), Eq[-1].subs(Eq.x_def)
 

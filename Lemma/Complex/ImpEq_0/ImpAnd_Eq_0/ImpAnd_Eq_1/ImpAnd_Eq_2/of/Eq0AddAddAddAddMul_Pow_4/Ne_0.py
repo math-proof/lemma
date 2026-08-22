@@ -42,7 +42,7 @@ def apply(is_nonzero, given, x=None):
     A = U ** (S.One / 3)
     B = V ** (S.One / 3)
 
-    from Lemma.Algebra.And.Imp.of.Add.eq.Zero.Ne_0.quartic.depressed import solver_set
+    from Lemma.Complex.ImpEq_0.ImpAnd_Eq_0.ImpAnd_Eq_1.ImpAnd_Eq_2.of.Eq0AddAddAddMul_Pow_4.Ne_0 import solver_set
     delta = alpha ** 2 - 4 * gamma
 
     A = Symbol(A)
@@ -55,14 +55,14 @@ def apply(is_nonzero, given, x=None):
 
 @prove(slow=True)
 def prove(Eq):
-    from Lemma import Algebra, Nat
+    from Lemma import Nat
 
     x, a, b, c, d, e = Symbol(complex=True, given=True)
     Eq << apply(Unequal(a, 0), Equal(a * x ** 4 + b * x ** 3 + c * x ** 2 + d * x + e, 0), x=x)
 
     Eq << Nat.Div.of.Eq.Ne_0.apply(Eq[0], Eq[1])
 
-    Eq << Algebra.And.Imp.of.Add.eq.Zero.quartic.one_leaded.apply(Eq[-1], x=x)
+    Eq << Complex.ImpEq_0.ImpAnd_Eq_0.ImpAnd_Eq_1.ImpAnd_Eq_2.of.Eq0AddAddAddAddPow_4.apply(Eq[-1], x=x)
 
     Eq <<= Eq[-4].subs(Eq[2].reversed, Eq[3].reversed, Eq[4].reversed), Eq[-3].subs(Eq[2].reversed, Eq[3].reversed, Eq[4].reversed), Eq[-2].subs(Eq[2].reversed, Eq[3].reversed, Eq[4].reversed), Eq[-1].subs(Eq[2].reversed, Eq[3].reversed, Eq[4].reversed)
 

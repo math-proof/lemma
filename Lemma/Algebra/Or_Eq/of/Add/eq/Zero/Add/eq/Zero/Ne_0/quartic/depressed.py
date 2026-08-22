@@ -12,7 +12,7 @@ def apply(fx, add_is_zero, is_nonzero, x=None):
         fx, add_is_zero = add_is_zero, fx
         _d, d = add_is_zero.of(Equal)
 
-    from Lemma.Algebra.And.Imp.of.Add.eq.Zero.quartic.one_leaded import quartic_coefficient
+    from Lemma.Complex.ImpEq_0.ImpAnd_Eq_0.ImpAnd_Eq_1.ImpAnd_Eq_2.of.Eq0AddAddAddAddPow_4 import quartic_coefficient
     fx = fx.of(Equal[0])
     S[1], S[0], alpha, beta, gamma = quartic_coefficient(fx, x=x)
 

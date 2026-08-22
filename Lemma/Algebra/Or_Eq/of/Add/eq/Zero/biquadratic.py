@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(fx, x=None):
-    from Lemma.Algebra.And.Imp.of.Add.eq.Zero.quartic.one_leaded import quartic_coefficient
+    from Lemma.Complex.ImpEq_0.ImpAnd_Eq_0.ImpAnd_Eq_1.ImpAnd_Eq_2.of.Eq0AddAddAddAddPow_4 import quartic_coefficient
     fx = fx.of(Equal[0])
     S[1], S[0], alpha, S[0], gamma = quartic_coefficient(fx, x=x)
     delta = alpha ** 2 - 4 * gamma

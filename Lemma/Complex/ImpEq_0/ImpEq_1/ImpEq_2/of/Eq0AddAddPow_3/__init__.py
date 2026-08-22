@@ -20,7 +20,9 @@ def apply(is_zero, x=None):
     arg_AB = Piecewise((0, Equal(p * Ceil((Arg(U) + Arg(V)) / (2 * S.Pi) - S.One / 2), 0)), (1, Arg(U) + Arg(V) > S.Pi), (-1, True))
 
     d = arg_p - arg_AB
-    return Imply(Equal(d, 0), Equal(x, A + B) | Equal(x, A * w + B * ~w) | Equal(x, A * ~w + B * w)), Imply(Equal(d % 3, 1), Equal(x, A * w + B) | Equal(x, A * ~w + B * ~w) | Equal(x, A + B * w)), Imply(Equal(d % 3, 2), Equal(x, A * ~w + B) | Equal(x, A + B * ~w) | Equal(x, A * w + B * w))
+    return Imply(Equal(d, 0), Equal(x, A + B) | Equal(x, A * w + B * ~w) | Equal(x, A * ~w + B * w)), \
+        Imply(Equal(d % 3, 1), Equal(x, A * w + B) | Equal(x, A * ~w + B * ~w) | Equal(x, A + B * w)), \
+        Imply(Equal(d % 3, 2), Equal(x, A * ~w + B) | Equal(x, A + B * ~w) | Equal(x, A * w + B * w))
 
 
 
@@ -63,15 +65,15 @@ def prove(Eq):
 
     Eq << Bool.OrAndS.of.And_Or.apply(Eq[-1], simplify=None)
 
-    Eq << Eq[-1].this.find(Equal[-2] & Equal[0]).apply(Algebra.Or.Eq.of.Add.eq.Zero.Eq_Ceil.cubic, x, ret=0)
+    Eq << Eq[-1].this.find(Equal[-2] & Equal[0]).apply(Complex.ImpEq_0.ImpEq_1.ImpEq_2.of.Eq0AddAddPow_3.EqSubCeilSSubDivS, x, ret=0)
 
-    Eq << Eq[-1].this.find(Equal[-1] & Equal[0]).apply(Algebra.Or.Eq.of.Add.eq.Zero.Eq_Ceil.cubic, x, ret=0)
+    Eq << Eq[-1].this.find(Equal[-1] & Equal[0]).apply(Complex.ImpEq_0.ImpEq_1.ImpEq_2.of.Eq0AddAddPow_3.EqSubCeilSSubDivS, x, ret=0)
 
-    Eq << Eq[-1].this.find(Equal[0] & Equal[0]).apply(Algebra.Or.Eq.of.Add.eq.Zero.Eq_Ceil.cubic, x, ret=0)
+    Eq << Eq[-1].this.find(Equal[0] & Equal[0]).apply(Complex.ImpEq_0.ImpEq_1.ImpEq_2.of.Eq0AddAddPow_3.EqSubCeilSSubDivS, x, ret=0)
 
-    Eq << Eq[-1].this.find(Equal[S(1)] & Equal[0]).apply(Algebra.Or.Eq.of.Add.eq.Zero.Eq_Ceil.cubic, x, ret=0)
+    Eq << Eq[-1].this.find(Equal[S(1)] & Equal[0]).apply(Complex.ImpEq_0.ImpEq_1.ImpEq_2.of.Eq0AddAddPow_3.EqSubCeilSSubDivS, x, ret=0)
 
-    Eq << Eq[-1].this.find(Equal[S(2)] & Equal[0]).apply(Algebra.Or.Eq.of.Add.eq.Zero.Eq_Ceil.cubic, x, ret=0)
+    Eq << Eq[-1].this.find(Equal[S(2)] & Equal[0]).apply(Complex.ImpEq_0.ImpEq_1.ImpEq_2.of.Eq0AddAddPow_3.EqSubCeilSSubDivS, x, ret=0)
 
     # find Equal[S(1)] & Equal[S(-2)]
     Eq << Eq[-1].this.args[:3:2].apply(Bool.And_Or.of.OrAndS)
@@ -97,3 +99,4 @@ if __name__ == '__main__':
 # created on 2018-11-24
 # updated on 2023-05-15
 
+from . import EqSubCeilSSubDivS
