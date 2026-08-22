@@ -59,9 +59,9 @@ def prove(Eq):
     A, B = Symbol(complex=True, given=True)
     Eq << apply(Equal(A ** 3, B ** 3), Equal(Ceil(3 * Arg(A) / (S.Pi * 2) - S.One / 2), Ceil(3 * Arg(B) / (S.Pi * 2) - S.One / 2)))
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Expr.eq.MulAbs_ExpMulIArg)
+    Eq << Eq[-1].this.lhs.apply(Complex.Eq_MulNorm_ExpMulIArg)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Expr.eq.MulAbs_ExpMulIArg)
+    Eq << Eq[-1].this.rhs.apply(Complex.Eq_MulNorm_ExpMulIArg)
 
     Eq << Nat.Pow.of.Eq.apply(Eq[0], exp=S.One / 3)
 

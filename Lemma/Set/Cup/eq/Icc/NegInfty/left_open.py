@@ -40,7 +40,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Ceil.le.Zero.of.Le_0)
 
-    Eq << Algebra.Le_Ceil.apply(x)
+    Eq << Int.Le_Ceil.apply(x)
 
 
 

@@ -19,7 +19,7 @@ def prove(Eq):
     n = Symbol(integer=True, positive=True)
     Eq << apply(z ** (1 / n))
 
-    Eq << Eq[-1].this.lhs.base.apply(Algebra.Expr.eq.MulAbs_ExpMulIArg)
+    Eq << Eq[-1].this.lhs.base.apply(Complex.Eq_MulNorm_ExpMulIArg)
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Pow.eq.Mul.split.base)
 

@@ -39,7 +39,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.args[-1].apply(Complex.Expr.eq.AddRe_MulIIm)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Expr.eq.MulAbs_ExpMulIArg)
+    Eq << Eq[-1].this.rhs.apply(Complex.Eq_MulNorm_ExpMulIArg)
 
 
 

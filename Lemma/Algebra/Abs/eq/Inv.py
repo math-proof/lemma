@@ -10,12 +10,12 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Complex
 
     x = Symbol(complex=True, zero=False)
     Eq << apply(abs(x ** -1))
 
-    Eq << Algebra.Expr.eq.MulAbs_ExpMulIArg.apply(x)
+    Eq << Complex.Eq_MulNorm_ExpMulIArg.apply(x)
 
     Eq << Eq[0].subs(Eq[1])
 

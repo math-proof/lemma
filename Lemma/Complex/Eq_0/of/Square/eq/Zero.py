@@ -14,7 +14,7 @@ def prove(Eq):
     x = Symbol(complex=True, given=True)
     Eq << apply(Equal(x ** 2, 0))
 
-    Eq << Eq[0].this.lhs.base.apply(Algebra.Expr.eq.MulAbs_ExpMulIArg)
+    Eq << Eq[0].this.lhs.base.apply(Complex.Eq_MulNorm_ExpMulIArg)
 
     Eq << Nat.OrEqS_0.of.Mul.eq.Zero.apply(Eq[-1])
 

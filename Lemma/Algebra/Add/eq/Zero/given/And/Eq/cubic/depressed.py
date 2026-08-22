@@ -82,7 +82,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Nat.Mul_Add.eq.AddMulS, deep=True)
 
-    Eq << Algebra.Eq.of.Eq_Pow.cubic_root.omega.apply(Eq[-1]) * 3
+    Eq << Complex.Eq_Mul_Pow_SubCeilS.of.Pow_3.apply(Eq[-1]) * 3
 
     Eq << Eq[-1].this.rhs.subs(Eq.A, Eq.B)
 

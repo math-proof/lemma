@@ -21,7 +21,7 @@ def apply(given, d):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Rat
+    from Lemma import Set, Rat, Int
 
     x, a, b = Symbol(integer=True, given=True)
     d = Symbol(integer=True, positive=True, given=True)
@@ -33,7 +33,7 @@ def prove(Eq):
 
     Eq << Rat.LeFloor.apply(b / d) * d
 
-    Eq << Rat.GeCeil.apply(a / d) * d
+    Eq << Int.GeCeil.apply(a / d) * d
 
     Eq << Set.Subset.Ico.of.Le.Ge.apply(Eq[-2], Eq[-1])
 

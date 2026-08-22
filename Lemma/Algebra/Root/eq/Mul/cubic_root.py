@@ -21,7 +21,7 @@ def prove(Eq):
     Eq << Eq[-1].this.find(Exp[~Mul]).apply(Nat.Mul_Add.eq.AddMulS)
     Eq << Eq[-1].this.find(Exp).apply(Real.ExpAdd.eq.MulExpS)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Expr.eq.MulAbs_ExpMulIArg)
+    Eq << Eq[-1].this.rhs.apply(Complex.Eq_MulNorm_ExpMulIArg)
 
 
 if __name__ == '__main__':

@@ -129,7 +129,7 @@ def prove(Eq):
 
     Eq << Eq[1].subs(Eq[-2].reversed, Eq[-1].reversed)
 
-    Eq << Algebra.Eq.of.Eq_Pow.cubic_root.omega.apply(Eq.eq_pow)
+    Eq << Complex.Eq_Mul_Pow_SubCeilS.of.Pow_3.apply(Eq.eq_pow)
 
     Eq << Eq[-1].subs(Eq[-2])
 

@@ -18,3 +18,6 @@ from . import Pow_Inv
 from . import PowExp_Inv
 from . import OrEqS_Div
 from . import Conj
+from . import ArgMul
+from . import Eq_Mul_Pow_SubCeilS
+from . import Eq_MulNorm_ExpMulIArg

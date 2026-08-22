@@ -15,7 +15,7 @@ def prove(Eq):
     r = Symbol(real=True)
     Eq << apply(r > 0, z)
 
-    Eq << Algebra.Any.Eq.of.Gt_0.apply(Eq[0])
+    Eq << Nat.Any_Eq.of.Gt_0.apply(Eq[0])
 
     Eq <<= Eq[2] & Eq[1]
 

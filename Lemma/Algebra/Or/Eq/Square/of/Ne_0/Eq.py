@@ -59,7 +59,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Int.MulAbsS.eq.AbsMul)
 
-    Eq << Algebra.EqAbs.of.Or.apply(Eq.ou)
+    Eq << Int.Abs.of.OrEqS.apply(Eq.ou)
 
 
 

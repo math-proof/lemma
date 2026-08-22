@@ -163,7 +163,6 @@ from . import Ceil
 from . import Eq_Ceil
 from . import CeilSubDivArg
 from . import Ceil_Arg
-from . import Le_Ceil
 from . import GeCeil
 from . import Mul_CeilDiv
 from . import CeilAddDiv_2
@@ -267,9 +266,6 @@ from . import EqSub
 from . import EqAll_Eq_0
 from . import EqMaxima
 from . import EqTranspose
-from . import AndImpS_Eq
-from . import EqFrac
-from . import Frac
 from . import One
 from . import Zero
 from . import AllIn_Icc
@@ -284,3 +280,5 @@ from . import Eq_Ite
 from . import Any_AndEq
 from . import GivenAnd
 from . import Mod
+from . import Frac
+from . import EqFrac

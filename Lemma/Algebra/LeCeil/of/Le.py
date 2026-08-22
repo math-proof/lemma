@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Nat.Gt.of.Gt.Ge.apply(Eq[-2], Eq[-1])
 
-    Eq << Rat.GeCeil.apply(y)
+    Eq << Int.GeCeil.apply(y)
 
     Eq << Nat.Gt.of.Gt.Ge.apply(Eq[-2], Eq[-1])
 

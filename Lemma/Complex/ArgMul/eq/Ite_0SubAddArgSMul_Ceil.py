@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Nat
+    from Lemma import Algebra, Bool, Nat, Complex
 
     x, y = Symbol(complex=True, given=True)
     Eq << apply(Arg(x * y))
@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq << Bool.Imp_Ite.given.Imp.apply(Eq[2], invert=True)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Arg.eq.Add.of.Ne_0.Ne_0)
+    Eq << Eq[-1].this.lhs.apply(Complex.ArgMul.eq.SubAddArgSMul_Ceil.of.Ne_0.Ne_0)
 
 
 if __name__ == '__main__':

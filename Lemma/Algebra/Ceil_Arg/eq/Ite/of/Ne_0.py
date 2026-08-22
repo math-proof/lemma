@@ -43,7 +43,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Add[Piecewise]).apply(Nat.Add_Ite.eq.Ite_AddS)
 
-    Eq << Eq[-1].this.find(Ceil[Piecewise]).apply(Algebra.Ceil.Ite.eq.Ite)
+    Eq << Eq[-1].this.find(Ceil[Piecewise]).apply(Int.CeilIte.eq.Ite_CeilS)
 
     Eq.eq = Eq[-1].this.find(Ceil[~Mul]).apply(Nat.Mul_Add.eq.AddMulS)
 

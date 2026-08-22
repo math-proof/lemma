@@ -16,7 +16,7 @@ def prove(Eq):
     n = Symbol(integer=True, given=True, positive=True)
     Eq << apply(Arg(z ** n))
 
-    Eq << Eq[-1].this.lhs.arg.base.apply(Algebra.Expr.eq.MulAbs_ExpMulIArg)
+    Eq << Eq[-1].this.lhs.arg.base.apply(Complex.Eq_MulNorm_ExpMulIArg)
 
     Eq << Eq[-1].this.lhs.arg.apply(Algebra.Pow.eq.Mul.split.base)
 

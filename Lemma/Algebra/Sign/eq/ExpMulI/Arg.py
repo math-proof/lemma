@@ -17,7 +17,7 @@ def prove(Eq):
 
     Eq << Eq[0].lhs.this.apply(Complex.Sign.eq.Ite__Div_Abs)
 
-    Eq << Algebra.Expr.eq.MulAbs_ExpMulIArg.apply(z)
+    Eq << Complex.Eq_MulNorm_ExpMulIArg.apply(z)
 
     Eq << Eq[-2].this.rhs.subs(Eq[-1])
 

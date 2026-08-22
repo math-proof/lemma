@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq.abs_is_positive = Eq[-1] * Eq[-2]
 
-    Eq <<= Algebra.Expr.eq.MulAbs_ExpMulIArg.apply(x), Algebra.Expr.eq.MulAbs_ExpMulIArg.apply(y)
+    Eq <<= Complex.Eq_MulNorm_ExpMulIArg.apply(x), Complex.Eq_MulNorm_ExpMulIArg.apply(y)
 
     Eq << Eq[-1] * Eq[-2]
 

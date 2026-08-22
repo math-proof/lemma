@@ -45,7 +45,7 @@ def prove(Eq):
 
     Eq << Bool.All.given.Imp.apply(Eq[-1])
 
-    Eq << Rat.GeCeil.apply(Eq.Ceiling_el.lhs.arg)
+    Eq << Int.GeCeil.apply(Eq.Ceiling_el.lhs.arg)
 
     Eq << Int.LtSub_1.of.Le.apply(Eq[-1], step=1)
 

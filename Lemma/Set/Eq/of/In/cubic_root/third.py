@@ -41,7 +41,7 @@ def prove(Eq):
 
     # Eq << Eq[-1] / Eq[1].rhs.args[1]
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Expr.eq.MulAbs_ExpMulIArg)
+    Eq << Eq[-1].this.rhs.apply(Complex.Eq_MulNorm_ExpMulIArg)
 
 
 if __name__ == '__main__':

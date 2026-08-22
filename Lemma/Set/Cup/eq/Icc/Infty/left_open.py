@@ -35,7 +35,7 @@ def prove(Eq):
 
     Eq << Int.LtSubCeil_1.apply(x)
 
-    Eq << Algebra.Le_Ceil.apply(x)
+    Eq << Int.Le_Ceil.apply(x)
 
     Eq << Eq[-1].this.lhs.simplify()
 

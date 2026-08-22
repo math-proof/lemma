@@ -26,9 +26,9 @@ def prove(Eq):
 
     Eq.difference = Eq[-1].this.apply(Int.EqAdd.Is.Eq_Sub, rhs=-1).reversed
 
-    Eq << Eq[1].this.lhs.apply(Algebra.Expr.eq.MulAbs_ExpMulIArg)
+    Eq << Eq[1].this.lhs.apply(Complex.Eq_MulNorm_ExpMulIArg)
 
-    Eq << Eq[-1].this.rhs.args[0].apply(Algebra.Expr.eq.MulAbs_ExpMulIArg)
+    Eq << Eq[-1].this.rhs.args[0].apply(Complex.Eq_MulNorm_ExpMulIArg)
 
     Eq << Eq[-1].subs(Eq.difference)
 

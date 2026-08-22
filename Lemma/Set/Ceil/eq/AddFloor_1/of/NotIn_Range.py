@@ -14,7 +14,7 @@ def prove(Eq):
     x = Symbol(real=True)
     Eq << apply(NotElement(x, Integers))
 
-    Eq << Rat.GeCeil.apply(x)
+    Eq << Int.GeCeil.apply(x)
 
     Eq << Set.GtFrac_0.of.NotIn_Range.apply(Eq[0])
 

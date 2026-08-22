@@ -47,3 +47,6 @@ from . import NotInSub
 from . import LtSubCeil_1
 from . import AddAddS
 from . import AddCeil
+from . import CeilIte
+from . import GeCeil
+from . import Le_Ceil

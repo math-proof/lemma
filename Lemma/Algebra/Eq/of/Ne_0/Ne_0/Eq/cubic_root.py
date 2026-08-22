@@ -25,11 +25,11 @@ def prove(Eq):
     A, B = Symbol(complex=True, given=True)
     Eq << apply(Unequal(A, 0), Unequal(B, 0), Equal(Ceil((Arg(A) + Arg(B)) / (S.Pi * 2) - S.One / 2), 1))
 
-    Eq << Eq[-1].this.lhs.args[0].base.apply(Algebra.Expr.eq.MulAbs_ExpMulIArg)
+    Eq << Eq[-1].this.lhs.args[0].base.apply(Complex.Eq_MulNorm_ExpMulIArg)
 
-    Eq << Eq[-1].this.lhs.args[0].base.apply(Algebra.Expr.eq.MulAbs_ExpMulIArg)
+    Eq << Eq[-1].this.lhs.args[0].base.apply(Complex.Eq_MulNorm_ExpMulIArg)
 
-    Eq << Eq[-1].this.find(Pow[~Mul]).apply(Algebra.Expr.eq.MulAbs_ExpMulIArg)
+    Eq << Eq[-1].this.find(Pow[~Mul]).apply(Complex.Eq_MulNorm_ExpMulIArg)
 
     Eq << Eq[-1].this.find(Abs[Mul]).apply(Int.Abs.eq.Mul)
 
@@ -41,7 +41,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.args[1].apply(Complex.Pow_Inv.eq.Mul_ExpMulIDivArg)
 
-    Eq << Eq[-1].rhs.find(Arg).this.apply(Algebra.Arg.Mul.eq.Ite)
+    Eq << Eq[-1].rhs.find(Arg).this.apply(Complex.ArgMul.eq.Ite_0SubAddArgSMul_Ceil)
 
     Eq << Bool.BFn.of.BFnIte.Cond.apply(Eq[0] & Eq[1], Eq[-1], invert=True)
 

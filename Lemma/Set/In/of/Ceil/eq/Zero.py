@@ -16,7 +16,7 @@ def prove(Eq):
 
     Eq << Set.In_Ico.given.Le.Lt.apply(Eq[-1])
 
-    Eq << Algebra.Le_Ceil.apply(x)
+    Eq << Int.Le_Ceil.apply(x)
 
     Eq << Eq[-1].subs(Eq[0])
 
