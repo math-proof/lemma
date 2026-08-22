@@ -1,5 +1,6 @@
 import sympy.core.power
 import sympy.core.numbers
+import sympy.functions.elementary.complexes
 import sympy.polys.polyroots
 import Lemma.Complex.ImpEq_0.ImpEq_1.ImpEq_2.of.Eq0AddAddAddPow_3
 open Complex
@@ -26,15 +27,15 @@ private lemma main
   let ω : ℂ := ↑(-(1 / 2 : ℝ)) + ↑(√3 / 2 : ℝ) * I
   (D = 0 →
       x = A + B - a' / 3 ∨
-        x = A * ω + B * (starRingEnd ℂ) ω - a' / 3 ∨
-        x = A * (starRingEnd ℂ) ω + B * ω - a' / 3) ∧
+        x = A * ω + B * ~ω - a' / 3 ∨
+        x = A * ~ω + B * ω - a' / 3) ∧
     (D % 3 = 1 →
       x = A * ω + B - a' / 3 ∨
-        x = A * (starRingEnd ℂ) ω + B * (starRingEnd ℂ) ω - a' / 3 ∨
+        x = A * ~ω + B * ~ω - a' / 3 ∨
         x = A + B * ω - a' / 3) ∧
     (D % 3 = 2 →
-      x = A * (starRingEnd ℂ) ω + B - a' / 3 ∨
-        x = A + B * (starRingEnd ℂ) ω - a' / 3 ∨
+      x = A * ~ω + B - a' / 3 ∨
+        x = A + B * ~ω - a' / 3 ∨
         x = A * ω + B * ω - a' / 3) := by
 -- proof
   intro a' b' c' p q δ A B D ω

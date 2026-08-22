@@ -1,9 +1,10 @@
 import sympy.core.power
 import sympy.core.numbers
+import sympy.functions.elementary.complexes
 import sympy.polys.polyroots
 import Lemma.Algebra.Ceil.Arg.eq.Ite
 import Lemma.Algebra.EqArg.of.Gt_0
-import Lemma.Algebra.Eq.of.Eq_Pow.cubic_root.omega
+import Lemma.Complex.Eq_Mul_Pow_SubCeilS.of.Pow_3
 import Lemma.Complex.EqSquareSqrt
 open Algebra Complex
 
@@ -31,15 +32,15 @@ private lemma main
   let d : ℤ := arg_p - arg_AB
   (d = 0 →
       x = A + B ∨
-        x = A * ω + B * (starRingEnd ℂ) ω ∨
-        x = A * (starRingEnd ℂ) ω + B * ω) ∧
+        x = A * ω + B * ~ω ∨
+        x = A * ~ω + B * ω) ∧
     (d % 3 = 1 →
       x = A * ω + B ∨
-        x = A * (starRingEnd ℂ) ω + B * (starRingEnd ℂ) ω ∨
+        x = A * ~ω + B * ~ω ∨
         x = A + B * ω) ∧
     (d % 3 = 2 →
-      x = A * (starRingEnd ℂ) ω + B ∨
-        x = A + B * (starRingEnd ℂ) ω ∨
+      x = A * ~ω + B ∨
+        x = A + B * ~ω ∨
         x = A * ω + B * ω) := by
 -- proof
   intro δ U V A B ω arg_p arg_AB d
@@ -104,7 +105,7 @@ private lemma main
       simp [δ]
     rw [hmul, hδq]
     ring
-  have hrot := Eq.of.Eq_Pow.cubic_root.omega (A := A * B) (B := -p / 3) hprod3
+  have hrot := Eq_Mul_Pow_SubCeilS.of.Pow_3 (A := A * B) (B := -p / 3) hprod3
   have hωexp : (2 * π * I / 3).exp = ω := by
     have hmul : (2 * π * I / 3 : ℂ) = ↑(2 * π / 3 : ℝ) * I := by
       simp [div_eq_mul_inv]
@@ -126,7 +127,7 @@ private lemma main
   have him : ω.im = √3 / 2 := by
     simp only [ω, add_im, mul_im, ofReal_re, ofReal_im, I_re, I_im]
     ring
-  have hstar : (starRingEnd ℂ) ω = ω ^ 2 := by
+  have hstar : ~ω = ω ^ 2 := by
     apply Complex.ext
     ·
       simp [pow_two, mul_re, conj_re, hre, him]
@@ -139,7 +140,7 @@ private lemma main
   have hωne : ω ≠ 0 := by
     rw [← hωexp]
     exact exp_ne_zero _
-  have hωstar : ω * (starRingEnd ℂ) ω = 1 := by
+  have hωstar : ω * ~ω = 1 := by
     rw [hstar]
     have : ω * ω ^ 2 = ω ^ 3 := by
       simp [pow_two, pow_three]
@@ -163,16 +164,16 @@ private lemma main
         exact hω3
       rw [h3z, one_zpow]
     rw [this, mul_one]
-  have cardano_of_identities {A B : ℂ} (hAB : A ^ 3 + B ^ 3 = -q) (hp : 3 * A * B = -p) : x = A + B ∨ x = A * ω + B * (starRingEnd ℂ) ω ∨ x = A * (starRingEnd ℂ) ω + B * ω := by
-    have hadd : ω + (starRingEnd ℂ) ω = -1 := by
+  have cardano_of_identities {A B : ℂ} (hAB : A ^ 3 + B ^ 3 = -q) (hp : 3 * A * B = -p) : x = A + B ∨ x = A * ω + B * ~ω ∨ x = A * ~ω + B * ω := by
+    have hadd : ω + ~ω = -1 := by
       apply Complex.ext
       ·
         simp [Complex.add_re, Complex.conj_re, hre]
         ring
       ·
         simp [Complex.add_im, Complex.conj_im, him]
-    have hsq : ω ^ 2 = (starRingEnd ℂ) ω := hstar.symm
-    have hsq' : ((starRingEnd ℂ) ω) ^ 2 = ω := by
+    have hsq : ω ^ 2 = ~ω := hstar.symm
+    have hsq' : (~ω) ^ 2 = ω := by
       rw [hstar]
       have : (ω ^ 2) ^ 2 = ω := by
         rw [← pow_mul, show (2 * 2 : ℕ) = 4 from rfl]
@@ -180,26 +181,26 @@ private lemma main
           rw [show (4 : ℕ) = 3 + 1 from rfl, pow_add, pow_one]
         rw [this, hω3, one_mul]
       exact this
-    have hc3 : ((starRingEnd ℂ) ω) ^ 3 = 1 := by
+    have hc3 : (~ω) ^ 3 = 1 := by
       rw [pow_succ, hsq', hωstar]
-    have hc4 : ((starRingEnd ℂ) ω) ^ 4 = (starRingEnd ℂ) ω := by
+    have hc4 : (~ω) ^ 4 = ~ω := by
       rw [pow_succ, hc3, one_mul]
-    have hc6 : ((starRingEnd ℂ) ω) ^ 6 = 1 := by
+    have hc6 : (~ω) ^ 6 = 1 := by
       rw [show (6 : ℕ) = 3 + 3 from rfl, pow_add, hc3, mul_one]
-    have hc8 : ((starRingEnd ℂ) ω) ^ 8 = ((starRingEnd ℂ) ω) ^ 2 := by
+    have hc8 : (~ω) ^ 8 = (~ω) ^ 2 := by
       rw [show (8 : ℕ) = 6 + 2 from rfl, pow_add, hc6, one_mul]
     have hx3 : x ^ 3 + p * x + q = x ^ 3 - 3 * A * B * x - (A ^ 3 + B ^ 3) := by
       rw [hp, hAB]
       ring
-    have hprod : (x - (A + B)) * (x - (A * ω + B * (starRingEnd ℂ) ω)) * (x - (A * (starRingEnd ℂ) ω + B * ω)) = x ^ 3 - 3 * A * B * x - (A ^ 3 + B ^ 3) := by
+    have hprod : (x - (A + B)) * (x - (A * ω + B * ~ω)) * (x - (A * ~ω + B * ω)) = x ^ 3 - 3 * A * B * x - (A ^ 3 + B ^ 3) := by
       rw [← hsq, ← hsq']
       ring_nf
       rw [hc8, hc6, hc4, hsq']
       simp only [mul_one]
-      have hωsum : (starRingEnd ℂ) ω = -1 - ω := eq_sub_of_add_eq (by rwa [add_comm])
+      have hωsum : ~ω = -1 - ω := eq_sub_of_add_eq (by rwa [add_comm])
       rw [hωsum]
       ring
-    have h0 : (x - (A + B)) * (x - (A * ω + B * (starRingEnd ℂ) ω)) * (x - (A * (starRingEnd ℂ) ω + B * ω)) = 0 := by
+    have h0 : (x - (A + B)) * (x - (A * ω + B * ~ω)) * (x - (A * ~ω + B * ω)) = 0 := by
       rw [hprod, ← hx3, h]
     rcases mul_eq_zero.mp h0 with h0 | h0
     ·
@@ -246,26 +247,26 @@ private lemma main
       exact Or.inl (by simpa [A'] using hx)
     ·
       refine Or.inr (Or.inl ?_)
-      change x = A' * ω + B * (starRingEnd ℂ) ω at hx
-      have heq : A' * ω = A * (starRingEnd ℂ) ω := by
+      change x = A' * ω + B * ~ω at hx
+      have heq : A' * ω = A * ~ω := by
         dsimp [A']
         calc
           A * ω * ω = A * (ω * ω) := by rw [mul_assoc]
           _ = A * ω ^ 2 := by rw [← pow_two]
-          _ = A * (starRingEnd ℂ) ω := by rw [hstar]
+          _ = A * ~ω := by rw [hstar]
       rw [heq] at hx
       exact hx
     ·
       refine Or.inr (Or.inr ?_)
-      change x = A' * (starRingEnd ℂ) ω + B * ω at hx
-      have heq : A' * (starRingEnd ℂ) ω = A := by
+      change x = A' * ~ω + B * ω at hx
+      have heq : A' * ~ω = A := by
         dsimp [A']
         rw [mul_assoc, hωstar, mul_one]
       rw [heq] at hx
       exact hx
   ·
     intro hd2
-    let A' : ℂ := A * (starRingEnd ℂ) ω
+    let A' : ℂ := A * ~ω
     have hA'3 : A' ^ 3 = A ^ 3 := by
       simp only [A', hstar]
       rw [mul_pow]
@@ -292,18 +293,18 @@ private lemma main
       exact Or.inl (by simpa [A'] using hx)
     ·
       refine Or.inr (Or.inl ?_)
-      change x = A' * ω + B * (starRingEnd ℂ) ω at hx
+      change x = A' * ω + B * ~ω at hx
       have heq : A' * ω = A := by
         dsimp [A']
-        have : (starRingEnd ℂ) ω * ω = 1 := by
+        have : ~ω * ω = 1 := by
           rw [mul_comm, hωstar]
         rw [mul_assoc, this, mul_one]
       rw [heq] at hx
       exact hx
     ·
       refine Or.inr (Or.inr ?_)
-      change x = A' * (starRingEnd ℂ) ω + B * ω at hx
-      have heq : A' * (starRingEnd ℂ) ω = A * ω := by
+      change x = A' * ~ω + B * ω at hx
+      have heq : A' * ~ω = A * ω := by
         dsimp [A']
         rw [hstar]
         have hω4 : ω ^ 4 = ω := by

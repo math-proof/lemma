@@ -133,6 +133,7 @@ def UnaryPrefix.func : UnaryPrefix → Func
     | `Not => ⟨40, "¬", "\\lnot"⟩  -- Lean_lnot
     | `Bool.not => ⟨40, "!", "\\text{!}"⟩  -- LeanNot
     | `Complement.complement => ⟨100, "~~~", "~~~"⟩
+    | `Complex.conj => ⟨1024, "~", "\\overline"⟩  -- LeanConj, SymPy `~z` / `starRingEnd ℂ`
     | `Complex.ofReal
     | `Hyperreal.ofReal
     | `Int.ofNat
@@ -566,6 +567,7 @@ e = {e}, e = {← ppExpr e}, e.type = {← inferType e}"
     | `Bool.not
     | `Real.sqrt
     | `Root.sqrt
+    | `Complex.conj
     | `Complex.ofReal
     | `Hyperreal.ofReal
     | `Int.ofNat

@@ -2,7 +2,7 @@ import Lemma.Nat.Sub.gt.Zero.is.Gt
 import Lemma.Int.LtCoeS.is.Lt
 import Lemma.Nat.CoeSub.eq.SubCoeS.of.Gt
 import Lemma.Rat.LtDivS.of.Lt.Gt_0
-import Lemma.Rat.GeCeil
+import Lemma.Int.GeCeil
 import Lemma.Nat.Gt.of.Ge.Gt
 import Lemma.Int.EqToNat.of.Gt_0
 import Lemma.Nat.LeMulS.of.Le.Gt_0

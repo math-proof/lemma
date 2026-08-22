@@ -684,6 +684,8 @@ abstract class Lean extends IndentedNode
                 return $this->append('Lean_bigcap', 'operator');
             case '¬':
                 return $this->parent->insert_unary($this, 'Lean_lnot');
+            case '~':
+                return $this->parent->insert_unary($this, 'LeanConj');
             case '√':
                 return $this->parent->insert_unary($this, 'Lean_sqrt');
             case '∛':
@@ -3829,6 +3831,30 @@ class Lean_sqrt extends LeanUnaryArithmeticPre
         return "$this->operator%s";
     }
 
+}
+
+class LeanConj extends LeanUnaryArithmeticPre
+{
+    public static $input_priority = 1024;
+    public function __get($vname)
+    {
+        switch ($vname) {
+            case 'operator':
+                return '~';
+            case 'command':
+                return '\\overline';
+            default:
+                return parent::__get($vname);
+        }
+    }
+    public function latexFormat()
+    {
+        return '\\overline{%s}';
+    }
+    public function strFormat()
+    {
+        return "$this->operator%s";
+    }
 }
 
 class LeanSquare extends LeanUnaryArithmeticPost

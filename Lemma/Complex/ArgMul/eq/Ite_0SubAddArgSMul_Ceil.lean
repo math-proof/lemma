@@ -1,6 +1,6 @@
 import sympy.core.numbers
-import Lemma.Algebra.Arg.eq.Add.of.Ne_0.Ne_0
-open Algebra
+import Lemma.Complex.ArgMul.eq.SubAddArgSMul_Ceil.of.Ne_0.Ne_0
+open Complex
 
 
 @[main]
@@ -17,12 +17,12 @@ private lemma main
   ·
     rcases h with hx | hy
     ·
-      rw [hx, zero_mul, Complex.arg_zero]
+      rw [hx, zero_mul, arg_zero]
     ·
-      rw [hy, mul_zero, Complex.arg_zero]
+      rw [hy, mul_zero, arg_zero]
   ·
     push Not at h
-    exact Arg.eq.Add.of.Ne_0.Ne_0 h.1 h.2
+    exact ArgMul.eq.SubAddArgSMul_Ceil.of.Ne_0.Ne_0 h.1 h.2
 
 
 -- created on 2018-10-26

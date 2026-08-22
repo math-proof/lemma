@@ -63,6 +63,7 @@ export const tactics = [
     'pattern',
     'pick_goal',
     'positivity',
+    'push',
     'push_cast',
     'push_neg',
     'rcases',

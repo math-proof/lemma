@@ -2,7 +2,7 @@ import sympy.core.numbers
 import sympy.core.power
 import sympy.polys.polyroots
 import Lemma.Algebra.Mul.Root.eq.Mul.Ite.cubic_root
-import Lemma.Algebra.Arg.eq.Add.of.Ne_0.Ne_0
+import Lemma.Complex.ArgMul.eq.SubAddArgSMul_Ceil.of.Ne_0.Ne_0
 import Lemma.Algebra.EqArg.of.Gt_0
 import Lemma.Complex.ArgExpMulI.eq.Sub_Mul_Ceil
 import Lemma.Algebra.Gt_Arg.Is.Eq_Ceil
@@ -223,8 +223,8 @@ private lemma main
   have harg_prod :
       arg (U ^ (3 : ℂ)⁻¹ * V ^ (3 : ℂ)⁻¹) = (arg U + arg V) / 3 := by
     rw [Mul.Root.eq.Mul.Ite.cubic_root (A := U) (B := V)]
-    rw [Arg.eq.Add.of.Ne_0.Ne_0 hUV_cbrt hfac, arg_cbrt hUV0, harg_fac]
-    have hargUV := Arg.eq.Add.of.Ne_0.Ne_0 hU hV
+    rw [ArgMul.eq.SubAddArgSMul_Ceil.of.Ne_0.Ne_0 hUV_cbrt hfac, arg_cbrt hUV0, harg_fac]
+    have hargUV := ArgMul.eq.SubAddArgSMul_Ceil.of.Ne_0.Ne_0 hU hV
     have hsum :
         arg (U * V) / 3 + 2 * π * d / 3 = (arg U + arg V) / 3 := by
       rw [hargUV]

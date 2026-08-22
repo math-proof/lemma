@@ -1,5 +1,5 @@
 import sympy.core.numbers
-import Lemma.Algebra.Expr.eq.MulAbs_ExpMulIArg
+import Lemma.Complex.Eq_MulNorm_ExpMulIArg
 import Lemma.Algebra.EqArg.of.Gt_0
 import Lemma.Complex.ArgExpMulI.eq.Sub_Mul_Ceil
 open Algebra Complex
@@ -22,7 +22,7 @@ private lemma main
   ·
     have hpos : (‖z‖ : ℝ) ^ n > 0 := pow_pos (norm_pos_iff.mpr hz) n
     have hzpow : z ^ n = ↑(‖z‖ ^ n) * (I * (n * arg z)).exp := by
-      conv_lhs => rw [Algebra.Expr.eq.MulAbs_ExpMulIArg (z := z)]
+      conv_lhs => rw [Complex.Eq_MulNorm_ExpMulIArg (z := z)]
       rw [mul_pow]
       have h_exp : (I * arg z).exp ^ n = (I * (n * arg z)).exp := by
         rw [← exp_nsmul]
@@ -37,4 +37,4 @@ private lemma main
 
 
 -- created on 2018-08-26
--- updated on 2026-08-20
+-- updated on 2026-08-22

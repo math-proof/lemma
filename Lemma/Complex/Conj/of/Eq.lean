@@ -8,10 +8,10 @@ private lemma main
 -- given
   (h : x = y) :
 -- imply
-  (starRingEnd ℂ) x = (starRingEnd ℂ) y := by
+  ~x = ~y := by
 -- proof
   rw [h]
 
 
 -- created on 2018-08-18
--- updated on 2026-08-20
+-- updated on 2026-08-22

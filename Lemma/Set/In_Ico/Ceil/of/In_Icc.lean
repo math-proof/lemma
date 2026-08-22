@@ -2,11 +2,11 @@ import sympy.sets.sets
 import Lemma.Set.In_Ico.is.Le.Lt
 import Lemma.Set.Lt.of.In_Ioc
 import Lemma.Set.Le.of.In_Ioc
-import Lemma.Algebra.Le_Ceil
+import Lemma.Int.GeCeil
 import Lemma.Rat.LeFloor
 import Lemma.Int.LtCoeS.is.Lt
 import Lemma.Nat.Lt_Add_1.of.Le
-open Set Algebra Rat Int Nat
+open Set Rat Int Nat
 
 
 @[main]
@@ -29,4 +29,4 @@ private lemma main
 
 
 -- created on 2018-10-24
--- updated on 2026-08-20
+-- updated on 2026-08-22

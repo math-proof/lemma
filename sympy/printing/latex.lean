@@ -291,6 +291,8 @@ def Expr.latexFormat : Expr → String
           | `Real.sqrt
           | `Root.sqrt =>
             s!"{opStr}%s"
+          | `Complex.conj =>
+            "\\overline{%s}"
           | `Neg.neg =>
             if let const (.ident `Hyperreal.epsilon) := arg then
               "0^-"

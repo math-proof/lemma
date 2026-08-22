@@ -1,6 +1,6 @@
 import sympy.core.numbers
 import Lemma.Algebra.Arg.Pow.eq.Add
-import Lemma.Algebra.Expr.eq.MulAbs_ExpMulIArg
+import Lemma.Complex.Eq_MulNorm_ExpMulIArg
 open Algebra
 
 
@@ -28,7 +28,7 @@ private lemma main
     have hπ : (3 : ℝ) ≠ 0 := by norm_num
     field_simp [hπ]
     linarith
-  rw [Algebra.Expr.eq.MulAbs_ExpMulIArg (z := A), Algebra.Expr.eq.MulAbs_ExpMulIArg (z := B)]
+  rw [Complex.Eq_MulNorm_ExpMulIArg (z := A), Complex.Eq_MulNorm_ExpMulIArg (z := B)]
   have hnorm : ‖A‖ = ‖B‖ := by
     have hp : ‖A‖ ^ 3 = ‖B‖ ^ 3 := by
       simpa [Complex.norm_pow] using congrArg norm h
@@ -65,4 +65,4 @@ private lemma main
 
 
 -- created on 2018-08-28
--- updated on 2026-08-20
+-- updated on 2026-08-22

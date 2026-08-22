@@ -2,7 +2,13 @@ import Lemma.Set.In_IocCeil
 open Set
 
 
-@[main]
+/--
+| attributes | lemma |
+| :---: | :---: |
+| main | Int.GeCeil |
+| comm | Int.Le_Ceil |
+-/
+@[main, comm]
 private lemma main
   [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
   [FloorRing α]
@@ -15,3 +21,4 @@ private lemma main
 
 
 -- created on 2018-05-10
+-- updated on 2026-08-22

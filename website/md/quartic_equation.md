@@ -180,11 +180,11 @@ x=z-\dfrac{a'}{4}
       - [Complex.Or_Eq_NegSqrt.of.EqSquare](http://www.lemma.cn/lean/?module=Complex.Or_Eq_NegSqrt.of.EqSquare)
     - [Algebra.Eq.of.Eq_Pow.cubic_root.omega](http://www.lemma.cn/lean/?module=Algebra.Eq.of.Eq_Pow.cubic_root.omega) — \(A^3=B^3\Rightarrow A=B\,\omega^d\) with \(d\) from \(\operatorname{arg}\) and \(\lceil\cdot\rceil\)
       - [Algebra.Arg.Pow.eq.Add](http://www.lemma.cn/lean/?module=Algebra.Arg.Pow.eq.Add) — \(\operatorname{arg}(z^n)=n\operatorname{arg} z-2\pi\lceil n\operatorname{arg} z/(2\pi)-1/2\rceil\)
-        - [Algebra.Expr.eq.MulAbs_ExpMulIArg](http://www.lemma.cn/lean/?module=Algebra.Expr.eq.MulAbs_ExpMulIArg) — polar form \(z=\|z\|e^{i\operatorname{arg} z}\)
+        - [Complex.Eq_MulNorm_ExpMulIArg](http://www.lemma.cn/lean/?module=Complex.Eq_MulNorm_ExpMulIArg) — polar form \(z=\|z\|e^{i\operatorname{arg} z}\)
         - [Algebra.EqArg.of.Gt_0](http://www.lemma.cn/lean/?module=Algebra.EqArg.of.Gt_0)
         - [Complex.ArgExpMulI.eq.Sub_Mul_Ceil](http://www.lemma.cn/lean/?module=Complex.ArgExpMulI.eq.Sub_Mul_Ceil) — \(\operatorname{arg}(e^{ix})=x-2\pi\lceil x/(2\pi)-1/2\rceil\)
           - [Int.Floor.eq.NegCeilNeg](http://www.lemma.cn/lean/?module=Int.Floor.eq.NegCeilNeg)
-      - [Algebra.Expr.eq.MulAbs_ExpMulIArg](http://www.lemma.cn/lean/?module=Algebra.Expr.eq.MulAbs_ExpMulIArg)
+      - [Complex.Eq_MulNorm_ExpMulIArg](http://www.lemma.cn/lean/?module=Complex.Eq_MulNorm_ExpMulIArg)
 
 Related lemmas in the same family, **not** imported by the main theorem: the \(\beta=0\)-only depressed statement
 [Algebra.And.Imp.of.Add.eq.Zero.quartic.depressed](http://www.lemma.cn/lean/?module=Algebra.And.Imp.of.Add.eq.Zero.quartic.depressed)
@@ -216,7 +216,7 @@ Cube roots of unity are written
 \omega=-\tfrac12+i\tfrac{\sqrt{3}}{2},\qquad \overline{\omega}=\omega^2,\qquad \omega^3=1.
 \]
 The polar form \(z=\|z\|e^{i\operatorname{arg} z}\) is
-[Algebra.Expr.eq.MulAbs_ExpMulIArg](http://www.lemma.cn/lean/?module=Algebra.Expr.eq.MulAbs_ExpMulIArg).
+[Complex.Eq_MulNorm_ExpMulIArg](http://www.lemma.cn/lean/?module=Complex.Eq_MulNorm_ExpMulIArg).
 The reduction of \(\operatorname{arg}(e^{ix})\) into \((-\pi,\pi]\) by a ceiling is
 [Complex.ArgExpMulI.eq.Sub_Mul_Ceil](http://www.lemma.cn/lean/?module=Complex.ArgExpMulI.eq.Sub_Mul_Ceil),
 which yields the power rule

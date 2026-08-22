@@ -1,5 +1,6 @@
 import sympy.core.power
 import sympy.core.numbers
+import sympy.functions.elementary.complexes
 import sympy.polys.polyroots
 import Lemma.Complex.ImpEq_0.ImpAnd_Eq_0.ImpAnd_Eq_1.ImpAnd_Eq_2.of.Eq0AddAddAddPow_4
 open Complex
@@ -56,7 +57,7 @@ private lemma main
         x = √(-2 * β / √y0 - y1) / 2 + √y0 / 2 - a / 4 ∨
         x = -√(-2 * β / √y0 - y1) / 2 + √y0 / 2 - a / 4) ∧
     (β ≠ 0 ∧ D % 3 = 2 →
-      let y : ℂ := A * (starRingEnd ℂ) ω + B
+      let y : ℂ := A * ~ω + B
       let y0 : ℂ := -2 * α / 3 + y
       let y1 : ℂ := 4 * α / 3 + y
       x = √(2 * β / √y0 - y1) / 2 - √y0 / 2 - a / 4 ∨

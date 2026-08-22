@@ -1,4 +1,4 @@
-import Lemma.Rat.GeCeil
+import Lemma.Int.GeCeil
 import Lemma.Nat.LeMulS.of.Le.Gt_0
 import Lemma.Rat.EqMulDiv.of.Gt_0
 import Lemma.Nat.Sub.gt.Zero.is.Gt

@@ -1,7 +1,7 @@
 import sympy.sets.sets
-import Lemma.Algebra.Le_Ceil
+import Lemma.Int.GeCeil
 import Lemma.Rat.LeFloor
-open Algebra Rat
+open Rat Int
 
 
 @[main]
@@ -22,4 +22,4 @@ private lemma main
 
 
 -- created on 2018-08-29
--- updated on 2026-08-20
+-- updated on 2026-08-22

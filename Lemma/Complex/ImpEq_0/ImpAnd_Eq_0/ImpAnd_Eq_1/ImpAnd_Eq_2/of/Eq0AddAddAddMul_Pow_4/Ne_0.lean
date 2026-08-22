@@ -1,10 +1,11 @@
 import sympy.core.power
 import sympy.core.numbers
+import sympy.functions.elementary.complexes
 import sympy.polys.polyroots
 import Lemma.Complex.EqSquareSqrt
 import Lemma.Complex.Or_Eq_NegSqrt.of.EqSquare
-import Lemma.Algebra.Eq.of.Eq_Pow.cubic_root.omega
-open Complex Algebra
+import Lemma.Complex.Eq_Mul_Pow_SubCeilS.of.Pow_3
+open Complex
 
 
 @[main]
@@ -46,7 +47,7 @@ private lemma main
         x = √(-2 * β / √y0 - y1) / 2 + √y0 / 2 ∨
         x = -√(-2 * β / √y0 - y1) / 2 + √y0 / 2) ∧
     (D % 3 = 2 →
-      let y : ℂ := A * (starRingEnd ℂ) ω + B
+      let y : ℂ := A * ~ω + B
       let y0 : ℂ := -2 * α / 3 + y
       let y1 : ℂ := 4 * α / 3 + y
       x = √(2 * β / √y0 - y1) / 2 - √y0 / 2 ∨
@@ -160,7 +161,7 @@ private lemma main
     ring_nf
     rfl
   have hAB0 : Ac * Bc = (-p / 3) * ω ^ (-D) := by
-    have h := Eq.of.Eq_Pow.cubic_root.omega (A := Ac * Bc) (B := -p / 3) hprod3
+    have h := Eq_Mul_Pow_SubCeilS.of.Pow_3 (A := Ac * Bc) (B := -p / 3) hprod3
     simp [hωexp] at h
     convert h using 1
     simp [D]
@@ -178,7 +179,7 @@ private lemma main
   have him : ω.im = √3 / 2 := by
     simp only [ω, add_im, mul_im, ofReal_re, ofReal_im, I_re, I_im]
     ring
-  have hstar : (starRingEnd ℂ) ω = ω ^ 2 := by
+  have hstar : ~ω = ω ^ 2 := by
     apply Complex.ext
     ·
       simp [pow_two, mul_re, conj_re, hre, him]
@@ -395,7 +396,7 @@ private lemma main
       rfl
   ·
     intro hD y y0 y1
-    let A' : ℂ := A * (starRingEnd ℂ) ω
+    let A' : ℂ := A * ~ω
     apply hbranch A'
     ·
       simp only [A', hstar]

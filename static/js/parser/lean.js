@@ -772,6 +772,8 @@ export class Lean extends IndentedNode {
                 return this.append('Lean_bigcap', 'operator');
             case '¬':
                 return this.parent.insert_unary(this, 'Lean_lnot');
+            case '~':
+                return this.parent.insert_unary(this, 'LeanConj');
             case '√':
                 return this.parent.insert_unary(this, 'Lean_sqrt');
             case '∛':
@@ -3681,6 +3683,23 @@ class Lean_sqrt extends LeanUnaryArithmeticPre {
     }
     get operator() {
         return '√';
+    }
+    strFormat() {
+        return `${this.operator}%s`;
+    }
+}
+
+/** Prefix conjugate `~z` (`starRingEnd ℂ` / SymPy `~z`). */
+class LeanConj extends LeanUnaryArithmeticPre {
+    static input_priority = 1024;
+    get operator() {
+        return '~';
+    }
+    get command() {
+        return '\\overline';
+    }
+    latexFormat() {
+        return '\\overline{%s}';
     }
     strFormat() {
         return `${this.operator}%s`;
@@ -9721,6 +9740,7 @@ const LEAN_CLASSES = {
     LeanInv,
     LeanFactorial,
     Lean_lnot,
+    LeanConj,
     Lean_namespace,
     LeanNegPart,
     LeanNot,
