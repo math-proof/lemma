@@ -1,6 +1,6 @@
 import sympy.core.power
 import sympy.polys.polyroots
-import Lemma.Complex.OrEqS_Div_Mul2.of.Eq0AddAddMul_Square.Ne_0
+import Lemma.Complex.OrEqS_Div.of.Eq0AddAddMul_Square.Ne_0
 open Complex
 
 
@@ -15,8 +15,8 @@ private lemma main
 -- proof
   have h : a * x² + 0 * x + c = 0 := by
     simpa using h₁
-  simpa using OrEqS_Div_Mul2.of.Eq0AddAddMul_Square.Ne_0 h₀ h
+  simpa using OrEqS_Div.of.Eq0AddAddMul_Square.Ne_0 h₀ h
 
 
 -- created on 2018-08-15
--- updated on 2026-08-20
+-- updated on 2026-08-22

@@ -7097,6 +7097,8 @@ export class LeanArgsCommaSeparated extends LeanArgs {
     /**
      * Trailing comma then newline inside `[…]` / `⟨…⟩`: this line stays `LeanArgsCommaSeparated`;
      * the bracket body becomes (or grows) `LeanArgsCommaNewLineSeparated`.
+     * Sibling items keep the incoming indent — do not bump by +2 (that made later
+     * one-item-per-line entries look like a dedent and attach `.eq…` to the previous line).
      */
     insert_newline(caret, newline_count, indent, next) {
         if (caret instanceof LeanCaret && this.args[this.args.length - 1] === caret) {
@@ -7104,7 +7106,6 @@ export class LeanArgsCommaSeparated extends LeanArgs {
                 return super.insert_newline(caret, newline_count, indent, next);
             }
             this.args.pop();
-            if (indent === this.indent) indent = this.indent + 2;
             const lineCaret = new LeanCaret(indent, caret.level);
             const line = new LeanArgsCommaSeparated([lineCaret], indent, caret.level);
             const parent = this.parent;
@@ -7243,6 +7244,13 @@ export class LeanArgsCommaNewLineSeparated extends LeanMultipleLine(LeanArgs) {
         }
         const last = this.args[this.args.length - 1];
         if (last === caret) {
+            if (caret instanceof LeanArgsCommaSeparated) {
+                if (caret.args[caret.args.length - 1] instanceof LeanCaret) caret.args.pop();
+                const lineCaret = new LeanCaret(indent, caret.level);
+                const line = new LeanArgsCommaSeparated([lineCaret], indent, caret.level);
+                this.push(line);
+                return lineCaret;
+            }
             for (let i = 0; i < newline_count - 1; ++i) {
                 caret = new LeanCaret(indent, caret.level);
                 this.push(caret);

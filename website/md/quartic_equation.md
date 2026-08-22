@@ -170,10 +170,7 @@ x=z-\dfrac{a'}{4}
 
 - `Complex.ImpEq_0.ImpAnd_Eq_0.ImpAnd_Eq_1.ImpAnd_Eq_2.of.Eq0AddAddAddAddMul_Pow_4.Ne_0` ([SymPy](http://www.lemma.cn/py/?module=Complex.ImpEq_0.ImpAnd_Eq_0.ImpAnd_Eq_1.ImpAnd_Eq_2.of.Eq0AddAddAddAddMul_Pow_4.Ne_0) / [Lean 4](http://www.lemma.cn/lean/?module=Complex.ImpEq_0.ImpAnd_Eq_0.ImpAnd_Eq_1.ImpAnd_Eq_2.of.Eq0AddAddAddAddMul_Pow_4.Ne_0))
   - [Algebra.Or_Eq.of.Add.eq.Zero.biquadratic](http://www.lemma.cn/lean/?module=Algebra.Or_Eq.of.Add.eq.Zero.biquadratic) — case \(\beta=0\)
-    - [Algebra.And_Imp_Or_EqS_Div.of.Add.eq.Zero.quadratic](http://www.lemma.cn/lean/?module=Algebra.And_Imp_Or_EqS_Div.of.Add.eq.Zero.quadratic) — quadratic in \(x^2\)
-      - [Complex.Imp_Eq_0.Imp_Eq_DivNeg.Imp_OrEqS_Div_Mul2.of.Eq0AddAddMul_Square](http://www.lemma.cn/lean/?module=Complex.Imp_Eq_0.Imp_Eq_DivNeg.Imp_OrEqS_Div_Mul2.of.Eq0AddAddMul_Square)
-        - [Complex.OrEqS_Div_Mul2.of.Eq0AddAddMul_Square.Ne_0](http://www.lemma.cn/lean/?module=Complex.OrEqS_Div_Mul2.of.Eq0AddAddMul_Square.Ne_0)
-        - [Rat.ImpEq.ImpNe.of.AddMul.eq.Zero](http://www.lemma.cn/lean/?module=Rat.ImpEq.ImpNe.of.AddMul.eq.Zero)
+    - [Complex.OrEqS_Div.of.Eq0AddAddMul_Square.Ne_0](http://www.lemma.cn/lean/?module=Complex.OrEqS_Div.of.Eq0AddAddMul_Square.Ne_0) — quadratic in \(x^2\)
     - [Complex.Or_Eq_NegSqrt.of.EqSquare](http://www.lemma.cn/lean/?module=Complex.Or_Eq_NegSqrt.of.EqSquare) — \(x^2=c\Rightarrow x=\sqrt{c}\lor x=-\sqrt{c}\)
       - [Complex.EqSquareSqrt](http://www.lemma.cn/lean/?module=Complex.EqSquareSqrt) — \((\sqrt{z})^2=z\)
       - [Real.OrEqS.of.Square](http://www.lemma.cn/lean/?module=Real.OrEqS.of.Square)

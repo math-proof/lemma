@@ -6883,8 +6883,6 @@ class LeanArgsCommaSeparated extends LeanArgs
             if ($this->indent > $indent)
                 return parent::insert_newline($caret, $newline_count, $indent, $next);
             array_pop($this->args);
-            if ($indent == $this->indent)
-                $indent = $this->indent + 2;
             $lineCaret = new LeanCaret($indent, $caret->level);
             $line = new LeanArgsCommaSeparated([$lineCaret], $indent, $caret->level);
             $parent = $this->parent;
@@ -7035,6 +7033,14 @@ class LeanArgsCommaNewLineSeparated extends LeanArgs
             throw new Exception(__METHOD__ . " is unexpected for " . get_class($this));
         } else {
             if (end($this->args) === $caret) {
+                if ($caret instanceof LeanArgsCommaSeparated) {
+                    if (end($caret->args) instanceof LeanCaret)
+                        array_pop($caret->args);
+                    $lineCaret = new LeanCaret($indent, $caret->level);
+                    $line = new LeanArgsCommaSeparated([$lineCaret], $indent, $caret->level);
+                    $this->push($line);
+                    return $lineCaret;
+                }
                 for ($i = 0; $i < $newline_count - 1; ++$i) {
                     $caret = new LeanCaret($indent, $caret->level);
                     $this->push($caret);

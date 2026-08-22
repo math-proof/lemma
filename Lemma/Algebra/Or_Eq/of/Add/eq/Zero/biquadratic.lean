@@ -1,6 +1,6 @@
 import sympy.core.power
 import sympy.polys.polyroots
-import Lemma.Complex.OrEqS_Div.of.Eq0AddAddMul_Square.of.Ne_0
+import Lemma.Complex.OrEqS_Div.of.Eq0AddAddMul_Square.Ne_0
 import Lemma.Complex.Or_Eq_NegSqrt.of.EqSquare
 open Complex
 
@@ -21,12 +21,11 @@ private lemma main
   have hy : (1 : ℂ) * (x ^ 2) ^ 2 + α * x ^ 2 + γ = 0 := by
     convert h
     ring
-  have hquad := OrEqS_Div.of.Eq0AddAddMul_Square.of.Ne_0 hy
   have hone : (1 : ℂ) ≠ 0 := one_ne_zero
-  obtain ⟨_, _, hroot⟩ := hquad
+  have hroot := OrEqS_Div.of.Eq0AddAddMul_Square.Ne_0 (x := x ^ 2) hone hy
   have hΔ : (α ^ 2 - 4 * (1 : ℂ) * γ) = Δ := by
     simp [Δ]
-  obtain hpos | hneg := hroot hone
+  obtain hpos | hneg := hroot
   ·
     rw [hΔ] at hpos
     have hx2 : x ^ 2 = √Δ / 2 - α / 2 := by
@@ -48,4 +47,4 @@ private lemma main
 
 
 -- created on 2018-11-26
--- updated on 2026-08-20
+-- updated on 2026-08-22
