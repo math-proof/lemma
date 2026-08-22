@@ -17,5 +17,5 @@ private lemma main
   zpow_pos h_x n
 
 
--- created on 2023-04-15
+-- created on 2018-08-22
 -- updated on 2026-08-22

@@ -854,7 +854,7 @@ export class Lean extends IndentedNode {
                     self.start_idx++;
                     token += tokens[self.start_idx];
                 }
-                if (index < tactics.length && tactics[index] === tokenOrig)
+                if (index < tactics.length && tactics[index] === tokenOrig && this instanceof LeanCaret)
                     return this.parent.insert_tactic(this, token);
                 return this.parent.insert_word(this, token);
             }
