@@ -47,7 +47,7 @@ def prove(Eq):
 
     Eq <<= Bool.Imp_And.given.Imp.Imp.apply(Eq[-3]), Bool.And_And.given.And.Cond.apply(Eq[-2]), Bool.Imp_Imp.given.And.Imp.apply(Eq[-1])
 
-    Eq << Algebra.Cond.given.Cond.subst.Bool.apply(Eq[-2], cond=Eq[0], invert=True)
+    Eq << Bool.Cond.given.Cond.Eq.apply(Eq[-2], cond=Eq[0], invert=True)
 
     Eq <<= Eq[-5].this.lhs.apply(Set.Gt.of.In_Icc), Eq[-4].this.rhs.apply(Set.In.given.In.Sub, m / 2), Eq[-3].this.expr.apply(Algebra.Lt.given.Gt_0), Eq[-1].this.lhs.apply(Algebra.GtSquare.of.Ge_0.Gt)
 

@@ -9,7 +9,7 @@ def apply(given, x):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
 
     p, x = Symbol(complex=True)
     Eq << apply(Unequal(p, 0), x)
@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs / p
 
-    Eq << Algebra.Cond.given.Cond.subst.Bool.apply(Eq[-1], cond=Eq[0], invert=True)
+    Eq << Bool.Cond.given.Cond.Eq.apply(Eq[-1], cond=Eq[0], invert=True)
 
 
 if __name__ == '__main__':

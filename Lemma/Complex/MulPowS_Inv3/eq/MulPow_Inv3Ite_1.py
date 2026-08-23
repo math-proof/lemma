@@ -14,7 +14,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Complex
+    from Lemma import Bool, Complex
 
     A, B = Symbol(complex=True, given=True)
     Eq << apply(A ** (S.One / 3) * B ** (S.One / 3) )
@@ -37,7 +37,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.apply(Bool.Imp_Imp.Is.ImpAnd), Eq[-1].this.lhs.apply(Complex.OrEqSCeil.of.CeilSubDivAddArgS.ne.Zero)
 
-    Eq << Eq[-2].this.lhs.apply(Algebra.Eq.of.Ne_0.Ne_0.Eq.cubic_root)
+    Eq << Eq[-2].this.lhs.apply(Complex.MulPowS_Inv3.eq.MulPow_Inv3.of.EqCeilSubDivAddArgS.Ne_0.Ne_0)
 
     Eq << Eq[-1].this.find(Greater).apply(Complex.GtAddArgS.Is.EqCeilSubDivS, simplify=None)
 
@@ -46,8 +46,8 @@ def prove(Eq):
     Eq <<= Bool.Imp.given.ImpEq.apply(Eq[-2]), Bool.Imp.given.ImpEq.apply(Eq[-1])
 
     Eq <<= Eq[-2].this.apply(Bool.Imp_Imp.Is.ImpAnd), Eq[-1].this.apply(Bool.Imp_Imp.Is.ImpAnd)
-    Eq <<= Eq[-2].this.lhs.apply(Algebra.Eq.of.Ne_0.Ne_0.Eq.cubic_root)
-    Eq <<= Eq[-1].this.lhs.apply(Algebra.Eq.of.Ne_0.Ne_0.Eq.cubic_root)
+    Eq <<= Eq[-2].this.lhs.apply(Complex.MulPowS_Inv3.eq.MulPow_Inv3.of.EqCeilSubDivAddArgS.Ne_0.Ne_0)
+    Eq <<= Eq[-1].this.lhs.apply(Complex.MulPowS_Inv3.eq.MulPow_Inv3.of.EqCeilSubDivAddArgS.Ne_0.Ne_0)
 
 
 if __name__ == '__main__':

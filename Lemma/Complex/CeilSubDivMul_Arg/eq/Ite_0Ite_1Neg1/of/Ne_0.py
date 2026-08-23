@@ -53,7 +53,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs * (-Integer(27) / 4)
 
-    Eq.suffice = Eq[-1].this.rhs.apply(Algebra.Eq_0.of.Pow.eq.Zero)
+    Eq.suffice = Eq[-1].this.rhs.apply(Nat.Eq_0.of.Pow.eq.Zero.Gt_0)
 
     Eq << Equal(U * V, 0).this.apply(Nat.OrEqS_0.of.Mul.eq.Zero)
 
@@ -67,7 +67,7 @@ def prove(Eq):
 
     Eq << Bool.UFnIte.given.UFnIte.Iff.apply(Eq.eq, old=Eq[-1].lhs, new=Eq[-1].rhs)
 
-    Eq << Algebra.Cond.given.Cond.subst.Bool.apply(Eq[-1], cond=Eq[0], invert=True)
+    Eq << Bool.Cond.given.Cond.Eq.apply(Eq[-1], cond=Eq[0], invert=True)
 
     Eq.p_cubic = Eq[-1].find(Pow[Mul]).this.apply(Complex.Pow_Inv.eq.Mul_ExpMulIDivArg)
 
@@ -115,7 +115,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(ExprCondPair[Ceil[Add[~Mul[Add]]]]).apply(Nat.Mul_Add.eq.AddMulS)
 
-    Eq.eq_simplified = Eq[-1].this.find(Add[~Ceil]).apply(Algebra.CeilAddDiv_2.eq.AddCeilSub_Div12.of.IsOdd)
+    Eq.eq_simplified = Eq[-1].this.find(Add[~Ceil]).apply(Int.CeilAddDiv_2.eq.AddCeilSub_Div.of.Odd)
 
     Eq << Eq.p_cubic * exp(-S.ImaginaryUnit * 2 * S.Pi / 3)
 
@@ -143,7 +143,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(ExprCondPair[Ceil[Add[~Mul[Add]]]]).apply(Nat.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.find(Add[~Ceil]).apply(Algebra.CeilAddDiv_2.eq.AddCeilSub_Div12.of.IsOdd)
+    Eq << Eq[-1].this.find(Add[~Ceil]).apply(Int.CeilAddDiv_2.eq.AddCeilSub_Div.of.Odd)
 
 
 

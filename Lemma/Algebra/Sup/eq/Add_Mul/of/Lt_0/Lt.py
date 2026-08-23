@@ -15,7 +15,7 @@ def apply(is_negative, lt, fx, x=None, left_open=True, right_open=True):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     m, M, x, a, b = Symbol(real=True, given=True)
     Eq << apply(a < 0, m < M, a * x + b, x)
@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << Eq[-2].subs(Eq[-1])
 
-    Eq << Algebra.Eq.given.Eq.Div.apply(Eq[-1], a)
+    Eq << Nat.Div.given.Eq.apply(Eq[-1], a)
     Eq << Algebra.EqInf.of.Lt.apply(Eq[1], x)
 
 

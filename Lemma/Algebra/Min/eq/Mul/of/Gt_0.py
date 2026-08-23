@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Nat.Ite_MulS.eq.Mul_Ite)
 
-    Eq.eq = Algebra.Eq.given.Eq.Div.apply(Eq[-1], r)
+    Eq.eq = Nat.Div.given.Eq.apply(Eq[-1], r)
 
     Eq.equivalent = Iff(Eq[-1].find(LessEqual), Eq[-1].rhs.find(LessEqual), plausible=True)
 

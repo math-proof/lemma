@@ -44,7 +44,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Nat.Ge.of.Gt)
 
-    Eq << Algebra.Cond.given.Cond.subst.Bool.apply(Eq[-1], cond=Eq[0], invert=True)
+    Eq << Bool.Cond.given.Cond.Eq.apply(Eq[-1], cond=Eq[0], invert=True)
 
     Eq <<= Bool.Imp_And.of.Cond.apply(Eq[1], cond=x > 0), Bool.Imp_And.of.Cond.apply(Eq[2], cond=y > 0)
 

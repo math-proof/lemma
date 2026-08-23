@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Add ** 2).apply(Algebra.Square.Neg)
 
-    Eq << Algebra.Eq.given.Eq.Div.apply(Eq[-1], Eq[-1].find((~Add) ** 2))
+    Eq << Nat.Div.given.Eq.apply(Eq[-1], Eq[-1].find((~Add) ** 2))
 
     Eq << Finset.EqDiff.of.Eq_ReducedSum.apply(Eq[0])
 
