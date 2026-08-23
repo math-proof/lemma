@@ -13,7 +13,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool, Nat, Int
+    from Lemma import Set, Bool, Nat, Int
 
     k = Symbol(integer=True)
     Eq << apply(Cup[k:oo](Interval(-k - 1, -k, left_open=True)))

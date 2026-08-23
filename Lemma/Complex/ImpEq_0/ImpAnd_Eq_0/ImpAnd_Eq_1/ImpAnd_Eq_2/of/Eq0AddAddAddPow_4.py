@@ -33,7 +33,7 @@ def apply(fx, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Complex
+    from Lemma import Bool, Complex
 
     x, alpha, beta, gamma = Symbol(complex=True, given=True)
     fx = x ** 4 + alpha * x ** 2 + beta * x + gamma

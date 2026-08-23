@@ -17,7 +17,7 @@ def apply(is_nonzero, eq, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Complex, Complex, Complex
+    from Lemma import Complex
 
     x, a, b, c = Symbol(complex=True, given=True)
     Eq << apply(Unequal(a, 0), Equal(a * x ** 2 + b * x + c, 0), x=x)
