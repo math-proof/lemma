@@ -10,7 +10,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Nat
     n = Symbol(integer=True, positive=True)
     x, y = Symbol(real=True, shape=(n,))
 
@@ -18,9 +18,9 @@ def prove(Eq):
 
     Eq << Bool.Iff.given.Imp.Imp.apply(Eq[-1])
 
-    Eq << Eq[-2].this.lhs.lhs.apply(Algebra.Delta.eq.Ite)
+    Eq << Eq[-2].this.lhs.lhs.apply(Nat.Delta.eq.Ite)
 
-    Eq << Eq[-1].this.rhs.lhs.apply(Algebra.Delta.eq.Ite)
+    Eq << Eq[-1].this.rhs.lhs.apply(Nat.Delta.eq.Ite)
 
 
 if __name__ == '__main__':

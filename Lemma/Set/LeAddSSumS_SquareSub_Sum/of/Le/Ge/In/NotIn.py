@@ -16,7 +16,7 @@ def apply(le, ge, contains, notcontains):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Rat
+    from Lemma import Algebra, Set, Bool, Rat, Nat, Nat, Nat, Nat
 
     y_quote = Symbol(integer=True, given=True)
     x, y = Symbol(integer=True)
@@ -44,7 +44,7 @@ def prove(Eq):
     Eq << Set.Any.Eq.of.Card.gt.Zero.apply(Eq[-1], b_quote)
     Eq << Eq[-1].subs(Eq.abs_complement)
     Eq.abs_union = Set.EqCard.of.NotIn.apply(Eq[3])
-    Eq << Algebra.Gt_0.of.Eq.apply(Eq.abs_union)
+    Eq << Nat.Gt_0.of.Gt_0.Eq.apply(Eq.abs_union)
     Eq << Set.Any.Eq.of.Card.gt.Zero.apply(Eq[-1], a_quote)
     Eq << Eq[-1].subs(Eq.abs_union)
     Eq << Algebra.Any.And.of.Any.Any.apply(Eq[-1], Eq[-4], simplify=None)

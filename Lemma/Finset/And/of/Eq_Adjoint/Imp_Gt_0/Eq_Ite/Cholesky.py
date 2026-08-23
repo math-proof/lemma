@@ -75,7 +75,7 @@ def prove(Eq):
         (Eq[-1].expr.rhs, j > i),
         (Eq.A_diagonal.rhs, True)), plausible=True)
 
-    Eq.lt_infer, Eq.gt_infer, Eq.eq_infer = Bool.Cond_Ite.given.And.Imp.apply(Eq.A_ij)
+    Eq.lt_infer, Eq.gt_infer, Eq.eq_infer = Bool.BFn_Ite.given.Imp.Imp.apply(Eq.A_ij)
 
     Eq << Bool.Imp.given.All.apply(Eq.lt_infer)
 

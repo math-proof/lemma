@@ -25,7 +25,7 @@ def prove(Eq):
     p, q, r = Function(real=True, shape=())
     Eq << apply(Any[x](Equal(x[i, j], Piecewise((p(x), j < i), (q(x), j > i), (r(x), True)))))
 
-    Eq << Eq[0].this.expr.apply(Bool.Cond_Ite.given.And.Imp)
+    Eq << Eq[0].this.expr.apply(Bool.BFn_Ite.given.Imp.Imp)
 
     Eq << Bool.Any_And.given.And.Imp.apply(Eq[-1])
 

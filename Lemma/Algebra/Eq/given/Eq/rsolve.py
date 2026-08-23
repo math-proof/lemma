@@ -19,7 +19,7 @@ def apply(self, k=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset, Nat
+    from Lemma import Algebra, Finset, Nat, Real
 
     n = Symbol(integer=True, nonnegative=True)
     k = Symbol(integer=True)
@@ -32,7 +32,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Nat.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.find(Symbol * Pow).args[:2].apply(Algebra.Mul.eq.Pow.Add.exponent)
+    Eq << Eq[-1].this.find(Symbol * Pow).args[:2].apply(Real.MulPowS.eq.Pow_Add.of.Gt_0)
 
     Eq << Eq[-1].this.find(Mul[Sum]).apply(Finset.Mul_Sum.eq.Sum_Mul)
 

@@ -30,59 +30,59 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.doit()
 
-    Eq << Finset.Eq.of.Eq.rmatmul.apply(Eq[-1], shift)
+    Eq << Tensor.Dot.of.Eq.left.apply(Eq[-1], shift)
 
-    Eq << Finset.Eq.of.Eq.rmatmul.apply(Eq[-1], shift)
+    Eq << Tensor.Dot.of.Eq.left.apply(Eq[-1], shift)
 
-    Eq << Finset.Eq.of.Eq.rmatmul.apply(Eq[-1], shift)
+    Eq << Tensor.Dot.of.Eq.left.apply(Eq[-1], shift)
 
-    Eq << Finset.Eq.of.Eq.rmatmul.apply(Eq[-1], shift)
+    Eq << Tensor.Dot.of.Eq.left.apply(Eq[-1], shift)
 
     Eq << Eq[-1] + Eq[-2] + Eq[-3] + Eq[-4] + Eq[-5]
 
     Eq << Eq.L_definition.subs(Eq[-1])
 
-    Eq << Finset.Eq.of.Eq.rmatmul.apply(Eq[-1], AddMatrix(n, 1, 0))
+    Eq << Tensor.Dot.of.Eq.left.apply(Eq[-1], AddMatrix(n, 1, 0))
 
-    Eq << Finset.Eq.of.Eq.rmatmul.apply(Eq[-1], AddMatrix(n, 2, 0))
+    Eq << Tensor.Dot.of.Eq.left.apply(Eq[-1], AddMatrix(n, 2, 0))
 
-    Eq << Finset.Eq.of.Eq.rmatmul.apply(Eq[-1], AddMatrix(n, 3, 0))
+    Eq << Tensor.Dot.of.Eq.left.apply(Eq[-1], AddMatrix(n, 3, 0))
 
-    Eq << Finset.Eq.of.Eq.rmatmul.apply(Eq[-1], AddMatrix(n, 4, 0))
+    Eq << Tensor.Dot.of.Eq.left.apply(Eq[-1], AddMatrix(n, 4, 0))
 
-    Eq << Finset.Eq.of.Eq.rmatmul.apply(Eq[-1], AddMatrix(n, 5, 0))
+    Eq << Tensor.Dot.of.Eq.left.apply(Eq[-1], AddMatrix(n, 5, 0))
 
-    Eq << Finset.Eq.of.Eq.rmatmul.apply(Eq[-1], MulMatrix(n, 0, S.One / (n - 1)))
+    Eq << Tensor.Dot.of.Eq.left.apply(Eq[-1], MulMatrix(n, 0, S.One / (n - 1)))
 
-    Eq << Finset.Eq.of.Eq.rmatmul.apply(Eq[-1], AddMatrix(n, 0, 1, -1))
+    Eq << Tensor.Dot.of.Eq.left.apply(Eq[-1], AddMatrix(n, 0, 1, -1))
 
-    Eq << Finset.Eq.of.Eq.rmatmul.apply(Eq[-1], MulMatrix(n, 1, -1))
+    Eq << Tensor.Dot.of.Eq.left.apply(Eq[-1], MulMatrix(n, 1, -1))
 
-    Eq << Finset.Eq.of.Eq.rmatmul.apply(Eq[-1], AddMatrix(n, 0, 2, -1))
+    Eq << Tensor.Dot.of.Eq.left.apply(Eq[-1], AddMatrix(n, 0, 2, -1))
 
-    Eq << Finset.Eq.of.Eq.rmatmul.apply(Eq[-1], MulMatrix(n, 2, -1))
+    Eq << Tensor.Dot.of.Eq.left.apply(Eq[-1], MulMatrix(n, 2, -1))
 
-    Eq << Finset.Eq.of.Eq.rmatmul.apply(Eq[-1], AddMatrix(n, 0, 3, -1))
+    Eq << Tensor.Dot.of.Eq.left.apply(Eq[-1], AddMatrix(n, 0, 3, -1))
 
-    Eq << Finset.Eq.of.Eq.rmatmul.apply(Eq[-1], MulMatrix(n, 3, -1))
+    Eq << Tensor.Dot.of.Eq.left.apply(Eq[-1], MulMatrix(n, 3, -1))
 
-    Eq << Finset.Eq.of.Eq.rmatmul.apply(Eq[-1], AddMatrix(n, 0, 4, -1))
+    Eq << Tensor.Dot.of.Eq.left.apply(Eq[-1], AddMatrix(n, 0, 4, -1))
 
-    Eq << Finset.Eq.of.Eq.rmatmul.apply(Eq[-1], MulMatrix(n, 4, -1))
+    Eq << Tensor.Dot.of.Eq.left.apply(Eq[-1], MulMatrix(n, 4, -1))
 
-    Eq << Finset.Eq.of.Eq.rmatmul.apply(Eq[-1], AddMatrix(n, 0, 5, -1))
+    Eq << Tensor.Dot.of.Eq.left.apply(Eq[-1], AddMatrix(n, 0, 5, -1))
 
-    Eq << Finset.Eq.of.Eq.rmatmul.apply(Eq[-1], MulMatrix(n, 5, -1))
+    Eq << Tensor.Dot.of.Eq.left.apply(Eq[-1], MulMatrix(n, 5, -1))
 
-    Eq << Finset.Eq.of.Eq.rmatmul.apply(Eq[-1], AddMatrix(n, 1, 0, -1))
+    Eq << Tensor.Dot.of.Eq.left.apply(Eq[-1], AddMatrix(n, 1, 0, -1))
 
-    Eq << Finset.Eq.of.Eq.rmatmul.apply(Eq[-1], AddMatrix(n, 2, 0, -1))
+    Eq << Tensor.Dot.of.Eq.left.apply(Eq[-1], AddMatrix(n, 2, 0, -1))
 
-    Eq << Finset.Eq.of.Eq.rmatmul.apply(Eq[-1], AddMatrix(n, 3, 0, -1))
+    Eq << Tensor.Dot.of.Eq.left.apply(Eq[-1], AddMatrix(n, 3, 0, -1))
 
-    Eq << Finset.Eq.of.Eq.rmatmul.apply(Eq[-1], AddMatrix(n, 4, 0, -1))
+    Eq << Tensor.Dot.of.Eq.left.apply(Eq[-1], AddMatrix(n, 4, 0, -1))
 
-    Eq << Finset.Eq.of.Eq.rmatmul.apply(Eq[-1], AddMatrix(n, 5, 0, -1))
+    Eq << Tensor.Dot.of.Eq.left.apply(Eq[-1], AddMatrix(n, 5, 0, -1))
 
     Eq << Eq[-1].apply(Finset.EqDet.of.Eq)
 

@@ -8,7 +8,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Algebra, Tensor
+    from Lemma import Finset, Algebra, Tensor, Real
 
     m, d = Symbol(integer=True, positive=True)
     i, j = Symbol(integer=True)
@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(FallingFactorial).apply(Finset.FallingFactorial.eq.Mul.Binom)
 
-    Eq << Eq[-1].this.find(Pow * Pow).args[:2].apply(Algebra.Mul.eq.Pow.Add.exponent)
+    Eq << Eq[-1].this.find(Pow * Pow).args[:2].apply(Real.MulPowS.eq.Pow_Add.of.Gt_0)
 
     k = Eq[-1].find(Sum).variable
     Eq << Eq[-1].this.expr.rhs.find(Sum).apply(Finset.Sum.eq.AddSumS, cond=k<=i)

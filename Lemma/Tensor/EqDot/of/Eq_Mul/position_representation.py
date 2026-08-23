@@ -60,10 +60,10 @@ def prove(Eq):
         Eq[-1].lhs.find((~MatMul) - MatMul).this.apply(Tensor.Dot.eq.Stack_Sum_MulGetS),\
         Eq[-1].lhs.find(MatMul - ~MatMul).this.apply(Tensor.Dot.eq.Stack_Sum_MulGetS)
 
-    Eq <<= Eq[-4].rhs.find(Mul).this.apply(Algebra.Mul.Delta.subst, 1, reverse=True),\
-        Eq[-3].rhs.find(Mul).this.apply(Algebra.Mul.Delta.subst, 1, reverse=True),\
-        Eq[-2].rhs.find(Mul).this.apply(Algebra.Mul.Delta.subst, 1, reverse=True),\
-        Eq[-1].rhs.find(Mul).this.apply(Algebra.Mul.Delta.subst, 1, reverse=True)
+    Eq <<= Eq[-4].rhs.find(Mul).this.apply(Nat.Mul_Delta, 1, reverse=True),\
+        Eq[-3].rhs.find(Mul).this.apply(Nat.Mul_Delta, 1, reverse=True),\
+        Eq[-2].rhs.find(Mul).this.apply(Nat.Mul_Delta, 1, reverse=True),\
+        Eq[-1].rhs.find(Mul).this.apply(Nat.Mul_Delta, 1, reverse=True)
 
     Eq << Eq[-9].subs(*Eq[-8:])
 
@@ -97,8 +97,8 @@ def prove(Eq):
 
     Eq << Eq[-2].subs(Eq[-1])
 
-    Eq <<= Eq[-1].find(Stack).this.apply(Tensor.Stack.eq.Mul),\
-        Eq[-1].find(-~Stack).this.apply(Tensor.Stack.eq.Mul)
+    Eq <<= Eq[-1].find(Stack).this.apply(Tensor.Stack_Mul.eq.MulStackS),\
+        Eq[-1].find(-~Stack).this.apply(Tensor.Stack_Mul.eq.MulStackS)
 
     Eq << Eq[-1].find(Stack[KroneckerDelta]).this.apply(Tensor.Stack.eq.Eye)
 

@@ -18,7 +18,7 @@ def apply(given, left=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset
+    from Lemma import Finset, Tensor
 
     n = Symbol(integer=True, positive=True)
     A, B = Symbol(real=True, shape=(n, n))
@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << Finset.EqInv.of.Eq.apply(Eq[0])
 
-    Eq << Finset.Eq.of.Eq.rmatmul.apply(Eq[-1], B)
+    Eq << Tensor.Dot.of.Eq.left.apply(Eq[-1], B)
 
     Eq << Finset.EqInv.of.Eq.apply(Eq[-1])
 

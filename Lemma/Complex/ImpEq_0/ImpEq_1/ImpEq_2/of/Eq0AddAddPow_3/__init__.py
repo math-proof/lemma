@@ -55,7 +55,7 @@ def prove(Eq):
 
     V = Eq[-1].find(Arg[Add]).arg
     U = Eq[-1].find(Arg[2]).arg
-    Eq.eq_peicewise = Algebra.Ceil.Arg.eq.Ite.apply(Eq[-1].find(Ceil)._subs(-p, U ** (S.One / 3) * V ** (S.One / 3)))
+    Eq.eq_peicewise = Complex.CeilSubDivMul3Arg.eq.Ite_0Ite_1Neg1.apply(Eq[-1].find(Ceil)._subs(-p, U ** (S.One / 3) * V ** (S.One / 3)))
 
     Eq << Eq[-1].subs(Eq.eq_peicewise.reversed)
 
@@ -81,9 +81,9 @@ def prove(Eq):
     # find Equal[S(-1)] & Equal[S(2)]
     Eq << Eq[-1].this.args[:2].apply(Bool.And_Or.of.OrAndS)
 
-    Eq << Eq[-1].this.find(Equal[Integer] | Equal[Integer]).apply(Algebra.EqMod.of.Or_Eq)
+    Eq << Eq[-1].this.find(Equal[Integer] | Equal[Integer]).apply(Nat.Mod.of.OrEqS)
 
-    Eq << Eq[-1].this.find(Equal[Integer] | Equal[Integer]).apply(Algebra.EqMod.of.Or_Eq)
+    Eq << Eq[-1].this.find(Equal[Integer] | Equal[Integer]).apply(Nat.Mod.of.OrEqS)
 
     Eq << Eq[-1].this.find(Equal[Ceil, Ceil]).apply(Nat.ModSub.eq.Zero.of.Eq, 3, swap=True)
 

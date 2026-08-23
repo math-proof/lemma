@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(self):
-    from Lemma.Algebra.Mul.eq.Pow.Add.exponent import determine_args
+    from Lemma.Real.MulPowS.eq.Pow_Add.of.Gt_0 import determine_args
     ret, others = determine_args(self.of(Mul))
     assert others
 

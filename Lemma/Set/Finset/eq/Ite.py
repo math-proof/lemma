@@ -14,7 +14,7 @@ def prove(Eq):
     a, b = Symbol(integer=True)
     Eq << apply(FiniteSet(Piecewise((a, b > 0), (a + 2, True))))
 
-    Eq << Bool.Cond_Ite.given.And.Imp.apply(Eq[0])
+    Eq << Bool.BFn_Ite.given.Imp.Imp.apply(Eq[0])
 
     Eq << Bool.Imp_Ite.given.Imp.apply(Eq[-2])
 

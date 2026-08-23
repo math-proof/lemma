@@ -28,7 +28,7 @@ def apply(a_size, xa_equality, j=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Tensor, Finset
+    from Lemma import Algebra, Set, Bool, Tensor, Finset, Nat
 
     n = Symbol(domain=Range(2, oo), given=True)
     x, a = Symbol(shape=(n,), integer=True, given=True)
@@ -44,7 +44,7 @@ def prove(Eq):
 
     Eq << Eq[-1].lhs.indices[0].this.apply(Tensor.Dot.eq.Sum)
 
-    Eq << Eq[-1].rhs.expr.args[1].this.apply(Algebra.Delta.eq.Ite)
+    Eq << Eq[-1].rhs.expr.args[1].this.apply(Nat.Delta.eq.Ite)
 
     Eq << Algebra.Eq.of.Eq.Eq.subst.rhs.apply(Eq[-1], Eq[-2])
 

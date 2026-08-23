@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Unequal).apply(Algebra.Ne_0.Is.Eq_odd)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Delta.eq.Ite, swap=True)
+    Eq << Eq[-1].this.lhs.apply(Nat.Delta.eq.Ite, swap=True)
 
 
 if __name__ == '__main__':

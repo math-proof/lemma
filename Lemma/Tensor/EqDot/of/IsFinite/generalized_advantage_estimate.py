@@ -38,7 +38,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Pow * Pow).apply(Nat.Mul_Add.eq.AddMulS, 3)
 
-    Eq << Eq[-1].this.rhs.find(Pow * Pow * Pow).args[1:3].apply(Algebra.Mul.eq.Pow.Add.exponent)
+    Eq << Eq[-1].this.rhs.find(Pow * Pow * Pow).args[1:3].apply(Real.MulPowS.eq.Pow_Add.of.Gt_0)
 
     Eq << Eq[-1].this.find(Sum).apply(Finset.Sum_Add.eq.AddSumS)
 

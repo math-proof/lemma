@@ -11,14 +11,14 @@ def apply(self, swap=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Nat
 
     x, y = Symbol(integer=True)
     Eq << apply(KroneckerDelta(x, y))
 
     Eq << Eq[0].this.rhs.apply(Bool.Bool.eq.Ite)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Delta.eq.Ite)
+    Eq << Eq[-1].this.lhs.apply(Nat.Delta.eq.Ite)
 
 
 if __name__ == '__main__':

@@ -36,11 +36,11 @@ def prove(Eq):
 
     Eq.Ξ_definition = Eq[-1].this.rhs.args[1]().expr.simplify()
 
-    Eq << Eq.Ξ_definition.this.rhs.args[-1].expr.apply(Algebra.Delta.eq.Ite)
+    Eq << Eq.Ξ_definition.this.rhs.args[-1].expr.apply(Nat.Delta.eq.Ite)
 
     Eq << Eq[-1].this.rhs.apply(Bool.Ite_Ite.eq.Ite__Ite)
 
-    Eq << Eq[-1].this.rhs.args[0].expr.apply(Algebra.Delta.eq.Ite)
+    Eq << Eq[-1].this.rhs.args[0].expr.apply(Nat.Delta.eq.Ite)
 
     Eq << Eq[-1].this.rhs.apply(Bool.Ite_Ite.eq.Ite__Ite, index=0)
 

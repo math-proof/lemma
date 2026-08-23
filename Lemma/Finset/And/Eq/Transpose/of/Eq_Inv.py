@@ -22,7 +22,7 @@ def prove(Eq):
     Σ_xy, Λ_xy = Symbol(shape=(n, m), real=True)
     Eq << apply(Equal(BlockMatrix([[Λ_x, Λ_xy], [Λ_xy.T, Λ_y]]), Inverse(BlockMatrix([[Σ_x, Σ_xy], [Σ_xy.T, Σ_y]]))))
 
-    Eq << Finset.Eq.of.Eq.rmatmul.apply(Eq[0], Eq[0].rhs.find(BlockMatrix))
+    Eq << Tensor.Dot.of.Eq.left.apply(Eq[0], Eq[0].rhs.find(BlockMatrix))
 
     Eq << Eq[-1].this.rhs.apply(Tensor.SEq_Append, n, n)
 

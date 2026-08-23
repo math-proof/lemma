@@ -91,7 +91,7 @@ def prove(Eq):
         [Zcr, Zcr,  Ic, Zcc],
         [Zrr,  Ir, Zrc, Zrc],
         [Zcr, Zcr, Zcc,  Ic]]
-    Eq << Finset.Eq.of.Eq.rmatmul.apply(Eq[-1], D_r)
+    Eq << Tensor.Dot.of.Eq.left.apply(Eq[-1], D_r)
 
     Eq << Eq[-1].this.lhs.args[:2].apply(Tensor.Dot.eq.Block, deep=True)
 
@@ -103,7 +103,7 @@ def prove(Eq):
         [Zrr, Zrc,  Ir, Zrc],
         [Zcr,  Ic, Zcr, Zcc],
         [Zcr, Zcc, Zcr,  Ic]]
-    Eq << Tensor.EqDot.of.Eq.apply(Eq[-1], D_c)
+    Eq << Tensor.Dot.of.Eq.apply(Eq[-1], D_c)
 
     Eq << Eq[-1].this.lhs.args[-2:].apply(Tensor.Dot.eq.Block, deep=True)
 

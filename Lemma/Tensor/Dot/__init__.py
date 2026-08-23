@@ -5,3 +5,4 @@ from . import Stack
 from . import Eye
 from . import bilinear
 from . import cosine_similarity
+from . import of

@@ -19,7 +19,7 @@ def apply(self, pivot=-1, i=None, d=1):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset, Bool, Nat
+    from Lemma import Algebra, Finset, Bool, Nat, Real
 
     d = Symbol(integer=True, positive=True, given=False)
     n = Symbol(domain=Range(d, oo))
@@ -55,7 +55,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.find(-Pow).args[:2].apply(Algebra.Mul.eq.Pow.Add.exponent)
+    Eq << Eq[-1].this.find(-Pow).args[:2].apply(Real.MulPowS.eq.Pow_Add.of.Gt_0)
 
     Eq << Imply(Eq[0], Eq.induct, plausible=True)
 

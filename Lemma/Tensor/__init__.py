@@ -90,3 +90,4 @@ from . import SoftmaxAdd
 from . import GetSlice
 from . import Get
 from . import SEq_Append
+from . import Stack_Mul

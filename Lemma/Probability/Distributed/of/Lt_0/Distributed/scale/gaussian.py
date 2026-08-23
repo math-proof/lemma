@@ -10,7 +10,7 @@ def apply(lt_zero, dist, b=0):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Real, Probability, Bool, Complex, Rat, Int
+    from Lemma import Algebra, Real, Probability, Bool, Complex, Rat, Int, Nat
 
     x = Symbol(real=True, random=True)
     mu, b = Symbol(real=True)
@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq.eq_prob, *Eq[-2:] = Bool.And_And.given.And.Cond.apply(Eq[-1], None)
 
-    Eq << Algebra.Ne.of.Lt.apply(Eq[0])
+    Eq << Nat.Ne.of.Lt.apply(Eq[0])
 
     Eq << Complex.NeNorm_0.of.Ne_0.apply(Eq[-2])
 

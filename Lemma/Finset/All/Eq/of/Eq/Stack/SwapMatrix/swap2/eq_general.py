@@ -57,7 +57,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this().expr.simplify()
 
-    Eq << Eq[-1].this.expr.apply(Finset.Eq.of.Eq.rmatmul, w[t, i])
+    Eq << Eq[-1].this.expr.apply(Tensor.Dot.of.Eq.left, w[t, i])
 
     Eq << Eq[-1].this.expr.rhs.subs(Eq[0].subs(i, t).subs(j, i))
 

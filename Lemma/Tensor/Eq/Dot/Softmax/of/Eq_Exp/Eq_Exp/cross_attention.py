@@ -112,9 +112,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Tensor.Stack.Ite.eq.Block)
 
-    Eq << Eq[-1].this.find(Stack).apply(Tensor.Stack.eq.Mul)
+    Eq << Eq[-1].this.find(Stack).apply(Tensor.Stack_Mul.eq.MulStackS)
 
-    Eq << Eq[-1].this.find(Stack[Mul[Ones]]).apply(Tensor.Stack.eq.Mul)
+    Eq << Eq[-1].this.find(Stack[Mul[Ones]]).apply(Tensor.Stack_Mul.eq.MulStackS)
 
     Eq << Eq[-1].this.find(Stack[Pow]).apply(Tensor.Stack.eq.Pow)
 

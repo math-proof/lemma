@@ -9,12 +9,12 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool
+    from Lemma import Algebra, Set, Bool, Nat
 
     x, y = Symbol(real=True)
     Eq << apply(KroneckerDelta(x, y))
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Delta.eq.Ite)
+    Eq << Eq[-1].this.lhs.apply(Nat.Delta.eq.Ite)
 
     Eq << Set.Bool.In.Finset.apply(Equal(x, y).toNat)
 

@@ -19,7 +19,7 @@ def prove(Eq):
     r = Symbol(integer=True)
     Eq << apply(Unequal(n % 2, 0))
 
-    Eq << Eq[1].this.expr.apply(Algebra.EqMod.of.Eq, 2)
+    Eq << Eq[1].this.expr.apply(Nat.Mod.of.Eq, 2)
 
     Eq << Nat.Ne_0.of.Eq.apply(Eq[-1])
 

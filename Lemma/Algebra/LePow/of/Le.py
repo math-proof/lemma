@@ -11,7 +11,7 @@ def apply(lt, n):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Nat
+    from Lemma import Algebra, Bool, Nat, Real
 
     n = Symbol(integer=True, positive=True, given=False)
     x = Symbol(real=True, nonnegative=True)
@@ -24,9 +24,9 @@ def prove(Eq):
 
     Eq << Nat.LeMulS.of.Le.Le.Ge_0.Ge_0.apply(Eq[0], Eq[1])
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Mul.eq.Pow.Add.exponent)
+    Eq << Eq[-1].this.lhs.apply(Real.MulPowS.eq.Pow_Add.of.Gt_0)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Mul.eq.Pow.Add.exponent)
+    Eq << Eq[-1].this.rhs.apply(Real.MulPowS.eq.Pow_Add.of.Gt_0)
 
     Eq << Imply(Eq[1], Eq[2], plausible=True)
 

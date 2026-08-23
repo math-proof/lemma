@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Sum).apply(Finset.Sum.Binom.eq.Pow.Newton)
 
-    Eq << Eq[-1].this.find(Stack).apply(Tensor.Stack.eq.Mul)
+    Eq << Eq[-1].this.find(Stack).apply(Tensor.Stack_Mul.eq.MulStackS)
 
     Eq << Eq[-1].this.find(Det).apply(Finset.Det.Mul.eq.Mul.Prod)
 

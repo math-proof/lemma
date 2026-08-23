@@ -11,13 +11,13 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     x, y = Symbol(integer=True)
     f = Function(complex=True)
     Eq << apply((f(x) - f(y)) * KroneckerDelta(x, y))
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Mul.Delta.subst)
+    Eq << Eq[-1].this.lhs.apply(Nat.Mul_Delta)
 
 
 

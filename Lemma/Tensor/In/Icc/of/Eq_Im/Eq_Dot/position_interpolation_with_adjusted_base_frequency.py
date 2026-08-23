@@ -180,11 +180,11 @@ def prove(Eq):
 
     Eq.gt_zero_2_bβ = Algebra.Gt_0.of.Lt.apply(Eq[-1])
 
-    Eq.ne = Algebra.Ne.of.Lt.apply(Eq[-1])
+    Eq.ne = Nat.Ne.of.Lt.apply(Eq[-1])
 
     Eq << Algebra.LtPow.of.Lt.apply(Eq[-1], 2, evaluate=False)
 
-    Eq.ne4 = Algebra.Ne.of.Lt.apply(Eq[-1])
+    Eq.ne4 = Nat.Ne.of.Lt.apply(Eq[-1])
 
     Eq << Bool.BFn.of.BFnIte.Cond.apply(Eq.ne, Eq.Sum_ge_piece)
 

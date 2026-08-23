@@ -15,7 +15,7 @@ def prove(Eq):
     x, y, z = Symbol(integer=True)
     Eq << apply(x < 0, Equal(1 / x + y, z))
 
-    Eq << Algebra.Ne.of.Lt.apply(Eq[0])
+    Eq << Nat.Ne.of.Lt.apply(Eq[0])
 
     Eq << Nat.Div.of.Eq.Ne_0.apply(Eq[-1], Eq[2])
 

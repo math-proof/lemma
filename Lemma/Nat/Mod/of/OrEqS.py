@@ -21,14 +21,14 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     x, a = Symbol(integer=True, given=True)
     Eq << apply(Equal(x, a) | Equal(x, a + 3))
 
-    Eq << Eq[0].this.args[0].apply(Algebra.EqMod.of.Eq, 3)
+    Eq << Eq[0].this.args[0].apply(Nat.Mod.of.Eq, 3)
 
-    Eq << Eq[-1].this.args[0].apply(Algebra.EqMod.of.Eq, 3)
+    Eq << Eq[-1].this.args[0].apply(Nat.Mod.of.Eq, 3)
 
 
 

@@ -40,7 +40,7 @@ def prove(Eq):
 
     Eq << Bool.Imp.given.ImpEq.apply(Eq[-1])
 
-    Eq << Eq.lt_zero.this.rhs.apply(Bool.Cond_Ite.given.And.Imp)
+    Eq << Eq.lt_zero.this.rhs.apply(Bool.BFn_Ite.given.Imp.Imp)
 
     Eq << Bool.Imp_And.given.Imp.Imp.apply(Eq[-1])
 

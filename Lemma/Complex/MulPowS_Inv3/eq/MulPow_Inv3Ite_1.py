@@ -14,7 +14,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Complex
 
     A, B = Symbol(complex=True, given=True)
     Eq << apply(A ** (S.One / 3) * B ** (S.One / 3) )
@@ -35,11 +35,11 @@ def prove(Eq):
 
     Eq <<= Bool.Imp.given.ImpEq.apply(Eq[-2]), Bool.Imp_Ite.given.Imp.apply(Eq[-1], invert=True)
 
-    Eq <<= Eq[-2].this.apply(Bool.Imp_Imp.Is.ImpAnd), Eq[-1].this.lhs.apply(Algebra.Or_Eq.Arg.of.Ceil.ne.Zero)
+    Eq <<= Eq[-2].this.apply(Bool.Imp_Imp.Is.ImpAnd), Eq[-1].this.lhs.apply(Complex.OrEqSCeil.of.CeilSubDivAddArgS.ne.Zero)
 
     Eq << Eq[-2].this.lhs.apply(Algebra.Eq.of.Ne_0.Ne_0.Eq.cubic_root)
 
-    Eq << Eq[-1].this.find(Greater).apply(Algebra.Gt_Arg.Is.Eq_Ceil, simplify=None)
+    Eq << Eq[-1].this.find(Greater).apply(Complex.GtAddArgS.Is.EqCeilSubDivS, simplify=None)
 
     Eq << Bool.ImpOr.given.Imp.Imp.apply(Eq[-1])
 

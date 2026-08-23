@@ -35,7 +35,7 @@ def prove(Eq):
     k = Symbol(integer=True) # time step counter
     Eq << Eq.eq_matmul.rhs._subs(oo, k).this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.rhs.find(Symbol * Pow).args[:2].apply(Algebra.Mul.eq.Pow.Add.exponent)
+    Eq << Eq[-1].this.rhs.find(Symbol * Pow).args[:2].apply(Real.MulPowS.eq.Pow_Add.of.Gt_0)
 
     Eq << Eq[-1].this.rhs.apply(Finset.Sum_Add.eq.AddSumS)
 

@@ -51,7 +51,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Div.cancel, n)
 
-    Eq << Eq[-1].this.rhs.find(Integral).expr.apply(Algebra.Mul.eq.Pow.Add.exponent)
+    Eq << Eq[-1].this.rhs.find(Integral).expr.apply(Real.MulPowS.eq.Pow_Add.of.Gt_0)
 
     Eq << Bool.UFn.of.UFn.Eq.apply(Eq[0], Eq[-1])
 

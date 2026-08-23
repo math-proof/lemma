@@ -79,7 +79,7 @@ def prove(Eq):
 
     Eq << Bool.Eq.of.Eq.Eq.apply(Eq[-1], Eq[-2])
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Arg.ExpMulI.eq.Mul.Arg)
+    Eq << Eq[-1].this.rhs.apply(Complex.ArgExpMulI.eq.DivArg)
 
     Eq << Eq[-1].this.find(Arg[Mul]).apply(Complex.ArgMulPowS.eq.SubMul_ArgMul)
 

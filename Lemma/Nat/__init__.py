@@ -64,3 +64,5 @@ from . import Any_Eq
 from . import EqPow0_0
 from . import GtPowS
 from . import ModSub
+from . import Delta
+from . import Mul_Delta

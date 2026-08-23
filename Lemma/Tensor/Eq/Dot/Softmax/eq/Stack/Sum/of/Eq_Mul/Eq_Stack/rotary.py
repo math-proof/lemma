@@ -46,7 +46,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(i, k - i)
 
-    Eq << Finset.Eq.of.Eq.rmatmul.apply(Eq[-1], Q[i])
+    Eq << Tensor.Dot.of.Eq.left.apply(Eq[-1], Q[i])
 
     Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Sum)
 

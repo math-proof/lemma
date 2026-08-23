@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq << Eq[-1].lhs.arg.this.args[1].apply(Finset.Stack.eq.Block.split, 1)
 
-    Eq << Finset.Eq.of.Eq.rmatmul.apply(Eq[-1], SwapMatrix(n + 1, 0, 1))
+    Eq << Tensor.Dot.of.Eq.left.apply(Eq[-1], SwapMatrix(n + 1, 0, 1))
 
     Eq << Eq[-1].this.rhs.args[0].apply(Algebra.One.eq.Block, 1)
 

@@ -10,16 +10,16 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Algebra, Nat
 
     x = Symbol(complex=True)
     Eq << apply(Element(x, Interval.open(-oo, 0)))
 
     Eq << Set.Lt_0.of.IsNegative.apply(Eq[0])
 
-    Eq << Algebra.Ne.of.Lt.apply(Eq[-1])
+    Eq << Nat.Ne.of.Lt.apply(Eq[-1])
 
-    
+
 
 
 if __name__ == '__main__':

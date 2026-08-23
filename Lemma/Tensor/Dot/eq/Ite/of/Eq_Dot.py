@@ -41,7 +41,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Le.given.Lt)
 
-    Eq << Bool.Cond_Ite.given.And.Imp.apply(Eq[1])
+    Eq << Bool.BFn_Ite.given.Imp.Imp.apply(Eq[1])
 
 
 

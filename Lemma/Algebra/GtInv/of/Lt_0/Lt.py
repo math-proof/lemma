@@ -18,13 +18,13 @@ def prove(Eq):
 
     Eq << ~Eq[-1]
 
-    Eq << Algebra.Ne.of.Lt.apply(Eq[0])
+    Eq << Nat.Ne.of.Lt.apply(Eq[0])
 
     Eq << Bool.Cond.of.Or_Not.Cond.apply(Eq[-1], Eq[-2])
 
     Eq.x_is_negative = Nat.Lt.of.Lt.Lt.apply(Eq[0], Eq[1])
 
-    Eq << Algebra.Ne.of.Lt.apply(Eq.x_is_negative)
+    Eq << Nat.Ne.of.Lt.apply(Eq.x_is_negative)
 
     Eq << Bool.Cond.of.Or_Not.Cond.apply(Eq[-1], Eq[-2])
 

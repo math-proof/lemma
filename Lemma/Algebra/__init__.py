@@ -38,7 +38,6 @@ from . import Floor
 from . import Sign
 from . import Sup
 from . import Any_Or
-from . import Gt_Arg
 from . import Le_Block
 from . import Lt_Block
 from . import All_And
@@ -160,10 +159,6 @@ from . import Sup_Add_Mul_Square
 from . import InvAdd_Inv
 from . import Ceil
 from . import Eq_Ceil
-from . import CeilSubDivArg
-from . import CeilAddDiv_2
-from . import LeDiv
-from . import LeLog
 from . import LeMul
 from . import LeSqrt
 from . import LeAdd
@@ -266,7 +261,6 @@ from . import GeSqrt_0
 from . import LeDivS
 from . import AddSumS_SquareSub
 from . import EqArg
-from . import EqMod
 from . import EqNeg
 from . import Ite
 from . import Eq_Ite
@@ -279,3 +273,6 @@ from . import GtDiv
 from . import GtMaxima
 from . import GeCeil
 from . import Mul_CeilDiv
+from . import LeLog
+from . import LeDiv
+from . import CeilAddDiv_2

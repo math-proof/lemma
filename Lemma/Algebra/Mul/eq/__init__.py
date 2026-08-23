@@ -7,7 +7,6 @@ from . import Im
 from . import Block
 from . import Square
 from . import Log
-from . import Pow
 from . import Sum
 from . import Re
 from . import Max

@@ -3,7 +3,6 @@ from . import Eq_Conditioned
 from . import Eq_Matrix
 from . import Ne_0
 from . import IsFinite
-from . import Eq
 from . import Eq_Dot
 from . import Eq_Stack
 from . import EqDot

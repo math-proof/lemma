@@ -30,13 +30,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite, 1)
 
-    Eq << Bool.Cond_Ite.given.And.Imp.apply(Eq[-1])
+    Eq << Bool.BFn_Ite.given.Imp.Imp.apply(Eq[-1])
 
     Eq << Bool.ImpOr.given.Imp.Imp.apply(Eq[-1])
 
     Eq <<= Eq[-2].this.lhs.apply(Algebra.Lt.of.Lt.Ge), Eq[-1].this.lhs.apply(Nat.Gt.of.Ge.Lt)
 
-    Eq << Eq[-2].this.lhs.apply(Algebra.Ne.of.Lt)
+    Eq << Eq[-2].this.lhs.apply(Nat.Ne.of.Lt)
 
     Eq << Eq[-1].this.lhs.apply(Nat.Ne.of.Gt)
 

@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Algebra, Bool, Nat
+    from Lemma import Finset, Algebra, Bool, Nat, Real
 
     k = Symbol(integer=True)
     n = Symbol(integer=True, nonnegative=True, given=False)
@@ -30,7 +30,7 @@ def prove(Eq):
 
     Eq << Eq[0] * x
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Mul.eq.Pow.Add.exponent)
+    Eq << Eq[-1].this.rhs.apply(Real.MulPowS.eq.Pow_Add.of.Gt_0)
 
     Eq << Eq[-1].this.lhs.apply(Finset.Mul_Sum.eq.Sum_Mul)
 

@@ -45,7 +45,7 @@ def prove(Eq):
 
     Eq << Eq[-2].subs(Eq[-1])
 
-    Eq << Algebra.Ne.of.Lt.apply(Eq.lt)
+    Eq << Nat.Ne.of.Lt.apply(Eq.lt)
 
     Eq << Algebra.EqSum.of.Ne.geometric_series.apply(Eq[-1], Eq[-2].rhs.find(Sum))
 

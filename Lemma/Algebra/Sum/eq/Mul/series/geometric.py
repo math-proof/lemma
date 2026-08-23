@@ -37,7 +37,7 @@ def prove(Eq):
     λ = Symbol(real=True)
     Eq << apply(Sum[k:n](λ ** k))
 
-    Eq << Bool.Cond_Ite.given.And.Imp.apply(Eq[0])
+    Eq << Bool.BFn_Ite.given.Imp.Imp.apply(Eq[0])
 
     Eq << Bool.Imp.given.ImpEq.apply(Eq[-2])
 

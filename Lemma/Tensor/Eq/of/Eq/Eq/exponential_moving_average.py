@@ -16,7 +16,7 @@ def apply(initial_condition, recurrence, n=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Tensor, Algebra, Nat
+    from Lemma import Finset, Tensor, Algebra, Nat, Real
 
     v, θ = Symbol(shape=(oo,), real=True)
     t, n = Symbol(integer=True)
@@ -62,7 +62,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Sum).expr.args[:3].apply(Nat.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.find(Pow * Pow).args[1:].apply(Algebra.Mul.eq.Pow.Add.exponent)
+    Eq << Eq[-1].this.find(Pow * Pow).args[1:].apply(Real.MulPowS.eq.Pow_Add.of.Gt_0)
 
     Eq << Eq[-1].this.rhs.args[:-1].apply(Nat.AddMulS.eq.Mul_Add)
 

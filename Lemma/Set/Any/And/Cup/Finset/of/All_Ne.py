@@ -53,7 +53,7 @@ def prove(Eq):
 
     Eq << Bool.All.given.Imp.apply(Eq.all_ne_piece)
 
-    Eq << Eq[-1].this.rhs.apply(Bool.Cond_Ite.given.And.Imp)
+    Eq << Eq[-1].this.rhs.apply(Bool.BFn_Ite.given.Imp.Imp)
 
     Eq << Bool.Imp_And.given.Imp.Imp.apply(Eq[-1])
 
@@ -75,7 +75,7 @@ def prove(Eq):
 
     Eq << Bool.All.given.Imp.apply(Eq.all_ge)
 
-    Eq << Eq[-1].this.rhs.apply(Bool.Cond_Ite.given.And.Imp)
+    Eq << Eq[-1].this.rhs.apply(Bool.BFn_Ite.given.Imp.Imp)
 
     Eq << Bool.Imp_And.given.Imp.Imp.apply(Eq[-1])
 
@@ -95,7 +95,7 @@ def prove(Eq):
 
     Eq << Bool.All.given.Imp.apply(Eq.all_ne)
 
-    Eq << Eq[-1].this.rhs.apply(Bool.Cond_Ite.given.And.Imp)
+    Eq << Eq[-1].this.rhs.apply(Bool.BFn_Ite.given.Imp.Imp)
 
     Eq << Bool.Imp_And.given.Imp.Imp.apply(Eq[-1])
 
@@ -103,7 +103,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.lhs.args[::2].apply(Set.In.Ico.Inter.of.Lt.In_Ico), Eq[-1].this.lhs.args[::2].apply(Set.In.Ico.Inter.of.Ge.In_Ico)
 
-    Eq <<= Eq[-2].this.rhs.apply(Bool.Cond_Ite.given.And.Imp), Eq[-1].this.rhs.apply(Bool.Cond_Ite.given.And.Imp)
+    Eq <<= Eq[-2].this.rhs.apply(Bool.BFn_Ite.given.Imp.Imp), Eq[-1].this.rhs.apply(Bool.BFn_Ite.given.Imp.Imp)
 
     Eq <<= Bool.Imp_And.given.Imp.Imp.apply(Eq[-2]), Bool.Imp_And.given.Imp.Imp.apply(Eq[-1])
 

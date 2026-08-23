@@ -57,7 +57,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(r[k], r[t] - r[i]).subs(c[k], c[t] - c[i])
 
-    Eq << Finset.Eq.of.Eq.rmatmul.apply(Eq[-1], Q[i])
+    Eq << Tensor.Dot.of.Eq.left.apply(Eq[-1], Q[i])
 
     Eq.theta_r, Eq.theta_c = Eq[0].subs(i, r[t] - r[i]), Eq[1].subs(j, c[t] - c[i])
 

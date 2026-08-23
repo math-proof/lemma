@@ -16,7 +16,7 @@ def prove(Eq):
 
     Eq << Eq[0].this.lhs.apply(Complex.ArgExpMulI.eq.Sub_Mul_Ceil)
 
-    Eq << Eq[-1].this.find(Ceil).apply(Algebra.CeilSubDivArg.eq.Zero)
+    Eq << Eq[-1].this.find(Ceil).apply(Complex.CeilSubDivArg.eq.Zero)
 
     # https://en.wikipedia.org/wiki/Argument_(complex_analysis)
 

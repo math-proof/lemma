@@ -16,7 +16,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Algebra, Tensor
+    from Lemma import Finset, Algebra, Tensor, Nat
 
     k = Symbol(integer=True)
     i = Symbol(integer=True, nonnegative=True)
@@ -46,7 +46,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Finset.Mul_Sum.eq.Sum_Mul)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Mul.Delta.subst)
+    Eq << Eq[-1].this.lhs.apply(Nat.Mul_Delta)
 
     Eq << Eq[-1].reversed
 

@@ -12,7 +12,7 @@ def apply(given, k=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     # n = q * d + r
     n = Symbol(integer=True, given=True)
@@ -20,7 +20,7 @@ def prove(Eq):
     Eq << apply(Equal(n % 2, 0))
 
 
-    Eq << Eq[1].this.expr.apply(Algebra.EqMod.of.Eq, 2)
+    Eq << Eq[1].this.expr.apply(Nat.Mod.of.Eq, 2)
 
 
 

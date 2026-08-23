@@ -15,9 +15,9 @@ def prove(Eq):
     i, j = Symbol(integer=True)
     Eq << apply(sin(x * KroneckerDelta(i, j)))
 
-    Eq << Eq[-1].this.find(KroneckerDelta).apply(Algebra.Delta.eq.Ite)
+    Eq << Eq[-1].this.find(KroneckerDelta).apply(Nat.Delta.eq.Ite)
 
-    Eq << Eq[-1].this.find(KroneckerDelta).apply(Algebra.Delta.eq.Ite)
+    Eq << Eq[-1].this.find(KroneckerDelta).apply(Nat.Delta.eq.Ite)
 
     Eq << Eq[-1].this.rhs.apply(Nat.Mul_Ite.eq.Ite_MulS)
 

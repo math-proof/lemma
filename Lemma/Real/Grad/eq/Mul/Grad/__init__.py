@@ -20,7 +20,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Real, Bool
+    from Lemma import Algebra, Real, Bool, Nat
 
     n = Symbol(integer=True, positive=True)
     f = Function(real=True)
@@ -28,7 +28,7 @@ def prove(Eq):
     i, j = Symbol(integer=True)
     Eq << apply(Derivative[x[i]](f(x[j])))
 
-    Eq << Eq[-1].this.find(KroneckerDelta).apply(Algebra.Delta.eq.Ite)
+    Eq << Eq[-1].this.find(KroneckerDelta).apply(Nat.Delta.eq.Ite)
 
     Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=Eq[-1].find(Equal))
 

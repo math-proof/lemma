@@ -99,7 +99,7 @@ def prove(Eq):
 
     Eq << Eq[-1] * 2 ** (k / 2 + S.Half)
 
-    Eq << Eq[-1].this.find(Pow * Pow).args[1:3].apply(Algebra.Mul.eq.Pow.Add.exponent)
+    Eq << Eq[-1].this.find(Pow * Pow).args[1:3].apply(Real.MulPowS.eq.Pow_Add.of.Gt_0)
 
     Eq << Eq[-1] * (sqrt(S.Pi) * Gamma(k / 2))
 
@@ -119,7 +119,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Integral)().find(Abs).simplify()
 
-    Eq << Eq[-1].this.find(sin * Pow).apply(Algebra.Mul.eq.Pow.Add.exponent)
+    Eq << Eq[-1].this.find(sin * Pow).apply(Real.MulPowS.eq.Pow_Add.of.Gt_0)
 
     Eq << Eq[-1].this.find(Integral).apply(Real.Integral.Sin.eq.Mul.gamma.wallis)
 

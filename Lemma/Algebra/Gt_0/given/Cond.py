@@ -15,7 +15,7 @@ def prove(Eq):
 
     Eq << Eq[0].this.find(functions.Bool).apply(Bool.Bool.eq.Ite)
 
-    Eq << Bool.Cond_Ite.given.And.Imp.apply(Eq[-1])
+    Eq << Bool.BFn_Ite.given.Imp.Imp.apply(Eq[-1])
 
 
 

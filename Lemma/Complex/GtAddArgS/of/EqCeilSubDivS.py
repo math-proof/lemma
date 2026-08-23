@@ -9,12 +9,12 @@ def apply(eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Int
+    from Lemma import Algebra, Int, Nat, Nat, Nat, Nat
 
     A, B = Symbol(complex=True, given=True)
     Eq << apply(Equal(Ceil((Arg(A) + Arg(B)) / (S.Pi * 2) - S.One / 2), 1))
 
-    Eq << Algebra.Gt_0.of.Eq.apply(Eq[0])
+    Eq << Nat.Gt_0.of.Gt_0.Eq.apply(Eq[0])
 
     Eq << Int.Gt_0.of.Lt0Ceil.apply(Eq[-1])
 

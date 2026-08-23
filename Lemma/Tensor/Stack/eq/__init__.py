@@ -1,4 +1,3 @@
-from . import Mul
 from . import Pow
 from . import ReducedMax
 from . import ReducedArgMin

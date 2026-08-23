@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq << Eq[0].reversed
 
-    Eq << Tensor.EqDot.of.Eq.apply(Eq[-1], Eq[-1].lhs.find(BlockMatrix)).reversed
+    Eq << Tensor.Dot.of.Eq.apply(Eq[-1], Eq[-1].lhs.find(BlockMatrix)).reversed
 
     Eq << Eq[-1].this.rhs.apply(Tensor.SEq_Append, n, n)
 

@@ -16,7 +16,7 @@ def prove(Eq):
 
     Eq << Bool.Iff.given.Imp.Imp.apply(Eq[0])
 
-    Eq << Eq[-2].this.lhs.apply(Algebra.Eq_Ceil.of.Gt_Arg)
+    Eq << Eq[-2].this.lhs.apply(Complex.EqCeilSubDivS.of.GtAddArgS)
     Eq << Eq[-1].this.lhs.apply(Complex.GtAddArgS.of.EqCeilSubDivS)
 
 

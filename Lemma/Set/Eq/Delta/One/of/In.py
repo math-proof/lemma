@@ -11,13 +11,13 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool
+    from Lemma import Algebra, Set, Bool, Nat
 
     x = Symbol(integer=True, given=True)
     given = Element(x, {0, 1})
     Eq << apply(given)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Delta.eq.Ite)
+    Eq << Eq[-1].this.lhs.apply(Nat.Delta.eq.Ite)
 
     Eq << Eq[-1].apply(Bool.Cond.given.Or.OrNot, cond=Equal(1, x))
 

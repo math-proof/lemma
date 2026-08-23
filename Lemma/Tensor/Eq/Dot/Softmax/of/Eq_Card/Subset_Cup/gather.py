@@ -93,7 +93,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq.a_def)
 
-    Eq << Eq[-1].this.find(Stack[Mul]).apply(Tensor.Stack.eq.Mul)
+    Eq << Eq[-1].this.find(Stack[Mul]).apply(Tensor.Stack_Mul.eq.MulStackS)
 
     Eq << Eq[-1].this.find(Stack[MatMul]).apply(Tensor.Stack_Dot.eq.DotSliceS)
 

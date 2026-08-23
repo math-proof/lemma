@@ -16,7 +16,7 @@ def prove(Eq):
     a, x = Symbol(real=True)
     Eq << apply(Unequal(x, a), x <= a + 1)
 
-    Eq << Algebra.Ne.of.Lt.apply(Eq[2])
+    Eq << Nat.Ne.of.Lt.apply(Eq[2])
 
     Eq << Nat.Le.of.Lt.apply(Eq[2])
 

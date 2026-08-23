@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Eq.is_negative.this.lhs.apply(Set.Lt_0.of.IsNegative)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Ne.of.Lt)
+    Eq << Eq[-1].this.lhs.apply(Nat.Ne.of.Lt)
 
     Eq << Eq[-1].this.lhs.apply(Int.GtAbs_0.of.Ne_0)
 
