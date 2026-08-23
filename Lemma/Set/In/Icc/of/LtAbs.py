@@ -11,12 +11,12 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set
+    from Lemma import Algebra, Set, Int
 
     x, a = Symbol(real=True, given=True)
     Eq << apply(abs(x) < a)
 
-    Eq << Algebra.And.of.LtAbs.apply(Eq[0])
+    Eq << Int.And.of.LtAbs.apply(Eq[0])
     Eq << Set.In_Ico.given.Le.Lt.apply(Eq[1])
 
 

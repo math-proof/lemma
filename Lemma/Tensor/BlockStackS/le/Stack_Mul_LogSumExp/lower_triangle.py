@@ -14,16 +14,16 @@ def apply(A, l):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Bool
+    from Lemma import Algebra, Tensor, Bool, Int
 
     n = Symbol(domain=Range(2, oo))
     l = Symbol(domain=Range(2, n + 1))
     A = Symbol(shape=(n, n), real=True)
     Eq << apply(A, l)
 
-    Eq << Algebra.Le.given.All.Le.apply(Eq[0])
+    Eq << Tensor.Le.given.All.Le.apply(Eq[0])
 
-    Eq << Algebra.Le.given.Le_0.apply(Eq[-1])
+    Eq << Int.Le.given.Le_0.apply(Eq[-1])
 
     Eq << Bool.BFn_Ite.given.OrAndS.apply(Eq[-1])
 
@@ -31,8 +31,8 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(LessEqual[Zeros]).apply(Algebra.Le_0.given.Le)
 
-    Eq << Eq[-1].this.find(LessEqual[BlockMatrix]).apply(Algebra.LeBlock.given.And.Le)
-    Eq.ou = Eq[-1].this.find(LessEqual[Mul, Log[ReducedSum[Exp]]]).apply(Algebra.Le.given.All.Le)
+    Eq << Eq[-1].this.find(LessEqual[BlockMatrix]).apply(Tensor.LeBlock.given.And.Le)
+    Eq.ou = Eq[-1].this.find(LessEqual[Mul, Log[ReducedSum[Exp]]]).apply(Tensor.Le.given.All.Le)
 
     Eq <<= Tensor.Le_LogSumExp.apply(Eq.ou.find(Sliced)), Tensor.Le_LogSumExp.apply(Eq.ou.args[1].find(Sliced))
 

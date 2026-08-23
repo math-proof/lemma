@@ -24,7 +24,7 @@ def prove(Eq):
     i = Symbol(integer=True)
     Eq << Algebra.Pow.Sum.eq.Sum.apply(Sum[i:3](x[i]) ** n)
 
-    Eq << Eq[-1].this.lhs.find(Sum).apply(Algebra.Sum.eq.Add.doit)
+    Eq << Eq[-1].this.lhs.find(Sum).apply(Finset.Sum.eq.Add.doit)
 
     Eq << Eq[-1].this.find(ReducedSum).apply(Algebra.ReducedSum.eq.Add.doit)
 

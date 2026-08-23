@@ -26,7 +26,7 @@ def prove(Eq):
     Eq << Eq[-1].this.expr.apply(Set.In.Ico.of.Lt.Ge)
 
 
-    Eq << Algebra.Any.of.Any_Eq.Cond.subst.apply(Eq[-1], Eq[2])
+    Eq << Bool.Any.of.Any_Eq.Cond.subst.apply(Eq[-1], Eq[2])
 
 
 

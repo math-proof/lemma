@@ -14,7 +14,7 @@ def apply(eq_cup):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Algebra, Nat
 
     X = Symbol(etype=dtype.real, given=True, finiteset=True)
     y = Symbol(real=True, given=True)
@@ -32,7 +32,7 @@ def prove(Eq):
 
     Eq << Set.EqCard.of.Eq.apply(Eq[-2])
 
-    Eq << Algebra.Le.of.Eq.Le.subst.apply(Eq[-1], Eq[-2])
+    Eq << Nat.Le.of.Eq.Le.subst.apply(Eq[-1], Eq[-2])
 
 
 if __name__ == '__main__':

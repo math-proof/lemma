@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq << Eq[-1].apply(Bool.AllIn.of.All, (k_,))
 
-    Eq << Algebra.All.given.And.All.apply(Eq[-2], cond=n.set)
+    Eq << Bool.All.given.And.All.apply(Eq[-2], cond=n.set)
 
     Eq << Eq[-1].this().expr.simplify()
 

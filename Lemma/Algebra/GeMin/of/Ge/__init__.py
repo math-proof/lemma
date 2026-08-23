@@ -9,16 +9,16 @@ def apply(given, m):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
     x, y, z = Symbol(real=True, given=True)
 
     Eq << apply(x >= y, z)
 
     Eq << Eq[-1] - y
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Add.eq.Min)
+    Eq << Eq[-1].this.lhs.apply(Nat.Add.eq.Min)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Add.eq.Min)
+    Eq << Eq[-1].this.rhs.apply(Nat.Add.eq.Min)
 
     Eq << Eq[0] - y
 

@@ -44,11 +44,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Finset.SumIco.eq.Sum_UFnAdd, -1)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.eq.Sub.unshift)
+    Eq << Eq[-1].this.lhs.apply(Finset.Sum.eq.Sub.unshift)
 
     Eq << Eq[-1] + x[0]
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.eq.Add.pop)
+    Eq << Eq[-1].this.lhs.apply(Finset.Sum.eq.Add.pop)
 
     Eq << Eq[-1] * c ** n
 

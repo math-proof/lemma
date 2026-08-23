@@ -36,7 +36,7 @@ def prove(Eq):
 
     Eq << Finset.Det.eq.Sum.expansion_by_minors.apply(Det(Eq.expand.rhs), i=0)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.eq.Add.shift)
+    Eq << Eq[-1].this.rhs.apply(Finset.Sum.eq.Add.shift)
 
     Eq << Eq[-1].this.rhs.find(Stack)().expr.simplify()
 
@@ -48,13 +48,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs().expr.simplify()
 
-    Eq << Algebra.All.Eq.of.Eq.apply(Eq[-1])
+    Eq << Tensor.All.Eq.of.Eq.apply(Eq[-1])
 
-    Eq << Eq[-1].this.expr.apply(Algebra.All.Eq.of.Eq)
+    Eq << Eq[-1].this.expr.apply(Tensor.All.Eq.of.Eq)
 
     Eq << Eq[-1].this.rhs.apply(Nat.AddMulS.eq.Mul_Add)
 
-    Eq.recursion = Algebra.All.of.All_Eq.Cond.subst.apply(Eq[-1], Eq.recursion)
+    Eq.recursion = Bool.All.of.All_Eq.Cond.subst.apply(Eq[-1], Eq.recursion)
 
     Eq << Eq.recursion.rhs.find(Det[~Stack]).this.find(Sum).doit()
 
@@ -66,13 +66,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Pow - Mul).apply(Nat.AddMulS.eq.Mul_Add)
 
-    Eq.recursion = Algebra.All.of.All_Eq.Cond.subst.apply(Eq[-1], Eq.recursion)
+    Eq.recursion = Bool.All.of.All_Eq.Cond.subst.apply(Eq[-1], Eq.recursion)
 
     Eq << Eq.recursion.rhs.args[0].this.doit()
 
     Eq.determinant = Eq[-1].this.find(Product).apply(Algebra.Prod.limits.subst.offset, -1)
 
-    Eq << Algebra.Cond.of.Cond.subst.apply(Eq[0], a[:n], a[1:n + 1])
+    Eq << Bool.Cond.of.Cond.subst.apply(Eq[0], a[:n], a[1:n + 1])
 
     k = Eq.determinant.find(Stack).variable
     Eq << Eq[-1].this.lhs.arg.limits_subs(j, k).this.lhs.arg.limits_subs(i, j).this.rhs.limits_subs(i, i - 1)
@@ -98,7 +98,7 @@ def prove(Eq):
 
     Eq << Bool.All.of.Cond.apply(Eq[-1], _i)
 
-    Eq << Algebra.All.of.All_Eq.Cond.subst.apply(Eq[-1], Eq.recursion)
+    Eq << Bool.All.of.All_Eq.Cond.subst.apply(Eq[-1], Eq.recursion)
 
     Eq << Eq.expand.apply(Finset.EqDet.of.Eq)
 

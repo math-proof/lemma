@@ -4,7 +4,7 @@ from util import *
 @apply
 def apply(eq_pow):
     A, B = eq_pow.of(Equal)
-    from Lemma.Algebra.Eq.of.Eq_Pow.Eq_Ceil.cubic_root import cubic_root
+    from Lemma.Complex.Eq.of.Eq_Pow.Eq_Ceil.cubic_root import cubic_root
     A = cubic_root(A)
     B = cubic_root(B)
 

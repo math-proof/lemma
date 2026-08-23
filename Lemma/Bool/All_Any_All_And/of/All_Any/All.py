@@ -32,7 +32,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.apply(Bool.Any_Or.given.OrAnyS, simplify=None)
 
-    Eq << Eq[-1].this.find(Any).apply(Algebra.Any.given.Cond, simplify=None)
+    Eq << Eq[-1].this.find(Any).apply(Bool.Any.given.Cond, simplify=None)
 
     Eq << Eq[-1].this.expr.apply(Bool.Or_Not.given.All)
 

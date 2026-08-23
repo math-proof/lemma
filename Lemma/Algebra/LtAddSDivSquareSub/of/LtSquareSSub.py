@@ -81,7 +81,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.expand()
 
-    Eq << Algebra.Le.given.Ge_0.apply(Eq[-1])
+    Eq << Nat.Le.given.Ge_0.apply(Eq[-1])
 
     Eq << Eq[-1] / 5 * 8
 

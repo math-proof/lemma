@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(self):
-    from Lemma.Algebra.Abs.Neg import rewrite
+    from Lemma.Int.Abs.Neg import rewrite
     return Equal(self, rewrite(cos, self), evaluate=False)
 
 

@@ -16,7 +16,7 @@ def apply(x, k=None):
 
 @prove(proved=False)
 def prove(Eq):
-    from Lemma import Algebra, Nat
+    from Lemma import Algebra, Nat, Bool, Finset, Tensor
     from Lemma.Finset.Sigma.eq.Add.recurrent import sigma
     n = Symbol(domain=Range(2, oo), given=False)
     x = Symbol(real=True, positive=True, shape=(oo,))
@@ -31,17 +31,17 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Product).apply(Algebra.Prod.eq.Mul.doit)
 
-    Eq << Eq[-1].this.find(All).apply(Algebra.All.Is.And.doit.outer)
+    Eq << Eq[-1].this.find(All).apply(Bool.All.Is.And.doit.outer)
 
-    Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.eq.Add.doit)
+    Eq << Eq[-1].this.find(Sum).apply(Finset.Sum.eq.Add.doit)
 
-    Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.limits.shift.CartesianSpace.Cond)
+    Eq << Eq[-1].this.find(Sum).apply(Tensor.Sum.limits.shift.CartesianSpace.Cond)
 
-    Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.eq.Add.doit.outer)
+    Eq << Eq[-1].this.find(Sum).apply(Finset.Sum.eq.Add.doit.outer)
 
-    Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.limits.delete.SetOf)
+    Eq << Eq[-1].this.find(Sum).apply(Finset.Sum.limits.delete.SetOf)
 
-    Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.limits.delete.SetOf)
+    Eq << Eq[-1].this.find(Sum).apply(Finset.Sum.limits.delete.SetOf)
 
     Eq << Eq[-1].this.find(Sum).simplify()
 
@@ -77,11 +77,11 @@ def prove(Eq):
 
     Eq.s_k1_neg = Eq[-1].reversed
 
-    Eq << Algebra.Cond.of.All.subst.apply(Eq[0], k, k_)
+    Eq << Bool.Cond.of.All.subst.apply(Eq[0], k, k_)
 
     Eq.hypothesis_k = Eq[-1].subs(t(k_).this.defun().reversed).subs(t(k_ + 1).this.defun().reversed)
 
-    Eq << Algebra.Cond.of.All.subst.apply(Eq[0], k, k_ - 1)
+    Eq << Bool.Cond.of.All.subst.apply(Eq[0], k, k_ - 1)
 
     Eq.hypothesis_k_1 = Eq[-1].subs(t(k_).this.defun().reversed).subs(t(k_ - 1).this.defun().reversed)
 

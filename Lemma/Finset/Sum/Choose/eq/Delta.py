@@ -13,7 +13,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Algebra, Set, Tensor, Int
+    from Lemma import Finset, Algebra, Set, Tensor, Int, Bool
 
     k = Symbol(integer=True)
     i = Symbol(integer=True, nonnegative=True)
@@ -25,15 +25,15 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(x, -1).subs(y, 1)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.limits.pop.CartesianSpace.Cond)
+    Eq << Eq[-1].this.rhs.apply(Tensor.Sum.limits.pop.CartesianSpace.Cond)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.limits.separate)
+    Eq << Eq[-1].this.rhs.apply(Finset.Sum.limits.separate)
 
-    Eq << Eq[-1].this.rhs.find(Sum).apply(Algebra.Sum.limits.pop.CartesianSpace.Cond, simplify=None)
+    Eq << Eq[-1].this.rhs.find(Sum).apply(Tensor.Sum.limits.pop.CartesianSpace.Cond, simplify=None)
 
     Eq << Eq[-1].this.rhs.find(Equal).apply(Int.EqAdd.Is.Eq_Sub, lhs=slice(1, None))
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.limits.separate)
+    Eq << Eq[-1].this.rhs.apply(Finset.Sum.limits.separate)
 
     Eq << Eq[-1].this.rhs.find(Sum).apply(Finset.Sum.eq.Sum_MulBool)
 
@@ -42,13 +42,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Finset.Sum_MulBoolAnd.eq.Sum)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.limits.separate)
+    Eq << Eq[-1].this.rhs.apply(Finset.Sum.limits.separate)
 
     Eq << Eq[-1].this.find(Element).apply(Set.In_Icc.Is.InNeg)
 
     Eq << Eq[-1].this.find(Element).apply(Set.In_Icc.Is.InAdd, n - k2)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.limits.separate)
+    Eq << Eq[-1].this.rhs.apply(Finset.Sum.limits.separate)
 
     Eq << Eq[-1].this.rhs().find(Min).simplify()
 
@@ -59,7 +59,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Sum).limits_subs(k1, k)
 
-    Eq << Eq[-1].this.rhs.find(Sum).apply(Algebra.Sum.limits.subst.Neg)
+    Eq << Eq[-1].this.rhs.find(Sum).apply(Finset.Sum.limits.subst.Neg)
 
     Eq << Eq[-1].this.rhs.apply(Tensor.Sum.eq.Dot)
 
@@ -67,7 +67,7 @@ def prove(Eq):
 
     Eq << Tensor.Eq.of.DotStack_Pow.independence.vector.apply(Eq[-1])
 
-    Eq << Algebra.Cond.of.All.subst.apply(Eq[-1], i_, i)
+    Eq << Bool.Cond.of.All.subst.apply(Eq[-1], i_, i)
 
     Eq << Eq[-1].this.find(Multinomial).simplify()
 

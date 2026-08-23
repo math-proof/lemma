@@ -32,9 +32,9 @@ def prove(Eq):
 
     Eq.induct = Eq.hypothesis.subs(k, k + 1)
 
-    Eq << Algebra.All.given.And.All.split.apply(Eq.induct, cond=Equal(j, k))
+    Eq << Bool.All.given.And.All.split.apply(Eq.induct, cond=Equal(j, k))
 
-    Eq << Algebra.Cond.of.All.subst.apply(Eq.Lij_is_real, i, k)
+    Eq << Bool.Cond.of.All.subst.apply(Eq.Lij_is_real, i, k)
 
     Eq <<= Eq.hypothesis & Eq[-1]
 
@@ -48,11 +48,11 @@ def prove(Eq):
 
     Eq << Set.IsReal.Sub.of.IsReal.IsReal.apply(Eq[-1], Eq[-2])
 
-    Eq.Lkk_is_positive = Algebra.Cond.of.All.subst.apply(Eq.Lii_is_positive, i, k)
+    Eq.Lkk_is_positive = Bool.Cond.of.All.subst.apply(Eq.Lii_is_positive, i, k)
 
     Eq << Set.IsReal.of.IsReal.IsPositive.apply(Eq[-1], Eq.Lkk_is_positive)
 
-    Eq << Algebra.Cond.of.All.subst.apply(Eq.Ati_def, i, k).this.find(MatMul).T
+    Eq << Bool.Cond.of.All.subst.apply(Eq.Ati_def, i, k).this.find(MatMul).T
 
     Eq <<= Eq[-2].subs(Eq[-1].reversed)
 

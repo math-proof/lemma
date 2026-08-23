@@ -38,13 +38,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.args[1].apply(Fin.Sum_BFn.comm)
 
-    Eq << Eq[-1].this.lhs.args[1].apply(Algebra.Sum.limits.separate)
+    Eq << Eq[-1].this.lhs.args[1].apply(Finset.Sum.limits.separate)
 
     Eq << Eq[-1].this.find(Sum[Pr[Conditioned]]).apply(Probability.Sum.eq.One.Conditioned)
 
     Eq << Eq[-1].this.lhs.apply(Fin.Sum_BFn.comm)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.limits.separate)
+    Eq << Eq[-1].this.lhs.apply(Finset.Sum.limits.separate)
 
     Eq << Eq[-1].this.find(Sum[Mul[~Sum]]).apply(Probability.Sum.eq.KL)
 

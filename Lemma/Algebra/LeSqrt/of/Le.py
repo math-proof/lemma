@@ -10,7 +10,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Int
 
     x, y = Symbol(real=True)
     Eq << apply(LessEqual(x * x, y * y))
@@ -29,9 +29,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Add >= 0) - y
 
-    Eq << Eq[-1].this.args[0].apply(Algebra.LeAbs.of.Le.Ge.both)
+    Eq << Eq[-1].this.args[0].apply(Int.LeAbs.of.Le.Ge.both)
 
-    Eq << Eq[-1].this.find(And).apply(Algebra.LeAbs.of.Le.Ge.both)
+    Eq << Eq[-1].this.find(And).apply(Int.LeAbs.of.Le.Ge.both)
 
 
 

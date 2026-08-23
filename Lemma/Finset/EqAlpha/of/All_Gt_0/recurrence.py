@@ -12,7 +12,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset, Bool, Set
+    from Lemma import Algebra, Finset, Bool, Set, Nat
     from Lemma.Finset.Alpha.gt.Zero import alpha
 
     x = Symbol(real=True, shape=(oo,))
@@ -42,9 +42,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.rhs.defun()
 
-    Eq << Algebra.Cond.of.Cond.subst.apply(Eq.hypothesis, x[:n + 2], x[1:n + 3])
+    Eq << Bool.Cond.of.Cond.subst.apply(Eq.hypothesis, x[:n + 2], x[1:n + 3])
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.All.limits.subst.offset, -1)
+    Eq << Eq[-1].this.lhs.apply(Nat.All.limits.subst.offset, -1)
 
     Eq << Eq[-1].this.lhs.apply(Set.AllIn.given.AllIn_Union, Range(1, n + 3))
 

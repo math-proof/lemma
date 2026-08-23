@@ -25,7 +25,7 @@ def solver_set(d, A, B, x, alpha, beta, w, offset=0):
 @apply
 def apply(fx, is_nonzero, x=None):
     from Lemma.Complex.ImpEq_0.ImpAnd_Eq_0.ImpAnd_Eq_1.ImpAnd_Eq_2.of.Eq0AddAddAddAddPow_4 import quartic_coefficient
-    from Lemma.Algebra.Add.eq.Zero.given.And.Eq.cubic.one_leaded import cubic_solve
+    from Lemma.Complex.Add.eq.Zero.given.And.Eq.cubic.one_leaded import cubic_solve
     from Lemma.Algebra.Ne.of.Ne_0.Add.eq.Zero import cubic_delta
     fx = fx.of(Equal[0])
     S[1], S[0], alpha, beta, gamma = quartic_coefficient(fx, x=x)
@@ -50,7 +50,7 @@ def apply(fx, is_nonzero, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool, Complex
 
     x, alpha, beta, gamma = Symbol(complex=True, given=True)
     fx = x ** 4 + alpha * x ** 2 + beta * x + gamma
@@ -60,19 +60,19 @@ def prove(Eq):
 
     Eq << Bool.Imp_And.of.ImpAnd.apply(Eq[-1])
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Or_Eq.of.Add.eq.Zero.Add.eq.Zero.Ne_0.quartic.depressed, x)
+    Eq << Eq[-1].this.rhs.apply(Complex.Or_Eq.of.Add.eq.Zero.Add.eq.Zero.Ne_0.quartic.depressed, x)
 
     Eq << Bool.Imp.of.Cond.apply(Eq[0] & Eq[1], cond=Eq[3].lhs)
 
     Eq << Bool.Imp_And.of.ImpAnd.apply(Eq[-1])
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Or_Eq.of.Add.eq.Zero.Mod.eq.Zero.Ne_0.quartic.depressed, x)
+    Eq << Eq[-1].this.rhs.apply(Complex.Or_Eq.of.Add.eq.Zero.Mod.eq.Zero.Ne_0.quartic.depressed, x)
 
     Eq << Bool.Imp.of.Cond.apply(Eq[0] & Eq[1], cond=Eq[4].lhs)
 
     Eq << Bool.Imp_And.of.ImpAnd.apply(Eq[-1])
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Or_Eq.of.Add.eq.Zero.Mod.eq.Zero.Ne_0.quartic.depressed, x)
+    Eq << Eq[-1].this.rhs.apply(Complex.Or_Eq.of.Add.eq.Zero.Mod.eq.Zero.Ne_0.quartic.depressed, x)
 
     # https://planetmath.org/QuarticFormula
     # https://en.wikipedia.org/wiki/Quartic_equation

@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Algebra.Gt.of.Gt.Le.apply(Eq[0], Eq[-1])
 
-    Eq << Algebra.LeDiv.of.Gt_0.Le.apply(Eq[-2], Eq[0])
+    Eq << Rat.LeDiv.of.Gt_0.Le.apply(Eq[-2], Eq[0])
 
 
     Eq << Rat.GeDivS.of.Ge.Gt_0.apply(Eq[-2], Eq[-1])

@@ -16,7 +16,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Finset
 
     x = Function(real=True)
     i, k = Symbol(integer=True)
@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq << Eq[0].this.find(Difference).doit()
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.eq.Sub.telescope)
+    Eq << Eq[-1].this.lhs.apply(Finset.Sum.eq.Sub.telescope)
 
 
 if __name__ == '__main__':

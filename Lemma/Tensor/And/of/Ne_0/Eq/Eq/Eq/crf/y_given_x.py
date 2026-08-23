@@ -32,7 +32,7 @@ def apply(x_independence_assumption, y_independence_assumption, xy_independence_
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Set, Bool, Probability, Real, Int
+    from Lemma import Tensor, Algebra, Set, Bool, Probability, Real, Int, Finset
 
     from Lemma.Tensor.Eq.of.Ne_0.Eq.Eq.Eq.crf.markov import markov_assumptions
     d, n = Symbol(domain=Range(2, oo))
@@ -68,11 +68,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Exp).apply(Real.ExpAdd.eq.MulExpS)
 
-    Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.limits.pop.Slice)
+    Eq << Eq[-1].this.find(Sum).apply(Tensor.Sum.limits.pop.Slice)
 
-    Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.limits.separate)
+    Eq << Eq[-1].this.find(Sum).apply(Finset.Sum.limits.separate)
 
-    Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.eq.ReducedSum)
+    Eq << Eq[-1].this.find(Sum).apply(Tensor.Sum.eq.ReducedSum)
 
     Eq << Eq[-1].this.find(Stack).apply(Tensor.Stack.ReducedSum.eq.Dot)
 

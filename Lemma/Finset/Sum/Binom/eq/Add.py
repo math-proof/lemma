@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.expr.args[1].apply(Algebra.Mul.Neg)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.eq.Sub.telescope)
+    Eq << Eq[-1].this.lhs.apply(Finset.Sum.eq.Sub.telescope)
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Mul.Neg, 1)
 

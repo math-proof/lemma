@@ -75,7 +75,7 @@ def prove(Eq):
 
     Eq.lt = Algebra.Lt.of.Lt.relax.apply(Eq[-1], upper=Min(n, u))
 
-    Eq << Algebra.Le.of.Le.relax.apply(Eq[-2], upper=Min(l - 1, n - 1))
+    Eq << Nat.Le.of.Le.relax.apply(Eq[-2], upper=Min(l - 1, n - 1))
 
     Eq.ge = -Eq[-1].this.rhs.apply(Algebra.Min.eq.Add)
 

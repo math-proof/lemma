@@ -13,7 +13,7 @@ def apply(eq, sgm):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Algebra, Finset
 
     n = Symbol(integer=True, positive=True)
     x = Symbol(real=True)
@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq << Set.All.Ne.of.Eq.apply(Eq[0])
 
-    Eq << Algebra.EqSum.of.All_Ne.double_limits.apply(Eq[-1], Eq[1].lhs)
+    Eq << Finset.EqSum.of.All_Ne.double_limits.apply(Eq[-1], Eq[1].lhs)
 
 
 

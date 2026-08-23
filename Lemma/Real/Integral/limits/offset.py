@@ -15,7 +15,7 @@ def apply(self, offset):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Real
+    from Lemma import Algebra, Real, Int
 
     x, a, b, d = Symbol(real=True)
     f = Function(real=True, integrable=True)
@@ -25,7 +25,7 @@ def prove(Eq):
     fn = Function("f^-", real=True, eval=lambda x: (abs(f(x)) - f(x)) / 2)
     Eq << fp(x).this.defun()
 
-    Eq << Algebra.Add_Abs.ge.Zero.apply(f(x)) / 2
+    Eq << Int.Add_Abs.ge.Zero.apply(f(x)) / 2
 
     Eq.fp_is_nonnegative = Eq[-1].subs(Eq[-2].reversed)
 

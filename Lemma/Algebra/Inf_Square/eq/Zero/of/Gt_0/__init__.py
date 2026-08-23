@@ -26,7 +26,7 @@ def prove(Eq):
     t = Symbol(real=True)
     Eq <<= Algebra.LeInf.given.All_Any_Lt.apply(Eq[-2], t), Algebra.GeInf.given.All.Ge.apply(Eq[-1])
 
-    Eq << Algebra.All.given.And.All.split.apply(Eq[-1], cond=t <= M ** 2)
+    Eq << Bool.All.given.And.All.split.apply(Eq[-1], cond=t <= M ** 2)
 
     Eq <<= Eq[-2].this.expr.apply(Bool.Any_UFn.given.UFnUFn, x, sqrt(t) / 2)
 
@@ -44,7 +44,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.lhs.apply(Set.Le.Le.of.In_Icc), Eq[-1].this.rhs * 4
 
-    Eq <<= Eq[-2].this.lhs.apply(Algebra.LeSqrt.of.Gt_0.Le, ret=0), Eq[-1].this.rhs.reversed
+    Eq <<= Eq[-2].this.lhs.apply(Real.LeSqrt.of.Gt_0.Le, ret=0), Eq[-1].this.rhs.reversed
 
     Eq <<= Eq[-2].subs(Eq[2]), Eq[-1].this.lhs.apply(Nat.Gt_Sub_1.of.Gt, lower=0, ret=0)
 

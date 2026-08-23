@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(is_positive, lt, fx, x=None, left_open=True, right_open=True):
-    from Lemma.Algebra.Le.of.Le.Ge.quadratic import quadratic_coefficient
+    from Lemma.Real.Le.of.Le.Ge.quadratic import quadratic_coefficient
     m, M = lt.of(Less)
     a = is_positive.of(Expr > 0)
 
@@ -50,7 +50,7 @@ def prove(Eq):
 
     Eq << Bool.And_And.given.And.Cond.apply(Eq[-1])
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Add.eq.Max)
+    Eq << Eq[-1].this.lhs.apply(Nat.Add.eq.Max)
 
     Eq << Eq[-1].this.find(Add ** 2).apply(Nat.SquareAdd.eq.AddAdd_SquareS_Mul2Add)
 

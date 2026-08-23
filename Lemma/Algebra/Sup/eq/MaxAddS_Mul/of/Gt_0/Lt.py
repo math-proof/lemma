@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << Nat.EqMax.of.Lt.apply(Eq[-1]) + b
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Add.eq.Max)
+    Eq << Eq[-1].this.lhs.apply(Nat.Add.eq.Max)
     Eq << Algebra.Sup.eq.Add_Mul.of.Gt_0.Lt.apply(Eq[0], Eq[1], a * x + b, x)
     Eq << Eq[-1].subs(Eq[-2].reversed)
 

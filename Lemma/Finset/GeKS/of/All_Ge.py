@@ -34,7 +34,7 @@ def prove(Eq):
 
     Eq << Bool.Imp.given.Cond.apply(Eq[-1])
 
-    Eq << Algebra.Cond.of.All.subst.apply(Eq[0], i, 1)
+    Eq << Bool.Cond.of.All.subst.apply(Eq[0], i, 1)
 
     _n = Symbol('n', domain=Range(2, oo))
 

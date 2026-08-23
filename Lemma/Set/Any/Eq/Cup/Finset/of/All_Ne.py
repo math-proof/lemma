@@ -15,7 +15,7 @@ def apply(all_historic, y=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool
+    from Lemma import Set, Algebra, Bool, Real
 
     i, j = Symbol(integer=True)
     n = Symbol(integer=True, positive=True, given=False)
@@ -33,7 +33,7 @@ def prove(Eq):
     Eq << Eq.induct.this.lhs.apply(Set.Any.And.Cup.Finset.of.All_Ne)
 
     a = Eq[-1].lhs.variable
-    Eq << Algebra.Cond.of.Cond.subst.apply(Eq[2], x[:n], a[:n])
+    Eq << Bool.Cond.of.Cond.subst.apply(Eq[2], x[:n], a[:n])
 
     Eq << Bool.Imp.given.And.Imp.invert.apply(Eq[-2], cond=Eq[-1])
 
@@ -57,7 +57,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Equal & Greater).apply(Algebra.Gt.of.Eq.Gt, ret=0)
 
-    Eq << Eq[-1].this.lhs.expr.apply(Algebra.Any.And.of.Any.Any, simplify=0)
+    Eq << Eq[-1].this.lhs.expr.apply(Bool.Any.And.of.Any.Any, simplify=0)
 
     Eq << Eq[-1].this.find(Equal[Cup]).apply(Set.EqReducedMax.of.Eq_Cup, ret=0, simplify=None)
 
@@ -77,11 +77,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Greater).reversed
 
-    Eq << Eq[-1].this.find(Less).apply(Algebra.All.Lt.of.LtMaxima)
+    Eq << Eq[-1].this.find(Less).apply(Real.All.Lt.of.LtMaxima)
 
-    Eq << Eq[-1].this.find(All).apply(Algebra.Cond.of.All.subst, i, n - 1)
+    Eq << Eq[-1].this.find(All).apply(Bool.Cond.of.All.subst, i, n - 1)
 
-    Eq << Eq[-1].this.find(And).args[1:].apply(Algebra.All.of.Cond.All.push)
+    Eq << Eq[-1].this.find(And).args[1:].apply(Bool.All.of.Cond.All.push)
 
     Eq << Eq[-1].this.lhs.apply(Bool.AnySetOf.of.Any_And, 1)
 

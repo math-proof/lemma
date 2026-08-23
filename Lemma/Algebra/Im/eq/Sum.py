@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Finset
 
     x = Symbol(real=True)
     f = Function(complex=True)
@@ -19,9 +19,9 @@ def prove(Eq):
 
     Eq << Eq[0].subs(n, n + 1)
 
-    Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.eq.Add.pop)
+    Eq << Eq[-1].this.find(Sum).apply(Finset.Sum.eq.Add.pop)
 
-    Eq << Eq[-1].this.lhs.find(Sum).apply(Algebra.Sum.eq.Add.pop)
+    Eq << Eq[-1].this.lhs.find(Sum).apply(Finset.Sum.eq.Add.pop)
 
     Eq << Imply(Eq[0], Eq[1], plausible=True)
 

@@ -46,7 +46,7 @@ def prove(Eq):
 
     Eq << Eq.induct.this.lhs.defun()
 
-    Eq << Algebra.Cond.of.Cond.subst.apply(Eq[0], x[:n], x[1:n + 1])
+    Eq << Bool.Cond.of.Cond.subst.apply(Eq[0], x[:n], x[1:n + 1])
 
     Eq << Eq[-1].apply(Rat.Lt0Div.of.Gt_0)
 

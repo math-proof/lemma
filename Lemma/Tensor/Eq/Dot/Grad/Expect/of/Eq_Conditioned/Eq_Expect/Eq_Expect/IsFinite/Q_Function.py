@@ -40,7 +40,7 @@ def prove(Eq):
 
     Eq.le_sup = Nat.Le.of.Le.Le.apply(Eq[-2], Eq[-1])
 
-    Eq << Algebra.All_Le_Sup.apply(Eq[3].lhs)
+    Eq << Real.All_Le_Sup.apply(Eq[3].lhs)
 
     Eq << Bool.All.of.Cond.apply(Eq[-1], s[t].var, simplify=None)
 

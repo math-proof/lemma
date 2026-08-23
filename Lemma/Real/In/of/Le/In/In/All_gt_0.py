@@ -21,7 +21,7 @@ def apply(le, contains0, contains1, all_is_positive):
 
 @prove(proved=False)
 def prove(Eq):
-    from Lemma import Set, Real, Algebra
+    from Lemma import Set, Real, Algebra, Nat
 
     a, b, x, x0, x1 = Symbol(real=True)
     f = Function(real=True)
@@ -52,7 +52,7 @@ def prove(Eq):
 
     Eq << Bool.And_And.of.And.apply(Eq[-1])
 
-    Eq << Algebra.Le.of.Ge_0.apply(Eq[-2])
+    Eq << Nat.Le.of.Ge_0.apply(Eq[-2])
 
 
 

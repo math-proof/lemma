@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(self):
-    from Lemma.Algebra.Sum.limits.swap.subst import rewrite
+    from Lemma.Finset.Sum.limits.swap.subst import rewrite
     return Equal(self, rewrite(Cap, self))
 
 

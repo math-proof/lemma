@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool
+    from Lemma import Algebra, Set, Bool, Real, Nat
 
     n = Symbol(integer=True, positive=True)
     x = Symbol(real=True, shape=(oo,))
@@ -18,13 +18,13 @@ def prove(Eq):
 
     Eq << Eq[1].this.rhs.apply(Algebra.ReducedMax.eq.Maxima)
 
-    Eq << Algebra.All_Le_Maxima.apply(Eq[-1].rhs)
+    Eq << Real.All_Le_Maxima.apply(Eq[-1].rhs)
 
     Eq << Set.Any_In.of.In_Cup.apply(Eq[0])
 
     Eq << Bool.Any_And.of.Any.All.All_Imp.apply(Eq[-2], Eq[-1])
 
-    Eq << Eq[-1].this.expr.apply(Algebra.Le.of.Eq.Le)
+    Eq << Eq[-1].this.expr.apply(Nat.Le.of.Eq.Le)
 
 
 if __name__ == '__main__':

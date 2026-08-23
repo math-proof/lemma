@@ -34,7 +34,7 @@ def prove(Eq):
 
     Eq << Eq[1].subs(k, 0).subs(Eq[0].subs(k, 0))
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Block.eq.Eye)
+    Eq << Eq[-1].this.rhs.apply(Tensor.Block.eq.Eye)
 
     Eq << Eq[-3].subs(Eq[-1])
 

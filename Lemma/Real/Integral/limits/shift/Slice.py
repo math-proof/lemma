@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(self, index=0):
-    from Lemma.Algebra.Sum.limits.shift.Slice import rewrite
+    from Lemma.Tensor.Sum.limits.shift.Slice import rewrite
     return Equal(self, rewrite(Integral, self, index))
 
 

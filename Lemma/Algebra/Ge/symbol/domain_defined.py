@@ -10,14 +10,14 @@ def apply(x):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Set
 
     a, b = Symbol(real=True)
     domain=Interval(a, b)
     x = Symbol(domain=domain)
     Eq << apply(x)
 
-    Eq << Algebra.Le.symbol.domain_defined.apply(x)
+    Eq << Set.Le.symbol.domain_defined.apply(x)
 
     Eq << Eq[-1].reversed
 

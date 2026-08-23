@@ -41,9 +41,9 @@ def prove(Eq):
 
     Eq << Finset.Binom.eq.Add.Pascal.apply(Binomial(n + 1, k))
 
-    Eq << Algebra.Cond.given.And.subst.apply(Eq.induct, *Eq[-1].args)
+    Eq << Bool.Cond.given.And.subst.apply(Eq.induct, *Eq[-1].args)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.Mul.eq.Add)
+    Eq << Eq[-1].this.rhs.apply(Finset.Sum.Mul.eq.Add)
 
     Eq << Imply(Eq[0], Eq.induct, plausible=True)
 

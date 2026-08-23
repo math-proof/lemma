@@ -10,13 +10,13 @@ def apply(fraction):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Rat
+    from Lemma import Algebra, Rat, Int
     x = Symbol(real=True)
     Eq << apply(frac(x))
 
     Eq << Eq[-1].this.lhs.apply(Rat.Frac.eq.Sub_Floor)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Ceil.eq.Add.Frac)
+    Eq << Eq[-1].this.rhs.apply(Int.Ceil.eq.Add.Frac)
 
     Eq << Eq[-1].this.find(FractionalPart).apply(Rat.Frac.eq.Sub_Floor)
 

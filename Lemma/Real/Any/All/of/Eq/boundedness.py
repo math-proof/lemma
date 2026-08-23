@@ -42,7 +42,7 @@ def prove(Eq):
 
     Eq.less_than = Eq[-1].this.expr.expr.apply(Nat.Le.of.Lt)
 
-    Eq << Algebra.All_GeMaxima.apply(Maxima[n:N + 1](abs(x[n])))
+    Eq << Real.All_GeMaxima.apply(Maxima[n:N + 1](abs(x[n])))
 
     Eq << LessEqual(Maxima[n:N + 1](abs(x[n])), M, plausible=True)
 
@@ -50,12 +50,12 @@ def prove(Eq):
 
     Eq << Eq[-2].this.expr.apply(Nat.Le.of.Ge.Le, Eq[-1])
 
-    Eq.any = Algebra.Any.All.of.Any_All.All.apply(Eq.less_than, Eq[-1])
+    Eq.any = Bool.Any.All.of.Any_All.All.apply(Eq.less_than, Eq[-1])
 
-    Eq << Algebra.Any.given.Any.subst.apply(Eq[1], Eq[1].variable, M)
+    Eq << Bool.Any.given.Any.subst.apply(Eq[1], Eq[1].variable, M)
 
     Eq << Eq[-1].this.find(Element).apply(Set.In.given.Gt_0)
-    Eq << Eq[-1].this.find(All).apply(Algebra.All.limits.domain_defined)
+    Eq << Eq[-1].this.find(All).apply(Bool.All.limits.domain_defined)
 
     Eq.is_nonzero = Unequal(M, 0, plausible=True)
 
@@ -63,13 +63,13 @@ def prove(Eq):
 
     Eq << ~Eq[-1]
 
-    Eq << Eq[-1].this.expr.apply(Algebra.And.Ge.of.Eq_Max, simplify=None)
+    Eq << Eq[-1].this.expr.apply(Nat.And.Ge.of.Eq_Max, simplify=None)
 
     Eq << Eq[-1].this.expr.args[0].apply(Nat.Eq_0.of.Le_0, simplify=None)
 
-    Eq << Eq[-1].this.find(Equal[0]).apply(Algebra.And.Ge.of.Eq_Max, simplify=None)
+    Eq << Eq[-1].this.find(Equal[0]).apply(Nat.And.Ge.of.Eq_Max, simplify=None)
 
-    Eq << Eq[-1].this.expr.apply(Algebra.And.of.And.delete, index=-1)
+    Eq << Eq[-1].this.expr.apply(Bool.And.of.And.delete, index=-1)
 
     Eq << Eq[-1].this.args[0].apply(Algebra.Eq_0.of.Abs.le.Zero)
 

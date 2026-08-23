@@ -16,14 +16,14 @@ def apply(given, index=-1):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Nat
 
     x, y, z = Symbol(real=True, given=True)
     Eq << apply(x > Max(y, z))
 
     Eq << Bool.Iff.given.Imp.Imp.apply(Eq[0])
 
-    Eq << Eq[-2].this.lhs.apply(Algebra.And.Gt.of.Gt_Max)
+    Eq << Eq[-2].this.lhs.apply(Nat.And.Gt.of.Gt_Max)
 
     Eq << Eq[-1].this.lhs.apply(Algebra.GtMax.of.Gt.Gt)
 

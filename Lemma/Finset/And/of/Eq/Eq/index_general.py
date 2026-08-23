@@ -105,7 +105,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.args[::2].apply(Bool.Cond.of.Eq.Cond.subst, ret=0)
 
-    Eq << Eq[-1].this.expr.apply(Algebra.And.of.And.delete)
+    Eq << Eq[-1].this.expr.apply(Bool.And.of.And.delete)
 
     Eq << Eq.j_equality.limits_subs(a, b)
 

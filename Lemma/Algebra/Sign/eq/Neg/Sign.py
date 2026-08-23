@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Mul).apply(Algebra.Mul.Neg)
 
-    Eq << Eq[-1].this.rhs.find(Abs).apply(Algebra.Abs.Neg)
+    Eq << Eq[-1].this.rhs.find(Abs).apply(Int.Abs.Neg)
 
 
 if __name__ == '__main__':

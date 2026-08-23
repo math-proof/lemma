@@ -10,14 +10,14 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Bool
 
     x, a, b = Symbol(real=True)
     f, g = Function(shape=(), real=True)
     Eq << apply(All[x:a:b](Equal(f(x), g(x))))
 
     x_ = Symbol("x", domain=Interval.open(a, b))
-    Eq << Algebra.Cond.of.All.subst.apply(Eq[0], x, x_)
+    Eq << Bool.Cond.of.All.subst.apply(Eq[0], x, x_)
 
     Eq << Eq[1].this.lhs.limits_subs(x, x_)
 

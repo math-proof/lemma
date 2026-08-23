@@ -41,7 +41,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(alpha).defun()
 
-    Eq << Algebra.Cond.of.Cond.subst.apply(Eq[0], x[:n + 2], x[1:n + 3])
+    Eq << Bool.Cond.of.Cond.subst.apply(Eq[0], x[:n + 2], x[1:n + 3])
 
     Eq << Finset.Alpha.ne.Zero.apply(x[1:n + 3])
 

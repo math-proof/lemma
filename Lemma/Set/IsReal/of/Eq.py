@@ -10,13 +10,13 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Bool
 
     x = Symbol(super_complex=True)
     e = Symbol(real=True)
     Eq << apply(Equal(x, e))
 
-    Eq << Algebra.Any.of.Cond.apply(Eq[0], e)
+    Eq << Bool.Any.of.Cond.apply(Eq[0], e)
 
 
 if __name__ == '__main__':

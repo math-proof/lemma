@@ -19,7 +19,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Real, Bool, Nat
 
     x, a, b = Symbol(real=True)
     f = Function(real=True)
@@ -28,17 +28,17 @@ def prove(Eq):
     y = Symbol(Eq[0].lhs)
     Eq << y.this.definition.reversed
 
-    Eq << Algebra.And.of.Eq.squeeze.apply(Eq[-1])
+    Eq << Nat.And.of.Eq.squeeze.apply(Eq[-1])
 
-    Eq <<= Algebra.All.Le.of.LeSup.apply(Eq[-2]), Algebra.All.Any.Gt.of.GeSup.apply(Eq[-1])
+    Eq <<= Real.All.Le.of.LeSup.apply(Eq[-2]), Real.All.Any.Gt.of.GeSup.apply(Eq[-1])
 
     Eq << Eq[0].subs(Eq[1]).reversed
 
     Eq << Algebra.Eq.given.And.squeeze.apply(Eq[-1])
 
-    Eq <<= Algebra.LeSup.given.All.Le.apply(Eq[-2]), Algebra.GeSup.given.All_Any_Gt.apply(Eq[-1])
+    Eq <<= Real.LeSup.given.All.Le.apply(Eq[-2]), Algebra.GeSup.given.All_Any_Gt.apply(Eq[-1])
 
-    Eq <<= Eq[-2].this.apply(Algebra.All.limits.Neg), Eq[-1].this.expr.apply(Algebra.Any.limits.Neg)
+    Eq <<= Eq[-2].this.apply(Bool.All.limits.Neg), Eq[-1].this.expr.apply(Bool.Any.limits.Neg)
 
 
 if __name__ == '__main__':

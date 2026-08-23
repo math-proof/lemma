@@ -13,7 +13,7 @@ def apply(given, index=0):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Algebra, Bool
 
     n = Symbol(complex=True, positive=True)
     A = Symbol(etype=dtype.complex[n])
@@ -21,7 +21,7 @@ def prove(Eq):
     Eq << apply(Subset({x, y}, A))
 
     Eq << Set.All_In.of.Subset.apply(Eq[0])
-    Eq << Algebra.Cond.of.All.subst.apply(Eq[-1], Eq[-1].variable, x)
+    Eq << Bool.Cond.of.All.subst.apply(Eq[-1], Eq[-1].variable, x)
 
 
 if __name__ == '__main__':

@@ -3,3 +3,5 @@ from . import Zero
 from . import MulBoolS
 from . import One
 from . import SquareBool
+from . import Delta
+from . import PowBool

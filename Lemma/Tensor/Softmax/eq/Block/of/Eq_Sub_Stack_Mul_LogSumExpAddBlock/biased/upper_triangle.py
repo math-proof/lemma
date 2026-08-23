@@ -32,9 +32,9 @@ def prove(Eq):
             Stack[i:n - u](A[i, i:i + u]),
             Stack[i:u](BlockMatrix(A[i + n - u, n - u + i:], -oo * Ones(i)))) - Stack[i:n](Ones(u) * Log(ReducedSum(Exp(A[i, i:Min(n, i + u)] + BlockMatrix(H[i], Zeros(Min(n - i, u) - 1))))))))
 
-    Eq << Eq[0].this.find(BlockMatrix[1]).apply(Algebra.Block.split, n - Min(u, n))
+    Eq << Eq[0].this.find(BlockMatrix[1]).apply(Tensor.Block.split, n - Min(u, n))
 
-    Eq << Add(*Eq[-1].find(Add[BlockMatrix]).args[:2]).this.apply(Algebra.Add.Block.eq.Block)
+    Eq << Add(*Eq[-1].find(Add[BlockMatrix]).args[:2]).this.apply(Tensor.Add.Block.eq.Block)
 
     Eq.z_def = Eq[-2].subs(Eq[-1])
 
@@ -79,9 +79,9 @@ def prove(Eq):
 
     Eq << Bool.AllIn.of.All.apply(Eq[-1], (i, 0, n - Min(u, n)))
 
-    Eq << Algebra.All.Eq.Slice.of.All_Eq.apply(Eq[-1], slice(i, i + Min(u, n)))
+    Eq << Tensor.All.Eq.Slice.of.All_Eq.apply(Eq[-1], slice(i, i + Min(u, n)))
 
-    Eq << Eq[-1].this.find(KroneckerDelta).apply(Algebra.Delta.offset, -i)
+    Eq << Eq[-1].this.find(KroneckerDelta).apply(Nat.Delta.offset, -i)
 
     Eq << Eq[-1].this.find(Mul).apply(Tensor.Expr.eq.Stack, simplify=None)
 
@@ -99,7 +99,7 @@ def prove(Eq):
 
     Eq << Eq.A_def[i][i:Min(n, i + u)]
 
-    Eq << Eq[-1].this.find(KroneckerDelta).apply(Algebra.Delta.offset, -i)
+    Eq << Eq[-1].this.find(KroneckerDelta).apply(Nat.Delta.offset, -i)
 
     Eq << Eq[-1].this.find(Mul[Stack]).apply(Tensor.Expr.eq.Stack, simplify=None)
 

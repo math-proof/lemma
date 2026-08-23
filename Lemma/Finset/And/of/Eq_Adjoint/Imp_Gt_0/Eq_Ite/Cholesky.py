@@ -35,9 +35,9 @@ def prove(Eq):
 
     Eq.A_lower = Bool.Imp.of.AllSetOf.apply(Eq[-3])
 
-    Eq.L_lower = Algebra.All.of.Cond.All.push.apply(Eq[-1], Eq[-2])
+    Eq.L_lower = Bool.All.of.Cond.All.push.apply(Eq[-1], Eq[-2])
 
-    Eq << Algebra.All.of.All.limits.domain_defined.apply(Eq[-3])
+    Eq << Bool.All.of.All.limits.domain_defined.apply(Eq[-3])
 
     Eq.L_is_zero = Bool.Imp.of.Cond_Ite.apply(Eq[2], -1)
 
@@ -68,7 +68,7 @@ def prove(Eq):
 
     Eq << Bool.All.of.Imp.apply(Eq[-1])
 
-    Eq << Algebra.All.of.All.limits.domain_defined.apply(Eq[-1])
+    Eq << Bool.All.of.All.limits.domain_defined.apply(Eq[-1])
 
     Eq.A_ij = Equal(A[i, j], Piecewise(
         (Eq.A_lower.rhs.rhs, j < i),
@@ -85,7 +85,7 @@ def prove(Eq):
 
     Eq << Bool.Imp.given.Cond.apply(Eq[-1])
 
-    Eq <<= Algebra.All.given.All.limits.domain_defined.apply(Eq[-3]), Algebra.All.given.All.limits.domain_defined.apply(Eq[-2])
+    Eq <<= Bool.All.given.All.limits.domain_defined.apply(Eq[-3]), Bool.All.given.All.limits.domain_defined.apply(Eq[-2])
 
     Eq << Eq.A_ij.this.rhs.apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite, 1)
 

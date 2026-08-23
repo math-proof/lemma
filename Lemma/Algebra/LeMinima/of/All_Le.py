@@ -10,7 +10,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Nat
+    from Lemma import Algebra, Bool, Nat, Real
 
     x = Symbol(real=True)
     S = Symbol(etype=dtype.real, given=True, empty=False)
@@ -18,7 +18,7 @@ def prove(Eq):
     M = Symbol(real=True)
     Eq << apply(All[x:S](f(x) <= M))
 
-    Eq << Algebra.All_LeMinima.apply(Eq[1].lhs)
+    Eq << Real.All_LeMinima.apply(Eq[1].lhs)
 
     Eq << Bool.All_And.of.All.All.apply(Eq[0], Eq[2])
 

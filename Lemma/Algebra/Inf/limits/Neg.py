@@ -19,7 +19,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Real, Bool, Nat
 
     x, a, b = Symbol(real=True)
     f = Function(real=True)
@@ -28,16 +28,16 @@ def prove(Eq):
     y = Symbol(Eq[0].lhs)
     Eq << y.this.definition.reversed
 
-    Eq << Algebra.And.of.Eq.squeeze.apply(Eq[-1])
+    Eq << Nat.And.of.Eq.squeeze.apply(Eq[-1])
 
-    Eq <<= Algebra.All.Any.Lt.of.LeInf.apply(Eq[-2]), Algebra.All.Ge.of.GeInf.apply(Eq[-1])
+    Eq <<= Real.All.Any.Lt.of.LeInf.apply(Eq[-2]), Real.All.Ge.of.GeInf.apply(Eq[-1])
 
     Eq << Eq[0].subs(Eq[1]).reversed
 
     Eq << Algebra.Eq.given.And.squeeze.apply(Eq[-1])
 
     Eq <<= Algebra.LeInf.given.All_Any_Lt.apply(Eq[-2]), Algebra.GeInf.given.All.Ge.apply(Eq[-1])
-    Eq <<= Eq[-2].this.expr.apply(Algebra.Any.limits.Neg), Eq[-1].this.apply(Algebra.All.limits.Neg)
+    Eq <<= Eq[-2].this.expr.apply(Bool.Any.limits.Neg), Eq[-1].this.apply(Bool.All.limits.Neg)
 
 
 if __name__ == '__main__':

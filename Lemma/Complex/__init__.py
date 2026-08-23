@@ -32,3 +32,13 @@ from . import CeilSubDivMul3Arg
 from . import EqCeilSubDivS
 from . import OrOrSEqS
 from . import OrEqS
+from . import Or_Eq
+from . import Add
+from . import Eq
+from . import Mul
+from . import Pow
+from . import Square
+from . import Root
+from . import Abs
+from . import Sum
+from . import Block

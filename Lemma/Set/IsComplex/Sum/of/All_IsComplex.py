@@ -14,7 +14,7 @@ def apply(all_is_complex):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool
+    from Lemma import Algebra, Set, Bool, Finset
 
     x = Symbol(super_complex=True, shape=(oo,))
     i = Symbol(integer=True)
@@ -31,7 +31,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Set.IsComplex.Add.of.IsComplex.IsComplex)
 
-    Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.eq.Sub.push)
+    Eq << Eq[-1].this.find(Sum).apply(Finset.Sum.eq.Sub.push)
 
     Eq << Imply(Eq[2], Eq.induct, plausible=True)
 

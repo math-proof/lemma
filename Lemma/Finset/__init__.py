@@ -85,3 +85,12 @@ from . import SumSetOf_Odd
 from . import SumSetOf_Even
 from . import SumRange
 from . import PowAdd
+from . import AbsSum
+from . import EqSum
+from . import Eq_Sum
+from . import Sum_SquareSub
+from . import LeProd
+from . import LeSum
+from . import LeAbs
+from . import Le_0
+from . import LeAddSDivS

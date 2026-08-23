@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(self, index=0):
-    from Lemma.Algebra.Sum.limits.concat import rewrite
+    from Lemma.Tensor.Sum.limits.concat import rewrite
     return Equal(self, rewrite(Product, self, index))
 
 

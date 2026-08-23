@@ -53,13 +53,13 @@ def prove(Eq):
 
     Eq << Bool.Imp.given.All.apply(Eq[1])
 
-    Eq.block1 = Algebra.All.given.All.limits.domain_defined.apply(Eq[-1])
+    Eq.block1 = Bool.All.given.All.limits.domain_defined.apply(Eq[-1])
 
     Eq.block2 = Bool.Imp.given.All.apply(Eq[2])
 
     Eq << Bool.Imp.given.All.apply(Eq[3])
 
-    Eq.block3 = Algebra.All.given.All.limits.domain_defined.apply(Eq[-1])
+    Eq.block3 = Bool.All.given.All.limits.domain_defined.apply(Eq[-1])
 
     j = Symbol(integer=True)
     Eq <<= Eq.block1.this.expr.lhs.apply(Tensor.Expr.eq.Stack, j)

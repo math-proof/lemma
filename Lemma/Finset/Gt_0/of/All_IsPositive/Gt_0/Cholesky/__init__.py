@@ -13,7 +13,7 @@ def apply(all_is_positive, eq_initial):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Tensor, Int, Nat
+    from Lemma import Algebra, Set, Bool, Tensor, Int, Nat, Complex, Finset
 
     n = Symbol(domain=Range(10, oo))
     A = Symbol(shape=(n, n), complex=True)
@@ -32,7 +32,7 @@ def prove(Eq):
 
     Eq << Eq.hypothesis.find(Norm **  2).this.apply(Tensor.Sum.Square.Abs.eq.Add.Norm.Dot.recursive)
 
-    Eq << Eq.hypothesis.find(Sum).this.apply(Algebra.Sum.eq.Add.shift)
+    Eq << Eq.hypothesis.find(Sum).this.apply(Finset.Sum.eq.Add.shift)
 
     Eq.gt_zero = Eq.hypothesis.subs(*Eq[-2:])
 
@@ -43,7 +43,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 
-    Eq.Lkk_is_positive = Algebra.Cond.of.All.subst.apply(Eq[0], i, k)
+    Eq.Lkk_is_positive = Bool.Cond.of.All.subst.apply(Eq[0], i, k)
 
     Eq.eq_square_Lkk = Set.Eq.Square.Abs.of.IsReal.apply(Eq.Lkk_is_positive)
 
@@ -64,7 +64,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Stack).apply(Tensor.Stack_Dot.eq.DotSliceS)
 
-    Eq << Eq[-1].this.find(Abs[BlockMatrix @ Conjugate[SlicedIndexed]]).apply(Algebra.Abs.Conj)
+    Eq << Eq[-1].this.find(Abs[BlockMatrix @ Conjugate[SlicedIndexed]]).apply(Complex.Abs.Conj)
 
 
 

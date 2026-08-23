@@ -29,7 +29,7 @@ def prove(Eq):
 
     Eq <<= Set.In_Ico.given.Ge.Le_Sub_1.apply(Eq[0]), Set.In_Ico.given.Ge.Le_Sub_1.apply(Eq[1]), Set.Ge.Le_Sub_1.of.In_Ico.apply(Eq[-1])
 
-    Eq <<= Algebra.And.Ge.of.Ge_Max.apply(Eq[-2]), Algebra.And.Lt.of.Lt_Min.apply(Eq[-1])
+    Eq <<= Nat.And.Ge.of.Ge_Max.apply(Eq[-2]), Nat.And.Lt.of.Lt_Min.apply(Eq[-1])
 
     Eq << Nat.Lt_Add_1.of.Le.apply(Eq[-2].reversed + n, lower=i)
 

@@ -17,7 +17,7 @@ def apply(eq, infer, eq_piece, All_And):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset, Bool, Tensor, Nat
+    from Lemma import Algebra, Finset, Bool, Tensor, Nat, Complex
 
     n = Symbol(domain=Range(10, oo))
     A = Symbol(shape=(n, n), complex=True)
@@ -73,35 +73,35 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Sum[~Mul]).apply(Finset.Mul_Sum.eq.Sum_Mul)
 
-    Eq << Eq[-1].this.find(Sum[2]).apply(Algebra.Sum.eq.Add.split.limits)
+    Eq << Eq[-1].this.find(Sum[2]).apply(Finset.Sum.eq.Add.split.limits)
 
     Eq << Eq[-1].this.lhs.args[1:3].apply(Finset.AddSumS.eq.Sum_Add_Sum)
 
     # converting A[j, i] to ~A[i, j] if j < i
     Eq << Eq[-1].subs(Eq[0][j, i].reversed)
 
-    Eq << Eq[-1].this.find(Sum[2]).apply(Algebra.Sum.limits.swap.intlimit)
+    Eq << Eq[-1].this.find(Sum[2]).apply(Finset.Sum.limits.swap.intlimit)
 
     # converting all A expression to L expression: A[i, j] = L[i, j] + .... if i < j
     Eq << Bool.All.of.All_And.apply(Eq[5]).limits_subs(j, i)
 
-    Eq << Algebra.All.of.All_Eq.Cond.subst.apply(Eq[-1], Eq[-2])
+    Eq << Bool.All.of.All_Eq.Cond.subst.apply(Eq[-1], Eq[-2])
 
-    Eq << Algebra.All.of.All_Eq.Cond.subst.apply(Eq.Aii_def, Eq[-1])
+    Eq << Bool.All.of.All_Eq.Cond.subst.apply(Eq.Aii_def, Eq[-1])
 
-    Eq << Eq.Aij_def.this.apply(Algebra.All.limits.swap.intlimit)
+    Eq << Eq.Aij_def.this.apply(Bool.All.limits.swap.intlimit)
 
-    Eq << Algebra.All.of.All_Eq.Cond.subst.apply(Eq[-1], Eq[-2])
+    Eq << Bool.All.of.All_Eq.Cond.subst.apply(Eq[-1], Eq[-2])
 
-    Eq << Eq[-1].this.find(Indexed * Norm ** 2 * Conjugate).args[::2].apply(Algebra.Mul.Conj.eq.Square.Abs)
+    Eq << Eq[-1].this.find(Indexed * Norm ** 2 * Conjugate).args[::2].apply(Complex.Mul.Conj.eq.Square.Abs)
 
-    Eq << Eq[-1].this.lhs.find(Add).args[:2].apply(Algebra.Add.eq.Mul.Re)
+    Eq << Eq[-1].this.lhs.find(Add).args[:2].apply(Complex.Add.eq.Mul.Re)
 
-    Eq << Eq[-1].this.lhs.find(Sum[~Add, Tuple, Tuple]).apply(Algebra.Add.eq.Mul.Re)
+    Eq << Eq[-1].this.lhs.find(Sum[~Add, Tuple, Tuple]).apply(Complex.Add.eq.Mul.Re)
 
-    Eq << Eq[-1].this.lhs.find(Sum[Re]).apply(Algebra.Sum.limits.separate)
+    Eq << Eq[-1].this.lhs.find(Sum[Re]).apply(Finset.Sum.limits.separate)
 
-    Eq << Eq[-1].this.lhs.find(Sum[Re]).apply(Algebra.Sum.eq.Re)
+    Eq << Eq[-1].this.lhs.find(Sum[Re]).apply(Complex.Sum.eq.Re)
 
     Eq << Eq[-1].this.lhs.find(Conjugate * ~Sum).apply(Tensor.Sum.eq.Dot, simplify=1)
 
@@ -111,7 +111,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.args[1:].apply(Finset.AddSumS.eq.Sum_Add_Sum)
 
-    Eq << Eq[-1].this.find(Sum).expr.args[1:].apply(Algebra.Add.eq.Re)
+    Eq << Eq[-1].this.find(Sum).expr.args[1:].apply(Complex.Add.eq.Re)
 
     Eq << Eq[-1].this.find(Re[~Add]).apply(Nat.AddMulS.eq.Mul_Add)
 
@@ -119,7 +119,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Re, Add).apply(Tensor.Add.eq.Dot.Block)
 
-    Eq << Eq[-1].this.find(BlockMatrix[Conjugate]).apply(Algebra.Block.eq.Conj)
+    Eq << Eq[-1].this.find(BlockMatrix[Conjugate]).apply(Complex.Block.eq.Conj)
 
     Eq << Finset.Gt_0.of.All_IsPositive.Gt_0.Cholesky.apply(Eq.Lii_is_positive, Eq[-1])
 

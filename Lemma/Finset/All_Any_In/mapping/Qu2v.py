@@ -51,7 +51,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Sum)
 
-    Eq << Algebra.All.Any.of.All_Any_Eq.Cond.subst.apply(Eq.x_j_equality, Eq[-1])
+    Eq << Bool.All.Any.of.All_Any_Eq.Cond.subst.apply(Eq.x_j_equality, Eq[-1])
 
     Eq << Eq[-1].this.expr().expr.rhs.args[0].simplify()
 

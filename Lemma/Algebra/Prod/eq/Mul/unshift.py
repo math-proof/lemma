@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(self):
-    from Lemma.Algebra.Sum.eq.Sub.unshift import rewrite
+    from Lemma.Finset.Sum.eq.Sub.unshift import rewrite
     def inverse(x):
         assert x.is_nonzero
         return 1 / x

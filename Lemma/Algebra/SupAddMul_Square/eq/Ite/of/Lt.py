@@ -4,7 +4,7 @@ from util import *
 @apply
 def apply(lt, fx, x=None, left_open=True, right_open=True):
     m, M = lt.of(Less)
-    from Lemma.Algebra.Le.of.Le.Ge.quadratic import quadratic_coefficient
+    from Lemma.Real.Le.of.Le.Ge.quadratic import quadratic_coefficient
     x, a, b, c = quadratic_coefficient(fx, x=x)
 
     delta = b * b - 4 * a * c

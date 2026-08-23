@@ -16,7 +16,7 @@ def apply(given, delta=None, var=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Real, Algebra, Bool
+    from Lemma import Real, Algebra, Bool, Int
 
     n = Symbol(integer=True, positive=True)
     x, x0, a = Symbol(real=True)
@@ -27,7 +27,7 @@ def prove(Eq):
     Eq << Real.Any.All.of.IsLimited.limit_definition.symbol_subs.apply(Eq[0], var='A')
 
     A = -Eq[-1].expr.expr.lhs.arg.args[0]
-    Eq << Eq[-1].this.expr.expr.apply(Algebra.And.of.Lt.split.Abs)
+    Eq << Eq[-1].this.expr.expr.apply(Int.And.of.Lt.split.Abs)
 
     Eq << Eq[-1].this.expr.expr.args[0] + A
 

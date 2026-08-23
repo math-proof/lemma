@@ -19,7 +19,7 @@ def apply(eq_xy, eq_ab, i=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor
+    from Lemma import Algebra, Tensor, Finset
 
     n = Symbol(integer=True, positive=True)
     x, y, a, b = Symbol(shape=(n,), real=True)
@@ -39,7 +39,7 @@ def prove(Eq):
 
     Eq << Eq[2].subs(Eq[-1])
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.limits.domain_defined)
+    Eq << Eq[-1].this.rhs.apply(Finset.Sum.limits.domain_defined)
 
 
 

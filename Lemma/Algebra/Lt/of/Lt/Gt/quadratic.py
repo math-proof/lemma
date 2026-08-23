@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(lt, gt, quadratic=None):
-    from Lemma.Algebra.Le.of.Le.Ge.quadratic import quadratic_coefficient
+    from Lemma.Real.Le.of.Le.Ge.quadratic import quadratic_coefficient
     x, m = gt.of(Greater)
     S[x], M = lt.of(Less)
     x, a, b, c = quadratic_coefficient(quadratic, x)
@@ -14,7 +14,7 @@ def apply(lt, gt, quadratic=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     x, m, M, b, c = Symbol(real=True)
     a = Symbol(real=True, positive=True)
@@ -47,7 +47,7 @@ def prove(Eq):
 
     Eq << Eq[-1] - b * b / (4 * a) + c
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Add.eq.Max)
+    Eq << Eq[-1].this.rhs.apply(Nat.Add.eq.Max)
 
 
 if __name__ == '__main__':

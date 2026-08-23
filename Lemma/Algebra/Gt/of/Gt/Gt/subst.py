@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(less_than_f, less_than):
-    from Lemma.Algebra.Le.of.Eq.Le.subst import ratsimp
+    from Lemma.Nat.Le.of.Eq.Le.subst import ratsimp
     assert less_than_f.is_Greater
     assert less_than.is_Greater
 

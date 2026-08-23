@@ -34,7 +34,7 @@ def apply(eq_M, x, w, r):
 
 @prove#(slow=True)
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool, Tensor, Int, Nat
+    from Lemma import Set, Algebra, Bool, Tensor, Int, Nat, Finset
 
     m, d, d_quote = Symbol(integer=True, positive=True)
     n, l, r = Symbol(shape=(3,), integer=True, positive=True)
@@ -84,15 +84,15 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Piecewise, Piecewise).apply(Bool.Ite.nest, pivot=slice(1, None, 2))# select cond with j
 
-    Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.limits.separate.Ite).this.find(Sum).apply(Algebra.Sum.limits.separate.Ite)
+    Eq << Eq[-1].this.find(Sum).apply(Finset.Sum.limits.separate.Ite).this.find(Sum).apply(Finset.Sum.limits.separate.Ite)
 
-    Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.limits.separate, evaluate=True)
+    Eq << Eq[-1].this.find(Sum).apply(Finset.Sum.limits.separate, evaluate=True)
 
-    Eq << Eq[-1].this.find(Min, Add[Min]).apply(Algebra.Add.eq.Min).this.find(Min, Add[Min]).apply(Algebra.Add.eq.Min).this.find(Min, Add[Min]).apply(Algebra.Add.eq.Min)
+    Eq << Eq[-1].this.find(Min, Add[Min]).apply(Nat.Add.eq.Min).this.find(Min, Add[Min]).apply(Nat.Add.eq.Min).this.find(Min, Add[Min]).apply(Nat.Add.eq.Min)
 
     Eq << Eq[-1].this.find(Min[Ceil]).apply(Algebra.Min.eq.Add, 1).this.find(Min[Ceil]).apply(Algebra.Min.eq.Add, 1).this.find(Min[Ceil]).apply(Algebra.Min.eq.Add, 1)
 
-    Eq << Eq[-1].this.find(Add[Ceil]).apply(Algebra.Add.Ceil.eq.Floor).this.find(Add[Ceil]).apply(Algebra.Add.Ceil.eq.Floor).this.find(Add[Ceil]).apply(Algebra.Add.Ceil.eq.Floor)
+    Eq << Eq[-1].this.find(Add[Ceil]).apply(Int.Add.Ceil.eq.Floor).this.find(Add[Ceil]).apply(Int.Add.Ceil.eq.Floor).this.find(Add[Ceil]).apply(Int.Add.Ceil.eq.Floor)
 
     Eq << Eq[-1].this.find(Min[Floor]).apply(Algebra.Min.eq.Floor).this.find(Min[Floor]).apply(Algebra.Min.eq.Floor).this.find(Min[Floor]).apply(Algebra.Min.eq.Floor)
 

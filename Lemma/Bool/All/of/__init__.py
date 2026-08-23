@@ -3,3 +3,8 @@ from . import All_And
 from . import All_OrNot
 from . import Cond
 from . import Given
+from . import All
+from . import All_Eq
+from . import Ge
+from . import Le
+from . import Lt

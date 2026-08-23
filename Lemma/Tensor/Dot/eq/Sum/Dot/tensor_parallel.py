@@ -38,7 +38,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Tensor.Dot.eq.Sum, simplify=None)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.eq.ReducedSum)
+    Eq << Eq[-1].this.lhs.apply(Tensor.Sum.eq.ReducedSum)
 
     Eq << Eq[-1].this.lhs.apply(Algebra.ReducedSum.reshape, t_p, d / t_p)
 

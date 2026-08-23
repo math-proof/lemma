@@ -4,13 +4,13 @@ from util import *
 @apply
 def apply(self):
     from Lemma.Vector.Sum.eq.Sum_Get import rewrite
-    from Lemma.Algebra.Sum.eq.Add.doit import doit
+    from Lemma.Finset.Sum.eq.Add.doit import doit
     return Equal(self, doit(Sum, rewrite(self)))
 
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Vector
+    from Lemma import Algebra, Vector, Finset
 
     k = Symbol(integer=True, positive=True)
     x = Symbol(real=True, shape=(oo,))
@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Vector.Sum.eq.Sum_Get)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.eq.Add.doit)
+    Eq << Eq[-1].this.lhs.apply(Finset.Sum.eq.Add.doit)
 
 
 

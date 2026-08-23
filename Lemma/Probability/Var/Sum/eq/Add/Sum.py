@@ -15,7 +15,7 @@ def apply(self, j=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra
+    from Lemma import Probability, Algebra, Finset
 
     x = Symbol(real=True, shape=(oo,), random=True)
     i, j = Symbol(integer=True)
@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq << Eq[0].this.lhs.apply(Probability.Var.Sum.eq.Sum.Cov)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.eq.Add.split.limits)
+    Eq << Eq[-1].this.lhs.apply(Finset.Sum.eq.Add.split.limits)
 
     Eq << Eq[-1].this.find(Covariance).apply(Probability.Cov.eq.Var)
 

@@ -10,13 +10,13 @@ def apply(is_negative, self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Rat
 
     a, x, m, M = Symbol(real=True)
     f = Function(real=True)
     Eq << apply(a < 0, Sup[x:m:M](f(x) * a))
 
-    Eq << Algebra.Div.lt.Zero.of.Lt_0.apply(Eq[0])
+    Eq << Rat.Div.lt.Zero.of.Lt_0.apply(Eq[0])
 
     Eq << Algebra.Inf.eq.Mul.Sup.of.Lt_0.apply(Eq[-1], Eq[1].rhs.args[1]).reversed * a
 

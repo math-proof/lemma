@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(self):
-    from Lemma.Algebra.Add.eq.Sum.limits.unshift import absorb
+    from Lemma.Finset.Add.eq.Sum.limits.unshift import absorb
     return Equal(self, absorb(Product, self), evaluate=False)
 
 

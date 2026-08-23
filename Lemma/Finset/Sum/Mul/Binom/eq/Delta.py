@@ -21,7 +21,7 @@ def prove(Eq):
     Eq << apply(Sum[k:i:n + 1](Binomial(n, k) * (-1) ** (k - i) * Binomial(k, i)))
 
     m = Symbol(integer=True, nonnegative=True)
-    Eq.hypothesis = Eq[0].subs(n, m + i).this.rhs.apply(Algebra.Delta.offset, -i)
+    Eq.hypothesis = Eq[0].subs(n, m + i).this.rhs.apply(Nat.Delta.offset, -i)
 
     Eq.initial = Eq.hypothesis.subs(i, 0)
 
@@ -29,7 +29,7 @@ def prove(Eq):
 
     Eq.induct = Eq.hypothesis.subs(i, i + 1)
 
-    Eq << Eq.induct.this.lhs.apply(Algebra.Sum.eq.Add.by_parts.offset, pivot=slice(1, 2))
+    Eq << Eq.induct.this.lhs.apply(Finset.Sum.eq.Add.by_parts.offset, pivot=slice(1, 2))
 
     Eq << Eq[-1].this.find(~Binomial - Binomial).apply(Finset.Binom.eq.Add.Pascal)
 
@@ -55,9 +55,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Mul[Sum]).apply(Finset.Mul_Sum.eq.Sum_Mul)
 
-    Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.eq.Sub.unshift)
+    Eq << Eq[-1].this.find(Sum).apply(Finset.Sum.eq.Sub.unshift)
 
-    Eq << Eq[-1].this.find(Sum[Binomial]).apply(Algebra.Sum.eq.Sub.unshift)
+    Eq << Eq[-1].this.find(Sum[Binomial]).apply(Finset.Sum.eq.Sub.unshift)
 
     Eq << Eq[-1].this.find(Mul).apply(Nat.Mul_Add.eq.AddMulS)
 
@@ -71,7 +71,7 @@ def prove(Eq):
 
     Eq << Eq.hypothesis.subs(m, n - i)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Delta.offset, i)
+    Eq << Eq[-1].this.rhs.apply(Nat.Delta.offset, i)
 
 
 

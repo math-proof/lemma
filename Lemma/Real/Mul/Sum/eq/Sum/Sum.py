@@ -34,9 +34,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Finset.SumIco.eq.Sum_UFnAdd, -k)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.limits.swap.intlimit)
+    Eq << Eq[-1].this.rhs.apply(Finset.Sum.limits.swap.intlimit)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.limits.separate)
+    Eq << Eq[-1].this.rhs.apply(Finset.Sum.limits.separate)
 
 
 if __name__ == '__main__':

@@ -75,7 +75,7 @@ def prove(Eq):
 
     Eq.induct = Eq.hypothesis.subs(t, t + 1)
 
-    Eq << Algebra.All.given.And.All.split.apply(Eq.induct, cond=Equal(i, t))
+    Eq << Bool.All.given.And.All.split.apply(Eq.induct, cond=Equal(i, t))
 
     Eq << Imply(Eq.hypothesis, Eq.induct, plausible=True)
 

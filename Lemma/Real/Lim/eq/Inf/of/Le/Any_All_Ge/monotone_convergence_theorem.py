@@ -32,7 +32,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.apply(Int.LtSub_1.of.Le, lower=-oo)
 
-    Eq.le_inf = Algebra.All_LeInf.apply(Eq[-1].lhs)
+    Eq.le_inf = Real.All_LeInf.apply(Eq[-1].lhs)
 
     Eq << Nat.Lt_Add_1.of.Le.apply(Eq.le_inf, upper=oo)
 
@@ -50,15 +50,15 @@ def prove(Eq):
 
     Eq.any_gt = Eq[-1].this.expr + a[N]
 
-    Eq << Algebra.All.Le.of.Le.monotone.apply(Eq[0], n, N)
+    Eq << Nat.All.Le.of.Le.monotone.apply(Eq[0], n, N)
 
     Eq << Set.AllIn_SDiff.of.All.apply(Eq[-1], domain=Range(N + 1, oo))
 
-    Eq << Algebra.All.And.of.Cond.All.apply(Eq.inf_is_real, Eq[-1], simplify=None)
+    Eq << Bool.All.And.of.Cond.All.apply(Eq.inf_is_real, Eq[-1], simplify=None)
 
     Eq << Eq[-1].this.expr.apply(Set.LeSub.of.Le.In)
 
-    Eq << Algebra.Any.All.And.of.All.Any.apply(Eq[-1], Eq.any_gt)
+    Eq << Bool.Any.All.And.of.All.Any.apply(Eq[-1], Eq.any_gt)
 
     Eq << Eq[-1].this.expr.expr.apply(Nat.Lt.of.Lt.Le)
 
@@ -66,7 +66,7 @@ def prove(Eq):
 
     Eq << Eq[-2].subs(Eq[-1].reversed)
 
-    Eq << Eq[-1].this.find(Abs).apply(Algebra.Abs.Neg)
+    Eq << Eq[-1].this.find(Abs).apply(Int.Abs.Neg)
 
     Eq << Real.Eq.of.Any_All.limit_definition.apply(Eq[-1])
 

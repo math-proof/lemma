@@ -9,7 +9,7 @@ def apply(self, i=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Tensor
 
     k = Symbol(integer=True)
     n = Symbol(integer=True, positive=True, given=True)
@@ -19,7 +19,7 @@ def prove(Eq):
     Eq << ~Eq[0]
 
 
-    Eq << Algebra.All.Eq.of.Eq.apply(Eq[-1], simplify=None)
+    Eq << Tensor.All.Eq.of.Eq.apply(Eq[-1], simplify=None)
     Eq << ~Eq[-1]
 
 

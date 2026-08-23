@@ -124,19 +124,19 @@ def prove(Eq):
 
     Eq << Eq[-3].subs(*Eq[-2:])
 
-    Eq << Eq[-1].this.find(BlockMatrix).apply(Algebra.Block.eq.Add.Block, (-1, slice(-1, None), slice(-1, None)))
+    Eq << Eq[-1].this.find(BlockMatrix).apply(Tensor.Block.eq.Add.Block, (-1, slice(-1, None), slice(-1, None)))
 
-    Eq << Eq[-1].this.find(Add[~BlockMatrix]).apply(Algebra.Block.eq.Mul.Block)
+    Eq << Eq[-1].this.find(Add[~BlockMatrix]).apply(Tensor.Block.eq.Mul.Block)
 
-    Eq << Eq[-1].this.find(Add[~BlockMatrix]).apply(Algebra.Block.eq.Mul.Block)
+    Eq << Eq[-1].this.find(Add[~BlockMatrix]).apply(Tensor.Block.eq.Mul.Block)
 
-    Eq << Eq[-1].this.find((~BlockMatrix) @ BlockMatrix).apply(Algebra.Block.eq.Add.Block, (-1, -1, -1))
+    Eq << Eq[-1].this.find((~BlockMatrix) @ BlockMatrix).apply(Tensor.Block.eq.Add.Block, (-1, -1, -1))
 
-    Eq << Eq[-1].this.find(Add[~BlockMatrix]).apply(Algebra.Block.eq.Mul.Block)
+    Eq << Eq[-1].this.find(Add[~BlockMatrix]).apply(Tensor.Block.eq.Mul.Block)
 
-    Eq << Eq[-1].this.find(Add[~BlockMatrix]).apply(Algebra.Block.eq.Mul.Block)
+    Eq << Eq[-1].this.find(Add[~BlockMatrix]).apply(Tensor.Block.eq.Mul.Block)
 
-    Eq << Eq[-1].this.find(Mul[~BlockMatrix]).apply(Algebra.Block.eq.Neg.Block)
+    Eq << Eq[-1].this.find(Mul[~BlockMatrix]).apply(Tensor.Block.eq.Neg.Block)
 
     Eq <<= Eq[-1].find(BlockMatrix[Cos]).this.apply(Real.Block.eq.Cos), Eq[-1].find(BlockMatrix[Sin]).this.apply(Real.Block.eq.Sin)
 

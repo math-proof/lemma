@@ -46,7 +46,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Probability.Pr.eq.Sub.SDiff)
 
-    Eq << Algebra.Le.of.Le.transport.apply(Eq[-1], lhs=0)
+    Eq << Nat.Le.of.Le.transport.apply(Eq[-1], lhs=0)
 
     Eq << -Eq[-1]
 

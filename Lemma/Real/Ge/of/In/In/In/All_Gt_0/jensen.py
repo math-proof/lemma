@@ -30,7 +30,7 @@ def prove(Eq):
 
     w_ = Symbol('w', domain=Eq[0].rhs)
     x_ = Symbol('x', domain=domain)
-    Eq << Algebra.Cond.of.All.subst.apply(Eq[3], x, x_)
+    Eq << Bool.Cond.of.All.subst.apply(Eq[3], x, x_)
 
     Eq << Real.Ge.of.Gt_0.jensen.apply(Eq[-1], w=w_)
 

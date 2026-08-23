@@ -88,11 +88,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Element).apply(Int.In_Icc.Is.InSub, 1)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Add.Block.eq.Block)
+    Eq << Eq[-1].this.rhs.apply(Tensor.Add.Block.eq.Block)
 
-    Eq << Eq[-1].this.find(Add[BlockMatrix]).apply(Algebra.Add.eq.Block)
+    Eq << Eq[-1].this.find(Add[BlockMatrix]).apply(Tensor.Add.eq.Block)
 
-    Eq << Eq[-1].this.find(Add[BlockMatrix]).apply(Algebra.Add.eq.Block)
+    Eq << Eq[-1].this.find(Add[BlockMatrix]).apply(Tensor.Add.eq.Block)
 
     Eq << MulMatrix(n + 1, 1, -1) @ (MulMatrix(n + 1, 0, -1) @ Eq[-1])
 

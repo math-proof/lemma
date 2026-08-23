@@ -10,12 +10,12 @@ def apply(ge_a, ge_b):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     x, y, b = Symbol(real=True, given=True)
     Eq << apply(x >= y, x >= b)
 
-    Eq << Algebra.And.Ge.of.Ge_Max.apply(Eq[-1])
+    Eq << Nat.And.Ge.of.Ge_Max.apply(Eq[-1])
 
 
 

@@ -10,7 +10,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Bool
 
     n = Symbol(integer=True, positive=True, given=True)
     i = Symbol(integer=True)
@@ -20,7 +20,7 @@ def prove(Eq):
     j = Symbol(domain=Range(n))
     Eq << Eq[0][j]
 
-    Eq << Algebra.All.of.Cond.domain_defined.apply(Eq[-1])
+    Eq << Bool.All.of.Cond.domain_defined.apply(Eq[-1])
 
 
 

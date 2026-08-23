@@ -71,7 +71,7 @@ def prove(Eq):
 
     Eq.www_expansion = Eq[-1].this().expr.rhs.expr.simplify()
 
-    Eq << Algebra.All.of.Cond.domain_defined.apply(Eq[0], j)
+    Eq << Bool.All.of.Cond.domain_defined.apply(Eq[0], j)
 
     Eq << Eq[-1].simplify()
 

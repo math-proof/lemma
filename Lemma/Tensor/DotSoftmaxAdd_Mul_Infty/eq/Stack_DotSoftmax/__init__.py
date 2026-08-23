@@ -14,7 +14,7 @@ def apply(eq_relu, eq_min, A, V):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Set, Bool, Vector
+    from Lemma import Tensor, Algebra, Set, Bool, Vector, Finset
 
     n, l, u, d_z = Symbol(integer=True, positive=True)
     i = Symbol(integer=True)
@@ -65,13 +65,13 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq.start_definition.reversed, Eq.zeta[i].reversed)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.eq.ReducedSum)
+    Eq << Eq[-1].this.rhs.apply(Tensor.Sum.eq.ReducedSum)
 
     Eq.zi_definition = Eq.zi_definition.subs(Eq[-1])
 
     Eq << Eq.zi_definition.rhs.args[0].this.apply(Tensor.Dot.eq.Stack_Sum_MulGetS)
 
-    Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.limits.domain_defined)
+    Eq << Eq[-1].this.find(Sum).apply(Finset.Sum.limits.domain_defined)
 
     k = Eq[-1].rhs.expr.variable
     Eq << Eq.Xi_definition[k]

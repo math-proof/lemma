@@ -33,7 +33,7 @@ def prove(Eq):
 
     Eq.induct = Eq.hypothesis.subs(n, n + 1)
 
-    Eq << Eq.induct.this.find(Sum).apply(Algebra.Sum.eq.Add.pop)
+    Eq << Eq.induct.this.find(Sum).apply(Finset.Sum.eq.Add.pop)
 
     Eq << Eq[-1].this.find(Sum).apply(Finset.Sum_Mul.eq.Mul_Sum)
 
@@ -53,7 +53,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Pr * Product).args[1:].apply(Algebra.Mul.eq.Prod.limits.push)
 
-    Eq << Eq[-1].this.find(Sum[Derivative * Product]).apply(Algebra.Sum.limits.concat)
+    Eq << Eq[-1].this.find(Sum[Derivative * Product]).apply(Tensor.Sum.limits.concat)
 
     Eq << Imply(Eq.hypothesis, Eq.induct, plausible=True)
 

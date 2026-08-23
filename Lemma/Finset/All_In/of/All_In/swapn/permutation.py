@@ -44,7 +44,7 @@ def prove(Eq):
 
     Eq << Tensor.Stack.eq.Dot.swapn.helper.apply(x[:n], b[:n], w)
 
-    Eq << Algebra.All.Any.of.All_Any_Eq.Cond.subst.apply(Eq[-2].reversed, Eq[-1])
+    Eq << Bool.All.Any.of.All_Any_Eq.Cond.subst.apply(Eq[-2].reversed, Eq[-1])
 
     Eq << Set.AllIn_SDiff.of.All.apply(Eq[-1], (x[:n], S))
 

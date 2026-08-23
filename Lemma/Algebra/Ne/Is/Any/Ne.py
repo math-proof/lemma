@@ -29,7 +29,7 @@ def prove(Eq):
 
     Eq << Bool.Iff.given.Imp.Imp.apply(Eq[0])
 
-    Eq << Eq[-2].this.lhs.apply(Algebra.Any.Ne.of.Ne)
+    Eq << Eq[-2].this.lhs.apply(Bool.Any.Ne.of.Ne)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Ne.given.Any.Ne)
 

@@ -8,7 +8,7 @@ def apply(expr, *limits):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool
+    from Lemma import Set, Algebra, Bool, Finset, Nat
 
     n = Symbol(integer=True, positive=True, given=False)
     k = Symbol(integer=True)
@@ -30,9 +30,9 @@ def prove(Eq):
 
     Eq << Set.CardUnion.le.AddCardS.apply(*Eq[-1].lhs.arg.args)
 
-    Eq << Algebra.Le.of.Le.Le.subst.apply(Eq[-1], Eq[0])
+    Eq << Nat.Le.of.Le.Le.subst.apply(Eq[-1], Eq[0])
 
-    Eq << Eq.induct.this.rhs.apply(Algebra.Sum.eq.Add.pop)
+    Eq << Eq.induct.this.rhs.apply(Finset.Sum.eq.Add.pop)
 
     Eq << Imply(Eq[0], Eq.induct, plausible=True)
 

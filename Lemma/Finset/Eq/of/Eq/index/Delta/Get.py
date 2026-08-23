@@ -38,7 +38,7 @@ def prove(Eq):
 
     Eq << Eq[-2].apply(Algebra.Ne.of.Eq.Ne.subst)
 
-    Eq << Eq[-1].this.apply(Algebra.Cond.of.Ne.Cond.subst, ret=0)
+    Eq << Eq[-1].this.apply(Bool.Cond.of.Ne.Cond.subst, ret=0)
 
     Eq << Eq[0].apply(Set.EqCard.of.Eq)
 

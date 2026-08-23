@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Real
+    from Lemma import Probability, Algebra, Real, Nat
 
     D = Symbol(integer=True, positive=True)
     θ = Symbol(real=True, shape=(D,))
@@ -19,11 +19,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Probability.Expect.eq.Integral)
 
-    Eq << Algebra.All_Le_Sup.apply(Eq[1].rhs)
+    Eq << Real.All_Le_Sup.apply(Eq[1].rhs)
 
     Eq << Probability.Pr.ge.Zero.apply(Eq[-2].find(Pr))
 
-    Eq << Algebra.LeMul.of.Ge_0.Le.apply(Eq[-1], Eq[-2])
+    Eq << Nat.LeMul.of.Ge_0.Le.apply(Eq[-1], Eq[-2])
 
     Eq << Real.LeIntegral.of.Le.apply(Eq[-1], [x.var])
 

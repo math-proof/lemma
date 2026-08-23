@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(*imply):
-    from Lemma.Algebra.EqSum.of.Eq.Eq.unshift import absorb_front
+    from Lemma.Finset.EqSum.of.Eq.Eq.unshift import absorb_front
     return absorb_front(Product, Less, *imply, criteria=lambda cond: cond.lhs > 0)
 
 

@@ -10,17 +10,17 @@ def apply(x):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor
+    from Lemma import Algebra, Tensor, Real, Int
 
     n = Symbol(integer=True, positive=True)
     x = Symbol(real=True, shape=(n,))
     Eq << apply(x)
 
-    Eq << Algebra.Le.given.Le_0.apply(Eq[0])
+    Eq << Int.Le.given.Le_0.apply(Eq[0])
 
     Eq << Eq[-1].this.lhs.apply(Tensor.Add.LogSumExp.eq.Log.Softmax)
 
-    Eq << Algebra.Le.given.Le.Exp.apply(Eq[-1])
+    Eq << Real.Le.given.Le.Exp.apply(Eq[-1])
 
     Eq << Eq[-1].this.lhs.apply(Tensor.Softmax.eq.DivExp_KeepdimSumExp)
 

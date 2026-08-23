@@ -26,7 +26,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Algebra, Real
 
     x, b = Symbol(real=True)
     a = Symbol(real=True, positive=True)
@@ -37,7 +37,7 @@ def prove(Eq):
     Eq << Algebra.GeLog.of.Ge.apply(Eq[-2])
 
     Eq << Algebra.Gt_0.of.Ge.apply(Eq[2])
-    Eq << Algebra.LeLog.of.Gt_0.Le.apply(Eq[-1], Eq[3])
+    Eq << Real.LeLog.of.Gt_0.Le.apply(Eq[-1], Eq[3])
 
     Eq << Set.In_Ico.given.Le.Lt.apply(Eq[1])
 

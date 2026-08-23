@@ -15,17 +15,17 @@ def apply(n):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Algebra, Bool
     n = Symbol(integer=True, positive=True)
     Eq << apply(n)
 
     Eq << Eq[1].subs(Eq[0])
 
-    Eq << Algebra.All.limits_assert.apply(Eq[-1].limits)
+    Eq << Bool.All.limits_assert.apply(Eq[-1].limits)
 
     Eq << Element(n - 1, Eq[-1].rhs, plausible=True)
 
-    Eq << Algebra.All.of.All_Eq.Cond.subst.apply(Eq[-2].reversed, Eq[-1])
+    Eq << Bool.All.of.All_Eq.Cond.subst.apply(Eq[-2].reversed, Eq[-1])
 
     Eq << Eq[-1].this.expr.apply(Set.Any_In.of.In_Cup)
 

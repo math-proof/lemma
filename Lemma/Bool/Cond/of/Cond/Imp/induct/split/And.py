@@ -35,7 +35,7 @@ def prove(Eq):
     x = Symbol(real=True)
     Eq << apply(f[0](x) > g[0](x), Imply((f[n](x) > g[n](x)) & (f[n](t(x)) > g[n](t(x))), (f[n + 1](x) > g[n + 1](x))), n=n, x=x)
 
-    Eq << Eq[2].cond.this.apply(Algebra.Cond.of.Cond.subst, x, t(x))
+    Eq << Eq[2].cond.this.apply(Bool.Cond.of.Cond.subst, x, t(x))
 
     Eq << Bool.Imp_And.of.ImpAnd.apply(Eq[-1])
     Eq.induct = Bool.Imp.of.Imp.Imp.apply(Eq[-1], Eq[1])

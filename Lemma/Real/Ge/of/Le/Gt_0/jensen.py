@@ -73,7 +73,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.expr * w, Eq[-1].this.expr * (1 - w)
 
-    Eq << Algebra.Any.And.of.Any.Any.apply(Eq[-2], Eq[-1], simplify=None)
+    Eq << Bool.Any.And.of.Any.Any.apply(Eq[-2], Eq[-1], simplify=None)
 
     Eq << Eq[-1].this.expr.apply(Algebra.EqSub.of.Eq.Eq, swap=True)
 

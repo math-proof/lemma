@@ -30,7 +30,7 @@ def apply(eq_max, eq_min, eq_K_quote, eq_V_quote, eq_K, eq_V, Q, K, V):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Bool
+    from Lemma import Tensor, Algebra, Bool, Nat
 
     n, k, l, u, d = Symbol(integer=True, positive=True)
     d_z = Symbol(integer=True, positive=True)
@@ -62,7 +62,7 @@ def prove(Eq):
 
     Eq <<= Eq[0][i], Eq[1][i]
 
-    Eq.le_min = Algebra.Le.of.Eq_Max.Eq_Min.apply(Eq.beta, Eq.zeta)
+    Eq.le_min = Tensor.Le.of.Eq_Max.Eq_Min.apply(Eq.beta, Eq.zeta)
 
     Eq <<= Algebra.EqSlice.of.Le.Eq.apply(Eq.le_min, Eq[-2], step=d), Algebra.EqSlice.of.Le.Eq.apply(Eq.le_min, Eq[-1], step=d)
 
@@ -72,7 +72,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.find(Min[~Add]).apply(Algebra.Expr.eq.IteGe, lower=ζ[i] - 1), Eq[-1].this.find(Min[~Add]).apply(Algebra.Expr.eq.IteGe, lower=ζ[i] - 1)
 
-    Eq.le_zeta = Algebra.Le.of.Eq.relax.apply(Eq.zeta[i], upper=n)
+    Eq.le_zeta = Nat.Le.of.Eq.relax.apply(Eq.zeta[i], upper=n)
 
     Eq <<= Bool.BFn.of.BFnIte.Cond.apply(Eq.le_zeta, Eq[-2]), Bool.BFn.of.BFnIte.Cond.apply(Eq.le_zeta, Eq[-1])
 

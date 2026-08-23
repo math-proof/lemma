@@ -27,7 +27,7 @@ def apply(eq_z, eq_z_quote, el):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Set, Bool, Fin
+    from Lemma import Tensor, Algebra, Set, Bool, Fin, Nat
 
     n = Symbol(domain=Range(2, oo))
     l = Symbol(domain=Range(2, n + 1))
@@ -60,7 +60,7 @@ def prove(Eq):
 
     Eq << -Eq[-1]
 
-    Eq.ge = -Algebra.Le.of.Le.relax.apply(Eq[-1], upper=l - 1)
+    Eq.ge = -Nat.Le.of.Le.relax.apply(Eq[-1], upper=l - 1)
 
     Eq << Bool.BFn.of.BFnIte.Cond.apply(Eq.ge, Eq.eq, invert=True)
 

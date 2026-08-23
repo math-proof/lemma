@@ -10,7 +10,7 @@ def apply(eq, eq1):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Real, Finset, Set, Bool, Fin, Complex
+    from Lemma import Algebra, Real, Finset, Set, Bool, Fin, Complex, Rat
 
     n, k = Symbol(integer=True)
     # n = Symbol(integer=True, nonnegative=True)
@@ -36,7 +36,7 @@ def prove(Eq):
 
     Eq.g_squared = Bool.Eq.of.Eq.Eq.apply(Eq[-2], Eq[-1])
 
-    Eq << Eq.g_definition.this.rhs.apply(Algebra.Sum.eq.Add.shift)
+    Eq << Eq.g_definition.this.rhs.apply(Finset.Sum.eq.Add.shift)
 
     Eq << Eq[-1].subs(Eq[0])
 
@@ -70,9 +70,9 @@ def prove(Eq):
 
     Eq << Real.Gt.of.Lt_0.monotony.apply(Eq[-1])
 
-    Eq << Algebra.Any.of.Any_Eq.Cond.subst.apply(Eq.positive_sqrt_quote, Eq[-1], reverse=True)
+    Eq << Bool.Any.of.Any_Eq.Cond.subst.apply(Eq.positive_sqrt_quote, Eq[-1], reverse=True)
 
-    Eq.any_gt = Algebra.Any.of.Any.limits.relax.subst.apply(Eq[-1], x_quote, x)
+    Eq.any_gt = Bool.Any.of.Any.limits.relax.subst.apply(Eq[-1], x_quote, x)
 
     Eq << Real.EqGrad.of.Eq.apply(Eq.g_definition, (x,), simplify=None)
 
@@ -144,7 +144,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.args[1].expr.powsimp()
 
-    Eq << Eq[-1].this.rhs.args[1].apply(Algebra.Sum.eq.Add.shift)
+    Eq << Eq[-1].this.rhs.args[1].apply(Finset.Sum.eq.Add.shift)
 
     Eq << 1 - Eq[-1]
 
@@ -156,7 +156,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Mul).apply(Algebra.Mul.distribute)
 
-    Eq << Eq[-1].this.find(Mul).apply(Algebra.Div.cancel, 2)
+    Eq << Eq[-1].this.find(Mul).apply(Rat.Div.cancel, 2)
 
     Eq << Eq[-1].this.find(Binomial).apply(Finset.Binom.eq.Div.Binom.decrease)
 

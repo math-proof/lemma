@@ -92,7 +92,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.apply(Bool.Cond.of.Eq.Cond.subst, ret=0)
 
-    Eq << Algebra.Any.And.of.Any.limits.Cond.apply(Eq[-1], 0, simplify=None)
+    Eq << Bool.Any.And.of.Any.limits.Cond.apply(Eq[-1], 0, simplify=None)
 
     Eq << Bool.AnySetOf.of.Any_And.apply(Eq[-1], simplify=None)
 
@@ -108,7 +108,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.apply(Bool.Cond.of.Eq.Cond.subst, simplify=None)
 
-    Eq << Algebra.Any.And.of.Any.limits.Cond.apply(Eq[-1], 0, simplify=None)
+    Eq << Bool.Any.And.of.Any.limits.Cond.apply(Eq[-1], 0, simplify=None)
 
     Eq << Bool.AnySetOf.of.Any_And.apply(Eq[-1], -1, simplify=None)
 

@@ -14,7 +14,7 @@ def apply(eq_relu, eq_min):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra
+    from Lemma import Tensor, Nat
 
     n, l, u = Symbol(integer=True, positive=True)
     i = Symbol(integer=True)
@@ -27,13 +27,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(relu).apply(Tensor.Relu.eq.Add.Min)
 
-    Eq << Add(*Eq[-1].rhs.args[:3]).this.apply(Algebra.Add.eq.Min)
+    Eq << Add(*Eq[-1].rhs.args[:3]).this.apply(Nat.Add.eq.Min)
 
     Eq << Eq[-2].subs(Eq[-1])
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Add.eq.Min)
+    Eq << Eq[-1].this.rhs.apply(Nat.Add.eq.Min)
 
-    Eq << Eq[-1].this.find(Min[~Add]).apply(Algebra.Add.eq.Min)
+    Eq << Eq[-1].this.find(Min[~Add]).apply(Nat.Add.eq.Min)
 
 
 

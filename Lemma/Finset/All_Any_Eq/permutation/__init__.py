@@ -16,7 +16,7 @@ def apply(a):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set
+    from Lemma import Algebra, Set, Bool
 
     n = Symbol(integer=True, positive=True)
     a = Symbol(etype=dtype.integer, shape=(n,))
@@ -24,13 +24,13 @@ def prove(Eq):
 
     Eq << Eq[1].subs(Eq[0])
 
-    Eq << Algebra.All.limits_assert.apply(Eq[-1].limits)
+    Eq << Bool.All.limits_assert.apply(Eq[-1].limits)
 
     Eq << Element(a[n - 1], Eq[-1].rhs, plausible=True)
 
     Eq << Eq[-1].this.rhs.apply(Set.Cup.eq.UnionCupS, cond=slice(-1))
 
-    Eq << Algebra.All.of.All_Eq.Cond.subst.apply(Eq[-2].reversed, Eq[-1])
+    Eq << Bool.All.of.All_Eq.Cond.subst.apply(Eq[-2].reversed, Eq[-1])
 
     Eq << Eq[-1].this.expr.apply(Set.Any_In.of.In_Cup)
 

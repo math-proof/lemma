@@ -15,7 +15,7 @@ def apply(given, *limits):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Bool
     n = Symbol(positive=True, integer=True, given=True)
     x = Symbol(integer=True, given=True)
     k = Symbol(integer=True)
@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << ~Eq[-1]
 
-    Eq << Algebra.All.And.of.Cond.All.apply(Eq[0], Eq[-1])
+    Eq << Bool.All.And.of.Cond.All.apply(Eq[0], Eq[-1])
 
 
 if __name__ == '__main__':

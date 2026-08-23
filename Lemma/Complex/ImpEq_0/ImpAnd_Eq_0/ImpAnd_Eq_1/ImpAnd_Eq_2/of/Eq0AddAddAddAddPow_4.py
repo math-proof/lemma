@@ -32,7 +32,7 @@ def apply(given, x=None):
 
     w = -S.One / 2 + sqrt(3) * S.ImaginaryUnit / 2
     from Lemma.Algebra.Ne.of.Ne_0.Add.eq.Zero import cubic_delta
-    from Lemma.Algebra.Add.eq.Zero.given.And.Eq.cubic.one_leaded import cubic_solve
+    from Lemma.Complex.Add.eq.Zero.given.And.Eq.cubic.one_leaded import cubic_solve
     y_delta = cubic_delta(x, alpha, beta, gamma)
     _d, Y0, Y1, Y2 = cubic_solve(y_delta, x)
 
@@ -56,7 +56,7 @@ def apply(given, x=None):
 
 @prove(slow=True)
 def prove(Eq):
-    from Lemma import Int
+    from Lemma import Int, Complex
 
     x, a, b, c, d = Symbol(complex=True, given=True)
     Eq << apply(Equal(x ** 4 + a * x ** 3 + b * x ** 2 + c * x + d, 0), x=x)

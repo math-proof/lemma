@@ -13,7 +13,7 @@ def apply(self, index=-1):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     x, y = Symbol(real=True)
     Eq << apply(Min(x, y))
@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.args[1].apply(Algebra.Mul.eq.Min)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Add.eq.Min)
+    Eq << Eq[-1].this.rhs.apply(Nat.Add.eq.Min)
 
 
 

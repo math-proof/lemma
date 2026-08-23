@@ -17,7 +17,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Real, Nat
 
     x, m, M, h = Symbol(real=True)
     f = Function(real=True)
@@ -26,14 +26,14 @@ def prove(Eq):
     y = Symbol(Eq[0].rhs.args[1])
     Eq << y.this.definition.reversed
 
-    Eq <<= Algebra.And.of.Eq.squeeze.apply(Eq[-1]), Eq[0].subs(Eq[-1])
+    Eq <<= Nat.And.of.Eq.squeeze.apply(Eq[-1]), Eq[0].subs(Eq[-1])
 
     z = Symbol(real=True)
-    Eq <<= Algebra.All.Any.Lt.of.LeInf.apply(Eq[-3], z), Algebra.All.Ge.of.GeInf.apply(Eq[-2]), Algebra.Eq.given.And.squeeze.apply(Eq[-1])
+    Eq <<= Real.All.Any.Lt.of.LeInf.apply(Eq[-3], z), Real.All.Ge.of.GeInf.apply(Eq[-2]), Algebra.Eq.given.And.squeeze.apply(Eq[-1])
 
     Eq <<= Algebra.LeInf.given.All_Any_Lt.apply(Eq[-2], z), Algebra.GeInf.given.All.Ge.apply(Eq[-1])
 
-    Eq << Algebra.All.given.All.limits.subst.offset.apply(Eq[-1], h)
+    Eq << Nat.All.given.All.limits.subst.offset.apply(Eq[-1], h)
 
     Eq << Eq[-1].this.expr.expr - h
 

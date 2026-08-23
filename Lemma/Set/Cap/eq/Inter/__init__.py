@@ -29,7 +29,7 @@ def prove(Eq):
     Eq <<= Eq[-2].this.rhs.args[0].apply(Set.In_Cap.given.All_In), \
     Eq[-1].this.lhs.args[0].apply(Set.All_In.of.In_Cap)
 
-    Eq <<= Eq[-2].this.rhs.apply(Algebra.All.All.given.All.And), \
+    Eq <<= Eq[-2].this.rhs.apply(Bool.All.All.given.All.And), \
     Eq[-1].this.lhs.apply(Bool.All_And.of.All.All)
 
     Eq <<= Eq[-2].this.lhs.apply(Set.All_In.of.In_Cap), \

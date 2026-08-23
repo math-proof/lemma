@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(is_negative, lt, fx, x=None, left_open=True, right_open=True):
-    from Lemma.Algebra.Le.of.Le.Ge.quadratic import quadratic_coefficient
+    from Lemma.Real.Le.of.Le.Ge.quadratic import quadratic_coefficient
     m, M = lt.of(Less)
     a = is_negative.of(Expr < 0)
 
@@ -19,12 +19,12 @@ def apply(is_negative, lt, fx, x=None, left_open=True, right_open=True):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Int, Nat
+    from Lemma import Algebra, Set, Bool, Int, Nat, Rat
 
     m, M, x, a, b, c = Symbol(real=True, given=True)
     Eq << apply(a < 0, m < M, a * x ** 2 + b * x + c, x)
 
-    Eq << Algebra.Div.lt.Zero.of.Lt_0.apply(Eq[0])
+    Eq << Rat.Div.lt.Zero.of.Lt_0.apply(Eq[0])
 
     Eq << Eq[2].this.lhs.apply(Algebra.Sup.eq.Add)
 
@@ -48,7 +48,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.lhs.apply(Algebra.Ge_0.of.Le), Eq[-1].this.lhs.apply(Algebra.Le_0.of.Ge)
 
-    Eq <<= Eq[-2].this.rhs.rhs.apply(Algebra.Add.eq.Max), Eq[-1].this.rhs.rhs.apply(Algebra.Add.eq.Max)
+    Eq <<= Eq[-2].this.rhs.rhs.apply(Nat.Add.eq.Max), Eq[-1].this.rhs.rhs.apply(Nat.Add.eq.Max)
 
     Eq << Eq[1] + Eq[3].lhs * b /2
 

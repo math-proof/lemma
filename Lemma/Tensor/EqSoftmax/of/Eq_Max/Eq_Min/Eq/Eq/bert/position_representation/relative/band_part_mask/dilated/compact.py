@@ -44,7 +44,7 @@ def prove(Eq):
         Equal(V_dquote, Stack[j:Range(0, Min(n, l + u - 1), d), i:n](V_quote[i, Min(n - 1, j + β[i])])),
         Q=Q, K=K, V=V)
 
-    Eq.le = Algebra.Le.of.Eq_Max.Eq_Min.apply(Eq.beta, Eq.zeta)
+    Eq.le = Tensor.Le.of.Eq_Max.Eq_Min.apply(Eq.beta, Eq.zeta)
 
     K_dquote = Symbol('K^\"', Stack[j:Min(n, l + u - 1), i:n](K_quote[i, Min(n - 1, j + β[i])]))
     V_dquote = Symbol('V^\"', Stack[j:Min(n, l + u - 1), i:n](V_quote[i, Min(n - 1, j + β[i])]))

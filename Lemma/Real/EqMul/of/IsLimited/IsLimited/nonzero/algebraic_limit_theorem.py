@@ -12,7 +12,7 @@ def apply(limited_f, limited_g):
 
 @prove
 def prove(Eq):
-    from Lemma import Real, Set, Algebra, Bool, Rat, Nat
+    from Lemma import Real, Set, Algebra, Bool, Rat, Nat, Complex, Int
 
     x, x0 = Symbol(real=True)
     f, g = Function(real=True)
@@ -34,7 +34,7 @@ def prove(Eq):
 
     Eq << Set.IsPositive.Abs.of.IsNotZero.apply(Eq[-1], simplify=None)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Abs.eq.Inv, simplify=None)
+    Eq << Eq[-1].this.lhs.apply(Complex.Abs.eq.Inv, simplify=None)
 
     Eq.is_positive_real = Nat.InMul.of.In_Ico.Gt_0.apply(Eq[-1], ε / 2, simplify=None)
 
@@ -43,13 +43,13 @@ def prove(Eq):
     Eq.Limit_B_definition = Real.Any.All.of.IsLimited.limit_definition.symbol_subs.apply(Eq[1], ε_1, δ_1, var='B')
 
     B = -Eq.Limit_B_definition.expr.expr.lhs.arg.args[0]
-    Eq << Algebra.AbsSubMulS.le.AddMulS_AbsSub.apply(f(x), g(x), A, B)
+    Eq << Int.AbsSubMulS.le.AddMulS_AbsSub.apply(f(x), g(x), A, B)
 
     δ_2 = Symbol(real=True, positive=True)
     Eq << Real.Any.All.Le.of.IsLimited.boundedness.apply(Eq[1], delta=δ_2, var='B')
 
     B = Eq[-1].expr.expr.rhs
-    Eq.le = Eq[-1].this.expr.expr.apply(Algebra.Le.of.Le.Lt.subst, Eq[-2])
+    Eq.le = Eq[-1].this.expr.expr.apply(Nat.Le.of.Le.Lt.subst, Eq[-2])
 
     assert B > 0
     Eq << Eq.Limit_A_definition.subs(ε_0, ε / B / 2)
@@ -64,11 +64,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.expr.apply(Set.LtMul.of.Lt.IsPositive, Eq.abs_is_positive)
 
-    Eq << Algebra.Any.All.And.of.Any_All.Any_All.limits_Inter.apply(Eq[-1], Eq.lt_fx)
+    Eq << Bool.Any.All.And.of.Any_All.Any_All.limits_Inter.apply(Eq[-1], Eq.lt_fx)
 
     Eq << Eq[-1].this.expr.expr.apply(Algebra.LtAdd.of.Lt.Lt)
 
-    Eq << Algebra.Any.All.And.of.Any_All.Any_All.limits_Inter.apply(Eq.le, Eq[-1])
+    Eq << Bool.Any.All.And.of.Any_All.Any_All.limits_Inter.apply(Eq.le, Eq[-1])
 
     Eq << Eq[-1].this.expr.expr.apply(Nat.Lt.of.Lt.Le)
 
@@ -76,10 +76,10 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Element).apply(Set.In.given.In.Sub, x0)
 
-    Eq << Eq[-1].this.find(Add[Min]).apply(Algebra.Add.eq.Min)
+    Eq << Eq[-1].this.find(Add[Min]).apply(Nat.Add.eq.Min)
 
     delta = Symbol(real=True, positive=True)
-    Eq << Algebra.Any.of.Any.subst.apply(Eq[-1], Min(δ_0, δ_1, δ_2), delta)
+    Eq << Bool.Any.of.Any.subst.apply(Eq[-1], Min(δ_0, δ_1, δ_2), delta)
 
     Eq << Eq[-1].this.find(Element).apply(Set.In_Icc.given.InAdd, x0)
 

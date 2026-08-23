@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Set.Any_Eq.of.In.apply(Eq[1], var='b')
 
-    Eq << Algebra.Any.And.of.Any.Any.apply(Eq[-1], Eq[-2], simplify=None)
+    Eq << Bool.Any.And.of.Any.Any.apply(Eq[-1], Eq[-2], simplify=None)
 
     Eq << Eq[-1].this.expr.apply(Algebra.EqMul.of.Eq.Eq)
 
@@ -36,7 +36,7 @@ def prove(Eq):
 
     a, b = Eq[-1].variables
     c = Symbol(real=True)
-    Eq << Algebra.Any.of.Any.subst.apply(Eq[-1], a * b, c)
+    Eq << Bool.Any.of.Any.subst.apply(Eq[-1], a * b, c)
 
     Eq << Eq[-1].this.find(Greater).apply(Set.IsPositive.of.Gt_0, simplify=None)
 

@@ -17,16 +17,16 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Algebra, Int
 
     x = Symbol(real=True)
     Eq << apply(Interval.open(x, -x) | Interval.open(-x, x))
 
     Eq << Eq[0].this.lhs.apply(Set.Union.eq.Icc)
 
-    Eq << Eq[-1].this.find(Abs).apply(Algebra.Abs.eq.Max)
+    Eq << Eq[-1].this.find(Abs).apply(Int.Abs.eq.Max)
 
-    Eq << Eq[-1].this.find(Abs).apply(Algebra.Abs.eq.Max)
+    Eq << Eq[-1].this.find(Abs).apply(Int.Abs.eq.Max)
 
     Eq << Eq[-1].this.find(-~Max).apply(Algebra.Max.eq.Mul.Min)
 

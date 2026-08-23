@@ -43,9 +43,9 @@ def prove(Eq):
 
     Eq.induct = Eq[1].subs(n, n + 1)
 
-    Eq << Eq.induct.this.rhs.find(Sum).apply(Algebra.Sum.eq.Add.pop)
+    Eq << Eq.induct.this.rhs.find(Sum).apply(Finset.Sum.eq.Add.pop)
 
-    Eq << Eq[-1].this.find(f[~Sum]).apply(Algebra.Sum.eq.Add.pop)
+    Eq << Eq[-1].this.find(f[~Sum]).apply(Finset.Sum.eq.Add.pop)
 
     Eq.lt, Eq.ge = Bool.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=w[n] < 1)
 
@@ -59,7 +59,7 @@ def prove(Eq):
 
     i = Eq[-1].lhs.variable
     fxi = Eq[-1].rhs.find(Sum, f)
-    Eq << Eq[-1].lhs.this.apply(Algebra.Sum.eq.Zero.Mul.of.All_Eq_0, Stack[i:n](fxi))
+    Eq << Eq[-1].lhs.this.apply(Finset.Sum.eq.Zero.Mul.of.All_Eq_0, Stack[i:n](fxi))
 
     Eq <<= Eq[-1] & Eq[-2]
 
@@ -68,7 +68,7 @@ def prove(Eq):
     Eq << Bool.Imp_And.given.Imp.Imp.apply(Eq[-1])
 
     x = fxi.arg.base
-    Eq << Eq[-1].lhs.this.apply(Algebra.Sum.eq.Zero.Mul.of.All_Eq_0, x)
+    Eq << Eq[-1].lhs.this.apply(Finset.Sum.eq.Zero.Mul.of.All_Eq_0, x)
 
     Eq <<= Eq[-1] & Eq[-2]
 
@@ -96,7 +96,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Bool.Imp.fold, index=slice(1, None))
 
-    Eq << Eq[-1].this.find(And).apply(Algebra.All.And.of.Cond.All, simplify=None)
+    Eq << Eq[-1].this.find(And).apply(Bool.All.And.of.Cond.All, simplify=None)
 
     Eq << Eq[-1].this.find(And).apply(Rat.GeDivS.of.Ge.Gt_0, ret=0)
 
@@ -111,13 +111,13 @@ def prove(Eq):
 
     Eq << Eq[-1].reversed
 
-    Eq << Algebra.Cond.given.And.subst.apply(Eq[-3], *Eq[-1].args, simplify=None)
+    Eq << Bool.Cond.given.And.subst.apply(Eq[-3], *Eq[-1].args, simplify=None)
 
-    Eq << Eq[-1].this.find(Equal & ~GreaterEqual).apply(Algebra.All.of.Cond.domain_defined, wrt=i)
+    Eq << Eq[-1].this.find(Equal & ~GreaterEqual).apply(Bool.All.of.Cond.domain_defined, wrt=i)
 
     Eq.induct1 = Eq[-1].this.lhs.apply(Set.In.Icc.of.Lt.Ge)
 
-    Eq << Algebra.Cond.of.Cond.subst.apply(Eq[1], w[:n], w_)
+    Eq << Bool.Cond.of.Cond.subst.apply(Eq[1], w[:n], w_)
 
     Eq << Eq[-1].this.find(Sum).simplify()
 
@@ -155,11 +155,11 @@ def prove(Eq):
 
     Eq << Bool.Imp_And.of.ImpAnd.apply(Eq[-1], index=1)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.All.And.of.Cond.All, simplify=None)
+    Eq << Eq[-1].this.rhs.apply(Bool.All.And.of.Cond.All, simplify=None)
 
     Eq << Bool.Imp_And.of.ImpAnd.apply(Eq[-1], index=0)
 
-    Eq << Eq[-1].this.rhs.find(Sum).apply(Algebra.Sum.limits.domain_defined)
+    Eq << Eq[-1].this.rhs.find(Sum).apply(Finset.Sum.limits.domain_defined)
 
     Eq << Eq[-1].this.rhs.apply(Set.In.of.Eq_Sum.All.mean)
 

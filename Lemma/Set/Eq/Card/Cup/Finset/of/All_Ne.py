@@ -14,7 +14,7 @@ def apply(all_historic):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Finset
 
     i, j = Symbol(integer=True)
     n = Symbol(integer=True, positive=True)
@@ -26,7 +26,7 @@ def prove(Eq):
     def f(x):
         return S.One
 
-    Eq << Algebra.EqSum.of.All_Ne.double_limits.apply(Eq[0], Sum[a:Eq[1].lhs.arg](f(a)))
+    Eq << Finset.EqSum.of.All_Ne.double_limits.apply(Eq[0], Sum[a:Eq[1].lhs.arg](f(a)))
 
     Eq << Eq[-1].this.lhs.expr.defun()
     Eq << Eq[-1].this.rhs.expr.defun()

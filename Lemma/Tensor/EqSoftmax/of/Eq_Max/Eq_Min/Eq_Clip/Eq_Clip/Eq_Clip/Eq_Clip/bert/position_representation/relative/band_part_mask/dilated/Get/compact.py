@@ -64,7 +64,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2][i], Eq[-1][i]
 
-    Eq.le_min = Algebra.Le.of.Eq_Max.Eq_Min.apply(Eq.beta, Eq.zeta)
+    Eq.le_min = Tensor.Le.of.Eq_Max.Eq_Min.apply(Eq.beta, Eq.zeta)
 
     Eq <<= Algebra.EqSlice.of.Le.Eq.apply(Eq.le_min, Eq[-2], step=d), Algebra.EqSlice.of.Le.Eq.apply(Eq.le_min, Eq[-1], step=d)
 

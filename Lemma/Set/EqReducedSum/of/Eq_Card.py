@@ -17,7 +17,7 @@ def apply(eq, sgm, *, simplify=True):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Algebra, Tensor
 
     n = Symbol(integer=True, positive=True)
     x = Symbol(real=True)
@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq << Set.EqSum.of.Eq_Card.apply(Eq[0], Eq[1].find(Sum))
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.eq.ReducedSum)
+    Eq << Eq[-1].this.rhs.apply(Tensor.Sum.eq.ReducedSum)
 
 
 

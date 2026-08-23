@@ -17,7 +17,7 @@ def apply(el, is_finite):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Real
+    from Lemma import Set, Algebra, Real, Finset
 
     r = Symbol(shape=(oo,), real=True)
     γ = Symbol(real=True)
@@ -41,7 +41,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Mul).args[::2].apply(Real.MulPowS.eq.PowMul, simplify=None)
 
-    Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.limits.domain_defined, simplify=None)
+    Eq << Eq[-1].this.find(Sum).apply(Finset.Sum.limits.domain_defined, simplify=None)
 
 
 

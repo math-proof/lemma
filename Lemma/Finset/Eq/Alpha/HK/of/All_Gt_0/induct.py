@@ -66,19 +66,19 @@ def prove(Eq):
     Eq.alpha_recurrence = Eq.induct.lhs.this.apply(Finset.EqAlpha.of.All_Gt_0.recurrence)
 
     # try to avoid using reciprocal expression, instead, using find(1 / Expr) to ensure logical correctness!
-    Eq << Algebra.Cond.of.Cond.subst.apply(Eq.hypothesis, x[:n + 1], BlockMatrix(x[:n], Eq.alpha_recurrence.find(Indexed + 1 / Indexed)))
+    Eq << Bool.Cond.of.Cond.subst.apply(Eq.hypothesis, x[:n + 1], BlockMatrix(x[:n], Eq.alpha_recurrence.find(Indexed + 1 / Indexed)))
 
     Eq << Eq[-1].this.rhs.lhs.apply(Finset.Alpha.Block)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.All.given.And.All, cond={n})
+    Eq << Eq[-1].this.lhs.apply(Bool.All.given.And.All, cond={n})
 
     Eq << Eq[-1].this.find(All)().expr.simplify()
 
-    Eq << Eq[-1].this.find(Greater).apply(Algebra.Add.gt.Zero.given.And.Gt_0)
+    Eq << Eq[-1].this.find(Greater).apply(Nat.Add.gt.Zero.given.And.Gt_0)
 
     Eq << Eq[-1].this.find(Greater[2]).apply(Algebra.Gt_0.given.Gt_0.Inv)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.And.Is.All.limits.push)
+    Eq << Eq[-1].this.lhs.apply(Bool.And.Is.All.limits.push)
 
     Eq <<= Eq.alpha_recurrence & Eq[-1]
 

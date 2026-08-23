@@ -9,14 +9,14 @@ def apply(given, index=0):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     M, x = Symbol(real=True)
     f, g = Function(real=True)
     Eq << apply(Equal(M, Min(f(x), g(x))))
 
 
-    Eq << Algebra.Le.of.Eq_Min.apply(Eq[0])
+    Eq << Nat.Le.of.Eq_Min.apply(Eq[0])
     Eq << Eq[-1].reversed
 
 

@@ -18,7 +18,7 @@ def prove(Eq):
 
     Eq << Bool.All.of.Imp.apply(Eq[0], j)
 
-    Eq << Algebra.All.of.All.limits.domain_defined.apply(Eq[-1], j)
+    Eq << Bool.All.of.All.limits.domain_defined.apply(Eq[-1], j)
 
     Eq << Eq[-1].this(i).find(Max).simplify()
 

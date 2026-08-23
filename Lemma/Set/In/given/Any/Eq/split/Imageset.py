@@ -30,11 +30,11 @@ def prove(Eq):
 
     Eq << Eq[1].simplify()
 
-    Eq << Algebra.All.limits_assert.apply(Eq[1].limits)
+    Eq << Bool.All.limits_assert.apply(Eq[1].limits)
 
     Eq << Eq[-1].this.expr.apply(Set.In.Imageset.of.In, f=f)
 
-    Eq << Algebra.Any.of.Any_Eq.All.subst.apply(Eq[1].reversed, Eq[-1])
+    Eq << Bool.Any.of.Any_Eq.All.subst.apply(Eq[1].reversed, Eq[-1])
     Eq << Bool.And_And.of.And.apply(Eq[-1])
 
 

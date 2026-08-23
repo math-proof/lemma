@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(le, contains):
-    from Lemma.Algebra.Abs.Sum.eq.Mul.Sum import dissect_distance
+    from Lemma.Int.Abs.Sum.eq.Mul.Sum import dissect_distance
     dx, dy = le.of(LessEqual)
 
     yt, x, i, n = dissect_distance(dx)
@@ -38,7 +38,7 @@ def apply(le, contains):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Int
 
     n = Symbol(integer=True, positive=True)
     x, y = Function(real=True)
@@ -48,7 +48,7 @@ def prove(Eq):
     Eq << apply(abs(y(t) - Sum[i:n](x(i)) / n) <= abs(y(t) - Sum[j:m](y(j)) / m), Element(t, Range(m)))
 
     t_ = Symbol('t', domain=Range(m))
-    Eq << Eq[0]._subs(t, t_).this.apply(Algebra.Le.of.Le_Abs.function, t_)
+    Eq << Eq[0]._subs(t, t_).this.apply(Int.Le.of.Le_Abs.function, t_)
 
     Eq << Eq[-1].subs(t_, t)
 

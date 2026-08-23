@@ -57,15 +57,15 @@ def prove(Eq):
             Stack[i:Min(u, n)](BlockMatrix(A[i + n - Min(u, n), n - Min(u, n) + i:], -oo * Ones(i)))
         )) - Stack[i:n](Ones(breadth) * Log(ReducedSum(Exp(A[i, relu(i + 1 - l):Min(n, i + u)] + BlockMatrix(Zeros(i - relu(i - l + 1)), H[i], Zeros(-i + Min(n, i + u) - 1))))))))
 
-    Eq << BlockMatrix[1](H, Zeros(n, Min(u, n) - 1)).this.apply(Algebra.Block.split, n - Min(u, n))
+    Eq << BlockMatrix[1](H, Zeros(n, Min(u, n) - 1)).this.apply(Tensor.Block.split, n - Min(u, n))
 
     Eq << Eq[0].find(BlockMatrix[1][Zeros]).this.subs(Eq[-1])
 
     Eq << Eq[0].subs(Eq[-1])
 
-    Eq << Add(*Eq[-1].find(Add[BlockMatrix]).args[:2]).this.apply(Algebra.Add.Block.eq.Block)
+    Eq << Add(*Eq[-1].find(Add[BlockMatrix]).args[:2]).this.apply(Tensor.Add.Block.eq.Block)
 
-    Eq << Eq[-1].this.rhs.find(Add[BlockMatrix]).apply(Algebra.Add.Block.eq.Block)
+    Eq << Eq[-1].this.rhs.find(Add[BlockMatrix]).apply(Tensor.Add.Block.eq.Block)
 
     Eq.z_def = Eq[-3].subs(Eq[-1])
 
@@ -118,9 +118,9 @@ def prove(Eq):
 
     Eq << Bool.AllIn.of.All.apply(Eq[-1], (i, 0, n - Min(u, n)))
 
-    Eq << Algebra.All.Eq.Slice.of.All_Eq.apply(Eq[-1], slice(i, i + Min(u, n)))
+    Eq << Tensor.All.Eq.Slice.of.All_Eq.apply(Eq[-1], slice(i, i + Min(u, n)))
 
-    Eq << Eq[-1].this.find(KroneckerDelta).apply(Algebra.Delta.offset, -i)
+    Eq << Eq[-1].this.find(KroneckerDelta).apply(Nat.Delta.offset, -i)
 
     Eq << Eq[-1].this.find(Mul).apply(Tensor.Expr.eq.Stack, simplify=None)
 
@@ -138,13 +138,13 @@ def prove(Eq):
 
     Eq << Eq.A_def[i][relu(i + 1 - l):Min(n, i + u)]
 
-    Eq << Eq[-1].this.find(KroneckerDelta).apply(Algebra.Delta.offset, -i)
+    Eq << Eq[-1].this.find(KroneckerDelta).apply(Nat.Delta.offset, -i)
 
     Eq << Eq[-1].this.find(Mul[Stack]).apply(Tensor.Expr.eq.Stack, simplify=None)
 
     Eq << Eq[-1].this.find(Stack).apply(Tensor.Stack.Delta.eq.Mul.Stack)
 
-    Eq << Eq[-1].this.find(KroneckerDelta).apply(Algebra.Delta.offset, -relu(i + 1 - l) + i)
+    Eq << Eq[-1].this.find(KroneckerDelta).apply(Nat.Delta.offset, -relu(i + 1 - l) + i)
 
     Eq << Eq[-1].this.find(Stack).apply(Tensor.Stack.Delta.eq.Block)
 

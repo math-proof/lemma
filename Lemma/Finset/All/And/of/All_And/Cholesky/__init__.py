@@ -32,11 +32,11 @@ def prove(Eq):
 
     Eq.induct = Eq.hypothesis.subs(k, k + 1)
 
-    Eq << Algebra.All.given.And.All.split.apply(Eq.induct, cond=Equal(j, k))
+    Eq << Bool.All.given.And.All.split.apply(Eq.induct, cond=Equal(j, k))
 
     Eq.Lij_conj_is_complex = Eq.Lij_is_complex.this.expr.apply(Set.IsComplex.Conj.of.IsComplex)
 
-    Eq << Algebra.Cond.of.All.subst.apply(Eq.Lij_conj_is_complex, i, k)
+    Eq << Bool.Cond.of.All.subst.apply(Eq.Lij_conj_is_complex, i, k)
 
     Eq <<= Eq.hypothesis & Eq[-1]
 
@@ -50,11 +50,11 @@ def prove(Eq):
 
     Eq << Set.IsComplex.Sub.of.IsComplex.IsComplex.apply(Eq[-1], Eq[-2])
 
-    Eq.Lkk_is_positive = Algebra.Cond.of.All.subst.apply(Eq.Lii_is_positive, i, k)
+    Eq.Lkk_is_positive = Bool.Cond.of.All.subst.apply(Eq.Lii_is_positive, i, k)
 
     Eq << Set.IsComplex.of.IsComplex.IsPositive.apply(Eq[-1], Eq.Lkk_is_positive)
 
-    Eq << Algebra.Cond.of.All.subst.apply(Eq.Ati_def, i, k)
+    Eq << Bool.Cond.of.All.subst.apply(Eq.Ati_def, i, k)
 
     Eq <<= Eq[-2].subs(Eq[-1].reversed)
 
@@ -72,13 +72,13 @@ def prove(Eq):
 
     Eq << Bool.All_And.of.All.All.apply(Eq.Lij_conj_is_complex, Eq[3])
 
-    Eq << Eq[-1].this.apply(Algebra.All.limits.separate, simplify=None)
+    Eq << Eq[-1].this.apply(Bool.All.limits.separate, simplify=None)
 
     Eq << Eq[-1].this().find(Min).simplify()
 
     Eq << Eq[-1].this.expr.apply(Set.IsComplex.of.IsComplex.IsComplex)
 
-    Eq << Eq[-1].this.apply(Algebra.All.limits.separate, simplify=None)
+    Eq << Eq[-1].this.apply(Bool.All.limits.separate, simplify=None)
 
     Eq << Eq[-1].this.expr.apply(Set.IsComplex.Sum.of.All_IsComplex)
 

@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(self):
-    from Lemma.Algebra.Block.eq.Exp import extract
+    from Lemma.Tensor.Block.eq.Exp import extract
     return Equal(self, Tan(extract(Tan, self)), evaluate=False)
 
 

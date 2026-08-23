@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq << Nat.Le.of.Lt.apply(Eq[2])
 
-    Eq << Algebra.Le.of.Le.relax.apply(Eq[-1], a + 1)
+    Eq << Nat.Le.of.Le.relax.apply(Eq[-1], a + 1)
 
 
 if __name__ == '__main__':

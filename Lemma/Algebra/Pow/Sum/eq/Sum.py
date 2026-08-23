@@ -11,7 +11,7 @@ def apply(self, var='k'):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset, Set, Bool, Int
+    from Lemma import Algebra, Finset, Set, Bool, Int, Tensor
 
     n = Symbol(integer=True, positive=True, given=False)
     x = Symbol(complex=True, shape=(oo,))
@@ -23,11 +23,11 @@ def prove(Eq):
 
     Eq << Eq[1].this.rhs.apply(Finset.Sum.eq.Sum_MulBool)
 
-    Eq << Eq[-1].this.find(functions.Bool).apply(Algebra.Bool.eq.Delta)
+    Eq << Eq[-1].this.find(functions.Bool).apply(Bool.Bool.eq.Delta)
 
     Eq.induct = Eq[0].subs(n, n + 1)
 
-    Eq << Eq.induct.this.lhs.base.apply(Algebra.Sum.eq.Add.pop)
+    Eq << Eq.induct.this.lhs.base.apply(Finset.Sum.eq.Add.pop)
 
     Eq << Eq[-1].this.lhs.apply(Finset.Pow.eq.Sum.Binom.Newton)
 
@@ -43,12 +43,12 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Equal).apply(Int.EqAdd.Is.Eq_Sub, lhs=0)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.limits.pop.CartesianSpace.Cond)
+    Eq << Eq[-1].this.rhs.apply(Tensor.Sum.limits.pop.CartesianSpace.Cond)
 
     k = Eq[-1].lhs.variable
     Eq << Eq[-1].this.rhs.limits_subs(Eq[-1].rhs.variables[1], k)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.limits.separate)
+    Eq << Eq[-1].this.rhs.apply(Finset.Sum.limits.separate)
 
     Eq << Eq[-1].this.rhs.find(Sum).apply(Finset.Sum_Mul.eq.Mul_Sum)
 

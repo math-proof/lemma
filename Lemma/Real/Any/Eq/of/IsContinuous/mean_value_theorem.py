@@ -33,13 +33,13 @@ def prove(Eq):
 
     Eq.intermediate_value = Eq[-1].subs(Eq.max.reversed).subs(Eq.min.reversed)
 
-    Eq << Algebra.All_LeMinima.apply(m.definition)
+    Eq << Real.All_LeMinima.apply(m.definition)
 
     Eq << Real.LeIntegral.of.All_Le.apply(Eq[-1])
 
     Eq << Eq[-1].subs(Eq.min.reversed) / (b - a)
 
-    Eq << Algebra.All_GeMaxima.apply(M.definition)
+    Eq << Real.All_GeMaxima.apply(M.definition)
 
     Eq << Real.GeIntegral.of.All_Ge.apply(Eq[-1])
 
@@ -49,7 +49,7 @@ def prove(Eq):
 
     Eq << Bool.Or_NotIn.of.All.apply(Eq.intermediate_value, Eq.intermediate_value.rhs, Eq[-1].lhs)
 
-    Eq << Algebra.Any.Or.of.Or.apply(Eq[-1], simplify=None)
+    Eq << Bool.Any.Or.of.Or.apply(Eq[-1], simplify=None)
 
     Eq << Bool.Any_And.of.Any.All.apply(Eq[-1], Eq[-3], simplify=None)
 

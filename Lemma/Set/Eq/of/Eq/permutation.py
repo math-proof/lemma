@@ -14,7 +14,7 @@ def apply(given, x):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Finset
+    from Lemma import Set, Algebra, Finset, Bool
 
     n = Symbol(integer=True, positive=True)
     p, x = Symbol(integer=True, shape=(n,))
@@ -40,7 +40,7 @@ def prove(Eq):
 
     Eq << Eq[-1].apply(Set.In_Cup.given.Any_In)
 
-    Eq << Algebra.Any.given.Any.subst.apply(Eq[-1], Eq[-1].variable, p[_i])
+    Eq << Bool.Any.given.Any.subst.apply(Eq[-1], Eq[-1].variable, p[_i])
 
     Eq.supset = Supset(Eq.subset.lhs, Eq.subset.rhs, plausible=True)
 
@@ -53,8 +53,8 @@ def prove(Eq):
     index_j = Eq[-1].lhs.indices[0]
     Eq << Eq.definition.subs(Eq[-1].reversed)
 
-    Eq << Algebra.Any.given.Any.subst.apply(Eq[-1], Eq[-1].variable, index_j)
-    Eq << Algebra.Any.given.Cond.apply(Eq[-1])
+    Eq << Bool.Any.given.Any.subst.apply(Eq[-1], Eq[-1].variable, index_j)
+    Eq << Bool.Any.given.Cond.apply(Eq[-1])
 
     Eq <<= Eq.subset & Eq.supset
 

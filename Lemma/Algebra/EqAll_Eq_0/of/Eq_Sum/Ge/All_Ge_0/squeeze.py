@@ -23,13 +23,13 @@ def prove(Eq):
     a = Symbol(real=True)
     Eq << apply(Equal(Sum[i:n + 1](x[i]), a), x[n] >= a, All[i:n + 1](x[i] >= 0))
 
-    Eq.eq = Eq[0].this.lhs.apply(Algebra.Sum.eq.Add.pop)
+    Eq.eq = Eq[0].this.lhs.apply(Finset.Sum.eq.Add.pop)
 
     Eq.All_is_nonnegative = Set.AllIn_SDiff.of.All.apply(Eq[2], domain=Range(n))
 
     Eq << Algebra.Ge_0.Sum.of.All_Ge_0.apply(Eq.All_is_nonnegative)
 
-    Eq << Algebra.LeSub.of.Eq.Ge.apply(Eq.eq, Eq[-1])
+    Eq << Nat.LeSub.of.Eq.Ge.apply(Eq.eq, Eq[-1])
 
     Eq << Nat.Eq.of.Le.Le.apply(Eq[1], Eq[-1])
 

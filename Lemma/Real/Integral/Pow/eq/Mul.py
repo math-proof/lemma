@@ -39,7 +39,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(-~Symbol).definition
 
-    Eq << Algebra.Any.And.of.Any_All.subst.apply(Eq[-1], x, 0)
+    Eq << Bool.Any.And.of.Any_All.subst.apply(Eq[-1], x, 0)
 
     Eq << Eq[-1].this.expr.expr.args[1].lhs.doit()
 

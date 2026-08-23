@@ -9,13 +9,13 @@ def apply(x, y):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Nat
     x, y = Symbol(real=True)
     Eq << apply(x, y)
 
     Eq << Eq[0].this.lhs.args[1].defun()
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Add.eq.Max)
+    Eq << Eq[-1].this.lhs.apply(Nat.Add.eq.Max)
 
 
 if __name__ == '__main__':

@@ -39,7 +39,7 @@ def prove(Eq):
     y = Symbol(real=True)
     Eq <<= Algebra.LeInf.given.All_Any_Lt.apply(Eq[-2], y), Algebra.GeInf.given.All.Ge.apply(Eq[-1])
 
-    Eq <<= Algebra.All.given.And.All.split.apply(Eq[-2], cond=y <= M ** 2), Bool.All.given.Imp.apply(Eq[-1])
+    Eq <<= Bool.All.given.And.All.split.apply(Eq[-2], cond=y <= M ** 2), Bool.All.given.Imp.apply(Eq[-1])
 
     Eq <<= Bool.All.given.Imp.apply(Eq[-3]), Eq[-2].subs(Eq.eq_max), Eq[-1].this.lhs.apply(Set.Gt.of.In_Icc)
 
@@ -61,11 +61,11 @@ def prove(Eq):
 
     Eq <<= Bool.Imp_And.given.Imp.Imp.apply(Eq[-3]), Eq[-2].this.rhs.apply(Set.In.given.And.strengthen, M, strict=True), Bool.Imp_And.given.Imp.Imp.apply(Eq[-1])
 
-    Eq <<= Eq[-4].this.rhs * 2, Eq[-5].this.rhs * 2, Bool.Imp.given.Cond.apply(Eq[-3]), Eq[-1].this.lhs.apply(Algebra.GtSqrt.of.Gt), Eq[-2].this.rhs.apply(Algebra.Add.gt.Zero.given.And.Gt_0, 1)
+    Eq <<= Eq[-4].this.rhs * 2, Eq[-5].this.rhs * 2, Bool.Imp.given.Cond.apply(Eq[-3]), Eq[-1].this.lhs.apply(Algebra.GtSqrt.of.Gt), Eq[-2].this.rhs.apply(Nat.Add.gt.Zero.given.And.Gt_0, 1)
 
     Eq << Eq[-3] + (m - M)
 
-    Eq <<= Eq[-5].this.lhs.apply(Algebra.GtSqrt.of.Gt), Eq[-4].this.rhs.apply(Algebra.Add.gt.Zero.given.And), Eq[-2].subs(Eq.eq_abs_M), Bool.Imp_And.given.Imp.Imp.apply(Eq[-1])
+    Eq <<= Eq[-5].this.lhs.apply(Algebra.GtSqrt.of.Gt), Eq[-4].this.rhs.apply(Nat.Add.gt.Zero.given.And), Eq[-2].subs(Eq.eq_abs_M), Bool.Imp_And.given.Imp.Imp.apply(Eq[-1])
 
     Eq <<= Eq[-5].subs(Eq.eq_abs_m), Eq[-4].this.lhs.apply(Nat.Gt_Sub_1.of.Gt, lower=0), Eq[-3].this.rhs.apply(Algebra.Gt.transport, lhs=slice(1, None)), Bool.Imp.given.Cond.apply(Eq[-2]), Eq[-1].this.lhs.apply(Nat.Gt_Sub_1.of.Gt, lower=0)
 

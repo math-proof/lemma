@@ -40,7 +40,7 @@ def prove(Eq):
 
     Eq << Eq.final.subs(Eq[-1].reversed)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.eq.Sub.telescope)
+    Eq << Eq[-1].this.lhs.apply(Finset.Sum.eq.Sub.telescope)
 
     Eq << Eq[-1].this.rhs.apply(Finset.FallingFactorial.eq.Inv.FallingFactorial)
 

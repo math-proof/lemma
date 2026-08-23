@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(eq, f_eq, swap=False, reverse=False, simplify=True, assumptions={}):
-    from Lemma.Algebra.All.of.All_Eq.Cond.subst import subs
+    from Lemma.Bool.All.of.All_Eq.Cond.subst import subs
     if swap:
         f_eq, eq = eq, f_eq
 

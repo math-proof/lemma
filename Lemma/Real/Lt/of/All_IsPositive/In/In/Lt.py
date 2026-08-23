@@ -40,7 +40,7 @@ def prove(Eq):
 
     Eq << Algebra.Gt_0.of.Lt.apply(Eq[3])
 
-    Eq << Algebra.All.And.of.Cond.All.apply(Eq[-1], Eq[-2], simplify=None)
+    Eq << Bool.All.And.of.Cond.All.apply(Eq[-1], Eq[-2], simplify=None)
 
     Eq << Eq[-1].this.expr.apply(Nat.Lt0Mul.of.Gt_0.Gt_0)
 

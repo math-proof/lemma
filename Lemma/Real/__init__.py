@@ -135,3 +135,16 @@ from . import ExpMulIte
 from . import MulPowS
 from . import PowMul
 from . import MulExpS
+from . import All_GeMaxima
+from . import All_GeSup
+from . import All_Ge_Inf
+from . import All_Ge_Minima
+from . import All_LeInf
+from . import All_LeMinima
+from . import All_Le_Maxima
+from . import All_Le_Sup
+from . import Any_Lt_0
+from . import LeLog
+from . import LeMaxima
+from . import LeSqrt
+from . import LeSup

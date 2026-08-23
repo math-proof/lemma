@@ -14,7 +14,7 @@ def apply(eq_conditioned, eq_expect, eq_var, n=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability, Finset, Int, Nat, Vector
+    from Lemma import Algebra, Probability, Finset, Int, Nat, Vector, Tensor
 
     x = Symbol(real=True, shape=(oo,), random=True)
     μ = Symbol(real=True)
@@ -23,7 +23,7 @@ def prove(Eq):
     n = Symbol(domain=Range(2, oo))
     Eq << apply(Equal(x[k] | x[:k], x[k]), Equal(Expectation(x[k]), μ), Equal(Variance(x[k]), σ ** 2), n)
 
-    Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.Square.ReducedSum.eq.Add.Sum.Square)
+    Eq << Eq[-1].this.find(Sum).apply(Tensor.Sum.Square.ReducedSum.eq.Add.Sum.Square)
 
     Eq << Eq[-1].this.lhs.apply(Probability.Expect.eq.Mul) * (n - 1)
 

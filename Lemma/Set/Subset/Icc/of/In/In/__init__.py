@@ -29,11 +29,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.apply(Bool.OrAndS.of.And_Or, simplify=None)
 
-    Eq << Eq[-1].this.expr.args[0].apply(Algebra.And.of.And.delete, index=-1, simplify=None)
+    Eq << Eq[-1].this.expr.args[0].apply(Bool.And.of.And.delete, index=-1, simplify=None)
 
     Eq << Eq[-1].this.expr.args[0].apply(Nat.Lt.of.Le.Lt)
 
-    Eq << Eq[-1].this.args[1].expr.apply(Algebra.And.of.And.delete, index=1)
+    Eq << Eq[-1].this.args[1].expr.apply(Bool.And.of.And.delete, index=1)
 
     Eq << Eq[-1].this.args[1].expr.apply(Nat.Le.of.Le.Ge)
 

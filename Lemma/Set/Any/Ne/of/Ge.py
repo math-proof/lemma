@@ -17,7 +17,7 @@ def apply(given, *vars):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Algebra, Bool
 
     S = Symbol(etype=dtype.integer, given=True)
     Eq << apply(Card(S) >= 2)
@@ -39,7 +39,7 @@ def prove(Eq):
 
     Eq << Eq[0] - 1
 
-    Eq << Algebra.Any.of.Any_Eq.Cond.subst.apply(Eq[-2].reversed, Eq[-1])
+    Eq << Bool.Any.of.Any_Eq.Cond.subst.apply(Eq[-2].reversed, Eq[-1])
 
     Eq << Eq[-1].this.expr.apply(Set.Ne_Empty.of.Ge, simplify=False)
 
@@ -50,7 +50,7 @@ def prove(Eq):
 
     Eq << ~Eq[1]
 
-    Eq << Algebra.Any.of.All_Eq.Any.subst.apply(Eq[-1], Eq[-2])
+    Eq << Bool.Any.of.All_Eq.Any.subst.apply(Eq[-1], Eq[-2])
 
 
 

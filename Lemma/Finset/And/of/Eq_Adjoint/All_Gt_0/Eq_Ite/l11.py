@@ -10,7 +10,7 @@ def apply(eq, infer, eq_piece):
 
 @prove
 def prove(Eq):
-    from Lemma import Bool, Finset, Set, Algebra, Tensor
+    from Lemma import Bool, Finset, Set, Algebra, Tensor, Complex
 
     n = Symbol(domain=Range(2, oo))
     A = Symbol(shape=(n, n), complex=True)
@@ -68,7 +68,7 @@ def prove(Eq):
 
     Eq << Set.IsPositive.Sqrt.of.IsPositive.apply(Eq[-1])
 
-    Eq << Eq[-1].this.find(Mul).args[1:].apply(Algebra.Mul.Conj.eq.Square.Abs)
+    Eq << Eq[-1].this.find(Mul).args[1:].apply(Complex.Mul.Conj.eq.Square.Abs)
 
     Eq << Eq[2].subs(i, 1).subs(j, 1).reversed
 
@@ -80,7 +80,7 @@ def prove(Eq):
 
     Eq << Eq.A11_def.this.find(Norm).apply(Algebra.Norm.eq.Sqrt)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.eq.Add.doit)
+    Eq << Eq[-1].this.rhs.apply(Finset.Sum.eq.Add.doit)
 
     Eq << Set.Eq.Square.Abs.of.IsReal.apply(Eq.L11_is_positive)
 

@@ -63,7 +63,7 @@ def prove(Eq):
 
     Eq << Set.Eq.of.All_Eq_Empty.nonoverlapping.setlimit.utility.apply(Eq[-1])
 
-    Eq << Algebra.All.of.All_Eq.Cond.subst.apply(Eq.yi_definition, Eq[-1])
+    Eq << Bool.All.of.All_Eq.Cond.subst.apply(Eq.yi_definition, Eq[-1])
 
 
 if __name__ == '__main__':

@@ -12,7 +12,7 @@ def apply(eq_x_bar, eq_M2):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Finset
 
     x, M = Symbol(real=True, shape=(oo,))
     n, k = Symbol(integer=True)
@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq << Eq[1].subs(n, n + 1) - Eq[1]
 
-    Eq << Eq[-1].this(n).find(Sum).apply(Algebra.Sum.eq.Add.pop)
+    Eq << Eq[-1].this(n).find(Sum).apply(Finset.Sum.eq.Add.pop)
 
     Eq << Algebra.Eq.Sum.Square.eq.Add.Sum.Square.of.Eq_ReducedSum.apply(Eq[0], x_bar[n + 1], k)
 

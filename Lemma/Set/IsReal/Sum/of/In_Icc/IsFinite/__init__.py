@@ -17,14 +17,14 @@ def apply(el, is_finite):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Real, Nat, Int, Rat
+    from Lemma import Algebra, Set, Real, Nat, Int, Rat, Finset
 
     r = Symbol(shape=(oo,), real=True)
     γ = Symbol(real=True)
     k = Symbol(integer=True)
     Eq << apply(Element(γ, Interval(0, 1, left_open=True, right_open=True)), Less(Sup[k:oo](Abs(r[k])), oo))
 
-    Eq << Algebra.All_Le_Sup.apply(Eq[1].find(Sup))
+    Eq << Real.All_Le_Sup.apply(Eq[1].find(Sup))
 
     Eq.gt_zero, Eq.lt = Set.Le.Le.of.In_Icc.apply(Eq[0])
 
@@ -37,7 +37,7 @@ def prove(Eq):
     n = Symbol(integer=True, positive=True)
     Eq << Algebra.LeSum.of.Le.apply(Eq[-1], (k, 0, n))
 
-    Eq << Algebra.AbsSum.le.Sum_Abs.apply(Eq[2].find(Sum)._subs(oo, n))
+    Eq << Finset.AbsSum.le.Sum_Abs.apply(Eq[2].find(Sum)._subs(oo, n))
 
     Eq << Nat.Le.of.Le.Le.apply(Eq[-1], Eq[-2])
 
@@ -47,11 +47,11 @@ def prove(Eq):
 
     Eq << Nat.Ne.of.Lt.apply(Eq.lt)
 
-    Eq << Algebra.EqSum.of.Ne.geometric_series.apply(Eq[-1], Eq[-2].rhs.find(Sum))
+    Eq << Rat.EqSum.of.Ne.geometric_series.apply(Eq[-1], Eq[-2].rhs.find(Sum))
 
     Eq << Eq[-3].subs(Eq[-1])
 
-    Eq << Algebra.And.of.LeAbs.apply(Eq[-1])
+    Eq << Int.And.of.LeAbs.apply(Eq[-1])
 
     Eq <<= Real.LeLim.of.Le.apply(Eq[-2], (n, oo)), Real.GeLim.of.Ge.apply(Eq[-1], (n, oo))
 
@@ -81,7 +81,7 @@ def prove(Eq):
 
     Eq << Algebra.LtAbs.of.Lt.Gt.apply(Eq[-2], Eq[-1])
 
-    Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.limits.domain_defined)
+    Eq << Eq[-1].this.find(Sum).apply(Finset.Sum.limits.domain_defined)
 
     Eq << Set.IsReal.of.Abs_Lt_Infty.apply(Eq[-1], simplify=None)
 

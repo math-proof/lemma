@@ -23,7 +23,7 @@ def apply(eq_D, eq_Ah, eq_Al, V):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Bool, Nat
+    from Lemma import Tensor, Algebra, Bool, Nat, Finset
 
     n, d_z = Symbol(integer=True, positive=True)
     h = Symbol(domain=Range(1, n))
@@ -68,7 +68,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.subs(Eq.ksi_def)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.eq.Ite)
+    Eq << Eq[-1].this.rhs.apply(Finset.Sum.eq.Ite)
 
     Eq << Eq[-1].this.find(ExprCondPair)().expr.args[0].simplify()
 
@@ -82,9 +82,9 @@ def prove(Eq):
 
     Eq.divisor_definition = Eq[-1].this.rhs.apply(Nat.Ite.eq.SubIte)
 
-    Eq << Eq.divisor_definition.find(ExprCondPair[2]).find(Sum).this.apply(Algebra.Sum.eq.ReducedSum)
+    Eq << Eq.divisor_definition.find(ExprCondPair[2]).find(Sum).this.apply(Tensor.Sum.eq.ReducedSum)
 
-    Eq << Eq.divisor_definition.find(ExprCondPair).find(Sum).this.apply(Algebra.Sum.eq.ReducedSum)
+    Eq << Eq.divisor_definition.find(ExprCondPair).find(Sum).this.apply(Tensor.Sum.eq.ReducedSum)
 
     Eq.divisor_definition = Eq.divisor_definition.this.rhs.subs(Eq[-2], Eq[-1], simplify=False)
 
@@ -114,7 +114,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.simplify()
 
-    Eq.zi_definition = Algebra.Cond.of.Eq.Cond.subs_with_expand_dims.apply(Eq[-1], Eq.zi_definition)
+    Eq.zi_definition = Tensor.Cond.of.Eq.Cond.subs_with_expand_dims.apply(Eq[-1], Eq.zi_definition)
 
     Eq << Eq.zi_definition.find(MatMul).this.apply(Tensor.Dot.eq.Stack_Sum_MulGetS)
 
@@ -132,11 +132,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Tensor.Stack.eq.Add)
 
-    Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.Mul.eq.Add)
+    Eq << Eq[-1].this.find(Sum).apply(Finset.Sum.Mul.eq.Add)
 
     Eq << Eq[-1].this.find(ExprCondPair)().find(Piecewise).simplify()
 
-    Eq << Eq[-1].this.find(Sum[Mul[Add]]).apply(Algebra.Sum.Mul.eq.Add)
+    Eq << Eq[-1].this.find(Sum[Mul[Add]]).apply(Finset.Sum.Mul.eq.Add)
 
     Eq << Eq[-1].this.find(ExprCondPair[2])().find(Piecewise).simplify()
 
@@ -156,7 +156,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.subs(Eq.lower_part, Eq.upper_part)
 
-    Eq << Algebra.Cond.of.Eq.Cond.subs_with_expand_dims.apply(Eq.diagonal_part, Eq[-1])
+    Eq << Tensor.Cond.of.Eq.Cond.subs_with_expand_dims.apply(Eq.diagonal_part, Eq[-1])
 
     Eq << Eq.zi_definition.this.rhs.subs(Eq[-1])
 

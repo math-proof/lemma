@@ -9,13 +9,13 @@ def apply(is_negative, z):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat, Bool
+    from Lemma import Algebra, Nat, Bool, Real
 
     z = Symbol(complex=True, given=True)
     r = Symbol(real=True)
     Eq << apply(r < 0, Arg(z))
 
-    Eq << Algebra.Any.Eq.of.Lt_0.apply(Eq[0])
+    Eq << Real.Any.Eq.of.Lt_0.apply(Eq[0])
 
     Eq <<= Eq[1] & Eq[-1]
 

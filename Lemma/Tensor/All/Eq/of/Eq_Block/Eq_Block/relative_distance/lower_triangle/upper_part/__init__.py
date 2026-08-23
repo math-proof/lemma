@@ -38,7 +38,7 @@ def prove(Eq):
 
     Eq <<= Bool.AllIn.of.All.apply(Eq[-1], (i, 0, l), simplify=None)
 
-    Eq << Algebra.All.Eq.Slice.of.All_Eq.apply(Eq[-1], slice(0, i + 1))
+    Eq << Tensor.All.Eq.Slice.of.All_Eq.apply(Eq[-1], slice(0, i + 1))
 
     Eq << Eq[-1].this.find((~Indexed) - Indexed).args[1].apply(Algebra.Expr.eq.IteGe, upper=n - 1)
 
@@ -48,7 +48,7 @@ def prove(Eq):
 
     Eq << Bool.AllIn.of.All.apply(Eq[-1], (i, 0, l), simplify=None)
 
-    Eq << Algebra.All.Eq.Slice.of.All_Eq.apply(Eq[-1], slice(0, i + 1))
+    Eq << Tensor.All.Eq.Slice.of.All_Eq.apply(Eq[-1], slice(0, i + 1))
 
     Eq << Eq[-1].this.find(relu).apply(Tensor.Relu.eq.Add.Min)
 

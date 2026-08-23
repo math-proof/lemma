@@ -10,7 +10,7 @@ def apply(is_positive, self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Nat, Rat
+    from Lemma import Algebra, Bool, Nat, Rat, Real
 
     a, x, m, M = Symbol(real=True)
     f = Function(real=True)
@@ -21,10 +21,10 @@ def prove(Eq):
     y = Symbol(Eq[1].rhs.args[1])
     Eq << y.this.definition.reversed
 
-    Eq << Algebra.And.of.Eq.squeeze.apply(Eq[-1])
+    Eq << Nat.And.of.Eq.squeeze.apply(Eq[-1])
 
     z = Symbol(real=True)
-    Eq <<= Algebra.All.Any.Lt.of.LeInf.apply(Eq[-2], z), Algebra.All.Ge.of.GeInf.apply(Eq[-1])
+    Eq <<= Real.All.Any.Lt.of.LeInf.apply(Eq[-2], z), Real.All.Ge.of.GeInf.apply(Eq[-1])
 
     Eq <<= Bool.Imp.of.AllSetOf.apply(Eq[-2]), Bool.Imp.of.AllSetOf.apply(Eq[-1])
 

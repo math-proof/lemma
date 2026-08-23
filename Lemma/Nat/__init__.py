@@ -66,3 +66,16 @@ from . import GtPowS
 from . import ModSub
 from . import Delta
 from . import Mul_Delta
+from . import AddTesseract
+from . import All
+from . import Any
+from . import And
+from . import Sum
+from . import LeAdd
+from . import LeMax
+from . import LeMin
+from . import LeSquare
+from . import LeSub
+from . import Le_Max
+from . import Le_Min
+from . import Clip

@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(is_nonzero, delta_is_zero, fx):
-    from Lemma.Algebra.Le.of.Le.Ge.quadratic import quadratic_coefficient
+    from Lemma.Real.Le.of.Le.Ge.quadratic import quadratic_coefficient
     a = is_nonzero.of(Unequal[0])
     x, = fx.free_symbols - delta_is_zero.free_symbols
     delta = delta_is_zero.of(Equal[0])

@@ -12,7 +12,7 @@ def apply(limited_f, limited_g):
 
 @prove
 def prove(Eq):
-    from Lemma import Real, Algebra
+    from Lemma import Real, Algebra, Bool
 
     x = Symbol(real=True)
     f, g = Function(real=True)
@@ -31,11 +31,11 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(ε_1, ε / 2)
 
-    Eq << Algebra.Any.All.And.of.Any_All.Any_All.limits_Inter.apply(Eq[-1], Eq[-3])
+    Eq << Bool.Any.All.And.of.Any_All.Any_All.limits_Inter.apply(Eq[-1], Eq[-3])
 
     Eq << Eq[-1].this.expr.expr.apply(Algebra.Lt.Abs.Sub.of.Lt.Lt)
 
-    Eq << Algebra.Any.of.Any.subst.apply(Eq[-1], Max(N0, N1), N)
+    Eq << Bool.Any.of.Any.subst.apply(Eq[-1], Max(N0, N1), N)
 
     Eq << Real.Eq.of.Any_All.limit_definition.apply(Eq[-1])
 

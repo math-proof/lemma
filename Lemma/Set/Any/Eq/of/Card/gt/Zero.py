@@ -40,9 +40,9 @@ def prove(Eq):
 
     Eq << Eq[-2].subs(Eq[-1])
 
-    Eq << Eq[-1].this.apply(Algebra.Any.limits.separate, simplify=None)
+    Eq << Eq[-1].this.apply(Bool.Any.limits.separate, simplify=None)
 
-    Eq << Eq[-1].this.apply(Algebra.Any.Is.Or.doit.setlimit)
+    Eq << Eq[-1].this.apply(Bool.Any.Is.Or.doit.setlimit)
 
 
 

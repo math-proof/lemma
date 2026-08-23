@@ -17,7 +17,7 @@ def apply(eq_limit):
 
 @prove(proved=False)
 def prove(Eq):
-    from Lemma import Real, Algebra, Set
+    from Lemma import Real, Algebra, Set, Bool
 
     x, epsilon = Symbol(real=True)
     f = Function(real=True)
@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq << Real.Any.All.of.Eq_Lim.limit_definition.apply(Eq[0], 'chi')
 
-    Eq << Eq[-1].this.expr.apply(Algebra.All.And.of.All)
+    Eq << Eq[-1].this.expr.apply(Bool.All.And.of.All)
 
     Eq << Eq[-1].this.find(Element).apply(Set.Lt.of.In_Icc)
 

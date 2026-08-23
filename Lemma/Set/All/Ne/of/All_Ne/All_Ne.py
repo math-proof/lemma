@@ -27,7 +27,7 @@ def apply(all_historic, all_n):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Bool
 
     i, j = Symbol(integer=True)
     n = Symbol(integer=True, positive=True)
@@ -35,7 +35,7 @@ def prove(Eq):
     Eq << apply(All[j:i, i:n](Unequal(x[i], x[j])),
                 All[i:n](Unequal(x[n], x[i])))
 
-    Eq << Algebra.All.given.And.All.apply(Eq[-1], cond={n}, wrt=i)
+    Eq << Bool.All.given.And.All.apply(Eq[-1], cond={n}, wrt=i)
 
 
 

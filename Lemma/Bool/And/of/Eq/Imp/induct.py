@@ -33,7 +33,7 @@ def prove(Eq):
 
     Eq << Imply(Eq[2], Eq[2]._subs(x, x + 1), plausible=True)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Cond.of.Cond.subst, x, x + 1)
+    Eq << Eq[-1].this.lhs.apply(Bool.Cond.of.Cond.subst, x, x + 1)
 
     Eq << Bool.Imp_And.of.ImpAnd.apply(Eq[-1])
 

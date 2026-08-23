@@ -81,7 +81,7 @@ def prove(Eq):
 
     Eq.piecewise_equality = Eq.piecewise_equality.this.lhs.apply(Tensor.Dot.eq.Sum)
 
-    Eq << Eq.piecewise_equality.lhs.args[-1].this.apply(Algebra.Sum.SDiff.eq.Add)
+    Eq << Eq.piecewise_equality.lhs.args[-1].this.apply(Finset.Sum.SDiff.eq.Add)
 
     Eq << Eq[-1].subs(Eq.eq_intersection)
 
@@ -90,7 +90,7 @@ def prove(Eq):
     Eq << Eq[-1].this.rhs.subs(Eq.union_equality)
 
     Eq << Eq.di_definition.this.rhs.defun().this.rhs.apply(Tensor.Dot.eq.Sum)
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.eq.Sub.unshift)
+    Eq << Eq[-1].this.rhs.apply(Finset.Sum.eq.Sub.unshift)
 
     Eq << Eq[-3].subs(Eq[-1].reversed)
 

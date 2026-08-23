@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Real
+    from Lemma import Algebra, Real, Rat
 
     x = Symbol(real=True)
     Eq << apply(tanh(x))
@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(cosh).apply(Real.Cosh.eq.AddDivSExp_2)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Div.cancel, 2)
+    Eq << Eq[-1].this.lhs.apply(Rat.Div.cancel, 2)
 
 
 

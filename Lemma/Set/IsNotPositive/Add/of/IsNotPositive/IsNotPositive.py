@@ -13,7 +13,7 @@ def apply(a_is_nonpositive, b_is_nonpositive):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Algebra, Nat
 
     x, y = Symbol(super_real=True)
     Eq << apply(Element(x, Interval(-oo, 0)), Element(y, Interval(-oo, 0)))
@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Set.Le.of.In_Icc.apply(Eq[1])
 
-    Eq << Algebra.LeAdd.of.Le.Le.apply(Eq[-1], Eq[-2])
+    Eq << Nat.LeAdd.of.Le.Le.apply(Eq[-1], Eq[-2])
 
     Eq << Set.IsReal.Add.of.IsReal.IsReal.apply(Eq[0], Eq[1])
 

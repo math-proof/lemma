@@ -28,13 +28,13 @@ def prove(Eq):
 
     Eq << Bool.Or_NotIn.of.All.apply(Eq.given, x, Eq.given_i.expr.lhs)
 
-    Eq << Algebra.All.And.of.Cond.All.apply(Eq[-1], Eq.given_i)
+    Eq << Bool.All.And.of.Cond.All.apply(Eq[-1], Eq.given_i)
 
     Eq << Bool.All.of.All_And.apply(Eq[-1], index=-1)
 
     Eq << Bool.Or_NotIn.of.All.apply(Eq.given_i, x, Eq[-1].expr.lhs)
 
-    Eq << Algebra.All.And.of.Cond.All.apply(Eq[-2], Eq[-1])
+    Eq << Bool.All.And.of.Cond.All.apply(Eq[-2], Eq[-1])
 
     Eq << Bool.All.of.All_And.apply(Eq[-1], index=1)
 
@@ -52,7 +52,7 @@ def prove(Eq):
 
     Eq.plausible = All(Element(w[i, j] @ x, S), (x, S), (j, Range(1, n)), plausible=True)
 
-    Eq << Algebra.All.given.And.All.apply(Eq.plausible, cond=i.set, wrt=j)
+    Eq << Bool.All.given.And.All.apply(Eq.plausible, cond=i.set, wrt=j)
 
     Eq << Set.Inter.eq.Ite_.ExprCondPair_.Finset.In.ExprCondPairEmpty.apply(i, Range(1, n))
 
@@ -68,7 +68,7 @@ def prove(Eq):
 
     Eq << Eq.given_i.subs(Eq[-1].reversed)
 
-    Eq << Algebra.All.given.And.All.apply(Eq[2], cond=Equal(j, 0))
+    Eq << Bool.All.given.And.All.apply(Eq[2], cond=Equal(j, 0))
 
 
 

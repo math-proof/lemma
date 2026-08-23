@@ -15,7 +15,7 @@ def prove(Eq):
     x, a, b = Symbol(real=True)
     Eq << apply(Integral[x:a:b](f(x)))
 
-    Eq << Algebra.LeAbs.given.And.apply(Eq[0])
+    Eq << Int.LeAbs.given.And.apply(Eq[0])
 
     Eq << Int.GeAbs.apply(f(x))
 

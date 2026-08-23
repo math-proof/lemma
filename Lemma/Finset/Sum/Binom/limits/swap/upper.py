@@ -19,11 +19,11 @@ def prove(Eq):
     f = Function(real=True)
     Eq << apply(Sum[k:j:n, j:h:n](Binomial(i + k - j, i) * f(k)))
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.limits.swap.intlimit)
+    Eq << Eq[-1].this.lhs.apply(Finset.Sum.limits.swap.intlimit)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.limits.separate)
+    Eq << Eq[-1].this.lhs.apply(Finset.Sum.limits.separate)
 
-    Eq << Eq[-1].this.lhs.find(Sum).apply(Algebra.Sum.limits.subst.Neg, j, k - j)
+    Eq << Eq[-1].this.lhs.find(Sum).apply(Finset.Sum.limits.subst.Neg, j, k - j)
 
     Eq << Eq[-1].this.lhs.find(Sum).apply(Finset.Sum.Binom.eq.Binom)
 

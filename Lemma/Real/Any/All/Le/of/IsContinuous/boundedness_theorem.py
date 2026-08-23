@@ -14,7 +14,7 @@ def apply(given, M=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Real, Algebra
+    from Lemma import Real, Algebra, Bool
 
     a = Symbol(real=True)
     b = Symbol(real=True, domain=Interval.open(a, oo))
@@ -24,10 +24,10 @@ def prove(Eq):
 
     Eq << Real.Any.All.Le.of.IsContinuous.extreme_value_theorem.apply(Eq[0])
 
-    Eq << Algebra.Any.of.Any.limits.relax.apply(Eq[-1], domain=Reals)
+    Eq << Bool.Any.of.Any.limits.relax.apply(Eq[-1], domain=Reals)
 
     m = Eq[1].variable
-    Eq << Algebra.Any.given.Any.subst.apply(Eq[1], m, f(Eq[-1].variable))
+    Eq << Bool.Any.given.Any.subst.apply(Eq[1], m, f(Eq[-1].variable))
 
 
 if __name__ == '__main__':

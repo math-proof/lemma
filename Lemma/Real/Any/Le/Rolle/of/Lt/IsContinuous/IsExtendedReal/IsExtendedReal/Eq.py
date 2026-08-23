@@ -22,7 +22,7 @@ def apply(lt, is_continuous, left_is_real, right_is_real, equal):
 
 @prove
 def prove(Eq):
-    from Lemma import Real, Set, Algebra, Bool, Int
+    from Lemma import Real, Set, Algebra, Bool, Int, Nat
 
     a, b, x = Symbol(real=True)
     f = Function(shape=(), real=True)
@@ -63,7 +63,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(And[Or]).apply(Bool.OrAndS.of.And_Or, simplify=None)
 
-    Eq << Eq[-1].this.find(And).apply(Algebra.Any.And.of.Any.Any)
+    Eq << Eq[-1].this.find(And).apply(Bool.Any.And.of.Any.Any)
 
     Eq << Eq[-1].this.find(And).apply(Bool.Cond.of.And, 1)
 
@@ -150,13 +150,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(And).apply(Algebra.EqMul.of.Eq.Eq)
 
-    Eq << Eq[-1].this.find(Equal).apply(Algebra.Le.of.Eq)
+    Eq << Eq[-1].this.find(Equal).apply(Nat.Le.of.Eq)
 
     Eq << Eq[-1].this.lhs.apply(Set.AllIn_SDiff.of.All, Interval.open(a, b))
 
     Eq << Eq[-1].this.rhs.apply(Bool.Any_UFn.given.UFnUFn, x, (a + b) / 2)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Cond.of.All.subst, x, (a + b) / 2)
+    Eq << Eq[-1].this.lhs.apply(Bool.Cond.of.All.subst, x, (a + b) / 2)
 
     Eq << Bool.Imp.given.Cond.apply(Eq[-1])
 

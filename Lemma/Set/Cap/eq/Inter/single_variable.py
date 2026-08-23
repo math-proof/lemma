@@ -33,7 +33,7 @@ def prove(Eq):
     Eq <<= Eq[-2].this.rhs.find(Element).apply(Set.In_Cap.given.All_In), \
     Eq[-1].this.lhs.find(Element).apply(Set.All_In.of.In_Cap)
 
-    Eq <<= Eq[-2].this.lhs.apply(Bool.All.All.of.All, cond=A), Eq[-1].this.rhs.apply(Algebra.All.given.And.All.split, cond=A)
+    Eq <<= Eq[-2].this.lhs.apply(Bool.All.All.of.All, cond=A), Eq[-1].this.rhs.apply(Bool.All.given.And.All.split, cond=A)
 
     Eq <<= Eq[-2].this.lhs.args[0].apply(Bool.All.Is.Imp), Eq[-1].this.rhs.args[0].apply(Bool.All.Is.Imp)
 

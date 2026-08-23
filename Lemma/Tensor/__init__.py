@@ -91,3 +91,11 @@ from . import GetSlice
 from . import Get
 from . import SEq_Append
 from . import Stack_Mul
+from . import All_Ge_ReducedMin
+from . import All_Le_ReducedMax
+from . import Any
+from . import LeBlock
+from . import Le_1
+from . import Le_Block
+from . import LeAbs
+from . import Cond

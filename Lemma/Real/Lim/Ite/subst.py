@@ -57,16 +57,16 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Less).apply(Bool.BFn_Ite.given.OrAndS)
 
-    Eq << Eq[-1].this.expr.apply(Algebra.All_Or.given.All)
+    Eq << Eq[-1].this.expr.apply(Bool.All_Or.given.All)
 
     N = Eq[-1].variable
-    Eq << Algebra.Any.given.Any.subst.apply(Eq[-1], N, Max(N, a))
+    Eq << Bool.Any.given.Any.subst.apply(Eq[-1], N, Max(N, a))
 
     Eq << Eq[2].this.expr.apply(Set.AllIn_SDiff.of.All, Range(Max(N + 1, a + 1), oo))
 
     Eq << Eq[-1].this.find(Max).apply(Algebra.Max.eq.Add)
 
-    Eq << Eq[-1].this.expr.apply(Algebra.All.And.of.All)
+    Eq << Eq[-1].this.expr.apply(Bool.All.And.of.All)
 
     Eq << Eq[-1].this.find(Element).apply(Set.Ge.Le_Sub_1.of.In_Ico)
 

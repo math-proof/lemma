@@ -12,7 +12,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Algebra, Tensor
+    from Lemma import Finset, Algebra, Tensor, Rat
 
     m = Symbol(integer=True, positive=True)
     d = Symbol(integer=True, nonnegative=True)
@@ -32,7 +32,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Product).apply(Algebra.Prod.eq.Pow.Sum)
 
-    Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.eq.Mul.series.arithmetic)
+    Eq << Eq[-1].this.find(Sum).apply(Rat.Sum.eq.Mul.series.arithmetic)
 
     Eq << Eq[-1].this.find(Add[Stack]).apply(Tensor.Add_Stack.eq.Stack_Add)
 

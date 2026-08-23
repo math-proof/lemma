@@ -21,13 +21,13 @@ def prove(Eq):
 
     Eq.ge, Eq.lt = Bool.And_And.given.And.Cond.apply(Eq[-1])
 
-    Eq << Algebra.All.limits_assert.apply(Eq.lt.limits)
+    Eq << Bool.All.limits_assert.apply(Eq.lt.limits)
 
     Eq << Eq[-1].this.expr.apply(Nat.Le_Sub_1.of.Lt)
 
-    Eq << Algebra.All_Or.given.All.apply(Eq.lt)
+    Eq << Bool.All_Or.given.All.apply(Eq.lt)
 
-    Eq << Algebra.All.limits_assert.apply(Eq.ge.limits)
+    Eq << Bool.All.limits_assert.apply(Eq.ge.limits)
 
     Eq << Eq[-1].this.expr.apply(Set.Any.Ne.of.Ge)
 

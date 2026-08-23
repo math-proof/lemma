@@ -8,7 +8,7 @@ def apply(le_zero):
 
 @prove
 def prove(Eq):
-    from Lemma import Real, Set, Algebra, Bool
+    from Lemma import Real, Set, Algebra, Bool, Nat
 
     x = Symbol(real=True)
     Eq << apply(x >= 0)
@@ -46,7 +46,7 @@ def prove(Eq):
 
     Eq << Bool.Cond.of.Imp.Cond.apply(Eq[0], Eq[-1])
 
-    Eq << Algebra.Le.of.Ge_0.apply(Eq[-1])
+    Eq << Nat.Le.of.Ge_0.apply(Eq[-1])
 
 
 

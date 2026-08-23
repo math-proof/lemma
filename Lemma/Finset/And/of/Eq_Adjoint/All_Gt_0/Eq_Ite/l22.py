@@ -11,7 +11,7 @@ def apply(eq, infer, eq_piece):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Set, Algebra, Tensor, Nat, Bool
+    from Lemma import Finset, Set, Algebra, Tensor, Nat, Bool, Complex
 
     n = Symbol(integer=True, positive=True)
     n = Symbol(domain=Range(10, oo))
@@ -82,9 +82,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Add * ~Add).apply(Nat.AddMulS.eq.Mul_Add)
 
-    Eq << Eq[-1].find(Norm ** 2).this.base.apply(Algebra.Norm.eq.Sqrt).this.rhs.apply(Algebra.Sum.eq.Add.doit)
+    Eq << Eq[-1].find(Norm ** 2).this.base.apply(Algebra.Norm.eq.Sqrt).this.rhs.apply(Finset.Sum.eq.Add.doit)
 
-    Eq << Eq[-1].this.find(Abs ** 2).apply(Algebra.Square.Abs.eq.Mul.Conj)
+    Eq << Eq[-1].this.find(Abs ** 2).apply(Complex.Square.Abs.eq.Mul.Conj)
 
     Eq << Set.EqAbs.of.IsPositive.apply(Eq.L11_is_positive)
 
@@ -116,13 +116,13 @@ def prove(Eq):
 
     Eq << Set.IsPositive.Sqrt.of.IsPositive.apply(Eq[-1])
 
-    Eq << Eq[-1].this.find(Mul).args[1:].apply(Algebra.Mul.Conj.eq.Square.Abs)
+    Eq << Eq[-1].this.find(Mul).args[1:].apply(Complex.Mul.Conj.eq.Square.Abs)
 
-    Eq << Eq[-1].this.find(Mul).args[1:].apply(Algebra.Mul.Conj.eq.Square.Abs)
+    Eq << Eq[-1].this.find(Mul).args[1:].apply(Complex.Mul.Conj.eq.Square.Abs)
 
     Eq << Eq[2].subs(i, 2).subs(j, 2).reversed
 
-    Eq << Eq[-1].this.find(Norm).apply(Algebra.Norm.eq.Sqrt).this.find(Sum).apply(Algebra.Sum.eq.Add.doit)
+    Eq << Eq[-1].this.find(Norm).apply(Algebra.Norm.eq.Sqrt).this.find(Sum).apply(Finset.Sum.eq.Add.doit)
 
     Eq << Eq[-3].subs(Eq[-1]), Eq[-1] ** 2
 
@@ -132,7 +132,7 @@ def prove(Eq):
 
     Eq << Eq.A22_def.this.find(Norm).apply(Algebra.Norm.eq.Sqrt)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.eq.Add.doit)
+    Eq << Eq[-1].this.rhs.apply(Finset.Sum.eq.Add.doit)
 
     Eq << Set.Eq.Square.Abs.of.IsReal.apply(Eq.L22_is_positive)
 

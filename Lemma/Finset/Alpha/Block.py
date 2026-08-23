@@ -31,7 +31,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.defun()
 
-    Eq << Algebra.Cond.of.Cond.subst.apply(Eq[0], x[:n], x[1:n + 1])
+    Eq << Bool.Cond.of.Cond.subst.apply(Eq[0], x[:n], x[1:n + 1])
 
     Eq << Finset.Alpha.ne.Zero.apply(Eq[-1].lhs.arg)
 

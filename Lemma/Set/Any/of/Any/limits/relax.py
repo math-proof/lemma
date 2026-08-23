@@ -33,7 +33,7 @@ def prove(Eq):
     f = Function(shape=(), integer=True)
     Eq << apply(Any[e:S - {t}](f(e) > 0), domain=S)
 
-    Eq << Algebra.Any.given.Or.Any.split.apply(Eq[-1], cond={t})
+    Eq << Bool.Any.given.Or.Any.split.apply(Eq[-1], cond={t})
 
     Eq << Bool.Or.given.Cond.apply(Eq[-1], index=1)
 

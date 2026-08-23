@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Complex, Finset
 
     n = Symbol(integer=True, positive=True)
     x = Symbol(complex=True, shape=(n,))
@@ -21,13 +21,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Norm).apply(Algebra.Norm.eq.Sqrt)
 
-    Eq << Eq[-1].this.find(Abs ** 2).apply(Algebra.Square.Abs.eq.Mul.Conj)
+    Eq << Eq[-1].this.find(Abs ** 2).apply(Complex.Square.Abs.eq.Mul.Conj)
 
-    Eq << Eq[-1].this.find(Expr * Conjugate).args[:2].apply(Algebra.Mul.Conj.eq.Square.Abs)
+    Eq << Eq[-1].this.find(Expr * Conjugate).args[:2].apply(Complex.Mul.Conj.eq.Square.Abs)
 
-    Eq << Eq[-1].this.find(Expr * Conjugate).apply(Algebra.Mul.Conj.eq.Square.Abs)
+    Eq << Eq[-1].this.find(Expr * Conjugate).apply(Complex.Mul.Conj.eq.Square.Abs)
 
-    Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.limits.domain_defined)
+    Eq << Eq[-1].this.find(Sum).apply(Finset.Sum.limits.domain_defined)
 
 
 if __name__ == '__main__':

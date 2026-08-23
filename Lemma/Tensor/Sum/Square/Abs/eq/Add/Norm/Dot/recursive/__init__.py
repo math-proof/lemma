@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor
+    from Lemma import Algebra, Tensor, Complex
 
     t, k = Symbol(integer=True, positive=True)
     L = Symbol(shape=(oo, oo), super_complex=True)
@@ -34,7 +34,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Re[MatMul * Conjugate]).apply(Algebra.Re.Conj)
 
-    Eq << Eq[-1].this.rhs.args[-2:].apply(Algebra.Add.eq.Re)
+    Eq << Eq[-1].this.rhs.args[-2:].apply(Complex.Add.eq.Re)
 
     Eq << Eq[-1].this.rhs.args[-1].apply(Algebra.Re.eq.Mul)
 
@@ -44,7 +44,7 @@ def prove(Eq):
 
     Eq << Eq[-1].rhs.find(Add[MatMul]).this.apply(Tensor.Add.eq.Dot.Block)
 
-    Eq << Eq[-1].this.rhs.find(BlockMatrix[Conjugate]).apply(Algebra.Block.eq.Conj)
+    Eq << Eq[-1].this.rhs.find(BlockMatrix[Conjugate]).apply(Complex.Block.eq.Conj)
 
     Eq << Eq[-3].subs(Eq[-1])
 

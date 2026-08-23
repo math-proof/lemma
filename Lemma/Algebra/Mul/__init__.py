@@ -3,7 +3,6 @@ from . import simp
 from . import scale
 from . import Sum
 from . import Block
-from . import Conj
 from . import Neg
 from . import eq
 from . import Delta

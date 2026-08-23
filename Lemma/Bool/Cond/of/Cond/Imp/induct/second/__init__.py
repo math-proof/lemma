@@ -31,7 +31,7 @@ def prove(Eq):
     f, g = Symbol(shape=(oo,), real=True)
     Eq << apply(f[0] > g[0], Imply(f[k] > g[k], f[n] > g[n]), n=n, k=k, hypothesis=True)
 
-    Eq << Eq[1].this.lhs.apply(Algebra.Cond.given.All, k)
+    Eq << Eq[1].this.lhs.apply(Bool.Cond.given.All, k)
 
     Eq << Bool.Cond.of.Cond.Imp.induct.second.split.All.apply(Eq[0], Eq[-1], n=n)
 

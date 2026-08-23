@@ -15,7 +15,7 @@ def apply(eq_conditioned, eq_expect, j=None, n=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Probability, Algebra, Vector
+    from Lemma import Finset, Probability, Algebra, Vector, Rat
 
     x = Symbol(real=True, shape=(oo,), random=True)
     μ = Symbol(real=True)
@@ -44,11 +44,11 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq[1].subs(k, j))
 
-    Eq << Eq[-1].this.lhs.find(Sum).apply(Algebra.Sum.limits.separate)
+    Eq << Eq[-1].this.lhs.find(Sum).apply(Finset.Sum.limits.separate)
 
     Eq << Eq[-1].this.lhs.find(Sum).apply(Finset.Sum_Mul.eq.Mul_Sum)
 
-    Eq << Eq[-1].this.lhs.find(Sum).apply(Algebra.Sum.eq.Mul.series.arithmetic).reversed
+    Eq << Eq[-1].this.lhs.find(Sum).apply(Rat.Sum.eq.Mul.series.arithmetic).reversed
 
     # https://en.wikipedia.org/wiki/Bessel's_correction
 

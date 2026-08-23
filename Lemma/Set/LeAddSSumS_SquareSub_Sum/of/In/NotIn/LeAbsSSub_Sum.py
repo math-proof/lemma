@@ -44,7 +44,7 @@ def prove(Eq):
 
     Eq << Bool.Imp_And.given.Imp.Imp.apply(Eq[-1])
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Le.given.Eq)
+    Eq << Eq[-1].this.rhs.apply(Nat.Le.given.Eq)
 
     Eq << Bool.Imp.of.Cond.apply(Eq[0], cond=Eq[-1].lhs)
 

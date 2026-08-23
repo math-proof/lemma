@@ -11,7 +11,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor
+    from Lemma import Algebra, Tensor, Bool
 
     n = Symbol(integer=True, positive=True, given=True)
     i = Symbol(integer=True)
@@ -21,7 +21,7 @@ def prove(Eq):
     j = Symbol(domain=Range(n))
     Eq << Tensor.Eq.given.All_EqGetS.apply(Eq[1], j)
 
-    Eq << Algebra.Cond.of.All.subst.apply(Eq[0], i, j)
+    Eq << Bool.Cond.of.All.subst.apply(Eq[0], i, j)
 
 
 if __name__ == '__main__':

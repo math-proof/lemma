@@ -69,7 +69,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Element).apply(Set.Ne.of.In)
 
-    Eq << Eq[-1].this.expr.apply(Algebra.Cond.of.Ne.Cond.subst)
+    Eq << Eq[-1].this.expr.apply(Bool.Cond.of.Ne.Cond.subst)
 
 
 

@@ -12,12 +12,12 @@ def apply(given, reverse=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set
+    from Lemma import Set, Complex
 
     x = Symbol(complex=True)
     Eq << apply(Element(x, Interval(-oo, oo)))
 
-    Eq << Eq[1].this.lhs.apply(Algebra.Square.Abs.eq.Mul.Conj)
+    Eq << Eq[1].this.lhs.apply(Complex.Square.Abs.eq.Mul.Conj)
 
     Eq << Set.EqConj.of.IsReal.apply(Eq[0])
 

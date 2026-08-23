@@ -34,7 +34,7 @@ def prove(Eq):
     j = Symbol(domain=Range(n))
     Eq << Tensor.Eq.given.All_EqGetS.apply(Eq[-1], [i, j])
 
-    Eq << Eq[-1].this.rhs.args[1].apply(Algebra.Sum.Sum.limits.swap)
+    Eq << Eq[-1].this.rhs.args[1].apply(Finset.Sum.Sum.limits.swap)
 
     Eq << Eq[-1].this.rhs.args[1].apply(Finset.SumIco.eq.Sum_UFnAdd, -i)
 

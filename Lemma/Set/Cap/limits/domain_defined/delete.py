@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(self):
-    from Lemma.Algebra.Sum.limits.domain_defined.delete import limits_delete
+    from Lemma.Finset.Sum.limits.domain_defined.delete import limits_delete
     assert self.is_Cap
     return Equal(self, limits_delete(self))
 

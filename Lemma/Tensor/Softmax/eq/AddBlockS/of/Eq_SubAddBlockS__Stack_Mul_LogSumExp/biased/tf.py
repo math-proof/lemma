@@ -58,15 +58,15 @@ def prove(Eq):
 
         )) - Stack[i:n](Ones(breadth) * Log(ReducedSum(Exp(A[i, relu(i + 1 - l):Min(n, i + u)] + BlockMatrix(Zeros(Min(i, l - 1)), H[i], Zeros(Min(n - i, u) - 1))))))))
 
-    Eq << BlockMatrix[1](H, Zeros(n, Min(u, n) - 1)).this.apply(Algebra.Block.split, n + 1 - Min(u, n))
+    Eq << BlockMatrix[1](H, Zeros(n, Min(u, n) - 1)).this.apply(Tensor.Block.split, n + 1 - Min(u, n))
 
     Eq << Eq[0].find(BlockMatrix[1][Zeros]).this.subs(Eq[-1])
 
     Eq << Eq[0].subs(Eq[-1])
 
-    Eq << Add(*Eq[-1].find(Add[BlockMatrix]).args[:2]).this.apply(Algebra.Add.Block.eq.Block)
+    Eq << Add(*Eq[-1].find(Add[BlockMatrix]).args[:2]).this.apply(Tensor.Add.Block.eq.Block)
 
-    Eq << Eq[-1].this.rhs.find(Add[BlockMatrix]).apply(Algebra.Add.Block.eq.Block)
+    Eq << Eq[-1].this.rhs.find(Add[BlockMatrix]).apply(Tensor.Add.Block.eq.Block)
 
     Eq.z_def = Eq[-3].subs(Eq[-1])
 
@@ -119,9 +119,9 @@ def prove(Eq):
 
     Eq << Bool.AllIn.of.All.apply(Eq[-1], (i, 0, n + 1 - Min(u, n)))
 
-    Eq << Algebra.All.Eq.Slice.of.All_Eq.apply(Eq[-1], slice(i, i + Min(u, n)))
+    Eq << Tensor.All.Eq.Slice.of.All_Eq.apply(Eq[-1], slice(i, i + Min(u, n)))
 
-    Eq << Eq[-1].this.find(KroneckerDelta).apply(Algebra.Delta.offset, -i)
+    Eq << Eq[-1].this.find(KroneckerDelta).apply(Nat.Delta.offset, -i)
 
     Eq << Eq[-1].this.find(Mul).apply(Tensor.Expr.eq.Stack, simplify=None)
 
@@ -139,7 +139,7 @@ def prove(Eq):
 
     Eq << Eq.A_def[i][relu(i + 1 - l):Min(n, i + u)]
 
-    Eq << Eq[-1].this.find(KroneckerDelta).apply(Algebra.Delta.offset, -i)
+    Eq << Eq[-1].this.find(KroneckerDelta).apply(Nat.Delta.offset, -i)
 
     Eq << Eq[-1].this.find(Mul[Stack]).apply(Tensor.Expr.eq.Stack, simplify=None)
 
@@ -151,7 +151,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Zeros).shape[0].find(relu).apply(Tensor.Relu.eq.Add.Min)
 
-    Eq << Eq[-1].this.find(Zeros).shape[0].apply(Algebra.Add.eq.Min)
+    Eq << Eq[-1].this.find(Zeros).shape[0].apply(Nat.Add.eq.Min)
 
     Eq << Eq[-1].this.find(BlockMatrix).args[2].shape[0].find(Min).apply(Algebra.Min.eq.Add, i)
 

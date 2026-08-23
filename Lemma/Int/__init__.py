@@ -55,3 +55,11 @@ from . import CeilAddDiv_2
 from . import OrEqS_0
 from . import OrEqSAdd
 from . import OrEqS
+from . import AbsAdd
+from . import AbsSubMulS
+from . import Add
+from . import AddAbsS
+from . import Add_Abs
+from . import Any
+from . import LeSquare
+from . import Clip

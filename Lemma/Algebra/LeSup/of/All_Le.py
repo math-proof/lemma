@@ -10,7 +10,7 @@ def apply(all_le):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Tensor
 
     M, x, a, b = Symbol(real=True)
     f = Function(real=True)
@@ -22,7 +22,7 @@ def prove(Eq):
     m = Symbol(Eq[-1].lhs)
     Eq << m.this.definition
 
-    Eq << Algebra.All.Le.of.Eq_ReducedMin.apply(Eq[-1])
+    Eq << Tensor.All.Le.of.Eq_ReducedMin.apply(Eq[-1])
 
     y = Eq[-1].variable
     Eq << Bool.Imp.of.AllSetOf.apply(Eq[-1])

@@ -36,7 +36,7 @@ def prove(Eq):
 
     Eq << Eq[-1].lhs.this.apply(Tensor.Dot.Softmax.eq.Stack.Sum.scaled_dot_product_attention, i, j, k)
 
-    Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.limits.domain_defined, simplify=None)
+    Eq << Eq[-1].this.find(Sum).apply(Finset.Sum.limits.domain_defined, simplify=None)
 
     Eq << Tensor.EqDot.of.Eq_Stack.position_representation.rotary.apply(Eq[1]).subs(j, k)
 

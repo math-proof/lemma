@@ -15,7 +15,7 @@ def apply(le):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Tensor
 
     n, m = Symbol(integer=True, positive=True)
     a = Symbol(shape=(n,), real=True)
@@ -27,14 +27,14 @@ def prove(Eq):
 
     Eq << Bool.BFn_Ite.given.OrAndS.apply(Eq[-1])
 
-    Eq << Algebra.All.Gt.of.Gt.apply(Eq[1])
+    Eq << Tensor.All.Gt.of.Gt.apply(Eq[1])
 
     i = Eq[-1].rhs.index
     Eq << Bool.AllIn.of.All.apply(Eq[-1], (i, Range(-oo, n)), simplify=None)
 
     Eq.infer_lt = Bool.Imp.of.AllSetOf.apply(Eq[-1])
 
-    Eq << Algebra.All.Gt.of.Gt.apply(Eq[2])
+    Eq << Tensor.All.Gt.of.Gt.apply(Eq[2])
 
     Eq << Eq[-1].subs(i, i - n)
 

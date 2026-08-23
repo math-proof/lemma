@@ -11,3 +11,4 @@ from . import Rat
 from . import Complex
 from . import Vector
 from . import Fin
+from . import Bool

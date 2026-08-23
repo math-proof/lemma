@@ -15,7 +15,7 @@ def apply(is_negative, lt, fx, x=None, left_open=True, right_open=True):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     m, M, x, a, b = Symbol(real=True, given=True)
     Eq << apply(a < 0, m < M, a * x + b, x)
@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq << Algebra.EqMax.of.Gt.apply(Eq[-1]) + b
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Add.eq.Max)
+    Eq << Eq[-1].this.lhs.apply(Nat.Add.eq.Max)
 
     Eq << Algebra.Sup.eq.Add_Mul.of.Lt_0.Lt.apply(Eq[0], Eq[1], a * x + b, x)
 

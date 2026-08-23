@@ -34,7 +34,7 @@ def prove(Eq):
     t = Symbol(real=True)
     args = Eq.eq_grad.rhs.args
     y = args[0] + args[1] / x ** 2 * t ** 2 + args[2] / x * t + args[3] + args[4]
-    Eq << Algebra.Add.eq.Add.square_completing.apply(y)
+    Eq << Rat.Add.eq.Add.square_completing.apply(y)
 
     Eq << Eq[-1].this.rhs.find(cos ** 2).apply(Real.Square.Cos.eq.Sub.Square.Sin)
 

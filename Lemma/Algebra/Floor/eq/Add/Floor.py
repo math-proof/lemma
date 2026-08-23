@@ -18,7 +18,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Floor.eq.CeilDivAdd_Sign)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Ceil.eq.Add.Frac)
+    Eq << Eq[-1].this.lhs.apply(Int.Ceil.eq.Add.Frac)
 
     Eq << Eq[-1] - x / 2
 

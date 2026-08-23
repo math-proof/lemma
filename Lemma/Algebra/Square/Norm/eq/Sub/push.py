@@ -12,7 +12,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Finset
 
     n = Symbol(integer=True, positive=True)
     x = Symbol(complex=True, shape=(oo,))
@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Norm).apply(Algebra.Norm.eq.Sqrt)
 
-    Eq << Eq[-1].this.rhs.find(Sum).apply(Algebra.Sum.eq.Add.pop)
+    Eq << Eq[-1].this.rhs.find(Sum).apply(Finset.Sum.eq.Add.pop)
 
 
 if __name__ == '__main__':

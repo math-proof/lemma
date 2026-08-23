@@ -32,7 +32,7 @@ def prove(Eq):
 
     Eq <<= ~Eq[-2], ~Eq[-1]
 
-    Eq <<= Eq[-2].this.apply(Algebra.Cond.of.Ne.Cond.subst, ret=0), Eq[-1].this.apply(Algebra.Cond.Delta.of.Eq.Cond, ret=0)
+    Eq <<= Eq[-2].this.apply(Bool.Cond.of.Ne.Cond.subst, ret=0), Eq[-1].this.apply(Bool.Cond.Delta.of.Eq.Cond, ret=0)
 
     Eq << Eq[-1].apply(Set.NotIn.of.Ne.Ne, simplify=False)
 
@@ -44,7 +44,7 @@ def prove(Eq):
 
     Eq <<= ~Eq[-2], ~Eq[-1]
 
-    Eq.a00, Eq.a01 = Eq[-2].this.apply(Algebra.Cond.of.Ne.Cond.subst, ret=0), Eq[-1].this.apply(Algebra.Cond.Delta.of.Eq.Cond, ret=0)
+    Eq.a00, Eq.a01 = Eq[-2].this.apply(Bool.Cond.of.Ne.Cond.subst, ret=0), Eq[-1].this.apply(Bool.Cond.Delta.of.Eq.Cond, ret=0)
 
     Eq << Eq.a00.apply(Set.NotIn.of.Ne.Ne, simplify=False)
 

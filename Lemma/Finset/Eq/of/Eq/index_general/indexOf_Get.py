@@ -44,7 +44,7 @@ def prove(Eq):
 
     Eq << Set.All_Subset.of.Subset_Cup.apply(Eq[-1])
 
-    Eq << Algebra.Cond.of.All.subst.apply(Eq[-1], Eq[-1].variable, j)
+    Eq << Bool.Cond.of.All.subst.apply(Eq[-1], Eq[-1].variable, j)
 
     Eq <<= Eq[-1] & Eq.xj_notcontains
 

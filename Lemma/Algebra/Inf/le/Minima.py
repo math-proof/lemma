@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Real
 
     x = Symbol(real=True)
     S = Symbol(etype=dtype.real)
@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Algebra.ReducedMax.eq.Maxima)
 
-    Eq << Algebra.LeMaxima.given.All.Le.apply(Eq[-1])
+    Eq << Real.LeMaxima.given.All.Le.apply(Eq[-1])
 
     Eq << Bool.All.given.Imp.apply(Eq[-1])
 

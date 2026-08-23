@@ -11,7 +11,7 @@ def apply(eq_conditioned, dist0, dist1):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Real, Algebra
+    from Lemma import Probability, Real, Rat
 
     x0, x1 = Symbol(real=True, random=True)
     mu0, mu1 = Symbol(real=True)
@@ -49,7 +49,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Integral).apply(Real.Integral.Exp.eq.Mul.quadratic)
 
-    Eq << Eq[-1].this.find(Exp[Mul[~Add]]).apply(Algebra.Add.eq.Add.square_completing, y)
+    Eq << Eq[-1].this.find(Exp[Mul[~Add]]).apply(Rat.Add.eq.Add.square_completing, y)
 
 
 

@@ -10,7 +10,7 @@ def apply(is_positive, self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Rat
+    from Lemma import Algebra, Bool, Rat, Real, Nat
 
     m, M, x, a, b, c = Symbol(real=True, given=True)
     f = Function(real=True)
@@ -21,14 +21,14 @@ def prove(Eq):
     y = Symbol(Eq[1].lhs.args[1])
     Eq << y.this.definition
 
-    Eq <<= Algebra.And.of.Eq.squeeze.apply(Eq[-1].reversed), Eq[1].subs(Eq[-1].reversed).reversed
+    Eq <<= Nat.And.of.Eq.squeeze.apply(Eq[-1].reversed), Eq[1].subs(Eq[-1].reversed).reversed
 
-    Eq <<= Algebra.All.Le.of.LeSup.apply(Eq[-3]), Algebra.All.Any.Gt.of.GeSup.apply(Eq[-2]), Algebra.Eq.given.And.squeeze.apply(Eq[-1])
+    Eq <<= Real.All.Le.of.LeSup.apply(Eq[-3]), Real.All.Any.Gt.of.GeSup.apply(Eq[-2]), Algebra.Eq.given.And.squeeze.apply(Eq[-1])
 
     y_ = Eq[-3].variable
-    Eq <<= Bool.Imp.of.AllSetOf.apply(Eq[-3]), Algebra.LeSup.given.All.Le.apply(Eq[-2]), Algebra.GeSup.given.All_Any_Gt.apply(Eq[-1])
+    Eq <<= Bool.Imp.of.AllSetOf.apply(Eq[-3]), Real.LeSup.given.All.Le.apply(Eq[-2]), Algebra.GeSup.given.All_Any_Gt.apply(Eq[-1])
 
-    Eq <<= Eq[-3].subs(y_, Eq[2].lhs * y_), Eq[-2].this.expr.apply(Algebra.Le.given.And.scale.positive, a, div=True), Bool.All.given.Imp.apply(Eq[-1])
+    Eq <<= Eq[-3].subs(y_, Eq[2].lhs * y_), Eq[-2].this.expr.apply(Nat.Le.given.And.scale.positive, a, div=True), Bool.All.given.Imp.apply(Eq[-1])
 
     Eq << Bool.And_And.given.And.Cond.apply(Eq[-2])
 

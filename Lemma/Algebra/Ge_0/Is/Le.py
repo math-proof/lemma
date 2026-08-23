@@ -9,14 +9,14 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Nat
 
     a, b = Symbol(real=True, given=True)
     Eq << apply(LessEqual(0, a - b))
 
     Eq << Bool.Iff.given.Imp.Imp.apply(Eq[0])
 
-    Eq << Eq[-2].this.lhs.apply(Algebra.Le.of.Ge_0)
+    Eq << Eq[-2].this.lhs.apply(Nat.Le.of.Ge_0)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Ge_0.given.Le)
 

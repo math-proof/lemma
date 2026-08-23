@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.apply(Nat.LeAddS.Is.Le)
 
-    Eq << Eq[-1].this.apply(Algebra.Le.of.Ge_0)
+    Eq << Eq[-1].this.apply(Nat.Le.of.Ge_0)
 
 
 if __name__ == '__main__':

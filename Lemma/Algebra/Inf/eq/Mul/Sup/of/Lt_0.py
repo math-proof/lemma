@@ -12,21 +12,21 @@ def apply(is_negative, self, div=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Real, Nat, Rat
 
     a, x, m, M = Symbol(real=True)
     f = Function(real=True)
     Eq << apply(a < 0, Inf[x:m:M](f(x) * a))
 
-    Eq.reciprocal = Algebra.Div.lt.Zero.of.Lt_0.apply(Eq[0])
+    Eq.reciprocal = Rat.Div.lt.Zero.of.Lt_0.apply(Eq[0])
 
     y = Symbol(Eq[1].rhs.args[1])
     Eq << y.this.definition.reversed
 
-    Eq << Algebra.And.of.Eq.squeeze.apply(Eq[-1])
+    Eq << Nat.And.of.Eq.squeeze.apply(Eq[-1])
 
     z = Symbol(real=True)
-    Eq <<= Algebra.All.Le.of.LeSup.apply(Eq[-2]), Algebra.All.Any.Gt.of.GeSup.apply(Eq[-1], z)
+    Eq <<= Real.All.Le.of.LeSup.apply(Eq[-2]), Real.All.Any.Gt.of.GeSup.apply(Eq[-1], z)
 
     Eq <<= Bool.Imp.of.AllSetOf.apply(Eq[-2]), Bool.Imp.of.AllSetOf.apply(Eq[-1])
 

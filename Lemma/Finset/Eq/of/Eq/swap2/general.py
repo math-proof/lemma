@@ -44,7 +44,7 @@ def prove(Eq):
 
     Eq.given = Eq.given.subs(Eq[-1])
 
-    Eq << Algebra.All.of.All.limits.swap.apply(Eq.given)
+    Eq << Bool.All.of.All.limits.swap.apply(Eq.given)
 
     Eq << All[x:S](Eq[-1].expr._subs(j, 0), plausible=True)
 

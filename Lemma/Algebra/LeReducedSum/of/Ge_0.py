@@ -11,20 +11,20 @@ def apply(ge):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Finset, Vector, Nat
+    from Lemma import Algebra, Bool, Finset, Vector, Nat, Tensor
 
     n = Symbol(integer=True, positive=True, given=True)
     x = Symbol(real=True, shape=(n,), given=True)
     Eq << apply(x >= Zeros(n))
 
-    Eq << Algebra.Le.given.All.Le.apply(Eq[1])
+    Eq << Tensor.Le.given.All.Le.apply(Eq[1])
 
     Eq << Eq[-1].this.find(ReducedSum).apply(Vector.Sum.eq.Sum_Get)
 
     i = Eq[-1].lhs.index
     Eq << Eq[-1].find(Sum).this.apply(Finset.Sum.eq.AddSumS, cond={i})
 
-    Eq << Algebra.All.Ge.of.Ge.apply(Eq[0], i)
+    Eq << Tensor.All.Ge.of.Ge.apply(Eq[0], i)
 
     Eq << Algebra.Ge_0.Sum.of.Ge_0.apply(Eq[-1], (i, Range(n) - {i}))
 

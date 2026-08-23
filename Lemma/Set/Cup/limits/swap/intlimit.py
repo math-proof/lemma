@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(self):
-    from Lemma.Algebra.Sum.limits.swap.intlimit import limits_swap
+    from Lemma.Finset.Sum.limits.swap.intlimit import limits_swap
     return Equal(self, limits_swap(Cup, self))
 
 

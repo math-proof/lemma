@@ -17,7 +17,7 @@ def apply(given, function):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool
+    from Lemma import Set, Algebra, Bool, Finset
 
     i, j = Symbol(integer=True)
     A, B = Symbol(etype=dtype.integer)
@@ -30,7 +30,7 @@ def prove(Eq):
 
     Eq << Bool.EqSum.of.Iff.apply(Eq[-1], h(i, j))
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.limits.separate)
+    Eq << Eq[-1].this.rhs.apply(Finset.Sum.limits.separate)
 
 
 

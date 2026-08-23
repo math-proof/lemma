@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq << Eq.induct.subs(Eq[-1])
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.eq.Add.pop)
+    Eq << Eq[-1].this.lhs.apply(Finset.Sum.eq.Add.pop)
 
     Eq << Eq[-1].this.find(Sum)().find(Add).simplify()
 
@@ -37,13 +37,13 @@ def prove(Eq):
 
     Eq << Eq.deduct.find(Product).this.apply(Finset.Prod.eq.MulProdS, cond={n})
 
-    Eq << Eq.deduct.find(Mul, Sum).this.apply(Algebra.Sum.eq.Add.pop)
+    Eq << Eq.deduct.find(Mul, Sum).this.apply(Finset.Sum.eq.Add.pop)
 
     Eq << Eq.deduct.rhs.this.subs(Eq[-1], Eq[-2])
 
     Eq << Eq[-1].this.rhs.expand()
 
-    Eq << Algebra.And.given.And.trans.apply(Eq.deduct & Eq[-1])
+    Eq << Bool.And.given.And.trans.apply(Eq.deduct & Eq[-1])
 
     Eq.deduction = Eq[-1].reversed
 
@@ -59,7 +59,7 @@ def prove(Eq):
     # return Stack(Piecewise((KroneckerDelta(i, j), i < n - 1), (2 * KroneckerDelta(j, n - 1) - 1, True)), *limits)
     Eq << (D @ column_transformation(*D.limits)).this.apply(Tensor.Dot.eq.Stack_Sum_MulGetS)
 
-    Eq << Eq[-1].this.find(Sum[2]).apply(Algebra.Sum.eq.Add.pop)
+    Eq << Eq[-1].this.find(Sum[2]).apply(Finset.Sum.eq.Add.pop)
 
     Eq.split = Eq[-1].this.rhs().find(Mul, Add, KroneckerDelta).simplify()
 
@@ -126,7 +126,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq.det_lamda).apply(Bool.All.of.Cond, i)
 
-    Eq << Algebra.And.given.And.subst.All_Eq.apply(Eq.deduction & Eq[-1])
+    Eq << Bool.And.given.And.subst.All_Eq.apply(Eq.deduction & Eq[-1])
 
     Eq << Imply(Eq[0], Eq.induct, plausible=True)
 

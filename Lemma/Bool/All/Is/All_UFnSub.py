@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(self, old, new):
-    from Lemma.Algebra.Sum.limits.subst.Neg import limits_subs
+    from Lemma.Finset.Sum.limits.subst.Neg import limits_subs
     return limits_subs(All, self, old, new)
 
 

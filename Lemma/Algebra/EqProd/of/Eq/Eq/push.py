@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(*imply):
-    from Lemma.Algebra.EqSum.of.Eq.Eq.push import absorb_back
+    from Lemma.Finset.EqSum.of.Eq.Eq.push import absorb_back
     return absorb_back(Product, Equal, *imply)
 
 

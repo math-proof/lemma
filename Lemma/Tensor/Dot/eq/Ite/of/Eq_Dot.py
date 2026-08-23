@@ -8,7 +8,7 @@ def apply(eq_R):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool
+    from Lemma import Algebra, Set, Bool, Nat
 
     # n denotes sequence length (seq_length)
     n = Symbol(integer=True, positive=True)
@@ -21,7 +21,7 @@ def prove(Eq):
     Eq << apply(Equal(R[t].T @ R[k], R[k - t]))
 
 
-    Eq << Algebra.All.of.Cond.domain_defined.apply(Eq[0], k)
+    Eq << Bool.All.of.Cond.domain_defined.apply(Eq[0], k)
 
     Eq << Bool.Imp.of.AllSetOf.apply(Eq[-1])
 
@@ -39,7 +39,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.reversed
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Le.given.Lt)
+    Eq << Eq[-1].this.lhs.apply(Nat.Le.given.Lt)
 
     Eq << Bool.BFn_Ite.given.Imp.Imp.apply(Eq[1])
 

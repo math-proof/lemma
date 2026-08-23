@@ -16,7 +16,7 @@ def apply(eq_x_bar_A, eq_x_bar_B, eq_x_delta, eq_x_bar, k=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat, Rat
+    from Lemma import Finset, Nat, Rat
 
     x_A = Symbol("x^A", real=True, shape=(oo,))
     x_B = Symbol("x^B", real=True, shape=(oo,))
@@ -38,7 +38,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 
-    Eq << Algebra.AddSumS_SquareSub.eq.AddAddSumS.of.Eq_DivSum.Eq_DivSum.Eq_Div_Add.apply(*Eq[:2], Eq[-1], k)
+    Eq << Finset.AddSumS_SquareSub.eq.AddAddSumS.of.Eq_DivSum.Eq_DivSum.Eq_Div_Add.apply(*Eq[:2], Eq[-1], k)
 
     Eq << Eq[-1].subs(Eq[2].reversed)
     # https://en.wikipedia.org/wiki/Algorithms_for_calculating_variance# Parallel_algorithm

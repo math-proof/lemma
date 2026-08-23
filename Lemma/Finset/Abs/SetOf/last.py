@@ -39,7 +39,7 @@ def prove(Eq):
 
     Eq << Set.All_CupFinset.eq.Ico.apply(P)
 
-    Eq << Algebra.All.of.All_Eq.Cond.subst.apply(Eq[-1], Eq[-2])
+    Eq << Bool.All.of.All_Eq.Cond.subst.apply(Eq[-1], Eq[-2])
 
     Eq.P2P_quote = All[x[:n]:P](Element(x_quote, P_quote), plausible=True)
 
@@ -51,7 +51,7 @@ def prove(Eq):
 
     Eq << Bool.All.All.of.All_And.apply(Eq[-1])
 
-    Eq << Algebra.All.And.of.Cond.All.apply(Eq.x_quote_n_definition, Eq[-2], simplify=False)
+    Eq << Bool.All.And.of.Cond.All.apply(Eq.x_quote_n_definition, Eq[-2], simplify=False)
 
     Eq << Eq[-1].this.expr.apply(Bool.Eq.of.Eq.Eq, reverse=True)
 

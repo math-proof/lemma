@@ -16,14 +16,14 @@ def apply(given, index=-1):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Nat
 
     x, y, z = Symbol(real=True, given=True)
     Eq << apply(x < Min(y, z))
 
     Eq << Bool.Iff.given.Imp.Imp.apply(Eq[0])
 
-    Eq << Eq[-2].this.lhs.apply(Algebra.And.Lt.of.Lt_Min)
+    Eq << Eq[-2].this.lhs.apply(Nat.And.Lt.of.Lt_Min)
 
     Eq << Eq[-1].this.lhs.apply(Algebra.LtMin.of.Lt.Lt)
 

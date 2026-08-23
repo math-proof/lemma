@@ -38,7 +38,7 @@ def prove(Eq):
 
     Eq << Bool.Imp_And.of.ImpAnd.apply(Eq[-1])
 
-    Eq << Eq[-1].this.find(And, All).apply(Algebra.Cond.of.All.subst, Eq[-1].lhs.variable, n + 1)
+    Eq << Eq[-1].this.find(And, All).apply(Bool.Cond.of.All.subst, Eq[-1].lhs.variable, n + 1)
 
     Eq << Eq[-1].this.find(And).apply(Nat.Lt0Mul.of.Gt_0.Gt_0)
 

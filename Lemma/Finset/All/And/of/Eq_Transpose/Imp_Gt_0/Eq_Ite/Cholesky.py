@@ -29,7 +29,7 @@ def apply(eq, infer, eq_piece, t):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset, Set, Bool
+    from Lemma import Algebra, Finset, Set, Bool, Tensor
 
     n = Symbol(domain=Range(10, oo))
     A = Symbol(shape=(n, n), real=True)
@@ -51,7 +51,7 @@ def prove(Eq):
 
     Eq << Set.IsReal.Sum.of.All_IsReal.apply(Eq[-1])
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.eq.Square.Norm, simplify=None)
+    Eq << Eq[-1].this.lhs.apply(Tensor.Sum.eq.Square.Norm, simplify=None)
 
     Eq << Element(A[t, t], S.Complexes, plausible=True)
 
@@ -73,7 +73,7 @@ def prove(Eq):
 
     Eq.induct = Eq.hypothesis.subs(t, t + 1)
 
-    Eq << Algebra.All.given.And.All.split.apply(Eq.induct, cond=Equal(i, t))
+    Eq << Bool.All.given.And.All.split.apply(Eq.induct, cond=Equal(i, t))
 
     Eq << Imply(Eq.hypothesis, Eq.induct, plausible=True)
 

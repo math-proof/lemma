@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(self):
-    from Lemma.Algebra.Sum.eq.Add.doit.outer.setlimit import doit
+    from Lemma.Finset.Sum.eq.Add.doit.outer.setlimit import doit
     return Equal(self, doit(Product, self))
 
 

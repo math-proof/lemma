@@ -13,7 +13,7 @@ def apply(le_x, le_y, lt):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set
+    from Lemma import Algebra, Set, Bool, Real
 
     x, y, z = Symbol(positive=True)
     Eq << apply(x <= z, y <= z, z < x + y)
@@ -52,7 +52,7 @@ def prove(Eq):
 
     Eq.cos = Eq[-1].this.expr / (2 * x * y)
 
-    Eq << Algebra.Le.of.Le.Le.quadratic.apply(Eq.x_bound, Eq.y_bound)
+    Eq << Real.Le.of.Le.Le.quadratic.apply(Eq.x_bound, Eq.y_bound)
 
     Eq << Eq.xy_bound * Eq.xy_bound
 
@@ -66,9 +66,9 @@ def prove(Eq):
 
     Eq << Set.In.Arccos.Icc.of.In.apply(Eq[-1])
 
-    Eq << Algebra.Any.given.Any.subst.apply(Eq.cos, Eq.cos.variable, Eq[-1].lhs)
+    Eq << Bool.Any.given.Any.subst.apply(Eq.cos, Eq.cos.variable, Eq[-1].lhs)
 
-    Eq << Algebra.Any.given.Cond.apply(Eq[-1])
+    Eq << Bool.Any.given.Cond.apply(Eq[-1])
 
     # https://baike.baidu.com/item/%E5%92%8C%E8%A7%92%E5%85%AC%E5%BC%8F
 

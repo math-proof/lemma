@@ -29,7 +29,7 @@ def prove(Eq):
     Eq << Eq[-1].apply(Bool.Imp.given.All)
 
     n_ = Symbol('n', integer=True, positive=True)
-    Eq << Algebra.All.given.Cond.subst.apply(Eq[-1], Eq[-1].variable, n_)
+    Eq << Bool.All.given.Cond.subst.apply(Eq[-1], Eq[-1].variable, n_)
 
     Eq << Eq[-1].this.lhs.apply(Finset.Binom.eq.Mul)
 

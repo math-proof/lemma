@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset, Bool
+    from Lemma import Algebra, Finset, Bool, Rat
 
     i, j = Symbol(integer=True)
     n, t = Symbol(integer=True, nonnegative=True)
@@ -28,23 +28,23 @@ def prove(Eq):
 
     Eq << Bool.Imp.given.ImpEq.apply(Eq[-1])
 
-    Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.limits.separate)
+    Eq << Eq[-1].this.find(Sum).apply(Finset.Sum.limits.separate)
 
-    Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.eq.Mul.series.arithmetic)
+    Eq << Eq[-1].this.find(Sum).apply(Rat.Sum.eq.Mul.series.arithmetic)
 
     Eq << Eq[-1].this.find(Binomial).apply(Finset.Binom.eq.Mul.FallingFactorial.doit)
 
     Eq << Eq[0].lhs.this.find(Binomial).apply(Finset.Binom.eq.Sub.Pascal)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.limits.separate)
+    Eq << Eq[-1].this.rhs.apply(Finset.Sum.limits.separate)
 
-    Eq << Eq[-1].this.rhs.expr.apply(Algebra.Sum.eq.Sub.telescope)
+    Eq << Eq[-1].this.rhs.expr.apply(Finset.Sum.eq.Sub.telescope)
 
     Eq << Eq[-1].this.rhs.apply(Finset.Sum_Add.eq.AddSumS)
 
     Eq << Eq[-1].this.rhs.find(Sum).expr.apply(Finset.Binom.eq.Sub.Pascal)
 
-    Eq << Eq[-1].this.rhs.find(Sum).apply(Algebra.Sum.eq.Sub.telescope)
+    Eq << Eq[-1].this.rhs.find(Sum).apply(Finset.Sum.eq.Sub.telescope)
 
     Eq << Eq[-1].this.rhs.find(Mul[~Binomial]).apply(Finset.Binom.eq.Div.Binom)
 

@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(self):
-    from Lemma.Algebra.Add.eq.Sum.limits.SDiff import limits_complement
+    from Lemma.Finset.Add.eq.Sum.limits.SDiff import limits_complement
     (function, *limits_a), (S[function], *limits_b) = self.of(Product / Product)
 
     limits = limits_complement(limits_a, limits_b, function=function)

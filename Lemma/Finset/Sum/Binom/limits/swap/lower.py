@@ -20,9 +20,9 @@ def prove(Eq):
     f = Function(real=True)
     Eq << apply(Sum[k:h:j + 1, j:h:n](Binomial(i + j - k, i) * f(k)))
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.limits.swap.intlimit)
+    Eq << Eq[-1].this.lhs.apply(Finset.Sum.limits.swap.intlimit)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.limits.separate)
+    Eq << Eq[-1].this.lhs.apply(Finset.Sum.limits.separate)
 
     Eq << Eq[-1].this.lhs.find(Sum).apply(Finset.SumIco.eq.Sum_UFnAdd, offset=k)
 

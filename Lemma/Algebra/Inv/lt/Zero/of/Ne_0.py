@@ -10,14 +10,14 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Rat
 
     a = Symbol(real=True, nonpositive=True)
     Eq << apply(Unequal(a, 0))
 
     Eq << Algebra.Lt_0.of.Ne_0.apply(Eq[0])
 
-    Eq << Algebra.Div.lt.Zero.of.Lt_0.apply(Eq[-1])
+    Eq << Rat.Div.lt.Zero.of.Lt_0.apply(Eq[-1])
 
 
 if __name__ == '__main__':

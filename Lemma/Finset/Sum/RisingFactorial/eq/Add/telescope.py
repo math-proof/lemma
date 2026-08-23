@@ -37,7 +37,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq[-4].reversed)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.eq.Sub.telescope)
+    Eq << Eq[-1].this.lhs.apply(Finset.Sum.eq.Sub.telescope)
 
 
 

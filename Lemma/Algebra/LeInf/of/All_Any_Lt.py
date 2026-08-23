@@ -9,7 +9,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Real
 
     M0, a, b = Symbol(real=True, given=True)
     M, x = Symbol(real=True)
@@ -18,7 +18,7 @@ def prove(Eq):
 
     Eq << ~Eq[1]
 
-    Eq << Algebra.Any.All.Ge.of.GtInf.apply(Eq[-1])
+    Eq << Real.Any.All.Ge.of.GtInf.apply(Eq[-1])
 
     Eq << ~Eq[-1]
 

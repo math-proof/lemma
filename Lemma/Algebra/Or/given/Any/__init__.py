@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(imply):
-    from Lemma.Algebra.Any.of.Or import ou_to_any
+    from Lemma.Bool.Any.of.Or import ou_to_any
     return ou_to_any(imply)
 
 

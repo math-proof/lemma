@@ -64,7 +64,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Element).apply(Set.In_Icc.Is.InAdd, i)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.eq.ReducedSum)
+    Eq << Eq[-1].this.rhs.apply(Tensor.Sum.eq.ReducedSum)
 
     Eq << Eq[-1].this.find(Max).apply(Tensor.Max.eq.Relu)
 
@@ -112,7 +112,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this(j).find(Symbol < 0).simplify()
 
-    Eq << Eq[-1].this.find(And).apply(Algebra.And.collect, cond=Eq[-1].find(Element))
+    Eq << Eq[-1].this.find(And).apply(Bool.And.collect, cond=Eq[-1].find(Element))
 
     Eq << Eq[-1].this.find(Element).apply(Set.In_Icc.Is.InNeg)
 

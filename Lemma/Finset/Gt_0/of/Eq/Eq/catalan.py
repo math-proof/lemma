@@ -40,7 +40,7 @@ def prove(Eq):
 
     Eq.hypothsis_k = Eq[2].subs(n, k)
 
-    Eq.hypothsis_nk = Algebra.Cond.of.Cond.subst.apply(Eq.hypothsis_k, k, n - k)
+    Eq.hypothsis_nk = Bool.Cond.of.Cond.subst.apply(Eq.hypothsis_k, k, n - k)
 
     Eq << Eq.hypothsis_nk * Eq.hypothsis_k
 
@@ -53,7 +53,7 @@ def prove(Eq):
 
     Eq << Imply(Eq.hypothsis_k, Eq.induct, plausible=True)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Cond.given.All, k)
+    Eq << Eq[-1].this.lhs.apply(Bool.Cond.given.All, k)
 
     Eq << Bool.Cond.of.Cond.Imp.induct.second.split.All.apply(Eq.initial, Eq[-1], n=n)
 

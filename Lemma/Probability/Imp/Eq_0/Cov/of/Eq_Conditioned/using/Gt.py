@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << Bool.Imp.given.All.apply(Eq[1], i)
 
-    Eq << Algebra.All.given.All.limits.domain_defined.apply(Eq[-1])
+    Eq << Bool.All.given.All.limits.domain_defined.apply(Eq[-1])
 
 
 

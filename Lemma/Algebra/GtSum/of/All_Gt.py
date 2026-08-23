@@ -12,7 +12,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Set
+    from Lemma import Algebra, Bool, Set, Finset
 
     n = Symbol(integer=True, positive=True)
     i = Symbol(integer=True)
@@ -29,9 +29,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Algebra.GtAdd.of.Gt.Gt)
 
-    Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.eq.Sub.push)
+    Eq << Eq[-1].this.find(Sum).apply(Finset.Sum.eq.Sub.push)
 
-    Eq << Eq[-1].this.find(Add[~Sum]).apply(Algebra.Sum.eq.Sub.push)
+    Eq << Eq[-1].this.find(Add[~Sum]).apply(Finset.Sum.eq.Sub.push)
 
     Eq << Imply(Eq[2], Eq.induct, plausible=True)
 

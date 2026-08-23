@@ -9,7 +9,7 @@ def apply(lt, x=None, left_open=True, right_open=True):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Nat
+    from Lemma import Algebra, Set, Bool, Nat, Real
 
     m, M, a, b = Symbol(real=True, given=True)
     x = Symbol(real=True)
@@ -20,9 +20,9 @@ def prove(Eq):
     Eq << Algebra.Eq.given.And.squeeze.apply(Eq[-1])
 
     y = Symbol(real=True)
-    Eq <<= Algebra.GeSup.given.All_Any_Gt.apply(Eq[-1], y), Algebra.LeSup.given.All.Le.apply(Eq[-2])
+    Eq <<= Algebra.GeSup.given.All_Any_Gt.apply(Eq[-1], y), Real.LeSup.given.All.Le.apply(Eq[-2])
 
-    Eq <<= Algebra.All.given.And.All.split.apply(Eq[-2], cond=y < m), Bool.All.given.All_Or_Not.apply(Eq[-1])
+    Eq <<= Bool.All.given.And.All.split.apply(Eq[-2], cond=y < m), Bool.All.given.All_Or_Not.apply(Eq[-1])
 
     Eq <<= Eq[-2].subs(Eq.eq_min), Eq[-3].this.expr.apply(Bool.Any_UFn.given.UFnUFn, x, (M + y) / 2), Eq[-1].this.find(NotElement).apply(Set.NotIn_Icc.given.OrLtS)
 

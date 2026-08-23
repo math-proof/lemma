@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[1], cond=a < b)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.All.given.All.And.limits_cond, simplify=None)
+    Eq << Eq[-1].this.rhs.apply(Bool.All.given.All.And.limits_cond, simplify=None)
 
     Eq << (a >= b).this.apply(Set.Ioc.eq.Empty.of.Ge, left_open=True)
 

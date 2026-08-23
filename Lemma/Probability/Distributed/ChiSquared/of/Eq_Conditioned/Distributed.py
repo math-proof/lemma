@@ -10,7 +10,7 @@ def apply(eq_conditioned, dist):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Real, Set, Bool, Nat
+    from Lemma import Probability, Algebra, Real, Set, Bool, Nat, Finset
 
     i = Symbol(integer=True)
     x = Symbol(shape=(oo,), real=True, random=True)
@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq.induct = Eq[2].subs(k, k + 1)
 
-    Eq << Eq.induct.this.lhs.apply(Algebra.Sum.eq.Add.pop)
+    Eq << Eq.induct.this.lhs.apply(Finset.Sum.eq.Add.pop)
 
     y = Symbol(real=True, nonnegative=True)
     Eq << Probability.Distributed.given.Eq.Pr.apply(Eq[-1], y)
@@ -61,7 +61,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Real.Integral.eq.Mul.Bool)
 
-    Eq << Eq[-1].this.rhs.find(LessEqual).apply(Algebra.Le.Is.Ge_0)
+    Eq << Eq[-1].this.rhs.find(LessEqual).apply(Nat.Le.Is.Ge_0)
 
     Eq << Eq[-1].this.rhs.find(GreaterEqual) / 2
 

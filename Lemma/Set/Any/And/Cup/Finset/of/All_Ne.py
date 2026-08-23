@@ -15,7 +15,7 @@ def apply(all_historic, y=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool
+    from Lemma import Algebra, Set, Bool, Tensor
 
     i, j = Symbol(integer=True)
     n = Symbol(integer=True, positive=True, given=False)
@@ -65,11 +65,11 @@ def prove(Eq):
 
     Eq << Eq[-1].limits_subs(i, i - 1)
 
-    Eq << Algebra.Cond.of.All.subst.apply(Eq[0], i, k)
+    Eq << Bool.Cond.of.All.subst.apply(Eq[0], i, k)
 
-    Eq << Eq[0].this.apply(Algebra.All.limits.swap.intlimit)
+    Eq << Eq[0].this.apply(Bool.All.limits.swap.intlimit)
 
-    Eq << Algebra.Cond.of.All.subst.apply(Eq[-1], j, k)
+    Eq << Bool.Cond.of.All.subst.apply(Eq[-1], j, k)
 
     Eq << Eq[-1].this.expr.reversed
 
@@ -87,7 +87,7 @@ def prove(Eq):
 
     Eq << Eq[-1].limits_subs(i, i - 1)
 
-    Eq << Algebra.All.Ge.of.Eq_ReducedArgMax.apply(Eq.k_def)
+    Eq << Tensor.All.Ge.of.Eq_ReducedArgMax.apply(Eq.k_def)
 
     Eq << Bool.All.All.of.All.apply(Eq[-1], cond=i < k)
 

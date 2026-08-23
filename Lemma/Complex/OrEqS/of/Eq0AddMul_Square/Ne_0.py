@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(is_nonzero, eq, x=None):
-    from Lemma.Algebra.Le.of.Le.Ge.quadratic import quadratic_coefficient
+    from Lemma.Real.Le.of.Le.Ge.quadratic import quadratic_coefficient
     a = is_nonzero.of(Unequal[0])
     fx, rhs = eq.of(Equal)
     if not rhs.is_Zero:

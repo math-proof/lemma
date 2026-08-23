@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Vector
+    from Lemma import Algebra, Vector, Finset, Tensor
 
     n = Symbol(integer=True, positive=True)
     x, y = Symbol(shape=(oo,), real=True)
@@ -18,9 +18,9 @@ def prove(Eq):
 
     Eq << Eq[0].this.lhs.apply(Vector.Sum.eq.Sum_Get)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.eq.Add.pop)
+    Eq << Eq[-1].this.lhs.apply(Finset.Sum.eq.Add.pop)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.eq.ReducedSum)
+    Eq << Eq[-1].this.lhs.apply(Tensor.Sum.eq.ReducedSum)
 
 
 

@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.apply(Algebra.GeMinima.of.All_Ge)
 
-    Eq << Algebra.All_LeMinima.apply(Eq[1].lhs)
+    Eq << Real.All_LeMinima.apply(Eq[1].lhs)
 
     Eq << Eq[-1].limits_subs(Eq[-1].variable, Eq[-2].variable)
 

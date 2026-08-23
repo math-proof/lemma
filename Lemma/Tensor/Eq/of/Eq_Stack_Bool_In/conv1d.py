@@ -56,11 +56,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(functions.Bool).apply(Bool.Bool.eq.Ite)
 
-    Eq << Eq[-1].this.find(Min, Add).apply(Algebra.Add.eq.Min)
+    Eq << Eq[-1].this.find(Min, Add).apply(Nat.Add.eq.Min)
 
     Eq << Eq[-1].this.find(Min).apply(Algebra.Min.eq.Add, 1)
 
-    Eq << Eq[-1].this.find(Add[Ceil]).apply(Algebra.Add.Ceil.eq.Floor)
+    Eq << Eq[-1].this.find(Add[Ceil]).apply(Int.Add.Ceil.eq.Floor)
 
     Eq << Eq[-1].this.find(Min[Floor]).apply(Algebra.Min.eq.Floor)
 

@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(eq, cond, delta=False, **kwargs):
-    from Lemma.Algebra.Cond.Delta.of.Eq.Cond import process_given_conditions
+    from Lemma.Bool.Cond.Delta.of.Eq.Cond import process_given_conditions
     eq, f_eq = process_given_conditions(eq, cond, delta=delta, **kwargs)
     return eq, f_eq.simplify()
 

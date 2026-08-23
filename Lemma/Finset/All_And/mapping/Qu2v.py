@@ -74,7 +74,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.expand()
 
-    Eq << Algebra.All.of.All_Eq.Cond.subst.apply(Eq.x_h_equality, Eq[-1])
+    Eq << Bool.All.of.All_Eq.Cond.subst.apply(Eq.x_h_equality, Eq[-1])
 
 
 if __name__ == '__main__':

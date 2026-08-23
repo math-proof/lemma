@@ -13,7 +13,7 @@ def apply(lt, given):
 
 @prove(proved=False)
 def prove(Eq):
-    from Lemma import Set, Real, Algebra
+    from Lemma import Set, Real, Algebra, Bool
 
     a, b = Symbol(real=True, given=True)
     domain = Interval(a, b)
@@ -31,13 +31,13 @@ def prove(Eq):
 
     Eq <<= Bool.Imp_And.of.Cond.Imp.apply(Eq.is_continuous, Eq.le), Bool.Imp_And.of.Cond.Imp.apply(Eq.is_differentiable, Eq.le)
 
-    Eq <<= Eq[-2].this.rhs.apply(Algebra.All.of.Le.All.limits.restrict), Eq[-1].this.rhs.apply(Algebra.All.of.Le.All.limits.restrict)
+    Eq <<= Eq[-2].this.rhs.apply(Bool.All.of.Le.All.limits.restrict), Eq[-1].this.rhs.apply(Bool.All.of.Le.All.limits.restrict)
 
     Eq <<= Element(t, Interval(a, b, left_open=True)).this.apply(Set.Lt.of.In_Icc) & Eq[-1] & Eq[-2]
 
     Eq << Eq[-1].this.rhs.apply(Real.Any.Eq.of.Lt.IsContinuous.IsDifferentiable.mean_value_theorem.Lagrange)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Any.And.of.Any.limits.Cond, simplify=None)
+    Eq << Eq[-1].this.rhs.apply(Bool.Any.And.of.Any.limits.Cond, simplify=None)
 
     Eq << Eq[-1].this.rhs.find(Element).apply(Set.Ne_Empty.of.In, simplify=None)
 
@@ -45,7 +45,7 @@ def prove(Eq):
 
     Eq << Bool.Imp_And.of.Cond.Imp.apply(Eq[1], Eq.le)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.All.of.Le.All.limits.restrict)
+    Eq << Eq[-1].this.rhs.apply(Bool.All.of.Le.All.limits.restrict)
 
     Eq << Eq[-1].this.find(All).apply(Set.AllIn_SDiff.of.All, Interval(a, t, left_open=True, right_open=True))
 

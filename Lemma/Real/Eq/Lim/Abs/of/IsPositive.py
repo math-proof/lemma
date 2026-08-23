@@ -33,11 +33,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Greater).apply(Nat.Gt_Sub_1.of.Gt, 0)
 
-    Eq << Algebra.Any.All.And.of.Any_All.Any_All.limits_Inter.apply(Eq[-1], Eq[3])
+    Eq << Bool.Any.All.And.of.Any_All.Any_All.limits_Inter.apply(Eq[-1], Eq[3])
 
     Eq << Eq[-1].this.find(Less & Less).args[:2].apply(Algebra.Lt.Lt.given.Lt.Min)
 
-    Eq << Algebra.Any.of.Any.subst.apply(Eq[-1], Min(δ_0, δ_1), δ)
+    Eq << Bool.Any.of.Any.subst.apply(Eq[-1], Min(δ_0, δ_1), δ)
 
     Eq << Eq[-1].this.find(Greater).apply(Algebra.EqAbs.of.Gt)
 

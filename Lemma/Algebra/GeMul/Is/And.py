@@ -9,7 +9,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Nat
 
     x, y = Symbol(real=True)
     f = Function(real=True)
@@ -17,7 +17,7 @@ def prove(Eq):
 
     Eq << Bool.Iff.given.Imp.Imp.apply(Eq[0])
 
-    Eq << Eq[-2].this.lhs.apply(Algebra.And.of.GeMul)
+    Eq << Eq[-2].this.lhs.apply(Nat.And.of.GeMul)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.GeMul.given.And)
 

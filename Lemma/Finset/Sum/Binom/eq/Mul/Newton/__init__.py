@@ -16,7 +16,7 @@ def prove(Eq):
     n = Symbol(integer=True, nonnegative=True)
     Eq << apply(Sum[k:n + 1](Binomial(n, k) * x ** k * k))
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.eq.Add.shift)
+    Eq << Eq[-1].this.lhs.apply(Finset.Sum.eq.Add.shift)
 
     Eq << Eq[-1].this.lhs().find(Binomial).apply(Finset.Binom.eq.Div.Binom)
 

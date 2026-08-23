@@ -4,7 +4,7 @@ from util import *
 @apply
 def apply(is_positive, el, fx, x=None):
     ab, interval = el.of(Element)
-    from Lemma.Algebra.Le.of.Le.Ge.quadratic import quadratic_coefficient
+    from Lemma.Real.Le.of.Le.Ge.quadratic import quadratic_coefficient
     a = is_positive.of(Expr > 0)
 
     x, S[a], b, c = quadratic_coefficient(fx, x=x)

@@ -23,7 +23,7 @@ def prove(Eq):
     n = Symbol(integer=True)
     Eq << apply(Element(γ, Interval(0, 1, left_open=True, right_open=True)), Less(Sup[n:oo](Abs(x[n])), oo))
 
-    Eq << Algebra.All_Le_Sup.apply(Eq[1].find(Sup))
+    Eq << Real.All_Le_Sup.apply(Eq[1].find(Sup))
 
     Eq.gt_zero, Eq.lt = Set.Le.Le.of.In_Icc.apply(Eq[0])
 

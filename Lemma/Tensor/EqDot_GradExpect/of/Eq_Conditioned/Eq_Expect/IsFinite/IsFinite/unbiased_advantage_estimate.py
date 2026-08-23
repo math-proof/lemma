@@ -49,7 +49,7 @@ def prove(Eq):
 
     Eq.limit = Eq[-1].this.find(Limit[Sum]).apply(Real.Lim.eq.Sum)
 
-    Eq << Algebra.All_Le_Sup.apply(Eq[3].lhs)
+    Eq << Real.All_Le_Sup.apply(Eq[3].lhs)
 
     Eq << Eq[-1].subs(t, t + k)
 

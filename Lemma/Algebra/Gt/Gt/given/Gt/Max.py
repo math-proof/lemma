@@ -10,12 +10,12 @@ def apply(gt_a, gt_b):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     x, y, b = Symbol(real=True, given=True)
     Eq << apply(x > y, x > b)
 
-    Eq << Algebra.And.Gt.of.Gt_Max.apply(Eq[2])
+    Eq << Nat.And.Gt.of.Gt_Max.apply(Eq[2])
 
 
 if __name__ == '__main__':

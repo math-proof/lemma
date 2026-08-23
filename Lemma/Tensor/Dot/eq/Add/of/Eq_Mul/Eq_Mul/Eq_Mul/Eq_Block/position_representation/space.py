@@ -55,7 +55,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Block, deep=True)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Block.eq.Add.Block, (-1, slice(1, None)))
+    Eq << Eq[-1].this.rhs.apply(Tensor.Block.eq.Add.Block, (-1, slice(1, None)))
 
     Eq <<= Eq[-1].rhs.find(MatMul).this.apply(Tensor.Dot.Eye.eq.Mul), \
         Eq[-1].find(MatMul[2]).this.apply(Tensor.Dot.Eye.eq.Mul), \
@@ -64,9 +64,9 @@ def prove(Eq):
 
     Eq << Eq[-5].subs(*Eq[-4:])
 
-    Eq << Eq[-1].this.find(BlockMatrix).apply(Algebra.Block.eq.Mul.Block)
+    Eq << Eq[-1].this.find(BlockMatrix).apply(Tensor.Block.eq.Mul.Block)
 
-    Eq << Eq[-1].this.find(BlockMatrix).apply(Algebra.Block.eq.Mul.Block)
+    Eq << Eq[-1].this.find(BlockMatrix).apply(Tensor.Block.eq.Mul.Block)
 
     Eq << Eq[-1].this.find(BlockMatrix).apply(Real.Block.eq.Cos)
 

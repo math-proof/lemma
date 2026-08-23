@@ -41,9 +41,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Sum).apply(Fin.Sum_BFn.comm)
 
-    Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.limits.separate)
+    Eq << Eq[-1].this.find(Sum).apply(Finset.Sum.limits.separate)
 
-    Eq << Eq[-1].this.find(Sum[Pow * Pow]).apply(Algebra.Sum.eq.Mul.series.geometric)
+    Eq << Eq[-1].this.find(Sum[Pow * Pow]).apply(Rat.Sum.eq.Mul.series.geometric)
 
     Eq << Eq[-1].this.find(Sum).find(Expr ** -1).base.apply(Rat.SubDivS1.eq.DivSub.of.Ne_0.Ne_0)
 
@@ -57,7 +57,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Sum).apply(Finset.Sum_Mul.eq.Mul_Sum)
 
-    Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.eq.Sub.push)
+    Eq << Eq[-1].this.find(Sum).apply(Finset.Sum.eq.Sub.push)
 
     Eq << Eq[-1].this.find(Sum).apply(Finset.Sum.Binom.eq.Delta.Zero)
 
@@ -73,13 +73,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Nat.AddMulS.eq.Mul_Add)
 
-    Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.eq.Sub.push)
+    Eq << Eq[-1].this.find(Sum).apply(Finset.Sum.eq.Sub.push)
 
     Eq << Eq[-1].this.lhs.defun()
 
     Eq << Eq.induct * factorial(k + 1)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.eq.Add.pop)
+    Eq << Eq[-1].this.rhs.apply(Finset.Sum.eq.Add.pop)
 
     Eq << Imply(Eq.hypothesis, Eq.induct, plausible=True)
 

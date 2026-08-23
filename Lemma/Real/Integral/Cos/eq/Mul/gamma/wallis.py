@@ -11,7 +11,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Real, Algebra, Bool, Nat
+    from Lemma import Real, Algebra, Bool, Nat, Rat
 
     n = Symbol(integer=True, positive=True, given=False)
     x = Symbol(real=True)
@@ -49,7 +49,7 @@ def prove(Eq):
 
     Eq << Algebra.Eq.of.Eq.simple_equation.apply(Eq[-1], -Eq[-1].rhs.args[1])
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Div.cancel, n)
+    Eq << Eq[-1].this.rhs.apply(Rat.Div.cancel, n)
 
     Eq << Eq[-1].this.rhs.find(Integral).expr.apply(Real.MulPowS.eq.Pow_Add.of.Gt_0)
 

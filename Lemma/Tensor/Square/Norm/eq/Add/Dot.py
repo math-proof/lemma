@@ -16,7 +16,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor
+    from Lemma import Tensor, Complex
 
     n = Symbol(integer=True, positive=True)
     x, y, z = Symbol(complex=True, shape=(n,))
@@ -28,13 +28,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.args[0].apply(Tensor.Dot.eq.Square.Norm)
 
-    Eq << Eq[-1].this.rhs.args[:4:2].apply(Algebra.Add.eq.Mul.Re)
+    Eq << Eq[-1].this.rhs.args[:4:2].apply(Complex.Add.eq.Mul.Re)
 
     Eq << Eq[-1].this.rhs.args[1].apply(Tensor.Dot.eq.Square.Norm)
 
-    Eq << Eq[-1].this.rhs.args[:4:2].apply(Algebra.Add.eq.Mul.Re)
+    Eq << Eq[-1].this.rhs.args[:4:2].apply(Complex.Add.eq.Mul.Re)
 
-    Eq << Eq[-1].this.rhs.args[:2].apply(Algebra.Add.eq.Mul.Re)
+    Eq << Eq[-1].this.rhs.args[:2].apply(Complex.Add.eq.Mul.Re)
 
     Eq << Eq[-1].this.rhs.args[0].apply(Tensor.Dot.eq.Square.Norm)
 

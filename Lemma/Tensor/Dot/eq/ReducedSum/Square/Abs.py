@@ -20,7 +20,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Vector
+    from Lemma import Tensor, Vector, Complex
 
     n = Symbol(integer=True, positive=True)
     x = Symbol(complex=True, shape=(n,))
@@ -30,7 +30,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Vector.Sum.eq.Sum_Get)
 
-    Eq << Eq[-1].this.lhs.expr.apply(Algebra.Mul.Conj.eq.Square.Abs)
+    Eq << Eq[-1].this.lhs.expr.apply(Complex.Mul.Conj.eq.Square.Abs)
 
     Eq << Eq[-1].this.rhs.simplify()
 

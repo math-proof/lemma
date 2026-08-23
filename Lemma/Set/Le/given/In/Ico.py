@@ -10,14 +10,14 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
     n, b = Symbol(integer=True, given=True)
 
     Eq << apply(n <= b)
 
     Eq << Eq[-1].simplify()
 
-    Eq << Algebra.Le.given.Lt.One.apply(Eq[0])
+    Eq << Nat.Le.given.Lt.One.apply(Eq[0])
 
 
 if __name__ == '__main__':

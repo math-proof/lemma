@@ -37,13 +37,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Sum).apply(Fin.Sum_BFn.comm, 1, 2)
 
-    Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.limits.separate)
+    Eq << Eq[-1].this.find(Sum).apply(Finset.Sum.limits.separate)
 
     Eq << Eq[-1].this.find(Sum[Integral]).apply(Real.Sum.eq.Integral)
 
     Eq << Eq[-1].this.find(Sum[Pr]).apply(Probability.Sum.eq.Pr)
 
-    Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.limits.separate)
+    Eq << Eq[-1].this.find(Sum).apply(Finset.Sum.limits.separate)
 
     Eq << Eq[-1].this.find(Sum[Integral]).apply(Real.Sum.eq.Integral)
 
@@ -65,7 +65,7 @@ def prove(Eq):
     Eq << Eq[-1].this.rhs.apply(Finset.Sum_Add.eq.AddSumS)
     Eq << Eq[-1].this.find(Pr * Sum).apply(Finset.Mul_Sum.eq.Sum_Mul)
     Eq << Eq[-1].this.find(Mul[~Sum]).apply(Fin.Sum_BFn.comm)
-    Eq.eq_grad = Eq[-1].this.find(Mul[~Sum]).apply(Algebra.Sum.limits.separate)
+    Eq.eq_grad = Eq[-1].this.find(Mul[~Sum]).apply(Finset.Sum.limits.separate)
     Eq << Rat.Ne_0.of.Div1.gt.Zero.apply(Eq[0]).subs(t, t + 1)
     Eq << Probability.Ne_0.of.Ne_0.joint_slice.apply(Eq[-1], [-1, -1])
     Eq << Probability.Cond.Pr.of.Cond.weighted.apply(Eq[-1], (a, π))

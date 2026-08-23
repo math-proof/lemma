@@ -22,7 +22,7 @@ def apply(n, k, s2=None, A=None):
 
 @prove(proved=False)
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool
+    from Lemma import Set, Algebra, Bool, Nat
 
     k = Symbol(integer=True, positive=True)
     n = Symbol(integer=True, positive=True, given=True)
@@ -61,7 +61,7 @@ def prove(Eq):
 
     Eq << Set.Cup.of.All_Eq.fin.apply(Eq[1], (i, 0, k + 1))
 
-    Eq.x_quote_union = Algebra.All.of.All_Eq.Cond.subst.apply(Eq.x_union_s1, Eq[-1])
+    Eq.x_quote_union = Bool.All.of.All_Eq.Cond.subst.apply(Eq.x_union_s1, Eq[-1])
 
     Eq << Eq[1].apply(Set.EqCard.of.Eq)
 
@@ -70,9 +70,9 @@ def prove(Eq):
 
     Eq << Set.CardUnion.le.AddCardS.apply(*Eq[-1].rhs.args[1].arg.args)
 
-    Eq << Algebra.Le.of.Eq.Le.subst.apply(Eq[-2], Eq[-1])
+    Eq << Nat.Le.of.Eq.Le.subst.apply(Eq[-2], Eq[-1])
 
-    Eq << Algebra.All.of.All_Eq.Cond.subst.apply(Eq.x_abs_sum_s1, Eq[-1])
+    Eq << Bool.All.of.All_Eq.Cond.subst.apply(Eq.x_abs_sum_s1, Eq[-1])
 
     Eq << Eq.x_quote_union.this.expr.apply(Set.EqCard.of.Eq)
 
@@ -98,21 +98,21 @@ def prove(Eq):
 
     Eq << Bool.All_And.of.All.All.apply(Eq.x_abs_positive_s1, Eq[-3].reversed)
 
-    Eq.xi_is_positive = Eq[-1].this.expr.apply(Algebra.Cond.of.Eq.Cond)
+    Eq.xi_is_positive = Eq[-1].this.expr.apply(Bool.Cond.of.Eq.Cond)
 
-    Eq.xi_all_is_positive = Eq.xi_is_positive.apply(Algebra.All.given.All.limits.delete, index=0)
+    Eq.xi_all_is_positive = Eq.xi_is_positive.apply(Bool.All.given.All.limits.delete, index=0)
 
     Eq << Eq.xi_all_is_positive.this.expr.apply(Bool.All.given.All.AllNot, cond=Equal(i, j))
 
     Eq << Bool.All_And.given.All.All.apply(Eq[-1])
 
-    Eq << Eq[-1].apply(Algebra.All.given.All.Or.limits.delete, simplify=None)
+    Eq << Eq[-1].apply(Bool.All.given.All.Or.limits.delete, simplify=None)
 
     Eq << Eq[-1].this.find(NotElement).apply(Set.NotIn_SDiff.given.Or, simplify=None)
 
-    Eq << Eq[-1].this.find(Greater).apply(Algebra.Cond.given.Or.domain_defined, wrt=i, simplify=None)
+    Eq << Eq[-1].this.find(Greater).apply(Bool.Cond.given.Or.domain_defined, wrt=i, simplify=None)
 
-    Eq << Eq.xi_is_positive.apply(Algebra.All.Or.of.All.limits.delete, simplify=None)
+    Eq << Eq.xi_is_positive.apply(Bool.All.Or.of.All.limits.delete, simplify=None)
 
     Eq << Eq[-1].this.find(NotElement).apply(Set.Or.of.NotIn_SDiff, simplify=None)
 
@@ -142,7 +142,7 @@ def prove(Eq):
 
     Eq << Set.CardUnion.eq.Sub_.AddCards.CardInter.principle.inclusion_exclusion.apply(*Eq[-1].lhs.args)
 
-    Eq << Algebra.Any.of.Any_Eq.Cond.subst.apply(Eq[-2], Eq[-1])
+    Eq << Bool.Any.of.Any_Eq.Cond.subst.apply(Eq[-2], Eq[-1])
 
     Eq.set_size_inequality = Eq[-1].this.expr.apply(Algebra.Lt.of.Eq.Lt.subst, Less(Eq[-1].expr.rhs, Eq[-1].expr.rhs + 1, plausible=True))
 
@@ -152,7 +152,7 @@ def prove(Eq):
 
     Eq << Set.CardCup.le.Sum_Card.apply(*Eq[-2].lhs.args[0].args)
 
-    Eq << Algebra.Le.of.Le.Le.subst.apply(Eq[-2], Eq[-1])
+    Eq << Nat.Le.of.Le.Le.subst.apply(Eq[-2], Eq[-1])
 
     Eq << Bool.Any_And.of.Any.All.apply(Eq[-1], Eq.set_size_inequality)
 

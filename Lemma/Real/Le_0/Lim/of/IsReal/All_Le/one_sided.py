@@ -43,7 +43,7 @@ def prove(Eq):
     δ_quote = Symbol(real=True, positive=True)
     Eq << Real.Any.All.Gt.of.Gt_0.Eq_Lim.apply(*Eq[-2:], delta=δ_quote)
 
-    Eq << Algebra.Any.All.And.of.Cond.Any_All.apply(Eq[-2] / 2, Eq[-1])
+    Eq << Bool.Any.All.And.of.Cond.Any_All.apply(Eq[-2] / 2, Eq[-1])
 
     Eq << Eq[-1].this.find(And).apply(Nat.Gt.of.Gt.Gt)
 

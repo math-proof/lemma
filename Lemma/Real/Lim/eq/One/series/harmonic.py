@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq.mean_value_theorem = Real.Any.Eq.of.IsContinuous.mean_value_theorem.apply(Eq[-1])
 
-    Eq << Algebra.All.limits_assert.apply(Eq[-1].limits)
+    Eq << Bool.All.limits_assert.apply(Eq[-1].limits)
 
     Eq << Eq[-1].this.expr.apply(Set.In.Inv.Icc.of.In)
 

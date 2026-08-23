@@ -23,7 +23,7 @@ def apply(self, deep=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability, Bool
+    from Lemma import Algebra, Probability, Bool, Finset
 
     x = Symbol(real=True, random=True)
     y = Symbol(real=True, shape=(oo,), random=True)
@@ -35,9 +35,9 @@ def prove(Eq):
 
     Eq.induct = Eq[0].subs(n, n + 1)
 
-    Eq << Eq.induct.this.find(Sum).apply(Algebra.Sum.eq.Add.pop)
+    Eq << Eq.induct.this.find(Sum).apply(Finset.Sum.eq.Add.pop)
 
-    Eq << Eq[-1].this.lhs.find(Sum).apply(Algebra.Sum.eq.Add.pop)
+    Eq << Eq[-1].this.lhs.find(Sum).apply(Finset.Sum.eq.Add.pop)
 
     Eq << Eq[-1].this.lhs.apply(Probability.Cov.Add.eq.Add.Cov)
 

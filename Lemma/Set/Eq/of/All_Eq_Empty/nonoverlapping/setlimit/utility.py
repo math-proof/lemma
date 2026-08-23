@@ -38,7 +38,7 @@ def prove(Eq):
 
     Eq << Eq[0].subs(i, 1)
 
-    Eq << Algebra.Cond.of.All.subst.apply(Eq[-1], j, 0)
+    Eq << Bool.Cond.of.All.subst.apply(Eq[-1], j, 0)
 
     Eq << Set.CardUnion.eq.Sub_.AddCards.CardInter.principle.inclusion_exclusion.apply(*Eq[-1].lhs.args).subs(Eq[-1])
 

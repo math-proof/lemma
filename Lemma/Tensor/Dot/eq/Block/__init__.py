@@ -176,7 +176,7 @@ def apply(self, deep=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor
+    from Lemma import Tensor
 
     a, b, c, d, n, m = Symbol(integer=True, positive=True)
     A = Symbol(shape=(c, n), complex=True)
@@ -203,9 +203,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(MatMul[BlockMatrix]).apply(Tensor.Dot.eq.Block.basic)
 
-    Eq << Eq[-1].this.rhs.find(Add).apply(Algebra.Add.Block.eq.Block)
+    Eq << Eq[-1].this.rhs.find(Add).apply(Tensor.Add.Block.eq.Block)
 
-    Eq << Eq[-1].this.rhs.find(Add[BlockMatrix]).apply(Algebra.Add.Block.eq.Block)
+    Eq << Eq[-1].this.rhs.find(Add[BlockMatrix]).apply(Tensor.Add.Block.eq.Block)
 
 
 

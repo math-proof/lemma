@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(MatMul).apply(Tensor.Dot.eq.Sum)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.eq.Add.shift)
+    Eq << Eq[-1].this.lhs.apply(Finset.Sum.eq.Add.shift)
 
     Eq << Eq[-1].this.lhs.apply(Finset.SumIco.eq.Sum_UFnAdd, 1)
 

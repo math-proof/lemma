@@ -14,7 +14,7 @@ def apply(eq, Q_def, V_def, MDV_def, any, eq_argmax):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability, Set, Bool, Nat, Finset, Rat, Int
+    from Lemma import Algebra, Probability, Set, Bool, Nat, Finset, Rat, Int, Real
 
     b, D = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), integer=True, random=True) # states / observation
@@ -41,7 +41,7 @@ def prove(Eq):
 
     Eq.ne_zero = Eq[-1].subs(t, 0)
 
-    Eq << Algebra.All.Ge.of.Eq_ArgMax.apply(Eq[5])
+    Eq << Real.All.Ge.of.Eq_ArgMax.apply(Eq[5])
 
     Eq << Eq[-1].subs(π_quote, π_hat)
 
@@ -80,7 +80,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Equal[Piecewise]).apply(Bool.And.Imp.of.Cond_Ite)
 
-    Eq << Eq[-1].this.expr.apply(Algebra.And.of.And.delete, 1)
+    Eq << Eq[-1].this.expr.apply(Bool.And.of.And.delete, 1)
 
     Eq << Eq[-1].this.expr.args[1:].apply(Bool.ImpAndS.of.Imp.Imp)
 
@@ -118,7 +118,7 @@ def prove(Eq):
 
     Eq << ~Eq.ge_MDV
 
-    Eq << Algebra.Any.And.of.Any.Any.apply(Eq[-1], Eq[-2])
+    Eq << Bool.Any.And.of.Any.Any.apply(Eq[-1], Eq[-2])
 
     Eq << Eq[-1].this.expr.args[:2].apply(Algebra.Lt.of.Ge.Lt)
 

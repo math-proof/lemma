@@ -13,7 +13,7 @@ def apply(lt, left_open=True, right_open=True, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool
+    from Lemma import Algebra, Set, Bool, Real
 
     m, M = Symbol(real=True, given=True)
     x = Symbol(real=True)
@@ -33,7 +33,7 @@ def prove(Eq):
 
     Eq << Bool.Imp_And.of.Cond.apply(Eq[0], cond=Eq[-1].lhs)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Any.GtSquare.of.Lt.Lt_Max)
+    Eq << Eq[-1].this.rhs.apply(Real.Any.GtSquare.of.Lt.Lt_Max)
 
 
 if __name__ == '__main__':

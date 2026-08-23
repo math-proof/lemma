@@ -23,7 +23,7 @@ def apply(eq_max, eq_min, eq_K, eq_V, Q, K, V):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Set, Bool, Vector
+    from Lemma import Tensor, Algebra, Set, Bool, Vector, Finset, Nat
 
     n, l, u, d = Symbol(integer=True, positive=True)
     d_z = Symbol(integer=True, positive=True)
@@ -83,13 +83,13 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq.beta[i].reversed, Eq.zeta_i.reversed)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.eq.ReducedSum)
+    Eq << Eq[-1].this.rhs.apply(Tensor.Sum.eq.ReducedSum)
 
     Eq.zi_definition = Eq.zi_definition.subs(Eq[-1])
 
     Eq << Eq.zi_definition.rhs.args[0].this.apply(Tensor.Dot.eq.Stack_Sum_MulGetS)
 
-    Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.limits.domain_defined)
+    Eq << Eq[-1].this.find(Sum).apply(Finset.Sum.limits.domain_defined)
 
     k = Eq[-1].rhs.expr.variable
     Eq << Eq.Xi_definition[k]
@@ -110,13 +110,13 @@ def prove(Eq):
 
     Eq << Eq[0][i]
 
-    Eq.le_zeta_i = Algebra.Le.of.Eq.relax.apply(Eq.zeta_i, upper=n)
+    Eq.le_zeta_i = Nat.Le.of.Eq.relax.apply(Eq.zeta_i, upper=n)
 
     Eq << Algebra.EqSlice.of.Le.Eq.apply(Eq.le_zeta_i, Eq[-1], start=β[i], step=d)
 
     Eq.zi_definition = Eq[-3].subs(Eq[-1])
 
-    Eq.le = Algebra.Le.of.Eq_Max.Eq_Min.apply(Eq.beta, Eq.zeta)
+    Eq.le = Tensor.Le.of.Eq_Max.Eq_Min.apply(Eq.beta, Eq.zeta)
 
     Eq <<= Algebra.EqSlice.of.Le.Eq.apply(Eq.le, Eq.K_dquote[i], step=d), Algebra.EqSlice.of.Le.Eq.apply(Eq.le, Eq.V_dquote[i], step=d)
 

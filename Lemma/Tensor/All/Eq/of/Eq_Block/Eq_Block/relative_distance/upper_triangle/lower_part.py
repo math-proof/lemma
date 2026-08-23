@@ -20,7 +20,7 @@ def apply(eq_V, eq_V_quote):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Tensor
 
     n, k = Symbol(domain=Range(2, oo))
     u = Symbol(domain=Range(2, n + 1))
@@ -37,7 +37,7 @@ def prove(Eq):
 
     Eq <<= Bool.AllIn.of.All.apply(Eq[-1], (i, 0, u), simplify=None)
 
-    Eq << Algebra.All.Eq.Slice.of.All_Eq.apply(Eq[-1], slice(i + n - u, n))
+    Eq << Tensor.All.Eq.Slice.of.All_Eq.apply(Eq[-1], slice(i + n - u, n))
 
     Eq << Eq[-1].this.find(~Indexed - Indexed).args[1].apply(Algebra.Expr.eq.IteGe, upper=n - 1)
 
@@ -47,7 +47,7 @@ def prove(Eq):
 
     Eq << Bool.AllIn.of.All.apply(Eq[-1], (i, 0, u), simplify=None)
 
-    Eq << Algebra.All.Eq.Slice.of.All_Eq.apply(Eq[-1], slice(0, u - i))
+    Eq << Tensor.All.Eq.Slice.of.All_Eq.apply(Eq[-1], slice(0, u - i))
 
 
 

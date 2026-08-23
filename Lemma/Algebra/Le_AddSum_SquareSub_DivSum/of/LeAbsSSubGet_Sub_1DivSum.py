@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(given):
-    from Lemma.Algebra.Abs.Sum.eq.Mul.Sum import dissect_distance
+    from Lemma.Int.Abs.Sum.eq.Mul.Sum import dissect_distance
 
     dx, dy = given.of(LessEqual)
 
@@ -27,7 +27,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset
+    from Lemma import Algebra, Finset, Rat
 
     n = Symbol(integer=True, positive=True)
     x = Symbol(real=True, shape=(oo,))
@@ -36,7 +36,7 @@ def prove(Eq):
     i, j = Symbol(integer=True)
     Eq << apply(abs(y[m - 1] - Sum[i](x[i]) / n) <= abs((y[m - 1] - Sum[j](y[j]) / m)))
 
-    Eq << Eq[-1].rhs.args[0].this.apply(Algebra.Sum.Square.eq.Div.Sum.Square)
+    Eq << Eq[-1].rhs.args[0].this.apply(Rat.Sum.Square.eq.Div.Sum.Square)
 
     Eq << Eq[-1].subs(n, n + 1)
 
@@ -52,13 +52,13 @@ def prove(Eq):
 
     Eq << Eq[1].subs(Eq[-1])
 
-    Eq << Eq[-1].this.lhs.find(Sum).apply(Algebra.Sum.Square.eq.Div.Sum.Square)
+    Eq << Eq[-1].this.lhs.find(Sum).apply(Rat.Sum.Square.eq.Div.Sum.Square)
 
-    Eq << Eq[-1].this.rhs.find(Sum).apply(Algebra.Sum.Square.eq.Div.Sum.Square)
+    Eq << Eq[-1].this.rhs.find(Sum).apply(Rat.Sum.Square.eq.Div.Sum.Square)
 
-    Eq << Eq[-1].this.rhs.args[1].apply(Algebra.Sum.Square.eq.Div.Sum.Square)
+    Eq << Eq[-1].this.rhs.args[1].apply(Rat.Sum.Square.eq.Div.Sum.Square)
 
-    Eq << Algebra.LeAddSDivS.of.LeAbsSSubGet_Sub_1DivSum.apply(Eq[0])
+    Eq << Finset.LeAddSDivS.of.LeAbsSSubGet_Sub_1DivSum.apply(Eq[0])
 
     Eq << Eq[-1].this.lhs.find(Sum).limits_subs(i, j)
 

@@ -57,7 +57,7 @@ def prove(Eq):
 
     Eq << Bool.UFn.of.Eq.apply(Eq[-1], log)
 
-    Eq << Algebra.EqSum.of.Eq_Transpose.apply(Eq[-1], i, j)
+    Eq << Tensor.EqSum.of.Eq_Transpose.apply(Eq[-1], i, j)
 
     Eq << Eq.A_def[i, i]
 

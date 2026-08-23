@@ -15,7 +15,7 @@ def prove(Eq):
 
     Eq << Bool.Iff.given.Imp.Imp.apply(Eq[0])
 
-    Eq << Eq[-2].this.lhs.apply(Algebra.Cond.of.Gt_0)
+    Eq << Eq[-2].this.lhs.apply(Bool.Cond.of.Gt_0)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Gt_0.given.Cond)
 

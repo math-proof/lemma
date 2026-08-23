@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool
+    from Lemma import Algebra, Set, Bool, Real
 
     n = Symbol(integer=True, positive=True)
     x = Symbol(real=True, shape=(oo,))
@@ -18,7 +18,7 @@ def prove(Eq):
 
     Eq << Eq[1].this.rhs.apply(Algebra.ReducedMin.eq.Minima)
 
-    Eq << Algebra.All_Ge_Minima.apply(Eq[-1].rhs)
+    Eq << Real.All_Ge_Minima.apply(Eq[-1].rhs)
 
     Eq << Set.Any_In.of.In_Cup.apply(Eq[0])
 

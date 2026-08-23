@@ -18,7 +18,7 @@ def apply(cup_finiteset_equality, last_element_equality):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Nat
+    from Lemma import Set, Algebra, Nat, Bool
 
     n = Symbol(integer=True, positive=True, given=True)
     p = Symbol(shape=(oo,), integer=True, nonnegative=True, given=True)
@@ -47,7 +47,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.args[0].apply(Set.Cup.eq.Union.doit.setlimit, evaluate=False)
 
-    Eq << Algebra.Any.of.Any_Eq.Cond.subst.apply(Eq[-3].reversed, Eq[-1])
+    Eq << Bool.Any.of.Any_Eq.Cond.subst.apply(Eq[-3].reversed, Eq[-1])
 
     Eq.paradox = Eq[-1].subs(Eq[1])
 
@@ -63,7 +63,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq[0])
 
-    Eq << Algebra.Any.of.Any_Eq.Cond.subst.apply(Eq[-1].reversed, Eq[-3])
+    Eq << Bool.Any.of.Any_Eq.Cond.subst.apply(Eq[-1].reversed, Eq[-3])
 
     Eq << Set.EqSDiff.of.NotIn.apply(Eq.plausible)
 

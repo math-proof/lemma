@@ -15,12 +15,12 @@ def apply(lt_zero, lt):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Rat
 
     x, a, b = Symbol(real=True)
     Eq << apply(x < 0, a < b)
 
-    Eq << Algebra.Div.lt.Zero.of.Lt_0.apply(Eq[0])
+    Eq << Rat.Div.lt.Zero.of.Lt_0.apply(Eq[0])
 
     Eq << Algebra.GtMul.of.Lt_0.Lt.apply(Eq[-1], Eq[1])
 

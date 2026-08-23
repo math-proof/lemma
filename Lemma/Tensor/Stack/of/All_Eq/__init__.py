@@ -23,7 +23,7 @@ def apply(given, expr=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Bool
 
     n = Symbol(integer=True, positive=True, given=True)
     i = Symbol(integer=True)
@@ -31,7 +31,7 @@ def prove(Eq):
     Eq << apply(All[i:n](Equal(f(i), g(i))))
 
     j = Symbol(domain=Range(n))
-    Eq << Algebra.Cond.of.All.subst.apply(Eq[0], i, j)
+    Eq << Bool.Cond.of.All.subst.apply(Eq[0], i, j)
 
     Eq << Eq[1].this.lhs.limits_subs(i, j)
 

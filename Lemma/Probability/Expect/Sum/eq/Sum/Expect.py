@@ -35,7 +35,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability, Bool
+    from Lemma import Algebra, Probability, Bool, Finset
 
     n = Symbol(integer=True, positive=True, given=False)
     f = Function(real=True)
@@ -48,9 +48,9 @@ def prove(Eq):
 
     Eq.induct = Eq[0].subs(n, n + 1)
 
-    Eq << Eq.induct.this.find(Sum).apply(Algebra.Sum.eq.Add.pop)
+    Eq << Eq.induct.this.find(Sum).apply(Finset.Sum.eq.Add.pop)
 
-    Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.eq.Add.pop)
+    Eq << Eq[-1].this.find(Sum).apply(Finset.Sum.eq.Add.pop)
 
     Eq << Eq[-1].this.lhs.apply(Probability.Expect.eq.Add)
 

@@ -11,12 +11,12 @@ def apply(is_negative, strict_greater_than):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Rat
 
     x, a, b = Symbol(real=True)
     Eq << apply(x < 0, a > b)
 
-    Eq << Algebra.Div.lt.Zero.of.Lt_0.apply(Eq[0])
+    Eq << Rat.Div.lt.Zero.of.Lt_0.apply(Eq[0])
 
     Eq << Algebra.LtMul.of.Lt_0.Gt.apply(Eq[-1], Eq[1])
 

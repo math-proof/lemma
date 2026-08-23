@@ -29,7 +29,7 @@ def prove(Eq):
 
     Eq << Eq.induct.this.find(All).apply(Bool.All.All.of.All_And)
 
-    Eq << Eq[-1].this.find(Element[~Sum]).apply(Algebra.Sum.eq.Add.pop)
+    Eq << Eq[-1].this.find(Element[~Sum]).apply(Finset.Sum.eq.Add.pop)
 
     Eq.lt, Eq.ge = Bool.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=w[n] < 1)
 
@@ -39,11 +39,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Algebra.EqAll_Eq_0.of.Eq_Sum.Ge.All_Ge_0.squeeze)
 
-    Eq << Eq[-1].this.find(All[Element]).apply(Algebra.Cond.of.All.subst, i, n)
+    Eq << Eq[-1].this.find(All[Element]).apply(Bool.Cond.of.All.subst, i, n)
 
     Eq << Bool.Imp_AndEq.given.Imp_AndEq.apply(Eq[-1])
 
-    Eq << Eq[-1].this.find(All).apply(Algebra.Sum.eq.Zero.Mul.of.All_Eq_0, x)
+    Eq << Eq[-1].this.find(All).apply(Finset.Sum.eq.Zero.Mul.of.All_Eq_0, x)
 
     Eq << Bool.Imp_AndEq.given.Imp_AndEq.apply(Eq[-1], index=1)
 
@@ -51,7 +51,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.apply(Bool.Imp_Imp.Is.ImpAnd)
 
-    Eq << Eq[-1].this.find(Equal[~Sum]).apply(Algebra.Sum.eq.Add.pop)
+    Eq << Eq[-1].this.find(Equal[~Sum]).apply(Finset.Sum.eq.Add.pop)
 
     Eq << Eq[-1].this.find(Equal) - w[n]
 
@@ -69,7 +69,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.apply(Bool.Imp.fold, slice(1, None))
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.All.And.of.Cond.All, simplify=None)
+    Eq << Eq[-1].this.lhs.apply(Bool.All.And.of.Cond.All, simplify=None)
 
     Eq << Eq[-1].this.lhs.find(And).apply(Algebra.GeDiv.of.Lt.Ge, ret=0)
 
@@ -94,7 +94,7 @@ def prove(Eq):
 
     Eq << Eq[-2].subs(Eq[-1])
 
-    Eq << Algebra.Cond.of.Cond.subst.apply(Eq.hypothesis, w[:n], w_)
+    Eq << Bool.Cond.of.Cond.subst.apply(Eq.hypothesis, w[:n], w_)
 
     Eq << Bool.Imp.of.Cond.apply(Eq[-1], cond=Eq[-2].rhs.lhs)
 

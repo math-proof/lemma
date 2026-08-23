@@ -22,7 +22,7 @@ def prove(Eq):
     y = Symbol(real=True)
     Eq <<= Algebra.LeInf.given.All_Any_Lt.apply(Eq[-2], y), Algebra.GeInf.given.All.Ge.apply(Eq[-1])
 
-    Eq <<= Algebra.All.given.And.All.split.apply(Eq[-2], cond=y <= M), Bool.All.given.All_Or_Not.apply(Eq[-1])
+    Eq <<= Bool.All.given.And.All.split.apply(Eq[-2], cond=y <= M), Bool.All.given.All_Or_Not.apply(Eq[-1])
 
     Eq <<= Eq[-2].subs(Eq.eq_max), Eq[-3].this.expr.apply(Bool.Any_UFn.given.UFnUFn, x, (m + y) / 2), Eq[-1].this.find(NotElement).apply(Set.NotIn_Icc.given.OrLtS)
 

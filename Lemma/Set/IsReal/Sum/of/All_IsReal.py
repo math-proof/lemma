@@ -14,7 +14,7 @@ def apply(all_is_real):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool
+    from Lemma import Algebra, Set, Bool, Finset
 
     x = Symbol(super_complex=True, shape=(oo,))
     i = Symbol(integer=True)
@@ -31,7 +31,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Set.IsReal.Add.of.IsReal.IsReal)
 
-    Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.eq.Sub.push)
+    Eq << Eq[-1].this.find(Sum).apply(Finset.Sum.eq.Sub.push)
     Eq << Imply(Eq[2], Eq.induct, plausible=True)
 
     Eq << Bool.Cond.of.All_Imp.apply(Eq[-1], n=n, start=0)

@@ -11,7 +11,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset, Vector
+    from Lemma import Algebra, Finset, Vector, Tensor
 
     n = Symbol(integer=True, positive=True)
     x, y = Symbol(shape=(n,), real=True)
@@ -21,9 +21,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Finset.Sum_Add.eq.AddSumS)
 
-    Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.eq.ReducedSum)
+    Eq << Eq[-1].this.find(Sum).apply(Tensor.Sum.eq.ReducedSum)
 
-    Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.eq.ReducedSum)
+    Eq << Eq[-1].this.find(Sum).apply(Tensor.Sum.eq.ReducedSum)
 
 
 

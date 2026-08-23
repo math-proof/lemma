@@ -18,7 +18,7 @@ def apply(f0, f1, suffice, n=None, start=0):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Nat
 
     n = Symbol(integer=True, positive=True)
     f, g = Symbol(integer=True, shape=(oo,))
@@ -71,11 +71,11 @@ def prove(Eq):
 
     Eq.even = Eq[-1].reversed
 
-    Eq << Algebra.All.Eq.Lim_Eq_odd.of.Eq.apply(Eq.odd, m)
+    Eq << Nat.All.Eq.Lim_Eq_odd.of.Eq.apply(Eq.odd, m)
 
-    Eq << Algebra.All.Eq.Lim_Eq_even.of.Eq.apply(Eq.even, m)
+    Eq << Nat.All.Eq.Lim_Eq_even.of.Eq.apply(Eq.even, m)
 
-    Eq << Eq[-1].this.apply(Algebra.All.limits.subst.offset, -2)
+    Eq << Eq[-1].this.apply(Nat.All.limits.subst.offset, -2)
 
     Eq <<= Eq[-1] & Eq[-3]
 

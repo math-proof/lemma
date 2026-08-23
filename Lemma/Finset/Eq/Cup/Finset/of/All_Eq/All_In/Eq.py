@@ -39,7 +39,7 @@ def prove(Eq):
 
     Eq << Set.Any.Eq.of.Eq_Card.apply(Eq[2])
 
-    Eq << Algebra.Any.All.And.of.All.Any.apply(Eq[0], Eq[-1])
+    Eq << Bool.Any.All.And.of.All.Any.apply(Eq[0], Eq[-1])
 
     Eq << Eq[-1].this.expr.expr.apply(Bool.Eq.of.Eq.Eq)
 

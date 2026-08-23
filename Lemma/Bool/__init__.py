@@ -73,3 +73,11 @@ from . import Imp_AndEq
 from . import UFnIte
 from . import Imp_Or_And
 from . import And_Imp
+from . import Add
+from . import All_Any
+from . import All_Or
+from . import AllIn_Icc
+from . import GivenAnd
+from . import Le
+from . import As
+from . import Delta

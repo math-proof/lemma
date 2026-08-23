@@ -11,7 +11,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Real
 
     x = Symbol(real=True)
     y = Symbol(positive=True)
@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq << Eq[1].this.apply(Algebra.Ge.given.Ge_0)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Add.eq.Log)
+    Eq << Eq[-1].this.lhs.apply(Real.Add.eq.Log)
 
     Eq.is_nonnegative = Eq[0] / y - 1
 

@@ -37,7 +37,7 @@ def prove(Eq):
 
 
 
-    Eq.Any_And = Algebra.Any.And.of.Any.Any.apply(Eq[-3], Eq[-1], simplify=None)
+    Eq.Any_And = Bool.Any.And.of.Any.Any.apply(Eq[-3], Eq[-1], simplify=None)
     Eq.abs_complement = Set.Eq.Card.SDiff.of.In.apply(Eq[2])
     Eq << Algebra.Ge.of.Eq.Ge.subst.apply(Eq.abs_complement, Eq[1])
     Eq << Algebra.Gt_0.of.Ge.apply(Eq[-1])
@@ -47,8 +47,8 @@ def prove(Eq):
     Eq << Nat.Gt_0.of.Gt_0.Eq.apply(Eq.abs_union)
     Eq << Set.Any.Eq.of.Card.gt.Zero.apply(Eq[-1], a_quote)
     Eq << Eq[-1].subs(Eq.abs_union)
-    Eq << Algebra.Any.And.of.Any.Any.apply(Eq[-1], Eq[-4], simplify=None)
-    Eq << Algebra.Any.And.of.Any.Any.apply(Eq.Any_And, Eq[-1], simplify=None)
+    Eq << Bool.Any.And.of.Any.Any.apply(Eq[-1], Eq[-4], simplify=None)
+    Eq << Bool.Any.And.of.Any.Any.apply(Eq.Any_And, Eq[-1], simplify=None)
     Eq << Bool.Any_And.of.Any.All.apply(Eq[0] & Eq[3], Eq[-1], simplify=None)
     Eq << Eq[-1].this.expr.apply(Set.Le.of.Eq_Cup.Eq_Cup.Eq_Cup.Eq_Cup.Le.NotIn)
 

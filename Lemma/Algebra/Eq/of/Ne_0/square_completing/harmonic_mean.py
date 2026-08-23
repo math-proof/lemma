@@ -17,7 +17,7 @@ def prove(Eq):
 
     Eq << Algebra.Eq.of.Ne_0.square_completing.apply(Eq[0], Eq[1].lhs, x)
 
-    Eq << Eq[-1].this.find(Add * (~Add) ** 2).args[1].apply(Algebra.Div.cancel, S(1) / 2)
+    Eq << Eq[-1].this.find(Add * (~Add) ** 2).args[1].apply(Rat.Div.cancel, S(1) / 2)
 
     Eq << Eq[-1].this.find(Add * (~Add) ** 2).args[1].apply(Algebra.Mul.Neg)
 
@@ -29,9 +29,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Mul[Add[-Pow, -Pow]]).apply(Algebra.Mul.Neg)
 
-    Eq << Eq[-1].this.find(Pow + Pow).args[:3].apply(Algebra.Add.eq.Add.square_completing, y)
+    Eq << Eq[-1].this.find(Pow + Pow).args[:3].apply(Rat.Add.eq.Add.square_completing, y)
 
-    Eq << Eq[-1].this.find(Pow + Pow).apply(Algebra.Add.eq.Add.square_completing, y)
+    Eq << Eq[-1].this.find(Pow + Pow).apply(Rat.Add.eq.Add.square_completing, y)
 
     Eq << Eq[-1].this.rhs.find(Add[Pow]).apply(Rat.SubDivS1.eq.DivSub.of.Ne_0.Ne_0)
 

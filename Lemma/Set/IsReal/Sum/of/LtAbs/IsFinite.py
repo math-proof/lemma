@@ -14,7 +14,7 @@ def apply(lt, is_finite):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool
+    from Lemma import Algebra, Set, Bool, Finset
 
     r = Symbol(shape=(oo,), real=True)
     γ = Symbol(real=True)
@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << Bool.Imp.given.ImpEq.apply(Eq.is_zero)
 
-    Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.eq.Add.shift)
+    Eq << Eq[-1].this.find(Sum).apply(Finset.Sum.eq.Add.shift)
 
     Eq << Eq[-1].this.find(Sum)().expr.simplify()
 

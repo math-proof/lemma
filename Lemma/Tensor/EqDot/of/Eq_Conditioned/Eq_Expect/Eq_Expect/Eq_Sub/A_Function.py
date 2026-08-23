@@ -83,7 +83,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Sum[~Expectation]).apply(Probability.Expect.eq.Mul)
 
-    Eq << Eq[-1].this.find(-~Sum).apply(Algebra.Sum.eq.Add.shift)
+    Eq << Eq[-1].this.find(-~Sum).apply(Finset.Sum.eq.Add.shift)
 
     Eq << Eq[2].subs(s[t].var, s[t]).subs(t, 0)
 

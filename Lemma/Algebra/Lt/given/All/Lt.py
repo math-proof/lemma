@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(lt, var=None):
-    from Lemma.Algebra.Le.given.All.Le import all_getitem
+    from Lemma.Tensor.Le.given.All.Le import all_getitem
     return all_getitem(lt, Less, var=var)
 
 @prove

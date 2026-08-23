@@ -29,30 +29,30 @@ def prove(Eq):
 
     Eq <<= Bool.Imp.given.All.apply(Eq[-3]), Bool.Imp.given.ImpEq.apply(Eq[-2])
 
-    Eq <<= Algebra.All.given.All.limits.domain_defined.apply(Eq[-2]), Eq[-1].this.rhs.simplify()
+    Eq <<= Bool.All.given.All.limits.domain_defined.apply(Eq[-2]), Eq[-1].this.rhs.simplify()
 
     Eq <<= Eq[-2].this(i).find(Min).simplify(), Bool.Imp.given.Cond.apply(Eq[-1])
 
-    Eq <<= Eq[-2].this(j).expr.args[1].args[0].apply(Tensor.SEq_Append, i + 1), Eq[-1].this(i).apply(Algebra.Any.limits.pop.Slice)
+    Eq <<= Eq[-2].this(j).expr.args[1].args[0].apply(Tensor.SEq_Append, i + 1), Eq[-1].this(i).apply(Tensor.Any.limits.pop.Slice)
 
-    Eq <<= Eq[-2].this(j).expr.simplify(), Eq[-1].this.apply(Algebra.Any.limits.swap)
+    Eq <<= Eq[-2].this(j).expr.simplify(), Eq[-1].this.apply(Bool.Any.limits.swap)
 
-    Eq << Eq[-1].this.apply(Algebra.Any.limits.separate)
+    Eq << Eq[-1].this.apply(Bool.Any.limits.separate)
 
-    Eq << Eq[-2].this(i).expr.apply(Algebra.Any.limits.pop.Slice)
+    Eq << Eq[-2].this(i).expr.apply(Tensor.Any.limits.pop.Slice)
 
-    Eq << Eq[-1].this.expr.apply(Algebra.Any.limits.swap)
+    Eq << Eq[-1].this.expr.apply(Bool.Any.limits.swap)
 
-    Eq << Eq[-1].this(j).expr.apply(Algebra.Any.limits.separate)
-    Eq << Eq[-1].this(j).expr.apply(Algebra.Any.limits.pop.Slice)
-    Eq << Eq[-1].this.expr.apply(Algebra.Any.limits.swap)
-    Eq << Eq[-1].this(j).expr.apply(Algebra.Any.limits.separate)
+    Eq << Eq[-1].this(j).expr.apply(Bool.Any.limits.separate)
+    Eq << Eq[-1].this(j).expr.apply(Tensor.Any.limits.pop.Slice)
+    Eq << Eq[-1].this.expr.apply(Bool.Any.limits.swap)
+    Eq << Eq[-1].this(j).expr.apply(Bool.Any.limits.separate)
 
     Eq << Bool.Any_And.of.Any.All.apply(Eq[0] & Eq[1], Eq[3], simplify=None)
 
     Eq << Eq[-1].this.expr.apply(Finset.And.of.Eq_Transpose.Imp_Gt_0.Eq_Ite.Cholesky, simplify=False, ret=0)
 
-    Eq << Algebra.Any.given.Any.subst.apply(Eq[2], L, L_quote)
+    Eq << Bool.Any.given.Any.subst.apply(Eq[2], L, L_quote)
 
 
 

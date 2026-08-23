@@ -4,7 +4,7 @@ from util import *
 @apply
 def apply(ne, self, x=None):
     a = ne.of(Unequal[0])
-    from Lemma.Algebra.Le.of.Le.Ge.quadratic import quadratic_coefficient
+    from Lemma.Real.Le.of.Le.Ge.quadratic import quadratic_coefficient
     x, S[a], b, c = quadratic_coefficient(self, x=x)
     rest = (4 * a * c - b ** 2) / (4 * a)
     rest = rest.ratsimp()

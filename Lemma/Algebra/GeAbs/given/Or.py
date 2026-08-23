@@ -9,14 +9,14 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Int
 
     x, a = Symbol(real=True, given=True)
     Eq << apply(abs(x) >= a)
 
     Eq << ~Eq[0]
 
-    Eq << Eq[-1].this.apply(Algebra.And.of.LtAbs)
+    Eq << Eq[-1].this.apply(Int.And.of.LtAbs)
 
     Eq <<= Eq[1] & Eq[-1]
 

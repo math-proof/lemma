@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Nat.Add_Ite.eq.Ite_AddS)
 
-    Eq << Eq[-1].this.lhs.args[1].expr.apply(Algebra.Add.eq.Min)
+    Eq << Eq[-1].this.lhs.args[1].expr.apply(Nat.Add.eq.Min)
 
     Eq << Eq[-1].this.lhs.args[0].cond.reversed
 

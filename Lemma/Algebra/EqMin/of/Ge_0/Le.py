@@ -18,9 +18,9 @@ def prove(Eq):
 
     Eq << Eq[-1] - x ** 2
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Add.eq.Min)
+    Eq << Eq[-1].this.lhs.apply(Nat.Add.eq.Min)
 
-    Eq << Algebra.LeSquare.of.Ge_0.Le.apply(Eq[0], Eq[1])
+    Eq << Nat.LeSquare.of.Ge_0.Le.apply(Eq[0], Eq[1])
 
     Eq << Algebra.Ge_0.of.Le.apply(Eq[-1])
 

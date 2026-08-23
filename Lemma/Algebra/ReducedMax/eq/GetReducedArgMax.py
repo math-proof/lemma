@@ -8,7 +8,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Tensor, Real, Bool
 
     n = Symbol(integer=True, positive=True)
     x = Symbol(real=True, shape=(oo,))
@@ -21,12 +21,12 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Algebra.ReducedMax.eq.Maxima)
 
-    Eq << Algebra.All_Le_Maxima.apply(Eq[-1].lhs)
+    Eq << Real.All_Le_Maxima.apply(Eq[-1].lhs)
 
     i = Eq[-1].variable
-    Eq.le = Algebra.Cond.of.All.subst.apply(Eq[-1], i, k)
+    Eq.le = Bool.Cond.of.All.subst.apply(Eq[-1], i, k)
 
-    Eq << Algebra.All.Ge.of.Eq_ReducedArgMax.apply(Eq[1])
+    Eq << Tensor.All.Ge.of.Eq_ReducedArgMax.apply(Eq[1])
 
     Eq << Eq[-1].this.expr.reversed
 

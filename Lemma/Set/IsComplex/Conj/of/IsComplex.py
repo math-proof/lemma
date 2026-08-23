@@ -10,7 +10,7 @@ def apply(is_complex):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Complex
+    from Lemma import Set, Algebra, Complex, Bool
 
     x, y = Symbol(super_complex=True)
     Eq << apply(Element(x, S.Complexes))
@@ -22,7 +22,7 @@ def prove(Eq):
     a = Eq[-1].variable
 
     c = Symbol(complex=True)
-    Eq << Algebra.Any.of.Any.subst.apply(Eq[-1], ~a, c)
+    Eq << Bool.Any.of.Any.subst.apply(Eq[-1], ~a, c)
 
 
 

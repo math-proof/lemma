@@ -20,7 +20,7 @@ def prove(Eq):
     t = Symbol(domain=Range(T))
     Eq << Tensor.Eq.given.All_EqGetS.apply(Eq[0], t)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.eq.ReducedSum)
+    Eq << Eq[-1].this.lhs.apply(Tensor.Sum.eq.ReducedSum)
 
     # https://arxiv.org/pdf/2105.14103.pdf
 

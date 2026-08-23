@@ -47,7 +47,7 @@ def prove(Eq):
 
     Eq << Bool.Cond.of.Eq.Cond.subst.apply(Eq.G_definition.reversed, Eq[-1])
 
-    Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.eq.Sub.unshift)
+    Eq << Eq[-1].this.find(Sum).apply(Finset.Sum.eq.Sub.unshift)
 
     Eq << Eq[-1].subs(t, t + 1)
 

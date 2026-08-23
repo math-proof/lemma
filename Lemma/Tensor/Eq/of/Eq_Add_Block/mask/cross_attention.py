@@ -46,13 +46,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite, -2)
 
-    Eq << Eq[-1].this.rhs.args[1].cond.apply(Algebra.And.collect, cond=i < h)
+    Eq << Eq[-1].this.rhs.args[1].cond.apply(Bool.And.collect, cond=i < h)
 
-    Eq << Eq[-1].this.rhs.args[1].cond.apply(Algebra.And.collect, cond=j < h)
+    Eq << Eq[-1].this.rhs.args[1].cond.apply(Bool.And.collect, cond=j < h)
 
     Eq << Eq[-1].this.rhs.apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite, -2)
 
-    Eq << Eq[-1].this.find(And).apply(Algebra.And.Is.Or.collect, cond=Equal(i, j))
+    Eq << Eq[-1].this.find(And).apply(Bool.And.Is.Or.collect, cond=Equal(i, j))
 
     Eq << Eq[-1].this.find(And).apply(Bool.And_Or.Is.OrAndS)
 

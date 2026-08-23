@@ -11,7 +11,7 @@ def apply(lt_r, γ, λ, k=None, i=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Real, Set, Tensor, Finset, Nat
+    from Lemma import Algebra, Real, Set, Tensor, Finset, Nat, Rat
 
     t, k, i = Symbol(integer=True) # time step counter
     δ = Symbol(shape=(oo,), real=True) # TD residual
@@ -21,9 +21,9 @@ def prove(Eq):
     n = Symbol(integer=True)
     Eq << Eq[1].lhs._subs(oo, n).this.find(Sum[~Mul[Sum]]).apply(Finset.Mul_Sum.eq.Sum_Mul)
 
-    Eq << Eq[-1].this.rhs.find(Sum).apply(Algebra.Sum.limits.swap.intlimit)
+    Eq << Eq[-1].this.rhs.find(Sum).apply(Finset.Sum.limits.swap.intlimit)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.limits.separate)
+    Eq << Eq[-1].this.rhs.apply(Finset.Sum.limits.separate)
 
     i = Eq[-1].rhs.variable
     Eq << Eq[-1].this.rhs.find(Mul[~Sum]).apply(Finset.SumIco.eq.Sum_UFnAdd, i)
@@ -32,7 +32,7 @@ def prove(Eq):
 
     Eq << Unequal(λ, 1, plausible=True)
 
-    Eq << Algebra.EqSum.of.Ne.geometric_series.apply(Eq[-1], Eq[-2].rhs.find(Mul[~Sum]))
+    Eq << Rat.EqSum.of.Ne.geometric_series.apply(Eq[-1], Eq[-2].rhs.find(Mul[~Sum]))
 
     Eq << Eq[-3].subs(Eq[-1]) * (1 - λ)
 

@@ -11,7 +11,7 @@ def apply(given, var=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat
+    from Lemma import Algebra, Nat, Bool
 
     k = Symbol(integer=True)
     x, y = Symbol(integer=True, given=True)
@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.apply(Nat.Ne_0.Ne_0.of.Mul.ne.Zero)
 
-    Eq << Algebra.Any.of.Any_And.limits_delete.apply(Eq[-1])
+    Eq << Bool.Any.of.Any_And.limits_delete.apply(Eq[-1])
 
     Eq <<= Eq[-1] & Eq[0]
 

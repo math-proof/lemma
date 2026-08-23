@@ -17,7 +17,7 @@ def apply(gt, self, n=None, k=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Real, Nat, Int
+    from Lemma import Algebra, Real, Nat, Int, Finset
 
     x, a, b = Symbol(real=True)
     f = Function(real=True, continuous=True)
@@ -34,17 +34,17 @@ def prove(Eq):
     Eq.eq_integral = Eq[-1].this.lhs.apply(Real.Neg.eq.Integral)
 
     [(k, S[0], n)] = Eq.eq_integral.find(Sum).limits
-    Eq << Eq.eq_integral.find(Sum).this.apply(Algebra.Sum.limits.subst.Neg, k, n - k)
+    Eq << Eq.eq_integral.find(Sum).this.apply(Finset.Sum.limits.subst.Neg, k, n - k)
 
     Eq << Eq[-1].this.rhs.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS, deep=True)
 
     Eq << Eq[-1].this.rhs.find(Add).apply(Int.AddAddS.eq.MulAddS, k / n)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.eq.Ite.unshift)
+    Eq << Eq[-1].this.rhs.apply(Finset.Sum.eq.Ite.unshift)
 
     Eq << Eq[-1].this.find(GreaterEqual).simplify()
 
-    Eq << Eq[-1].this.rhs.find(Sum).apply(Algebra.Sum.eq.Ite.pop)
+    Eq << Eq[-1].this.rhs.find(Sum).apply(Finset.Sum.eq.Ite.pop)
 
     Eq << Eq[-1].this.find(LessEqual).reversed
 

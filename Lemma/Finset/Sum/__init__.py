@@ -8,3 +8,11 @@ from . import Stirling
 from . import RisingFactorial
 from . import Diff
 from . import Sub
+from . import ge
+from . import gt
+from . import le
+from . import limits
+from . import lt
+from . import SDiff
+from . import Sum
+from . import doit

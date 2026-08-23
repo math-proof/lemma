@@ -10,7 +10,7 @@ def apply(self, simplify=True):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Real
+    from Lemma import Algebra, Bool, Real, Finset
 
     i = Symbol(integer=True)
     n = Symbol(integer=True, positive=True, given=False)
@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Real.MulPowS.eq.Pow_Add.of.Gt_0)
 
-    Eq << Eq[-1].this.find(Add[Sum]).apply(Algebra.Add.eq.Sum.limits.push)
+    Eq << Eq[-1].this.find(Add[Sum]).apply(Finset.Add.eq.Sum.limits.push)
 
     Eq << Imply(Eq[0], Eq.induct, plausible=True)
 

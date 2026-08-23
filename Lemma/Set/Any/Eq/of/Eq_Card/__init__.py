@@ -43,15 +43,15 @@ def prove(Eq):
 
     Eq.size_deduction = Eq.induct.lhs.this.apply(Set.Any.Eq.of.Eq.size_deduction, var=A[n])
 
-    Eq << Algebra.Cond.of.Cond.subst.apply(Eq[2], S, Eq.size_deduction.rhs.expr.lhs.arg)
+    Eq << Bool.Cond.of.Cond.subst.apply(Eq[2], S, Eq.size_deduction.rhs.expr.lhs.arg)
 
     Eq << Bool.Or.of.ImpNot.apply(Eq[-1])
 
-    Eq << Algebra.Any.Or.of.Or.apply(Eq[-1])
+    Eq << Bool.Any.Or.of.Or.apply(Eq[-1])
 
     Eq << Bool.Imp_And.of.Cond.Imp.apply(Eq[-1], Eq.size_deduction)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Any.And.of.Any.Any)
+    Eq << Eq[-1].this.rhs.apply(Bool.Any.And.of.Any.Any)
 
     Eq << Eq[-1].this.rhs.expr.apply(Bool.Cond.of.And, index=1)
 

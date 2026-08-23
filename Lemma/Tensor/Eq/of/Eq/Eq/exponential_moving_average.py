@@ -16,7 +16,7 @@ def apply(initial_condition, recurrence, n=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Tensor, Algebra, Nat, Real
+    from Lemma import Finset, Tensor, Algebra, Nat, Real, Rat
 
     v, θ = Symbol(shape=(oo,), real=True)
     t, n = Symbol(integer=True)
@@ -38,21 +38,21 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Nat.Mul_Add.eq.AddMulS, i=-1)
 
-    Eq << Eq[-1].this.find(Sum[Pow]).apply(Algebra.Sum.eq.Mul.series.geometric)
+    Eq << Eq[-1].this.find(Sum[Pow]).apply(Rat.Sum.eq.Mul.series.geometric)
 
-    Eq << Eq[-1].this.find(Mul[1 - Pow]).apply(Algebra.Div.cancel, factor=β)
+    Eq << Eq[-1].this.find(Mul[1 - Pow]).apply(Rat.Div.cancel, factor=β)
 
     Eq << Eq[-1].this.find(Mul[Add]).ratsimp()
 
     Eq << Eq[-1].this.find(Sum[~Mul]).apply(Finset.Mul_Sum.eq.Sum_Mul)
 
-    Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.limits.swap.intlimit)
+    Eq << Eq[-1].this.find(Sum).apply(Finset.Sum.limits.swap.intlimit)
 
-    Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.limits.separate)
+    Eq << Eq[-1].this.find(Sum).apply(Finset.Sum.limits.separate)
 
-    Eq << Eq[-1].this.find(Sum[Mul[~Sum]]).apply(Algebra.Sum.eq.Mul.series.geometric)
+    Eq << Eq[-1].this.find(Sum[Mul[~Sum]]).apply(Rat.Sum.eq.Mul.series.geometric)
 
-    Eq << Eq[-1].this.find(Mul[Pow]).args[:3].apply(Algebra.Div.cancel, factor=β)
+    Eq << Eq[-1].this.find(Mul[Pow]).args[:3].apply(Rat.Div.cancel, factor=β)
 
     Eq << Eq[-1].this.find(Sum).expr.args[:2].apply(Nat.Mul_Add.eq.AddMulS)
 

@@ -22,7 +22,7 @@ def apply(eq_sum, eq_union, x=None):
 
 @prove(proved=False)
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Set, Bool
+    from Lemma import Tensor, Algebra, Set, Bool, Finset, Real, Nat
 
     M, n = Symbol(integer=True, positive=True)
     i = Symbol(integer=True)
@@ -38,7 +38,7 @@ def prove(Eq):
     i_ = Symbol('i', Eq[-1].find(Indexed, Sum))
     Eq << Eq[-1].subs(i_.this.definition.reversed)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.limits.domain_defined.delete)
+    Eq << Eq[-1].this.lhs.apply(Finset.Sum.limits.domain_defined.delete)
 
     Eq.plausible = Eq[3].subs(Eq[-1])
 
@@ -49,7 +49,7 @@ def prove(Eq):
     i__ = Symbol("i'", Eq[-1].find(Indexed, ArgMin))
     Eq << Eq[-1].subs(i__.this.definition.reversed)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.limits.domain_defined.delete)
+    Eq << Eq[-1].this.lhs.apply(Finset.Sum.limits.domain_defined.delete)
 
     Eq.plausible = Eq.plausible.subs(Eq[-1])
 
@@ -63,7 +63,7 @@ def prove(Eq):
 
     Eq << Set.All.of.Eq_Cup.apply(Eq[-1])
 
-    Eq << Eq[-1].this.expr.apply(Algebra.All.Le.of.Eq_ArgMin)
+    Eq << Eq[-1].this.expr.apply(Real.All.Le.of.Eq_ArgMin)
 
     Eq << Eq[-1].this.expr.apply(Nat.LeSquareS.of.Le.Ge_0)
 
@@ -81,13 +81,13 @@ def prove(Eq):
 
     Eq << Eq.le.subs(Eq[-1], Eq[-3])
 
-    Eq << Algebra.Le.given.Ge_0.apply(Eq[-1])
+    Eq << Nat.Le.given.Ge_0.apply(Eq[-1])
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Add.eq.Sum.Sub)
+    Eq << Eq[-1].this.lhs.apply(Finset.Add.eq.Sum.Sub)
 
     Eq << Eq[-1].this.lhs.expr.expand()
 
-    Eq << Algebra.Sum.ge.Zero.given.Sum.ge.Zero.apply(Eq[-1])
+    Eq << Finset.Sum.ge.Zero.given.Sum.ge.Zero.apply(Eq[-1])
 
 
 

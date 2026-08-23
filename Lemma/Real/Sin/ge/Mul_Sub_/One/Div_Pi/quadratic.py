@@ -7,7 +7,7 @@ def apply(x):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Real
+    from Lemma import Algebra, Bool, Real, Nat
 
     x = Symbol(real=True)
     Eq << apply(x)
@@ -17,7 +17,7 @@ def prove(Eq):
     Eq << Eq[-2].this.lhs.apply(Real.GeSin.of.Ge_0.quadratic)
     Eq << (x <= 0).this.apply(Real.GeSin.of.Le_0.quadratic)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Le.given.Lt)
+    Eq << Eq[-1].this.lhs.apply(Nat.Le.given.Lt)
 
 
 

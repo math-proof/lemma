@@ -35,7 +35,7 @@ def prove(Eq):
 
     Eq << Eq[-1] * (1 + alpha + beta + alpha * beta)
 
-    Eq.less_than = Algebra.Abs.le.AddAbsS.apply(Eq[-1].lhs.arg, x - y)
+    Eq.less_than = Int.Abs.le.AddAbsS.apply(Eq[-1].lhs.arg, x - y)
 
     Eq << Eq[1] * (alpha - beta)
 

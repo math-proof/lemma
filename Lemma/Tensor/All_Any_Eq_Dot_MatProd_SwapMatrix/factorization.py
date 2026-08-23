@@ -43,7 +43,7 @@ def prove(Eq):
 
     Eq.equation = Eq[-1].this.expr.rhs[1].simplify()
 
-    Eq.limits_assertion = Algebra.All.limits_assert.apply(Eq.equation.limits)
+    Eq.limits_assertion = Bool.All.limits_assert.apply(Eq.equation.limits)
 
     Eq << Eq.limits_assertion.this.expr.apply(Set.Eq.of.Eq.split.Finset.Add)
 
@@ -104,7 +104,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Sum)
 
-    Eq << Algebra.All.Any.of.All_Any_Eq.Cond.subst.apply(Eq.any_n, Eq[-1])
+    Eq << Bool.All.Any.of.All_Any_Eq.Cond.subst.apply(Eq.any_n, Eq[-1])
 
     Eq << Eq[-1].this.expr().expr.rhs.simplify()
 
@@ -129,23 +129,23 @@ def prove(Eq):
 
     Eq << Bool.Or_NotIn.of.All.apply(Eq.hypothesis, Eq.hypothesis.variable, p_quote[:n])
 
-    Eq << Algebra.All.And.of.Cond.All.apply(Eq[-1], Eq[-2])
+    Eq << Bool.All.And.of.Cond.All.apply(Eq[-1], Eq[-2])
 
-    Eq << Eq[-1].this.expr.apply(Algebra.Cond.of.Any.Or, simplify=None)
+    Eq << Eq[-1].this.expr.apply(Bool.Cond.of.Any.Or, simplify=None)
 
     Eq << Eq.p_quote_definition.lhs.this.apply(Tensor.SEq_Append, n)
 
-    Eq << Algebra.All.Any.And.of.Cond.All_Any.apply(Eq[-1], Eq[-2])
+    Eq << Bool.All.Any.And.of.Cond.All_Any.apply(Eq[-1], Eq[-2])
 
     Eq << Eq[-1].this.expr.expr.apply(Bool.UFn.of.UFn.Eq, swap=True)
 
     Eq <<= Eq[-1] & Eq.any_n_plausible
 
-    Eq << Eq[-1].this.expr.apply(Algebra.Any.And.of.Any.Any, simplify=None)
+    Eq << Eq[-1].this.expr.apply(Bool.Any.And.of.Any.Any, simplify=None)
 
     Eq << Eq[-1].this.expr.expr.apply(Bool.UFn.of.UFn.Eq, swap=True)
 
-    Eq << Eq[-1].this.find(Any).apply(Algebra.Any.limits.concat)
+    Eq << Eq[-1].this.find(Any).apply(Tensor.Any.limits.concat)
     Eq << Imply(Eq.hypothesis, Eq.induct, plausible=True)
 
     Eq << Bool.Cond.of.Cond.All_Imp.apply(Eq.initial, Eq[-1], n=n, start=2)

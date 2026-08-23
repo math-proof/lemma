@@ -11,7 +11,7 @@ def apply(eq, interval, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Real, Bool, Nat
 
     m, M = Symbol(real=True, given=True)
     x = Symbol(real=True)
@@ -21,12 +21,12 @@ def prove(Eq):
     y = Symbol(Eq[1].rhs)
     Eq << y.this.definition
 
-    Eq <<= Algebra.And.of.Eq.squeeze.apply(Eq[-1].reversed), Eq[1].subs(Eq[-1].reversed)
+    Eq <<= Nat.And.of.Eq.squeeze.apply(Eq[-1].reversed), Eq[1].subs(Eq[-1].reversed)
 
     z = Symbol(real=True)
-    Eq <<= Algebra.All.Le.of.LeSup.apply(Eq[-3]), Algebra.All.Any.Gt.of.GeSup.apply(Eq[-2], z), Algebra.Eq.given.And.squeeze.apply(Eq[-1])
+    Eq <<= Real.All.Le.of.LeSup.apply(Eq[-3]), Real.All.Any.Gt.of.GeSup.apply(Eq[-2], z), Algebra.Eq.given.And.squeeze.apply(Eq[-1])
 
-    Eq <<= Algebra.All.of.All.limits.subst.Neg.real.apply(Eq[-4], x, -x), Eq[-3].this.expr.apply(Algebra.Any.of.Any.limits.Neg), Algebra.LeSup.given.All.Le.apply(Eq[-2]), Algebra.GeSup.given.All_Any_Gt.apply(Eq[-1], z)
+    Eq <<= Bool.All.of.All.limits.subst.Neg.real.apply(Eq[-4], x, -x), Eq[-3].this.expr.apply(Bool.Any.of.Any.limits.Neg), Real.LeSup.given.All.Le.apply(Eq[-2]), Algebra.GeSup.given.All_Any_Gt.apply(Eq[-1], z)
 
     Eq << Eq[-2].subs(Eq[0])
 

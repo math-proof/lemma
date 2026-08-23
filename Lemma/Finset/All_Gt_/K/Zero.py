@@ -9,7 +9,7 @@ def apply(x, n):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Nat, Int
+    from Lemma import Algebra, Set, Bool, Nat, Int, Tensor
 
     x = Symbol(integer=True, shape=(oo,))
     n = Symbol(integer=True, positive=True, given=False)
@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq << Eq.initial1.this.expr.lhs.defun()
 
-    Eq << Algebra.All.given.All.limits.split.apply(Eq[-1], index=1)
+    Eq << Tensor.All.given.All.limits.split.apply(Eq[-1], index=1)
 
     Eq << Bool.All.given.All_Or_Not.apply(Eq[-1])
 
@@ -33,15 +33,15 @@ def prove(Eq):
 
     Eq << Eq[0].this.expr.apply(Bool.AllIn.of.All, (x[n:n + 2], CartesianSpace(Range(1, oo), 2)), simplify=None)
 
-    Eq.is_positive = Algebra.All.of.All.limits.merge.apply(Eq[-1])
+    Eq.is_positive = Tensor.All.of.All.limits.merge.apply(Eq[-1])
 
     Eq.hypothesis = Eq[0].subs(n, n + 1)
 
     Eq << Eq.hypothesis.this.expr.apply(Bool.AllIn.of.All, (x[n + 1], 1, oo), simplify=None)
 
-    Eq << Algebra.All.And.of.All.apply(Eq[-1], index=0)
+    Eq << Bool.All.And.of.All.apply(Eq[-1], index=0)
 
-    Eq << Algebra.All.of.All.limits.merge.apply(Eq[-1])
+    Eq << Tensor.All.of.All.limits.merge.apply(Eq[-1])
 
     Eq << Eq[-1].this.expr.args[1].apply(Set.Ge.of.In_Ico)
 

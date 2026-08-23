@@ -10,12 +10,12 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Real
+    from Lemma import Real, Complex
 
     z = Symbol(complex=True, zero=False)
     Eq << apply(Sign(z))
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sign.eq.ExpMulI.Arg)
+    Eq << Eq[-1].this.lhs.apply(Complex.Sign.eq.ExpMulI.Arg)
 
     Eq << Eq[-1].this.lhs.apply(Real.ExpMulI.eq.AddCos_MulISin.Euler)
 

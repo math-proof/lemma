@@ -10,7 +10,7 @@ def apply(is_positive, self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Nat, Rat
+    from Lemma import Algebra, Bool, Nat, Rat, Real
 
     a, x, m, M = Symbol(real=True)
     f = Function(real=True)
@@ -21,10 +21,10 @@ def prove(Eq):
     y = Symbol(Eq[1].rhs.args[1])
     Eq << y.this.definition.reversed
 
-    Eq << Algebra.And.of.Eq.squeeze.apply(Eq[-1])
+    Eq << Nat.And.of.Eq.squeeze.apply(Eq[-1])
 
     z = Symbol(real=True)
-    Eq <<= Algebra.All.Le.of.LeSup.apply(Eq[-2]), Algebra.All.Any.Gt.of.GeSup.apply(Eq[-1], z)
+    Eq <<= Real.All.Le.of.LeSup.apply(Eq[-2]), Real.All.Any.Gt.of.GeSup.apply(Eq[-1], z)
 
     Eq <<= Bool.Imp.of.AllSetOf.apply(Eq[-2]), Bool.Imp.of.AllSetOf.apply(Eq[-1])
 
@@ -44,7 +44,7 @@ def prove(Eq):
 
     Eq << Algebra.Eq.given.And.squeeze.apply(Eq[-1])
 
-    Eq <<= Algebra.LeSup.given.All.Le.apply(Eq[-2]), Algebra.GeSup.given.All_Any_Gt.apply(Eq[-1], z)
+    Eq <<= Real.LeSup.given.All.Le.apply(Eq[-2]), Algebra.GeSup.given.All_Any_Gt.apply(Eq[-1], z)
 
     Eq <<= Bool.All.given.Imp.apply(Eq[-2]), Bool.All.given.Imp.apply(Eq[-1])
 

@@ -9,7 +9,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Nat
 
     x, a, b = Symbol(real=True, given=True)
     Eq << apply(LessEqual(x, a) | LessEqual(x, b))
@@ -18,7 +18,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Or.Le.of.Le_Max)
 
-    Eq << Eq[-2].this.rhs.apply(Algebra.Le_Max.given.Or.Le)
+    Eq << Eq[-2].this.rhs.apply(Nat.Le_Max.given.Or.Le)
 
 
 

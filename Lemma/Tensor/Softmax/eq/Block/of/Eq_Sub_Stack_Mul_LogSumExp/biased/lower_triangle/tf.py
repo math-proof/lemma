@@ -38,9 +38,9 @@ def prove(Eq):
             Stack[i:l - 1](BlockMatrix(-oo * Ones(l - i - 1), A[i, :i + 1])),
             Stack[i:n - l + 1](A[i + l - 1, i:i + l])) - Stack[i:n](Ones(l) * Log(ReducedSum(Exp(A[i, relu(i + 1 - l):i + 1] + BlockMatrix(Zeros(Min(i, l - 1)), H[i])))))))
 
-    Eq << Eq[0].this.find(BlockMatrix[1]).apply(Algebra.Block.split, Min(l, n) - 1)
+    Eq << Eq[0].this.find(BlockMatrix[1]).apply(Tensor.Block.split, Min(l, n) - 1)
 
-    Eq << Add(*Eq[-1].find(Add[BlockMatrix]).args[:2]).this.apply(Algebra.Add.Block.eq.Block)
+    Eq << Add(*Eq[-1].find(Add[BlockMatrix]).args[:2]).this.apply(Tensor.Add.Block.eq.Block)
 
     Eq.z_def = Eq[-2].subs(Eq[-1])
 
@@ -99,7 +99,7 @@ def prove(Eq):
 
     Eq << Eq.A_def[i][relu(i + 1 - l):i + 1]
 
-    Eq << Eq[-1].this.find(KroneckerDelta).apply(Algebra.Delta.offset, -Eq[-1].find(relu))
+    Eq << Eq[-1].this.find(KroneckerDelta).apply(Nat.Delta.offset, -Eq[-1].find(relu))
 
     Eq << Eq[-1].this.find(Mul[Stack]).apply(Tensor.Expr.eq.Stack, simplify=None)
 
@@ -111,7 +111,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Zeros).shape[0].find(relu).apply(Tensor.Relu.eq.Add.Min)
 
-    Eq << Eq[-1].this.find(Zeros).shape[0].apply(Algebra.Add.eq.Min)
+    Eq << Eq[-1].this.find(Zeros).shape[0].apply(Nat.Add.eq.Min)
     Eq << Eq.z_def.subs(Eq[-1].reversed, Eq.upper_part, Eq.lower_part.reversed)
 
     Eq << Tensor.Softmax.eq.Block.of.Eq_Sub_Stack_Mul_LogSumExp.lower_triangle.tf.apply(Eq[-1])

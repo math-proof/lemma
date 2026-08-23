@@ -19,7 +19,7 @@ def apply(is_positive, w=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Real, Bool
+    from Lemma import Algebra, Real, Bool, Nat
 
     n = Symbol(integer=True, positive=True)
     i = Symbol(integer=True)
@@ -44,7 +44,7 @@ def prove(Eq):
 
     Eq << Bool.Imp_And.of.ImpAnd.apply(Eq[-1])
 
-    Eq << Eq[-1].this.rhs.args[0].apply(Algebra.Le.of.Gt.relax)
+    Eq << Eq[-1].this.rhs.args[0].apply(Nat.Le.of.Gt.relax)
 
     Eq << Eq[-1].this.rhs.apply(Real.Ge.of.Le.Gt_0.jensen, w=1-w)
 

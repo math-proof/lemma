@@ -2,3 +2,8 @@ from . import given
 from . import invert
 from . import Imp
 from . import of
+from . import Eq
+from . import Is
+from . import All_Any
+from . import collect
+from . import distribute

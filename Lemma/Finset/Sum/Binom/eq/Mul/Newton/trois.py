@@ -16,7 +16,7 @@ def prove(Eq):
     n = Symbol(integer=True, positive=True)
     Eq << apply(Sum[k:n + 1](Binomial(n, k) * x ** k * k ** 3))
 
-    Eq << Eq[0].this.lhs.apply(Algebra.Sum.eq.Add.shift)
+    Eq << Eq[0].this.lhs.apply(Finset.Sum.eq.Add.shift)
 
     Eq << Eq[-1].this.lhs().find(Binomial).apply(Finset.Binom.eq.Div.Binom)
 
@@ -32,13 +32,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Nat.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.find(Sum[Mul[Symbol]]).apply(Algebra.Sum.eq.Sub.unshift)
+    Eq << Eq[-1].this.find(Sum[Mul[Symbol]]).apply(Finset.Sum.eq.Sub.unshift)
 
     Eq << Eq[-1].this.find(Sum[Mul[Symbol]]).apply(Finset.Sum.Binom.eq.Mul.Newton)
 
     Eq << Eq[-1].this.find(Sum).apply(Finset.Sum.Binom.eq.Pow.Newton)
 
-    Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.eq.Sub.unshift)
+    Eq << Eq[-1].this.find(Sum).apply(Finset.Sum.eq.Sub.unshift)
 
     Eq << Eq[-1].this.lhs.apply(Int.AddAddS.eq.MulAddS, factor=x)
 

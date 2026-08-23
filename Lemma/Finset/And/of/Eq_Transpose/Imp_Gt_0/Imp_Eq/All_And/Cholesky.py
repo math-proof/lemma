@@ -73,27 +73,27 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Sum[~Mul]).apply(Finset.Mul_Sum.eq.Sum_Mul)
 
-    Eq << Eq[-1].this.find(Add[~Sum]).apply(Algebra.Sum.eq.Add.split.limits)
+    Eq << Eq[-1].this.find(Add[~Sum]).apply(Finset.Sum.eq.Add.split.limits)
 
     Eq << Eq[-1].this.lhs.args[1:4:2].apply(Finset.AddSumS.eq.Sum_Add_Sum)
 
     # converting A[j, i] to ~A[i, j] if j < i
     Eq << Eq[-1].subs(Eq[0][j, i].reversed)
 
-    Eq << Eq[-1].this.find(Sum[2]).apply(Algebra.Sum.limits.swap.intlimit)
+    Eq << Eq[-1].this.find(Sum[2]).apply(Finset.Sum.limits.swap.intlimit)
 
     Eq << Bool.All.of.All_And.apply(Eq[5]).limits_subs(j, i)
 
     # converting all A expression to L expression: A[i, j] = L[i, j] + .... if i < j
-    Eq << Algebra.All.of.All_Eq.Cond.subst.apply(Eq[-1], Eq[-2])
+    Eq << Bool.All.of.All_Eq.Cond.subst.apply(Eq[-1], Eq[-2])
 
-    Eq << Algebra.All.of.All_Eq.Cond.subst.apply(Eq.Aii_def, Eq[-1])
+    Eq << Bool.All.of.All_Eq.Cond.subst.apply(Eq.Aii_def, Eq[-1])
 
-    Eq << Eq.Aij_def.this.apply(Algebra.All.limits.swap.intlimit)
+    Eq << Eq.Aij_def.this.apply(Bool.All.limits.swap.intlimit)
 
-    Eq << Algebra.All.of.All_Eq.Cond.subst.apply(Eq[-1], Eq[-2])
+    Eq << Bool.All.of.All_Eq.Cond.subst.apply(Eq[-1], Eq[-2])
 
-    Eq << Eq[-1].this.lhs.find(Mul[~Sum]).apply(Algebra.Sum.limits.separate)
+    Eq << Eq[-1].this.lhs.find(Mul[~Sum]).apply(Finset.Sum.limits.separate)
 
     Eq << Eq[-1].this.lhs.find(Indexed * ~Sum).apply(Tensor.Sum.eq.Dot, simplify=1)
 

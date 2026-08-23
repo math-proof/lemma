@@ -8,20 +8,20 @@ def apply(x):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Real, Nat
+    from Lemma import Algebra, Real, Nat, Bool
 
     x = Symbol(real=True)
     Eq << apply(x)
 
     Eq << Eq[0] - x
 
-    Eq << Algebra.Cond.given.All.domain_defined.apply(Eq[-1])
+    Eq << Bool.Cond.given.All.domain_defined.apply(Eq[-1])
 
-    Eq << Algebra.All.given.And.All.apply(Eq[-1], cond=x >= 1)
+    Eq << Bool.All.given.And.All.apply(Eq[-1], cond=x >= 1)
 
     x0 = Symbol(domain=Interval(0, 1, left_open=True, right_open=True))
     x1 = Symbol(domain=Interval(1, oo))
-    Eq <<= Algebra.All.given.Cond.subst.apply(Eq[-1], x, x0), Algebra.All.given.Cond.subst.apply(Eq[-2], x, x1)
+    Eq <<= Bool.All.given.Cond.subst.apply(Eq[-1], x, x0), Bool.All.given.Cond.subst.apply(Eq[-2], x, x1)
 
     Eq.is_positive, Eq.is_nonpositive = Greater(Derivative[x0](Eq[-2].lhs), 0, plausible=True), LessEqual(Derivative[x1](Eq[-1].lhs), 0, plausible=True)
 

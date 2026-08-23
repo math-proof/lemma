@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Vector
+    from Lemma import Algebra, Tensor, Vector, Finset
 
     m, n = Symbol(integer=True, positive=True)
     x = Symbol(shape=(m, n), real=True)
@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(ReducedSum).apply(Vector.Sum.eq.Sum_Get)
 
-    Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.limits.domain_defined)
+    Eq << Eq[-1].this.find(Sum).apply(Finset.Sum.limits.domain_defined)
 
 
 

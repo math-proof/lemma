@@ -11,7 +11,7 @@ def apply(given, index):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Algebra, Bool
     n = Symbol(positive=True, integer=True)
     x = Symbol(integer=True, shape=(n,))
     i = Symbol(integer=True)
@@ -21,7 +21,7 @@ def prove(Eq):
 
     a = Eq[-1].variable
 
-    Eq << Algebra.Any.given.Any.subst.apply(Eq[-1], a, x)
+    Eq << Bool.Any.given.Any.subst.apply(Eq[-1], a, x)
 
     Eq << Set.Any_In.given.Ne_Empty.apply(Eq[-1])
 

@@ -75,7 +75,7 @@ def prove(Eq):
     y = Eq[-1].expr.rhs
     Eq << Element(y, Interval(-oo, oo, left_open=False, right_open=False), plausible=True)
 
-    Eq <<= Algebra.All.And.of.Cond.All.apply(Eq[-1], Eq[-3]), Algebra.All.And.of.Cond.All.apply(Eq[-1], Eq[-2])
+    Eq <<= Bool.All.And.of.Cond.All.apply(Eq[-1], Eq[-3]), Bool.All.And.of.Cond.All.apply(Eq[-1], Eq[-2])
 
     Eq <<= Eq[-2].this.expr.apply(Bool.Cond.of.Eq.Cond.subst, reverse=True, simplify=None), Eq[-1].this.expr.apply(Bool.Cond.of.Eq.Cond.subst, reverse=True, simplify=None)
 

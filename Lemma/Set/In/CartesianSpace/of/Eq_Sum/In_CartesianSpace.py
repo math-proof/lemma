@@ -11,7 +11,7 @@ def apply(eq, el):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool, Vector
+    from Lemma import Set, Algebra, Bool, Vector, Finset
 
     n = Symbol(integer=True, positive=True)
     t = Symbol(real=True, shape=(oo,))
@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq << Eq[0].this.lhs.apply(Vector.Sum.eq.Sum_Get)
 
-    Eq << Algebra.All.Le.of.Eq_Sum.All_Ge_0.apply(Eq[-1], Eq[-2])
+    Eq << Finset.All.Le.of.Eq_Sum.All_Ge_0.apply(Eq[-1], Eq[-2])
 
     Eq << Set.In_CartesianSpace.given.All.In.apply(Eq[2])
 

@@ -13,14 +13,14 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Algebra, Nat
 
     x, m, M = Symbol(real=True)
     Eq << apply(Element(x, Interval(m, M)))
 
     Eq << Set.Le.Le.of.In_Icc.apply(Eq[0])
 
-    Eq << Algebra.LeSquare.of.Le.Ge.apply(Eq[-2], Eq[-1])
+    Eq << Nat.LeSquare.of.Le.Ge.apply(Eq[-2], Eq[-1])
 
 
 if __name__ == '__main__':

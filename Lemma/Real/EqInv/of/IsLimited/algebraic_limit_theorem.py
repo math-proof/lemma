@@ -41,17 +41,17 @@ def prove(Eq):
 
     Eq.A_is_positive = Set.Gt_0.Abs.of.IsNotZero.apply(Eq.is_nonzero_real)
 
-    Eq << Algebra.Any.All.And.of.Cond.Any_All.apply(Eq.A_is_positive / 2, Eq[-1])
+    Eq << Bool.Any.All.And.of.Cond.Any_All.apply(Eq.A_is_positive / 2, Eq[-1])
 
     Eq << Eq[-1].this.expr.expr.apply(Algebra.LtInv.of.Gt_0.Gt)
 
     Eq << Rat.Lt0Div.of.Gt_0.apply(Eq.A_is_positive)
 
-    Eq << Algebra.Any.All.And.of.Cond.Any_All.apply(Eq[-1], Eq[-2])
+    Eq << Bool.Any.All.And.of.Cond.Any_All.apply(Eq[-1], Eq[-2])
 
     Eq << Eq[-1].this.expr.expr.apply(Algebra.LtMul.of.Gt_0.Lt)
 
-    Eq << Algebra.Any.All.And.of.Any_All.Any_All.limits_Inter.apply(Eq[2], Eq[-1])
+    Eq << Bool.Any.All.And.of.Any_All.Any_All.limits_Inter.apply(Eq[2], Eq[-1])
 
     Eq << Eq[-1].this.expr.expr.apply(Nat.LtMulS.of.Lt.Lt.Ge_0.Ge_0)
 
@@ -59,7 +59,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Abs[~Mul]).apply(Nat.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.expr.expr.lhs.apply(Algebra.Abs.Neg)
+    Eq << Eq[-1].this.expr.expr.lhs.apply(Int.Abs.Neg)
 
     Eq << Eq[-1].this.expr.limits[0][1].args[0].apply(Set.Lt.given.In.Icc)
 
@@ -74,7 +74,7 @@ def prove(Eq):
 
     Eq << Bool.Cond.of.Or_Not.Cond.apply(Eq[-1], Eq[-2])
 
-    Eq << Algebra.Any.of.Any.subst.apply(Eq[-1], Min(δ_0, δ_1), δ)
+    Eq << Bool.Any.of.Any.subst.apply(Eq[-1], Min(δ_0, δ_1), δ)
 
     Eq << Real.Eq.of.Any_All.limit_definition.apply(Eq[-1])
 

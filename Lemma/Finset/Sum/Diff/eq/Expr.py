@@ -21,9 +21,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.expr.apply(Finset.Mul_Sum.eq.Sum_Mul)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.limits.swap.intlimit)
+    Eq << Eq[-1].this.lhs.apply(Finset.Sum.limits.swap.intlimit)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.limits.separate)
+    Eq << Eq[-1].this.lhs.apply(Finset.Sum.limits.separate)
 
     Eq << Eq[-1].this.lhs.find(Sum).apply(Finset.Sum.Mul.Binom.eq.Delta)
 

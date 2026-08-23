@@ -14,7 +14,7 @@ def apply(a, wrt=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Algebra, Bool
     n = Symbol(integer=True, positive=True)
     x = Symbol(complex=True, shape=(n,))
 
@@ -40,7 +40,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.simplify()
 
-    Eq << Algebra.All.of.All.limits.invert.apply(Eq[-1])
+    Eq << Bool.All.of.All.limits.invert.apply(Eq[-1])
 
     Eq << Set.Eq.of.All_In.All_In.apply(Eq.all_contains_in_A, Eq.all_contains_in_B)
 

@@ -10,12 +10,12 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Complex
 
     z, w = Symbol(complex=True)
     Eq << apply(Im(z + w, evaluate=False))
 
-    Eq << Eq[0].this.rhs.apply(Algebra.Add.eq.Im)
+    Eq << Eq[0].this.rhs.apply(Complex.Add.eq.Im)
 
 
 

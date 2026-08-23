@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(self):
-    from Lemma.Algebra.Sum.eq.Add.shift import rewrite
+    from Lemma.Finset.Sum.eq.Add.shift import rewrite
     return Equal(self, rewrite(Product, self), evaluate=False)
 
 

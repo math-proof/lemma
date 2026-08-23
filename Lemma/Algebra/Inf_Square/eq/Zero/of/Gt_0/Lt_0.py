@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.apply(Bool.Any_UFn.given.UFnUFn, x, 0)
 
-    Eq << Eq[-1].this.args[1].apply(Algebra.All.Is.Or)
+    Eq << Eq[-1].this.args[1].apply(Bool.All.Is.Or)
 
 
 if __name__ == '__main__':

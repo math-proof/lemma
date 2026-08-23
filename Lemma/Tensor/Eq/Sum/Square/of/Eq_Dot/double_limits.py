@@ -18,7 +18,7 @@ def apply(given, i=None, j=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor
+    from Lemma import Algebra, Tensor, Finset
 
     n = Symbol(integer=True, positive=True)
     x, y = Symbol(shape=(n,), real=True, given=True)
@@ -26,9 +26,9 @@ def prove(Eq):
     Eq << apply(Equal(x @ SwapMatrix(n, i, j), y))
 
     j, i = Eq[1].lhs.variables
-    Eq << Eq[1].this.lhs.apply(Algebra.Sum_SquareSub.eq.Sub_SquareSum)
+    Eq << Eq[1].this.lhs.apply(Finset.Sum_SquareSub.eq.Sub_SquareSum)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum_SquareSub.eq.Sub_SquareSum)
+    Eq << Eq[-1].this.rhs.apply(Finset.Sum_SquareSub.eq.Sub_SquareSum)
 
     Eq << Tensor.EqSum.of.Eq_Dot.apply(Eq[0], i)
 

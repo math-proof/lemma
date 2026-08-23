@@ -24,7 +24,7 @@ def apply(given, x):
 
 @prove(proved=False)
 def prove(Eq):
-    from Lemma import Algebra, Real, Finset, Fin
+    from Lemma import Real, Finset, Fin
 
     A, B = Symbol(shape=(oo,), real=True)
     x = Symbol(real=True)
@@ -64,9 +64,9 @@ def prove(Eq):
 
     Eq << Eq[3] - Eq[-1]
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Add.eq.Sum.limits.SDiff)
+    Eq << Eq[-1].this.lhs.apply(Finset.Add.eq.Sum.limits.SDiff)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Add.eq.Sum.limits.SDiff)
+    Eq << Eq[-1].this.rhs.apply(Finset.Add.eq.Sum.limits.SDiff)
 
     r = Symbol(real=True, positive=True)
     Eq << Eq[-1].subs(x, r)

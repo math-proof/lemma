@@ -85,7 +85,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Element).apply(Set.In_Icc.Is.InAdd, i)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.eq.ReducedSum)
+    Eq << Eq[-1].this.rhs.apply(Tensor.Sum.eq.ReducedSum)
 
     Eq << Eq[-1].this.find(Max).apply(Tensor.Max.eq.Relu)
 
@@ -129,11 +129,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.args[1].apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite, 1)
 
-    Eq << Eq[-1].this.find(And).apply(Algebra.And.collect, cond=Eq[-1].find(Element))
+    Eq << Eq[-1].this.find(And).apply(Bool.And.collect, cond=Eq[-1].find(Element))
 
     Eq << Eq[-1].this(i, j).find(And).apply(Set.OrLt.Or.Is.In.Ico.BandPart.lower)
 
-    Eq << Eq[-1].this.find(And).apply(Algebra.And.collect, cond=Eq[-1].rhs.args[1].find(Element))
+    Eq << Eq[-1].this.find(And).apply(Bool.And.collect, cond=Eq[-1].rhs.args[1].find(Element))
 
     Eq.zij_dquote_def = Eq[-1].this(i, j).find(And).apply(Set.Or.Or.Is.In.Ico.BandPart.upper.Min)
 

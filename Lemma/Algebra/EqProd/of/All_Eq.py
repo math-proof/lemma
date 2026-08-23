@@ -10,7 +10,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Bool
     n = Symbol(integer=True, positive=True)
     i = Symbol(integer=True)
     f, g = Function(shape=(), complex=True)
@@ -19,7 +19,7 @@ def prove(Eq):
 
     i_ = Symbol('i', domain=Range(n))
 
-    Eq << Algebra.Cond.of.All.subst.apply(Eq[0], i, i_)
+    Eq << Bool.Cond.of.All.subst.apply(Eq[0], i, i_)
 
     Eq << Eq[1].this.lhs.limits_subs(i, i_)
 

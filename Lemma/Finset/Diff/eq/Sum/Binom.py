@@ -34,7 +34,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Sum).apply(Finset.Sum.eq.AddSumS, cond={n + 1})
 
-    Eq.hypothesis = Algebra.Cond.of.Cond.subst.apply(Eq[0], x, x + 1)
+    Eq.hypothesis = Bool.Cond.of.Cond.subst.apply(Eq[0], x, x + 1)
 
     Eq << Eq.hypothesis - Eq[0]
 

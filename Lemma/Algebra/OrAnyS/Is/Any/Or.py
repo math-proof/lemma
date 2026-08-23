@@ -19,14 +19,14 @@ def apply(imply):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Bool
 
     x = Symbol(real=True)
     A = Symbol(etype=dtype.real)
     f, g = Function(bool=True)
     Eq << apply(Or(Any[x:A](g(x)), Any[x:A](f(x))))
 
-    Eq << Eq[0].this.rhs.apply(Algebra.Any_Or.Is.OrAnyS)
+    Eq << Eq[0].this.rhs.apply(Bool.Any_Or.Is.OrAnyS)
 
 
 

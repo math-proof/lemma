@@ -18,7 +18,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.expr.apply(Finset.Binom.eq.Sub.Pascal)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.eq.Sub.telescope)
+    Eq << Eq[-1].this.lhs.apply(Finset.Sum.eq.Sub.telescope)
 
 
 if __name__ == '__main__':

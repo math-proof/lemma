@@ -1,0 +1,28 @@
+from util import *
+
+
+@apply
+def apply(self, old, new):
+    from Lemma.Finset.Sum.limits.subst.Neg import limits_subs
+    return limits_subs(Any, self, old, new)
+
+
+@prove
+def prove(Eq):
+    from Lemma import Algebra, Bool
+
+    i, a, b, c = Symbol(integer=True)
+    f = Function(real=True)
+    Eq << apply(Any[i:a:b](f(i)), i, c - i)
+
+    Eq << Bool.Iff.given.Imp.Imp.apply(Eq[0])
+
+    Eq << Eq[-2].this.lhs.apply(Bool.Any.of.Any.limits.subst.Neg, i, c - i)
+    Eq << Eq[-1].this.lhs.apply(Bool.Any.of.Any.limits.subst.Neg, i, c - i)
+
+
+if __name__ == '__main__':
+    run()
+# created on 2019-02-20
+
+from . import real

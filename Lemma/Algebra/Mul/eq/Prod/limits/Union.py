@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(self):
-    from Lemma.Algebra.Add.eq.Sum.limits.Union import limits_union
+    from Lemma.Finset.Add.eq.Sum.limits.Union import limits_union
     (function, *limits_a), (S[function], *limits_b) = self.of(Product * Product)
     limits = limits_union(limits_a, limits_b, function=function)
     return Equal(self, Product(function, *limits), evaluate=False)
@@ -11,7 +11,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset, Real
+    from Lemma import Algebra, Finset, Real, Bool
 
     k = Symbol(integer=True)
     A, B = Symbol(etype=dtype.integer)
@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.expr.apply(Real.MulPowS.eq.Pow_Add.of.Gt_0)
 
-    Eq << Eq[-1].this.find(Add).apply(Algebra.Add.principle.inclusive_exclusive)
+    Eq << Eq[-1].this.find(Add).apply(Bool.Add.principle.inclusive_exclusive)
 
 
 

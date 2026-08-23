@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(self):
-    from Lemma.Algebra.All.Is.And.doit.outer.setlimit import doit
+    from Lemma.Bool.All.Is.And.doit.outer.setlimit import doit
     return Equal(self, doit(Cap, self))
 
 

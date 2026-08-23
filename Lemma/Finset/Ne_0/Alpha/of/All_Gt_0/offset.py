@@ -18,7 +18,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset, Tensor
+    from Lemma import Algebra, Finset, Tensor, Nat
 
     x = Symbol(real=True, shape=(oo,))
     n = Symbol(integer=True, positive=True)
@@ -27,7 +27,7 @@ def prove(Eq):
     i = Symbol(integer=True)
     Eq << apply(All[i:a:n](x[i + b] > 0))
 
-    Eq << Eq[0].this.apply(Algebra.All.limits.subst.offset, a)
+    Eq << Eq[0].this.apply(Nat.All.limits.subst.offset, a)
 
     Eq << Tensor.Gt_0.Stack.of.All_Gt_0.apply(Eq[-1])
 

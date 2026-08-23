@@ -33,7 +33,7 @@ def prove(Eq):
 
     Eq << Eq[-1] / (m / n)
     Eq << Eq[-1].this.rhs.expand(func=True)
-    Eq << Algebra.Cond.of.Cond.subst.apply(Eq[0], n, n + 2)
+    Eq << Bool.Cond.of.Cond.subst.apply(Eq[0], n, n + 2)
     Eq << Eq[-1].this.rhs.expand(func=True)
     Eq << Eq[-1].this.lhs.expand()
     Eq.two = Eq[0].subs(m, 2)

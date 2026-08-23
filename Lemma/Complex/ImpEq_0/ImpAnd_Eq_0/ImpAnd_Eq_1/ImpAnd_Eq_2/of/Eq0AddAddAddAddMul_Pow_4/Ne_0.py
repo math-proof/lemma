@@ -29,7 +29,7 @@ def apply(is_nonzero, given, x=None):
 
     w = -S.One / 2 + sqrt(3) * S.ImaginaryUnit / 2
     from Lemma.Algebra.Ne.of.Ne_0.Add.eq.Zero import cubic_delta
-    from Lemma.Algebra.Add.eq.Zero.given.And.Eq.cubic.one_leaded import cubic_solve
+    from Lemma.Complex.Add.eq.Zero.given.And.Eq.cubic.one_leaded import cubic_solve
     y_delta = cubic_delta(x, alpha, beta, gamma)
     D, Y0, Y1, Y2 = cubic_solve(y_delta, x)
     D = Symbol(D)
@@ -55,7 +55,7 @@ def apply(is_nonzero, given, x=None):
 
 @prove(slow=True)
 def prove(Eq):
-    from Lemma import Nat
+    from Lemma import Nat, Complex
 
     x, a, b, c, d, e = Symbol(complex=True, given=True)
     Eq << apply(Unequal(a, 0), Equal(a * x ** 4 + b * x ** 3 + c * x ** 2 + d * x + e, 0), x=x)

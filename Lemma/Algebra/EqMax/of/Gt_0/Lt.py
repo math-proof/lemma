@@ -18,7 +18,7 @@ def prove(Eq):
 
     Eq << Eq[-1] - y ** 2
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Add.eq.Max)
+    Eq << Eq[-1].this.lhs.apply(Nat.Add.eq.Max)
 
     Eq << Algebra.LtSquare.of.Gt_0.Lt.apply(Eq[0], Eq[1])
 

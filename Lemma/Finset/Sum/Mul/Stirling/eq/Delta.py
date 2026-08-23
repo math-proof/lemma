@@ -16,7 +16,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Algebra, Tensor, Nat
+    from Lemma import Finset, Algebra, Tensor, Nat, Bool
 
     k = Symbol(integer=True)
     i = Symbol(integer=True, nonnegative=True)
@@ -30,9 +30,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.expr.apply(Finset.Mul_Sum.eq.Sum_Mul)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.limits.swap.intlimit)
+    Eq << Eq[-1].this.rhs.apply(Finset.Sum.limits.swap.intlimit)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.limits.separate)
+    Eq << Eq[-1].this.rhs.apply(Finset.Sum.limits.separate)
 
     Eq << Eq[-1].this.rhs.apply(Tensor.Sum.eq.Dot)
 
@@ -40,7 +40,7 @@ def prove(Eq):
 
     Eq << Tensor.Eq.of.DotStackFallingFactorial.vector_independence.apply(Eq[-1])
 
-    Eq << Algebra.Cond.of.All.subst.apply(Eq[-1], Eq[-1].variable, i)
+    Eq << Bool.Cond.of.All.subst.apply(Eq[-1], Eq[-1].variable, i)
 
     Eq << Eq[-1] * (-1) ** (n - i)
 

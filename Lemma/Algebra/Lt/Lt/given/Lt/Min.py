@@ -10,12 +10,12 @@ def apply(lt_a, lt_b):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     x, y, b = Symbol(real=True, given=True)
     Eq << apply(x < y, x < b)
 
-    Eq << Algebra.And.Lt.of.Lt_Min.apply(Eq[-1])
+    Eq << Nat.And.Lt.of.Lt_Min.apply(Eq[-1])
 
 
 if __name__ == '__main__':

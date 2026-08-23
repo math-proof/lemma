@@ -22,14 +22,14 @@ def prove(Eq):
     ε = Eq.all.variable
     Eq << All(Eq.all.expr, (ε, Interval(1, oo)), plausible=True)
 
-    Eq << Algebra.All.given.And.All.split.apply(Eq[-1], cond=ε > 1)
+    Eq << Bool.All.given.And.All.split.apply(Eq[-1], cond=ε > 1)
 
-    Eq << Algebra.Cond.of.All.subst.apply(Eq.all, ε, S.One / 2)
+    Eq << Bool.Cond.of.All.subst.apply(Eq.all, ε, S.One / 2)
 
     Eq << Eq[-1].this.find(Less).apply(Algebra.Lt.of.Lt.relax, 1)
 
     χ = Symbol(domain=Interval.open(1, oo))
-    Eq << Algebra.Cond.of.All.subst.apply(Eq.all, ε, 1 / χ)
+    Eq << Bool.Cond.of.All.subst.apply(Eq.all, ε, 1 / χ)
 
     Eq << Eq[-1].this.find(Less).apply(Algebra.Lt.of.Lt.relax, χ)
 
@@ -39,7 +39,7 @@ def prove(Eq):
 
     Eq << Real.Eq_Lim.given.Any_All.limit_definition.apply(Eq[0])
 
-    Eq << Algebra.Cond.given.All.apply(Eq[-1], Eq[-1].find(Abs < ~Symbol))
+    Eq << Bool.Cond.given.All.apply(Eq[-1], Eq[-1].find(Abs < ~Symbol))
 
 
 

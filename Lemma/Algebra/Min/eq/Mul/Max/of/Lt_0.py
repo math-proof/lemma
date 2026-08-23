@@ -18,13 +18,13 @@ def apply(is_negative, self, div=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Rat
 
     x, y = Symbol(real=True)
     r = Symbol(real=True)
     Eq << apply(r < 0, Min(r * x, r * y))
 
-    Eq << Algebra.Div.lt.Zero.of.Lt_0.apply(Eq[0])
+    Eq << Rat.Div.lt.Zero.of.Lt_0.apply(Eq[0])
 
     Eq << Algebra.Max.eq.Mul.Min.of.Lt_0.apply(Eq[-1], Eq[1].find(Max))
 

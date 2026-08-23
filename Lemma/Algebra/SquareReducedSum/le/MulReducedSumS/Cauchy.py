@@ -10,7 +10,7 @@ def apply(a, b):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat
+    from Lemma import Algebra, Nat, Real
 
     n = Symbol(domain=Range(2, oo))
     a, b = Symbol(shape=(n,), real=True, given=True)
@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << ~Eq[-1]
 
-    Eq << Algebra.Any_Lt_0.given.Add.gt.Zero.apply(Eq[-1])
+    Eq << Real.Any_Lt_0.given.Add.gt.Zero.apply(Eq[-1])
 
     Eq << Eq[-1] / 4
 

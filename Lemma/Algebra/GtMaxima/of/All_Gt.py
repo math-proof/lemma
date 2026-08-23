@@ -11,7 +11,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Nat
+    from Lemma import Algebra, Bool, Nat, Real
 
     x = Symbol(real=True)
     S = Symbol(etype=dtype.real, given=True, empty=False)
@@ -19,7 +19,7 @@ def prove(Eq):
     m = Symbol(real=True)
     Eq << apply(All[x:S](f(x) > m))
 
-    Eq << Algebra.All_GeMaxima.apply(Eq[1].lhs)
+    Eq << Real.All_GeMaxima.apply(Eq[1].lhs)
 
     Eq << Bool.All_And.of.All.All.apply(Eq[0], Eq[2])
 

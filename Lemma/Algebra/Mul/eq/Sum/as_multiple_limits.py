@@ -16,14 +16,14 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Finset
 
     n, m = Symbol(integer=True, positive=True)
     i = Symbol(integer=True)
     f, g = Function(integer=True)
     Eq << apply(Sum[i:m](f(i)) * Sum[i:n](g(i)))
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.limits.separate)
+    Eq << Eq[-1].this.rhs.apply(Finset.Sum.limits.separate)
 
     Eq << Eq[-1].this.rhs.simplify()
 

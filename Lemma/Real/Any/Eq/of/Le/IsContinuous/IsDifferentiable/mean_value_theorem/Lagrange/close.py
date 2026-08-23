@@ -44,7 +44,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Real.Any.Eq.of.Lt.IsContinuous.IsDifferentiable.mean_value_theorem.Lagrange)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Any.of.Any.limits.relax, domain=Interval(a, b))
+    Eq << Eq[-1].this.rhs.apply(Bool.Any.of.Any.limits.relax, domain=Interval(a, b))
 
 
 

@@ -31,7 +31,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.simplify()
 
-    Eq << Algebra.Cond.given.All.apply(Eq[-1], xi)
+    Eq << Bool.Cond.given.All.apply(Eq[-1], xi)
 
     Eq << Eq[-2].this.lhs.apply(Real.Subs.eq.Lim)
 

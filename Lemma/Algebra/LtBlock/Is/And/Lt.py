@@ -15,7 +15,7 @@ def apply(le):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Tensor
 
     n, m = Symbol(integer=True, positive=True)
     a = Symbol(shape=(n,), real=True)
@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq << Bool.Iff.given.Imp.Imp.apply(Eq[0])
 
-    Eq << Eq[-2].this.lhs.apply(Algebra.And.Lt.of.LtBlock)
+    Eq << Eq[-2].this.lhs.apply(Tensor.And.Lt.of.LtBlock)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.LtBlock.given.And.Lt)
 

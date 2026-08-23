@@ -10,12 +10,12 @@ def apply(ge_a, ge_b):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     x, y, a, b = Symbol(real=True, given=True)
     Eq << apply(x >= a, y >= b)
 
-    Eq << Algebra.LeMin.of.Le.Le.apply(-Eq[0], -Eq[1])
+    Eq << Nat.LeMin.of.Le.Le.apply(-Eq[0], -Eq[1])
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Min.eq.Mul.Max)
 

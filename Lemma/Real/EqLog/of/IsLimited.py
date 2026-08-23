@@ -10,7 +10,7 @@ def apply(is_limited):
 
 @prove(proved=False)
 def prove(Eq):
-    from Lemma import Real, Set, Algebra, Bool
+    from Lemma import Real, Set, Algebra, Bool, Int
 
     x, x0 = Symbol(real=True)
     f = Function(real=True)
@@ -36,9 +36,9 @@ def prove(Eq):
 
     Eq << Eq[-2].this.apply(Real.EqLim.Is.All_Any_All, delta=delta, epsilon=epsilon)
 
-    Eq << Eq[-1].this.expr.expr.lhs.arg.apply(Algebra.Add.eq.Log)
+    Eq << Eq[-1].this.expr.expr.lhs.arg.apply(Real.Add.eq.Log)
 
-    Eq << Eq[2].this.expr.expr.apply(Algebra.And.of.Lt.split.Abs)
+    Eq << Eq[2].this.expr.expr.apply(Int.And.of.Lt.split.Abs)
 
     Eq << Eq[-1].this.expr.expr.args[0].apply(Algebra.Lt.transport, lhs=0)
 
@@ -46,7 +46,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.expr.apply(Set.In.Icc.of.Lt.Gt)
 
-    Eq << Algebra.Any.All.And.of.Cond.Any_All.apply(Eq.A_is_positive, Eq[-1])
+    Eq << Bool.Any.All.And.of.Cond.Any_All.apply(Eq.A_is_positive, Eq[-1])
 
     Eq << Eq[-1].this.expr.expr.apply(Set.In.Div.of.Gt_0.In)
 

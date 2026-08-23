@@ -11,14 +11,14 @@ def apply(is_nonpositive, le):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     x, y = Symbol(real=True)
     Eq << apply(x <= 0, y <= x)
 
     Eq << Eq[-1] - y ** 2
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Add.eq.Max)
+    Eq << Eq[-1].this.lhs.apply(Nat.Add.eq.Max)
 
     Eq << Algebra.GeSquare.of.Le_0.Le.apply(Eq[0], Eq[1])
 

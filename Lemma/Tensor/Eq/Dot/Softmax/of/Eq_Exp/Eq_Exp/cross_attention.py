@@ -18,7 +18,7 @@ def apply(eq_Ah, eq_Al, V):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Bool, Nat
+    from Lemma import Tensor, Algebra, Bool, Nat, Finset
 
     n, d_z = Symbol(integer=True, positive=True)
     h = Symbol(domain=Range(1, n))
@@ -63,11 +63,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.subs(Eq.ksi_def)
 
-    Eq.divisor_definition = Eq[-1].this.rhs.apply(Algebra.Sum.eq.Ite)
+    Eq.divisor_definition = Eq[-1].this.rhs.apply(Finset.Sum.eq.Ite)
 
-    Eq << Eq.divisor_definition.find(ExprCondPair[2]).find(Sum).this.apply(Algebra.Sum.eq.ReducedSum)
+    Eq << Eq.divisor_definition.find(ExprCondPair[2]).find(Sum).this.apply(Tensor.Sum.eq.ReducedSum)
 
-    Eq << Eq.divisor_definition.find(ExprCondPair).find(Sum).this.apply(Algebra.Sum.eq.ReducedSum)
+    Eq << Eq.divisor_definition.find(ExprCondPair).find(Sum).this.apply(Tensor.Sum.eq.ReducedSum)
 
     Eq.divisor_definition = Eq.divisor_definition.this.rhs.subs(Eq[-2], Eq[-1], simplify=False)
 

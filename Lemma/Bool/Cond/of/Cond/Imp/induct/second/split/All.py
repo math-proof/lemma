@@ -36,7 +36,7 @@ def prove(Eq):
 
     Eq <<= Eq[-1] & Eq[1]
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.All.of.Cond.All.push)
+    Eq << Eq[-1].this.rhs.apply(Bool.All.of.Cond.All.push)
 
     Eq << Bool.Cond.of.Cond.All_Imp.apply(Eq[0], Eq[-1], n=n, start=1)
 

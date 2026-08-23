@@ -14,7 +14,7 @@ def apply(eq, Q_def, V_def, MDV_def, ge):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Probability, Bool, Nat, Rat, Int
+    from Lemma import Algebra, Tensor, Probability, Bool, Nat, Rat, Int, Real
 
     b, D = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), real=True, random=True) # states / observation
@@ -107,7 +107,7 @@ def prove(Eq):
 
     Eq << Nat.Ge.of.Ge.Ge.apply(Eq.ge, Eq[-1])
 
-    Eq << Algebra.All.Ge.of.GeInf.apply(Eq[-1])
+    Eq << Real.All.Ge.of.GeInf.apply(Eq[-1])
 
     Eq <<= Eq[2].subs(s[t].var, s[t]).subs(t, 0), Eq.V_quote.subs(s[t].var, s[t]).subs(t, 0)
 

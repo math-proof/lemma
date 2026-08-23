@@ -11,7 +11,7 @@ def apply(eq, i):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Set, Bool
+    from Lemma import Probability, Algebra, Set, Bool, Nat
 
     b = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), real=True, random=True) # states / observation
@@ -28,16 +28,16 @@ def prove(Eq):
 
     Eq << Bool.All.of.Cond.apply(Eq[-1], j)
 
-    Eq << Eq[-1].this.apply(Algebra.All.limits.subst.offset, -1)
+    Eq << Eq[-1].this.apply(Nat.All.limits.subst.offset, -1)
 
-    Eq << Eq[-1].this.apply(Algebra.All.limits.subst.offset, -t)
+    Eq << Eq[-1].this.apply(Nat.All.limits.subst.offset, -t)
 
     j = Eq[-1].variable
     Eq << Bool.Imp.of.AllSetOf.apply(Eq[-1])
 
     Eq << Eq[-1].this.lhs.reversed
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Le.given.Lt.One)
+    Eq << Eq[-1].this.lhs.apply(Nat.Le.given.Lt.One)
 
     Eq << Eq[-1].subs(t, i)
 

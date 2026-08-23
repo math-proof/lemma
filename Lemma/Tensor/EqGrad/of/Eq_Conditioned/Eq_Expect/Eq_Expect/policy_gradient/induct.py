@@ -15,7 +15,7 @@ def apply(eq, Q_def, V_def, n=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Real, Bool, Nat
+    from Lemma import Tensor, Algebra, Real, Bool, Nat, Finset
 
     b, D = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), real=True, random=True) # states / observation
@@ -35,7 +35,7 @@ def prove(Eq):
 
     Eq.induct = Eq.hypothesis.subs(n,  n + 1)
 
-    Eq << Eq.induct.this.find(Sum).apply(Algebra.Sum.eq.Add.pop)
+    Eq << Eq.induct.this.find(Sum).apply(Finset.Sum.eq.Add.pop)
 
     Eq << Eq.recursion.subs(t, n)
 

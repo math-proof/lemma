@@ -13,7 +13,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Algebra, Bool
+    from Lemma import Finset, Algebra, Bool, Rat
     from Lemma.Finset.Alpha.gt.Zero import alpha
     from Lemma.Finset.H.eq.Add.definition import H
     from Lemma.Finset.K.eq.Add.definition import K
@@ -63,7 +63,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.args[0].base.expand()
 
-    Eq << Algebra.Cond.of.Cond.subst.apply(Eq[0], x[:n + 1], BlockMatrix(x[:n], x[n] + 1 / x[n + 1]))
+    Eq << Bool.Cond.of.Cond.subst.apply(Eq[0], x[:n + 1], BlockMatrix(x[:n], x[n] + 1 / x[n + 1]))
 
     Eq << Eq[-1].this.lhs.apply(Finset.Alpha.Block)
 
@@ -71,7 +71,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.args[1].base.defun()
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Div.cancel, x[n + 1])
+    Eq << Eq[-1].this.rhs.apply(Rat.Div.cancel, x[n + 1])
 
     Eq << Imply(Eq[0], Eq.induct, plausible=True)
 

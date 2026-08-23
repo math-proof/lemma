@@ -18,7 +18,7 @@ def apply(n, k, A=None):
 
 @prove(proved=False)
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool
+    from Lemma import Set, Algebra, Bool, Nat
 
     n = Symbol(integer=True, positive=True)
     k = Symbol(domain=Range(1, n))
@@ -37,7 +37,7 @@ def prove(Eq):
     j = Symbol(domain=Range(k + 1))
     Eq << Set.Cup.of.All_Eq.fin.apply(Eq[0], (i, 0, k + 1))
 
-    Eq.x_quote_Union = Algebra.All.of.All_Eq.Cond.subst.apply(Eq.x_Union_s1, Eq[-1])
+    Eq.x_quote_Union = Bool.All.of.All_Eq.Cond.subst.apply(Eq.x_Union_s1, Eq[-1])
 
     Eq << Eq[0].apply(Set.EqCard.of.Eq)
 
@@ -46,9 +46,9 @@ def prove(Eq):
 
     Eq << Set.CardUnion.le.AddCardS.apply(*Eq[-1].rhs.args[1].arg.args)
 
-    Eq << Algebra.Le.of.Eq.Le.subst.apply(Eq[-2], Eq[-1])
+    Eq << Nat.Le.of.Eq.Le.subst.apply(Eq[-2], Eq[-1])
 
-    Eq << Algebra.All.of.All_Eq.Cond.subst.apply(Eq.x_abs_sum_s1, Eq[-1])
+    Eq << Bool.All.of.All_Eq.Cond.subst.apply(Eq.x_abs_sum_s1, Eq[-1])
 
     Eq << Eq.x_quote_Union.this.expr.apply(Set.EqCard.of.Eq)
 

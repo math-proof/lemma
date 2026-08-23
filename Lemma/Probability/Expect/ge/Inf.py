@@ -34,7 +34,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Probability.Expect.eq.Integral)
 
-    Eq << Algebra.All_Ge_Inf.apply(Eq[1].rhs)
+    Eq << Real.All_Ge_Inf.apply(Eq[1].rhs)
 
     Eq << Probability.Pr.ge.Zero.apply(Eq[-2].find(Pr))
 

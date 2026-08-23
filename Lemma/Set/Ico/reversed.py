@@ -10,7 +10,7 @@ def apply(self):
 
 @prove(proved=False)
 def prove(Eq):
-    from Lemma import Algebra, Nat
+    from Lemma import Algebra, Nat, Int
 
     a, b = Symbol(integer=True)
     k = Symbol(integer=True, zero=False)
@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Mod).apply(Nat.Mod.eq.Sub_Mul_FloorDiv)
 
-    Eq << Eq[-1].this.find(Ceil).apply(Algebra.Ceil.eq.Add.Floor)
+    Eq << Eq[-1].this.find(Ceil).apply(Int.Ceil.eq.Add.Floor)
 
     Eq << Eq[0].subs(Eq[1].reversed)
 

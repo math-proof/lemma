@@ -20,7 +20,7 @@ def apply(self, i=None, j=None):
 
 @prove(slow=True)
 def prove(Eq):
-    from Lemma import Algebra, Tensor
+    from Lemma import Algebra, Tensor, Finset
 
     print('this is a validation, not a proof in', __file__)
     n, i = Symbol(integer=True, positive=True)
@@ -29,7 +29,7 @@ def prove(Eq):
     A = Symbol(shape=(n, n), complex=True, zero=False)
     Eq << apply(det(A), i=i)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.eq.Add.doit)
+    Eq << Eq[-1].this.rhs.apply(Finset.Sum.eq.Add.doit)
 
     Eq << Eq[-1].this.find(Stack).apply(Tensor.Stack.eq.Matrix)
 

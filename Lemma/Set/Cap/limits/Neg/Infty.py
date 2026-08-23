@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Algebra, Bool
 
     i = Symbol(integer=True)
     f = Function(etype=dtype.real)
@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.rhs.apply(Set.In_Cap.given.All_In, simplify=None), Eq[-1].this.rhs.apply(Set.In_Cap.given.All_In, simplify=None)
 
-    Eq <<= Eq[-2].this.lhs.apply(Algebra.All.of.All.limits.Neg, simplify=None), Eq[-1].this.lhs.apply(Algebra.All.of.All.limits.Neg, simplify=None)
+    Eq <<= Eq[-2].this.lhs.apply(Bool.All.of.All.limits.Neg, simplify=None), Eq[-1].this.lhs.apply(Bool.All.of.All.limits.Neg, simplify=None)
 
 
 if __name__ == '__main__':

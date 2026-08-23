@@ -53,18 +53,18 @@ def apply(el, self, z=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set
+    from Lemma import Set, Complex
 
     z, a, b, c = Symbol(complex=True)
     Eq << apply(Element(a, Reals - {0}), a * abs(z) ** 2 + 2 * Re(b * z) + c)
 
-    Eq << Eq[1].this.find(Abs ** 2).apply(Algebra.Square.Abs.eq.Mul.Conj)
+    Eq << Eq[1].this.find(Abs ** 2).apply(Complex.Square.Abs.eq.Mul.Conj)
 
-    Eq << Eq[-1].this.find(Re).apply(Algebra.Re.eq.Add.Conj)
+    Eq << Eq[-1].this.find(Re).apply(Complex.Re.eq.Add.Conj)
 
-    Eq << Eq[-1].this.find(Abs ** 2).apply(Algebra.Square.Abs.eq.Mul.Conj)
+    Eq << Eq[-1].this.find(Abs ** 2).apply(Complex.Square.Abs.eq.Mul.Conj)
 
-    Eq << Eq[-1].this.find(Abs ** 2).apply(Algebra.Square.Abs.eq.Mul.Conj)
+    Eq << Eq[-1].this.find(Abs ** 2).apply(Complex.Square.Abs.eq.Mul.Conj)
 
     Eq << Set.EqConj.of.IsNotZero.square_completing.apply(Eq[0], Eq[-1].lhs)
 
