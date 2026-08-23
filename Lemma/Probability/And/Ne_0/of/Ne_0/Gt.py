@@ -18,14 +18,14 @@ def apply(ne_zero, gt):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability, Bool
+    from Lemma import Probability, Bool
 
     m, n = Symbol(integer=True, positive=True)
     x = Symbol(random=True, real=True, shape=(oo,))
     Eq << apply(Unequal(Pr(x[:m]), 0),
                 m > n)
 
-    Eq << Algebra.Iff.of.Gt.split.Eq.apply(Eq[1], *Eq[0].lhs.arg.args)
+    Eq << Bool.Iff.of.Gt.split.Eq.apply(Eq[1], *Eq[0].lhs.arg.args)
 
     Eq << Bool.Cond.of.Iff.Cond.subst.apply(Eq[-1], Eq[0])
 

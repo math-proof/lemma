@@ -15,7 +15,7 @@ def prove(Eq):
     Eq << apply(sin(x * 2))
 
     y = Symbol(real=True)
-    Eq << sin(x + y).this.apply(Real.Sin.eq.Add)
+    Eq << sin(x + y).this.apply(Real.SinAdd.eq.AddMulSSin_Cos)
 
     Eq << Eq[-1].subs(y, x)
 

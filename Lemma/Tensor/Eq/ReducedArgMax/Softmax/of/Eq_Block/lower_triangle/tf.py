@@ -24,7 +24,7 @@ def apply(eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Bool, Int
+    from Lemma import Tensor, Bool, Int
 
     n = Symbol(domain=Range(2, oo))
     l = Symbol(domain=Range(2, n + 1))
@@ -40,23 +40,23 @@ def prove(Eq):
     z_quote = Symbol(Eq[-1].lhs)
     Eq << Eq[-1].subs(z_quote.this.definition.reversed)
 
-    Eq << Algebra.EqReducedArgMax.of.Eq.apply(Eq[-1])
+    Eq << Tensor.EqReducedArgMax.of.Eq.apply(Eq[-1])
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.ReducedArgMax.eq.Block.ReducedArgMax)
+    Eq << Eq[-1].this.rhs.apply(Tensor.ReducedArgMax.eq.Block.ReducedArgMax)
 
     Eq << Eq[-1].this.rhs.find(ReducedArgMax).apply(Tensor.ReducedArgMax.eq.Stack.ReducedArgMax)
 
     Eq << Eq[-1].this.rhs.find(ReducedArgMax[Stack]).apply(Tensor.ReducedArgMax.eq.Stack.ReducedArgMax)
 
-    Eq << Eq[-1].this.rhs.find(ReducedArgMax[BlockMatrix]).apply(Algebra.ReducedArgMax.Block.eq.ReducedArgMax)
+    Eq << Eq[-1].this.rhs.find(ReducedArgMax[BlockMatrix]).apply(Tensor.ReducedArgMax.Block.eq.ReducedArgMax)
 
-    Eq << Eq[-1].this.rhs.find(ReducedArgMax[Exp]).apply(Algebra.ReducedArgMax.Exp.eq.ReducedArgMax)
+    Eq << Eq[-1].this.rhs.find(ReducedArgMax[Exp]).apply(Tensor.ReducedArgMax.Exp.eq.ReducedArgMax)
 
-    Eq << Eq[-1].this.rhs.find(ReducedArgMax[BlockMatrix]).apply(Algebra.ReducedArgMax.Block.eq.Add)
+    Eq << Eq[-1].this.rhs.find(ReducedArgMax[BlockMatrix]).apply(Tensor.ReducedArgMax.Block.eq.Add)
 
-    Eq << Eq[-1].this.rhs.find(ReducedArgMax[BlockMatrix]).apply(Algebra.ReducedArgMax.Block.eq.ReducedArgMax)
+    Eq << Eq[-1].this.rhs.find(ReducedArgMax[BlockMatrix]).apply(Tensor.ReducedArgMax.Block.eq.ReducedArgMax)
 
-    Eq.eq_reducedArgMax = Eq[-1].this.rhs.find(ReducedArgMax[Exp]).apply(Algebra.ReducedArgMax.Exp.eq.ReducedArgMax)
+    Eq.eq_reducedArgMax = Eq[-1].this.rhs.find(ReducedArgMax[Exp]).apply(Tensor.ReducedArgMax.Exp.eq.ReducedArgMax)
 
     Eq.eq_lamda = Equal(
         Stack[i:Min(l, n) - 1](z[i]),
@@ -84,11 +84,11 @@ def prove(Eq):
 
     Eq << Eq.eq_lamda.subs(Eq.zi_min_def)
 
-    Eq << Algebra.EqReducedArgMax.of.Eq.apply(Eq[-1])
+    Eq << Tensor.EqReducedArgMax.of.Eq.apply(Eq[-1])
 
     Eq << Eq[-1].this.rhs.apply(Tensor.ReducedArgMax.eq.Stack.ReducedArgMax)
 
-    Eq << Eq[-1].this.find(ReducedArgMax[BlockMatrix]).apply(Algebra.ReducedArgMax.Block.eq.Add)
+    Eq << Eq[-1].this.find(ReducedArgMax[BlockMatrix]).apply(Tensor.ReducedArgMax.Block.eq.Add)
 
     Eq << Eq[-1].subs(Eq.zi_min_def.reversed)
 

@@ -12,7 +12,7 @@ def apply(el, x, y):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Tensor
+    from Lemma import Bool, Tensor
 
     m, n = Symbol(integer=True, positive=True, given=True)
     x, y = Symbol(real=True, shape=(oo,))

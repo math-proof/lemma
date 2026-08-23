@@ -26,7 +26,7 @@ def apply(eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Bool
+    from Lemma import Tensor, Bool
 
     n, u = Symbol(domain=Range(2, oo))
     d_z = Symbol(integer=True, positive=True)

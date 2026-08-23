@@ -11,7 +11,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool, Real, Nat
+    from Lemma import Set, Bool, Real, Nat
 
     x, a = Symbol(real=True)
     Eq << apply(x ** 2 <= a ** 2)

@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Algebra
+    from Lemma import Finset
 
     x = Symbol(real=True)
     n = Symbol(integer=True, nonnegative=True)
@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(FallingFactorial).apply(Finset.FallingFactorial.eq.Prod)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Mul.eq.Prod.distribute)
+    Eq << Eq[-1].this.rhs.apply(Finset.Mul.eq.Prod.distribute)
 
 
 

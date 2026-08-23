@@ -15,13 +15,13 @@ def apply(eq, gt):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat, Rat
+    from Lemma import Nat, Rat
 
     x = Symbol(real=True, given=True)
     f, g, h = Function(real=True)
     Eq << apply(f(x) > g(x), Equal(g(x) * (f(x) - g(x)), h(x) * f(x) + x))
 
-    Eq << Algebra.Gt_0.of.Gt.apply(Eq[0])
+    Eq << Nat.Gt_0.of.Gt.apply(Eq[0])
 
     Eq << Rat.EqDiv.of.Gt_0.Eq.apply(Eq[-1], Eq[1])
 

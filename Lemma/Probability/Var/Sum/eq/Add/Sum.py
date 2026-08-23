@@ -15,7 +15,7 @@ def apply(self, j=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Finset
+    from Lemma import Probability, Finset
 
     x = Symbol(real=True, shape=(oo,), random=True)
     i, j = Symbol(integer=True)

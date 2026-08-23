@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability, Bool, Tensor
+    from Lemma import Probability, Bool, Tensor, Finset
 
     b = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), real=True, random=True)  # states / observation
@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq << Eq[0].subs(n, n + 1)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Prod.eq.Mul.pop)
+    Eq << Eq[-1].this.lhs.apply(Finset.Prod.eq.Mul.pop)
 
     Eq << Eq[-1].subs(Eq[0])
 

@@ -14,7 +14,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset, Bool, Nat
+    from Lemma import Finset, Bool, Nat, Rat
     from Lemma.Finset.Alpha.gt.Zero import alpha
     from Lemma.Finset.H.eq.Add.definition import H
     from Lemma.Finset.K.eq.Add.definition import K
@@ -53,11 +53,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs + 1
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Ne_0.of.Gt)
+    Eq << Eq[-1].this.lhs.apply(Nat.Ne_0.of.Gt)
 
     Eq << Bool.Imp.given.Imp_And.apply(Eq[-1])
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Ne_0.Eq.given.And.Mul)
+    Eq << Eq[-1].this.rhs.apply(Nat.Ne_0.Eq.given.And.Mul)
 
     Eq << Eq[-1].this.rhs.lhs.ratsimp()
 
@@ -76,7 +76,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Greater).apply(Nat.Add.gt.Zero.given.And.Gt_0)
 
-    Eq << Eq[-1].this.find(Greater[2]).apply(Algebra.Gt_0.given.Gt_0.Inv)
+    Eq << Eq[-1].this.find(Greater[2]).apply(Rat.Gt_0.given.Gt_0.Inv)
 
     Eq << Eq[-1].this.lhs.apply(Bool.And.Is.All.limits.push)
 

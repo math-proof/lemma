@@ -20,7 +20,7 @@ def apply(x):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Algebra, Bool, Tensor, Nat, Rat
+    from Lemma import Finset, Bool, Tensor, Nat, Rat
     from Lemma.Finset.Alpha.gt.Zero import alpha
     from Lemma.Finset.H.eq.Add.definition import H
 

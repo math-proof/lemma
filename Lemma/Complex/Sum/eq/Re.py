@@ -12,7 +12,7 @@ def apply(self, *, simplify=True):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Finset
+    from Lemma import Bool, Finset
 
     n = Symbol(integer=True, nonnegative=True, given=False)
     z = Symbol(complex=True, shape=(oo,))

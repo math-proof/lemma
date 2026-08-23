@@ -11,7 +11,7 @@ def apply(eq, i):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Set, Bool, Nat
+    from Lemma import Probability, Set, Bool, Nat
 
     b = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), real=True, random=True) # states / observation

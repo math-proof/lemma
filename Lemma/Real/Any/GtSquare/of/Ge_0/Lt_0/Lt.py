@@ -20,14 +20,14 @@ def apply(M_is_nonnegative, is_negative, lt, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Real
+    from Lemma import Set, Real, Nat
 
     m, M, U = Symbol(real=True, given=True)
     Eq << apply(M >= 0, m + M < 0, U < m ** 2)
 
     Eq << -Eq[0]
 
-    Eq << -Eq[1].this.apply(Algebra.Lt.transport).reversed
+    Eq << -Eq[1].this.apply(Nat.Lt.transport).reversed
 
     Eq << Real.Any.GtSquare.of.Le_0.Lt.Lt.apply(Eq[-2], Eq[-1], Eq[2])
 

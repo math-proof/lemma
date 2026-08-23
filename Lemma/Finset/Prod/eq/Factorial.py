@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Algebra
+    from Lemma import Finset
 
     n = Symbol(integer=True, positive=True)
     i = Symbol(integer=True)
@@ -18,7 +18,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Finset.Factorial.eq.Prod)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Prod.limits.subst.Neg, i, n - i)
+    Eq << Eq[-1].this.rhs.apply(Finset.Prod.limits.subst.Neg, i, n - i)
 
 
 if __name__ == '__main__':

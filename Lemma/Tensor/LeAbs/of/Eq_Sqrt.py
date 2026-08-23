@@ -9,7 +9,7 @@ def apply(eq_C):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Nat, Rat, Real, Int
+    from Lemma import Tensor, Nat, Rat, Real, Int
 
     n, d = Symbol(domain=Range(2, oo))
     C, C_quote = Symbol(shape=(n, d), real=True)
@@ -17,10 +17,10 @@ def prove(Eq):
 
     Eq << Int.LeAbs.given.And.apply(Eq[1])
 
-    Eq <<= Tensor.Le.given.All.Le.apply(Eq[-2]), Algebra.Ge.given.All.Ge.apply(Eq[-1])
+    Eq <<= Tensor.Le.given.All.Le.apply(Eq[-2]), Nat.Ge.given.All.Ge.apply(Eq[-1])
 
     i = Eq[-1].find(Indexed).index
-    Eq <<= Tensor.Le.given.All.Le.apply(Eq[-2]), Algebra.Ge.given.All.Ge.apply(Eq[-1])
+    Eq <<= Tensor.Le.given.All.Le.apply(Eq[-2]), Nat.Ge.given.All.Ge.apply(Eq[-1])
 
     j = Eq[-1].find(Indexed[2]).index
     Eq <<= Eq[-2].subs(Eq[0]), Eq[-1].subs(Eq[0])

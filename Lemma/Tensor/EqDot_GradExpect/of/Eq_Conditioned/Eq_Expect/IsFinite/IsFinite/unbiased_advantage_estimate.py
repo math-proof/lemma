@@ -15,7 +15,7 @@ def apply(eq, V_def, lt_dV, lt_V):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Real, Probability, Tensor, Bool, Finset, Nat
+    from Lemma import Real, Probability, Tensor, Bool, Finset, Nat
 
     b, D = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), real=True, random=True) # states / observation
@@ -55,7 +55,7 @@ def prove(Eq):
 
     Eq << Bool.All.of.Cond.apply(Eq[-1], k, simplify=None)
 
-    Eq << Algebra.LeSup.of.All_Le.apply(Eq[-1])
+    Eq << Real.LeSup.of.All_Le.apply(Eq[-1])
 
     Eq << Nat.Lt.of.Le.Lt.apply(Eq[-1], Eq[3])
 

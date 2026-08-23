@@ -14,9 +14,9 @@ def prove(Eq):
     x, y = Symbol(complex=True)
     Eq << apply(sin(x - y))
 
-    Eq << Eq[0].this.lhs.apply(Real.Sin.eq.Sub)
+    Eq << Eq[0].this.lhs.apply(Real.SinSub.eq.SubMulSSin_Cos)
 
-    Eq << Eq[-1].this.rhs.find(Sin).apply(Real.Sin.eq.Sub)
+    Eq << Eq[-1].this.rhs.find(Sin).apply(Real.SinSub.eq.SubMulSSin_Cos)
 
 
 

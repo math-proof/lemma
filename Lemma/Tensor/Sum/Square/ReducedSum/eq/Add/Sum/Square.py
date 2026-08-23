@@ -29,7 +29,7 @@ def apply(self, j=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Vector, Nat, Tensor, Finset
+    from Lemma import Vector, Nat, Tensor, Finset
 
     i, j = Symbol(integer=True)
     n = Symbol(integer=True, positive=True)

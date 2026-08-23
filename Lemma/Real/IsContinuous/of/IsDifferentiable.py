@@ -19,7 +19,7 @@ def apply(all_contains):
 
 @prove
 def prove(Eq):
-    from Lemma import Real, Algebra, Bool
+    from Lemma import Real, Bool
 
     a, b, x = Symbol(real=True)
     f = Function(real=True)

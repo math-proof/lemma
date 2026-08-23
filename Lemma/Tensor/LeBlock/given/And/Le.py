@@ -15,7 +15,7 @@ def apply(le):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Tensor
 
     n, m = Symbol(integer=True, positive=True)
     a = Symbol(shape=(n,), real=True)
@@ -23,7 +23,7 @@ def prove(Eq):
     x = Symbol(real=True)
     Eq << apply(BlockMatrix(a, b) <= x)
 
-    Eq << Algebra.Ge_Block.given.And.Ge.apply(Eq[0].reversed)
+    Eq << Tensor.Ge_Block.given.And.Ge.apply(Eq[0].reversed)
 
     Eq << Eq[-2].reversed
     Eq << Eq[-1].reversed

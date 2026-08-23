@@ -13,7 +13,7 @@ def apply(eq_R, eq_D, j):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Algebra, Tensor, Bool, Nat
+    from Lemma import Finset, Tensor, Bool, Nat, Int
 
     k = Symbol(domain=Range(2, oo))
     # k is the size of the rank list
@@ -47,9 +47,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Stack * Stack).apply(Tensor.Mul.Stack.eq.Stack)
 
-    Eq << Algebra.EqTranspose.of.Eq.apply(Eq.A_def)
+    Eq << Tensor.EqTranspose.of.Eq.apply(Eq.A_def)
 
-    Eq << Eq[-1].this.find(Sign).apply(Algebra.Sign.eq.Neg.Sign)
+    Eq << Eq[-1].this.find(Sign).apply(Int.Sign.eq.Neg.Sign)
 
     Eq << Bool.Eq.of.Eq.Eq.apply(Eq.A_def, Eq[-1])
 

@@ -26,7 +26,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset, Rat
+    from Lemma import Finset, Rat, Int
 
     n = Symbol(integer=True, positive=True)
     x = Symbol(real=True, shape=(oo,))
@@ -70,7 +70,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.args[2].limits_subs(i, j, simplify=None)
 
-    Eq << Eq[-1].this.lhs.args[0].find(Expr ** 2).apply(Algebra.Square.Neg)
+    Eq << Eq[-1].this.lhs.args[0].find(Expr ** 2).apply(Int.Square.Neg)
 
 
 

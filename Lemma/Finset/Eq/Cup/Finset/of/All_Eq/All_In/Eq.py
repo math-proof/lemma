@@ -24,7 +24,7 @@ def apply(all_x, all_p, equality):
 
 @prove(proved=False)
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool
+    from Lemma import Set, Bool
 
     n = Symbol(domain=Range(2, oo))
     S = Symbol(etype=dtype.integer[n])

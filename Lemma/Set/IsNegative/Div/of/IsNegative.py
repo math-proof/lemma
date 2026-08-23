@@ -11,7 +11,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool, Rat
+    from Lemma import Set, Bool, Rat
 
     x = Symbol(hyper_real=True)
     Eq << apply(Element(x, Interval.open(-oo, 0)))

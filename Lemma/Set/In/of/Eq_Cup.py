@@ -14,7 +14,7 @@ def apply(eq_cup):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Nat
+    from Lemma import Set, Nat
 
     X = Symbol(etype=dtype.real, given=True, finiteset=True)
     y = Symbol(real=True, given=True)

@@ -8,7 +8,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool
+    from Lemma import Set, Bool, Tensor
 
     n = Symbol(integer=True, positive=True)
     x = Symbol(real=True, shape=(oo,))
@@ -19,7 +19,7 @@ def prove(Eq):
     i = Eq[-1].variable
     Eq << Bool.Any_UFn.given.UFnUFn.apply(Eq[-1], i, ReducedArgMax(x[:n]))
 
-    Eq << Algebra.ReducedMax.eq.GetReducedArgMax.apply(x[:n])
+    Eq << Tensor.ReducedMax.eq.GetReducedArgMax.apply(x[:n])
 
 
 if __name__ == '__main__':

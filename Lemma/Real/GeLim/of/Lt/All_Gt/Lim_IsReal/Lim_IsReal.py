@@ -28,7 +28,7 @@ def apply(lt, all_gt, limit_is_real_fx, limit_is_real_gx):
 
 @prove
 def prove(Eq):
-    from Lemma import Real, Algebra, Set, Bool
+    from Lemma import Real, Set, Bool, Nat
 
     a, b = Symbol(real=True, given=True)
     x = Symbol(real=True)
@@ -43,13 +43,13 @@ def prove(Eq):
     Eq << Eq[-1].this.expr.apply(Real.Eq_Lim.Sub.of.Eq_Lim.Eq_Lim)
 
     xi = Eq[-1].variable
-    Eq <<= Eq[1].this.expr.apply(Algebra.Gt_0.of.Gt)
+    Eq <<= Eq[1].this.expr.apply(Nat.Gt_0.of.Gt)
 
     Eq <<= Eq[-1].limits_subs(x, xi)
 
     Eq <<= Eq[-1] & Eq[-2]
 
-    Eq <<= Eq[-1].this.expr.apply(Algebra.Gt.of.Eq.Gt.subst)
+    Eq <<= Eq[-1].this.expr.apply(Nat.Gt.of.Eq.Gt.subst)
 
     Eq <<= Bool.Imp.of.AllSetOf.apply(Eq[-1])
 
@@ -64,7 +64,7 @@ def prove(Eq):
 
     Eq << Bool.All.of.Imp.apply(Eq[-1])
 
-    Eq << Algebra.Gt_0.of.Lt.apply(Eq[0])
+    Eq << Nat.Gt_0.of.Lt.apply(Eq[0])
 
     Eq << Real.Lim.ge.Zero.of.Gt_0.All_GtLim__0.apply(Eq[-1], Eq[-2])
 

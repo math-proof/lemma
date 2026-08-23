@@ -10,14 +10,14 @@ def apply(lt):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Int
 
     x, a = Symbol(real=True, given=True)
     Eq << apply(abs(x) < a)
 
-    Eq << Algebra.Lt.of.LtAbs.apply(Eq[0])
+    Eq << Int.Lt.of.LtAbs.apply(Eq[0])
 
-    Eq << Algebra.Gt.of.LtAbs.apply(Eq[0])
+    Eq << Int.Gt.of.LtAbs.apply(Eq[0])
 
 
 

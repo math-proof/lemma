@@ -13,7 +13,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Algebra, Bool, Rat
+    from Lemma import Finset, Bool, Rat
     from Lemma.Finset.Alpha.gt.Zero import alpha
     from Lemma.Finset.H.eq.Add.definition import H
     from Lemma.Finset.K.eq.Add.definition import K
@@ -37,7 +37,7 @@ def prove(Eq):
     Eq << Bool.And_And.given.And.Cond.apply(Eq[-2])
 
 
-    Eq << Eq[-1].this.lhs.args[1].apply(Algebra.InvAdd_Inv.eq.Div_AddMul, x[2])
+    Eq << Eq[-1].this.lhs.args[1].apply(Rat.InvAdd_Inv.eq.Div_AddMul, x[2])
 
     Eq << Eq[-1] * (x[1] * x[2] + 1)
 

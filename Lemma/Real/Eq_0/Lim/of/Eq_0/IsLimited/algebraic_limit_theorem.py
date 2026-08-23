@@ -16,7 +16,7 @@ def apply(limited_f, limited_g):
 
 @prove
 def prove(Eq):
-    from Lemma import Real, Algebra, Bool
+    from Lemma import Real, Bool, Int, Nat
 
     x, x0 = Symbol(real=True)
     f, g = Function(real=True)
@@ -35,9 +35,9 @@ def prove(Eq):
 
     Eq << Bool.Any.All.And.of.Any_All.Any_All.limits_Inter.apply(Eq[-1], Eq[-2])
 
-    Eq << Eq[-1].this.expr.expr.apply(Algebra.Lt.Abs.Mul.of.Lt.Lt)
+    Eq << Eq[-1].this.expr.expr.apply(Int.Lt.Abs.Mul.of.Lt.Lt)
 
-    Eq << Eq[-1].this.find(Min).apply(Algebra.Min.eq.Add)
+    Eq << Eq[-1].this.find(Min).apply(Nat.Min.eq.Add)
 
     δ = Symbol(real=True, positive=True)
     Eq << Bool.Any.of.Any.subst.apply(Eq[-1], Min(δ_0, δ_1), δ)

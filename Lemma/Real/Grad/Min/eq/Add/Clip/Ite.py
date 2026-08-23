@@ -14,7 +14,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Real, Algebra
+    from Lemma import Real, Nat
 
     ε = Symbol(domain=Interval(0, 1, left_open=True, right_open=True))
     # 0 < ε < 1
@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Derivative[Mul]).apply(Real.Grad.Mul.eq.Add, simplify=None)
 
-    Eq << Eq[-1].find(Min).this.apply(Algebra.Min.Clip.eq.Ite)
+    Eq << Eq[-1].find(Min).this.apply(Nat.Min.Clip.eq.Ite)
 
     Eq << Real.EqGrad.of.Eq.apply(Eq[-1], [θ])
 

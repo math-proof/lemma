@@ -38,7 +38,7 @@ def apply(et_eq_8, et_eq_5):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
     from Lemma.Bool.And.Eq.of.And.just_intonation import equate
     λ_7_low = Symbol(r"λ_{\underset{\mathbf{\Large{.}}}{7}}", real=True)
     λ_1, λ_2, λ_3, λ_4, λ_5, λ_6, λ_7 = Symbol(real=True)

@@ -13,7 +13,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Algebra, Tensor, Nat, Int
+    from Lemma import Finset, Tensor, Nat, Int
 
     r = Symbol(real=True)
     n = Symbol(domain=Range(2, oo))
@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << Tensor.Dot.of.Eq.left.apply(Eq[-1], SwapMatrix(n + 1, 0, 1))
 
-    Eq << Eq[-1].this.rhs.args[0].apply(Algebra.One.eq.Block, 1)
+    Eq << Eq[-1].this.rhs.args[0].apply(Tensor.One.eq.Block, 1)
 
     Eq << Eq[-1].this.rhs.args[1].apply(Tensor.Stack.eq.Block.split, 1)
 
@@ -42,9 +42,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Tensor.Stack.eq.Block.shift)
 
-    Eq << Eq[-1].this.rhs.args[0].apply(Algebra.One.eq.Block, 1)
+    Eq << Eq[-1].this.rhs.args[0].apply(Tensor.One.eq.Block, 1)
 
-    Eq << Eq[-1].this.rhs.args[0].args[1].apply(Algebra.One.eq.Block, 1)
+    Eq << Eq[-1].this.rhs.args[0].args[1].apply(Tensor.One.eq.Block, 1)
 
     Eq << Eq[-1].this.rhs.args[1].apply(Tensor.Stack.eq.Transpose.Block, 1)
 

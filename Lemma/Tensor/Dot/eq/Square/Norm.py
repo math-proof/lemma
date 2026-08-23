@@ -22,7 +22,7 @@ def apply(self, swap=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor
+    from Lemma import Tensor, Real
 
     n = Symbol(integer=True, positive=True)
     x = Symbol(complex=True, shape=(n,))
@@ -30,7 +30,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Tensor.Dot.eq.ReducedSum.Square.Abs)
 
-    Eq << Eq[-1].this.find(Norm).apply(Algebra.Norm.eq.Sqrt)
+    Eq << Eq[-1].this.find(Norm).apply(Real.Norm.eq.Sqrt)
 
     Eq << Eq[-1].this.rhs.apply(Tensor.Sum.eq.ReducedSum)
 

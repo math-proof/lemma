@@ -15,7 +15,7 @@ def apply(given, *limits):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
     n = Symbol(positive=True, integer=True, given=True)
     x = Symbol(integer=True, given=True)
     k = Symbol(integer=True)

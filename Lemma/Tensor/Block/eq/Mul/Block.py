@@ -16,13 +16,13 @@ def apply(self, pivot=-1, *, simplify=True):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Tensor
 
     n, m = Symbol(integer=True, positive=True)
     A, B, C, D = Symbol(real=True, shape=(m, n))
     Eq << apply(BlockMatrix(A * C, B * D))
 
-    Eq << Eq[0].this.rhs.apply(Algebra.Mul.Block.eq.Block)
+    Eq << Eq[0].this.rhs.apply(Tensor.Mul.Block.eq.Block)
 
 
 

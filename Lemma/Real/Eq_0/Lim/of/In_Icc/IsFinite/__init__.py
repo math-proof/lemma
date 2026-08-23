@@ -16,7 +16,7 @@ def apply(el, is_finite):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Real, Nat, Int, Rat
+    from Lemma import Set, Real, Nat, Int, Rat
 
     x = Symbol(real=True, shape=(oo,))
     γ = Symbol(real=True)
@@ -29,7 +29,7 @@ def prove(Eq):
 
     Eq << Rat.Lt0Pow.of.Gt_0.apply(Eq.gt_zero, n)
 
-    Eq << Algebra.Gt_0.Abs.of.Gt_0.apply(Eq[-1])
+    Eq << Int.Gt_0.Abs.of.Gt_0.apply(Eq[-1])
 
     Eq << Nat.LeMul.of.Gt_0.Le.apply(Eq[-1], Eq[-3])
 

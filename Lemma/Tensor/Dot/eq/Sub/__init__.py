@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Int
+    from Lemma import Tensor, Int
 
     n = Symbol(integer=True, positive=True)
     A, B = Symbol(shape=(n, n), complex=True)

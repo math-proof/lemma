@@ -16,7 +16,7 @@ def apply(self, var=None, swap=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset, Bool
+    from Lemma import Finset, Bool
 
     x, y = Symbol(integer=True)
     n = Symbol(integer=True, nonnegative=True, given=False)

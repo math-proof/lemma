@@ -13,12 +13,12 @@ def apply(lt, le):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Rat
+    from Lemma import Rat, Nat
 
     x, y, a, b = Symbol(real=True)
     Eq << apply(x < y, a * (y - x) <= b)
 
-    Eq << Algebra.Gt_0.of.Lt.apply(Eq[0])
+    Eq << Nat.Gt_0.of.Lt.apply(Eq[0])
 
     Eq << Rat.LeDiv.of.Gt_0.Le.apply(Eq[-1], Eq[1])
 

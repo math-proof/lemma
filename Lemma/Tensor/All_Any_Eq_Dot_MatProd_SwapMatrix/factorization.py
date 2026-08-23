@@ -16,7 +16,7 @@ def apply(n):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Finset, Bool, Tensor, Nat, Int
+    from Lemma import Set, Finset, Bool, Tensor, Nat, Int
 
     n = Symbol(domain=Range(2, oo), given=False)
     Eq << apply(n)
@@ -28,11 +28,11 @@ def prove(Eq):
 
     Eq << Eq.initial.doit(deep=True)
 
-    Eq << Eq[-1].this.find(Sliced).apply(Algebra.Slice.eq.Matrix)
+    Eq << Eq[-1].this.find(Sliced).apply(Tensor.Slice.eq.Matrix)
 
-    Eq << Eq[-1].this.find(Sliced).apply(Algebra.Slice.eq.Matrix)
+    Eq << Eq[-1].this.find(Sliced).apply(Tensor.Slice.eq.Matrix)
 
-    Eq << Eq[-1].this.find(Sliced).apply(Algebra.Slice.eq.Matrix)
+    Eq << Eq[-1].this.find(Sliced).apply(Tensor.Slice.eq.Matrix)
 
     p0 = Eq[-1].variable
     Eq << Eq[-1].this.expr.apply(Bool.Any_UFn.given.UFnUFn, b[:2], Matrix((0, KroneckerDelta(p0, 0))))

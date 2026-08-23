@@ -10,7 +10,7 @@ def apply(ge, sgm):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat, Finset
+    from Lemma import Nat, Finset
 
     a, b = Symbol(integer=True, given=True)
     n = Symbol(integer=True)

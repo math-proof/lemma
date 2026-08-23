@@ -9,14 +9,14 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Real
+    from Lemma import Set, Bool, Real, Nat, Tensor
 
     n = Symbol(integer=True, positive=True)
     x = Symbol(real=True, shape=(oo,))
     c = Symbol(real=True)
     Eq << apply(Element(c, x[:n].cup_finiteset()))
 
-    Eq << Eq[1].this.rhs.apply(Algebra.ReducedMin.eq.Minima)
+    Eq << Eq[1].this.rhs.apply(Tensor.ReducedMin.eq.Minima)
 
     Eq << Real.All_Ge_Minima.apply(Eq[-1].rhs)
 
@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq << Bool.Any_And.of.Any.All.All_Imp.apply(Eq[-2], Eq[-1])
 
-    Eq << Eq[-1].this.expr.apply(Algebra.Ge.of.Eq.Ge)
+    Eq << Eq[-1].this.expr.apply(Nat.Ge.of.Eq.Ge)
 
 
 

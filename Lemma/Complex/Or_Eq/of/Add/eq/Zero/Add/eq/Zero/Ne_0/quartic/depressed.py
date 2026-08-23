@@ -4,7 +4,7 @@ from util import *
 @apply
 def apply(fx, add_is_zero, is_nonzero, x=None):
     from Lemma.Complex.Add.eq.Zero.given.And.Eq.cubic.one_leaded import cubic_solve
-    from Lemma.Algebra.Ne.of.Ne_0.Add.eq.Zero import cubic_delta
+    from Lemma.Nat.Ne.of.Ne_0.Add.eq.Zero import cubic_delta
     try:
         (c, p), d = add_is_zero.of(Equal[Ceil - Piecewise])
         _d = Ceil(c) - Piecewise(*p)
@@ -51,9 +51,9 @@ def apply(fx, add_is_zero, is_nonzero, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat, Int, Complex, Real, Bool
+    from Lemma import Nat, Int, Complex, Real, Bool
     from Lemma.Complex.Add.eq.Zero.given.And.Eq.cubic.one_leaded import cubic_solve
-    from Lemma.Algebra.Ne.of.Ne_0.Add.eq.Zero import cubic_delta
+    from Lemma.Nat.Ne.of.Ne_0.Add.eq.Zero import cubic_delta
 
     d = 1
     x, y, alpha, beta, gamma = Symbol(complex=True, given=True)
@@ -79,11 +79,11 @@ def prove(Eq):
 
     Eq << Bool.Cond.of.Cond.Given.apply(Eq[4], Eq[-1], simplify=None)
 
-    Eq << Algebra.Ne.of.Ne_0.Add.eq.Zero.apply(Eq[2], Eq[-1], y)
+    Eq << Nat.Ne.of.Ne_0.Add.eq.Zero.apply(Eq[2], Eq[-1], y)
 
-    Eq << Algebra.Ne_0.of.Ne.apply(Eq[-1]) * 2
+    Eq << Nat.Ne_0.of.Ne.apply(Eq[-1]) * 2
 
-    Eq << Algebra.EqSquare.of.Ne_0.Add.eq.Zero.apply(Eq[-1], Eq[-3] * -8, Eq.eq.rhs)
+    Eq << Real.EqSquare.of.Ne_0.Add.eq.Zero.apply(Eq[-1], Eq[-3] * -8, Eq.eq.rhs)
 
     Eq << Eq.eq.subs(Eq[-1])
 
@@ -107,7 +107,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Mul[Pow]).apply(Real.MulPowS.eq.PowMul)
 
-    Eq << Eq[-1].this.rhs.find(Expr ** 3).apply(Algebra.Pow.eq.Mul.Neg)
+    Eq << Eq[-1].this.rhs.find(Expr ** 3).apply(Int.Pow.eq.Mul.Neg)
 
     Eq << Eq.y.subs(Eq[-1])
 

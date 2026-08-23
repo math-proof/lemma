@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Int, Nat
+    from Lemma import Int, Nat
 
     x = Symbol(real=True)
     Eq << apply(abs(x))
@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Nat.Max.eq.IteGe)
 
-    Eq << Eq[-1].this.find(Expr >= -Expr).apply(Algebra.Ge.Is.Ge_0)
+    Eq << Eq[-1].this.find(Expr >= -Expr).apply(Nat.Ge.Is.Ge_0)
 
     Eq << Eq[-1].this.find(Expr * 2 >= 0) / 2
 

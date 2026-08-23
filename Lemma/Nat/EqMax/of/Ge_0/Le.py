@@ -11,7 +11,7 @@ def apply(is_nonnegative, le):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat
+    from Lemma import Nat
 
     x, y = Symbol(real=True)
     Eq << apply(x >= 0, x <= y)
@@ -22,9 +22,9 @@ def prove(Eq):
 
     Eq << Nat.LeSquare.of.Ge_0.Le.apply(Eq[0], Eq[1])
 
-    Eq << Algebra.Le_0.of.Le.apply(Eq[-1])
+    Eq << Nat.Le_0.of.Le.apply(Eq[-1])
 
-    Eq << Algebra.EqMax.of.Le.apply(Eq[-1])
+    Eq << Nat.EqMax.of.Le.apply(Eq[-1])
 
 
 if __name__ == '__main__':

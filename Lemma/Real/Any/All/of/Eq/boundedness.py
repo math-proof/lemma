@@ -15,7 +15,7 @@ def apply(given, M=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Real, Algebra, Set, Bool, Nat
+    from Lemma import Real, Set, Bool, Nat, Int
 
     n = Symbol(integer=True)
     x = Symbol(real=True, shape=(oo,), given=True)
@@ -25,7 +25,7 @@ def prove(Eq):
     Eq << Real.Any.All.of.Eq_Lim.limit_definition.apply(Eq[0])
 
     ε = Eq[-1].expr.expr.rhs
-    Eq << Eq[-1].this.expr.expr.apply(Algebra.Lt.Abs.Max.of.Lt)
+    Eq << Eq[-1].this.expr.expr.apply(Int.Lt.Abs.Max.of.Lt)
 
     Eq.lt = Eq[-1].subs(ε, S.Half)
 
@@ -71,11 +71,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.apply(Bool.And.of.And.delete, index=-1)
 
-    Eq << Eq[-1].this.args[0].apply(Algebra.Eq_0.of.Abs.le.Zero)
+    Eq << Eq[-1].this.args[0].apply(Int.Eq_0.of.Abs.le.Zero)
 
-    Eq << Eq[-1].this.args[1].apply(Algebra.Eq_0.of.Abs.le.Zero)
+    Eq << Eq[-1].this.args[1].apply(Int.Eq_0.of.Abs.le.Zero)
 
-    Eq << Eq[-1].this.apply(Algebra.EqSub.of.Eq.Eq)
+    Eq << Eq[-1].this.apply(Int.EqSub.of.Eq.Eq)
 
     Eq << GreaterEqual(M, 0, plausible=True)
 

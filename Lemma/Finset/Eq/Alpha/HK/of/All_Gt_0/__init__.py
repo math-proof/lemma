@@ -12,7 +12,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset, Bool
+    from Lemma import Finset, Bool, Nat
     from Lemma.Finset.Alpha.gt.Zero import alpha
     from Lemma.Finset.H.eq.Add.definition import H
     from Lemma.Finset.K.eq.Add.definition import K
@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq.case1, Eq.case2 = Bool.Imp.given.ImpAnd.ImpAnd_Not.apply(Eq[-1], cond=n < 2)
 
-    Eq << Eq.case1.this.lhs.apply(Algebra.Lt.Is.Eq.squeeze)
+    Eq << Eq.case1.this.lhs.apply(Nat.Lt.Is.Eq.squeeze)
 
     Eq << Eq[-1].this.apply(Bool.IffImpSAndEq)
 

@@ -33,7 +33,7 @@ def apply(eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Set, Bool, Int, Nat
+    from Lemma import Tensor, Set, Bool, Int, Nat
 
     n, l, u = Symbol(domain=Range(2, oo))
     A = Symbol(shape=(n, n), real=True)
@@ -92,25 +92,25 @@ def prove(Eq):
 
     Eq << Eq.four_blocks.subs(Eq.block0, Eq.block1, Eq.block2, Eq.block3)
 
-    Eq << Algebra.EqReducedArgMax.of.Eq.apply(Eq[-1])
+    Eq << Tensor.EqReducedArgMax.of.Eq.apply(Eq[-1])
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.ReducedArgMax.eq.Ite.ReducedArgMax)
+    Eq << Eq[-1].this.rhs.apply(Tensor.ReducedArgMax.eq.Ite.ReducedArgMax)
 
-    Eq << Eq[-1].this.rhs.find(ReducedArgMax).apply(Algebra.ReducedArgMax.Block.eq.ReducedArgMax)
+    Eq << Eq[-1].this.rhs.find(ReducedArgMax).apply(Tensor.ReducedArgMax.Block.eq.ReducedArgMax)
 
-    Eq << Eq[-1].this.find(ReducedArgMax[BlockMatrix]).apply(Algebra.ReducedArgMax.Block.eq.Add)
+    Eq << Eq[-1].this.find(ReducedArgMax[BlockMatrix]).apply(Tensor.ReducedArgMax.Block.eq.Add)
 
-    Eq << Eq[-1].this.find(ReducedArgMax[BlockMatrix]).apply(Algebra.ReducedArgMax.Block.eq.ReducedArgMax)
+    Eq << Eq[-1].this.find(ReducedArgMax[BlockMatrix]).apply(Tensor.ReducedArgMax.Block.eq.ReducedArgMax)
 
-    Eq << Eq[-1].this.find(ReducedArgMax[BlockMatrix]).apply(Algebra.ReducedArgMax.Block.eq.Add)
+    Eq << Eq[-1].this.find(ReducedArgMax[BlockMatrix]).apply(Tensor.ReducedArgMax.Block.eq.Add)
 
-    Eq << Eq[-1].this.find(ReducedArgMax[Exp]).apply(Algebra.ReducedArgMax.Exp.eq.ReducedArgMax)
+    Eq << Eq[-1].this.find(ReducedArgMax[Exp]).apply(Tensor.ReducedArgMax.Exp.eq.ReducedArgMax)
 
-    Eq << Eq[-1].this.find(ReducedArgMax[Exp]).apply(Algebra.ReducedArgMax.Exp.eq.ReducedArgMax)
+    Eq << Eq[-1].this.find(ReducedArgMax[Exp]).apply(Tensor.ReducedArgMax.Exp.eq.ReducedArgMax)
 
-    Eq << Eq[-1].this.find(ReducedArgMax[Exp]).apply(Algebra.ReducedArgMax.Exp.eq.ReducedArgMax)
+    Eq << Eq[-1].this.find(ReducedArgMax[Exp]).apply(Tensor.ReducedArgMax.Exp.eq.ReducedArgMax)
 
-    Eq << Eq[-1].this.find(ReducedArgMax[Exp]).apply(Algebra.ReducedArgMax.Exp.eq.ReducedArgMax)
+    Eq << Eq[-1].this.find(ReducedArgMax[Exp]).apply(Tensor.ReducedArgMax.Exp.eq.ReducedArgMax)
 
     Eq << Eq[-1].this.rhs.apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite, -2)
 
@@ -118,24 +118,24 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Bool.Ite__Ite.eq.Ite__IteAnd_Not)
 
-    Eq << Eq[-1].this.find(And).apply(Algebra.Lt.Lt.Is.Lt.Min)
+    Eq << Eq[-1].this.find(And).apply(Nat.Lt.Lt.Is.Lt.Min)
 
     Eq << Eq[-1].this.find(And).apply(Set.Cond.Cond.Is.In.Ico)
 
-    Eq.four_blocks = Eq[-1].this.find(And).apply(Algebra.Ge.Ge.Is.Ge.Max)
+    Eq.four_blocks = Eq[-1].this.find(And).apply(Nat.Ge.Ge.Is.Ge.Max)
 
     Eq << Tensor.And.Imp.Block.of.Eq_Block.tf.apply(Eq[0])
 
-    Eq <<= Eq[-3].this.rhs.apply(Algebra.EqReducedArgMax.of.Eq), Eq[-2].this.rhs.apply(Algebra.EqReducedArgMax.of.Eq), Eq[-1].this.rhs.apply(Algebra.EqReducedArgMax.of.Eq)
+    Eq <<= Eq[-3].this.rhs.apply(Tensor.EqReducedArgMax.of.Eq), Eq[-2].this.rhs.apply(Tensor.EqReducedArgMax.of.Eq), Eq[-1].this.rhs.apply(Tensor.EqReducedArgMax.of.Eq)
 
-    Eq <<= Eq[-3].this.rhs.find(ReducedArgMax[BlockMatrix]).apply(Algebra.ReducedArgMax.Block.eq.Add), \
-        Eq[-2].this.rhs.find(ReducedArgMax[BlockMatrix]).apply(Algebra.ReducedArgMax.Block.eq.Add)
+    Eq <<= Eq[-3].this.rhs.find(ReducedArgMax[BlockMatrix]).apply(Tensor.ReducedArgMax.Block.eq.Add), \
+        Eq[-2].this.rhs.find(ReducedArgMax[BlockMatrix]).apply(Tensor.ReducedArgMax.Block.eq.Add)
 
-    Eq.block3 = Eq[-3].this.rhs.find(ReducedArgMax[BlockMatrix]).apply(Algebra.ReducedArgMax.Block.eq.ReducedArgMax)
+    Eq.block3 = Eq[-3].this.rhs.find(ReducedArgMax[BlockMatrix]).apply(Tensor.ReducedArgMax.Block.eq.ReducedArgMax)
 
     Eq.block0 = Eq[-2].this.rhs.apply(Int.EqAdd.Is.Eq_Sub, rhs=slice(0, 3))
 
-    Eq << Eq[-1].this.rhs.find(ReducedArgMax[BlockMatrix]).apply(Algebra.ReducedArgMax.Block.eq.ReducedArgMax)
+    Eq << Eq[-1].this.rhs.find(ReducedArgMax[BlockMatrix]).apply(Tensor.ReducedArgMax.Block.eq.ReducedArgMax)
 
     Eq.block1 = Eq[-1].this.rhs.apply(Int.EqAdd.Is.Eq_Sub, rhs=slice(0, 3))
 

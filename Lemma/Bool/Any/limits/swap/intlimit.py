@@ -9,7 +9,7 @@ def apply(self):
 
 @prove(proved=False)
 def prove(Eq):
-    from Lemma import Algebra, Set
+    from Lemma import Set
 
     i, j, d, a = Symbol(integer=True)
     n = Symbol(integer=True, positive=True)

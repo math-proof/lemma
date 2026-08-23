@@ -1,0 +1,54 @@
+from util import *
+
+
+@apply
+def apply(is_positive, self):
+    a = is_positive.of(Expr > 0)
+    fx, *limits = self.of(Inf)
+    return Equal(Inf(fx * a, *limits), a * self)
+
+
+@prove
+def prove(Eq):
+    from Lemma import Bool, Nat, Rat, Real
+
+    a, x, m, M = Symbol(real=True)
+    f = Function(real=True)
+    Eq << apply(a > 0, Inf[x:m:M](f(x)))
+
+    Eq.reciprocal = Rat.Lt0Div.of.Gt_0.apply(Eq[0])
+
+    y = Symbol(Eq[1].rhs.args[1])
+    Eq << y.this.definition.reversed
+
+    Eq << Nat.And.of.Eq.squeeze.apply(Eq[-1])
+
+    z = Symbol(real=True)
+    Eq <<= Real.All.Any.Lt.of.LeInf.apply(Eq[-2], z), Real.All.Ge.of.GeInf.apply(Eq[-1])
+
+    Eq <<= Bool.Imp.of.AllSetOf.apply(Eq[-2]), Bool.Imp.of.AllSetOf.apply(Eq[-1])
+
+    Eq <<= Eq[-2].subs(z, z * Eq.reciprocal.lhs), Bool.Imp_And.of.Cond.Imp.apply(Eq[0], Eq[-1])
+
+    Eq <<= Bool.ImpAndS.of.Imp.apply(Eq[-2], cond=Eq[0]), Eq[-1].this.rhs.apply(Nat.GeMulS.of.Ge.Gt_0)
+
+    Eq << Eq[-2].this.rhs.apply(Bool.Any_And.of.Any.All, simplify=None)
+
+    Eq << Eq[-1].this.rhs.expr.apply(Nat.LtMul.of.Gt_0.Lt)
+
+    Eq << Eq[-1].this.lhs.args[1].apply(Rat.Gt.given.And.scale.positive, a)
+
+    Eq << Bool.BFn.of.BFnIte.Cond.apply(Eq[0], Eq[-1])
+
+    Eq << Eq[1].subs(Eq[2])
+
+    Eq << Nat.Eq.given.And.squeeze.apply(Eq[-1])
+
+    Eq <<= Real.LeInf.given.All_Any_Lt.apply(Eq[-2], z), Real.GeInf.given.All.Ge.apply(Eq[-1])
+
+    Eq <<= Bool.All.given.Imp.apply(Eq[-2]), Bool.All.given.Imp.apply(Eq[-1])
+
+
+if __name__ == '__main__':
+    run()
+# created on 2019-08-13

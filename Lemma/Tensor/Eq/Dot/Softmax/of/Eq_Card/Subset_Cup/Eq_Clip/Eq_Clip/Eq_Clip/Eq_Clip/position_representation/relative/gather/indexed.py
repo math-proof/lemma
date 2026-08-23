@@ -29,7 +29,7 @@ def apply(eq_cup, subset, eq_K_quote, eq_V_quote, eq_K_dquote, eq_V_dquote, Q, K
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Bool
+    from Lemma import Tensor, Bool
 
     n, k, m = Symbol(integer=True, positive=True)
     r = Symbol(shape=(n,), integer=True)
@@ -59,11 +59,11 @@ def prove(Eq):
 
     Eq <<= Tensor.Stack.of.All_Eq.fin.apply(Eq[-2], (j, 0, m)), Tensor.Stack.of.All_Eq.fin.apply(Eq[-1], (j, 0, m))
 
-    Eq <<= Algebra.EqTranspose.of.Eq.apply(Eq[-2], (0, 1)), Algebra.EqTranspose.of.Eq.apply(Eq[-1], (0, 1))
+    Eq <<= Tensor.EqTranspose.of.Eq.apply(Eq[-2], (0, 1)), Tensor.EqTranspose.of.Eq.apply(Eq[-1], (0, 1))
 
     Eq <<= Bool.Eq.of.Eq.Eq.apply(Eq[-2], Eq[4]), Bool.Eq.of.Eq.Eq.apply(Eq[-1], Eq[5])
 
-    Eq << Algebra.EqTranspose.of.Eq.apply(Eq[-2], (1, 1))
+    Eq << Tensor.EqTranspose.of.Eq.apply(Eq[-2], (1, 1))
     Eq << Tensor.Eq.Dot.Softmax.of.Eq_Card.Subset_Cup.position_representation.relative.gather.apply(Eq[0], Eq[1], Q, K, V, K_quote, V_quote)
 
     Eq << Eq[-1].subs(Eq[-3], Eq[-2])

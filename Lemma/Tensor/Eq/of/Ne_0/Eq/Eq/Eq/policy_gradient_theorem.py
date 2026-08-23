@@ -54,7 +54,7 @@ def apply(sar_independence_assumption, ne, T=None, t=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Real
+    from Lemma import Probability, Real
 
     b, d, L, D = Symbol(domain=Range(2, oo))
     s = Symbol(shape=(L + 1, b), real=True, random=True)
@@ -78,7 +78,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Real.LogMul.eq.AddLogS.of.Ne_0.Ne_0)
 
-    Eq << Eq[-1].this.find(Log[Product]).apply(Algebra.Log.eq.Sum)
+    Eq << Eq[-1].this.find(Log[Product]).apply(Real.Log.eq.Sum)
 
     Eq << Eq[-1].this.find(Log[Mul]).apply(Real.LogMul.eq.AddLogS.of.Ne_0.Ne_0)
 

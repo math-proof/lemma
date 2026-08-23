@@ -15,22 +15,22 @@ def apply(self, var='k'):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset
+    from Lemma import Finset, Tensor
 
     x = Symbol(complex=True, shape=(3,))
     n = Symbol(integer=True, nonnegative=True)
     Eq << apply((x[0] + x[1] + x[2]) ** n)
 
     i = Symbol(integer=True)
-    Eq << Algebra.Pow.Sum.eq.Sum.apply(Sum[i:3](x[i]) ** n)
+    Eq << Finset.Pow.Sum.eq.Sum.apply(Sum[i:3](x[i]) ** n)
 
     Eq << Eq[-1].this.lhs.find(Sum).apply(Finset.Sum.eq.Add.doit)
 
-    Eq << Eq[-1].this.find(ReducedSum).apply(Algebra.ReducedSum.eq.Add.doit)
+    Eq << Eq[-1].this.find(ReducedSum).apply(Tensor.ReducedSum.eq.Add.doit)
 
-    Eq << Eq[-1].this.find(Product).apply(Algebra.Prod.eq.Mul.doit)
+    Eq << Eq[-1].this.find(Product).apply(Finset.Prod.eq.Mul.doit)
 
-    Eq << Eq[-1].this.find(Product).apply(Algebra.Prod.eq.Mul.doit)
+    Eq << Eq[-1].this.find(Product).apply(Finset.Prod.eq.Mul.doit)
 
     Eq << Eq[0].this.find(Multinomial).apply(Finset.Choose.eq.Div.Factorial)
 

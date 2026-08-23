@@ -19,7 +19,7 @@ def apply(eq_initial, eq_B_def, eq_A_def):
 
 @prove(proved=False)
 def prove(Eq):
-    from Lemma import Algebra, Finset, Tensor, Bool
+    from Lemma import Finset, Tensor, Bool
 
     n = Symbol(integer=True, positive=True)
     n = 7
@@ -184,18 +184,18 @@ def prove(Eq):
 
     Eq.back_subs6 = Eq.back_subs6.subs(Eq[6], Eq[8], Eq[11], Eq[13], Eq[16], Eq[18], Eq[21], Eq[23], Eq[26], Eq[28], Eq[31], Eq[33], Eq[37], Eq[36])
 
-    Eq.back_subs6 = Eq.back_subs6.this.find(BlockMatrix).apply(Algebra.Expr.eq.Matrix).this.find(BlockMatrix).apply(Algebra.Expr.eq.Matrix).this.find(BlockMatrix).apply(Algebra.Expr.eq.Matrix).this.find(BlockMatrix).apply(Algebra.Expr.eq.Matrix).this.find(BlockMatrix).apply(Algebra.Expr.eq.Matrix).this.find(BlockMatrix).apply(Algebra.Expr.eq.Matrix)
+    Eq.back_subs6 = Eq.back_subs6.this.find(BlockMatrix).apply(Tensor.Expr.eq.Matrix).this.find(BlockMatrix).apply(Tensor.Expr.eq.Matrix).this.find(BlockMatrix).apply(Tensor.Expr.eq.Matrix).this.find(BlockMatrix).apply(Tensor.Expr.eq.Matrix).this.find(BlockMatrix).apply(Tensor.Expr.eq.Matrix).this.find(BlockMatrix).apply(Tensor.Expr.eq.Matrix)
 
     Eq.back_subs6 = Eq.back_subs6.this.rhs.args[0:2].apply(Tensor.Dot.eq.Matrix).this.rhs.args[0:2].apply(Tensor.Dot.eq.Matrix).this.rhs.args[0:2].apply(Tensor.Dot.eq.Matrix).this.rhs.args[0:2].apply(Tensor.Dot.eq.Matrix).this.rhs.args[0:2].apply(Tensor.Dot.eq.Matrix)
 
     B = Eq.back_subs6.rhs.args[1].T
     Eq << (B / Stack[i:n](Factorial(i))).this.find(Stack).apply(Tensor.Stack.eq.Matrix)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Expr.eq.Matrix)
+    Eq << Eq[-1].this.rhs.apply(Tensor.Expr.eq.Matrix)
 
-    Eq << Stack[j:n, i:n](Stirling(i, j)).this.apply(Algebra.Expr.eq.Matrix)
+    Eq << Stack[j:n, i:n](Stirling(i, j)).this.apply(Tensor.Expr.eq.Matrix)
 
-    Eq << Stack[j:n, i:n](Binomial(i, j)).this.apply(Algebra.Expr.eq.Matrix)
+    Eq << Stack[j:n, i:n](Binomial(i, j)).this.apply(Tensor.Expr.eq.Matrix)
 
 
 

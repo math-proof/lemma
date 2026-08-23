@@ -12,7 +12,7 @@ def apply(self, pivot=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool
+    from Lemma import Set, Bool, Nat
 
     a, b = Symbol(integer=True)
     c = Symbol(domain=Interval(a, b, left_open=True, right_open=True))
@@ -34,7 +34,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Set.Ge.of.Ge.In_Iic, a)
 
-    Eq << Eq[-2].this.lhs.apply(Algebra.Lt.of.Lt.relax, b)
+    Eq << Eq[-2].this.lhs.apply(Nat.Lt.of.Lt.relax, b)
 
     Eq << Bool.Imp.given.Or_Not.apply(Eq[-1])
 

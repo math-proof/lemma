@@ -12,14 +12,14 @@ def apply(lt, index=-1):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Nat
 
     x, y, z = Symbol(real=True, given=True)
     Eq << apply(Max(y, z) < x)
 
-    Eq << Algebra.Lt.of.Lt_Max.apply(Eq[0], index=0)
+    Eq << Nat.Lt.of.Lt_Max.apply(Eq[0], index=0)
 
-    Eq << Algebra.Lt.of.Lt_Max.apply(Eq[0], index=1)
+    Eq << Nat.Lt.of.Lt_Max.apply(Eq[0], index=1)
 
 
 if __name__ == '__main__':

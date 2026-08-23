@@ -10,7 +10,7 @@ def apply(lt, le, right_open=False, left_open=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool, Nat
+    from Lemma import Set, Bool, Nat
 
     a, b, x = Symbol(real=True, given=True)
     Eq << apply(a < x, x <= b, left_open=True)

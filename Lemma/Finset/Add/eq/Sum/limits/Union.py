@@ -27,7 +27,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset, Nat, Bool
+    from Lemma import Finset, Nat, Bool
     k = Symbol(integer=True)
     A, B = Symbol(etype=dtype.integer)
     f = Function(integer=True)

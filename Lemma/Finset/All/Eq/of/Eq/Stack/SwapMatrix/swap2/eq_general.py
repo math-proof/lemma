@@ -13,7 +13,7 @@ def apply(eq_w):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Tensor, Nat, Int
+    from Lemma import Set, Bool, Tensor, Nat, Int
 
     n = Symbol(domain=Range(2, oo))
     w = Symbol(integer=True, shape=(n, n, n, n))

@@ -11,7 +11,7 @@ def apply(eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability, Bool, Rat
+    from Lemma import Probability, Bool, Rat, Finset
 
     b = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), real=True, random=True)  # states / observation
@@ -30,7 +30,7 @@ def prove(Eq):
 
     Eq << Bool.And_And.given.And.Cond.apply(Eq[-1], None)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Mul.eq.Prod.limits.push)
+    Eq << Eq[-1].this.lhs.apply(Finset.Mul.eq.Prod.limits.push)
 
     Eq << Probability.EqProd.of.Eq.markov.first_order.apply(Eq[0], k + 1)
 

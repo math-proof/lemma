@@ -12,7 +12,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Algebra
+    from Lemma import Finset
 
     n = Symbol(domain=Range(2, oo), given=False)
     i, j = Symbol(integer=True)
@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Finset.Prod.eq.Factorial.apply(Product[j:i](i - j))
 
-    Eq << Algebra.EqProd.of.Eq.apply(Eq[-1], (i, 0, n))
+    Eq << Finset.EqProd.of.Eq.apply(Eq[-1], (i, 0, n))
 
     a = Symbol(Stack[j:n](j + delta))
     Eq << a[j].this.definition

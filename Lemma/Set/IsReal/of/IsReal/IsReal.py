@@ -17,7 +17,7 @@ def apply(a_is_real, b_is_real):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool
+    from Lemma import Set, Bool, Nat
 
     x, y = Symbol(super_real=True)
     Eq << apply(Element(x, Reals), Element(y, Reals))
@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq << Bool.Any.And.of.Any.Any.apply(Eq[-1], Eq[-2], simplify=None)
 
-    Eq << Eq[-1].this.expr.apply(Algebra.EqMul.of.Eq.Eq)
+    Eq << Eq[-1].this.expr.apply(Nat.EqMul.of.Eq.Eq)
 
     a, b = Eq[-1].variables
     c = Symbol(real=True)

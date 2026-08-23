@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Algebra
+    from Lemma import Finset
 
     x = Symbol(complex=True)
     k = Symbol(integer=True, positive=True)
@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(RisingFactorial).apply(Finset.RisingFactorial.eq.Prod)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Prod.eq.Mul.pop)
+    Eq << Eq[-1].this.lhs.apply(Finset.Prod.eq.Mul.pop)
 
 
 

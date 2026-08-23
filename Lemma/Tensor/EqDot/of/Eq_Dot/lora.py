@@ -8,7 +8,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor
+    from Lemma import Tensor
 
     # n denotes sequence length (seq_length)
     # d denotes embedding size
@@ -23,7 +23,7 @@ def prove(Eq):
     W_quote = Symbol(W + β * A.T @ B.T)
     Eq << W_quote.this.definition
 
-    Eq <<= Eq[-1].reversed, Algebra.EqTranspose.of.Eq.apply(Eq[-1])
+    Eq <<= Eq[-1].reversed, Tensor.EqTranspose.of.Eq.apply(Eq[-1])
 
     Eq << Eq[0].subs(*Eq[-2:])
 

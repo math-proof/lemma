@@ -9,7 +9,7 @@ def apply(lt, x=None, left_open=True, right_open=True):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Nat
+    from Lemma import Set, Bool, Nat, Real
 
     m, M, a, b = Symbol(real=True, given=True)
     x = Symbol(real=True)
@@ -20,7 +20,7 @@ def prove(Eq):
     Eq << Nat.Eq.given.And.squeeze.apply(Eq[-1])
 
     y = Symbol(real=True)
-    Eq <<= Algebra.LeInf.given.All_Any_Lt.apply(Eq[-2], y), Algebra.GeInf.given.All.Ge.apply(Eq[-1])
+    Eq <<= Real.LeInf.given.All_Any_Lt.apply(Eq[-2], y), Real.GeInf.given.All.Ge.apply(Eq[-1])
 
     Eq <<= Bool.All.given.And.All.split.apply(Eq[-2], cond=y <= M), Bool.All.given.All_Or_Not.apply(Eq[-1])
 
@@ -40,7 +40,7 @@ def prove(Eq):
 
     Eq <<= Eq[-3].this.lhs.apply(Nat.Gt.of.Lt.Gt, ret=1), Eq[-1].this.rhs.apply(Set.In.given.And.strengthen, lower=M, strict=True)
 
-    Eq <<= Eq[-2].this.lhs.apply(Algebra.GtAdd.of.Gt.Gt), Bool.Imp.given.Cond.apply(Eq[-1])
+    Eq <<= Eq[-2].this.lhs.apply(Nat.GtAdd.of.Gt.Gt), Bool.Imp.given.Cond.apply(Eq[-1])
 
     Eq << Eq[-1] + (m - M)
 

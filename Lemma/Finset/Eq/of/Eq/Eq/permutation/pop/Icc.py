@@ -18,7 +18,7 @@ def apply(cup_finiteset_equality, last_element_equality):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Nat, Bool
+    from Lemma import Set, Nat, Bool
 
     n = Symbol(integer=True, positive=True, given=True)
     p = Symbol(shape=(oo,), integer=True, nonnegative=True, given=True)

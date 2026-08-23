@@ -17,7 +17,7 @@ def apply(n, k, s0=None, B=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool
+    from Lemma import Set, Bool
 
     n, k = Symbol(integer=True, positive=True, given=True)
     Eq << apply(n, k)

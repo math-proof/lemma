@@ -19,7 +19,7 @@ def apply(self, k=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Finset, Nat, Fin, Real
+    from Lemma import Bool, Finset, Nat, Fin, Real
 
     n = Symbol(integer=True, nonnegative=True)
     k = Symbol(integer=True)

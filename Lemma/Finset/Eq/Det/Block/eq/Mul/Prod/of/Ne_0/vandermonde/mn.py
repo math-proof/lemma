@@ -12,14 +12,14 @@ def apply(is_nonzero, x1, m, d):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset, Tensor, Rat, Real
+    from Lemma import Finset, Tensor, Rat, Real
 
     d = Symbol(integer=True, positive=True)
     m = Symbol(domain=Range(d + 1, oo))
     x1, x2 = Symbol(complex=True)
     Eq << apply(Unequal(x2, 0), x1, m, d)
 
-    Eq << Algebra.Inv.ne.Zero.of.Ne_0.apply(Eq[0])
+    Eq << Rat.Inv.ne.Zero.of.Ne_0.apply(Eq[0])
 
     r = Symbol(Eq[-1].lhs * x1)
     Eq << r.this.definition * x2

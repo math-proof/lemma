@@ -11,7 +11,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Algebra, Tensor, Nat, Real
+    from Lemma import Finset, Tensor, Nat, Real, Int
 
     r = Symbol(real=True)
     n = Symbol(integer=True, positive=True)
@@ -54,11 +54,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Finset.Sum_Mul.eq.Mul_Sum)
 
-    Eq << Eq[-1].this.rhs.find(Sum).expr.apply(Algebra.Mul.simp.Pow.Mul.base)
+    Eq << Eq[-1].this.rhs.find(Sum).expr.apply(Nat.Mul.simp.Pow.Mul.base)
 
     Eq << Eq[-1].this.rhs.find(Sum).apply(Finset.Sum.Binom.eq.Mul.Newton)
 
-    Eq << Eq[-1].this.rhs.args[-1].apply(Algebra.Pow.eq.Mul.Neg)
+    Eq << Eq[-1].this.rhs.args[-1].apply(Int.Pow.eq.Mul.Neg)
 
     Eq.eq_block = Eq.eq_block.subs(Eq[-1])
 
@@ -66,11 +66,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Finset.Sum_Mul.eq.Mul_Sum)
 
-    Eq << Eq[-1].this.rhs.find(Sum).expr.apply(Algebra.Mul.simp.Pow.Mul.base)
+    Eq << Eq[-1].this.rhs.find(Sum).expr.apply(Nat.Mul.simp.Pow.Mul.base)
 
     Eq << Eq[-1].this.rhs.find(Sum).apply(Finset.Sum.Binom.eq.Mul.Newton.deux)
 
-    Eq << Eq[-1].this.find(Add ** Add).apply(Algebra.Pow.eq.Mul.Neg)
+    Eq << Eq[-1].this.find(Add ** Add).apply(Int.Pow.eq.Mul.Neg)
 
     Eq.eq_block = Eq.eq_block.subs(Eq[-1])
 
@@ -78,15 +78,15 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Finset.Sum_Mul.eq.Mul_Sum)
 
-    Eq << Eq[-1].this.rhs.find(Sum).expr.apply(Algebra.Mul.simp.Pow.Mul.base)
+    Eq << Eq[-1].this.rhs.find(Sum).expr.apply(Nat.Mul.simp.Pow.Mul.base)
 
     Eq << Eq[-1].this.rhs.find(Sum).apply(Finset.Sum.Binom.eq.Mul.Newton.trois)
 
     Eq << Eq[-1].this.rhs.apply(Nat.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.find(Add ** Add).apply(Algebra.Pow.eq.Mul.Neg)
+    Eq << Eq[-1].this.find(Add ** Add).apply(Int.Pow.eq.Mul.Neg)
 
-    Eq << Eq[-1].this.find((1 - Symbol) ** Add).apply(Algebra.Pow.eq.Mul.Neg)
+    Eq << Eq[-1].this.find((1 - Symbol) ** Add).apply(Int.Pow.eq.Mul.Neg)
 
     Eq << Eq[-1].this.rhs.apply(Nat.AddMulS.eq.Mul_Add)
 
@@ -134,7 +134,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Finset.Det.Block.eq.Mul)
 
-    Eq << Eq[-1].this.find(Add ** Mul).apply(Algebra.Pow.eq.Mul.Neg)
+    Eq << Eq[-1].this.find(Add ** Mul).apply(Int.Pow.eq.Mul.Neg)
 
 
 

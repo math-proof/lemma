@@ -12,7 +12,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Real, Algebra, Bool
+    from Lemma import Real, Bool
 
     # m is the inductive variable
     m = Symbol(integer=True, positive=True, given=False)

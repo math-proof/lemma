@@ -17,7 +17,7 @@ def apply(el, is_finite):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Real, Finset
+    from Lemma import Set, Real, Finset
 
     r = Symbol(shape=(oo,), real=True)
     γ = Symbol(real=True)

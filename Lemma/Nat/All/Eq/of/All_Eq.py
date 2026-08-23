@@ -26,7 +26,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Finset, Nat
+    from Lemma import Set, Bool, Finset, Nat
 
     n, a = Symbol(integer=True)
     f = Function(complex=True)

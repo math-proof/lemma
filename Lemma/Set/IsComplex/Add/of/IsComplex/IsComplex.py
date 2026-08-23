@@ -12,7 +12,7 @@ def apply(a_is_complex, b_is_complex):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Nat, Bool
+    from Lemma import Set, Nat, Bool
 
     x, y = Symbol(super_complex=True)
     Eq << apply(Element(x, S.Complexes), Element(y, S.Complexes))

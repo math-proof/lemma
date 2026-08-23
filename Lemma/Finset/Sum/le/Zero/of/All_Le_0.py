@@ -10,13 +10,13 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Finset
     n = Symbol(integer=True, positive=True)
     i = Symbol(integer=True)
     f = Function(shape=(), complex=True)
     Eq << apply(All[i:n](f(i) <= 0))
 
-    Eq << Algebra.LeSum.of.All_Le.apply(Eq[0])
+    Eq << Finset.LeSum.of.All_Le.apply(Eq[0])
 
 
 if __name__ == '__main__':

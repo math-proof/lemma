@@ -35,7 +35,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability, Bool, Finset
+    from Lemma import Probability, Bool, Finset
 
     n = Symbol(integer=True, positive=True, given=False)
     f = Function(real=True)

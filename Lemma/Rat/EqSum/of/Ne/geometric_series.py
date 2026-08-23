@@ -10,7 +10,7 @@ def apply(ne, self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat, Finset, Fin, Real
+    from Lemma import Nat, Finset, Fin, Real
 
     k, n = Symbol(integer=True)
     λ = Symbol(real=True)
@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Nat.AddMulS.eq.Mul_Add)
 
-    Eq << -Algebra.Ne_0.of.Ne.apply(Eq[0])
+    Eq << -Nat.Ne_0.of.Ne.apply(Eq[0])
 
     Eq << Nat.Div.of.Eq.Ne_0.apply(Eq[-1], Eq[-2])
 

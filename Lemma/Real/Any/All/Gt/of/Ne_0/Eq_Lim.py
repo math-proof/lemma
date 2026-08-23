@@ -14,7 +14,7 @@ def apply(is_nonzero, eq, delta=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Real, Bool, Int
+    from Lemma import Real, Bool, Int, Nat
 
     x, x0, A = Symbol(real=True)
     f = Function(real=True)
@@ -34,13 +34,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Bool.Cond.of.Eq.Cond.subst, reverse=True)
 
-    Eq << Eq[-1].this.rhs.expr.expr.apply(Algebra.Gt_0.of.Gt.trans, ret=0)
+    Eq << Eq[-1].this.rhs.expr.expr.apply(Nat.Gt_0.of.Gt.trans, ret=0)
 
     Eq << Eq[-1].this.rhs.expr.expr.args[0].apply(Int.EqAbs.of.Gt_0)
 
     Eq << Eq[-1].this.rhs.expr.expr.apply(Bool.Cond.of.Eq.Cond.subst, reverse=True)
 
-    Eq << And(A <= 0, Eq[0]).this.apply(Algebra.Lt_0.of.Ne_0.Le_0)
+    Eq << And(A <= 0, Eq[0]).this.apply(Nat.Lt_0.of.Ne_0.Le_0)
 
     Eq << Eq[-1].this.apply(Bool.Imp.fold)
 
@@ -58,7 +58,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Bool.Cond.of.Eq.Cond.subst, reverse=True)
 
-    Eq << Eq[-1].this.rhs.expr.expr.apply(Algebra.Lt_0.of.Lt.trans, ret=0)
+    Eq << Eq[-1].this.rhs.expr.expr.apply(Nat.Lt_0.of.Lt.trans, ret=0)
 
     Eq << Eq[-1].this.find(Expr < 0).apply(Int.Abs.eq.Neg.of.Lt_0)
 

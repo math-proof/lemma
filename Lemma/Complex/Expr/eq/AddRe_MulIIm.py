@@ -8,7 +8,6 @@ def apply(self):
 
 @prove(provable=False)
 def prove(Eq):
-    from Lemma import Algebra
 
     z = Symbol(complex=True, given=True)
     Eq << apply(z)

@@ -28,7 +28,7 @@ def apply(eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Bool
+    from Lemma import Tensor, Bool
 
     n = Symbol(domain=Range(2, oo))
     u = Symbol(domain=Range(2, n + 1))

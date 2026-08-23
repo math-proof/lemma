@@ -10,7 +10,7 @@ def apply(given, *, cond=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
 
     p, q, r = Symbol(bool=True)
     Eq << apply(boolalg.Imply(p, q), cond=r)
@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Bool.Or_And.given.AndOrS.apply(Eq[-1])
 
-    Eq << Algebra.Or.given.Or.apply(Eq[-1], slice(0, 3, 2))
+    Eq << Bool.Or.given.Or.apply(Eq[-1], slice(0, 3, 2))
 
 
 

@@ -21,14 +21,14 @@ def apply(is_positive, contains):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Int
 
     t, x, a, b = Symbol(real=True)
     Eq << apply(t < 0, Element(x, Interval(a, b, left_open=True)))
 
     Eq << Set.Le.Le.of.In_Icc.apply(Eq[1])
 
-    Eq <<= Algebra.LtMul.of.Lt_0.Gt.apply(Eq[0], Eq[-2]), Algebra.GeMul.of.Lt_0.Le.apply(Eq[0], Eq[-1])
+    Eq <<= Int.LtMul.of.Lt_0.Gt.apply(Eq[0], Eq[-2]), Int.GeMul.of.Lt_0.Le.apply(Eq[0], Eq[-1])
 
     Eq << Set.In.Icc.of.Lt.Ge.apply(Eq[-2], Eq[-1])
 

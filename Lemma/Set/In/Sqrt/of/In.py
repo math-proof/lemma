@@ -11,7 +11,7 @@ def apply(contains):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Real
 
     x = Symbol(real=True)
     a, b = Symbol(real=True, nonnegative=True)
@@ -21,11 +21,11 @@ def prove(Eq):
 
     Eq << Set.Le.Le.of.In_Icc.apply(Eq[0])
 
-    Eq << Algebra.GeSqrt.of.Ge.apply(Eq[-2])
+    Eq << Real.GeSqrt.of.Ge.apply(Eq[-2])
 
     Eq << Set.Ge.of.Ge.In_Iic.apply(Eq[-2], lower=0)
 
-    Eq << Algebra.LtSqrt.of.Ge_0.Lt.apply(Eq[-1], Eq[-2])
+    Eq << Real.LtSqrt.of.Ge_0.Lt.apply(Eq[-1], Eq[-2])
 
 
 if __name__ == '__main__':

@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor
+    from Lemma import Tensor
 
     T, d = Symbol(integer=True, positive=True)
     i, t = Symbol(integer=True)

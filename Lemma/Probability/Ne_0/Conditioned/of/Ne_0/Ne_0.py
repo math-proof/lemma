@@ -26,7 +26,7 @@ def apply(ne_zero_given, ne_zero_joint):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Nat
+    from Lemma import Probability, Nat, Rat
 
     x, y = Symbol(random=True, integer=True)
     Eq << apply(Unequal(Pr(y), 0),
@@ -36,9 +36,9 @@ def prove(Eq):
 
     Eq << Nat.Div.of.Eq.Ne_0.apply(Eq[0], Eq[-1])
 
-    Eq << Algebra.Ne_0.Div.of.Ne_0.Ne_0.apply(Eq[1], Eq[0])
+    Eq << Rat.Ne_0.Div.of.Ne_0.Ne_0.apply(Eq[1], Eq[0])
 
-    Eq << Algebra.Ne.of.Ne.Eq.apply(Eq[-1], Eq[-2])
+    Eq << Nat.Ne.of.Ne.Eq.apply(Eq[-1], Eq[-2])
 
 
 if __name__ == '__main__':

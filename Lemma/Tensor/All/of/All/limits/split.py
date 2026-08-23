@@ -38,7 +38,7 @@ def apply(given, index=-1):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool
+    from Lemma import Set, Bool
 
     n = Symbol(integer=True, positive=True)
     a, b = Symbol(real=True)

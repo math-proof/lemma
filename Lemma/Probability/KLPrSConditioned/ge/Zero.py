@@ -10,7 +10,7 @@ def apply(prob_lhs, prob_rhs):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Finset, Nat
+    from Lemma import Probability, Finset, Nat, Real
 
     D, m, n = Symbol(integer=True, positive=True)
     θ, θ_quote = Symbol(real=True, shape=(D,))
@@ -20,11 +20,11 @@ def prove(Eq):
 
     Eq << Eq[0].this.find(KL).apply(Probability.KL.eq.Sum)
 
-    Eq << Algebra.Log.ge.Sub_.One.Inv.apply(Eq[1].find(Log).arg)
+    Eq << Real.Log.ge.Sub_.One.Inv.apply(Eq[1].find(Log).arg)
 
-    Eq << Algebra.GeMul.of.Ge.apply(Eq[-1], Eq[1].find(Pr))
+    Eq << Nat.GeMul.of.Ge.apply(Eq[-1], Eq[1].find(Pr))
 
-    Eq << Algebra.GeSum.of.Ge.apply(Eq[-1], (x.var,))
+    Eq << Finset.GeSum.of.Ge.apply(Eq[-1], (x.var,))
 
     Eq << Eq[-1].this.rhs.expr.apply(Nat.Mul_Add.eq.AddMulS)
 

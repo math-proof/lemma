@@ -9,7 +9,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Int, Nat, Tensor
+    from Lemma import Set, Int, Nat, Tensor
 
     x, y = Symbol(integer=True)
     Eq << apply(Equal({x, y}, {0, 1}))

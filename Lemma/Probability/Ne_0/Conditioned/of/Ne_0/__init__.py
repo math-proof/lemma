@@ -12,7 +12,7 @@ def apply(given, *wrt):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra
+    from Lemma import Probability, Nat
 
     x, y, z = Symbol(real=True, random=True)
     Eq << apply(Unequal(Pr(x, y, z), 0), y, z)
@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq << Eq[0].subs(Eq[-1])
 
-    Eq << Algebra.Ne.of.Ne_0.Ne.scalar.apply(Eq[-3], Eq[-1])
+    Eq << Nat.Ne.of.Ne_0.Ne.scalar.apply(Eq[-3], Eq[-1])
 
 
 

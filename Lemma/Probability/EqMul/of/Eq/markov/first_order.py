@@ -11,7 +11,7 @@ def apply(eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability, Real, Bool, Rat, Tensor
+    from Lemma import Probability, Real, Bool, Rat, Tensor, Finset
 
     b = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), real=True, random=True)  # states / observation
@@ -32,7 +32,7 @@ def prove(Eq):
     Eq << Eq[-2].subs(Eq[-1])
     Eq << Bool.And_And.given.And.Cond.apply(Eq[-1], None)
     Eq << Eq[-1].this.lhs.apply(Real.Mul.eq.Integral)
-    Eq << Eq[-1].this.find(Mul).apply(Algebra.Mul.eq.Prod.limits.push)
+    Eq << Eq[-1].this.find(Mul).apply(Finset.Mul.eq.Prod.limits.push)
     Eq << Eq[-1].this.rhs.apply(Probability.Pr.eq.Integral.joint, s[1:k])
     Eq << Eq[-1].this.find(And).args[::2].apply(Tensor.Eq.Eq.Is.Eq.concat)
     Eq << Eq[-1].this.find(And).apply(Tensor.Eq.Eq.Is.Eq.concat)

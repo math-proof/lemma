@@ -10,7 +10,7 @@ def apply(limited_f, dir=1):
 
 @prove
 def prove(Eq):
-    from Lemma import Real, Algebra, Set, Bool
+    from Lemma import Real, Set, Bool, Int
 
     x, x0, A = Symbol(real=True)
     f = Function(real=True)
@@ -22,9 +22,9 @@ def prove(Eq):
     epsilon = Eq[-1].expr.expr.rhs
     Eq << Real.Any.All.of.Eq_Lim.limit_definition.apply(Eq[0], epsilon, delta)
 
-    Eq << Eq[-1].this.find(Greater).apply(Algebra.GtAbs.Is.Or)
+    Eq << Eq[-1].this.find(Greater).apply(Int.GtAbs.Is.Or)
 
-    Eq << Eq[-1].this.find(And[~Less]).apply(Algebra.LtAbs.Is.And)
+    Eq << Eq[-1].this.find(And[~Less]).apply(Int.LtAbs.Is.And)
 
     Eq << Eq[-1].this.find(And).apply(Bool.And_Or.Is.OrAndS)
 

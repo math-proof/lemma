@@ -46,7 +46,7 @@ def apply(self, old, new):
         return cond
 
     if old.is_Sliced:
-        from Lemma.Algebra.Slice.eq.Matrix import convert
+        from Lemma.Tensor.Slice.eq.Matrix import convert
         old = convert(old)
         if old.is_DenseMatrix:
             old = Tuple(*old._args)

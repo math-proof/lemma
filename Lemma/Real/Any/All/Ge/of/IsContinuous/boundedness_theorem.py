@@ -15,7 +15,7 @@ def apply(given, m=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Real, Algebra, Bool
+    from Lemma import Real, Bool
 
     a = Symbol(real=True)
     b = Symbol(real=True, domain=Interval.open(a, oo))

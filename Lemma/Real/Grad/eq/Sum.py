@@ -21,7 +21,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Real, Bool, Finset
+    from Lemma import Real, Bool, Finset
 
     x = Symbol(real=True)
     f = Function(real=True)

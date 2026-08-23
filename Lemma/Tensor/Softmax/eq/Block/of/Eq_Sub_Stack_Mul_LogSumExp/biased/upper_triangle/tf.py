@@ -24,7 +24,7 @@ def apply(eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Bool, Int, Nat
+    from Lemma import Tensor, Bool, Int, Nat
 
     n, u = Symbol(domain=Range(2, oo))
     A = Symbol(shape=(n, n), real=True)
@@ -52,7 +52,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Stack).apply(Tensor.Stack.Delta.eq.Block)
 
-    Eq << Eq[-1].this.find(Mul[BlockMatrix]).apply(Algebra.Mul.eq.Block)
+    Eq << Eq[-1].this.find(Mul[BlockMatrix]).apply(Tensor.Mul.eq.Block)
 
     Eq.matmul_subs = Eq[-1].this.apply(Int.EqAdd.Is.Eq_Sub, rhs=0).reversed
 
@@ -92,7 +92,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Stack).apply(Tensor.Stack.Delta.eq.Block)
 
-    Eq << Eq[-1].this.find(Mul).apply(Algebra.Mul.eq.Block)
+    Eq << Eq[-1].this.find(Mul).apply(Tensor.Mul.eq.Block)
 
     Eq << Tensor.Stack.of.All_Eq.apply(Eq[-1])
 
@@ -110,9 +110,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Stack).apply(Tensor.Stack.Delta.eq.Block)
 
-    Eq << Eq[-1].this.find(Mul[BlockMatrix]).apply(Algebra.Mul.eq.Block)
+    Eq << Eq[-1].this.find(Mul[BlockMatrix]).apply(Tensor.Mul.eq.Block)
 
-    Eq << Eq[-1].this.find(Zeros).shape[0].find(Min).apply(Algebra.Min.eq.Add, i)
+    Eq << Eq[-1].this.find(Zeros).shape[0].find(Min).apply(Nat.Min.eq.Add, i)
 
     Eq << Eq.z_def.subs(Eq[-1].reversed, Eq.upper_part.reversed, Eq.lower_part)
 

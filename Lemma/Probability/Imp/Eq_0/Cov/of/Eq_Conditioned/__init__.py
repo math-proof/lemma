@@ -11,14 +11,14 @@ def apply(eq, i):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability, Bool
+    from Lemma import Probability, Bool
 
     x = Symbol(shape=(oo,), real=True, random=True)
     t, i = Symbol(integer=True) # time counter
     Eq << apply(
         Equal(x[t] | x[:t], x[t]), i) # history-irrelevant conditional independence assumption
 
-    Eq << Eq[1].this.lhs.apply(Algebra.Or.of.Ne)
+    Eq << Eq[1].this.lhs.apply(Bool.Or.of.Ne)
 
     Eq << Bool.ImpOr.given.Imp.Imp.apply(Eq[-1])
 

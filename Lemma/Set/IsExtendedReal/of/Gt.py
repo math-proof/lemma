@@ -9,14 +9,14 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Nat
 
     x = Symbol(extended_complex=True)
     b = Symbol(real=True)
     Eq << apply(x > b)
 
     Eq << Eq[-1].simplify()
-    Eq << Algebra.Gt.given.And.strengthen.apply(Eq[-1], upper=b)
+    Eq << Nat.Gt.given.And.strengthen.apply(Eq[-1], upper=b)
 
 
 if __name__ == '__main__':

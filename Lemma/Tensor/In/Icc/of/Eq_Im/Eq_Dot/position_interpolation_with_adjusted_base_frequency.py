@@ -18,7 +18,7 @@ def apply(eq_cosine_similarity, eq_rotary_ABF):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Tensor, Nat, Finset, Real, Complex, Rat
+    from Lemma import Set, Bool, Tensor, Nat, Finset, Real, Complex, Rat, Int
 
     # N denotes sequence length (seq_length)
     # b denotes 10000 adjusted to 500000
@@ -80,13 +80,13 @@ def prove(Eq):
 
     Eq << Complex.EqIm.of.Eq.apply(Eq[-1])
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Im.eq.Sum)
+    Eq << Eq[-1].this.rhs.apply(Complex.Im.eq.Sum)
 
     Eq << Eq[-1].this.find(Pow * Pow).args[1:].apply(Real.MulPowS.eq.PowMul)
 
-    Eq << Algebra.EqNorm.of.Eq.apply(Eq.def_RoPE)
+    Eq << Real.EqNorm.of.Eq.apply(Eq.def_RoPE)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Norm.eq.Sqrt)
+    Eq << Eq[-1].this.rhs.apply(Real.Norm.eq.Sqrt)
 
     Eq << Eq[-1].subs(t, t + 1)
 
@@ -94,7 +94,7 @@ def prove(Eq):
 
     Eq.eq_cos = Eq[-1].subs(Eq[-5], Eq[-3], Eq[-2])
 
-    Eq << (Norm(x) ** 2).this.base.apply(Algebra.Norm.eq.Sqrt, simplify=None)
+    Eq << (Norm(x) ** 2).this.base.apply(Real.Norm.eq.Sqrt, simplify=None)
 
     Eq << Eq[-1].this.rhs.apply(Finset.Sum.eq.AddSumS, cond=Equal(Eq[-1].rhs.variable % 2, 0))
 
@@ -113,7 +113,7 @@ def prove(Eq):
     Eq << GreaterEqual(1 / (b * β), 0, plausible=True)
 
     j = Symbol(domain=Range(d / 2))
-    Eq << Algebra.LePow.of.Le.apply(Eq[-2], 2 * j / d)
+    Eq << Nat.LePow.of.Le.apply(Eq[-2], 2 * j / d)
 
     Eq << LessEqual(α, 1, plausible=True)
 
@@ -141,7 +141,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.apply(Nat.LeMul.of.Gt_0.Le)
 
-    Eq.Sum_le = Algebra.LeSum.of.All_Le.apply(Eq[-1])
+    Eq.Sum_le = Finset.LeSum.of.All_Le.apply(Eq[-1])
 
     Eq << Tensor.All_Ge_ReducedMin.apply(ReducedMin(x ** 2))
 
@@ -153,7 +153,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.apply(Nat.GeMulS.of.Ge.Gt_0)
 
-    Eq.Sum_ge = Algebra.GeSum.of.All_Ge.apply(Eq[-1])
+    Eq.Sum_ge = Finset.GeSum.of.All_Ge.apply(Eq[-1])
 
     Eq << Real.Sin.ge.Mul_Sub_.One.Div_Pi.quadratic.apply(Eq.gt_zero_eta.lhs)
 
@@ -161,7 +161,7 @@ def prove(Eq):
 
     Eq << Bool.All.of.Cond.apply(Eq[-1], j)
 
-    Eq << Algebra.GeSum.of.All_Ge.apply(Eq[-1])
+    Eq << Finset.GeSum.of.All_Ge.apply(Eq[-1])
 
     Eq << Eq[-1].this.rhs.apply(Finset.Sum_Add.eq.AddSumS)
 
@@ -172,17 +172,17 @@ def prove(Eq):
     # Eq << Less(1 / (b * β) ** (2 / d), 1, plausible=True)
     Eq << Less(1 / (b * β), 1, plausible=True)
 
-    Eq << Algebra.LtPow.of.Lt.apply(Eq[-1], 2 / d, evaluate=False)
+    Eq << Nat.LtPow.of.Lt.apply(Eq[-1], 2 / d, evaluate=False)
 
     Eq << Eq[-1].this.lhs.apply(Real.PowMul.eq.MulPowS)
 
     Eq << Eq[-1].this.lhs.apply(Real.MulPowS.eq.PowMul)
 
-    Eq.gt_zero_2_bβ = Algebra.Gt_0.of.Lt.apply(Eq[-1])
+    Eq.gt_zero_2_bβ = Nat.Gt_0.of.Lt.apply(Eq[-1])
 
     Eq.ne = Nat.Ne.of.Lt.apply(Eq[-1])
 
-    Eq << Algebra.LtPow.of.Lt.apply(Eq[-1], 2, evaluate=False)
+    Eq << Nat.LtPow.of.Lt.apply(Eq[-1], 2, evaluate=False)
 
     Eq.ne4 = Nat.Ne.of.Lt.apply(Eq[-1])
 
@@ -194,9 +194,9 @@ def prove(Eq):
 
     Eq << Bool.BFn.of.BFnIte.Cond.apply(Eq.ne4, Eq[-1])
 
-    Eq << Eq[-1].this.find(1 - Expr ** -2 * Expr ** -2).apply(Algebra.Sub.Square.eq.Mul)
+    Eq << Eq[-1].this.find(1 - Expr ** -2 * Expr ** -2).apply(Int.Sub.Square.eq.Mul)
 
-    Eq << Eq[-1].this.rhs.args[1].find(1 - Mul ** Mul).apply(Algebra.Sub.Square.eq.Mul)
+    Eq << Eq[-1].this.rhs.args[1].find(1 - Mul ** Mul).apply(Int.Sub.Square.eq.Mul)
 
     Eq << Eq[-1].this.rhs.apply(Nat.AddMulS.eq.Mul_Add)
 
@@ -208,7 +208,7 @@ def prove(Eq):
 
     Eq << Bool.All.of.Cond.apply(Eq[-1], j)
 
-    Eq << Algebra.LeSum.of.All_Le.apply(Eq[-1])
+    Eq << Finset.LeSum.of.All_Le.apply(Eq[-1])
 
     Eq << Eq[-1].this.rhs.find(Sum).apply(Rat.Sum.eq.Mul.series.geometric)
 
@@ -226,7 +226,7 @@ def prove(Eq):
 
     Eq << Greater(2 * α * (1 - 1 / (b * β)), 0, plausible=True)
 
-    Eq << Algebra.Gt_0.Div.of.Gt_0.Gt_0.apply(Eq[-1], Eq.gt_zero_2_bβ)
+    Eq << Rat.Gt_0.Div.of.Gt_0.Gt_0.apply(Eq[-1], Eq.gt_zero_2_bβ)
 
     Eq << Set.In.Div.of.Gt_0.In.apply(Eq[-1], Eq[-3])
 

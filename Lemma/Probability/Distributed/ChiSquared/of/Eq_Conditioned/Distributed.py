@@ -10,7 +10,7 @@ def apply(eq_conditioned, dist):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Real, Set, Bool, Nat, Finset
+    from Lemma import Probability, Real, Set, Bool, Nat, Finset
 
     i = Symbol(integer=True)
     x = Symbol(shape=(oo,), real=True, random=True)
@@ -53,7 +53,7 @@ def prove(Eq):
 
     Eq.eq_grad = Eq[-1].this.find(Integral).apply(Real.Integral.limits.separate)
 
-    Eq << Eq.eq_grad.find(Mul[~Integral]).this.find(LessEqual).apply(Algebra.Le.transport, lhs=0)
+    Eq << Eq.eq_grad.find(Mul[~Integral]).this.find(LessEqual).apply(Nat.Le.transport, lhs=0)
 
     Eq << Eq[-1].this.rhs.find(LessEqual).apply(Set.LeSquare.Is.In.Icc)
 
@@ -71,9 +71,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(-~Integral).apply(Real.Integral.eq.Neg)
 
-    Eq << Eq[-1].this.find(Pow >= 0).apply(Algebra.Sqrt.ge.Zero.Is.Ge_0)
+    Eq << Eq[-1].this.find(Pow >= 0).apply(Real.Sqrt.ge.Zero.Is.Ge_0)
 
-    Eq << Eq[-1].this.find(Add >= 0).apply(Algebra.Ge.transport, lhs=-1)
+    Eq << Eq[-1].this.find(Add >= 0).apply(Nat.Ge.transport, lhs=-1)
 
     Eq << Eq.eq_grad.subs(Eq[-1])
 

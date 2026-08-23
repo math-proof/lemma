@@ -13,7 +13,7 @@ def apply(contains1, contains2, w=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Nat, Real
+    from Lemma import Set, Bool, Nat, Real
 
     a, b, x0, x1 = Symbol(real=True)
     domain = Interval(a, b, left_open=True)

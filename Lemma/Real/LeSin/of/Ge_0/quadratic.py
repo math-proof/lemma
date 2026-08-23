@@ -8,7 +8,7 @@ def apply(le_zero):
 
 @prove
 def prove(Eq):
-    from Lemma import Real, Set, Algebra, Bool, Nat
+    from Lemma import Real, Set, Bool, Nat
 
     x = Symbol(real=True)
     Eq << apply(x >= 0)
@@ -32,7 +32,7 @@ def prove(Eq):
 
     Eq << Eq[-1] + Eq[-2]
 
-    Eq << Algebra.Ge.of.Eq.Ge.apply(Eq.eq_grad, Eq[-1])
+    Eq << Nat.Ge.of.Eq.Ge.apply(Eq.eq_grad, Eq[-1])
 
     Eq << Bool.AllIn.of.All.apply(Eq[-1], (x, Interval(0, oo)))
 

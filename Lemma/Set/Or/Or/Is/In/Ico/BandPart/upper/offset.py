@@ -11,25 +11,25 @@ def apply(ou, ou_et):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool
+    from Lemma import Set, Bool, Nat
 
     n, u = Symbol(domain=Range(2, oo), given=True)
     i, j = Symbol(domain=Range(n), given=True)
     Eq << apply(And(j >= i, i >= n + 1 - Min(n, u)) | Element(j - i, Range(Min(n, u))), Or(j >= i, i < n + 1 - Min(n, u)))
 
-    Eq << Eq[0].this.find(Or[2]).apply(Algebra.Or.invert, 0)
+    Eq << Eq[0].this.find(Or[2]).apply(Bool.Or.invert, 0)
 
     Eq << Eq[-1].this.find(NotElement).apply(Set.NotIn_Ico.Is.Or)
 
     Eq << Eq[-1].this.find(And, And, Symbol >= Symbol) - i
 
-    Eq << Eq[-1].this.find(Symbol < Symbol + 1).apply(Algebra.Lt.Is.Ge.strengthen)
+    Eq << Eq[-1].this.find(Symbol < Symbol + 1).apply(Nat.Lt.Is.Ge.strengthen)
 
     Eq << Eq[-1].this.find(Symbol >= Symbol) - i
 
     Eq << Eq[-1].this.find(Or[~And]).apply(Bool.And.distribute, 1)
 
-    Eq << Eq[-1].this.find(Add >= Min).apply(Algebra.Ge.transport, lhs=0)
+    Eq << Eq[-1].this.find(Add >= Min).apply(Nat.Ge.transport, lhs=0)
 
     Eq << -Eq[-1].this.find(-Symbol >= Add)
 

@@ -57,7 +57,7 @@ def apply(s_independence_assumption, a_independence_assumption, r_independence_a
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Tensor, Nat
+    from Lemma import Probability, Tensor, Nat, Finset
 
     b, d, L = Symbol(domain=Range(2, oo))
     s = Symbol(shape=(L + 1, b), real=True, random=True)
@@ -114,7 +114,7 @@ def prove(Eq):
 
     Eq.recursion = Eq.recursion.subs(Eq[-1])
 
-    Eq << Algebra.EqProd.of.Eq.apply(Eq.recursion, (k, 1, T))
+    Eq << Finset.EqProd.of.Eq.apply(Eq.recursion, (k, 1, T))
 
     Eq << Eq[-1].this.rhs.limits_subs(Eq[-1].rhs.variable, t)
 
@@ -138,7 +138,7 @@ def prove(Eq):
 
     Eq << Eq.final.subs(Eq[-1])
 
-    Eq << Eq[4].this.find(Product).apply(Algebra.Prod.eq.Mul.shift)
+    Eq << Eq[4].this.find(Product).apply(Finset.Prod.eq.Mul.shift)
 
 
 

@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Real, Algebra, Bool, Nat, Rat
+    from Lemma import Real, Bool, Nat, Rat
 
     n = Symbol(integer=True, positive=True, given=False)
     x = Symbol(real=True)

@@ -11,7 +11,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Nat
+    from Lemma import Set, Bool, Nat
 
     x = Symbol(integer=True, given=True)
     given = Element(x, {0, 1})
@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq <<= ~Eq[-1], ~Eq[-2]
 
-    Eq << Eq[-2].apply(Algebra.Ne.of.Eq.Ne.subst)
+    Eq << Eq[-2].apply(Nat.Ne.of.Eq.Ne.subst)
 
     Eq << Eq[-1].apply(Bool.BFn.of.BFnIte.Cond, invert=True, ret=0)
 

@@ -9,7 +9,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Nat, Real
+    from Lemma import Bool, Nat, Real
 
     x, t = Symbol(real=True)
     M = Symbol(real=True, given=True)
@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq << Bool.Imp.given.ImpEq.apply(Eq[-2])
 
-    Eq << Eq[-1].this.rhs.expr.apply(Algebra.Lt.given.And)
+    Eq << Eq[-1].this.rhs.expr.apply(Nat.Lt.given.And)
 
     Eq << Eq[-1].this.rhs.apply(Bool.All_And.given.All.All)
 

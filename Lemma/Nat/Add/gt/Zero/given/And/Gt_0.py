@@ -13,12 +13,12 @@ def apply(given, index=-1):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Nat
 
     a, b = Symbol(real=True, given=True)
     Eq << apply(a + b > 0)
 
-    Eq << Algebra.Gt_0.Add.of.Gt_0.Gt_0.apply(Eq[1], Eq[2])
+    Eq << Nat.Gt_0.Add.of.Gt_0.Gt_0.apply(Eq[1], Eq[2])
 
 
 if __name__ == '__main__':

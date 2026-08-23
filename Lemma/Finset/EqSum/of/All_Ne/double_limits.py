@@ -19,7 +19,7 @@ def apply(all_ne, sgm):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Int, Nat, Set, Finset
+    from Lemma import Bool, Int, Nat, Set, Finset
 
     i, j = Symbol(integer=True)
     n = Symbol(integer=True, positive=True, given=False)

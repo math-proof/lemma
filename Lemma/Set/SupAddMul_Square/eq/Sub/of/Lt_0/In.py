@@ -15,20 +15,20 @@ def apply(is_negative, el, fx, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set
+    from Lemma import Set, Real
 
     m, M, x, a, b, c = Symbol(real=True, given=True)
     Eq << apply(a < 0, Element(-b / (2 * a), Interval(m, M, left_open=True)), a * x ** 2 + b * x + c, x)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sup.eq.Add)
+    Eq << Eq[-1].this.lhs.apply(Real.Sup.eq.Add)
 
-    Eq << Algebra.Sup.eq.Mul.Inf.of.Lt_0.apply(Eq[0], Eq[-1].lhs)
+    Eq << Real.Sup.eq.Mul.Inf.of.Lt_0.apply(Eq[0], Eq[-1].lhs)
 
     Eq << Eq[-1].this.find(Inf).expr.expand()
 
     Eq.is_positive = -Eq[0]
 
-    Eq << Algebra.Inf.eq.Mul.of.Gt_0.apply(Eq.is_positive, Eq[-1].find(Inf))
+    Eq << Real.Inf.eq.Mul.of.Gt_0.apply(Eq.is_positive, Eq[-1].find(Inf))
 
     Eq << -Eq[-1].this.lhs.expr.expand()
 

@@ -14,7 +14,7 @@ def apply(A, u):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Bool, Nat, Int
+    from Lemma import Tensor, Bool, Nat, Int
 
     n = Symbol(domain=Range(2, oo))
     u = Symbol(domain=Range(2, n + 1))
@@ -27,9 +27,9 @@ def prove(Eq):
 
     Eq << Bool.BFn_Ite.given.OrAndS.apply(Eq[-1])
 
-    Eq << Eq[-1].this.find(LessEqual).apply(Algebra.Le_0.given.Le)
+    Eq << Eq[-1].this.find(LessEqual).apply(Nat.Le_0.given.Le)
 
-    Eq << Eq[-1].this.find(LessEqual[Zeros]).apply(Algebra.Le_0.given.Le)
+    Eq << Eq[-1].this.find(LessEqual[Zeros]).apply(Nat.Le_0.given.Le)
 
     Eq << Eq[-1].this.find(LessEqual[BlockMatrix]).apply(Tensor.LeBlock.given.And.Le)
 
@@ -37,7 +37,7 @@ def prove(Eq):
 
     Eq <<= Tensor.Le_LogSumExp.apply(Eq.ou.args[1].find(Sliced)), Tensor.Le_LogSumExp.apply(Eq.ou.find(Sliced))
 
-    Eq <<= Eq.ou.find(Less).this.apply(Algebra.Lt.of.Lt.transport, rhs=1), Eq.ou.find(GreaterEqual).this.apply(Algebra.Ge.of.Ge.transport, rhs=1)
+    Eq <<= Eq.ou.find(Less).this.apply(Nat.Lt.of.Lt.transport, rhs=1), Eq.ou.find(GreaterEqual).this.apply(Nat.Ge.of.Ge.transport, rhs=1)
 
     Eq <<= Eq[-1].this.rhs.apply(Nat.EqMin.of.Ge), Eq[-2].this.rhs.apply(Nat.EqMin.of.Lt)
 

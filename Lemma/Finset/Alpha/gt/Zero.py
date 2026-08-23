@@ -32,7 +32,7 @@ def apply(x, n):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Nat, Rat
+    from Lemma import Bool, Nat, Rat
     x = Symbol(real=True, positive=True, shape=(oo,))
     n = Symbol(integer=True, positive=True, given=False)
 

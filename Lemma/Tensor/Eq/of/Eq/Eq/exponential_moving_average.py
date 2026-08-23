@@ -16,7 +16,7 @@ def apply(initial_condition, recurrence, n=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Tensor, Algebra, Nat, Real, Rat
+    from Lemma import Finset, Tensor, Nat, Real, Rat
 
     v, θ = Symbol(shape=(oo,), real=True)
     t, n = Symbol(integer=True)

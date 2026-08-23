@@ -19,7 +19,7 @@ def apply(greater_than, _greater_than):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Int
+    from Lemma import Set, Int, Nat
 
     a, b, x = Symbol(integer=True, given=True)
     Eq << apply(x > b, a >= x)
@@ -27,7 +27,7 @@ def prove(Eq):
     # Eq << apply(b > x, x >= a)
     Eq << Set.In_Ico.given.Ge.Le_Sub_1.apply(Eq[-1])
 
-    Eq <<= Int.Lt.given.Le_Sub_1.apply(Eq[-1]), Algebra.Ge.given.Gt.relax.apply(Eq[-2])
+    Eq <<= Int.Lt.given.Le_Sub_1.apply(Eq[-1]), Nat.Ge.given.Gt.relax.apply(Eq[-2])
 
     Eq << Eq[-1].reversed
 

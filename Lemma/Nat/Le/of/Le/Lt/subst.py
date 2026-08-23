@@ -14,13 +14,13 @@ def apply(le, lt):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat
+    from Lemma import Nat
     t, x, y, b = Symbol(real=True)
     k = Symbol(real=True, nonnegative=True)
 
     Eq << apply(y <= x * k + b, x < t)
 
-    Eq << Algebra.LeMul.of.Lt.apply(Eq[1], k)
+    Eq << Nat.LeMul.of.Lt.apply(Eq[1], k)
 
     Eq << Eq[-1] + b
 

@@ -18,7 +18,7 @@ def apply(contains1, contains2):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Nat
 
     a, b, c, x, y = Symbol(integer=True, given=True)
     Eq << apply(Element(x, Interval(a, b, left_open=True)), Element(y, Interval(b, c, left_open=True)))
@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << Set.Le.Le.of.In_Icc.apply(Eq[1])
 
-    Eq << Algebra.Lt.of.Le.Gt.apply(Eq[-3], Eq[-2])
+    Eq << Nat.Lt.of.Le.Gt.apply(Eq[-3], Eq[-2])
 
 
 if __name__ == '__main__':

@@ -12,7 +12,7 @@ def apply(lt, contains_y):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Nat
 
     a, b, c, x = Symbol(integer=True)
     Eq << apply(x < c, Element(x, Range(a, b)))
@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Set.Ge.Le_Sub_1.of.In_Ico.apply(Eq[1])
 
-    Eq << Algebra.LtMin.of.Lt.Lt.apply(Eq[-1], Eq[0])
+    Eq << Nat.LtMin.of.Lt.Lt.apply(Eq[-1], Eq[0])
 
 
 if __name__ == '__main__':

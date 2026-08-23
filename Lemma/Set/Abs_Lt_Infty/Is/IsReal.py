@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Int
 
     x = Symbol(extended_real=True)
     Eq << apply(Abs(x) < oo)
@@ -18,7 +18,7 @@ def prove(Eq):
     Eq << Eq[0].this.rhs.apply(Set.In_Icc.Is.And)
 
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.LtAbs.Is.And)
+    Eq << Eq[-1].this.lhs.apply(Int.LtAbs.Is.And)
 
 
 

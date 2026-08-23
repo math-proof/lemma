@@ -11,7 +11,7 @@ def apply(contains1, contains2):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool, Nat
+    from Lemma import Set, Bool, Nat
 
     a, b, x, y = Symbol(real=True, given=True)
     S = Interval(a, b, left_open=True)

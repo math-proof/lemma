@@ -12,7 +12,7 @@ def apply(gt_zero, Add_Gt_zero, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat, Real
+    from Lemma import Nat, Real
 
     a, b, c = Symbol(real=True, given=True)
     x = Symbol(real=True)

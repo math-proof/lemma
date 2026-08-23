@@ -26,7 +26,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset, Nat
+    from Lemma import Finset, Nat, Rat, Int
 
     n = Symbol(integer=True, positive=True)
     x = Symbol(real=True, shape=(n,))
@@ -37,17 +37,17 @@ def prove(Eq):
 
     Eq << Nat.LeSquareS.of.Le.Ge_0.apply(Eq[0])
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.SquareSub_DivSum.eq.DivSquareSum_Sub)
+    Eq << Eq[-1].this.lhs.apply(Rat.SquareSub_DivSum.eq.DivSquareSum_Sub)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.SquareSub_DivSum.eq.DivSquareSum_Sub)
+    Eq << Eq[-1].this.rhs.apply(Rat.SquareSub_DivSum.eq.DivSquareSum_Sub)
 
-    Eq << Eq[-1].this.lhs.args[1].apply(Algebra.Square.Sum.eq.Add.Sum)
+    Eq << Eq[-1].this.lhs.args[1].apply(Finset.Square.Sum.eq.Add.Sum)
 
-    Eq << Eq[-1].this.rhs.args[1].apply(Algebra.Square.Sum.eq.Add.Sum)
+    Eq << Eq[-1].this.rhs.args[1].apply(Finset.Square.Sum.eq.Add.Sum)
 
     Eq.le_given = Eq[-1] * m ** 2
 
-    Eq << Eq.le_given.rhs.this.find(2 * ~Sum).expr.apply(Algebra.Mul.eq.Add.Square)
+    Eq << Eq.le_given.rhs.this.find(2 * ~Sum).expr.apply(Nat.Mul.eq.Add.Square)
 
     Eq << Eq[-1].this.rhs.find(Mul).apply(Finset.Mul_Sum.eq.Sum_Mul)
 
@@ -75,7 +75,7 @@ def prove(Eq):
 
     Eq << Eq.variance.subs(Eq[-1])
 
-    Eq << Eq[-1].this.rhs.find(Mul, Sum).expr.apply(Algebra.Square.Neg)
+    Eq << Eq[-1].this.rhs.find(Mul, Sum).expr.apply(Int.Square.Neg)
 
     Eq << Eq[-1].this.rhs.find(Mul, Sum).apply(Finset.Sum.limits.domain_defined)
 
@@ -91,7 +91,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.args[0].limits_subs(i, j)
 
-    Eq << Eq[-1].this.rhs.args[0].expr.apply(Algebra.Square.Neg)
+    Eq << Eq[-1].this.rhs.args[0].expr.apply(Int.Square.Neg)
 
     Eq << Eq.le_given.subs(Eq[-1])
 
@@ -107,7 +107,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.args[0].find(Sum).apply(Finset.Sum.limits.swap.subst)
 
-    Eq.le_given = Eq[-1].this.lhs.args[0].find(Sum).expr.apply(Algebra.Square.Neg)
+    Eq.le_given = Eq[-1].this.lhs.args[0].find(Sum).expr.apply(Int.Square.Neg)
 
     Eq << Eq[1] - Eq[1].rhs.args[1]
 
@@ -142,7 +142,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Nat.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.lhs.find(Sum).expr.apply(Algebra.Square.Neg, simplify=None)
+    Eq << Eq[-1].this.lhs.find(Sum).expr.apply(Int.Square.Neg, simplify=None)
 
     Eq << Eq[-1] - Eq[-1].lhs.args[0]
 
@@ -199,7 +199,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.ratsimp()
 
-    Eq << (Sum[i](x_[i]) ** 2).this.apply(Algebra.Square.Sum.eq.Add.Sum)
+    Eq << (Sum[i](x_[i]) ** 2).this.apply(Finset.Square.Sum.eq.Add.Sum)
 
     Eq << Eq[-1].this.rhs.args[0].simplify()
 

@@ -12,7 +12,7 @@ def apply(n, u, v):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Finset, Bool, Tensor
+    from Lemma import Set, Finset, Bool, Tensor
 
     n = Symbol(integer=True, positive=True)
     u, v = Symbol(domain=Range(n + 1))

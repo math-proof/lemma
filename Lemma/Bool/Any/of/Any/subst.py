@@ -31,7 +31,7 @@ def apply(self, old, new):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
     e, a, b = Symbol(real=True)
 
     A = Function(etype=dtype.real)

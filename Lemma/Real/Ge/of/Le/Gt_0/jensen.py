@@ -18,7 +18,7 @@ def apply(le, is_positive, w=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Real, Algebra, Set, Bool, Nat, Int
+    from Lemma import Real, Set, Bool, Nat, Int
 
     a, b = Symbol(real=True, given=True)
     domain = Interval(a, b, left_open=True, right_open=True)
@@ -41,7 +41,7 @@ def prove(Eq):
 
     Eq.is_nonpositive = Eq[0] - x1
 
-    Eq <<= Nat.LeMulS.of.Ge_0.Le.apply(Eq.is_nonpositive, w) + x1, Algebra.GeMul.of.Ge.apply(Eq[0].reversed, 1 - w) + w * x0
+    Eq <<= Nat.LeMulS.of.Ge_0.Le.apply(Eq.is_nonpositive, w) + x1, Nat.GeMul.of.Ge.apply(Eq[0].reversed, 1 - w) + w * x0
 
     Eq << Eq[-2].this.find(Mul).apply(Nat.Mul_Add.eq.AddMulS, simplify=None)
 
@@ -75,7 +75,7 @@ def prove(Eq):
 
     Eq << Bool.Any.And.of.Any.Any.apply(Eq[-2], Eq[-1], simplify=None)
 
-    Eq << Eq[-1].this.expr.apply(Algebra.EqSub.of.Eq.Eq, swap=True)
+    Eq << Eq[-1].this.expr.apply(Int.EqSub.of.Eq.Eq, swap=True)
 
 
     Eq << Eq[-1].this.expr.lhs.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
@@ -92,7 +92,7 @@ def prove(Eq):
     Eq << Bool.Imp.of.Cond.apply(Eq.all_is_positive, cond=Eq[-1].lhs)
     Eq <<= Eq[-1] & Eq[-2] & Eq.suffice
     Eq << Eq[-1].this.rhs.apply(Real.In.of.Le.In.In.All_gt_0)
-    Eq.is_nonnegative = Eq[-1].this.rhs.apply(Algebra.Ge_0.of.Le)
+    Eq.is_nonnegative = Eq[-1].this.rhs.apply(Nat.Ge_0.of.Le)
     Eq << GreaterEqual(w * (1 - w), 0, plausible=True)
     Eq << Int.Le0Mul.of.Ge_0.Ge_0.apply(Eq[-1], -Eq.is_nonpositive)
     Eq << Bool.Imp.of.Cond.apply(Eq[-1], cond=Eq[-3].lhs)
@@ -100,7 +100,7 @@ def prove(Eq):
     Eq <<= Eq[-1].this.rhs.apply(Int.Le0Mul.of.Ge_0.Ge_0)
     Eq << Bool.All.of.Imp.apply(Eq[-1], wrt=(x_, x__))
     Eq << Bool.Any_And.of.Any.All.All_Imp.apply(Eq[-1], Eq.any)
-    Eq << Eq[-1].this.expr.apply(Algebra.Ge.of.Ge.Eq)
+    Eq << Eq[-1].this.expr.apply(Nat.Ge.of.Ge.Eq)
     Eq << Bool.And_And.of.And.apply(Eq[-1])
     Eq << Eq[-1] + Eq[2].rhs
 

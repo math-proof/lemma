@@ -26,7 +26,7 @@ def apply(eq_z, eq_z_quote, el):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Set, Bool, Fin, Nat
+    from Lemma import Tensor, Set, Bool, Fin, Nat
 
     n = Symbol(domain=Range(2, oo))
     l = Symbol(domain=Range(2, n + 1))
@@ -53,7 +53,7 @@ def prove(Eq):
 
     Eq.ge_relu, Eq.lt_1 = Set.Ge.Le_Sub_1.of.In_Ico.apply(Eq[2])
 
-    Eq << Eq.ge_relu.this.find(Min).args[0].apply(Algebra.Expr.eq.IteGe, upper=n - 1)
+    Eq << Eq.ge_relu.this.find(Min).args[0].apply(Nat.Expr.eq.IteGe, upper=n - 1)
 
     Eq << Eq[-1].this(i).find(GreaterEqual).simplify()
 

@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Real, Algebra, Bool
+    from Lemma import Real, Bool
 
     x = Symbol(real=True)
     n = Symbol(integer=True, nonnegative=True)

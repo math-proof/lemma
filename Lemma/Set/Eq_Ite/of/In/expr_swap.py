@@ -15,7 +15,7 @@ def apply(given, piecewise):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
 
     x = Symbol(integer=True, given=True)
     S, A = Symbol(etype=dtype.integer, given=True)
@@ -65,7 +65,7 @@ def prove(Eq):
 
     Eq << Eq.q_definition.subs(Eq.bool_equality.reversed)
 
-    Eq << Eq[-1].this.find(Equal).apply(Algebra.Eq_Bool.Is.Cond)
+    Eq << Eq[-1].this.find(Equal).apply(Bool.Eq_Bool.Is.Cond)
 
     Eq << Eq.p_definition.subs(Eq[-1].reversed)
 

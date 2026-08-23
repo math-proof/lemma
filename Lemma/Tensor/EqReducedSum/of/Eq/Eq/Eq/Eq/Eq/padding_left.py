@@ -16,7 +16,7 @@ def apply(eq_A, eq_P, eq_P_quote, eq_I_quote, eq_I_dquote):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Bool, Finset, Vector
+    from Lemma import Tensor, Bool, Finset, Vector, Nat
 
     k = Symbol(integer=True)
     n = Symbol(integer=True, positive=True) # seq_length
@@ -50,7 +50,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Piecewise).apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite, simplify=None)
 
-    Eq << Eq[-1].this.find(GreaterEqual).apply(Algebra.GeMul.Is.And, simplify=None)
+    Eq << Eq[-1].this.find(GreaterEqual).apply(Nat.GeMul.Is.And, simplify=None)
 
     Eq << Eq[-1].this.find(functions.Bool).apply(Bool.Bool.eq.Ite, simplify=None)
 

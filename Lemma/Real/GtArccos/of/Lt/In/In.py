@@ -13,20 +13,20 @@ def apply(lt, contains, contains_y):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Real
+    from Lemma import Set, Bool, Real, Nat
 
     x, y = Symbol(real=True)
     Eq << apply(x < y, Element(x, Interval(-1, 1)), Element(y, Interval(-1, 1, right_open=True)))
 
-    Eq << Algebra.Gt.given.Gt_0.apply(Eq[3])
+    Eq << Nat.Gt.given.Gt_0.apply(Eq[3])
 
-    Eq << Real.Sin.eq.Sub.apply(sin(Eq[-1].lhs))
+    Eq << Real.SinSub.eq.SubMulSSin_Cos.apply(sin(Eq[-1].lhs))
 
     Eq << Set.GtSqrt.of.Lt.In.In.apply(Eq[0], Eq[1], Eq[2])
 
-    Eq << Algebra.Gt_0.of.Gt.apply(Eq[-1])
+    Eq << Nat.Gt_0.of.Gt.apply(Eq[-1])
 
-    Eq.sin_is_positive = Algebra.Gt.of.Eq.Gt.subst.apply(Eq[-3], Eq[-1])
+    Eq.sin_is_positive = Nat.Gt.of.Eq.Gt.subst.apply(Eq[-3], Eq[-1])
 
     Eq << Real.Arccos.In.Icc.apply(x)
 

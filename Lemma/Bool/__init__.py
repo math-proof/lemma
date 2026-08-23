@@ -81,3 +81,10 @@ from . import GivenAnd
 from . import Le
 from . import As
 from . import Delta
+from . import Eq_Bool
+from . import Or_Any
+from . import Or_Ge
+from . import Or_Gt
+from . import Or_Le
+from . import Or_Lt
+from . import Subs

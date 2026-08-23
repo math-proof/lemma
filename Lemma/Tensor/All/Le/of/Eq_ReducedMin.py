@@ -10,14 +10,14 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Real
+    from Lemma import Real, Tensor
 
     M, x = Symbol(real=True)
     S = Symbol(etype=dtype.real)
     f = Function(real=True)
     Eq << apply(Equal(M, ReducedMin({f(x): Element(x, S)})))
 
-    Eq << Eq[0].this.rhs.apply(Algebra.ReducedMin.eq.Minima)
+    Eq << Eq[0].this.rhs.apply(Tensor.ReducedMin.eq.Minima)
     Eq << Real.All.Le.of.Eq_Minima.apply(Eq[-1])
 
 

@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Real, Int
+    from Lemma import Real, Int
 
     f = Function(real=True, continuous=True)
     x, a, b = Symbol(real=True)

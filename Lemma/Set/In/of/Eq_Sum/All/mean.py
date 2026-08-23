@@ -11,7 +11,7 @@ def apply(eq, forall):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Finset, Rat
+    from Lemma import Set, Bool, Finset, Rat
 
     i = Symbol(integer=True)
     n = Symbol(integer=True, positive=True, given=False)
@@ -71,7 +71,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Bool.All.And.of.Cond.All, simplify=None)
 
-    Eq << Eq[-1].this.lhs.find(And).apply(Algebra.GeDiv.of.Lt.Ge, ret=0)
+    Eq << Eq[-1].this.lhs.find(And).apply(Rat.GeDiv.of.Lt.Ge, ret=0)
 
     Eq << Eq[-1].this.apply(Bool.Imp.swap)
 

@@ -9,13 +9,13 @@ def apply(ne_zero):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset
+    from Lemma import Finset, Rat
 
     n = Symbol(integer=True, positive=True)
     A = Symbol(r"\boldsymbol A", real=True, shape=(n, n))
     Eq << apply(Unequal(Det(A), 0))
 
-    Eq << Algebra.Inv.ne.Zero.of.Ne_0.apply(Eq[0])
+    Eq << Rat.Inv.ne.Zero.of.Ne_0.apply(Eq[0])
 
     Eq << Eq[1].this.lhs.apply(Finset.Det.Pow.eq.Pow, simplify=None)
 

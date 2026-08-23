@@ -16,7 +16,7 @@ def apply(eq_A, eq_P, eq_P_quote, eq_I_quote, eq_I_dquote):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Bool, Int, Nat, Finset, Vector
+    from Lemma import Tensor, Bool, Int, Nat, Finset, Vector
 
     k = Symbol(integer=True)
     n = Symbol(integer=True, positive=True) # seq_length
@@ -56,9 +56,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(GreaterEqual).apply(Int.Ge.Is.Gt_Sub_1, simplify=None)
 
-    Eq << Eq[-1].this.lhs().find(Greater).apply(Algebra.Mul.gt.Zero.Is.Gt_0, simplify=None)
+    Eq << Eq[-1].this.lhs().find(Greater).apply(Nat.Mul.gt.Zero.Is.Gt_0, simplify=None)
 
-    Eq << Eq[-1].this.find(Greater).apply(Algebra.Gt_0.Is.Cond)
+    Eq << Eq[-1].this.find(Greater).apply(Nat.Gt_0.Is.Cond)
 
     Eq << Eq[-1].this.lhs.apply(Finset.SumIco.eq.Sum_UFnAdd, -Eq[-1].find(ReducedArgMax))
 

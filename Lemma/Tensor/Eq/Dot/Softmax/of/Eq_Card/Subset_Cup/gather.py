@@ -15,7 +15,7 @@ def apply(eq_cup, subset, Q, K, V):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Set, Bool, Vector, Finset
+    from Lemma import Tensor, Set, Bool, Vector, Finset
 
     n, k, m = Symbol(integer=True, positive=True)
     r = Symbol(shape=(n,), integer=True)

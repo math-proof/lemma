@@ -19,7 +19,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Algebra, Tensor
+    from Lemma import Finset, Tensor, Int
 
     m = Symbol(integer=True, positive=True)
     d = Symbol(integer=True, nonnegative=True)
@@ -29,7 +29,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Tensor.Dot.eq.Stack_Sum_MulGetS)
 
-    Eq << Eq[-1].this.find(Pow[-Symbol]).apply(Algebra.Pow.eq.Mul.Neg)
+    Eq << Eq[-1].this.find(Pow[-Symbol]).apply(Int.Pow.eq.Mul.Neg)
 
     # j < m - d
     # k <= d + j < d + (m - d) = m

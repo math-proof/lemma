@@ -14,9 +14,9 @@ def prove(Eq):
     x, y = Symbol(real=True)
     Eq << apply(sin(x) * cos(y))
 
-    Eq << Eq[-1].this.find(Sin[Expr - Expr]).apply(Real.Sin.eq.Add)
+    Eq << Eq[-1].this.find(Sin[Expr - Expr]).apply(Real.SinAdd.eq.AddMulSSin_Cos)
 
-    Eq << Eq[-1].this.find(Sin[Expr + Expr]).apply(Real.Sin.eq.Add)
+    Eq << Eq[-1].this.find(Sin[Expr + Expr]).apply(Real.SinAdd.eq.AddMulSSin_Cos)
 
 
 

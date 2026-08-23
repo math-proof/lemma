@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(gt, eq):
-    from Lemma.Algebra.Lt.of.Lt.Eq import swap
+    from Lemma.Nat.Lt.of.Lt.Eq import swap
     return Greater(*swap(Greater, gt, eq))
 
 

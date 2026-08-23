@@ -14,7 +14,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Real, Int
+    from Lemma import Probability, Real, Int
 
     x = Symbol(real=True, random=True)
     Eq << apply(Pr(x >= 0))

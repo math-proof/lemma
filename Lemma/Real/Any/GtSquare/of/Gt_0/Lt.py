@@ -14,7 +14,7 @@ def apply(M_is_positive, lt, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Int, Nat
+    from Lemma import Set, Bool, Int, Nat, Real
 
     M, U = Symbol(real=True, given=True)
     Eq << apply(M > 0, U < M ** 2)
@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << Bool.Imp_And.of.Cond.apply(Eq[1], cond=Eq[-1].lhs)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.LtSqrt.of.Ge_0.Lt)
+    Eq << Eq[-1].this.rhs.apply(Real.LtSqrt.of.Ge_0.Lt)
 
     Eq << Int.EqAbs.of.Gt_0.apply(Eq[0])
 
@@ -46,19 +46,19 @@ def prove(Eq):
 
     Eq << Bool.Imp_And.given.Imp.Imp.apply(Eq[-1])
 
-    Eq <<= Eq[-2].this.rhs.apply(Algebra.Gt.given.Gt_0), Eq[-1].this.rhs.apply(Set.In_Ico.given.Le.Lt)
+    Eq <<= Eq[-2].this.rhs.apply(Nat.Gt.given.Gt_0), Eq[-1].this.rhs.apply(Set.In_Ico.given.Le.Lt)
 
-    Eq <<= Eq[-2].this.find(Add).apply(Algebra.Sub.Square.eq.Mul), Bool.Imp_And.given.Imp.Imp.apply(Eq[-1])
+    Eq <<= Eq[-2].this.find(Add).apply(Int.Sub.Square.eq.Mul), Bool.Imp_And.given.Imp.Imp.apply(Eq[-1])
 
-    Eq <<= Eq[-3].this.rhs.apply(Algebra.Mul.gt.Zero.given.And.Gt_0), Eq[-2].this.rhs * 2, Eq[-1].this.rhs * 2
+    Eq <<= Eq[-3].this.rhs.apply(Nat.Mul.gt.Zero.given.And.Gt_0), Eq[-2].this.rhs * 2, Eq[-1].this.rhs * 2
 
-    Eq <<= Bool.Imp_And.given.Imp.Imp.apply(Eq[-3]), Eq[-2].this.rhs.apply(Algebra.Lt.transport, lhs=0), Eq[-1].this.rhs.apply(Algebra.Gt.given.Gt_0)
+    Eq <<= Bool.Imp_And.given.Imp.Imp.apply(Eq[-3]), Eq[-2].this.rhs.apply(Nat.Lt.transport, lhs=0), Eq[-1].this.rhs.apply(Nat.Gt.given.Gt_0)
 
     Eq <<= Eq[-3].this.rhs * 2, Eq[-2].this.rhs * 2, Eq[-1].this.rhs.apply(Nat.Add.gt.Zero.given.And, index=1)
 
-    Eq <<= Eq[-3].this.rhs.apply(Nat.Add.gt.Zero.given.And, index=0), Eq[-2].this.rhs.apply(Algebra.Gt.transport), Bool.Imp_And.given.Imp.Imp.apply(Eq[-1])
+    Eq <<= Eq[-3].this.rhs.apply(Nat.Add.gt.Zero.given.And, index=0), Eq[-2].this.rhs.apply(Nat.Gt.transport), Bool.Imp_And.given.Imp.Imp.apply(Eq[-1])
 
-    Eq <<= Bool.Imp_And.given.Imp.Imp.apply(Eq[-4]), Eq[-3].this.rhs.reversed, Eq[-2].this.rhs / 3, Eq[-1].this.lhs.apply(Algebra.GeSqrt_0.of.Ge_0)
+    Eq <<= Bool.Imp_And.given.Imp.Imp.apply(Eq[-4]), Eq[-3].this.rhs.reversed, Eq[-2].this.rhs / 3, Eq[-1].this.lhs.apply(Real.GeSqrt_0.of.Ge_0)
 
     Eq << Eq[-1].this.rhs / 3
 

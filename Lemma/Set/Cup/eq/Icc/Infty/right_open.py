@@ -12,7 +12,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool, Nat, Int
+    from Lemma import Set, Bool, Nat, Int
 
     k = Symbol(integer=True)
     Eq << apply(Cup[k:oo](Interval(k, k + 1, right_open=True)))
@@ -37,7 +37,7 @@ def prove(Eq):
 
     Eq << Int.GtAddFloor_1.apply(x)
 
-    Eq << Algebra.Ge_Floor.apply(x)
+    Eq << Int.Ge_Floor.apply(x)
 
 
 

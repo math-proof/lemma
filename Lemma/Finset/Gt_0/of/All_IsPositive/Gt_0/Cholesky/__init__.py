@@ -13,7 +13,7 @@ def apply(all_is_positive, eq_initial):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Tensor, Int, Nat, Complex, Finset
+    from Lemma import Set, Bool, Tensor, Int, Nat, Complex, Finset
 
     n = Symbol(domain=Range(10, oo))
     A = Symbol(shape=(n, n), complex=True)
@@ -36,7 +36,7 @@ def prove(Eq):
 
     Eq.gt_zero = Eq.hypothesis.subs(*Eq[-2:])
 
-    Eq <<= Eq.gt_zero.find(Abs ** 2 * Norm ** 2).this.args[1].apply(Algebra.Square.Norm.eq.Add.pop).this.rhs.apply(Nat.Mul_Add.eq.AddMulS),\
+    Eq <<= Eq.gt_zero.find(Abs ** 2 * Norm ** 2).this.args[1].apply(Tensor.Square.Norm.eq.Add.pop).this.rhs.apply(Nat.Mul_Add.eq.AddMulS),\
         Eq.gt_zero.find(-2 * ~Re).this.find(Expr @ Expr @ Expr).apply(Tensor.Dot.eq.Sub.push)
 
     Eq << Eq[-1].this.find(Stack).apply(Tensor.Stack_Dot.eq.DotSliceS)
@@ -60,7 +60,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq.eq_square_Lkk)
 
-    Eq << Eq[-1].this.find(Norm[BlockMatrix @ Conjugate[Sliced]] ** 2).apply(Algebra.Square.Norm.eq.Sub.push)
+    Eq << Eq[-1].this.find(Norm[BlockMatrix @ Conjugate[Sliced]] ** 2).apply(Tensor.Square.Norm.eq.Sub.push)
 
     Eq << Eq[-1].this.find(Stack).apply(Tensor.Stack_Dot.eq.DotSliceS)
 
@@ -80,7 +80,7 @@ def prove(Eq):
 
     Eq << Int.Gt.of.Sub.gt.Zero.apply(Eq[-1])
 
-    Eq << Eq[-1].this.rhs.base.apply(Algebra.Norm.Conj)
+    Eq << Eq[-1].this.rhs.base.apply(Complex.Norm.Conj)
 
 
 

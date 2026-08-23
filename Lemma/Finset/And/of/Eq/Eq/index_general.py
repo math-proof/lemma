@@ -28,7 +28,7 @@ def apply(a_size, xa_equality, j=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Tensor, Finset, Nat
+    from Lemma import Set, Bool, Tensor, Finset, Nat
 
     n = Symbol(domain=Range(2, oo), given=True)
     x, a = Symbol(shape=(n,), integer=True, given=True)

@@ -1,1 +1,4 @@
 from . import eq
+from . import Ite
+from . import le
+from . import lt

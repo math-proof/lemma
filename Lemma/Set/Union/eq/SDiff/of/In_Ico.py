@@ -11,7 +11,7 @@ def apply(el):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool, Nat
+    from Lemma import Set, Bool, Nat
 
     n = Symbol(integer=True, positive=True)
     i = Symbol(integer=True)
@@ -29,11 +29,11 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.find(Element).apply(Set.In_Ico.Is.And), Eq[-1].this.find(Element).apply(Set.In_Ico.Is.And)
 
-    Eq << Eq[-1].this.rhs.find(GreaterEqual).apply(Algebra.Ge.Is.Gt.strengthen)
+    Eq << Eq[-1].this.rhs.find(GreaterEqual).apply(Nat.Ge.Is.Gt.strengthen)
 
     Eq << Eq[-2].this.find(NotElement).simplify()
 
-    Eq << Eq[-1].this.find(Symbol >= Add).apply(Algebra.Ge.Is.Gt.strengthen)
+    Eq << Eq[-1].this.find(Symbol >= Add).apply(Nat.Ge.Is.Gt.strengthen)
 
     Eq << Bool.ImpOr.given.Imp.Imp.apply(Eq[-1])
 

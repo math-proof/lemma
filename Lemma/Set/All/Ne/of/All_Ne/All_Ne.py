@@ -27,7 +27,7 @@ def apply(all_historic, all_n):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
 
     i, j = Symbol(integer=True)
     n = Symbol(integer=True, positive=True)

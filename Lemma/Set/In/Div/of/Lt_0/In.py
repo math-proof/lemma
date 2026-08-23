@@ -22,14 +22,14 @@ def apply(lt_zero, el):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Rat, Nat
 
     t, x, a, b = Symbol(real=True)
     Eq << apply(t < 0, Element(x, Interval(a, b, left_open=True)))
 
     Eq << Set.Le.Le.of.In_Icc.apply(Eq[1])
 
-    Eq <<= Algebra.LtDiv.of.Lt_0.Gt.apply(Eq[0], Eq[-2]), Algebra.GeDiv.of.Lt_0.Le.apply(Eq[0], Eq[-1])
+    Eq <<= Nat.LtDiv.of.Lt_0.Gt.apply(Eq[0], Eq[-2]), Rat.GeDiv.of.Lt_0.Le.apply(Eq[0], Eq[-1])
 
     Eq << Set.In.Icc.of.Lt.Ge.apply(Eq[-2], Eq[-1])
 

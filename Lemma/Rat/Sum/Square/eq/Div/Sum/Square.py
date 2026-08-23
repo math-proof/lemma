@@ -40,7 +40,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset, Nat
+    from Lemma import Finset, Nat
 
     i, j = Symbol(integer=True)
     n = Symbol(integer=True, positive=True)
@@ -55,7 +55,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Sum[2]).limits_subs(j, i)
 
-    Eq << Eq[-1].this.lhs.find(Mul).args[2].apply(Algebra.Square.Sum.eq.Add.Sum)
+    Eq << Eq[-1].this.lhs.find(Mul).args[2].apply(Finset.Square.Sum.eq.Add.Sum)
 
     Eq << Eq[-1].this.lhs.find(Mul).apply(Nat.Mul_Add.eq.AddMulS)
 

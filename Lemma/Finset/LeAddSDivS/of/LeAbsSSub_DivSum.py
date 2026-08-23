@@ -24,7 +24,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Finset, Int
+    from Lemma import Tensor, Finset, Int
 
     n = Symbol(integer=True, positive=True)
     x = Symbol(real=True, shape=(n,))
@@ -75,7 +75,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.simplify()
 
-    Eq << Eq[-1].this.rhs.expr.apply(Algebra.Square.Neg)
+    Eq << Eq[-1].this.rhs.expr.apply(Int.Square.Neg)
 
     Eq << Eq[-4].subs(Eq[-1].reversed)
 

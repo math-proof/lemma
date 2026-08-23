@@ -14,7 +14,7 @@ def apply(X0, X1):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset, Tensor
+    from Lemma import Finset, Tensor
 
     n0, n1 = Symbol(integer=True, positive=True)
     p = Symbol(domain=Interval(0, 1, left_open=True, right_open=True))
@@ -36,7 +36,7 @@ def prove(Eq):
 
     Eq << Finset.Pow.eq.Sum.Binom.Newton.apply((p + 1) ** (n0 + n1), swap=True).subs(Eq[-1])
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Mul.eq.Sum.as_multiple_limits)
+    Eq << Eq[-1].this.lhs.apply(Finset.Mul.eq.Sum.as_multiple_limits)
 
     Eq << Eq[-1].this.lhs.apply(Finset.SumIco.eq.Sum_UFnAdd, -Eq[-1].lhs.variables[1])
 

@@ -21,7 +21,7 @@ def apply(contains, contains0, contains1, all_is_positive, swap=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Real, Bool
+    from Lemma import Real, Bool
 
     w, x, x0, x1, a, b = Symbol(real=True)
     f = Function(real=True)

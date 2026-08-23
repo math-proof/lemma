@@ -9,13 +9,13 @@ def apply(le):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Real
 
     m, M, x = Symbol(real=True)
     f = Function(real=True)
     Eq << apply(Sup[x:Interval(m, M, left_open=True, right_open=True)](f(x)) <= M)
 
-    Eq << Algebra.LeSup.of.All_Le.apply(Eq[1])
+    Eq << Real.LeSup.of.All_Le.apply(Eq[1])
 
 
 if __name__ == '__main__':

@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Complex
+    from Lemma import Complex, Int
 
     x, y = Symbol(complex=True)
     Eq << apply(Abs(x + ~y))
@@ -18,7 +18,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Complex.Norm.eq.Sqrt)
 
-    Eq << Eq[-1].this.rhs.find((Expr - Expr) ** 2).apply(Algebra.Square.Neg)
+    Eq << Eq[-1].this.rhs.find((Expr - Expr) ** 2).apply(Int.Square.Neg)
 
 
 

@@ -2,3 +2,10 @@ from . import given
 from . import Is
 from . import of
 from . import Or
+from . import Any
+from . import Ge
+from . import Gt
+from . import Le
+from . import Lt
+from . import collect
+from . import invert

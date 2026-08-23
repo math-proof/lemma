@@ -14,7 +14,7 @@ def apply(A, l):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Bool, Int
+    from Lemma import Tensor, Bool, Int, Nat
 
     n = Symbol(domain=Range(2, oo))
     l = Symbol(domain=Range(2, n + 1))
@@ -27,9 +27,9 @@ def prove(Eq):
 
     Eq << Bool.BFn_Ite.given.OrAndS.apply(Eq[-1])
 
-    Eq << Eq[-1].this.find(LessEqual).apply(Algebra.Le_0.given.Le)
+    Eq << Eq[-1].this.find(LessEqual).apply(Nat.Le_0.given.Le)
 
-    Eq << Eq[-1].this.find(LessEqual[Zeros]).apply(Algebra.Le_0.given.Le)
+    Eq << Eq[-1].this.find(LessEqual[Zeros]).apply(Nat.Le_0.given.Le)
 
     Eq << Eq[-1].this.find(LessEqual[BlockMatrix]).apply(Tensor.LeBlock.given.And.Le)
     Eq.ou = Eq[-1].this.find(LessEqual[Mul, Log[ReducedSum[Exp]]]).apply(Tensor.Le.given.All.Le)

@@ -16,7 +16,7 @@ def apply(le, is_continuous, is_differentiable):
 
 @prove
 def prove(Eq):
-    from Lemma import Real, Algebra, Bool, Set, Nat
+    from Lemma import Real, Bool, Set, Nat
 
     from Lemma.Real.Any.Eq.Rolle.of.Lt.IsContinuous.IsDifferentiable.Eq import is_differentiable
     from Lemma.Real.All.Any.Eq.of.All_Eq.intermediate_value_theorem import is_continuous

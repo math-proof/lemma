@@ -14,7 +14,7 @@ def apply(eq, ge):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Nat, Finset
+    from Lemma import Bool, Nat, Finset, Int
 
     x = Symbol(real=True, negative=False, shape=(oo,), given=True)
     n = Symbol(integer=True, negative=False, given=True)
@@ -44,7 +44,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this().expr.find(Piecewise, Element).simplify()
 
-    Eq << Eq[-1].this.expr.apply(Algebra.LtSub.of.Eq.Gt)
+    Eq << Eq[-1].this.expr.apply(Int.LtSub.of.Eq.Gt)
 
 
 if __name__ == '__main__':

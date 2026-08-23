@@ -11,7 +11,7 @@ def apply(is_nonpositive, greater_than):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat, Int
+    from Lemma import Nat, Int
 
     x, m = Symbol(real=True)
     Eq << apply(x <= 0, x >= m)

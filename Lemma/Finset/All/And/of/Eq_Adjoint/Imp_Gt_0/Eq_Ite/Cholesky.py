@@ -29,7 +29,7 @@ def apply(eq, infer, eq_piece, t):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset, Set, Bool, Tensor
+    from Lemma import Finset, Set, Bool, Tensor, Nat
 
     n = Symbol(domain=Range(10, oo))
     A = Symbol(shape=(n, n), complex=True)
@@ -59,7 +59,7 @@ def prove(Eq):
 
     Eq << Set.IsComplex.Sub.of.IsComplex.IsComplex.apply(Eq[-1], Eq[-2])
 
-    Eq << Algebra.Gt_0.of.Gt.apply(Eq.gt_zero)
+    Eq << Nat.Gt_0.of.Gt.apply(Eq.gt_zero)
 
     Eq << Set.IsPositive.of.Gt_0.IsComplex.apply(Eq[-1], Eq[-2])
 
@@ -71,7 +71,7 @@ def prove(Eq):
 
     Eq <<= Set.Eq.Square.Abs.of.IsReal.apply(Eq[-2], reverse=True), Eq[-1] - Add(*Eq[-1].lhs.args[1:])
 
-    Eq << Eq[-1].subs(Eq[-2]).this.find(Norm ** 2).apply(Algebra.Square.Norm.eq.Sub.push)
+    Eq << Eq[-1].subs(Eq[-2]).this.find(Norm ** 2).apply(Tensor.Square.Norm.eq.Sub.push)
 
     Eq.induct = Eq.hypothesis.subs(t, t + 1)
 

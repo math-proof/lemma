@@ -12,7 +12,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset, Bool, Set, Nat, Rat
+    from Lemma import Finset, Bool, Set, Nat, Rat
     from Lemma.Finset.Alpha.gt.Zero import alpha
 
     x = Symbol(real=True, shape=(oo,))

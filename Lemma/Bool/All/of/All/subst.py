@@ -31,7 +31,7 @@ def apply(given, old, new):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
 
     x, i, m = Symbol(integer=True)
     n = Function(integer=True, nonnegative=True)

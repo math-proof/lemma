@@ -16,7 +16,7 @@ def apply(given, index=-1):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Nat
+    from Lemma import Bool, Nat
 
     x, y, z = Symbol(real=True, given=True)
     Eq << apply(x <= Min(y, z))

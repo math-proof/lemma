@@ -22,7 +22,7 @@ def apply(lt, is_continuous, left_is_real, right_is_real, equal):
 
 @prove
 def prove(Eq):
-    from Lemma import Real, Set, Algebra, Bool, Int, Nat
+    from Lemma import Real, Set, Bool, Int, Nat
 
     a, b, x = Symbol(real=True)
     f = Function(shape=(), real=True)
@@ -47,13 +47,13 @@ def prove(Eq):
     Eq << Real.Any.All.Ge.of.Lt.IsContinuous.extreme_value_theorem.apply(*Eq[:2]).limits_subs(ξ, c0)
 
     # Eq << Eq[-1].this.expr.expr.reversed
-    Eq << Algebra.Or.Any.of.Any.split.apply(Eq[-1], cond={a, b})
+    Eq << Bool.Or.Any.of.Any.split.apply(Eq[-1], cond={a, b})
 
     Eq << Eq[-1].subs(Eq.eq_intersect)
 
     Eq << Real.Any.All.Le.of.Lt.IsContinuous.extreme_value_theorem.apply(*Eq[:2]).limits_subs(ξ, c1)
 
-    Eq << Algebra.Or.Any.of.Any.split.apply(Eq[-1], cond={a, b})
+    Eq << Bool.Or.Any.of.Any.split.apply(Eq[-1], cond={a, b})
 
     Eq << Eq[-1].subs(Eq.eq_intersect)
 
@@ -148,7 +148,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Equal).apply(Real.And.Eq_Grad.of.Eq_Grad)
 
-    Eq << Eq[-1].this.find(And).apply(Algebra.EqMul.of.Eq.Eq)
+    Eq << Eq[-1].this.find(And).apply(Nat.EqMul.of.Eq.Eq)
 
     Eq << Eq[-1].this.find(Equal).apply(Nat.Le.of.Eq)
 

@@ -12,7 +12,7 @@ def apply(self, index=-1):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Nat
+    from Lemma import Set, Nat
 
     a, b, c = Symbol(integer=True)
     Eq << apply(Range(Max(b, c), a))
@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.lhs.apply(Set.Ge.Le_Sub_1.of.In_Ico), Eq[-1].this.rhs.apply(Set.In_Ico.given.Ge.Le_Sub_1)
 
-    Eq <<= Eq[-2].this.find(GreaterEqual).apply(Nat.And.Ge.of.Ge_Max), Eq[-1].this.find(GreaterEqual).apply(Algebra.Ge_Max.given.And.Ge)
+    Eq <<= Eq[-2].this.find(GreaterEqual).apply(Nat.And.Ge.of.Ge_Max), Eq[-1].this.find(GreaterEqual).apply(Nat.Ge_Max.given.And.Ge)
 
     Eq <<= Eq[-2].this.find(Element).apply(Set.In_Inter.given.In.In, simplify=None), Eq[-1].this.find(Element).apply(Set.In.In.of.In_Inter, simplify=None)
 

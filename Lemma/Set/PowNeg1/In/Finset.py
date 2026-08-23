@@ -13,7 +13,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Int
     n = Symbol(integer=True)
 
     Eq << apply((-1) ** n)
@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.arg.definition
 
-    Eq << Algebra.Or.of.Eq_Abs.apply(Eq[-1])
+    Eq << Int.Or.of.Eq_Abs.apply(Eq[-1])
 
     Eq << Set.In_Finset.of.OrEqS.apply(Eq[-1])
 

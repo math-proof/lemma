@@ -11,7 +11,7 @@ def apply(contains):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Nat, Real, Int
+    from Lemma import Set, Nat, Real, Int
 
     a, b, x = Symbol(real=True)
     Eq << apply(Element(x, Interval(a, b)))
@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq << Int.Le0Sub.of.Ge.apply(Eq[-1])
 
-    Eq << Algebra.GeSqrt_0.of.Ge_0.apply(Eq[-1])
+    Eq << Real.GeSqrt_0.of.Ge_0.apply(Eq[-1])
 
     Eq << LessEqual(-x ** 2, 0, plausible=True)
 

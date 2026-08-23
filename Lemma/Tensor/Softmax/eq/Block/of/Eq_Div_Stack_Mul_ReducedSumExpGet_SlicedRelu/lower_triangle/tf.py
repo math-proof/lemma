@@ -21,7 +21,7 @@ def apply(eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Set, Bool, Nat, Vector, Int
+    from Lemma import Tensor, Set, Bool, Nat, Vector, Int
 
     n = Symbol(domain=Range(2, oo))
     l = Symbol(domain=Range(2, n + 1))
@@ -116,9 +116,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Element).apply(Set.In_Icc.Is.InNeg)
 
-    Eq << Eq[-1].this.find(Symbol < Symbol + 1).apply(Algebra.Lt.Is.Le.strengthen)
+    Eq << Eq[-1].this.find(Symbol < Symbol + 1).apply(Nat.Lt.Is.Le.strengthen)
 
-    Eq << Eq[-1].this.find(Symbol < Symbol + 1).apply(Algebra.Lt.Is.Le.strengthen)
+    Eq << Eq[-1].this.find(Symbol < Symbol + 1).apply(Nat.Lt.Is.Le.strengthen)
 
     Eq << Eq[-1].this(i, j).find(And).apply(Set.OrLe.Or.Is.In_Ico.BandPart.lower.offset)
 

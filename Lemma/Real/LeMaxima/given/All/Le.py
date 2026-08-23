@@ -9,13 +9,13 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Real
 
     M, x, a, b = Symbol(real=True)
     f = Function(real=True)
     Eq << apply(Maxima[x:a:b](f(x)) <= M)
 
-    Eq << Algebra.LeMaxima.of.All_Le.apply(Eq[1])
+    Eq << Real.LeMaxima.of.All_Le.apply(Eq[1])
 
 
 if __name__ == '__main__':

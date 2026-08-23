@@ -13,7 +13,7 @@ def apply(eq_max, eq_min):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat
+    from Lemma import Nat
 
     n, l, u, d = Symbol(integer=True, positive=True)
     i = Symbol(integer=True)
@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq << Eq[-1][i]
 
-    Eq << Eq[-1].this.find(Max).apply(Algebra.Max.eq.Mul.Min, -1)
+    Eq << Eq[-1].this.find(Max).apply(Nat.Max.eq.Mul.Min, -1)
 
     Eq << Eq[-1].this.rhs.apply(Nat.Add.eq.Min)
 

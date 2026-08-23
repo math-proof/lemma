@@ -9,12 +9,12 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Nat
+    from Lemma import Bool, Nat
 
     n = Symbol(integer=True)
     Eq << apply(KroneckerDelta(1, n % 2))
 
-    Eq << Eq[0].this.find(Pow).apply(Algebra.Pow.eq.Ite.negativeOne)
+    Eq << Eq[0].this.find(Pow).apply(Nat.Pow.eq.Ite.negativeOne)
 
     Eq << Eq[-1].this.find(Mul[Piecewise]).apply(Nat.Mul_Ite.eq.Ite_MulS, simplify=None)
 
@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite)
 
-    Eq << Eq[-1].this.find(Unequal).apply(Algebra.Ne_0.Is.Eq_odd)
+    Eq << Eq[-1].this.find(Unequal).apply(Nat.Ne_0.Is.Eq_odd)
 
     Eq << Eq[-1].this.lhs.apply(Nat.Delta.eq.Ite, swap=True)
 

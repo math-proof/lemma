@@ -15,7 +15,7 @@ def apply(all_historic, y=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Tensor
+    from Lemma import Set, Bool, Tensor, Nat, Real
 
     i, j = Symbol(integer=True)
     n = Symbol(integer=True, positive=True, given=False)
@@ -24,9 +24,9 @@ def prove(Eq):
 
     Eq << Eq[1].this.find(Greater).reversed
 
-    Eq << Eq[-1].this.find(ReducedMax).apply(Algebra.ReducedMax.eq.Maxima, i)
+    Eq << Eq[-1].this.find(ReducedMax).apply(Tensor.ReducedMax.eq.Maxima, i)
 
-    Eq << Eq[-1].this.find(Less).apply(Algebra.LtMaxima.given.All.Lt)
+    Eq << Eq[-1].this.find(Less).apply(Real.LtMaxima.given.All.Lt)
 
     Eq << Eq[-1].this.find(Less).reversed
 
@@ -47,7 +47,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.args[1].apply(Set.CupIn_Ico.eq.Cup_UFnAdd, -1)
 
-    Eq << Eq.all_gt.this.expr.apply(Algebra.Gt.given.And)
+    Eq << Eq.all_gt.this.expr.apply(Nat.Gt.given.And)
 
     Eq.all_ne_piece, Eq.all_ge = Bool.All_And.given.All.All.apply(Eq[-1])
 

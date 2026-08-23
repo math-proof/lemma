@@ -15,13 +15,13 @@ def apply(given, *limits, simplify=True):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Real
+    from Lemma import Real, Nat
 
     x = Symbol(real=True)
     f, g = Function(shape=(), real=True)
     Eq << apply(LessEqual(f(x) / x, g(x) / x), (x, 0))
 
-    Eq << Algebra.Ge.of.Le.reverse.apply(Eq[0])
+    Eq << Nat.Ge.of.Le.reverse.apply(Eq[0])
 
     Eq << Real.GeLim.of.Ge.apply(Eq[-1], (x, 0))
 

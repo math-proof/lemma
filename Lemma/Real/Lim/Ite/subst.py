@@ -39,7 +39,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Real, Algebra, Set, Bool, Int
+    from Lemma import Real, Set, Bool, Int, Nat
 
     n = Symbol(integer=True)
     a = Symbol(integer=True, given=True)
@@ -64,7 +64,7 @@ def prove(Eq):
 
     Eq << Eq[2].this.expr.apply(Set.AllIn_SDiff.of.All, Range(Max(N + 1, a + 1), oo))
 
-    Eq << Eq[-1].this.find(Max).apply(Algebra.Max.eq.Add)
+    Eq << Eq[-1].this.find(Max).apply(Nat.Max.eq.Add)
 
     Eq << Eq[-1].this.expr.apply(Bool.All.And.of.All)
 
@@ -72,7 +72,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(GreaterEqual).apply(Int.LtSub_1.of.Le)
 
-    Eq << Eq[-1].this.find(Greater).apply(Algebra.Gt.of.Gt_Max, 1)
+    Eq << Eq[-1].this.find(Greater).apply(Nat.Gt.of.Gt_Max, 1)
 
 
 

@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Int
+    from Lemma import Int, Finset
 
     n = Symbol(integer=True, positive=True)
     k = Symbol(integer=True)
@@ -18,7 +18,7 @@ def prove(Eq):
 
     Eq << Int.GeAbs.apply(f(k))
 
-    Eq << Algebra.LeSum.of.Le.apply(Eq[-1], (k, 0, n))
+    Eq << Finset.LeSum.of.Le.apply(Eq[-1], (k, 0, n))
 
 
 if __name__ == '__main__':

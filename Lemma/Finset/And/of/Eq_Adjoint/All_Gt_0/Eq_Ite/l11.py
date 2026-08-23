@@ -10,7 +10,7 @@ def apply(eq, infer, eq_piece):
 
 @prove
 def prove(Eq):
-    from Lemma import Bool, Finset, Set, Algebra, Tensor, Complex
+    from Lemma import Bool, Finset, Set, Tensor, Complex, Nat, Real
 
     n = Symbol(domain=Range(2, oo))
     A = Symbol(shape=(n, n), complex=True)
@@ -34,7 +34,7 @@ def prove(Eq):
     ξ = Symbol(r'{\color{red} {ξ}}', complex=True)
     Eq << Eq[1].subs(x, Stack[i:n](Piecewise((ξ, Equal(i, 0)), (1, Equal(i, 1)), (0, True))))
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Ne.given.Any.Ne)
+    Eq << Eq[-1].this.lhs.apply(Nat.Ne.given.Any.Ne)
 
     Eq << Eq[-1].this.lhs.apply(Bool.Any_UFn.given.UFnUFn, i, 1)
 
@@ -50,7 +50,7 @@ def prove(Eq):
 
     Eq << Set.EqConj.of.IsNotZero.square_completing.apply(Eq[-1], Eq[-2].lhs, simplify=None)
 
-    Eq << Algebra.Gt.of.Eq.Gt.apply(Eq[-1], Eq[-3])
+    Eq << Nat.Gt.of.Eq.Gt.apply(Eq[-1], Eq[-3])
 
     Eq << Eq[-1].subs(ξ, -Eq[-1].find(Indexed ** 2 * Add * Add).find(Mul))
 
@@ -78,7 +78,7 @@ def prove(Eq):
 
     Eq << Eq[-1] - Eq[-1].lhs.args[1]
 
-    Eq << Eq.A11_def.this.find(Norm).apply(Algebra.Norm.eq.Sqrt)
+    Eq << Eq.A11_def.this.find(Norm).apply(Real.Norm.eq.Sqrt)
 
     Eq << Eq[-1].this.rhs.apply(Finset.Sum.eq.Add.doit)
 

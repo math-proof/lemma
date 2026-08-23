@@ -9,7 +9,7 @@ def apply(el):
 
 @prove
 def prove(Eq):
-    from Lemma import Real, Algebra, Set, Bool, Int, Rat, Nat
+    from Lemma import Real, Set, Bool, Int, Rat, Nat
 
     x = Symbol(real=True)
     Eq << apply(Element(x, Interval.open(0, S.Pi)))
@@ -48,19 +48,19 @@ def prove(Eq):
 
     Eq << Rat.Ne_0.of.Div1.gt.Zero.apply(Eq.eq_grad)
 
-    Eq << Algebra.Square.gt.Zero.of.Ne_0.apply(Eq[-1])
+    Eq << Nat.Square.gt.Zero.of.Ne_0.apply(Eq[-1])
 
     Eq << Set.Gt.of.In_Icc.apply(Eq[0])
 
     Eq << Real.LtSin.of.Gt_0.apply(Eq[-1])
 
-    Eq << Algebra.Gt_0.of.Lt.apply(Eq[-1])
+    Eq << Nat.Gt_0.of.Lt.apply(Eq[-1])
 
     Eq << Nat.GtSquare_0.of.Gt_0.apply(Eq[-1])
 
-    Eq << Algebra.Gt_0.Div.of.Gt_0.Gt_0.apply(Eq[-1], Eq[-5]) / 2
+    Eq << Rat.Gt_0.Div.of.Gt_0.Gt_0.apply(Eq[-1], Eq[-5]) / 2
 
-    Eq << Algebra.Gt.of.Eq.Gt.apply(Eq[-1], Eq.eq_grad)
+    Eq << Nat.Gt.of.Eq.Gt.apply(Eq[-1], Eq.eq_grad)
 
     Eq << Bool.AllIn.of.All.apply(Eq[-1], (x, Interval(0, S.Pi, right_open=True)))
 

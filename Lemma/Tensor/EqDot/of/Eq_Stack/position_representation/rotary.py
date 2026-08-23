@@ -9,7 +9,7 @@ def apply(eq_R):
 
 @prove(slow=True)
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Tensor, Nat, Real
+    from Lemma import Set, Bool, Tensor, Nat, Real, Finset
     from Lemma.Tensor.Dot.eq.Stack.of.Eq_Stack.position_representation.rotary import rotary_matrix
     # b denotes 10000
     b = Symbol(integer=True, positive=True)
@@ -61,7 +61,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Piecewise).apply(Bool.Ite.nest, pivot=slice(1, None))
 
-    Eq << Eq[-1].this.find(Equal[1]).apply(Algebra.Eq_odd.Is.Ne.Zero)
+    Eq << Eq[-1].this.find(Equal[1]).apply(Nat.Eq_odd.Is.Ne.Zero)
 
     Eq << Eq[-1].this.rhs.find(Piecewise).apply(Bool.Ite.nest)
 
@@ -92,7 +92,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Piecewise).apply(Bool.Ite.nest, pivot=slice(1, None))
 
-    Eq << Eq[-1].this.find(Equal[1]).apply(Algebra.Eq_odd.Is.Ne.Zero)
+    Eq << Eq[-1].this.find(Equal[1]).apply(Nat.Eq_odd.Is.Ne.Zero)
 
     Eq << Eq[-1].this.rhs.find(Piecewise).apply(Bool.Ite.nest)
 

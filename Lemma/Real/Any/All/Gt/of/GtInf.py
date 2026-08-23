@@ -11,7 +11,7 @@ def apply(le, M=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Real, Bool
+    from Lemma import Real, Bool
 
     M, M0, x, a, b = Symbol(real=True)
     f = Function(real=True)
@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq << Eq[0].subs(-Eq[-1])
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Inf.eq.Neg.Sup)
+    Eq << Eq[-1].this.lhs.apply(Real.Inf.eq.Neg.Sup)
 
     Eq << -Eq[-1]
 

@@ -23,7 +23,7 @@ def apply(self, deep=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability, Bool, Finset
+    from Lemma import Probability, Bool, Finset
 
     x = Symbol(real=True, random=True)
     y = Symbol(real=True, shape=(oo,), random=True)

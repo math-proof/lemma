@@ -11,7 +11,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Real, Algebra
+    from Lemma import Real
 
     x = Symbol(real=True)
     Eq << apply(Integral[x](exp(-x ** 2 / 2)))
@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.doit()
 
-    Eq << Eq[-1].apply(Algebra.EqSqrt.of.Eq)
+    Eq << Eq[-1].apply(Real.EqSqrt.of.Eq)
 
     # https://ccjou.wordpress.com/2012/11/26/jacobian-矩陣與行列式/
 

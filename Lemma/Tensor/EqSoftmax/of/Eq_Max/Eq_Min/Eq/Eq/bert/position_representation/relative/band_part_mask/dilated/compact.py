@@ -24,7 +24,7 @@ def apply(eq_max, eq_min, eq_K, eq_V, Q, K, V):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Bool
+    from Lemma import Tensor, Bool, Int
 
     n, l, u, d = Symbol(integer=True, positive=True)
     d_z = Symbol(integer=True, positive=True)
@@ -52,7 +52,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2][i], Eq[-1][i]
 
-    Eq <<= Algebra.EqSlice.of.Le.Eq.apply(Eq.le, Eq[-2], step=d), Algebra.EqSlice.of.Le.Eq.apply(Eq.le, Eq[-1], step=d)
+    Eq <<= Tensor.EqSlice.of.Le.Eq.apply(Eq.le, Eq[-2], step=d), Tensor.EqSlice.of.Le.Eq.apply(Eq.le, Eq[-1], step=d)
 
     Eq.eq_K_dquote = Eq[-2].this.rhs.apply(Tensor.Stack.Ico.simp)
 
@@ -60,9 +60,9 @@ def prove(Eq):
 
     Eq <<= Eq.K_dquote[i], Eq.V_dquote[i]
 
-    Eq << Algebra.LeCeil.of.Le.apply(Eq.le / d)
+    Eq << Int.LeCeilS.of.Le.apply(Eq.le / d)
 
-    Eq <<= Algebra.EqSlice.of.Le.Eq.apply(Eq[-1], Eq[-3]), Algebra.EqSlice.of.Le.Eq.apply(Eq[-1], Eq[-2])
+    Eq <<= Tensor.EqSlice.of.Le.Eq.apply(Eq[-1], Eq[-3]), Tensor.EqSlice.of.Le.Eq.apply(Eq[-1], Eq[-2])
 
     Eq <<= Bool.Eq.of.Eq.Eq.apply(Eq.eq_K_dquote, Eq[-2]), Bool.Eq.of.Eq.Eq.apply(Eq.eq_V_dquote, Eq[-1])
 

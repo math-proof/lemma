@@ -11,7 +11,7 @@ def apply(eq_theta, eq_R, x):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Real
+    from Lemma import Tensor, Real
     from Lemma.Tensor.EqDot.of.Eq_Mul.position_representation import rotary_matrix
     # n denotes sequence length (seq_length)
     # b denotes 10000
@@ -57,9 +57,9 @@ def prove(Eq):
 
     Eq << Eq[-4].subs(*Eq[-3:])
 
-    Eq << Eq[-1].this.find(BlockMatrix).apply(Real.Block.eq.Cos)
+    Eq << Eq[-1].this.find(BlockMatrix).apply(Tensor.AppendCosS.eq.CosAppend)
 
-    Eq << Eq[-1].this.find(BlockMatrix * ~BlockMatrix).apply(Real.Block.eq.Sin)
+    Eq << Eq[-1].this.find(BlockMatrix * ~BlockMatrix).apply(Tensor.AppendSinS.eq.SinAppend)
 
     Eq << Eq[-1].subs(Eq[0].reversed)
 

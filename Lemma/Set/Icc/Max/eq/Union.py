@@ -13,7 +13,7 @@ def apply(self, index=-1):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Nat, Bool
 
     a, b, c = Symbol(integer=True)
     Eq << apply(Interval(a, Max(b, c), left_open=True, right_open=True))
@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.lhs.apply(Set.Le.Le.of.In_Icc), Eq[-1].this.rhs.apply(Set.In_Ico.given.Le.Lt)
 
-    Eq <<= Eq[-2].this.find(Less).apply(Algebra.Or.Lt.of.Lt_Max), Eq[-1].this.find(Less).apply(Algebra.Lt_Max.given.Or.Lt)
+    Eq <<= Eq[-2].this.find(Less).apply(Bool.Or.Lt.of.Lt_Max), Eq[-1].this.find(Less).apply(Nat.Lt_Max.given.Or.Lt)
 
     Eq <<= Eq[-2].this.find(Element).apply(Set.In_Union.given.OrInS, simplify=None), Eq[-1].this.find(Element).apply(Set.OrInS.of.In_Union, simplify=None)
 

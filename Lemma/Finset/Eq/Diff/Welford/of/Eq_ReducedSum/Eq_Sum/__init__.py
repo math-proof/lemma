@@ -12,7 +12,7 @@ def apply(eq_x_bar, eq_M2):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Finset, Tensor
+    from Lemma import Bool, Finset, Tensor
 
     x, M = Symbol(real=True, shape=(oo,))
     n, k = Symbol(integer=True)

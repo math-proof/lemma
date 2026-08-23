@@ -9,7 +9,7 @@ def apply(eq_x_bar):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat, Rat
+    from Lemma import Nat, Rat, Tensor
 
     x = Symbol(real=True, shape=(oo,))
     n, k = Symbol(integer=True)
@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq << Eq[0].subs(n, n + 1) - Eq[0]
 
-    Eq << Eq[-1].this.find(ReducedSum).apply(Algebra.ReducedSum.eq.Add.pop)
+    Eq << Eq[-1].this.find(ReducedSum).apply(Tensor.ReducedSum.eq.Add.pop)
 
     Eq << Eq[0] * n
 

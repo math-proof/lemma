@@ -13,14 +13,14 @@ def apply(self, index=-1):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat
+    from Lemma import Nat
 
     x, y = Symbol(real=True)
     Eq << apply(Min(x, y))
 
     Eq << Eq[0].this.rhs.args[1].args[1].defun()
 
-    Eq << Eq[-1].this.rhs.args[1].apply(Algebra.Mul.eq.Min)
+    Eq << Eq[-1].this.rhs.args[1].apply(Nat.Mul.eq.Min)
 
     Eq << Eq[-1].this.rhs.apply(Nat.Add.eq.Min)
 

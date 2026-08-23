@@ -12,7 +12,7 @@ def apply(n, u=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Tensor, Bool, Nat
+    from Lemma import Set, Tensor, Bool, Nat
 
     n = Symbol(integer=True, positive=True, given=True)
     Eq << apply(n)

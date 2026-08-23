@@ -9,7 +9,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Real
+    from Lemma import Real
 
     x, x0 = Symbol(real=True)
     S = Symbol(etype=dtype.real)

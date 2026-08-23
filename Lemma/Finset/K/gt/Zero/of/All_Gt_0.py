@@ -11,7 +11,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Set, Nat
+    from Lemma import Bool, Set, Nat
     from Lemma.Finset.K.eq.Add.definition import K
     x = Symbol(real=True, shape=(oo,))
     i = Symbol(integer=True)
@@ -46,7 +46,7 @@ def prove(Eq):
 
     Eq <<= Eq[-1] & Eq[-2]
 
-    Eq << Eq[-1].this.find(And).apply(Algebra.Gt_0.Add.of.Gt_0.Gt_0)
+    Eq << Eq[-1].this.find(And).apply(Nat.Gt_0.Add.of.Gt_0.Gt_0)
 
     Eq << Imply(Eq.hypothesis & Eq.induct1, Eq.induct2, plausible=True)
 

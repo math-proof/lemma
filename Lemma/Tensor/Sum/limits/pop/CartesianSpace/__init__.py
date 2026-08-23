@@ -17,7 +17,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Finset, Nat, Bool, Tensor
+    from Lemma import Set, Finset, Nat, Bool, Tensor
 
     a, b = Symbol(integer=True)
     n = Symbol(integer=True, positive=True)

@@ -11,26 +11,26 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set
+    from Lemma import Set, Nat, Bool, Int
 
     x, a = Symbol(real=True)
     Eq << apply(x ** 2 <= a ** 2)
 
-    Eq << Algebra.Le_0.of.Le.apply(Eq[0])
+    Eq << Nat.Le_0.of.Le.apply(Eq[0])
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sub.Square.eq.Mul)
+    Eq << Eq[-1].this.lhs.apply(Int.Sub.Square.eq.Mul)
 
-    Eq << Algebra.Or.of.Le_0.split.Mul.apply(Eq[-1])
+    Eq << Bool.Or.of.Le_0.split.Mul.apply(Eq[-1])
 
-    Eq << Eq[-1].this.args[0].args[0].apply(Algebra.Le.transport, lhs=0)
+    Eq << Eq[-1].this.args[0].args[0].apply(Nat.Le.transport, lhs=0)
 
-    Eq << Eq[-1].this.args[0].args[1].apply(Algebra.Ge.transport, lhs=1)
+    Eq << Eq[-1].this.args[0].args[1].apply(Nat.Ge.transport, lhs=1)
 
     Eq << Eq[-1].this.args[0].apply(Set.In_Icc.of.Le.Le)
 
-    Eq << Eq[-1].this.args[1].args[0].apply(Algebra.Le.transport, lhs=1)
+    Eq << Eq[-1].this.args[1].args[0].apply(Nat.Le.transport, lhs=1)
 
-    Eq << Eq[-1].this.args[1].args[1].apply(Algebra.Ge.transport, lhs=0)
+    Eq << Eq[-1].this.args[1].args[1].apply(Nat.Ge.transport, lhs=0)
 
     Eq << Eq[-1].this.args[1].apply(Set.In_Icc.of.Le.Le)
 

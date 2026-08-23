@@ -19,7 +19,7 @@ def apply(cup_finiteset_equality, last_element_equality):
 
 @prove(proved=False)
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set
 
     n = Symbol(integer=True, positive=True, given=True)
     p, a = Symbol(shape=(oo,), etype=dtype.integer, given=True)

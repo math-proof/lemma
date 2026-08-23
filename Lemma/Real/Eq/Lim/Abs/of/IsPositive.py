@@ -11,7 +11,7 @@ def apply(is_positive):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Real, Algebra, Bool, Nat, Int
+    from Lemma import Set, Real, Bool, Nat, Int
 
     x, x0 = Symbol(real=True)
     g = Function(real=True)
@@ -35,7 +35,7 @@ def prove(Eq):
 
     Eq << Bool.Any.All.And.of.Any_All.Any_All.limits_Inter.apply(Eq[-1], Eq[3])
 
-    Eq << Eq[-1].this.find(Less & Less).args[:2].apply(Algebra.Lt.Lt.given.Lt.Min)
+    Eq << Eq[-1].this.find(Less & Less).args[:2].apply(Nat.Lt.Lt.given.Lt.Min)
 
     Eq << Bool.Any.of.Any.subst.apply(Eq[-1], Min(δ_0, δ_1), δ)
 

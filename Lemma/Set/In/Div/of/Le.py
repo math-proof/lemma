@@ -10,7 +10,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Rat
+    from Lemma import Set, Rat, Nat
 
     n = Symbol(real=True, positive=True)
     b = Symbol(real=True)
@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq << Greater(n, 0, plausible=True)
 
-    Eq << Algebra.Gt.of.Gt.Le.apply(Eq[0], Eq[-1])
+    Eq << Nat.Gt.of.Gt.Le.apply(Eq[0], Eq[-1])
 
     Eq << Rat.LeDiv.of.Gt_0.Le.apply(Eq[-2], Eq[0])
 

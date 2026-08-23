@@ -16,7 +16,7 @@ def apply(le, ge, contains, notcontains):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Rat, Nat
+    from Lemma import Set, Bool, Rat, Nat
 
     y_quote = Symbol(integer=True, given=True)
     x, y = Symbol(integer=True)
@@ -31,7 +31,7 @@ def prove(Eq):
     a, b, a_quote, b_quote = Symbol(shape=(oo,), integer=True)
     Eq << Set.Any.Eq.of.Card.ne.Zero.apply(Eq[-1], a)
 
-    Eq << Algebra.Gt_0.of.Ge.apply(Eq[1])
+    Eq << Nat.Gt_0.of.Ge.apply(Eq[1])
 
     Eq << Set.Any.Eq.of.Card.gt.Zero.apply(Eq[-1], b)
 
@@ -39,8 +39,8 @@ def prove(Eq):
 
     Eq.Any_And = Bool.Any.And.of.Any.Any.apply(Eq[-3], Eq[-1], simplify=None)
     Eq.abs_complement = Set.Eq.Card.SDiff.of.In.apply(Eq[2])
-    Eq << Algebra.Ge.of.Eq.Ge.subst.apply(Eq.abs_complement, Eq[1])
-    Eq << Algebra.Gt_0.of.Ge.apply(Eq[-1])
+    Eq << Nat.Ge.of.Eq.Ge.subst.apply(Eq.abs_complement, Eq[1])
+    Eq << Nat.Gt_0.of.Ge.apply(Eq[-1])
     Eq << Set.Any.Eq.of.Card.gt.Zero.apply(Eq[-1], b_quote)
     Eq << Eq[-1].subs(Eq.abs_complement)
     Eq.abs_union = Set.EqCard.of.NotIn.apply(Eq[3])

@@ -10,12 +10,12 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Real
 
     x, y = Symbol(real=True)
     Eq << apply(LessEqual(x, y))
 
-    Eq << Algebra.LeLog.of.Le.apply(Eq[1])
+    Eq << Real.LeLog.of.Le.apply(Eq[1])
 
 
 if __name__ == '__main__':

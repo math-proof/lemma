@@ -38,7 +38,7 @@ def apply(eq_z, eq_z_quote, el):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Set, Bool, Nat, Fin
+    from Lemma import Tensor, Set, Bool, Nat, Fin
 
     n, l, u = Symbol(domain=Range(2, oo))
     h = Symbol(integer=True, shape=(n,))
@@ -69,15 +69,15 @@ def prove(Eq):
 
     Eq.ge_neg_min, Eq.lt_min = Set.Ge.Le_Sub_1.of.In_Ico.apply(Eq[2])
 
-    Eq <<= Eq.ge_neg_min.this.find(Min).args[0].apply(Algebra.Expr.eq.IteGe, upper=n - 1), Eq.lt_min.this.find(Add).apply(Algebra.Expr.eq.IteGe, upper=n)
+    Eq <<= Eq.ge_neg_min.this.find(Min).args[0].apply(Nat.Expr.eq.IteGe, upper=n - 1), Eq.lt_min.this.find(Add).apply(Nat.Expr.eq.IteGe, upper=n)
 
     Eq <<= -Eq[-2].this(i).find(GreaterEqual).simplify(), Eq[-1].this(i).find(GreaterEqual).simplify()
 
-    Eq.lt = Algebra.Lt.of.Lt.relax.apply(Eq[-1], upper=Min(n, u))
+    Eq.lt = Nat.Lt.of.Lt.relax.apply(Eq[-1], upper=Min(n, u))
 
     Eq << Nat.Le.of.Le.relax.apply(Eq[-2], upper=Min(l - 1, n - 1))
 
-    Eq.ge = -Eq[-1].this.rhs.apply(Algebra.Min.eq.Add)
+    Eq.ge = -Eq[-1].this.rhs.apply(Nat.Min.eq.Add)
 
     Eq << Bool.BFn.of.BFnIte.Cond.apply(Eq.ge, Eq.eq, invert=True)
 

@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Algebra, Nat
+    from Lemma import Finset, Nat, Int
 
     m, n, i = Symbol(integer=True, nonnegative=True)
     k = Symbol(integer=True)
@@ -20,11 +20,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.lhs.expr.args[1].apply(Algebra.Mul.Neg)
+    Eq << Eq[-1].this.lhs.expr.args[1].apply(Int.Mul.Neg)
 
     Eq << Eq[-1].this.lhs.apply(Finset.Sum.eq.Sub.telescope)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Mul.Neg, 1)
+    Eq << Eq[-1].this.lhs.apply(Int.Mul.Neg, 1)
 
 
 

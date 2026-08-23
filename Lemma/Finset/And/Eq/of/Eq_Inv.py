@@ -12,7 +12,7 @@ def apply(eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Nat
+    from Lemma import Tensor, Nat
 
     m, n = Symbol(integer=True, positive=True)
     Σ_x = Symbol(shape=(n, n), real=True, singular=False)
@@ -32,7 +32,7 @@ def prove(Eq):
 
     Eq << Tensor.Slice.Get.of.Eq.apply(Eq[-1], n)
 
-    Eq <<= Algebra.EqTranspose.of.Eq.apply(Eq[-2]), Algebra.EqTranspose.of.Eq.apply(Eq[-1])
+    Eq <<= Tensor.EqTranspose.of.Eq.apply(Eq[-2]), Tensor.EqTranspose.of.Eq.apply(Eq[-1])
 
     Eq <<= Tensor.Slice.Get.of.Eq.apply(Eq[-2], n), Tensor.Slice.Get.of.Eq.apply(Eq[-1], n)
 

@@ -30,7 +30,7 @@ def apply(eq_M, x, w, r):
 
 @prove#(slow=True)
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool, Tensor, Int, Nat, Finset
+    from Lemma import Set, Bool, Tensor, Int, Nat, Finset
 
     m, d, d_quote = Symbol(integer=True, positive=True)
     n, l, r = Symbol(shape=(2,), integer=True, positive=True)
@@ -76,13 +76,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Min, Add[Min]).apply(Nat.Add.eq.Min).this.find(Min, Add[Min]).apply(Nat.Add.eq.Min)
 
-    Eq << Eq[-1].this.find(Min[Ceil]).apply(Algebra.Min.eq.Add, 1).this.find(Min[Ceil]).apply(Algebra.Min.eq.Add, 1)
+    Eq << Eq[-1].this.find(Min[Ceil]).apply(Nat.Min.eq.Add, 1).this.find(Min[Ceil]).apply(Nat.Min.eq.Add, 1)
 
     Eq << Eq[-1].this.find(Add[Ceil]).apply(Int.Add.Ceil.eq.Floor).this.find(Add[Ceil]).apply(Int.Add.Ceil.eq.Floor)
 
-    Eq << Eq[-1].this.find(Min[Floor]).apply(Algebra.Min.eq.Floor).this.find(Min[Floor]).apply(Algebra.Min.eq.Floor)
+    Eq << Eq[-1].this.find(Min[Floor]).apply(Int.Min.eq.Floor).this.find(Min[Floor]).apply(Int.Min.eq.Floor)
 
-    Eq << Eq[-1].this.find(-Floor).apply(Algebra.Mul.eq.Ceil).this.find(-Floor).apply(Algebra.Mul.eq.Ceil)
+    Eq << Eq[-1].this.find(-Floor).apply(Int.Mul.eq.Ceil).this.find(-Floor).apply(Int.Mul.eq.Ceil)
 
     Eq << Eq[-1].this.rhs.subs(Eq.M_def)
 
@@ -107,11 +107,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Bool.Ite_Ite.eq.Ite__Ite)
 
-    Eq << Eq[-1].this.find(-Floor).apply(Algebra.Mul.eq.Ceil).this.find(-Floor).apply(Algebra.Mul.eq.Ceil)
+    Eq << Eq[-1].this.find(-Floor).apply(Int.Mul.eq.Ceil).this.find(-Floor).apply(Int.Mul.eq.Ceil)
 
-    Eq << Eq[-1].this.find(-Add).apply(Algebra.Mul.distribute).this.find(-Add).apply(Algebra.Mul.distribute)
+    Eq << Eq[-1].this.find(-Add).apply(Nat.Mul.distribute).this.find(-Add).apply(Nat.Mul.distribute)
 
-    Eq << Eq[-1].this.find(Min[Floor]).apply(Algebra.Min.eq.Floor).this.find(Min[Floor]).apply(Algebra.Min.eq.Floor)
+    Eq << Eq[-1].this.find(Min[Floor]).apply(Int.Min.eq.Floor).this.find(Min[Floor]).apply(Int.Min.eq.Floor)
 
     Eq << Bool.Eq.of.Eq.Eq.apply(Eq.convolution_definition, Eq[-1])
 

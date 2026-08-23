@@ -8,7 +8,7 @@ def apply(eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Rat
+    from Lemma import Rat
 
     x, a = Symbol(complex=True)
     d = Symbol(complex=True, zero=False)

@@ -11,7 +11,7 @@ def apply(eq_x_bar, t, k=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset, Int, Nat, Vector
+    from Lemma import Finset, Int, Nat, Vector
 
     x = Symbol(real=True, shape=(oo,))
     n, k = Symbol(integer=True)
@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Finset.AddSumS.eq.Sum_Add_Sum)
 
-    Eq << Eq[-1].this.lhs.expr.apply(Algebra.Sub.Square.eq.Mul)
+    Eq << Eq[-1].this.lhs.expr.apply(Int.Sub.Square.eq.Mul)
 
     Eq << Eq[-1].this.lhs.find(Sum).apply(Finset.Sum_Add.eq.AddSumS)
 

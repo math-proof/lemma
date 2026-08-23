@@ -14,7 +14,7 @@ def apply(greater_than, _greater_than):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Nat
 
     a, b, x = Symbol(integer=True, given=True)
     Eq << apply(b < x, x < a)
@@ -24,7 +24,7 @@ def prove(Eq):
 
 
 
-    Eq << Algebra.Ge.given.Gt.relax.apply(Eq[-1])
+    Eq << Nat.Ge.given.Gt.relax.apply(Eq[-1])
 
     Eq << Eq[-1].reversed
 

@@ -132,7 +132,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool, Nat
 
     n, k = Symbol(integer=True, positive=True)
     i = Symbol(domain=Range(n))
@@ -142,7 +142,7 @@ def prove(Eq):
 
     Eq << Eq[0].this.lhs.apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite)
 
-    Eq << Eq[-1].this.find(GreaterEqual).apply(Algebra.Ge.Is.Eq.squeeze)
+    Eq << Eq[-1].this.find(GreaterEqual).apply(Nat.Ge.Is.Eq.squeeze)
 
 
 if __name__ == '__main__':

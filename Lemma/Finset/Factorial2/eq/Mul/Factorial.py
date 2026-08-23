@@ -12,19 +12,19 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Algebra
+    from Lemma import Finset
 
     n = Symbol(integer=True, nonnegative=True)
     Eq << apply(Factorial2(n * 2))
 
     Eq << Eq[-1].this.lhs.apply(Finset.Factorial2.eq.Prod)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Prod.eq.Mul.scale, S.Half)
+    Eq << Eq[-1].this.lhs.apply(Finset.Prod.eq.Mul.scale, S.Half)
 
     Eq << Eq[-1].this.rhs.apply(Finset.Factorial.eq.Prod)
 
     i = Eq[-1].lhs.variable
-    Eq << Eq[-1].this.lhs.apply(Algebra.Prod.limits.subst.Neg, i, n - i)
+    Eq << Eq[-1].this.lhs.apply(Finset.Prod.limits.subst.Neg, i, n - i)
     # https://en.wikipedia.org/wiki/Double_factorial
 
 

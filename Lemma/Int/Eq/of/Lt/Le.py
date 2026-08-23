@@ -12,7 +12,7 @@ def apply(x1_less_than_y, y_less_than_x):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Rat, Int
+    from Lemma import Rat, Int
     x = Symbol(real=True)
     y = Symbol(integer=True)
 

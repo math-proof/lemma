@@ -12,13 +12,13 @@ def apply(ou, ou_et):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool
+    from Lemma import Set, Bool, Nat
 
     n, u = Symbol(domain=Range(2, oo), given=True)
     i, j = Symbol(domain=Range(n), given=True)
     Eq << apply(And(j >= i, i >= n - u) | Element(j - i, Range(u)), Or(j >= i, i < n - u))
 
-    Eq << Eq[0].this.find(Or[2]).apply(Algebra.Or.invert, 0)
+    Eq << Eq[0].this.find(Or[2]).apply(Bool.Or.invert, 0)
 
     Eq << Eq[-1].this.find(NotElement).apply(Set.NotIn_Ico.Is.Or)
 
@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Or[~And]).apply(Bool.And.distribute, 1)
 
-    Eq << Eq[-1].this.find(Add >= Symbol).apply(Algebra.Ge.transport, lhs=0)
+    Eq << Eq[-1].this.find(Add >= Symbol).apply(Nat.Ge.transport, lhs=0)
 
     Eq << -Eq[-1].this.find(-Symbol >= Add)
 

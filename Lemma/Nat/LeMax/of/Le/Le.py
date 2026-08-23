@@ -10,12 +10,12 @@ def apply(le_0, le_1):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Nat
 
     b, a, x, y = Symbol(real=True, given=True)
     Eq << apply(x <= a, y <= b)
 
-    Eq << Algebra.GeMax.of.Ge.Ge.apply(Eq[0].reversed, Eq[1].reversed)
+    Eq << Nat.GeMax.of.Ge.Ge.apply(Eq[0].reversed, Eq[1].reversed)
 
     Eq << Eq[-1].reversed
 

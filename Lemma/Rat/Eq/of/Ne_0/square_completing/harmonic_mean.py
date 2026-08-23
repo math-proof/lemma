@@ -10,7 +10,7 @@ def apply(ne_zero, self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat, Rat
+    from Lemma import Nat, Rat, Int
 
     a, b, x, y, z = Symbol(complex=True)
     Eq << apply(Unequal(a + b, 0), a * (x - y) ** 2 + b * (x - z) ** 2)
@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Add * (~Add) ** 2).args[1].apply(Rat.Div.cancel, S(1) / 2)
 
-    Eq << Eq[-1].this.find(Add * (~Add) ** 2).args[1].apply(Algebra.Mul.Neg)
+    Eq << Eq[-1].this.find(Add * (~Add) ** 2).args[1].apply(Int.Mul.Neg)
 
     Eq << Nat.Eq_Sub.of.EqAdd.apply(Eq[-1], rhs=2)
 
@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Nat.AddMulS.eq.Mul_Add)
 
-    Eq << Eq[-1].this.find(Mul[Add[-Pow, -Pow]]).apply(Algebra.Mul.Neg)
+    Eq << Eq[-1].this.find(Mul[Add[-Pow, -Pow]]).apply(Int.Mul.Neg)
 
     Eq << Eq[-1].this.find(Pow + Pow).args[:3].apply(Rat.Add.eq.Add.square_completing, y)
 

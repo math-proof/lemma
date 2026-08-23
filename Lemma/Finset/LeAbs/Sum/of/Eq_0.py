@@ -18,7 +18,7 @@ def apply(is_zero, self, pivot=-1, i=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat, Int, Finset, Real
+    from Lemma import Nat, Int, Finset, Real
 
     n = Symbol(integer=True, nonnegative=True)
     i, k = Symbol(integer=True)
@@ -39,7 +39,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.apply(Nat.LeMulS.of.Ge_0.Le, Eq[-2].rhs.find(Abs[Sum]))
 
-    Eq << Algebra.LeSum.of.All_Le.apply(Eq[-1])
+    Eq << Finset.LeSum.of.All_Le.apply(Eq[-1])
 
     Eq << Nat.Le.of.Le.Le.apply(Eq[-4], Eq[-1])
 

@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Algebra
+    from Lemma import Finset
 
     n = Symbol(integer=True, positive=True)
     k = Symbol(domain=Range(n + 1))
@@ -27,11 +27,11 @@ def prove(Eq):
     Eq << Eq[-1].this.find(Factorial).apply(Finset.Factorial.eq.Prod)
 
     i = Eq[-1].rhs.variable
-    Eq << Eq[-1].this.lhs.args[0].apply(Algebra.Prod.limits.subst.Neg, i, n - i)
+    Eq << Eq[-1].this.lhs.args[0].apply(Finset.Prod.limits.subst.Neg, i, n - i)
 
-    Eq << Eq[-1].this.find((~Product) ** -1).apply(Algebra.Prod.limits.subst.Neg, i, n - i)
+    Eq << Eq[-1].this.find((~Product) ** -1).apply(Finset.Prod.limits.subst.Neg, i, n - i)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Mul.eq.Prod.limits.SDiff)
+    Eq << Eq[-1].this.lhs.apply(Finset.Mul.eq.Prod.limits.SDiff)
 
 
 if __name__ == '__main__':

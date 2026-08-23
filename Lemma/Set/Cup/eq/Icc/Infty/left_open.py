@@ -12,7 +12,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool, Nat, Int
+    from Lemma import Set, Bool, Nat, Int
 
     k = Symbol(integer=True)
     Eq << apply(Cup[k:oo](Interval(k, k + 1, left_open=True)))
@@ -29,7 +29,7 @@ def prove(Eq):
 
     Eq <<= Eq[-3].this.lhs.find(Element).apply(Set.Ge.of.In_Ico), Bool.Imp.given.Cond.apply(Eq[-2]), Eq[-1].this.rhs.apply(Set.In_Ico.given.Ge.Le_Sub_1)
 
-    Eq <<= Eq[-3].this.lhs.expr.apply(Nat.Gt.of.Gt.Ge), Set.In_Ico.given.Le.Lt.apply(Eq[-2]), Eq[-1].this.rhs.apply(Algebra.Ge.transport, lhs=0)
+    Eq <<= Eq[-3].this.lhs.expr.apply(Nat.Gt.of.Gt.Ge), Set.In_Ico.given.Le.Lt.apply(Eq[-2]), Eq[-1].this.rhs.apply(Nat.Ge.transport, lhs=0)
 
     Eq << Eq[-4].this.lhs.apply(Set.IsPositive.of.Gt_0, simplify=None)
 
@@ -39,7 +39,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.simplify()
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Gt_0.Ceil.of.Gt_0)
+    Eq << Eq[-1].this.lhs.apply(Int.Gt_0.Ceil.of.Gt_0)
 
     Eq << Eq[-1].this.lhs.apply(Nat.Ge_Add_1.of.Gt)
 

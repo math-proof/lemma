@@ -32,7 +32,7 @@ def apply(x_independence_assumption, y_independence_assumption, xy_independence_
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Set, Bool, Probability, Real, Int, Finset
+    from Lemma import Tensor, Set, Bool, Probability, Real, Int, Finset, Nat
 
     from Lemma.Tensor.Eq.of.Ne_0.Eq.Eq.Eq.crf.markov import markov_assumptions
     d, n = Symbol(domain=Range(2, oo))
@@ -102,7 +102,7 @@ def prove(Eq):
 
     Eq << Bool.ImpNot.of.Or.apply(Eq[-1])
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Ne.given.Gt)
+    Eq << Eq[-1].this.lhs.apply(Nat.Ne.given.Gt)
 
     Eq.xy_joint_nonzero = Probability.Ne_0.of.Ne_0.joint_slice.apply(Eq[3], (slice(0, t + 1), slice(0, t + 1)))
 
@@ -115,7 +115,7 @@ def prove(Eq):
 
     Eq << Eq[-2].subs(Eq[-1].reversed)
 
-    Eq << Eq[-1].apply(Algebra.Or.Log.of.Eq)
+    Eq << Eq[-1].apply(Real.Or.Log.of.Eq)
 
     Eq << Bool.And_And.of.And.apply(Eq[-1] & Eq.xy_joint_nonzero)
 
@@ -125,7 +125,7 @@ def prove(Eq):
 
     Eq.y_given_x_log = Eq[-2].subs(Eq[-1])
 
-    Eq << Eq.z_definition.apply(Algebra.EqReducedSum.of.Eq)
+    Eq << Eq.z_definition.apply(Tensor.EqReducedSum.of.Eq)
 
     Eq << Eq[-1].subs(Eq.z_definition_by_x_quote)
 

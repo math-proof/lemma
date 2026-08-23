@@ -10,7 +10,7 @@ def apply(eq_ab, eq_xy):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
 
     a, b, x, y = Symbol(integer=True)
     Eq << apply(Iff(a > 0, b > 0), Iff(x > 0, y > 0))
@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << Bool.Imp.of.Iff.apply(Eq[1], reverse=True)
 
-    Eq << Algebra.Given.Or.of.Given.Given.apply(Eq[-2], Eq[-1]).reversed
+    Eq << Bool.Given.Or.of.Given.Given.apply(Eq[-2], Eq[-1]).reversed
 
 
 

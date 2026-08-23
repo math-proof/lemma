@@ -17,7 +17,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Nat
+    from Lemma import Set, Bool, Nat
 
     a, b = Symbol(real=True)
     Eq << apply(Interval(a, b) | Interval(b, a))
@@ -36,7 +36,7 @@ def prove(Eq):
 
     Eq << Imply(a > b, Equal(Max(a, b), a), plausible=True)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.EqMax.of.Gt)
+    Eq << Eq[-1].this.lhs.apply(Nat.EqMax.of.Gt)
 
     Eq <<= Eq[-2] & Eq[-1]
 
@@ -54,7 +54,7 @@ def prove(Eq):
 
     Eq << Imply(a <= b, Equal(Max(a, b), b), plausible=True)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.EqMax.of.Le)
+    Eq << Eq[-1].this.lhs.apply(Nat.EqMax.of.Le)
 
     Eq <<= Eq[2] & Eq[-1]
 

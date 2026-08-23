@@ -12,7 +12,7 @@ def apply(eq_x_bar, eq_σ2):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Algebra, Bool, Nat, Rat
+    from Lemma import Finset, Bool, Nat, Rat
 
     x, σ = Symbol(real=True, shape=(oo,))
     n, k = Symbol(integer=True)

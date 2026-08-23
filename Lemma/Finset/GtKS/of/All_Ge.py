@@ -13,7 +13,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset, Bool, Nat
+    from Lemma import Finset, Bool, Nat
     from Lemma.Finset.K.eq.Add.definition import K
 
     x = Symbol(real=True, shape=(oo,))
@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq << Bool.All.All.of.All.apply(Eq[0], cond={n})
 
-    Eq << Eq[-1].this.expr.apply(Algebra.Gt_0.of.Ge)
+    Eq << Eq[-1].this.expr.apply(Nat.Gt_0.of.Ge)
 
     Eq << Finset.K.gt.Zero.of.All_Gt_0.apply(Eq[-1])
 
@@ -35,7 +35,7 @@ def prove(Eq):
 
     Eq << Finset.K.gt.Zero.of.All_Gt_0.apply(Eq[-1])
 
-    Eq << Algebra.GtAdd.of.Gt.Ge.apply(Eq[-1], Eq[-4])
+    Eq << Nat.GtAdd.of.Gt.Ge.apply(Eq[-1], Eq[-4])
 
 
 

@@ -35,7 +35,7 @@ def apply(eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Tensor, Nat
+    from Lemma import Bool, Tensor, Nat
 
     n, l, u = Symbol(domain=Range(2, oo))
     A = Symbol(shape=(n, n), real=True)
@@ -91,7 +91,7 @@ def prove(Eq):
 
     Eq <<= Eq[-1].this.expr.rhs.apply(Tensor.Expr.eq.Stack, j)
 
-    Eq <<= Eq[-1].this.find(ExprCondPair[2]).cond.apply(Algebra.Lt.transport, rhs=slice(0, 4, 3))
+    Eq <<= Eq[-1].this.find(ExprCondPair[2]).cond.apply(Nat.Lt.transport, rhs=slice(0, 4, 3))
 
     Eq << Eq[-1].subs(Eq.z_ij_def)
 
@@ -111,9 +111,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this(i).find(And).simplify()
 
-    Eq << Eq[-1].this.find(Or[~Less]).apply(Algebra.Lt.transport, rhs=slice(0, 2))
+    Eq << Eq[-1].this.find(Or[~Less]).apply(Nat.Lt.transport, rhs=slice(0, 2))
 
-    Eq << Eq[-1].this.find(Or).apply(Algebra.Or_Lt.Is.Lt.Max)
+    Eq << Eq[-1].this.find(Or).apply(Bool.Or_Lt.Is.Lt.Max)
 
     Eq << Eq[-1].this().find(Max).simplify()
 
@@ -121,7 +121,7 @@ def prove(Eq):
 
     Eq <<= Eq[-1].this.expr.rhs.apply(Tensor.Expr.eq.Stack, j)
 
-    Eq <<= Eq[-1].this.find(Less).apply(Algebra.Lt.transport, rhs=slice(0, 4, 3))
+    Eq <<= Eq[-1].this.find(Less).apply(Nat.Lt.transport, rhs=slice(0, 4, 3))
 
     Eq << Eq[-1].subs(Eq.z_ij_def)
 
@@ -135,9 +135,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this(i).expr.rhs.find(ExprCondPair[Piecewise[ExprCondPair[~Piecewise]]]).find(Symbol < Min - 1).simplify()
 
-    Eq << Eq[-1].this.find(Or[~Less]).apply(Algebra.Lt.transport, rhs=slice(0, 2))
+    Eq << Eq[-1].this.find(Or[~Less]).apply(Nat.Lt.transport, rhs=slice(0, 2))
 
-    Eq << Eq[-1].this.find(Or).apply(Algebra.Or_Lt.Is.Lt.Max)
+    Eq << Eq[-1].this.find(Or).apply(Bool.Or_Lt.Is.Lt.Max)
 
     Eq << Eq[-1].this(i).find(Max).simplify()
 

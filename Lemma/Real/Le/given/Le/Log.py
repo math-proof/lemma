@@ -9,12 +9,12 @@ def apply(lt):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Real
 
     x, y, z = Symbol(real=True, given=True)
     Eq << apply(LessEqual(x, y))
 
-    Eq << Algebra.LeExp.of.Le.apply(Eq[1])
+    Eq << Real.LeExp.of.Le.apply(Eq[1])
 
 
 if __name__ == '__main__':

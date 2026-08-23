@@ -10,12 +10,12 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool
+    from Lemma import Set, Bool, Tensor
     x, y = Symbol(integer=True)
 
     Eq << apply(Equal({x, y}, {0, 1}))
 
-    Eq << Algebra.EqReducedSum.of.Eq.apply(Eq[0])
+    Eq << Tensor.EqReducedSum.of.Eq.apply(Eq[0])
 
     Eq << Eq[-1].this.rhs.doit()
 

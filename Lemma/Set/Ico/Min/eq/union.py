@@ -12,7 +12,7 @@ def apply(self, index=-1):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Nat, Bool
 
     a, b, c = Symbol(integer=True)
     Eq << apply(Range(Min(b, c), a))
@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.lhs.apply(Set.Ge.Le_Sub_1.of.In_Ico), Eq[-1].this.rhs.apply(Set.In_Ico.given.Ge.Le_Sub_1)
 
-    Eq <<= Eq[-2].this.find(GreaterEqual).apply(Algebra.Or.Ge.of.Ge_Min), Eq[-1].this.find(GreaterEqual).apply(Algebra.Ge_Min.given.Or.Ge)
+    Eq <<= Eq[-2].this.find(GreaterEqual).apply(Bool.Or.Ge.of.Ge_Min), Eq[-1].this.find(GreaterEqual).apply(Nat.Ge_Min.given.Or.Ge)
 
     Eq <<= Eq[-2].this.find(Element).apply(Set.In_Union.given.OrInS, simplify=None), Eq[-1].this.find(Element).apply(Set.OrInS.of.In_Union, simplify=None)
 

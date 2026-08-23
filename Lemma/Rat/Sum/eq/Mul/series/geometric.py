@@ -31,7 +31,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Rat
+    from Lemma import Bool, Rat
 
     k, n = Symbol(integer=True)
     λ = Symbol(real=True)

@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat, Real
+    from Lemma import Nat, Real, Int
 
     n, b = Symbol(positive=True, integer=True)
     d = Symbol(integer=True, positive=True, even=True)
@@ -17,17 +17,17 @@ def prove(Eq):
     i, j = Symbol(integer=True)
     Eq << apply(Piecewise((cos(i / b ** (j / d)), Equal(j % 2, 0)), (-sin(i / b ** ((j - 1) / d)), True)))
 
-    Eq << Eq[0].this.rhs.find(Mod).apply(Algebra.Mod.eq.Ite)
+    Eq << Eq[0].this.rhs.find(Mod).apply(Int.Mod.eq.Ite)
 
     Eq << Eq[-1].this.find(Mul[Piecewise]).apply(Nat.Mul_Ite.eq.Ite_MulS, simplify=None)
 
-    Eq << Eq[-1].this.find(Floor).apply(Algebra.Floor.eq.Ite, simplify=None)
+    Eq << Eq[-1].this.find(Floor).apply(Int.Floor.eq.Ite, simplify=None)
 
     Eq << Eq[-1].this.find(Mul[Piecewise]).apply(Nat.Mul_Ite.eq.Ite_MulS, simplify=None)
 
-    Eq << Eq[-1].this.find(Mul[Add]).apply(Algebra.Mul.distribute, simplify=None)
+    Eq << Eq[-1].this.find(Mul[Add]).apply(Nat.Mul.distribute, simplify=None)
 
-    Eq << Eq[-1].this.rhs.find(Mul[Add]).apply(Algebra.Mul.distribute, simplify=None)
+    Eq << Eq[-1].this.rhs.find(Mul[Add]).apply(Nat.Mul.distribute, simplify=None)
 
     Eq << Eq[-1].this.find(Pow[Piecewise]).apply(Nat.Pow_Ite.eq.Ite_PowS, simplify=None)
 
@@ -35,7 +35,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Add[Piecewise]).apply(Nat.AddIteS.eq.IteAnd, simplify=None)
 
-    Eq << Eq[-1].this.rhs.apply(Real.Cos.eq.Ite, simplify=None)
+    Eq << Eq[-1].this.rhs.apply(Real.CosIte.eq.Ite_CosS, simplify=None)
 
 
 

@@ -11,14 +11,14 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Nat
 
     x, a, b = Symbol(integer=True)
     Eq << apply(Element(x, Range(a, b)))
 
     Eq << Set.Ge.Le_Sub_1.of.In_Ico.apply(Eq[0])
 
-    Eq << Algebra.Lt.of.Ge.Lt.apply(*Eq[-2:])
+    Eq << Nat.Lt.of.Ge.Lt.apply(*Eq[-2:])
 
 
 if __name__ == '__main__':

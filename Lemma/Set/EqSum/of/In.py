@@ -12,7 +12,7 @@ def apply(contains, sgm):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset
+    from Lemma import Finset, Bool
 
     n, m = Symbol(integer=True, positive=True)
     x, y = Function(real=True)
@@ -21,7 +21,7 @@ def prove(Eq):
     Eq << apply(Element(t, Range(m)), Sum[j:m](y(j)))
 
     Eq << Eq[1].this.lhs.apply(Finset.Sum.eq.AddSumS, cond={t})
-    Eq << Algebra.Eq_Ite.of.Cond.apply(Eq[0], Eq[-1].lhs)
+    Eq << Bool.Eq_Ite.of.Cond.apply(Eq[0], Eq[-1].lhs)
 
 
 if __name__ == '__main__':

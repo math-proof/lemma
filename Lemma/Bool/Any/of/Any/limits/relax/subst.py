@@ -10,7 +10,7 @@ def apply(given, old, new):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
     a, b, z = Symbol(real=True)
     x = Symbol(domain=Interval(a, b, right_open=True))
     y = Symbol(domain=Interval(a, b))

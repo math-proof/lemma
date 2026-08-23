@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Algebra, Tensor
+    from Lemma import Finset, Tensor, Int
 
     m, d = Symbol(integer=True, positive=True)
     d = Symbol(domain=Range(m))
@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Tensor.Dot.eq.Stack_Sum_MulGetS, simplify=None)
 
-    Eq << Eq[-1].this.find((-Symbol) ** Add).apply(Algebra.Pow.eq.Mul.Neg, simplify=None)
+    Eq << Eq[-1].this.find((-Symbol) ** Add).apply(Int.Pow.eq.Mul.Neg, simplify=None)
 
     Eq << Eq[-1].this.lhs().find(Sum).simplify()
 

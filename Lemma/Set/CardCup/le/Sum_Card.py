@@ -8,7 +8,7 @@ def apply(expr, *limits):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool, Finset, Nat
+    from Lemma import Set, Bool, Finset, Nat
 
     n = Symbol(integer=True, positive=True, given=False)
     k = Symbol(integer=True)

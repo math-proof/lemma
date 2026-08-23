@@ -12,7 +12,7 @@ def apply(limited_f, limited_g):
 
 @prove
 def prove(Eq):
-    from Lemma import Real, Set, Algebra, Bool, Rat, Nat, Complex, Int
+    from Lemma import Real, Set, Bool, Rat, Nat, Complex, Int
 
     x, x0 = Symbol(real=True)
     f, g = Function(real=True)
@@ -66,7 +66,7 @@ def prove(Eq):
 
     Eq << Bool.Any.All.And.of.Any_All.Any_All.limits_Inter.apply(Eq[-1], Eq.lt_fx)
 
-    Eq << Eq[-1].this.expr.expr.apply(Algebra.LtAdd.of.Lt.Lt)
+    Eq << Eq[-1].this.expr.expr.apply(Nat.LtAdd.of.Lt.Lt)
 
     Eq << Bool.Any.All.And.of.Any_All.Any_All.limits_Inter.apply(Eq.le, Eq[-1])
 

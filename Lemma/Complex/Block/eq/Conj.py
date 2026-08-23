@@ -17,7 +17,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Complex
+    from Lemma import Complex
 
     n = Symbol(positive=True, integer=True)
     A, B, C, D = Symbol(shape=(n, n), complex=True)

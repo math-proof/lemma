@@ -14,7 +14,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Finset
+    from Lemma import Bool, Finset
 
     x = Symbol(complex=True, shape=(oo, oo))
     i, j = Symbol(integer=True)

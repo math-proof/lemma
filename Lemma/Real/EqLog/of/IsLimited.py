@@ -10,7 +10,7 @@ def apply(is_limited):
 
 @prove(proved=False)
 def prove(Eq):
-    from Lemma import Real, Set, Algebra, Bool, Int
+    from Lemma import Real, Set, Bool, Int, Nat
 
     x, x0 = Symbol(real=True)
     f = Function(real=True)
@@ -40,9 +40,9 @@ def prove(Eq):
 
     Eq << Eq[2].this.expr.expr.apply(Int.And.of.Lt.split.Abs)
 
-    Eq << Eq[-1].this.expr.expr.args[0].apply(Algebra.Lt.transport, lhs=0)
+    Eq << Eq[-1].this.expr.expr.args[0].apply(Nat.Lt.transport, lhs=0)
 
-    Eq << Eq[-1].this.expr.expr.args[0].apply(Algebra.Gt.transport, lhs=0)
+    Eq << Eq[-1].this.expr.expr.args[0].apply(Nat.Gt.transport, lhs=0)
 
     Eq << Eq[-1].this.expr.expr.apply(Set.In.Icc.of.Lt.Gt)
 
@@ -55,7 +55,7 @@ def prove(Eq):
     Eq << Eq[-1].this.expr.expr.rhs.args[1].apply(Nat.Mul_Add.eq.AddMulS)
 
     epsilon1 = Symbol(domain=Interval(0, 1, left_open=True, right_open=True))
-    Eq << Algebra.Or.of.Cond.subst.apply(Eq[-1], epsilon0, epsilon1 * A)
+    Eq << Bool.Or.of.Cond.subst.apply(Eq[-1], epsilon0, epsilon1 * A)
 
     Eq << Bool.Cond.of.Or_Not.Cond.apply(Eq.A_is_positive * epsilon1, Eq[-1])
 

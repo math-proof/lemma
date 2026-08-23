@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat, Int
+    from Lemma import Nat, Int, Real
 
     x, y = Symbol(real=True, given=True)
     Eq << apply(x + y)
@@ -33,7 +33,7 @@ def prove(Eq):
 
     Eq << -Eq[-1]
 
-    Eq << Algebra.GeSqrt.of.Ge.apply(Eq[-1])
+    Eq << Real.GeSqrt.of.Ge.apply(Eq[-1])
 
     Eq << Eq[-1].reversed
 

@@ -18,7 +18,7 @@ def apply(self, pivot=-1, j=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset
+    from Lemma import Finset
 
     i, j, k = Symbol(integer=True)
     f, g = Function(real=True)

@@ -23,7 +23,7 @@ def apply(el, all_le):
 
 @prove
 def prove(Eq):
-    from Lemma import Real, Algebra, Bool, Set, Nat
+    from Lemma import Real, Bool, Set, Nat
 
     x = Symbol(real=True)
     x0 = Symbol(real=True, given=True)

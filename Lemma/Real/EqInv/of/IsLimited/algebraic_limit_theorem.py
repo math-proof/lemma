@@ -11,7 +11,7 @@ def apply(is_limited):
 
 @prove
 def prove(Eq):
-    from Lemma import Real, Set, Algebra, Bool, Int, Nat, Rat
+    from Lemma import Real, Set, Bool, Int, Nat, Rat
 
     x, x0 = Symbol(real=True)
     g = Function(real=True)
@@ -43,13 +43,13 @@ def prove(Eq):
 
     Eq << Bool.Any.All.And.of.Cond.Any_All.apply(Eq.A_is_positive / 2, Eq[-1])
 
-    Eq << Eq[-1].this.expr.expr.apply(Algebra.LtInv.of.Gt_0.Gt)
+    Eq << Eq[-1].this.expr.expr.apply(Nat.LtInv.of.Gt_0.Gt)
 
     Eq << Rat.Lt0Div.of.Gt_0.apply(Eq.A_is_positive)
 
     Eq << Bool.Any.All.And.of.Cond.Any_All.apply(Eq[-1], Eq[-2])
 
-    Eq << Eq[-1].this.expr.expr.apply(Algebra.LtMul.of.Gt_0.Lt)
+    Eq << Eq[-1].this.expr.expr.apply(Nat.LtMul.of.Gt_0.Lt)
 
     Eq << Bool.Any.All.And.of.Any_All.Any_All.limits_Inter.apply(Eq[2], Eq[-1])
 
@@ -68,7 +68,7 @@ def prove(Eq):
     Eq << Eq[-1].this.expr.limits[0][1].args[1].simplify()
 
     ε, δ = Symbol(positive=True)
-    Eq << Algebra.Or.of.Cond.subst.apply(Eq[-1], ε_0, abs(A) ** 2 / 2 * ε)
+    Eq << Bool.Or.of.Cond.subst.apply(Eq[-1], ε_0, abs(A) ** 2 / 2 * ε)
 
     Eq << Nat.GtSquare_0.of.Gt_0.apply(Eq.A_is_positive) * ε / 2
 

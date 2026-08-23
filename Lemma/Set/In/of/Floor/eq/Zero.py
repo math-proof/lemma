@@ -9,14 +9,14 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Int
+    from Lemma import Set, Int
 
     x = Symbol(real=True, given=True)
     Eq << apply(Equal(Floor(x), 0))
 
     Eq << Set.In_Ico.given.Le.Lt.apply(Eq[-1])
 
-    Eq << Algebra.Ge_Floor.apply(x)
+    Eq << Int.Ge_Floor.apply(x)
 
     Eq << Eq[-1].subs(Eq[0])
 

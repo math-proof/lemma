@@ -11,7 +11,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Nat, Rat
+    from Lemma import Set, Nat, Rat
 
     n = Symbol(real=True)
     b = Symbol(real=True, positive=True)
@@ -25,9 +25,9 @@ def prove(Eq):
 
     Eq << Rat.Lt0Div.of.Gt_0.apply(Eq[-1])
 
-    Eq << Algebra.GtDiv.of.Gt_0.Gt.apply(Eq[-2], Eq[0])
+    Eq << Rat.GtDiv.of.Gt_0.Gt.apply(Eq[-2], Eq[0])
 
-    Eq << Algebra.GtDiv.of.Gt_0.Gt.apply(Eq[-2], Eq[-1])
+    Eq << Rat.GtDiv.of.Gt_0.Gt.apply(Eq[-2], Eq[-1])
 
     Eq << Eq[-1].reversed
 

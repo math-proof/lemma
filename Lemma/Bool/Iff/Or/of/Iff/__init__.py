@@ -9,7 +9,7 @@ def apply(self, *, cond=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
 
     p, q, r = Symbol(bool=True)
     Eq << apply(boolalg.Iff(p, q), cond=r)
@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq << Bool.Imp.of.Iff.apply(Eq[0], reverse=True)
 
-    Eq << Algebra.Given.Or.of.Given.apply(Eq[-1], cond=r).reversed
+    Eq << Bool.Given.Or.of.Given.apply(Eq[-1], cond=r).reversed
 
     Eq << Bool.Iff.given.Imp.Imp.apply(Eq[1])
 

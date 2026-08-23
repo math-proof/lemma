@@ -10,12 +10,12 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Nat
 
     x = Symbol(real=True)
     Eq << apply(Min(0, x))
 
-    Eq << Eq[0].this.lhs.apply(Algebra.Min.eq.Mul.Max, factor=-1)
+    Eq << Eq[0].this.lhs.apply(Nat.Min.eq.Mul.Max, factor=-1)
 
     Eq << Eq[-1].this.rhs.defun()
 

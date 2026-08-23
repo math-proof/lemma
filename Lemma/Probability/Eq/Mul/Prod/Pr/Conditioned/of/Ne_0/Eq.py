@@ -19,7 +19,7 @@ def apply(eq, ne):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Bool, Tensor, Finset, Nat
+    from Lemma import Probability, Bool, Tensor, Finset, Nat
 
     m, n, t = Symbol(integer=True, positive=True)
     # suppose you have a set of documents y which is labeled with some semantic tags called keywords x;
@@ -46,7 +46,7 @@ def prove(Eq):
 
     Eq << Nat.Eq_Div.of.Eq.Ne_0.apply(Eq[-1], Eq.yt_given_x_nonzero)
 
-    Eq << Algebra.EqProd.of.Eq.apply(Eq[-1], (t, 1, m))
+    Eq << Finset.EqProd.of.Eq.apply(Eq[-1], (t, 1, m))
 
     t = Eq[-1].rhs.variable
     Eq << Eq[-1] * Eq[-1].find(Pow).base

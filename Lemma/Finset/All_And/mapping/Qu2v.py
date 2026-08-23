@@ -27,7 +27,7 @@ def predefined_symbols(n):
 
 @prove(proved=False)
 def prove(Eq):
-    from Lemma import Set, Algebra, Finset, Bool, Tensor
+    from Lemma import Set, Finset, Bool, Tensor
 
     n = Symbol(integer=True, positive=True, given=True)
     u = Symbol(domain=Range(n + 1), given=True)

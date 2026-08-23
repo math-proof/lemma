@@ -9,7 +9,7 @@ def apply(x, n):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Nat, Int, Tensor
+    from Lemma import Set, Bool, Nat, Int, Tensor
 
     x = Symbol(integer=True, shape=(oo,))
     n = Symbol(integer=True, positive=True, given=False)
@@ -51,7 +51,7 @@ def prove(Eq):
 
     Eq <<= Eq.is_positive & Eq[-1]
 
-    Eq << Eq[-1].this.expr.apply(Algebra.Gt_0.Add.of.Gt_0.Gt_0)
+    Eq << Eq[-1].this.expr.apply(Nat.Gt_0.Add.of.Gt_0.Gt_0)
 
     Eq << Imply(Eq[0] & Eq.hypothesis, Eq.induct, plausible=True)
 

@@ -12,12 +12,12 @@ def apply(self, strict=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor
+    from Lemma import Tensor, Nat
 
     x = Symbol(real=True)
     Eq << apply(x)
 
-    Eq << Algebra.Expr.eq.IteGe.apply(x, lower=S.Zero)
+    Eq << Nat.Expr.eq.IteGe.apply(x, lower=S.Zero)
 
     Eq << Eq[-1].this.find(LessEqual).reversed
 

@@ -33,7 +33,7 @@ def apply(eq_V, eq_V_quote, eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Bool
+    from Lemma import Tensor, Bool
 
     n, k = Symbol(domain=Range(2, oo))
     u = Symbol(domain=Range(2, n + 1))

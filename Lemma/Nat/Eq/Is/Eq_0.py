@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Int
+    from Lemma import Bool, Int, Tensor
 
     a = Symbol(real=True)
     b = Symbol(real=True, zero=False)
@@ -18,7 +18,7 @@ def prove(Eq):
 
     Eq << Bool.Iff.given.Imp.Imp.apply(Eq[0])
 
-    Eq << Eq[-2].this.lhs.apply(Algebra.Eq_0.of.Eq)
+    Eq << Eq[-2].this.lhs.apply(Tensor.Eq_0.of.Eq)
 
     Eq << Eq[-1].this.rhs.apply(Int.Eq.given.Sub.eq.Zero)
 

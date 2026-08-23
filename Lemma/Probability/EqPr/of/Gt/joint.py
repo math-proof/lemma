@@ -19,14 +19,14 @@ def apply(gt, prob):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Bool
 
     m, n = Symbol(integer=True, positive=True)
     x = Symbol(random=True, real=True, shape=(oo,))
     prob = Pr(x[:m])
     Eq << apply(m > n, prob)
 
-    Eq << Algebra.Iff.of.Gt.split.Eq.apply(Eq[0], *prob.arg.args)
+    Eq << Bool.Iff.of.Gt.split.Eq.apply(Eq[0], *prob.arg.args)
 
     Eq << Eq[1].subs(Eq[-1])
     Eq << Eq[-1].reversed

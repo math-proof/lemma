@@ -14,7 +14,7 @@ def apply(limited_f, limited_g):
 
 @prove
 def prove(Eq):
-    from Lemma import Real, Set, Algebra, Bool
+    from Lemma import Real, Set, Bool, Nat
 
     x, x0 = Symbol(real=True)
     f, g = Function(real=True)
@@ -29,7 +29,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Bool.Any_And.of.Any.All, simplify=None)
 
-    Eq << Eq[-1].this.rhs.expr.apply(Algebra.EqMul.of.Eq.Eq)
+    Eq << Eq[-1].this.rhs.expr.apply(Nat.EqMul.of.Eq.Eq)
 
     Eq << Bool.ImpAndS.of.Imp.Imp.apply(Eq.is_zero, Eq[-1])
 

@@ -12,7 +12,7 @@ def apply(eq_x_bar, eq_s2):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Algebra, Bool, Int, Rat, Nat
+    from Lemma import Finset, Bool, Int, Rat, Nat, Tensor
 
     x, s = Symbol(real=True, shape=(oo,))
     n, k = Symbol(integer=True)
@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.doit()
 
-    Eq << Algebra.Sub.eq.Mul.of.Eq_ReducedSum.apply(Eq[0])
+    Eq << Tensor.Sub.eq.Mul.of.Eq_ReducedSum.apply(Eq[0])
 
     Eq << Eq[-2].subs(Eq[-1])
 

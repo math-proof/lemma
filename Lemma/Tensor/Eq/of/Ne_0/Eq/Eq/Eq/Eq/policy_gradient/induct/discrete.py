@@ -13,7 +13,7 @@ def apply(eq, Q_def, V_def, n=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Bool, Finset, Nat
+    from Lemma import Tensor, Bool, Finset, Nat
 
     b, D = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), integer=True, random=True) # states / observation
@@ -51,7 +51,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Product * Sum[Mul[Pr]]).apply(Finset.Mul_Sum.eq.Sum_Mul)
 
-    Eq << Eq[-1].this.find(Pr * Product).args[1:].apply(Algebra.Mul.eq.Prod.limits.push)
+    Eq << Eq[-1].this.find(Pr * Product).args[1:].apply(Finset.Mul.eq.Prod.limits.push)
 
     Eq << Eq[-1].this.find(Sum[Derivative * Product]).apply(Tensor.Sum.limits.concat)
 

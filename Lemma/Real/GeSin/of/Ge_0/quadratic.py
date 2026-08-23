@@ -8,7 +8,7 @@ def apply(ge_zero):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Nat, Real, Finset
+    from Lemma import Set, Bool, Nat, Real, Finset
 
     x = Symbol(real=True)
     Eq << apply(x >= 0)
@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(x, S.Pi - x)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Le_0.given.Ge)
+    Eq << Eq[-1].this.lhs.apply(Nat.Le_0.given.Ge)
 
     Eq << Eq[-1].find(Mul).this.apply(Nat.Mul_Add.eq.AddMulS)
 
@@ -31,7 +31,7 @@ def prove(Eq):
 
     Eq << Eq[-4].subs(Eq.eq_identity)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Ge.given.Gt)
+    Eq << Eq[-1].this.lhs.apply(Nat.Ge.given.Gt)
 
     Eq << Bool.Imp.given.ImpAnd.ImpAnd_Not.apply(Eq[3], cond=x > S.Pi / 2)
 
@@ -51,7 +51,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Set.In_Icc.Is.And)
 
-    Eq << Eq[-1].this.find(And[~GreaterEqual]).apply(Algebra.Ge.given.Gt)
+    Eq << Eq[-1].this.find(And[~GreaterEqual]).apply(Nat.Ge.given.Gt)
 
 
 

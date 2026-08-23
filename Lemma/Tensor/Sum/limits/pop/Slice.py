@@ -18,7 +18,7 @@ def apply(self, index=0):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor
+    from Lemma import Tensor
 
     n = Symbol(integer=True, nonnegative=True)
     i = Symbol(domain=Range(n))

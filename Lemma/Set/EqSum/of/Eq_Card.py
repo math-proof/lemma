@@ -13,7 +13,7 @@ def apply(eq, sgm):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Finset
+    from Lemma import Set, Finset
 
     n = Symbol(integer=True, positive=True)
     x = Symbol(real=True)

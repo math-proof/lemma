@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(eq, cond):
-    from Lemma.Algebra.Gt.of.Eq.Gt import trans
+    from Lemma.Nat.Gt.of.Eq.Gt import trans
     return trans(LessEqual, eq, cond)
 
 

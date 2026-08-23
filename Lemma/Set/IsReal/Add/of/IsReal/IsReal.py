@@ -13,7 +13,7 @@ def apply(a_is_real, b_is_real):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Nat, Bool
+    from Lemma import Set, Nat, Bool
 
     x, y = Symbol(hyper_real=True)
     Eq << apply(Element(x, Reals), Element(y, Reals))

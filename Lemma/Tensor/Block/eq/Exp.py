@@ -17,13 +17,13 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Tensor
 
     n = Symbol(positive=True, integer=True)
     A, B, C, D = Symbol(shape=(n, n), real=True)
     Eq << apply(BlockMatrix([[exp(A), exp(B)], [exp(C), exp(D)]]))
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Exp.eq.Block)
+    Eq << Eq[-1].this.rhs.apply(Tensor.Exp.eq.Block)
 
 
 

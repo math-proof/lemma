@@ -31,7 +31,7 @@ def apply(given, i=None, j=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset, Bool
+    from Lemma import Finset, Bool, Nat
 
     n = Symbol(domain=Range(2, oo))
     x = Symbol(shape=(n,), integer=True, given=True)
@@ -45,7 +45,7 @@ def prove(Eq):
 
     Eq <<= ~Eq[-1], ~Eq[-2]
 
-    Eq << Eq[-2].apply(Algebra.Ne.of.Eq.Ne.subst)
+    Eq << Eq[-2].apply(Nat.Ne.of.Eq.Ne.subst)
 
     Eq << Eq[-1].this.apply(Bool.Cond.of.Ne.Cond.subst, ret=0)
 
@@ -57,7 +57,7 @@ def prove(Eq):
 
     Eq << Eq[-2].this.args[1].lhs.subs(Eq[-1].reversed)
 
-    Eq << Eq[-1].apply(Algebra.Ne.of.Eq.Ne.subst)
+    Eq << Eq[-1].apply(Nat.Ne.of.Eq.Ne.subst)
 
 
 

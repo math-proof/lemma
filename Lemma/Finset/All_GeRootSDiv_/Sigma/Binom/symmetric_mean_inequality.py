@@ -16,7 +16,7 @@ def apply(x, k=None):
 
 @prove(proved=False)
 def prove(Eq):
-    from Lemma import Algebra, Nat, Bool, Finset, Tensor
+    from Lemma import Nat, Bool, Finset, Tensor
     from Lemma.Finset.Sigma.eq.Add.recurrent import sigma
     n = Symbol(domain=Range(2, oo), given=False)
     x = Symbol(real=True, positive=True, shape=(oo,))
@@ -29,7 +29,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(sigma).defun()
 
-    Eq << Eq[-1].this.find(Product).apply(Algebra.Prod.eq.Mul.doit)
+    Eq << Eq[-1].this.find(Product).apply(Finset.Prod.eq.Mul.doit)
 
     Eq << Eq[-1].this.find(All).apply(Bool.All.Is.And.doit.outer)
 
@@ -49,7 +49,7 @@ def prove(Eq):
 
     Eq << Nat.Le0AddAddSquareSMulMul2.apply(sqrt(x[0]) - sqrt(x[1]))
 
-    Eq << Algebra.Ge.of.Ge_0.apply(Eq[-1])
+    Eq << Nat.Ge.of.Ge_0.apply(Eq[-1])
 
     t = Function(real=True, eval=lambda k: (sigma[k](x[:n]) / binomial(n, k)) ** (1 / k))
     k_ = Symbol("k", domain=Range(2, n))

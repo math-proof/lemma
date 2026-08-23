@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Real
+    from Lemma import Real, Int
 
     n = Symbol(integer=True)
     x = Symbol(domain=Interval(-1, 1, left_open=True, right_open=True))
@@ -18,7 +18,7 @@ def prove(Eq):
 
     Eq << Less(Abs(x), 1, plausible=True)
 
-    Eq << Algebra.LtAbs.given.And.apply(Eq[-1])
+    Eq << Int.LtAbs.given.And.apply(Eq[-1])
 
     Eq << Real.Eq_0.Lim.of.LtAbs.geometric_series.apply(Eq[1], n)
 

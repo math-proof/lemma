@@ -28,7 +28,7 @@ def apply(eq_z, eq_z_quote, el):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Set, Bool, Fin
+    from Lemma import Tensor, Set, Bool, Fin, Nat
 
     n = Symbol(domain=Range(2, oo))
     u = Symbol(domain=Range(2, n + 1))
@@ -55,11 +55,11 @@ def prove(Eq):
 
     Eq.ge_zero, Eq.lt_min = Set.Ge.Le_Sub_1.of.In_Ico.apply(Eq[2])
 
-    Eq << Eq.lt_min.this.find(Add).apply(Algebra.Expr.eq.IteGe, upper=n)
+    Eq << Eq.lt_min.this.find(Add).apply(Nat.Expr.eq.IteGe, upper=n)
 
     Eq << Eq[-1].this(i).find(GreaterEqual).simplify()
 
-    Eq.lt = Algebra.Lt.of.Lt.relax.apply(Eq[-1], upper=Min(n, u))
+    Eq.lt = Nat.Lt.of.Lt.relax.apply(Eq[-1], upper=Min(n, u))
 
     Eq << Bool.BFn.of.BFnIte.Cond.apply(Eq.lt, Eq.eq)
 

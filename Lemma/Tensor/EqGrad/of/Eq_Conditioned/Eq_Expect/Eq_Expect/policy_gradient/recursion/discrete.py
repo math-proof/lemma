@@ -13,7 +13,7 @@ def apply(eq, Q_def, V_def):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Real, Probability, Algebra, Finset, Rat, Nat, Fin
+    from Lemma import Tensor, Real, Probability, Finset, Rat, Nat, Fin
 
     b, D = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), integer=True, random=True) # states / observation

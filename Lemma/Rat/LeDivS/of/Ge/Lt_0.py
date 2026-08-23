@@ -11,7 +11,7 @@ def apply(is_negative, ge):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Int, Rat
+    from Lemma import Int, Rat
 
     x, a, b = Symbol(real=True)
     Eq << apply(x < 0, a >= b)

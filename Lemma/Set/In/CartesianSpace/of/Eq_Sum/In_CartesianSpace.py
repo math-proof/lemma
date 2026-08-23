@@ -11,7 +11,7 @@ def apply(eq, el):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool, Vector, Finset
+    from Lemma import Set, Bool, Vector, Finset
 
     n = Symbol(integer=True, positive=True)
     t = Symbol(real=True, shape=(oo,))

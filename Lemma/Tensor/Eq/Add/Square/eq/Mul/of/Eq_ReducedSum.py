@@ -9,7 +9,7 @@ def apply(eq_x_bar):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset, Bool, Nat, Int
+    from Lemma import Finset, Bool, Nat, Int, Tensor
 
     x = Symbol(real=True, shape=(oo,))
     n, k = Symbol(integer=True)
@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Nat.AddMulS.eq.Mul_Add)
 
-    Eq << Eq[-1].this.find(Add ** 2).apply(Algebra.Square.Neg)
+    Eq << Eq[-1].this.find(Add ** 2).apply(Int.Square.Neg)
 
     Eq << Nat.Div.given.Eq.apply(Eq[-1], Eq[-1].find((~Add) ** 2))
 
@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq.diff = Eq[-1].this.lhs.doit()
 
-    Eq << Algebra.Sub.eq.Mul.of.Eq_ReducedSum.apply(Eq[0])
+    Eq << Tensor.Sub.eq.Mul.of.Eq_ReducedSum.apply(Eq[0])
 
     Eq << Eq.diff * n
 

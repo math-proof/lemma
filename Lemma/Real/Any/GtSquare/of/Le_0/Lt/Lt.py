@@ -15,7 +15,7 @@ def apply(M_is_nonpositive, lt_mM, lt, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Real, Bool
+    from Lemma import Real, Bool
 
     m, M, U = Symbol(real=True, given=True)
     Eq << apply(M <= 0, m < M, U < m ** 2)

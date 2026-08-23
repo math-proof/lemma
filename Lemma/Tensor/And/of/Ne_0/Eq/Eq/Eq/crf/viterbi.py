@@ -30,7 +30,7 @@ def apply(x_independence_assumption, y_independence_assumption, xy_independence_
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Set, Bool, Int
+    from Lemma import Tensor, Set, Bool, Int, Real, Nat
 
     from Lemma.Tensor.Eq.of.Ne_0.Eq.Eq.Eq.crf.markov import markov_assumptions
     d, n = Symbol(domain=Range(2, oo))
@@ -65,11 +65,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Bool.Eq.of.Eq.Eq.subst.rhs)
 
-    Eq << Eq[-1].this.find(Maxima).apply(Algebra.Maxima.limits.pop.Slice)
+    Eq << Eq[-1].this.find(Maxima).apply(Real.Maxima.limits.pop.Slice)
 
     Eq << Eq[-1].this.find(Maxima).simplify()
 
-    Eq << Eq[-1].this.find(Maxima).apply(Algebra.Maxima.eq.ReducedMax)
+    Eq << Eq[-1].this.find(Maxima).apply(Real.Maxima.eq.ReducedMax)
 
     Eq << Eq[-1].this.find(Stack).apply(Tensor.Stack.eq.ReducedMax)
 
@@ -81,17 +81,17 @@ def prove(Eq):
 
     Eq << Bool.ImpNot.of.Or.apply(Eq[-1])
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Ne.given.Gt)
+    Eq << Eq[-1].this.lhs.apply(Nat.Ne.given.Gt)
 
     Eq << Eq[4].reversed
 
     Eq << Eq[-1].apply(Bool.UFn.of.Eq, exp)
 
-    Eq << Algebra.EqMaxima.of.Eq.apply(Eq[-1], (y[:t + 1],))
+    Eq << Real.EqMaxima.of.Eq.apply(Eq[-1], (y[:t + 1],))
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Maxima.eq.Exp)
+    Eq << Eq[-1].this.rhs.apply(Real.Maxima.eq.Exp)
 
-    Eq << Algebra.EqReducedMax.of.Eq.apply(Eq.x_quote_definition)
+    Eq << Tensor.EqReducedMax.of.Eq.apply(Eq.x_quote_definition)
 
     Eq << Eq[-2].subs(Eq[-1].reversed)
 

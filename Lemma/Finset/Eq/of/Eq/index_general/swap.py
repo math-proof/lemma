@@ -31,7 +31,7 @@ def apply(given, i=None, j=None, w=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Algebra, Set, Bool, Tensor
+    from Lemma import Finset, Set, Bool, Tensor
 
     n = Symbol(domain=Range(2, oo))
     x = Symbol(shape=(n,), integer=True)

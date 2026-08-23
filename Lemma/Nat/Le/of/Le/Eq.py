@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(le, eq):
-    from Lemma.Algebra.Lt.of.Lt.Eq import swap
+    from Lemma.Nat.Lt.of.Lt.Eq import swap
     return LessEqual(*swap(LessEqual, le, eq))
 
 

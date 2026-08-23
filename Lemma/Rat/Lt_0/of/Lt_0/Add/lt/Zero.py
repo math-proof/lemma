@@ -12,7 +12,7 @@ def apply(lt_zero, add_lt_zero, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Int, Nat
+    from Lemma import Set, Int, Nat
 
     a, b, c = Symbol(real=True, given=True)
     x = Symbol(real=True)
@@ -43,7 +43,7 @@ def prove(Eq):
 
     Eq << Int.Ge0Mul.of.Lt_0.Ge_0.apply(Eq[0], Eq[-1])
 
-    Eq << Algebra.Lt_0.Add.of.Le_0.Lt_0.apply(Eq[-1], Eq[-3])
+    Eq << Nat.Lt_0.Add.of.Le_0.Lt_0.apply(Eq[-1], Eq[-3])
 
 
 if __name__ == '__main__':

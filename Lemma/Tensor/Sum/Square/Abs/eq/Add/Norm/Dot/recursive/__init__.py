@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Complex
+    from Lemma import Tensor, Complex, Nat
 
     t, k = Symbol(integer=True, positive=True)
     L = Symbol(shape=(oo, oo), super_complex=True)
@@ -26,21 +26,21 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Tensor.Square.Norm.eq.Add.Dot)
 
-    Eq << Eq[-1].this.rhs.find(Norm[Indexed * Conjugate]).apply(Algebra.Norm.eq.Mul.Norm)
+    Eq << Eq[-1].this.rhs.find(Norm[Indexed * Conjugate]).apply(Nat.Norm.eq.Mul.Norm)
 
     Eq << Eq[-1].this.rhs.args[1:3].apply(Tensor.Add.Square.eq.Sub.Dot)
 
     Eq << Eq[-1].this.rhs.find(Re[Mul[~MatMul[Adjoint]]]).T
 
-    Eq << Eq[-1].this.rhs.find(Re[MatMul * Conjugate]).apply(Algebra.Re.Conj)
+    Eq << Eq[-1].this.rhs.find(Re[MatMul * Conjugate]).apply(Complex.Re.Conj)
 
     Eq << Eq[-1].this.rhs.args[-2:].apply(Complex.Add.eq.Re)
 
-    Eq << Eq[-1].this.rhs.args[-1].apply(Algebra.Re.eq.Mul)
+    Eq << Eq[-1].this.rhs.args[-1].apply(Complex.Re.eq.Mul)
 
     Eq << Eq[-1].this.rhs.args[-1].find(Add).apply(Tensor.Add.eq.Dot)
 
-    Eq << Eq[-1].this.find(Re).apply(Algebra.Re.Conj)
+    Eq << Eq[-1].this.find(Re).apply(Complex.Re.Conj)
 
     Eq << Eq[-1].rhs.find(Add[MatMul]).this.apply(Tensor.Add.eq.Dot.Block)
 
@@ -48,7 +48,7 @@ def prove(Eq):
 
     Eq << Eq[-3].subs(Eq[-1])
 
-    Eq << Eq[-1].this.find(Norm[Conjugate]).apply(Algebra.Norm.Conj)
+    Eq << Eq[-1].this.find(Norm[Conjugate]).apply(Complex.Norm.Conj)
 
 
 

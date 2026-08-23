@@ -9,7 +9,7 @@ def apply(eq, infer, eq_piece):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Algebra, Set, Bool, Tensor, Nat
+    from Lemma import Finset, Set, Bool, Tensor, Nat
 
     n = Symbol(integer=True, positive=True)
     n = Symbol(domain=Range(10, oo))

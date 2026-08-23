@@ -26,7 +26,7 @@ def apply(given, wrt=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
 
     m, n = Symbol(integer=True, positive=True, given=True)
     f = Symbol(real=True, shape=(n,), given=True)

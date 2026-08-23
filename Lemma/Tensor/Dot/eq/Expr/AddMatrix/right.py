@@ -18,7 +18,7 @@ def apply(x, lamda, w=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Int
+    from Lemma import Tensor, Int, Nat
 
     n = Symbol(domain=Range(2, oo))
     x = Symbol(shape=(n,), real=True)
@@ -62,7 +62,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Add[Mul]).apply(Int.AddAddS.eq.MulAddS, factor=KroneckerDelta(i, j))
 
-    Eq << Eq[-1].this.find(Mul).apply(Algebra.Mul.Delta.eq.Zero)
+    Eq << Eq[-1].this.find(Mul).apply(Nat.Mul.Delta.eq.Zero)
 
 
 

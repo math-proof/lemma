@@ -11,13 +11,13 @@ def apply(is_nonzero, n, x2):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset, Tensor, Nat, Rat, Real
+    from Lemma import Finset, Tensor, Nat, Rat, Real
 
     n = Symbol(integer=True, positive=True)
     x1, x2 = Symbol(complex=True)
     Eq << apply(Unequal(x2, 0), n, x1)
 
-    Eq << Algebra.Inv.ne.Zero.of.Ne_0.apply(Eq[0])
+    Eq << Rat.Inv.ne.Zero.of.Ne_0.apply(Eq[0])
 
     r = Symbol(Eq[-1].lhs * x1)
     Eq << r.this.definition * x2

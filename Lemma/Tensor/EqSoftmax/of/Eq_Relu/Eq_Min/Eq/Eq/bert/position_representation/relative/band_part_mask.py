@@ -24,7 +24,7 @@ def apply(eq_relu, eq_min, eq_K, eq_V, Q, K, V):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Set, Bool, Vector, Finset, Nat
+    from Lemma import Tensor, Set, Bool, Vector, Finset, Nat
 
     n, l, u = Symbol(integer=True, positive=True)
     # l denotes the size of the preceding context including current position;
@@ -112,19 +112,19 @@ def prove(Eq):
 
     Eq.le_zeta_i = Nat.Le.of.Eq.relax.apply(Eq.zeta[i], upper=n)
 
-    Eq << Algebra.EqSlice.of.Le.Eq.apply(Eq.le_zeta_i, Eq[-1], start=β[i])
+    Eq << Tensor.EqSlice.of.Le.Eq.apply(Eq.le_zeta_i, Eq[-1], start=β[i])
 
     Eq.zi_definition = Eq[-3].subs(Eq[-1])
 
     Eq << Tensor.Le.of.Eq_Relu.Eq_Min.apply(Eq.beta, Eq.zeta)
 
-    Eq <<= Algebra.EqSlice.of.Le.Eq.apply(Eq[-1], Eq.K_dquote[i]), Algebra.EqSlice.of.Le.Eq.apply(Eq[-1], Eq.V_dquote[i])
+    Eq <<= Tensor.EqSlice.of.Le.Eq.apply(Eq[-1], Eq.K_dquote[i]), Tensor.EqSlice.of.Le.Eq.apply(Eq[-1], Eq.V_dquote[i])
 
-    Eq <<= Eq[-2].this.find(Symbol + Indexed).apply(Algebra.Expr.eq.IteGe, upper=ζ[i] - 1), Eq[-1].this.find(Symbol + Indexed).apply(Algebra.Expr.eq.IteGe, upper=ζ[i] - 1)
+    Eq <<= Eq[-2].this.find(Symbol + Indexed).apply(Nat.Expr.eq.IteGe, upper=ζ[i] - 1), Eq[-1].this.find(Symbol + Indexed).apply(Nat.Expr.eq.IteGe, upper=ζ[i] - 1)
 
     Eq <<= Eq[-2].this.rhs().find(GreaterEqual).simplify(), Eq[-1].this.rhs().find(GreaterEqual).simplify()
 
-    Eq <<= Eq[-2].this.find(Symbol - 1).apply(Algebra.Expr.eq.IteGe, lower=ζ[i] - 1), Eq[-1].this.find(Symbol - 1).apply(Algebra.Expr.eq.IteGe, lower=ζ[i] - 1)
+    Eq <<= Eq[-2].this.find(Symbol - 1).apply(Nat.Expr.eq.IteGe, lower=ζ[i] - 1), Eq[-1].this.find(Symbol - 1).apply(Nat.Expr.eq.IteGe, lower=ζ[i] - 1)
 
     Eq <<= Bool.BFn.of.BFnIte.Cond.apply(Eq.le_zeta_i, Eq[-2]), Bool.BFn.of.BFnIte.Cond.apply(Eq.le_zeta_i, Eq[-1])
 

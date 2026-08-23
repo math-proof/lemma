@@ -25,7 +25,7 @@ def apply(eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Bool, Real
+    from Lemma import Tensor, Bool, Real, Nat
 
     n = Symbol(domain=Range(2, oo))
     l = Symbol(domain=Range(2, n + 1))
@@ -40,17 +40,17 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Real.ExpAdd.eq.MulExpS)
 
-    Eq << Eq[-1].this.rhs.find(Exp[BlockMatrix]).apply(Algebra.Exp.eq.Block)
+    Eq << Eq[-1].this.rhs.find(Exp[BlockMatrix]).apply(Tensor.Exp.eq.Block)
 
     Eq << Eq[-1].this.find(Exp[Stack[BlockMatrix]]).apply(Tensor.Exp.eq.Stack)
 
     Eq << Eq[-1].this.find(Exp[Stack]).apply(Tensor.Exp.eq.Stack)
 
-    Eq << Eq[-1].this.find(Exp[BlockMatrix]).apply(Algebra.Exp.eq.Block)
+    Eq << Eq[-1].this.find(Exp[BlockMatrix]).apply(Tensor.Exp.eq.Block)
 
     Eq << Eq[-1].this.rhs.find(Exp[Mul[Stack]]).apply(Tensor.Exp.eq.Stack)
 
-    Eq << Eq[-1].this.rhs.find(Pow[ReducedSum]).apply(Algebra.Pow.eq.Mul.One)
+    Eq << Eq[-1].this.rhs.find(Pow[ReducedSum]).apply(Nat.Pow.eq.Mul.One)
 
     Eq << Eq[-1].this.rhs.find(Stack).apply(Tensor.Stack.eq.Pow)
 

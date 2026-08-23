@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(self, i=None):
-    from Lemma.Algebra.Ne.Is.Any.Ne import rewrite
+    from Lemma.Nat.Ne.Is.Any.Ne import rewrite
     return rewrite(self, i)
 
 

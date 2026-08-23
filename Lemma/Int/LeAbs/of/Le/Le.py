@@ -10,7 +10,7 @@ def apply(le, le_neg):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat, Int
+    from Lemma import Nat, Int, Real
 
     x, y = Symbol(real=True)
     Eq << apply(x <= y, -x <= y)
@@ -19,13 +19,13 @@ def prove(Eq):
 
     Eq << Eq[1] - y
 
-    Eq << Algebra.Ge_0.of.Le_0.Le_0.apply(Eq[-1], Eq[-2])
+    Eq << Int.Ge_0.of.Le_0.Le_0.apply(Eq[-1], Eq[-2])
 
     Eq << Eq[-1].this.lhs.expand() + x * x
 
     Eq << Eq[-1].reversed
 
-    Eq.lt = Algebra.LeSqrt.of.Le.apply(Eq[-1])
+    Eq.lt = Real.LeSqrt.of.Le.apply(Eq[-1])
 
     Eq << Nat.Ge.of.Le.Ge.apply(Eq[0], -Eq[1])
 

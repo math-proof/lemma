@@ -10,7 +10,7 @@ def apply(is_limited):
 
 @prove(proved=False)
 def prove(Eq):
-    from Lemma import Real, Set, Algebra
+    from Lemma import Real, Set
 
     x, x0 = Symbol(real=True)
     f = Function(real=True)

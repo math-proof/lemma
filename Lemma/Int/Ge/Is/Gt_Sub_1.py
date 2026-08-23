@@ -10,7 +10,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Int
+    from Lemma import Bool, Int, Nat
 
     x, y = Symbol(integer=True)
     Eq << apply(x >= y)
@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq << Eq[-2].this.lhs.apply(Int.LtSub_1.of.Le)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Ge.given.Gt.relax)
+    Eq << Eq[-1].this.rhs.apply(Nat.Ge.given.Gt.relax)
 
 
 if __name__ == '__main__':

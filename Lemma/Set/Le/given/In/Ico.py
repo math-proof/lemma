@@ -10,7 +10,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat
+    from Lemma import Nat
     n, b = Symbol(integer=True, given=True)
 
     Eq << apply(n <= b)

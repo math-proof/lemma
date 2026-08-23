@@ -19,7 +19,7 @@ def apply(eq_xy, eq_ab, i=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Finset
+    from Lemma import Tensor, Finset
 
     n = Symbol(integer=True, positive=True)
     x, y, a, b = Symbol(shape=(n,), real=True)

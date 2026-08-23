@@ -17,7 +17,7 @@ def apply(A, B, n=None, k=None, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset, Fin
+    from Lemma import Finset, Fin
 
     A, B = Symbol(shape=(oo,), real=True)
     Eq << apply(A, B)

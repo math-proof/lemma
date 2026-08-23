@@ -30,7 +30,7 @@ def apply(eq_max, eq_min, eq_K_quote, eq_V_quote, eq_K, eq_V, Q, K, V):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Bool, Rat, Nat
+    from Lemma import Tensor, Bool, Rat, Nat, Int
 
     n, k, l, u, d = Symbol(integer=True, positive=True)
     d_z = Symbol(integer=True, positive=True)
@@ -62,7 +62,7 @@ def prove(Eq):
 
     Eq.le_min = Tensor.Le.of.Eq_Max.Eq_Min.apply(Eq.beta, Eq.zeta)
 
-    Eq <<= Algebra.EqSlice.of.Le.Eq.apply(Eq.le_min, Eq[-2], step=d), Algebra.EqSlice.of.Le.Eq.apply(Eq.le_min, Eq[-1], step=d)
+    Eq <<= Tensor.EqSlice.of.Le.Eq.apply(Eq.le_min, Eq[-2], step=d), Tensor.EqSlice.of.Le.Eq.apply(Eq.le_min, Eq[-1], step=d)
 
     Eq <<= Eq[-2].this.rhs.apply(Tensor.Stack.Ico.simp), Eq[-1].this.rhs.apply(Tensor.Stack.Ico.simp)
 
@@ -76,15 +76,15 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.subs(Eq.zeta[i])
 
-    Eq << Algebra.Lt.of.Lt.relax.apply(Eq[-1], upper=n)
+    Eq << Nat.Lt.of.Lt.relax.apply(Eq[-1], upper=n)
 
     Eq.le_ceiling = Nat.Le_Sub_1.of.Lt.apply(Eq[-1])
 
-    Eq <<= Eq.eq_K_dquote.this.find(Min).args[1].apply(Algebra.Expr.eq.IteGe, upper=Eq.le_ceiling.lhs), Eq.eq_V_dquote.this.find(Min).args[1].apply(Algebra.Expr.eq.IteGe, upper=Eq.le_ceiling.lhs)
+    Eq <<= Eq.eq_K_dquote.this.find(Min).args[1].apply(Nat.Expr.eq.IteGe, upper=Eq.le_ceiling.lhs), Eq.eq_V_dquote.this.find(Min).args[1].apply(Nat.Expr.eq.IteGe, upper=Eq.le_ceiling.lhs)
 
     Eq <<= Eq[-2].this.rhs().find(GreaterEqual).simplify(), Eq[-1].this.rhs().find(GreaterEqual).simplify()
 
-    Eq <<= Eq[-2].this.find(Min).args[0].apply(Algebra.Expr.eq.IteGe, lower=Eq.le_ceiling.lhs), Eq[-1].this.find(Min).args[0].apply(Algebra.Expr.eq.IteGe, lower=Eq.le_ceiling.lhs)
+    Eq <<= Eq[-2].this.find(Min).args[0].apply(Nat.Expr.eq.IteGe, lower=Eq.le_ceiling.lhs), Eq[-1].this.find(Min).args[0].apply(Nat.Expr.eq.IteGe, lower=Eq.le_ceiling.lhs)
 
     Eq <<= Bool.BFn.of.BFnIte.Cond.apply(Eq.le_ceiling, Eq[-2]), Bool.BFn.of.BFnIte.Cond.apply(Eq.le_ceiling, Eq[-1])
 
@@ -94,9 +94,9 @@ def prove(Eq):
 
     Eq <<= Eq.K_dquote[i], Eq.V_dquote[i]
 
-    Eq << Algebra.LeCeil.of.Le.apply(Eq.le_min / d)
+    Eq << Int.LeCeilS.of.Le.apply(Eq.le_min / d)
 
-    Eq <<= Algebra.EqSlice.of.Le.Eq.apply(Eq[-1], Eq[-3]), Algebra.EqSlice.of.Le.Eq.apply(Eq[-1], Eq[-2])
+    Eq <<= Tensor.EqSlice.of.Le.Eq.apply(Eq[-1], Eq[-3]), Tensor.EqSlice.of.Le.Eq.apply(Eq[-1], Eq[-2])
 
     Eq <<= Bool.Eq.of.Eq.Eq.apply(Eq.slice_K_dquote, Eq[-2]), Bool.Eq.of.Eq.Eq.apply(Eq.slice_V_dquote, Eq[-1])
 

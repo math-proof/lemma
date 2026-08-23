@@ -17,7 +17,7 @@ def apply(eq_limit):
 
 @prove(proved=False)
 def prove(Eq):
-    from Lemma import Real, Algebra, Set, Bool
+    from Lemma import Real, Set, Bool, Nat
 
     x, epsilon = Symbol(real=True)
     f = Function(real=True)
@@ -29,8 +29,8 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Element).apply(Set.Gt.of.In_Icc)
 
-    Eq << Eq[-1].this.expr.expr.apply(Algebra.GtMul.of.Gt_0.Gt)
-    Eq << Eq[-1].this.expr.expr.apply(Algebra.Gt.transport, lhs=0)
+    Eq << Eq[-1].this.expr.expr.apply(Nat.GtMul.of.Gt_0.Gt)
+    Eq << Eq[-1].this.expr.expr.apply(Nat.Gt.transport, lhs=0)
 
 
 if __name__ == '__main__':

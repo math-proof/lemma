@@ -9,7 +9,7 @@ def apply(eq, i, j):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset, Vector
+    from Lemma import Finset, Vector
 
     n = Symbol(integer=True, positive=True)
     A = Symbol(shape=(n, n), complex=True)

@@ -20,7 +20,7 @@ def apply(eq, el):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Set, Nat, Rat
+    from Lemma import Probability, Set, Nat, Rat, Int
 
     x = Symbol(real=True, random=True)
     b = Symbol(real=True)
@@ -51,9 +51,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Nat.AddMulS.eq.Mul_Add)
 
-    Eq << Algebra.Lt_0.given.And.split.Mul.apply(Eq[-1])
+    Eq << Int.Lt_0.given.And.split.Mul.apply(Eq[-1])
 
-    Eq << Algebra.Lt_0.given.Lt.apply(Eq[-1])
+    Eq << Nat.Lt_0.given.Lt.apply(Eq[-1])
 
     Eq << Set.Le.Le.of.In_Icc.apply(Eq[1])
 
@@ -61,7 +61,7 @@ def prove(Eq):
 
     Eq << Nat.Gt_0.of.Ne_0.apply(Eq[-1])
 
-    Eq << Algebra.LtMul.of.Gt_0.Lt.apply(Eq[-1], Eq[-3])
+    Eq << Nat.LtMul.of.Gt_0.Lt.apply(Eq[-1], Eq[-3])
 
     Eq << Eq[2].this.find(Mul).apply(Nat.Mul_Add.eq.AddMulS)
 

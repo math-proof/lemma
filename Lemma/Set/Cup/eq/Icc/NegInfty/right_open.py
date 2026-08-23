@@ -13,7 +13,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool, Int, Nat
+    from Lemma import Set, Bool, Int, Nat
 
     k = Symbol(integer=True)
     Eq << apply(Cup[k:oo](Interval(-k - 1, -k, right_open=True)))
@@ -30,11 +30,11 @@ def prove(Eq):
 
     Eq <<= Eq[-3].this.lhs.find(Element).apply(Set.Le.of.In_Ico), Eq[-1].this.rhs.apply(Set.In_Ico.given.Ge.Le_Sub_1), Bool.Imp.given.Cond.apply(Eq[-2])
 
-    Eq <<= Eq[-3].this.lhs.expr.apply(Algebra.LtAdd.of.Le.Lt), Eq[-2].this.rhs.apply(Algebra.Ge.transport, lhs=0), Set.In_Ico.given.Le.Lt.apply(Eq[-1])
+    Eq <<= Eq[-3].this.lhs.expr.apply(Nat.LtAdd.of.Le.Lt), Eq[-2].this.rhs.apply(Nat.Ge.transport, lhs=0), Set.In_Ico.given.Le.Lt.apply(Eq[-1])
 
     Eq << Eq[-4].this.lhs.apply(Set.IsNegative.of.Lt_0, simplify=None)
 
-    Eq << Algebra.Ge_Floor.apply(x)
+    Eq << Int.Ge_Floor.apply(x)
 
     Eq << Int.GtAddFloor_1.apply(x)
 
@@ -44,7 +44,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Set.Lt.of.In_Icc)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Floor.lt.Zero.of.Lt_0)
+    Eq << Eq[-1].this.lhs.apply(Int.Floor.lt.Zero.of.Lt_0)
 
 
 

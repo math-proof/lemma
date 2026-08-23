@@ -17,7 +17,7 @@ def apply(given, *vars):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool
+    from Lemma import Set, Bool
 
     S = Symbol(etype=dtype.integer, given=True)
     Eq << apply(Card(S) >= 2)

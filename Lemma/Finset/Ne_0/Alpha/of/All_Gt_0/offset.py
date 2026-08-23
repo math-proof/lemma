@@ -18,7 +18,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset, Tensor, Nat
+    from Lemma import Finset, Tensor, Nat
 
     x = Symbol(real=True, shape=(oo,))
     n = Symbol(integer=True, positive=True)

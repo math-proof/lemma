@@ -11,7 +11,7 @@ def apply(lt_r, γ, λ, k=None, i=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Real, Set, Tensor, Finset, Nat, Rat
+    from Lemma import Real, Set, Tensor, Finset, Nat, Rat
 
     t, k, i = Symbol(integer=True) # time step counter
     δ = Symbol(shape=(oo,), real=True) # TD residual
@@ -61,7 +61,7 @@ def prove(Eq):
 
     Eq << Eq.lt.this.lhs.doit()
 
-    Eq << Eq[0].this.lhs.limits_subs(t, i).this.lhs.apply(Algebra.Sup.limits.subst.offset, t)
+    Eq << Eq[0].this.lhs.limits_subs(t, i).this.lhs.apply(Real.Sup.limits.subst.offset, t)
 
     Eq << Set.IsReal.Sum.of.LtAbs.IsFinite.apply(Eq.lt, Eq[-1], simplify=None)
 

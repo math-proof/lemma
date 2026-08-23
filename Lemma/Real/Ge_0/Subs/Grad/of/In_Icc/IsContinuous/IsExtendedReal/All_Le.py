@@ -17,7 +17,7 @@ def apply(el_Interval, is_continuous, is_extended_real, all_le):
 
 @prove
 def prove(Eq):
-    from Lemma import Real, Algebra, Set, Bool, Int
+    from Lemma import Real, Set, Bool, Int, Nat
 
     a, b, x, c = Symbol(real=True)
     f = Function(shape=(), real=True)
@@ -34,7 +34,7 @@ def prove(Eq):
 
     Eq << Int.InSub.of.In_Icc.apply(Eq[0], c)
 
-    Eq.lt_zero = Set.Gt.of.In_Icc.apply(Eq[-1]).this.apply(Algebra.Lt_0.of.Gt)
+    Eq.lt_zero = Set.Gt.of.In_Icc.apply(Eq[-1]).this.apply(Nat.Lt_0.of.Gt)
 
     Eq << Bool.ImpAnd.of.Imp.cond.apply(Eq[-1], Eq[-2])
 
@@ -42,7 +42,7 @@ def prove(Eq):
 
     Eq << Bool.BFn.of.BFnIte.Cond.apply(Eq[-3], Eq[-1])
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Le_0.of.Le)
+    Eq << Eq[-1].this.rhs.apply(Nat.Le_0.of.Le)
 
     Eq << Bool.Imp.And.of.Imp.apply(Eq[-1])
 

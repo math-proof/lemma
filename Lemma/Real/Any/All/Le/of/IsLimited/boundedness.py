@@ -16,7 +16,7 @@ def apply(given, delta=None, var=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Real, Algebra, Bool, Int
+    from Lemma import Real, Bool, Int
 
     n = Symbol(integer=True, positive=True)
     x, x0, a = Symbol(real=True)
@@ -33,7 +33,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.expr.args[1] + A
 
-    Eq << Eq[-1].this.expr.expr.apply(Algebra.Lt.Abs.Max.of.Lt.Gt)
+    Eq << Eq[-1].this.expr.expr.apply(Int.Lt.Abs.Max.of.Lt.Gt)
 
     Eq << Bool.Any_UFn.of.UFnUFn.apply(Eq[-1], Eq[-1].expr.expr.rhs, M)
 

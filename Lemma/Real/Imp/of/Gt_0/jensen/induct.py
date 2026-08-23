@@ -25,7 +25,7 @@ def apply(is_positive, x=None, w=None, i=None, n=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Real, Bool, Finset, Nat, Rat
+    from Lemma import Set, Real, Bool, Finset, Nat, Rat
 
     n = Symbol(integer=True, positive=True, given=False)
     a, b = Symbol(real=True)
@@ -131,7 +131,7 @@ def prove(Eq):
 
     Eq <<  Eq[-1].this.find(And[~Element]).apply(Set.Lt.of.In_Icc)
 
-    Eq << Eq[-1].this.find(And[Less]).apply(Algebra.GeMul.of.Lt.Ge)
+    Eq << Eq[-1].this.find(And[Less]).apply(Nat.GeMul.of.Lt.Ge)
 
     Eq.hypothesis = Eq[-1].this.find(GreaterEqual[Mul]) + w[n] * f(x[n])
 

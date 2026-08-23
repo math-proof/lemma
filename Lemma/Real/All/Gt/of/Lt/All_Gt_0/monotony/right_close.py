@@ -13,7 +13,7 @@ def apply(lt, given):
 
 @prove(proved=False)
 def prove(Eq):
-    from Lemma import Set, Real, Algebra, Bool
+    from Lemma import Set, Real, Bool
 
     a, b = Symbol(real=True, given=True)
     domain = Interval(a, b)

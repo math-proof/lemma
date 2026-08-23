@@ -10,7 +10,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Nat
+    from Lemma import Set, Nat, Int, Real
 
     x = Symbol(real=True, given=True)
     Eq << apply(Element(x, Interval(-1, 1)))
@@ -21,11 +21,11 @@ def prove(Eq):
 
     Eq << -Eq[-2]
 
-    Eq << Algebra.Ge_0.of.Le_0.Le_0.apply(Eq[-1], Eq[-2])
+    Eq << Int.Ge_0.of.Le_0.Le_0.apply(Eq[-1], Eq[-2])
 
     Eq << Eq[-1].this.lhs.apply(Nat.Mul_Add.eq.AddMulS, deep=True)
 
-    Eq << Algebra.GeSqrt_0.of.Ge_0.apply(Eq[-1])
+    Eq << Real.GeSqrt_0.of.Ge_0.apply(Eq[-1])
 
 
 if __name__ == '__main__':

@@ -16,7 +16,7 @@ def apply(m_is_nonnegative, lt_mM, lt, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Nat, Int
+    from Lemma import Set, Bool, Nat, Int, Real
 
     m, M, U = Symbol(real=True, given=True)
     Eq << apply(m >= 0, m < M, U < M ** 2)
@@ -34,11 +34,11 @@ def prove(Eq):
 
     Eq << Eq[-1] / 2
 
-    Eq << Algebra.GtSquare.of.Ge_0.Gt.apply(Eq[0], Eq[-1])
+    Eq << Nat.GtSquare.of.Ge_0.Gt.apply(Eq[0], Eq[-1])
 
     Eq << Bool.Imp_And.of.Cond.apply(Eq[-1], cond=U < m ** 2)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Gt.of.Gt.Lt)
+    Eq << Eq[-1].this.rhs.apply(Nat.Gt.of.Gt.Lt)
 
     Eq << Bool.Imp.given.Cond.apply(Eq.contains)
 
@@ -50,17 +50,17 @@ def prove(Eq):
 
     Eq << Bool.Imp_And.given.Imp.Imp.apply(Eq[-1], index=None)
 
-    Eq <<= Eq[-1].this.rhs.apply(Algebra.Gt.given.Gt_0), Eq[-3].this.rhs.apply(Algebra.Lt.transport, lhs=0)
+    Eq <<= Eq[-1].this.rhs.apply(Nat.Gt.given.Gt_0), Eq[-3].this.rhs.apply(Nat.Lt.transport, lhs=0)
 
-    Eq <<= Eq[-2].this.find(Add).apply(Algebra.Sub.Square.eq.Mul), Eq[-1].this.rhs * 2
+    Eq <<= Eq[-2].this.find(Add).apply(Int.Sub.Square.eq.Mul), Eq[-1].this.rhs * 2
 
     Eq <<= Eq[-2].this.lhs.apply(Set.Ge.of.Ge.In_Iic, lower=0), Eq[-1].this.lhs.apply(Set.Ge.of.Ge.In_Iic, lower=0)
 
-    Eq.is_nonnegative = Eq[-2].this.rhs.apply(Algebra.Mul.gt.Zero.given.And.Gt_0)
+    Eq.is_nonnegative = Eq[-2].this.rhs.apply(Nat.Mul.gt.Zero.given.And.Gt_0)
 
     Eq <<= Bool.Imp_And.of.Cond.apply(Eq[2], cond=U >= 0)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.LtSqrt.of.Ge_0.Lt)
+    Eq << Eq[-1].this.rhs.apply(Real.LtSqrt.of.Ge_0.Lt)
 
     Eq << Int.EqAbs.of.Gt_0.apply(Eq[4])
 
@@ -70,7 +70,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.rhs * 2, Eq[-1].this.rhs * 2
 
-    Eq <<= Eq[-2].this.rhs.apply(Nat.Add.gt.Zero.given.And, 0), Eq[-1].this.rhs.apply(Algebra.Gt_0.given.Gt)
+    Eq <<= Eq[-2].this.rhs.apply(Nat.Add.gt.Zero.given.And, 0), Eq[-1].this.rhs.apply(Nat.Gt_0.given.Gt)
 
     Eq <<= Eq[-2].this.rhs.args[1] / 3, Eq[-1].this.rhs.reversed
 
@@ -78,17 +78,17 @@ def prove(Eq):
 
     Eq <<= Bool.Imp.given.Cond.apply(Eq[-2])
 
-    Eq <<= Eq[-1].this.lhs.apply(Algebra.GeSqrt_0.of.Ge_0)
+    Eq <<= Eq[-1].this.lhs.apply(Real.GeSqrt_0.of.Ge_0)
 
     Eq << Bool.Imp_And.of.Cond.apply(Eq[1].reversed, cond=U >= m ** 2)
 
-    Eq << Eq[-1].this.rhs.args[1].apply(Algebra.GeSqrt.of.Ge)
+    Eq << Eq[-1].this.rhs.args[1].apply(Real.GeSqrt.of.Ge)
 
     Eq << Int.EqAbs.of.Ge_0.apply(Eq[0])
 
     Eq << Eq[-2].subs(Eq[-1])
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.GtAdd.of.Gt.Ge)
+    Eq << Eq[-1].this.rhs.apply(Nat.GtAdd.of.Gt.Ge)
 
     Eq << Eq[-1].this.rhs / 2
 

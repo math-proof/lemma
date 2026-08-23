@@ -59,7 +59,7 @@ def apply(lt, is_continuous, is_differentiable, equal):
 
 @prove
 def prove(Eq):
-    from Lemma import Real, Set, Algebra, Bool, Nat, Complex
+    from Lemma import Real, Set, Bool, Nat, Complex
 
     a, b = Symbol(real=True)
     f = Function(shape=(), real=True)
@@ -81,7 +81,7 @@ def prove(Eq):
 
     Eq << Real.Any.Le.Rolle.of.Lt.IsContinuous.IsExtendedReal.IsExtendedReal.Eq.apply(*Eq[:2], *Eq[-2:], Eq[3])
 
-    Eq << Eq.All_And.this.expr.apply(Algebra.EqMul.of.Eq.Eq)
+    Eq << Eq.All_And.this.expr.apply(Nat.EqMul.of.Eq.Eq)
 
     Eq << Bool.Any_And.of.Any.All.All_Imp.apply(*Eq[-2:])
 

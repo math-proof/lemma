@@ -16,7 +16,7 @@ def apply(x_less_than_1, y_less_than_1):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat, Real
+    from Lemma import Nat, Real
 
     x, y = Symbol(real=True, nonnegative=True)
     Eq << apply(x <= 1, y <= 1)

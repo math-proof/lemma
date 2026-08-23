@@ -11,7 +11,7 @@ def apply(le, M=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat, Real
+    from Lemma import Nat, Real
 
     M, M0, x, a, b = Symbol(real=True)
     f = Function(real=True)

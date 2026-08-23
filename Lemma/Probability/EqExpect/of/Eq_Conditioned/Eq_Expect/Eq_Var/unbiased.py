@@ -14,7 +14,7 @@ def apply(eq_conditioned, eq_expect, eq_var, n=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability, Finset, Int, Nat, Vector, Tensor
+    from Lemma import Probability, Finset, Int, Nat, Vector, Tensor
 
     x = Symbol(real=True, shape=(oo,), random=True)
     μ = Symbol(real=True)
@@ -49,7 +49,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.expand()
 
-    Eq << Eq[-1].this.lhs.expr.apply(Algebra.Square.Sum.eq.Add.Sum)
+    Eq << Eq[-1].this.lhs.expr.apply(Finset.Square.Sum.eq.Add.Sum)
 
     Eq << Eq[-1].this.lhs.apply(Probability.Expect.eq.Add)
 

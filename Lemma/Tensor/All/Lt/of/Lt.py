@@ -9,13 +9,13 @@ def apply(lt, var=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Nat
 
     n = Symbol(integer=True, positive=True)
     x, y = Symbol(shape=(n,), real=True)
     Eq << apply(x < y)
 
-    Eq << Eq[0].this.apply(Algebra.Lt.Is.All.Lt)
+    Eq << Eq[0].this.apply(Nat.Lt.Is.All.Lt)
 
 
 

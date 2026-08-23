@@ -11,7 +11,7 @@ def apply(is_positive, le):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat
+    from Lemma import Nat
 
     x, M = Symbol(real=True)
     Eq << apply(x > 0, x <= M)

@@ -24,6 +24,15 @@ LEMMA_DIR = PY_ROOT / "Lemma"
 IMPORT_LINE_RE = re.compile(r"^from \. import (.+)$")
 LEMMA_IMPORT_RE = re.compile(r"^(\s*)from Lemma import (.+?)\s*$")
 PROVE_DEF_RE = re.compile(r"^def prove\(")
+# Names that `from util import *` / sympy bind on theorem modules. A child
+# package with the same name is invisible to getattr unless deleted first.
+SHADOW_CHILD_NAMES = {
+    "Abs", "Add", "All", "And", "Any", "Arg", "Block", "Bool", "Ceil", "Cond",
+    "Cup", "Eq", "Exp", "Floor", "Ge", "Gt", "Iff", "Im", "Imp", "Inf", "Le",
+    "Log", "Lt", "Max", "Min", "Mod", "Mul", "Ne", "Norm", "One", "Or", "Pow",
+    "Re", "Sign", "Slice", "Sqrt", "Stack", "Subset", "Sum", "Sup", "Supset",
+    "Transpose", "apply", "domain", "given", "invert", "prove",
+}
 
 
 def module_to_dir(module: str) -> Path:
@@ -100,7 +109,27 @@ def insert_into_init(package_dir: Path, name: str, dry_run: bool) -> None:
     if not dry_run:
         if text and not text.endswith("\n"):
             text += "\n"
-        write_text(init, text + f"from . import {name}\n")
+        prefix = del_shadow_line(text, name)
+        write_text(init, text + prefix + f"from . import {name}\n")
+
+
+def del_shadow_line(text: str, name: str) -> str:
+    if not is_theorem_text(text) or name not in SHADOW_CHILD_NAMES:
+        return ""
+    if re.search(rf"^del {re.escape(name)}\s*$", text, re.M):
+        return ""
+    return f"del {name}\n"
+
+
+def unshadow_existing_imports(theorem: str, imports: str) -> str:
+    dels = []
+    for name in imported_names(imports):
+        line = del_shadow_line(theorem, name)
+        if line:
+            dels.append(line)
+    if not dels:
+        return theorem.rstrip() + "\n\n" + imports.lstrip("\n")
+    return theorem.rstrip() + "\n\n" + "".join(dels) + imports.lstrip("\n")
 
 
 def delete_from_init(package_dir: Path, name: str, dry_run: bool) -> None:
@@ -170,7 +199,7 @@ def merge_theorem_into_init(init: Path, theorem: str, dry_run: bool) -> None:
         existing = read_text(init)
         if is_theorem_text(existing):
             raise RuntimeError(f"destination already has a theorem: {init}")
-        text = theorem.rstrip() + "\n\n" + existing.lstrip("\n")
+        text = unshadow_existing_imports(theorem, existing)
     else:
         text = theorem
     print(f"  write {init.relative_to(PY_ROOT)} (theorem into package)")
@@ -204,6 +233,9 @@ def cleanup_empty_packages(start: Path, dry_run: bool) -> None:
             if line.strip() and not IMPORT_LINE_RE.match(line.rstrip("\n"))
         ).strip()
         if children or has_apply or has_imports or leftover:
+            break
+        if current.parent == LEMMA_DIR:
+            # Keep top-level sections even after their last theorem moves.
             break
         name = current.name
         parent = current.parent

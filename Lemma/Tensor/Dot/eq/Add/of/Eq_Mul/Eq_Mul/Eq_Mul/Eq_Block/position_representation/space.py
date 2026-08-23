@@ -14,7 +14,7 @@ def apply(eq_theta_r, eq_theta_c, eq_theta_z, eq_R, xt, r, c, z):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Real
+    from Lemma import Tensor
     from Lemma.Tensor.EqDot.of.Eq_Mul.Eq_Mul.Eq_Mul.Eq_Block.position_representation.space import rotary_matrix
     # n denotes sequence length (seq_length)
     # b_r, b_c denotes 10000
@@ -68,9 +68,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(BlockMatrix).apply(Tensor.Block.eq.Mul.Block)
 
-    Eq << Eq[-1].this.find(BlockMatrix).apply(Real.Block.eq.Cos)
+    Eq << Eq[-1].this.find(BlockMatrix).apply(Tensor.AppendCosS.eq.CosAppend)
 
-    Eq << Eq[-1].this.find(BlockMatrix[2]).apply(Real.Block.eq.Sin)
+    Eq << Eq[-1].this.find(BlockMatrix[2]).apply(Tensor.AppendSinS.eq.SinAppend)
 
     # reference:
     # https://nn.labml.ai/transformers/rope/index.html

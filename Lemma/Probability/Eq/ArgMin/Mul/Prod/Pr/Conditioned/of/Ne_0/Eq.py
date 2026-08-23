@@ -19,7 +19,7 @@ def apply(eq, ne):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Real
+    from Lemma import Probability, Real
 
     t, n, m = Symbol(integer=True, positive=True)
     x = Symbol(real=True, shape=(n,), random=True)

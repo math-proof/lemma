@@ -14,7 +14,7 @@ def apply(self, i=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Algebra
+    from Lemma import Finset
 
     n = Symbol(integer=True, positive=True)
     i = Symbol(integer=True)
@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Finset.Factorial2.eq.Prod, i)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Prod.limits.subst.Neg, i, n - i)
+    Eq << Eq[-1].this.lhs.apply(Finset.Prod.limits.subst.Neg, i, n - i)
 
     # https://en.wikipedia.org/wiki/Double_factorial
 

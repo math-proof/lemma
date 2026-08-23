@@ -22,7 +22,7 @@ def apply(el, all_ge):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Real, Set, Bool
+    from Lemma import Real, Set, Bool, Nat
 
     x = Symbol(real=True)
     x0 = Symbol(real=True, given=True)
@@ -61,7 +61,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Set.In_SDiff.of.In.Ne)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Ge_0.of.Eq)
+    Eq << Eq[-1].this.lhs.apply(Nat.Ge_0.of.Eq)
 
 
 

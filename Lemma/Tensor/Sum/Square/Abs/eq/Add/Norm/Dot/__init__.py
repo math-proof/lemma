@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor
+    from Lemma import Tensor, Complex
 
     t, k = Symbol(integer=True, positive=True)
     L = Symbol(shape=(oo, oo), super_complex=True)
@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Re[~MatMul]).T
 
-    Eq << Eq[-1].this.find(Norm[Conjugate]).apply(Algebra.Norm.Conj)
+    Eq << Eq[-1].this.find(Norm[Conjugate]).apply(Complex.Norm.Conj)
 
 
 

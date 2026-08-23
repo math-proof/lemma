@@ -11,7 +11,7 @@ def apply(is_nonnegative, le):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat, Int
+    from Lemma import Nat, Int
 
     x, M = Symbol(real=True)
     Eq << apply(x >= 0, x <= M)

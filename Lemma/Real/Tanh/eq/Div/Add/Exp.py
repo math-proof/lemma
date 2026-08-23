@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Real, Rat
+    from Lemma import Real, Rat
 
     x = Symbol(real=True)
     Eq << apply(tanh(x))

@@ -18,7 +18,7 @@ def apply(all, all_any):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
 
     x = Symbol(shape=(oo,), etype=dtype.integer)
     n, k = Symbol(integer=True, positive=True)

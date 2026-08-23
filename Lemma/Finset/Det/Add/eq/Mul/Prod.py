@@ -9,7 +9,7 @@ def apply(n, a):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Algebra, Bool, Tensor, Nat
+    from Lemma import Finset, Bool, Tensor, Nat
 
     n = Symbol(integer=True, positive=True, given=False)
     a = Symbol(shape=(oo,), complex=True, zero=False)
@@ -113,7 +113,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Mul, Det).doit(deep=True)
 
-    Eq << Eq[-1].this.find(Product[2]).apply(Algebra.Prod.limits.subst.offset, -1)
+    Eq << Eq[-1].this.find(Product[2]).apply(Finset.Prod.limits.subst.offset, -1)
 
     k = Eq[-1].find(Product).variable
     Eq << Product[k:n](Eq[-1].find(Product).expr).this.apply(Finset.Prod.eq.MulProdS, cond={i})

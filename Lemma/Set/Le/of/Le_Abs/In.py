@@ -38,7 +38,7 @@ def apply(le, contains):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Int
+    from Lemma import Bool, Int
 
     n = Symbol(integer=True, positive=True)
     x, y = Function(real=True)

@@ -14,7 +14,7 @@ def apply(eq, n):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Tensor
+    from Lemma import Probability, Tensor, Finset
 
     b = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), real=True, random=True)  # states / observation
@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq << Probability.EqPr.of.Eq.apply(Eq[0], simplify=False)
 
-    Eq << Algebra.EqProd.of.Eq.apply(Eq[-1], (k, 1, n + 1))
+    Eq << Finset.EqProd.of.Eq.apply(Eq[-1], (k, 1, n + 1))
 
     Eq << Eq[-1].this.find(Pr).apply(Probability.Pr.eq.Div.Pr.bayes)
 

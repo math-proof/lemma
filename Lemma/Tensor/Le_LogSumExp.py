@@ -10,7 +10,7 @@ def apply(x):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Real, Int
+    from Lemma import Tensor, Real, Int
 
     n = Symbol(integer=True, positive=True)
     x = Symbol(real=True, shape=(n,))
@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << GreaterEqual(exp(x), Zeros(*x.shape), plausible=True)
 
-    Eq << Algebra.LeReducedSum.of.Ge_0.apply(Eq[-1])
+    Eq << Tensor.LeReducedSum.of.Ge_0.apply(Eq[-1])
 
     Eq << Eq[-1] / Eq[-1].find(ReducedSum)
 

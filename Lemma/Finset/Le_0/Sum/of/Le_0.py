@@ -17,7 +17,7 @@ def apply(given, *limits):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Finset
     n = Symbol(integer=True, positive=True)
     k = Symbol(integer=True)
     h = Symbol(real=True, shape=(n,))
@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << Eq[-1].simplify()
 
-    Eq << Algebra.LeSum.of.All_Le.apply(Eq[-1])
+    Eq << Finset.LeSum.of.All_Le.apply(Eq[-1])
 
     Eq << Eq[1].this.lhs.simplify()
 

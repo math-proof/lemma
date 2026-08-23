@@ -10,7 +10,7 @@ def apply(ge, Any_All_Le):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Real, Bool, Nat, Int
+    from Lemma import Set, Real, Bool, Nat, Int
 
     a = Symbol(real=True, shape=(oo,), given=True)
     n = Symbol(integer=True)
@@ -23,11 +23,11 @@ def prove(Eq):
 
     Eq << ~Eq.any_gt
 
-    Eq << Eq[-1].this.expr.apply(Algebra.LeSup.of.All_Le)
+    Eq << Eq[-1].this.expr.apply(Real.LeSup.of.All_Le)
 
     Eq.any_le = Eq[-1].this.find(Sup).limits_subs(N, n)
 
-    Eq << Eq[1].this.expr.apply(Algebra.LeSup.of.All_Le)
+    Eq << Eq[1].this.expr.apply(Real.LeSup.of.All_Le)
 
     Eq << Eq[-1].this.expr.apply(Nat.Lt_Add_1.of.Le, upper=oo)
 

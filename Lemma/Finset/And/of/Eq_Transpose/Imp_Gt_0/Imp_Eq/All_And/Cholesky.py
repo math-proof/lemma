@@ -17,7 +17,7 @@ def apply(eq, infer, eq_piece, All_And):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset, Bool, Tensor, Nat
+    from Lemma import Finset, Bool, Tensor, Nat
 
     n = Symbol(domain=Range(10, oo))
     A = Symbol(shape=(n, n), real=True)
@@ -53,7 +53,7 @@ def prove(Eq):
 
     Eq << Eq[1].subs(x, BlockMatrix(x[:t], 1, Zeros(n - t - 1)))
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Ne.given.Any.Ne)
+    Eq << Eq[-1].this.lhs.apply(Nat.Ne.given.Any.Ne)
 
     Eq << Eq[-1].this.lhs.apply(Bool.Any_UFn.given.UFnUFn, i, t)
 

@@ -12,7 +12,7 @@ def apply(lt, is_finite):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Real, Bool
+    from Lemma import Set, Real, Bool, Int
 
     x = Symbol(real=True, shape=(oo,))
     λ = Symbol(real=True)
@@ -29,7 +29,7 @@ def prove(Eq):
 
     Eq << Bool.And_Imp.given.And_ImpAnd.apply(Eq[0], Eq.gt_zero)
 
-    Eq << Eq[-1].this.find(And[~Less]).apply(Algebra.Lt.of.LtAbs)
+    Eq << Eq[-1].this.find(And[~Less]).apply(Int.Lt.of.LtAbs)
 
     Eq << Eq[-1].this.lhs.apply(Set.In.Icc.of.Lt.Gt)
 
@@ -39,7 +39,7 @@ def prove(Eq):
 
     Eq << Bool.And_Imp.given.And_ImpAnd.apply(Eq[0], Eq.lt_zero)
 
-    Eq << Eq[-1].this.find(Abs < 1).apply(Algebra.Gt.of.LtAbs)
+    Eq << Eq[-1].this.find(Abs < 1).apply(Int.Gt.of.LtAbs)
 
     Eq << Eq[-1].this.lhs.apply(Set.In.Icc.of.Lt.Gt)
 

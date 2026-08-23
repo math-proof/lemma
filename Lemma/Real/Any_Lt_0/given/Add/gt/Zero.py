@@ -13,7 +13,7 @@ def apply(any_lt_zero, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Real
+    from Lemma import Real
 
     a, b, c = Symbol(real=True, given=True)
     x = Symbol(real=True)

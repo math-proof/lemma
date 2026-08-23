@@ -9,14 +9,14 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Real
+    from Lemma import Real
 
     M, x = Symbol(real=True)
     S = Symbol(etype=dtype.real)
     f = Function(real=True)
     Eq << apply(Equal(M, Inf[x:S](f(x))))
 
-    Eq << Algebra.Inf.le.Minima.apply(Eq[0].rhs)
+    Eq << Real.Inf.le.Minima.apply(Eq[0].rhs)
 
     Eq << Eq[-1].subs(Eq[0].reversed).reversed
 

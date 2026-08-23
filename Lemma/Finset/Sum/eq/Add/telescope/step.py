@@ -25,7 +25,7 @@ def apply(self, offset):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset, Int
+    from Lemma import Finset, Int
 
     k = Symbol(integer=True, positive=True)
     x = Symbol(real=True, shape=(oo, k))

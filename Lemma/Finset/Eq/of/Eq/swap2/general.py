@@ -19,7 +19,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Algebra, Tensor, Bool
+    from Lemma import Finset, Tensor, Bool
 
     n = Symbol(domain=Range(2, oo))
     S = Symbol(etype=dtype.integer[n])

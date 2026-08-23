@@ -10,13 +10,13 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset, Bool, Rat
+    from Lemma import Finset, Bool, Rat, Nat, Int
 
     i, j = Symbol(integer=True)
     n, t = Symbol(integer=True, nonnegative=True)
     Eq << apply(Sum[j:i, i:n](Binomial(i - j, t)))
 
-    Eq << Eq[0].this.find(Sign).apply(Algebra.Sign.eq.Ite)
+    Eq << Eq[0].this.find(Sign).apply(Int.Sign.eq.Ite)
 
     Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=t > 0)
 
@@ -56,7 +56,7 @@ def prove(Eq):
 
     Eq << Bool.Imp.of.AllSetOf.apply(Eq[-1])
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Ge.given.Gt.relax)
+    Eq << Eq[-1].this.lhs.apply(Nat.Ge.given.Gt.relax)
 
     Eq << Eq[-1].subs(Eq[-1].lhs.lhs, t)
 

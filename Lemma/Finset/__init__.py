@@ -95,3 +95,14 @@ from . import LeAbs
 from . import Le_0
 from . import LeAddSDivS
 from . import EqAll_Eq_0
+from . import EqProd
+from . import Ge
+from . import Gt
+from . import Ge_0
+from . import GeProd
+from . import GeSum
+from . import GtProd
+from . import GtSum
+from . import LtProd
+from . import LtSum
+from . import Square

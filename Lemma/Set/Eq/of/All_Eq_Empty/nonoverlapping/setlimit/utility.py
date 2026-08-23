@@ -22,7 +22,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Finset
+    from Lemma import Set, Bool, Finset
 
     i, j = Symbol(integer=True)
     n = Symbol(domain=Range(2, oo), given=False)

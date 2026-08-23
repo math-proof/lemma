@@ -9,7 +9,7 @@ def apply(eq, infer, eq_piece):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Real
+    from Lemma import Set, Real, Nat
 
     n = Symbol(integer=True, positive=True)
     n = Symbol(domain=Range(10, oo))
@@ -21,7 +21,7 @@ def prove(Eq):
                Imply(Unequal(x, Zeros(n)), (~x) @ A @ x > 0),
                Equal(L[i, j], Piecewise(((A[i, j] - L[i, :j] @ ~L[j, :j]) / L[j, j], j < i), (sqrt(A[i, i] - Norm(L[i, :i]) ** 2), Equal(j, i)), (0, True))))
 
-    Eq << Algebra.Gt_0.of.All_Gt_0.positive_definite.apply(Eq[1], i)
+    Eq << Nat.Gt_0.of.All_Gt_0.positive_definite.apply(Eq[1], i)
 
     Eq << Eq[-1].subs(i, 0)
 

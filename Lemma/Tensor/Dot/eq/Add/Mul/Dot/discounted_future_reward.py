@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Finset, Real
+    from Lemma import Tensor, Finset, Real
 
     r = Symbol(shape=(oo,), real=True, random=True) # rewards
     t, k = Symbol(integer=True) # time counter

@@ -17,7 +17,7 @@ def apply(given, upper=None, lower=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Nat
 
     x, a, b = Symbol(integer=True, given=True)
     Eq << apply(Element(x, Range(a, b)), upper=b + 1)
@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << Set.Ge.Le_Sub_1.of.In_Ico.apply(Eq[0])
 
-    Eq << Algebra.Lt.of.Lt.relax.apply(Eq[-1], upper=b + 1)
+    Eq << Nat.Lt.of.Lt.relax.apply(Eq[-1], upper=b + 1)
 
 
 

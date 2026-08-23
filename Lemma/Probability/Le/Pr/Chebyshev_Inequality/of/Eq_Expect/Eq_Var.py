@@ -12,7 +12,7 @@ def apply(eq_expect, eq_var, k):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra
+    from Lemma import Probability, Nat, Int
 
     x = Symbol(real=True, random=True)
     k = Symbol(positive=True)
@@ -28,11 +28,11 @@ def prove(Eq):
 
     Eq << Eq[-3].subs(Eq[-1])
 
-    Eq << Eq[-1].this.find(GreaterEqual).apply(Algebra.Ge.Is.Ge_0)
+    Eq << Eq[-1].this.find(GreaterEqual).apply(Nat.Ge.Is.Ge_0)
 
-    Eq << Eq[-1].this.find(GreaterEqual).lhs.apply(Algebra.Sub.Square.eq.Mul)
+    Eq << Eq[-1].this.find(GreaterEqual).lhs.apply(Int.Sub.Square.eq.Mul)
 
-    Eq << Eq[-1].this.find(GreaterEqual).apply(Algebra.Ge_0.Is.Or.split.Mul)
+    Eq << Eq[-1].this.find(GreaterEqual).apply(Nat.Ge_0.Is.Or.split.Mul)
 
     Eq << Eq[-1].this.find(LessEqual) - k * σ
 
@@ -42,7 +42,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(GreaterEqual) + k * σ
 
-    Eq << Eq[-1].this.find(Or).apply(Algebra.Or.Is.GeAbs)
+    Eq << Eq[-1].this.find(Or).apply(Int.Or.Is.GeAbs)
 
 
 

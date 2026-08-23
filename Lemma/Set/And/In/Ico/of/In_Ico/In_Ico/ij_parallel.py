@@ -22,16 +22,16 @@ def apply(contains_i, contains_j):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Nat
+    from Lemma import Set, Nat
 
     a, i, j, n, m, d = Symbol(integer=True)
     Eq << apply(Element(i, Range(d + j, n + j)), Element(j, Range(a, m)))
 
     Eq.ge, Eq.lt = Set.Ge.Le_Sub_1.of.In_Ico.apply(Eq[0])
 
-    Eq << Eq.ge.this.apply(Algebra.Ge.transport, rhs=0)
+    Eq << Eq.ge.this.apply(Nat.Ge.transport, rhs=0)
 
-    Eq << Eq.lt.this.apply(Algebra.Lt.transport, rhs=-1)
+    Eq << Eq.lt.this.apply(Nat.Lt.transport, rhs=-1)
 
     Eq << Set.In.Ico.of.Lt.Ge.apply(Eq[-1], Eq[-2])
 

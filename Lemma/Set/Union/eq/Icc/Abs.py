@@ -17,7 +17,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Int
+    from Lemma import Set, Int, Nat
 
     x = Symbol(real=True)
     Eq << apply(Interval.open(x, -x) | Interval.open(-x, x))
@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Abs).apply(Int.Abs.eq.Max)
 
-    Eq << Eq[-1].this.find(-~Max).apply(Algebra.Max.eq.Mul.Min)
+    Eq << Eq[-1].this.find(-~Max).apply(Nat.Max.eq.Mul.Min)
 
 
 

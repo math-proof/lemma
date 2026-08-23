@@ -23,7 +23,7 @@ def apply(eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Set, Bool, Nat, Vector, Int
+    from Lemma import Tensor, Set, Bool, Nat, Vector, Int
 
     n, u = Symbol(domain=Range(2, oo))
     A = Symbol(shape=(n, n), real=True)

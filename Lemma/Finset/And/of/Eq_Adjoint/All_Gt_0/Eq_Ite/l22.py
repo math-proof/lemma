@@ -11,7 +11,7 @@ def apply(eq, infer, eq_piece):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Set, Algebra, Tensor, Nat, Bool, Complex
+    from Lemma import Finset, Set, Tensor, Nat, Bool, Complex, Real
 
     n = Symbol(integer=True, positive=True)
     n = Symbol(domain=Range(10, oo))
@@ -54,7 +54,7 @@ def prove(Eq):
     ξ = Symbol(r'{\color{red} {ξ}}', complex=True, shape=(oo,))
     Eq << Eq[1].subs(x, Stack[i:n](Piecewise((ξ[0], Equal(i, 0)), (ξ[1], Equal(i, 1)), (1, Equal(i, 2)), (0, True))))
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Ne.given.Any.Ne)
+    Eq << Eq[-1].this.lhs.apply(Nat.Ne.given.Any.Ne)
 
     Eq << Eq[-1].this.lhs.apply(Bool.Any_UFn.given.UFnUFn, i, 2)
 
@@ -70,7 +70,7 @@ def prove(Eq):
 
     Eq << Set.EqConj.of.IsNotZero.square_completing.apply(Eq[-1], Eq[-2].lhs, ξ[0], simplify=None)
 
-    Eq << Algebra.Gt.of.Eq.Gt.apply(Eq[-1], Eq[-3])
+    Eq << Nat.Gt.of.Eq.Gt.apply(Eq[-1], Eq[-3])
 
     Eq << Eq[-1].subs(ξ[0], -Eq[-1].find(Indexed ** 2 * Add * Add).find(Mul))
 
@@ -82,7 +82,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Add * ~Add).apply(Nat.AddMulS.eq.Mul_Add)
 
-    Eq << Eq[-1].find(Norm ** 2).this.base.apply(Algebra.Norm.eq.Sqrt).this.rhs.apply(Finset.Sum.eq.Add.doit)
+    Eq << Eq[-1].find(Norm ** 2).this.base.apply(Real.Norm.eq.Sqrt).this.rhs.apply(Finset.Sum.eq.Add.doit)
 
     Eq << Eq[-1].this.find(Abs ** 2).apply(Complex.Square.Abs.eq.Mul.Conj)
 
@@ -94,7 +94,7 @@ def prove(Eq):
 
     Eq << Set.EqConj.of.IsNotZero.square_completing.apply(Eq[-1], Eq[-2].lhs, ξ[1], simplify=None)
 
-    Eq << Algebra.Gt.of.Eq.Gt.apply(Eq[-1], Eq[-3])
+    Eq << Nat.Gt.of.Eq.Gt.apply(Eq[-1], Eq[-3])
 
     Eq << Eq[-1].subs(ξ[1], -Eq[-1].find(Indexed ** 2 * Add * Add).find(Mul))
 
@@ -122,7 +122,7 @@ def prove(Eq):
 
     Eq << Eq[2].subs(i, 2).subs(j, 2).reversed
 
-    Eq << Eq[-1].this.find(Norm).apply(Algebra.Norm.eq.Sqrt).this.find(Sum).apply(Finset.Sum.eq.Add.doit)
+    Eq << Eq[-1].this.find(Norm).apply(Real.Norm.eq.Sqrt).this.find(Sum).apply(Finset.Sum.eq.Add.doit)
 
     Eq << Eq[-3].subs(Eq[-1]), Eq[-1] ** 2
 
@@ -130,7 +130,7 @@ def prove(Eq):
 
     Eq << Eq[-1] - Add(*Eq[-1].lhs.args[1:])
 
-    Eq << Eq.A22_def.this.find(Norm).apply(Algebra.Norm.eq.Sqrt)
+    Eq << Eq.A22_def.this.find(Norm).apply(Real.Norm.eq.Sqrt)
 
     Eq << Eq[-1].this.rhs.apply(Finset.Sum.eq.Add.doit)
 

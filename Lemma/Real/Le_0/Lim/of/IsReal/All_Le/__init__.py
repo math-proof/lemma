@@ -15,7 +15,7 @@ def apply(el, all_le):
 
 @prove
 def prove(Eq):
-    from Lemma import Real, Algebra, Bool, Nat
+    from Lemma import Real, Bool, Nat
 
     x = Symbol(real=True)
     x0 = Symbol(real=True, given=True)
@@ -41,9 +41,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Less).reversed
 
-    Eq << Eq[-1].this.find(And[~Greater]).apply(Algebra.Gt.given.Gt.relax, lower=Min(δ_quote, delta))
+    Eq << Eq[-1].this.find(And[~Greater]).apply(Nat.Gt.given.Gt.relax, lower=Min(δ_quote, delta))
 
-    Eq << Eq[1].this.find(And[~Greater]).apply(Algebra.Gt.given.Gt.relax, lower=Min(δ_quote, delta))
+    Eq << Eq[1].this.find(And[~Greater]).apply(Nat.Gt.given.Gt.relax, lower=Min(δ_quote, delta))
 
     Eq << Bool.Any_And.of.Any.All.apply(*Eq[-2:], simplify=None)
 

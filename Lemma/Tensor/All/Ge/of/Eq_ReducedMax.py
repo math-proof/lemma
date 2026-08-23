@@ -10,14 +10,14 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Real
+    from Lemma import Real, Tensor
 
     M, x = Symbol(real=True)
     S = Symbol(etype=dtype.real)
     f = Function(real=True)
     Eq << apply(Equal(M, ReducedMax({f(x): Element(x, S)})))
 
-    Eq << Eq[0].this.rhs.apply(Algebra.ReducedMax.eq.Maxima)
+    Eq << Eq[0].this.rhs.apply(Tensor.ReducedMax.eq.Maxima)
 
     Eq << Real.All.Ge.of.Eq_Maxima.apply(Eq[-1])
 

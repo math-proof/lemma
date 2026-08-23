@@ -9,7 +9,6 @@ def apply(given):
 
 @prove(provable=False)
 def prove(Eq):
-    from Lemma import Algebra
 
     M, a, b = Symbol(real=True, given=True)
     x = Symbol(real=True)

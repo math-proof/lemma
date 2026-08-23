@@ -7,7 +7,7 @@ def apply(x):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Real, Nat
+    from Lemma import Bool, Real, Nat
 
     x = Symbol(real=True)
     Eq << apply(x)

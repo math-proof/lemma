@@ -15,7 +15,7 @@ def apply(n, P_quote=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool, Tensor
+    from Lemma import Set, Bool, Tensor
 
     n = Symbol(integer=True, positive=True)
     Eq << apply(n)

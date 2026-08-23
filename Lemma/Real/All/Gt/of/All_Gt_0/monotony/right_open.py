@@ -11,7 +11,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Real, Set, Bool
+    from Lemma import Real, Set, Bool
 
     a, b = Symbol(real=True, given=True)
     domain = Interval(a, b, right_open=True)

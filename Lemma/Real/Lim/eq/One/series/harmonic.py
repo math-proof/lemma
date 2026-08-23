@@ -9,7 +9,7 @@ def apply(n):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Real, Set, Bool, Finset
+    from Lemma import Real, Set, Bool, Finset
 
     n = Symbol(integer=True, positive=True)
     Eq << apply(n)
@@ -41,7 +41,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2].apply(Bool.AllIn.of.All, (k, 1, n)), Eq[-1].apply(Bool.AllIn.of.All, (k, 1, n - 1))
 
-    Eq <<= Algebra.LeSum.of.All_Le.apply(Eq[-2]), Algebra.GeSum.of.All_Ge.apply(Eq[-1])
+    Eq <<= Finset.LeSum.of.All_Le.apply(Eq[-2]), Finset.GeSum.of.All_Ge.apply(Eq[-1])
 
     Eq <<= Eq[-2].this.lhs.doit(), Eq[-1].this.lhs.doit().reversed
 

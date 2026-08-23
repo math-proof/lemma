@@ -19,7 +19,7 @@ def apply(all_is_positive_real, contains0, contains1, le):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Real, Algebra, Bool, Nat
+    from Lemma import Set, Real, Bool, Nat
 
     a, b, x, x0, x1 = Symbol(real=True)
     f = Function(real=True)
@@ -38,7 +38,7 @@ def prove(Eq):
 
     Eq << Eq.is_positive_real.this.expr.apply(Set.Gt_0.of.IsPositive)
 
-    Eq << Algebra.Gt_0.of.Lt.apply(Eq[3])
+    Eq << Nat.Gt_0.of.Lt.apply(Eq[3])
 
     Eq << Bool.All.And.of.Cond.All.apply(Eq[-1], Eq[-2], simplify=None)
 
@@ -50,7 +50,7 @@ def prove(Eq):
 
     Eq << Bool.And_And.of.And.apply(Eq[-1])
 
-    Eq << Algebra.Lt.of.Gt_0.apply(Eq[-1])
+    Eq << Nat.Lt.of.Gt_0.apply(Eq[-1])
 
 
 

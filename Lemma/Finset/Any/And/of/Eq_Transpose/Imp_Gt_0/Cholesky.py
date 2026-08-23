@@ -10,7 +10,7 @@ def apply(eq, infer, L, i, j):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset, Bool, Tensor
+    from Lemma import Finset, Bool, Tensor
 
     n = Symbol(integer=True, positive=True)
     A = Symbol(shape=(n, n), real=True)

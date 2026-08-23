@@ -14,7 +14,7 @@ def apply(given, x):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Finset, Bool
+    from Lemma import Set, Finset, Bool
 
     n = Symbol(integer=True, positive=True)
     p, x = Symbol(integer=True, shape=(n,))

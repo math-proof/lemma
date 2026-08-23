@@ -12,7 +12,7 @@ def apply(S):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Nat
+    from Lemma import Set, Bool, Nat
 
     S = Symbol(etype=dtype.real)
     Eq << apply(S)

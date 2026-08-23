@@ -12,7 +12,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset, Int, Nat, Fin
+    from Lemma import Finset, Int, Nat, Fin
 
     k, h = Symbol(complex=True)
     a, b, i = Symbol(integer=True)

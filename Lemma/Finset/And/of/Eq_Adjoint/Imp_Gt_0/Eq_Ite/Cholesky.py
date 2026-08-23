@@ -9,7 +9,7 @@ def apply(eq, infer, eq_piece):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Algebra, Set, Bool, Tensor, Nat, Complex
+    from Lemma import Finset, Set, Bool, Tensor, Nat, Complex
 
     n = Symbol(integer=True, positive=True)
     A = Symbol(shape=(n, n), complex=True)

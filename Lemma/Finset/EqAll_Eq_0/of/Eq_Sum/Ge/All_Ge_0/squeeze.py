@@ -15,7 +15,7 @@ def apply(eq_sum, ge, all_is_nonnegative):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Set, Nat, Finset
+    from Lemma import Bool, Set, Nat, Finset, Int
 
     x = Symbol(real=True, shape=(oo,), given=True)
     n = Symbol(integer=True, given=True, negative=False)
@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq.All_is_nonnegative = Set.AllIn_SDiff.of.All.apply(Eq[2], domain=Range(n))
 
-    Eq << Algebra.Ge_0.Sum.of.All_Ge_0.apply(Eq.All_is_nonnegative)
+    Eq << Finset.Ge_0.Sum.of.All_Ge_0.apply(Eq.All_is_nonnegative)
 
     Eq << Nat.LeSub.of.Eq.Ge.apply(Eq.eq, Eq[-1])
 
@@ -49,13 +49,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this().expr.find(Piecewise, Element).simplify()
 
-    Eq.any_is_negative = Eq[-1].this.expr.apply(Algebra.LtSub.of.Eq.Gt)
+    Eq.any_is_negative = Eq[-1].this.expr.apply(Int.LtSub.of.Eq.Gt)
 
     Eq << Set.AllIn_SDiff.of.All.apply(Eq.All_is_nonnegative, Range(n) - {i})
 
     Eq << Eq[-1].limits_subs(i, j)
 
-    Eq << Algebra.Ge_0.Sum.of.All_Ge_0.apply(Eq[-1])
+    Eq << Finset.Ge_0.Sum.of.All_Ge_0.apply(Eq[-1])
 
     Eq << Bool.Any_And.of.Any.All.apply(Eq[-1], Eq.any_is_negative)
 

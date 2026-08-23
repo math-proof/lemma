@@ -22,7 +22,7 @@ def apply(eq_M, x, w, r):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool, Tensor, Int, Nat
+    from Lemma import Set, Bool, Tensor, Int, Nat
 
     m, n, d, d_quote, l, r = Symbol(integer=True, positive=True)
     # r is the dilation rate
@@ -58,13 +58,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Min, Add).apply(Nat.Add.eq.Min)
 
-    Eq << Eq[-1].this.find(Min).apply(Algebra.Min.eq.Add, 1)
+    Eq << Eq[-1].this.find(Min).apply(Nat.Min.eq.Add, 1)
 
     Eq << Eq[-1].this.find(Add[Ceil]).apply(Int.Add.Ceil.eq.Floor)
 
-    Eq << Eq[-1].this.find(Min[Floor]).apply(Algebra.Min.eq.Floor)
+    Eq << Eq[-1].this.find(Min[Floor]).apply(Int.Min.eq.Floor)
 
-    Eq << Eq[-1].this.find(-Floor).apply(Algebra.Mul.eq.Ceil)
+    Eq << Eq[-1].this.find(-Floor).apply(Int.Mul.eq.Ceil)
 
     Eq << Eq[-1].this.rhs.subs(Eq.M_def)
 
@@ -83,11 +83,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite)
 
-    Eq << Eq[-1].this.find(-Floor).apply(Algebra.Mul.eq.Ceil)
+    Eq << Eq[-1].this.find(-Floor).apply(Int.Mul.eq.Ceil)
 
-    Eq << Eq[-1].this.find(-Add).apply(Algebra.Mul.distribute)
+    Eq << Eq[-1].this.find(-Add).apply(Nat.Mul.distribute)
 
-    Eq << Eq[-1].this.find(Min[Floor]).apply(Algebra.Min.eq.Floor)
+    Eq << Eq[-1].this.find(Min[Floor]).apply(Int.Min.eq.Floor)
 
     Eq << Bool.Eq.of.Eq.Eq.apply(Eq.convolution_definition, Eq[-1])
 

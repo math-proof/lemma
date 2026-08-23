@@ -22,7 +22,7 @@ def apply(n, k, s2=None, A=None):
 
 @prove(proved=False)
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool, Nat
+    from Lemma import Set, Bool, Nat
 
     k = Symbol(integer=True, positive=True)
     n = Symbol(integer=True, positive=True, given=True)
@@ -80,7 +80,7 @@ def prove(Eq):
     u = Eq[-1].lhs.arg
     Eq << Set.CardCup.le.Sum_Card.apply(u.expr, *u.limits)
 
-    Eq << Eq[-2].this.expr.apply(Algebra.Ge.of.Eq.Le.subst, Eq[-1])
+    Eq << Eq[-2].this.expr.apply(Nat.Ge.of.Eq.Le.subst, Eq[-1])
 
     Eq.SqueezeTheorem = Eq[-4] & Eq[-1]
 
@@ -144,7 +144,7 @@ def prove(Eq):
 
     Eq << Bool.Any.of.Any_Eq.Cond.subst.apply(Eq[-2], Eq[-1])
 
-    Eq.set_size_inequality = Eq[-1].this.expr.apply(Algebra.Lt.of.Eq.Lt.subst, Less(Eq[-1].expr.rhs, Eq[-1].expr.rhs + 1, plausible=True))
+    Eq.set_size_inequality = Eq[-1].this.expr.apply(Nat.Lt.of.Eq.Lt.subst, Less(Eq[-1].expr.rhs, Eq[-1].expr.rhs + 1, plausible=True))
 
     Eq << Eq.x_quote_union.this.expr.lhs.apply(Set.Cup.eq.UnionCupS, cond={i, j})
 
@@ -156,7 +156,7 @@ def prove(Eq):
 
     Eq << Bool.Any_And.of.Any.All.apply(Eq[-1], Eq.set_size_inequality)
 
-    Eq << Eq[-1].this.expr.apply(Algebra.LtAdd.of.Lt.Le)
+    Eq << Eq[-1].this.expr.apply(Nat.LtAdd.of.Lt.Le)
 
 
 if __name__ == '__main__':

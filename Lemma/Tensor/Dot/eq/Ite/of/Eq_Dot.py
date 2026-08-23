@@ -8,7 +8,7 @@ def apply(eq_R):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Nat
+    from Lemma import Set, Bool, Nat, Tensor
 
     # n denotes sequence length (seq_length)
     n = Symbol(integer=True, positive=True)
@@ -35,7 +35,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(k, j).subs(t, k).subs(j, t)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.EqTranspose.of.Eq)
+    Eq << Eq[-1].this.rhs.apply(Tensor.EqTranspose.of.Eq)
 
     Eq << Eq[-1].this.lhs.reversed
 

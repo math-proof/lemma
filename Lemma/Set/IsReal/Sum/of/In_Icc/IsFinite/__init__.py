@@ -17,7 +17,7 @@ def apply(el, is_finite):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Real, Nat, Int, Rat, Finset
+    from Lemma import Set, Real, Nat, Int, Rat, Finset
 
     r = Symbol(shape=(oo,), real=True)
     γ = Symbol(real=True)
@@ -30,12 +30,12 @@ def prove(Eq):
 
     Eq << Rat.Lt0Pow.of.Gt_0.apply(Eq.gt_zero, k)
 
-    Eq << Algebra.Gt_0.Abs.of.Gt_0.apply(Eq[-1])
+    Eq << Int.Gt_0.Abs.of.Gt_0.apply(Eq[-1])
 
     Eq << Nat.LeMul.of.Gt_0.Le.apply(Eq[-1], Eq[-3])
 
     n = Symbol(integer=True, positive=True)
-    Eq << Algebra.LeSum.of.Le.apply(Eq[-1], (k, 0, n))
+    Eq << Finset.LeSum.of.Le.apply(Eq[-1], (k, 0, n))
 
     Eq << Finset.AbsSum.le.Sum_Abs.apply(Eq[2].find(Sum)._subs(oo, n))
 
@@ -63,7 +63,7 @@ def prove(Eq):
 
     Eq << Nat.Gt_Sub_1.of.Gt.apply(Eq.gt_zero, -1)
 
-    Eq << Algebra.LtAbs.of.Gt.Lt.apply(Eq[-1], Eq.lt)
+    Eq << Int.LtAbs.of.Gt.Lt.apply(Eq[-1], Eq.lt)
 
     Eq << Real.Eq_0.Lim.of.LtAbs.geometric_series.apply(Eq[-1], n)
 
@@ -73,13 +73,13 @@ def prove(Eq):
 
     Eq << -Eq.lt + 1
 
-    Eq << Algebra.LtDiv.of.Gt_0.Lt.apply(Eq[-1], Eq[1], simplify=False)
+    Eq << Nat.LtDiv.of.Gt_0.Lt.apply(Eq[-1], Eq[1], simplify=False)
 
     Eq << -Eq[-1]
 
     Eq <<= Nat.Lt.of.Le.Lt.apply(Eq.upper_bound, Eq[-2]), Nat.Gt.of.Ge.Gt.apply(Eq.lower_bound, Eq[-1])
 
-    Eq << Algebra.LtAbs.of.Lt.Gt.apply(Eq[-2], Eq[-1])
+    Eq << Int.LtAbs.of.Lt.Gt.apply(Eq[-2], Eq[-1])
 
     Eq << Eq[-1].this.find(Sum).apply(Finset.Sum.limits.domain_defined)
 

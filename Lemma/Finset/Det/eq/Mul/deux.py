@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Algebra, Tensor
+    from Lemma import Finset, Tensor, Nat
 
     n = Symbol(integer=True, positive=True)
     A, B = Symbol(shape=(n, n), complex=True)
@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Det).apply(Finset.Det.Mul.eq.Mul)
 
-    Eq << Eq[-1].this.find(Pow).apply(Algebra.Pow.eq.One)
+    Eq << Eq[-1].this.find(Pow).apply(Nat.Pow.eq.One)
 
     Eq << Eq[-1].reversed
 

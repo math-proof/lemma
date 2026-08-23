@@ -27,7 +27,7 @@ def apply(imply):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
 
     x = Symbol(real=True, shape=(oo, oo))
     i, j = Symbol(integer=True)
@@ -52,7 +52,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Any[Or]).apply(Bool.Any_Or.given.OrAnyS)
 
-    Eq << Eq[-1].this.args[:2].apply(Algebra.Or_Any.given.Any.Or)
+    Eq << Eq[-1].this.args[:2].apply(Bool.Or_Any.given.Any.Or)
 
     Eq << Bool.Or.given.Cond.apply(Eq[-1], 1)
 

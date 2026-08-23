@@ -11,7 +11,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset, Bool
+    from Lemma import Finset, Bool
 
     k, n = Symbol(integer=True, positive=True)
     Eq << apply(Stirling(n + 1, k + 1))

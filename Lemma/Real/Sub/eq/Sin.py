@@ -14,7 +14,7 @@ def prove(Eq):
     x, y = Symbol(real=True)
     Eq << apply(sin(x) * cos(y) - cos(x) * sin(y))
 
-    Eq << Eq[0].this.rhs.apply(Real.Sin.eq.Sub)
+    Eq << Eq[0].this.rhs.apply(Real.SinSub.eq.SubMulSSin_Cos)
 
 
 if __name__ == '__main__':

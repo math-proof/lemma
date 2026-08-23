@@ -27,7 +27,7 @@ def apply(equivalent_0, equivalent_1, reverse=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
 
     a, x, b = Symbol(etype=dtype.real)
     f = Function(real=True)
@@ -45,7 +45,7 @@ def prove(Eq):
 
     Eq << Bool.Imp.of.Iff.apply(Eq[1], reverse=True)
 
-    Eq << Algebra.Given.of.Given.Given.apply(Eq[-2], Eq[-1]).reversed
+    Eq << Bool.Given.of.Given.Given.apply(Eq[-2], Eq[-1]).reversed
 
 
 

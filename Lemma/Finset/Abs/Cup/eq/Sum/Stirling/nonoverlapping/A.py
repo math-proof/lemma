@@ -18,7 +18,7 @@ def apply(n, k, A=None):
 
 @prove(proved=False)
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool, Nat
+    from Lemma import Set, Bool, Nat
 
     n = Symbol(integer=True, positive=True)
     k = Symbol(domain=Range(1, n))

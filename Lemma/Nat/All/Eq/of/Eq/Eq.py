@@ -20,7 +20,7 @@ def apply(eq_k, eq_n, wrt=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
 
     n = Symbol(integer=True, positive=True)
     f, g = Symbol(integer=True, shape=(oo,))

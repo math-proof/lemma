@@ -8,7 +8,7 @@ def apply(A, B):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Nat
 
     A, B = Symbol(etype=dtype.integer)
     Eq << apply(A, B)
@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq << Eq[-1] + GreaterEqual(Eq[-1].rhs.args[1], 0, plausible=True)
 
-    Eq << Eq[-1].this.apply(Algebra.Ge.simp.common_terms)
+    Eq << Eq[-1].this.apply(Nat.Ge.simp.common_terms)
 
 
 if __name__ == '__main__':

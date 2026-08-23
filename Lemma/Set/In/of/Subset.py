@@ -13,7 +13,7 @@ def apply(given, index=0):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool
+    from Lemma import Set, Bool
 
     n = Symbol(complex=True, positive=True)
     A = Symbol(etype=dtype.complex[n])

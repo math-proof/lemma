@@ -8,7 +8,7 @@ def apply(gt_zero):
 
 @prove
 def prove(Eq):
-    from Lemma import Real, Set, Algebra, Bool, Nat
+    from Lemma import Real, Set, Bool, Nat
 
     x = Symbol(real=True)
     Eq << apply(x >= 0)
@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << Set.Le.of.In_Icc.apply(Eq[-1])
 
-    Eq << Algebra.Ge_0.of.Le.apply(Eq[-1])
+    Eq << Nat.Ge_0.of.Le.apply(Eq[-1])
 
     Eq << Eq[-1].subs(Eq[-4].reversed)
 

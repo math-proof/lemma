@@ -11,7 +11,7 @@ def apply(lt_zero, x=None, b=None, c=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Rat, Real
+    from Lemma import Bool, Rat, Real
 
     a, b, c = Symbol(real=True, given=True)
     x = Symbol(real=True)

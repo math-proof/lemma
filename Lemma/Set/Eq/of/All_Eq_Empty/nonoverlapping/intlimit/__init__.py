@@ -25,7 +25,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool
+    from Lemma import Set, Bool
 
     i, j = Symbol(integer=True)
     n = Symbol(domain=Range(2, oo))

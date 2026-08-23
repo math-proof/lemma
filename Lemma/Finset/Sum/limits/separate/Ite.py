@@ -30,7 +30,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Finset
+    from Lemma import Bool, Finset
     i, j = Symbol(integer=True)
     A, B, C, D = Symbol(etype=dtype.integer)
 

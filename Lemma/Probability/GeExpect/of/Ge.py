@@ -12,7 +12,7 @@ def apply(ge, *limits):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Real
+    from Lemma import Probability, Real, Nat
 
     x = Symbol(real=True, random=True)
     f, g = Function(real=True)
@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq << Probability.Pr.ge.Zero.apply(Eq[-1].find(Pr))
 
-    Eq << Algebra.GeMul.of.Ge_0.Ge.apply(Eq[-1], Eq[0])
+    Eq << Nat.GeMul.of.Ge_0.Ge.apply(Eq[-1], Eq[0])
 
     Eq << Real.GeIntegral.of.Ge.apply(Eq[-1], (x.var,))
 

@@ -19,7 +19,7 @@ def apply(given, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool
+    from Lemma import Set, Bool, Tensor
 
     n = Symbol(domain=Range(2, oo), given=False)
     k = Symbol(integer=True, positive=True)
@@ -32,7 +32,7 @@ def prove(Eq):
 
     Eq << Eq.initial.this.rhs.doit(deep=True)
 
-    Eq << Eq[-1].this.find(Sliced).apply(Algebra.Slice.eq.Block)
+    Eq << Eq[-1].this.find(Sliced).apply(Tensor.Slice.eq.Block)
 
     Eq << Eq[-1].this.find(Unequal).reversed
 

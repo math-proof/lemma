@@ -11,14 +11,14 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Int
     x, a = Symbol(integer=True, given=True)
 
     Eq << apply(abs(x) < a)
 
-    Eq << Algebra.Lt.of.Lt.split.Abs.apply(Eq[0])
+    Eq << Int.Lt.of.Lt.split.Abs.apply(Eq[0])
 
-    Eq << -Algebra.Lt.of.Lt.split.Abs.apply(Eq[0], negate=True)
+    Eq << -Int.Lt.of.Lt.split.Abs.apply(Eq[0], negate=True)
 
 
 if __name__ == '__main__':

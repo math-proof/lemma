@@ -11,7 +11,7 @@ def apply(eq, k):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Bool, Tensor
+    from Lemma import Probability, Bool, Tensor
 
     b = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), real=True, random=True) # states / observation

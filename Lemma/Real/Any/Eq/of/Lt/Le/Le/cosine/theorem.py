@@ -13,7 +13,7 @@ def apply(le_x, le_y, lt):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Real
+    from Lemma import Set, Bool, Real
 
     x, y, z = Symbol(positive=True)
     Eq << apply(x <= z, y <= z, z < x + y)

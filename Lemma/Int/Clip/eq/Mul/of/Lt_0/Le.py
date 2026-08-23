@@ -10,7 +10,7 @@ def apply(lt_zero, le, x):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat
+    from Lemma import Nat, Int
 
     x, a, b = Symbol(real=True)
     λ = Symbol(real=True)
@@ -18,9 +18,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(clip).defun()
 
-    Eq << Algebra.Min.eq.Mul.Max.of.Lt_0.apply(Eq[0], Eq[3].lhs)
+    Eq << Int.Min.eq.Mul.Max.of.Lt_0.apply(Eq[0], Eq[3].lhs)
 
-    Eq << Algebra.Max.eq.Mul.Min.of.Lt_0.apply(Eq[0], Eq[-1].rhs.find(Mul[~Max]))
+    Eq << Int.Max.eq.Mul.Min.of.Lt_0.apply(Eq[0], Eq[-1].rhs.find(Mul[~Max]))
 
     Eq << Eq[-2].this.rhs.subs(Eq[-1])
 

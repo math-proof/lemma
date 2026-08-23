@@ -12,7 +12,7 @@ def apply(le, index=-1):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat
+    from Lemma import Nat
 
     x, y, z = Symbol(real=True, given=True)
     Eq << apply(x <= Min(y, z))

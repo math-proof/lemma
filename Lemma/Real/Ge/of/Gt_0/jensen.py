@@ -19,7 +19,7 @@ def apply(is_positive, w=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Real, Bool, Nat
+    from Lemma import Real, Bool, Nat
 
     n = Symbol(integer=True, positive=True)
     i = Symbol(integer=True)

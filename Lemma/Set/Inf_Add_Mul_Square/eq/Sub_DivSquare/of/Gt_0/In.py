@@ -15,19 +15,19 @@ def apply(is_positive, el, fx, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Rat, Int, Nat
+    from Lemma import Set, Rat, Int, Nat, Real
 
     m, M, a, b, c = Symbol(real=True, given=True)
     x = Symbol(real=True)
     Eq << apply(a > 0, Element(-b / (2 * a), Interval(m, M, right_open=True)), a * x ** 2 + b * x + c, x)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Inf.limits.subst.offset, Eq[1].lhs)
+    Eq << Eq[-1].this.lhs.apply(Real.Inf.limits.subst.offset, Eq[1].lhs)
 
     Eq << Eq[-1].this.lhs.expr.expand()
 
     Eq << Rat.Lt0Div.of.Gt_0.apply(Eq[0])
 
-    Eq << Algebra.Inf.eq.Mul.of.Gt_0.apply(Eq[-1], Eq[-2].lhs) * a
+    Eq << Real.Inf.eq.Mul.of.Gt_0.apply(Eq[-1], Eq[-2].lhs) * a
 
     Eq << Eq[-3].subs(Eq[-1].reversed)
 
@@ -37,7 +37,7 @@ def prove(Eq):
 
     Eq << Set.Le.Le.of.In_Icc.apply(Eq[-1])
 
-    Eq << Algebra.Inf_Square.eq.Zero.of.Gt_0.Le_0.apply(Eq[-1], Eq[-2], left_open=False, x=x)
+    Eq << Real.Inf_Square.eq.Zero.of.Gt_0.Le_0.apply(Eq[-1], Eq[-2], left_open=False, x=x)
 
 
 if __name__ == '__main__':

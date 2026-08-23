@@ -25,7 +25,7 @@ def apply(eq, eq1):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool, Nat, Finset
 
     k = Symbol(integer=True)
     n = Symbol(integer=True, given=False)
@@ -33,7 +33,7 @@ def prove(Eq):
     Eq << apply(Equal(C[0], 1),
                 Equal(C[n + 1], Sum[k:n + 1](C[k] * C[n - k])))
 
-    Eq.initial = Algebra.Gt.of.Eq.apply(Eq[0], 0)
+    Eq.initial = Nat.Gt.of.Eq.apply(Eq[0], 0)
 
     k = Symbol(domain=Range(n + 1))
     Eq.induct = Eq[2].subs(n, n + 1)
@@ -44,12 +44,12 @@ def prove(Eq):
 
     Eq << Eq.hypothsis_nk * Eq.hypothsis_k
 
-    Eq << Algebra.GtSum.of.Gt.apply(Eq[-1], (k,))
+    Eq << Finset.GtSum.of.Gt.apply(Eq[-1], (k,))
 
     Eq << Eq[-1].this.lhs.limits_subs(k, k.copy(domain=None))
 
     Eq << Eq[-1] + Eq[1]
-    Eq << Eq[-1].this.apply(Algebra.Gt.transport)
+    Eq << Eq[-1].this.apply(Nat.Gt.transport)
 
     Eq << Imply(Eq.hypothsis_k, Eq.induct, plausible=True)
 

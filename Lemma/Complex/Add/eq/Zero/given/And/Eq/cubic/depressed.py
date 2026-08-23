@@ -33,7 +33,7 @@ def apply(is_zero, x=None, d=0):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat, Real, Int, Complex, Finset
+    from Lemma import Nat, Real, Int, Complex, Finset
 
     x, p, q = Symbol(complex=True, given=True)
     Eq << apply(Equal(x ** 3 + p * x + q, 0), x=x, d=1)
@@ -70,7 +70,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Nat.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.lhs.args[0].apply(Algebra.Mul.distribute, 0)
+    Eq << Eq[-1].this.lhs.args[0].apply(Nat.Mul.distribute, 0)
 
     Eq << Eq[-1].subs(Eq.w_square)
 

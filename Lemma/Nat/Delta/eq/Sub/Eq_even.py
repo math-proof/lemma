@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat
+    from Lemma import Nat
 
     n = Symbol(integer=True)
     Eq << apply(KroneckerDelta(0, n % 2))

@@ -14,7 +14,7 @@ def apply(le, _le, right_open=True, left_open=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool, Nat
+    from Lemma import Set, Bool, Nat
 
     a, b, x = Symbol(real=True, given=True)
     Eq << apply(x <= b, a <= x)

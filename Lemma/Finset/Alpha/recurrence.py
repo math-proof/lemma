@@ -16,7 +16,7 @@ def apply(A):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset, Bool, Rat
+    from Lemma import Finset, Bool, Rat
     from Lemma.Finset.Alpha.gt.Zero import alpha
 
     x = Symbol(real=True, positive=True, shape=(oo,))

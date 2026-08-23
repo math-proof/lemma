@@ -17,7 +17,7 @@ def apply(gt, self, n=None, k=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Real, Nat, Int, Finset
+    from Lemma import Real, Nat, Int, Finset
 
     x, a, b = Symbol(real=True)
     f = Function(real=True, continuous=True)
@@ -29,7 +29,7 @@ def prove(Eq):
 
     Eq << -Eq[-1]
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Mul.Neg)
+    Eq << Eq[-1].this.rhs.apply(Int.Mul.Neg)
 
     Eq.eq_integral = Eq[-1].this.lhs.apply(Real.Neg.eq.Integral)
 

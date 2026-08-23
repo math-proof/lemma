@@ -24,7 +24,7 @@ def apply(f0, suffice, n=None, k=None, hypothesis=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
 
     n = Symbol(integer=True, nonnegative=True)
     k = Symbol(domain=Range(n))

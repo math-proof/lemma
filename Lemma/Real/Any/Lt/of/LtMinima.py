@@ -9,7 +9,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Real
+    from Lemma import Real
 
     M, a, b = Symbol(real=True, given=True)
     x = Symbol(real=True)
@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq << Eq[0].subs(Eq[-1])
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Minima.eq.Neg.Maxima)
+    Eq << Eq[-1].this.lhs.apply(Real.Minima.eq.Neg.Maxima)
 
     Eq << Real.Any.Gt.of.GtMaxima.apply(-Eq[-1])
 

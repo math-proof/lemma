@@ -10,14 +10,14 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Finset
 
     n = Symbol(integer=True, positive=True)
     i = Symbol(integer=True)
     f = Function(shape=(), complex=True)
     Eq << apply(All[i:n](f(i) > 0))
 
-    Eq << Algebra.GtSum.of.All_Gt.apply(Eq[0])
+    Eq << Finset.GtSum.of.All_Gt.apply(Eq[0])
 
 
 if __name__ == '__main__':

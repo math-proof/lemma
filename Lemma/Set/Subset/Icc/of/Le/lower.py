@@ -10,7 +10,7 @@ def apply(given, lower, left_open=False, right_open=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool
+    from Lemma import Set, Bool
 
     x, y, z = Symbol(real=True, given=True)
     Eq << apply(x <= y, z, left_open=True)
@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.args[1].apply(Set.NotIn_Icc.given.OrLtS), Eq[-1].this.find(NotElement).apply(Set.NotIn_Icc.given.OrLtS)
 
-    Eq << Algebra.Or.given.Or.apply(Eq[-1], slice(0, 2))
+    Eq << Bool.Or.given.Or.apply(Eq[-1], slice(0, 2))
 
     Eq << Set.Or.given.NotIn.Icc.apply(Eq[-1])
 

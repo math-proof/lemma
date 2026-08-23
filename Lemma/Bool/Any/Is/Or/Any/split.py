@@ -10,7 +10,7 @@ def apply(given, *, cond=None, wrt=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
 
     x = Symbol(real=True)
     f = Function(integer=True, shape=())
@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq << Bool.Iff.given.Imp.Imp.apply(Eq[0])
 
-    Eq << Eq[-2].this.lhs.apply(Algebra.Or.Any.of.Any.split, cond=x < 0)
+    Eq << Eq[-2].this.lhs.apply(Bool.Or.Any.of.Any.split, cond=x < 0)
 
     Eq << Eq[-1].this.rhs.apply(Bool.Any.given.Or.Any.split, cond=x < 0)
 

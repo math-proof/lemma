@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Real, Algebra, Probability, Bool
+    from Lemma import Real, Probability, Bool, Finset
 
     b = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), real=True, random=True) # states / observation
@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq << Eq.induct.this.lhs.apply(Real.Integral.limits.pop.Slice)
 
-    Eq << Eq[-1].this.find(Product).apply(Algebra.Prod.eq.Mul.pop)
+    Eq << Eq[-1].this.find(Product).apply(Finset.Prod.eq.Mul.pop)
 
     Eq << Eq[-1].this.lhs.apply(Real.Integral.limits.separate)
 

@@ -26,7 +26,7 @@ def apply(eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Set, Bool, Nat, Vector, Int
+    from Lemma import Tensor, Set, Bool, Nat, Vector, Int
 
     n = Symbol(domain=Range(2, oo))
     u = Symbol(domain=Range(2, n + 1))

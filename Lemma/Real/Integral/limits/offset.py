@@ -15,7 +15,7 @@ def apply(self, offset):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Real, Int
+    from Lemma import Real, Int
 
     x, a, b, d = Symbol(real=True)
     f = Function(real=True, integrable=True)
@@ -31,7 +31,7 @@ def prove(Eq):
 
     Eq << fn(x).this.defun()
 
-    Eq << Algebra.SubAbs.ge.Zero.apply(f(x)) / 2
+    Eq << Int.SubAbs.ge.Zero.apply(f(x)) / 2
 
     Eq.fn_is_nonnegative =  Eq[-1].subs(Eq[-2].reversed)
 

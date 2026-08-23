@@ -19,7 +19,7 @@ def apply(given, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool
+    from Lemma import Set, Bool
 
     k = Symbol(integer=True, positive=True)
     s = Symbol(etype=dtype.integer[k], given=True)

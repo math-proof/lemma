@@ -11,7 +11,7 @@ def apply(ne_zero_lhs, ne_zero_rhs, y):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Real, Finset, Nat, Fin
+    from Lemma import Probability, Real, Finset, Nat, Fin
 
     D, m, n = Symbol(integer=True, positive=True)
     θ, θ_quote = Symbol(real=True, shape=(D,))
@@ -50,9 +50,9 @@ def prove(Eq):
 
     Eq << Probability.KLPrSConditioned.ge.Zero.apply(*Eq[-1].find(KL).args)
 
-    Eq << Algebra.Ge_0.Mul.of.Ge_0.apply(Eq[-1], Pr[θ](Equal(x, x.var)))
+    Eq << Nat.Ge_0.Mul.of.Ge_0.apply(Eq[-1], Pr[θ](Equal(x, x.var)))
 
-    Eq << Algebra.Ge_0.Sum.of.Ge_0.apply(Eq[-1], (x.var,))
+    Eq << Finset.Ge_0.Sum.of.Ge_0.apply(Eq[-1], (x.var,))
 
 
 

@@ -11,7 +11,7 @@ def apply(ne_zero_lhs, ne_zero_rhs, y):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Real, Nat
+    from Lemma import Probability, Real, Nat
 
 
     D, m, n = Symbol(integer=True, positive=True)
@@ -51,7 +51,7 @@ def prove(Eq):
 
     Eq << Probability.KLPrSConditioned.ge.Zero.apply(*Eq[-1].find(KL).args)
 
-    Eq << Algebra.Ge_0.Mul.of.Ge_0.apply(Eq[-1], Pr[θ](Equal(x, x.var)))
+    Eq << Nat.Ge_0.Mul.of.Ge_0.apply(Eq[-1], Pr[θ](Equal(x, x.var)))
 
     Eq << Real.Ge_0.Integral.of.Ge_0.apply(Eq[-1], (x.var,))
 

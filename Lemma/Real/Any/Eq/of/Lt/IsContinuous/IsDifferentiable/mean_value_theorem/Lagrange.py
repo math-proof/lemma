@@ -19,7 +19,7 @@ def apply(lt, is_continuous, is_differentiable):
 
 @prove
 def prove(Eq):
-    from Lemma import Real, Algebra, Set, Bool, Nat
+    from Lemma import Real, Set, Bool, Nat
 
     from Lemma.Real.Any.Eq.Rolle.of.Lt.IsContinuous.IsDifferentiable.Eq import is_differentiable
     from Lemma.Real.All.Any.Eq.of.All_Eq.intermediate_value_theorem import is_continuous
@@ -63,7 +63,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.simplify()
 
-    Eq << Eq[-1].this.expr.rhs.apply(Algebra.Mul.distribute)
+    Eq << Eq[-1].this.expr.rhs.apply(Nat.Mul.distribute)
 
     Eq.is_differentiable = ForAll(Element(Derivative[x](g(x)), Reals), *Eq[2].limits, plausible=True)
 

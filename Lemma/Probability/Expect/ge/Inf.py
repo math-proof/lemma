@@ -24,7 +24,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Real
+    from Lemma import Probability, Real, Nat
 
     D = Symbol(integer=True, positive=True)
     θ = Symbol(real=True, shape=(D,))
@@ -38,7 +38,7 @@ def prove(Eq):
 
     Eq << Probability.Pr.ge.Zero.apply(Eq[-2].find(Pr))
 
-    Eq << Algebra.GeMul.of.Ge_0.Ge.apply(Eq[-1], Eq[-2])
+    Eq << Nat.GeMul.of.Ge_0.Ge.apply(Eq[-1], Eq[-2])
 
     Eq << Real.GeIntegral.of.Ge.apply(Eq[-1], [x.var])
 

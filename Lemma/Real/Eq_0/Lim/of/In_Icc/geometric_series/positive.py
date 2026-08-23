@@ -11,7 +11,7 @@ def apply(el, n):
 
 @prove
 def prove(Eq):
-    from Lemma import Real, Algebra, Set, Bool, Nat, Int
+    from Lemma import Real, Set, Bool, Nat, Int
 
     n = Symbol(integer=True, positive=True)
     x = Symbol(real=True, given=True)
@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq << Real.Eq_Lim.given.Any_All.limit_definition.restricted.apply(Eq[1])
 
-    Eq << Eq[-1].this.find(Less).apply(Algebra.Lt.given.Lt.Log)
+    Eq << Eq[-1].this.find(Less).apply(Real.Lt.given.Lt.Log)
 
     Eq.gt_zero = Set.Gt.of.In_Icc.apply(Eq[0])
 
@@ -55,7 +55,7 @@ def prove(Eq):
 
     Eq << Bool.And_Imp.given.And_ImpAnd.apply(Eq.lt_zero, Eq[-1])
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.LtMul.of.Lt_0.Gt)
+    Eq << Eq[-1].this.lhs.apply(Int.LtMul.of.Lt_0.Gt)
 
 
 

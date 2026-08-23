@@ -8,14 +8,14 @@ def apply(x):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Rat
+    from Lemma import Rat, Int
 
     x = Symbol(real=True, given=True)
     Eq << apply(x)
 
     Eq << Rat.Ceil.lt.Add_1.apply(x)
 
-    Eq << Algebra.LeFloor.of.Lt.apply(Eq[-1])
+    Eq << Int.LeFloor.of.Lt.apply(Eq[-1])
 
 
 if __name__ == '__main__':

@@ -33,7 +33,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat, Int
+    from Lemma import Nat, Int
 
     di = Symbol('d_i', integer=True)
     i0 = Symbol(integer=True)
@@ -52,7 +52,7 @@ def prove(Eq):
 
     Eq << Int.GeFloor.of.Ge.apply(Eq[-1])
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Floor.eq.Min)
+    Eq << Eq[-1].this.rhs.apply(Int.Floor.eq.Min)
 
     Eq << Eq[-1].this.rhs.args[0].arg.expand()
 

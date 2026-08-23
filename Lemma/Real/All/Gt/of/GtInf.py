@@ -9,7 +9,7 @@ def apply(le):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Nat, Real
+    from Lemma import Bool, Nat, Real
 
     y, m, M, x = Symbol(real=True)
     f = Function(real=True)

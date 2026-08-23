@@ -33,7 +33,7 @@ def apply(eq_cup_X, eq_cup_Y, eq_cup_X_union, eq_cup_Y_complement, le, notcontai
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool
+    from Lemma import Set, Bool
 
     x, y, i = Symbol(integer=True)
     y_quote = Symbol(integer=True, given=True)

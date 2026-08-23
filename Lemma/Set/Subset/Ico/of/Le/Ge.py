@@ -12,7 +12,7 @@ def apply(greater_than, _greater_than):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool, Nat
+    from Lemma import Set, Bool, Nat
 
     a, b, x, y = Symbol(integer=True, given=True)
     Eq << apply(y <= b, x >= a)

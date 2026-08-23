@@ -27,7 +27,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Fin, Finset
+    from Lemma import Fin, Finset
     x = Symbol(real=True, shape=(oo, oo))
     i, j = Symbol(integer=True)
     f = Function(integer=True)

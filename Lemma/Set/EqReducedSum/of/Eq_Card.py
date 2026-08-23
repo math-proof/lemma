@@ -17,7 +17,7 @@ def apply(eq, sgm, *, simplify=True):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Tensor
+    from Lemma import Set, Tensor
 
     n = Symbol(integer=True, positive=True)
     x = Symbol(real=True)

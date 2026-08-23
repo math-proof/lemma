@@ -12,7 +12,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Rat, Nat
+    from Lemma import Set, Rat, Nat
 
     n = Symbol(integer=True)
     d = Symbol(integer=True, negative=True)
@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Set.In_Ico.given.Ge.Le_Sub_1.apply(Eq[-1], right_open=False)
 
-    Eq << Algebra.Ge.given.Gt.relax.apply(Eq[-2])
+    Eq << Nat.Ge.given.Gt.relax.apply(Eq[-2])
 
     Eq <<= Eq[-2] - n, Eq[-1] - n
 

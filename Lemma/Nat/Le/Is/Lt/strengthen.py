@@ -11,12 +11,12 @@ def apply(lt):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Nat
 
     x, a = Symbol(integer=True, given=True)
     Eq << apply(x + 1 <= a)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Lt.Is.Le.strengthen)
+    Eq << Eq[-1].this.rhs.apply(Nat.Lt.Is.Le.strengthen)
 
 
 

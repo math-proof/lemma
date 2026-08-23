@@ -11,7 +11,7 @@ def apply(imply):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
 
     e = Symbol(real=True)
     f = Function(integer=True)

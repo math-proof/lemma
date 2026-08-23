@@ -14,7 +14,7 @@ def apply(given, x=None, y=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Int, Nat
+    from Lemma import Set, Bool, Int, Nat
 
     k = Symbol(integer=True, positive=True)
     S = Symbol(etype=dtype.integer[k])

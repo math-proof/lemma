@@ -11,7 +11,7 @@ def apply(eq, i):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Bool
+    from Lemma import Probability, Bool
 
     s, r = Symbol(shape=(oo,), real=True, random=True)
     t, i = Symbol(integer=True) # time counter

@@ -14,7 +14,7 @@ def apply(given, var=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool, Nat
 
     x = Symbol(real=True, given=True)
     Eq << apply(x > 0)
@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq << Eq[0] / 2
 
-    Eq << Algebra.Gt.given.Gt_0.apply(Eq[-2])
+    Eq << Nat.Gt.given.Gt_0.apply(Eq[-2])
 
 
 if __name__ == '__main__':

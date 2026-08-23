@@ -9,7 +9,7 @@ def apply(x, a):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Real, Algebra, Int, Nat, Set
+    from Lemma import Probability, Real, Int, Nat, Set
 
     x = Symbol(real=True, random=True)
     a = Symbol(positive=True)
@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Eq.eq.find(Integral).this.apply(Real.Integral.eq.Add.split, a)
 
-    Eq << Algebra.Ge.of.Eq.relax.apply(Eq[-1], Eq[-1].find(Integral[2]))
+    Eq << Nat.Ge.of.Eq.relax.apply(Eq[-1], Eq[-1].find(Integral[2]))
 
     Eq << Eq[-1].this.rhs.find(Abs).apply(Int.Abs.eq.IteGe_0)
 
@@ -41,7 +41,7 @@ def prove(Eq):
 
     Eq << Eq.eq.find(Integral[2]).this.apply(Real.Integral.eq.Add.split, -a)
 
-    Eq << Algebra.Ge.of.Eq.relax.apply(Eq[-1], Eq[-1].rhs.find(Integral))
+    Eq << Nat.Ge.of.Eq.relax.apply(Eq[-1], Eq[-1].rhs.find(Integral))
 
     Eq << Eq[-1].this.rhs.find(Abs).apply(Int.Abs.eq.IteGe_0)
 
@@ -63,13 +63,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Nat.AddMulS.eq.Mul_Add)
 
-    Eq << Algebra.Ge.of.Eq.Ge.subst.apply(Eq.eq, Eq[-1])
+    Eq << Nat.Ge.of.Eq.Ge.subst.apply(Eq.eq, Eq[-1])
 
     Eq << Eq[-1] / a
 
     Eq << Eq[-1].reversed
 
-    Eq << Eq[0].lhs.this.find(GreaterEqual).apply(Algebra.GeAbs.Is.Or)
+    Eq << Eq[0].lhs.this.find(GreaterEqual).apply(Int.GeAbs.Is.Or)
 
     Eq << Eq[-1].this.rhs.apply(Probability.Pr.Or.eq.Add)
 

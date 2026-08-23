@@ -32,7 +32,7 @@ def apply(self, *indices):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability, Real, Tensor
+    from Lemma import Probability, Real, Tensor
 
     # this is the proof of the law of iterated expectations
     # https://en.wikipedia.org/wiki/Law_of_total_expectation

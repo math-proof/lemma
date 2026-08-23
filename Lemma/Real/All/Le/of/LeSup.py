@@ -9,15 +9,15 @@ def apply(le):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Nat, Real
+    from Lemma import Bool, Nat, Real, Tensor
 
     m, M, x = Symbol(real=True)
     f = Function(real=True)
     Eq << apply(Sup[x:Interval(m, M, left_open=True, right_open=True)](f(x)) <= M)
 
-    Eq << Eq[0].this.lhs.apply(Algebra.Sup.eq.ReducedMin)
+    Eq << Eq[0].this.lhs.apply(Real.Sup.eq.ReducedMin)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.ReducedMin.eq.Minima)
+    Eq << Eq[-1].this.lhs.apply(Tensor.ReducedMin.eq.Minima)
 
     Eq << Real.Any.Le.of.LeMinima.apply(Eq[-1])
 

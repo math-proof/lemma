@@ -14,7 +14,7 @@ def apply(eq, Q_def, V_def, MDV_def, ge):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Probability, Bool, Nat, Rat, Int, Real
+    from Lemma import Tensor, Probability, Bool, Nat, Rat, Int, Real
 
     b, D = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), real=True, random=True) # states / observation
@@ -31,7 +31,7 @@ def prove(Eq):
                 Equal((MDV[π, π_quote] ^ γ)(s[t].var), Expectation[a:π_quote]((Q[π] ^ γ)(s[t].var, a[t]) | s[t]) - Pr[π, π_quote](s[t]) / Pr[s:π](s[t]) * KL(Pr[a:π_quote](a[t] | s[t]), Pr[a:π](a[t] | s[t]))),
                 GreaterEqual((MDV[π, π_quote] ^ γ)(s[t].var), (MDV[π, π] ^ γ)(s[t].var)))
 
-    Eq << Algebra.Ge.given.Ge_0.apply(Eq.ge_VF)
+    Eq << Nat.Ge.given.Ge_0.apply(Eq.ge_VF)
 
     Eq.VQ, Eq.VV, Eq.QV = Tensor.And.Eq.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.Bellman.apply(*Eq[:3])
 
@@ -49,7 +49,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq[-2])
 
-    Eq << Algebra.Ge.of.Ge.transport.apply(Eq[-1], lhs=0)
+    Eq << Nat.Ge.of.Ge.transport.apply(Eq[-1], lhs=0)
 
     Eq << Eq.QV.subs(a[t].var, a[t])
 
@@ -77,7 +77,7 @@ def prove(Eq):
 
     Eq << GreaterEqual(γ, 0, plausible=True)
 
-    Eq << Algebra.GeMul.of.Ge_0.Ge.apply(Eq[-1], Eq[-2])
+    Eq << Nat.GeMul.of.Ge_0.Ge.apply(Eq[-1], Eq[-2])
 
     Eq << -Eq[-1].reversed
 
@@ -85,7 +85,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Inf).limits_subs(s[t + 1].var, s[t].var)
 
-    Eq << Algebra.GeInf.of.Ge.apply(Eq[-1], (s[t].var,))
+    Eq << Real.GeInf.of.Ge.apply(Eq[-1], (s[t].var,))
 
     Eq << Eq[-1].this.lhs.apply(Nat.AddMulS.eq.Mul_Add)
 
@@ -95,13 +95,13 @@ def prove(Eq):
 
     Eq <<= Probability.KL.ge.Zero.apply(Eq.ge.find(KL)), Probability.Pr.ge.Zero.apply(Eq.ge.find(Pr)), Rat.Ne_0.of.Div1.gt.Zero.apply(Eq.ge)
 
-    Eq <<= Int.Le0Mul.of.Ge_0.Ge_0.apply(Eq[-2], Eq[-3]), Algebra.Inv.gt.Zero.of.Ne_0.apply(Eq[-1])
+    Eq <<= Int.Le0Mul.of.Ge_0.Ge_0.apply(Eq[-2], Eq[-3]), Rat.Inv.gt.Zero.of.Ne_0.apply(Eq[-1])
 
     Eq << Nat.GeMulS.of.Ge.Gt_0.apply(Eq[-1], Eq[-2])
 
     Eq << Bool.All.of.Cond.apply(Eq[-1], s[t].var, simplify=None)
 
-    Eq << Algebra.GeInf.of.All_Ge.apply(Eq[-1])
+    Eq << Real.GeInf.of.All_Ge.apply(Eq[-1])
 
     Eq << Rat.GeDivS.of.Ge.Gt_0.apply(Eq.gt_zero, Eq[-1])
 

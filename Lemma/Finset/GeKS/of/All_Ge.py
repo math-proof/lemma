@@ -14,7 +14,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Algebra, Bool, Nat
+    from Lemma import Finset, Bool, Nat
     from Lemma.Finset.K.eq.Add.definition import K
     x = Symbol(real=True, shape=(oo,))
     i = Symbol(integer=True)
@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq.case2, Eq.case1 = Bool.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=n >= 2)
 
-    Eq << Eq.case1.this.lhs.apply(Algebra.Lt.Is.Eq.squeeze)
+    Eq << Eq.case1.this.lhs.apply(Nat.Lt.Is.Eq.squeeze)
 
     Eq << Eq[-1].this.apply(Bool.IffImpSAndEq)
 

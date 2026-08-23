@@ -10,14 +10,14 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset
+    from Lemma import Finset, Real
 
     i = Symbol(integer=True)
     n = Symbol(integer=True, positive=True)
     x = Symbol(complex=True, shape=(n,))
     Eq << apply(Sum[i:n](abs(x[i]) ** 2))
 
-    Eq << Eq[0].this.find(Norm).apply(Algebra.Norm.eq.Sqrt)
+    Eq << Eq[0].this.find(Norm).apply(Real.Norm.eq.Sqrt)
 
     Eq << Eq[-1].this.rhs.apply(Finset.Sum.limits.domain_defined)
 

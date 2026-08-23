@@ -10,7 +10,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Rat
+    from Lemma import Bool, Rat, Real
 
     x, y = Symbol(real=True)
     Eq << apply(Equal(y, sigmoid(x)))
@@ -29,7 +29,7 @@ def prove(Eq):
 
     Eq << Eq[-1].reversed
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Mul.eq.Log)
+    Eq << Eq[-1].this.rhs.apply(Real.Mul.eq.Log)
 
 
 if __name__ == '__main__':

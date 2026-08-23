@@ -15,7 +15,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool
+    from Lemma import Set, Bool, Nat, Int
 
     i = Symbol(integer=True)
     n = Symbol(integer=True, positive=True, given=True)
@@ -29,11 +29,11 @@ def prove(Eq):
 
     Eq << Set.CardUnion.eq.Sub_.AddCards.CardInter.principle.inclusion_exclusion.apply(x[i], x[j])
 
-    Eq << Eq[-2].this.expr.apply(Algebra.Lt.of.Eq.Gt.subst, Eq[-1])
+    Eq << Eq[-2].this.expr.apply(Nat.Lt.of.Eq.Gt.subst, Eq[-1])
 
     Eq << Bool.Any_And.of.Any.All.apply(Eq[0], Eq[-1], simplify=False)
 
-    Eq.gt = Eq[-1].this.expr.apply(Algebra.GtSub.of.Eq.Lt)
+    Eq.gt = Eq[-1].this.expr.apply(Int.GtSub.of.Eq.Lt)
 
     Eq << Eq[0].lhs.arg.this.apply(Set.Cup.eq.UnionCupS, cond={i, j})
 
@@ -41,7 +41,7 @@ def prove(Eq):
 
     Eq << Set.CardUnion.le.AddCardS.apply(*Eq[-1].rhs.args)
 
-    Eq << Eq.gt.this.expr.apply(Algebra.Gt.of.Gt.Le.subst, Eq[-1])
+    Eq << Eq.gt.this.expr.apply(Nat.Gt.of.Gt.Le.subst, Eq[-1])
 
     Eq << Eq[-1].this().find(Intersection).simplify()
 
@@ -49,7 +49,7 @@ def prove(Eq):
 
     Eq << Eq.union_less_than.this.find(Cup).limits_subs(Eq.union_less_than.find(Cup).variable, Eq[-1].find(Cup).variable)
 
-    Eq << Eq[-1].this.expr.apply(Algebra.Gt.of.Gt.Le.subst, Eq.union_less_than)
+    Eq << Eq[-1].this.expr.apply(Nat.Gt.of.Gt.Le.subst, Eq.union_less_than)
 
     Eq << Eq[-1].this().expr.lhs.simplify()
 

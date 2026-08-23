@@ -13,7 +13,7 @@ def apply(self, reverse=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat
+    from Lemma import Nat
 
     x, y = Symbol(integer=True)
     Eq << apply(KroneckerDelta(x, y))

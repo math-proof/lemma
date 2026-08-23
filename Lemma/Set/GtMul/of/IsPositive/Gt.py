@@ -13,7 +13,7 @@ def apply(is_positive, gt):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Nat
 
     x = Symbol(real=True, given=True)
     g, h = Function(real=True)
@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Set.Gt_0.of.IsPositive.apply(Eq[0])
 
-    Eq << Algebra.GtMul.of.Gt_0.Gt.apply(Eq[-1], Eq[1], simplify=None)
+    Eq << Nat.GtMul.of.Gt_0.Gt.apply(Eq[-1], Eq[1], simplify=None)
 
 
 if __name__ == '__main__':

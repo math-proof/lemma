@@ -14,7 +14,7 @@ def apply(x_less_than_a, y_less_than_b):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Int
+    from Lemma import Int
     x, y, a, b = Symbol(real=True)
 
 

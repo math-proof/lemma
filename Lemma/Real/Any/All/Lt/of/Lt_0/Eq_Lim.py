@@ -20,7 +20,7 @@ def apply(is_positive, eq, delta=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Real, Algebra, Bool, Int
+    from Lemma import Real, Bool, Int, Nat
 
     x, A, x0 = Symbol(real=True)
     f = Function(real=True)
@@ -30,7 +30,7 @@ def prove(Eq):
     delta = Eq[-1].variable
     Eq << Real.Any.All.of.Eq_Lim.limit_definition.apply(Eq[1], epsilon, delta)
 
-    Eq << Algebra.Or.of.Cond.subst.apply(Eq[-1], epsilon, -A / 2)
+    Eq << Bool.Or.of.Cond.subst.apply(Eq[-1], epsilon, -A / 2)
 
     Eq << Bool.Cond.of.Or_Not.Cond.apply(-Eq[0] / 2, Eq[-1])
 
@@ -38,7 +38,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.expr.apply(Bool.Cond.of.And)
 
-    Eq << Eq[-1].this.expr.expr.apply(Algebra.Lt.transport, lhs=0)
+    Eq << Eq[-1].this.expr.expr.apply(Nat.Lt.transport, lhs=0)
 
 
 

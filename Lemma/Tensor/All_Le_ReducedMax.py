@@ -13,7 +13,7 @@ def apply(self, var=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Real
+    from Lemma import Real, Tensor
 
     n = Symbol(integer=True, positive=True)
     x = Symbol(real=True, shape=(n,))
@@ -22,7 +22,7 @@ def prove(Eq):
     i = Eq[0].variable
     Eq << Real.All_Le_Maxima.apply(Maxima[i:n](x[i]))
 
-    Eq << Eq[0].this.expr.rhs.apply(Algebra.ReducedMax.eq.Maxima, var=i)
+    Eq << Eq[0].this.expr.rhs.apply(Tensor.ReducedMax.eq.Maxima, var=i)
 
 
 

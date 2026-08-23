@@ -9,14 +9,14 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Real, Nat
+    from Lemma import Set, Bool, Real, Nat, Tensor
 
     n = Symbol(integer=True, positive=True)
     x = Symbol(real=True, shape=(oo,))
     c = Symbol(real=True)
     Eq << apply(Element(c, x[:n].cup_finiteset()))
 
-    Eq << Eq[1].this.rhs.apply(Algebra.ReducedMax.eq.Maxima)
+    Eq << Eq[1].this.rhs.apply(Tensor.ReducedMax.eq.Maxima)
 
     Eq << Real.All_Le_Maxima.apply(Eq[-1].rhs)
 

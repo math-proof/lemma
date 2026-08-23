@@ -10,7 +10,7 @@ def apply(eq, eq1):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Real, Finset, Set, Bool, Fin, Complex, Rat, Nat
+    from Lemma import Real, Finset, Set, Bool, Fin, Complex, Rat, Nat, Tensor
 
     n, k = Symbol(integer=True)
     # n = Symbol(integer=True, nonnegative=True)
@@ -50,7 +50,7 @@ def prove(Eq):
 
     Eq << Bool.Eq.of.Eq.Eq.apply(Eq[-1], Eq[-3])
 
-    Eq << Algebra.Eq_0.of.Eq.apply(Eq[-1])
+    Eq << Tensor.Eq_0.of.Eq.apply(Eq[-1])
 
     Eq.ou = Complex.OrEqS_Div.of.Eq0AddAddMul_Square.Ne_0.apply(Unequal(x, 0, evaluate=False), Eq[-1], x=g(x), simplify=False)
 
@@ -86,7 +86,7 @@ def prove(Eq):
 
     Eq << Eq[-1] * x ** (n - 1)
 
-    Eq << Algebra.Gt.Sum.Mul.of.Gt.apply(Eq[-1], (n, 0, oo))
+    Eq << Finset.Gt.Sum.Mul.of.Gt.apply(Eq[-1], (n, 0, oo))
 
     Eq << Eq[-1].this.lhs.subs(Eq.g_derivative.reversed)
 
@@ -154,7 +154,7 @@ def prove(Eq):
 
     Eq << Eq[-1] + Eq.negative_sqrt
 
-    Eq << Eq[-1].this.find(Mul).apply(Algebra.Mul.distribute)
+    Eq << Eq[-1].this.find(Mul).apply(Nat.Mul.distribute)
 
     Eq << Eq[-1].this.find(Mul).apply(Rat.Div.cancel, 2)
 

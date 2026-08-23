@@ -11,7 +11,7 @@ def apply(all_lt, subset, A):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Bool, Vector, Finset
+    from Lemma import Tensor, Bool, Vector, Finset
 
     n, m = Symbol(integer=True, positive=True)
     A = Symbol(shape=(n, m), real=True)

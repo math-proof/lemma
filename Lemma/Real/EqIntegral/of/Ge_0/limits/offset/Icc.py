@@ -11,7 +11,7 @@ def apply(is_nonnegative, self, offset):
 
 @prove
 def prove(Eq):
-    from Lemma import Real, Algebra, Set
+    from Lemma import Real, Set
 
     x, a, b, d = Symbol(real=True)
     f = Function(real=True, integrable=True)
@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Real.Integral.eq.Mul.Lim.Lebesgue.of.Ge_0.apply(Eq[0], Eq[1].rhs)
 
-    Eq << Eq[-1].find(Sup).this.apply(Algebra.Sup.limits.subst.offset, -d)
+    Eq << Eq[-1].find(Sup).this.apply(Real.Sup.limits.subst.offset, -d)
 
     Eq << Eq[-2].subs(Eq[-1])
 

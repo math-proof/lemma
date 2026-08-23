@@ -9,7 +9,7 @@ def apply(le, x):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Nat
+    from Lemma import Bool, Nat
 
     x, a, b = Symbol(real=True)
     Eq << apply(a <= b, x)
@@ -22,15 +22,15 @@ def prove(Eq):
 
     Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=a <= x)
 
-    Eq <<= Eq[-2].this.find(Min[~Max]).apply(Algebra.Max.eq.Ite.Lt), Eq[-1].this.find(Min[~Max]).apply(Algebra.Max.eq.Ite.Lt)
+    Eq <<= Eq[-2].this.find(Min[~Max]).apply(Nat.Max.eq.Ite.Lt), Eq[-1].this.find(Min[~Max]).apply(Nat.Max.eq.Ite.Lt)
 
     Eq <<= Eq[-2].this.lhs.reversed, Eq[-1].this.lhs.reversed
 
     Eq <<= Bool.Imp_Ite.given.Imp.apply(Eq[-2], invert=True), Bool.Imp_Ite.given.Imp.apply(Eq[-1])
 
-    Eq <<= Eq[-2].this.rhs.apply(Algebra.Eq_Max.given.Ge), Eq[-1].subs(Eq[2])
+    Eq <<= Eq[-2].this.rhs.apply(Nat.Eq_Max.given.Ge), Eq[-1].subs(Eq[2])
 
-    Eq <<= Eq[-2].this.rhs.apply(Algebra.GeMin.given.And.Ge), Eq[-1].this.rhs.apply(Algebra.Eq_Max.given.Ge)
+    Eq <<= Eq[-2].this.rhs.apply(Nat.GeMin.given.And.Ge), Eq[-1].this.rhs.apply(Nat.Eq_Max.given.Ge)
 
     Eq << Bool.Imp.given.Cond.apply(Eq[-2])
 

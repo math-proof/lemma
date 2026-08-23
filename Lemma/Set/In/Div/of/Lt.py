@@ -10,7 +10,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Nat, Rat
 
     n = Symbol(real=True, positive=True)
     b = Symbol(real=True)
@@ -20,12 +20,12 @@ def prove(Eq):
 
     Eq << Greater(n, 0, plausible=True)
 
-    Eq << Algebra.Gt.of.Gt.Lt.apply(Eq[0], Eq[-1])
+    Eq << Nat.Gt.of.Gt.Lt.apply(Eq[0], Eq[-1])
 
-    Eq << Algebra.LtDiv.of.Gt_0.Lt.apply(Eq[-2], Eq[0])
+    Eq << Nat.LtDiv.of.Gt_0.Lt.apply(Eq[-2], Eq[0])
 
 
-    Eq << Algebra.GtDiv.of.Gt_0.Gt.apply(Eq[-2], Eq[-1])
+    Eq << Rat.GtDiv.of.Gt_0.Gt.apply(Eq[-2], Eq[-1])
 
 
 if __name__ == '__main__':

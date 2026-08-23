@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool
+    from Lemma import Set, Bool
 
     A, B = Symbol(etype=dtype.integer)
     x, y = Symbol(integer=True)
@@ -29,7 +29,7 @@ def prove(Eq):
     Eq <<= Eq[-2].this.rhs.args[0].apply(Set.In_Cup.given.Any_In), \
     Eq[-1].this.lhs.args[0].apply(Set.Any_In.of.In_Cup)
 
-    Eq <<= Eq[-2].this.rhs.apply(Algebra.Or.given.Any.Or), \
+    Eq <<= Eq[-2].this.rhs.apply(Bool.Or.given.Any.Or), \
     Eq[-1].this.lhs.apply(Bool.Any.Or.of.Or)
 
     Eq <<= Eq[-2].this.rhs.expr.apply(Set.Or.given.In), \

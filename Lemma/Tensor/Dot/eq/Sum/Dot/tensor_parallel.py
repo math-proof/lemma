@@ -14,7 +14,7 @@ def apply(self, t_p):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor
+    from Lemma import Tensor
 
     # m denotes batch size
     # n denotes sequence length
@@ -40,9 +40,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Tensor.Sum.eq.ReducedSum)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.ReducedSum.reshape, t_p, d / t_p)
+    Eq << Eq[-1].this.lhs.apply(Tensor.ReducedSum.reshape, t_p, d / t_p)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.ReducedSum.axes.separate)
+    Eq << Eq[-1].this.lhs.apply(Tensor.ReducedSum.axes.separate)
     Eq << Eq[-1].this.lhs.arg.apply(Tensor.ReducedSum.eq.Stack, simplify=None)
     Eq << Eq[-1].this.lhs.find(Sum).apply(Tensor.Sum.eq.Dot)
 

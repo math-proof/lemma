@@ -13,7 +13,7 @@ def apply(self, index=-1):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Nat
+    from Lemma import Set, Nat
 
     a, b, c = Symbol(integer=True)
     Eq << apply(Interval(a, Min(b, c), left_open=True))

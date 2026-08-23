@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Real, Tensor
+    from Lemma import Probability, Real, Tensor
 
     n = Symbol(integer=True, positive=True)
     f = Function(real=True)

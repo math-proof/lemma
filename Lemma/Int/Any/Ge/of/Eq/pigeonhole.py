@@ -9,7 +9,7 @@ def apply(eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat, Rat
+    from Lemma import Nat, Rat, Finset
 
     x = Symbol(integer=True, nonnegative=True, shape=(oo,), given=True)
     n, k = Symbol(integer=True, positive=True, given=True)
@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.apply(Nat.Le_Sub_1.of.Lt)
 
-    Eq << Algebra.LeSum.of.All_Le.apply(Eq[-1])
+    Eq << Finset.LeSum.of.All_Le.apply(Eq[-1])
 
     Eq << Eq[-1].subs(Eq[0])
 

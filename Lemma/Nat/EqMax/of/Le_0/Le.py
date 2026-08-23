@@ -11,7 +11,7 @@ def apply(is_nonpositive, le):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat
+    from Lemma import Nat, Int
 
     x, y = Symbol(real=True)
     Eq << apply(x <= 0, y <= x)
@@ -20,11 +20,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Nat.Add.eq.Max)
 
-    Eq << Algebra.GeSquare.of.Le_0.Le.apply(Eq[0], Eq[1])
+    Eq << Int.GeSquare.of.Le_0.Le.apply(Eq[0], Eq[1])
 
-    Eq << Algebra.Le_0.of.Ge.apply(Eq[-1])
+    Eq << Nat.Le_0.of.Ge.apply(Eq[-1])
 
-    Eq << Algebra.EqMax.of.Le.apply(Eq[-1])
+    Eq << Nat.EqMax.of.Le.apply(Eq[-1])
 
 
 if __name__ == '__main__':

@@ -8,7 +8,7 @@ def apply(A, B):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Nat
+    from Lemma import Set, Nat
     A, B = Symbol(etype=dtype.integer)
     Eq << apply(A, B)
 

@@ -18,12 +18,12 @@ def apply(self, index=0):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Bool
 
     a, b, c, d, e, f, x, y = Symbol(real=True)
     Eq << apply(((a < b) | (e < f)) & (c < d) & (x < y), 1)
 
-    Eq << Eq[0].this.find(Or[And]).apply(Algebra.Or.collect, cond=x < y)
+    Eq << Eq[0].this.find(Or[And]).apply(Bool.Or.collect, cond=x < y)
 
 
 

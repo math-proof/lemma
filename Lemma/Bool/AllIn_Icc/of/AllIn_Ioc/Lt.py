@@ -19,7 +19,7 @@ def apply(le, given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Set
+    from Lemma import Bool, Set, Nat
 
     a, b, c = Symbol(real=True, given=True)
     x = Symbol(real=True)
@@ -34,7 +34,7 @@ def prove(Eq):
     e = Eq[-1].lhs.lhs
     Eq << Eq[-1].subs(e, c - a)
 
-    Eq << Algebra.Gt_0.of.Gt.apply(Eq[0])
+    Eq << Nat.Gt_0.of.Gt.apply(Eq[0])
 
     Eq << Bool.Cond.of.Imp.Cond.apply(Eq[-1], Eq[-2])
 

@@ -14,7 +14,7 @@ def apply(all_is_complex):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Finset
+    from Lemma import Set, Bool, Finset
 
     x = Symbol(super_complex=True, shape=(oo,))
     i = Symbol(integer=True)

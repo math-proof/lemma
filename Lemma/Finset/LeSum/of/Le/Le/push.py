@@ -9,7 +9,7 @@ def apply(*imply):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset, Nat
+    from Lemma import Finset, Nat
 
     k, a = Symbol(integer=True)
     b = Symbol(domain=Range(a + 1, oo))

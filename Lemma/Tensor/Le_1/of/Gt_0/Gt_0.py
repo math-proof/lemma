@@ -10,7 +10,7 @@ def apply(gt_zero_a, gt_zero_b):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Nat, Real
+    from Lemma import Bool, Nat, Real, Tensor
 
     n = Symbol(domain=Range(2, oo))
     a, b = Symbol(shape=(n,), real=True, given=True)
@@ -28,11 +28,11 @@ def prove(Eq):
 
     Eq << Real.GtSqrt_0.of.Gt_0.apply(Eq[0] * Eq[1])
 
-    Eq << Algebra.GtMul.of.Gt_0.Gt.apply(Eq[-1], Eq[-2])
+    Eq << Nat.GtMul.of.Gt_0.Gt.apply(Eq[-1], Eq[-2])
 
-    Eq << Algebra.GtSquare.of.Gt_0.Gt.apply(Eq[-2], Eq[-1])
+    Eq << Nat.GtSquare.of.Gt_0.Gt.apply(Eq[-2], Eq[-1])
 
-    Eq << Algebra.SquareReducedSum.le.MulReducedSumS.Cauchy.apply(a, b)
+    Eq << Tensor.SquareReducedSum.le.MulReducedSumS.Cauchy.apply(a, b)
 
     Eq << ~Eq[-1]
 

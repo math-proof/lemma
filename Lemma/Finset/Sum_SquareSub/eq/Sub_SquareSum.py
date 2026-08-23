@@ -12,7 +12,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset, Nat, Rat
+    from Lemma import Finset, Nat, Rat
 
     i, j = Symbol(integer=True)
     n = Symbol(integer=True, positive=True)

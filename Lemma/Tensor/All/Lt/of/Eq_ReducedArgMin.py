@@ -11,7 +11,7 @@ def apply(given, var=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor
+    from Lemma import Tensor
 
     n = Symbol(integer=True, positive=True)
     M = Symbol(integer=True)
@@ -19,7 +19,7 @@ def prove(Eq):
     f = Function(real=True)
     Eq << apply(Equal(M, ReducedArgMin(f(x))))
 
-    Eq << Eq[0].this.rhs.apply(Algebra.ReducedArgMin.eq.ReducedArgMax.Neg)
+    Eq << Eq[0].this.rhs.apply(Tensor.ReducedArgMin.eq.ReducedArgMax.Neg)
 
     Eq << Tensor.All.Gt.of.Eq_ReducedArgMax.apply(Eq[-1])
 

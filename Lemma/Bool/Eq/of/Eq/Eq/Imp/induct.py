@@ -18,7 +18,7 @@ def apply(f0, f1, suffice, n=None, start=0):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Nat
+    from Lemma import Bool, Nat
 
     n = Symbol(integer=True, positive=True)
     f, g = Symbol(integer=True, shape=(oo,))

@@ -11,7 +11,7 @@ def apply(eq_theta, eq_R):
 @prove
 def prove(Eq):
     from Lemma.Tensor.EqDot.of.Eq_Mul.position_representation import rotary_matrix
-    from Lemma import Tensor, Algebra
+    from Lemma import Tensor
 
     # n denotes sequence length (seq_length)
     # b denotes 10000

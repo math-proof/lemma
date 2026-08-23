@@ -10,7 +10,7 @@ def apply(lt_zero, dist, b=0):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Real, Probability, Bool, Complex, Rat, Int, Nat
+    from Lemma import Real, Probability, Bool, Complex, Rat, Int, Nat
 
     x = Symbol(real=True, random=True)
     mu, b = Symbol(real=True)
@@ -39,7 +39,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Integral).apply(Real.Integral.eq.Mul)
 
-    Eq << Algebra.Iff.of.Lt_0.apply(Eq[0], cond=Eq[-1].find(LessEqual))
+    Eq << Bool.Iff.of.Lt_0.apply(Eq[0], cond=Eq[-1].find(LessEqual))
 
     Eq << Eq[-2].subs(Eq[-1])
 

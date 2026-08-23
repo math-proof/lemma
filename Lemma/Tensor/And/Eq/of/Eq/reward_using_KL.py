@@ -10,7 +10,7 @@ def apply(eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Nat
+    from Lemma import Set, Bool, Nat
 
     n, b, D = Symbol(integer=True, positive=True)
     # n is the sequence length
@@ -43,7 +43,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this(t).find(GreaterEqual).simplify()
 
-    Eq << Eq[-1].this.find(And).apply(Algebra.Ne.Lt.given.Lt)
+    Eq << Eq[-1].this.find(And).apply(Nat.Ne.Lt.given.Lt)
 
     # https://arxiv.org/pdf/1909.08593.pdf#page=3
 

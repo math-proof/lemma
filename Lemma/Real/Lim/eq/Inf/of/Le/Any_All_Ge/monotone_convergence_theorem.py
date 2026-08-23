@@ -11,7 +11,7 @@ def apply(le, Any_All_Ge):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Real, Bool, Nat, Int
+    from Lemma import Set, Real, Bool, Nat, Int
 
     a = Symbol(real=True, shape=(oo,), given=True)
     n = Symbol(integer=True)
@@ -24,11 +24,11 @@ def prove(Eq):
 
     Eq << ~Eq.any_lt
 
-    Eq << Eq[-1].this.expr.apply(Algebra.GeInf.of.All_Ge)
+    Eq << Eq[-1].this.expr.apply(Real.GeInf.of.All_Ge)
 
     Eq.any_ge = Eq[-1].this.find(Inf).limits_subs(N, n)
 
-    Eq << Eq[1].this.expr.apply(Algebra.GeInf.of.All_Ge)
+    Eq << Eq[1].this.expr.apply(Real.GeInf.of.All_Ge)
 
     Eq << Eq[-1].this.expr.apply(Int.LtSub_1.of.Le, lower=-oo)
 

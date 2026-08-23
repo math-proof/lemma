@@ -26,7 +26,7 @@ def apply(eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Int, Nat
+    from Lemma import Tensor, Int, Nat
 
     n = Symbol(domain=Range(2, oo))
     l = Symbol(domain=Range(2, n + 1))
@@ -55,7 +55,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Stack).apply(Tensor.Stack.Delta.eq.Block)
 
-    Eq << Eq[-1].this.find(Mul).apply(Algebra.Mul.eq.Block)
+    Eq << Eq[-1].this.find(Mul).apply(Tensor.Mul.eq.Block)
 
     Eq.matmul_subs = Eq[-1].this.apply(Int.EqAdd.Is.Eq_Sub, rhs=0).reversed
 
@@ -69,7 +69,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(-~Piecewise).find(Less).simplify()
 
-    Eq << Eq[-1].this.rhs.find(-~Piecewise).find(Less).apply(Algebra.Lt.transport, lhs=slice(0, 3, 2))
+    Eq << Eq[-1].this.rhs.find(-~Piecewise).find(Less).apply(Nat.Lt.transport, lhs=slice(0, 3, 2))
 
     Eq << Eq[-1].this.rhs.find(-Piecewise).apply(Nat.Mul_Ite.eq.Ite_MulS)
 
@@ -89,7 +89,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Stack).apply(Tensor.Stack.Delta.eq.Block)
 
-    Eq << Eq[-1].this.find(Mul).apply(Algebra.Mul.eq.Block)
+    Eq << Eq[-1].this.find(Mul).apply(Tensor.Mul.eq.Block)
 
     Eq << Tensor.Stack.of.All_Eq.fin.apply(Eq[-1], (i, 0, n + 1 - Min(l, n)), simplify=None)
 
@@ -107,7 +107,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Stack).apply(Tensor.Stack.Delta.eq.Block)
 
-    Eq << Eq[-1].this.find(Mul[BlockMatrix]).apply(Algebra.Mul.eq.Block)
+    Eq << Eq[-1].this.find(Mul[BlockMatrix]).apply(Tensor.Mul.eq.Block)
 
     Eq << Eq[-1].this.find(Zeros).shape[0].find(relu).apply(Tensor.Relu.eq.Add.Min)
 

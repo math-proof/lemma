@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.ratsimp()
 
-    Eq << Eq[-1].this.find(Sin[Add]).apply(Real.Sin.eq.Add)
+    Eq << Eq[-1].this.find(Sin[Add]).apply(Real.SinAdd.eq.AddMulSSin_Cos)
 
     Eq << Eq[-1].this.find(Cos[Add]).apply(Real.CosAdd.eq.SubCosCos_SinSin)
 

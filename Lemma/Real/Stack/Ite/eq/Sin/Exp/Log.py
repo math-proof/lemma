@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Real
+    from Lemma import Tensor, Real
 
     n, b = Symbol(positive=True, integer=True)
     d = Symbol(integer=True, positive=True, even=True)
@@ -24,7 +24,7 @@ def prove(Eq):
     Eq << Tensor.Eq.given.All_EqGetS.apply(Eq[-1], (i, j))
 
     Eq << Real.Eq_Sin.given.Eq.apply(Eq[-1])
-    Eq << Eq[-1].this.find(Mul[Log]).apply(Algebra.Mul.eq.Log)
+    Eq << Eq[-1].this.find(Mul[Log]).apply(Real.Mul.eq.Log)
 
 
 

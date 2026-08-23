@@ -34,7 +34,7 @@ def apply(greater_than, less_than, quadratic=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat
+    from Lemma import Nat
 
     x, m, M, b, c = Symbol(real=True)
     a = Symbol(real=True, positive=True)

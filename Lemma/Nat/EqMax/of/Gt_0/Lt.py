@@ -11,7 +11,7 @@ def apply(is_positive, lt):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat
+    from Lemma import Nat
 
     x, y = Symbol(real=True)
     Eq << apply(x > 0, x < y)
@@ -20,9 +20,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Nat.Add.eq.Max)
 
-    Eq << Algebra.LtSquare.of.Gt_0.Lt.apply(Eq[0], Eq[1])
+    Eq << Nat.LtSquare.of.Gt_0.Lt.apply(Eq[0], Eq[1])
 
-    Eq << Algebra.Lt_0.of.Lt.apply(Eq[-1])
+    Eq << Nat.Lt_0.of.Lt.apply(Eq[-1])
 
     Eq << Nat.EqMax.of.Lt.apply(Eq[-1])
 

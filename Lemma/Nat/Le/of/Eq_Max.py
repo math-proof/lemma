@@ -9,13 +9,13 @@ def apply(given, index=0):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Nat
 
     M, x = Symbol(real=True)
     f, g = Function(real=True)
     Eq << apply(Equal(M, Max(f(x), g(x))))
 
-    Eq << Algebra.Ge.of.Eq_Max.apply(Eq[0])
+    Eq << Nat.Ge.of.Eq_Max.apply(Eq[0])
     Eq << Eq[-1].reversed
 
 

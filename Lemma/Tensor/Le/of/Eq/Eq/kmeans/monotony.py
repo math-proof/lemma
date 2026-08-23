@@ -22,7 +22,7 @@ def apply(eq_sum, eq_union, x=None):
 
 @prove(proved=False)
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Set, Bool, Finset, Real, Nat
+    from Lemma import Tensor, Set, Bool, Finset, Real, Nat
 
     M, n = Symbol(integer=True, positive=True)
     i = Symbol(integer=True)
@@ -53,9 +53,9 @@ def prove(Eq):
 
     Eq.plausible = Eq.plausible.subs(Eq[-1])
 
-    Eq << Eq.plausible.this.find(Norm).apply(Algebra.Norm.eq.Sqrt)
+    Eq << Eq.plausible.this.find(Norm).apply(Real.Norm.eq.Sqrt)
 
-    Eq.le = Eq[-1].this.find(Norm).apply(Algebra.Norm.eq.Sqrt)
+    Eq.le = Eq[-1].this.find(Norm).apply(Real.Norm.eq.Sqrt)
 
     Eq << Eq.le.find(mean, Indexed).this.definition
 
@@ -67,9 +67,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.apply(Nat.LeSquareS.of.Le.Ge_0)
 
-    Eq << Eq[-1].this.find(Norm).apply(Algebra.Norm.eq.Sqrt)
+    Eq << Eq[-1].this.find(Norm).apply(Real.Norm.eq.Sqrt)
 
-    Eq << Eq[-1].this.find(Norm).apply(Algebra.Norm.eq.Sqrt)
+    Eq << Eq[-1].this.find(Norm).apply(Real.Norm.eq.Sqrt)
 
     Eq << Eq.le.find(mean).this.defun()
 

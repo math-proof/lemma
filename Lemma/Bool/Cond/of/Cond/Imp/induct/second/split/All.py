@@ -23,7 +23,7 @@ def apply(f0, suffice, n=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
     n = Symbol(integer=True, nonnegative=True)
     k = Symbol(integer=True)
     f, g = Symbol(shape=(oo,), real=True)

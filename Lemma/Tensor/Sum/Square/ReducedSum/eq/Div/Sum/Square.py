@@ -29,7 +29,7 @@ def apply(self, j=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Vector, Rat
+    from Lemma import Vector, Rat
 
     i, j = Symbol(integer=True)
     n = Symbol(integer=True, positive=True)

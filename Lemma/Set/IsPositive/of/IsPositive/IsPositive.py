@@ -13,7 +13,7 @@ def apply(a_is_positive, b_is_positive):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool, Nat
+    from Lemma import Set, Bool, Nat
 
     x, y = Symbol(hyper_real=True)
     Eq << apply(Element(x, Interval.open(0, oo)), Element(y, Interval.open(0, oo)))
@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq << Bool.Any.And.of.Any.Any.apply(Eq[-1], Eq[-2], simplify=None)
 
-    Eq << Eq[-1].this.expr.apply(Algebra.EqMul.of.Eq.Eq)
+    Eq << Eq[-1].this.expr.apply(Nat.EqMul.of.Eq.Eq)
 
     Eq << Bool.Any_And.of.AnySetOf_AnySetOf.apply(Eq[-1], simplify=None)
 

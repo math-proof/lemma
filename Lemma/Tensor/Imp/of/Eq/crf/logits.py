@@ -12,7 +12,7 @@ def apply(given, G, x, s):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Real, Finset, Int
+    from Lemma import Set, Bool, Real, Finset, Int, Nat
 
     # d is the number of output labels
     # oo is the length of the sequence
@@ -37,7 +37,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq.x_definition.subs(i, 0).reversed)
 
-    Eq << Eq[-1].this.find(Log[Product]).apply(Algebra.Log.eq.Sum)
+    Eq << Eq[-1].this.find(Log[Product]).apply(Real.Log.eq.Sum)
 
     Eq << Eq[-1].this.find(Log[Mul]).apply(Real.LogMul.eq.AddLogS.of.Ne_0.Ne_0)
 
@@ -55,7 +55,7 @@ def prove(Eq):
 
     Eq << Bool.ImpNot.of.Or.apply(Eq[-1], 0)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.EqSub.of.Eq.Eq, Eq[-4])
+    Eq << Eq[-1].this.rhs.apply(Int.EqSub.of.Eq.Eq, Eq[-4])
 
     Eq << Eq[-1].this.rhs.rhs.simplify()
 
@@ -67,7 +67,7 @@ def prove(Eq):
 
     Eq << Bool.ImpNot.of.Or.apply(Eq[-1], 0)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Ne.given.Gt)
+    Eq << Eq[-1].this.lhs.apply(Nat.Ne.given.Gt)
 
     # reference: Neural Architectures for Named Entity Recognition.pdf
 

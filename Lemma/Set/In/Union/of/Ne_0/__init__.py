@@ -10,12 +10,12 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set
+    from Lemma import Set, Bool
 
     x = Symbol(real=True)
     Eq << apply(Unequal(x, 0))
 
-    Eq << Algebra.Or.of.Ne_0.apply(Eq[0])
+    Eq << Bool.Or.of.Ne_0.apply(Eq[0])
 
     Eq << Eq[-1].this.args[1].apply(Set.IsPositive.of.Gt_0, simplify=None)
 

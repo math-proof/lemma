@@ -11,7 +11,7 @@ def apply(eq, all):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset, Set, Bool
+    from Lemma import Finset, Set, Bool
 
     n = Symbol(domain=Range(2, oo))
     S = Symbol(etype=dtype.integer[n])

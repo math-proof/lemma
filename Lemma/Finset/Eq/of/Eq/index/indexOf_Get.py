@@ -23,7 +23,7 @@ def apply(given, j=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Algebra, Set, Bool, Nat
+    from Lemma import Finset, Set, Bool, Nat
 
     n = Symbol(domain=Range(2, oo), given=True)
     x = Symbol(shape=(oo,), integer=True, given=True)
@@ -34,7 +34,7 @@ def prove(Eq):
     t, i = Symbol(domain=Range(n))
     Eq << Finset.And.of.Eq.index.apply(Eq[0], j=t)
 
-    Eq.ou = Algebra.Or.of.Cond.subst.apply(Eq[-1], t, x[j])
+    Eq.ou = Bool.Or.of.Cond.subst.apply(Eq[-1], t, x[j])
 
     Eq.equality = Eq.ou.args[0].copy(plausible=True)
 
@@ -50,9 +50,9 @@ def prove(Eq):
 
     Eq << Finset.Eq.of.Eq.index.Delta.Get.apply(Eq[0], i, j)
 
-    Eq.ou1 = Algebra.Or.of.Cond.subst.apply(Eq[-1], i, Eq[1].lhs)
+    Eq.ou1 = Bool.Or.of.Cond.subst.apply(Eq[-1], i, Eq[1].lhs)
 
-    Eq.ou2 = Algebra.Or.of.Cond.subst.apply(Eq[2], t, x[j])
+    Eq.ou2 = Bool.Or.of.Cond.subst.apply(Eq[2], t, x[j])
 
     Eq.index_contains = Eq.ou2.args[0].copy(plausible=True)
 

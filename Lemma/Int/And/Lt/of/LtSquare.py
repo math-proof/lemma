@@ -11,26 +11,26 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Int
+    from Lemma import Set, Int, Nat
 
     x, a = Symbol(real=True)
     Eq << apply(x ** 2 < a ** 2)
 
-    Eq << Algebra.Lt_0.of.Lt.apply(Eq[0])
+    Eq << Nat.Lt_0.of.Lt.apply(Eq[0])
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sub.Square.eq.Mul)
+    Eq << Eq[-1].this.lhs.apply(Int.Sub.Square.eq.Mul)
 
     Eq << Int.Or.of.Lt_0.split.Mul.apply(Eq[-1])
 
-    Eq << Eq[-1].this.args[0].args[0].apply(Algebra.Lt.transport, lhs=0)
+    Eq << Eq[-1].this.args[0].args[0].apply(Nat.Lt.transport, lhs=0)
 
-    Eq << Eq[-1].this.args[0].args[1].apply(Algebra.Gt.transport, lhs=1)
+    Eq << Eq[-1].this.args[0].args[1].apply(Nat.Gt.transport, lhs=1)
 
     Eq << Eq[-1].this.args[0].apply(Set.In.Icc.of.Lt.Gt)
 
-    Eq << Eq[-1].this.args[1].args[0].apply(Algebra.Lt.transport, lhs=1)
+    Eq << Eq[-1].this.args[1].args[0].apply(Nat.Lt.transport, lhs=1)
 
-    Eq << Eq[-1].this.args[1].args[1].apply(Algebra.Gt.transport, lhs=0)
+    Eq << Eq[-1].this.args[1].args[1].apply(Nat.Gt.transport, lhs=0)
 
     Eq << Eq[-1].this.args[1].apply(Set.In.Icc.of.Lt.Gt)
 

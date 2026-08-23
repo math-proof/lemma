@@ -35,7 +35,7 @@ def apply(x_independence_assumption, y_independence_assumption, xy_independence_
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability, Bool, Tensor, Nat, Rat
+    from Lemma import Probability, Bool, Tensor, Nat, Rat, Finset
 
     d, n = Symbol(domain=Range(2, oo))
     x = Symbol(shape=(n, d), real=True, random=True)
@@ -76,7 +76,7 @@ def prove(Eq):
 
     Eq.recursion = Eq.recursion.subs(Eq[-1])
 
-    Eq << Algebra.Or.of.Cond.subst.apply(Eq[2], k, k + 1)
+    Eq << Bool.Or.of.Cond.subst.apply(Eq[2], k, k + 1)
 
     Eq << Eq[-1].this.find(NotElement).simplify()
 
@@ -102,7 +102,7 @@ def prove(Eq):
 
     Eq.recursion = Eq.recursion.subs(Eq[-1])
 
-    Eq << Algebra.EqProd.of.Eq.apply(Eq.recursion, (k, 1, k + 1))
+    Eq << Finset.EqProd.of.Eq.apply(Eq.recursion, (k, 1, k + 1))
 
     Eq << Eq[-1].this.rhs.limits_subs(Eq[-1].rhs.variable, Eq.factorization.rhs.args[-1].variable)
 
@@ -113,7 +113,7 @@ def prove(Eq):
     Eq << Eq[-1].subs(Eq.first)
 
     t = Eq.factorization.rhs.args[-1].limits[0][2] - 1
-    Eq << Algebra.Or.of.Cond.subst.apply(Eq[-1], k, t)
+    Eq << Bool.Or.of.Cond.subst.apply(Eq[-1], k, t)
 
     Eq << Eq[-1].this.find(NotElement).simplify()
 

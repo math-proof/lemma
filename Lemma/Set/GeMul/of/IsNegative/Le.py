@@ -13,7 +13,7 @@ def apply(is_negative, le):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Int
 
     x = Symbol(real=True, given=True)
     g, h = Function(real=True)
@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Set.Lt_0.of.IsNegative.apply(Eq[0])
 
-    Eq << Algebra.GeMul.of.Lt_0.Le.apply(Eq[-1], Eq[1], simplify=None)
+    Eq << Int.GeMul.of.Lt_0.Le.apply(Eq[-1], Eq[1], simplify=None)
 
 
 if __name__ == '__main__':

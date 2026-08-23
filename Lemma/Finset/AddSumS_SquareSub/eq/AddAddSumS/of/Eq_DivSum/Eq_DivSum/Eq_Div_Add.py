@@ -15,7 +15,7 @@ def apply(eq_x_bar_A, eq_x_bar_B, eq_x_bar, k=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset, Nat, Int, Vector, Rat
+    from Lemma import Finset, Nat, Int, Vector, Rat
 
     x_A = Symbol("x^A", real=True, shape=(oo,))
     x_B = Symbol("x^B", real=True, shape=(oo,))
@@ -30,7 +30,7 @@ def prove(Eq):
 
     Eq <<= (Eq[-1].lhs.find(Sum[Add ** 2]) - Eq[-1].rhs.find(Sum[Add ** 2])).this.apply(Finset.AddSumS.eq.Sum_Add_Sum), (Eq[-1].lhs.find(Sum[Add ** 2][2]) - Eq[-1].rhs.find(Sum[Add ** 2][2])).this.apply(Finset.AddSumS.eq.Sum_Add_Sum)
 
-    Eq <<= Eq[-2].this.rhs.expr.apply(Algebra.Sub.Square.eq.Mul), Eq[-1].this.rhs.expr.apply(Algebra.Sub.Square.eq.Mul)
+    Eq <<= Eq[-2].this.rhs.expr.apply(Int.Sub.Square.eq.Mul), Eq[-1].this.rhs.expr.apply(Int.Sub.Square.eq.Mul)
 
     Eq <<= Eq[-2].this.rhs.find(Sum).apply(Finset.Sum_Add.eq.AddSumS), Eq[-1].this.rhs.find(Sum).apply(Finset.Sum_Add.eq.AddSumS)
 
@@ -48,7 +48,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.rhs.find((~Add) ** 2).apply(Nat.AddMulS.eq.Mul_Add), Eq[-1].this.rhs.find((~Add) ** 2).apply(Nat.AddMulS.eq.Mul_Add)
 
-    Eq << Eq[-2].this.rhs.find(Add ** 2).apply(Algebra.Square.Neg)
+    Eq << Eq[-2].this.rhs.find(Add ** 2).apply(Int.Square.Neg)
 
     Eq << Eq[-2] + Eq[-1]
 

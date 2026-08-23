@@ -9,7 +9,7 @@ def apply(given, right_open=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool
+    from Lemma import Set, Bool, Nat
 
     x, y = Symbol(real=True, given=True)
     Eq << apply(x <= y)
@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Element).simplify()
 
-    Eq << Eq[-1].this.expr.apply(Algebra.Gt.of.Gt.Le)
+    Eq << Eq[-1].this.expr.apply(Nat.Gt.of.Gt.Le)
 
     Eq << ~Eq[-1]
 

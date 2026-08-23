@@ -12,7 +12,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Tensor
+    from Lemma import Set, Bool, Tensor, Nat
 
     x, y = Symbol(etype=dtype.complex, given=True)
     a = Symbol(etype=dtype.complex, shape=(oo,), given=True)
@@ -72,7 +72,7 @@ def prove(Eq):
 
     Eq <<= Imply(And(*Eq[-1].args[::2]), And(*Eq[-1].args[::2]), plausible=True), Imply(And(*Eq[-1].args[1::2]), And(*Eq[-1].args[1::2]), plausible=True)
 
-    Eq <<= Eq[-2].this.rhs.apply(Bool.Eq.of.Eq.Eq), Eq[-1].this.rhs.apply(Algebra.Ne.of.Eq.Ne)
+    Eq <<= Eq[-2].this.rhs.apply(Bool.Eq.of.Eq.Eq), Eq[-1].this.rhs.apply(Nat.Ne.of.Eq.Ne)
 
     Eq << Bool.ImpAndS.of.Imp.Imp.apply(Eq[-2], Eq[-1])
 

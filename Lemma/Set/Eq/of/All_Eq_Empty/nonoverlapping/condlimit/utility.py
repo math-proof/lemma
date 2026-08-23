@@ -18,7 +18,7 @@ def apply(given, n):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool
+    from Lemma import Set, Bool, Nat
     i, j = Symbol(integer=True)
     n = Symbol(domain=Range(2, oo), given=False)
     x = Symbol(shape=(oo,), etype=dtype.integer, finiteset=True)
@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << Bool.Imp.of.AllSetOf.apply(Eq[0])
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Ne.given.Lt)
+    Eq << Eq[-1].this.lhs.apply(Nat.Ne.given.Lt)
 
     j_ = Symbol('j', integer=True, nonnegative=True)
     Eq << Eq[-1].subs(j, j_)

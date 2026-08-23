@@ -14,7 +14,7 @@ def apply(ou, reverse=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Real, Rat
+    from Lemma import Bool, Real, Rat, Nat
 
     x, y = Symbol(real=True)
     Eq << apply(Unequal(x, 0) | Unequal(y, 0))
@@ -43,7 +43,7 @@ def prove(Eq):
 
     Eq << Bool.Imp_And.of.Cond.apply(Eq.sqrt_is_positive, cond=Eq.x_is_negative.lhs)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.LtDiv.of.Gt_0.Lt)
+    Eq << Eq[-1].this.rhs.apply(Nat.LtDiv.of.Gt_0.Lt)
 
     Eq <<= Eq.x_is_negative & Eq[-1]
 

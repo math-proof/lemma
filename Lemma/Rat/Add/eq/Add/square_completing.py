@@ -16,7 +16,7 @@ def apply(self, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Rat
+    from Lemma import Rat
 
     x, a, b, c = Symbol(complex=True, given=True)
     a = Symbol(complex=True, given=True, zero=False)

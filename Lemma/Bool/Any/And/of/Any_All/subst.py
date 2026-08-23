@@ -17,7 +17,7 @@ def apply(given, old, new):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
 
     C, x, y = Symbol(real=True)
     A, B = Symbol(etype=dtype.real)

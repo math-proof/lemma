@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(self):
-    from Lemma.Real.Sin.eq.Block import rewrite
+    from Lemma.Tensor.SinAppend.eq.AppendSinS import rewrite
     return Equal(self, rewrite(Tan, self))
 
 

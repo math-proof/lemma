@@ -12,7 +12,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Int
+    from Lemma import Set, Int
 
     x, m = Symbol(real=True)
     Eq << apply(Element(x, Interval(m, 0)))

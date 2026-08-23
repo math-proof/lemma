@@ -12,14 +12,14 @@ def apply(gt, index=-1):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Nat
 
     x, y, z = Symbol(real=True, given=True)
     Eq << apply(x > Max(y, z))
 
-    Eq << Algebra.Gt.of.Gt_Max.apply(Eq[0], index=0)
+    Eq << Nat.Gt.of.Gt_Max.apply(Eq[0], index=0)
 
-    Eq << Algebra.Gt.of.Gt_Max.apply(Eq[0], index=1)
+    Eq << Nat.Gt.of.Gt_Max.apply(Eq[0], index=1)
 
 
 

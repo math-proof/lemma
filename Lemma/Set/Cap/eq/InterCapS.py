@@ -9,7 +9,7 @@ def apply(self, indices, wrt=None, *, simplify=True):
 
 @prove(provable=False)
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set
 
     x = Symbol(integer=True)
     f = Function(etype=dtype.real)

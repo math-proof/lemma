@@ -11,7 +11,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Algebra
+    from Lemma import Finset, Nat
 
     n = Symbol(integer=True, positive=True)
     A = Symbol(real=True, shape=(n, n))
@@ -25,7 +25,7 @@ def prove(Eq):
     Eq << Finset.EqDet.of.Eq.apply(Eq[0])
     Eq << Unequal(Det(B), 0, plausible=True)
 
-    Eq << Algebra.Ne.of.Eq.Ne.apply(Eq[-2], Eq[-1])
+    Eq << Nat.Ne.of.Eq.Ne.apply(Eq[-2], Eq[-1])
 
 
 if __name__ == '__main__':

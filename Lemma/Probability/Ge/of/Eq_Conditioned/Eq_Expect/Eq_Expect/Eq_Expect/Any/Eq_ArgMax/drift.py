@@ -14,7 +14,7 @@ def apply(eq, Q_def, V_def, MDV_def, any, eq_argmax):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability, Set, Bool, Nat, Finset, Rat, Int, Real
+    from Lemma import Probability, Set, Bool, Nat, Finset, Rat, Int, Real
 
     b, D = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), integer=True, random=True) # states / observation
@@ -112,7 +112,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.args[:2].apply(Rat.GeDivS.of.Ge.Gt_0)
 
-    Eq << Eq[-1].this.find(GreaterEqual).apply(Algebra.Ge.of.Ge_0)
+    Eq << Eq[-1].this.find(GreaterEqual).apply(Nat.Ge.of.Ge_0)
 
     Eq.ge_MDV = GreaterEqual((MDV[π, π_tilde] ^ γ)(s[t].var), (MDV[π, π] ^ γ)(s[t].var), plausible=True)
 
@@ -120,7 +120,7 @@ def prove(Eq):
 
     Eq << Bool.Any.And.of.Any.Any.apply(Eq[-1], Eq[-2])
 
-    Eq << Eq[-1].this.expr.args[:2].apply(Algebra.Lt.of.Ge.Lt)
+    Eq << Eq[-1].this.expr.args[:2].apply(Nat.Lt.of.Ge.Lt)
 
     Eq << Eq[-1].this.find(Imply).apply(Bool.ImpEq.of.ImpEq.subst)
 

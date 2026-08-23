@@ -8,7 +8,7 @@ def apply(x, y, z):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Nat
+    from Lemma import Bool, Nat
 
     x, y, z = Symbol(real=True, given=True)
     Eq << apply(x, y, z)
@@ -34,9 +34,9 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.args[1] + y, Eq[-1].this.args[1] + z
 
-    Eq << Eq[-1].this.args[1].apply(Algebra.GeMin.of.Gt, x)
+    Eq << Eq[-1].this.args[1].apply(Nat.GeMin.of.Gt, x)
 
-    Eq << Eq[-2].this.args[1].apply(Algebra.LeMin.of.Le, z)
+    Eq << Eq[-2].this.args[1].apply(Nat.LeMin.of.Le, z)
 
 
 

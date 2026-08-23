@@ -9,7 +9,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat, Bool
+    from Lemma import Nat, Bool
 
     a, b = Symbol(real=True)
     Eq << apply(Unequal(functions.Bool(a > b), 0))

@@ -11,7 +11,7 @@ def apply(eq_given):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Real, Bool, Vector
+    from Lemma import Probability, Real, Bool, Vector, Finset
 
     m, n = Symbol(integer=True, positive=True)
     φ = Function(real=True, shape=(m, n))
@@ -40,7 +40,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(ReducedSum).apply(Vector.Sum.eq.Sum_Get, a)
 
-    Eq << Eq[-1].this.find(Mul[Sum]).apply(Algebra.Mul.Sum.absorb, 1)
+    Eq << Eq[-1].this.find(Mul[Sum]).apply(Finset.Mul.Sum.absorb, 1)
 
     Eq << Eq[3] * Eq[3].find(ReducedSum)
 

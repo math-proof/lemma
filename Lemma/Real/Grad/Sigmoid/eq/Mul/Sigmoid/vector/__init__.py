@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Rat
+    from Lemma import Rat, Tensor
 
     n = Symbol(integer=True, positive=True)
     x = Symbol(real=True, shape=(n,))
@@ -31,13 +31,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.doit()
 
-    Eq << Mul(*Eq[-1].lhs.args[1:]).this.apply(Algebra.Mul.eq.Transpose)
+    Eq << Mul(*Eq[-1].lhs.args[1:]).this.apply(Tensor.Mul.eq.Transpose)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Transpose.eq.Mul)
+    Eq << Eq[-1].this.rhs.apply(Tensor.Transpose.eq.Mul)
 
     Eq << Eq[-3].subs(Eq[-1])
 
-    Eq << Mul(*Eq[-1].lhs.args[1:]).this.apply(Algebra.Mul.eq.Transpose)
+    Eq << Mul(*Eq[-1].lhs.args[1:]).this.apply(Tensor.Mul.eq.Transpose)
 
     Eq << Eq[-2].subs(Eq[-1])
 

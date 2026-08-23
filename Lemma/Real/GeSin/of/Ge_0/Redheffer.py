@@ -8,7 +8,7 @@ def apply(ge_zero):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Nat, Real, Finset
+    from Lemma import Set, Bool, Nat, Real, Finset, Rat, Int
 
     x = Symbol(real=True)
     Eq << apply(x >= 0)
@@ -42,7 +42,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Greater).simplify()
 
-    Eq << Eq[-1].this.find(Expr ** 2 - Expr ** 2).apply(Algebra.Sub.Square.eq.Mul)
+    Eq << Eq[-1].this.find(Expr ** 2 - Expr ** 2).apply(Int.Sub.Square.eq.Mul)
 
     Eq.le = -Eq[-1].this.rhs
 
@@ -56,11 +56,11 @@ def prove(Eq):
 
     Eq << Bool.Imp.given.Imp_And.apply(Eq[-1])
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Gt_0.Gt.given.And.Div)
+    Eq << Eq[-1].this.rhs.apply(Rat.Gt_0.Gt.given.And.Div)
 
     Eq << Bool.Imp.And.of.Imp.apply(Eq.gt_1)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.GtMul.of.Gt_0.Gt)
+    Eq << Eq[-1].this.rhs.apply(Nat.GtMul.of.Gt_0.Gt)
 
     Eq << Eq[-1].lhs.this.apply(Real.LeSin.of.Gt_0)
 

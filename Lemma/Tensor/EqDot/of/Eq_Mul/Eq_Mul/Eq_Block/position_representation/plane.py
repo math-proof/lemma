@@ -29,7 +29,7 @@ def apply(eq_theta_r, eq_theta_c, eq_R, i_, j_):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Bool, Real
+    from Lemma import Tensor, Bool
     # n denotes sequence length (seq_length)
     # b_r, b_c denotes 10000
     n = Symbol(integer=True, positive=True)
@@ -123,20 +123,20 @@ def prove(Eq):
 
     Eq.identity = Eq[-1].find(Identity).this.apply(Tensor.SEq_Append, d_r / 2, d_r / 2)
 
-    Eq <<= Eq[-1].find(cos).this.apply(Real.Cos.eq.Block), Eq[-1].find(sin).this.apply(Real.Sin.eq.Block), \
-        Eq[-1].find(BlockMatrix[2]).find(cos).this.apply(Real.Cos.eq.Block), Eq[-1].find(BlockMatrix[2]).find(sin).this.apply(Real.Sin.eq.Block)
+    Eq <<= Eq[-1].find(cos).this.apply(Tensor.CosAppend.eq.AppendCosS), Eq[-1].find(sin).this.apply(Tensor.SinAppend.eq.AppendSinS), \
+        Eq[-1].find(BlockMatrix[2]).find(cos).this.apply(Tensor.CosAppend.eq.AppendCosS), Eq[-1].find(BlockMatrix[2]).find(sin).this.apply(Tensor.SinAppend.eq.AppendSinS)
 
     Eq << Eq[-5].subs(*Eq[-4:], Eq.identity)
 
-    Eq <<= Eq[-1].find(Mul).this.apply(Algebra.Mul.eq.Block),\
-        Eq[-1].find(Mul[2]).this.apply(Algebra.Mul.eq.Block),\
-        Eq[-1].find(BlockMatrix[2]).find(Mul).this.apply(Algebra.Mul.eq.Block),\
-        Eq[-1].find(BlockMatrix[2]).args[1].find(Mul).this.apply(Algebra.Mul.eq.Block)
+    Eq <<= Eq[-1].find(Mul).this.apply(Tensor.Mul.eq.Block),\
+        Eq[-1].find(Mul[2]).this.apply(Tensor.Mul.eq.Block),\
+        Eq[-1].find(BlockMatrix[2]).find(Mul).this.apply(Tensor.Mul.eq.Block),\
+        Eq[-1].find(BlockMatrix[2]).args[1].find(Mul).this.apply(Tensor.Mul.eq.Block)
 
     Eq << Eq[-5].subs(*Eq[-4:])
 
-    Eq <<= Eq[-1].find(-BlockMatrix).this.apply(Algebra.Mul.eq.Block), \
-        Eq[-1].find(BlockMatrix[2]).find(-BlockMatrix).this.apply(Algebra.Mul.eq.Block)
+    Eq <<= Eq[-1].find(-BlockMatrix).this.apply(Tensor.Mul.eq.Block), \
+        Eq[-1].find(BlockMatrix[2]).find(-BlockMatrix).this.apply(Tensor.Mul.eq.Block)
 
     Eq << Eq[-3].subs(*Eq[-2:])
 
@@ -144,16 +144,16 @@ def prove(Eq):
 
     Eq << Eq[2].subs(i, i - i_quote).subs(j, j - j_quote)
 
-    Eq <<= Eq[-1].find(cos).this.apply(Real.Cos.eq.Block), Eq[-1].find(sin).this.apply(Real.Sin.eq.Block)
+    Eq <<= Eq[-1].find(cos).this.apply(Tensor.CosAppend.eq.AppendCosS), Eq[-1].find(sin).this.apply(Tensor.SinAppend.eq.AppendSinS)
 
     Eq << Eq[-3].subs(*Eq[-2:], Eq.identity)
 
-    Eq <<= Eq[-1].rhs.find(Mul).this.apply(Algebra.Mul.eq.Block),\
-        Eq[-1].rhs.args[1].find(Mul).this.apply(Algebra.Mul.eq.Block)
+    Eq <<= Eq[-1].rhs.find(Mul).this.apply(Tensor.Mul.eq.Block),\
+        Eq[-1].rhs.args[1].find(Mul).this.apply(Tensor.Mul.eq.Block)
 
     Eq << Eq[-3].subs(*Eq[-2:])
 
-    Eq << Eq[-1].this.find(-BlockMatrix).apply(Algebra.Mul.eq.Block)
+    Eq << Eq[-1].this.find(-BlockMatrix).apply(Tensor.Mul.eq.Block)
 
     Eq << Bool.Eq.of.Eq.Eq.apply(Eq.eq_matmul, Eq[-1])
 

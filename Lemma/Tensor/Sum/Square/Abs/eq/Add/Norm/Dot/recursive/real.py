@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Nat
+    from Lemma import Tensor, Nat
 
     t, k = Symbol(integer=True, positive=True)
     L = Symbol(shape=(oo, oo), super_real=True)
@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Tensor.Square.Norm.eq.Add.Dot)
 
-    Eq << Eq[-1].this.rhs.find(Norm[Indexed * Sliced]).apply(Algebra.Norm.eq.Mul.Norm)
+    Eq << Eq[-1].this.rhs.find(Norm[Indexed * Sliced]).apply(Nat.Norm.eq.Mul.Norm)
 
     Eq << Eq[-1].this.rhs.args[-2:].apply(Tensor.Add.Square.eq.Sub.Dot)
 

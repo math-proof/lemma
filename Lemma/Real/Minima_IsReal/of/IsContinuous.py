@@ -13,7 +13,7 @@ def apply(given):
 
 @prove(proved=False)
 def prove(Eq):
-    from Lemma import Real, Algebra, Bool
+    from Lemma import Real, Bool
 
     a = Symbol(real=True)
     b = Symbol(real=True, domain=Interval.open(a, oo))
@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq << Real.Any.All.Ge.of.IsContinuous.extreme_value_theorem.apply(Eq[0])
 
-    Eq << Eq[-1].this.expr.apply(Algebra.GeMinima.of.All_Ge)
+    Eq << Eq[-1].this.expr.apply(Real.GeMinima.of.All_Ge)
 
     Eq << Real.All_LeMinima.apply(Eq[1].lhs)
 

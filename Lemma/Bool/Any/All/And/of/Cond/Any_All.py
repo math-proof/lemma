@@ -13,7 +13,7 @@ def apply(cond, exists):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
 
     y, x = Symbol(real=True)
     B, A = Symbol(etype=dtype.real, given=True)

@@ -8,7 +8,7 @@ def apply(x):
 
 @prove(provable=False)
 def prove(Eq):
-    from Lemma import Algebra, Set
+    from Lemma import Set
 
     x = Symbol(real=True, given=True)
     Eq << apply(x)

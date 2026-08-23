@@ -26,7 +26,7 @@ def apply(given, t):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Int
+    from Lemma import Int
 
     n = Symbol(integer=True, positive=True)
     x, y = Function(real=True)

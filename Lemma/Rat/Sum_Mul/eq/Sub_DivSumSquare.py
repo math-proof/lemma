@@ -12,14 +12,14 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Finset
 
     i, j = Symbol(integer=True)
     n = Symbol(integer=True, positive=True)
     x = Symbol(real=True, shape=(oo,))
     Eq << apply(Sum[j:i, i:n](x[i] * x[j]))
 
-    Eq << Algebra.Square.Sum.eq.Add.Sum.apply(Eq[0].find(Pow[Sum]))
+    Eq << Finset.Square.Sum.eq.Add.Sum.apply(Eq[0].find(Pow[Sum]))
 
     Eq << Eq[0].subs(Eq[-1])
 

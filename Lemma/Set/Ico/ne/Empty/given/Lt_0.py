@@ -10,12 +10,12 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set
+    from Lemma import Set, Nat
 
     a, b = Symbol(integer=True, given=True)
     Eq << apply(Unequal(Range(a, b), a.emptySet))
 
-    Eq << Algebra.Lt.of.Lt_0.apply(Eq[-1])
+    Eq << Nat.Lt.of.Lt_0.apply(Eq[-1])
 
     Eq << Set.Ico.ne.Empty.of.Lt.apply(Eq[-1])
 
