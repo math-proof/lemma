@@ -10,7 +10,7 @@ def apply(pow):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Int, Complex, Real, Rat
+    from Lemma import Bool, Int, Complex, Real, Rat
 
     z = Symbol(complex=True, given=True)
     n = Symbol(integer=True, given=True, positive=True)
@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Rat.Lt0Pow.of.Gt_0, n)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.EqArg.of.Gt_0, Eq[-1].find(Exp))
+    Eq << Eq[-1].this.lhs.apply(Complex.ArgMul.eq.Arg.of.Gt_0, Eq[-1].find(Exp))
 
     Eq << Bool.Imp.given.ImpEq.apply(Eq[-1])
 

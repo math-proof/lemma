@@ -17,7 +17,7 @@ def apply(is_nonzero, eq, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Nat, Int
+    from Lemma import Bool, Nat, Int
 
     x, a, c = Symbol(complex=True)
     Eq << apply(Unequal(a, 0), Equal(a * x ** 2 + c, 0), x=x)
@@ -55,7 +55,7 @@ def prove(Eq):
 
     Eq << Bool.OrAndS.given.And_Or.apply(Eq[-1])
 
-    Eq << Algebra.Or.given.Eq.Abs.apply(Eq[-1])
+    Eq << Int.OrEqS.given.Abs.apply(Eq[-1])
 
     Eq << Eq[-1].this.rhs.apply(Int.MulAbsS.eq.AbsMul)
 

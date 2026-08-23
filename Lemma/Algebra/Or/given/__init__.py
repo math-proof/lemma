@@ -1,4 +1,3 @@
-from . import Eq
-from . import Or
-from . import Any
 from . import Eq_Ite
+from . import Any
+from . import Or

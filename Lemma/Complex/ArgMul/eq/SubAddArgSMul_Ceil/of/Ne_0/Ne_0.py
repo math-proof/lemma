@@ -11,7 +11,7 @@ def apply(is_nonzero_x, is_nonzero_y):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Int, Complex, Real
+    from Lemma import Int, Complex, Real
 
     x, y = Symbol(complex=True, given=True)
     Eq << apply(Unequal(x, 0), Unequal(y, 0))
@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq << Complex.Arg.of.Eq.apply(Eq[-1])
 
-    Eq << Algebra.EqArg.of.Gt_0.apply(Eq.abs_is_positive, Mul(*Eq[-1].rhs.arg.args[2:]))
+    Eq << Complex.ArgMul.eq.Arg.of.Gt_0.apply(Eq.abs_is_positive, Mul(*Eq[-1].rhs.arg.args[2:]))
 
     Eq << Eq[-2].subs(Eq[-1])
 

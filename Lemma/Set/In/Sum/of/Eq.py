@@ -14,7 +14,7 @@ def apply(given, var=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Nat
+    from Lemma import Set, Nat, Bool
 
     n = Symbol(integer=True)
     S = Symbol(etype=dtype.integer[n])
@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq <<= Eq[1] & Eq[-1]
 
-    Eq << Eq[-1].this.apply(Algebra.Cond.Any.given.Any.And, simplify=None)
+    Eq << Eq[-1].this.apply(Bool.Cond.Any.given.Any_And, simplify=None)
 
     Eq << Eq[-1].this.expr.apply(Nat.Eq.UFn.given.Eq.UFn)
 

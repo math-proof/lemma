@@ -50,7 +50,7 @@ def prove(Eq):
 
     Eq <<= Eq[-1] & Eq.axiom
 
-    Eq << Eq[-1].this.expr.apply(Algebra.Cond.Any.given.Any.And, simplify=None)
+    Eq << Eq[-1].this.expr.apply(Bool.Cond.Any.given.Any_And, simplify=None)
 
     Eq << Eq[-1].this.expr.expr.apply(Nat.Eq.UFn.given.Eq.UFn)
 

@@ -56,7 +56,7 @@ def apply(given, x=None):
 
 @prove(slow=True)
 def prove(Eq):
-    from Lemma import Algebra, Int
+    from Lemma import Int
 
     x, a, b, c, d = Symbol(complex=True, given=True)
     Eq << apply(Equal(x ** 4 + a * x ** 3 + b * x ** 2 + c * x + d, 0), x=x)
@@ -84,7 +84,7 @@ def prove(Eq):
 
     Eq <<= Eq[-4].subs(Eq.x_def), Eq[-3].subs(Eq.x_def), Eq[-2].subs(Eq.x_def), Eq[-1].subs(Eq.x_def)
 
-    Eq <<= Eq[-4].this.rhs.apply(Algebra.Or_Eq.offset, -a / 4), Eq[-3].this.rhs.apply(Algebra.Or_Eq.offset, -a / 4), Eq[-2].this.rhs.apply(Algebra.Or_Eq.offset, -a / 4), Eq[-1].this.rhs.apply(Algebra.Or_Eq.offset, -a / 4)
+    Eq <<= Eq[-4].this.rhs.apply(Int.OrEqSAdd.Is.OrEqS_Sub, -a / 4), Eq[-3].this.rhs.apply(Int.OrEqSAdd.Is.OrEqS_Sub, -a / 4), Eq[-2].this.rhs.apply(Int.OrEqSAdd.Is.OrEqS_Sub, -a / 4), Eq[-1].this.rhs.apply(Int.OrEqSAdd.Is.OrEqS_Sub, -a / 4)
 
 
 

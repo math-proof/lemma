@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.rhs.find(Equal[0]).apply(Algebra.Eq_even.given.Any), Eq[-1].this.rhs.find(Unequal[0]).apply(Algebra.Mod.ne.Zero.given.Any)
 
-    Eq <<= Eq[-2].this.rhs.apply(Algebra.Cond.Any.given.Any.And, simplify=None), Eq[-1].this.rhs.apply(Algebra.Cond.Any.given.Any.And, simplify=None)
+    Eq <<= Eq[-2].this.rhs.apply(Bool.Cond.Any.given.Any_And, simplify=None), Eq[-1].this.rhs.apply(Bool.Cond.Any.given.Any_And, simplify=None)
 
     Eq <<= Eq[-2].this.find(And).apply(Nat.Eq.UFn.given.Eq.UFn), Eq[-1].this.find(And).apply(Nat.Eq.UFn.given.Eq.UFn)
 

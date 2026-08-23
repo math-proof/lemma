@@ -12,7 +12,7 @@ def apply(self, *, simplify=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
 
     i, j = Symbol(integer=True)
     n = Symbol(integer=True, positive=True)
@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.expr.apply(Bool.Any_And.of.Any.All, simplify=None)
 
-    Eq << Eq[-2].this.rhs.expr.apply(Algebra.Cond.Any.given.Any.And, simplify=None)
+    Eq << Eq[-2].this.rhs.expr.apply(Bool.Cond.Any.given.Any_And, simplify=None)
 
 
 
