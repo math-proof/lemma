@@ -9,7 +9,7 @@ The main objectives of this project are formalizing in Lean4:
   - `permute`, `transpose`
   - `repeat`, `resize`, `reshape`, `unsqueeze`
   - `einsum`, `tensordot`, `matmul`, `bmm`
-  - `softmax`, `exp`, `log`, `sigmoid`
+  - `softmax`, `exp`, `log`, `sigmoid`, `sin`, `cos`
 
 * **symbolic mathematics from SymPy**
   The commonly used SymPy operators:  

@@ -1,5 +1,6 @@
 import sympy.tensor.tensor
 import sympy.vector.functions
+import sympy.functions.elementary.trigonometric
 import Lemma.Nat.NotLt.is.Ge
 import Lemma.List.ProdTake_1.eq.Get_0.of.GtLength_0
 import Lemma.List.LengthInsertIdx.eq.Add1Length.of.GeLength
@@ -43,6 +44,26 @@ instance [NeZero s.prod] [ExpNeZero α] : ExpNeZero (Tensor α s) where
     simp [EqData0'0] at h_eq
     have h := ExpNeZero.exp_ne_zero x.data
     contradiction
+
+/--
+[sin](https://pytorch.org/docs/stable/generated/torch.sin.html)
+Elementwise sine. Available for `Tensor ℝ s` and `Tensor ℂ s` via `Sin`.
+-/
+def Tensor.sin [Sin α] (x : Tensor α s) : Tensor α s :=
+  x.map Sin.sin
+
+/--
+[cos](https://pytorch.org/docs/stable/generated/torch.cos.html)
+Elementwise cosine. Available for `Tensor ℝ s` and `Tensor ℂ s` via `Cos`.
+-/
+def Tensor.cos [Cos α] (x : Tensor α s) : Tensor α s :=
+  x.map Cos.cos
+
+instance [Sin α] : Sin (Tensor α s) where
+  sin := Tensor.sin
+
+instance [Cos α] : Cos (Tensor α s) where
+  cos := Tensor.cos
 
 /--
 [log](https://pytorch.org/docs/stable/generated/torch.log.html)

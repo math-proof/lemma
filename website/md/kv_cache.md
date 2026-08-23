@@ -8,6 +8,11 @@ The same lemma is published on [lemma.cn](http://www.lemma.cn/) as two public vi
 - **Lean 4 version** (machine-checked dependent type theory; lemma `kv_cache`):
   [http://www.lemma.cn/lean/?module=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T](http://www.lemma.cn/lean/?module=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T)
 
+The project source is at [github.com/math-proof/lemma](https://github.com/math-proof/lemma): [Lean 4 on main](https://github.com/math-proof/lemma/tree/main) and [SymPy on master](https://github.com/math-proof/lemma/tree/master). This lemma’s files are
+[All_Eq_DotSoftmaxAdd_DivDot_T.lean](https://github.com/math-proof/lemma/blob/main/Lemma/Tensor/GetSlice/eq/Append_DotSoftmaxDivDot_Append/of/All_Eq_DotSoftmaxAdd_DivDot_T.lean)
+and
+[kv_cache.py](https://github.com/math-proof/lemma/blob/master/Lemma/Tensor/GetSlice/eq/Append_DotSoftmaxDivDot_Append/of/All_Eq_DotSoftmaxAdd_DivDot_T/kv_cache.py).
+
 The [SymPy page](http://www.lemma.cn/py/?module=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T.kv_cache) renders the original `apply` / `prove` statement as an interactive theorem document. The [Lean 4 page](http://www.lemma.cn/lean/?module=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T) renders the `@[main]` lemma with given/imply blocks, nested `let` binders, and hyperreal tensor equality \(\approx\). Both are the public faces of this result; the present note describes the mathematics that those pages display.
 
 ## Technical Field
@@ -28,7 +33,7 @@ A **KV cache** stores those past keys and values and, at the next step, concaten
 \[
 K_{:n+1}=K_{:n}\mathbin{++}[k_n],\qquad V_{:n+1}=V_{:n}\mathbin{++}[v_n].
 \]
-Hugging Face Transformers implements this as `use_cache=True` (the default in [`generate`](https://huggingface.co/docs/transformers/en/main_classes/text_generation)). The tensors travel as `past_key_values`; the default container is [`DynamicCache`](https://huggingface.co/docs/transformers/en/kv_cache), one \((K,V)\) pair per layer, shape growing as `[batch, heads, seq_len, head_dim]`. Internally the attention module concatenates the current \(k,v\) with the cache and attends with a mask of length `past_kv_length + 1`. Prefill still runs the full prompt once; decode then feeds **one new `input_id` per step** plus the cache, which is the loop `model(..., past_key_values=cache, use_cache=True)` in their [cache explanation](https://huggingface.co/docs/transformers/en/cache_explanation). Sliding-window models (and `DynamicCache` when `config` has a window) keep only the last \(\ell\) pairs, matching the Lean statement; vanilla GPT keeps the whole prefix, matching the SymPy statement.
+Hugging Face Transformers implements this as `use_cache=True` (the default in [generate](https://huggingface.co/docs/transformers/en/main_classes/text_generation)). The tensors travel as `past_key_values`; the default container is [DynamicCache](https://huggingface.co/docs/transformers/en/kv_cache), one \((K,V)\) pair per layer, shape growing as `[batch, heads, seq_len, head_dim]`. Internally the attention module concatenates the current \(k,v\) with the cache and attends with a mask of length `past_kv_length + 1`. Prefill still runs the full prompt once; decode then feeds **one new `input_id` per step** plus the cache, which is the loop `model(..., past_key_values=cache, use_cache=True)` in their [cache explanation](https://huggingface.co/docs/transformers/en/cache_explanation). Sliding-window models (and `DynamicCache` when `config` has a window) keep only the last \(\ell\) pairs, matching the Lean statement; vanilla GPT keeps the whole prefix, matching the SymPy statement.
 
 That is an implementation. The lemma is the missing identity: if \(Z(n)\) is already the masked attention of the prefix, then Hugging Face’s “concat cache with the new \(k,v\) and take the last row” is exactly \(Z(n+1)\), not a different algorithm.
 
@@ -124,6 +129,7 @@ FIG. 0 comprises the two public lemma.cn visualizations of the finished statemen
 
 - SymPy: [http://www.lemma.cn/py/?module=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T.kv_cache](http://www.lemma.cn/py/?module=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T.kv_cache)
 - Lean 4: [http://www.lemma.cn/lean/?module=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T](http://www.lemma.cn/lean/?module=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T)
+- Source: [Lean 4 (main)](https://github.com/math-proof/lemma/blob/main/Lemma/Tensor/GetSlice/eq/Append_DotSoftmaxDivDot_Append/of/All_Eq_DotSoftmaxAdd_DivDot_T.lean), [SymPy (master)](https://github.com/math-proof/lemma/blob/master/Lemma/Tensor/GetSlice/eq/Append_DotSoftmaxDivDot_Append/of/All_Eq_DotSoftmaxAdd_DivDot_T/kv_cache.py)
 
 FIG. 1 is the reduction used in the main theorem: instantiate the hypothesis at \(n+1\), unfold masked attention into a stack of windowed rows, split the stack as prefix \(++\) last row, and identify the two blocks with \(Z(n)\) and the cached `row`.
 
@@ -208,7 +214,7 @@ On the support of \(\Xi\), the infinite term vanishes and the logit is \(A_{ij}\
 `Tensor ℝ s` is this library’s formalisation of a real tensor of shape `s`, with operations matching `torch.Tensor`: `matmul` (`@`), transpose \((\cdot)^\top\), `softmax`, `band_part`, slicing `[start:stop]`, stacking `[i < n] f i`, and concatenation `++`. Lifting to `Tensor ℝ* s` interprets entries in the hyperreals, so that \(\infty\) is a positive infinite scalar. Shape-cast equality is written \(\simeq\) (`SEq`).
 
 The relation \(\approx\) (`XEq`) is **not** Mathlib’s “infinitely close” (\(a-b\) infinitesimal). It is the total closeness of
-[Hyperreal.XEq.is.InfinitesimalDivAbsSub](http://www.lemma.cn/lean/?module=Hyperreal.XEq.is.InfinitesimalDivAbsSub), designed to mimic [`torch.isclose`](https://docs.pytorch.org/docs/stable/generated/torch.isclose.html):
+[Hyperreal.XEq.is.InfinitesimalDivAbsSub](http://www.lemma.cn/lean/?module=Hyperreal.XEq.is.InfinitesimalDivAbsSub), designed to mimic [torch.isclose](https://docs.pytorch.org/docs/stable/generated/torch.isclose.html):
 
 - *atol.* Absolute error is \(\lvert a-b\rvert\). In \(\mathbb R^*\) one takes this as \(0\) in the finite-clip sense: if \(\lvert a-b\rvert\) is infinitesimal then \(a\approx b\), but the converse fails (two infinities can differ infinitely while remaining relatively close).
 - *rtol.* Relative error is \(\lvert a-b\rvert/(\lvert a\rvert+\lvert b\rvert+1)\). The extra \(+1\) keeps the denominator away from \(0\). Two hyperreals are \(\approx\) iff this quantity is infinitesimal (\(\to 0\)).
@@ -304,3 +310,4 @@ The lemma does not bound approximation error of dropping tokens outside the wind
 [lemma.cn/py](http://www.lemma.cn/py/?module=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T.kv_cache)
 and
 [lemma.cn/lean](http://www.lemma.cn/lean/?module=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T).
+The source is on GitHub: [Lean 4 (main)](https://github.com/math-proof/lemma/tree/main), [SymPy (master)](https://github.com/math-proof/lemma/tree/master).

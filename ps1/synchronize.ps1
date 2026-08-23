@@ -11,7 +11,7 @@ param(
 # usage, sync default table: lemma
 # .\ps1\synchronize.ps1
 # any InnoDB table in schema axiom (identifier-safe name)
-# .\ps1\synchronize.ps1 -Table other_table
+# .\ps1\synchronize.ps1 axiom
 # git pull on remote before sync (repo path: ~/github/<Project>)
 # .\ps1\synchronize.ps1 -Project lean
 # .\ps1\synchronize.ps1 -Project lean -Table lemma

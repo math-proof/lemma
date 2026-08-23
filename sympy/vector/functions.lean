@@ -1,9 +1,28 @@
 import sympy.vector.vector
 import sympy.functions.elementary.exponential
+import sympy.functions.elementary.trigonometric
 import sympy.core.relational
 open Vector
 
 namespace List.Vector
+
+/--
+Elementwise sine. Available for `Vector ℝ n` and `Vector ℂ n` via `Sin`.
+-/
+def sin [Sin α] (x : Vector α n) : Vector α n :=
+  x.map Sin.sin
+
+/--
+Elementwise cosine. Available for `Vector ℝ n` and `Vector ℂ n` via `Cos`.
+-/
+def cos [Cos α] (x : Vector α n) : Vector α n :=
+  x.map Cos.cos
+
+instance [Sin α] : Sin (Vector α n) where
+  sin := sin
+
+instance [Cos α] : Cos (Vector α n) where
+  cos := cos
 
 instance [Exp α] : Exp (Vector α n) where
   exp a := a.map Exp.exp

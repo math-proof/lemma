@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[main, comm]
 private lemma main
 -- given
   (x y : ℝ) :
@@ -12,3 +12,4 @@ private lemma main
 
 
 -- created on 2026-08-01
+-- updated on 2026-08-23
