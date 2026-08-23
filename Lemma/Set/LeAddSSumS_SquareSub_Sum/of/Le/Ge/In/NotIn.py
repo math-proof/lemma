@@ -16,7 +16,7 @@ def apply(le, ge, contains, notcontains):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Rat, Nat, Nat, Nat, Nat
+    from Lemma import Algebra, Set, Bool, Rat, Nat
 
     y_quote = Symbol(integer=True, given=True)
     x, y = Symbol(integer=True)

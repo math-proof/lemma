@@ -649,7 +649,7 @@ class RisingFactorial(CombinatorialFunction):
         else:
             base = p._print(n)
 
-        tex = r"{%s}^\overline{%s}" % (base, p._print(k))
+        tex = r"{%s}^{\overline{%s}}" % (base, p._print(k))
 
         return p._do_exponent(tex, exp)
 
@@ -804,7 +804,7 @@ class FallingFactorial(CombinatorialFunction):
             
         sub = r"%s" % p._print(k)
 
-        tex = r"%s^\underline{%s}" % (base, sub)
+        tex = r"%s^{\underline{%s}}" % (base, sub)
 
         return p._do_exponent(tex, exp)
 

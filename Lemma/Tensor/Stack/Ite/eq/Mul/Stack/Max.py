@@ -17,7 +17,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Tensor, Nat
+    from Lemma import Bool, Tensor, Nat
 
     n = Symbol(integer=True, positive=True)
     i, j = Symbol(integer=True)

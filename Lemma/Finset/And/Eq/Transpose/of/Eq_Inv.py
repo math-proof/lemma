@@ -12,7 +12,7 @@ def apply(eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Algebra, Tensor, Nat
+    from Lemma import Algebra, Tensor, Nat
 
     m, n = Symbol(integer=True, positive=True)
     Σ_x = Symbol(shape=(n, n), real=True, singular=False)

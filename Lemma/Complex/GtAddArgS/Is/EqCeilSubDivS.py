@@ -9,7 +9,7 @@ def apply(gt):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Complex
+    from Lemma import Bool, Complex
 
     A, B = Symbol(complex=True, given=True)
     Eq << apply(Arg(A) + Arg(B) > S.Pi)

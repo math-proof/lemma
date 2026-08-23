@@ -31,7 +31,7 @@ def apply(eq_theta_r, eq_theta_c, eq_theta_z, eq_R, i_, j_, k_):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Finset, Algebra, Bool, Real
+    from Lemma import Tensor, Algebra, Bool, Real
 
     # n denotes sequence length (seq_length)
     # b_r, b_c denotes 10000

@@ -28,7 +28,7 @@ def apply(is_zero, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool, Nat, Finset, Int, Complex
+    from Lemma import Set, Bool, Nat, Finset, Int, Complex
 
     x, p, q = Symbol(complex=True, given=True)
     Eq << apply(Equal(x ** 3 + p * x + q, 0), x=x)

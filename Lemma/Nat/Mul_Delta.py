@@ -32,7 +32,7 @@ def apply(self, index=None, reverse=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat
+    from Lemma import Nat
 
     x, y = Symbol(integer=True)
     f = Function(complex=True)

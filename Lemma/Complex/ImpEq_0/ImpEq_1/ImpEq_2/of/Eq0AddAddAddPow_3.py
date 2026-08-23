@@ -30,7 +30,7 @@ def apply(given, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Int, Nat, Complex, Finset
+    from Lemma import Int, Nat, Complex, Finset
 
     x, a, b, c = Symbol(complex=True, given=True)
     Eq << apply(Equal(x ** 3 + a * x ** 2 + b * x + c, 0), x=x)

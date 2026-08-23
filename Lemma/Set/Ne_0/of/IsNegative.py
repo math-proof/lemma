@@ -10,7 +10,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Nat
+    from Lemma import Set, Nat
 
     x = Symbol(complex=True)
     Eq << apply(Element(x, Interval.open(-oo, 0)))

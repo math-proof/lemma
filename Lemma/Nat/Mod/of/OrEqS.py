@@ -21,7 +21,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat
+    from Lemma import Nat
 
     x, a = Symbol(integer=True, given=True)
     Eq << apply(Equal(x, a) | Equal(x, a + 3))
