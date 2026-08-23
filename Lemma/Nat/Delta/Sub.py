@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Nat.Delta.eq.Ite)
 
-    Eq << Eq[-1].this.find(Equal).apply(Algebra.Eq.Is.Eq_0)
+    Eq << Eq[-1].this.find(Equal).apply(Nat.Eq.Is.Eq_0)
 
     Eq << Eq[-1].this.rhs.apply(Nat.Delta.eq.Ite, swap=True)
 

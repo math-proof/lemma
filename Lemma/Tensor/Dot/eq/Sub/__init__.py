@@ -10,13 +10,13 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor
+    from Lemma import Algebra, Tensor, Int
 
     n = Symbol(integer=True, positive=True)
     A, B = Symbol(shape=(n, n), complex=True)
     Eq << apply(((A + B) ^ -1) @ B)
 
-    Eq << Algebra.Eq.given.Eq.transport.apply(Eq[0], rhs=0)
+    Eq << Int.Eq.given.Eq.transport.apply(Eq[0], rhs=0)
 
     Eq << Eq[-1].this.lhs.apply(Tensor.Add.eq.Dot)
 

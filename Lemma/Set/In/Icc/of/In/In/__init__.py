@@ -13,7 +13,7 @@ def apply(contains1, contains2, w=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Nat
+    from Lemma import Algebra, Set, Bool, Nat, Real
 
     a, b, x0, x1 = Symbol(real=True)
     domain = Interval(a, b, left_open=True)
@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=w > 0)
 
-    Eq << (w <= 0).this.apply(Algebra.Eq.of.Le.squeeze.Icc)
+    Eq << (w <= 0).this.apply(Real.Eq.of.Le.squeeze.Icc)
 
     Eq <<= Eq[-1] & Eq[-2]
 
@@ -36,7 +36,7 @@ def prove(Eq):
 
     Eq.open_Interval, Eq.ge = Eq[-2].this.apply(Bool.Imp_Imp.Is.ImpAnd), Eq[-1].this.apply(Bool.Imp_Imp.Is.ImpAnd)
 
-    Eq << (w >= 1).this.apply(Algebra.Eq.of.Ge.squeeze)
+    Eq << (w >= 1).this.apply(Nat.Eq.of.Ge.squeeze)
 
     Eq <<= Eq[-1] & Eq.ge
 

@@ -141,7 +141,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(k, 1)
 
-    Eq.geometric_progression = Algebra.Eq.of.Eq.geometric_progression.apply(Eq[-1], n=i)
+    Eq.geometric_progression = Nat.Eq.of.Eq.geometric_progression.apply(Eq[-1], n=i)
 
     Eq << z[1].this.definition
 

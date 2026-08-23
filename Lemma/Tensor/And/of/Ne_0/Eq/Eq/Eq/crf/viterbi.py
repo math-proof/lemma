@@ -63,7 +63,7 @@ def prove(Eq):
 
     Eq <<= Eq[-1] & Eq[-4]
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Eq.of.Eq.Eq.subst.rhs)
+    Eq << Eq[-1].this.rhs.apply(Bool.Eq.of.Eq.Eq.subst.rhs)
 
     Eq << Eq[-1].this.find(Maxima).apply(Algebra.Maxima.limits.pop.Slice)
 

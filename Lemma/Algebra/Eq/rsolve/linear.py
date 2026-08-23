@@ -32,7 +32,7 @@ def prove(Eq):
 
     Eq << Eq[-2].this.rhs.apply(Finset.Eq_Sum.given.Eq.rsolve)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Eq.given.Eq.rsolve, k)
+    Eq << Eq[-1].this.rhs.apply(Finset.Eq.given.Eq.rsolve, k)
 
 
 

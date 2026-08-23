@@ -29,7 +29,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.rhs.find(Pr).apply(Probability.Pr.eq.Integral.joint, x[k + 1:n])
 
-    Eq << Eq[-1].this.find(And).apply(Algebra.Eq.Eq.Is.Eq.concat)
+    Eq << Eq[-1].this.find(And).apply(Tensor.Eq.Eq.Is.Eq.concat)
 
     Eq << Eq[-1].this.find(Mul[Integral]).apply(Real.Mul.eq.Integral)
 
@@ -37,7 +37,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Pr).apply(Probability.Pr.eq.Integral.joint, x[:k])
 
-    Eq << Eq[-1].this.find(And).apply(Algebra.Eq.Eq.Is.Eq.concat)
+    Eq << Eq[-1].this.find(And).apply(Tensor.Eq.Eq.Is.Eq.concat)
 
     Eq << Eq[-1].this.find(Mul[Integral]).apply(Real.Mul.eq.Integral)
 

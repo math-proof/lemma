@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Finset, Fin
+    from Lemma import Algebra, Tensor, Finset, Fin, Bool
 
     n = Symbol(integer=True)
     x, y = Symbol(shape=(n,), real=True)
@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << Eq.expansion.subs(W, W.T)
 
-    Eq << Eq[-1].apply(Algebra.Eq.of.Eq.swap, x, y)
+    Eq << Eq[-1].apply(Bool.Eq.of.Eq.swap, x, y)
 
     Eq << Eq[-1].this.rhs.limits_subs(i, j)
 

@@ -11,7 +11,7 @@ def apply(eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability, Real, Bool, Rat
+    from Lemma import Algebra, Probability, Real, Bool, Rat, Tensor
 
     b = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), real=True, random=True)  # states / observation
@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << Eq[1].this.lhs.find(Pr).apply(Probability.Pr.eq.Integral.joint, s[1:k])
 
-    Eq << Eq[-1].this.lhs.find(Equal & Equal).apply(Algebra.Eq.Eq.Is.Eq.concat)
+    Eq << Eq[-1].this.lhs.find(Equal & Equal).apply(Tensor.Eq.Eq.Is.Eq.concat)
 
     Eq << Probability.EqProd.of.Eq.markov.first_order.apply(Eq[0], k)
     Eq << Eq[-2].subs(Eq[-1])
@@ -34,8 +34,8 @@ def prove(Eq):
     Eq << Eq[-1].this.lhs.apply(Real.Mul.eq.Integral)
     Eq << Eq[-1].this.find(Mul).apply(Algebra.Mul.eq.Prod.limits.push)
     Eq << Eq[-1].this.rhs.apply(Probability.Pr.eq.Integral.joint, s[1:k])
-    Eq << Eq[-1].this.find(And).args[::2].apply(Algebra.Eq.Eq.Is.Eq.concat)
-    Eq << Eq[-1].this.find(And).apply(Algebra.Eq.Eq.Is.Eq.concat)
+    Eq << Eq[-1].this.find(And).args[::2].apply(Tensor.Eq.Eq.Is.Eq.concat)
+    Eq << Eq[-1].this.find(And).apply(Tensor.Eq.Eq.Is.Eq.concat)
     Eq << Probability.EqProd.of.Eq.markov.first_order.apply(Eq[0], k + 1)
     Eq << Eq[-2].subs(Eq[-1])
 

@@ -82,19 +82,19 @@ def prove(Eq):
 
     Eq << Probability.Ne_0.of.Ne_0.joint_slice.apply(Eq[3], [slice(0, k + 1), slice(0, k), slice(0, k + 1)])
 
-    Eq << Eq[-1].this.find(Equal).apply(Algebra.Eq.Is.And.Eq.split)
+    Eq << Eq[-1].this.find(Equal).apply(Tensor.Eq.Is.And.Eq.split)
 
-    Eq.ne_zero_sar = Eq[-1].this.find(Equal[4]).apply(Algebra.Eq.Is.And.Eq.split)
+    Eq.ne_zero_sar = Eq[-1].this.find(Equal[4]).apply(Tensor.Eq.Is.And.Eq.split)
 
     Eq << Probability.Ne_0.Conditioned.of.Ne_0.Ne_0.apply(Eq.ne_zero, Eq[-1])
 
     Eq << Probability.Eq.of.Ne_0.bayes.Conditioned.apply(Eq[-1], r[k], s[k + 1])
 
-    Eq << Eq[-1].this.rhs.find(Conditioned).rhs.args[-1].apply(Algebra.Eq.Is.And.Eq.split)
+    Eq << Eq[-1].this.rhs.find(Conditioned).rhs.args[-1].apply(Tensor.Eq.Is.And.Eq.split)
 
-    Eq << Eq[-1].this.find(Pr[2]).arg.rhs.args[-1].apply(Algebra.Eq.Is.And.Eq.split)
+    Eq << Eq[-1].this.find(Pr[2]).arg.rhs.args[-1].apply(Tensor.Eq.Is.And.Eq.split)
 
-    Eq << Eq.ne_zero.this.find(Equal[3]).apply(Algebra.Eq.Is.And.Eq.split)
+    Eq << Eq.ne_zero.this.find(Equal[3]).apply(Tensor.Eq.Is.And.Eq.split)
 
     Eq << Probability.EqConditioned.of.Ne_0.Eq_Conditioned.joint.apply(Eq[1], Eq[-1])
 
@@ -120,7 +120,7 @@ def prove(Eq):
 
     Eq << Eq[-1] * Eq[-1].find(Pow[~Pr])
 
-    Eq << Eq[-1].this.rhs.find(Pr[~And]).args[-1].apply(Algebra.Eq.Is.And.Eq.split)
+    Eq << Eq[-1].this.rhs.find(Pr[~And]).args[-1].apply(Tensor.Eq.Is.And.Eq.split)
 
     Eq << Probability.Ne_0.Slice.of.Ne_0.apply(Eq.ne_zero_s, 0)
 

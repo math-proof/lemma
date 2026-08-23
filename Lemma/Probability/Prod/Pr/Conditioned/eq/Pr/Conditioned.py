@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability, Bool
+    from Lemma import Algebra, Probability, Bool, Tensor
 
     b = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), real=True, random=True)  # states / observation
@@ -27,7 +27,7 @@ def prove(Eq):
     Eq << Eq[-1].this.lhs.args[1].apply(Probability.Pr.Conditioned.eq.Div.Pr.Conditioned, pivot=slice(1, None))
 
 
-    Eq << Eq[-1].this.find(Equal & Equal).apply(Algebra.Eq.Eq.Is.Eq.concat)
+    Eq << Eq[-1].this.find(Equal & Equal).apply(Tensor.Eq.Eq.Is.Eq.concat)
     Eq << Imply(Eq[0], Eq[1], plausible=True)
     Eq << Bool.Eq_Ite.of.All_Imp.apply(Eq[-1], n=n, start=0)
 

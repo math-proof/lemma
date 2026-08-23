@@ -33,7 +33,7 @@ def prove(Eq):
 
     j = Symbol(integer=True)
     # Eq << Eq[-1].this.apply(Algebra.eq.rsolve.linear, j)
-    Eq << Algebra.Eq.of.Eq.rsolve.apply(Eq[-1], j)
+    Eq << Finset.Eq.of.Eq.rsolve.apply(Eq[-1], j)
 
     Eq << Eq[-1].this.rhs.args[0].args[0].defun()
 

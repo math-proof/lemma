@@ -58,7 +58,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Finset.Sum.limits.domain_defined, simplify=None)
 
-    Eq << Algebra.Eq.Sum.ReducedArgMax.of.All_Lt.Subset_Cup.apply(Eq[0], Eq[1], lambda i, j: exp(A[i, j]))
+    Eq << Tensor.Eq.Sum.ReducedArgMax.of.All_Lt.Subset_Cup.apply(Eq[0], Eq[1], lambda i, j: exp(A[i, j]))
 
     Eq << Bool.Eq.of.Eq.Eq.apply(Eq[-2], Eq[-1])
 

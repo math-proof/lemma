@@ -30,7 +30,7 @@ def prove(Eq):
 #     Eq << apply(Min(floor(x), floor(y), floor(z)))
     Eq << apply(floor(Min(x, y)))
 
-    Eq << Eq[0].apply(Algebra.Eq.given.And.split.Floor)
+    Eq << Eq[0].apply(Int.Eq.given.And.split.Floor)
 
     Eq <<= Int.GtAddFloor_1.apply(x), Int.GtAddFloor_1.apply(y)
 

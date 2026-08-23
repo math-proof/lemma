@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Int.EqAbs.of.Gt_0.apply(Eq[0])
 
-    Eq << Algebra.Eq.given.And.squeeze.apply(Eq[1])
+    Eq << Nat.Eq.given.And.squeeze.apply(Eq[1])
 
     t = Symbol(real=True)
     Eq <<= Algebra.LeInf.given.All_Any_Lt.apply(Eq[-2], t), Algebra.GeInf.given.All.Ge.apply(Eq[-1])

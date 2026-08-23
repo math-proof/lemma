@@ -14,7 +14,7 @@ def apply(is_positive, is_nonpositive, left_open=True, right_open=True, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Nat
 
     m, M = Symbol(real=True, given=True)
     x = Symbol(real=True)
@@ -28,11 +28,11 @@ def prove(Eq):
 
     Eq << Bool.Imp_And.of.Cond.apply(Eq[0] & Eq[1], cond=m >= 0)
 
-    Eq << Eq[-1].this.rhs.args[1:].apply(Algebra.Eq.of.Le.Ge)
+    Eq << Eq[-1].this.rhs.args[1:].apply(Nat.Eq.of.Le.Ge)
 
     Eq << Eq[-1].this.find(Greater).apply(Algebra.Inf_Square.eq.Zero.of.Gt_0)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Eq.of.Eq.Eq.subst.lhs, reverse=True)
+    Eq << Eq[-1].this.rhs.apply(Bool.Eq.of.Eq.Eq.subst.lhs, reverse=True)
 
 
 

@@ -34,7 +34,7 @@ def prove(Eq):
 
     Eq.eq_abs_m = Int.EqAbs.of.Ge_0.apply(Eq[0])
 
-    Eq << Algebra.Eq.given.And.squeeze.apply(Eq[2])
+    Eq << Nat.Eq.given.And.squeeze.apply(Eq[2])
 
     y = Symbol(real=True)
     Eq <<= Algebra.LeInf.given.All_Any_Lt.apply(Eq[-2], y), Algebra.GeInf.given.All.Ge.apply(Eq[-1])

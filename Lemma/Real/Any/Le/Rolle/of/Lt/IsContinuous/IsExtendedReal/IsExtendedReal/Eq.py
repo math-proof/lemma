@@ -140,7 +140,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(And).apply(Bool.Cond.of.Eq.Cond.subst)
 
-    Eq << Eq[-1].this.find(And).apply(Algebra.Eq.of.Le.Ge)
+    Eq << Eq[-1].this.find(And).apply(Nat.Eq.of.Le.Ge)
 
     Eq << Eq[-1].this.find(Equal).apply(Real.EqGrad.of.Eq, (x,))
 

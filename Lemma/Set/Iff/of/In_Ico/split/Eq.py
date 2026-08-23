@@ -12,7 +12,7 @@ def apply(el, x, y):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Tensor
 
     m, n = Symbol(integer=True, positive=True, given=True)
     x, y = Symbol(real=True, shape=(oo,))
@@ -21,7 +21,7 @@ def prove(Eq):
     k = Symbol(domain=Eq[0].rhs)
     Eq << All[k](Eq[1].cond._subs(n, k), plausible=True)
 
-    Eq << Eq[-1].this.expr.lhs.apply(Algebra.Eq.Is.And.Eq.split, Eq[-1].variable)
+    Eq << Eq[-1].this.expr.lhs.apply(Tensor.Eq.Is.And.Eq.split, Eq[-1].variable)
 
     Eq << Bool.Or_NotIn.of.All.apply(Eq[-1], k, n)
 

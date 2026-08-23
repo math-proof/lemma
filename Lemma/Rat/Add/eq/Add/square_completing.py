@@ -16,7 +16,7 @@ def apply(self, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Rat
 
     x, a, b, c = Symbol(complex=True, given=True)
     a = Symbol(complex=True, given=True, zero=False)
@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq << Unequal(a, 0, plausible=True)
 
-    Eq << Algebra.Eq.of.Ne_0.square_completing.apply(Eq[1], Eq[0].lhs, simplify=None)
+    Eq << Rat.Eq.of.Ne_0.square_completing.apply(Eq[1], Eq[0].lhs, simplify=None)
 
     # Eq << Eq[0].this.rhs.expand()
     # https://en.wikipedia.org/wiki/Completing_the_square

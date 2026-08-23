@@ -28,7 +28,7 @@ def prove(Eq):
     Eq <<= Nat.And.of.Eq.squeeze.apply(Eq[-1]), Eq[0].subs(Eq[-1])
 
     z = Symbol(real=True)
-    Eq <<= Real.All.Le.of.LeSup.apply(Eq[-3]), Real.All.Any.Gt.of.GeSup.apply(Eq[-2], z), Algebra.Eq.given.And.squeeze.apply(Eq[-1])
+    Eq <<= Real.All.Le.of.LeSup.apply(Eq[-3]), Real.All.Any.Gt.of.GeSup.apply(Eq[-2], z), Nat.Eq.given.And.squeeze.apply(Eq[-1])
 
     Eq <<= Real.LeSup.given.All.Le.apply(Eq[-2]), Algebra.GeSup.given.All_Any_Gt.apply(Eq[-1], z)
 

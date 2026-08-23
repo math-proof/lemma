@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq <<= -Eq[-2], -Eq[-1]
 
-    Eq << Algebra.Eq.of.Lt.Le.apply(Eq[-2], Eq[-1])
+    Eq << Int.Eq.of.Lt.Le.apply(Eq[-2], Eq[-1])
 
     Eq << Eq[-1].this.rhs.apply(Int.Floor.eq.NegCeilNeg)
 

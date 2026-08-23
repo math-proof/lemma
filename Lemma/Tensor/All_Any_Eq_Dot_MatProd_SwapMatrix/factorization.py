@@ -55,7 +55,7 @@ def prove(Eq):
 
     Eq << Bool.All_And.given.All.All.apply(Eq[-1])
 
-    Eq << Eq[-1].this.expr.apply(Algebra.Eq.given.And.split.Matrix)
+    Eq << Eq[-1].this.expr.apply(Tensor.Eq.given.And.split.Matrix)
 
     Eq.premier, Eq.second = Bool.All_And.given.All.All.apply(Eq[-1])
 

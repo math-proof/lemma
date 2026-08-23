@@ -12,13 +12,13 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool
+    from Lemma import Algebra, Set, Bool, Tensor
 
     x, y = Symbol(etype=dtype.complex, given=True)
     a = Symbol(etype=dtype.complex, shape=(oo,), given=True)
     Eq << apply(Equal({x, y}, {a[0], a[1]}))
 
-    Eq << Algebra.Eq.given.And.split.Matrix.apply(Eq[1])
+    Eq << Tensor.Eq.given.And.split.Matrix.apply(Eq[1])
 
     Eq << Element(x, {x, y}, plausible=True)
 

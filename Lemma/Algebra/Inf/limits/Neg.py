@@ -34,7 +34,7 @@ def prove(Eq):
 
     Eq << Eq[0].subs(Eq[1]).reversed
 
-    Eq << Algebra.Eq.given.And.squeeze.apply(Eq[-1])
+    Eq << Nat.Eq.given.And.squeeze.apply(Eq[-1])
 
     Eq <<= Algebra.LeInf.given.All_Any_Lt.apply(Eq[-2]), Algebra.GeInf.given.All.Ge.apply(Eq[-1])
     Eq <<= Eq[-2].this.expr.apply(Bool.Any.limits.Neg), Eq[-1].this.apply(Bool.All.limits.Neg)

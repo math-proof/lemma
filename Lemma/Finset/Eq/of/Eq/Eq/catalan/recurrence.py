@@ -10,7 +10,7 @@ def apply(eq, eq1):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Real, Finset, Set, Bool, Fin, Complex, Rat
+    from Lemma import Algebra, Real, Finset, Set, Bool, Fin, Complex, Rat, Nat
 
     n, k = Symbol(integer=True)
     # n = Symbol(integer=True, nonnegative=True)
@@ -106,7 +106,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(NotElement).apply(Set.Or.of.NotIn_Icc)
 
-    Eq << Eq[-1].this.args[1].apply(Algebra.Eq.of.Ge.squeeze)
+    Eq << Eq[-1].this.args[1].apply(Nat.Eq.of.Ge.squeeze)
 
     Eq.all_ne = Bool.All.of.All_OrNot.apply(Eq[-1], wrt=x)
 

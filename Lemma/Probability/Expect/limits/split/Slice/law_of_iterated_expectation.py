@@ -54,7 +54,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Pr[Conditioned]).apply(Probability.Pr.eq.Div.Pr.bayes)
 
-    Eq << Eq[-1].this.find(And).apply(Algebra.Eq.Eq.Is.Eq.concat)
+    Eq << Eq[-1].this.find(And).apply(Tensor.Eq.Eq.Is.Eq.concat)
 
     Eq << Eq[-1].this.rhs.apply(Real.Integral.limits.concat)
 

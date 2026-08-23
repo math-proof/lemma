@@ -8,3 +8,6 @@ from . import Stack
 from . import Sum
 from . import Cup
 from . import Dot
+from . import Add
+from . import Eq
+from . import Is

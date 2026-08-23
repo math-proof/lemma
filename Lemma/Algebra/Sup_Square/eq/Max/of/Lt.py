@@ -13,13 +13,13 @@ def apply(lt, left_open=True, right_open=True, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Real
+    from Lemma import Algebra, Set, Bool, Real, Nat
 
     m, M = Symbol(real=True, given=True)
     x = Symbol(real=True)
     Eq << apply(m < M, x=x)
 
-    Eq << Algebra.Eq.given.And.squeeze.apply(Eq[-1])
+    Eq << Nat.Eq.given.And.squeeze.apply(Eq[-1])
 
     Eq << Element(x, Interval(m, M, left_open=True, right_open=True)).this.apply(Set.LtSquare.of.In_Icc)
 

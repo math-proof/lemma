@@ -17,7 +17,7 @@ def prove(Eq):
 
     Eq.eq_min = Nat.EqMin.of.Lt.apply(Eq[0])
 
-    Eq << Algebra.Eq.given.And.squeeze.apply(Eq[-1])
+    Eq << Nat.Eq.given.And.squeeze.apply(Eq[-1])
 
     y = Symbol(real=True)
     Eq <<= Algebra.GeSup.given.All_Any_Gt.apply(Eq[-1], y), Real.LeSup.given.All.Le.apply(Eq[-2])

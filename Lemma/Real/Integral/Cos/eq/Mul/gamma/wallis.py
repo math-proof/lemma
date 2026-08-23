@@ -47,7 +47,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Integral[-Expr]).simplify()
 
-    Eq << Algebra.Eq.of.Eq.simple_equation.apply(Eq[-1], -Eq[-1].rhs.args[1])
+    Eq << Rat.Eq.of.Eq.simple_equation.apply(Eq[-1], -Eq[-1].rhs.args[1])
 
     Eq << Eq[-1].this.rhs.apply(Rat.Div.cancel, n)
 

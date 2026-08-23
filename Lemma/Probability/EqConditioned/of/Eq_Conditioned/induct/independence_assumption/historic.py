@@ -11,7 +11,7 @@ def apply(eq, k):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability, Bool
+    from Lemma import Algebra, Probability, Bool, Tensor
 
     b = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), real=True, random=True) # states / observation
@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << Eq[1].subs(t, t + 1)
 
-    Eq << Eq[-1].this.find(Equal).apply(Algebra.Eq.Is.And.Eq.split)
+    Eq << Eq[-1].this.find(Equal).apply(Tensor.Eq.Is.And.Eq.split)
 
     Eq << Probability.EqConditioned.of.Eq_Conditioned.getitem.apply(Eq[-1], s[:t])
 

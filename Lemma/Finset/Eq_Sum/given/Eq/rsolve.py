@@ -11,7 +11,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Finset
 
     k, n = Symbol(integer=True)
     c = Symbol(real=True, positive=True)
@@ -19,7 +19,7 @@ def prove(Eq):
     h = Function(real=True)
     Eq << apply(Equal(x[n], x[0] * c ** n + Sum[k:n](h(k) * c ** (n - k - 1))))
 
-    Eq << Algebra.Eq.of.Eq.rsolve.apply(Eq[1])
+    Eq << Finset.Eq.of.Eq.rsolve.apply(Eq[1])
 
 
 

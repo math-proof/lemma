@@ -17,7 +17,7 @@ def prove(Eq):
 
     Eq.eq_max = Nat.EqMax.of.Lt.apply(Eq[0])
 
-    Eq << Algebra.Eq.given.And.squeeze.apply(Eq[-1])
+    Eq << Nat.Eq.given.And.squeeze.apply(Eq[-1])
 
     y = Symbol(real=True)
     Eq <<= Algebra.LeInf.given.All_Any_Lt.apply(Eq[-2], y), Algebra.GeInf.given.All.Ge.apply(Eq[-1])

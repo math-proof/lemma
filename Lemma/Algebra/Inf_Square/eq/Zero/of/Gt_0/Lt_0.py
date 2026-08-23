@@ -14,14 +14,14 @@ def apply(is_positive, is_negative, left_open=True, right_open=True, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Bool, Set, Algebra
+    from Lemma import Bool, Set, Algebra, Nat
 
     m, M = Symbol(real=True, given=True)
     x = Symbol(real=True)
     Eq << apply(M > 0, m < 0, x=x)
 
     Eq << Set.In_Ioo.of.Lt.Lt.apply(Eq[0], Eq[1])
-    Eq << Algebra.Eq.given.And.squeeze.apply(Eq[2])
+    Eq << Nat.Eq.given.And.squeeze.apply(Eq[2])
 
     t = Symbol(real=True)
     Eq <<= Algebra.LeInf.given.All_Any_Lt.apply(Eq[-2], t), Algebra.GeInf.given.All.Ge.apply(Eq[-1])

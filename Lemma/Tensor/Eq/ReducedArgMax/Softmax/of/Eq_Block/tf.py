@@ -145,7 +145,7 @@ def prove(Eq):
 
     Eq << Bool.Ite.of.Imp_Eq.apply(Eq.block3, Eq[-1].rhs, index=1, reverse=True)
 
-    Eq << Algebra.Eq.of.And.apply(Eq.four_blocks & Eq[-1] & Eq[-2] & Eq[-3]).reversed
+    Eq << Bool.Eq.of.And.apply(Eq.four_blocks & Eq[-1] & Eq[-2] & Eq[-3]).reversed
 
     Eq << Tensor.Stack.of.All_Eq.fin.apply(Eq[-1], (i, 0, n))
 

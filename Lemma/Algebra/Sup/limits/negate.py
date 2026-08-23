@@ -34,7 +34,7 @@ def prove(Eq):
 
     Eq << Eq[0].subs(Eq[1]).reversed
 
-    Eq << Algebra.Eq.given.And.squeeze.apply(Eq[-1])
+    Eq << Nat.Eq.given.And.squeeze.apply(Eq[-1])
 
     Eq <<= Real.LeSup.given.All.Le.apply(Eq[-2]), Algebra.GeSup.given.All_Any_Gt.apply(Eq[-1])
 

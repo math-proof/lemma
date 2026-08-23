@@ -38,7 +38,7 @@ def prove(Eq):
     Eq << Eq[-1].this.rhs.find(Sum).apply(Finset.Sum.eq.Sum_MulBool)
 
     k0, k1, k2 = Eq[-1].rhs.variables
-    Eq << Eq[-1].this.find(And).apply(Algebra.Eq.Cond.Is.And.subst)
+    Eq << Eq[-1].this.find(And).apply(Bool.Eq.Cond.Is.And.subst)
 
     Eq << Eq[-1].this.rhs.apply(Finset.Sum_MulBoolAnd.eq.Sum)
 

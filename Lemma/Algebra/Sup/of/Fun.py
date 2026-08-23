@@ -24,7 +24,7 @@ def prove(Eq):
     Eq <<= Nat.And.of.Eq.squeeze.apply(Eq[-1].reversed), Eq[1].subs(Eq[-1].reversed)
 
     z = Symbol(real=True)
-    Eq <<= Real.All.Le.of.LeSup.apply(Eq[-3]), Real.All.Any.Gt.of.GeSup.apply(Eq[-2], z), Algebra.Eq.given.And.squeeze.apply(Eq[-1])
+    Eq <<= Real.All.Le.of.LeSup.apply(Eq[-3]), Real.All.Any.Gt.of.GeSup.apply(Eq[-2], z), Nat.Eq.given.And.squeeze.apply(Eq[-1])
 
     Eq <<= Bool.All.of.All.limits.subst.Neg.real.apply(Eq[-4], x, -x), Eq[-3].this.expr.apply(Bool.Any.of.Any.limits.Neg), Real.LeSup.given.All.Le.apply(Eq[-2]), Algebra.GeSup.given.All_Any_Gt.apply(Eq[-1], z)
 

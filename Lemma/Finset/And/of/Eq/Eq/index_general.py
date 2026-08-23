@@ -46,7 +46,7 @@ def prove(Eq):
 
     Eq << Eq[-1].rhs.expr.args[1].this.apply(Nat.Delta.eq.Ite)
 
-    Eq << Algebra.Eq.of.Eq.Eq.subst.rhs.apply(Eq[-1], Eq[-2])
+    Eq << Bool.Eq.of.Eq.Eq.subst.rhs.apply(Eq[-1], Eq[-2])
 
     s_j = Symbol(conditionset(k, Equal(a[j], x[k]), Range(n)))
     Eq.s_j_definition = s_j.this.definition

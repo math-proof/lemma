@@ -11,7 +11,7 @@ def apply(eq_x_bar, t, k=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Rat, Nat
+    from Lemma import Algebra, Bool, Rat, Nat, Tensor
 
     x = Symbol(real=True, shape=(oo,))
     n, k = Symbol(integer=True)
@@ -19,7 +19,7 @@ def prove(Eq):
     x_bar = Symbol(r"{\bar {x}}", real=True)
     Eq << apply(Equal(x_bar, ReducedSum(x[:n]) / n), t, k)
 
-    Eq << Algebra.Eq.Sum.Square.eq.Add.Sum.Square.of.Eq_ReducedSum.apply(Eq[0], t, k)
+    Eq << Tensor.Eq.Sum.Square.eq.Add.Sum.Square.of.Eq_ReducedSum.apply(Eq[0], t, k)
 
     Eq << GreaterEqual(Eq[-1].rhs.find(Add ** 2), 0, plausible=True)
 

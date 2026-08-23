@@ -16,7 +16,7 @@ def apply(eq_a, eq_b, eq_a_t, eq_b_t, eq_r, eq_k, eq_v, eq_o, i=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Real
+    from Lemma import Algebra, Real, Finset
 
     # T is the sequence length
     # d is the embedding size
@@ -43,7 +43,7 @@ def prove(Eq):
         Equal(V[t], W_v @ (μ_v * x[t] + (1 - μ_v) * x[t - 1])),
         Equal(O[t], W_o @ (sigmoid(R[t]) *(a[t] + exp(u + K[t]) * V[t]) / (b[t] + exp(u + K[t])))), i)
 
-    Eq <<= Algebra.Eq.of.Eq.rsolve.apply(Eq[2]), Algebra.Eq.of.Eq.rsolve.apply(Eq[3])
+    Eq <<= Finset.Eq.of.Eq.rsolve.apply(Eq[2]), Finset.Eq.of.Eq.rsolve.apply(Eq[3])
 
     Eq <<= Eq[-2].subs(Eq[0]), Eq[-1].subs(Eq[1])
 

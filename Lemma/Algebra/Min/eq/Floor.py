@@ -32,7 +32,7 @@ def prove(Eq):
 
     Eq << apply(Min(n + floor(x), floor(y)))
 
-    Eq << Eq[0].apply(Algebra.Eq.given.And.split.Floor)
+    Eq << Eq[0].apply(Int.Eq.given.And.split.Floor)
 
     assert n + floor(x) <= n + x
 

@@ -75,7 +75,7 @@ def prove(Eq):
 
     Eq << Rat.Ne_0.of.Div1.gt.Zero.apply(Eq[0]).subs(t, t + 1)
     Eq << Probability.Ne_0.Slice.of.Ne_0.apply(Eq[-1], slice(t, t + 2))
-    Eq << Eq[-1].this.find(Equal[Sliced]).apply(Algebra.Eq.Is.And.Eq.split)
+    Eq << Eq[-1].this.find(Equal[Sliced]).apply(Tensor.Eq.Is.And.Eq.split)
     Eq << Probability.EqConditioned.of.Eq_Conditioned.independence_assumption.future.apply(Eq[0])
 
     Eq << Probability.EqConditioned.of.Ne_0.Eq_Conditioned.joint.apply(*Eq[-2:])

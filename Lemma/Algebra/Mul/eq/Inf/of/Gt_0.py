@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq <<= Nat.And.of.Eq.squeeze.apply(Eq[-1].reversed), Eq[1].subs(Eq[-1].reversed).reversed
 
-    Eq <<= Real.All.Any.Lt.of.LeInf.apply(Eq[-3]), Real.All.Ge.of.GeInf.apply(Eq[-2]), Algebra.Eq.given.And.squeeze.apply(Eq[-1])
+    Eq <<= Real.All.Any.Lt.of.LeInf.apply(Eq[-3]), Real.All.Ge.of.GeInf.apply(Eq[-2]), Nat.Eq.given.And.squeeze.apply(Eq[-1])
 
     y_ = Eq[-4].variable
     Eq <<= Bool.Imp.of.AllSetOf.apply(Eq[-4]), Algebra.GeInf.given.All.Ge.apply(Eq[-1]), Algebra.LeInf.given.All_Any_Lt.apply(Eq[-2])

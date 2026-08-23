@@ -11,7 +11,7 @@ def apply(eq, k):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Bool
+    from Lemma import Probability, Algebra, Bool, Tensor
 
     b = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), real=True, random=True) # states / observation
@@ -29,9 +29,9 @@ def prove(Eq):
 
     Eq << Probability.EqPr.of.Eq_Conditioned.Eq_Conditioned.joint.apply(Eq[1], Eq[2])
 
-    Eq << Eq[-1].this.find(And).apply(Algebra.Eq.Eq.Is.Eq.concat)
+    Eq << Eq[-1].this.find(And).apply(Tensor.Eq.Eq.Is.Eq.concat)
 
-    Eq << Eq[-1].this.find(And).apply(Algebra.Eq.Eq.Is.Eq.concat)
+    Eq << Eq[-1].this.find(And).apply(Tensor.Eq.Eq.Is.Eq.concat)
 
     Eq << Imply(Eq[1], Eq.induct, plausible=True)
 

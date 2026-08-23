@@ -68,7 +68,7 @@ def prove(Eq):
 
     Eq << Probability.Ne_0.of.Ne_0.joint_slice.apply(Eq[-1], [t, slice(t, t + 2)])
 
-    Eq << Eq[-1].this.find(Equal[Sliced]).apply(Algebra.Eq.Is.And.Eq.split)
+    Eq << Eq[-1].this.find(Equal[Sliced]).apply(Tensor.Eq.Is.And.Eq.split)
 
     Eq << Probability.EqConditioned.of.Eq_Conditioned.joint.independence_assumption.apply(Eq[0])
 
