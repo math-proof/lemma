@@ -9,14 +9,14 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Int, Int, Int, Int
 
     x = Symbol(real=True, given=True)
     Eq << apply(Greater(Ceil(x), 0))
 
     Eq << ~Eq[-1]
 
-    Eq << Algebra.Ceil.le.Zero.of.Le_0.apply(Eq[-1])
+    Eq << Int.Ge0Ceil.of.Le_0.apply(Eq[-1])
     Eq << ~Eq[-1]
 
 

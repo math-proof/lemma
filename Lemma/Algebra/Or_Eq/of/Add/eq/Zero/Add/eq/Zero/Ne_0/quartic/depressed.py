@@ -87,7 +87,7 @@ def prove(Eq):
 
     Eq << Eq.eq.subs(Eq[-1])
 
-    Eq << Algebra.OrEqS_0.of.Eq_Square.apply(Eq[-1])
+    Eq << Int.OrEqS_0.of.Square.apply(Eq[-1])
 
     Eq << Eq[-1].this.args[0].apply(Complex.OrEqS_Div.of.Eq0AddAddMul_Square.Ne_0, Unequal(1, 0, evaluate=False))
 

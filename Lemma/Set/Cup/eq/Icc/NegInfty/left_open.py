@@ -38,7 +38,7 @@ def prove(Eq):
 
     Eq << Eq[-3].this.lhs.apply(Set.Le.of.In_Icc)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Ceil.le.Zero.of.Le_0)
+    Eq << Eq[-1].this.lhs.apply(Int.Ge0Ceil.of.Le_0)
 
     Eq << Int.Le_Ceil.apply(x)
 

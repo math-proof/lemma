@@ -17,7 +17,7 @@ def apply(is_nonzero, eq, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Complex, Complex, Complex
 
     x, a, b, c = Symbol(complex=True, given=True)
     Eq << apply(Unequal(a, 0), Equal(a * x ** 2 + b * x + c, 0), x=x)
@@ -33,7 +33,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.expand()
 
-    Eq << Algebra.Or.Eq.Square.of.Ne_0.Eq.apply(Eq[0], Eq[-1].reversed, x=x)
+    Eq << Complex.OrEqS.of.Eq0AddMul_Square.Ne_0.apply(Eq[0], Eq[-1].reversed, x=x)
 
     Eq << Eq[-1].subs(x.this.definition)
 

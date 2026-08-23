@@ -141,8 +141,6 @@ from . import Lt_Maxima
 from . import Le_1
 from . import LeMinima
 from . import As
-from . import OrEqS_0
-from . import InfAddMul_Square
 from . import LeAddSDivS
 from . import LtAddSDivSquareSub
 from . import SupAddMul_Square
@@ -275,3 +273,4 @@ from . import GeCeil
 from . import Mul_CeilDiv
 from . import LeLog
 from . import LeDiv
+from . import InfAddMul_Square

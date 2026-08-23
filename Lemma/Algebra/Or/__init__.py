@@ -2,7 +2,6 @@ from . import collect
 from . import invert
 from . import Or
 from . import given
-from . import Eq
 from . import of
 from . import Ge
 from . import Lt

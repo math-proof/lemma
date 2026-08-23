@@ -27,9 +27,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Mul).apply(Nat.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.args[-1].apply(Algebra.OrEqS_0.of.Eq_Square)
+    Eq << Eq[-1].this.args[-1].apply(Int.OrEqS_0.of.Square)
 
-    Eq << Eq[-1].this.args[-1].apply(Algebra.OrEqS_0.of.Eq_Square)
+    Eq << Eq[-1].this.args[-1].apply(Int.OrEqS_0.of.Square)
 
     Eq << Eq[-1].this.args[-1].apply(Int.EqAdd.Is.Eq_Sub)
 
