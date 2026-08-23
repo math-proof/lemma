@@ -53,7 +53,7 @@ def prove(Eq):
 
     Eq << Eq[-2].subs(Eq[-1])
 
-    Eq << Algebra.Or.given.And.collect.apply(Eq[-1])
+    Eq << Bool.OrAndS.given.And_Or.apply(Eq[-1])
 
     Eq << Algebra.Or.given.Eq.Abs.apply(Eq[-1])
 

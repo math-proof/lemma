@@ -10,14 +10,14 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Finset
 
     x, y = Symbol(real=True)
     Eq << apply((x - y) ** 3)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Pow.eq.Add)
+    Eq << Eq[-1].this.lhs.apply(Finset.PowAdd.eq.Sum_MulMulPowS)
 
-    Eq << Eq[-1].this.rhs.args[1].apply(Algebra.Pow.eq.Add)
+    Eq << Eq[-1].this.rhs.args[1].apply(Finset.PowAdd.eq.Sum_MulMulPowS)
 
 
 

@@ -30,7 +30,7 @@ def apply(given, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Int, Nat, Complex
+    from Lemma import Algebra, Int, Nat, Complex, Finset
 
     x, a, b, c = Symbol(complex=True, given=True)
     Eq << apply(Equal(x ** 3 + a * x ** 2 + b * x + c, 0), x=x)
@@ -42,9 +42,9 @@ def prove(Eq):
 
     Eq << Eq[0].subs(Eq[-1])
 
-    Eq << Eq[-1].this.find(Pow[Add]).apply(Algebra.Pow.eq.Add, simplify=None)
+    Eq << Eq[-1].this.find(Pow[Add]).apply(Finset.PowAdd.eq.Sum_MulMulPowS, simplify=None)
 
-    Eq << Eq[-1].this.find(Pow[Add]).apply(Algebra.Pow.eq.Add, simplify=None)
+    Eq << Eq[-1].this.find(Pow[Add]).apply(Finset.PowAdd.eq.Sum_MulMulPowS, simplify=None)
 
     Eq << Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS, simplify=None)
 

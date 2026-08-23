@@ -68,11 +68,11 @@ def prove(Eq):
 
     Eq << Eq[0].subs(Eq[-1])
 
-    Eq << Eq[-1].this.find(Pow[Add]).apply(Algebra.Pow.eq.Add, simplify=None)
+    Eq << Eq[-1].this.find(Pow[Add]).apply(Finset.PowAdd.eq.Sum_MulMulPowS, simplify=None)
 
-    Eq << Eq[-1].this.find(Pow[Add]).apply(Algebra.Pow.eq.Add, simplify=None)
+    Eq << Eq[-1].this.find(Pow[Add]).apply(Finset.PowAdd.eq.Sum_MulMulPowS, simplify=None)
 
-    Eq << Eq[-1].this.find(Pow[Add]).apply(Algebra.Pow.eq.Add, simplify=None)
+    Eq << Eq[-1].this.find(Pow[Add]).apply(Finset.PowAdd.eq.Sum_MulMulPowS, simplify=None)
 
     Eq << Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS, simplify=None)
 

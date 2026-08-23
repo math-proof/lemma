@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.find(Pow).apply(Real.Pow_Add.eq.MulPowS.of.Gt_0)
 
-    Eq << Eq[-1].this.find(Add ** 3).apply(Algebra.Pow.eq.Add)
+    Eq << Eq[-1].this.find(Add ** 3).apply(Finset.PowAdd.eq.Sum_MulMulPowS)
 
     Eq << Eq[-1].this.find(Sum).expr.apply(Nat.Mul_Add.eq.AddMulS)
 

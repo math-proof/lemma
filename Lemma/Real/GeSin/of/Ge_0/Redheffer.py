@@ -8,7 +8,7 @@ def apply(ge_zero):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Nat, Real
+    from Lemma import Algebra, Set, Bool, Nat, Real, Finset
 
     x = Symbol(real=True)
     Eq << apply(x >= 0)
@@ -52,7 +52,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Mul).apply(Nat.Mul_Add.eq.AddMulS, deep=True)
 
-    Eq << Eq[-1].this.find(Add ** 2).apply(Algebra.Pow.eq.Add)
+    Eq << Eq[-1].this.find(Add ** 2).apply(Finset.PowAdd.eq.Sum_MulMulPowS)
 
     Eq << Bool.Imp.given.Imp_And.apply(Eq[-1])
 
