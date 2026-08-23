@@ -12,4 +12,4 @@ private lemma main
   Nat.zero_lt_of_lt h
 
 
--- created on 2025-05-04
+-- created on 2019-07-06

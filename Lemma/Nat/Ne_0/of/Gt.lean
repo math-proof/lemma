@@ -12,4 +12,4 @@ private lemma main
   linarith [h]
 
 
--- created on 2025-07-18
+-- created on 2020-09-21

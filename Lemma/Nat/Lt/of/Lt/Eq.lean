@@ -14,4 +14,4 @@ private lemma main
   rwa [← h₀] at h₁
 
 
--- created on 2025-07-06
+-- created on 2019-12-13

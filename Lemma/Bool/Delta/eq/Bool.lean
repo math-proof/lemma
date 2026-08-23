@@ -19,4 +19,4 @@ private lemma main
   simp [KroneckerDelta]
 
 
--- created on 2025-06-01
+-- created on 2023-08-20

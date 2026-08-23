@@ -15,5 +15,5 @@ private lemma main
   EqMax.of.Ge (Ge.of.Gt h)
 
 
--- created on 2025-05-17
+-- created on 2019-07-21
 -- updated on 2025-10-12

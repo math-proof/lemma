@@ -22,4 +22,4 @@ private lemma main
   apply Ge.of.Gt h₁
 
 
--- created on 2025-03-23
+-- created on 2020-01-23
