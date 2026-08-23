@@ -19,7 +19,7 @@ private lemma main
   ·
     rw [h, arg_zero, Real.cos_zero]
   ·
-    exact Complex.cos_arg h
+    exact cos_arg h
 
 
 -- created on 2018-06-12

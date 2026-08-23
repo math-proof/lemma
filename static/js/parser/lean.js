@@ -6708,6 +6708,16 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
             return [stripped[1].toLatex(syntax)];
         } else if (this.is_Sum()) {
             return this.args[0].lhs.arg.latexArgs();
+        } else if (
+            func instanceof LeanProperty &&
+            func.rhs instanceof LeanToken &&
+            func.rhs.text === 'choose' &&
+            (args.length === 2 || args.length === 3)
+        ) {
+            const n = args.length === 2 ? func.lhs : args[1];
+            const k = args.length === 2 ? args[1] : args[2];
+            const peel = (arg) => (arg instanceof LeanParenthesis ? arg.arg : arg);
+            return [peel(n).toLatex(syntax), peel(k).toLatex(syntax)];
         }
         return args.map((arg) => {
             if (arg instanceof LeanParenthesis && arg.arg instanceof LeanDiv)
@@ -6781,6 +6791,8 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
             return '\\sum\\limits_{\\substack{%s}} {%s}';
         } else if (func instanceof LeanProperty && func.rhs instanceof LeanToken) {
             if (func.rhs.text === 'fmod' && args.length === 2) return '{%s}{%s}';
+            if (func.rhs.text === 'choose' && (args.length === 2 || args.length === 3))
+                return '\\binom{%s}{%s}';
         }
         const n = args.length;
         return Array(n)
@@ -8083,11 +8095,19 @@ class LeanUsing extends LeanUnary {
     is_indented() {
         return false;
     }
+    sep() {
+        const {arg} = this;
+        if (arg instanceof LeanStatements) return '\n';
+        if (arg instanceof LeanCaret) return '';
+        return ' ';
+    }
     strFormat() {
-        return `${this.operator} %s`;
+        const s = this.sep();
+        return `${this.operator}${s}%s`;
     }
     latexFormat() {
-        return `${this.command}\\ %s`;
+        const s = this.sep();
+        return s === '\n' ? `${this.command}\n%s` : `${this.command}\\ %s`;
     }
     insert_newline(caret, newline_count, indent, next) {
         if (this.indent <= indent && caret instanceof LeanCaret && caret === this.arg) {
@@ -8111,7 +8131,14 @@ class LeanUsing extends LeanUnary {
 
     echo() {
         this.arg.echo();
-    }    
+    }
+
+    set_line(line) {
+        this.line = line;
+        let L = line;
+        if (this.arg instanceof LeanStatements) L++;
+        return this.arg.set_line(L);
+    }
 }
 
 export class LeanAt extends LeanUnary {
@@ -8141,12 +8168,28 @@ export class LeanAt extends LeanUnary {
         return false;
     }
 
+    sep() {
+        const {arg} = this;
+        if (arg instanceof LeanStatements) return '\n';
+        if (arg instanceof LeanCaret) return '';
+        return ' ';
+    }
+
     latexFormat() {
-        return `{\\color{#00f}${this.command}}\\ %s`;
+        const s = this.sep();
+        return s === '\n' ? `{\\color{#00f}${this.command}}\n%s` : `{\\color{#00f}${this.command}}\\ %s`;
     }
 
     strFormat() {
-        return `${this.operator} %s`;
+        const s = this.sep();
+        return `${this.operator}${s}%s`;
+    }
+
+    set_line(line) {
+        this.line = line;
+        let L = line;
+        if (this.arg instanceof LeanStatements) L++;
+        return this.arg.set_line(L);
     }
 }
 
@@ -8154,11 +8197,19 @@ class LeanIn extends LeanUnary {
     is_indented() {
         return false;
     }
+    sep() {
+        const {arg} = this;
+        if (arg instanceof LeanStatements) return '\n';
+        if (arg instanceof LeanCaret) return '';
+        return ' ';
+    }
     strFormat() {
-        return `${this.operator} %s`;
+        const s = this.sep();
+        return `${this.operator}${s}%s`;
     }
     latexFormat() {
-        return `${this.command} %s`;
+        const s = this.sep();
+        return `${this.command}${s}%s`;
     }
     insert_newline(caret, newline_count, indent, next) {
         if (this.indent <= indent && caret instanceof LeanCaret && caret === this.arg) {
@@ -8182,17 +8233,31 @@ class LeanIn extends LeanUnary {
     get command() {
         return 'in';
     }
+    set_line(line) {
+        this.line = line;
+        let L = line;
+        if (this.arg instanceof LeanStatements) L++;
+        return this.arg.set_line(L);
+    }
 }
 
 class LeanGeneralizing extends LeanUnary {
     is_indented() {
         return false;
     }
+    sep() {
+        const {arg} = this;
+        if (arg instanceof LeanStatements) return '\n';
+        if (arg instanceof LeanCaret) return '';
+        return ' ';
+    }
     strFormat() {
-        return `${this.operator} %s`;
+        const s = this.sep();
+        return `${this.operator}${s}%s`;
     }
     latexFormat() {
-        return `${this.command} %s`;
+        const s = this.sep();
+        return `${this.command}${s}%s`;
     }
     insert_newline(caret, newline_count, indent, next) {
         if (this.indent <= indent && caret instanceof LeanCaret && caret === this.arg) {
@@ -8212,6 +8277,12 @@ class LeanGeneralizing extends LeanUnary {
     }
     get command() {
         return 'generalizing';
+    }
+    set_line(line) {
+        this.line = line;
+        let L = line;
+        if (this.arg instanceof LeanStatements) L++;
+        return this.arg.set_line(L);
     }
 }
 

@@ -3,18 +3,13 @@ import sympy.Basic
 
 @[main]
 private lemma main
-  [CommSemiring α]
+  [CommMonoid α]
   {a b : α}
   {n : ℕ} :
 -- imply
-  (a * b) ^ n = a ^ n * b ^ n := by
+  (a * b) ^ n = a ^ n * b ^ n :=
 -- proof
-  induction n with
-  | zero =>
-    simp
-  | succ n ih =>
-    rw [pow_succ, pow_succ, ih]
-    ring
+  mul_pow a b n
 
 
 -- created on 2024-07-01

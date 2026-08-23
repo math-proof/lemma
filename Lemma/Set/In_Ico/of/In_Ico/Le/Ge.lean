@@ -1,7 +1,7 @@
 import sympy.sets.sets
-import Lemma.Algebra.Lt.of.Lt.Ge
+import Lemma.Nat.Lt.of.Lt.Le
 import Lemma.Set.In_Icc.is.Le.Le
-open Algebra Set
+open Nat Set
 
 
 @[main]
@@ -15,7 +15,7 @@ private lemma main
 -- imply
   x ∈ Ico a' b' :=
 -- proof
-  ⟨le_trans h₀ h.1, Lt.of.Lt.Ge h.2 h₁⟩
+  ⟨le_trans h₀ h.1, Lt.of.Lt.Le h.2 h₁⟩
 
 
 -- created on 2018-11-05

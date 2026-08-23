@@ -1,7 +1,7 @@
 import sympy.core.numbers
-import Lemma.Algebra.EqArg.of.Gt_0
+import Lemma.Complex.ArgMul.eq.Arg.of.Gt_0
 import Lemma.Complex.ArgExpMulI.eq.Sub_Mul_Ceil
-open Algebra Complex
+open Complex
 
 
 @[main]
@@ -29,7 +29,7 @@ private lemma main
         have h_add : I * arg x + I * arg y = I * (arg x + arg y) := by
           rw [← mul_add, ← ofReal_add]
         rw [h_add]
-  rw [hxy, EqArg.of.Gt_0 h_abs]
+  rw [hxy, ArgMul.eq.Arg.of.Gt_0 h_abs]
   rw [← ofReal_add]
   apply ArgExpMulI.eq.Sub_Mul_Ceil
 

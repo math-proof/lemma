@@ -3,10 +3,10 @@ import sympy.core.numbers
 import sympy.functions.elementary.complexes
 import sympy.polys.polyroots
 import Lemma.Complex.ImpEq_0.ImpEq_1.ImpEq_2.of.Eq0AddAddPow_3
-import Lemma.Algebra.Ceil.Arg.eq.Ite
-import Lemma.Algebra.EqArg.of.Gt_0
+import Lemma.Complex.CeilSubDivMul3Arg.eq.Ite_0Ite_1Neg1
+import Lemma.Complex.ArgMul.eq.Arg.of.Gt_0
 import Lemma.Complex.Arg.in.IocNegPiPi
-open Algebra Complex
+open Complex
 
 
 /--
@@ -84,8 +84,8 @@ private lemma main
     rw [hA, hB, hcbrt]
     ring
   have harg : arg (A * B) = arg (U ^ (3 : ℂ)⁻¹ * V ^ (3 : ℂ)⁻¹) := by
-    rw [hAB, EqArg.of.Gt_0 hpos, EqArg.of.Gt_0 hpos]
-  have hite := Ceil.Arg.eq.Ite (p := p) (q := q)
+    rw [hAB, ArgMul.eq.Arg.of.Gt_0 hpos, ArgMul.eq.Arg.of.Gt_0 hpos]
+  have hite := CeilSubDivMul3Arg.eq.Ite_0Ite_1Neg1 (p := p) (q := q)
   have hd :
       d =
         ⌈3 * arg (-p / 3) / (2 * π) - 1 / 2⌉ -

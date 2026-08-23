@@ -3,14 +3,14 @@ import sympy.core.power
 import sympy.polys.polyroots
 import Lemma.Complex.MulPowS_Inv3.eq.MulPow_Inv3Ite_1
 import Lemma.Complex.ArgMul.eq.SubAddArgSMul_Ceil.of.Ne_0.Ne_0
-import Lemma.Algebra.EqArg.of.Gt_0
+import Lemma.Complex.ArgMul.eq.Arg.of.Gt_0
 import Lemma.Complex.ArgExpMulI.eq.Sub_Mul_Ceil
-import Lemma.Algebra.Gt_Arg.Is.Eq_Ceil
-import Lemma.Algebra.Or_Eq.Arg.of.Ceil.ne.Zero
+import Lemma.Complex.GtAddArgS.is.EqCeilSubDivS
+import Lemma.Complex.OrEqSCeil.of.CeilSubDivAddArgS.ne.Zero
 import Lemma.Complex.Arg.in.IocNegPiPi
 import Lemma.Set.Add.in.Ioc.of.In.In
 import Lemma.Complex.EqSquareSqrt
-open Algebra Complex Set
+open Complex Set
 
 
 private lemma arg_cbrt
@@ -25,7 +25,7 @@ private lemma arg_cbrt
     ring
   rw [hlog, exp_add, ← ofReal_exp]
   have hpos : Real.exp (Real.log ‖z‖ / 3) > 0 := Real.exp_pos _
-  rw [EqArg.of.Gt_0 hpos]
+  rw [ArgMul.eq.Arg.of.Gt_0 hpos]
   have hcast : ↑(arg z / 3) * I = I * (arg z / 3 : ℝ) := by
     simp
     ring
@@ -241,16 +241,16 @@ private lemma main
               exact hd0
         simp [arg_one, hd0]
       ·
-        have hd1 : d = 1 := (Gt_Arg.Is.Eq_Ceil (A := U) (B := V)).mp hgt
+        have hd1 : d = 1 := (GtAddArgS.is.EqCeilSubDivS (A := U) (B := V)).mp hgt
         rw [hd1, arg_omega]
         ring
       ·
         have ⟨_, hrest⟩ := not_or.mp h0
         have ⟨_, hdne⟩ := not_or.mp hrest
-        have hor := Or_Eq.Arg.of.Ceil.ne.Zero hdne
+        have hor := OrEqSCeil.of.CeilSubDivAddArgS.ne.Zero hdne
         have hdne1 : d ≠ 1 := by
           intro hd1
-          exact hgt ((Gt_Arg.Is.Eq_Ceil (A := U) (B := V)).mpr hd1)
+          exact hgt ((GtAddArgS.is.EqCeilSubDivS (A := U) (B := V)).mpr hd1)
         have hdneg : d = -1 := by
           rcases hor with h | h
           ·
@@ -308,16 +308,16 @@ private lemma main
     ·
       exact hd0
     ·
-      have hd1 : d = 1 := (Gt_Arg.Is.Eq_Ceil (A := U) (B := V)).mp hgt
+      have hd1 : d = 1 := (GtAddArgS.is.EqCeilSubDivS (A := U) (B := V)).mp hgt
       exact hd1
     ·
       have hdne : d ≠ 0 := by
         intro hd
         exact hd0 hd
-      have hor := Or_Eq.Arg.of.Ceil.ne.Zero hdne
+      have hor := OrEqSCeil.of.CeilSubDivAddArgS.ne.Zero hdne
       have hdne1 : d ≠ 1 := by
         intro hd1
-        exact hgt ((Gt_Arg.Is.Eq_Ceil (A := U) (B := V)).mpr hd1)
+        exact hgt ((GtAddArgS.is.EqCeilSubDivS (A := U) (B := V)).mpr hd1)
       rcases hor with h | h
       ·
         contradiction

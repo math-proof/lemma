@@ -11,7 +11,7 @@ private lemma main
 -- imply
   arg z = arccos (re z / ‖z‖) :=
 -- proof
-  Complex.arg_of_im_nonneg_of_ne_zero h_GeIm_0 h
+  arg_of_im_nonneg_of_ne_zero h_GeIm_0 h
 
 
 -- created on 2025-01-13

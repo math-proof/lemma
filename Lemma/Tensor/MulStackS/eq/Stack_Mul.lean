@@ -6,7 +6,13 @@ import Lemma.Vector.MulMapS.eq.Map_FunMul
 open Vector Nat Tensor
 
 
-@[main]
+/--
+| attributes | lemma |
+| :---: | :---: |
+| main | Tensor.MulStackS.eq.Stack_Mul |
+| comm | Tensor.Stack_Mul.eq.MulStackS |
+-/
+@[main, comm]
 private lemma main
   [Mul α]
 -- given
@@ -28,4 +34,4 @@ private lemma main
 
 
 -- created on 2025-07-03
--- updated on 2025-09-24
+-- updated on 2026-08-23

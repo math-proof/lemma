@@ -18,10 +18,10 @@ private lemma main
   split_ifs with h_re h_im
   · rfl
   ·
-    rw [Complex.neg_im, neg_div, Real.arcsin_neg]
+    rw [neg_im, neg_div, Real.arcsin_neg]
     ring
   ·
-    rw [Complex.neg_im, neg_div, Real.arcsin_neg]
+    rw [neg_im, neg_div, Real.arcsin_neg]
 
 
 -- created on 2026-08-07

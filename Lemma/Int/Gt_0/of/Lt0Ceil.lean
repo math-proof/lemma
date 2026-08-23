@@ -1,5 +1,5 @@
-import Lemma.Algebra.Ceil.le.Zero.of.Le_0
-open Algebra
+import Lemma.Int.LeCeil.is.Le
+open Int
 
 
 @[main]
@@ -13,9 +13,9 @@ private lemma main
   x > 0 := by
 -- proof
   by_contra hx
-  have := Ceil.le.Zero.of.Le_0 (le_of_not_gt hx)
-  exact not_le_of_gt h this
-
+  apply not_le_of_gt h
+  apply LeCeil.of.Le
+  grind
 
 -- created on 2018-10-30
 -- updated on 2026-08-20

@@ -1,8 +1,8 @@
 import sympy.core.numbers
-import Lemma.Algebra.Eq.of.Ne_0.Ne_0.Eq.cubic_root
-import Lemma.Algebra.Or_Eq.Arg.of.Ceil.ne.Zero
-import Lemma.Algebra.Gt_Arg.Is.Eq_Ceil
-open Algebra
+import Lemma.Complex.MulPowS_Inv3.eq.MulPow_Inv3.of.EqCeilSubDivAddArgS.Ne_0.Ne_0
+import Lemma.Complex.OrEqSCeil.of.CeilSubDivAddArgS.ne.Zero
+import Lemma.Complex.GtAddArgS.is.EqCeilSubDivS
+open Complex
 
 
 @[main]
@@ -18,9 +18,8 @@ private lemma main
       else
         -(1 / 2) - I * ↑(√3) / 2 := by
 -- proof
-  classical
   have hexp : (3 : ℂ)⁻¹ ≠ 0 := by norm_num
-  have hz : (0 : ℂ) ^ (3 : ℂ)⁻¹ = 0 := Complex.zero_cpow hexp
+  have hz : (0 : ℂ) ^ (3 : ℂ)⁻¹ = 0 := zero_cpow hexp
   split_ifs with h0 hgt
   ·
     rcases h0 with hA | h0
@@ -39,27 +38,27 @@ private lemma main
           ·
             simp [hB, hz]
           ·
-            simpa using Eq.of.Ne_0.Ne_0.Eq.cubic_root.zero hA hB hd0
+            simpa using MulPowS_Inv3.eq.MulPow_Inv3.of.EqCeilSubDivAddArgS.Ne_0.Ne_0.zero hA hB hd0
   ·
     have ⟨hA, hrest⟩ := not_or.mp h0
     have ⟨hB, hd0⟩ := not_or.mp hrest
     have hd1 : ⌈(arg A + arg B) / (2 * π) - 1 / 2⌉ = 1 :=
-      (Gt_Arg.Is.Eq_Ceil (A := A) (B := B)).mp hgt
-    simpa using Eq.of.Ne_0.Ne_0.Eq.cubic_root hA hB hd1
+      (GtAddArgS.is.EqCeilSubDivS (A := A) (B := B)).mp hgt
+    simpa using MulPowS_Inv3.eq.MulPow_Inv3.of.EqCeilSubDivAddArgS.Ne_0.Ne_0 hA hB hd1
   ·
     have ⟨hA, hrest⟩ := not_or.mp h0
     have ⟨hB, hd0⟩ := not_or.mp hrest
-    have hor := Or_Eq.Arg.of.Ceil.ne.Zero hd0
+    have hor := OrEqSCeil.of.CeilSubDivAddArgS.ne.Zero hd0
     have hdne1 : ⌈(arg A + arg B) / (2 * π) - 1 / 2⌉ ≠ 1 := by
       intro hd1
-      exact hgt ((Gt_Arg.Is.Eq_Ceil (A := A) (B := B)).mpr hd1)
+      exact hgt ((GtAddArgS.is.EqCeilSubDivS (A := A) (B := B)).mpr hd1)
     have hdneg : ⌈(arg A + arg B) / (2 * π) - 1 / 2⌉ = -1 := by
       rcases hor with h | h
       ·
         contradiction
       ·
         exact h
-    simpa using Eq.of.Ne_0.Ne_0.Eq.cubic_root.neg hA hB hdneg
+    simpa using MulPowS_Inv3.eq.MulPow_Inv3.of.EqCeilSubDivAddArgS.Ne_0.Ne_0.neg hA hB hdneg
 
 
 -- created on 2018-11-01

@@ -484,6 +484,8 @@ def Expr.latexFormat : Expr → String
           let left := level.toColor (left.priority > func.priority)
           let right := level.toColor (right.priority > func.priority)
           "%s {\\color{red}\\%%%%} %s".format left, right
+        | "choose", [_, _] =>
+          "\\binom{%s}{%s}"
         | "getSlice", [_, Basic (.Special ⟨`Slice.mk⟩) [start, _, step] _] =>
           if let const (.natVal 1) := step then
             if let const (.natVal 0) := start then

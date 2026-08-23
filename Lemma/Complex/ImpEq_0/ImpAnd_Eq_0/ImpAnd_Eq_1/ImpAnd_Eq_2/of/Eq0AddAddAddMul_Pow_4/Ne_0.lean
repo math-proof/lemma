@@ -180,7 +180,7 @@ private lemma main
     simp only [ω, add_im, mul_im, ofReal_re, ofReal_im, I_re, I_im]
     ring
   have hstar : ~ω = ω ^ 2 := by
-    apply Complex.ext
+    apply ext
     ·
       simp [pow_two, mul_re, conj_re, hre, him]
       ring_nf

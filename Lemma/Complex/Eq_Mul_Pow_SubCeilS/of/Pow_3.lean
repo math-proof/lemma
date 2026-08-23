@@ -27,10 +27,10 @@ private lemma main
     have hπ : (3 : ℝ) ≠ 0 := by norm_num
     field_simp [hπ]
     linarith
-  rw [Complex.Eq_MulNorm_ExpMulIArg (z := A), Complex.Eq_MulNorm_ExpMulIArg (z := B)]
+  rw [Eq_MulNorm_ExpMulIArg (z := A), Eq_MulNorm_ExpMulIArg (z := B)]
   have hnorm : ‖A‖ = ‖B‖ := by
     have hp : ‖A‖ ^ 3 = ‖B‖ ^ 3 := by
-      simpa [Complex.norm_pow] using congrArg norm h
+      simpa [norm_pow] using congrArg norm h
     have hfac :
         ‖A‖ ^ 3 - ‖B‖ ^ 3 =
           (‖A‖ - ‖B‖) * (‖A‖ ^ 2 + ‖A‖ * ‖B‖ + ‖B‖ ^ 2) := by
@@ -49,14 +49,14 @@ private lemma main
     exact hne ((sq_eq_zero_iff.mp hA0).trans (sq_eq_zero_iff.mp hB0).symm)
   simp [hnorm, ω]
   have hmul : (I * arg B).exp * (ω ^ d) = (I * arg A).exp := by
-    have hz : ω ^ d = Complex.exp (↑d * (2 * π * I / 3)) := (Complex.exp_int_mul _ d).symm
-    rw [hz, ← Complex.exp_add]
+    have hz : ω ^ d = exp (↑d * (2 * π * I / 3)) := (exp_int_mul _ d).symm
+    rw [hz, ← exp_add]
     congr 1
     have hadd : I * arg B + ↑d * (2 * π * I / 3) = I * arg A := by
       have : (d : ℂ) * (2 * π * I / 3) = I * ↑(2 * π * d / 3) := by
         simp
         ring
-      rw [this, ← mul_add, ← Complex.ofReal_add]
+      rw [this, ← mul_add, ← ofReal_add]
       congr 2
       linarith [hθ]
     exact hadd

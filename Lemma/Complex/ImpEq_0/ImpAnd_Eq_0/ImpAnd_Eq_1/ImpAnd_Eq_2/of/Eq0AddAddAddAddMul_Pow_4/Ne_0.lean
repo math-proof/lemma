@@ -2,9 +2,9 @@ import sympy.core.power
 import sympy.core.numbers
 import sympy.functions.elementary.complexes
 import sympy.polys.polyroots
-import Lemma.Algebra.Or_Eq.of.Add.eq.Zero.biquadratic
+import Lemma.Complex.OrOrSEqS.of.Eq0AddAddPow_4
 import Lemma.Complex.ImpEq_0.ImpAnd_Eq_0.ImpAnd_Eq_1.ImpAnd_Eq_2.of.Eq0AddAddAddMul_Pow_4.Ne_0
-open Algebra Complex
+open Complex
 
 
 @[main]
@@ -98,8 +98,8 @@ private lemma main
     intro hβ Δ
     have hz : z ^ 4 + α * z ^ 2 + γ = 0 := by
       simpa [hβ] using hdep
-    have hbi := Or_Eq.of.Add.eq.Zero.biquadratic (x := z) (α := α) (γ := γ) hz
-    rcases hbi with hz' | hz' | hz' | hz'
+    have hbi := OrOrSEqS.of.Eq0AddAddPow_4.biquadratic (x := z) (α := α) (γ := γ) hz
+    rcases hbi with (hz' | hz') | hz' | hz'
     ·
       exact Or.inl (eq_sub_of_add_eq hz')
     ·

@@ -1,8 +1,8 @@
 import sympy.core.numbers
 import Lemma.Complex.Eq_MulNorm_ExpMulIArg
-import Lemma.Algebra.EqArg.of.Gt_0
+import Lemma.Complex.ArgMul.eq.Arg.of.Gt_0
 import Lemma.Complex.ArgExpMulI.eq.Sub_Mul_Ceil
-open Algebra Complex
+open Complex
 
 
 @[main]
@@ -26,7 +26,7 @@ private lemma main
   ·
     have hpos : (‖z‖ : ℝ) ^ n > 0 := pow_pos (norm_pos_iff.mpr hz) n
     have hzpow : z ^ n = ↑(‖z‖ ^ n) * (I * (n * arg z)).exp := by
-      conv_lhs => rw [Complex.Eq_MulNorm_ExpMulIArg (z := z)]
+      conv_lhs => rw [Eq_MulNorm_ExpMulIArg (z := z)]
       rw [mul_pow]
       have h_exp : (I * arg z).exp ^ n = (I * (n * arg z)).exp := by
         rw [← exp_nsmul]
@@ -34,7 +34,7 @@ private lemma main
         rw [nsmul_eq_mul]
         ring
       rw [h_exp, ofReal_pow]
-    rw [hzpow, EqArg.of.Gt_0 hpos]
+    rw [hzpow, ArgMul.eq.Arg.of.Gt_0 hpos]
     have hcast : (↑n * ↑z.arg : ℂ) = ↑((n : ℝ) * z.arg) := (ofReal_mul (n : ℝ) z.arg).symm
     rw [hcast]
     apply ArgExpMulI.eq.Sub_Mul_Ceil

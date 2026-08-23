@@ -2,11 +2,11 @@ import sympy.core.power
 import sympy.core.numbers
 import sympy.functions.elementary.complexes
 import sympy.polys.polyroots
-import Lemma.Algebra.Ceil.Arg.eq.Ite
-import Lemma.Algebra.EqArg.of.Gt_0
+import Lemma.Complex.CeilSubDivMul3Arg.eq.Ite_0Ite_1Neg1
+import Lemma.Complex.ArgMul.eq.Arg.of.Gt_0
 import Lemma.Complex.Eq_Mul_Pow_SubCeilS.of.Pow_3
 import Lemma.Complex.EqSquareSqrt
-open Algebra Complex
+open Complex
 
 
 @[main]
@@ -77,8 +77,8 @@ private lemma main
     rw [hA, hB, hcbrt]
     ring
   have harg : arg (A * B) = arg (U ^ (3 : ℂ)⁻¹ * V ^ (3 : ℂ)⁻¹) := by
-    rw [hAB, EqArg.of.Gt_0 hpos, EqArg.of.Gt_0 hpos]
-  have hite := Ceil.Arg.eq.Ite (p := p) (q := q)
+    rw [hAB, ArgMul.eq.Arg.of.Gt_0 hpos, ArgMul.eq.Arg.of.Gt_0 hpos]
+  have hite := CeilSubDivMul3Arg.eq.Ite_0Ite_1Neg1 (p := p) (q := q)
   have hd : d = ⌈3 * arg (-p / 3) / (2 * π) - 1 / 2⌉ - ⌈3 * arg (A * B) / (2 * π) - 1 / 2⌉ := by
     simp only [d, arg_p, arg_AB]
     rw [harg, hite]
@@ -128,7 +128,7 @@ private lemma main
     simp only [ω, add_im, mul_im, ofReal_re, ofReal_im, I_re, I_im]
     ring
   have hstar : ~ω = ω ^ 2 := by
-    apply Complex.ext
+    apply ext
     ·
       simp [pow_two, mul_re, conj_re, hre, him]
       ring_nf
@@ -166,12 +166,12 @@ private lemma main
     rw [this, mul_one]
   have cardano_of_identities {A B : ℂ} (hAB : A ^ 3 + B ^ 3 = -q) (hp : 3 * A * B = -p) : x = A + B ∨ x = A * ω + B * ~ω ∨ x = A * ~ω + B * ω := by
     have hadd : ω + ~ω = -1 := by
-      apply Complex.ext
+      apply ext
       ·
-        simp [Complex.add_re, Complex.conj_re, hre]
+        simp [add_re, conj_re, hre]
         ring
       ·
-        simp [Complex.add_im, Complex.conj_im, him]
+        simp [add_im, conj_im, him]
     have hsq : ω ^ 2 = ~ω := hstar.symm
     have hsq' : (~ω) ^ 2 = ω := by
       rw [hstar]
@@ -314,9 +314,7 @@ private lemma main
         rw [mul_assoc, ← pow_add]
         have : (2 + 2 : ℕ) = 4 := by norm_num
         rw [this, hω4]
-      rw [heq] at hx
-      exact hx
-
+      rwa [heq] at hx
 
 
 -- created on 2018-11-24

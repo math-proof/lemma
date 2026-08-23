@@ -6504,6 +6504,14 @@ class LeanArgsSpaceSeparated extends LeanArgs
             $args = $this->strip_parenthesis();
             $arg = $args[1]->toLatex($syntax);
             return [$arg];
+        } elseif ($func instanceof LeanProperty && $func->rhs instanceof LeanToken && $func->rhs->text === 'choose' && (count($args) === 2 || count($args) === 3)) {
+            $n = count($args) === 2 ? $func->lhs : $args[1];
+            $k = count($args) === 2 ? $args[1] : $args[2];
+            if ($n instanceof LeanParenthesis)
+                $n = $n->arg;
+            if ($k instanceof LeanParenthesis)
+                $k = $k->arg;
+            return [$n->toLatex($syntax), $k->toLatex($syntax)];
         }
         return parent::latexArgs($syntax);
     }
@@ -6576,6 +6584,10 @@ class LeanArgsSpaceSeparated extends LeanArgs
                     case 'fmod':
                         if (count($args) == 2)
                             return '{%s}{%s}';
+                        break;
+                    case 'choose':
+                        if (count($args) == 2 || count($args) == 3)
+                            return '\\binom{%s}{%s}';
                         break;
                 }
             }
@@ -7973,12 +7985,27 @@ class LeanUsing extends LeanUnary
 
     public function latexFormat()
     {
-        return "$this->command %s";
+        $sep = $this->sep();
+        return $sep === "\n" ? "$this->command\n%s" : "$this->command %s";
+    }
+
+    public function sep()
+    {
+        return $this->arg instanceof LeanStatements ? "\n" : ' ';
+    }
+
+    public function set_line($line)
+    {
+        $this->line = $line;
+        if ($this->arg instanceof LeanStatements)
+            ++$line;
+        return $this->arg->set_line($line);
     }
 
     public function strFormat()
     {
-        return "$this->operator %s";
+        $sep = $this->sep();
+        return "$this->operator$sep%s";
     }
 
 }
@@ -8019,12 +8046,27 @@ class LeanAt extends LeanUnary
 
     public function latexFormat()
     {
-        return "{\\color{#00f}$this->command}\ %s";
+        $sep = $this->sep();
+        return $sep === "\n" ? "{\\color{#00f}$this->command}\n%s" : "{\\color{#00f}$this->command}\ %s";
+    }
+
+    public function sep()
+    {
+        return $this->arg instanceof LeanStatements ? "\n" : ' ';
+    }
+
+    public function set_line($line)
+    {
+        $this->line = $line;
+        if ($this->arg instanceof LeanStatements)
+            ++$line;
+        return $this->arg->set_line($line);
     }
 
     public function strFormat()
     {
-        return "$this->operator %s";
+        $sep = $this->sep();
+        return "$this->operator$sep%s";
     }
 
 }
@@ -8067,12 +8109,27 @@ class LeanIn extends LeanUnary
 
     public function latexFormat()
     {
-        return "$this->command %s";
+        $sep = $this->sep();
+        return "$this->command$sep%s";
+    }
+
+    public function sep()
+    {
+        return $this->arg instanceof LeanStatements ? "\n" : ' ';
+    }
+
+    public function set_line($line)
+    {
+        $this->line = $line;
+        if ($this->arg instanceof LeanStatements)
+            ++$line;
+        return $this->arg->set_line($line);
     }
 
     public function strFormat()
     {
-        return "$this->operator %s";
+        $sep = $this->sep();
+        return "$this->operator$sep%s";
     }
 
 }
@@ -8113,12 +8170,27 @@ class LeanGeneralizing extends LeanUnary
 
     public function latexFormat()
     {
-        return "$this->command %s";
+        $sep = $this->sep();
+        return "$this->command$sep%s";
+    }
+
+    public function sep()
+    {
+        return $this->arg instanceof LeanStatements ? "\n" : ' ';
+    }
+
+    public function set_line($line)
+    {
+        $this->line = $line;
+        if ($this->arg instanceof LeanStatements)
+            ++$line;
+        return $this->arg->set_line($line);
     }
 
     public function strFormat()
     {
-        return "$this->operator %s";
+        $sep = $this->sep();
+        return "$this->operator$sep%s";
     }
 
 }

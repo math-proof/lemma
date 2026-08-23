@@ -2,9 +2,9 @@ import sympy.core.power
 import sympy.core.numbers
 import sympy.functions.elementary.complexes
 import sympy.polys.polyroots
-import Lemma.Algebra.Or_Eq.of.Add.eq.Zero.biquadratic
+import Lemma.Complex.OrOrSEqS.of.Eq0AddAddPow_4
 import Lemma.Complex.ImpEq_0.ImpAnd_Eq_0.ImpAnd_Eq_1.ImpAnd_Eq_2.of.Eq0AddAddAddMul_Pow_4.Ne_0
-open Algebra Complex
+open Complex
 
 
 @[main]
@@ -65,7 +65,17 @@ private lemma main
     intro hβ Δ
     have hbq : x ^ 4 + α * x ^ 2 + γ = 0 := by
       simpa [hβ] using h
-    simpa [Δ] using Or_Eq.of.Add.eq.Zero.biquadratic hbq
+    have hbi := OrOrSEqS.of.Eq0AddAddPow_4.biquadratic hbq
+    simpa [Δ] using show
+        x = √(√Δ / 2 - α / 2) ∨
+          x = -√(√Δ / 2 - α / 2) ∨
+          x = √(-√Δ / 2 - α / 2) ∨
+          x = -√(-√Δ / 2 - α / 2) from by
+      rcases hbi with (hx | hx) | hx | hx
+      · exact Or.inl hx
+      · exact Or.inr (Or.inl hx)
+      · exact Or.inr (Or.inr (Or.inl hx))
+      · exact Or.inr (Or.inr (Or.inr hx))
   ·
     intro ⟨hβ, hD⟩ y y0 y1
     exact (ImpEq_0.ImpAnd_Eq_0.ImpAnd_Eq_1.ImpAnd_Eq_2.of.Eq0AddAddAddMul_Pow_4.Ne_0 h hβ).1 hD
