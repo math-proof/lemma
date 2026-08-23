@@ -39,7 +39,7 @@ def prove(Eq):
 
     Eq << Bool.Cond.of.And.apply(Eq[-1], 1).reversed
 
-    Eq << Algebra.EqDiv.of.Gt_0.Eq.apply(Eq[-1], Eq[-3])
+    Eq << Rat.EqDiv.of.Gt_0.Eq.apply(Eq[-1], Eq[-3])
 
 
 

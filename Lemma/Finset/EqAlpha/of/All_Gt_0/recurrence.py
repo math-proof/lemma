@@ -12,7 +12,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset, Bool, Set, Nat
+    from Lemma import Algebra, Finset, Bool, Set, Nat, Rat
     from Lemma.Finset.Alpha.gt.Zero import alpha
 
     x = Symbol(real=True, shape=(oo,))
@@ -54,7 +54,7 @@ def prove(Eq):
 
     Eq <<= Eq[-1] & Eq[-2]
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.EqInv.of.Ne_0.Eq)
+    Eq << Eq[-1].this.rhs.apply(Rat.EqInv.of.Ne_0.Eq)
 
     Eq << Imply(Eq.hypothesis, Eq.induct, plausible=True)
 

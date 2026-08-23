@@ -62,7 +62,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.expr.apply(Nat.Lt.of.Lt.Le)
 
-    Eq << Algebra.EqAbs.of.Le.apply(Eq.le_inf)
+    Eq << Int.EqAbs.of.Le.apply(Eq.le_inf)
 
     Eq << Eq[-2].subs(Eq[-1].reversed)
 

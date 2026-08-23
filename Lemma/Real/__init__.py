@@ -148,3 +148,6 @@ from . import LeLog
 from . import LeMaxima
 from . import LeSqrt
 from . import LeSup
+from . import EqArgMax
+from . import EqArgMin
+from . import EqInf

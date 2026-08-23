@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << Nat.Gt.of.Gt.Ge.apply(Eq[-2], Eq[0])
 
-    Eq.eq_max = Algebra.EqMax.of.Ge_0.Lt.apply(Eq[0], Eq[1])
+    Eq.eq_max = Nat.EqMax.of.Ge_0.Lt.apply(Eq[0], Eq[1])
 
     Eq << Nat.Gt.of.Ge.Lt.apply(Eq[0], Eq[1])
 

@@ -23,7 +23,7 @@ def apply(given, j=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Algebra, Set, Bool
+    from Lemma import Finset, Algebra, Set, Bool, Nat
 
     n = Symbol(domain=Range(2, oo), given=True)
     x = Symbol(shape=(oo,), integer=True, given=True)
@@ -70,7 +70,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq.equality)
 
-    Eq << Eq[-1].this.apply(Algebra.Eq.simp.Delta)
+    Eq << Eq[-1].this.apply(Nat.Eq.simp.Delta)
 
     Eq << Eq[-1].reversed
 

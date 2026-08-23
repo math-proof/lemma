@@ -99,3 +99,5 @@ from . import Le_1
 from . import Le_Block
 from . import LeAbs
 from . import Cond
+from . import EqAdjoint
+from . import EqBlock

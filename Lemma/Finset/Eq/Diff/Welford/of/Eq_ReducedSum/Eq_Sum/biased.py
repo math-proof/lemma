@@ -39,7 +39,7 @@ def prove(Eq):
 
     Eq << Nat.Gt_Sub_1.of.Gt.apply(Eq[-1], lower=0)
 
-    Eq << Algebra.EqDiv.of.Gt_0.Eq.apply(Eq[-1], Eq[-4])
+    Eq << Rat.EqDiv.of.Gt_0.Eq.apply(Eq[-1], Eq[-4])
 
 
     Eq << Eq[-1].this.rhs.apply(Nat.AddMulS.eq.Mul_Add)

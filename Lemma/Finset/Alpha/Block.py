@@ -11,7 +11,7 @@ def apply(A):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset, Bool
+    from Lemma import Algebra, Finset, Bool, Rat
     from Lemma.Finset.Alpha.gt.Zero import alpha
 
     x = Symbol(real=True, positive=True, shape=(oo,))
@@ -35,7 +35,7 @@ def prove(Eq):
 
     Eq << Finset.Alpha.ne.Zero.apply(Eq[-1].lhs.arg)
 
-    Eq << Algebra.EqInv.of.Ne_0.Eq.apply(Eq[-1], Eq[-2])
+    Eq << Rat.EqInv.of.Ne_0.Eq.apply(Eq[-1], Eq[-2])
 
     Eq << Imply(Eq[0], Eq.induct, plausible=True)
 

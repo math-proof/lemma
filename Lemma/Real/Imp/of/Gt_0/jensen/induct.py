@@ -51,7 +51,7 @@ def prove(Eq):
 
     Eq << Eq.ge.this.apply(Bool.Imp_Imp.Is.ImpAnd)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.EqAll_Eq_0.of.Eq_Sum.Ge.All_Ge_0.squeeze)
+    Eq << Eq[-1].this.lhs.apply(Finset.EqAll_Eq_0.of.Eq_Sum.Ge.All_Ge_0.squeeze)
 
     Eq << Bool.Imp_AndEq.given.Imp_AndEq.apply(Eq[-1])
 
@@ -84,7 +84,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.apply(Bool.Imp.fold, index=2)
 
-    Eq << Eq[-1].this.find(And).apply(Algebra.EqDiv.of.Gt_0.Eq, simplify=None, ret=1)
+    Eq << Eq[-1].this.find(And).apply(Rat.EqDiv.of.Gt_0.Eq, simplify=None, ret=1)
 
     Eq << Eq[-1].this.find(Mul[Sum]).apply(Finset.Mul_Sum.eq.Sum_Mul)
 

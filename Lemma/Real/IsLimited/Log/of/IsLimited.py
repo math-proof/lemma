@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << Set.Gt_0.of.IsPositive.apply(Eq[-1])
 
-    Eq << Algebra.EqLog.of.Gt_0.Eq.apply(Eq[-1], Eq.is_limited)
+    Eq << Real.EqLog.of.Gt_0.Eq.apply(Eq[-1], Eq.is_limited)
 
 
 if __name__ == '__main__':

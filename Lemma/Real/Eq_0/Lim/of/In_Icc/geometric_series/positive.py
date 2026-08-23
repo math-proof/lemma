@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << Eq[-2].subs(Eq[-1])
 
-    Eq << Algebra.EqLog.of.Gt_0.apply(Eq.gt_zero, Eq[-1].find(All).variable)
+    Eq << Real.EqLog.of.Gt_0.apply(Eq.gt_zero, Eq[-1].find(All).variable)
 
     Eq.any = Eq[-2].subs(Eq[-1])
 

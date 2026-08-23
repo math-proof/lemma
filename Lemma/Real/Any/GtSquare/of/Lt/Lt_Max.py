@@ -37,7 +37,7 @@ def prove(Eq):
 
     Eq <<= Bool.Imp.Imp.of.Imp_And.apply(Eq[-4], simplify=None), \
         Eq[-3].this.rhs.args[:4:2].apply(Bool.Cond.of.Eq.Cond.subst, simplify=None), \
-        Eq[-2].this.rhs.args[::2].apply(Algebra.EqMax.of.Ge_0.Lt, ret=slice(None)), \
+        Eq[-2].this.rhs.args[::2].apply(Nat.EqMax.of.Ge_0.Lt, ret=slice(None)), \
         Eq[-1].this.apply(Bool.Imp.Is.ImpNotS)
 
     Eq <<= Eq[-5].this.rhs.rhs.apply(Bool.Cond.of.And, index=slice(2, None, -2), simplify=None), \
@@ -50,8 +50,8 @@ def prove(Eq):
         Eq[-2].this.rhs.rhs.args[2].apply(Algebra.Le.transport), \
         Eq[-1].this.rhs.apply(Real.Any.GtSquare.of.Ge_0.Lt.Lt)
 
-    Eq <<= Eq[-2].this.rhs.rhs.args[1:].apply(Algebra.EqMax.of.Le_0.Gt, ret=1), \
-        Eq[-1].this.rhs.rhs.args[1:].apply(Algebra.EqMax.of.Gt_0.Le, ret=0)
+    Eq <<= Eq[-2].this.rhs.rhs.args[1:].apply(Nat.EqMax.of.Le_0.Gt, ret=1), \
+        Eq[-1].this.rhs.rhs.args[1:].apply(Nat.EqMax.of.Gt_0.Le, ret=0)
 
     Eq <<= Eq[-2].this.rhs.rhs.args[:2].apply(Bool.Cond.of.Eq.Cond.subst), \
         Eq[-1].this.rhs.rhs.args[:2].apply(Bool.Cond.of.Eq.Cond.subst)

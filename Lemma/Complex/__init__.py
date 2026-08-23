@@ -42,3 +42,6 @@ from . import Root
 from . import Abs
 from . import Sum
 from . import Block
+from . import EqArg
+from . import EqConj
+from . import EqIm

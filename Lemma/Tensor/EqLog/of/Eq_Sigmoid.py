@@ -17,7 +17,7 @@ def prove(Eq):
 
     Eq << Eq[0].this.rhs.defun()
 
-    Eq << Algebra.EqInv.of.Eq.apply(Eq[-1])
+    Eq << Rat.EqInv.of.Eq.apply(Eq[-1])
 
     Eq << Eq[-1] - 1
 

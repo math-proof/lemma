@@ -15,7 +15,7 @@ def apply(self, n=None, k=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Real, Bool
+    from Lemma import Algebra, Real, Bool, Rat
 
     x, a, b = Symbol(real=True)
     f = Function(real=True, continuous=True)
@@ -35,7 +35,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.args[1].apply(Algebra.Gt_0.of.Lt)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.EqDiv.of.Gt_0.Eq)
+    Eq << Eq[-1].this.rhs.apply(Rat.EqDiv.of.Gt_0.Eq)
 
     Eq << Bool.Imp_And.of.ImpAnd.apply(Eq[-1])
 

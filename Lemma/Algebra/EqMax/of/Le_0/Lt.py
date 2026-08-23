@@ -18,7 +18,7 @@ def prove(Eq):
 
     Eq << Nat.Le.of.Lt.apply(Eq[1])
 
-    Eq << Algebra.EqMax.of.Le_0.Le.apply(Eq[0], Eq[-1])
+    Eq << Nat.EqMax.of.Le_0.Le.apply(Eq[0], Eq[-1])
 
 
 

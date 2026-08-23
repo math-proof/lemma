@@ -16,7 +16,7 @@ def prove(Eq):
     f = Function(real=True)
     Eq << apply(Equal(x0, ArgMax[x:S](f(x))))
 
-    Eq << Algebra.EqArgMax.of.Eq.definition.apply(Eq[0])
+    Eq << Real.EqArgMax.of.Eq.definition.apply(Eq[0])
 
     Eq << Real.All.Ge.of.Eq_Maxima.apply(Eq[-1])
 

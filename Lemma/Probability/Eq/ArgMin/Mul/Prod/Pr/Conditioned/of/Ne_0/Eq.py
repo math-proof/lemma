@@ -19,7 +19,7 @@ def apply(eq, ne):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra
+    from Lemma import Probability, Algebra, Real
 
     t, n, m = Symbol(integer=True, positive=True)
     x = Symbol(real=True, shape=(n,), random=True)
@@ -31,7 +31,7 @@ def prove(Eq):
 
     Eq << Probability.Eq.Mul.Prod.Pr.Conditioned.of.Ne_0.Eq.apply(Eq[0], Eq[-1])
 
-    Eq << Algebra.EqArgMin.of.Eq.apply(Eq[-1], (i,))
+    Eq << Real.EqArgMin.of.Eq.apply(Eq[-1], (i,))
 
 
 

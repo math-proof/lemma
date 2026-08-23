@@ -11,7 +11,7 @@ def apply(eq_z, eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Real
+    from Lemma import Algebra, Tensor, Real, Complex
 
     p = Symbol(real=True, shape=(3, 2))
     theta = Symbol(real=True)
@@ -35,7 +35,7 @@ def prove(Eq):
 
     Eq.real_part = Algebra.EqRe.of.Eq.apply(Eq[-1])
 
-    Eq.imaginary_part = Algebra.EqIm.of.Eq.apply(Eq[-1])
+    Eq.imaginary_part = Complex.EqIm.of.Eq.apply(Eq[-1])
 
     Eq <<= Eq.p_def[0], Eq.p_def[1], Eq.p_def[2]
 

@@ -63,3 +63,4 @@ from . import Add_Abs
 from . import Any
 from . import LeSquare
 from . import Clip
+from . import EqFrac

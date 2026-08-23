@@ -74,7 +74,7 @@ def prove(Eq):
 
     Eq << Probability.Ne_0.of.Ne_0.joint_slice.apply(Eq[1], [slice(0, T), slice(0, T), slice(0, T + 1)])
 
-    Eq << Algebra.EqLog.of.Ne_0.Eq.apply(Eq[-1], Eq[-2])
+    Eq << Real.EqLog.of.Ne_0.Eq.apply(Eq[-1], Eq[-2])
 
     Eq << Eq[-1].this.rhs.apply(Real.LogMul.eq.AddLogS.of.Ne_0.Ne_0)
 

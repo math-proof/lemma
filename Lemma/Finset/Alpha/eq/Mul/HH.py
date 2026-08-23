@@ -20,7 +20,7 @@ def apply(x):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Algebra, Bool, Tensor, Nat
+    from Lemma import Finset, Algebra, Bool, Tensor, Nat, Rat
     from Lemma.Finset.Alpha.gt.Zero import alpha
     from Lemma.Finset.H.eq.Add.definition import H
 
@@ -56,7 +56,7 @@ def prove(Eq):
 
     Eq << Finset.Alpha.ne.Zero.apply(reverse(x[:n]))
 
-    Eq << Algebra.EqInv.of.Ne_0.Eq.apply(Eq[-1], Eq[0])
+    Eq << Rat.EqInv.of.Ne_0.Eq.apply(Eq[-1], Eq[0])
 
     Eq << Imply(Eq[0], Eq.induct, plausible=True)
 

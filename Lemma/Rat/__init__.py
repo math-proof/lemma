@@ -26,3 +26,5 @@ from . import LeInv
 from . import Div
 from . import DivSubS
 from . import Eq
+from . import EqDiv
+from . import EqInv

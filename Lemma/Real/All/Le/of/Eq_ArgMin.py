@@ -16,7 +16,7 @@ def prove(Eq):
     f = Function(real=True)
     Eq << apply(Equal(x0, ArgMin[x:S](f(x))))
 
-    Eq << Algebra.EqArgMin.of.Eq.definition.apply(Eq[0])
+    Eq << Real.EqArgMin.of.Eq.definition.apply(Eq[0])
 
     Eq << Real.All.Le.of.Eq_Minima.apply(Eq[-1])
 

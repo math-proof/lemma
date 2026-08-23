@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(given):
-    from Lemma.Algebra.Eq.simp.terms.negative import simplify_negative_terms
+    from Lemma.Int.Eq.simp.terms.negative import simplify_negative_terms
     return simplify_negative_terms(LessEqual, given)
 
 

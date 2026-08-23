@@ -8,7 +8,7 @@ def apply(eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Rat
 
     x, a = Symbol(complex=True)
     d = Symbol(complex=True, zero=False)
@@ -18,7 +18,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq[0])
 
-    Eq << Algebra.EqDiv.of.Eq.transplant.apply(Eq[-1])
+    Eq << Rat.EqDiv.of.Eq.transplant.apply(Eq[-1])
 
     Eq << Eq[-1] - Eq[0]
 

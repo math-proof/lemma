@@ -22,7 +22,7 @@ def apply(x):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Algebra, Bool, Nat
+    from Lemma import Finset, Algebra, Bool, Nat, Rat
     from Lemma.Finset.K.eq.Add.definition import K
     from Lemma.Finset.Alpha.gt.Zero import alpha
 
@@ -49,7 +49,7 @@ def prove(Eq):
 
     Eq << Finset.Alpha.ne.Zero.apply(reverse(x[1:n + 1]))
 
-    Eq << Algebra.EqInv.of.Ne_0.Eq.apply(Eq[-1], Eq[0])
+    Eq << Rat.EqInv.of.Ne_0.Eq.apply(Eq[-1], Eq[0])
 
     Eq << Imply(Eq[0], Eq.induct, plausible=True)
 

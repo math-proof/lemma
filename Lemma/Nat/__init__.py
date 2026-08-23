@@ -79,3 +79,4 @@ from . import LeSub
 from . import Le_Max
 from . import Le_Min
 from . import Clip
+from . import EqDelta

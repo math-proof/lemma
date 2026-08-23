@@ -42,7 +42,7 @@ def prove(Eq):
     Eq << Eq[-1].this.expr - 2
     Eq << Eq[-1].this.expr.apply(Int.Eq.of.Sub.eq.Zero)
     Eq << Any(Unequal(Eq[-1].rhs, 0), *Eq.S_supset.limits, plausible=True)
-    Eq << Eq[-1].this.expr.apply(Algebra.EqDelta.of.Ne_0)
+    Eq << Eq[-1].this.expr.apply(Nat.EqDelta.of.Ne_0)
     Eq << Bool.Any_And.of.AnySetOf_AnySetOf.apply(Eq[-1])
     Eq << ~Eq[-2]
     Eq << Bool.Any_And.of.Any.All.All_Imp.apply(Eq[-1], Eq[-4])

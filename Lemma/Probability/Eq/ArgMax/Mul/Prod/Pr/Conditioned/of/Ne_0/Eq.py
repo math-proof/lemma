@@ -19,7 +19,7 @@ def apply(eq, ne):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra
+    from Lemma import Probability, Algebra, Real
 
     m, n, t = Symbol(integer=True, positive=True)
     # suppose you have a set of documents y which is labeled with some semantic tags called keywords x;
@@ -34,7 +34,7 @@ def prove(Eq):
 
     Eq << Probability.Eq.Mul.Prod.Pr.Conditioned.of.Ne_0.Eq.apply(Eq[0], Eq[-1])
 
-    Eq << Algebra.EqArgMax.of.Eq.apply(Eq[-1], (i,))
+    Eq << Real.EqArgMax.of.Eq.apply(Eq[-1], (i,))
 
 
 

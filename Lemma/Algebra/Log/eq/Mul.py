@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Real
 
     b = Symbol(real=True, positive=True)
     e = Symbol(real=True)
@@ -18,7 +18,7 @@ def prove(Eq):
 
     Eq << Greater(b, 0, plausible=True)
 
-    Eq << Algebra.EqLog.of.Gt_0.apply(Eq[-1], e)
+    Eq << Real.EqLog.of.Gt_0.apply(Eq[-1], e)
 
 
 if __name__ == '__main__':

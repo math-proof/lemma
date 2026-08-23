@@ -78,7 +78,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Exp).arg.apply(Nat.AddMulS.eq.Mul_Add)
 
-    Eq << Algebra.EqIm.of.Eq.apply(Eq[-1])
+    Eq << Complex.EqIm.of.Eq.apply(Eq[-1])
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Im.eq.Sum)
 

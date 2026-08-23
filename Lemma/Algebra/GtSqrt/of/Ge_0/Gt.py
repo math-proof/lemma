@@ -10,7 +10,7 @@ def apply(is_nonnegative, gt):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat, Real
+    from Lemma import Algebra, Nat, Real, Rat
 
     x, y = Symbol(real=True)
     Eq << apply(x >= 0, y > x)
@@ -29,7 +29,7 @@ def prove(Eq):
 
     Eq << ((sqrt(x) + sqrt(y))(-sqrt(x) + sqrt(y))).this.apply(Nat.Mul_Add.eq.AddMulS, deep=True)
 
-    Eq << Algebra.EqDiv.of.Gt_0.Eq.apply(Eq.is_positive, Eq[-1], simplify=None)
+    Eq << Rat.EqDiv.of.Gt_0.Eq.apply(Eq.is_positive, Eq[-1], simplify=None)
 
     Eq << Eq[-3].subs(Eq[-1].reversed)
 

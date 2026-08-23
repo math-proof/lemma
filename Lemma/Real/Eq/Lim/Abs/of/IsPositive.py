@@ -11,7 +11,7 @@ def apply(is_positive):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Real, Algebra, Bool, Nat
+    from Lemma import Set, Real, Algebra, Bool, Nat, Int
 
     x, x0 = Symbol(real=True)
     g = Function(real=True)
@@ -39,7 +39,7 @@ def prove(Eq):
 
     Eq << Bool.Any.of.Any.subst.apply(Eq[-1], Min(δ_0, δ_1), δ)
 
-    Eq << Eq[-1].this.find(Greater).apply(Algebra.EqAbs.of.Gt)
+    Eq << Eq[-1].this.find(Greater).apply(Int.EqAbs.of.Gt)
 
     Eq << Eq[-1].this.find(And).apply(Bool.Cond.of.Eq.Cond.subst, reverse=True)
 

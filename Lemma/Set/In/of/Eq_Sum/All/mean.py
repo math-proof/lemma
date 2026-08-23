@@ -11,7 +11,7 @@ def apply(eq, forall):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Finset
+    from Lemma import Algebra, Set, Bool, Finset, Rat
 
     i = Symbol(integer=True)
     n = Symbol(integer=True, positive=True, given=False)
@@ -37,7 +37,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.apply(Bool.Imp_Imp.Is.ImpAnd)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.EqAll_Eq_0.of.Eq_Sum.Ge.All_Ge_0.squeeze)
+    Eq << Eq[-1].this.lhs.apply(Finset.EqAll_Eq_0.of.Eq_Sum.Ge.All_Ge_0.squeeze)
 
     Eq << Eq[-1].this.find(All[Element]).apply(Bool.Cond.of.All.subst, i, n)
 
@@ -55,7 +55,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Equal) - w[n]
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.EqDiv.of.Eq.Lt, ret=1)
+    Eq << Eq[-1].this.lhs.apply(Rat.EqDiv.of.Eq.Lt, ret=1)
 
     Eq << Eq[-1].this.find(Mul[Sum]).apply(Finset.Mul_Sum.eq.Sum_Mul)
 

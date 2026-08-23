@@ -16,7 +16,7 @@ def apply(lt, self, n=None, k=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Real, Algebra, Bool
+    from Lemma import Real, Algebra, Bool, Rat
 
     x, a, b = Symbol(real=True)
     f = Function(real=True, continuous=True)
@@ -30,7 +30,7 @@ def prove(Eq):
 
     Eq << Algebra.Gt_0.of.Lt.apply(Eq[0])
 
-    Eq << Algebra.EqDiv.of.Gt_0.Eq.apply(Eq[-1], Eq[-2])
+    Eq << Rat.EqDiv.of.Gt_0.Eq.apply(Eq[-1], Eq[-2])
 
     Eq << Real.EqDarboux.of.Lt.Eq_Lim.apply(Eq[0], Eq[-1])
 

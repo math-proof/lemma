@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq << Set.Ne_0.of.In.apply(Eq.is_nonzero_real)
 
-    Eq << Algebra.EqInv.of.Ne_0.Eq.apply(Eq[-1], Eq.is_limited)
+    Eq << Rat.EqInv.of.Ne_0.Eq.apply(Eq[-1], Eq.is_limited)
 
     Eq << Eq[1].subs(Eq[-1])
 
