@@ -43,7 +43,7 @@ def prove(Eq):
 
     Eq <<= Bool.ImpEq.of.ImpEq.subst.apply(Eq[-2]), Bool.Imp_And.of.ImpAnd.apply(Eq[-1])
 
-    Eq << Eq[-2].this.rhs.apply(Algebra.Or_Eq.of.Add.eq.Zero.biquadratic, x)
+    Eq << Eq[-2].this.rhs.apply(Complex.OrOrSEqS.of.Eq0AddAddPow_4.biquadratic, x)
 
     Eq << Bool.Imp.Imp.of.Imp_And.apply(Eq[-1].this.rhs.apply(Complex.ImpEq_0.ImpAnd_Eq_0.ImpAnd_Eq_1.ImpAnd_Eq_2.of.Eq0AddAddAddMul_Pow_4.Ne_0, x), None)
 

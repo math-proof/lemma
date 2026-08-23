@@ -34,7 +34,7 @@ def prove(Eq):
 
     Eq <<= Bool.AnySetOf.of.Any_And.apply(Eq.any_ax, index=1), Bool.AnySetOf.of.Any_And.apply(Eq.any_by, index=1)
 
-    Eq <<= Eq[-2].this.expr.apply(Algebra.Lt.of.Lt.Ge), Eq[-1].this.expr.apply(Nat.Gt.of.Ge.Lt)
+    Eq <<= Eq[-2].this.expr.apply(Nat.Lt.of.Lt.Le), Eq[-1].this.expr.apply(Nat.Gt.of.Ge.Lt)
 
     Eq <<= Eq[-2] & Eq[1], Eq[-1] & Eq[0]
 

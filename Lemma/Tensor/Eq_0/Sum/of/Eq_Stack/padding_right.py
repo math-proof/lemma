@@ -47,7 +47,7 @@ def prove(Eq):
     Eq << Eq[-1].this.expr.args[:2].apply(Nat.GeMulS.of.Ge.Gt_0, ret=0)
     Eq << Eq[-1].this.find(GreaterEqual).apply(Int.LtSub_1.of.Le)
     Eq << Eq[-1].this.expr.args[:2].apply(Algebra.GtMul.of.Gt_0.Gt)
-    Eq << Eq[-1].this.expr.apply(Algebra.Lt.of.Lt.Ge)
+    Eq << Eq[-1].this.expr.apply(Nat.Lt.of.Lt.Le)
     Eq << Eq[-1].this.expr.apply(Nat.Le_Sub_1.of.Lt)
     Eq << Eq[-1].this.expr.apply(Nat.Eq_0.of.Le_0)
     Eq << Eq[-1].this.expr.apply(Algebra.Cond.of.Eq_0.invert)

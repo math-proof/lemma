@@ -13,7 +13,7 @@ def apply(greater_than, _greater_than):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool
+    from Lemma import Set, Algebra, Bool, Nat
 
     a, b, x, y = Symbol(real=True, given=True)
     Eq << apply(y <= b, x >= a)
@@ -35,7 +35,7 @@ def prove(Eq):
 
     Eq <<= Bool.AnySetOf.of.Any_And.apply(Eq.any_ax, index=1), Bool.AnySetOf.of.Any_And.apply(Eq.any_by, index=2)
 
-    Eq <<= Eq[-2].this.expr.apply(Algebra.Lt.of.Lt.Ge), Eq[-1].this.expr.apply(Algebra.Gt.of.Gt.Le)
+    Eq <<= Eq[-2].this.expr.apply(Nat.Lt.of.Lt.Le), Eq[-1].this.expr.apply(Algebra.Gt.of.Gt.Le)
 
     Eq <<= Eq[-2] & Eq[1], Eq[-1] & Eq[0]
 
