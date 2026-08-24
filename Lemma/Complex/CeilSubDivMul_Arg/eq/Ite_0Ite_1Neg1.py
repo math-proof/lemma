@@ -1,7 +1,7 @@
 from util import *
 
 
-@apply
+@apply(given=True)
 def apply(is_nonzero, q):
     p = is_nonzero.of(Unequal[0])
 

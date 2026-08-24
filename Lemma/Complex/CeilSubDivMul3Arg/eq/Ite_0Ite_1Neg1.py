@@ -39,7 +39,7 @@ def prove(Eq):
 
     Eq << Eq[-3].subs(Eq[-1])
 
-    Eq << Unequal(p, 0).this.apply(Complex.CeilSubDivMul_Arg.eq.Ite_0Ite_1Neg1.of.Ne_0, q)
+    Eq << Unequal(p, 0).this.apply(Complex.CeilSubDivMul_Arg.eq.Ite_0Ite_1Neg1, q)
 
     Eq << Eq[-1].lhs.this.apply(Nat.Eq_0.Is.EqMul.of.Ne_0, Eq[-1].find(Equal[~Ceil, 0]))
 
