@@ -3951,7 +3951,7 @@ def simplify_patterns_xor():
                      )
     return _matchers_xor
 
-binary_operators = 'equ', 'Is', 'eq', 'ne', 'gt', 'ge', 'lt', 'le', 'at', 'to', 'subset', 'supset', 'et', 'ou', 'distributed'
+binary_operators = 'equ', 'Is', 'eq', 'ne', 'gt', 'ge', 'lt', 'le', 'at', 'to', 'subset', 'supset', 'et', 'ou', 'distributed', 'As'
 def inference_type(tokens):
 
     for token in ('of', 'given', *binary_operators):

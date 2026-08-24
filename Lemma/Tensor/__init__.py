@@ -130,3 +130,4 @@ from . import AppendAddS
 from . import MulAppendS
 from . import AppendMulS
 from . import AppendHstackS
+from . import DotAppendHstackS

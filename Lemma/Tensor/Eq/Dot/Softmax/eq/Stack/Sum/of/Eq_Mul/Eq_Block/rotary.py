@@ -40,7 +40,7 @@ def prove(Eq):
 
     Eq.final = Eq[-2].subs(Eq[-1])
 
-    Eq << Tensor.Dot.eq.Add.of.Eq_Mul.Eq_Block.position_representation.rotary.apply(*Eq[:2], K[i])
+    Eq << Tensor.DotAppendHstackS.As.AddMulS.rotary.apply(*Eq[:2], K[i])
 
     Eq << Eq[-1].subs(k, k - t).subs(i, k).subs(t, i)
 

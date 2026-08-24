@@ -37,6 +37,7 @@ LEMMA_PATH_RE = re.compile(r"\.[a-z]+$")
 PY_KEYWORD_SEGMENTS = {
     "Is": "is",
     "In": "in",
+    "As": "as",
 }
 LEAN_KEYWORD_SEGMENTS = {v: k for k, v in PY_KEYWORD_SEGMENTS.items()}
 

@@ -1,6 +1,6 @@
 from util import *
 
-@apply
+@apply(given=True)
 def apply(eq_theta, eq_R, xt):
     from Lemma.Tensor.EqDot.of.Eq_Mul.position_representation import extract
     Rk, d, alpha, θ, b, k, *_ = extract(eq_theta, eq_R)
