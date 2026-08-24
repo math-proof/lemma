@@ -125,3 +125,8 @@ from . import SquareReducedSum
 from . import LeReducedSum
 from . import ReducedArgMaxBlock
 from . import Zero
+from . import AddAppendS
+from . import AppendAddS
+from . import MulAppendS
+from . import AppendMulS
+from . import AppendHstackS

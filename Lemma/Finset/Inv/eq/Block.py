@@ -41,7 +41,7 @@ def prove(Eq):
 
     Eq << (Eq[0].lhs.find(BlockMatrix) @ Eq[0].rhs).this.apply(Tensor.Dot.eq.Block, True)
 
-    Eq << Eq[-1].this.rhs.apply(Tensor.Block.eq.Eye)
+    Eq << Eq[-1].this.rhs.apply(Tensor.AppendHstackS.eq.Eye)
 
     Eq << Tensor.EqInv.of.Eq_Dot.apply(Eq[-1], left=True)
 

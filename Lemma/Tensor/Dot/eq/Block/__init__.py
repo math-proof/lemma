@@ -203,9 +203,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(MatMul[BlockMatrix]).apply(Tensor.Dot.eq.Block.basic)
 
-    Eq << Eq[-1].this.rhs.find(Add).apply(Tensor.Add.Block.eq.Block)
+    Eq << Eq[-1].this.rhs.find(Add).apply(Tensor.AddAppendS.eq.AppendAddS)
 
-    Eq << Eq[-1].this.rhs.find(Add[BlockMatrix]).apply(Tensor.Add.Block.eq.Block)
+    Eq << Eq[-1].this.rhs.find(Add[BlockMatrix]).apply(Tensor.AddAppendS.eq.AppendAddS)
 
 
 

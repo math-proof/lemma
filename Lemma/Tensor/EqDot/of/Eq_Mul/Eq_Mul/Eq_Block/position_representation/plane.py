@@ -115,7 +115,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.args[1:3].apply(Tensor.Dot.eq.Block, deep=True)
 
-    Eq << Eq[-1].this.find(BlockMatrix[2]).apply(Tensor.Block.eq.Eye)
+    Eq << Eq[-1].this.find(BlockMatrix[2]).apply(Tensor.AppendHstackS.eq.Eye)
 
     Eq.eq_matmul = Bool.Eq.of.Eq.Eq.apply(Eq.eq_matmul, Eq[-1])
 

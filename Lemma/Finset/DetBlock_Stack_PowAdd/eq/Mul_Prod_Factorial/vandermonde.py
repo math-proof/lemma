@@ -88,7 +88,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Element).apply(Int.In_Icc.Is.InSub, 1)
 
-    Eq << Eq[-1].this.rhs.apply(Tensor.Add.Block.eq.Block)
+    Eq << Eq[-1].this.rhs.apply(Tensor.AddAppendS.eq.AppendAddS)
 
     Eq << Eq[-1].this.find(Add[BlockMatrix]).apply(Tensor.Add.eq.Block)
 

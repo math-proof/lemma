@@ -63,9 +63,9 @@ def prove(Eq):
 
     Eq << Eq[0].subs(Eq[-1])
 
-    Eq << Add(*Eq[-1].find(Add[BlockMatrix]).args[:2]).this.apply(Tensor.Add.Block.eq.Block)
+    Eq << Add(*Eq[-1].find(Add[BlockMatrix]).args[:2]).this.apply(Tensor.AddAppendS.eq.AppendAddS)
 
-    Eq << Eq[-1].this.rhs.find(Add[BlockMatrix]).apply(Tensor.Add.Block.eq.Block)
+    Eq << Eq[-1].this.rhs.find(Add[BlockMatrix]).apply(Tensor.AddAppendS.eq.AppendAddS)
 
     Eq.z_def = Eq[-3].subs(Eq[-1])
 

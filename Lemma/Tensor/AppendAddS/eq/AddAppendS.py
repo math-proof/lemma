@@ -19,7 +19,7 @@ def prove(Eq):
     A, B, C, D = Symbol(real=True, shape=(m, n))
     Eq << apply(BlockMatrix(A + C, B + D))
 
-    Eq << Eq[0].this.rhs.apply(Tensor.Add.Block.eq.Block)
+    Eq << Eq[0].this.rhs.apply(Tensor.AddAppendS.eq.AppendAddS)
 
 
 

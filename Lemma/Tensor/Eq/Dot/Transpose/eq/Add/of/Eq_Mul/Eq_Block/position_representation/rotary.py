@@ -45,11 +45,11 @@ def prove(Eq):
 
     Eq << Eq[-5].subs(*Eq[-4:])
 
-    Eq << Eq[-1].this.rhs.apply(Tensor.Block.eq.Add.Block)
+    Eq << Eq[-1].this.rhs.apply(Tensor.AppendAddS.eq.AddAppendS)
 
-    Eq << Eq[-1].this.find(BlockMatrix).apply(Tensor.Block.eq.Mul.Block)
+    Eq << Eq[-1].this.find(BlockMatrix).apply(Tensor.AppendMulS.eq.MulAppendS)
 
-    Eq << Eq[-1].this.find(BlockMatrix).apply(Tensor.Block.eq.Mul.Block)
+    Eq << Eq[-1].this.find(BlockMatrix).apply(Tensor.AppendMulS.eq.MulAppendS)
 
     Eq <<= Eq[-1].find(Stack).this.apply(Real.Stack.eq.Cos), Eq[-1].find(Stack[Sin]).this.apply(Real.Stack.eq.Sin)
 

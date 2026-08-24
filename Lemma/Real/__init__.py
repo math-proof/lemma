@@ -206,3 +206,4 @@ from . import Lt_Maxima
 from . import Max
 from . import Min
 from . import Norm
+from . import AddSinSin_CosCos

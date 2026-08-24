@@ -34,7 +34,7 @@ def prove(Eq):
 
     Eq << Eq[0].this.find(BlockMatrix[1]).apply(Tensor.Block.split, n - Min(u, n))
 
-    Eq << Add(*Eq[-1].find(Add[BlockMatrix]).args[:2]).this.apply(Tensor.Add.Block.eq.Block)
+    Eq << Add(*Eq[-1].find(Add[BlockMatrix]).args[:2]).this.apply(Tensor.AddAppendS.eq.AppendAddS)
 
     Eq.z_def = Eq[-2].subs(Eq[-1])
 
