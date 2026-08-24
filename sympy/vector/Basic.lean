@@ -98,6 +98,9 @@ instance [Sub α] : HSub (Vector α n) α (Vector α n) where
 instance [Mul α] : Mul (Vector α n) where
   mul a b := a.map₂ HMul.hMul b
 
+instance [HPow α β α] : HPow (Vector α n) (Vector β n) (Vector α n) where
+  hPow a b := a.map₂ HPow.hPow b
+
 instance [Mul α] : HMul (Vector α n) α (Vector α n) where
   hMul a b := a.map (· * b)
 

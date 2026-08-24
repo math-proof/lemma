@@ -317,7 +317,7 @@ password = $MYSQL_PWD
 port = $MYSQL_PORT
 EOF
 
-mysql --defaults-extra-file="$tempConfigPath" -D axiom -e "update lemma set error = NULL" 2>&1 | tee test.log
+mysql --defaults-extra-file="$tempConfigPath" -D axiom -e "update lemma set error = NULL where user = '$user'" 2>&1 | tee test.log
 
 grep -P "ERROR \d+ \(\d+\): Unknown database 'axiom'" test.log
 if [ $? -eq 0 ]; then
@@ -347,7 +347,7 @@ if [ $? -eq 0 ]; then
     exit 1
   fi
 fi
-mysql --defaults-extra-file="$tempConfigPath" -D axiom -e "delete from lemma where error is NULL" 2>&1 | tee test.log
+mysql --defaults-extra-file="$tempConfigPath" -D axiom -e "delete from lemma where user = '$user' and error is NULL" 2>&1 | tee test.log
 end_time=$(date +%s)
 time_cost=$((end_time - start_time))
 

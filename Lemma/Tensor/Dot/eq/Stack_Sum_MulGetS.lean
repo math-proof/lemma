@@ -39,5 +39,23 @@ private lemma une
   apply GetDot.eq.Sum_MulGetS.une.fin
 
 
+/--
+Matrix–vector product as a stack of inner products.
+-/
+@[main, fin]
+private lemma mv
+  [Mul α] [AddCommMonoid α]
+-- given
+  (A : Tensor α [n, k])
+  (C : Tensor α [k]) :
+-- imply
+  A @ C = [i < n] ∑ p : Fin k, (id (α := Tensor α []) A[i][p]) * (id (α := Tensor α []) C[p]) := by
+-- proof
+  apply Eq.of.All_EqGetS.fin
+  intro i
+  conv_rhs => erw [EqGetStack.fin (i := i)]
+  apply GetDot.eq.Sum_MulGetS.mv.fin
+
+
 -- created on 2018-04-02
--- updated on 2026-08-19
+-- updated on 2026-08-24

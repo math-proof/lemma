@@ -2,7 +2,7 @@ import Lemma.Real.CosSub.eq.AddCosCos_SinSin
 open Real
 
 
-@[main]
+@[main, comm]
 private lemma main
 -- given
   (x y : ℝ) :

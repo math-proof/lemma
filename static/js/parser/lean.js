@@ -5724,6 +5724,16 @@ class LeanBar extends LeanUnary {
         this.arg.echo();
     }
 
+    insert_bar(caret, prevToken, next) {
+        const p = this.parent;
+        if (p instanceof LeanTactic) {
+            const c = new LeanCaret(this.indent, caret.level);
+            p.push(new LeanBar(c, this.indent, c.level));
+            return c;
+        }
+        return super.insert_bar(caret, prevToken, next);
+    }
+
     insert_comma(caret) {
         if (caret === this.arg) {
             const $new = new LeanCaret(this.indent, caret.level);
@@ -5738,7 +5748,7 @@ class LeanBar extends LeanUnary {
     }
 
     is_indented() {
-        return true;
+        return !(this.parent instanceof LeanTactic);
     }
 
     latexFormat() {
@@ -7587,6 +7597,15 @@ export class LeanTactic extends LeanSyntax {
             if (stmt instanceof LeanTacticBlock) return true;
             if (!stmt.is_comment()) break;
         }
+    }
+
+    insert_bar(caret, prevToken, next) {
+        // Lean opener is `first | tac | …`. Later `|`s are extra LeanBar args (see LeanBar.insert_bar).
+        if (this.tacticName === 'first' && caret === this.arg && caret instanceof LeanCaret) {
+            this.replace(caret, new LeanBar(caret, this.indent, caret.level));
+            return caret;
+        }
+        return super.insert_bar(caret, prevToken, next);
     }
 
     insert_comma(caret) {
@@ -9552,6 +9571,7 @@ class LeanStack extends LeanBigOperator {
     }
 
     get stack_priority() {
+        if (this.scope) return LeanRelational.input_priority;
         return 28;
     }
 

@@ -509,7 +509,7 @@ $mysql = @(
 
 # Run the initial MySQL command and log output
 
-mysql @mysql -D axiom -e "update lemma set error = NULL" 2>&1 | Tee-Object -FilePath test.log
+mysql @mysql -D axiom -e "update lemma set error = NULL where user = '$user'" 2>&1 | Tee-Object -FilePath test.log
 
 # Check for database existence error
 if (Select-String -Path test.log -Pattern "ERROR \d+ \(\d+\): Unknown database 'axiom'") {
@@ -551,7 +551,7 @@ if (Select-String -Path test.log -Pattern "ERROR \d+ \(\w+\) at line \d+: Table 
 }
 
 # Execute MySQL command and log output
-mysql @mysql -D axiom -e "delete from lemma where error is NULL" 2>&1 | Tee-Object -FilePath test.log
+mysql @mysql -D axiom -e "delete from lemma where user = '$user' and error is NULL" 2>&1 | Tee-Object -FilePath test.log
 
 # Calculate time cost
 $end_time = [DateTimeOffset]::Now.ToUnixTimeSeconds()

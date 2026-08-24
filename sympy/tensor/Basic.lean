@@ -144,6 +144,17 @@ instance : HAppend (Tensor α (b_z ++ m :: s)) (Tensor α (b_z ++ n :: s)) (Tens
     let b : List.Vector (List.Vector α (n * s.prod)) b_z.prod := cast (by simp) (B.data.splitAt b_z.length)
     ⟨cast (congrArg (List.Vector α) (by grind)) (List.Vector.map₂ HAppend.hAppend a b).flatten⟩
 
+/--
+[torch.hstack](https://docs.pytorch.org/docs/stable/generated/torch.hstack.html)
+
+Horizontal concatenation along the second axis. Rank ≥ 2 only (no 1D case).
+-/
+def Tensor.hstack (A : Tensor α (d :: n :: s)) (B : Tensor α (d :: m :: s)) :
+    Tensor α (d :: (n + m) :: s) :=
+  let A : Tensor α ([d] ++ n :: s) := A
+  let B : Tensor α ([d] ++ m :: s) := B
+  A ++ B
+
 instance [LE α] : LE (Tensor α s) where
   le A B := A.data ≤ B.data
 
