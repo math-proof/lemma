@@ -46,7 +46,7 @@ def prove(Eq):
 
     Eq << Eq[0].this.rhs.args[1].apply(Tensor.SEq_Append, t - k - 1)
 
-    Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Block)
+    Eq << Eq[-1].this.rhs.apply(Tensor.DotAppendS.eq.AppendAddSDotS)
 
 
 

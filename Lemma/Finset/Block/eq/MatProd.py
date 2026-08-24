@@ -36,7 +36,7 @@ def prove(Eq):
 
     Eq << Eq[-2].subs(Eq[-1].reversed)
 
-    Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Block, deep=True)
+    Eq << Eq[-1].this.rhs.apply(Tensor.DotAppendS.eq.AppendAddSDotS, deep=True)
 
     Eq << Eq[-1].this.rhs.find(MatMul).apply(Tensor.Dot.eq.MatProd.push)
 

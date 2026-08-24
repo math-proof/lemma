@@ -17,7 +17,7 @@ def prove(Eq):
     x = Symbol(domain=Range(a, b + 1), given=True)
     Eq << apply(Equal(x, b))
 
-    Eq << Nat.Eq.of.Ge.squeeze.apply(Eq[1])
+    Eq << Nat.Eq.of.Ge.In_Icc.apply(Eq[1])
 
 
 

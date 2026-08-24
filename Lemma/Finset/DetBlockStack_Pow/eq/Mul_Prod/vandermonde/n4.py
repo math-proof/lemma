@@ -22,7 +22,7 @@ def prove(Eq):
     # http://localhost/axiom/?module=Finset.Det_Block.to.Mul.Prod.vandermonde.st.Lamda.Pow.n3
     j, i = Eq[0].lhs.arg.args[-1].variables
     E = Stack[j:n + 4, i:n + 4]((-1) ** (j - i) * binomial(j, i))
-    Eq << (Eq[0].lhs.arg @ E).this.apply(Tensor.Dot.eq.Block)
+    Eq << (Eq[0].lhs.arg @ E).this.apply(Tensor.DotAppendS.eq.AppendAddSDotS)
 
     Eq << Eq[-1].this.rhs.find(MatMul).apply(Tensor.Dot.eq.Stack_Sum_MulGetS)
 

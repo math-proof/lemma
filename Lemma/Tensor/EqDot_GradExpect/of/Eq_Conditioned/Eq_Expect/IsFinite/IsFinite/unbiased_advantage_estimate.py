@@ -71,7 +71,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Sum).apply(Tensor.Sum.eq.Dot)
 
-    Eq << Eq[-1].this.rhs.find(Stack).apply(Tensor.Stack.eq.Pow)
+    Eq << Eq[-1].this.rhs.find(Stack).apply(Tensor.Stack_PowGetS.eq.Pow)
 
     Eq << Eq[-1].this.rhs.find(Stack).limits_subs(Eq[-1].rhs.find(Stack).variable, t)
 

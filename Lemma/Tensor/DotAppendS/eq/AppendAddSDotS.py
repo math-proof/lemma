@@ -189,19 +189,19 @@ def prove(Eq):
     _D = Symbol("D'", shape=(m, b), complex=True)
     Eq << apply(BlockMatrix([[A, B], [C, D]]) @ BlockMatrix([[_A, _C], [_B, _D]]), True)
 
-    Eq << Eq[-1].lhs.this.apply(Tensor.Dot.eq.Block.basic)
+    Eq << Eq[-1].lhs.this.apply(Tensor.DotAppend.eq.AppendDotS)
 
-    Eq << Eq[-1].this.rhs.find(MatMul).apply(Tensor.Dot.eq.Block.basic)
+    Eq << Eq[-1].this.rhs.find(MatMul).apply(Tensor.DotAppend.eq.AppendDotS)
 
-    Eq << Eq[-1].this.rhs.find(MatMul).apply(Tensor.Dot.eq.Block.basic)
+    Eq << Eq[-1].this.rhs.find(MatMul).apply(Tensor.DotAppend.eq.AppendDotS)
 
-    Eq << Eq[-1].this.rhs.find(MatMul).apply(Tensor.Dot.eq.Block.basic)
+    Eq << Eq[-1].this.rhs.find(MatMul).apply(Tensor.DotAppend.eq.AppendDotS)
 
-    Eq << Eq[-1].this.rhs.find(MatMul[BlockMatrix]).apply(Tensor.Dot.eq.Block.basic)
+    Eq << Eq[-1].this.rhs.find(MatMul[BlockMatrix]).apply(Tensor.DotAppend.eq.AppendDotS)
 
-    Eq << Eq[-1].this.rhs.find(MatMul[BlockMatrix]).apply(Tensor.Dot.eq.Block.basic)
+    Eq << Eq[-1].this.rhs.find(MatMul[BlockMatrix]).apply(Tensor.DotAppend.eq.AppendDotS)
 
-    Eq << Eq[-1].this.rhs.find(MatMul[BlockMatrix]).apply(Tensor.Dot.eq.Block.basic)
+    Eq << Eq[-1].this.rhs.find(MatMul[BlockMatrix]).apply(Tensor.DotAppend.eq.AppendDotS)
 
     Eq << Eq[-1].this.rhs.find(Add).apply(Tensor.AddAppendS.eq.AppendAddS)
 
@@ -216,4 +216,3 @@ if __name__ == '__main__':
 
 # created on 2020-08-18
 # updated on 2021-12-13
-from . import basic

@@ -98,11 +98,11 @@ def prove(Eq):
     H = Symbol(shape=(n, n), complex=True)
     Eq << apply(Determinant(BlockMatrix([[A, B, C], [D, Zeros(2 * n, 2 * n), E], [F, G, H]])))
 
-    Eq << (BlockMatrix([[Zeros(2 * n, n), Identity(2 * n), Zeros(2 * n, n)], [Identity(n), Zeros(n, 2 * n), Zeros(n, n)], [Zeros(n, n), Zeros(n, 2 * n), Identity(n)]]) @ Eq[0].lhs.arg).this.apply(Tensor.Dot.eq.Block, True)
+    Eq << (BlockMatrix([[Zeros(2 * n, n), Identity(2 * n), Zeros(2 * n, n)], [Identity(n), Zeros(n, 2 * n), Zeros(n, n)], [Zeros(n, n), Zeros(n, 2 * n), Identity(n)]]) @ Eq[0].lhs.arg).this.apply(Tensor.DotAppendS.eq.AppendAddSDotS, True)
 
     Eq << Eq[-1] @ BlockMatrix([[Identity(n), Zeros(n, n), Zeros(n, 2 * n)], [Zeros(2 * n, n), Zeros(2 * n, n), Identity(2 * n)], [Zeros(n, n), Identity(n), Zeros(n, 2 * n)]])
 
-    Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Block, True)
+    Eq << Eq[-1].this.rhs.apply(Tensor.DotAppendS.eq.AppendAddSDotS, True)
 
     X = Symbol(BlockMatrix([D.T, E.T]).T)
     Y = Symbol(BlockMatrix([B, G]))

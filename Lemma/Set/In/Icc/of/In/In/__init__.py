@@ -36,7 +36,7 @@ def prove(Eq):
 
     Eq.open_Interval, Eq.ge = Eq[-2].this.apply(Bool.Imp_Imp.Is.ImpAnd), Eq[-1].this.apply(Bool.Imp_Imp.Is.ImpAnd)
 
-    Eq << (w >= 1).this.apply(Nat.Eq.of.Ge.squeeze)
+    Eq << (w >= 1).this.apply(Nat.Eq.of.Ge.In_Icc)
 
     Eq <<= Eq[-1] & Eq.ge
 

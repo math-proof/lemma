@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(MatMul).args[1].apply(Tensor.SEq_Append, k)
 
-    Eq << Eq[-1].this.rhs.find(MatMul).apply(Tensor.Dot.eq.Block)
+    Eq << Eq[-1].this.rhs.find(MatMul).apply(Tensor.DotAppendS.eq.AppendAddSDotS)
 
 
 

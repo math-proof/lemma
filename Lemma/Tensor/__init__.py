@@ -131,3 +131,8 @@ from . import MulAppendS
 from . import AppendMulS
 from . import AppendHstackS
 from . import DotAppendHstackS
+from . import DotAppend
+from . import DotMulEye
+from . import Stack_PowGetS
+from . import MulAppend
+from . import DotAppendS

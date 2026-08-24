@@ -93,7 +93,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Expectation[Expectation]).apply(Probability.Expect.law_of_total_expectation)
 
-    Eq << Eq[-1].this.rhs.find(MatMul[~Stack]).apply(Tensor.Stack.eq.Pow)
+    Eq << Eq[-1].this.rhs.find(MatMul[~Stack]).apply(Tensor.Stack_PowGetS.eq.Pow)
 
     Eq << Eq[-1].this.rhs.apply(Tensor.Add.eq.Dot)
 

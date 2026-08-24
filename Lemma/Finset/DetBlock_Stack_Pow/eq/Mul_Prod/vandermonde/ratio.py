@@ -19,7 +19,7 @@ def prove(Eq):
     Eq << apply(Det(BlockMatrix([Stack[j:m, i:d](j ** i * λ ** j), Stack[j:m, i:m - d](j ** i)])))
 
     E = BlockMatrix(Stack[j:d, i:m]((-λ) ** (j - i) * binomial(j, i)).T, Stack[j:m - d, i:m]((-λ) ** (d + j - i) * binomial(d, i - j)).T).T
-    Eq << (Eq[0].lhs.arg @ E).this.apply(Tensor.Dot.eq.Block)
+    Eq << (Eq[0].lhs.arg @ E).this.apply(Tensor.DotAppendS.eq.AppendAddSDotS)
 
     Eq << Eq[-1].this.rhs.find(Mul[Stack]).apply(Tensor.Mul.eq.Stack, simplify=None)
 

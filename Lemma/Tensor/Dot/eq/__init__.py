@@ -7,7 +7,6 @@ from . import Stack
 from . import Sub
 from . import Mul
 from . import Pow
-from . import Block
 from . import Exp
 from . import Neg
 from . import Sum

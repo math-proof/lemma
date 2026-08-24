@@ -80,7 +80,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Probability.Expect.eq.Dot)
 
-    Eq << Eq[-1].this.rhs.find(Stack).apply(Tensor.Stack.eq.Pow)
+    Eq << Eq[-1].this.rhs.find(Stack).apply(Tensor.Stack_PowGetS.eq.Pow)
 
     Eq << Eq[-1].this.rhs.find(Expectation).apply(Probability.Expect.Stack.eq.Stack.Expect)
 

@@ -53,7 +53,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Stack).apply(Tensor.Stack.Delta.eq.Block)
 
-    Eq << Eq[-1].this.find(Mul).apply(Tensor.Mul.eq.Block)
+    Eq << Eq[-1].this.find(Mul).apply(Tensor.MulAppend.eq.AppendMulS)
 
     Eq.matmul_subs = Eq[-1].this.apply(Int.EqAdd.Is.Eq_Sub, rhs=0).reversed
 
@@ -87,7 +87,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Stack).apply(Tensor.Stack.Delta.eq.Block)
 
-    Eq << Eq[-1].this.find(Mul).apply(Tensor.Mul.eq.Block)
+    Eq << Eq[-1].this.find(Mul).apply(Tensor.MulAppend.eq.AppendMulS)
 
     Eq << Tensor.Stack.of.All_Eq.fin.apply(Eq[-1], (i, 0, n - Min(l, n)), simplify=None)
 
@@ -105,7 +105,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Stack).apply(Tensor.Stack.Delta.eq.Block)
 
-    Eq << Eq[-1].this.find(Mul[BlockMatrix]).apply(Tensor.Mul.eq.Block)
+    Eq << Eq[-1].this.find(Mul[BlockMatrix]).apply(Tensor.MulAppend.eq.AppendMulS)
 
     Eq << Eq[-1].this.find(Zeros).shape[0].find(relu).apply(Tensor.Relu.eq.Add.Min)
 

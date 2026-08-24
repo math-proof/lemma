@@ -18,7 +18,7 @@ def prove(Eq):
 
     Eq << Eq[0].lhs.this.find(Sliced).apply(Tensor.SEq_Append, t - k)
 
-    Eq << Eq[-1].this.rhs.find(MatMul).apply(Tensor.Dot.eq.Block)
+    Eq << Eq[-1].this.rhs.find(MatMul).apply(Tensor.DotAppendS.eq.AppendAddSDotS)
 
     Eq.next = Eq[-1].subs(k, k + 1)
 

@@ -116,11 +116,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Stack[Mul[Ones]]).apply(Tensor.Stack_Mul.eq.MulStackS)
 
-    Eq << Eq[-1].this.find(Stack[Pow]).apply(Tensor.Stack.eq.Pow)
+    Eq << Eq[-1].this.find(Stack[Pow]).apply(Tensor.Stack_PowGetS.eq.Pow)
 
     Eq << Eq[-1].this.find(Stack).apply(Tensor.Stack.eq.ReducedSum)
 
-    Eq << Eq[-1].this.find(Stack[Pow]).apply(Tensor.Stack.eq.Pow)
+    Eq << Eq[-1].this.find(Stack[Pow]).apply(Tensor.Stack_PowGetS.eq.Pow)
 
     Eq << Eq[-1].this.find(Stack).apply(Tensor.Stack.eq.ReducedSum)
 

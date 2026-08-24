@@ -53,7 +53,7 @@ def prove(Eq):
 
     Eq << Eq[1].subs(Eq[0]).subs(Eq[0].subs(k, t))
 
-    Eq << Eq[-1].this.lhs.apply(Tensor.Dot.eq.Block, deep=True)
+    Eq << Eq[-1].this.lhs.apply(Tensor.DotAppendS.eq.AppendAddSDotS, deep=True)
 
     Eq <<= Eq[-1].lhs.find(MatMul).this.apply(Tensor.Dot.eq.Stack_Sum_MulGetS),\
         Eq[-1].lhs.find(MatMul[2]).this.apply(Tensor.Dot.eq.Stack_Sum_MulGetS),\
@@ -106,7 +106,7 @@ def prove(Eq):
 
     Eq <<= Eq[-1].find(Stack).this.apply(Real.Stack.eq.Cos), Eq[-1].find(Stack[Sin]).this.apply(Real.Stack.eq.Sin)
 
-    Eq << Eq[-1].rhs.find(Stack).this.apply(Tensor.Stack.eq.Pow)
+    Eq << Eq[-1].rhs.find(Stack).this.apply(Tensor.Stack_PowGetS.eq.Pow)
 
     j = Eq[-1].lhs.variable
     Eq << Eq[0].subs(k, k - t).this.find(Stack).limits_subs(i, j).reversed

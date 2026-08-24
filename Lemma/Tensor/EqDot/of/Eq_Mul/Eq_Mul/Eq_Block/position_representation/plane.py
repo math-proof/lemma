@@ -93,9 +93,9 @@ def prove(Eq):
         [Zcr, Zcr, Zcc,  Ic]]
     Eq << Tensor.Dot.of.Eq.left.apply(Eq[-1], D_r)
 
-    Eq << Eq[-1].this.lhs.args[:2].apply(Tensor.Dot.eq.Block, deep=True)
+    Eq << Eq[-1].this.lhs.args[:2].apply(Tensor.DotAppendS.eq.AppendAddSDotS, deep=True)
 
-    Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Block, deep=True)
+    Eq << Eq[-1].this.rhs.apply(Tensor.DotAppendS.eq.AppendAddSDotS, deep=True)
 
     # swap the 1st and 2nd columns of I Matrix, we get the column transformation
     D_c = [
@@ -105,15 +105,15 @@ def prove(Eq):
         [Zcr, Zcc, Zcr,  Ic]]
     Eq << Tensor.Dot.of.Eq.apply(Eq[-1], D_c)
 
-    Eq << Eq[-1].this.lhs.args[-2:].apply(Tensor.Dot.eq.Block, deep=True)
+    Eq << Eq[-1].this.lhs.args[-2:].apply(Tensor.DotAppendS.eq.AppendAddSDotS, deep=True)
 
-    Eq.eq_matmul = Eq[-1].this.rhs.apply(Tensor.Dot.eq.Block, deep=True)
+    Eq.eq_matmul = Eq[-1].this.rhs.apply(Tensor.DotAppendS.eq.AppendAddSDotS, deep=True)
 
-    Eq <<= (Eq.eq_matmul.lhs.args[0] @ D_c).this.apply(Tensor.Dot.eq.Block, deep=True),  (D_r @ Eq.eq_matmul.lhs.args[1]).this.apply(Tensor.Dot.eq.Block, deep=True)
+    Eq <<= (Eq.eq_matmul.lhs.args[0] @ D_c).this.apply(Tensor.DotAppendS.eq.AppendAddSDotS, deep=True),  (D_r @ Eq.eq_matmul.lhs.args[1]).this.apply(Tensor.DotAppendS.eq.AppendAddSDotS, deep=True)
 
     Eq << Eq[-2] @ Eq[-1]
 
-    Eq << Eq[-1].this.lhs.args[1:3].apply(Tensor.Dot.eq.Block, deep=True)
+    Eq << Eq[-1].this.lhs.args[1:3].apply(Tensor.DotAppendS.eq.AppendAddSDotS, deep=True)
 
     Eq << Eq[-1].this.find(BlockMatrix[2]).apply(Tensor.AppendHstackS.eq.Eye)
 
@@ -128,15 +128,15 @@ def prove(Eq):
 
     Eq << Eq[-5].subs(*Eq[-4:], Eq.identity)
 
-    Eq <<= Eq[-1].find(Mul).this.apply(Tensor.Mul.eq.Block),\
-        Eq[-1].find(Mul[2]).this.apply(Tensor.Mul.eq.Block),\
-        Eq[-1].find(BlockMatrix[2]).find(Mul).this.apply(Tensor.Mul.eq.Block),\
-        Eq[-1].find(BlockMatrix[2]).args[1].find(Mul).this.apply(Tensor.Mul.eq.Block)
+    Eq <<= Eq[-1].find(Mul).this.apply(Tensor.MulAppend.eq.AppendMulS),\
+        Eq[-1].find(Mul[2]).this.apply(Tensor.MulAppend.eq.AppendMulS),\
+        Eq[-1].find(BlockMatrix[2]).find(Mul).this.apply(Tensor.MulAppend.eq.AppendMulS),\
+        Eq[-1].find(BlockMatrix[2]).args[1].find(Mul).this.apply(Tensor.MulAppend.eq.AppendMulS)
 
     Eq << Eq[-5].subs(*Eq[-4:])
 
-    Eq <<= Eq[-1].find(-BlockMatrix).this.apply(Tensor.Mul.eq.Block), \
-        Eq[-1].find(BlockMatrix[2]).find(-BlockMatrix).this.apply(Tensor.Mul.eq.Block)
+    Eq <<= Eq[-1].find(-BlockMatrix).this.apply(Tensor.MulAppend.eq.AppendMulS), \
+        Eq[-1].find(BlockMatrix[2]).find(-BlockMatrix).this.apply(Tensor.MulAppend.eq.AppendMulS)
 
     Eq << Eq[-3].subs(*Eq[-2:])
 
@@ -148,12 +148,12 @@ def prove(Eq):
 
     Eq << Eq[-3].subs(*Eq[-2:], Eq.identity)
 
-    Eq <<= Eq[-1].rhs.find(Mul).this.apply(Tensor.Mul.eq.Block),\
-        Eq[-1].rhs.args[1].find(Mul).this.apply(Tensor.Mul.eq.Block)
+    Eq <<= Eq[-1].rhs.find(Mul).this.apply(Tensor.MulAppend.eq.AppendMulS),\
+        Eq[-1].rhs.args[1].find(Mul).this.apply(Tensor.MulAppend.eq.AppendMulS)
 
     Eq << Eq[-3].subs(*Eq[-2:])
 
-    Eq << Eq[-1].this.find(-BlockMatrix).apply(Tensor.Mul.eq.Block)
+    Eq << Eq[-1].this.find(-BlockMatrix).apply(Tensor.MulAppend.eq.AppendMulS)
 
     Eq << Bool.Eq.of.Eq.Eq.apply(Eq.eq_matmul, Eq[-1])
 

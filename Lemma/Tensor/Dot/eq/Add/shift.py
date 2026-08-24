@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.args[1].apply(Tensor.SEq_Append, 1)
 
-    Eq << Eq[-1].this.lhs.apply(Tensor.Dot.eq.Block)
+    Eq << Eq[-1].this.lhs.apply(Tensor.DotAppendS.eq.AppendAddSDotS)
 
 
 

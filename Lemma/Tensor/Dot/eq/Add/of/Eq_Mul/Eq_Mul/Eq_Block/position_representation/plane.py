@@ -49,14 +49,14 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.args[1].apply(Tensor.SEq_Append, (d_r + d_c) / 2)
 
-    Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Block, deep=True)
+    Eq << Eq[-1].this.rhs.apply(Tensor.DotAppendS.eq.AppendAddSDotS, deep=True)
 
     Eq << Eq[-1].this.rhs.apply(Tensor.AppendAddS.eq.AddAppendS, (-1, slice(1, None)))
 
-    Eq <<= Eq[-1].rhs.find(MatMul).this.apply(Tensor.Dot.Eye.eq.Mul), \
-        Eq[-1].find(MatMul[2]).this.apply(Tensor.Dot.Eye.eq.Mul), \
-        Eq[-1].find(-~MatMul).this.apply(Tensor.Dot.Eye.eq.Mul), \
-        Eq[-1].rhs.args[1].find(MatMul).this.apply(Tensor.Dot.Eye.eq.Mul)
+    Eq <<= Eq[-1].rhs.find(MatMul).this.apply(Tensor.DotMulEye.eq.Mul), \
+        Eq[-1].find(MatMul[2]).this.apply(Tensor.DotMulEye.eq.Mul), \
+        Eq[-1].find(-~MatMul).this.apply(Tensor.DotMulEye.eq.Mul), \
+        Eq[-1].rhs.args[1].find(MatMul).this.apply(Tensor.DotMulEye.eq.Mul)
 
     Eq << Eq[-5].subs(*Eq[-4:])
 

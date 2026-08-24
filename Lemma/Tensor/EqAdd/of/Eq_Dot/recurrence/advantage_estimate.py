@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Pow).apply(Real.Pow_Add.eq.MulPowS.of.Gt_0)
 
-    Eq << Eq[-1].this.find(Stack).apply(Tensor.Stack.eq.Pow)
+    Eq << Eq[-1].this.find(Stack).apply(Tensor.Stack_PowGetS.eq.Pow)
 
     Eq << Eq[0].subs(t, t + 1)
 
