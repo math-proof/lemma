@@ -1,7 +1,5 @@
 # 滑动窗口因果注意力下 KV Cache 正确性的形式化验证
 
-**cosmosZhou**
-
 项目工件：<https://github.com/math-proof/lemma>
 
 ## 摘要
