@@ -2,7 +2,7 @@
 # .\ps1\update.ps1 -clean
 param(
     [switch]$clean,
-    [String]$version = "v4.32.0"
+    [String]$version = "v4.33.1"
 )
 $versionNumber = $version.Substring(1)
 # cd ~/.elan/toolchains

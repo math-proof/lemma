@@ -1,0 +1,381 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{url}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue,
+  citecolor=blue,
+  urlcolor=blue
+}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{definition}[theorem]{Definition}
+
+\newcommand{\Tensor}{\operatorname{Tensor}}
+\newcommand{\bandpart}{\operatorname{band\_part}}
+\newcommand{\rowop}{\operatorname{row}}
+\newcommand{\concat}{\mathbin{+\mkern-4mu+}}
+\newcommand{\XEq}{\approx}
+\newcommand{\SEq}{\simeq}
+\newcommand{\Rstar}{\mathbb{R}^*}
+
+\title{Formal Verification of KV-Cache Correctness\\for Sliding-Window Causal Attention}
+\author{cosmosZhou\\[0.3em]\small Project artifact: \url{https://github.com/math-proof/lemma}}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Production GPT-style decoders rely on a key--value (KV) cache to avoid recomputing past keys and values at every autoregressive step.
+Implementations in Hugging Face Transformers, vLLM, and related systems concatenate cached tensors with the new token and attend over a sliding causal window, but this incremental update is validated by tests rather than proved as a tensor identity.
+We state and machine-check such an identity in the \texttt{lemma} library: if every prefix output $Z(n)$ equals sliding-window masked scaled dot-product attention, then $Z(n{+}1)$ equals $Z(n)$ concatenated with one new attention row computed from the cached window plus the new key and value.
+The proof is checked in Lean~4 (2026-08-19) and was first stated interactively in SymPy (2024-02-28).
+Masking uses hyperreal $-\infty$ via a \texttt{band\_part} mask (library-defined from \texttt{tril}/\texttt{triu}/\texttt{masked\_fill}, following TensorFlow's \texttt{tf.linalg.band\_part}~\cite{tensorflow_band_part}), and equality is the library's total hyperreal closeness relation $\XEq$, designed to mimic \texttt{torch.isclose} on $\Rstar$.
+We give the formal statement, a proof sketch, the lemma dependency structure, and limitations of what is and is not claimed.
+Interactive visualizations and source files are public on \url{http://www.lemma.cn/} and GitHub~\cite{lemma_repo}.
+\end{abstract}
+
+\section{Introduction}
+\label{sec:intro}
+
+GPT-2, GPT-3, GPT-4, and every Hugging Face \texttt{AutoModelForCausalLM} decode one token at a time~\cite{radford2019language}.
+At each step a self-attention layer maps hidden states to queries, keys, and values $Q,K,V$.
+For the new token at position $n$, causal attention is
+\[
+\operatorname{softmax}\!\left(\frac{q_n K_{:n+1}^{\top}}{\sqrt{d_z}}+M\right)V_{:n+1},
+\]
+where $K_{:n+1}$ and $V_{:n+1}$ collect keys and values of all tokens seen so far and $M$ hides future positions~\cite{vaswani2017attention}.
+The linear maps producing $K$ and $V$ do not depend on later tokens, so the first $n$ key/value rows never change; recomputing them at every generate step is quadratic in prefix length and wasted work.
+
+A \emph{KV cache} stores past keys and values and, at the next step, concatenates only the new pair:
+\[
+K_{:n+1}=K_{:n}\concat[k_n],\qquad V_{:n+1}=V_{:n}\concat[v_n].
+\]
+Hugging Face Transformers implements this as \texttt{use\_cache=True} (the default in \texttt{generate})~\cite{huggingface_generate}.
+Tensors travel as \texttt{past\_key\_values}; the default container is \texttt{DynamicCache}~\cite{huggingface_dynamic_cache}, one $(K,V)$ pair per layer with shape \texttt{[batch, heads, seq\_len, head\_dim]}.
+Internally the attention module concatenates current $k,v$ with the cache and attends with a mask of length \texttt{past\_kv\_length + 1}~\cite{huggingface_kv_cache}.
+Prefill runs the full prompt once; decode then feeds one new \texttt{input\_id} per step plus the cache.
+Sliding-window models keep only the last $\ell$ pairs, matching our Lean statement; vanilla GPT keeps the whole prefix, matching the SymPy special case.
+
+That is an implementation.
+The contribution of this paper is the missing algebraic identity: if $Z(n)$ is already masked attention of the prefix, then ``concatenate cache with new $k,v$ and take the last row'' is exactly $Z(n{+}1)$, not a different algorithm.
+We prove this as a machine-checked lemma in a \texttt{Tensor} type semantically equivalent to \texttt{torch.Tensor}~\cite{lemma_repo}, with causal masking $(\bandpart-1)\cdot\infty$ over hyperreals $\Rstar$ so masked positions are identically zero after $\exp$, rather than a floating-point stand-in such as $-10^9$.
+
+Public interactive statements appear on lemma.cn in SymPy~\cite{lemma_kv_cache_sympy} and Lean~4~\cite{lemma_kv_cache_lean}; source files are
+\texttt{All\_Eq\_DotSoftmaxAdd\_DivDot\_T.lean} and \texttt{kv\_cache.py} on GitHub~\cite{lemma_repo}.
+
+\section{Related work}
+\label{sec:related}
+
+\textbf{Runtime systems.}
+PyTorch, Hugging Face Transformers~\cite{huggingface_kv_cache}, vLLM~\cite{vllm}, and SGLang~\cite{sglang} implement KV caches and sliding windows as production systems.
+Correctness is tested, not proved as a tensor equation.
+
+\textbf{Formal libraries.}
+Mathlib~\cite{mathlib_hyperreal} has hyperreal analysis but no \texttt{torch.Tensor} calculus, no \texttt{band\_part}, and no softmax-attention lemmas matching PyTorch semantics.
+OrthoCache machine-checks Parseval for the Walsh--Hadamard transform and a total-variation bound for spectral eviction~\cite{orthocache}; it does not prove that an incremental cached row equals full masked attention.
+TorchLean / BatchInvariantInference~\cite{torchlean} specifies schedule-explicit CUDA attention and batch invariance---a refinement of kernels against a denotation, not this library's \texttt{Tensor} identity with \texttt{band\_part} and hyperreal $\infty$.
+The \texttt{fak} project reports bit-identical cache tests ($\max|\Delta|=0$) in Go; those are empirical witnesses, not Lean/SymPy theorems.
+
+\textbf{Hyperreal closeness.}
+Classical nonstandard analysis~\cite{keisler1976elementary} and Mathlib define ``infinitely close'' by $a-b$ infinitesimal, equivalently $\operatorname{st}(a)=\operatorname{st}(b)$ when both are finite.
+Infinite hyperreals have no standard part, so that relation is not total on $\Rstar$.
+\texttt{torch.isclose}~\cite{pytorch_isclose} is IEEE floating-point code: $|x-y|\le \mathrm{rtol}\cdot|y|+\mathrm{atol}$; non-finite values are close iff equal.
+It is not a theorem and not hyperreal.
+Our library's $\XEq$ relation~\cite{lemma_xeq} fills this gap: a machine-checked, total relation on $\Rstar$ mimicking \texttt{torch.isclose} with infinitesimal relative tolerance.
+The KV-cache lemma is among the first large tensor identities using it: $\exp(-\infty)\XEq 0$, and masked softmax is $\XEq$ the windowed stack rather than definitionally equal in $\mathbb{R}$.
+
+\section{Preliminaries}
+\label{sec:prelim}
+
+\subsection{Tensors and notation}
+
+\texttt{Tensor $\mathbb{R}$ s} is this library's formalization of a real tensor of shape \texttt{s}, with operations matching \texttt{torch.Tensor}: matrix multiply (\texttt{@}), transpose $(\cdot)^{\top}$, \texttt{softmax}, \texttt{tril}, \texttt{triu}, \texttt{masked\_fill}, slicing \texttt{[start:stop]}, stacking $[i<n]\,f(i)$, and concatenation $\concat$.
+Lifting to \texttt{Tensor $\Rstar$ s} interprets entries in the hyperreals.
+Shape-cast equality is written $\SEq$ (\texttt{SEq}).
+
+\paragraph{\texttt{band\_part} (not a native PyTorch API).}
+PyTorch has no \texttt{band\_part}.
+This library names the TensorFlow operation \texttt{tf.linalg.band\_part}~\cite{tensorflow_band_part} and defines it from PyTorch primitives~\cite{lemma_repo}:
+\begin{verbatim}
+# matches Tensor.band_part in special.lean (d=1: no extra masked_fill)
+def band_part(X, l, u, d=1):
+    Y = (X.tril(u).triu(-l))
+    if d == 1:
+        return Y
+    delta = j - i   # diagonal index on the last two axes
+    return Y.masked_fill((delta + l) % d != 0, 0)
+\end{verbatim}
+\noindent
+Here \texttt{j - i} is the diagonal index $j-i$ on the last two axes (as in \texttt{sympy/matrices/expressions/special.lean}).
+Entry $(i,j)$ is kept iff $j-i\in[-l,u]$ and, when $d>1$, iff $d\mid(j-i+l)$ (dilated band; default $d=1$).
+Lemma \texttt{Tensor.BandPart.eq.Stack\_BoolIn\_Icc} proves this equals the boolean indicator of $j-i\in[-l,u]$ for $d=1$.
+We write $\bandpart(l,u)$ for \texttt{band\_part(ones(n,n), l, u)}.
+\emph{Do not confuse} the band parameters $(l,u)$ with the \emph{sliding-window width} $\ell$ below: the causal window mask uses $\bandpart(\ell-1,0)$, which keeps exactly the last $\ell$ keys per row ($j-i\in[1-\ell,0]$).
+
+Fix sliding-window width $\ell\ge 1$ (the number of past keys each query may attend to), embedding size $d_z$, and sequences
+\[
+Q,K,V:\mathbb{N}\to\Tensor\mathbb{R}[d_z],
+\]
+together with prefix outputs $Z(n)\in\Tensor\mathbb{R}[n,d_z]$.
+Write $Q_{:n}=[i<n]\,Q(i)$ and likewise for $K,V$.
+\emph{Notation:} $\ell$ is the mathematical symbol for this window width; Lean and code use the same name \texttt{l} ($\ell=\texttt{l}$).
+The \texttt{band\_part} mask in the theorems is \texttt{band\_part(..., l-1, 0)}, \emph{not} \texttt{band\_part(..., l, 0)}---the first argument to \texttt{band\_part} is a band limit, not the window width.
+
+\subsection{Hyperreal closeness \texorpdfstring{$\XEq$}{approx}}
+
+\begin{definition}[\texorpdfstring{$\XEq$}{approx} on \texorpdfstring{$\Rstar$}{R*}~\cite{lemma_xeq}]
+\label{def:xeq}
+For $a,b\in\Rstar$,
+\[
+a\XEq b
+\quad\Longleftrightarrow\quad
+\frac{|a-b|}{|a|+|b|+1}\to 0,
+\]
+i.e.\ the relative gap is infinitesimal.
+On tensors, $\XEq$ is the pointwise lift of this scalar relation.
+\end{definition}
+
+This is \emph{not} Mathlib's infinitely-close relation ($a-b$ infinitesimal).
+It mimics \texttt{torch.isclose}~\cite{pytorch_isclose}:
+absolute tolerance is effectively $0$ (infinitesimal absolute error implies $\XEq$, but not conversely);
+relative tolerance is the displayed quotient, with $+1$ in the denominator for stability near zero.
+Two infinities may differ by an infinite amount and still be $\XEq$, which a naive $|a-b|$ test forbids.
+
+Throughout the proof, $\exp(A+(\Xi-1)\infty)\XEq e^{A}\Xi$ is false as an identity of reals and false as NSA infinitely-close when both sides are infinite; it is true as $\XEq$.
+
+\subsection{Hyperreal band-part mask}
+
+\begin{lemma}[Mask exponential~\cite{lemma_gpt}]
+\label{lem:mask}
+With $\Xi_{ij}=\mathbf{1}_{[-\ell+1,0]}(j-i)$,
+\[
+\exp\bigl(A_{ij}+(\Xi_{ij}-1)\infty\bigr)\XEq e^{A_{ij}}\Xi_{ij}.
+\]
+On the support of $\Xi$ the infinite term vanishes; off the support the logit is $-\infty$ and the exponential is infinitesimally $0$.
+Softmax of that matrix is the sliding-window causal softmax without a finite clip constant (Figure~\ref{fig:mask}).
+\end{lemma}
+
+\begin{figure}[ht]
+\centering
+\[
+\Xi_{ij}=\mathbf{1}_{[-\ell+1,0]}(j-i),\qquad
+\exp\bigl(A_{ij}+(\Xi_{ij}-1)\infty\bigr)\XEq e^{A_{ij}}\Xi_{ij}.
+\]
+\caption{Hyperreal \texttt{band\_part} mask: forbidden logits go to $-\infty$; $\exp$ yields infinitesimal zero off the sliding window.}
+\label{fig:mask}
+\end{figure}
+
+\subsection{Stack decomposition (lemma \texttt{gpt})}
+
+Lemma \texttt{gpt}~\cite{lemma_gpt} unfolds batched sliding-window masked attention into one row per token---the row-wise form used inside a KV cache.
+Throughout, $\ell\ge 1$ is the \emph{sliding-window width}: query at row $i$ attends to keys with indices in $[(i+1-\ell)_+,i+1)$ (at most $\ell$ keys, causal).
+The Lean proof uses parameter \texttt{l} $=\ell$ and mask \texttt{band\_part(l-1, 0)}.
+
+\begin{lemma}[Stack decomposition (sliding window $\ell$)~\cite{lemma_gpt}]
+\label{lem:gpt}
+Fix sliding-window width $\ell\ge 1$.
+For $Q,K,V\in\Tensor\mathbb{R}[n,d_z]$,
+\begin{align*}
+&\operatorname{softmax}\!\left(
+\frac{QK^{\top}}{\sqrt{d_z}}
++\bigl((1_{[n,n]}).\bandpart(\ell-1,0)-1\bigr)\infty
+\right)V \\
+&\qquad\XEq\;
+[i<n]\;
+\operatorname{softmax}\!\left(\frac{Q[i]\,K[(i+1-\ell):(i+1)]^{\top}}{\sqrt{d_z}}\right)
+V[(i+1-\ell):(i+1)].
+\end{align*}
+The left-hand side is batched masked attention with a causal band of width~$\ell$ (mask $\bandpart(\ell-1,0)$).
+The right-hand side is the same computation row by row: each row $i$ attends only to its length-$\ell$ key/value window---exactly the slice a KV cache concatenates and reuses at decode step~$i$.
+When $\ell\ge n$ the window is the full prefix (vanilla GPT causal attention).
+\end{lemma}
+
+\section{Main result}
+\label{sec:main}
+
+\begin{theorem}[KV-cache increment~\cite{lemma_kv_cache_lean}]
+\label{thm:kv-cache}
+Assume $\ell\ge 1$ and for every $n$,
+\begin{equation}
+\label{eq:hyp}
+Z(n)\;\XEq\;
+\operatorname{softmax}\!\left(
+\frac{Q_{:n}K_{:n}^{\top}}{\sqrt{d_z}}
++\bigl((1_{[n,n]}).\bandpart(\ell-1,0)-1\bigr)\cdot\infty
+\right)
+V_{:n}.
+\end{equation}
+The mask is $\bandpart(\ell-1,0)$, i.e.\ in PyTorch (with \texttt{l} $=\ell$ the sliding-window width):
+\begin{verbatim}
+# l == ell in the paper (sliding-window width; Lean name l)
+torch.ones(n, n).tril(0).triu(-(l - 1))
+\end{verbatim}
+\noindent
+equivalently \texttt{band\_part(torch.ones(n, n), l - 1, 0)} in this library.
+Entry $(i,j)$ is kept iff $j-i\in[1-\ell,0]$, i.e.\ causal attention restricted to the last $\ell$ keys.
+
+Let
+\begin{align*}
+K_w&=K_{:n}[(n+1-\ell):n],&
+V_w&=V_{:n}[(n+1-\ell):n],\\
+\rowop&=
+\operatorname{softmax}\!\left(\frac{Q(n)\,(K_w^{\top}\concat K(n)^{\top})}{\sqrt{d_z}}\right)
+(V_w\concat[V(n)]).
+\end{align*}
+Then
+\begin{equation}
+\label{eq:conc}
+Z(n+1)\;\XEq\; Z(n)\concat[\rowop].
+\end{equation}
+\end{theorem}
+
+Thus one new query attends only to the cached window plus the new key/value; the previous $n$ output rows are reused unchanged.
+
+The SymPy theorem~\cite{lemma_kv_cache_sympy} is the full-causal special case \texttt{BandPart[n, 0]}, with
+\[
+\operatorname{softmax}\!\left(\frac{Q[n]\,[K[:n]^{\top}\mid K[n]]}{\sqrt{d_z}}\right)[V[:n]\mid V[n]],
+\]
+i.e.\ the window is the entire prefix.
+When $\ell>n+1$ in Lean, slice $[(n+1-\ell):n]$ is the whole prefix and the SymPy theorem is recovered.
+
+\section{Proof sketch}
+\label{sec:proof}
+
+The proof is fully checked in Lean~4 in a single file importing the lemmas listed in Section~\ref{sec:deps}.
+Figure~\ref{fig:reduction} summarizes the reduction.
+
+\begin{figure}[ht]
+\centering
+\[
+\begin{array}{c}
+Z(n)\;\XEq\;
+\operatorname{softmax}\!\left(
+\dfrac{Q_{:n}K_{:n}^{\top}}{\sqrt{d_{z}}}
++\bigl((1).\bandpart(\ell-1,0)-1\bigr)\infty
+\right)V_{:n}
+\quad(\forall n)
+\\[1.1em]
+\Big\downarrow\ \scriptstyle\text{instantiate at }n+1,\ \text{Lemma~\ref{lem:gpt}}
+\\[0.9em]
+Z(n+1)\;\XEq\;
+[i<n+1]\;
+\operatorname{softmax}\!\left(
+\dfrac{Q[i]\,K[(i+1-\ell):(i+1)]^{\top}}{\sqrt{d_{z}}}
+\right)
+V[(i+1-\ell):(i+1)]
+\\[1.1em]
+\Big\downarrow\ \scriptstyle [i<n+1]f(i)=[i<n]f(i)\concat[i<1]f(n)
+\\[0.9em]
+\begin{array}{c@{\qquad}c}
+[i<n]\,f(i) & [f(n)] \\[0.5em]
+\Big\downarrow\ \scriptstyle h(n)+\text{Lemma~\ref{lem:gpt}} & \Big\downarrow\ \scriptstyle\text{slice}=\text{window}\concat\text{new token} \\[0.5em]
+Z(n) &
+\operatorname{softmax}\!\left(\dfrac{Q(n)\,(K_{w}^{\top}\concat K(n)^{\top})}{\sqrt{d_{z}}}\right)(V_{w}\concat[V(n)])
+\end{array}
+\\[1.6em]
+Z(n+1)\;\XEq\; Z(n)\concat[\rowop]
+\end{array}
+\]
+\caption{Proof reduction for Theorem~\ref{thm:kv-cache}.}
+\label{fig:reduction}
+\end{figure}
+
+\paragraph{Step 1: instantiate and unfold.}
+Apply hypothesis~\eqref{eq:hyp} at $n+1$ and Lemma~\ref{lem:gpt} to express $Z(n+1)$ as a stack of windowed row attentions.
+
+\paragraph{Step 2: split the stack.}
+By \texttt{Tensor.Stack.eq.AppendStackS},
+$[i<n+1]f(i)=[i<n]f(i)\concat[i<1]f(n)$ for the row function $f$ from Lemma~\ref{lem:gpt}.
+Congruence of $\XEq$ under $\concat$ is \texttt{Tensor.XEqAppendS.of.XEq.XEq}.
+
+\paragraph{Step 3: identify the prefix block.}
+The block $[i<n]f(i)$ equals $Z(n)$ by the hypothesis at $n$ and Lemma~\ref{lem:gpt}, after proving window slices of $K_{:n+1}$ and $K_{:n}$ agree below $n$ via \texttt{Tensor.SEqGetSliceSStack.of.LengthSlice} and \texttt{Tensor.GetSliceStack.as.Stack\_UFnAdd.of.Eq}.
+
+\paragraph{Step 4: identify the last row.}
+The singleton $[f(n)]$ is attention of $Q(n)$ against
+$K_{:n+1}[(n+1-\ell):(n+1)]\SEq K_w\concat[K(n)]$ (and likewise for $V$).
+Transposing concatenated row-blocks is concatenation of transposes up to shape cast (\texttt{Tensor.TAppend.as.AppendTS}).
+Composing with softmax-scale-matmul yields $\rowop$, giving~\eqref{eq:conc}.
+
+\section{Formalization artifact}
+\label{sec:artifact}
+
+Interactive visualizations of the finished statement:
+\begin{itemize}[noitemsep]
+  \item SymPy: \url{http://www.lemma.cn/py/?module=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T.kv_cache}
+  \item Lean~4: \url{http://www.lemma.cn/lean/?module=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T}
+\end{itemize}
+The SymPy page displays \texttt{apply}/\texttt{prove} for prefix equality implying concatenation with \texttt{row}.
+The Lean page displays \texttt{@[main] private lemma kv\_cache} with \texttt{[NeZero (l : $\mathbb{N}$)]}, universal hypothesis on $Z(n)$, the \texttt{let} chain \texttt{Kn, Vn, Kw, Vw, KT, kT, row}, and conclusion $Z(n+1)\XEq Z(n)\concat[\rowop]$.
+
+Source: \url{https://github.com/math-proof/lemma} (Lean~4 on \texttt{main}, SymPy on \texttt{master}).
+
+\subsection{Lemma dependencies}
+\label{sec:deps}
+
+Figure~\ref{fig:deps} lists major imported lemmas (private helpers in the same file omitted).
+
+\begin{figure}[ht]
+\small
+\begin{verbatim}
+Tensor.GetSlice.eq...All_Eq_DotSoftmaxAdd_DivDot_T  (kv_cache)
+|-- Tensor.DotSoftmaxAdd_Mul_Infty.eq.Stack_DotSoftmaxDivDot_T  (gpt)
+|   |-- Tensor.DotSoftmaxAdd_Mul_Infty.eq.Stack_DotSoftmax
+|   |   |-- Tensor.BandPart.eq.Stack_BoolIn_Icc
+|   |   |-- Tensor.ExpAdd_MulInfty.eq.Mul_Stack_Bool
+|   |   `-- Tensor.Softmax.eq.DivExp_KeepdimSumExp
+|   |-- Tensor.GetDot_TGetSlice.as.Dot_Get
+|   `-- Tensor.GetSliceGetDiv.eq.DivGetSliceGet
+|-- Tensor.Stack.eq.AppendStackS
+|-- Tensor.XEqAppendS.of.XEq.XEq
+|-- Tensor.GetSliceStack.as.Stack_UFnAdd.of.Eq
+|-- Tensor.SEqGetSliceSStack.of.LengthSlice
+|-- Tensor.SEqAppendS.of.SEq.SEq
+`-- Tensor.TAppend.as.AppendTS
+\end{verbatim}
+\caption{Import graph for the Lean proof of Theorem~\ref{thm:kv-cache}.}
+\label{fig:deps}
+\end{figure}
+
+\section{SymPy versus Lean~4}
+\label{sec:sympy-lean}
+
+The SymPy lemma (2024-02-28)~\cite{lemma_kv_cache_sympy} is the full-causal increment with \texttt{Equal} rather than $\XEq$.
+Its proof applies the Python \texttt{gpt} unfolding, substitutes $n\mapsto n+1$, splits the stack, and rewrites last-row slices as \texttt{SEq\_Append}.
+
+The Lean~4 lemma (2026-08-19)~\cite{lemma_kv_cache_lean} keeps parameter $\ell\neq 0$, slices $[(n+1-\ell):n]$, works in $\Rstar$ with $\XEq$, and carries \texttt{cast}s required by dependent transpose shapes.
+A batched causal variant exists on the SymPy side at \texttt{Tensor.Eq.of.Eq.gpt.kv\_cache.batched}.
+
+\section{Discussion and limitations}
+\label{sec:discussion}
+
+The statement is an implication, not an if-and-only-if:
+\emph{given} $\forall n.\; Z(n)\XEq$ masked-attention$(Q_{:n},K_{:n},V_{:n};\ell)$,
+\emph{imply} $Z(n+1)\XEq Z(n)\concat[\rowop]$.
+
+It does not construct $Q,K,V$ from a neural network, does not address multi-head or grouped-query layouts, and does not prove CUDA-level bit identity.
+It does prove that, in this \texttt{Tensor} calculus, the KV-cache update is the same mathematical object as one more step of sliding-window masked attention.
+
+The lemma does not bound approximation error from dropping tokens outside the window (that is already encoded in the mask).
+It does not replace OrthoCache's spectral eviction theorems~\cite{orthocache} or TorchLean's kernel-refinement theorems~\cite{torchlean}.
+It is the complementary statement: if prefixes are exact masked attention, the cached one-row update is exact masked attention of length $n+1$.
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+We have presented a machine-checked identity linking GPT-style KV-cache updates to incremental sliding-window masked attention, together with a hyperreal closeness relation suitable for masked softmax with $-\infty$.
+The result is public on lemma.cn and GitHub~\cite{lemma_repo}, with proofs checked in Lean~4 and an earlier SymPy formulation.
+Future work includes multi-head layouts, batched Lean formalization, and connecting $\XEq$ to floating-point refinement theorems.
+
+\bibliographystyle{plain}
+\bibliography{refs}
+
+\end{document}

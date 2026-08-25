@@ -8,7 +8,7 @@ The fundamental design philosophy is: precise syntax, concise expression, effici
 
 * By *interactive*, it means that fully automated theorem proving (ATP) is not currently achievable. Human assistance is required: people search the theorem library and tell the computer which theorems to apply to which kinds of problems.
 * By *axiomatization*, it means following [Hilbert's program](https://en.wikipedia.org/wiki/Hilbert%27s_program): every proved mathematical theorem is derived in finitely many steps from axiom schemas and inference rules, strictly formalized in the framework of dependent type theory.
-* By *code as proof*, it means that, via the Curry–Howard correspondence, mathematical propositions are described exactly by [Lean](https://lean-lang.org/) statements. The code itself is the proof; there is no ambiguity of natural-language phrases such as “evidently,” “similarly,” “it is easy to see,” “in general,” “and so on,” “conversely,” “in summary,” or “without loss of generality.” Lean 4 formal proofs also have none of the rounding error caused by floating-point numbers in other programming languages.
+* By *code as proof*, via the Curry–Howard correspondence, mathematical propositions are described exactly by [Lean](https://lean-lang.org/) statements; the proof is a well-typed program, without substituting checkable steps with natural-language shortcuts such as “evidently,” “it is easy to see,” “similarly,” “in general,” “and so on,” “conversely,” “in summary,” or “without loss of generality.” Under Lean 4’s exact real and hyperreal semantics, there is no floating-point rounding error as in ordinary numerical code.
 
 The site can be found via Google: [定理库](https://www.google.com.hk/search?q=%E5%AE%9A%E7%90%86%E5%BA%93).
 Proof assistants / theorem libraries in the open-source community include [leanprover](https://leanprover-community.github.io/mathlib4_docs/Mathlib/Algebra/Algebra/Basic.html), [coq](https://github.com/coq/coq), and [isabelle](https://isabelle.in.tum.de/).
@@ -57,9 +57,9 @@ The library currently contains <label id=count>5000</label> proved theorems (<la
 
 <br><br>
 -------
-This formal algorithm theorem library helps algorithm researchers analyze principles, shorten arguments, and “put an engine on thinking.” It is mainly useful for theoretical mathematical proof, and can serve as a reference for mathematics students and researchers, as well as algorithm engineers and researchers in algorithm work and mathematical analysis.
-It also helps mathematicians organize theorem knowledge: with the online code editor one can edit proofs, collect theorems, and quickly locate definitions of theorems, functions, and symbols. Natural-language comments, Lean 4 code, and LaTeX formulas are interleaved and translated among each other, yielding a multimodal structured document and automatically rendered LaTeX, a substitute for pen-and-paper calculation.
-It simplifies both research and teaching, and is an electronic algorithm reference written in Lean 4.
+This formal algorithm theorem library supports work in algorithms and mathematical formalization—a **dynamo for thinking**: state algorithmic properties as machine-checkable propositions and prove them step by step; organize and retrieve lemmas to shorten repeated manual argument; maintain proof scripts in the online editor, with comments, Lean 4 source, and LaTeX rendered side by side as structured documents.
+
+It serves students and researchers in mathematics and related fields, algorithm designers and analysts, and readers who consult formal proofs in teaching or self-study. The library is an interactive, searchable electronic algorithm reference written in Lean 4.
 <br><br>
 
 ![](png/national_emblem.png)

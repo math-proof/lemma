@@ -6,3 +6,7 @@ test.*
 __pycache__
 *.echo.lean
 .vscode/PythonImportHelper-v2-Completion.json
+*.zip
+*.aux
+*.out
+*.blg

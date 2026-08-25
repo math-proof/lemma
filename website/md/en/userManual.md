@@ -1,167 +1,97 @@
-<h1>User Manual for Axiomatized/Semi-mechanized library of Theorems</h1>
-<hr />
-<h2>Online User Manual</h2>
-<br>
-<h3>Theorem Search Function</h3>
-<p>
-	Start the theorem library in the website<a href='../axiom/'>sympy/axiom</a>,
-	or the theorem library search page<a href='../axiom/search'>sympy/axiom/search</a>,
-	as follows:
-</p>
-<img class=zoom src="png/search/panel.png" alt="search box" />
-<hr />
-<br>
-<p>input a keyword at the search box pointed by the red arrow, the
-	keyword should represent a partial indicate of the full theorem name
-	you want to search, for example, the keyword 'binomial' in 'binomial
-	theorem', as follows:</p>
-<img class=zoom src="png/search/keyword.png" alt="search keyword">
-<hr />
-<br>
-<p>press Enter key, then we can view all the theorems that include the
-	keyword 'binomial', as follows:</p>
-<img class=zoom src="png/search/results.png" alt="搜索关键词" />
-<hr />
-<br>
-<p>
-	click the hyperlink pointed by the red arrow, we can view the whole
-	proof process of <a
-		href='../axiom/Discrete/combinatorics/binomial/theorem.php'>binomial
-		theorem</a>, we can also directly visit the get api: <a
-		href='../axiom/search.php?q=binomial'>www.lemma.cn/py?q=binomial</a>
-	to acquire the search results. Both the graphical user interface and
-	get api support<a
-		href='http://www.regular-expressions.info/tutorial.html'>regular
-		expression</a>, and whole word matching, e.g., <a
-		href='../axiom/search.php?q=Discrete.*binomial&regularExpression=true'>www.lemma.cn/py/axiom.php?q=Discrete.*binomial&amp;regularExpression=true</a>
-	which indicates searching theorems that include both 'Discrete' and
-	'binomial'.
-</p>
-<hr />
-<br>
-<h3>Theorem Dependency Analysis</h3>
-<br>
-<h4>Dependency Graph of Callee Theorems</h4>
-Take
-<a href='../axiom.php?module=Discrete.combinatorics.binomial.theorem'>Newton's
-	Binomial Theorem</a>
-as an example :
-<br>
-use the mouse to hover over the first hyperlink on the page, we shall
-see the hint "callee hierarchy", as follows:
-<img class=zoom src="png/hierarchy/hyperlink.png" />
-<hr />
-<br>
-click the hyperlink, we enter the
-<a
-	href='../axiom.php?callee=axiom.Discrete.combinatorics.binomial.theorem'>Dependency
-	Graph of Callee Theorems</a>
-, as follows:
+# User Manual — Lean 4 Formal Theorem Library
 
-<img class=zoom src="png/hierarchy/callee.png" />
-<br>
-the graph aboved shows the following theorems that employed 'binomial
-theorem' in their process of proof:
-<ul>
-	<li><a href='../axiom.php?module=Discrete.difference.factorial'>axiom.Discrete.difference.factorial</a></li>
-	<li><a href='../axiom.php?module=Discrete.matrix.vandermonde.concatenate'>axiom.Discrete.matrix.vandermonde.concatenate</a></li>
-</ul>
-in "Dependency Graph of Callee Theorems", click >>>>(expansion button),
-we can further view the theorems that are callees of the callee of
-current theorem in question. Click <<<<(hiding button), we can hide the
-content that we expanded before.
-<br>
-in "Dependency Graph of Callee Theorems", click the hyperlink
-<a
-	href='../axiom.php?callee=Discrete.combinatorics.binomial.theorem#deep'>callee</a>
-, we can expand all the callee hiearchies, as follows:
-<img class=zoom src="png/hierarchy/deep/callee.png" />
-<hr />
-<br>
-<br>
-<h4>Dependency Graph of Caller Theorems</h4>
+## Online usage
 
-<br>
-in "Dependency Graph of Callee Theorems", click the hyperlink
-<a
-	href='../axiom.php?caller=axiom.Discrete.combinatorics.binomial.theorem'>caller</a>
-, we can view the Dependency Graph of Caller Theorems, as follows:
-<img class=zoom src="png/hierarchy/caller.png" />
-<hr />
-the results above shows that during the process of proving 'binomial
-theorem', we employed the following sub-theorems:
-<ul>
-	<li><a href='../axiom.php?module=Discrete.combinatorics.binomial.Pascal'>axiom.Discrete.combinatorics.binomial.Pascal</a>:
-		<a href='https://en.wikipedia.org/wiki/Pascal%27s_rule'>Pascal's Rule</a>
-		in Combinatorics, named after the French methematician Pascal.</li>
-	<li><a href='../axiom.php?module=Algebra.infer.to.cond.induction'>axiom.Algebra.infer.to.cond.induction</a>:
-		the first <a
-		href='https://en.wikipedia.org/wiki/Mathematical_induction'>mathematical
-			induction</a>, a method of recursively prooving mathematical theorems
-		.</li>
-</ul>
-<br>
+### Theorem search
 
-in "Dependency Graph of Callee Theorems", click the hyperlink
-<a
-	href='../axiom.php?caller=Discrete.combinatorics.binomial.theorem#deep'>caller</a>
-, we can expand the all callee hierarchies, as follows:
-<img class=zoom src="png/hierarchy/deep/caller.png" />
-<hr />
-<br>
-<hr />
-<br>
-<br>
-<h2>Offline User Manual</h2>
-For offline usage, the user must install the php web server. The
-detailed installation instructions is provided here:
-<a href='../php installation.docx'>php installation.docx</a>
-. The user must also install the development environment of Python3.
-Python3.6 is the most recommended. After install python3.6, a dependent
-python package must be installed:
-<br>
-pip install mpmath
-<br>
-<br>
-Now is the way to setup the theorem library on localhost using the
-python source codes:
-<br>
-<br>
-Take windows system as an example:
-<h4></h4>
-<li>designate a website folder, for example: E:\github, in accordance
-	with the methods provided in php installation.docx, alter the
-	DOCUMENT_ROOT of php server. Then we enter this document root:<br> cd
-	E:\github
-</li>
-<br>
-<li>use git to download the python source codes: <br> git clone
-	--depth=1 <a href=https://github.com/math-proof/lemma.git>https://github.com/math-proof/lemma.git</a>
-</li>
-<br>
-<li>enter the axiom folder: <br>cd axiom
-</li>
-<br>
-<li>execute run, wherein debug=1 means output debugging information,
-	while debug=0 means no debugging information:<br>python run.py debug=1
+The Lean 4 visualization site is served by `index.php` at the repository root (typical local URLs: [http://localhost:8080/lean/index.php](http://localhost:8080/lean/index.php) or [http://localhost/lean/index.php](http://localhost/lean/index.php), depending on your PHP document root and port). With no query parameters, the library summary is shown; use the search box (top right) or a GET URL to search.
 
-</li>
-<br>
-<li>after run.py is finished, the console will print the time lapse of
-	the whole program, as well as the automatic prooving results of the
-	whole theorem library, for example:<br> in all 868 axioms<br> unproved:<br>
-	(the detail is omitted)....... <br> websites:<br> (the detail is
-	omitted)....... <br> seconds cost = 45.13455533981323<br> minutes
-	cost = 0.7522425889968872<br> total unproved = 22 <br> total failures
-	= 0
+**Basic search** matches module names in the database (substring match; at most `limit` hits, default 100). Examples:
 
-</li>
-<br>
-<li>start the Chrome, or Edge/IE browser, input at the browser address
-	bar:<br> <a href='../axiom.php'>http://localhost/axiom/index.php</a><br>Now
-	the visualized theorem library is instantiated. Then we can directly
-	access this theorem library at localhost.
-</li>
-<br>
-<hr />
-<br>
+- [../../../index.php?q=Icc&limit=100](../../../index.php?q=Icc&limit=100) — modules whose name contains `Icc`
+- [../../../index.php?q=kv_cache&limit=50](../../../index.php?q=kv_cache&limit=50) — modules whose name contains `kv_cache`
+- [../../../index.php?module=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T](../../../index.php?module=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T) — open the main KV-cache lemma directly
+
+The search placeholder reads `input a hint in search of a formula/theorem/axiom`. Optional flags (checkboxes or URL parameters):
+
+- `limit` — maximum number of results (default 100)
+- `caseSensitive=on` — case-sensitive match
+- `wholeWord=on` — whole-word match
+- `regularExpression=on` — regular expression (e.g. `q=Tensor\..*BandPart&regularExpression=on`)
+- `fullText=on` — grep in `Lemma/**/*.lean` sources (e.g. `q=band_part&fullText=on`)
+- `latex=on` — LaTeX formula similarity search (requires the LaTeX backend service)
+
+Shortcuts (with focus in the search box): Alt+C / W / R / L / U toggle Case / WholeWord / Regex / LaTeX / FullText; Ctrl+F focuses the search box.
+
+![search box](png/search/panel.png)
+
+Enter a keyword (e.g. module fragment `Icc`, `DotSoftmax`, `kv_cache`) and submit to list matching modules; click a result to open that lemma page.
+
+![search keyword](png/search/keyword.png)
+
+The results page title is `search results` with a hit count. Click a module name to open its given / imply / proof view.
+
+![search results](png/search/results.png)
+
+### Lemma dependencies (callee / caller)
+
+Each lemma page has three blocks: **-- given**, **-- imply**, and **-- proof**. Dependencies come from the `imports` field in the database: if lemma A’s `imports` contains `Lemma.B`, then A uses B in its proof.
+
+Terminology (English labels and URL parameters on the site):
+
+- **callee hierarchy** (link on the `-- imply` heading, `?callee=module`): lemmas that *import this module* — other results whose `imports` list includes the current module (who depends on this result).
+- **caller hierarchy** (link on the `-- proof` heading, `?caller=module`): lemmas *imported by this module* — entries in this module’s `imports` list (what this proof calls).
+
+On the hierarchy page you can switch between callee and caller views; append `#deep` or use the deep link to expand the full tree; use `>>>>` / `<<<<` beside nodes to expand or collapse one level.
+
+#### Callee hierarchy (who uses this lemma)
+
+Example: the [main KV-cache lemma](../../../index.php?module=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T).
+
+On the lemma page, hover the link left of **-- imply**; the tooltip is `callee hierarchy`:
+
+![callee link](png/hierarchy/hyperlink.png)
+
+Click it to open the callee graph, e.g. [`?callee=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T`](../../../index.php?callee=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T):
+
+![callee hierarchy](png/hierarchy/callee.png)
+
+The graph lists other lemmas whose `imports` reference this module (if any).
+
+- Click `>>>>` to expand further dependents; `<<<<` to collapse.
+- Open [`?callee=…#deep`](../../../index.php?callee=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T#deep) to expand the full callee tree at once.
+
+#### Caller hierarchy (what this lemma uses)
+
+On the lemma page, click the link left of **-- proof** titled `caller hierarchy`, e.g. [`?caller=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T`](../../../index.php?caller=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T):
+
+![caller hierarchy](png/hierarchy/caller.png)
+
+The graph lists lemmas imported in this proof (e.g. `Tensor.DotSoftmaxAdd_Mul_Infty.eq.Stack_DotSoftmaxDivDot_T` (lemma `gpt`), `Tensor.Stack.eq.AppendStackS`, etc.).
+
+- Open [`?caller=…#deep`](../../../index.php?caller=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T#deep) to expand the full caller tree.
+
+![deep caller hierarchy](png/hierarchy/deep/caller.png)
+
+## Local deployment
+
+You need a PHP web server, MySQL (theorem index), the Lean 4 toolchain, and this repository [math-proof/lemma](https://github.com/math-proof/lemma). Point PHP `DocumentRoot` at the cloned repo root (containing `index.php` and `Lemma/`).
+
+Linux example (see [php installation.docx](../php%20installation.docx) for PHP setup):
+
+```bash
+cd /usr/local
+git clone https://github.com/cosmosZhou/shell.git
+cd shell/php
+make
+sh start.sh port=80 DocumentRoot=/home/github/lean
+```
+
+Windows example:
+
+1. Set the web root, e.g. `E:\github\lean`, and configure `DOCUMENT_ROOT` per php installation.docx.
+2. Clone the project: `git clone --depth=1 https://github.com/math-proof/lemma.git`
+3. Install Lean 4 (see `lean-toolchain`), run `lake build`, and refresh the MySQL index (e.g. `ps1/update.ps1`).
+4. In the browser (adjust port as configured):
+   - [http://localhost/lean/index.php](http://localhost/lean/index.php)
+   - or [http://localhost:8080/lean/index.php?q=Icc&limit=100](http://localhost:8080/lean/index.php?q=Icc&limit=100)

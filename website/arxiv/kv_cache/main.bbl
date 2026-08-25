@@ -1,0 +1,110 @@
+\begin{thebibliography}{10}
+
+\bibitem{orthocache}
+OrthoCache authors.
+\newblock Orthocache: spectral eviction for kv caches, 2025.
+\newblock Lean~4 formalization; public repository.
+
+\bibitem{torchlean}
+TorchLean authors.
+\newblock Torchlean / batchinvariantinference, 2025.
+\newblock Schedule-explicit CUDA attention specification.
+
+\bibitem{huggingface_kv_cache}
+{Hugging Face}.
+\newblock Cache explanation.
+\newblock \url{https://huggingface.co/docs/transformers/en/cache_explanation},
+  2024.
+
+\bibitem{huggingface_dynamic_cache}
+{Hugging Face}.
+\newblock Dynamiccache.
+\newblock \url{https://huggingface.co/docs/transformers/en/kv_cache}, 2024.
+
+\bibitem{huggingface_generate}
+{Hugging Face}.
+\newblock Generation.
+\newblock
+  \url{https://huggingface.co/docs/transformers/en/main_classes/text_generation},
+  2024.
+
+\bibitem{keisler1976elementary}
+H.~Jerome Keisler.
+\newblock {\em Elementary Calculus: An Infinitesimal Approach}.
+\newblock Prindle, Weber \& Schmidt, second edition, 1986.
+
+\bibitem{vllm}
+Woosuk Kwon et~al.
+\newblock vllm: Easy, fast, and cheap llm serving.
+\newblock \url{https://github.com/vllm-project/vllm}, 2023.
+
+\bibitem{lemma_kv_cache_sympy}
+math proof.
+\newblock kv\_cache lemma (sympy).
+\newblock
+  \url{http://www.lemma.cn/py/?module=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T.kv_cache},
+  2024.
+
+\bibitem{lemma_xeq}
+math proof.
+\newblock Hyperreal.xeq.is.infinitesimaldivabssub.
+\newblock
+  \url{http://www.lemma.cn/lean/?module=Hyperreal.XEq.is.InfinitesimalDivAbsSub},
+  2025.
+
+\bibitem{lemma_gpt}
+math proof.
+\newblock Tensor.dotsoftmaxadd\_mul\_infty.eq.stack\_dotsoftmaxdivdot\_t.
+\newblock
+  \url{http://www.lemma.cn/lean/?module=Tensor.DotSoftmaxAdd_Mul_Infty.eq.Stack_DotSoftmaxDivDot_T},
+  2025.
+
+\bibitem{lemma_kv_cache_lean}
+math proof.
+\newblock kv\_cache lemma (lean~4).
+\newblock
+  \url{http://www.lemma.cn/lean/?module=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T},
+  2026.
+
+\bibitem{lemma_repo}
+math proof.
+\newblock lemma: machine-checked tensor calculus.
+\newblock \url{https://github.com/math-proof/lemma}, 2026.
+
+\bibitem{mathlib_hyperreal}
+{Mathlib community}.
+\newblock Mathlib: Hyperreal numbers.
+\newblock \url{https://leanprover-community.github.io/mathlib4_docs/}, 2026.
+
+\bibitem{pytorch_isclose}
+{PyTorch}.
+\newblock torch.isclose.
+\newblock
+  \url{https://docs.pytorch.org/docs/stable/generated/torch.isclose.html},
+  2024.
+
+\bibitem{radford2019language}
+Alec Radford, Jeffrey Wu, Rewon Child, David Luan, Dario Amodei, and Ilya
+  Sutskever.
+\newblock Language models are unsupervised multitask learners.
+\newblock OpenAI Technical Report, 2019.
+
+\bibitem{tensorflow_band_part}
+{TensorFlow}.
+\newblock tf.linalg.band\_part.
+\newblock
+  \url{https://tensorflow.google.cn/api_docs/python/tf/linalg/band_part}, 2024.
+
+\bibitem{vaswani2017attention}
+Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones,
+  Aidan~N Gomez, {\L}ukasz Kaiser, and Illia Polosukhin.
+\newblock Attention is all you need.
+\newblock In {\em Advances in Neural Information Processing Systems},
+  volume~30, 2017.
+
+\bibitem{sglang}
+Lianmin Zheng et~al.
+\newblock Sglang: Efficient execution of structured language model programs,
+  2024.
+
+\end{thebibliography}

@@ -55,6 +55,9 @@ switch ($lang) {
     case 'zh':
         $title = '标记文档';
         break;
+    case 'fr':
+        $title = 'Documents Markdown';
+        break;
     default:
         $title = 'MarkDown Documents';
         break;

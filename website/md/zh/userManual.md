@@ -1,140 +1,97 @@
-<h1>半机械化数学定理库操作手册</h1>
-<hr />
-<h2>线上操作手册</h2>
-<br>
-<h3>定理检索功能</h3>
-<p>
-	启动软件网站可视化定理库<a href='../axiom/'>sympy/axiom</a>，或者定理库搜索界面<a
-		href='../axiom/search'>sympy/axiom/search</a>如下图所示：
-</p>
-<img class=zoom src="png/search/panel.png" alt="搜索框" />
-<hr />
-<br>
-<p>在箭头所指的提示符（input a hint for search of a
-	theorem/axiom）搜索框中输入需要查找的数学定理的名称，或者定理名称的个别单词，比如binomial theorem
-	中的binomial关键词，如下图所示：</p>
-<img class=zoom src="png/search/keyword.png" alt="搜索关键词">
-<hr />
-<br>
-<p>键入回车(Enter)之后，就可在前端打印出包含binomial单词的所有数学定理了：如下图所示：</p>
-<img class=zoom src="png/search/results.png" alt="搜索关键词" />
-<hr />
-<br>
-<p>
-	按照箭头方向所指单击即可进入<a
-		href='../axiom.php?module=Discrete.combinatorics.binomial.theorem'>牛顿二项式定理</a>的论证过程，
-	用户也可以直接访问get api: <a href='../axiom.php?q=binomial'>www.lemma.cn/py/search.php?q=binomial</a>
-	来获取搜索结果。 图形界面和get api同时也支持<a
-		href='http://www.regular-expressions.info/tutorial.html'>正则表达式</a>以及全字(whole
-	word)匹配，比如： <a
-		href='../axiom.php?q=Discrete.*binomial&regularExpression=true'>www.lemma.cn/py/search.php?q=Discrete.*binomial&amp;regularExpression=true</a>
-	表示搜索在同时包含discrete和binomial单词的定理。
-</p>
-<hr />
-<br>
-<h3>定理依存关系分析</h3>
-<br>
-<h4>上层定理引用关系</h4>
-以下以
-<a href='../axiom.php?module=Discrete.combinatorics.binomial.theorem'>牛顿二项式定理</a>
-为例 ：
-<br>
-鼠标指向网页第一个超链接，会出现悬浮提示“callee hierarchy”。如图所示：
-<img class=zoom src="png/hierarchy/hyperlink.png" />
-<hr />
-<br>
-单击该超链接即可进入
-<a
-	href='../axiom.php?callee=axiom.Discrete.combinatorics.binomial.theorem'>上层定理引用层级图</a>
-。如图所示：
-<img class=zoom src="png/hierarchy/callee.png" />
-<br>
-以上结果显示有以下几个定理在论证过程中引用了二项式定理：
-<ul>
-	<li><a href='../axiom.php?module=Discrete.difference.factorial'>axiom.Discrete.difference.factorial</a></li>
-	<li><a href='../axiom.php?module=Discrete.matrix.vandermonde.concatenate'>axiom.Discrete.matrix.vandermonde.concatenate</a></li>
-</ul>
-在“上层定理引用层级图”中单击>>>>(展开按钮)，可以进一步查看上层定理的更上一层定理。单击<<<<(隐藏按钮)，可以隐藏展开后的定理。
-<br>
-在“上层定理引用层级图”中单击
-<a
-	href='../axiom.php?callee=Discrete.combinatorics.binomial.theorem#deep'>callee</a>
-超链接，可以展开所有上层定理引用关系图。如图所示：
-<img class=zoom src="png/hierarchy/deep/callee.png" />
-<hr />
-<br>
-<br>
-<h4>下层定理引用关系</h4>
+# Lean 4 形式化定理库操作手册
 
-<br>
-在“上层定理引用层级图”中单击
-<a
-	href='../axiom.php?caller=axiom.Discrete.combinatorics.binomial.theorem'>caller</a>
-超链接，可以查看下层定理引用关系图。如图所示：
-<img class=zoom src="png/hierarchy/caller.png" />
-<hr />
-以上结果显示在二项式定理的论证过程中引用了以下几个定理：
-<ul>
-	<li><a href='../axiom.php?module=Discrete.combinatorics.binomial.Pascal'>axiom.Discrete.combinatorics.binomial.Pascal</a>组合数学中的<a
-		href='https://en.wikipedia.org/wiki/Pascal%27s_rule'>Pascal法则</a>，以法国数学家Pascal命名。</li>
-	<li><a href='../axiom.php?module=Algebra.Imply.to.cond.induction'>axiom.Algebra.Imply.to.cond.induction</a>第一<a
-		href='https://en.wikipedia.org/wiki/Mathematical_induction'>数学归纳法</a>，一种递归证明方法。</li>
-</ul>
-<br>
+## 线上操作
 
-在“下层定理引用层级图”中单击
-<a
-	href='../axiom.php?caller=Discrete.combinatorics.binomial.theorem#deep'>caller</a>
-超链接，可以展开所有下层定理引用关系图。如图所示：
-<img class=zoom src="png/hierarchy/deep/caller.png" />
-<hr />
-<br>
-<hr />
-<br>
-<br>
-<h2>线下使用指南</h2>
-线下使用该工具需要自己搭建本地php网站，具体php安装过程请参考安装部署文档
-<a href='../php installation.docx'>php installation.docx</a>
-。
-在linux环境下使用以下命令安装：<br>
-cd /usr/local<br>
-git clone https://github.com/cosmosZhou/shell.git<br>
-cd shell/php<br>
-make<br>
-sh start.sh port=80 DocumentRoot=/home/github<br>
-DocumentRoot设定为所需的工程(网页)文件夹目录。<br>
+### 定理检索
 
-线下使用还必须安装python开发环境。建议使用python3.9版的。
-以下介绍python工程的使用方法：
-<br>
-<br>
-以线下windows版为例，
-<h4></h4>
-<li>指定一个网页文件夹，比如：E:\github，按照php installation.docx所提供的方法，
-	修改php网站的DOCUMENT_ROOT。然后进入该文件夹：<br>cd E:\github
-</li>
-<br>
-<li>使用git下载python工程源代码： <br> git clone --depth=1 <a
-	href=https://github.com/math-proof/lemma.git>https://github.com/math-proof/lemma.git</a>
-</li>
-<br>
-<li>进入axiom文件夹：<br>cd axiom
-</li>
-<br>
-<li>执行run命令，其中debug=1表示输出调试信息，debug=0表示不输出调试信息：<br>python run.py debug=1
+Lean 4 可视化定理库由仓库根目录的 `index.php` 提供（本地常见地址：[http://localhost:8080/lean/index.php](http://localhost:8080/lean/index.php) 或 [http://localhost/lean/index.php](http://localhost/lean/index.php)，视 PHP 站点根目录与端口而定）。打开后若无查询参数，显示定理库摘要；在页面右上角的搜索框输入关键词并提交，或直接使用 GET 链接检索。
 
-</li>
-<br>
-<li>执行run完毕后会打印执行耗时，以及整个定理库的自动化证明的情况，比如， <br> in all 868 axioms<br>
-	unproved:<br> (调试信息省略)....... <br> websites:<br> (调试信息省略)....... <br>
-	seconds cost = 45.13455533981323<br> minutes cost =
-	0.7522425889968872<br> total unproved = 22 <br> total failures = 0
+**基本检索**：在模块名数据库中做子串匹配（默认最多返回 `limit` 条，缺省为 100）。示例：
 
-</li>
-<br>
-<li>打开Chrome或者Edge/IE浏览器，在浏览器地址栏输入：<br> <a href='../axiom'>http://localhost/axiom/index.php</a>
-	<br>即可启动软件网站可视化定理库，这样就可以在本地环境下直接访问可视化定理库了
-</li>
-<br>
-<hr />
-<br>
+- [../../../index.php?q=Icc&limit=100](../../../index.php?q=Icc&limit=100) — 模块名含 `Icc` 的引理
+- [../../../index.php?q=kv_cache&limit=50](../../../index.php?q=kv_cache&limit=50) — 模块名含 `kv_cache`
+- [../../../index.php?module=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T](../../../index.php?module=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T) — 直接打开 KV-cache 主引理页
+
+搜索框占位符为 `input a hint in search of a formula/theorem/axiom`。可选参数（勾选或写入 URL）：
+
+- `limit` — 结果条数上限（默认 100）
+- `caseSensitive=on` — 区分大小写
+- `wholeWord=on` — 全词匹配
+- `regularExpression=on` — 正则表达式（例：`q=Tensor\..*BandPart&regularExpression=on`）
+- `fullText=on` — 在 `Lemma/**/*.lean` 源文件中全文检索（例：`q=band_part&fullText=on`）
+- `latex=on` — 按 LaTeX 公式相似度检索（需后端 LaTeX 服务）
+
+快捷键（搜索框聚焦时）：Alt+C / W / R / L / U 分别切换 Case / WholeWord / Regex / LaTeX / FullText；Ctrl+F 聚焦搜索框。
+
+![搜索框](png/search/panel.png)
+
+在搜索框输入关键词（如模块名片段 `Icc`、`DotSoftmax`、`kv_cache`），提交后即可列出匹配的模块名；单击结果中的链接进入对应引理页。
+
+![搜索关键词](png/search/keyword.png)
+
+结果页标题为 `search results`，并显示命中条数。单击某一模块名打开该定理的 given / imply / proof 页面。
+
+![搜索结果](png/search/results.png)
+
+### 引理依存关系（callee / caller）
+
+每条引理页分为 **-- given**、**-- imply**、**-- proof** 三块。依存关系由数据库中的 `imports` 字段维护：若引理 A 的 `imports` 含 `Lemma.B`，则 A 在证明中使用了 B。
+
+术语与链接（页面上的英文标题与 URL 参数一致）：
+
+- **callee hierarchy**（`-- imply` 标题上的链接，`?callee=模块名`）：*引用本定理的引理* — 即 `imports` 中包含本模块的其他引理（谁依赖本结果）。
+- **caller hierarchy**（`-- proof` 标题上的链接，`?caller=模块名`）：*本定理所引用的引理* — 即本模块 `imports` 列表中的引理（本证明调用了谁）。
+
+可在层级页顶部在 callee 与 caller 视图之间切换；链接 `#deep` 或页面上的 deep 选项可展开完整多层依存树；子节点旁的 `>>>>` / `<<<<` 可逐层展开或折叠。
+
+#### callee 层级（谁使用了本定理）
+
+以下以 [KV-cache 主引理](../../../index.php?module=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T) 为例。
+
+在引理页将鼠标悬停于 **-- imply** 左侧链接，提示为 `callee hierarchy`：
+
+![callee 链接](png/hierarchy/hyperlink.png)
+
+单击该链接进入 callee 层级图，例如 [`?callee=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T`](../../../index.php?callee=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T)：
+
+![callee 层级图](png/hierarchy/callee.png)
+
+图中列出在 `imports` 中引用该模块的其他引理（若有）。
+
+- 单击 `>>>>` 展开更上层引用；`<<<<` 折叠。
+- 访问 [`?callee=…#deep`](../../../index.php?callee=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T#deep) 可一次展开全部 callee 层级。
+
+#### caller 层级（本定理使用了谁）
+
+在引理页单击 **-- proof** 左侧、标题为 `caller hierarchy` 的链接，例如 [`?caller=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T`](../../../index.php?caller=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T)：
+
+![caller 层级图](png/hierarchy/caller.png)
+
+图中列出该引理证明所 import 的子引理（如 `Tensor.DotSoftmaxAdd_Mul_Infty.eq.Stack_DotSoftmaxDivDot_T`（lemma `gpt`）、`Tensor.Stack.eq.AppendStackS` 等）。
+
+- 访问 [`?caller=…#deep`](../../../index.php?caller=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T#deep) 可展开完整 caller 层级。
+
+![caller 深层展开](png/hierarchy/deep/caller.png)
+
+## 线下部署与使用
+
+本地运行需：PHP Web 服务器、MySQL（定理索引库）、Lean 4 工具链，以及本仓库 [math-proof/lemma](https://github.com/math-proof/lemma)。将 PHP 的文档根目录（`DocumentRoot`）指向克隆下来的仓库根目录（内含 `index.php` 与 `Lemma/`）。
+
+Linux 示例（PHP 安装细节见 [php installation.docx](../php%20installation.docx)）：
+
+```bash
+cd /usr/local
+git clone https://github.com/cosmosZhou/shell.git
+cd shell/php
+make
+sh start.sh port=80 DocumentRoot=/home/github/lean
+```
+
+Windows 示例：
+
+1. 指定网页根目录，例如 `E:\github\lean`，按 php installation.docx 配置 `DOCUMENT_ROOT`。
+2. 克隆工程：`git clone --depth=1 https://github.com/math-proof/lemma.git`
+3. 安装 Lean 4（见仓库 `lean-toolchain`），执行 `lake build`，并按项目脚本更新 MySQL 定理索引（如 `ps1/update.ps1`）。
+4. 浏览器访问（端口按本地配置调整）：
+   - [http://localhost/lean/index.php](http://localhost/lean/index.php)
+   - 或 [http://localhost:8080/lean/index.php?q=Icc&limit=100](http://localhost:8080/lean/index.php?q=Icc&limit=100)

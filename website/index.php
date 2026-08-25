@@ -46,7 +46,6 @@ switch ($lang) {
 
         $userGuide = '用户指南';
         $participation = '项目参与';
-        $contact = '联系作者';
         $endeavour = '我的奋斗';
         // $elementaryExamples = '初级例题';
         // $intermediateExamples = '中级例题';
@@ -58,6 +57,22 @@ switch ($lang) {
         $userManual = '操作手册';
         $programmingReference = "编程参考";
         break;
+    case 'fr':
+        $title = 'Bibliothèque formelle de théorèmes algorithmiques';
+        $home = 'Accueil';
+        $faq = 'Questions fréquentes';
+        $bugReport = 'Signaler un bug';
+
+        $userGuide = 'Guide utilisateur';
+        $participation = 'Participation';
+        $endeavour = 'Parcours';
+        $designManual = 'Manuel de conception';
+        $languageSelect = 'Choisir la langue';
+
+        $history = 'Historique';
+        $userManual = 'Manuel utilisateur';
+        $programmingReference = 'Référence de programmation';
+        break;
     default:
     case 'en':
         $title = 'Formalized Algorithmic Theorem Library';
@@ -67,7 +82,6 @@ switch ($lang) {
         
         $userGuide = 'User Guide';
         $participation = 'Participation';
-        $contact = 'Contact Us';
         $endeavour = 'Lifelong Endeavour';
         // $elementaryExamples = 'Elementary Examples';
         // $intermediateExamples = 'Intermediate Examples';
@@ -118,9 +132,6 @@ switch ($lang) {
 				</div>
 				<div class='sidebar_body'>
 					<a href='?lang=<?php echo $lang ?>&section=participation'><?php echo $participation ?></a>
-				</div>
-				<div class='sidebar_body'>
-					<a href='?lang=<?php echo $lang ?>&section=contact'><?php echo $contact ?></a>
 				</div>
 				<div class='sidebar_body'>
 					<a href='?lang=<?php echo $lang ?>&section=history'><?php echo $history ?></a>
