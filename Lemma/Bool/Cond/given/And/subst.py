@@ -18,7 +18,7 @@ def prove(Eq):
     S = Symbol(etype=dtype.real[m][n])
     Eq << apply(Element(a * b, S), a, 2 * c)
 
-    Eq << Bool.Cond.of.Eq.Cond.subst.apply(Eq[2].reversed, Eq[1])
+    Eq << Bool.Cond.of.Cond.Eq.apply(Eq[2].reversed, Eq[1])
 
 
 if __name__ == '__main__':

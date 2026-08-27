@@ -68,11 +68,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Expr <= 0).apply(Nat.EqMin.of.Le)
 
-    Eq << Eq[-1].this.expr.args[:2].apply(Bool.Cond.of.Eq.Cond.subst)
+    Eq << Eq[-1].this.expr.args[:2].apply(Bool.Cond.of.Cond.Eq)
 
     Eq << Eq[-1].this.expr.args[1].apply(Nat.EqMax.of.Lt, ret=0)
 
-    Eq << Eq[-1].this.expr.args[:2].apply(Bool.Cond.of.Eq.Cond.subst)
+    Eq << Eq[-1].this.expr.args[:2].apply(Bool.Cond.of.Cond.Eq)
 
     Eq << Eq[-1].this.expr.args[0].apply(Set.Gt.of.Ioc.ne.Empty)
 

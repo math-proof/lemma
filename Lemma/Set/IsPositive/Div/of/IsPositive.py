@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Greater).apply(Set.IsPositive.of.Gt_0, simplify=None)
 
-    Eq << Eq[-1].this.expr.apply(Bool.Cond.of.Eq.Cond.subst, reverse=True)
+    Eq << Eq[-1].this.expr.apply(Bool.Cond.of.Cond.Eq, reverse=True)
 
 
 

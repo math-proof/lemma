@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Set.In_Ico.Is.And_EqModS.apply(Eq[0])
 
-    Eq << Bool.Cond.of.Cond.Iff.apply(Eq[0], Eq[-1])
+    Eq << Bool.Cond.of.Iff.Cond.apply(Eq[0], Eq[-1])
 
     Eq << Bool.And_And.of.And.apply(Eq[-1], None)
 

@@ -37,11 +37,11 @@ def prove(Eq):
 
     Eq << Eq.suffice.this.lhs.apply(Bool.Imp_And.of.ImpAnd, index=0)
 
-    Eq << Eq[-1].this.lhs.rhs.apply(Bool.Cond.of.Eq.Cond.subst)
+    Eq << Eq[-1].this.lhs.rhs.apply(Bool.Cond.of.Cond.Eq)
 
     Eq << Eq.necessary.this.lhs.apply(Bool.Imp_And.of.ImpAnd, index=0)
 
-    Eq << Eq[-1].this.lhs.rhs.apply(Bool.Cond.of.Eq.Cond.subst, reverse=True)
+    Eq << Eq[-1].this.lhs.rhs.apply(Bool.Cond.of.Cond.Eq, reverse=True)
 
 
 if __name__ == '__main__':

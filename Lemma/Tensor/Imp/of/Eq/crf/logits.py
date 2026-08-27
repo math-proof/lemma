@@ -43,9 +43,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Sum).apply(Finset.Sum_Add.eq.AddSumS)
 
-    Eq << Bool.Cond.of.Eq.Cond.subst.apply(Eq.x_definition.reversed, Eq[-1])
+    Eq << Bool.Cond.of.Cond.Eq.apply(Eq.x_definition.reversed, Eq[-1])
 
-    Eq << Bool.Cond.of.Eq.Cond.subst.apply(Eq.G_definition.reversed, Eq[-1])
+    Eq << Bool.Cond.of.Cond.Eq.apply(Eq.G_definition.reversed, Eq[-1])
 
     Eq << Eq[-1].this.find(Sum).apply(Finset.Sum.eq.Sub.unshift)
 

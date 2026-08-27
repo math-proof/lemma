@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Set.Ne_0.of.IsPositive.apply(Eq[0])
 
-    Eq << Nat.Div.of.Eq.Ne_0.apply(Eq[-1], Eq[1], simplify=None)
+    Eq << Nat.Div.of.Eq.nonzero.apply(Eq[-1], Eq[1], simplify=None)
 
 
 if __name__ == '__main__':

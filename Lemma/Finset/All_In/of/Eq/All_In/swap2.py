@@ -48,7 +48,7 @@ def prove(Eq):
 
     Eq << Bool.All_And.of.All.All.apply(Eq.final_statement, Eq[-1])
 
-    Eq.i_complement = Eq[-1].this.expr.apply(Bool.Cond.of.Eq.Cond.subst)
+    Eq.i_complement = Eq[-1].this.expr.apply(Bool.Cond.of.Cond.Eq)
 
     Eq.plausible = All(Element(w[i, j] @ x, S), (x, S), (j, Range(1, n)), plausible=True)
 

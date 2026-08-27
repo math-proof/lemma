@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.args[1:].apply(Nat.GeMulS.of.Ge.Gt_0)
 
-    Eq << Eq[-1].this.expr.apply(Bool.Cond.of.Eq.Cond.subst, reverse=True)
+    Eq << Eq[-1].this.expr.apply(Bool.Cond.of.Cond.Eq, reverse=True)
 
 
 

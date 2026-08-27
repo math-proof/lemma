@@ -55,7 +55,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Bool.Any_And.of.AnySetOf)
 
-    Eq << Eq[-1].this.rhs.expr.apply(Bool.Cond.of.Eq.Cond.subst, reverse=True, ret=0)
+    Eq << Eq[-1].this.rhs.expr.apply(Bool.Cond.of.Cond.Eq, reverse=True, ret=0)
 
     Eq << Eq[-1].this.lhs.rhs.definition
 

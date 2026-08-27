@@ -17,7 +17,7 @@ def prove(Eq):
 
     Eq << ~Eq[-1]
 
-    Eq << Nat.Div.of.Eq.Ne_0.apply(Eq[0], Eq[-1])
+    Eq << Nat.Div.of.Eq.nonzero.apply(Eq[0], Eq[-1])
 
     Eq <<= Eq[-1] & Eq[1]
 

@@ -21,17 +21,17 @@ def prove(Eq):
 
     Eq << Probability.Pr.eq.Mul.Pr.of.Ne_0.bayes.apply(Eq[-1], x, y)
 
-    Eq.lhs = Nat.Div.of.Eq.Ne_0.apply(Eq[-2], Eq[-1])
+    Eq.lhs = Nat.Div.of.Eq.nonzero.apply(Eq[-2], Eq[-1])
 
     Eq << Probability.Ne_0.of.Ne_0.joint.apply(Eq[0])
 
     Eq << Probability.Pr.eq.Mul.Pr.of.Ne_0.bayes.apply(Eq[-1], x)
 
-    Eq << Nat.Div.of.Eq.Ne_0.apply(Eq[-2], Eq[-1]).reversed
+    Eq << Nat.Div.of.Eq.nonzero.apply(Eq[-2], Eq[-1]).reversed
 
     Eq << Probability.Pr.eq.Mul.Pr.of.Ne_0.bayes.apply(Eq[2], y)
 
-    Eq << Nat.Div.of.Eq.Ne_0.apply(Eq[2], Eq[-1]).reversed
+    Eq << Nat.Div.of.Eq.nonzero.apply(Eq[2], Eq[-1]).reversed
 
     Eq << Eq[-1] * Eq[-3]
 

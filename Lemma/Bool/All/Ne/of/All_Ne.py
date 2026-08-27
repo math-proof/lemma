@@ -40,7 +40,7 @@ def prove(Eq):
 
     Eq <<= Eq[-1] & Eq[-3]
 
-    Eq << Eq[-1].this.rhs.apply(Bool.Cond.of.Eq.Cond.subst)
+    Eq << Eq[-1].this.rhs.apply(Bool.Cond.of.Cond.Eq)
 
     Eq << Bool.All.of.Imp.apply(Eq[-1])
 

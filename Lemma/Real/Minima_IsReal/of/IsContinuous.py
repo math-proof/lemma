@@ -34,7 +34,7 @@ def prove(Eq):
     Eq << Element(Eq[-1].expr.rhs, Reals, plausible=True)
 
     Eq << Bool.Any_And.of.Any.All.apply(Eq[-1], Eq[-2])
-    Eq << Eq[-1].this.expr.apply(Bool.Cond.of.Eq.Cond.subst, reverse=True)
+    Eq << Eq[-1].this.expr.apply(Bool.Cond.of.Cond.Eq, reverse=True)
 
 
 if __name__ == '__main__':

@@ -77,7 +77,7 @@ def prove(Eq):
 
     Eq <<= Bool.All.And.of.Cond.All.apply(Eq[-1], Eq[-3]), Bool.All.And.of.Cond.All.apply(Eq[-1], Eq[-2])
 
-    Eq <<= Eq[-2].this.expr.apply(Bool.Cond.of.Eq.Cond.subst, reverse=True, simplify=None), Eq[-1].this.expr.apply(Bool.Cond.of.Eq.Cond.subst, reverse=True, simplify=None)
+    Eq <<= Eq[-2].this.expr.apply(Bool.Cond.of.Cond.Eq, reverse=True, simplify=None), Eq[-1].this.expr.apply(Bool.Cond.of.Cond.Eq, reverse=True, simplify=None)
 
     Eq << Real.Any.Le.Rolle.of.Lt.IsContinuous.IsExtendedReal.IsExtendedReal.Eq.apply(*Eq[:2], *Eq[-2:], Eq[3])
 
@@ -85,7 +85,7 @@ def prove(Eq):
 
     Eq << Bool.Any_And.of.Any.All.All_Imp.apply(*Eq[-2:])
 
-    Eq << Eq[-1].this.expr.apply(Bool.Cond.of.Eq.Cond.subst)
+    Eq << Eq[-1].this.expr.apply(Bool.Cond.of.Cond.Eq)
 
     Eq << Eq[-1].this.expr.apply(Nat.Eq_0.of.Le_0)
 

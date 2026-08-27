@@ -36,14 +36,14 @@ def prove(Eq):
         Eq[-2].this.lhs.apply(Nat.Le.of.Lt)
 
     Eq <<= Bool.Imp.Imp.of.Imp_And.apply(Eq[-4], simplify=None), \
-        Eq[-3].this.rhs.args[:4:2].apply(Bool.Cond.of.Eq.Cond.subst, simplify=None), \
+        Eq[-3].this.rhs.args[:4:2].apply(Bool.Cond.of.Cond.Eq, simplify=None), \
         Eq[-2].this.rhs.args[::2].apply(Nat.EqMax.of.Ge_0.Lt, ret=slice(None)), \
         Eq[-1].this.apply(Bool.Imp.Is.ImpNotS)
 
     Eq <<= Eq[-5].this.rhs.rhs.apply(Bool.Cond.of.And, index=slice(2, None, -2), simplify=None), \
         Eq[-4].this.rhs.rhs.apply(Bool.Cond.of.And, index=slice(3, None, -3), simplify=None), \
         Eq[-3].this.rhs.args[:3].apply(Real.Any.GtSquare.of.Le_0.Lt.Lt), \
-        Eq[-2].this.rhs.args[::2].apply(Bool.Cond.of.Eq.Cond.subst), \
+        Eq[-2].this.rhs.args[::2].apply(Bool.Cond.of.Cond.Eq), \
         Bool.Imp.given.Cond.apply(Eq[-1]).reversed
 
     Eq <<= Eq[-3].this.rhs.rhs.args[1].apply(Nat.Gt.transport, lhs=0), \
@@ -53,8 +53,8 @@ def prove(Eq):
     Eq <<= Eq[-2].this.rhs.rhs.args[1:].apply(Nat.EqMax.of.Le_0.Gt, ret=1), \
         Eq[-1].this.rhs.rhs.args[1:].apply(Nat.EqMax.of.Gt_0.Le, ret=0)
 
-    Eq <<= Eq[-2].this.rhs.rhs.args[:2].apply(Bool.Cond.of.Eq.Cond.subst), \
-        Eq[-1].this.rhs.rhs.args[:2].apply(Bool.Cond.of.Eq.Cond.subst)
+    Eq <<= Eq[-2].this.rhs.rhs.args[:2].apply(Bool.Cond.of.Cond.Eq), \
+        Eq[-1].this.rhs.rhs.args[:2].apply(Bool.Cond.of.Cond.Eq)
 
     Eq <<= Eq[-2].this.rhs.apply(Bool.Imp_And.of.ImpAnd), \
         Eq[-1].this.rhs.rhs.args[1].apply(Nat.Ge.of.Gt)
@@ -76,7 +76,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.rhs.args[0].apply(Int.EqAdd.Is.Eq_Sub, lhs=0)
 
-    Eq << Eq[-1].this.rhs.rhs.apply(Bool.Cond.of.Eq.Cond.subst, ret=0)
+    Eq << Eq[-1].this.rhs.rhs.apply(Bool.Cond.of.Cond.Eq, ret=0)
 
     Eq << Bool.Imp_And.of.ImpAnd.apply(Eq[-1], index=0)
 
@@ -84,7 +84,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.rhs.args[1:].apply(Real.Any.GtSquare.of.Gt_0.Lt)
 
-    Eq << Eq[-1].this.rhs.rhs.apply(Bool.Cond.of.Eq.Cond.subst, reverse=True)
+    Eq << Eq[-1].this.rhs.rhs.apply(Bool.Cond.of.Cond.Eq, reverse=True)
 
     Eq <<= Eq[-1] & Eq.is_negative & Eq.is_positive
 

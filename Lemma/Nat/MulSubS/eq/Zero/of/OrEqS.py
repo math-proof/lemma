@@ -15,7 +15,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Bool, Tensor
+    from Lemma import Bool, Tensor, Nat
 
     k = Symbol(integer=True, positive=True)
     x, p = Symbol(real=True, shape=(k,), given=True)
@@ -24,9 +24,9 @@ def prove(Eq):
 
     Eq <<= ~Eq[1] & Eq[0]
 
-    Eq << Eq[-1].this.args[0].apply(Tensor.Ne_0.Ne_0.of.Mul.ne.Zero)
+    Eq << Eq[-1].this.args[0].apply(Nat.Ne_0.Ne_0.of.Mul.ne.Zero.tensor)
 
-    Eq << Eq[-1].this.find(Unequal[Zeros]).apply(Tensor.Ne_0.Ne_0.of.Mul.ne.Zero)
+    Eq << Eq[-1].this.find(Unequal[Zeros]).apply(Nat.Ne_0.Ne_0.of.Mul.ne.Zero.tensor)
 
     Eq << Bool.OrAndS.of.And_Or.apply(Eq[-1])
 

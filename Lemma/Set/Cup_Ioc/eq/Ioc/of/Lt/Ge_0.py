@@ -67,7 +67,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Greater).apply(Nat.EqMin.of.Gt)
 
-    Eq << Eq[-1].this.expr.args[:2].apply(Bool.Cond.of.Eq.Cond.subst)
+    Eq << Eq[-1].this.expr.args[:2].apply(Bool.Cond.of.Cond.Eq)
 
     Eq << Bool.Any_And.of.Any.All.apply(Eq[0], Eq[-1])
 
@@ -75,7 +75,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.args[1].apply(Nat.EqMax.of.Ge)
 
-    Eq << Eq[-1].this.expr.args[:2].apply(Bool.Cond.of.Eq.Cond.subst)
+    Eq << Eq[-1].this.expr.args[:2].apply(Bool.Cond.of.Cond.Eq)
 
     Eq << Eq[-1].this.expr.args[0].apply(Set.Gt.of.Ioc.ne.Empty)
 

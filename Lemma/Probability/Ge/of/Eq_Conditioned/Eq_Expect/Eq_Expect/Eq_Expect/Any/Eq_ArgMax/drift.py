@@ -102,7 +102,7 @@ def prove(Eq):
 
     Eq << Bool.Any_And.of.Any.All.apply(Eq[-2], Eq[-1])
 
-    Eq << Eq[-1].this.expr.args[:2].apply(Bool.Cond.of.Eq.Cond.subst)
+    Eq << Eq[-1].this.expr.args[:2].apply(Bool.Cond.of.Cond.Eq)
 
     Eq << Bool.And_And.of.And.apply(Eq.ne_zero)[1].subs(s[0].var, s[t].var)
 
@@ -132,7 +132,7 @@ def prove(Eq):
 
     Eq << Eq[-3].subs(Eq[-2], Eq[-1])
 
-    Eq << Eq[-1].this.expr.apply(Bool.Cond.of.Eq.Cond.subst)
+    Eq << Eq[-1].this.expr.apply(Bool.Cond.of.Cond.Eq)
 
     Eq << Eq[3].subs(π_quote, π_tilde)
 

@@ -1,7 +1,7 @@
 from util import *
 
 
-def doit(All, self):
+def expand(All, self):
     xi, (i, s) = self.of(All)
 
     sgm = self.identity(xi)
@@ -14,7 +14,7 @@ def doit(All, self):
 
 @apply
 def apply(self):
-    return doit(All, self)
+    return expand(All, self)
 
 
 @prove
@@ -53,3 +53,4 @@ if __name__ == '__main__':
     run()
 
 # created on 2018-03-29
+from . import doit

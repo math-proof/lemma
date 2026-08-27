@@ -46,9 +46,9 @@ def prove(Eq):
     Eq << Eq[-1].this.find(Sum).apply(Finset.Sum_Add.eq.AddSumS)
 
     i = Symbol(integer=True)
-    Eq << Bool.Cond.of.Eq.Cond.subst.apply(Eq.eq_x.subs(t, i).reversed, Eq[-1])
+    Eq << Bool.Cond.of.Cond.Eq.apply(Eq.eq_x.subs(t, i).reversed, Eq[-1])
 
-    Eq << Bool.Cond.of.Eq.Cond.subst.apply(Eq.eq_G.subs(t, i).reversed, Eq[-1])
+    Eq << Bool.Cond.of.Cond.Eq.apply(Eq.eq_G.subs(t, i).reversed, Eq[-1])
 
     Eq << Eq[-1].subs(t, t + 1)
 

@@ -26,3 +26,5 @@ if __name__ == '__main__':
     run()
 # created on 2018-01-22
 
+del tensor
+from . import tensor

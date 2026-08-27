@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Bool.Imp_And.of.Cond.Imp.apply(Eq[-1], Eq.is_zero)
 
-    Eq << Eq[-1].this.rhs.apply(Bool.Cond.of.Eq.Cond.subst)
+    Eq << Eq[-1].this.rhs.apply(Bool.Cond.of.Cond.Eq)
 
     Eq << Eq[-1].this.rhs.apply(Set.EqEmpty.of.Subset_Empty, simplify=None)
 

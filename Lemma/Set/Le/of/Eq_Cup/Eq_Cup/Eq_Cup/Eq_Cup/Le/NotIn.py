@@ -90,7 +90,7 @@ def prove(Eq):
 
     Eq << Bool.Any_And.of.Any.All.apply(Eq.given, Eq[-1], simplify=None)
 
-    Eq << Eq[-1].this.expr.apply(Bool.Cond.of.Eq.Cond.subst, ret=0)
+    Eq << Eq[-1].this.expr.apply(Bool.Cond.of.Cond.Eq, ret=0)
 
     Eq << Bool.Any.And.of.Any.limits.Cond.apply(Eq[-1], 0, simplify=None)
 
@@ -102,17 +102,17 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Element).apply(Set.EqSum.of.In, Eq[-1].find(Sum[2]).find(Sum), simplify=None, ret=0)
 
-    Eq << Eq[-1].this.expr.args[:2].apply(Bool.Cond.of.Eq.Cond.subst, simplify=None)
+    Eq << Eq[-1].this.expr.args[:2].apply(Bool.Cond.of.Cond.Eq, simplify=None)
 
     Eq << Eq[-1].this.expr.args[1].apply(Set.EqSum.of.In, Eq[-1].expr.args[0].lhs.args[3])
 
-    Eq << Eq[-1].this.expr.apply(Bool.Cond.of.Eq.Cond.subst, simplify=None)
+    Eq << Eq[-1].this.expr.apply(Bool.Cond.of.Cond.Eq, simplify=None)
 
     Eq << Bool.Any.And.of.Any.limits.Cond.apply(Eq[-1], 0, simplify=None)
 
     Eq << Bool.AnySetOf.of.Any_And.apply(Eq[-1], -1, simplify=None)
 
-    Eq << Eq[-1].this.expr.apply(Bool.Cond.of.Eq.Cond.subst, reverse=True)
+    Eq << Eq[-1].this.expr.apply(Bool.Cond.of.Cond.Eq, reverse=True)
 
     Eq << Set.EqSum.of.Eq_Cup.Eq_Cup.NotIn.apply(Eq[0], Eq[2], Eq[5], Eq.eq_X_union.rhs.find(Sum))
 
@@ -135,7 +135,7 @@ def prove(Eq):
 
     Eq << Bool.Any_And.of.AnySetOf_AnySetOf.apply(Eq[-1], simplify=None)
 
-    Eq << Eq[-1].this.expr.args[3:5].apply(Bool.Cond.of.Eq.Cond.subst, simplify=None)
+    Eq << Eq[-1].this.expr.args[3:5].apply(Bool.Cond.of.Cond.Eq, simplify=None)
 
     Eq << Bool.AnySetOf.of.Any_And.apply(Eq[-1], -2, simplify=None)
 
@@ -144,7 +144,7 @@ def prove(Eq):
     Eq << Bool.Any_And.of.AnySetOf_AnySetOf.apply(Eq[-1], simplify=None)
 
 
-    Eq << Eq[-1].this.expr.apply(Bool.Cond.of.Eq.Cond.subst)
+    Eq << Eq[-1].this.expr.apply(Bool.Cond.of.Cond.Eq)
     Eq << Eq[-1].subs(Eq.eq_X_union.reversed, Eq.eq_Y_complement.reversed)
 
 

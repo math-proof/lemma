@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << -Nat.Ne_0.of.Ne.apply(Eq[0])
 
-    Eq << Nat.Div.of.Eq.Ne_0.apply(Eq[-1], Eq[-2])
+    Eq << Nat.Div.of.Eq.nonzero.apply(Eq[-1], Eq[-2])
 
     Eq << Fin.Sum.of.All_Eq.apply(Eq[-1], (k, 0, n))
 

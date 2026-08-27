@@ -50,7 +50,7 @@ def prove(Eq):
 
     Eq <<= Eq[-1] & Eq.suffice_eq
 
-    Eq << Eq[-1].this.rhs.apply(Bool.Cond.of.Eq.Cond.subst)
+    Eq << Eq[-1].this.rhs.apply(Bool.Cond.of.Cond.Eq)
 
     Eq << Eq[-1].this.rhs.apply(Int.Eq_0.of.Abs.le.Zero)
 

@@ -40,7 +40,7 @@ def prove(Eq):
 
     Eq <<= Bool.Imp_And.of.Cond.Imp.apply(Eq[-2], Eq[-4]), Bool.Imp_And.of.Cond.Imp.apply(Eq[-1], Eq[-3])
 
-    Eq <<= Eq[-2].this.rhs.apply(Bool.Cond.of.Eq.Cond.subst, reverse=True, index=1), Eq[-1].this.rhs.apply(Bool.Cond.of.Eq.Cond.subst, reverse=True, index=1)
+    Eq <<= Eq[-2].this.rhs.apply(Bool.Cond.of.Cond.Eq, reverse=True, index=1), Eq[-1].this.rhs.apply(Bool.Cond.of.Cond.Eq, reverse=True, index=1)
 
     Eq << Bool.Or.of.Imp.Imp.apply(Eq[-2], Eq[-1])
 

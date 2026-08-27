@@ -17,7 +17,7 @@ def prove(Eq):
 
 
 
-    Eq << Bool.Cond.of.Eq.Cond.subst.apply(Eq[-1], Eq[0])
+    Eq << Bool.Cond.of.Cond.Eq.apply(Eq[-1], Eq[0])
 
 
 if __name__ == '__main__':

@@ -107,30 +107,10 @@ export default {
 			latex: null,
 			count: [],
 			whitelist : [
-				'Bool.Cond.of.Eq.Cond.subst',
-				'Bool.Cond.of.Iff.Cond.subst',
-				'Bool.All_In_Insert.Is.And_All', // Bool.AllIn_Insert.Is.And_All
-				'Bool.Cond.of.All_Imp', 
 				'Bool.All.of.Given', // plausible
 				'Bool.All.of.Cond', // plausible
 				'Bool.Imp.Is.All', // plausible
-				
-				'Nat.Div.of.Eq.Ne_0',
 				'Set.Eq.of.ImpIn.ImpIn', // plausible
-				
-				'Algebra.Eq.of.Ge.squeeze',
-				'Algebra.Ge.Is.Eq.squeeze',
-				'Algebra.EqSumS.of.Eq', // Algebra.EqSumS.of.All_Eq
-				'Algebra.GeSqrt_0.of.Ge_0', // Algebra.GeSqrt_0
-				'Algebra.Sum.limits.domain_defined.delete',
-				'Algebra.Sum.limits.domain_defined',
-				'Algebra.Sum.eq.ReducedSum',
-
-				'Tensor.Ne_0.Ne_0.of.Mul.ne.Zero', // Algebra.Ne_0.Ne_0.of.Mul.ne.Zero
-				'Tensor.EqStackS.of.Eq', // Tensor.EqStackS.of.All_Eq
-				'Tensor.Dot.eq.Sum',
-				'Tensor.Sum.eq.Dot',
-				'Tensor.Stack_Dot.eq.DotSliceS',
 			],
 		};
 	},

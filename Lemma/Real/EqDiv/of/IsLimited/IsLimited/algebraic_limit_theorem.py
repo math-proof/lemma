@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq << Set.IsReal.Inv.of.In.apply(Eq[1])
 
-    Eq << Bool.Cond.of.Eq.Cond.subst.apply(Eq.inverse, Eq[-1], reverse=True)
+    Eq << Bool.Cond.of.Cond.Eq.apply(Eq.inverse, Eq[-1], reverse=True)
 
     Eq << Real.EqMul.of.IsLimited.IsLimited.algebraic_limit_theorem.apply(Eq[0], Eq[-1])
     Eq << Eq[-1].subs(Eq.inverse)

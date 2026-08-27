@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq << Real.EqLim.Is.All_Any_All.apply(Eq[0])
 
-    Eq << Bool.Cond.of.Cond.Iff.apply(Eq[0], Eq[-1])
+    Eq << Bool.Cond.of.Iff.Cond.apply(Eq[0], Eq[-1])
 
     Eq << Eq[-1].subs(Eq[0].reversed)
 

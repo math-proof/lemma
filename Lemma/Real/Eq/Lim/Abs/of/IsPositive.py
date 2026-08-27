@@ -41,7 +41,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Greater).apply(Int.EqAbs.of.Gt)
 
-    Eq << Eq[-1].this.find(And).apply(Bool.Cond.of.Eq.Cond.subst, reverse=True)
+    Eq << Eq[-1].this.find(And).apply(Bool.Cond.of.Cond.Eq, reverse=True)
 
 
 if __name__ == '__main__':

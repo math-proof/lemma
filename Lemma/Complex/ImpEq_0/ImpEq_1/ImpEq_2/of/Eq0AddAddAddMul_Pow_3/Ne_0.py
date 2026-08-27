@@ -56,7 +56,7 @@ def prove(Eq):
     x, a, b, c, d = Symbol(complex=True, given=True)
     Eq << apply(Unequal(a, 0), Equal(a * x ** 3 + b * x ** 2 + c * x + d, 0), x=x)
 
-    Eq << Nat.Div.of.Eq.Ne_0.apply(Eq[0], Eq[1])
+    Eq << Nat.Div.of.Eq.nonzero.apply(Eq[0], Eq[1])
 
     Eq << Complex.ImpEq_0.ImpEq_1.ImpEq_2.of.Eq0AddAddAddPow_3.apply(Eq[-1], x=x)
 

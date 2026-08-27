@@ -3,8 +3,8 @@ from util import *
 
 @apply
 def apply(self):
-    from Lemma.Bool.AllIn_Insert.Is.And_All import doit
-    return Equal(self, doit(Cup, self))
+    from Lemma.Bool.AllIn_Insert.Is.And_All import expand
+    return Equal(self, expand(Cup, self))
 
 
 @prove

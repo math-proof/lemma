@@ -19,7 +19,7 @@ def prove(Eq):
     Eq << Set.Any_Eq.of.In.apply(Eq[2])
 
     Eq << Bool.Any_And.of.Any.All.apply(Eq[1], Eq[-1], simplify=None)
-    Eq << Eq[-1].this.expr.apply(Bool.Cond.of.Eq.Cond.subst)
+    Eq << Eq[-1].this.expr.apply(Bool.Cond.of.Cond.Eq)
 
 
 

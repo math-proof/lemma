@@ -37,7 +37,7 @@ def prove(Eq):
 
     Eq.initial = Eq[1].subs(n, 1)
 
-    Eq << Eq.initial.this.lhs.apply(Bool.Cond.of.Eq.Cond.subst, ret=0)
+    Eq << Eq.initial.this.lhs.apply(Bool.Cond.of.Cond.Eq, ret=0)
 
     Eq << Bool.Imp.given.ImpEq.apply(Eq[-1])
 

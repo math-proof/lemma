@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq << Bool.Any_And.of.Any.All.All_Imp.apply(Eq[0], Eq[1])
 
-    Eq << Eq[-1].this.expr.apply(Bool.Cond.of.Eq.Cond.subst)
+    Eq << Eq[-1].this.expr.apply(Bool.Cond.of.Cond.Eq)
 
 
 if __name__ == '__main__':

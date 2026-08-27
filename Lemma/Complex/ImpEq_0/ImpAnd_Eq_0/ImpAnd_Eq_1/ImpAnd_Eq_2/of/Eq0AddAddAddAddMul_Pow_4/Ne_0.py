@@ -60,7 +60,7 @@ def prove(Eq):
     x, a, b, c, d, e = Symbol(complex=True, given=True)
     Eq << apply(Unequal(a, 0), Equal(a * x ** 4 + b * x ** 3 + c * x ** 2 + d * x + e, 0), x=x)
 
-    Eq << Nat.Div.of.Eq.Ne_0.apply(Eq[0], Eq[1])
+    Eq << Nat.Div.of.Eq.nonzero.apply(Eq[0], Eq[1])
 
     Eq << Complex.ImpEq_0.ImpAnd_Eq_0.ImpAnd_Eq_1.ImpAnd_Eq_2.of.Eq0AddAddAddAddPow_4.apply(Eq[-1], x=x)
 

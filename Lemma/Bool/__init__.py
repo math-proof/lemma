@@ -30,9 +30,6 @@ from . import BFnIte
 from . import ImpOr
 from . import Ite
 from . import Ne_0
-from . import All_In_Insert
-from . import AllOr
-from . import Any_All_And
 from . import AnySetOf
 from . import BFn_Ite__Ite
 from . import Iff_And
@@ -88,3 +85,5 @@ from . import Or_Gt
 from . import Or_Le
 from . import Or_Lt
 from . import Subs
+from . import AllOr
+from . import Any_All_And

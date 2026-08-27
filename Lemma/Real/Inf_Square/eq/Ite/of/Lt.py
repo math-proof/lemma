@@ -48,7 +48,7 @@ def prove(Eq):
 
     Eq <<= Bool.And_Imp.given.And_ImpAnd.apply(Eq[0], Eq[-1])
 
-    Eq <<= Eq[-1].this.lhs.apply(Bool.Cond.of.Eq.Cond.subst)
+    Eq <<= Eq[-1].this.lhs.apply(Bool.Cond.of.Cond.Eq)
 
     Eq << Eq[-1].this.lhs.apply(Real.Inf_Square.eq.Zero.of.Lt_0, x)
 

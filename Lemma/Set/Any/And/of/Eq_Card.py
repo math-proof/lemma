@@ -29,7 +29,7 @@ def prove(Eq):
 
     Eq << Bool.Any_And.of.AnySetOf_AnySetOf.apply(Eq[-1])
 
-    Eq << Eq[-1].this.expr.apply(Bool.Cond.of.Eq.Cond.subst, reverse=True, simplify=None, ret=0)
+    Eq << Eq[-1].this.expr.apply(Bool.Cond.of.Cond.Eq, reverse=True, simplify=None, ret=0)
 
 
 if __name__ == '__main__':

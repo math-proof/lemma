@@ -36,8 +36,8 @@ def prove(Eq):
 
     Eq <<= Bool.Any_And.of.Any.All.All_Imp.apply(Eq[-2], Eq.mean_value_theorem), Bool.Any_And.of.Any.All.All_Imp.apply(Eq[-1], Eq.mean_value_theorem)
 
-    Eq <<= Eq[-2].this.expr.apply(Bool.Cond.of.Eq.Cond.subst, reverse=True), \
-    Eq[-1].this.expr.apply(Bool.Cond.of.Eq.Cond.subst, reverse=True)
+    Eq <<= Eq[-2].this.expr.apply(Bool.Cond.of.Cond.Eq, reverse=True), \
+    Eq[-1].this.expr.apply(Bool.Cond.of.Cond.Eq, reverse=True)
 
     Eq <<= Eq[-2].apply(Bool.AllIn.of.All, (k, 1, n)), Eq[-1].apply(Bool.AllIn.of.All, (k, 1, n - 1))
 

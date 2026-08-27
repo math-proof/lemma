@@ -103,7 +103,7 @@ def prove(Eq):
 
     Eq << Bool.Any_And.of.Any.All.All_Imp.apply(Eq.j_equality.reversed, Eq.distribute_ab)
 
-    Eq << Eq[-1].this.expr.args[::2].apply(Bool.Cond.of.Eq.Cond.subst, ret=0)
+    Eq << Eq[-1].this.expr.args[::2].apply(Bool.Cond.of.Cond.Eq, ret=0)
 
     Eq << Eq[-1].this.expr.apply(Bool.And.of.And.delete)
 

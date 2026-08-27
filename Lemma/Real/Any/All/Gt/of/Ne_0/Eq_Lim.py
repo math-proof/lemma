@@ -32,13 +32,13 @@ def prove(Eq):
 
     Eq <<= Eq[-1] & Eq[-2]
 
-    Eq << Eq[-1].this.rhs.apply(Bool.Cond.of.Eq.Cond.subst, reverse=True)
+    Eq << Eq[-1].this.rhs.apply(Bool.Cond.of.Cond.Eq, reverse=True)
 
     Eq << Eq[-1].this.rhs.expr.expr.apply(Nat.Gt_0.of.Gt.trans, ret=0)
 
     Eq << Eq[-1].this.rhs.expr.expr.args[0].apply(Int.EqAbs.of.Gt_0)
 
-    Eq << Eq[-1].this.rhs.expr.expr.apply(Bool.Cond.of.Eq.Cond.subst, reverse=True)
+    Eq << Eq[-1].this.rhs.expr.expr.apply(Bool.Cond.of.Cond.Eq, reverse=True)
 
     Eq << And(A <= 0, Eq[0]).this.apply(Nat.Lt_0.of.Ne_0.Le_0)
 
@@ -56,7 +56,7 @@ def prove(Eq):
 
     Eq <<= Eq[-1] & Eq[-3]
 
-    Eq << Eq[-1].this.rhs.apply(Bool.Cond.of.Eq.Cond.subst, reverse=True)
+    Eq << Eq[-1].this.rhs.apply(Bool.Cond.of.Cond.Eq, reverse=True)
 
     Eq << Eq[-1].this.rhs.expr.expr.apply(Nat.Lt_0.of.Lt.trans, ret=0)
 
@@ -64,7 +64,7 @@ def prove(Eq):
 
     Eq << -Eq[-1].this.find(Equal)
 
-    Eq << Eq[-1].this.rhs.expr.expr.apply(Bool.Cond.of.Eq.Cond.subst, reverse=True)
+    Eq << Eq[-1].this.rhs.expr.expr.apply(Bool.Cond.of.Cond.Eq, reverse=True)
 
     Eq << -Eq[-1].this.rhs.expr.expr
 

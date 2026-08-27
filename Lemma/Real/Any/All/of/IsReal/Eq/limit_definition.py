@@ -31,11 +31,11 @@ def prove(Eq):
 
     Eq << Bool.Any_And.of.Any.All.apply(Eq[1], Eq[-1], simplify=None)
 
-    Eq << Eq[-1].this.expr.apply(Bool.Cond.of.Eq.Cond.subst, ret=0)
+    Eq << Eq[-1].this.expr.apply(Bool.Cond.of.Cond.Eq, ret=0)
 
     Eq << Eq[-1].this.expr.args[1].apply(Real.Any.All.of.Eq_Lim.limit_definition)
 
-    Eq << Eq[-1].this.expr.apply(Bool.Cond.of.Eq.Cond.subst, reverse=True)
+    Eq << Eq[-1].this.expr.apply(Bool.Cond.of.Cond.Eq, reverse=True)
 
 
 if __name__ == '__main__':

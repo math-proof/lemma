@@ -34,7 +34,7 @@ def prove(Eq):
 
     Eq << Probability.Pr.eq.Mul.Pr.of.Ne_0.bayes.apply(Eq[0], x)
 
-    Eq << Nat.Div.of.Eq.Ne_0.apply(Eq[0], Eq[-1])
+    Eq << Nat.Div.of.Eq.nonzero.apply(Eq[0], Eq[-1])
 
     Eq << Rat.Ne_0.Div.of.Ne_0.Ne_0.apply(Eq[1], Eq[0])
 

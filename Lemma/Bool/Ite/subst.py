@@ -63,7 +63,7 @@ def prove(Eq):
 
     Eq << Bool.OrAndS.of.BFn_Ite.apply(Eq[-1])
 
-    Eq << Eq[-1].this.args[0].args[:2].apply(Bool.Cond.of.Eq.Cond.subst, ret=0)
+    Eq << Eq[-1].this.args[0].args[:2].apply(Bool.Cond.of.Cond.Eq, ret=0)
 
     Eq << Bool.BFn_Ite__Ite.of.And.ou.OrAndS.apply(Eq[-1], wrt=p)
 
