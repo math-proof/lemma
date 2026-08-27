@@ -25,13 +25,13 @@ private lemma main
   have h_den_x : den_x = x.sum 0 := rfl
   have h_sum_scalar_y : den_y.data[0] = y.data.sum := calc
     den_y.data[0] = den_y.data.head := by
-      rw [Head.eq.Get_0.fin]
+      erw [Head.eq.Get_0.fin]
       simp [GetElem.getElem]
     _ = (y.sum 0).data.head := by rw [h_den_y]
     _ = y.data.sum := HeadDataSum.eq.SumData y
   have h_sum_scalar_x : den_x.data[0] = x.data.sum := calc
     den_x.data[0] = den_x.data.head := by
-      rw [Head.eq.Get_0.fin]
+      erw [Head.eq.Get_0.fin]
       simp [GetElem.getElem]
     _ = (x.sum 0).data.head := by rw [h_den_x]
     _ = x.data.sum := HeadDataSum.eq.SumData x

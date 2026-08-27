@@ -35,6 +35,7 @@ import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Vector.GetDiv.eq.DivGetS
 import Lemma.Vector.GetExp.eq.ExpGet
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
+import Lemma.Vector.GetMap.eq.UFnGet
 import Lemma.Vector.GetGetSlice.eq.Get.of.GtGet.GtLength
 import Lemma.Vector.GetRepeat.eq.Get_Mod
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
@@ -70,9 +71,15 @@ private lemma main
   unfold Tensor.toVector
   simp [DataExp.eq.ExpData]
   rw [GetCast.eq.Get.of.Eq.fin (by simp)]
-  repeat erw [GetExp.eq.ExpGet.fin]
-  simp
+  conv_rhs => erw [GetMap.eq.UFnGet]
+  conv_rhs => erw [DataDiv.eq.DivDataS]
+  erw [GetDiv.eq.DivGetS.fin]
+  conv_rhs =>
+    erw [DataExp.eq.ExpData]
+    erw [GetExp.eq.ExpGet.fin]
+    rw [GetCast.eq.Get.of.Eq.fin (by simp)]
   erw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
+  conv_lhs => erw [GetExp.eq.ExpGet.fin]
   simp [← h_qr]
   apply Div.of.Eq.left
   rw [DataKeepdim.eq.Cast_FlattenMapSplitAtCast_Data (d := ⟨d + 1, by grind⟩)]
@@ -100,7 +107,8 @@ private lemma main
   have h_rₐ := rₐ.isLt
   repeat erw [GetFlatten.eq.Get.of.Eq_AddMul.fin (by assumption)]
   simp
-  repeat rw [GetRepeat.eq.Get_Mod.fin]
+  conv_lhs => erw [GetMap.eq.UFnGet]
+  repeat erw [GetRepeat.eq.Get_Mod.fin]
   repeat erw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
   simp [ProdDropInsertIdxEraseIdx.eq.ProdDrop.of.GtLength h] at ⊢ h_rₐ h_q'_div h_r'_mod h_qₐ_div h_rₐ_mod
   rw [DataSum.eq.Sum_DataSelect (d := ⟨d + 1, by grind⟩)]
@@ -182,4 +190,4 @@ private lemma main
 
 
 -- created on 2025-11-29
--- updated on 2025-11-30
+-- updated on 2026-08-27

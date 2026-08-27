@@ -26,17 +26,17 @@ private lemma main
   apply EqCast.of.SEq
   apply SEq.of.All_EqGetS.Eq (by simp)
   intro i
-  simp
+  simp [GetElem.getElem]
+  erw [GetMap.eq.UFnGet]
   apply Eq.of.EqDataS
   have hi := i.isLt
   have hi : i < n := by
     simp_all
-  have h := GetSplitAt_1.eq.GetUnflatten.of.Lt hi (List.Vector.map data v).flatten
+  have h := GetSplitAt_1.eq.GetUnflatten.of.Lt.fin hi (List.Vector.map data v).flatten
   simp at h
   erw [h]
   erw [EqUnflattenFlatten]
   dsimp [Tensor.data]
-  simp only [GetElem.getElem]
   apply GetMap.eq.UFnGet
 
 

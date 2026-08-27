@@ -27,15 +27,14 @@ private lemma main
     intro t
     have h_t := t.isLt
     simp at h_t
-    simp [GetFlatten.eq.Get.of.Eq_AddMul (n := s.prod) (m := ([].rotate 1).prod) (i := ⟨0, by simp⟩) (j := ⟨t, by simpa⟩) (t := t) (by simp)]
+    erw [GetFlatten.eq.Get.of.Eq_AddMul (n := s.prod) (m := ([].rotate 1).prod) (i := ⟨0, by simp⟩) (j := ⟨t, by simpa⟩) (t := t) (by simp)]
     unfold Tensor.rotate
     simp
     simp only [GetElem.getElem]
     erw [GetFlatten.eq.Get.of.Eq_AddMul.fin (i := ⟨0, by simp⟩) (j := ⟨0, by simp⟩) (by simp)]
-    rw [GetTranspose.eq.Get.fin]
-    repeat rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
+    erw [GetTranspose.eq.Get.fin]
+    repeat erw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
     simp
-    erw [Vector.EqHeadSplitAt_0]
 
 
 -- created on 2025-10-20

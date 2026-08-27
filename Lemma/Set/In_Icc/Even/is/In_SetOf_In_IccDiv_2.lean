@@ -15,32 +15,39 @@ open Set Nat
 private lemma main
   {a b n : ℤ} :
 -- imply
-  (n ∈ Icc a b ∧ n is even) ↔
-    n ∈ {2 * k | k ∈ Icc ((a + 1) / 2) (b / 2)} := by
+  n ∈ Icc a b ∧ n is even ↔ n ∈ {2 * k | k ∈ Icc ((a + 1) / 2) (b / 2)} := by
 -- proof
   constructor
-  · intro ⟨h₁, h⟩
+  ·
+    intro ⟨h₁, h⟩
     obtain ⟨k, hk⟩ := Any_Eq_Mul2.of.Even h
-    rw [Set.mem_setOf]
+    rw [Set.mem_ofPred]
     refine ⟨k, ?_, hk.symm⟩
-    rcases (In_Icc.is.Le.Le _ _).mp h₁ with ⟨ha, hb⟩
+    rcases Le.Le.of.In_Icc h₁ with ⟨ha, hb⟩
     apply In_Icc.of.Le.Le
-    · rw [Int.ediv_le_iff_le_mul (by norm_num : (0 : ℤ) < 2)]
+    ·
+      rw [Int.ediv_le_iff_le_mul (by norm_num : (0 : ℤ) < 2)]
       grind
-    · rw [Int.le_ediv_iff_mul_le (by norm_num : (0 : ℤ) < 2)]
+    ·
+      rw [Int.le_ediv_iff_mul_le (by norm_num : (0 : ℤ) < 2)]
       grind
-  · intro h
-    rw [Set.mem_setOf] at h
+  ·
+    intro h
+    rw [Set.mem_ofPred] at h
     obtain ⟨k, hk_icc, hk_eq⟩ := h
     constructor
-    · rw [← hk_eq]
-      rcases (In_Icc.is.Le.Le _ _).mp hk_icc with ⟨ha, hb⟩
+    ·
+      rw [← hk_eq]
+      rcases Le.Le.of.In_Icc hk_icc with ⟨ha, hb⟩
       apply In_Icc.of.Le.Le
-      · rw [Int.ediv_le_iff_le_mul (by norm_num : (0 : ℤ) < 2)] at ha
+      ·
+        rw [Int.ediv_le_iff_le_mul (by norm_num : (0 : ℤ) < 2)] at ha
         grind
-      · rw [Int.le_ediv_iff_mul_le (by norm_num : (0 : ℤ) < 2)] at hb
+      ·
+        rw [Int.le_ediv_iff_mul_le (by norm_num : (0 : ℤ) < 2)] at hb
         grind
-    · exact Even.of.Any_Eq_Mul2 ⟨k, hk_eq.symm⟩
+    ·
+      exact Even.of.Any_Eq_Mul2 ⟨k, hk_eq.symm⟩
 
 
 -- created on 2018-05-28

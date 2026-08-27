@@ -43,6 +43,7 @@ private lemma main
       erw [GetResize.eq.Cast_ResizeGet.of.GtGet_0.GtVal_0.fin (d := ⟨d + 1, by grind⟩) (by grind) (by grind)]
       conv_rhs => erw [GetResize.eq.Cast_ResizeGet.of.GtGet_0.GtVal_0.fin (d := ⟨d + 1, by grind⟩) (by grind) (by grind)]
       simp
+      apply SEqCast.of.SEq.Eq (by simp)
       erw [GetUnsqueeze.eq.Cast_UnsqueezeGet.of.GtGet_0.Gt_0.GtLength_0.fin (by grind) (by grind) (by grind)]
       simp
       apply ih (X.get t) ⟨d, by grind⟩ n

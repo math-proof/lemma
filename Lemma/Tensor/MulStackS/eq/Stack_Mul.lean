@@ -3,6 +3,7 @@ import sympy.tensor.stack
 import Lemma.Nat.Mul
 import Lemma.Vector.FlattenMul.eq.MulFlattenS
 import Lemma.Vector.MulMapS.eq.Map_FunMul
+import Lemma.Vector.MapMap.eq.Map_Comp
 open Vector Nat Tensor
 
 
@@ -27,10 +28,11 @@ private lemma main
   simp [GetElem.getElem]
   let a := (List.Vector.range s₀).map fun x => (A.get x).data
   let b := (List.Vector.range s₀).map fun x => (B.get x).data
+  repeat erw [MapMap.eq.Map_Comp]
   show a.flatten * b.flatten = ((List.Vector.range s₀).map fun x => (A.get x).data * (B.get x).data).flatten
   rw [← FlattenMul.eq.MulFlattenS]
   congr
-  exact MulMapS.eq.Map_FunMul _ _
+  apply MulMapS.eq.Map_FunMul
 
 
 -- created on 2025-07-03

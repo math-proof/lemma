@@ -21,7 +21,7 @@ private lemma main
   apply Eq.of.SEq
   have := GetSelect.as.SelectGet.of.GtGet_0.GtGet_Add_1.LtAdd_1Length (i := i) (j := k) (d := d) (by grind) (by simp) (by simp) ([k < n] f k)
   apply this.trans
-  rw [EqGetStack.fin]
+  erw [EqGetStack.fin]
   rfl
 
 

@@ -1,8 +1,7 @@
-import stdlib.List
+import Batteries.Data.List.Lemmas
+import Lemma.List.TakeSet.eq.Take.of.Ge
 import Lemma.Nat.Lt.of.Lt.Lt
-import Lemma.List.LengthTake.eq.Min_Length
-import Lemma.Nat.EqMin.of.Lt
-import Lemma.List.EqTakeAppend.of.Eq_Length
+import Lemma.Nat.NotLt.is.Ge
 open List Nat
 
 
@@ -15,19 +14,14 @@ private lemma main
 -- imply
   (s.swap i j).take i = s.take i := by
 -- proof
-  unfold List.swap
-  split_ifs with h_eq h_j
-  ·
-    rfl
-  ·
-    simp
+  if h_j : j < s.length then
     have h_i := Lt.of.Lt.Lt h h_j
-    have h_length := LengthTake.eq.Min_Length s i
-    have h_min := EqMin.of.Lt h_i
-    rw [h_min] at h_length
-    apply EqTakeAppend.of.Eq_Length h_length
-  ·
-    rfl
+    rw [List.swap_eq_of_lt h_i h_j]
+    rw [TakeSet.eq.Take.of.Ge (by linarith)]
+    rw [TakeSet.eq.Take.of.Ge (by rfl)]
+  else
+    grind [List.swap_eq_of_ge_right]
 
 
 -- created on 2025-05-17
+-- updated on 2026-08-24

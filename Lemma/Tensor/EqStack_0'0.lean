@@ -15,7 +15,7 @@ private lemma main
 -- proof
   apply Eq.of.All_EqGetS.fin
   intro i
-  simp [EqGet0_0.fin]
+  conv_rhs => erw [EqGet0_0.fin]
   rw [EqGetStack.fin]
   rfl
 

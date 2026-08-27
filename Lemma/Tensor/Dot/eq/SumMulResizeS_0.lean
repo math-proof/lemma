@@ -16,6 +16,7 @@ private lemma main
   simp [Dot.dot]
   unfold Tensor.einsum
   simp
+  rfl
 
 
 -- created on 2026-08-13

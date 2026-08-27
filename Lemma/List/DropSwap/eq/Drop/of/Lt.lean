@@ -1,16 +1,7 @@
-import Lemma.List.Cons.eq.Append
-import Lemma.List.AppendAppend.eq.Append_Append
-import Lemma.List.EqDropAppend.of.Eq_Length
-import Lemma.List.LengthAppend.eq.AddLengthS
-import Lemma.List.LengthList.eq.One
-import Lemma.Nat.Add.is.Eq
-import Lemma.List.LengthSlice.eq.SubMin_Length
+import Batteries.Data.List.Lemmas
+import Lemma.List.DropSet.eq.Drop.of.Lt
 import Lemma.Nat.Lt.of.Lt.Lt
-import Lemma.Nat.Le.of.Lt
-import Lemma.Nat.Sub_Add.eq.SubSub
-import Lemma.Nat.EqAddSub.of.Ge
-import Lemma.Nat.EqAdd_Sub.of.Lt
-import Lemma.Nat.Sub.ge.One.of.Lt
+import Lemma.Nat.NotLt.is.Ge
 open List Nat
 
 
@@ -23,30 +14,14 @@ private lemma main
 -- imply
   (s.swap i j).drop (j + 1) = s.drop (j + 1) := by
 -- proof
-  unfold List.swap
-  split_ifs with h_eq h_j
-  ·
-    rfl
-  ·
-    rw [Cons.eq.Append s[i]]
-    rw [Append_Append.eq.AppendAppend]
-    apply EqDropAppend.of.Eq_Length
-    rw [LengthAppend.eq.AddLengthS]
-    rw [LengthList.eq.One]
-    apply Add.of.Eq
-    simp
-    rw [LengthSlice.eq.SubMin_Length]
+  if h_j : j < s.length then
     have h_i := Lt.of.Lt.Lt h h_j
-    simp [Le.of.Lt h_i, Le.of.Lt h_j]
-    rw [Sub_Add.eq.SubSub]
-    rw [EqAddSub.of.Ge]
-    ·
-      rw [EqAdd_Sub.of.Lt h]
-    ·
-      apply Sub.ge.One.of.Lt h
-  ·
-    rfl
+    rw [List.swap_eq_of_lt h_i h_j]
+    rw [DropSet.eq.Drop.of.Lt (by linarith)]
+    rw [DropSet.eq.Drop.of.Lt (by linarith)]
+  else
+    grind [List.swap_eq_of_ge_right]
 
 
 -- created on 2025-05-17
--- updated on 2025-05-18
+-- updated on 2026-08-24

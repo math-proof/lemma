@@ -17,14 +17,10 @@ private lemma main
 -- proof
   repeat rw [ToVector.eq.MapRange_Get.fin]
   ext i
-  simp
-  rw [GetDiv.eq.DivGet.fin (A := A)]
-  erw [GetDiv.eq.DivGet.fin (a := A.reshape s (by simp))]
-  simp
+  repeat erw [GetMap.eq.UFnGet]
   rw [EqGetRange.fin]
+  erw [GetDiv.eq.DivGet.fin (A := A)]
   erw [Div.eq.Div_Reshape]
-  simp
-  rfl
 
 
 -- created on 2025-09-24

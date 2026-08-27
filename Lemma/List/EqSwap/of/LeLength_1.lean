@@ -1,4 +1,4 @@
-import stdlib.List
+import Batteries.Data.List.Lemmas
 import sympy.Basic
 
 
@@ -11,13 +11,14 @@ private lemma main
 -- imply
   s.swap i j = s := by
 -- proof
-  match h : s with
+  match s with
   | [] =>
-    unfold List.swap
     simp
-  | [x] =>
-    unfold List.swap
-    grind
+  | [_] =>
+    grind [List.swap_eq]
+  | _ :: _ :: _ =>
+    simp at h
 
 
 -- created on 2026-07-22
+-- updated on 2026-08-24

@@ -18,7 +18,8 @@ private lemma main
   | [] =>
     simp [Tensor.length] at h₀
   | m :: s' =>
-    exact All_XEqGetS.of.XEq h₁ ⟨i, by simp [Tensor.length] at h₀ ⊢; omega⟩
+    simp [Tensor.length] at h₀ ⊢
+    exact All_XEqGetS.of.XEq h₁ ⟨i, by omega⟩
 
 
 -- created on 2026-07-21

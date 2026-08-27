@@ -1,6 +1,5 @@
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.List.Permute__Neg.of.Le
-import Lemma.List.EqSwap
 import Lemma.List.Swap.eq.PermutePermute.of.Lt.GtLength
 import Lemma.Tensor.SEqPermute
 import Lemma.Tensor.SEqPermuteS.of.SEq.Eq.Eq.GtLength
@@ -22,7 +21,7 @@ private lemma main
   split_ifs with h h h
   ·
     if h_1 : s.length = 1 then
-      apply SEqCast.of.SEq.Eq (by simp [h_1, EqSwap])
+      apply SEqCast.of.SEq.Eq (by simp [h_1])
       erw [Permute__Neg.eq.Cast.of.Le (i := ⟨s.length - 1, by grind⟩) (by grind)]
       simp
       apply SEq_Cast.of.SEq.Eq

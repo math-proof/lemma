@@ -43,7 +43,7 @@ private lemma main
     dsimp only [rowsY, rangeY]
     simp [GetElem.getElem, EqGetRange.fin]
   let k' : Fin (n * s.prod) := Fin.cast hprod k
-  have hk_eq : k' = ⟨i * s.prod + j, hk_lt⟩ := Fin.ext (by simp [k', hij, Prod.eq.Foldr])
+  have hk_eq : k' = ⟨i * s.prod + j, hk_lt⟩ := Fin.ext (by simp [Prod.eq.Foldr]; grind)
   let j' : Fin s.prod := Fin.cast (Prod.eq.Foldr s).symm j
   have hj : j = Fin.cast (Prod.eq.Foldr s) j' := Fin.ext (by simp [j'])
   have hmid : R₀ rowsX[i][j] rowsY[i][j] := by
@@ -60,9 +60,11 @@ private lemma main
   have hflat_eqX : (((List.Vector.range n).map fun i => X i).map data).flatten[k] = rowsX.flatten[k'] := by
     dsimp [rowsX, rangeX, k']
     simp [GetElem.getElem]
+    rfl
   have hflat_eqY : (((List.Vector.range n).map fun i => Y i).map data).flatten[k] = rowsY.flatten[k'] := by
     dsimp [rowsY, rangeY, k']
     simp [GetElem.getElem]
+    rfl
   exact hflat_eqY ▸ hflat_eqX ▸ hR
 
 

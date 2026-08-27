@@ -22,7 +22,8 @@ private lemma main
   intro h_i_length h_i'
   have := Unsqueeze.as.Stack_Unsqueeze.of.GtLength_0 h_s X d
   have := SEqGetS.of.SEq.GtLength.fin h_i' this
-  rwa [EqGetStack.fin] at this
+  erw [EqGetStack.fin] at this
+  assumption
 
 
 -- created on 2025-07-13

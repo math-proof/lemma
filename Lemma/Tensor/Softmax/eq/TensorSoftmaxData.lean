@@ -14,6 +14,7 @@ import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Vector.GetSum.eq.SumMapGet
 import Lemma.Vector.GetUnflatten.eq.Get_AddMul
 import Lemma.Vector.Head.eq.Get_0
+import Lemma.Vector.EqGetReplicate
 open Bool List Nat Tensor Vector
 
 
@@ -47,18 +48,18 @@ private lemma main
   have := EqGetUnsqueeze_0.fin ((exp (⟨X⟩ : Tensor α [n])).sum 0)
   simp at this
   simp [this]
-  rw [DataSum_0.eq.SumSplitAtData]
+  erw [DataSum_0.eq.SumSplitAtData]
   simp [DataExp.eq.ExpData]
   unfold List.Vector.splitAt
   have h_eq := Prod.eq.MulProdS [n] 1
   have := GetSum.eq.SumMapGet.val (cast (congrArg (List.Vector α) h_eq) (exp X)).unflatten ⟨0, by simp⟩
   simp at this
-  simp [Head.eq.Get_0]
-  rw [this]
+  erw [Vector.EqGetReplicate]
+  simp only [GetElem.getElem] at this
+  erw [this]
   apply congrArg
   ext i
   simp
-  simp only [GetElem.getElem]
   rw [GetUnflatten.eq.Get_AddMul.fin]
   simp
   rw [GetCast.eq.Get.of.Eq.fin (by simp)]

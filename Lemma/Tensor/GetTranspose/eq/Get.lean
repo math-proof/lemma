@@ -1,6 +1,7 @@
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.Tensor.PermuteCast.as.Permute.of.Eq
 import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
+import Lemma.Tensor.Get.of.Eq
 import Lemma.List.ProdAppend.eq.MulProdS
 import Lemma.Tensor.SEqPermute
 import Lemma.Tensor.Permute.eq.Ite
@@ -8,7 +9,7 @@ import Lemma.Vector.Eq.of.Eq_Cast.Eq
 import Lemma.Tensor.Get.of.Data.as.FlattenTransposeSplitAt_1
 import Lemma.Tensor.PermuteTail.eq.CastRotate.of.LeLength
 open Tensor Vector List Bool
-set_option maxHeartbeats 1000000
+set_option maxHeartbeats 4000000
 
 
 @[main, fin, comm, fin.comm]
@@ -25,7 +26,9 @@ private lemma main
   unfold Tensor.transpose
   simp [Permute.eq.Cast]
   simp [GetElem.getElem]
-  have := Tensor.PermuteCast.eq.Cast_Permute.of.Eq (s' := [m, n].permute 0 0) (by rw [List.EqPermute]) X ⟨1, by grind⟩ (-1)
+  have := PermuteCast.eq.Cast_Permute.of.Eq (s' := [m, n].permute 0 0) (by rw [List.EqPermute]) X ⟨1, by grind⟩ (-1)
+  simp at this
+  have := Tensor.Get.of.Eq.fin this (i := ⟨j, by simp [List.EqPermute]⟩)
   erw [this]
   have h_s : [m, n] = [m, n].permute 0 0 := by rw [List.EqPermute]
   have h_s : [m, n].permute ⟨1, by grind⟩ (-1) = ([m, n].permute 0 0).permute ⟨1, by grind⟩ (-1) := by
@@ -35,23 +38,23 @@ private lemma main
     simp [List.Swap.eq.PermutePermute.of.Lt.GtLength]
   have := GetCast.eq.Cast_Get.of.Eq.GtLength_0.right.fin
     (s' := [m, n].swap 0 1)
-    (by simp [List.LengthSwap.eq.Length])
+    (by simp)
     h_swap
     X'
-    ⟨j, by simp [List.EqSwap_0'1]⟩
+    ⟨j, by simp⟩
   simp [X'] at this
   erw [this]
   let X' := (cast (congrArg (Tensor α) h_s) (X.permute 1 (-1))).get j
   have := GetCast.eq.Cast_Get.of.Eq.GtLength_0.right.fin
     (s' := ([m, n].swap 0 1).tail)
-    (by simp [EqSwap_0'1])
+    (by simp)
     (by grind)
     X'
-    ⟨i, by simp [EqSwap_0'1]⟩
+    ⟨i, by simp⟩
   simp [X'] at this
   erw [this]
   apply EqCast.of.SEq
-  rw [EqSwap_0'1] at h_swap
+  simp at h_swap
   have := GetCast.eq.Cast_Get.of.Eq.GtLength_0.right.fin
     (s' := ([m, n].permute 0 0).permute ⟨1, by grind⟩ (-1))
     (by simp)
@@ -123,11 +126,7 @@ private lemma main
   erw [← h_X']
   apply Get.of.Data.as.FlattenTransposeSplitAt_1
   simp [X']
-  apply Eq.of.Eq_Cast.Eq
-  ·
-    assumption
-  ·
-    simp
+  apply Eq.of.Eq_Cast.Eq (by simp) h_data
 
 
 -- created on 2025-07-13

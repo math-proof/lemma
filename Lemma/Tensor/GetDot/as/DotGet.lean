@@ -94,7 +94,7 @@ private lemma une
   | s₀ :: s =>
     simp [Dot.dot]
     rw [Einsum.eq.Cast_SelectBmm.of.GeLength_2 (by simp)]
-    conv_rhs => rw [Einsum.eq.Cast_SelectBmm.of.GeLength_2 (by simp)]
+    conv_rhs => erw [Einsum.eq.Cast_SelectBmm.of.GeLength_2 (by simp)]
     simp
     apply SEq_Cast.of.SEq.Eq
     ·
@@ -143,7 +143,7 @@ private lemma une
                 ·
                   rw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.right.fin (by simp) (by simp)]
                   apply SEqCast.of.SEq.Eq (by simp)
-                  rw [GetReshape.eq.Cast_Reshape.of.Prod.GtLength_0.fin (by grind) (by grind) (i := ⟨i, by grind⟩)]
+                  erw [GetReshape.eq.Cast_Reshape.of.Prod.GtLength_0.fin (by grind) (by grind) (i := ⟨i, by grind⟩)]
                   apply SEqCast.of.SEq.Eq (by simp)
                   apply SEqReshapeS.of.Eq.Eq.Dvd
                   ·
@@ -154,7 +154,6 @@ private lemma une
             simp [AppendTake_Length.eq.Cons_Append_List]
           ·
             simp [AppendTake_Length.eq.Cons_Append_List]
-            exact i.isLt
       ·
         simp [matmul_shape]
       ·

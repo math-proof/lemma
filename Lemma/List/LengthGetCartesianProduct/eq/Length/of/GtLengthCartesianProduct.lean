@@ -11,9 +11,10 @@ private lemma main
 -- imply
   s.cartesianProduct[i].length = s.length := by
 -- proof
-  unfold List.cartesianProduct
-  rw [LengthGetProduct.eq.Length.of.GtLengthProduct]
+  unfold List.cartesianProduct at *
+  rw [LengthGetProduct.eq.Length.of.GtLengthProduct h₀]
   rw [LengthMap.eq.Length]
 
 
 -- created on 2025-06-29
+-- updated on 2026-08-24

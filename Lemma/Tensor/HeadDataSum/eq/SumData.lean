@@ -21,16 +21,15 @@ private lemma main
   simp
   unfold List.Vector.splitAt
   simp
-  rw [Head.eq.Get_0.fin]
+  erw [Head.eq.Get_0.fin]
   erw [GetSum.eq.SumMapGet.fin]
-  rw [Sum.of.SEq]
+  apply Sum.of.SEq
   apply SEq.of.All_EqGetS.Eq.fin
   ·
     intro i
     have h_i := i.isLt
-    simp
-    rw [Head.eq.Get_0.fin]
-    rw [GetUnflatten.eq.Get_AddMul.fin]
+    erw [GetMap.eq.UFnGet]
+    erw [GetUnflatten.eq.Get_AddMul.fin]
     erw [GetCast.eq.Get.of.Eq.fin (by simp)]
     simp
   ·

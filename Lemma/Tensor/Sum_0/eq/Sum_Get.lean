@@ -25,7 +25,8 @@ private lemma main
   apply HEq.of.All_Eq.Eq (by simp)
   intro i
   simp [GetElem.getElem, Tensor.get, Tensor.toVector]
-  rw [GetCast_Map.eq.UFnGet.of.Eq.Lt.fin (by exact i.isLt) (by simp)]
+  erw [GetCast_Map.eq.UFnGet.of.Eq.Lt.fin (by exact i.isLt) (by simp)]
+  rfl
 
 
 -- created on 2025-07-13

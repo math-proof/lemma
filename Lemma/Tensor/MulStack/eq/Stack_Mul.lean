@@ -18,6 +18,7 @@ private lemma scalar
 -- proof
   unfold Stack Tensor.OfVector
   simp only [HMul.hMul]
+  apply Eq.of.EqDataS
   simp
   ext t
   have h_t := t.isLt

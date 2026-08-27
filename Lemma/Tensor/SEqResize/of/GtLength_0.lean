@@ -1,13 +1,14 @@
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.List.EqCons_Tail.of.GtLength_0
 import Lemma.List.HeadD.eq.Get_0.of.GtLength_0
+import Lemma.Vector.GetMap.eq.UFnGet
 import Lemma.Tensor.GetOfVector.eq.Get
 import Lemma.Tensor.GetToVector.eq.Get
 import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.GtLength_0
 import Lemma.Tensor.Resize.as.OfVectorMapToVector.of.GtVal_0
 import Lemma.Tensor.SEqResizeS.of.SEq.Val.Eq
 import Lemma.Tensor.SEqResize_0.of.GtLength_0
-open Bool List Tensor
+open Bool List Tensor Vector
 
 
 @[main, cast]
@@ -35,7 +36,8 @@ private lemma main
       apply SEq.of.All_SEqGetS.Eq.GtLength_0 (by simp)
       ·
         intro t
-        rw [GetOfVector.eq.Get.fin]
+        erw [GetOfVector.eq.Get.fin]
+        erw [GetMap.eq.UFnGet]
         simp
         erw [GetToVector.eq.Get.fin (i := ⟨t, by grind⟩)]
         have ih := ih (by grind) (X.get ⟨t, by grind⟩)

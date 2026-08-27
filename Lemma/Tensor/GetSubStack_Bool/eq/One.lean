@@ -6,6 +6,7 @@ import Lemma.Tensor.GetSub.eq.SubGetS
 import sympy.tensor.functions
 import sympy.tensor.stack
 open Tensor Int Nat
+set_option maxHeartbeats 2000000
 
 
 @[main]
@@ -28,7 +29,7 @@ private lemma main
   rw [EqGetStack.fin]
   erw [GetSub.eq.SubGetS.fin]
   rw [EqGetStack.fin]
-  rw [EqGet1_1.fin]
+  erw [EqGet1_1.fin]
   erw [EqGet1_1.fin]
   split_ifs with h
   .

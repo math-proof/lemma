@@ -1,6 +1,5 @@
 import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.List.EqPermute
-import Lemma.List.EqSwap_0'1
 import Lemma.List.LengthSlice.eq.Min
 import Lemma.List.Permute__Neg1.eq.Swap.of.GtVal_0
 import Lemma.List.LengthSlice.eq.One.of.Lt
@@ -35,7 +34,6 @@ private lemma main
     have h_t := t.isLt
     conv_rhs at h_t =>
       simp
-    simp [EqSwap_0'1] at h_t
     unfold Tensor.T
     unfold Tensor.transpose
     simp
@@ -79,12 +77,16 @@ private lemma main
         simp [h_qr]
       ·
         simp_all [LengthSlice.eq.Min]
-        simp [h_permute, Permute__Neg1.eq.Swap.of.GtVal_0, EqSwap_0'1]
+        erw [List.TailPermute__Neg.eq.EraseIdx]
+        simp [h_permute]
     ·
-      rw [ProdPermute.eq.Prod]
+      erw [LengthPermute.eq.Length]
+      grind
+    .
+      erw [ProdPermute.eq.Prod]
       grind
   ·
-    simp [EqSwap_0'1]
+    simp
 
 
 @[main]
@@ -100,7 +102,6 @@ private lemma row
     have h_t := t.isLt
     conv_rhs at h_t =>
       simp
-    simp [EqSwap_0'1] at h_t
     unfold Tensor.T
     unfold Tensor.transpose
     simp
@@ -129,7 +130,7 @@ private lemma row
       erw [this]
       erw [DataSelect.eq.Cast_FlattenGetSliceSplitAtData.simp]
       erw [Vector.Get_0.eq.Head.fin]
-      rw [Head.eq.Get_0.fin]
+      erw [Head.eq.Get_0.fin]
       erw [GetCast.eq.Get.of.Eq.fin]
       ·
         simp
@@ -149,10 +150,13 @@ private lemma row
         simp
         rwa [LengthSlice.eq.One.of.Lt]
     ·
-      rw [ProdPermute.eq.Prod]
+      erw [LengthPermute.eq.Length]
+      grind
+    ·
+      erw [ProdPermute.eq.Prod]
       grind
   ·
-    simp [EqSwap_0'1]
+    simp
 
 
 -- created on 2026-04-23

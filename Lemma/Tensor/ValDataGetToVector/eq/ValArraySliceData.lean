@@ -28,7 +28,7 @@ private lemma main
       (fun data ↦ (⟨data⟩ : Tensor α s))
     simp at this
     simp [GetElem.getElem]
-    rw [this]
+    erw [this]
     apply HEq.of.SEq
     apply GetSplitAt_1.as.ArraySlice.of.GtGet_0.GtLength_0
     repeat grind

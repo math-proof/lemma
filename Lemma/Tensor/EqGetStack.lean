@@ -23,6 +23,7 @@ private lemma main
   simp
   have := GetUnflattenDataStack.eq.Data.fin f i
   simp [GetElem.getElem] at this
+  erw [GetMap.eq.UFnGet]
   erw [GetSplitAt_1.eq.GetUnflatten.of.Lt.fin]
   assumption
 

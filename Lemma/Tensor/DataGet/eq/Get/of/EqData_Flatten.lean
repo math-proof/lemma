@@ -28,6 +28,7 @@ private lemma main
   simp [GetVal.eq.Get.of.Lt (show i.val < v.length by simp)]
   simp [GetElem.getElem]
   simp [GetCast.eq.Get.of.Eq.fin]
+  erw [GetMap.eq.UFnGet]
   erw [GetSplitAt_1.eq.GetUnflatten.of.Lt.fin (by grind)]
   congr
   conv_rhs => rw [Eq_UnflattenFlatten v]

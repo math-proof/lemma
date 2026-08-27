@@ -69,7 +69,8 @@ private lemma main
         apply SEqReshapeS.of.Eq.Eq.Dvd (by simp) (by simp) (by rfl)
   | sₐ :: sₜ, s'ₐ :: s'ₜ =>
     simp [Dot.dot]
-    simpa using GetEinsum.as.EinsumGet.of.GtLengthS.fin (by grind) X Y i
+    have := GetEinsum.as.EinsumGet.of.GtLengthS.fin (by grind) X Y i
+    simpa
 
 
 -- created on 2026-07-16

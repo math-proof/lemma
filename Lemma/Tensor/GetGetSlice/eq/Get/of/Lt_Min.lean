@@ -31,6 +31,7 @@ private lemma main
     rw [Length.eq.Get_0.of.GtLength_0 (by simp)]
     simp
   apply Eq.of.EqDataS
+  erw [GetMap.eq.UFnGet]
   simp
   erw [GetSplitAt_1.eq.GetUnflatten.of.Lt.fin]
   erw [EqUnflattenFlatten]

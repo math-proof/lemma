@@ -77,11 +77,7 @@ private lemma main
             ·
               intro l
               apply SelectGet.as.GetSelect.of.GtGet_0.GtGet_Add_1.LtAdd_1Length h _ h_t
-              ·
-                simp
-              ·
-                apply GtGet.of.GtGetTail.GtLengthTail (by grind)
-                grind
+              simp
             ·
               simp
           ·

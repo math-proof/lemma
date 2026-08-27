@@ -1,4 +1,3 @@
-import Lemma.Vector.EqRepeat_0'0
 import Lemma.Vector.GetResize.eq.Ite_Get_Mod
 open Vector
 
@@ -13,11 +12,7 @@ private lemma main
 -- proof
   cases n with
   | zero =>
-    cases v
-    dsimp [List.Vector.resize]
-    rw [EqRepeat_0'0]
-    ext i
-    exact Fin.elim0 i
+    apply Subsingleton.elim
   | succ n =>
     ext i
     rw [GetResize.eq.Ite_Get_Mod.fin]
@@ -31,3 +26,4 @@ private lemma main
 
 
 -- created on 2026-07-15
+-- updated on 2026-08-24

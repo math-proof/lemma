@@ -138,24 +138,6 @@ def List.enumerate (s : List α) : List (Fin s.length × α) :=
     )
     (by simp)
 
-def List.swap (s : List α) (i : Nat) (j : Nat) : List α :=
-  if i = j then
-    s
-  else if h_lt : i < j then
-    if h_j : j < s.length then
-      -- s[:i] ++ [s[i]] ++ s[i + 1:j] ++ [s[j]] ++ s[j + 1:], transform to:
-      -- s[:i] ++ [s[j]] ++ s[i + 1:j] ++ [s[i]] ++ s[j + 1:]
-      s.take i ++ s[j] :: s.slice (i + 1) j ++ s[i] :: s.drop (j + 1)
-    else
-      s
-  else -- j < i
-    if h_i : i < s.length then
-      -- s[:j] ++ [s[j]] ++ s[j + 1:i] ++ [s[i]] ++ s[i + 1:], transform to:
-      -- s[:j] ++ [s[i]] ++ s[j + 1:i] ++ [s[j]] ++ s[i + 1:]
-      s.take j ++ s[i] :: s.slice (j + 1) i ++ s[j] :: s.drop (i + 1)
-    else
-      s
-
 def List.permute (s : List α) (i : Fin s.length) (d : ℤ) : List α :=
   match d with
   | .ofNat d =>

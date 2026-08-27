@@ -15,10 +15,10 @@ private lemma main
 -- proof
   simp [GetElem.getElem]
   rw [Sub.eq.Add_Neg]
-  rw [GetAdd.eq.AddGetS.fin]
+  erw [GetAdd.eq.AddGetS.fin]
   have := GetNeg.eq.NegGet.fin (i := ⟨i, by grind⟩) B
   simp at this
-  rw [this]
+  erw [this]
   erw [Sub.eq.Add_Neg]
   rfl
 

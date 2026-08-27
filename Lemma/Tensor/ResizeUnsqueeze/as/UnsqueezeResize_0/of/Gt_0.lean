@@ -80,13 +80,13 @@ private lemma main
           ·
             grind
       else
-        rw [GetAppend.eq.Get_Sub.of.GtAdd.Ge.fin]
+        erw [GetAppend.eq.Get_Sub.of.GtAdd.Ge.fin]
         ·
           simp [h_InsertIdx]
           rw [EqGet0_0.fin]
           conv_rhs => erw [UnsqueezeCast.eq.Cast_Unsqueeze.of.Eq (by rw [Set_0.eq.Cons_Tail.of.GtLength_0 (by grind)]; grind)]
           apply SEq_Cast.of.SEq.Eq (by rw [Set_0.eq.Cons_Tail.of.GtLength_0 (by grind)]; grind)
-          rw [GetAppend.eq.Get_Sub.of.GtAdd.Ge.fin]
+          erw [GetAppend.eq.Get_Sub.of.GtAdd.Ge.fin]
           ·
             rw [EqGet0_0.fin]
             conv_rhs => erw [EqUnsqueeze0'0]

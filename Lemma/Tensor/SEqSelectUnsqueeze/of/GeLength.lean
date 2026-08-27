@@ -5,7 +5,9 @@ import Lemma.Tensor.SEq.of.All_SEqGetS.Eq
 import Lemma.Tensor.Select.as.OfVectorMapToVector.of.GtVal_0
 import Lemma.Tensor.Select_0.as.Get.of.GtLength_0
 import Lemma.Tensor.ToVector.eq.MapRange_Get.of.GtLength_0
-open Tensor
+import Lemma.Vector.GetMap.eq.UFnGet
+import Lemma.Bool.SEq.is.SEqCast.of.Eq
+open Tensor Vector Bool
 
 
 /--
@@ -28,6 +30,7 @@ private lemma main
     have := EqGetUnsqueeze_0.fin X
     simp at this ⊢
     rw [this]
+    rfl
   | succ d ih =>
     match s with
     | [] =>
@@ -35,7 +38,8 @@ private lemma main
     | s₀ :: s =>
       rw [Select.eq.Cast_OfVectorMapToVector.of.GtVal_0 (by grind) (i := ⟨0, by grind⟩)]
       simp
-      rw [ToVector.eq.MapRange_Get.of.GtLength_0]
+      apply SEqCast.of.SEq.Eq (by grind)
+      erw [ToVector.eq.MapRange_Get.of.GtLength_0]
       ·
         simp
         apply SEq.of.All_SEqGetS.Eq
@@ -44,15 +48,18 @@ private lemma main
         ·
           intro i
           rw [GetOfVector.eq.Get]
-          simp
+          simp only [GetElem.getElem]
           have h := GetUnsqueeze.eq.Cast_UnsqueezeGet.of.GtGet_0.Gt_0.GtLength_0.fin (by simp) (by simp) (by simp) X (s := s₀ :: s) (d := d + 1) (i := (List.Vector.range s₀)[i])
           simp at h
-          rw [h]
+          rw [GetMap.eq.UFnGet]
+          erw [GetMap.eq.UFnGet]
+          erw [h]
           simp at h_dim
           have ih := ih h_dim (X.get (List.Vector.range s₀)[i])
           apply ih.trans
           simp [GetElem.getElem]
           rw [Vector.EqGetRange.fin]
+          rfl
       ·
         simp
 

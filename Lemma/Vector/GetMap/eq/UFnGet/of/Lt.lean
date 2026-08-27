@@ -1,4 +1,5 @@
-import sympy.Basic
+import Lemma.Vector.GetMap.eq.UFnGet
+open Vector
 
 
 @[main, fin]
@@ -11,8 +12,8 @@ private lemma main
 -- imply
   (v.map f)[i] = f v[i] := by
 -- proof
-  simp [GetElem.getElem]
+  apply GetMap.eq.UFnGet
 
 
 -- created on 2025-06-01
--- updated on 2025-06-14
+-- updated on 2026-08-27

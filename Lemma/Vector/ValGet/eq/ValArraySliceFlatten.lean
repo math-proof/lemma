@@ -1,7 +1,6 @@
 import Lemma.Vector.EqCons_Tail
 import Lemma.Nat.Add_Mul.eq.MulAdd_1
 import Lemma.List.DropDrop.eq.Drop_Add
-import Lemma.List.EqDropAppend
 import Lemma.Bool.UFn.of.Eq
 import Lemma.Vector.GetCons__Add_1.eq.Get.of.Lt_Mul
 open Vector List Bool Nat
@@ -63,12 +62,9 @@ private lemma main
       simp
       rw [MulAdd_1.eq.Add_Mul]
       rw [Drop_Add.eq.DropDrop]
-      have : (List.drop n (v.head.toList ++ (List.map List.Vector.toList v.tail.toList).flatten)) = (List.drop v.head.toList.length (v.head.toList ++ (List.map List.Vector.toList v.tail.toList).flatten)) := by
-        simp
-      erw [this]
-      rw [EqDropAppend]
-      rfl
+      rw [h_v]
+      simp [List.Vector.toList_cons, List.map_cons, List.flatten_cons, i']
 
 
 -- created on 2025-05-08
--- updated on 2025-05-31
+-- updated on 2026-08-24

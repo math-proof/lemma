@@ -10,7 +10,7 @@ private lemma main
 -- imply
   (a :: b :: c).swap 0 1 = b :: a :: c := by
 -- proof
-  simp [List.swap, List.slice, List.array_slice]
+  simp [List.swap]
 
 
 -- created on 2025-06-16

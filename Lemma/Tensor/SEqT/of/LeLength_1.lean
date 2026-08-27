@@ -2,7 +2,6 @@ import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.Bool.SEqCast.of.Eq
 import Lemma.List.EqPermute
 import Lemma.List.Permute__Neg.of.Le
-import Lemma.List.EqSwap
 import Lemma.Tensor.SEqPermute
 import Lemma.Tensor.SEqPermuteS__Neg.of.Le
 import Lemma.Tensor.T.as.Permute__Neg1.of.GtLength_0
@@ -24,7 +23,6 @@ private lemma main
       apply SEqCast.of.SEq.Eq
       ·
         simp
-        rw [EqSwap]
         erw [Permute__Neg.of.Le (by grind)]
         simp [EqPermute]
       ·
@@ -47,7 +45,7 @@ private lemma main
       unfold Tensor.transpose
       simp
       apply SEqCast.of.Eq
-      rw [EqSwap]
+      rfl
 
 
 -- created on 2026-07-22

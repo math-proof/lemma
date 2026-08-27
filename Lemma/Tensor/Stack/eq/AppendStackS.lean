@@ -22,12 +22,13 @@ private lemma main
     simp
     erw [GetAppend.eq.Get.of.Lt h]
     simp [GetElem.getElem]
-    rw [EqGetStack.fun.fin]
+    erw [EqGetStack.fun.fin]
   else
     simp at h ⊢
     erw [GetAppend.eq.Get_Sub.of.GtAdd.Ge (by simp_all) (by simp_all)]
     simp [GetElem.getElem]
-    simp_all [EqGetStack.fin]
+    erw [EqGetStack.fin]
+    grind
 
 
 -- created on 2019-10-14

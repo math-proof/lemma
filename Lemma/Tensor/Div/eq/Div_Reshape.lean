@@ -29,9 +29,8 @@ private lemma main
   simp
   rw [GetCast.eq.Get.of.Eq.fin]
   ·
-    rw [GetRepeat.eq.Get_Mod.fin]
+    erw [GetRepeat.eq.Get_Mod.fin]
     simp [EqMod_1'0]
-    rw [Head.eq.Get_0]
     simp [HDiv.hDiv]
     rfl
   ·

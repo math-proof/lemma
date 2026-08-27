@@ -25,6 +25,7 @@ private lemma main
     rw [Length.eq.Get_0.of.GtLength_0 this]
     simp [← h_s]
     simp [Tensor.length]
+    grind
 
 
 -- created on 2025-07-24

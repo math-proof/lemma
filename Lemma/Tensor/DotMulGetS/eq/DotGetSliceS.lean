@@ -92,8 +92,8 @@ private lemma main
     arg 2
     ext k
     arg 1
-    rw [CoeIte.eq.Ite_CoeS]
-    erw [Mul_Ite.eq.Ite_MulS]
+    rw [CoeIte.eq.Ite_CoeS (p := ((k : ℕ) ∈ Ico ((i : ℕ) + 1 - l) ((i : ℕ) + u)))]
+    erw [Mul_Ite.eq.Ite_MulS (p := ((k : ℕ) ∈ Ico ((i : ℕ) + 1 - l) ((i : ℕ) + u)))]
   conv_lhs =>
     arg 2
     ext k
@@ -126,7 +126,7 @@ private lemma main
       apply Eq.of.EqDataS
       dsimp [HMul.hMul]
       ext idx
-      simp [List.Vector.get_map, EqData0'0]
+      simp [EqData0'0]
       fin_cases idx
       change (0 : α) * v.data[0] = 0
       apply EqMul0_0
@@ -152,12 +152,17 @@ private lemma main
       have hZt := GetGetSlice.eq.Get_Add.of.GtSubMin hk Z
       have hA := GetGetSlice.eq.Get_Add.of.GtSubMin hk Ai
       have hV := GetGetSlice.eq.Get_Add.of.GtSubMin hk V
-      simp [GetElem.getElem] at hZt hA hV ⊢
-      rw [hZt, hZ]
-      dsimp [mulKV]
-      erw [hA, hV]
-      rfl
+      simp [GetElem.getElem] at hZt hA hV
+      simp [id]
+      refine Eq.trans ?_ (hZt.trans ?_)
+      ·
+        congr 1
+      ·
+        erw [hZ]
+        dsimp [mulKV]
+        erw [hA, hV]
+        rfl
 
 
 -- created on 2026-08-14
--- updated on 2026-08-20
+-- updated on 2026-08-27

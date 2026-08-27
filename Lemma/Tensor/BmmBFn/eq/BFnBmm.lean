@@ -1,4 +1,3 @@
-import Lemma.List.EqSwap_0'1
 import Lemma.List.EraseIdxAppend.eq.Append_EraseIdx.of.LeLength
 import Lemma.List.InsertIdxAppend.eq.Append_InsertIdx
 import Lemma.List.InsertIdxAppend.eq.Append_InsertIdx.of.LeLength
@@ -42,7 +41,7 @@ private lemma main
   let CT : Tensor α (bz ++ [n, k]) :=
     cast (congrArg (Tensor α) (by
       rw [SwapAppend.eq.Append_Swap.of.LeLength.LeLength (by simp) (by simp)]
-      simp [EqSwap_0'1])) Cᵀ
+      simp)) Cᵀ
   let C0 : Tensor α (bz ++ [1, n, k]) :=
     cast (congrArg (Tensor α) (by
       rw [InsertIdxAppend.eq.Append_InsertIdx.of.LeLength (by simp)]

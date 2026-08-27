@@ -81,9 +81,12 @@ private lemma main
   rw [← h_z]
   apply @Tensor.XEq.of.All_XEqGetS.fin
   intro i
+  have hi : ↑i < n := i.isLt
   have h_Ξᵢ := XEqGetS.of.XEq.GtLength.fin (i := i) (by grind) h_Ξ
   simp at h_Ξᵢ
-  rw [@Tensor.GetMul.eq.MulGetS.fin] at h_Ξᵢ
+  have hmuld : (exp A' * Ξ).get ⟨↑i, by grind⟩ = (exp A').get ⟨↑i, hi⟩ * Ξ.get ⟨↑i, hi⟩ := by
+    convert GetMul.eq.MulGetS.fin (exp A') Ξ ⟨↑i, hi⟩ <;> rfl
+  rw [hmuld] at h_Ξᵢ
   have h_zi := Get.of.Eq.fin h_z i
   simp at h_zi
   rw [Softmax.eq.DivExp_KeepdimSumExp] at h_zi
@@ -107,11 +110,7 @@ private lemma main
     conv_rhs => rw [ExpMap.eq.MapExp.of.All_EqUFnExp_ExpUFn (by aesop)]
     conv_rhs => erw [GetMap.eq.MapGet.fin (i := ⟨i, by grind⟩)]
     conv_rhs =>
-      pattern (map (band_part _ _ _) _).get _
-      erw [GetMap.eq.MapGet.fin (i := ⟨i, by grind⟩)]
-    conv_rhs =>
-      pattern (map (band_part _ _ _) _).get _
-      erw [GetMap.eq.MapGet.fin (i := ⟨i, by grind⟩)]
+      erw [GetMap.eq.MapGet.fin (Tensor.band_part (1 : Tensor ℝ [n, n]) (l - 1) (u - 1)) Hyperreal.ofReal ⟨i, by grind⟩]
     simp
     conv_rhs => erw [MulMapS.eq.MapMul.of.All_Eq_Mul (by aesop)]
     conv_rhs => erw [SumMap.eq.MapSum.of.All_EqUFnAdd (by aesop)]
@@ -124,11 +123,7 @@ private lemma main
     conv_rhs => erw [MapGet.eq.GetMap.fin (i := ⟨i, by grind⟩)]
     conv_rhs => rw [MapExp.eq.ExpMap.of.All_EqUFnExp_ExpUFn (by aesop)]
     conv_rhs =>
-      pattern map (get (band_part _ _) _) _
-      erw [MapGet.eq.GetMap.fin (i := ⟨i, by grind⟩)]
-    conv_rhs =>
-      pattern map (get (band_part _ _) _) _
-      erw [MapGet.eq.GetMap.fin (i := ⟨i, by grind⟩)]
+      erw [MapGet.eq.GetMap.fin (Tensor.band_part (1 : Tensor ℝ [n, n]) (l - 1) (u - 1)) Hyperreal.ofReal ⟨i, by grind⟩]
     simp
     rw [← hΞ]
     rw [← h_A']
@@ -178,11 +173,11 @@ private lemma main
       erw [Exp.eq.MulSoftmax_SumExp]
     simp
     conv_lhs => erw [DotMul.eq.MulDot]
-    simp [EqGetStack.fin]
     erw [EqDivMul.of.Ne_0]
     .
-      simp [GetElem.getElem]
-      rfl
+      apply Tensor.XEq.of.Eq
+      apply Eq.symm
+      apply EqGetStack.fin _ ⟨↑i, hi⟩
     .
       rw [h_A']
       conv_lhs => erw [GetMap.eq.MapGet.fin]
@@ -193,8 +188,8 @@ private lemma main
       .
         simp
       .
-        apply Tensor.GtCoe_0.of.Gt_0
-        apply Tensor.GtSumExp_0.of.Ne_0
+        apply @Tensor.GtCoe_0.of.Gt_0
+        apply GtSumExp_0.of.Ne_0
         apply Nat.Ne.of.Gt
         have := NeZero.pos l
         apply List.Lt0LengthSlice.of.Lt.Lt
@@ -207,4 +202,4 @@ private lemma main
 
 
 -- created on 2020-12-28
--- updated on 2026-08-20
+-- updated on 2026-08-28

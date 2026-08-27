@@ -68,7 +68,7 @@ private lemma main
       simp at h_stop_eq
       denote h_step_eq : step = n.succ
       simp [h_start_eq, h_stop_eq]
-      simp [Get]
+      erw [Get]
       apply GetSlicedIndices.eq.AddMul.of.Gt_0.Gt_0.Lt.Lt _ h_j
       repeat linarith
 
@@ -123,10 +123,10 @@ private lemma Comm
       simp at h_stop_eq
       denote h_step_eq : step = n.succ
       simp [h_start_eq, h_stop_eq]
-      simp [Get]
+      erw [Get]
       apply GetSlicedIndices.eq.AddMul.of.Gt_0.Gt_0.Lt.Lt.comm _ h_j
       repeat linarith
 
 
 -- created on 2025-11-07
--- updated on 2025-11-08
+-- updated on 2026-08-24

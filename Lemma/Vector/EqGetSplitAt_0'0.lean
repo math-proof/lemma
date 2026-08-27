@@ -31,8 +31,8 @@ private lemma main
     simp [GetTake.eq.Get.of.Lt_Min]
     rw [GetDrop.eq.Get_Add.of.Lt_Sub]
     simp [GetElem.getElem]
-    rw [GetCast.eq.Get.of.Eq.fin]
-    simp
+    rw [GetCast.eq.Get.of.Eq.fin (by simp)]
+    rfl
   ·
     rw [EqMin.of.Le]
     rw [EqGetRange.of.Lt]
@@ -40,3 +40,4 @@ private lemma main
 
 
 -- created on 2025-07-12
+-- updated on 2026-08-24

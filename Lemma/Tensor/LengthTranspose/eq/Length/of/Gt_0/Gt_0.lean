@@ -1,5 +1,4 @@
 import Lemma.List.Permute.of.Eq.Val.Eq
-import Lemma.List.EqSwap
 import Lemma.List.EqSwap.of.OrLeSLength
 import Lemma.List.Swap
 import Lemma.List.Swap.eq.PermutePermute.of.Lt.GtLength
@@ -24,7 +23,7 @@ private lemma main
   ·
     rw [LengthCast.eq.Length.of.Eq]
     subst h_eq
-    rw [EqSwap]
+    simp
   ·
     rw [LengthCast.eq.Length.of.Eq]
     rwa [EqSwap.of.OrLeSLength]

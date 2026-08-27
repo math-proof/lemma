@@ -1,4 +1,5 @@
 import Lemma.Vector.GtMin.of.GtLengthSlice
+import Lemma.List.LengthSlice.eq.Min
 import Lemma.List.LengthSlice.eq.Zero
 import Lemma.Int.EqToNat
 import Lemma.List.GetSlicedIndices.eq.AddMul.of.GtLength.Gt_0.Le.Lt
@@ -66,7 +67,8 @@ private lemma main
     ·
       apply List.LengthSlice.eq.Zero
     ·
-      simp [Slice.length]
+      simp [Nat.div_zero, List.LengthSlice.eq.Zero]
+      convert LengthSlice.eq.Min (n := 0) (m := 0) <;> simp
   else
     have h_d := Nat.pos_of_ne_zero h_d
     set L := (⟨a, b, d⟩ : Slice).length n with hL
@@ -97,3 +99,4 @@ private lemma main
 
 
 -- created on 2026-08-07
+-- updated on 2026-08-24

@@ -48,7 +48,7 @@ private lemma main
     rw [EqToNat]
     rw [ToNatSubCoeS.eq.Sub]
   simp [GetElem.getElem]
-  rw [h_Ξᵢ]
+  erw [h_Ξᵢ]
   rw [Sum_0.eq.Sum_Get.fin]
   conv_lhs =>
     arg 2

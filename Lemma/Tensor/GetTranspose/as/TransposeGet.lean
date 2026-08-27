@@ -97,13 +97,21 @@ private lemma main
         simp
         apply SEqCast.of.SEq.Eq
         ·
-          simp
-          apply congrArg
+          apply congrArg List.tail
           rw [Swap.eq.PermutePermute.of.Lt.GtLength]
           ·
             simp [bz', args, args', bz'1]
             repeat rw [Permute.of.Eq.Val.Eq]
-            repeat simp
+            ·
+              rfl
+            ·
+              simp
+            ·
+              simp
+            ·
+              rfl
+            ·
+              rfl
           ·
             simp
           ·
@@ -155,12 +163,20 @@ private lemma main
           .
             simp
       ·
-        simp
         rw [Swap.eq.PermutePermute.of.Lt.GtLength]
         ·
           simp [bz', args, args', bz'1]
           repeat rw [Permute.of.Eq.Val.Eq]
-          repeat simp
+          ·
+            rfl
+          ·
+            simp
+          ·
+            simp
+          ·
+            rfl
+          ·
+            rfl
         ·
           simp
         ·
@@ -168,4 +184,4 @@ private lemma main
 
 
 -- created on 2026-07-03
--- updated on 2026-07-04
+-- updated on 2026-08-27

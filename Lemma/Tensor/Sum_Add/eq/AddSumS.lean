@@ -36,7 +36,7 @@ private lemma main
     conv_rhs =>
       arg 1
       erw [AddAdd.comm]
-    rw [AddAdd.eq.Add_Add]
+    conv_rhs => erw [AddAdd.eq.Add_Add]
     congr 1
     repeat rw [EqSumStack.fn]
     rfl

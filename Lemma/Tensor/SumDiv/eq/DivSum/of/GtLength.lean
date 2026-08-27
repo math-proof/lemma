@@ -54,41 +54,38 @@ private lemma main
       simp at h
       have h_sum : ∀ x : Tensor α s, (x / n.reshape s (by simp)).sum dim = x.sum dim / n := fun x => by
         simpa [Div_Reshape.eq.Div] using ih h x
-      erw [funext h_sum]
-      have h_fun : (fun x : Tensor α s ↦ x.sum dim / n) = (fun x : Tensor α (s.eraseIdx dim) => x / n) ∘ (fun x : Tensor α s => x.sum dim) := by
-        funext x
+      erw [Vector.MapMap.eq.Map_Comp]
+      conv_lhs =>
+        arg 1
+        arg 1
+        arg 1
+        ext x
         simp
-      simp [h_fun]
-      simp only [Map_Comp.eq.MapMap]
+      erw [funext h_sum]
       unfold Tensor.OfVector
       simp
-      have h_data : (fun x : Tensor α s => (x.sum dim / n).data) =
-          (fun x : Tensor α (s.eraseIdx dim) => (x / n).data) ∘ (fun x : Tensor α s => x.sum dim) := by
-        funext x
+      erw [MapMap.eq.Map_Comp]
+      conv_lhs =>
+        arg 1
+        arg 1
+        ext x
         simp
-      simp only [h_data, Map_Comp.eq.MapMap]
-      have h_fun : (fun x : Tensor α (s.eraseIdx dim) ↦ (x / n).data) = (fun x : Tensor α (s.eraseIdx dim) => x.data) ∘ (fun x => x / n) := by
-        funext x
-        simp
-      simp only [h_fun, Map_Comp.eq.MapMap]
-      have h_fun : (fun x : Tensor α (s.eraseIdx dim) => x.data) = Tensor.data := by
-        simp
-      simp only [h_fun]
       apply SEq.of.All_EqGetS.Eq.fin (by rfl)
       intro k
-      rw [GetMap.eq.UFnGet]
+      erw [GetMap.eq.UFnGet]
       let ⟨i, j, h_k⟩ := Any_Eq_AddMul k
-      repeat rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_k]
+      rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_k]
+      erw [GetMap.eq.UFnGet]
       simp
-      rw [DataDiv.eq.DivData]
+      erw [DataDiv.eq.DivData]
       rw [GetDiv.eq.DivGet.fin (a := n.data[0])]
       erw [GetToVector.eq.Get.fin]
       congr 1
       rw [Sum.eq.OfVectorMapToVector X dim]
       unfold Tensor.OfVector
       simp
-      repeat rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_k]
-      simp
+      rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_k]
+      repeat erw [GetMap.eq.UFnGet]
       erw [GetToVector.eq.Get.fin]
 
 

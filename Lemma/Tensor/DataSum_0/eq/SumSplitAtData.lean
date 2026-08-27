@@ -1,5 +1,6 @@
 import Lemma.Bool.EqCast.of.SEq
 import Lemma.Vector.EqHeadSplitAt_0
+import Lemma.Vector.GetMap.eq.UFnGet
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Vector.GetSum.eq.SumMapGet
 import Lemma.Vector.Head.eq.Get_0
@@ -25,6 +26,7 @@ private lemma main
   rw [GetFlatten.eq.Get.of.Eq_AddMul.fin (i := ⟨0, by grind⟩) (j := ⟨t, by grind⟩) (by grind)]
   simp
   rw [Head.eq.Get_0.fin]
+  erw [GetMap.eq.UFnGet]
   erw [GetSum.eq.SumMapGet.fin]
   erw [GetSum.eq.SumMapGet.fin]
   simp

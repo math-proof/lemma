@@ -1,7 +1,6 @@
 import Lemma.Bool.EqCast.of.SEq
-import Lemma.List.ProdSwap.eq.Prod
 import Lemma.Tensor.SEqDataTransposeTensor
-open Bool List Tensor
+open Bool Tensor
 
 
 @[main]
@@ -9,7 +8,7 @@ private lemma main
 -- given
   (v : List.Vector α [n].prod) :
 -- imply
-  (⟨v⟩ : Tensor α [n, 1])ᵀ.data = cast (congrArg (List.Vector α) (by simp [ProdSwap.eq.Prod])) v := by
+  (⟨v⟩ : Tensor α [n, 1])ᵀ.data = cast (congrArg (List.Vector α) (by simp)) v := by
 -- proof
   apply Eq_Cast.of.SEq
   apply SEqDataTransposeTensor
@@ -20,7 +19,7 @@ private lemma row
 -- given
   (v : List.Vector α [1, n].prod) :
 -- imply
-  (⟨v⟩ : Tensor α [1, n])ᵀ.data = cast (congrArg (List.Vector α) (by simp [ProdSwap.eq.Prod])) v := by
+  (⟨v⟩ : Tensor α [1, n])ᵀ.data = cast (congrArg (List.Vector α) (by simp)) v := by
 -- proof
   apply Eq_Cast.of.SEq
   apply SEqDataTransposeTensor.row

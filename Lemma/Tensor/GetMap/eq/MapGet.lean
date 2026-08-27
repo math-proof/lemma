@@ -25,7 +25,7 @@ private lemma main
     unfold Tensor.map
     apply Eq.of.EqDataS
     simp [GetElem.getElem]
-    repeat rw [DataGet.eq.GetUnflattenData.fin]
+    repeat erw [DataGet.eq.GetUnflattenData.fin]
     simp
     ext j
     repeat erw [GetUnflatten.eq.Get_AddMul.fin]

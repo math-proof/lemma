@@ -17,7 +17,7 @@ private lemma main
   (X.bmm Y).length = X.length := by
 -- proof
   unfold Tensor.bmm
-  rw [LengthCast.eq.Length.of.Eq (by grind)]
+  rw [LengthCast.eq.Length.of.Eq (by simp [EraseIdxAppend.eq.Append_EraseIdx])]
   rw [LengthSum.eq.Length.of.Gt_0.GtLength (by simp) (by simp)]
   rw [LengthMul.eq.Length.of.GtLength_0 (by simp)]
   rw [LengthCast.eq.Length.of.Eq (by simp)]

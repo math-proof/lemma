@@ -1,7 +1,6 @@
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.Bool.SEqCast.of.Eq
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
-import Lemma.List.EqSwap_0'1
 import Lemma.List.InsertIdxAppend.eq.Append_Cons
 import Lemma.List.InsertIdxAppend.eq.Append_InsertIdx
 import Lemma.List.SwapAppend.eq.Append_Swap.of.LeLength.LeLength
@@ -24,7 +23,7 @@ private lemma main
 -- imply
   let A' : Tensor α (bz ++ [m, 1, k]) := cast (congrArg (Tensor α) (by simp [InsertIdxAppend.eq.Append_InsertIdx])) (A.unsqueeze (bz.length + 1))
   let A' : Tensor α (bz ++ [m, n, k]) := cast (congrArg (Tensor α) (by simp)) (A'.repeat ⟨bz.length + 1, by grind⟩ n)
-  let B' : Tensor α (bz ++ [n, k]) := cast (congrArg (Tensor α) (by rw [SwapAppend.eq.Append_Swap.of.LeLength.LeLength (by simp) (by simp)]; simp [EqSwap_0'1])) Bᵀ
+  let B' : Tensor α (bz ++ [n, k]) := cast (congrArg (Tensor α) (by simp_all [SwapAppend.eq.Append_Swap.of.LeLength.LeLength])) Bᵀ
   let B' : Tensor α (bz ++ [1, n, k]) := cast (congrArg (Tensor α) (by simp [InsertIdxAppend.eq.Append_Cons])) (B'.unsqueeze bz.length)
   let B' : Tensor α (bz ++ [m, n, k]) := cast (congrArg (Tensor α) (by simp)) (B'.repeat ⟨bz.length, by grind⟩ m)
   A @ B ≃ (A' * B').sum (bz.length + 2) := by
@@ -37,7 +36,7 @@ private lemma main
   simp
   unfold bmm
   simp
-  apply SEqCast.of.SEq.Eq (by simp [broadcast_shape]; grind)
+  apply SEqCast.of.SEq.Eq (by simp [broadcast_shape, List.EraseIdxAppend.eq.Append_EraseIdx])
   apply SEqSumS.of.SEq.Eq (by simp)
   apply SEqMulS.of.SEq.SEq
   ·
@@ -65,7 +64,7 @@ private lemma main
       repeat simp [InsertIdxAppend.eq.Append_Cons]
       apply SEqUnsqueezeS.of.SEq.Eq _ (by grind)
       apply SEqCastS.of.SEq.Eq.Eq
-      repeat rw [SwapAppend.eq.Append_Swap.of.LeLength.LeLength (by grind) (by grind)]; simp [EqSwap_0'1]
+      repeat rw [SwapAppend.eq.Append_Swap.of.LeLength.LeLength (by grind) (by grind)]; simp
       apply SEqTS.of.SEq
       apply SEqCast.of.Eq
       simp

@@ -65,7 +65,8 @@ private lemma main
         exact Nat.lt_of_succ_lt_succ h_d
       rw [GetRepeat.eq.Cast_RepeatGet.of.GtGet_0.GtVal_0.fin h_dim (by grind)]
       rw [GetResize.eq.Cast_ResizeGet.of.GtGet_0.GtVal_0.fin h_dim (by grind)]
-      simpa using ih (X := X.get ⟨i, by grind⟩) (s := s₀) h_d'
+      have := ih (X := X.get ⟨i, by grind⟩) (s := s₀) h_d'
+      aesop
 
 
 -- created on 2026-07-30

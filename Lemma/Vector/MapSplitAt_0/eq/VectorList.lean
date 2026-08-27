@@ -14,15 +14,13 @@ private lemma main
   (v.splitAt 0).map f = ⟨[f v], by simp⟩ := by
 -- proof
   ext i
-  simp
-  have h_i := i.isLt
-  conv_rhs at h_i => simp
-  have h_i := Eq_0.of.Lt_1 h_i
+  have h_i := Eq_0.of.Lt_1 (by simpa using i.isLt)
   have h_i := Eq_Fin.of.EqVal h_i
   rw [h_i]
-  conv_rhs => simp [List.Vector.get]
+  erw [List.Vector.get_map]
   congr
   apply EqGetSplitAt_0'0.fin
 
 
 -- created on 2026-04-23
+-- updated on 2026-08-24

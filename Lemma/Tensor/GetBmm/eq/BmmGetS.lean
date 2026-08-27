@@ -33,10 +33,10 @@ private lemma main
 -- proof
   simp [GetElem.getElem]
   simp [Tensor.bmm]
-  apply Eq_Cast.of.SEq.Eq (by grind)
+  apply Eq_Cast.of.SEq.Eq (by simp [List.EraseIdxAppend.eq.Append_EraseIdx])
   conv_lhs => rw [Eq_Fin i]
-  erw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.right.fin (by grind) (by simp; grind)]
-  apply SEqCast.of.SEq.Eq (by simp; grind)
+  erw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.right.fin (by grind) (by simp [List.EraseIdxAppend.eq.Append_EraseIdx])]
+  apply SEqCast.of.SEq.Eq (by simp [List.EraseIdxAppend.eq.Append_EraseIdx])
   apply SEq.of.Eq
   rw [GetSum.eq.Cast_SumGet.of.GtGet_0.Gt_0.GtLength.fin (by grind) (by grind) (by grind)]
   apply Sum.of.Eq
@@ -67,9 +67,15 @@ private lemma main
   have h_s_t₁ : (b :: bz ++ [n, k]).insertIdx (b :: bz).length 1 = b :: bz ++ [1, n, k] := by
     simp [InsertIdxAppend.eq.Append_Cons]
   have h_s_t₂ : (b :: bz ++ [k, n]).swap ((b :: bz ++ [k, n]).length - 2) ((b :: bz ++ [k, n]).length - 1) = b :: bz ++ [n, k] := by
-    simp [List.swap, AddAdd.eq.Add_Add, Slice.eq.Nil]
-  conv_lhs => rw [Eq_Fin i]
-  erw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.right.fin (s' := b :: bz ++ [m, 1, k]) (by grind) (by grind)]
+    simp [Swap.eq.Ite, AddAdd.eq.Add_Add, Slice.eq.Nil]
+  have := GetCast.eq.Cast_Get.of.Eq.GtLength_0.right.fin
+    (s' := b :: bz ++ [m, 1, k])
+    (by grind)
+    h_s₁
+    (X.unsqueeze (bz.length + 1 + 1))
+    ⟨i, by grind⟩
+  simp at this
+  simp [this]
   have := GetUnsqueeze.eq.Cast_UnsqueezeGet.of.GtGet_0.GtLength_0.fin
     (i := i)
     (by grind)
@@ -94,13 +100,18 @@ private lemma main
     (bz.length)
   simp at this
   simp [this]
-  conv_lhs => rw [Eq_Fin i]
-  erw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.right.fin (s' := (b :: bz ++ [n, k])) (by grind) (by grind)]
-  simp
+  have := GetCast.eq.Cast_Get.of.Eq.GtLength_0.right.fin
+    (s' := b :: bz ++ [n, k])
+    (by grind)
+    h_s_t₂
+    Yᵀ
+    ⟨i, by grind⟩
+  simp at this
+  simp [this]
   apply Unsqueeze.of.Eq
   apply Cast.of.SEq.Eq.left (by grind)
   apply GetTranspose.as.TransposeGet
 
 
 -- created on 2026-06-24
--- updated on 2026-07-03
+-- updated on 2026-08-27

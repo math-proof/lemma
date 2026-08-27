@@ -19,6 +19,7 @@ import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.GetSum.eq.SumMapGet
 import Lemma.Vector.GetUnflatten.eq.Get_AddMul
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
+import Lemma.Vector.MapMap.eq.Map_Comp
 open Bool Fin List Nat Tensor Vector
 
 
@@ -36,7 +37,12 @@ private lemma main
   simp
   apply EqCast.of.SEq
   rw [DataOfVector.eq.FlattenMapData]
-  simp
+  erw [MapMap.eq.Map_Comp]
+  conv_rhs =>
+    arg 1
+    arg 1
+    ext x
+    simp
   apply SEq.of.All_EqGetS.Eq.fin
   ·
     intro t
@@ -44,14 +50,14 @@ private lemma main
     let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul h_t
     let ⟨h_q_div, h_r_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qr
     rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qr]
-    simp
     simp at h_t
     simp only [MulMul.eq.Mul_Mul] at h_t
     rw [MulProdS.eq.ProdEraseIdx] at h_t
     let ⟨q', r', h_q'r'⟩ := Any_Eq_AddMul.of.Lt_Mul h_t
     let ⟨h_q'_div, h_r'_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_q'r'
     rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_q'r']
-    simp
+    erw [GetMap.eq.UFnGet]
+    conv_rhs => erw [GetMap.eq.UFnGet]
     rw [GetCast.eq.Get.of.Eq.fin (by simp; grind)]
     have h_r' := r'.isLt
     simp only [ProdEraseIdx.eq.MulProdS] at h_r'
@@ -73,8 +79,7 @@ private lemma main
     congr 1
     erw [GetToVector.eq.Get.fin]
     ext j
-    rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
-    erw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
+    repeat erw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
     simp
     rw [DataGet.eq.GetUnflattenData.fin]
     erw [GetUnflatten.eq.Get_AddMul.fin]

@@ -12,11 +12,12 @@ private lemma main
 -- imply
   (v.splitAt 0).head = v := by
 -- proof
-  rw [Head.eq.Get_0.fin]
+  erw [Head.eq.Get_0.fin]
   apply Eq.of.All_EqGetS.fin
   intros
   erw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
-  simp
+  aesop
 
 
 -- created on 2026-05-03
+-- updated on 2026-08-24

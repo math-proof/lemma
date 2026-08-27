@@ -62,15 +62,16 @@ private lemma main
         intro j
         repeat rw [EqGetStack.fin]
         split_ifs with h
-        · apply Eq.of.EqDataS
+        ·
+          apply Eq.of.EqDataS
           dsimp [Tensor.map]
-          simp [EqData0'0]
           ext i
           fin_cases i
-          assumption
-        · erw [GetMap.eq.MapGet.fin X f (i := ⟨i, by grind⟩)]
+          aesop
+        ·
+          erw [GetMap.eq.MapGet.fin X f (i := ⟨i, by grind⟩)]
           erw [GetMap.eq.MapGet.fin (X.get i) f (i := ⟨j, by grind⟩)]
-          rfl
+          aesop
 
 
 -- created on 2026-07-29

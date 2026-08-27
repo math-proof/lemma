@@ -37,6 +37,7 @@ private lemma cons
     have := GetAppend.eq.Get.fin X O (i := ⟨i, h_i⟩)
     simp at this
     rw [this]
+    rfl
   ·
     aesop
 

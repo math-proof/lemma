@@ -79,6 +79,7 @@ private lemma main
     rw [decide_eq_true (And.intro hband hdvd), Bool.toNat_true]
     apply Eq.of.EqDataS
     simp [EqData1'1]
+    rfl
   have h_gt : 0 < row.data[hj] := by
     have hdata := GetData.eq.GetDataGet.of.Lt.fin (α := α) (n := n) (i := j) (h_i := j.isLt) row
     have ht : row[j].data[0] = (1 : α) := calc
@@ -90,7 +91,9 @@ private lemma main
     calc
       _ < row[j].data[0] := hpos
       _ = row.data[j] := by simpa [GetElem.getElem] using hdata.symm
-      _ = row.data[hj] := by simp [hj, GetElem.getElem]
+      _ = row.data[hj] := by
+        simp [hj, GetElem.getElem]
+        rfl
   have h_data : row.data.sum > 0 := by
     rw [Sum.eq.Sum_Get (n := [n].prod)]
     have hpos := GtSumS.of.Any_Gt.All_Ge

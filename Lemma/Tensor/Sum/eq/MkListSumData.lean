@@ -23,11 +23,9 @@ private lemma main
   have := GetSum.eq.SumMapGet.fin (X.splitAt 1) ⟨0, by simp⟩
   simp at this
   conv_lhs => simp [this]
-  simp [List.Vector.get]
   apply congrArg
   ext i
-  simp
-  rw [Head.eq.Get_0.fin]
+  erw [GetMap.eq.UFnGet]
   erw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
   simp
 

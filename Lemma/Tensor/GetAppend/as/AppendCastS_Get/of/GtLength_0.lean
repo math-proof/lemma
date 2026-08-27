@@ -4,7 +4,8 @@ import Lemma.Tensor.GetOfVector.eq.Get
 import Lemma.Tensor.GetToVector.eq.Get
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.GtLength_0
-open Tensor List
+import Lemma.Vector.GetMap₂.eq.BFnGetS
+open Tensor List Vector
 
 
 @[main, fin, cast, cast.fin]
@@ -32,12 +33,13 @@ private lemma main
     let B' : List.Vector (Tensor α (b ++ n :: s)) ((b₀ :: b ++ n :: s).headD 1) := B.toVector
     erw [GetOfVector.eq.Get.fin (Vector.map₂ HAppend.hAppend A' B')]
     simp [A', B']
+    erw [GetMap₂.eq.BFnGetS.fin]
     have := GetToVector.eq.Get.fin A i
     simp at this
-    rw [this]
+    erw [this]
     have := GetToVector.eq.Get.fin B i
     simp at this
-    rw [this]
+    erw [this]
     rfl
 
 

@@ -15,7 +15,7 @@ private lemma main
   have hrow := EqGetStack.fin (fun i : Fin n => [j < n] (↑(KroneckerDelta i j) : Tensor α [])) i
   have hcol := EqGetStack.fin (fun j : Fin n => (↑(KroneckerDelta i j) : Tensor α [])) j
   simp [GetElem.getElem] at hrow hcol ⊢
-  rw [hrow, hcol]
+  erw [hrow, hcol]
   rfl
 
 

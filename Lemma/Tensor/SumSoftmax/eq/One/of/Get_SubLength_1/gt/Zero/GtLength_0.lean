@@ -1,3 +1,4 @@
+import Lemma.Bool.EqCast.of.SEq
 import Lemma.Tensor.Eq.is.All_EqGetS
 import Lemma.Tensor.Softmax.eq.TensorSoftmaxData
 import Lemma.Tensor.Sum.eq.MkListSumData
@@ -8,7 +9,7 @@ import Lemma.Tensor.EqGet1_1
 import Lemma.Tensor.GetSum.as.SumGet.of.GtGet_0.Gt_0.GtLength
 import Lemma.Tensor.EqData1'1
 import Lemma.Tensor.GetSoftmax.eq.SoftmaxGet.of.GtGet_0.Gt_0.GtLength
-open Tensor Vector
+open Tensor Vector Bool
 
 
 @[main]
@@ -42,17 +43,19 @@ private lemma main
         simp
         constructor
         omega
-      rw [SumSoftmax.eq.One]
+      erw [SumSoftmax.eq.One]
     | .cons s₁ s =>
       apply Eq.of.All_EqGetS (m := s₀)
       intro i
       have := GetSum.eq.Cast_SumGet.of.GtGet_0.Gt_0.GtLength (by simp) (by simp) (by simp) X.softmax (d := (s₀ :: s₁ :: s).length - 1) (i := i)
       simp at this
-      simp [this]
+      erw [this]
       have := EqGet1_1.val (s := (s₀ :: s₁ :: s).eraseIdx ((s₀ :: s₁ :: s).length - 1)) (i := i) (α := α)
       simp at this
+      apply EqCast.of.SEq
       erw [this]
       erw [GetSoftmax.eq.SoftmaxGet.of.GtGet_0.Gt_0.GtLength (by simp) (by simp) (by simp)]
+      apply SEq.of.Eq
       apply ih (by simp) (by simp_all)
 
 

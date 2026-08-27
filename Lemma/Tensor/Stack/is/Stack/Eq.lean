@@ -30,27 +30,26 @@ private lemma main
     constructor
     ·
       apply Eq.of.SEq
-      have h_f := Tensor.GetSliceStack.as.Stack_UFn f n 1
+      have h_f := GetSliceStack.as.Stack_UFn f n 1
       rw [h_slice] at h_f
       apply h_f.symm.trans
-      apply Tensor.GetSliceStack.as.Stack_UFn g n 1
+      apply GetSliceStack.as.Stack_UFn g n 1
     ·
       simp only [GetElem.getElem] at h_n
-      simp [Tensor.EqGetStack.fun.fin] at h_n
+      repeat erw [EqGetStack.fun.fin] at h_n
       assumption
   ·
     intro ⟨h₀, h₁⟩
     calc
-      [i < n + 1] f i = [i < n] f i ++ [i < 1] f (n + i) := Stack.eq.AppendStackS f
+      _ = [i < n] f i ++ [i < 1] f (n + i) := Stack.eq.AppendStackS f
       _ = [i < n] g i ++ [i < 1] g (n + i) := by
         rw [h₀]
-        have : [i < 1] f (n + i) = [i < 1] g (n + i) := by
-          apply Eq.of.All_EqGetS
-          intro i
-          fin_cases i
-          repeat rw [EqGetStack]
-          simpa
-        rw [this]
+        congr 1
+        apply Eq.of.All_EqGetS
+        intro i
+        fin_cases i
+        repeat rw [EqGetStack]
+        simpa
       _ = [i < n + 1] g i := (Stack.eq.AppendStackS g).symm
 
 

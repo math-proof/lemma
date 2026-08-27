@@ -152,7 +152,7 @@ private lemma main
     simp [d_alg]
   have hABd : A * B * ω ^ d_alg = -p / 3 := by
     rw [hAB, mul_assoc, ← zpow_add₀ hωne]
-    simp [neg_add_cancel, zpow_zero]
+    simp [neg_add_cancel]
   have hωdmod (n : ℤ) : ω ^ n = ω ^ (n % 3) := by
     have hsplit : n % 3 + 3 * (n / 3) = n := by omega
     conv_lhs => rw [← hsplit]

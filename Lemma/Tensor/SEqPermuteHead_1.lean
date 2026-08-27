@@ -28,6 +28,7 @@ private lemma main
     simp
     apply SEq.of.All_EqGetS.Eq (by simp)
     intro t
+    fin_cases t
     simp only [GetElem.getElem]
     erw [GetFlatten.eq.Get.of.Eq_AddMul.fin (j := ⟨0, by simp⟩) (i := ⟨0, by simp⟩) (by simp)]
     unfold Tensor.rotate

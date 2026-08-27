@@ -24,6 +24,7 @@ private lemma main
   extract_lets A' B' at happ
   refine happ.trans ?_
   simp [A', B', GetElem.getElem]
+  rfl
 
 
 -- created on 2026-08-19

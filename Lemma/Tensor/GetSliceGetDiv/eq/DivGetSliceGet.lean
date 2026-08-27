@@ -1,6 +1,7 @@
+import Lemma.Tensor.GetDiv.eq.DivGet
 import Lemma.Tensor.GetSliceDiv.eq.DivGetSlice
 open Tensor
-set_option maxHeartbeats 600000
+set_option maxHeartbeats 1000000
 
 
 /--
@@ -21,9 +22,11 @@ private lemma main
   (X / a)[i][j:k] = X[i][j:k] / a := by
 -- proof
   simp [GetElem.getElem]
-  rw [GetDiv.eq.DivGet.scalar.fin (X := X) (a := a) (i := i)]
+  have h := GetDiv.eq.DivGet.scalar.fin (X := X) (a := a) (i := i)
+  simp at h
+  erw [h]
   apply GetSliceDiv.eq.DivGetSlice
 
 
 -- created on 2026-08-18
--- updated on 2026-08-20
+-- updated on 2026-08-27

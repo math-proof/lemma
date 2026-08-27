@@ -58,7 +58,8 @@ private lemma main
     have hmid : R₀ (A.data.get ⟨i.val * p + k.val, h_idx⟩) (B.data.get ⟨i.val * p + k.val, h_idx⟩) := by
       simpa [GetElem.getElem] using h'
     rw [← hA', ← hB'] at hmid
-    simpa [GetElem.getElem] using hmid
+    simp [GetElem.getElem]
+    grind
 
 
 -- created on 2026-07-28

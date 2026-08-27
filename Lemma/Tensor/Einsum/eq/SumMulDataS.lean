@@ -56,6 +56,7 @@ private lemma resize
 -- proof
   unfold Tensor.einsum
   simp
+  rfl
 
 
 -- created on 2026-01-05

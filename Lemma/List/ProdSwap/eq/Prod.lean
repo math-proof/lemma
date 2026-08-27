@@ -1,4 +1,4 @@
-import stdlib.List
+import Lemma.List.Swap.eq.Ite
 import Lemma.Nat.NotLt.is.Ge
 import Lemma.Nat.Lt.is.Le.Ne
 import Lemma.Bool.Ne.is.NotEq
@@ -15,7 +15,7 @@ private lemma main
 -- imply
   (s.swap i j).prod = s.prod := by
 -- proof
-  unfold List.swap
+  rw [Swap.eq.Ite]
   split_ifs with h_eq h_lt? h_j h_i
   ·
     rfl
@@ -36,3 +36,4 @@ private lemma main
 
 
 -- created on 2025-06-14
+-- updated on 2026-08-24

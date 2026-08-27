@@ -39,7 +39,7 @@ cd lemma
 lake clean
 lake build
 # for Windows
-# . ps1/run.ps1
+. ps1/run.ps1
 # for Linux
 bash sh/run.sh
 ```
@@ -61,7 +61,7 @@ Details: [`server/README.md`](server/README.md).
 ## lean
 ### build from binary
 check https://github.com/leanprover/lean4/tags to see the available installer for your system.  
-for linux: (better to use VPN to download, using a browser not by wget!)
+for linux
 ```sh
 # suppose ~/github is your working directory and the binary installer file is copied here.
 cd ~/github
@@ -149,10 +149,8 @@ solutions:
 - [ ] scp -r yourLeanProject yourName@TargetIPAddress:targetFolder/
 Now you can work on yourLeanProject on your Target machine with no trouble.
 
-# related projects
-https://github.com/ImperialCollegeLondon/FLT
-
-# paper to read
+# related resources
+## paper to read
 ```
 https://lean-lang.org/doc/reference/latest/
 https://zhuanlan.zhihu.com/p/695704489
@@ -176,17 +174,14 @@ https://arxiv.org/abs/2310.05328
 [LEAN-GitHub: Compiling GitHub LEAN repositories for a versatile LEAN prover](https://arxiv.org/abs/2407.17227)
 https://github.com/lean-dojo/TorchLean
 ```
-## formal neural network
+## famous projects
+https://github.com/ImperialCollegeLondon/FLT
 https://github.com/or4nge19/NeuralNetworks  
 https://github.com/mkaratarakis/HopfieldNet  
 https://github.com/pitmonticone/LeanProject  
 https://github.com/stanford-centaur/pypantograph  
 
-cd repl
-lake update -R && lake build
-lake exe repl
-
-# lean-web
+## lean-web
 https://live.lean-lang.org/
 https://github.com/leanprover-community/lean4web/blob/main/doc/Usage.md
 https://www.leanprover.cn/projects/lean4web/
@@ -265,7 +260,7 @@ Guidelines and prompts for using LLMs to write and refactor Lean 4 proofs in thi
 
 ### Proof style
 - Use `obtain` instead of `rcases`, `if … then … else …` instead of `by_cases`, `have` instead of `haveI`, and `let` instead of `letI`.
-- inline `have` statement if it is referenced only once, e.g.: refer using `apply` instead of `exact` to avoid `have` statements.
+- inline `have` without introducing `show` if it is referenced only once, e.g.: prefer `apply` instead of `exact`, perhaps by creating some holes.
 - use `calc` instead of `by calc`, replace the first left hand side expression with _
 - After a bullet tactic (`·`), put the next statement on a new line when that branch contains more than one step.
 - implicit/instance (instImplicit) arguments should be put before the `given` section

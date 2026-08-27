@@ -1,5 +1,6 @@
 import Lemma.Bool.EqCastS.of.SEq.Eq
 import Lemma.Bool.SEq.is.Eq
+import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.Nat.Max
 import Lemma.Nat.Mul
@@ -19,13 +20,16 @@ import Lemma.Tensor.SEqResizeS.of.SEq.Val.Eq
 import Lemma.Tensor.SEqSelectUnsqueeze.of.GeLength
 import Lemma.Tensor.SEqSumS.of.SEq
 import Lemma.Tensor.SEqTS.of.SEq
+import Lemma.Tensor.SEqUnsqueezeS.of.SEq
 import Lemma.Tensor.SelectCast.as.Select.of.Eq
 import Lemma.Tensor.SelectMul.eq.MulSelectS
 import Lemma.Tensor.SelectRepeat.as.RepeatSelect.of.Lt
 import Lemma.Tensor.SelectSum.as.SumSelect.of.Gt
 import Lemma.Tensor.SelectUnsqueeze.as.UnsqueezeSelect.of.Lt.GeLength
+import Lemma.Tensor.UnsqueezeCast.as.Unsqueeze.of.Eq
 import Lemma.Tensor.UnsqueezeUnsqueeze_0
 open Bool Nat Tensor
+set_option maxHeartbeats 1000000
 
 
 @[main]
@@ -55,7 +59,7 @@ private lemma main
     apply EqCastS.of.SEq.Eq (by simp)
     erw [UnsqueezeUnsqueeze_0]
     erw [SelectRepeat.eq.Cast_RepeatSelect.of.Lt (by grind) (d := ⟨1, by grind⟩) (i := ⟨0, by simp⟩)]
-    rw [GetRepeat.eq.Cast_RepeatGet.of.GtGet_0.GtVal_0.fin (by grind) (by grind)]
+    erw [GetRepeat.eq.Cast_RepeatGet.of.GtGet_0.GtVal_0.fin (by grind) (by grind)]
     apply SEq.of.Eq
     apply EqCastS.of.SEq.Eq (by simp)
     simp
@@ -64,12 +68,20 @@ private lemma main
     erw [SelectUnsqueeze.eq.Cast_UnsqueezeSelect.of.Lt.GeLength (by grind) (by grind) (i := ⟨0, by grind⟩)]
     simp
     erw [EqGetUnsqueeze_0.fin]
-    erw [SelectUnsqueeze.eq.Cast.of.GeLength (by grind)]
-    simp
+    have h := SelectUnsqueeze.eq.Cast.of.GeLength (s := [n]) (d := 0) (by simp) Y
+    simp at h
+    simp [h]
+    apply Eq.of.SEq
+    apply SEqCast.of.SEq.Eq (by simp)
+    apply UnsqueezeCast.as.Unsqueeze.of.Eq (by simp)
   ·
     erw [GetRepeat_0.eq.Cast_Get_Mod_Get.of.GtMul_Get.GtLength_0.fin (by grind) (by grind)]
-    erw [SelectUnsqueeze.eq.Cast.of.GeLength (by grind)]
-    simp
+    have h := SelectUnsqueeze.eq.Cast.of.GeLength (s := [m, n]) (d := 1) (by simp) Xᵀ
+    simp at h
+    apply h.trans
+    apply Eq.of.SEq
+    apply SEqCastS.of.SEq.Eq.Eq (by simp) (by simp)
+    apply SEq.of.Eq
     erw [EqGetUnsqueeze_0.fin]
 
 
@@ -99,24 +111,33 @@ private lemma resize
     apply SEqCastS.of.SEq.Eq.Eq (by simp) (by simp)
     erw [UnsqueezeUnsqueeze_0 (Y.resize 0 (n' ⊔ n))]
     erw [SelectRepeat.eq.Cast_RepeatSelect.of.Lt (by grind) (d := ⟨1, by grind⟩) (i := ⟨0, by simp⟩)]
-    rw [GetRepeat.eq.Cast_RepeatGet.of.GtGet_0.GtVal_0.fin (by grind) (by grind)]
+    erw [GetRepeat.eq.Cast_RepeatGet.of.GtGet_0.GtVal_0.fin (by grind) (by grind)]
     apply SEqCastS.of.SEq.Eq.Eq (by simp) (by simp)
     simp
     apply SEqRepeatS.of.SEq.Val.Eq (by simp) (by simp)
     erw [SelectUnsqueeze.eq.Cast_UnsqueezeSelect.of.Lt.GeLength (by grind) (by grind) (i := ⟨0, by grind⟩)]
     simp
     erw [EqGetUnsqueeze_0.fin]
-    erw [SelectUnsqueeze.eq.Cast.of.GeLength (by grind)]
-    simp
-    rw [Max.comm]
+    have h := SelectUnsqueeze.eq.Cast.of.GeLength (s := [n'].set 0 (n ⊔ n')) (d := 0) (by simp) (Y.resize 0 (n ⊔ n'))
+    simp at h
+    simp [h]
+    apply SEqUnsqueezeS.of.SEq
+    apply SEqCast.of.SEq.Eq (by simp)
+    apply SEqResizeS.of.SEq.Val.Eq (by rw [Max.comm]) (by simp)
+    rfl
   ·
     erw [GetRepeat_0.eq.Cast_Get_Mod_Get.of.GtMul_Get.GtLength_0.fin (by grind) (by grind)]
-    erw [SelectUnsqueeze.eq.Cast.of.GeLength (by grind)]
-    simp
+    have h := SelectUnsqueeze.eq.Cast.of.GeLength (d := 1) (by simp) (Xᵀ.resize ⟨1, by simp⟩ (n ⊔ n'))
+    simp at h
+    apply (SEq.of.Eq h).trans
+    apply SEqCastS.of.SEq.Eq.Eq (by simp) (by simp)
     erw [EqGetUnsqueeze_0.fin]
-    rw [Max.comm]
+    have hR : Xᵀ.resize ⟨1, by simp⟩ (n ⊔ n') ≃ Xᵀ.resize ⟨1, by simp⟩ (n' ⊔ n) :=
+      SEqResizeS.of.SEq.Val.Eq (by rw [Max.comm]) (by simp) (by rfl)
+    apply hR.trans
     apply SEq.of.Eq
     apply ResizeT_1.eq.TResize_0
 
 
 -- created on 2026-07-30
+-- updated on 2026-08-27

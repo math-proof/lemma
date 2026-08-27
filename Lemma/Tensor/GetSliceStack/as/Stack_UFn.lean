@@ -19,9 +19,10 @@ private lemma main
   .
     intro j
     simp only [GetElem.getElem]
-    simp [EqGetStack.fun.fin]
+    conv_rhs => erw [EqGetStack.fun.fin]
     erw [GetGetSlice.eq.Get.fin]
-    rw [EqGetStack.fun.fin]
+    conv_lhs => erw [EqGetStack.fun.fin]
+    rfl
   .
     simp [Tensor.length]
     rw [LengthSlice.eq.Min]

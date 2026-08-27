@@ -26,7 +26,7 @@ private lemma main
     simp
     erw [SumAppend.eq.AddSumS]
     rw [SumAppend.eq.AddSumS]
-    rw [h_add]
+    erw [h_add]
     congr 1
     simp [EqSumStack]
 

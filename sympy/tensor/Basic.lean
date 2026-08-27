@@ -1,3 +1,4 @@
+import Batteries.Data.List.Lemmas
 import stdlib.Nat
 import sympy.vector.vector
 import Lemma.Bool.UFn.of.Eq
@@ -16,7 +17,6 @@ import Lemma.List.Prod.eq.Mul_ProdTail.of.GtLength_0
 import Lemma.List.EraseIdxAppend.eq.Append_EraseIdx
 import Lemma.List.InsertIdxAppend.eq.Append_InsertIdx.of.LeLength
 import Lemma.List.SwapAppend.eq.Append_Swap.of.LeLength.LeLength
-import Lemma.List.EqSwap_0'1
 import Lemma.List.ProdSwap.eq.Prod
 import Lemma.List.Rotate_Mod.eq.Rotate
 import Lemma.List.EqPermute
@@ -297,17 +297,9 @@ def Tensor.permute (X : Tensor α s) (i : Fin s.length) (d : ℤ) : Tensor α (s
 -/
 def Tensor.transpose (X : Tensor α s) (i j : ℕ) : Tensor α (s.swap i j) :=
   if h_eq : i = j then
-    cast (by simp_all [EqSwap]) X
+    cast (by simp_all [List.swap_self]) X
   else if h : i ≥ s.length ∨ j ≥ s.length then
-    cast
-      (by
-        obtain hi | hj := h
-        .
-          simp_all [EqSwap.of.LeLength.left]
-        .
-          simp_all [EqSwap.of.LeLength]
-      )
-      X
+    cast (by obtain hi | hj := h <;> simp_all) X
   else
     have h : i ⊔ j < s.length := by
       simp_all
@@ -341,30 +333,12 @@ postfix:1024 "ᵀ" => Tensor.T
 [torch.bmm](https://docs.pytorch.org/docs/stable/generated/torch.bmm.html)
 -/
 def Tensor.bmm [Mul α] [Add α] [Zero α] (A : Tensor α (batch_size ++ [m, k])) (B : Tensor α (batch_size ++ [k, n])) : Tensor α (batch_size ++ [m, n]) :=
-  let A : Tensor α (batch_size ++ [m, 1, k]) := cast
-    (by simp_all [InsertIdxAppend.eq.Append_InsertIdx])
-    (A.unsqueeze (batch_size.length + 1))
-  let A : Tensor α (batch_size ++ [m, n, k]) := cast
-    (by simp)
-    (A.repeat ⟨batch_size.length + 1, by simp⟩ n)
-  let B : Tensor α (batch_size ++ [n, k]) := cast
-    (by
-      rw [SwapAppend.eq.Append_Swap.of.LeLength.LeLength (by simp) (by simp)]
-      simp [EqSwap_0'1]
-    )
-    B.T
-  let B : Tensor α (batch_size ++ [1, n, k]) := cast
-    (by
-      rw [InsertIdxAppend.eq.Append_InsertIdx.of.LeLength (by simp)]
-      simp
-    )
-    (B.unsqueeze batch_size.length)
-  let B : Tensor α (batch_size ++ [m, n, k]) := cast
-    (by simp)
-    (B.repeat ⟨batch_size.length, by simp⟩ m)
-  cast
-    (by simp_all [EraseIdxAppend.eq.Append_EraseIdx])
-    ((A * B).sum (batch_size.length + 2))
+  let A : Tensor α (batch_size ++ [m, 1, k]) := cast (by simp_all [InsertIdxAppend.eq.Append_InsertIdx]) (A.unsqueeze (batch_size.length + 1))
+  let A : Tensor α (batch_size ++ [m, n, k]) := cast (by simp) (A.repeat ⟨batch_size.length + 1, by simp⟩ n)
+  let B : Tensor α (batch_size ++ [n, k]) := cast (by simp_all [SwapAppend.eq.Append_Swap.of.LeLength.LeLength]) B.T
+  let B : Tensor α (batch_size ++ [1, n, k]) := cast (by simp_all [InsertIdxAppend.eq.Append_InsertIdx.of.LeLength]) (B.unsqueeze batch_size.length)
+  let B : Tensor α (batch_size ++ [m, n, k]) := cast (by simp) (B.repeat ⟨batch_size.length, by simp⟩ m)
+  cast (by simp_all [EraseIdxAppend.eq.Append_EraseIdx]) ((A * B).sum (batch_size.length + 2))
 
 def Tensor.map (f : α → β) (X : Tensor α s) : Tensor β s :=
   ⟨X.data.map f⟩

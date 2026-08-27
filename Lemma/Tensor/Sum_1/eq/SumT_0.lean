@@ -16,7 +16,7 @@ private lemma main
   X.sum 1 = Xᵀ.sum 0 := by
 -- proof
   rw [Tensor.T.eq.Cast_Permute__Neg1.of.GtLength_0 (by grind)]
-  rw [SumCast.eq.Cast_Sum.of.Eq (by simp; erw [Permute__Neg1.eq.Swap.of.GtLength (by grind)])]
+  rw [SumCast.eq.Cast_Sum.of.Eq (by erw [Permute__Neg1.eq.Swap.of.GtLength (by grind)]; simp)]
   apply Eq_Cast.of.SEq
   simp
   symm

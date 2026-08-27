@@ -9,68 +9,6 @@ open Tensor
 set_option maxHeartbeats 400000
 
 
-private lemma sum_append_mul
-  [Mul α] [AddCommMonoid α]
--- given
-  (X : Tensor α [n])
-  (Y : Tensor α [m])
-  (x : Tensor α [n])
-  (y : Tensor α [m]) :
--- imply
-  ∑ p : Fin (n + m),
-      (id (α := Tensor α []) (X ++ Y)[p]) * (id (α := Tensor α []) (x ++ y)[p]) =
-    Add.add
-      (∑ p : Fin n, (id (α := Tensor α []) X[p]) * (id (α := Tensor α []) x[p]))
-      (∑ p : Fin m, (id (α := Tensor α []) Y[p]) * (id (α := Tensor α []) y[p])) := by
--- proof
-  let f : Fin (n + m) → Tensor α [] := fun p =>
-    (id (α := Tensor α []) (X ++ Y)[p]) * (id (α := Tensor α []) (x ++ y)[p])
-  have hsum :=
-    Fintype.sum_equiv finSumFinEquiv
-      (fun s : Fin n ⊕ Fin m => f (finSumFinEquiv s)) f (fun _ => rfl)
-  have hsplit :
-      ∑ p : Fin (n + m), f p =
-        Add.add
-          (∑ p : Fin n, f (finSumFinEquiv (Sum.inl p)))
-          (∑ p : Fin m, f (finSumFinEquiv (Sum.inr p))) := by
-    rw [← hsum, Fintype.sum_sum_type]
-    rfl
-  refine Eq.trans hsplit ?_
-  refine congrArg₂ Add.add ?_ ?_
-  ·
-    apply Finset.sum_congr rfl
-    intro p _
-    simp only [f, id, finSumFinEquiv_apply_left]
-    have hX' : (X ++ Y)[Fin.castAdd m p] = X[p] := by
-      simp [GetElem.getElem]
-      simpa [Fin.castAdd] using GetAppend.eq.Get.fin X Y p
-    have hx' : (x ++ y)[Fin.castAdd m p] = x[p] := by
-      simp [GetElem.getElem]
-      simpa [Fin.castAdd] using GetAppend.eq.Get.fin x y p
-    rw [hX', hx']
-  ·
-    apply Finset.sum_congr rfl
-    intro p _
-    simp only [f, id, finSumFinEquiv_apply_right]
-    have hY' : (X ++ Y)[Fin.natAdd n p] = Y[p] := by
-      have h :=
-        GetAppend.eq.Get_Sub.of.GtAdd.Ge
-          (i := n + (p : ℕ))
-          (h₀ := Nat.le_add_right n p)
-          (h₁ := Nat.add_lt_add_left p.isLt n) X Y
-      simp [GetElem.getElem, Fin.natAdd] at h ⊢
-      exact h
-    have hy' : (x ++ y)[Fin.natAdd n p] = y[p] := by
-      have h :=
-        GetAppend.eq.Get_Sub.of.GtAdd.Ge
-          (i := n + (p : ℕ))
-          (h₀ := Nat.le_add_right n p)
-          (h₁ := Nat.add_lt_add_left p.isLt n) x y
-      simp [GetElem.getElem, Fin.natAdd] at h ⊢
-      exact h
-    rw [hY', hy']
-
-
 @[main]
 private lemma main
   [Mul α] [AddCommMonoid α]
@@ -123,8 +61,57 @@ private lemma main
         (∑ p : Fin n, (id (α := Tensor α []) Ai[p]) * (id (α := Tensor α []) x[p]))
         (∑ p : Fin m, (id (α := Tensor α []) Bi[p]) * (id (α := Tensor α []) y[p]))
   rw [hsplit]
-  exact sum_append_mul Ai Bi x y
+  let f : Fin (n + m) → Tensor α [] := fun p =>
+    (id (α := Tensor α []) (Ai ++ Bi)[p]) * (id (α := Tensor α []) (x ++ y)[p])
+  have hsum :=
+    Fintype.sum_equiv finSumFinEquiv
+      (fun s : Fin n ⊕ Fin m => f (finSumFinEquiv s)) f (fun _ => rfl)
+  have hsum_split :
+      ∑ p : Fin (n + m), f p =
+        Add.add
+          (∑ p : Fin n, f (finSumFinEquiv (Sum.inl p)))
+          (∑ p : Fin m, f (finSumFinEquiv (Sum.inr p))) := by
+    rw [← hsum, Fintype.sum_sum_type]
+    rfl
+  refine Eq.trans hsum_split ?_
+  refine congrArg₂ Add.add ?_ ?_
+  ·
+    apply Finset.sum_congr rfl
+    intro p _
+    simp only [f, id, finSumFinEquiv_apply_left]
+    have hX' : (Ai ++ Bi)[Fin.castAdd m p] = Ai[p] := by
+      have h := GetAppend.eq.Get.fin Ai Bi p
+      simp [GetElem.getElem, Fin.castAdd] at h ⊢
+      rw [h]
+      exact congrArg Ai.get (Eq.symm (Fin.eta p p.isLt))
+    have hx' : (x ++ y)[Fin.castAdd m p] = x[p] := by
+      have h := GetAppend.eq.Get.fin x y p
+      simp [GetElem.getElem, Fin.castAdd] at h ⊢
+      rw [h]
+      exact congrArg x.get (Eq.symm (Fin.eta p p.isLt))
+    rw [hX', hx']
+  ·
+    apply Finset.sum_congr rfl
+    intro p _
+    simp only [f, id, finSumFinEquiv_apply_right]
+    have hY' : (Ai ++ Bi)[Fin.natAdd n p] = Bi[p] := by
+      have h :=
+        GetAppend.eq.Get_Sub.of.GtAdd.Ge
+          (i := n + (p : ℕ))
+          (h₀ := Nat.le_add_right n p)
+          (h₁ := Nat.add_lt_add_left p.isLt n) Ai Bi
+      simp [GetElem.getElem, Fin.natAdd] at h ⊢
+      exact h
+    have hy' : (x ++ y)[Fin.natAdd n p] = y[p] := by
+      have h :=
+        GetAppend.eq.Get_Sub.of.GtAdd.Ge
+          (i := n + (p : ℕ))
+          (h₀ := Nat.le_add_right n p)
+          (h₁ := Nat.add_lt_add_left p.isLt n) x y
+      simp [GetElem.getElem, Fin.natAdd] at h ⊢
+      exact h
+    rw [hY', hy']
 
 
 -- created on 2026-08-23
--- updated on 2026-08-24
+-- updated on 2026-08-27

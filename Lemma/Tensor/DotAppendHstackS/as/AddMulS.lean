@@ -38,39 +38,37 @@ private lemma rotary
 -- proof
   intro I C S R
   apply SEq.of.Eq
-  have hblock :=
-    DotAppendS.eq.AppendAddSDotS (I * C) (-(I * S)) (I * S) (I * C) x0 x1
   simp [R]
-  rw [hblock]
-  have hIc := DotMulEye.eq.Mul θ.cos x0
-  have hIs0 := DotMulEye.eq.Mul θ.sin x0
-  have hIc1 := DotMulEye.eq.Mul θ.cos x1
-  have hstack : -S = [_ < d] (-θ.sin) := by
-    apply Tensor.Eq.of.All_EqGetS.fin
-    intro i
-    have hN := GetNeg.eq.NegGet (S : Tensor α (d :: [d]))
-      ⟨(i : ℕ), by simp [Tensor.length]⟩
-    have hS := EqGetStack.fin (fun _ : Fin d => θ.sin) i
-    have hS' := EqGetStack.fin (fun _ : Fin d => -θ.sin) i
-    simp [S, GetElem.getElem] at hN hS hS' ⊢
-    rw [hN, hS, hS']
-    rfl
+  rw [DotAppendS.eq.AppendAddSDotS (I * C) (-(I * S)) (I * S) (I * C) x0 x1]
   have hnegS : -(I * S) = I * ([_ < d] (-θ.sin)) := by
     apply Eq.of.EqDataS
     rw [DataNeg.eq.NegData, DataMul.eq.MulDataS, DataMul.eq.MulDataS]
-    have hd := congrArg Tensor.data hstack
-    rw [DataNeg.eq.NegData] at hd
-    rw [← hd]
+    rw [← congrArg Tensor.data (?hstack : -S = [_ < d] (-θ.sin))]
+    case hstack =>
+      apply Tensor.Eq.of.All_EqGetS.fin
+      intro i
+      have hN := GetNeg.eq.NegGet (S : Tensor α (d :: [d])) ⟨(i : ℕ), by simp [Tensor.length]⟩
+      have hS := EqGetStack.fin (fun _ : Fin d => θ.sin) i
+      have hS' := EqGetStack.fin (fun _ : Fin d => -θ.sin) i
+      simp [S, GetElem.getElem] at hN hS hS' ⊢
+      erw [hN, hS, hS']
+      rfl
+    rw [DataNeg.eq.NegData]
     ext j
     rw [Vector.GetNeg.eq.NegGet.fin, Vector.GetMul.eq.MulGetS.fin, Vector.GetMul.eq.MulGetS.fin]
     rw [Vector.GetNeg.eq.NegGet.fin]
-    exact (mul_neg (I.data.get j) (S.data.get j)).symm
-  have hIs1 := DotMulEye.eq.Mul (-θ.sin) x1
-  rw [hnegS, hIc, hIs0, hIc1, hIs1]
+    apply Eq.symm
+    apply mul_neg
+  rw [
+    hnegS,
+    DotMulEye.eq.Mul θ.cos x0,
+    DotMulEye.eq.Mul θ.sin x0,
+    DotMulEye.eq.Mul θ.cos x1,
+    DotMulEye.eq.Mul (-θ.sin) x1
+  ]
   simp only [id]
-  have h0 : θ.cos * x0 + (-θ.sin) * x1 = x0 * θ.cos + (-x1) * θ.sin := by
-    rw [mul_comm θ.cos x0]
-    congr 1
+  rw [mul_comm θ.cos x0]
+  have hsin : (-θ.sin) * x1 = (-x1) * θ.sin := by
     apply Eq.of.EqDataS
     rw [DataMul.eq.MulDataS, DataMul.eq.MulDataS, DataNeg.eq.NegData, DataNeg.eq.NegData]
     rw [_root_.mul_comm]
@@ -78,15 +76,15 @@ private lemma rotary
     rw [Vector.GetMul.eq.MulGetS.fin, Vector.GetMul.eq.MulGetS.fin,
       Vector.GetNeg.eq.NegGet.fin, Vector.GetNeg.eq.NegGet.fin]
     rw [mul_neg, neg_mul]
-  have h1 : θ.sin * x0 + θ.cos * x1 = x1 * θ.cos + x0 * θ.sin := by
-    rw [mul_comm θ.sin x0, mul_comm θ.cos x1, _root_.add_comm]
-  rw [h0, h1]
+  rw [hsin]
+  rw [mul_comm θ.sin x0, mul_comm θ.cos x1]
+  conv_lhs =>
+    arg 2
+    rw [_root_.add_comm]
   rw [AppendAddS.eq.AddAppendS (A := x0 * θ.cos) (B := x1 * θ.cos) (C := (-x1) * θ.sin) (D := x0 * θ.sin)]
-  have hm0 := AppendMulS.eq.MulAppendS x0 θ.cos x1 θ.cos
-  have hm1 := AppendMulS.eq.MulAppendS (-x1) θ.sin x0 θ.sin
-  rw [hm0, hm1]
+  rw [AppendMulS.eq.MulAppendS x0 θ.cos x1 θ.cos, AppendMulS.eq.MulAppendS (-x1) θ.sin x0 θ.sin]
   rw [CosAppend.eq.AppendCosS θ θ, SinAppend.eq.AppendSinS θ θ]
 
 
 -- created on 2023-06-06
--- updated on 2026-08-24
+-- updated on 2026-08-27

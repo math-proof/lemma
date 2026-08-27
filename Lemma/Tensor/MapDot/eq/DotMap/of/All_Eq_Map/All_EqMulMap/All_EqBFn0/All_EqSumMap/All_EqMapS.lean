@@ -11,7 +11,8 @@ import Lemma.Tensor.RepeatBFn.eq.BFnRepeat
 import Lemma.Tensor.ResizeBFn.eq.BFnResize
 import Lemma.Tensor.SelectBFn.eq.BFnSelect
 import Lemma.Tensor.UnsqueezeBFn.eq.BFnUnsqueeze
-open Tensor
+import Lemma.Vector.GetMap.eq.UFnGet
+open Tensor Vector
 
 
 /-- `dot` commutes with a pointwise scalar binary operator `f`. -/
@@ -38,7 +39,8 @@ private lemma main
     repeat rw [Einsum.eq.MulGetData_0]
     have hdata : (A.map (f · B.data[0])).data[0] = f A.data[0] B.data[0] := by
       simp [Tensor.map]
-      rfl
+      simp only [GetElem.getElem]
+      erw [GetMap.eq.UFnGet]
     rw [hdata]
     apply h_left
   | _ :: _, [] =>

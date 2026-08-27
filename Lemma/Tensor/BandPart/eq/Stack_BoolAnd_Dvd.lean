@@ -17,10 +17,18 @@ private lemma main
   simp [Tensor.masked_fill]
   apply Eq.of.All_EqGetS.fin
   intro i
-  repeat rw [EqGetStack.fin]
+  simp [EqGetStack.fin]
+  erw [EqGetStack.fin]
+  erw [EqGetStack.fin]
   apply Eq.of.All_EqGetS.fin
   intro j
-  repeat rw [EqGetStack.fin]
+  simp [EqGetStack.fin]
+  erw [EqGetStack.fin]
+  conv_lhs => simp [EqGetStack.fin]
+  conv_lhs =>
+    arg 2
+    arg 3
+    erw [EqGetStack.fin]
   split_ifs with h_dvd h_triu h_tril
   ·
     have h1 : ¬((i : ℤ) ≤ j + l) := by linarith
@@ -28,13 +36,14 @@ private lemma main
   ·
     have h2 : ¬((j : ℤ) ≤ u + i) := by linarith
     simp [h2]
+    grind
   ·
     rw [EqGet1_1.fin]
     erw [EqGet1_1.fin]
     have h1 : (i : ℤ) ≤ j + l := by linarith
     have h2 : (j : ℤ) ≤ u + i := by linarith
     simp [h_dvd, h1, h2]
-    rfl
+    grind
   ·
     simp [decide_eq_false_iff_not.mpr h_dvd]
 

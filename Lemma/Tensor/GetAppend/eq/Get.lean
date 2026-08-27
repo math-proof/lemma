@@ -43,11 +43,15 @@ private lemma main
       rw [GetUnflatten.eq.Cast_ArraySlice.of.Lt (by linarith)]
       apply SEqCast.of.SEq.Eq
       ·
-        simp_all [Le_SubMulS.of.Lt h_lt]
+        simp_all
       ·
+        apply SEqCast.of.SEq.Eq (by simp_all [Le_SubMulS.of.Lt h_lt])
         apply SEqArraySliceS.of.Eq
-        apply SEqCast.of.Eq
+        apply SEqCast.of.SEq.Eq
+        simp
+        apply SEqCast.of.SEq.Eq
         simp [AddMulS.eq.MulAdd]
+        rfl
     ·
       apply GetUnflatten.as.ArraySliceAppend
   ·

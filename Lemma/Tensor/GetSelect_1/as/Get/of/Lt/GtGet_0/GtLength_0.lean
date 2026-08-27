@@ -17,6 +17,7 @@ import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Vector.GetMap.eq.UFnGet.of.Lt
 import Lemma.Vector.GetSplitAt_1.eq.GetUnflatten
 import Lemma.Vector.GetSplitAt_1.eq.GetUnflatten.of.Lt
+import Lemma.Vector.MapMap.eq.Map_Comp
 open List Tensor Vector Bool
 
 
@@ -32,49 +33,46 @@ private lemma main
 -- proof
   unfold Tensor.get toVector
   simp only [GetElem.getElem]
-  repeat rw [GetCast.eq.Get.of.Eq.fin]
+  repeat rw [GetCast.eq.Get.of.Eq.fin (by apply ProdTake_1.eq.HeadD_1)]
+  repeat rw [GetMap.eq.UFnGet.of.Lt.fin]
+  apply SEq.of.SEqDataS.Eq <;>
+    simp
+  apply SEq_Cast.of.SEq.Eq
   ·
-    repeat rw [GetMap.eq.UFnGet.of.Lt.fin]
-    apply SEq.of.SEqDataS.Eq <;>
-      simp
-    apply SEq_Cast.of.SEq.Eq
+    simp
+  ·
+    simp only [GetElem.getElem]
+    erw [GetSplitAt_1.eq.GetUnflatten.of.Lt.fin h_j]
+    erw [Select.eq.OfVectorMapToVector.of.GtLength (by grind) (i := ⟨i, by grind⟩)]
+    simp [DataOfVector.eq.FlattenMapData]
+    erw [MapMap.eq.Map_Comp]
+    erw [EqUnflattenFlatten]
+    erw [GetMap.eq.UFnGet]
+    apply SEqCast.of.SEq.Eq (by simp)
+    conv_lhs => simp
+    erw [Select_0.eq.Cast_Get.of.GtGet_0.GtLength_0]
+    rw [DataCast.eq.Cast_Data.of.Eq (by simp)]
+    apply SEqCast.of.SEq.Eq
     ·
       simp
     ·
-      simp only [GetElem.getElem]
-      erw [GetSplitAt_1.eq.GetUnflatten.of.Lt.fin h_j]
-      erw [Select.eq.OfVectorMapToVector.of.GtLength (by grind) (i := ⟨i, by grind⟩)]
-      simp [DataOfVector.eq.FlattenMapData]
-      erw [EqUnflattenFlatten]
-      erw [Vector.GetMap.eq.UFnGet]
-      erw [Select_0.eq.Cast_Get.of.GtGet_0.GtLength_0]
-      rw [DataCast.eq.Cast_Data.of.Eq (by simp)]
+      erw [DataGet.eq.Cast_GetSplitAtData.of.GtLength_0.fin (by grind) (X.toVector.get ⟨j, by grind⟩) ⟨i, by grind⟩]
       apply SEqCast.of.SEq.Eq
-      .
+      ·
         simp
-      .
-        erw [DataGet.eq.Cast_GetSplitAtData.of.GtLength_0.fin (by grind) (X.toVector.get ⟨j, by grind⟩) ⟨i, by grind⟩]
-        apply SEqCast.of.SEq.Eq
-        .
-          simp
-        .
-          apply SEq.of.Eq
-          apply Get.of.Eq.Lt
-          congr
-          simp
-          erw [GetToVector.eq.Get.fin (i := ⟨j, by simpa [Length.eq.Get_0.of.Ne_Nil]⟩)]
-          rw [GetVal.eq.Get.of.Lt (by grind)]
-          apply Eq.of.EqDataS
-          rw [DataGet.eq.Cast_GetSplitAtData.of.GtLength_0.fin (i := ⟨j, by grind⟩) (by simp)]
-          apply EqCast.of.SEq
-          apply SEq.of.Eq
-          simp [GetElem.getElem]
-  ·
-    simp
-  ·
-    apply ProdTake_1.eq.HeadD_1
-  ·
-    simp
+      ·
+        apply SEq.of.Eq
+        apply Get.of.Eq.Lt
+        congr
+        simp
+        erw [GetToVector.eq.Get.fin (i := ⟨j, by simpa [Length.eq.Get_0.of.Ne_Nil]⟩)]
+        rw [GetVal.eq.Get.of.Lt (by grind)]
+        apply Eq.of.EqDataS
+        rw [DataGet.eq.Cast_GetSplitAtData.of.GtLength_0.fin (i := ⟨j, by grind⟩) (by simp)]
+        apply EqCast.of.SEq
+        apply SEq.of.Eq
+        simp [GetElem.getElem]
 
 
 -- created on 2025-11-01
+-- updated on 2026-08-27

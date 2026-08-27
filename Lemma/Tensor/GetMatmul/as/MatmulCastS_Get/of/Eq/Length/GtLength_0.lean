@@ -41,8 +41,9 @@ private lemma main
   have := SEqGetS.of.SEq.GtLength.fin h_i this (i := i)
   simp at this
   apply this.trans
-  simp [GetOfVector.eq.Get.fin]
+  erw [GetOfVector.eq.Get.fin]
   simp [Xi, Yi]
+  erw [Vector.GetMap₂.eq.BFnGetS.fin]
   apply SEqMatmulS.of.SEq.SEq
   ·
     grind
@@ -53,7 +54,7 @@ private lemma main
     ·
       grind
     ·
-      rw [GetCast.eq.Get.of.Eq.fin]
+      erw [GetCast.eq.Get.of.Eq.fin]
       ·
         simp [Tensor.get]
         simp only [GetElem.getElem]

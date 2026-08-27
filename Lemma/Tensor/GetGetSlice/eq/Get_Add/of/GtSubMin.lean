@@ -34,6 +34,7 @@ private lemma main
   have h_m : m = X.length := by
     rw [Length.eq.Get_0.of.GtLength_0 (by simp)]
     simp
+  erw [GetMap.eq.UFnGet]
   apply Eq.of.EqDataS
   simp
   erw [GetSplitAt_1.eq.GetUnflatten.of.Lt.fin]

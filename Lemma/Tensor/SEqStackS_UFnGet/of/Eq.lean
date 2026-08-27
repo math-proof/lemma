@@ -19,10 +19,8 @@ private lemma main
   simp_all
   intro i
   simp [GetElem.getElem]
-  repeat rw [EqGetStack.fin]
-  simp
-  apply SEq.of.Eq
-  rfl
+  erw [EqGetStack.fin]
+  conv_rhs => erw [EqGetStack.fin]
 
 
 -- created on 2025-07-13

@@ -28,7 +28,7 @@ private lemma main
     have h_k : k < (s.swap i j).length := by
       simpa [LengthSwap.eq.Length]
     apply IffEqS.of.Eq
-    simp [h_k]
+    rw [List.getElem?_eq_getElem h_k]
     rw [GetSwap.eq.Ite.of.GtLength.GtLength.Lt h_ij h_j h_k_length]
     split_ifs with h_ki h_kj
     ·
@@ -71,4 +71,4 @@ private lemma main
 
 
 -- created on 2025-06-21
--- updated on 2025-10-26
+-- updated on 2026-08-24

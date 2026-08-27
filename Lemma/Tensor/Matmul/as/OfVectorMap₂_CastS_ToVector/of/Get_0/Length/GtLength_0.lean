@@ -64,7 +64,7 @@ private lemma main
     ·
       simp at h_0
       subst h_0
-      simp
+      -- simp
       apply SEqOfVectorS.of.SEq
       apply SEqMap₂S.of.All_Eq.SEq.SEq
       ·
@@ -79,26 +79,28 @@ private lemma main
         rw [this]
         have := GetToVector.eq.Get.fin X ⟨t, by grind⟩
         simp at this
-        rw [this]
+        erw [this]
         have := GetToVector.eq.Get.fin Y ⟨t, by grind⟩
         simp at this
-        rw [this]
+        erw [this]
         have := GetResize_0.eq.Cast_Get.of.GtLength_0.fin (by grind) X ⟨t, by grind⟩ s₀
         simp at this
-        rw [this]
+        erw [this]
         have := GetResize_0.eq.Cast_Get.of.GtLength_0.fin (by grind) Y ⟨t, by grind⟩ s₀
         simp at this
-        rw [this]
+        erw [this]
       .
         rw [EqMax]
         have := Resize_0.eq.Cast.of.GtLength_0 (by grind) X
         simp at this
         rw [this]
+        rfl
       .
         rw [EqMax]
         have := Resize_0.eq.Cast.of.GtLength_0 (by grind) Y
         simp at this
         rw [this]
+        rfl
 
 
 -- created on 2026-01-11

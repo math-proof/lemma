@@ -73,7 +73,7 @@ private lemma main
       simp [In', In, Tensor.eye]
       have h := EqGetStack.fin (fun i : Fin n => [j < n] (↑(KroneckerDelta i j) : Tensor α [])) i
       simp [GetElem.getElem] at h ⊢
-      rw [h]
+      erw [h]
       apply Eq.of.All_EqGetS.fin
       intro j
       have hL := EqGetStack.fin (fun j : Fin n => (↑(KroneckerDelta i j) : Tensor α [])) j
@@ -92,9 +92,7 @@ private lemma main
     have h0stack : (0 : Tensor α [m]) = [j < m] (0 : Tensor α []) :=
       (EqStack_0'0 (α := α) [] m).symm
     rw [h0stack]
-    have hzero :
-        [j < m] (0 : Tensor α []) =
-          [j < m] (↑(KroneckerDelta (i : ℕ) (n + (j : ℕ))) : Tensor α []) := by
+    have hzero : [j < m] (0 : Tensor α []) = [j < m] (↑(KroneckerDelta (i : ℕ) (n + (j : ℕ))) : Tensor α []) := by
       apply Eq.of.All_EqGetS.fin
       intro j
       have hL := EqGetStack.fin (fun _ : Fin m => (0 : Tensor α [])) j
@@ -103,24 +101,22 @@ private lemma main
       rw [hL, hR]
       simp [Delta.eq.Ite]
       split_ifs with h
-      · have : (i : ℕ) < n := i.isLt
+      ·
+        have : (i : ℕ) < n := i.isLt
         omega
-      · exact (EqCast_0'0 (R := Tensor α [])).symm
+      ·
+        exact (EqCast_0'0 (R := Tensor α [])).symm
     rw [hzero]
-    have hget := EqGetStack.fin
-      (fun i : Fin n => [j < n + m] (↑(KroneckerDelta (i : ℕ) (j : ℕ)) : Tensor α [])) i
+    have hget := EqGetStack.fin (fun i : Fin n => [j < n + m] (↑(KroneckerDelta (i : ℕ) (j : ℕ)) : Tensor α [])) i
     simp [GetElem.getElem] at hget ⊢
-    rw [hget]
-    exact (Stack.eq.AppendStackS (n := n) (j := m)
-      (fun j => (↑(KroneckerDelta (i : ℕ) j) : Tensor α []))).symm
+    erw [hget]
+    symm
+    apply Stack.eq.AppendStackS (fun j => (↑(KroneckerDelta (i : ℕ) j) : Tensor α []))
   have h1 : row1 = [i < m] [j < n + m] (↑(KroneckerDelta (n + (i : ℕ)) (j : ℕ)) : Tensor α []) := by
     apply Eq.of.All_EqGetS.fin
     intro i
     rw [hrow1]
-    show
-      id (α := Tensor α [n + m]) (Zmn' ++ Im')[i] =
-        id (α := Tensor α [n + m])
-          ([i < m] [j < n + m] (↑(KroneckerDelta (n + (i : ℕ)) (j : ℕ)) : Tensor α []))[i]
+    show id (α := Tensor α [n + m]) (Zmn' ++ Im')[i] = id (α := Tensor α [n + m]) ([i < m] [j < n + m] (↑(KroneckerDelta (n + (i : ℕ)) (j : ℕ)) : Tensor α []))[i]
     have happ := GetAppend.eq.AppendGetS (A := Zmn') (B := Im') i
     simp only [id] at happ ⊢
     rw [happ]
@@ -135,7 +131,7 @@ private lemma main
       simp [Im', Im, Tensor.eye]
       have h := EqGetStack.fin (fun i : Fin m => [j < m] (↑(KroneckerDelta i j) : Tensor α [])) i
       simp [GetElem.getElem] at h ⊢
-      rw [h]
+      erw [h]
       apply Eq.of.All_EqGetS.fin
       intro j
       have hL := EqGetStack.fin (fun j : Fin m => (↑(KroneckerDelta i j) : Tensor α [])) j
@@ -158,11 +154,11 @@ private lemma main
       rw [hL, hR]
       simp [Delta.eq.Ite]
       split_ifs with h
-      · omega
-      · exact (EqCast_0'0 (R := Tensor α [])).symm
-    have heye :
-        [j < m] (↑(KroneckerDelta (i : ℕ) (j : ℕ)) : Tensor α []) =
-          [j < m] (↑(KroneckerDelta (n + (i : ℕ)) (n + (j : ℕ))) : Tensor α []) := by
+      ·
+        omega
+      ·
+        exact (EqCast_0'0 (R := Tensor α [])).symm
+    have heye : [j < m] (↑(KroneckerDelta (i : ℕ) (j : ℕ)) : Tensor α []) = [j < m] (↑(KroneckerDelta (n + (i : ℕ)) (n + (j : ℕ))) : Tensor α []) := by
       apply Eq.of.All_EqGetS.fin
       intro j
       have hL := EqGetStack.fin (fun j : Fin m => (↑(KroneckerDelta (i : ℕ) (j : ℕ)) : Tensor α [])) j
@@ -174,9 +170,9 @@ private lemma main
     have hget := EqGetStack.fin
       (fun i : Fin m => [j < n + m] (↑(KroneckerDelta (n + (i : ℕ)) (j : ℕ)) : Tensor α [])) i
     simp [GetElem.getElem] at hget ⊢
-    rw [hget]
-    exact (Stack.eq.AppendStackS (n := n) (j := m)
-      (fun j => (↑(KroneckerDelta (n + (i : ℕ)) j) : Tensor α []))).symm
+    erw [hget]
+    symm
+    apply Stack.eq.AppendStackS (fun j => (↑(KroneckerDelta (n + (i : ℕ)) j) : Tensor α []))
   rw [h0, h1]
 
 

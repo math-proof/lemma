@@ -20,7 +20,7 @@ private lemma scalar
   erw [MulStack.eq.Stack_Mul.scalar]
   have := EqGetStack.fin fun i : Fin n => X[i] * a
   simp [GetElem.getElem] at this ⊢
-  rw [this]
+  erw [this]
 
 
 @[main, fin]

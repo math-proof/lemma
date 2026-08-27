@@ -1,192 +1,29 @@
-import Lemma.Bool.SEq.is.Eq
-import Lemma.Nat.MulMul.eq.Mul_Mul
-import Lemma.Tensor.Dot.eq.GetSumMul
-import Lemma.Tensor.Dot.eq.SelectSumMul
-import Lemma.Tensor.Dot.eq.SumMul__0
-import Lemma.Tensor.Eq.is.All_EqGetS
-import Lemma.Tensor.EqGetUnsqueeze_0
-import Lemma.Tensor.EqTT
-import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
+import Lemma.Fin.MulSum.eq.Sum_Mul
+import Lemma.Fin.Sum.of.All_Eq
+import Lemma.Fin.Sum_BFn
+import Lemma.Finset.Mul_Sum.eq.Sum_Mul
 import Lemma.Tensor.GetDotDot.eq.DotDotGet
 import Lemma.Tensor.GetDot_Dot.eq.Dot_Dot_GetT
-import Lemma.Tensor.GetMul.eq.MulGetS
-import Lemma.Tensor.GetRepeat.as.RepeatGet.of.GtGet_0.GtVal_0
-import Lemma.Tensor.GetRepeat_0.as.Get_Mod_Get.of.GtMul_Get.GtLength_0
-import Lemma.Tensor.GetSum_2.eq.SumGet__1
-import Lemma.Tensor.GetUnsqueeze.as.UnsqueezeGet.of.GtGet_0.Gt_0.GtLength_0
-import Lemma.Tensor.MulSum_0.eq.Sum_Mul_Cast_RepeatUnsqueeze
-import Lemma.Tensor.Mul_Sum_0.eq.Sum_MulCast_RepeatUnsqueeze
-import Lemma.Tensor.SEqMulS.of.SEq.SEq
-import Lemma.Tensor.SEqSelectUnsqueeze.of.GeLength
-import Lemma.Tensor.SEqSumS.of.SEq.Eq
-import Lemma.Tensor.SelectCast.as.Select.of.Eq
-import Lemma.Tensor.SelectMul.eq.MulSelectS
-import Lemma.Tensor.SelectRepeat.as.RepeatSelect.of.Lt
-import Lemma.Tensor.SelectSum.as.SumSelect.of.Gt
-import Lemma.Tensor.SelectUnsqueeze.as.UnsqueezeSelect.of.Lt.GeLength
-import Lemma.Tensor.Select_0.as.Get.of.GtLength_0
-import Lemma.Tensor.Sum_1.eq.SumT_0
-import Lemma.Tensor.Sum_Sum_0'0.eq.Sum_Sum_1'0
-import Lemma.Tensor.TMul.eq.MulTS
-open Bool Nat Tensor
-set_option maxHeartbeats 500000
+import Lemma.Tensor.Get.of.Eq
+import Lemma.Tensor.Sum_0.eq.Sum_Get
+import Lemma.Vector.GetMul.eq.MulGet
+open Tensor Fin Vector
+set_option maxHeartbeats 1000000
 
 
-@[main]
-private lemma vec
-  [NonUnitalSemiring α]
+private lemma mul_nil
+  [Mul α]
 -- given
-  (L : Tensor α [m])
-  (M : Tensor α [m, n])
-  (N : Tensor α [n]) :
+  (a b : Tensor α []) :
 -- imply
-  (L @ M) @ N = L @ (M @ N) := by
+  Mul.mul a b = HMul.hMul (γ := Tensor α []) (self := instHMulTensorNilNatOfMul) a b := by
 -- proof
-  apply (Dot.eq.SumMul__0 (L @ M) N).trans
-  symm
-  apply (Dot.eq.SumMul__0 L (M @ N)).trans
-  rw [Dot.eq.GetSumMul]
-  rw [Dot.eq.SelectSumMul]
-  rw [SelectSum.eq.Cast_SumSelect.of.Gt (d := ⟨1, by grind⟩) (i := ⟨0, by simp⟩) (by grind)]
-  simp
-  erw [GetSum_2.eq.SumGet__1.fin (i := ⟨0, by grind⟩)]
-  simp
-  rw [GetMul.eq.MulGetS.fin]
-  rw [SelectMul.eq.MulSelectS]
-  conv_lhs =>
-    arg 1
-    arg 2
-    arg 1
-    arg 2
-    erw [SelectCast.eq.Cast_Select.of.Eq (by grind) (d := ⟨1, by grind⟩) (i := ⟨0, by simp⟩)]
-  simp
-  conv_lhs =>
-    arg 1
-    arg 2
-    arg 1
-    arg 2
-    arg 2
-    erw [SelectRepeat.eq.Cast_RepeatSelect.of.Lt (by grind) (d := ⟨1, by grind⟩) (i := ⟨0, by simp⟩)]
-  simp
-  conv_lhs =>
-    arg 1
-    arg 2
-    arg 1
-    arg 2
-    arg 2
-    arg 1
-    erw [SelectUnsqueeze.eq.Cast_UnsqueezeSelect.of.Lt.GeLength (by grind) (by grind) (i := ⟨0, by simp⟩)]
-  simp
-  conv_lhs =>
-    arg 1
-    arg 2
-    arg 1
-    arg 2
-    arg 2
-    arg 1
-    arg 1
-    erw [Select_0.eq.Cast_Get.of.GtLength_0 (by grind)]
-  simp
-  conv_lhs =>
-    arg 1
-    arg 2
-    arg 1
-    arg 2
-    arg 2
-    arg 1
-    arg 1
-    erw [EqGetUnsqueeze_0.fin]
-  conv_lhs =>
-    arg 1
-    arg 2
-    arg 1
-    arg 1
-    erw [SelectUnsqueeze.eq.Cast.of.GeLength (by grind)]
-  simp
-  conv_rhs =>
-    arg 1
-    arg 1
-    arg 1
-    arg 1
-    erw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.right.fin (i := ⟨0, by grind⟩) (s' := [1, n, m]) (by grind) (by grind)]
-  simp
-  conv_rhs =>
-    arg 1
-    arg 1
-    arg 1
-    arg 1
-    arg 2
-    erw [GetRepeat.eq.Cast_RepeatGet.of.GtGet_0.GtVal_0.fin (by grind) (by grind)]
-  simp
-  conv_rhs =>
-    arg 1
-    arg 1
-    arg 1
-    arg 1
-    arg 2
-    arg 1
-    erw [GetUnsqueeze.eq.Cast_UnsqueezeGet.of.GtGet_0.Gt_0.GtLength_0.fin (by grind) (by grind) (by grind)]
-  simp
-  conv_rhs =>
-    arg 1
-    arg 1
-    arg 1
-    arg 1
-    arg 2
-    arg 1
-    arg 1
-    erw [EqGetUnsqueeze_0.fin]
-  conv_rhs =>
-    arg 1
-    arg 1
-    arg 1
-    arg 2
-    erw [GetRepeat_0.eq.Cast_Get_Mod_Get.of.GtMul_Get.GtLength_0.fin (by grind) (by grind)]
-  simp
-  conv_rhs =>
-    arg 1
-    arg 1
-    arg 1
-    arg 2
-    erw [EqGetUnsqueeze_0.fin]
-  rw [Sum_1.eq.SumT_0]
-  rw [Sum_1.eq.SumT_0]
-  conv_lhs =>
-    arg 1
-    arg 2
-    arg 1
-    erw [TMul.eq.MulTS]
-  conv_rhs =>
-    arg 1
-    arg 1
-    arg 1
-    erw [TMul.eq.MulTS]
-  conv_rhs =>
-    arg 1
-    arg 1
-    arg 1
-    arg 2
-    erw [EqTT]
-  conv_lhs => erw [Mul_Sum_0.eq.Sum_MulCast_RepeatUnsqueeze]
-  simp
-  conv_rhs => erw [MulSum_0.eq.Sum_Mul_Cast_RepeatUnsqueeze]
-  simp
-  conv_lhs => erw [Sum_Sum_0'0.eq.Sum_Sum_1'0]
-  apply Eq.of.SEq
-  apply SEqSumS.of.SEq.Eq (by rfl)
-  rw [Sum_1.eq.SumT_0]
-  apply SEqSumS.of.SEq.Eq (by rfl)
-  conv_lhs => erw [TMul.eq.MulTS]
-  conv_lhs => erw [TMul.eq.MulTS]
-  conv_lhs =>
-    arg 2
-    arg 1
-    erw [EqTT]
-  conv_lhs =>
-    arg 2
-    arg 2
-    erw [EqTT]
-  rw [Mul_Mul.eq.MulMul]
+  apply Eq.of.EqDataS
+  change a.data * b.data = a.data * b.data[0]
+  apply Vector.Eq.of.All_EqGetS.fin
+  intro t
+  rw [Vector.GetMul.eq.MulGetS.fin a.data b.data t, Vector.GetMul.eq.MulGet.fin a.data b.data[0] t]
+  fin_cases t
   rfl
 
 
@@ -203,19 +40,125 @@ private lemma main
 -- imply
   (L @ M) @ N = L @ (M @ N) := by
 -- proof
-  apply Eq.of.All_EqGetS.fin
+  apply Tensor.Eq.of.All_EqGetS.fin
   intro i
-  apply Eq.of.All_EqGetS.fin
+  apply Tensor.Eq.of.All_EqGetS.fin
   intro j
   apply (GetDotDot.eq.DotDotGet L M N i j).trans
-  symm
-  apply (GetDot_Dot.eq.Dot_Dot_GetT L M N i j).trans
-  have := vec L[i] M Nᵀ[j]
-  simp at this
-  simp
-  conv_rhs => erw [this]
-  rfl
+  apply Eq.trans _ (GetDot_Dot.eq.Dot_Dot_GetT L M N i j).symm
+  let Li : Tensor α [m] := L[i]
+  let Nj : Tensor α [n] := Nᵀ[j]
+  apply (Dot.eq.SumMul__0 (Li @ M) Nj).trans
+  apply Eq.trans _ (Dot.eq.SumMul__0 Li (M @ Nj)).symm
+  let LM : Tensor α [n] := Li @ M
+  let MN : Tensor α [m] := M @ Nj
+  apply (Sum_0.eq.Sum_Get (LM * Nj)).trans
+  apply Eq.trans _ (Sum_0.eq.Sum_Get (Li * MN)).symm
+  trans ∑ k : Fin n, id (α := Tensor α []) LM[k] * id (α := Tensor α []) Nj[k]
+  ·
+    apply Sum.of.All_Eq
+    intro k
+    apply (GetMul.eq.MulGetS LM Nj k).trans
+    apply mul_nil (a := (LM[k] : Tensor α [])) (b := (Nj[k] : Tensor α []))
+  trans ∑ p : Fin m, id (α := Tensor α []) Li[p] * id (α := Tensor α []) MN[p]
+  ·
+    trans ∑ k : Fin n, (∑ p : Fin m, id (α := Tensor α []) Li[p] * id (α := Tensor α []) M[p][k]) * id (α := Tensor α []) Nj[k]
+    ·
+      apply Sum.of.All_Eq
+      intro k
+      rw [show LM[k] = (Li @ M)[k] by
+        simp [LM, GetElem.getElem]
+        rfl]
+      apply congrArg (fun t => id (α := Tensor α []) t * id (α := Tensor α []) Nj[k])
+      apply (Tensor.Get.of.Eq.fin (Dot.eq.GetDotUnsqueeze_0 Li M) k).trans
+      apply (GetDot.eq.DotGetS (Li.unsqueeze 0) M ⟨0, by simp⟩ k).trans
+      apply Eq.trans
+      ·
+        apply congrArg (fun t : Tensor α [m] => t @ (Mᵀ[k] : Tensor α [m]))
+        apply EqGetUnsqueeze_0.nat
+      let Mj : Tensor α [m] := Mᵀ[k]
+      apply (Dot.eq.SumMul__0 Li Mj).trans
+      apply (Sum_0.eq.Sum_Get (Li * Mj)).trans
+      apply Sum.of.All_Eq
+      intro p
+      apply (GetMul.eq.MulGetS Li Mj p).trans
+      rw [show Mj[p] = M[p][k] by
+        simp only [Mj]
+        apply (Tensor.Get.of.Eq.fin (GetT.eq.Select M k) p).trans
+        apply Bool.Eq.of.SEq
+        apply
+          (GetSelect_1.as.Get.of.Lt.GtGet_0.GtLength_0
+            (s := [n]) (n := m) (i := ↑k) (j := ↑p)
+            (by simp) (by simp) p.isLt M).trans
+        simp
+        rfl]
+      apply mul_nil (a := (Li[p] : Tensor α [])) (b := (M[p][k] : Tensor α []))
+    trans ∑ k : Fin n, ∑ p : Fin m, (id (α := Tensor α []) Li[p] * id (α := Tensor α []) M[p][k]) * id (α := Tensor α []) Nj[k]
+    ·
+      apply Sum.of.All_Eq
+      intro k
+      let f := fun p : Fin m => id (α := Tensor α []) Li[p] * id (α := Tensor α []) M[p][k]
+      let x := id (α := Tensor α []) Nj[k]
+      change (∑ p : Fin m, f p) * x = ∑ p : Fin m, f p * x
+      apply Eq.trans (mul_nil (∑ p : Fin m, f p) x).symm
+      apply Eq.trans (MulSum.eq.Sum_Mul f)
+      apply Sum.of.All_Eq
+      intro p
+      apply mul_nil
+    trans ∑ p : Fin m, ∑ k : Fin n, (id (α := Tensor α []) Li[p] * id (α := Tensor α []) M[p][k]) * id (α := Tensor α []) Nj[k]
+    ·
+      apply Sum_BFn.comm
+    trans ∑ p : Fin m, ∑ k : Fin n, id (α := Tensor α []) Li[p] * (id (α := Tensor α []) M[p][k] * id (α := Tensor α []) Nj[k])
+    ·
+      apply Sum.of.All_Eq
+      intro p
+      apply Sum.of.All_Eq
+      intro k
+      let a := id (α := Tensor α []) Li[p]
+      let b := id (α := Tensor α []) M[p][k]
+      let c := id (α := Tensor α []) Nj[k]
+      change (a * b) * c = a * (b * c)
+      rw [(mul_nil a b).symm]
+      rw [(mul_nil (Mul.mul a b) c).symm]
+      apply Eq.trans (Nat.MulMul.eq.Mul_Mul (a := a) (b := b) (c := c))
+      rw [(mul_nil b c).symm]
+      apply mul_nil a (Mul.mul b c)
+    trans ∑ p : Fin m, id (α := Tensor α []) Li[p] * ∑ k : Fin n, id (α := Tensor α []) M[p][k] * id (α := Tensor α []) Nj[k]
+    ·
+      apply Sum.of.All_Eq
+      intro p
+      apply Eq.symm
+      let a := id (α := Tensor α []) Li[p]
+      let f := fun k : Fin n => id (α := Tensor α []) M[p][k] * id (α := Tensor α []) Nj[k]
+      change a * ∑ k : Fin n, f k = ∑ k : Fin n, a * f k
+      apply Eq.trans (mul_nil a (∑ k : Fin n, f k)).symm
+      apply Eq.trans (Finset.Mul_Sum.eq.Sum_Mul (s := Finset.univ) f a)
+      apply Sum.of.All_Eq
+      intro k
+      apply mul_nil
+    apply Sum.of.All_Eq
+    intro p
+    rw [show MN[p] = (M @ Nj)[p] by
+      simp [MN, GetElem.getElem]
+      rfl]
+    apply congrArg (fun t => id (α := Tensor α []) Li[p] * id (α := Tensor α []) t)
+    symm
+    apply (GetDot.eq.DotGet.une M Nj p).trans
+    let Mi : Tensor α [n] := M[p]
+    apply (Dot.eq.SumMul__0 Mi Nj).trans
+    apply (Sum_0.eq.Sum_Get (Mi * Nj)).trans
+    apply Sum.of.All_Eq
+    intro k
+    apply (GetMul.eq.MulGetS Mi Nj k).trans
+    simp [id, Mi]
+    apply mul_nil
+  ·
+    apply Sum.of.All_Eq
+    intro p
+    apply Eq.symm
+    apply (GetMul.eq.MulGetS Li MN p).trans
+    apply mul_nil (a := (Li[p] : Tensor α [])) (b := (MN[p] : Tensor α []))
 
 
 -- created on 2025-05-03
--- updated on 2026-07-23
+-- updated on 2026-08-27

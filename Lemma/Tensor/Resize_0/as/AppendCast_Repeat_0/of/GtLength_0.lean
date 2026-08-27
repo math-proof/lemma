@@ -67,7 +67,6 @@ private lemma main
         have h_ne_0 := Ne_0.of.GtMul h_t
         split_ifs with h_lt
         ·
-          rw [Head.eq.Get_0.fin]
           erw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
           simp
           rw [DivMulS.eq.Div.of.Ne_0 (by grind)] at h_lt
@@ -76,7 +75,8 @@ private lemma main
             rw [DataRepeat.eq.Cast_FlattenMapSplitAtData]
             rw [GetCast.eq.Get.of.Eq.fin (by grind)]
             simp
-            rw [GetFlatten.eq.Get.of.Lt_Mul (by grind)]
+            rw [GetFlatten.eq.Get.of.Lt_Mul (by simpa)]
+            erw [GetMap.eq.UFnGet]
             simp [GetRepeat.eq.Get_Mod.fin]
             erw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
             congr 1

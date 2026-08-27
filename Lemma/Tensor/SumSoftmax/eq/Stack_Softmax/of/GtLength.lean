@@ -21,7 +21,8 @@ private lemma main
   apply Eq.of.SEq
   erw [GetSoftmax.eq.SoftmaxGet.of.GtGet_0.LtAdd_1Length (i := i) (d := d) (by simpa) (by simp) ([k < n] f k)]
   simp [GetElem.getElem]
-  rw [EqGetStack.fin]
+  erw [EqGetStack.fin]
+  rfl
 
 
 -- created on 2025-11-30

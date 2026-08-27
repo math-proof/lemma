@@ -26,8 +26,9 @@ private lemma main
   apply @Vector.Eq.of.All_EqGetS.fin
   intro i
   fin_cases i
+  repeat erw [Vector.Get_0.eq.Head.fin]
   simp [HeadDataSum.eq.SumData]
-  rw [DataMul.eq.MulDataS]
+  erw [DataMul.eq.MulDataS]
   congr 1
   ·
     simp

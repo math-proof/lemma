@@ -1,26 +1,21 @@
-import Lemma.Tensor.Coe.eq.Map
-import Lemma.Int.Sub.eq.Add_Neg
-import Lemma.Tensor.EqHeadData
-import Lemma.Vector.MulSub.eq.SubMulS
-import Lemma.Tensor.DataSub.eq.SubDataS
+import Lemma.Hyperreal.InfiniteNeg.is.XEqExp_0
 import Lemma.Hyperreal.InfinitePos.is.InfiniteNegSub
 import Lemma.Hyperreal.InfinitePosInfty
-import Lemma.Hyperreal.InfiniteNeg.is.XEqExp_0
-import Lemma.Hyperreal.InfinitePos.is.InfiniteNegNeg
+import Lemma.Hyperreal.XEq.of.Eq
 import Lemma.Tensor.DataExp.eq.ExpData
-import Lemma.Tensor.EqData0'0
-import Lemma.Tensor.EqGetStack
-import Lemma.Tensor.GetAdd_MulSub_1.eq.Ite_Get
+import Lemma.Tensor.DataMul.eq.MulData
+import Lemma.Tensor.DataSub.eq.SubDataS
+import Lemma.Tensor.EqGet1_1
+import Lemma.Tensor.EqHeadData
 import Lemma.Tensor.GetExp.eq.ExpGet
-import Lemma.Tensor.GetMul.eq.MulGetS
+import Lemma.Tensor.GetMap.eq.MapGet
+import Lemma.Tensor.GetMul.eq.MulGet
+import Lemma.Tensor.GetSub.eq.SubGetS
 import Lemma.Tensor.XEq.is.All_XEqGetS.of.GtLength_0
-import Lemma.Tensor.XEq.is.XEqDataS
-import Lemma.Tensor.XEqExpS.of.XEq_0
-import Lemma.Vector.EqGet0_0
 import Lemma.Vector.GetExp.eq.ExpGet
-import sympy.tensor.functions
-import sympy.tensor.stack
-open Hyperreal Tensor Int
+import Lemma.Vector.GetMul.eq.MulGet
+import Lemma.Vector.GetSub.eq.SubGetS
+open Hyperreal Tensor
 set_option maxHeartbeats 1000000
 
 
@@ -36,7 +31,6 @@ private lemma main
   Exp.exp (A + (Ξ - 1) * ∞) ≈ exp A * Ξ := by
 -- proof
   intro Ξ A'
-  have h_A : A' = map Hyperreal.ofReal A := by rfl
   apply XEq.of.All_XEqGetS.GtLength_0 (h := by simp)
   intro i
   apply XEq.of.All_XEqGetS.GtLength_0 (h := by simp)
@@ -47,61 +41,132 @@ private lemma main
   rw [this]
   have := GetExp.eq.ExpGet.fin ((A' + (Ξ - 1) * ∞).get i) ⟨j, by grind⟩
   simp at this
-  rw [this]
-  have := GetAdd_MulSub_1.eq.Ite_Get.fin p A i j
-  simp at this
-  rw [← h_A] at this
+  erw [this]
   simp [Ξ]
   apply XEq.of.XEqDataS
   erw [DataExp.eq.ExpData]
   rw [GetAdd.eq.AddGetS.fin]
   erw [GetAdd.eq.AddGetS.fin]
-  rw [GetMul.eq.MulGetS.fin]
-  erw [GetMul.eq.MulGetS.fin ((Exp.exp A').get i) (([i<n][j<n]↑(p i j).toNat).get i) j]
-  rw [GetMul.eq.MulGet.scalar.fin]
-  erw [GetMul.eq.MulGet.scalar.fin (([i<n][j<n]((p i j).toNat : Tensor ℝ* []) - 1).get i) ω j]
-  rw [GetSub.eq.SubGetS.fin]
-  erw [GetSub.eq.SubGetS.fin (([i<n][j<n]↑(p i j).toNat).get i) (Tensor.get (1 : Tensor ℝ* [n, n]) i) j]
-  repeat rw [EqGetStack.fin]
-  rw [EqGet1_1.fin]
-  erw [EqGet1_1.fin (s := [n, n].tail) j (α := ℝ*)]
-  rw [DataMul.eq.MulDataS]
-  have := GetExp.eq.ExpGet.fin A' ⟨i, by grind⟩
-  simp at this
-  rw [this]
-  have := GetExp.eq.ExpGet.fin (A'.get i) ⟨j, by grind⟩
-  simp at this
-  rw [this]
-  erw [DataExp.eq.ExpData]
-  rw [DataAdd.eq.AddDataS]
-  rw [DataMul.eq.MulData]
-  rw [DataSub.eq.SubDataS]
-  rw [EqData1'1]
-  rw [@Vector.MulSub.eq.SubMulS]
+  have hi : ↑i < n := i.isLt
+  have hj : ↑j < n := j.isLt
+  erw [congrArg Tensor.data
+    (congrArg (fun X => X.get ⟨↑j, hj⟩)
+      (GetMul.eq.MulGetS.fin
+        (Exp.exp A')
+        ([i < n] [j < n] ↑(p i j).toNat)
+        ⟨↑i, hi⟩))]
+  erw [congrArg Tensor.data
+    (GetMul.eq.MulGetS.fin
+      ((Exp.exp A').get ⟨↑i, hi⟩)
+      (([i < n] [j < n] ↑(p i j).toNat).get ⟨↑i, hi⟩)
+      ⟨↑j, hj⟩)]
+  let mask : Tensor ℝ* [n, n] := [i < n] [j < n] ((p i j).toNat : Tensor ℝ* [])
+  refine
+    (congrArg
+      (fun t => Exp.exp ((A'.get i).get ⟨↑j, hj⟩ + t).data)
+      ((congrArg (fun X : Tensor ℝ* [n] => X.get ⟨↑j, hj⟩)
+          (by
+            convert GetMul.eq.MulGet.scalar.fin (mask - 1) ω ⟨↑i, hi⟩ <;> rfl)).trans
+        (GetMul.eq.MulGet.scalar.fin ((mask - 1).get ⟨↑i, hi⟩) ω ⟨↑j, hj⟩))) ▸ ?_
+  have hE₁ := GetExp.eq.ExpGet.fin A' ⟨↑i, hi⟩
+  simp at hE₁
+  have hE₂ := GetExp.eq.ExpGet.fin (A'.get ⟨↑i, hi⟩) ⟨↑j, hj⟩
+  simp at hE₂
+  refine
+    (congrArg Tensor.data
+      (congrArg
+        (fun x : Tensor ℝ* [] =>
+          x * (([i < n] [j < n] ↑(p i j).toNat).get ⟨↑i, hi⟩).get ⟨↑j, hj⟩)
+        (hE₁.symm ▸ hE₂))).symm ▸ ?_
+  have hmsk :
+      (mask.get ⟨↑i, hi⟩).get ⟨↑j, hj⟩ = ((p i j).toNat : Tensor ℝ* []) := by
+    apply Eq.trans (b := ([j < n] ((p ⟨↑i, hi⟩ j).toNat : Tensor ℝ* [])).get ⟨↑j, hj⟩)
+    ·
+      apply congrArg (fun X : Tensor ℝ* [n] => X.get ⟨↑j, hj⟩)
+      apply EqGetStack.fin (fun i : Fin n => [j < n] ((p i j).toNat : Tensor ℝ* [])) ⟨↑i, hi⟩
+    apply Eq.trans
+    ·
+      apply EqGetStack.fin (fun j : Fin n => ((p ⟨↑i, hi⟩ j).toNat : Tensor ℝ* [])) ⟨↑j, hj⟩
+    congr 1
   apply @Vector.XEq.of.All_XEqGetS.fin
   intro k
   fin_cases k
   rw [Vector.GetExp.eq.ExpGet.fin]
+  erw [DataAdd.eq.AddDataS]
   erw [Vector.GetAdd.eq.AddGetS.fin]
-  repeat rw [Tensor.DataGet.eq.GetUnflattenData.fin]
+  erw [DataMul.eq.MulData]
+  erw [Vector.GetMul.eq.MulGet.fin]
+  erw [DataMul.eq.MulDataS]
   erw [Vector.GetMul.eq.MulGetS.fin]
+  erw [DataExp.eq.ExpData]
   erw [Vector.GetExp.eq.ExpGet.fin]
-  repeat erw [Vector.GetUnflatten.eq.Get_AddMul.fin]
+  have hA :
+      ((A'.get i).get ⟨↑j, hj⟩).data.get ⟨0, Nat.zero_lt_one⟩ =
+        ((A'.get ⟨↑i, hi⟩).get ⟨↑j, hj⟩).data.get ⟨0, Nat.zero_lt_one⟩ := by
+    apply congrArg (fun t : Tensor ℝ* [] => t.data.get ⟨0, Nat.zero_lt_one⟩)
+    congr 1
+  refine
+    (congrArg₂ (fun a b => Exp.exp (a + b * ω)) hA
+      (congrArg (fun t : Tensor ℝ* [] => t.data.get ⟨0, Nat.zero_lt_one⟩)
+        (((congrArg (fun X : Tensor ℝ* [n] => X.get ⟨↑j, hj⟩)
+            ((GetSub.eq.SubGetS.fin mask (1 : Tensor ℝ* [n, n]) ⟨↑i, hi⟩).trans
+              (congrArg (fun t => mask.get ⟨↑i, hi⟩ - t)
+                (EqGet1_1.fin (i := ⟨↑i, hi⟩) (s := [n, n]) (α := ℝ*))))).trans
+          ((GetSub.eq.SubGetS.fin (mask.get ⟨↑i, hi⟩) (1 : Tensor ℝ* [n]) ⟨↑j, hj⟩).trans
+            (congrArg (fun t => (mask.get ⟨↑i, hi⟩).get ⟨↑j, hj⟩ - t)
+              (EqGet1_1.fin (i := ⟨↑j, hj⟩) (s := [n]) (α := ℝ*))))).trans
+          (congrArg (fun t : Tensor ℝ* [] => Sub.sub t (1 : Tensor ℝ* [])) hmsk)))) ▸ ?_
+  refine
+    (congrArg₂ (fun a b => Exp.exp a * b) hA
+      (congrArg (fun t : Tensor ℝ* [] => t.data.get ⟨0, Nat.zero_lt_one⟩) hmsk)).symm ▸ ?_
+  erw [DataSub.eq.SubDataS]
   erw [Vector.GetSub.eq.SubGetS.fin]
-  repeat erw [Vector.GetMul.eq.MulGet.fin]
+  erw [EqData1'1]
   erw [Vector.EqGet1_1.fin]
-  simp
-  erw [EqHeadData.nat]
   if h : p i j then
-    simp [h]
+    have hcast :
+        (↑(p i j).toNat : Tensor ℝ* []).data.get ⟨0, Nat.zero_lt_one⟩ = ((1 : ℕ) : ℝ*) :=
+      (congrArg (fun n : ℕ => (n : Tensor ℝ* []).data.get ⟨0, Nat.zero_lt_one⟩)
+        (by simp [h])).trans
+        ((Vector.Get_0.eq.Head.fin ((1 : ℕ) : Tensor ℝ* []).data).trans (EqHeadData.nat (1 : ℕ)))
+    refine
+      (congrArg
+        (fun t : ℝ* =>
+          Exp.exp
+            (((A'.get ⟨↑i, hi⟩).get ⟨↑j, hj⟩).data.get ⟨0, Nat.zero_lt_one⟩ +
+              (t - 1) * ω))
+        hcast) ▸ ?_
+    refine
+      (congrArg
+        (fun t : ℝ* =>
+          Exp.exp (((A'.get ⟨↑i, hi⟩).get ⟨↑j, hj⟩).data.get ⟨0, Nat.zero_lt_one⟩) * t)
+        hcast) ▸ ?_
+    apply XEq.of.Eq
+    simp
   else
-    simp [h]
-    rw [Add_Neg.eq.Sub]
+    have hcast :
+        (↑(p i j).toNat : Tensor ℝ* []).data.get ⟨0, Nat.zero_lt_one⟩ = ((0 : ℕ) : ℝ*) :=
+      (congrArg (fun n : ℕ => (n : Tensor ℝ* []).data.get ⟨0, Nat.zero_lt_one⟩)
+        (by simp [h])).trans
+        ((Vector.Get_0.eq.Head.fin ((0 : ℕ) : Tensor ℝ* []).data).trans (EqHeadData.nat (0 : ℕ)))
+    refine (congrArg (fun t : ℝ* => Exp.exp (((A'.get ⟨↑i, hi⟩).get ⟨↑j, hj⟩).data.get ⟨0, Nat.zero_lt_one⟩ + (t - 1) * ω)) hcast) ▸ ?_
+    refine (congrArg (fun t : ℝ* => Exp.exp (((A'.get ⟨↑i, hi⟩).get ⟨↑j, hj⟩).data.get ⟨0, Nat.zero_lt_one⟩) * t) hcast) ▸ ?_
+    simp
+    rw [Int.Add_Neg.eq.Sub]
     apply XEqExp_0.of.InfiniteNeg
-    simp only [A', map]
-    erw [Vector.GetMap.eq.UFnGet]
+    refine
+      (congrArg (fun t => t - ω)
+        (((congrArg (fun t : Tensor ℝ* [n] => (t.get ⟨↑j, hj⟩).data.get ⟨0, Nat.zero_lt_one⟩)
+            ((by rfl : A' = map Hyperreal.ofReal A) ▸
+              GetMap.eq.MapGet.fin A Hyperreal.ofReal ⟨↑i, hi⟩)).trans
+          (congrArg (fun t : Tensor ℝ* [] => t.data.get ⟨0, Nat.zero_lt_one⟩)
+            (GetMap.eq.MapGet.fin (A.get ⟨↑i, hi⟩) Hyperreal.ofReal ⟨↑j, hj⟩))).trans
+          (Vector.GetMap.eq.UFnGet
+            ((A.get ⟨↑i, hi⟩).get ⟨↑j, hj⟩).data
+            Hyperreal.ofReal
+            ⟨0, Nat.zero_lt_one⟩))) ▸ ?_
     apply InfiniteNegSub.of.InfinitePos _ InfinitePosInfty
 
 
 -- created on 2023-06-18
--- updated on 2025-12-29
+-- updated on 2026-08-28

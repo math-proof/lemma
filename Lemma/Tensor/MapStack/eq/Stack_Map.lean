@@ -19,7 +19,7 @@ private lemma main
   rw [EqGetStack.fin]
   erw [GetMap.eq.MapGet.fin (i := ⟨i, by grind⟩)]
   congr 1
-  rw [EqGetStack.fin]
+  erw [EqGetStack.fin]
   rfl
 
 

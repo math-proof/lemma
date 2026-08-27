@@ -2,7 +2,6 @@ import Lemma.Tensor.DataSum_0.eq.SumSplitAtData
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Tensor.EqData0'0
 import Lemma.Vector.Eq.is.All_EqGetS
-import Lemma.Vector.Sum.eq.Zero
 open Tensor Vector
 
 
@@ -19,7 +18,7 @@ private lemma main
   simp [EqData0'0]
   apply Eq.of.All_EqGetS
   intro i
-  simp [Sum.eq.Zero]
+  simp
   rfl
 
 

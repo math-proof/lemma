@@ -32,12 +32,14 @@ private lemma main
     match h_d : d with
     | ⟨0, h_lt⟩ =>
       simp
-      repeat erw [EqGetUnsqueeze_0.fin]
+      repeat erw [EqGetUnsqueeze_0.nat.fin]
+      rfl
     | ⟨d + 1, h_d⟩ =>
-      rw [GetUnsqueeze.eq.Cast_UnsqueezeGet.of.GtGet_0.Gt_0.GtLength_0.fin (by grind) (by grind) (by simp)]
+      rw [GetUnsqueeze.eq.Cast_UnsqueezeGet.of.GtGet_0.Gt_0.GtLength_0.fin (by grind) (by grind) (by grind)]
       simp
-      erw [GetUnsqueeze.eq.Cast_UnsqueezeGet.of.GtGet_0.Gt_0.GtLength_0.fin (by grind) (by grind) (by grind)]
+      conv_rhs => erw [GetUnsqueeze.eq.Cast_UnsqueezeGet.of.GtGet_0.Gt_0.GtLength_0.fin (by grind) (by grind) (by grind)]
       simp
+      apply SEq_Cast.of.SEq.Eq (by simp)
       erw [GetResize.eq.Cast_ResizeGet.of.GtGet_0.GtVal_0.fin (by grind) (by grind)]
       apply ih (X.get t) ⟨d, by grind⟩ n
 

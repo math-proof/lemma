@@ -1,6 +1,7 @@
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.Tensor.DataSum_0.eq.SumSplitAtData
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
+import Lemma.Vector.HeadMap.eq.UFnHead
 open Bool Tensor Vector
 
 
@@ -26,10 +27,10 @@ private lemma main
       simp
       erw [GetFlatten.eq.Get.of.Eq_AddMul.fin (i := ⟨0, by grind⟩) (j := ⟨0, by grind⟩) (by grind)]
       simp
-      congr 1
-      congr 1
-      congr 1
+      congr
+      erw [HeadMap.eq.UFnHead]
       erw [EqHeadSplitAt_0]
+      rfl
     ·
       simp
   | s₀ :: s =>

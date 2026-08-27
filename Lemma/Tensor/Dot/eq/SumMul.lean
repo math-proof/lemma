@@ -1,7 +1,6 @@
 import Lemma.Bool.SEq.is.EqCast.of.Eq
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
-import Lemma.List.EqSwap_0'1
 import Lemma.Tensor.Dot.eq.Bmm
 import Lemma.Tensor.SEqMulS.of.SEq.SEq
 import Lemma.Tensor.SEqRepeatS.of.SEq.Val.Eq
@@ -9,7 +8,7 @@ import Lemma.Tensor.SEqResizeS.of.SEq.Val.Eq
 import Lemma.Tensor.SEqSumS.of.SEq.Eq
 import Lemma.Tensor.SEqTS.of.SEq
 import Lemma.Tensor.SEqUnsqueezeS.of.SEq.Eq
-open Bool List Tensor
+open Bool Tensor
 
 
 @[main]
@@ -64,6 +63,7 @@ private lemma resize
     apply SEqRepeatS.of.SEq.Val.Eq (by simp) (by simp [broadcast_shape])
     apply SEqCast.of.SEq.Eq (by simp [broadcast_shape])
     apply SEqUnsqueezeS.of.SEq.Eq _ (by simp [broadcast_shape])
+    apply SEqCast.of.SEq.Eq (by simp [broadcast_shape])
     apply SEqResizeS.of.SEq.Val.Eq (by grind) (by grind)
     rfl
   ·
@@ -71,8 +71,9 @@ private lemma resize
     apply SEqRepeatS.of.SEq.Val.Eq (by simp) (by simp [broadcast_shape])
     apply SEqCast.of.SEq.Eq (by simp [broadcast_shape])
     apply SEqUnsqueezeS.of.SEq.Eq _ (by simp [broadcast_shape])
-    apply SEqCast.of.SEq.Eq (by simp [broadcast_shape, EqSwap_0'1])
+    apply SEqCast.of.SEq.Eq (by simp [broadcast_shape])
     apply SEqTS.of.SEq
+    apply SEqCast.of.SEq.Eq (by simp [broadcast_shape])
     apply SEqResizeS.of.SEq.Val.Eq (by grind) (by grind)
     rfl
 

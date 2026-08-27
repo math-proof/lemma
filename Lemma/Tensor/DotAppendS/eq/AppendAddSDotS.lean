@@ -19,16 +19,13 @@ private lemma main
 -- imply
   (A.hstack B ++ C.hstack D) @ (x ++ y) = (id (α := Tensor α [n]) (A @ x) + id (α := Tensor α [n]) (B @ y)) ++ (id (α := Tensor α [m]) (C @ x) + id (α := Tensor α [m]) (D @ y)) := by
 -- proof
-  have hsplit := DotAppend.eq.AppendDotS.mv (Tensor.hstack A B) (Tensor.hstack C D) (x ++ y)
-  rw [hsplit]
-  have h0 := DotHstack.eq.AddDotS A B x y
-  have h1 := DotHstack.eq.AddDotS C D x y
+  rw [DotAppend.eq.AppendDotS.mv (Tensor.hstack A B) (Tensor.hstack C D) (x ++ y)]
   have h0inv : (Tensor.hstack A B) @ (x ++ y) = cast (by simp [matmul_shape]) (cast (by simp [matmul_shape]) ((Tensor.hstack A B) @ (x ++ y)) : Tensor α [n]) := by
     simp
   have h1inv : (Tensor.hstack C D) @ (x ++ y) = cast (by simp [matmul_shape]) (cast (by simp [matmul_shape]) ((Tensor.hstack C D) @ (x ++ y)) : Tensor α [m]) := by
     simp
-  rw [h0inv, h1inv, h0, h1]
-  simp
+  rw [h0inv, h1inv, DotHstack.eq.AddDotS A B x y, DotHstack.eq.AddDotS C D x y]
+  grind
 
 
 -- created on 2020-08-18

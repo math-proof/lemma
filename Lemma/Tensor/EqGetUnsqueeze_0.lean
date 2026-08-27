@@ -1,6 +1,9 @@
 import sympy.tensor.tensor
 import Lemma.Nat.Eq_0.of.Lt_1
 import Lemma.Tensor.EqLengthUnsqueeze_0'1
+import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
+import Lemma.Tensor.GetCast.as.Get.of.Eq
+import Lemma.Vector.GetMap.eq.UFnGet
 import Lemma.Bool.EqCast.of.Eq
 import Lemma.Bool.EqCast.of.SEq
 import Lemma.Bool.SEq.is.Eq
@@ -26,11 +29,13 @@ private lemma main
   simp [GetElem.getElem]
   simp [Tensor.get]
   simp [Tensor.toVector]
-  simp [GetElem.getElem]
+  simp only [GetElem.getElem]
+  erw [Tensor.GetCast.eq.Cast_Get.of.Eq.fin (by grind)]
   apply EqCast.of.SEq
-  rw [ArraySlice.eq.Cast_GetCast_SplitAt_1.of.GtGet_0.GtLength_0.Eq_ProdTail.Eq_Prod (s := 1 :: s) _ (by grind)]
-  apply SEqCast.of.SEq.Eq <;>
-    simp
+  erw [GetMap.eq.UFnGet]
+  apply SEq.of.SEqDataS.Eq (by simp)
+  simp
+  apply SEqCast.of.SEq.Eq (by simp)
   apply SEq.of.Eq
   unfold List.Vector.splitAt
   simp
@@ -40,8 +45,8 @@ private lemma main
   simp [List.Vector.get]
   simp only [GetElem.getElem]
   simp [GetCast.eq.Get.of.Eq.fin]
-  rw [GetArraySlice.eq.Get_Add.of.Lt_Min_Sub.fin (by simp)]
-  rw [EqGetMapRange.fin]
+  rw [GetArraySlice.eq.Get_Add.of.Lt_Min_Sub.fin (by simp; grind)]
+  erw [EqGetMapRange.fin]
   simp only [GetElem.getElem]
   simp [List.Vector.get]
   congr

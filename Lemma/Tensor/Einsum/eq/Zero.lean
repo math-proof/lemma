@@ -17,10 +17,10 @@ private lemma main
   simp [Einsum.eq.SumMulDataS]
   apply Eq.of.EqDataS
   simp [Tensor.sum, EqData0'0]
-  apply Eq.of.All_EqGetS
+  apply Eq.of.All_EqGetS.fin
   intro i
-  simp [Sum.eq.Zero]
-  rfl
+  rw [Vector.GetCast.eq.Get.of.Eq.fin (by simp)]
+  erw [Vector.EqGet0_0.fin]
 
 
 -- created on 2026-07-06

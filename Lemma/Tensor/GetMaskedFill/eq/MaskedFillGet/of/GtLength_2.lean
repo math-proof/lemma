@@ -1,7 +1,8 @@
 import Lemma.Tensor.GetOfVector.eq.Get
 import Lemma.Tensor.GtLength.of.GtLength_0
 import Lemma.Tensor.LengthMaskedFill.eq.Length
-open Tensor
+import Lemma.Vector.GetMap.eq.UFnGet
+open Tensor Vector
 
 
 /--
@@ -29,7 +30,7 @@ private lemma main
     rw [Tensor.masked_fill, dif_pos h]
     simp [GetElem.getElem]
     erw [GetOfVector.eq.Get.fin]
-    simp
+    erw [GetMap.eq.UFnGet]
     congr 1
 
 

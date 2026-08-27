@@ -33,7 +33,7 @@ private lemma main
   apply EqCast.of.SEq
   have := ArraySlice.as.GetSplitAt_1.of.GtGet_0.GtLength_0.Eq_ProdTail (s := s₀ :: s) (n := s.prod) (i := i) (by simp_all) (by simp_all) (by simp_all) data
   apply SEq.of.SEq.SEq this
-  rw [GetCast_Map.eq.UFnGet.of.Eq.Lt.fin (by grind) (by simp)]
+  erw [GetCast_Map.eq.UFnGet.of.Eq.Lt.fin (by grind) (by simp)]
   simp [GetElem.getElem]
   rfl
 

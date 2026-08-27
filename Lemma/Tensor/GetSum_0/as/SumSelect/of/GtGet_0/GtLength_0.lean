@@ -1,15 +1,7 @@
-import Lemma.Tensor.EqGet0_0
-import Lemma.Tensor.Get.of.Eq.GtLength_0
-import Lemma.Tensor.GetSelect_1.as.Get.of.Lt.GtGet_0.GtLength_0
-import Lemma.Tensor.GetSum.eq.Sum_Get.of.GtLength_0
-import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.LengthSum.eq.Get_0.of.GtLength_0
-import Lemma.Tensor.SEq0S.of.Eq
-import Lemma.Tensor.SEqSumS.of.All_SEq.Gt_0
-import Lemma.Tensor.Sum.eq.Zero
-import Lemma.Tensor.Sum_0.eq.Sum_Get
+import Lemma.Tensor.SelectSum.as.SumSelect.of.Lt
+import Lemma.Tensor.Select_0.as.Get.of.GtGet_0.GtLength_0
 open Tensor
-set_option maxHeartbeats 500000
 
 
 @[main, comm]
@@ -24,33 +16,9 @@ private lemma main
   (X.sum 0).get ⟨i, h_Xi⟩ ≃ (X.select ⟨1, by grind⟩ ⟨i, by grind⟩).sum 0 := by
 -- proof
   intro h_Xi
-  if h₀ : s₀ = 0 then
-    subst h₀
-    simp [Sum.eq.Zero]
-    have := Sum.eq.Zero X
-    rw [Get.of.Eq.GtLength_0 h_s this ⟨i, h_i⟩]
-    erw [EqGet0_0.fin]
-    apply SEq0S.of.Eq
-    simp
-  else
-    have h_sum := Sum_0.eq.Sum_Get.fin X
-    have h_sum : (X.sum 0).get ⟨i, h_Xi⟩ = (∑ i : Fin s₀, X.get i).get ⟨i, by grind⟩ := by
-      congr
-      simp
-      aesop
-    simp [Sum_0.eq.Sum_Get.fin]
-    erw [h_sum]
-    have h_all : ∀ k : Fin s₀, (X.select ⟨1, by grind⟩ ⟨i, by grind⟩).get k ≃ (X.get ⟨k, by rw [Length.eq.Get_0.of.GtLength_0 (by simp)]; simp⟩).get ⟨i, by rw [Length.eq.Get_0.of.GtLength_0 (by simpa)]; simpa⟩ := by
-      intro k
-      apply GetSelect_1.as.Get.of.Lt.GtGet_0.GtLength_0 h_s h_i
-      grind
-    have := SEqSumS.of.All_SEq.Gt_0 (by omega) h_all
-    simp at this
-    symm
-    apply this.trans
-    erw [GetSum.eq.Sum_Get.of.GtLength_0 h_s (fun i : Fin s₀ => X.get i) ⟨i, by omega⟩]
-    rfl
+  apply SEq.trans (Get.as.Select_0.of.GtGet_0.GtLength_0 h_s h_i (X.sum 0))
+  exact SelectSum.as.SumSelect.of.Lt (s := s₀ :: s) (d := ⟨1, Nat.succ_lt_succ h_s⟩) (k := 0) Nat.zero_lt_one X ⟨i, by simpa⟩
 
 
 -- created on 2025-11-01
--- updated on 2025-11-06
+-- updated on 2026-08-27

@@ -79,9 +79,9 @@ private lemma main
         simp [v_m] at h_b
         rw [h_b]
         simp [GetElem.getElem]
-        repeat rw [EqGetRange.fin]
+        simp [EqGetRange.fin]
         simp [List.Vector.get]
-        repeat rw [GetVal.eq.Get.of.Lt (by simp_all)]
+        repeat rw [GetVal.eq.Get.of.Lt (by grind)]
         have hq := h₂ q
         have hq := Val.of.SEq hq
         apply Get.of.Eq.GtLength (show r < A[q].data.val.length by simp_all) hq

@@ -27,12 +27,13 @@ private lemma main
     have h_u : ¬d ≤ j - i := by
       linarith
     simp [h_u]
+    grind
   ·
     simp at h_u
     simp [h_u]
     rw [EqGet1_1.fin]
     erw [EqGet1_1.fin]
-    rfl
+    grind
 
 
 -- created on 2026-01-03

@@ -49,6 +49,7 @@ private lemma main
       ·
         apply SEqReshapeS.of.SEq.Eq.Dvd
         repeat rw [EqMax.of.Lt h_n]
+        aesop
       ·
         apply SEqCastS.of.SEq.Eq.Eq
         ·

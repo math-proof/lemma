@@ -6,6 +6,7 @@ import Lemma.Nat.EqDivMul.of.Ne_0
 import Lemma.Nat.EqValCast.of.Lt.Eq
 import Lemma.Nat.Le_SubMulS.of.Lt
 import Lemma.Tensor.Unsqueeze.eq.TensorMap_FunGetData
+import Lemma.Vector.MapMap.eq.Map_Comp
 import Lemma.Vector.EqGetRange
 import Lemma.Vector.Get
 import Lemma.Vector.GetCast_Map.eq.UFnGet.of.Eq.Lt
@@ -25,6 +26,8 @@ private lemma main
   obtain ⟨X⟩ := X
   simp [Unsqueeze.eq.TensorMap_FunGetData]
   unfold Tensor.OfVector
+  erw [MapMap.eq.Map_Comp]
+  apply Eq.of.EqDataS
   simp
   ext k
   simp [EqGetRange.fin]
@@ -54,13 +57,20 @@ private lemma main
   simp [GetElem.getElem] at h_flat h_get h_split ⊢
   symm
   refine Eq.trans h_flat ?_
-  simp [h_get]
+  erw [h_get]
   convert h_split
-  simp [EqGetRange.fin]
-  rw [EqValCast.of.Lt.Eq (by rw [h_prod_insert.symm]) h_k]
-  congr 1
-  have h_heq := HEqFinS.of.Eq.Eq.Lt j.isLt h_prod_insert rfl
-  simpa [h_eq] using (congrArg Fin.val (EqCast.of.HEq h_heq)).symm
+  .
+    grind
+  .
+    simp
+  .
+    rfl
+  .
+    simp [EqGetRange.fin]
+    rw [EqValCast.of.Lt.Eq (by rw [h_prod_insert.symm]) h_k]
+    congr 1
+    have h_heq := HEqFinS.of.Eq.Eq.Lt j.isLt h_prod_insert rfl
+    simpa [h_eq] using (congrArg Fin.val (EqCast.of.HEq h_heq)).symm
 
 
 -- created on 2025-07-13

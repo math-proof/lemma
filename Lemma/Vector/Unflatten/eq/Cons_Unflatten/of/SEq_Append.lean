@@ -39,7 +39,7 @@ private lemma main
       nlinarith
     have hj' := j.isLt
     have := Get.of.SEq_Append.Lt.Lt hj hj' h
-    assumption
+    aesop
   | i + 1 =>
     simp [MulAdd_1.eq.Add_Mul]
     simp [AddAdd.eq.Add_Add]
@@ -48,14 +48,9 @@ private lemma main
     rw [AddAdd.comm] at hij
     have hij := Lt.of.LtAddS hij
     have h_eq := Get_Add.eq.Get.of.SEq_Append.Lt.LtAdd (show n + (i * n + j) < (m + 1) * n by linarith) hij h
-    let i : Fin m := ⟨i, Lt.of.AddMul.lt.Mul hij⟩
-    have h_ij : i * n + j < m * n := by
-      simpa [i]
-    have h_v_tail := Get_AddMul.eq.GetUnflatten tail i
-    simp [i] at h_v_tail
-    simp [GetElem.getElem] at h_v_tail
-    simp [List.Vector.get] at h_v_tail
-    rwa [← h_v_tail]
+    erw [GetUnflatten.eq.Get_AddMul tail ⟨i, by grind⟩]
+    aesop
 
 
 -- created on 2025-05-31
+-- updated on 2026-08-24

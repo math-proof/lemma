@@ -4,7 +4,8 @@ import Lemma.Tensor.GetData.eq.HeadDataGet.of.Lt
 import Lemma.Tensor.GetDot.eq.Dot_GetT
 import Lemma.Tensor.XEq.is.All_XEqGetS.of.GtLength_0
 import Lemma.Tensor.XEqDotS.of.XEq.OrAll_NotInfinite.All_Imp_XEqInvS
-open Tensor
+import Lemma.Vector.Head.eq.Get_0
+open Tensor Vector
 
 
 private lemma get_col
@@ -12,7 +13,7 @@ private lemma get_col
   (A : Tensor ℝ* [n]) (X : Tensor ℝ [n, m])
   (j : Fin m) :
 -- imply
-  (A @ (X : Tensor ℝ* [n, m])).get ⟨j, by grind [matmul_shape]⟩ = A @ (id (α := Tensor ℝ [n]) (Xᵀ.get j) : Tensor ℝ* [n]) := by
+  (A @ (X : Tensor ℝ* [n, m])).get ⟨j, by simp [matmul_shape]; grind⟩ = A @ (id (α := Tensor ℝ [n]) (Xᵀ.get j) : Tensor ℝ* [n]) := by
 -- proof
   rw [GetDot.eq.Dot_GetT.fin A (X : Tensor ℝ* [n, m]) j]
   conv_lhs => simp [GetElem.getElem]
@@ -21,11 +22,11 @@ private lemma get_col
   apply Eq.of.EqDataS
   ext i
   rw [GetData.eq.GetDataGet.of.Lt.fin (by grind) (i := i)]
-  simp
   conv_lhs => erw [MapGet.eq.GetMap.fin]
   symm
   apply (GetData.eq.HeadDataGet.of.Lt.fin (by grind) ((X : Tensor ℝ* [n, m])ᵀ.get j) (i := i)).trans
   rw [TMap.eq.MapT]
+  erw [Head.eq.Get_0.fin]
   rfl
 
 
@@ -65,7 +66,7 @@ private lemma main
   rw [get_col A X j, get_col B' X j]
   refine XEqDotS.of.XEq.OrAll_NotInfinite.All_Imp_XEqInvS (fun i h_inf => absurd h_inf ?_) (Or.inl fun i => ?_) (by simpa [B'] using h)
   .
-    apply NotInfiniteGetData Xᵀ[j] ⟨i, by simp [List.EqSwap_0'1]⟩
+    apply NotInfiniteGetData Xᵀ[j] ⟨i, by simp⟩
   .
     apply NotInfiniteGetDataMul B Xᵀ[j] ⟨i, by grind⟩
 
@@ -84,8 +85,8 @@ private lemma left
   apply XEq.of.All_XEqGetS.GtLength_0 (h := by simp [matmul_shape])
   intro i
   rw [get_row X A i, get_row X B' i]
-  rw [Dot.comm]
-  conv_rhs => rw [Dot.comm]
+  rw [@Tensor.Dot.comm]
+  conv_rhs => rw [@Tensor.Dot.comm]
   refine XEqDotS.of.XEq.OrAll_NotInfinite.All_Imp_XEqInvS (fun j h_inf => absurd h_inf ?_) (Or.inl fun j => ?_) (by simpa [B'] using h)
   .
     apply NotInfiniteGetData X[i] ⟨j, by grind⟩

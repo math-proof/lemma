@@ -23,7 +23,8 @@ private lemma main
   have := GetSum.as.SumGet.of.GtGet_0.LtAdd_1Length (i := i) (d := d) (by simpa) (by simp) ([k < n] f k)
   apply this.trans
   simp [GetElem.getElem]
-  rw [EqGetStack.fin]
+  erw [EqGetStack.fin]
+  rfl
 
 
 -- created on 2025-11-15

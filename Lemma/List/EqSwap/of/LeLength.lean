@@ -1,5 +1,5 @@
-import Lemma.List.Swap
-open List
+import Batteries.Data.List.Lemmas
+import sympy.Basic
 
 
 @[main]
@@ -10,20 +10,9 @@ private lemma left
   (h : s.length ≤ i)
   (j : ℕ) :
 -- imply
-  s.swap i j = s := by
+  s.swap i j = s :=
 -- proof
-  unfold List.swap
-  split_ifs with h_eq h_lt? h_j h_i
-  ·
-    rfl
-  ·
-    linarith
-  ·
-    rfl
-  ·
-    linarith
-  ·
-    rfl
+  List.swap_eq_of_ge_left h
 
 
 @[main]
@@ -33,10 +22,10 @@ private lemma main
   (h : s.length ≤ j)
   (i : ℕ) :
 -- imply
-  s.swap i j = s := by
+  s.swap i j = s :=
 -- proof
-  rw [Swap]
-  apply left h
+  List.swap_eq_of_ge_right h
 
 
 -- created on 2025-06-07
+-- updated on 2026-08-24

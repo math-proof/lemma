@@ -22,6 +22,8 @@ private lemma main
     have h_i : i' = i := rfl
     have := GetMul.eq.MulGetS A B i'
     simp_all
+    grind
+
 
 
 -- created on 2025-07-01

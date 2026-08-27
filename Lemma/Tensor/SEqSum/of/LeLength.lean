@@ -4,6 +4,7 @@ import Lemma.List.EqEraseIdx.of.LeLength
 import Lemma.List.EqTake.of.LeLength
 import Lemma.List.ProdDrop.eq.One.of.LeLength
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
+import Lemma.Vector.GetMap.eq.UFnGet
 import Lemma.Vector.FlattenCast.as.Flatten.of.Eq.Eq
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Vector.GetSum.eq.SumMapGet
@@ -38,7 +39,6 @@ private lemma main
     rw [MapCast.eq.Cast_Map.of.Eq (by simp [EqTake.of.LeLength hd])]
     rw [FlattenCast.eq.Cast_Flatten.of.Eq.Eq (by simp [EqTake.of.LeLength hd]) (by grind)]
     refine SEqCast.of.SEq.Eq (by simp [EqTake.of.LeLength hd]) ?_
-    simp
     apply SEq.of.All_EqGetS.Eq.fin
     ·
       intro t
@@ -49,6 +49,7 @@ private lemma main
       rw [Sum.eq.Head.of.Eq_1 (by rw [List.Drop.eq.Nil.of.LeLength (by grind)]; grind)]
       simp [GetElem.getElem]
       rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
+      erw [GetMap.eq.UFnGet]
       simp [List.Vector.get]
     ·
       rw [h_drop_prod]

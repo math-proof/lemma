@@ -14,6 +14,7 @@ private lemma main
 -- proof
   conv_lhs => rw [Exp.eq.MulSoftmax_KeepdimSumExp X 0]
   simp [Mul_Keepdim.eq.Mul]
+  rfl
 
 
 -- created on 2021-12-14

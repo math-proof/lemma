@@ -14,7 +14,7 @@ private lemma main
   X.data[i]'(by simpa) = X[i].data.head := by
 -- proof
   simp
-  rw [Head.eq.Get_0.fin]
+  erw [Head.eq.Get_0.fin]
   apply GetData.eq.GetDataGet.of.Lt h_i
 
 

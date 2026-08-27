@@ -32,7 +32,8 @@ private lemma main
       erw [GetBmm.eq.Cast_BmmGetS.of.Eq.fin (b₀ := h) (b := t) (by simp) (i := ⟨j, by grind⟩)]
       apply SEq_Cast.of.SEq.Eq (by simp)
       ·
-        rw [GetOfVector.eq.Get.fin]
+        erw [GetOfVector.eq.Get.fin]
+        erw [Vector.GetMap₂.eq.BFnGetS.fin]
         simp
         have ih := ih (X.get ⟨j, by grind⟩) (Y.get ⟨j, by grind⟩)
         symm

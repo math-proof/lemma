@@ -24,7 +24,7 @@ private lemma main
   rw [@Tensor.Sum.eq.Zero]
   unfold Tensor.keepdim
   simp
-  rw [Unsqueeze.eq.TensorCast_Data]
+  erw [Unsqueeze.eq.TensorCast_Data]
   simp [EqData0'0]
   erw [EqCast_0'0.of.Eq]
   erw [EqTensor0'0]

@@ -1,8 +1,5 @@
-import Lemma.List.LengthAppend_Cons_Drop.eq.Length.of.Lt.GtLength
-import Lemma.Nat.NotLt.is.Ge
-import Lemma.Nat.Lt.is.Le.Ne
-import Lemma.Bool.Ne.is.NotEq
-open List Bool Nat
+import Batteries.Data.List.Lemmas
+import sympy.Basic
 
 
 @[main]
@@ -11,27 +8,10 @@ private lemma main
   (s : List α)
   (i j : ℕ) :
 -- imply
-  (s.swap i j).length = s.length := by
+  (s.swap i j).length = s.length :=
 -- proof
-  unfold List.swap
-  split_ifs with h_eq h_lt? h_j h_i
-  ·
-    rfl
-  ·
-    apply LengthAppend_Cons_Drop.eq.Length.of.Lt.GtLength h_lt? h_j
-  ·
-    rfl
-  ·
-    apply LengthAppend_Cons_Drop.eq.Length.of.Lt.GtLength _ h_i
-    apply Lt.of.Le.Ne
-    ·
-      apply Le.of.NotGt h_lt?
-    ·
-      symm
-      apply Ne.of.NotEq h_eq
-  ·
-    rfl
+  List.length_swap
 
 
 -- created on 2025-05-12
--- updated on 2025-05-15
+-- updated on 2026-08-24

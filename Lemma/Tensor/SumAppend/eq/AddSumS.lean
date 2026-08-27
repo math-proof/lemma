@@ -48,6 +48,7 @@ private lemma main
       erw [GetAppend.eq.Get.of.Lt.fin (by simpa using h_in)]
       erw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
       simp
+      rfl
     else
       have hn : n ≤ i := by omega
       have h_ge := Nat.le_trans (Nat.mul_le_mul_right s.prod hn) (Nat.le_add_right _ j)
@@ -58,8 +59,7 @@ private lemma main
       erw [GetAppend.eq.Get_Sub.of.Lt_Add.Ge.fin (by simp; omega)]
       erw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
       simp
-      congr 1
-      simp
+      congr
       have h_le := Nat.mul_le_mul_right s.prod hn
       calc
         _ = j + (↑i * s.prod - n * s.prod) := by grind

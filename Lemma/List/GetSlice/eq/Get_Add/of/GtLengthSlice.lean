@@ -16,9 +16,9 @@ private lemma main
     apply Lt.of.Lt_Min (LtAdd.of.Lt_Sub.left h)
   (s.slice i n)[j] = s[i + j] := by
 -- proof
-  unfold List.slice
-  rw [GetArraySlice.eq.Get_Add.of.GtLength]
+  unfold List.slice at h ⊢
+  apply GetArraySlice.eq.Get_Add.of.GtLength h
 
 
 -- created on 2025-06-07
--- updated on 2025-06-28
+-- updated on 2026-08-24

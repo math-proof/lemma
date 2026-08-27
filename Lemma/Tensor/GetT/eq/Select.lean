@@ -1,6 +1,5 @@
 import Lemma.Bool.EqCast.of.SEq
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
-import Lemma.List.EqSwap_0'1
 import Lemma.List.Swap.eq.Permute__Neg1.of.GtLength
 import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
 import Lemma.Tensor.GetPermuteTail.as.Select.of.GtGet.GtLength_0
@@ -21,7 +20,7 @@ private lemma main
   rw [T.eq.Cast_Permute__Neg1.of.GtLength_0 (by grind)]
   have h_swap := Swap.eq.Permute__Neg1.of.GtLength (s := [m, n]) (i := 0) (by grind)
   have h_swap' := h_swap
-  simp [EqSwap_0'1] at h_swap
+  simp at h_swap
   erw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (by simp) (by simp; grind) (i := ⟨i, by simp; grind⟩)]
   apply EqCast.of.SEq
   erw [GetPermute__Neg.eq.Cast_Select.of.GtGet.GtLength_0 (by grind) (by simp)]

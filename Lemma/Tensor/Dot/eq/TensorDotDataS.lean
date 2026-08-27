@@ -20,6 +20,7 @@ private lemma main
   apply Eq.of.All_EqGetS.fin
   intro i
   fin_cases i
+  repeat erw [Get_0.eq.Head.fin]
   simp [HeadDataSum.eq.SumData]
   rw [DataMul.eq.MulDataS]
   simp only [List.Vector.head]

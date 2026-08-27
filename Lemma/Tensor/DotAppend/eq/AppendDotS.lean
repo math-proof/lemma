@@ -17,9 +17,7 @@ private lemma stack
   (B : Tensor α [m, k])
   (C : Tensor α [k, l]) :
 -- imply
-  [i < n + m] [j < l] ∑ p : Fin k, id (α := Tensor α []) (A ++ B)[i][p] * id (α := Tensor α []) C[p][j] =
-    [i < n] [j < l] ∑ p : Fin k, id (α := Tensor α []) A[i][p] * id (α := Tensor α []) C[p][j] ++
-      [i < m] [j < l] ∑ p : Fin k, id (α := Tensor α []) B[i][p] * id (α := Tensor α []) C[p][j] := by
+  [i < n + m] [j < l] ∑ p : Fin k, id (α := Tensor α []) (A ++ B)[i][p] * id (α := Tensor α []) C[p][j] = [i < n] [j < l] ∑ p : Fin k, id (α := Tensor α []) A[i][p] * id (α := Tensor α []) C[p][j] ++ [i < m] [j < l] ∑ p : Fin k, id (α := Tensor α []) B[i][p] * id (α := Tensor α []) C[p][j] := by
 -- proof
   let g : ℕ → Tensor α [l] := fun i =>
     [j < l] ∑ p : Fin k,
@@ -51,6 +49,7 @@ private lemma stack
       have hrow := GetAppend.eq.Get.of.Lt (A := A) (B := B) hi
       simp [GetElem.getElem, Tensor.length] at hrow ⊢
       rw [hrow]
+      rfl
     else
       have hge : n ≤ (i : ℕ) := Nat.le_of_not_lt hi
       have hi' : (i : ℕ) - n < m := Nat.sub_lt_left_of_lt_add hge i.isLt
@@ -58,6 +57,7 @@ private lemma stack
       have hrow := GetAppend.eq.Get_Sub.of.GtAdd.Ge (A := A) (B := B) hge i.isLt
       simp [GetElem.getElem, Tensor.length] at hrow ⊢
       rw [hrow]
+      rfl
   have hsplit : [i < n + m] g i = [i < n] g i ++ [i < m] g (n + i) :=
     Stack.eq.AppendStackS (n := n) (j := m) g
   have hA : [i < n] g i =
@@ -72,6 +72,7 @@ private lemma stack
     rw [EqGetStack.fin]
     rw [EqGetStack.fin]
     simp [GetElem.getElem, i.isLt]
+    rfl
   have hB : [i < m] g (n + i) =
       [i < m] [j < l] ∑ p : Fin k, id (α := Tensor α []) B[i][p] * id (α := Tensor α []) C[p][j] := by
     apply Eq.of.All_EqGetS.fin
@@ -94,6 +95,7 @@ private lemma stack
     rw [hget]
     convert rfl
     congr
+    rfl
   rw [hAB, hsplit, hA, hB]
 
 
@@ -168,6 +170,7 @@ private lemma stack_mv
       (fun i : Fin n => ∑ p : Fin k, (id (α := Tensor α []) A[i][p]) * (id (α := Tensor α []) C[p])) i
     rw [hL, hR]
     simp [g, GetElem.getElem, i.isLt]
+    rfl
   have hB : [i < m] g (n + i) = [i < m] ∑ p : Fin k, (id (α := Tensor α []) B[i][p]) * (id (α := Tensor α []) C[p]) := by
     apply Eq.of.All_EqGetS.fin
     intro i

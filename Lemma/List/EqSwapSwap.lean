@@ -1,13 +1,5 @@
-import stdlib.List
-import Lemma.List.Swap.eq.Ite
-import Lemma.List.LengthSwap.eq.Length
-import Lemma.Nat.NotLt.is.Ge
-import Lemma.Nat.Gt.is.Ge.Ne
-import Lemma.Nat.Ge.of.Gt
-import Lemma.List.GetSwap.eq.Get.of.GtLengthSwap.GtLength
-import Lemma.List.EqAppend_ConsAppend_Cons.of.GtLength.Lt
-import Lemma.List.Swap
-open List Nat
+import Batteries.Data.List.Lemmas
+import sympy.Basic
 
 
 @[main]
@@ -16,36 +8,9 @@ private lemma main
   (s : List α)
   (i j : ℕ) :
 -- imply
-  (s.swap i j).swap j i = s := by
+  (s.swap i j).swap j i = s :=
 -- proof
-  rw [Swap.eq.Ite]
-  simp [LengthSwap.eq.Length]
-  split_ifs with h_eq h_lt? h_i h_j
-  ·
-    rw [h_eq]
-    simp [List.swap]
-  ·
-    rw [GetSwap.eq.Get.of.GtLengthSwap.GtLength (by linarith) (by linarith)]
-    rw [GetSwap.eq.Get.of.GtLengthSwap.GtLength.left h_i (by linarith)]
-    rw [Swap]
-    apply EqAppend_ConsAppend_Cons.of.GtLength.Lt h_lt? h_i
-  ·
-    unfold List.swap
-    simp [h_i]
-    have h_ge := Ge.of.Gt h_lt?
-    simp [h_ge]
-  ·
-    have h_ge := Ge.of.NotLt h_lt?
-    have h_gt := Gt.of.Ge.Ne h_ge h_eq
-    rw [GetSwap.eq.Get.of.GtLengthSwap.GtLength h_j (by linarith)]
-    rw [GetSwap.eq.Get.of.GtLengthSwap.GtLength.left (by linarith) (by linarith)]
-    apply EqAppend_ConsAppend_Cons.of.GtLength.Lt h_gt h_j
-  ·
-    unfold List.swap
-    simp [h_j]
-    have h_ge := Ge.of.NotLt h_lt?
-    have h_gt := Gt.of.Ge.Ne h_ge h_eq
-    simp [h_gt]
+  List.swap_swap_flip
 
 
 @[main]
@@ -54,11 +19,10 @@ private lemma swap
   (s : List α)
   (i j : ℕ) :
 -- imply
-  (s.swap i j).swap i j = s := by
+  (s.swap i j).swap i j = s :=
 -- proof
-  have := main s i j
-  rwa [Swap _ j i] at this
+  List.swap_swap
 
 
 -- created on 2025-05-17
--- updated on 2025-05-18
+-- updated on 2026-08-24

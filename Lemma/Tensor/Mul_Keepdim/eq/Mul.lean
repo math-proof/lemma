@@ -10,6 +10,7 @@ import Lemma.Tensor.Mul.eq.Mul_GetData_0
 import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Vector.Head.eq.Get_0
 import Lemma.Vector.Mul.eq.Mul_Replicate
+import Lemma.Vector.EqGetReplicate
 import sympy.tensor.functions
 open Bool Nat Tensor Vector
 
@@ -25,7 +26,7 @@ private lemma main
   A * X.keepdim = A * den := by
 -- proof
   simp
-  rw [Mul.eq.Mul_GetData_0]
+  erw [Mul.eq.Mul_GetData_0]
   apply Eq.of.EqDataS
   rw [DataMul.eq.MulDataS]
   have h_rhs : (A * X.data[0]).data = A.data * List.Vector.replicate [n].prod X.data[0] := calc
@@ -46,7 +47,8 @@ private lemma main
   simp [EqMod_1'0]
   have := EqGetUnsqueeze_0.fin X
   simp at this
-  simp [this, Head.eq.Get_0]
+  simp [this]
+  erw [EqGetReplicate]
   rfl
 
 

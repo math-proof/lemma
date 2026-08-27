@@ -54,6 +54,7 @@ private lemma main
     simp [GetElem.getElem] at this
     simp [List.Vector.get] at this
     rw [this]
+    grind
   else
     have hi := Ge.of.NotLt hi
     have := GetAppend.eq.Get_Sub.of.Lt_Add.Ge hi h_i a.unflatten b.unflatten
@@ -82,9 +83,9 @@ private lemma main
     have := Get_AddMul.eq.GetUnflatten.of.Lt h_i b
     simp [GetElem.getElem] at this
     simp [List.Vector.get] at this
-    rw [← this]
+    erw [← this]
     simp [h_eq]
 
 
 -- created on 2025-05-31
--- updated on 2025-06-01
+-- updated on 2026-08-24

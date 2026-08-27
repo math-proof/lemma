@@ -1,3 +1,4 @@
+import Lemma.Bool.EqCast.of.SEq
 import Lemma.Fin.All_EqUFnS.of.All_Eq
 import Lemma.Nat.EqMod_1'0
 import Lemma.Tensor.EqGetUnsqueeze_0
@@ -7,7 +8,7 @@ import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
 import Lemma.Tensor.GetRepeat_0.as.Get_Mod_Get.of.GtMul_Get.GtLength_0
 import Lemma.Tensor.MulStack.eq.Stack_Mul
 import Lemma.Tensor.MulSumStack.eq.SumStack_Mul
-open Fin Nat Tensor
+open Fin Nat Tensor Bool
 
 
 @[main, comm]
@@ -31,9 +32,11 @@ private lemma main
     intro i
     erw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (s' := n :: s) (i := ⟨i, by grind⟩) (by grind) (by grind)]
     simp
+    apply EqCast.of.SEq
     erw [GetRepeat_0.eq.Cast_Get_Mod_Get.of.GtMul_Get.GtLength_0.fin (by grind) (by grind)]
     simp [EqMod_1'0]
     erw [EqGetUnsqueeze_0.fin]
+    aesop
   have h_all := All_EqUFnS.of.All_Eq.bin h_all (f := fun a i => X.get i * a)
   erw [Stack.of.All_Eq.fin h_all] at h_mul_stack
   conv_rhs =>

@@ -47,6 +47,7 @@ private lemma main
       symm
       erw [GetGetSlice.eq.Get.of.Lt_Min (n := (i : ℕ)) X h_min]
       simp [GetElem.getElem]
+      rfl
     else
       have h_ge : (t : ℕ) ≥ (⟨0, (i : ℕ), 1⟩ : Slice).length X.length := by
         rw [h_len0]
@@ -66,7 +67,8 @@ private lemma main
       congr 1
       apply Eq.of.Val
       simp
-      exact (EqAdd_Sub.of.Ge (Ge.of.NotLt h_t)).symm
+      symm
+      exact EqAdd_Sub.of.Ge (Ge.of.NotLt h_t)
 
 
 -- created on 2023-03-31

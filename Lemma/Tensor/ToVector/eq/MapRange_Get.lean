@@ -1,5 +1,6 @@
 import Lemma.Tensor.GetToVector.eq.Get
 import Lemma.Vector.EqGetRange
+import Lemma.Vector.GetMap.eq.UFnGet
 open Tensor Vector
 
 
@@ -12,10 +13,11 @@ private lemma main
 -- proof
   simp [GetElem.getElem]
   ext i
+  erw [GetMap.eq.UFnGet]
   simp
   show (toVector X).get i = X.get ((List.Vector.range n).get i)
-  rw [GetToVector.eq.Get.cons.fin]
-  rw [EqGetRange.fin]
+  erw [GetToVector.eq.Get.cons.fin]
+  erw [EqGetRange.fin]
 
 
 -- created on 2025-09-24

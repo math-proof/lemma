@@ -80,13 +80,13 @@ private lemma main
               simp [TailSet_0.eq.Tail]
               simp [show (q * s[0] + r) * s.tail.prod + k = 0 * (n * s.prod) + (q * s[0] + r) * s.tail.prod + k by simp]
               simp only [AddAdd.eq.Add_Add]
-              rw [GetFlatten_AddMul.eq.Get.of.Lt.Lt.fin (by grind)]
+              erw [GetFlatten_AddMul.eq.Get.of.Lt.Lt.fin (by grind)]
               ·
-                rw [GetMap.eq.UFnGet.of.Lt.fin (by simp)]
+                erw [GetMap.eq.UFnGet.of.Lt.fin (by simp)]
                 simp only [GetElem.getElem]
                 conv_lhs => erw [EqGetSplitAt_0'0.fin data]
                 conv_lhs => rw [Get]
-                simp [GetRepeat.eq.Get_Mod.of.Lt_Mul h_lt_add]
+                erw [GetRepeat.eq.Get_Mod.of.Lt_Mul h_lt_add]
                 simp [Get]
                 congr
                 rw [MulAdd.eq.AddMulS]

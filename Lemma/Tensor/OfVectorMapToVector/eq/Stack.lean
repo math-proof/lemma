@@ -1,5 +1,6 @@
 import sympy.tensor.stack
 import Lemma.Vector.EqGetRange
+import Lemma.Vector.GetMap.eq.UFnGet
 open Vector
 
 
@@ -15,10 +16,13 @@ private lemma main
   unfold Stack
   congr
   ext i
-  simp [EqGetRange.fin]
+  erw [GetMap.eq.UFnGet]
+  erw [GetMap.eq.UFnGet]
+  erw [EqGetRange.fin]
   simp [GetElem.getElem]
   simp [Tensor.get]
   simp [GetElem.getElem]
+  rfl
 
 
 -- created on 2025-07-13

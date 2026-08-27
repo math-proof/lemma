@@ -1,13 +1,6 @@
 import Lemma.Vector.ValGet.eq.ValArraySliceFlatten
-import Lemma.List.LengthArraySlice.eq.Min_SubLength
-import Lemma.List.LengthFlatten.eq.SumMapLength
-import Lemma.Vector.SumMapVal.eq.Mul
-import Lemma.Vector.GetVal.eq.Get
-import Lemma.Vector.GetVal.eq.Get.of.Lt
-import Lemma.Nat.NotLt.is.Ge
-import Lemma.List.GetElem.eq.None.of.LeLength
-import Lemma.List.Get.of.Eq.GtLength
-open Vector List Nat
+import Lemma.Vector.ValArraySlice.eq.ArraySliceVal
+open Vector
 
 
 @[main]
@@ -18,57 +11,10 @@ private lemma main
 -- imply
   v[i].val = (v.toList.map List.Vector.toList).flatten.array_slice (i * n) n := by
 -- proof
-  have h := ValGet.eq.ValArraySliceFlatten v i
-  ext j t
-  if h_j : j < v[i].val.length then
-    let h_lt := h_j
-    simp at h_lt
-    by_cases h_j' : j < (v.flatten.array_slice (i * n) n).val.length
-    ·
-      have h := Get.of.Eq.GtLength h_j h
-      simp at h_j'
-      have h_j : j < ((List.map List.Vector.toList v.toList).flatten.array_slice (i * n) n).length := by
-        simp_all
-        rw [LengthArraySlice.eq.Min_SubLength]
-        rw [LengthFlatten.eq.SumMapLength]
-        simp_all
-        simp [List.Vector.toList]
-        rw [SumMapVal.eq.Mul]
-        exact h_j'.right
-      simp [h_lt, h_j]
-      rw [GetVal.eq.Get.of.Lt]
-      ·
-        unfold List.Vector.array_slice List.Vector.drop List.Vector.take at h
-        unfold List.Vector.flatten at h
-        simp at h
-        rw [GetVal.eq.Get.of.Lt] at h
-        ·
-          constructor <;>
-          ·
-            intro h_ij
-            rw [← h_ij]
-            unfold List.array_slice
-            simp
-            rw [← h]
-      ·
-        assumption
-    ·
-      have h_j := Ge.of.NotLt h_j'
-      simp_all
-  else
-    have h_j := Ge.of.NotLt h_j
-    simp at h_j
-    have h_ge : j ≥ v[i.val].val.length := by
-      simp_all
-    simp
-    rw [GetElem.eq.None.of.LeLength h_ge]
-    simp
-    have h_ge : j ≥ ((List.map List.Vector.toList v.toList).flatten.array_slice (↑i * n) n).length := by
-      rw [LengthArraySlice.eq.Min_SubLength]
-      simp_all
-    rw [GetElem.eq.None.of.LeLength h_ge]
-    simp
+  rw [ValGet.eq.ValArraySliceFlatten v i]
+  rw [ValArraySlice.eq.ArraySliceVal]
+  rfl
 
 
 -- created on 2025-05-27
--- updated on 2025-05-31
+-- updated on 2026-08-24

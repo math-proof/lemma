@@ -57,6 +57,7 @@ private lemma zero
   ·
     apply Bool.SEq.of.Eq
     simp
+    rfl
 
 
 -- created on 2026-08-17

@@ -1,6 +1,7 @@
 import Lemma.Tensor.Einsum.eq.MulGetData_0
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Vector.Eq.is.All_EqGetS
+import Lemma.Vector.GetMap.eq.UFnGet
 import sympy.tensor.tensor
 open Tensor Vector
 
@@ -24,8 +25,10 @@ private lemma left
   apply Vector.Eq.of.All_EqGetS.fin
   intro i
   simp [Tensor.map, HMul.hMul]
-  erw [List.Vector.get_map, List.Vector.get_map]
-  apply h_mul
+  simp only [GetElem.getElem]
+  repeat erw [GetMap.eq.UFnGet]
+  simp [HMul.hMul] at h_mul
+  rw [h_mul]
 
 
 /-- `dot` with a 0-d right factor commutes with a pointwise map `f`. -/
@@ -49,7 +52,8 @@ private lemma main
   apply Vector.Eq.of.All_EqGetS.fin
   intro i
   simp [HMul.hMul]
-  erw [List.Vector.get_map, List.Vector.get_map]
+  simp only [GetElem.getElem]
+  repeat erw [GetMap.eq.UFnGet]
   apply h_mul
 
 

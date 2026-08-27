@@ -15,7 +15,7 @@ private lemma main
   (X : Tensor α [n, m])
   (j : Fin m) :
 -- imply
-  (A @ X)[j]'(by grind [matmul_shape]) = A @ Xᵀ[j] := by
+  (A @ X)[j]'(by simp [matmul_shape]; grind) = A @ Xᵀ[j] := by
 -- proof
   simp [GetElem.getElem]
   have h_dot := GetDot.eq.DotGet.une.fin Xᵀ A j

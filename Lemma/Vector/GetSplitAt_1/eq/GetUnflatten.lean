@@ -22,8 +22,9 @@ private lemma main
   ·
     simp
   .
-    aesop
+    grind
   repeat simp
 
 
 -- created on 2025-07-16
+-- updated on 2026-08-24

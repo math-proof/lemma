@@ -24,7 +24,7 @@ private lemma main
   X / ((X.sum 0).keepdim) = X / den := by
 -- proof
   simp
-  rw [Div.eq.Div_GetData_0]
+  erw [Div.eq.Div_GetData_0]
   apply Eq.of.EqDataS
   rw [DataDiv.eq.DivDataS]
   have h_rhs : (X / (X.sum 0).data[0]).data = X.data / List.Vector.replicate [n].prod (X.sum 0).data[0] := calc
@@ -45,7 +45,8 @@ private lemma main
   simp [EqMod_1'0]
   have := EqGetUnsqueeze_0.fin (X.sum 0)
   simp at this
-  simp [this, Head.eq.Get_0]
+  simp [this]
+  erw [Vector.EqGetReplicate]
   rfl
 
 

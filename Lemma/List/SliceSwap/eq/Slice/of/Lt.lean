@@ -1,13 +1,10 @@
-import Lemma.List.SliceAppend.eq.Take_Sub.of.Eq_Length
-import Lemma.List.LengthTake.eq.Min_Length
-import Lemma.List.Cons.eq.Append
-import Lemma.List.AppendAppend.eq.Append_Append
-import Lemma.List.AppendAppend.eq.Append_Append
-import Lemma.List.LengthAppend.eq.AddLengthS
-import Lemma.List.EqTakeAppend.of.Eq_Length
-import Lemma.Nat.Le.of.Lt.Lt
-import Lemma.List.LengthSlice.eq.SubMin_Length
-import Lemma.Nat.EqMin.of.Lt
+import Batteries.Data.List.Lemmas
+import Lemma.List.Slice.eq.DropTake
+import Lemma.List.DropSet.eq.Drop.of.Lt
+import Lemma.List.TakeSet.eq.SetTake.of.Lt
+import Lemma.List.TakeSet.eq.Take.of.Ge
+import Lemma.Nat.Lt.of.Lt.Lt
+import Lemma.Nat.NotLt.is.Ge
 open List Nat
 
 
@@ -20,27 +17,17 @@ private lemma main
 -- imply
   (s.swap i j).slice (i + 1) j = s.slice (i + 1) j := by
 -- proof
-  unfold List.swap
-  split_ifs with h_eq h_j
-  ·
-    rfl
-  ·
-    rw [Cons.eq.Append s[j]]
-    rw [Append_Append.eq.AppendAppend]
-    rw [AppendAppend.eq.Append_Append]
-    rw [SliceAppend.eq.Take_Sub.of.Eq_Length]
-    ·
-      rw [EqTakeAppend.of.Eq_Length]
-      rw [LengthSlice.eq.SubMin_Length]
-      rw [EqMin.of.Lt h_j]
-    ·
-      rw [LengthAppend.eq.AddLengthS]
-      rw [LengthTake.eq.Min_Length]
-      simp
-      apply Le.of.Lt.Lt h h_j
-  ·
-    rfl
+  if h_j : j < s.length then
+    have h_i := Lt.of.Lt.Lt h h_j
+    rw [List.swap_eq_of_lt h_i h_j]
+    rw [Slice.eq.DropTake]
+    rw [TakeSet.eq.Take.of.Ge (by rfl)]
+    rw [TakeSet.eq.SetTake.of.Lt h]
+    rw [DropSet.eq.Drop.of.Lt (by linarith)]
+    rw [← Slice.eq.DropTake]
+  else
+    grind [List.swap_eq_of_ge_right]
 
 
 -- created on 2025-05-17
--- updated on 2025-05-18
+-- updated on 2026-08-24

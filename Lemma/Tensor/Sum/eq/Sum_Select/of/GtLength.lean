@@ -3,7 +3,6 @@ import Lemma.List.EqGetCons
 import Lemma.List.EraseIdx.eq.Cons_EraseIdxTail.of.GtLength_0
 import Lemma.List.EraseIdxTail.eq.TailEraseIdx.of.Lt_SubLength_1
 import Lemma.List.GetEraseIdx.eq.Get.of.Gt.GtLength
-import Lemma.List.GtGet.of.GtGetTail.GtLengthTail
 import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.GtLength
 import Lemma.Nat.Gt_0.of.Gt
 import Lemma.Nat.Lt_Sub.of.LtAdd
@@ -68,12 +67,7 @@ private lemma main
           ·
             intro l
             apply SelectGet.as.GetSelect.of.GtGet_0.GtGet_Add_1.LtAdd_1Length h _ h_t
-            ·
-              simp
-            ·
-              apply GtGet.of.GtGetTail.GtLengthTail
-              simp
-              grind
+            grind
           ·
             simp
         ·

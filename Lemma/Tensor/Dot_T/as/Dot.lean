@@ -1,11 +1,10 @@
 import Lemma.Bool.SEq.is.Eq
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
-import Lemma.List.EqSwap_0'1
 import Lemma.Tensor.DotT.eq.Dot
 import Lemma.Tensor.EqTT
 import Lemma.Tensor.SEqDotS.of.SEq
 import Lemma.Tensor.TCast.as.T.of.Eq
-open Bool List Tensor
+open Bool Tensor
 
 
 @[main]
@@ -18,7 +17,7 @@ private lemma main
   A @ Xᵀ ≃ X @ A := by
 -- proof
   have hshape : [m, n].swap ([m, n].length - 2) ([m, n].length - 1) = [n, m] := by
-    simp [EqSwap_0'1]
+    simp
   let XT : Tensor α [n, m] := cast (congrArg (Tensor α) hshape) Xᵀ
   apply (SEqDotS.of.SEq.left (SEqCast.of.Eq hshape Xᵀ) A).trans
   have h := DotT.eq.Dot XT A

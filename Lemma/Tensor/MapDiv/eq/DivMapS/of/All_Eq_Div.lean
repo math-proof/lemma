@@ -3,6 +3,7 @@ import Lemma.Tensor.DataDiv.eq.DivDataS
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Vector.MapDiv.eq.DivMap.of.All_Eq_Div
 import Lemma.Vector.MapDiv.eq.DivMapS.of.All_Eq_Div
+import Lemma.Vector.GetMap.eq.UFnGet
 open Tensor Vector
 
 
@@ -39,6 +40,8 @@ private lemma scalar
   unfold Tensor.map
   simp [DataDiv.eq.DivData]
   rw [MapDiv.eq.DivMap.of.All_Eq_Div hf]
+  simp only [GetElem.getElem]
+  erw [GetMap.eq.UFnGet]
 
 
 -- created on 2026-08-08

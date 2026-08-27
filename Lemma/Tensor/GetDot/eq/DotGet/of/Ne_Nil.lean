@@ -27,7 +27,7 @@ private lemma main
   simp [GetElem.getElem]
   have h_cast := GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (by grind) (by simp; grind) X ⟨i, by grind⟩ (s' := n :: (s.take (s.length - 1) ++ [s[s.length - 1]]))
   simp at h_cast
-  rw [h_cast] at h_get
+  erw [h_cast] at h_get
   have h_s : (n :: s).tail = (n :: (s.take (s.length - 1) ++ [s[s.length - 1]])).tail := by
     simp
     grind
@@ -60,7 +60,7 @@ private lemma une
   simp [GetElem.getElem]
   have h_cast := GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (by grind) (by simp; grind) X ⟨i, by grind⟩ (s' := n :: (s.take (s.length - 1) ++ [s[s.length - 1]]))
   simp at h_cast
-  rw [h_cast] at h_get
+  erw [h_cast] at h_get
   have h_s : (n :: s).tail = (n :: (s.take (s.length - 1) ++ [s[s.length - 1]])).tail := by
     simp
     grind

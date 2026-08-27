@@ -49,9 +49,10 @@ private lemma main
       simp [Tensor.length]
       simp [GetElem.getElem]
       erw [GetToVector.eq.Get.cons.fin]
-      rw [GetTensorFlatten.eq.TensorGet.fin]
-      simp [EqGetStack.fun.fin]
-      rw [Vector.Get]
+      erw [GetTensorFlatten.eq.TensorGet.fin]
+      erw [GetMap.eq.UFnGet]
+      erw [EqGetStack.fun.fin]
+      erw [Vector.Get]
       have h_i := i.isLt
       simp [← GetValIndices.eq.Add.of.Lt (i := i) (j := j) (n := n) (by simpa)]
       rfl

@@ -56,7 +56,7 @@ private lemma main
     erw [GetToVector.eq.Get.fin (i := ⟨q', by grind⟩)]
     unfold Tensor.select
     simp
-    rw [DataGet.eq.GetUnflattenData.fin (X := X)]
+    erw [DataGet.eq.GetUnflattenData.fin (X := X)]
     erw [GetCast.eq.Get.of.Eq.fin (MulLengthSlice.eq.ProdEraseIdx.of.GtGet.GtLength.simp h i.isLt) (i := ⟨r', by grind⟩)]
     simp
     have h_r : r' < ((⟨↑↑i, ↑(s.take (d + 1)).prod, ↑s[d]⟩ : Slice).length (s.take (d + 1)).prod) * (s.drop (d + 1)).prod := by

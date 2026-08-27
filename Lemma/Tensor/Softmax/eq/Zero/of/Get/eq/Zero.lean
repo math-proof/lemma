@@ -30,7 +30,7 @@ private lemma main
     ·
       intro t
       rw [EqGet0_0.fin]
-      rw [EqGetStack.fin]
+      erw [EqGetStack.fin]
       have hi := Lt_Sub.of.LtAdd h_d
       rw [ih (by simpa) (by simpa)]
       rfl

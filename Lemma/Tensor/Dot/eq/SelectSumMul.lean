@@ -1,7 +1,6 @@
 import Lemma.Bool.SEq.is.Eq
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
-import Lemma.List.EqSwap_0'1
 import Lemma.Nat.EqMax
 import Lemma.Nat.EqMax.of.Ge
 import Lemma.Nat.EqMax.of.Lt
@@ -15,9 +14,12 @@ import Lemma.Tensor.SEqResize_0.of.Eq_Get_0.GtLength_0
 import Lemma.Tensor.SEqSelectS.of.SEq
 import Lemma.Tensor.SEqSumS.of.SEq.Eq
 import Lemma.Tensor.SEqUnsqueezeS.of.SEq.Eq
+import Lemma.Tensor.ResizeCast.as.Resize.of.Eq
+import Lemma.Tensor.SEqTS.of.SEq
 import Lemma.Tensor.TCast.as.T.of.Eq
 import Lemma.Tensor.TransposeUnsqueeze.eq.Unsqueeze
-open Bool List Nat Tensor
+import Lemma.Tensor.TransposeUnsqueeze_Length.as.Unsqueeze
+open Bool Nat Tensor
 
 
 @[main]
@@ -52,12 +54,16 @@ private lemma main
     apply SEqCastS.of.SEq.Eq.Eq (by simp [broadcast_shape]) (by simp)
     apply SEqRepeatS.of.SEq.Val.Eq (by simp) (by simp [broadcast_shape])
     apply SEqUnsqueezeS.of.SEq.Eq _ (by simp [broadcast_shape])
-    apply SEqCast.of.SEq.Eq (by simp [broadcast_shape, EqSwap_0'1])
+    apply SEqCast.of.SEq.Eq (by simp [broadcast_shape])
     erw [Resize_0.eq.Cast.of.Eq_Get_0.GtLength_0 (by simp) (by grind)]
     erw [TCast.eq.Cast_T.of.Eq (by simp [broadcast_shape])]
-    apply SEqCast.of.SEq.Eq (by simp [broadcast_shape, EqSwap_0'1])
-    apply SEq.of.Eq
-    apply TransposeUnsqueeze.eq.Unsqueeze
+    apply SEqCast.of.SEq.Eq (by simp [broadcast_shape])
+    rw [Tensor.TCast.eq.Cast_T.of.Eq (by simp)]
+    apply SEqCast.of.SEq.Eq (by simp)
+    erw [Tensor.TCast.eq.Cast_T.of.Eq (by simp)]
+    apply SEqCast.of.SEq.Eq (by simp)
+    erw [TransposeUnsqueeze.eq.Unsqueeze]
+    rfl
 
 
 @[main]
@@ -95,12 +101,13 @@ private lemma resize
     apply SEqCastS.of.SEq.Eq.Eq (by simp [broadcast_shape]) (by simp)
     apply SEqRepeatS.of.SEq.Val.Eq (by simp) (by simp [broadcast_shape])
     apply SEqUnsqueezeS.of.SEq.Eq _ (by simp [broadcast_shape])
-    apply SEqCast.of.SEq.Eq (by simp [broadcast_shape, EqSwap_0'1])
-    have := ResizeUnsqueeze_Succ.eq.Cast_UnsqueezeResize B ⟨0, by grind⟩ (k ⊔ k')
-    simp at this
-    rw [this]
-    erw [TransposeUnsqueeze.eq.Unsqueeze]
-    rfl
+    apply SEqCast.of.SEq.Eq (by simp [broadcast_shape])
+    erw [TCast.eq.Cast_T.of.Eq (by simp [broadcast_shape])]
+    apply SEqCast.of.SEq.Eq (by simp [broadcast_shape])
+    apply (SEqTS.of.SEq (ResizeCast.as.Resize.of.Eq (by simp) (B.unsqueeze 1) ⟨0, by grind⟩ (k ⊔ k'))).trans
+    apply (SEqTS.of.SEq (ResizeUnsqueeze_Succ.as.UnsqueezeResize B ⟨0, by grind⟩ (k ⊔ k'))).trans
+    apply TransposeUnsqueeze_Length.as.Unsqueeze
 
 
 -- created on 2026-07-11
+-- updated on 2026-08-27

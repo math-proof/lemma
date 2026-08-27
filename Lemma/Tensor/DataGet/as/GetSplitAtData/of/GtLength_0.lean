@@ -24,7 +24,8 @@ private lemma main
   | n :: s =>
     simp [GetElem.getElem]
     erw [GetSplitAt_1.eq.GetUnflatten.fin]
-    rw [DataGet.eq.GetUnflattenData.fin]
+    erw [DataGet.eq.GetUnflattenData.fin]
+    rfl
 
 
 -- created on 2025-11-01
