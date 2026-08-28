@@ -6,7 +6,7 @@ def apply(fx, mod_is_zero, is_nonzero, x=None):
     if fx.lhs.is_Mod:
         fx, mod_is_zero = mod_is_zero, fx
 
-    from Lemma.Nat.Ne.of.Ne_0.Add.eq.Zero import cubic_delta
+    from Lemma.Rat.Ne_Div_2.of.Eq0AddSubSub_Pow_3.Ne_0 import cubic_delta
     from Lemma.Complex.Eq0AddAddAddPow_3.given.Eq_Ite_SubAdd_Pow_Inv3.EqSubCeil_Ite import cubic_solve
     from Lemma.Complex.ImpEq_0.ImpAnd_Eq_0.ImpAnd_Eq_1.ImpAnd_Eq_2.of.Eq0AddAddAddAddPow_4 import quartic_coefficient
     fx = fx.of(Equal[0])
@@ -48,9 +48,9 @@ def apply(fx, mod_is_zero, is_nonzero, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Nat, Int, Complex, Real, Bool
+    from Lemma import Nat, Int, Complex, Real, Bool, Rat
     from Lemma.Complex.Eq0AddAddAddPow_3.given.Eq_Ite_SubAdd_Pow_Inv3.EqSubCeil_Ite import cubic_solve
-    from Lemma.Nat.Ne.of.Ne_0.Add.eq.Zero import cubic_delta
+    from Lemma.Rat.Ne_Div_2.of.Eq0AddSubSub_Pow_3.Ne_0 import cubic_delta
 
     d = 1
     x, y, alpha, beta, gamma = Symbol(complex=True, given=True)
@@ -76,11 +76,11 @@ def prove(Eq):
 
     Eq << Bool.Cond.of.Imp.Cond.apply(Eq[4], Eq[-1].reversed, simplify=None)
 
-    Eq << Nat.Ne.of.Ne_0.Add.eq.Zero.apply(Eq[2], Eq[-1], y)
+    Eq << Rat.Ne_Div_2.of.Eq0AddSubSub_Pow_3.Ne_0.apply(Eq[2], Eq[-1], y)
 
     Eq << Int.Sub.ne.Zero.of.Ne.apply(Eq[-1]) * 2
 
-    Eq << Real.EqSquare.of.Ne_0.Add.eq.Zero.apply(Eq[-1], Eq[-3] * -8, Eq.eq.rhs)
+    Eq << Complex.Eq_SquareAddMulSqrt.of.Eq0SubSquare_MulMul4.Ne_0.apply(Eq[-1], Eq[-3] * -8, Eq.eq.rhs)
 
     Eq << Eq.eq.subs(Eq[-1])
 

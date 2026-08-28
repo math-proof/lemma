@@ -55,7 +55,7 @@ def prove(Eq):
 
     V = Eq[-1].find(Arg[Add]).arg
     U = Eq[-1].find(Arg[2]).arg
-    Eq.eq_peicewise = Complex.CeilSubDivMul3Arg.eq.Ite_0Ite_1Neg1.apply(Eq[-1].find(Ceil)._subs(-p, U ** (S.One / 3) * V ** (S.One / 3)))
+    Eq.eq_peicewise = Complex.CeilSubDivMul3Arg.eq.IteEq0Mul_Ceil.apply(Eq[-1].find(Ceil)._subs(-p, U ** (S.One / 3) * V ** (S.One / 3)))
 
     Eq << Eq[-1].subs(Eq.eq_peicewise.reversed)
 

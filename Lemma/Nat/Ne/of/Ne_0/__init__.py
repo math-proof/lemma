@@ -25,7 +25,5 @@ if __name__ == '__main__':
     run()
 # created on 2021-09-19
 
-del Add
 del Ne
-from . import Add
 from . import Ne

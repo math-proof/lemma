@@ -86,7 +86,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.subs(Eq.A, Eq.B)
 
-    Eq << Eq[-1].this.find(Ceil).apply(Complex.CeilSubDivMul3Arg.eq.Ite_0Ite_1Neg1)
+    Eq << Eq[-1].this.find(Ceil).apply(Complex.CeilSubDivMul3Arg.eq.IteEq0Mul_Ceil)
 
     Eq << Eq[-1].subs(Eq[1])
 

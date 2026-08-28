@@ -37,7 +37,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.apply(Bool.Imp_Imp.Is.ImpAnd), Eq[-1].this.lhs.apply(Complex.OrEqSCeil.of.CeilSubDivAddArgS.ne.Zero)
 
-    Eq << Eq[-2].this.lhs.apply(Complex.MulPowS_Inv3.eq.MulPow_Inv3.of.EqCeilSubDivAddArgS.Ne_0.Ne_0)
+    Eq << Eq[-2].this.lhs.apply(Complex.MulPowS_Inv3.eq.MulPow_Inv3.of.EqCeilSubDivAddArgS)
 
     Eq << Eq[-1].this.find(Greater).apply(Complex.GtAddArgS.Is.EqCeilSubDivS, simplify=None)
 
@@ -46,8 +46,9 @@ def prove(Eq):
     Eq <<= Bool.Imp.given.ImpEq.apply(Eq[-2]), Bool.Imp.given.ImpEq.apply(Eq[-1])
 
     Eq <<= Eq[-2].this.apply(Bool.Imp_Imp.Is.ImpAnd), Eq[-1].this.apply(Bool.Imp_Imp.Is.ImpAnd)
-    Eq <<= Eq[-2].this.lhs.apply(Complex.MulPowS_Inv3.eq.MulPow_Inv3.of.EqCeilSubDivAddArgS.Ne_0.Ne_0)
-    Eq <<= Eq[-1].this.lhs.apply(Complex.MulPowS_Inv3.eq.MulPow_Inv3.of.EqCeilSubDivAddArgS.Ne_0.Ne_0)
+    Eq <<= Eq[-2].this.lhs.apply(Complex.MulPowS_Inv3.eq.MulPow_Inv3.of.EqCeilSubDivAddArgS)
+    Eq <<= Eq[-1].this.lhs.apply(Complex.MulPowS_Inv3.eq.MulPow_Inv3.of.EqCeilSubDivAddArgS)
+    Eq << Eq[-1].this.find(Add ** -1).apply(Complex.Expr.eq.AddRe_MulIIm)
 
 
 if __name__ == '__main__':

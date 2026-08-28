@@ -32,7 +32,6 @@ from . import CeilSubDivMul3Arg
 from . import EqCeilSubDivS
 from . import OrOrSEqS
 from . import OrEqS
-from . import Or_Eq
 from . import Add
 from . import Eq
 from . import Mul
@@ -48,3 +47,4 @@ from . import EqIm
 from . import EqRe
 from . import Eq0AddAddPow_3
 from . import Eq0AddAddAddPow_3
+from . import Eq_SquareAddMulSqrt

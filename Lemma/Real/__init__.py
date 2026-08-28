@@ -157,9 +157,6 @@ from . import EqMin
 from . import EqMinima
 from . import EqNorm
 from . import EqSqrt
-from . import EqSquare
-from . import EqSup
-from . import GtMinima
 from . import GtSqrt
 from . import GeMinima
 from . import GeInf
@@ -207,3 +204,5 @@ from . import Max
 from . import Min
 from . import Norm
 from . import AddSinSin_CosCos
+from . import EqSup
+from . import GtMinima

@@ -8,14 +8,7 @@ def apply(is_nonzero_A, is_nonzero_B, eq):
     w = -S.One / 2 + sqrt(3) / 2 * S.ImaginaryUnit
     eq.lhs.of(Ceil[Expr - Expr])
     (((S[A], S[B]), S[S.One / (S.Pi * 2)]), S[S.One / 2]), d = eq.of(Equal[Ceil[(Arg + Arg) * Expr - Expr]])
-    if d == 0:
-        factor = 1
-    elif d % 3 == 1:
-        factor = w
-    else:
-        factor = ~w
-
-    return Equal(A ** (S.One / 3) * B ** (S.One / 3), (A * B) ** (S.One / 3) * factor)
+    return Equal(A ** (S.One / 3) * B ** (S.One / 3), (A * B) ** (S.One / 3) * w ** d)
 
 
 @prove
