@@ -58,7 +58,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Sum).apply(Finset.Sum.Binom.eq.Mul.Newton)
 
-    Eq << Eq[-1].this.rhs.args[-1].apply(Int.Pow.eq.Mul.Neg)
+    Eq << Eq[-1].this.rhs.args[-1].apply(Int.Pow.eq.MulPowSNeg)
 
     Eq.eq_block = Eq.eq_block.subs(Eq[-1])
 
@@ -70,7 +70,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Sum).apply(Finset.Sum.Binom.eq.Mul.Newton.deux)
 
-    Eq << Eq[-1].this.find(Add ** Add).apply(Int.Pow.eq.Mul.Neg)
+    Eq << Eq[-1].this.find(Add ** Add).apply(Int.Pow.eq.MulPowSNeg)
 
     Eq.eq_block = Eq.eq_block.subs(Eq[-1])
 
@@ -84,9 +84,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Nat.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.find(Add ** Add).apply(Int.Pow.eq.Mul.Neg)
+    Eq << Eq[-1].this.find(Add ** Add).apply(Int.Pow.eq.MulPowSNeg)
 
-    Eq << Eq[-1].this.find((1 - Symbol) ** Add).apply(Int.Pow.eq.Mul.Neg)
+    Eq << Eq[-1].this.find((1 - Symbol) ** Add).apply(Int.Pow.eq.MulPowSNeg)
 
     Eq << Eq[-1].this.rhs.apply(Nat.AddMulS.eq.Mul_Add)
 
@@ -134,7 +134,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Finset.Det.Block.eq.Mul)
 
-    Eq << Eq[-1].this.find(Add ** Mul).apply(Int.Pow.eq.Mul.Neg)
+    Eq << Eq[-1].this.find(Add ** Mul).apply(Int.Pow.eq.MulPowSNeg)
 
 
 

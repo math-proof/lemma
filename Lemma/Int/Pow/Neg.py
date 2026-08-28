@@ -15,7 +15,7 @@ def prove(Eq):
     x, y = Symbol(real=True)
     n = Symbol(integer=True, even=True)
     Eq << apply((x - y) ** n)
-    Eq << Eq[-1].this.lhs.apply(Int.Pow.eq.Mul.Neg)
+    Eq << Eq[-1].this.lhs.apply(Int.Pow.eq.MulPowSNeg)
 
 
 if __name__ == '__main__':

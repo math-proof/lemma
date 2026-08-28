@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(fx, add_is_zero, is_nonzero, x=None):
-    from Lemma.Complex.Add.eq.Zero.given.And.Eq.cubic.one_leaded import cubic_solve
+    from Lemma.Complex.Eq0AddAddAddPow_3.given.Eq_Ite_SubAdd_Pow_Inv3.EqSubCeil_Ite import cubic_solve
     from Lemma.Nat.Ne.of.Ne_0.Add.eq.Zero import cubic_delta
     try:
         (c, p), d = add_is_zero.of(Equal[Ceil - Piecewise])
@@ -52,7 +52,7 @@ def apply(fx, add_is_zero, is_nonzero, x=None):
 @prove
 def prove(Eq):
     from Lemma import Nat, Int, Complex, Real, Bool
-    from Lemma.Complex.Add.eq.Zero.given.And.Eq.cubic.one_leaded import cubic_solve
+    from Lemma.Complex.Eq0AddAddAddPow_3.given.Eq_Ite_SubAdd_Pow_Inv3.EqSubCeil_Ite import cubic_solve
     from Lemma.Nat.Ne.of.Ne_0.Add.eq.Zero import cubic_delta
 
     d = 1
@@ -73,7 +73,7 @@ def prove(Eq):
 
     Eq.eq = Eq[-1].this.apply(Int.EqAdd.Is.Eq_Sub, lhs=slice(0, 3))
 
-    Eq << Equal(cubic_delta(y, alpha, beta, gamma), 0).this.apply(Complex.Add.eq.Zero.given.And.Eq.cubic.one_leaded, y, d=1)
+    Eq << Equal(cubic_delta(y, alpha, beta, gamma), 0).this.apply(Complex.Eq0AddAddAddPow_3.given.Eq_Ite_SubAdd_Pow_Inv3.EqSubCeil_Ite, y, d=1)
 
     Eq << Eq[-1].subs(Eq[1])
 
@@ -107,7 +107,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Mul[Pow]).apply(Real.MulPowS.eq.PowMul)
 
-    Eq << Eq[-1].this.rhs.find(Expr ** 3).apply(Int.Pow.eq.Mul.Neg)
+    Eq << Eq[-1].this.rhs.find(Expr ** 3).apply(Int.Pow.eq.MulPowSNeg)
 
     Eq << Eq.y.subs(Eq[-1])
 

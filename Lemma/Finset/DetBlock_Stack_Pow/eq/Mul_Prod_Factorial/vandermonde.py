@@ -45,7 +45,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Finset.Det.eq.Mul)
 
-    Eq << Eq[-1].this.find(Add ** Symbol).apply(Int.Pow.eq.Mul.Neg)
+    Eq << Eq[-1].this.find(Add ** Symbol).apply(Int.Pow.eq.MulPowSNeg)
 
 
 if __name__ == '__main__':

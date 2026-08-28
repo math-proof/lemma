@@ -89,7 +89,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.apply(Nat.Eq_0.of.Le_0)
 
-    Eq << Eq[-1].this.expr.apply(Complex.Eq_0.of.Square.eq.Zero)
+    Eq << Eq[-1].this.expr.apply(Nat.Eq_0.of.EqSquare_0.complex)
 
     Eq << Eq[-1].this.expr.lhs.definition
     # https://en.wikipedia.org/wiki/Rolle%27s_theorem

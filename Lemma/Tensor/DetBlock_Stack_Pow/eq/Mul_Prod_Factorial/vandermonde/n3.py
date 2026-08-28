@@ -55,7 +55,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Sum).apply(Finset.Sum.Binom.eq.Mul.Newton)
 
-    Eq << Eq[-1].this.rhs.args[-1].apply(Int.Pow.eq.Mul.Neg)
+    Eq << Eq[-1].this.rhs.args[-1].apply(Int.Pow.eq.MulPowSNeg)
 
     Eq.eq_block = Eq.eq_block.subs(Eq[-1])
 
@@ -67,7 +67,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Sum).apply(Finset.Sum.Binom.eq.Mul.Newton.deux)
 
-    Eq << Eq[-1].this.find(Add ** Add).apply(Int.Pow.eq.Mul.Neg)
+    Eq << Eq[-1].this.find(Add ** Add).apply(Int.Pow.eq.MulPowSNeg)
 
     Eq << Eq.eq_block.subs(Eq[-1])
 
@@ -121,7 +121,7 @@ def prove(Eq):
 
     Eq << Eq[-3].subs(Eq[-1])
 
-    Eq << Eq[-1].this.find(Add ** Mul).apply(Int.Pow.eq.Mul.Neg)
+    Eq << Eq[-1].this.find(Add ** Mul).apply(Int.Pow.eq.MulPowSNeg)
 
 
 

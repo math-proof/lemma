@@ -29,7 +29,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Tensor.Dot.eq.Stack_Sum_MulGetS)
 
-    Eq << Eq[-1].this.find(Pow[-Symbol]).apply(Int.Pow.eq.Mul.Neg)
+    Eq << Eq[-1].this.find(Pow[-Symbol]).apply(Int.Pow.eq.MulPowSNeg)
 
     # j < m - d
     # k <= d + j < d + (m - d) = m

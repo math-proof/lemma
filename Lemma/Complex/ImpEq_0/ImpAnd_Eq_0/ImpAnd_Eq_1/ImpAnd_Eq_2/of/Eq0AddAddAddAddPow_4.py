@@ -32,7 +32,7 @@ def apply(given, x=None):
 
     w = -S.One / 2 + sqrt(3) * S.ImaginaryUnit / 2
     from Lemma.Nat.Ne.of.Ne_0.Add.eq.Zero import cubic_delta
-    from Lemma.Complex.Add.eq.Zero.given.And.Eq.cubic.one_leaded import cubic_solve
+    from Lemma.Complex.Eq0AddAddAddPow_3.given.Eq_Ite_SubAdd_Pow_Inv3.EqSubCeil_Ite import cubic_solve
     y_delta = cubic_delta(x, alpha, beta, gamma)
     _d, Y0, Y1, Y2 = cubic_solve(y_delta, x)
 
