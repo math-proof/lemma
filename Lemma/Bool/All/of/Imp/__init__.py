@@ -39,3 +39,4 @@ if __name__ == '__main__':
 # created on 2019-09-02
 
 from . import single_variable
+from . import comm

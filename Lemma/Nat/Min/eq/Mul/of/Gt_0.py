@@ -30,7 +30,7 @@ def prove(Eq):
 
     Eq << Bool.Iff.given.Imp.Imp.apply(Eq.equivalent)
 
-    Eq <<= Bool.And_Imp.given.And_ImpAnd.apply(Eq[0], Eq[-2]), Bool.Given.given.Given_And.apply(Eq[-1], cond=Eq[0])
+    Eq <<= Bool.And_Imp.given.And_ImpAnd.apply(Eq[0], Eq[-2]), Bool.Imp.given.Imp_And.comm.apply(Eq[-1], cond=Eq[0])
 
     Eq <<= Eq[-2].this.lhs.apply(Rat.LeDiv.of.Gt_0.Le), Eq[-1].this.rhs.apply(Nat.LeMul.of.Gt_0.Le)
 

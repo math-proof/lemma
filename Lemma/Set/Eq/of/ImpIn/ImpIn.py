@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << Eq[0].this.apply(Bool.Imp.Is.All, wrt=x)
 
-    Eq << Bool.All.of.Given.apply(Eq[1], wrt=x)
+    Eq << Bool.All.of.Imp.comm.apply(Eq[1], wrt=x)
 
     Eq << Set.Eq.of.All_In.All_In.apply(Eq[-2], Eq[-1])
 

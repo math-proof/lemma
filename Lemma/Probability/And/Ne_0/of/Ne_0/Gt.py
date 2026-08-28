@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << Bool.Iff.of.Gt.split.Eq.apply(Eq[1], *Eq[0].lhs.arg.args)
 
-    Eq << Bool.Cond.of.Cond.Iff.subst.apply(Eq[-1], Eq[0])
+    Eq << Bool.Cond.of.Cond.Iff.apply(Eq[-1], Eq[0])
 
     Eq << Probability.And.Ne_0.of.Ne_0.apply(Eq[-1])
 

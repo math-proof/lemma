@@ -46,11 +46,7 @@
 			</tr>
 			<tr>
 				<td>unformalized</td>
-				<td>{{count[0] - whitelist.length}}</td>
-			</tr>
-			<tr>
-				<td>whitelist</td>
-				<td>{{whitelist.length}}</td>
+				<td>{{count[0]}}</td>
 			</tr>
 			<tr>
 				<td>formalized</td>
@@ -62,7 +58,7 @@
 			</tr>
 		</table><br>
 		<div class=clear>
-			most wanted <input size=2 v-model=topk @change=change_input />of {{count[0] - whitelist.length}} unformalized lemmas: <br>
+			most wanted <input size=2 v-model=topk @change=change_input />of {{count[0]}} unformalized lemmas: <br>
 			<table tabindex=0 align=left border=1>
 				<tr>
 					<th>lemma</th>
@@ -106,12 +102,6 @@ export default {
 			regularExpression: false,
 			latex: null,
 			count: [],
-			whitelist : [
-				'Bool.All.of.Given', // plausible
-				'Bool.All.of.Cond', // plausible
-				'Bool.Imp.Is.All', // plausible
-				'Set.Eq.of.ImpIn.ImpIn', // plausible
-			],
 		};
 	},
 
@@ -207,8 +197,7 @@ from
 		on 
 			_s.module = regexp_replace(_t.module, '\\\\.[a-z]+$', '', 1, 0, 'c')
 where 
-	_s.module is null and 
-	not json_contains(${JSON.stringify(this.whitelist).mysqlStr()}, json_quote(_t.module))
+	_s.module is null
 order by depth desc
 limit ${this.topk}`;
 			console.log(sql);
