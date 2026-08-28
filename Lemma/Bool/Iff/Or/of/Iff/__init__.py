@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq << Bool.Imp.of.Iff.apply(Eq[0], reverse=True)
 
-    Eq << Bool.Given.Or.of.Given.apply(Eq[-1], cond=r).reversed
+    Eq << Bool.Imp.Or.of.Imp.apply(Eq[-1], cond=r)
 
     Eq << Bool.Iff.given.Imp.Imp.apply(Eq[1])
 
@@ -30,7 +30,7 @@ def prove(Eq):
 if __name__ == '__main__':
     run()
 # created on 2022-01-27
-# updated on 2025-04-12
+# updated on 2026-08-28
 
 del Iff
 from . import Iff

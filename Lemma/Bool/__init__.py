@@ -19,7 +19,6 @@ from . import OrAndS
 from . import All_And
 from . import And_And
 from . import Eq_0
-from . import Given
 from . import Ite_Ite
 from . import Or_Not
 from . import Or_NotIn
@@ -74,7 +73,6 @@ from . import Add
 from . import All_Any
 from . import All_Or
 from . import AllIn_Icc
-from . import GivenAnd
 from . import Le
 from . import Delta
 from . import Eq_Bool
