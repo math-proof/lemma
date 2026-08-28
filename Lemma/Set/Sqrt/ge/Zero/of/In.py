@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Nat.Mul_Add.eq.AddMulS, deep=True)
 
-    Eq << Real.GeSqrt_0.pos.apply(Eq[-1])
+    Eq << Real.GeSqrt_0.apply(Eq[-1])
 
 
 if __name__ == '__main__':

@@ -58,7 +58,7 @@ def prove(Eq):
 
     Eq <<= Eq[-3].this.rhs.apply(Nat.Add.gt.Zero.given.And, index=0), Eq[-2].this.rhs.apply(Nat.Gt.transport), Bool.Imp_And.given.Imp.Imp.apply(Eq[-1])
 
-    Eq <<= Bool.Imp_And.given.Imp.Imp.apply(Eq[-4]), Eq[-3].this.rhs.reversed, Eq[-2].this.rhs / 3, Eq[-1].this.lhs.apply(Real.GeSqrt_0.pos)
+    Eq <<= Bool.Imp_And.given.Imp.Imp.apply(Eq[-4]), Eq[-3].this.rhs.reversed, Eq[-2].this.rhs / 3, Eq[-1].this.lhs.apply(Real.GeSqrt_0)
 
     Eq << Eq[-1].this.rhs / 3
 

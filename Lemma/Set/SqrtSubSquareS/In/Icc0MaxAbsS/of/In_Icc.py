@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq << Int.Le0Sub.of.Ge.apply(Eq[-1])
 
-    Eq << Real.GeSqrt_0.pos.apply(Eq[-1])
+    Eq << Real.GeSqrt_0.apply(Eq[-1])
 
     Eq << LessEqual(-x ** 2, 0, plausible=True)
 

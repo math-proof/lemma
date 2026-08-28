@@ -16,7 +16,7 @@ def prove(Eq):
 
     Eq << Nat.Ge.of.Gt.apply(Eq[0])
 
-    Eq << Real.GeSqrt_0.pos.apply(Eq[-1])
+    Eq << Real.GeSqrt_0.apply(Eq[-1])
 
     Eq << Real.NeSqrt_0.of.Gt_0.apply(Eq[0])
 
