@@ -15,14 +15,18 @@ def apply(sufficient_A, sufficient_B):
 
 @prove
 def prove(Eq):
-    from Lemma import Set
+    from Lemma import Set, Bool
     n = Symbol(integer=True, positive=True)
     x = Symbol(complex=True, shape=(n,))
     A, B = Symbol(etype=dtype.integer[n])
 
     Eq << apply(Imply(Element(x, A), Element(x, B)), Imply(Element(x, B), Element(x, A)))
 
-    Eq << Set.Eq.of.ImpIn.ImpIn.apply(Eq[0], Eq[1].reversed)
+    Eq << Eq[0].this.apply(Bool.All_Imp.Is.All, wrt=x)
+
+    Eq << Eq[1].this.apply(Bool.All_Imp.Is.All, wrt=x)
+
+    Eq << Set.Eq.of.All_In.All_In.apply(Eq[-2], Eq[-1])
 
 
 if __name__ == '__main__':
