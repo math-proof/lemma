@@ -142,7 +142,7 @@ def prove(Eq):
 
     Eq << Eq[0].this.lhs.apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite)
 
-    Eq << Eq[-1].this.find(GreaterEqual).apply(Nat.Ge.Is.Eq.squeeze)
+    Eq << Eq[-1].this.find(GreaterEqual).apply(Nat.Ge.In_Icc.Is.Eq)
 
 
 if __name__ == '__main__':
