@@ -175,7 +175,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Real.ExpAdd.eq.MulExpS)
 
-    Eq.eq_euler = Eq[-1].this.find(exp).apply(Real.ExpMulI.eq.AddCos_MulISin.Euler)
+    Eq.eq_euler = Eq[-1].this.find(exp).apply(Real.ExpMulI.eq.AddCos_MulISin)
 
     Eq << Int.Mod.eq.Ite.apply(Eq.eq_euler.find(Mod))
 

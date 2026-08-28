@@ -19,7 +19,7 @@ def prove(Eq):
     Eq << apply(Equal(z, p @ Matrix((1, S.ImaginaryUnit))),
                 Equal(z[2] - z[0], (z[1] - z[0]) * exp(S.ImaginaryUnit * theta)))
 
-    Eq << Eq[1].this.find(Exp).apply(Real.ExpMulI.eq.AddCos_MulISin.Euler)
+    Eq << Eq[1].this.find(Exp).apply(Real.ExpMulI.eq.AddCos_MulISin)
 
     Eq.p_def = Tensor.Expr.eq.Matrix.apply(p)
 

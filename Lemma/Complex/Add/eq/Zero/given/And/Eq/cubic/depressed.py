@@ -90,7 +90,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq[1])
 
-    Eq << Eq[-1].this.find(Exp).apply(Real.ExpMulI.eq.AddCos_MulISin.Euler)
+    Eq << Eq[-1].this.find(Exp).apply(Real.ExpMulI.eq.AddCos_MulISin)
 
     Eq << Eq[-1].subs(Eq.w_conj.reversed)
 

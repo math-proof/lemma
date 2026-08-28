@@ -13,7 +13,7 @@ def prove(Eq):
     z = Symbol(complex=True, given=True)
     Eq << apply(z)
 
-    Eq << Eq[0].this.find(Exp).apply(Real.ExpMulI.eq.AddCos_MulISin.Euler)
+    Eq << Eq[0].this.find(Exp).apply(Real.ExpMulI.eq.AddCos_MulISin)
 
     Eq << Eq[-1].this.lhs.apply(Complex.Expr.eq.AddRe_MulIIm)
 

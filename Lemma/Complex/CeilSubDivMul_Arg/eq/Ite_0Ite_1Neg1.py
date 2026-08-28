@@ -97,7 +97,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.arg.apply(Real.MulExpS.eq.ExpAdd)
 
-    Eq.arg_p3_w = Eq[-1].this.lhs.find(Exp).apply(Real.ExpMulI.eq.AddCos_MulISin.Euler)
+    Eq.arg_p3_w = Eq[-1].this.lhs.find(Exp).apply(Real.ExpMulI.eq.AddCos_MulISin)
 
     Eq.p3_contains = Complex.Arg.In.IocNegPiPi.apply(-p ** 3)
 
@@ -127,7 +127,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.arg.apply(Real.MulExpS.eq.ExpAdd)
 
-    Eq.arg_p3_w = Eq[-1].this.lhs.find(Exp).apply(Real.ExpMulI.eq.AddCos_MulISin.Euler)
+    Eq.arg_p3_w = Eq[-1].this.lhs.find(Exp).apply(Real.ExpMulI.eq.AddCos_MulISin)
 
     Eq << Int.InSub.of.In_Icc.apply(Eq.p3_contains, S.Pi * 2, simplify=None)
 

@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq << Bool.And_Imp.given.And_ImpAnd.apply(Eq[0], Eq.gt_zero)
 
-    Eq << Eq[-1].this.lhs.apply(Rat.Lt0Pow.of.Gt_0.Gt_0)
+    Eq << Eq[-1].this.lhs.apply(Rat.Lt0Pow.of.Gt_0.pos)
 
     Eq << Bool.Imp.given.ImpAnd.ImpAnd_Not.apply(Eq.le_zero, cond=n < 0)
 
@@ -28,12 +28,12 @@ def prove(Eq):
     Eq << Bool.And_Imp.given.And_ImpAnd.apply(Eq[0], Eq[-2])
 
 
-    Eq << Eq[-1].this.lhs.apply(Rat.Lt0Pow.of.Gt_0.Lt_0)
+    Eq << Eq[-1].this.lhs.apply(Rat.Lt0Pow.of.Gt_0.neg)
 
 
 if __name__ == '__main__':
     run()
 # created on 2018-08-22
 # updated on 2023-04-15
-from . import Gt_0
-from . import Lt_0
+from . import pos
+from . import neg

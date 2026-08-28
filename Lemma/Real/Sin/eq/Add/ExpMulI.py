@@ -15,9 +15,9 @@ def prove(Eq):
     x = Symbol(real=True)
     Eq << apply(sin(x))
 
-    Eq << Eq[0].find(Exp).this.apply(Real.ExpMulI.eq.AddCos_MulISin.Euler)
+    Eq << Eq[0].find(Exp).this.apply(Real.ExpMulI.eq.AddCos_MulISin)
 
-    Eq << Eq[0].find(- ~Exp).this.apply(Real.ExpMulI.eq.AddCos_MulISin.Euler)
+    Eq << Eq[0].find(- ~Exp).this.apply(Real.ExpMulI.eq.AddCos_MulISin)
 
     Eq << Eq[-2] - Eq[-1]
 

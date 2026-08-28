@@ -17,7 +17,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Complex.Sign.eq.ExpMulI.Arg)
 
-    Eq << Eq[-1].this.lhs.apply(Real.ExpMulI.eq.AddCos_MulISin.Euler)
+    Eq << Eq[-1].this.lhs.apply(Real.ExpMulI.eq.AddCos_MulISin)
 
 
 
