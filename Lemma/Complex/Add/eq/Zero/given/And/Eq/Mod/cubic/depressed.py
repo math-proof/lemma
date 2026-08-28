@@ -60,9 +60,10 @@ def prove(Eq):
     Eq <<= Bool.BFn.of.BFnIte.Cond.apply(Eq[2], Eq[-2]) & Bool.BFn.of.BFnIte.Cond.apply(Eq[2], Eq[-1])
 
     Eq << Eq[-1].this.rhs.apply(Set.Or_Eq.given.In.Finset)
-    Eq << Bool.Cond.of.Cond.Given.apply(Eq.contains, Eq[-1])
+    Eq << Bool.Cond.of.Imp.Cond.apply(Eq.contains, Eq[-1].reversed)
 
 
 if __name__ == '__main__':
     run()
 # created on 2018-11-20
+# updated on 2026-08-28

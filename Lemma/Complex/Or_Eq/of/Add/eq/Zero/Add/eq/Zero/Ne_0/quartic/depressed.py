@@ -77,7 +77,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq[1])
 
-    Eq << Bool.Cond.of.Cond.Given.apply(Eq[4], Eq[-1], simplify=None)
+    Eq << Bool.Cond.of.Imp.Cond.apply(Eq[4], Eq[-1].reversed, simplify=None)
 
     Eq << Nat.Ne.of.Ne_0.Add.eq.Zero.apply(Eq[2], Eq[-1], y)
 
@@ -144,4 +144,4 @@ def prove(Eq):
 if __name__ == '__main__':
     run()
 # created on 2018-11-14
-# updated on 2026-08-22
+# updated on 2026-08-28
