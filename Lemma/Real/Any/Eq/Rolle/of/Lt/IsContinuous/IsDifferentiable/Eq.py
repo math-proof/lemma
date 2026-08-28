@@ -59,7 +59,7 @@ def apply(lt, is_continuous, is_differentiable, equal):
 
 @prove
 def prove(Eq):
-    from Lemma import Real, Set, Bool, Nat, Complex
+    from Lemma import Real, Set, Bool, Nat
 
     a, b = Symbol(real=True)
     f = Function(shape=(), real=True)

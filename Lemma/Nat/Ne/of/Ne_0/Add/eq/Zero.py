@@ -22,7 +22,7 @@ def apply(is_nonzero, fy, y):
 
 @prove
 def prove(Eq):
-    from Lemma import Complex, Nat
+    from Lemma import Nat
 
     y, alpha, beta, gamma = Symbol(complex=True, given=True)
     fy = cubic_delta(y, alpha, beta, gamma)
