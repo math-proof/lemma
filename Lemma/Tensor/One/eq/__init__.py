@@ -1,3 +1,3 @@
 from . import Stack
 from . import Block
-from . import Matrix
+from . import Tensor

@@ -15,7 +15,6 @@ from . import And
 from . import Any
 from . import Cup
 from . import Det
-from . import DetBlockStack_Pow
 from . import Diff
 from . import Eq
 from . import EqFactorial

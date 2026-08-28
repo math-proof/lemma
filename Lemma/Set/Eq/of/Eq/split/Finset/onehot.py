@@ -14,7 +14,7 @@ def prove(Eq):
     x, y = Symbol(integer=True)
     Eq << apply(Equal({x, y}, {0, 1}))
 
-    Eq << Tensor.Eq.given.And.split.Matrix.apply(Eq[1])
+    Eq << Tensor.Eq.given.And.split.Tensor.apply(Eq[1])
 
 
 

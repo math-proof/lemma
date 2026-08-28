@@ -31,19 +31,19 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Finset.Sum.eq.Add.doit)
 
-    Eq << Eq[-1].this.find(Stack).apply(Tensor.Stack.eq.Matrix)
+    Eq << Eq[-1].this.find(Stack).apply(Tensor.Stack.eq.Tensor)
 
-    Eq << Eq[-1].this.find(Stack).apply(Tensor.Stack.eq.Matrix)
+    Eq << Eq[-1].this.find(Stack).apply(Tensor.Stack.eq.Tensor)
 
-    Eq << Eq[-1].this.find(Stack).apply(Tensor.Stack.eq.Matrix)
+    Eq << Eq[-1].this.find(Stack).apply(Tensor.Stack.eq.Tensor)
 
-    Eq << Eq[-1].this.find(Stack).apply(Tensor.Stack.eq.Matrix)
+    Eq << Eq[-1].this.find(Stack).apply(Tensor.Stack.eq.Tensor)
 
-    Eq << Eq[-1].this.find(Stack).apply(Tensor.Stack.eq.Matrix)
+    Eq << Eq[-1].this.find(Stack).apply(Tensor.Stack.eq.Tensor)
 
     Eq << Eq[-1].this.lhs.arg.apply(Tensor.Expr.eq.Stack)
 
-    Eq << Eq[-1].this.lhs.arg.apply(Tensor.Stack.eq.Matrix)
+    Eq << Eq[-1].this.lhs.arg.apply(Tensor.Stack.eq.Tensor)
 
     Eq << Eq[-1].doit(deep=True)
 

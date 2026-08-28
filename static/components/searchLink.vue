@@ -1,7 +1,6 @@
 <template>
-	<a v-if="mode == 'a'" v-focus tabindex=2 :href=href @contextmenu.prevent=contextmenu @keydown=keydown_a>
+	<a v-if="mode == 'a'" v-focus v-clipboard tabindex=2 :data-clipboard-text=clipboardText :href=href @contextmenu.prevent @keydown=keydown_a>
         {{module.isArray? module[1]: module}}
-       	<searchContextmenu v-if='showContextmenu' :left=left :top=top></searchContextmenu>
     </a>
 	<span v-else-if="mode == 'span'">
        	{{module}}
@@ -12,18 +11,12 @@
 
 <script>
 console.log('import searchLink.vue');
-import searchContextmenu from "./searchContextmenu.vue"
 
 var focusedAlready = false;
 export default {
-	components: {searchContextmenu},
-	
 	data(){
 		return {
 			mode: 'a',
-			showContextmenu: false,
-			left: -1,
-			top: -1,
 		};
 	},
 	
@@ -32,6 +25,11 @@ export default {
 	computed: {
 		user(){
 			return axiom_user();
+		},
+
+		clipboardText(){
+			var {module} = this;
+			return module.isArray ? module[0] : module;
 		},
 		
 		href(){
@@ -83,21 +81,6 @@ export default {
 
 			this.mode = 'a';
 			return undeletables;
-		},
-		
-		contextmenu(event) {
-			//console.log("contextmenu: function(event)");
-			var self = event.target;				
-			
-			this.left = event.x + self.getScrollLeft();
-			this.top = event.y + self.getScrollTop();
-			
-			this.showContextmenu = true;
-			
-			setTimeout(()=>{
-				var contextmenu = self.lastElementChild;
-				contextmenu.focus();				
-			}, 100);				
 		},
 		
 		blur(event){
@@ -186,6 +169,8 @@ export default {
 		    	el.focus();
 		    }
 		},
+
+		clipboard,
 	},
 }
 </script>

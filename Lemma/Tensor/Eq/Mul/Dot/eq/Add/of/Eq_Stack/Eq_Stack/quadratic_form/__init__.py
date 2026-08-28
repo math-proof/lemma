@@ -60,7 +60,7 @@ def prove(Eq):
                                                       w_p[k_p + clip(p[j] - p[i], -k_p, k_p), t])))),
                 Equal(a, Stack[t:d, j:n, i:n](W_Γ[Min((abs(r[j] - r[i]) + 1) // d_r, h_r - 1), Min((abs(c[j] - c[i]) + 1) // d_c, h_c - 1), Min((abs(l[j] - l[i]) + 1) // d_l, h_l - 1), Min((abs(o[j] - o[i]) + 1) // d_o, h_o - 1), Min((abs(p[j] - p[i]) + 1) // d_p, h_p - 1)] * Γ[t])))
 
-    Eq << Eq[-1].this.lhs.find(Stack).apply(Tensor.Stack.eq.Matrix)
+    Eq << Eq[-1].this.lhs.find(Stack).apply(Tensor.Stack.eq.Tensor)
 
     c = Symbol(a[i, j, t])
     Eq << Eq[-1].subs(c.this.definition.reversed)

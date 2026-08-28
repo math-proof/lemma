@@ -8,7 +8,6 @@ from . import Eq
 from . import Floor
 from . import In_SDiff
 from . import Ceil
-from . import Eq_Mod
 from . import Or
 from . import Subset
 from . import Ne_Empty

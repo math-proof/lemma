@@ -1,6 +1,5 @@
 from . import ReducedMax
 from . import ReducedArgMin
-from . import Matrix
 from . import ReducedArgMax
 from . import Sum
 from . import Block
@@ -13,3 +12,4 @@ from . import Ite
 from . import Eye
 from . import Dot
 from . import AppendStackS
+from . import Tensor

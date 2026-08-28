@@ -1,1 +1,1 @@
-from . import Matrix
+from . import Tensor

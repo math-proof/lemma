@@ -229,3 +229,4 @@ from . import Cup_Ico
 from . import Ioc
 from . import In_IocFloor_Ceil
 from . import In_Singleton
+from . import In_SetOf

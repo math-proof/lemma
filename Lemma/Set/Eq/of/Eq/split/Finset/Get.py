@@ -18,7 +18,7 @@ def prove(Eq):
     a = Symbol(etype=dtype.complex, shape=(oo,), given=True)
     Eq << apply(Equal({x, y}, {a[0], a[1]}))
 
-    Eq << Tensor.Eq.given.And.split.Matrix.apply(Eq[1])
+    Eq << Tensor.Eq.given.And.split.Tensor.apply(Eq[1])
 
     Eq << Element(x, {x, y}, plausible=True)
 

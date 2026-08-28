@@ -21,11 +21,11 @@ def prove(Eq):
 
     Eq << Eq[1].this.find(Exp).apply(Real.ExpMulI.eq.AddCos_MulISin)
 
-    Eq.p_def = Tensor.Expr.eq.Matrix.apply(p)
+    Eq.p_def = Tensor.Expr.eq.Tensor.apply(p)
 
     Eq << Eq[0].subs(Eq.p_def)
 
-    Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Matrix)
+    Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Tensor)
 
     Eq <<= Eq[-1][0], Eq[-1][1], Eq[-1][2]
 
@@ -41,7 +41,7 @@ def prove(Eq):
 
     Eq << Eq[2].subs(Eq[-1], Eq[-3], Eq[-2])
 
-    Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Matrix)
+    Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Tensor)
 
     Eq << Eq[-1].this.rhs.expand()
 

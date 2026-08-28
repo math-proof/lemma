@@ -56,15 +56,15 @@ def prove(Eq):
     a = Symbol(real=True, shape=(2 ** n,))
     Eq << apply(quadratic_form(x, a))
 
-    Eq << Eq[-1].find(Symbol).this.apply(Tensor.Expr.eq.Matrix)
+    Eq << Eq[-1].find(Symbol).this.apply(Tensor.Expr.eq.Tensor)
 
     Eq << Eq[0].subs(Eq[-1])
 
-    Eq << MatMul(*Eq[-1].find(MatMul).args[:2]).this.apply(Tensor.Dot.eq.Matrix)
+    Eq << MatMul(*Eq[-1].find(MatMul).args[:2]).this.apply(Tensor.Dot.eq.Tensor)
 
     Eq << Eq[-2].subs(Eq[-1])
 
-    Eq << Eq[-1].this.find(MatMul).apply(Tensor.Dot.eq.Matrix)
+    Eq << Eq[-1].this.find(MatMul).apply(Tensor.Dot.eq.Tensor)
 
     Eq << Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 

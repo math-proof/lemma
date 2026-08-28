@@ -11,5 +11,5 @@ from . import Exp
 from . import Neg
 from . import Sum
 from . import Ite
-from . import Matrix
 from . import Stack_Sum_MulGetS
+from . import Tensor

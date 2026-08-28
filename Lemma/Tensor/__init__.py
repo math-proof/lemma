@@ -118,7 +118,6 @@ from . import GtBlock
 from . import Gt_Block
 from . import LtBlock
 from . import Lt_Block
-from . import NeMatrix
 from . import ReducedMax
 from . import ReducedMin
 from . import SquareReducedSum
@@ -136,3 +135,6 @@ from . import DotMulEye
 from . import Stack_PowGetS
 from . import MulAppend
 from . import DotAppendS
+from . import Ne_Dot
+from . import DetBlockStack_Pow
+from . import DetBlock_Stack_Pow

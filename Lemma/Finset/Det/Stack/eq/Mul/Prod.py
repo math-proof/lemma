@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Symbol('L', Eq[0].lhs.arg).this.definition
 
-    Eq << Eq[-1].this.rhs.apply(Tensor.Stack.eq.Matrix)
+    Eq << Eq[-1].this.rhs.apply(Tensor.Stack.eq.Tensor)
 
     Eq << Eq[-1] @ MulMatrix(n, 0, 1 / a[0])
 

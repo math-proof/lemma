@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq << Eq.initial.this.rhs.doit(deep=True)
 
-    Eq << Eq[-1].this.lhs.arg.apply(Tensor.Stack.eq.Matrix).this.lhs.doit()
+    Eq << Eq[-1].this.lhs.arg.apply(Tensor.Stack.eq.Tensor).this.lhs.doit()
 
     Eq.induct = Eq[0].subs(n, n + 1)
 

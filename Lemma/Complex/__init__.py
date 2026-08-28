@@ -46,3 +46,4 @@ from . import EqArg
 from . import EqConj
 from . import EqIm
 from . import EqRe
+from . import Eq0AddAddPow_3

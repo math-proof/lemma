@@ -47,7 +47,7 @@ def prove(Eq):
 
     Eq << Finset.EqDet.of.Eq.apply(Eq[-1])
 
-    Eq << Eq[-1].this.rhs.apply(Finset.DetBlock_Stack_Pow.eq.MulProd_Factorial.vandermonde.n2)
+    Eq << Eq[-1].this.rhs.apply(Tensor.DetBlock_Stack_Pow.eq.MulProd_Factorial.vandermonde.n2)
 
     Eq << Eq[-1].subs(r.this.definition)
 

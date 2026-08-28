@@ -56,7 +56,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq[-2])
 
-    Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Matrix)
+    Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Tensor)
 
     Eq << Eq[1].subs(k, 1)
 
@@ -78,7 +78,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq[-2])
 
-    Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Matrix)
+    Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Tensor)
 
     Eq << Eq[1].subs(k, 2)
 
@@ -100,7 +100,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq[-2])
 
-    Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Matrix)
+    Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Tensor)
 
     Eq << Eq[1].subs(k, 3)
 
@@ -122,7 +122,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq[-2])
 
-    Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Matrix)
+    Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Tensor)
 
     Eq << Eq[1].subs(k, 4)
 
@@ -144,7 +144,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq[-2])
 
-    Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Matrix)
+    Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Tensor)
 
     Eq << Eq[1].subs(k, 5)
 
@@ -166,7 +166,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq[-2])
 
-    Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Matrix)
+    Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Tensor)
 
     Eq << Eq[1].subs(k, 6)
 
@@ -184,18 +184,18 @@ def prove(Eq):
 
     Eq.back_subs6 = Eq.back_subs6.subs(Eq[6], Eq[8], Eq[11], Eq[13], Eq[16], Eq[18], Eq[21], Eq[23], Eq[26], Eq[28], Eq[31], Eq[33], Eq[37], Eq[36])
 
-    Eq.back_subs6 = Eq.back_subs6.this.find(BlockMatrix).apply(Tensor.Expr.eq.Matrix).this.find(BlockMatrix).apply(Tensor.Expr.eq.Matrix).this.find(BlockMatrix).apply(Tensor.Expr.eq.Matrix).this.find(BlockMatrix).apply(Tensor.Expr.eq.Matrix).this.find(BlockMatrix).apply(Tensor.Expr.eq.Matrix).this.find(BlockMatrix).apply(Tensor.Expr.eq.Matrix)
+    Eq.back_subs6 = Eq.back_subs6.this.find(BlockMatrix).apply(Tensor.Expr.eq.Tensor).this.find(BlockMatrix).apply(Tensor.Expr.eq.Tensor).this.find(BlockMatrix).apply(Tensor.Expr.eq.Tensor).this.find(BlockMatrix).apply(Tensor.Expr.eq.Tensor).this.find(BlockMatrix).apply(Tensor.Expr.eq.Tensor).this.find(BlockMatrix).apply(Tensor.Expr.eq.Tensor)
 
-    Eq.back_subs6 = Eq.back_subs6.this.rhs.args[0:2].apply(Tensor.Dot.eq.Matrix).this.rhs.args[0:2].apply(Tensor.Dot.eq.Matrix).this.rhs.args[0:2].apply(Tensor.Dot.eq.Matrix).this.rhs.args[0:2].apply(Tensor.Dot.eq.Matrix).this.rhs.args[0:2].apply(Tensor.Dot.eq.Matrix)
+    Eq.back_subs6 = Eq.back_subs6.this.rhs.args[0:2].apply(Tensor.Dot.eq.Tensor).this.rhs.args[0:2].apply(Tensor.Dot.eq.Tensor).this.rhs.args[0:2].apply(Tensor.Dot.eq.Tensor).this.rhs.args[0:2].apply(Tensor.Dot.eq.Tensor).this.rhs.args[0:2].apply(Tensor.Dot.eq.Tensor)
 
     B = Eq.back_subs6.rhs.args[1].T
-    Eq << (B / Stack[i:n](Factorial(i))).this.find(Stack).apply(Tensor.Stack.eq.Matrix)
+    Eq << (B / Stack[i:n](Factorial(i))).this.find(Stack).apply(Tensor.Stack.eq.Tensor)
 
-    Eq << Eq[-1].this.rhs.apply(Tensor.Expr.eq.Matrix)
+    Eq << Eq[-1].this.rhs.apply(Tensor.Expr.eq.Tensor)
 
-    Eq << Stack[j:n, i:n](Stirling(i, j)).this.apply(Tensor.Expr.eq.Matrix)
+    Eq << Stack[j:n, i:n](Stirling(i, j)).this.apply(Tensor.Expr.eq.Tensor)
 
-    Eq << Stack[j:n, i:n](Binomial(i, j)).this.apply(Tensor.Expr.eq.Matrix)
+    Eq << Stack[j:n, i:n](Binomial(i, j)).this.apply(Tensor.Expr.eq.Tensor)
 
 
 
