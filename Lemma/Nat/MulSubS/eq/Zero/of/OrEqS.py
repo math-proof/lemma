@@ -15,7 +15,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Bool, Tensor, Nat
+    from Lemma import Bool, Nat
 
     k = Symbol(integer=True, positive=True)
     x, p = Symbol(real=True, shape=(k,), given=True)

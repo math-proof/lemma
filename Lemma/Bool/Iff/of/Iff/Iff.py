@@ -45,7 +45,7 @@ def prove(Eq):
 
     Eq << Bool.Imp.of.Iff.apply(Eq[1], reverse=True)
 
-    Eq << Bool.Given.of.Given.Given.apply(Eq[-2], Eq[-1]).reversed
+    Eq << Bool.Imp.of.Imp.Imp.apply(Eq[-2], Eq[-1])
 
 
 
@@ -54,4 +54,4 @@ if __name__ == '__main__':
     run()
 # created on 2019-09-12
 
-# updated on 2025-04-12
+# updated on 2026-08-28
