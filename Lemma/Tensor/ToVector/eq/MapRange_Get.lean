@@ -13,7 +13,7 @@ private lemma main
 -- proof
   simp [GetElem.getElem]
   ext i
-  erw [GetMap.eq.UFnGet]
+  erw [GetMap.eq.UFnGet.fin]
   simp
   show (toVector X).get i = X.get ((List.Vector.range n).get i)
   erw [GetToVector.eq.Get.cons.fin]

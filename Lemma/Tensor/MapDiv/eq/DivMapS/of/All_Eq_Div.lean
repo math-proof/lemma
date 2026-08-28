@@ -41,7 +41,7 @@ private lemma scalar
   simp [DataDiv.eq.DivData]
   rw [MapDiv.eq.DivMap.of.All_Eq_Div hf]
   simp only [GetElem.getElem]
-  erw [GetMap.eq.UFnGet]
+  erw [GetMap.eq.UFnGet.fin]
 
 
 -- created on 2026-08-08

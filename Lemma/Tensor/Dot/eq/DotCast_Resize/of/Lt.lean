@@ -62,9 +62,9 @@ private lemma main
         have h_t := t.isLt
         erw [DataOfVector.eq.FlattenMapData]
         repeat erw [GetFlatten.eq.Get.of.Lt_Mul (by grind)]
-        rw [GetMap.eq.UFnGet]
-        conv_rhs => erw [GetMap.eq.UFnGet]
-        conv_lhs => erw [GetMap.eq.UFnGet]
+        rw [GetMap.eq.UFnGet.fin]
+        conv_rhs => erw [GetMap.eq.UFnGet.fin]
+        conv_lhs => erw [GetMap.eq.UFnGet.fin]
         simp
         have h_t' : t < X.length * n' := by simpa [Tensor.length] using h_t
         have h_div := LtDiv.of.Lt_Mul h_t'
@@ -99,7 +99,7 @@ private lemma main
             grind
           ·
             erw [GetFlatten.eq.Get.of.Lt_Mul (by grind)]
-            erw [GetMap.eq.UFnGet]
+            erw [GetMap.eq.UFnGet.fin]
             erw [GetResize.eq.Ite_Get_Mod.fin]
             simp
             grind

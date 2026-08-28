@@ -26,7 +26,7 @@ private lemma main
   rw [GetFlatten.eq.Get.of.Eq_AddMul.fin (i := ⟨0, by grind⟩) (j := ⟨t, by grind⟩) (by grind)]
   simp
   rw [Head.eq.Get_0.fin]
-  erw [GetMap.eq.UFnGet]
+  erw [GetMap.eq.UFnGet.fin]
   erw [GetSum.eq.SumMapGet.fin]
   erw [GetSum.eq.SumMapGet.fin]
   simp

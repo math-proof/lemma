@@ -25,7 +25,7 @@ private lemma main
   conv_lhs => simp [this]
   apply congrArg
   ext i
-  erw [GetMap.eq.UFnGet]
+  erw [GetMap.eq.UFnGet.fin]
   erw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
   simp
 

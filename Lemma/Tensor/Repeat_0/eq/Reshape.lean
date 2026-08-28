@@ -43,7 +43,7 @@ private lemma main
         intro i
         have h_i := i.isLt
         rw [GetFlatten.eq.Get.of.Eq_AddMul.fin (i := ⟨0, by grind⟩) (j := ⟨i, by grind⟩) (by simp)]
-        erw [GetMap.eq.UFnGet]
+        erw [GetMap.eq.UFnGet.fin]
         repeat rw [GetRepeat.eq.Get_Mod.fin]
         erw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
         simp

@@ -114,7 +114,7 @@ private lemma main
     erw [@Vector.GetNeg.eq.NegGet.fin]
     erw [@Vector.GetMul.eq.MulGet.fin]
     erw [@Vector.GetNeg.eq.NegGet.fin]
-    erw [Vector.GetMap.eq.UFnGet]
+    erw [Vector.GetMap.eq.UFnGet.fin]
     fin_cases k
     erw [EqData1'1]
     erw [@Vector.EqGet1_1.fin]

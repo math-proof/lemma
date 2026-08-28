@@ -49,7 +49,7 @@ private lemma main
       rw [Sum.eq.Head.of.Eq_1 (by rw [List.Drop.eq.Nil.of.LeLength (by grind)]; grind)]
       simp [GetElem.getElem]
       rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
-      erw [GetMap.eq.UFnGet]
+      erw [GetMap.eq.UFnGet.fin]
       simp [List.Vector.get]
     ·
       rw [h_drop_prod]

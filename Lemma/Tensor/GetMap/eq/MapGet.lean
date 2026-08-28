@@ -30,8 +30,8 @@ private lemma main
     ext j
     repeat erw [GetUnflatten.eq.Get_AddMul.fin]
     simp [Foldr.eq.Prod]
-    erw [GetMap.eq.UFnGet]
-    erw [GetMap.eq.UFnGet]
+    erw [GetMap.eq.UFnGet.fin]
+    erw [GetMap.eq.UFnGet.fin]
     congr 1
     apply Get_AddMul.eq.GetUnflatten.fin
 

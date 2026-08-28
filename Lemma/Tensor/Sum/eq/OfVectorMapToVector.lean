@@ -56,8 +56,8 @@ private lemma main
     let ⟨q', r', h_q'r'⟩ := Any_Eq_AddMul.of.Lt_Mul h_t
     let ⟨h_q'_div, h_r'_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_q'r'
     rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_q'r']
-    erw [GetMap.eq.UFnGet]
-    conv_rhs => erw [GetMap.eq.UFnGet]
+    erw [GetMap.eq.UFnGet.fin]
+    conv_rhs => erw [GetMap.eq.UFnGet.fin]
     rw [GetCast.eq.Get.of.Eq.fin (by simp; grind)]
     have h_r' := r'.isLt
     simp only [ProdEraseIdx.eq.MulProdS] at h_r'

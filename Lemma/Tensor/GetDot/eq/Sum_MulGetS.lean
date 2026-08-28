@@ -50,7 +50,7 @@ private lemma main
   rw [Vector.Head.eq.Get_0.fin]
   erw [Vector.GetMul.eq.MulGetS.fin]
   congr 1
-  erw [GetMap.eq.UFnGet]
+  erw [GetMap.eq.UFnGet.fin]
   rfl
 
 
@@ -106,7 +106,7 @@ private lemma mv
   rw [Vector.Head.eq.Get_0.fin]
   erw [Vector.GetMul.eq.MulGetS.fin]
   congr 1
-  erw [GetMap.eq.UFnGet]
+  erw [GetMap.eq.UFnGet.fin]
   congr 1
 
 

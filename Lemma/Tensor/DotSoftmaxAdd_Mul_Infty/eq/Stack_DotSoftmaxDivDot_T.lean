@@ -6,7 +6,7 @@ import Lemma.Tensor.GetTCast_T.eq.Get
 import Lemma.Tensor.MapBmm.eq.BmmMapS.of.All_Eq_Add.All_Eq_Mul
 import Lemma.Tensor.MapDiv.eq.DivMap.of.All_Eq_Div
 open Tensor
-set_option maxHeartbeats 1000000
+set_option maxHeartbeats 2000000
 
 
 @[main]
@@ -30,7 +30,6 @@ private lemma gpt
     simp only [KT]
     rw [MapCast.eq.Cast_Map.of.Eq (List.EqSwap_0'1 n d_z)]
     rw [TMap.eq.MapT]
-    rfl
   have hQK : QK' = (Q : Tensor ℝ* [n, d_z]) @ (KT : Tensor ℝ* [d_z, n]) := by
     apply Eq.of.EqDataS
     simp only [QK', Q', K', KT, hKT]
@@ -49,11 +48,12 @@ private lemma gpt
   ·
     apply Eq.of.All_EqGetS.fin
     intro i
-    simp [EqGetStack.fin]
+    conv_lhs => erw [EqGetStack.fin]
+    conv_rhs => erw [EqGetStack.fin]
     simp only [V']
     apply Bool.Eq.of.SEq
     apply SEqDotS.of.SEq
-    apply SEqSoftmaxS.of.SEq.Eq (by simp [matmul_shape, List.EqSwap_0'1])
+    apply SEqSoftmaxS.of.SEq.Eq (by simp [matmul_shape])
     apply Bool.SEq.of.Eq
     rw [← hdiv, hQK]
     simp [GetElem.getElem]

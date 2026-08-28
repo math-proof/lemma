@@ -61,7 +61,7 @@ private lemma main
         intro t
         have h_t := t.isLt
         erw [GetFlatten.eq.Get.of.Eq_AddMul.fin (i := ⟨0, by grind⟩) (j := ⟨t, by grind⟩) (by grind)]
-        erw [GetMap.eq.UFnGet]
+        erw [GetMap.eq.UFnGet.fin]
         simp [GetResize.eq.Ite_Get_Mod.fin]
         simp at h_t
         have h_ne_0 := Ne_0.of.GtMul h_t
@@ -76,7 +76,7 @@ private lemma main
             rw [GetCast.eq.Get.of.Eq.fin (by grind)]
             simp
             rw [GetFlatten.eq.Get.of.Lt_Mul (by simpa)]
-            erw [GetMap.eq.UFnGet]
+            erw [GetMap.eq.UFnGet.fin]
             simp [GetRepeat.eq.Get_Mod.fin]
             erw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
             congr 1

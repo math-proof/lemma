@@ -24,9 +24,9 @@ private lemma main
   have := GetSplitAt_1.eq.GetUnflatten.fin ((List.Vector.map Tensor.data ((List.Vector.range n).map (fun i : Fin n ↦ f i))).flatten) i
   erw [this]
   erw [EqUnflattenFlatten]
-  erw [GetMap.eq.UFnGet]
+  erw [GetMap.eq.UFnGet.fin]
   congr
-  erw [GetMap.eq.UFnGet]
+  erw [GetMap.eq.UFnGet.fin]
   congr
   apply EqGetRange i
 

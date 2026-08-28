@@ -72,10 +72,10 @@ private lemma main
         simp
       apply SEq.of.All_EqGetS.Eq.fin (by rfl)
       intro k
-      erw [GetMap.eq.UFnGet]
+      erw [GetMap.eq.UFnGet.fin]
       let ⟨i, j, h_k⟩ := Any_Eq_AddMul k
       rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_k]
-      erw [GetMap.eq.UFnGet]
+      erw [GetMap.eq.UFnGet.fin]
       simp
       erw [DataDiv.eq.DivData]
       rw [GetDiv.eq.DivGet.fin (a := n.data[0])]
@@ -85,7 +85,7 @@ private lemma main
       unfold Tensor.OfVector
       simp
       rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_k]
-      repeat erw [GetMap.eq.UFnGet]
+      repeat erw [GetMap.eq.UFnGet.fin]
       erw [GetToVector.eq.Get.fin]
 
 

@@ -18,7 +18,7 @@ private lemma fin
   intro i
   rw [GetUnflattenDataStack.eq.Data.fin]
   simp [GetElem.getElem]
-  erw [GetMap.eq.UFnGet]
+  erw [GetMap.eq.UFnGet.fin]
   congr
   simp [EqGetRange.fin i]
 

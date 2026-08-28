@@ -16,8 +16,8 @@ private lemma main
   unfold Stack
   congr
   ext i
-  erw [GetMap.eq.UFnGet]
-  erw [GetMap.eq.UFnGet]
+  erw [GetMap.eq.UFnGet.fin]
+  erw [GetMap.eq.UFnGet.fin]
   erw [EqGetRange.fin]
   simp [GetElem.getElem]
   simp [Tensor.get]

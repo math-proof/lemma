@@ -47,7 +47,7 @@ private lemma main
     simp [DataOfVector.eq.FlattenMapData]
     erw [MapMap.eq.Map_Comp]
     erw [EqUnflattenFlatten]
-    erw [GetMap.eq.UFnGet]
+    erw [GetMap.eq.UFnGet.fin]
     apply SEqCast.of.SEq.Eq (by simp)
     conv_lhs => simp
     erw [Select_0.eq.Cast_Get.of.GtGet_0.GtLength_0]

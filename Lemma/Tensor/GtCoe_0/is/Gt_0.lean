@@ -32,7 +32,7 @@ private lemma main
     have hi := h i
     simp [GetElem.getElem, EqGet0_0.fin] at hi ⊢
     rw [← MapData.eq.DataMap] at hi
-    rw [GetMap.eq.UFnGet] at hi
+    rw [GetMap.eq.UFnGet.fin] at hi
     exact Gt_0.of.GtCoe_0 hi
   ·
     intro h

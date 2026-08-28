@@ -46,7 +46,7 @@ private lemma main
   erw [DataMul.eq.MulDataS]
   rw [Vector.Head.eq.Get_0.fin]
   erw [Vector.GetMul.eq.MulGetS.fin]
-  erw [Vector.GetMap.eq.UFnGet]
+  erw [Vector.GetMap.eq.UFnGet.fin]
   simp [GetElem.getElem, HMul.hMul, id]
   congr
 

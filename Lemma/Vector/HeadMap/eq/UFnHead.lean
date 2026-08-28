@@ -14,7 +14,7 @@ private lemma main
   (v.map f).head = f v.head := by
 -- proof
   simp only [Head.eq.Get_0.fin]
-  apply GetMap.eq.UFnGet
+  apply GetMap.eq.UFnGet.fin
 
 
 -- created on 2026-08-27

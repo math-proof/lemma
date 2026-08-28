@@ -28,7 +28,7 @@ private lemma main
     simp [ProdDrop.eq.One.of.LeLength h] at h_j
     have h_j := Eq_Fin.of.EqVal h_j
     simp [h_j]
-    erw [GetMap.eq.UFnGet]
+    erw [GetMap.eq.UFnGet.fin]
     rfl
   ·
     rw [EqTake.of.LeLength h]

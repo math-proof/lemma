@@ -1,8 +1,10 @@
 import Lemma.Tensor.DotSoftmaxAdd_Mul_Infty.eq.Stack_DotSoftmax
 import Lemma.Tensor.EqGetStack
-import Lemma.Tensor.Eq.is.All_EqGetS
+import Lemma.Tensor.EqHeadData
 import Lemma.Tensor.XEq.of.Eq
+import Lemma.Vector.Head.eq.Get_0
 open Tensor
+set_option maxHeartbeats 4000000
 
 
 @[main]
@@ -26,24 +28,44 @@ private lemma main
     let ζᵢ := ζ[i].data[0]
     A[i, βᵢ: ζᵢ].softmax @ V[βᵢ: ζᵢ] := by
 -- proof
+  have hβ (i : Fin n) :
+      (([j < n] ((↑j + 1 - l : ℕ) : Tensor ℕ []))[i]).data[0] = ↑i + 1 - l := by
+    have hi : ↑i < n := i.isLt
+    refine
+      (congrArg (fun t : Tensor ℕ [] => t.data[0])
+        (EqGetStack.fin (n := n) (α := ℕ) (s := [])
+          (fun j : Fin n => ((↑j + 1 - l : ℕ) : Tensor ℕ [])) ⟨↑i, hi⟩)) ▸ ?_
+    apply Eq.trans (Vector.Get_0.eq.Head.fin ((↑(↑i + 1 - l) : Tensor ℕ []).data))
+    apply EqHeadData.nat
+  have hζ (i : Fin n) :
+      (([j < n] ((↑j + u : ℕ) : Tensor ℕ []))[i]).data[0] = ↑i + u := by
+    have hi : ↑i < n := i.isLt
+    refine
+      (congrArg (fun t : Tensor ℕ [] => t.data[0])
+        (EqGetStack.fin (n := n) (α := ℕ) (s := [])
+          (fun j : Fin n => ((↑j + u : ℕ) : Tensor ℕ [])) ⟨↑i, hi⟩)) ▸ ?_
+    apply Eq.trans (Vector.Get_0.eq.Head.fin ((↑(↑i + u) : Tensor ℕ []).data))
+    apply EqHeadData.nat
   have h := DotSoftmaxAdd_Mul_Infty.eq.Stack_DotSoftmax (l := l) (u := u) (n := n) (d_z := d_z) A V
   subst h_β h_ζ
   refine h.trans ?_
   apply XEq.symm
-  apply XEq.of.Eq
-  apply Eq.of.All_EqGetS.fin
-  intro i
-  simp only [EqGetStack.fin]
-  have hβ : (([j < n] ((j.val + 1 - l : ℕ) : Tensor ℕ []))[i]).data[0] = i + 1 - l := by
-    simp [GetElem.getElem]
-    erw [EqGetStack.fin]
-    rfl
-  have hζ : (([j < n] ((j.val + u : ℕ) : Tensor ℕ []))[i]).data[0] = i + u := by
-    simp [GetElem.getElem]
-    erw [EqGetStack.fin]
-    rfl
-  rw [hβ, hζ]
+  apply Tensor.XEq.of.Eq
+  let idxβ : Fin n → ℕ := fun i =>
+    (([j < n] ((↑j + 1 - l : ℕ) : Tensor ℕ []))[i]).data[0]
+  let idxζ : Fin n → ℕ := fun i =>
+    (([j < n] ((↑j + u : ℕ) : Tensor ℕ []))[i]).data[0]
+  let idxβ' : Fin n → ℕ := fun i => ↑i + 1 - l
+  let idxζ' : Fin n → ℕ := fun i => ↑i + u
+  change
+    ([i < n]
+      (map Hyperreal.ofReal A)[i][↑(idxβ i):↑(idxζ i)].softmax @
+        (map Hyperreal.ofReal V)[↑(idxβ i):↑(idxζ i)]) =
+      ([i < n]
+        (map Hyperreal.ofReal A)[i][↑(idxβ' i):↑(idxζ' i)].softmax @
+          (map Hyperreal.ofReal V)[↑(idxβ' i):↑(idxζ' i)])
+  rw [show idxβ = idxβ' from funext hβ, show idxζ = idxζ' from funext hζ]
 
 
 -- created on 2022-01-01
--- updated on 2026-08-20
+-- updated on 2026-08-28

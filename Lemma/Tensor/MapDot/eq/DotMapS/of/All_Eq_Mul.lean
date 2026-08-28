@@ -26,7 +26,7 @@ private lemma left
   intro i
   simp [Tensor.map, HMul.hMul]
   simp only [GetElem.getElem]
-  repeat erw [GetMap.eq.UFnGet]
+  repeat erw [GetMap.eq.UFnGet.fin]
   simp [HMul.hMul] at h_mul
   rw [h_mul]
 
@@ -53,7 +53,7 @@ private lemma main
   intro i
   simp [HMul.hMul]
   simp only [GetElem.getElem]
-  repeat erw [GetMap.eq.UFnGet]
+  repeat erw [GetMap.eq.UFnGet.fin]
   apply h_mul
 
 

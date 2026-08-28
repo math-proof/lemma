@@ -51,8 +51,8 @@ private lemma main
           simp only [GetElem.getElem]
           have h := GetUnsqueeze.eq.Cast_UnsqueezeGet.of.GtGet_0.Gt_0.GtLength_0.fin (by simp) (by simp) (by simp) X (s := s₀ :: s) (d := d + 1) (i := (List.Vector.range s₀)[i])
           simp at h
-          rw [GetMap.eq.UFnGet]
-          erw [GetMap.eq.UFnGet]
+          rw [GetMap.eq.UFnGet.fin]
+          erw [GetMap.eq.UFnGet.fin]
           erw [h]
           simp at h_dim
           have ih := ih h_dim (X.get (List.Vector.range s₀)[i])

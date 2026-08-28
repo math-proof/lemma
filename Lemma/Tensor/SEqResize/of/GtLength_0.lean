@@ -37,7 +37,7 @@ private lemma main
       ·
         intro t
         erw [GetOfVector.eq.Get.fin]
-        erw [GetMap.eq.UFnGet]
+        erw [GetMap.eq.UFnGet.fin]
         simp
         erw [GetToVector.eq.Get.fin (i := ⟨t, by grind⟩)]
         have ih := ih (by grind) (X.get ⟨t, by grind⟩)

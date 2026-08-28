@@ -17,7 +17,7 @@ private lemma main
 -- proof
   repeat rw [ToVector.eq.MapRange_Get.fin]
   ext i
-  repeat erw [GetMap.eq.UFnGet]
+  repeat erw [GetMap.eq.UFnGet.fin]
   rw [EqGetRange.fin]
   erw [GetDiv.eq.DivGet.fin (A := A)]
   erw [Div.eq.Div_Reshape]

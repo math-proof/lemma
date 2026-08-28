@@ -53,8 +53,12 @@ private lemma kv_cache
       intro i
       simp only [EqGetStack.fin]
       simp [f]
-      split_ifs <;>
-        first | rfl | omega
+      erw [EqGetStack.fin]
+      split_ifs
+      .
+        aesop
+      .
+        omega
     ·
       apply Stack.eq.AppendStackS
   apply XEqAppendS.of.XEq.XEq
@@ -75,7 +79,8 @@ private lemma kv_cache
         ·
           simp only [Qs, Qn]
           repeat rw [MapStack.eq.Stack_Map]
-          simp [GetElem.getElem, EqGetStack.fin]
+          simp [GetElem.getElem]
+          repeat erw [EqGetStack.fin]
         ·
           apply SEqTS.of.SEq
           simp only [Ks, Kn]

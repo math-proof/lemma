@@ -12,7 +12,7 @@ private lemma main
 -- imply
   (v.map f)[i] = f v[i] := by
 -- proof
-  apply GetMap.eq.UFnGet
+  apply GetMap.eq.UFnGet.fin
 
 
 -- created on 2025-06-01

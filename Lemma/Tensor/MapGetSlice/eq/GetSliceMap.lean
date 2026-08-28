@@ -30,9 +30,9 @@ private lemma main
   apply congrArg List.Vector.flatten
   apply List.Vector.ext
   intro t
-  rw [GetMap.eq.UFnGet]
-  erw [GetMap.eq.UFnGet]
-  erw [GetMap.eq.UFnGet]
+  rw [GetMap.eq.UFnGet.fin]
+  erw [GetMap.eq.UFnGet.fin]
+  erw [GetMap.eq.UFnGet.fin]
   simp [Tensor.length]
   rw [MapData.eq.DataMap]
   apply congrArg Tensor.data

@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[main, fin]
 private lemma main
   {β : Type*}
 -- given
@@ -9,9 +9,9 @@ private lemma main
   (f : α → β)
   (i : Fin n) :
 -- imply
-  (v.map f).get i = f (v.get i) := by
+  (v.map f)[i] = f (v[i]) := by
 -- proof
-  simp [List.Vector.get_map]
+  simp
 
 
 -- created on 2024-07-01

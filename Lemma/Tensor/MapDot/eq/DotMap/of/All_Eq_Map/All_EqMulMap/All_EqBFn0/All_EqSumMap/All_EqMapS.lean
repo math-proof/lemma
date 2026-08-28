@@ -40,7 +40,7 @@ private lemma main
     have hdata : (A.map (f · B.data[0])).data[0] = f A.data[0] B.data[0] := by
       simp [Tensor.map]
       simp only [GetElem.getElem]
-      erw [GetMap.eq.UFnGet]
+      erw [GetMap.eq.UFnGet.fin]
     rw [hdata]
     apply h_left
   | _ :: _, [] =>

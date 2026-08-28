@@ -15,7 +15,7 @@ private lemma fin
   unfold Stack Tensor.OfVector
   erw [← Eq_UnflattenFlatten]
   simp [GetElem.getElem]
-  erw [GetMap.eq.UFnGet]
+  erw [GetMap.eq.UFnGet.fin]
   congr
   simp [List.Vector.get]
   simp [List.Vector.range]

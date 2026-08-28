@@ -27,7 +27,7 @@ private lemma main
   apply SEq.of.All_EqGetS.Eq (by simp)
   intro i
   simp [GetElem.getElem]
-  erw [GetMap.eq.UFnGet]
+  erw [GetMap.eq.UFnGet.fin]
   apply Eq.of.EqDataS
   have hi := i.isLt
   have hi : i < n := by
@@ -37,7 +37,7 @@ private lemma main
   erw [h]
   erw [EqUnflattenFlatten]
   dsimp [Tensor.data]
-  apply GetMap.eq.UFnGet
+  apply GetMap.eq.UFnGet.fin
 
 
 

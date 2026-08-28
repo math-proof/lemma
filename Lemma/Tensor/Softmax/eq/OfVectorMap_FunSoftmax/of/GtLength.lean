@@ -71,7 +71,7 @@ private lemma main
   unfold Tensor.toVector
   simp [DataExp.eq.ExpData]
   rw [GetCast.eq.Get.of.Eq.fin (by simp)]
-  conv_rhs => erw [GetMap.eq.UFnGet]
+  conv_rhs => erw [GetMap.eq.UFnGet.fin]
   conv_rhs => erw [DataDiv.eq.DivDataS]
   erw [GetDiv.eq.DivGetS.fin]
   conv_rhs =>
@@ -107,7 +107,7 @@ private lemma main
   have h_rₐ := rₐ.isLt
   repeat erw [GetFlatten.eq.Get.of.Eq_AddMul.fin (by assumption)]
   simp
-  conv_lhs => erw [GetMap.eq.UFnGet]
+  conv_lhs => erw [GetMap.eq.UFnGet.fin]
   repeat erw [GetRepeat.eq.Get_Mod.fin]
   repeat erw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
   simp [ProdDropInsertIdxEraseIdx.eq.ProdDrop.of.GtLength h] at ⊢ h_rₐ h_q'_div h_r'_mod h_qₐ_div h_rₐ_mod

@@ -20,8 +20,8 @@ private lemma Comm
   intro i
   dsimp only [Mul.mul, HMul.hMul]
   erw [GetMap₂.eq.BFnGetS.fin]
-  erw [GetMap.eq.UFnGet (i := i)]
-  erw [GetMap.eq.UFnGet (i := i)]
+  erw [GetMap.eq.UFnGet.fin (i := i)]
+  erw [GetMap.eq.UFnGet.fin (i := i)]
   erw [GetMap₂.eq.BFnGetS.fin]
   apply mul_right_comm
 
@@ -40,9 +40,9 @@ private lemma comm.left
   apply Vector.Eq.of.All_EqGetS.fin
   intro i
   dsimp only [HMul.hMul]
-  erw [GetMap.eq.UFnGet (i := i)]
-  erw [GetMap.eq.UFnGet (i := i)]
-  erw [GetMap.eq.UFnGet (i := i)]
+  erw [GetMap.eq.UFnGet.fin (i := i)]
+  erw [GetMap.eq.UFnGet.fin (i := i)]
+  erw [GetMap.eq.UFnGet.fin (i := i)]
   apply mul_right_comm
 
 
@@ -60,10 +60,10 @@ private lemma comm.right
   apply Vector.Eq.of.All_EqGetS.fin
   intro i
   dsimp only [HMul.hMul]
-  erw [GetMap.eq.UFnGet (i := i)]
-  erw [GetMap.eq.UFnGet (i := i)]
-  erw [GetMap.eq.UFnGet (i := i)]
-  erw [GetMap.eq.UFnGet (i := i)]
+  erw [GetMap.eq.UFnGet.fin (i := i)]
+  erw [GetMap.eq.UFnGet.fin (i := i)]
+  erw [GetMap.eq.UFnGet.fin (i := i)]
+  erw [GetMap.eq.UFnGet.fin (i := i)]
   apply mul_right_comm
 
 

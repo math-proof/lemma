@@ -16,10 +16,10 @@ private lemma main
 -- proof
   apply Eq.of.All_EqGetS.fin
   intro i
-  erw [GetMap.eq.UFnGet (i := i)]
+  erw [GetMap.eq.UFnGet.fin (i := i)]
   erw [GetRepeat.eq.Get_Mod.of.Lt_Mul.fin]
   erw [GetRepeat.eq.Get_Mod.of.Lt_Mul.fin]
-  erw [GetMap.eq.UFnGet]
+  erw [GetMap.eq.UFnGet.fin]
 
 
 -- created on 2026-08-12

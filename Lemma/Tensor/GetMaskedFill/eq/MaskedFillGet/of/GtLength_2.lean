@@ -30,7 +30,7 @@ private lemma main
     rw [Tensor.masked_fill, dif_pos h]
     simp [GetElem.getElem]
     erw [GetOfVector.eq.Get.fin]
-    erw [GetMap.eq.UFnGet]
+    erw [GetMap.eq.UFnGet.fin]
     congr 1
 
 

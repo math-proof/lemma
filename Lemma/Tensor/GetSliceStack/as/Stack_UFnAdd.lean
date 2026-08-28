@@ -50,7 +50,7 @@ private lemma main
       simp [GetElem.getElem]
       erw [GetToVector.eq.Get.cons.fin]
       erw [GetTensorFlatten.eq.TensorGet.fin]
-      erw [GetMap.eq.UFnGet]
+      erw [GetMap.eq.UFnGet.fin]
       erw [EqGetStack.fun.fin]
       erw [Vector.Get]
       have h_i := i.isLt

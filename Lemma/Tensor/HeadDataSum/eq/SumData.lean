@@ -28,7 +28,7 @@ private lemma main
   ·
     intro i
     have h_i := i.isLt
-    erw [GetMap.eq.UFnGet]
+    erw [GetMap.eq.UFnGet.fin]
     erw [GetUnflatten.eq.Get_AddMul.fin]
     erw [GetCast.eq.Get.of.Eq.fin (by simp)]
     simp

@@ -32,7 +32,7 @@ private lemma main
   simp only [GetElem.getElem]
   erw [Tensor.GetCast.eq.Cast_Get.of.Eq.fin (by grind)]
   apply EqCast.of.SEq
-  erw [GetMap.eq.UFnGet]
+  erw [GetMap.eq.UFnGet.fin]
   apply SEq.of.SEqDataS.Eq (by simp)
   simp
   apply SEqCast.of.SEq.Eq (by simp)
