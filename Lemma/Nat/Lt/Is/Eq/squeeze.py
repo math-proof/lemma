@@ -14,7 +14,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Bool
+    from Lemma import Bool, Nat
     x = Symbol(domain=Range(1, oo))
 
     Eq << apply(Less(x, 2))
@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq << Eq[-2].this.apply(Bool.Imp.Is.Or_Not)
 
-    Eq << Eq[-1].this.apply(Bool.Given.Is.Or)
+    Eq << Eq[-1].this.lhs.apply(Nat.Lt.of.Eq, 2)
 
 
 
@@ -31,3 +31,4 @@ if __name__ == '__main__':
     run()
 
 # created on 2020-01-10
+# updated on 2026-08-28

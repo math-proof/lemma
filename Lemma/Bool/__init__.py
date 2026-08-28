@@ -76,7 +76,6 @@ from . import All_Or
 from . import AllIn_Icc
 from . import GivenAnd
 from . import Le
-from . import As
 from . import Delta
 from . import Eq_Bool
 from . import Or_Any
