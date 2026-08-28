@@ -18,7 +18,7 @@ def prove(Eq):
     x = Symbol(real=True)
     Eq << apply(a < 0, b ** 2 - 4 * a * c >= 0, x=x)
 
-    Eq.delta_is_nonnegative = Real.GeSqrt_0.of.Ge_0.apply(Eq[1])
+    Eq.delta_is_nonnegative = Real.GeSqrt_0.pos.apply(Eq[1])
 
     Eq << Eq.delta_is_nonnegative - b
 

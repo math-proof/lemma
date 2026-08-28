@@ -16,7 +16,7 @@ def prove(Eq):
 
     Eq << Bool.Iff.given.Imp.Imp.apply(Eq[0])
 
-    Eq << Eq[-2].this.lhs.apply(Real.GeSqrt_0.of.Ge_0)
+    Eq << Eq[-2].this.lhs.apply(Real.GeSqrt_0.pos)
 
     Eq << Eq[-1].this.rhs.apply(Real.Ge_0.given.Ge_0.Sqrt)
 

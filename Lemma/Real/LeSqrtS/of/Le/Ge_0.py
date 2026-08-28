@@ -16,7 +16,7 @@ def prove(Eq):
     x, y = Symbol(real=True)
     Eq << apply(x >= 0, LessEqual(x, y))
 
-    Eq << Real.GeSqrt_0.of.Ge_0.apply(Eq[0])
+    Eq << Real.GeSqrt_0.pos.apply(Eq[0])
 
     t = Symbol(nonnegative=True)
     Eq << Nat.Gt.ou.AndGeS.of.Ge.apply(Eq[-1], t)
@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq << Nat.Ge.of.Le.Ge.apply(Eq[1], Eq[0])
 
-    Eq << Real.GeSqrt_0.of.Ge_0.apply(Eq[-1])
+    Eq << Real.GeSqrt_0.pos.apply(Eq[-1])
 
     Eq << Set.In_Ici.of.Ge.apply(Eq[-1])
 

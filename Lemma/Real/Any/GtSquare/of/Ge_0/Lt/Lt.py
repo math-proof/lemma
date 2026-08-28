@@ -78,7 +78,7 @@ def prove(Eq):
 
     Eq <<= Bool.Imp.given.Cond.apply(Eq[-2])
 
-    Eq <<= Eq[-1].this.lhs.apply(Real.GeSqrt_0.of.Ge_0)
+    Eq <<= Eq[-1].this.lhs.apply(Real.GeSqrt_0.pos)
 
     Eq << Bool.Imp_And.of.Cond.apply(Eq[1].reversed, cond=U >= m ** 2)
 

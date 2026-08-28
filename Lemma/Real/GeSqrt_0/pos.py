@@ -1,7 +1,7 @@
 from util import *
 
 
-@apply
+@apply(given=True)
 def apply(given):
     x = given.of(Expr >= 0)
     return sqrt(x) >= 0

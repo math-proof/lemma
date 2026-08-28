@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq << Real.GtSqrt_0.of.Gt_0.apply(Eq[-1])
 
-    Eq << Real.GeSqrt_0.of.Ge_0.apply(Eq[0])
+    Eq << Real.GeSqrt_0.pos.apply(Eq[0])
 
     Eq << Nat.GtAdd.of.Gt.Ge.apply(Eq[-2], Eq[-1])
 
