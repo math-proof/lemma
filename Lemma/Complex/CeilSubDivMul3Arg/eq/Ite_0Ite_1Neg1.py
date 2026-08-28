@@ -44,7 +44,7 @@ def prove(Eq):
     Eq << Eq[-1].lhs.this.apply(Nat.Eq_0.Is.EqMul.of.Ne_0, Eq[-1].find(Equal[~Ceil, 0]))
 
     Eq <<= Eq[-1] & Eq[-2]
-    Eq << Eq[-1].this.rhs.apply(Bool.Cond.of.Cond.Iff)
+    Eq << Eq[-1].this.rhs.apply(Bool.Cond.of.Cond.All_Iff)
 
 
 

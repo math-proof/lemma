@@ -53,7 +53,7 @@ def prove(Eq):
 
     Eq << Bool.Iff.of.Bool.apply(Eq[-1])
 
-    Eq << Bool.Cond.of.Cond.Iff.apply(Eq[-1], Eq[-4])
+    Eq << Bool.Cond.of.Cond.All_Iff.apply(Eq[-1], Eq[-4])
 
 
 

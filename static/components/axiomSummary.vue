@@ -192,12 +192,19 @@ select
 	_t.module, _t.depth
 from 
 	_t
-	left join 
-		axiom.lemma as _s 
-		on 
-			_s.module = regexp_replace(_t.module, '\\\\.[a-z]+$', '', 1, 0, 'c')
 where 
-	_s.module is null
+	not exists (
+		select 
+			1 
+		from 
+			axiom.lemma as _s 
+		where 
+			_s.user = 'lean' and 
+			(
+				_s.module = _t.module or 
+				_s.module = regexp_replace(_t.module, '\\\\.[a-z]+$', '', 1, 0, 'c')
+			)
+	)
 order by depth desc
 limit ${this.topk}`;
 			console.log(sql);
@@ -210,23 +217,26 @@ limit ${this.topk}`;
 		},
 
 		async fetchFormalizationStatus() {
+			var {user} = this;
 			var sql = `
-with statistic as (
-	select 
-		_t.axiom, 
-		if (_s.module is null, 0, 1) as status
-	from 
-		axiom.axiom as _t
-		left join 
-			axiom.lemma as _s 
-			on 
-				_s.module = regexp_replace(REPLACE(_t.axiom, '.given.', '.of.'), '\\\\.[a-z]+$', '', 1, 0, 'c')
-)
 select 
 	count(*) as count,
-	status 
+	if (exists (
+		select 
+			1 
+		from 
+			axiom.lemma as _s 
+		where 
+			_s.user = 'lean' and 
+			(
+				_s.module = REPLACE(_t.axiom, '.given.', '.of.') or 
+				_s.module = regexp_replace(REPLACE(_t.axiom, '.given.', '.of.'), '\\\\.[a-z]+$', '', 1, 0, 'c')
+			)
+	), 1, 0) as status 
 from 
-	statistic 
+	axiom.axiom as _t 
+where 
+	_t.user = '${user}' 
 group by status`;
 			console.log(sql);
 			var list = await form_post('php/request/execute.php', {sql, resultType: 1});
