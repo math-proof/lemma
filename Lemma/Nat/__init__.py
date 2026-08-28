@@ -121,3 +121,7 @@ from . import LePow
 from . import Le_0
 from . import LtPow
 from . import MulIteS
+from . import LePow
+from . import Le_0
+from . import LtPow
+from . import MulIteS

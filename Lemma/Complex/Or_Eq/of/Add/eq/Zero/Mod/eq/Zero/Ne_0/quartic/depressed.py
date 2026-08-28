@@ -78,7 +78,7 @@ def prove(Eq):
 
     Eq << Nat.Ne.of.Ne_0.Add.eq.Zero.apply(Eq[2], Eq[-1], y)
 
-    Eq << Nat.Ne_0.of.Ne.apply(Eq[-1]) * 2
+    Eq << Int.Sub.ne.Zero.of.Ne.apply(Eq[-1]) * 2
 
     Eq << Real.EqSquare.of.Ne_0.Add.eq.Zero.apply(Eq[-1], Eq[-3] * -8, Eq.eq.rhs)
 
