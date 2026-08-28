@@ -2,10 +2,11 @@ import sympy.core.power
 import sympy.core.numbers
 import sympy.functions.elementary.complexes
 import sympy.polys.polyroots
-import Lemma.Complex.CeilSubDivMul3Arg.eq.Ite_0Ite_1Neg1
+import Lemma.Complex.CeilSubDivMul3Arg.eq.IteEq0Mul_Ceil
 import Lemma.Complex.ArgMul.eq.Arg.of.Gt_0
 import Lemma.Complex.Eq_Mul_Pow_SubCeilS.of.Pow_3
 import Lemma.Complex.EqSquareSqrt
+import Lemma.Complex.PowMul.eq.MulPowS.of.Gt_0
 open Complex
 
 
@@ -44,19 +45,6 @@ private lemma main
         x = A * ω + B * ω) := by
 -- proof
   intro δ U V A B ω arg_p arg_AB d
-  have hmul_half (z : ℂ) : ((2 : ℂ)⁻¹ * z) ^ (3 : ℂ)⁻¹ = (2 : ℂ)⁻¹ ^ (3 : ℂ)⁻¹ * z ^ (3 : ℂ)⁻¹ := by
-    by_cases hz : z = 0
-    ·
-      subst hz
-      simp [(by norm_num : (3 : ℂ) ≠ 0)]
-    ·
-      rw [cpow_def_of_ne_zero (mul_ne_zero (by norm_num) hz), cpow_def_of_ne_zero hz, cpow_def_of_ne_zero (by norm_num : (2 : ℂ)⁻¹ ≠ 0)]
-      have hlog : log ((2 : ℂ)⁻¹ * z) = ↑(Real.log (2 : ℝ)⁻¹) + log z := by
-        rw [(by norm_num : (2 : ℂ)⁻¹ = (2 : ℝ)⁻¹), log_ofReal_mul (by norm_num : (0 : ℝ) < (2 : ℝ)⁻¹) hz]
-      rw [hlog, add_mul, exp_add]
-      have hlog2 : log (2 : ℂ)⁻¹ = ↑(Real.log (2 : ℝ)⁻¹) := by
-        rw [(by norm_num : (2 : ℂ)⁻¹ = (2 : ℝ)⁻¹), ofReal_log (by norm_num : (0 : ℝ) ≤ (2 : ℝ)⁻¹)]
-      rw [hlog2]
   have hUA : √δ / 2 - q / 2 = (2 : ℂ)⁻¹ * U := by
     simp [U]
     ring
@@ -65,10 +53,14 @@ private lemma main
     ring
   have hA : A = (2 : ℂ)⁻¹ ^ (3 : ℂ)⁻¹ * U ^ (3 : ℂ)⁻¹ := by
     simp only [A]
-    rw [hUA, hmul_half]
+    rw [hUA, (by norm_num : (2 : ℂ)⁻¹ = ↑((2 : ℝ)⁻¹))]
+    apply PowMul.eq.MulPowS.of.Gt_0
+    norm_num
   have hB : B = (2 : ℂ)⁻¹ ^ (3 : ℂ)⁻¹ * V ^ (3 : ℂ)⁻¹ := by
     simp only [B]
-    rw [hVB, hmul_half]
+    rw [hVB, (by norm_num : (2 : ℂ)⁻¹ = ↑((2 : ℝ)⁻¹))]
+    apply PowMul.eq.MulPowS.of.Gt_0
+    norm_num
   have hcbrt : (2 : ℂ)⁻¹ ^ (3 : ℂ)⁻¹ = ↑((2 : ℝ)⁻¹ ^ ((3 : ℝ)⁻¹)) := by
     rw [show (2 : ℂ)⁻¹ = ↑((2 : ℝ)⁻¹) from by norm_num, show (3 : ℂ)⁻¹ = ↑((3 : ℝ)⁻¹) from by norm_num, ofReal_cpow (by norm_num : (0 : ℝ) ≤ (2 : ℝ)⁻¹)]
   have hpos : (0 : ℝ) < (2 : ℝ)⁻¹ ^ ((3 : ℝ)⁻¹) :=
@@ -78,7 +70,7 @@ private lemma main
     ring
   have harg : arg (A * B) = arg (U ^ (3 : ℂ)⁻¹ * V ^ (3 : ℂ)⁻¹) := by
     rw [hAB, ArgMul.eq.Arg.of.Gt_0 hpos, ArgMul.eq.Arg.of.Gt_0 hpos]
-  have hite := CeilSubDivMul3Arg.eq.Ite_0Ite_1Neg1 (p := p) (q := q)
+  have hite := CeilSubDivMul3Arg.eq.IteEq0Mul_Ceil (p := p) (q := q)
   have hd : d = ⌈3 * arg (-p / 3) / (2 * π) - 1 / 2⌉ - ⌈3 * arg (A * B) / (2 * π) - 1 / 2⌉ := by
     simp only [d, arg_p, arg_AB]
     rw [harg, hite]

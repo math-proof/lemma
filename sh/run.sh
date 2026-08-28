@@ -40,6 +40,7 @@ imports=($imports)
 echo "modules:"
 touch test.sql
 
+output_file=test.sql
 echo "INSERT INTO lemma (user, module, imports, open, def, lemma, error, date) VALUES " > test.sql
 for module in ${imports[*]}; do
   # echo "${module//.//}.lean"
@@ -126,21 +127,136 @@ transformPrefix() {
   echo "$s"
 }
 
-Not() {
+NotToken() {
   local token="$1"
   if [[ "$token" == Not* ]]; then
-    # Remove leading "Not"
     printf '%s\n' "${token:3}"
   elif [[ "$token" == Eq* ]]; then
-    # Replace leading "Eq" with "Ne"
     printf '%s\n' "Ne${token:2}"
   elif [[ "$token" == Ne* ]]; then
-    # Replace leading "Ne" with "Eq"
     printf '%s\n' "Eq${token:2}"
   else
-    # Prepend "Not"
     printf '%s\n' "Not${token}"
   fi
+}
+
+# Match Lean `List.Not` / `String.Not`: a lone token flips Eq/Ne/Not,
+# while `X.eq.Y` / `X.ne.Y` flip the infix (so `Sub.eq.Zero` → `Sub.ne.Zero`).
+Not() {
+  local token="$1"
+  local -a parts
+  IFS='.' read -ra parts <<< "$token"
+  if [[ ${#parts[@]} -eq 1 ]]; then
+    NotToken "$token"
+    return
+  fi
+  if [[ "${parts[1]}" == "eq" ]]; then
+    parts[1]=ne
+    local IFS='.'
+    printf '%s\n' "${parts[*]}"
+    return
+  fi
+  if [[ "${parts[1]}" == "ne" ]]; then
+    parts[1]=eq
+    local IFS='.'
+    printf '%s\n' "${parts[*]}"
+    return
+  fi
+  if [[ "${parts[1]}" == "ou" ]]; then
+    local left right
+    left=$(Not "${parts[0]}")
+    if [[ ${#parts[@]} -gt 2 ]]; then
+      local IFS='.'
+      right=$(Not "${parts[*]:2}")
+      printf '%s\n' "${left}.${right}"
+    else
+      printf '%s\n' "$left"
+    fi
+    return
+  fi
+  NotToken "$token"
+}
+
+emit_synthetic() {
+  echo "  ('$user', \"$1\", '[]', '[]', '[]', '[]', '[]', '[]')," >> test.sql
+}
+
+# Sets _section _lhs _rhs _of_suffix _of_args for `Section.LHS.is.RHS[.of.Args]`.
+parse_is_module() {
+  local module="$1"
+  if [[ ! "$module" =~ ^([a-zA-Z0-9_]+)\.(.+)\.is\.(.+)$ ]]; then
+    return 1
+  fi
+  _section="${BASH_REMATCH[1]}"
+  _lhs="${BASH_REMATCH[2]}"
+  local rest="${BASH_REMATCH[3]}"
+  if [[ "$rest" == *".of."* ]]; then
+    _rhs="${rest%%.of.*}"
+    _of_args=".of.${rest#*.of.}"
+    _of_suffix=".${rest#*.of.}"
+  else
+    _rhs="$rest"
+    _of_args=""
+    _of_suffix=""
+  fi
+  return 0
+}
+
+# Swap the two sides of `is` (`List.comm` / `commutateIs`).
+comm_swap_is() {
+  local module="$1"
+  local -a tokens rest first afterIs new_tokens prefix ofPart restIs
+  IFS='.' read -ra tokens <<< "$module"
+  local ofIdx=-1 isIdx=-1 i
+  for i in "${!tokens[@]}"; do
+    if [[ "${tokens[$i]}" == "of" ]]; then
+      ofIdx=$i
+      break
+    fi
+  done
+  if [[ $ofIdx -lt 0 ]]; then
+    rest=("${tokens[@]:1}")
+    for i in "${!rest[@]}"; do
+      if [[ "${rest[$i]}" == "is" ]]; then
+        isIdx=$i
+        break
+      fi
+    done
+    if [[ $isIdx -gt 0 ]]; then
+      first=("${rest[@]:0:$isIdx}")
+    else
+      first=()
+    fi
+    if [[ $isIdx -ge 0 && $((isIdx + 1)) -lt ${#rest[@]} ]]; then
+      afterIs=("${rest[@]:$((isIdx + 1))}")
+    else
+      afterIs=()
+    fi
+    new_tokens=("${tokens[0]}" "${afterIs[@]}" is "${first[@]}")
+  else
+    prefix=("${tokens[@]:0:$ofIdx}")
+    ofPart=("${tokens[@]:$ofIdx}")
+    restIs=("${prefix[@]:1}")
+    for i in "${!restIs[@]}"; do
+      if [[ "${restIs[$i]}" == "is" ]]; then
+        isIdx=$i
+        break
+      fi
+    done
+    if [[ $isIdx -gt 0 ]]; then
+      first=("${restIs[@]:0:$isIdx}")
+    else
+      first=()
+    fi
+    if [[ $isIdx -ge 0 && $((isIdx + 1)) -lt ${#restIs[@]} ]]; then
+      afterIs=("${restIs[@]:$((isIdx + 1))}")
+    else
+      afterIs=()
+    fi
+    new_tokens=("${prefix[0]}" "${afterIs[@]}" is "${first[@]}" "${ofPart[@]}")
+  fi
+  local IFS='.'
+  printf '%s\n' "${new_tokens[*]}"
 }
 
 # Find all .lean files except *.echo.lean under Lemma/
@@ -167,49 +283,82 @@ find Lemma -type f -name "*.lean" ! -name "*.echo.lean" | while read -r file; do
   if [[ $constructor_comment == *"constructor order"* ]]; then
     constructor_order=true
   fi
-  # Handle comm attribute
-  if [[ $attributes =~ \bcomm([[:space:]]*([0-9]+))?\b ]]; then
-    deBruijn="${BASH_REMATCH[2]}"
+  # Handle comm attribute (`comm` / `comm N`, not `comm.is` / `mp.comm`)
+  re_comm='(^|,[[:space:]]*)comm([[:space:]]+([0-9]+))?(,|$)'
+  if [[ $attributes =~ $re_comm ]]; then
+    deBruijn="${BASH_REMATCH[3]}"
     IFS='.' read -ra tokens <<< "$module"
-    case "${tokens[2]}" in
-      eq|is|as|ne|lt|le|gt|ge)
+    found=false
+    has_is=false
+    for t in "${tokens[@]:1}"; do
+      if [[ "$t" == "is" ]]; then
+        has_is=true
+        break
+      fi
+    done
+    # `A.eq.B.is.C` has tokens[2] = eq, but comm still swaps around `is`.
+    if $has_is; then
+      found=true
+      if [[ -z "$deBruijn" ]]; then
+        new_module=$(comm_swap_is "$module")
+      elif [[ "${tokens[2]}" == "is" ]]; then
         tmp="${tokens[1]}"
         tokens[1]="${tokens[3]}"
         tokens[3]="$tmp"
-        ;;
-      *)
-        deBruijn=${deBruijn:-0}
-        index=$((${#tokens[@]}-1))
-        increment=-1
-        while [[ $deBruijn -gt 0 ]]; do
-          if ((deBruijn & 1)); then
-            tokens[$index]=$(transformPrefix "${tokens[$index]}")
+        new_module=$(IFS=. ; echo "${tokens[*]}")
+      else
+        new_module=$(comm_swap_is "$module")
+      fi
+    else
+      case "${tokens[2]}" in
+        eq|as|ne|lt|le|gt|ge)
+          found=true
+          tmp="${tokens[1]}"
+          tokens[1]="${tokens[3]}"
+          tokens[3]="$tmp"
+          new_module=$(IFS=. ; echo "${tokens[*]}")
+          ;;
+        *)
+          deBruijn=${deBruijn:-0}
+          index=$((${#tokens[@]}-1))
+          increment=-1
+          while [[ $deBruijn -gt 0 ]]; do
+            if ((deBruijn & 1)); then
+              found=true
+              tokens[$index]=$(transformPrefix "${tokens[$index]}")
+            fi
+            deBruijn=$((deBruijn >> 1))
+            index=$((index + increment))
+          done
+          first=$(transformPrefix "${tokens[1]}")
+          if [[ "${tokens[1]}" != "$first" ]]; then
+            found=true
+            tokens[1]="$first"
           fi
-          deBruijn=$((deBruijn >> 1))
-          index=$((index + increment))
-        done
-        tokens[1]=$(transformPrefix "${tokens[1]}")
-        ;;
-    esac
-    new_module=$(IFS=. ; echo "${tokens[*]}")
-    echo "  ('$user', \"$new_module\", '[]', '[]', '[]', '[]', '[]', '[]')," >> "$output_file"
+          new_module=$(IFS=. ; echo "${tokens[*]}")
+          ;;
+      esac
+    fi
+    if $found; then
+      emit_synthetic "$new_module"
+    fi
   fi
   # Handle mp attribute
-  if [[ $attributes =~ \bmp\b ]]; then
-    if [[ $module =~ ^([a-zA-Z0-9_]+)\.(.+)\.is\.(.+)(\.of\..+)?$ ]]; then
-      new_module="${BASH_REMATCH[1]}.${BASH_REMATCH[3]}.of.${BASH_REMATCH[2]}${BASH_REMATCH[4]}"
-      echo "  ('$user', \"$new_module\", '[]', '[]', '[]', '[]', '[]', '[]')," >> "$output_file"
+  re_mp='(^|,[[:space:]]+)mp(,|$)'
+  if [[ $attributes =~ $re_mp ]]; then
+    if parse_is_module "$module"; then
+      emit_synthetic "${_section}.${_rhs}.of.${_lhs}${_of_suffix}"
     fi
   fi
   # Handle mpr attribute
-  if [[ $attributes =~ \bmpr\b ]]; then
-    if [[ $module =~ ^([a-zA-Z0-9_]+)\.(.+)\.is\.(.+)(\.of\..+)?$ ]]; then
-      new_module="${BASH_REMATCH[1]}.${BASH_REMATCH[2]}.of.${BASH_REMATCH[3]}${BASH_REMATCH[4]}"
-      echo "  ('$user', \"$new_module\", '[]', '[]', '[]', '[]', '[]', '[]')," >> "$output_file"
+  re_mpr='(^|,[[:space:]]+)mpr(,|$)'
+  if [[ $attributes =~ $re_mpr ]]; then
+    if parse_is_module "$module"; then
+      emit_synthetic "${_section}.${_lhs}.of.${_rhs}${_of_suffix}"
     fi
   fi
   # Handle mp.comm
-  if [[ $attributes =~ \bmp\.comm\b ]]; then
+  if [[ $attributes == *mp.comm* ]]; then
     IFS='.' read -ra tokens <<< "$module"
     if [[ "${tokens[2]}" == "is" ]]; then
       new_tokens=()
@@ -221,13 +370,13 @@ find Lemma -type f -name "*.lean" ! -name "*.echo.lean" | while read -r file; do
       new_tokens[2]="of"
       new_tokens[3]="$tmp"
       new_module=$(IFS=. ; echo "${new_tokens[*]}")
-      echo "  ('$user', \"$new_module\", '[]', '[]', '[]', '[]', '[]', '[]')," >> "$output_file"
+      emit_synthetic "$new_module"
     else
       echo "Ignoring @\[main, mp.comm] at $file"
     fi
   fi
   # Handle mpr.comm
-  if [[ $attributes =~ \bmpr\.comm\b ]]; then
+  if [[ $attributes == *mpr.comm* ]]; then
     IFS='.' read -ra tokens <<< "$module"
     if [[ "${tokens[2]}" == "is" ]]; then
       new_tokens=()
@@ -238,31 +387,50 @@ find Lemma -type f -name "*.lean" ! -name "*.echo.lean" | while read -r file; do
       new_tokens[2]="of"
       new_tokens[3]=$(transformPrefix "${new_tokens[3]}")
       new_module=$(IFS=. ; echo "${new_tokens[*]}")
-      echo "  ('$user', \"$new_module\", '[]', '[]', '[]', '[]', '[]', '[]')," >> "$output_file"
+      emit_synthetic "$new_module"
     else
       echo "Ignoring @\[main, mpr.comm] at $file"
     fi
   fi
-  # Handle comm.is
-  if [[ $attributes =~ \bcomm\.is\b ]]; then
-    if [[ $module =~ ^([a-zA-Z0-9_]+)\.(.+)\.is\.(.+?)(\.of\..+)?$ ]]; then
-      section="${BASH_REMATCH[1]}"
-      given=$(transformPrefix "${BASH_REMATCH[2]}")
-      imply=$(transformPrefix "${BASH_REMATCH[3]}")
-      arguments="${BASH_REMATCH[4]}"
-      new_module="$section.$given.is.$imply$arguments"
-      echo "  ('$user', \"$new_module\", '[]', '[]', '[]', '[]', '[]', '[]')," >> "$output_file"
+  # Handle mp.mt
+  if [[ $attributes == *mp.mt* ]]; then
+    if parse_is_module "$module"; then
+      emit_synthetic "${_section}.$(Not "$_lhs").of.$(Not "$_rhs")${_of_suffix}"
     fi
   fi
-  # Handle mt attributes
-  while [[ $attributes =~ \bmt[[:space:]]*([0-9]*)\b ]]; do
-    mt_val="${BASH_REMATCH[1]}"
+  # Handle mpr.mt
+  if [[ $attributes == *mpr.mt* ]]; then
+    if parse_is_module "$module"; then
+      emit_synthetic "${_section}.$(Not "$_rhs").of.$(Not "$_lhs")${_of_suffix}"
+    fi
+  fi
+  # Handle comm.is
+  if [[ $attributes == *comm.is* ]]; then
+    if parse_is_module "$module"; then
+      given=$(transformPrefix "$_lhs")
+      imply=$(transformPrefix "$_rhs")
+      emit_synthetic "${_section}.${given}.is.${imply}${_of_args}"
+    fi
+  fi
+  # Handle is.comm
+  if [[ $attributes == *is.comm* ]]; then
+    if parse_is_module "$module"; then
+      given=$(transformPrefix "$_lhs")
+      imply=$(transformPrefix "$_rhs")
+      emit_synthetic "${_section}.${imply}.is.${given}${_of_args}"
+    fi
+  fi
+  # Handle mt attributes (not `mp.mt` / `mpr.mt`)
+  attr_mt="${attributes//mp.mt/}"
+  attr_mt="${attr_mt//mpr.mt/}"
+  re_mt='(^|[^[:alnum:].])mt([[:space:]]+([0-9]+))?([^[:alnum:]]|$)'
+  while [[ $attr_mt =~ $re_mt ]]; do
+    mt_val="${BASH_REMATCH[3]}"
     if [[ $module =~ ^([a-zA-Z0-9_]+)\.(.+)\.of\.(.+)$ ]]; then
       section="${BASH_REMATCH[1]}"
-      imply="${BASH_REMATCH[2]}" # Placeholder, Not operation missing
+      imply=$(Not "${BASH_REMATCH[2]}")
       given="${BASH_REMATCH[3]}"
-      given_array=(${given//./ })
-      # Compute index
+      IFS='.' read -ra given_array <<< "$given"
       if [[ -n "$mt_val" ]]; then
         i=$((${#given_array[@]}-1-$(echo "l($mt_val)/l(2)" | bc -l | awk '{printf("%d\n",$1+0.5)}')))
       else
@@ -271,15 +439,25 @@ find Lemma -type f -name "*.lean" ! -name "*.echo.lean" | while read -r file; do
       if $constructor_order; then
         i=$((${#given_array[@]}-1-$i))
       fi
-      new_imply="$imply"  # Not operation placeholder
+      new_imply=$(Not "${given_array[$i]}")
       arguments=("${given_array[@]}")
       arguments[$i]="$imply"
       new_given=$(IFS=. ; echo "${arguments[*]}")
-      new_module="$section.$new_imply.of.$new_given"
-      echo "  ('$user', \"$new_module\", '[]', '[]', '[]', '[]', '[]', '[]')," >> "$output_file"
+      emit_synthetic "$section.$new_imply.of.$new_given"
     fi
-    # Remove matched mt to avoid infinite loop
-    attributes="${attributes/${BASH_REMATCH[0]}/}"
+    attr_mt="${attr_mt/${BASH_REMATCH[0]}/}"
+  done
+  # Handle subst N
+  attr_subst="$attributes"
+  re_subst='subst[[:space:]]+([0-9]+)'
+  while [[ $attr_subst =~ $re_subst ]]; do
+    b="${BASH_REMATCH[1]}"
+    if [[ "$module" == *".of."* ]]; then
+      emit_synthetic "${module}.Eq_${b}"
+    else
+      emit_synthetic "${module}.of.Eq_${b}"
+    fi
+    attr_subst="${attr_subst/${BASH_REMATCH[0]}/}"
   done
 done
 sed -i '$ s/,$/\nON DUPLICATE KEY UPDATE imports = VALUES(imports), error = VALUES(error);/' test.sql

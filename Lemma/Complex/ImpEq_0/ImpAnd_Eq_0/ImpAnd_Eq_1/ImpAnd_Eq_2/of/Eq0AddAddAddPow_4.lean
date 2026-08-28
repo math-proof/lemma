@@ -1,7 +1,3 @@
-import sympy.core.power
-import sympy.core.numbers
-import sympy.functions.elementary.complexes
-import sympy.polys.polyroots
 import Lemma.Complex.OrOrSEqS.of.Eq0AddAddPow_4
 import Lemma.Complex.ImpEq_0.ImpAnd_Eq_0.ImpAnd_Eq_1.ImpAnd_Eq_2.of.Eq0AddAddAddMul_Pow_4.Ne_0
 open Complex
@@ -24,9 +20,18 @@ private lemma main
   let p : ℂ := br - ar ^ 2 / 3
   let q : ℂ := 2 * ar ^ 3 / 27 - ar * br / 3 + cr
   let δc : ℂ := 4 * p ^ 3 / 27 + q ^ 2
-  let Ac : ℂ := (√δc / 2 - q / 2) ^ (3 : ℂ)⁻¹
-  let Bc : ℂ := (-√δc / 2 - q / 2) ^ (3 : ℂ)⁻¹
-  let D : ℤ := ⌈3 * arg (-p / 3) / (2 * π) - 1 / 2⌉ - ⌈3 * arg (Ac * Bc) / (2 * π) - 1 / 2⌉
+  let D : ℤ :=
+    ⌈3 * arg (-p / 3) / (2 * π) - 1 / 2⌉ -
+      (
+        let U : ℂ := √δc - q
+        let V : ℂ := -√δc - q
+        if p * (⌈(arg U + arg V) / (2 * π) - 1 / 2⌉ : ℂ) = 0 then
+          (0 : ℤ)
+        else if arg U + arg V > π then
+          1
+        else
+          -1
+      )
   let ω : ℂ := ↑(-(1 / 2 : ℝ)) + ↑(√3 / 2 : ℝ) * I
   (β = 0 →
     let Δ : ℂ := α ^ 2 - 4 * γ
@@ -59,7 +64,7 @@ private lemma main
         x = √(-2 * β / √y0 - y1) / 2 + √y0 / 2 ∨
         x = -√(-2 * β / √y0 - y1) / 2 + √y0 / 2) := by
 -- proof
-  intro δ U V A B ar br cr p q δc Ac Bc D ω
+  intro δ U V A B ar br cr p q δc D ω
   refine ⟨?_, ?_, ?_, ?_⟩
   ·
     intro hβ Δ
@@ -88,4 +93,4 @@ private lemma main
 
 
 -- created on 2018-11-27
--- updated on 2026-08-22
+-- updated on 2026-08-28

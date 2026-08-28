@@ -514,6 +514,10 @@ export class Lean extends IndentedNode {
                 return this.parent.insert_left(this, 'LeanDoubleAngleQuotation');
             case '»':
                 return this.parent.push_right('LeanDoubleAngleQuotation');
+            case '‹':
+                return this.parent.insert_left(this, 'LeanSingleAngleQuotation');
+            case '›':
+                return this.parent.push_right('LeanSingleAngleQuotation');
             case '?':
                 if (this instanceof LeanGetElem) {
                     const parent = this.parent;
@@ -905,7 +909,8 @@ export class Lean extends IndentedNode {
             case 'LeanFloor':
             case 'LeanCeil':
             case 'LeanNorm':
-            case 'LeanDoubleAngleQuotation': {
+            case 'LeanDoubleAngleQuotation':
+            case 'LeanSingleAngleQuotation': {
                 const {indent, level} = this;
                 const caret = new LeanCaret(indent, level);
                 if (func === 'LeanBracket') {
@@ -2344,6 +2349,19 @@ class LeanDoubleAngleQuotation extends LeanPairedGroup {
     }
     latexFormat() {
         return '\\left\\langle{%s}\\right\\rangle'; // «» guillemets
+    }
+}
+
+/** Lean `‹p›` assumption term (look up a local of type `p`). */
+class LeanSingleAngleQuotation extends LeanPairedGroup {
+    get stack_priority() {
+        return 10;
+    }
+    get operator() {
+        return ['‹', '›'];
+    }
+    latexFormat() {
+        return '\\text{‹}{%s}\\text{›}';
     }
 }
 
@@ -9736,6 +9754,7 @@ const LEAN_CLASSES = {
     LeanFloor,
     LeanFrom,
     LeanDoubleAngleQuotation,
+    LeanSingleAngleQuotation,
     Lean_equiv,
     LeanNotEquiv,
     LeanAt,

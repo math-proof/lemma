@@ -1,5 +1,4 @@
-import sympy.core.numbers
-import Lemma.Complex.MulPowS_Inv3.eq.MulPow_Inv3.of.EqCeilSubDivAddArgS.Ne_0.Ne_0
+import Lemma.Complex.MulPowS_Inv3.eq.MulPow_Inv3.of.EqCeilSubDivAddArgS
 import Lemma.Complex.OrEqSCeil.of.CeilSubDivAddArgS.ne.Zero
 import Lemma.Complex.GtAddArgS.is.EqCeilSubDivS
 open Complex
@@ -20,6 +19,27 @@ private lemma main
 -- proof
   have hexp : (3 : ℂ)⁻¹ ≠ 0 := by norm_num
   have hz : (0 : ℂ) ^ (3 : ℂ)⁻¹ = 0 := zero_cpow hexp
+  let ω : ℂ := ↑(-(1 / 2 : ℝ)) + ↑(√3 / 2 : ℝ) * I
+  have h3r : (√3 : ℝ) ^ 2 = 3 := Real.sq_sqrt (by norm_num)
+  have hre : ω.re = -(1 / 2) := by
+    simp only [ω, add_re, mul_re, ofReal_re, ofReal_im, I_re, I_im]
+    ring
+  have him : ω.im = √3 / 2 := by
+    simp only [ω, add_im, mul_im, ofReal_re, ofReal_im, I_re, I_im]
+    ring
+  have hω1 : ω = -(1 / 2) + I * ↑(√3) / 2 := by
+    apply Complex.ext <;> simp [hre, him]
+  have hωinv : ω⁻¹ = -(1 / 2) - I * ↑(√3) / 2 := by
+    have hstar : ~ω = -(1 / 2) - I * ↑(√3) / 2 := by
+      apply Complex.ext <;> simp [conj_re, conj_im, hre, him]
+    have hmul : ω * ~ω = 1 := by
+      rw [mul_conj, ← ofReal_one]
+      congr 1
+      rw [normSq_apply, hre, him]
+      ring_nf
+      rw [h3r]
+      ring
+    exact (inv_eq_of_mul_eq_one_right hmul).trans hstar
   split_ifs with h0 hgt
   ·
     rcases h0 with hA | h0
@@ -30,24 +50,17 @@ private lemma main
       ·
         simp [hB, hz]
       ·
-        by_cases hA : A = 0
-        ·
-          simp [hA, hz]
-        ·
-          by_cases hB : B = 0
-          ·
-            simp [hB, hz]
-          ·
-            simpa using MulPowS_Inv3.eq.MulPow_Inv3.of.EqCeilSubDivAddArgS.Ne_0.Ne_0.zero hA hB hd0
+        simpa using MulPowS_Inv3.eq.MulPow_Inv3.of.EqCeilSubDivAddArgS hd0
   ·
-    have ⟨hA, hrest⟩ := not_or.mp h0
-    have ⟨hB, hd0⟩ := not_or.mp hrest
     have hd1 : ⌈(arg A + arg B) / (2 * π) - 1 / 2⌉ = 1 :=
       (GtAddArgS.is.EqCeilSubDivS (A := A) (B := B)).mp hgt
-    simpa using MulPowS_Inv3.eq.MulPow_Inv3.of.EqCeilSubDivAddArgS.Ne_0.Ne_0 hA hB hd1
+    have h := MulPowS_Inv3.eq.MulPow_Inv3.of.EqCeilSubDivAddArgS hd1
+    convert h
+    rw [zpow_one]
+    exact hω1.symm
   ·
-    have ⟨hA, hrest⟩ := not_or.mp h0
-    have ⟨hB, hd0⟩ := not_or.mp hrest
+    have ⟨_, hrest⟩ := not_or.mp h0
+    have ⟨_, hd0⟩ := not_or.mp hrest
     have hor := OrEqSCeil.of.CeilSubDivAddArgS.ne.Zero hd0
     have hdne1 : ⌈(arg A + arg B) / (2 * π) - 1 / 2⌉ ≠ 1 := by
       intro hd1
@@ -58,8 +71,11 @@ private lemma main
         contradiction
       ·
         exact h
-    simpa using MulPowS_Inv3.eq.MulPow_Inv3.of.EqCeilSubDivAddArgS.Ne_0.Ne_0.neg hA hB hdneg
+    have h := MulPowS_Inv3.eq.MulPow_Inv3.of.EqCeilSubDivAddArgS hdneg
+    convert h
+    rw [zpow_neg_one]
+    exact hωinv.symm
 
 
 -- created on 2018-11-01
--- updated on 2026-08-20
+-- updated on 2026-08-29

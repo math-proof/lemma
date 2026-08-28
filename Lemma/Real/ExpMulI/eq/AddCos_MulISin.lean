@@ -17,5 +17,5 @@ private lemma main
   apply ExpMulI.eq.AddCos_MulISin
 
 
--- created on 2025-01-05
+-- created on 2018-06-02
 -- updated on 2025-10-07

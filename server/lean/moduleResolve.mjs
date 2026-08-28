@@ -151,6 +151,32 @@ export function Not(token) {
   }
   if (Array.isArray(token)) {
     if (token.length === 1) return [Not(token[0])];
+    if (token.length === 3 && isInfixOperator(token[1])) {
+      let [left, op, right] = token;
+      switch (op) {
+        case 'eq':
+          op = 'ne';
+          break;
+        case 'ne':
+          op = 'eq';
+          break;
+        // case 'ge':
+        //   op = 'lt';
+        //   break;
+        // case 'gt':
+        //   op = 'le';
+        //   break;
+        // case 'le':
+        //   op = 'gt';
+        //   break;
+        // case 'lt':
+        //   op = 'ge';
+        //   break;
+        case 'ou':
+          return [Not(left), Not(right)];
+      }
+      return [left, op, right];
+    }
     return token;
   }
   return token;
@@ -357,15 +383,27 @@ export function resolveMissingModuleRedirect(moduleDot) {
               if (castHit) return castHit;
             }
             // (e.g. `Nat.AddSub.eq.SubAdd.of.Ge` → `Nat.SubAdd.eq.AddSub.of.Ge`).
-            const segment_ = segment.map((r) => [...r]);
+            let segment_ = segment.map((r) => [...r]);
             segment_[0] = [first[2], first[1], first[0]];
-            const p = moduleToLeanFromSegment(segment_, section);
-            if (p && fs.existsSync(p)) {
+            if (existsSync(tokensToModule(segment_, section))) {
               segment = segment_;
             } else if (segment[1]) {
-              segment[1][0] = 'is';
-              if (!existsSync(tokensToModule(segment, section))) {
-                [segment[0], segment[2]] = [segment[2], segment[0]];
+              segment_[0] = [...segment[0]];
+              segment_[1][0] = 'is';
+              if (existsSync(tokensToModule(segment_, section))) {
+                segment = segment_;
+              }
+              else {
+                [segment_[0], segment_[2]] = [segment_[2], segment_[0]];
+                if (existsSync(tokensToModule(segment_, section))) {
+                  segment = segment_;
+                }
+                else {
+                  [segment_[0], segment_[2]] = [Not(segment_[2]), Not(segment_[0])];
+                  if (existsSync(tokensToModule(segment_, section))) {
+                    segment = segment_;
+                  }
+                }
               }
             }
           }

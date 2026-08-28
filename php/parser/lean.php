@@ -431,6 +431,10 @@ abstract class Lean extends IndentedNode
                 return $this->parent->insert_left($this, 'LeanDoubleAngleQuotation');
             case '»':
                 return $this->parent->push_right('LeanDoubleAngleQuotation');
+            case '‹':
+                return $this->parent->insert_left($this, 'LeanSingleAngleQuotation');
+            case '›':
+                return $this->parent->push_right('LeanSingleAngleQuotation');
             case '?':
                 if ($this instanceof LeanGetElem) {
                     $parent = $this->parent;
@@ -827,6 +831,7 @@ abstract class Lean extends IndentedNode
             case 'LeanCeil':
             case 'LeanNorm':
             case 'LeanDoubleAngleQuotation':
+            case 'LeanSingleAngleQuotation':
                 $indent = $this->indent;
                 $level = $this->level;
                 $caret = new LeanCaret($indent, $level);
@@ -2074,6 +2079,26 @@ class LeanFloor extends LeanPairedGroup
     public function latexFormat()
     {
         return '\left\lfloor {%s} \right\rfloor';
+    }
+}
+
+class LeanSingleAngleQuotation extends LeanPairedGroup
+{
+    public function __get($vname)
+    {
+        switch ($vname) {
+            case 'stack_priority':
+                return 10;
+            case 'operator':
+                return ['‹', '›'];
+            default:
+                return parent::__get($vname);
+        }
+    }
+
+    public function latexFormat()
+    {
+        return '\text{‹}{%s}\text{›}';
     }
 }
 

@@ -1,9 +1,5 @@
-import sympy.core.numbers
-import sympy.core.power
-import sympy.polys.polyroots
 import Lemma.Complex.CeilSubDivMul_Arg.eq.Ite_0Ite_1Neg1
 import Lemma.Nat.Eq_0.is.EqMul.of.Ne_0
-import Lemma.Complex.EqSquareSqrt
 open Complex Nat
 
 
@@ -16,7 +12,7 @@ private lemma main
   let V : ℂ := -√δ - q
   ⌈3 * arg (U ^ (3 : ℂ)⁻¹ * V ^ (3 : ℂ)⁻¹) / (2 * π) - 1 / 2⌉ =
     if p * (⌈(arg U + arg V) / (2 * π) - 1 / 2⌉ : ℂ) = 0 then
-      (0 : ℤ)
+      0
     else if arg U + arg V > π then
       1
     else
@@ -66,4 +62,4 @@ private lemma main
 
 
 -- created on 2018-11-09
--- updated on 2026-08-22
+-- updated on 2026-08-28

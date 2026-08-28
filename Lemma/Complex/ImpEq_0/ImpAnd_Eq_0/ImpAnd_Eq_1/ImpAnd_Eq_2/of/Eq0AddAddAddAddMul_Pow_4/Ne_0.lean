@@ -1,10 +1,6 @@
-import sympy.core.power
-import sympy.core.numbers
-import sympy.functions.elementary.complexes
-import sympy.polys.polyroots
-import Lemma.Complex.OrOrSEqS.of.Eq0AddAddPow_4
-import Lemma.Complex.ImpEq_0.ImpAnd_Eq_0.ImpAnd_Eq_1.ImpAnd_Eq_2.of.Eq0AddAddAddMul_Pow_4.Ne_0
-open Complex
+import Lemma.Complex.ImpEq_0.ImpAnd_Eq_0.ImpAnd_Eq_1.ImpAnd_Eq_2.of.Eq0AddAddAddAddPow_4
+import Lemma.Nat.Mul.eq.Zero.is.OrEqS_0
+open Complex Nat
 
 
 @[main]
@@ -34,11 +30,18 @@ private lemma main
   let p : ℂ := br - ar ^ 2 / 3
   let q : ℂ := 2 * ar ^ 3 / 27 - ar * br / 3 + cr
   let δc : ℂ := 4 * p ^ 3 / 27 + q ^ 2
-  let Ac : ℂ := (√δc / 2 - q / 2) ^ (3 : ℂ)⁻¹
-  let Bc : ℂ := (-√δc / 2 - q / 2) ^ (3 : ℂ)⁻¹
   let D : ℤ :=
     ⌈3 * arg (-p / 3) / (2 * π) - 1 / 2⌉ -
-      ⌈3 * arg (Ac * Bc) / (2 * π) - 1 / 2⌉
+      (
+        let U : ℂ := √δc - q
+        let V : ℂ := -√δc - q
+        if p * (⌈(arg U + arg V) / (2 * π) - 1 / 2⌉ : ℂ) = 0 then
+          (0 : ℤ)
+        else if arg U + arg V > π then
+          1
+        else
+          -1
+      )
   let ω : ℂ := ↑(-(1 / 2 : ℝ)) + ↑(√3 / 2 : ℝ) * I
   (β = 0 →
     let Δ : ℂ := α ^ 2 - 4 * γ
@@ -71,80 +74,17 @@ private lemma main
         x = √(-2 * β / √y0 - y1) / 2 + √y0 / 2 - a' / 4 ∨
         x = -√(-2 * β / √y0 - y1) / 2 + √y0 / 2 - a' / 4) := by
 -- proof
-  intro a' b' c' d' α β γ δ U V A B ar br cr p q δc Ac Bc D ω
-  let z : ℂ := x + a' / 4
-  have hx : x = z - a' / 4 := by
-    simp [z]
-  have hmonic : x ^ 4 + a' * x ^ 3 + b' * x ^ 2 + c' * x + d' = 0 := by
-    have hmul :
-        a * (x ^ 4 + (b / a) * x ^ 3 + (c / a) * x ^ 2 + (d / a) * x + e / a) =
-          a * x ^ 4 + b * x ^ 3 + c * x ^ 2 + d * x + e := by
-      field_simp [ha]
-    have h0 : a * (x ^ 4 + a' * x ^ 3 + b' * x ^ 2 + c' * x + d') = 0 := by
-      simp only [a', b', c', d']
-      rw [hmul, h]
-    exact (mul_eq_zero.mp h0).resolve_left ha
-  have hdep : z ^ 4 + α * z ^ 2 + β * z + γ = 0 := by
-    rw [hx] at hmonic
-    have hexp :
-        (z - a' / 4) ^ 4 + a' * (z - a' / 4) ^ 3 + b' * (z - a' / 4) ^ 2 +
-            c' * (z - a' / 4) + d' =
-          z ^ 4 + α * z ^ 2 + β * z + γ := by
-      simp only [α, β, γ]
-      ring
-    rwa [hexp] at hmonic
-  refine ⟨?_, ?_, ?_, ?_⟩
-  ·
-    intro hβ Δ
-    have hz : z ^ 4 + α * z ^ 2 + γ = 0 := by
-      simpa [hβ] using hdep
-    have hbi := OrOrSEqS.of.Eq0AddAddPow_4.biquadratic (x := z) (α := α) (γ := γ) hz
-    rcases hbi with (hz' | hz') | hz' | hz'
-    ·
-      exact Or.inl (eq_sub_of_add_eq hz')
-    ·
-      exact Or.inr (Or.inl (eq_sub_of_add_eq hz'))
-    ·
-      exact Or.inr (Or.inr (Or.inl (eq_sub_of_add_eq hz')))
-    ·
-      exact Or.inr (Or.inr (Or.inr (eq_sub_of_add_eq hz')))
-  ·
-    intro ⟨hβ, hD⟩ y y0 y1
-    have hfour := (ImpEq_0.ImpAnd_Eq_0.ImpAnd_Eq_1.ImpAnd_Eq_2.of.Eq0AddAddAddMul_Pow_4.Ne_0 hdep hβ).1 hD
-    rcases hfour with hz' | hz' | hz' | hz'
-    ·
-      exact Or.inl (hx.trans (hz' ▸ rfl))
-    ·
-      exact Or.inr (Or.inl (hx.trans (hz' ▸ rfl)))
-    ·
-      exact Or.inr (Or.inr (Or.inl (hx.trans (hz' ▸ rfl))))
-    ·
-      exact Or.inr (Or.inr (Or.inr (hx.trans (hz' ▸ rfl))))
-  ·
-    intro ⟨hβ, hD⟩ y y0 y1
-    have hfour := (ImpEq_0.ImpAnd_Eq_0.ImpAnd_Eq_1.ImpAnd_Eq_2.of.Eq0AddAddAddMul_Pow_4.Ne_0 hdep hβ).2.1 hD
-    rcases hfour with hz' | hz' | hz' | hz'
-    ·
-      exact Or.inl (hx.trans (hz' ▸ rfl))
-    ·
-      exact Or.inr (Or.inl (hx.trans (hz' ▸ rfl)))
-    ·
-      exact Or.inr (Or.inr (Or.inl (hx.trans (hz' ▸ rfl))))
-    ·
-      exact Or.inr (Or.inr (Or.inr (hx.trans (hz' ▸ rfl))))
-  ·
-    intro ⟨hβ, hD⟩ y y0 y1
-    have hfour := (ImpEq_0.ImpAnd_Eq_0.ImpAnd_Eq_1.ImpAnd_Eq_2.of.Eq0AddAddAddMul_Pow_4.Ne_0 hdep hβ).2.2 hD
-    rcases hfour with hz' | hz' | hz' | hz'
-    ·
-      exact Or.inl (hx.trans (hz' ▸ rfl))
-    ·
-      exact Or.inr (Or.inl (hx.trans (hz' ▸ rfl)))
-    ·
-      exact Or.inr (Or.inr (Or.inl (hx.trans (hz' ▸ rfl))))
-    ·
-      exact Or.inr (Or.inr (Or.inr (hx.trans (hz' ▸ rfl))))
+  intro a' b' c' d' α β γ δ U V A B ar br cr p q δc D ω
+  apply ImpEq_0.ImpAnd_Eq_0.ImpAnd_Eq_1.ImpAnd_Eq_2.of.Eq0AddAddAddAddPow_4
+  apply
+    (OrEqS_0.of.Mul.eq.Zero
+      (a := a)
+      (b := x ^ 4 + a' * x ^ 3 + b' * x ^ 2 + c' * x + d')
+      ?_).resolve_left ha
+  refine Eq.trans ?_ h
+  simp only [a', b', c', d']
+  field_simp [ha]
 
 
 -- created on 2018-11-29
--- updated on 2026-08-21
+-- updated on 2026-08-28

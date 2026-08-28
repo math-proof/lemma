@@ -1,6 +1,5 @@
-import Lemma.Int.Sub.ne.Zero.of.Ne
+import Lemma.Int.Sub.eq.Zero.is.Eq
 import Lemma.Int.CoeSub.eq.SubCoeS
-import Lemma.Int.Ne.of.Sub.ne.Zero
 import Lemma.Int.NeCoe_0.is.Ne_0
 open Int
 

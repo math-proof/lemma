@@ -189,10 +189,10 @@ https://github.com/hhu-adam/lean4web-tools
 https://github.com/leanprover-community/lean4web
 
 # Lemma Naming Convention
-Rule of thumb: implyCondition.of.givenCondition₀.givenCondition₁...givenConditionₙ  
-The givenConditions are indexed using DeBruijn (the reverse order as appeared in lean code), unless otherwise stated, e.g.: constructor order wherein givenConditions are listed according to the parameter order of the constructor indicated by implyCondition.  
+Rule of thumb: implyCondition.of.givenCondition.givenCondition...givenCondition  
+The givenConditions are listed using DeBruijn, in the reverse order as indexed in lean code, unless otherwise stated, e.g.: constructor order wherein givenConditions are listed according to the parameter order of the constructor indicated by implyCondition.  
 if implyCondition is a conjunction, it is written as:
-implyCondition₀.implyCondition₁...implyConditionₖ.of.givenCondition₀.givenCondition₁...givenConditionₙ  
+implyCondition.implyCondition...implyCondition.of.givenCondition.givenCondition...givenCondition  
 
 ## CamelCase
 CamelCase is used for unary function, eg:  
@@ -261,7 +261,8 @@ Guidelines and prompts for using LLMs to write and refactor Lean 4 proofs in thi
 ### Proof style
 - Use `obtain` instead of `rcases`, `if … then … else …` instead of `by_cases`, `have` instead of `haveI`, and `let` instead of `letI`.
 - inline `have` without introducing `show` if it is referenced only once, e.g.: prefer `apply` instead of `exact`, perhaps by creating some holes.
-- use `calc` instead of `by calc`, replace the first left hand side expression with _
+- use `calc` instead of `by calc`, start `calc` with _
+- avoid `calc` within [] of `rw`/`erw`/`simp`, use `by` within [] only when it is one-liner statement withno `;`
 - After a bullet tactic (`·`), put the next statement on a new line when that branch contains more than one step.
 - implicit/instance (instImplicit) arguments should be put before the `given` section
 - default arguments should be put within the `given` section: propositions come first, expressions come next, unless otherwise specified

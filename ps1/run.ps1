@@ -214,7 +214,7 @@ function transformPrefix {
     return $s
 }
 
-function Not($token) {
+function Not-Token($token) {
     if ($token.StartsWith('Not')) {
         return $token.Substring(3)
     }
@@ -227,6 +227,32 @@ function Not($token) {
     else {
         return "Not" + $token
     }
+}
+
+# Match Lean `List.Not` / `String.Not`: a lone token flips Eq/Ne/Not,
+# while `X.eq.Y` / `X.ne.Y` flip the infix (so `Sub.eq.Zero` → `Sub.ne.Zero`).
+function Not($token) {
+    $parts = @($token -split '\.')
+    if ($parts.Length -eq 1) {
+        return Not-Token $token
+    }
+    if ($parts[1] -eq 'eq') {
+        $parts[1] = 'ne'
+        return $parts -join '.'
+    }
+    if ($parts[1] -eq 'ne') {
+        $parts[1] = 'eq'
+        return $parts -join '.'
+    }
+    if ($parts[1] -eq 'ou') {
+        $left = Not $parts[0]
+        $right = if ($parts.Length -gt 2) { Not (($parts[2..($parts.Length - 1)] -join '.')) } else { '' }
+        if ($right) {
+            return "$left.$right"
+        }
+        return $left
+    }
+    return Not-Token $token
 }
 
 # Get all .lean files except *.echo.lean under Lemma/
@@ -247,59 +273,91 @@ Get-ChildItem -Recurse -Path "Lemma" -Include *.lean -Exclude *.echo.lean | ForE
     if ($match) {
         $tokens = $module -split '\.'
         $deBruijn = $matches[1]
-        $found = $false;
-        switch -regex ($tokens[2]) {
-            "^is$" {
-                $found = $true;
-                if ([string]::IsNullOrEmpty($deBruijn)) {
-                    $ofIdx = [array]::IndexOf([object[]]$tokens, 'of')
-                    if ($ofIdx -lt 0) {
-                        $rest = $tokens[1..($tokens.Length - 1)]
-                        $isIdx = [array]::IndexOf([object[]]$rest, 'is')
-                        $first = @()
-                        if ($isIdx -gt 0) { $first = @($rest[0..($isIdx - 1)]) }
-                        $afterIs = @()
-                        if ($isIdx -lt $rest.Length - 1) { $afterIs = @($rest[($isIdx + 1)..($rest.Length - 1)]) }
-                        $newRest = $afterIs + @('is') + $first
-                        $tokens = @($tokens[0]) + $newRest
-                    } else {
-                        $prefix = $tokens[0..($ofIdx - 1)]
-                        $ofPart = $tokens[$ofIdx..($tokens.Length - 1)]
-                        $rest = $prefix[1..($prefix.Length - 1)]
-                        $isIdx = [array]::IndexOf([object[]]$rest, 'is')
-                        $first = @()
-                        if ($isIdx -gt 0) { $first = @($rest[0..($isIdx - 1)]) }
-                        $afterIs = @()
-                        if ($isIdx -lt $rest.Length - 1) { $afterIs = @($rest[($isIdx + 1)..($rest.Length - 1)]) }
-                        $newRest = $afterIs + @('is') + $first
-                        $tokens = @($prefix[0]) + $newRest + $ofPart
-                    }
+        $found = $false
+        $rest = @()
+        if ($tokens.Length -gt 1) {
+            $rest = @($tokens[1..($tokens.Length - 1)])
+        }
+        # `A.eq.B.is.C` has tokens[2] = eq, but comm still swaps around `is`
+        # (`List.comm` / `commutateIs`), not the inner infix.
+        if ($rest -contains 'is') {
+            $found = $true
+            if ([string]::IsNullOrEmpty($deBruijn)) {
+                $ofIdx = [array]::IndexOf([object[]]$tokens, 'of')
+                if ($ofIdx -lt 0) {
+                    $isIdx = [array]::IndexOf([object[]]$rest, 'is')
+                    $first = @()
+                    if ($isIdx -gt 0) { $first = @($rest[0..($isIdx - 1)]) }
+                    $afterIs = @()
+                    if ($isIdx -lt $rest.Length - 1) { $afterIs = @($rest[($isIdx + 1)..($rest.Length - 1)]) }
+                    $newRest = $afterIs + @('is') + $first
+                    $tokens = @($tokens[0]) + $newRest
                 } else {
-                    $tokens = @($tokens[0], $tokens[3], $tokens[2], $tokens[1]) + $tokens[4..($tokens.Length - 1)]
+                    $prefix = $tokens[0..($ofIdx - 1)]
+                    $ofPart = $tokens[$ofIdx..($tokens.Length - 1)]
+                    $restIs = @($prefix[1..($prefix.Length - 1)])
+                    $isIdx = [array]::IndexOf([object[]]$restIs, 'is')
+                    $first = @()
+                    if ($isIdx -gt 0) { $first = @($restIs[0..($isIdx - 1)]) }
+                    $afterIs = @()
+                    if ($isIdx -lt $restIs.Length - 1) { $afterIs = @($restIs[($isIdx + 1)..($restIs.Length - 1)]) }
+                    $newRest = $afterIs + @('is') + $first
+                    $tokens = @($prefix[0]) + $newRest + $ofPart
+                }
+            } elseif ($tokens[2] -eq 'is') {
+                $tail = @()
+                if ($tokens.Length -gt 4) {
+                    $tail = $tokens[4..($tokens.Length - 1)]
+                }
+                $tokens = @($tokens[0], $tokens[3], $tokens[2], $tokens[1]) + $tail
+            } else {
+                $ofIdx = [array]::IndexOf([object[]]$tokens, 'of')
+                if ($ofIdx -lt 0) {
+                    $isIdx = [array]::IndexOf([object[]]$rest, 'is')
+                    $first = @()
+                    if ($isIdx -gt 0) { $first = @($rest[0..($isIdx - 1)]) }
+                    $afterIs = @()
+                    if ($isIdx -lt $rest.Length - 1) { $afterIs = @($rest[($isIdx + 1)..($rest.Length - 1)]) }
+                    $newRest = $afterIs + @('is') + $first
+                    $tokens = @($tokens[0]) + $newRest
+                } else {
+                    $prefix = $tokens[0..($ofIdx - 1)]
+                    $ofPart = $tokens[$ofIdx..($tokens.Length - 1)]
+                    $restIs = @($prefix[1..($prefix.Length - 1)])
+                    $isIdx = [array]::IndexOf([object[]]$restIs, 'is')
+                    $first = @()
+                    if ($isIdx -gt 0) { $first = @($restIs[0..($isIdx - 1)]) }
+                    $afterIs = @()
+                    if ($isIdx -lt $restIs.Length - 1) { $afterIs = @($restIs[($isIdx + 1)..($restIs.Length - 1)]) }
+                    $newRest = $afterIs + @('is') + $first
+                    $tokens = @($prefix[0]) + $newRest + $ofPart
                 }
             }
-            "^(eq|as|ne|lt|le|gt|ge)$" {
-                $found = $true;
-                $tmp = $tokens[1]
-                $tokens[1] = $tokens[3]
-                $tokens[3] = $tmp
-            }
-            default {
-                $deBruijn = [int]$deBruijn
-                $index = $tokens.length - 1
-                $increment = -1
-                while ($deBruijn) {
-                    if ($deBruijn -band 1) {
-                        $found = $true;
-                        $tokens[$index] = transformPrefix $tokens[$index]
+        } else {
+            switch -regex ($tokens[2]) {
+                "^(eq|as|ne|lt|le|gt|ge)$" {
+                    $found = $true
+                    $tmp = $tokens[1]
+                    $tokens[1] = $tokens[3]
+                    $tokens[3] = $tmp
+                }
+                default {
+                    $deBruijn = [int]$deBruijn
+                    $index = $tokens.length - 1
+                    $increment = -1
+                    while ($deBruijn) {
+                        if ($deBruijn -band 1) {
+                            $found = $true
+                            $tokens[$index] = transformPrefix $tokens[$index]
+                        }
+                        $deBruijn = $deBruijn -shr 1
+                        $index += $increment
                     }
-                    $deBruijn = $deBruijn -shr 1
-                    $index += $increment
-                }
-                $first = transformPrefix $tokens[1]
-                if ($tokens[1] -ne $first) {
-                    $found = $true;
-                    $tokens[1] = $first
+                    $first = transformPrefix $tokens[1]
+                    if ($tokens[1] -ne $first) {
+                        $found = $true
+                        $tokens[1] = $first
+                    }
                 }
             }
         }
