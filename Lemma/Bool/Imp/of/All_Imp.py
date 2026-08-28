@@ -35,7 +35,7 @@ def prove(Eq):
 
     Eq << Eq[-1].simplify()
 
-    Eq << Bool.Cond.of.Cond.All_Imp.apply(Eq[-1], Eq[0], n=n)
+    Eq << Bool.Cond.of.All_Imp.Cond.apply(Eq[-1], Eq[0], n=n)
 
 
 if __name__ == '__main__':

@@ -29,7 +29,7 @@ def prove(Eq):
 
     Eq << Imply(Eq[2], Eq.induct, plausible=True)
 
-    Eq << Bool.Cond.of.All_Imp.apply(Eq[-1], n=m, start=0)
+    Eq << Bool.Imp.of.All_Imp.apply(Eq[-1], n=m, start=0)
 
     Eq << Bool.All.of.Cond.apply(Eq[2], m)
 

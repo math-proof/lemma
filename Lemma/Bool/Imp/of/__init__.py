@@ -6,3 +6,4 @@ from . import Imp
 from . import Iff
 from . import Imp_And
 from . import Imp_Ite
+from . import All_Imp

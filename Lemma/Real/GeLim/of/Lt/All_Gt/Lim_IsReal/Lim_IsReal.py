@@ -62,7 +62,7 @@ def prove(Eq):
 
     Eq <<= Eq[-1].this.lhs.apply(Set.In_Ico.given.Le.Lt)
 
-    Eq << Bool.All.of.Imp.apply(Eq[-1])
+    Eq << Bool.All.of.All_Imp.apply(Eq[-1])
 
     Eq << Nat.Gt_0.of.Lt.apply(Eq[0])
 

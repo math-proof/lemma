@@ -46,8 +46,8 @@ def prove(Eq):
     Eq <<= Eq[-2].this.lhs.args[0].lhs.args[1].apply(Set.In_Inter.Is.And_In_Inter), \
     Eq[-1].this.rhs.args[0].lhs.args[1].apply(Set.In_Inter.Is.And_In_Inter)
 
-    Eq <<= Eq[-2].this.lhs.args[0].apply(Bool.Imp.Is.All, wrt=x), \
-    Eq[-1].this.rhs.args[0].apply(Bool.Imp.Is.All, wrt=x)
+    Eq <<= Eq[-2].this.lhs.args[0].apply(Bool.All_Imp.Is.All, wrt=x), \
+    Eq[-1].this.rhs.args[0].apply(Bool.All_Imp.Is.All, wrt=x)
 
     Eq <<= Eq[-2].this.lhs.args[1].apply(Bool.All.Is.Imp), Eq[-1].this.rhs.apply(Bool.All.Is.Imp)
 
@@ -59,8 +59,8 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.lhs.args[0].lhs.simplify(), Eq[-1].this.rhs.lhs.simplify()
 
-    Eq <<= Eq[-2].this.lhs.args[0].apply(Bool.Imp.Is.All, wrt=x), \
-    Eq[-1].this.rhs.apply(Bool.Imp.Is.All, wrt=x)
+    Eq <<= Eq[-2].this.lhs.args[0].apply(Bool.All_Imp.Is.All, wrt=x), \
+    Eq[-1].this.rhs.apply(Bool.All_Imp.Is.All, wrt=x)
 
 
 

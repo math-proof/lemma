@@ -83,7 +83,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Element).apply(Set.In_Icc.given.InAdd, x0)
 
-    Eq << Eq[-1].this.expr.apply(Bool.All.of.Imp)
+    Eq << Eq[-1].this.expr.apply(Bool.All.of.All_Imp)
 
     Eq << Real.Eq.of.Any_All.limit_definition.apply(Eq[-1])
 

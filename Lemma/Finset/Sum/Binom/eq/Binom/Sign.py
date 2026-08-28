@@ -50,7 +50,7 @@ def prove(Eq):
 
     Eq << Bool.Imp.of.Cond.apply(Eq[-1], cond=t > 0)
 
-    Eq << Bool.All.of.Imp.apply(Eq[-1])
+    Eq << Bool.All.of.All_Imp.apply(Eq[-1])
 
     Eq << Eq[-1].this().find(Mul[~Binomial]).simplify()
 

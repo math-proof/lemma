@@ -34,7 +34,7 @@ def prove(Eq):
     Eq << Eq[-1].this.find(Sum).apply(Finset.Sum.eq.Sub.push)
     Eq << Imply(Eq[2], Eq.induct, plausible=True)
 
-    Eq << Bool.Cond.of.All_Imp.apply(Eq[-1], n=n, start=0)
+    Eq << Bool.Imp.of.All_Imp.apply(Eq[-1], n=n, start=0)
 
     Eq << Bool.Cond.of.Imp.Cond.apply(Eq[0], Eq[2])
 

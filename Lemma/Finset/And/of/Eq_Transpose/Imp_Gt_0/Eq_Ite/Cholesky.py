@@ -44,7 +44,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Set.In_Union.of.In, Reals)
 
-    Eq << Bool.All.of.Imp.apply(Eq[-1], j)
+    Eq << Bool.All.of.All_Imp.apply(Eq[-1], j)
 
     Eq << Bool.AllOr.of.All.All.apply(Eq[-1], Eq.L_lower)
 
@@ -63,7 +63,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq[-2])
 
-    Eq << Bool.All.of.Imp.apply(Eq[-1])
+    Eq << Bool.All.of.All_Imp.apply(Eq[-1])
 
     Eq << Bool.All.of.All.limits.domain_defined.apply(Eq[-1])
 

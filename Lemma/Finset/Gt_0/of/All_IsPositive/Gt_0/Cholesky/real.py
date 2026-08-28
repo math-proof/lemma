@@ -66,7 +66,7 @@ def prove(Eq):
 
     Eq << Imply(Eq.hypothesis, Eq.induct, plausible=True)
 
-    Eq << Bool.Cond.of.Cond.All_Imp.apply(Eq[1], Eq[-1], k, 0)
+    Eq << Bool.Cond.of.All_Imp.Cond.apply(Eq[1], Eq[-1], k, 0)
 
     Eq << Eq.induct.subs(k, t - 1)
 

@@ -48,7 +48,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Set.LeDiv.of.IsPositive.Le)
 
-    Eq << Bool.All.of.Imp.apply(Eq[-1])
+    Eq << Bool.All.of.All_Imp.apply(Eq[-1])
 
     Eq << Set.IsPositive.of.Gt_0.apply(Eq.gt_zero, simplify=None)
 

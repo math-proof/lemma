@@ -29,7 +29,7 @@ def prove(Eq):
 
     Eq.n2 = Imply(n >= 2, Eq.hypothesis, plausible=True)
 
-    Eq << Eq.n2.this.apply(Bool.Imp.Is.All)
+    Eq << Eq.n2.this.apply(Bool.All_Imp.Is.All)
 
     _n = Symbol('n', domain=Range(2, oo))
 
@@ -60,7 +60,7 @@ def prove(Eq):
 
     Eq << Bool.ImpOrS.of.Imp.Imp.apply(Eq.n1, Eq.n0)
 
-    Eq << Eq[-1].this.apply(Bool.Imp.Is.All, wrt=n)
+    Eq << Eq[-1].this.apply(Bool.All_Imp.Is.All, wrt=n)
 
     Eq << Eq[-1].simplify()
 

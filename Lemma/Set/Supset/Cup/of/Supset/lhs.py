@@ -31,7 +31,7 @@ def prove(Eq):
 
     Eq << Imply(Eq[1], Eq.induct, plausible=True)
 
-    Eq << Bool.Cond.of.Cond.All_Imp.apply(Eq.initial, Eq[-1], n=m, start=1, simplify=None)
+    Eq << Bool.Cond.of.All_Imp.Cond.apply(Eq.initial, Eq[-1], n=m, start=1, simplify=None)
 
 
 if __name__ == '__main__':

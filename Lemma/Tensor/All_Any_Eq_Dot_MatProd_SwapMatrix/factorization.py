@@ -148,7 +148,7 @@ def prove(Eq):
     Eq << Eq[-1].this.find(Any).apply(Tensor.Any.limits.concat)
     Eq << Imply(Eq.hypothesis, Eq.induct, plausible=True)
 
-    Eq << Bool.Cond.of.Cond.All_Imp.apply(Eq.initial, Eq[-1], n=n, start=2)
+    Eq << Bool.Cond.of.All_Imp.Cond.apply(Eq.initial, Eq[-1], n=n, start=2)
 
     Eq << Eq[1].subs(Eq[0])
 

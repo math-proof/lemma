@@ -16,7 +16,7 @@ def prove(Eq):
     i, j = Symbol(integer=True)
     Eq << apply(Imply(j > i, Equal(L[i, j], 0)))
 
-    Eq << Bool.All.of.Imp.apply(Eq[0], j)
+    Eq << Bool.All.of.All_Imp.apply(Eq[0], j)
 
     Eq << Bool.All.of.All.limits.domain_defined.apply(Eq[-1], j)
 

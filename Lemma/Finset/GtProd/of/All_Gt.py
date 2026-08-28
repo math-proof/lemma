@@ -37,7 +37,7 @@ def prove(Eq):
     Eq << Eq[-1].this.rhs.apply(Nat.GtMulS.of.Gt.Gt.Ge_0.Ge_0)
 
     Eq << Imply(Eq[2], Eq.induct, plausible=True)
-    Eq << Bool.Cond.of.All_Imp.apply(Eq[-1], n=n, start=1)
+    Eq << Bool.Imp.of.All_Imp.apply(Eq[-1], n=n, start=1)
     Eq << Bool.Cond.of.Imp.Cond.apply(Eq[0], Eq[2])
 
 

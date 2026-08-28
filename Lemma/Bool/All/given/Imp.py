@@ -16,7 +16,7 @@ def prove(Eq):
 
     Eq << apply(All[n:Equal(f[n], g[n])](Equal(f[n + 1], g[n + 1])))
 
-    Eq << Eq[1].this.apply(Bool.Imp.Is.All, wrt=n)
+    Eq << Eq[1].this.apply(Bool.All_Imp.Is.All, wrt=n)
 
 
 if __name__ == '__main__':

@@ -30,7 +30,7 @@ def prove(Eq):
 
     Eq << Imply(Eq[1], Eq[2], plausible=True)
 
-    Eq << Bool.Cond.of.Cond.All_Imp.apply(Eq[0], Eq[-1], n, 1)
+    Eq << Bool.Cond.of.All_Imp.Cond.apply(Eq[0], Eq[-1], n, 1)
 
 
 

@@ -31,7 +31,7 @@ def prove(Eq):
     Eq << Eq[-1].this.lhs.apply(Real.CosSub)
     Eq << Imply(Eq[2], Eq.induct, plausible=True)
 
-    Eq << Bool.Cond.of.Cond.All_Imp.apply(Eq[0], Eq[-1], n=n, start=0)
+    Eq << Bool.Cond.of.All_Imp.Cond.apply(Eq[0], Eq[-1], n=n, start=0)
 
     Eq << Bool.All.of.Cond.apply(Eq[2], n)
 

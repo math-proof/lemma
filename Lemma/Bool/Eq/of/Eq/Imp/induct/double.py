@@ -37,7 +37,7 @@ def prove(Eq):
 
     Eq << Eq[1].subs(x, y)
 
-    Eq << Bool.Cond.of.Cond.All_Imp.apply(Eq[-2], Eq[-1], n=n)
+    Eq << Bool.Cond.of.All_Imp.Cond.apply(Eq[-2], Eq[-1], n=n)
 
     Eq << Eq[2].subs(y, x)
 

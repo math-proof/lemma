@@ -32,7 +32,7 @@ def prove(Eq):
     j_ = Symbol('j', integer=True, nonnegative=True)
     Eq << Eq[-1].subs(j, j_)
 
-    Eq << Bool.All.of.Imp.apply(Eq[-1])
+    Eq << Bool.All.of.All_Imp.apply(Eq[-1])
 
     Eq << Set.Eq.of.All_Eq_Empty.nonoverlapping.intlimit.utility.apply(Eq[-1], n)
 

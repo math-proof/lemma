@@ -42,7 +42,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Bool.Cond.of.Cond.Eq)
 
-    Eq << Bool.All.of.Imp.apply(Eq[-1])
+    Eq << Bool.All.of.All_Imp.apply(Eq[-1])
 
     Eq << Eq[-1].this.expr.apply(Bool.All.of.All_OrNot, 1)
 

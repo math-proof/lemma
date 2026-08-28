@@ -77,7 +77,7 @@ def prove(Eq):
 
     Eq << Imply(Eq[2], Eq.induct, plausible=True)
 
-    Eq << Bool.Cond.of.Cond.All_Imp.apply(Eq.initial, Eq[-1], start=2, n=n)
+    Eq << Bool.Cond.of.All_Imp.Cond.apply(Eq.initial, Eq[-1], start=2, n=n)
 
     Eq << Bool.Cond.of.Imp.Cond.apply(Eq[0], Eq[2])
 

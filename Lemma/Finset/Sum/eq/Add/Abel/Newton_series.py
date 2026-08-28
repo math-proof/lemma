@@ -53,7 +53,7 @@ def prove(Eq):
 
     Eq << Imply(Eq[0], Eq.induct, plausible=True)
 
-    Eq << Bool.Cond.of.Cond.All_Imp.apply(Eq.initial, Eq[-1], d, 1)
+    Eq << Bool.Cond.of.All_Imp.Cond.apply(Eq.initial, Eq[-1], d, 1)
 
     # https://en.wikipedia.org/wiki/Summation_by_parts
 

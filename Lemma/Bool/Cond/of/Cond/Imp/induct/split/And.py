@@ -39,7 +39,7 @@ def prove(Eq):
 
     Eq << Bool.Imp_And.of.ImpAnd.apply(Eq[-1])
     Eq.induct = Bool.Imp.of.Imp.Imp.apply(Eq[-1], Eq[1])
-    Eq << Bool.Cond.of.Cond.All_Imp.apply(Eq[0], Eq.induct, n=n)
+    Eq << Bool.Cond.of.All_Imp.Cond.apply(Eq[0], Eq.induct, n=n)
 
 
 

@@ -51,7 +51,7 @@ def prove(Eq):
 
     Eq << Imply(Eq.hypothesis, Eq.induct, plausible=True)
 
-    Eq << Bool.Cond.of.All_Imp.apply(Eq[-1], n=m)
+    Eq << Bool.Imp.of.All_Imp.apply(Eq[-1], n=m)
 
 
 

@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << apply(Imply(Element(x, A), Element(x, B)))
 
-    Eq << Eq[0].this.apply(Bool.Imp.Is.All, wrt=x)
+    Eq << Eq[0].this.apply(Bool.All_Imp.Is.All, wrt=x)
 
     Eq << Set.Subset.of.All_In.apply(Eq[-1])
 

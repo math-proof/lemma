@@ -45,7 +45,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.lhs.apply(Bool.Bool.eq.Ite)
 
-    Eq << Bool.Cond.of.Cond.All_Imp.apply(Eq.equality, Eq.suffice, n=n)
+    Eq << Bool.Cond.of.All_Imp.Cond.apply(Eq.equality, Eq.suffice, n=n)
 
     Eq << Eq[-1].this.lhs.definition
 

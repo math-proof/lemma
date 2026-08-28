@@ -98,7 +98,7 @@ def prove(Eq):
     Eq << Bool.Imp.of.Cond.apply(Eq[-1], cond=Eq[-3].lhs)
     Eq <<= Eq[-1] & Eq.is_nonnegative
     Eq <<= Eq[-1].this.rhs.apply(Int.Le0Mul.of.Ge_0.Ge_0)
-    Eq << Bool.All.of.Imp.apply(Eq[-1], wrt=(x_, x__))
+    Eq << Bool.All.of.All_Imp.apply(Eq[-1], wrt=(x_, x__))
     Eq << Bool.Any_And.of.Any.All.All_Imp.apply(Eq[-1], Eq.any)
     Eq << Eq[-1].this.expr.apply(Nat.Ge.of.Ge.Eq)
     Eq << Bool.And_And.of.And.apply(Eq[-1])

@@ -35,7 +35,7 @@ def prove(Eq):
 
     Eq <<= Eq[0] & Eq[1]
 
-    Eq << Bool.Cond.of.Cond.All_Imp.apply(Eq[-1], Eq[-2], n=n, start=1)
+    Eq << Bool.Cond.of.All_Imp.Cond.apply(Eq[-1], Eq[-2], n=n, start=1)
 
     Eq << Bool.Cond.of.And.apply(Eq[-1], index=0)
 

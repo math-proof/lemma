@@ -28,7 +28,7 @@ def prove(Eq):
     Eq << Eq[-1].this.lhs.apply(Set.AllIn_Ico.Cond.given.AllIn_Icc.Le)
     Eq << Eq[-1].this.rhs.apply(Set.CupIn_Icc.of.CupIn_Ico.Eq.Le)
     Eq << Imply(Eq.hypothesis, Eq.induct, plausible=True)
-    Eq << Bool.Cond.of.All_Imp.apply(Eq[-1], n=n, start=1)
+    Eq << Bool.Imp.of.All_Imp.apply(Eq[-1], n=n, start=1)
 
     Eq << Bool.Cond.of.Imp.Cond.apply(Eq[0], Eq.hypothesis)
 

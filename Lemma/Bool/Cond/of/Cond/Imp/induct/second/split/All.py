@@ -30,7 +30,7 @@ def prove(Eq):
 
     Eq << apply(f[0] > g[0], Imply(All[k:n](f[k] > g[k]), f[n] > g[n]), n=n)
 
-    Eq << Eq[1].this.apply(Bool.Imp.Is.All, wrt=n)
+    Eq << Eq[1].this.apply(Bool.All_Imp.Is.All, wrt=n)
 
     Eq << Imply(All[k:n](f[k] > g[k]), All[k:n](f[k] > g[k]), plausible=True)
 
@@ -38,7 +38,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Bool.All.of.Cond.All.push)
 
-    Eq << Bool.Cond.of.Cond.All_Imp.apply(Eq[0], Eq[-1], n=n, start=1)
+    Eq << Bool.Cond.of.All_Imp.Cond.apply(Eq[0], Eq[-1], n=n, start=1)
 
     Eq << Bool.Or_NotIn.of.All.apply(Eq[-1], k, n - 1)
 

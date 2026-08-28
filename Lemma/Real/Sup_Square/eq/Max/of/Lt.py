@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq << Element(x, Interval(m, M, left_open=True, right_open=True)).this.apply(Set.LtSquare.of.In_Icc)
 
-    Eq << Bool.All.of.Imp.apply(Eq[-1])
+    Eq << Bool.All.of.All_Imp.apply(Eq[-1])
 
     Eq << Real.LeSup.of.All_Lt.apply(Eq[-1])
 

@@ -63,7 +63,7 @@ def prove(Eq):
 
     Eq << Bool.Imp.of.Imp_And.apply(Eq[-1], 1)
 
-    Eq << Bool.All.of.Imp.apply(Eq[-1])
+    Eq << Bool.All.of.All_Imp.apply(Eq[-1])
 
     Eq << Eq[-1].this.expr.apply(Int.Gt.of.Sub.gt.Zero)
 
