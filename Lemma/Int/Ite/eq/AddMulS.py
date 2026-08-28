@@ -134,15 +134,16 @@ def apply(self):
 def prove(Eq):
     from Lemma import Bool, Nat
 
-    n, k = Symbol(integer=True, positive=True)
+    n = Symbol(integer=True, positive=True)
     i = Symbol(domain=Range(n))
-    x, y = Symbol(real=True, shape=(k,), given=True)
-    g, f, h = Function(real=True)
+    g, h = Function(real=True)
     Eq << apply(Piecewise((g(i), i < n - 1), (h(i), True)))
 
     Eq << Eq[0].this.lhs.apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite)
 
-    Eq << Eq[-1].this.find(GreaterEqual).apply(Nat.Ge.In_Icc.Is.Eq)
+    Eq << Nat.Ge.Is.Eq.of.In_Icc.apply(i, n - 1)
+
+    Eq << Eq[-2].subs(Eq[-1])
 
 
 if __name__ == '__main__':

@@ -1,11 +1,10 @@
 from util import *
 
 
-@apply
-def apply(self):
-    x, b = self.of(GreaterEqual)
+@apply(given=None)
+def apply(x, b):
     assert x <= b
-    return Equal(x, b)
+    return Iff(GreaterEqual(x, b), Equal(x, b))
 
 
 @prove
@@ -15,7 +14,7 @@ def prove(Eq):
     a = Symbol(integer=True)
     b = Symbol(integer=True, given=True)
     x = Symbol(domain=Range(a, b + 1), given=True)
-    Eq << apply(x >= b)
+    Eq << apply(x, b)
 
     Eq << Bool.Iff.given.Imp.Imp.apply(Eq[0])
 

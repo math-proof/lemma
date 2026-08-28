@@ -5,4 +5,3 @@ from . import given
 from . import simp
 from . import symbol
 from . import transport
-from . import In_Icc
