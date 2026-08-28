@@ -61,7 +61,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.args[1].apply(Set.In.given.Any.Eq.split.Imageset)
 
-    Eq << Set.Eq.of.ImpIn.ImpIn.apply(Eq.suffice, Eq.necessary)
+    Eq << Set.Eq.of.All_Imp.All_Imp.apply(Eq.suffice, Eq.necessary.reversed)
 
     Eq << Eq[-1].this.lhs.definition
 
