@@ -1,4 +1,4 @@
-import Lemma.Bool.Cond.of.Cond.All_Imp
+import Lemma.Bool.Cond.of.All_Imp.Cond
 open Bool
 
 
@@ -13,7 +13,7 @@ private lemma main
 -- imply
   f n = 0 := by
 -- proof
-  apply Cond.of.Cond.All_Imp n h₀ h₁
+  apply Cond.of.All_Imp.Cond h₀ h₁
 
 
 -- created on 2018-04-17

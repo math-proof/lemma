@@ -4,15 +4,16 @@ open Bool
 
 @[main]
 private lemma main
-  {f g : ℕ → Prop}
+  {f : ℕ → Prop}
 -- given
-  (h₀ : f 0 = g 0)
-  (h₁ : ∀ n, f n = g n → f (n + 1) = g (n + 1))
+  (h₁ : ∀ n, f n → f (n + 1))
   (n : ℕ) :
 -- imply
-  f n = g n := by
+  f 0 → f n := by
 -- proof
+  intro h₀
   apply Cond.of.All_Imp.Cond h₀ h₁
 
 
--- created on 2018-04-17
+-- created on 2018-04-18
+-- updated on 2026-08-28
