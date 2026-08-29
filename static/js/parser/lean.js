@@ -1439,7 +1439,7 @@ class LeanBlockComment extends Lean {
 
     set_line(line) {
         this.line = line;
-        return line + (this.text.match(/\n/g).length ?? 0);
+        return line + (this.text.match(/\n/g)?.length ?? 0);
     }
 
     strFormat() {
@@ -1469,7 +1469,7 @@ class LeanDocString extends LeanBlockComment {
     set_line(line) {
         this.line = line;
         let L = line + 1;
-        L += this.text.match(/\n/g).length ?? 0;
+        L += this.text.match(/\n/g)?.length ?? 0;
         return L + 1;
     }
 
@@ -9134,12 +9134,12 @@ class Lean_let extends LeanSyntax {
 
     echo() {
         const token = this.get_echo_token();
+        const by = this.args[0]?.rhs;
+        if (by instanceof LeanBy) {
+            const stmt = by.arg;
+            if (stmt instanceof LeanStatements) stmt.echo();
+        }
         if (token) {
-            const by = this.args[0].rhs;
-            if (by instanceof LeanBy) {
-                const stmt = by.arg;
-                if (stmt instanceof LeanStatements) stmt.echo();
-            }
             return [1, this, new LeanTactic('echo', token, this.indent, token.level)];
         }
     }
@@ -9217,7 +9217,7 @@ class Lean_let extends LeanSyntax {
             const by = assign.rhs;
             if (by instanceof LeanBy && by.arg instanceof LeanStatements) {
                 const statements = assign.split(syntax);
-                const Ctor = /** @type {typeof Lean_let} */ (this.constructor);
+                const Ctor = this.constructor;
                 statements[0] = new Ctor(statements[0], this.indent, assign.level);
                 return statements;
             }
@@ -9259,8 +9259,12 @@ class Lean_have extends Lean_let {
         const assign = this.args[0];
         if (!(assign instanceof LeanAssign)) return;
         let token = assign.lhs;
-        if (token instanceof LeanColon) token = token.lhs;
-        if (token instanceof LeanCaret) token = new LeanToken('this', this.indent, token.level);
+        if (token instanceof LeanColon)
+            token = token.lhs;
+        if (token instanceof LeanCaret)
+            token = new LeanToken('this', this.indent, token.level);
+        if (token instanceof LeanArgsSpaceSeparated && token.args[0] instanceof LeanToken)
+            token = token.args[0];
         if (
             token instanceof LeanAngleBracket &&
             token.arg instanceof LeanArgsCommaSeparated &&

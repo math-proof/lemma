@@ -9088,13 +9088,13 @@ class Lean_let extends LeanSyntax
     public function echo()
     {
         $token = $this->get_echo_token();
+        $by = $this->args[0]->rhs ?? null;
+        if ($by instanceof LeanBy) {
+            $stmt = $by->arg;
+            if ($stmt instanceof LeanStatements)
+                $stmt->echo();
+        }
         if ($token) {
-            $by = $this->args[0]->rhs;
-            if ($by instanceof LeanBy) {
-                $stmt = $by->arg;
-                if ($stmt instanceof LeanStatements)
-                    $stmt->echo();
-            }
             return [
                 1,
                 $this,
@@ -9210,6 +9210,8 @@ class Lean_have extends Lean_let
                 $token = $token->lhs;
             if ($token instanceof LeanCaret)
                 $token = new LeanToken('this', $this->indent, $token->level);
+            if ($token instanceof LeanArgsSpaceSeparated && $token->args[0] instanceof LeanToken)
+                $token = $token->args[0];
             if (
                 $token instanceof LeanAngleBracket &&
                 $token->arg instanceof LeanArgsCommaSeparated &&
