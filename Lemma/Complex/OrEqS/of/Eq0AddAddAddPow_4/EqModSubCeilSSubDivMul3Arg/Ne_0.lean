@@ -41,7 +41,7 @@ private lemma main
   let V : ℂ := α ^ 3 / 27 - 4 * α * γ / 3 + β ^ 2 / 2 - √δ
   let A : ℂ := U ^ (3 : ℂ)⁻¹
   let B : ℂ := V ^ (3 : ℂ)⁻¹
-  let ω : ℂ := ↑(- (1 / 2 : ℝ)) + ↑(√3 / 2 : ℝ) * I
+  let ω : ℂ := (I * (2 * π / 3)).exp
   let y : ℂ := if d = 0 then A + B else if d = 1 then A * ω + B else A * ~ω + B
   let y0 : ℂ := -2 * α / 3 + y
   let y1 : ℂ := 4 * α / 3 + y

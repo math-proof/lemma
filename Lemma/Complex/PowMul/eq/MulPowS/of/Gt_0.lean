@@ -27,8 +27,7 @@ private lemma main
     else
       rw [mul_zero, zero_cpow hw, mul_zero]
   else
-    apply PowMul.eq.MulPowS.of.AddArgS.in.IocNegPiPi.Ne_0.Ne_0
-      (ofReal_ne_zero.mpr (ne_of_gt h)) hz
+    apply PowMul.eq.MulPowS.of.AddArgS.in.IocNegPiPi.Ne_0.Ne_0 (ofReal_ne_zero.mpr (ne_of_gt h)) hz
     rw [arg_ofReal_of_nonneg (Ge.of.Gt h), zero_add]
     apply Arg.in.IocNegPiPi
 

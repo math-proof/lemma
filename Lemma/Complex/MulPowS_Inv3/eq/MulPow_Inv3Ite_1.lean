@@ -1,7 +1,9 @@
+import Lemma.Bool.NotOr.is.AndNotS
+import Lemma.Complex.ExpMulIDivMulNeg2Pi3.eq.Sub_MulI
+import Lemma.Complex.GtAddArgS.is.EqCeilSubDivS
 import Lemma.Complex.MulPowS_Inv3.eq.MulPowS.of.EqCeilSubDivAddArgS
 import Lemma.Complex.OrEqSCeil.of.CeilSubDivAddArgS.ne.Zero
-import Lemma.Complex.GtAddArgS.is.EqCeilSubDivS
-open Complex
+open Bool Complex
 
 
 @[main]
@@ -17,64 +19,38 @@ private lemma main
       else
         -(1 / 2) - I * ↑(√3) / 2 := by
 -- proof
-  have hexp : (3 : ℂ)⁻¹ ≠ 0 := by norm_num
-  have hz : (0 : ℂ) ^ (3 : ℂ)⁻¹ = 0 := zero_cpow hexp
-  let ω : ℂ := ↑(-(1 / 2 : ℝ)) + ↑(√3 / 2 : ℝ) * I
-  have h3r : (√3 : ℝ) ^ 2 = 3 := Real.sq_sqrt (by norm_num)
-  have hre : ω.re = -(1 / 2) := by
-    simp only [ω, add_re, mul_re, ofReal_re, ofReal_im, I_re, I_im]
-    ring
-  have him : ω.im = √3 / 2 := by
-    simp only [ω, add_im, mul_im, ofReal_re, ofReal_im, I_re, I_im]
-    ring
-  have hω1 : ω = -(1 / 2) + I * ↑(√3) / 2 := by
-    apply Complex.ext <;> simp [hre, him]
-  have hωinv : ω⁻¹ = -(1 / 2) - I * ↑(√3) / 2 := by
-    have hstar : ~ω = -(1 / 2) - I * ↑(√3) / 2 := by
-      apply Complex.ext <;> simp [conj_re, conj_im, hre, him]
-    have hmul : ω * ~ω = 1 := by
-      rw [mul_conj, ← ofReal_one]
-      congr 1
-      rw [normSq_apply, hre, him]
-      ring_nf
-      rw [h3r]
-      ring
-    exact (inv_eq_of_mul_eq_one_right hmul).trans hstar
+  have hz : (0 : ℂ) ^ (3 : ℂ)⁻¹ = 0 := zero_cpow (by norm_num)
+  rw [MulPowS_Inv3.eq.MulPowS.of.EqCeilSubDivAddArgS (d := ⌈(arg A + arg B) / (2 * π) - 1 / 2⌉) rfl]
   split_ifs with h0 hgt
   ·
-    rcases h0 with hA | h0
+    obtain hA | h0 := h0
     ·
-      simp [hA, hz]
+      grind
     ·
-      rcases h0 with hB | hd0
+      obtain hB | hd0 := h0
       ·
-        simp [hB, hz]
+        grind
       ·
-        simpa using MulPowS_Inv3.eq.MulPowS.of.EqCeilSubDivAddArgS hd0
+        rw [hd0, zpow_zero]
   ·
-    have hd1 : ⌈(arg A + arg B) / (2 * π) - 1 / 2⌉ = 1 :=
-      (GtAddArgS.is.EqCeilSubDivS (A := A) (B := B)).mp hgt
-    have h := MulPowS_Inv3.eq.MulPowS.of.EqCeilSubDivAddArgS hd1
-    convert h
-    rw [zpow_one]
-    exact hω1.symm
+    rw [EqCeilSubDivS.of.GtAddArgS (A := A) (B := B) hgt, zpow_one]
+    simp [mul_div_assoc]
   ·
-    have ⟨_, hrest⟩ := not_or.mp h0
-    have ⟨_, hd0⟩ := not_or.mp hrest
-    have hor := OrEqSCeil.of.CeilSubDivAddArgS.ne.Zero hd0
-    have hdne1 : ⌈(arg A + arg B) / (2 * π) - 1 / 2⌉ ≠ 1 := by
-      intro hd1
-      exact hgt ((GtAddArgS.is.EqCeilSubDivS (A := A) (B := B)).mpr hd1)
+    obtain ⟨_, hrest⟩ := AndNotS.of.NotOr h0
+    obtain ⟨_, hdne⟩ := AndNotS.of.NotOr hrest
+    have hor := OrEqSCeil.of.CeilSubDivAddArgS.ne.Zero hdne
     have hdneg : ⌈(arg A + arg B) / (2 * π) - 1 / 2⌉ = -1 := by
-      rcases hor with h | h
+      obtain h | h := hor
       ·
-        contradiction
+        apply (hgt (GtAddArgS.of.EqCeilSubDivS (A := A) (B := B) h)).elim
       ·
-        exact h
-    have h := MulPowS_Inv3.eq.MulPowS.of.EqCeilSubDivAddArgS hdneg
-    convert h
-    rw [zpow_neg_one]
-    exact hωinv.symm
+        apply h
+    rw [hdneg, zpow_neg_one]
+    rw [Add_MulI.eq.ExpMulIDivMul2Pi3, ← exp_neg]
+    have : -(I * (2 * π / 3)) = I * (-2 * π / 3) := by
+      ring
+    rw [this, ExpMulIDivMulNeg2Pi3.eq.Sub_MulI]
+    simp [mul_div_assoc]
 
 
 -- created on 2018-11-01

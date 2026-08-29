@@ -10,7 +10,7 @@ private lemma main
 -- given
   (h : A ^ 3 = B ^ 3) :
 -- imply
-  let ω : ℂ := (2 * π * I / 3).exp
+  let ω : ℂ := (I * (2 * π / 3)).exp
   let d : ℤ := ⌈3 * arg A / (2 * π) - 1 / 2⌉ - ⌈3 * arg B / (2 * π) - 1 / 2⌉
   A = B * ω ^ d := by
 -- proof
@@ -47,13 +47,13 @@ private lemma main
     have hA0 : ‖A‖ ^ 2 = 0 := le_antisymm (by linarith) ha
     have hB0 : ‖B‖ ^ 2 = 0 := le_antisymm (by linarith) hb
     exact hne ((sq_eq_zero_iff.mp hA0).trans (sq_eq_zero_iff.mp hB0).symm)
-  simp [hnorm, ω]
+  simp [hnorm]
   have hmul : (I * arg B).exp * (ω ^ d) = (I * arg A).exp := by
-    have hz : ω ^ d = exp (↑d * (2 * π * I / 3)) := (exp_int_mul _ d).symm
+    have hz : ω ^ d = exp (↑d * (I * (2 * π / 3))) := (exp_int_mul _ d).symm
     rw [hz, ← exp_add]
     congr 1
-    have hadd : I * arg B + ↑d * (2 * π * I / 3) = I * arg A := by
-      have : (d : ℂ) * (2 * π * I / 3) = I * ↑(2 * π * d / 3) := by
+    have hadd : I * arg B + ↑d * (I * (2 * π / 3)) = I * arg A := by
+      have : (d : ℂ) * (I * (2 * π / 3)) = I * ↑(2 * π * d / 3) := by
         simp
         ring
       rw [this, ← mul_add, ← ofReal_add]

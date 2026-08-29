@@ -1,10 +1,6 @@
 import sympy.functions.elementary.complexes
 import sympy.functions.elementary.trigonometric
-import Lemma.Rat.DivMul.eq.Mul_Div
-import Lemma.Nat.MulMul.eq.Mul_Mul
-import Lemma.Rat.DivAdd.eq.AddDivS
-import Lemma.Nat.Mul
-open Nat Rat
+import sympy.Basic
 
 
 @[main]
@@ -14,13 +10,8 @@ private lemma main
 -- imply
   (I * x).exp = x.cos + I * x.sin := by
 -- proof
-  rw [Complex.sin, Complex.cos]
-  rw [Mul_Div.eq.DivMul.comm]
-  rw [MulMul.eq.Mul_Mul]
-  simp
-  rw [AddDivS.eq.DivAdd]
-  simp
-  rw [Mul.comm]
+  rw [mul_comm, Complex.exp_mul_I, mul_comm]
 
 
 -- created on 2025-10-07
+-- updated on 2026-08-29

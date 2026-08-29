@@ -1,7 +1,7 @@
 import Lemma.Int.Floor.eq.NegCeilNeg
+import Lemma.Complex.ExpMulI.eq.AddCos_MulISin
 import sympy.core.numbers
-import sympy.functions.elementary.complexes
-open Int
+open Int Complex
 
 
 @[main]
@@ -11,8 +11,8 @@ private lemma main
 -- imply
   arg ((I * x).exp) = x - 2 * π * ⌈x / (2 * π) - 1 / 2⌉ := by
 -- proof
-  rw [mul_comm I (x : ℂ), Complex.exp_mul_I]
-  have h := Complex.arg_cos_add_sin_mul_I_sub x
+  rw [ExpMulI.eq.AddCos_MulISin, mul_comm I]
+  have h := arg_cos_add_sin_mul_I_sub x
   have h_neg : -((π - x) / (2 * π)) = x / (2 * π) - 1 / 2 := by
     field_simp
     ring

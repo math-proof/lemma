@@ -41,7 +41,7 @@ private lemma main
   let V : ℂ := α ^ 3 / 27 - 4 * α * γ / 3 + β ^ 2 / 2 - √δ
   let A : ℂ := U ^ (3 : ℂ)⁻¹
   let B : ℂ := V ^ (3 : ℂ)⁻¹
-  let ω : ℂ := ↑(- (1 / 2 : ℝ)) + ↑(√3 / 2 : ℝ) * I
+  let ω : ℂ := (I * (2 * π / 3)).exp
   let y : ℂ := if d = 0 then A + B else if d % 3 = 1 then A * ω + B else A * ~ω + B
   let y0 : ℂ := -2 * α / 3 + y
   let y1 : ℂ := 4 * α / 3 + y
@@ -74,10 +74,7 @@ private lemma main
     Ne_Div_2.of.Eq0AddSubSub_Pow_3.Ne_0 h₀ hres
   have h8 : (8 : ℂ) ^ (3 : ℂ)⁻¹ = 2 := by
     have h8' : ((2 : ℂ) ^ 3) ^ (3 : ℂ)⁻¹ = 2 := by
-      apply pow_cpow_nat_inv (by norm_num)
-      ·
-        simp
-        linarith [Real.pi_pos]
+      apply pow_cpow_nat_inv (by norm_num) <;>
       ·
         simp
         linarith [Real.pi_pos]
@@ -85,10 +82,7 @@ private lemma main
     norm_num
   have h16 : (16 : ℂ) ^ (2 : ℂ)⁻¹ = 4 := by
     have h16' : ((4 : ℂ) ^ 2) ^ (2 : ℂ)⁻¹ = 4 := by
-      apply pow_cpow_nat_inv (by norm_num)
-      ·
-        simp
-        linarith [Real.pi_pos]
+      apply pow_cpow_nat_inv (by norm_num) <;>
       ·
         simp
         linarith [Real.pi_pos]
@@ -103,29 +97,21 @@ private lemma main
     apply PowMul.eq.MulPowS.of.Gt_0
     norm_num
   have hdelta16 : δ = 16 * δc := by
-    simp only [δ, δc, p, q, ar, br, cr]
-    ring
+    grind
   have hmid : α ^ 3 / 27 - 4 * α * γ / 3 + β ^ 2 / 2 = -4 * q := by
-    simp only [q, ar, br, cr]
-    ring
+    grind
   have hsqrt : √δ = 4 * √δc := by
     rw [hdelta16]
     simp only [Root.sqrt]
     rw [hmul16, h16]
   have hU : U = (8 : ℂ) * (√δc / 2 - q / 2) := by
-    simp only [U]
-    rw [hsqrt, hmid]
-    ring
+    grind
   have hV : V = (8 : ℂ) * (-√δc / 2 - q / 2) := by
-    simp only [V]
-    rw [hsqrt, hmid]
-    ring
+    grind
   have hA : A = 2 * Ac := by
-    simp only [A, Ac]
-    rw [hU, hmul8, h8]
+    grind
   have hB : B = 2 * Bc := by
-    simp only [B, Bc]
-    rw [hV, hmul8, h8]
+    grind
   have hyz : y = 2 * (z + ar / 3) := by
     simp only [y, z, hA, hB]
     if hD0 : d = 0 then
@@ -137,16 +123,9 @@ private lemma main
     else
       simp [hD0, hD1]
       ring
-  have hy0z : y0 = 2 * z - α := by
-    simp only [y0, hyz, ar]
-    ring
-  have hy1z : y1 = 2 * z + α := by
-    simp only [y1, hyz, ar]
-    ring
-  have hy0ne : y0 ≠ 0 := by
-    convert Mul.ne.Zero.of.Ne_0.Ne_0 (a := (2 : ℂ)) (b := z - α / 2) (by norm_num) (Sub.ne.Zero.of.Ne hzne)
-    rw [hy0z]
-    ring
+  have hy0z : y0 = 2 * z - α := by grind
+  have hy1z : y1 = 2 * z + α := by grind
+  have hy0ne : y0 ≠ 0 := by grind
   have hs2 : (√y0) ^ 2 = y0 := EqSquareSqrt
   have hsne : √y0 ≠ 0 := by
     apply Ne_0.of.NeSquare_0
@@ -180,17 +159,7 @@ private lemma main
       rw [SquareNeg.eq.Square, hs2, hy0z, hy1z]
       field_simp [hsne]
       ring
-    obtain hpos | hneg := hroot
-    ·
-      refine Or.inr (Or.inr (Or.inl ?_))
-      convert hpos using 1
-      rw [hDelta]
-      ring
-    ·
-      refine Or.inr (Or.inr (Or.inr ?_))
-      convert hneg using 1
-      rw [hDelta]
-      ring
+    obtain hpos | hneg := hroot <;> grind
   ·
     have hquad : (1 : ℂ) * x ^ 2 + √y0 * x + (z - β / (2 * √y0)) = 0 := by
       convert hsum using 1
@@ -202,17 +171,7 @@ private lemma main
       rw [hs2, hy0z, hy1z]
       field_simp [hsne]
       ring
-    obtain hpos | hneg := hroot
-    ·
-      refine Or.inl ?_
-      convert hpos using 1
-      rw [hDelta]
-      ring
-    ·
-      refine Or.inr (Or.inl ?_)
-      convert hneg using 1
-      rw [hDelta]
-      ring
+    obtain hpos | hneg := hroot <;> grind
 
 
 -- created on 2018-11-14
