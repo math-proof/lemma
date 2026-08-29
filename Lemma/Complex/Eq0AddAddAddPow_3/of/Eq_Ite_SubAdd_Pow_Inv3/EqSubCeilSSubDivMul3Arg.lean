@@ -1,4 +1,4 @@
-import Lemma.Complex.Eq0AddAddPow_3.of.Eq_Ite_Add_Pow_Inv3.EqModSubCeil_Ite
+import Lemma.Complex.Eq0AddAddPow_3.of.Eq_Ite_Add_Pow_Inv3.EqSubCeilSSubDivMul3Arg
 open Complex
 
 
@@ -15,13 +15,8 @@ private lemma main
         let δ : ℂ := 4 * p ^ 3 / 27 + q ^ 2
         let U : ℂ := √δ - q
         let V : ℂ := -√δ - q
-        if p * (⌈(arg U + arg V) / (2 * π) - 1 / 2⌉ : ℂ) = 0 then
-          (0 : ℤ)
-        else if arg U + arg V > π then
-          1
-        else
-          -1
-      )) % 3 = d)
+        ⌈3 * arg (U ^ (3 : ℂ)⁻¹ * V ^ (3 : ℂ)⁻¹) / (2 * π) - 1 / 2⌉
+      )) = d)
   (h₁ : x =
     let p : ℂ := b - a ^ 2 / 3
     let q : ℂ := 2 * a ^ 3 / 27 - a * b / 3 + c
@@ -29,16 +24,16 @@ private lemma main
     let δ : ℂ := 4 * p ^ 3 / 27 + q ^ 2
     let A : ℂ := (√δ / 2 - q / 2) ^ (3 : ℂ)⁻¹
     let B : ℂ := (-√δ / 2 - q / 2) ^ (3 : ℂ)⁻¹
-    (if d = 0 then A + B else if d = 1 then A * ω + B else A * ~ω + B) - a / 3):
+    (if d = 0 then A + B else if d % 3 = 1 then A * ω + B else A * ~ω + B) - a / 3):
 -- imply
   x ^ 3 + a * x ^ 2 + b * x + c = 0 := by
 -- proof
   extract_lets p q δ U V at h₀
   extract_lets ω A B at h₁
   let z : ℂ :=
-    if d = 0 then A + B else if d = 1 then A * ω + B else A * ~ω + B
+    if d = 0 then A + B else if d % 3 = 1 then A * ω + B else A * ~ω + B
   have hz : z ^ 3 + p * z + q = 0 := by
-    apply Eq0AddAddPow_3.of.Eq_Ite_Add_Pow_Inv3.EqModSubCeil_Ite (p := p) (q := q) (x := z) (d := d)
+    apply Eq0AddAddPow_3.of.Eq_Ite_Add_Pow_Inv3.EqSubCeilSSubDivMul3Arg.cardano (p := p) (q := q) (x := z) (d := d)
     ·
       simpa using h₀
     ·
@@ -52,5 +47,5 @@ private lemma main
   ring
 
 
--- created on 2018-11-20
--- updated on 2026-08-28
+-- created on 2018-11-10
+-- updated on 2026-08-29

@@ -1,4 +1,4 @@
-import Lemma.Complex.CeilSubDivMul_Arg.eq.Ite_0Ite_1Neg1
+import Lemma.Complex.CeilSubDivMul3Arg.eq.IteEqCeil_0
 import Lemma.Nat.Eq_0.is.EqMul.of.Ne_0
 open Complex Nat
 
@@ -53,7 +53,7 @@ private lemma main
       simp [hp]
     rw [if_pos hcond]
   ·
-    have h := CeilSubDivMul_Arg.eq.Ite_0Ite_1Neg1 (p := p) (q := q)
+    have h := CeilSubDivMul3Arg.eq.IteEqCeil_0 (p := p) (q := q)
     simp only [δ, U, V] at h ⊢
     rw [h]
     refine if_congr ?_ rfl rfl

@@ -1,5 +1,5 @@
-import Lemma.Complex.OrEqS.of.Eq0AddAddAddPow_4.EqModSubCeil_Ite.Ne_0
-import Lemma.Complex.OrEqS.of.Eq0AddAddAddPow_4.EqSubCeil_Ite.Ne_0
+import Lemma.Complex.OrEqS.of.Eq0AddAddAddPow_4.EqModSubCeilSSubDivMul3Arg.Ne_0
+import Lemma.Complex.OrEqS.of.Eq0AddAddAddPow_4.EqSubCeilSSubDivMul3Arg.Ne_0
 open Complex
 
 
@@ -7,8 +7,8 @@ open Complex
 private lemma main
   {x α β γ : ℂ}
 -- given
-  (h : x ^ 4 + α * x ^ 2 + β * x + γ = 0)
-  (hβ : β ≠ 0) :
+  (hβ : β ≠ 0)
+  (h : x ^ 4 + α * x ^ 2 + β * x + γ = 0) :
 -- imply
   let δ : ℂ := -(α ^ 2 / 3 + 4 * γ) ^ 3 / 27 + (-α ^ 3 / 27 + 4 * α * γ / 3 - β ^ 2 / 2) ^ 2
   let U : ℂ := α ^ 3 / 27 - 4 * α * γ / 3 + β ^ 2 / 2 + √δ
@@ -26,12 +26,7 @@ private lemma main
       (
         let U : ℂ := √δc - q
         let V : ℂ := -√δc - q
-        if p * (⌈(arg U + arg V) / (2 * π) - 1 / 2⌉ : ℂ) = 0 then
-          (0 : ℤ)
-        else if arg U + arg V > π then
-          1
-        else
-          -1
+        ⌈3 * arg (U ^ (3 : ℂ)⁻¹ * V ^ (3 : ℂ)⁻¹) / (2 * π) - 1 / 2⌉
       )
   let ω : ℂ := ↑(-(1 / 2 : ℝ)) + ↑(√3 / 2 : ℝ) * I
   (D = 0 →
@@ -63,21 +58,21 @@ private lemma main
   refine ⟨?_, ?_, ?_⟩
   ·
     intro hD y y0 y1
-    apply OrEqS.of.Eq0AddAddAddPow_4.EqSubCeil_Ite.Ne_0 (d := (0 : ℤ)) hβ
+    apply OrEqS.of.Eq0AddAddAddPow_4.EqSubCeilSSubDivMul3Arg.Ne_0 (d := (0 : ℤ)) hβ
     ·
       convert hD
     ·
       apply h
   ·
     intro hD y y0 y1
-    apply OrEqS.of.Eq0AddAddAddPow_4.EqModSubCeil_Ite.Ne_0 (d := (1 : ℤ)) hβ
+    apply OrEqS.of.Eq0AddAddAddPow_4.EqModSubCeilSSubDivMul3Arg.Ne_0 (d := (1 : ℤ)) hβ
     ·
       convert hD
     ·
       apply h
   ·
     intro hD y y0 y1
-    apply OrEqS.of.Eq0AddAddAddPow_4.EqModSubCeil_Ite.Ne_0 (d := (2 : ℤ)) hβ
+    apply OrEqS.of.Eq0AddAddAddPow_4.EqModSubCeilSSubDivMul3Arg.Ne_0 (d := (2 : ℤ)) hβ
     ·
       convert hD
     ·
@@ -85,4 +80,4 @@ private lemma main
 
 
 -- created on 2018-11-27
--- updated on 2026-08-28
+-- updated on 2026-08-29

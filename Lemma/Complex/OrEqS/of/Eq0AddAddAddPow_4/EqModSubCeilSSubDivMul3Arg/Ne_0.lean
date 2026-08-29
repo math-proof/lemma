@@ -1,4 +1,4 @@
-import Lemma.Complex.Eq0AddAddAddPow_3.of.Eq_Ite_SubAdd_Pow_Inv3.EqModSubCeil_Ite
+import Lemma.Complex.Eq0AddAddAddPow_3.of.Eq_Ite_SubAdd_Pow_Inv3.EqModSubCeilSSubDivMul3Arg
 import Lemma.Complex.Eq_SquareAddMulSqrt.of.Eq0SubSquare_MulMul4.Ne_0
 import Lemma.Complex.OrEqS_Div.of.Eq0AddAddMul_Square.Ne_0
 import Lemma.Int.OrEqS_0.of.Square
@@ -32,12 +32,7 @@ private lemma main
         let δc : ℂ := 4 * p ^ 3 / 27 + q ^ 2
         let U : ℂ := √δc - q
         let V : ℂ := -√δc - q
-        if p * (⌈(arg U + arg V) / (2 * π) - 1 / 2⌉ : ℂ) = 0 then
-          (0 : ℤ)
-        else if arg U + arg V > π then
-          1
-        else
-          -1
+        ⌈3 * arg (U ^ (3 : ℂ)⁻¹ * V ^ (3 : ℂ)⁻¹) / (2 * π) - 1 / 2⌉
       )) % 3 = d)
   (h₂ : x ^ 4 + α * x ^ 2 + β * x + γ = 0) :
 -- imply
@@ -65,7 +60,7 @@ private lemma main
   let z : ℂ :=
     (if d = 0 then Ac + Bc else if d = 1 then Ac * ω + Bc else Ac * ~ω + Bc) - ar / 3
   have hcubic : z ^ 3 + ar * z ^ 2 + br * z + cr = 0 := by
-    apply Eq0AddAddAddPow_3.of.Eq_Ite_SubAdd_Pow_Inv3.EqModSubCeil_Ite (x := z) (a := ar) (b := br) (c := cr) (d := d)
+    apply Eq0AddAddAddPow_3.of.Eq_Ite_SubAdd_Pow_Inv3.EqModSubCeilSSubDivMul3Arg
     ·
       convert h₁
     ·
@@ -221,4 +216,4 @@ private lemma main
 
 
 -- created on 2018-11-26
--- updated on 2026-08-28
+-- updated on 2026-08-29

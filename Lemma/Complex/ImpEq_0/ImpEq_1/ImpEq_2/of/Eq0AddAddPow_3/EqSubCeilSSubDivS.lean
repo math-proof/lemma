@@ -66,18 +66,12 @@ private lemma main
     ring
   have harg : arg (A * B) = arg (U ^ (3 : ℂ)⁻¹ * V ^ (3 : ℂ)⁻¹) := by
     rw [hAB, ArgMul.eq.Arg.of.Gt_0 hpos, ArgMul.eq.Arg.of.Gt_0 hpos]
-  have hite := CeilSubDivMul3Arg.eq.IteEq0Mul_Ceil (p := p) (q := q)
   have hd :
       d =
         ⌈3 * arg (-p / 3) / (2 * π) - 1 / 2⌉ -
-          if p * (⌈(arg U + arg V) / (2 * π) - 1 / 2⌉ : ℂ) = 0 then
-            (0 : ℤ)
-          else if arg U + arg V > π then
-            1
-          else
-            -1 := by
+          ⌈3 * arg (U ^ (3 : ℂ)⁻¹ * V ^ (3 : ℂ)⁻¹) / (2 * π) - 1 / 2⌉ := by
     simp only [d]
-    rw [harg, hite]
+    rw [harg]
   have hΔ : |d| ≤ 2 := by
     simp only [d]
     apply AbsSubCeilSSubDivMul3Arg.le.Two
@@ -95,4 +89,4 @@ private lemma main
 
 
 -- created on 2018-11-15
--- updated on 2026-08-28
+-- updated on 2026-08-29

@@ -25,12 +25,7 @@ private lemma main
       (
         let U : ℂ := √δc - q
         let V : ℂ := -√δc - q
-        if p * (⌈(arg U + arg V) / (2 * π) - 1 / 2⌉ : ℂ) = 0 then
-          (0 : ℤ)
-        else if arg U + arg V > π then
-          1
-        else
-          -1
+        ⌈3 * arg (U ^ (3 : ℂ)⁻¹ * V ^ (3 : ℂ)⁻¹) / (2 * π) - 1 / 2⌉
       )
   let ω : ℂ := ↑(-(1 / 2 : ℝ)) + ↑(√3 / 2 : ℝ) * I
   (β = 0 →
@@ -83,14 +78,14 @@ private lemma main
       · exact Or.inr (Or.inr (Or.inr hx))
   ·
     intro ⟨hβ, hD⟩ y y0 y1
-    exact (ImpEq_0.ImpAnd_Eq_0.ImpAnd_Eq_1.ImpAnd_Eq_2.of.Eq0AddAddAddMul_Pow_4.Ne_0 h hβ).1 hD
+    exact (ImpEq_0.ImpAnd_Eq_0.ImpAnd_Eq_1.ImpAnd_Eq_2.of.Eq0AddAddAddMul_Pow_4.Ne_0 hβ h).1 hD
   ·
     intro ⟨hβ, hD⟩ y y0 y1
-    exact (ImpEq_0.ImpAnd_Eq_0.ImpAnd_Eq_1.ImpAnd_Eq_2.of.Eq0AddAddAddMul_Pow_4.Ne_0 h hβ).2.1 hD
+    exact (ImpEq_0.ImpAnd_Eq_0.ImpAnd_Eq_1.ImpAnd_Eq_2.of.Eq0AddAddAddMul_Pow_4.Ne_0 hβ h).2.1 hD
   ·
     intro ⟨hβ, hD⟩ y y0 y1
-    exact (ImpEq_0.ImpAnd_Eq_0.ImpAnd_Eq_1.ImpAnd_Eq_2.of.Eq0AddAddAddMul_Pow_4.Ne_0 h hβ).2.2 hD
+    exact (ImpEq_0.ImpAnd_Eq_0.ImpAnd_Eq_1.ImpAnd_Eq_2.of.Eq0AddAddAddMul_Pow_4.Ne_0 hβ h).2.2 hD
 
 
 -- created on 2018-11-27
--- updated on 2026-08-28
+-- updated on 2026-08-29

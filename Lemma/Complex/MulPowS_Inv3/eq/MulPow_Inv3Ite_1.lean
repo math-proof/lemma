@@ -1,4 +1,4 @@
-import Lemma.Complex.MulPowS_Inv3.eq.MulPow_Inv3.of.EqCeilSubDivAddArgS
+import Lemma.Complex.MulPowS_Inv3.eq.MulPowS.of.EqCeilSubDivAddArgS
 import Lemma.Complex.OrEqSCeil.of.CeilSubDivAddArgS.ne.Zero
 import Lemma.Complex.GtAddArgS.is.EqCeilSubDivS
 open Complex
@@ -50,11 +50,11 @@ private lemma main
       ·
         simp [hB, hz]
       ·
-        simpa using MulPowS_Inv3.eq.MulPow_Inv3.of.EqCeilSubDivAddArgS hd0
+        simpa using MulPowS_Inv3.eq.MulPowS.of.EqCeilSubDivAddArgS hd0
   ·
     have hd1 : ⌈(arg A + arg B) / (2 * π) - 1 / 2⌉ = 1 :=
       (GtAddArgS.is.EqCeilSubDivS (A := A) (B := B)).mp hgt
-    have h := MulPowS_Inv3.eq.MulPow_Inv3.of.EqCeilSubDivAddArgS hd1
+    have h := MulPowS_Inv3.eq.MulPowS.of.EqCeilSubDivAddArgS hd1
     convert h
     rw [zpow_one]
     exact hω1.symm
@@ -71,7 +71,7 @@ private lemma main
         contradiction
       ·
         exact h
-    have h := MulPowS_Inv3.eq.MulPow_Inv3.of.EqCeilSubDivAddArgS hdneg
+    have h := MulPowS_Inv3.eq.MulPowS.of.EqCeilSubDivAddArgS hdneg
     convert h
     rw [zpow_neg_one]
     exact hωinv.symm

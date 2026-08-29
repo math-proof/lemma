@@ -1,5 +1,5 @@
 import Lemma.Complex.AbsSubCeilSSubDivMul3Arg.le.Two
-import Lemma.Complex.CeilSubDivMul3Arg.eq.IteEq0Mul_Ceil
+import Lemma.Complex.EqSquareSqrt
 import Lemma.Complex.Eq0AddAddPow_3.of.Eq_Add.EqMul3_Neg.EqAddPowS_3_Neg
 import Lemma.Complex.Eq_Mul_Pow_SubCeilS.of.Pow_3
 import Lemma.Complex.PowMul.eq.MulPowS.of.Gt_0
@@ -16,12 +16,7 @@ private lemma Cardano
       let δ : ℂ := 4 * p ^ 3 / 27 + q ^ 2
       let U : ℂ := √δ - q
       let V : ℂ := -√δ - q
-      if p * (⌈(arg U + arg V) / (2 * π) - 1 / 2⌉ : ℂ) = 0 then
-        (0 : ℤ)
-      else if arg U + arg V > π then
-        1
-      else
-        -1
+      ⌈3 * arg (U ^ (3 : ℂ)⁻¹ * V ^ (3 : ℂ)⁻¹) / (2 * π) - 1 / 2⌉
     ) = d)
   (h₁ : x =
     let ω : ℂ := ↑(-(1 / 2 : ℝ)) + ↑(√3 / 2 : ℝ) * I
@@ -108,7 +103,7 @@ private lemma Cardano
     ⌈3 * arg (-p / 3) / (2 * π) - 1 / 2⌉ - ⌈3 * arg (A * B) / (2 * π) - 1 / 2⌉
   have hd_alg : d_alg = d := by
     simp only [d_alg]
-    rw [harg, CeilSubDivMul3Arg.eq.IteEq0Mul_Ceil (p := p) (q := q)]
+    rw [harg]
     apply h₀
   have hAB : A * B = (-p / 3) * ω ^ (-d_alg) := by
     have hmul : (√δ / 2 - q / 2) * (-√δ / 2 - q / 2) = -(δ - q ^ 2) / 4 := calc
@@ -211,4 +206,4 @@ private lemma Cardano
 
 
 -- created on 2018-11-10
--- updated on 2026-08-28
+-- updated on 2026-08-29

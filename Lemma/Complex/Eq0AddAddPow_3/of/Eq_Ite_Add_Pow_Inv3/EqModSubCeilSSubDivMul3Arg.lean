@@ -1,4 +1,5 @@
-import Lemma.Complex.Eq0AddAddPow_3.of.Eq_Ite_Add_Pow_Inv3.EqSubCeil_Ite
+import Lemma.Complex.AbsCeilSubDivMul3Arg.le.One
+import Lemma.Complex.Eq0AddAddPow_3.of.Eq_Ite_Add_Pow_Inv3.EqSubCeilSSubDivMul3Arg
 import Lemma.Int.Eq_0.of.Mod_3.eq.Zero.LeAbs_2
 open Complex Int
 
@@ -13,12 +14,7 @@ private lemma main
       let δ : ℂ := 4 * p ^ 3 / 27 + q ^ 2
       let U : ℂ := √δ - q
       let V : ℂ := -√δ - q
-      if p * (⌈(arg U + arg V) / (2 * π) - 1 / 2⌉ : ℂ) = 0 then
-        (0 : ℤ)
-      else if arg U + arg V > π then
-        1
-      else
-        -1
+      ⌈3 * arg (U ^ (3 : ℂ)⁻¹ * V ^ (3 : ℂ)⁻¹) / (2 * π) - 1 / 2⌉
     )) % 3 = d)
   (h₁ : x =
     let ω : ℂ := ↑(-(1 / 2 : ℝ)) + ↑(√3 / 2 : ℝ) * I
@@ -35,12 +31,7 @@ private lemma main
         let δ : ℂ := 4 * p ^ 3 / 27 + q ^ 2
         let U : ℂ := √δ - q
         let V : ℂ := -√δ - q
-        if p * (⌈(arg U + arg V) / (2 * π) - 1 / 2⌉ : ℂ) = 0 then
-          (0 : ℤ)
-        else if arg U + arg V > π then
-          1
-        else
-          -1
+        ⌈3 * arg (U ^ (3 : ℂ)⁻¹ * V ^ (3 : ℂ)⁻¹) / (2 * π) - 1 / 2⌉
       )
   extract_lets δ U V at d_alg
   have hd : d_alg % 3 = d := by
@@ -49,20 +40,8 @@ private lemma main
     have hp : |⌈3 * arg (-p / 3) / (2 * π) - 1 / 2⌉| ≤ 1 :=
       AbsCeilSubDivMul3Arg.le.One (-p / 3)
     have hAB :
-        |(if p * (⌈(arg U + arg V) / (2 * π) - 1 / 2⌉ : ℂ) = 0 then
-            (0 : ℤ)
-          else if arg U + arg V > π then
-            1
-          else
-            -1)| ≤
-          1 := by
-      split_ifs
-      ·
-        norm_num
-      ·
-        norm_num
-      ·
-        norm_num
+        |⌈3 * arg (U ^ (3 : ℂ)⁻¹ * V ^ (3 : ℂ)⁻¹) / (2 * π) - 1 / 2⌉| ≤ 1 :=
+      AbsCeilSubDivMul3Arg.le.One _
     simp only [d_alg]
     obtain ⟨hp₁, hp₂⟩ := LeNeg.Le.of.LeAbs hp
     obtain ⟨hAB₁, hAB₂⟩ := LeNeg.Le.of.LeAbs hAB
@@ -71,7 +50,7 @@ private lemma main
       omega
     ·
       omega
-  apply Eq0AddAddPow_3.of.Eq_Ite_Add_Pow_Inv3.EqSubCeil_Ite.cardano (d := d_alg)
+  apply Eq0AddAddPow_3.of.Eq_Ite_Add_Pow_Inv3.EqSubCeilSSubDivMul3Arg.cardano (d := d_alg)
   ·
     rfl
   ·
@@ -104,4 +83,4 @@ private lemma main
 
 
 -- created on 2018-11-20
--- updated on 2026-08-28
+-- updated on 2026-08-29

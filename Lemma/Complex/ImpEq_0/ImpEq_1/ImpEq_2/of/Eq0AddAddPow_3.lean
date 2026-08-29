@@ -2,7 +2,6 @@ import sympy.core.power
 import sympy.core.numbers
 import sympy.functions.elementary.complexes
 import sympy.polys.polyroots
-import Lemma.Complex.CeilSubDivMul3Arg.eq.IteEq0Mul_Ceil
 import Lemma.Complex.ArgMul.eq.Arg.of.Gt_0
 import Lemma.Complex.Eq_Mul_Pow_SubCeilS.of.Pow_3
 import Lemma.Complex.EqSquareSqrt
@@ -24,12 +23,7 @@ private lemma main
   let ω : ℂ := ↑(-(1 / 2 : ℝ)) + ↑(√3 / 2 : ℝ) * I
   let arg_p : ℤ := ⌈3 * arg (-p / 3) / (2 * π) - 1 / 2⌉
   let arg_AB : ℤ :=
-    if p * (⌈(arg U + arg V) / (2 * π) - 1 / 2⌉ : ℂ) = 0 then
-      (0 : ℤ)
-    else if arg U + arg V > π then
-      1
-    else
-      -1
+    ⌈3 * arg (U ^ (3 : ℂ)⁻¹ * V ^ (3 : ℂ)⁻¹) / (2 * π) - 1 / 2⌉
   let d : ℤ := arg_p - arg_AB
   (d = 0 →
       x = A + B ∨
@@ -70,10 +64,9 @@ private lemma main
     ring
   have harg : arg (A * B) = arg (U ^ (3 : ℂ)⁻¹ * V ^ (3 : ℂ)⁻¹) := by
     rw [hAB, ArgMul.eq.Arg.of.Gt_0 hpos, ArgMul.eq.Arg.of.Gt_0 hpos]
-  have hite := CeilSubDivMul3Arg.eq.IteEq0Mul_Ceil (p := p) (q := q)
   have hd : d = ⌈3 * arg (-p / 3) / (2 * π) - 1 / 2⌉ - ⌈3 * arg (A * B) / (2 * π) - 1 / 2⌉ := by
     simp only [d, arg_p, arg_AB]
-    rw [harg, hite]
+    rw [harg]
   let d_alg : ℤ := ⌈3 * arg (-p / 3) / (2 * π) - 1 / 2⌉ - ⌈3 * arg (A * B) / (2 * π) - 1 / 2⌉
   have hd_alg : d = d_alg := hd
   rw [hd_alg]
@@ -310,4 +303,4 @@ private lemma main
 
 
 -- created on 2018-11-24
--- updated on 2026-08-22
+-- updated on 2026-08-29
