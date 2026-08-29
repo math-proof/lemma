@@ -25,7 +25,6 @@ from . import MulPowS_Inv3
 from . import Add_MulI
 from . import ArgMulPowS
 from . import ArgPow
-from . import CeilSubDivMul_Arg
 from . import CeilSubDivArg
 from . import OrEqSCeil
 from . import CeilSubDivMul3Arg
