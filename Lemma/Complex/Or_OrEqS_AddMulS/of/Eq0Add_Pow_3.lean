@@ -1,4 +1,4 @@
-import Lemma.Complex.Eq0AddAddPow_3.is.OrEqSAdd.of.EqMul3_Neg.EqAddPowS_3_Neg
+import Lemma.Complex.Eq0Add_Pow_3.is.Or_OrEqS_AddMulS.of.EqNeg_MulMul3.EqNeg_AddPowS_3
 import Lemma.Complex.Eq.of.Re.Im
 import Lemma.Complex.Eq_Mul_Pow_SubCeilS.of.Pow_3
 import Lemma.Complex.EqSquareSqrt
@@ -12,27 +12,19 @@ Cardano's formula for solving cubic equations
 @[main]
 private lemma Cardano
   {x p q : ℂ}
-  {d : ℤ}
 -- given
-  (h : x ^ 3 + p * x + q = 0)
-  (hd : ⌈3 * arg (-p / 3) / (2 * π) - 1 / 2⌉ -
-    (
-      let δ : ℂ := 4 * p ^ 3 / 27 + q ^ 2
-      let A : ℂ := (√δ / 2 - q / 2) ^ (3 : ℂ)⁻¹
-      let B : ℂ := (-√δ / 2 - q / 2) ^ (3 : ℂ)⁻¹
-      ⌈3 * arg (A * B) / (2 * π) - 1 / 2⌉
-    ) = d) :
+  (h : q + p * x + x ^ 3 = 0) :
 -- imply
   let δ : ℂ := 4 * p ^ 3 / 27 + q ^ 2
   let A : ℂ := (√δ / 2 - q / 2) ^ (3 : ℂ)⁻¹
   let B : ℂ := (-√δ / 2 - q / 2) ^ (3 : ℂ)⁻¹
   let ω : ℂ := (I * (2 * π / 3)).exp
+  let d : ℤ := ⌈3 * arg (-p / 3) / (2 * π) - 1 / 2⌉ - ⌈3 * arg (A * B) / (2 * π) - 1 / 2⌉
   x = A * ω ^ d + B ∨
     x = A * ω ^ (d - 1) + B * ω ∨
     x = A * ω ^ (d + 1) + B * ~ω := by
 -- proof
-  intro δ A B ω
-  extract_lets at hd
+  intro δ A B ω d
   have hA3 : A ^ 3 = √δ / 2 - q / 2 := by
     simp [A]
   have hB3 : B ^ 3 = -√δ / 2 - q / 2 := by
@@ -85,12 +77,12 @@ private lemma Cardano
     simp [hωexp, -one_div] at h
     have : A * B = (-p / 3) * ω ^ (-d) := by
       apply h.trans
-      rw [(by linarith [hd] : ⌈3 * arg (A * B) / (2 * π) - 1 / 2⌉ - ⌈3 * arg (-p / 3) / (2 * π) - 1 / 2⌉ = -d)]
+      simp [d]
     rw [this, mul_assoc, ← zpow_add₀ hωne]
     simp [neg_add_cancel]
   let A' : ℂ := A * ω ^ d
   obtain hx | hx | hx :=
-    OrEqSAdd.of.Eq0AddAddPow_3.EqMul3_Neg.EqAddPowS_3_Neg (A := A') (B := B)
+    Or_OrEqS_AddMulS.of.Eq0Add_Pow_3.EqNeg_MulMul3.EqNeg_AddPowS_3 (A := A') (B := B)
       (by
         simp only [A']
         rw [mul_pow,

@@ -6,7 +6,7 @@ import Lemma.Complex.EqSquareSqrt
 import Lemma.Nat.Mul.eq.Zero.is.OrEqS_0
 import Lemma.Nat.Ne_0.Ne_0.of.Mul.ne.Zero
 import Lemma.Bool.NotOr.is.AndNotS
-open Bool Complex Nat Rat Set
+open Bool Complex Nat
 
 
 @[main]
@@ -36,7 +36,7 @@ private lemma main
     have harg : arg (U ^ (3 : ℂ)⁻¹ * V ^ (3 : ℂ)⁻¹) = 0 := by
       rw [hprod, arg_zero]
     have hceil0 : ⌈(-1 / 2 : ℝ)⌉ = 0 := by
-      apply EqCeil.of.Lt.Le <;> norm_num
+      apply Int.EqCeil.of.Lt.Le <;> norm_num
     have hsimp :
         3 * arg (U ^ (3 : ℂ)⁻¹ * V ^ (3 : ℂ)⁻¹) / (2 * π) - 1 / 2 = -1 / 2 := by
       rw [harg]
@@ -57,7 +57,7 @@ private lemma main
     have hcond : ⌈(arg U + arg V) / (2 * π) - 1 / 2⌉ = 0 := by
       have hπ : (0 : ℝ) < π := Real.pi_pos
       have hden : (0 : ℝ) < 2 * π := mul_pos (by norm_num) hπ
-      apply EqCeil.of.Lt.Le
+      apply Int.EqCeil.of.Lt.Le
       ·
         have := div_lt_div_of_pos_right hθ₁ hden
         have hsimp' : (-π) / (2 * π) = (-1 / 2 : ℝ) := by field_simp
@@ -131,7 +131,7 @@ private lemma main
             simp [div_eq_mul_inv]
           rw [this]
           apply EqArgExpMulI.of.In_Ioc
-          apply In_Ioc.of.Lt.Le <;> linarith [Real.pi_pos]
+          apply Set.In_Ioc.of.Lt.Le <;> linarith [Real.pi_pos]
         rw [this]
         ring
       ·
@@ -157,7 +157,7 @@ private lemma main
             simp [div_eq_mul_inv]
           rw [this]
           apply EqArgExpMulI.of.In_Ioc
-          apply In_Ioc.of.Lt.Le <;> linarith [Real.pi_pos]
+          apply Set.In_Ioc.of.Lt.Le <;> linarith [Real.pi_pos]
         rw [this]
         ring
     have harg_prod :
@@ -170,13 +170,13 @@ private lemma main
       have hargUV := ArgMul.eq.SubAddArgSMul_Ceil.of.Ne_0.Ne_0 hU hV
       have hsum : arg (U * V) / 3 + 2 * π * d / 3 = (arg U + arg V) / 3 := by grind
       have hwrap : ⌈((arg U + arg V) / 3) / (2 * π) - 1 / 2⌉ = 0 := by
-        have hsumI := Add.in.Ioc.of.In.In (Arg.in.IocNegPiPi U) (Arg.in.IocNegPiPi V)
+        have hsumI := Set.Add.in.Ioc.of.In.In (Arg.in.IocNegPiPi U) (Arg.in.IocNegPiPi V)
         have hπ : (0 : ℝ) < π := Real.pi_pos
         have hden : (0 : ℝ) < 6 * π := mul_pos (by norm_num) hπ
         have ha : ((arg U + arg V) / 3) / (2 * π) - 1 / 2 = (arg U + arg V) / (6 * π) - 1 / 2 := by
           grind
         rw [ha]
-        apply EqCeil.of.Lt.Le
+        apply Int.EqCeil.of.Lt.Le
         ·
           have hlt : -3 * π < arg U + arg V := by linarith [hsumI.1]
           have := div_lt_div_of_pos_right hlt hden

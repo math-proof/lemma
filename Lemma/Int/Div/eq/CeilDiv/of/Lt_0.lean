@@ -1,10 +1,10 @@
 import Lemma.Int.Div.eq.AddDiv___Mod
-import Lemma.Rat.EqCeil.is.Lt.Le
+import Lemma.Int.EqCeil.is.Lt.Le
 import Lemma.Int.Div.gt.Neg1.of.Lt_0
 import Lemma.Nat.Gt_Add.of.Eq_Add.Gt
 import Lemma.Int.Sub.eq.Add_Neg
 import Lemma.Int.LeDivS.of.Lt_0
-open Int Rat Nat
+open Int Nat
 
 
 @[main]

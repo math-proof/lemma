@@ -1,9 +1,8 @@
 import Lemma.Complex.AbsSubCeilSSubDivMul3Arg.le.Two
-import Lemma.Complex.Eq0AddAddPow_3.is.OrEqSAdd.of.EqMul3_Neg.EqAddPowS_3_Neg
+import Lemma.Complex.Eq0Add_Pow_3.is.Or_OrEqS_AddMulS.of.EqNeg_MulMul3.EqNeg_AddPowS_3
 import Lemma.Complex.EqSquareSqrt
 import Lemma.Complex.Eq_Mul_Pow_SubCeilS.of.Pow_3
 import Lemma.Complex.ExpMulIDivMul2Pi3.eq.Add_MulI
-import Lemma.Complex.PowMul.eq.MulPowS.of.Gt_0
 open Complex
 
 
@@ -15,9 +14,9 @@ private lemma Cardano
   (h₀ : ⌈3 * arg (-p / 3) / (2 * π) - 1 / 2⌉ -
     (
       let δ : ℂ := 4 * p ^ 3 / 27 + q ^ 2
-      let U : ℂ := √δ - q
-      let V : ℂ := -√δ - q
-      ⌈3 * arg (U ^ (3 : ℂ)⁻¹ * V ^ (3 : ℂ)⁻¹) / (2 * π) - 1 / 2⌉
+      let A : ℂ := (√δ / 2 - q / 2) ^ (3 : ℂ)⁻¹
+      let B : ℂ := (-√δ / 2 - q / 2) ^ (3 : ℂ)⁻¹
+      ⌈3 * arg (A * B) / (2 * π) - 1 / 2⌉
     ) = d)
   (h₁ : x =
     let ω : ℂ := (I * (2 * π / 3)).exp
@@ -28,37 +27,8 @@ private lemma Cardano
 -- imply
   x ^ 3 + p * x + q = 0 := by
 -- proof
-  extract_lets δ U V at h₀
-  extract_lets ω A B at h₁
-  have hpos : (0 : ℝ) < (2 : ℝ)⁻¹ ^ ((3 : ℝ)⁻¹) :=
-    Real.rpow_pos_of_pos (by norm_num) _
-  have hA : A = (2 : ℂ)⁻¹ ^ (3 : ℂ)⁻¹ * U ^ (3 : ℂ)⁻¹ := by
-    simp only [A]
-    have : √δ / 2 - q / 2 = (2 : ℂ)⁻¹ * U := by
-      simp [U]
-      ring
-    rw [this, (by norm_num : (2 : ℂ)⁻¹ = ↑((2 : ℝ)⁻¹))]
-    apply PowMul.eq.MulPowS.of.Gt_0
-    norm_num
-  have hB : B = (2 : ℂ)⁻¹ ^ (3 : ℂ)⁻¹ * V ^ (3 : ℂ)⁻¹ := by
-    simp only [B]
-    have : -√δ / 2 - q / 2 = (2 : ℂ)⁻¹ * V := by
-      simp [V]
-      ring
-    rw [this, (by norm_num : (2 : ℂ)⁻¹ = ↑((2 : ℝ)⁻¹))]
-    apply PowMul.eq.MulPowS.of.Gt_0
-    norm_num
-  have hcbrt : (2 : ℂ)⁻¹ ^ (3 : ℂ)⁻¹ = ↑((2 : ℝ)⁻¹ ^ ((3 : ℝ)⁻¹)) := by
-    rw [(by norm_num : (2 : ℂ)⁻¹ = ↑((2 : ℝ)⁻¹)),
-      (by norm_num : (3 : ℂ)⁻¹ = ↑((3 : ℝ)⁻¹)),
-      ofReal_cpow (by norm_num : (0 : ℝ) ≤ (2 : ℝ)⁻¹)]
-  have harg : arg (A * B) = arg (U ^ (3 : ℂ)⁻¹ * V ^ (3 : ℂ)⁻¹) := by
-    have : A * B =
-        ↑((2 : ℝ)⁻¹ ^ ((3 : ℝ)⁻¹)) *
-          (↑((2 : ℝ)⁻¹ ^ ((3 : ℝ)⁻¹)) * (U ^ (3 : ℂ)⁻¹ * V ^ (3 : ℂ)⁻¹)) := by
-      rw [hA, hB, hcbrt]
-      ring
-    rw [this, ArgMul.eq.Arg.of.Gt_0 hpos, ArgMul.eq.Arg.of.Gt_0 hpos]
+  extract_lets δ A B at h₀
+  extract_lets ω at h₁
   have hA3 : A ^ 3 = √δ / 2 - q / 2 := by
     simp [A]
   have hB3 : B ^ 3 = -√δ / 2 - q / 2 := by
@@ -95,7 +65,6 @@ private lemma Cardano
     ⌈3 * arg (-p / 3) / (2 * π) - 1 / 2⌉ - ⌈3 * arg (A * B) / (2 * π) - 1 / 2⌉
   have hd_alg : d_alg = d := by
     simp only [d_alg]
-    rw [harg]
     apply h₀
   have hAB : A * B = (-p / 3) * ω ^ (-d_alg) := by
     have hmul : (√δ / 2 - q / 2) * (-√δ / 2 - q / 2) = -(δ - q ^ 2) / 4 := calc
@@ -130,7 +99,8 @@ private lemma Cardano
       omega :
       d = 0 ∨ d % 3 = 1 ∨ d % 3 = 2)
   ·
-    apply Eq0AddAddPow_3.of.OrEqSAdd.EqMul3_Neg.EqAddPowS_3_Neg (A := A) (B := B)
+    rw [(by ring : x ^ 3 + p * x + q = q + p * x + x ^ 3)]
+    apply Eq0Add_Pow_3.of.Or_OrEqS_AddMulS.EqNeg_MulMul3.EqNeg_AddPowS_3 (A := A) (B := B)
     ·
       apply hA3B3
     ·
@@ -146,7 +116,8 @@ private lemma Cardano
       simpa [hd0] using h₁
   ·
     let A' : ℂ := A * ω
-    apply Eq0AddAddPow_3.of.OrEqSAdd.EqMul3_Neg.EqAddPowS_3_Neg (A := A') (B := B)
+    rw [(by ring : x ^ 3 + p * x + q = q + p * x + x ^ 3)]
+    apply Eq0Add_Pow_3.of.Or_OrEqS_AddMulS.EqNeg_MulMul3.EqNeg_AddPowS_3 (A := A') (B := B)
     ·
       simp only [A']
       rw [mul_pow, hω3, mul_one, hA3B3]
@@ -170,7 +141,8 @@ private lemma Cardano
       simpa [A', hmod, this] using h₁
   ·
     let A' : ℂ := A * ~ω
-    apply Eq0AddAddPow_3.of.OrEqSAdd.EqMul3_Neg.EqAddPowS_3_Neg (A := A') (B := B)
+    rw [(by ring : x ^ 3 + p * x + q = q + p * x + x ^ 3)]
+    apply Eq0Add_Pow_3.of.Or_OrEqS_AddMulS.EqNeg_MulMul3.EqNeg_AddPowS_3 (A := A') (B := B)
     ·
       simp only [A', hstar]
       have : (ω ^ 2) ^ 3 = 1 := by

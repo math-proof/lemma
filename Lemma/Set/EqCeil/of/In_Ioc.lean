@@ -1,8 +1,8 @@
 import sympy.sets.sets
-import Lemma.Rat.EqCeil.is.Lt.Le
+import Lemma.Int.EqCeil.is.Lt.Le
 import Lemma.Set.Lt.of.In_Ioc
 import Lemma.Set.Le.of.In_Ioc
-open Set Rat
+open Set Int
 
 
 @[main]

@@ -9,10 +9,10 @@ open Complex Int Nat
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Complex.Eq0AddAddPow_3.is.OrEqSAdd.of.EqMul3_Neg.EqAddPowS_3_Neg |
-| comm | Complex.OrEqSAdd.is.Eq0AddAddPow_3.of.EqMul3_Neg.EqAddPowS_3_Neg |
-| mp | Complex.OrEqSAdd.of.Eq0AddAddPow_3.EqMul3_Neg.EqAddPowS_3_Neg |
-| mpr | Complex.Eq0AddAddPow_3.of.OrEqSAdd.EqMul3_Neg.EqAddPowS_3_Neg |
+| main | Complex.Eq0Add_Pow_3.is.Or_OrEqS_AddMulS.of.EqNeg_MulMul3.EqNeg_AddPowS_3 |
+| comm | Complex.Or_OrEqS_AddMulS.is.Eq0Add_Pow_3.of.EqNeg_MulMul3.EqNeg_AddPowS_3 |
+| mp | Complex.Or_OrEqS_AddMulS.of.Eq0Add_Pow_3.EqNeg_MulMul3.EqNeg_AddPowS_3 |
+| mpr | Complex.Eq0Add_Pow_3.of.Or_OrEqS_AddMulS.EqNeg_MulMul3.EqNeg_AddPowS_3 |
 -/
 @[main, comm, mp, mpr]
 private lemma main
@@ -21,7 +21,7 @@ private lemma main
   (h₀ : A ^ 3 + B ^ 3 = -q)
   (h₁ : 3 * A * B = -p) :
 -- imply
-  x ^ 3 + p * x + q = 0 ↔
+  q + p * x + x ^ 3 = 0 ↔
     let ω : ℂ := (I * (2 * π / 3)).exp
     x = A + B ∨
       x = A * ω + B * ~ω ∨
@@ -72,7 +72,7 @@ private lemma main
   have hc8 : (~ω) ^ 8 = (~ω) ^ 2 := by
     rw [(by rfl : (8 : ℕ) = 6 + 2), pow_add, hc6, one_mul]
   have cubic_of_sum {A B : ℂ} (hAB : A ^ 3 + B ^ 3 = -q) (hp : 3 * A * B = -p) (hx : x = A + B) :
-      x ^ 3 + p * x + q = 0 := by
+      q + p * x + x ^ 3 = 0 := by
     subst hx
     calc
       _ = A ^ 3 + B ^ 3 + 3 * A * B * (A + B) + p * (A + B) + q := by
@@ -96,7 +96,7 @@ private lemma main
       rw [← EqSub.of.Eq_Add (y := (-1 : ℂ)) (d := ~ω) (x := ω) (by rwa [add_comm, eq_comm])]
       ring
     obtain h0 | h0 := OrEqS_0.of.Mul.eq.Zero (by
-      have : x ^ 3 + p * x + q = x ^ 3 - 3 * A * B * x - (A ^ 3 + B ^ 3) := by
+      have : q + p * x + x ^ 3 = x ^ 3 - 3 * A * B * x - (A ^ 3 + B ^ 3) := by
         rw [h₁, h₀]
         ring
       rw [hprod, ← this, h])

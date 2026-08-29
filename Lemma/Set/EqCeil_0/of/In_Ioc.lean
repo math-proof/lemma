@@ -1,6 +1,6 @@
 import sympy.sets.sets
-import Lemma.Rat.EqCeil.is.Lt.Le
-open Rat
+import Lemma.Int.EqCeil.is.Lt.Le
+open Int
 
 
 @[main]

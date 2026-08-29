@@ -1,7 +1,7 @@
 import sympy.core.logic
-import Lemma.Rat.EqCeil.is.Lt.Le
+import Lemma.Int.EqCeil.is.Lt.Le
 import Lemma.Set.In_Ioc.is.Lt.Le
-open Set Rat
+open Set Int
 
 
 @[main]
