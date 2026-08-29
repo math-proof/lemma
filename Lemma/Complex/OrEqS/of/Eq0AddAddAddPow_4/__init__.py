@@ -1,2 +1,2 @@
-from . import EqSubCeil_Ite
-from . import EqModSubCeil_Ite
+from . import EqModSubCeilSSubDivMul3Arg
+from . import EqSubCeilSSubDivMul3Arg

@@ -55,7 +55,7 @@ def prove(Eq):
 
     Eq.contains = Set.In_SetOf.of.In.UFn.apply(Eq[1], Eq[-1])
 
-    Eq <<= Eq[0].cond.this.apply(Complex.Eq0AddAddPow_3.given.Eq_Ite_Add_Pow_Inv3.EqSubCeil_Ite, x, 1), Eq[0].cond.this.apply(Complex.Eq0AddAddPow_3.given.Eq_Ite_Add_Pow_Inv3.EqSubCeil_Ite, x, -2)
+    Eq <<= Eq[0].cond.this.apply(Complex.Eq0AddAddPow_3.given.Eq_Ite_Add_Pow_Inv3.EqSubCeilSSubDivMul3Arg, x, 1), Eq[0].cond.this.apply(Complex.Eq0AddAddPow_3.given.Eq_Ite_Add_Pow_Inv3.EqSubCeilSSubDivMul3Arg, x, -2)
 
     Eq <<= Bool.BFn.of.BFnIte.Cond.apply(Eq[2], Eq[-2]) & Bool.BFn.of.BFnIte.Cond.apply(Eq[2], Eq[-1])
 
