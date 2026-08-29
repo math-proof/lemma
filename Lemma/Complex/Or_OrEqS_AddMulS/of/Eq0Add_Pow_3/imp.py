@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(is_zero, x=None):
-    from Lemma.Complex.ImpEq_0.ImpEq_1.ImpEq_2.of.Eq0AddAddAddMul_Pow_3.Ne_0 import cubic_coefficient
+    from Lemma.Complex.Or_OrEqS_SubAddMulS.of.Eq0Add_Mul_Pow_3.Ne_0 import cubic_coefficient
     fx = is_zero.of(Equal[0])
     S[1], S[0], p, q = cubic_coefficient(fx, x=x)
 
@@ -65,15 +65,15 @@ def prove(Eq):
 
     Eq << Bool.OrAndS.of.And_Or.apply(Eq[-1], simplify=None)
 
-    Eq << Eq[-1].this.find(Equal[-2] & Equal[0]).apply(Complex.ImpEq_0.ImpEq_1.ImpEq_2.of.Eq0AddAddPow_3.EqSubCeilSSubDivMul3Arg, x, ret=0)
+    Eq << Eq[-1].this.find(Equal[-2] & Equal[0]).apply(Complex.Or_OrEqS_AddMulS.of.Eq0Add_Pow_3, x, ret=0)
 
-    Eq << Eq[-1].this.find(Equal[-1] & Equal[0]).apply(Complex.ImpEq_0.ImpEq_1.ImpEq_2.of.Eq0AddAddPow_3.EqSubCeilSSubDivMul3Arg, x, ret=0)
+    Eq << Eq[-1].this.find(Equal[-1] & Equal[0]).apply(Complex.Or_OrEqS_AddMulS.of.Eq0Add_Pow_3, x, ret=0)
 
-    Eq << Eq[-1].this.find(Equal[0] & Equal[0]).apply(Complex.ImpEq_0.ImpEq_1.ImpEq_2.of.Eq0AddAddPow_3.EqSubCeilSSubDivMul3Arg, x, ret=0)
+    Eq << Eq[-1].this.find(Equal[0] & Equal[0]).apply(Complex.Or_OrEqS_AddMulS.of.Eq0Add_Pow_3, x, ret=0)
 
-    Eq << Eq[-1].this.find(Equal[S(1)] & Equal[0]).apply(Complex.ImpEq_0.ImpEq_1.ImpEq_2.of.Eq0AddAddPow_3.EqSubCeilSSubDivMul3Arg, x, ret=0)
+    Eq << Eq[-1].this.find(Equal[S(1)] & Equal[0]).apply(Complex.Or_OrEqS_AddMulS.of.Eq0Add_Pow_3, x, ret=0)
 
-    Eq << Eq[-1].this.find(Equal[S(2)] & Equal[0]).apply(Complex.ImpEq_0.ImpEq_1.ImpEq_2.of.Eq0AddAddPow_3.EqSubCeilSSubDivMul3Arg, x, ret=0)
+    Eq << Eq[-1].this.find(Equal[S(2)] & Equal[0]).apply(Complex.Or_OrEqS_AddMulS.of.Eq0Add_Pow_3, x, ret=0)
 
     # find Equal[S(1)] & Equal[S(-2)]
     Eq << Eq[-1].this.args[:3:2].apply(Bool.And_Or.of.OrAndS)
@@ -99,4 +99,3 @@ if __name__ == '__main__':
 # created on 2018-11-24
 # updated on 2023-05-15
 
-from . import EqSubCeilSSubDivMul3Arg

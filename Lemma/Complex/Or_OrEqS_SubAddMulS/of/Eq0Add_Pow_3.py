@@ -7,7 +7,7 @@ def apply(given, x=None):
     if not rhs.is_Zero:
         fx -= rhs
 
-    from Lemma.Complex.ImpEq_0.ImpEq_1.ImpEq_2.of.Eq0AddAddAddMul_Pow_3.Ne_0 import cubic_coefficient
+    from Lemma.Complex.Or_OrEqS_SubAddMulS.of.Eq0Add_Mul_Pow_3.Ne_0 import cubic_coefficient
     S[1], a, b, c = cubic_coefficient(fx, x=x)
     q = a ** 3 / 27 * 2 + c - a * b / 3
     p = b - a ** 2 / 3
@@ -50,7 +50,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS, simplify=None)
 
-    Eq << Complex.ImpEq_0.ImpEq_1.ImpEq_2.of.Eq0AddAddPow_3.apply(Eq[-1], x=x)
+    Eq << Complex.Or_OrEqS_AddMulS.of.Eq0Add_Pow_3.imp.apply(Eq[-1], x=x)
 
     Eq <<= Eq[-3].subs(Eq.x_def), Eq[-2].subs(Eq.x_def), Eq[-1].subs(Eq.x_def)
 

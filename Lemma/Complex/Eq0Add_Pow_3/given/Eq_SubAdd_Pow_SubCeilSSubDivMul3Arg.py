@@ -7,7 +7,7 @@ def apply(given, x=None, d=1):
     if not rhs.is_Zero:
         fx -= rhs
 
-    from Lemma.Complex.ImpEq_0.ImpEq_1.ImpEq_2.of.Eq0AddAddAddMul_Pow_3.Ne_0 import cubic_coefficient
+    from Lemma.Complex.Or_OrEqS_SubAddMulS.of.Eq0Add_Mul_Pow_3.Ne_0 import cubic_coefficient
     S[1], a, b, c = cubic_coefficient(fx, x=x)
     q = a ** 3 / 27 * 2 + c - a * b / 3
     p = b - a ** 2 / 3

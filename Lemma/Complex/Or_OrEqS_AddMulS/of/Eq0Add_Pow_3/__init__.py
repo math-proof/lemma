@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(is_zero, eq, x=None):
-    from Lemma.Complex.ImpEq_0.ImpEq_1.ImpEq_2.of.Eq0AddAddAddMul_Pow_3.Ne_0 import cubic_coefficient
+    from Lemma.Complex.Or_OrEqS_SubAddMulS.of.Eq0Add_Mul_Pow_3.Ne_0 import cubic_coefficient
     fx = is_zero.of(Equal[0])
     S[1], S[0], p, q = cubic_coefficient(fx, x=x)
 
@@ -164,3 +164,4 @@ if __name__ == '__main__':
 # created on 2018-11-15
 # updated on 2023-05-20
 
+from . import imp

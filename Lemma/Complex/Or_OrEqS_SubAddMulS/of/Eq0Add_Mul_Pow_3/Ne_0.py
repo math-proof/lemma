@@ -58,7 +58,7 @@ def prove(Eq):
 
     Eq << Nat.Div.of.Eq.nonzero.apply(Eq[0], Eq[1])
 
-    Eq << Complex.ImpEq_0.ImpEq_1.ImpEq_2.of.Eq0AddAddAddPow_3.apply(Eq[-1], x=x)
+    Eq << Complex.Or_OrEqS_SubAddMulS.of.Eq0Add_Pow_3.apply(Eq[-1], x=x)
 
 
 if __name__ == '__main__':

@@ -42,7 +42,7 @@ def apply(is_nonzero, given, x=None):
     A = U ** (S.One / 3)
     B = V ** (S.One / 3)
 
-    from Lemma.Complex.ImpEq_0.ImpAnd_Eq_0.ImpAnd_Eq_1.ImpAnd_Eq_2.of.Eq0AddAddAddMul_Pow_4.Ne_0 import solver_set
+    from Lemma.Complex.OrOrSEqS_Div_2.of.Eq0Add_Pow_4.Ne_0.ferrari import solver_set
     delta = alpha ** 2 - 4 * gamma
 
     A = Symbol(A)

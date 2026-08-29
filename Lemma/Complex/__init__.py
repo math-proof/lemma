@@ -47,3 +47,7 @@ from . import EqRe
 from . import Eq0AddAddPow_3
 from . import Eq0AddAddAddPow_3
 from . import Eq_SquareAddMulSqrt
+from . import Or_OrEqS_AddMulS
+from . import Or_OrEqS_SubAddMulS
+from . import OrOrSEqS_Div_2
+from . import Eq0Add_Pow_3
