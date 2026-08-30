@@ -5,7 +5,7 @@ param(
     [Parameter(Position = 0)]
     [ValidateNotNullOrEmpty()]
     [ValidatePattern('^[a-zA-Z0-9_]+$')]
-    [string] $Table = 'lemma',
+    [string] $Table = 'lemma'
 )
 # usage, sync default table: lemma
 # .\ps1\synchronize.ps1
