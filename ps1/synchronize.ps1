@@ -1,27 +1,15 @@
+# ensure the remote git repo is up to date before sync:
+# ssh "${env:REMOTE_MYSQL_USER}@${env:REMOTE_MYSQL_HOST}" "git -C github/lean pull"
+# ssh "${env:REMOTE_MYSQL_USER}@${env:REMOTE_MYSQL_HOST}" "git -C github/py pull"
 param(
     [Parameter(Position = 0)]
     [ValidateNotNullOrEmpty()]
     [ValidatePattern('^[a-zA-Z0-9_]+$')]
     [string] $Table = 'lemma',
-
-    [Parameter()]
-    [ValidatePattern('^[a-zA-Z0-9_-]+$')]
-    [string] $Project
 )
 # usage, sync default table: lemma
 # .\ps1\synchronize.ps1
-# any InnoDB table in schema axiom (identifier-safe name)
 # .\ps1\synchronize.ps1 axiom
-# git pull on remote before sync (repo path: ~/github/<Project>)
-# .\ps1\synchronize.ps1 -Project lean
-# .\ps1\synchronize.ps1 -Project lean -Table lemma
-if ($Project) {
-    Write-Host "git pull github/$Project on ${env:REMOTE_MYSQL_USER}@${env:REMOTE_MYSQL_HOST}..."
-    ssh "${env:REMOTE_MYSQL_USER}@${env:REMOTE_MYSQL_HOST}" "git -C github/$Project pull"
-    if ($LASTEXITCODE -ne 0) {
-        throw "git pull github/$Project failed with exit code $LASTEXITCODE"
-    }
-}
 
 # Run the MySQL command, use -N to skip headers and -B for batch output.
 $local_datadir = mysql -u"$env:USERNAME" --default-character-set=utf8mb4 -N -B -D axiom -e "SHOW VARIABLES WHERE Variable_name = 'datadir'" |
