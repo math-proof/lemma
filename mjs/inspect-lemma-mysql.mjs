@@ -1,6 +1,6 @@
 /**
  * Dump proof.by[].latex from MySQL for a module (requires MYSQL_HOST, etc.).
- * Usage: MYSQL_HOST=127.0.0.1 node scripts/inspect-lemma-mysql.mjs [module] [user]
+ * Usage: MYSQL_HOST=127.0.0.1 node mjs/inspect-lemma-mysql.mjs [module] [user]
  */
 import {
   getMysqlConfig,

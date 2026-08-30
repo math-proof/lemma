@@ -4,7 +4,7 @@
  * Requires both servers to be running.
  *
  * Usage:
- *   node scripts/compare-php-node.mjs [module]
+ *   node mjs/compare-php-node.mjs [module]
  */
 
 import path from 'path';

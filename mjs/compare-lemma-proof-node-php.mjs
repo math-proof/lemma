@@ -6,7 +6,7 @@
  * equality including `latex`, set LEAN_PROOF_COMPARE_INCLUDE_LATEX=1.
  *
  * Usage:
- *   node scripts/compare-lemma-proof-node-php.mjs [module]
+ *   node mjs/compare-lemma-proof-node-php.mjs [module]
  *
  * Env (optional):
  *   LEAN_NODE_LEMMA_BASE  default http://127.0.0.1/lean/

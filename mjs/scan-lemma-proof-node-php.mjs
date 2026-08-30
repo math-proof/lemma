@@ -4,7 +4,7 @@
  * compare-lemma-proof-node-php.mjs (Node vs PHP lemma HTML).
  *
  * Usage:
- *   node scripts/scan-lemma-proof-node-php.mjs [--limit=N] [--fail-fast] [--verbose] [--include-latex]
+ *   node mjs/scan-lemma-proof-node-php.mjs [--limit=N] [--fail-fast] [--verbose] [--include-latex]
  *
  * Env: same as compare script (LEAN_NODE_LEMMA_BASE, LEAN_PHP_LEMMA_BASE).
  * By default only proof.by[].lean is compared; --include-latex or

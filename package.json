@@ -9,7 +9,7 @@
     "node": "node server/app.mjs",
     "test:lean": "node scripts/test-lean-parser.mjs",
     "test:lean:scan": "node scripts/test-lean-parser.mjs --scan-lemma",
-    "compare:php-node": "node scripts/compare-php-node.mjs"
+    "compare:php-node": "node mjs/compare-php-node.mjs"
   },
   "dependencies": {
     "ejs": "^3.1.10",

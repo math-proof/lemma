@@ -2094,7 +2094,7 @@ export class LeanParenthesis extends LeanPairedGroup {
 
     strFormat() {
         if (leanParenthesisLemmaAssignByMultilineClose(this)) {
-            const asn = /** @type {LeanAssign} */ (this.parent);
+            const asn = this.parent;
             const pad = ' '.repeat((asn.indent ?? 0) + 2);
             return super.strFormat(`%s\n${pad}`);
         }
@@ -3738,6 +3738,12 @@ class LeanSquare extends LeanUnaryArithmeticPost {
     get operator() {
         return '²';
     }
+    get command() {
+        return '^2';
+    }
+    latexFormat() {
+        return `{%s}${this.command}`;
+    }
     strFormat() {
         return `%s${this.operator}`;
     }
@@ -3803,6 +3809,12 @@ class LeanCube extends LeanUnaryArithmeticPost {
     get operator() {
         return '³';
     }
+    get command() {
+        return '^3';
+    }
+    latexFormat() {
+        return `{%s}${this.command}`;
+    }
     strFormat() {
         return `%s${this.operator}`;
     }
@@ -3836,6 +3848,12 @@ class LeanQuarticRoot extends LeanUnaryArithmeticPre {
 class LeanTesseract extends LeanUnaryArithmeticPost {
     get operator() {
         return '⁴';
+    }
+    get command() {
+        return '^4';
+    }
+    latexFormat() {
+        return `{%s}${this.command}`;
     }
     strFormat() {
         return `%s${this.operator}`;

@@ -2,7 +2,7 @@
  * Fetch Node + PHP lemma HTML for hard-coded sample modules and print the first
  * proof-step mismatch (lean + latex) for each.
  *
- *   node scripts/inspect-lemma-proof-diff-sample.mjs
+ *   node mjs/inspect-lemma-proof-diff-sample.mjs
  */
 import {
   extractPayload,
