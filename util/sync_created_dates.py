@@ -5,7 +5,7 @@ A Python lemma in Lemma/... and a Lean lemma in ../lean/Lemma/... are paired by
 lemma path: ``.given.`` is normalized to ``.of.`` (as in the axiom hierarchy),
 path segment ``Is`` is normalized to ``is`` (Python reserves ``is``; Lean does
 not), path segment ``In`` is normalized to ``in`` (Python reserves ``in``),
-then any trailing all-lowercase segment is dropped (e.g.
+then any trailing lowercase identifier segment is dropped (e.g.
 ``Nat.AddAdd.comm`` and ``Nat.AddAdd`` share path ``Nat.AddAdd``;
 ``Bool.Imp.given.ImpEq`` matches ``Bool.Imp.of.ImpEq``;
 ``Bool.And_Or.Is.OrAndS`` matches ``Bool.And_Or.is.OrAndS``). When the Python
@@ -32,7 +32,7 @@ LEMMA_DIR = ROOT / "Lemma"
 
 CREATE_RE_PY = re.compile(r"#\s*created on (\d{4}-\d{2}-\d{2})", re.I)
 CREATE_RE_LEAN = re.compile(r"^--\s*created on (\d{4}-\d{2}-\d{2})\s*$", re.I)
-LEMMA_PATH_RE = re.compile(r"\.[a-z]+$")
+LEMMA_PATH_RE = re.compile(r"\.[a-z_0-9]+$")
 
 PY_KEYWORD_SEGMENTS = {
     "Is": "is",
