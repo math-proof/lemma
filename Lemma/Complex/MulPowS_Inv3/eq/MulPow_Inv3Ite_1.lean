@@ -10,16 +10,17 @@ open Bool Complex
 private lemma main
   {A B : ℂ} :
 -- imply
-  A ^ (3 : ℂ)⁻¹ * B ^ (3 : ℂ)⁻¹ =
-    (A * B) ^ (3 : ℂ)⁻¹ *
+  ∛A * ∛B = ∛(A * B) *
       if A = 0 ∨ B = 0 ∨ ⌈(arg A + arg B) / (2 * π) - 1 / 2⌉ = 0 then
         (1 : ℂ)
       else if arg A + arg B > π then
-        -(1 / 2) + I * ↑(√3) / 2
+        ↑(-(1 / 2 : ℝ)) + I * ↑(√3 / 2 : ℝ)
       else
-        -(1 / 2) - I * ↑(√3) / 2 := by
+        ↑(-(1 / 2 : ℝ)) - I * ↑(√3 / 2 : ℝ) := by
 -- proof
-  have hz : (0 : ℂ) ^ (3 : ℂ)⁻¹ = 0 := zero_cpow (by norm_num)
+  have hz : ∛(0 : ℂ) = 0 := by
+    simp only [Root.cubic]
+    apply zero_cpow (by norm_num)
   rw [MulPowS_Inv3.eq.MulPowS.of.EqCeilSubDivAddArgS (d := ⌈(arg A + arg B) / (2 * π) - 1 / 2⌉) rfl]
   split_ifs with h0 hgt
   ·
@@ -34,7 +35,6 @@ private lemma main
         rw [hd0, zpow_zero]
   ·
     rw [EqCeilSubDivS.of.GtAddArgS (A := A) (B := B) hgt, zpow_one]
-    simp [mul_div_assoc]
   ·
     obtain ⟨_, hrest⟩ := AndNotS.of.NotOr h0
     obtain ⟨_, hdne⟩ := AndNotS.of.NotOr hrest
@@ -46,11 +46,11 @@ private lemma main
       ·
         apply h
     rw [hdneg, zpow_neg_one]
+    simp only [Root.sqrt]
     rw [Add_MulI.eq.ExpMulIDivMul2Pi3, ← exp_neg]
     have : -(I * (2 * π / 3)) = I * (-2 * π / 3) := by
       ring
     rw [this, ExpMulIDivMulNeg2Pi3.eq.Sub_MulI]
-    simp [mul_div_assoc]
 
 
 -- created on 2018-11-01

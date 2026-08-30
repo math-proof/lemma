@@ -289,7 +289,9 @@ def Expr.latexFormat : Expr → String
             else
               ""
           | `Real.sqrt
-          | `Root.sqrt =>
+          | `Root.sqrt
+          | `Root.cubic
+          | `Root.quartic =>
             s!"{opStr}%s"
           | `Complex.conj =>
             "\\overline{%s}"

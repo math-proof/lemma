@@ -3934,6 +3934,15 @@ class LeanCubicRoot extends LeanUnaryArithmeticPre
                 return parent::__get($vname);
         }
     }
+    public function latexArgs(&$syntax = null)
+    {
+        $arg = $this->arg;
+        if ($arg instanceof LeanParenthesis)
+            $arg = $arg->arg;
+        $arg = $arg->toLatex($syntax);
+        return [$arg];
+    }
+
     public function latexFormat()
     {
         return "$this->command{%s}";
@@ -4050,6 +4059,15 @@ class LeanQuarticRoot extends LeanUnaryArithmeticPre
                 return parent::__get($vname);
         }
     }
+    public function latexArgs(&$syntax = null)
+    {
+        $arg = $this->arg;
+        if ($arg instanceof LeanParenthesis)
+            $arg = $arg->arg;
+        $arg = $arg->toLatex($syntax);
+        return [$arg];
+    }
+
     public function latexFormat()
     {
         return "$this->command{%s}";

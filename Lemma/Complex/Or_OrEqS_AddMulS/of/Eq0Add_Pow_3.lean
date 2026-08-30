@@ -16,8 +16,8 @@ private lemma Cardano
   (h : q + p * x + x ^ 3 = 0) :
 -- imply
   let δ : ℂ := 4 * p ^ 3 / 27 + q ^ 2
-  let A : ℂ := ((-q + √δ) / 2) ^ (3 : ℂ)⁻¹
-  let B : ℂ := ((-q - √δ) / 2) ^ (3 : ℂ)⁻¹
+  let A : ℂ := ∛((-q + √δ) / 2)
+  let B : ℂ := ∛((-q - √δ) / 2)
   let ω : ℂ := (I * (2 * π / 3)).exp
   let k : ℤ := ⌈3 * arg (-p / 3) / (2 * π) - 1 / 2⌉ - ⌈3 * arg (A * B) / (2 * π) - 1 / 2⌉
   x = A * ω ^ k + B ∨
@@ -26,9 +26,9 @@ private lemma Cardano
 -- proof
   intro δ A B ω k
   have hA3 : A ^ 3 = (-q + √δ) / 2 := by
-    simp [A]
+    simp [A, Root.cubic]
   have hB3 : B ^ 3 = (-q - √δ) / 2 := by
-    simp [B]
+    simp [B, Root.cubic]
   have hA3B3 : A ^ 3 + B ^ 3 = -q := by
     rw [hA3, hB3]
     ring

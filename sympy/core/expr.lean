@@ -146,6 +146,8 @@ def UnaryPrefix.func : UnaryPrefix → Func
     | `DFunLike.coe => ⟨1024, "⇑", "\\Uparrow"⟩  -- LeanUparrow
     | `Real.sqrt
     | `Root.sqrt => ⟨72, "√", "\\sqrt"⟩  -- Lean_sqrt
+    | `Root.cubic => ⟨72, "∛", "\\sqrt[3]"⟩
+    | `Root.quartic => ⟨72, "∜", "\\sqrt[4]"⟩
     | `OfNat.ofNat => ⟨107, "cast", ""⟩  -- Lean_cast
     | _ => ⟨76, name.toString, name.toString⟩  -- UnaryPrefix resulted from Lean.Expr.proj
 
@@ -567,6 +569,8 @@ e = {e}, e = {← ppExpr e}, e.type = {← inferType e}"
     | `Bool.not
     | `Real.sqrt
     | `Root.sqrt
+    | `Root.cubic
+    | `Root.quartic
     | `Complex.conj
     | `Complex.ofReal
     | `Hyperreal.ofReal

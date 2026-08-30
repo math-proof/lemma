@@ -19,8 +19,8 @@ private lemma Ferrari
   let p : ℂ := -4 * γ - α ^ 2 / 3
   let q : ℂ := -2 * α ^ 3 / 27 + 8 * α * γ / 3 - β ^ 2
   let δ : ℂ := 4 * p ^ 3 / 27 + q ^ 2
-  let A : ℂ := ((-q + √δ) / 2) ^ (3 : ℂ)⁻¹
-  let B : ℂ := ((-q - √δ) / 2) ^ (3 : ℂ)⁻¹
+  let A : ℂ := ∛((-q + √δ) / 2)
+  let B : ℂ := ∛((-q - √δ) / 2)
   let k : ℤ := ⌈3 * arg (-p / 3) / (2 * π) - 1 / 2⌉ - ⌈3 * arg (A * B) / (2 * π) - 1 / 2⌉
   let ω : ℂ := (I * (2 * π / 3)).exp
   let y : ℂ := A * ω ^ k + B
@@ -44,10 +44,10 @@ private lemma Ferrari
   let δc : ℂ := 4 * pc ^ 3 / 27 + qc ^ 2
   let U : ℂ := (-q + √δ) / 2
   let V : ℂ := (-q - √δ) / 2
-  let Ac : ℂ := ((-qc + √δc) / 2) ^ (3 : ℂ)⁻¹
-  let Bc : ℂ := ((-qc - √δc) / 2) ^ (3 : ℂ)⁻¹
-  have h8 : (8 : ℂ) ^ (3 : ℂ)⁻¹ = 2 := by
-    have h8' : ((2 : ℂ) ^ 3) ^ (3 : ℂ)⁻¹ = 2 := by
+  let Ac : ℂ := ∛((-qc + √δc) / 2)
+  let Bc : ℂ := ∛((-qc - √δc) / 2)
+  have h8 : ∛(8 : ℂ) = 2 := by
+    have h8' : ∛((2 : ℂ) ^ 3) = 2 := by
       apply pow_cpow_nat_inv (by norm_num) <;>
       ·
         simp
@@ -62,7 +62,7 @@ private lemma Ferrari
         linarith [Real.pi_pos]
     convert h64'
     norm_num
-  have hmul8 (w : ℂ) : ((8 : ℂ) * w) ^ (3 : ℂ)⁻¹ = (8 : ℂ) ^ (3 : ℂ)⁻¹ * w ^ (3 : ℂ)⁻¹ := by
+  have hmul8 (w : ℂ) : ∛((8 : ℂ) * w) = ∛(8 : ℂ) * ∛w := by
     rw [(by norm_num : (8 : ℂ) = ↑(8 : ℝ))]
     apply PowMul.eq.MulPowS.of.Gt_0
     norm_num
@@ -83,8 +83,12 @@ private lemma Ferrari
   have hV : V = (8 : ℂ) * ((-qc - √δc) / 2) := by
     grind
   have hA : A = 2 * Ac := by
+    simp only [A, Ac]
+    simp_all [Root.cubic]
     grind
   have hB : B = 2 * Bc := by
+    simp only [B, Bc]
+    simp_all [Root.cubic]
     grind
   have harg : arg (A * B) = arg (Ac * Bc) := by
     have : A * B = ↑(4 : ℝ) * (Ac * Bc) := by

@@ -1,5 +1,6 @@
 import Lemma.Complex.ArgMul.eq.SubAddArgSMul_Ceil.of.Ne_0.Ne_0
 import Lemma.Complex.ExpMulIDivMul2Pi3.eq.Add_MulI
+import sympy.polys.polyroots
 open Complex
 
 
@@ -11,19 +12,18 @@ private lemma main
   (h : ⌈(arg A + arg B) / (2 * π) - 1 / 2⌉ = d) :
 -- imply
   let ω : ℂ := ↑(-(1 / 2 : ℝ)) + I * ↑(√3 / 2 : ℝ)
-  A ^ (3 : ℂ)⁻¹ * B ^ (3 : ℂ)⁻¹ =
-    (A * B) ^ (3 : ℂ)⁻¹ * ω ^ d := by
+  ∛A * ∛B = ∛(A * B) * ω ^ d := by
 -- proof
   intro ω
+  simp only [Root.cubic]
   have hexp : (3 : ℂ)⁻¹ ≠ 0 := by norm_num
-  have hz : (0 : ℂ) ^ (3 : ℂ)⁻¹ = 0 := zero_cpow hexp
   by_cases hA : A = 0
   ·
-    simp [hA, hz]
+    simp [hA]
   ·
     by_cases hB : B = 0
     ·
-      simp [hB, hz]
+      simp [hB]
     ·
       have hAB : A * B ≠ 0 := mul_ne_zero hA hB
       rw [cpow_def_of_ne_zero hA, cpow_def_of_ne_zero hB, cpow_def_of_ne_zero hAB]
@@ -35,7 +35,8 @@ private lemma main
         simp [ofReal_add, ofReal_sub]
         ring
       have hωexp : (I * (2 * π / 3)).exp = ω := by
-        rw [ExpMulIDivMul2Pi3.eq.Add_MulI]
+        simp only [ω, Root.sqrt]
+        apply ExpMulIDivMul2Pi3.eq.Add_MulI
       rw [← exp_add]
       have hadd :
           log A * (3 : ℂ)⁻¹ + log B * (3 : ℂ)⁻¹ =

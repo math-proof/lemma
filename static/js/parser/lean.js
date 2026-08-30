@@ -3702,6 +3702,14 @@ class Lean_sqrt extends LeanUnaryArithmeticPre {
     get operator() {
         return '√';
     }
+    latexArgs(syntax) {
+        let arg = this.arg;
+        if (arg instanceof LeanParenthesis) arg = arg.arg;
+        return [arg.toLatex(syntax)];
+    }
+    latexFormat() {
+        return `${this.command}{%s}`;
+    }
     strFormat() {
         return `${this.operator}%s`;
     }
@@ -3742,6 +3750,17 @@ class LeanCubicRoot extends LeanUnaryArithmeticPre {
     }
     get operator() {
         return '∛';
+    }
+    get command() {
+        return '\\sqrt[3]';
+    }
+    latexArgs(syntax) {
+        let arg = this.arg;
+        if (arg instanceof LeanParenthesis) arg = arg.arg;
+        return [arg.toLatex(syntax)];
+    }
+    latexFormat() {
+        return `${this.command}{%s}`;
     }
     strFormat() {
         return `${this.operator}%s`;
@@ -3796,6 +3815,17 @@ class LeanQuarticRoot extends LeanUnaryArithmeticPre {
     }
     get operator() {
         return '∜';
+    }
+    get command() {
+        return '\\sqrt[4]';
+    }
+    latexArgs(syntax) {
+        let arg = this.arg;
+        if (arg instanceof LeanParenthesis) arg = arg.arg;
+        return [arg.toLatex(syntax)];
+    }
+    latexFormat() {
+        return `${this.command}{%s}`;
     }
     strFormat() {
         return `${this.operator}%s`;

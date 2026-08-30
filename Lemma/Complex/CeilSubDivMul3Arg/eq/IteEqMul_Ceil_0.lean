@@ -10,7 +10,7 @@ private lemma main
   let δ : ℂ := 4 * p ^ 3 / 27 + q ^ 2
   let U : ℂ := √δ - q
   let V : ℂ := -√δ - q
-  ⌈3 * arg (U ^ (3 : ℂ)⁻¹ * V ^ (3 : ℂ)⁻¹) / (2 * π) - 1 / 2⌉ =
+  ⌈3 * arg (∛U * ∛V) / (2 * π) - 1 / 2⌉ =
     if p * (⌈(arg U + arg V) / (2 * π) - 1 / 2⌉ : ℂ) = 0 then
       0
     else if arg U + arg V > π then
@@ -22,8 +22,9 @@ private lemma main
   classical
   by_cases hp : p = 0
   ·
-    have hexp : (3 : ℂ)⁻¹ ≠ 0 := by norm_num
-    have hz : (0 : ℂ) ^ (3 : ℂ)⁻¹ = 0 := zero_cpow hexp
+    have hz : ∛(0 : ℂ) = 0 := by
+      simp only [Root.cubic]
+      apply zero_cpow (by norm_num)
     have hsq : √δ * √δ = δ := by
       simpa [pow_two] using (EqSquareSqrt : (√δ)² = δ)
     have hUV : U * V = -(4 * p ^ 3 / 27) := by
@@ -33,19 +34,19 @@ private lemma main
       ring
     have hUV0 : U * V = 0 := by
       simp [hUV, hp]
-    have hprod : U ^ (3 : ℂ)⁻¹ * V ^ (3 : ℂ)⁻¹ = 0 := by
-      rcases mul_eq_zero.mp hUV0 with hU | hV
+    have hprod : ∛U * ∛V = 0 := by
+      obtain hU | hV := mul_eq_zero.mp hUV0
       ·
         simp [hU, hz]
       ·
         simp [hV, hz]
-    have harg : arg (U ^ (3 : ℂ)⁻¹ * V ^ (3 : ℂ)⁻¹) = 0 := by
+    have harg : arg (∛U * ∛V) = 0 := by
       rw [hprod, arg_zero]
     have hceil0 : ⌈(-1 / 2 : ℝ)⌉ = 0 := by
       apply Int.ceil_eq_iff.mpr
       constructor <;> norm_num
     have hsimp :
-        3 * arg (U ^ (3 : ℂ)⁻¹ * V ^ (3 : ℂ)⁻¹) / (2 * π) - 1 / 2 = -1 / 2 := by
+        3 * arg (∛U * ∛V) / (2 * π) - 1 / 2 = -1 / 2 := by
       rw [harg]
       ring
     rw [hsimp, hceil0]
