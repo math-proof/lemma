@@ -42,12 +42,12 @@ def apply(is_nonzero, given, x=None):
     A = U ** (S.One / 3)
     B = V ** (S.One / 3)
 
-    from Lemma.Complex.OrOrSEqS_Div_2.of.Eq0Add_Pow_4.Ne_0.ferrari import solver_set
+    from Lemma.Complex.OrOrSEqS_Div_2.of.Eq0Add_Pow_4.Ne_0 import solver_set
     delta = alpha ** 2 - 4 * gamma
 
     A = Symbol(A)
     B = Symbol(B)
-    return Imply(Equal(beta, 0), Equal(x, sqrt(sqrt(delta) / 2 - alpha / 2) - a / 4) | Equal(x, -sqrt(sqrt(delta) / 2 - alpha / 2) - a / 4) | Equal(x, sqrt(-sqrt(delta) / 2 - alpha / 2) - a / 4) | Equal(x, -sqrt(-sqrt(delta) / 2 - alpha / 2) - a / 4)), \
+    return Imply(Equal(beta, 0), Equal(x, sqrt((sqrt(delta) - alpha) / 2) - a / 4) | Equal(x, -sqrt((sqrt(delta) - alpha) / 2) - a / 4) | Equal(x, sqrt((-sqrt(delta) - alpha) / 2) - a / 4) | Equal(x, -sqrt((-sqrt(delta) - alpha) / 2) - a / 4)), \
             Imply(Unequal(beta, 0) & Equal(D, 0), solver_set(0, A, B, x, alpha, beta, w, -a / 4)), \
             Imply(Unequal(beta, 0) & Equal(D % 3, 1), solver_set(1, A, B, x, alpha, beta, w, -a / 4)), \
             Imply(Unequal(beta, 0) & Equal(D % 3, 2), solver_set(2, A, B, x, alpha, beta, w, -a / 4))
@@ -62,7 +62,7 @@ def prove(Eq):
 
     Eq << Nat.Div.of.Eq.nonzero.apply(Eq[0], Eq[1])
 
-    Eq << Complex.ImpEq_0.ImpAnd_Eq_0.ImpAnd_Eq_1.ImpAnd_Eq_2.of.Eq0AddAddAddAddPow_4.apply(Eq[-1], x=x)
+    Eq << Complex.Imp_OrOrSEqS_Sub.Imp_OrOrSEqS_SubDiv_2.of.Eq0Add_Pow_4.apply(Eq[-1], x=x)
 
     Eq <<= Eq[-4].subs(Eq[2].reversed, Eq[3].reversed, Eq[4].reversed), Eq[-3].subs(Eq[2].reversed, Eq[3].reversed, Eq[4].reversed), Eq[-2].subs(Eq[2].reversed, Eq[3].reversed, Eq[4].reversed), Eq[-1].subs(Eq[2].reversed, Eq[3].reversed, Eq[4].reversed)
 

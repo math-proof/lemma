@@ -55,7 +55,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS, simplify=None)
 
-    Eq << Complex.Eq0AddAddPow_3.given.Eq_Ite_Add_Pow_Inv3.EqModSubCeilSSubDivMul3Arg.apply(Eq[-1], x=x, d=1)
+    Eq << Complex.Eq0Add_Pow_3.given.Eq_AddMulPow_SubCeilSSubDivMul3Arg.apply(Eq[-1], x=x, d=1)
 
     Eq << Eq[-1].subs(Eq.x_def)
 

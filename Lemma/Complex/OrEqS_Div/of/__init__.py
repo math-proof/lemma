@@ -1,1 +1,1 @@
-from . import Eq0AddAddMul_Square
+from . import Eq0Add_Mul_Square

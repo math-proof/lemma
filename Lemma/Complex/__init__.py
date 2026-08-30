@@ -8,10 +8,6 @@ from . import EqArgExpMulI
 from . import Re
 from . import Im
 from . import CosArg
-from . import ImpEq_0
-from . import ArgAdd
-from . import Sign
-from . import ArgExpMulI
 from . import ArgIte
 from . import GtAddArgS
 from . import Pow_Inv
@@ -44,10 +40,14 @@ from . import EqArg
 from . import EqConj
 from . import EqIm
 from . import EqRe
-from . import Eq0AddAddPow_3
 from . import Eq0AddAddAddPow_3
 from . import Eq_SquareAddMulSqrt
 from . import Or_OrEqS_AddMulS
 from . import Or_OrEqS_SubAddMulS
 from . import OrOrSEqS_Div_2
 from . import Eq0Add_Pow_3
+from . import Imp_OrOrSEqS
+from . import Imp_OrOrSEqS_Sub
+from . import ArgExpMulI
+from . import ArgAdd
+from . import Sign

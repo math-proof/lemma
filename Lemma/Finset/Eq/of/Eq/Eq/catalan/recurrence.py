@@ -52,7 +52,7 @@ def prove(Eq):
 
     Eq << Tensor.Eq_0.of.Eq.apply(Eq[-1])
 
-    Eq.ou = Complex.OrEqS_Div.of.Eq0AddAddMul_Square.Ne_0.apply(Unequal(x, 0, evaluate=False), Eq[-1], x=g(x), simplify=False)
+    Eq.ou = Complex.OrEqS_Div.of.Eq0Add_Mul_Square.Ne_0.apply(Unequal(x, 0, evaluate=False), Eq[-1], x=g(x), simplify=False)
 
     Eq.negative_sqrt = Eq.ou.args[0].copy(plausible=True)
 
