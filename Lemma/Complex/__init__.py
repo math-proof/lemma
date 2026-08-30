@@ -40,7 +40,6 @@ from . import EqArg
 from . import EqConj
 from . import EqIm
 from . import EqRe
-from . import Eq0AddAddAddPow_3
 from . import Eq_SquareAddMulSqrt
 from . import Or_OrEqS_AddMulS
 from . import Or_OrEqS_SubAddMulS
