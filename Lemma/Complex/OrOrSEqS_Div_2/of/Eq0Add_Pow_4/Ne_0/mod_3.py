@@ -7,7 +7,7 @@ def apply(fx, mod_is_zero, is_nonzero, x=None):
         fx, mod_is_zero = mod_is_zero, fx
 
     from Lemma.Rat.Ne_Div_2.of.Eq0AddSubSub_Pow_3.Ne_0 import cubic_delta
-    from Lemma.Complex.Eq0AddAddAddPow_3.given.Eq_Ite_SubAdd_Pow_Inv3.EqSubCeilSSubDivMul3Arg import cubic_solve
+    from Lemma.Complex.Eq0Add_Pow_3.given.Eq_SubAdd_Pow_SubCeilSSubDivMul3Arg.sub import cubic_solve
     from Lemma.Complex.Imp_OrOrSEqS_Sub.Imp_OrOrSEqS_SubDiv_2.of.Eq0Add_Pow_4 import quartic_coefficient
     fx = fx.of(Equal[0])
     S[1], S[0], alpha, beta, gamma = quartic_coefficient(fx, x=x)
@@ -49,7 +49,7 @@ def apply(fx, mod_is_zero, is_nonzero, x=None):
 @prove
 def prove(Eq):
     from Lemma import Nat, Int, Complex, Real, Bool, Rat
-    from Lemma.Complex.Eq0AddAddAddPow_3.given.Eq_Ite_SubAdd_Pow_Inv3.EqSubCeilSSubDivMul3Arg import cubic_solve
+    from Lemma.Complex.Eq0Add_Pow_3.given.Eq_SubAdd_Pow_SubCeilSSubDivMul3Arg.sub import cubic_solve
     from Lemma.Rat.Ne_Div_2.of.Eq0AddSubSub_Pow_3.Ne_0 import cubic_delta
 
     d = 1

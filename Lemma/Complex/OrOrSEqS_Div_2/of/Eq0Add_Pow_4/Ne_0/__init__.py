@@ -25,7 +25,7 @@ def solver_set(d, A, B, x, alpha, beta, w, offset=0):
 @apply
 def apply(is_nonzero, fx, x=None):
     from Lemma.Complex.Imp_OrOrSEqS_Sub.Imp_OrOrSEqS_SubDiv_2.of.Eq0Add_Pow_4 import quartic_coefficient
-    from Lemma.Complex.Eq0AddAddAddPow_3.given.Eq_Ite_SubAdd_Pow_Inv3.EqSubCeilSSubDivMul3Arg import cubic_solve
+    from Lemma.Complex.Eq0Add_Pow_3.given.Eq_SubAdd_Pow_SubCeilSSubDivMul3Arg.sub import cubic_solve
     from Lemma.Rat.Ne_Div_2.of.Eq0AddSubSub_Pow_3.Ne_0 import cubic_delta
     fx = fx.of(Equal[0])
     S[1], S[0], alpha, beta, gamma = quartic_coefficient(fx, x=x)
