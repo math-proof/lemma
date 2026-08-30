@@ -48,7 +48,7 @@
 * [Real](../?module=Real) 实数代数与实分析
 * [Hyperreal](../?module=Real) 非标准分析
 * [Complex](../?module=Complex) 复分析，例：
-  - [一元四次方程](../?module=Complex.ImpEq_0.ImpAnd_Eq_0.ImpAnd_Eq_1.ImpAnd_Eq_2.of.Eq0AddAddAddAddMul_Pow_4.Ne_0)
+  - [一元四次方程](../?module=Complex.Imp_OrOrSEqS_Sub.Imp_OrOrSEqS_SubDiv_2.of.Eq0Add_Mul_Pow_4.Ne_0)
 * [Set](../?module=Set) 集合论
 * [Finset](../?module=Set) 有限集合论
 * [List](../?module=List) 列表理论

@@ -1,25 +1,25 @@
 # Fully Radical Solution of the Quartic Equation over \(\mathbb C\)
 
 The same lemma is published on [lemma.cn](http://www.lemma.cn/) as two public visualizations that share the module path
-`Complex.ImpEq_0.ImpAnd_Eq_0.ImpAnd_Eq_1.ImpAnd_Eq_2.of.Eq0AddAddAddAddMul_Pow_4.Ne_0`:
+`Complex.Imp_OrOrSEqS_Sub.Imp_OrOrSEqS_SubDiv_2.of.Eq0Add_Mul_Pow_4.Ne_0`:
 
 - **SymPy version** (interactive Python / symbolic exploration):
-  [http://www.lemma.cn/py/?module=Complex.ImpEq_0.ImpAnd_Eq_0.ImpAnd_Eq_1.ImpAnd_Eq_2.of.Eq0AddAddAddAddMul_Pow_4.Ne_0](http://www.lemma.cn/py/?module=Complex.ImpEq_0.ImpAnd_Eq_0.ImpAnd_Eq_1.ImpAnd_Eq_2.of.Eq0AddAddAddAddMul_Pow_4.Ne_0)
+  [http://www.lemma.cn/py/?module=Complex.Imp_OrOrSEqS_Sub.Imp_OrOrSEqS_SubDiv_2.of.Eq0Add_Mul_Pow_4.Ne_0](http://www.lemma.cn/py/?module=Complex.Imp_OrOrSEqS_Sub.Imp_OrOrSEqS_SubDiv_2.of.Eq0Add_Mul_Pow_4.Ne_0)
 - **Lean 4 version** (machine-checked dependent type theory):
-  [http://www.lemma.cn/lean/?module=Complex.ImpEq_0.ImpAnd_Eq_0.ImpAnd_Eq_1.ImpAnd_Eq_2.of.Eq0AddAddAddAddMul_Pow_4.Ne_0](http://www.lemma.cn/lean/?module=Complex.ImpEq_0.ImpAnd_Eq_0.ImpAnd_Eq_1.ImpAnd_Eq_2.of.Eq0AddAddAddAddMul_Pow_4.Ne_0)
+  [http://www.lemma.cn/lean/?module=Complex.Imp_OrOrSEqS_Sub.Imp_OrOrSEqS_SubDiv_2.of.Eq0Add_Mul_Pow_4.Ne_0](http://www.lemma.cn/lean/?module=Complex.Imp_OrOrSEqS_Sub.Imp_OrOrSEqS_SubDiv_2.of.Eq0Add_Mul_Pow_4.Ne_0)
 
 The project source is at [github.com/math-proof/lemma](https://github.com/math-proof/lemma): [Lean 4 on main](https://github.com/math-proof/lemma/tree/main) and [SymPy on master](https://github.com/math-proof/lemma/tree/master). This lemma’s files are
-[Ne_0.lean](https://github.com/math-proof/lemma/blob/main/Lemma/Complex/ImpEq_0/ImpAnd_Eq_0/ImpAnd_Eq_1/ImpAnd_Eq_2/of/Eq0AddAddAddAddMul_Pow_4/Ne_0.lean)
+[Ne_0.lean](https://github.com/math-proof/lemma/blob/main/Lemma/Complex/Imp_OrOrSEqS_Sub/Imp_OrOrSEqS_SubDiv_2/of/Eq0Add_Mul_Pow_4/Ne_0.lean)
 and
-[Ne_0.py](https://github.com/math-proof/lemma/blob/master/Lemma/Complex/ImpEq_0/ImpAnd_Eq_0/ImpAnd_Eq_1/ImpAnd_Eq_2/of/Eq0AddAddAddAddMul_Pow_4/Ne_0.py).
+[Ne_0.py](https://github.com/math-proof/lemma/blob/master/Lemma/Complex/Imp_OrOrSEqS_Sub/Imp_OrOrSEqS_SubDiv_2/of/Eq0Add_Mul_Pow_4/Ne_0.py).
 
-The [SymPy page](http://www.lemma.cn/py/?module=Complex.ImpEq_0.ImpAnd_Eq_0.ImpAnd_Eq_1.ImpAnd_Eq_2.of.Eq0AddAddAddAddMul_Pow_4.Ne_0) renders the original `apply` / `prove` statement as an interactive theorem document. The [Lean 4 page](http://www.lemma.cn/lean/?module=Complex.ImpEq_0.ImpAnd_Eq_0.ImpAnd_Eq_1.ImpAnd_Eq_2.of.Eq0AddAddAddAddMul_Pow_4.Ne_0) renders the `@[main]` lemma with given/imply blocks, nested `let` binders, and the four-fold conjunction of radical expressions. Both are the public faces of this result; the present note describes the mathematics that those pages display.
+The [SymPy page](http://www.lemma.cn/py/?module=Complex.Imp_OrOrSEqS_Sub.Imp_OrOrSEqS_SubDiv_2.of.Eq0Add_Mul_Pow_4.Ne_0) renders the original `apply` / `prove` statement as an interactive theorem document. The [Lean 4 page](http://www.lemma.cn/lean/?module=Complex.Imp_OrOrSEqS_Sub.Imp_OrOrSEqS_SubDiv_2.of.Eq0Add_Mul_Pow_4.Ne_0) renders the `@[main]` lemma with given/imply blocks, nested `let` binders, and the four-fold conjunction of radical expressions. Both are the public faces of this result; the present note describes the mathematics that those pages display.
 
 ## Technical Field
 
 The present disclosure belongs to formalized computer algebra and complex analysis: closed-form roots of a univariate polynomial of degree four over the field of complex numbers, expressed by nested principal square roots and cube roots.
 
-It concerns a complete Ferrari–Cardano formula in which every auxiliary quantity is defined by principal functions \(\sqrt{\,\cdot\,}\) and \(z^{1/3}\), together with an integer branch index assembled from the principal argument \(\operatorname{arg}\) and the ceiling function. The formula is stated twice in public: first as an interactive SymPy lemma on [lemma.cn/py](http://www.lemma.cn/py/?module=Complex.ImpEq_0.ImpAnd_Eq_0.ImpAnd_Eq_1.ImpAnd_Eq_2.of.Eq0AddAddAddAddMul_Pow_4.Ne_0), then as a Lean 4 lemma on [lemma.cn/lean](http://www.lemma.cn/lean/?module=Complex.ImpEq_0.ImpAnd_Eq_0.ImpAnd_Eq_1.ImpAnd_Eq_2.of.Eq0AddAddAddAddMul_Pow_4.Ne_0), using Mathlib’s `Complex.sqrt` and `cpow`. It is a closed-form identity, not a numerical solver.
+It concerns a complete Ferrari–Cardano formula in which every auxiliary quantity is defined by principal functions \(\sqrt{\,\cdot\,}\) and \(z^{1/3}\), together with an integer branch index assembled from the principal argument \(\operatorname{arg}\) and the ceiling function. The formula is stated twice in public: first as an interactive SymPy lemma on [lemma.cn/py](http://www.lemma.cn/py/?module=Complex.Imp_OrOrSEqS_Sub.Imp_OrOrSEqS_SubDiv_2.of.Eq0Add_Mul_Pow_4.Ne_0), then as a Lean 4 lemma on [lemma.cn/lean](http://www.lemma.cn/lean/?module=Complex.Imp_OrOrSEqS_Sub.Imp_OrOrSEqS_SubDiv_2.of.Eq0Add_Mul_Pow_4.Ne_0), using Mathlib’s `Complex.sqrt` and `cpow`. It is a closed-form identity, not a numerical solver.
 
 ## Background
 
@@ -43,7 +43,7 @@ Public formalizations stop short of that closed form.
 - **Isabelle/HOL** `Cubic_Quartic` and the HOL Light entry on Wiedijk’s list are algebraic in the same sense as Mathlib: roots are assumed, not constructed by principal functions.
 
 This library already has a companion cubic lemma
-[Complex.ImpEq_0.ImpEq_1.ImpEq_2.of.Eq0AddAddAddMul_Pow_3.Ne_0](http://www.lemma.cn/lean/?module=Complex.ImpEq_0.ImpEq_1.ImpEq_2.of.Eq0AddAddAddMul_Pow_3.Ne_0)
+[Complex.Or_OrEqS_SubAddMulS.of.Eq0Add_Mul_Pow_3.Ne_0](http://www.lemma.cn/lean/?module=Complex.Or_OrEqS_SubAddMulS.of.Eq0Add_Mul_Pow_3.Ne_0)
 that solves \(ax^3+bx^2+cx+d=0\) over \(\mathbb C\) by principal radicals and the same integer
 \[
 D=\Bigl\lceil\frac{3\operatorname{arg}(-p/3)}{2\pi}-\frac12\Bigr\rceil
@@ -51,7 +51,7 @@ D=\Bigl\lceil\frac{3\operatorname{arg}(-p/3)}{2\pi}-\frac12\Bigr\rceil
 \]
 The quartic lemma’s distinct contribution is to finish Ferrari on that calculus: the cubic resolvent is not left as a hypothesis; it is expanded by Cardano, one valid resolvent root \(y\) is selected by \(D\bmod 3\), and the four quartic roots are nested principal square roots of that \(y\). Among public Lean 4 sources, this is the first fully expanded principal-radical quartic over \(\mathbb C\). It is not the first quartic in Lean 4, and it is not the first Complex radical quartic in any proof assistant.
 
-The statement is public in two visualizations on lemma.cn, under the same module name. The [SymPy page](http://www.lemma.cn/py/?module=Complex.ImpEq_0.ImpAnd_Eq_0.ImpAnd_Eq_1.ImpAnd_Eq_2.of.Eq0AddAddAddAddMul_Pow_4.Ne_0) is the original interactive form (created 2018-11-29): a Python `apply` that returns four implications, proved by reducing to the monic quartic and calling the library’s depressed solver. The [Lean 4 page](http://www.lemma.cn/lean/?module=Complex.ImpEq_0.ImpAnd_Eq_0.ImpAnd_Eq_1.ImpAnd_Eq_2.of.Eq0AddAddAddAddMul_Pow_4.Ne_0) is the machine-checked form of that same given/imply skeleton, with every `let` binder and every principal radical visible in the rendered lemma. Mathlib, Coq, and Isabelle do not publish this fully expanded \(\mathbb C\) formula as a browsable theorem page of that kind.
+The statement is public in two visualizations on lemma.cn, under the same module name. The [SymPy page](http://www.lemma.cn/py/?module=Complex.Imp_OrOrSEqS_Sub.Imp_OrOrSEqS_SubDiv_2.of.Eq0Add_Mul_Pow_4.Ne_0) is the original interactive form (created 2018-11-29): a Python `apply` that returns four implications, proved by reducing to the monic quartic and calling the library’s depressed solver. The [Lean 4 page](http://www.lemma.cn/lean/?module=Complex.Imp_OrOrSEqS_Sub.Imp_OrOrSEqS_SubDiv_2.of.Eq0Add_Mul_Pow_4.Ne_0) is the machine-checked form of that same given/imply skeleton, with every `let` binder and every principal radical visible in the rendered lemma. Mathlib, Coq, and Isabelle do not publish this fully expanded \(\mathbb C\) formula as a browsable theorem page of that kind.
 
 ## Summary
 
@@ -121,9 +121,9 @@ The lemma is a four-fold conjunction of implications, one for \(\beta=0\) and on
 
 FIG. 0 comprises the two public lemma.cn visualizations of the finished statement, under one module name:
 
-- SymPy: [http://www.lemma.cn/py/?module=Complex.ImpEq_0.ImpAnd_Eq_0.ImpAnd_Eq_1.ImpAnd_Eq_2.of.Eq0AddAddAddAddMul_Pow_4.Ne_0](http://www.lemma.cn/py/?module=Complex.ImpEq_0.ImpAnd_Eq_0.ImpAnd_Eq_1.ImpAnd_Eq_2.of.Eq0AddAddAddAddMul_Pow_4.Ne_0)
-- Lean 4: [http://www.lemma.cn/lean/?module=Complex.ImpEq_0.ImpAnd_Eq_0.ImpAnd_Eq_1.ImpAnd_Eq_2.of.Eq0AddAddAddAddMul_Pow_4.Ne_0](http://www.lemma.cn/lean/?module=Complex.ImpEq_0.ImpAnd_Eq_0.ImpAnd_Eq_1.ImpAnd_Eq_2.of.Eq0AddAddAddAddMul_Pow_4.Ne_0)
-- Source: [Lean 4 (main)](https://github.com/math-proof/lemma/blob/main/Lemma/Complex/ImpEq_0/ImpAnd_Eq_0/ImpAnd_Eq_1/ImpAnd_Eq_2/of/Eq0AddAddAddAddMul_Pow_4/Ne_0.lean), [SymPy (master)](https://github.com/math-proof/lemma/blob/master/Lemma/Complex/ImpEq_0/ImpAnd_Eq_0/ImpAnd_Eq_1/ImpAnd_Eq_2/of/Eq0AddAddAddAddMul_Pow_4/Ne_0.py)
+- SymPy: [http://www.lemma.cn/py/?module=Complex.Imp_OrOrSEqS_Sub.Imp_OrOrSEqS_SubDiv_2.of.Eq0Add_Mul_Pow_4.Ne_0](http://www.lemma.cn/py/?module=Complex.Imp_OrOrSEqS_Sub.Imp_OrOrSEqS_SubDiv_2.of.Eq0Add_Mul_Pow_4.Ne_0)
+- Lean 4: [http://www.lemma.cn/lean/?module=Complex.Imp_OrOrSEqS_Sub.Imp_OrOrSEqS_SubDiv_2.of.Eq0Add_Mul_Pow_4.Ne_0](http://www.lemma.cn/lean/?module=Complex.Imp_OrOrSEqS_Sub.Imp_OrOrSEqS_SubDiv_2.of.Eq0Add_Mul_Pow_4.Ne_0)
+- Source: [Lean 4 (main)](https://github.com/math-proof/lemma/blob/main/Lemma/Complex/Imp_OrOrSEqS_Sub/Imp_OrOrSEqS_SubDiv_2/of/Eq0Add_Mul_Pow_4/Ne_0.lean), [SymPy (master)](https://github.com/math-proof/lemma/blob/master/Lemma/Complex/Imp_OrOrSEqS_Sub/Imp_OrOrSEqS_SubDiv_2/of/Eq0Add_Mul_Pow_4/Ne_0.py)
 
 FIG. 1 is the reduction used in the main theorem: divide by the leading coefficient, depress by \(z=x+a'/4\), then split on \(\beta=0\) versus \(\beta\neq 0\).
 
@@ -133,7 +133,7 @@ FIG. 3 is the cube-root branch selector \(D\), shared in design with the library
 
 **FIG. 0 — public visualizations**
 
-The [SymPy page](http://www.lemma.cn/py/?module=Complex.ImpEq_0.ImpAnd_Eq_0.ImpAnd_Eq_1.ImpAnd_Eq_2.of.Eq0AddAddAddAddMul_Pow_4.Ne_0) is the rendering: given `a ≠ 0` and `a x^4 + b x^3 + c x^2 + d x + e = 0`, it displays four implications (`β = 0`, `β ≠ 0 ∧ D = 0`, `D % 3 = 1`, `D % 3 = 2`) with nested radicals as an interactive theorem document. The [Lean 4 page](http://www.lemma.cn/lean/?module=Complex.ImpEq_0.ImpAnd_Eq_0.ImpAnd_Eq_1.ImpAnd_Eq_2.of.Eq0AddAddAddAddMul_Pow_4.Ne_0) is the rendering of the same skeleton: `@[main] private lemma main` with `{x a b c d e : ℂ}`, the `let` chain `a', b', α, β, γ, δ, U, V, A, B, …, D, ω`, and the four-fold `∧` of radical disjunctions. Those two URLs are the public drawings of the lemma.
+The [SymPy page](http://www.lemma.cn/py/?module=Complex.Imp_OrOrSEqS_Sub.Imp_OrOrSEqS_SubDiv_2.of.Eq0Add_Mul_Pow_4.Ne_0) is the rendering: given `a ≠ 0` and `a x^4 + b x^3 + c x^2 + d x + e = 0`, it displays four implications (`β = 0`, `β ≠ 0 ∧ D = 0`, `D % 3 = 1`, `D % 3 = 2`) with nested radicals as an interactive theorem document. The [Lean 4 page](http://www.lemma.cn/lean/?module=Complex.Imp_OrOrSEqS_Sub.Imp_OrOrSEqS_SubDiv_2.of.Eq0Add_Mul_Pow_4.Ne_0) is the rendering of the same skeleton: `@[main] private lemma main` with `{x a b c d e : ℂ}`, the `let` chain `a', b', α, β, γ, δ, U, V, A, B, …, D, ω`, and the four-fold `∧` of radical disjunctions. Those two URLs are the public drawings of the lemma.
 
 **FIG. 1 — reduction**
 
@@ -174,13 +174,13 @@ x=z-\dfrac{a'}{4}
 
 **FIG. 2 — lemma dependencies of the main theorem**
 
-- `Complex.ImpEq_0.ImpAnd_Eq_0.ImpAnd_Eq_1.ImpAnd_Eq_2.of.Eq0AddAddAddAddMul_Pow_4.Ne_0` ([SymPy](http://www.lemma.cn/py/?module=Complex.ImpEq_0.ImpAnd_Eq_0.ImpAnd_Eq_1.ImpAnd_Eq_2.of.Eq0AddAddAddAddMul_Pow_4.Ne_0) / [Lean 4](http://www.lemma.cn/lean/?module=Complex.ImpEq_0.ImpAnd_Eq_0.ImpAnd_Eq_1.ImpAnd_Eq_2.of.Eq0AddAddAddAddMul_Pow_4.Ne_0))
-  - [Complex.OrOrSEqS.of.Eq0AddAddPow_4](http://www.lemma.cn/lean/?module=Complex.OrOrSEqS.of.Eq0AddAddPow_4) — case \(\beta=0\)
-    - [Complex.OrEqS_Div.of.Eq0AddAddMul_Square.Ne_0](http://www.lemma.cn/lean/?module=Complex.OrEqS_Div.of.Eq0AddAddMul_Square.Ne_0) — quadratic in \(x^2\)
+- `Complex.Imp_OrOrSEqS_Sub.Imp_OrOrSEqS_SubDiv_2.of.Eq0Add_Mul_Pow_4.Ne_0` ([SymPy](http://www.lemma.cn/py/?module=Complex.Imp_OrOrSEqS_Sub.Imp_OrOrSEqS_SubDiv_2.of.Eq0Add_Mul_Pow_4.Ne_0) / [Lean 4](http://www.lemma.cn/lean/?module=Complex.Imp_OrOrSEqS_Sub.Imp_OrOrSEqS_SubDiv_2.of.Eq0Add_Mul_Pow_4.Ne_0))
+  - [Complex.OrOrSEqS.of.Eq0Add_Pow_4](http://www.lemma.cn/lean/?module=Complex.OrOrSEqS.of.Eq0Add_Pow_4) — case \(\beta=0\)
+    - [Complex.OrEqS_Div.of.Eq0Add_Mul_Square.Ne_0](http://www.lemma.cn/lean/?module=Complex.OrEqS_Div.of.Eq0Add_Mul_Square.Ne_0) — quadratic in \(x^2\)
     - [Complex.Or_Eq_NegSqrt.of.EqSquare](http://www.lemma.cn/lean/?module=Complex.Or_Eq_NegSqrt.of.EqSquare) — \(x^2=c\Rightarrow x=\sqrt{c}\lor x=-\sqrt{c}\)
       - [Complex.EqSquareSqrt](http://www.lemma.cn/lean/?module=Complex.EqSquareSqrt) — \((\sqrt{z})^2=z\)
       - [Real.OrEqS.of.Square](http://www.lemma.cn/lean/?module=Real.OrEqS.of.Square)
-  - [Complex.ImpEq_0.ImpAnd_Eq_0.ImpAnd_Eq_1.ImpAnd_Eq_2.of.Eq0AddAddAddMul_Pow_4.Ne_0](http://www.lemma.cn/lean/?module=Complex.ImpEq_0.ImpAnd_Eq_0.ImpAnd_Eq_1.ImpAnd_Eq_2.of.Eq0AddAddAddMul_Pow_4.Ne_0) — case \(\beta\neq 0\)
+  - [Complex.OrOrSEqS_Div_2.of.Eq0Add_Pow_4.Ne_0](http://www.lemma.cn/lean/?module=Complex.OrOrSEqS_Div_2.of.Eq0Add_Pow_4.Ne_0) — case \(\beta\neq 0\)
     - (`hbranch`) — given a resolvent root \(y_0\), factor into two quadratics
       - [Complex.EqSquareSqrt](http://www.lemma.cn/lean/?module=Complex.EqSquareSqrt)
       - [Complex.Or_Eq_NegSqrt.of.EqSquare](http://www.lemma.cn/lean/?module=Complex.Or_Eq_NegSqrt.of.EqSquare)
@@ -193,11 +193,11 @@ x=z-\dfrac{a'}{4}
       - [Complex.Eq_MulNorm_ExpMulIArg](http://www.lemma.cn/lean/?module=Complex.Eq_MulNorm_ExpMulIArg)
 
 Related lemmas in the same family, **not** imported by the main theorem: the depressed statement
-[Complex.ImpEq_0.ImpAnd_Eq_0.ImpAnd_Eq_1.ImpAnd_Eq_2.of.Eq0AddAddAddPow_4](http://www.lemma.cn/lean/?module=Complex.ImpEq_0.ImpAnd_Eq_0.ImpAnd_Eq_1.ImpAnd_Eq_2.of.Eq0AddAddAddPow_4)
+[Complex.Imp_OrOrSEqS.Imp_OrOrSEqS_Div_2.of.Eq0Add_Pow_4](http://www.lemma.cn/lean/?module=Complex.Imp_OrOrSEqS.Imp_OrOrSEqS_Div_2.of.Eq0Add_Pow_4)
 and the monic offset
-[Complex.ImpEq_0.ImpAnd_Eq_0.ImpAnd_Eq_1.ImpAnd_Eq_2.of.Eq0AddAddAddAddPow_4](http://www.lemma.cn/lean/?module=Complex.ImpEq_0.ImpAnd_Eq_0.ImpAnd_Eq_1.ImpAnd_Eq_2.of.Eq0AddAddAddAddPow_4).
+[Complex.Imp_OrOrSEqS_Sub.Imp_OrOrSEqS_SubDiv_2.of.Eq0Add_Pow_4](http://www.lemma.cn/lean/?module=Complex.Imp_OrOrSEqS_Sub.Imp_OrOrSEqS_SubDiv_2.of.Eq0Add_Pow_4).
 The cubic formula
-[Complex.ImpEq_0.ImpEq_1.ImpEq_2.of.Eq0AddAddPow_3.EqSubCeilSSubDivS](http://www.lemma.cn/lean/?module=Complex.ImpEq_0.ImpEq_1.ImpEq_2.of.Eq0AddAddPow_3.EqSubCeilSSubDivS)
+[Complex.Or_OrEqS_SubAddMulS.of.Eq0Add_Pow_3](http://www.lemma.cn/lean/?module=Complex.Or_OrEqS_SubAddMulS.of.Eq0Add_Pow_3)
 uses the same \(D\) selector; the quartic proof calls `Eq_Mul_Pow_SubCeilS.of.Pow_3` directly, because Ferrari needs one resolvent root rather than the three Cardano combinations.
 
 **FIG. 3 — branch integer \(D\)**
@@ -246,9 +246,9 @@ with \(\alpha,\beta,\gamma\) as in the Summary. The main file performs this expa
 ### 3. Biquadratic case \(\beta=0\)
 
 If \(\beta=0\), the depressed equation is \(z^4+\alpha z^2+\gamma=0\), a quadratic in \(z^2\). Lemma
-[Complex.OrOrSEqS.of.Eq0AddAddPow_4](http://www.lemma.cn/lean/?module=Complex.OrOrSEqS.of.Eq0AddAddPow_4)
+[Complex.OrOrSEqS.of.Eq0Add_Pow_4](http://www.lemma.cn/lean/?module=Complex.OrOrSEqS.of.Eq0Add_Pow_4)
 assembles the four principal-radical roots. It first solves the quadratic in \(z^2\) by
-[Complex.OrEqS_Div.of.Eq0AddAddMul_Square.Ne_0](http://www.lemma.cn/lean/?module=Complex.OrEqS_Div.of.Eq0AddAddMul_Square.Ne_0),
+[Complex.OrEqS_Div.of.Eq0Add_Mul_Square.Ne_0](http://www.lemma.cn/lean/?module=Complex.OrEqS_Div.of.Eq0Add_Mul_Square.Ne_0),
 \[
 z^2=\frac{-\alpha\pm\sqrt{\alpha^2-4\gamma}}{2}=\pm\frac{\sqrt{\Delta}}{2}-\frac{\alpha}{2},\qquad \Delta=\alpha^2-4\gamma.
 \]
@@ -350,7 +350,7 @@ Each inner disjunction is exhaustive for that case: a root \(x\) of the original
 ### 8. What is not claimed
 
 The lemma does not construct roots in a general field of characteristic zero, does not avoid \(\operatorname{arg}\) and \(\lceil\cdot\rceil\), and does not prove that a randomly chosen pairing of principal cube roots is a resolvent root. It also does not replace Mathlib’s abstract Ferrari theorem: that theorem remains the right statement when one only knows that some square roots and some resolvent root exist in \(K\). The present lemma is the complementary statement on \(\mathbb C\): every coefficient tuple with \(a\neq 0\) is sent to four explicit principal-radical expressions, with the cube-root branch named by \(D\). That statement is the one visualized at
-[lemma.cn/py](http://www.lemma.cn/py/?module=Complex.ImpEq_0.ImpAnd_Eq_0.ImpAnd_Eq_1.ImpAnd_Eq_2.of.Eq0AddAddAddAddMul_Pow_4.Ne_0)
+[lemma.cn/py](http://www.lemma.cn/py/?module=Complex.Imp_OrOrSEqS_Sub.Imp_OrOrSEqS_SubDiv_2.of.Eq0Add_Mul_Pow_4.Ne_0)
 and
-[lemma.cn/lean](http://www.lemma.cn/lean/?module=Complex.ImpEq_0.ImpAnd_Eq_0.ImpAnd_Eq_1.ImpAnd_Eq_2.of.Eq0AddAddAddAddMul_Pow_4.Ne_0).
+[lemma.cn/lean](http://www.lemma.cn/lean/?module=Complex.Imp_OrOrSEqS_Sub.Imp_OrOrSEqS_SubDiv_2.of.Eq0Add_Mul_Pow_4.Ne_0).
 The source is on GitHub: [Lean 4 (main)](https://github.com/math-proof/lemma/tree/main), [SymPy (master)](https://github.com/math-proof/lemma/tree/master).
