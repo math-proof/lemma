@@ -1,4 +1,3 @@
-import sympy.functions.elementary.complexes
 import sympy.functions.elementary.trigonometric
 import Lemma.Complex.Norm.eq.Sqrt
 open Complex

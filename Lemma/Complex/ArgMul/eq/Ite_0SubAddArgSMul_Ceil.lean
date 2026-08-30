@@ -1,4 +1,3 @@
-import sympy.core.numbers
 import Lemma.Complex.ArgMul.eq.SubAddArgSMul_Ceil.of.Ne_0.Ne_0
 open Complex
 

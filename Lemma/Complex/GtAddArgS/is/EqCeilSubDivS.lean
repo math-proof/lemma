@@ -1,5 +1,3 @@
-import sympy.core.numbers
-import sympy.functions.elementary.complexes
 import Lemma.Complex.Arg.in.IocNegPiPi
 import Lemma.Set.Add.in.Ioc.of.In.In
 import Lemma.Set.InDiv.of.In_Ioc.Gt_0

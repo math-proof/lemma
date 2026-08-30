@@ -1,4 +1,3 @@
-import sympy.core.power
 import Lemma.Real.EqSquareSqrt.of.Ge_0
 import Lemma.Nat.Ge.of.Gt
 open Nat Real

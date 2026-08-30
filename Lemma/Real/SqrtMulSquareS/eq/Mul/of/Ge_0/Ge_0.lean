@@ -1,4 +1,3 @@
-import sympy.core.power
 import Lemma.Int.GeSquare_0
 import Lemma.Real.EqSqrtSquare.of.Ge_0
 open Int Real

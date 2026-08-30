@@ -1,4 +1,3 @@
-import sympy.core.numbers
 import sympy.sets.sets
 import Lemma.Complex.LogMul.eq.AddLogS.of.AddArgS.in.IocPiS.Ne_0.Ne_0
 open Complex

@@ -1,6 +1,5 @@
 import sympy.functions.elementary.complexes
 import sympy.sets.sets
-import sympy.core.numbers
 import sympy.Basic
 
 

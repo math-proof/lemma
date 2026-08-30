@@ -1,4 +1,3 @@
-import sympy.core.power
 import sympy.Basic
 
 

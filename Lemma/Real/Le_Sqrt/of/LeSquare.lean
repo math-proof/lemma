@@ -1,4 +1,3 @@
-import sympy.core.power
 import Lemma.Real.GeSqrt_0
 import Lemma.Int.GeSquare_0
 import Lemma.Nat.Ge.of.Ge.Ge

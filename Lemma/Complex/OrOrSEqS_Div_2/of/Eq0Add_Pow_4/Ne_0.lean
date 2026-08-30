@@ -1,6 +1,6 @@
 import Lemma.Complex.Eq0Add_Pow_3.of.Eq_SubAdd_Pow_SubCeilSSubDivMul3Arg
 import Lemma.Complex.Eq_SquareAddMulSqrt.of.Eq0SubSquare_MulMul4.Ne_0
-import Lemma.Complex.OrEqS_Div.of.Eq0AddAddMul_Square.Ne_0
+import Lemma.Complex.OrEqS_Div.of.Eq0Add_Mul_Square.Ne_0
 import Lemma.Complex.PowMul.eq.MulPowS.of.Gt_0
 import Lemma.Int.OrEqS_0.of.Square
 import Lemma.Int.SquareNeg.eq.Square
@@ -16,16 +16,16 @@ private lemma Ferrari
   (hβ : β ≠ 0)
   (h : γ + β * x + α * x ^ 2 + x ^ 4 = 0) :
 -- imply
-  let p : ℂ := -4 * γ - α ^ 2 / 3
-  let q : ℂ := -2 * α ^ 3 / 27 + 8 * α * γ / 3 - β ^ 2
-  let δ : ℂ := 4 * p ^ 3 / 27 + q ^ 2
-  let A : ℂ := ∛((-q + √δ) / 2)
-  let B : ℂ := ∛((-q - √δ) / 2)
-  let k : ℤ := ⌈3 * arg (-p / 3) / (2 * π) - 1 / 2⌉ - ⌈3 * arg (A * B) / (2 * π) - 1 / 2⌉
-  let ω : ℂ := (I * (2 * π / 3)).exp
-  let y : ℂ := A * ω ^ k + B
-  let y0 : ℂ := -2 * α / 3 + y
-  let y1 : ℂ := 4 * α / 3 + y
+  let p := -4 * γ - α ^ 2 / 3
+  let q := -2 * α ^ 3 / 27 + 8 * α * γ / 3 - β ^ 2
+  let δ := 4 * p ^ 3 / 27 + q ^ 2
+  let A := ∛((-q + √δ) / 2)
+  let B := ∛((-q - √δ) / 2)
+  let k := ⌈3 * arg (-p / 3) / (2 * π) - 1 / 2⌉ - ⌈3 * arg (A * B) / (2 * π) - 1 / 2⌉
+  let ω := (I * (2 * π / 3)).exp
+  let y := A * ω ^ k + B
+  let y0 := -2 * α / 3 + y
+  let y1 := 4 * α / 3 + y
   (x = (√(2 * β / √y0 - y1) - √y0) / 2 ∨
     x = (-√(2 * β / √y0 - y1) - √y0) / 2) ∨
     x = (√(-2 * β / √y0 - y1) + √y0) / 2 ∨
@@ -36,16 +36,16 @@ private lemma Ferrari
   have h' : x ^ 4 + α * x ^ 2 + β * x + γ = 0 := by
     rw [(by ring : x ^ 4 + α * x ^ 2 + β * x + γ = γ + β * x + α * x ^ 2 + x ^ 4)]
     apply h
-  let cr : ℂ := -β ^ 2 / 8 + α * γ / 2
-  let ar : ℂ := -α / 2
-  let br : ℂ := -γ
-  let pc : ℂ := br - ar ^ 2 / 3
-  let qc : ℂ := 2 * ar ^ 3 / 27 - ar * br / 3 + cr
-  let δc : ℂ := 4 * pc ^ 3 / 27 + qc ^ 2
-  let U : ℂ := (-q + √δ) / 2
-  let V : ℂ := (-q - √δ) / 2
-  let Ac : ℂ := ∛((-qc + √δc) / 2)
-  let Bc : ℂ := ∛((-qc - √δc) / 2)
+  let cr := -β ^ 2 / 8 + α * γ / 2
+  let ar := -α / 2
+  let br := -γ
+  let pc := br - ar ^ 2 / 3
+  let qc := 2 * ar ^ 3 / 27 - ar * br / 3 + cr
+  let δc := 4 * pc ^ 3 / 27 + qc ^ 2
+  let U := (-q + √δ) / 2
+  let V := (-q - √δ) / 2
+  let Ac := ∛((-qc + √δc) / 2)
+  let Bc := ∛((-qc - √δc) / 2)
   have h8 : ∛(8 : ℂ) = 2 := by
     have h8' : ∛((2 : ℂ) ^ 3) = 2 := by
       apply pow_cpow_nat_inv (by norm_num) <;>
@@ -107,7 +107,7 @@ private lemma Ferrari
     rw [this, h4]
     apply ArgMul.eq.Arg.of.Gt_0
     norm_num
-  let z : ℂ := Ac * ω ^ k + Bc - ar / 3
+  let z := Ac * ω ^ k + Bc - ar / 3
   have hcubic : cr + br * z + ar * z ^ 2 + z ^ 3 = 0 := by
     apply Eq0Add_Pow_3.of.Eq_SubAdd_Pow_SubCeilSSubDivMul3Arg
     extract_lets
@@ -161,10 +161,10 @@ private lemma Ferrari
         ring
   obtain hdiff | hsum := Int.OrEqS_0.of.Square hsqeq
   ·
-    have hquad : (1 : ℂ) * x ^ 2 + (-√y0) * x + (z + β / (2 * √y0)) = 0 := by
+    have hquad : (z + β / (2 * √y0)) + (-√y0) * x + (1 : ℂ) * x ^ 2 = 0 := by
       convert hdiff using 1
       ring
-    have hroot := OrEqS_Div.of.Eq0AddAddMul_Square.Ne_0 (x := x) one_ne_zero hquad
+    have hroot := OrEqS_Div.of.Eq0Add_Mul_Square.Ne_0 (x := x) one_ne_zero hquad
     extract_lets Δ at hroot
     have hDelta : Δ = -2 * β / √y0 - y1 := by
       simp only [Δ]
@@ -183,10 +183,10 @@ private lemma Ferrari
       rw [hDelta]
       ring
   ·
-    have hquad : (1 : ℂ) * x ^ 2 + √y0 * x + (z - β / (2 * √y0)) = 0 := by
+    have hquad : (z - β / (2 * √y0)) + √y0 * x + (1 : ℂ) * x ^ 2 = 0 := by
       convert hsum using 1
       ring
-    have hroot := OrEqS_Div.of.Eq0AddAddMul_Square.Ne_0 (x := x) one_ne_zero hquad
+    have hroot := OrEqS_Div.of.Eq0Add_Mul_Square.Ne_0 (x := x) one_ne_zero hquad
     extract_lets Δ at hroot
     have hDelta : Δ = 2 * β / √y0 - y1 := by
       simp only [Δ]

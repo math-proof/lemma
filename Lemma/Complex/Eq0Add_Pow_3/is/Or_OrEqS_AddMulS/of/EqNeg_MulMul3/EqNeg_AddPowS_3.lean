@@ -22,12 +22,12 @@ private lemma main
   (h₁ : 3 * A * B = -p) :
 -- imply
   q + p * x + x ^ 3 = 0 ↔
-    let ω : ℂ := (I * (2 * π / 3)).exp
+    let ω := (I * (2 * π / 3)).exp
     x = A + B ∨
       x = A * ω + B * ~ω ∨
       x = A * ~ω + B * ω := by
 -- proof
-  let ω : ℂ := ↑(-(1 / 2 : ℝ)) + I * ↑(√3 / 2 : ℝ)
+  let ω := ↑(-(1 / 2 : ℝ)) + I * ↑(√3 / 2 : ℝ)
   have hωexp : (I * (2 * π / 3)).exp = ω := by
     rw [ExpMulIDivMul2Pi3.eq.Add_MulI]
   have hω3 : ω ^ 3 = 1 := by

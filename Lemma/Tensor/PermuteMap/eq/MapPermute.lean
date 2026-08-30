@@ -47,11 +47,10 @@ private lemma main
       have h_X := SEqPermuteS__Neg.of.Le (i := i) (d := (-d).toNat) (by grind) X
       have h_X_map := SEqPermuteS__Neg.of.Le (i := i) (d := (-d).toNat) (by grind) (X.map f)
       rw [h_toNat] at h_X h_X_map
-      let d' : ℤ := -↑↑i
-      have h_X' : X.permute i d ≃ X.permute i d' := by simpa [d'] using h_X
-      have h_reduced := main (X := X) (i := i) (d := d') (f := f)
+      have h_X' : X.permute i d ≃ X.permute i (-i) := by simpa using h_X
+      have h_reduced := main (X := X) (i := i) (d := -i) (f := f)
       refine h_X_map.trans (h_reduced.trans ?_)
-      apply (MapCast.as.Map.of.Eq h_X'.symm.1 (X := X.permute i d') (f := f)).symm.trans (SEq.of.Eq (congrArg (Tensor.map f) (SEq.cast h_X'.symm)))
+      apply (MapCast.as.Map.of.Eq h_X'.symm.1 (X := X.permute i (-i)) (f := f)).symm.trans (SEq.of.Eq (congrArg (Tensor.map f) (SEq.cast h_X'.symm)))
 
 
 -- created on 2026-08-07

@@ -1,5 +1,4 @@
 import sympy.core.logic
-import sympy.polys.polyroots
 import Lemma.Int.SquareSub.eq.SubAddSquareS_MulMul2
 import Lemma.Int.Mul_Sub.eq.SubMulS
 import Lemma.Int.Eq_Neg.of.Add.eq.Zero
@@ -29,6 +28,7 @@ import Lemma.Rat.EqMul_Div.of.Ne_0
 import Lemma.Rat.EqMul.is.Eq_Div.of.Ne_0
 import Lemma.Rat.DivSub.eq.SubDivS
 import Lemma.Complex.Or_Eq_NegSqrt.of.EqSquare
+import Lemma.Nat.AddAdd
 open Rat Int Nat Complex
 
 
@@ -37,11 +37,12 @@ private lemma main
   {x a b c : ℂ}
 -- given
   (h₀ : a ≠ 0)
-  (h₁ : a * x² + b * x + c = 0) :
+  (h₁ : c + b * x + a * x² = 0) :
 -- imply
-  let Δ : ℂ := b² - 4 * a * c
+  let Δ := b² - 4 * a * c
   x = (-b + √Δ) / (2 * a) ∨ x = (-b - √Δ) / (2 * a) := by
 -- proof
+  rw [AddAdd.rotate, AddAdd.swap] at h₁
   let x' := x + b / (2 * a)
   have hx : x = x' - b / (2 * a) := by simp [x']
   rw [hx] at h₁
@@ -117,4 +118,4 @@ private lemma main
 
 
 -- created on 2018-08-15
--- updated on 2026-08-22
+-- updated on 2026-08-30

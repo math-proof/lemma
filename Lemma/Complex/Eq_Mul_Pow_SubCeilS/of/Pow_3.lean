@@ -1,4 +1,3 @@
-import sympy.core.numbers
 import Lemma.Complex.ArgPow.eq.SubMul_Arg
 import Lemma.Complex.Eq_MulNorm_ExpMulIArg
 open Complex
@@ -10,8 +9,8 @@ private lemma main
 -- given
   (h : A ^ 3 = B ^ 3) :
 -- imply
-  let ω : ℂ := (I * (2 * π / 3)).exp
-  let d : ℤ := ⌈3 * arg A / (2 * π) - 1 / 2⌉ - ⌈3 * arg B / (2 * π) - 1 / 2⌉
+  let ω := (I * (2 * π / 3)).exp
+  let d := ⌈3 * arg A / (2 * π) - 1 / 2⌉ - ⌈3 * arg B / (2 * π) - 1 / 2⌉
   A = B * ω ^ d := by
 -- proof
   intro ω d

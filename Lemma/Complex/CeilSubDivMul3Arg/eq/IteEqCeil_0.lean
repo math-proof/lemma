@@ -13,9 +13,9 @@ open Bool Complex Nat
 private lemma main
   {p q : ℂ} :
 -- imply
-  let δ : ℂ := 4 * p ^ 3 / 27 + q ^ 2
-  let U : ℂ := √δ - q
-  let V : ℂ := -√δ - q
+  let δ := 4 * p ^ 3 / 27 + q ^ 2
+  let U := √δ - q
+  let V := -√δ - q
   ⌈3 * arg (∛U * ∛V) / (2 * π) - 1 / 2⌉ =
     if ⌈(arg U + arg V) / (2 * π) - 1 / 2⌉ = 0 then
       (0 : ℤ)
@@ -72,7 +72,7 @@ private lemma main
   else
     have hUV0 : U * V ≠ 0 := by grind
     obtain ⟨hU, hV⟩ := Ne_0.Ne_0.of.Mul.ne.Zero hUV0
-    let d : ℤ := ⌈(arg U + arg V) / (2 * π) - 1 / 2⌉
+    let d := ⌈(arg U + arg V) / (2 * π) - 1 / 2⌉
     have hUV_cbrt : ∛(U * V) ≠ 0 := by
       simp only [Root.cubic]
       rw [cpow_def_of_ne_zero hUV0]

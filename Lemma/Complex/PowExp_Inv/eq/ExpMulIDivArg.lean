@@ -1,4 +1,3 @@
-import sympy.core.numbers
 import sympy.functions.elementary.complexes
 import sympy.Basic
 

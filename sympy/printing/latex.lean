@@ -54,18 +54,27 @@ def Expr.is_Mem : Expr → Bool
   | _ => false
 
 
-def Expr.is_Bool : Expr → Bool
-  | Basic (.Special ⟨`Bool.toNat⟩) args _ => args.length == 1
-  | _ => false
-
-
-def Expr.is_Card : Expr → Bool
-  | Basic (.Special ⟨`Finset.card⟩) args _ => args.length == 1
-  | _ => false
-
-
-def Expr.is_Abs : Expr → Bool
-  | Basic (.Special ⟨`abs⟩) args _ => args.length == 1
+def Expr.is_EnclosedGroup : Expr → Bool
+  | Basic (.Special ⟨op⟩) args _ =>
+    match op with
+    | `Bool.toNat
+    | `Finset.card
+    | `abs
+    | `Norm.norm
+    | `Int.ceil
+    | `Int.floor =>
+      args.length == 1
+    | _ =>
+      false
+  | Basic (.UnaryPrefix ⟨op⟩) args _ =>
+    match op with
+    | `Real.sqrt
+    | `Root.sqrt
+    | `Root.cubic
+    | `Root.quartic =>
+      args.length == 1
+    | _ =>
+      false
   | _ => false
 
 def Expr.is_GetElem : Expr → Bool
@@ -199,7 +208,7 @@ def BinaryInfix.latexFormat (op : BinaryInfix) (left right : Expr) (level : ℕ)
   let func := op.func
   let opStr := func.command
   -- left associative operators
-  let left := level.toColor (left.priority ≥ func.priority || left.is_Abs || left.is_Bool || left.is_Card)
+  let left := level.toColor (left.priority ≥ func.priority || left.is_EnclosedGroup)
   let right := level.toColor (right.priority > func.priority || right.is_Div)
   s!"{left} {opStr} {right}"
 
@@ -229,7 +238,7 @@ def Expr.latexFormat : Expr → String
           "%s {/\\!\\!/} %s"
 
         | `HPow.hPow =>
-          let left := level.toColor (left.priority ≥ func.priority || left.is_Abs || left.is_Bool || left.is_Card)
+          let left := level.toColor (left.priority ≥ func.priority || left.is_EnclosedGroup)
           s!"{left} {opStr} %s"
         | `LT.lt =>
           if e.asTendsToZero? != none then
@@ -305,7 +314,7 @@ def Expr.latexFormat : Expr → String
           | _ =>
             ""
         if format.isEmpty then
-          let arg := level.toColor (arg.priority ≥ func.priority)
+          let arg := level.toColor (arg.priority ≥ func.priority || arg.is_EnclosedGroup)
           let arg :=
             if func.priority == 76 then
               "\\ " ++ arg
@@ -319,7 +328,7 @@ def Expr.latexFormat : Expr → String
 
     | .UnaryPostfix ⟨op⟩ =>
       if let [arg] := args then
-        let arg := level.toColor (arg.priority ≥ func.priority)
+        let arg := level.toColor (arg.priority ≥ func.priority || arg.is_EnclosedGroup)
         s!"{arg}{opStr}"
       else
         op.toString
@@ -380,14 +389,14 @@ def Expr.latexFormat : Expr → String
       | `GetElem.getElem =>
         match args with
         | list :: _ =>
-          let list := level.toColor (list.priority > func.priority || list.is_Abs || list.is_Bool || list.is_Card || list.is_GetElem || list.is_GetElem? || list.is_LeanProperty)
+          let list := level.toColor (list.priority > func.priority || list.is_EnclosedGroup || list.is_GetElem || list.is_GetElem? || list.is_LeanProperty)
           s!"{list}_%s"
         | _ =>
           opStr
       | `GetElem?.getElem? =>
         match args with
         | list :: _ =>
-          let list := level.toColor (list.priority > func.priority || list.is_Abs || list.is_Bool || list.is_Card || list.is_GetElem || list.is_GetElem? || list.is_LeanProperty)
+          let list := level.toColor (list.priority > func.priority || list.is_EnclosedGroup || list.is_GetElem || list.is_GetElem? || list.is_LeanProperty)
           let index := "{%s?}"
           s!"{list}_{index}"
         | _ =>

@@ -263,6 +263,7 @@ Guidelines and prompts for using LLMs to write and refactor Lean 4 proofs in thi
 - inline `have` without introducing `show` if it is referenced only once, e.g.: prefer `apply` instead of `exact`, perhaps by creating some holes.
 - use `calc` instead of `by calc`, start `calc` with _
 - avoid `calc` within [] of `rw`/`erw`/`simp`, use `by` within [] only when it is one-liner statement withno `;`
+- follow `show` with `from`/`by` instead of `from by`
 - After a bullet tactic (`·`), put the next statement on a new line when that branch contains more than one step.
 - implicit/instance (instImplicit) arguments should be put before the `given` section
 - default arguments should be put within the `given` section: propositions come first, expressions come next, unless otherwise specified

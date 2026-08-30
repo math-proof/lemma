@@ -1,4 +1,3 @@
-import sympy.core.numbers
 import Lemma.Complex.ArgPow.eq.SubMul_Arg
 open Complex
 

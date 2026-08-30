@@ -7,7 +7,6 @@ import Lemma.Int.GtNeg_0.of.Lt_0
 import Lemma.Int.Lt0Mul.of.Lt_0.Lt_0
 import Lemma.Nat.Lt0Mul.of.Gt_0.Gt_0
 import Lemma.Nat.Sub.eq.AddNeg
-import sympy.core.power
 open Hyperreal Int Nat
 
 

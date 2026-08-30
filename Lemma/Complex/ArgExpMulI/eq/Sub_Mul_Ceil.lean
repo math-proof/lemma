@@ -1,6 +1,5 @@
 import Lemma.Int.Floor.eq.NegCeilNeg
 import Lemma.Complex.ExpMulI.eq.AddCos_MulISin
-import sympy.core.numbers
 open Int Complex
 
 

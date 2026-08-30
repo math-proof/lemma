@@ -1,6 +1,5 @@
 import sympy.functions.elementary.trigonometric
 import sympy.functions.elementary.complexes
-import sympy.core.numbers
 import sympy.Basic
 
 

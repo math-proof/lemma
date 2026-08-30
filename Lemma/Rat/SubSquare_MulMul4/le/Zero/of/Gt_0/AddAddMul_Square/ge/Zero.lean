@@ -1,4 +1,3 @@
-import sympy.core.power
 import Lemma.Rat.DivNeg.eq.NegDiv
 import Lemma.Int.SquareNeg.eq.Square
 import Lemma.Rat.SquareDiv.eq.DivSquareS

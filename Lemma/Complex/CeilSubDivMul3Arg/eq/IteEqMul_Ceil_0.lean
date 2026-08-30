@@ -7,9 +7,9 @@ open Complex Nat
 private lemma main
   {p q : ℂ} :
 -- imply
-  let δ : ℂ := 4 * p ^ 3 / 27 + q ^ 2
-  let U : ℂ := √δ - q
-  let V : ℂ := -√δ - q
+  let δ := 4 * p ^ 3 / 27 + q ^ 2
+  let U := √δ - q
+  let V := -√δ - q
   ⌈3 * arg (∛U * ∛V) / (2 * π) - 1 / 2⌉ =
     if p * (⌈(arg U + arg V) / (2 * π) - 1 / 2⌉ : ℂ) = 0 then
       0

@@ -1,4 +1,3 @@
-import sympy.core.power
 import sympy.polys.polyroots
 import sympy.Basic
 

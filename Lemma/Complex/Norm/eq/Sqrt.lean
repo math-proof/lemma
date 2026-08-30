@@ -1,4 +1,3 @@
-import sympy.functions.elementary.complexes
 import Lemma.Complex.Expr.eq.AddRe_MulIIm
 import Lemma.Real.AbsAdd_MulI.eq.SqrtAddSquareS
 open Complex Real

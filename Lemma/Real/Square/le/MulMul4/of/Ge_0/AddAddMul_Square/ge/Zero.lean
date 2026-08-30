@@ -1,4 +1,3 @@
-import sympy.core.power
 import Lemma.Real.SubSquare_MulMul4.le.Zero.of.Ge_0.AddAddMul_Square.ge.Zero
 open Real
 

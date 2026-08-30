@@ -2,8 +2,8 @@ import Lemma.Complex.ExpMulI.eq.AddCos_MulISin
 import Lemma.Complex.Expr.eq.AddRe_MulIIm
 import Lemma.Bool.Eq.of.Eq.Eq
 import Lemma.Nat.Mul_Add.eq.AddMulS
-import Lemma.Complex.Re.eq.MulNorm_CosArg
-import Lemma.Complex.Im.eq.MulNorm_SinArg
+import Lemma.Complex.MulNorm_CosArg.eq.Re
+import Lemma.Complex.MulNorm_SinArg.eq.Im
 import Lemma.Complex.Eq.of.Re.Im
 open Bool Complex Nat
 

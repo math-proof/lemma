@@ -1,6 +1,4 @@
-import sympy.core.power
-import sympy.polys.polyroots
-import Lemma.Complex.OrEqS_Div.of.Eq0AddAddMul_Square.Ne_0
+import Lemma.Complex.OrEqS_Div.of.Eq0Add_Mul_Square.Ne_0
 open Complex
 
 
@@ -13,9 +11,10 @@ private lemma main
 -- imply
   x = √(-4 * a * c) / (2 * a) ∨ x = -√(-4 * a * c) / (2 * a) := by
 -- proof
-  have h : a * x² + 0 * x + c = 0 := by
-    simpa using h₁
-  simpa using OrEqS_Div.of.Eq0AddAddMul_Square.Ne_0 h₀ h
+  have h : c + 0 * x + a * x² = 0 := by
+    rw [(by ring : c + 0 * x + a * x² = a * x² + c)]
+    apply h₁
+  simpa using OrEqS_Div.of.Eq0Add_Mul_Square.Ne_0 h₀ h
 
 
 -- created on 2018-08-15

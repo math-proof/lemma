@@ -1,5 +1,3 @@
-import sympy.core.power
-import sympy.polys.polyroots
 import Lemma.Nat.SquareAdd.eq.AddAddSquareS_MulMul2
 import Lemma.Nat.SquareMul.eq.MulSquareS
 import Lemma.Nat.Eq_0.is.EqSquare_0

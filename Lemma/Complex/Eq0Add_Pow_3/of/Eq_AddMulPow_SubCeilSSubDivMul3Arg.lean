@@ -9,11 +9,11 @@ private lemma main
   {x p q : ℂ}
 -- given
   (h : x =
-    let ω : ℂ := (I * (2 * π / 3)).exp
-    let δ : ℂ := 4 * p ^ 3 / 27 + q ^ 2
-    let A : ℂ := ∛((-q + √δ) / 2)
-    let B : ℂ := ∛((-q - √δ) / 2)
-    let k : ℤ := ⌈3 * arg (-p / 3) / (2 * π) - 1 / 2⌉ - ⌈3 * arg (A * B) / (2 * π) - 1 / 2⌉
+    let ω := (I * (2 * π / 3)).exp
+    let δ := 4 * p ^ 3 / 27 + q ^ 2
+    let A := ∛((-q + √δ) / 2)
+    let B := ∛((-q - √δ) / 2)
+    let k := ⌈3 * arg (-p / 3) / (2 * π) - 1 / 2⌉ - ⌈3 * arg (A * B) / (2 * π) - 1 / 2⌉
     A * ω ^ k + B) :
 -- imply
   q + p * x + x ^ 3 = 0 := by

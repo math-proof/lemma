@@ -11,7 +11,7 @@ private lemma main
 -- given
   (h : ⌈(arg A + arg B) / (2 * π) - 1 / 2⌉ = d) :
 -- imply
-  let ω : ℂ := ↑(-(1 / 2 : ℝ)) + I * ↑(√3 / 2 : ℝ)
+  let ω := ↑(-(1 / 2 : ℝ)) + I * ↑(√3 / 2 : ℝ)
   ∛A * ∛B = ∛(A * B) * ω ^ d := by
 -- proof
   intro ω

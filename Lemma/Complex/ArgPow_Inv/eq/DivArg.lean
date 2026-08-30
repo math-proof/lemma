@@ -1,4 +1,3 @@
-import sympy.core.numbers
 import Lemma.Complex.ArgExpMulI.eq.DivArg
 import Lemma.Complex.ArgMul.eq.Arg.of.Gt_0
 import Lemma.Complex.Pow_Inv.eq.Mul_ExpMulIDivArg

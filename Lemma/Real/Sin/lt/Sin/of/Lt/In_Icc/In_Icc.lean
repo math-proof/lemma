@@ -1,5 +1,4 @@
 import sympy.sets.sets
-import sympy.core.numbers
 import sympy.functions.elementary.trigonometric
 import sympy.Basic
 

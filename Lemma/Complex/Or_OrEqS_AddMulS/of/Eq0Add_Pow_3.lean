@@ -15,11 +15,11 @@ private lemma Cardano
 -- given
   (h : q + p * x + x ^ 3 = 0) :
 -- imply
-  let δ : ℂ := 4 * p ^ 3 / 27 + q ^ 2
-  let A : ℂ := ∛((-q + √δ) / 2)
-  let B : ℂ := ∛((-q - √δ) / 2)
-  let ω : ℂ := (I * (2 * π / 3)).exp
-  let k : ℤ := ⌈3 * arg (-p / 3) / (2 * π) - 1 / 2⌉ - ⌈3 * arg (A * B) / (2 * π) - 1 / 2⌉
+  let δ := 4 * p ^ 3 / 27 + q ^ 2
+  let A := ∛((-q + √δ) / 2)
+  let B := ∛((-q - √δ) / 2)
+  let ω := (I * (2 * π / 3)).exp
+  let k := ⌈3 * arg (-p / 3) / (2 * π) - 1 / 2⌉ - ⌈3 * arg (A * B) / (2 * π) - 1 / 2⌉
   x = A * ω ^ k + B ∨
     x = A * ω ^ (k - 1) + B * ω ∨
     x = A * ω ^ (k + 1) + B * ~ω := by
@@ -80,7 +80,7 @@ private lemma Cardano
       simp [k]
     rw [this, mul_assoc, ← zpow_add₀ hωne]
     simp [neg_add_cancel]
-  let A' : ℂ := A * ω ^ k
+  let A' := A * ω ^ k
   obtain hx | hx | hx :=
     Or_OrEqS_AddMulS.of.Eq0Add_Pow_3.EqNeg_MulMul3.EqNeg_AddPowS_3 (A := A') (B := B)
       (by
