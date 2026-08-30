@@ -1,0 +1,65 @@
+\begin{thebibliography}{10}
+
+\bibitem{dyson2022polynomials}
+Nicholas Dyson, Benedikt Ahrens, and Jacopo Emmenegger.
+\newblock The solutions to single-variable polynomials, implemented and
+  verified in {Lean}, 2022.
+
+\bibitem{lemma_quartic_sympy}
+math proof.
+\newblock Fully radical quartic over $\mathbb{C}$ ({SymPy}).
+\newblock
+  \url{http://www.lemma.cn/py/?module=Complex.Imp_OrOrSEqS_Sub.Imp_OrOrSEqS_SubDiv_2.of.Eq0Add_Mul_Pow_4.Ne_0},
+  2018.
+
+\bibitem{lemma_omega_rect}
+math proof.
+\newblock Complex.expmulidivmul2pi3.eq.add\_muli.
+\newblock
+  \url{http://www.lemma.cn/lean/?module=Complex.ExpMulIDivMul2Pi3.eq.Add_MulI},
+  2026.
+
+\bibitem{lemma_omega_conj}
+math proof.
+\newblock Complex.expmulidivmulneg2pi3.eq.sub\_muli.
+\newblock
+  \url{http://www.lemma.cn/lean/?module=Complex.ExpMulIDivMulNeg2Pi3.eq.Sub_MulI},
+  2026.
+
+\bibitem{lemma_quartic_lean}
+math proof.
+\newblock Fully radical quartic over $\mathbb{C}$ ({Lean}~4).
+\newblock
+  \url{http://www.lemma.cn/lean/?module=Complex.Imp_OrOrSEqS_Sub.Imp_OrOrSEqS_SubDiv_2.of.Eq0Add_Mul_Pow_4.Ne_0},
+  2026.
+
+\bibitem{lemma_repo}
+math proof.
+\newblock lemma: machine-checked mathematics.
+\newblock \url{https://github.com/math-proof/lemma}, 2026.
+
+\bibitem{lemma_cubic_lean}
+math proof.
+\newblock Principal-radical cubic over $\mathbb{C}$ ({Lean}~4).
+\newblock
+  \url{http://www.lemma.cn/lean/?module=Complex.Or_OrEqS_SubAddMulS.of.Eq0Add_Mul_Pow_3.Ne_0},
+  2026.
+
+\bibitem{mathlib}
+{Mathlib community}.
+\newblock The {Lean} mathematical library.
+\newblock \url{https://leanprover-community.github.io/mathlib4_docs/}, 2026.
+
+\bibitem{wiedijk100}
+Freek Wiedijk.
+\newblock Formalizing 100 theorems.
+\newblock \url{https://www.cs.ru.nl/~freek/100/}, 2024.
+
+\bibitem{zhu2024mathlibquartic}
+Thomas Zhu.
+\newblock The roots of cubic and quartic polynomials.
+\newblock Mathlib~4 Archive, {PR} \#18290, 2024.
+\newblock
+  \url{https://github.com/leanprover-community/mathlib4/blob/master/Archive/Wiedijk100Theorems/SolutionOfCubicQuartic.lean}.
+
+\end{thebibliography}

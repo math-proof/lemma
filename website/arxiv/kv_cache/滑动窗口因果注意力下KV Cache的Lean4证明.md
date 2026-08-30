@@ -1,8 +1,6 @@
-# 滑动窗口因果注意力下 KV Cache 正确性的形式化验证
-
 项目工件：<https://github.com/math-proof/lemma>
 
-## 摘要
+# 摘要
 
 生产级 GPT 式解码器依赖 key–value（KV）cache，以避免在每一步自回归解码中重复计算过去的 key 与 value。Hugging Face Transformers、vLLM 及相关系统将 cache 张量与新 token 拼接，并在滑动因果窗口上计算注意力，但这一增量更新靠测试验证，而非证明为张量恒等式。
 
@@ -12,7 +10,7 @@
 
 下文给出形式陈述、证明思路、引理依赖结构，以及主张与不主张的边界。交互式可视化与源码公开于 [lemma.cn](http://www.lemma.cn/) 与 [GitHub](https://github.com/math-proof/lemma)。
 
-## 1 引言
+# 1 引言
 
 GPT-2、GPT-3、GPT-4 以及 Hugging Face 的每个 `AutoModelForCausalLM` 均逐 token 解码。每一步，自注意力层将隐状态映射为 query、key、value（\(Q,K,V\)）。对位置 \(n\) 的新 token，因果注意力为
 
@@ -34,7 +32,7 @@ Hugging Face Transformers 以 `use_cache=True` 实现（[`generate`](https://hug
 
 公开交互陈述见 lemma.cn 的 [SymPy](http://www.lemma.cn/py/?module=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T.kv_cache) 与 [Lean 4](http://www.lemma.cn/lean/?module=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T)；源码文件为 `All_Eq_DotSoftmaxAdd_DivDot_T.lean` 与 `kv_cache.py`（[GitHub](https://github.com/math-proof/lemma)）。
 
-## 2 相关工作
+# 2 相关工作
 
 **运行时系统。** PyTorch、Hugging Face Transformers（[cache 说明](https://huggingface.co/docs/transformers/en/cache_explanation)）、[vLLM](https://github.com/vllm-project/vllm) 与 [SGLang](https://arxiv.org/abs/2312.07104) 将 KV cache 与滑动窗口实现为生产系统。正确性靠测试，而非证明为张量方程。
 
@@ -44,9 +42,9 @@ Hugging Face Transformers 以 `use_cache=True` 实现（[`generate`](https://hug
 
 本库的 \(\approx\) 关系（[`Hyperreal.XEq.is.InfinitesimalDivAbsSub`](http://www.lemma.cn/lean/?module=Hyperreal.XEq.is.InfinitesimalDivAbsSub)）填补这一空白：在 \(\mathbb{R}^*\) 上全定义、可机器检验，以无穷小相对容差 mimic `torch.isclose`。KV cache 引理是首批大规模使用该关系的张量恒等式之一：\(\exp(-\infty)\approx 0\)，masked softmax 与窗口堆叠在 \(\mathbb{R}\) 中不等义相等，但在 \(\approx\) 下成立。
 
-## 3 预备知识
+# 3 预备知识
 
-### 3.1 张量与记号
+## 3.1 张量与记号
 
 `Tensor ℝ s` 为本库对形状 `s` 的实张量形式化，运算与 `torch.Tensor` 一致：矩阵乘（`@`）、转置 \((\cdot)^{\top}\)、`softmax`、`tril`、`triu`、`masked_fill`、切片 `[start:stop]`、堆叠 \([i<n]\,f(i)\)、拼接 \(\mathbin{+\mkern-4mu+}\)。提升到 `Tensor ℝ* s` 即在超实数上解释条目。形状 cast 相等记为 \(\simeq\)（`SEq`）。
 
@@ -74,7 +72,7 @@ Q,K,V:\mathbb{N}\to\operatorname{Tensor}\mathbb{R}[d_z],
 
 及前缀输出 \(Z(n)\in\operatorname{Tensor}\mathbb{R}[n,d_z]\)。记 \(Q_{:n}=[i<n]\,Q(i)\)，\(K,V\) 同理。*记号：* \(\ell\) 为数学符号；Lean 与代码同名 `l`（\(\ell=\texttt{l}\)）。定理中 `band_part` mask 为 `band_part(..., l-1, 0)`，*不是* `band_part(..., l, 0)`——`band_part` 的第一个参数是 band 限，不是窗口宽度。
 
-### 3.2 超实数 closeness \(\approx\)
+## 3.2 超实数 closeness \(\approx\)
 
 **定义 3.1**（\(\mathbb{R}^*\) 上的 \(\approx\)，[`Hyperreal.XEq.is.InfinitesimalDivAbsSub`](http://www.lemma.cn/lean/?module=Hyperreal.XEq.is.InfinitesimalDivAbsSub)）。对 \(a,b\in\mathbb{R}^*\)，
 
@@ -90,7 +88,7 @@ a\approx b
 
 证明中，\(\exp(A+(\Xi-1)\infty)\approx e^{A}\Xi\) 在实数上恒等不成立，在两者皆无穷时经典 NSA 无穷接近也不成立；作为 \(\approx\) 成立。
 
-### 3.3 超实数 band-part 掩码
+## 3.3 超实数 band-part 掩码
 
 **引理 3.2**（Mask exponential，[`lemma_gpt`](http://www.lemma.cn/lean/?module=Tensor.DotSoftmaxAdd_Mul_Infty.eq.Stack_DotSoftmaxDivDot_T) 相关）。令 \(\Xi_{ij}=\mathbf{1}_{[-\ell+1,0]}(j-i)\)，
 
@@ -107,7 +105,7 @@ a\approx b
 \exp\bigl(A_{ij}+(\Xi_{ij}-1)\infty\bigr)\approx e^{A_{ij}}\Xi_{ij}.
 \]
 
-### 3.4 堆叠分解（引理 `gpt`）
+## 3.4 堆叠分解（引理 `gpt`）
 
 引理 [`gpt`](http://www.lemma.cn/lean/?module=Tensor.DotSoftmaxAdd_Mul_Infty.eq.Stack_DotSoftmaxDivDot_T) 将 batch 滑动窗口 masked attention 展开为逐 token 一行——KV cache 内部使用的行形式。全程 \(\ell\ge 1\) 为*滑动窗口宽度*：第 \(i\) 行 query attend 下标在 \([(i+1-\ell)_+,i+1)\) 的 key（至多 \(\ell\) 个，因果）。Lean 证明用参数 `l` \(=\ell\)，mask `band_part(l-1, 0)`。
 
@@ -128,7 +126,7 @@ V[(i+1-\ell):(i+1)].
 
 左式为宽度 \(\ell\) 的因果 band masked batch attention（mask \(\operatorname{band\_part}(\ell-1,0)\)）。右式逐行相同：第 \(i\) 行只 attend 长度 \(\ell\) 的 key/value 窗口——正是 decode 第 \(i\) 步 KV cache 拼接并复用的切片。当 \(\ell\ge n\) 时窗口为全前缀（经典 GPT 因果 attention）。
 
-## 4 主结果
+# 4 主结果
 
 **定理 4.1**（KV cache 增量，[`lemma_kv_cache_lean`](http://www.lemma.cn/lean/?module=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T)）。设 \(\ell\ge 1\)，且对每个 \(n\)（式 (1)），
 
@@ -180,7 +178,7 @@ Z(n+1)\;\approx\; Z(n)\mathbin{+\mkern-4mu+}[\operatorname{row}].
 
 即窗口为整段前缀。Lean 中当 \(\ell>n+1\) 时，切片 \([(n+1-\ell):n]\) 为全前缀，可还原 SymPy 定理。
 
-## 5 证明思路
+# 5 证明思路
 
 证明在 Lean 4 单文件中完全检验，导入 §6.1 所列引理。**图 2** 概括 reduction。
 
@@ -225,7 +223,7 @@ Z(n+1)\;\approx\; Z(n)\mathbin{+\mkern-4mu+}[\operatorname{row}]
 
 **步骤 4：识别最后一行。** 单块 \([f(n)]\) 为 \(Q(n)\) 对 \(K_{:n+1}[(n+1-\ell):(n+1)]\simeq K_w\mathbin{+\mkern-4mu+}[K(n)]\)（\(V\) 同理）的 attention。拼接行块的转置在 shape cast 下为转置的拼接（[`Tensor.TAppend.as.AppendTS`](http://www.lemma.cn/lean/?module=Tensor.TAppend.as.AppendTS)）。与 softmax–scale–matmul 合成得 \(\operatorname{row}\)，即 (2)。
 
-## 6 形式化工件
+# 6 形式化工件
 
 已完成陈述的交互可视化：
 
@@ -236,7 +234,7 @@ SymPy 页展示 `apply` / `prove`：前缀相等推出与 `row` 拼接。Lean �
 
 源码：<https://github.com/math-proof/lemma>（Lean 4 在 `main`，SymPy 在 `master`）。
 
-### 6.1 引理依赖
+## 6.1 引理依赖
 
 **图 3** 定理 4.1 的 Lean 证明主要导入引理（同文件 private 辅助引理未列出）。
 
@@ -255,13 +253,13 @@ SymPy 页展示 `apply` / `prove`：前缀相等推出与 `row` 拼接。Lean �
   - [SEqAppendS](http://www.lemma.cn/lean/?module=Tensor.SEqAppendS.of.SEq.SEq) — `Tensor.SEqAppendS.of.SEq.SEq`
   - [AppendTS](http://www.lemma.cn/lean/?module=Tensor.TAppend.as.AppendTS) — `Tensor.TAppend.as.AppendTS`
 
-## 7 SymPy 与 Lean 4
+# 7 SymPy 与 Lean 4
 
 SymPy 引理（2024-02-28，[`lemma_kv_cache_sympy`](http://www.lemma.cn/py/?module=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T.kv_cache)）为全因果增量，用 `Equal` 而非 \(\approx\)；证明展开 Python `gpt`、代入 \(n\mapsto n+1\)、拆堆叠、将末行切片重写为 `SEq_Append`。
 
 Lean 4 引理（2026-08-19，[`lemma_kv_cache_lean`](http://www.lemma.cn/lean/?module=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T)）保留 \(\ell\neq 0\)，切片 \([(n+1-\ell):n]\)，在 \(\mathbb{R}^*\) 上用 \(\approx\)，并含依赖转置 shape 所需的 `cast`。SymPy 侧有 batch 因果变体 [Tensor.Eq.of.Eq.gpt.kv_cache.batched](http://www.lemma.cn/py/?module=Tensor.Eq.of.Eq.gpt.kv_cache.batched)。
 
-## 8 讨论与局限
+# 8 讨论与局限
 
 本陈述是蕴涵，非充要：*已知* \(\forall n.\; Z(n)\approx\) masked-attention\((Q_{:n},K_{:n},V_{:n};\ell)\)，*则* \(Z(n+1)\approx Z(n)\mathbin{+\mkern-4mu+}[\operatorname{row}]\)。
 
@@ -269,11 +267,11 @@ Lean 4 引理（2026-08-19，[`lemma_kv_cache_lean`](http://www.lemma.cn/lean/?m
 
 引理不估计窗口外 token 被丢弃的近似误差（mask 已编码）。它不替代 OrthoCache 的谱 eviction 定理或 TorchLean 的 kernel refinement 定理。互补表述：若前缀已是 exact masked attention，则 cache 单行更新即为长度 \(n+1\) 的 exact masked attention。
 
-## 9 结论
+# 9 结论
 
 我们给出一条可机器检验的恒等式，将 GPT 式 KV cache 更新与滑动窗口 masked attention 的增量一步对齐，并配套适用于 \(-\infty\) mask softmax 的超实数 closeness \(\approx\)。结果公开于 lemma.cn 与 GitHub，Lean 4 证明已检验，并有较早 SymPy 表述。后续工作包括多头布局、Lean batch 形式化，以及将 \(\approx\) 与浮点 refinement 定理衔接。
 
-## 参考文献
+# 参考文献
 
 与 `main.pdf` 参考文献表一致（arXiv 接收后在此补充 PDF 链接）。
 

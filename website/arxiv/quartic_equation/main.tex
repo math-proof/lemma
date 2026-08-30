@@ -1,0 +1,397 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{url}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue,
+  citecolor=blue,
+  urlcolor=blue
+}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Arg}{\operatorname{arg}}
+
+\title{Fully Radical Solution of the Quartic Equation over \(\C\)}
+\author{LiZhi Zhou\\[0.3em]\small Project artifact: \url{https://github.com/math-proof/lemma}}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Ferrari's method reduces a general quartic to a depressed quartic and a cubic resolvent; Cardano then solves that cubic by cube roots.
+Over an arbitrary field the identities are classical, and Mathlib's archived Ferrari theorem leaves the resolvent root and the square roots as extra data.
+What is not classical is a \emph{total} map \(\C^5\to\C^4\) in \emph{principal} radicals: Mathlib's \(\sqrt{\,\cdot\,}\) and \(\sqrt[3]{\,\cdot\,}\) (Lean \texttt{Root.cubic}, notation \(\sqrt[3]{\,}\)) fail the product law, so Cardano's pairing \(3AB=-p\) does not hold for two independent principal cube roots.
+
+We state and machine-check such a map in the \texttt{lemma} library.
+Every auxiliary quantity is a principal square or cube root; the missing cube root of unity is the radical \(-\tfrac12+i\sqrt{3}/2\) (the exponential \(e^{2\pi i/3}\) is an abbreviation only); the branch is the single power \(\omega^{k}\) with
+\[
+k=\Bigl\lceil\frac{3\Arg(-p/3)}{2\pi}-\tfrac12\Bigr\rceil
+-\Bigl\lceil\frac{3\Arg(AB)}{2\pi}-\tfrac12\Bigr\rceil,
+\]
+not a case split on \(k\bmod 3\).
+The proof is checked in Lean~4 (updated 2026-08-30) and was first stated interactively in SymPy (2018-11-29).
+Interactive visualizations and source files are public on \url{http://www.lemma.cn/} and GitHub~\cite{lemma_repo}.
+\end{abstract}
+
+\section{Introduction}
+\label{sec:intro}
+
+Let \(a,b,c,d,e,x\in\C\) with \(a\neq 0\) and
+\[
+a x^4+b x^3+c x^2+d x+e=0.
+\]
+Ferrari (16th century) translates to a depressed quartic \(z^4+\alpha z^2+\beta z+\gamma=0\), produces a cubic resolvent, and factors the quartic into two quadratics once a resolvent root is known.
+Cardano solves that cubic by cube roots.
+Over \(\C\), Mathlib's \(\sqrt{z}\) and \(\sqrt[3]{z}\) are defined by the principal logarithm (argument in \((-\pi,\pi]\)).
+They satisfy
+\[
+(\sqrt{z})^2=z,\qquad \bigl(\sqrt[3]{z}\bigr)^3=z
+\]
+for every \(z\), but they do \emph{not} satisfy
+\[
+\sqrt{z}\sqrt{w}=\sqrt{zw},\qquad \sqrt[3]{z}\,\sqrt[3]{w}=\sqrt[3]{zw}
+\]
+in general.
+Any fully radical formula over \(\C\) must therefore name the missing cube root of unity explicitly and select a consistent Cardano pair.
+
+This paper records the public lemma
+\texttt{Complex.Imp\_OrOrSEqS\_Sub.Imp\_OrOrSEqS\_SubDiv\_2.of.Eq0Add\_Mul\_Pow\_4.Ne\_0}~\cite{lemma_quartic_lean,lemma_quartic_sympy}:
+a conjunction of two implications (\(\beta=0\) and \(\beta\neq 0\)), each a four-fold disjunction of nested principal radicals.
+The cube-root branch is \(y=A\omega^{k}+B\), not three residue classes of an integer modulo~3.
+Cube roots in the statement are Lean \(\sqrt[3]{\,}\) (\texttt{Root.cubic}), not a bare \texttt{cpow} written as \(z^{(3:\C)^{-1}}\).
+
+The same module is visualized on lemma.cn in SymPy~\cite{lemma_quartic_sympy} and Lean~4~\cite{lemma_quartic_lean}.
+Source files are \texttt{Ne\_0.lean} (branch \texttt{main}) and \texttt{Ne\_0.py} (branch \texttt{master})~\cite{lemma_repo}.
+
+\section{Related work}
+\label{sec:related}
+
+\textbf{Mathlib~4.}
+Zhu's archive formalization~\cite{zhu2024mathlibquartic} (PR~\#18290; Wiedijk items 37 and 46~\cite{wiedijk100}) proves Ferrari over a field \(K\) of characteristic not two.
+Square roots appear as hypotheses \(t^2=\cdots\), \(v^2=\cdots\), and the resolvent root \(u\) is an extra datum.
+The comment on \texttt{quartic\_eq\_zero\_iff} states that an explicit Cardano expression for \(u\) ``would be too long.''
+The theorem is not a map \(\C^5\to\C^4\) in principal radicals, and it is not specific to \(\C\)~\cite{mathlib}.
+
+\textbf{Dyson--Ahrens--Emmenegger}~\cite{dyson2022polynomials}
+work in Lean~3 in a field equipped with \emph{some} square-root and cube-root operations.
+The functions are axioms, not Mathlib's principal branches; the product identity for cube roots is deliberately not assumed.
+Instantiating the typeclass with \(\C\) does not prove the principal-branch formula.
+
+\textbf{Coq}
+(the development compared in that paper, \S7.1) is specific to \(\C\) and uses De~Moivre \(n\)th roots.
+That is a complex-domain radical solution, but it is not a Lean~4 lemma and does not use Mathlib's principal \(\sqrt{\,\cdot\,}\) / \texttt{Root.cubic} together with an \(\Arg\)/\(\lceil\cdot\rceil\) selector.
+
+\textbf{Isabelle/HOL} \texttt{Cubic\_Quartic} and the HOL Light entry on Wiedijk's list are algebraic in the same sense as Mathlib: roots are assumed, not constructed by principal functions.
+
+This library already has a companion cubic lemma~\cite{lemma_cubic_lean}
+that solves \(ax^3+bx^2+cx+d=0\) over \(\C\) by principal radicals and the same integer \(k\), writing the three Cardano roots as \(A\omega^{k}+B\), \(A\omega^{k-1}+B\omega\), and \(A\omega^{k+1}+B\,\overline{\omega}\).
+The quartic contribution is to finish Ferrari on that calculus: the resolvent is expanded by Cardano, one legal root \(y=A\omega^{k}+B\) is selected, and the four quartic roots are nested principal square roots of that \(y\).
+
+\section{The formula}
+\label{sec:formula}
+
+Write \(a'=b/a\), \(b'=c/a\), \(c'=d/a\), \(d'=e/a\), and
+\begin{align*}
+\alpha&=b'-3a'^2/8,\\
+\beta&=a'^3/8+c'-a'b'/2,\\
+\gamma&=a'^2 b'/16+d'-3a'^4/256-a'c'/4.
+\end{align*}
+Then \(z=x+a'/4\) satisfies \(z^4+\alpha z^2+\beta z+\gamma=0\).
+
+\paragraph{Biquadratic regime \(\beta=0\).}
+With \(\Delta=\alpha^2-4\gamma\),
+\[
+x=\pm\sqrt{\bigl(\pm\sqrt{\Delta}-\alpha\bigr)/2}-a'/4
+\]
+(four independent choices of the two signs).
+
+\paragraph{Ferrari regime \(\beta\neq 0\).}
+Form Cardano quantities of the resolvent,
+\begin{align*}
+p&=-4\gamma-\alpha^2/3,\\
+q&=-2\alpha^3/27+8\alpha\gamma/3-\beta^2,\\
+\delta&=4p^3/27+q^2,\\
+A&=\sqrt[3]{(-q+\sqrt{\delta})/2},\qquad
+B=\sqrt[3]{(-q-\sqrt{\delta})/2},
+\end{align*}
+and
+\[
+k=\Bigl\lceil\frac{3\Arg(-p/3)}{2\pi}-\tfrac12\Bigr\rceil
+-\Bigl\lceil\frac{3\Arg(AB)}{2\pi}-\tfrac12\Bigr\rceil.
+\]
+The abbreviation \(\omega=e^{2\pi i/3}\) (Lean \texttt{(I * (2 * $\pi$ / 3)).exp}) is for simplicity only: a complex exponential is \emph{not} a radical.
+The same primitive cube root of unity is the principal-radical rectangular form
+\[
+\omega=-\tfrac12+i\,\tfrac{\sqrt{3}}{2}
+\]
+(Lean \texttt{(-(1 / 2 : $\mathbb{R}$)) + I * ($\sqrt{3}$ / 2 : $\mathbb{R}$)}), and \(\overline{\omega}=-\tfrac12-i\,\tfrac{\sqrt{3}}{2}\).
+The identities \(e^{2\pi i/3}=-\tfrac12+i\sqrt{3}/2\) and its conjugate are machine-checked~\cite{lemma_omega_rect,lemma_omega_conj}.
+Set
+\[
+y=A\,\omega^{k}+B,\qquad
+y_0=-2\alpha/3+y,\qquad
+y_1=4\alpha/3+y.
+\]
+Then
+\begin{align*}
+x&=\frac{\sqrt{2\beta/\sqrt{y_0}-y_1}-\sqrt{y_0}}{2}-\frac{a'}{4}
+\quad\text{or}\quad
+\frac{-\sqrt{2\beta/\sqrt{y_0}-y_1}-\sqrt{y_0}}{2}-\frac{a'}{4}\\
+&\quad\text{or}\quad
+\frac{\sqrt{-2\beta/\sqrt{y_0}-y_1}+\sqrt{y_0}}{2}-\frac{a'}{4}
+\quad\text{or}\quad
+\frac{-\sqrt{-2\beta/\sqrt{y_0}-y_1}+\sqrt{y_0}}{2}-\frac{a'}{4}.
+\end{align*}
+
+\begin{theorem}[Principal-radical quartic~\cite{lemma_quartic_lean}]
+\label{thm:quartic}
+Assume \(a\neq 0\) and \(ax^4+bx^3+cx^2+dx+e=0\).
+With the quantities above:
+\begin{enumerate}[noitemsep]
+  \item if \(\beta=0\), then \(x\) equals one of the four biquadratic expressions;
+  \item if \(\beta\neq 0\), then \(x\) equals one of the four Ferrari expressions with \(y=A\omega^{k}+B\).
+\end{enumerate}
+The cube-root branch is the single factor \(\omega^{k}\), not a case split on \(k\bmod 3\).
+\end{theorem}
+
+The statement does not claim that every combination of nested radicals is a root for a wrong branch; it claims that a genuine root \(x\) equals one of the four expressions once that power of \(\omega\) is selected.
+
+\section{Figures}
+\label{sec:figures}
+
+\paragraph{Figure~0 --- public visualizations.}
+The SymPy page~\cite{lemma_quartic_sympy} displays two implications (\(\beta=0\), \(\beta\neq 0\)) as an interactive theorem document (created 2018-11-29).
+The Lean~4 page~\cite{lemma_quartic_lean} displays \texttt{@[main] private lemma main} with \(\{x,a,b,c,d,e:\C\}\), the \texttt{let} chain \(a',b',\alpha,\beta,\gamma,p,q,\delta,A,B,k,\omega,y,y_0,y_1\) (\(A,B\) via \(\sqrt[3]{\,}\)), and the conjunction of two radical disjunctions.
+
+\paragraph{Figure~1 --- reduction.}
+Figure~\ref{fig:reduction} is the reduction used in the main theorem: divide by the leading coefficient, depress by \(z=x+a'/4\), then split on \(\beta=0\) versus \(\beta\neq 0\).
+
+\begin{figure}[ht]
+\centering
+\footnotesize
+\[
+\begin{array}{c}
+a x^{4}+b x^{3}+c x^{2}+d x+e=0,\quad a\neq 0 \\[0.6em]
+\Big\downarrow\ \scriptstyle a'=\frac{b}{a},\; b'=\frac{c}{a},\; c'=\frac{d}{a},\; d'=\frac{e}{a} \\[0.6em]
+x^{4}+a' x^{3}+b' x^{2}+c' x+d'=0 \\[0.6em]
+\Big\downarrow\ \scriptstyle z=x+\frac{a'}{4} \\[0.6em]
+z^{4}+\alpha z^{2}+\beta z+\gamma=0 \\[0.25em]
+\scriptstyle
+\alpha=b'-\frac{3a'^{2}}{8},\quad
+\beta=\frac{a'^{3}}{8}+c'-\frac{a'b'}{2},\quad
+\gamma=\frac{a'^{2}b'}{16}+d'-\frac{3a'^{4}}{256}-\frac{a'c'}{4}
+\\[1.0em]
+\begin{array}{c@{\qquad}c}
+\beta=0 & \beta\neq 0 \\[0.4em]
+\Big\downarrow & \Big\downarrow \\[0.4em]
+\Delta=\alpha^{2}-4\gamma &
+y=A\,\omega^{k}+B
+\\[1.6em]
+x=\pm\sqrt{\dfrac{\pm\sqrt{\Delta}-\alpha}{2}}-\dfrac{a'}{4}
+&
+\begin{array}{c}
+y_{0}=-\dfrac{2\alpha}{3}+y,\quad y_{1}=\dfrac{4\alpha}{3}+y \\[0.45em]
+x=\dfrac{\pm\sqrt{\pm\dfrac{2\beta}{\sqrt{y_{0}}}-y_{1}}\pm\sqrt{y_{0}}}{2}-\dfrac{a'}{4}
+\end{array}
+\end{array}
+\\[1.0em]
+x=z-\dfrac{a'}{4}
+\end{array}
+\]
+\caption{Reduction of the general quartic and the two radical regimes.}
+\label{fig:reduction}
+\end{figure}
+
+\paragraph{Figure~2 --- lemma dependencies.}
+Figure~\ref{fig:deps} lists major imported lemmas of Theorem~\ref{thm:quartic}.
+Private helpers in the same file are drawn in parentheses.
+Links point to the Lean~4 pages; the SymPy counterpart of each module is the same path under \url{http://www.lemma.cn/py/?module=}.
+
+\begin{figure}[ht]
+\small
+\begin{itemize}[leftmargin=1.2em,itemsep=0.15em]
+  \item \href{http://www.lemma.cn/lean/?module=Complex.Imp_OrOrSEqS_Sub.Imp_OrOrSEqS_SubDiv_2.of.Eq0Add_Mul_Pow_4.Ne_0}{\texttt{Imp\_OrOrSEqS\_Sub.\ldots Ne\_0}} --- main theorem
+  \begin{itemize}[leftmargin=1.1em,itemsep=0.1em]
+    \item \href{http://www.lemma.cn/lean/?module=Complex.OrOrSEqS.of.Eq0Add_Pow_4}{\texttt{OrOrSEqS.of.Eq0Add\_Pow\_4}} --- case \(\beta=0\)
+    \begin{itemize}[leftmargin=1.1em,itemsep=0.05em]
+      \item \href{http://www.lemma.cn/lean/?module=Complex.OrEqS_Div.of.Eq0Add_Mul_Square.Ne_0}{\texttt{OrEqS\_Div.of.Eq0Add\_Mul\_Square.Ne\_0}} --- quadratic in \(x^2\)
+      \item \href{http://www.lemma.cn/lean/?module=Complex.Or_Eq_NegSqrt.of.EqSquare}{\texttt{Or\_Eq\_NegSqrt.of.EqSquare}} --- \(x^2=c\Rightarrow x=\pm\sqrt{c}\)
+      \begin{itemize}[leftmargin=1.1em,itemsep=0.05em]
+        \item \href{http://www.lemma.cn/lean/?module=Complex.EqSquareSqrt}{\texttt{EqSquareSqrt}} --- \((\sqrt{z})^2=z\)
+        \item \href{http://www.lemma.cn/lean/?module=Real.OrEqS.of.Square}{\texttt{Real.OrEqS.of.Square}}
+      \end{itemize}
+    \end{itemize}
+    \item \href{http://www.lemma.cn/lean/?module=Complex.OrOrSEqS_Div_2.of.Eq0Add_Pow_4.Ne_0}{\texttt{OrOrSEqS\_Div\_2.of.Eq0Add\_Pow\_4.Ne\_0}} --- case \(\beta\neq 0\)
+    \begin{itemize}[leftmargin=1.1em,itemsep=0.05em]
+      \item (\texttt{hbranch}) --- given a resolvent root \(y_0\), factor into two quadratics
+      \item \href{http://www.lemma.cn/lean/?module=Complex.Eq_Mul_Pow_SubCeilS.of.Pow_3}{\texttt{Eq\_Mul\_Pow\_SubCeilS.of.Pow\_3}} --- \(A^3=B^3\Rightarrow A=B\,\omega^{k}\)
+      \begin{itemize}[leftmargin=1.1em,itemsep=0.05em]
+        \item \href{http://www.lemma.cn/lean/?module=Complex.ArgPow.eq.SubMul_Arg}{\texttt{ArgPow.eq.SubMul\_Arg}}
+        \item \href{http://www.lemma.cn/lean/?module=Complex.Eq_MulNorm_ExpMulIArg}{\texttt{Eq\_MulNorm\_ExpMulIArg}}
+        \item \href{http://www.lemma.cn/lean/?module=Complex.ArgExpMulI.eq.Sub_Mul_Ceil}{\texttt{ArgExpMulI.eq.Sub\_Mul\_Ceil}}
+        \item \href{http://www.lemma.cn/lean/?module=Int.Floor.eq.NegCeilNeg}{\texttt{Int.Floor.eq.NegCeilNeg}}
+      \end{itemize}
+    \end{itemize}
+  \end{itemize}
+\end{itemize}
+\caption{Import graph for the Lean proof of Theorem~\ref{thm:quartic}.}
+\label{fig:deps}
+\end{figure}
+
+Related lemmas in the same family, \emph{not} imported by the main theorem: the depressed statement
+\href{http://www.lemma.cn/lean/?module=Complex.Imp_OrOrSEqS.Imp_OrOrSEqS_Div_2.of.Eq0Add_Pow_4}{\texttt{Imp\_OrOrSEqS.Imp\_OrOrSEqS\_Div\_2.of.Eq0Add\_Pow\_4}}
+and the monic offset
+\href{http://www.lemma.cn/lean/?module=Complex.Imp_OrOrSEqS_Sub.Imp_OrOrSEqS_SubDiv_2.of.Eq0Add_Pow_4}{\texttt{Imp\_OrOrSEqS\_Sub.Imp\_OrOrSEqS\_SubDiv\_2.of.Eq0Add\_Pow\_4}}.
+The cubic formula~\cite{lemma_cubic_lean} uses the same \(k\) selector; the quartic proof calls \texttt{Eq\_Mul\_Pow\_SubCeilS.of.Pow\_3} directly, because Ferrari needs one resolvent root \(A\omega^{k}+B\) rather than three Cardano combinations.
+
+\paragraph{Figure~3 --- branch integer \(k\).}
+From \(A^3=B^3\) one has \(A=B\,\omega^{k}\) with
+\[
+k=\Bigl\lceil\frac{3\Arg A}{2\pi}-\tfrac12\Bigr\rceil
+-\Bigl\lceil\frac{3\Arg B}{2\pi}-\tfrac12\Bigr\rceil.
+\]
+Applied to \(AB\) and \(-p/3\), this is the same \(k\) as in Theorem~\ref{thm:quartic}, and \(\omega^{-k}\) restores \(AB=(-p/3)\,\omega^{-k}\).
+Multiplying only \(A\) by \(\omega^{k}\) produces a legal Ferrari parameter \(y=A\omega^{k}+B\).
+Because \(\omega^{3}=1\), the three residue classes of \(k\) modulo~3 are already encoded in that single power: \(\omega^{k}\in\{1,\omega,\overline{\omega}\}\).
+
+\section{Proof outline}
+\label{sec:proof}
+
+\subsection{Principal radicals}
+\label{sec:radicals}
+
+Throughout, \(\sqrt{\,\cdot\,}\) is Mathlib \texttt{Complex.sqrt} and \(\sqrt[3]{\,\cdot\,}\) is Lean \texttt{Root.cubic}.
+Both are total functions \(\C\to\C\).
+The identity \((\sqrt{z})^2=z\) is \texttt{Complex.EqSquareSqrt}.
+If \(x^2=c\), then \(x=\sqrt{c}\) or \(x=-\sqrt{c}\) by \texttt{Complex.Or\_Eq\_NegSqrt.of.EqSquare}.
+Cube roots of unity are the radicals
+\[
+\omega=-\tfrac12+i\,\tfrac{\sqrt{3}}{2},\qquad
+\overline{\omega}=-\tfrac12-i\,\tfrac{\sqrt{3}}{2},\qquad
+\omega^{2}=\overline{\omega},\qquad
+\omega^{3}=1.
+\]
+The polar form \(z=\|z\|e^{i\Arg z}\) is \texttt{Complex.Eq\_MulNorm\_ExpMulIArg}.
+Reduction of \(\Arg(e^{ix})\) into \((-\pi,\pi]\) by a ceiling is \texttt{Complex.ArgExpMulI.eq.Sub\_Mul\_Ceil}, which yields \texttt{Complex.ArgPow.eq.SubMul\_Arg} and then
+\texttt{Complex.Eq\_Mul\_Pow\_SubCeilS.of.Pow\_3}:
+if \(A^3=B^3\), then \(A=B\,\omega^{k}\) for the integer \(k\) of Figure~3.
+
+\subsection{Depression}
+\label{sec:depress}
+
+Division by \(a\neq 0\) produces the monic equation \(x^4+a'x^3+b'x^2+c'x+d'=0\).
+The translation \(z=x+a'/4\) cancels the cubic term and yields \(z^4+\alpha z^2+\beta z+\gamma=0\) with \(\alpha,\beta,\gamma\) as in \S\ref{sec:formula}.
+The main file performs this expansion by \texttt{ring}; the four nested-radical expressions for \(z\) are then shifted back by \(-a'/4\).
+
+\subsection{Biquadratic case \(\beta=0\)}
+\label{sec:biquad}
+
+The depressed equation is \(z^4+\alpha z^2+\gamma=0\), a quadratic in \(z^2\).
+Lemma \texttt{Complex.OrOrSEqS.of.Eq0Add\_Pow\_4} assembles the four principal-radical roots.
+It first solves
+\[
+z^2=\frac{-\alpha\pm\sqrt{\alpha^2-4\gamma}}{2}=\frac{\pm\sqrt{\Delta}-\alpha}{2},\qquad \Delta=\alpha^2-4\gamma,
+\]
+then splits each \(z^2=c\) by \texttt{Or\_Eq\_NegSqrt}.
+Translating \(x=z-a'/4\) is the first conjunct of Theorem~\ref{thm:quartic}.
+
+\subsection{Ferrari factorization}
+\label{sec:ferrari}
+
+Let \(y_0\in\C\) be any root of the cubic resolvent
+\[
+y_0^3+2\alpha y_0^2+(\alpha^2-4\gamma)y_0-\beta^2=0,
+\]
+and set \(y_1=y_0+2\alpha\).
+A private helper proves \(y_0\neq 0\) (else \(\beta=0\)), that \((\sqrt{y_0})^2=y_0\), and that with \(Y=(y_0+\alpha)/2\) one has
+\[
+(z^2+Y)^2-\bigl(\sqrt{y_0}\,z-\beta/(2\sqrt{y_0})\bigr)^2
+=z^4+\alpha z^2+\beta z+\gamma.
+\]
+The left-hand side is a product of two quadratics.
+Each is solved by completing the square and \texttt{Or\_Eq\_NegSqrt}, producing
+\begin{align*}
+z&=\frac{\sqrt{2\beta/\sqrt{y_0}-y_1}-\sqrt{y_0}}{2},&
+z&=\frac{-\sqrt{2\beta/\sqrt{y_0}-y_1}-\sqrt{y_0}}{2},\\
+z&=\frac{\sqrt{-2\beta/\sqrt{y_0}-y_1}+\sqrt{y_0}}{2},&
+z&=\frac{-\sqrt{-2\beta/\sqrt{y_0}-y_1}+\sqrt{y_0}}{2}.
+\end{align*}
+This step still treats \(y_0\) as given.
+The rest of the proof constructs \(y_0\) from principal radicals.
+
+\subsection{Cardano data of the resolvent}
+\label{sec:cardano}
+
+The theorem statement writes the scaled Cardano pair directly:
+\begin{align*}
+p&=-4\gamma-\alpha^2/3,\\
+q&=-2\alpha^3/27+8\alpha\gamma/3-\beta^2,\\
+\delta&=4p^3/27+q^2,\\
+A&=\sqrt[3]{(-q+\sqrt{\delta})/2},\qquad
+B=\sqrt[3]{(-q-\sqrt{\delta})/2}.
+\end{align*}
+The proof also depresses the resolvent by
+\[
+a_r=-\alpha/2,\qquad b_r=-\gamma,\qquad c_r=-\beta^2/8+\alpha\gamma/2,
+\]
+and the unscaled Cardano parameters
+\begin{align*}
+p_c&=b_r-a_r^2/3,\qquad
+q_c=2a_r^3/27-a_r b_r/3+c_r,\qquad
+\delta_c=4p_c^3/27+q_c^2,\\
+A_c&=\sqrt[3]{(-q_c+\sqrt{\delta_c})/2},\qquad
+B_c=\sqrt[3]{(-q_c-\sqrt{\delta_c})/2}.
+\end{align*}
+A direct calculation gives \(q=8q_c\), \(\delta=64\delta_c\), and \(\sqrt{\delta}=8\sqrt{\delta_c}\) (the last because \(64>0\) on the principal branch).
+Positive real scaling of cube roots yields \(A=2A_c\) and \(B=2B_c\), and \(\Arg(AB)=\Arg(A_c B_c)\).
+
+\subsection{Restoring \(3(A\omega^{k})B=-p\)}
+\label{sec:product}
+
+Because \((AB)^3=(-p/3)^3\), lemma \texttt{Eq\_Mul\_Pow\_SubCeilS.of.Pow\_3} supplies
+\[
+AB=(-p/3)\,\omega^{-k}.
+\]
+Multiplying by \(\omega^{k}\) restores the product in one step: \(AB\,\omega^{k}=-p/3\).
+Since \((\omega^{k})^3=1\),
+\[
+(A\omega^{k})^3+B^3=A^3+B^3=-q,\qquad 3(A\omega^{k})B=-p,
+\]
+so \(y=A\omega^{k}+B\) satisfies \(y^3+py+q=0\).
+There is no case split on \(k\bmod 3\): the three possible rotations \(1\), \(\omega\), \(\overline{\omega}\) are the values of the single power \(\omega^{k}\).
+Shifting \(y_0=-2\alpha/3+y\) and \(y_1=4\alpha/3+y\) recovers a resolvent root, and the four nested square roots apply.
+
+Unlike the cubic formula in this library, only \(A\) is rotated.
+A quartic needs one legal resolvent parameter, not three Cardano roots of the original unknown.
+
+\section{Discussion and limitations}
+\label{sec:discussion}
+
+The statement is a conjunction of two implications, not an if-and-only-if that would list roots for a mismatched branch, and not a four-fold split on \(k\bmod 3\).
+Each inner disjunction is exhaustive for that case.
+Principal square roots in the Ferrari step may vanish or repeat when the quartic has multiple roots; the disjunction still holds.
+
+The lemma does not construct roots in a general field of characteristic zero, does not avoid \(\Arg\) and \(\lceil\cdot\rceil\), and does not prove that a randomly chosen pairing of principal cube roots is a resolvent root.
+It does not replace Mathlib's abstract Ferrari theorem~\cite{zhu2024mathlibquartic}: that theorem remains the right statement when one only knows that some square roots and some resolvent root exist in \(K\).
+The present lemma is the complementary statement on \(\C\): every coefficient tuple with \(a\neq 0\) is sent to four explicit principal-radical expressions, with the cube-root branch named by the power \(\omega^{k}\).
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+We have presented a machine-checked, fully expanded Ferrari--Cardano formula for the general quartic over \(\C\), using principal square roots, principal cube roots \(\sqrt[3]{\,}\), the radical cube root of unity \(-\tfrac12+i\sqrt{3}/2\), and a single power \(\omega^{k}\) assembled from \(\Arg\) and \(\lceil\cdot\rceil\).
+The result is public on lemma.cn and GitHub~\cite{lemma_repo}, with proofs checked in Lean~4 and an earlier SymPy formulation.
+
+\bibliographystyle{plain}
+\bibliography{refs}
+
+\end{document}

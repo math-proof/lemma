@@ -32,6 +32,146 @@ function lemma_shell_latex_tag_re(): string
     return '/\\\\tag\*?\{((?:[^{}]|\{[^{}]*\})*)\}\s*$/';
 }
 
+/** Matching `}` for `{` at $open; skip `\{` / `\}`. */
+function lemma_shell_latex_match_brace(string $s, int $open): ?int
+{
+    if (($s[$open] ?? '') !== '{')
+        return null;
+    $depth = 0;
+    $len = strlen($s);
+    for ($i = $open; $i < $len; $i++) {
+        $c = $s[$i];
+        if ($c === '\\') {
+            $i++;
+            continue;
+        }
+        if ($c === '{')
+            $depth++;
+        elseif ($c === '}') {
+            $depth--;
+            if ($depth === 0)
+                return $i;
+        }
+    }
+    return null;
+}
+
+/** Heavy `\left(...\right)` is 400; keep `\left(...\right]` intervals. Also drop `\\` in the body. */
+function lemma_shell_latex_flatten_left_right_paren(string $latex): string
+{
+    $open = '\\left(';
+    $close = '\\right)';
+    $pos = 0;
+    while (($i = strpos($latex, $open, $pos)) !== false) {
+        $start = $i + strlen($open);
+        $depth = 1;
+        $j = $start;
+        $len = strlen($latex);
+        $interval = false;
+        while ($j < $len && $depth > 0) {
+            if (substr($latex, $j, 6) === $open) {
+                $depth++;
+                $j += 6;
+                continue;
+            }
+            if (substr($latex, $j, 7) === $close) {
+                $depth--;
+                if ($depth === 0)
+                    break;
+                $j += 7;
+                continue;
+            }
+            if ($depth === 1 && substr($latex, $j, 7) === '\\right]') {
+                $interval = true;
+                break;
+            }
+            $j++;
+        }
+        if ($interval || $depth !== 0) {
+            $pos = $i + 1;
+            continue;
+        }
+        $body = trim(str_replace(["\\\\\n", '\\\\'], ' ', substr($latex, $start, $j - $start)));
+        // {\left(-2\right)} must become {-2}, not {(-2)}, or \frac {{(-2)} β} parses as \frac{(-2)} β.
+        $repl = preg_match('/^-[0-9]+$/', $body) ? $body : '(' . $body . ')';
+        $latex = substr($latex, 0, $i) . $repl . substr($latex, $j + strlen($close));
+        $pos = $i + 1;
+    }
+    return $latex;
+}
+
+/** `{ {A} - {B} }` as an `=` RHS is 400 when both sides are heavy fracs. */
+function lemma_shell_latex_is_group_diff(string $inner): bool
+{
+    $inner = trim($inner);
+    if (($inner[0] ?? '') !== '{')
+        return false;
+    $c = lemma_shell_latex_match_brace($inner, 0);
+    if ($c === null)
+        return false;
+    $rest = substr($inner, $c + 1);
+    if (!preg_match('/^\s*[-+]\s*\{/', $rest))
+        return false;
+    $open2 = strpos($rest, '{');
+    $c2 = lemma_shell_latex_match_brace($rest, $open2);
+    return $c2 !== null && trim(substr($rest, $c2 + 1)) === '';
+}
+
+function lemma_shell_latex_peel_eq_group_diff(string $latex): string
+{
+    $pos = 0;
+    while (($i = strpos($latex, ' = {', $pos)) !== false) {
+        $open = $i + 3;
+        $close = lemma_shell_latex_match_brace($latex, $open);
+        if ($close === null) {
+            $pos = $i + 1;
+            continue;
+        }
+        $inner = substr($latex, $open + 1, $close - $open - 1);
+        if (($inner[0] ?? '') === '{' || lemma_shell_latex_is_group_diff($inner)) {
+            $latex = substr($latex, 0, $open) . $inner . substr($latex, $close + 1);
+            $pos = $open + strlen($inner);
+        } else {
+            $pos = $close + 1;
+        }
+    }
+    return $latex;
+}
+
+/** Extra `{ A \lor B }` around a heavy or is 400; do not peel `\frac`/`\sqrt`/`^`/`_` args. */
+function lemma_shell_latex_peel_wrapped_lor(string $latex): string
+{
+    $needle = ' \\lor ';
+    for ($guard = 0; $guard < 64; $guard++) {
+        $changed = false;
+        $len = strlen($latex);
+        $i = 0;
+        while ($i < $len) {
+            if ($latex[$i] === '{') {
+                $close = lemma_shell_latex_match_brace($latex, $i);
+                if ($close === null)
+                    break;
+                $inner = substr($latex, $i + 1, $close - $i - 1);
+                $prefix = substr($latex, 0, $i);
+                $before = $i > 0 ? $latex[$i - 1] : '';
+                $cmd = $before !== '^' && $before !== '_'
+                    && !preg_match('/\\\\(?:frac|sqrt(?:\[\d+\])?|text|ensuremath|mathrm|mathbf|mathbb|overline|colorbox|begin)\\s*$/', $prefix);
+                if ($cmd && str_contains($inner, $needle)) {
+                    $latex = substr($latex, 0, $i) . $inner . substr($latex, $close + 1);
+                    $changed = true;
+                    break;
+                }
+                $i = $close + 1;
+                continue;
+            }
+            $i++;
+        }
+        if (!$changed)
+            break;
+    }
+    return $latex;
+}
+
 /** Strip project-specific LaTeX wrappers so CodeCogs can parse the math. */
 function lemma_shell_simplify_latex_for_codecogs(string $latex): string
 {
@@ -43,9 +183,27 @@ function lemma_shell_simplify_latex_for_codecogs(string $latex): string
     $latex = str_replace('&&', '', $latex);
     $latex = str_replace('{{\\begin{cases}', '{\\begin{cases}', $latex);
     $latex = str_replace('\\end{cases}}}', '\\end{cases}}', $latex);
+    // {factor  cases} (ite as a product) is 400 when the cases body is heavy.
+    $latex = preg_replace(
+        '/\{((?:[^{}]|\{[^{}]*\})+?)\s*\\\\begin\{cases\}(.*?)\\\\end\{cases\}\}/s',
+        '{$1}\\cdot\\begin{cases}$2\\end{cases}',
+        $latex
+    );
+    // Align rows are `\\ &`; cases are `val & cond \\` — only strip tab-after-break.
+    $latex = str_replace(["\\\\\n&", '\\\\&'], ["\\\\\n", '\\\\'], $latex);
     $latex = preg_replace('/\\\\colorbox\{#[0-9a-fA-F]+\}(\{\$)/', '$1', $latex);
     $latex = str_replace('{$\\mathord{\\left', '{\\left', $latex);
     $latex = str_replace('\\right)}$}', '\\right)}', $latex);
+    $latex = str_replace('\\right)$}', '\\right)}', $latex);
+    // {colorbox{mathord}} leaves {{\left(...\right)}}; extra group around a heavy body is 400.
+    $latex = preg_replace(
+        '/\{\{\\\\left\(((?:(?!\\\\left).)*?)\\\\right\)\}\}/s',
+        '{\\left($1\\right)}',
+        $latex
+    );
+    $latex = lemma_shell_latex_flatten_left_right_paren($latex);
+    $latex = lemma_shell_latex_peel_wrapped_lor($latex);
+    $latex = lemma_shell_latex_peel_eq_group_diff($latex);
     if (!str_contains($latex, '$')) {
         $latex = str_replace(['\\left\\{', '\\right\\}'], ['\\{', '\\}'], $latex);
     }
@@ -60,6 +218,7 @@ function lemma_shell_simplify_latex_for_codecogs(string $latex): string
         'α', 'β', 'γ', 'δ', 'Δ', 'ω', 'π',
         '∃', '∀',
         '⟨', '⟩',
+        '↑',
     ], [
         '\\ensuremath{\\mathbb{R}}', '\\ensuremath{\\mathbb{C}}', '\\ensuremath{\\mathbb{N}}', '\\ensuremath{\\mathbb{Z}}',
         '\\ensuremath{\\alpha}', '\\ensuremath{\\beta}', '\\ensuremath{\\gamma}', '\\ensuremath{\\delta}',
@@ -71,8 +230,15 @@ function lemma_shell_simplify_latex_for_codecogs(string $latex): string
         '\\ensuremath{\\Delta}', '\\ensuremath{\\omega}', '\\ensuremath{\\pi}',
         '\\ensuremath{\\exists}', '\\ensuremath{\\forall}',
         '\\ensuremath{\\langle}', '\\ensuremath{\\rangle}',
+        '\\uparrow',
     ], $latex);
     $latex = str_replace(['\\lt', '\\gt'], ['<', '>'], $latex);
+    // {\left(-2\right)} → {-2} can turn \frac {{-2} β}{d} into \frac {-2} β}{d}.
+    $latex = preg_replace(
+        '/\\\\frac \{(-[0-9]+)\}(\s+(?:\\\\ensuremath\{[^}]+\}|\\\\[a-zA-Z]+))\}(\s*\{)/',
+        '\\frac {{\\1}\\2}\\3',
+        $latex
+    );
     return trim($latex);
 }
 

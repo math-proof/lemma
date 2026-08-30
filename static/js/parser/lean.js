@@ -3606,9 +3606,22 @@ export class LeanUnaryArithmeticPost extends LeanUnaryArithmetic {
     get stack_priority() {
         return 60;
     }
+    strFormat() {
+        return `%s${this.operator}`;
+    }
+    latexFormat() {
+        return `{%s}${this.command}`;
+    }
 }
 
-class LeanUnaryArithmeticPre extends LeanUnaryArithmetic {}
+class LeanUnaryArithmeticPre extends LeanUnaryArithmetic {
+    strFormat() {
+        return `${this.operator}%s`;
+    }
+    latexFormat() {
+        return `${this.command}{%s}`;
+    }
+}
 
 /** Unary minus. */
 class LeanNeg extends LeanUnaryArithmeticPre {
@@ -3629,9 +3642,6 @@ class LeanPlus extends LeanUnaryArithmeticPre {
     get operator() {
         return '+';
     }
-    strFormat() {
-        return `${this.operator}%s`;
-    }
 }
 
 /** Postfix inverse `⁻¹`. Lean `postfix:max` (tighter than `^`). */
@@ -3646,23 +3656,11 @@ class LeanInv extends LeanUnaryArithmeticPost {
     latexArgs(syntax) {
         return [this.arg.peelLatexCoe().toLatex(syntax)];
     }
-    latexFormat() {
-        return `{%s}${this.command}`;
-    }
-    strFormat() {
-        return `%s${this.operator}`;
-    }
 }
 
 /** Postfix factorial `n !`. */
 class LeanFactorial extends LeanUnaryArithmeticPost {
     static input_priority = 10000;
-    get command() {
-        return '!';
-    }
-    latexFormat() {
-        return '{%s}!';
-    }
     get operator() {
         return '!';
     }
@@ -3677,8 +3675,8 @@ class LeanPosPart extends LeanUnaryArithmeticPost {
     get operator() {
         return '⁺';
     }
-    strFormat() {
-        return `%s${this.operator}`;
+    get command() {
+        return '^{+}';
     }
 }
 
@@ -3688,8 +3686,8 @@ class LeanNegPart extends LeanUnaryArithmeticPost {
     get operator() {
         return '⁻';
     }
-    strFormat() {
-        return `%s${this.operator}`;
+    get command() {
+        return '^{-}';
     }
 }
 
@@ -3707,12 +3705,6 @@ class Lean_sqrt extends LeanUnaryArithmeticPre {
         if (arg instanceof LeanParenthesis) arg = arg.arg;
         return [arg.toLatex(syntax)];
     }
-    latexFormat() {
-        return `${this.command}{%s}`;
-    }
-    strFormat() {
-        return `${this.operator}%s`;
-    }
 }
 
 /** Prefix conjugate `~z` (`starRingEnd ℂ` / SymPy `~z`). */
@@ -3724,12 +3716,6 @@ class LeanConj extends LeanUnaryArithmeticPre {
     get command() {
         return '\\overline';
     }
-    latexFormat() {
-        return '\\overline{%s}';
-    }
-    strFormat() {
-        return `${this.operator}%s`;
-    }
 }
 
 /** Postfix square `²`. */
@@ -3740,12 +3726,6 @@ class LeanSquare extends LeanUnaryArithmeticPost {
     }
     get command() {
         return '^2';
-    }
-    latexFormat() {
-        return `{%s}${this.command}`;
-    }
-    strFormat() {
-        return `%s${this.operator}`;
     }
 }
 
@@ -3765,12 +3745,6 @@ class LeanCubicRoot extends LeanUnaryArithmeticPre {
         if (arg instanceof LeanParenthesis) arg = arg.arg;
         return [arg.toLatex(syntax)];
     }
-    latexFormat() {
-        return `${this.command}{%s}`;
-    }
-    strFormat() {
-        return `${this.operator}%s`;
-    }
 }
 
 /** Up arrow `↑`. */
@@ -3785,9 +3759,6 @@ class Lean_uparrow extends LeanUnaryArithmeticPre {
     peelLatexCoe() {
         return this.arg.peelLatexCoe();
     }
-    strFormat() {
-        return `${this.operator}%s`;
-    }
 }
 
 /** Double up arrow `⇑`. */
@@ -3799,8 +3770,8 @@ class LeanUparrow extends LeanUnaryArithmeticPre {
     get operator() {
         return '⇑';
     }
-    strFormat() {
-        return `${this.operator}%s`;
+    get command() {
+        return '\\Uparrow';
     }
 }
 
@@ -3811,12 +3782,6 @@ class LeanCube extends LeanUnaryArithmeticPost {
     }
     get command() {
         return '^3';
-    }
-    latexFormat() {
-        return `{%s}${this.command}`;
-    }
-    strFormat() {
-        return `%s${this.operator}`;
     }
 }
 
@@ -3836,12 +3801,6 @@ class LeanQuarticRoot extends LeanUnaryArithmeticPre {
         if (arg instanceof LeanParenthesis) arg = arg.arg;
         return [arg.toLatex(syntax)];
     }
-    latexFormat() {
-        return `${this.command}{%s}`;
-    }
-    strFormat() {
-        return `${this.operator}%s`;
-    }
 }
 
 /** Postfix fourth power `⁴`. */
@@ -3852,12 +3811,6 @@ class LeanTesseract extends LeanUnaryArithmeticPost {
     get command() {
         return '^4';
     }
-    latexFormat() {
-        return `{%s}${this.command}`;
-    }
-    strFormat() {
-        return `%s${this.operator}`;
-    }
 }
 
 /** Postfix transpose `ᵀ`. */
@@ -3865,8 +3818,8 @@ class LeanTranspose extends LeanUnaryArithmeticPost {
     get operator() {
         return 'ᵀ';
     }
-    strFormat() {
-        return `%s${this.operator}`;
+    get command() {
+        return '^{T}';
     }
 }
 
