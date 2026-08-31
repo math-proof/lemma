@@ -64,7 +64,7 @@ const self = new Vue({
 				if (!event.ctrlKey)
 					break;
 				console.log('ctrl+H for replacement');
-				setAttribute(this, 'replacement', this.replacement == null? '' : null);
+				this.setAttribute('replacement', this.replacement == null? '' : null);
 				event.preventDefault();
 				break;
 			case 'f':

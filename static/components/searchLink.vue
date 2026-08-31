@@ -14,7 +14,8 @@ import Vue from "../js/vue.js";
 
 console.log('import searchLink.vue');
 
-var focusedAlready = false;
+// script setup re-runs per instance; keep one gate so only the first <a> auto-focuses.
+const focusGate = Vue.searchLinkFocus ??= { already: false };
 
 const props = defineProps(['data']);
 
@@ -91,7 +92,7 @@ const self = new Vue({
 			}
 			else{
 				this.mode = 'span';
-				focusedAlready = false;
+				focusGate.already = false;
 				this.$nextTick(async () => {
 					var undeletables = await this.set_module(event.target.value);
 					console.log("undeletable files = ", undeletables);
@@ -121,7 +122,7 @@ const self = new Vue({
 			switch(event.key) {
 			case 'F2':
 				this.mode = 'input';
-				focusedAlready = false;
+				focusGate.already = false;
 				break;
 			case 'Delete':
 				var self = this.$parent;
@@ -161,14 +162,15 @@ const self = new Vue({
 	directives: {
 		focus: {
 			mounted(el) {
-				if (!focusedAlready || el.tagName == 'input'){
+				if (!focusGate.already || el.tagName.toLowerCase() == 'input') {
 					el.focus();
-					focusedAlready = true;
+					focusGate.already = true;
 				}
 			},
 
-			updated(el){
-				el.focus();
+			updated(el) {
+				if (el.tagName.toLowerCase() == 'input')
+					el.focus();
 			}
 		},
 

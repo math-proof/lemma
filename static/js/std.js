@@ -5098,7 +5098,7 @@ Cookie.instance = new Cookie();
 
 /**
  * @param {string} component  SFC base name under static/components/
- * @param {Record<string, unknown>} data  Root state passed as props to the child; each own key is bound with v-model:key
+ * @param {Record<string, unknown>} data  Root $data passed as props to the child; each own key is bound with onUpdate:key
  * @param {string} [id='root']  Mount target element id
  */
 async function createApp(component, data, id) {
@@ -5164,34 +5164,26 @@ async function createApp(component, data, id) {
 	}
 	document.body.appendChild(div);
 
-	var components = {};
-	components[component] = await loadModule(`static/components/${component}.vue`, options);
-
-	var args = [];
-	for (let key in data) {
-		args.push(`v-model:${key}="${key}"`);
-	}
-
-	var App = {
-		components: components,
-
-		data() {
-			return data;
+	data ||= {};
+	const Comp = await loadModule(`static/components/${component}.vue`, options);
+	const $data = Vue.reactive(data);
+	const Root = {
+		setup(_, { expose }) {
+			expose({ $data, ...Vue.toRefs($data) });
+			return () => {
+				const props = {};
+				for (const key in data) {
+					props[key] = $data[key];
+					props[`onUpdate:${key}`] = (value) => { $data[key] = value; };
+				}
+				return Vue.h(Comp, props);
+			};
 		},
-
-		template: `<${component} ref=${component} ${args.join(' ')}></${component}>`,
 	};
 
-	var app = Vue.createApp(App);
+	var app = Vue.createApp(Root);
 	app.mount('#' + id);
 	return app;
-}
-
-function setAttribute(self, key, value){
-	while (!(key in self.$data)){
-		self = self.$parent;
-	}
-	self.$data[key] = value;
 }
 
 function track_mounted(tag){
@@ -5648,7 +5640,6 @@ Object.assign(globalThis, {
 	rotationMatrix,
 	sample,
 	saveFile,
-	setAttribute,
 	setitem,
 	sortedDictEntries,
 	sleep,

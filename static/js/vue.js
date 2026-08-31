@@ -26,6 +26,18 @@ class Component {
 		attributes.configurable = true;
 		Object.defineProperty(this, key, attributes);
 	}
+
+	setAttribute(key, value) {
+		var self = this;
+		while (self && !(self.$data && key in self.$data))
+			self = self.$parent;
+		if (!self)
+			throw new Error(`setAttribute: ${key} not found`);
+		if (key in self)
+			self[key] = value;
+		else
+			self.$data[key] = value;
+	}
 }
 
 class Parent extends Component {
@@ -36,17 +48,6 @@ class Parent extends Component {
 		const exposed = instance?.exposed || {};
 		for (let key in exposed) {
 			this.defineProperty(exposed, key);
-		}
-		// Options-API root: $data lives on proxy, not in exposed. Skip if defineExpose already set $data.
-		const proxy = instance?.proxy;
-		if (proxy && proxy.$data != null && !('$data' in exposed)) {
-			Object.defineProperty(this, '$data', {
-				enumerable: true,
-				configurable: true,
-				get() {
-					return proxy.$data;
-				},
-			});
 		}
 	}
 

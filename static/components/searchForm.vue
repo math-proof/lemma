@@ -44,10 +44,6 @@ const self = new Vue({
 	},
 
 	methods: {
-		setAttribute(key, value) {
-			setAttribute(this, key, value);
-		},
-
 		input(event) {
 			this.setAttribute(event.target.name, event.target.value);
 		},
