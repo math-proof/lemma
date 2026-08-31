@@ -231,7 +231,6 @@ x=z-\dfrac{a'}{4}
 
 \paragraph{Figure~2 --- lemma dependencies.}
 Figure~\ref{fig:deps} lists major imported lemmas of Theorem~\ref{thm:quartic}.
-Private helpers in the same file are drawn in parentheses.
 Links point to the Lean~4 pages.
 SymPy has only the one-direction (\texttt{of}/\texttt{mp}) names, e.g.\ \url{http://www.lemma.cn/py/?module=Complex.In_Ite_FinsetSSubS__SubS.of.Eq0Add_Mul_Pow_4.Ne_0}, not the Lean \texttt{is} if-and-only-if.
 
@@ -240,24 +239,25 @@ SymPy has only the one-direction (\texttt{of}/\texttt{mp}) names, e.g.\ \url{htt
 \begin{itemize}[leftmargin=1.2em,itemsep=0.15em]
   \item \href{http://www.lemma.cn/lean/?module=Complex.Eq0Add_Mul_Pow_4.is.In_Ite_FinsetSSubS__SubS.of.Ne_0}{\texttt{Eq0Add\_Mul\_Pow\_4.is.In\_Ite\_FinsetSSubS\_\_SubS.of.Ne\_0}} --- main theorem
   \begin{itemize}[leftmargin=1.1em,itemsep=0.1em]
-    \item \href{http://www.lemma.cn/lean/?module=Complex.OrOrSEqS.of.Eq0Add_Pow_4}{\texttt{OrOrSEqS.of.Eq0Add\_Pow\_4}} --- case \(\beta=0\)
+    \item \href{http://www.lemma.cn/lean/?module=Complex.Eq0Add_Pow_4.is.In_Ite_FinsetSSubS__SubS}{\texttt{Eq0Add\_Pow\_4.is.In\_Ite\_FinsetSSubS\_\_SubS}} --- monic offset
+    \item \href{http://www.lemma.cn/lean/?module=Complex.Eq0Add_Pow_4.is.In_Ite_FinsetS}{\texttt{Eq0Add\_Pow\_4.is.In\_Ite\_FinsetS}} --- depressed
     \begin{itemize}[leftmargin=1.1em,itemsep=0.05em]
-      \item \href{http://www.lemma.cn/lean/?module=Complex.OrEqS_Div.of.Eq0Add_Mul_Square.Ne_0}{\texttt{OrEqS\_Div.of.Eq0Add\_Mul\_Square.Ne\_0}} --- quadratic in \(x^2\)
-      \item \href{http://www.lemma.cn/lean/?module=Complex.Or_Eq_NegSqrt.of.EqSquare}{\texttt{Or\_Eq\_NegSqrt.of.EqSquare}} --- \(x^2=c\Rightarrow x=\pm\sqrt{c}\)
+      \item \href{http://www.lemma.cn/lean/?module=Complex.Eq0Add_Pow_4.is.In_FinsetSqrtS_NegSSqrt}{\texttt{Eq0Add\_Pow\_4.is.In\_FinsetSqrtS\_NegSSqrt}} --- case \(\beta=0\)
       \begin{itemize}[leftmargin=1.1em,itemsep=0.05em]
-        \item \href{http://www.lemma.cn/lean/?module=Complex.EqSquareSqrt}{\texttt{EqSquareSqrt}} --- \((\sqrt{z})^2=z\)
-        \item \href{http://www.lemma.cn/lean/?module=Real.OrEqS.of.Square}{\texttt{Real.OrEqS.of.Square}}
+        \item \href{http://www.lemma.cn/lean/?module=Complex.Eq0Add_Mul_Square.is.In_FinsetDivS_Mul2.of.Ne_0}{\texttt{Eq0Add\_Mul\_Square.is.In\_FinsetDivS\_Mul2.of.Ne\_0}} --- quadratic in \(x^2\)
+        \item \href{http://www.lemma.cn/lean/?module=Complex.EqSquare.is.In_FinsetSqrt_NegSqrt}{\texttt{EqSquare.is.In\_FinsetSqrt\_NegSqrt}} --- \(x^2=c\Rightarrow x=\pm\sqrt{c}\)
+        (\href{http://www.lemma.cn/lean/?module=Complex.EqSquareSqrt}{\texttt{EqSquareSqrt}},
+        \href{http://www.lemma.cn/lean/?module=Real.OrEqS.of.Square}{\texttt{Real.OrEqS.of.Square}})
       \end{itemize}
-    \end{itemize}
-    \item \href{http://www.lemma.cn/lean/?module=Complex.OrOrSEqS_Div_2.of.Eq0Add_Pow_4.Ne_0}{\texttt{OrOrSEqS\_Div\_2.of.Eq0Add\_Pow\_4.Ne\_0}} --- case \(\beta\neq 0\)
-    \begin{itemize}[leftmargin=1.1em,itemsep=0.05em]
-      \item (\texttt{hbranch}) --- given a resolvent root \(y_0\), factor into two quadratics
-      \item \href{http://www.lemma.cn/lean/?module=Complex.Eq_Mul_Pow_SubCeilS.of.Pow_3}{\texttt{Eq\_Mul\_Pow\_SubCeilS.of.Pow\_3}} --- \(A^3=B^3\Rightarrow A=B\,\omega^{k}\)
+      \item \href{http://www.lemma.cn/lean/?module=Complex.Eq0Add_Pow_4.is.In_FinsetDivS_2DivS_2.of.Ne_0}{\texttt{Eq0Add\_Pow\_4.is.In\_FinsetDivS\_2DivS\_2.of.Ne\_0}} --- case \(\beta\neq 0\)
       \begin{itemize}[leftmargin=1.1em,itemsep=0.05em]
-        \item \href{http://www.lemma.cn/lean/?module=Complex.ArgPow.eq.SubMul_Arg}{\texttt{ArgPow.eq.SubMul\_Arg}}
-        \item \href{http://www.lemma.cn/lean/?module=Complex.Eq_MulNorm_ExpMulIArg}{\texttt{Eq\_MulNorm\_ExpMulIArg}}
-        \item \href{http://www.lemma.cn/lean/?module=Complex.ArgExpMulI.eq.Sub_Mul_Ceil}{\texttt{ArgExpMulI.eq.Sub\_Mul\_Ceil}}
-        \item \href{http://www.lemma.cn/lean/?module=Int.Floor.eq.NegCeilNeg}{\texttt{Int.Floor.eq.NegCeilNeg}}
+        \item \href{http://www.lemma.cn/lean/?module=Complex.Eq0Add_Pow_3.is.In_Finset_SubSAddMulS}{\texttt{Eq0Add\_Pow\_3.is.In\_Finset\_SubSAddMulS}} --- cubic resolvent
+        (\href{http://www.lemma.cn/lean/?module=Complex.Eq_Mul_Pow_SubCeilS.of.Pow_3}{\texttt{Eq\_Mul\_Pow\_SubCeilS.of.Pow\_3}}:
+        \href{http://www.lemma.cn/lean/?module=Complex.ArgPow.eq.SubMul_Arg}{\texttt{ArgPow.eq.SubMul\_Arg}},
+        \href{http://www.lemma.cn/lean/?module=Complex.Eq_MulNorm_ExpMulIArg}{\texttt{Eq\_MulNorm\_ExpMulIArg}},
+        \href{http://www.lemma.cn/lean/?module=Complex.ArgExpMulI.eq.Sub_Mul_Ceil}{\texttt{ArgExpMulI.eq.Sub\_Mul\_Ceil}},
+        \href{http://www.lemma.cn/lean/?module=Int.Floor.eq.NegCeilNeg}{\texttt{Int.Floor.eq.NegCeilNeg}})
+        \item \href{http://www.lemma.cn/lean/?module=Complex.Eq_SquareAddMulSqrt.of.Eq0SubSquare_MulMul4.Ne_0}{\texttt{Eq\_SquareAddMulSqrt.of.Eq0SubSquare\_MulMul4.Ne\_0}} --- Ferrari factor
       \end{itemize}
     \end{itemize}
   \end{itemize}
@@ -266,12 +266,13 @@ SymPy has only the one-direction (\texttt{of}/\texttt{mp}) names, e.g.\ \url{htt
 \label{fig:deps}
 \end{figure}
 
-Related lemmas in the same family, \emph{not} imported by the main theorem: the depressed statement
-\href{http://www.lemma.cn/lean/?module=Complex.Imp_OrOrSEqS.Imp_OrOrSEqS_Div_2.of.Eq0Add_Pow_4}{\texttt{Imp\_OrOrSEqS.Imp\_OrOrSEqS\_Div\_2.of.Eq0Add\_Pow\_4}}
+The depressed statement
+\href{http://www.lemma.cn/lean/?module=Complex.Eq0Add_Pow_4.is.In_Ite_FinsetS}{\texttt{Eq0Add\_Pow\_4.is.In\_Ite\_FinsetS}}
 and the monic offset
-\href{http://www.lemma.cn/lean/?module=Complex.Imp_OrOrSEqS_Sub.Imp_OrOrSEqS_SubDiv_2.of.Eq0Add_Pow_4}{\texttt{Imp\_OrOrSEqS\_Sub.Imp\_OrOrSEqS\_SubDiv\_2.of.Eq0Add\_Pow\_4}}.
-See also the quadratic~\cite{lemma_quadratic_lean} and the cubic~\cite{lemma_cubic_lean}.
-The quartic proof calls \texttt{Eq\_Mul\_Pow\_SubCeilS.of.Pow\_3} directly, because Ferrari needs one resolvent root \(A\omega^{k}+B\).
+\href{http://www.lemma.cn/lean/?module=Complex.Eq0Add_Pow_4.is.In_Ite_FinsetSSubS__SubS}{\texttt{Eq0Add\_Pow\_4.is.In\_Ite\_FinsetSSubS\_\_SubS}}
+are imported (Figure~\ref{fig:deps}).
+See also the general quadratic~\cite{lemma_quadratic_lean} and the general cubic~\cite{lemma_cubic_lean}.
+The cubic Cardano proof calls \texttt{Eq\_Mul\_Pow\_SubCeilS.of.Pow\_3}, because Ferrari needs one resolvent root \(A\omega^{k}+B\).
 
 \paragraph{Figure~3 --- branch integer \(k\).}
 From \(A^3=B^3\) one has \(A=B\,\omega^{k}\) with
@@ -316,12 +317,12 @@ The main file performs this expansion by \texttt{ring}; the four nested-radical 
 \label{sec:biquad}
 
 The depressed equation is \(z^4+\alpha z^2+\gamma=0\), a quadratic in \(z^2\).
-Lemma \texttt{Complex.OrOrSEqS.of.Eq0Add\_Pow\_4} assembles the four principal-radical roots.
+Lemma \texttt{Complex.Eq0Add\_Pow\_4.is.In\_FinsetSqrtS\_NegSSqrt} assembles the four principal-radical roots.
 It first solves
 \[
 z^2=\frac{-\alpha\pm\sqrt{\alpha^2-4\gamma}}{2}=\frac{\pm\sqrt{\Delta}-\alpha}{2},\qquad \Delta=\alpha^2-4\gamma,
 \]
-then splits each \(z^2=c\) by \texttt{Or\_Eq\_NegSqrt}.
+then splits each \(z^2=c\) by \texttt{EqSquare.is.In\_FinsetSqrt\_NegSqrt}.
 Translating \(x=z-a'/4\) is the \(\beta=0\) branch of Theorem~\ref{thm:quartic}.
 
 \subsection{Ferrari factorization}
@@ -338,7 +339,7 @@ A private helper proves \(y_0\neq 0\) (else \(\beta=0\)), that \((\sqrt{y_0})^2=
 =z^4+\alpha z^2+\beta z+\gamma.
 \]
 The left-hand side is a product of two quadratics.
-Each is solved by completing the square and \texttt{Or\_Eq\_NegSqrt}, producing
+Each is solved by completing the square and \texttt{EqSquare.is.In\_FinsetSqrt\_NegSqrt}, producing
 \begin{align*}
 z&=\frac{\sqrt{2\beta/\sqrt{y_0}-y_1}-\sqrt{y_0}}{2},&
 z&=\frac{-\sqrt{2\beta/\sqrt{y_0}-y_1}-\sqrt{y_0}}{2},\\
