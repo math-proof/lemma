@@ -2593,6 +2593,16 @@ class LeanAssign extends LeanBinary
             $stmts->swap_echo_star($syntax, $statements);
             return $statements;
         }
+        if (($calc = $this->rhs) instanceof LeanCalc) {
+            if ($syntax !== null)
+                $syntax['calc'] = true;
+            $self = clone $this;
+            $calc = $self->rhs;
+            $statements = $calc->split($syntax);
+            $calc->arg = new LeanCaret($calc->indent, $calc->level);
+            $statements[0] = $self;
+            return $statements;
+        }
         return [$this];
     }
 
@@ -2921,6 +2931,8 @@ class Lean_in extends LeanBinaryBoolean
             if (!($lhs->arg instanceof LeanColon))
                 $lhs = $lhs->arg;
         }
+        if ($rhs instanceof LeanParenthesis && $rhs->arg instanceof LeanIte)
+            $rhs = $rhs->arg;
         $lhs = $lhs->toLatex($syntax);
         $rhs = $rhs->toLatex($syntax);
         return [$lhs, $rhs];
@@ -7863,9 +7875,20 @@ class LeanCalc extends LeanUnary
 
     public function echo()
     {
-        if (($arg = $this->arg) instanceof LeanArgsNewLineSeparated) {
+        $echoStep = function ($stmt) {
+            if ($stmt instanceof LeanAssign && ($by = $stmt->rhs) instanceof LeanBy && ($byArg = $by->arg) instanceof LeanStatements) {
+                $indent = $byArg->indent;
+                $level = $byArg->level;
+                $byArg->unshift(new LeanTactic('echo', new LeanToken('⊢', $indent, $level), $indent, $level));
+            }
+            $stmt->echo();
+        };
+        $arg = $this->arg;
+        if ($arg instanceof LeanArgsNewLineSeparated) {
             foreach ($arg->args as $stmt)
-                $stmt->echo();
+                $echoStep($stmt);
+        } elseif ($arg instanceof LeanArgsIndented) {
+            $echoStep($arg->rhs);
         }
     }
 
@@ -9106,11 +9129,13 @@ class Lean_let extends LeanSyntax
     public function echo()
     {
         $token = $this->get_echo_token();
-        $by = $this->args[0]->rhs ?? null;
-        if ($by instanceof LeanBy) {
-            $stmt = $by->arg;
+        $proof = $this->args[0]->rhs ?? null;
+        if ($proof instanceof LeanBy) {
+            $stmt = $proof->arg;
             if ($stmt instanceof LeanStatements)
                 $stmt->echo();
+        } elseif ($proof instanceof LeanCalc) {
+            $proof->echo();
         }
         if ($token) {
             return [
@@ -9181,10 +9206,16 @@ class Lean_let extends LeanSyntax
     public function split(&$syntax = null)
     {
         $assign = $this->args[0];
-        if ($assign instanceof LeanAssign && ($by = $assign->rhs) instanceof LeanBy && ($stmts = $by->arg) instanceof LeanStatements) {
-            $statements = $assign->split($syntax);
-            $statements[0] = new static($statements[0], $this->indent, $assign->level);
-            return $statements;
+        if ($assign instanceof LeanAssign) {
+            $proof = $assign->rhs;
+            if (
+                ($proof instanceof LeanBy && $proof->arg instanceof LeanStatements) ||
+                $proof instanceof LeanCalc
+            ) {
+                $statements = $assign->split($syntax);
+                $statements[0] = new static($statements[0], $this->indent, $assign->level);
+                return $statements;
+            }
         }
         return [$this];
     }

@@ -1,5 +1,6 @@
-import Lemma.Complex.OrEqS_Div.of.Eq0Add_Mul_Square.Ne_0
-open Complex
+import Lemma.Complex.Eq0Add_Mul_Square.is.In_FinsetDivS_Mul2.of.Ne_0
+import Lemma.Set.In_Finset.is.OrEqS
+open Complex Set
 
 
 @[main]
@@ -14,7 +15,7 @@ private lemma main
   have h : c + 0 * x + a * x² = 0 := by
     rw [(by ring : c + 0 * x + a * x² = a * x² + c)]
     apply h₁
-  simpa using OrEqS_Div.of.Eq0Add_Mul_Square.Ne_0 h₀ h
+  simpa [In_Finset.is.OrEqS] using In_FinsetDivS_Mul2.of.Eq0Add_Mul_Square.Ne_0 h₀ h
 
 
 -- created on 2018-08-15

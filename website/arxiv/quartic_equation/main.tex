@@ -21,7 +21,11 @@
 \newcommand{\Arg}{\operatorname{arg}}
 
 \title{Fully Radical Solution of the Quartic Equation over \(\C\)}
-\author{LiZhi Zhou\\[0.3em]\small Project artifact: \url{https://github.com/math-proof/lemma}}
+\author{LiZhi Zhou\\[0.3em]
+\small Project artifact: \url{https://github.com/math-proof/lemma}\\[0.2em]
+\small Quartic:
+\href{http://www.lemma.cn/lean/?module=Complex.Eq0Add_Mul_Pow_4.is.In_Ite_FinsetSSubS__SubS.of.Ne_0}{Lean~4},
+\href{http://www.lemma.cn/py/?module=Complex.In_Ite_FinsetSSubS__SubS.of.Eq0Add_Mul_Pow_4.Ne_0}{SymPy}}
 \date{}
 
 \begin{document}
@@ -35,12 +39,16 @@ What is not classical is a \emph{total} map \(\C^5\to\C^4\) in \emph{principal} 
 We state and machine-check such a map in the \texttt{lemma} library.
 Every auxiliary quantity is a principal square or cube root; the missing cube root of unity is the radical \(-\tfrac12+i\sqrt{3}/2\) (the exponential \(e^{2\pi i/3}\) is an abbreviation only); the branch is the single power \(\omega^{k}\) with
 \[
-k=\Bigl\lceil\frac{3\Arg(-p/3)}{2\pi}-\tfrac12\Bigr\rceil
+k=\Bigl\lceil\frac{3\Arg(-p)}{2\pi}-\tfrac12\Bigr\rceil
 -\Bigl\lceil\frac{3\Arg(AB)}{2\pi}-\tfrac12\Bigr\rceil,
 \]
 not a case split on \(k\bmod 3\).
-The proof is checked in Lean~4 (updated 2026-08-30) and was first stated interactively in SymPy (2018-11-29).
-Interactive visualizations and source files are public on \url{http://www.lemma.cn/} and GitHub~\cite{lemma_repo}.
+The proof is checked in Lean~4 (updated 2026-09-01) and was first stated interactively in SymPy (2018-11-29).
+The quartic statements are
+\href{http://www.lemma.cn/lean/?module=Complex.Eq0Add_Mul_Pow_4.is.In_Ite_FinsetSSubS__SubS.of.Ne_0}{Lean~4}~\cite{lemma_quartic_lean}
+and
+\href{http://www.lemma.cn/py/?module=Complex.In_Ite_FinsetSSubS__SubS.of.Eq0Add_Mul_Pow_4.Ne_0}{SymPy}~\cite{lemma_quartic_sympy};
+source is on GitHub~\cite{lemma_repo}.
 \end{abstract}
 
 \section{Introduction}
@@ -64,14 +72,21 @@ for every \(z\), but they do \emph{not} satisfy
 in general.
 Any fully radical formula over \(\C\) must therefore name the missing cube root of unity explicitly and select a consistent Cardano pair.
 
-This paper records the public lemma
-\texttt{Complex.Imp\_OrOrSEqS\_Sub.Imp\_OrOrSEqS\_SubDiv\_2.of.Eq0Add\_Mul\_Pow\_4.Ne\_0}~\cite{lemma_quartic_lean,lemma_quartic_sympy}:
-a conjunction of two implications (\(\beta=0\) and \(\beta\neq 0\)), each a four-fold disjunction of nested principal radicals.
+This paper records the public Lean~4 lemma
+\texttt{Complex.Eq0Add\_Mul\_Pow\_4.is.In\_Ite\_FinsetSSubS\_\_SubS.of.Ne\_0}~\cite{lemma_quartic_lean}:
+an if-and-only-if: the equation holds precisely when \(x\) lies in the four-element set of nested principal radicals selected by whether \(\beta=0\).
 The cube-root branch is \(y=A\omega^{k}+B\), not three residue classes of an integer modulo~3.
 Cube roots in the statement are Lean \(\sqrt[3]{\,}\) (\texttt{Root.cubic}), not a bare \texttt{cpow} written as \(z^{(3:\C)^{-1}}\).
 
-The same module is visualized on lemma.cn in SymPy~\cite{lemma_quartic_sympy} and Lean~4~\cite{lemma_quartic_lean}.
-Source files are \texttt{Ne\_0.lean} (branch \texttt{main}) and \texttt{Ne\_0.py} (branch \texttt{master})~\cite{lemma_repo}.
+The SymPy counterpart~\cite{lemma_quartic_sympy} is the one-direction lemma
+\texttt{Complex.In\_Ite\_FinsetSSubS\_\_SubS.of.Eq0Add\_Mul\_Pow\_4.Ne\_0}
+(the Lean \texttt{mp} alias); it has no \texttt{is} if-and-only-if.
+Both are visualized on lemma.cn.
+Source files are
+\texttt{Lemma/Complex/Eq0Add\_Mul\_Pow\_4/is/In\_Ite\_FinsetSSubS\_\_SubS/of/Ne\_0.lean} (branch \texttt{main})
+and
+\texttt{Lemma/Complex/In\_Ite\_FinsetSSubS\_\_SubS/of/Eq0Add\_Mul\_Pow\_4/Ne\_0.py} (branch \texttt{master})~\cite{lemma_repo}.
+Companion statements in the same library---linked only, without their solution methods---are the quadratic~\cite{lemma_quadratic_lean} and the cubic~\cite{lemma_cubic_lean}.
 
 \section{Related work}
 \label{sec:related}
@@ -93,9 +108,8 @@ That is a complex-domain radical solution, but it is not a Lean~4 lemma and does
 
 \textbf{Isabelle/HOL} \texttt{Cubic\_Quartic} and the HOL Light entry on Wiedijk's list are algebraic in the same sense as Mathlib: roots are assumed, not constructed by principal functions.
 
-This library already has a companion cubic lemma~\cite{lemma_cubic_lean}
-that solves \(ax^3+bx^2+cx+d=0\) over \(\C\) by principal radicals and the same integer \(k\), writing the three Cardano roots as \(A\omega^{k}+B\), \(A\omega^{k-1}+B\omega\), and \(A\omega^{k+1}+B\,\overline{\omega}\).
-The quartic contribution is to finish Ferrari on that calculus: the resolvent is expanded by Cardano, one legal root \(y=A\omega^{k}+B\) is selected, and the four quartic roots are nested principal square roots of that \(y\).
+This library already has companion quadratic~\cite{lemma_quadratic_lean} and cubic~\cite{lemma_cubic_lean} lemmas over \(\C\).
+The quartic contribution is to finish Ferrari on that principal-radical calculus: the resolvent is expanded by Cardano, one legal root \(y=A\omega^{k}+B\) is selected, and the four quartic roots are nested principal square roots of that \(y\).
 
 \section{The formula}
 \label{sec:formula}
@@ -126,7 +140,7 @@ B=\sqrt[3]{(-q-\sqrt{\delta})/2},
 \end{align*}
 and
 \[
-k=\Bigl\lceil\frac{3\Arg(-p/3)}{2\pi}-\tfrac12\Bigr\rceil
+k=\Bigl\lceil\frac{3\Arg(-p)}{2\pi}-\tfrac12\Bigr\rceil
 -\Bigl\lceil\frac{3\Arg(AB)}{2\pi}-\tfrac12\Bigr\rceil.
 \]
 The abbreviation \(\omega=e^{2\pi i/3}\) (Lean \texttt{(I * (2 * $\pi$ / 3)).exp}) is for simplicity only: a complex exponential is \emph{not} a radical.
@@ -155,23 +169,26 @@ x&=\frac{\sqrt{2\beta/\sqrt{y_0}-y_1}-\sqrt{y_0}}{2}-\frac{a'}{4}
 
 \begin{theorem}[Principal-radical quartic~\cite{lemma_quartic_lean}]
 \label{thm:quartic}
-Assume \(a\neq 0\) and \(ax^4+bx^3+cx^2+dx+e=0\).
-With the quantities above:
-\begin{enumerate}[noitemsep]
-  \item if \(\beta=0\), then \(x\) equals one of the four biquadratic expressions;
-  \item if \(\beta\neq 0\), then \(x\) equals one of the four Ferrari expressions with \(y=A\omega^{k}+B\).
-\end{enumerate}
+Assume \(a\neq 0\).
+With the quantities above,
+\[
+ax^4+bx^3+cx^2+dx+e=0
+\]
+if and only if \(x\) equals one of the four biquadratic expressions when \(\beta=0\), and one of the four Ferrari expressions with \(y=A\omega^{k}+B\) when \(\beta\neq 0\).
 The cube-root branch is the single factor \(\omega^{k}\), not a case split on \(k\bmod 3\).
 \end{theorem}
 
-The statement does not claim that every combination of nested radicals is a root for a wrong branch; it claims that a genuine root \(x\) equals one of the four expressions once that power of \(\omega\) is selected.
+The \(\mathtt{if}\) selects the matching four-element set; it does not list Ferrari radicals as roots when \(\beta=0\), nor biquadratic radicals when \(\beta\neq 0\).
 
 \section{Figures}
 \label{sec:figures}
 
 \paragraph{Figure~0 --- public visualizations.}
-The SymPy page~\cite{lemma_quartic_sympy} displays two implications (\(\beta=0\), \(\beta\neq 0\)) as an interactive theorem document (created 2018-11-29).
-The Lean~4 page~\cite{lemma_quartic_lean} displays \texttt{@[main] private lemma main} with \(\{x,a,b,c,d,e:\C\}\), the \texttt{let} chain \(a',b',\alpha,\beta,\gamma,p,q,\delta,A,B,k,\omega,y,y_0,y_1\) (\(A,B\) via \(\sqrt[3]{\,}\)), and the conjunction of two radical disjunctions.
+The SymPy page~\cite{lemma_quartic_sympy} displays the one-direction (\texttt{mp}) statement
+\texttt{In\_Ite\_FinsetSSubS\_\_SubS.of.Eq0Add\_Mul\_Pow\_4.Ne\_0}
+as an interactive theorem document (created 2018-11-29).
+The Lean~4 page~\cite{lemma_quartic_lean} displays \texttt{@[main, comm, mp, mpr] private lemma main} with \(\{x,a,b,c,d,e:\C\}\), the hypothesis \(a\neq 0\), the \texttt{let} chain \(a',b',\alpha,\beta,\gamma\) and the inner \(\mathtt{if}\) lets, and the if-and-only-if
+\(ax^4+\cdots+e=0\) iff \(x\) belongs to the selected four-element set.
 
 \paragraph{Figure~1 --- reduction.}
 Figure~\ref{fig:reduction} is the reduction used in the main theorem: divide by the leading coefficient, depress by \(z=x+a'/4\), then split on \(\beta=0\) versus \(\beta\neq 0\).
@@ -215,12 +232,13 @@ x=z-\dfrac{a'}{4}
 \paragraph{Figure~2 --- lemma dependencies.}
 Figure~\ref{fig:deps} lists major imported lemmas of Theorem~\ref{thm:quartic}.
 Private helpers in the same file are drawn in parentheses.
-Links point to the Lean~4 pages; the SymPy counterpart of each module is the same path under \url{http://www.lemma.cn/py/?module=}.
+Links point to the Lean~4 pages.
+SymPy has only the one-direction (\texttt{of}/\texttt{mp}) names, e.g.\ \url{http://www.lemma.cn/py/?module=Complex.In_Ite_FinsetSSubS__SubS.of.Eq0Add_Mul_Pow_4.Ne_0}, not the Lean \texttt{is} if-and-only-if.
 
 \begin{figure}[ht]
 \small
 \begin{itemize}[leftmargin=1.2em,itemsep=0.15em]
-  \item \href{http://www.lemma.cn/lean/?module=Complex.Imp_OrOrSEqS_Sub.Imp_OrOrSEqS_SubDiv_2.of.Eq0Add_Mul_Pow_4.Ne_0}{\texttt{Imp\_OrOrSEqS\_Sub.\ldots Ne\_0}} --- main theorem
+  \item \href{http://www.lemma.cn/lean/?module=Complex.Eq0Add_Mul_Pow_4.is.In_Ite_FinsetSSubS__SubS.of.Ne_0}{\texttt{Eq0Add\_Mul\_Pow\_4.is.In\_Ite\_FinsetSSubS\_\_SubS.of.Ne\_0}} --- main theorem
   \begin{itemize}[leftmargin=1.1em,itemsep=0.1em]
     \item \href{http://www.lemma.cn/lean/?module=Complex.OrOrSEqS.of.Eq0Add_Pow_4}{\texttt{OrOrSEqS.of.Eq0Add\_Pow\_4}} --- case \(\beta=0\)
     \begin{itemize}[leftmargin=1.1em,itemsep=0.05em]
@@ -252,7 +270,8 @@ Related lemmas in the same family, \emph{not} imported by the main theorem: the 
 \href{http://www.lemma.cn/lean/?module=Complex.Imp_OrOrSEqS.Imp_OrOrSEqS_Div_2.of.Eq0Add_Pow_4}{\texttt{Imp\_OrOrSEqS.Imp\_OrOrSEqS\_Div\_2.of.Eq0Add\_Pow\_4}}
 and the monic offset
 \href{http://www.lemma.cn/lean/?module=Complex.Imp_OrOrSEqS_Sub.Imp_OrOrSEqS_SubDiv_2.of.Eq0Add_Pow_4}{\texttt{Imp\_OrOrSEqS\_Sub.Imp\_OrOrSEqS\_SubDiv\_2.of.Eq0Add\_Pow\_4}}.
-The cubic formula~\cite{lemma_cubic_lean} uses the same \(k\) selector; the quartic proof calls \texttt{Eq\_Mul\_Pow\_SubCeilS.of.Pow\_3} directly, because Ferrari needs one resolvent root \(A\omega^{k}+B\) rather than three Cardano combinations.
+See also the quadratic~\cite{lemma_quadratic_lean} and the cubic~\cite{lemma_cubic_lean}.
+The quartic proof calls \texttt{Eq\_Mul\_Pow\_SubCeilS.of.Pow\_3} directly, because Ferrari needs one resolvent root \(A\omega^{k}+B\).
 
 \paragraph{Figure~3 --- branch integer \(k\).}
 From \(A^3=B^3\) one has \(A=B\,\omega^{k}\) with
@@ -260,7 +279,7 @@ From \(A^3=B^3\) one has \(A=B\,\omega^{k}\) with
 k=\Bigl\lceil\frac{3\Arg A}{2\pi}-\tfrac12\Bigr\rceil
 -\Bigl\lceil\frac{3\Arg B}{2\pi}-\tfrac12\Bigr\rceil.
 \]
-Applied to \(AB\) and \(-p/3\), this is the same \(k\) as in Theorem~\ref{thm:quartic}, and \(\omega^{-k}\) restores \(AB=(-p/3)\,\omega^{-k}\).
+For \((AB)^3=(-p/3)^3\) the general selector is the negative of the \(k\) in Theorem~\ref{thm:quartic} (the statement writes \(\Arg(-p)\), which equals \(\Arg(-p/3)\)), and \(\omega^{-k}\) restores \(AB=(-p/3)\,\omega^{-k}\).
 Multiplying only \(A\) by \(\omega^{k}\) produces a legal Ferrari parameter \(y=A\omega^{k}+B\).
 Because \(\omega^{3}=1\), the three residue classes of \(k\) modulo~3 are already encoded in that single power: \(\omega^{k}\in\{1,\omega,\overline{\omega}\}\).
 
@@ -303,7 +322,7 @@ It first solves
 z^2=\frac{-\alpha\pm\sqrt{\alpha^2-4\gamma}}{2}=\frac{\pm\sqrt{\Delta}-\alpha}{2},\qquad \Delta=\alpha^2-4\gamma,
 \]
 then splits each \(z^2=c\) by \texttt{Or\_Eq\_NegSqrt}.
-Translating \(x=z-a'/4\) is the first conjunct of Theorem~\ref{thm:quartic}.
+Translating \(x=z-a'/4\) is the \(\beta=0\) branch of Theorem~\ref{thm:quartic}.
 
 \subsection{Ferrari factorization}
 \label{sec:ferrari}
@@ -377,9 +396,9 @@ A quartic needs one legal resolvent parameter, not three Cardano roots of the or
 \section{Discussion and limitations}
 \label{sec:discussion}
 
-The statement is a conjunction of two implications, not an if-and-only-if that would list roots for a mismatched branch, and not a four-fold split on \(k\bmod 3\).
-Each inner disjunction is exhaustive for that case.
-Principal square roots in the Ferrari step may vanish or repeat when the quartic has multiple roots; the disjunction still holds.
+The statement is an if-and-only-if: the equation holds precisely when \(x\) lies in the four-element set selected by \(\mathtt{if}\,\beta=0\).
+It is not a four-fold split on \(k\bmod 3\).
+Principal square roots in the Ferrari step may vanish or repeat when the quartic has multiple roots; membership still holds.
 
 The lemma does not construct roots in a general field of characteristic zero, does not avoid \(\Arg\) and \(\lceil\cdot\rceil\), and does not prove that a randomly chosen pairing of principal cube roots is a resolvent root.
 It does not replace Mathlib's abstract Ferrari theorem~\cite{zhu2024mathlibquartic}: that theorem remains the right statement when one only knows that some square roots and some resolvent root exist in \(K\).

@@ -1,5 +1,5 @@
-/** Uses shared format polyfill from utility.js (same as std.js); parser must not depend on std. */
-import '../utility.js';
+/** Shared polyfills (`format`, `isspace`, `binary_search`, …) from `std.js`. */
+import '../std.js';
 
 export class Node {
     constructor(kwargs, parent = null) {

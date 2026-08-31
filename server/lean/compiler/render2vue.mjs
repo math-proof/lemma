@@ -2,6 +2,7 @@
  * `LeanModule::render2vue` / `merge_proof` — implementation lives in `static/js/parser/lean.js`.
  */
 
+import '../../../static/js/std.js';
 import { compile, LeanModule } from '../../../static/js/parser/lean.js';
 import { runEcho2Vue } from '../echo2vue.mjs';
 

@@ -1,4 +1,4 @@
-import '../utility.js';
+import '../std.js';
 import { IndentedNode, AbstractParser, Closable } from './node.js';
 import { tactics } from '../../codemirror/mode/lean/tactics.js';
 
@@ -3100,7 +3100,9 @@ export class Lean_in extends LeanBinaryBoolean {
     latexArgs(syntax) {
         let lhs = this.lhs;
         if (lhs instanceof LeanParenthesis && !(lhs.arg instanceof LeanColon)) lhs = lhs.arg;
-        return [lhs.toLatex(syntax), this.rhs.toLatex(syntax)];
+        let rhs = this.rhs;
+        if (rhs instanceof LeanParenthesis && rhs.arg instanceof LeanIte) rhs = rhs.arg;
+        return [lhs.toLatex(syntax), rhs.toLatex(syntax)];
     }
 }
 export class Lean_notin extends LeanBinaryBoolean {
@@ -8090,8 +8092,20 @@ class LeanCalc extends LeanUnary {
 
     echo() {
         const arg = this.arg;
+        const echoStep = (stmt) => {
+            if (stmt instanceof LeanAssign && stmt.rhs instanceof LeanBy) {
+                const byArg = stmt.rhs.arg;
+                if (byArg instanceof LeanStatements) {
+                    const {indent, level} = byArg;
+                    byArg.unshift(new LeanTactic('echo', new LeanToken('⊢', indent, level), indent, level));
+                }
+            }
+            stmt.echo();
+        };
         if (arg instanceof LeanArgsNewLineSeparated) {
-            for (const stmt of arg.args) stmt.echo();
+            for (const stmt of arg.args) echoStep(stmt);
+        } else if (arg instanceof LeanArgsIndented) {
+            echoStep(arg.rhs);
         }
     }
 
@@ -9149,10 +9163,12 @@ class Lean_let extends LeanSyntax {
 
     echo() {
         const token = this.get_echo_token();
-        const by = this.args[0]?.rhs;
-        if (by instanceof LeanBy) {
-            const stmt = by.arg;
+        const proof = this.args[0]?.rhs;
+        if (proof instanceof LeanBy) {
+            const stmt = proof.arg;
             if (stmt instanceof LeanStatements) stmt.echo();
+        } else if (proof instanceof LeanCalc) {
+            proof.echo();
         }
         if (token) {
             return [1, this, new LeanTactic('echo', token, this.indent, token.level)];
@@ -9229,8 +9245,11 @@ class Lean_let extends LeanSyntax {
     split(syntax) {
         const assign = this.args[0];
         if (assign instanceof LeanAssign) {
-            const by = assign.rhs;
-            if (by instanceof LeanBy && by.arg instanceof LeanStatements) {
+            const proof = assign.rhs;
+            if (
+                (proof instanceof LeanBy && proof.arg instanceof LeanStatements) ||
+                proof instanceof LeanCalc
+            ) {
                 const statements = assign.split(syntax);
                 const Ctor = this.constructor;
                 statements[0] = new Ctor(statements[0], this.indent, assign.level);

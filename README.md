@@ -267,9 +267,8 @@ Guidelines and prompts for using LLMs to write and refactor Lean 4 proofs in thi
 - Use `obtain` instead of `rcases`, `if … then … else …` instead of `by_cases`, `have` instead of `haveI`, and `let` instead of `letI`.
 - inline `have` without introducing `show` if it is referenced only once, e.g.: prefer `apply` instead of `exact`, perhaps by creating some holes.
 - use `calc` instead of `by calc`, start `calc` with _
-- within [] block of `rw`/`erw`/`simp`:
-  - use `by` only when it is one-liner statement with no `;`
-  - avoid `calc`
+- the tactic within compact type-ascribed `by` term (by tactic : Type) should be one-liner with no `;`
+- avoid `calc` within [] block of `rw`/`erw`/`simp`:
 - follow `show` with `from`/`by` instead of `from by`
 - use `grind`/`aesop` as much as possible
 - After a bullet tactic (`·`), put the next statement on a new line when that branch contains more than one step.

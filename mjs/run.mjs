@@ -10,6 +10,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import mysql from 'mysql2/promise';
+import '../static/js/std.js';
 import { echo2vueFromSource } from '../server/lean/compiler/index.mjs';
 import {
   REPO_ROOT,

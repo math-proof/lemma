@@ -1,61 +1,7 @@
 /**
- * Shared helpers for client and server.
- * Works in both Node (import) and browser (script type="module").
- * Environment-agnostic exports (format); browser-only code guarded by typeof window.
+ * Page/Vue helpers. Shared polyfills (`format`, `isspace`, `ord`, `chr`, `zip`, …)
+ * live in `std.js`, loaded as a classic script in the browser.
  */
-String.prototype.format = function () {
-  const args = [...arguments];
-  let i = 0;
-  return this.replace(/%([sd%])/g, (_m, ch) => {
-    if (ch === '%') return '%';
-    return args[i++];
-  });
-};
-
-String.prototype.isspace = function () {
-  return /^\s+$/.test(this);
-};
-
-String.prototype.isString = true;
-
-export function ord(s) {
-  return s.charCodeAt(0);
-}
-
-export function chr(unicode) {
-	return String.fromCharCode(unicode);
-}
-
-export function compareTo(lhs, rhs) {
-  if (lhs.isString)
-    return compareTo(lhs.map(ch => ord(ch)), rhs.map(ch => ord(ch)));
-  if (lhs.isArray) {
-		for (var [lhs, rhs] of zip(lhs, rhs)) {
-			var cmp = compareTo(lhs, rhs);
-			if (cmp)
-				return cmp;
-		}
-
-		return 0;
-	}
-	return lhs - rhs;
-}
-
-export function *zip() {
-  var size = Infinity;
-  for (var arr of arguments) {
-  size = Math.min(arr.length, size);
-}
-
-  for (var i of range(size)) {
-  var arrs = [];
-  for (var arr of arguments) {
-    arrs.push(arr[i]);
-  }
-
-      yield arrs;
-  }
-}
 
 /** First path segment (e.g. `lean` for `/lean` or `/lean/`). Used in `/${user}/?module=…` links. */
 function axiom_user() {
@@ -157,9 +103,6 @@ latex.updated = function (el, binding) {
 };
 
 if (typeof window !== "undefined") {
-  window.ord = ord;
-  window.chr = chr;
-  window.zip = zip;
   window.axiom_user = axiom_user;
   window.textFocused = textFocused;
   window.find_and_jump = find_and_jump;
