@@ -3629,17 +3629,34 @@ class LeanNeg extends LeanUnaryArithmeticPre {
     get operator() {
         return '-';
     }
+    get command() {
+        return '-';
+    }
     sep() {
         return this.arg instanceof LeanNeg ? ' ' : '';
     }
     strFormat() {
         return `${this.operator}${this.sep()}%s`;
     }
+    latexArgs(syntax) {
+        let arg = this.arg;
+        if (arg instanceof LeanParenthesis) {
+            if (
+                arg.arg instanceof LeanDiv ||
+                (arg.arg instanceof LeanMul && !arg.arg.command)
+            )
+                arg = arg.arg;
+        }
+        return [arg.toLatex(syntax)];
+    }
 }
 
 /** Unary plus. */
 class LeanPlus extends LeanUnaryArithmeticPre {
     get operator() {
+        return '+';
+    }
+    get command() {
         return '+';
     }
 }
@@ -3769,9 +3786,6 @@ class LeanUparrow extends LeanUnaryArithmeticPre {
     }
     get operator() {
         return '⇑';
-    }
-    get command() {
-        return '\\Uparrow';
     }
 }
 

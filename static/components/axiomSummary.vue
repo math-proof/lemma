@@ -1,7 +1,7 @@
 <template>
 	<div tabindex=1 @keydown=keydown>
 		the whole math repertoire is composed of the following sections:
-		<searchForm v-if="issearch" :q=q :caseSensitive=caseSensitive :wholeWord=wholeWord :regularExpression=regularExpression :latex=latex :fullText=fullText></searchForm>		
+		<searchForm v-if="issearch" :q=q :caseSensitive=caseSensitive :wholeWord=wholeWord :regularExpression=regularExpression :latex=latex :fullText=fullText></searchForm>
 		<ul>
 			<li v-for="(content, section) in repertoire">
 				<a :href=href_section(section)>
@@ -66,26 +66,27 @@
 	</div>
 </template>
 
-<script>
+<script setup>
+import Vue from "../js/vue.js";
+import searchForm from "./searchForm.vue";
+
 console.log('import axiomSummary.vue');
 
-import searchForm from "./searchForm.vue"
-	
-export default {
-	components: {searchForm},
-	
-	props : ['state_count_pairs', 'repertoire'],
-	
+const props = defineProps(['state_count_pairs', 'repertoire']);
+
+const self = new Vue({
+	props,
+
 	data() {
 		return {
-			issearch: false,
+			issearch: true,
 			sectionStatistics: [],
 			yearStatistics: [],
 			recentAxioms: [],
 			topk: 10,
 			q: '',
 			caseSensitive: false,
-			wholeWord: false, 
+			wholeWord: false,
 			regularExpression: false,
 			latex: null,
 			fullText: false
@@ -95,7 +96,7 @@ export default {
 	created() {
 		this.updateRecentAxioms();
 	},
-	
+
 	methods: {
 		href_section(section) {
 			var q = encodeURIComponent(section);
@@ -111,7 +112,7 @@ export default {
 			var q = encodeURIComponent(type);
 			return `?type=${q}`;
 		},
-	
+
 		keydown(event){
 			switch(event.key){
 			case 'f':
@@ -122,11 +123,11 @@ export default {
 				}
 			}
 		},
-		
+
 		async updateRecentAxioms() {
 			this.recentAxioms = await get(`php/request/recent.php?top=${this.topk}`);;
 		},
-		
+
 		change_input(event){
 			this.updateRecentAxioms();
 		},
@@ -166,17 +167,36 @@ order by
 			console.log(this.yearStatistics);
 		},
 	},
-	
+
 	mounted() {
-		var error = document.querySelector('a[href$=error]') || 
-			document.querySelector('a[href$=warning]') || 
+		var error = document.querySelector('a[href$=error]') ||
+			document.querySelector('a[href$=warning]') ||
 			document.querySelector('a[href$=unprovable]');
 		if (error)
 			error.focus();
 		this.updateSectionStatistics();
 		this.updateYearStatistics();
 	},
-}
+});
+
+const {
+	issearch,
+	q,
+	caseSensitive,
+	wholeWord,
+	regularExpression,
+	latex,
+	fullText,
+	sectionStatistics,
+	yearStatistics,
+	recentAxioms,
+	topk,
+	href_section,
+	href_module,
+	href_state,
+	keydown,
+	change_input,
+} = self.globals;
 </script>
 
 <style scoped>

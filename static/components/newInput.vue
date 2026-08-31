@@ -3,11 +3,13 @@
 		<select v-if=phrases v-focus name=suggest class='non-arrowed' :style=select_style :size=select_size @keydown=keydown_select @blur=blur>
 			<option v-for="phrase in phrases" :value=phrase>{{phrase}}</option>
 		</select>
-		<input v-focus spellcheck=false ref=input name=module v-model=module :size=input_size @keydown=keydown @change=change >
+		<input v-focus spellcheck=false :ref="$refs.input" name=module v-model=module :size=input_size @keydown=keydown @change=change >
 	</div>
 </template>
 
-<script>
+<script setup>
+import Vue from "../js/vue.js";
+
 function getTextWidth(str) {
 	let result = 0;
 	let div = document.createElement("div");
@@ -28,22 +30,19 @@ function getTextWidth(str) {
 }
 
 console.log('import newInput.vue');
-export default {
-	props : [],
-	
-	created() {
+
+const self = new Vue({
+	$refs: {
+		input: null,
 	},
-	
-	updated() {
-	},
-	
+
 	data() {
 		return {
 			phrases: null,
 			start: -1,
 		};
 	},
-	
+
 	computed: {
 		module: {
 			get() {
@@ -59,35 +58,31 @@ export default {
 		input_size() {
 			return this.module.length;
 		},
-		
+
 		select_size() {
 			return Math.min(this.phrases.length, 10);
 		},
-		
+
 		char_width() {
-			return getTextWidth("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ") / 52;	
+			return getTextWidth("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ") / 52;
 		},
-		
+
 		select_style() {
 			var offset = this.start * this.char_width;
 			return `transform: translate(${offset}px, 20px)`;
 		},
-		
+
 		editor() {
-			return this.$refs.input;
-		},
-		
-		input() {
-			return this.$refs.input;
+			return this.input;
 		},
 	},
-	
+
 	methods: {
 		get_next_input() {
-			var self = this.$parent.$refs.render.renderLean[0];
+			var self = this.$parent.render.renderLean[0];
 			if (self.instImplicit)
 				return self.instImplicit;
-			
+
 			if (self.strictImplicit)
 				return self.strictImplicit;
 
@@ -100,7 +95,7 @@ export default {
 						return self.given[i];
 				}
 			}
-			
+
 			if (self.explicit)
 				return self.explicit;
 
@@ -109,7 +104,7 @@ export default {
 		},
 
 		keydown(event){
-			var self = event.target; 
+			var self = event.target;
 			var text = self.value;
 			if (self.size <= text.length)
 				self.size = text.length * 1.5;
@@ -139,7 +134,7 @@ export default {
 						for (let i = 0; i < linesToMove; ++i)
 							cm.moveV(-1, "line");
 					}
-					else 
+					else
 						cm.setCursor(0, start);
 					break;
 				case 'F3':
@@ -161,9 +156,9 @@ export default {
 				default:
 					break;
 			}
-		},	
+		},
 		blur(event){
-			this.phrases = null;	
+			this.phrases = null;
 		},
 		keydown_select(event){
 			var self = event.target;
@@ -182,20 +177,20 @@ export default {
 				else{
 					pos = value.slice(0, selectionStart).search(/\w+$/);
 				}
-				
+
 				value = value.slice(0, pos) + phrase + value.slice(selectionStart);
 				input.value = value;
 				this.module = value;
-				
+
 				this.phrases = null;
-				
+
 				selectionStart += phrase.length;
 				break;
 			case 'Escape':
 				var input = self.nextElementSibling;
 				var selectionStart = input.selectionStart;
-				
-				this.phrases = null;					
+
+				this.phrases = null;
 				break;
 			case 'Backspace':
 				var input = self.nextElementSibling;
@@ -223,7 +218,7 @@ export default {
 
 				// console.log("selectionStart = " + selectionStart);
 				this.phrases = null;
-				
+
 				--selectionStart;
 				break;
 			case 'ArrowRight':
@@ -231,13 +226,13 @@ export default {
 				var selectionStart = input.selectionStart;
 
 				this.phrases = null;
-				
+
 				++selectionStart;
 				break;
 			default:
 				return;
 			}
-			
+
 			this.$nextTick(()=>{
 				var input = this.input;
 				input.focus();
@@ -245,30 +240,32 @@ export default {
 				input.selectionEnd = selectionStart;
 			});
 		},
-		
+
 		change(event){
-			document.title = event.target.value;	
+			document.title = event.target.value;
 		},
 	},
-	
+
 	directives: {
 		focus: {
-		    // after dom is inserted into the document
-		    mounted(el, binding) {
+			// after dom is inserted into the document
+			mounted(el, binding) {
 				el.focus();
-		    },
+			},
 		},
 	},
 
 	mounted() {
 		this.$parent.update_action();
-	}
-};
+	},
+});
+
+const { $refs, phrases, select_style, select_size, keydown_select, blur, module, input_size, keydown, change } = self.globals;
 </script>
 
 <style>
 
-select.non-arrowed {	
+select.non-arrowed {
 	width: auto;
 	z-index: 10;
 	position: absolute;

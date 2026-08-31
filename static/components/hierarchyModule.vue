@@ -10,16 +10,17 @@
     </li>
 </template>
 
-<script>
+<script setup>
+import Vue from "../js/vue.js";
+import searchLink from "./searchLink.vue";
+
 console.log('import hierarchyModule.vue');
 
-import searchLink from "./searchLink.vue"
+const props = defineProps(['module']);
 
-export default {
-	components : {searchLink},
-	
-	props : ['module'],
-	
+const self = new Vue({
+	props,
+
 	data() {
 		return {
 			backgroundColor: 'inherit',
@@ -45,7 +46,7 @@ export default {
 			}
 		}
 	},
-	
+
 	computed: {
 		keyInput() {
 			return this.$parent.keyInput;
@@ -62,10 +63,9 @@ export default {
 		},
 
 		deep: {
-			/*get() {
-				return 0;	
-			},*/
-			
+			get() {
+				return this.show;
+			},
 			set(deep){
 				if (deep){
 					this.show = true;
@@ -77,11 +77,11 @@ export default {
 				}
 			},
 		},
-		
+
 		li_style() {
-			return `background-color:${this.backgroundColor}`;	
+			return `background-color:${this.backgroundColor}`;
 		},
-		
+
 		depth() {
 			var depth = -1;
 			var root = this.$root;
@@ -93,14 +93,14 @@ export default {
 				++depth;
 				parent = parent.$parent;
 			}
-			
+
 			return depth;
 		},
-		
+
 		buttonText() {
 			return this.show? '«««' : '»»»';
 		},
-		
+
 		buttonTitle() {
 			return this.show? 'click to collapse' : 'click to expand';
 		},
@@ -109,14 +109,15 @@ export default {
 			return this.$root.graph[this.module];
 		},
 	},
-	
+
 	methods: {
 		click(event) {
 			this.show = !this.show;
-		},	
-		
+		},
 	},
-};
+});
+
+const { li_style, data, modules, show, children, buttonTitle, buttonText, click } = self.globals;
 </script>
 
 <style scoped>

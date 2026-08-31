@@ -23,16 +23,21 @@
 	</form>
 </template>
 
-<script>
+<script setup>
+import Vue from "../js/vue.js";
+
 console.log('import searchForm.vue');
-export default {
-	props : ['q', 'caseSensitive', 'wholeWord', 'regularExpression', 'fullText', 'latex', 'replacement', 'limit'],
+
+const props = defineProps(['q', 'caseSensitive', 'wholeWord', 'regularExpression', 'fullText', 'latex', 'replacement', 'limit']);
+
+const self = new Vue({
+	props,
 
 	computed: {
 		user() {
-			return axiom_user();	
-		}, 
-		
+			return axiom_user();
+		},
+
 		action() {
 			return `/${this.user}/index.php`;
 		},
@@ -40,14 +45,13 @@ export default {
 
 	methods: {
 		setAttribute(key, value) {
-			// this.$parent.$data[key] = value;
 			setAttribute(this, key, value);
 		},
 
 		input(event) {
 			this.setAttribute(event.target.name, event.target.value);
 		},
-		
+
 		keydown(event) {
 			if (event.altKey){
 				switch(event.key){
@@ -71,29 +75,32 @@ export default {
 		},
 
 		replace(event) {
-			this.$parent.replace(event);
+			const proxy = this.$$instance?.parent?.proxy;
+			(this.$parent.replace || proxy?.replace)?.call(proxy ?? this.$parent, event);
 			event.preventDefault();
 		},
 
 		replaceAll(event) {
-			this.$parent.replaceAll(event);
+			const proxy = this.$$instance?.parent?.proxy;
+			(this.$parent.replaceAll || proxy?.replaceAll)?.call(proxy ?? this.$parent, event);
 			event.preventDefault();
 		},
 
 		focus() {
 			this.$el.querySelector('input[name=q]').focus();
 		},
-	},	
-	
+	},
+
 	directives: {
 		focus: {
-		    // after dom is inserted into the document
-		    mounted(el, binding) {
+			mounted(el) {
 				el.focus();
-		    },
+			},
 		},
 	},
-};
+});
+
+const { action, keydown, input, replace, replaceAll } = self.globals;
 </script>
 
 <style scoped>

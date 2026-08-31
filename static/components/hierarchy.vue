@@ -2,20 +2,25 @@
 	<div>
 		<hierarchyInformation :key-input=keyInput :deep=!deep></hierarchyInformation>
 		<br>
-		<hierarchyModule ref=hierarchyModule :module=module></hierarchyModule>
+		<hierarchyModule :ref="$refs.hierarchyModule" :module=module></hierarchyModule>
 	</div>
 </template>
 
-<script>
-console.log('import hierarchy.vue');	
+<script setup>
+import Vue from "../js/vue.js";
+import hierarchyInformation from "./hierarchyInformation.vue";
+import hierarchyModule from "./hierarchyModule.vue";
 
-import hierarchyInformation from "./hierarchyInformation.vue"
-import hierarchyModule from "./hierarchyModule.vue"
+console.log('import hierarchy.vue');
 
-export default {
-	components: {hierarchyModule, hierarchyInformation },
-	
-	props : [ 'module', 'graph', 'traceback', 'keyInput'],
+const props = defineProps(['module', 'graph', 'traceback', 'keyInput']);
+
+const self = new Vue({
+	props,
+
+	$refs: {
+		hierarchyModule: null,
+	},
 
 	computed: {
 		deep() {
@@ -28,20 +33,19 @@ export default {
 			return false;
 		},
 	},
-	
-	methods: {
-	},
-	
+
 	mounted() {
-		var hierarchyModule = this.$refs.hierarchyModule;
+		var hierarchyModule = this.hierarchyModule;
 		if (this.deep){
 			hierarchyModule.deep = true;
 		}
 		else{
-			hierarchyModule.show = true;	
+			hierarchyModule.show = true;
 		}
 	},
-};
+});
+
+const { $refs, deep } = self.globals;
 </script>
 
 <style>

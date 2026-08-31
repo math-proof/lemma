@@ -1,5 +1,5 @@
 <template>
-	<a v-if="mode == 'a'" v-focus v-clipboard tabindex=2 :data-clipboard-text=module :href=href @contextmenu.prevent=contextmenu @keydown=keydown_a :target="data.target?? '_blank'">
+	<a v-if="mode == 'a'" v-focus v-clipboard tabindex=2 :data-clipboard-text=module :href=href @keydown=keydown_a :target="data.target?? '_blank'">
         {{data.replacement ?? data.text?? module}}
     </a>
 	<span v-else-if="mode == 'span'">
@@ -9,24 +9,23 @@
     
 </template>
 
-<script>
-import searchContextmenu from "./searchContextmenu.vue"
+<script setup>
+import Vue from "../js/vue.js";
+
 console.log('import searchLink.vue');
 
 var focusedAlready = false;
-export default {
-	components: {searchContextmenu},
+
+const props = defineProps(['data']);
+
+const self = new Vue({
+	props,
 
 	data() {
 		return {
 			mode: 'a',
-			showContextmenu: false,
-			left: -1,
-			top: -1,
 		};
 	},
-
-	props: ['data'],
 
 	computed: {
 		module() {
@@ -84,21 +83,6 @@ export default {
 
 			this.mode = 'a';
 			return undeletables;
-		},
-
-		contextmenu(event) {
-			var self = event.target;
-
-			this.left = event.x + self.getScrollLeft();
-			this.top = event.y + self.getScrollTop();
-
-			this.showContextmenu = true;
-
-			setTimeout(()=>{
-				var contextmenu = self.lastElementChild;
-				if (contextmenu)
-					contextmenu.focus();
-			}, 100);
 		},
 
 		blur(event){
@@ -176,22 +160,23 @@ export default {
 
 	directives: {
 		focus: {
-		    // after dom is inserted into the document
-		    mounted(el, binding) {
-		    	if (!focusedAlready || el.tagName == 'input'){
-		    		el.focus();
-		    		focusedAlready = true;
-		    	}
-		    },
+			mounted(el) {
+				if (!focusedAlready || el.tagName == 'input'){
+					el.focus();
+					focusedAlready = true;
+				}
+			},
 
-		    updated(el, binding){
-		    	el.focus();
-		    }
+			updated(el){
+				el.focus();
+			}
 		},
 
 		clipboard,
 	},
-}
+});
+
+const { mode, module, href, keydown_a, blur, keydown } = self.globals;
 </script>
 
 <style scoped>

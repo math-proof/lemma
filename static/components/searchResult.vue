@@ -1,35 +1,38 @@
 <template>
 	<div @keydown=keydown>
-		<searchForm ref=searchForm :q=q :regularExpression=regularExpression :wholeWord=wholeWord :caseSensitive=caseSensitive :fullText=fullText :replacement=replacement :limit=limit></searchForm>
+		<searchForm :ref="$refs.searchForm" :q=q :regularExpression=regularExpression :wholeWord=wholeWord :caseSensitive=caseSensitive :fullText=fullText :replacement=replacement :limit=limit></searchForm>
 		<a :href=href>search</a> results:
 		<br>
 		in all, there are {{data.length}} hits:
 		<br>
 		<ul>
 			<li v-for="data, i of data">
-				<searchLink :data=data :ref="el => searchLink[i] = el"></searchLink>
+				<searchLink :data=data :ref="el => self.searchLink[i] = el"></searchLink>
 			</li>
 		</ul>
 	</div>
 </template>
 
-<script>
-import searchForm from "./searchForm.vue"
-import searchLink from "./searchLink.vue"
+<script setup>
+import Vue from "../js/vue.js";
+import searchForm from "./searchForm.vue";
+import searchLink from "./searchLink.vue";
+
 console.log('import searchResult.vue');
 
-export default {
-	components: {searchForm, searchLink},
+const props = defineProps(['data', 'q', 'caseSensitive', 'wholeWord', 'regularExpression', 'fullText', 'replacement', 'limit']);
 
-	props : ['data', 'q', 'caseSensitive', 'wholeWord', 'regularExpression', 'fullText', 'replacement', 'limit'],
+const self = new Vue({
+	props,
+
+	$refs: {
+		searchForm: null,
+	},
 
 	data() {
 		return {
 			searchLink: [],
 		};
-	},
-	created() {
-		// console.log('searchResult created', this.data);
 	},
 
 	computed: {
@@ -68,7 +71,7 @@ export default {
 				if (!event.ctrlKey)
 					break;
 				console.log('ctrl+F for search');
-				this.$refs.searchForm.focus();
+				this.searchForm.focus();
 				event.preventDefault();
 				break;
 			}
@@ -89,15 +92,15 @@ export default {
 				await this.replace();
 		},
 
-        window_open(module) {
-            setTimeout(async seconds => {
-                await sleep(seconds);
-                window.open(
-                    location.origin + location.pathname + `?module=${module}#window.close`,
-                    '_blank'
-                );
-            }, 1000, 1);
-        },
+		window_open(module) {
+			setTimeout(async seconds => {
+				await sleep(seconds);
+				window.open(
+					location.origin + location.pathname + `?module=${module}#window.close`,
+					'_blank'
+				);
+			}, 1000, 1);
+		},
 	},
 
 	async mounted() {
@@ -112,8 +115,9 @@ module = ${module}`);
 			}
 		}
 	},
-}
+});
 
+const { $refs, href, keydown } = self.globals;
 </script>
 
 <style scoped>

@@ -40,11 +40,8 @@
 import lemma from "./lemma.vue"
 import def from "./def.vue"
 import Vue from "../js/vue.js";
-import { mounted, click_left as clickLeftDocument, fetch_lemma, has_typeclasses } from "../js/lemma.js";
-import { generate, parse_token } from "../js/prompting.js";
-import MarkdownParser from "../js/parser/markdown.js";
+import { mounted, click_left as clickLeftDocument, fetch_lemma } from "../js/lemma.js";
 import { tactics } from "../codemirror/mode/lean/tactics.js";
-import { sbd } from "../js/sbd.js";
 
 console.log("import render.vue");
 
@@ -61,27 +58,11 @@ const props = defineProps([
 
 const $emit = defineEmits(['update:module']);
 
-function postprocess_word(text, word) {
-	for (var char of word)
-		text = postprocess_char(text, char);
-	return text;
-}
-
-function postprocess_char(parser, char) {
-	if (!parser.start)
-		parser.start = 0;
-	parser.parse(char, parser.start);
-	parser.start++;
-	return parser;
-}
-
 const self = new Vue({
 	props,
 	$emit,
 
 	data() {
-        // const model = 'deepseek-r1';
-        const model = 'deepseek-reasoner';
         const PartialOrder = {
             Preorder: [],
         };
@@ -306,7 +287,6 @@ const self = new Vue({
             },
             tactics,
             selectedIndex: [],
-            model : getParameterByName('model', model),
             ext: 'lean',
             prequisite: {
                 Mathlib: {
@@ -405,11 +385,8 @@ const self = new Vue({
 
         mounted(this);
         var {module} = this;
-        var model = getParameterByName('model[proof]');
-        if (!model) {
-            if (this.lemma.any(lemma => this.heed_update(lemma)) && !getParameterByName('new')) {
-                await this.echo(module);
-            }
+        if (this.lemma.any(lemma => this.heed_update(lemma)) && !getParameterByName('new')) {
+            await this.echo(module);
         }
 
         var {hash} = location;
@@ -490,48 +467,6 @@ where
         }
         else if (!hash && !this.lemma.any(lemma => !lemma.proof))
             this.focus_main_proof_when_ready();
-        if (model) {
-            this.model = model;
-            var i = this.lemma.findIndex(x => x.name == 'main');
-            if (i < 0)
-                i = 0;
-            var lemma = this.lemma[i];
-            var index = [i, 'proof'];
-            var {proof} = lemma;
-            var attr = proof.by? 'by' : (proof.calc? 'calc' : null);
-            if (attr) {
-                index.push(attr);
-                proof = proof[attr];
-            }
-            proof.clear();
-            proof.push({lean : 'sorry', latex : null});
-            for (var [j, editor] of enumerate(this.renderLean[i].proof[attr])) {
-                if (j)
-                    editor.update();
-                else 
-                    editor.update('sorry');
-            }
-            index.push(proof.length - 1);
-            this.code_generation(index, proof.back().lean.split("\n").length - 1);
-            return;
-        }
-        if (model = getParameterByName('model')) {
-            this.model = model;
-            for (var [i, lemma] of enumerate(this.lemma)) {
-                if (lemma.name == 'main') {
-                    var index = [i, 'proof'];
-                    var {proof} = lemma;
-                    var attr = proof.by? 'by' : (proof.calc? 'calc' : null);
-                    if (attr) {
-                        index.push(attr);
-                        proof = proof[attr];
-                    }
-                    index.push(proof.length - 1);
-                    this.code_generation(index, proof.back().lean.split("\n").length - 1);
-                    break;
-                }
-            }
-        }
 
         if (this.lemma.any(lemma =>!lemma.proof))
             this.fetch_proof(module).catch(err => console.error('[fetch_proof]', err));
@@ -1053,299 +988,6 @@ where
                 }
             }
         },
-
-        async code_generation(index, cursor_line) {
-            this.update([], this.renderLean);
-            var line = this.indices2line(index) + cursor_line;
-            var {error, module, imports} = this;
-            var lemma = deepCopy(this.lemma, ['think', 'final']);
-            setitem(this.lemma, ...index, 'think', new MarkdownParser);
-            setitem(this.lemma, ...index, 'final', '');
-            var errorIndex = error.findIndex(err => err.line == line && (err.type != 'warning' || err.info.match(/^aesop:/)));
-            var lemmaType = lemma[index[0]].name == 'main'? 'theorem': 'lemma';
-            if (errorIndex < 0) {
-                var sorry = false;
-                if (error.length || (sorry = getitem(lemma, ...index).lean.match(/^ *sorry *$/m))) {
-                    var {by} = lemma[index[0]].proof;
-                    if (by && by.length == 1) {
-                        console.log(by);
-                        if (by[0].lean.match(/^ *sorry *$/)) {
-                            by[0].lean += ' -- please try to apply builtin lemmas in mathlib to prove this theorem';
-                            sorry = true;
-                        }
-                    }
-                    var codes = ranged(index[0] + 1).map(i => {
-                        // lemma[i].attribute.remove('main');
-                        lemma[i].attribute.clear();
-                        var {name} = lemma[i];
-                        if (name == 'main') {
-                            lemma[i].name = module;
-                            var lemmaType = 'theorem';
-                        }
-                        else {
-                            lemma[i].name = module + '.' + name.toLowerCase();
-                            var lemmaType = 'lemma';
-                        }
-                        return fetch_lemma(lemma[i], lemmaType);
-                    });
-                    var code = codes.join("\n\n");
-                    code = code.rtrim();
-                    if (!sorry) {
-                        var m = code.match(/^ *sorry *$/m);
-                        if (!m) {
-                            m = code.match(/(\n +).+$/);
-                            var spaces = m ? m[1] : '\n  ';
-                            code += spaces + 'sorry';
-                        }
-                    }
-                }
-                else {
-                    if (lemma[index[0]].comment)
-                        return;
-                    lemma.forEach(lemma => {
-                        if (lemma.attribute) {
-                            // lemma.attribute.remove('main');
-                            lemma.attribute.clear();
-                        }
-                        delete lemma.accessibility;
-                    });
-                    var codes = ranged(index[0] + 1).map(i => {
-                        lemmaType = 'lemma';
-                        if (lemma[i].name == 'main')
-                            lemma[i].name = module;
-                        if (i == index[0])
-                            lemma[i].comment = `Please add the docstring here to describe the purpose of the following ${lemmaType}.`;
-                        return fetch_lemma(lemma[i], lemmaType);
-                    });
-                    var code = codes.join("\n\n");
-                    code = code.rtrim();
-                    errorIndex = -2;
-                }
-            }
-            else {
-                var code = getitem(lemma, ...index);
-                var old_lean = code.lean;
-                var old_leans = old_lean.split("\n");
-                var old_lean_head = old_leans.slice(0, cursor_line + 1).join("\n");
-                var old_lean_tail = old_leans.slice(cursor_line + 1).join("\n");
-                code.lean = `${old_lean_head}
-${error.filter(err => err.line == line).sort((a, b) => a.col - b.col).map(err => `/-\n${err.info}\n-/`).join("\n")}
-${old_lean_tail}`;
-                var codes = ranged(index[0] + 1).map(i => {
-                    if (lemma[i].attribute) {
-                        // lemma[i].attribute.remove('main');
-                        lemma[i].attribute.clear();
-                    }
-                    var {name} = lemma[i];
-                    var lemmaType;
-                    if (name == 'main') {
-                        lemma[i].name = module;
-                        lemmaType = 'theorem';
-                    }
-                    else {
-                        lemma[i].name = module + '.' + name.toLowerCase();
-                        lemmaType = 'lemma';
-                    }
-                    return fetch_lemma(lemma[i], lemmaType);
-                });
-                var code = codes.join("\n\n");
-                code = code.rtrim();
-            }
-            var [prequisite, ...imports] = await this.piece_together(`
-SELECT
-    _t.module,
-    imports,
-    open,
-    def,
-    lemma
-FROM
-    axiom.lemma as _t
-    JOIN JSON_TABLE(
-        ${JSON.stringify(this.submodules).mysqlStr()},
-        '$[*]' COLUMNS (module text PATH '$')
-    ) as jt using (module)`, true);
-            if (imports.length) {
-                if (imports.length > 1)
-                    imports[imports.length - 1] += `\n\n-- The axioms above are actually lemmas proven to be true, with detailed proofs omitted here for simplicity. They are listed here to facilitate proving the current ${lemmaType}.`;
-                else
-                    imports[imports.length - 1] += `\n\n-- The axiom above is actually a lemma proven to be true, with detailed proofs omitted here for simplicity. It is listed here to facilitate proving the current ${lemmaType}.`;
-            }
-            prequisite = [prequisite, ...imports].join("\n\n");
-            var has_intermediate_step = code.match(/^  -- (Goals? to prove: |Premises? given: )?\\\[[^\n]+\\\]$/m);
-            if (has_intermediate_step) {
-                var proven = errorIndex == -2 ? '' : 'partially proven ';
-                var prelude = `Now You're given a ${proven}${lemmaType} where each intermediate proof-step is annotated with its latex representation indicating the tactic state:`;
-            }
-            else {
-                var proven = errorIndex == -2 ? 'in question' : 'to prove';
-                var prelude = `Below is the ${lemmaType} ${proven}:`;
-            }
-            if (prequisite)
-                prelude = prequisite + "\n\n-- " + prelude;
-            var task;
-            if (errorIndex >= 0) {
-                task = `At the line \`\`\`${old_leans[cursor_line]}\`\`\`, I got errors from Lean compilor which I wrapped in block comment /- and -/ below the code. Please fix the errors for me. Please don't duplicate my original code. In your final representation, give me only your newly added code which I can easily extract to replace the erroneous line.`;
-                this.taskType = 'error';
-            }
-            else if (errorIndex == -2) {
-                task = `The ${lemmaType} is already proven and verified by the lean compiler. Please add a docstring with about two sentences in between /-- -/ for the ${lemmaType} at the line specified above.\n**Note**: No need to prove the ${lemmaType} above and don't duplicate my original code.`;
-                this.taskType = 'docstring';
-            }
-            else if (has_intermediate_step) {
-                task = "Please complete the proof for me. If you can't solve the problem all at once, give me only the next proof-step that is workable and helpful for further problem-solving. Please don't duplicate my original code. In your final representation, give me only your newly added code which I can easily extract to replace the \`sorry\` tactic.`";
-                this.taskType = 'proof';
-            }
-            else if (has_typeclasses(this.lemma[index[0]])) {
-                task = "Please generate the proof to replace the \`sorry\` tactic. If you can't solve the problem all at once, give me only the next proof-step that is workable and helpful for further problem-solving.";
-                this.taskType = 'proof';
-            }
-            else {
-                task = "Please provide necessary typeclasses to make the code compile and generate the proof to replace the \`sorry\` tactic. If you can't solve the problem all at once, give me only the next proof-step that is workable and helpful for further problem-solving.";
-                this.taskType = 'typeclass';
-            }
-            task = `
-\`\`\`lean4
-${prelude}
-${code}
-\`\`\`
-${task}`;
-            console.log(task);
-            this.generate(
-                [
-                    {role: "system", content: "You are a helpful lean4 proof assistant."},
-                    {role: "user", content: task}
-                ],
-                {
-                    model: this.model,
-                    index: [...index, 'think'],
-                    id : module
-                }
-            );
-            setitem(this.lemma, ...index, 'prompt', task);
-        },
-
-    	generate(prompt, kwargs) {
-			var {onmessage, onclose} = this;
-			var {model, id} = kwargs;
-            var stream = {
-                id,
-
-                onmessage(message) {
-                    onmessage(message, kwargs);
-                },
-
-                onerror(err) {
-                    console.log(err);
-                },
-
-                onclose() {
-                    onclose(kwargs);
-                },
-            };
-			return generate(prompt, model, stream);
-    	},
-
-		postprocess(text, word, postprocess) {
-            try {
-                if (!text)
-                    word = word.ltrim();
-                return postprocess(text, word);
-            }
-            catch (err) {
-                console.log(err);
-            }
-		},
-
-		onmessage(message, kwargs) {
-			var {id, data} = message;
-			var {index} = kwargs;
-			if (id && data) {
-				try{
-					// console.log(data);
-                    var think = {};
-					var word = parse_token(data, think);
-					if (word) {
-						var {lemma} = this;
-                        var content = getitem(lemma, ...index);
-                        if (!think.reasoning_content) {
-                            if (!this.think_closed && content.is_MarkdownText) {
-                                word = '</think>' + word;
-                                this.think_closed = true;
-                            }
-                        }
-                        setitem(
-                            lemma,
-                            ...index,
-                            this.postprocess(
-                                content, 
-                                word,
-                                postprocess_word
-                            )
-                        );
-                        if (!think.reasoning_content) {
-                            index = [...index.slice(0, -1), 'final'];
-                            setitem(
-                                lemma,
-                                ...index,
-                                getitem(lemma, ...index) + word,
-                            );
-                        }
-					}
-                    else if (think.reasoning_content) {
-                        word = think.reasoning_content;
-						var {lemma} = this;
-                        var content = getitem(lemma, ...index);
-                        if (content && content.is_MarkdownCaret)
-                            word = '<think>' + word;
-                        setitem(
-                            lemma,
-                            ...index,
-                            this.postprocess(
-                                content, 
-                                word,
-                                postprocess_word
-                            )
-                        );
-                    }
-				}
-				catch(err) {
-					console.log(message);
-					console.log(err);
-				}
-			}
-		},
-
-		async onclose(kwargs) {
-			var {index} = kwargs;
-            var {lemma} = this;
-            this.postprocess(
-                getitem(lemma, ...index), 
-                "\n", // add newline at the end of the markdown text
-                postprocess_char
-            );
-            index = [...index.slice(0, -1), 'final'];
-            var final = getitem(lemma, ...index);
-            console.log(final);
-            switch (this.taskType) {
-            case 'error':
-                break;
-            case 'docstring':
-                var docstring = final.match(/(?<=^|\n)\/--([\s\S]*?)-\/(?=\n|$)/);
-                if (docstring) {
-                    docstring = docstring[1].trim("\n");
-                    docstring = sbd(docstring).map(text => text.replace(/^\n+|\n+$/g, '')).join("\n");
-                    console.log(docstring);
-                    var i = index[0];
-                        this.lemma[i].comment = docstring;
-                }
-                break;
-            case 'proof':
-                final = final.replace(/\/-.*?\n/g, '');
-                break;
-            case 'typeclass':
-                break;
-            }
-		},
 
 		keydown(event) {
 			switch (event.key) {

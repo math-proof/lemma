@@ -38,7 +38,6 @@
                     <p v-latex.block=given.latex></p>
                     <input type=hidden :name="`lemma[${index}][given][${i}]`" :value=given.lean />
                 </template>
-                <markdown v-if=given.think :root=given.think.root v-clipboard :data-clipboard-text=given.prompt />
             </div>
             <renderLean v-if=default :text=default :index="[index, 'default']"></renderLean>
         </div>
@@ -52,7 +51,6 @@
                 <p v-latex.block=imply.latex></p>
                 <input type=hidden :name="`lemma[${index}][imply]`" :value=imply.lean />
             </template>
-            <markdown v-if=imply.think :root=imply.think.root v-clipboard :data-clipboard-text=imply.prompt />
         </div>
         <template v-if=proof>
             <hr>
@@ -63,7 +61,6 @@
             <template v-for="(code, i) in get_proof_list(proof)" :key="`${refresh}-${index}-proof-${i}`">
                 <renderLean :text=code.lean :index="get_index(index, i)"></renderLean>
                 <p v-latex.block=gather(code.latex)></p>
-                <markdown v-if=code.think :root=code.think.root v-clipboard :data-clipboard-text=code.prompt />
             </template>
         </template>
     </div>
@@ -302,10 +299,6 @@ ${latex}
 \\end{gather}`;
             }
             return latex;
-        },
-
-        code_generation(indices, line) {
-            this.$parent.code_generation(indices, line);
         },
 
         async Escape(code, indices) {

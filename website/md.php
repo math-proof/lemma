@@ -111,7 +111,7 @@ body {
     	newText.push(text.slice(start));
     	text = newText.join('');
 
-        $("#content").innerHTML = marked(text);
+        document.querySelector("#content").innerHTML = marked(text);
 	});
 
 </script>

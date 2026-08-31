@@ -18,34 +18,6 @@ String.prototype.isspace = function () {
 
 String.prototype.isString = true;
 
-Array.prototype.binary_search = function(value, cmp) {
-	if (cmp) {
-		if (cmp.length == 1) {
-			var key = cmp;
-			cmp = (lhs, rhs) => compareTo(key(lhs), key(rhs));
-		}
-	}
-	else {
-		cmp = (a, b) => a.compareTo(b);
-	}
-
-  var begin = 0, end = this.length;
-  for (;;) {
-      if (begin == end)
-          return begin;
-
-      var mid = begin + end >> 1;
-
-      var ret = cmp(this[mid], value);
-      if (ret < 0)
-          begin = mid + 1;
-      else if (ret > 0)
-          end = mid;
-      else
-          return mid;
-  }
-}
-
 export function ord(s) {
   return s.charCodeAt(0);
 }

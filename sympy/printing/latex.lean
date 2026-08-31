@@ -106,6 +106,18 @@ def Expr.toList : Expr → Option (List Expr)
   | .const (.ident `List.nil) => some .nil
   | _ => none
 
+def Expr.toFinset : Expr → Option (List Expr)
+  | Basic (.Special ⟨`Insert.insert⟩) [head, tail] _ =>
+    if let some args := tail.toFinset then
+      head :: args
+    else
+      none
+  | e =>
+    if let some x := e.asSingleton? then
+      some [x]
+    else
+      none
+
 def Expr.traceCases (e : Expr) : ℕ × Expr :=
   match e with
   | Basic (.Special ⟨`ite⟩) args _ =>
@@ -382,7 +394,11 @@ def Expr.latexFormat : Expr → String
         else
           "\\begin{cases} %s \\\\ {%%s} & {\\color{blue}\\text{else}} \\end{cases}".format "\\\\".implode (["%s"].repeat n)
       | `Insert.insert =>
-        "\\left\\{%s, %s\\right\\}"
+        if let some elems := e.toFinset then
+          let format := ", ".intercalate (["%s"].repeat elems.length)
+          "\\left\\{" ++ format ++ "\\right\\}"
+        else
+          "\\left\\{%s, %s\\right\\}"
       | `List.get
       | `List.Vector.get
       | `Tensor.get
@@ -656,13 +672,14 @@ where
       | `ite =>
         merge_ite e []
       | `Insert.insert =>
-        match args with
-        | [a, Basic (.Special ⟨`Singleton.singleton⟩) [b] _] =>
-          [a.toLatex, b.toLatex]
-        | [a, .Symbol b _] =>
-          [a.toLatex, "..." ++ b.toString]
-        | _ =>
-          map args
+        if let some elems := e.toFinset then
+          map elems
+        else
+          match args with
+          | [a, .Symbol b _] =>
+            [a.toLatex, "..." ++ b.toString]
+          | _ =>
+            map args
       | `Subtype.mk
       | `Fin.mk =>
         let a : Option Expr :=

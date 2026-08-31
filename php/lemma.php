@@ -218,7 +218,6 @@ function lemma_shell_simplify_latex_for_codecogs(string $latex): string
         'α', 'β', 'γ', 'δ', 'Δ', 'ω', 'π',
         '∃', '∀',
         '⟨', '⟩',
-        '↑',
     ], [
         '\\ensuremath{\\mathbb{R}}', '\\ensuremath{\\mathbb{C}}', '\\ensuremath{\\mathbb{N}}', '\\ensuremath{\\mathbb{Z}}',
         '\\ensuremath{\\alpha}', '\\ensuremath{\\beta}', '\\ensuremath{\\gamma}', '\\ensuremath{\\delta}',
@@ -230,7 +229,6 @@ function lemma_shell_simplify_latex_for_codecogs(string $latex): string
         '\\ensuremath{\\Delta}', '\\ensuremath{\\omega}', '\\ensuremath{\\pi}',
         '\\ensuremath{\\exists}', '\\ensuremath{\\forall}',
         '\\ensuremath{\\langle}', '\\ensuremath{\\rangle}',
-        '\\uparrow',
     ], $latex);
     $latex = str_replace(['\\lt', '\\gt'], ['<', '>'], $latex);
     // {\left(-2\right)} → {-2} can turn \frac {{-2} β}{d} into \frac {-2} β}{d}.

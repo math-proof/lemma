@@ -1,42 +1,37 @@
 <template>
-	<button type=button class=transparent @click=click :title="show? 'click to collapse' : 'click to expand'">{{buttonText}}<br></button>
+	<button type=button class=transparent @click=self.click :title="self.show? 'click to collapse' : 'click to expand'">{{self.buttonText}}<br></button>
 </template>
 
-<script>
+<script setup>
+import Vue from "../js/vue.js"
 // console.log('import buttonExpand.vue');
 
-export default {
-	props : [ 'initial_show', 'callback'],
+const props = defineProps(['initial_show', 'callback']);
 
-    data() {
-        return {
+const self = new Vue({
+	props,
+
+	data() {
+		return {
 			show: this.initial_show,
-        };
-    },
+		};
+	},
 
-    computed: {
-
+	computed: {
 		buttonText() {
 			return this.show? '«««' : '»»»';
 		},
-    },
+	},
 
-    created() {
-    },
-
-    methods: {
-		click(event) {
+	methods: {
+		click() {
 			this.show = !this.show;
 
 			if (this.callback)
 				this.callback();
 		},
-    },
-
-	directives: {
 	},
-
-}
+});
 </script>
 
 <style>

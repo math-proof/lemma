@@ -10,19 +10,19 @@ private lemma main
   (h : A ^ 3 = B ^ 3) :
 -- imply
   let ω := (I * (2 * π / 3)).exp
-  let d := ⌈3 * arg A / (2 * π) - 1 / 2⌉ - ⌈3 * arg B / (2 * π) - 1 / 2⌉
-  A = B * ω ^ d := by
+  let k := ⌈3 * arg A / (2 * π) - 1 / 2⌉ - ⌈3 * arg B / (2 * π) - 1 / 2⌉
+  A = B * ω ^ k := by
 -- proof
-  intro ω d
+  intro ω k
   have harg : arg (A ^ 3) = arg (B ^ 3) := by rw [h]
   have hA3 := ArgPow.eq.SubMul_Arg A 3
   have hB3 := ArgPow.eq.SubMul_Arg B 3
-  have hd : (3 : ℝ) * (arg A - arg B) = 2 * π * d := by
+  have hd : (3 : ℝ) * (arg A - arg B) = 2 * π * k := by
     have := harg
     rw [hA3, hB3] at this
-    simp [d] at this ⊢
+    simp [k] at this ⊢
     linarith
-  have hθ : arg A - arg B = 2 * π * d / 3 := by
+  have hθ : arg A - arg B = 2 * π * k / 3 := by
     have hπ : (3 : ℝ) ≠ 0 := by norm_num
     field_simp [hπ]
     linarith
@@ -47,12 +47,12 @@ private lemma main
     have hB0 : ‖B‖ ^ 2 = 0 := le_antisymm (by linarith) hb
     exact hne ((sq_eq_zero_iff.mp hA0).trans (sq_eq_zero_iff.mp hB0).symm)
   simp [hnorm]
-  have hmul : (I * arg B).exp * (ω ^ d) = (I * arg A).exp := by
-    have hz : ω ^ d = exp (↑d * (I * (2 * π / 3))) := (exp_int_mul _ d).symm
+  have hmul : (I * arg B).exp * (ω ^ k) = (I * arg A).exp := by
+    have hz : ω ^ k = exp (↑k * (I * (2 * π / 3))) := (exp_int_mul _ k).symm
     rw [hz, ← exp_add]
     congr 1
-    have hadd : I * arg B + ↑d * (I * (2 * π / 3)) = I * arg A := by
-      have : (d : ℂ) * (I * (2 * π / 3)) = I * ↑(2 * π * d / 3) := by
+    have hadd : I * arg B + ↑k * (I * (2 * π / 3)) = I * arg A := by
+      have : (k : ℂ) * (I * (2 * π / 3)) = I * ↑(2 * π * k / 3) := by
         simp
         ring
       rw [this, ← mul_add, ← ofReal_add]

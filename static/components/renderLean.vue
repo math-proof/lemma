@@ -225,10 +225,6 @@ const self = new Vue({
             this.$parent.save();
         },
 
-        code_generation(line) {
-            this.$parent.code_generation(this.index, line);
-        },
-
         append(word) {
             // precondition: word does not contain newlines
             var cm = this.editor;

@@ -102,6 +102,6 @@ text = text.transform(/<script( type=module)?>([\s\S]*)<\/script>/g, m=>{
     return '';
 });
 
-$("#content").innerHTML = marked(text);
+document.querySelector("#content").innerHTML = marked(text);
 
 </script>

@@ -367,18 +367,6 @@ where
 				return cm.toggleComment();
 			},
 
-			"Ctrl-I": function(cm) {
-				var cursor = cm.getCursor();
-    			var currentLine = cursor.line;
-    			// // Start from the beginning of the document
-    			// var from = { line: 0, ch: 0 };
-    			// // End at the last character of the current line
-    			// var to = { line: currentLine, ch: cm.getLine(currentLine).length };
-    			// // Get all text in this range
-    			// var text = cm.getRange(from, to);
-				self.code_generation(currentLine);
-			},
-
 			'.': function(cm) {
 				cm.replaceSelection('.');
 				return cm.showHint();

@@ -10,7 +10,7 @@ The fundamental design philosophy is: precise syntax, concise expression, effici
 * By *axiomatization*, it means following [Hilbert's program](https://en.wikipedia.org/wiki/Hilbert%27s_program): every proved mathematical theorem is derived in finitely many steps from axiom schemas and inference rules, strictly formalized in the framework of dependent type theory.
 * By *code as proof*, via the Curry–Howard correspondence, mathematical propositions are described exactly by [Lean](https://lean-lang.org/) statements; the proof is a well-typed program, without substituting checkable steps with natural-language shortcuts such as “evidently,” “it is easy to see,” “similarly,” “in general,” “and so on,” “conversely,” “in summary,” or “without loss of generality.” Under Lean 4’s exact real and hyperreal semantics, there is no floating-point rounding error as in ordinary numerical code.
 
-The site can be found via Google: [定理库](https://www.google.com.hk/search?q=%E5%AE%9A%E7%90%86%E5%BA%93).
+The site can be found via google/baidu/bing: 定理库.
 Proof assistants / theorem libraries in the open-source community include [leanprover](https://leanprover-community.github.io/mathlib4_docs/Mathlib/Algebra/Algebra/Basic.html), [coq](https://github.com/coq/coq), and [isabelle](https://isabelle.in.tum.de/).
 
 
@@ -67,6 +67,6 @@ It serves students and researchers in mathematics and related fields, algorithm 
 [<font size=2>浙ICP备20017509号-3</font>](https://beian.miit.gov.cn/)
 
 <script type=module>
-	$('#count').innerHTML = await get("../php/request/count.php");
-  $('#lines').innerHTML = await get("../php/request/lines.php");
+	document.querySelector('#count').innerHTML = await get("../php/request/count.php");
+  document.querySelector('#lines').innerHTML = await get("../php/request/lines.php");
 </script>

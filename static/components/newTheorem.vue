@@ -1,18 +1,26 @@
 <template>
 	module :
-	<newInput ref=newInput :module=module></newInput>
-	<render ref=render :imports=imports :open=open :lemma=lemma :error=error :module=module :date=date></render>
+	<newInput :ref="$refs.newInput" :module=module></newInput>
+	<render :ref="$refs.render" :imports=imports :open=open :lemma=lemma :error=error :module=module :date=date></render>
 </template>
 
-<script>
-import render from "./render.vue"
-import newInput from "./newInput.vue"
+<script setup>
+import Vue from "../js/vue.js";
+import render from "./render.vue";
+import newInput from "./newInput.vue";
+
 console.log('import newTheorem.vue');
 
-export default {
-	components: { render, newInput },
-	props : [ 'name', 'imports', 'open', 'lemma', 'error', 'date'],
-	
+const props = defineProps(['name', 'imports', 'open', 'lemma', 'error', 'date']);
+
+const self = new Vue({
+	props,
+
+	$refs: {
+		newInput: null,
+		render: null,
+	},
+
 	data() {
 		var module = this.name;
 		var module = module.replace(/[/\\]/g, '.');
@@ -20,30 +28,26 @@ export default {
 			module
 		};
 	},
-	
+
 	computed: {
 		renderLean() {
-   			var proof = [];
-   			proof.push(this.$refs.proof);
-   			return proof;
-   		},
-   		
-   		newInput() {
-   			return this.$refs.newInput;
-   		},
-   		
-   		user() {
-   			return axiom_user();	
-   		},
-   		
-   		action() {
-   			var module = this.module.replace(/\./g, '/');
-   			return `/${this.user}/?module=${module}`;
-   		},
+			var proof = [];
+			proof.push(this.$refs.proof);
+			return proof;
+		},
+
+		user() {
+			return axiom_user();
+		},
+
+		action() {
+			var module = this.module.replace(/\./g, '/');
+			return `/${this.user}/?module=${module}`;
+		},
 	},
-	
+
 	methods: {
-        async save() {
+		async save() {
 			var {module} = this;
 			var sql = `
 select * from lemma where module = "${module}";
@@ -51,15 +55,21 @@ select * from lemma where module = "${module}";
 			var lemma = await form_post('php/request/execute.php', {sql});
 			if (lemma.length)
 				alert(`Lemma ${module} already exists!`);
-			else 
+			else
 				form.submit();
-        },
+		},
 
 		update_action() {
-			this.$refs.render.action = this.action;
+			this.render.action = this.action;
 		},
 	},
-}
+
+	mounted() {
+		this.update_action();
+	},
+});
+
+const { $refs, module } = self.globals;
 </script>
 
 <style>

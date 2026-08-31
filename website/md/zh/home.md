@@ -9,7 +9,7 @@
 * **公理化**：在依赖类型论框架下，已证结论由公理模式与推理规则经有限步演绎导出；这一立场受 [希尔伯特形式主义计划](https://en.wikipedia.org/wiki/Hilbert%27s_program) 启发，强调证明的可复核性而非诉诸自然语言中的省略语。
 * **程序即证明**：依据 Curry–Howard 同构，命题以 [Lean](https://lean-lang.org/) 语句精确编码，证明即类型正确的程序，从而避免以「显然，易知，同理，一般地，以此类推，反之亦然，综上所述，不失一般性」等自然语言省略语代替可检验的推导；在 Lean 4 的精确实数与超实数语义下，不存在一般数值代码中的浮点舍入误差。
 
-网站可通过 Google 检索「[定理库](https://www.google.com.hk/search?q=%E5%AE%9A%E7%90%86%E5%BA%93)」访问。相关开源证明助手与定理库包括 [Lean/mathlib](https://leanprover-community.github.io/mathlib4_docs/Mathlib/Algebra/Algebra/Basic.html)、[Coq](https://github.com/coq/coq) 与 [Isabelle](https://isabelle.in.tum.de/)。
+网站可通过 google/baidu/bing 检索「定理库」访问。相关开源证明助手与定理库包括 [Lean/mathlib](https://leanprover-community.github.io/mathlib4_docs/Mathlib/Algebra/Algebra/Basic.html)、[Coq](https://github.com/coq/coq) 与 [Isabelle](https://isabelle.in.tum.de/)。
 
 熟练使用本系统，通常需要熟悉下列推理模式及其在 Lean 中的对应策略：
 
@@ -38,7 +38,7 @@
 # 算法定理库的建设
   <br>
 
-目前库中收录约 <label id=count>5000</label> 条已证定理（约 <label id=lines>100000</label> 行 Lean 代码），供交互式推导与查阅。主要覆盖：
+目前库中收录 <label id=count>5000</label> 条已证定理（<label id=lines>100000</label> 行 Lean 代码），供交互式推导与查阅。主要覆盖：
 
 * [Bool](../?module=Bool) 命题逻辑与布尔运算
 * [Fin](../?module=Fin) 有限索引与自然数片段上的初等代数
@@ -70,6 +70,6 @@
 [<font size=2>浙ICP备20017509号-3</font>](https://beian.miit.gov.cn/)
 
 <script type=module>
-	$('#count').innerHTML = await get("../php/request/count.php");
-  $('#lines').innerHTML = await get("../php/request/lines.php");
+	document.querySelector('#count').innerHTML = await get("../php/request/count.php");
+  document.querySelector('#lines').innerHTML = await get("../php/request/lines.php");
 </script>

@@ -245,6 +245,11 @@ The Identity is a simplified version of an Equality/Equivalence of the same type
 - Sum is short for : EqSumS (which as rule of `Plural S`, is defined as Sum.eq.Sum)
 - And is abbreviated from : IffAndS (which as rule of `Plural S`, is defined as And.is.And)
 
+## Variadic Functions
+List, Finset are considered variadic functions, eg:
+- In_ListNeg denotes: _ ∈ [Neg]
+- In_Finset_AddMulS denotes: _ ∈ {_, AddMul, AddMul}
+
 # LLM-Assisted Proving
 
 Guidelines and prompts for using LLMs to write and refactor Lean 4 proofs in this repository.
@@ -262,7 +267,9 @@ Guidelines and prompts for using LLMs to write and refactor Lean 4 proofs in thi
 - Use `obtain` instead of `rcases`, `if … then … else …` instead of `by_cases`, `have` instead of `haveI`, and `let` instead of `letI`.
 - inline `have` without introducing `show` if it is referenced only once, e.g.: prefer `apply` instead of `exact`, perhaps by creating some holes.
 - use `calc` instead of `by calc`, start `calc` with _
-- avoid `calc` within [] of `rw`/`erw`/`simp`, use `by` within [] only when it is one-liner statement withno `;`
+- within [] block of `rw`/`erw`/`simp`:
+  - use `by` only when it is one-liner statement with no `;`
+  - avoid `calc`
 - follow `show` with `from`/`by` instead of `from by`
 - After a bullet tactic (`·`), put the next statement on a new line when that branch contains more than one step.
 - implicit/instance (instImplicit) arguments should be put before the `given` section

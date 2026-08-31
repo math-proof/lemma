@@ -1,7 +1,9 @@
-import Lemma.Complex.Eq0Add_Pow_3.is.Or_OrEqS_AddMulS.of.EqNeg_MulMul3.EqNeg_AddPowS_3
+import Lemma.Complex.Eq0Add_Pow_3.is.In_Finset_AddSMulS.of.EqNeg_MulMul3.EqNeg_AddPowS_3
 import Lemma.Complex.EqSquareSqrt
 import Lemma.Complex.Eq_Mul_Pow_SubCeilS.of.Pow_3
-open Complex
+import Lemma.Complex.Pow_3.eq.One
+import Lemma.Set.In_Finset.is.Or_OrEqS
+open Complex Set
 
 
 @[main]
@@ -26,15 +28,11 @@ private lemma main
   have hA3B3 : A ^ 3 + B ^ 3 = -q := by
     rw [hA3, hB3]
     ring
-  have hω3 : ω ^ 3 = 1 := by
-    rw [← exp_nat_mul]
-    convert exp_two_pi_mul_I using 2
-    ring
   have hωne : ω ≠ 0 := exp_ne_zero _
   have hωk3 : (ω ^ k) ^ (3 : ℕ) = 1 := by
     rw [← zpow_ofNat, ← zpow_mul]
     rw [(by ring : (k * 3 : ℤ) = 3 * k)]
-    rw [zpow_mul, zpow_ofNat, hω3, one_zpow]
+    rw [zpow_mul, zpow_ofNat, Pow_3.eq.One, one_zpow]
   have hAB : A * B = (-p / 3) * ω ^ (-k) := by
     have hmul : ((-q + √δ) / 2) * ((-q - √δ) / 2) = -(δ - q ^ 2) / 4 := calc
       _ = -((√δ / 2) * (√δ / 2) - (q / 2) * (q / 2)) := by
@@ -54,7 +52,7 @@ private lemma main
   have hABk : A * B * ω ^ k = -p / 3 := by
     rw [hAB, mul_assoc, ← zpow_add₀ hωne]
     simp [neg_add_cancel]
-  apply Eq0Add_Pow_3.of.Or_OrEqS_AddMulS.EqNeg_MulMul3.EqNeg_AddPowS_3 (A := A * ω ^ k) (B := B)
+  apply Eq0Add_Pow_3.of.In_Finset_AddSMulS.EqNeg_MulMul3.EqNeg_AddPowS_3 (A := A * ω ^ k) (B := B)
   ·
     rw [mul_pow, hωk3, mul_one, hA3B3]
   ·
@@ -63,9 +61,10 @@ private lemma main
     rw [this, hABk]
     ring
   ·
+    apply In_Finset.of.Or_OrEqS
     apply Or.inl
     apply h
 
 
 -- created on 2018-11-20
--- updated on 2026-08-30
+-- updated on 2026-08-31

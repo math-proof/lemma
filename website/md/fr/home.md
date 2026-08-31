@@ -9,7 +9,7 @@ Ses traits principaux se résument ainsi : **preuve interactive (ITP)**, **axiom
 * **Axiomatisation** : dans le cadre de la théorie des types dépendants, chaque résultat établi se déduit en un nombre fini d'étapes à partir de schémas d'axiomes et de règles d'inférence ; cette orientation, inspirée du [programme formaliste de Hilbert](https://en.wikipedia.org/wiki/Hilbert%27s_program), privilégie la reproductibilité des preuves plutôt que les raccourcis du langage naturel.
 * **Programme comme preuve** : par l'isomorphisme de Curry–Howard, les propositions sont codées exactement en [Lean](https://lean-lang.org/) ; la preuve est un programme bien typé, sans recourir à des formules du type « évidemment », « il est facile de voir », « de même », « en général », « et ainsi de suite », « réciproquement », « pour conclure », « sans perte de généralité » à la place d'un enchaînement vérifiable ; sous la sémantique exacte des réels et hyperréels de Lean 4, il n'y a pas d'erreur d'arrondi en virgule flottante comme dans le code numérique ordinaire.
 
-Le site est accessible via Google : [定理库](https://www.google.com.hk/search?q=%E5%AE%9A%E7%90%86%E5%BA%93). Parmi les assistants de preuve et bibliothèques open source apparentés : [Lean/mathlib](https://leanprover-community.github.io/mathlib4_docs/Mathlib/Algebra/Algebra/Basic.html), [Coq](https://github.com/coq/coq) et [Isabelle](https://isabelle.in.tum.de/).
+Le site est accessible via google/baidu/bing : 定理库. Parmi les assistants de preuve et bibliothèques open source apparentés : [Lean/mathlib](https://leanprover-community.github.io/mathlib4_docs/Mathlib/Algebra/Algebra/Basic.html), [Coq](https://github.com/coq/coq) et [Isabelle](https://isabelle.in.tum.de/).
 
 Pour maîtriser ce système de dérivation, il est utile de connaître les modes de raisonnement suivants et leurs tactiques Lean associées :
 
@@ -38,7 +38,7 @@ Pour maîtriser ce système de dérivation, il est utile de connaître les modes
 # Construction de la bibliothèque algorithmique
   <br>
 
-La bibliothèque contient environ <label id=count>5000</label> théorèmes établis (environ <label id=lines>100000</label> lignes de code Lean), disponibles pour la dérivation interactive et la consultation. Domaines principaux :
+La bibliothèque contient <label id=count>5000</label> théorèmes établis (<label id=lines>100000</label> lignes de code Lean), disponibles pour la dérivation interactive et la consultation. Domaines principaux :
 
 * [Bool](../?module=Bool) Logique propositionnelle et opérations booléennes
 * [Fin](../?module=Fin) Algèbre élémentaire sur des indices finis
@@ -70,6 +70,6 @@ Elle s'adresse aux étudiants et chercheurs en mathématiques et domaines voisin
 [<font size=2>浙ICP备20017509号-3</font>](https://beian.miit.gov.cn/)
 
 <script type=module>
-	$('#count').innerHTML = await get("../php/request/count.php");
-  $('#lines').innerHTML = await get("../php/request/lines.php");
+	document.querySelector('#count').innerHTML = await get("../php/request/count.php");
+  document.querySelector('#lines').innerHTML = await get("../php/request/lines.php");
 </script>

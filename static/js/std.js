@@ -1,286 +1,3 @@
-"use strict";
-
-function argmin(args){
-	if (arguments.length == 1){
-		args = arguments[0];
-	}
-	else{
-		args = arguments;
-	}
-
-	var min = Infinity;
-	var argmin = -1;
-	for (var index of range(args.length)){
-		if (args[index] < min){
-			min = args[index];
-			argmin = index;
-		}
-	}
-
-	return argmin;
-}
-
-function argmax(args){
-	if (arguments.length == 1){
-		args = arguments[0];
-	}
-	else{
-		args = arguments;
-	}
-
-	var max = -Infinity;
-	var argmax = -1;
-	for (var index of range(args.length)){
-		if (args[index] > max){
-			max = args[index];
-			argmax = index;
-		}
-	}
-
-	return argmax;
-}
-
-function $(selector){
-	return document.querySelector(selector);
-}
-
-function get(url, data) {
-	return axios.get(url, {params: data}).then(result => result.data);
-}
-
-function form_post(url, data) {
-	if (url.match(/^https?:\/\//)) {
-		data = {url, data};
-		url = 'php/request/post.php';
-	}
-
-	return axios.post(url, Qs.stringify(data)).then(result => {
-		var {data} = result;
-		if (data && data.isString)
-			return data.trim();
-		return data;
-	});
-}
-
-function json_post(url, data, header, stream) {
-	var method = 'post';
-	if (url.match(/^https?:\/\//)) {
-		data = {url, data};
-		url = 'php/request/post.php';
-		data.header = header;
-		if (stream) {
-			var {id, signal, onmessage, onclose, onerror} = stream;
-			data.id = id;
-			return fetchEventSource(url, {
-				method,
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify(data),
-				signal,
-				onmessage,
-				onclose,
-				onerror,
-				onopen(response) {
-					if (response.ok && response.headers.get("content-type").includes("text/event-stream")) {
-						return; // everything's good
-					} else if (response.status >= 400 && response.status < 500 &&response.status !== 429) {
-						// client-side errors are usually non-retriable:
-						throw new FatalError();
-					} else {
-						throw new FatalError();
-					}
-				},
-				openWhenHidden: true
-			});
-		}
-	}
-
-	var header = {'Content-Type': 'application/json'};
-	return axios({url, method, data, header}).then(result => {
-		var {data} = result;
-		if (data.isString && data.back() == '\n')
-			data = data.slice(0, -1);
-		return data;
-	});
-}
-
-function octet_stream_post(url, data, successCallback, errorCallback) {
-	var {filename, binary} = data;
-	var xhr = new XMLHttpRequest();
-	xhr.open("POST", url);
-	xhr.setRequestHeader('filename', filename);
-	xhr.overrideMimeType("application/octet-stream");
-	if(xhr.sendAsBinary)
-		xhr.sendAsBinary(binary);
-	else
-		xhr.send(binary);
-
-	xhr.onreadystatechange = function(event){
-		if(xhr.readyState===4){
-			if(xhr.status===200){
-				var jqXHR = event.target;
-				if (successCallback) {
-					successCallback(JSON.parse(jqXHR.responseText));
-				}
-			}else{
-				if (errorCallback) {
-					errorCallback(jqXHR.responseText);
-				}
-			}
-		}
-	}
-}
-
-function strlen(s) {
-	var length = 0;
-	for (let i = 0; i < s.length; i++) {
-		var code = s.charCodeAt(i)
-		switch (code) {
-		case 0x2002:
-		//case 0x2014:
-		case 0x2212:
-			length += 1;
-			break;
-		default:
-			if (code & 0xff80)
-				length += 2;
-			else
-				length += 1;
-		}
-	}
-	return length;
-}
-
-function getParameterByName(name, defaultValue) {
-	return new URLSearchParams(window.location.search).get(name) || defaultValue;
-}
-
-function getParameter(name, evaluate) {
-	var attrs = [];
-	for (var m of name.matchAll(/\[([^\[\]]+)\]/g)) {
-		attrs.push(m[1]);
-	}
-	name = name.replace(/(\[[^\[\]]+\])/g, "");
-	var reg = new RegExp("(?<=^|&)" + name + "((?:\\[[^\\[\\]]+\\])*)=([^&]*)(?=&|$)", 'g');
-	var {search} = window.location;
-	if (search.startsWith("?")) {
-		search = search.substr(1);
-		var result = {};
-		var hit = false;
-		for (var m of search.matchAll(reg)) {
-			var attr = m[1];
-			var expr = unescape(m[2]);
-			if (evaluate) {
-				if (expr && expr.isString)
-					expr = eval(expr);
-			}
-			if (attr) {
-				var arglist = [];
-				for (var m of attr.matchAll(/\[([^\[\]]+)\]/g)) {
-					arglist.push(m[1]);
-				}
-
-				if (attrs.length) {
-					if (attrs.equals(arglist))
-						return expr;
-
-					if (attrs.length >= arglist.length || arglist.slice(0, attrs.length).equals(attrs))
-						continue;
-
-					arglist = arglist.slice(attrs.length);
-				}
-				setitem(result, ...arglist, expr);
-				hit = true;
-			}
-			else {
-				if (!attrs.length) {
-					return expr;
-				}
-			}
-		}
-		if (hit) {
-			if (!attrs.length) {
-				return list(result);
-			}
-		}
-	}
-}
-
-function getParameters() {
-	var kwargs = {};
-	var search = window.location.search;
-	if (search.startsWith("?")) {
-		for (var tuple of search.slice(1).split('&')) {
-			input_kwargs(kwargs, ...tuple.split('='));
-		}
-	}
-
-	return kwargs;
-}
-
-function input_kwargs(kwargs, name, value){
-	if (name.match(/[\[\]]+/)) {
-		name = name.split(/[\[\]]+/);
-		name = name.slice(0, -1);
-		setitem(kwargs, ...name, value);
-	}
-	else {
-		kwargs[name] = value;
-	}
-}
-
-function equals(obj, _obj){
-	if (obj == null){
-		return _obj == null;
-	}
-
-	if (_obj == null){
-		return false;
-	}
-
-	if (Array.isArray(obj)){
-		if (Array.isArray(_obj)){
-			return obj.equals(_obj);
-		}
-		return false;
-	}
-
-	if (Array.isArray(_obj)){
-		return false;
-	}
-
-	if (typeof(obj) === "object"){
-		if (typeof(_obj) === "object"){
-			return dict_equals(obj, _obj);
-		}
-		return false;
-	}
-
-	if (typeof(_obj) === "object"){
-		return false;
-	}
-
-	return obj == _obj;
-}
-
-function dict_equals(dict, _dict){
-	var keys = Object.keys(dict);
-	var _keys = Object.keys(_dict);
-	if (keys.length != _keys.length)
-		return false;
-
-	for (let key of keys){
-		if (!_dict.hasOwnProperty(key))
-			return false;
-
-		if (!equals(dict[key], _dict[key])){
-			return false;
-		}
-	}
-
-	return true;
-}
 
 Number.prototype.isNumber = true;
 
@@ -771,6 +488,16 @@ String.prototype.contains = function(rhs){
 	return this.indexOf(rhs) >= 0;
 };
 
+String.prototype.format = function() {
+	var args = arguments;
+	var index = 0;
+	return this.replace(/%[sd]/g,
+		function() {
+			return args[index++];
+		}
+	);
+};
+
 String.prototype.percentage = function() {
 	return 'NaN';
 };
@@ -890,6 +617,10 @@ String.prototype.fullmatch = function(regex){
 	);
 };
 
+String.prototype.isspace = function() {
+	return /^\s+$/.test(this);
+};
+
 String.prototype.regexp = function(flags='') {
     return new RegExp(this, flags);
 }
@@ -898,139 +629,7 @@ String.prototype.strlen = function() {
 	return strlen(this);
 };
 
-NodeList.prototype.indexOf = function(e) {
-	for (var i = 0; i < this.length; ++i) {
-		if (this[i] == e)
-			return i;
-	}
-	return -1;
-};
-
-NodeList.prototype.pop = function() {
-	var lastChild = this[this.length - 1];
-	lastChild.remove();
-	return lastChild;
-};
-
-NodeList.prototype.shift = function() {
-	var firstChild = this[0];
-	firstChild.remove();
-	return firstChild;
-};
-
-NodeList.prototype.reverse = function() {
-	return [...this].reverse();
-};
-
-NodeList.prototype.splice = function() {
-	var [index, howmany, ...items] = arguments;
-	var deletes = [];
-	if (index < 0)
-		index = this.length + index;
-
-	var parent = this[0].parentElement;
-
-	for (var i = index; i < index + howmany; ++i) {
-		deletes.push(this[i]);
-	}
-
-	for (let node of deletes) {
-		node.remove();
-	}
-
-	if (items) {
-		if (index == this.length) {
-			for (let item of items)
-				parent.appendChild(item);
-		}
-		else {
-			var pivot = this[index];
-			for (let item of items)
-				parent.insertBefore(item, pivot);
-		}
-	}
-
-	return this;
-};
-
-NodeList.prototype.slice = function(start, end) {
-	return [...this].slice(start, end);
-};
-
-NodeList.prototype.back = function() {
-	return this[this.length - 1];
-};
-
-NodeList.prototype.map = function(fn) {
-	return [...this].map(fn);
-};
-
-NodeList.prototype.filter = function(fn) {
-	return [...this].filter(fn);
-};
-
-HTMLCollection.prototype.slice = function(start, end) {
-	var list = [...this];
-	if (end < 0)
-		end += list.length;
-
-	if (start < 0)
-		start += list.length;
-
-	return list.slice(start, end);
-};
-
-HTMLCollection.prototype.indexOf = function(e) {
-	for (var i = 0; i < this.length; ++i) {
-		if (this[i] == e)
-			return i;
-	}
-	return -1;
-};
-
-// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax
-HTMLCollection.prototype.splice = function() {
-	var [index, howmany, ...items] = arguments;
-	var deletes = [];
-	if (index < 0)
-		index = this.length + index;
-
-	var parent = this[0].parentElement;
-
-	for (var i = index; i < index + howmany; ++i) {
-		deletes.push(this[i]);
-	}
-
-	for (let node of deletes) {
-		node.remove();
-	}
-
-	if (items) {
-		if (index == this.length) {
-			for (let item of items)
-				parent.appendChild(item);
-		}
-		else {
-			var pivot = this[index];
-			for (let item of items)
-				parent.insertBefore(item, pivot);
-		}
-	}
-
-	return this;
-};
-
-HTMLCollection.prototype.map = function(f) {
-	return [...this].map(f);
-};
-
-HTMLCollection.prototype.filter = function(f) {
-	return [...this].filter(f);
-};
-
-HTMLCollection.prototype.back = function() {
-	return this[this.length - 1];
-};
+String.prototype.isString = true;
 
 Array.prototype.equals = function(rhs){
 	if (!Array.isArray(rhs))
@@ -1346,6 +945,34 @@ Array.prototype.clone = function() {
 	return this.map(value => (typeof value?.clone === 'function')? value.clone() : value);
 }
 
+Array.prototype.binary_search = function(value, compareTo) {
+	if (compareTo) {
+		if (compareTo.length == 1) {
+			var key = compareTo;
+			compareTo = (lhs, rhs) => window.compareTo(key(lhs), key(rhs));
+		}
+	}
+	else {
+		compareTo = (a, b) => a.compareTo(b);
+	}
+
+    var begin = 0, end = this.length;
+    for (;;) {
+        if (begin == end)
+            return begin;
+
+        var mid = begin + end >> 1;
+
+        var ret = compareTo(this[mid], value);
+        if (ret < 0)
+            begin = mid + 1;
+        else if (ret > 0)
+            end = mid;
+        else
+            return mid;
+    }
+}
+
 Array.prototype.binary_insert = function(value, compareTo) {
 	this.insert(this.binary_search(value, compareTo), value);
 }
@@ -1399,6 +1026,528 @@ Set.prototype.array_intersect = function (other) {
 	return set;
 }
 
+if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+NodeList.prototype.indexOf = function(e) {
+	for (var i = 0; i < this.length; ++i) {
+		if (this[i] == e)
+			return i;
+	}
+	return -1;
+};
+
+NodeList.prototype.pop = function() {
+	var lastChild = this[this.length - 1];
+	lastChild.remove();
+	return lastChild;
+};
+
+NodeList.prototype.shift = function() {
+	var firstChild = this[0];
+	firstChild.remove();
+	return firstChild;
+};
+
+NodeList.prototype.reverse = function() {
+	return [...this].reverse();
+};
+
+NodeList.prototype.splice = function() {
+	var [index, howmany, ...items] = arguments;
+	var deletes = [];
+	if (index < 0)
+		index = this.length + index;
+
+	var parent = this[0].parentElement;
+
+	for (var i = index; i < index + howmany; ++i) {
+		deletes.push(this[i]);
+	}
+
+	for (let node of deletes) {
+		node.remove();
+	}
+
+	if (items) {
+		if (index == this.length) {
+			for (let item of items)
+				parent.appendChild(item);
+		}
+		else {
+			var pivot = this[index];
+			for (let item of items)
+				parent.insertBefore(item, pivot);
+		}
+	}
+
+	return this;
+};
+
+NodeList.prototype.slice = function(start, end) {
+	return [...this].slice(start, end);
+};
+
+NodeList.prototype.back = function() {
+	return this[this.length - 1];
+};
+
+NodeList.prototype.map = function(fn) {
+	return [...this].map(fn);
+};
+
+NodeList.prototype.filter = function(fn) {
+	return [...this].filter(fn);
+};
+
+HTMLCollection.prototype.slice = function(start, end) {
+	var list = [...this];
+	if (end < 0)
+		end += list.length;
+
+	if (start < 0)
+		start += list.length;
+
+	return list.slice(start, end);
+};
+
+HTMLCollection.prototype.indexOf = function(e) {
+	for (var i = 0; i < this.length; ++i) {
+		if (this[i] == e)
+			return i;
+	}
+	return -1;
+};
+
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax
+HTMLCollection.prototype.splice = function() {
+	var [index, howmany, ...items] = arguments;
+	var deletes = [];
+	if (index < 0)
+		index = this.length + index;
+
+	var parent = this[0].parentElement;
+
+	for (var i = index; i < index + howmany; ++i) {
+		deletes.push(this[i]);
+	}
+
+	for (let node of deletes) {
+		node.remove();
+	}
+
+	if (items) {
+		if (index == this.length) {
+			for (let item of items)
+				parent.appendChild(item);
+		}
+		else {
+			var pivot = this[index];
+			for (let item of items)
+				parent.insertBefore(item, pivot);
+		}
+	}
+
+	return this;
+};
+
+HTMLCollection.prototype.map = function(f) {
+	return [...this].map(f);
+};
+
+HTMLCollection.prototype.filter = function(f) {
+	return [...this].filter(f);
+};
+
+HTMLCollection.prototype.back = function() {
+	return this[this.length - 1];
+};
+
+HTMLElement.prototype.getScrollTop = function() {
+	var scrollTop = 0;
+
+	var current = this;
+	while (current !== null) {
+		scrollTop += current.scrollTop;
+		current = current.parentElement;
+	}
+
+	return scrollTop;
+};
+
+HTMLElement.prototype.getOffsetTop = function() {
+	var offsetTop = 0;
+
+	var current = this;
+	while (current !== null) {
+		offsetTop += current.offsetTop;
+		current = current.offsetParent;
+	}
+
+	return offsetTop;
+};
+
+HTMLElement.prototype.getScrollLeft = function() {
+	var scrollLeft = 0;
+
+	var current = this;
+	while (current !== null) {
+		scrollLeft += current.scrollLeft;
+		current = current.parentElement;
+	}
+
+	return scrollLeft;
+};
+
+HTMLElement.prototype.getOffsetLeft = function() {
+	var offsetLeft = 0;
+
+	var current = this;
+	while (current !== null) {
+		offsetLeft += current.offsetLeft;
+		current = current.offsetParent;
+	}
+
+	return offsetLeft;
+};
+
+HTMLElement.prototype.coordinate = function(rate_x, rate_y) {
+	var rect = this.getBoundingClientRect();
+	return [rect.x + rect.width * rate_x, rect.y + rect.height * rate_y];
+};
+
+HTMLElement.prototype.contain = function(x0, y0) {
+	var rect = this.getBoundingClientRect();
+	return x0 >= rect.x && x0 < rect.x + rect.width && y0 >= rect.y && y0 < rect.y + rect.height;
+};
+
+HTMLElement.prototype.center = function() {
+	return this.coordinate(0.5, 0.5);
+};
+
+HTMLElement.prototype.distance = function(rhs) {
+	var [x0, y0] = this.center();
+	if (!Array.isArray(rhs))
+		rhs = rhs.center();
+
+	var [x1, y1] = rhs;
+	return distance(x0, y0, x1, y1);
+};
+
+HTMLElement.prototype.hiddenStatus = function() {
+	const {scrollLeft, scrollTop, clientWidth, clientHeight} = document.documentElement;
+	var offsetLeft = this.getOffsetLeft() - scrollLeft;
+	var offsetTop = this.getOffsetTop() - scrollTop;
+	var {offsetWidth, offsetHeight} = this;
+
+	var hidden = {};
+	if (offsetTop < 0)
+		hidden.y = offsetTop;
+	else if (offsetTop + offsetHeight > clientHeight)
+		hidden.y = offsetTop + offsetHeight - clientHeight;
+
+	if (offsetLeft < 0)
+		hidden.x = offsetLeft;
+	else if (offsetLeft + offsetWidth > clientWidth)
+		hidden.x = offsetLeft + offsetWidth - clientWidth;
+	return hidden;
+};
+
+function argmin(args){
+	if (arguments.length == 1){
+		args = arguments[0];
+	}
+	else{
+		args = arguments;
+	}
+
+	var min = Infinity;
+	var argmin = -1;
+	for (var index of range(args.length)){
+		if (args[index] < min){
+			min = args[index];
+			argmin = index;
+		}
+	}
+
+	return argmin;
+}
+
+function argmax(args){
+	if (arguments.length == 1){
+		args = arguments[0];
+	}
+	else{
+		args = arguments;
+	}
+
+	var max = -Infinity;
+	var argmax = -1;
+	for (var index of range(args.length)){
+		if (args[index] > max){
+			max = args[index];
+			argmax = index;
+		}
+	}
+
+	return argmax;
+}
+
+function get(url, data) {
+	return axios.get(url, {params: data}).then(result => result.data);
+}
+
+function form_post(url, data) {
+	if (url.match(/^https?:\/\//)) {
+		data = {url, data};
+		url = 'php/request/post.php';
+	}
+
+	return axios.post(url, Qs.stringify(data)).then(result => {
+		var {data} = result;
+		if (data && data.isString)
+			return data.trim();
+		return data;
+	});
+}
+
+function json_post(url, data, header, stream) {
+	var method = 'post';
+	if (url.match(/^https?:\/\//)) {
+		data = {url, data};
+		url = 'php/request/post.php';
+		data.header = header;
+		if (stream) {
+			var {id, signal, onmessage, onclose, onerror} = stream;
+			data.id = id;
+			return fetchEventSource(url, {
+				method,
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(data),
+				signal,
+				onmessage,
+				onclose,
+				onerror,
+				onopen(response) {
+					if (response.ok && response.headers.get("content-type").includes("text/event-stream")) {
+						return; // everything's good
+					} else if (response.status >= 400 && response.status < 500 &&response.status !== 429) {
+						// client-side errors are usually non-retriable:
+						throw new FatalError();
+					} else {
+						throw new FatalError();
+					}
+				},
+				openWhenHidden: true
+			});
+		}
+	}
+
+	var header = {'Content-Type': 'application/json'};
+	return axios({url, method, data, header}).then(result => {
+		var {data} = result;
+		if (data.isString && data.back() == '\n')
+			data = data.slice(0, -1);
+		return data;
+	});
+}
+
+function octet_stream_post(url, data, successCallback, errorCallback) {
+	var {filename, binary} = data;
+	var xhr = new XMLHttpRequest();
+	xhr.open("POST", url);
+	xhr.setRequestHeader('filename', filename);
+	xhr.overrideMimeType("application/octet-stream");
+	if(xhr.sendAsBinary)
+		xhr.sendAsBinary(binary);
+	else
+		xhr.send(binary);
+
+	xhr.onreadystatechange = function(event){
+		if(xhr.readyState===4){
+			if(xhr.status===200){
+				var jqXHR = event.target;
+				if (successCallback) {
+					successCallback(JSON.parse(jqXHR.responseText));
+				}
+			}else{
+				if (errorCallback) {
+					errorCallback(jqXHR.responseText);
+				}
+			}
+		}
+	}
+}
+
+function ord(s) {
+	return s.charCodeAt(0);
+}
+function chr(unicode) {
+	return String.fromCharCode(unicode);
+}
+function strlen(s) {
+	var length = 0;
+	for (let i = 0; i < s.length; i++) {
+		var code = s.charCodeAt(i)
+		switch (code) {
+		case 0x2002:
+		//case 0x2014:
+		case 0x2212:
+			length += 1;
+			break;
+		default:
+			if (code & 0xff80)
+				length += 2;
+			else
+				length += 1;
+		}
+	}
+	return length;
+}
+
+function getParameterByName(name, defaultValue) {
+	return new URLSearchParams(window.location.search).get(name) || defaultValue;
+}
+
+function getParameter(name, evaluate) {
+	var attrs = [];
+	for (var m of name.matchAll(/\[([^\[\]]+)\]/g)) {
+		attrs.push(m[1]);
+	}
+	name = name.replace(/(\[[^\[\]]+\])/g, "");
+	var reg = new RegExp("(?<=^|&)" + name + "((?:\\[[^\\[\\]]+\\])*)=([^&]*)(?=&|$)", 'g');
+	var {search} = window.location;
+	if (search.startsWith("?")) {
+		search = search.substr(1);
+		var result = {};
+		var hit = false;
+		for (var m of search.matchAll(reg)) {
+			var attr = m[1];
+			var expr = unescape(m[2]);
+			if (evaluate) {
+				if (expr && expr.isString)
+					expr = eval(expr);
+			}
+			if (attr) {
+				var arglist = [];
+				for (var m of attr.matchAll(/\[([^\[\]]+)\]/g)) {
+					arglist.push(m[1]);
+				}
+
+				if (attrs.length) {
+					if (attrs.equals(arglist))
+						return expr;
+
+					if (attrs.length >= arglist.length || arglist.slice(0, attrs.length).equals(attrs))
+						continue;
+
+					arglist = arglist.slice(attrs.length);
+				}
+				setitem(result, ...arglist, expr);
+				hit = true;
+			}
+			else {
+				if (!attrs.length) {
+					return expr;
+				}
+			}
+		}
+		if (hit) {
+			if (!attrs.length) {
+				return list(result);
+			}
+		}
+	}
+}
+
+function getParameters() {
+	var kwargs = {};
+	var search = window.location.search;
+	if (search.startsWith("?")) {
+		for (var tuple of search.slice(1).split('&')) {
+			input_kwargs(kwargs, ...tuple.split('='));
+		}
+	}
+
+	return kwargs;
+}
+
+function input_kwargs(kwargs, name, value){
+	if (name.match(/[\[\]]+/)) {
+		name = name.split(/[\[\]]+/);
+		name = name.slice(0, -1);
+		setitem(kwargs, ...name, value);
+	}
+	else {
+		kwargs[name] = value;
+	}
+}
+
+function equals(obj, _obj){
+	if (obj == null){
+		return _obj == null;
+	}
+
+	if (_obj == null){
+		return false;
+	}
+
+	if (Array.isArray(obj)){
+		if (Array.isArray(_obj)){
+			return obj.equals(_obj);
+		}
+		return false;
+	}
+
+	if (Array.isArray(_obj)){
+		return false;
+	}
+
+	if (typeof(obj) === "object"){
+		if (typeof(_obj) === "object"){
+			return dict_equals(obj, _obj);
+		}
+		return false;
+	}
+
+	if (typeof(_obj) === "object"){
+		return false;
+	}
+
+	return obj == _obj;
+}
+
+function dict_equals(dict, _dict){
+	var keys = Object.keys(dict);
+	var _keys = Object.keys(_dict);
+	if (keys.length != _keys.length)
+		return false;
+
+	for (let key of keys){
+		if (!_dict.hasOwnProperty(key))
+			return false;
+
+		if (!equals(dict[key], _dict[key])){
+			return false;
+		}
+	}
+
+	return true;
+}
+
+function compareTo(lhs, rhs) {
+	if (lhs.isString)
+		return compareTo(lhs.map(ch => ord(ch)), rhs.map(ch => ord(ch)));
+	if (lhs.isArray) {
+		for (var [lhs, rhs] of zip(lhs, rhs)) {
+			var cmp = compareTo(lhs, rhs);
+			if (cmp)
+				return cmp;
+		}
+		return 0;
+	}
+	return lhs - rhs;
+}
 /**
  * @template T
  */
@@ -1886,97 +2035,6 @@ function deepCopy(obj, excludes) {
 		result.__proto__ = obj.__proto__;
 	return result;
 }
-
-
-HTMLElement.prototype.getScrollTop = function() {
-	var scrollTop = 0;
-
-	var current = this;
-	while (current !== null) {
-		scrollTop += current.scrollTop;
-		current = current.parentElement;
-	}
-
-	return scrollTop;
-};
-
-HTMLElement.prototype.getOffsetTop = function() {
-	var offsetTop = 0;
-
-	var current = this;
-	while (current !== null) {
-		offsetTop += current.offsetTop;
-		current = current.offsetParent;
-	}
-
-	return offsetTop;
-};
-
-HTMLElement.prototype.getScrollLeft = function() {
-	var scrollLeft = 0;
-
-	var current = this;
-	while (current !== null) {
-		scrollLeft += current.scrollLeft;
-		current = current.parentElement;
-	}
-
-	return scrollLeft;
-};
-
-HTMLElement.prototype.getOffsetLeft = function() {
-	var offsetLeft = 0;
-
-	var current = this;
-	while (current !== null) {
-		offsetLeft += current.offsetLeft;
-		current = current.offsetParent;
-	}
-
-	return offsetLeft;
-};
-
-HTMLElement.prototype.coordinate = function(rate_x, rate_y) {
-	var rect = this.getBoundingClientRect();
-	return [rect.x + rect.width * rate_x, rect.y + rect.height * rate_y];
-};
-
-HTMLElement.prototype.contain = function(x0, y0) {
-	var rect = this.getBoundingClientRect();
-	return x0 >= rect.x && x0 < rect.x + rect.width && y0 >= rect.y && y0 < rect.y + rect.height;
-};
-
-HTMLElement.prototype.center = function() {
-	return this.coordinate(0.5, 0.5);
-};
-
-HTMLElement.prototype.distance = function(rhs) {
-	var [x0, y0] = this.center();
-	if (!Array.isArray(rhs))
-		rhs = rhs.center();
-
-	var [x1, y1] = rhs;
-	return distance(x0, y0, x1, y1);
-};
-
-HTMLElement.prototype.hiddenStatus = function() {
-    const {scrollLeft, scrollTop, clientWidth, clientHeight} = document.documentElement;
-    var offsetLeft = this.getOffsetLeft() - scrollLeft;
-    var offsetTop = this.getOffsetTop() - scrollTop;
-	var {offsetWidth, offsetHeight} = this;
-
-    var hidden = {};
-    if (offsetTop < 0)
-    	hidden.y = offsetTop;
-    else if (offsetTop + offsetHeight > clientHeight)
-    	hidden.y = offsetTop + offsetHeight - clientHeight;
-
-    if (offsetLeft < 0)
-    	hidden.x = offsetLeft;
-    else if (offsetLeft + offsetWidth > clientWidth)
-    	hidden.x = offsetLeft + offsetWidth - clientWidth;
-    return hidden;
-};
 
 function intersects(rectA, rect) {
 	function intersects(rangeA, rangeB){
@@ -4394,6 +4452,19 @@ function partitionText(text, d){
 }
 
 
+function *zip() {
+	var size = Infinity;
+	for (var arr of arguments) {
+		size = Math.min(arr.length, size);
+	}
+	for (var i of range(size)) {
+		var arrs = [];
+		for (var arr of arguments) {
+			arrs.push(arr[i]);
+		}
+		yield arrs;
+	}
+}
 function zipped() {
     return [...zip(...arguments)];
 }
@@ -4731,7 +4802,7 @@ function addCSS(cssText){
 	head.appendChild(style);
 }
 
-function items(dict, reverse) {
+function sortedDictEntries(dict, reverse) {
 	dict = Object.entries(dict);
 	dict.sort(reverse ? (lhs, rhs) => rhs[0].compareTo(lhs[0]): (lhs, rhs) => lhs[0].compareTo(rhs[0]));
 	return dict;
@@ -5195,13 +5266,12 @@ const clipboard = {
 	},
 };
 
-async function query(host, token, sql) {
+async function query(host, sql) {
 	var data = {sql};
-	data.token = token;
 	var kwargs = {};
 	if (host && host != 'localhost')
 		kwargs.host = host;
-	return await form_post('query.php?' + get_url(kwargs), data);
+	return await form_post('query?' + get_url(kwargs), data);
 }
 
 function fetchEventSource(input, _a) {
@@ -5480,3 +5550,119 @@ function isinstance(obj, cls) {
 		return obj instanceof cls;
 }
 console.log("import std.js");
+Object.assign(globalThis, {
+	Complement,
+	Cookie,
+	Deque,
+	EmptySet,
+	FatalError,
+	Intersection,
+	Parallelogram,
+	Polygon,
+	PriorityQueue,
+	Range,
+	Rational,
+	Real,
+	Rectangle,
+	SymbolicSet,
+	Tetragon,
+	Trapezoid,
+	TrapezoidH,
+	TrapezoidV,
+	Triangle,
+	Union,
+	_merge_sort,
+	addCSS,
+	argmax,
+	argmin,
+	array_push,
+	arraycopy,
+	batches,
+	chr,
+	clipboard,
+	cmp,
+	compareTo,
+	compare_debug,
+	computed,
+	convertWithAlignment,
+	createApp,
+	deepCopy,
+	deleteIndices,
+	dict_equals,
+	distance,
+	enumerate,
+	enumerated,
+	equals,
+	fetchEventSource,
+	form_post,
+	from,
+	fromEntries,
+	gcd,
+	get,
+	getClass,
+	getParameter,
+	getParameterByName,
+	getParameters,
+	get_class,
+	get_url,
+	get_url_array,
+	input_kwargs,
+	intersection,
+	intersects,
+	isEmpty,
+	isEnglish,
+	is_same,
+	isinstance,
+	items,
+	join,
+	json_extract,
+	json_post,
+	len,
+	list,
+	majority,
+	map,
+	mapped,
+	max,
+	mean,
+	merge_sort,
+	min,
+	not_any_of,
+	octet_stream_post,
+	ord,
+	params,
+	parseTSV,
+	partition,
+	partitionText,
+	pop,
+	prod,
+	query,
+	quote,
+	quote_html,
+	randrange,
+	range,
+	ranged,
+	reversed,
+	rotateLeft,
+	rotatePoint,
+	rotateRight,
+	rotationMatrix,
+	sample,
+	saveFile,
+	setAttribute,
+	setitem,
+	sortedDictEntries,
+	sleep,
+	solve_x,
+	solve_y,
+	split_filename,
+	str,
+	str_html,
+	strlen,
+	sum,
+	sunday,
+	toUnicodeDigit,
+	topologicalSortDepthFirst,
+	track_mounted,
+	zip,
+	zipped,
+});}
