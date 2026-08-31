@@ -12,7 +12,6 @@ from . import ArgIte
 from . import GtAddArgS
 from . import Pow_Inv
 from . import PowExp_Inv
-from . import OrEqS_Div
 from . import Conj
 from . import ArgMul
 from . import Eq_Mul_Pow_SubCeilS
@@ -25,7 +24,6 @@ from . import CeilSubDivArg
 from . import OrEqSCeil
 from . import CeilSubDivMul3Arg
 from . import EqCeilSubDivS
-from . import OrOrSEqS
 from . import OrEqS
 from . import Add
 from . import Eq
@@ -42,11 +40,14 @@ from . import EqIm
 from . import EqRe
 from . import Eq_SquareAddMulSqrt
 from . import Eq0Add_Pow_3
-from . import Imp_OrOrSEqS
-from . import Imp_OrOrSEqS_Sub
-from . import ArgExpMulI
-from . import ArgAdd
-from . import Sign
 from . import In_Finset_AddSMulS
 from . import OrOrSEqS_Div_2
 from . import In_Finset_SubSAddMulS
+from . import In_FinsetDivS_2DivS_2
+from . import In_FinsetDivS_Mul2
+from . import In_FinsetSqrtS_NegSSqrt
+from . import In_Ite_FinsetS
+from . import In_Ite_FinsetSSubS__SubS
+from . import Sign
+from . import ArgExpMulI
+from . import ArgAdd

@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(fx, x=None):
-    from Lemma.Complex.Imp_OrOrSEqS_Sub.Imp_OrOrSEqS_SubDiv_2.of.Eq0Add_Pow_4 import quartic_coefficient
+    from Lemma.Complex.In_Ite_FinsetSSubS__SubS.of.Eq0Add_Pow_4 import quartic_coefficient
     fx = fx.of(Equal[0])
     S[1], S[0], alpha, S[0], gamma = quartic_coefficient(fx, x=x)
     delta = alpha ** 2 - 4 * gamma
@@ -21,7 +21,7 @@ def prove(Eq):
     y = Symbol(x ** 2)
     Eq << Eq[0].subs(y.this.definition.reversed)
 
-    Eq << Complex.OrEqS_Div.of.Eq0Add_Mul_Square.Ne_0.apply(Unequal(1, 0, evaluate=False), Eq[-1], x=y)
+    Eq << Complex.In_FinsetDivS_Mul2.of.Eq0Add_Mul_Square.Ne_0.apply(Unequal(1, 0, evaluate=False), Eq[-1], x=y)
 
     Eq << Eq[-1].subs(y.this.definition)
 

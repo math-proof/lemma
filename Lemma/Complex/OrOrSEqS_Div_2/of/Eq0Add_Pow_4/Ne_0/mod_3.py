@@ -8,7 +8,7 @@ def apply(fx, mod_is_zero, is_nonzero, x=None):
 
     from Lemma.Rat.Ne_Div_2.of.Eq0AddSubSub_Pow_3.Ne_0 import cubic_delta
     from Lemma.Complex.Eq0Add_Pow_3.given.Eq_SubAdd_Pow_SubCeilSSubDivMul3Arg.sub import cubic_solve
-    from Lemma.Complex.Imp_OrOrSEqS_Sub.Imp_OrOrSEqS_SubDiv_2.of.Eq0Add_Pow_4 import quartic_coefficient
+    from Lemma.Complex.In_Ite_FinsetSSubS__SubS.of.Eq0Add_Pow_4 import quartic_coefficient
     fx = fx.of(Equal[0])
     S[1], S[0], alpha, beta, gamma = quartic_coefficient(fx, x=x)
 
@@ -86,9 +86,9 @@ def prove(Eq):
 
     Eq << Int.OrEqS_0.of.Square.apply(Eq[-1])
 
-    Eq << Eq[-1].this.args[0].apply(Complex.OrEqS_Div.of.Eq0Add_Mul_Square.Ne_0, Unequal(1, 0, evaluate=False))
+    Eq << Eq[-1].this.args[0].apply(Complex.In_FinsetDivS_Mul2.of.Eq0Add_Mul_Square.Ne_0, Unequal(1, 0, evaluate=False))
 
-    Eq.root = Eq[-1].this.args[-1].apply(Complex.OrEqS_Div.of.Eq0Add_Mul_Square.Ne_0, Unequal(1, 0, evaluate=False))
+    Eq.root = Eq[-1].this.args[-1].apply(Complex.In_FinsetDivS_Mul2.of.Eq0Add_Mul_Square.Ne_0, Unequal(1, 0, evaluate=False))
 
     Eq << Eq[4] * 6
 

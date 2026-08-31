@@ -829,14 +829,6 @@ function compile_python_file($py)
     foreach ($text as $line) {
         error_log($line);
     }
-    // $user = basename(dirname(dirname(__file__)));
-    // if (std\is_linux()) {
-    // $url = "https://www.lemma.cn:5000/compile";
-    // } else {
-    // $url = "http://localhost:5000/compile";
-    // }
-
-    // $data = ["py"=> $py];
     return "error detected!";
 }
 

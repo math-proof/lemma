@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(fx, x=None):
-    from Lemma.Complex.Imp_OrOrSEqS_Sub.Imp_OrOrSEqS_SubDiv_2.of.Eq0Add_Pow_4 import quartic_coefficient
+    from Lemma.Complex.In_Ite_FinsetSSubS__SubS.of.Eq0Add_Pow_4 import quartic_coefficient
     from Lemma.Complex.Eq0Add_Pow_3.given.Eq_SubAdd_Pow_SubCeilSSubDivMul3Arg.sub import cubic_solve
     from Lemma.Rat.Ne_Div_2.of.Eq0AddSubSub_Pow_3.Ne_0 import cubic_delta
     fx = fx.of(Equal[0])
@@ -22,7 +22,7 @@ def apply(fx, x=None):
     A = U ** (S.One / 3)
     B = V ** (S.One / 3)
 
-    from Lemma.Complex.OrOrSEqS_Div_2.of.Eq0Add_Pow_4.Ne_0 import solver_set
+    from Lemma.Complex.In_FinsetDivS_2DivS_2.of.Eq0Add_Pow_4.Ne_0 import solver_set
     delta = alpha ** 2 - 4 * gamma
 
     return Imply(Equal(beta, 0), Equal(x, sqrt((sqrt(delta) - alpha) / 2)) | Equal(x, -sqrt((sqrt(delta) - alpha) / 2)) | Equal(x, sqrt((-sqrt(delta) - alpha) / 2)) | Equal(x, -sqrt((-sqrt(delta) - alpha) / 2))), \
@@ -43,9 +43,9 @@ def prove(Eq):
 
     Eq <<= Bool.ImpEq.of.ImpEq.subst.apply(Eq[-2]), Bool.Imp_And.of.ImpAnd.apply(Eq[-1])
 
-    Eq << Eq[-2].this.rhs.apply(Complex.OrOrSEqS.of.Eq0Add_Pow_4, x)
+    Eq << Eq[-2].this.rhs.apply(Complex.In_FinsetSqrtS_NegSSqrt.of.Eq0Add_Pow_4, x)
 
-    Eq << Bool.Imp.Imp.of.Imp_And.apply(Eq[-1].this.rhs.apply(Complex.OrOrSEqS_Div_2.of.Eq0Add_Pow_4.Ne_0, x), None)
+    Eq << Bool.Imp.Imp.of.Imp_And.apply(Eq[-1].this.rhs.apply(Complex.In_FinsetDivS_2DivS_2.of.Eq0Add_Pow_4.Ne_0, x), None)
 
 
 if __name__ == '__main__':
