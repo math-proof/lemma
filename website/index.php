@@ -56,8 +56,6 @@ switch ($lang) {
 
         $history = '探索历程';
         $userManual = '操作手册';
-        $signIn = '登陆';
-        $signUp = '注册';
         $programmingReference = "编程参考";
         break;
     default:
@@ -82,8 +80,6 @@ switch ($lang) {
         $history = 'Breif History';
         
         $userManual = 'User Manual';
-        $signIn = 'Sign In';
-        $signUp = 'Sign UP';
         $programmingReference = "Programming Reference";
         break;
 }
@@ -109,8 +105,6 @@ switch ($lang) {
 					<option value=fr <?php echo $lang == 'fr'? 'selected': ''?>>Français</option>
 				</select>
 				<br>
-				<a href='signin.php?lang=<?php echo $lang ?>' align='left'><?php echo $signIn ?></a>
-				<a href='signup.php?lang=<?php echo $lang ?>' align='left'><?php echo $signUp ?></a>
 			</div>
 
 		</div>

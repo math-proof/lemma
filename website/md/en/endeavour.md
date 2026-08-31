@@ -1,7 +1,7 @@
 <div id="body">
-	<h1>Road Map of axiom.top</h1>
+	<h1>Road Map of lemma.cn</h1>
 	<p>
-		The ultimate ideal of axiom.top is Mathematics Mechanization which is
+		The ultimate ideal of lemma.cn is Mathematics Mechanization which is
 		also the goal of the Chinese institute: <a href="http://www.mmrc.iss.ac.cn/">
 			Key Laboratory of Mathematics Mechanization, CAS</a>. So far, its
 		research result is not open to general public. As of this writing, in

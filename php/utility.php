@@ -831,7 +831,7 @@ function compile_python_file($py)
     }
     // $user = basename(dirname(dirname(__file__)));
     // if (std\is_linux()) {
-    // $url = "https://www.axiom.top:5000/compile";
+    // $url = "https://www.lemma.cn:5000/compile";
     // } else {
     // $url = "http://localhost:5000/compile";
     // }

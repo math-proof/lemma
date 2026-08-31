@@ -70,7 +70,7 @@ def prove(Eq):
 
     Eq.eq = Eq[-1].this.apply(Int.EqAdd.Is.Eq_Sub, lhs=slice(0, 3))
 
-    Eq << Equal(cubic_delta(y, alpha, beta, gamma), 0).this.apply(Complex.Eq0Add_Pow_3.given.Eq_SubAdd_Pow_SubCeilSSubDivMul3Arg, y, d=1)
+    Eq << Equal(cubic_delta(y, alpha, beta, gamma), 0).this.apply(Complex.Eq0Add_Pow_3.given.In_Finset_SubSAddMulS, y, d=1)
 
     Eq << Eq[-1].subs(Eq[1])
 

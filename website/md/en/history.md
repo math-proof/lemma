@@ -1,4 +1,4 @@
-# Brief history of development of axiom.top
+# Brief history of development of lemma.cn
   <br>
 
 
@@ -31,7 +31,7 @@ translated into a Python project.<br>
 
 ------
 In 2018, the writer established a website, namely <a href="../axiom">
-	axiom.top</a> for the purpose of sharing this axiomatized reasoning
+	lemma.cn</a> for the purpose of sharing this axiomatized reasoning
 system. The writer also hopes that with the aid of open-source
 community, a large data-set can be established by volunteer engineers,
 so that further development of advanced analysis tool based on
