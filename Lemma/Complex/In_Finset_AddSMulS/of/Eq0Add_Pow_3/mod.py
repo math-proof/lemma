@@ -65,15 +65,15 @@ def prove(Eq):
 
     Eq << Bool.OrAndS.of.And_Or.apply(Eq[-1], simplify=None)
 
-    Eq << Eq[-1].this.find(Equal[-2] & Equal[0]).apply(Complex.In_Finset_AddMulS.of.Eq0Add_Pow_3, x, ret=0)
+    Eq << Eq[-1].this.find(Equal[-2] & Equal[0]).apply(Complex.In_Finset_AddSMulS.of.Eq0Add_Pow_3, x, ret=0)
 
-    Eq << Eq[-1].this.find(Equal[-1] & Equal[0]).apply(Complex.In_Finset_AddMulS.of.Eq0Add_Pow_3, x, ret=0)
+    Eq << Eq[-1].this.find(Equal[-1] & Equal[0]).apply(Complex.In_Finset_AddSMulS.of.Eq0Add_Pow_3, x, ret=0)
 
-    Eq << Eq[-1].this.find(Equal[0] & Equal[0]).apply(Complex.In_Finset_AddMulS.of.Eq0Add_Pow_3, x, ret=0)
+    Eq << Eq[-1].this.find(Equal[0] & Equal[0]).apply(Complex.In_Finset_AddSMulS.of.Eq0Add_Pow_3, x, ret=0)
 
-    Eq << Eq[-1].this.find(Equal[S(1)] & Equal[0]).apply(Complex.In_Finset_AddMulS.of.Eq0Add_Pow_3, x, ret=0)
+    Eq << Eq[-1].this.find(Equal[S(1)] & Equal[0]).apply(Complex.In_Finset_AddSMulS.of.Eq0Add_Pow_3, x, ret=0)
 
-    Eq << Eq[-1].this.find(Equal[S(2)] & Equal[0]).apply(Complex.In_Finset_AddMulS.of.Eq0Add_Pow_3, x, ret=0)
+    Eq << Eq[-1].this.find(Equal[S(2)] & Equal[0]).apply(Complex.In_Finset_AddSMulS.of.Eq0Add_Pow_3, x, ret=0)
 
     # find Equal[S(1)] & Equal[S(-2)]
     Eq << Eq[-1].this.args[:3:2].apply(Bool.And_Or.of.OrAndS)

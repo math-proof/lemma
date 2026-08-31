@@ -50,7 +50,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS, simplify=None)
 
-    Eq << Complex.In_Finset_AddMulS.of.Eq0Add_Pow_3.mod.apply(Eq[-1], x=x)
+    Eq << Complex.In_Finset_AddSMulS.of.Eq0Add_Pow_3.mod.apply(Eq[-1], x=x)
 
     Eq <<= Eq[-3].subs(Eq.x_def), Eq[-2].subs(Eq.x_def), Eq[-1].subs(Eq.x_def)
 
