@@ -4,7 +4,7 @@ from util import *
 @apply
 def apply(fx, x=None):
     from Lemma.Complex.In_Ite_FinsetSSubS__SubS.of.Eq0Add_Pow_4 import quartic_coefficient
-    from Lemma.Complex.Eq0Add_Pow_3.given.Eq_SubAdd_Pow_SubCeilSSubDivMul3Arg.sub import cubic_solve
+    from Lemma.Complex.Eq0Add_Pow_3.given.In_Finset_SubSAddMulS.sub import cubic_solve
     from Lemma.Rat.Ne_Div_2.of.Eq0AddSubSub_Pow_3.Ne_0 import cubic_delta
     fx = fx.of(Equal[0])
     S[1], S[0], alpha, beta, gamma = quartic_coefficient(fx, x=x)

@@ -2,20 +2,17 @@ from util import *
 
 
 @apply
-def apply(fx, add_is_zero, is_nonzero, x=None):
-    from Lemma.Complex.Eq0Add_Pow_3.given.Eq_SubAdd_Pow_SubCeilSSubDivMul3Arg.sub import cubic_solve
-    from Lemma.Rat.Ne_Div_2.of.Eq0AddSubSub_Pow_3.Ne_0 import cubic_delta
-    try:
-        (c, p), d = add_is_zero.of(Equal[Ceil - Piecewise])
-        _d = Ceil(c) - Piecewise(*p)
-    except:
-        fx, add_is_zero = add_is_zero, fx
-        _d, d = add_is_zero.of(Equal)
+def apply(fx, mod_is_zero, is_nonzero, x=None):
+    if fx.lhs.is_Mod:
+        fx, mod_is_zero = mod_is_zero, fx
 
+    from Lemma.Rat.Ne_Div_2.of.Eq0AddSubSub_Pow_3.Ne_0 import cubic_delta
+    from Lemma.Complex.Eq0Add_Pow_3.given.In_Finset_SubSAddMulS.sub import cubic_solve
     from Lemma.Complex.In_Ite_FinsetSSubS__SubS.of.Eq0Add_Pow_4 import quartic_coefficient
     fx = fx.of(Equal[0])
     S[1], S[0], alpha, beta, gamma = quartic_coefficient(fx, x=x)
 
+    _d, d = mod_is_zero.of(Equal[Expr % 3])
     y_delta = cubic_delta(x, alpha, beta, gamma)
     S[_d], y0 = cubic_solve(y_delta, x, d)
 
@@ -52,7 +49,7 @@ def apply(fx, add_is_zero, is_nonzero, x=None):
 @prove
 def prove(Eq):
     from Lemma import Nat, Int, Complex, Real, Bool, Rat
-    from Lemma.Complex.Eq0Add_Pow_3.given.Eq_SubAdd_Pow_SubCeilSSubDivMul3Arg.sub import cubic_solve
+    from Lemma.Complex.Eq0Add_Pow_3.given.In_Finset_SubSAddMulS.sub import cubic_solve
     from Lemma.Rat.Ne_Div_2.of.Eq0AddSubSub_Pow_3.Ne_0 import cubic_delta
 
     d = 1
@@ -60,9 +57,9 @@ def prove(Eq):
     fx = x ** 4 + alpha * x ** 2 + beta * x + gamma
     y_delta = cubic_delta(y, alpha, beta, gamma)
     _d, y0 = cubic_solve(y_delta, y, d)
-    y = Symbol(y0)
-    Eq << apply(Equal(fx, 0), Equal(_d, d), Unequal(beta, 0), x=x)
+    Eq << apply(Equal(fx, 0), Equal(_d % 3, d), Unequal(beta, 0), x=x)
 
+    y = Symbol(y0)
     Eq << y.this.definition
 
     Eq << ((x ** 2 + y) ** 2).this.apply(Nat.SquareAdd.eq.AddAdd_SquareS_Mul2Add)
@@ -73,7 +70,7 @@ def prove(Eq):
 
     Eq.eq = Eq[-1].this.apply(Int.EqAdd.Is.Eq_Sub, lhs=slice(0, 3))
 
-    Eq << Equal(cubic_delta(y, alpha, beta, gamma), 0).this.apply(Complex.Eq0Add_Pow_3.given.Eq_SubAdd_Pow_SubCeilSSubDivMul3Arg.sub, y, d=1)
+    Eq << Equal(cubic_delta(y, alpha, beta, gamma), 0).this.apply(Complex.Eq0Add_Pow_3.given.In_Finset_SubSAddMulS, y, d=1)
 
     Eq << Eq[-1].subs(Eq[1])
 
@@ -143,5 +140,5 @@ def prove(Eq):
 
 if __name__ == '__main__':
     run()
-# created on 2018-11-14
+# created on 2018-11-26
 # updated on 2026-08-28

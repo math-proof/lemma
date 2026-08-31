@@ -25,7 +25,7 @@ def solver_set(d, A, B, x, alpha, beta, w, offset=0):
 @apply
 def apply(is_nonzero, fx, x=None):
     from Lemma.Complex.In_Ite_FinsetSSubS__SubS.of.Eq0Add_Pow_4 import quartic_coefficient
-    from Lemma.Complex.Eq0Add_Pow_3.given.Eq_SubAdd_Pow_SubCeilSSubDivMul3Arg.sub import cubic_solve
+    from Lemma.Complex.Eq0Add_Pow_3.given.In_Finset_SubSAddMulS.sub import cubic_solve
     from Lemma.Rat.Ne_Div_2.of.Eq0AddSubSub_Pow_3.Ne_0 import cubic_delta
     fx = fx.of(Equal[0])
     S[1], S[0], alpha, beta, gamma = quartic_coefficient(fx, x=x)
@@ -60,19 +60,19 @@ def prove(Eq):
 
     Eq << Bool.Imp_And.of.ImpAnd.apply(Eq[-1])
 
-    Eq << Eq[-1].this.rhs.apply(Complex.OrOrSEqS_Div_2.of.Eq0Add_Pow_4.Ne_0.sub, x)
+    Eq << Eq[-1].this.rhs.apply(Complex.In_FinsetDivS_2DivS_2.of.Eq0Add_Pow_4.Ne_0.sub, x)
 
     Eq << Bool.Imp.of.Cond.apply(Eq[0] & Eq[1], cond=Eq[3].lhs)
 
     Eq << Bool.Imp_And.of.ImpAnd.apply(Eq[-1])
 
-    Eq << Eq[-1].this.rhs.apply(Complex.OrOrSEqS_Div_2.of.Eq0Add_Pow_4.Ne_0.mod_3, x)
+    Eq << Eq[-1].this.rhs.apply(Complex.In_FinsetDivS_2DivS_2.of.Eq0Add_Pow_4.Ne_0.mod_3, x)
 
     Eq << Bool.Imp.of.Cond.apply(Eq[0] & Eq[1], cond=Eq[4].lhs)
 
     Eq << Bool.Imp_And.of.ImpAnd.apply(Eq[-1])
 
-    Eq << Eq[-1].this.rhs.apply(Complex.OrOrSEqS_Div_2.of.Eq0Add_Pow_4.Ne_0.mod_3, x)
+    Eq << Eq[-1].this.rhs.apply(Complex.In_FinsetDivS_2DivS_2.of.Eq0Add_Pow_4.Ne_0.mod_3, x)
 
     # https://planetmath.org/QuarticFormula
     # https://en.wikipedia.org/wiki/Quartic_equation
@@ -82,3 +82,5 @@ if __name__ == '__main__':
     run()
 # created on 2018-11-27
 
+from . import mod_3
+from . import sub

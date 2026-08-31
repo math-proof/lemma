@@ -41,7 +41,6 @@ from . import EqRe
 from . import Eq_SquareAddMulSqrt
 from . import Eq0Add_Pow_3
 from . import In_Finset_AddSMulS
-from . import OrOrSEqS_Div_2
 from . import In_Finset_SubSAddMulS
 from . import In_FinsetDivS_2DivS_2
 from . import In_FinsetDivS_Mul2

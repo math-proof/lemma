@@ -1,7 +1,12 @@
 from util import *
 
 
-def cubic_solve(fx, x, d=None):
+@apply
+def apply(given, x=None, d=1):
+    fx, rhs = given.of(Equal)
+    if not rhs.is_Zero:
+        fx -= rhs
+
     from Lemma.Complex.In_Finset_SubSAddMulS.of.Eq0Add_Mul_Pow_3.Ne_0 import cubic_coefficient
     S[1], a, b, c = cubic_coefficient(fx, x=x)
     q = a ** 3 / 27 * 2 + c - a * b / 3
@@ -15,31 +20,17 @@ def cubic_solve(fx, x, d=None):
     w = -S.One / 2 + sqrt(3) / 2 * S.ImaginaryUnit
     arg_p = Ceil(3 * Arg(-p / 3) / (S.Pi * 2) - S.One / 2)
     arg_AB = Piecewise((0, Equal(p * Ceil((Arg(U) + Arg(V)) / (2 * S.Pi) - S.One / 2), 0)), (1, Arg(U) + Arg(V) > S.Pi), (-1, True))
-    if d is None:
-        x0 = A + B
-        x1 = A * w + B
-        x2 = A * ~w + B
-        return arg_p - arg_AB, x0 - a / 3, x1 - a / 3, x2 - a / 3
 
     if d == 0:
         x0 = A + B
-    elif d % 3 == 1:
+    elif d == 1:
         x0 = A * w + B
-    elif d % 3 == 2:
+    elif d == 2:
         x0 = A * ~w + B
     else:
         ...
 
-    return arg_p - arg_AB, x0 - a / 3
-
-@apply
-def apply(given, x=None, d=0):
-    fx, rhs = given.of(Equal)
-    if not rhs.is_Zero:
-        fx -= rhs
-    _d, x0 = cubic_solve(fx, x, d)
-
-    return Equal(_d, d), Equal(x, x0)
+    return Equal((arg_p - arg_AB) % 3, d), Equal(x, x0 - a / 3)
 
 
 @prove
@@ -64,17 +55,15 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS, simplify=None)
 
-    Eq << Complex.Eq0Add_Pow_3.given.Eq_AddMulPow_SubCeilSSubDivMul3Arg.sub.apply(Eq[-1], x=x, d=1)
+    Eq << Complex.Eq0Add_Pow_3.given.In_Finset_AddSMulS.apply(Eq[-1], x=x, d=1)
 
     Eq << Eq[-1].subs(Eq.x_def)
 
     Eq << Eq[-1].this.apply(Int.EqAdd.Is.Eq_Sub, lhs=1)
 
 
-
-
-
 if __name__ == '__main__':
     run()
-# created on 2018-11-10
-# updated on 2023-05-12
+# created on 2018-11-20
+# updated on 2023-05-19
+from . import sub
