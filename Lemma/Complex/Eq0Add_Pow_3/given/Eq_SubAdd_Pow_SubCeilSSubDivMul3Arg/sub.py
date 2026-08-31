@@ -2,7 +2,7 @@ from util import *
 
 
 def cubic_solve(fx, x, d=None):
-    from Lemma.Complex.Or_OrEqS_SubAddMulS.of.Eq0Add_Mul_Pow_3.Ne_0 import cubic_coefficient
+    from Lemma.Complex.Or_OrEqS_SubSAddMulS.of.Eq0Add_Mul_Pow_3.Ne_0 import cubic_coefficient
     S[1], a, b, c = cubic_coefficient(fx, x=x)
     q = a ** 3 / 27 * 2 + c - a * b / 3
     p = b - a ** 2 / 3
