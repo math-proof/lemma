@@ -41,9 +41,6 @@ from . import EqConj
 from . import EqIm
 from . import EqRe
 from . import Eq_SquareAddMulSqrt
-from . import Or_OrEqS_AddMulS
-from . import Or_OrEqS_SubAddMulS
-from . import OrOrSEqS_Div_2
 from . import Eq0Add_Pow_3
 from . import Imp_OrOrSEqS
 from . import Imp_OrOrSEqS_Sub
@@ -51,3 +48,6 @@ from . import ArgExpMulI
 from . import ArgAdd
 from . import Sign
 from . import In_Finset_AddMulS
+from . import In_Finset_SubAddMulS
+from . import Or_OrEqS_SubAddMulS
+from . import OrOrSEqS_Div_2
