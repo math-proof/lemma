@@ -48,6 +48,5 @@ from . import ArgExpMulI
 from . import ArgAdd
 from . import Sign
 from . import In_Finset_AddSMulS
-from . import Or_OrEqS_SubSAddMulS
-from . import In_Finset_SubSAddMulS
 from . import OrOrSEqS_Div_2
+from . import In_Finset_SubSAddMulS

@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(is_zero, x=None, d=0):
-    from Lemma.Complex.Or_OrEqS_SubSAddMulS.of.Eq0Add_Mul_Pow_3.Ne_0 import cubic_coefficient
+    from Lemma.Complex.In_Finset_SubSAddMulS.of.Eq0Add_Mul_Pow_3.Ne_0 import cubic_coefficient
     fx = is_zero.of(Equal[0])
     S[1], S[0], p, q = cubic_coefficient(fx, x=x)
 
