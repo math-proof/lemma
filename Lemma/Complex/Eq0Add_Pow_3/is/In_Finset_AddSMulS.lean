@@ -1,3 +1,4 @@
+import Lemma.Complex.ArgDiv.eq.Arg.of.Gt_0
 import Lemma.Complex.Eq0Add_Pow_3.is.In_Finset_AddSMulS.of.EqNeg_MulMul3.EqNeg_AddPowS_3
 import Lemma.Complex.Eq_Mul_Pow_SubCeilS.of.Pow_3
 import Lemma.Complex.EqSquareSqrt
@@ -25,7 +26,7 @@ private lemma main
     let A := ∛((-q + √δ) / 2)
     let B := ∛((-q - √δ) / 2)
     let ω := (I * (2 * π / 3)).exp
-    let k := ⌈3 * arg (-p / 3) / (2 * π) - 1 / 2⌉ - ⌈3 * arg (A * B) / (2 * π) - 1 / 2⌉
+    let k := ⌈3 * arg (-p) / (2 * π) - 1 / 2⌉ - ⌈3 * arg (A * B) / (2 * π) - 1 / 2⌉
     x ∈ ({A * ω ^ k + B, A * ω ^ (k - 1) + B * ω, A * ω ^ (k + 1) + B * ~ω} : Set ℂ) := by
 -- proof
   extract_lets δ A B ω k
@@ -70,6 +71,7 @@ private lemma main
         ring
       _ = 3 * ((-p / 3) * ω ^ (-k) * ω ^ k) := by
         rw [h]
+        erw [ArgDiv.eq.Arg.of.Gt_0 (by norm_num)]
         simp [k]
       _ = 3 * (-p / 3) := by
         rw [mul_assoc, ← zpow_add₀ hωne]

@@ -22,7 +22,7 @@ private lemma main
   let δ := 4 * p ^ 3 / 27 + q ^ 2
   let A := ∛((-q + √δ) / 2)
   let B := ∛((-q - √δ) / 2)
-  let k := ⌈3 * arg (-p / 3) / (2 * π) - 1 / 2⌉ - ⌈3 * arg (A * B) / (2 * π) - 1 / 2⌉
+  let k := ⌈3 * arg (-p) / (2 * π) - 1 / 2⌉ - ⌈3 * arg (A * B) / (2 * π) - 1 / 2⌉
   let ω := (I * (2 * π / 3)).exp
   let y := A * ω ^ k + B
   let y0 := -2 * α / 3 + y

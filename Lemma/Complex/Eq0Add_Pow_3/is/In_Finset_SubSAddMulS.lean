@@ -25,7 +25,7 @@ private lemma main
     let A := ∛((-q + √δ) / 2)
     let B := ∛((-q - √δ) / 2)
     let ω := (I * (2 * π / 3)).exp
-    let k := ⌈3 * arg (-p / 3) / (2 * π) - 1 / 2⌉ - ⌈3 * arg (A * B) / (2 * π) - 1 / 2⌉
+    let k := ⌈3 * arg (-p) / (2 * π) - 1 / 2⌉ - ⌈3 * arg (A * B) / (2 * π) - 1 / 2⌉
     x ∈ ({A * ω ^ k + B - a / 3, A * ω ^ (k - 1) + B * ω - a / 3, A * ω ^ (k + 1) + B * ~ω - a / 3} : Set ℂ) := by
 -- proof
   extract_lets p q δ A B ω k

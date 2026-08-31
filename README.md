@@ -271,6 +271,7 @@ Guidelines and prompts for using LLMs to write and refactor Lean 4 proofs in thi
   - use `by` only when it is one-liner statement with no `;`
   - avoid `calc`
 - follow `show` with `from`/`by` instead of `from by`
+- use `grind`/`aesop` as much as possible
 - After a bullet tactic (`·`), put the next statement on a new line when that branch contains more than one step.
 - implicit/instance (instImplicit) arguments should be put before the `given` section
 - default arguments should be put within the `given` section: propositions come first, expressions come next, unless otherwise specified
