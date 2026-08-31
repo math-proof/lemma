@@ -17,9 +17,9 @@ def prove(Eq):
     x, y = Symbol(shape=(n,), given=True, complex=True)
     Eq << apply(Equal(x @ Stack[k:n](p ** k), y @ Stack[k:n](p ** k)))
 
-    Eq << Tensor.Dot.cosine_similarity.apply(*Eq[0].lhs.args)
+    Eq << Tensor.Dot.comm.apply(*Eq[0].lhs.args)
 
-    Eq << Tensor.Dot.cosine_similarity.apply(*Eq[0].rhs.args)
+    Eq << Tensor.Dot.comm.apply(*Eq[0].rhs.args)
 
     Eq << Eq[0].subs(Eq[-1], Eq[-2])
 
