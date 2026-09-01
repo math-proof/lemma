@@ -62,7 +62,7 @@ def prove(Eq):
 
     Eq.matmul_QRK = Eq[-1].this.rhs.expr.args[1:].apply(Nat.AddMulS.eq.Mul_Add)
 
-    Eq << Eq[2].find(BlockMatrix @ BlockMatrix).this.apply(Tensor.DotAppendS.eq.AppendAddSDotS)
+    Eq << Eq[2].find(BlockMatrix @ BlockMatrix).this.apply(Tensor.DotAppendSHstackS.eq.AppendHstackSAddSDotS)
 
     Eq << Eq[-1].this.rhs.find(MatMul).apply(Tensor.Dot.eq.Sum)
 

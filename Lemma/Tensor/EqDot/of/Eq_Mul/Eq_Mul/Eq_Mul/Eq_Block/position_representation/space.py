@@ -127,9 +127,9 @@ def prove(Eq):
         [Zzr, Zzr, Zzc, Zzc, Zzz,  Iz]]
     Eq << Tensor.Dot.of.Eq.left.apply(Eq[-1], D_r)
 
-    Eq << Eq[-1].this.lhs.args[:2].apply(Tensor.DotAppendS.eq.AppendAddSDotS, deep=True)
+    Eq << Eq[-1].this.lhs.args[:2].apply(Tensor.DotAppendSHstackS.eq.AppendHstackSAddSDotS, deep=True)
 
-    Eq << Eq[-1].this.rhs.apply(Tensor.DotAppendS.eq.AppendAddSDotS, deep=True)
+    Eq << Eq[-1].this.rhs.apply(Tensor.DotAppendSHstackS.eq.AppendHstackSAddSDotS, deep=True)
 
     # swap the 1st and 3rd columns, 2nd and 4th columns of I Matrix, we get the column transformation
     D_c = [
@@ -141,15 +141,15 @@ def prove(Eq):
         [Zzr, Zzc, Zzz, Zzr, Zzc,  Iz]]
     Eq << Tensor.Dot.of.Eq.apply(Eq[-1], D_c)
 
-    Eq << Eq[-1].this.lhs.args[-2:].apply(Tensor.DotAppendS.eq.AppendAddSDotS, deep=True)
+    Eq << Eq[-1].this.lhs.args[-2:].apply(Tensor.DotAppendSHstackS.eq.AppendHstackSAddSDotS, deep=True)
 
-    Eq.eq_matmul = Eq[-1].this.rhs.apply(Tensor.DotAppendS.eq.AppendAddSDotS, deep=True)
+    Eq.eq_matmul = Eq[-1].this.rhs.apply(Tensor.DotAppendSHstackS.eq.AppendHstackSAddSDotS, deep=True)
 
-    Eq <<= (Eq.eq_matmul.lhs.args[0] @ D_c).this.apply(Tensor.DotAppendS.eq.AppendAddSDotS, deep=True),  (D_r @ Eq.eq_matmul.lhs.args[1]).this.apply(Tensor.DotAppendS.eq.AppendAddSDotS, deep=True)
+    Eq <<= (Eq.eq_matmul.lhs.args[0] @ D_c).this.apply(Tensor.DotAppendSHstackS.eq.AppendHstackSAddSDotS, deep=True),  (D_r @ Eq.eq_matmul.lhs.args[1]).this.apply(Tensor.DotAppendSHstackS.eq.AppendHstackSAddSDotS, deep=True)
 
     Eq << Eq[-2] @ Eq[-1]
 
-    Eq << Eq[-1].this.lhs.args[1:3].apply(Tensor.DotAppendS.eq.AppendAddSDotS, deep=True)
+    Eq << Eq[-1].this.lhs.args[1:3].apply(Tensor.DotAppendSHstackS.eq.AppendHstackSAddSDotS, deep=True)
 
     Eq << Eq[-1].this.find(BlockMatrix[2]).apply(Tensor.AppendHstackS.eq.Eye)
 

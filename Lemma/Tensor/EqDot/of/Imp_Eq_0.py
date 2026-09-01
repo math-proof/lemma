@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.args[1].apply(Tensor.SEq_Append, Min(i, j) + 1)
 
-    Eq << Eq[-1].this.lhs.apply(Tensor.DotAppendS.eq.AppendAddSDotS)
+    Eq << Eq[-1].this.lhs.apply(Tensor.DotAppendSHstackS.eq.AppendHstackSAddSDotS)
 
     Eq << Tensor.Eq_0.Dot.of.Imp_Eq_0.apply(Eq[0])
 

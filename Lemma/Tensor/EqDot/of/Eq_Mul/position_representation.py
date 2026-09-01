@@ -1,16 +1,16 @@
 from util import *
 
 
-def eq_theta(θ, d, b, k, i, λ=1):
-    return Equal(θ[k], λ * k / b ** (Stack[i:d / 2](i) / (d / 2)))
+def eq_theta(θ, d, b, i, j, λ=1):
+    return Equal(θ[i], λ * i / b ** (Stack[j:d / 2](j) / (d / 2)))
 
 def rotary_def(θ, d, k):
     return BlockMatrix([
         [Identity(d / 2) * cos(θ[k]), -Identity(d / 2) * sin(θ[k])],
         [Identity(d / 2) * sin(θ[k]), Identity(d / 2) * cos(θ[k])]])
 
-def rotary_matrix(R, θ, d, b, k, i, λ=1):
-    return eq_theta(θ, d, b, k, i, λ), Equal(R(k), rotary_def(θ, d, k))
+def rotary_matrix(R, θ, d, b, i, j, λ=1):
+    return eq_theta(θ, d, b, i, j, λ), Equal(R(i), rotary_def(θ, d, i))
 
 def extract_theta(eq_theta):
     (tλ, (b, ((k, limit_k), d))), (θ, t) = eq_theta.of(Equal[Expr / Symbol ** (2 * Stack / Symbol), Indexed])
@@ -20,19 +20,19 @@ def extract_theta(eq_theta):
     return d, b, λ, θ, t, k
 
 def extract(eq_theta, eq_R):
-    d, b, λ, θ, k, i = extract_theta(eq_theta)
+    d, b, λ, θ, i, j = extract_theta(eq_theta)
     ((cos, sin), (S[-sin], S[cos])), Rk = eq_R.of(Equal[BlockMatrix[BlockMatrix[1], BlockMatrix[1]]])
-    S[θ[k]] = cos.of(Cos[Expr] * Identity)
-    S[θ[k]] = sin.of(-Identity * Sin[Expr])
-    alpha = BlockMatrix(θ[k], θ[k])
+    S[θ[i]] = cos.of(Cos[Expr] * Identity)
+    S[θ[i]] = sin.of(-Identity * Sin[Expr])
+    alpha = BlockMatrix(θ[i], θ[i])
 
-    return Rk, d, alpha, θ, b, k, i, λ
+    return Rk, d, alpha, θ, b, i, j, λ
 
 @apply
 def apply(eq_theta, t):
-    d, b, λ, θ, k, i = extract_theta(eq_theta)
-    Rk = rotary_def(θ, d, k)
-    return Equal(Rk.subs(k, t).T @ Rk, Rk.subs(k, k - t))
+    d, b, λ, θ, i, j = extract_theta(eq_theta)
+    Rk = rotary_def(θ, d, i)
+    return Equal(Rk.subs(i, t).T @ Rk, Rk.subs(i, i - t))
 
 @prove
 def prove(Eq):
@@ -44,16 +44,16 @@ def prove(Eq):
     # d denotes embedding size which must be even
     d = Symbol(integer=True, positive=True, even=True)
     θ = Symbol(shape=(n, d / 2), real=True)
-    # k, t denote token index
-    # i denotes row index
-    i, k, t = Symbol(integer=True)
+    # i, t denote token index
+    # j denotes row index
+    i, j, t = Symbol(integer=True)
     # λ denotes scaling factor
     λ = Symbol(real=True)
-    Eq << apply(eq_theta(θ, d, b, k, i, λ), t)
+    Eq << apply(eq_theta(θ, d, b, i, j, λ), t)
 
-    Eq << Eq[1].subs(Eq[0]).subs(Eq[0].subs(k, t))
+    Eq << Eq[1].subs(Eq[0]).subs(Eq[0].subs(i, t))
 
-    Eq << Eq[-1].this.lhs.apply(Tensor.DotAppendS.eq.AppendAddSDotS, deep=True)
+    Eq << Eq[-1].this.lhs.apply(Tensor.DotAppendSHstackS.eq.AppendHstackSAddSDotS, deep=True)
 
     Eq <<= Eq[-1].lhs.find(MatMul).this.apply(Tensor.Dot.eq.Stack_Sum_MulGetS),\
         Eq[-1].lhs.find(MatMul[2]).this.apply(Tensor.Dot.eq.Stack_Sum_MulGetS),\
@@ -84,7 +84,7 @@ def prove(Eq):
         Eq[-1].find(Mul[KroneckerDelta] - Mul).this.apply(Nat.AddMulS.eq.Mul_Add)
     Eq << Eq[-3].subs(*Eq[-2:])
     Eq <<= Eq[-1].lhs.find(Sin * Sin + Cos * Cos).this.apply(Real.AddSinSin_CosCos.eq.CosSub), \
-        Eq[-1].lhs.find(Sin * Cos - Sin * Cos).this.apply(Real.Sub.eq.Sin)
+        Eq[-1].lhs.find(Sin * Cos - Sin * Cos).this.apply(Real.SubMulSSin_Cos.eq.SinSub)
 
     Eq << Eq[-3].subs(*Eq[-2:])
 
@@ -108,8 +108,8 @@ def prove(Eq):
 
     Eq << Eq[-1].rhs.find(Stack).this.apply(Tensor.Stack_PowGetS.eq.Pow)
 
-    j = Eq[-1].lhs.variable
-    Eq << Eq[0].subs(k, k - t).this.find(Stack).limits_subs(i, j).reversed
+    _j = Eq[-1].lhs.variable
+    Eq << Eq[0].subs(i, i - t).this.find(Stack).limits_subs(j, _j).reversed
 
     Eq << Eq[-5].subs(*Eq[-4:])
 

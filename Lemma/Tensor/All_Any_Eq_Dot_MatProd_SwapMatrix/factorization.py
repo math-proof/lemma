@@ -79,7 +79,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.expr.rhs.args[0].apply(Tensor.Stack.eq.AppendStackS)
 
-    Eq << MatMul(*Eq[-1].expr.expr.rhs.args[:2]).this.apply(Tensor.DotAppendS.eq.AppendAddSDotS, deep=True)
+    Eq << MatMul(*Eq[-1].expr.expr.rhs.args[:2]).this.apply(Tensor.DotAppendSHstackS.eq.AppendHstackSAddSDotS, deep=True)
 
     Eq << Eq[-1].subs(Eq[-1].rhs.args[0].this.T)
 

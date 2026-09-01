@@ -52,7 +52,7 @@ def prove(Eq):
 
     Eq << Eq.Dot.this.rhs.subs(Eq[-1])
 
-    Eq << Eq[-1].this.rhs.apply(Tensor.DotAppendS.eq.AppendAddSDotS, deep=True)
+    Eq << Eq[-1].this.rhs.apply(Tensor.DotAppendSHstackS.eq.AppendHstackSAddSDotS, deep=True)
 
     Eq << Eq[-1].this.rhs.find(MatMul).apply(Tensor.Dot.eq.Sum)
 

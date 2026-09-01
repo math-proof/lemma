@@ -134,7 +134,7 @@ from . import DotAppend
 from . import DotMulEye
 from . import Stack_PowGetS
 from . import MulAppend
-from . import DotAppendS
-from . import Ne_Dot
-from . import DetBlockStack_Pow
 from . import DetBlock_Stack_Pow
+from . import DotAppendSHstackS
+from . import DetBlockStack_Pow
+from . import Ne_Dot

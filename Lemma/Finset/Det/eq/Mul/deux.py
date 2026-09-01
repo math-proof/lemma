@@ -16,7 +16,7 @@ def prove(Eq):
     A, B = Symbol(shape=(n, n), complex=True)
     Eq << apply(Determinant(A @ B))
 
-    Eq << (BlockMatrix([[A, Zeros(n, n)], [Identity(n), B]]) @ BlockMatrix([[Identity(n), -B], [Zeros(n, n), Identity(n)]])).this.apply(Tensor.DotAppendS.eq.AppendAddSDotS, deep=True)
+    Eq << (BlockMatrix([[A, Zeros(n, n)], [Identity(n), B]]) @ BlockMatrix([[Identity(n), -B], [Zeros(n, n), Identity(n)]])).this.apply(Tensor.DotAppendSHstackS.eq.AppendHstackSAddSDotS, deep=True)
 
     Eq << Finset.EqDet.of.Eq.apply(Eq[-1])
 

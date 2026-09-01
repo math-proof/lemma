@@ -49,7 +49,7 @@ def prove(Eq):
     Eq << Eq[0].subs(i, i_quote).subs(j, j_quote).T @ Eq[0]
 
     Eq <<= Eq[-1].rhs.find(Sin * Sin + Cos * Cos).this.apply(Real.AddSinSin_CosCos.eq.CosSub),\
-        Eq[-1].rhs.find(Sin * Cos - Sin * Cos).this.apply(Real.Sub.eq.Sin)
+        Eq[-1].rhs.find(Sin * Cos - Sin * Cos).this.apply(Real.SubMulSSin_Cos.eq.SinSub)
 
     Eq << -Eq[-1]
 
@@ -58,7 +58,7 @@ def prove(Eq):
     Eq << Eq[-5].subs(*Eq[-4:])
 
     Eq <<= Eq[-1].rhs.find(Sin * Sin + Cos * Cos).this.apply(Real.AddSinSin_CosCos.eq.CosSub),\
-        Eq[-1].rhs.find(Sin * Cos - Sin * Cos).this.apply(Real.Sub.eq.Sin)
+        Eq[-1].rhs.find(Sin * Cos - Sin * Cos).this.apply(Real.SubMulSSin_Cos.eq.SinSub)
 
     Eq << -Eq[-1]
 

@@ -109,9 +109,9 @@ def prove(Eq):
     Eq << Eq[-1].this.rhs.apply(Nat.AddIteS.eq.IteAnd, deep=True, simplify=None)
 
     Eq <<= Eq[-1].rhs.find(Sin * Sin + Cos * Cos).this.apply(Real.AddSinSin_CosCos.eq.CosSub), \
-        Eq[-1].rhs.find(Sin * Cos - Sin * Cos).this.apply(Real.Sub.eq.Sin), \
+        Eq[-1].rhs.find(Sin * Cos - Sin * Cos).this.apply(Real.SubMulSSin_Cos.eq.SinSub), \
         Eq[-1].rhs.args[1].find(Sin * Sin + Cos * Cos).this.apply(Real.AddSinSin_CosCos.eq.CosSub), \
-        Eq[-1].rhs.args[1].find(Sin * Cos - Sin * Cos).this.apply(Real.Sub.eq.Sin)
+        Eq[-1].rhs.args[1].find(Sin * Cos - Sin * Cos).this.apply(Real.SubMulSSin_Cos.eq.SinSub)
 
     Eq << Eq[-5].subs(*Eq[-4:])
 

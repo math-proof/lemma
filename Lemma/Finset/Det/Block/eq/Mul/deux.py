@@ -35,15 +35,15 @@ def prove(Eq):
     C = Symbol(shape=(m, n), complex=True)
     Eq << apply(Determinant(BlockMatrix([[C, A],[B, Zeros(n, m)]])))
 
-    Eq << (Eq[0].lhs.arg @ BlockMatrix([[Zeros(n, m), Identity(n)],[Identity(m), Zeros(m, n)]])).this.apply(Tensor.DotAppendS.eq.AppendAddSDotS)
+    Eq << (Eq[0].lhs.arg @ BlockMatrix([[Zeros(n, m), Identity(n)],[Identity(m), Zeros(m, n)]])).this.apply(Tensor.DotAppendSHstackS.eq.AppendHstackSAddSDotS)
 
-    Eq << Eq[-1].this.rhs.find(MatMul).apply(Tensor.DotAppendS.eq.AppendAddSDotS)
+    Eq << Eq[-1].this.rhs.find(MatMul).apply(Tensor.DotAppendSHstackS.eq.AppendHstackSAddSDotS)
 
-    Eq << Eq[-1].this.rhs.find(MatMul).apply(Tensor.DotAppendS.eq.AppendAddSDotS)
+    Eq << Eq[-1].this.rhs.find(MatMul).apply(Tensor.DotAppendSHstackS.eq.AppendHstackSAddSDotS)
 
-    Eq << Eq[-1].this.rhs.find(MatMul).apply(Tensor.DotAppendS.eq.AppendAddSDotS)
+    Eq << Eq[-1].this.rhs.find(MatMul).apply(Tensor.DotAppendSHstackS.eq.AppendHstackSAddSDotS)
 
-    Eq << Eq[-1].this.rhs.find(MatMul).apply(Tensor.DotAppendS.eq.AppendAddSDotS)
+    Eq << Eq[-1].this.rhs.find(MatMul).apply(Tensor.DotAppendSHstackS.eq.AppendHstackSAddSDotS)
 
     Eq << Finset.EqDet.of.Eq.apply(Eq[-1])
 

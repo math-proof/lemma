@@ -4,7 +4,7 @@ from util import *
 @apply
 def apply(self):
     X = self.of(MatPow[Expr, 2])
-    from Lemma.Tensor.DotAppendS.eq.AppendAddSDotS import matmul
+    from Lemma.Tensor.DotAppendSHstackS.eq.AppendHstackSAddSDotS import matmul
     return Equal(self, matmul(X, X, deep=True))
 
 
@@ -34,7 +34,7 @@ def prove(Eq):
 
     Eq << Eq[-1] @ Eq[1].rhs
 
-    Eq << Eq[-1].this.lhs.apply(Tensor.DotAppendS.eq.AppendAddSDotS, deep=True)
+    Eq << Eq[-1].this.lhs.apply(Tensor.DotAppendSHstackS.eq.AppendHstackSAddSDotS, deep=True)
 
     Eq << Eq[-1].subs(Eq[1])
 

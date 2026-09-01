@@ -206,3 +206,4 @@ from . import Norm
 from . import AddSinSin_CosCos
 from . import EqSup
 from . import GtMinima
+from . import SubMulSSin_Cos

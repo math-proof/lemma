@@ -39,7 +39,7 @@ def prove(Eq):
             [Zeros(n - k - l, k), Zeros(n - k - l, l), Identity(n - k - l)]
         ]) ^ -1)
 
-    Eq << (Eq[0].lhs.find(BlockMatrix) @ Eq[0].rhs).this.apply(Tensor.DotAppendS.eq.AppendAddSDotS, True)
+    Eq << (Eq[0].lhs.find(BlockMatrix) @ Eq[0].rhs).this.apply(Tensor.DotAppendSHstackS.eq.AppendHstackSAddSDotS, True)
 
     Eq << Eq[-1].this.rhs.apply(Tensor.AppendHstackS.eq.Eye)
 

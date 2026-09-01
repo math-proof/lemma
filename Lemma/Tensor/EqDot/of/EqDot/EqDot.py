@@ -23,7 +23,7 @@ def prove(Eq):
     A, B, C, D, X, Y = Symbol(shape=(n, n), real=True)
     Eq << apply(Equal(A @ B, X), Equal(C @ D, Y))
 
-    Eq << Eq[-1].this.lhs.apply(Tensor.DotAppendS.eq.AppendAddSDotS, deep=True)
+    Eq << Eq[-1].this.lhs.apply(Tensor.DotAppendSHstackS.eq.AppendHstackSAddSDotS, deep=True)
 
     Eq << Eq[-1].subs(*Eq[:2])
 

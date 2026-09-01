@@ -21,7 +21,7 @@ def prove(Eq):
 
     j, i = Eq[0].lhs.arg.args[1].variables
     E = Stack[j:n + 1, i:n + 1]((-1) ** (j - i) * binomial(j, i))
-    Eq << (Eq[0].lhs.arg @ E).this.apply(Tensor.DotAppendS.eq.AppendAddSDotS)
+    Eq << (Eq[0].lhs.arg @ E).this.apply(Tensor.DotAppendSHstackS.eq.AppendHstackSAddSDotS)
 
     Eq << Eq[-1].this.rhs.find(MatMul).apply(Tensor.Dot.eq.Stack_Sum_MulGetS)
 

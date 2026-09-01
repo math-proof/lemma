@@ -33,11 +33,11 @@ def prove(Eq):
 
     Eq.A_def_expand = Eq[-1].this.find(Stack).apply(Tensor.Stack.eq.Block.split, d_z)
 
-    Eq << MatMul(*Eq.A_def_expand.find(MatMul).args[:2]).this.apply(Tensor.DotAppendS.eq.AppendAddSDotS, deep=True)
+    Eq << MatMul(*Eq.A_def_expand.find(MatMul).args[:2]).this.apply(Tensor.DotAppendSHstackS.eq.AppendHstackSAddSDotS, deep=True)
 
     Eq << Eq[-1] @ Eq[-2].find(MatMul).args[2]
 
-    Eq << Eq[-1].this.rhs.apply(Tensor.DotAppendS.eq.AppendAddSDotS, deep=True)
+    Eq << Eq[-1].this.rhs.apply(Tensor.DotAppendSHstackS.eq.AppendHstackSAddSDotS, deep=True)
 
     Eq << Bool.Eq.of.Eq.Eq.apply(Eq.A_def_expand, Eq[-1])
 
