@@ -205,13 +205,40 @@ export class Lean extends IndentedNode {
         if (this.parent) return this.parent.append(this, $new, type);
     }
 
+    /** `hstack` rows stacked with `++` → rectangular block cells. */
+    blockMatrixRows() {
+        const rows = this.flattenAppend().map((n) => n.hstackBlocks());
+        if (!rows.length || rows.some((r) => !r)) return null;
+        const cols = rows[0].length;
+        if (cols < 1 || rows.some((r) => r.length !== cols)) return null;
+        return rows;
+    }
+
     case_default() {
         return this;
     }
 
     echo() {}
 
+    /** Flatten a `++` chain, peeling grouping parentheses. */
+    flattenAppend() {
+        const inner = this.peelParen();
+        if (inner !== this) return inner.flattenAppend();
+        return [this];
+    }
+
     getEcho() {}
+
+    /**
+     * `A.hstack B` or `Tensor.hstack A B` → `[A, B]`.
+     * Grouping parentheses dispatch to the inner node.
+     * @returns {Lean[] | null}
+     */
+    hstackBlocks() {
+        const inner = this.peelParen();
+        if (inner !== this) return inner.hstackBlocks();
+        return null;
+    }
 
     insert(caret, func, type) {
         if (this.parent) return this.parent.insert(this, func, type);
@@ -343,6 +370,14 @@ export class Lean extends IndentedNode {
             (p instanceof LeanIte && (this === p.then || this === p.else));
     }
 
+    isMatMulContext() {
+        return false;
+    }
+
+    isMatMulOperand() {
+        return this.parent != null && this.parent.isMatMulContext();
+    }
+
     is_outsider() {
         return false;
     }
@@ -361,6 +396,26 @@ export class Lean extends IndentedNode {
 
     latexFormat() {
         return this.strFormat();
+    }
+
+    matrixLatexArgs(syntax) {
+        const rows = this.matrixLatexSpec();
+        if (!rows) return null;
+        return rows.flat().map((cell) => cell.peelParen().toLatex(syntax));
+    }
+
+    /**
+     * Block matrix (`hstack` / `hstack ++ hstack`) or a stacked vector next to `@`.
+     * @returns {Lean[][] | null}
+     */
+    matrixLatexSpec() {
+        const rows = this.blockMatrixRows();
+        if (rows) return rows;
+        if (this.isMatMulOperand()) {
+            const parts = this.flattenAppend();
+            if (parts.length >= 2) return parts.map((p) => [p]);
+        }
+        return null;
     }
 
     parse(token, self) {
@@ -867,6 +922,11 @@ export class Lean extends IndentedNode {
 
     /** Default: leave the node as-is. Colon / `↑` / `(e : T)` override this. */
     peelLatexCoe() {
+        return this;
+    }
+
+    /** Strip grouping parentheses (not `(e : T)` ascriptions). */
+    peelParen() {
         return this;
     }
 
@@ -2035,24 +2095,34 @@ export class LeanParenthesis extends LeanPairedGroup {
         return parent instanceof LeanArgsNewLineSeparated || parent instanceof LeanArgsCommaNewLineSeparated || (parent instanceof LeanIte && this !== parent.if);
     }
 
+    isMatMulContext() {
+        return this.parent != null && this.parent.isMatMulContext();
+    }
+
     isProp(vars) {
         return this.arg.isProp(vars);
     }
 
     latexArgs(syntax) {
         const arg = this.arg;
+        if (arg.matrixLatexSpec())
+            return [arg.toLatex(syntax)];
         if (arg instanceof LeanColon) {
             if (arg.lhs instanceof LeanBrace) return arg.lhs.latexArgs(syntax) ?? [arg.lhs.toLatex(syntax)];
             if (arg.rhs instanceof LeanToken && arg.rhs.text === 'Bool') return [arg.lhs.toLatex(syntax)];
+            if (arg.isZeroOneTensor()) return [arg.toLatex(syntax)];
         }
         return super.latexArgs(syntax);
     }
 
     latexFormat() {
         const arg = this.arg;
+        if (arg.matrixLatexSpec())
+            return '%s';
         if (arg instanceof LeanColon) {
             if (arg.lhs instanceof LeanBrace) return arg.lhs.latexFormat() ?? '%s';
             if (arg.rhs instanceof LeanToken && arg.rhs.text === 'Bool') return '\\left|{%s}\\right|';
+            if (arg.isZeroOneTensor()) return '%s';
         }
         return this.toColor();
     }
@@ -2061,6 +2131,11 @@ export class LeanParenthesis extends LeanPairedGroup {
         const inner = this.arg.peelLatexCoe();
         if (inner !== this.arg) return inner;
         return this;
+    }
+
+    peelParen() {
+        if (this.arg instanceof LeanColon) return this;
+        return this.arg.peelParen();
     }
 
     regexp() {
@@ -2605,6 +2680,10 @@ export class LeanProperty extends LeanBinary {
                         switch (lhs.text) {
                             case 'Real':
                             case 'Complex':
+                            case 'Cos':
+                            case 'Sin':
+                            case 'Tan':
+                            case 'Log':
                                 arg = null;
                         }
                     }
@@ -2658,6 +2737,10 @@ export class LeanProperty extends LeanBinary {
                         switch (lhs.text) {
                             case 'Real':
                             case 'Complex':
+                            case 'Cos':
+                            case 'Sin':
+                            case 'Tan':
+                            case 'Log':
                                 arg = null;
                         }
                     }
@@ -2762,6 +2845,51 @@ export class LeanColon extends LeanBinary {
 
     peelLatexCoe() {
         return this.lhs.peelLatexCoe();
+    }
+
+    /**
+     * `(0 : Tensor α [n, m])` / `(1 : Tensor α [n, m])` → shape cells for `\mathbf{0}_{n,m}`.
+     * @returns {Lean[] | null}
+     */
+    tensorTypeShape() {
+        let ty = this.rhs;
+        if (ty instanceof LeanParenthesis) ty = ty.arg;
+        if (!(ty instanceof LeanArgsSpaceSeparated)) return null;
+        const args = ty.args.filter((a) => !(a instanceof LeanCaret));
+        if (args.length < 2) return null;
+        const head = args[0];
+        if (!(head instanceof LeanToken) || head.text !== 'Tensor') return null;
+        const shape = args[args.length - 1];
+        if (shape instanceof LeanBracket) {
+            const inner = shape.arg;
+            if (!inner || inner instanceof LeanCaret) return [];
+            if (inner instanceof LeanArgsCommaSeparated)
+                return inner.args.filter((a) => !(a instanceof LeanCaret));
+            return [inner];
+        }
+        return [shape];
+    }
+
+    isZeroOneTensor() {
+        const lhs = this.lhs;
+        return (
+            lhs instanceof LeanToken &&
+            (lhs.text === '0' || lhs.text === '1') &&
+            this.tensorTypeShape() != null
+        );
+    }
+
+    latexFormat() {
+        if (this.isZeroOneTensor()) return `\\mathbf{${this.lhs.text}}_{%s}`;
+        return super.latexFormat();
+    }
+
+    latexArgs(syntax) {
+        if (this.isZeroOneTensor()) {
+            const dims = this.tensorTypeShape();
+            return [dims.map((d) => d.toLatex(syntax)).join(',')];
+        }
+        return super.latexArgs(syntax);
     }
 
     sep() {
@@ -3248,6 +3376,10 @@ export class LeanMatMul extends LeanArithmetic {
     get command() {
         return '{\\color{red}\\times}';
     }
+
+    isMatMulContext() {
+        return true;
+    }
 }
 
 export class Lean_bullet extends LeanArithmetic {
@@ -3298,13 +3430,14 @@ export class LeanDiv extends LeanArithmetic {
             if (rhs instanceof LeanParenthesis && !(rhs.arg instanceof LeanColon))
                 rhs = rhs.arg;
         }
-        return [lhs.toLatex(syntax), rhs.toLatex(syntax)];
+        const rhsLatex = rhs instanceof LeanDiv
+            ? '\\left. {%s} \\right/ {%s}'.format(...rhs.latexArgs(syntax))
+            : rhs.toLatex(syntax);
+        return [lhs.toLatex(syntax), rhsLatex];
     }
 
     latexFormat() {
-        const lhs = this.lhs;
-        const rhs = this.rhs;
-        if (lhs instanceof LeanDiv || (rhs instanceof LeanParenthesis && rhs.arg instanceof LeanDiv)) {
+        if (this.lhs instanceof LeanDiv) {
             return '\\left. {%s} \\right/ {%s}';
         }
         return '\\frac {%s} {%s}';
@@ -3466,7 +3599,7 @@ export class LeanPow extends LeanArithmetic {
         }
         if (rhs instanceof LeanParenthesis) {
             const inner = rhs.arg;
-            if (inner instanceof Lean_sqrt || inner instanceof LeanPairedGroup ||
+            if (inner instanceof LeanDiv || inner instanceof Lean_sqrt || inner instanceof LeanPairedGroup ||
                 (inner instanceof LeanArgsSpaceSeparated && (inner.is_Abs() || inner.is_Bool())))
                 rhs = inner;
         }
@@ -3545,6 +3678,25 @@ export class LeanAppend extends LeanArithmetic {
 
     get operator() {
         return '++';
+    }
+
+    flattenAppend() {
+        return this.lhs.flattenAppend().concat(this.rhs.flattenAppend());
+    }
+
+    latexArgs(syntax) {
+        return this.matrixLatexArgs(syntax) ?? super.latexArgs(syntax);
+    }
+
+    latexFormat() {
+        const rows = this.matrixLatexSpec();
+        if (rows) return LeanAppend.bmatrixFormat(rows.length, rows[0].length);
+        return super.latexFormat();
+    }
+
+    static bmatrixFormat(nrows, ncols) {
+        const row = Array(ncols).fill('%s').join(' & ');
+        return '\\begin{bmatrix} ' + Array(nrows).fill(row).join(' \\\\ ') + ' \\end{bmatrix}';
     }
 }
 
@@ -6574,6 +6726,19 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         return '';
     }
 
+    /**
+     * `A.hstack B` or `Tensor.hstack A B` → `[A, B]`.
+     * @returns {Lean[] | null}
+     */
+    hstackBlocks() {
+        const func = this.args[0];
+        if (!(func instanceof LeanProperty) || !(func.rhs instanceof LeanToken) || func.rhs.text !== 'hstack')
+            return null;
+        if (this.args.length === 2) return [func.lhs, this.args[1]];
+        if (this.args.length === 3) return [this.args[1], this.args[2]];
+        return null;
+    }
+
     insert(caret, func, type) {
         const last = this.args[this.args.length - 1];
         if (last === caret && !(caret instanceof LeanCaret) && type !== 'modifier') {
@@ -6684,7 +6849,45 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
      * @param {Record<string, unknown> | null} [syntax]
      * @returns {string[]}
      */
+    /** `id (α := T) e` — identity; LaTeX prints only `e`. */
+    idLatexInner() {
+        const {args} = this;
+        if (args.length !== 3 || !(args[0] instanceof LeanToken) || args[0].text !== 'id')
+            return null;
+        const named = args[1] instanceof LeanParenthesis ? args[1].arg : args[1];
+        if (!(named instanceof LeanAssign && named.lhs instanceof LeanToken && named.lhs.text === 'α'))
+            return null;
+        let inner = args[2];
+        if (
+            inner instanceof LeanParenthesis &&
+            !(inner.arg instanceof LeanColon) &&
+            this.canStripIdParen(inner.arg)
+        )
+            inner = inner.arg;
+        return inner;
+    }
+
+    /**
+     * `A op B op' C` compares `op.stack_priority` with `op'.input_priority`.
+     * After dropping `id`, `inner` is `op` on the left and `op'` on the right.
+     */
+    canStripIdParen(inner) {
+        const parent = this.parent;
+        if (!parent) return true;
+        if (parent instanceof LeanBinary) {
+            if (parent.lhs === this)
+                return parent.constructor.input_priority <= inner.stack_priority;
+            if (parent.rhs === this)
+                return inner.constructor.input_priority > parent.stack_priority;
+        }
+        return inner.constructor.input_priority > parent.stack_priority;
+    }
+
     latexArgs(syntax = null) {
+        const matrixArgs = this.matrixLatexArgs(syntax);
+        if (matrixArgs) return matrixArgs;
+        const idInner = this.idLatexInner();
+        if (idInner) return [idInner.toLatex(syntax)];
         const {args} = this;
         const func = args[0];
         if (this.is_Abs()) {
@@ -6724,6 +6927,8 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
                         case 'Iic':
                         case 'Ioi':
                         case 'Iio':
+                        case 'eye':
+                            return [];
                         case 'Zeros':
                         case 'Ones': {
                             const s = this.strip_parenthesis();
@@ -6756,6 +6961,13 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         } else if (
             func instanceof LeanProperty &&
             func.rhs instanceof LeanToken &&
+            func.rhs.text === 'eye' &&
+            args.length === 2
+        ) {
+            return [];
+        } else if (
+            func instanceof LeanProperty &&
+            func.rhs instanceof LeanToken &&
             func.rhs.text === 'choose' &&
             (args.length === 2 || args.length === 3)
         ) {
@@ -6772,6 +6984,9 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
     }
 
     latexFormat() {
+        const rows = this.matrixLatexSpec();
+        if (rows) return LeanAppend.bmatrixFormat(rows.length, rows[0].length);
+        if (this.idLatexInner()) return '%s';
         const {args} = this;
         const func = args[0];
         if (this.is_Abs()) return '\\left|{%s}\\right|';
@@ -6806,6 +7021,8 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
                             return '\\left(%s, \\infty\\right)';
                         case 'Iio':
                             return '\\left(-\\infty, %s\\right)';
+                        case 'eye':
+                            return '\\mathbb{I}';
                         case 'Zeros':
                             return '\\mathbf{0}_{%s}';
                         case 'Ones':
@@ -6835,6 +7052,7 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         } else if (this.is_Sum()) {
             return '\\sum\\limits_{\\substack{%s}} {%s}';
         } else if (func instanceof LeanProperty && func.rhs instanceof LeanToken) {
+            if (func.rhs.text === 'eye' && args.length === 2) return '\\mathbb{I}';
             if (func.rhs.text === 'fmod' && args.length === 2) return '{%s}{%s}';
             if (func.rhs.text === 'choose' && (args.length === 2 || args.length === 3))
                 return '\\binom{%s}{%s}';

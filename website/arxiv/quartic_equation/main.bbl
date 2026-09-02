@@ -1,9 +1,61 @@
 \begin{thebibliography}{10}
 
+\bibitem{brookfield2007}
+Gary Brookfield.
+\newblock Factoring quartic polynomials: A lost art.
+\newblock {\em Mathematics Magazine}, 80(1):67--70, 2007.
+
+\bibitem{cardano1545}
+Girolamo Cardano.
+\newblock {\em Ars Magna, or The Rules of Algebra}.
+\newblock Dover, 1968.
+\newblock English translation of the 1545 Latin text; Ferrari's quartic appears
+  here.
+
+\bibitem{carneiroquartic}
+Mario Carneiro.
+\newblock Proof of the quartic formula.
+\newblock Metamath, 2021.
+\newblock \url{https://us.metamath.org/mpeuni/quart.html}.
+
+\bibitem{chaieb2021isabelle}
+Amine Chaieb.
+\newblock \texttt{Cubic\_Quartic}.
+\newblock Isabelle/{HOL}, 2021.
+\newblock
+  \url{https://isabelle.in.tum.de/dist/library/HOL/HOL-ex/Cubic_Quartic.html}.
+
+\bibitem{chardard2021coq}
+Fr{\'e}d{\'e}ric Chardard.
+\newblock \texttt{cardan\_ferrari.v}.
+\newblock Coq 100 theorems, 2021.
+\newblock
+  \url{https://github.com/coq-community/coq-100-theorems/blob/master/cardan_ferrari.v}.
+
+\bibitem{moura2015lean}
+Leonardo de~Moura, Soonho Kong, Jeremy Avigad, Floris van Doorn, and Jakob von
+  Raumer.
+\newblock The {Lean} theorem prover (system description).
+\newblock In {\em Automated Deduction -- {CADE}-25}, volume 9195 of {\em LNCS},
+  pages 378--388. Springer, 2015.
+
+\bibitem{moura2021lean4}
+Leonardo de~Moura and Sebastian Ullrich.
+\newblock The {Lean} 4 theorem prover and programming language.
+\newblock In {\em Automated Deduction -- {CADE} 28}, volume 12699 of {\em
+  LNCS}, pages 625--635. Springer, 2021.
+
 \bibitem{dyson2022polynomials}
 Nicholas Dyson, Benedikt Ahrens, and Jacopo Emmenegger.
 \newblock The solutions to single-variable polynomials, implemented and
-  verified in {Lean}, 2022.
+  verified in {Lean}.
+\newblock \url{https://arxiv.org/abs/2201.00255}, 2022.
+
+\bibitem{harrisonhol}
+John Harrison.
+\newblock Proof of the quartic formula.
+\newblock {HOL} Light, 2021.
+\newblock Wiedijk item 46; \url{https://www.cl.cam.ac.uk/users/jrh/hol-light/}.
 
 \bibitem{lemma_quartic_sympy}
 math proof.
@@ -57,6 +109,34 @@ math proof.
 \newblock The {Lean} mathematical library.
 \newblock \url{https://leanprover-community.github.io/mathlib4_docs/}, 2026.
 
+\bibitem{meurer2017sympy}
+Aaron Meurer, Christopher~P. Smith, Mateusz Paprocki, Ond{\v{r}}ej
+  {\v{C}}ert{\'\i}k, Sergey~B. Kirpichev, Matthew Rocklin, Amit Kumar, Sergiu
+  Ivanov, Jason~K. Moore, Sartaj Singh, Thilina Rathnayake, Sean Vig, Brian~E.
+  Granger, Richard~P. Muller, Francesco Bonazzi, Harsh Gupta, Shivam Vats,
+  Fredrik Johansson, Fabian Pedregosa, Matthew~J. Curry, Andy~R. Terrel,
+  {\v{S}}t{\v{e}}p{\'a}n Rou{\v{c}}ka, Ashutosh Saboo, Isuru Fernando, Sumith
+  Kulal, Robert Cimrman, and Anthony Scopatz.
+\newblock {SymPy}: symbolic computing in {Python}.
+\newblock {\em PeerJ Computer Science}, 3:e103, 2017.
+
+\bibitem{riccardi2009}
+Marco Riccardi.
+\newblock Solution of cubic and quartic equations.
+\newblock {\em Formalized Mathematics}, 17(1):117--122, 2009.
+
+\bibitem{sympy}
+{SymPy Development Team}.
+\newblock {SymPy}.
+\newblock \url{https://www.sympy.org/}, 2026.
+
+\bibitem{mathlib2020}
+{The mathlib Community}.
+\newblock The {Lean} mathematical library.
+\newblock In {\em Proceedings of the 9th {ACM} {SIGPLAN} International
+  Conference on Certified Programs and Proofs ({CPP})}, pages 367--381. ACM,
+  2020.
+
 \bibitem{wiedijk100}
 Freek Wiedijk.
 \newblock Formalizing 100 theorems.
@@ -68,5 +148,10 @@ Thomas Zhu.
 \newblock Mathlib~4 Archive, {PR} \#18290, 2024.
 \newblock
   \url{https://github.com/leanprover-community/mathlib4/blob/master/Archive/Wiedijk100Theorems/SolutionOfCubicQuartic.lean}.
+
+\bibitem{zwillinger2003}
+Daniel Zwillinger.
+\newblock {\em {CRC} Standard Mathematical Tables and Formulae}.
+\newblock Chapman and Hall/CRC, 31 edition, 2003.
 
 \end{thebibliography}

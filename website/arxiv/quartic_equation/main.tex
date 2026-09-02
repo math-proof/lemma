@@ -32,23 +32,27 @@
 \maketitle
 
 \begin{abstract}
-Ferrari's method reduces a general quartic to a depressed quartic and a cubic resolvent; Cardano then solves that cubic by cube roots.
-Over an arbitrary field the identities are classical, and Mathlib's archived Ferrari theorem leaves the resolvent root and the square roots as extra data.
-What is not classical is a \emph{total} map \(\C^5\to\C^4\) in \emph{principal} radicals: Mathlib's \(\sqrt{\,\cdot\,}\) and \(\sqrt[3]{\,\cdot\,}\) (Lean \texttt{Root.cubic}, notation \(\sqrt[3]{\,}\)) fail the product law, so Cardano's pairing \(3AB=-p\) does not hold for two independent principal cube roots.
+Ferrari--Cardano formulas are classical, but a fully explicit \emph{principal-branch} radical map
+\(\C^5\to\C^4\) is subtle in formal libraries, because principal roots generally do not satisfy
+\(\sqrt{z}\sqrt{w}=\sqrt{zw}\) or \(\sqrt[3]{z}\sqrt[3]{w}=\sqrt[3]{zw}\).
+Consequently, Cardano's pairing \(3AB=-p\) is not automatic for two independent principal cube roots.
 
-We state and machine-check such a map in the \texttt{lemma} library.
-Every auxiliary quantity is a principal square or cube root; the missing cube root of unity is the radical \(-\tfrac12+i\sqrt{3}/2\) (the exponential \(e^{2\pi i/3}\) is an abbreviation only); the branch is the single power \(\omega^{k}\) with
+We formalize and machine-check a total principal-radical quartic solution in Lean~4:
+for every \((a,b,c,d,e)\in\C^5\) with \(a\neq 0\), the roots are exactly a four-element set of nested principal radicals.
+The branch choice is a single power \(\omega^k\), with
 \[
 k=\Bigl\lceil\frac{3\Arg(-p)}{2\pi}-\tfrac12\Bigr\rceil
 -\Bigl\lceil\frac{3\Arg(AB)}{2\pi}-\tfrac12\Bigr\rceil,
 \]
-not a case split on \(k\bmod 3\).
-The proof is checked in Lean~4 (updated 2026-09-01) and was first stated interactively in SymPy (2018-11-29).
-The quartic statements are
-\href{http://www.lemma.cn/lean/?module=Complex.Eq0Add_Mul_Pow_4.is.In_Ite_FinsetSSubS__SubS.of.Ne_0}{Lean~4}~\cite{lemma_quartic_lean}
-and
-\href{http://www.lemma.cn/py/?module=Complex.In_Ite_FinsetSSubS__SubS.of.Eq0Add_Mul_Pow_4.Ne_0}{SymPy}~\cite{lemma_quartic_sympy};
-source is on GitHub~\cite{lemma_repo}.
+so no explicit case split on \(k\bmod 3\) is required.
+The primitive cube root is written as the radical
+\(\omega=-\tfrac12+i\sqrt{3}/2\) (the form \(e^{2\pi i/3}\) is used only as notation).
+
+Artifacts: Lean theorem
+\href{http://www.lemma.cn/lean/?module=Complex.Eq0Add_Mul_Pow_4.is.In_Ite_FinsetSSubS__SubS.of.Ne_0}{\nolinkurl{Complex.Eq0Add_Mul_Pow_4.is.In_Ite_FinsetSSubS__SubS.of.Ne_0}}~\cite{lemma_quartic_lean},
+SymPy counterpart
+\href{http://www.lemma.cn/py/?module=Complex.In_Ite_FinsetSSubS__SubS.of.Eq0Add_Mul_Pow_4.Ne_0}{\nolinkurl{Complex.In_Ite_FinsetSSubS__SubS.of.Eq0Add_Mul_Pow_4.Ne_0}}~\cite{lemma_quartic_sympy},
+and source repository~\cite{lemma_repo}.
 \end{abstract}
 
 \section{Introduction}
@@ -58,9 +62,9 @@ Let \(a,b,c,d,e,x\in\C\) with \(a\neq 0\) and
 \[
 a x^4+b x^3+c x^2+d x+e=0.
 \]
-Ferrari (16th century) translates to a depressed quartic \(z^4+\alpha z^2+\beta z+\gamma=0\), produces a cubic resolvent, and factors the quartic into two quadratics once a resolvent root is known.
+Ferrari (16th century) translates to a depressed quartic \(z^4+\alpha z^2+\beta z+\gamma=0\), produces a cubic resolvent, and factors the quartic into two quadratics once a resolvent root is known~\cite{cardano1545}.
 Cardano solves that cubic by cube roots.
-Over \(\C\), Mathlib's \(\sqrt{z}\) and \(\sqrt[3]{z}\) are defined by the principal logarithm (argument in \((-\pi,\pi]\)).
+Over \(\C\), Mathlib's \(\sqrt{z}\) and \(\sqrt[3]{z}\)~\cite{mathlib2020,mathlib} are defined by the principal logarithm (argument in \((-\pi,\pi]\)).
 They satisfy
 \[
 (\sqrt{z})^2=z,\qquad \bigl(\sqrt[3]{z}\bigr)^3=z
@@ -72,41 +76,68 @@ for every \(z\), but they do \emph{not} satisfy
 in general.
 Any fully radical formula over \(\C\) must therefore name the missing cube root of unity explicitly and select a consistent Cardano pair.
 
-This paper records the public Lean~4 lemma
-\texttt{Complex.Eq0Add\_Mul\_Pow\_4.is.In\_Ite\_FinsetSSubS\_\_SubS.of.Ne\_0}~\cite{lemma_quartic_lean}:
+This paper records the public Lean~4~\cite{moura2021lean4} lemma
+\nolinkurl{Complex.Eq0Add_Mul_Pow_4.is.In_Ite_FinsetSSubS__SubS.of.Ne_0}~\cite{lemma_quartic_lean}:
 an if-and-only-if: the equation holds precisely when \(x\) lies in the four-element set of nested principal radicals selected by whether \(\beta=0\).
 The cube-root branch is \(y=A\omega^{k}+B\), not three residue classes of an integer modulo~3.
 Cube roots in the statement are Lean \(\sqrt[3]{\,}\) (\texttt{Root.cubic}), not a bare \texttt{cpow} written as \(z^{(3:\C)^{-1}}\).
 
-The SymPy counterpart~\cite{lemma_quartic_sympy} is the one-direction lemma
-\texttt{Complex.In\_Ite\_FinsetSSubS\_\_SubS.of.Eq0Add\_Mul\_Pow\_4.Ne\_0}
-(the Lean \texttt{mp} alias); it has no \texttt{is} if-and-only-if.
+The SymPy~\cite{sympy,meurer2017sympy} counterpart~\cite{lemma_quartic_sympy} is the one-direction lemma
+\nolinkurl{Complex.In_Ite_FinsetSSubS__SubS.of.Eq0Add_Mul_Pow_4.Ne_0}
+(the Lean \nolinkurl{mp} alias); it has no \nolinkurl{is} if-and-only-if.
 Both are visualized on lemma.cn.
 Source files are
-\texttt{Lemma/Complex/Eq0Add\_Mul\_Pow\_4/is/In\_Ite\_FinsetSSubS\_\_SubS/of/Ne\_0.lean} (branch \texttt{main})
+\nolinkurl{Lemma/Complex/Eq0Add_Mul_Pow_4/is/In_Ite_FinsetSSubS__SubS/of/Ne_0.lean} (branch \nolinkurl{main})
 and
-\texttt{Lemma/Complex/In\_Ite\_FinsetSSubS\_\_SubS/of/Eq0Add\_Mul\_Pow\_4/Ne\_0.py} (branch \texttt{master})~\cite{lemma_repo}.
+\nolinkurl{Lemma/Complex/In_Ite_FinsetSSubS__SubS/of/Eq0Add_Mul_Pow_4/Ne_0.py} (branch \nolinkurl{master})~\cite{lemma_repo}.
 Companion statements in the same library---linked only, without their solution methods---are the quadratic~\cite{lemma_quadratic_lean} and the cubic~\cite{lemma_cubic_lean}.
+
+\subsection{Main contributions}
+\label{sec:contrib}
+
+This paper contributes the following concrete artifacts.
+\begin{enumerate}[leftmargin=1.3em,itemsep=0.2em]
+  \item A total principal-radical quartic map over \(\C\): for every coefficient tuple with \(a\neq 0\), the theorem returns a four-element radical solution set.
+  \item A branch-consistent Cardano pairing under principal cube roots, encoded by a single selector \(\omega^k\) instead of a manual split on \(k\bmod 3\).
+  \item A Lean~4 if-and-only-if theorem (not only one direction), publicly linked with dependency graph and companion SymPy artifact.
+  \item A fully explicit radical form for \(\omega\), namely \(-\tfrac12+i\sqrt{3}/2\), compatible with principal-branch reasoning used in the formal proof.
+\end{enumerate}
+
+\subsection{Reproducibility}
+\label{sec:repro}
+
+All statements are public and executable from the \nolinkurl{lemma} repository~\cite{lemma_repo}.
+The main Lean object is
+\nolinkurl{Complex.Eq0Add_Mul_Pow_4.is.In_Ite_FinsetSSubS__SubS.of.Ne_0}~\cite{lemma_quartic_lean},
+and the SymPy analogue is
+\nolinkurl{Complex.In_Ite_FinsetSSubS__SubS.of.Eq0Add_Mul_Pow_4.Ne_0}~\cite{lemma_quartic_sympy}.
+For a camera-ready release, we recommend pinning the exact repository commit hash and Lean/mathlib toolchain revision in this section.
 
 \section{Related work}
 \label{sec:related}
 
 \textbf{Mathlib~4.}
-Zhu's archive formalization~\cite{zhu2024mathlibquartic} (PR~\#18290; Wiedijk items 37 and 46~\cite{wiedijk100}) proves Ferrari over a field \(K\) of characteristic not two.
-Square roots appear as hypotheses \(t^2=\cdots\), \(v^2=\cdots\), and the resolvent root \(u\) is an extra datum.
-The comment on \texttt{quartic\_eq\_zero\_iff} states that an explicit Cardano expression for \(u\) ``would be too long.''
-The theorem is not a map \(\C^5\to\C^4\) in principal radicals, and it is not specific to \(\C\)~\cite{mathlib}.
+Zhu's archive formalization~\cite{zhu2024mathlibquartic} (PR~\#18290; Wiedijk items 37 and 46~\cite{wiedijk100}) proves Ferrari over a field \(K\) of characteristic \(\neq 2\).
+Its statement is algebraic: square roots and a resolvent root are provided as data (e.g.
+\(t^2=\cdots\), \(v^2=\cdots\), with root parameter \(u\)).
+As noted in the source commentary, a fully expanded Cardano expression is intentionally omitted~\cite{zwillinger2003}.
+Hence it is not a principal-radical map \(\C^5\to\C^4\) specialized to Mathlib's complex branches~\cite{mathlib}.
 
 \textbf{Dyson--Ahrens--Emmenegger}~\cite{dyson2022polynomials}
-work in Lean~3 in a field equipped with \emph{some} square-root and cube-root operations.
-The functions are axioms, not Mathlib's principal branches; the product identity for cube roots is deliberately not assumed.
-Instantiating the typeclass with \(\C\) does not prove the principal-branch formula.
+(arXiv:\href{https://arxiv.org/abs/2201.00255}{2201.00255})
+formalize quadratic/cubic/quartic formulas in Lean~3~\cite{moura2015lean} over fields of characteristic \(\neq 2,3\), using a typeclass that assumes only
+\((\sqrt{z})^2=z\) and \((\sqrt[3]{z})^3=z\).
+Because multiplicative branch laws are not assumed, their cubic uses one computed cube root and reconstructs its Cardano partner by division (Proposition~1.1).
+Their quartic (Proposition~1.3) is not total: it excludes several vanishing regimes and solves via a resolvent followed by two quadratics (Brookfield style~\cite{brookfield2007}), rather than a single explicit principal-radical map.
+So even at \(\C\), this does not directly yield a total principal-branch map \(\C^5\to\C^4\) with one selector \(y=A\omega^k+B\).
 
-\textbf{Coq}
-(the development compared in that paper, \S7.1) is specific to \(\C\) and uses De~Moivre \(n\)th roots.
-That is a complex-domain radical solution, but it is not a Lean~4 lemma and does not use Mathlib's principal \(\sqrt{\,\cdot\,}\) / \texttt{Root.cubic} together with an \(\Arg\)/\(\lceil\cdot\rceil\) selector.
+\textbf{Coq.}
+Chardard's \texttt{cardan\_ferrari.v}~\cite{chardard2021coq} (discussed in~\cite{dyson2022polynomials}) is a \(\C\)-specific Coq formalization using De~Moivre roots.
+It is a complex radical development, but not in Lean~4 and not expressed in Mathlib's principal \(\sqrt{\,\cdot\,}\)/\texttt{Root.cubic} branch framework.
 
-\textbf{Isabelle/HOL} \texttt{Cubic\_Quartic} and the HOL Light entry on Wiedijk's list are algebraic in the same sense as Mathlib: roots are assumed, not constructed by principal functions.
+\textbf{Other proof assistants.}
+Isabelle/{HOL} \texttt{Cubic\_Quartic}~\cite{chaieb2021isabelle}, Harrison's {HOL} Light quartic~\cite{harrisonhol}, Carneiro's Metamath quartic~\cite{carneiroquartic}, and Riccardi's Mizar development~\cite{riccardi2009} appear on Wiedijk's list~\cite{wiedijk100}.
+They are algebraic in spirit: roots are assumed or constructed without the specific principal-branch selector mechanism used here.
 
 This library already has companion quadratic~\cite{lemma_quadratic_lean} and cubic~\cite{lemma_cubic_lean} lemmas over \(\C\).
 The quartic contribution is to finish Ferrari on that principal-radical calculus: the resolvent is expanded by Cardano, one legal root \(y=A\omega^{k}+B\) is selected, and the four quartic roots are nested principal square roots of that \(y\).
@@ -143,7 +174,7 @@ and
 k=\Bigl\lceil\frac{3\Arg(-p)}{2\pi}-\tfrac12\Bigr\rceil
 -\Bigl\lceil\frac{3\Arg(AB)}{2\pi}-\tfrac12\Bigr\rceil.
 \]
-The abbreviation \(\omega=e^{2\pi i/3}\) (Lean \texttt{(I * (2 * $\pi$ / 3)).exp}) is for simplicity only: a complex exponential is \emph{not} a radical.
+The abbreviation \(\omega=e^{2\pi i/3}\) (Lean \nolinkurl{(I * (2 * pi / 3)).exp}) is for simplicity only: a complex exponential is \emph{not} a radical.
 The same primitive cube root of unity is the principal-radical rectangular form
 \[
 \omega=-\tfrac12+i\,\tfrac{\sqrt{3}}{2}
@@ -257,7 +288,7 @@ SymPy has only the one-direction (\texttt{of}/\texttt{mp}) names, e.g.\ \url{htt
         \href{http://www.lemma.cn/lean/?module=Complex.Eq_MulNorm_ExpMulIArg}{\texttt{Eq\_MulNorm\_ExpMulIArg}},
         \href{http://www.lemma.cn/lean/?module=Complex.ArgExpMulI.eq.Sub_Mul_Ceil}{\texttt{ArgExpMulI.eq.Sub\_Mul\_Ceil}},
         \href{http://www.lemma.cn/lean/?module=Int.Floor.eq.NegCeilNeg}{\texttt{Int.Floor.eq.NegCeilNeg}})
-        \item \href{http://www.lemma.cn/lean/?module=Complex.Eq_SquareAddMulSqrt.of.Eq0SubSquare_MulMul4.Ne_0}{\texttt{Eq\_SquareAddMulSqrt.of.Eq0SubSquare\_MulMul4.Ne\_0}} --- Ferrari factor
+        \item \href{http://www.lemma.cn/lean/?module=Complex.Eq_SquareAddMulSqrt.of.Eq0SubSquare_MulMul4.Ne_0}{\texttt{Eq\_SquareAddMulSqrt.of.Eq0SubSquare\_MulMul4.Ne\_0}} --- \(\Delta=0\Rightarrow ax^2+bx+c\) is a square
       \end{itemize}
     \end{itemize}
   \end{itemize}
@@ -313,7 +344,7 @@ Division by \(a\neq 0\) produces the monic equation \(x^4+a'x^3+b'x^2+c'x+d'=0\)
 The translation \(z=x+a'/4\) cancels the cubic term and yields \(z^4+\alpha z^2+\beta z+\gamma=0\) with \(\alpha,\beta,\gamma\) as in \S\ref{sec:formula}.
 The main file performs this expansion by \texttt{ring}; the four nested-radical expressions for \(z\) are then shifted back by \(-a'/4\).
 
-\subsection{Biquadratic case \(\beta=0\)}
+\subsection{Biquadratic case \texorpdfstring{$\beta=0$}{beta=0}}
 \label{sec:biquad}
 
 The depressed equation is \(z^4+\alpha z^2+\gamma=0\), a quadratic in \(z^2\).
@@ -375,7 +406,7 @@ B_c=\sqrt[3]{(-q_c-\sqrt{\delta_c})/2}.
 A direct calculation gives \(q=8q_c\), \(\delta=64\delta_c\), and \(\sqrt{\delta}=8\sqrt{\delta_c}\) (the last because \(64>0\) on the principal branch).
 Positive real scaling of cube roots yields \(A=2A_c\) and \(B=2B_c\), and \(\Arg(AB)=\Arg(A_c B_c)\).
 
-\subsection{Restoring \(3(A\omega^{k})B=-p\)}
+\subsection{Restoring \texorpdfstring{$3(A\omega^{k})B=-p$}{3(A omega k)B=-p}}
 \label{sec:product}
 
 Because \((AB)^3=(-p/3)^3\), lemma \texttt{Eq\_Mul\_Pow\_SubCeilS.of.Pow\_3} supplies
@@ -403,6 +434,7 @@ Principal square roots in the Ferrari step may vanish or repeat when the quartic
 
 The lemma does not construct roots in a general field of characteristic zero, does not avoid \(\Arg\) and \(\lceil\cdot\rceil\), and does not prove that a randomly chosen pairing of principal cube roots is a resolvent root.
 It does not replace Mathlib's abstract Ferrari theorem~\cite{zhu2024mathlibquartic}: that theorem remains the right statement when one only knows that some square roots and some resolvent root exist in \(K\).
+It does not replace Dyson--Ahrens--Emmenegger~\cite{dyson2022polynomials}: that development remains the right statement for an arbitrary field with unspecified root operations and several non-vanishing hypotheses.
 The present lemma is the complementary statement on \(\C\): every coefficient tuple with \(a\neq 0\) is sent to four explicit principal-radical expressions, with the cube-root branch named by the power \(\omega^{k}\).
 
 \section{Conclusion}

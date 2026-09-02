@@ -44,6 +44,23 @@ def Expr.is_Div : Expr → Bool
       false
   | _ => false
 
+def Expr.peelLatexCoe : Expr → Expr
+  | e@(Basic (.UnaryPrefix ⟨op⟩) [arg] _) =>
+    match op with
+    | `Nat.cast
+    | `Int.cast
+    | `Rat.cast
+    | `Int.ofNat
+    | `Complex.ofReal
+    | `Hyperreal.ofReal
+    | `Fin.val
+    | `Subtype.val =>
+      arg.peelLatexCoe
+    | _ =>
+      e
+  | e =>
+    e
+
 
 def Expr.is_Mem : Expr → Bool
   | Basic (.BinaryInfix ⟨op⟩) args _ =>
@@ -53,6 +70,50 @@ def Expr.is_Mem : Expr → Bool
     | _ => false
   | _ => false
 
+
+/-- Flatten a `++` chain, skipping `id`. -/
+def Expr.flattenAppend : Expr → List Expr
+  | Basic (.ExprWithAttr (.Lean_operatorname `id)) [e] _ =>
+    e.flattenAppend
+  | Basic (.BinaryInfix ⟨`HAppend.hAppend⟩) [l, r] _ =>
+    l.flattenAppend ++ r.flattenAppend
+  | e =>
+    [e]
+
+/-- `A.hstack B` → row `[A B]` (not a comma list). -/
+def Expr.hstackBlocks : Expr → Option (List Expr)
+  | Basic (.ExprWithAttr (.Lean_operatorname `id)) [e] _ =>
+    e.hstackBlocks
+  | Basic (.ExprWithAttr (.LeanMethod `Tensor.hstack _)) [a, b] _ =>
+    some [a, b]
+  | _ =>
+    none
+
+/-- `hstack` rows stacked with `++` → rectangular block cells. -/
+def Expr.blockMatrixRows (e : Expr) : Option (List (List Expr)) :=
+  match e.flattenAppend.mapM Expr.hstackBlocks with
+  | some rows@(row0 :: rest) =>
+    let cols := row0.length
+    if cols ≥ 1 && rest.all (fun r => r.length == cols) then
+      some rows
+    else
+      none
+  | _ =>
+    none
+
+def Expr.is_BlockMatrix : Expr → Bool
+  | Basic (.ExprWithAttr (.Lean_operatorname `id)) [e] _ =>
+    e.is_BlockMatrix
+  | e@(Basic (.BinaryInfix ⟨`HAppend.hAppend⟩) ..) =>
+    e.blockMatrixRows != none
+  | e@(Basic (.ExprWithAttr (.LeanMethod `Tensor.hstack _)) ..) =>
+    e.blockMatrixRows != none
+  | _ =>
+    false
+
+def Expr.bmatrixFormat (nrows ncols : Nat) : String :=
+  let row := " & ".intercalate (["%s"].repeat ncols)
+  "\\begin{bmatrix} " ++ " \\\\ ".intercalate ([row].repeat nrows) ++ " \\end{bmatrix}"
 
 def Expr.is_EnclosedGroup : Expr → Bool
   | Basic (.Special ⟨op⟩) args _ =>
@@ -75,7 +136,8 @@ def Expr.is_EnclosedGroup : Expr → Bool
       args.length == 1
     | _ =>
       false
-  | _ => false
+  | e =>
+    e.is_BlockMatrix
 
 def Expr.is_GetElem : Expr → Bool
   | Basic (.Special ⟨`GetElem.getElem⟩) args _ => args.length == 3
@@ -95,6 +157,11 @@ def Expr.is_GetElem? : Expr → Bool
 
 def Expr.is_LeanProperty : Expr → Bool
   | Basic (.ExprWithAttr (.LeanProperty name)) .. => name != `IsConstant.is_constant
+  | _ => false
+
+def Expr.is_Eye : Expr → Bool
+  | Basic (.ExprWithAttr (.Lean_operatorname `id)) [e] _ => e.is_Eye
+  | Basic (.ExprWithAttr (.Lean_operatorname `Tensor.eye)) .. => true
   | _ => false
 
 def Expr.toList : Expr → Option (List Expr)
@@ -207,9 +274,9 @@ def Expr.tendsToLatexArg? : Expr → Option Expr
     <|> e.asTendsToZeroNeg?
 
 def Expr.methodFormat (obj : Expr) (args : List Expr) (func : Operator) (attr: String) (level : ℕ) : String :=
-  let obj := level.toColor (obj.priority > func.priority || obj.toList != none)
+  let obj := level.toColor (obj.priority > func.priority || obj.toList != none || obj.is_Eye)
   let args := args.map fun arg =>
-    level.toColor (arg.priority > func.priority || arg.is_Div)
+    level.toColor (arg.priority > func.priority || arg.is_Div || arg.is_BlockMatrix)
   let args := "\\ ".intercalate args
   if args.isEmpty then
     s!"{obj}.{attr}"
@@ -221,7 +288,7 @@ def BinaryInfix.latexFormat (op : BinaryInfix) (left right : Expr) (level : ℕ)
   let opStr := func.command
   -- left associative operators
   let left := level.toColor (left.priority ≥ func.priority || left.is_EnclosedGroup)
-  let right := level.toColor (right.priority > func.priority || right.is_Div)
+  let right := level.toColor (right.priority > func.priority || right.is_Div || right.is_BlockMatrix)
   s!"{left} {opStr} {right}"
 
 
@@ -281,6 +348,11 @@ def Expr.latexFormat : Expr → String
           if let some args := e.toList then
             let format := ", ".intercalate (["%s"].repeat args.length)
             s!"\\left[{format}\\right]"
+          else
+            binop.latexFormat left right level
+        | `HAppend.hAppend =>
+          if let some rows@(row0 :: _) := e.blockMatrixRows then
+            Expr.bmatrixFormat rows.length row0.length
           else
             binop.latexFormat left right level
         | _ =>
@@ -383,9 +455,8 @@ def Expr.latexFormat : Expr → String
     | .Special ⟨op⟩ =>
       match op with
       | .anonymous =>
-        -- similar like Python' list.enumerate
         let args := args.zipIdx.map fun ⟨arg, i⟩ =>
-          level.toColor ((i == 0 || arg.priority > func.priority) && (i > 0 || arg.priority ≥ func.priority))
+          level.toColor ((i == 0 || arg.priority > func.priority) && (i > 0 || arg.priority ≥ func.priority) || arg.is_Div || arg.is_BlockMatrix)
         "\\ ".intercalate args
       | `ite =>
         let ⟨n, last⟩ := e.traceCases
@@ -421,16 +492,22 @@ def Expr.latexFormat : Expr → String
         let args := ["%s"].repeat args.length
         let args := ", ".intercalate args
         s!"\\langle {args} \\rangle"
+      | `OfNat.ofNat =>
+        "\\mathbf{%s}_{%s}"
       | _ =>
         opStr
     | .ExprWithAttr op =>
       match op with
       | .Lean_function _ =>
         let args := args.map fun arg =>
-          level.toColor (arg.priority > func.priority)
+          level.toColor (arg.priority > func.priority || arg.is_Div || arg.is_BlockMatrix)
         opStr ++ "\\ " ++ "\\ ".intercalate args
       | .Lean_operatorname name =>
         match name with
+        | `id =>
+          if let some rows@(row0 :: _) := e.blockMatrixRows then
+            Expr.bmatrixFormat rows.length row0.length
+          else if args.isEmpty then opStr else "%s"
         | `Exp.exp
         | `Real.exp => "{\\color{RoyalBlue} e} ^ %s"
         | `Finset.Ioo
@@ -449,8 +526,7 @@ def Expr.latexFormat : Expr → String
         | `Set.Ici => "\\left[%s, \\infty\\right)"
         | `Finset.Ioi
         | `Set.Ioi => "\\left(%s, \\infty\\right)"
-        | `Zeros => "\\mathbf{0}_{%s}"
-        | `Ones => "\\mathbf{1}_{%s}"
+        | `Tensor.eye => "\\mathbb{I}"
         | `Stack =>
           let arg := level.toColor (
             if let [_, Basic (.ExprWithLimits .Lean_lambda) [fn, Binder .default _ _ nil] _] := args then
@@ -482,13 +558,13 @@ def Expr.latexFormat : Expr → String
               ""
           if postOp.isEmpty then
             let args := args.map fun arg =>
-              level.toColor (arg.priority > func.priority)
+              level.toColor (arg.priority > func.priority || arg.is_Div || arg.is_BlockMatrix)
             opStr ++ "\\ " ++ "\\ ".intercalate args
           else
             postOp
         | _  =>
           let args := args.map fun arg =>
-            level.toColor (arg.priority > func.priority)
+            level.toColor (arg.priority > func.priority || arg.is_Div || arg.is_BlockMatrix)
           opStr ++ "\\ " ++ "\\ ".intercalate args
       | .LeanMethod name idx =>
         let attr := name.getLast.toString.escape_specials
@@ -511,6 +587,11 @@ def Expr.latexFormat : Expr → String
           let left := level.toColor (left.priority > func.priority)
           let right := level.toColor (right.priority > func.priority)
           "%s {\\color{red}\\%%%%} %s".format left, right
+        | "hstack", _ =>
+          if let some rows@(row0 :: _) := e.blockMatrixRows then
+            Expr.bmatrixFormat rows.length row0.length
+          else
+            opStr
         | "choose", [_, _] =>
           "\\binom{%s}{%s}"
         | "getSlice", [_, Basic (.Special ⟨`Slice.mk⟩) [start, _, step] _] =>
@@ -535,7 +616,7 @@ def Expr.latexFormat : Expr → String
           if args.length ≤ idx then
             let op := name.toString.escape_specials
             let args := args.map fun arg =>
-              level.toColor (arg.priority ≥ func.priority || arg.is_Div)
+              level.toColor (arg.priority ≥ func.priority || arg.is_Div || arg.is_BlockMatrix)
             let args := "\\ ".intercalate args
             s!"{op}\\ {args}"
           else if let obj :: args := args.swap 0 idx then
@@ -544,7 +625,7 @@ def Expr.latexFormat : Expr → String
             opStr
       | .Lean_typeclass _ =>
         let args := args.map fun arg =>
-          level.toColor (arg.priority > func.priority || arg.toList != none)
+          level.toColor (arg.priority > func.priority || arg.toList != none || arg.is_Div || arg.is_BlockMatrix)
         let args := "\\ ".intercalate args
         s!"{opStr}\\ {args}"
       | .LeanProperty name =>
@@ -565,7 +646,7 @@ def Expr.latexFormat : Expr → String
         | _ =>
           match args with
           | arg :: _ =>
-            let arg := level.toColor (arg.priority ≥ func.priority || arg.toList != none)
+            let arg := level.toColor (arg.priority ≥ func.priority || arg.toList != none || arg.is_Eye)
             s!"{arg}.{attr}"
           | .nil =>
             name.toString.escape_specials
@@ -702,6 +783,30 @@ where
           map [a] ++ ["\\cdots"]
         else
           map args
+      | `OfNat.ofNat =>
+        match args with
+        | [const (.natVal n), shape] =>
+          let dims :=
+            if let some dims := shape.toList then
+              ",".intercalate (dims.map fun d => d.toLatex)
+            else
+              "{%s}".format shape.toLatex
+          [toString n, dims]
+        | _ =>
+          map args
+      | _ =>
+        map args
+    | .BinaryInfix ⟨`Div.div⟩
+    | .BinaryInfix ⟨`HDiv.hDiv⟩
+    | .BinaryInfix ⟨`Rat.divInt⟩ =>
+      match args with
+      | [left, right] =>
+        if right.is_Div then
+          let leftTex := "{%s}".format left.toLatex
+          let rightTex := "{%s}".format (flattenedDiv right)
+          [leftTex, rightTex]
+        else
+          map args
       | _ =>
         map args
     | .BinaryInfix ⟨`Membership.mem⟩ =>
@@ -719,6 +824,11 @@ where
     | .BinaryInfix ⟨`List.cons⟩ =>
       if let some args := e.toList then
         map args
+      else
+        map args
+    | .BinaryInfix ⟨`HAppend.hAppend⟩ =>
+      if let some rows := e.blockMatrixRows then
+        map rows.flatten
       else
         map args
     | .ExprWithAttr op =>
@@ -739,6 +849,11 @@ where
                 map [base, start, stop, step]
           else
             map args
+        | .str _ "hstack" =>
+          if let some rows := e.blockMatrixRows then
+            map rows.flatten
+          else
+            map (args.swap 0 idx)
         | .str _ "sum" =>
           match args.swap 0 idx with
           | [X, dim] =>
@@ -835,6 +950,13 @@ where
             map args
         | args =>
           map args
+      | .Lean_operatorname `id =>
+        if let some rows := e.blockMatrixRows then
+          map rows.flatten
+        else
+          map args
+      | .Lean_operatorname `Tensor.eye =>
+        []
       | _ =>
         map args
     | .UnaryPrefix ⟨`Not⟩ =>
@@ -860,6 +982,18 @@ where
   map : List Expr → List String
   | [] => []
   | head :: tail => ("{%s}".format head.toLatex) :: map tail
+
+  flattenedDiv : Expr → String
+  | e@(Basic (.BinaryInfix ⟨op⟩) [left, right] _) =>
+    match op with
+    | `Div.div
+    | `HDiv.hDiv
+    | `Rat.divInt =>
+      "\\left. {%s} \\right/ {%s}".format left.toLatex, (if right.is_Div then flattenedDiv right else right.toLatex)
+    | _ =>
+      e.toLatex
+  | e =>
+    e.toLatex
 
   merge_ite : Expr → List String → List String
   | Basic (.Special ⟨`ite⟩) args _, cases =>

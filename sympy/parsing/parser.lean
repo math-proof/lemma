@@ -246,6 +246,11 @@ cond = {← ppExpr cond}
       match name with
       | `OfNat.ofNat =>
         if let [arg] := args then
+          if let const (.natVal n) := arg then
+            if n == 0 || n == 1 then
+              let tyE ← Expr.toExpr (← inferType e) binders level
+              if let some shape := tyE.tensorShape? then
+                return Basic (.Special ⟨`OfNat.ofNat⟩) [arg, shape] level
           return arg
       | `DFunLike.coe =>
         if let const (.ident name) :: args@(.cons ..) := args then

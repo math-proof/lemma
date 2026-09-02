@@ -256,6 +256,7 @@ def Special.func : Special → Func
     | `Insert.insert => ⟨72, "{%s}", "\\left\\{%s\\right\\}"⟩  -- LeanBrace
     | `setOf => ⟨72, "{%s | %s}", "\\left\\{%s \\mid %s\\right\\}"⟩  -- LeanSetOf
     | `Decidable.decide => ⟨72, "%s", "%s"⟩  -- LeanDecide
+    | `OfNat.ofNat => ⟨107, "%s", "\\mathbf{%s}_{%s}"⟩
     | .str _ op  =>
       if op.endsWithNumberedWord "match" then
         ⟨60, "match", "match"⟩  -- Lean_match
@@ -387,6 +388,7 @@ def Expr.priority : Expr → Nat
   | sort ..
   | const _ => 2048
   | Symbol .. => 2048
+  | Basic (.ExprWithAttr (.Lean_operatorname `id)) [e] _ => e.priority
   | Basic op ..  => op.priority
   | Binder binder .. => binder.func.priority
 
@@ -397,6 +399,15 @@ def Expr.level : Expr → Nat
 def Expr.isEmpty : Expr → Bool
   | nil => true
   | _ => false
+
+/-- Shape argument of `Tensor α s`, if this node is that type. -/
+def Expr.tensorShape? : Expr → Option Expr
+  | Basic (.ExprWithAttr (.Lean_typeclass `Tensor)) args _ =>
+    match args with
+    | [_, shape] => some shape
+    | [shape] => some shape
+    | _ => none
+  | _ => none
 
 
 def Expr.isTypeClass : Expr → Bool

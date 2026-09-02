@@ -218,6 +218,10 @@ instance [CommMagma α] : CommMagma (Vector α n) where
     ext i
     simp [CommMagma.mul_comm]
 
+instance [CommSemigroup α] : CommSemigroup (Vector α n) where
+  mul_assoc := mul_assoc
+  mul_comm := mul_comm
+
 instance [Add α] [IsLeftCancelAdd α] : IsLeftCancelAdd (Vector α n) where
   add_left_cancel a := by
     unfold IsAddLeftRegular Function.Injective

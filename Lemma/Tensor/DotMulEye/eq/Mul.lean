@@ -7,19 +7,10 @@ import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.GetEye.eq.Delta
 import Lemma.Tensor.GetMul.eq.MulGetS
+import Lemma.Tensor.Mul
 import Lemma.Vector.Map₂.eq.Map.of.Eq_1
 open Bool Nat Tensor
 set_option maxHeartbeats 400000
-
-
-private lemma hmul_eq_mul
-  [Mul α]
-  (x y : Tensor α []) :
-  id (α := Tensor α []) x * id (α := Tensor α []) y = Mul.mul (id (α := Tensor α []) x) (id (α := Tensor α []) y) := by
-  apply Eq.of.EqDataS
-  simp [id, HMul.hMul, Mul.mul]
-  erw [Vector.Map₂.eq.Map.of.Eq_1 (n := [].prod) (by rfl)]
-  rfl
 
 
 private lemma mul_cast_one
@@ -88,7 +79,7 @@ private lemma main
     (congrArg (fun X : Tensor α [n] => X[i]) hstack).trans hsum
   have hR : (a * b)[i] = (id (α := Tensor α []) a[i]) * (id (α := Tensor α []) b[i]) := by
     have hb := GetMul.eq.MulGetS.fin a b i
-    exact hb.trans (hmul_eq_mul a[i] b[i]).symm
+    exact hb.trans (Tensor.Mul (id (α := Tensor α []) a[i]) (id (α := Tensor α []) b[i])).symm
   refine Eq.trans hL ?_
   refine Eq.trans ?_ hR.symm
   have hMp (p : Fin n) :
@@ -100,7 +91,7 @@ private lemma main
     have hc := eye_mul_broadcast_get a i p
     simp only [id] at hc ⊢
     rw [hc]
-    exact hmul_eq_mul _ _
+    exact Tensor.Mul (id (α := Tensor α []) _) (id (α := Tensor α []) _)
   have hsingle : ∑ p : Fin n, (id (α := Tensor α []) M[i][p]) * (id (α := Tensor α []) b[p]) = (id (α := Tensor α []) M[i][i]) * (id (α := Tensor α []) b[i]) := by
     apply Finset.sum_eq_single i
     ·
@@ -127,8 +118,8 @@ private lemma main
   rw [hsingle]
   rw [hMp i]
   simp [Delta.eq.Ite]
-  exact (mul_cast_one a[i] b[i]).trans (hmul_eq_mul a[i] b[i]).symm
+  exact (mul_cast_one a[i] b[i]).trans (Tensor.Mul (id (α := Tensor α []) a[i]) (id (α := Tensor α []) b[i])).symm
 
 
 -- created on 2023-09-18
--- updated on 2026-08-27
+-- updated on 2026-09-02

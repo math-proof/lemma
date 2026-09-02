@@ -22,7 +22,7 @@ private lemma main
   apply this.symm.trans
   apply XEq.of.Eq
   congr
-  rw [@Tensor.NegMul.eq.MulNeg]
+  rw [@Tensor.NegMul.eq.MulNeg.scalar]
   rw [NegSub.eq.Sub]
 
 

@@ -276,21 +276,6 @@ private lemma int_mod_eq_zero_of_add_mod_eq
       exact absurd this (ne_of_lt hb.2)
 
 
-private lemma int_mod_eq_zero_of_sub_mod_eq
-  {m j d : ℤ}
--- given
-  (hd : 0 < d)
-  (h : (m - j) % d = m % d) :
--- imply
-  j % d = 0 := by
--- proof
-  apply int_mod_eq_zero_of_add_mod_eq hd
-  simpa [Int.add_emod, Int.emod_emod] using calc
-    _ = ((m - j) % d + j % d) % d := by simp [h]
-    _ = ((m - j) + j) % d := by rw [← Int.add_emod]
-    _ = m % d := by simp
-
-
 private lemma nat_mod_eq_zero_of_add_mod_eq
   {start j step : ℕ}
 -- given
@@ -300,19 +285,6 @@ private lemma nat_mod_eq_zero_of_add_mod_eq
   j % step = 0 := by
 -- proof
   have hj := int_mod_eq_zero_of_add_mod_eq (show (0 : ℤ) < (step : ℤ) from Nat.cast_pos.mpr h_step) (show ((start : ℤ) + j) % (step : ℤ) = (start : ℤ) % (step : ℤ) by exact_mod_cast h)
-  exact_mod_cast hj
-
-
-private lemma nat_mod_eq_zero_of_sub_mod_eq
-  {m j step : ℕ}
--- given
-  (_h_step : 0 < step)
-  (_hle : j ≤ m)
-  (h : (m - j) % step = m % step) :
--- imply
-  j % step = 0 := by
--- proof
-  have hj := int_mod_eq_zero_of_sub_mod_eq (show (0 : ℤ) < (step : ℤ) from Nat.cast_pos.mpr _h_step) (show ((m : ℤ) - j) % (step : ℤ) = (m : ℤ) % (step : ℤ) by exact_mod_cast h)
   exact_mod_cast hj
 
 
@@ -650,4 +622,4 @@ private lemma main
 
 
 -- created on 2023-05-30
--- updated on 2026-08-08
+-- updated on 2026-09-02

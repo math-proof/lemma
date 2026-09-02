@@ -16,15 +16,15 @@
 ## 形式化推理策略
 
 1. **归纳法**  
-   数学归纳法：由基例与归纳步建立对全体自然数（或良基结构）的命题。策略示例：`induction`
+   数学归纳法：由基例与归纳步建立对全体自然数（或良基结构）的命题，如：`induction`
 2. **演绎法**  
-   由一般命题推出特殊实例，含全称量词引入与消去。策略示例：`specialize` / `intro` / `rintro`
+   由一般命题推出特殊实例，含全称量词引入与消去，如：`specialize` / `intro` / `rintro`
 3. **反证法**  
-   归谬法：假设结论否定成立，据 [排中律](../?module=Bool.Or_Not) 推导矛盾。策略示例：`by_contra`
+   归谬法：假设结论否定成立，据 [排中律](../?module=Bool.Or_Not) 推导矛盾，如：`by_contra`
 4. **分治法**  
-   分类讨论：将目标分解为互斥且穷尽的情形分别证明。策略示例：`by_cases` / `interval_cases` / `rcases`
+   分类讨论：将目标分解为互斥且穷尽的情形分别证明，如：`by_cases` / `interval_cases` / `rcases`
 5. **溯因式推理**  
-   由待证目标反向寻找充分条件或适用引理（证明搜索意义上的“由果索因”）。策略示例：`refine` / `apply`
+   由待证目标反向寻找充分条件或适用引理（证明搜索意义上的“由果索因”），如：`refine` / `apply`
 
 ## 启发式辅助推理
 
@@ -38,14 +38,14 @@
 # 算法定理库的建设
   <br>
 
-目前库中收录 <label id=count>5000</label> 条已证定理（<label id=lines>100000</label> 行 Lean 代码），供交互式推导与查阅。主要覆盖：
+目前库中收录 <label id=count>5000</label> 条已证定理（<label id=lines>100000</label> 行 Lean 代码），供交互式推导与查阅，覆盖：
 
 * [Bool](../?module=Bool) 命题逻辑与布尔运算
-* [Fin](../?module=Fin) 有限索引与自然数片段上的初等代数
+* [Fin](../?module=Fin) 有限索引初等代数
 * [Nat](../?module=Nat) 自然数初等代数
 * [Int](../?module=Int) 整数初等代数
 * [Rat](../?module=Rat) 有理数初等代数
-* [Real](../?module=Real) 实数代数与实分析
+* [Real](../?module=Real) 实分析
 * [Hyperreal](../?module=Real) 非标准分析
 * [Complex](../?module=Complex) 复分析，例：
   - [一元二次方程](../?module=Complex.Eq0Add_Mul_Square.is.In_FinsetDivS_Mul2.of.Ne_0)

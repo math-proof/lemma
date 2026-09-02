@@ -1,4 +1,4 @@
-import Lemma.Real.CosSub.eq.AddCosCos_SinSin
+import Lemma.Real.CosSub.eq.AddMulS
 import Lemma.Real.Eq_DivPi2.of.EqCos_0.In_Icc0Pi
 import Lemma.Real.GtPi0
 import Lemma.Set.Ge.of.In_Icc
@@ -25,7 +25,7 @@ private lemma main
       ring
     _ = π * ⌊x / π⌋ + π / 2 := by
       rw [Eq_DivPi2.of.EqCos_0.In_Icc0Pi (In_Icc.of.Le.Le (Le.of.In_Ico hIco) (le_of_lt (Lt.of.In_Ico hIco))) _]
-      rw [hy, CosSub.eq.AddCosCos_SinSin, h, zero_mul]
+      rw [hy, CosSub.eq.AddMulS, h, zero_mul]
       simp [sin_int_mul_pi, mul_comm π]
 
 

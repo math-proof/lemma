@@ -4,12 +4,10 @@ import Lemma.Tensor.MulAppendS.eq.AppendMulS
 import Lemma.Tensor.CosAppend.eq.AppendCosS
 import Lemma.Tensor.DataMul.eq.MulDataS
 import Lemma.Tensor.DataNeg.eq.NegData
-import Lemma.Tensor.DotAppendS.eq.AppendAddSDotS
+import Lemma.Tensor.DotAppendHstack.eq.AppendAddSDotS
 import Lemma.Tensor.DotMulEye.eq.Mul
-import Lemma.Tensor.Eq.is.All_EqGetS
 import Lemma.Tensor.Eq.is.EqDataS
-import Lemma.Tensor.EqGetStack
-import Lemma.Tensor.GetNeg.eq.NegGet
+import Lemma.Tensor.NegStack.eq.Stack_Neg
 import Lemma.Tensor.SinAppend.eq.AppendSinS
 import Lemma.Vector.GetMul.eq.MulGetS
 import Lemma.Vector.GetNeg.eq.NegGet
@@ -29,30 +27,16 @@ private lemma rotary
 -- given
   (θ x0 x1 : Tensor α [d]) :
 -- imply
-  let I : Tensor α [d, d] := Tensor.eye d
-  let C : Tensor α [d, d] := [_ < d] θ.cos
-  let S : Tensor α [d, d] := [_ < d] θ.sin
-  let R := Tensor.hstack (I * C) (-(I * S)) ++ Tensor.hstack (I * S) (I * C)
-  R @ (x0 ++ x1) ≃
+  ((Tensor.eye d * [_ < d] θ.cos).hstack (-(Tensor.eye d * [_ < d] θ.sin)) ++
+      (Tensor.eye d * [_ < d] θ.sin).hstack (Tensor.eye d * [_ < d] θ.cos)) @ (x0 ++ x1) ≃
     (x0 ++ x1) * (θ ++ θ).cos + ((-x1) ++ x0) * (θ ++ θ).sin := by
 -- proof
-  intro I C S R
   apply SEq.of.Eq
-  simp [R]
-  rw [DotAppendS.eq.AppendAddSDotS (I * C) (-(I * S)) (I * S) (I * C) x0 x1]
-  have hnegS : -(I * S) = I * ([_ < d] (-θ.sin)) := by
+  rw [DotAppendHstack.eq.AppendAddSDotS (Tensor.eye d * [_ < d] θ.cos) (-(Tensor.eye d * [_ < d] θ.sin)) (Tensor.eye d * [_ < d] θ.sin) (Tensor.eye d * [_ < d] θ.cos) x0 x1]
+  have hnegS : -(Tensor.eye d * [_ < d] θ.sin) = Tensor.eye d * ([_ < d] (-θ.sin)) := by
     apply Eq.of.EqDataS
     rw [DataNeg.eq.NegData, DataMul.eq.MulDataS, DataMul.eq.MulDataS]
-    rw [← congrArg Tensor.data (?hstack : -S = [_ < d] (-θ.sin))]
-    case hstack =>
-      apply Tensor.Eq.of.All_EqGetS.fin
-      intro i
-      have hN := GetNeg.eq.NegGet (S : Tensor α (d :: [d])) ⟨(i : ℕ), by simp [Tensor.length]⟩
-      have hS := EqGetStack.fin (fun _ : Fin d => θ.sin) i
-      have hS' := EqGetStack.fin (fun _ : Fin d => -θ.sin) i
-      simp [S, GetElem.getElem] at hN hS hS' ⊢
-      erw [hN, hS, hS']
-      rfl
+    rw [← congrArg Tensor.data (NegStack.eq.Stack_Neg (fun _ : Fin d => θ.sin))]
     rw [DataNeg.eq.NegData]
     ext j
     rw [Vector.GetNeg.eq.NegGet.fin, Vector.GetMul.eq.MulGetS.fin, Vector.GetMul.eq.MulGetS.fin]
@@ -87,4 +71,4 @@ private lemma rotary
 
 
 -- created on 2023-06-06
--- updated on 2026-08-27
+-- updated on 2026-09-02

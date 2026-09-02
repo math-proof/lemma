@@ -165,6 +165,8 @@ def Expr.strFormat : Expr → String
       | `GetElem.getElem
       | `Singleton.singleton
       | `setOf
+      | `OfNat.ofNat =>
+        "%s"
       | _ =>
         opStr
 
@@ -339,6 +341,12 @@ where
       match args with
       | [d, a, b] =>
         [a.toString, b.toString, d.toString]
+      | _ =>
+        map args
+    | .Special ⟨`OfNat.ofNat⟩ =>
+      match args with
+      | lit :: _ =>
+        [lit.toString]
       | _ =>
         map args
     | .BinaryInfix ⟨`Membership.mem⟩ =>

@@ -132,6 +132,21 @@ abstract class Lean extends IndentedNode
             return $this->parent->append($new, $type);
     }
 
+    public function blockMatrixRows()
+    {
+        $rows = array_map(fn($n) => $n->hstackBlocks(), $this->flattenAppend());
+        if (!$rows || in_array(null, $rows, true))
+            return null;
+        $cols = count($rows[0]);
+        if ($cols < 1)
+            return null;
+        foreach ($rows as $r) {
+            if (count($r) !== $cols)
+                return null;
+        }
+        return $rows;
+    }
+
     public function case_default($key, ...$kwargs)
     {
         return $this;
@@ -141,7 +156,23 @@ abstract class Lean extends IndentedNode
     {
     }
 
+    public function flattenAppend()
+    {
+        $inner = $this->peelParen();
+        if ($inner !== $this)
+            return $inner->flattenAppend();
+        return [$this];
+    }
+
     public function getEcho() {}
+
+    public function hstackBlocks()
+    {
+        $inner = $this->peelParen();
+        if ($inner !== $this)
+            return $inner->hstackBlocks();
+        return null;
+    }
 
     public function insert($caret, $func, $type)
     {
@@ -272,6 +303,16 @@ abstract class Lean extends IndentedNode
             $parent instanceof LeanIte && ($this === $parent->then || $this === $parent->else);
     }
 
+    public function isMatMulContext()
+    {
+        return false;
+    }
+
+    public function isMatMulOperand()
+    {
+        return $this->parent && $this->parent->isMatMulContext();
+    }
+
     public function is_outsider()
     {
         return false;
@@ -301,6 +342,33 @@ abstract class Lean extends IndentedNode
     {
         return $this->strFormat();
     }
+
+    public function matrixLatexArgs(&$syntax = null)
+    {
+        $rows = $this->matrixLatexSpec();
+        if (!$rows)
+            return null;
+        $out = [];
+        foreach ($rows as $row) {
+            foreach ($row as $cell)
+                $out[] = $cell->peelParen()->toLatex($syntax);
+        }
+        return $out;
+    }
+
+    public function matrixLatexSpec()
+    {
+        $rows = $this->blockMatrixRows();
+        if ($rows)
+            return $rows;
+        if ($this->isMatMulOperand()) {
+            $parts = $this->flattenAppend();
+            if (count($parts) >= 2)
+                return array_map(fn($p) => [$p], $parts);
+        }
+        return null;
+    }
+
     function parse($token, ...$kwargs)
     {
         [$self] = $kwargs;
@@ -782,6 +850,11 @@ abstract class Lean extends IndentedNode
     }
 
     public function peelLatexCoe()
+    {
+        return $this;
+    }
+
+    public function peelParen()
     {
         return $this;
     }
@@ -1797,6 +1870,12 @@ class LeanParenthesis extends LeanPairedGroup
         }
         return $parent instanceof LeanArgsNewLineSeparated || $parent instanceof LeanArgsCommaNewLineSeparated || ($parent instanceof LeanIte && $this !== $parent->if);
     }
+
+    public function isMatMulContext()
+    {
+        return $this->parent && $this->parent->isMatMulContext();
+    }
+
     public function isProp($vars)
     {
         return $this->arg->isProp($vars);
@@ -1804,11 +1883,15 @@ class LeanParenthesis extends LeanPairedGroup
     public function latexArgs(&$syntax = null)
     {
         $arg = $this->arg;
+        if ($arg->matrixLatexSpec())
+            return [$arg->toLatex($syntax)];
         if ($arg instanceof LeanColon) {
             if ($arg->lhs instanceof LeanBrace)
                 return $arg->lhs->latexArgs($syntax);
             if ($arg->rhs instanceof LeanToken && $arg->rhs->text == 'Bool')
                 return [$arg->lhs->toLatex($syntax)];
+            if ($arg->isZeroOneTensor())
+                return [$arg->toLatex($syntax)];
         }
         return parent::latexArgs($syntax);
     }
@@ -1816,11 +1899,15 @@ class LeanParenthesis extends LeanPairedGroup
     public function latexFormat()
     {
         $arg = $this->arg;
+        if ($arg->matrixLatexSpec())
+            return '%s';
         if ($arg instanceof LeanColon) {
             if ($arg->lhs instanceof LeanBrace)
                 return $arg->lhs->latexFormat(); # special case for ({ ... } : ...)
             if ($arg->rhs instanceof LeanToken && $arg->rhs->text == 'Bool')
                 return '\left|{%s}\right|';
+            if ($arg->isZeroOneTensor())
+                return '%s';
         }
         return $this->toColor();
     }
@@ -1831,6 +1918,13 @@ class LeanParenthesis extends LeanPairedGroup
         if ($inner !== $this->arg)
             return $inner;
         return $this;
+    }
+
+    public function peelParen()
+    {
+        if ($this->arg instanceof LeanColon)
+            return $this;
+        return $this->arg->peelParen();
     }
 
     public function regexp()
@@ -2348,6 +2442,21 @@ class LeanProperty extends LeanBinary
                 case 'sin':
                 case 'tan':
                 case 'log':
+                    $arg = '%s';
+                    if ($lhs instanceof LeanToken) {
+                        switch ($lhs->text) {
+                            case 'Real':
+                            case 'Complex':
+                            case 'Cos':
+                            case 'Sin':
+                            case 'Tan':
+                            case 'Log':
+                                $arg = null;
+                        }
+                    }
+                    if ($arg)
+                        return [$this->lhs->toLatex($syntax)];
+                    break;
                 case 'fmod':
                     return [$this->lhs->toLatex($syntax)];
                 case 'card':
@@ -2387,7 +2496,21 @@ class LeanProperty extends LeanBinary
                 case 'sin':
                 case 'tan':
                 case 'log':
-                    return "\\$command {%s}";
+                    $arg = '%s';
+                    if ($lhs instanceof LeanToken) {
+                        switch ($lhs->text) {
+                            case 'Real':
+                            case 'Complex':
+                            case 'Cos':
+                            case 'Sin':
+                            case 'Tan':
+                            case 'Log':
+                                $arg = null;
+                        }
+                    }
+                    if ($arg)
+                        return "\\$command {%s}";
+                    break;
                 case 'fmod':
                     return '{%s} {\color{red}\%%}';
                 case 'card':
@@ -2475,6 +2598,53 @@ class LeanColon extends LeanBinary
     public function peelLatexCoe()
     {
         return $this->lhs->peelLatexCoe();
+    }
+
+    public function tensorTypeShape()
+    {
+        $ty = $this->rhs;
+        if ($ty instanceof LeanParenthesis)
+            $ty = $ty->arg;
+        if (!$ty instanceof LeanArgsSpaceSeparated)
+            return null;
+        $args = array_values(array_filter($ty->args, fn($a) => !$a instanceof LeanCaret));
+        if (count($args) < 2)
+            return null;
+        $head = $args[0];
+        if (!$head instanceof LeanToken || $head->text !== 'Tensor')
+            return null;
+        $shape = $args[count($args) - 1];
+        if ($shape instanceof LeanBracket) {
+            $inner = $shape->arg;
+            if (!$inner || $inner instanceof LeanCaret)
+                return [];
+            if ($inner instanceof LeanArgsCommaSeparated)
+                return array_values(array_filter($inner->args, fn($a) => !$a instanceof LeanCaret));
+            return [$inner];
+        }
+        return [$shape];
+    }
+
+    public function isZeroOneTensor()
+    {
+        $lhs = $this->lhs;
+        return $lhs instanceof LeanToken && ($lhs->text === '0' || $lhs->text === '1') && $this->tensorTypeShape() !== null;
+    }
+
+    public function latexFormat()
+    {
+        if ($this->isZeroOneTensor())
+            return '\\mathbf{' . $this->lhs->text . '}_{%s}';
+        return parent::latexFormat();
+    }
+
+    public function latexArgs(&$syntax = null)
+    {
+        if ($this->isZeroOneTensor()) {
+            $dims = $this->tensorTypeShape();
+            return [implode(',', array_map(fn($d) => $d->toLatex($syntax), $dims))];
+        }
+        return parent::latexArgs($syntax);
     }
     public function sep()
     {
@@ -3130,6 +3300,11 @@ class LeanMatMul extends LeanArithmetic
                 return parent::__get($vname);
         }
     }
+
+    public function isMatMulContext()
+    {
+        return true;
+    }
 }
 
 class Lean_bullet extends LeanArithmetic
@@ -3219,17 +3394,18 @@ class LeanDiv extends LeanArithmetic
                 $rhs = $rhs->arg;
         }
         $lhs = $lhs->toLatex($syntax);
-        $rhs = $rhs->toLatex($syntax);
+        if ($rhs instanceof LeanDiv)
+            $rhs = sprintf('\left. {%s} \right/ {%s}', ...$rhs->latexArgs($syntax));
+        else
+            $rhs = $rhs->toLatex($syntax);
         return [$lhs, $rhs];
     }
     public function latexFormat()
     {
-        [$lhs, $rhs] = $this->args;
-        if ($lhs instanceof LeanDiv || $rhs instanceof LeanParenthesis && $rhs->arg instanceof LeanDiv) {
+        if ($this->lhs instanceof LeanDiv) {
             return '\left. {%s} \right/ {%s}';
-        } else {
-            return '\frac {%s} {%s}';
         }
+        return '\frac {%s} {%s}';
     }
 }
 
@@ -3556,6 +3732,33 @@ class LeanAppend extends LeanArithmetic
             default:
                 return parent::__get($vname);
         }
+    }
+
+    public function flattenAppend()
+    {
+        return array_merge($this->lhs->flattenAppend(), $this->rhs->flattenAppend());
+    }
+
+    public function latexArgs(&$syntax = null)
+    {
+        $args = $this->matrixLatexArgs($syntax);
+        if ($args !== null)
+            return $args;
+        return parent::latexArgs($syntax);
+    }
+
+    public function latexFormat()
+    {
+        $rows = $this->matrixLatexSpec();
+        if ($rows)
+            return self::bmatrixFormat(count($rows), count($rows[0]));
+        return parent::latexFormat();
+    }
+
+    public static function bmatrixFormat($nrows, $ncols)
+    {
+        $row = implode(' & ', array_fill(0, $ncols, '%s'));
+        return '\\begin{bmatrix} ' . implode(' \\\\ ', array_fill(0, $nrows, $row)) . ' \\end{bmatrix}';
     }
 }
 
@@ -6389,6 +6592,20 @@ class LeanArgsSpaceSeparated extends LeanArgs
         }
         return '';
     }
+
+    public function hstackBlocks()
+    {
+        $func = $this->args[0];
+        if (!($func instanceof LeanProperty) || !($func->rhs instanceof LeanToken) || $func->rhs->text !== 'hstack')
+            return null;
+        $n = count($this->args);
+        if ($n === 2)
+            return [$func->lhs, $this->args[1]];
+        if ($n === 3)
+            return [$this->args[1], $this->args[2]];
+        return null;
+    }
+
     public function insert($caret, $func, $type)
     {
         if ($caret === end($this->args) && !$caret instanceof LeanCaret && $type != 'modifier') {
@@ -6486,8 +6703,52 @@ class LeanArgsSpaceSeparated extends LeanArgs
         return true;
     }
 
+    /** `id (α := T) e` — identity; LaTeX prints only `e`. */
+    public function idLatexInner()
+    {
+        $args = $this->args;
+        if (count($args) !== 3 || !($args[0] instanceof LeanToken) || $args[0]->text !== 'id')
+            return null;
+        $named = $args[1] instanceof LeanParenthesis ? $args[1]->arg : $args[1];
+        if (!($named instanceof LeanAssign && $named->lhs instanceof LeanToken && $named->lhs->text === 'α'))
+            return null;
+        $inner = $args[2];
+        if (
+            $inner instanceof LeanParenthesis &&
+            !($inner->arg instanceof LeanColon) &&
+            $this->canStripIdParen($inner->arg)
+        )
+            $inner = $inner->arg;
+        return $inner;
+    }
+
+    /** Strip `(e)` after dropping `id` when `e` binds tighter than `id`'s parent. */
+    /**
+     * `A op B op' C` compares `op.stack_priority` with `op'.input_priority`.
+     * After dropping `id`, `inner` is `op` on the left and `op'` on the right.
+     */
+    public function canStripIdParen($inner)
+    {
+        $parent = $this->parent;
+        if (!$parent)
+            return true;
+        if ($parent instanceof LeanBinary) {
+            if ($parent->lhs === $this)
+                return get_class($parent)::$input_priority <= $inner->stack_priority;
+            if ($parent->rhs === $this)
+                return get_class($inner)::$input_priority > $parent->stack_priority;
+        }
+        return get_class($inner)::$input_priority > $parent->stack_priority;
+    }
+
     public function latexArgs(&$syntax = null)
     {
+        $matrixArgs = $this->matrixLatexArgs($syntax);
+        if ($matrixArgs !== null)
+            return $matrixArgs;
+        $idInner = $this->idLatexInner();
+        if ($idInner)
+            return [$idInner->toLatex($syntax)];
         $args = $this->args;
         $func = $args[0];
         if ($this->is_Abs()) {
@@ -6526,6 +6787,8 @@ class LeanArgsSpaceSeparated extends LeanArgs
                             $arg = $arg->toLatex($syntax);
                             return [$arg];
 
+                        case 'eye':
+                            return [];
                         case 'Ici':
                         case 'Iic':
                         case 'Ioi':
@@ -6559,6 +6822,8 @@ class LeanArgsSpaceSeparated extends LeanArgs
             $args = $this->strip_parenthesis();
             $arg = $args[1]->toLatex($syntax);
             return [$arg];
+        } elseif ($func instanceof LeanProperty && $func->rhs instanceof LeanToken && $func->rhs->text === 'eye' && count($args) === 2) {
+            return [];
         } elseif ($func instanceof LeanProperty && $func->rhs instanceof LeanToken && $func->rhs->text === 'choose' && (count($args) === 2 || count($args) === 3)) {
             $n = count($args) === 2 ? $func->lhs : $args[1];
             $k = count($args) === 2 ? $args[1] : $args[2];
@@ -6573,6 +6838,11 @@ class LeanArgsSpaceSeparated extends LeanArgs
 
     public function latexFormat()
     {
+        $rows = $this->matrixLatexSpec();
+        if ($rows)
+            return LeanAppend::bmatrixFormat(count($rows), count($rows[0]));
+        if ($this->idLatexInner())
+            return '%s';
         $args = $this->args;
         $func = $args[0];
         if ($this->is_Abs())
@@ -6610,6 +6880,8 @@ class LeanArgsSpaceSeparated extends LeanArgs
                         case 'Iio':
                             return '\left(-\infty, %s\right)';
 
+                        case 'eye':
+                            return '\\mathbb{I}';
                         case 'Zeros':
                             return '\mathbf{0}_{%s}';
                         case 'Ones':
@@ -6636,6 +6908,10 @@ class LeanArgsSpaceSeparated extends LeanArgs
         } elseif ($func instanceof LeanProperty) {
             if ($func->rhs instanceof LeanToken) {
                 switch ($func->rhs->text) {
+                    case 'eye':
+                        if (count($args) == 2)
+                            return '\\mathbb{I}';
+                        break;
                     case 'fmod':
                         if (count($args) == 2)
                             return '{%s}{%s}';

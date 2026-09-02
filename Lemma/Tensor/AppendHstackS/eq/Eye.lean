@@ -23,7 +23,7 @@ private lemma main
 -- given
   (n m : ℕ) :
 -- imply
-  Tensor.hstack (Tensor.eye n) (0 : Tensor α [n, m]) ++ Tensor.hstack (0 : Tensor α [m, n]) (Tensor.eye m) = Tensor.eye (n + m) := by
+  (Tensor.eye n).hstack (0 : Tensor α [n, m]) ++ (0 : Tensor α [m, n]).hstack (Tensor.eye m) = Tensor.eye (n + m) := by
 -- proof
   let In : Tensor α [n, n] := Tensor.eye n
   let Znm : Tensor α [n, m] := 0
@@ -33,8 +33,8 @@ private lemma main
   let Znm' : Tensor α ([n] ++ m :: []) := Znm
   let Zmn' : Tensor α ([m] ++ n :: []) := Zmn
   let Im' : Tensor α ([m] ++ m :: []) := Im
-  let row0 : Tensor α [n, n + m] := Tensor.hstack In Znm
-  let row1 : Tensor α [m, n + m] := Tensor.hstack Zmn Im
+  let row0 : Tensor α [n, n + m] := In.hstack Znm
+  let row1 : Tensor α [m, n + m] := Zmn.hstack Im
   have hrow0 : row0 = In' ++ Znm' := rfl
   have hrow1 : row1 = Zmn' ++ Im' := rfl
   change row0 ++ row1 = Tensor.eye (n + m)
