@@ -1,1 +1,1 @@
-from . import AddSinSin_CosCos
+from . import AddMulS

@@ -83,7 +83,7 @@ def prove(Eq):
     Eq <<= Eq[-1].find(Mul + Mul).this.apply(Nat.AddMulS.eq.Mul_Add),\
         Eq[-1].find(Mul[KroneckerDelta] - Mul).this.apply(Nat.AddMulS.eq.Mul_Add)
     Eq << Eq[-3].subs(*Eq[-2:])
-    Eq <<= Eq[-1].lhs.find(Sin * Sin + Cos * Cos).this.apply(Real.AddSinSin_CosCos.eq.CosSub), \
+    Eq <<= Eq[-1].lhs.find(Sin * Sin + Cos * Cos).this.apply(Real.AddMulS.eq.CosSub), \
         Eq[-1].lhs.find(Sin * Cos - Sin * Cos).this.apply(Real.SubMulSSin_Cos.eq.SinSub)
 
     Eq << Eq[-3].subs(*Eq[-2:])

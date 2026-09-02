@@ -203,7 +203,10 @@ from . import Lt_Maxima
 from . import Max
 from . import Min
 from . import Norm
-from . import AddSinSin_CosCos
-from . import EqSup
 from . import GtMinima
 from . import SubMulSSin_Cos
+from . import AddMulS
+from . import EqSup
+from . import EqSup
+from . import EqSup
+from . import EqSup
