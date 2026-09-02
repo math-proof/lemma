@@ -12,7 +12,7 @@ def rotary_matrix(d_r, d_c, b_r, b_c, λ_r, λ_c, θ_r, θ_c, R, i, j, k):
             [Identity(d) * sin(θ),  Identity(d) * cos(θ)]]))
 
 def extract(eq_theta_r, eq_theta_c, eq_R):
-    from Lemma.Tensor.EqDot.of.Eq_Mul.position_representation import extract_theta
+    from Lemma.Tensor.EqDotT.of.Eq_Stack_Div_Pow_Div.Ge import extract_theta
     d_r, b_r, λ_r, θ_r, i, k = extract_theta(eq_theta_r)
     d_c, b_c, λ_c, θ_c, j, S[k] = extract_theta(eq_theta_c)
 
@@ -61,9 +61,9 @@ def prove(Eq):
     i_quote, j_quote = Symbol(integer=True)
     Eq << apply(*rotary_matrix(d_r, d_c, b_r, b_c, λ_r, λ_c, θ_r, θ_c, R, i, j, k), i_quote, j_quote)
 
-    Eq << Tensor.EqDot.of.Eq_Mul.position_representation.apply(Eq[0], i_quote)
+    Eq << Tensor.EqDotT.of.Eq_Stack_Div_Pow_Div.Ge.apply(Eq[0], i_quote)
 
-    Eq << Tensor.EqDot.of.Eq_Mul.position_representation.apply(Eq[1], j_quote)
+    Eq << Tensor.EqDotT.of.Eq_Stack_Div_Pow_Div.Ge.apply(Eq[1], j_quote)
 
     Eq << Tensor.EqDot.of.EqDot.EqDot.apply(*Eq[-2:])
 

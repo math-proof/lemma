@@ -4,7 +4,7 @@ from util import *
 
 @apply
 def apply(eq_theta, eq_R, Q, K, V, j):
-    from Lemma.Tensor.EqDot.of.Eq_Mul.position_representation import extract
+    from Lemma.Tensor.EqDotT.of.Eq_Stack_Div_Pow_Div.Ge import extract
     Rk, d, alpha, θ, b, k, i, *_ = extract(eq_theta, eq_R)
     n = Q.shape[0]
     Ri = Rk.subs(k, i)
@@ -15,7 +15,7 @@ def apply(eq_theta, eq_R, Q, K, V, j):
 @prove
 def prove(Eq):
     from Lemma import Tensor, Finset, Bool, Nat
-    from Lemma.Tensor.EqDot.of.Eq_Mul.position_representation import rotary_matrix
+    from Lemma.Tensor.EqDotT.of.Eq_Stack_Div_Pow_Div.Ge import rotary_matrix
     # n denotes sequence length (seq_length)
     # b denotes 10000
     n, b = Symbol(integer=True, positive=True)

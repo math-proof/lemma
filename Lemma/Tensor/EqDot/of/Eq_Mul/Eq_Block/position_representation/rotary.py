@@ -1,7 +1,7 @@
 from util import *
 
 
-from Lemma.Tensor.EqDot.of.Eq_Mul.position_representation import rotary_matrix, extract
+from Lemma.Tensor.EqDotT.of.Eq_Stack_Div_Pow_Div.Ge import rotary_matrix, extract
 @apply
 def apply(eq_theta, eq_R, t):
     Rk, d, alpha, θ, b, k, *_ = extract(eq_theta, eq_R)
@@ -26,7 +26,7 @@ def prove(Eq):
     λ = Symbol(real=True)
     Eq << apply(*rotary_matrix(R, θ, d, b, k, i, λ), t)
 
-    Eq << Tensor.EqDot.of.Eq_Mul.position_representation.apply(Eq[0], t)
+    Eq << Tensor.EqDotT.of.Eq_Stack_Div_Pow_Div.Ge.apply(Eq[0], t)
 
     Eq << Eq[1].reversed
 

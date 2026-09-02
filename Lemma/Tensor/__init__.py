@@ -138,3 +138,4 @@ from . import DetBlock_Stack_Pow
 from . import DotAppendSHstackS
 from . import DetBlockStack_Pow
 from . import Ne_Dot
+from . import EqDotT

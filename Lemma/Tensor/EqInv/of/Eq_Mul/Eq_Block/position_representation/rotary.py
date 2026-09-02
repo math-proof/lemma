@@ -3,14 +3,14 @@ from util import *
 
 @apply
 def apply(eq_theta, eq_R):
-    from Lemma.Tensor.EqDot.of.Eq_Mul.position_representation import extract
+    from Lemma.Tensor.EqDotT.of.Eq_Stack_Div_Pow_Div.Ge import extract
     Rk, d, alpha, θ, b, k, i, *_ = extract(eq_theta, eq_R)
     Ri = Rk.subs(k, i)
     return Equal(Ri.T, Ri ^ -1)
 
 @prove
 def prove(Eq):
-    from Lemma.Tensor.EqDot.of.Eq_Mul.position_representation import rotary_matrix
+    from Lemma.Tensor.EqDotT.of.Eq_Stack_Div_Pow_Div.Ge import rotary_matrix
     from Lemma import Tensor
 
     # n denotes sequence length (seq_length)
