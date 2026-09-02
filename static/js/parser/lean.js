@@ -2423,7 +2423,7 @@ class LeanDoubleAngleQuotation extends LeanPairedGroup {
         return ['«', '»'];
     }
     latexFormat() {
-        return '\\left\\langle{%s}\\right\\rangle'; // «» guillemets
+        return '%s';
     }
 }
 

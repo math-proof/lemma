@@ -10,7 +10,6 @@ import Lemma.Tensor.SubGetS.eq.Get_Sub.of.Ge
 import Lemma.Tensor.TAppendHstackS.eq.AppendHstackSTS
 import Lemma.Tensor.TMulEye.eq.MulEye
 open Tensor
-set_option maxHeartbeats 800000
 
 
 noncomputable def rotaryMatrix (θ : Tensor ℝ [d]) : Tensor ℝ [d + d, d + d] :=
@@ -23,11 +22,11 @@ private lemma main
   {n d : ℕ}
   {θ : Tensor ℝ [n, d / 2]}
   {b : ℕ}
-  {lam : ℝ}
+  {«λ» : ℝ}
   {k t : Fin n}
 -- given
   (h : t ≤ k)
-  (hθ : θ = [i < n] [j < d / 2] ↑(lam * i / b ^ (j / (d / 2 : ℝ)))) :
+  (hθ : θ = [i < n] [j < d / 2] ↑(«λ» * i / b ^ (j / (d / 2 : ℝ)))) :
 -- imply
   let R (i : Fin n) :=
     let I := Tensor.eye (d / 2)
@@ -49,7 +48,7 @@ private lemma main
     rw [NegMul_Stack.eq.Mul_Stack_Neg]
     rw [TAppendHstackS.eq.AppendHstackSTS]
     rw [TMulEye.eq.MulEye α.cos, TMulEye.eq.MulEye α.sin, TMulEye.eq.MulEye (-α.sin)]
-    rw [← NegMul_Stack.eq.Mul_Stack_Neg]
+    rw [Mul_Stack_Neg.eq.NegMul_Stack]
   simp only [rotaryMatrix]
   apply (DotAppendSHstackS.eq.AppendHstackSAddSDotS
     ((Tensor.eye (α := ℝ) (d / 2)) * [_ < d / 2] α.cos)
@@ -72,18 +71,18 @@ private lemma main
   repeat erw [AddMulS_Stack.eq.Mul_Stack_Add]
   have h00 : α.cos * β.cos + α.sin * β.sin = (β - α).cos := by
     rw [mul_comm α.cos, mul_comm α.sin]
-    exact (CosSub.eq.AddMulS β α).symm
+    exact AddMulS.eq.CosSub β α
   have h01 : α.cos * (-β.sin) + α.sin * β.cos = -((β - α).sin) := by
     rw [Mul_Neg.eq.NegMul, add_comm, ← sub_eq_add_neg, mul_comm α.cos]
-    exact ((congrArg Neg.neg (SinSub.eq.SubMulSSin_Cos β α)).trans (neg_sub (β.sin * α.cos) (α.sin * β.cos))).symm
+    exact (neg_sub (β.sin * α.cos) (α.sin * β.cos)).symm.trans (congrArg Neg.neg (SubMulSSin_Cos.eq.SinSub β α))
   have h10 : (-α.sin) * β.cos + α.cos * β.sin = (β - α).sin := by
     rw [MulNeg.eq.NegMul, add_comm, ← sub_eq_add_neg, mul_comm α.cos]
-    exact (SinSub.eq.SubMulSSin_Cos β α).symm
+    exact SubMulSSin_Cos.eq.SinSub β α
   have h11 : (-α.sin) * (-β.sin) + α.cos * β.cos = (β - α).cos := by
     rw [MulNeg.eq.NegMul, Mul_Neg.eq.NegMul, neg_neg, add_comm, mul_comm α.cos, mul_comm α.sin]
-    exact (CosSub.eq.AddMulS β α).symm
+    exact AddMulS.eq.CosSub β α
   rw [h00, h01, h10, h11]
-  rw [← NegMul_Stack.eq.Mul_Stack_Neg]
+  rw [Mul_Stack_Neg.eq.NegMul_Stack]
 
 
 -- created on 2023-09-16

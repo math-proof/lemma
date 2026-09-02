@@ -6,9 +6,12 @@ open Tensor
 
 
 /--
-2×2 block matrix times a 2×2 block matrix.
+| attributes | lemma |
+| :---: | :---: |
+| main | Tensor.DotAppendSHstackS.eq.AppendHstackSAddSDotS |
+| comm | Tensor.AppendHstackSAddSDotS.eq.DotAppendSHstackS |
 -/
-@[main]
+@[main, comm]
 private lemma main
   [Mul α] [AddCommMonoid α]
 -- given
@@ -36,3 +39,4 @@ private lemma main
 
 
 -- created on 2020-08-18
+-- updated on 2026-09-02
