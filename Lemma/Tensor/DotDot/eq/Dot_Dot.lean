@@ -2,29 +2,143 @@ import Lemma.Fin.MulSum.eq.Sum_Mul
 import Lemma.Fin.Sum.of.All_Eq
 import Lemma.Fin.Sum_BFn
 import Lemma.Finset.Mul_Sum.eq.Sum_Mul
+import Lemma.Nat.MulMul.eq.Mul_Mul
+import Lemma.Tensor.Dot.eq.GetDotUnsqueeze_0
+import Lemma.Tensor.Dot.eq.Sum_MulGetS
+import Lemma.Tensor.EqGetUnsqueeze_0
+import Lemma.Tensor.GetDot.eq.DotGet
+import Lemma.Tensor.GetDot.eq.DotGetS
 import Lemma.Tensor.GetDotDot.eq.DotDotGet
 import Lemma.Tensor.GetDot_Dot.eq.Dot_Dot_GetT
 import Lemma.Tensor.Get.of.Eq
-import Lemma.Tensor.Sum_0.eq.Sum_Get
-import Lemma.Vector.GetMul.eq.MulGet
-open Tensor Fin Vector
+import Lemma.Tensor.GetTranspose.eq.Get
+import Lemma.Tensor.Mul
+open Tensor Fin
 set_option maxHeartbeats 1000000
 
 
-private lemma mul_nil
-  [Mul α]
+@[main]
+private lemma vmv
+  [NonUnitalSemiring α]
 -- given
-  (a b : Tensor α []) :
+  (v : Tensor α [m])
+  (M : Tensor α [m, n])
+  (w : Tensor α [n]) :
 -- imply
-  Mul.mul a b = HMul.hMul (γ := Tensor α []) (self := instHMulTensorNilNatOfMul) a b := by
+  (v @ M) @ w = v @ (M @ w) := by
 -- proof
-  apply Eq.of.EqDataS
-  change a.data * b.data = a.data * b.data[0]
-  apply Vector.Eq.of.All_EqGetS.fin
-  intro t
-  rw [Vector.GetMul.eq.MulGetS.fin a.data b.data t, Vector.GetMul.eq.MulGet.fin a.data b.data[0] t]
-  fin_cases t
-  rfl
+  apply (Dot.eq.Sum_MulGetS (v @ M) w).trans
+  apply Eq.trans _ (Dot.eq.Sum_MulGetS v (M @ w)).symm
+  trans ∑ k : Fin n, id (α := Tensor α []) (v @ (Mᵀ[k] : Tensor α [m])) * id (α := Tensor α []) w[k]
+  ·
+    apply Sum.of.All_Eq
+    intro k
+    apply congrArg (fun t => id (α := Tensor α []) t * id (α := Tensor α []) w[k])
+    apply (Tensor.Get.of.Eq.fin (Dot.eq.GetDotUnsqueeze_0 v M) k).trans
+    apply (GetDot.eq.DotGetS (v.unsqueeze 0) M ⟨0, by simp⟩ k).trans
+    apply congrArg (fun t : Tensor α [m] => t @ (Mᵀ[k] : Tensor α [m]))
+    apply EqGetUnsqueeze_0.nat
+  trans ∑ k : Fin n, (∑ i : Fin m, id (α := Tensor α []) v[i] * id (α := Tensor α []) M[i][k]) * id (α := Tensor α []) w[k]
+  ·
+    apply Sum.of.All_Eq
+    intro k
+    apply congrArg (fun t => t * id (α := Tensor α []) w[k])
+    apply Eq.trans (Dot.eq.Sum_MulGetS v (Mᵀ[k] : Tensor α [m]))
+    apply Sum.of.All_Eq
+    intro i
+    apply congrArg (fun t => id (α := Tensor α []) v[i] * id (α := Tensor α []) t)
+    exact GetTranspose.eq.Get M i k
+  trans ∑ k : Fin n, ∑ i : Fin m, (id (α := Tensor α []) v[i] * id (α := Tensor α []) M[i][k]) * id (α := Tensor α []) w[k]
+  ·
+    apply Sum.of.All_Eq
+    intro k
+    let f := fun i : Fin m => id (α := Tensor α []) v[i] * id (α := Tensor α []) M[i][k]
+    let x := id (α := Tensor α []) w[k]
+    change (∑ i : Fin m, f i) * x = ∑ i : Fin m, f i * x
+    apply Eq.trans (Mul _ _)
+    apply Eq.trans (MulSum.eq.Sum_Mul f)
+    apply Sum.of.All_Eq
+    intro i
+    apply (Mul _ _).symm
+  trans ∑ i : Fin m, ∑ k : Fin n, (id (α := Tensor α []) v[i] * id (α := Tensor α []) M[i][k]) * id (α := Tensor α []) w[k]
+  ·
+    apply Sum_BFn.comm
+  trans ∑ i : Fin m, ∑ k : Fin n, id (α := Tensor α []) v[i] * (id (α := Tensor α []) M[i][k] * id (α := Tensor α []) w[k])
+  ·
+    apply Sum.of.All_Eq
+    intro i
+    apply Sum.of.All_Eq
+    intro k
+    let a := id (α := Tensor α []) v[i]
+    let b := id (α := Tensor α []) M[i][k]
+    let c := id (α := Tensor α []) w[k]
+    change (a * b) * c = a * (b * c)
+    repeat rw [@Tensor.Mul]
+    apply Eq.trans Nat.MulMul.eq.Mul_Mul
+    rfl
+  trans ∑ i : Fin m, id (α := Tensor α []) v[i] * ∑ k : Fin n, id (α := Tensor α []) M[i][k] * id (α := Tensor α []) w[k]
+  ·
+    apply Sum.of.All_Eq
+    intro i
+    apply Eq.symm
+    let a := id (α := Tensor α []) v[i]
+    let f := fun k : Fin n => id (α := Tensor α []) M[i][k] * id (α := Tensor α []) w[k]
+    change a * ∑ k : Fin n, f k = ∑ k : Fin n, a * f k
+    apply Eq.trans (Mul _ _)
+    apply Eq.trans (Finset.Mul_Sum.eq.Sum_Mul (s := Finset.univ) f a)
+    apply Sum.of.All_Eq
+    intro k
+    apply (Mul _ _).symm
+  apply Sum.of.All_Eq
+  intro i
+  apply congrArg (fun t => id (α := Tensor α []) v[i] * id (α := Tensor α []) t)
+  apply Eq.trans _ (GetDot.eq.DotGet.une M w i).symm
+  apply Eq.symm
+  apply Dot.eq.Sum_MulGetS
+
+
+@[main]
+private lemma vmm
+  [NonUnitalSemiring α]
+-- given
+  (v : Tensor α [m])
+  (M : Tensor α [m, n])
+  (N : Tensor α [n, o]) :
+-- imply
+  (v @ M) @ N = v @ (M @ N) := by
+-- proof
+  apply Tensor.Eq.of.All_EqGetS.fin
+  intro j
+  apply (Tensor.Get.of.Eq.fin (Dot.eq.GetDotUnsqueeze_0 (v @ M) N) j).trans
+  apply (GetDot.eq.DotGetS ((v @ M).unsqueeze 0) N ⟨0, by simp⟩ j).trans
+  apply Eq.trans
+  ·
+    apply congrArg (fun t : Tensor α [n] => t @ (Nᵀ[j] : Tensor α [n]))
+    apply EqGetUnsqueeze_0.nat
+  apply Eq.trans (vmv v M (Nᵀ[j] : Tensor α [n]))
+  apply Eq.trans _ (Tensor.Get.of.Eq.fin (Dot.eq.GetDotUnsqueeze_0 v (M @ N)) j).symm
+  apply Eq.trans _ (GetDot_Dot.eq.Dot_Dot_GetT (v.unsqueeze 0) M N ⟨0, by simp⟩ j).symm
+  apply congrArg (fun t : Tensor α [m] => t @ (M @ (Nᵀ[j])))
+  apply Eq.symm
+  apply EqGetUnsqueeze_0
+
+
+@[main]
+private lemma mmv
+  [NonUnitalSemiring α]
+-- given
+  (M : Tensor α [l, m])
+  (N : Tensor α [m, n])
+  (v : Tensor α [n]) :
+-- imply
+  (M @ N) @ v = M @ (N @ v) := by
+-- proof
+  apply Tensor.Eq.of.All_EqGetS.fin
+  intro i
+  apply (GetDot.eq.DotGet.une (M @ N) v i).trans
+  apply Eq.trans _ (GetDot.eq.DotGet.une M (N @ v) i).symm
+  apply Eq.trans (congrArg (fun t => t @ v) (GetDot.eq.DotGet M N i))
+  apply vmv
 
 
 /--
@@ -46,119 +160,8 @@ private lemma main
   intro j
   apply (GetDotDot.eq.DotDotGet L M N i j).trans
   apply Eq.trans _ (GetDot_Dot.eq.Dot_Dot_GetT L M N i j).symm
-  let Li : Tensor α [m] := L[i]
-  let Nj : Tensor α [n] := Nᵀ[j]
-  apply (Dot.eq.SumMul__0 (Li @ M) Nj).trans
-  apply Eq.trans _ (Dot.eq.SumMul__0 Li (M @ Nj)).symm
-  let LM : Tensor α [n] := Li @ M
-  let MN : Tensor α [m] := M @ Nj
-  apply (Sum_0.eq.Sum_Get (LM * Nj)).trans
-  apply Eq.trans _ (Sum_0.eq.Sum_Get (Li * MN)).symm
-  trans ∑ k : Fin n, id (α := Tensor α []) LM[k] * id (α := Tensor α []) Nj[k]
-  ·
-    apply Sum.of.All_Eq
-    intro k
-    apply (GetMul.eq.MulGetS LM Nj k).trans
-    apply mul_nil (a := (LM[k] : Tensor α [])) (b := (Nj[k] : Tensor α []))
-  trans ∑ p : Fin m, id (α := Tensor α []) Li[p] * id (α := Tensor α []) MN[p]
-  ·
-    trans ∑ k : Fin n, (∑ p : Fin m, id (α := Tensor α []) Li[p] * id (α := Tensor α []) M[p][k]) * id (α := Tensor α []) Nj[k]
-    ·
-      apply Sum.of.All_Eq
-      intro k
-      rw [show LM[k] = (Li @ M)[k] by
-        simp [LM, GetElem.getElem]
-        rfl]
-      apply congrArg (fun t => id (α := Tensor α []) t * id (α := Tensor α []) Nj[k])
-      apply (Tensor.Get.of.Eq.fin (Dot.eq.GetDotUnsqueeze_0 Li M) k).trans
-      apply (GetDot.eq.DotGetS (Li.unsqueeze 0) M ⟨0, by simp⟩ k).trans
-      apply Eq.trans
-      ·
-        apply congrArg (fun t : Tensor α [m] => t @ (Mᵀ[k] : Tensor α [m]))
-        apply EqGetUnsqueeze_0.nat
-      let Mj : Tensor α [m] := Mᵀ[k]
-      apply (Dot.eq.SumMul__0 Li Mj).trans
-      apply (Sum_0.eq.Sum_Get (Li * Mj)).trans
-      apply Sum.of.All_Eq
-      intro p
-      apply (GetMul.eq.MulGetS Li Mj p).trans
-      rw [show Mj[p] = M[p][k] by
-        simp only [Mj]
-        apply (Tensor.Get.of.Eq.fin (GetT.eq.Select M k) p).trans
-        apply Bool.Eq.of.SEq
-        apply
-          (GetSelect_1.as.Get.of.Lt.GtGet_0.GtLength_0
-            (s := [n]) (n := m) (i := ↑k) (j := ↑p)
-            (by simp) (by simp) p.isLt M).trans
-        simp
-        rfl]
-      apply mul_nil (a := (Li[p] : Tensor α [])) (b := (M[p][k] : Tensor α []))
-    trans ∑ k : Fin n, ∑ p : Fin m, (id (α := Tensor α []) Li[p] * id (α := Tensor α []) M[p][k]) * id (α := Tensor α []) Nj[k]
-    ·
-      apply Sum.of.All_Eq
-      intro k
-      let f := fun p : Fin m => id (α := Tensor α []) Li[p] * id (α := Tensor α []) M[p][k]
-      let x := id (α := Tensor α []) Nj[k]
-      change (∑ p : Fin m, f p) * x = ∑ p : Fin m, f p * x
-      apply Eq.trans (mul_nil (∑ p : Fin m, f p) x).symm
-      apply Eq.trans (MulSum.eq.Sum_Mul f)
-      apply Sum.of.All_Eq
-      intro p
-      apply mul_nil
-    trans ∑ p : Fin m, ∑ k : Fin n, (id (α := Tensor α []) Li[p] * id (α := Tensor α []) M[p][k]) * id (α := Tensor α []) Nj[k]
-    ·
-      apply Sum_BFn.comm
-    trans ∑ p : Fin m, ∑ k : Fin n, id (α := Tensor α []) Li[p] * (id (α := Tensor α []) M[p][k] * id (α := Tensor α []) Nj[k])
-    ·
-      apply Sum.of.All_Eq
-      intro p
-      apply Sum.of.All_Eq
-      intro k
-      let a := id (α := Tensor α []) Li[p]
-      let b := id (α := Tensor α []) M[p][k]
-      let c := id (α := Tensor α []) Nj[k]
-      change (a * b) * c = a * (b * c)
-      rw [(mul_nil a b).symm]
-      rw [(mul_nil (Mul.mul a b) c).symm]
-      apply Eq.trans (Nat.MulMul.eq.Mul_Mul (a := a) (b := b) (c := c))
-      rw [(mul_nil b c).symm]
-      apply mul_nil a (Mul.mul b c)
-    trans ∑ p : Fin m, id (α := Tensor α []) Li[p] * ∑ k : Fin n, id (α := Tensor α []) M[p][k] * id (α := Tensor α []) Nj[k]
-    ·
-      apply Sum.of.All_Eq
-      intro p
-      apply Eq.symm
-      let a := id (α := Tensor α []) Li[p]
-      let f := fun k : Fin n => id (α := Tensor α []) M[p][k] * id (α := Tensor α []) Nj[k]
-      change a * ∑ k : Fin n, f k = ∑ k : Fin n, a * f k
-      apply Eq.trans (mul_nil a (∑ k : Fin n, f k)).symm
-      apply Eq.trans (Finset.Mul_Sum.eq.Sum_Mul (s := Finset.univ) f a)
-      apply Sum.of.All_Eq
-      intro k
-      apply mul_nil
-    apply Sum.of.All_Eq
-    intro p
-    rw [show MN[p] = (M @ Nj)[p] by
-      simp [MN, GetElem.getElem]
-      rfl]
-    apply congrArg (fun t => id (α := Tensor α []) Li[p] * id (α := Tensor α []) t)
-    symm
-    apply (GetDot.eq.DotGet.une M Nj p).trans
-    let Mi : Tensor α [n] := M[p]
-    apply (Dot.eq.SumMul__0 Mi Nj).trans
-    apply (Sum_0.eq.Sum_Get (Mi * Nj)).trans
-    apply Sum.of.All_Eq
-    intro k
-    apply (GetMul.eq.MulGetS Mi Nj k).trans
-    simp [id, Mi]
-    apply mul_nil
-  ·
-    apply Sum.of.All_Eq
-    intro p
-    apply Eq.symm
-    apply (GetMul.eq.MulGetS Li MN p).trans
-    apply mul_nil (a := (Li[p] : Tensor α [])) (b := (MN[p] : Tensor α []))
+  apply vmv
 
 
 -- created on 2025-05-03
--- updated on 2026-08-27
+-- updated on 2026-09-03

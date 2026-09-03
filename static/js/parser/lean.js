@@ -2423,7 +2423,7 @@ class LeanDoubleAngleQuotation extends LeanPairedGroup {
         return ['«', '»'];
     }
     latexFormat() {
-        return '%s';
+        return '{\\color{red}%s}';
     }
 }
 
@@ -3872,7 +3872,7 @@ class Lean_sqrt extends LeanUnaryArithmeticPre {
         return '√';
     }
     latexArgs(syntax) {
-        let arg = this.arg;
+        let arg = this.arg.peelLatexCoe();
         if (arg instanceof LeanParenthesis) arg = arg.arg;
         return [arg.toLatex(syntax)];
     }
@@ -7223,10 +7223,9 @@ export class LeanArgsNewLineSeparated extends LeanMultipleLine(LeanArgs) {
             this.push(c);
             return c;
         }
-        if (this.parent instanceof LeanAssign && !(caret instanceof LeanLineComment)) {
-            return super.insert_newline(caret, newline_count, indent, next);
-        }
         const last = this.args[this.args.length - 1];
+        // if (this.parent instanceof LeanAssign && !(caret instanceof LeanLineComment) && last !== caret)
+            // return super.insert_newline(caret, newline_count, indent, next);
         if (last === caret) {
             for (let i = 0; i < newline_count; ++i) {
                 caret = new LeanCaret(indent, caret.level);
@@ -9312,13 +9311,17 @@ export class Lean_def extends LeanArgs {
                         return caret;
                     }
                 } else if (caret instanceof LeanAssign) {
-                    const caret = this.assignment.rhs;
-                    if (caret instanceof LeanCaret) {
-                        caret.indent = indent;
-                        this.assignment.rhs = new LeanStatements([caret], indent, caret.level);
-                        return caret;
+                    const {rhs} = this.assignment;
+                    if (rhs instanceof LeanCaret) {
+                        rhs.indent = indent;
+                        this.assignment.rhs = new LeanStatements([rhs], indent, rhs.level);
+                        return rhs;
                     }
-                    indent = this.indent;
+                    if (rhs instanceof LeanArgsNewLineSeparated || rhs instanceof LeanStatements) {
+                        const c = new LeanCaret(indent, rhs.level);
+                        rhs.push(c);
+                        return c;
+                    }
                 }
             }
         }

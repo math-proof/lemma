@@ -2218,6 +2218,11 @@ class LeanDoubleAngleQuotation extends LeanPairedGroup
     {
         return false;
     }
+
+    public function latexFormat()
+    {
+        return '{\\color{red}%s}';
+    }
 }
 
 abstract class LeanBinary extends LeanArgs
@@ -4055,7 +4060,7 @@ class Lean_sqrt extends LeanUnaryArithmeticPre
     }
     public function latexArgs(&$syntax = null)
     {
-        $arg = $this->arg;
+        $arg = $this->arg->peelLatexCoe();
         if ($arg instanceof LeanParenthesis)
             $arg = $arg->arg;
         $arg = $arg->toLatex($syntax);
@@ -7057,7 +7062,7 @@ class LeanArgsNewLineSeparated extends LeanArgs
             return $caret;
         }
 
-        if ($this->parent instanceof LeanAssign && !($caret instanceof LeanLineComment))
+        if ($this->parent instanceof LeanAssign && !($caret instanceof LeanLineComment) && end($this->args) !== $caret)
             return parent::insert_newline($caret, $newline_count, $indent, $next);
 
         if (end($this->args) === $caret) {
@@ -9265,13 +9270,18 @@ class Lean_def extends LeanArgs
                         return $caret;
                     }
                 } elseif ($caret instanceof LeanAssign) {
-                    $caret = $this->assignment->rhs;
-                    if ($caret instanceof LeanCaret) {
-                        $caret->indent = $indent;
-                        $this->assignment->rhs = new LeanStatements([$caret], $indent, $caret->level);
-                        return $caret;
-                    } else
-                        return parent::insert_newline($caret, $newline_count, $this->indent, $next);
+                    $rhs = $this->assignment->rhs;
+                    if ($rhs instanceof LeanCaret) {
+                        $rhs->indent = $indent;
+                        $this->assignment->rhs = new LeanStatements([$rhs], $indent, $rhs->level);
+                        return $rhs;
+                    }
+                    if ($rhs instanceof LeanArgsNewLineSeparated || $rhs instanceof LeanStatements) {
+                        $c = new LeanCaret($indent, $rhs->level);
+                        $rhs->push($c);
+                        return $c;
+                    }
+                    return parent::insert_newline($caret, $newline_count, $indent, $next);
                 }
             }
             throw new Exception(__METHOD__ . " is unexpected for " . get_class($this));

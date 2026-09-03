@@ -5,43 +5,20 @@ import Lemma.Tensor.DotMulSEye.eq.MulEye
 import Lemma.Tensor.Mul_Neg.eq.NegMul
 import Lemma.Tensor.NegMul.eq.MulNeg
 import Lemma.Tensor.NegMul_Stack.eq.Mul_Stack_Neg
+import Lemma.Tensor.RotaryMatrix.eq.AppendHstackSMulSEye
 import Lemma.Tensor.SinSub.eq.SubMulSSin_Cos
-import Lemma.Tensor.SubGetS.eq.Get_Sub.of.Ge
 import Lemma.Tensor.TAppendHstackS.eq.AppendHstackSTS
 import Lemma.Tensor.TMulEye.eq.MulEye
 open Tensor
 
 
-noncomputable def rotaryMatrix (θ : Tensor ℝ [d]) : Tensor ℝ [d + d, d + d] :=
-  let I : Tensor ℝ [d, d] := Tensor.eye d
-  (I * [_ < d] θ.cos).hstack (-(I * [_ < d] θ.sin)) ++ (I * [_ < d] θ.sin).hstack (I * [_ < d] θ.cos)
-
-
 @[main]
 private lemma main
-  {n d : ℕ}
-  {θ : Tensor ℝ [n, d / 2]}
-  {b : ℕ}
-  {«λ» : ℝ}
-  {k t : Fin n}
 -- given
-  (h : t ≤ k)
-  (hθ : θ = [i < n] [j < d / 2] ↑(«λ» * i / b ^ (j / (d / 2 : ℝ)))) :
+  (α β : Tensor ℝ [d]) :
 -- imply
-  let R (i : Fin n) :=
-    let I := Tensor.eye (d / 2)
-    let θᵢ : Tensor ℝ [d / 2] := θ[i]
-    (I * [_ < d / 2] θᵢ.cos).hstack (-(I * [_ < d / 2] θᵢ.sin)) ++ (I * [_ < d / 2] θᵢ.sin).hstack (I * [_ < d / 2] θᵢ.cos)
-  (R t)ᵀ @ R k = R (k - t) := by
+  (rotaryMatrix α)ᵀ @ rotaryMatrix β = rotaryMatrix (β - α) := by
 -- proof
-  intro R
-  extract_lets I at R
-  have hR (i : Fin n) : R i = rotaryMatrix (θ[i] : Tensor ℝ [d / 2]) := by simp [R, rotaryMatrix, I]
-  rw [hR t, hR k, hR (k - t)]
-  refine Eq.trans ?_ (congrArg rotaryMatrix (SubGetS.eq.Get_Sub.of.Ge hθ h))
-  let α : Tensor ℝ [d / 2] := θ[t]
-  let β : Tensor ℝ [d / 2] := θ[k]
-  change (rotaryMatrix α)ᵀ @ (rotaryMatrix β) = rotaryMatrix (β - α)
   conv_lhs =>
     arg 1
     simp only [rotaryMatrix]
@@ -51,14 +28,14 @@ private lemma main
     rw [Mul_Stack_Neg.eq.NegMul_Stack]
   simp only [rotaryMatrix]
   apply (DotAppendSHstackS.eq.AppendHstackSAddSDotS
-    ((Tensor.eye (α := ℝ) (d / 2)) * [_ < d / 2] α.cos)
-    ((Tensor.eye (α := ℝ) (d / 2)) * [_ < d / 2] α.sin)
-    (-((Tensor.eye (α := ℝ) (d / 2)) * [_ < d / 2] α.sin))
-    ((Tensor.eye (α := ℝ) (d / 2)) * [_ < d / 2] α.cos)
-    ((Tensor.eye (α := ℝ) (d / 2)) * [_ < d / 2] β.cos)
-    (-((Tensor.eye (α := ℝ) (d / 2)) * [_ < d / 2] β.sin))
-    ((Tensor.eye (α := ℝ) (d / 2)) * [_ < d / 2] β.sin)
-    ((Tensor.eye (α := ℝ) (d / 2)) * [_ < d / 2] β.cos)).trans
+    ((Tensor.eye (α := ℝ) d) * [_ < d] α.cos)
+    ((Tensor.eye (α := ℝ) d) * [_ < d] α.sin)
+    (-((Tensor.eye (α := ℝ) d) * [_ < d] α.sin))
+    ((Tensor.eye (α := ℝ) d) * [_ < d] α.cos)
+    ((Tensor.eye (α := ℝ) d) * [_ < d] β.cos)
+    (-((Tensor.eye (α := ℝ) d) * [_ < d] β.sin))
+    ((Tensor.eye (α := ℝ) d) * [_ < d] β.sin)
+    ((Tensor.eye (α := ℝ) d) * [_ < d] β.cos)).trans
   simp only [id]
   rw [NegMul_Stack.eq.Mul_Stack_Neg, NegMul_Stack.eq.Mul_Stack_Neg]
   rw [DotMulSEye.eq.MulEye α.cos β.cos]
@@ -85,5 +62,4 @@ private lemma main
   rw [Mul_Stack_Neg.eq.NegMul_Stack]
 
 
--- created on 2023-09-16
--- updated on 2026-09-02
+-- created on 2026-09-03

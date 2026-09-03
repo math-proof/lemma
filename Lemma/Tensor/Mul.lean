@@ -1,3 +1,4 @@
+import Lemma.Nat.Mul
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Vector.GetMul.eq.MulGetS
 import Lemma.Vector.Map₂.eq.Map.of.Eq_1
@@ -38,7 +39,8 @@ private lemma Comm
   simp [Mul.mul]
   erw [GetMul.eq.MulGetS.fin (a := X.data) (b := Y.data) (i := i)]
   erw [GetMul.eq.MulGetS.fin (a := Y.data) (b := X.data) (i := i)]
-  rw [_root_.mul_comm]
+  rw [Nat.Mul.comm]
 
 
 -- created on 2026-09-02
+-- updated on 2026-09-03

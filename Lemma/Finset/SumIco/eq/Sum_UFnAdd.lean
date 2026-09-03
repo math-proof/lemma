@@ -10,18 +10,22 @@ private lemma main
   ∑ n ∈ Finset.Ico a b, f n = ∑ n ∈ Finset.Ico (a - d) (b - d), f (n + d) := by
 -- proof
   apply Finset.sum_bij (fun m _ => m - d)
-  · intro m hm
+  ·
+    intro m hm
     simp only [Finset.mem_Ico] at hm ⊢
     rcases hm with ⟨h₁, h₂⟩
     exact ⟨by omega, by omega⟩
-  · intro m₁ _ m₂ _ h
+  ·
+    intro m₁ _ m₂ _ h
     omega
-  · intro n hn
+  ·
+    intro n hn
     refine ⟨n + d, ?_, by omega⟩
     simp only [Finset.mem_Ico] at hn ⊢
     rcases hn with ⟨h₁, h₂⟩
     exact ⟨by omega, by omega⟩
-  · intro m hm
+  ·
+    intro m hm
     simp
 
 
