@@ -1,0 +1,130 @@
+\begin{thebibliography}{10}
+
+\bibitem{barbero2025round}
+Federico Barbero, Alex Vitvitskyi, Christos Perivolaropoulos, Razvan Pascanu,
+  and Petar Veli{\v{c}}kovi{\'c}.
+\newblock Round and round we go! what makes rotary positional encodings useful?
+\newblock In {\em International Conference on Learning Representations}, 2025.
+\newblock arXiv:2410.06205.
+
+\bibitem{moura2021lean4}
+Leonardo de~Moura and Sebastian Ullrich.
+\newblock The {Lean} 4 theorem prover and programming language.
+\newblock In {\em Automated Deduction -- {CADE} 28}, volume 12699 of {\em
+  LNCS}, pages 625--635. Springer, 2021.
+
+\bibitem{liu2025rethinking}
+Haiping Liu, Lijing Lin, Jingyuan Sun, Zhegong Shangguan, Mauricio~A. Alvarez,
+  and Hongpeng Zhou.
+\newblock Rethinking {RoPE}: A mathematical blueprint for $n$-dimensional
+  rotary positional embedding, 2025.
+
+\bibitem{lemma_repo}
+math proof.
+\newblock lemma: machine-checked tensor calculus.
+\newblock \url{https://github.com/math-proof/lemma}, 2026.
+
+\bibitem{lemma_rope_pair}
+math proof.
+\newblock Tensor.dotdotsrotarymatrix.eq.dot\_dotrotarymatrixsub.
+\newblock
+  \url{http://www.lemma.cn/lean/?module=Tensor.DotDotSRotaryMatrix.eq.Dot_DotRotaryMatrixSub},
+  2026.
+
+\bibitem{lemma_rope_real}
+math proof.
+\newblock Tensor.dotrotarymatrix.eq.addmuls.
+\newblock
+  \url{http://www.lemma.cn/lean/?module=Tensor.DotRotaryMatrix.eq.AddMulS},
+  2026.
+
+\bibitem{lemma_rope_add}
+math proof.
+\newblock Tensor.dotrotarymatrixs.eq.rotarymatrixadd.
+\newblock
+  \url{http://www.lemma.cn/lean/?module=Tensor.DotRotaryMatrixS.eq.RotaryMatrixAdd},
+  2026.
+
+\bibitem{lemma_rope_rel}
+math proof.
+\newblock
+  Tensor.dotsoftmaxdivdot\_stack\_tdot.eq.stack\_div\_sumexp.of.eq\_stack\_mul.
+\newblock
+  \url{http://www.lemma.cn/lean/?module=Tensor.DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul},
+  2026.
+
+\bibitem{lemma_rope_orth}
+math proof.
+\newblock Tensor.dott\_rotarymatrix.eq.eye.
+\newblock
+  \url{http://www.lemma.cn/lean/?module=Tensor.DotT_RotaryMatrix.eq.Eye}, 2026.
+
+\bibitem{mathlib}
+{Mathlib community}.
+\newblock The {Lean} mathematical library.
+\newblock \url{https://leanprover-community.github.io/mathlib4_docs/}, 2026.
+
+\bibitem{peng2023yarn}
+Bowen Peng, Jeffrey Quesnelle, Honglu Fan, and Enrico Shippole.
+\newblock {YaRN}: Efficient context window extension of large language models,
+  2023.
+
+\bibitem{press2022alibi}
+Ofir Press, Noah~A. Smith, and Mike Lewis.
+\newblock Train short, test long: Attention with linear biases enables input
+  length extrapolation.
+\newblock In {\em International Conference on Learning Representations}, 2022.
+\newblock arXiv:2108.12409.
+
+\bibitem{shaw2018relative}
+Peter Shaw, Jakob Uszkoreit, and Ashish Vaswani.
+\newblock Self-attention with relative position representations.
+\newblock In {\em Proceedings of NAACL-HLT}, pages 464--468, 2018.
+
+\bibitem{su2024roformer}
+Jianlin Su, Murtadha Ahmed, Yu~Lu, Shengfeng Pan, Wen Bo, and Yunfeng Liu.
+\newblock {RoFormer}: Enhanced transformer with rotary position embedding.
+\newblock {\em Neurocomputing}, 568:127063, 2024.
+\newblock arXiv:2104.09864.
+
+\bibitem{su2021roformer}
+Jianlin Su, Yu~Lu, Shengfeng Pan, Murtadha Ahmed, Bo~Wen, and Yunfeng Liu.
+\newblock {RoFormer}: Enhanced transformer with rotary position embedding,
+  2021.
+
+\bibitem{mathlib2020}
+{The mathlib Community}.
+\newblock The {Lean} mathematical library.
+\newblock In {\em Proceedings of the 9th {ACM} {SIGPLAN} International
+  Conference on Certified Programs and Proofs ({CPP})}, pages 367--381. ACM,
+  2020.
+
+\bibitem{touvron2023llama}
+Hugo Touvron, Thibaut Lavril, Gautier Izacard, Xavier Martinet, Marie-Anne
+  Lachaux, Timoth{\'e}e Lacroix, Baptiste Rozi{\`e}re, Naman Goyal, Eric
+  Hambro, Faisal Azhar, Aurelien Rodriguez, Armand Joulin, Edouard Grave, and
+  Guillaume Lample.
+\newblock {LLaMA}: Open and efficient foundation language models, 2023.
+
+\bibitem{vaswani2017attention}
+Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones,
+  Aidan~N. Gomez, {\L}ukasz Kaiser, and Illia Polosukhin.
+\newblock Attention is all you need.
+\newblock In {\em Advances in Neural Information Processing Systems},
+  volume~30, 2017.
+
+\bibitem{zhang2025grape}
+Yifan Zhang, Zixiang Chen, Yifeng Liu, Zhen Qin, Huizhuo Yuan, Kangping Xu,
+  Yang Yuan, Quanquan Gu, and Andrew Chi-Chih Yao.
+\newblock Group representational position encoding, 2025.
+
+\bibitem{lemma_kv_cache}
+LiZhi Zhou.
+\newblock Formal verification of kv-cache correctness for sliding-window causal
+  attention.
+\newblock
+  \url{http://www.lemma.cn/lean/?module=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T},
+  2026.
+\newblock lemma library.
+
+\end{thebibliography}
