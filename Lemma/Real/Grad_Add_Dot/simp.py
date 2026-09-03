@@ -44,7 +44,7 @@ def prove(Eq):
     b = Symbol(r"\vec b", real=True, shape=(n,))
     Eq << apply(Derivative(c + b @ x, x))
 
-    Eq << Eq[0].this.find(MatMul).apply(Tensor.Dot.eq.Sum, var='j')
+    Eq << Eq[0].this.find(MatMul).apply(Tensor.Dot.eq.Sum_MulGetS, var='j')
 
     Eq << Eq[-1].this.lhs.apply(Real.Grad.eq.Stack)
 

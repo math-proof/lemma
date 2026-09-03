@@ -44,7 +44,7 @@ def prove(Eq):
     Q, K, V = Symbol(shape=(n, d), real=True)
     Eq << apply(*rotary_matrix(d_r, d_c, b_r, b_c, λ_r, λ_c, θ_r, θ_c, R, i, j, k), Q, K, V, r, c, t)
 
-    Eq << Eq[-1].lhs.this.apply(Tensor.Dot.Softmax.eq.Stack.Sum.scaled_dot_product_attention, i, j, t)
+    Eq << Eq[-1].lhs.this.apply(Tensor.DotSoftmaxDivDot_T.eq.Stack_Div_SumExp, i, j, t)
 
     i_quote, j_quote = Symbol(integer=True)
     Eq << Tensor.EqDot.of.Eq_Mul.Eq_Mul.Eq_Block.position_representation.plane.apply(*Eq[:3], i_quote, j_quote)
@@ -63,7 +63,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq.theta_r, Eq.theta_c)
 
-    Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Sum)
+    Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Sum_MulGetS)
 
     Eq <<= Eq[-1].find(Sum).this.apply(Finset.SumIco.eq.Sum_UFnAdd, d_r / 2), \
         Eq[-1].find(Sum[2]).this.apply(Finset.SumIco.eq.Sum_UFnAdd, d_r + d_c / 2),\

@@ -39,7 +39,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Probability.Dot.eq.Expect)
 
-    Eq << Eq[-1].this.rhs.find(MatMul).apply(Tensor.Dot.eq.Sum)
+    Eq << Eq[-1].this.rhs.find(MatMul).apply(Tensor.Dot.eq.Sum_MulGetS)
 
     Eq << Eq[-1].this.rhs.find(Mul[Expectation]).apply(Probability.Mul.eq.Expect)
 

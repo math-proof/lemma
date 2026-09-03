@@ -129,8 +129,6 @@ from . import AppendAddS
 from . import MulAppendS
 from . import AppendMulS
 from . import AppendHstackS
-from . import DotAppendHstackS
-from . import DotAppend
 from . import DotMulEye
 from . import Stack_PowGetS
 from . import MulAppend
@@ -138,4 +136,9 @@ from . import DetBlock_Stack_Pow
 from . import DotAppendSHstackS
 from . import DetBlockStack_Pow
 from . import Ne_Dot
-from . import EqDotT
+from . import DotRotaryMatrix
+from . import DotAppend
+from . import DotT_RotaryMatrix
+from . import DotT
+from . import DotSoftmaxDivDot_T
+from . import DotSoftmaxDivDot_Stack_TDot

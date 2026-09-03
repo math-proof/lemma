@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Eq[-1] @ x
 
-    Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Sum)
+    Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Sum_MulGetS)
 
     Eq << Eq[0].lhs.this.subs(Eq[-1])
 

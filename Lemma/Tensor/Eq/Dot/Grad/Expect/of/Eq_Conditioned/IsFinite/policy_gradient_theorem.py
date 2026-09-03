@@ -50,7 +50,7 @@ def prove(Eq):
 
     Eq << Tensor.Eq.Dot.Grad.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.IsFinite.Q_Function.apply(Eq[0], Eq.Q_Function, Eq.V_Function, Eq[-1])
 
-    Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Sum)
+    Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Sum_MulGetS)
 
     Eq << Eq[-1].this.find(Mul[Expectation]).apply(Probability.Mul.eq.Expect)
 

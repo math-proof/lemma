@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(self):
-    from Lemma.Finset.Sum.limits.domain_defined import limits_insert
+    from Lemma.Finset.Sum.eq.SumRange import limits_insert
     assert self.is_Cap
     return Equal(self, limits_insert(self))
 

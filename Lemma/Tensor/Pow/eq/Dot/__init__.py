@@ -27,7 +27,7 @@ def prove(Eq):
     i = Symbol(domain=Range(n))
     Eq << Tensor.Eq.given.All_EqGetS.apply(Eq[0], i)
 
-    Eq << Eq[-1].this.find(MatMul).apply(Tensor.Dot.eq.Sum)
+    Eq << Eq[-1].this.find(MatMul).apply(Tensor.Dot.eq.Sum_MulGetS)
 
     Eq << Eq[-1].this.rhs.apply(Real.MulPowS.eq.PowMul)
 

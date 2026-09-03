@@ -56,7 +56,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(x_[i].this.definition)
 
-    Eq << Eq[0].this.rhs.find(Sum).apply(Finset.Sum.limits.domain_defined.delete)
+    Eq << Eq[0].this.rhs.find(Sum).apply(Finset.SumRange.eq.Sum)
 
 
 if __name__ == '__main__':

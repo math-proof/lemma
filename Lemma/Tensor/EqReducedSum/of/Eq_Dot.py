@@ -23,7 +23,7 @@ def prove(Eq):
     t = Symbol(integer=True)
     Eq << Eq[0][t].reversed
 
-    Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Sum)
+    Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Sum_MulGetS)
 
     Eq << Eq[1].this.rhs.apply(Vector.Sum.eq.Sum_Get, t)
 

@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Eq[0].this.lhs.apply(Tensor.DotSoftmaxAdd_Mul_Infty.eq.Stack_DotSoftmaxDivDot_T.gpt, i)
 
-    Eq << Eq[-1].this.lhs.apply(Tensor.Dot.eq.Sum)
+    Eq << Eq[-1].this.lhs.apply(Tensor.Dot.eq.Sum_MulGetS)
 
 
 

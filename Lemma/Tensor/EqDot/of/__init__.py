@@ -4,7 +4,6 @@ from . import Ne_0
 from . import IsFinite
 from . import Eq_Dot
 from . import Eq_Stack
-from . import EqDot
+from . import Eq_Tensor
 from . import Eq_0
 from . import Imp_Eq_0
-from . import Eq_Tensor

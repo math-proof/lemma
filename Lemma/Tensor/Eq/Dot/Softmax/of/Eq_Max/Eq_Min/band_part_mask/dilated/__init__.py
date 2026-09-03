@@ -72,7 +72,7 @@ def prove(Eq):
 
     Eq << Eq.zi_definition.rhs.args[0].this.apply(Tensor.Dot.eq.Stack_Sum_MulGetS)
 
-    Eq << Eq[-1].this.find(Sum).apply(Finset.Sum.limits.domain_defined)
+    Eq << Eq[-1].this.find(Sum).apply(Finset.Sum.eq.SumRange)
 
     k = Eq[-1].rhs.expr.variable
     Eq << Eq.Xi_definition[k]

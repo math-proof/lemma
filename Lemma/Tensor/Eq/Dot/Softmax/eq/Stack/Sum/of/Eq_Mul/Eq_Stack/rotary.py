@@ -34,9 +34,9 @@ def prove(Eq):
         Equal(R(i), rotary_matrix(d, b, i, j, k)),
         Q, K, V)
 
-    Eq << Eq[-1].lhs.this.apply(Tensor.Dot.Softmax.eq.Stack.Sum.scaled_dot_product_attention, i, j, k)
+    Eq << Eq[-1].lhs.this.apply(Tensor.DotSoftmaxDivDot_T.eq.Stack_Div_SumExp, i, j, k)
 
-    Eq << Eq[-1].this.find(Sum).apply(Finset.Sum.limits.domain_defined, simplify=None)
+    Eq << Eq[-1].this.find(Sum).apply(Finset.Sum.eq.SumRange, simplify=None)
 
     Eq << Tensor.EqDot.of.Eq_Stack.position_representation.rotary.apply(Eq[1]).subs(j, k)
 
@@ -48,7 +48,7 @@ def prove(Eq):
 
     Eq << Tensor.Dot.of.Eq.left.apply(Eq[-1], Q[i])
 
-    Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Sum)
+    Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Sum_MulGetS)
 
     Eq << Eq[-1].this.find(Sum).apply(Finset.SumRange.eq.Sum_UFnAddMul2)
 
@@ -66,9 +66,9 @@ def prove(Eq):
 
     Eq << Eq[2].find(BlockMatrix @ BlockMatrix).this.apply(Tensor.DotAppendSHstackS.eq.AppendHstackSAddSDotS)
 
-    Eq << Eq[-1].this.rhs.find(MatMul).apply(Tensor.Dot.eq.Sum)
+    Eq << Eq[-1].this.rhs.find(MatMul).apply(Tensor.Dot.eq.Sum_MulGetS)
 
-    Eq << Eq[-1].this.rhs.find(MatMul).apply(Tensor.Dot.eq.Sum)
+    Eq << Eq[-1].this.rhs.find(MatMul).apply(Tensor.Dot.eq.Sum_MulGetS)
 
     Eq << Eq[-1].subs(Eq[0].subs(k, k - i)[j])
 

@@ -30,7 +30,7 @@ def prove(Eq):
                 Less(Sup[s[t].var, t](Abs(Derivative[π]((V[π] ^ γ)(s[t].var)))), oo),
                 Less(Sup[s[t].var, t](Abs((V[π] ^ γ)(s[t].var))), oo))
 
-    Eq.eq_matmul = Eq.hypothesis.find(Expectation, MatMul)._subs(s, s.var)._subs(r, r.var).this.apply(Tensor.Dot.eq.Sum)
+    Eq.eq_matmul = Eq.hypothesis.find(Expectation, MatMul)._subs(s, s.var)._subs(r, r.var).this.apply(Tensor.Dot.eq.Sum_MulGetS)
 
     k = Symbol(integer=True) # time step counter
     Eq << Eq.eq_matmul.rhs._subs(oo, k).this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)

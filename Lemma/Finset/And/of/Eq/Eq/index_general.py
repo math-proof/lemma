@@ -42,7 +42,7 @@ def prove(Eq):
 
     Eq <<= Eq[-3].subs(Eq[-1]), Eq[-2].subs(Eq[-1])
 
-    Eq << Eq[-1].lhs.indices[0].this.apply(Tensor.Dot.eq.Sum)
+    Eq << Eq[-1].lhs.indices[0].this.apply(Tensor.Dot.eq.Sum_MulGetS)
 
     Eq << Eq[-1].rhs.expr.args[1].this.apply(Nat.Delta.eq.Ite)
 

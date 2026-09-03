@@ -56,7 +56,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Greater).reversed
 
-    Eq << Eq[-1].this.rhs.apply(Finset.Sum.limits.domain_defined, simplify=None)
+    Eq << Eq[-1].this.rhs.apply(Finset.Sum.eq.SumRange, simplify=None)
 
     Eq << Tensor.Eq.Sum.ReducedArgMax.of.All_Lt.Subset_Cup.apply(Eq[0], Eq[1], lambda i, j: exp(A[i, j]))
 

@@ -102,7 +102,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.args[1].expr.apply(Int.Ite.eq.AddMulS)
 
-    Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Sum)
+    Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Sum_MulGetS)
 
     Eq << Bool.All.Any.of.All_Any_Eq.Cond.subst.apply(Eq.any_n, Eq[-1])
 

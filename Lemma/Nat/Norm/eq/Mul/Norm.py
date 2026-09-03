@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Expr * Conjugate).apply(Complex.Mul.Conj.eq.Square.Abs)
 
-    Eq << Eq[-1].this.find(Sum).apply(Finset.Sum.limits.domain_defined)
+    Eq << Eq[-1].this.find(Sum).apply(Finset.Sum.eq.SumRange)
 
 
 if __name__ == '__main__':

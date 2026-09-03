@@ -70,7 +70,7 @@ def prove(Eq):
 
     Eq << Eq[-1] @ Eq.def_RoPE
 
-    Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Sum)
+    Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Sum_MulGetS)
 
     Eq << Eq[-1].this.rhs.expr.args[:2].apply(Nat.Mul_Add.eq.AddMulS, deep=True)
 

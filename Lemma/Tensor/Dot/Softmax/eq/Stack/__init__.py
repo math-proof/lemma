@@ -1,3 +1,2 @@
-from . import Sum
-from . import Div
 from . import Dot
+from . import Div

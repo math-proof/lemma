@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq << Eq[0].this.find(Norm).apply(Real.Norm.eq.Sqrt)
 
-    Eq << Eq[-1].this.rhs.apply(Finset.Sum.limits.domain_defined)
+    Eq << Eq[-1].this.rhs.apply(Finset.Sum.eq.SumRange)
 
 
 if __name__ == '__main__':

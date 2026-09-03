@@ -81,7 +81,7 @@ def prove(Eq):
 
     Eq << Int.LtAbs.of.Lt.Gt.apply(Eq[-2], Eq[-1])
 
-    Eq << Eq[-1].this.find(Sum).apply(Finset.Sum.limits.domain_defined)
+    Eq << Eq[-1].this.find(Sum).apply(Finset.Sum.eq.SumRange)
 
     Eq << Set.IsReal.of.Abs_Lt_Infty.apply(Eq[-1], simplify=None)
 

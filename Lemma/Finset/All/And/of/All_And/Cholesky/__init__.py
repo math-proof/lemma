@@ -68,7 +68,7 @@ def prove(Eq):
 
     Eq << Eq.induct.subs(k, t - 1)
 
-    Eq << Eq.Ati_def.this.find(MatMul).apply(Tensor.Dot.eq.Sum)
+    Eq << Eq.Ati_def.this.find(MatMul).apply(Tensor.Dot.eq.Sum_MulGetS)
 
     Eq << Bool.All_And.of.All.All.apply(Eq.Lij_conj_is_complex, Eq[3])
 

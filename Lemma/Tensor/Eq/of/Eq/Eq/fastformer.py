@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Eq[1][i, j]
 
-    Eq << Eq[-1].this.find(MatMul).apply(Tensor.Dot.eq.Sum)
+    Eq << Eq[-1].this.find(MatMul).apply(Tensor.Dot.eq.Sum_MulGetS)
 
     # https://arxiv.org/pdf/2108.09084.pdf
     # pytorch implementation:

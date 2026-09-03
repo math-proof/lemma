@@ -27,7 +27,7 @@ def prove(Eq):
 
     k = Eq[-1].rhs.args[1].indices[-1]
     d = Eq[-1].lhs.indices[0].args[0]
-    Eq << Eq[-1].rhs.this.subs(Eq[0][k]).this.rhs.apply(Tensor.Dot.eq.Sum)
+    Eq << Eq[-1].rhs.this.subs(Eq[0][k]).this.rhs.apply(Tensor.Dot.eq.Sum_MulGetS)
 
     i, j, _ = Eq[-1].lhs.args[1].indices
     Eq << Eq[-1].this(i).find(Element).simplify()
@@ -38,7 +38,7 @@ def prove(Eq):
 
     Eq.eq = Eq[1].subs(Eq[-1])
 
-    Eq << Eq.eq.lhs.indices[0].this.subs(Eq[0][k]).this.rhs.apply(Tensor.Dot.eq.Sum)
+    Eq << Eq.eq.lhs.indices[0].this.subs(Eq[0][k]).this.rhs.apply(Tensor.Dot.eq.Sum_MulGetS)
 
     Eq << Eq[-1].this(i).find(Element).simplify()
 

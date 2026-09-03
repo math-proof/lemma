@@ -35,7 +35,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq.y_def.reversed)
 
-    Eq << Eq[-1].this.find(MatMul).apply(Tensor.Dot.eq.Sum, var=j)
+    Eq << Eq[-1].this.find(MatMul).apply(Tensor.Dot.eq.Sum_MulGetS, var=j)
 
     i = Symbol(domain=Range(n))
     Eq << Eq[-1].apply(Real.EqGrad.of.Eq, (x[i],), simplify=False)

@@ -33,7 +33,7 @@ def prove(Eq):
     i, j, k = Eq[-1].lhs.args[0].indices
     Eq << (Eq[1].lhs[k] @ x).this.args[0].definition
 
-    Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Sum)
+    Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Sum_MulGetS)
 
     Eq << Eq[-1].this(i).find(Element).simplify()
 

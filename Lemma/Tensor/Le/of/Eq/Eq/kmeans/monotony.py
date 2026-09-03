@@ -38,7 +38,7 @@ def prove(Eq):
     i_ = Symbol('i', Eq[-1].find(Indexed, Sum))
     Eq << Eq[-1].subs(i_.this.definition.reversed)
 
-    Eq << Eq[-1].this.lhs.apply(Finset.Sum.limits.domain_defined.delete)
+    Eq << Eq[-1].this.lhs.apply(Finset.SumRange.eq.Sum)
 
     Eq.plausible = Eq[3].subs(Eq[-1])
 
@@ -49,7 +49,7 @@ def prove(Eq):
     i__ = Symbol("i'", Eq[-1].find(Indexed, ArgMin))
     Eq << Eq[-1].subs(i__.this.definition.reversed)
 
-    Eq << Eq[-1].this.lhs.apply(Finset.Sum.limits.domain_defined.delete)
+    Eq << Eq[-1].this.lhs.apply(Finset.SumRange.eq.Sum)
 
     Eq.plausible = Eq.plausible.subs(Eq[-1])
 

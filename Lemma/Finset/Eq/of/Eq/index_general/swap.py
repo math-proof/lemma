@@ -55,7 +55,7 @@ def prove(Eq):
 
     Eq.definition = Eq[-1].this.lhs.defun()
 
-    Eq.expand = Eq.definition.lhs.args[0].expr.args[1].this.apply(Tensor.Dot.eq.Sum)
+    Eq.expand = Eq.definition.lhs.args[0].expr.args[1].this.apply(Tensor.Dot.eq.Sum_MulGetS)
 
     Eq << Finset.And.of.Eq.index.apply(Eq[0], j=j)
 
@@ -79,7 +79,7 @@ def prove(Eq):
 
     Eq.union_equality, Eq.piecewise_equality = Set.EqUnion.of.Subset.apply(Eq[-2]), Eq.definition.subs(Eq[-1])
 
-    Eq.piecewise_equality = Eq.piecewise_equality.this.lhs.apply(Tensor.Dot.eq.Sum)
+    Eq.piecewise_equality = Eq.piecewise_equality.this.lhs.apply(Tensor.Dot.eq.Sum_MulGetS)
 
     Eq << Eq.piecewise_equality.lhs.args[-1].this.apply(Finset.Sum.SDiff.eq.Add)
 
@@ -89,7 +89,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.subs(Eq.union_equality)
 
-    Eq << Eq.di_definition.this.rhs.defun().this.rhs.apply(Tensor.Dot.eq.Sum)
+    Eq << Eq.di_definition.this.rhs.defun().this.rhs.apply(Tensor.Dot.eq.Sum_MulGetS)
     Eq << Eq[-1].this.rhs.apply(Finset.Sum.eq.Sub.unshift)
 
     Eq << Eq[-3].subs(Eq[-1].reversed)

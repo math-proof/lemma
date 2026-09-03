@@ -34,7 +34,7 @@ def prove(Eq):
 
     Eq << Eq[0].subs(Eq[1].reversed, Eq[2].reversed, simplify=None)
 
-    Eq << Eq[-1].this.find(Mul[~Sum]).apply(Finset.Sum.limits.domain_defined)
+    Eq << Eq[-1].this.find(Mul[~Sum]).apply(Finset.Sum.eq.SumRange)
 
     Eq << Sum[j:n, i:m]((x[i, j] - x_bar) ** 2).this.expr.apply(Nat.SquareAdd.eq.AddAdd_SquareS_Mul2Add)
 

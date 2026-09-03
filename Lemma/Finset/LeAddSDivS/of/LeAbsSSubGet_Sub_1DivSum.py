@@ -53,7 +53,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Finset.Sum_Add.eq.AddSumS)
 
-    Eq << Eq[-1].this.rhs.args[0].apply(Finset.Sum.limits.domain_defined)
+    Eq << Eq[-1].this.rhs.args[0].apply(Finset.Sum.eq.SumRange)
 
     Eq << Eq[-1].this.rhs.args[0]().expr.args[1].simplify()
 
@@ -65,7 +65,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.limits_subs(i, j)
 
-    Eq << Eq[-1].this.rhs.apply(Finset.Sum.limits.domain_defined)
+    Eq << Eq[-1].this.rhs.apply(Finset.Sum.eq.SumRange)
 
     Eq << Eq[-1] + Eq.variance.rhs.args[0]
 
@@ -77,7 +77,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Mul, Sum).expr.apply(Int.Square.Neg)
 
-    Eq << Eq[-1].this.rhs.find(Mul, Sum).apply(Finset.Sum.limits.domain_defined)
+    Eq << Eq[-1].this.rhs.find(Mul, Sum).apply(Finset.Sum.eq.SumRange)
 
     Eq << Eq[-1] + Eq.le_given.rhs.args[0]
 
@@ -97,7 +97,7 @@ def prove(Eq):
 
     Eq << Eq[-1] - Eq[-1].rhs.args[-1]
 
-    Eq << Eq[-1].this.rhs.find(-~Sum).apply(Finset.Sum.limits.domain_defined)
+    Eq << Eq[-1].this.rhs.find(-~Sum).apply(Finset.Sum.eq.SumRange)
 
     Eq << Eq[-1].this.rhs.collect(Eq[-1].rhs.find(Sum))
 
@@ -161,7 +161,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Finset.Sum_Add.eq.AddSumS)
 
-    Eq << Eq[-1].this.rhs.args[0].apply(Finset.Sum.limits.domain_defined)
+    Eq << Eq[-1].this.rhs.args[0].apply(Finset.Sum.eq.SumRange)
 
     Eq << Eq[-1].this.rhs.args[0]().expr.args[1].simplify()
 

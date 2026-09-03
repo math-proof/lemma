@@ -41,7 +41,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Mul).args[::2].apply(Real.MulPowS.eq.PowMul, simplify=None)
 
-    Eq << Eq[-1].this.find(Sum).apply(Finset.Sum.limits.domain_defined, simplify=None)
+    Eq << Eq[-1].this.find(Sum).apply(Finset.Sum.eq.SumRange, simplify=None)
 
 
 

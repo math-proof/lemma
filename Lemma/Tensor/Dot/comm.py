@@ -16,9 +16,9 @@ def prove(Eq):
     i = Symbol(domain=Range(n))
     Eq << apply(x, y)
 
-    Eq << Eq[0].lhs.this.apply(Tensor.Dot.eq.Sum, var=i)
+    Eq << Eq[0].lhs.this.apply(Tensor.Dot.eq.Sum_MulGetS, var=i)
 
-    Eq << Eq[0].rhs.this.apply(Tensor.Dot.eq.Sum, var=i)
+    Eq << Eq[0].rhs.this.apply(Tensor.Dot.eq.Sum_MulGetS, var=i)
 
     Eq << Eq[-2].subs(Eq[-1].reversed)
 

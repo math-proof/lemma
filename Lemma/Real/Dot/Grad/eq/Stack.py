@@ -29,7 +29,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Mul).apply(Tensor.Mul.Stack.eq.Stack)
 
-    Eq << Eq[-1].this.lhs.apply(Tensor.Dot.eq.Sum)
+    Eq << Eq[-1].this.lhs.apply(Tensor.Dot.eq.Sum_MulGetS)
 
 
 

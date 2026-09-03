@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq << Eq[0].this.lhs.apply(Vector.Sum.eq.Sum_Get)
 
-    Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Sum)
+    Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Sum_MulGetS)
     Eq << Eq[-1].this.lhs.simplify()
 
 

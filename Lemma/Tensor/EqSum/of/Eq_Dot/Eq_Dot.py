@@ -29,17 +29,17 @@ def prove(Eq):
     _i = Eq[-1].lhs.variable
     Eq << Eq[0][_i].reversed
 
-    Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Sum)
+    Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Sum_MulGetS)
 
     Eq << Eq[1][_i].reversed
 
-    Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Sum)
+    Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Sum_MulGetS)
 
     Eq << Eq[-1] * Eq[-3]
 
     Eq << Eq[2].subs(Eq[-1])
 
-    Eq << Eq[-1].this.rhs.apply(Finset.Sum.limits.domain_defined)
+    Eq << Eq[-1].this.rhs.apply(Finset.Sum.eq.SumRange)
 
 
 

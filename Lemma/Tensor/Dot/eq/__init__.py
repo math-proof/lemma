@@ -13,3 +13,4 @@ from . import Sum
 from . import Ite
 from . import Stack_Sum_MulGetS
 from . import Tensor
+from . import Sum_MulGetS

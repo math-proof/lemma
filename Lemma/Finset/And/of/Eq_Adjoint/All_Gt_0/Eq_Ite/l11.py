@@ -40,7 +40,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.args[:2].apply(Tensor.Dot.eq.Stack_Sum_MulGetS)
 
-    Eq << Eq[-1].this.lhs.apply(Tensor.Dot.eq.Sum)
+    Eq << Eq[-1].this.lhs.apply(Tensor.Dot.eq.Sum_MulGetS)
 
     Eq << Eq[-1].subs(Eq[0][0, 1].reversed)
 

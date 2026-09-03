@@ -54,17 +54,17 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Tensor.DotAppendSHstackS.eq.AppendHstackSAddSDotS, deep=True)
 
-    Eq << Eq[-1].this.rhs.find(MatMul).apply(Tensor.Dot.eq.Sum)
+    Eq << Eq[-1].this.rhs.find(MatMul).apply(Tensor.Dot.eq.Sum_MulGetS)
 
-    Eq << Eq[-1].this.rhs.find(MatMul).apply(Tensor.Dot.eq.Sum)
+    Eq << Eq[-1].this.rhs.find(MatMul).apply(Tensor.Dot.eq.Sum_MulGetS)
 
     Eq << Eq[-1].this.rhs.find(MatMul).apply(Tensor.Dot.eq.Stack_Sum_MulGetS)
 
-    Eq << Eq[-1].this.rhs.find(MatMul).apply(Tensor.Dot.eq.Sum)
+    Eq << Eq[-1].this.rhs.find(MatMul).apply(Tensor.Dot.eq.Sum_MulGetS)
 
     Eq << Eq[-1].this.find(Sum).apply(Finset.Sum_Add.eq.AddSumS)
 
-    Eq << Eq[-1].this.rhs.find(MatMul).apply(Tensor.Dot.eq.Sum)
+    Eq << Eq[-1].this.rhs.find(MatMul).apply(Tensor.Dot.eq.Sum_MulGetS)
 
     Eq << Eq[-1].this.find(Sum).expr.apply(Nat.Mul_Add.eq.AddMulS)
 

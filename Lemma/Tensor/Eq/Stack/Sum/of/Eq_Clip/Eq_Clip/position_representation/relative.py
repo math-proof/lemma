@@ -39,7 +39,7 @@ def prove(Eq):
 
     Eq << Tensor.EqSoftmax.of.Eq_Clip.Eq_Clip.bert.position_representation.relative.apply(Eq.K_quote, Eq.V_quote, Q, K, V)
 
-    Eq << Eq[-1].this.rhs.find(MatMul).apply(Tensor.Dot.Softmax.eq.Stack.Sum.scaled_dot_product_attention, j, k, simplify=1)
+    Eq << Eq[-1].this.rhs.find(MatMul).apply(Tensor.DotSoftmaxDivDot_T.eq.Stack_Div_SumExp, j, k, simplify=1)
 
     # reference:
     # Self-Attention with Relative Position Representations.pdf

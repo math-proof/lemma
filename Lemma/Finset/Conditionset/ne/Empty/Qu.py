@@ -23,7 +23,7 @@ def prove(Eq):
     a = Symbol(Stack[i:n + 1](i) @ SwapMatrix(n + 1, n, _t))
     Eq << a.this.definition
 
-    Eq << a[n].this.definition.this.rhs.apply(Tensor.Dot.eq.Sum)
+    Eq << a[n].this.definition.this.rhs.apply(Tensor.Dot.eq.Sum_MulGetS)
 
     Eq << Tensor.Cup.Finset.Dot.apply(a)
 

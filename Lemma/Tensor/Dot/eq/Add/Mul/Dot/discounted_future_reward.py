@@ -18,9 +18,9 @@ def prove(Eq):
     # discounted future reward;
     Eq << apply(γ ** Stack[k](k) @ r[t:])
 
-    Eq << Eq[0].this.lhs.apply(Tensor.Dot.eq.Sum)
+    Eq << Eq[0].this.lhs.apply(Tensor.Dot.eq.Sum_MulGetS)
 
-    Eq << Eq[-1].this.find(MatMul).apply(Tensor.Dot.eq.Sum)
+    Eq << Eq[-1].this.find(MatMul).apply(Tensor.Dot.eq.Sum_MulGetS)
 
     Eq << Eq[-1].this.lhs.apply(Finset.Sum.eq.Add.shift)
 

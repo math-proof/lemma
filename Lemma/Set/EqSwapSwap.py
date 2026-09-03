@@ -57,7 +57,7 @@ def prove(Eq):
 
     Eq << Eq[-3].subs(Eq[-1])
 
-    Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Sum)
+    Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Sum_MulGetS)
 
     Eq << Eq[-1].this(k).rhs.simplify()
 

@@ -13,7 +13,7 @@ def rotary_matrix(d_r, d_c, d_z, b_r, b_c, b_z, λ_r, λ_c, λ_z, θ_r, θ_c, θ
             [Identity(d) * sin(θ),  Identity(d) * cos(θ)]]))
 
 def extract(eq_theta_r, eq_theta_c, eq_theta_z, eq_R):
-    from Lemma.Tensor.EqDotT.of.Eq_Stack_Div_Pow_Div.Ge import extract_theta
+    from Lemma.Tensor.DotT.eq.RotaryMatrixSub.of.Eq_Stack_Mul.Ge import extract_theta
     d_r, b_r, λ_r, θ_r, i, h = extract_theta(eq_theta_r)
     d_c, b_c, λ_c, θ_c, j, S[h] = extract_theta(eq_theta_c)
     d_z, b_z, λ_z, θ_z, k, S[h] = extract_theta(eq_theta_z)
@@ -67,11 +67,11 @@ def prove(Eq):
     i_quote, j_quote, k_quote = Symbol(integer=True)
     Eq << apply(*rotary_matrix(d_r, d_c, d_z, b_r, b_c, b_z, λ_r, λ_c, λ_z, θ_r, θ_c, θ_z, R, i, j, k, h), i_quote, j_quote, k_quote)
 
-    Eq << Tensor.EqDotT.of.Eq_Stack_Div_Pow_Div.Ge.apply(Eq[0], i_quote)
+    Eq << Tensor.DotT.eq.RotaryMatrixSub.of.Eq_Stack_Mul.Ge.apply(Eq[0], i_quote)
 
-    Eq << Tensor.EqDotT.of.Eq_Stack_Div_Pow_Div.Ge.apply(Eq[1], j_quote)
+    Eq << Tensor.DotT.eq.RotaryMatrixSub.of.Eq_Stack_Mul.Ge.apply(Eq[1], j_quote)
 
-    Eq << Tensor.EqDot.of.EqDot.EqDot.apply(*Eq[-2:])
+    Eq << Tensor.DotAppendSHstackS.eq.AppendHstackS.apply(*Eq[-2:])
 
     Eq << Eq[-1].find(Zeros).this.apply(Tensor.SEq_Append, d_r / 2, d_c / 2)
 
@@ -79,9 +79,9 @@ def prove(Eq):
 
     Eq << Eq[-3].subs(*Eq[-2:])
 
-    Eq << Tensor.EqDotT.of.Eq_Stack_Div_Pow_Div.Ge.apply(Eq[2], k_quote)
+    Eq << Tensor.DotT.eq.RotaryMatrixSub.of.Eq_Stack_Mul.Ge.apply(Eq[2], k_quote)
 
-    Eq << Tensor.EqDot.of.EqDot.EqDot.apply(*Eq[-2:])
+    Eq << Tensor.DotAppendSHstackS.eq.AppendHstackS.apply(*Eq[-2:])
 
     Eq << Eq[-1].rhs.args[1].find(Zeros).this.apply(Tensor.SEq_Append, d_z / 2, d_r)
 

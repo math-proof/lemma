@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(eq_theta, eq_R, x):
-    from Lemma.Tensor.EqDotT.of.Eq_Stack_Div_Pow_Div.Ge import extract
+    from Lemma.Tensor.DotT.eq.RotaryMatrixSub.of.Eq_Stack_Mul.Ge import extract
     Rk, d, alpha, θ, b, k, *_ = extract(eq_theta, eq_R)
     return Equal(
         Rk.T @ x,
@@ -12,7 +12,7 @@ def apply(eq_theta, eq_R, x):
 @prove
 def prove(Eq):
     from Lemma import Tensor, Real
-    from Lemma.Tensor.EqDotT.of.Eq_Stack_Div_Pow_Div.Ge import rotary_matrix
+    from Lemma.Tensor.DotT.eq.RotaryMatrixSub.of.Eq_Stack_Mul.Ge import rotary_matrix
     # n denotes sequence length (seq_length)
     # b denotes 10000
     n, b = Symbol(integer=True, positive=True)

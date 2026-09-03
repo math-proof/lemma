@@ -159,7 +159,7 @@ def prove(Eq):
 
     Eq << Bool.Imp_And.of.ImpAnd.apply(Eq[-1], index=0)
 
-    Eq << Eq[-1].this.rhs.find(Sum).apply(Finset.Sum.limits.domain_defined)
+    Eq << Eq[-1].this.rhs.find(Sum).apply(Finset.Sum.eq.SumRange)
 
     Eq << Eq[-1].this.rhs.apply(Set.In.of.Eq_Sum.All.mean)
 

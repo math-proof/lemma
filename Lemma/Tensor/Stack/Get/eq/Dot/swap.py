@@ -36,7 +36,7 @@ def prove(Eq):
     k = Eq[1].lhs.variable
     Eq << (Eq[0].lhs[k] @ Stack[k:n](k)).this.args[0].definition
 
-    Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Sum)
+    Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Sum_MulGetS)
 
     Eq << Eq[-1].this(i).rhs.args[0].expr.simplify()
 

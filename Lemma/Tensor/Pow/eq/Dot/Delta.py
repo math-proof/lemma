@@ -20,7 +20,7 @@ def prove(Eq):
     z = Symbol(real=True)
     Eq << apply(z ** n)
 
-    Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Sum)
+    Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Sum_MulGetS)
 
 
 

@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq << (Eq[0].lhs[i] @ Eq[1].lhs.indices[0].args[1]).this.args[0].definition
 
-    Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Sum)
+    Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Sum_MulGetS)
 
     Eq << Eq[1].lhs.this.subs(Eq[-1])
 

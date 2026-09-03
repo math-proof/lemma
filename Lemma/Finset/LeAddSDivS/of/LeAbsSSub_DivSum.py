@@ -39,13 +39,13 @@ def prove(Eq):
 
     Eq << y_[m - 1].this.definition
 
-    Eq.y_last = Eq[-1].this.rhs.apply(Tensor.Dot.eq.Sum)
+    Eq.y_last = Eq[-1].this.rhs.apply(Tensor.Dot.eq.Sum_MulGetS)
 
     Eq.le = Eq[0].subs(Eq.y_last.reversed)
 
     Eq << y_[t].this.definition
 
-    Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Sum)
+    Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Sum_MulGetS)
 
     Eq << Tensor.EqSum.of.Eq_Dot.apply(Eq[2], j)
 

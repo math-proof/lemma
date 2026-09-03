@@ -49,7 +49,7 @@ def prove(Eq):
 
     Eq << Eq[-2].this.rhs.subs(Eq[-1])
 
-    Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Sum)
+    Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Sum_MulGetS)
 
     Eq << Bool.All.Any.of.All_Any_Eq.Cond.subst.apply(Eq.x_j_equality, Eq[-1])
 

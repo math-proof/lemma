@@ -35,7 +35,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Sum).apply(Tensor.Sum.eq.Stack)
 
-    Eq << Eq[-1].this.find(Sum).apply(Finset.Sum.limits.domain_defined)
+    Eq << Eq[-1].this.find(Sum).apply(Finset.Sum.eq.SumRange)
 
     Eq << Eq[-1].this.find(Sum).doit()
 

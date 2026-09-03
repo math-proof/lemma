@@ -37,9 +37,9 @@ def prove(Eq):
     a, b, y, x = Symbol(shape=(n,), real=True)
     Eq << apply(Sum[i:n](y[i] * x[i] + a[i] * b[i]))
 
-    Eq << Eq[-1].this.find(MatMul).apply(Tensor.Dot.eq.Sum)
+    Eq << Eq[-1].this.find(MatMul).apply(Tensor.Dot.eq.Sum_MulGetS)
 
-    Eq << Eq[-1].this.find(MatMul).apply(Tensor.Dot.eq.Sum)
+    Eq << Eq[-1].this.find(MatMul).apply(Tensor.Dot.eq.Sum_MulGetS)
 
     Eq << Eq[-1].this.lhs.simplify()
 

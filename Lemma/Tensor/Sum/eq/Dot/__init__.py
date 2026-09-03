@@ -31,7 +31,7 @@ def prove(Eq):
     y, x = Symbol(shape=(n,), real=True)
     Eq << apply(Sum[i:n](y[i] * x[i]))
 
-    Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Sum)
+    Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Sum_MulGetS)
 
     Eq << Eq[-1].this.lhs.simplify()
 

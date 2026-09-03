@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq << Eq[0].this.lhs.apply(Tensor.Dot.Softmax.eq.Stack.Dot.scaled_dot_product_attention, i)
 
-    Eq << Eq[-1].this.lhs.apply(Tensor.Dot.eq.Sum)
+    Eq << Eq[-1].this.lhs.apply(Tensor.Dot.eq.Sum_MulGetS)
     # https://arxiv.org/abs/1706.03762
 
 

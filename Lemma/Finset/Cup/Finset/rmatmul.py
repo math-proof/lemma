@@ -32,7 +32,7 @@ def prove(Eq):
 
     Eq << (Eq[0].lhs[k] @ x).this.args[0].definition
 
-    Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Sum)
+    Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Sum_MulGetS)
 
     Eq << Eq[-1].this(i).find(Element).simplify()
     Eq << Eq[-1].this(j).find(Element).simplify()

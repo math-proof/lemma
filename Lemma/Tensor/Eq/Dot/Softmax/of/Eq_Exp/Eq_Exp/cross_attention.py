@@ -59,7 +59,7 @@ def prove(Eq):
 
     Eq << Eq.zi_definition.find(ReducedSum).this.apply(Tensor.ReducedSum.eq.Dot)
 
-    Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Sum)
+    Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Sum_MulGetS)
 
     Eq << Eq[-1].this.rhs.subs(Eq.ksi_def)
 

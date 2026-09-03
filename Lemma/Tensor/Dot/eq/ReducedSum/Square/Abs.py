@@ -26,7 +26,7 @@ def prove(Eq):
     x = Symbol(complex=True, shape=(n,))
     Eq << apply(x @ ~x)
 
-    Eq << Eq[-1].this.lhs.apply(Tensor.Dot.eq.Sum)
+    Eq << Eq[-1].this.lhs.apply(Tensor.Dot.eq.Sum_MulGetS)
 
     Eq << Eq[-1].this.rhs.apply(Vector.Sum.eq.Sum_Get)
 

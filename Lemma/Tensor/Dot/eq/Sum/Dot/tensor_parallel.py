@@ -36,7 +36,7 @@ def prove(Eq):
     i = Symbol(domain=Range(d_o))
     Eq << Tensor.Eq.given.All_EqGetS.apply(Eq[-1], i)
 
-    Eq << Eq[-1].this.lhs.apply(Tensor.Dot.eq.Sum, simplify=None)
+    Eq << Eq[-1].this.lhs.apply(Tensor.Dot.eq.Sum_MulGetS, simplify=None)
 
     Eq << Eq[-1].this.lhs.apply(Tensor.Sum.eq.ReducedSum)
 
