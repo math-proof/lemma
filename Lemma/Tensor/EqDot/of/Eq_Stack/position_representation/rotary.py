@@ -7,9 +7,9 @@ def apply(eq_R):
     (Ri, d), b, (i, j, k) = extract(eq_R)
     return Equal(Ri.T @ Ri.subs(i, j), Ri.subs(i, j - i))
 
-@prove(slow=True)
+@prove
 def prove(Eq):
-    from Lemma import Set, Bool, Tensor, Nat, Real, Finset
+    from Lemma import Set, Bool, Tensor, Nat, Int, Real, Finset
     from Lemma.Tensor.Dot.eq.Stack.of.Eq_Stack.position_representation.rotary import rotary_matrix
     # b denotes 10000
     b = Symbol(integer=True, positive=True)
@@ -47,9 +47,9 @@ def prove(Eq):
     Eq <<= Eq.el_to_et.find(Element[Range]).this.apply(Set.In.Ico.Mul.dilated, 2), \
         Eq.el_to_et_1.find(Element[Range]).this.apply(Set.In.Ico.Mul.dilated, 2).this.rhs.apply(Set.In_Icc.Is.InAdd, 1)
 
-    Eq.el_Range_mul = Eq[-2].this.rhs.apply(Set.In_Range.Is.Mod.In_Range)
+    Eq.el_Range_mul = Eq[-2].this.rhs.apply(Int.In_Range.Is.Mod.In_Range)
 
-    Eq.el_Range_mul_1 = Eq[-1].this.rhs.apply(Set.In_Range.Is.Mod.In_Range)
+    Eq.el_Range_mul_1 = Eq[-1].this.rhs.apply(Int.In_Range.Is.Mod.In_Range)
 
     Eq << Eq[-3].subs(Eq.el_to_et, Eq.el_to_et_1, Eq.el_finite_mul, Eq.el_Range_mul, Eq.el_finite_mul_1, Eq.el_Range_mul_1)
 
