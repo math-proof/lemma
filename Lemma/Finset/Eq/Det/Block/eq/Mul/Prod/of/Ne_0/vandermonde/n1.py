@@ -41,7 +41,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Mul ** Symbol).apply(Real.PowMul.eq.MulPowS)
 
-    Eq << Eq[-1].this.rhs.apply(Tensor.Stack.Ite.eq.Block)
+    Eq << Eq[-1].this.rhs.apply(Tensor.Stack_Ite.eq.Append)
 
     Eq << Finset.EqDet.of.Eq.apply(Eq[-1])
 

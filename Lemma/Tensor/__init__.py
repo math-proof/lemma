@@ -142,3 +142,4 @@ from . import DotT_RotaryMatrix
 from . import DotT
 from . import DotSoftmaxDivDot_T
 from . import DotSoftmaxDivDot_Stack_TDot
+from . import Stack_Ite

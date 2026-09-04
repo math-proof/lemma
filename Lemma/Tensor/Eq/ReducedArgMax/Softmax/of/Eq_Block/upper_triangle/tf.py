@@ -58,7 +58,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Stack).apply(Tensor.Stack.eq.Add)
 
-    Eq.eq_reducedArgMax = Eq[-1].this.find(Stack[Piecewise]).apply(Tensor.Stack.Ite.eq.Block)
+    Eq.eq_reducedArgMax = Eq[-1].this.find(Stack[Piecewise]).apply(Tensor.Stack_Ite.eq.Append)
 
     Eq.eq_lamda = Equal(
         Stack[i:Min(u, n) - 1](z[i + n + 1 - Min(n, u)]),

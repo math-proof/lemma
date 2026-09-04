@@ -46,7 +46,7 @@ def prove(Eq):
     k = Symbol(domain=Range(N))
     Eq << Tensor.Eq.given.All_EqGetS.apply(Eq[0], k)
 
-    Eq << Eq[-1].this.lhs.apply(Tensor.Stack.Ite.eq.Block)
+    Eq << Eq[-1].this.lhs.apply(Tensor.Stack_Ite.eq.Append)
 
 
 if __name__ == '__main__':

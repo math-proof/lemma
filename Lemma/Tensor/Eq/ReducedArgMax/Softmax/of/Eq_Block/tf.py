@@ -66,7 +66,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Piecewise[2]).apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite, 0)
 
-    Eq.block0 = Eq[-1].this.rhs.apply(Tensor.Stack.Ite.eq.Block)
+    Eq.block0 = Eq[-1].this.rhs.apply(Tensor.Stack_Ite.eq.Append)
 
     Eq << Eq.four_blocks.find(ExprCondPair[2]).find(BlockMatrix).this.apply(Tensor.Expr.eq.Stack, j)
 
@@ -80,7 +80,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(And).apply(Bool.And_Or.Is.OrAndS)
 
-    Eq.block2 = Eq[-1].this.find(Stack).apply(Tensor.Stack.Ite.eq.Block)
+    Eq.block2 = Eq[-1].this.find(Stack).apply(Tensor.Stack_Ite.eq.Append)
 
     Eq << Eq.four_blocks.find(ExprCondPair[4]).find(Add[BlockMatrix]).this.apply(Tensor.Expr.eq.Stack, j)
 
@@ -88,7 +88,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Add[Piecewise]).apply(Nat.AddIteS.eq.IteAnd)
 
-    Eq.block3 = Eq[-1].this.find(Stack).apply(Tensor.Stack.Ite.eq.Block)
+    Eq.block3 = Eq[-1].this.find(Stack).apply(Tensor.Stack_Ite.eq.Append)
 
     Eq << Eq.four_blocks.subs(Eq.block0, Eq.block1, Eq.block2, Eq.block3)
 
