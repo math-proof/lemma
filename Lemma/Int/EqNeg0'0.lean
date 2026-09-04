@@ -3,11 +3,11 @@ import sympy.Basic
 
 @[main]
 private lemma main
-  [AddGroup α] :
+  [NegZeroClass α] :
 -- imply
-  -0 = (0 : α) := by
+  -0 = (0 : α) :=
 -- proof
-  simp
+  NegZeroClass.neg_zero
 
 
 -- created on 2026-07-12

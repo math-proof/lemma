@@ -88,7 +88,7 @@ const self = new Vue({
           postname: 'lemma',
           markdownComment: null,
           commentEditMode: false,
-          accessibilities: ['public', 'protected', 'private', 'public nonrec', 'protected nonrec', 'private nonrec', 'noncomputable', 'scoped', 'nonrec'],
+          accessibilities: ['public', 'protected', 'private', 'public nonrec', 'protected nonrec', 'private nonrec', 'noncomputable', 'private noncomputable', 'scoped', 'nonrec'],
       };
   },
 

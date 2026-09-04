@@ -8,6 +8,8 @@
  */
 import fs from 'fs';
 import path from 'path';
+import readline from 'node:readline/promises';
+import { stdin as input, stdout as output } from 'node:process';
 import { fileURLToPath } from 'url';
 import mysql from 'mysql2/promise';
 import '../static/js/std.js';
@@ -108,14 +110,29 @@ export async function runLeanFile(leanInput) {
   return { module, abs, code };
 }
 
+async function promptLeanInput() {
+  const rl = readline.createInterface({ input, output });
+  try {
+    return (await rl.question('Lean file path: ')).trim();
+  } finally {
+    rl.close();
+  }
+}
+
 async function main() {
   const args = process.argv.slice(2).filter((a) => a !== '--');
-  if (args.length === 0 || args.includes('-h') || args.includes('--help')) {
+  if (args.includes('-h') || args.includes('--help')) {
     console.error('usage: node mjs/run.mjs <lean-file-or-module>');
-    process.exit(args.length === 0 ? 2 : 0);
+    process.exit(0);
   }
 
-  const { module, abs } = await runLeanFile(args[0]);
+  const leanInput = args[0] || (await promptLeanInput());
+  if (!leanInput) {
+    console.error('usage: node mjs/run.mjs <lean-file-or-module>');
+    process.exit(2);
+  }
+
+  const { module, abs } = await runLeanFile(leanInput);
   console.log(`replaced axiom.lemma user=${USER} module=${module}`);
   console.log(abs);
 }

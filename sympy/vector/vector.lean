@@ -42,6 +42,13 @@ instance [MulZeroClass α] : MulZeroClass (Vector α n) where
     ext i
     simp [Zero.eq.Replicate]
 
+instance [NegZeroClass α] : NegZeroClass (Vector α n) where
+  neg_zero := by
+    ext i
+    rw [GetNeg.eq.NegGet.fin]
+    rw [EqGet0_0.fin]
+    apply NegZeroClass.neg_zero
+
 instance [AddCommMagma α] : AddCommMagma (Vector α n) where
   add_comm a b := by
     simp [Add.eq.Map₂]

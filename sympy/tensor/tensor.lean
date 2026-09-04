@@ -386,6 +386,12 @@ instance [MulZeroClass α] : MulZeroClass (Tensor α s) where
     rw [DataMul.eq.MulDataS]
     simp [EqData0'0]
 
+instance [NegZeroClass α] : NegZeroClass (Tensor α s) where
+  neg_zero := by
+    apply Eq.of.EqDataS
+    rw [DataNeg.eq.NegData]
+    simp [EqData0'0]
+
 instance [AddCommMagma α] : AddCommMagma (Tensor α s) where
   add_comm X Y := by
     apply Eq.of.EqDataS

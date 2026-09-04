@@ -2,6 +2,7 @@ import Lemma.Tensor.DataMul.eq.MulData
 import Lemma.Tensor.DataMul.eq.MulDataS
 import Lemma.Tensor.DataNeg.eq.NegData
 import Lemma.Tensor.Eq.is.EqDataS
+import Lemma.Tensor.Mul
 import Lemma.Vector.NegMul.eq.MulNeg
 open Tensor Vector
 
@@ -11,8 +12,6 @@ open Tensor Vector
 | :---: | :---: |
 | main | Tensor.NegMul.eq.MulNeg |
 | comm | Tensor.MulNeg.eq.NegMul |
-| scalar | Tensor.NegMul.eq.MulNeg.scalar |
-| comm.scalar | Tensor.MulNeg.eq.NegMul.scalar |
 -/
 @[main, comm]
 private lemma main
@@ -47,5 +46,20 @@ private lemma scalar
   rw [DataNeg.eq.NegData]
 
 
+@[main, comm]
+private lemma nil
+  [Mul α] [HasDistribNeg α]
+-- given
+  (X Y : Tensor α []) :
+-- imply
+  -(X * Y) = -X * Y := by
+-- proof
+  refine (congrArg Neg.neg (Tensor.Mul X Y)).trans ?_
+  refine Eq.trans ?_ (Tensor.Mul (-X) Y).symm
+  apply Eq.of.EqDataS
+  simp [Mul.mul, Neg.neg]
+  exact Vector.NegMul.eq.MulNeg X.data Y.data
+
+
 -- created on 2026-01-02
--- updated on 2026-09-02
+-- updated on 2026-09-04

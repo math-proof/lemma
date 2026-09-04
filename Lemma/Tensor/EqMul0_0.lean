@@ -1,7 +1,9 @@
 import Lemma.Tensor.DataMul.eq.MulData
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Tensor.EqData0'0
+import Lemma.Tensor.Mul
 import Lemma.Vector.EqMul0_0
+import sympy.tensor.tensor
 open Vector Tensor
 
 
@@ -20,5 +22,19 @@ private lemma main
   apply EqMul0_0
 
 
+@[main]
+private lemma nil
+  [Semiring α]
+  [CharZero α]
+-- given
+  (x : Tensor α []) :
+-- imply
+  (↑(0 : ℕ) : Tensor α []) * x = 0 := by
+-- proof
+  have h0 : (↑(0 : ℕ) : Tensor α []) = (0 : Tensor α []) := Nat.cast_zero
+  rw [h0, Tensor.Mul]
+  apply MulZeroClass.zero_mul
+
+
 -- created on 2025-12-23
--- updated on 2026-07-19
+-- updated on 2026-09-04
