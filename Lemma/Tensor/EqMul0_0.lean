@@ -23,7 +23,7 @@ private lemma main
 
 
 @[main]
-private lemma nil
+private lemma nat
   [Semiring α]
   [CharZero α]
 -- given
@@ -31,8 +31,7 @@ private lemma nil
 -- imply
   (↑(0 : ℕ) : Tensor α []) * x = 0 := by
 -- proof
-  have h0 : (↑(0 : ℕ) : Tensor α []) = (0 : Tensor α []) := Nat.cast_zero
-  rw [h0, Tensor.Mul]
+  erw [Nat.cast_zero, Tensor.Mul]
   apply MulZeroClass.zero_mul
 
 

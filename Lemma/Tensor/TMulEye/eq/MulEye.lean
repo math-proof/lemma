@@ -42,8 +42,7 @@ private lemma main
     simp [hij]
   else
     simp [hij, Delta.eq.Ite]
-    have h0 : (↑(0 : ℕ) : Tensor α []) = (0 : Tensor α []) := Nat.cast_zero
-    rw [h0]
+    erw [Nat.cast_zero]
     apply Eq.of.EqDataS
     have hmul : ∀ A B : Tensor α [], (Mul.mul A B).data = A.data * B.data := fun _ _ => rfl
     rw [hmul, hmul]

@@ -10,45 +10,7 @@ import Lemma.Tensor.GetMul.eq.MulGetS
 import Lemma.Tensor.Mul
 import Lemma.Vector.Map₂.eq.Map.of.Eq_1
 open Bool Nat Tensor
-set_option maxHeartbeats 400000
-
-
-private lemma mul_cast_one
-  [Semiring α]
-  (x y : Tensor α []) :
-  Mul.mul (Mul.mul (↑(1 : ℕ) : Tensor α []) x) y = Mul.mul x y := by
-  have h1 : (↑(1 : ℕ) : Tensor α []) = (1 : Tensor α []) := Nat.cast_one
-  rw [h1]
-  apply Eq.of.EqDataS
-  have hmul : ∀ A B : Tensor α [], (Mul.mul A B).data = A.data * B.data := fun _ _ => rfl
-  rw [hmul, hmul]
-  have ho : (1 : Tensor α []).data = (1 : List.Vector α [].prod) := rfl
-  rw [ho]
-  change (1 : List.Vector α [].prod) * x.data * y.data = (Mul.mul x y).data
-  rw [one_mul]
-  rfl
-
-
-private lemma eye_mul_broadcast_get
-  [Semiring α] [CharZero α]
-  (a : Tensor α [n])
-  (i p : Fin n) :
-  id (α := Tensor α []) (((Tensor.eye n : Tensor α [n, n]) * ([_ < n] a))[i][p]) =
-    Mul.mul
-      (id (α := Tensor α []) (↑(KroneckerDelta i p) : Tensor α []))
-      (id (α := Tensor α []) a[p]) := by
-  have hrow := GetMul.eq.MulGetS (Tensor.eye n : Tensor α [n, n]) ([_ < n] a) i
-  have hA := EqGetStack (fun _ : Fin n => a) i
-  have hd := GetEye.eq.Delta (α := α) i p
-  have hcell := GetMul.eq.MulGetS ((Tensor.eye n : Tensor α [n, n])[i]) (([_ < n] a)[i]) p
-  have h1 :
-      ((Tensor.eye n : Tensor α [n, n]) * ([_ < n] a))[i][p] =
-        ((Tensor.eye n : Tensor α [n, n])[i] * ([_ < n] a)[i])[p] :=
-    congrArg (fun X : Tensor α [n] => X[p]) hrow
-  erw [h1, hcell, hA, hd]
-  apply Eq.of.EqDataS
-  simp [id, HMul.hMul, Mul.mul]
-  erw [Vector.Map₂.eq.Map.of.Eq_1 (n := [].prod) (by rfl)]
+set_option maxHeartbeats 1000000
 
 
 /--
@@ -60,66 +22,85 @@ private lemma main
 -- given
   (a b : Tensor α [n]) :
 -- imply
-  ((Tensor.eye n : Tensor α [n, n]) * ([_ < n] a)) @ b = a * b := by
+  ((Tensor.eye n : Tensor α [n, n]) * [_ < n] a) @ b = a * b := by
 -- proof
   let M : Tensor α [n, n] := (Tensor.eye n : Tensor α [n, n]) * ([_ < n] a)
-  have h := Dot.eq.Stack_Sum_MulGetS.mv M b
-  have hshape : matmul_shape [n, n] [n] = [n] := by simp [matmul_shape]
-  have hstack : (cast (by simp [matmul_shape]) (M @ b) : Tensor α [n]) = [i < n] ∑ p : Fin n, (id (α := Tensor α []) M[i][p]) * (id (α := Tensor α []) b[p]) := by
+  have hstack : (cast (by simp [matmul_shape]) ((M) @ (b)) : Tensor α [n]) = [j < n] ∑ p : Fin n, (id (α := Tensor α []) M[j][p]) * (id (α := Tensor α []) b[p]) := by
     apply Eq.of.EqDataS
     apply Eq.of.SEq
-    have hcast := DataCast.as.Data.of.Eq hshape (M @ b)
-    have hd := SEq.of.Eq (congrArg Tensor.data h)
-    exact hcast.trans hd
+    apply (DataCast.as.Data.of.Eq (by simp [matmul_shape]) ((M) @ (b))).trans
+    apply SEq.of.Eq
+    apply congrArg Tensor.data
+    apply Dot.eq.Stack_Sum_MulGetS.mv
   apply Eq.of.All_EqGetS.fin
   intro i
-  have hsum := EqGetStack.fin
-    (fun i : Fin n => ∑ p : Fin n, (id (α := Tensor α []) M[i][p]) * (id (α := Tensor α []) b[p])) i
-  have hL : (cast (by simp [matmul_shape]) (M @ b) : Tensor α [n])[i] = ∑ p : Fin n, (id (α := Tensor α []) M[i][p]) * (id (α := Tensor α []) b[p]) :=
-    (congrArg (fun X : Tensor α [n] => X[i]) hstack).trans hsum
+  have hL : (cast (by simp [matmul_shape]) ((M) @ (b)) : Tensor α [n])[i] = ∑ p : Fin n, (id (α := Tensor α []) M[i][p]) * (id (α := Tensor α []) b[p]) :=
+    (congrArg (fun X : Tensor α [n] => X[i]) hstack).trans
+      (EqGetStack.fin (fun j : Fin n => ∑ p : Fin n, (id (α := Tensor α []) M[j][p]) * (id (α := Tensor α []) b[p])) i)
   have hR : (a * b)[i] = (id (α := Tensor α []) a[i]) * (id (α := Tensor α []) b[i]) := by
-    have hb := GetMul.eq.MulGetS.fin a b i
-    exact hb.trans (Tensor.Mul (id (α := Tensor α []) a[i]) (id (α := Tensor α []) b[i])).symm
-  refine Eq.trans hL ?_
-  refine Eq.trans ?_ hR.symm
+    apply Eq.trans
+    ·
+      apply GetMul.eq.MulGetS.fin
+    ·
+      apply Eq.symm
+      apply Tensor.Mul
+  apply Eq.trans hL
+  apply Eq.trans _ hR.symm
   have hMp (p : Fin n) :
       (id (α := Tensor α []) M[i][p]) * (id (α := Tensor α []) b[p]) =
         Mul.mul
           (Mul.mul (id (α := Tensor α []) (↑(KroneckerDelta i p) : Tensor α [])) (id (α := Tensor α []) a[p]))
           (id (α := Tensor α []) b[p]) := by
     simp only [M]
-    have hc := eye_mul_broadcast_get a i p
+    have hrow := GetMul.eq.MulGetS (Tensor.eye n : Tensor α [n, n]) ([_ < n] a) i
+    have hA := EqGetStack (fun _ : Fin n => a) i
+    have hd := GetEye.eq.Delta (α := α) i p
+    have hcell := GetMul.eq.MulGetS ((Tensor.eye n : Tensor α [n, n])[i]) (([_ < n] a)[i]) p
+    have h1 :
+        ((Tensor.eye n : Tensor α [n, n]) * ([_ < n] a))[i][p] =
+          ((Tensor.eye n : Tensor α [n, n])[i] * ([_ < n] a)[i])[p] :=
+      congrArg (fun X : Tensor α [n] => X[p]) hrow
+    have hc :
+        id (α := Tensor α []) (((Tensor.eye n : Tensor α [n, n]) * ([_ < n] a))[i][p]) =
+          Mul.mul
+            (id (α := Tensor α []) (↑(KroneckerDelta i p) : Tensor α []))
+            (id (α := Tensor α []) a[p]) := by
+      erw [h1, hcell, hA, hd]
+      apply Eq.of.EqDataS
+      simp [id, HMul.hMul, Mul.mul]
+      erw [Vector.Map₂.eq.Map.of.Eq_1 (n := [].prod) (by rfl)]
     simp only [id] at hc ⊢
     rw [hc]
-    exact Tensor.Mul (id (α := Tensor α []) _) (id (α := Tensor α []) _)
+    apply Tensor.Mul (id (α := Tensor α []) _) (id (α := Tensor α []) _)
   have hsingle : ∑ p : Fin n, (id (α := Tensor α []) M[i][p]) * (id (α := Tensor α []) b[p]) = (id (α := Tensor α []) M[i][i]) * (id (α := Tensor α []) b[i]) := by
     apply Finset.sum_eq_single i
     ·
       intro p _ hp
       rw [hMp p]
-      have hip : i ≠ p := by
-        intro h
-        exact hp h.symm
-      have hδ : KroneckerDelta i p = 0 := by
-        simp [Delta.eq.Ite, hip]
-      rw [hδ]
-      have h0 : (↑(0 : ℕ) : Tensor α []) = (0 : Tensor α []) := Nat.cast_zero
-      rw [h0]
+      simp [Delta.eq.Ite, Ne.symm hp]
+      erw [Nat.cast_zero]
       apply Eq.of.EqDataS
       have hmul0 : ∀ A B : Tensor α [], (Mul.mul A B).data = A.data * B.data := fun _ _ => rfl
       rw [hmul0, hmul0]
-      have hz : (0 : Tensor α []).data = (0 : List.Vector α [].prod) := rfl
-      rw [hz]
+      rw [(rfl : (0 : Tensor α []).data = (0 : List.Vector α [].prod))]
       change (0 : List.Vector α [].prod) * (id (α := Tensor α []) a[p]).data * (id (α := Tensor α []) b[p]).data = 0
       rw [zero_mul, zero_mul]
     ·
       intro hi
-      exact (hi (Finset.mem_univ i)).elim
+      apply (hi (Finset.mem_univ i)).elim
   rw [hsingle]
   rw [hMp i]
   simp [Delta.eq.Ite]
-  exact (mul_cast_one a[i] b[i]).trans (Tensor.Mul (id (α := Tensor α []) a[i]) (id (α := Tensor α []) b[i])).symm
+  erw [Nat.cast_one]
+  apply Eq.trans _ (Tensor.Mul (id (α := Tensor α []) a[i]) (id (α := Tensor α []) b[i])).symm
+  apply Eq.of.EqDataS
+  have hmul : ∀ A B : Tensor α [], (Mul.mul A B).data = A.data * B.data := fun _ _ => rfl
+  rw [hmul, hmul]
+  rw [(rfl : (1 : Tensor α []).data = (1 : List.Vector α [].prod))]
+  change (1 : List.Vector α [].prod) * (id (α := Tensor α []) a[i]).data * (id (α := Tensor α []) b[i]).data = (Mul.mul (id (α := Tensor α []) a[i]) (id (α := Tensor α []) b[i])).data
+  rw [one_mul]
+  rfl
 
 
 -- created on 2023-09-18
--- updated on 2026-09-02
+-- updated on 2026-09-05
