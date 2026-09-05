@@ -15,16 +15,11 @@ import Lemma.Tensor.GetRotaryMatrix.eq.MulCos_Delta.of.Lt.Lt
 import Lemma.Tensor.GetRotaryMatrix.eq.MulNegSin_Delta.of.Lt.Ge
 import Lemma.Tensor.GetRotaryMatrix.eq.MulSin_Delta.of.Ge.Lt
 import Lemma.Tensor.GetRotaryMatrix'.eq.Ite_IteS
-import Lemma.Tensor.Mul
-import Lemma.Tensor.RotaryMatrix.eq.AppendHstackSMulSEye
-import Lemma.Tensor.RotaryMatrix'.eq.Stack_Ite_IteS
 import Lemma.Tensor.SEqDotS.of.SEq
-import Lemma.Tensor.Interleave.eq.AppendStackS_Delta
 import sympy.functions.special.tensor_functions
 import sympy.matrices.expressions.special
 import sympy.tensor.functions
 open Bool Nat Tensor Fin
-set_option maxHeartbeats 20000000
 
 
 @[main]
@@ -44,64 +39,47 @@ private lemma main
     apply (Finset.sum_eq_single (toSplit j) ?_ ?_).trans ?_
     ·
       intro k _ hk
-      have hP := GetInterleave.eq.Delta_ToSplit k j
-      have hne : (k : ℕ) ≠ (toSplit j : ℕ) := Fin.val_injective.ne hk
-      have := congrArg (fun t : Tensor ℝ [] => (((interleave d)ᵀ) @ (rotaryMatrix θ))[i][k] * t) hP
-      apply this.trans
-      simp [Delta.eq.Ite, hne]
+      apply (congrArg (fun t : Tensor ℝ [] => (((interleave d)ᵀ) @ (rotaryMatrix θ))[i][k] * t) (GetInterleave.eq.Delta_ToSplit k j)).trans
+      simp [Delta.eq.Ite, Fin.val_injective.ne hk]
       apply Tensor.EqMul_0'0.nat
     ·
       intro h
       apply (h (Finset.mem_univ _)).elim
     ·
-      have hP := GetInterleave.eq.Delta_ToSplit (toSplit j) j
-      have := congrArg (fun t : Tensor ℝ [] => (((interleave d)ᵀ) @ (rotaryMatrix θ))[i][toSplit j] * t) hP
-      apply this.trans
+      apply (congrArg (fun t : Tensor ℝ [] => (((interleave d)ᵀ) @ (rotaryMatrix θ))[i][toSplit j] * t) (GetInterleave.eq.Delta_ToSplit (toSplit j) j)).trans
       simp [Delta.eq.Ite]
       apply (Tensor.EqMul_1.nat _).trans
-      let PT : Tensor ℝ [d + d, d + d] := cast (congrArg (Tensor ℝ) (by simp)) (interleave d)ᵀ
-      have hS : PT ≃ (interleave d)ᵀ := SEqCast.of.Eq (by simp) (interleave d)ᵀ
-      have hD := SEqDotS.of.SEq hS (rotaryMatrix θ)
-      have hEqDot : PT @ rotaryMatrix θ = (interleave d)ᵀ @ rotaryMatrix θ := Eq.of.SEq hD
-      apply (congrArg (fun t : Tensor ℝ [d + d, d + d] => t[i][toSplit j]) hEqDot.symm).trans
+      apply (congrArg (fun t : Tensor ℝ [d + d, d + d] => t[i][toSplit j]) (Eq.of.SEq (SEqDotS.of.SEq (SEqCast.of.Eq (by simp) (interleave d)ᵀ) (rotaryMatrix θ))).symm).trans
       apply (GetDot.eq.Sum_MulGetS _ _ _ _).trans
       apply (Finset.sum_eq_single (toSplit i) ?_ ?_).trans ?_
       ·
         intro k _ hk
-        have hne : (k : ℕ) ≠ (toSplit i : ℕ) := Fin.val_injective.ne hk
-        have hδ := GetTInterleave.eq.Delta_ToSplit i k
-        apply (congrArg (fun t : Tensor ℝ [] => t * id (α := Tensor ℝ []) (rotaryMatrix θ)[k][toSplit j]) hδ).trans
-        simp [Delta.eq.Ite, hne]
+        apply (congrArg (fun t : Tensor ℝ [] => t * id (α := Tensor ℝ []) (rotaryMatrix θ)[k][toSplit j]) (GetTInterleave.eq.Delta_ToSplit i k)).trans
+        simp [Delta.eq.Ite, Fin.val_injective.ne hk]
         apply Tensor.EqMul0_0.nat
       ·
         intro h
         apply (h (Finset.mem_univ _)).elim
       ·
-        have hδ := GetTInterleave.eq.Delta_ToSplit i (toSplit i)
-        apply (congrArg (fun t : Tensor ℝ [] => t * id (α := Tensor ℝ []) (rotaryMatrix θ)[toSplit i][toSplit j]) hδ).trans
+        apply (congrArg (fun t : Tensor ℝ [] => t * id (α := Tensor ℝ []) (rotaryMatrix θ)[toSplit i][toSplit j]) (GetTInterleave.eq.Delta_ToSplit i (toSplit i))).trans
         simp [Delta.eq.Ite]
         apply Tensor.EqMul1.nat
   symm
   have hL := GetRotaryMatrix'.eq.Ite_IteS θ i j
-  by_cases hei : (i : ℕ) % 2 = 0
-  ·
-    by_cases hej : (j : ℕ) % 2 = 0
-    ·
+  if hei : (i : ℕ) % 2 = 0 then
+    if hej : (j : ℕ) % 2 = 0 then
       simp [toSplit, hei, hej]
       let iC : Fin (d + d) := ⟨(i : ℕ) / 2, by grind⟩
       let jC : Fin (d + d) := ⟨(j : ℕ) / 2, by grind⟩
       have hRg := GetRotaryMatrix.eq.MulCos_Delta.of.Lt.Lt θ iC jC (by grind) (by grind)
       simp only [iC, jC] at hL hRg ⊢
       apply hL.trans (Eq.trans ?_ hRg.symm)
-      have hsucc : ¬((j : ℕ) = (i : ℕ) + 1) := by
-        intro h
-        omega
+      have hsucc : ¬((j : ℕ) = (i : ℕ) + 1) := by omega
       simp [hei, hsucc]
-      by_cases hij : (j : ℕ) = (i : ℕ)
-      ·
+      if hij : (j : ℕ) = (i : ℕ) then
         simp [hij, Delta.eq.Ite]
         apply (Tensor.EqMul_1.nat _).symm
-      ·
+      else
         have hne : (i : ℕ) / 2 ≠ (j : ℕ) / 2 := by
           intro h
           apply hij
@@ -110,7 +88,7 @@ private lemma main
           omega
         simp [hij, Delta.eq.Ite, hne]
         apply (Tensor.EqMul_0'0.nat _).symm
-    ·
+    else
       have hj1 : (j : ℕ) % 2 = 1 := Nat.mod_two_ne_zero.mp hej
       simp [toSplit, hei, hj1]
       let iC : Fin (d + d) := ⟨(i : ℕ) / 2, by grind⟩
@@ -120,24 +98,19 @@ private lemma main
       apply hL.trans (Eq.trans ?_ hRg.symm)
       have hneij : (j : ℕ) ≠ (i : ℕ) := fun h => hej (h ▸ hei)
       simp [hei, hneij]
-      by_cases hs : (j : ℕ) = (i : ℕ) + 1
-      ·
+      if hs : (j : ℕ) = (i : ℕ) + 1 then
         have heq : (i : ℕ) / 2 = ((i : ℕ) + 1) / 2 := by omega
-        have hlt : ((i : ℕ) + 1) / 2 < d := by
-          have := i.isLt
-          omega
         simp [hs, Delta.eq.Ite, heq]
         apply (Tensor.EqMul_1.nat _).symm
-      ·
+      else
         have hne : (i : ℕ) / 2 ≠ (j : ℕ) / 2 := by
           intro h
           apply hs
           omega
         simp [hs, Delta.eq.Ite, hne]
         apply (Tensor.EqMul_0'0.nat _).symm
-  ·
-    by_cases hej : (j : ℕ) % 2 = 0
-    ·
+  else
+    if hej : (j : ℕ) % 2 = 0 then
       have hi1 : (i : ℕ) % 2 = 1 := Nat.mod_two_ne_zero.mp hei
       simp [toSplit, hi1, hej]
       let iR : Fin (d + d) := ⟨(i : ℕ) / 2 + d, by grind⟩
@@ -147,19 +120,18 @@ private lemma main
       apply hL.trans (Eq.trans ?_ hRg.symm)
       have hneij : (j : ℕ) ≠ (i : ℕ) := fun h => hei (h ▸ hej)
       simp [hei, hneij]
-      by_cases hp : (j : ℕ) + 1 = (i : ℕ)
-      ·
+      if hp : (j : ℕ) + 1 = (i : ℕ) then
         have heq : (i : ℕ) / 2 = (j : ℕ) / 2 := by omega
         simp [hp, Delta.eq.Ite, heq]
         apply (Tensor.EqMul_1.nat _).symm
-      ·
+      else
         have hne : (i : ℕ) / 2 ≠ (j : ℕ) / 2 := by
           intro h
           apply hp
           omega
         simp [hp, Delta.eq.Ite, hne]
         apply (Tensor.EqMul_0'0.nat _).symm
-    ·
+    else
       have hi1 : (i : ℕ) % 2 = 1 := Nat.mod_two_ne_zero.mp hei
       have hj1 : (j : ℕ) % 2 = 1 := Nat.mod_two_ne_zero.mp hej
       simp [toSplit, hi1, hj1]
@@ -168,15 +140,12 @@ private lemma main
       have hRg := GetRotaryMatrix.eq.MulCos_Delta.of.Ge.Ge θ iR jR (by grind) (by grind)
       simp only [iR, jR] at hL hRg ⊢
       apply hL.trans (Eq.trans ?_ hRg.symm)
-      have hpred : ¬((j : ℕ) + 1 = (i : ℕ)) := by
-        intro h
-        omega
+      have hpred : ¬((j : ℕ) + 1 = (i : ℕ)) := by omega
       simp [hei, hpred]
-      by_cases hij : (j : ℕ) = (i : ℕ)
-      ·
+      if hij : (j : ℕ) = (i : ℕ) then
         simp [hij, Delta.eq.Ite]
         apply (Tensor.EqMul_1.nat _).symm
-      ·
+      else
         have hne : (i : ℕ) / 2 ≠ (j : ℕ) / 2 := by
           intro h
           apply hij
