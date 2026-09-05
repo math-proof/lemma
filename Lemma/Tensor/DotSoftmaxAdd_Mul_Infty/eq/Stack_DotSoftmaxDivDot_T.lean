@@ -64,11 +64,11 @@ private lemma gpt
     have h_j := j.isLt
     simp only [List.LengthSlice.eq.SubMin] at h_j
     apply (GetGetSlice.eq.Get_Add.of.GtSubMin.fin h_j (X := ((Q : Tensor ℝ* [n, d_z]) @ (KT : Tensor ℝ* [d_z, n]))[i])).trans
-    apply Eq.trans (b := (((Q : Tensor ℝ* [n, d_z]).get i) @ (K : Tensor ℝ* [n, d_z]).get ⟨(i : ℕ) + 1 - l + j, by grind⟩))
+    apply Eq.trans (b := (((Q : Tensor ℝ* [n, d_z]).get i) @ (K : Tensor ℝ* [n, d_z]).get ⟨i + 1 - l + j, by grind⟩))
     ·
       simp [GetElem.getElem]
       erw [GetDot.eq.DotGetS.fin]
-      rw [congrArg (·ᵀ) hKT]
+      rw [congrArg T hKT]
       apply congrArg
       apply GetTCast_T.eq.Get.fin
     ·

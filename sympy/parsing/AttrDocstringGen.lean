@@ -47,10 +47,10 @@ partial def commRunSh (tokens : List String) (n : Nat) : List String :=
   else
     let rec loop (toks : List String) (deBruijn : Nat) (index : Int) : List String :=
       if deBruijn == 0 then
-        setAt toks 1 (toks[1]!.transformPrefix)
+        setAt toks 1 toks[1]!.transformPrefix
       else if deBruijn % 2 == 1 then
         let idx := Int.natAbs index
-        loop (setAt toks idx (toks[idx]!.transformPrefix)) (deBruijn / 2) (index - 1)
+        loop (setAt toks idx toks[idx]!.transformPrefix) (deBruijn / 2) (index - 1)
       else
         loop toks (deBruijn / 2) (index - 1)
     loop tokens n (tokens.length - 1)
@@ -61,7 +61,7 @@ def parityBits (n : Nat) : List Bool :=
 def escapeMd (s : String) : String := s
 
 def customAttrHead (attr : String) : String :=
-  let parts := (attr.trimAscii.toString).splitOn " " |>.filter (· != "")
+  let parts := attr.trimAscii.toString.splitOn " " |>.filter (· != "")
   match parts with
   | ["mp", "and"] => "mp and"
   | ["mpr", "and"] => "mpr and"
@@ -127,11 +127,11 @@ def mprCommLemmaTokens (tokens : List String) (parity : List Bool) : List String
   | none => List.comm (List.mpr tokens) parity
 
 def attrLemmaName (tokens : List String) (attr : String) : String :=
-  let parts := (attr.trimAscii.toString).splitOn " " |>.filter (· != "")
+  let parts := attr.trimAscii.toString.splitOn " " |>.filter (· != "")
   match parts with
   | ["main"] => moduleName tokens
   | ["comm"] => moduleName (List.comm tokens (ofParityFromTokens tokens))
-  | ["comm", n] => moduleName (commRunSh tokens (n.toNat!))
+  | ["comm", n] => moduleName (commRunSh tokens n.toNat!)
   | ["mp"] => moduleName (List.mp tokens)
   | ["mp", "and"] => moduleName (List.mp tokens)
   | ["mp", _] => moduleName (List.mp tokens)
@@ -140,14 +140,14 @@ def attrLemmaName (tokens : List String) (attr : String) : String :=
   | ["mpr", _] => moduleName (List.mpr tokens)
   | ["mp.comm"] => moduleName (mpCommLemmaTokens tokens (ofParityFromTokens tokens))
   | ["mp.comm", "and"] => moduleName (mpCommLemmaTokens tokens (ofParityFromTokens tokens))
-  | ["mp.comm", _] => moduleName (mpCommLemmaTokens tokens (parityBits (parts[1]!.toNat!)))
+  | ["mp.comm", _] => moduleName (mpCommLemmaTokens tokens (parityBits parts[1]!.toNat!))
   | ["mpr.comm"] => moduleName (mprCommLemmaTokens tokens (ofParityFromTokens tokens))
   | ["mpr.comm", "and"] => moduleName (mprCommLemmaTokens tokens (ofParityFromTokens tokens))
-  | ["mpr.comm", _] => moduleName (mprCommLemmaTokens tokens (parityBits (parts[1]!.toNat!)))
+  | ["mpr.comm", _] => moduleName (mprCommLemmaTokens tokens (parityBits parts[1]!.toNat!))
   | ["comm.is"] => moduleName (List.comm.is tokens [])
-  | ["comm.is", n] => moduleName (List.comm.is tokens (parityBits (n.toNat!)))
+  | ["comm.is", n] => moduleName (List.comm.is tokens (parityBits n.toNat!))
   | ["is.comm"] => moduleName (List.is.comm tokens [])
-  | ["is.comm", n] => moduleName (List.is.comm tokens (parityBits (n.toNat!)))
+  | ["is.comm", n] => moduleName (List.is.comm tokens (parityBits n.toNat!))
   | ["fin"] => moduleName (tokens ++ ["fin"])
   | ["fin", _] => moduleName (tokens ++ ["fin"])
   | ["fin.comm"] => moduleName (List.comm tokens [] ++ ["fin"])
@@ -158,24 +158,24 @@ def attrLemmaName (tokens : List String) (attr : String) : String :=
   | ["cast.fin"] => moduleName (List.castPath tokens true ++ ["fin"])
   | ["cast", "fin"] => moduleName (List.castPath tokens true ++ ["fin"])
   | ["cast.comm"] => moduleName (List.comm (List.castPath tokens true) (ofParityFromTokens tokens))
-  | ["cast.comm", n] => moduleName (List.comm (List.castPath tokens true) (parityBits (n.toNat!)))
+  | ["cast.comm", n] => moduleName (List.comm (List.castPath tokens true) (parityBits n.toNat!))
   | ["left"] => nameToModule (tokens.left : Lean.Name)
   | ["right"] => nameToModule (tokens.right : Lean.Name)
   | ["mpr.left"] => nameToModule ((List.mpr tokens).left : Lean.Name)
   | ["mpr.right"] => nameToModule ((List.mpr tokens).right : Lean.Name)
   | ["val"] => moduleName (tokens ++ ["val"])
   | ["mt"] => nameToModule (List.mt tokens : Lean.Name)
-  | ["mt", n] => nameToModule (List.mt tokens false (n.toNat!) : Lean.Name)
+  | ["mt", n] => nameToModule (List.mt tokens false n.toNat! : Lean.Name)
   | ["mp.mt"] => nameToModule (List.mt (List.mp tokens) : Lean.Name)
-  | ["mp.mt", n] => nameToModule (List.mt (List.mp tokens) false (n.toNat!) : Lean.Name)
+  | ["mp.mt", n] => nameToModule (List.mt (List.mp tokens) false n.toNat! : Lean.Name)
   | ["mpr.mt"] => nameToModule (List.mt (List.mpr tokens) : Lean.Name)
-  | ["mpr.mt", n] => nameToModule (List.mt (List.mpr tokens) false (n.toNat!) : Lean.Name)
+  | ["mpr.mt", n] => nameToModule (List.mt (List.mpr tokens) false n.toNat! : Lean.Name)
   | ["subst"] => moduleName (substTokens tokens "1")
   | ["subst", n] => moduleName (substTokens tokens n)
   | _ => panic! s!"unknown attribute: {attr}"
 
 def formatAttrLabel (attr : String) : String :=
-  let parts := (attr.trimAscii.toString).splitOn " " |>.filter (· != "")
+  let parts := attr.trimAscii.toString.splitOn " " |>.filter (· != "")
   match parts with
   | ["mp", "and"] => "mp and"
   | ["mpr", "and"] => "mpr and"
@@ -203,7 +203,7 @@ def main (args : List String) : IO Unit := do
         pure ()
       else
         let parts := line.splitOn "|"
-        let rel := (parts.head!.trimAscii.toString)
+        let rel := parts.head!.trimAscii.toString
         let attrs := parts.tail.map (·.trimAscii.toString)
         IO.println s!"FILE:{rel}"
         IO.println (docstringFor rel attrs)

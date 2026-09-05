@@ -815,7 +815,7 @@ initialize registerBuiltinAttribute {
     let ⟨_, type, value⟩ := Expr.mpr decl.type (if parity > 0 then decl.proof else .const declName (levelParams.map .param)) parity and
     let moduleTokens := (← getEnv).moduleTokens.mpr
     let ⟨parity, type, value⟩ := Expr.disjunction type value
-    let name := (moduleTokens.left).lemmaName declName
+    let name := moduleTokens.left.lemmaName declName
     addAndCompile <| .thmDecl {
       name := name
       levelParams := levelParams
@@ -836,7 +836,7 @@ initialize registerBuiltinAttribute {
     let ⟨_, type, value⟩ := Expr.mpr decl.type (if parity > 0 then decl.proof else .const declName (levelParams.map .param)) parity and
     let moduleTokens := (← getEnv).moduleTokens.mpr
     let ⟨parity, type, value⟩ := Expr.disjunction type value 0 false
-    let name := (moduleTokens.right).lemmaName declName
+    let name := moduleTokens.right.lemmaName declName
     addAndCompile <| .thmDecl {
       name := name
       levelParams := levelParams
@@ -1141,7 +1141,7 @@ theorem Section.as.UFn_0 (u : Fin 1 → List.Vector α n) : lhs ≃ rhs := by pr
 -/
 initialize registerBuiltinAttribute {
   name := `cast
-  descr := "Automatically generate the cast equality from an as / ≃ theorem (testing)."
+  descr := "Automatically generate the cast equality from an as / ≃ theorem."
   applicationTime := .afterCompilation
   add := fun declName stx kind => do
     let decl ← getConstInfo declName
@@ -1195,7 +1195,7 @@ initialize registerBuiltinAttribute {
 
 initialize registerBuiltinAttribute {
   name := `cast.fin
-  descr := "Automatically generate the cast.fin equality from an as / ≃ theorem (testing)."
+  descr := "Automatically generate the cast.fin equality from an as / ≃ theorem."
   applicationTime := .afterCompilation
   add := fun declName stx kind => do
     let decl ← getConstInfo declName

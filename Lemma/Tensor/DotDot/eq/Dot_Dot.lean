@@ -118,7 +118,7 @@ private lemma vmm
   apply Eq.trans (vmv v M (Nᵀ[j] : Tensor α [n]))
   apply Eq.trans _ (Tensor.Get.of.Eq.fin (Dot.eq.GetDotUnsqueeze_0 v (M @ N)) j).symm
   apply Eq.trans _ (GetDot_Dot.eq.Dot_Dot_GetT (v.unsqueeze 0) M N ⟨0, by simp⟩ j).symm
-  apply congrArg (fun t : Tensor α [m] => t @ (M @ (Nᵀ[j])))
+  apply congrArg (fun t : Tensor α [m] => t @ (M @ Nᵀ[j]))
   apply Eq.symm
   apply EqGetUnsqueeze_0
 

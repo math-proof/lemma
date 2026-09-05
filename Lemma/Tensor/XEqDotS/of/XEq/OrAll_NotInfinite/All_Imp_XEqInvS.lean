@@ -1,10 +1,11 @@
+import Lemma.Nat.Mul
 import Lemma.Tensor.Dot
 import Lemma.Tensor.Dot.eq.TensorDotDataS
 import Lemma.Tensor.Ge0Mul.is.Ge0MulDataS
 import Lemma.Tensor.Le0Mul.is.Le0MulDataS
 import Lemma.Tensor.XEq.is.XEqDataS
 import Lemma.Vector.XEqDotS.of.XEq.OrAll_NotInfinite.All_Imp_XEqInvS
-open Tensor Vector
+open Nat Tensor Vector
 
 
 @[main]
@@ -45,8 +46,9 @@ private lemma left
 -- proof
   rw [Tensor.Dot.comm]
   conv_rhs => rw [Tensor.Dot.comm]
-  apply main h_xinfty _ h
-  grind
+  rw [Mul.comm] at h_or
+  apply main h_xinfty h_or h
 
 
 -- created on 2026-07-29
+-- updated on 2026-09-05

@@ -25,16 +25,16 @@ private lemma main
   ((Tensor.eye n : Tensor α [n, n]) * [_ < n] a) @ b = a * b := by
 -- proof
   let M : Tensor α [n, n] := (Tensor.eye n : Tensor α [n, n]) * ([_ < n] a)
-  have hstack : (cast (by simp [matmul_shape]) ((M) @ (b)) : Tensor α [n]) = [j < n] ∑ p : Fin n, (id (α := Tensor α []) M[j][p]) * (id (α := Tensor α []) b[p]) := by
+  have hstack : (cast (by simp [matmul_shape]) (M @ b) : Tensor α [n]) = [j < n] ∑ p : Fin n, (id (α := Tensor α []) M[j][p]) * (id (α := Tensor α []) b[p]) := by
     apply Eq.of.EqDataS
     apply Eq.of.SEq
-    apply (DataCast.as.Data.of.Eq (by simp [matmul_shape]) ((M) @ (b))).trans
+    apply (DataCast.as.Data.of.Eq (by simp [matmul_shape]) (M @ b)).trans
     apply SEq.of.Eq
     apply congrArg Tensor.data
     apply Dot.eq.Stack_Sum_MulGetS.mv
   apply Eq.of.All_EqGetS.fin
   intro i
-  have hL : (cast (by simp [matmul_shape]) ((M) @ (b)) : Tensor α [n])[i] = ∑ p : Fin n, (id (α := Tensor α []) M[i][p]) * (id (α := Tensor α []) b[p]) :=
+  have hL : (cast (by simp [matmul_shape]) (M @ b) : Tensor α [n])[i] = ∑ p : Fin n, (id (α := Tensor α []) M[i][p]) * (id (α := Tensor α []) b[p]) :=
     (congrArg (fun X : Tensor α [n] => X[i]) hstack).trans
       (EqGetStack.fin (fun j : Fin n => ∑ p : Fin n, (id (α := Tensor α []) M[j][p]) * (id (α := Tensor α []) b[p])) i)
   have hR : (a * b)[i] = (id (α := Tensor α []) a[i]) * (id (α := Tensor α []) b[i]) := by

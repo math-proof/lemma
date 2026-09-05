@@ -8,7 +8,7 @@ private lemma main
 -- given
   (v : List.Vector (List.Vector α n) m) :
 -- imply
-  ((v.val).map (List.length ∘ List.Vector.toList)).sum = m * n := by
+  (v.val.map (List.length ∘ List.Vector.toList)).sum = m * n := by
 -- proof
   have := MapVal.eq.Replicate v
   simp_all [List.sum_replicate]

@@ -35,8 +35,9 @@ private lemma left
 -- proof
   rw [Dot.comm]
   conv_rhs => rw [Dot.comm]
-  apply main h_xinfty _ h
-  grind
+  rw [Mul.comm] at h_or
+  apply main h_xinfty h_or h
 
 
 -- created on 2026-07-29
+-- updated on 2026-09-05

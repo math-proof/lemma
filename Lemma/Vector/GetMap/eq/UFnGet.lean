@@ -9,7 +9,7 @@ private lemma main
   (f : α → β)
   (i : Fin n) :
 -- imply
-  (v.map f)[i] = f (v[i]) := by
+  (v.map f)[i] = f v[i] := by
 -- proof
   simp
 

@@ -10,7 +10,7 @@ open Tensor
 @[main]
 private lemma main :
 -- imply
-  rotaryMatrix (0 : Tensor ℝ [d]) = Tensor.eye (d + d) := by
+  (0 : Tensor ℝ [d]).rotaryMatrix = Tensor.eye (d + d) := by
 -- proof
   simp only [rotaryMatrix]
   rw [Cos0.eq.One, Sin0.eq.Zero]
@@ -20,3 +20,4 @@ private lemma main :
 
 
 -- created on 2026-09-03
+-- updated on 2026-09-05

@@ -48,7 +48,7 @@ def flatten (xs : Vector (Vector α n) m) : Vector α (m * n) :=
   ⟨(xs.toList.map Vector.toList).flatten, by simp_all [Function.comp_def, List.map_const']⟩
 
 def array_slice (L : Vector α n) (start : Nat) (step : Nat) : Vector α (min step (n - start)) :=
-  (take (step) ∘ drop start) L
+  (take step ∘ drop start) L
 
 def unflatten (xs : Vector α (m * n)) : Vector (Vector α n) m :=
   (range m).map fun i : Fin m => cast (by rw [EqMin_SubMulS]) (xs.array_slice (i * n) n)

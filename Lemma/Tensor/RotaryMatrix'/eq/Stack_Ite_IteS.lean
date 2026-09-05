@@ -3,7 +3,7 @@ import sympy.tensor.functions
 import sympy.tensor.stack
 
 
-noncomputable def rotaryMatrix' (θ : Tensor ℝ [d]) : Tensor ℝ [d + d, d + d] :=
+noncomputable def Tensor.rotaryMatrix' (θ : Tensor ℝ [d]) : Tensor ℝ [d + d, d + d] :=
   [i < d + d] [j < d + d]
     if (i : ℕ) is even then
       if (j : ℕ) = (i : ℕ) then
@@ -45,7 +45,7 @@ private lemma main
 -- given
   (θ : Tensor ℝ [d]) :
 -- imply
-  rotaryMatrix' θ =
+  θ.rotaryMatrix' =
     [i < d + d] [j < d + d]
       if (i : ℕ) is even then
         if (j : ℕ) = (i : ℕ) then
@@ -66,3 +66,4 @@ private lemma main
 
 
 -- created on 2026-09-04
+-- updated on 2026-09-05

@@ -249,10 +249,9 @@ def Expr.strFormat : Expr → String
           else
             "%s"
         s!"{name} " ++ " ".intercalate args
-        -- opStr
 
   | Binder binder binderName _ value =>
-    let binderName := " ".intercalate (binderName.normalized)
+    let binderName := " ".intercalate binderName.normalized
     match binder with
     | .instImplicit =>
       binder.func.operator
@@ -307,7 +306,7 @@ where
             let limits := limits.map fun arg =>
               match arg with
               | Binder .default binderName _ nil =>
-                " ".intercalate (binderName.normalized)
+                " ".intercalate binderName.normalized
               | _ =>
                 arg.toString
             limits.reverse ++ [expr.toString]

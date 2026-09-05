@@ -56,7 +56,7 @@ private lemma main
     rw [NegSub.eq.Sub]
     rw [Sub_Neg.eq.Add]
     have h₀ := FMod.eq.Sub_MulFDiv (n := -n) (d := d)
-    have h₁ := FMod.eq.Sub_MulFDiv (n := (d + n - sign (d))) (d := d)
+    have h₁ := FMod.eq.Sub_MulFDiv (n := (d + n - sign d)) (d := d)
     rw [SubAdd.eq.Add_Sub] at h₁
     norm_cast at h
     have h := Ne.of.NotEq h

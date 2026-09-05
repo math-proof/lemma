@@ -76,12 +76,7 @@ private lemma main
     ⟨i, by grind⟩
   simp at this
   simp [this]
-  have := GetUnsqueeze.eq.Cast_UnsqueezeGet.of.GtGet_0.GtLength_0.fin
-    (i := i)
-    (by grind)
-    (by grind)
-    X
-    (bz.length + 1)
+  have := GetUnsqueeze.eq.Cast_UnsqueezeGet.of.GtGet_0.GtLength_0.fin (i := i) (by grind) (by grind) X (bz.length + 1)
   simp at this
   simp [this]
   apply Mul.of.Eq.left
@@ -92,22 +87,8 @@ private lemma main
   erw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.right.fin (s' := b :: bz ++ [1, n, k]) (by grind) (by grind)]
   apply Cast.of.SEq.Eq.left (by grind)
   apply SEq.of.Eq
-  have := GetUnsqueeze.eq.Cast_UnsqueezeGet.of.GtGet_0.GtLength_0.fin
-    (i := i)
-    (by grind)
-    (by grind)
-    (cast (congrArg (Tensor α) h_s_t₂) Yᵀ)
-    (bz.length)
-  simp at this
-  simp [this]
-  have := GetCast.eq.Cast_Get.of.Eq.GtLength_0.right.fin
-    (s' := b :: bz ++ [n, k])
-    (by grind)
-    h_s_t₂
-    Yᵀ
-    ⟨i, by grind⟩
-  simp at this
-  simp [this]
+  rw [GetUnsqueeze.eq.Cast_UnsqueezeGet.of.GtGet_0.GtLength_0.fin (by grind) (by grind)]
+  simp [GetCast.eq.Cast_Get.of.Eq.GtLength_0.right.fin (by grind) h_s_t₂]
   apply Unsqueeze.of.Eq
   apply Cast.of.SEq.Eq.left (by grind)
   apply GetTranspose.as.TransposeGet

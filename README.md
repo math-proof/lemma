@@ -175,6 +175,7 @@ https://arxiv.org/abs/2310.05328
 https://github.com/lean-dojo/TorchLean
 ```
 ## famous projects
+https://github.com/anthropics/fermats-last-theorem (https://www.anthropic.com/research/formalizing-fermats-last-theorem)
 https://github.com/ImperialCollegeLondon/FLT
 https://github.com/or4nge19/NeuralNetworks  
 https://github.com/mkaratarakis/HopfieldNet  

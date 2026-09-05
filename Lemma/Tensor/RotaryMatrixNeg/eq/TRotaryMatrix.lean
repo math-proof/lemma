@@ -12,7 +12,7 @@ private lemma main
 -- given
   (α : Tensor ℝ [d]) :
 -- imply
-  rotaryMatrix (-α) = (rotaryMatrix α)ᵀ := by
+  (-α).rotaryMatrix = α.rotaryMatrixᵀ := by
 -- proof
   simp [RotaryMatrix.eq.AppendHstackSMulSEye]
   rw [CosNeg.eq.Cos, SinNeg.eq.NegSin]
@@ -26,3 +26,4 @@ private lemma main
 
 
 -- created on 2026-09-03
+-- updated on 2026-09-05

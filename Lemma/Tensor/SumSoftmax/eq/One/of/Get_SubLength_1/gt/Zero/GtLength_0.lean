@@ -20,7 +20,7 @@ private lemma main
   (h : s[s.length - 1] > 0)
   (X : Tensor α s) :
 -- imply
-  (X.softmax).sum = 1 := by
+  X.softmax.sum = 1 := by
 -- proof
   induction s with
   | nil =>

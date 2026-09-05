@@ -22,7 +22,7 @@ private lemma main
   (hθ : θ = [i < n] (τ * (i : ℝ)))
   (Q K V : Tensor ℝ [n, d + d]) :
 -- imply
-  let R (i : Fin n) := rotaryMatrix θ[i]
+  let R (i : Fin n) := θ[i].rotaryMatrix
   let Rel (i k : Fin n) : Tensor ℝ [d + d, d + d] :=
     if k ≥ i then
       R (k - i)
@@ -58,12 +58,12 @@ private lemma main
         apply congrArg₂ <;> apply EqGetStack.fin
       ·
         apply Eq.trans (DotDotSRotaryMatrix.eq.Dot_DotRotaryMatrixSub θ[i] θ[k] Q[i] K[k])
-        apply congrArg (fun t : Tensor ℝ [d + d, d + d] => (Q[i]) @ ((t) @ (K[k])))
+        apply congrArg (fun t : Tensor ℝ [d + d, d + d] => Q[i] @ (t @ K[k]))
         exact RotaryMatrixSubGetS.eq.Ite_RotaryMatrix_T.of.Eq_Stack_Mul (i := i) (j := k) hθ
   ·
-    apply congrArg (fun t : Tensor ℝ [d + d] => id (α := Tensor ℝ []) (exp (t @ ([i < n] (R i) @ (K[i]))ᵀ / √↑(d + d))).sum)
+    apply congrArg (fun t : Tensor ℝ [d + d] => id (α := Tensor ℝ []) (exp (t @ ([i < n] (R i) @ K[i])ᵀ / √↑(d + d))).sum)
     apply EqGetStack.fin
 
 
 -- created on 2023-06-09
--- updated on 2026-09-03
+-- updated on 2026-09-05

@@ -68,7 +68,7 @@ private lemma main
             intro k
             have h_k := k.isLt
             simp at h_k
-            have h_lt_add := AddMul_ProdTail.lt.Mul_Prod.of.Lt_ProdTailSet.Lt.GtGet_0.GtLength_0 h_s (r.isLt) (q.isLt) h_k
+            have h_lt_add := AddMul_ProdTail.lt.Mul_Prod.of.Lt_ProdTailSet.Lt.GtGet_0.GtLength_0 h_s r.isLt q.isLt h_k
             simp only [GetElem.getElem]
             rw [GetSplitAt.eq.Get_AddMul_ProdDrop.of.Lt_ProdTake.Lt_ProdDrop.fin]
             have := GetSplitAt.eq.Get_AddMul_ProdDrop.of.Lt_ProdTake.Lt_ProdDrop.fin
@@ -96,7 +96,7 @@ private lemma main
                 rw [AddAdd.eq.Add_Add]
                 rw [ModAddMul.eq.Mod]
                 apply EqMod.of.Lt
-                have := AddMul.lt.Mul.of.Lt.Lt (r.isLt) h_k
+                have := AddMul.lt.Mul.of.Lt.Lt r.isLt h_k
                 rw [TailSet_0.eq.Tail] at this
                 convert this
               ·

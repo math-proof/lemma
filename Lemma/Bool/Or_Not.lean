@@ -2,7 +2,7 @@ import sympy.Basic
 
 
 /--
-law of excluded middle (排中律)
+law of excluded middle
 -/
 @[main]
 private lemma main

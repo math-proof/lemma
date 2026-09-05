@@ -60,6 +60,13 @@
   primaryClass  = {cs.CL}
 }
 
+@misc{huggingface_rope_utils,
+  title         = {Utilities for Rotary Embedding},
+  author        = {{Hugging Face}},
+  year          = {2026},
+  howpublished  = {\url{https://github.com/huggingface/transformers/blob/main/docs/source/en/internal/rope_utils.md}}
+}
+
 @misc{touvron2023llama,
   title         = {{LLaMA}: Open and Efficient Foundation Language Models},
   author        = {Touvron, Hugo and Lavril, Thibaut and Izacard, Gautier and Martinet, Xavier and Lachaux, Marie-Anne and Lacroix, Timoth{\'e}e and Rozi{\`e}re, Baptiste and Goyal, Naman and Hambro, Eric and Azhar, Faisal and Rodriguez, Aurelien and Joulin, Armand and Grave, Edouard and Lample, Guillaume},
@@ -119,6 +126,41 @@
   howpublished  = {\url{https://github.com/math-proof/lemma}}
 }
 
+@misc{lemma_rope_hf_def,
+  title         = {Tensor.RotaryMatrix.eq.AppendHstackSMulSEye},
+  author        = {math-proof},
+  year          = {2026},
+  howpublished  = {\url{http://www.lemma.cn/lean/?module=Tensor.RotaryMatrix.eq.AppendHstackSMulSEye}}
+}
+
+@misc{lemma_rope_su_def,
+  title         = {Tensor.RotaryMatrix'.eq.Stack\_Ite\_IteS},
+  author        = {math-proof},
+  year          = {2026},
+  howpublished  = {\url{http://www.lemma.cn/lean/?module=Tensor.RotaryMatrix'.eq.Stack_Ite_IteS}}
+}
+
+@misc{lemma_rope_conj,
+  title         = {Tensor.RotaryMatrix'.eq.DotDot\_RotaryMatrix},
+  author        = {math-proof},
+  year          = {2026},
+  howpublished  = {\url{http://www.lemma.cn/lean/?module=Tensor.RotaryMatrix'.eq.DotDot_RotaryMatrix}}
+}
+
+@misc{lemma_rope_entry,
+  title         = {Tensor.GetRotaryMatrix'.eq.GetRotaryMatrix},
+  author        = {math-proof},
+  year          = {2026},
+  howpublished  = {\url{http://www.lemma.cn/lean/?module=Tensor.GetRotaryMatrix'.eq.GetRotaryMatrix}}
+}
+
+@misc{lemma_rope_su_sub,
+  title         = {Tensor.DotT.eq.RotaryMatrix'Sub},
+  author        = {math-proof},
+  year          = {2026},
+  howpublished  = {\url{http://www.lemma.cn/lean/?module=Tensor.DotT.eq.RotaryMatrix'Sub}}
+}
+
 @misc{lemma_rope_rel,
   title         = {Tensor.DotSoftmaxDivDot\_Stack\_TDot.eq.Stack\_Div\_SumExp.of.Eq\_Stack\_Mul},
   author        = {math-proof},
@@ -154,10 +196,3 @@
   howpublished  = {\url{http://www.lemma.cn/lean/?module=Tensor.DotT_RotaryMatrix.eq.Eye}}
 }
 
-@misc{lemma_kv_cache,
-  title         = {Formal verification of KV-cache correctness for sliding-window causal attention},
-  author        = {Zhou, LiZhi},
-  year          = {2026},
-  howpublished  = {\url{http://www.lemma.cn/lean/?module=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T}},
-  note          = {lemma library}
-}

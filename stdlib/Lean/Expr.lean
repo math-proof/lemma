@@ -568,7 +568,7 @@ def Lean.Expr.getElem2get : Expr → Expr
   | lam binderName binderType body binderInfo =>
     lam binderName binderType.getElem2get body.getElem2get binderInfo
   | letE declName type value body nondep =>
-    letE declName (type.getElem2get) (value.getElem2get) (body.getElem2get) nondep
+    letE declName type.getElem2get value.getElem2get body.getElem2get nondep
   | proj typeName idx struct => proj typeName idx struct.getElem2get
   | mdata data expr => mdata data expr.getElem2get
   | expr => expr
@@ -589,7 +589,7 @@ def Lean.Expr.fin2val : Expr → Expr
   | lam binderName binderType body binderInfo =>
     lam binderName binderType.fin2val body.fin2val binderInfo
   | letE declName type value body nondep =>
-    letE declName (type.fin2val) (value.fin2val) (body.fin2val) nondep
+    letE declName type.fin2val value.fin2val body.fin2val nondep
   | proj typeName idx struct => proj typeName idx struct.fin2val
   | mdata data expr => mdata data expr.fin2val
   | expr => expr

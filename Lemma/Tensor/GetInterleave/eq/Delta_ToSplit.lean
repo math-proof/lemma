@@ -14,14 +14,14 @@ private lemma main
 -- given
   (k j : Fin (d + d)) :
 -- imply
-  (interleave d)[k][j] = (↑(KroneckerDelta (k : ℕ) (toSplit j : ℕ)) : Tensor ℝ []) := by
+  (interleave d)[k][j] = (↑(KroneckerDelta (k : ℕ) j.toSplit) : Tensor ℝ []) := by
 -- proof
   simp only [interleave]
   if hk : k < d then
     have hrow := GetAppend.eq.Get.of.Lt (n := d) (m := d) hk ([i < d] [j < d + d] (↑(KroneckerDelta (j : ℕ) (2 * (i : ℕ))) : Tensor ℝ [])) ([i < d] [j < d + d] (↑(KroneckerDelta (j : ℕ) (2 * (i : ℕ) + 1)) : Tensor ℝ []))
     have hA := EqGetStack.fin (fun i : Fin d => [j < d + d] (↑(KroneckerDelta (j : ℕ) (2 * (i : ℕ))) : Tensor ℝ [])) ⟨(k : ℕ), hk⟩
     have hcell := EqGetStack.fin (fun j : Fin (d + d) => (↑(KroneckerDelta (j : ℕ) (2 * (k : ℕ))) : Tensor ℝ [])) j
-    have hof : (↑(KroneckerDelta (j : ℕ) (2 * (k : ℕ))) : Tensor ℝ []) = (↑(KroneckerDelta (j : ℕ) (ofSplit k : ℕ)) : Tensor ℝ []) := by
+    have hof : (↑(KroneckerDelta (j : ℕ) (2 * k)) : Tensor ℝ []) = (↑(KroneckerDelta (j : ℕ) (k.ofSplit : ℕ)) : Tensor ℝ []) := by
       simp [OfSplit.eq.Ite_Mul2, hk]
     apply (congrArg (fun t : Tensor ℝ [d + d] => t[j]) hrow).trans
     apply (congrArg (fun t : Tensor ℝ [d + d] => t[j]) hA).trans
@@ -39,7 +39,7 @@ private lemma main
       omega
     have hB := EqGetStack.fin (fun i : Fin d => [j < d + d] (↑(KroneckerDelta (j : ℕ) (2 * (i : ℕ) + 1)) : Tensor ℝ [])) ⟨k - d, hk'⟩
     have hcell := EqGetStack.fin (fun j : Fin (d + d) => (↑(KroneckerDelta (j : ℕ) (2 * ((k : ℕ) - d) + 1)) : Tensor ℝ [])) j
-    have hof : (↑(KroneckerDelta (j : ℕ) (2 * ((k : ℕ) - d) + 1)) : Tensor ℝ []) = (↑(KroneckerDelta (j : ℕ) (ofSplit k : ℕ)) : Tensor ℝ []) := by
+    have hof : (↑(KroneckerDelta (j : ℕ) (2 * (k - d) + 1)) : Tensor ℝ []) = (↑(KroneckerDelta (j : ℕ) k.ofSplit) : Tensor ℝ []) := by
       simp [OfSplit.eq.Ite_Mul2, hk]
     apply (congrArg (fun t : Tensor ℝ [d + d] => t[j]) hrow).trans
     apply (congrArg (fun t : Tensor ℝ [d + d] => t[j]) hB).trans

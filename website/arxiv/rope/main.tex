@@ -1,14 +1,14 @@
 \documentclass[11pt,a4paper]{article}
 
 \usepackage[margin=1in]{geometry}
-\usepackage{amsmath,amssymb,amsthm}
+\usepackage{amsmath,amssymb,amsthm,bm,graphicx}
 \usepackage{enumitem}
 \usepackage{hyperref}
 \usepackage{url}
 \makeatletter
 \g@addto@macro{\UrlBreaks}{\do\.\do\_\do\-}
 \makeatother
-\newcommand{\lmod}[1]{\path{#1}}
+\newcommand{\lmod}[1]{\href{http://www.lemma.cn/lean/?module=#1}{\nolinkurl{#1}}}
 
 \hypersetup{
   colorlinks=true,
@@ -35,7 +35,7 @@
 
 \title{Lean~4-Checked Identities for\\One-Dimensional Rotary Position Embeddings}
 \author{LiZhi Zhou\\[0.3em]
-\small Project artifact: \url{https://github.com/math-proof/lemma}\\[0.4em]
+\small Project artifact: \href{https://github.com/math-proof/lemma}{github.com/math-proof/lemma}\\[0.4em]
 \small
 Relative:
 \href{http://www.lemma.cn/lean/?module=Tensor.DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul}{softmax},
@@ -43,6 +43,8 @@ Relative:
 pairing:
 \href{http://www.lemma.cn/lean/?module=Tensor.DotDotSRotaryMatrix.eq.Dot_DotRotaryMatrixSub}{$q^\top R_{n-m}k$},
 \quad
+layouts:
+\href{http://www.lemma.cn/lean/?module=Tensor.RotaryMatrix'.eq.DotDot_RotaryMatrix}{$R'=P^\top RP$}\\[0.25em]
 realization:
 \href{http://www.lemma.cn/lean/?module=Tensor.DotRotaryMatrix.eq.AddMulS}{kernel},
 \quad
@@ -60,7 +62,12 @@ orthogonal:
 Rotary position embedding (RoPE) encodes a token index by rotating query and key vectors in two-dimensional planes.
 The identities that make this useful---a kernel evaluation formula, orthogonality, angle addition, and the reduction of attention to a relative offset---are standard, but they are usually written for $2\times 2$ blocks or for a fixed geometric frequency schedule, and they are not machine-checked.
 We develop one-dimensional RoPE in the \texttt{lemma} library in Lean~4.
-A single matrix \(\rot(\alpha)\in\R^{(d+d)\times(d+d)}\) is defined for an arbitrary angle vector \(\alpha\in\R^d\) (here \(d\) is already the half-dimension) in the even/odd split-half layout used by production kernels.
+Two matrices \(\rot(\alpha),\rot'(\alpha)\in\R^{(d+d)\times(d+d)}\) are defined for an arbitrary angle vector \(\alpha\in\R^d\) (here \(d\) is already the half-dimension).
+The unprimed matrix is the even/odd split-half layout of Hugging Face Transformers~\cite{huggingface_rope_utils}; the primed matrix is Su et al.'s original interleaved block-diagonal layout~\cite{su2021roformer}.
+They are conjugate by a fixed even/odd gather \(\boldsymbol{P}\):
+\(\rot'(\alpha)=\boldsymbol{P}^\top\rot(\alpha)\boldsymbol{P}\),
+and entrywise
+\(\rot'(\alpha)_{i,j}=\rot(\alpha)_{i^{\mathrm{toSplit}},j^{\mathrm{toSplit}}}\).
 We prove, with no \texttt{sorry}:
 the realization
 \(\rot(\alpha)\,x = x\odot\cos(\alpha\concat\alpha)+((-x_1)\concat x_0)\odot\sin(\alpha\concat\alpha)\);
@@ -68,8 +75,10 @@ the orthogonal identities \(\rot(\alpha)^\top\rot(\alpha)=\eye_{d+d}\) and \(\ro
 the free-angle group law \(\rot(\alpha)\rot(\beta)=\rot(\alpha+\beta)\);
 the RoFormer pairing
 \((\rot(\alpha)\,q)^\top(\rot(\beta)\,k)=q^\top\rot(\beta-\alpha)\,k\);
+the same transpose product on the primed layout,
+\(\rot'(\alpha)^\top\rot'(\beta)=\rot'(\beta-\alpha)\);
 and, under the linear hypothesis \(\theta_i=i\,\tau\), the relative form of softmax attention, in which each unnormalized weight depends on \(\rot(\theta_k-\theta_i)\) rewritten as \(\rot(\theta_{k-i})\) or \(\rot(\theta_{i-k})^\top\).
-Interactive statements are public on lemma.cn~\cite{lemma_rope_rel,lemma_rope_pair,lemma_rope_real,lemma_rope_add,lemma_rope_orth}.
+Interactive statements are public on lemma.cn~\cite{lemma_rope_rel,lemma_rope_pair,lemma_rope_conj,lemma_rope_real,lemma_rope_add,lemma_rope_orth}.
 \end{abstract}
 
 \section{Introduction}
@@ -88,8 +97,7 @@ RoFormer records the consequence that matters for attention,
 and introduces the relative matrix as a transpose product
 \(\rot_{\Theta,n-m}=(\rot_{\Theta,m})^\top\rot_{\Theta,n}\).
 Equation~\eqref{eq:roformer-rel} is machine-checked in Lean~4 as
-\lmod{Tensor.DotDotSRotaryMatrix.eq.Dot_DotRotaryMatrixSub}
-(\url{http://www.lemma.cn/lean/?module=Tensor.DotDotSRotaryMatrix.eq.Dot_DotRotaryMatrixSub});
+\lmod{Tensor.DotDotSRotaryMatrix.eq.Dot_DotRotaryMatrixSub};
 the proof is recorded in Section~\ref{sec:pair}.
 Later expositions isolate the two-by-two rules \(\rho(\theta)^\top=\rho(-\theta)\) and \(\rho(\theta)\rho(\theta')=\rho(\theta+\theta')\)~\cite{barbero2025round}.
 
@@ -102,15 +110,17 @@ The efficient evaluation
   = x \odot \cos(\alpha\concat\alpha)
   + \mathrm{rotateHalf}(x)\odot\sin(\alpha\concat\alpha)
 \end{equation}
-is the form that appears in kernels~\cite{touvron2023llama}; it is not the form in which~\eqref{eq:roformer-rel} is written.
-A gap between the paper matrix and the kernel formula is a natural place for a machine-checked development.
+is the form that appears in Hugging Face kernels~\cite{huggingface_rope_utils,touvron2023llama}; it is not the interleaved matrix in which~\eqref{eq:roformer-rel} is written.
+A gap between the RoFormer matrix and the kernel formula is a natural place for a machine-checked development.
 
 This paper records such a development in Lean~4~\cite{moura2021lean4}, on top of the \texttt{lemma} tensor library~\cite{lemma_repo} in which shapes are lists of natural numbers and matrix multiplication is a typed \texttt{Dot} instance.
-The object we study is a single function
+The objects we study are two functions
 \[
-  \rot : \R^d \to \R^{(d+d)\times(d+d)}
+  \rot,\;\rot' : \R^d \to \R^{(d+d)\times(d+d)}
 \]
-of a free angle vector.
+of a free angle vector:
+\texttt{rotaryMatrix} is the Hugging Face split-half matrix, and
+\texttt{rotaryMatrix'} is Su et al.'s original interleaved matrix.
 No frequency schedule is built into \(\rot\).
 The geometric RoPE angles \(\theta_{i,p}=\lambda\,i/b^{p/d}\) appear only later, and only as the special case \(\theta_i=i\,\tau\) of a constant frequency vector \(\tau\in\R^d\).
 That hypothesis is the arithmetic needed for relative indexing; YaRN-style scalings and other learned or interpolated frequencies~\cite{peng2023yarn} are the same lemma with a different \(\tau\).
@@ -120,9 +130,20 @@ We machine-check, with no \texttt{sorry}, the following groups of one-dimensiona
 Each public name below is a module path in the library; the path \emph{is} the statement.
 
 \begin{enumerate}[leftmargin=1.6em,itemsep=0.4em]
+  \item \textbf{Two layouts.}
+    \lmod{Tensor.RotaryMatrix.eq.AppendHstackSMulSEye}~\cite{lemma_rope_hf_def}
+    is Hugging Face \texttt{rotate\_half}~\cite{huggingface_rope_utils};
+    \lmod{Tensor.RotaryMatrix'.eq.Stack_Ite_IteS}~\cite{lemma_rope_su_def}
+    is the RoFormer matrix~\cite{su2021roformer}.
+    They are conjugate by the even/odd gather \(\boldsymbol{P}=\mathrm{interleave}\,d\):
+    \lmod{Tensor.RotaryMatrix'.eq.DotDot_RotaryMatrix}~\cite{lemma_rope_conj}
+    states \(\rot'(\alpha)=\boldsymbol{P}^\top\rot(\alpha)\boldsymbol{P}\),
+    and
+    \lmod{Tensor.GetRotaryMatrix'.eq.GetRotaryMatrix}~\cite{lemma_rope_entry}
+    states the entrywise form.
   \item \textbf{Realization.}
     \lmod{Tensor.DotRotaryMatrix.eq.AddMulS}~\cite{lemma_rope_real}:
-    equation~\eqref{eq:impl-intro} for the split-half matrix.
+    equation~\eqref{eq:impl-intro} for the Hugging Face matrix.
   \item \textbf{Orthogonality.}
     \lmod{Tensor.DotT_RotaryMatrix.eq.Eye}~\cite{lemma_rope_orth}:
     \(\rot(\alpha)^\top\rot(\alpha)=\eye_{d+d}\),
@@ -135,6 +156,9 @@ Each public name below is a module path in the library; the path \emph{is} the s
     \lmod{Tensor.DotDotSRotaryMatrix.eq.Dot_DotRotaryMatrixSub}~\cite{lemma_rope_pair}:
     equation~\eqref{eq:roformer-rel} for free angle vectors,
     \((\rot(\alpha)\,q)^\top(\rot(\beta)\,k)=q^\top\rot(\beta-\alpha)\,k\).
+    The same transpose product on the RoFormer layout is
+    \lmod{Tensor.DotT.eq.RotaryMatrix'Sub}~\cite{lemma_rope_su_sub}:
+    \(\rot'(\alpha)^\top\rot'(\beta)=\rot'(\beta-\alpha)\).
   \item \textbf{Relative attention.}
     \lmod{Tensor.DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul}~\cite{lemma_rope_rel}:
     after applying \(\rot(\theta_i)\) to every query and key,
@@ -144,16 +168,18 @@ Each public name below is a module path in the library; the path \emph{is} the s
 \end{enumerate}
 
 The mathematics is not new.
-What is packaged here is a single formal object that matches the implementation layout, a frequency hypothesis no stronger than linearity in the index, and a complete chain from the matrix definition to the softmax identity.
+What is packaged here is a pair of formal objects---the RoFormer matrix and the Hugging Face matrix---a checked conjugation between them, a frequency hypothesis no stronger than linearity in the index, and a complete chain from the Hugging Face definition to the softmax identity.
 
 \section{Related work}
 \label{sec:related}
 
-RoFormer~\cite{su2021roformer,su2024roformer} introduces RoPE, writes the block-diagonal matrix of two-by-two rotations, and derives~\eqref{eq:roformer-rel}.
+RoFormer~\cite{su2021roformer,su2024roformer} introduces RoPE, writes the block-diagonal matrix of two-by-two rotations on interleaved pairs \((2p,\,2p+1)\), and derives~\eqref{eq:roformer-rel}.
 The paper emphasizes orthogonality and the relative-offset form of the inner product.
 It introduces the relative matrix as a transpose product
 \(\rot_{\Theta,n-m}=(\rot_{\Theta,m})^\top\rot_{\Theta,n}\),
 rather than as the free-angle composition \(\rot(\alpha)\rot(\beta)=\rot(\alpha+\beta)\).
+Hugging Face Transformers uses the conjugate split-half layout and evaluates it by \texttt{rotate\_half}~\cite{huggingface_rope_utils}.
+The two published matrices are~\eqref{eq:rot-su} and~\eqref{eq:rot-hf} below; this paper machine-checks both and the conjugation.
 
 That additive law is already stated in later theoretical work.
 Liu et al.~\cite{liu2025rethinking} call it \emph{exponential additivity}:
@@ -174,15 +200,13 @@ Barbero et al.~\cite{barbero2025round} use the integer special case
 \(\rot^i\rot^j=\rot^{i+j}\).
 Context-extension methods such as YaRN~\cite{peng2023yarn} keep this group law and change only the frequencies.
 The present paper does not claim~\eqref{eq:liu-add} as new mathematics;
-it machine-checks the identity for the split-half matrix and an arbitrary pair of angle vectors.
-Implementation notes~\cite{touvron2023llama} evaluate RoPE through~\eqref{eq:impl-intro} rather than a dense \((d+d)\times(d+d)\) multiply.
+it machine-checks the identity for the Hugging Face matrix and an arbitrary pair of angle vectors, and transports the transpose product to the RoFormer matrix.
+Implementation notes~\cite{touvron2023llama,huggingface_rope_utils} evaluate RoPE through~\eqref{eq:impl-intro} rather than a dense \((d+d)\times(d+d)\) multiply.
 
 Relative attention more broadly includes Shaw et al.~\cite{shaw2018relative} and ALiBi~\cite{press2022alibi}.
 We do not compare methods; we only certify the algebra of the rotary special case.
 
 On the formal side, mathlib~\cite{mathlib2020,mathlib} contains the trigonometric addition formulae that sit under our real and vector lemmas, but not a RoPE matrix or an attention identity.
-A companion development in the same library proves that a sliding-window KV-cache update equals incremental masked attention~\cite{lemma_kv_cache}.
-The present paper is the positional counterpart: it takes the split-half rotary matrix through softmax.
 
 \section{Tensors and notation}
 \label{sec:prelim}
@@ -200,10 +224,18 @@ We write \(\concat\) for concatenation of \(1\)-tensors and \(\odot\) for pointw
 Index notation \(\theta[i]\) is \texttt{GetElem} along the leading axis.
 For \(k,t:\mathrm{Fin}\,n\) with \(k\ge t\), the difference \(k-t\) agrees with subtraction of values (\lmod{Nat.ValSub.eq.SubValS.of.Ge}).
 
-We write \(\rot(\alpha)\) for the Lean function \texttt{rotaryMatrix}.
+We write \(\rot(\alpha)\) for the Lean function \texttt{rotaryMatrix} (Hugging Face) and \(\rot'(\alpha)\) for \texttt{rotaryMatrix'} (RoFormer).
+The even/odd gather is \(\boldsymbol{P}=\mathrm{interleave}\,d\).
 
 \section{The rotary matrix}
 \label{sec:def}
+
+The library defines two rotary matrices on the same angle vector \(\alpha\in\R^d\).
+They differ only by which coordinates form a plane.
+The displayed arrays below are the LaTeX from the corresponding lemma docstrings; both write \({\boldsymbol{R}}^{d}_{\Theta,m}\) for the published matrix, while Lean's \(d\) is the half-dimension, so \(\alpha\) plays the role of \((m\theta_1,\ldots,m\theta_{d/2})\) and the matrix has shape \([d+d,\,d+d]\).
+
+\subsection{Hugging Face split-half matrix}
+\label{sec:def-hf}
 
 \begin{definition}[Split-half rotary matrix]
 \label{def:rot}
@@ -221,12 +253,27 @@ Define
 \end{equation}
 where \(\odot\) broadcasts the vector \(\cos\alpha\) (resp.\ \(\sin\alpha\)) onto the diagonal of each block.
 In the library this is a vertical concatenation of two horizontal stacks
-(\lmod{Tensor.RotaryMatrix.eq.AppendHstackSMulSEye}).
+(\lmod{Tensor.RotaryMatrix.eq.AppendHstackSMulSEye}~\cite{lemma_rope_hf_def}).
 \end{definition}
 
-Equation~\eqref{eq:rot-def} is the even/odd layout: plane \(p\) is the pair of coordinates \((p,\,p+d)\).
-RoFormer's \(\mathrm{blkdiag}(\rho(\alpha_1),\ldots,\rho(\alpha_d))\) uses pairs \((2p,\,2p+1)\).
-The two matrices are conjugate by a fixed permutation of axes; every identity below is insensitive to that permutation once it is stated for~\eqref{eq:rot-def}.
+This is the even/odd layout of Hugging Face Transformers~\cite{huggingface_rope_utils}: plane \(p\) is the pair \((p,\,p+d)\), matching \texttt{rotate\_half}.
+The lemma docstring records the same matrix in the published expanded form
+\begin{equation}
+\label{eq:rot-hf}
+\resizebox{\linewidth}{!}{\(\displaystyle
+{\boldsymbol{R}}^{d}_{\Theta,m}=\begin{pmatrix}
+\cos m\theta_{1} & 0 & \cdots & 0 & -\sin m\theta_{1} & 0 & \cdots & 0 \\
+0 & \cos m\theta_{2} & \cdots & 0 & 0 & -\sin m\theta_{2} & \cdots & 0 \\
+\vdots & \vdots & \ddots & \vdots & \vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \cdots & \cos m\theta_{d/2} & 0 & 0 & \cdots & -\sin m\theta_{d/2} \\
+\sin m\theta_{1} & 0 & \cdots & 0 & \cos m\theta_{1} & 0 & \cdots & 0 \\
+0 & \sin m\theta_{2} & \cdots & 0 & 0 & \cos m\theta_{2} & \cdots & 0 \\
+\vdots & \vdots & \ddots & \vdots & \vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \cdots & \sin m\theta_{d/2} & 0 & 0 & \cdots & \cos m\theta_{d/2}
+\end{pmatrix}
+\)}
+\end{equation}
+Equation~\eqref{eq:rot-def} is~\eqref{eq:rot-hf} in block form.
 
 Acting on a split vector \(x=x_0\concat x_1\) with \(x_0,x_1\in\R^d\), the definition is the simultaneous plane rotation
 \begin{equation}
@@ -240,10 +287,123 @@ Acting on a split vector \(x=x_0\concat x_1\) with \(x_0,x_1\in\R^d\), the defin
   \begin{pmatrix} x_{0,p} \\ x_{1,p} \end{pmatrix}.
 \end{equation}
 
+\subsection{RoFormer interleaved matrix}
+\label{sec:def-su}
+
+\begin{definition}[Interleaved rotary matrix]
+\label{def:rotp}
+\lmod{Tensor.RotaryMatrix'.eq.Stack_Ite_IteS}~\cite{lemma_rope_su_def}.
+Su et al.'s original rotary matrix~\cite{su2021roformer} acts on interleaved pairs \((2p,\,2p+1)\) (one-based \((2i-1,\,2i)\)).
+The lemma docstring records
+\begin{equation}
+\label{eq:rot-su}
+\resizebox{\linewidth}{!}{\(\displaystyle
+{\boldsymbol{R}}^{d}_{\Theta,m}=\begin{pmatrix}
+\cos m\theta_{1} & -\sin m\theta_{1} & 0 & 0 & \cdots & 0 & 0 \\
+\sin m\theta_{1} & \cos m\theta_{1} & 0 & 0 & \cdots & 0 & 0 \\
+0 & 0 & \cos m\theta_{2} & -\sin m\theta_{2} & \cdots & 0 & 0 \\
+0 & 0 & \sin m\theta_{2} & \cos m\theta_{2} & \cdots & 0 & 0 \\
+\vdots & \vdots & \vdots & \vdots & \ddots & \vdots & \vdots \\
+0 & 0 & 0 & 0 & \cdots & \cos m\theta_{d/2} & -\sin m\theta_{d/2} \\
+0 & 0 & 0 & 0 & \cdots & \sin m\theta_{d/2} & \cos m\theta_{d/2}
+\end{pmatrix}
+\)}
+\end{equation}
+We write \(\rot'(\alpha)\) for this matrix.
+On an even row \(i=2p\) the nonzero entries are \(\cos\alpha_p\) on the diagonal and \(-\sin\alpha_p\) immediately to the right; on the next row they are \(\sin\alpha_p\) immediately to the left and \(\cos\alpha_p\) on the diagonal
+(\lmod{Tensor.GetRotaryMatrix'.eq.Ite_IteS}).
+\end{definition}
+
+\subsection{Comparison}
+\label{sec:compare}
+
+The two layouts differ by a fixed even/odd gather, independent of \(\alpha\).
+
+\begin{definition}[Even/odd gather]
+\label{def:P}
+\lmod{Tensor.Interleave.eq.AppendStackS_Delta}.
+Let \(\boldsymbol{P}:=\mathrm{interleave}\,d\in\R^{(d+d)\times(d+d)}\) be the permutation matrix from the lemma docstring
+\begin{equation}
+\label{eq:P}
+{\boldsymbol{P}}=\begin{pmatrix}
+1 & 0 & 0 & 0 & \cdots & 0 & 0 \\
+0 & 0 & 1 & 0 & \cdots & 0 & 0 \\
+\vdots & \vdots & \vdots & \vdots & \ddots & \vdots & \vdots \\
+0 & 0 & 0 & 0 & \cdots & 1 & 0 \\
+0 & 1 & 0 & 0 & \cdots & 0 & 0 \\
+0 & 0 & 0 & 1 & \cdots & 0 & 0 \\
+\vdots & \vdots & \vdots & \vdots & \ddots & \vdots & \vdots \\
+0 & 0 & 0 & 0 & \cdots & 0 & 1
+\end{pmatrix}
+\end{equation}
+so \((\boldsymbol{P}x)_i=x_{2i}\) and \((\boldsymbol{P}x)_{i+d}=x_{2i+1}\).
+\end{definition}
+
+The matrix \(\boldsymbol{P}\) is orthogonal:
+\(\boldsymbol{P}^\top@\boldsymbol{P}=\eye_{d+d}\)
+(\lmod{Tensor.DotTInterleave.eq.Eye})
+and
+\(\boldsymbol{P}@\boldsymbol{P}^\top=\eye_{d+d}\)
+(\lmod{Tensor.Dot_TInterleave.eq.Eye}).
+
+\begin{theorem}[Conjugation]
+\label{thm:conj}
+\lmod{Tensor.RotaryMatrix'.eq.DotDot_RotaryMatrix}~\cite{lemma_rope_conj}.
+For every \(\alpha\in\R^d\),
+\begin{equation}
+  \label{eq:conj}
+  \rot'(\alpha)
+  \;=\;
+  \bigl((\mathrm{interleave}\,d)^\top @ \rot(\alpha)\bigr) @ \mathrm{interleave}\,d.
+\end{equation}
+\end{theorem}
+
+Thus \(\rot'(\alpha)=\boldsymbol{P}^\top\rot(\alpha)\boldsymbol{P}\): an interleaved vector is gathered to the split-half layout, rotated by the Hugging Face matrix, and scattered back.
+The four quadrants of~\eqref{eq:rot-hf} become the \(2\times 2\) blocks of~\eqref{eq:rot-su}.
+
+Entrywise, the same fact is a reindexing of coordinates.
+
+\begin{lemma}
+\label{lem:toSplit}
+\lmod{Fin.ToSplit.eq.Ite_Div_2}.
+For \(i:\mathrm{Fin}\,(d+d)\),
+\begin{equation}
+  i^{\mathrm{toSplit}}
+  \;=\;
+  \begin{cases}
+    i/2 & \text{if \(i\) is even},\\
+    i/2+d & \text{if \(i\) is odd}.
+  \end{cases}
+\end{equation}
+Even interleaved indices land in the first half; odd ones land in the second half.
+\end{lemma}
+
+\begin{theorem}[Entrywise comparison]
+\label{thm:entry}
+\lmod{Tensor.GetRotaryMatrix'.eq.GetRotaryMatrix}~\cite{lemma_rope_entry}.
+For every \(\alpha\in\R^d\) and \(i,j:\mathrm{Fin}\,(d+d)\),
+\begin{equation}
+  \label{eq:entry}
+  \rot'(\alpha)_{i,j}
+  \;=\;
+  \rot(\alpha)_{i^{\mathrm{toSplit}},\,j^{\mathrm{toSplit}}}.
+\end{equation}
+\end{theorem}
+
+The four cases of~\eqref{eq:entry} are the four quadrant lemmas
+\lmod{Tensor.GetRotaryMatrix.eq.MulCos_Delta.of.Lt.Lt},
+\lmod{Tensor.GetRotaryMatrix.eq.MulCos_Delta.of.Ge.Ge},
+\lmod{Tensor.GetRotaryMatrix.eq.MulSin_Delta.of.Ge.Lt},
+and
+\lmod{Tensor.GetRotaryMatrix.eq.MulNegSin_Delta.of.Lt.Ge}.
+
+Kernel realization (Section~\ref{sec:real}) is a statement about \(\rot\), because that is the layout \texttt{rotate\_half} implements.
+The RoFormer pairing chain in Section~\ref{sec:pair} is written for \(\rot\); the matching matrix identity for \(\rot'\) is Theorem~\ref{thm:dotTp}.
+
 \section{Realization}
 \label{sec:real}
 
-A dense multiply by~\eqref{eq:rot-def} is not how RoPE is run.
+A dense multiply by~\eqref{eq:rot-def} is not how Hugging Face RoPE is run.
 The kernel form uses one cosine, one sine, and a half-swap.
 
 \begin{theorem}[Realization]
@@ -270,8 +430,9 @@ Then
 The proof first identifies \(x=x_0\concat x_1\) up to the library's shape-cast equality \(\simeq\), then applies the already-split identity
 \lmod{Tensor.DotRotaryMatrix.eq.AddMulSAppend}:
 unfold Definition~\ref{def:rot}, multiply the four blocks against \(x_0\concat x_1\), and reassemble the concatenations.
-The identity \((-x_1)\concat x_0\) is exactly \texttt{rotateHalf} in common libraries.
-Theorem~\ref{thm:real} is therefore the certificate that the kernel and the matrix are the same map.
+The identity \((-x_1)\concat x_0\) is exactly \texttt{rotate\_half} in Hugging Face Transformers~\cite{huggingface_rope_utils}.
+Theorem~\ref{thm:real} is therefore the certificate that the kernel and the Hugging Face matrix are the same map.
+The interleaved matrix \(\rot'\) is recovered afterwards by Theorem~\ref{thm:conj}.
 
 \section{Orthogonality}
 \label{sec:orth}
@@ -308,6 +469,8 @@ together with the block-transpose law for a \(2\times 2\) stack of horizontal co
 \label{lem:R0}
 \lmod{Tensor.RotaryMatrix0.eq.Eye}.
 \(\rot(0)=\eye_{d+d}\).
+The RoFormer layout satisfies the same identity:
+\lmod{Tensor.RotaryMatrix'0.eq.Eye} states \(\rot'(0)=\eye_{d+d}\).
 \end{lemma}
 
 This is \(\cos 0=1\), \(\sin 0=0\)
@@ -348,7 +511,7 @@ For all \(\alpha,\beta\in\R^d\),
 \end{equation}
 \end{theorem}
 
-This is the free-angle form of RoFormer's definition of \(\rot_{\Theta,n-m}\).
+This is the free-angle form of RoFormer's definition of \(\rot_{\Theta,n-m}\), stated on the Hugging Face matrix.
 The proof expands both sides of~\eqref{eq:rot-def}, multiplies the four-by-four pattern of blocks
 (\lmod{Tensor.DotAppendSHstackS.eq.AppendHstackSAddSDotS},
 \lmod{Tensor.DotMulSEye.eq.MulEye}),
@@ -362,6 +525,19 @@ and applies the tensor cosine- and sine-subtraction formulae
 which are
 \lmod{Tensor.CosSub.eq.AddMulS} and
 \lmod{Tensor.SinSub.eq.SubMulSSin_Cos}.
+
+The RoFormer matrix satisfies the same law by conjugation.
+
+\begin{theorem}
+\label{thm:dotTp}
+\lmod{Tensor.DotT.eq.RotaryMatrix'Sub}~\cite{lemma_rope_su_sub}.
+For all \(\alpha,\beta\in\R^d\),
+\begin{equation}
+  \rot'(\alpha)^\top @ \rot'(\beta) = \rot'(\beta-\alpha).
+\end{equation}
+\end{theorem}
+
+The proof writes \(\rot'(\alpha)=\boldsymbol{P}^\top\rot(\alpha)\boldsymbol{P}\) (Theorem~\ref{thm:conj}), cancels \(\boldsymbol{P}^\top@\boldsymbol{P}=\eye\) and \(\boldsymbol{P}@\boldsymbol{P}^\top=\eye\), and applies Theorem~\ref{thm:dotT}.
 
 \begin{theorem}[Additive group law]
 \label{thm:add}
@@ -395,6 +571,9 @@ Then
 \begin{equation}
   \rot(\theta_t)^\top @ \rot(\theta_k) = \rot(\theta_{k-t}).
 \end{equation}
+The same arithmetic on the RoFormer layout is
+\lmod{Tensor.DotT.eq.RotaryMatrix'Get_Sub.of.Eq_Stack_Mul.Ge}:
+\(\rot'(\theta_t)^\top @ \rot'(\theta_k) = \rot'(\theta_{k-t})\).
 \end{proposition}
 
 The only arithmetic beyond Theorem~\ref{thm:dotT} is
@@ -426,8 +605,7 @@ On two \(1\)-tensors the library writes the inner product as \(@\), so~\eqref{eq
 The correspondence is \(\alpha\leftrightarrow\Theta_m\), \(\beta\leftrightarrow\Theta_n\), hence \(\beta-\alpha\leftrightarrow n-m\) in angle space.
 The Lean~4 statement, with a complete proof and no \texttt{sorry}, is
 \begin{center}
-\lmod{Tensor.DotDotSRotaryMatrix.eq.Dot_DotRotaryMatrixSub}\\[0.25em]
-\url{http://www.lemma.cn/lean/?module=Tensor.DotDotSRotaryMatrix.eq.Dot_DotRotaryMatrixSub}.
+\lmod{Tensor.DotDotSRotaryMatrix.eq.Dot_DotRotaryMatrixSub}.
 \end{center}
 
 \begin{theorem}[RoFormer pairing]
@@ -592,17 +770,23 @@ Equation~\eqref{eq:soft} is the sense in which ``RoPE is a relative position emb
 Interactive visualizations of the public statements:
 \begin{itemize}[noitemsep]
   \item Relative softmax:
-    \url{http://www.lemma.cn/lean/?module=Tensor.DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul}
+    \lmod{Tensor.DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul}
   \item RoFormer pairing~\eqref{eq:roformer-rel}:
-    \url{http://www.lemma.cn/lean/?module=Tensor.DotDotSRotaryMatrix.eq.Dot_DotRotaryMatrixSub}
+    \lmod{Tensor.DotDotSRotaryMatrix.eq.Dot_DotRotaryMatrixSub}
+  \item Conjugation \(R'=P^\top RP\):
+    \lmod{Tensor.RotaryMatrix'.eq.DotDot_RotaryMatrix}
+  \item Hugging Face matrix:
+    \lmod{Tensor.RotaryMatrix.eq.AppendHstackSMulSEye}
+  \item RoFormer matrix:
+    \lmod{Tensor.RotaryMatrix'.eq.Stack_Ite_IteS}
   \item Realization:
-    \url{http://www.lemma.cn/lean/?module=Tensor.DotRotaryMatrix.eq.AddMulS}
+    \lmod{Tensor.DotRotaryMatrix.eq.AddMulS}
   \item Additive group law:
-    \url{http://www.lemma.cn/lean/?module=Tensor.DotRotaryMatrixS.eq.RotaryMatrixAdd}
+    \lmod{Tensor.DotRotaryMatrixS.eq.RotaryMatrixAdd}
   \item Orthogonality:
-    \url{http://www.lemma.cn/lean/?module=Tensor.DotT_RotaryMatrix.eq.Eye}
+    \lmod{Tensor.DotT_RotaryMatrix.eq.Eye}
 \end{itemize}
-Source: \url{https://github.com/math-proof/lemma}~\cite{lemma_repo}.
+Source: \href{https://github.com/math-proof/lemma}{github.com/math-proof/lemma}~\cite{lemma_repo}.
 Every module in Table~\ref{tab:mods} builds with \texttt{lake build} and contains no \texttt{sorry}.
 
 \begin{table}[t]
@@ -615,19 +799,26 @@ The public name of a lemma is the module path.}
 \hline
 Module & Content \\
 \hline
-\texttt{RotaryMatrix.eq.AppendHstackSMulSEye} & Definition~\ref{def:rot} \\
+\texttt{RotaryMatrix.eq.AppendHstackSMulSEye} & Definition~\ref{def:rot} (Hugging Face) \\
+\texttt{RotaryMatrix'.eq.Stack\_Ite\_IteS} & Definition~\ref{def:rotp} (RoFormer) \\
+\texttt{Interleave.eq.AppendStackS\_Delta} & Definition~\ref{def:P} \\
+\texttt{RotaryMatrix'.eq.DotDot\_RotaryMatrix} & Theorem~\ref{thm:conj} \\
+\texttt{GetRotaryMatrix'.eq.GetRotaryMatrix} & Theorem~\ref{thm:entry} \\
 \texttt{DotRotaryMatrix.eq.AddMulS} & Theorem~\ref{thm:real} \\
 \texttt{RotaryMatrixNeg.eq.TRotaryMatrix} & Lemma~\ref{lem:neg-T} \\
 \texttt{RotaryMatrix0.eq.Eye} & Lemma~\ref{lem:R0} \\
+\texttt{RotaryMatrix'0.eq.Eye} & \(\rot'(0)=\eye\) \\
 \texttt{DotT\_RotaryMatrix.eq.Eye} & Theorem~\ref{thm:orth} \\
 \texttt{DotRotaryMatrixNeg.eq.Eye} & \(\rot(-\alpha)\rot(\alpha)=\eye\) \\
 \texttt{DotT.eq.RotaryMatrixSub} & Theorem~\ref{thm:dotT} \\
+\texttt{DotT.eq.RotaryMatrix'Sub} & Theorem~\ref{thm:dotTp} \\
 \texttt{DotRotaryMatrixS.eq.RotaryMatrixAdd} & Theorem~\ref{thm:add} \\
 \texttt{SubGetS.eq.Get\_Sub.of.Eq\_Stack\_Mul.Ge} & \(\theta_k-\theta_t=\theta_{k-t}\) \\
 \texttt{DotT.eq.RotaryMatrixSub.of.Eq\_Stack\_Mul.Ge} & Proposition~\ref{prop:eqdott} \\
-{\footnotesize\lmod{RotaryMatrixSubGetS.eq.Ite_RotaryMatrix_T.of.Eq_Stack_Mul}} & Lemma~\ref{lem:ite} \\
+{\footnotesize\lmod{Tensor.DotT.eq.RotaryMatrix'Get_Sub.of.Eq_Stack_Mul.Ge}} & \(\rot'\) form of Proposition~\ref{prop:eqdott} \\
+{\footnotesize\lmod{Tensor.RotaryMatrixSubGetS.eq.Ite_RotaryMatrix_T.of.Eq_Stack_Mul}} & Lemma~\ref{lem:ite} \\
 \texttt{DotDotSRotaryMatrix.eq.Dot\_DotRotaryMatrixSub} & Theorem~\ref{thm:pair} \\
-{\footnotesize\lmod{DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul}} & Theorem~\ref{thm:soft} \\
+{\footnotesize\lmod{Tensor.DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul}} & Theorem~\ref{thm:soft} \\
 \hline
 \end{tabular}
 \end{table}
@@ -658,6 +849,16 @@ DotT_RotaryMatrix.eq.Eye
 
 DotRotaryMatrix.eq.AddMulS
 `-- DotRotaryMatrix.eq.AddMulSAppend
+
+RotaryMatrix'.eq.DotDot_RotaryMatrix
+|-- GetRotaryMatrix'.eq.Ite_IteS
+`-- GetRotaryMatrix.eq.Mul{Cos,NegSin,Sin}_Delta (four quadrants)
+
+DotT.eq.RotaryMatrix'Sub
+|-- RotaryMatrix'.eq.DotDot_RotaryMatrix
+|-- DotT.eq.RotaryMatrixSub
+|-- DotTInterleave.eq.Eye
+`-- Dot_TInterleave.eq.Eye
 \end{verbatim}
 \caption{Import graph for the headline RoPE lemmas.
 Prefixes \texttt{Tensor.} are omitted.}
@@ -672,8 +873,12 @@ We certify equalities of tensors, not approximation quality, length extrapolatio
 Theorem~\ref{thm:soft} is an identity for every \(Q,K,V\) and every linear \(\theta\); it does not say that a trained model uses the relative matrix in a particular way at inference time, nor that attention decays with distance~\cite{barbero2025round}.
 
 \paragraph{Layout.}
-All statements are for the split-half pairing~\eqref{eq:rot-def}.
-A development that used interleaved pairs \((2p,2p+1)\) would be word-for-word the same after a permutation lemma we do not currently need.
+We formalize both pairings.
+\texttt{rotaryMatrix} is the Hugging Face split-half matrix~\eqref{eq:rot-hf};
+\texttt{rotaryMatrix'} is Su et al.'s interleaved matrix~\eqref{eq:rot-su}.
+Theorem~\ref{thm:conj} is the permutation lemma that earlier drafts left informal.
+Kernel realization (Theorem~\ref{thm:real}) and the inner-product pairing (Theorem~\ref{thm:pair}) are stated for the Hugging Face layout, which is the map \texttt{rotate\_half} implements.
+The matching matrix identity on the RoFormer layout is Theorem~\ref{thm:dotTp}.
 
 \paragraph{Frequencies.}
 Definition~\ref{def:lin} is sufficient for Lemma~\ref{lem:ite} and strictly weaker than the classical geometric schedule.
@@ -697,14 +902,14 @@ This is a library elaboration fact, not a mathematical hypothesis.
 \section{Conclusion}
 \label{sec:conclusion}
 
-The algebraic skeleton of one-dimensional RoPE is a handful of identities about a split-half block matrix of plane rotations.
-We have stated those identities in Lean~4 at the level of the matrix that implementations multiply, proved the kernel evaluation formula, the orthogonal and additive group laws for free angle vectors, the RoFormer pairing~\eqref{eq:roformer-rel}, and the relative-offset form of softmax attention under a linear frequency hypothesis.
-The modules named in the introduction are the public interface of that development~\cite{lemma_rope_rel,lemma_rope_pair,lemma_rope_real,lemma_rope_add,lemma_rope_orth}.
+The algebraic skeleton of one-dimensional RoPE is a handful of identities about a block matrix of plane rotations, in either the Hugging Face split-half layout or Su et al.'s interleaved layout.
+We have stated both matrices in Lean~4, proved they are conjugate by a fixed even/odd gather, and, on the Hugging Face matrix that implementations multiply, proved the kernel evaluation formula, the orthogonal and additive group laws for free angle vectors, the RoFormer pairing~\eqref{eq:roformer-rel}, and the relative-offset form of softmax attention under a linear frequency hypothesis.
+The modules named in the introduction are the public interface of that development~\cite{lemma_rope_rel,lemma_rope_pair,lemma_rope_conj,lemma_rope_real,lemma_rope_add,lemma_rope_orth}.
 
 \section*{Acknowledgements}
 
 The formalization uses Lean~4 and mathlib~\cite{moura2021lean4,mathlib2020}.
-Interactive statements of the modules in Table~\ref{tab:mods} are available at \url{http://www.lemma.cn/}.
+Interactive statements of the modules in Table~\ref{tab:mods} are available at \href{http://www.lemma.cn/}{lemma.cn}.
 
 \bibliographystyle{plain}
 \bibliography{refs}

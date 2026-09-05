@@ -10,7 +10,7 @@ private lemma main
 -- given
   (v : List.Vector (List.Vector α n) m) :
 -- imply
-  (v.map fun row => row.map f).flatten = (v.flatten).map f := by
+  (v.map (·.map f)).flatten = v.flatten.map f := by
 -- proof
   ext k
   obtain ⟨i, j, h_eq⟩ := Any_Eq_AddMul k

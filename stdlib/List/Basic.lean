@@ -6,7 +6,7 @@ mimic the PHP Array API
 [array_slice][https://www.php.net/manual/en/function.array-slice.php]
 -/
 def List.array_slice (L : List α) (start : Nat) (size : Nat) : List α :=
-  (take (size) ∘ drop start) L
+  (take size ∘ drop start) L
 
 /--
 mimic the JavaScript Array API

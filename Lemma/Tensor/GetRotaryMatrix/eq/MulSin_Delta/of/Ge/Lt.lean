@@ -13,7 +13,7 @@ private lemma main
   (hi : i ≥ d)
   (hj : j < d) :
 -- imply
-  (rotaryMatrix θ)[i][j] = θ.sin[j]'(by grind) * (KroneckerDelta (α := Fin d) ⟨i - d, by grind⟩ ⟨j, by grind⟩ : Tensor ℝ []) := by
+  θ.rotaryMatrix[i][j] = θ.sin[j]'(by grind) * (KroneckerDelta (α := Fin d) ⟨i - d, by grind⟩ ⟨j, by grind⟩ : Tensor ℝ []) := by
 -- proof
   unfold rotaryMatrix
   extract_lets I
@@ -28,3 +28,4 @@ private lemma main
 
 
 -- created on 2026-09-04
+-- updated on 2026-09-05

@@ -42,10 +42,9 @@ private lemma main
     have h_dot := SEq.trans h_dotY h_dotX
     have h_w := GtLengthDot.of.LeLengthS.Ne_Nil (by grind) (by omega) X Y i
     rw [← Length.of.SEq h_dot] at h_w
-    have h_lhs := SEqGetS.of.SEq.GtLength h_w h_dot
-    have h_get_i := SEqGetS.of.SEq.GtLength i.isLt hX_seq
-    have h_rhs := (SEqDotS.of.SEq.left hY_seq (X'[i])).trans (SEqDotS.of.SEq h_get_i Y)
-    exact h_lhs.symm.trans (h_get.trans h_rhs)
+    apply (SEqGetS.of.SEq.GtLength h_w h_dot).symm.trans (h_get.trans _)
+    apply (SEqDotS.of.SEq.left hY_seq X'[i]).trans (SEqDotS.of.SEq _ Y)
+    apply SEqGetS.of.SEq.GtLength i.isLt hX_seq
 
 
 -- created on 2026-01-04

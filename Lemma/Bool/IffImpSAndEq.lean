@@ -13,7 +13,6 @@ private lemma main
   ·
     intro h₀ h₁
     have := h₀ h₁
-    -- Apply h₀ to h₁ to get q(x)
     simp_all
 
 

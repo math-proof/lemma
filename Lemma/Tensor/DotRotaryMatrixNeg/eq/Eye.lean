@@ -8,10 +8,11 @@ private lemma main
 -- given
   (α : Tensor ℝ [d]) :
 -- imply
-  (rotaryMatrix (-α)) @ rotaryMatrix α = Tensor.eye (d + d) := by
+  (-α).rotaryMatrix @ α.rotaryMatrix = Tensor.eye (d + d) := by
 -- proof
   rw [RotaryMatrixNeg.eq.TRotaryMatrix]
   exact DotT_RotaryMatrix.eq.Eye α
 
 
 -- created on 2026-09-03
+-- updated on 2026-09-05

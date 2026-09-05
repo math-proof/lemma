@@ -23,7 +23,7 @@ private lemma main
   (θ : Tensor ℝ [d])
   (x0 x1 : Tensor ℝ [d]) :
 -- imply
-  (rotaryMatrix θ) @ (x0 ++ x1) = (x0 ++ x1) * (θ ++ θ).cos + (-x1 ++ x0) * (θ ++ θ).sin := by
+  θ.rotaryMatrix @ (x0 ++ x1) = (x0 ++ x1) * (θ ++ θ).cos + (-x1 ++ x0) * (θ ++ θ).sin := by
 -- proof
   simp only [rotaryMatrix]
   rw [DotAppendHstack.eq.AppendAddSDotS (Tensor.eye d * [_ < d] θ.cos) (-(Tensor.eye d * [_ < d] θ.sin)) (Tensor.eye d * [_ < d] θ.sin) (Tensor.eye d * [_ < d] θ.cos) x0 x1]
@@ -65,3 +65,4 @@ private lemma main
 
 
 -- created on 2026-09-03
+-- updated on 2026-09-05

@@ -7,7 +7,7 @@ private lemma main
 -- given
   (v : List.Vector (List.Vector α n) m) :
 -- imply
-  (v.val).map (List.length ∘ List.Vector.toList) = List.replicate m n := by
+  v.val.map (List.length ∘ List.Vector.toList) = List.replicate m n := by
 -- proof
   induction h : v using List.Vector.inductionOn with
   | nil =>

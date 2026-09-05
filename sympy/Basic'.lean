@@ -539,7 +539,7 @@ initialize registerBuiltinAttribute {
     let moduleTokens := (← getEnv).moduleTokens.mpr
     println! s!"moduleTokens = {moduleTokens}"
     let ⟨parity, type, value⟩ ← Expr.disjunction' type value
-    let name := (moduleTokens.left).lemmaName declName
+    let name := moduleTokens.left.lemmaName declName
     println! s!"name = {name}"
     addAndCompile <| .thmDecl {
       name := name
@@ -562,7 +562,7 @@ initialize registerBuiltinAttribute {
     let moduleTokens := (← getEnv).moduleTokens.mpr
     println! s!"moduleTokens = {moduleTokens}"
     let ⟨parity, type, value⟩ ← Expr.disjunction' type value 0 false
-    let name := (moduleTokens.right).lemmaName declName
+    let name := moduleTokens.right.lemmaName declName
     println! s!"name = {name}"
     addAndCompile <| .thmDecl {
       name := name

@@ -24,7 +24,7 @@ private lemma main
   (i : Fin m)
   (j : Fin n) :
 -- imply
-  (List.Vector.indices ⟨j, m * n, n⟩ (m * n)).get ⟨i, by simp [EqLengthSlice_Mul.of.Lt (j.isLt)]⟩ = ↑i * n + j := by
+  (List.Vector.indices ⟨j, m * n, n⟩ (m * n)).get ⟨i, by simp [EqLengthSlice_Mul.of.Lt j.isLt]⟩ = ↑i * n + j := by
 -- proof
   unfold List.Vector.indices Slice.range
   simp
@@ -79,7 +79,7 @@ private lemma Comm
   (i : Fin m)
   (j : Fin n) :
 -- imply
-  (List.Vector.indices ⟨j, n * m, n⟩ (n * m)).get ⟨i, by simp [EqLengthSlice_Mul.of.Lt.comm (j.isLt)]⟩ = ↑i * n + j := by
+  (List.Vector.indices ⟨j, n * m, n⟩ (n * m)).get ⟨i, by simp [EqLengthSlice_Mul.of.Lt.comm j.isLt]⟩ = ↑i * n + j := by
 -- proof
   unfold List.Vector.indices Slice.range
   simp

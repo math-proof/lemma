@@ -16,7 +16,7 @@ private lemma main
 -- given
   (k : Fin (d + d)) :
 -- imply
-  (Fin.ofSplit k : ℕ) =
+  k.ofSplit =
     if (k : ℕ) < d then
       2 * (k : ℕ)
     else

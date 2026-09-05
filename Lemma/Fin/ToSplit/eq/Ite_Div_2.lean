@@ -10,7 +10,7 @@ private lemma main
 -- given
   (i : Fin (d + d)) :
 -- imply
-  (Fin.toSplit i : ℕ) =
+  i.toSplit =
     if (i : ℕ) % 2 = 0 then
       (i : ℕ) / 2
     else

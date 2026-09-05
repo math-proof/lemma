@@ -11,7 +11,7 @@ private lemma main
 -- given
   (x : List.Vector α n) :
 -- imply
-  (x.softmax).sum = 1 := by
+  x.softmax.sum = 1 := by
 -- proof
   unfold List.Vector.softmax
   simp

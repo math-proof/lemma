@@ -9,7 +9,7 @@ private lemma main
 -- given
   (α : Tensor ℝ [d]) :
 -- imply
-  (rotaryMatrix α)ᵀ @ (rotaryMatrix α) = Tensor.eye (d + d) := by
+  α.rotaryMatrixᵀ @ α.rotaryMatrix = Tensor.eye (d + d) := by
 -- proof
   apply Eq.trans (DotT.eq.RotaryMatrixSub α α)
   rw [Sub.eq.Zero]
@@ -17,3 +17,4 @@ private lemma main
 
 
 -- created on 2023-06-16
+-- updated on 2026-09-05

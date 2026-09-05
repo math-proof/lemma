@@ -41,7 +41,7 @@ private lemma main
     rw [GetAdd.eq.AddGetS A' ((mask - 1) * ∞) i]
   simp only [List.tail_cons]
   conv_lhs =>
-    erw [GetAdd.eq.AddGetS (A'[i]) (((mask - 1) * ∞)[i]) j]
+    erw [GetAdd.eq.AddGetS A'[i] ((mask - 1) * ∞)[i] j]
   conv_lhs =>
     rw [GetMul.eq.MulGet.scalar (mask - 1) ∞ i]
   conv_lhs =>
@@ -58,7 +58,7 @@ private lemma main
   conv_lhs =>
     arg 2
     arg 1
-    apply GetSub.eq.SubGetS (mask[i]) (1 : Tensor ℝ* [n]) j
+    apply GetSub.eq.SubGetS mask[i] (1 : Tensor ℝ* [n]) j
   conv_lhs =>
     arg 2
     arg 1
@@ -100,7 +100,7 @@ private lemma main
       apply GetMap.eq.MapGet A Hyperreal.ofReal i
     conv_lhs =>
       arg 1
-      apply GetMap.eq.MapGet (A[i]) Hyperreal.ofReal j
+      apply GetMap.eq.MapGet A[i] Hyperreal.ofReal j
     simp [Tensor.map]
     apply XEq.of.XEqDataS
     erw [DataAdd.eq.AddDataS]

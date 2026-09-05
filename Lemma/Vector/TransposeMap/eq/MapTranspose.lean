@@ -9,7 +9,7 @@ private lemma main
   (v : List.Vector (List.Vector α n) m)
   (f : α → β) :
 -- imply
-  (v.map (·.map f)).transpose = (v.transpose).map (·.map f) := by
+  (v.map (·.map f)).transpose = v.transpose.map (·.map f) := by
 -- proof
   ext i j
   simp [GetTranspose.eq.Get.fin]

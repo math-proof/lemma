@@ -10,13 +10,10 @@ private lemma main
 -- imply
   ∀ x : α, ∃ j, ∀ i : ι, p x i ∧ q x j := by
 -- proof
-  intro x                  -- Fix arbitrary x : α
-  obtain ⟨j₀, hq⟩ := h₁ x  -- Use h₁ to get j₀ such that q x j₀
-  use j₀                   -- Use j₀ as our witness
-  intro i                  -- Fix arbitrary i : ι
-  constructor              -- Split the conjunction
-  · exact h₀ x i           -- Prove p x i using h₀
-  · exact hq               -- Prove q x j₀ (hq)
+  intro x
+  obtain ⟨j, hq⟩ := h₁ x
+  use j
+  grind
 
 
 -- created on 2018-12-03

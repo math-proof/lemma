@@ -18,7 +18,7 @@ private lemma main
 -- imply
   let x0 := cast (congrArg (Tensor ℝ) (ConsLengthSlice.eq.List.head d)) x[:d]
   let x1 := cast (congrArg (Tensor ℝ) (ConsLengthSlice.eq.List.tail d)) x[d:]
-  (rotaryMatrix θ) @ x = x * (θ ++ θ).cos + (-x1 ++ x0) * (θ ++ θ).sin := by
+  θ.rotaryMatrix @ x = x * (θ ++ θ).cos + (-x1 ++ x0) * (θ ++ θ).sin := by
 -- proof
   intro x0 x1
   have hx : x = x0 ++ x1 := by
@@ -39,10 +39,10 @@ private lemma main
         rfl
       ·
         apply SEq_Cast.of.Eq (ConsLengthSlice.eq.List.tail d)
-  apply Eq.trans (congrArg (fun t => (rotaryMatrix θ) @ t) hx)
+  apply Eq.trans (congrArg (fun t => θ.rotaryMatrix @ t) hx)
   apply Eq.trans (DotRotaryMatrix.eq.AddMulSAppend θ x0 x1)
   rw [← hx]
 
 
 -- created on 2023-06-06
--- updated on 2026-09-03
+-- updated on 2026-09-05

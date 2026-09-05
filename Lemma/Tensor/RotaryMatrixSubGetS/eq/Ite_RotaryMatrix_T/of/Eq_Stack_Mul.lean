@@ -13,11 +13,11 @@ private lemma main
 -- given
   (hθ : θ = [i < n] (τ * (i : ℝ))) :
 -- imply
-  rotaryMatrix (θ[j] - θ[i]) =
+  (θ[j] - θ[i]).rotaryMatrix =
     if j ≥ i then
-      rotaryMatrix θ[j - i]
+      θ[j - i].rotaryMatrix
     else
-      (rotaryMatrix θ[i - j])ᵀ := by
+      θ[i - j].rotaryMatrixᵀ := by
 -- proof
   by_cases h : j ≥ i
   ·
@@ -25,8 +25,9 @@ private lemma main
     exact congrArg rotaryMatrix (SubGetS.eq.Get_Sub.of.Eq_Stack_Mul.Ge h hθ)
   ·
     erw [if_neg h]
-    rw [(Sub.eq.NegSub (θ[j]) (θ[i])).trans (congrArg Neg.neg (SubGetS.eq.Get_Sub.of.Eq_Stack_Mul.Ge (by grind) hθ))]
+    rw [(Sub.eq.NegSub θ[j] θ[i]).trans (congrArg Neg.neg (SubGetS.eq.Get_Sub.of.Eq_Stack_Mul.Ge (by grind) hθ))]
     apply RotaryMatrixNeg.eq.TRotaryMatrix
 
 
 -- created on 2026-09-03
+-- updated on 2026-09-05

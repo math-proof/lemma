@@ -8,7 +8,7 @@ private lemma main
 -- given
   (k : Fin (d + d)) :
 -- imply
-  toSplit (ofSplit k) = k := by
+  k.ofSplit.toSplit = k := by
 -- proof
   apply Fin.ext
   rw [ToSplit.eq.Ite_Div_2, OfSplit.eq.Ite_Mul2]

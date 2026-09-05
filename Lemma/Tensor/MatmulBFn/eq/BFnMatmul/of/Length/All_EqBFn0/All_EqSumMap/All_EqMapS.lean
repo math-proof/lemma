@@ -95,7 +95,7 @@ private lemma main
         have hLR : L = F R := by
           apply Tensor.Eq.of.All_EqGetS
           intro i
-          have hFR : (F R)[i] = F (R[i]) := by
+          have hFR : (F R)[i] = F R[i] := by
             simp only [F]
             exact GetMap.eq.MapGet.fin R (f · B.data[0]) i
           rw [hFR]
@@ -116,10 +116,10 @@ private lemma main
           have hCR :=
             GetCast.as.Get.of.Eq.GtLength_0.right.fin (by simp) hshape
               (Ar.matmul Cr (by simpa using hlen')) i
-          have hAi : (F Ar)[i] = F (Ar[i]) := by
+          have hAi : (F Ar)[i] = F Ar[i] := by
             simp only [F]
             exact GetMap.eq.MapGet.fin Ar (f · B.data[0]) i
-          have ih' := ih hlen' (Ar[i]) (Cr[i])
+          have ih' := ih hlen' Ar[i] Cr[i]
           have hXA : (n ⊔ n' :: s) ++ [m, t] = ((n ⊔ n' :: s)[0] :: (n ⊔ n' :: s).tail) ++ [m, t] := by
             simp
           have hYA : (n ⊔ n' :: s') ++ [t, k] = ((n ⊔ n' :: s')[0] :: (n ⊔ n' :: s').tail) ++ [t, k] := by

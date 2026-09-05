@@ -19,7 +19,7 @@ private lemma main
   ¬(X : Tensor ℝ* s).data[i] → ∞ := by
 -- proof
   rw [← Any_IsSt.is.NotInfinite]
-  refine Exists.intro (X.data[i]) ?_
+  refine Exists.intro X.data[i] ?_
   simp [Tensor.map, GetElem.getElem]
 
 

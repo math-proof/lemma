@@ -46,7 +46,7 @@ def Expr.toJson (this : Expr) : Json :=
     .null
 
   | Basic (.ExprWithLimits .Lean_forall) (expr :: limits) _ =>
-    let codeObject := limits.foldl (fun obj limit => limit.collect obj) (Json.mkObj ([]))
+    let codeObject := limits.foldl (fun obj limit => limit.collect obj) (Json.mkObj [])
     let imply := Json.mkObj ([
       ("lean", expr.toString),
       ("latex", expr.toLatex)

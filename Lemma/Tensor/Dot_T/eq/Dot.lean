@@ -12,8 +12,8 @@ private lemma main
 -- imply
   A @ Xᵀ = X @ A := by
 -- proof
-  apply Eq.trans (DotT.eq.Dot (Xᵀ) A).symm
-  exact congrArg (fun t => (t) @ (A)) (EqTT X)
+  apply Eq.trans (DotT.eq.Dot Xᵀ A).symm
+  exact congrArg (fun t => t @ A) (EqTT X)
 
 
 @[main, comm]
@@ -25,8 +25,8 @@ private lemma resize
 -- imply
   A @ Xᵀ = X @ A := by
 -- proof
-  apply Eq.trans (DotT.eq.Dot.resize (Xᵀ) A).symm
-  exact congrArg (fun t => (t) @ (A)) (EqTT X)
+  apply Eq.trans (DotT.eq.Dot.resize Xᵀ A).symm
+  exact congrArg (fun t => t @ A) (EqTT X)
 
 
 -- created on 2026-09-03

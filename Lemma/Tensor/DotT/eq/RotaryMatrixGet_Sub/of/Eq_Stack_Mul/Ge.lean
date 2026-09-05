@@ -13,11 +13,11 @@ private lemma main
   (h : k ≥ t)
   (hθ : θ = [i < n] (τ * (i : ℝ))) :
 -- imply
-  (rotaryMatrix θ[t])ᵀ @ (rotaryMatrix θ[k]) = rotaryMatrix θ[k - t] := by
+  θ[t].rotaryMatrixᵀ @ θ[k].rotaryMatrix = θ[k - t].rotaryMatrix := by
 -- proof
   apply Eq.trans (DotT.eq.RotaryMatrixSub θ[t] θ[k])
   exact congrArg rotaryMatrix (SubGetS.eq.Get_Sub.of.Eq_Stack_Mul.Ge h hθ)
 
 
--- created on 2023-09-16
--- updated on 2026-09-03
+-- created on 2023-05-30
+-- updated on 2026-09-05

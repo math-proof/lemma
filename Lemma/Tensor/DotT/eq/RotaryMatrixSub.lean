@@ -17,7 +17,7 @@ private lemma main
 -- given
   (α β : Tensor ℝ [d]) :
 -- imply
-  (rotaryMatrix α)ᵀ @ rotaryMatrix β = rotaryMatrix (β - α) := by
+  α.rotaryMatrixᵀ @ β.rotaryMatrix = (β - α).rotaryMatrix := by
 -- proof
   conv_lhs =>
     arg 1
@@ -63,3 +63,4 @@ private lemma main
 
 
 -- created on 2026-09-03
+-- updated on 2026-09-05

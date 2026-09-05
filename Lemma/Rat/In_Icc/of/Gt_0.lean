@@ -27,25 +27,25 @@ private lemma main
       have h1'' : ((l' : ℤ) - ((i : ℤ) - l)) / (d : ℚ) ≤ t := by
         rw [div_le_iff₀ hd']
         linarith
-      exact (Int.ceil_le).mpr h1''
+      exact Int.ceil_le.mpr h1''
     ·
       have h2 : t * (d : ℤ) ≤ ((u' : ℤ) - ((i : ℤ) - l)) := by linarith
       have h2' : t * (d : ℚ) ≤ ((u' : ℤ) - ((i : ℤ) - l) : ℚ) := by exact_mod_cast h2
       have h2'' : t ≤ ((u' : ℤ) - ((i : ℤ) - l)) / (d : ℚ) := by
         rw [le_div_iff₀ hd']
         linarith
-      exact (Int.le_floor).mpr h2''
+      exact Int.le_floor.mpr h2''
   ·
     intro ⟨htLo, htHi⟩
     constructor
     ·
-      have h1 : ((l' : ℤ) - ((i : ℤ) - l) : ℚ) / (d : ℚ) ≤ t := (Int.ceil_le).mp htLo
+      have h1 : ((l' : ℤ) - ((i : ℤ) - l) : ℚ) / (d : ℚ) ≤ t := Int.ceil_le.mp htLo
       have h1' : ((l' : ℤ) - ((i : ℤ) - l)) ≤ t * (d : ℤ) := by
         rw [div_le_iff₀ hd'] at h1
         exact_mod_cast h1
       linarith
     ·
-      have h2 : t ≤ ((u' : ℤ) - ((i : ℤ) - l)) / (d : ℚ) := (Int.le_floor).mp htHi
+      have h2 : t ≤ ((u' : ℤ) - ((i : ℤ) - l)) / (d : ℚ) := Int.le_floor.mp htHi
       have h2' : t * (d : ℤ) ≤ ((u' : ℤ) - ((i : ℤ) - l)) := by
         rw [le_div_iff₀ hd'] at h2
         exact_mod_cast h2

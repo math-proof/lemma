@@ -55,7 +55,7 @@ private lemma main
         simp
       rw [h_Cons]
       have h_v := Eq_Cons_Tail v
-      have h_v := UFn.of.Eq h_v (List.Vector.toList)
+      have h_v := UFn.of.Eq h_v List.Vector.toList
       erw [h_v]
       simp only [GetElem.getElem] at ih ⊢
       rw [ih]

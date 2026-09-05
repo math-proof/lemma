@@ -1,5 +1,3 @@
-import Lemma.Bool.SEq.is.Eq
-import Lemma.Bool.SEqCast.of.Eq
 import Lemma.Fin.ToSplit.eq.Ite_Div_2
 import Lemma.Nat.Delta.eq.Ite
 import Lemma.Tensor.Eq.is.All_EqGetS
@@ -15,11 +13,10 @@ import Lemma.Tensor.GetRotaryMatrix.eq.MulCos_Delta.of.Lt.Lt
 import Lemma.Tensor.GetRotaryMatrix.eq.MulNegSin_Delta.of.Lt.Ge
 import Lemma.Tensor.GetRotaryMatrix.eq.MulSin_Delta.of.Ge.Lt
 import Lemma.Tensor.GetRotaryMatrix'.eq.Ite_IteS
-import Lemma.Tensor.SEqDotS.of.SEq
 import sympy.functions.special.tensor_functions
 import sympy.matrices.expressions.special
 import sympy.tensor.functions
-open Bool Nat Tensor Fin
+open Nat Tensor Fin
 
 
 @[main]
@@ -27,41 +24,43 @@ private lemma main
 -- given
   (θ : Tensor ℝ [d]) :
 -- imply
-  rotaryMatrix' θ = ((interleave d)ᵀ @ rotaryMatrix θ) @ interleave d := by
+  θ.rotaryMatrix' = ((interleave d)ᵀ @ θ.rotaryMatrix) @ interleave d := by
 -- proof
+  let P : Tensor ℝ [d + d, d + d] := interleave d
+  let PT : Tensor ℝ [d + d, d + d] := Pᵀ
+  apply Eq.trans (b := (PT @ θ.rotaryMatrix) @ P) _ rfl
   apply Eq.of.All_EqGetS.fin
   intro i
   apply Eq.of.All_EqGetS.fin
   intro j
-  apply (Eq.trans (b := (rotaryMatrix θ)[toSplit i][toSplit j]) _ _).symm
+  apply (Eq.trans (b := θ.rotaryMatrix[i.toSplit][j.toSplit]) _ _).symm
   ·
     apply (GetDot.eq.Sum_MulGetS _ _ _ _).trans
-    apply (Finset.sum_eq_single (toSplit j) ?_ ?_).trans ?_
+    apply (Finset.sum_eq_single j.toSplit ?_ ?_).trans ?_
     ·
       intro k _ hk
-      apply (congrArg (fun t : Tensor ℝ [] => (((interleave d)ᵀ) @ (rotaryMatrix θ))[i][k] * t) (GetInterleave.eq.Delta_ToSplit k j)).trans
+      apply (congrArg (fun t : Tensor ℝ [] => (PT @ θ.rotaryMatrix)[i][k] * t) (GetInterleave.eq.Delta_ToSplit k j)).trans
       simp [Delta.eq.Ite, Fin.val_injective.ne hk]
       apply Tensor.EqMul_0'0.nat
     ·
       intro h
       apply (h (Finset.mem_univ _)).elim
     ·
-      apply (congrArg (fun t : Tensor ℝ [] => (((interleave d)ᵀ) @ (rotaryMatrix θ))[i][toSplit j] * t) (GetInterleave.eq.Delta_ToSplit (toSplit j) j)).trans
+      apply (congrArg (fun t : Tensor ℝ [] => (PT @ θ.rotaryMatrix)[i][j.toSplit] * t) (GetInterleave.eq.Delta_ToSplit j.toSplit j)).trans
       simp [Delta.eq.Ite]
       apply (Tensor.EqMul_1.nat _).trans
-      apply (congrArg (fun t : Tensor ℝ [d + d, d + d] => t[i][toSplit j]) (Eq.of.SEq (SEqDotS.of.SEq (SEqCast.of.Eq (by simp) (interleave d)ᵀ) (rotaryMatrix θ))).symm).trans
-      apply (GetDot.eq.Sum_MulGetS _ _ _ _).trans
-      apply (Finset.sum_eq_single (toSplit i) ?_ ?_).trans ?_
+      apply (GetDot.eq.Sum_MulGetS PT θ.rotaryMatrix i j.toSplit).trans
+      apply (Finset.sum_eq_single i.toSplit ?_ ?_).trans ?_
       ·
         intro k _ hk
-        apply (congrArg (fun t : Tensor ℝ [] => t * id (α := Tensor ℝ []) (rotaryMatrix θ)[k][toSplit j]) (GetTInterleave.eq.Delta_ToSplit i k)).trans
+        apply (congrArg (fun t : Tensor ℝ [] => t * id (α := Tensor ℝ []) θ.rotaryMatrix[k][j.toSplit]) (GetTInterleave.eq.Delta_ToSplit i k)).trans
         simp [Delta.eq.Ite, Fin.val_injective.ne hk]
         apply Tensor.EqMul0_0.nat
       ·
         intro h
         apply (h (Finset.mem_univ _)).elim
       ·
-        apply (congrArg (fun t : Tensor ℝ [] => t * id (α := Tensor ℝ []) (rotaryMatrix θ)[toSplit i][toSplit j]) (GetTInterleave.eq.Delta_ToSplit i (toSplit i))).trans
+        apply (congrArg (fun t : Tensor ℝ [] => t * id (α := Tensor ℝ []) θ.rotaryMatrix[i.toSplit][j.toSplit]) (GetTInterleave.eq.Delta_ToSplit i i.toSplit)).trans
         simp [Delta.eq.Ite]
         apply Tensor.EqMul1.nat
   symm
@@ -139,4 +138,4 @@ private lemma main
 
 
 -- created on 2026-09-04
--- updated on 2026-09-05
+-- updated on 2026-09-06

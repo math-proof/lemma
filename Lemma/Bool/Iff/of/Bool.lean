@@ -15,7 +15,7 @@ private lemma main
   ·
     apply Imp.of.Bool h
   ·
-    apply Imp.of.Bool (h.symm)
+    apply Imp.of.Bool h.symm
 
 
 -- created on 2018-03-22

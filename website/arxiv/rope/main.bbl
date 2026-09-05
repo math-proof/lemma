@@ -13,6 +13,13 @@ Leonardo de~Moura and Sebastian Ullrich.
 \newblock In {\em Automated Deduction -- {CADE} 28}, volume 12699 of {\em
   LNCS}, pages 625--635. Springer, 2021.
 
+\bibitem{huggingface_rope_utils}
+{Hugging Face}.
+\newblock Utilities for rotary embedding.
+\newblock
+  \url{https://github.com/huggingface/transformers/blob/main/docs/source/en/internal/rope_utils.md},
+  2026.
+
 \bibitem{liu2025rethinking}
 Haiping Liu, Lijing Lin, Jingyuan Sun, Zhegong Shangguan, Mauricio~A. Alvarez,
   and Hongpeng Zhou.
@@ -53,11 +60,45 @@ math proof.
   \url{http://www.lemma.cn/lean/?module=Tensor.DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul},
   2026.
 
+\bibitem{lemma_rope_su_sub}
+math proof.
+\newblock Tensor.dott.eq.rotarymatrix'sub.
+\newblock
+  \url{http://www.lemma.cn/lean/?module=Tensor.DotT.eq.RotaryMatrix'Sub}, 2026.
+
 \bibitem{lemma_rope_orth}
 math proof.
 \newblock Tensor.dott\_rotarymatrix.eq.eye.
 \newblock
   \url{http://www.lemma.cn/lean/?module=Tensor.DotT_RotaryMatrix.eq.Eye}, 2026.
+
+\bibitem{lemma_rope_entry}
+math proof.
+\newblock Tensor.getrotarymatrix'.eq.getrotarymatrix.
+\newblock
+  \url{http://www.lemma.cn/lean/?module=Tensor.GetRotaryMatrix'.eq.GetRotaryMatrix},
+  2026.
+
+\bibitem{lemma_rope_hf_def}
+math proof.
+\newblock Tensor.rotarymatrix.eq.appendhstacksmulseye.
+\newblock
+  \url{http://www.lemma.cn/lean/?module=Tensor.RotaryMatrix.eq.AppendHstackSMulSEye},
+  2026.
+
+\bibitem{lemma_rope_conj}
+math proof.
+\newblock Tensor.rotarymatrix'.eq.dotdot\_rotarymatrix.
+\newblock
+  \url{http://www.lemma.cn/lean/?module=Tensor.RotaryMatrix'.eq.DotDot_RotaryMatrix},
+  2026.
+
+\bibitem{lemma_rope_su_def}
+math proof.
+\newblock Tensor.rotarymatrix'.eq.stack\_ite\_ites.
+\newblock
+  \url{http://www.lemma.cn/lean/?module=Tensor.RotaryMatrix'.eq.Stack_Ite_IteS},
+  2026.
 
 \bibitem{mathlib}
 {Mathlib community}.
@@ -117,14 +158,5 @@ Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones,
 Yifan Zhang, Zixiang Chen, Yifeng Liu, Zhen Qin, Huizhuo Yuan, Kangping Xu,
   Yang Yuan, Quanquan Gu, and Andrew Chi-Chih Yao.
 \newblock Group representational position encoding, 2025.
-
-\bibitem{lemma_kv_cache}
-LiZhi Zhou.
-\newblock Formal verification of kv-cache correctness for sliding-window causal
-  attention.
-\newblock
-  \url{http://www.lemma.cn/lean/?module=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T},
-  2026.
-\newblock lemma library.
 
 \end{thebibliography}

@@ -9,7 +9,7 @@ private lemma main
   (θ : Tensor ℝ [d])
   (i j : Fin (d + d)) :
 -- imply
-  (rotaryMatrix' θ)[i][j] =
+  θ.rotaryMatrix'[i][j] =
     if (i : ℕ) % 2 = 0 then
       if (j : ℕ) = (i : ℕ) then
         (θ.cos[(i : ℕ) / 2]'(by grind) : Tensor ℝ [])
@@ -31,3 +31,4 @@ private lemma main
 
 
 -- created on 2026-09-04
+-- updated on 2026-09-05

@@ -30,7 +30,7 @@ private lemma main
             simp [Nat.cast_sub hge]
           rw [hcast, sub_self]
           omega
-      apply (Int.ceil_le).mpr
+      apply Int.ceil_le.mpr
       rw [div_le_iff₀ hd']
       calc
         ((↑(i - l) : ℤ) - ((i : ℤ) - l) : ℚ) ≤ (l : ℚ) := by exact_mod_cast hnum_le_l_z
@@ -47,7 +47,7 @@ private lemma main
           have hge : l ≤ i := (not_le.mp hle).le
           simp [Int.subNatNat_eq_coe]
           omega
-      apply (Int.le_floor).mpr
+      apply Int.le_floor.mpr
       rw [le_div_iff₀ hd']
       have hsub : (((i : ℤ) - l) : ℚ) = (Int.subNatNat i l : ℚ) := by simp
       have hmin : ((↑((n - 1) ⊓ (i + u)) : ℤ) : ℚ) = (((n - 1) ⊓ (i + u) : ℤ) : ℚ) := by
