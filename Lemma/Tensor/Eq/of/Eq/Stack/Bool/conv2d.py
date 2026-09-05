@@ -28,7 +28,7 @@ def apply(eq_M, x, w, r):
     return Equal(conv2d[r](x * M0, w) * M1, Stack[k:m](block))
 
 
-@prove#(slow=True)
+@prove
 def prove(Eq):
     from Lemma import Set, Bool, Tensor, Int, Nat, Finset
 

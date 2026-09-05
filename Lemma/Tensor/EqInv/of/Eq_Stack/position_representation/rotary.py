@@ -23,7 +23,7 @@ def prove(Eq):
     R = Function(shape=(d, d), real=True)
     Eq << apply(Equal(R(i), rotary_matrix(d, b, i, j, k)))
 
-    Eq << Tensor.EqDot.of.Eq_Stack.position_representation.rotary.apply(Eq[0])
+    Eq << Tensor.DotT.eq.RotaryMatrixGet_Sub.of.Eq_Stack_Mul.Ge.apply(Eq[0])
 
     Eq << Eq[-1].subs(j, i)
 

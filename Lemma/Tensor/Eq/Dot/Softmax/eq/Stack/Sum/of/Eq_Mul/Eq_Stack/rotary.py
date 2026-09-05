@@ -38,7 +38,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Sum).apply(Finset.Sum.eq.SumRange, simplify=None)
 
-    Eq << Tensor.EqDot.of.Eq_Stack.position_representation.rotary.apply(Eq[1]).subs(j, k)
+    Eq << Tensor.DotT.eq.RotaryMatrixGet_Sub.of.Eq_Stack_Mul.Ge.apply(Eq[1]).subs(j, k)
 
     Eq.final = Eq[-2].subs(Eq[-1])
 

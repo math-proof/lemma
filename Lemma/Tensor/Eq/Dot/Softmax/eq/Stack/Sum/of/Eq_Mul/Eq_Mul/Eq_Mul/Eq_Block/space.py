@@ -14,7 +14,7 @@ def apply(eq_theta_r, eq_theta_c, eq_theta_z, eq_R, Q, K, V, r, c, z, t):
         Softmax((Stack[t:n](Rt @ Q[t]) @ Stack[t:n](Rt @ K[t]).T) / sqrt(d)) @ V,
         Stack[j:d, i:n](Sum[t](V[t, j] * Exp(S[K[t, :d / 2] * Q[i, :d / 2] + K[t, d / 2:] * Q[i, d / 2:], K[t, :d / 2] * Q[i, d / 2:] - K[t, d / 2:] * Q[i, :d / 2]] @ [cos(θ), sin(θ)] / sqrt(d))) / ReducedSum(Exp((Q[i] @ Rt.subs(t, i).T @ Stack[i:n](Rt.subs(t, i) @ K[i]).T) / sqrt(d)))))
 
-@prove(slow=True)
+@prove
 def prove(Eq):
     from Lemma import Tensor, Finset, Nat
     from Lemma.Tensor.EqDot.of.Eq_Mul.Eq_Mul.Eq_Mul.Eq_Block.position_representation.space import rotary_matrix

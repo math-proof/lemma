@@ -18,7 +18,7 @@ def apply(self, i=None, j=None):
     return Equal(self, sigmar(A[i, j] * Cofactors(A)[i, j]).simplify())
 
 
-@prove(slow=True)
+@prove
 def prove(Eq):
     from Lemma import Tensor, Finset
 

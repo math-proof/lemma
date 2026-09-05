@@ -53,8 +53,7 @@ def apply(given, x=None):
             Imply(Unequal(beta, 0) & Equal(_d % 3, 2), solver_set(2, A, B, x, alpha, beta, w, -a / 4))
 
 
-
-@prove(slow=True)
+@prove
 def prove(Eq):
     from Lemma import Int, Complex, Nat, Finset
 
