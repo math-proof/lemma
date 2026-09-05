@@ -69,41 +69,34 @@ private lemma main
   if hei : (i : ℕ) % 2 = 0 then
     if hej : (j : ℕ) % 2 = 0 then
       simp [toSplit, hei, hej]
-      let iC : Fin (d + d) := ⟨(i : ℕ) / 2, by grind⟩
-      let jC : Fin (d + d) := ⟨(j : ℕ) / 2, by grind⟩
-      have hRg := GetRotaryMatrix.eq.MulCos_Delta.of.Lt.Lt θ iC jC (by grind) (by grind)
-      simp only [iC, jC] at hL hRg ⊢
+      have hRg := GetRotaryMatrix.eq.MulCos_Delta.of.Lt.Lt θ ⟨i / 2, by grind⟩ ⟨j / 2, by grind⟩ (by grind) (by grind)
       apply hL.trans (Eq.trans ?_ hRg.symm)
-      have hsucc : ¬((j : ℕ) = (i : ℕ) + 1) := by omega
+      have hsucc : ¬((j : ℕ) = i + 1) := by omega
       simp [hei, hsucc]
-      if hij : (j : ℕ) = (i : ℕ) then
+      if hij : (j : ℕ) = i then
         simp [hij, Delta.eq.Ite]
         apply (Tensor.EqMul_1.nat _).symm
       else
-        have hne : (i : ℕ) / 2 ≠ (j : ℕ) / 2 := by
+        have hne : (i : ℕ) / 2 ≠ j / 2 := by
           intro h
           apply hij
-          have ha2 : 2 * ((i : ℕ) / 2) = (i : ℕ) := Nat.mul_div_cancel' (Nat.dvd_of_mod_eq_zero hei)
-          have hb2 : 2 * ((j : ℕ) / 2) = (j : ℕ) := Nat.mul_div_cancel' (Nat.dvd_of_mod_eq_zero hej)
+          have ha2 := Nat.mul_div_cancel' (Nat.dvd_of_mod_eq_zero hei)
+          have hb2 := Nat.mul_div_cancel' (Nat.dvd_of_mod_eq_zero hej)
           omega
         simp [hij, Delta.eq.Ite, hne]
         apply (Tensor.EqMul_0'0.nat _).symm
     else
-      have hj1 : (j : ℕ) % 2 = 1 := Nat.mod_two_ne_zero.mp hej
-      simp [toSplit, hei, hj1]
-      let iC : Fin (d + d) := ⟨(i : ℕ) / 2, by grind⟩
-      let jR : Fin (d + d) := ⟨(j : ℕ) / 2 + d, by grind⟩
-      have hRg := GetRotaryMatrix.eq.MulNegSin_Delta.of.Lt.Ge θ iC jR (by grind) (by grind)
-      simp only [iC, jR] at hL hRg ⊢
+      simp [toSplit, hei, Nat.mod_two_ne_zero.mp hej]
+      have hRg := GetRotaryMatrix.eq.MulNegSin_Delta.of.Lt.Ge θ ⟨i / 2, by grind⟩ ⟨j / 2 + d, by grind⟩ (by grind) (by grind)
       apply hL.trans (Eq.trans ?_ hRg.symm)
-      have hneij : (j : ℕ) ≠ (i : ℕ) := fun h => hej (h ▸ hei)
+      have hneij : (j : ℕ) ≠ i := fun h => hej (h ▸ hei)
       simp [hei, hneij]
-      if hs : (j : ℕ) = (i : ℕ) + 1 then
-        have heq : (i : ℕ) / 2 = ((i : ℕ) + 1) / 2 := by omega
+      if hs : (j : ℕ) = i + 1 then
+        have heq : (i : ℕ) / 2 = (i + 1) / 2 := by omega
         simp [hs, Delta.eq.Ite, heq]
         apply (Tensor.EqMul_1.nat _).symm
       else
-        have hne : (i : ℕ) / 2 ≠ (j : ℕ) / 2 := by
+        have hne : (i : ℕ) / 2 ≠ j / 2 := by
           intro h
           apply hs
           omega
@@ -111,42 +104,33 @@ private lemma main
         apply (Tensor.EqMul_0'0.nat _).symm
   else
     if hej : (j : ℕ) % 2 = 0 then
-      have hi1 : (i : ℕ) % 2 = 1 := Nat.mod_two_ne_zero.mp hei
-      simp [toSplit, hi1, hej]
-      let iR : Fin (d + d) := ⟨(i : ℕ) / 2 + d, by grind⟩
-      let jC : Fin (d + d) := ⟨(j : ℕ) / 2, by grind⟩
-      have hRg := GetRotaryMatrix.eq.MulSin_Delta.of.Ge.Lt θ iR jC (by grind) (by grind)
-      simp only [iR, jC] at hL hRg ⊢
+      simp [toSplit, Nat.mod_two_ne_zero.mp hei, hej]
+      have hRg := GetRotaryMatrix.eq.MulSin_Delta.of.Ge.Lt θ ⟨i / 2 + d, by grind⟩ ⟨j / 2, by grind⟩ (by grind) (by grind)
       apply hL.trans (Eq.trans ?_ hRg.symm)
-      have hneij : (j : ℕ) ≠ (i : ℕ) := fun h => hei (h ▸ hej)
+      have hneij : (j : ℕ) ≠ i := fun h => hei (h ▸ hej)
       simp [hei, hneij]
-      if hp : (j : ℕ) + 1 = (i : ℕ) then
-        have heq : (i : ℕ) / 2 = (j : ℕ) / 2 := by omega
+      if hp : (j : ℕ) + 1 = i then
+        have heq : (i : ℕ) / 2 = j / 2 := by omega
         simp [hp, Delta.eq.Ite, heq]
         apply (Tensor.EqMul_1.nat _).symm
       else
-        have hne : (i : ℕ) / 2 ≠ (j : ℕ) / 2 := by
+        have hne : (i : ℕ) / 2 ≠ j / 2 := by
           intro h
           apply hp
           omega
         simp [hp, Delta.eq.Ite, hne]
         apply (Tensor.EqMul_0'0.nat _).symm
     else
-      have hi1 : (i : ℕ) % 2 = 1 := Nat.mod_two_ne_zero.mp hei
-      have hj1 : (j : ℕ) % 2 = 1 := Nat.mod_two_ne_zero.mp hej
-      simp [toSplit, hi1, hj1]
-      let iR : Fin (d + d) := ⟨(i : ℕ) / 2 + d, by grind⟩
-      let jR : Fin (d + d) := ⟨(j : ℕ) / 2 + d, by grind⟩
-      have hRg := GetRotaryMatrix.eq.MulCos_Delta.of.Ge.Ge θ iR jR (by grind) (by grind)
-      simp only [iR, jR] at hL hRg ⊢
+      simp [toSplit, Nat.mod_two_ne_zero.mp hei, Nat.mod_two_ne_zero.mp hej]
+      have hRg := GetRotaryMatrix.eq.MulCos_Delta.of.Ge.Ge θ ⟨i / 2 + d, by grind⟩ ⟨j / 2 + d, by grind⟩ (by grind) (by grind)
       apply hL.trans (Eq.trans ?_ hRg.symm)
-      have hpred : ¬((j : ℕ) + 1 = (i : ℕ)) := by omega
+      have hpred : ¬((j : ℕ) + 1 = i) := by omega
       simp [hei, hpred]
-      if hij : (j : ℕ) = (i : ℕ) then
+      if hij : (j : ℕ) = i then
         simp [hij, Delta.eq.Ite]
         apply (Tensor.EqMul_1.nat _).symm
       else
-        have hne : (i : ℕ) / 2 ≠ (j : ℕ) / 2 := by
+        have hne : (i : ℕ) / 2 ≠ j / 2 := by
           intro h
           apply hij
           omega
