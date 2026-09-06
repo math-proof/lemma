@@ -99,6 +99,11 @@ function is_latex_print($latex, &$res)
     return false;
 }
 
+if (($resolved = module_from_lemma_path($module)) !== null && $resolved !== $module) {
+    header("location:?module=$resolved");
+    exit;
+}
+
 $module = str_replace('/', '.', $module);
 $title = str_replace('.', '/', $module);
 

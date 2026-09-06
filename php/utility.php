@@ -37,6 +37,22 @@ function py_to_module($py)
     return $module;
 }
 
+/** If `$module` is a filesystem path under `Lemma/`, return the dotted module name; otherwise null. */
+function module_from_lemma_path($module)
+{
+    $norm = str_replace('\\', '/', $module);
+    if (!preg_match('#(?:^|/)Lemma/#', $norm)) {
+        return null;
+    }
+    $py = $module;
+    if (is_file($module)) {
+        $py = realpath($module);
+    } elseif (is_file($norm)) {
+        $py = realpath($norm);
+    }
+    return py_to_module($py);
+}
+
 function php_to_py($php)
 {
     // error_log("php file = $php");
