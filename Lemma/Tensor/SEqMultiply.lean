@@ -1,7 +1,7 @@
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Lemma.Vector.Eq.of.Val
 import sympy.tensor.multiply
-open Tensor Vector Nat List.Vector
+open Tensor Vector
 
 
 @[main]
