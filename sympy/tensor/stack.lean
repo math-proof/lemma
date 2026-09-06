@@ -22,6 +22,15 @@ macro_rules
   | `(∑ _ < $n, $body) => `(([ _ < $n ] $body).sum 0)
   | `(∑ $x:ident < $n, $body) => `(([ $x:ident < $n ] $body).sum 0)
 
+/--
+Tensor product along axis 0 of a stack: `∏ i < n, f i` means `([i < n] f i).prod 0`.
+Uses priority above Mathlib's bounded `∏ i < n, …` (Finset.Iio) notation.
+-/
+syntax (priority := 10000) "∏ " binderIdent "<" term ", " term:67 : term
+macro_rules
+  | `(∏ _ < $n, $body) => `(([ _ < $n ] $body).prod 0)
+  | `(∏ $x:ident < $n, $body) => `(([ $x:ident < $n ] $body).prod 0)
+
 
 -- Unexpander to convert Stack expressions back to custom syntax
 @[app_unexpander Stack]
@@ -38,6 +47,18 @@ def Tensor.sum.unexpand : PrettyPrinter.Unexpander
     match X with
     | `([$x < $n] $body) =>
       `(∑ $x < $n, $body)
+    | _ =>
+      throw ()
+  | _ =>
+    throw ()
+
+/-- Infoview: print `([i < n] f i).prod 0` as `∏ i < n, f i`. -/
+@[app_unexpander Tensor.prod]
+def Tensor.prod.unexpand : PrettyPrinter.Unexpander
+  | `($_ $X 0) =>
+    match X with
+    | `([$x < $n] $body) =>
+      `(∏ $x < $n, $body)
     | _ =>
       throw ()
   | _ =>

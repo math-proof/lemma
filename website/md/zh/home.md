@@ -57,6 +57,7 @@
 * [Vector](../?module=Vector) 向量（一维张量）理论
 * [Tensor](../?module=Tensor) 形式化张量演算，语义上与 **torch.Tensor** 对齐，用于深度学习算法的形式化表述与验证，例：
   - [kv_cache](../?module=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T)
+  - [RoPE](../?module=Tensor.DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul)
 
 <br><br>
 -------

@@ -283,12 +283,12 @@ const self = new Vue({
 
   mounted() {
     this.$nextTick(() => {
-      this.explorerRoot?.focus?.();
+      this.explorerEl()?.focus?.();
     });
-    const hit = this.focusRowFromHash();
+    const hit = this.focusRowFromHash() || this.focusOfFolder();
     if (!hit && this.displayRows.length) {
       this.$nextTick(() => {
-        this.explorerRoot?.querySelector?.('.row-inner')?.focus?.();
+        this.explorerEl()?.querySelector?.('.row-inner')?.focus?.();
       });
     }
     if (this.rows.length === 0 && this.packages.length === 0 && this.theorems.length === 0) {
@@ -331,7 +331,7 @@ const self = new Vue({
         clearTimeout(folderSearchTimer);
         folderSearchTimer = null;
       }
-      this.$nextTick(() => this.explorerRoot?.focus());
+      this.$nextTick(() => this.explorerEl()?.focus());
     },
     async deleteSelectedLeanFile() {
       const row = this.displayRows[this.selectedIndex];
@@ -439,10 +439,8 @@ const self = new Vue({
         }
       }
     },
-    focusRowFromHash() {
-      const hash = location.hash ? location.hash.slice(1) : '';
-      if (!hash) return false;
-      const i = this.displayRows.findIndex((r) => r.name === hash);
+    focusRowByName(name) {
+      const i = this.displayRows.findIndex((r) => r.name === name);
       if (i < 0) return false;
       this.selectedIndex = i;
       this.$nextTick(() => {
@@ -451,6 +449,24 @@ const self = new Vue({
         el?.querySelector('.row-inner')?.focus?.();
       });
       return true;
+    },
+    focusRowFromHash() {
+      const hash = location.hash ? location.hash.slice(1) : '';
+      if (!hash) return false;
+      return this.focusRowByName(hash);
+    },
+    /** Former lemma path is often now a directory whose next step is `of` (e.g. `…/of/Ge`). */
+    focusOfFolder() {
+      const i = this.displayRows.findIndex((r) => r.kind === 'folder' && r.name === 'of');
+      if (i < 0) return false;
+      return this.focusRowByName('of');
+    },
+    /** Template `:ref="$refs.explorerRoot"` is a Vue ref; `this.explorerRoot` stays `{}` until `$mounted`. */
+    explorerEl() {
+      const slot = this.$refs?.explorerRoot;
+      if (slot && typeof slot === 'object' && slot.value instanceof HTMLElement) return slot.value;
+      if (this.explorerRoot instanceof HTMLElement) return this.explorerRoot;
+      return document.querySelector('.explorer');
     },
   },
 });

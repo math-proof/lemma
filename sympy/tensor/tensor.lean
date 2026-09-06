@@ -571,6 +571,16 @@ instance [CommMonoid α] : CommMonoid (Tensor α s) where
 instance [CommSemiring α] : CommSemiring (Tensor α s) where
   mul_comm := mul_comm
 
+instance [AddCommGroup α] : AddCommGroup (Tensor α s) where
+  add_comm := add_comm
+
+instance [AddGroupWithOne α] : AddGroupWithOne (Tensor α s) where
+
+instance [Ring α] : Ring (Tensor α s) where
+
+instance [CommRing α] : CommRing (Tensor α s) where
+  mul_comm := mul_comm
+
 instance [Add α] [IsLeftCancelAdd α] : IsLeftCancelAdd (Tensor α s) where
   add_left_cancel a := by
     unfold IsAddLeftRegular Function.Injective

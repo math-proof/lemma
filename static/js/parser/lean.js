@@ -77,6 +77,7 @@ export const token2classname = Object.freeze({
 
 /** Lean identifier continuation token (supports Unicode letters like Ξ). */
 function isIdentContinueToken(s) {
+    if ('ᵀ¹²³⁴'.includes(s)) return false;
     return /^[\p{L}\p{N}_'!?₀-₉]+$/u.test(s);
 }
 
@@ -427,6 +428,7 @@ export class Lean extends IndentedNode {
             case 'open':
             case 'namespace':
             case 'def':
+            case 'abbrev':
             case 'theorem':
             case 'lemma':
             case 'set_option':
@@ -2731,6 +2733,12 @@ export class LeanProperty extends LeanBinary {
                     return [this.lhs.toLatex(syntax)];
                 case 'factorial':
                     return [this.lhs.toLatex(syntax)];
+                case 'det': {
+                    let arg = this.lhs;
+                    if (arg instanceof LeanParenthesis && !(arg.arg instanceof LeanColon))
+                        arg = arg.arg;
+                    return [arg.toLatex(syntax)];
+                }
             }
         }
         return super.latexArgs(syntax);
@@ -2795,6 +2803,8 @@ export class LeanProperty extends LeanBinary {
                     return '{\\color{RoyalBlue}\\sigma}\\left(%s\\right)';
                 case 'factorial':
                     return '{%s}!';
+                case 'det':
+                    return '\\left|{%s}\\right|';
             }
         }
         return `{%s}${this.command}{%s}`;
@@ -3624,12 +3634,8 @@ export class LeanPow extends LeanArithmetic {
                 (inner instanceof LeanArgsSpaceSeparated && (inner.is_Abs() || inner.is_Bool())))
                 lhs = inner;
         }
-        if (rhs instanceof LeanParenthesis) {
-            const inner = rhs.arg;
-            if (inner instanceof LeanDiv || inner instanceof Lean_sqrt || inner instanceof LeanPairedGroup ||
-                (inner instanceof LeanArgsSpaceSeparated && (inner.is_Abs() || inner.is_Bool())))
-                rhs = inner;
-        }
+        if (rhs instanceof LeanParenthesis)
+            rhs = rhs.arg;
         return [lhs.toLatex(syntax), rhs.toLatex(syntax)];
     }
 }
@@ -3860,6 +3866,9 @@ class LeanInv extends LeanUnaryArithmeticPost {
 class LeanFactorial extends LeanUnaryArithmeticPost {
     static input_priority = 10000;
     get operator() {
+        return '!';
+    }
+    get command() {
         return '!';
     }
     strFormat() {
@@ -6873,6 +6882,83 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         return func instanceof LeanToken && args.length === 2 && func.text === 'abs';
     }
 
+    /** `Ico` / `Finset.Ico` / `Set.Ico` (and Icc, Ioc, Ioo, Ici, Iic, Ioi, Iio). */
+    intervalCtor() {
+        const func = this.args[0];
+        if (func instanceof LeanToken) return func.text;
+        if (func instanceof LeanProperty && func.rhs instanceof LeanToken) return func.rhs.text;
+        return null;
+    }
+
+    /**
+     * `descFactorial x k` / `x.descFactorial k` / `Nat.descFactorial n k`
+     * (same shapes for `ascFactorial`).
+     */
+    factorialPowerOperands() {
+        const {args} = this;
+        const func = args[0];
+        if (func instanceof LeanToken && args.length === 3)
+            return [args[1], args[2]];
+        if (func instanceof LeanProperty && func.rhs instanceof LeanToken) {
+            if (args.length === 2) return [func.lhs, args[1]];
+            if (args.length === 3) return [args[1], args[2]];
+        }
+        return null;
+    }
+
+    /** Falling \(x^{\underline{k}}\) / rising \(x^{\overline{k}}\). */
+    factorialPowerLatexFormat() {
+        if (!this.factorialPowerOperands()) return null;
+        const func = this.args[0];
+        const name = func instanceof LeanToken ? func.text
+            : func instanceof LeanProperty && func.rhs instanceof LeanToken ? func.rhs.text
+            : null;
+        switch (name) {
+            case 'descFactorial':
+                return '{%s}^{\\underline{%s}}';
+            case 'ascFactorial':
+                return '{%s}^{\\overline{%s}}';
+            default:
+                return null;
+        }
+    }
+
+    /** `Ico a b` → `[a, b)`. */
+    intervalLatexFormat() {
+        const ctor = this.intervalCtor();
+        if (!ctor) return null;
+        switch (this.args.length) {
+            case 2:
+                switch (ctor) {
+                    case 'Ici':
+                        return '\\left[%s, \\infty\\right)';
+                    case 'Iic':
+                        return '\\left(-\\infty, %s\\right]';
+                    case 'Ioi':
+                        return '\\left(%s, \\infty\\right)';
+                    case 'Iio':
+                        return '\\left(-\\infty, %s\\right)';
+                    default:
+                        return null;
+                }
+            case 3:
+                switch (ctor) {
+                    case 'Ioc':
+                        return '\\left(%s, %s\\right]';
+                    case 'Ioo':
+                        return '\\left(%s, %s\\right)';
+                    case 'Icc':
+                        return '\\left[%s, %s\\right]';
+                    case 'Ico':
+                        return '\\left[%s, %s\\right)';
+                    default:
+                        return null;
+                }
+            default:
+                return null;
+        }
+    }
+
     is_Bool() {
         const args = this.args;
         const func = args[0];
@@ -6889,6 +6975,15 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
             func.lhs instanceof LeanParenthesis && func.lhs.arg instanceof LeanStack &&
             func.rhs instanceof LeanToken && func.rhs.text === 'sum' && 
             zero instanceof LeanToken && 
+            zero.text === '0';
+    }
+
+    is_Prod() {
+        const [func, zero] = this.args;
+        return func instanceof LeanProperty &&
+            func.lhs instanceof LeanParenthesis && func.lhs.arg instanceof LeanStack &&
+            func.rhs instanceof LeanToken && func.rhs.text === 'prod' &&
+            zero instanceof LeanToken &&
             zero.text === '0';
     }
 
@@ -6979,6 +7074,17 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
             const stripped = this.strip_parenthesis();
             return [stripped[1].toLatex(syntax)];
         }
+        if (this.intervalLatexFormat()) {
+            const s = this.strip_parenthesis();
+            if (syntax && func instanceof LeanToken) syntax[func.text] = true;
+            if (args.length === 2) return [s[1].toLatex(syntax)];
+            return [s[1].toLatex(syntax), s[2].toLatex(syntax)];
+        }
+        if (this.factorialPowerLatexFormat()) {
+            const [n, k] = this.factorialPowerOperands();
+            const peel = (arg) => (arg instanceof LeanParenthesis ? arg.arg : arg);
+            return [n.toLatex(syntax), peel(k).toLatex(syntax)];
+        }
         if (func instanceof LeanToken) {
             const fn = func.text;
             if (syntax) syntax[fn] = true;
@@ -7008,10 +7114,6 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
                             if (arg instanceof LeanParenthesis && arg.arg instanceof LeanDiv) arg = arg.arg;
                             return [arg.toLatex(syntax)];
                         }
-                        case 'Ici':
-                        case 'Iic':
-                        case 'Ioi':
-                        case 'Iio':
                         case 'eye':
                             return [];
                         case 'Zeros':
@@ -7024,13 +7126,6 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
                     break;
                 case 3:
                     switch (fn) {
-                        case 'Ioc':
-                        case 'Ioo':
-                        case 'Icc':
-                        case 'Ico': {
-                            const s = this.strip_parenthesis();
-                            return [s[1].toLatex(syntax), s[2].toLatex(syntax)];
-                        }
                         case 'KroneckerDelta':
                             return [args[1].toLatex(syntax), args[2].toLatex(syntax)];
                         default:
@@ -7041,7 +7136,7 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         } else if (this.is_Bool()) {
             const stripped = this.strip_parenthesis();
             return [stripped[1].toLatex(syntax)];
-        } else if (this.is_Sum()) {
+        } else if (this.is_Sum() || this.is_Prod()) {
             return this.args[0].lhs.arg.latexArgs();
         } else if (
             func instanceof LeanProperty &&
@@ -7075,6 +7170,10 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         const {args} = this;
         const func = args[0];
         if (this.is_Abs()) return '\\left|{%s}\\right|';
+        const interval = this.intervalLatexFormat();
+        if (interval) return interval;
+        const factorialPower = this.factorialPowerLatexFormat();
+        if (factorialPower) return factorialPower;
         if (func instanceof LeanToken) {
             switch (args.length) {
                 case 2:
@@ -7098,14 +7197,6 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
                         case 'arctanh':
                         case 'arccoth':
                             return `${func.text}\\ {%s}`;
-                        case 'Ici':
-                            return '\\left[%s, \\infty\\right)';
-                        case 'Iic':
-                            return '\\left(-\\infty, %s\\right]';
-                        case 'Ioi':
-                            return '\\left(%s, \\infty\\right)';
-                        case 'Iio':
-                            return '\\left(-\\infty, %s\\right)';
                         case 'eye':
                             return '\\mathbb{I}';
                         case 'Zeros':
@@ -7117,14 +7208,6 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
                     break;
                 case 3:
                     switch (func.text) {
-                        case 'Ioc':
-                            return '\\left(%s, %s\\right]';
-                        case 'Ioo':
-                            return '\\left(%s, %s\\right)';
-                        case 'Icc':
-                            return '\\left[%s, %s\\right]';
-                        case 'Ico':
-                            return '\\left[%s, %s\\right)';
                         case 'KroneckerDelta':
                             return '\\delta_{%s %s}';
                         default:
@@ -7134,8 +7217,8 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
             }
         } else if (this.is_Bool()) {
             return '\\left|{%s}\\right|';
-        } else if (this.is_Sum()) {
-            return '\\sum\\limits_{\\substack{%s}} {%s}';
+        } else if (this.is_Sum() || this.is_Prod()) {
+            return `\\${this.args[0].rhs.text}\\limits_{\\substack{%s}} {%s}`;
         } else if (func instanceof LeanProperty && func.rhs instanceof LeanToken) {
             if (func.rhs.text === 'eye' && args.length === 2) return '\\mathbb{I}';
             if (func.rhs.text === 'fmod' && args.length === 2) return '{%s}{%s}';
@@ -9257,7 +9340,8 @@ class LeanAttribute extends LeanUnary {
         switch ($new) {
             case 'Lean_theorem':
             case 'Lean_lemma':
-            case 'Lean_def': {
+            case 'Lean_def':
+            case 'Lean_abbrev': {
                 $new = LEAN_CLASSES[$new];
                 const {level, indent} = this;
                 const caret = new LeanCaret(indent, level);
@@ -9417,6 +9501,8 @@ export class Lean_def extends LeanArgs {
 }
 
 export class Lean_theorem extends Lean_def {}
+
+export class Lean_abbrev extends Lean_def {}
 
 export class Lean_lemma extends Lean_def {
     echo() {
@@ -9758,9 +9844,37 @@ class LeanBigOperator extends LeanArgs {
         return `${op} %s,${sep}%s`;
     }
 
+    /** `i : Fin k` in ∑/∏ → subscript `i < k`. */
+    finRangeBound() {
+        const bound = this.bound;
+        if (!(bound instanceof LeanColon)) return null;
+        let ty = bound.rhs;
+        if (ty instanceof LeanParenthesis) ty = ty.arg;
+        if (ty instanceof LeanArgsSpaceSeparated && ty.args.length === 2) {
+            const [fn, n] = ty.args;
+            if (fn instanceof LeanToken && fn.text === 'Fin')
+                return [bound.lhs, n];
+        }
+        return null;
+    }
+
     latexFormat() {
+        if (!(this instanceof LeanQuantifier) && this.finRangeBound())
+            return `${this.command}\\limits_{%s < %s} {%s}`;
         const cmd = this.command;
         return `${cmd}\\limits_{\\substack{%s}} {%s}`;
+    }
+
+    latexArgs(syntax) {
+        if (!(this instanceof LeanQuantifier)) {
+            const fin = this.finRangeBound();
+            if (fin) {
+                const [i, n] = fin;
+                const peel = (arg) => (arg instanceof LeanParenthesis ? arg.arg : arg);
+                return [i.toLatex(syntax), peel(n).toLatex(syntax), this.scope.toLatex(syntax)];
+            }
+        }
+        return super.latexArgs(syntax);
     }
 
     toJSON() {
@@ -10078,6 +10192,7 @@ const LEAN_CLASSES = {
     LeanStatements,
     LeanModule,
     Lean_def,
+    Lean_abbrev,
     Lean_theorem,
     Lean_lemma,
     LeanCaret,

@@ -56,6 +56,7 @@ The library currently contains <label id=count>5000</label> proved theorems (<la
 * [Vector](../?module=Vector) One-dimensional vector theorems
 * [Tensor](../?module=Tensor) Formal tensor calculus, semantically equivalent to **torch.Tensor**, for formal verification of deep-learning algorithms, e.g.:
   - [kv_cache](../?module=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T)
+  - [RoPE](../?module=Tensor.DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul)
 
 <br><br>
 -------

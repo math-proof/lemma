@@ -6,12 +6,6 @@ import sympy.tensor.Basic
 open Tensor Vector
 
 
-/--
-| attributes | lemma |
-| :---: | :---: |
-| main | Tensor.Mul |
-| comm | Tensor.Mul.comm |
--/
 @[main]
 private lemma main
   [Mul α]

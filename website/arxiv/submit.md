@@ -22,6 +22,8 @@ Do not use `main.md` for the Chinese file.
 - One paper, one `main.tex`, compiled with pdfLaTeX.
 - Bibliography: classic BibTeX (`\bibliographystyle{…}` + `\bibliography{refs}`), not `biblatex`/`biber`.
 - Lemma names as clickable text via `\href{http://www.lemma.cn/lean/?module=…}{…}` or `\lmod{…}`. Do not print the raw `http://…` string next to the name.
+- Under **Project artifact** on the title page, put the GitHub URL and a last line that is the Lean~4 lemma link (`Lean~4` as the clickable text), so a reader can skip the PDF and open the theorem. Same line at the top of the Zhihu `*.md`.
+- **Lean~4 only.** Do not mention SymPy, `lemma.cn/py/`, `.py` sources, or the `master` branch. Dates on those pages are draft times, not proof times. The paper is the Lean theorem.
 - Keep the upload **flat**: no subdirectories. Extra figures, if any, sit next to `main.tex`.
 
 ## `main.bbl` and `main.pdf`
@@ -84,6 +86,7 @@ Audience: Zhihu readers (知乎读者). This file is not the arXiv source.
 - **Headings:** only `#` and `##` (no `###` or deeper).
 - **Author line:** omit the arXiv author name (Zhihu anonymity). A project-artifact link is enough.
 - **Hyperlink** `[text](url)`: both sides must be free of markdown special tokens. No LaTeX (`\(`, `$`, `\mathrm`, …), no backtick code spans, and no ASCII apostrophe `'`. A parser can take `'` as the start of a link title, so `[共轭](…RotaryMatrix'.eq…)` is broken. Put math or `code` outside the brackets. The lemma name **is** the `module=` query and the Linux path; do not replace `'` with a lookalike (Unicode prime `′` is a different character and will 404). Write the path apostrophe as `%27` in the URL, and in the label whenever the label is the lemma name: `[RotaryMatrix%27.eq.DotDot_RotaryMatrix](http://www.lemma.cn/lean/?module=Tensor.RotaryMatrix%27.eq.DotDot_RotaryMatrix)`. A Chinese word as label is fine: `[共轭](http://www.lemma.cn/lean/?module=Tensor.RotaryMatrix%27.eq.DotDot_RotaryMatrix)`.
-- Lemma names are markdown links to lemma.cn, not raw `http://…` in the body.
+- Lemma names are markdown links to lemma.cn Lean pages only (`/lean/?module=`), not raw `http://…` in the body, and not `lemma.cn/py/`.
+- Do not mention SymPy. Same rule as `main.tex`.
 - Do not link to repo `main.pdf`. Add the arXiv URL after acceptance.
 - Keep section-for-section correspondence with `main.tex` (chapters, formulas, figure numbers, bibliography).

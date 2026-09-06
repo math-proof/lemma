@@ -7,6 +7,18 @@ open Tensor Vector
 
 
 @[main]
+private lemma main
+  [MulOneClass α]
+-- given
+  (X : Tensor α []) :
+-- imply
+  (1 : Tensor α []) * X = X := by
+-- proof
+  rw [Tensor.Mul]
+  apply one_mul
+
+
+@[main]
 private lemma nat
   [Semiring α]
   [CharZero α]
@@ -15,23 +27,8 @@ private lemma nat
 -- imply
   (↑(1 : ℕ) : Tensor α []) * x = x := by
 -- proof
-  erw [Nat.cast_one, Tensor.Mul]
-  apply one_mul
-
-
-@[main]
-private lemma main
-  [MulOneClass α]
--- given
-  (X : Tensor α s) :
--- imply
-  (1 : α) * X = X := by
--- proof
-  apply Eq.of.EqDataS
-  rw [DataMul.eq.Mul_Data]
-  ext i
-  rw [GetMul.eq.Mul_Get.fin]
-  apply one_mul
+  erw [Nat.cast_one]
+  apply main
 
 
 -- created on 2026-09-04

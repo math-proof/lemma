@@ -22,6 +22,9 @@ instance : IsConstant (Vector α n) where
 def sum [Add α] [Zero α] : Vector α n → α
   | ⟨v, _⟩ => v.sum
 
+def prod [Mul α] [One α] : Vector α n → α
+  | ⟨v, _⟩ => v.prod
+
 def headD : Vector α n → α → α
   | ⟨v, _⟩, d => v.headD d
 

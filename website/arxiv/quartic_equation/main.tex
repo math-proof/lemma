@@ -24,8 +24,7 @@
 \author{LiZhi Zhou\\[0.3em]
 \small Project artifact: \url{https://github.com/math-proof/lemma}\\[0.2em]
 \small Quartic:
-\href{http://www.lemma.cn/lean/?module=Complex.Eq0Add_Mul_Pow_4.is.In_Ite_FinsetSSubS__SubS.of.Ne_0}{Lean~4},
-\href{http://www.lemma.cn/py/?module=Complex.In_Ite_FinsetSSubS__SubS.of.Eq0Add_Mul_Pow_4.Ne_0}{SymPy}}
+\href{http://www.lemma.cn/lean/?module=Complex.Eq0Add_Mul_Pow_4.is.In_Ite_FinsetSSubS__SubS.of.Ne_0}{Lean~4}}
 \date{}
 
 \begin{document}
@@ -48,10 +47,8 @@ so no explicit case split on \(k\bmod 3\) is required.
 The primitive cube root is written as the radical
 \(\omega=-\tfrac12+i\sqrt{3}/2\) (the form \(e^{2\pi i/3}\) is used only as notation).
 
-Artifacts: Lean theorem
-\href{http://www.lemma.cn/lean/?module=Complex.Eq0Add_Mul_Pow_4.is.In_Ite_FinsetSSubS__SubS.of.Ne_0}{\nolinkurl{Complex.Eq0Add_Mul_Pow_4.is.In_Ite_FinsetSSubS__SubS.of.Ne_0}}~\cite{lemma_quartic_lean},
-SymPy counterpart
-\href{http://www.lemma.cn/py/?module=Complex.In_Ite_FinsetSSubS__SubS.of.Eq0Add_Mul_Pow_4.Ne_0}{\nolinkurl{Complex.In_Ite_FinsetSSubS__SubS.of.Eq0Add_Mul_Pow_4.Ne_0}}~\cite{lemma_quartic_sympy},
+Artifact: Lean theorem
+\href{http://www.lemma.cn/lean/?module=Complex.Eq0Add_Mul_Pow_4.is.In_Ite_FinsetSSubS__SubS.of.Ne_0}{\nolinkurl{Complex.Eq0Add_Mul_Pow_4.is.In_Ite_FinsetSSubS__SubS.of.Ne_0}}~\cite{lemma_quartic_lean}
 and source repository~\cite{lemma_repo}.
 \end{abstract}
 
@@ -82,14 +79,8 @@ an if-and-only-if: the equation holds precisely when \(x\) lies in the four-elem
 The cube-root branch is \(y=A\omega^{k}+B\), not three residue classes of an integer modulo~3.
 Cube roots in the statement are Lean \(\sqrt[3]{\,}\) (\texttt{Root.cubic}), not a bare \texttt{cpow} written as \(z^{(3:\C)^{-1}}\).
 
-The SymPy~\cite{sympy,meurer2017sympy} counterpart~\cite{lemma_quartic_sympy} is the one-direction lemma
-\nolinkurl{Complex.In_Ite_FinsetSSubS__SubS.of.Eq0Add_Mul_Pow_4.Ne_0}
-(the Lean \nolinkurl{mp} alias); it has no \nolinkurl{is} if-and-only-if.
-Both are visualized on lemma.cn.
-Source files are
-\nolinkurl{Lemma/Complex/Eq0Add_Mul_Pow_4/is/In_Ite_FinsetSSubS__SubS/of/Ne_0.lean} (branch \nolinkurl{main})
-and
-\nolinkurl{Lemma/Complex/In_Ite_FinsetSSubS__SubS/of/Eq0Add_Mul_Pow_4/Ne_0.py} (branch \nolinkurl{master})~\cite{lemma_repo}.
+The source file is
+\nolinkurl{Lemma/Complex/Eq0Add_Mul_Pow_4/is/In_Ite_FinsetSSubS__SubS/of/Ne_0.lean}~\cite{lemma_repo}.
 Companion statements in the same library---linked only, without their solution methods---are the quadratic~\cite{lemma_quadratic_lean} and the cubic~\cite{lemma_cubic_lean}.
 
 \subsection{Main contributions}
@@ -99,7 +90,7 @@ This paper contributes the following concrete artifacts.
 \begin{enumerate}[leftmargin=1.3em,itemsep=0.2em]
   \item A total principal-radical quartic map over \(\C\): for every coefficient tuple with \(a\neq 0\), the theorem returns a four-element radical solution set.
   \item A branch-consistent Cardano pairing under principal cube roots, encoded by a single selector \(\omega^k\) instead of a manual split on \(k\bmod 3\).
-  \item A Lean~4 if-and-only-if theorem (not only one direction), publicly linked with dependency graph and companion SymPy artifact.
+  \item A Lean~4 if-and-only-if theorem, publicly linked with its dependency graph.
   \item A fully explicit radical form for \(\omega\), namely \(-\tfrac12+i\sqrt{3}/2\), compatible with principal-branch reasoning used in the formal proof.
 \end{enumerate}
 
@@ -108,9 +99,7 @@ This paper contributes the following concrete artifacts.
 
 All statements are public and executable from the \nolinkurl{lemma} repository~\cite{lemma_repo}.
 The main Lean object is
-\nolinkurl{Complex.Eq0Add_Mul_Pow_4.is.In_Ite_FinsetSSubS__SubS.of.Ne_0}~\cite{lemma_quartic_lean},
-and the SymPy analogue is
-\nolinkurl{Complex.In_Ite_FinsetSSubS__SubS.of.Eq0Add_Mul_Pow_4.Ne_0}~\cite{lemma_quartic_sympy}.
+\nolinkurl{Complex.Eq0Add_Mul_Pow_4.is.In_Ite_FinsetSSubS__SubS.of.Ne_0}~\cite{lemma_quartic_lean}.
 For a camera-ready release, we recommend pinning the exact repository commit hash and Lean/mathlib toolchain revision in this section.
 
 \section{Related work}
@@ -214,10 +203,7 @@ The \(\mathtt{if}\) selects the matching four-element set; it does not list Ferr
 \section{Figures}
 \label{sec:figures}
 
-\paragraph{Figure~0 --- public visualizations.}
-The SymPy page~\cite{lemma_quartic_sympy} displays the one-direction (\texttt{mp}) statement
-\texttt{In\_Ite\_FinsetSSubS\_\_SubS.of.Eq0Add\_Mul\_Pow\_4.Ne\_0}
-as an interactive theorem document (created 2018-11-29).
+\paragraph{Figure~0 --- public visualization.}
 The Lean~4 page~\cite{lemma_quartic_lean} displays \texttt{@[main, comm, mp, mpr] private lemma main} with \(\{x,a,b,c,d,e:\C\}\), the hypothesis \(a\neq 0\), the \texttt{let} chain \(a',b',\alpha,\beta,\gamma\) and the inner \(\mathtt{if}\) lets, and the if-and-only-if
 \(ax^4+\cdots+e=0\) iff \(x\) belongs to the selected four-element set.
 
@@ -263,7 +249,6 @@ x=z-\dfrac{a'}{4}
 \paragraph{Figure~2 --- lemma dependencies.}
 Figure~\ref{fig:deps} lists major imported lemmas of Theorem~\ref{thm:quartic}.
 Links point to the Lean~4 pages.
-SymPy has only the one-direction (\texttt{of}/\texttt{mp}) names, e.g.\ \url{http://www.lemma.cn/py/?module=Complex.In_Ite_FinsetSSubS__SubS.of.Eq0Add_Mul_Pow_4.Ne_0}, not the Lean \texttt{is} if-and-only-if.
 
 \begin{figure}[ht]
 \small
@@ -441,7 +426,7 @@ The present lemma is the complementary statement on \(\C\): every coefficient tu
 \label{sec:conclusion}
 
 We have presented a machine-checked, fully expanded Ferrari--Cardano formula for the general quartic over \(\C\), using principal square roots, principal cube roots \(\sqrt[3]{\,}\), the radical cube root of unity \(-\tfrac12+i\sqrt{3}/2\), and a single power \(\omega^{k}\) assembled from \(\Arg\) and \(\lceil\cdot\rceil\).
-The result is public on lemma.cn and GitHub~\cite{lemma_repo}, with proofs checked in Lean~4 and an earlier SymPy formulation.
+The result is public on lemma.cn and GitHub~\cite{lemma_repo}, with proofs checked in Lean~4.
 
 \bibliographystyle{plain}
 \bibliography{refs}

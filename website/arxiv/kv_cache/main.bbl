@@ -38,12 +38,10 @@ Woosuk Kwon et~al.
 \newblock vllm: Easy, fast, and cheap llm serving.
 \newblock \url{https://github.com/vllm-project/vllm}, 2023.
 
-\bibitem{lemma_kv_cache_sympy}
+\bibitem{lemma_infty}
 math proof.
-\newblock kv\_cache lemma (sympy).
-\newblock
-  \url{http://www.lemma.cn/py/?module=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T.kv_cache},
-  2024.
+\newblock Hyperreal.infiniteinfty.
+\newblock \url{http://www.lemma.cn/lean/?module=Hyperreal.InfiniteInfty}, 2025.
 
 \bibitem{lemma_xeq}
 math proof.

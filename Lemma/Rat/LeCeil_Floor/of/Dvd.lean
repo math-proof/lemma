@@ -60,7 +60,7 @@ private lemma main
         norm_cast
         ring_nf
       simpa [hq'] using hle
-    exact_mod_cast hceil_le_q.trans (Int.cast_le.mpr hq_le_floor)
+    exact hceil_le_q.trans (Int.cast_le.mpr hq_le_floor)
 
 
 -- created on 2026-07-28

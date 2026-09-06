@@ -476,14 +476,14 @@ def Expr.latexFormat : Expr → String
       | `GetElem.getElem =>
         match args with
         | list :: _ =>
-          let list := level.toColor (list.priority > func.priority || list.is_EnclosedGroup || list.is_GetElem || list.is_GetElem? || list.is_LeanProperty)
+          let list := level.toColor (list.priority > func.priority || list.is_EnclosedGroup || list.is_GetElem || list.is_GetElem? || list.is_LeanProperty || list.is_Eye)
           s!"{list}_%s"
         | _ =>
           opStr
       | `GetElem?.getElem? =>
         match args with
         | list :: _ =>
-          let list := level.toColor (list.priority > func.priority || list.is_EnclosedGroup || list.is_GetElem || list.is_GetElem? || list.is_LeanProperty)
+          let list := level.toColor (list.priority > func.priority || list.is_EnclosedGroup || list.is_GetElem || list.is_GetElem? || list.is_LeanProperty || list.is_Eye)
           let index := "{%s?}"
           s!"{list}_{index}"
         | _ =>
@@ -537,6 +537,10 @@ def Expr.latexFormat : Expr → String
           s!"\\left[%s < %s\\right] {arg}"
         | `letFun => "{\\begin{align*}&{\\color{blue}let}\\ %s : %s := ⋯\\\\&%s\\end{align*}}"
         | `KroneckerDelta => "\\delta_{%s %s}"
+        | `descFactorial
+        | `Nat.descFactorial => "{%s}^{\\underline{%s}}"
+        | `ascFactorial
+        | `Nat.ascFactorial => "{%s}^{\\overline{%s}}"
         | `OfScientific.ofScientific => "%s%s.%s"
         | `Subtype =>
           let postOp :=
@@ -594,6 +598,10 @@ def Expr.latexFormat : Expr → String
             opStr
         | "choose", [_, _] =>
           "\\binom{%s}{%s}"
+        | "descFactorial", [_, _] =>
+          "{%s}^{\\underline{%s}}"
+        | "ascFactorial", [_, _] =>
+          "{%s}^{\\overline{%s}}"
         | "getSlice", [_, Basic (.Special ⟨`Slice.mk⟩) [start, _, step] _] =>
           if let const (.natVal 1) := step then
             if let const (.natVal 0) := start then
@@ -605,10 +613,11 @@ def Expr.latexFormat : Expr → String
               "{%s}_{:%s:%s}"
             else
               "{%s}_{%s:%s:%s}"
-        | "sum", [X, dim] =>
+        | "sum", [X, dim]
+        | "prod", [X, dim] =>
           if dim == const (.natVal 0) then
             match Expr.asStack? X with
-            | some _ => "\\sum\\limits_{\\substack{%s}} {%s}"
+            | some _ => "\\" ++ attr ++ "\\limits_{\\substack{%s}} {%s}"
             | none => X.methodFormat [dim] func attr level
           else
             X.methodFormat [dim] func attr level
@@ -641,6 +650,8 @@ def Expr.latexFormat : Expr → String
           "%s\\ {\\color{blue}\\text{is}}\\ {constant}"
         | `Tensor.T =>
           "{%s}^{\\color{magenta} T}"
+        | `Tensor.det =>
+          "\\left|{%s}\\right|"
         | `Nat.factorial =>
           "{%s}!"
         | _ =>
@@ -720,6 +731,8 @@ where
         | .Lean_bigcup
         | .Lean_bigcap =>
           match args with
+          | [expr, Binder .default name (Basic (.ExprWithAttr (.Lean_typeclass `Fin)) [n] _) nil] =>
+            [("{%s < %s}".format name.toString.escape_specials, n.toLatex), expr.toLatex]
           | [expr, Binder .default name type nil] =>
             [("{%s : %s}".format name.toString.escape_specials, type.toLatex), expr.toLatex]
           | _ =>
@@ -854,7 +867,8 @@ where
             map rows.flatten
           else
             map (args.swap 0 idx)
-        | .str _ "sum" =>
+        | .str _ "sum"
+        | .str _ "prod" =>
           match args.swap 0 idx with
           | [X, dim] =>
             if dim == const (.natVal 0) then

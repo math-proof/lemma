@@ -235,6 +235,16 @@ instance [CommMonoid α] : CommMonoid (Vector α n) where
 instance [CommSemiring α] : CommSemiring (Vector α n) where
   mul_comm := mul_comm
 
+instance [AddCommGroup α] : AddCommGroup (Vector α n) where
+  add_comm := add_comm
+
+instance [AddGroupWithOne α] : AddGroupWithOne (Vector α n) where
+
+instance [Ring α] : Ring (Vector α n) where
+
+instance [CommRing α] : CommRing (Vector α n) where
+  mul_comm := mul_comm
+
 instance [Add α] [IsLeftCancelAdd α] : IsLeftCancelAdd (Vector α n) where
   add_left_cancel a := by
     unfold IsAddLeftRegular Function.Injective

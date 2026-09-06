@@ -172,6 +172,13 @@ def Tensor.sum [Add α] [Zero α] (X : Tensor α s) (dim : ℕ := s.length - 1) 
   ⟨cast (by simp; grind) ((X.data.splitAt dim).map fun x => (x.splitAt 1).sum).flatten⟩
 
 /--
+[torch.prod](https://docs.pytorch.org/docs/stable/generated/torch.prod.html)
+use (X.prod dim).keepdim to keep the dimension
+-/
+def Tensor.prod [Mul α] [One α] (X : Tensor α s) (dim : ℕ := s.length - 1) : Tensor α (s.eraseIdx dim) :=
+  ⟨cast (by simp; grind) ((X.data.splitAt dim).map fun x => (x.splitAt 1).prod).flatten⟩
+
+/--
 [torch.mean](https://pytorch.org/docs/stable/generated/torch.mean.html)
 
 Compute the mean of a tensor along a given dimension.

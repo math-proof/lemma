@@ -380,6 +380,7 @@ abstract class Lean extends IndentedNode
             case 'open':
             case 'namespace':
             case 'def':
+            case 'abbrev':
             case 'theorem':
             case 'lemma':
             case 'set_option':
@@ -9183,6 +9184,7 @@ class LeanAttribute extends LeanUnary
             case 'Lean_theorem':
             case 'Lean_lemma':
             case 'Lean_def':
+            case 'Lean_abbrev':
                 $level = $this->level;
                 $caret = new LeanCaret($this->indent, $level);
                 $new = new $new($accessibility, $caret, $this->indent, $level);
@@ -9350,6 +9352,8 @@ class Lean_def extends LeanArgs
 }
 
 class Lean_theorem extends Lean_def {}
+
+class Lean_abbrev extends Lean_def {}
 
 class Lean_lemma extends Lean_def
 {

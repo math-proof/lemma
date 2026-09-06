@@ -13,7 +13,7 @@ private lemma main
   d * ⌊(n : α) / (d : α)⌋ ≥ n + 1 - d := by
 -- proof
   rw [← Div.eq.FloorDiv.of.Gt_0 (α := α) (n := (n : ℤ)) (d := (d : ℤ)) h]
-  exact_mod_cast Mul_Div.ge.SubAdd_1.of.Gt_0 h
+  exact Mul_Div.ge.SubAdd_1.of.Gt_0 h
 
 
 -- created on 2018-05-27

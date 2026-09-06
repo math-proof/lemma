@@ -5,11 +5,11 @@ The main objectives of this project are formalizing in Lean4:
 
 * **machine learning framework Torch**
   The commonly used Torch operators:  
-  - `sum`, `mean`, `select`, `max`, `min`, `argmax`, `argmin`
+  - `sum`, `mean`, `prod`, `select`, `max`, `min`, `argmax`, `argmin`
   - `permute`, `transpose`
   - `repeat`, `resize`, `reshape`, `unsqueeze`, `hstack`
   - `einsum`, `tensordot`, `matmul`, `bmm`
-  - `softmax`, `exp`, `log`, `sigmoid`, `sin`, `cos`
+  - `softmax`, `exp`, `log`, `sigmoid`, `sin`, `cos`, `det`
 
 * **symbolic mathematics from SymPy**
   The commonly used SymPy operators:  

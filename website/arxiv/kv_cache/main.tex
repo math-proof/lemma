@@ -26,7 +26,10 @@
 \newcommand{\Rstar}{\mathbb{R}^*}
 
 \title{Formal Verification of KV-Cache Correctness\\for Sliding-Window Causal Attention}
-\author{LiZhi Zhou\\[0.3em]\small Project artifact: \url{https://github.com/math-proof/lemma}}
+\author{LiZhi Zhou\\[0.3em]
+\small Project artifact: \url{https://github.com/math-proof/lemma}\\[0.2em]
+\small KV-cache:
+\href{http://www.lemma.cn/lean/?module=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T}{Lean~4}}
 \date{}
 
 \begin{document}
@@ -36,7 +39,7 @@
 Production GPT-style decoders rely on a key--value (KV) cache to avoid recomputing past keys and values at every autoregressive step.
 Implementations in Hugging Face Transformers, vLLM, and related systems concatenate cached tensors with the new token and attend over a sliding causal window, but this incremental update is validated by tests rather than proved as a tensor identity.
 We state and machine-check such an identity in the \texttt{lemma} library: if every prefix output $Z(n)$ equals sliding-window masked scaled dot-product attention, then $Z(n{+}1)$ equals $Z(n)$ concatenated with one new attention row computed from the cached window plus the new key and value.
-The proof is checked in Lean~4 (2026-08-19) and was first stated interactively in SymPy (2024-02-28).
+The proof is checked in Lean~4.
 Masking uses hyperreal $-\infty$ via a \texttt{band\_part} mask (library-defined from \texttt{tril}/\texttt{triu}/\texttt{masked\_fill}, following TensorFlow's \texttt{tf.linalg.band\_part}~\cite{tensorflow_band_part}), and equality is the library's total hyperreal closeness relation $\XEq$, designed to mimic \texttt{torch.isclose} on $\Rstar$.
 We give the formal statement, a proof sketch, the lemma dependency structure, and limitations of what is and is not claimed.
 Interactive visualizations and source files are public on \url{http://www.lemma.cn/} and GitHub~\cite{lemma_repo}.
@@ -62,14 +65,14 @@ Hugging Face Transformers implements this as \texttt{use\_cache=True} (the defau
 Tensors travel as \texttt{past\_key\_values}; the default container is \texttt{DynamicCache}~\cite{huggingface_dynamic_cache}, one $(K,V)$ pair per layer with shape \texttt{[batch, heads, seq\_len, head\_dim]}.
 Internally the attention module concatenates current $k,v$ with the cache and attends with a mask of length \texttt{past\_kv\_length + 1}~\cite{huggingface_kv_cache}.
 Prefill runs the full prompt once; decode then feeds one new \texttt{input\_id} per step plus the cache.
-Sliding-window models keep only the last $\ell$ pairs, matching our Lean statement; vanilla GPT keeps the whole prefix, matching the SymPy special case.
+Sliding-window models keep only the last $\ell$ pairs, matching our Lean statement; vanilla GPT keeps the whole prefix, recovered when $\ell>n+1$.
 
 That is an implementation.
 The contribution of this paper is the missing algebraic identity: if $Z(n)$ is already masked attention of the prefix, then ``concatenate cache with new $k,v$ and take the last row'' is exactly $Z(n{+}1)$, not a different algorithm.
 We prove this as a machine-checked lemma in a \texttt{Tensor} type semantically equivalent to \texttt{torch.Tensor}~\cite{lemma_repo}, with causal masking $(\bandpart-1)\cdot\infty$ over hyperreals $\Rstar$ so masked positions are identically zero after $\exp$, rather than a floating-point stand-in such as $-10^9$.
 
-Public interactive statements appear on lemma.cn in SymPy~\cite{lemma_kv_cache_sympy} and Lean~4~\cite{lemma_kv_cache_lean}; source files are
-\texttt{All\_Eq\_DotSoftmaxAdd\_DivDot\_T.lean} and \texttt{kv\_cache.py} on GitHub~\cite{lemma_repo}.
+The public interactive statement is the Lean~4 lemma~\cite{lemma_kv_cache_lean}; the source file is
+\texttt{All\_Eq\_DotSoftmaxAdd\_DivDot\_T.lean} on GitHub~\cite{lemma_repo}.
 
 \section{Related work}
 \label{sec:related}
@@ -82,7 +85,7 @@ Correctness is tested, not proved as a tensor equation.
 Mathlib~\cite{mathlib_hyperreal} has hyperreal analysis but no \texttt{torch.Tensor} calculus, no \texttt{band\_part}, and no softmax-attention lemmas matching PyTorch semantics.
 OrthoCache machine-checks Parseval for the Walsh--Hadamard transform and a total-variation bound for spectral eviction~\cite{orthocache}; it does not prove that an incremental cached row equals full masked attention.
 TorchLean / BatchInvariantInference~\cite{torchlean} specifies schedule-explicit CUDA attention and batch invariance---a refinement of kernels against a denotation, not this library's \texttt{Tensor} identity with \texttt{band\_part} and hyperreal $\infty$.
-The \texttt{fak} project reports bit-identical cache tests ($\max|\Delta|=0$) in Go; those are empirical witnesses, not Lean/SymPy theorems.
+The \texttt{fak} project reports bit-identical cache tests ($\max|\Delta|=0$) in Go; those are empirical witnesses, not Lean theorems.
 
 \textbf{Hyperreal closeness.}
 Classical nonstandard analysis~\cite{keisler1976elementary} and Mathlib define ``infinitely close'' by $a-b$ infinitesimal, equivalently $\operatorname{st}(a)=\operatorname{st}(b)$ when both are finite.
@@ -114,7 +117,7 @@ def band_part(X, l, u, d=1):
     return Y.masked_fill((delta + l) % d != 0, 0)
 \end{verbatim}
 \noindent
-Here \texttt{j - i} is the diagonal index $j-i$ on the last two axes (as in \texttt{sympy/matrices/expressions/special.lean}).
+Here \texttt{j - i} is the diagonal index $j-i$ on the last two axes (as in this library's \texttt{special.lean}).
 Entry $(i,j)$ is kept iff $j-i\in[-l,u]$ and, when $d>1$, iff $d\mid(j-i+l)$ (dilated band; default $d=1$).
 Lemma \texttt{Tensor.BandPart.eq.Stack\_BoolIn\_Icc} proves this equals the boolean indicator of $j-i\in[-l,u]$ for $d=1$.
 We write $\bandpart(l,u)$ for \texttt{band\_part(ones(n,n), l, u)}.
@@ -129,7 +132,21 @@ Write $Q_{:n}=[i<n]\,Q(i)$ and likewise for $K,V$.
 \emph{Notation:} $\ell$ is the mathematical symbol for this window width; Lean and code use the same name \texttt{l} ($\ell=\texttt{l}$).
 The \texttt{band\_part} mask in the theorems is \texttt{band\_part(..., l-1, 0)}, \emph{not} \texttt{band\_part(..., l, 0)}---the first argument to \texttt{band\_part} is a band limit, not the window width.
 
-\subsection{Hyperreal closeness \texorpdfstring{$\XEq$}{approx}}
+\subsection{Hyperreal \texorpdfstring{$\infty$}{infinity} and closeness \texorpdfstring{$\XEq$}{approx}}
+
+\begin{definition}[Hyperreal $\infty$~\cite{mathlib_hyperreal}]
+\label{def:infty}
+The symbol $\infty$ in this paper is a point of $\Rstar$, not the extended-real $+\infty$.
+It is Mathlib's sample infinite hyperreal
+\[
+\infty \;=\; \mathtt{Hyperreal.omega}
+\;=\; \mathtt{ofSeq}\,\mathtt{Nat.cast}
+\;=\; [\![(0,1,2,3,\ldots)]\!]
+\in\Rstar.
+\]
+Thus $\infty>r$ for every $r\in\mathbb{R}$, $\infty>0$, and $-\infty$ is its additive inverse.
+The predicate $x\to\infty$ means that $x$ is infinite; in particular $\infty\to\infty$~\cite{lemma_infty}.
+\end{definition}
 
 \begin{definition}[\texorpdfstring{$\XEq$}{approx} on \texorpdfstring{$\Rstar$}{R*}~\cite{lemma_xeq}]
 \label{def:xeq}
@@ -239,12 +256,10 @@ Z(n+1)\;\XEq\; Z(n)\concat[\rowop].
 
 Thus one new query attends only to the cached window plus the new key/value; the previous $n$ output rows are reused unchanged.
 
-The SymPy theorem~\cite{lemma_kv_cache_sympy} is the full-causal special case \texttt{BandPart[n, 0]}, with
+When $\ell>n+1$, slice $[(n+1-\ell):n]$ is the whole prefix and the new row is full-causal attention
 \[
-\operatorname{softmax}\!\left(\frac{Q[n]\,[K[:n]^{\top}\mid K[n]]}{\sqrt{d_z}}\right)[V[:n]\mid V[n]],
+\operatorname{softmax}\!\left(\frac{Q[n]\,[K[:n]^{\top}\mid K[n]]}{\sqrt{d_z}}\right)[V[:n]\mid V[n]].
 \]
-i.e.\ the window is the entire prefix.
-When $\ell>n+1$ in Lean, slice $[(n+1-\ell):n]$ is the whole prefix and the SymPy theorem is recovered.
 
 \section{Proof sketch}
 \label{sec:proof}
@@ -308,15 +323,11 @@ Composing with softmax-scale-matmul yields $\rowop$, giving~\eqref{eq:conc}.
 \section{Formalization artifact}
 \label{sec:artifact}
 
-Interactive visualizations of the finished statement:
-\begin{itemize}[noitemsep]
-  \item SymPy: \url{http://www.lemma.cn/py/?module=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T.kv_cache}
-  \item Lean~4: \url{http://www.lemma.cn/lean/?module=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T}
-\end{itemize}
-The SymPy page displays \texttt{apply}/\texttt{prove} for prefix equality implying concatenation with \texttt{row}.
+The interactive visualization is
+\href{http://www.lemma.cn/lean/?module=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T}{\texttt{Tensor.GetSlice.eq.Append\_DotSoftmaxDivDot\_Append.of.All\_Eq\_DotSoftmaxAdd\_DivDot\_T}}~\cite{lemma_kv_cache_lean}.
 The Lean page displays \texttt{@[main] private lemma kv\_cache} with \texttt{[NeZero (l : $\mathbb{N}$)]}, universal hypothesis on $Z(n)$, the \texttt{let} chain \texttt{Kn, Vn, Kw, Vw, KT, kT, row}, and conclusion $Z(n+1)\XEq Z(n)\concat[\rowop]$.
 
-Source: \url{https://github.com/math-proof/lemma} (Lean~4 on \texttt{main}, SymPy on \texttt{master}).
+Source: \url{https://github.com/math-proof/lemma} (Lean~4 on \texttt{main}).
 
 \subsection{Lemma dependencies}
 \label{sec:deps}
@@ -345,15 +356,6 @@ Tensor.GetSlice.eq...All_Eq_DotSoftmaxAdd_DivDot_T  (kv_cache)
 \label{fig:deps}
 \end{figure}
 
-\section{SymPy versus Lean~4}
-\label{sec:sympy-lean}
-
-The SymPy lemma (2024-02-28)~\cite{lemma_kv_cache_sympy} is the full-causal increment with \texttt{Equal} rather than $\XEq$.
-Its proof applies the Python \texttt{gpt} unfolding, substitutes $n\mapsto n+1$, splits the stack, and rewrites last-row slices as \texttt{SEq\_Append}.
-
-The Lean~4 lemma (2026-08-19)~\cite{lemma_kv_cache_lean} keeps parameter $\ell\neq 0$, slices $[(n+1-\ell):n]$, works in $\Rstar$ with $\XEq$, and carries \texttt{cast}s required by dependent transpose shapes.
-A batched causal variant exists on the SymPy side at \texttt{Tensor.Eq.of.Eq.gpt.kv\_cache.batched}.
-
 \section{Discussion and limitations}
 \label{sec:discussion}
 
@@ -372,7 +374,7 @@ It is the complementary statement: if prefixes are exact masked attention, the c
 \label{sec:conclusion}
 
 We have presented a machine-checked identity linking GPT-style KV-cache updates to incremental sliding-window masked attention, together with a hyperreal closeness relation suitable for masked softmax with $-\infty$.
-The result is public on lemma.cn and GitHub~\cite{lemma_repo}, with proofs checked in Lean~4 and an earlier SymPy formulation.
+The result is public on lemma.cn and GitHub~\cite{lemma_repo}, with proofs checked in Lean~4.
 Future work includes multi-head layouts, batched Lean formalization, and connecting $\XEq$ to floating-point refinement theorems.
 
 \bibliographystyle{plain}

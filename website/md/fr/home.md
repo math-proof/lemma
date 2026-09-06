@@ -57,6 +57,7 @@ La bibliothèque contient <label id=count>5000</label> théorèmes établis (<la
 * [Vector](../?module=Vector) Vecteurs (tenseurs unidimensionnels)
 * [Tensor](../?module=Tensor) Calcul tensoriel formalisé, sémantiquement aligné sur **torch.Tensor**, pour la spécification et la vérification formelle d'algorithmes d'apprentissage profond, p. ex. :
   - [kv_cache](../?module=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T)
+  - [RoPE](../?module=Tensor.DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul)
 
 <br><br>
 -------

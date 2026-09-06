@@ -4,6 +4,9 @@
 For files with `@[main, ...] private lemma main`, generates attribute docstrings via
 `sympy/parsing/AttrDocstringGen.lean` and verifies each name with `#check`.
 
+If the lemma is only `@[main]` (no other attributes), do not add an attribute
+docstring. The name is already implied by the file path.
+
 Redundant imports are detected by trying to remove each import (in order) and
 re-typechecking the file.
 
@@ -35,6 +38,8 @@ CUSTOM_ATTR_HEADS = frozenset({
 
 IMPORT_LINE_RE = re.compile(r"^import ([\w.']+)\s*$")
 
+# Requires `@[main, ...]` with at least one extra attribute. Bare `@[main]`
+# needs no attribute docstring.
 MAIN_ATTR_RE = re.compile(
     r"@\[main,\s*([^\]]+)\]\s*\nprivate lemma main\b",
 )
@@ -300,6 +305,7 @@ def process_docstrings(
 
     found = find_main_attr_block(content)
     if not found:
+        # `@[main]` only: skip the attributes table.
         return content, False
 
     insert_at, attr_blob = found
