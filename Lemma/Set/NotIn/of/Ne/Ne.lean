@@ -1,6 +1,6 @@
 import Lemma.Set.NotIn.of.Ne
 import Lemma.Set.NotIn_Union.of.NotIn.NotIn
-import Lemma.Set.UnionSingletonS.eq.Finset
+import Lemma.Set.UnionFinsetS.eq.Finset
 open Set
 
 
@@ -17,7 +17,7 @@ private lemma main
   have h₁ := NotIn.of.Ne h₁
   have := NotIn_Union.of.NotIn.NotIn h₀ h₁
   -- Use the fact that {a, b} is equivalent to {a} ∪ {b} to rewrite the goal
-  rwa [UnionSingletonS.eq.Finset] at this
+  rwa [UnionFinsetS.eq.Finset] at this
 
 
 -- created on 2018-03-09

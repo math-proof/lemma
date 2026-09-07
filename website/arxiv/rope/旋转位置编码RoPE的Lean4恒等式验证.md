@@ -8,7 +8,7 @@
 
 我们在 `lemma` 库中用 Lean 4 展开一维 RoPE。对任意角向量 \(\alpha\in\mathbb{R}^{d}\)（此处 \(d\) 已是半维）定义两个矩阵 \(\mathrm{R}(\alpha),\mathrm{R}'(\alpha)\in\mathbb{R}^{(d+d)\times(d+d)}\)。不带撇的是 Hugging Face Transformers 的奇偶对半布局[[4]](https://github.com/huggingface/transformers/blob/main/docs/source/en/internal/rope_utils.md)；带撇的是苏剑林等原文的交错块对角布局[[2]](https://arxiv.org/abs/2104.09864)。二者被固定的奇偶聚集 \(\boldsymbol{P}\) 共轭：\(\mathrm{R}'(\alpha)=\boldsymbol{P}^{\top}\mathrm{R}(\alpha)\boldsymbol{P}\)，且逐元 \(\mathrm{R}'(\alpha)_{i,j}=\mathrm{R}(\alpha)_{i^{\mathrm{toSplit}},j^{\mathrm{toSplit}}}\)。
 
-我们证明（无 `sorry`）：实现公式 \(\mathrm{R}(\alpha)\,x=x\odot\cos(\alpha\mathbin{+\mkern-4mu+}\alpha)+((-x_{1})\mathbin{+\mkern-4mu+}x_{0})\odot\sin(\alpha\mathbin{+\mkern-4mu+}\alpha)\)；正交 \(\mathrm{R}(\alpha)^{\top}\mathrm{R}(\alpha)=I_{d+d}\) 与 \(\mathrm{R}(-\alpha)=\mathrm{R}(\alpha)^{\top}\)；自由角群律 \(\mathrm{R}(\alpha)\mathrm{R}(\beta)=\mathrm{R}(\alpha+\beta)\)；RoFormer 配对 \((\mathrm{R}(\alpha)\,q)^{\top}(\mathrm{R}(\beta)\,k)=q^{\top}\mathrm{R}(\beta-\alpha)\,k\)；撇号布局上同样的转置积 \(\mathrm{R}'(\alpha)^{\top}\mathrm{R}'(\beta)=\mathrm{R}'(\beta-\alpha)\)；以及在线性假设 \(\theta_{i}=i\,\tau\) 下，softmax 注意力的相对形式——每个未归一化权重只依赖 \(\mathrm{R}(\theta_{k}-\theta_{i})\)，并可改写为 \(\mathrm{R}(\theta_{k-i})\) 或 \(\mathrm{R}(\theta_{i-k})^{\top}\)。交互陈述见 [lemma.cn](http://www.lemma.cn/)。
+我们给出如下机器检验结果：实现公式 \(\mathrm{R}(\alpha)\,x=x\odot\cos(\alpha\mathbin{+\mkern-4mu+}\alpha)+((-x_{1})\mathbin{+\mkern-4mu+}x_{0})\odot\sin(\alpha\mathbin{+\mkern-4mu+}\alpha)\)；正交 \(\mathrm{R}(\alpha)^{\top}\mathrm{R}(\alpha)=I_{d+d}\) 与 \(\mathrm{R}(-\alpha)=\mathrm{R}(\alpha)^{\top}\)；自由角群律 \(\mathrm{R}(\alpha)\mathrm{R}(\beta)=\mathrm{R}(\alpha+\beta)\)；RoFormer 配对 \((\mathrm{R}(\alpha)\,q)^{\top}(\mathrm{R}(\beta)\,k)=q^{\top}\mathrm{R}(\beta-\alpha)\,k\)；撇号布局上同样的转置积 \(\mathrm{R}'(\alpha)^{\top}\mathrm{R}'(\beta)=\mathrm{R}'(\beta-\alpha)\)；以及在线性假设 \(\theta_{i}=i\,\tau\) 下，softmax 注意力的相对形式——每个未归一化权重只依赖 \(\mathrm{R}(\theta_{k}-\theta_{i})\)，并可改写为 \(\mathrm{R}(\theta_{k-i})\) 或 \(\mathrm{R}(\theta_{i-k})^{\top}\)。交互陈述见 [lemma.cn](http://www.lemma.cn/)。
 
 # 1 引言
 
@@ -39,7 +39,7 @@ Transformer 需要次序的表示[[5]](https://arxiv.org/abs/1706.03762)。旋�
 
 `rotaryMatrix` 是 Hugging Face 对半矩阵，`rotaryMatrix'` 是苏剑林等的原文交错矩阵。\(\mathrm{R}\) 不内建任何频率表。几何 RoPE 角 \(\theta_{i,p}=\lambda\,i/b^{p/d}\) 只在后文出现，且只作为常频率向量 \(\tau\in\mathbb{R}^{d}\) 的特例 \(\theta_{i}=i\,\tau\)。相对下标所需的算术仅此；YaRN 式缩放及其他学得或插值频率[[10]](https://arxiv.org/abs/2309.00071) 是同一条引理换一个 \(\tau\)。
 
-**贡献。** 下列一维 RoPE 事实均经机器检验、无 `sorry`。每个公开名是库中的模块路径；路径即陈述。
+**贡献。** 下列一维 RoPE 事实均经机器检验。每个公开名是库中的模块路径；路径即陈述。
 
 1. **两种布局。** [RotaryMatrix.eq.AppendHstackSMulSEye](http://www.lemma.cn/lean/?module=Tensor.RotaryMatrix.eq.AppendHstackSMulSEye) 是 Hugging Face 的 `rotate_half`；[RotaryMatrix%27.eq.Stack_Ite_IteS](http://www.lemma.cn/lean/?module=Tensor.RotaryMatrix%27.eq.Stack_Ite_IteS) 是 RoFormer 矩阵。二者被奇偶聚集 \(\boldsymbol{P}=\mathrm{interleave}\,d\) 共轭：[RotaryMatrix%27.eq.DotDot_RotaryMatrix](http://www.lemma.cn/lean/?module=Tensor.RotaryMatrix%27.eq.DotDot_RotaryMatrix) 陈述 \(\mathrm{R}'(\alpha)=\boldsymbol{P}^{\top}\mathrm{R}(\alpha)\boldsymbol{P}\)，[GetRotaryMatrix%27.eq.GetRotaryMatrix](http://www.lemma.cn/lean/?module=Tensor.GetRotaryMatrix%27.eq.GetRotaryMatrix) 陈述逐元形式。
 2. **实现。** [DotRotaryMatrix.eq.AddMulS](http://www.lemma.cn/lean/?module=Tensor.DotRotaryMatrix.eq.AddMulS)：Hugging Face 矩阵上的 kernel 公式。
@@ -317,7 +317,7 @@ RoFormer 的相对位置律是内积恒等式
 q\,@\,\bigl(\mathrm{R}(\beta-\alpha)\,@\,k\bigr).
 \]
 
-对应为 \(\alpha\leftrightarrow\Theta_{m}\)、\(\beta\leftrightarrow\Theta_{n}\)，从而角空间中 \(\beta-\alpha\leftrightarrow n-m\)。Lean 4 陈述（完整证明、无 `sorry`）为 [Tensor.DotDotSRotaryMatrix.eq.Dot_DotRotaryMatrixSub](http://www.lemma.cn/lean/?module=Tensor.DotDotSRotaryMatrix.eq.Dot_DotRotaryMatrixSub)。
+对应为 \(\alpha\leftrightarrow\Theta_{m}\)、\(\beta\leftrightarrow\Theta_{n}\)，从而角空间中 \(\beta-\alpha\leftrightarrow n-m\)。Lean 4 陈述为 [Tensor.DotDotSRotaryMatrix.eq.Dot_DotRotaryMatrixSub](http://www.lemma.cn/lean/?module=Tensor.DotDotSRotaryMatrix.eq.Dot_DotRotaryMatrixSub)。
 
 **定理 8.1**（RoFormer 配对）。对 \(\alpha,\beta\in\mathbb{R}^{d}\) 与 \(q,k\in\mathbb{R}^{d+d}\)，上式成立。
 
@@ -445,7 +445,7 @@ R(i-k)^{\top} & \text{若 }k<i,
 - 加法群律：[DotRotaryMatrixS.eq.RotaryMatrixAdd](http://www.lemma.cn/lean/?module=Tensor.DotRotaryMatrixS.eq.RotaryMatrixAdd)
 - 正交：[DotT_RotaryMatrix.eq.Eye](http://www.lemma.cn/lean/?module=Tensor.DotT_RotaryMatrix.eq.Eye)
 
-源码：<https://github.com/math-proof/lemma>[[1]](https://github.com/math-proof/lemma)。表中每个模块均 `lake build` 通过，且无 `sorry`。
+源码：<https://github.com/math-proof/lemma>[[1]](https://github.com/math-proof/lemma)。表中每个模块均 `lake build` 通过。
 
 所用余弦、正弦事实先在 \(\mathbb{R}\) 上证明，再到 `List.Vector`，再到张量，沿 `.data` 搬运。分层是故意的：旋转证明从不把张量实现展开到对应向量引理之外。
 

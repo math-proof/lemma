@@ -9,9 +9,9 @@ private lemma main
   (h₀ : a = b)
   (h₁ : p a) :
 -- imply
-  p b := by
+  p b :=
 -- proof
-  rwa [← h₀]
+  h₀ ▸ h₁
 
 
--- created on 2018-04-12
+-- created on 2018-02-06

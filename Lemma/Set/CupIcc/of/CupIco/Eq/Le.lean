@@ -1,0 +1,29 @@
+import Lemma.Set.Union.of.Eq.Eq
+import Lemma.Set.EqCupFinset
+import Lemma.Set.UnionCupS.eq.CupUnion
+import Lemma.Set.Icc.eq.UnionIco.of.Le
+open Set
+
+
+@[main]
+private lemma main
+  [PartialOrder α]
+  {g f : α → Set α}
+  {a b : α}
+-- given
+  (h₀ : a ≤ b)
+  (h₁ : g b = f b)
+  (h₂ : ⋃ k ∈ Ico a b, g k = ⋃ k ∈ Ico a b, f k) :
+-- imply
+  ⋃ k ∈ Icc a b, g k = ⋃ k ∈ Icc a b, f k := by
+-- proof
+  have := Union.of.Eq.Eq h₂ h₁
+  have h_gb := EqCupFinset g b
+  have h_fb := EqCupFinset f b
+  rw [← h_gb, ← h_fb] at this
+  repeat rw [UnionCupS.eq.CupUnion] at this
+  rwa [← Icc.eq.UnionIco.of.Le h₀] at this
+
+
+-- created on 2018-09-26
+-- updated on 2025-07-21

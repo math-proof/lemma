@@ -1,0 +1,32 @@
+import Lemma.Nat.NotLt.is.Ge
+import Lemma.Set.Icc.eq.Empty.of.Gt
+import Lemma.Set.InterFinsetS.subset.Icc
+import Lemma.Set.EqEmpty.is.Subset_Empty
+import Lemma.Nat.Eq.of.Le.Le
+open Set Nat
+
+
+@[main]
+private lemma main
+  [LinearOrder α]
+  {x y : α}
+-- given
+  (h : x ≥ y) :
+-- imply
+  Icc x y = {x} ∩ {y} := by
+-- proof
+
+  by_cases h' : x > y
+  ·
+    have h := Icc.eq.Empty.of.Gt h'
+    have h_subset := InterFinsetS.subset.Icc x y
+    rw [h] at h_subset
+    have h := EqEmpty.of.Subset_Empty h_subset
+    aesop
+  ·
+    have h' := Le.of.NotGt h'
+    have h := Eq.of.Le.Le h' h
+    aesop
+
+
+-- created on 2018-09-15

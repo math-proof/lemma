@@ -68,7 +68,7 @@ They are conjugate by a fixed even/odd gather \(\boldsymbol{P}\):
 \(\rot'(\alpha)=\boldsymbol{P}^\top\rot(\alpha)\boldsymbol{P}\),
 and entrywise
 \(\rot'(\alpha)_{i,j}=\rot(\alpha)_{i^{\mathrm{toSplit}},j^{\mathrm{toSplit}}}\).
-We prove, with no \texttt{sorry}:
+We prove the following machine-checked results:
 the realization
 \(\rot(\alpha)\,x = x\odot\cos(\alpha\concat\alpha)+((-x_1)\concat x_0)\odot\sin(\alpha\concat\alpha)\);
 the orthogonal identities \(\rot(\alpha)^\top\rot(\alpha)=\eye_{d+d}\) and \(\rot(-\alpha)=\rot(\alpha)^\top\);
@@ -126,7 +126,7 @@ The geometric RoPE angles \(\theta_{i,p}=\lambda\,i/b^{p/d}\) appear only later,
 That hypothesis is the arithmetic needed for relative indexing; YaRN-style scalings and other learned or interpolated frequencies~\cite{peng2023yarn} are the same lemma with a different \(\tau\).
 
 \paragraph{Contributions.}
-We machine-check, with no \texttt{sorry}, the following groups of one-dimensional RoPE facts.
+We machine-check the following groups of one-dimensional RoPE facts.
 Each public name below is a module path in the library; the path \emph{is} the statement.
 
 \begin{enumerate}[leftmargin=1.6em,itemsep=0.4em]
@@ -603,7 +603,7 @@ On two \(1\)-tensors the library writes the inner product as \(@\), so~\eqref{eq
   q\,@\,\bigl(\rot(\beta-\alpha)\,@\,k\bigr).
 \end{equation}
 The correspondence is \(\alpha\leftrightarrow\Theta_m\), \(\beta\leftrightarrow\Theta_n\), hence \(\beta-\alpha\leftrightarrow n-m\) in angle space.
-The Lean~4 statement, with a complete proof and no \texttt{sorry}, is
+The Lean~4 statement is
 \begin{center}
 \lmod{Tensor.DotDotSRotaryMatrix.eq.Dot_DotRotaryMatrixSub}.
 \end{center}
@@ -787,7 +787,7 @@ Interactive visualizations of the public statements:
     \lmod{Tensor.DotT_RotaryMatrix.eq.Eye}
 \end{itemize}
 Source: \href{https://github.com/math-proof/lemma}{github.com/math-proof/lemma}~\cite{lemma_repo}.
-Every module in Table~\ref{tab:mods} builds with \texttt{lake build} and contains no \texttt{sorry}.
+Every module in Table~\ref{tab:mods} builds with \texttt{lake build}.
 
 \begin{table}[t]
 \centering

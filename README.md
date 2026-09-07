@@ -10,11 +10,12 @@ The main objectives of this project are formalizing in Lean4:
   - `repeat`, `resize`, `reshape`, `unsqueeze`, `hstack`
   - `einsum`, `tensordot`, `matmul`, `bmm`
   - `softmax`, `exp`, `log`, `sigmoid`, `sin`, `cos`, `det`
+  - `item`
 
 * **symbolic mathematics from SymPy**
   The commonly used SymPy operators:  
-  - `Range`
-  - `Complex.Sign`
+  - `Range`, `Complex.Sign`
+  - `descFactorial`(FallingFactorial), `ascFactorial`(RisingFactorial)
 
 * **mathematical foundations of reinforcement learning**
   This part is based on the reference book [*Mathematical Foundation of Reinforcement Learning*](https://github.com/MathFoundationRL/Book-Mathematical-Foundation-of-Reinforcement-Learning) and is still in progress.
@@ -265,12 +266,13 @@ Guidelines and prompts for using LLMs to write and refactor Lean 4 proofs in thi
 - For `LHS.eq.RHS` tagged with `@[comm]`, prefer the generated commutative lemma `RHS.eq.LHS` over `simp` / `rw [← LHS.eq.RHS]`.
 
 ### Proof style
-- Use `obtain` instead of `rcases`, `if … then … else …` instead of `by_cases`, `have` instead of `haveI`, and `let` instead of `letI`.
+- Use `obtain` instead of `rcases`, `if … then … else …` instead of `by_cases` (if it is not followed by `<;>`), `have` instead of `haveI`, and `let` instead of `letI`.
 - inline `have` without introducing `show` if it is referenced only once, e.g.: prefer `apply` instead of `exact`, perhaps by creating some holes.
 - use `calc` instead of `by calc`, start `calc` with _
 - no multi-line tactics inside parentheses, the tactic within compact type-ascribed `by` term (by tactic : Type) should be one-liner with no `;`
 - avoid `calc` within [] block of `rw`/`erw`/`simp`:
 - follow `show` with `from`/`by` instead of `from by`
+- `by exact expr` should be simplifed to `expr`
 - use `grind`/`aesop` as much as possible
 - After a bullet tactic (`·`), put the next statement on a new line when that branch contains more than one step.
 - implicit/instance (instImplicit) arguments should be put before the `given` section

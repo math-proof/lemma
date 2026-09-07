@@ -2723,7 +2723,10 @@ export class LeanProperty extends LeanBinary {
                     return [this.lhs.toLatex(syntax)];
                 case 'card':
                     if (!(lhs instanceof LeanToken && this.parent instanceof LeanArgsSpaceSeparated && this.parent.args[0] === this)) {
-                        return [this.lhs.toLatex(syntax)];
+                        let arg = this.lhs;
+                        if (arg instanceof LeanParenthesis && !(arg.arg instanceof LeanColon))
+                            arg = arg.arg;
+                        return [arg.toLatex(syntax)];
                     }
                     break;
                 case 'softmax':
@@ -6987,6 +6990,37 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
             zero.text === '0';
     }
 
+    is_MatProd() {
+        const {args} = this;
+        if (args.length !== 3) return false;
+        const func = args[0];
+        const isMatProd =
+            (func instanceof LeanToken && func.text === 'matProd') ||
+            (func instanceof LeanProperty &&
+                func.rhs instanceof LeanToken &&
+                func.rhs.text === 'matProd');
+        if (!isMatProd) return false;
+        const peel = (arg) => (arg instanceof LeanParenthesis ? arg.arg : arg);
+        const fn = peel(args[2]);
+        if (!(fn instanceof Lean_fun)) return false;
+        const arrow = fn.arg;
+        return arrow instanceof LeanRightarrow || arrow instanceof Lean_mapsto;
+    }
+
+    /**
+     * LaTeX parts for matProd: `[i, n, body]` for `\prod\limits_{i < n} {body}`.
+     * @returns {[string, string, string] | null}
+     */
+    matProdLatexParts(syntax) {
+        if (!this.is_MatProd()) return null;
+        const peel = (arg) => (arg instanceof LeanParenthesis ? arg.arg : arg);
+        const n = peel(this.args[1]);
+        const arrow = peel(this.args[2]).arg;
+        let binder = peel(arrow.lhs);
+        if (binder instanceof LeanColon) binder = binder.lhs;
+        return [binder.toLatex(syntax), n.toLatex(syntax), arrow.rhs.toLatex(syntax)];
+    }
+
     is_indented() {
         const parent = this.parent;
         return (
@@ -7138,6 +7172,8 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
             return [stripped[1].toLatex(syntax)];
         } else if (this.is_Sum() || this.is_Prod()) {
             return this.args[0].lhs.arg.latexArgs();
+        } else if (this.is_MatProd()) {
+            return this.matProdLatexParts(syntax);
         } else if (
             func instanceof LeanProperty &&
             func.rhs instanceof LeanToken &&
@@ -7219,6 +7255,8 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
             return '\\left|{%s}\\right|';
         } else if (this.is_Sum() || this.is_Prod()) {
             return `\\${this.args[0].rhs.text}\\limits_{\\substack{%s}} {%s}`;
+        } else if (this.is_MatProd()) {
+            return '\\prod\\limits_{%s < %s} {%s}';
         } else if (func instanceof LeanProperty && func.rhs instanceof LeanToken) {
             if (func.rhs.text === 'eye' && args.length === 2) return '\\mathbb{I}';
             if (func.rhs.text === 'fmod' && args.length === 2) return '{%s}{%s}';

@@ -107,6 +107,9 @@ instance [Sub α] : HSub (Tensor α s) (Tensor α []) (Tensor α s) where
 instance [Mul α] : Mul (Tensor α s) where
   mul A B := ⟨A.data * B.data⟩
 
+instance [Mul α] : HMul (Tensor α s) (Tensor α []) (Tensor α s) where
+  hMul A b := ⟨A.data * b.data[0]⟩
+
 instance [Mul α] : HMul α (Tensor α s) (Tensor α s) where
   hMul a B := ⟨a * B.data⟩
 
@@ -127,9 +130,6 @@ instance [Neg α] : Neg (Tensor α s) where
 
 instance [Inv α] : Inv (Tensor α s) where
   inv X := ⟨X.data⁻¹⟩
-
-instance [Mul α] : HMul (Tensor α s) (Tensor α []) (Tensor α s) where
-  hMul A b := ⟨A.data * b.data[0]⟩
 
 /-- Append two tensors. -/
 instance : HAppend (Tensor α (n :: s)) (Tensor α (m :: s)) (Tensor α ((n + m) :: s)) where
@@ -356,6 +356,12 @@ def Tensor.map₂ (f : α → β → γ) (X : Tensor α s) (Y : Tensor β s) : T
 
 instance : Coe α (Tensor α []) where
   coe x := ⟨[x], by simp⟩
+
+/--
+[torch.Tensor.item](https://docs.pytorch.org/docs/stable/generated/torch.Tensor.item.html)
+-/
+def Tensor.item (X : Tensor α []) : α :=
+  X.data[0]
 
 instance [Coe α β] : Coe (Tensor α s) (Tensor β s) where
   coe X := X.map Coe.coe

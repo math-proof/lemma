@@ -4,7 +4,7 @@ import Lemma.Int.SubAdd.eq.Add_Sub
 import Lemma.Nat.Add
 import Lemma.Int.AddSub.eq.SubAdd
 import Lemma.Nat.Add.is.Eq
-import Lemma.Finset.Filter.eq.Singleton.of.In
+import Lemma.Finset.Filter.eq.Finset.of.In
 open Set Nat Finset Int
 
 
@@ -23,7 +23,7 @@ private lemma main
 -- proof
   have := Sum.of.All_Eq h₁
   rw [Finset.sum_ite] at this
-  simp [Filter.eq.Singleton.of.In h₀] at this
+  simp [Filter.eq.Finset.of.In h₀] at this
   rw [this]
   rw [Add.comm]
   rw [Add_Sub.eq.SubAdd]

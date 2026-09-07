@@ -4,7 +4,7 @@ import Lemma.Set.In_Inter.is.In.In
 import Lemma.Set.In.of.In.Subset
 import Lemma.Set.SubsetCapS.of.Supset
 import Lemma.Set.Supset_SDiff
-import Lemma.Set.In_CapIn_Union.of.In_Cap.In_Cap
+import Lemma.Set.In_CapUnion.of.In_Cap.In_Cap
 open Set
 
 
@@ -29,7 +29,7 @@ private lemma main
   ·
     intro x h_inter
     let ⟨h_Inter, h_SDiff⟩ := In.In.of.In_Inter h_inter
-    have h_Union := In_CapIn_Union.of.In_Cap.In_Cap h_Inter h_SDiff
+    have h_Union := In_CapUnion.of.In_Cap.In_Cap h_Inter h_SDiff
     rwa [EqUnionInter__SDiff A B] at h_Union
 
 

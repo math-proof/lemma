@@ -4,6 +4,8 @@
 For files with `@[main, ...] private lemma main`, generates attribute docstrings via
 `sympy/parsing/AttrDocstringGen.lean` and verifies each name with `#check`.
 
+Only the lemma main will be added with attribute docstring; other lemmas won't.
+
 If the lemma is only `@[main]` (no other attributes), do not add an attribute
 docstring. The name is already implied by the file path.
 

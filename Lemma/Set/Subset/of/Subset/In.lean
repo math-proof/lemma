@@ -1,4 +1,4 @@
-import Lemma.Set.SubsetSingleton.of.In
+import Lemma.Set.SubsetFinset.of.In
 import Lemma.Set.SubsetUnionS.of.Subset.Subset
 open Set
 
@@ -12,7 +12,7 @@ private lemma main
 -- imply
   B ∪ {x} ⊆ A := by
 -- proof
-  have h_singleton := SubsetSingleton.of.In h₀
+  have h_singleton := SubsetFinset.of.In h₀
   have := SubsetUnionS.of.Subset.Subset h₁ h_singleton
   simpa using this
 

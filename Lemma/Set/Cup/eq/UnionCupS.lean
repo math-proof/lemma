@@ -1,6 +1,6 @@
 import Lemma.Set.Eq.of.All_In.All_In
 import Lemma.Set.In_Union.is.OrInS
-import Lemma.Set.In_CupIn_Union.is.OrInS_Cup
+import Lemma.Set.In_CupUnion.is.OrInS_Cup
 import Lemma.Set.EqUnionInter__SDiff
 import Lemma.Set.In.of.In.Subset
 import Lemma.Set.SubsetCupS.of.Subset
@@ -20,7 +20,7 @@ private lemma main
   ·
     intro x h_cup
     apply In_Union.of.OrInS
-    apply OrInS_Cup.of.In_CupIn_Union
+    apply OrInS_Cup.of.In_CupUnion
     rwa [EqUnionInter__SDiff A B]
   ·
     intro x h_union

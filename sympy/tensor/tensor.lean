@@ -33,9 +33,9 @@ import Lemma.Tensor.DataNeg.eq.NegData
 import Lemma.Tensor.DataInv.eq.InvData
 import Lemma.Tensor.EqData0'0
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength
--- @[grind =]
 import Lemma.Tensor.EqLength
 import Lemma.Tensor.LengthMap.eq.Length
+import Lemma.Tensor.Eq.is.Item
 open Bool Nat Int List Tensor
 
 def Tensor.get (X : Tensor α s) (i : Fin X.length) : Tensor α s.tail :=
@@ -434,3 +434,25 @@ instance [AddLeftCancelMonoid α] : AddLeftCancelMonoid (Tensor α s) where
 
 instance [AddCancelCommMonoid α] : AddCancelCommMonoid (Tensor α s) where
   add_left_cancel := IsLeftCancelAdd.add_left_cancel
+
+/--
+0-d tensors inherit a linear order from the underlying scalar type.
+Note: this coexists with the pointwise `LE` instance on `Tensor`; absolute value
+uses the `Max` from this `LinearOrder`.
+-/
+noncomputable instance [LinearOrder α] : LinearOrder (Tensor α []) :=
+  LinearOrder.lift' Tensor.item (by apply Eq.of.Item)
+
+/-- Transport `LinearOrder` along any shape with length 0 (i.e. `s = []`). -/
+noncomputable instance (priority := low) [LinearOrder α] {s : List ℕ}
+    [Fact (s.length = 0)] : LinearOrder (Tensor α s) :=
+  List.eq_nil_of_length_eq_zero (Fact.out (p := s.length = 0)) ▸
+    inferInstanceAs (LinearOrder (Tensor α []))
+
+/-- Two-element lists have length 2. -/
+instance {a b : ℕ} : Fact ([a, b].length = 2) := ⟨rfl⟩
+
+/-- Batch shape of a square matrix determinant is empty. -/
+instance {s : List ℕ} [Fact (s.length = 2)] :
+    Fact ((s.take (s.length - 2)).length = 0) :=
+  ⟨by simp [Fact.out (p := s.length = 2)]⟩

@@ -2466,9 +2466,14 @@ class LeanProperty extends LeanBinary
                 case 'fmod':
                     return [$this->lhs->toLatex($syntax)];
                 case 'card':
-                    if (!($this->lhs instanceof LeanToken && $this->parent instanceof LeanArgsSpaceSeparated && $this->parent->args[0] === $this))
-                        return [$this->lhs->toLatex($syntax)];
-                    case 'softmax':
+                    if (!($this->lhs instanceof LeanToken && $this->parent instanceof LeanArgsSpaceSeparated && $this->parent->args[0] === $this)) {
+                        $arg = $this->lhs;
+                        if ($arg instanceof LeanParenthesis && !($arg->arg instanceof LeanColon))
+                            $arg = $arg->arg;
+                        return [$arg->toLatex($syntax)];
+                    }
+                    break;
+                case 'softmax':
                     $syntax['softmax'] = true;
                     break;
                 case 'sigmoid':
@@ -6679,6 +6684,44 @@ class LeanArgsSpaceSeparated extends LeanArgs
         return $func instanceof LeanProperty && $func->rhs instanceof LeanToken && $func->rhs->text == 'toNat' && $func->lhs instanceof LeanToken && $func->lhs->text == 'Bool';
     }
 
+    public function is_MatProd()
+    {
+        $args = $this->args;
+        if (count($args) !== 3)
+            return false;
+        $func = $args[0];
+        $isMatProd =
+            ($func instanceof LeanToken && $func->text === 'matProd') ||
+            ($func instanceof LeanProperty &&
+                $func->rhs instanceof LeanToken &&
+                $func->rhs->text === 'matProd');
+        if (!$isMatProd)
+            return false;
+        $peel = fn($arg) => $arg instanceof LeanParenthesis ? $arg->arg : $arg;
+        $fn = $peel($args[2]);
+        if (!($fn instanceof Lean_fun))
+            return false;
+        $arrow = $fn->arg;
+        return $arrow instanceof LeanRightarrow || $arrow instanceof Lean_mapsto;
+    }
+
+    /**
+     * LaTeX parts for matProd: `[i, n, body]` for `\prod\limits_{i < n} {body}`.
+     * @return array{0: string, 1: string, 2: string}|null
+     */
+    public function matProdLatexParts(&$syntax = null)
+    {
+        if (!$this->is_MatProd())
+            return null;
+        $peel = fn($arg) => $arg instanceof LeanParenthesis ? $arg->arg : $arg;
+        $n = $peel($this->args[1]);
+        $arrow = $peel($this->args[2])->arg;
+        $binder = $peel($arrow->lhs);
+        if ($binder instanceof LeanColon)
+            $binder = $binder->lhs;
+        return [$binder->toLatex($syntax), $n->toLatex($syntax), $arrow->rhs->toLatex($syntax)];
+    }
+
     public function is_indented()
     {
         $parent = $this->parent;
@@ -6835,6 +6878,8 @@ class LeanArgsSpaceSeparated extends LeanArgs
             $args = $this->strip_parenthesis();
             $arg = $args[1]->toLatex($syntax);
             return [$arg];
+        } elseif ($this->is_MatProd()) {
+            return $this->matProdLatexParts($syntax);
         } elseif ($func instanceof LeanProperty && $func->rhs instanceof LeanToken && $func->rhs->text === 'eye' && count($args) === 2) {
             return [];
         } elseif ($func instanceof LeanProperty && $func->rhs instanceof LeanToken && $func->rhs->text === 'choose' && (count($args) === 2 || count($args) === 3)) {
@@ -6918,6 +6963,8 @@ class LeanArgsSpaceSeparated extends LeanArgs
             }
         } elseif ($this->is_Bool()) {
             return '\left|{%s}\right|';
+        } elseif ($this->is_MatProd()) {
+            return '\\prod\\limits_{%s < %s} {%s}';
         } elseif ($func instanceof LeanProperty) {
             if ($func->rhs instanceof LeanToken) {
                 switch ($func->rhs->text) {

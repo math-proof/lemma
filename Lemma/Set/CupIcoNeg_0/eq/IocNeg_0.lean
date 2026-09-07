@@ -1,4 +1,4 @@
-import Lemma.Set.CupIn_Ico.eq.Cup_UFnSub
+import Lemma.Set.CupIco.eq.Cup_UFnSub
 import Lemma.Finset.Cup_Ioc.eq.IocNeg_0
 import Lemma.Int.AddSubNeg.eq.Neg
 import Lemma.Int.SubNeg
@@ -18,7 +18,7 @@ private lemma main
 -- imply
   ⋃ k ∈ Set.Ico (-n : ℤ) 0, Ioc (k : R) (k + 1 : R) = Ioc (-n : R) 0 := by
 -- proof
-  rw [CupIn_Ico.eq.Cup_UFnSub (-1)]
+  rw [CupIco.eq.Cup_UFnSub (-1)]
   simp [AddSubNeg.eq.Neg]
   simp [SubNeg.comm]
   rw [CupAnd.eq.CupIco]

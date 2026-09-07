@@ -4,7 +4,7 @@ import Lemma.Set.In.of.In.Subset
 import Lemma.Set.In_Union.is.OrInS
 import Lemma.Finset.SubsetCupS.of.Subset
 import Lemma.Finset.SubsetSDiff
-import Lemma.Finset.In_CupIn_Union.is.OrInS_Cup
+import Lemma.Finset.In_CupUnion.is.OrInS_Cup
 open Set Finset
 
 
@@ -21,7 +21,7 @@ private lemma fn
   ·
     intro k h_cup
     apply In_Union.of.OrInS
-    apply OrInS_Cup.of.In_CupIn_Union
+    apply OrInS_Cup.of.In_CupUnion
     rwa [EqUnionInter__SDiff A B]
   ·
     intro k h_union
@@ -47,7 +47,7 @@ private lemma main
   ·
     intro k h_cup
     apply In_Union.of.OrInS
-    apply OrInS_Cup.of.In_CupIn_Union
+    apply OrInS_Cup.of.In_CupUnion
     rwa [EqUnionInter__SDiff A B]
   ·
     intro k h_union

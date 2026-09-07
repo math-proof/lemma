@@ -203,6 +203,13 @@ def Expr.asStack? : Expr → Option (String × Expr × Expr)
   | _ =>
     none
 
+/-- `Tensor.matProd n (fun i => body)` → `(i, n, body)`. -/
+def Expr.asMatProd? : Expr → Option (String × Expr × Expr)
+  | Basic (.ExprWithAttr (.Lean_operatorname `Tensor.matProd)) [n, Basic (.ExprWithLimits .Lean_lambda) [fn, Binder .default binderName _ nil] _] _ =>
+    some (binderName.escape_specials "\\ ", n, fn)
+  | _ =>
+    none
+
 def LimTo.latex : LimTo → String
   | inf => "\\infty"
   | ninf => "-\\infty"
@@ -527,6 +534,14 @@ def Expr.latexFormat : Expr → String
         | `Finset.Ioi
         | `Set.Ioi => "\\left(%s, \\infty\\right)"
         | `Tensor.eye => "\\mathbb{I}"
+        | `Tensor.matProd =>
+          match Expr.asMatProd? e with
+          | some _ =>
+            "\\prod\\limits_{%s < %s} {%s}"
+          | none =>
+            let args := args.map fun arg =>
+              level.toColor (arg.priority > func.priority || arg.is_Div || arg.is_BlockMatrix)
+            opStr ++ "\\ " ++ "\\ ".intercalate args
         | `Stack =>
           let arg := level.toColor (
             if let [_, Basic (.ExprWithLimits .Lean_lambda) [fn, Binder .default _ _ nil] _] := args then
@@ -888,6 +903,12 @@ where
         if let [n, Basic (.ExprWithLimits .Lean_lambda) [fn, Binder .default i _ nil] _] := args then
           i.toString.escape_specials :: map [n, fn]
         else
+          map args
+      | .Lean_operatorname `Tensor.matProd =>
+        match Expr.asMatProd? e with
+        | some (i, n, fn) =>
+          i :: map [n, fn]
+        | none =>
           map args
       | .Lean_operatorname `letFun =>
         if let [_, Basic (.ExprWithLimits .Lean_lambda) [fn, Binder _ h hType _] _] := args then

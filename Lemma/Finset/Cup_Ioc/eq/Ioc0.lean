@@ -1,11 +1,11 @@
-import Lemma.Set.SDiff_Singleton.eq.Range
-import Lemma.Set.InterRange.eq.Singleton
+import Lemma.Set.SDiff_Finset.eq.Range
+import Lemma.Set.InterRange.eq.Finset
 import Lemma.Set.UnionIocS.eq.Ioc.of.Le.Le
 import Lemma.Set.Union
 import Lemma.Nat.CoeAdd.eq.AddCoeS
 import Lemma.Int.NegAdd.eq.SubNeg
 import Lemma.Finset.Cup.eq.UnionCupS
-import Lemma.Finset.CupIn_Singleton.eq.UFn
+import Lemma.Finset.CupFinset.eq.UFn
 open Set Nat Int Finset
 
 
@@ -22,9 +22,9 @@ private lemma main
     simp
   | succ n ih =>
     rw [Cup.eq.UnionCupS (B := {n})]
-    rw [SDiff_Singleton.eq.Range]
-    rw [InterRange.eq.Singleton]
-    simp only [CupIn_Singleton.eq.UFn]
+    rw [SDiff_Finset.eq.Range]
+    rw [InterRange.eq.Finset]
+    simp only [CupFinset.eq.UFn]
     rw [ih]
     rw [Union.comm]
     rw [UnionIocS.eq.Ioc.of.Le.Le]

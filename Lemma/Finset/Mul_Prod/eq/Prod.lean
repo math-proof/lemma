@@ -1,7 +1,7 @@
 import Lemma.Finset.Prod.eq.MulProdS
 import Lemma.Set.Ico.eq.SDiffRangeS
 import Lemma.Set.In_Ico
-import Lemma.Set.EqInterSingleton.of.In
+import Lemma.Set.EqInterFinset.of.In
 import Lemma.Nat.Mul.of.Eq
 import Lemma.Finset.Ico.eq.SDiffIco
 open Set Finset Nat

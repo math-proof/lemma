@@ -2,7 +2,7 @@ import sympy.functions.elementary.integers
 import Lemma.Set.NeFrac_0.of.NotIn
 import Lemma.Set.Frac.in.Ico
 import Lemma.Set.In_SDiff.of.In.Ne
-import Lemma.Set.Ico.cut.Singleton.eq.Ioo
+import Lemma.Set.SDiff_Finset.eq.Ioo
 open Set
 
 
@@ -19,7 +19,7 @@ private lemma main
   have h := NeFrac_0.of.NotIn h
   have := Frac.in.Ico (x := x)
   have := In_SDiff.of.In.Ne this h
-  rwa [Ico.cut.Singleton.eq.Ioo] at this
+  rwa [SDiff_Finset.eq.Ioo] at this
 
 
 -- created on 2018-05-17

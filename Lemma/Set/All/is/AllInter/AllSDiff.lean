@@ -1,4 +1,4 @@
-import Lemma.Set.AllIn_SDiff.of.All
+import Lemma.Set.AllSDiff.of.All
 import Lemma.Set.In.is.In_Inter.ou.In_SDiff
 import Lemma.Set.In_Inter.is.In.In
 open Set
@@ -25,7 +25,7 @@ private lemma main
     · intro x hx
       apply h
       exact (In.In.of.In_Inter hx).left
-    · exact AllIn_SDiff.of.All h B
+    · exact AllSDiff.of.All h B
   · intro h x hx
     obtain ⟨h_inter, h_sdiff⟩ := h
     obtain h' | h' := In_Inter.ou.In_SDiff.of.In B hx
