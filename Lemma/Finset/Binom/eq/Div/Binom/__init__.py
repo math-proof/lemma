@@ -31,9 +31,9 @@ def prove(Eq):
     n_ = Symbol('n', integer=True, positive=True)
     Eq << Bool.All.given.Cond.subst.apply(Eq[-1], Eq[-1].variable, n_)
 
-    Eq << Eq[-1].this.lhs.apply(Finset.Binom.eq.Mul)
+    Eq << Eq[-1].this.lhs.apply(Nat.Binom.eq.Div_MulFactorialS.of.Ge)
 
-    Eq << Eq[-1].this.find(Binomial).apply(Finset.Binom.eq.Mul)
+    Eq << Eq[-1].this.find(Binomial).apply(Nat.Binom.eq.Div_MulFactorialS.of.Ge)
 
     Eq << Eq[-1].this.lhs.find(Factorial).apply(Finset.Factorial.eq.Mul)
 

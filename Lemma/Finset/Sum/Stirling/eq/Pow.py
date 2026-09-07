@@ -34,7 +34,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Finset.Mul_Sum.eq.Sum_Mul)
 
-    Eq << Eq[-1].this.lhs().expr.args[:2].apply(Finset.Mul.FallingFactorial.eq.Add)
+    Eq << Eq[-1].this.lhs().expr.args[:2].apply(Finset.Mul.DescFactorial.eq.Add)
 
     Eq << Eq[-1].this.find(Mul).apply(Nat.Mul_Add.eq.AddMulS)
 

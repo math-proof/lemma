@@ -1,2 +1,2 @@
-from . import FallingFactorial
-from . import RisingFactorial
+from . import DescFactorial
+from . import AscFactorial

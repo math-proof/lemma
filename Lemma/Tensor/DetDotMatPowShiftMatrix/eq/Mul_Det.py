@@ -10,7 +10,7 @@ def apply(A):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Tensor
+    from Lemma import Tensor
 
     n = 6
     A = Symbol(shape=(n, n), complex=True)
@@ -84,9 +84,9 @@ def prove(Eq):
 
     Eq << Tensor.Dot.of.Eq.left.apply(Eq[-1], AddMatrix(n, 5, 0, -1))
 
-    Eq << Eq[-1].apply(Finset.EqDet.of.Eq)
+    Eq << Eq[-1].apply(Tensor.Det.of.Eq)
 
-    Eq << Eq[-1].this.lhs.apply(Finset.Det.eq.Mul)
+    Eq << Eq[-1].this.lhs.apply(Tensor.DetDot.eq.MulDetS.trois)
 
     Eq << Eq[-1] * (n - 1)
 

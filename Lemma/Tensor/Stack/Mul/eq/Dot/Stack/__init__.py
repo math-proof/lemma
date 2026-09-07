@@ -1,2 +1,2 @@
-from . import FallingFactorial
 from . import Stirling
+from . import DescFactorial

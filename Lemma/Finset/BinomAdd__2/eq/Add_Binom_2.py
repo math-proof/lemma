@@ -10,16 +10,16 @@ def apply(self, d):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset
+    from Lemma import Nat
 
     x, y = Symbol(integer=True, nonnegative=True)
     Eq << apply(Binomial(x + y, 2), x)
 
-    Eq << Eq[-1].this.lhs.apply(Finset.Binom.eq.Mul.FallingFactorial)
+    Eq << Eq[-1].this.lhs.apply(Nat.Binom.eq.DivDescFactorial)
 
-    Eq << Eq[-1].this.find(Binomial).apply(Finset.Binom.eq.Mul.FallingFactorial)
+    Eq << Eq[-1].this.find(Binomial).apply(Nat.Binom.eq.DivDescFactorial)
 
-    Eq << Eq[-1].this.find(Binomial).apply(Finset.Binom.eq.Mul.FallingFactorial)
+    Eq << Eq[-1].this.find(Binomial).apply(Nat.Binom.eq.DivDescFactorial)
 
     Eq << Eq[-1].this.lhs.expand()
     Eq << Eq[-1].this.rhs.expand()

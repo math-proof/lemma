@@ -1,3 +1,3 @@
 from . import Pow
-from . import RisingFactorial
-from . import FallingFactorial
+from . import DescFactorial
+from . import AscFactorial

@@ -18,7 +18,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Finset.Factorial.eq.Prod)
 
-    Eq << Eq[-1].this.rhs.apply(Finset.Prod.limits.subst.Neg, i, n - i)
+    Eq << Eq[-1].this.rhs.apply(Finset.ProdIco.eq.Prod_UFnSub, i, n - i)
 
 
 if __name__ == '__main__':

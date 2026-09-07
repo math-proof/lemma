@@ -48,13 +48,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Real.Lim.eq.Mul)
 
-    Eq << Eq[-1].this.lhs.find(Limit).apply(Real.Lim.eq.Sum)
-
     Eq << Eq[-1].this.find(Limit).apply(Real.Lim.eq.Add)
 
-    Eq << Eq[-1].this.find(Limit).apply(Real.Lim.eq.Mul)
-
-    Eq.limit = Eq[-1].this.find(Limit).apply(Real.Lim.eq.Sum)
+    Eq.limit = Eq[-1].this.find(Limit).apply(Real.Lim.eq.Mul)
 
     i = Eq.limit.rhs.find(Sum).variable
     Eq.lt = Less(Abs(γ, evaluate=False), 1, plausible=True)
@@ -76,6 +72,8 @@ def prove(Eq):
     Eq << Real.Eq_0.Lim.of.Eq_0.IsLimited.algebraic_limit_theorem.apply(Eq[-1], Eq[-2])
 
     Eq << Eq.limit.subs(Eq[-1])
+
+    Eq << Eq[-1].this.rhs.simplify()
 
     Eq << Eq[-1].this.rhs.apply(Tensor.Sum.eq.Dot)
 

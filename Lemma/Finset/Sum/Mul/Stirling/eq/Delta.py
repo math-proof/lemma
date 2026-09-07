@@ -24,9 +24,9 @@ def prove(Eq):
     Eq << apply(Sum[k:i:n + 1]((-1) ** (k - i) * Stirling1(n, k) * Stirling(k, i)))
 
     x = Symbol(complex=True)
-    Eq << Finset.FallingFactorial.eq.Sum.Stirling.apply(FallingFactorial(x, n), k)
+    Eq << Finset.DescFactorial.eq.Sum.Stirling.apply(FallingFactorial(x, n), k)
 
-    Eq << Eq[-1].this.rhs().find(Symbol ** Symbol).apply(Finset.Pow.eq.Sum.Stirling.FallingFactorial)
+    Eq << Eq[-1].this.rhs().find(Symbol ** Symbol).apply(Finset.Pow.eq.Sum.Stirling.DescFactorial)
 
     Eq << Eq[-1].this.rhs.expr.apply(Finset.Mul_Sum.eq.Sum_Mul)
 
@@ -36,9 +36,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Tensor.Sum.eq.Dot)
 
-    Eq << Eq[-1].this.lhs.apply(Tensor.FallingFactorial.eq.Dot.Delta)
+    Eq << Eq[-1].this.lhs.apply(Tensor.DescFactorial.eq.Dot.Delta)
 
-    Eq << Tensor.Eq.of.DotStackFallingFactorial.vector_independence.apply(Eq[-1])
+    Eq << Tensor.Eq.of.DotStackDescFactorial.vector_independence.apply(Eq[-1])
 
     Eq << Bool.Cond.of.All.subst.apply(Eq[-1], Eq[-1].variable, i)
 

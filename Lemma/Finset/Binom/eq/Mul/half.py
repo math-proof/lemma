@@ -11,15 +11,15 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Real
+    from Lemma import Finset, Real, Nat
 
     n = Symbol(integer=True, nonnegative=True)
     n = Symbol(integer=True, positive=True)
     Eq << apply(Binomial(S.One / 2, n))
 
-    Eq << Eq[0].lhs.this.apply(Finset.Binom.eq.Mul.FallingFactorial)
+    Eq << Eq[0].lhs.this.apply(Nat.Binom.eq.DivDescFactorial)
 
-    Eq << Eq[-1].this.find(FallingFactorial).apply(Finset.FallingFactorial.eq.Prod)
+    Eq << Eq[-1].this.find(FallingFactorial).apply(Finset.DescFactorial.eq.Prod)
 
     Eq << Eq[-1].this.find(Product).apply(Finset.Prod.eq.Mul.Neg)
 

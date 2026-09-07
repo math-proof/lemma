@@ -13,7 +13,7 @@ def apply(a, b):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Tensor
+    from Lemma import Tensor
 
     n = 5
     a, b = Symbol(shape=(n,), complex=True, zero=False)
@@ -31,8 +31,8 @@ def prove(Eq):
 
     Eq << MulMatrix(n, n - 1, b[n - 2]) @ Eq[-1]
 
-    Eq << Eq[-1].apply(Finset.EqDet.of.Eq)
-    Eq << Eq[-1].this.lhs.apply(Finset.Det.eq.Mul)
+    Eq << Eq[-1].apply(Tensor.Det.of.Eq)
+    Eq << Eq[-1].this.lhs.apply(Tensor.DetDot.eq.MulDetS.trois)
 
     Eq << Eq[-1].subs(Eq[1])
 

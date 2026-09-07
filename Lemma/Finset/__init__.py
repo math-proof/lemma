@@ -29,13 +29,9 @@ from . import All_Any_Eq
 from . import DetBlock_Stack_PowAdd
 from . import EqInv
 from . import Factorial2
-from . import FallingFactorial
 from . import Gt_0
 from . import MatProd
 from . import Pow
-from . import RisingFactorial
-from . import Stack
-from . import Abs
 from . import All_In
 from . import Binom
 from . import Block
@@ -56,7 +52,6 @@ from . import DetStackPowAdd
 from . import MatPowStack_Mul_Binom
 from . import All_In_MatProd
 from . import Delta
-from . import Sum_MulMul_RisingFactorial_Stirling
 from . import Add
 from . import All_GeRootSDiv_
 from . import EqDet
@@ -105,3 +100,10 @@ from . import GtSum
 from . import LtProd
 from . import LtSum
 from . import Square
+from . import ProdIco
+from . import DivProdS
+from . import DescFactorial
+from . import AscFactorial
+from . import Sum_MulMul_AscFactorial_Stirling
+from . import Abs
+from . import Stack

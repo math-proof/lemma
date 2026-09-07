@@ -20,13 +20,9 @@ def prove(Eq):
 
     Eq << Real.EqLim.of.Eq.apply(Eq[-1], (n, oo))
 
-    Eq << Eq[-1].this.rhs.apply(Real.Lim.eq.Sum)
-
-    Eq << Eq[-1].this.lhs.apply(Real.Lim.eq.Sum)
+    Eq << Eq[-1].this.rhs.simplify()
 
     Eq << Eq[-1].this.lhs.simplify()
-
-    Eq << Eq[-1].this.rhs.simplify()
 
 
 if __name__ == '__main__':

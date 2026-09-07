@@ -15,13 +15,13 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset
+    from Lemma import Nat
 
     n = Symbol(integer=True, positive=True)
     k, i = Symbol(integer=True)
     Eq << apply(n * (n - 1) * (n - 2))
 
-    Eq << Eq[0].this.find(Binomial).apply(Finset.Binom.eq.Mul.FallingFactorial.doit)
+    Eq << Eq[0].this.find(Binomial).apply(Nat.Binom.eq.DivDescFactorial.doit)
 
 
 if __name__ == '__main__':

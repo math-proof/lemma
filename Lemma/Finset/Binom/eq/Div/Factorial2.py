@@ -14,13 +14,13 @@ def apply(self, i=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset
+    from Lemma import Finset, Nat
 
     n = Symbol(integer=True, positive=True)
     i = Symbol(integer=True)
     Eq << apply(Binomial(n * 2, n), i)
 
-    Eq << Eq[0].this.lhs.apply(Finset.Binom.eq.Mul)
+    Eq << Eq[0].this.lhs.apply(Nat.Binom.eq.Div_MulFactorialS.of.Ge)
 
     Eq << Eq[-1] * factorial(n)
 

@@ -12,7 +12,7 @@ def apply(is_nonzero, x1, m, d):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Tensor, Rat, Real
+    from Lemma import Finset, Tensor, Rat, Real, Nat
 
     d = Symbol(integer=True, positive=True)
     m = Symbol(domain=Range(d + 1, oo))
@@ -35,17 +35,17 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Tensor.Stack_Ite.eq.Append)
 
-    Eq << Finset.EqDet.of.Eq.apply(Eq[-1])
+    Eq << Tensor.Det.of.Eq.apply(Eq[-1])
 
     Eq << Eq[-1].this.rhs.apply(Finset.DetBlock_Stack_Pow.eq.Mul_Prod.vandermonde.ratio)
 
     Eq << Eq[-1].subs(r.this.definition)
 
-    Eq << Eq[-1].this.lhs.apply(Finset.Det.eq.Mul)
+    Eq << Eq[-1].this.lhs.apply(Tensor.DetDot.eq.MulDetS.trois)
 
     Eq << Eq[-1] * x2 ** binomial(m, 2)
 
-    Eq << Eq[-1].this.lhs.find(Binomial).apply(Finset.Binom.eq.Mul.FallingFactorial.doit)
+    Eq << Eq[-1].this.lhs.find(Binomial).apply(Nat.Binom.eq.DivDescFactorial.doit)
 
     Eq << Eq[-1].this.find(Symbol ** ~Add).expand()
 

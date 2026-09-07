@@ -12,13 +12,11 @@ def apply(self, var=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Real
-
     n = Symbol(integer=True)
     s = Function(real=True)
     Eq << apply(Sum[n:oo](s(n)))
 
-    Eq << Eq[0].this.rhs.apply(Real.Lim.eq.Sum)
+    Eq << Eq[0].this.rhs.simplify()
 
 
 
@@ -26,3 +24,4 @@ def prove(Eq):
 if __name__ == '__main__':
     run()
 # created on 2023-04-16
+# updated on 2026-09-06

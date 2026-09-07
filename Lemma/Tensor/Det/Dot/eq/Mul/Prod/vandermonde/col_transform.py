@@ -12,7 +12,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Tensor, Rat
+    from Lemma import Finset, Tensor, Rat, Nat
 
     m = Symbol(integer=True, positive=True)
     d = Symbol(integer=True, nonnegative=True)
@@ -22,13 +22,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(MatMul).apply(Tensor.Dot.vandermonde.col_transform)
 
-    Eq << Eq[-1].this.lhs.apply(Finset.Det.eq.Mul, doit=True, deep=False)
+    Eq << Eq[-1].this.lhs.apply(Tensor.DetDot.eq.MulDetS.trois, doit=True, deep=False)
 
     Eq << Eq[-1].this.find(Sum).apply(Finset.Sum.Binom.eq.Pow.Newton)
 
     Eq << Eq[-1].this.find(Stack).apply(Tensor.Stack_Mul.eq.MulStackS)
 
-    Eq << Eq[-1].this.find(Det).apply(Finset.Det.Mul.eq.Mul.Prod)
+    Eq << Eq[-1].this.find(Det).apply(Tensor.DetMul.eq.MulProd)
 
     Eq << Eq[-1].this.find(Product).apply(Finset.Prod.eq.Pow.Sum)
 
@@ -40,7 +40,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Det).apply(Finset.DetStackPowAdd.eq.Prod_Factorial.vandermonde)
 
-    Eq << Eq[-1].this.find(Binomial).apply(Finset.Binom.eq.Mul.FallingFactorial.doit)
+    Eq << Eq[-1].this.find(Binomial).apply(Nat.Binom.eq.DivDescFactorial.doit)
 
 
 

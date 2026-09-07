@@ -30,9 +30,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Finset.Sum.eq.Sub.telescope)
 
-    Eq << Eq[-1].this.find(Binomial).apply(Finset.Binom.eq.Mul.FallingFactorial.doit)
+    Eq << Eq[-1].this.find(Binomial).apply(Nat.Binom.eq.DivDescFactorial.doit)
 
-    Eq << Eq[-1].this.find(Binomial).apply(Finset.Binom.eq.Mul.FallingFactorial.doit)
+    Eq << Eq[-1].this.find(Binomial).apply(Nat.Binom.eq.DivDescFactorial.doit)
 
     Eq << Eq.eq.subs(Eq[-1])
 

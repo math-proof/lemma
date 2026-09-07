@@ -66,8 +66,6 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Expectation[Sum]).apply(Probability.Expect.Sum.eq.Sum.Expect)
 
-    Eq << Eq[-1].this.find(Limit).apply(Real.Lim.eq.Sum)
-
     Eq << Eq[-1].this.rhs.apply(Probability.Sum.Expect.eq.Expect.Sum)
 
     Eq << Eq[-1].this.find(Sum).apply(Tensor.Sum.eq.Dot, 1)
@@ -94,4 +92,4 @@ def prove(Eq):
 if __name__ == '__main__':
     run()
 # created on 2023-03-30
-# updated on 2023-04-14
+# updated on 2026-09-06

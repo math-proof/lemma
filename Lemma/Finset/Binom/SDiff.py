@@ -9,14 +9,14 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset
+    from Lemma import Nat
 
     n, k = Symbol(integer=True)
     Eq << apply(Binomial(n, k))
 
-    Eq << Eq[-1].this.lhs.apply(Finset.Binom.eq.Mul)
+    Eq << Eq[-1].this.lhs.apply(Nat.Binom.eq.Div_MulFactorialS.of.Ge)
 
-    Eq << Eq[-1].this.rhs.apply(Finset.Binom.eq.Mul)
+    Eq << Eq[-1].this.rhs.apply(Nat.Binom.eq.Div_MulFactorialS.of.Ge)
 
 
 

@@ -9,17 +9,17 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset
+    from Lemma import Finset, Nat
 
     n = Symbol(integer=True, positive=True)
     k = Symbol(domain=Range(1, n))
     Eq << apply(Binomial(n, k))
 
-    Eq << Eq[-1].this.lhs.apply(Finset.Binom.eq.Mul)
+    Eq << Eq[-1].this.lhs.apply(Nat.Binom.eq.Div_MulFactorialS.of.Ge)
 
-    Eq << Eq[-1].this.find(binomial).apply(Finset.Binom.eq.Mul)
+    Eq << Eq[-1].this.find(binomial).apply(Nat.Binom.eq.Div_MulFactorialS.of.Ge)
 
-    Eq << Eq[-1].this.find(binomial).apply(Finset.Binom.eq.Mul)
+    Eq << Eq[-1].this.find(binomial).apply(Nat.Binom.eq.Div_MulFactorialS.of.Ge)
 
     Eq << Eq[-1].this.find(Factorial).apply(Finset.Factorial.eq.Mul)
 

@@ -43,11 +43,9 @@ def prove(Eq):
 
     Eq << Real.EqLim.of.Eq.apply(Eq[-1], (k, oo))
 
-    Eq << Eq[-1].this.lhs.apply(Real.Lim.eq.Sum)
-
     Eq << Eq[-1].this.rhs.find(Limit).apply(Real.Lim.eq.Add)
 
-    Eq.limit = Eq[-1].this.find(Limit[Sum]).apply(Real.Lim.eq.Sum)
+    Eq.limit = Eq[-1].this.find(Limit[Sum]).simplify()
 
     Eq << Real.All_Le_Sup.apply(Eq[3].lhs)
 
@@ -109,4 +107,4 @@ def prove(Eq):
 if __name__ == '__main__':
     run()
 # created on 2023-04-13
-# updated on 2023-05-20
+# updated on 2026-09-06

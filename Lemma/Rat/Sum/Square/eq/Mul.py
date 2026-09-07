@@ -16,7 +16,7 @@ def prove(Eq):
     n = Symbol(domain=Range(2, oo))
     Eq << apply(Sum[k:n](k ** 2))
 
-    Eq << Binomial(k, 2).this.apply(Finset.Binom.eq.Mul.FallingFactorial.doit)
+    Eq << Binomial(k, 2).this.apply(Nat.Binom.eq.DivDescFactorial.doit)
 
     Eq << Eq[-1] * 2
 
@@ -38,7 +38,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Sum).apply(Finset.Sum.Binom.eq.Binom)
 
-    Eq << Eq[-1].this.find(Binomial).apply(Finset.Binom.eq.Mul.FallingFactorial.doit)
+    Eq << Eq[-1].this.find(Binomial).apply(Nat.Binom.eq.DivDescFactorial.doit)
 
     Eq << Eq[-1].this.rhs.apply(Nat.AddMulS.eq.Mul_Add)
 

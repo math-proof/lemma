@@ -390,7 +390,32 @@ class Limit(Expr):
                     return x0.clear_infinitesimal()[0] + const
                 
                 return Limit[x:x0](expr) + const
-            
+
+        if expr.is_Product or expr.is_Sum or expr.is_Integral:
+            function = expr.expr
+            limits = [list(limit) for limit in expr.limits]
+            hit = False
+            for _x, *ab in reversed(limits):
+                if x == _x:
+                    assert any(c._has(x) for c in ab)
+                    hit = True
+            if not hit and function._has(x):
+                function = Limit[x:x0](function)
+                try:
+                    function = function.doit()
+                except:
+                    ...
+            for i, (_x, *ab) in enumerate(limits):
+                for j, t in enumerate(ab):
+                    try:
+                        t = Limit[x:x0](t).doit()
+                    except:
+                        t = Limit[x:x0](t)
+                    ab[j] = t
+                limits[i] = (_x, *ab)
+            expr = expr.func(function, *limits)
+            return expr.simplify(**kwargs)
+
         return self
 
     @cacheit
@@ -487,7 +512,7 @@ class Limit(Expr):
                 else:
                     yield x[tuple(slices)]
 
-            else:                    
+            else:
                 yield v
 
         for x, *ab in limits:

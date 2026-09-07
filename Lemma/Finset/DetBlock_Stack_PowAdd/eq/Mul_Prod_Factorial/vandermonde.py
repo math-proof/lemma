@@ -96,9 +96,9 @@ def prove(Eq):
 
     Eq << MulMatrix(n + 1, 1, -1) @ (MulMatrix(n + 1, 0, -1) @ Eq[-1])
 
-    Eq << Finset.EqDet.of.Eq.apply(Eq[-1])
+    Eq << Tensor.Det.of.Eq.apply(Eq[-1])
 
-    Eq << Eq[-1].this.lhs.apply(Finset.Det.eq.Mul).reversed.subs(Eq[1])
+    Eq << Eq[-1].this.lhs.apply(Tensor.DetDot.eq.MulDetS.trois).reversed.subs(Eq[1])
 
     Eq << Eq[0].find(1 - Stack).this.apply(Tensor.Add_Stack.eq.Stack_Add)
 

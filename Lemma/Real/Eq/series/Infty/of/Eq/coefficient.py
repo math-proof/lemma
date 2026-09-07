@@ -81,9 +81,9 @@ def prove(Eq):
 
     Eq << Real.EqLim.of.Eq.apply(Eq[-1], (r, 0))
 
-    Eq << Eq[-1].this.lhs.apply(Real.Lim.eq.Sum)
+    Eq << Eq[-1].this.lhs.simplify()
 
-    Eq << Eq[-1].this.rhs.apply(Real.Lim.eq.Sum)
+    Eq << Eq[-1].this.rhs.simplify()
 
     Eq << Eq[-1].this.lhs.apply(Finset.Sum.eq.AddSumS, cond={0})
 
@@ -108,4 +108,4 @@ if __name__ == '__main__':
     run()
 
 # created on 2020-05-18
-# updated on 2023-04-16
+# updated on 2026-09-06

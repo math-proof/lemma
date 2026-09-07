@@ -23,8 +23,6 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Expectation).apply(Probability.Expect.eq.Integral)
 
-    Eq << Eq[-1].this.lhs.apply(Real.Lim.eq.Integral)
-
     Eq << Eq[-1].this.lhs.find(Limit).apply(Real.Lim.eq.Mul)
 
 

@@ -65,7 +65,6 @@ from . import MatProd
 from . import EqSum
 from . import Square
 from . import Cup
-from . import FallingFactorial
 from . import In
 from . import One
 from . import EqDot
@@ -143,3 +142,8 @@ from . import DotT
 from . import DotSoftmaxDivDot_T
 from . import DotSoftmaxDivDot_Stack_TDot
 from . import Stack_Ite
+from . import DescFactorial
+from . import DetMul
+from . import DetDot
+from . import DetAppendHstackS
+from . import DetDot_AppendHstackS

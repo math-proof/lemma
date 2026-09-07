@@ -32,7 +32,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Sum).apply(Rat.Sum.eq.Mul.series.arithmetic)
 
-    Eq << Eq[-1].this.find(Binomial).apply(Finset.Binom.eq.Mul.FallingFactorial.doit)
+    Eq << Eq[-1].this.find(Binomial).apply(Nat.Binom.eq.DivDescFactorial.doit)
 
     Eq << Eq[0].lhs.this.find(Binomial).apply(Finset.Binom.eq.Sub.Pascal)
 

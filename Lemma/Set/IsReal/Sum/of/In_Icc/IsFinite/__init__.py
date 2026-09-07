@@ -55,8 +55,6 @@ def prove(Eq):
 
     Eq <<= Real.LeLim.of.Le.apply(Eq[-2], (n, oo)), Real.GeLim.of.Ge.apply(Eq[-1], (n, oo))
 
-    Eq <<= Eq[-2].this.lhs.apply(Real.Lim.eq.Sum), Eq[-1].this.lhs.apply(Real.Lim.eq.Sum)
-
     Eq <<= Eq[-2].this.rhs.apply(Real.Lim.eq.Mul), Eq[-1].this.rhs.apply(Real.Lim.eq.Mul)
 
     Eq.upper_bound, Eq.lower_bound = Eq[-2].this.find(Limit).apply(Real.Lim.eq.Mul), Eq[-1].this.find(Limit).apply(Real.Lim.eq.Mul)

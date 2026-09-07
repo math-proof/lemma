@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(MatMul).apply(Tensor.DotStackS.eq.DotStackS.vandermonde.col_transform)
 
-    Eq << Eq[-1].this.lhs.apply(Finset.Det.eq.Mul, doit=True, deep=False)
+    Eq << Eq[-1].this.lhs.apply(Tensor.DetDot.eq.MulDetS.trois, doit=True, deep=False)
 
     Eq << Eq[-1].this.find(Sum).apply(Finset.Sum.Binom.eq.Pow.Newton)
 

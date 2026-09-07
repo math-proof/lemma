@@ -113,16 +113,16 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Mul, Det).doit(deep=True)
 
-    Eq << Eq[-1].this.find(Product[2]).apply(Finset.Prod.limits.subst.offset, -1)
+    Eq << Eq[-1].this.find(Product[2]).apply(Finset.ProdIco.eq.Prod_UFnAdd, -1)
 
     k = Eq[-1].find(Product).variable
     Eq << Product[k:n](Eq[-1].find(Product).expr).this.apply(Finset.Prod.eq.MulProdS, cond={i})
 
     Eq.det_lamda = Eq[-2].subs((Eq[-1] / Eq[-1].rhs.args[0]).reversed)
 
-    Eq << Eq.column_transformation.apply(Finset.EqDet.of.Eq)
+    Eq << Eq.column_transformation.apply(Tensor.Det.of.Eq)
 
-    Eq << Eq[-1].this.lhs.apply(Finset.Det.eq.Mul)
+    Eq << Eq[-1].this.lhs.apply(Tensor.DetDot.eq.MulDetS.trois)
 
     Eq << Eq[-1].subs(Eq.det_lamda).apply(Bool.All.of.Cond, i)
 

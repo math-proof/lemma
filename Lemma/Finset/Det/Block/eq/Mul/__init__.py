@@ -115,15 +115,15 @@ def prove(Eq):
 
     Eq << Eq[-4].subs(Eq[-1].reversed)
 
-    Eq << Finset.EqDet.of.Eq.apply(Eq[-1])
+    Eq << Tensor.Det.of.Eq.apply(Eq[-1])
 
-    Eq << Eq[-1].this.rhs.apply(Finset.Det.Block.eq.Mul.deux)
-
-    Eq << Eq[-1].this.rhs.find(Symbol).definition
+    Eq << Eq[-1].this.rhs.apply(Tensor.DetAppendHstackS.eq.MulPowNeg1Mul)
 
     Eq << Eq[-1].this.rhs.find(Symbol).definition
 
-    Eq << Eq[-1].this.lhs.apply(Finset.Det.eq.Mul)
+    Eq << Eq[-1].this.rhs.find(Symbol).definition
+
+    Eq << Eq[-1].this.lhs.apply(Tensor.DetDot.eq.MulDetS.trois)
 
     Eq << Eq[-1].this.lhs.args[-1].apply(Finset.DetBlock.eq.PowNegativeOneMul)
 
@@ -138,5 +138,4 @@ if __name__ == '__main__':
 
 # created on 2021-11-21
 # updated on 2022-01-15
-from . import deux
 from . import Prod

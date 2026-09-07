@@ -11,7 +11,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Nat
+    from Lemma import Nat, Tensor
 
     n = Symbol(integer=True, positive=True)
     A = Symbol(real=True, shape=(n, n))
@@ -22,7 +22,7 @@ def prove(Eq):
 
 
 
-    Eq << Finset.EqDet.of.Eq.apply(Eq[0])
+    Eq << Tensor.Det.of.Eq.apply(Eq[0])
     Eq << Unequal(Det(B), 0, plausible=True)
 
     Eq << Nat.Ne.of.Eq.Ne.apply(Eq[-2], Eq[-1])

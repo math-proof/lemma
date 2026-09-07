@@ -41,9 +41,9 @@ def prove(Eq):
 
     Eq << ShiftMatrix(n + 1, 0, n) @ Eq[-1]
 
-    Eq << Finset.EqDet.of.Eq.apply(Eq[-1])
+    Eq << Tensor.Det.of.Eq.apply(Eq[-1])
 
-    Eq << Eq[-1].this.lhs.apply(Finset.Det.eq.Mul)
+    Eq << Eq[-1].this.lhs.apply(Tensor.DetDot.eq.MulDetS.trois)
 
     Eq << Eq[-1].this.find(Add ** Symbol).apply(Int.Pow.eq.MulPowSNeg)
 

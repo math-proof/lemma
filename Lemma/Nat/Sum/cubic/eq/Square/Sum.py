@@ -16,13 +16,13 @@ def prove(Eq):
     n = Symbol(domain=Range(3, oo))
     Eq << apply(Sum[k:n](k ** 3))
 
-    Eq << Finset.Pow.eq.Sum.Stirling.FallingFactorial.apply(k ** 3)
+    Eq << Finset.Pow.eq.Sum.Stirling.DescFactorial.apply(k ** 3)
 
     Eq << Eq[-1].this.rhs.apply(Finset.Sum.eq.Add.doit)
 
-    Eq << Binomial(k, 3).this.apply(Finset.Binom.eq.Mul.FallingFactorial.doit).reversed * 6
+    Eq << Binomial(k, 3).this.apply(Nat.Binom.eq.DivDescFactorial.doit).reversed * 6
 
-    Eq << Binomial(k, 2).this.apply(Finset.Binom.eq.Mul.FallingFactorial.doit).reversed * 2
+    Eq << Binomial(k, 2).this.apply(Nat.Binom.eq.DivDescFactorial.doit).reversed * 2
 
     Eq << Eq[-3].subs(*Eq[-2:])
 
@@ -50,9 +50,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Sum).apply(Finset.Sum.Binom.eq.Binom)
 
-    Eq << Eq[-1].this.find(Binomial).apply(Finset.Binom.eq.Mul.FallingFactorial.doit)
+    Eq << Eq[-1].this.find(Binomial).apply(Nat.Binom.eq.DivDescFactorial.doit)
 
-    Eq << Eq[-1].this.find(Binomial).apply(Finset.Binom.eq.Mul.FallingFactorial.doit)
+    Eq << Eq[-1].this.find(Binomial).apply(Nat.Binom.eq.DivDescFactorial.doit)
 
     Eq << Eq[-1].this.rhs.apply(Nat.AddMulS.eq.Mul_Add)
 

@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Finset.Factorial2.eq.Prod, i)
 
-    Eq << Eq[-1].this.lhs.apply(Finset.Prod.limits.subst.Neg, i, n - i)
+    Eq << Eq[-1].this.lhs.apply(Finset.ProdIco.eq.Prod_UFnSub, i, n - i)
 
     # https://en.wikipedia.org/wiki/Double_factorial
 

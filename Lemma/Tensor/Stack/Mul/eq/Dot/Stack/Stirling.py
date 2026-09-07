@@ -17,9 +17,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Stack_Sum_MulGetS, simplify=None)
 
-    Eq << Eq[-1].this.lhs().find(Pow).apply(Finset.Pow.eq.Sum.Stirling.FallingFactorial)
+    Eq << Eq[-1].this.lhs().find(Pow).apply(Finset.Pow.eq.Sum.Stirling.DescFactorial)
 
-    Eq << Eq[-1].this.find(FallingFactorial).apply(Finset.FallingFactorial.eq.Mul.Binom)
+    Eq << Eq[-1].this.find(FallingFactorial).apply(Finset.DescFactorial.eq.Mul.Binom)
 
     Eq << Eq[-1].this.find(Pow * Pow).args[:2].apply(Real.MulPowS.eq.Pow_Add.of.Gt_0)
 

@@ -11,7 +11,7 @@ def apply(self, var='k'):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Set, Bool, Int, Tensor
+    from Lemma import Finset, Set, Bool, Int, Tensor, Nat
 
     n = Symbol(integer=True, positive=True, given=False)
     x = Symbol(complex=True, shape=(oo,))
@@ -31,7 +31,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Finset.Pow.eq.Sum.Binom.Newton)
 
-    Eq << Eq[-1].this.find(Binomial).apply(Finset.Binom.eq.Mul)
+    Eq << Eq[-1].this.find(Binomial).apply(Nat.Binom.eq.Div_MulFactorialS.of.Ge)
 
     Eq << Eq[-1].this.rhs.apply(Finset.Sum_Mul.eq.Mul_Sum)
 

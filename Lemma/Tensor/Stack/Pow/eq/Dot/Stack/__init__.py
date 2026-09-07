@@ -1,2 +1,2 @@
-from . import FallingFactorial
 from . import Mul
+from . import DescFactorial

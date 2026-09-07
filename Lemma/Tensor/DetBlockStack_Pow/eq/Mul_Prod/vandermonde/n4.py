@@ -128,9 +128,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Mul[Matrix]).apply(Tensor.Mul.eq.Tensor)
 
-    Eq << Finset.EqDet.of.Eq.apply(Eq[-1])
+    Eq << Tensor.Det.of.Eq.apply(Eq[-1])
 
-    Eq << Eq[-1].this.lhs.apply(Finset.Det.eq.Mul, deep=True)
+    Eq << Eq[-1].this.lhs.apply(Tensor.DetDot.eq.MulDetS.trois, deep=True)
 
     Eq << Eq[-1].this.rhs.apply(Finset.Det.Block.eq.Mul)
 

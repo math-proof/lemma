@@ -3,9 +3,7 @@ from . import of
 from . import Binom
 from . import Choose
 from . import Mul
-from . import FallingFactorial
 from . import Stirling
-from . import RisingFactorial
 from . import Diff
 from . import Sub
 from . import ge
@@ -16,3 +14,5 @@ from . import lt
 from . import SDiff
 from . import Sum
 from . import doit
+from . import DescFactorial
+from . import AscFactorial

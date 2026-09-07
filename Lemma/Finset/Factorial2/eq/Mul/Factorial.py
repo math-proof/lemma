@@ -24,7 +24,7 @@ def prove(Eq):
     Eq << Eq[-1].this.rhs.apply(Finset.Factorial.eq.Prod)
 
     i = Eq[-1].lhs.variable
-    Eq << Eq[-1].this.lhs.apply(Finset.Prod.limits.subst.Neg, i, n - i)
+    Eq << Eq[-1].this.lhs.apply(Finset.ProdIco.eq.Prod_UFnSub, i, n - i)
     # https://en.wikipedia.org/wiki/Double_factorial
 
 

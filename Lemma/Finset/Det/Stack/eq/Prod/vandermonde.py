@@ -70,14 +70,14 @@ def prove(Eq):
 
     Eq << Eq.recursion.rhs.args[0].this.doit()
 
-    Eq.determinant = Eq[-1].this.find(Product).apply(Finset.Prod.limits.subst.offset, -1)
+    Eq.determinant = Eq[-1].this.find(Product).apply(Finset.ProdIco.eq.Prod_UFnAdd, -1)
 
     Eq << Bool.Cond.of.Cond.subst.apply(Eq[0], a[:n], a[1:n + 1])
 
     k = Eq.determinant.find(Stack).variable
     Eq << Eq[-1].this.lhs.arg.limits_subs(j, k).this.lhs.arg.limits_subs(i, j).this.rhs.limits_subs(i, i - 1)
 
-    Eq << Eq[-1].this.rhs.apply(Finset.Prod.limits.subst.offset, -1)
+    Eq << Eq[-1].this.rhs.apply(Finset.ProdIco.eq.Prod_UFnAdd, -1)
 
     Eq << Eq.determinant.subs(Eq[-1])
 
@@ -100,11 +100,11 @@ def prove(Eq):
 
     Eq << Bool.All.of.All_Eq.Cond.subst.apply(Eq[-1], Eq.recursion)
 
-    Eq << Eq.expand.apply(Finset.EqDet.of.Eq)
+    Eq << Eq.expand.apply(Tensor.Det.of.Eq)
 
     Eq << Eq[-1].subs(Eq[-2])
 
-    Eq << Eq[-1].this.lhs.apply(Finset.Det.eq.Mul)
+    Eq << Eq[-1].this.lhs.apply(Tensor.DetDot.eq.MulDetS.trois)
 
     Eq << Eq[-1].this.lhs.args[0].doit()
 

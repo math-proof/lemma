@@ -45,17 +45,17 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Tensor.Stack_Ite.eq.Append)
 
-    Eq << Finset.EqDet.of.Eq.apply(Eq[-1])
+    Eq << Tensor.Det.of.Eq.apply(Eq[-1])
 
     Eq << Eq[-1].this.rhs.apply(Tensor.DetBlock_Stack_Pow.eq.MulProd_Factorial.vandermonde.n2)
 
     Eq << Eq[-1].subs(r.this.definition)
 
-    Eq << Eq[-1].this.lhs.apply(Finset.Det.eq.Mul)
+    Eq << Eq[-1].this.lhs.apply(Tensor.DetDot.eq.MulDetS.trois)
 
     Eq << Eq[-1] * x2 ** binomial(n, 2)
 
-    Eq << Eq[-1].this.lhs.find(Binomial).apply(Finset.Binom.eq.Mul.FallingFactorial.doit)
+    Eq << Eq[-1].this.lhs.find(Binomial).apply(Nat.Binom.eq.DivDescFactorial.doit)
 
     Eq << Eq[-1].this.find(Symbol ** Add).expand()
 
