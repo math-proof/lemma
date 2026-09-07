@@ -1,6 +1,7 @@
 import Lemma.Bool.EqCast.of.SEq
 import Lemma.Nat.EqMax
 import Lemma.Tensor.SEqResize.of.Eq_Get
+import sympy.matrices.expressions.matmul
 open Bool Nat Tensor
 
 

@@ -650,7 +650,8 @@ def Expr.latexFormat : Expr → String
           "%s\\ {\\color{blue}\\text{is}}\\ {constant}"
         | `Tensor.T =>
           "{%s}^{\\color{magenta} T}"
-        | `Tensor.det =>
+        | `Tensor.det
+        | `Matrix.det =>
           "\\left|{%s}\\right|"
         | `Nat.factorial =>
           "{%s}!"

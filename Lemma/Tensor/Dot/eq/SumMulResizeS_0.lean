@@ -1,4 +1,4 @@
-import sympy.tensor.tensor
+import sympy.matrices.expressions.matmul
 
 
 @[main]

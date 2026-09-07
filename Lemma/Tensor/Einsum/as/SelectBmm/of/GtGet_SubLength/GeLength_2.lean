@@ -11,6 +11,7 @@ import Lemma.Tensor.SEqBmmS.of.SEq.SEq
 import Lemma.Tensor.SEqReshapeS.of.SEq.Eq.Dvd
 import Lemma.Tensor.SEqResize.of.Eq_Get
 import Lemma.Tensor.SEqSelectS.of.SEq
+import sympy.matrices.expressions.matmul
 open Bool List Nat Tensor
 set_option maxHeartbeats 400000
 

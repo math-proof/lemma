@@ -2475,6 +2475,11 @@ class LeanProperty extends LeanBinary
                     return [$this->lhs->toLatex($syntax)];
                 case 'factorial':
                     return [$this->lhs->toLatex($syntax)];
+                case 'det':
+                    $arg = $this->lhs;
+                    if ($arg instanceof LeanParenthesis && !($arg->arg instanceof LeanColon))
+                        $arg = $arg->arg;
+                    return [$arg->toLatex($syntax)];
             }
         }
         return parent::latexArgs($syntax);
@@ -2532,6 +2537,8 @@ class LeanProperty extends LeanBinary
                     return '{\\color{RoyalBlue}\\sigma}\\left(%s\\right)';
                 case 'factorial':
                     return '{%s}!';
+                case 'det':
+                    return '\left|{%s}\right|';
             }
         }
         return "{%s}$this->command{%s}";

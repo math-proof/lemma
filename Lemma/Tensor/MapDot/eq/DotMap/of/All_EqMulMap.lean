@@ -1,5 +1,5 @@
 import Lemma.Tensor.MapCast.as.MapBFn.of.Eq
-import sympy.tensor.tensor
+import sympy.matrices.expressions.matmul
 open Tensor
 
 

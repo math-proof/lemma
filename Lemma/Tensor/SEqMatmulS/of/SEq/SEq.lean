@@ -1,6 +1,6 @@
 import Lemma.Bool.SEq.is.Eq
 import stdlib.SEq
-import sympy.tensor.tensor
+import sympy.matrices.expressions.matmul
 open Bool
 
 

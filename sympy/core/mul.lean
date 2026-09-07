@@ -143,63 +143,63 @@ lemma pad1_zipWith_lcm (s s' : List ℕ) {n m : ℕ}
   rw [hzip_len]
 
 /--
-Output shape of `Tensor.multiply`.
+Output shape of `Tensor.mul`.
 
 Right-align the shapes (left-pad `1`s), then take `Nat.lcm` on each axis.
 `lcm 0 x = 0`, so a zero-size axis stays zero.
 -/
-def multiply_shape (s s' : List ℕ) : List ℕ :=
+def mul_shape (s s' : List ℕ) : List ℕ :=
   let n := s.length ⊔ s'.length
   (pad1 s n).zipWith Nat.lcm (pad1 s' n)
 
-lemma multiply_shape_eq (s s' : List ℕ) :
-    multiply_shape s s' =
+lemma mul_shape_eq (s s' : List ℕ) :
+    mul_shape s s' =
       (pad1 s (s.length ⊔ s'.length)).zipWith Nat.lcm
         (pad1 s' (s.length ⊔ s'.length)) :=
   rfl
 
-lemma multiply_shape_length (s s' : List ℕ) :
-    (multiply_shape s s').length = s.length ⊔ s'.length := by
-  simp [multiply_shape, List.length_zipWith, pad1_length_max, pad1_length_max']
+lemma mul_shape_length (s s' : List ℕ) :
+    (mul_shape s s').length = s.length ⊔ s'.length := by
+  simp [mul_shape, List.length_zipWith, pad1_length_max, pad1_length_max']
 
-lemma multiply_shape_self (s : List ℕ) :
-    multiply_shape s s = s := by
-  simp [multiply_shape, pad1_id]
+lemma mul_shape_self (s : List ℕ) :
+    mul_shape s s = s := by
+  simp [mul_shape, pad1_id]
 
-lemma multiply_shape_comm (s s' : List ℕ) :
-    multiply_shape s s' = multiply_shape s' s := by
+lemma mul_shape_comm (s s' : List ℕ) :
+    mul_shape s s' = mul_shape s' s := by
   have hmax : s.length ⊔ s'.length = s'.length ⊔ s.length := max_comm _ _
-  simp only [multiply_shape, hmax]
+  simp only [mul_shape, hmax]
   exact zipWith_lcm_comm _ _ (by
     rw [← hmax]
     exact pad1_length_eq s s')
 
-lemma multiply_shape_assoc (s s' s'' : List ℕ) :
-    multiply_shape (multiply_shape s s') s'' =
-      multiply_shape s (multiply_shape s' s'') := by
+lemma mul_shape_assoc (s s' s'' : List ℕ) :
+    mul_shape (mul_shape s s') s'' =
+      mul_shape s (mul_shape s' s'') := by
   let r := s.length ⊔ s'.length ⊔ s''.length
-  have hABlen : (multiply_shape s s').length ⊔ s''.length = r := by
-    rw [multiply_shape_length]
-  have hBClen : s.length ⊔ (multiply_shape s' s'').length = r := by
-    rw [multiply_shape_length]
+  have hABlen : (mul_shape s s').length ⊔ s''.length = r := by
+    rw [mul_shape_length]
+  have hBClen : s.length ⊔ (mul_shape s' s'').length = r := by
+    rw [mul_shape_length]
     simp [r, max_comm, max_left_comm]
   have hL :
-      multiply_shape (multiply_shape s s') s'' =
-        (pad1 (multiply_shape s s') r).zipWith Nat.lcm (pad1 s'' r) := by
-    rw [multiply_shape_eq, hABlen]
+      mul_shape (mul_shape s s') s'' =
+        (pad1 (mul_shape s s') r).zipWith Nat.lcm (pad1 s'' r) := by
+    rw [mul_shape_eq, hABlen]
   have hR :
-      multiply_shape s (multiply_shape s' s'') =
-        (pad1 s r).zipWith Nat.lcm (pad1 (multiply_shape s' s'') r) := by
-    rw [multiply_shape_eq, hBClen]
+      mul_shape s (mul_shape s' s'') =
+        (pad1 s r).zipWith Nat.lcm (pad1 (mul_shape s' s'') r) := by
+    rw [mul_shape_eq, hBClen]
   have hABpad :
-      pad1 (multiply_shape s s') r =
+      pad1 (mul_shape s s') r =
         (pad1 s r).zipWith Nat.lcm (pad1 s' r) := by
-    rw [multiply_shape_eq]
+    rw [mul_shape_eq]
     exact pad1_zipWith_lcm s s' le_rfl le_sup_left
   have hBCpad :
-      pad1 (multiply_shape s' s'') r =
+      pad1 (mul_shape s' s'') r =
         (pad1 s' r).zipWith Nat.lcm (pad1 s'' r) := by
-    rw [multiply_shape_eq]
+    rw [mul_shape_eq]
     exact pad1_zipWith_lcm s' s'' le_rfl (by simp [r])
   rw [hL, hR, hABpad, hBCpad]
   apply zipWith_lcm_assoc
@@ -208,9 +208,9 @@ lemma multiply_shape_assoc (s s' s'' : List ℕ) :
   ·
     rw [pad1_length s' r (by simp [r]), pad1_length s'' r (by simp [r])]
 
-lemma multiply_shape_prod_eq_zero_iff (s s' : List ℕ) :
-    (multiply_shape s s').prod = 0 ↔ s.prod = 0 ∨ s'.prod = 0 := by
-  rw [multiply_shape_eq]
+lemma mul_shape_prod_eq_zero_iff (s s' : List ℕ) :
+    (mul_shape s s').prod = 0 ↔ s.prod = 0 ∨ s'.prod = 0 := by
+  rw [mul_shape_eq]
   simp [zipWith_lcm_prod_eq_zero_iff _ _ (pad1_length_eq s s'),
     pad1_prod]
 
@@ -392,100 +392,100 @@ lemma val_get (v : List.Vector α n) {i : ℕ} (hi : i < n)
   rfl
 
 private lemma wrapFlat_lt_src (s s' : List ℕ) (i : ℕ)
-    (h : (multiply_shape s s').prod ≠ 0) :
-    wrapFlat (pad1 s (s.length ⊔ s'.length)) (multiply_shape s s') i < s.prod := by
+    (h : (mul_shape s s').prod ≠ 0) :
+    wrapFlat (pad1 s (s.length ⊔ s'.length)) (mul_shape s s') i < s.prod := by
   have hsa : (pad1 s (s.length ⊔ s'.length)).prod ≠ 0 := by
     rw [pad1_prod]
-    exact mt Or.inl ((multiply_shape_prod_eq_zero_iff s s').not.mp h)
+    exact mt Or.inl ((mul_shape_prod_eq_zero_iff s s').not.mp h)
   have hlen :
-      (pad1 s (s.length ⊔ s'.length)).length = (multiply_shape s s').length := by
-    rw [pad1_length_max, multiply_shape_length]
+      (pad1 s (s.length ⊔ s'.length)).length = (mul_shape s s').length := by
+    rw [pad1_length_max, mul_shape_length]
   have := wrapFlat_lt _ _ hlen hsa i
   rwa [pad1_prod] at this
 
 private lemma wrapFlat_lt_src' (s s' : List ℕ) (i : ℕ)
-    (h : (multiply_shape s s').prod ≠ 0) :
-    wrapFlat (pad1 s' (s.length ⊔ s'.length)) (multiply_shape s s') i < s'.prod := by
+    (h : (mul_shape s s').prod ≠ 0) :
+    wrapFlat (pad1 s' (s.length ⊔ s'.length)) (mul_shape s s') i < s'.prod := by
   have hsb : (pad1 s' (s.length ⊔ s'.length)).prod ≠ 0 := by
     rw [pad1_prod]
-    exact mt Or.inr ((multiply_shape_prod_eq_zero_iff s s').not.mp h)
+    exact mt Or.inr ((mul_shape_prod_eq_zero_iff s s').not.mp h)
   have hlen :
-      (pad1 s' (s.length ⊔ s'.length)).length = (multiply_shape s s').length := by
-    rw [pad1_length_max', multiply_shape_length]
+      (pad1 s' (s.length ⊔ s'.length)).length = (mul_shape s s').length := by
+    rw [pad1_length_max', mul_shape_length]
   have := wrapFlat_lt _ _ hlen hsb i
   rwa [pad1_prod] at this
 
 /--
-Heterogeneous tensor multiplication `A.multiply B`.
+Heterogeneous tensor multiplication `A.mul B`.
 
 Shapes are right-aligned and combined with per-axis `lcm`. Data is the
 pointwise product after wrapping each axis (`wrapFlat`).
 -/
-def multiply [Mul α] (A : Tensor α s) (B : Tensor α s') :
-    Tensor α (multiply_shape s s') :=
-  if h : (multiply_shape s s').prod = 0 then
+def mul [Mul α] (A : Tensor α s) (B : Tensor α s') :
+    Tensor α (mul_shape s s') :=
+  if h : (mul_shape s s').prod = 0 then
     ⟨cast (congrArg (List.Vector α) h.symm) List.Vector.nil⟩
   else
     ⟨List.Vector.ofFn fun i =>
-      A.data.get ⟨wrapFlat (pad1 s (s.length ⊔ s'.length)) (multiply_shape s s') i.val,
+      A.data.get ⟨wrapFlat (pad1 s (s.length ⊔ s'.length)) (mul_shape s s') i.val,
         wrapFlat_lt_src s s' i.val h⟩ *
-      B.data.get ⟨wrapFlat (pad1 s' (s.length ⊔ s'.length)) (multiply_shape s s') i.val,
+      B.data.get ⟨wrapFlat (pad1 s' (s.length ⊔ s'.length)) (mul_shape s s') i.val,
         wrapFlat_lt_src' s s' i.val h⟩⟩
 
-lemma val_multiply_zero [Mul α] (A : Tensor α s) (B : Tensor α s')
-    (h : (multiply_shape s s').prod = 0) :
-    (A.multiply B).data.val = [] := by
-  unfold multiply
+lemma val_mul_zero [Mul α] (A : Tensor α s) (B : Tensor α s')
+    (h : (mul_shape s s').prod = 0) :
+    (A.mul B).data.val = [] := by
+  unfold mul
   rw [dif_pos h]
   exact val_cast_vector h.symm List.Vector.nil
 
-lemma get_multiply [Mul α] (A : Tensor α s) (B : Tensor α s')
-    (h : (multiply_shape s s').prod ≠ 0)
-    (i : Fin (multiply_shape s s').prod) :
-    (A.multiply B).data.get i =
-      A.data.get ⟨wrapFlat (pad1 s (s.length ⊔ s'.length)) (multiply_shape s s') i.val,
+lemma get_mul [Mul α] (A : Tensor α s) (B : Tensor α s')
+    (h : (mul_shape s s').prod ≠ 0)
+    (i : Fin (mul_shape s s').prod) :
+    (A.mul B).data.get i =
+      A.data.get ⟨wrapFlat (pad1 s (s.length ⊔ s'.length)) (mul_shape s s') i.val,
         wrapFlat_lt_src s s' i.val h⟩ *
-      B.data.get ⟨wrapFlat (pad1 s' (s.length ⊔ s'.length)) (multiply_shape s s') i.val,
+      B.data.get ⟨wrapFlat (pad1 s' (s.length ⊔ s'.length)) (mul_shape s s') i.val,
         wrapFlat_lt_src' s s' i.val h⟩ := by
-  unfold multiply
+  unfold mul
   rw [dif_neg h]
   exact List.Vector.get_ofFn _ _
 
 lemma pad_rank_left (s s' s'' : List ℕ) :
-    s.length ⊔ (multiply_shape s' s'').length =
+    s.length ⊔ (mul_shape s' s'').length =
       s.length ⊔ s'.length ⊔ s''.length := by
-  rw [multiply_shape_length]
+  rw [mul_shape_length]
   simp [max_comm, max_left_comm]
 
 lemma pad_rank_right (s s' s'' : List ℕ) :
-    (multiply_shape s s').length ⊔ s''.length =
+    (mul_shape s s').length ⊔ s''.length =
       s.length ⊔ s'.length ⊔ s''.length := by
-  rw [multiply_shape_length]
+  rw [mul_shape_length]
 
 /--
-Wrapping `A` through `A.multiply B`, then through `(A.multiply B).multiply C`,
+Wrapping `A` through `A.mul B`, then through `(A.mul B).mul C`,
 is wrapping `A` directly into the ternary output.
 -/
-lemma wrapFlat_through_multiply (s s' s'' : List ℕ) (i : ℕ)
-    (hAB : (multiply_shape s s').prod ≠ 0)
-    (_hout : (multiply_shape (multiply_shape s s') s'').prod ≠ 0) :
-    wrapFlat (pad1 s (s.length ⊔ s'.length)) (multiply_shape s s')
+lemma wrapFlat_through_mul (s s' s'' : List ℕ) (i : ℕ)
+    (hAB : (mul_shape s s').prod ≠ 0)
+    (_hout : (mul_shape (mul_shape s s') s'').prod ≠ 0) :
+    wrapFlat (pad1 s (s.length ⊔ s'.length)) (mul_shape s s')
       (wrapFlat
-        (pad1 (multiply_shape s s')
-          ((multiply_shape s s').length ⊔ s''.length))
-        (multiply_shape (multiply_shape s s') s'') i) =
+        (pad1 (mul_shape s s')
+          ((mul_shape s s').length ⊔ s''.length))
+        (mul_shape (mul_shape s s') s'') i) =
       wrapFlat (pad1 s (s.length ⊔ s'.length ⊔ s''.length))
-        (multiply_shape (multiply_shape s s') s'') i := by
+        (mul_shape (mul_shape s s') s'') i := by
   let r := s.length ⊔ s'.length ⊔ s''.length
   let n := s.length ⊔ s'.length
   have hn : n ≤ r := le_sup_left
-  have hABlen : (multiply_shape s s').length = n := multiply_shape_length s s'
-  have hpadn : (multiply_shape s s').length ⊔ s''.length = r := by
+  have hABlen : (mul_shape s s').length = n := mul_shape_length s s'
+  have hpadn : (mul_shape s s').length ⊔ s''.length = r := by
     rw [hABlen]
   have hmid :
-      pad1 (multiply_shape s s') r =
+      pad1 (mul_shape s s') r =
         (pad1 s r).zipWith Nat.lcm (pad1 s' r) := by
-    rw [multiply_shape_eq]
+    rw [mul_shape_eq]
     exact pad1_zipWith_lcm s s' le_rfl hn
   have hsm :
       List.Forall₂ (fun a b => a ∣ b) (pad1 s r)
@@ -495,10 +495,10 @@ lemma wrapFlat_through_multiply (s s' s'' : List ℕ) (i : ℕ)
   have hmo :
       List.Forall₂ (fun a b => a ∣ b)
         ((pad1 s r).zipWith Nat.lcm (pad1 s' r))
-        (multiply_shape (multiply_shape s s') s'') := by
-    have : multiply_shape (multiply_shape s s') s'' =
-        (pad1 (multiply_shape s s') r).zipWith Nat.lcm (pad1 s'' r) := by
-      rw [multiply_shape_eq, hpadn]
+        (mul_shape (mul_shape s s') s'') := by
+    have : mul_shape (mul_shape s s') s'' =
+        (pad1 (mul_shape s s') r).zipWith Nat.lcm (pad1 s'' r) := by
+      rw [mul_shape_eq, hpadn]
     rw [this, hmid]
     exact forall₂_dvd_lcm_left _ _
       (by
@@ -511,40 +511,40 @@ lemma wrapFlat_through_multiply (s s' s'' : List ℕ) (i : ℕ)
     exact hAB
   have hcomp :=
     wrapFlat_comp (pad1 s r) ((pad1 s r).zipWith Nat.lcm (pad1 s' r))
-      (multiply_shape (multiply_shape s s') s'') i hsm hmo hmid_ne
+      (mul_shape (mul_shape s s') s'') i hsm hmo hmid_ne
   have hpad :=
-    wrapFlat_pad1 s (multiply_shape s s') le_sup_left hn hABlen
-      (wrapFlat (pad1 (multiply_shape s s')
-          ((multiply_shape s s').length ⊔ s''.length))
-        (multiply_shape (multiply_shape s s') s'') i)
+    wrapFlat_pad1 s (mul_shape s s') le_sup_left hn hABlen
+      (wrapFlat (pad1 (mul_shape s s')
+          ((mul_shape s s').length ⊔ s''.length))
+        (mul_shape (mul_shape s s') s'') i)
   rw [hpadn] at hpad ⊢
   rw [← hpad, hmid]
   exact hcomp
 
 /--
-Wrapping `B` through `A.multiply B`, then through `(A.multiply B).multiply C`,
+Wrapping `B` through `A.mul B`, then through `(A.mul B).mul C`,
 is wrapping `B` directly into the ternary output.
 -/
-lemma wrapFlat_through_multiply' (s s' s'' : List ℕ) (i : ℕ)
-    (hAB : (multiply_shape s s').prod ≠ 0)
-    (_hout : (multiply_shape (multiply_shape s s') s'').prod ≠ 0) :
-    wrapFlat (pad1 s' (s.length ⊔ s'.length)) (multiply_shape s s')
+lemma wrapFlat_through_mul' (s s' s'' : List ℕ) (i : ℕ)
+    (hAB : (mul_shape s s').prod ≠ 0)
+    (_hout : (mul_shape (mul_shape s s') s'').prod ≠ 0) :
+    wrapFlat (pad1 s' (s.length ⊔ s'.length)) (mul_shape s s')
       (wrapFlat
-        (pad1 (multiply_shape s s')
-          ((multiply_shape s s').length ⊔ s''.length))
-        (multiply_shape (multiply_shape s s') s'') i) =
+        (pad1 (mul_shape s s')
+          ((mul_shape s s').length ⊔ s''.length))
+        (mul_shape (mul_shape s s') s'') i) =
       wrapFlat (pad1 s' (s.length ⊔ s'.length ⊔ s''.length))
-        (multiply_shape (multiply_shape s s') s'') i := by
+        (mul_shape (mul_shape s s') s'') i := by
   let r := s.length ⊔ s'.length ⊔ s''.length
   let n := s.length ⊔ s'.length
   have hn : n ≤ r := le_sup_left
-  have hABlen : (multiply_shape s s').length = n := multiply_shape_length s s'
-  have hpadn : (multiply_shape s s').length ⊔ s''.length = r := by
+  have hABlen : (mul_shape s s').length = n := mul_shape_length s s'
+  have hpadn : (mul_shape s s').length ⊔ s''.length = r := by
     rw [hABlen]
   have hmid :
-      pad1 (multiply_shape s s') r =
+      pad1 (mul_shape s s') r =
         (pad1 s r).zipWith Nat.lcm (pad1 s' r) := by
-    rw [multiply_shape_eq]
+    rw [mul_shape_eq]
     exact pad1_zipWith_lcm s s' le_rfl hn
   have hsm :
       List.Forall₂ (fun a b => a ∣ b) (pad1 s' r)
@@ -554,10 +554,10 @@ lemma wrapFlat_through_multiply' (s s' s'' : List ℕ) (i : ℕ)
   have hmo :
       List.Forall₂ (fun a b => a ∣ b)
         ((pad1 s r).zipWith Nat.lcm (pad1 s' r))
-        (multiply_shape (multiply_shape s s') s'') := by
-    have : multiply_shape (multiply_shape s s') s'' =
-        (pad1 (multiply_shape s s') r).zipWith Nat.lcm (pad1 s'' r) := by
-      rw [multiply_shape_eq, hpadn]
+        (mul_shape (mul_shape s s') s'') := by
+    have : mul_shape (mul_shape s s') s'' =
+        (pad1 (mul_shape s s') r).zipWith Nat.lcm (pad1 s'' r) := by
+      rw [mul_shape_eq, hpadn]
     rw [this, hmid]
     exact forall₂_dvd_lcm_left _ _
       (by
@@ -570,70 +570,70 @@ lemma wrapFlat_through_multiply' (s s' s'' : List ℕ) (i : ℕ)
     exact hAB
   have hcomp :=
     wrapFlat_comp (pad1 s' r) ((pad1 s r).zipWith Nat.lcm (pad1 s' r))
-      (multiply_shape (multiply_shape s s') s'') i hsm hmo hmid_ne
+      (mul_shape (mul_shape s s') s'') i hsm hmo hmid_ne
   have hpad :=
-    wrapFlat_pad1 s' (multiply_shape s s') le_sup_right hn hABlen
-      (wrapFlat (pad1 (multiply_shape s s')
-          ((multiply_shape s s').length ⊔ s''.length))
-        (multiply_shape (multiply_shape s s') s'') i)
+    wrapFlat_pad1 s' (mul_shape s s') le_sup_right hn hABlen
+      (wrapFlat (pad1 (mul_shape s s')
+          ((mul_shape s s').length ⊔ s''.length))
+        (mul_shape (mul_shape s s') s'') i)
   rw [hpadn] at hpad ⊢
   rw [← hpad, hmid]
   exact hcomp
 
 /--
-Wrapping `B` through `B.multiply C`, then through `A.multiply (B.multiply C)`.
+Wrapping `B` through `B.mul C`, then through `A.mul (B.mul C)`.
 -/
-lemma wrapFlat_through_multiply_right (s s' s'' : List ℕ) (i : ℕ)
-    (hBC : (multiply_shape s' s'').prod ≠ 0)
-    (hout : (multiply_shape s (multiply_shape s' s'')).prod ≠ 0) :
-    wrapFlat (pad1 s' (s'.length ⊔ s''.length)) (multiply_shape s' s'')
+lemma wrapFlat_through_mul_right (s s' s'' : List ℕ) (i : ℕ)
+    (hBC : (mul_shape s' s'').prod ≠ 0)
+    (hout : (mul_shape s (mul_shape s' s'')).prod ≠ 0) :
+    wrapFlat (pad1 s' (s'.length ⊔ s''.length)) (mul_shape s' s'')
       (wrapFlat
-        (pad1 (multiply_shape s' s'')
-          (s.length ⊔ (multiply_shape s' s'').length))
-        (multiply_shape s (multiply_shape s' s'')) i) =
+        (pad1 (mul_shape s' s'')
+          (s.length ⊔ (mul_shape s' s'').length))
+        (mul_shape s (mul_shape s' s'')) i) =
       wrapFlat (pad1 s' (s.length ⊔ s'.length ⊔ s''.length))
-        (multiply_shape s (multiply_shape s' s'')) i := by
-  have h := wrapFlat_through_multiply s' s'' s i hBC (by
-    rwa [multiply_shape_comm])
-  simp only [multiply_shape_comm (multiply_shape s' s'') s,
-    max_comm (multiply_shape s' s'').length s.length,
+        (mul_shape s (mul_shape s' s'')) i := by
+  have h := wrapFlat_through_mul s' s'' s i hBC (by
+    rwa [mul_shape_comm])
+  simp only [mul_shape_comm (mul_shape s' s'') s,
+    max_comm (mul_shape s' s'').length s.length,
     max_comm (s'.length ⊔ s''.length) s.length] at h
   rw [max_assoc]
   exact h
 
 /--
-Wrapping `C` through `B.multiply C`, then through `A.multiply (B.multiply C)`.
+Wrapping `C` through `B.mul C`, then through `A.mul (B.mul C)`.
 -/
-lemma wrapFlat_through_multiply_right' (s s' s'' : List ℕ) (i : ℕ)
-    (hBC : (multiply_shape s' s'').prod ≠ 0)
-    (hout : (multiply_shape s (multiply_shape s' s'')).prod ≠ 0) :
-    wrapFlat (pad1 s'' (s'.length ⊔ s''.length)) (multiply_shape s' s'')
+lemma wrapFlat_through_mul_right' (s s' s'' : List ℕ) (i : ℕ)
+    (hBC : (mul_shape s' s'').prod ≠ 0)
+    (hout : (mul_shape s (mul_shape s' s'')).prod ≠ 0) :
+    wrapFlat (pad1 s'' (s'.length ⊔ s''.length)) (mul_shape s' s'')
       (wrapFlat
-        (pad1 (multiply_shape s' s'')
-          (s.length ⊔ (multiply_shape s' s'').length))
-        (multiply_shape s (multiply_shape s' s'')) i) =
+        (pad1 (mul_shape s' s'')
+          (s.length ⊔ (mul_shape s' s'').length))
+        (mul_shape s (mul_shape s' s'')) i) =
       wrapFlat (pad1 s'' (s.length ⊔ s'.length ⊔ s''.length))
-        (multiply_shape s (multiply_shape s' s'')) i := by
-  have h := wrapFlat_through_multiply' s' s'' s i hBC (by
-    rwa [multiply_shape_comm])
-  simp only [multiply_shape_comm (multiply_shape s' s'') s,
-    max_comm (multiply_shape s' s'').length s.length,
+        (mul_shape s (mul_shape s' s'')) i := by
+  have h := wrapFlat_through_mul' s' s'' s i hBC (by
+    rwa [mul_shape_comm])
+  simp only [mul_shape_comm (mul_shape s' s'') s,
+    max_comm (mul_shape s' s'').length s.length,
     max_comm (s'.length ⊔ s''.length) s.length] at h
   rw [max_assoc]
   exact h
 
 lemma wrapFlat_align_left (s s' s'' : List ℕ) (i : ℕ) :
-    wrapFlat (pad1 s (s.length ⊔ (multiply_shape s' s'').length))
-      (multiply_shape s (multiply_shape s' s'')) i =
+    wrapFlat (pad1 s (s.length ⊔ (mul_shape s' s'').length))
+      (mul_shape s (mul_shape s' s'')) i =
       wrapFlat (pad1 s (s.length ⊔ s'.length ⊔ s''.length))
-        (multiply_shape s (multiply_shape s' s'')) i := by
+        (mul_shape s (mul_shape s' s'')) i := by
   rw [pad_rank_left]
 
 lemma wrapFlat_align_right (s s' s'' : List ℕ) (i : ℕ) :
-    wrapFlat (pad1 s'' ((multiply_shape s s').length ⊔ s''.length))
-      (multiply_shape (multiply_shape s s') s'') i =
+    wrapFlat (pad1 s'' ((mul_shape s s').length ⊔ s''.length))
+      (mul_shape (mul_shape s s') s'') i =
       wrapFlat (pad1 s'' (s.length ⊔ s'.length ⊔ s''.length))
-        (multiply_shape (multiply_shape s s') s'') i := by
+        (mul_shape (mul_shape s s') s'') i := by
   rw [pad_rank_right]
 
 end Tensor

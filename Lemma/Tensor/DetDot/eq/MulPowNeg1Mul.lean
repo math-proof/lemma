@@ -1,13 +1,9 @@
-import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
-import Lemma.Bool.SEqCast.of.Eq
 import Lemma.Tensor.Det.eq.DetToMatrix
 import Lemma.Tensor.DetAppendHstackS.eq.PowNeg1
 import Lemma.Tensor.Mul
 import Lemma.Tensor.SEqDotS.of.SEq
 import Lemma.Tensor.ToMatrixDot.eq.MulToMatrixS
-import sympy.matrices.determinant
-import sympy.matrices.expressions.special
-open Bool Matrix Tensor
+open Matrix Tensor
 
 
 private lemma det_eq_toMatrix_add_comm
@@ -63,7 +59,7 @@ private lemma main
     simp [Pcast]
   have hdot : A @ P ≃ A @ Pcast := by
     rw [hPcast]
-    exact SEqDotS.of.SEq.left (SEq_Cast.of.Eq hs P) A
+    exact SEqDotS.of.SEq.left (Bool.SEq_Cast.of.Eq hs P) A
   have hAP :
       cast (congrArg (fun t => Tensor α [m + n, t]) (Nat.add_comm n m)) (A @ P) =
         A @ Pcast := by

@@ -1,6 +1,5 @@
 import Lemma.Bool.HEq.of.SEq
-import sympy.Basic
-import sympy.tensor.tensor
+import sympy.matrices.expressions.matmul
 open Bool
 
 

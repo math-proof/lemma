@@ -11,6 +11,7 @@ import Lemma.Tensor.SEqOfVectorS.of.SEq
 import Lemma.Tensor.SEqToVectorS.of.Eq
 import Lemma.Tensor.SEqToVectorS.of.SEq
 import Lemma.Vector.SEqMap₂S.of.All_Eq.SEq.SEq
+import sympy.matrices.expressions.matmul
 open Bool List Nat Tensor Vector
 
 

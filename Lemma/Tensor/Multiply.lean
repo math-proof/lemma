@@ -1,10 +1,10 @@
 import Lemma.Bool.SEq.is.Eq
-import Lemma.Tensor.SEqMultiply
+import Lemma.Tensor.SEqMulS
 open Bool Tensor
 
 
 /--
-Commutativity of `Tensor.multiply` when both arguments have the same shape.
+Commutativity of `Tensor.mul` when both arguments have the same shape.
 -/
 @[main]
 private lemma Comm
@@ -13,10 +13,10 @@ private lemma Comm
   (A : Tensor α s)
   (B : Tensor α s) :
 -- imply
-  A.multiply B = B.multiply A := by
+  A.mul B = B.mul A := by
 -- proof
   apply Eq.of.SEq
-  apply SEqMultiply
+  apply SEqMulS
 
 
 -- created on 2026-09-06

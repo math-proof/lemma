@@ -1,5 +1,5 @@
 import Lemma.Bool.SEq.is.Eq
-import sympy.tensor.tensor
+import sympy.matrices.expressions.matmul
 open Bool
 
 

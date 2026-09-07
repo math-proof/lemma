@@ -8,7 +8,7 @@ import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Vector.Eq.is.All_EqGetS
 import Lemma.Vector.GetMul.eq.MulGet
 import Lemma.Vector.GetMul.eq.Mul_Get
-import sympy.tensor.tensor
+import sympy.matrices.expressions.matmul
 open List Tensor Vector Bool
 
 

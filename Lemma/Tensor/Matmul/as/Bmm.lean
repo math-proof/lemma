@@ -5,6 +5,7 @@ import Lemma.Tensor.GetResize_0.as.Get.of.GtLength_0
 import Lemma.Tensor.GetToVector.eq.Get
 import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.GtLength_0
 import Lemma.Tensor.SEqMatmulS.of.SEq.SEq
+import sympy.matrices.expressions.matmul
 open Bool Tensor
 
 
