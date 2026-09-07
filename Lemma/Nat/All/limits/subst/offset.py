@@ -17,7 +17,7 @@ def prove(Eq):
 
     Eq << Bool.Iff.given.Imp.Imp.apply(Eq[-1])
 
-    Eq << Eq[-2].this.lhs.apply(Int.AllIn_Ico.of.AllIn_Ico.offset, d)
+    Eq << Eq[-2].this.lhs.apply(Int.AllIco.of.AllIco.offset, d)
 
     Eq << Eq[-1].this.rhs.apply(Nat.All.given.All.limits.subst.offset, d)
 

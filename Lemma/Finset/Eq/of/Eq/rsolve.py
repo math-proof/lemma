@@ -48,7 +48,7 @@ def prove(Eq):
 
     Eq << Eq[-1] + x[0]
 
-    Eq << Eq[-1].this.lhs.apply(Finset.Sum.eq.Add.pop)
+    Eq << Eq[-1].this.lhs.apply(Finset.SumIco.eq.AddSumIco.of.Le)
 
     Eq << Eq[-1] * c ** n
 

@@ -11,7 +11,7 @@ def apply(given, index=0):
 
 @prove
 def prove(Eq):
-    from Lemma import Set
+    from Lemma import Set, Finset
 
     A, B = Symbol(etype=dtype.integer, given=True)
     Eq << apply(Equal(A | B, A.etype.emptySet))
@@ -20,13 +20,13 @@ def prove(Eq):
 
     Eq.A_positive = Eq.A_nonempty.apply(Set.Gt_0.of.Ne_Empty)
 
-    Eq << Eq[0].apply(Set.EqCard.of.Eq)
+    Eq << Eq[0].apply(Finset.Card.of.Eq)
 
-    Eq << Eq[-1].this.lhs.apply(Set.Card.eq.Add, slice(1, None))
+    Eq << Eq[-1].this.lhs.apply(Finset.CardUnion.eq.Add_CardSDiff, slice(1, None))
 
     Eq << Set.SDiff.of.Eq.apply(Eq[0], A)
 
-    Eq << Eq[-1].apply(Set.EqCard.of.Eq)
+    Eq << Eq[-1].apply(Finset.Card.of.Eq)
 
     Eq << Eq[-3].subs(Eq[-1])
 

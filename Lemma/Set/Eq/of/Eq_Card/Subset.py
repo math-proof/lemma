@@ -18,16 +18,16 @@ def apply(equal, subset):
 
 @prove
 def prove(Eq):
-    from Lemma import Set
+    from Lemma import Set, Finset
 
     A, B = Symbol(etype=dtype.integer, given=True)
     Eq << apply(Equal(Card(A), Card(B)), Subset(A, B))
 
     Eq << Set.EqUnion.of.Subset.apply(Eq[1])
 
-    Eq << Eq[-1].apply(Set.EqCard.of.Eq)
+    Eq << Eq[-1].apply(Finset.Card.of.Eq)
 
-    Eq << Eq[-1].this.lhs.apply(Set.Card.eq.Add, slice(1, None))
+    Eq << Eq[-1].this.lhs.apply(Finset.CardUnion.eq.Add_CardSDiff, slice(1, None))
 
     Eq << Eq[-1].subs(Eq[0])
 

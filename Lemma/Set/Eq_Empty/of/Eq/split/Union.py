@@ -16,12 +16,12 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Nat
+    from Lemma import Set, Nat, Finset
 
     A, B = Symbol(etype=dtype.integer, given=True)
     Eq << apply(Equal(Card(A | B), Card(A) + Card(B)))
 
-    Eq << Set.CardUnion.eq.Sub_.AddCards.CardInter.principle.inclusion_exclusion.apply(A, B)
+    Eq << Finset.CardUnion.eq.SubAddCardS_CardInter.apply(A, B)
 
     Eq << Eq[-1].subs(Eq[0])
 

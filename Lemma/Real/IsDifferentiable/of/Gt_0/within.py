@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << Real.IsDifferentiable.of.All_Gt_0.apply(Eq[-1])
 
-    Eq << Set.AllIn_SDiff.of.All.apply(Eq[-1], domain=Interval(x0, x1))
+    Eq << Set.AllSDiff.of.All.apply(Eq[-1], domain=Interval(x0, x1))
 
 
 if __name__ == '__main__':

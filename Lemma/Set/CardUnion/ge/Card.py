@@ -8,14 +8,14 @@ def apply(A, B):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Nat
+    from Lemma import Set, Nat, Finset
 
     A, B = Symbol(etype=dtype.integer)
     Eq << apply(A, B)
 
     Eq << Eq[-1].lhs.arg.this.apply(Set.Union.rewrite.SDiff, index=0)
 
-    Eq << Set.EqCard.of.Eq.apply(Eq[-1])
+    Eq << Finset.Card.of.Eq.apply(Eq[-1])
 
     Eq << Eq[-1] + GreaterEqual(Eq[-1].rhs.args[1], 0, plausible=True)
 

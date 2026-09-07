@@ -39,7 +39,7 @@ def prove(Eq):
     e = Symbol(etype=dtype.integer.set)
     Eq << Set.Eq_Union_.Inter.SDiff.apply(s2, conditionset(e, Element({n}, e), s2))
 
-    Eq.s2_abs = Eq[-1].apply(Set.EqCard.of.Eq)
+    Eq.s2_abs = Eq[-1].apply(Finset.Card.of.Eq)
 
     Eq.s2_abs_plausible = Eq[0].subs(Eq.Stirling2, Eq.Stirling0, Eq.Stirling1)
 

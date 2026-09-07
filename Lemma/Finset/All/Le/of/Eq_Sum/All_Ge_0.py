@@ -31,7 +31,7 @@ def prove(Eq):
 
     Eq.any_is_negative = Eq[-1].this.expr.apply(Int.LtSub.of.Eq.Gt)
 
-    Eq << Set.AllIn_SDiff.of.All.apply(Eq[1], Range(n) - {i})
+    Eq << Set.AllSDiff.of.All.apply(Eq[1], Range(n) - {i})
 
     Eq << Eq[-1].limits_subs(i, j)
 

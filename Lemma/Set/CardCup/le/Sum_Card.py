@@ -22,17 +22,17 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.doit(deep=True)
 
-    Eq << Set.CardUnion.le.AddCardS.apply(*Eq[-1].lhs.arg.args)
+    Eq << Finset.CardUnion.le.AddCardS.apply(*Eq[-1].lhs.arg.args)
 
     Eq.induct = Eq[0].subs(n, n + 1)
 
     Eq << Eq.induct.this.lhs.arg.apply(Set.Cup.eq.UnionCupS, cond=slice(-1))
 
-    Eq << Set.CardUnion.le.AddCardS.apply(*Eq[-1].lhs.arg.args)
+    Eq << Finset.CardUnion.le.AddCardS.apply(*Eq[-1].lhs.arg.args)
 
     Eq << Nat.Le.of.Le.Le.subst.apply(Eq[-1], Eq[0])
 
-    Eq << Eq.induct.this.rhs.apply(Finset.Sum.eq.Add.pop)
+    Eq << Eq.induct.this.rhs.apply(Finset.SumIco.eq.AddSumIco.of.Le)
 
     Eq << Imply(Eq[0], Eq.induct, plausible=True)
 

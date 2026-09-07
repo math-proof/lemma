@@ -19,7 +19,7 @@ def prove(Eq):
     S = Symbol(etype=dtype.integer)
     Eq << apply(Element(e, S))
 
-    Eq << Eq[0].apply(Set.SubsetSingleton.of.In, simplify=False)
+    Eq << Eq[0].apply(Set.SubsetFinset.of.In, simplify=False)
 
     Eq << Set.EqUnion.of.Subset.apply(Eq[-1])
 

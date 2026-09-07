@@ -25,21 +25,21 @@ def prove(Eq):
 
     Eq << Eq[0].subs(n, n + 1)
 
-    Eq << Eq[-1].this.lhs.apply(Finset.Sum.eq.Add.pop)
+    Eq << Eq[-1].this.lhs.apply(Finset.SumIco.eq.AddSumIco.of.Le)
 
     Eq << Eq[-1].this.find(Sum[2]).apply(Finset.Sum.limits.separate)
 
-    Eq << Eq[-1].this.find(Sum[~Sum]).apply(Finset.Sum.eq.Add.pop)
+    Eq << Eq[-1].this.find(Sum[~Sum]).apply(Finset.SumIco.eq.AddSumIco.of.Le)
 
     Eq << Eq[-1].this.find(Sum[Add]).apply(Finset.Sum_Add.eq.AddSumS)
 
     Eq << Eq[-1].subs(Eq[0])
 
-    Eq << Eq[-1].this.rhs.args[0].apply(Finset.Sum.eq.Add.pop)
+    Eq << Eq[-1].this.rhs.args[0].apply(Finset.SumIco.eq.AddSumIco.of.Le)
 
-    Eq << Eq[-1].this.lhs.args[1].apply(Finset.Sum.eq.Add.pop)
+    Eq << Eq[-1].this.lhs.args[1].apply(Finset.SumIco.eq.AddSumIco.of.Le)
 
-    Eq << Eq[-1].this.rhs.apply(Finset.Sum.eq.Add.pop)
+    Eq << Eq[-1].this.rhs.apply(Finset.SumIco.eq.AddSumIco.of.Le)
 
     Eq << Eq[-1].this.rhs.apply(Finset.Sum_Add.eq.AddSumS)
 

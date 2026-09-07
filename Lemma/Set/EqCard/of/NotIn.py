@@ -9,15 +9,15 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set
+    from Lemma import Set, Finset
 
     S = Symbol(etype=dtype.integer)
     e = Symbol(integer=True)
     Eq << apply(NotElement(e, S))
 
-    Eq << Set.Eq_Empty.Inter.of.NotIn.apply(Eq[0])
+    Eq << Set.Inter_Finset.eq.Empty.of.NotIn.apply(Eq[0])
 
-    Eq << Set.Eq.of.Inter.eq.Empty.apply(Eq[-1])
+    Eq << Finset.CardUnion.eq.AddCardS.of.Inter.eq.Empty.apply(Eq[-1])
 
 
 if __name__ == '__main__':

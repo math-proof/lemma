@@ -63,9 +63,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(And).args[1::2].apply(Nat.Gt.of.Eq.Gt, simplify=None)
 
-    Eq << Eq[-1].this.find(Equal).apply(Set.Eq.of.Eq.set, simplify=None)
+    Eq << Eq[-1].this.find(Equal).apply(Set.Finset.of.Eq, simplify=None)
 
-    Eq << Eq[-1].this.find(And).args[:2].apply(Set.CupIn_Icc.of.CupIn_Ico.Eq.Le, simplify=None)
+    Eq << Eq[-1].this.find(And).args[:2].apply(Set.CupIcc.of.CupIco.Eq.Le, simplify=None)
 
     Eq << Eq[-1].this.lhs.apply(Bool.Any_And.of.AnySetOf_AnySetOf, -1)
 

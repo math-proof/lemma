@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.apply(Bool.Any.Is.Any_UFnNeg)
 
-    Eq << Int.AnyIn_Ico.of.AnyIn_Ico.offset.apply(Eq[-1], 1)
+    Eq << Int.AnyIco.of.AnyIco.offset.apply(Eq[-1], 1)
 
     Eq.any_eq = Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 

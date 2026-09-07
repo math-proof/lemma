@@ -22,7 +22,6 @@ from . import Eq_0
 from . import Ite_Ite
 from . import Or_Not
 from . import Or_NotIn
-from . import AllIn_Insert
 from . import And_Or
 from . import BFn
 from . import BFnIte
@@ -72,7 +71,6 @@ from . import And_Imp
 from . import Add
 from . import All_Any
 from . import All_Or
-from . import AllIn_Icc
 from . import Le
 from . import Delta
 from . import Eq_Bool
@@ -85,3 +83,5 @@ from . import Subs
 from . import AllOr
 from . import Any_All_And
 from . import All_Imp
+from . import AllInsert
+from . import AllIcc

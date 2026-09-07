@@ -30,7 +30,7 @@ def prove(Eq):
 
     Eq << Set.Any_In.of.Ne_Empty.apply(Eq[-1], simplify=False)
 
-    Eq << Eq[-1].this.expr.apply(Set.SubsetSingleton.of.In, simplify=False)
+    Eq << Eq[-1].this.expr.apply(Set.SubsetFinset.of.In, simplify=False)
 
     Eq << Eq[-1].this.expr.apply(Set.Eq.of.Eq_Card.Subset, Eq[0])
 

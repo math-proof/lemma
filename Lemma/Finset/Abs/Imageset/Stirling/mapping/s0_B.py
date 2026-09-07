@@ -53,7 +53,7 @@ def prove(Eq):
 
     Eq << Bool.Any.of.All_Eq.Any.subst.apply(Eq.x_union_s0, Eq[-1])
 
-    Eq << Eq.plausible_notcontains.this.expr.apply(Set.Eq_Empty.Inter.of.NotIn)
+    Eq << Eq.plausible_notcontains.this.expr.apply(Set.Inter_Finset.eq.Empty.of.NotIn)
 
     Eq.all_s0_equality = Eq[-1].this.expr.apply(Set.EqSDiff.of.Inter.eq.Empty)
 
@@ -66,7 +66,7 @@ def prove(Eq):
 
     Eq << Eq.B_assertion.this.expr.expr.apply(Set.SDiff.of.Eq, {n.set})
 
-    Eq << Bool.All.And.of.Cond.All.apply(Eq.all_s0_equality, Eq[-1], simplify=None)
+    Eq << Bool.All_And.of.All.Cond.apply(Eq.all_s0_equality, Eq[-1], simplify=None)
 
     Eq << Eq[-1].this.expr.apply(Bool.Any_And.of.Any.All.All_Imp)
 

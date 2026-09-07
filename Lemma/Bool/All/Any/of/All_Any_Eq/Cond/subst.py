@@ -15,7 +15,7 @@ def apply(all_any, cond, reverse=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Bool
+    from Lemma import Bool, Set
     x, y = Symbol(integer=True)
     f, g = Function(integer=True)
 
@@ -23,9 +23,9 @@ def prove(Eq):
 
     Eq << apply(All[y:B](Any[x:A](Equal(g(x, y), f(x, y)))), g(x, y) > y)
 
-    Eq << Bool.All.And.of.Cond.All.apply(Eq[1], Eq[0])
+    Eq << Bool.All_And.of.All.Cond.apply(Eq[1], Eq[0])
 
-    Eq << Eq[-1].this.expr.apply(Bool.Any.of.Any_Eq.Cond.subst)
+    Eq << Eq[-1].this.expr.apply(Set.Any_UFn.of.All_UFn.Any_Eq)
 
 
 if __name__ == '__main__':

@@ -28,13 +28,13 @@ def prove(Eq):
 
     Eq << Eq[-2].subs(Eq[-1])
 
-    Eq << Set.AllIn_SDiff.of.All.apply(Eq[-1], Range(m + 1, n))
+    Eq << Set.AllSDiff.of.All.apply(Eq[-1], Range(m + 1, n))
 
     Eq << LessEqual(Eq[-1].find(functions.Bool), 1, plausible=True)
 
     Eq << Eq[-1] * m
 
-    Eq << Bool.All.And.of.Cond.All.apply(Eq[-1], Eq[-3], simplify=None)
+    Eq << Bool.All_And.of.All.Cond.apply(Eq[-1], Eq[-3], simplify=None)
 
     Eq << Eq[-1].this.expr.apply(Nat.Ge.of.Le.Ge)
 

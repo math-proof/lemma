@@ -18,7 +18,7 @@ def prove(Eq):
 
     Eq << apply(All[x:A](Element(x, B)))
 
-    Eq << Eq[0].this.expr.apply(Set.SubsetSingleton.of.In, simplify=False)
+    Eq << Eq[0].this.expr.apply(Set.SubsetFinset.of.In, simplify=False)
 
     Eq << Eq[-1].apply(Set.SubsetCup.of.All_Subset)
 

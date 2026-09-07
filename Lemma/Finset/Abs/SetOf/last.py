@@ -33,7 +33,7 @@ def prove(Eq):
 
     Eq << Eq.x_quote_definition[i]
 
-    Eq << Set.Eq.Cup.Finset.of.Eq.apply(Eq[-1], (i, 0, n))
+    Eq << Set.SetOf_In_Range.of.All_Eq.apply(Eq[-1], (i, 0, n))
 
     Eq.x_quote_n_definition = Eq[-2].subs(i, n)
 
@@ -51,7 +51,7 @@ def prove(Eq):
 
     Eq << Bool.All.All.of.All_And.apply(Eq[-1])
 
-    Eq << Bool.All.And.of.Cond.All.apply(Eq.x_quote_n_definition, Eq[-2], simplify=False)
+    Eq << Bool.All_And.of.All.Cond.apply(Eq.x_quote_n_definition, Eq[-2], simplify=False)
 
     Eq << Eq[-1].this.expr.apply(Bool.Eq.of.Eq.Eq, reverse=True)
 

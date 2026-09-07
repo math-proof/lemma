@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Eq[1].subs(Eq[0])
 
-    Eq << Bool.All.limits_assert.apply(Eq[-1].limits)
+    Eq << Set.All_In.apply(Eq[-1].limits)
 
     Eq << Element(n - 1, Eq[-1].rhs, plausible=True)
 

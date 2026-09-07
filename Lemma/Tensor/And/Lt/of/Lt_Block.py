@@ -31,7 +31,7 @@ def prove(Eq):
 
     Eq <<= Bool.All.of.Imp.single_variable.apply(Eq[-2], simplify=None), Bool.All.of.Imp.single_variable.apply(Eq[-1], simplify=None)
 
-    Eq <<= Set.AllIn_SDiff.of.All.apply(Eq[-2], domain=Range(0, n), simplify=None), Set.AllIn_SDiff.of.All.apply(Eq[-1], domain=Range(n, m + n), simplify=None)
+    Eq <<= Set.AllSDiff.of.All.apply(Eq[-2], domain=Range(0, n), simplify=None), Set.AllSDiff.of.All.apply(Eq[-1], domain=Range(n, m + n), simplify=None)
 
     Eq << Tensor.LtStack.of.All_Lt.apply(Eq[-2])
 

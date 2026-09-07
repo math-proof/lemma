@@ -31,9 +31,9 @@ def prove(Eq):
 
     Eq << Bool.And_And.given.And.Cond.apply(Eq[-1])
 
-    Eq << Eq[-2].this.expr.apply(Set.AllIn.given.AllIn_Union, A)
+    Eq << Eq[-2].this.expr.apply(Set.All.given.AllUnion, A)
 
-    Eq << Eq[-1].this.expr.apply(Set.AllIn.given.AllIn_Union, B)
+    Eq << Eq[-1].this.expr.apply(Set.All.given.AllUnion, B)
 
 
 

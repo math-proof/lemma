@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(self):
-    from Lemma.Finset.Sum.eq.Add.pop import rewrite
+    from Lemma.Finset.SumIco.eq.AddSumIco.of.Le import rewrite
     return Equal(self, rewrite(Minima, self), evaluate=False)
 
 

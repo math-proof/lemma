@@ -33,7 +33,7 @@ def prove(Eq):
     i = Symbol(integer=True)
     Eq << apply(All[i:Range(m)](f[i] > 0))
 
-    Eq << Set.AllIn_SDiff.of.All.apply(Eq[0], domain=Range(Min(n, m)))
+    Eq << Set.AllSDiff.of.All.apply(Eq[0], domain=Range(Min(n, m)))
 
 
 if __name__ == '__main__':

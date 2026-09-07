@@ -40,7 +40,7 @@ def prove(Eq):
     Eq << Eq[-1].this.lhs.apply(Finset.Sum.eq.Sub.unshift)
 
     Eq << Eq[-1].this.lhs.apply(Finset.Sum.eq.Sub.unshift)
-    Eq << Eq[-1].this.lhs.apply(Finset.Sum.eq.Add.pop)
+    Eq << Eq[-1].this.lhs.apply(Finset.SumIco.eq.AddSumIco.of.Le)
 
     # https://en.wikipedia.org/wiki/Telescoping_series
 

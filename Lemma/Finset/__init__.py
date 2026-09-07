@@ -107,3 +107,7 @@ from . import AscFactorial
 from . import Sum_MulMul_AscFactorial_Stirling
 from . import Abs
 from . import Stack
+from . import Sum_BoolIn
+from . import CardUnion
+from . import Card
+from . import CupRange

@@ -16,13 +16,13 @@ def apply(equal_sum, equal_union):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Bool
+    from Lemma import Set, Bool, Finset
     x = Symbol(shape=(oo,), etype=dtype.integer, finite=True)
     k, n = Symbol(integer=True, positive=True)
     i = Symbol(integer=True)
     Eq << apply(Equal(Sum[i:k](Card(x[i])), n), Equal(Cup[i:k](x[i]), Range(n)))
 
-    Eq << Set.EqCard.of.Eq.apply(Eq[1])
+    Eq << Finset.Card.of.Eq.apply(Eq[1])
 
     Eq << Bool.Eq.of.Eq.Eq.apply(Eq[-1], Eq[0])
 

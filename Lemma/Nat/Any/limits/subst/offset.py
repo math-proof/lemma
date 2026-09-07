@@ -18,8 +18,8 @@ def prove(Eq):
 
     Eq << Bool.Iff.given.Imp.Imp.apply(Eq[-1])
 
-    Eq << Eq[-2].this.lhs.apply(Int.AnyIn_Ico.of.AnyIn_Ico.offset, d)
-    Eq << Eq[-1].this.lhs.apply(Int.AnyIn_Ico.of.AnyIn_Ico.offset, -d)
+    Eq << Eq[-2].this.lhs.apply(Int.AnyIco.of.AnyIco.offset, d)
+    Eq << Eq[-1].this.lhs.apply(Int.AnyIco.of.AnyIco.offset, -d)
 
 
 if __name__ == '__main__':

@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq <<= Real.All.Ge.of.Eq_Inf.apply(Eq[-1]), Eq[0].subs(Eq[-1].reversed)
 
-    Eq <<= Bool.All.And.of.Cond.All.apply(Eq[-2], Eq[-1], simplify=None)
+    Eq <<= Bool.All_And.of.All.Cond.apply(Eq[-2], Eq[-1], simplify=None)
     Eq <<= Eq[-1].this.expr.apply(Nat.Ge.of.Ge.Ge)
 
 

@@ -17,8 +17,6 @@ from . import Gt_0
 from . import MulAbsS
 from . import Ne_0
 from . import Ite
-from . import AllIn_Ico
-from . import AnyIn_Ico
 from . import Floor
 from . import Ceil
 from . import Le
@@ -98,3 +96,5 @@ from . import Lt_Abs
 from . import Mul_ModDiv
 from . import SubAbs
 from . import Square
+from . import AllIco
+from . import AnyIco

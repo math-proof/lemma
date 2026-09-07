@@ -17,7 +17,7 @@ def apply(given, *vars):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Bool
+    from Lemma import Set, Bool, Finset
 
     S = Symbol(etype=dtype.integer, given=True)
     Eq << apply(Card(S) >= 2)
@@ -29,9 +29,9 @@ def prove(Eq):
     Eq << Eq[-1].this.expr.apply(Set.EqUnion.of.In)
 
     i = Eq[-1].variable
-    Eq << Eq[-1].this.expr.apply(Set.EqCard.of.Eq)
+    Eq << Eq[-1].this.expr.apply(Finset.Card.of.Eq)
 
-    Eq << Eq[-1].this.find(Card).apply(Set.Card.eq.Add)
+    Eq << Eq[-1].this.find(Card).apply(Finset.CardUnion.eq.Add_CardSDiff)
 
 
 
@@ -39,7 +39,7 @@ def prove(Eq):
 
     Eq << Eq[0] - 1
 
-    Eq << Bool.Any.of.Any_Eq.Cond.subst.apply(Eq[-2].reversed, Eq[-1])
+    Eq << Set.Any_UFn.of.All_UFn.Any_Eq.apply(Eq[-2].reversed, Eq[-1])
 
     Eq << Eq[-1].this.expr.apply(Set.Ne_Empty.of.Ge, simplify=False)
 

@@ -18,7 +18,7 @@ def apply(cup_finiteset_equality, last_element_equality):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Nat, Bool
+    from Lemma import Set, Nat, Bool, Finset
 
     n = Symbol(integer=True, positive=True, given=True)
     p = Symbol(shape=(oo,), integer=True, nonnegative=True, given=True)
@@ -47,11 +47,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.args[0].apply(Set.Cup.eq.Union.doit.setlimit, evaluate=False)
 
-    Eq << Bool.Any.of.Any_Eq.Cond.subst.apply(Eq[-3].reversed, Eq[-1])
+    Eq << Set.Any_UFn.of.All_UFn.Any_Eq.apply(Eq[-3].reversed, Eq[-1])
 
     Eq.paradox = Eq[-1].subs(Eq[1])
 
-    Eq << Set.CardUnion.le.AddCardS.apply(*Eq.paradox.expr.rhs.args)
+    Eq << Finset.CardUnion.le.AddCardS.apply(*Eq.paradox.expr.rhs.args)
 
     Eq << Set.CardCup.le.Sum_Card.apply(*Eq.paradox.expr.rhs.args[1].args)
 
@@ -59,11 +59,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.apply(Nat.LeAddS.Is.Le)
 
-    Eq << Eq.paradox.this.expr.apply(Set.EqCard.of.Eq)
+    Eq << Eq.paradox.this.expr.apply(Finset.Card.of.Eq)
 
     Eq << Eq[-1].subs(Eq[0])
 
-    Eq << Bool.Any.of.Any_Eq.Cond.subst.apply(Eq[-1].reversed, Eq[-3])
+    Eq << Set.Any_UFn.of.All_UFn.Any_Eq.apply(Eq[-1].reversed, Eq[-3])
 
     Eq << Set.EqSDiff.of.NotIn.apply(Eq.plausible)
 

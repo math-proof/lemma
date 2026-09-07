@@ -39,18 +39,18 @@ def prove(Eq):
 
     Eq.x_quote_Union = Bool.All.of.All_Eq.Cond.subst.apply(Eq.x_Union_s1, Eq[-1])
 
-    Eq << Eq[0].apply(Set.EqCard.of.Eq)
+    Eq << Eq[0].apply(Finset.Card.of.Eq)
 
     x_quote_abs = Eq[-1]
     Eq << Eq[-1].apply(Fin.Sum.of.All_Eq, (i, 0, k + 1))
 
-    Eq << Set.CardUnion.le.AddCardS.apply(*Eq[-1].rhs.args[1].arg.args)
+    Eq << Finset.CardUnion.le.AddCardS.apply(*Eq[-1].rhs.args[1].arg.args)
 
     Eq << Nat.Le.of.Eq.Le.subst.apply(Eq[-2], Eq[-1])
 
     Eq << Bool.All.of.All_Eq.Cond.subst.apply(Eq.x_abs_sum_s1, Eq[-1])
 
-    Eq << Eq.x_quote_Union.this.expr.apply(Set.EqCard.of.Eq)
+    Eq << Eq.x_quote_Union.this.expr.apply(Finset.Card.of.Eq)
 
     u = Eq[-1].lhs.arg
     Eq.SqueezeTheorem = Set.CardCup.le.Sum_Card.apply(u.expr, *u.limits)

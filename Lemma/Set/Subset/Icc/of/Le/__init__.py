@@ -14,11 +14,11 @@ def prove(Eq):
     x, y = Symbol(real=True, given=True)
     Eq << apply(x <= y)
 
-    Eq << Set.Icc.eq.InterSingletonS.of.Le.apply(Eq[0])
+    Eq << Set.Icc.eq.InterFinsetS.of.Le.apply(Eq[0])
 
     Eq << Eq[1].subs(Eq[-1])
 
-    Eq << Set.InterSingletonS.subset.Icc.apply(x, y)
+    Eq << Set.InterFinsetS.subset.Icc.apply(x, y)
 
 
 if __name__ == '__main__':

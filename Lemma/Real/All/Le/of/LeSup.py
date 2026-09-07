@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq << Bool.Any_And.of.AnySetOf_AnySetOf.apply(Eq[-1])
 
-    Eq << Eq[-1].this.expr.apply(Bool.All.And.of.Cond.All, simplify=None)
+    Eq << Eq[-1].this.expr.apply(Bool.All_And.of.All.Cond, simplify=None)
 
     Eq << Eq[-1].this.expr.expr.apply(Nat.Le.of.Le.Le)
 

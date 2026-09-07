@@ -14,7 +14,7 @@ def apply(given, x=None, y=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Bool, Int, Nat
+    from Lemma import Set, Bool, Int, Nat, Finset
 
     k = Symbol(integer=True, positive=True)
     S = Symbol(etype=dtype.integer[k])
@@ -32,9 +32,9 @@ def prove(Eq):
 
     Eq << Bool.AnySetOf.of.Any_And.apply(Eq[-1], index=1)
 
-    Eq << Eq[-1].this.expr.apply(Set.EqCard.of.Eq)
+    Eq << Eq[-1].this.expr.apply(Finset.Card.of.Eq)
 
-    Eq << Eq[-1].this.find(Card).apply(Set.Card.eq.Add)
+    Eq << Eq[-1].this.find(Card).apply(Finset.CardUnion.eq.Add_CardSDiff)
 
 
     Eq << Eq[-1].this.find(Piecewise).apply(Int.Ite.eq.AddMulS)

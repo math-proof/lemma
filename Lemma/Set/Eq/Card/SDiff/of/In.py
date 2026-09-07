@@ -10,19 +10,19 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set
+    from Lemma import Set, Finset
 
     e = Symbol(integer=True)
     s = Symbol(etype=dtype.integer)
     Eq << apply(Element(e, s))
 
-    Eq << Set.SubsetSingleton.of.In.apply(Eq[0], simplify=False)
+    Eq << Set.SubsetFinset.of.In.apply(Eq[0], simplify=False)
 
     Eq << Set.EqUnion.of.Subset.apply(Eq[-1])
 
-    Eq << Set.EqCard.of.Eq.apply(Eq[-1])
+    Eq << Finset.Card.of.Eq.apply(Eq[-1])
 
-    Eq << Eq[-1].this.lhs.apply(Set.Card.eq.Add)
+    Eq << Eq[-1].this.lhs.apply(Finset.CardUnion.eq.Add_CardSDiff)
 
 
     Eq << Eq[-1] - 1

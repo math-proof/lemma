@@ -29,7 +29,7 @@ def prove(Eq):
 
     x0_ = Symbol('x0', domain=domain)
     x1_ = Symbol('x1', domain=domain)
-    Eq << Set.AllIn_SDiff.of.All.apply(Eq[-1], domain=Interval(x0_, x1_))
+    Eq << Set.AllSDiff.of.All.apply(Eq[-1], domain=Interval(x0_, x1_))
 
     Eq << Eq[-1].subs(x1_, x1)
 

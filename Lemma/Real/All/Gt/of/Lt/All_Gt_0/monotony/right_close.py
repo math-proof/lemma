@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq.is_continuous = Real.IsContinuous.of.IsDifferentiable.apply(Eq[-1])
 
-    Eq.is_differentiable = Set.AllIn_SDiff.of.All.apply(Eq[-1], Interval(a, b, left_open=True, right_open=True))
+    Eq.is_differentiable = Set.AllSDiff.of.All.apply(Eq[-1], Interval(a, b, left_open=True, right_open=True))
 
     Eq.le = Element(t, Interval(a, b, left_open=True)).this.apply(Set.Le.of.In_Icc)
 
@@ -47,7 +47,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Bool.All.of.Le.All.limits.restrict)
 
-    Eq << Eq[-1].this.find(All).apply(Set.AllIn_SDiff.of.All, Interval(a, t, left_open=True, right_open=True))
+    Eq << Eq[-1].this.find(All).apply(Set.AllSDiff.of.All, Interval(a, t, left_open=True, right_open=True))
 
     Eq <<= Eq.any & Eq[-1]
 

@@ -45,7 +45,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.arg.limits_subs(Eq[-1].lhs.arg.variable, Eq[-2].rhs.variable)
 
-    Eq << Eq[-2].apply(Set.EqCard.of.Eq)
+    Eq << Eq[-2].apply(Finset.Card.of.Eq)
 
     Eq <<= Eq[-2] & Eq[-1]
 

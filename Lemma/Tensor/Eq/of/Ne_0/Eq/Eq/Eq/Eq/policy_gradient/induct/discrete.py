@@ -33,7 +33,7 @@ def prove(Eq):
 
     Eq.induct = Eq.hypothesis.subs(n, n + 1)
 
-    Eq << Eq.induct.this.find(Sum).apply(Finset.Sum.eq.Add.pop)
+    Eq << Eq.induct.this.find(Sum).apply(Finset.SumIco.eq.AddSumIco.of.Le)
 
     Eq << Eq[-1].this.find(Sum).apply(Finset.Sum_Mul.eq.Mul_Sum)
 

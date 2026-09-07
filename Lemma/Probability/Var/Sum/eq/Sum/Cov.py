@@ -24,15 +24,15 @@ def prove(Eq):
 
     Eq.induct = Eq[0].subs(n, n + 1)
 
-    Eq << Eq.induct.this.find(Sum).apply(Finset.Sum.eq.Add.pop)
+    Eq << Eq.induct.this.find(Sum).apply(Finset.SumIco.eq.AddSumIco.of.Le)
 
-    Eq << Eq[-1].this.lhs.find(Sum).apply(Finset.Sum.eq.Add.pop)
+    Eq << Eq[-1].this.lhs.find(Sum).apply(Finset.SumIco.eq.AddSumIco.of.Le)
 
     Eq << Eq[-1].this.lhs.apply(Probability.Var.Add.eq.Add.Cov)
 
     Eq << Eq[-1].this.find(Covariance).apply(Probability.Cov.Sum.eq.Sum.Cov)
 
-    Eq << Eq[-1].this.rhs.find(Sum).apply(Finset.Sum.eq.Add.pop)
+    Eq << Eq[-1].this.rhs.find(Sum).apply(Finset.SumIco.eq.AddSumIco.of.Le)
 
     Eq << Eq[-1].this.lhs.find(Sum[Covariance]).limits_subs(i, j)
 
@@ -40,7 +40,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Finset.Sum.limits.separate)
 
-    Eq << Eq[-1].this.find(Sum[~Sum]).apply(Finset.Sum.eq.Add.pop)
+    Eq << Eq[-1].this.find(Sum[~Sum]).apply(Finset.SumIco.eq.AddSumIco.of.Le)
 
     Eq << Eq[-1].this.rhs.apply(Finset.Sum_Add.eq.AddSumS)
 

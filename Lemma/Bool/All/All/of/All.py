@@ -33,9 +33,9 @@ def prove(Eq):
     d = Symbol(real=True, positive=True)
     Eq << apply(All[x:Interval(-d, d, left_open=True, right_open=True)](f(x) > 0), cond=x < 0)
 
-    Eq << Set.AllIn_SDiff.of.All.apply(Eq[0], domain=Interval(0, d, right_open=True))
+    Eq << Set.AllSDiff.of.All.apply(Eq[0], domain=Interval(0, d, right_open=True))
 
-    Eq << Set.AllIn_SDiff.of.All.apply(Eq[0], domain=Interval(-d, 0, right_open=True, left_open=True))
+    Eq << Set.AllSDiff.of.All.apply(Eq[0], domain=Interval(-d, 0, right_open=True, left_open=True))
 
 
 

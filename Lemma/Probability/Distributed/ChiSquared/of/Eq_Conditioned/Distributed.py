@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq.induct = Eq[2].subs(k, k + 1)
 
-    Eq << Eq.induct.this.lhs.apply(Finset.Sum.eq.Add.pop)
+    Eq << Eq.induct.this.lhs.apply(Finset.SumIco.eq.AddSumIco.of.Le)
 
     y = Symbol(real=True, nonnegative=True)
     Eq << Probability.Distributed.given.Eq.Pr.apply(Eq[-1], y)

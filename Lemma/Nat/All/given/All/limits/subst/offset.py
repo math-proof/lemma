@@ -15,7 +15,7 @@ def prove(Eq):
     f = Function(integer=True)
     Eq << apply(All[n:1:m + 1](f(n) > 0), 1)
 
-    Eq << Int.AllIn_Ico.of.AllIn_Ico.offset.apply(Eq[1], -1)
+    Eq << Int.AllIco.of.AllIco.offset.apply(Eq[1], -1)
 
 
 

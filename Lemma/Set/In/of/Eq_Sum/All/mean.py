@@ -29,7 +29,7 @@ def prove(Eq):
 
     Eq << Eq.induct.this.find(All).apply(Bool.All.All.of.All_And)
 
-    Eq << Eq[-1].this.find(Element[~Sum]).apply(Finset.Sum.eq.Add.pop)
+    Eq << Eq[-1].this.find(Element[~Sum]).apply(Finset.SumIco.eq.AddSumIco.of.Le)
 
     Eq.lt, Eq.ge = Bool.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=w[n] < 1)
 
@@ -51,7 +51,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.apply(Bool.Imp_Imp.Is.ImpAnd)
 
-    Eq << Eq[-1].this.find(Equal[~Sum]).apply(Finset.Sum.eq.Add.pop)
+    Eq << Eq[-1].this.find(Equal[~Sum]).apply(Finset.SumIco.eq.AddSumIco.of.Le)
 
     Eq << Eq[-1].this.find(Equal) - w[n]
 
@@ -69,7 +69,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.apply(Bool.Imp.fold, slice(1, None))
 
-    Eq << Eq[-1].this.lhs.apply(Bool.All.And.of.Cond.All, simplify=None)
+    Eq << Eq[-1].this.lhs.apply(Bool.All_And.of.All.Cond, simplify=None)
 
     Eq << Eq[-1].this.lhs.find(And).apply(Rat.GeDiv.of.Lt.Ge, ret=0)
 

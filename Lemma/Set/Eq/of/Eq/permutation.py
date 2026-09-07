@@ -62,9 +62,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.limits_subs(_j, j)
 
-    Eq << Eq[-1].this.lhs.apply(Set.Cup.limits.domain_defined)
+    Eq << Eq[-1].this.lhs.apply(Finset.Cup.eq.CupRange)
 
-    Eq << Eq[-1].this.rhs.apply(Set.Cup.limits.domain_defined)
+    Eq << Eq[-1].this.rhs.apply(Finset.Cup.eq.CupRange)
 
 
 if __name__ == '__main__':

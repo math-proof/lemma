@@ -25,7 +25,7 @@ def prove(Eq):
     Eq << Bool.ImpAndS.of.Imp.apply(Eq.hypothesis, cond=Subset(f(n), g(n)))
 
     Eq << Eq[-1].this.rhs.apply(Set.Subset.Cup.of.Subset.Subset.push)
-    Eq << Eq[-1].this.lhs.apply(Set.AllIn_Ico.Cond.given.AllIn_Icc.Le)
+    Eq << Eq[-1].this.lhs.apply(Set.AllIco.Cond.given.AllIcc.Le)
 
     Eq << Imply(Eq.hypothesis, Eq.induct, plausible=True)
     Eq << Bool.Imp.of.All_Imp.apply(Eq[-1], n=n, start=1)

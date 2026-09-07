@@ -32,8 +32,8 @@ def prove(Eq):
     n_ = Symbol('n', integer=True, positive=True)
     Eq << Bool.All.given.Cond.subst.apply(Eq[-1], Eq[-1].variable, n_)
 
-    Eq << Eq[-1].this.lhs.apply(Tensor.MatProd.eq.Dot.pop)
-    Eq << Eq[-1].this.rhs.args[1].apply(Tensor.MatProd.eq.Dot.pop)
+    Eq << Eq[-1].this.lhs.apply(Tensor.MatProd.eq.DotMatProd)
+    Eq << Eq[-1].this.rhs.args[1].apply(Tensor.MatProd.eq.DotMatProd)
 
 
 if __name__ == '__main__':

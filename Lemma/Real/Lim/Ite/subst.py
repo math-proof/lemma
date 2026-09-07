@@ -62,7 +62,7 @@ def prove(Eq):
     N = Eq[-1].variable
     Eq << Bool.Any.given.Any.subst.apply(Eq[-1], N, Max(N, a))
 
-    Eq << Eq[2].this.expr.apply(Set.AllIn_SDiff.of.All, Range(Max(N + 1, a + 1), oo))
+    Eq << Eq[2].this.expr.apply(Set.AllSDiff.of.All, Range(Max(N + 1, a + 1), oo))
 
     Eq << Eq[-1].this.find(Max).apply(Nat.Max.eq.Add)
 

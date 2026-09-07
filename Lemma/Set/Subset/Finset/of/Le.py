@@ -16,7 +16,7 @@ def prove(Eq):
 
     Eq << Set.Subset.given.All_In.apply(Eq[1])
 
-    Eq << Eq[-1].this.apply(Bool.AllIn_Insert.Is.And_All)
+    Eq << Eq[-1].this.apply(Bool.AllInsert.Is.And_All)
 
     Eq << Bool.And_And.given.And.Cond.apply(Eq[-1])
 

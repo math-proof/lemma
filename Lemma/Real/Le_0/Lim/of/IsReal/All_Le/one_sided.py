@@ -47,9 +47,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(And).apply(Nat.Gt.of.Gt.Gt)
 
-    Eq << Eq[-1].this.find(All).apply(Set.AllIn_SDiff.of.All, domain=Interval.open(x0, x0 + Min(δ_quote, delta)))
+    Eq << Eq[-1].this.find(All).apply(Set.AllSDiff.of.All, domain=Interval.open(x0, x0 + Min(δ_quote, delta)))
 
-    Eq << Set.AllIn_SDiff.of.All.apply(Eq[1], domain=Interval.open(x0, x0 + Min(δ_quote, delta)))
+    Eq << Set.AllSDiff.of.All.apply(Eq[1], domain=Interval.open(x0, x0 + Min(δ_quote, delta)))
 
     Eq << Bool.Any_And.of.Any.All.apply(*Eq[-2:], simplify=None)
 

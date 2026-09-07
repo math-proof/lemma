@@ -52,9 +52,9 @@ def prove(Eq):
 
     Eq << Nat.All.Le.of.Le.monotone.apply(Eq[0], n, N)
 
-    Eq << Set.AllIn_SDiff.of.All.apply(Eq[-1], domain=Range(N + 1, oo))
+    Eq << Set.AllSDiff.of.All.apply(Eq[-1], domain=Range(N + 1, oo))
 
-    Eq << Bool.All.And.of.Cond.All.apply(Eq.inf_is_real, Eq[-1], simplify=None)
+    Eq << Bool.All_And.of.All.Cond.apply(Eq.inf_is_real, Eq[-1], simplify=None)
 
     Eq << Eq[-1].this.expr.apply(Set.LeSub.of.Le.In)
 

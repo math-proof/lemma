@@ -21,9 +21,9 @@ def prove(Eq):
 
     Eq.induct = Eq[0].subs(m, m + 1)
 
-    Eq << Eq.induct.this.lhs.apply(Tensor.MatProd.eq.Dot.pop)
+    Eq << Eq.induct.this.lhs.apply(Tensor.MatProd.eq.DotMatProd)
 
-    Eq << Eq[-1].this.rhs.apply(Tensor.MatProd.eq.Dot.pop)
+    Eq << Eq[-1].this.rhs.apply(Tensor.MatProd.eq.DotMatProd)
 
     Eq << Eq[0] @ f(m)
 

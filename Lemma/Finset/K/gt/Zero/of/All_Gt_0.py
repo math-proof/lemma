@@ -34,7 +34,7 @@ def prove(Eq):
 
     Eq.induct1 = Eq.hypothesis.subs(n, n + 1)
 
-    Eq << Eq.induct1.this.lhs.apply(Set.AllIn.given.AllIn_Union, Range(1, n + 2))
+    Eq << Eq.induct1.this.lhs.apply(Set.All.given.AllUnion, Range(1, n + 2))
 
     Eq << Bool.Imp_And.of.ImpAnd.apply(Eq[-1])
 
@@ -42,7 +42,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(And).apply(Nat.Lt0Mul.of.Gt_0.Gt_0)
 
-    Eq << Eq.hypothesis.this.lhs.apply(Set.AllIn.given.AllIn_Union, Range(1, n + 2))
+    Eq << Eq.hypothesis.this.lhs.apply(Set.All.given.AllUnion, Range(1, n + 2))
 
     Eq <<= Eq[-1] & Eq[-2]
 

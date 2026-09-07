@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq << Real.Any.All.of.Eq_Lim.limit_definition.apply(Eq[-1])
 
-    Eq << Eq[-1].this.expr.apply(Int.AllIn_Ico.of.AllIn_Ico.offset, -x0)
+    Eq << Eq[-1].this.expr.apply(Int.AllIco.of.AllIco.offset, -x0)
 
     Eq << Real.Eq.of.Any_All.limit_definition.apply(Eq[-1])
 

@@ -42,9 +42,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Sum).apply(Finset.Sum.eq.AddSumS, cond={n})
 
-    Eq << Eq[-1].this.lhs.apply(Finset.Sum.eq.Add.pop)
+    Eq << Eq[-1].this.lhs.apply(Finset.SumIco.eq.AddSumIco.of.Le)
 
-    Eq << Eq[-1].find(Sum, Sum).this.apply(Finset.Sum.eq.Add.pop)
+    Eq << Eq[-1].find(Sum, Sum).this.apply(Finset.SumIco.eq.AddSumIco.of.Le)
 
     Eq << Eq[-2].subs(Eq[-1])
 

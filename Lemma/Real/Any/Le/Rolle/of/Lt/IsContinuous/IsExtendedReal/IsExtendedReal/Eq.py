@@ -95,7 +95,7 @@ def prove(Eq):
     et = And(*Eq.Any_And_max.lhs.expr.args)
     Eq <<= et.this.apply(Bool.Cond.of.And, slice(0, 4)), et.this.apply(Bool.Cond.of.And, slice(3, 2, -1))
 
-    Eq <<= Eq[-2].this.rhs.find(All[LessEqual]).apply(Set.AllIn_SDiff.of.All, Interval.open(a, b), simplify=None), Eq[-1].this.rhs.find(All[LessEqual]).apply(Set.AllIn_SDiff.of.All, Interval.open(a, b), simplify=None)
+    Eq <<= Eq[-2].this.rhs.find(All[LessEqual]).apply(Set.AllSDiff.of.All, Interval.open(a, b), simplify=None), Eq[-1].this.rhs.find(All[LessEqual]).apply(Set.AllSDiff.of.All, Interval.open(a, b), simplify=None)
 
     Eq <<= Eq[-2].this.rhs.apply(Real.Le_0.Subs.Grad.of.In_Icc.IsContinuous.IsExtendedReal.All_Le), Eq[-1].this.rhs.apply(Real.Ge_0.Subs.Grad.of.In_Icc.IsContinuous.IsExtendedReal.All_Le)
 
@@ -114,7 +114,7 @@ def prove(Eq):
     et = And(*Eq.Any_And_min.lhs.expr.args)
     Eq <<= et.this.apply(Bool.Cond.of.And, slice(0, 4)), et.this.apply(Bool.Cond.of.And, slice(3, 2, -1))
 
-    Eq <<= Eq[-2].this.rhs.find(All[GreaterEqual]).apply(Set.AllIn_SDiff.of.All, Interval.open(a, b), simplify=None), Eq[-1].this.rhs.find(All[GreaterEqual]).apply(Set.AllIn_SDiff.of.All, Interval.open(a, b), simplify=None)
+    Eq <<= Eq[-2].this.rhs.find(All[GreaterEqual]).apply(Set.AllSDiff.of.All, Interval.open(a, b), simplify=None), Eq[-1].this.rhs.find(All[GreaterEqual]).apply(Set.AllSDiff.of.All, Interval.open(a, b), simplify=None)
 
     Eq <<= Eq[-2].this.rhs.apply(Real.Ge_0.Subs.Grad.of.In_Icc.IsContinuous.IsExtendedReal.All_Ge), Eq[-1].this.rhs.apply(Real.Le_0.Subs.Grad.of.In_Icc.IsContinuous.IsExtendedReal.All_Ge)
 
@@ -152,7 +152,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Equal).apply(Nat.Le.of.Eq)
 
-    Eq << Eq[-1].this.lhs.apply(Set.AllIn_SDiff.of.All, Interval.open(a, b))
+    Eq << Eq[-1].this.lhs.apply(Set.AllSDiff.of.All, Interval.open(a, b))
 
     Eq << Eq[-1].this.rhs.apply(Bool.Any_UFn.given.UFnUFn, x, (a + b) / 2)
 

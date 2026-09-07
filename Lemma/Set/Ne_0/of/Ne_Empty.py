@@ -9,7 +9,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Bool, Nat
+    from Lemma import Set, Bool, Nat, Finset
 
     A = Symbol(etype=dtype.integer)
     Eq << apply(Unequal(A, A.etype.emptySet))
@@ -18,9 +18,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.apply(Set.EqUnion.of.In)
 
-    Eq << Eq[-1].this.expr.apply(Set.EqCard.of.Eq)
+    Eq << Eq[-1].this.expr.apply(Finset.Card.of.Eq)
 
-    Eq << Eq[-1].this.find(Card).apply(Set.Card.eq.Add)
+    Eq << Eq[-1].this.find(Card).apply(Finset.CardUnion.eq.Add_CardSDiff)
 
     Eq << Unequal(Eq[-1].find(Add), 0, plausible=True)
 

@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq << ~Eq[1]
 
-    Eq << Eq[-1].apply(Set.Eq_Empty.Inter.of.NotIn)
+    Eq << Eq[-1].apply(Set.Inter_Finset.eq.Empty.of.NotIn)
 
     Eq <<= Eq[-1] & Eq[0]
 

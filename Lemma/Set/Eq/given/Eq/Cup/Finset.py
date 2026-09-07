@@ -25,7 +25,7 @@ def prove(Eq):
 
     i = Eq[0].lhs.variable
 
-    Eq << Set.Eq.Cup.Finset.of.Eq.apply(Eq[-1], (i, 0, n), simplify=None)
+    Eq << Set.SetOf_In_Range.of.All_Eq.apply(Eq[-1], (i, 0, n), simplify=None)
 
 
 if __name__ == '__main__':

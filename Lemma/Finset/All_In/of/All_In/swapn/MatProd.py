@@ -33,7 +33,7 @@ def prove(Eq):
     b = Eq.hypothesis.expr.lhs.args[1].expr.indices[1].base
     Eq.induct = Eq.hypothesis.subs(m, m + 1)
 
-    Eq << Eq.induct.expr.lhs.args[1].this.apply(Tensor.MatProd.eq.Dot.pop)
+    Eq << Eq.induct.expr.lhs.args[1].this.apply(Tensor.MatProd.eq.DotMatProd)
 
     Eq << x @ Eq[-1]
 

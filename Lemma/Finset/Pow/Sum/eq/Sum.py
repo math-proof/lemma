@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq.induct = Eq[0].subs(n, n + 1)
 
-    Eq << Eq.induct.this.lhs.base.apply(Finset.Sum.eq.Add.pop)
+    Eq << Eq.induct.this.lhs.base.apply(Finset.SumIco.eq.AddSumIco.of.Le)
 
     Eq << Eq[-1].this.lhs.apply(Finset.Pow.eq.Sum.Binom.Newton)
 

@@ -29,7 +29,7 @@ def prove(Eq):
 
     Eq << Bool.ImpAndS.of.Imp.apply(Eq[2], cond=f(n) >= g(n))
 
-    Eq << Eq[-1].this.lhs.apply(Set.AllIn_Ico.Cond.given.AllIn_Icc.Le)
+    Eq << Eq[-1].this.lhs.apply(Set.AllIco.Cond.given.AllIcc.Le)
 
     Eq << Eq[-1].this.rhs.apply(Nat.GeMul.of.Ge.Ge)
 

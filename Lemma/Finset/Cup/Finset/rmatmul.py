@@ -20,7 +20,7 @@ def apply(x, w=None, right=None, var=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Tensor
+    from Lemma import Set, Tensor, Finset
 
     n = Symbol(domain=Range(2, oo))
     x = Symbol(shape=(n,), integer=True)
@@ -37,7 +37,7 @@ def prove(Eq):
     Eq << Eq[-1].this(i).find(Element).simplify()
     Eq << Eq[-1].this(j).find(Element).simplify()
 
-    Eq << Eq[-1].apply(Set.Eq.Cup.Finset.of.Eq, (k, 0, n))
+    Eq << Eq[-1].apply(Set.SetOf_In_Range.of.All_Eq, (k, 0, n))
 
     Eq << Eq[-1].this.find(Complement[Complement]).apply(Set.SDiff_SDiff.eq.UnionInter)
 
@@ -51,11 +51,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.args[1]().expr.find(Intersection).simplify()
 
-    Eq << Eq[-1].this.lhs.apply(Set.Cup.limits.domain_defined)
+    Eq << Eq[-1].this.lhs.apply(Finset.Cup.eq.CupRange)
 
     Eq << Eq[-1].this.rhs.limits_subs(Eq[-1].rhs.variable, i)
 
-    Eq << Eq[-1].this.rhs.apply(Set.Cup.limits.domain_defined)
+    Eq << Eq[-1].this.rhs.apply(Finset.Cup.eq.CupRange)
 
 
 

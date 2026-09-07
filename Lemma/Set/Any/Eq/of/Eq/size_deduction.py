@@ -13,7 +13,7 @@ def apply(given, var=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Nat
+    from Lemma import Set, Nat, Finset
 
     S = Symbol(etype=dtype.integer)
     n = Symbol(integer=True, positive=True)
@@ -27,9 +27,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.apply(Set.EqUnion.of.In)
 
-    Eq << Eq[-1].this.expr.apply(Set.EqCard.of.Eq)
+    Eq << Eq[-1].this.expr.apply(Finset.Card.of.Eq)
 
-    Eq << Eq[-1].this.find(Card).apply(Set.Card.eq.Add)
+    Eq << Eq[-1].this.find(Card).apply(Finset.CardUnion.eq.Add_CardSDiff)
 
     Eq << Eq[-1].subs(Eq[0])
 

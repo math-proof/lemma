@@ -9,14 +9,14 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Set
+    from Lemma import Set, Finset
     n = 5
     x = Symbol(etype=dtype.real, shape=(n,))
     i = Symbol(integer=True)
 
     Eq << apply(Cup[i](x[i]))
 
-    Eq << Eq[-1].this.lhs.apply(Set.Cup.limits.domain_defined)
+    Eq << Eq[-1].this.lhs.apply(Finset.Cup.eq.CupRange)
 
     n -= 1
     Eq << Eq[-1].this.lhs.apply(Set.Cup.eq.UnionCupS, cond={n})

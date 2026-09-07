@@ -28,13 +28,13 @@ def prove(Eq):
 
     Eq << Bool.Or_NotIn.of.All.apply(Eq.given, x, Eq.given_i.expr.lhs)
 
-    Eq << Bool.All.And.of.Cond.All.apply(Eq[-1], Eq.given_i)
+    Eq << Bool.All_And.of.All.Cond.apply(Eq[-1], Eq.given_i)
 
     Eq << Bool.All.of.All_And.apply(Eq[-1], index=-1)
 
     Eq << Bool.Or_NotIn.of.All.apply(Eq.given_i, x, Eq[-1].expr.lhs)
 
-    Eq << Bool.All.And.of.Cond.All.apply(Eq[-2], Eq[-1])
+    Eq << Bool.All_And.of.All.Cond.apply(Eq[-2], Eq[-1])
 
     Eq << Bool.All.of.All_And.apply(Eq[-1], index=1)
 

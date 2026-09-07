@@ -30,7 +30,7 @@ def prove(Eq):
 
     Eq << Eq[1].simplify()
 
-    Eq << Bool.All.limits_assert.apply(Eq[1].limits)
+    Eq << Set.All_In.apply(Eq[1].limits)
 
     Eq << Eq[-1].this.expr.apply(Set.In.Imageset.of.In, f=f)
 

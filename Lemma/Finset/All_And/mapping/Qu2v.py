@@ -62,7 +62,7 @@ def prove(Eq):
     k = Eq[-1].expr.lhs.expr.arg.args[0].indices[-1]
     Eq.Xv_definition = Eq[1].subs(j, v)
 
-    Eq << Eq.Xv_definition[k].apply(Set.Eq.Cup.Finset.of.Eq, (k, 0, n + 1))
+    Eq << Eq.Xv_definition[k].apply(Set.SetOf_In_Range.of.All_Eq, (k, 0, n + 1))
 
     Eq.x_n1_cup_finiteset = Eq[-2].subs(Eq[-1].reversed)
 

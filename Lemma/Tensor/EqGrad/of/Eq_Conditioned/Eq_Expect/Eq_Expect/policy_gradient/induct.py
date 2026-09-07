@@ -35,7 +35,7 @@ def prove(Eq):
 
     Eq.induct = Eq.hypothesis.subs(n,  n + 1)
 
-    Eq << Eq.induct.this.find(Sum).apply(Finset.Sum.eq.Add.pop)
+    Eq << Eq.induct.this.find(Sum).apply(Finset.SumIco.eq.AddSumIco.of.Le)
 
     Eq << Eq.recursion.subs(t, n)
 

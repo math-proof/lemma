@@ -37,7 +37,7 @@ def prove(Eq):
 
     Eq << Eq[-1].limits_subs(Eq[-1].variable, n)
 
-    Eq << Int.AllIn_Ico.of.AllIn_Ico.offset.apply(Eq[-1], -N)
+    Eq << Int.AllIco.of.AllIco.offset.apply(Eq[-1], -N)
 
 
 if __name__ == '__main__':

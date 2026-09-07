@@ -16,7 +16,7 @@ def prove(Eq):
     s = Symbol(etype=dtype.integer)
     Eq << apply(Element(e, s))
 
-    Eq << Set.SubsetSingleton.of.In.apply(Eq[0], simplify=False)
+    Eq << Set.SubsetFinset.of.In.apply(Eq[0], simplify=False)
 
     Eq << Set.EqInter.of.Subset.apply(Eq[-1])
 

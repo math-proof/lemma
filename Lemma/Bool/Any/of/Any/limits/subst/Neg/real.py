@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Element).apply(Set.Neg.In.Icc.of.In_Icc)
 
-    Eq << Int.AnyIn_Ico.of.AnyIn_Ico.offset.apply(Eq[-1], -c)
+    Eq << Int.AnyIco.of.AnyIco.offset.apply(Eq[-1], -c)
 
 
 if __name__ == '__main__':

@@ -36,7 +36,7 @@ def prove(Eq):
 
     Eq << Tensor.All.Eq.of.Eq_Block.Eq_Block.relative_distance.lower_triangle.upper_part.apply(Eq[0], Eq[1])
 
-    Eq << Set.AllIn_SDiff.of.All.apply(Eq[-1], Range(l - 1))
+    Eq << Set.AllSDiff.of.All.apply(Eq[-1], Range(l - 1))
 
 
 

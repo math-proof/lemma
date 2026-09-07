@@ -9,7 +9,7 @@ def apply(n):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Set, Bool
+    from Lemma import Finset, Bool
 
     n = Symbol(integer=True, positive=True, given=False)
     Eq << apply(n)
@@ -23,7 +23,7 @@ def prove(Eq):
     Eq << Finset.Cup.eq.SetOf.P2Q_union.apply(n)
 
     Q = Eq[-1].lhs.expr.base
-    Eq << Eq[-1].apply(Set.EqCard.of.Eq)
+    Eq << Eq[-1].apply(Finset.Card.of.Eq)
 
     Eq << Finset.Abs.Cup.eq.Sum.Abs.permutation.nonoverlapping.apply(n, Q=Q)
 

@@ -12,7 +12,7 @@ def apply(n, u=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Tensor, Bool, Nat
+    from Lemma import Set, Tensor, Bool, Nat, Finset
 
     n = Symbol(integer=True, positive=True, given=True)
     Eq << apply(n)
@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << Tensor.Cup.Finset.Dot.apply(a)
 
-    Eq << Eq[-1].this.lhs.apply(Set.Cup.limits.domain_defined)
+    Eq << Eq[-1].this.lhs.apply(Finset.Cup.eq.CupRange)
 
     Eq <<= Eq[-1] & Eq[-3]
 

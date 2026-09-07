@@ -45,7 +45,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.find(Cup).expr.apply(Set.Finset.eq.Ite)
 
-    Eq << Eq[-1].this.lhs.args[1].apply(Set.CupIn_Ico.eq.Cup_UFnAdd, -1)
+    Eq << Eq[-1].this.lhs.args[1].apply(Set.CupIco.eq.Cup_UFnAdd, -1)
 
     Eq << Eq.all_gt.this.expr.apply(Nat.Gt.given.And)
 
@@ -91,7 +91,7 @@ def prove(Eq):
 
     Eq << Bool.All.All.of.All.apply(Eq[-1], cond=i < k)
 
-    Eq << Set.AllIn_SDiff.of.All.apply(Eq[-1], Range(k + 1, n + 1))
+    Eq << Set.AllSDiff.of.All.apply(Eq[-1], Range(k + 1, n + 1))
 
     Eq << Bool.All.given.Imp.apply(Eq.all_ne)
 
@@ -127,15 +127,15 @@ def prove(Eq):
         Eq[-2].this.expr.apply(Bool.Imp.given.All), \
         Eq[-1].this.expr.apply(Bool.Imp.given.All)
 
-    Eq <<= Set.AllIn.given.AllIn_Union.apply(Eq[-3], (j, 0, i)),\
+    Eq <<= Set.All.given.AllUnion.apply(Eq[-3], (j, 0, i)),\
         Eq[-2].limits_subs(i, i - 1),\
         Eq[-1].limits_subs(i, i - 1).limits_subs(j, j - 1)
 
-    Eq << Set.AllIn.given.AllIn_Union.apply(Eq[-3], (i, 0, n + 1))
+    Eq << Set.All.given.AllUnion.apply(Eq[-3], (i, 0, n + 1))
 
-    Eq <<= Set.AllIn.given.AllIn_Union.apply(Eq[-2], (j, 0, i)), Set.AllIn.given.AllIn_Union.apply(Eq[-1], (j, 0, i))
+    Eq <<= Set.All.given.AllUnion.apply(Eq[-2], (j, 0, i)), Set.All.given.AllUnion.apply(Eq[-1], (j, 0, i))
 
-    Eq <<= Set.AllIn.given.AllIn_Union.apply(Eq[-1], (i, 0, n + 1))
+    Eq <<= Set.All.given.AllUnion.apply(Eq[-1], (i, 0, n + 1))
 
 
 

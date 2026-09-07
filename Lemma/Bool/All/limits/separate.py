@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Bool.Iff.given.Imp.Imp.apply(Eq[0])
 
-    Eq << Eq[-1].this.lhs.expr.apply(Bool.All.And.of.Cond.All, simplify=None)
+    Eq << Eq[-1].this.lhs.expr.apply(Bool.All_And.of.All.Cond, simplify=None)
 
     Eq << Eq[-2].this.rhs.expr.apply(Bool.Cond.All.given.All.And, simplify=None)
 

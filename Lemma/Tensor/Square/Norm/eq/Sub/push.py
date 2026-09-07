@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Norm).apply(Real.Norm.eq.Sqrt)
 
-    Eq << Eq[-1].this.rhs.find(Sum).apply(Finset.Sum.eq.Add.pop)
+    Eq << Eq[-1].this.rhs.find(Sum).apply(Finset.SumIco.eq.AddSumIco.of.Le)
 
 
 if __name__ == '__main__':

@@ -26,7 +26,7 @@ def prove(Eq):
     Eq << apply(c <= b, All[x:Interval(a, b)](f(x) > 0))
 
     e = Symbol(nonnegative=True)
-    Eq << Set.AllIn_SDiff.of.All.apply(Eq[1], Interval(a, b - e))
+    Eq << Set.AllSDiff.of.All.apply(Eq[1], Interval(a, b - e))
 
     Eq << Bool.Imp.of.Cond.unbounded.apply(Eq[-1], e)
 

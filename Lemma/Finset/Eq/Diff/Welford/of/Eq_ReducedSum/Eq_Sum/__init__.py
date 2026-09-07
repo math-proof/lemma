@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq << Eq[1].subs(n, n + 1) - Eq[1]
 
-    Eq << Eq[-1].this(n).find(Sum).apply(Finset.Sum.eq.Add.pop)
+    Eq << Eq[-1].this(n).find(Sum).apply(Finset.SumIco.eq.AddSumIco.of.Le)
 
     Eq << Tensor.Eq.Sum.Square.eq.Add.Sum.Square.of.Eq_ReducedSum.apply(Eq[0], x_bar[n + 1], k)
 

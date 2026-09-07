@@ -43,7 +43,7 @@ def prove(Eq):
 
     Eq.equation = Eq[-1].this.expr.rhs[1].simplify()
 
-    Eq.limits_assertion = Bool.All.limits_assert.apply(Eq.equation.limits)
+    Eq.limits_assertion = Set.All_In.apply(Eq.equation.limits)
 
     Eq << Eq.limits_assertion.this.expr.apply(Set.Eq.of.Eq.split.Finset.Add)
 
@@ -69,7 +69,7 @@ def prove(Eq):
 
     Eq.induct = Eq.hypothesis.subs(n, n + 1)
 
-    Eq << Eq.induct.expr.expr.rhs.args[1].this.apply(Tensor.MatProd.eq.Dot.pop)
+    Eq << Eq.induct.expr.expr.rhs.args[1].this.apply(Tensor.MatProd.eq.DotMatProd)
 
     Eq << Finset.Block.eq.MatProd.apply(n, n, b)
 
@@ -129,7 +129,7 @@ def prove(Eq):
 
     Eq << Bool.Or_NotIn.of.All.apply(Eq.hypothesis, Eq.hypothesis.variable, p_quote[:n])
 
-    Eq << Bool.All.And.of.Cond.All.apply(Eq[-1], Eq[-2])
+    Eq << Bool.All_And.of.All.Cond.apply(Eq[-1], Eq[-2])
 
     Eq << Eq[-1].this.expr.apply(Bool.Cond.of.Any.Or, simplify=None)
 

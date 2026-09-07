@@ -18,7 +18,7 @@ def prove(Eq):
     B = Symbol(etype=dtype.complex[n], given=True)
     Eq << apply(Element(x, A), Subset(B, A))
 
-    Eq << Set.SubsetSingleton.of.In.apply(Eq[0])
+    Eq << Set.SubsetFinset.of.In.apply(Eq[0])
 
     Eq << Set.SubsetUnionS.of.Subset.Subset.apply(Eq[-1], Eq[1])
 

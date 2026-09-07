@@ -38,7 +38,7 @@ def prove(Eq):
 
     Eq << Eq[1].subs(n, n + 1) - Eq[-1]
 
-    Eq << Eq[-1].this.find(Sum).apply(Finset.Sum.eq.Add.pop)
+    Eq << Eq[-1].this.find(Sum).apply(Finset.SumIco.eq.AddSumIco.of.Le)
 
     Eq << Nat.Eq_Sub.of.EqAdd.apply(Eq[-1], lhs=-1)
 

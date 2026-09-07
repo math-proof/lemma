@@ -19,7 +19,7 @@ def prove(Eq):
     e = Symbol(integer=True)
     Eq << apply(NotElement(e, S))
 
-    Eq << Set.Eq_Empty.Inter.of.NotIn.apply(Eq[0])
+    Eq << Set.Inter_Finset.eq.Empty.of.NotIn.apply(Eq[0])
 
     Eq << Set.EqSDiff.of.Inter.eq.Empty.apply(Eq[-1])
 

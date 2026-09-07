@@ -15,7 +15,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Bool, Nat, Int
+    from Lemma import Set, Bool, Nat, Int, Finset
 
     i = Symbol(integer=True)
     n = Symbol(integer=True, positive=True, given=True)
@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.apply(Set.Gt_0.of.Ne_Empty)
 
-    Eq << Set.CardUnion.eq.Sub_.AddCards.CardInter.principle.inclusion_exclusion.apply(x[i], x[j])
+    Eq << Finset.CardUnion.eq.SubAddCardS_CardInter.apply(x[i], x[j])
 
     Eq << Eq[-2].this.expr.apply(Nat.Lt.of.Eq.Gt.subst, Eq[-1])
 
@@ -39,7 +39,7 @@ def prove(Eq):
 
     Eq.union_less_than = Set.CardCup.le.Sum_Card.apply(x[i], *Eq[-1].rhs.args[1].limits)
 
-    Eq << Set.CardUnion.le.AddCardS.apply(*Eq[-1].rhs.args)
+    Eq << Finset.CardUnion.le.AddCardS.apply(*Eq[-1].rhs.args)
 
     Eq << Eq.gt.this.expr.apply(Nat.Gt.of.Gt.Le.subst, Eq[-1])
 

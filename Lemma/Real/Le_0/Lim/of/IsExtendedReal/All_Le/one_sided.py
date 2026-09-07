@@ -51,9 +51,9 @@ def prove(Eq):
     δ_quote = Symbol(real=True, positive=True)
     Eq << Real.Any.All.Gt_0.of.Eq_Infty.apply(Eq[-1], delta=δ_quote)
 
-    Eq << Eq[-1].this.expr.apply(Set.AllIn_SDiff.of.All, domain=Interval.open(x0, x0 + Min(delta, δ_quote)))
+    Eq << Eq[-1].this.expr.apply(Set.AllSDiff.of.All, domain=Interval.open(x0, x0 + Min(delta, δ_quote)))
 
-    Eq << Set.AllIn_SDiff.of.All.apply(Eq[1], domain=Interval.open(x0, x0 + Min(delta, δ_quote)))
+    Eq << Set.AllSDiff.of.All.apply(Eq[1], domain=Interval.open(x0, x0 + Min(delta, δ_quote)))
 
     Eq << Bool.Any_And.of.Any.All.apply(*Eq[-2:])
 

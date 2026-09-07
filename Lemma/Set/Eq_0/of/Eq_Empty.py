@@ -9,13 +9,13 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set
+    from Lemma import Finset
 
     A = Symbol(etype=dtype.integer, given=True)
 
     Eq << apply(Equal(A, A.etype.emptySet))
 
-    Eq << Set.EqCard.of.Eq.apply(Eq[0])
+    Eq << Finset.Card.of.Eq.apply(Eq[0])
 
 
 if __name__ == '__main__':

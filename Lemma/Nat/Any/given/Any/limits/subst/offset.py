@@ -18,7 +18,7 @@ def prove(Eq):
 
 
 
-    Eq << Int.AnyIn_Ico.of.AnyIn_Ico.offset.apply(Eq[-1], -d)
+    Eq << Int.AnyIco.of.AnyIco.offset.apply(Eq[-1], -d)
 
 
 

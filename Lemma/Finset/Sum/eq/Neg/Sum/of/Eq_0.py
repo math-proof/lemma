@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << Eq[1].this.lhs.apply(Finset.Sum.eq.Add.by_parts, i=i)
 
-    Eq << Eq[-1].this.rhs.find(Sum).apply(Finset.Sum.eq.Add.pop)
+    Eq << Eq[-1].this.rhs.find(Sum).apply(Finset.SumIco.eq.AddSumIco.of.Le)
 
     Eq << Eq[-1].subs(Eq[0])
 

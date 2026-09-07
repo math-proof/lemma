@@ -39,7 +39,7 @@ def prove(Eq):
     Eq << apply(All[a:A](Element(f(a), B)), All[b:B](Element(g(b), A)),
                 All[a:A](Equal(a, g(f(a)))))
 
-    Eq << Eq[1].this.expr.apply(Set.SubsetSingleton.of.In, simplify=False)
+    Eq << Eq[1].this.expr.apply(Set.SubsetFinset.of.In, simplify=False)
 
     Eq.subset_A = Set.SubsetCup.of.All_Subset.apply(Eq[-1])
 

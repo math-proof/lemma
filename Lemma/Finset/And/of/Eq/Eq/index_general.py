@@ -83,7 +83,7 @@ def prove(Eq):
     Eq.inequality_ab = Eq.ou.args[1].copy(plausible=True)
 
     (a, *_), (b, *_) = Eq.inequality_ab.limits
-    Eq << Eq[1].apply(Set.EqCard.of.Eq)
+    Eq << Eq[1].apply(Finset.Card.of.Eq)
 
     Eq << Bool.Eq.of.Eq.Eq.apply(Eq[-1], Eq[0])
 

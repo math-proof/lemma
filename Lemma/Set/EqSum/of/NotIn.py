@@ -18,7 +18,7 @@ def prove(Eq):
     f = Function(integer=True)
     Eq << apply(NotElement(e, S), Sum[x:S | {e}](f(x)))
 
-    Eq << Set.Eq_Empty.Inter.of.NotIn.apply(Eq[0])
+    Eq << Set.Inter_Finset.eq.Empty.of.NotIn.apply(Eq[0])
 
     Eq << Eq[1].this.lhs.apply(Finset.Sum.eq.AddSumS, cond={e})
 

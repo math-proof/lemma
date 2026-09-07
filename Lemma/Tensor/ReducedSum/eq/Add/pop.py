@@ -18,7 +18,7 @@ def prove(Eq):
 
     Eq << Eq[0].this.lhs.apply(Vector.Sum.eq.Sum_Get)
 
-    Eq << Eq[-1].this.lhs.apply(Finset.Sum.eq.Add.pop)
+    Eq << Eq[-1].this.lhs.apply(Finset.SumIco.eq.AddSumIco.of.Le)
 
     Eq << Eq[-1].this.lhs.apply(Tensor.Sum.eq.ReducedSum)
 

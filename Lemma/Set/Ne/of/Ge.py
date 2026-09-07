@@ -13,14 +13,14 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set
+    from Lemma import Finset
     A = Symbol(etype=dtype.integer, given=True)
 
     Eq << apply(Card(A) >= 1)
 
     Eq << ~Eq[1]
 
-    Eq << Eq[-1].apply(Set.EqCard.of.Eq)
+    Eq << Eq[-1].apply(Finset.Card.of.Eq)
 
     Eq << Eq[0].subs(Eq[-1])
 

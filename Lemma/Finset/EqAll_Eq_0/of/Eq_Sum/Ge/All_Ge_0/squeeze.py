@@ -23,9 +23,9 @@ def prove(Eq):
     a = Symbol(real=True)
     Eq << apply(Equal(Sum[i:n + 1](x[i]), a), x[n] >= a, All[i:n + 1](x[i] >= 0))
 
-    Eq.eq = Eq[0].this.lhs.apply(Finset.Sum.eq.Add.pop)
+    Eq.eq = Eq[0].this.lhs.apply(Finset.SumIco.eq.AddSumIco.of.Le)
 
-    Eq.All_is_nonnegative = Set.AllIn_SDiff.of.All.apply(Eq[2], domain=Range(n))
+    Eq.All_is_nonnegative = Set.AllSDiff.of.All.apply(Eq[2], domain=Range(n))
 
     Eq << Finset.Ge_0.Sum.of.All_Ge_0.apply(Eq.All_is_nonnegative)
 
@@ -51,7 +51,7 @@ def prove(Eq):
 
     Eq.any_is_negative = Eq[-1].this.expr.apply(Int.LtSub.of.Eq.Gt)
 
-    Eq << Set.AllIn_SDiff.of.All.apply(Eq.All_is_nonnegative, Range(n) - {i})
+    Eq << Set.AllSDiff.of.All.apply(Eq.All_is_nonnegative, Range(n) - {i})
 
     Eq << Eq[-1].limits_subs(i, j)
 

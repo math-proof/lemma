@@ -21,9 +21,9 @@ def prove(Eq):
 
     Eq << Eq[0].subs(n, n + 1)
 
-    Eq << Eq[-1].this.lhs.apply(Finset.Sum.eq.Add.pop)
+    Eq << Eq[-1].this.lhs.apply(Finset.SumIco.eq.AddSumIco.of.Le)
 
-    Eq << Eq[-1].this.rhs.arg.apply(Finset.Sum.eq.Add.pop)
+    Eq << Eq[-1].this.rhs.arg.apply(Finset.SumIco.eq.AddSumIco.of.Le)
 
     Eq << Imply(Eq[0], Eq[1], plausible=True)
 

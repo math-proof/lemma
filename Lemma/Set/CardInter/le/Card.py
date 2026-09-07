@@ -8,11 +8,11 @@ def apply(A, B):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Nat
+    from Lemma import Set, Nat, Finset
     A, B = Symbol(etype=dtype.integer)
     Eq << apply(A, B)
 
-    Eq << Set.CardUnion.eq.Sub_.AddCards.CardInter.principle.inclusion_exclusion.apply(A, B).reversed
+    Eq << Finset.CardUnion.eq.SubAddCardS_CardInter.apply(A, B).reversed
 
     Eq << Set.CardUnion.ge.Card.apply(B, A)
 

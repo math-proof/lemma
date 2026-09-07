@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Unequal).apply(Set.NotIn.of.Ne)
 
-    Eq << Eq[-1].apply(Set.AllIn_Inter.of.All_Or_NotIn, index=1)
+    Eq << Eq[-1].apply(Set.AllInter.of.All_Or_NotIn, index=1)
 
     Eq <<= Eq[-1] & Eq[0]
 

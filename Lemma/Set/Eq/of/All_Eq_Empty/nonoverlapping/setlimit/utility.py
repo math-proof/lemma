@@ -40,13 +40,13 @@ def prove(Eq):
 
     Eq << Bool.Cond.of.All.subst.apply(Eq[-1], j, 0)
 
-    Eq << Set.CardUnion.eq.Sub_.AddCards.CardInter.principle.inclusion_exclusion.apply(*Eq[-1].lhs.args).subs(Eq[-1])
+    Eq << Finset.CardUnion.eq.SubAddCardS_CardInter.apply(*Eq[-1].lhs.args).subs(Eq[-1])
 
     Eq.induct = Eq[1].subs(n, n + 1)
 
     Eq << Eq.induct.lhs.arg.this.apply(Set.Cup.eq.UnionCupS, cond={n})
 
-    Eq << Set.CardUnion.eq.Sub_.AddCards.CardInter.principle.inclusion_exclusion.apply(*Eq[-1].rhs.args)
+    Eq << Finset.CardUnion.eq.SubAddCardS_CardInter.apply(*Eq[-1].rhs.args)
 
     Eq << Eq[0].subs(i, n).limits_subs(j, i)
 

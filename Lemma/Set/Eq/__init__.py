@@ -4,7 +4,6 @@ from . import Card
 from . import Square
 from . import Union
 from . import Bool
-from . import Cup
 from . import Delta
-from . import Is
 from . import ou
+from . import Is

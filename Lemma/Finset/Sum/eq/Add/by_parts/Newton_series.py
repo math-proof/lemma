@@ -35,7 +35,7 @@ def prove(Eq):
 
     Eq.induct = Eq[0].subs(d, d + 1)
 
-    Eq << Eq.induct.this.find(Sum[Pow * Sum * Sum]).apply(Finset.Sum.eq.Add.pop)
+    Eq << Eq.induct.this.find(Sum[Pow * Sum * Sum]).apply(Finset.SumIco.eq.AddSumIco.of.Le)
 
     Eq.abel = Eq[0].find(Mul[~Sum]).this.apply(Finset.Sum.eq.Add.by_parts, slice(1, None), i)
 

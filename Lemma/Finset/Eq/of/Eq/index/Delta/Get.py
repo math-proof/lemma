@@ -22,7 +22,7 @@ def apply(given, i=None, j=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Bool, Nat
+    from Lemma import Set, Bool, Nat, Finset
 
     n = Symbol(domain=Range(2, oo))
     x = Symbol(shape=(n,), integer=True, given=True)
@@ -40,7 +40,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.apply(Bool.Cond.of.Ne.Cond.subst, ret=0)
 
-    Eq << Eq[0].apply(Set.EqCard.of.Eq)
+    Eq << Eq[0].apply(Finset.Card.of.Eq)
 
     Eq << Set.All.Ne.SDiff.of.Eq.apply(Eq[-1])
 

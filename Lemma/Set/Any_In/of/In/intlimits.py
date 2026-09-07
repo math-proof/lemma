@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << ~Eq[-1]
 
-    Eq << Bool.All.And.of.Cond.All.apply(Eq[0], Eq[-1])
+    Eq << Bool.All_And.of.All.Cond.apply(Eq[0], Eq[-1])
 
 
 if __name__ == '__main__':

@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.args[0].simplify()
 
-    Eq << Eq[-1].this.expr.apply(Bool.All.And.of.Cond.All, simplify=None)
+    Eq << Eq[-1].this.expr.apply(Bool.All_And.of.All.Cond, simplify=None)
 
     Eq << Eq[-1].this.expr.expr.apply(Nat.Gt.of.Gt.Gt)
 

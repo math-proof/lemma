@@ -22,9 +22,9 @@ def prove(Eq):
 
     Eq << Bool.All_And.given.All.All.apply(Eq[-1])
 
-    Eq << Set.AllIn.given.AllIn_Union.apply(Eq[-2], A)
+    Eq << Set.All.given.AllUnion.apply(Eq[-2], A)
 
-    Eq << Set.AllIn.given.AllIn_Union.apply(Eq[-1], B)
+    Eq << Set.All.given.AllUnion.apply(Eq[-1], B)
 
 
 

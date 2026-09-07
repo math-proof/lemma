@@ -32,7 +32,7 @@ def prove(Eq):
 
     Eq << Finset.Pow.eq.Sum.Binom.Newton.apply((x + 1) ** (n + 1), swap=True) - x ** (n + 1)
 
-    Eq << Eq[-1].this.rhs.args[1].apply(Finset.Sum.eq.Add.pop)
+    Eq << Eq[-1].this.rhs.args[1].apply(Finset.SumIco.eq.AddSumIco.of.Le)
 
     Eq << Eq[-3].subs(Eq[-1])
 
@@ -63,7 +63,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.args[0].apply(Bool.Cond.given.All, _k)
 
-    Eq << Eq[-1].this.lhs.apply(Set.AllIn_Ico.Cond.given.AllIn_Icc.Le)
+    Eq << Eq[-1].this.lhs.apply(Set.AllIco.Cond.given.AllIcc.Le)
 
     Eq << Bool.Cond.of.Cond.Imp.induct.second.split.All.apply(Eq.initial, Eq[-1], n=n)
 

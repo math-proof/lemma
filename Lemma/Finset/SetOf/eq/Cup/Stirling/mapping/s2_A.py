@@ -63,18 +63,18 @@ def prove(Eq):
 
     Eq.x_quote_union = Bool.All.of.All_Eq.Cond.subst.apply(Eq.x_union_s1, Eq[-1])
 
-    Eq << Eq[1].apply(Set.EqCard.of.Eq)
+    Eq << Eq[1].apply(Finset.Card.of.Eq)
 
     x_quote_abs = Eq[-1]
     Eq << Eq[-1].apply(Fin.Sum.of.All_Eq, (i, 0, k + 1))
 
-    Eq << Set.CardUnion.le.AddCardS.apply(*Eq[-1].rhs.args[1].arg.args)
+    Eq << Finset.CardUnion.le.AddCardS.apply(*Eq[-1].rhs.args[1].arg.args)
 
     Eq << Nat.Le.of.Eq.Le.subst.apply(Eq[-2], Eq[-1])
 
     Eq << Bool.All.of.All_Eq.Cond.subst.apply(Eq.x_abs_sum_s1, Eq[-1])
 
-    Eq << Eq.x_quote_union.this.expr.apply(Set.EqCard.of.Eq)
+    Eq << Eq.x_quote_union.this.expr.apply(Finset.Card.of.Eq)
 
     x_quote_union_abs = Eq[-1]
     u = Eq[-1].lhs.arg
@@ -140,15 +140,15 @@ def prove(Eq):
 
     Eq << Eq[-2].reversed.this.expr.apply(Set.EqInter.of.Eq.Eq, Eq[-1])
 
-    Eq << Set.CardUnion.eq.Sub_.AddCards.CardInter.principle.inclusion_exclusion.apply(*Eq[-1].lhs.args)
+    Eq << Finset.CardUnion.eq.SubAddCardS_CardInter.apply(*Eq[-1].lhs.args)
 
-    Eq << Bool.Any.of.Any_Eq.Cond.subst.apply(Eq[-2], Eq[-1])
+    Eq << Set.Any_UFn.of.All_UFn.Any_Eq.apply(Eq[-2], Eq[-1])
 
     Eq.set_size_inequality = Eq[-1].this.expr.apply(Nat.Lt.of.Eq.Lt.subst, Less(Eq[-1].expr.rhs, Eq[-1].expr.rhs + 1, plausible=True))
 
     Eq << Eq.x_quote_union.this.expr.lhs.apply(Set.Cup.eq.UnionCupS, cond={i, j})
 
-    Eq << Set.CardUnion.le.AddCardS.apply(*Eq[-1].lhs.args)
+    Eq << Finset.CardUnion.le.AddCardS.apply(*Eq[-1].lhs.args)
 
     Eq << Set.CardCup.le.Sum_Card.apply(*Eq[-2].lhs.args[0].args)
 

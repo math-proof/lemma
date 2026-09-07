@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << Bool.ImpAndS.of.Imp.apply(Eq[2], cond=Element(x[n], S.Complexes))
 
-    Eq << Eq[-1].this.lhs.apply(Set.AllIn_Ico.Cond.given.AllIn_Icc.Le)
+    Eq << Eq[-1].this.lhs.apply(Set.AllIco.Cond.given.AllIcc.Le)
 
     Eq << Eq[-1].this.rhs.apply(Set.IsComplex.Add.of.IsComplex.IsComplex)
 

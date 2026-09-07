@@ -11,7 +11,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Bool
+    from Lemma import Set, Bool, Finset
 
     i = Symbol(integer=True)
     k = Symbol(integer=True, positive=True, given=True)
@@ -25,13 +25,13 @@ def prove(Eq):
 
 
 
-    Eq << Eq[0].apply(Set.EqCard.of.Eq)
+    Eq << Eq[0].apply(Finset.Card.of.Eq)
 
-    Eq << Eq[-1].this.lhs.apply(Set.Card.eq.Add.split, x[j])
+    Eq << Eq[-1].this.lhs.apply(Finset.Card.eq.Add_CardSDiff, x[j])
 
     Eq << Set.SDiff.of.Eq.apply(Eq[0], Eq.paradox.lhs)
 
-    Eq << Eq[-1].apply(Set.EqCard.of.Eq)
+    Eq << Eq[-1].apply(Finset.Card.of.Eq)
 
     Eq << Eq[-3].subs(Eq[-1])
 

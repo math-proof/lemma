@@ -24,7 +24,7 @@ def apply(a, var=None, *, simplify=True):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Set
+    from Lemma import Finset
 
     n = Symbol(domain=Range(2, oo))
     x = Symbol(shape=(n,), integer=True)
@@ -43,9 +43,9 @@ def prove(Eq):
 
     Eq << Eq[-2].subs(Eq[-1].reversed)
 
-    Eq << Eq[-1].this.rhs.apply(Set.Cup.limits.domain_defined.delete)
+    Eq << Eq[-1].this.rhs.apply(Finset.CupRange.eq.Cup)
 
-    Eq << Eq[-1].this.lhs.apply(Set.Cup.limits.domain_defined.delete)
+    Eq << Eq[-1].this.lhs.apply(Finset.CupRange.eq.Cup)
 
 
 if __name__ == '__main__':

@@ -31,7 +31,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Sum).apply(Finset.Sum.eq.Sub.unshift)
 
-    Eq << Eq[-1].this.rhs.find(Sum).apply(Finset.Sum.eq.Add.pop)
+    Eq << Eq[-1].this.rhs.find(Sum).apply(Finset.SumIco.eq.AddSumIco.of.Le)
 
     Eq << Eq[-1].this.rhs.args[1:].apply(Finset.AddSumS.eq.Sum_Add_Sum)
 

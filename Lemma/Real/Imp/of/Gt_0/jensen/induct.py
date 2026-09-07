@@ -43,9 +43,9 @@ def prove(Eq):
 
     Eq.induct = Eq[1].subs(n, n + 1)
 
-    Eq << Eq.induct.this.rhs.find(Sum).apply(Finset.Sum.eq.Add.pop)
+    Eq << Eq.induct.this.rhs.find(Sum).apply(Finset.SumIco.eq.AddSumIco.of.Le)
 
-    Eq << Eq[-1].this.find(f[~Sum]).apply(Finset.Sum.eq.Add.pop)
+    Eq << Eq[-1].this.find(f[~Sum]).apply(Finset.SumIco.eq.AddSumIco.of.Le)
 
     Eq.lt, Eq.ge = Bool.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=w[n] < 1)
 
@@ -96,7 +96,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Bool.Imp.fold, index=slice(1, None))
 
-    Eq << Eq[-1].this.find(And).apply(Bool.All.And.of.Cond.All, simplify=None)
+    Eq << Eq[-1].this.find(And).apply(Bool.All_And.of.All.Cond, simplify=None)
 
     Eq << Eq[-1].this.find(And).apply(Rat.GeDivS.of.Ge.Gt_0, ret=0)
 
@@ -155,7 +155,7 @@ def prove(Eq):
 
     Eq << Bool.Imp_And.of.ImpAnd.apply(Eq[-1], index=1)
 
-    Eq << Eq[-1].this.rhs.apply(Bool.All.And.of.Cond.All, simplify=None)
+    Eq << Eq[-1].this.rhs.apply(Bool.All_And.of.All.Cond, simplify=None)
 
     Eq << Bool.Imp_And.of.ImpAnd.apply(Eq[-1], index=0)
 

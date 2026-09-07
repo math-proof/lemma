@@ -46,7 +46,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Nat.All.limits.subst.offset, -1)
 
-    Eq << Eq[-1].this.lhs.apply(Set.AllIn.given.AllIn_Union, Range(1, n + 3))
+    Eq << Eq[-1].this.lhs.apply(Set.All.given.AllUnion, Range(1, n + 3))
 
     Eq << Imply(All[i:1:n + 3](x[i] > 0), Unequal(alpha(x[1:n + 3]), 0), plausible=True)
 

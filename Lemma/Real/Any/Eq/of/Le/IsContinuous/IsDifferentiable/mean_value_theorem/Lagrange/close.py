@@ -34,7 +34,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Nat.Eq.UFn.given.Eq.UFn)
 
-    Eq << Set.AllIn_SDiff.of.All.apply(Eq[2], Interval(a, b, left_open=True, right_open=True))
+    Eq << Set.AllSDiff.of.All.apply(Eq[2], Interval(a, b, left_open=True, right_open=True))
 
     Eq << Bool.Imp.of.Cond.apply(Eq[1] & Eq[-1], cond=b > a)
 

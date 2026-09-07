@@ -79,7 +79,7 @@ def prove(Eq):
 
     Eq << Eq.induct * factorial(k + 1)
 
-    Eq << Eq[-1].this.rhs.apply(Finset.Sum.eq.Add.pop)
+    Eq << Eq[-1].this.rhs.apply(Finset.SumIco.eq.AddSumIco.of.Le)
 
     Eq << Imply(Eq.hypothesis, Eq.induct, plausible=True)
 

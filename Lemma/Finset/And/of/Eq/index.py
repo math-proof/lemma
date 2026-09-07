@@ -40,7 +40,7 @@ def apply(given, j=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Set, Bool
+    from Lemma import Finset, Bool
 
     n = Symbol(domain=Range(2, oo))
 
@@ -57,7 +57,7 @@ def prove(Eq):
 
     Eq << a.cup_finiteset().this.expr.arg.base.definition
 
-    Eq << Eq[-1].apply(Set.EqCard.of.Eq)
+    Eq << Eq[-1].apply(Finset.Card.of.Eq)
 
     Eq << Bool.Eq.of.Eq.Eq.apply(Eq[0], Eq[-2])
 
