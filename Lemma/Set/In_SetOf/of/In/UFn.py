@@ -29,11 +29,11 @@ def prove(Eq):
 
     Eq << Bool.OrAndS.of.And_Or.apply(Eq[-1], simplify=None)
 
-    Eq << Eq[-1].this.args[-1].apply(Bool.UFn.of.UFn.Eq, simplify=None)
+    Eq << Eq[-1].this.args[-1].apply(Bool.UFn.of.UFn.Eq.deprecated, simplify=None)
 
-    Eq << Eq[-1].this.args[-2].apply(Bool.UFn.of.UFn.Eq, simplify=None)
+    Eq << Eq[-1].this.args[-2].apply(Bool.UFn.of.UFn.Eq.deprecated, simplify=None)
 
-    Eq << Eq[-1].this.args[0].apply(Bool.UFn.of.UFn.Eq)
+    Eq << Eq[-1].this.args[0].apply(Bool.UFn.of.UFn.Eq.deprecated)
 
     Eq << Bool.Cond.of.And.apply(Eq[-1], 1)
 

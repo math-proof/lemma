@@ -26,3 +26,5 @@ if __name__ == '__main__':
     run()
 # created on 2018-02-06
 # updated on 2022-04-01
+
+from . import deprecated

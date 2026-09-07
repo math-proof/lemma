@@ -61,7 +61,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Element).apply(Set.EqUnion.of.In)
 
-    Eq << Eq[-1].this.find(And).args[-2:].apply(Bool.Cond.of.Cond.Eq)
+    Eq << Eq[-1].this.find(And).args[-2:].apply(Bool.UFn.of.UFn.Eq)
 
     Eq << Eq[-1].this.find(Equal[2]).apply(Set.NotIn.of.Inter.eq.Empty, simplify=None)
 

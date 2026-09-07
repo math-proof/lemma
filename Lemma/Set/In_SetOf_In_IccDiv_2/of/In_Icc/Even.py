@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq << Bool.Any_And.of.Any.All.apply(Eq[1], Eq[-1], simplify=None)
 
-    Eq << Eq[-1].this.expr.apply(Bool.Cond.of.Cond.Eq, ret=0)
+    Eq << Eq[-1].this.expr.apply(Bool.UFn.of.UFn.Eq, ret=0)
 
     Eq << Eq[-1].this.find(Element).apply(Set.In_IccCeilDiv.of.In_Icc, 2, simplify=None)
 
@@ -31,7 +31,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Equal).apply(Nat.Eq.of.Eq, simplify=None)
 
-    Eq << Eq[-1].this.expr.apply(Bool.Cond.of.Cond.Eq)
+    Eq << Eq[-1].this.expr.apply(Bool.UFn.of.UFn.Eq)
 
     Eq << Eq[-1].this.rhs.args[0].apply(Int.Ceil.eq.FloorDivSub_Sign)
 

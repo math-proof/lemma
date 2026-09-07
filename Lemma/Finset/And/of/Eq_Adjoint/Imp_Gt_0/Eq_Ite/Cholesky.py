@@ -111,7 +111,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.rhs.args[0] + 1, Eq[-1].this.rhs.args[0] + 1
 
-    Eq <<= Eq[-2].this.rhs.apply(Bool.UFn.of.UFn.Eq, swap=True), Eq[-1].this.rhs.apply(Bool.UFn.of.UFn.Eq, swap=True)
+    Eq <<= Eq[-2].this.rhs.apply(Bool.UFn.of.UFn.Eq.deprecated, swap=True), Eq[-1].this.rhs.apply(Bool.UFn.of.UFn.Eq.deprecated, swap=True)
 
     Eq <<= Eq[-1] & Eq[-2]
 

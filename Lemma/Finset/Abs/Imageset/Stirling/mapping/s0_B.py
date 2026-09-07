@@ -70,7 +70,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.apply(Bool.Any_And.of.Any.All.All_Imp)
 
-    Eq.all_B_contains = Eq[-1].this.expr.expr.apply(Bool.UFn.of.UFn.Eq, swap=True).limits_subs(Eq[-1].variable, Eq.all_s0_equality.variable)
+    Eq.all_B_contains = Eq[-1].this.expr.expr.apply(Bool.UFn.of.UFn.Eq.deprecated, swap=True).limits_subs(Eq[-1].variable, Eq.all_s0_equality.variable)
 
     Eq.all_s0_contains = Set.All_In.split.Imageset.apply(B)
 

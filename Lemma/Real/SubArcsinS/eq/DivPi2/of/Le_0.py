@@ -44,7 +44,7 @@ def prove(Eq):
 
     Eq << Bool.Any_And.of.Any.All.apply(Eq[-1], Eq.any_eq, simplify=None)
 
-    Eq << Eq[-1].this.expr.apply(Bool.Cond.of.Cond.Eq, ret=0)
+    Eq << Eq[-1].this.expr.apply(Bool.UFn.of.UFn.Eq, ret=0)
 
     Eq << Eq[-1].this.find(Element).apply(Int.InSub.of.In_Icc, S.Pi / 2)
 

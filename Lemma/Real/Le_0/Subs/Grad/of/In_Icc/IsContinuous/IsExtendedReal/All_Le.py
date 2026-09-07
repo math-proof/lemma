@@ -57,7 +57,7 @@ def prove(Eq):
 
     Eq << Bool.Any_And.of.Any.All.apply(Eq[-3], Eq[-1], simplify=None)
 
-    Eq.Any_All = Eq[-1].this.expr.apply(Bool.Cond.of.Cond.Eq)
+    Eq.Any_All = Eq[-1].this.expr.apply(Bool.UFn.of.UFn.Eq)
 
     Eq << Bool.Imp.of.AllSetOf.apply(Eq[2])
 

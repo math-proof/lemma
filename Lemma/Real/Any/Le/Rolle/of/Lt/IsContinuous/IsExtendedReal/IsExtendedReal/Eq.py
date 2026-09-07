@@ -138,7 +138,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(And).args[:-1].apply(Set.Eq.of.In_Finset.In_Finset.Eq)
 
-    Eq << Eq[-1].this.find(And).apply(Bool.Cond.of.Cond.Eq)
+    Eq << Eq[-1].this.find(And).apply(Bool.UFn.of.UFn.Eq)
 
     Eq << Eq[-1].this.find(And).apply(Nat.Eq.of.Le.Ge)
 

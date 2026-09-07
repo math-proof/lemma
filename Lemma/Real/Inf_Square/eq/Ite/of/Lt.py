@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq <<= Eq[-3] & Eq[-4], Eq[-1] & Eq[-2]
 
-    Eq <<= Eq[-2].this.rhs.apply(Bool.UFn.of.UFn.Eq, reverse=True), Eq[-1].this.rhs.apply(Bool.UFn.of.UFn.Eq, reverse=True)
+    Eq <<= Eq[-2].this.rhs.apply(Bool.UFn.of.UFn.Eq.deprecated, reverse=True), Eq[-1].this.rhs.apply(Bool.UFn.of.UFn.Eq.deprecated, reverse=True)
 
     Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[1], cond=M >= 0)
 
@@ -48,7 +48,7 @@ def prove(Eq):
 
     Eq <<= Bool.And_Imp.given.And_ImpAnd.apply(Eq[0], Eq[-1])
 
-    Eq <<= Eq[-1].this.lhs.apply(Bool.Cond.of.Cond.Eq)
+    Eq <<= Eq[-1].this.lhs.apply(Bool.UFn.of.UFn.Eq)
 
     Eq << Eq[-1].this.lhs.apply(Real.Inf_Square.eq.Zero.of.Lt_0, x)
 

@@ -45,11 +45,11 @@ def prove(Eq):
 
     Eq << Bool.All_And.of.All.All.apply(Eq[0], Eq[-1], simplify=None)
 
-    Eq << Eq[-1].this.expr.apply(Bool.Cond.of.Cond.Eq)
+    Eq << Eq[-1].this.expr.apply(Bool.UFn.of.UFn.Eq)
 
     Eq << Bool.All_And.of.All.All.apply(Eq[-1], Eq[-3].limits_subs(i, j), simplify=None)
 
-    Eq.nonoverlapping = Eq[-1].this.expr.apply(Bool.UFn.of.UFn.Eq)
+    Eq.nonoverlapping = Eq[-1].this.expr.apply(Bool.UFn.of.UFn.Eq.deprecated)
 
     Eq << Eq.y_definition.apply(Bool.AllIn.of.All, (i, n, oo))
 

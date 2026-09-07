@@ -92,7 +92,7 @@ def prove(Eq):
 
     Eq << Bool.All_And.of.All.Cond.apply(Eq[1], Eq[0])
 
-    Eq << Eq[-1].this.expr.apply(Bool.Cond.of.Cond.Eq)
+    Eq << Eq[-1].this.expr.apply(Bool.UFn.of.UFn.Eq)
 
 
 

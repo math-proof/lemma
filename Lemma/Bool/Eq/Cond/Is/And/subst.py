@@ -21,9 +21,9 @@ def prove(Eq):
 
     Eq << Bool.Iff.given.Imp.Imp.apply(Eq[0])
 
-    Eq << Eq[-2].this.lhs.apply(Bool.Cond.of.Cond.Eq)
+    Eq << Eq[-2].this.lhs.apply(Bool.UFn.of.UFn.Eq)
 
-    Eq << Eq[-1].this.lhs.apply(Bool.Cond.of.Cond.Eq, reverse=True)
+    Eq << Eq[-1].this.lhs.apply(Bool.UFn.of.UFn.Eq, reverse=True)
 
 
 if __name__ == '__main__':

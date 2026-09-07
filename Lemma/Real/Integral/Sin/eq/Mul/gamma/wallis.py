@@ -50,7 +50,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Integral).expr.powsimp()
 
-    Eq << Bool.UFn.of.UFn.Eq.apply(Eq[0], Eq[-1])
+    Eq << Bool.UFn.of.UFn.Eq.deprecated.apply(Eq[0], Eq[-1])
 
     Eq << Eq[-1].this.rhs.ratsimp()
 

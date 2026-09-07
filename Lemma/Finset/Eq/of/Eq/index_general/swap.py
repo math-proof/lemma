@@ -102,7 +102,7 @@ def prove(Eq):
 
     Eq << Set.EqInter.of.In.apply(Eq.dj_domain)
 
-    Eq << Bool.UFn.of.UFn.Eq.apply(Eq[-1], Eq[-2])
+    Eq << Bool.UFn.of.UFn.Eq.deprecated.apply(Eq[-1], Eq[-2])
 
     Eq << Eq[-1].this.rhs.find(Element).simplify()
 

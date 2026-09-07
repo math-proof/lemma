@@ -71,7 +71,7 @@ def prove(Eq):
 
     Eq << Bool.All.of.All_OrNot.apply(Eq[-1], 1)
 
-    Eq << Bool.UFn.of.UFn.Eq.apply(Eq[-1].reversed, Eq[-5])
+    Eq << Bool.UFn.of.UFn.Eq.deprecated.apply(Eq[-1].reversed, Eq[-5])
 
     k = Symbol(integer=True)
     E_quote = Symbol("E'", Stack[j:m, i:m](Piecewise((Product[k:i + 1:j + 1](D[k]), j >= i), (0, True))))
