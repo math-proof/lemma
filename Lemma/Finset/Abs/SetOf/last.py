@@ -39,7 +39,7 @@ def prove(Eq):
 
     Eq << Set.All_CupFinset.eq.Ico.apply(P)
 
-    Eq << Bool.All.of.All_Eq.Cond.subst.apply(Eq[-1], Eq[-2])
+    Eq << Bool.All_UFn.of.UFn.All_Eq.apply(Eq[-1], Eq[-2])
 
     Eq.P2P_quote = All[x[:n]:P](Element(x_quote, P_quote), plausible=True)
 

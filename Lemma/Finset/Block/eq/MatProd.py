@@ -5,14 +5,14 @@ from util import *
 def apply(n, m, b):
     i = Symbol(integer=True)
 
-    return Equal(BlockMatrix(BlockMatrix(MatProduct[i:m](SwapMatrix(n, i, b[i])), Zeros(n)).T,
+    return Equal(BlockMatrix(BlockMatrix(MatProd[i:m](SwapMatrix(n, i, b[i])), Zeros(n)).T,
                              BlockMatrix(Zeros(n), 1)).T,
-                             MatProduct[i:m](SwapMatrix(n + 1, i, b[i])))
+                             MatProd[i:m](SwapMatrix(n + 1, i, b[i])))
 
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Bool, Tensor
+    from Lemma import Bool, Tensor
 
     n = Symbol(domain=Range(2, oo))
     m = Symbol(positive=True, integer=True, given=False)
@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq.initial = Eq[0].subs(m, 1)
 
-    Eq.concatenate = Finset.Block.eq.SwapMatrix.apply(n)
+    Eq.concatenate = Tensor.AppendHstackS.eq.SwapMatrix.apply(n)
 
     * _, i, j = Eq.concatenate.rhs.args
     Eq << Eq.concatenate.subs(i, 0).subs(j, b[0]).T
@@ -38,7 +38,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Tensor.DotAppendSHstackS.eq.AppendHstackSAddSDotS, deep=True)
 
-    Eq << Eq[-1].this.rhs.find(MatMul).apply(Tensor.Dot.eq.MatProd.push)
+    Eq << Eq[-1].this.rhs.find(MatMul).apply(Tensor.DotMatProd.eq.MatProd)
 
     Eq << Eq[-1].this.lhs.simplify()
 

@@ -33,7 +33,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.args[1].apply(Set.Inter.eq.Cup)
 
-    Eq << Eq[-1].this.find(Intersection[~Cup]).apply(Set.Cup.eq.Union.doit.setlimit, simplify=None, evaluate=False)
+    Eq << Eq[-1].this.find(Intersection[~Cup]).apply(Set.CupInsert.eq.Union_Cup, simplify=None, evaluate=False)
 
     Eq << Eq[-4].subs(Eq[-1])
 

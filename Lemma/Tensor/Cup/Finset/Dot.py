@@ -37,7 +37,7 @@ def prove(Eq):
 
     Eq << Eq[0].subs(Eq[-1].reversed)
 
-    Eq << Set.DotGetSwapMatrix.eq.ToSet.apply(x, w, right=True, var=k)
+    Eq << Set.SetOfDotGetSwapMatrix.eq.Range.apply(x, w, right=True, var=k)
 
     Eq << Eq[-2][k]
 

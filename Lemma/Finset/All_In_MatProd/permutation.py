@@ -19,7 +19,7 @@ def apply(m, d, w=None, x=None):
 
     P = Symbol(conditionset(x, Equal(x.cup_finset(), Range(n))))
 
-    return All[x:P](Element(x @ MatProduct[i:m](w[i, d[i]]), P))
+    return All[x:P](Element(x @ MatProd[i:m](w[i, d[i]]), P))
 
 
 @prove

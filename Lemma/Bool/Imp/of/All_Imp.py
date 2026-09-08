@@ -29,7 +29,7 @@ def prove(Eq):
 
     S = Symbol(etype=dtype.integer[k])
 
-    Eq << apply(Imply(All[x:S](Element(x @ MatProduct[i:n](w[i]), S)), All[x:S](Element(x @ MatProduct[i:n + 1](w[i]), S))), n=n)
+    Eq << apply(Imply(All[x:S](Element(x @ MatProd[i:n](w[i]), S)), All[x:S](Element(x @ MatProd[i:n + 1](w[i]), S))), n=n)
 
     Eq << Eq[0].lhs._subs(n, Zero()).copy(plausible=True)
 

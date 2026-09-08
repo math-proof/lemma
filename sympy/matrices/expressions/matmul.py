@@ -447,7 +447,7 @@ class MatMul(MatrixExpr):
 
     def simplifyProduct(self):
         for i, prod in enumerate(self.args):
-            if prod.is_MatProduct:
+            if prod.is_MatProd:
                 before = self.func(*self.args[:i])
                 latter = self.args[i + 1:]
                 if latter:
@@ -561,7 +561,7 @@ class MatMul(MatrixExpr):
                 return (B.T @ A.T).expand().T
             return self
               
-        if A.is_MatProduct:
+        if A.is_MatProd:
             return self
         
         kwargs = {'var': var, 'generator': self}

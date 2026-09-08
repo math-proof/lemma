@@ -45,7 +45,7 @@ def prove(Eq):
 
     Eq << Eq[0].lhs.this.apply(Set.Cup.eq.UnionCupS, cond={_i, n})
 
-    Eq << Eq[-1].this.rhs.args[0].apply(Set.Cup.eq.Union.doit.setlimit, evaluate=False)
+    Eq << Eq[-1].this.rhs.args[0].apply(Set.CupInsert.eq.Union_Cup, evaluate=False)
 
     Eq << Set.Any_UFn.of.All_UFn.Any_Eq.apply(Eq[-3].reversed, Eq[-1])
 

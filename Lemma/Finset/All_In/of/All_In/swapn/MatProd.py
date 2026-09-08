@@ -13,7 +13,7 @@ def apply(given, m=None, b=None):
     if b is None:
         b = Symbol(integer=True, shape=(oo,))
 
-    return All[x:s](Element(x @ MatProduct[i:m](w[i, b[i]]), s))
+    return All[x:s](Element(x @ MatProd[i:m](w[i, b[i]]), s))
 
 
 @prove

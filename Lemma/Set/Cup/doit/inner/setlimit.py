@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq << Set.Cup.of.All_Eq.fin.apply(Eq[-1], (i, 0, m))
 
-    Eq << Eq[-2].this.rhs.apply(Set.Cup.eq.Union.doit.setlimit)
+    Eq << Eq[-2].this.rhs.apply(Set.CupInsert.eq.Union_Cup)
 
     Eq << Eq[-2].subs(Eq[-1])
 

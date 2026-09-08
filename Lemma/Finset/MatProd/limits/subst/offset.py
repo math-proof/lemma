@@ -4,7 +4,7 @@ from util import *
 @apply
 def apply(self, index=0, offset=None):
     from Lemma.Finset.SumIco.eq.Sum_UFnAdd import limits_subs
-    return Equal(self, limits_subs(MatProduct, self, index, offset), evaluate=False)
+    return Equal(self, limits_subs(MatProd, self, index, offset), evaluate=False)
 
 
 @prove
@@ -15,7 +15,7 @@ def prove(Eq):
     k = Symbol(integer=True, positive=True)
     f = Function(real=True, shape=(k, k))
     m = Symbol(integer=True, nonnegative=True, given=False)
-    Eq << apply(MatProduct[n:m](f(n)), d)
+    Eq << apply(MatProd[n:m](f(n)), d)
 
     Eq << Eq[0].subs(m, 0)
 

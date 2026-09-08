@@ -690,10 +690,10 @@ class Product(ExprWithIntLimits):
         return self.is_One
 
 
-class MatProduct(ExprWithIntLimits, MatrixExpr):
+class MatProd(ExprWithIntLimits, MatrixExpr):
     r"""Represents unevaluated products of matrices.
 
-    ``MatProduct`` represents a finite or infinite product, with the first
+    ``MatProd`` represents a finite or infinite product, with the first
     argument being the general form of terms in the series, and the second
     argument being ``(dummy_variable, start, end)``, with ``dummy_variable``
     taking all integer values from ``start`` through ``end``. In accordance
@@ -706,7 +706,7 @@ class MatProduct(ExprWithIntLimits, MatrixExpr):
 
     is_complex = True
     operator = MatMul
-    is_MatProduct = True
+    is_MatProd = True
     
     def __new__(cls, function, *symbols, **assumptions):
         return ExprWithIntLimits.__new__(cls, function, *symbols, **assumptions)
@@ -1057,7 +1057,7 @@ class MatProduct(ExprWithIntLimits, MatrixExpr):
 
     def _sympystr(self, p):
         limits = ','.join([':'.join([p._print(arg) for arg in limit]) for limit in self.limits])
-        return 'MatProduct[%s](%s)' % (limits, p._print(self.expr))
+        return 'MatProd[%s](%s)' % (limits, p._print(self.expr))
 
     def _lean(self, p):
         limits = ','.join([':'.join([p._print(arg) for arg in limit]) for limit in self.limits])

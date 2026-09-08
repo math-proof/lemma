@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.doit()
 
-    Eq << Set.Ne.of.Eq.apply(Eq[0])
+    Eq << Set.Ne.of.Finset.apply(Eq[0])
 
     Eq << Bool.BFn.of.BFnIte.Cond.apply(Eq[-1], Eq[-2])
 

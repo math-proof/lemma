@@ -15,7 +15,7 @@ def apply(eq_initial, eq_B_def, eq_A_def):
             (-B[k, k + 1:, k] / B[k, k, k], True)),    Identity(n - k - 1)]])
 
     (S[block], B[k]), A[k + 1] = eq_A_def.of(Equal[MatMul])
-    return Equal(X, MatProduct[k:n](SwapMatrix(n, k, k + ReducedArgMax(Sign(Abs(A[k, k:, k])))).T @ MatProduct[k:n](block) @ B[n - 1]))
+    return Equal(X, MatProd[k:n](SwapMatrix(n, k, k + ReducedArgMax(Sign(Abs(A[k, k:, k])))).T @ MatProd[k:n](block) @ B[n - 1]))
 
 @prove(proved=False)
 def prove(Eq):

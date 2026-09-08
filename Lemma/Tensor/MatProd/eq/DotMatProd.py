@@ -3,12 +3,12 @@ from util import *
 
 @apply
 def apply(self):
-    function, (i, a, b) = self.of(MatProduct)
+    function, (i, a, b) = self.of(MatProd)
     assert i.is_integer
     back = function._subs(i, b - 1)
 #     b >= a => b + 1 >= a
     assert a <= b - 1
-    return Equal(self, MatMul(MatProduct[i:a:b - 1](function), back), evaluate=False)
+    return Equal(self, MatMul(MatProd[i:a:b - 1](function), back), evaluate=False)
 
 
 @prove(provable=False)
@@ -16,7 +16,7 @@ def prove(Eq):
     i = Symbol(integer=True)
     n, m = Symbol(integer=True, positive=True)
     f = Function(real=True, shape=(m, m))
-    Eq << apply(MatProduct[i:n + 1](f(i)))
+    Eq << apply(MatProd[i:n + 1](f(i)))
 
 
 

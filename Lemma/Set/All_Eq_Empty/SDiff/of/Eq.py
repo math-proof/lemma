@@ -55,7 +55,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this().expr.simplify()
 
-    Eq << Eq[-1].this.find(Card + Card[~Cup]).apply(Set.Cup.eq.Union.doit.setlimit)
+    Eq << Eq[-1].this.find(Card + Card[~Cup]).apply(Set.CupInsert.eq.Union_Cup)
 
     Eq << Eq.union_less_than.this.find(Cup).limits_subs(Eq.union_less_than.find(Cup).variable, Eq[-1].find(Cup).variable)
 

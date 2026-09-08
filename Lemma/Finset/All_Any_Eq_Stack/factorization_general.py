@@ -18,7 +18,7 @@ def apply(given):
 
     b = Symbol(integer=True, shape=(oo,), nonnegative=True)
 
-    d = Symbol(Stack[i:n](i) @ MatProduct[i:n](SwapMatrix(n, i, b[i])))
+    d = Symbol(Stack[i:n](i) @ MatProd[i:n](SwapMatrix(n, i, b[i])))
     return All[p[:n]:P](Any[b[:n]](Equal(p[:n], Stack[k:n](a[d[k]]))))
 
 

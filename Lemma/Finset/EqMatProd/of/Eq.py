@@ -5,7 +5,7 @@ from util import *
 def apply(given, *limits):
     lhs, rhs = given.of(Equal)
 
-    return Equal(MatProduct(lhs, *limits).simplify(), MatProduct(rhs, *limits).simplify())
+    return Equal(MatProd(lhs, *limits).simplify(), MatProd(rhs, *limits).simplify())
 
 
 @prove

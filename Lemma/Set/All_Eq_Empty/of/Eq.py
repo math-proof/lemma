@@ -45,7 +45,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this().find(Intersection).simplify()
 
-    Eq << Eq[-1].this.find(Cup).apply(Set.Cup.eq.Union.doit.setlimit)
+    Eq << Eq[-1].this.find(Cup).apply(Set.CupInsert.eq.Union_Cup)
 
     Eq << Eq.union_less_than.this.find(Cup).limits_subs(Eq.union_less_than.find(Cup).variable, Eq[-1].find(Cup).variable)
 

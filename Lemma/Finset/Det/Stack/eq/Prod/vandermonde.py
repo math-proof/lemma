@@ -54,7 +54,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Nat.AddMulS.eq.Mul_Add)
 
-    Eq.recursion = Bool.All.of.All_Eq.Cond.subst.apply(Eq[-1], Eq.recursion)
+    Eq.recursion = Bool.All_UFn.of.UFn.All_Eq.apply(Eq[-1], Eq.recursion)
 
     Eq << Eq.recursion.rhs.find(Det[~Stack]).this.find(Sum).doit()
 
@@ -66,7 +66,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Pow - Mul).apply(Nat.AddMulS.eq.Mul_Add)
 
-    Eq.recursion = Bool.All.of.All_Eq.Cond.subst.apply(Eq[-1], Eq.recursion)
+    Eq.recursion = Bool.All_UFn.of.UFn.All_Eq.apply(Eq[-1], Eq.recursion)
 
     Eq << Eq.recursion.rhs.args[0].this.doit()
 
@@ -98,7 +98,7 @@ def prove(Eq):
 
     Eq << Bool.All.of.Cond.apply(Eq[-1], _i)
 
-    Eq << Bool.All.of.All_Eq.Cond.subst.apply(Eq[-1], Eq.recursion)
+    Eq << Bool.All_UFn.of.UFn.All_Eq.apply(Eq[-1], Eq.recursion)
 
     Eq << Eq.expand.apply(Tensor.Det.of.Eq)
 

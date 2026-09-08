@@ -3,20 +3,21 @@ from util import *
 
 @apply
 def apply(self):
-    (f, (i, a, b)), S[f._subs(i, b)] = self.of(MatMul[MatProduct])
+    (f, (i, a, b)), S[f._subs(i, b)] = self.of(MatMul[MatProd])
 #     b >= a => b + 1 >= a
-    return Equal(self, MatProduct[i:a:b + 1](f))
+    return Equal(self, MatProd[i:a:b + 1](f))
 
 
-@prove(provable=False)
+@prove
 def prove(Eq):
+    from Lemma import Tensor
+
     i = Symbol(integer=True)
     m, n = Symbol(integer=True, positive=True)
     f = Function(real=True, shape=(m, m))
-    Eq << apply(MatProduct[i:n](f(i)) @ f(n))
+    Eq << apply(MatProd[i:n](f(i)) @ f(n))
 
-
-
+    Eq << Tensor.MatProd.eq.DotMatProd.apply(Eq[0].rhs).reversed
 
 
 if __name__ == '__main__':

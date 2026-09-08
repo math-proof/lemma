@@ -3,8 +3,7 @@ from . import All_And
 from . import All_OrNot
 from . import Cond
 from . import All
-from . import All_Eq
-from . import Ge
 from . import Le
 from . import Lt
 from . import All_Imp
+from . import Ge

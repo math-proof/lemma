@@ -37,7 +37,7 @@ def prove(Eq):
     j = Symbol(domain=Range(k + 1))
     Eq << Set.Cup.of.All_Eq.fin.apply(Eq[0], (i, 0, k + 1))
 
-    Eq.x_quote_Union = Bool.All.of.All_Eq.Cond.subst.apply(Eq.x_Union_s1, Eq[-1])
+    Eq.x_quote_Union = Bool.All_UFn.of.UFn.All_Eq.apply(Eq.x_Union_s1, Eq[-1])
 
     Eq << Eq[0].apply(Finset.Card.of.Eq)
 
@@ -48,7 +48,7 @@ def prove(Eq):
 
     Eq << Nat.Le.of.Eq.Le.subst.apply(Eq[-2], Eq[-1])
 
-    Eq << Bool.All.of.All_Eq.Cond.subst.apply(Eq.x_abs_sum_s1, Eq[-1])
+    Eq << Bool.All_UFn.of.UFn.All_Eq.apply(Eq.x_abs_sum_s1, Eq[-1])
 
     Eq << Eq.x_quote_Union.this.expr.apply(Finset.Card.of.Eq)
 

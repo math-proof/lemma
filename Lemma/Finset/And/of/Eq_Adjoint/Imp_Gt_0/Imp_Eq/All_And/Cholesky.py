@@ -85,13 +85,13 @@ def prove(Eq):
     # converting all A expression to L expression: A[i, j] = L[i, j] + .... if i < j
     Eq << Bool.All.of.All_And.apply(Eq[5]).limits_subs(j, i)
 
-    Eq << Bool.All.of.All_Eq.Cond.subst.apply(Eq[-1], Eq[-2])
+    Eq << Bool.All_UFn.of.UFn.All_Eq.apply(Eq[-1], Eq[-2])
 
-    Eq << Bool.All.of.All_Eq.Cond.subst.apply(Eq.Aii_def, Eq[-1])
+    Eq << Bool.All_UFn.of.UFn.All_Eq.apply(Eq.Aii_def, Eq[-1])
 
     Eq << Eq.Aij_def.this.apply(Bool.All.limits.swap.intlimit)
 
-    Eq << Bool.All.of.All_Eq.Cond.subst.apply(Eq[-1], Eq[-2])
+    Eq << Bool.All_UFn.of.UFn.All_Eq.apply(Eq[-1], Eq[-2])
 
     Eq << Eq[-1].this.find(Indexed * Norm ** 2 * Conjugate).args[::2].apply(Complex.Mul.Conj.eq.Square.Abs)
 

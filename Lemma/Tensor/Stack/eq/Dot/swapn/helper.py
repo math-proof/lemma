@@ -14,7 +14,7 @@ def apply(x, d, w=None):
         assert len(w.shape) == 4 and all(s == n for s in w.shape)
         assert w[i, j].is_SwapMatrix or w[i, j].definition.is_SwapMatrix
 
-    multiplier = MatProduct[i:m](w[i, d[i]])
+    multiplier = MatProd[i:m](w[i, d[i]])
     return Equal(Stack[k:n](x[(Stack[k:n](k) @ multiplier)[k]]), x @ multiplier)
 
 
@@ -35,7 +35,7 @@ def prove(Eq):
     k = Eq[-1].lhs.variable
     i, j = Eq[0].lhs.indices
     w = Eq[0].lhs.base
-    multiplier = MatProduct[i:m](w[i, d[i]])
+    multiplier = MatProd[i:m](w[i, d[i]])
     Eq.hypothesis = Equal(x[(Stack[k:n](k) @ multiplier)[k]], (x @ multiplier)[k], plausible=True)
 
     Eq.initial = Eq.hypothesis.subs(m, 1)

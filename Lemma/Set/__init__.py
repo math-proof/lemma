@@ -231,4 +231,5 @@ from . import Range
 from . import SetOf_In_Range
 from . import Inter_Finset
 from . import Any_UFn
-from . import DotGetSwapMatrix
+from . import SetOfDotGetSwapMatrix
+from . import CupInsert

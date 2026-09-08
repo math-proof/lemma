@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(f_eq, old, new, reverse=False, simplify=True, assumptions={}):
-    from Lemma.Bool.All.of.All_Eq.Cond.subst import subs
+    from Lemma.Bool.All_UFn.of.UFn.All_Eq import subs
     if reverse:
         old, new = new, old
     return subs(f_eq, old, new, simplify=simplify, assumptions=assumptions), Equal(old, new)

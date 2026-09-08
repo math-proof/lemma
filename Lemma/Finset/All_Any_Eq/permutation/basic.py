@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq << Element(n - 1, Eq[-1].rhs, plausible=True)
 
-    Eq << Bool.All.of.All_Eq.Cond.subst.apply(Eq[-2].reversed, Eq[-1])
+    Eq << Bool.All_UFn.of.UFn.All_Eq.apply(Eq[-2].reversed, Eq[-1])
 
     Eq << Eq[-1].this.expr.apply(Set.Any_In.of.In_Cup)
 

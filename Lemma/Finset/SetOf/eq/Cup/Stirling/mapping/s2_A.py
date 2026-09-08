@@ -61,7 +61,7 @@ def prove(Eq):
 
     Eq << Set.Cup.of.All_Eq.fin.apply(Eq[1], (i, 0, k + 1))
 
-    Eq.x_quote_union = Bool.All.of.All_Eq.Cond.subst.apply(Eq.x_union_s1, Eq[-1])
+    Eq.x_quote_union = Bool.All_UFn.of.UFn.All_Eq.apply(Eq.x_union_s1, Eq[-1])
 
     Eq << Eq[1].apply(Finset.Card.of.Eq)
 
@@ -72,7 +72,7 @@ def prove(Eq):
 
     Eq << Nat.Le.of.Eq.Le.subst.apply(Eq[-2], Eq[-1])
 
-    Eq << Bool.All.of.All_Eq.Cond.subst.apply(Eq.x_abs_sum_s1, Eq[-1])
+    Eq << Bool.All_UFn.of.UFn.All_Eq.apply(Eq.x_abs_sum_s1, Eq[-1])
 
     Eq << Eq.x_quote_union.this.expr.apply(Finset.Card.of.Eq)
 

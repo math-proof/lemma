@@ -30,7 +30,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Set.Cup.eq.UnionCupS, cond=slice(-1))
 
-    Eq << Bool.All.of.All_Eq.Cond.subst.apply(Eq[-2].reversed, Eq[-1])
+    Eq << Bool.All_UFn.of.UFn.All_Eq.apply(Eq[-2].reversed, Eq[-1])
 
     Eq << Eq[-1].this.expr.apply(Set.Any_In.of.In_Cup)
 

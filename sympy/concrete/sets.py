@@ -444,7 +444,7 @@ class Cup(Set, ExprWithLimits):
     def _latex(self, p):
         finite_set = self.finite_set()
         if finite_set is not None:
-            return p._print(finite_set)
+            return r"\left\{*%s\right\}" % p._print(finite_set)
 
         if self.is_ConditionSet:
             vars_print = p._print(self.variable)

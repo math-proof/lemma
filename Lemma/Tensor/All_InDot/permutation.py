@@ -34,7 +34,7 @@ def prove(Eq):
 
     x = Eq[2].variable
 
-    Eq << Set.DotGetSwapMatrix.eq.ToSet.apply(x, w)
+    Eq << Set.SetOfDotGetSwapMatrix.eq.Range.apply(x, w)
 
     Eq << Eq[2].this.expr.rhs.definition.subs(Eq[-1])
 

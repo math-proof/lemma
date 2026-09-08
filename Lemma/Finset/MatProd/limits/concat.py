@@ -4,7 +4,7 @@ from util import *
 @apply
 def apply(self, index=0):
     from Lemma.Tensor.Sum.limits.concat import rewrite
-    return Equal(self, rewrite(MatProduct, self, index))
+    return Equal(self, rewrite(MatProd, self, index))
 
 
 @prove
@@ -15,7 +15,7 @@ def prove(Eq):
     i = Symbol(domain=Range(n - 1))
     x = Symbol(integer=True, shape=(oo,))
     f = Function(real=True, shape=(m, m))
-    Eq << apply(MatProduct[x[i], x[i + 1:n + 1]](f(x[i:n])))
+    Eq << apply(MatProd[x[i], x[i + 1:n + 1]](f(x[i:n])))
 
     Eq << Eq[0].this.rhs.apply(Finset.MatProd.limits.shift.Slice)
 
