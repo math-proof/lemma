@@ -13,5 +13,5 @@ private lemma main
   Fin.exists_fin_succ_pi (P := p)
 
 
--- created on 2023-11-18
+-- created on 2023-07-02
 -- updated on 2026-09-08

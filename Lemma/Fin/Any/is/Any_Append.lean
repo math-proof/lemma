@@ -26,4 +26,4 @@ private lemma append
     exact ⟨Fin.append u v, h⟩
 
 
--- created on 2026-09-08
+-- created on 2023-11-18
