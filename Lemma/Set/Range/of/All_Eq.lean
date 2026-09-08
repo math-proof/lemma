@@ -1,5 +1,4 @@
-import Lemma.Set.Cup.of.All_Eq
-open Set
+import sympy.Basic
 
 
 @[main]
@@ -9,11 +8,10 @@ private lemma main
 -- given
   (h : ∀ i : ι, x i = y i) :
 -- imply
-  ⋃ i : ι, ({x i} : Set α) = ⋃ i : ι, ({y i} : Set α) := by
+  Set.range x = Set.range y := by
 -- proof
-  apply Cup.of.All_Eq
-  intro i
-  rw [h i]
+  apply congrArg Set.range
+  apply funext h
 
 
 @[main]
@@ -23,12 +21,13 @@ private lemma set
 -- given
   (h : ∀ i ∈ S, x i = y i) :
 -- imply
-  ⋃ i ∈ S, ({x i} : Set α) = ⋃ i ∈ S, ({y i} : Set α) := by
+  S.image x = S.image y := by
 -- proof
-  apply Cup.of.All_Eq.set
+  apply Set.image_congr
   intro i hi
-  rw [h i hi]
+  apply h
+  assumption
 
 
 -- created on 2020-07-23
--- updated on 2026-09-07
+-- updated on 2026-09-08

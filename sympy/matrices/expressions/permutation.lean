@@ -3,6 +3,27 @@ import sympy.tensor.stack
 
 
 /--
+Elementary row-swap matrix
+
+\[
+\begin{align*}
+&(P)_{i,j}=\delta_{j,i_0}\quad\text{when }i=j_0,\\
+&(P)_{i,j}=\delta_{j,j_0}\quad\text{when }i=i_0,\\
+&(P)_{i,j}=\delta_{j,i}\quad\text{otherwise.}
+\end{align*}
+\]
+-/
+def SwapMatrix [AddMonoidWithOne α] [CharZero α] (n i₀ j₀ : ℕ) : Tensor α [n, n] :=
+  [i < n] [j < n]
+    if (i : ℕ) = j₀ then
+      KroneckerDelta (j : ℕ) i₀
+    else if (i : ℕ) = i₀ then
+      KroneckerDelta (j : ℕ) j₀
+    else
+      KroneckerDelta j i
+
+
+/--
 Elementary row-shift matrix
 delete row `i` and insert after row `j` when `i < j`;
 delete row `i` and insert before row `j` when `j < i`.
@@ -34,27 +55,6 @@ def ShiftMatrix [AddMonoidWithOne α] [CharZero α] (n i₀ j₀ : ℕ) : Tensor
 
 
 /--
-Elementary row-swap matrix
-
-\[
-\begin{align*}
-&(P)_{i,j}=\delta_{j,i_0}\quad\text{when }i=j_0,\\
-&(P)_{i,j}=\delta_{j,j_0}\quad\text{when }i=i_0,\\
-&(P)_{i,j}=\delta_{j,i}\quad\text{otherwise.}
-\end{align*}
-\]
--/
-def SwapMatrix [AddMonoidWithOne α] [CharZero α] (n i₀ j₀ : ℕ) : Tensor α [n, n] :=
-  [i < n] [j < n]
-    if (i : ℕ) = j₀ then
-      KroneckerDelta (j : ℕ) i₀
-    else if (i : ℕ) = i₀ then
-      KroneckerDelta (j : ℕ) j₀
-    else
-      KroneckerDelta j i
-
-
-/--
 Elementary row-scale matrix
 
 \[
@@ -65,7 +65,6 @@ i.e. the identity with the `i₀`-th diagonal entry replaced by `k`.
 Determinant: `k`.
 -/
 def MulMatrix [Ring α] [CharZero α] (n i₀ : ℕ) (k : α) : Tensor α [n, n] :=
-  -- `_entry(self, i, j)` with `self.i = i₀`, `self.multiplier = k`
   [i < n] [j < n]
     (1 + (k - 1) * KroneckerDelta (i : ℕ) i₀) * KroneckerDelta i j
 

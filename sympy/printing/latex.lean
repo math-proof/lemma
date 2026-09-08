@@ -155,6 +155,26 @@ def Expr.is_GetElem? : Expr → Bool
   | Basic (.Special ⟨`GetElem?.getElem?⟩) args _ => args.length == 2
   | _ => false
 
+/--
+Peel consecutive `GetElem` / `*.get` applications into `(base, indices)`.
+Used so `M[i][j]` becomes `{M}_{i j}` (one subscript level) instead of `{{M}_{i}}_{j}`.
+-/
+def Expr.collectGetElemChain : Expr → Expr × List Expr
+  | e@(Basic (.Special ⟨op⟩) args _) =>
+    match op, args with
+    | `GetElem.getElem, xs :: i :: _ :: _ =>
+      let (base, idxs) := xs.collectGetElemChain
+      (base, idxs ++ [i])
+    | `List.get, xs :: i :: _
+    | `List.Vector.get, xs :: i :: _
+    | `Tensor.get, xs :: i :: _ =>
+      let (base, idxs) := xs.collectGetElemChain
+      (base, idxs ++ [i])
+    | _, _ =>
+      (e, [])
+  | e =>
+    (e, [])
+
 def Expr.is_LeanProperty : Expr → Bool
   | Basic (.ExprWithAttr (.LeanProperty name)) .. => name != `IsConstant.is_constant
   | _ => false
@@ -481,12 +501,12 @@ def Expr.latexFormat : Expr → String
       | `List.Vector.get
       | `Tensor.get
       | `GetElem.getElem =>
-        match args with
-        | list :: _ =>
-          let list := level.toColor (list.priority > func.priority || list.is_EnclosedGroup || list.is_GetElem || list.is_GetElem? || list.is_LeanProperty || list.is_Eye)
-          s!"{list}_%s"
-        | _ =>
+        let (base, indices) := e.collectGetElemChain
+        if indices.isEmpty then
           opStr
+        else
+          let baseFmt := level.toColor (base.priority > func.priority || base.is_EnclosedGroup || base.is_LeanProperty || base.is_Eye)
+          baseFmt ++ "_{" ++ ", ".intercalate (["%s"].repeat indices.length) ++ "}"
       | `GetElem?.getElem? =>
         match args with
         | list :: _ =>
@@ -709,7 +729,7 @@ where
   | Symbol name _ =>
     [name.escape_specials "."]
 
-  | Basic func args _ =>
+  | e@(Basic func args _) =>
     match func with
     | .ExprWithLimits op =>
       let args' :=
@@ -779,6 +799,15 @@ where
           [a.toLatex, b.toLatex, d.toLatex]
         | _ =>
           map args
+      | `List.get
+      | `List.Vector.get
+      | `Tensor.get
+      | `GetElem.getElem =>
+        let (base, indices) := e.collectGetElemChain
+        if indices.isEmpty then
+          map args
+        else
+          map (base :: indices)
       | `ite =>
         merge_ite e []
       | `Insert.insert =>

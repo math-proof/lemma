@@ -11,11 +11,9 @@ private lemma main
   (B : Tensor α [d, m])
   (i : Fin d) :
 -- imply
-  have : j < n + m := by grind
-  id (α := Tensor α []) (A.hstack B)[i][j] = id (α := Tensor α []) A[i][j] := by
+  (A.hstack B)[i][j]'(by grind) = A[i][j] := by
 -- proof
-  intro
-  apply (congrArg (fun t : Tensor α [n + m] => t[j]) (by simpa [id] using GetHstack.eq.AppendGetS A B i)).trans
+  apply (congrArg (fun t : Tensor α [n + m] => t[j]'(by grind)) (by simpa using GetHstack.eq.AppendGetS A B i)).trans
   apply GetAppend.eq.Get.of.Lt h
 
 

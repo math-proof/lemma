@@ -2117,7 +2117,8 @@ export class LeanParenthesis extends LeanPairedGroup {
             }
         }
         if (parent instanceof LeanStatements && this.indent > 0) return true;
-        if (parent instanceof LeanArgsIndented && this.indent > 0) return true;
+        // When LeanArgsIndented itself is indented, it prefixes the block — avoid double indent.
+        if (parent instanceof LeanArgsIndented && this.indent > 0 && !parent.is_indented()) return true;
         if (leanParenthesisLemmaAssignByMultilineClose(this)) return true;
         if (parent instanceof LeanRelational && this.indent > parent.indent && parent.parent instanceof LeanArgsNewLineSeparated)
             return true;
@@ -2140,7 +2141,10 @@ export class LeanParenthesis extends LeanPairedGroup {
             if (arg.lhs instanceof LeanBrace) return arg.lhs.latexArgs(syntax) ?? [arg.lhs.toLatex(syntax)];
             if (arg.rhs instanceof LeanToken && arg.rhs.text === 'Bool') return [arg.lhs.toLatex(syntax)];
             if (arg.isZeroOneTensor()) return [arg.toLatex(syntax)];
+            if (this.isLatexArgAscription()) return [arg.lhs.toLatex(syntax)];
         }
+        if (this.isLatexGetElemOperand())
+            return [arg.toLatex(syntax)];
         return super.latexArgs(syntax);
     }
 
@@ -2152,8 +2156,38 @@ export class LeanParenthesis extends LeanPairedGroup {
             if (arg.lhs instanceof LeanBrace) return arg.lhs.latexFormat() ?? '%s';
             if (arg.rhs instanceof LeanToken && arg.rhs.text === 'Bool') return '\\left|{%s}\\right|';
             if (arg.isZeroOneTensor()) return '%s';
+            if (this.isLatexArgAscription()) return '%s';
         }
+        if (this.isLatexGetElemOperand())
+            return '%s';
         return this.toColor();
+    }
+
+    /** Parenthesized GetElem base/index: `(e)[i]` → `e_i`, not `(e)_i`. */
+    isLatexGetElemOperand() {
+        const p = this.parent;
+        return (
+            p instanceof LeanGetElem ||
+            p instanceof LeanGetElemQue ||
+            p instanceof LeanGetElemQuote
+        );
+    }
+
+    isLatexArgAscription() {
+        const arg = this.arg;
+        if (!(arg instanceof LeanColon)) return false;
+        if (arg.isZeroOneTensor()) return false;
+        if (arg.lhs instanceof LeanBrace) return false;
+        if (arg.rhs instanceof LeanToken && arg.rhs.text === 'Bool') return false;
+        const p = this.parent;
+        return (
+            p instanceof LeanArgsSpaceSeparated ||
+            p instanceof LeanArgsCommaSeparated ||
+            p instanceof LeanGetElem ||
+            p instanceof LeanGetElemQue ||
+            p instanceof LeanGetElemQuote ||
+            p instanceof LeanRelational
+        );
     }
 
     peelLatexCoe() {
@@ -4064,13 +4098,52 @@ export class LeanMethodChaining extends LeanBinary {
 export class LeanGetElem extends LeanGetElemBaseBinary(LeanBinary) {
     static input_priority = 67;
 
+    collectGetElemChain() {
+        const indices = [];
+        let node = /** @type {Lean} */ (this);
+        while (node instanceof LeanGetElem) {
+            indices.unshift(node.rhs);
+            node = node.lhs;
+        }
+        return {base: node, indices};
+    }
+
     latexArgs(syntax) {
+        // Nested segment of a longer chain: outer node owns multi-index LaTeX.
+        if (this.parent instanceof LeanGetElem) return super.latexArgs(syntax);
+
+        const {base, indices} = this.collectGetElemChain();
+        const indexParts = indices.map((ix) => ix.toLatex(syntax));
+        const indexLatex = indexParts.join(', ');
+
+        if (base instanceof LeanProperty && base.rhs instanceof LeanToken) {
+            const fmt = base.latexFormat();
+            const args = base.latexArgs(syntax);
+            if (args.length && fmt.includes('%s')) {
+                args[0] = `{${base.lhs.toLatex(syntax)}}_{${indexLatex}}`;
+                return args;
+            }
+        }
+
+        if (indices.length >= 2) return [base.toLatex(syntax), ...indexParts];
+
         const spec = this.propertyGetElemLatex(syntax, this.rhs.toLatex(syntax));
         if (spec) return spec.args;
         return super.latexArgs(syntax);
     }
 
     latexFormat() {
+        if (this.parent instanceof LeanGetElem) return '{%s}_{%s}';
+
+        const {base, indices} = this.collectGetElemChain();
+        if (base instanceof LeanProperty && base.rhs instanceof LeanToken) {
+            const fmt = base.latexFormat();
+            if (fmt.includes('%s')) return fmt;
+        }
+        if (indices.length >= 2) {
+            return `{%s}_{${indices.map(() => '%s').join(', ')}}`;
+        }
+
         const spec = this.propertyGetElemLatex(null, '');
         if (spec) return spec.format;
         return '{%s}_{%s}';
@@ -7423,6 +7496,13 @@ export class LeanArgsNewLineSeparated extends LeanMultipleLine(LeanArgs) {
             return super.insert_newline(caret, newline_count, indent, next);
         }
         if (this.indent < indent) {
+            // Multiline app already has ≥2 lines: next indented line is another arg,
+            // not nested under a bare Property/Parenthesis (e.g. `(x).isLt` then more args).
+            if (this.args.length >= 2) {
+                const c = new LeanCaret(indent, caret.level);
+                this.push(c);
+                return c;
+            }
             const $new = this.push_args_indented(indent, newline_count);
             if ($new) return $new;
             const c = new LeanCaret(indent, caret.level);
@@ -7525,7 +7605,14 @@ export class LeanArgsIndented extends LeanBinary {
     }
 
     is_indented() {
-        return this.parent instanceof LeanStatements;
+        const p = this.parent;
+        // Under `have h :=` / multiline apps, this node carries the line indent for its lhs
+        // (e.g. `congrArg` in `have hget :=\n  congrArg\n    …`).
+        return (
+            p instanceof LeanStatements ||
+            p instanceof LeanArgsNewLineSeparated ||
+            p instanceof LeanAssign
+        );
     }
 
     latexFormat() {
@@ -8119,6 +8206,14 @@ export class LeanTactic extends LeanSyntax {
                 caret.push($new);
                 return $new;
             }
+            // `change` / `refine` / … with the term on the next indented line:
+            // keep it as this tactic's argument (not a sibling statement).
+            if (caret instanceof LeanCaret && this.indent < indent) {
+                caret.indent = indent;
+                const nl = new LeanArgsNewLineSeparated([caret], indent, caret.level);
+                this.replace(caret, nl);
+                return nl.push_newlines(newline_count - 1);
+            }
             if (next === '<') {
                 const c = new LeanCaret(indent, caret.level);
                 this.push(c);
@@ -8320,10 +8415,24 @@ export class LeanTactic extends LeanSyntax {
         for (const arg of this.args) {
             if (arg instanceof LeanCaret);
             else if (arg instanceof LeanSequentialTacticCombinator && arg.newlineBefore) parts.push('\n');
+            else if (arg instanceof LeanArgsNewLineSeparated || arg instanceof LeanArgsIndented) parts.push('\n');
             else parts.push(' ');
             parts.push('%s');
         }
         return func + parts.join('');
+    }
+
+    set_line(line) {
+        this.line = line;
+        let L = line;
+        for (const arg of this.args) {
+            if (arg == null) continue;
+            if (arg instanceof LeanCaret);
+            else if (arg instanceof LeanSequentialTacticCombinator && arg.newlineBefore) L++;
+            else if (arg instanceof LeanArgsNewLineSeparated || arg instanceof LeanArgsIndented) L++;
+            L = arg.set_line(L);
+        }
+        return L;
     }
 }
 

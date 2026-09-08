@@ -1,7 +1,7 @@
 import sympy.concrete.products
 
 
-@[main]
+@[main, comm]
 private lemma main
   [Mul α] [AddMonoidWithOne α] [CharZero α]
   {m n : ℕ}

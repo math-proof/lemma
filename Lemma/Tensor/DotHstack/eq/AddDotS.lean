@@ -152,15 +152,12 @@ private lemma main
     apply Finset.sum_congr rfl
     intro p _
     simp only [f, id, finSumFinEquiv_apply_left]
-    have hA' := GetHstack.eq.Get.of.Lt p.isLt A B i
-    simp only [id] at hA'
     apply congrArg₂ HMul.hMul
     ·
-      simpa [GetElem.getElem, Fin.castAdd] using hA'
+      simpa [GetElem.getElem, Fin.castAdd] using GetHstack.eq.Get.of.Lt p.isLt A B i
     ·
       have hX' := GetAppend.eq.Get.fin X Y p
-      have hX'' : (X ++ Y).get ⟨(p : ℕ), Nat.lt_add_right m p.isLt⟩ = X.get ⟨(p : ℕ), p.isLt⟩ :=
-        hX'.trans (congrArg X.get (Eq.symm (Fin.eta p p.isLt)))
+      have hX'' : (X ++ Y).get ⟨(p : ℕ), Nat.lt_add_right m p.isLt⟩ = X.get ⟨(p : ℕ), p.isLt⟩ := hX'.trans (congrArg X.get (Eq.symm (Fin.eta p p.isLt)))
       simpa [GetElem.getElem, Fin.castAdd] using congrArg (fun t : Tensor α [r] => t.get ⟨(j : ℕ), j.isLt⟩) hX''
   ·
     apply Finset.sum_congr rfl
@@ -170,7 +167,6 @@ private lemma main
       (j := n + (p : ℕ))
       (h₀ := Nat.le_add_right n p)
       (h₁ := Nat.add_lt_add_left p.isLt n) A B i
-    simp only [id] at hB'
     apply congrArg₂ HMul.hMul
     ·
       simpa [GetElem.getElem, Fin.natAdd] using hB'

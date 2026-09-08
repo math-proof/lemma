@@ -1893,7 +1893,11 @@ class LeanParenthesis extends LeanPairedGroup
                 return [$arg->lhs->toLatex($syntax)];
             if ($arg->isZeroOneTensor())
                 return [$arg->toLatex($syntax)];
+            if ($this->isLatexArgAscription())
+                return [$arg->lhs->toLatex($syntax)];
         }
+        if ($this->isLatexGetElemOperand())
+            return [$arg->toLatex($syntax)];
         return parent::latexArgs($syntax);
     }
 
@@ -1909,8 +1913,40 @@ class LeanParenthesis extends LeanPairedGroup
                 return '\left|{%s}\right|';
             if ($arg->isZeroOneTensor())
                 return '%s';
+            if ($this->isLatexArgAscription())
+                return '%s';
         }
+        if ($this->isLatexGetElemOperand())
+            return '%s';
         return $this->toColor();
+    }
+
+    public function isLatexGetElemOperand()
+    {
+        $p = $this->parent;
+        return $p instanceof LeanGetElem ||
+            $p instanceof LeanGetElemQue ||
+            $p instanceof LeanGetElemQuote;
+    }
+
+    public function isLatexArgAscription()
+    {
+        $arg = $this->arg;
+        if (!($arg instanceof LeanColon))
+            return false;
+        if ($arg->isZeroOneTensor())
+            return false;
+        if ($arg->lhs instanceof LeanBrace)
+            return false;
+        if ($arg->rhs instanceof LeanToken && $arg->rhs->text == 'Bool')
+            return false;
+        $p = $this->parent;
+        return $p instanceof LeanArgsSpaceSeparated ||
+            $p instanceof LeanArgsCommaSeparated ||
+            $p instanceof LeanGetElem ||
+            $p instanceof LeanGetElemQue ||
+            $p instanceof LeanGetElemQuote ||
+            $p instanceof LeanRelational;
     }
 
     public function peelLatexCoe()
@@ -4457,10 +4493,60 @@ class LeanGetElem extends LeanBinary
 {
     public static $input_priority = 67;
     use LeanGetElemBaseBinary;
+
+    public function collectGetElemChain()
+    {
+        $indices = [];
+        $node = $this;
+        while ($node instanceof LeanGetElem) {
+            array_unshift($indices, $node->rhs);
+            $node = $node->lhs;
+        }
+        return ['base' => $node, 'indices' => $indices];
+    }
+
+    public function latexArgs(&$syntax = null)
+    {
+        // Nested segment of a longer chain: outer node owns multi-index LaTeX.
+        if ($this->parent instanceof LeanGetElem)
+            return parent::latexArgs($syntax);
+
+        ['base' => $base, 'indices' => $indices] = $this->collectGetElemChain();
+        $indexParts = array_map(fn($ix) => $ix->toLatex($syntax), $indices);
+        $indexLatex = implode(', ', $indexParts);
+
+        if ($base instanceof LeanProperty && $base->rhs instanceof LeanToken) {
+            $fmt = $base->latexFormat();
+            $args = $base->latexArgs($syntax);
+            if ($args && str_contains($fmt, '%s')) {
+                $args[0] = '{' . $base->lhs->toLatex($syntax) . '}_{' . $indexLatex . '}';
+                return $args;
+            }
+        }
+
+        if (count($indices) >= 2)
+            return array_merge([$base->toLatex($syntax)], $indexParts);
+
+        return parent::latexArgs($syntax);
+    }
+
     public function latexFormat()
     {
+        if ($this->parent instanceof LeanGetElem)
+            return '{%s}_{%s}';
+
+        ['base' => $base, 'indices' => $indices] = $this->collectGetElemChain();
+        if ($base instanceof LeanProperty && $base->rhs instanceof LeanToken) {
+            $fmt = $base->latexFormat();
+            if (str_contains($fmt, '%s'))
+                return $fmt;
+        }
+        if (count($indices) >= 2)
+            return '{%s}_{' . implode(', ', array_fill(0, count($indices), '%s')) . '}';
+
         return '{%s}_{%s}';
     }
+
     public function strFormat()
     {
         return '%s[%s]';
@@ -7110,6 +7196,13 @@ class LeanArgsNewLineSeparated extends LeanArgs
             return parent::insert_newline($caret, $newline_count, $indent, $next);
         }
         if ($this->indent < $indent) {
+            // Multiline app already has ≥2 lines: next indented line is another arg,
+            // not nested under a bare Property/Parenthesis (e.g. `(x).isLt` then more args).
+            if (count($this->args) >= 2) {
+                $caret = new LeanCaret($indent, $caret->level);
+                $this->push($caret);
+                return $caret;
+            }
             if ($caret = $this->push_args_indented($indent, $newline_count))
                 return $caret;
             $caret = new LeanCaret($indent, $caret->level);
@@ -7227,7 +7320,12 @@ class LeanArgsIndented extends LeanBinary
 
     public function is_indented()
     {
-        return $this->parent instanceof LeanStatements;
+        $parent = $this->parent;
+        // Under `have h :=` / multiline apps, this node carries the line indent for its lhs
+        // (e.g. `congrArg` in `have hget :=\n  congrArg\n    …`).
+        return $parent instanceof LeanStatements ||
+            $parent instanceof LeanArgsNewLineSeparated ||
+            $parent instanceof LeanAssign;
     }
 
     public function latexFormat()
@@ -7839,6 +7937,14 @@ class LeanTactic extends LeanSyntax
                     $caret->push($new);
                     return $new;
                 }
+                // `change` / `refine` / … with the term on the next indented line:
+                // keep it as this tactic's argument (not a sibling statement).
+                if ($caret instanceof LeanCaret) {
+                    $caret->indent = $indent;
+                    $nl = new LeanArgsNewLineSeparated([$caret], $indent, $caret->level);
+                    $this->replace($caret, $nl);
+                    return $nl->push_newlines($newline_count - 1);
+                }
             }
             if ($next == '<') {
                 // possibly newline-indented <;>
@@ -8034,11 +8140,30 @@ class LeanTactic extends LeanSyntax
             if ($arg instanceof LeanCaret);
             elseif ($arg instanceof LeanSequentialTacticCombinator && $arg->newline)
                 $args[] = "\n";
+            elseif ($arg instanceof LeanArgsNewLineSeparated || $arg instanceof LeanArgsIndented)
+                $args[] = "\n";
             else
                 $args[] = ' ';
             $args[] = '%s';
         }
         return $func . implode('', $args);
+    }
+
+    public function set_line($line)
+    {
+        $this->line = $line;
+        $L = $line;
+        foreach ($this->args as $arg) {
+            if ($arg == null)
+                continue;
+            if ($arg instanceof LeanCaret);
+            elseif ($arg instanceof LeanSequentialTacticCombinator && $arg->newline)
+                $L++;
+            elseif ($arg instanceof LeanArgsNewLineSeparated || $arg instanceof LeanArgsIndented)
+                $L++;
+            $L = $arg->set_line($L);
+        }
+        return $L;
     }
 
 }
