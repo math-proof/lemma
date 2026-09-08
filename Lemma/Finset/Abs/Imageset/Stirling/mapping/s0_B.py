@@ -5,7 +5,7 @@ from util import *
 def apply(n, k, s0=None, B=None):
     if s0 is None:
         x = Symbol(shape=(oo,), etype=dtype.integer, finiteset=True)
-        s0 = Symbol(Cup[x[:k]:Stirling.conditionset(n, k, x)](x[:k].cup_finiteset().set))
+        s0 = Symbol(Cup[x[:k]:Stirling.conditionset(n, k, x)](x[:k].cup_finset().set))
     if B is None:
         e = Symbol(**s0.etype.dict)
         assert e.is_extended_real
@@ -70,7 +70,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.apply(Bool.Any_And.of.Any.All.All_Imp)
 
-    Eq.all_B_contains = Eq[-1].this.expr.expr.apply(Bool.UFn.of.UFn.Eq.deprecated, swap=True).limits_subs(Eq[-1].variable, Eq.all_s0_equality.variable)
+    Eq.all_B_contains = Eq[-1].this.expr.expr.apply(Bool.UFn.of.UFn.Eq, swap=True).limits_subs(Eq[-1].variable, Eq.all_s0_equality.variable)
 
     Eq.all_s0_contains = Set.All_In.split.Imageset.apply(B)
 

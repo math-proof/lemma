@@ -17,7 +17,7 @@ def apply(m, d, w=None, x=None):
         x = Symbol(shape=(oo,), integer=True, nonnegative=True)
     x = x[:n]
 
-    P = Symbol(conditionset(x, Equal(x.cup_finiteset(), Range(n))))
+    P = Symbol(conditionset(x, Equal(x.cup_finset(), Range(n))))
 
     return All[x:P](Element(x @ MatProduct[i:m](w[i, d[i]]), P))
 

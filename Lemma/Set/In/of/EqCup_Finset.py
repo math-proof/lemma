@@ -19,9 +19,9 @@ def prove(Eq):
     x = Symbol(integer=True, shape=(oo,))
     i = Symbol(domain=Range(n))
 
-    Eq << apply(Equal(x[:n].cup_finiteset(), s), index=i)
+    Eq << apply(Equal(x[:n].cup_finset(), s), index=i)
 
-    Eq << Element(x[i], x[:n].cup_finiteset(), plausible=True)
+    Eq << Element(x[i], x[:n].cup_finset(), plausible=True)
 
     Eq << Eq[-1].this.rhs.apply(Set.Cup.eq.UnionCupS, cond={i})
 

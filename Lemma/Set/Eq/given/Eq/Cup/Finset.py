@@ -21,7 +21,7 @@ def prove(Eq):
     n = Symbol(integer=True, positive=True)
     a, b = Symbol(integer=True, shape=(n,))
 
-    Eq << apply(Equal(a.cup_finiteset(), b.cup_finiteset()))
+    Eq << apply(Equal(a.cup_finset(), b.cup_finset()))
 
     i = Eq[0].lhs.variable
 

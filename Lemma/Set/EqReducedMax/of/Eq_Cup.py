@@ -16,7 +16,7 @@ def prove(Eq):
 
     n = Symbol(integer=True, positive=True)
     a, b, x = Symbol(real=True, shape=(oo,))
-    Eq << apply(Equal(a[:n].cup_finiteset(), b[:n].cup_finiteset()))
+    Eq << apply(Equal(a[:n].cup_finset(), b[:n].cup_finset()))
 
     Eq <<= Set.ReducedMax.In.Cup_Finset.apply(Eq[1].lhs.arg), Set.ReducedMax.In.Cup_Finset.apply(Eq[1].rhs.arg)
 

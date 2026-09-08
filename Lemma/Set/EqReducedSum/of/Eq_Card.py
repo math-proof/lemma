@@ -23,7 +23,7 @@ def prove(Eq):
     x = Symbol(real=True)
     a = Symbol(real=True, shape=(oo,))
     f = Function(real=True)
-    s = a[:n].cup_finiteset()
+    s = a[:n].cup_finset()
     Eq << apply(Equal(Card(s), n), Sum[x:s](f(x)))
 
     Eq << Set.EqSum.of.Eq_Card.apply(Eq[0], Eq[1].find(Sum))

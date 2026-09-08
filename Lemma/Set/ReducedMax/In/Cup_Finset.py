@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(self):
-    return Element(ReducedMax(self), self.cup_finiteset())
+    return Element(ReducedMax(self), self.cup_finset())
 
 
 @prove

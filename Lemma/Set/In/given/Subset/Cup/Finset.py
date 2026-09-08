@@ -8,7 +8,7 @@ def apply(el):
     n, = e.shape
     i = el.generate_var(integer=True)
 
-    return Subset(e.cup_finiteset(i), S.space)
+    return Subset(e.cup_finset(i), S.space)
 
 
 @prove

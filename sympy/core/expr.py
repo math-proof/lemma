@@ -3974,7 +3974,7 @@ class Expr(Basic, EvalfMixin):
             from sympy.stats.rv import given
             return given(self, expr)
             
-    def cup_finiteset(self, var=None):
+    def cup_finset(self, var=None):
         from sympy.concrete.sets import Cup
 
         i = self.generate_var(integer=True, var=var)

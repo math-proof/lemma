@@ -227,7 +227,8 @@ from . import CupIcc
 from . import CupIco
 from . import InterFinsetS
 from . import Ico
-from . import Cup_Finset
+from . import Range
 from . import SetOf_In_Range
 from . import Inter_Finset
 from . import Any_UFn
+from . import DotGetSwapMatrix

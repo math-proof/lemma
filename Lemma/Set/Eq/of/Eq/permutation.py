@@ -6,10 +6,10 @@ def apply(given, x):
     p_cup_finiteset, interval = given.of(Equal)
     (p, i), (S[i], S[0], n) = p_cup_finiteset.of(Cup[FiniteSet[Indexed]])
 
-    assert p_cup_finiteset == p[:n].cup_finiteset()
+    assert p_cup_finiteset == p[:n].cup_finset()
     S[0], S[n] = interval.args
     assert interval.right_open
-    return Equal(Cup[i:n](x[p[i]].set), x[:n].cup_finiteset())
+    return Equal(Cup[i:n](x[p[i]].set), x[:n].cup_finset())
 
 
 @prove
@@ -18,7 +18,7 @@ def prove(Eq):
 
     n = Symbol(integer=True, positive=True)
     p, x = Symbol(integer=True, shape=(n,))
-    Eq << apply(Equal(p.cup_finiteset(), Range(n)), x)
+    Eq << apply(Equal(p.cup_finset(), Range(n)), x)
 
     A = Symbol(Eq[1].lhs)
     B = Symbol(Eq[1].rhs)

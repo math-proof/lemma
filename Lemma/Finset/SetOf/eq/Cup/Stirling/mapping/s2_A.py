@@ -7,7 +7,7 @@ def apply(n, k, s2=None, A=None):
     j = Symbol(domain=Range(k + 1))
     if s2 is None:
         x = Symbol(shape=(oo,), etype=dtype.integer, finiteset=True)
-        s2 = Symbol(Cup[x[:k + 1]:Stirling.conditionset(n + 1, k + 1, x)](x[:k + 1].cup_finiteset().set))
+        s2 = Symbol(Cup[x[:k + 1]:Stirling.conditionset(n + 1, k + 1, x)](x[:k + 1].cup_finset().set))
 
     e = Symbol(**s2.etype.dict)
     if A is None:
@@ -15,7 +15,7 @@ def apply(n, k, s2=None, A=None):
         i = Symbol(integer=True)
         s1_quote = Symbol("s'_1", Stirling.conditionset(n, k + 1, x))
         x_quote = Symbol(Stack[i:k + 1](Piecewise(({n} | x[i], Equal(i, j)), (x[i], True))))
-        A = Symbol(Stack[j](Cup[x[:k + 1]:s1_quote]({x_quote.cup_finiteset()})))
+        A = Symbol(Stack[j](Cup[x[:k + 1]:s1_quote]({x_quote.cup_finset()})))
 
     return Equal(conditionset(e, NotElement({n}, e), s2), Cup[j](A[j]))
 

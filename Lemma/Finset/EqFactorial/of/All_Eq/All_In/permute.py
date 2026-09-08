@@ -19,9 +19,9 @@ def apply(all0, all1):
     assert x[j] == xj and x[i] == xi and x[0] == x0 and dtype == x.type
 
     equality, (S[x], S[s]) = all1.of(All)
-    S[Card(x.cup_finiteset())] = equality.of(Equal[n])
+    S[Card(x.cup_finset())] = equality.of(Equal[n])
 
-    return Equal(Card(s), factorial(n) * Card(Cup[x:s]({x.cup_finiteset()})))
+    return Equal(Card(s), factorial(n) * Card(Cup[x:s]({x.cup_finset()})))
 
 
 @prove(proved=False)
@@ -33,7 +33,7 @@ def prove(Eq):
     x = Symbol(**S.element_symbol().type.dict)
     i, j = Symbol(integer=True)
     Eq << apply(All[j:1:n, x:S](Element(Stack[i:n](Piecewise((x[0], Equal(i, j)), (x[j], Equal(i, 0)), (x[i], True))), S)),
-                All[x:S](Equal(Card(x.cup_finiteset()), n)))
+                All[x:S](Equal(Card(x.cup_finset()), n)))
 
     Eq << Finset.Eq.of.Eq.swap2.general.apply(Eq[0])
 
@@ -50,7 +50,7 @@ def prove(Eq):
     Eq <<= Eq[-2] & Eq[-1]
 
     F = Function(etype=dtype.integer[n])
-    F.eval = lambda e: conditionset(x, Equal(x.cup_finiteset(), e), S)
+    F.eval = lambda e: conditionset(x, Equal(x.cup_finset(), e), S)
     e = Symbol(etype=dtype.integer)
     Eq << Subset(F(e), S, plausible=True)
 

@@ -10,10 +10,10 @@ def apply(cup_finiteset_equality, last_element_equality):
     p, n = last_element_equality.lhs.of(Indexed)
     S[n] = last_element_equality.rhs
 
-    cup_finiteset, S[Range(n + 1)] = cup_finiteset_equality.of(Equal)
-    S[p[:n + 1]] = of_cup_finiteset(cup_finiteset)
+    cup_finset, S[Range(n + 1)] = cup_finiteset_equality.of(Equal)
+    S[p[:n + 1]] = of_cup_finiteset(cup_finset)
 
-    return Equal(p[:n].cup_finiteset(), Range(n))
+    return Equal(p[:n].cup_finset(), Range(n))
 
 
 @prove
@@ -22,7 +22,7 @@ def prove(Eq):
 
     n = Symbol(integer=True, positive=True, given=True)
     p = Symbol(shape=(oo,), integer=True, nonnegative=True, given=True)
-    Eq << apply(Equal(p[:n + 1].cup_finiteset(), Range(n + 1)),
+    Eq << apply(Equal(p[:n + 1].cup_finset(), Range(n + 1)),
                 Equal(p[n], n))
 
     Eq << Eq[0].this.lhs.apply(Set.Cup.eq.UnionCupS, cond=slice(-1))

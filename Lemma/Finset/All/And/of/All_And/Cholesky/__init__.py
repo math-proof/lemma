@@ -94,7 +94,7 @@ def prove(Eq):
 
     Eq << Bool.All_And.of.All.All.apply(Eq[-1], Eq[-2])
 
-    Eq << Eq[-1].this.expr.apply(Bool.UFn.of.UFn.Eq.deprecated, swap=True)
+    Eq << Eq[-1].this.expr.apply(Bool.UFn.of.UFn.Eq, swap=True)
 
     Eq << Eq[-1].this.find(MatMul).apply(Tensor.Dot.eq.Sub.push)
 

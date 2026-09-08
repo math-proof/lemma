@@ -31,7 +31,7 @@ def prove(Eq):
 
     j = Symbol(domain=Range(n), given=True)
 
-    Eq << apply(Equal(x[:n].cup_finiteset(k), Range(n)), j=j)
+    Eq << apply(Equal(x[:n].cup_finset(k), Range(n)), j=j)
 
     Eq << ~Eq[-1]
 

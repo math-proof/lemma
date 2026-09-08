@@ -8,14 +8,14 @@ def apply(n, k, s1=None, A=None):
 
     if s1 is None:
         x = Symbol(shape=(oo,), etype=dtype.integer, finiteset=True)
-        s1 = Symbol(Cup[x[:k + 1]:Stirling.conditionset(n, k + 1, x)]({x[:k + 1].cup_finiteset()}))
+        s1 = Symbol(Cup[x[:k + 1]:Stirling.conditionset(n, k + 1, x)]({x[:k + 1].cup_finset()}))
 
     if A is None:
         x = s1.definition.variable.base
         i = Symbol(integer=True)
         s1_quote = Symbol("s'_1", Stirling.conditionset(n, k + 1, x))
         x_quote = Symbol("x'", Stack[i:k + 1](Piecewise(({n} | x[i], Equal(i, j)), (x[i], True))))
-        A = Symbol(Stack[j](Cup[x[:k + 1]:s1_quote]({x_quote.cup_finiteset()})))
+        A = Symbol(Stack[j](Cup[x[:k + 1]:s1_quote]({x_quote.cup_finset()})))
     return Equal(Card(s1), Card(A[j]))
 
 

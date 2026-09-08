@@ -44,7 +44,7 @@ def prove(Eq):
     V_quote = Symbol(shape=(n, n, d_z), real=True)
     K_dquote = Symbol('K^\"', real=True, shape=(n, m, d_z))
     V_dquote = Symbol('V^\"', real=True, shape=(n, m, d_z))
-    s = d[:m].cup_finiteset(j)
+    s = d[:m].cup_finset(j)
     Eq << apply(
         Equal(Card(s), m),
         Subset(s, Range(n)),

@@ -32,7 +32,7 @@ def prove(Eq):
     a, b = Symbol(real=True, shape=(oo,))
     f = Function(real=True)
     n = Card(X)
-    Eq << apply(Equal(X, a[:n].cup_finiteset()), Equal(X - {y}, b[:n - 1].cup_finiteset()), Equal(y, a[i]), Element(i, Range(n)), Sum[j:Range(n) - {i}](f(a[j])))
+    Eq << apply(Equal(X, a[:n].cup_finset()), Equal(X - {y}, b[:n - 1].cup_finset()), Equal(y, a[i]), Element(i, Range(n)), Sum[j:Range(n) - {i}](f(a[j])))
 
     Eq.contains = Set.In.of.Eq_Cup.apply(Eq[1])
 

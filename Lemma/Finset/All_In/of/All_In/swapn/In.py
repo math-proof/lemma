@@ -16,7 +16,7 @@ def apply(given):
 
     p = Symbol(shape=(oo,), integer=True, nonnegative=True)
 
-    P = Symbol(conditionset(p[:n], Equal(p[:n].cup_finiteset(), Range(n))))
+    P = Symbol(conditionset(p[:n], Equal(p[:n].cup_finset(), Range(n))))
 
     return All[p[:n]:P, x:s](Element(Stack[k:n](x[p[k]]), s))
 

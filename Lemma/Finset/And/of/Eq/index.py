@@ -50,12 +50,12 @@ def prove(Eq):
 
     j = Symbol(domain=Range(n), given=True)
 
-    Eq << apply(Equal(x[:n].cup_finiteset(k), Range(n)), j)
+    Eq << apply(Equal(x[:n].cup_finset(k), Range(n)), j)
 
     a = Symbol(Stack[k:n](k))
     Eq.aj_definition = a.this.definition[j]
 
-    Eq << a.cup_finiteset().this.expr.arg.base.definition
+    Eq << a.cup_finset().this.expr.arg.base.definition
 
     Eq << Eq[-1].apply(Finset.Card.of.Eq)
 

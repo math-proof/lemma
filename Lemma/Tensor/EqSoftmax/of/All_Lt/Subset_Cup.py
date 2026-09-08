@@ -17,7 +17,7 @@ def prove(Eq):
     A = Symbol(shape=(n, m), real=True)
     d = Symbol(shape=(oo,), integer=True)
     i, j = Symbol(integer=True)
-    s = d[:m].cup_finiteset(j)
+    s = d[:m].cup_finset(j)
     Eq << apply(
         All[j:i, i:m](d[j] < d[i]),
         Subset(s, Range(n)),

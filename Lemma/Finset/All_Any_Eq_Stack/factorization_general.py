@@ -5,8 +5,8 @@ from util import *
 def apply(given):
     from Lemma.Set.Eq.given.Eq.Cup.Finset import of_cup_finiteset
     cup_finiteset_abs, n = given.of(Equal)
-    cup_finiteset = cup_finiteset_abs.of(Card)
-    a = of_cup_finiteset(cup_finiteset)
+    cup_finset = cup_finiteset_abs.of(Card)
+    a = of_cup_finiteset(cup_finset)
 
     assert a.shape == (n,)
 
@@ -14,7 +14,7 @@ def apply(given):
 
     p = Symbol(shape=(oo,), **a.dtype.dict)
 
-    P = Symbol(conditionset(p[:n], Equal(p[:n].cup_finiteset(), cup_finiteset)))
+    P = Symbol(conditionset(p[:n], Equal(p[:n].cup_finset(), cup_finset)))
 
     b = Symbol(integer=True, shape=(oo,), nonnegative=True)
 
@@ -28,7 +28,7 @@ def prove(Eq):
 
     n = Symbol(domain=Range(2, oo), given=False)
     a = Symbol(shape=(oo,), etype=dtype.integer, given=True)
-    Eq << apply(Equal(Card(a[:n].cup_finiteset()), n))
+    Eq << apply(Equal(Card(a[:n].cup_finset()), n))
 
     p = Eq[3].variable.base
     b = Eq[3].expr.variable.base

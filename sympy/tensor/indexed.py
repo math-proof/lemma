@@ -1295,7 +1295,7 @@ class Sliced(Expr):
             if slices_contains_indices(slices, _indices):
                 return other
         
-    def cup_finiteset(self, var=None):
+    def cup_finset(self, var=None):
         from sympy.concrete.sets import Cup
         i = self.generate_var(integer=True, var=var)
         return Cup({self.base[i]}, (i, *self.index))
@@ -2409,7 +2409,7 @@ class SlicedIndexed(Expr):
                 
             return self
 
-    def cup_finiteset(self, var=None):
+    def cup_finset(self, var=None):
         from sympy.concrete.sets import Cup
 
         i = self.generate_var(integer=True, var=var)

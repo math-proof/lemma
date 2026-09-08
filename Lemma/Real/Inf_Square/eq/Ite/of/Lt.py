@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq <<= Eq[-3] & Eq[-4], Eq[-1] & Eq[-2]
 
-    Eq <<= Eq[-2].this.rhs.apply(Bool.UFn.of.UFn.Eq.deprecated, reverse=True), Eq[-1].this.rhs.apply(Bool.UFn.of.UFn.Eq.deprecated, reverse=True)
+    Eq <<= Eq[-2].this.rhs.apply(Bool.UFn.of.UFn.Eq, reverse=True), Eq[-1].this.rhs.apply(Bool.UFn.of.UFn.Eq, reverse=True)
 
     Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[1], cond=M >= 0)
 

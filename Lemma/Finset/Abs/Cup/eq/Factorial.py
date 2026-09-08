@@ -4,7 +4,7 @@ from util import *
 @apply
 def apply(n):
     x = Symbol(shape=(oo,), integer=True, nonnegative=True)
-    return Equal(Card(conditionset(x[:n], Equal(x[:n].cup_finiteset(), Range(n)))), factorial(n))
+    return Equal(Card(conditionset(x[:n], Equal(x[:n].cup_finset(), Range(n)))), factorial(n))
 
 
 @prove

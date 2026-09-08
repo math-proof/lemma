@@ -7,7 +7,7 @@ def apply(all_x, all_p, equality):
     (x_cup_finiteset, e), (x, s) = all_x.of(All[Equal])
     (((S[x], (p, k)), (S[k], S[0], n)), S[s]), (S[x], S[s]), (S[p], P) = all_p.of(All[Element[Stack[Indexed[Indexed]]]])
 
-    assert x_cup_finiteset == x.cup_finiteset()
+    assert x_cup_finiteset == x.cup_finset()
     S[n] = x.shape[0]
 
     if P.is_set:
@@ -15,7 +15,7 @@ def apply(all_x, all_p, equality):
 
     S[n] = p.shape[0]
 
-    S[p.cup_finiteset()], S[Range(n)] = P.args
+    S[p.cup_finset()], S[Range(n)] = P.args
 
     S[e], S[n] = equality.of(Equal[Card])
 
@@ -32,8 +32,8 @@ def prove(Eq):
     i, j, k = Symbol(integer=True)
     e = Symbol(etype=dtype.integer, given=True)
     p = Symbol(shape=(n,), integer=True, nonnegative=True)
-    P = Symbol(conditionset(p[:n], Equal(p[:n].cup_finiteset(), Range(n))))
-    Eq << apply(All[x:S](Equal(x.cup_finiteset(), e)),
+    P = Symbol(conditionset(p[:n], Equal(p[:n].cup_finset(), Range(n))))
+    Eq << apply(All[x:S](Equal(x.cup_finset(), e)),
                 All[x:S, p[:n]:P](Element(Stack[k:n](x[p[k]]), S)),
                 Equal(Card(e), n))
 

@@ -14,7 +14,7 @@ def apply(cup_finiteset_equality, last_element_equality):
     S[p[:n + 1]] = of_cup_finiteset(cup_finiteset_p)
     S[a[:n + 1]] = of_cup_finiteset(cup_finiteset_a)
 
-    return Equal(p[:n].cup_finiteset(), a[:n].cup_finiteset())
+    return Equal(p[:n].cup_finset(), a[:n].cup_finset())
 
 
 @prove(proved=False)
@@ -23,7 +23,7 @@ def prove(Eq):
 
     n = Symbol(integer=True, positive=True, given=True)
     p, a = Symbol(shape=(oo,), etype=dtype.integer, given=True)
-    Eq << apply(Equal(p[:n + 1].cup_finiteset(), a[:n + 1].cup_finiteset()),
+    Eq << apply(Equal(p[:n + 1].cup_finset(), a[:n + 1].cup_finset()),
                 Equal(p[n], a[n]))
 
     Eq << Eq[0].this.lhs.apply(Set.Cup.eq.UnionCupS, cond=slice(-1))

@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Bool.All.of.Cond.apply(Eq[0], i)
 
-    Eq << Set.Cup_Finset.of.All_Eq.apply(Eq[-1])
+    Eq << Set.Range.of.All_Eq.apply(Eq[-1])
 
 
 if __name__ == '__main__':

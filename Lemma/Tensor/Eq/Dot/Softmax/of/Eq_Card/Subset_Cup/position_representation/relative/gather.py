@@ -26,7 +26,7 @@ def prove(Eq):
     i, j = Symbol(integer=True)
     K_quote = Symbol(shape=(n, n, d_z), real=True)
     V_quote = Symbol(shape=(n, n, d_z), real=True)
-    s = d[:m].cup_finiteset(j)
+    s = d[:m].cup_finset(j)
     Eq << apply(
         Equal(Card(s), m),
         Subset(s, Range(n)),

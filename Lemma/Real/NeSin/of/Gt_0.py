@@ -73,7 +73,7 @@ def prove(Eq):
 
     Eq << Bool.Any_And.of.Any.All.apply(Eq[-2], Eq[-1])
 
-    Eq << Eq[-1].this.expr.args[:2].apply(Bool.UFn.of.UFn.Eq.deprecated, swap=True)
+    Eq << Eq[-1].this.expr.args[:2].apply(Bool.UFn.of.UFn.Eq, swap=True)
 
     Eq << Eq[-1].this.find(Expr > 0).apply(Nat.GtSquare_0.of.Gt_0)
 

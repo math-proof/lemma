@@ -27,7 +27,7 @@ def prove(Eq):
     x = Symbol(real=True)
     a = Symbol(real=True, shape=(oo,))
     f = Function(real=True)
-    s = a[:n].cup_finiteset()
+    s = a[:n].cup_finset()
     Eq << apply(All[j:i, i:n](Unequal(a[i], a[j])), Sum[x:s](f(x)))
 
     Eq.hypothesis = Imply(Eq[0], Eq[1], plausible=True)

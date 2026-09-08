@@ -14,8 +14,8 @@ def apply(a, var=None, *, simplify=True):
         x = lhs
     else:
         return
-    a = a.cup_finiteset(var=var)
-    x = x.cup_finiteset(var=var)
+    a = a.cup_finset(var=var)
+    x = x.cup_finset(var=var)
     if simplify:
         a = a.simplify()
         x = x.simplify()
@@ -24,7 +24,7 @@ def apply(a, var=None, *, simplify=True):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset
+    from Lemma import Finset, Set
 
     n = Symbol(domain=Range(2, oo))
     x = Symbol(shape=(n,), integer=True)
@@ -37,7 +37,7 @@ def prove(Eq):
 
     Eq << Eq[0].subs(Eq[-1].reversed)
 
-    Eq << Finset.Cup.Finset.rmatmul.apply(x, w, right=True, var=k)
+    Eq << Set.DotGetSwapMatrix.eq.ToSet.apply(x, w, right=True, var=k)
 
     Eq << Eq[-2][k]
 

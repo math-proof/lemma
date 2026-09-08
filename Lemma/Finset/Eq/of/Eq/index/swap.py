@@ -37,7 +37,7 @@ def prove(Eq):
     x = Symbol(shape=(n,), integer=True)
     k = Symbol(integer=True)
     j, i = Symbol(domain=Range(n), given=True)
-    Eq << apply(Equal(x[:n].cup_finiteset(k), Range(n)), i, j)
+    Eq << apply(Equal(x[:n].cup_finset(k), Range(n)), i, j)
 
     _, di, dj = Eq[2].lhs.arg.args[0].args
     dj = Symbol("d_j", dj)

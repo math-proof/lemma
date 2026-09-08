@@ -5,11 +5,11 @@ from util import *
 def apply(n, P_quote=None):
     if P_quote is None:
         x = Symbol(shape=(oo,), integer=True, nonnegative=True)
-        P_quote = Symbol(conditionset(x[:n + 1], Equal(x[:n].cup_finiteset(), Range(n)) & Equal(x[n], n)))
+        P_quote = Symbol(conditionset(x[:n + 1], Equal(x[:n].cup_finset(), Range(n)) & Equal(x[n], n)))
     else:
         x = P_quote.definition.variable.base
 
-    P = Symbol(conditionset(x[:n], Equal(x[:n].cup_finiteset(), Range(n))))
+    P = Symbol(conditionset(x[:n], Equal(x[:n].cup_finset(), Range(n))))
     return Equal(Card(P), Card(P_quote))
 
 

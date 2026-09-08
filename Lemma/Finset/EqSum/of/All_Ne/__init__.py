@@ -20,7 +20,7 @@ def prove(Eq):
     i = Symbol(integer=True)
     n = Symbol(integer=True, positive=True)
     f = Function(complex=True)
-    Eq << apply(All[i:n](Unequal(y, x[i])), Sum[t:x[:n].cup_finiteset()](f(t)))
+    Eq << apply(All[i:n](Unequal(y, x[i])), Sum[t:x[:n].cup_finset()](f(t)))
 
     Eq << Set.Inter.eq.Empty.of.All_Ne.apply(Eq[0])
 

@@ -28,7 +28,7 @@ def prove(Eq):
     x = Symbol(shape=(n,), integer=True, given=True)
     k = Symbol(integer=True)
     i, j = Symbol(domain=Range(n), given=True)
-    Eq << apply(Equal(x[:n].cup_finiteset(k), Range(n)), i, j)
+    Eq << apply(Equal(x[:n].cup_finset(k), Range(n)), i, j)
 
     Eq << Eq[-1].apply(Bool.Cond.given.Or.OrNot, cond=Equal(i, j))
 

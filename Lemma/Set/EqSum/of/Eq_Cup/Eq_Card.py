@@ -20,7 +20,7 @@ def prove(Eq):
     x = Symbol(real=True)
     a = Symbol(real=True, shape=(oo,))
     f = Function(real=True)
-    Eq << apply(Equal(X, a[:n].cup_finiteset()), Equal(Card(X), n), Sum[x:X](f(x)))
+    Eq << apply(Equal(X, a[:n].cup_finset()), Equal(Card(X), n), Sum[x:X](f(x)))
 
     Eq << Eq[1].subs(Eq[0])
 

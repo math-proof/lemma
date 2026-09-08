@@ -37,7 +37,7 @@ def prove(Eq):
     x = Symbol(shape=(n,), integer=True)
     k = Symbol(integer=True)
     j, i = Symbol(domain=Range(n), given=True)
-    Eq << apply(Equal(x[:n].cup_finiteset(k), Range(n)), i, j)
+    Eq << apply(Equal(x[:n].cup_finset(k), Range(n)), i, j)
 
     _, di, dj = Eq[2].lhs.arg.args[0].args
     dj = Symbol("d_j", dj)
@@ -102,7 +102,7 @@ def prove(Eq):
 
     Eq << Set.EqInter.of.In.apply(Eq.dj_domain)
 
-    Eq << Bool.UFn.of.UFn.Eq.deprecated.apply(Eq[-1], Eq[-2])
+    Eq << Bool.UFn.of.UFn.Eq.apply(Eq[-1], Eq[-2])
 
     Eq << Eq[-1].this.rhs.find(Element).simplify()
 

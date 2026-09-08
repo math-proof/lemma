@@ -19,7 +19,7 @@ def X_definition(n, w, x):
 def predefined_symbols(n):
     x = Symbol(shape=(oo,), integer=True, nonnegative=True)
     t, i, j = Symbol(integer=True)
-    Q = Symbol(Stack[t:n + 1](conditionset(x[:n + 1], Equal(x[:n + 1].cup_finiteset(), Range(n + 1)) & Equal(x[n], t))))
+    Q = Symbol(Stack[t:n + 1](conditionset(x[:n + 1], Equal(x[:n + 1].cup_finset(), Range(n + 1)) & Equal(x[n], t))))
     w = Symbol(Stack[j, i](SwapMatrix(n + 1, i, j)))
 
     return Q, w, x

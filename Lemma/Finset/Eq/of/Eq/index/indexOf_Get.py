@@ -29,7 +29,7 @@ def prove(Eq):
     x = Symbol(shape=(oo,), integer=True, given=True)
     k = Symbol(integer=True)
     j = Symbol(domain=Range(n), given=True)
-    Eq << apply(Equal(x[:n].cup_finiteset(k), Range(n)), j)
+    Eq << apply(Equal(x[:n].cup_finset(k), Range(n)), j)
 
     t, i = Symbol(domain=Range(n))
     Eq << Finset.And.of.Eq.index.apply(Eq[0], j=t)

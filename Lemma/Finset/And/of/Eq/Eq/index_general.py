@@ -34,8 +34,8 @@ def prove(Eq):
     x, a = Symbol(shape=(n,), integer=True, given=True)
     k = Symbol(integer=True)
     j = Symbol(domain=Range(n), given=True)
-    Eq << apply(Equal(Card(a.cup_finiteset(k)), n),
-                Equal(x[:n].cup_finiteset(k), a.cup_finiteset(k)),
+    Eq << apply(Equal(Card(a.cup_finset(k)), n),
+                Equal(x[:n].cup_finset(k), a.cup_finset(k)),
                 j=j)
 
     Eq << Eq[2].lhs.this.defun()

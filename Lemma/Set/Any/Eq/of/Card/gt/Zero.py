@@ -32,7 +32,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.apply(Set.Any.And.of.Eq_Card, simplify=None)
 
-    Eq << Eq[-1].this.expr.apply(Bool.UFn.of.UFn.Eq.deprecated, swap=True, reverse=True, simplify=None, ret=1)
+    Eq << Eq[-1].this.expr.apply(Bool.UFn.of.UFn.Eq, swap=True, reverse=True, simplify=None, ret=1)
 
     Eq << Bool.AnySetOf.of.Any_And.apply(Eq[-1], 1)
 

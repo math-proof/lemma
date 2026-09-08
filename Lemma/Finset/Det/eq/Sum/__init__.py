@@ -9,7 +9,7 @@ def apply(self):
     i = self.generate_var(integer=True, var='i')
     j = self.generate_var(integer=True, var='j')
 
-    return Equal(self, Sum[p:Equal(p[:n].cup_finiteset(), Range(n))]((-1) ** Sum[j:i, i:n](Bool(p[i] < p[j])) * Product[i:n](A[i, p[i]])))
+    return Equal(self, Sum[p:Equal(p[:n].cup_finset(), Range(n))]((-1) ** Sum[j:i, i:n](Bool(p[i] < p[j])) * Product[i:n](A[i, p[i]])))
 
 
 @prove(provable=False)

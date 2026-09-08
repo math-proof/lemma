@@ -33,7 +33,7 @@ def prove(Eq):
     a, b = Symbol(real=True, shape=(oo,))
     f = Function(real=True)
     n = Card(X)
-    Eq << apply(Equal(X, a[:n].cup_finiteset()), Equal(X | {y}, b[:n + 1].cup_finiteset()), NotElement(y, X), Sum[i:n + 1](f(b[i])))
+    Eq << apply(Equal(X, a[:n].cup_finset()), Equal(X | {y}, b[:n + 1].cup_finset()), NotElement(y, X), Sum[i:n + 1](f(b[i])))
 
     Eq << Set.EqSum.of.Eq_Cup.apply(Eq[0], Sum[x:X](f(x)))
 

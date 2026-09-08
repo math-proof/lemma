@@ -12,10 +12,10 @@ def apply(x, w=None, right=None, var=None):
         assert w[i, j].is_SwapMatrix or w[i, j].definition.is_SwapMatrix
 
     if right:
-        lhs = (x @ w[i, j]).cup_finiteset(var=var)
+        lhs = (x @ w[i, j]).cup_finset(var=var)
     else:
-        lhs = (w[i, j] @ x).cup_finiteset(var=var)
-    return Equal(lhs, x.cup_finiteset(var=var))
+        lhs = (w[i, j] @ x).cup_finset(var=var)
+    return Equal(lhs, x.cup_finset(var=var))
 
 
 @prove

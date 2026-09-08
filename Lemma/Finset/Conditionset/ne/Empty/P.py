@@ -5,7 +5,7 @@ from util import *
 def apply(n):
     assert n > 0
     x = Symbol(integer=True, nonnegative=True, shape=(oo,))
-    P = Symbol(conditionset(x[:n], Equal(x[:n].cup_finiteset(), Range(n))))
+    P = Symbol(conditionset(x[:n], Equal(x[:n].cup_finset(), Range(n))))
     return Unequal(P, P.etype.emptySet)
 
 

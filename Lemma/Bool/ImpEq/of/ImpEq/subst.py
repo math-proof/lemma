@@ -18,7 +18,7 @@ def prove(Eq):
 
     Eq << Bool.Imp_And.of.ImpAnd.apply(Eq[0])
 
-    Eq << Eq[-1].this.rhs.apply(Bool.UFn.of.UFn.Eq.deprecated, swap=True)
+    Eq << Eq[-1].this.rhs.apply(Bool.UFn.of.UFn.Eq, swap=True)
 
 
 if __name__ == '__main__':

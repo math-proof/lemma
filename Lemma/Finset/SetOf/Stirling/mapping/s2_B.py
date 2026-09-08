@@ -6,12 +6,12 @@ def apply(n, k, s2=None, B=None):
     from sympy.functions.combinatorial.numbers import Stirling
     if s2 is None:
         x = Symbol(shape=(oo,), etype=dtype.integer, finite=True)
-        s2 = Symbol(Cup[x[:k + 1]:Stirling.conditionset(n + 1, k + 1, x)](x[:k + 1].cup_finiteset().set))
+        s2 = Symbol(Cup[x[:k + 1]:Stirling.conditionset(n + 1, k + 1, x)](x[:k + 1].cup_finset().set))
     e = Symbol(**s2.etype.dict)
 
     if B is None:
         x = s2.definition.variable.base
-        s0 = Symbol(Cup[x[:k]:Stirling.conditionset(n, k, x)](x[:k].cup_finiteset().set))
+        s0 = Symbol(Cup[x[:k]:Stirling.conditionset(n, k, x)](x[:k].cup_finset().set))
 
         B = Symbol(Cup[e:s0]({e | {n.set}}))
 
@@ -70,7 +70,7 @@ def prove(Eq):
     Eq << Eq[-1].subs(Eq.x_k_definition)
     x_union = Eq[-1]
     Eq << Eq.x_k_definition.apply(Set.eq.then.eq.set, simplify=False)
-    Eq << Eq[-1].apply(Set.eq.then.eq.union, x[:k].cup_finiteset())
+    Eq << Eq[-1].apply(Set.eq.then.eq.union, x[:k].cup_finset())
     Eq << s0_plausible.subs(Eq[-1].reversed)
     Eq << Eq[-1].this.expr.expr.apply(Set.element.of.contains.split.imageset)
     Eq << Eq[-1].this.expr.expr.rhs.definition
@@ -153,7 +153,7 @@ def prove(Eq):
     Eq.x_tilde_set_in_s0 = Eq[-3].func(Element(construct_finite_set(Cup, x_tilde), s0), *Eq[-3].limits, plausible=True)
     Eq << Eq.x_tilde_set_in_s0.subs(s0_definition)
     Eq << Eq[-1].this.expr.apply(Set.element.of.any_eq.split.imageset)
-    Eq << Set.eq.then.eq.cup_finiteset.apply(Eq.x_tilde_definition, (i, 0, k))
+    Eq << Set.eq.then.eq.cup_finset.apply(Eq.x_tilde_definition, (i, 0, k))
     Eq << Eq[-1].subs(Eq.x_j_definition)
     Eq << Eq[-1].subs(Eq.s2_n_assertion.reversed)
     Eq << Eq.x_tilde_set_in_s0.subs(Eq[-1])

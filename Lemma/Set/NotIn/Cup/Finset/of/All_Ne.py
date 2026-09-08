@@ -9,7 +9,7 @@ def apply(given):
 
     x = Stack[i:n](xi).simplify()
 
-    return NotElement(y, x.cup_finiteset())
+    return NotElement(y, x.cup_finset())
 
 
 @prove

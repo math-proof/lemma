@@ -15,7 +15,7 @@ def apply(n, w=None, left=True, P=None):
     x = x[:n]
 
     if P is None:
-        P = Symbol(conditionset(x, Equal(x.cup_finiteset(), Range(n))))
+        P = Symbol(conditionset(x, Equal(x.cup_finset(), Range(n))))
 
     if left:
         return All[x:P](Element(w[i, j] @ x, P))
@@ -25,7 +25,7 @@ def apply(n, w=None, left=True, P=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset
+    from Lemma import Set
     n = Symbol(domain=Range(2, oo))
 
     Eq << apply(n)
@@ -34,7 +34,7 @@ def prove(Eq):
 
     x = Eq[2].variable
 
-    Eq << Finset.Cup.Finset.rmatmul.apply(x, w)
+    Eq << Set.DotGetSwapMatrix.eq.ToSet.apply(x, w)
 
     Eq << Eq[2].this.expr.rhs.definition.subs(Eq[-1])
 

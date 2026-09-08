@@ -72,7 +72,7 @@ keywords += ['axiom',
              'negative', 'nonempty', 'nonnegative', 'nonpositive', 'nonzero',
              'plausible', 'positive', 'prime', 'provable', 'proved'
              'real', 'right_open',
-             'cup_finiteset', 'simplify', 'singular',
+             'cup_finset', 'simplify', 'singular',
              'this',
              'uncountable', 
              'zero']

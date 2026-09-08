@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.apply(Bool.UFn.of.UFn.Eq, ret=0)
 
-    Eq << Eq[-1].this.expr.apply(Bool.UFn.of.UFn.Eq.deprecated, reverse=True)
+    Eq << Eq[-1].this.expr.apply(Bool.UFn.of.UFn.Eq, reverse=True)
 
 
 

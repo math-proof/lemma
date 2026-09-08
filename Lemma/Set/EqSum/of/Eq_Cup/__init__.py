@@ -18,7 +18,7 @@ def prove(Eq):
     x = Symbol(real=True)
     a = Symbol(real=True, shape=(oo,))
     f = Function(real=True)
-    Eq << apply(Equal(X, a[:Card(X)].cup_finiteset()), Sum[x:X](f(x)))
+    Eq << apply(Equal(X, a[:Card(X)].cup_finset()), Sum[x:X](f(x)))
 
     n = Symbol(Card(X))
     Eq << n.this.definition.reversed

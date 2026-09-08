@@ -34,8 +34,8 @@ def prove(Eq):
 
     i, j = Symbol(domain=Range(n), given=True)
 
-    Eq << apply(Equal(Card(a[:n].cup_finiteset(k)), n),
-                Equal(x[:n].cup_finiteset(k), a[:n].cup_finiteset(k)),
+    Eq << apply(Equal(Card(a[:n].cup_finset(k)), n),
+                Equal(x[:n].cup_finset(k), a[:n].cup_finset(k)),
                 i=i, j=j)
 
 

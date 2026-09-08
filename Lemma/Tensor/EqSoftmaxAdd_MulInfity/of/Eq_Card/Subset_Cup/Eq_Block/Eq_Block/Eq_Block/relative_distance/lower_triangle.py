@@ -30,7 +30,7 @@ def prove(Eq):
     i, j = Symbol(integer=True)
     w_V = Symbol("w^V", shape=(2 * k + 1, d_z), real=True)
     V = Symbol(real=True, shape=(n, m, d_z))
-    s = d[:m].cup_finiteset(j)
+    s = d[:m].cup_finset(j)
     Eq << apply(
         Equal(Card(s), m),
         Subset(s, Range(n)),

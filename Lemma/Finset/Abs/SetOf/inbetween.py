@@ -8,7 +8,7 @@ def apply(n, Q=None):
         Q, w, x = predefined_symbols(n)
     else:
         x = Q.definition.expr.variable
-    P_quote = Symbol("P'", conditionset(x[:n + 1], Equal(x[:n].cup_finiteset(), Range(n)) & Equal(x[n], n)))
+    P_quote = Symbol("P'", conditionset(x[:n + 1], Equal(x[:n].cup_finset(), Range(n)) & Equal(x[n], n)))
 
     t = Q.definition.variable
     return Equal(Card(Q[t]), Card(P_quote))

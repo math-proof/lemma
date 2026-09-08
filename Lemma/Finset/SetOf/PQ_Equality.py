@@ -6,7 +6,7 @@ def apply(n, P_quote=None):
     from Lemma.Finset.All_And.mapping.Qu2v import predefined_symbols
     Q, w, x = predefined_symbols(n)
     if P_quote is None:
-        P_quote = Symbol("P'", conditionset(x[:n + 1], Equal(x[:n].cup_finiteset(), Range(n)) & Equal(x[n], n)))
+        P_quote = Symbol("P'", conditionset(x[:n + 1], Equal(x[:n].cup_finset(), Range(n)) & Equal(x[n], n)))
 
     return Equal(Q[n], P_quote)
 

@@ -37,7 +37,7 @@ def prove(Eq):
     Eq << apply(Equal(Sum[i:k + 1](Card(x[i])), n + 1),
                 Equal(Cup[i:k + 1](x[i]), Range(n + 1)),
                 All[i:k + 1](Card(x[i]) > 0),
-                NotElement({n}, x[:k + 1].cup_finiteset()))
+                NotElement({n}, x[:k + 1].cup_finset()))
     return
     Eq << Set.Eq.Eq.then.is_empty.Stirling2.apply(Eq[0], Eq[1])
 

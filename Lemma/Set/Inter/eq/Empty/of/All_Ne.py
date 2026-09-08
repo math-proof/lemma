@@ -9,7 +9,7 @@ def apply(given):
 
     x = Stack[i:n](xi).simplify()
 
-    return Equal({y} & x.cup_finiteset(), y.emptySet)
+    return Equal({y} & x.cup_finset(), y.emptySet)
 
 
 @prove

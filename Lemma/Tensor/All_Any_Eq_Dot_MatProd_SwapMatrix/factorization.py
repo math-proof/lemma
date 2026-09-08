@@ -7,7 +7,7 @@ def apply(n):
 
     p = Symbol(shape=(oo,), integer=True, nonnegative=True)
 
-    P = Symbol(conditionset(p[:n], Equal(p[:n].cup_finiteset(), Range(n))))
+    P = Symbol(conditionset(p[:n], Equal(p[:n].cup_finset(), Range(n))))
 
     b = Symbol(integer=True, shape=(oo,), nonnegative=True)
 
@@ -137,13 +137,13 @@ def prove(Eq):
 
     Eq << Bool.All.Any.And.of.Cond.All_Any.apply(Eq[-1], Eq[-2])
 
-    Eq << Eq[-1].this.expr.expr.apply(Bool.UFn.of.UFn.Eq.deprecated, swap=True)
+    Eq << Eq[-1].this.expr.expr.apply(Bool.UFn.of.UFn.Eq, swap=True)
 
     Eq <<= Eq[-1] & Eq.any_n_plausible
 
     Eq << Eq[-1].this.expr.apply(Bool.Any.And.of.Any.Any, simplify=None)
 
-    Eq << Eq[-1].this.expr.expr.apply(Bool.UFn.of.UFn.Eq.deprecated, swap=True)
+    Eq << Eq[-1].this.expr.expr.apply(Bool.UFn.of.UFn.Eq, swap=True)
 
     Eq << Eq[-1].this.find(Any).apply(Tensor.Any.limits.concat)
     Eq << Imply(Eq.hypothesis, Eq.induct, plausible=True)

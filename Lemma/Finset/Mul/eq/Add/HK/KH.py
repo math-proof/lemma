@@ -29,7 +29,7 @@ def prove(Eq):
 
     Eq << Finset.Alpha.eq.DivH_K.positive.apply(alpha(x[1:n + 1]))
 
-    Eq << Bool.UFn.of.UFn.Eq.deprecated.apply(Eq[-1], Eq[-2])
+    Eq << Bool.UFn.of.UFn.Eq.apply(Eq[-1], Eq[-2])
 
     Eq << Eq[-1] - x[0]
 

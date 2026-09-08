@@ -9,7 +9,7 @@ def apply(a):
 
     p = Symbol(shape=(oo,), etype=dtype.integer)
 
-    P = Symbol(conditionset(p[:n], Equal(p[:n].cup_finiteset(), a.cup_finiteset())))
+    P = Symbol(conditionset(p[:n], Equal(p[:n].cup_finset(), a.cup_finset())))
 
     return All[p[:n]:P](Exists[i:n](Equal(p[i], a[n - 1])))
 

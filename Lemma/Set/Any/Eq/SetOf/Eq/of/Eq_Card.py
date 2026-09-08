@@ -14,7 +14,7 @@ def apply(given, x=None):
     kwargs.pop('shape', None)
     if x is None:
         x = S.generate_var(shape=shape, **kwargs)
-    return Any[x[:n]:Equal(Card(x[:n].cup_finiteset()), n)](Equal(S, Cup[i:n]({x[i]})))
+    return Any[x[:n]:Equal(Card(x[:n].cup_finset()), n)](Equal(S, Cup[i:n]({x[i]})))
 
 
 @prove

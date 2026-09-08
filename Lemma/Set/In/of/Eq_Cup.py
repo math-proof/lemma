@@ -20,7 +20,7 @@ def prove(Eq):
     y = Symbol(real=True, given=True)
     b = Symbol(real=True, shape=(oo,))
     n = Card(X)
-    Eq << apply(Equal(X - {y}, b[:n - 1].cup_finiteset()))
+    Eq << apply(Equal(X - {y}, b[:n - 1].cup_finset()))
 
     Eq << ~Eq[1]
 

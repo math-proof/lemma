@@ -14,7 +14,7 @@ def apply(P):
 def prove(Eq):
     n = Symbol(integer=True, positive=True)
     x = Symbol(shape=(oo,), integer=True, nonnegative=True)
-    P = Symbol(conditionset(x[:n], Equal(x[:n].cup_finiteset(), Range(n))))
+    P = Symbol(conditionset(x[:n], Equal(x[:n].cup_finset(), Range(n))))
     Eq << apply(P)
 
     Eq << All[x[:n]:P](Element(x[:n], P), plausible=True)
