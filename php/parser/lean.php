@@ -388,9 +388,12 @@ abstract class Lean extends IndentedNode
             case 'fun':
             case 'match':
                 return $this->append("Lean_$token", "expr");
+            case 'set':
+                // `lemma set` — keyword is the declaration name, not a tactic.
+                if ($this instanceof LeanCaret && $this->parent instanceof Lean_def)
+                    return $this->parent->insert_word($this, $token);
             case 'have':
             case 'let':
-            case 'set':
             case 'show':
                 if ($this instanceof LeanCaret && $this->parent instanceof LeanProperty) {
                     while (preg_match("/['!?\w]/", $tokens[$i + 1])) {

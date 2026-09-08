@@ -442,9 +442,12 @@ export class Lean extends IndentedNode {
             case 'haveI':
             case 'letI':
                 token = token.slice(0, -1);
+            case 'set':
+                // `lemma set` — keyword is the declaration name, not a tactic.
+                if (this instanceof LeanCaret && this.parent instanceof Lean_def)
+                    return this.parent.insert_word(this, token);
             case 'have':
             case 'let':
-            case 'set':
             case 'show': {
                 const asPropertyField = self.parseKeywordAsPropertyField(this, token);
                 if (asPropertyField) return asPropertyField;
