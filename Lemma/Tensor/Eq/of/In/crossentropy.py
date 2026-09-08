@@ -25,7 +25,7 @@ def prove(Eq):
     t = Symbol(Eq[1].find(Stack))
     Eq << t.this.definition
 
-    Eq << Tensor.EqReducedSum.of.Eq.apply(Eq[-1])
+    Eq << Tensor.Sum.of.Eq.apply(Eq[-1])
 
     Eq << Bool.BFn.of.BFnIte.Cond.apply(Eq[0], Eq[-1])
 

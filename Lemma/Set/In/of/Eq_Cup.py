@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq << Eq[0].subs(Eq[-1])
 
-    Eq << Set.CardCup.le.Sum_Card.apply(*Eq[-1].rhs.args)
+    Eq << Finset.CardBiUnion.le.Sum_Card.apply(*Eq[-1].rhs.args)
 
     Eq << Finset.Card.of.Eq.apply(Eq[-2])
 

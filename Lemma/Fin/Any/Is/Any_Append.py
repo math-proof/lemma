@@ -9,7 +9,7 @@ def apply(self, index=0):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor
+    from Lemma import Fin
 
     n = Symbol(integer=True, positive=True)
     i = Symbol(domain=Range(n - 1))
@@ -17,7 +17,7 @@ def prove(Eq):
     f = Function(bool=True, shape=())
     Eq << apply(Any[x[i], x[i + 1:n + 1]](f(x[i:n])))
 
-    Eq << Eq[0].this.rhs.apply(Tensor.Any.limits.shift.Slice)
+    Eq << Eq[0].this.rhs.apply(Fin.Any.Is.Any_Cons)
 
 
 if __name__ == '__main__':

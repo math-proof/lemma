@@ -148,3 +148,4 @@ from . import DetDot
 from . import DetAppendHstackS
 from . import DetDot_AppendHstackS
 from . import DotMatProd
+from . import EqToMatrixStack

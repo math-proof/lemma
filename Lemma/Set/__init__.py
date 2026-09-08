@@ -48,9 +48,6 @@ from . import EqSwapSwap
 from . import AddClip
 from . import Delta
 from . import CardUnion
-from . import CardCup
-from . import Bool
-from . import Imageset_And
 from . import Eq_Union_
 from . import Inter
 from . import Imageset_Inter
@@ -233,3 +230,5 @@ from . import Inter_Finset
 from . import Any_UFn
 from . import SetOfDotGetSwapMatrix
 from . import CupInsert
+from . import Bool
+from . import Imageset_And

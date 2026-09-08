@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq <<= ~Eq[-1], ~Eq[-2]
 
-    Eq << Eq[-2].apply(Nat.Ne.of.Eq.Ne.subst)
+    Eq << Eq[-2].apply(Bool.UFn.of.UFn.Eq)
 
     Eq << Eq[-1].apply(Bool.BFn.of.BFnIte.Cond, invert=True, reverse=True, ret=0)
 

@@ -26,4 +26,3 @@ if __name__ == '__main__':
     run()
 # created on 2020-02-11
 
-from . import subst

@@ -111,3 +111,4 @@ from . import Sum_BoolIn
 from . import CardUnion
 from . import Card
 from . import CupRange
+from . import CardBiUnion

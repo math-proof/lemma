@@ -10,7 +10,7 @@ def apply(all_a, all_b, equality_a):
 
 @prove
 def prove(Eq):
-    from Lemma import Set
+    from Lemma import Set, Finset
     m, n = Symbol(integer=True, positive=True)
     A = Symbol(etype=dtype.integer[n])
     a = Symbol(integer=True, shape=(n,))
@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << Set.Eq.of.All_In.All_In.All_Eq.apply(Eq[0], Eq[1], Eq[2])
 
-    Eq << Set.CardCup.le.Sum_Card.apply(*Eq[-1].lhs.args)
+    Eq << Finset.CardBiUnion.le.Sum_Card.apply(*Eq[-1].lhs.args)
 
     Eq << Eq[-1].subs(Eq[-2])
 

@@ -16,7 +16,7 @@ def apply(n):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Finset, Bool, Tensor, Nat, Int
+    from Lemma import Set, Finset, Bool, Tensor, Nat, Int, Fin
 
     n = Symbol(domain=Range(2, oo), given=False)
     Eq << apply(n)
@@ -108,7 +108,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr().expr.rhs.simplify()
 
-    Eq.any_n_plausible = Eq[-1].this.expr.apply(Set.Any.of.Any.limits.relax, wrt=Eq[-1].expr.variable)
+    Eq.any_n_plausible = Eq[-1].this.expr.apply(Set.Any.of.Any.Subset, wrt=Eq[-1].expr.variable)
 
     Eq << Tensor.All_InDot.permutation.apply(n + 1, left=False)
 
@@ -145,7 +145,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.expr.apply(Bool.UFn.of.UFn.Eq, swap=True)
 
-    Eq << Eq[-1].this.find(Any).apply(Tensor.Any.limits.concat)
+    Eq << Eq[-1].this.find(Any).apply(Fin.Any.Is.Any_Append)
     Eq << Imply(Eq.hypothesis, Eq.induct, plausible=True)
 
     Eq << Bool.Cond.of.All_Imp.Cond.apply(Eq.initial, Eq[-1], n=n, start=2)

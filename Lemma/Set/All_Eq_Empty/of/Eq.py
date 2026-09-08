@@ -37,7 +37,7 @@ def prove(Eq):
 
     Eq << Eq[0].lhs.arg.this.apply(Set.Cup.eq.UnionCupS, cond={i, j})
 
-    Eq.union_less_than = Set.CardCup.le.Sum_Card.apply(x[i], *Eq[-1].rhs.args[1].limits)
+    Eq.union_less_than = Finset.CardBiUnion.le.Sum_Card.apply(x[i], *Eq[-1].rhs.args[1].limits)
 
     Eq << Finset.CardUnion.le.AddCardS.apply(*Eq[-1].rhs.args)
 

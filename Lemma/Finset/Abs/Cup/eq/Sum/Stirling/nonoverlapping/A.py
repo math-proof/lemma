@@ -53,7 +53,7 @@ def prove(Eq):
     Eq << Eq.x_quote_Union.this.expr.apply(Finset.Card.of.Eq)
 
     u = Eq[-1].lhs.arg
-    Eq.SqueezeTheorem = Set.CardCup.le.Sum_Card.apply(u.expr, *u.limits)
+    Eq.SqueezeTheorem = Finset.CardBiUnion.le.Sum_Card.apply(u.expr, *u.limits)
 
     Eq << Bool.OrAndS.of.BFn_Ite.apply(x_quote_abs)
 

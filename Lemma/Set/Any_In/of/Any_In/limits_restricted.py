@@ -9,7 +9,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Bool, Nat
+    from Lemma import Set, Bool
     S = Symbol(etype=dtype.real, given=True)
     e, t = Symbol(real=True)
 
@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq <<= Eq[-1] & Eq[-3]
 
-    Eq << Nat.Ne.of.Eq.Ne.subst.apply(Eq[-1], Eq[-3])
+    Eq << Bool.UFn.of.UFn.Eq.apply(Eq[-1], Eq[-3])
 
 
 if __name__ == '__main__':

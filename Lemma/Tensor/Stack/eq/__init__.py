@@ -12,4 +12,3 @@ from . import Ite
 from . import Eye
 from . import Dot
 from . import AppendStackS
-from . import Tensor

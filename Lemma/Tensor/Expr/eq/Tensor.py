@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq << Eq[0].this.lhs.apply(Tensor.Expr.eq.Stack)
 
-    Eq << Eq[-1].this.lhs.apply(Tensor.Stack.eq.Tensor)
+    Eq << Eq[-1].this.lhs.apply(Tensor.EqToMatrixStack)
 
 
 

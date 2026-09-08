@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Eq[-2].this.lhs.apply(Bool.Or.Any.of.Any.split, cond=x < 0)
 
-    Eq << Eq[-1].this.rhs.apply(Bool.Any.given.Or.Any.split, cond=x < 0)
+    Eq << Eq[-1].this.rhs.apply(Bool.AnyOr.given.OrAnyS, cond=x < 0)
 
 
 if __name__ == '__main__':

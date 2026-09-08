@@ -78,7 +78,7 @@ def prove(Eq):
 
     x_quote_union_abs = Eq[-1]
     u = Eq[-1].lhs.arg
-    Eq << Set.CardCup.le.Sum_Card.apply(u.expr, *u.limits)
+    Eq << Finset.CardBiUnion.le.Sum_Card.apply(u.expr, *u.limits)
 
     Eq << Eq[-2].this.expr.apply(Nat.Ge.of.Eq.Le.subst, Eq[-1])
 
@@ -150,7 +150,7 @@ def prove(Eq):
 
     Eq << Finset.CardUnion.le.AddCardS.apply(*Eq[-1].lhs.args)
 
-    Eq << Set.CardCup.le.Sum_Card.apply(*Eq[-2].lhs.args[0].args)
+    Eq << Finset.CardBiUnion.le.Sum_Card.apply(*Eq[-2].lhs.args[0].args)
 
     Eq << Nat.Le.of.Le.Le.subst.apply(Eq[-2], Eq[-1])
 

@@ -32,7 +32,7 @@ def prove(Eq):
 
     Eq.initial = Eq[0].subs(n, 2)
 
-    Eq << Eq.initial.this.find(Stack).apply(Tensor.Stack.eq.Tensor)
+    Eq << Eq.initial.this.find(Stack).apply(Tensor.EqToMatrixStack)
 
     Eq << Eq[-1].this.lhs.apply(Finset.Alpha.Vector)
 

@@ -89,11 +89,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.args[0].args[1]().expr.simplify()
 
-    Eq << Eq[-1].this.rhs.args[1].args[1].apply(Tensor.Stack.eq.Tensor)
+    Eq << Eq[-1].this.rhs.args[1].args[1].apply(Tensor.EqToMatrixStack)
 
-    Eq << Eq[-1].this.rhs.args[2].args[1].find(Stack).apply(Tensor.Stack.eq.Tensor)
+    Eq << Eq[-1].this.rhs.args[2].args[1].find(Stack).apply(Tensor.EqToMatrixStack)
 
-    Eq << Eq[-1].this.rhs.args[3].args[1].find(Stack).apply(Tensor.Stack.eq.Tensor)
+    Eq << Eq[-1].this.rhs.args[3].args[1].find(Stack).apply(Tensor.EqToMatrixStack)
 
     Eq << Eq[-1].this.find(Mul[Matrix]).apply(Tensor.Mul.eq.Tensor)
 

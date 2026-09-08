@@ -125,7 +125,7 @@ def prove(Eq):
 
     Eq.y_given_x_log = Eq[-2].subs(Eq[-1])
 
-    Eq << Eq.z_definition.apply(Tensor.EqReducedSum.of.Eq)
+    Eq << Eq.z_definition.apply(Tensor.Sum.of.Eq)
 
     Eq << Eq[-1].subs(Eq.z_definition_by_x_quote)
 

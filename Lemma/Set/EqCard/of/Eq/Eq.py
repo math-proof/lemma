@@ -17,7 +17,7 @@ def apply(equality_A, equality_B):
 
 @prove
 def prove(Eq):
-    from Lemma import Set
+    from Lemma import Finset
     n, m = Symbol(integer=True, positive=True)
     A = Symbol(etype=dtype.integer[n])
     a = Symbol(integer=True, shape=(n,))
@@ -30,11 +30,11 @@ def prove(Eq):
 
     Eq << apply(Equal(Cup[a:A](f(a).set), B), Equal(Cup[b:B](g(b).set), A))
 
-    Eq << Set.CardCup.le.Sum_Card.apply(*Eq[0].lhs.args)
+    Eq << Finset.CardBiUnion.le.Sum_Card.apply(*Eq[0].lhs.args)
 
     Eq << Eq[-1].subs(Eq[0])
 
-    Eq << Set.CardCup.le.Sum_Card.apply(*Eq[1].lhs.args)
+    Eq << Finset.CardBiUnion.le.Sum_Card.apply(*Eq[1].lhs.args)
 
     Eq << Eq[-1].subs(Eq[1])
 

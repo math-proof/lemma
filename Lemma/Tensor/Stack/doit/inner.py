@@ -10,7 +10,7 @@ def doit(self):
 
     arr = [xi._subs(i, a + t) for t in range(diff)]
 
-    assert limits, "try to invoke Tensor.Stack.eq.Tensor"
+    assert limits, "try to invoke Tensor.EqToMatrixStack"
     return Stack(BlockMatrix(arr), *limits)
 
 
@@ -32,7 +32,7 @@ def prove(Eq):
     i = Symbol(domain=Range(m))
     Eq << Tensor.Eq.given.All_EqGetS.apply(Eq[-1], i)
 
-    Eq << Eq[-1].this.lhs.apply(Tensor.Stack.eq.Tensor)
+    Eq << Eq[-1].this.lhs.apply(Tensor.EqToMatrixStack)
 
 
 

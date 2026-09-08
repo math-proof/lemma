@@ -189,7 +189,7 @@ def prove(Eq):
     Eq.back_subs6 = Eq.back_subs6.this.rhs.args[0:2].apply(Tensor.Dot.eq.Tensor).this.rhs.args[0:2].apply(Tensor.Dot.eq.Tensor).this.rhs.args[0:2].apply(Tensor.Dot.eq.Tensor).this.rhs.args[0:2].apply(Tensor.Dot.eq.Tensor).this.rhs.args[0:2].apply(Tensor.Dot.eq.Tensor)
 
     B = Eq.back_subs6.rhs.args[1].T
-    Eq << (B / Stack[i:n](Factorial(i))).this.find(Stack).apply(Tensor.Stack.eq.Tensor)
+    Eq << (B / Stack[i:n](Factorial(i))).this.find(Stack).apply(Tensor.EqToMatrixStack)
 
     Eq << Eq[-1].this.rhs.apply(Tensor.Expr.eq.Tensor)
 

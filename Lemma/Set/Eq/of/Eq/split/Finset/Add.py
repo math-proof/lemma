@@ -15,7 +15,7 @@ def prove(Eq):
 
     Eq << apply(Equal({x, y}, {0, 1}))
 
-    Eq << Tensor.EqReducedSum.of.Eq.apply(Eq[0])
+    Eq << Tensor.Sum.of.Eq.apply(Eq[0])
 
     Eq << Eq[-1].this.rhs.doit()
 

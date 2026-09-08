@@ -39,7 +39,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.simplify()
 
-    Eq << Eq[-1].this.rhs.apply(Tensor.Stack.eq.Tensor)
+    Eq << Eq[-1].this.rhs.apply(Tensor.EqToMatrixStack)
 
 
 if __name__ == '__main__':

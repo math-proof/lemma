@@ -53,7 +53,7 @@ def prove(Eq):
 
     Eq << Finset.CardUnion.le.AddCardS.apply(*Eq.paradox.expr.rhs.args)
 
-    Eq << Set.CardCup.le.Sum_Card.apply(*Eq.paradox.expr.rhs.args[1].args)
+    Eq << Finset.CardBiUnion.le.Sum_Card.apply(*Eq.paradox.expr.rhs.args[1].args)
 
     Eq << Eq[-2] + Eq[-1]
 

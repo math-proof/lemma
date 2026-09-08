@@ -38,15 +38,15 @@ def prove(Eq):
 
     Eq << Eq.initial.this.expr.expr.rhs.expr.indices[0].definition
 
-    Eq << Eq[-1].this.find(Stack).apply(Tensor.Stack.eq.Tensor)
+    Eq << Eq[-1].this.find(Stack).apply(Tensor.EqToMatrixStack)
 
-    Eq << Eq[-1].this.find(Stack).apply(Tensor.Stack.eq.Tensor)
+    Eq << Eq[-1].this.find(Stack).apply(Tensor.EqToMatrixStack)
 
-    Eq << Eq[-1].this.find(Stack).apply(Tensor.Stack.eq.Tensor)
+    Eq << Eq[-1].this.find(Stack).apply(Tensor.EqToMatrixStack)
 
-    Eq << Eq[-1].this.find(Stack).apply(Tensor.Stack.eq.Tensor)
+    Eq << Eq[-1].this.find(Stack).apply(Tensor.EqToMatrixStack)
 
-    Eq << Eq[-1].this.find(Stack).apply(Tensor.Stack.eq.Tensor)
+    Eq << Eq[-1].this.find(Stack).apply(Tensor.EqToMatrixStack)
 
 
 
