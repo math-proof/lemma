@@ -70,7 +70,7 @@ def prove(Eq):
 
     Eq << Real.Gt.of.Lt_0.monotony.apply(Eq[-1])
 
-    Eq << Set.Any_UFn.of.All_UFn.Any_Eq.apply(Eq.positive_sqrt_quote, Eq[-1], reverse=True)
+    Eq << Bool.Any_UFn.of.All_UFn.Any_Eq.apply(Eq.positive_sqrt_quote, Eq[-1], reverse=True)
 
     Eq.any_gt = Bool.Any.of.Any.limits.relax.subst.apply(Eq[-1], x_quote, x)
 

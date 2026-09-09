@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq << Eq.x_j_equality.this.expr.limits_subs(Eq.x_j_equality.expr.variable, j)
 
-    Eq << Tensor.All_InDot.permutation.apply(n + 1, w=w)
+    Eq << Tensor.All_InDotSwapMatrix.of.Eq_SetOf_EqRange.apply(n + 1, w=w)
 
     Eq << Subset(Eq[-2].limits[0][1], Eq[-1].rhs, plausible=True)
 
@@ -51,7 +51,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Sum_MulGetS)
 
-    Eq << Bool.All.Any.of.All_Any_Eq.Cond.subst.apply(Eq.x_j_equality, Eq[-1])
+    Eq << Bool.All_Any_UFn.of.All_UFn.All_Any_Eq.apply(Eq.x_j_equality, Eq[-1])
 
     Eq << Eq[-1].this.expr().expr.rhs.args[0].simplify()
 

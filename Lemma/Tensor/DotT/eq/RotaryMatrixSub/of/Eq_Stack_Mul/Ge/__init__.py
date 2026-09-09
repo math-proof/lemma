@@ -104,7 +104,7 @@ def prove(Eq):
 
     Eq << Eq[-4].subs(*Eq[-3:])
 
-    Eq <<= Eq[-1].find(Stack).this.apply(Real.Stack.eq.Cos), Eq[-1].find(Stack[Sin]).this.apply(Real.Stack.eq.Sin)
+    Eq <<= Eq[-1].find(Stack).this.apply(Tensor.Stack.eq.Cos), Eq[-1].find(Stack[Sin]).this.apply(Tensor.Stack.eq.Sin)
 
     Eq << Eq[-1].rhs.find(Stack).this.apply(Tensor.Stack_PowGetS.eq.Pow)
 

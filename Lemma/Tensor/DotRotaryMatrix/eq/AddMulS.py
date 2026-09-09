@@ -10,7 +10,7 @@ def apply(eq_theta, eq_R, xt):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Real
+    from Lemma import Tensor
     from Lemma.Tensor.DotT.eq.RotaryMatrixSub.of.Eq_Stack_Mul.Ge import rotary_matrix
     # n denotes sequence length (seq_length)
     # b denotes 10000
@@ -50,7 +50,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(BlockMatrix).apply(Tensor.AppendMulS.eq.MulAppendS)
 
-    Eq <<= Eq[-1].find(Stack).this.apply(Real.Stack.eq.Cos), Eq[-1].find(Stack[Sin]).this.apply(Real.Stack.eq.Sin)
+    Eq <<= Eq[-1].find(Stack).this.apply(Tensor.Stack.eq.Cos), Eq[-1].find(Stack[Sin]).this.apply(Tensor.Stack.eq.Sin)
 
     Eq << Eq[-1].rhs.find(Stack).this.apply(Tensor.Stack_PowGetS.eq.Pow)
 

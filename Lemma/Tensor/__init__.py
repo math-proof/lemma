@@ -75,10 +75,7 @@ from . import DotStackS
 from . import Dot_
 from . import EqDot_GradExpect
 from . import DotDot
-from . import All_Any_Eq_Dot_MatProd_SwapMatrix
 from . import DetDotMatPowShiftMatrix
-from . import All_InDot
-from . import DetDotStackS
 from . import Add_Stack
 from . import ExpSub_MulInfty
 from . import ExpAdd_MulInfty
@@ -149,3 +146,6 @@ from . import DetAppendHstackS
 from . import DetDot_AppendHstackS
 from . import DotMatProd
 from . import EqToMatrixStack
+from . import All_InDotSwapMatrix
+from . import DetDotStackS
+from . import Any_Eq_Dot_MatProd_SwapMatrix

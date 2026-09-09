@@ -118,7 +118,7 @@ def prove(Eq):
 
     Eq << ~Eq.ge_MDV
 
-    Eq << Bool.Any.And.of.Any.Any.apply(Eq[-1], Eq[-2])
+    Eq << Bool.Any_And.of.Any.Any.apply(Eq[-1], Eq[-2])
 
     Eq << Eq[-1].this.expr.args[:2].apply(Nat.Lt.of.Ge.Lt)
 

@@ -14,7 +14,7 @@ def prove(Eq):
     x, y = Symbol(integer=True)
     Eq << apply(Equal({x, y}, {0, 1}))
 
-    Eq << Tensor.Eq.given.And.split.Tensor.apply(Eq[1])
+    Eq << Tensor.Eq.Eq.given.Append.apply(Eq[1])
 
 
 
@@ -22,13 +22,13 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq[0])
 
-    Eq << Set.Eq.Delta.Zero.of.In.apply(Eq[-1])
+    Eq << Set.Delta0.eq.Sub1.of.In.apply(Eq[-1])
 
     Eq.x_equality = -Eq[-1] + 1
 
     Eq << Eq.x_equality.reversed
 
-    Eq << Set.Eq.of.Eq.split.Finset.Add.apply(Eq[0])
+    Eq << Set.Add.eq.One.of.Finset.apply(Eq[0])
 
     Eq << Eq[-1] + Eq.x_equality
 

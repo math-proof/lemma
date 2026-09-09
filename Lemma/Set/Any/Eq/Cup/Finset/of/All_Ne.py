@@ -57,7 +57,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Equal & Greater).apply(Nat.Gt.of.Eq.Gt, ret=0)
 
-    Eq << Eq[-1].this.lhs.expr.apply(Bool.Any.And.of.Any.Any, simplify=0)
+    Eq << Eq[-1].this.lhs.expr.apply(Bool.Any_And.of.Any.Any, simplify=0)
 
     Eq << Eq[-1].this.find(Equal[Cup]).apply(Set.EqReducedMax.of.Eq_Cup, ret=0, simplify=None)
 

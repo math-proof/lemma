@@ -29,7 +29,7 @@ def prove(Eq):
     w = Symbol(Stack[j, i](SwapMatrix(n, i, j)))
     Eq.swap, (Eq.P_definition, Eq.w_definition), Eq.axiom = apply(All[x[:n]:S](Element(w[i, j] @ x[:n], S)))
 
-    Eq << Tensor.All_Any_Eq_Dot_MatProd_SwapMatrix.factorization.apply(n)
+    Eq << Tensor.Any_Eq_Dot_MatProd_SwapMatrix.apply(n)
 
     * _, b_i = Eq[-1].rhs.args[1].expr.args
     b, _i = b_i.args
@@ -44,7 +44,7 @@ def prove(Eq):
 
     Eq << Tensor.Stack.eq.Dot.swapn.helper.apply(x[:n], b[:n], w)
 
-    Eq << Bool.All.Any.of.All_Any_Eq.Cond.subst.apply(Eq[-2].reversed, Eq[-1])
+    Eq << Bool.All_Any_UFn.of.All_UFn.All_Any_Eq.apply(Eq[-2].reversed, Eq[-1])
 
     Eq << Set.AllSDiff.of.All.apply(Eq[-1], (x[:n], S))
 

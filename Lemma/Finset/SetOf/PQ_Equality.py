@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Bool.All.All.of.All_And.apply(Eq[-1])
 
-    Eq << Eq[-3].this.expr.apply(Finset.Eq.of.Eq.Eq.permutation.pop.Icc)
+    Eq << Eq[-3].this.expr.apply(Finset.EqImageRange.of.EqImageRange.Eq)
 
     Eq.all_P_quote = Eq[-1] & Eq[-3]
 

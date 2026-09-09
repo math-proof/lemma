@@ -63,7 +63,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(And[Or]).apply(Bool.OrAndS.of.And_Or, simplify=None)
 
-    Eq << Eq[-1].this.find(And).apply(Bool.Any.And.of.Any.Any)
+    Eq << Eq[-1].this.find(And).apply(Bool.Any_And.of.Any.Any)
 
     Eq << Eq[-1].this.find(And).apply(Bool.Cond.of.And, 1)
 

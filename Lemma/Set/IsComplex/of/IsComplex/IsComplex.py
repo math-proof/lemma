@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq << Set.Any_Eq.of.In.apply(Eq[0], var='a')
     Eq << Set.Any_Eq.of.In.apply(Eq[1], var='b')
-    Eq << Bool.Any.And.of.Any.Any.apply(Eq[-1], Eq[-2], simplify=None)
+    Eq << Bool.Any_And.of.Any.Any.apply(Eq[-1], Eq[-2], simplify=None)
     Eq << Eq[-1].this.expr.apply(Nat.EqMul.of.Eq.Eq)
     a, b = Eq[-1].variables
     c = Symbol(complex=True)

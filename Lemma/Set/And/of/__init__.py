@@ -1,2 +1,1 @@
-from . import Eq
 from . import In_Ico

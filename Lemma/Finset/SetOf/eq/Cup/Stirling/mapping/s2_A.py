@@ -142,7 +142,7 @@ def prove(Eq):
 
     Eq << Finset.CardUnion.eq.SubAddCardS_CardInter.apply(*Eq[-1].lhs.args)
 
-    Eq << Set.Any_UFn.of.All_UFn.Any_Eq.apply(Eq[-2], Eq[-1])
+    Eq << Bool.Any_UFn.of.All_UFn.Any_Eq.apply(Eq[-2], Eq[-1])
 
     Eq.set_size_inequality = Eq[-1].this.expr.apply(Nat.Lt.of.Eq.Lt.subst, Less(Eq[-1].expr.rhs, Eq[-1].expr.rhs + 1, plausible=True))
 

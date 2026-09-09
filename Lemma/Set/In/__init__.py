@@ -22,3 +22,4 @@ from . import Imageset
 from . import Inv
 from . import NotIn
 from . import Ico
+from . import Subset

@@ -39,7 +39,7 @@ def prove(Eq):
 
     Eq << Eq[0] - 1
 
-    Eq << Set.Any_UFn.of.All_UFn.Any_Eq.apply(Eq[-2].reversed, Eq[-1])
+    Eq << Bool.Any_UFn.of.All_UFn.Any_Eq.apply(Eq[-2].reversed, Eq[-1])
 
     Eq << Eq[-1].this.expr.apply(Set.Ne_Empty.of.Ge, simplify=False)
 

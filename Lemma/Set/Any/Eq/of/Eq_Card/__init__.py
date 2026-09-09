@@ -51,7 +51,7 @@ def prove(Eq):
 
     Eq << Bool.Imp_And.of.Cond.Imp.apply(Eq[-1], Eq.size_deduction)
 
-    Eq << Eq[-1].this.rhs.apply(Bool.Any.And.of.Any.Any)
+    Eq << Eq[-1].this.rhs.apply(Bool.Any_And.of.Any.Any)
 
     Eq << Eq[-1].this.rhs.expr.apply(Bool.Cond.of.And, index=1)
 

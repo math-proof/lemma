@@ -87,3 +87,5 @@ from . import AllInsert
 from . import AllIcc
 from . import All_UFn
 from . import AnyOr
+from . import All_Any_UFn
+from . import All_Any_And
