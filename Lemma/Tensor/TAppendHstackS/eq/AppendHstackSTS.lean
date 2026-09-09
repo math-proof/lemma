@@ -43,7 +43,6 @@ private lemma main
       have hT := GetTranspose.eq.Get.fin A (i := ⟨j, hj⟩) (j := ⟨i, hi⟩)
       have hRrow := GetAppend.eq.Get.of.Lt (A := Aᵀ.hstack Cᵀ) (B := Bᵀ.hstack Dᵀ) hi
       have hRcell := GetHstack.eq.Get.of.Lt (A := Aᵀ) (B := Cᵀ) (i := ⟨i, hi⟩) hj
-      simp only [id] at hcell hRcell
       refine (congrArg (fun t : Tensor α [p + q] => t[i]) hrow).trans ?_
       refine hcell.trans (hT.symm.trans ?_)
       refine hRcell.symm.trans ?_
@@ -55,7 +54,6 @@ private lemma main
       have hT := GetTranspose.eq.Get.fin C (i := ⟨(j : ℕ) - n, hjn⟩) (j := ⟨i, hi⟩)
       have hRrow := GetAppend.eq.Get.of.Lt (A := Aᵀ.hstack Cᵀ) (B := Bᵀ.hstack Dᵀ) hi
       have hRcell := GetHstack.eq.Get_Sub.of.GtAdd.Ge (A := Aᵀ) (B := Cᵀ) (i := ⟨i, hi⟩) (le_of_not_gt hj) hj_nm
-      simp only [id] at hcell hRcell
       refine (congrArg (fun t : Tensor α [p + q] => t[i]) hrow).trans ?_
       refine hcell.trans (hT.symm.trans ?_)
       refine hRcell.symm.trans ?_
@@ -68,7 +66,6 @@ private lemma main
       have hT := GetTranspose.eq.Get.fin B (i := ⟨j, hj⟩) (j := ⟨(i : ℕ) - p, hip⟩)
       have hRrow := GetAppend.eq.Get_Sub.of.GtAdd.Ge (A := Aᵀ.hstack Cᵀ) (B := Bᵀ.hstack Dᵀ) (le_of_not_gt hi) hi_pq
       have hRcell := GetHstack.eq.Get.of.Lt (A := Bᵀ) (B := Dᵀ) (i := ⟨(i : ℕ) - p, hip⟩) hj
-      simp only [id] at hcell hRcell
       refine (congrArg (fun t : Tensor α [p + q] => t[i]) hrow).trans ?_
       refine hcell.trans (hT.symm.trans ?_)
       refine hRcell.symm.trans ?_
@@ -80,7 +77,6 @@ private lemma main
       have hT := GetTranspose.eq.Get.fin D (i := ⟨(j : ℕ) - n, hjn⟩) (j := ⟨(i : ℕ) - p, hip⟩)
       have hRrow := GetAppend.eq.Get_Sub.of.GtAdd.Ge (A := Aᵀ.hstack Cᵀ) (B := Bᵀ.hstack Dᵀ) (le_of_not_gt hi) hi_pq
       have hRcell := GetHstack.eq.Get_Sub.of.GtAdd.Ge (A := Bᵀ) (B := Dᵀ) (i := ⟨(i : ℕ) - p, hip⟩) (le_of_not_gt hj) hj_nm
-      simp only [id] at hcell hRcell
       refine (congrArg (fun t : Tensor α [p + q] => t[i]) hrow).trans ?_
       refine hcell.trans (hT.symm.trans ?_)
       refine hRcell.symm.trans ?_

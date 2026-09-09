@@ -59,11 +59,31 @@ Elementwise cosine. Available for `Tensor ℝ s` and `Tensor ℂ s` via `Cos`.
 def Tensor.cos [Cos α] (x : Tensor α s) : Tensor α s :=
   x.map Cos.cos
 
+/--
+[cot](https://pytorch.org/docs/stable/generated/torch.cot.html)
+Elementwise cotangent. Available for `Tensor ℝ s` and `Tensor ℂ s` via `Cot`.
+-/
+def Tensor.cot [Cot α] (x : Tensor α s) : Tensor α s :=
+  x.map Cot.cot
+
+/--
+[tan](https://pytorch.org/docs/stable/generated/torch.tan.html)
+Elementwise tangent. Available for `Tensor ℝ s` and `Tensor ℂ s` via `Tan`.
+-/
+def Tensor.tan [Tan α] (x : Tensor α s) : Tensor α s :=
+  x.map Tan.tan
+
 instance [Sin α] : Sin (Tensor α s) where
   sin := Tensor.sin
 
 instance [Cos α] : Cos (Tensor α s) where
   cos := Tensor.cos
+
+instance [Cot α] : Cot (Tensor α s) where
+  cot := Tensor.cot
+
+instance [Tan α] : Tan (Tensor α s) where
+  tan := Tensor.tan
 
 instance [HPow α β α] : HPow (Tensor α s) (Tensor β s) (Tensor α s) where
   hPow A B := A.map₂ HPow.hPow B

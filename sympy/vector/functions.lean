@@ -18,11 +18,29 @@ Elementwise cosine. Available for `Vector ℝ n` and `Vector ℂ n` via `Cos`.
 def cos [Cos α] (x : Vector α n) : Vector α n :=
   x.map Cos.cos
 
+/--
+Elementwise cotangent. Available for `Vector ℝ n` and `Vector ℂ n` via `Cot`.
+-/
+def cot [Cot α] (x : Vector α n) : Vector α n :=
+  x.map Cot.cot
+
+/--
+Elementwise tangent. Available for `Vector ℝ n` and `Vector ℂ n` via `Tan`.
+-/
+def tan [Tan α] (x : Vector α n) : Vector α n :=
+  x.map Tan.tan
+
 instance [Sin α] : Sin (Vector α n) where
   sin := sin
 
 instance [Cos α] : Cos (Vector α n) where
   cos := cos
+
+instance [Cot α] : Cot (Vector α n) where
+  cot := cot
+
+instance [Tan α] : Tan (Vector α n) where
+  tan := tan
 
 instance [Exp α] : Exp (Vector α n) where
   exp a := a.map Exp.exp

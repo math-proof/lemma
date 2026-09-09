@@ -4,7 +4,7 @@
  */
 import path from 'path';
 import fs from 'fs';
-import { REPO_ROOT, moduleToLeanPath } from './modulePath.mjs';
+import { REPO_ROOT } from './modulePath.mjs';
 
 /** @param {string} op */
 export function isInfixOperator(op) {
@@ -204,11 +204,6 @@ export function tokensToModule(segment, section) {
   return section ? `${section}.${body}` : body;
 }
 
-/** @param {string[][]} segment @param {string | null} section */
-function moduleToLeanFromSegment(segment, section) {
-  return moduleToLeanPath(tokensToModule(segment, section));
-}
-
 /**
  * If `Lemma/<module>.lean` is missing, apply the same rewrites as legacy `index.php`.
  * @param {string} moduleDot
@@ -218,26 +213,18 @@ export function resolveMissingModuleRedirect(moduleDot) {
   const module = String(moduleDot).trim().replace(/\//g, '.');
   if (!module) return null;
 
-  const title = module.replace(/\./g, '/');
-  const pathInfo = path.join(REPO_ROOT, 'Lemma', ...title.split('/').filter(Boolean));
-
-  if (pathInfo.endsWith('/') || pathInfo.endsWith(path.sep)) {
+  if (existsSync(module)) {
     return null;
   }
 
-  let leanFile = `${pathInfo}.lean`;
-  if (fs.existsSync(leanFile)) {
-    return null;
-  }
-
-  const parentLean = `${path.dirname(leanFile)}.lean`;
-  if (fs.existsSync(parentLean) && fs.statSync(parentLean).isFile()) {
-    const lastDot = module.lastIndexOf('.');
-    if (lastDot === -1) return null;
+  const lastDot = module.lastIndexOf('.');
+  if (lastDot !== -1) {
+    const parent = module.slice(0, lastDot);
     const lastToken = module.slice(lastDot + 1);
     /** Lowercase suffix → private lemma anchor in parent `.lean` (PHP `?module=Foo#bar`). */
-    if (!/^[a-z]+$/.test(lastToken)) return null;
-    return `${module.slice(0, lastDot)}#${lastToken}`;
+    if (/^[a-z]+$/.test(lastToken) && existsSync(parent)) {
+      return `${parent}#${lastToken}`;
+    }
   }
 
   /** @type {string[]} */
@@ -266,8 +253,7 @@ export function resolveMissingModuleRedirect(moduleDot) {
             tokens_[1] = transformPrefix(tokens_[1]);
             tokens_[3] = transformPrefix(tokens_[3]);
             let m = tokens_.join('.');
-            const p = moduleToLeanPath(m);
-            if (p && fs.existsSync(p)) return m;
+            if (existsSync(m)) return m;
             tokens = [tokens[0], ...tokens.slice(3), 'is', tokens[1]];
           } else {
             let m1 = tokens[1].match(/^([SH]?Eq|Iff)_(.+)/);
@@ -304,8 +290,7 @@ export function resolveMissingModuleRedirect(moduleDot) {
             if (mEq) {
               tokens[1] = mEq[1] + mEq[2];
               let m = tokens.join('.');
-              const p = moduleToLeanPath(m);
-              if (!p || !fs.existsSync(p)) {
+              if (!existsSync(m)) {
                 if (tokens.length > 4) arrayInsert(tokens, 4, 'of');
                 // `tokens` was updated but `tokensToModule(segment, …)` still read `of` from segment[1].
                 if (segment[1]?.length === 1 && segment[1][0] === 'of') {
@@ -313,8 +298,7 @@ export function resolveMissingModuleRedirect(moduleDot) {
                 }
                 // Same segment rewrite as the `!hit` branch below (PHP falls through to `tokens_to_module`).
                 if (segment.length >= 4) arrayInsert(segment, 3, ['of']);
-                const pSeg = moduleToLeanPath(tokensToModule(segment, section));
-                if (!fs.existsSync(pSeg)) {
+                if (!existsSync(tokensToModule(segment, section))) {
                   [segment[0], segment[2]] = [segment[2], segment[0]];
                 }
               }
@@ -411,7 +395,17 @@ export function resolveMissingModuleRedirect(moduleDot) {
         }
         default:
           if (index > 1) {
+            // `Eq.Eq.of.Append` → `Eq.Eq.is.Append`; if missing, commutateIs → `Append.is.Eq.Eq`
             segment[index][0] = 'is';
+            if (!existsSync(tokensToModule(segment, section))) {
+              // swap : Eq.Eq.is.Append to Append.is.Eq.Eq
+              const first = segment.slice(0, index);
+              const second = segment.slice(index + 1);
+              const swapped = [...second, ['is'], ...first];
+              if (existsSync(tokensToModule(swapped, section))) {
+                segment = swapped;
+              }
+            }
           }
       }
     }
@@ -424,38 +418,18 @@ export function resolveMissingModuleRedirect(moduleDot) {
           const s2 = segment[2];
           segment[0] = s2;
           segment[2] = s0;
-          let m = tokensToModule(segment, section);
-          const p = moduleToLeanPath(m);
-          if (p && fs.existsSync(p)) return m;
-          tokens = [tokens[0], ...tokens.slice(3), 'is', tokens[1]];
           break;
         }
         case 'eq': {
           const castHit = tryCastEqLemmaRedirect(module);
           if (castHit) return castHit;
-          const tmp = tokens[1];
-          tokens[1] = tokens[3];
-          tokens[3] = tmp;
           break;
         }
         case 'as':
         case 'ne': {
-          const tmp = tokens[1];
-          tokens[1] = tokens[3];
-          tokens[3] = tmp;
           break;
         }
         default: {
-          const firstT = tokens[1];
-          let mm = firstT.match(/^(S?Eq)_([\w'!₀-₉]+)$/);
-          if (mm) tokens[1] = mm[1] + mm[2];
-          else if ((index = tokens.indexOf('is')) !== -1) {
-            const sec = tokens[0];
-            const first = tokens.slice(1, index);
-            const second = tokens.slice(index + 1);
-            tokens = [sec, ...second, 'is', ...first];
-          } else 
-            return;
           break;
         }
       }
@@ -471,21 +445,18 @@ export function resolveMissingModuleRedirect(moduleDot) {
         }
         let segment_ = segment.map((r) => [...r]);
         segment_[0] = [first[2], first[1], first[0]];
-        let p = moduleToLeanFromSegment(segment_, section);
-        if (p && fs.existsSync(p)) {
+        if (existsSync(tokensToModule(segment_, section))) {
           segment = segment_;
         } else {
           let f = [...segment_[0]];
           f[0] = transformPrefix(f[0]);
           f[2] = transformPrefix(f[2]);
           segment_[0] = f;
-          p = moduleToLeanFromSegment(segment_, section);
-          if (p && fs.existsSync(p)) {
+          if (existsSync(tokensToModule(segment_, section))) {
             segment = segment_;
           } else {
             segment_[0] = [f[2], f[1], f[0]];
-            p = moduleToLeanFromSegment(segment_, section);
-            if (p && fs.existsSync(p)) segment = segment_;
+            if (existsSync(tokensToModule(segment_, section))) segment = segment_;
           }
         }
       } else {
@@ -504,14 +475,10 @@ export function resolveMissingModuleRedirect(moduleDot) {
 
   const out = tokensToModule(segment, section);
   if (out !== module) {
-    const p = moduleToLeanPath(out);
-    if (p && fs.existsSync(p)) return out;
+    if (existsSync(out)) return out;
     /** Rewrites like `Eq_Cast` → `EqCast` in dotted segments. */
     const folded = resolveUnderscoreModuleAlias(out);
-    if (folded) {
-      const p2 = moduleToLeanPath(folded);
-      if (p2 && fs.existsSync(p2)) return folded;
-    }
+    if (folded && existsSync(folded)) return folded;
   }
 }
 
@@ -536,8 +503,7 @@ export function resolveUnderscoreModuleAlias(moduleDot) {
       if (m) {
         const eqFold = m[1] + m[2];
         const alt = [...parts.slice(0, i), eqFold, ...parts.slice(i + 1)].join('.');
-        const p = moduleToLeanPath(alt);
-        if (p && fs.existsSync(p)) {
+        if (existsSync(alt)) {
           next = alt;
           break;
         }
@@ -548,8 +514,7 @@ export function resolveUnderscoreModuleAlias(moduleDot) {
         pieces[0] + pieces.slice(1).map((p) => p.charAt(0).toUpperCase() + p.slice(1)).join('');
       if (merged === seg) continue;
       const alt = [...parts.slice(0, i), merged, ...parts.slice(i + 1)].join('.');
-      const p = moduleToLeanPath(alt);
-      if (p && fs.existsSync(p)) {
+      if (existsSync(alt)) {
         next = alt;
         break;
       }

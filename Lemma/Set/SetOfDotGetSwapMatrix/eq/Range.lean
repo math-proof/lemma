@@ -9,12 +9,9 @@ private lemma main
   (x : Tensor α [n])
   (i j : Fin n) :
 -- imply
-  {(SwapMatrix (α := α) n ↑i ↑j)[k] @ x | (k : Fin n)} =
-    Set.range (fun k : Fin n => x[k]) := by
+  {(SwapMatrix (α := α) n i j)[k] @ x | (k : Fin n)} = Set.range (fun k : Fin n => x[k]) := by
 -- proof
-  have h :
-      (fun k : Fin n => (SwapMatrix (α := α) n ↑i ↑j)[k] @ x) =
-        (fun k : Fin n => x[k]) ∘ Equiv.swap i j := by
+  have h : (fun k : Fin n => (SwapMatrix (α := α) n i j)[k] @ x) = (fun k : Fin n => x[k]) ∘ Equiv.swap i j := by
     funext k
     apply DotGetSwapMatrix.eq.Get
   change Set.range _ = Set.range _

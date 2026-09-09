@@ -5,7 +5,7 @@ import Lemma.Nat.Add.is.Eq
 import Lemma.List.MapCons.eq.Cons_Map
 import Lemma.List.FlattenCons.eq.Append_Flatten
 import Lemma.List.Eq.of.Append.Length
-import Lemma.Vector.Eq.of.EqToListS
+import Lemma.Vector.Eq.is.ToList
 open List Vector Nat
 
 
@@ -35,7 +35,7 @@ private lemma main
       have h_head_length : a₀.toList.length = b₀.toList.length := by
         simp
       have h_head := Eq.of.Append.Length h_head_length h₁
-      have h_head := Eq.of.EqToListS h_head
+      have h_head := Eq.of.ToList h_head
       have h₁ := Eq.of.Append.Length.drop h_head_length h₁
       have ih := ih (b := b) h₀ h₁
       aesop

@@ -71,6 +71,58 @@ def Expr.is_Mem : Expr → Bool
   | _ => false
 
 
+/-- True when `e` denotes a `Set` / `Finset` (so `≤` should render as `⊆`). -/
+def Expr.is_SetLike : Expr → Bool
+  | Symbol _ ty => is_SetType ty
+  | Basic (.Special ⟨op⟩) .. =>
+    match op with
+    | `Insert.insert
+    | `Singleton.singleton
+    | `setOf => true
+    | _ => false
+  | Basic (.BinaryInfix ⟨op⟩) .. =>
+    match op with
+    | `Union.union
+    | `Inter.inter
+    | `SDiff.sdiff => true
+    | _ => false
+  | Basic (.ExprWithAttr attr) .. =>
+    match attr.name with
+    | `Set.Ioo
+    | `Set.Ico
+    | `Set.Iio
+    | `Set.Icc
+    | `Set.Iic
+    | `Set.Ioc
+    | `Set.Ici
+    | `Set.Ioi
+    | `Set.image
+    | `Set.preimage
+    | `Set.range
+    | `Finset.range
+    | `Finset.image
+    | `Finset.Ioo
+    | `Finset.Ico
+    | `Finset.Iio
+    | `Finset.Icc
+    | `Finset.Iic
+    | `Finset.Ioc
+    | `Finset.Ici
+    | `Finset.Ioi => true
+    | .str `Set _
+    | .str `Finset _ => true
+    | .str _ "image"
+    | .str _ "preimage" => true
+    | _ => false
+  | Basic (.UnaryPrefix ⟨`Finset.toSet⟩) .. => true
+  | _ => false
+where
+  is_SetType : Expr → Bool
+    | Basic (.ExprWithAttr (.Lean_typeclass `Set)) .. => true
+    | Basic (.ExprWithAttr (.Lean_typeclass `Finset)) .. => true
+    | _ => false
+
+
 /-- Flatten a `++` chain, skipping `id`. -/
 def Expr.flattenAppend : Expr → List Expr
   | Basic (.ExprWithAttr (.Lean_operatorname `id)) [e] _ =>
@@ -310,9 +362,10 @@ def Expr.methodFormat (obj : Expr) (args : List Expr) (func : Operator) (attr: S
   else
     s!"{obj}.{attr}\\ {args}"
 
-def BinaryInfix.latexFormat (op : BinaryInfix) (left right : Expr) (level : ℕ) : String :=
+def BinaryInfix.latexFormat (op : BinaryInfix) (left right : Expr) (level : ℕ)
+    (command : Option String := none) : String :=
   let func := op.func
-  let opStr := func.command
+  let opStr := command.getD func.command
   -- left associative operators
   let left := level.toColor (left.priority ≥ func.priority || left.is_EnclosedGroup)
   let right := level.toColor (right.priority > func.priority || right.is_Div || right.is_BlockMatrix)
@@ -351,6 +404,12 @@ def Expr.latexFormat : Expr → String
             "%s \\to 0"
           else if e.asTendsToInf? != none then
             "%s \\to \\infty"
+          else
+            binop.latexFormat left right level
+        | `LE.le =>
+          -- `Set` / `Finset` use the lattice `≤`, which should display as `⊆`
+          if left.is_SetLike || right.is_SetLike then
+            binop.latexFormat left right level "\\subseteq"
           else
             binop.latexFormat left right level
         | `And =>
@@ -577,6 +636,13 @@ def Expr.latexFormat : Expr → String
         | `ascFactorial
         | `Nat.ascFactorial => "{%s}^{\\overline{%s}}"
         | `OfScientific.ofScientific => "%s%s.%s"
+        | `Set.image
+        | `Finset.image =>
+          -- Mathlib: `f '' s` (text so KaTeX does not treat '' as double-prime)
+          "{%s}\\mathrel{\\text{''}}{%s}"
+        | `Set.preimage =>
+          -- Mathlib: `f ⁻¹' s`
+          "{%s}^{-1}'{%s}"
         | `Subtype =>
           let postOp :=
             match args with
@@ -633,6 +699,17 @@ def Expr.latexFormat : Expr → String
             opStr
         | "choose", [_, _] =>
           "\\binom{%s}{%s}"
+        | "image", _ =>
+          -- `s.image f` → Mathlib `f '' s`
+          if args.length > idx then
+            "{%s}\\mathrel{\\text{''}}{%s}"
+          else
+            opStr
+        | "preimage", _ =>
+          if args.length > idx then
+            "{%s}^{-1}'{%s}"
+          else
+            opStr
         | "descFactorial", [_, _] =>
           "{%s}^{\\underline{%s}}"
         | "ascFactorial", [_, _] =>
@@ -907,6 +984,15 @@ where
                 map [base, start, stop, step]
           else
             map args
+        | .str _ "image" =>
+          -- `s.image f` → latex args in Mathlib order `f '' s`
+          match args.swap 0 idx with
+          | [s, f] => map [f, s]
+          | swapped => map swapped
+        | .str _ "preimage" =>
+          match args.swap 0 idx with
+          | [s, f] => map [f, s]
+          | swapped => map swapped
         | .str _ "hstack" =>
           if let some rows := e.blockMatrixRows then
             map rows.flatten
