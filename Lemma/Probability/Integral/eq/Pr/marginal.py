@@ -11,9 +11,8 @@ def apply(self):
 @prove(provable=False)
 def prove(Eq):
 
-
-    x, y, z = Symbol(real=True, random=True)
-    Eq << apply(Integral[x.var](Pr(x, y, z)))
+    x, y = Symbol(real=True, random=True)
+    Eq << apply(Integral[x.var](Pr(x, y)))
 
     # the following will result in a recursive reasoning:
     # Eq << Eq[-1].this.rhs.apply(Probability.Probability.to.Integral.joint, x)

@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq << Eq[0].apply(Bool.AllIn.of.All, (x, a, b))
 
-    Eq << Real.GtIntegral.of.All_Gt.apply(Eq[-1])
+    Eq << Real.GtIntegralS.of.All_Gt.apply(Eq[-1])
 
 
 if __name__ == '__main__':
