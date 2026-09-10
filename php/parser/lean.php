@@ -459,6 +459,10 @@ abstract class Lean extends IndentedNode
                 $i += $j - 1;
                 return $caret;
             case '.':
+                if ($tokens[$self->start_idx + 1] === '.') {
+                    $self->start_idx++;
+                    return $this->push_binary('LeanUpto');
+                }
                 if ($this instanceof LeanCaret && ($this->parent instanceof LeanStatements || $this->parent instanceof LeanSequentialTacticCombinator))
                     return $this->parent->insert_unary($this, 'LeanTacticBlock');
                 else
@@ -758,6 +762,8 @@ abstract class Lean extends IndentedNode
                 return $this->append('Lean_bigcup', 'operator');
             case '⋂':
                 return $this->append('Lean_bigcap', 'operator');
+            case '∫':
+                return $this->append('Lean_int', 'operator');
             case '¬':
                 return $this->parent->insert_unary($this, 'Lean_lnot');
             case '~':
@@ -2341,6 +2347,41 @@ abstract class LeanBinary extends LeanArgs
         return $this->rhs->set_line($line);
     }
 
+}
+
+/**
+ * Interval notation `a..b` used by `∫ x in a..b, f x` (Mathlib `notation3 "a".."b"`).
+ * Binds looser than arithmetic/relational nodes, matching the term-level parsing of the bounds.
+ */
+class LeanUpto extends LeanBinary
+{
+    public static $input_priority = 49; // LeanRelational::$input_priority - 1
+
+    public function __get($vname)
+    {
+        switch ($vname) {
+            case 'operator':
+            case 'command':
+                return '..';
+            default:
+                return parent::__get($vname);
+        }
+    }
+
+    public function sep()
+    {
+        return '';
+    }
+
+    public function strFormat()
+    {
+        return '%s..%s';
+    }
+
+    public function latexFormat()
+    {
+        return '%s..%s';
+    }
 }
 
 class LeanProperty extends LeanBinary
@@ -9956,6 +9997,22 @@ class LeanBigOperator extends LeanArgs
         $val->parent = $this;
     }
 
+    /**
+     * `∫ x : ℝ in a..b, f x` — the `in` domain modifier attaches to the bound as a sibling:
+     * bound becomes `LeanArgsSpaceSeparated [oldBound, LeanIn domain]`.
+     */
+    public function insert($caret, $func, $type)
+    {
+        if ($func === 'LeanIn' && $type === 'modifier' && $caret === $this->bound && $this->scope === null) {
+            $c = new LeanCaret($this->indent, $caret->level);
+            $domain = new LeanIn($c, $this->indent, $caret->level);
+            $this->bound = new LeanArgsSpaceSeparated([$caret, $domain], $this->indent, $caret->level);
+            return $c;
+        }
+        if ($this->parent)
+            return $this->parent->insert($this, $func, $type);
+    }
+
     public function insert_comma($caret)
     {
         if ($caret === $this->bound) {
@@ -10162,6 +10219,69 @@ class Lean_prod extends LeanBigOperator
             default:
                 return parent::__get($vname);
         }
+    }
+}
+
+class Lean_int extends LeanBigOperator
+{
+    public static $input_priority = 60;
+    public function __get($vname)
+    {
+        switch ($vname) {
+            case 'operator':
+                return '∫';
+            default:
+                return parent::__get($vname);
+        }
+    }
+
+    /** The `x : ℝ` binder, peeling the space-separated domain wrapper and parentheses. */
+    private function binderColon()
+    {
+        $b = $this->bound;
+        if ($b instanceof LeanArgsSpaceSeparated)
+            $b = $b->args[0];
+        if ($b instanceof LeanParenthesis)
+            $b = $b->arg;
+        return $b instanceof LeanColon ? $b : null;
+    }
+
+    /** Domain after `in`, if any (e.g. `a..b` or `Ioc a b`). */
+    private function intDomain()
+    {
+        $b = $this->bound;
+        if ($b instanceof LeanArgsSpaceSeparated) {
+            foreach ($b->args as $a) {
+                if ($a instanceof LeanIn)
+                    return $a->arg;
+            }
+        }
+        return null;
+    }
+
+    // Standard math notation: \int\limits_a^b f(x)\,\mathrm{d}x
+    // (cf. SymPy LatexPrinter._print_Integral).
+    public function latexFormat()
+    {
+        $dom = $this->intDomain();
+        if ($dom instanceof LeanUpto)
+            return '\\int\\limits_{%s}^{%s} %s\\, \\mathrm{d}%s';
+        if ($dom !== null)
+            return '\\int\\limits_{%s} %s\\, \\mathrm{d}%s';
+        return '\\int %s\\, \\mathrm{d}%s';
+    }
+
+    public function latexArgs(&$syntax = null)
+    {
+        $colon = $this->binderColon();
+        $x = $colon ? $colon->lhs->toLatex($syntax) : '';
+        $body = $this->scope ? $this->scope->toLatex($syntax) : '';
+        $dom = $this->intDomain();
+        if ($dom instanceof LeanUpto)
+            return [$dom->lhs->toLatex($syntax), $dom->rhs->toLatex($syntax), $body, $x];
+        if ($dom !== null)
+            return [$dom->toLatex($syntax), $body, $x];
+        return [$body, $x];
     }
 }
 

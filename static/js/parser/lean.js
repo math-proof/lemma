@@ -511,6 +511,10 @@ export class Lean extends IndentedNode {
                 return caret;
             }
             case '.':
+                if (tokens[self.start_idx + 1] === '.') {
+                    self.start_idx++;
+                    return this.push_binary(LeanUpto);
+                }
                 if (
                     this instanceof LeanCaret &&
                     (this.parent instanceof LeanStatements || this.parent instanceof LeanSequentialTacticCombinator)
@@ -836,6 +840,8 @@ export class Lean extends IndentedNode {
                 return this.append('Lean_bigcup', 'operator');
             case '⋂':
                 return this.append('Lean_bigcap', 'operator');
+            case '∫':
+                return this.append('Lean_int', 'operator');
             case '¬':
                 return this.parent.insert_unary(this, 'Lean_lnot');
             case '~':
@@ -2598,6 +2604,34 @@ export class LeanBinary extends LeanArgs {
         if (op == null) return super.strFormat();
         const sep = this.sep();
         return `%s ${op}${sep}%s`;
+    }
+}
+
+/**
+ * Interval notation `a..b` used by `∫ x in a..b, f x` (Mathlib `notation3 "a".."b"`).
+ * Binds looser than arithmetic/relational nodes, matching the term-level parsing of the bounds.
+ */
+export class LeanUpto extends LeanBinary {
+    static input_priority = 49; // LeanRelational::$input_priority - 1
+
+    get operator() {
+        return '..';
+    }
+
+    get command() {
+        return '..';
+    }
+
+    strFormat() {
+        return '%s..%s';
+    }
+
+    latexFormat() {
+        return '%s..%s';
+    }
+
+    sep() {
+        return '';
     }
 }
 
@@ -10049,6 +10083,20 @@ class LeanBigOperator extends LeanArgs {
         };
     }
 
+    /**
+     * `∫ x : ℝ in a..b, f x` — the `in` domain modifier attaches to the bound as a sibling:
+     * bound becomes `LeanArgsSpaceSeparated [oldBound, LeanIn domain]`.
+     */
+    insert(caret, func, type) {
+        if (func === 'LeanIn' && type === 'modifier' && caret === this.bound && this.scope == null) {
+            const c = new LeanCaret(this.indent, caret.level);
+            const domain = new LeanIn(c, this.indent, caret.level);
+            this.bound = new LeanArgsSpaceSeparated([caret, domain], this.indent, caret.level);
+            return c;
+        }
+        if (this.parent) return this.parent.insert(this, func, type);
+    }
+
     insert_comma(caret) {
         if (caret === this.bound) {
             const c = new LeanCaret(this.indent, caret.level);
@@ -10186,6 +10234,52 @@ class Lean_prod extends LeanBigOperator {
     static input_priority = 67;
     get operator() {
         return '∏';
+    }
+}
+
+class Lean_int extends LeanBigOperator {
+    static input_priority = 60;
+    get operator() {
+        return '∫';
+    }
+
+    /** The `x : ℝ` binder, peeling the space-separated domain wrapper and parentheses. */
+    binderColon() {
+        let b = this.bound;
+        if (b instanceof LeanArgsSpaceSeparated) b = b.args[0];
+        if (b instanceof LeanParenthesis) b = b.arg;
+        return b instanceof LeanColon ? b : null;
+    }
+
+    /** Domain after `in`, if any (e.g. `a..b` or `Ioc a b`). */
+    intDomain() {
+        const b = this.bound;
+        if (b instanceof LeanArgsSpaceSeparated) {
+            const inNode = b.args.find((a) => a instanceof LeanIn);
+            return inNode ? inNode.arg : null;
+        }
+        return null;
+    }
+
+    // Standard math notation: \int\limits_a^b f(x)\,\mathrm{d}x
+    // (cf. SymPy LatexPrinter._print_Integral).
+    latexFormat() {
+        const dom = this.intDomain();
+        if (dom instanceof LeanUpto) return '\\int\\limits_{%s}^{%s} %s\\, \\mathrm{d}%s';
+        if (dom != null) return '\\int\\limits_{%s} %s\\, \\mathrm{d}%s';
+        return '\\int %s\\, \\mathrm{d}%s';
+    }
+
+    latexArgs(syntax) {
+        const colon = this.binderColon();
+        const x = colon ? colon.lhs.toLatex(syntax) : '';
+        const body = this.scope ? this.scope.toLatex(syntax) : '';
+        const dom = this.intDomain();
+        if (dom instanceof LeanUpto) {
+            return [dom.lhs.toLatex(syntax), dom.rhs.toLatex(syntax), body, x];
+        }
+        if (dom != null) return [dom.toLatex(syntax), body, x];
+        return [body, x];
     }
 }
 
@@ -10373,6 +10467,7 @@ const LEAN_CLASSES = {
     LeanBlockComment,
     LeanDocString,
     LeanProperty,
+    LeanUpto,
     LeanGetElem,
     LeanGetElemQue,
     LeanGetElemQuote,
@@ -10464,6 +10559,7 @@ const LEAN_CLASSES = {
     Lean_ominus,
     Lean_oslash,
     Lean_prod,
+    Lean_int,
     Lean_circledcirc,
     Lean_circledast,
     Lean_circleeq,

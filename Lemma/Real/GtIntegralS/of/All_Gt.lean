@@ -2,7 +2,9 @@ import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
 import sympy.Basic
 
 
-@[main]
+-- @[comm 8] flips binder `h` (bit 3), generating the strict-less counterpart
+-- Real.LtIntegralS.of.All_Gt.ioo (the `All_Gt` token itself is not prefix-flipped).
+@[main, comm 8]
 private lemma ioo
   {a b : ℝ}
   {f g : ℝ → ℝ}
@@ -68,4 +70,4 @@ private lemma icc
     fun x hx ↦ h x (Set.Ioc_subset_Icc_self hx)
 
 
--- created on 2026-09-10
+-- created on 2019-01-28
