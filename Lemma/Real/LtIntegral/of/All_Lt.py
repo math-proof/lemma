@@ -17,7 +17,7 @@ def prove(Eq):
 
     Eq << Eq[0].reversed
 
-    Eq << Real.GtIntegral.of.All_Gt.ioo.apply(Eq[-1])
+    Eq << Real.GtIntegral.of.All_Gt.apply(Eq[-1])
 
     Eq << Eq[-1].reversed
 

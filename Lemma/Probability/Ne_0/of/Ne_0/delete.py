@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq << Nat.Gt_0.of.Ne_0.apply(Eq[0])
 
-    Eq << Real.GtIntegral.of.All_Gt.apply(Eq[-1], (y.var,))
+    Eq << Real.GtIntegral.of.All_Gt.bind.apply(Eq[-1], (y.var,))
 
     Eq << Eq[-1].subs(Eq.y_marginal_probability)
 
