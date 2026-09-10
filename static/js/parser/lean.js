@@ -5309,7 +5309,10 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                             st.toLatex(syntax);
                             implicit.push(st);
                         } else if (st instanceof LeanArgsSpaceSeparated) {
-                            if (st.args[0] instanceof LeanBracket) instImplicit.push(strStmt(st));
+                            if (st.args.some((a) => a instanceof LeanParenthesis)) {
+                                declList.splice(i, 1, ...st.args);
+                                --i;
+                            } else if (st.args[0] instanceof LeanBracket) instImplicit.push(strStmt(st));
                             else if (st.args[0] instanceof LeanBrace) implicit.push(st);
                             else
                                 error.push({
@@ -7097,6 +7100,28 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         return [binder.toLatex(syntax), n.toLatex(syntax), arrow.rhs.toLatex(syntax)];
     }
 
+    /** An explicit named-implicit argument `(name := value)`, as in `eye (α := α) m`. */
+    isNamedImplicitArg(arg) {
+        const a = arg instanceof LeanParenthesis ? arg.arg : arg;
+        return a instanceof LeanAssign && a.lhs instanceof LeanToken;
+    }
+
+    /**
+     * The single positional argument of `eye n` / `Tensor.eye n`, ignoring explicit
+     * named-implicit args such as `(α := α)`; null for any other function or arity.
+     */
+    eyePositionalArgs(args) {
+        const func = args[0];
+        const isEye =
+            (func instanceof LeanToken && func.text === 'eye') ||
+            (func instanceof LeanProperty &&
+                func.rhs instanceof LeanToken &&
+                func.rhs.text === 'eye');
+        if (!isEye) return null;
+        const positional = args.slice(1).filter((arg) => !this.isNamedImplicitArg(arg));
+        return positional.length === 1 ? positional : null;
+    }
+
     is_indented() {
         const parent = this.parent;
         return (
@@ -7180,6 +7205,11 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         if (idInner) return [idInner.toLatex(syntax)];
         const {args} = this;
         const func = args[0];
+        if (this.is_MatProd()) return this.matProdLatexParts(syntax);
+        if (this.eyePositionalArgs(args)) {
+            if (syntax) syntax.eye = true;
+            return [];
+        }
         if (this.is_Abs()) {
             const stripped = this.strip_parenthesis();
             return [stripped[1].toLatex(syntax)];
@@ -7224,8 +7254,6 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
                             if (arg instanceof LeanParenthesis && arg.arg instanceof LeanDiv) arg = arg.arg;
                             return [arg.toLatex(syntax)];
                         }
-                        case 'eye':
-                            return [];
                         case 'Zeros':
                         case 'Ones': {
                             const s = this.strip_parenthesis();
@@ -7248,15 +7276,6 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
             return [stripped[1].toLatex(syntax)];
         } else if (this.is_Sum() || this.is_Prod()) {
             return this.args[0].lhs.arg.latexArgs();
-        } else if (this.is_MatProd()) {
-            return this.matProdLatexParts(syntax);
-        } else if (
-            func instanceof LeanProperty &&
-            func.rhs instanceof LeanToken &&
-            func.rhs.text === 'eye' &&
-            args.length === 2
-        ) {
-            return [];
         } else if (
             func instanceof LeanProperty &&
             func.rhs instanceof LeanToken &&
@@ -7282,6 +7301,8 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         const {args} = this;
         const func = args[0];
         if (this.is_Abs()) return '\\left|{%s}\\right|';
+        if (this.is_MatProd()) return '\\prod\\limits_{%s < %s} {%s}';
+        if (this.eyePositionalArgs(args)) return '\\mathbb{I}';
         const interval = this.intervalLatexFormat();
         if (interval) return interval;
         const factorialPower = this.factorialPowerLatexFormat();
@@ -7309,8 +7330,6 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
                         case 'arctanh':
                         case 'arccoth':
                             return `${func.text}\\ {%s}`;
-                        case 'eye':
-                            return '\\mathbb{I}';
                         case 'Zeros':
                             return '\\mathbf{0}_{%s}';
                         case 'Ones':
@@ -7331,10 +7350,7 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
             return '\\left|{%s}\\right|';
         } else if (this.is_Sum() || this.is_Prod()) {
             return `\\${this.args[0].rhs.text}\\limits_{\\substack{%s}} {%s}`;
-        } else if (this.is_MatProd()) {
-            return '\\prod\\limits_{%s < %s} {%s}';
         } else if (func instanceof LeanProperty && func.rhs instanceof LeanToken) {
-            if (func.rhs.text === 'eye' && args.length === 2) return '\\mathbb{I}';
             if (func.rhs.text === 'fmod' && args.length === 2) return '{%s}{%s}';
             if (func.rhs.text === 'choose' && (args.length === 2 || args.length === 3))
                 return '\\binom{%s}{%s}';

@@ -5,7 +5,7 @@ import Lemma.Tensor.Dot.eq.SumMul__0
 import Lemma.Tensor.GetDot.eq.DotGet
 import Lemma.Tensor.GetDot.eq.DotGetS
 import Lemma.Tensor.GetMul.eq.MulGetS
-import Lemma.Tensor.GetTranspose.eq.Get
+import Lemma.Tensor.EqGetT
 import Lemma.Tensor.Sum_0.eq.Sum_Get
 import Lemma.Vector.GetMap.eq.UFnGet
 open Fin Tensor Vector
@@ -37,7 +37,7 @@ private lemma main
   funext k
   simp [GetElem.getElem]
   conv_lhs => erw [@Tensor.GetMul.eq.MulGetS.fin]
-  have h := GetTranspose.eq.Get.fin B k j
+  have h := EqGetT.fin B k j
   have := congrArg (fun x => (A.get i).get k * x) h
   simp [HMul.hMul] at ⊢ this
   erw [this]

@@ -36,20 +36,17 @@ private lemma main
   let X := C.hstack A ++ B.hstack (0 : Tensor α [n, m])
   let P := (0 : Tensor α [n, m]).hstack (Tensor.eye n) ++ (Tensor.eye m).hstack (0 : Tensor α [m, n])
   let T := A.hstack C ++ (0 : Tensor α [n, m]).hstack B
-  have hC0 : id (α := Tensor α [m, m]) (C @ (0 : Tensor α [n, m])) = 0 := by
-    simp [id, EqDot_0'0]
+  have hC0 : id (α := Tensor α [m, m]) (C @ (0 : Tensor α [n, m])) = 0 := EqDot_0'0 C
   have hAI : id (α := Tensor α [m, m]) (A @ Tensor.eye (α := α) m) = A := by
-    simp [id, EqDot_Eye (α := α)]
+    simp [id, EqDot_Eye]
   have hCI : id (α := Tensor α [m, n]) (C @ Tensor.eye (α := α) n) = C := by
-    simp [id, EqDot_Eye (α := α)]
-  have hA0 : id (α := Tensor α [m, n]) (A @ (0 : Tensor α [m, n])) = 0 := by
-    simp [id, EqDot_0'0]
-  have hB0 : id (α := Tensor α [n, m]) (B @ (0 : Tensor α [n, m])) = 0 := by
-    simp [id, EqDot_0'0]
+    simp [id, EqDot_Eye]
+  have hA0 : id (α := Tensor α [m, n]) (A @ (0 : Tensor α [m, n])) = 0 := EqDot_0'0 A
+  have hB0 : id (α := Tensor α [n, m]) (B @ (0 : Tensor α [n, m])) = 0 := EqDot_0'0 B
   have h0I : id (α := Tensor α [n, m]) ((0 : Tensor α [n, m]) @ Tensor.eye (α := α) m) = 0 := by
     simp [id, EqDot0_0]
   have hBI : id (α := Tensor α [n, n]) (B @ Tensor.eye (α := α) n) = B := by
-    simp [id, EqDot_Eye (α := α)]
+    simp [id, EqDot_Eye]
   have h00 : id (α := Tensor α [n, n]) ((0 : Tensor α [n, m]) @ (0 : Tensor α [m, n])) = 0 := by
     simp [id, EqDot0_0]
   have hprod : X @ P = T := by
@@ -111,10 +108,9 @@ private lemma main
             rw [← hdot']
       _ = ((-1 : Tensor α []) ^ (m * n)) * id (α := Tensor α []) T.det := by
             rw [hXPdet]
-  show id (α := Tensor α []) X.det =
-      (-1) ^ (m * n) * id (α := Tensor α []) A.det * id (α := Tensor α []) B.det
+  show id (α := Tensor α []) X.det = (-1) ^ (m * n) * id (α := Tensor α []) A.det * id (α := Tensor α []) B.det
   rw [hsign, hT]
-  exact (Tensor.MulMul.eq.Mul_Mul _ _ _).symm
+  exact (MulMul.eq.Mul_Mul _ _ _).symm
 
 
 -- created on 2020-08-19

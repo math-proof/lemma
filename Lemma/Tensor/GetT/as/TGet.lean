@@ -11,7 +11,7 @@ import Lemma.List.GetPermute.eq.Get.of.Gt
 import Lemma.List.GetPermute__Neg.eq.Get_0.of.Gt
 import Lemma.List.Swap.eq.PermutePermute.of.Lt.GtLength
 import Lemma.Tensor.GetDite.eq.Get.of.Not
-import Lemma.Tensor.LengthTranspose.eq.Length.of.GtLength_2
+import Lemma.Tensor.LengthT.eq.Length.of.GtLength_2
 import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
 open Bool List Tensor
 
@@ -23,7 +23,7 @@ private lemma main
   (i : Fin b) :
 -- imply
   have : i < Xᵀ.length := by
-    rw [LengthTranspose.eq.Length.of.GtLength_2]
+    rw [LengthT.eq.Length.of.GtLength_2]
     repeat grind
   Xᵀ[i] ≃ X[i]ᵀ := by
 -- proof

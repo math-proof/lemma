@@ -2,7 +2,7 @@ import Lemma.Nat.Delta.eq.Ite
 import Lemma.Tensor.Eq.is.All_EqGetS
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Tensor.GetMulEye_Stack.eq.MulDelta
-import Lemma.Tensor.GetTranspose.eq.Get
+import Lemma.Tensor.EqGetT
 import Lemma.Tensor.Mul
 import sympy.matrices.expressions.special
 open Nat Tensor
@@ -30,7 +30,7 @@ private lemma main
   intro i
   apply Eq.of.All_EqGetS.fin
   intro j
-  conv_lhs => erw [GetTranspose.eq.Get.fin]
+  conv_lhs => erw [EqGetT.fin]
   have hL := (GetMulEye_Stack.eq.MulDelta x j i).trans (Tensor.Mul (↑(KroneckerDelta j i) : Tensor α []) (id (α := Tensor α []) x[i]))
   have hR := (GetMulEye_Stack.eq.MulDelta x i j).trans (Tensor.Mul (↑(KroneckerDelta i j) : Tensor α []) (id (α := Tensor α []) x[j]))
   simp only [id, M, I] at hL hR ⊢

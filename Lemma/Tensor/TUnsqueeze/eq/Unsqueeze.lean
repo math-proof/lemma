@@ -1,5 +1,5 @@
 import Lemma.Bool.SEq.is.Eq
-import Lemma.Tensor.TransposeUnsqueeze_Length.as.Unsqueeze
+import Lemma.Tensor.TUnsqueeze_Length.as.Unsqueeze
 open Bool Tensor
 
 
@@ -11,7 +11,7 @@ private lemma main
 -- imply
   (X.unsqueeze 1)ᵀ = X.unsqueeze 0 := by
 -- proof
-  have := TransposeUnsqueeze_Length.as.Unsqueeze X
+  have := TUnsqueeze_Length.as.Unsqueeze X
   simp at this
   apply Eq.of.SEq this
 
@@ -24,7 +24,7 @@ private lemma deux
 -- imply
   (X.unsqueeze 2)ᵀ = X.unsqueeze 1 := by
 -- proof
-  have := TransposeUnsqueeze_Length.as.Unsqueeze X
+  have := TUnsqueeze_Length.as.Unsqueeze X
   simp at this
   apply Eq.of.SEq this
 

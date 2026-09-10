@@ -49,7 +49,7 @@ private lemma mv
   (A : Tensor α [n, k])
   (C : Tensor α [k]) :
 -- imply
-  A @ C = [i < n] ∑ p : Fin k, (id (α := Tensor α []) A[i][p]) * (id (α := Tensor α []) C[p]) := by
+  A @ C = [i < n] ∑ p : Fin k, id (α := Tensor α []) A[i][p] * id (α := Tensor α []) C[p] := by
 -- proof
   apply Eq.of.All_EqGetS.fin
   intro i

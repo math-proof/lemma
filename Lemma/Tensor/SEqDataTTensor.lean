@@ -21,7 +21,7 @@ open Fin List Nat Tensor Vector
 set_option maxHeartbeats 400000
 
 
-@[main]
+@[main, cast]
 private lemma main
 -- given
   (v : List.Vector α [n].prod) :
@@ -89,7 +89,7 @@ private lemma main
     simp
 
 
-@[main]
+@[main, cast]
 private lemma row
 -- given
   (v : List.Vector α [1, n].prod) :

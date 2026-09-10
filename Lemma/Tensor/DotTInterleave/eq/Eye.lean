@@ -1,10 +1,5 @@
 import Lemma.Tensor.EqDot_Eye
-import Lemma.Tensor.Interleave.eq.AppendStackS_Delta
-import Lemma.Tensor.RotaryMatrix'.eq.DotDot_RotaryMatrix
 import Lemma.Tensor.RotaryMatrix'0.eq.Eye
-import Lemma.Tensor.RotaryMatrix0.eq.Eye
-import sympy.matrices.expressions.special
-import sympy.tensor.functions
 open Tensor
 
 

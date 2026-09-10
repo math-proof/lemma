@@ -5,7 +5,7 @@ import Lemma.Nat.Ge.of.Ge.Ge
 import Lemma.Set.Le.of.In_Ico
 import Lemma.Set.Lt.of.In_Ico
 import Lemma.Set.In_SDiff.is.In.NotIn
-import Lemma.Set.NotIn.of.In_SDiff
+import Lemma.Set.NotIn.is.In_SDiff
 import Lemma.Set.In.of.In_SDiff
 open Set Bool Nat
 

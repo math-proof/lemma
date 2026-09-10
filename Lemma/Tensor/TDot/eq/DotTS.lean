@@ -2,7 +2,7 @@ import Lemma.Tensor.Dot
 import Lemma.Tensor.Eq.is.All_EqGetS
 import Lemma.Tensor.EqTT
 import Lemma.Tensor.GetDot.eq.DotGetS
-import Lemma.Tensor.GetTranspose.eq.Get
+import Lemma.Tensor.EqGetT
 open Tensor
 
 
@@ -19,7 +19,7 @@ private lemma main
   intro i
   apply Eq.of.All_EqGetS.fin
   intro j
-  conv_lhs => erw [GetTranspose.eq.Get.fin]
+  conv_lhs => erw [EqGetT.fin]
   conv_lhs => erw [GetDot.eq.DotGetS.fin]
   conv_rhs => erw [GetDot.eq.DotGetS.fin]
   conv_rhs =>

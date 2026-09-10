@@ -5,7 +5,7 @@ import Lemma.Tensor.Eq.is.All_EqGetS
 import Lemma.Tensor.GetAppend.eq.Get.of.Lt
 import Lemma.Tensor.GetAppend.eq.Get_Sub.of.GtAdd.Ge
 import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
-import Lemma.Tensor.GetTranspose.eq.Get
+import Lemma.Tensor.EqGetT
 import Lemma.Tensor.SEqGetS.of.SEq.GtLength
 open Bool List Tensor
 set_option maxHeartbeats 400000
@@ -40,7 +40,7 @@ private lemma main
     SEqGetS.of.SEq.GtLength (i := (j : ℕ))
       (h₀ := by simp [Tensor.length])
       hL
-  have hT := GetTranspose.eq.Get.fin (A ++ B) (i := j) (j := i)
+  have hT := EqGetT.fin (A ++ B) (i := j) (j := i)
   refine hLj.trans ((SEq.of.Eq hT).trans ?_)
   if hj : (j : ℕ) < n then
     have hAj := GetAppend.eq.Get.of.Lt (A := A) (B := B) hj
@@ -57,7 +57,7 @@ private lemma main
           simp [Tensor.length]
           exact hj)
         hATj
-    have hTA := GetTranspose.eq.Get.fin A (i := ⟨j, hj⟩) (j := i)
+    have hTA := EqGetT.fin A (i := ⟨j, hj⟩) (j := i)
     refine (SEq.of.Eq (congrArg (fun t => t[i.val]) hAj)).trans ?_
     refine (SEq.of.Eq hTA.symm).trans ?_
     refine hATjj.symm.trans ?_
@@ -78,7 +78,7 @@ private lemma main
           simp [Tensor.length]
           omega)
         hBTj
-    have hTB := GetTranspose.eq.Get.fin B (i := ⟨(j : ℕ) - n, by omega⟩) (j := i)
+    have hTB := EqGetT.fin B (i := ⟨(j : ℕ) - n, by omega⟩) (j := i)
     refine (SEq.of.Eq (congrArg (fun t => t[i.val]) hBj)).trans ?_
     refine (SEq.of.Eq hTB.symm).trans ?_
     refine hBTjj.symm.trans ?_

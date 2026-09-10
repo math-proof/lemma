@@ -208,7 +208,7 @@ Eq_Log
 generally, if F is a binary function, and Y is its second argument, then
 F_Y denote the expression: F _ Y
 wherein:
-- _ (wild card) denotes any types of X
+- `_` (placeholder / hole) denotes the term to be inferred by Lean, i.e. any type for X
 - Y is the given type for the second argument of F
 
 ## Apostrophe
@@ -268,12 +268,13 @@ Guidelines and prompts for using LLMs to write and refactor Lean 4 proofs in thi
 ### Proof style
 - Use `obtain` instead of `rcases`, `if … then … else …` instead of `by_cases` (if it is not followed by `<;>`), `have` instead of `haveI`, and `let` instead of `letI`.
 - inline `have` without introducing `show` if it is referenced only once, e.g.: prefer `apply` instead of `exact`, perhaps by creating some holes.
-- use `calc` instead of `by calc`, start `calc` with _
+- use `calc` instead of `by calc`, start `calc` with `_`
 - no multi-line tactics inside parentheses, the tactic within compact type-ascribed `by` term (by tactic : Type) should be one-liner with no `;`
 - avoid `calc` within [] block of `rw`/`erw`/`simp`:
 - follow `show` with `from`/`by` instead of `from by`
 - `by exact expr` should be simplifed to `expr`
 - use `grind`/`aesop` as much as possible
+- in `apply`/`exact`, use `_` as arguments as much as possible, prefer `_` instead of `?_`/`?identifier`
 - After a bullet tactic (`·`), put the next statement on a new line when that branch contains more than one step.
 - implicit/instance (instImplicit) arguments should be put before the `given` section
 - default arguments should be put within the `given` section: propositions come first, expressions come next, unless otherwise specified

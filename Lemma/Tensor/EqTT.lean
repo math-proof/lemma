@@ -1,5 +1,5 @@
 import Lemma.Tensor.Eq.is.All_EqGetS
-import Lemma.Tensor.GetTranspose.eq.Get
+import Lemma.Tensor.EqGetT
 open Tensor
 
 
@@ -14,8 +14,8 @@ private lemma main
   intro i
   apply Eq.of.All_EqGetS.fin
   intro j
-  conv_lhs => erw [GetTranspose.eq.Get.fin]
-  conv_lhs => erw [GetTranspose.eq.Get.fin]
+  conv_lhs => erw [EqGetT.fin]
+  conv_lhs => erw [EqGetT.fin]
   rfl
 
 

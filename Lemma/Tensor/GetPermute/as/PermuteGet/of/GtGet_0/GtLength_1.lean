@@ -29,7 +29,6 @@ import Lemma.Vector.GetTranspose.eq.Get
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 open Bool List Nat Tensor Vector Fin
 set_option maxHeartbeats 400000
-set_option synthInstance.maxHeartbeats 200000
 
 
 @[main]

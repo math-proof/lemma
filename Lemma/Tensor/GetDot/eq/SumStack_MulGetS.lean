@@ -5,7 +5,7 @@ import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Tensor.EqGetUnsqueeze_0
 import Lemma.Tensor.GetDot.eq.DotGetS
 import Lemma.Tensor.GetMul.eq.MulGetS
-import Lemma.Tensor.GetTranspose.eq.Get
+import Lemma.Tensor.EqGetT
 import Lemma.Tensor.Sum_0.eq.SumStack_Get
 import Lemma.Tensor.SumStack.of.All_Eq
 import Lemma.Vector.GetMul.eq.MulGetS
@@ -34,7 +34,7 @@ private lemma main
   intro k
   simp [GetElem.getElem]
   conv_lhs => erw [GetMul.eq.MulGetS.fin]
-  have h := GetTranspose.eq.Get.fin B k j
+  have h := EqGetT.fin B k j
   have := congrArg (fun x => (A.get i).get k * x) h
   simp [HMul.hMul] at ⊢ this
   erw [this]

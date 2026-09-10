@@ -1,4 +1,4 @@
-import Lemma.Tensor.GetTranspose.eq.Get
+import Lemma.Tensor.EqGetT
 import sympy.matrices.dense
 open Matrix Tensor
 
@@ -11,7 +11,7 @@ private lemma main
   Xᵀ.toMatrix = X.toMatrixᵀ := by
 -- proof
   ext i j
-  exact GetTranspose.eq.Get X j i
+  exact EqGetT X j i
 
 
 -- created on 2026-09-07

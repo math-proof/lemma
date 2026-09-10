@@ -3,7 +3,7 @@ import Lemma.Tensor.GetAppend.eq.Get.of.Lt
 import Lemma.Tensor.GetAppend.eq.Get_Sub.of.GtAdd.Ge
 import Lemma.Tensor.GetHstack.eq.Get.of.Lt
 import Lemma.Tensor.GetHstack.eq.Get_Sub.of.GtAdd.Ge
-import Lemma.Tensor.GetTranspose.eq.Get
+import Lemma.Tensor.EqGetT
 import sympy.tensor.Basic
 open Tensor
 set_option maxHeartbeats 4000000
@@ -35,12 +35,12 @@ private lemma main
   have hi_pq : (i : ℕ) < p + q := i.isLt
   have hj_nm : (j : ℕ) < n + m := j.isLt
   conv_lhs =>
-    erw [GetTranspose.eq.Get.fin]
+    erw [EqGetT.fin]
   if hi : (i : ℕ) < p then
     if hj : (j : ℕ) < n then
       have hrow := GetAppend.eq.Get.of.Lt (A := A.hstack B) (B := C.hstack D) hj
       have hcell := GetHstack.eq.Get.of.Lt (A := A) (B := B) (i := ⟨j, hj⟩) hi
-      have hT := GetTranspose.eq.Get.fin A (i := ⟨j, hj⟩) (j := ⟨i, hi⟩)
+      have hT := EqGetT.fin A (i := ⟨j, hj⟩) (j := ⟨i, hi⟩)
       have hRrow := GetAppend.eq.Get.of.Lt (A := Aᵀ.hstack Cᵀ) (B := Bᵀ.hstack Dᵀ) hi
       have hRcell := GetHstack.eq.Get.of.Lt (A := Aᵀ) (B := Cᵀ) (i := ⟨i, hi⟩) hj
       refine (congrArg (fun t : Tensor α [p + q] => t[i]) hrow).trans ?_
@@ -51,7 +51,7 @@ private lemma main
       have hjn : (j : ℕ) - n < m := Nat.sub_lt_left_of_lt_add (le_of_not_gt hj) hj_nm
       have hrow := GetAppend.eq.Get_Sub.of.GtAdd.Ge (A := A.hstack B) (B := C.hstack D) (le_of_not_gt hj) hj_nm
       have hcell := GetHstack.eq.Get.of.Lt (A := C) (B := D) (i := ⟨(j : ℕ) - n, hjn⟩) hi
-      have hT := GetTranspose.eq.Get.fin C (i := ⟨(j : ℕ) - n, hjn⟩) (j := ⟨i, hi⟩)
+      have hT := EqGetT.fin C (i := ⟨(j : ℕ) - n, hjn⟩) (j := ⟨i, hi⟩)
       have hRrow := GetAppend.eq.Get.of.Lt (A := Aᵀ.hstack Cᵀ) (B := Bᵀ.hstack Dᵀ) hi
       have hRcell := GetHstack.eq.Get_Sub.of.GtAdd.Ge (A := Aᵀ) (B := Cᵀ) (i := ⟨i, hi⟩) (le_of_not_gt hj) hj_nm
       refine (congrArg (fun t : Tensor α [p + q] => t[i]) hrow).trans ?_
@@ -63,7 +63,7 @@ private lemma main
     if hj : (j : ℕ) < n then
       have hrow := GetAppend.eq.Get.of.Lt (A := A.hstack B) (B := C.hstack D) hj
       have hcell := GetHstack.eq.Get_Sub.of.GtAdd.Ge (A := A) (B := B) (i := ⟨j, hj⟩) (le_of_not_gt hi) hi_pq
-      have hT := GetTranspose.eq.Get.fin B (i := ⟨j, hj⟩) (j := ⟨(i : ℕ) - p, hip⟩)
+      have hT := EqGetT.fin B (i := ⟨j, hj⟩) (j := ⟨(i : ℕ) - p, hip⟩)
       have hRrow := GetAppend.eq.Get_Sub.of.GtAdd.Ge (A := Aᵀ.hstack Cᵀ) (B := Bᵀ.hstack Dᵀ) (le_of_not_gt hi) hi_pq
       have hRcell := GetHstack.eq.Get.of.Lt (A := Bᵀ) (B := Dᵀ) (i := ⟨(i : ℕ) - p, hip⟩) hj
       refine (congrArg (fun t : Tensor α [p + q] => t[i]) hrow).trans ?_
@@ -74,7 +74,7 @@ private lemma main
       have hjn : (j : ℕ) - n < m := Nat.sub_lt_left_of_lt_add (le_of_not_gt hj) hj_nm
       have hrow := GetAppend.eq.Get_Sub.of.GtAdd.Ge (A := A.hstack B) (B := C.hstack D) (le_of_not_gt hj) hj_nm
       have hcell := GetHstack.eq.Get_Sub.of.GtAdd.Ge (A := C) (B := D) (i := ⟨(j : ℕ) - n, hjn⟩) (le_of_not_gt hi) hi_pq
-      have hT := GetTranspose.eq.Get.fin D (i := ⟨(j : ℕ) - n, hjn⟩) (j := ⟨(i : ℕ) - p, hip⟩)
+      have hT := EqGetT.fin D (i := ⟨(j : ℕ) - n, hjn⟩) (j := ⟨(i : ℕ) - p, hip⟩)
       have hRrow := GetAppend.eq.Get_Sub.of.GtAdd.Ge (A := Aᵀ.hstack Cᵀ) (B := Bᵀ.hstack Dᵀ) (le_of_not_gt hi) hi_pq
       have hRcell := GetHstack.eq.Get_Sub.of.GtAdd.Ge (A := Bᵀ) (B := Dᵀ) (i := ⟨(i : ℕ) - p, hip⟩) (le_of_not_gt hj) hj_nm
       refine (congrArg (fun t : Tensor α [p + q] => t[i]) hrow).trans ?_

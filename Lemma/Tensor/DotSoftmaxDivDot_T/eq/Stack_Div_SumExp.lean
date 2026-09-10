@@ -8,7 +8,7 @@ import Lemma.Tensor.GetDiv.eq.DivGet
 import Lemma.Tensor.GetDot.eq.Dot_GetT
 import Lemma.Tensor.GetExp.eq.ExpGet
 import Lemma.Tensor.GetTCast_T.eq.Get
-import Lemma.Tensor.GetTranspose.eq.Get
+import Lemma.Tensor.EqGetT
 import Lemma.Tensor.Mul
 import Lemma.Tensor.SEqDotS.of.SEq
 import Lemma.Tensor.SEqExpS.of.SEq
@@ -65,7 +65,7 @@ private lemma main
       apply congrArg id
       apply congrArg₂
       ·
-        apply GetTranspose.eq.Get
+        apply EqGetT
       ·
         apply Eq.trans (GetExp.eq.ExpGet _ _)
         apply congrArg exp

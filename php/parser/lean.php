@@ -5457,6 +5457,24 @@ class LeanModule extends LeanStatements
                         $given = null;
                         $default = [];
                         $decidables = [];
+                        $flattened = [];
+                        foreach ($declspec as $s) {
+                            if ($s instanceof LeanArgsSpaceSeparated) {
+                                $hasParen = false;
+                                foreach ($s->args as $a)
+                                    if ($a instanceof LeanParenthesis) {
+                                        $hasParen = true;
+                                        break;
+                                    }
+                                if ($hasParen) {
+                                    foreach ($s->args as $a)
+                                        $flattened[] = $a;
+                                    continue;
+                                }
+                            }
+                            $flattened[] = $s;
+                        }
+                        $declspec = $flattened;
                         foreach ($declspec as $i => &$stmt) {
                             if ($stmt instanceof LeanBracket) {
                                 $instImplicit[] = "$stmt";
@@ -5495,6 +5513,7 @@ class LeanModule extends LeanStatements
                                 // the given comment is missing, try to add one
                                 if ($stmt->arg instanceof LeanColon) {
                                     std\array_insert($stmt->parent->args, $i, new LeanLineComment('given', $stmt->indent, $stmt->parent));
+                                    std\array_insert($declspec, $i, new LeanLineComment('given', $stmt->indent, $stmt->parent));
                                     $modify = true;
                                     ++$i;
                                 }
@@ -5505,6 +5524,15 @@ class LeanModule extends LeanStatements
 
                         if ($given !== null) {
                             $given = array_slice($declspec, $given);
+                            $flattened = [];
+                            foreach ($given as $s) {
+                                if ($s instanceof LeanArgsSpaceSeparated) {
+                                    foreach ($s->args as $a)
+                                        $flattened[] = $a;
+                                } else
+                                    $flattened[] = $s;
+                            }
+                            $given = $flattened;
                             $latex = [];
                             $givenStart = null;
                             $givenStop = null;
@@ -6811,6 +6839,36 @@ class LeanArgsSpaceSeparated extends LeanArgs
         return [$binder->toLatex($syntax), $n->toLatex($syntax), $arrow->rhs->toLatex($syntax)];
     }
 
+    /** An explicit named-implicit argument `(name := value)`, as in `eye (α := α) m`. */
+    public function is_named_implicit_arg($arg) : bool
+    {
+        if ($arg instanceof LeanParenthesis)
+            $arg = $arg->arg;
+        return $arg instanceof LeanAssign && $arg->lhs instanceof LeanToken;
+    }
+
+    /**
+     * The single positional argument of `eye n` / `Tensor.eye n`, ignoring explicit
+     * named-implicit args such as `(α := α)`; null for any other function or arity.
+     * @return array|null
+     */
+    public function eye_positional_args(array $args)
+    {
+        $func = $args[0] ?? null;
+        $isEye =
+            ($func instanceof LeanToken && $func->text === 'eye') ||
+            ($func instanceof LeanProperty &&
+                $func->rhs instanceof LeanToken &&
+                $func->rhs->text === 'eye');
+        if (!$isEye)
+            return null;
+        $positional = array_values(array_filter(
+            array_slice($args, 1),
+            fn($arg) => !$this->is_named_implicit_arg($arg)
+        ));
+        return count($positional) === 1 ? $positional : null;
+    }
+
     public function is_indented()
     {
         $parent = $this->parent;
@@ -6896,6 +6954,13 @@ class LeanArgsSpaceSeparated extends LeanArgs
             return [$idInner->toLatex($syntax)];
         $args = $this->args;
         $func = $args[0];
+        if ($this->is_MatProd())
+            return $this->matProdLatexParts($syntax);
+        if ($this->eye_positional_args($args)) {
+            if ($syntax !== null)
+                $syntax['eye'] = true;
+            return [];
+        }
         if ($this->is_Abs()) {
             $args = $this->strip_parenthesis();
             $arg = $args[1]->toLatex($syntax);
@@ -6932,8 +6997,6 @@ class LeanArgsSpaceSeparated extends LeanArgs
                             $arg = $arg->toLatex($syntax);
                             return [$arg];
 
-                        case 'eye':
-                            return [];
                         case 'Ici':
                         case 'Iic':
                         case 'Ioi':
@@ -6967,10 +7030,6 @@ class LeanArgsSpaceSeparated extends LeanArgs
             $args = $this->strip_parenthesis();
             $arg = $args[1]->toLatex($syntax);
             return [$arg];
-        } elseif ($this->is_MatProd()) {
-            return $this->matProdLatexParts($syntax);
-        } elseif ($func instanceof LeanProperty && $func->rhs instanceof LeanToken && $func->rhs->text === 'eye' && count($args) === 2) {
-            return [];
         } elseif ($func instanceof LeanProperty && $func->rhs instanceof LeanToken && $func->rhs->text === 'choose' && (count($args) === 2 || count($args) === 3)) {
             $n = count($args) === 2 ? $func->lhs : $args[1];
             $k = count($args) === 2 ? $args[1] : $args[2];
@@ -6994,6 +7053,10 @@ class LeanArgsSpaceSeparated extends LeanArgs
         $func = $args[0];
         if ($this->is_Abs())
             return '\left|{%s}\right|';
+        if ($this->is_MatProd())
+            return '\\prod\\limits_{%s < %s} {%s}';
+        if ($this->eye_positional_args($args))
+            return '\\mathbb{I}';
         if ($func instanceof LeanToken) {
             switch (count($args)) {
                 case 2:
@@ -7027,8 +7090,6 @@ class LeanArgsSpaceSeparated extends LeanArgs
                         case 'Iio':
                             return '\left(-\infty, %s\right)';
 
-                        case 'eye':
-                            return '\\mathbb{I}';
                         case 'Zeros':
                             return '\mathbf{0}_{%s}';
                         case 'Ones':
@@ -7052,15 +7113,9 @@ class LeanArgsSpaceSeparated extends LeanArgs
             }
         } elseif ($this->is_Bool()) {
             return '\left|{%s}\right|';
-        } elseif ($this->is_MatProd()) {
-            return '\\prod\\limits_{%s < %s} {%s}';
         } elseif ($func instanceof LeanProperty) {
             if ($func->rhs instanceof LeanToken) {
                 switch ($func->rhs->text) {
-                    case 'eye':
-                        if (count($args) == 2)
-                            return '\\mathbb{I}';
-                        break;
                     case 'fmod':
                         if (count($args) == 2)
                             return '{%s}{%s}';

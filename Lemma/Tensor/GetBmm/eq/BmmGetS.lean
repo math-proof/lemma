@@ -1,4 +1,4 @@
-import Lemma.Tensor.GetTranspose.as.TransposeGet
+import Lemma.Tensor.GetT.as.TGet
 import Lemma.Tensor.GetUnsqueeze.as.UnsqueezeGet.of.GtGet_0.GtLength_0
 import Lemma.Tensor.GetRepeat.as.RepeatGet.of.GtGet_0.GtLength_0
 import Lemma.Tensor.GetSum.as.SumGet.of.GtGet_0.Gt_0.GtLength
@@ -91,7 +91,7 @@ private lemma main
   simp [GetCast.eq.Cast_Get.of.Eq.GtLength_0.right.fin (by grind) h_s_t₂]
   apply Unsqueeze.of.Eq
   apply Cast.of.SEq.Eq.left (by grind)
-  apply GetTranspose.as.TransposeGet
+  apply GetT.as.TGet
 
 
 -- created on 2026-06-24

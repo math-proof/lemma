@@ -11,7 +11,7 @@ import Lemma.Tensor.GetDot.eq.DotGetS
 import Lemma.Tensor.GetDotDot.eq.DotDotGet
 import Lemma.Tensor.GetDot_Dot.eq.Dot_Dot_GetT
 import Lemma.Tensor.Get.of.Eq
-import Lemma.Tensor.GetTranspose.eq.Get
+import Lemma.Tensor.EqGetT
 import Lemma.Tensor.Mul
 open Tensor Fin
 set_option maxHeartbeats 1000000
@@ -47,7 +47,7 @@ private lemma vmv
     apply Sum.of.All_Eq
     intro i
     apply congrArg (fun t => id (α := Tensor α []) v[i] * id (α := Tensor α []) t)
-    exact GetTranspose.eq.Get M i k
+    apply EqGetT
   trans ∑ k : Fin n, ∑ i : Fin m, (id (α := Tensor α []) v[i] * id (α := Tensor α []) M[i][k]) * id (α := Tensor α []) w[k]
   ·
     apply Sum.of.All_Eq
