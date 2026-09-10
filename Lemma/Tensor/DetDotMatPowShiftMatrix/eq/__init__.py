@@ -1,1 +1,1 @@
-from . import Mul_Det
+from . import MulNeg_Det

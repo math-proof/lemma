@@ -16,7 +16,7 @@ def prove(Eq):
     S = Symbol(etype=dtype.real)
     Eq << apply(NotElement(x, S))
 
-    Eq << Set.In_SDiff.given.And.apply(Eq[1])
+    Eq << Set.In_SDiff.given.In.NotIn.apply(Eq[1])
 
 
 

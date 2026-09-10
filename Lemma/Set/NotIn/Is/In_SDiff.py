@@ -18,9 +18,9 @@ def prove(Eq):
 
     Eq << Bool.Iff.given.Imp.Imp.apply(Eq[0])
 
-    Eq << Eq[-2].this.lhs.apply(Set.In.SDiff.of.NotIn)
+    Eq << Eq[-2].this.lhs.apply(Set.In_SDiff.of.NotIn)
 
-    Eq << Eq[-1].this.rhs.apply(Set.NotIn.given.In.SDiff)
+    Eq << Eq[-1].this.rhs.apply(Set.NotIn.given.In_SDiff)
 
 
 

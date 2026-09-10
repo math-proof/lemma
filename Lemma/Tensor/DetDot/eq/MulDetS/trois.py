@@ -22,11 +22,11 @@ def prove(Eq):
     D = Symbol(A @ B)
     Eq << Eq[0].subs(D.this.definition.reversed)
 
-    Eq << Eq[-1].this.lhs.apply(Tensor.DetDot.eq.MulDotS)
+    Eq << Eq[-1].this.lhs.apply(Tensor.DetDot.eq.MulDetS)
 
     Eq << Eq[-1].this.lhs.args[1].arg.definition
 
-    Eq << Eq[-1].this.find(Det[MatMul]).apply(Tensor.DetDot.eq.MulDotS)
+    Eq << Eq[-1].this.find(Det[MatMul]).apply(Tensor.DetDot.eq.MulDetS)
 
 
 

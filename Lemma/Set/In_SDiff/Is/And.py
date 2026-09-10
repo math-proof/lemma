@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Eq[-2].this.lhs.apply(Set.In.NotIn.of.In_SDiff)
 
-    Eq << Eq[-1].this.rhs.apply(Set.In_SDiff.given.And, simplify=None)
+    Eq << Eq[-1].this.rhs.apply(Set.In_SDiff.given.In.NotIn, simplify=None)
 
 
 

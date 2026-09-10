@@ -26,7 +26,7 @@ def apply(all0, all1):
 
 @prove(proved=False)
 def prove(Eq):
-    from Lemma import Finset, Set, Bool
+    from Lemma import Finset, Set, Bool, Tensor
 
     n = Symbol(domain=Range(2, oo))
     S = Symbol(etype=dtype.integer[n])
@@ -37,7 +37,7 @@ def prove(Eq):
 
     Eq << Finset.Eq.of.Eq.swap2.general.apply(Eq[0])
 
-    Eq.permutation = Finset.All_In.of.All_In.swapn.permutation.apply(Eq[-1])
+    Eq.permutation = Tensor.All_InStack.of.All_InDotSwapMatrix.apply(Eq[-1])
 
     Eq << Eq.permutation.limits[0][1].this.definition
 

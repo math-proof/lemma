@@ -1,7 +1,7 @@
 from util import *
 
 
-@apply
+@apply(given=True)
 def apply(eq, x):
     (i, j), wij = eq.of(Equal[ShiftMatrix])
     n, = x.shape
@@ -39,11 +39,11 @@ def prove(Eq):
     Eq << Eq[-1].this.rhs.find(Piecewise, Piecewise).apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite, 1)
 
     #\.et\w*\.(to|given)
-    Eq << Eq[-1].this.rhs.find(Piecewise, Piecewise).find(And).apply(Set.Ne.NotIn.Is.NotIn)
+    Eq << Eq[-1].this.rhs.find(Piecewise, Piecewise).find(And).apply(Set.Ne.NotIn.Is.NotIn_Union)
 
-    Eq << Eq[-1].this.rhs().expr.args[1].find(NotElement).apply(Set.NotIn.Is.In.SDiff)
+    Eq << Eq[-1].this.rhs().expr.args[1].find(NotElement).apply(Set.NotIn.Is.In_SDiff)
 
-    Eq << Eq[-1].this.rhs().expr.args[1].find(NotElement).apply(Set.NotIn.Is.In.SDiff)
+    Eq << Eq[-1].this.rhs().expr.args[1].find(NotElement).apply(Set.NotIn.Is.In_SDiff)
 
     Eq << Eq[-1].this.rhs.find(Piecewise, Piecewise).apply(Bool.Ite__Ite.eq.Ite__IteAnd_Not, 0)
 

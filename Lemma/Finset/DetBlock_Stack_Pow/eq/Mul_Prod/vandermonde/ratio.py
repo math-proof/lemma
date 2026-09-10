@@ -33,7 +33,7 @@ def prove(Eq):
 
     Eq << Tensor.Det.of.Eq.apply(Eq[-1])
 
-    Eq << Eq[-1].this.lhs.apply(Tensor.DetDot.eq.MulDotS)
+    Eq << Eq[-1].this.lhs.apply(Tensor.DetDot.eq.MulDetS)
 
     Eq << Eq[-1].this.rhs.apply(Finset.Det.Block.eq.Mul)
 

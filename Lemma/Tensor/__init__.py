@@ -149,3 +149,7 @@ from . import EqToMatrixStack
 from . import All_InDotSwapMatrix
 from . import DetDotStackS
 from . import Any_Eq_Dot_MatProd_SwapMatrix
+from . import All_InStack
+from . import Card
+from . import EqDot_DotShiftMatrix
+from . import EqDotDot_ShiftMatrix

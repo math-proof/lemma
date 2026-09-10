@@ -3,7 +3,7 @@ from . import NotIn
 from . import Lt
 from . import Any
 from . import Ge
-from . import In
 from . import Or
 from . import Gt
 from . import Eq_Empty
+from . import In_SDiff

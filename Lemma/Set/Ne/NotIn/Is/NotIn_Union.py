@@ -22,9 +22,9 @@ def prove(Eq):
 
     Eq << Bool.Iff.given.Imp.Imp.apply(Eq[-1])
 
-    Eq << Eq[-2].this.lhs.apply(Set.NotIn.of.Ne.NotIn)
+    Eq << Eq[-2].this.lhs.apply(Set.NotIn_Union.of.NotIn.Ne)
 
-    Eq << Eq[-1].this.rhs.apply(Set.Ne.NotIn.given.NotIn)
+    Eq << Eq[-1].this.rhs.apply(Set.Ne.NotIn.given.NotIn_Union)
 
 
 if __name__ == '__main__':

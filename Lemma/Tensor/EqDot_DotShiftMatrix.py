@@ -1,7 +1,7 @@
 from util import *
 
 
-@apply
+@apply(given=True)
 def apply(eq, x):
     (i, j), wij = eq.of(Equal[ShiftMatrix])
     n, = x.shape

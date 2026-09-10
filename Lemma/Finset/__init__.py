@@ -17,8 +17,6 @@ from . import Cup
 from . import Det
 from . import Diff
 from . import Eq
-from . import EqFactorial
-from . import EqSwapMatrix
 from . import Factorial
 from . import K
 from . import Mul
@@ -113,3 +111,4 @@ from . import Any_Eq_Sub_1
 from . import DetBlock_Stack_Pow
 from . import Eq_0
 from . import EqImageRange
+from . import EqSwapMatrix

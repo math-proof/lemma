@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << Bool.Imp.of.Imp_Ite.apply(Eq.former)
 
-    Eq << Eq[-1].this.lhs.apply(Set.In_SDiff.given.And, simplify=None)
+    Eq << Eq[-1].this.lhs.apply(Set.In_SDiff.given.In.NotIn, simplify=None)
 
     Eq << Bool.Imp.And.of.Imp_And.subst.Bool.apply(Eq[-1], index=1, invert=True)
 

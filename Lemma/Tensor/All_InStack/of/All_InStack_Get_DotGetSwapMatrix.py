@@ -23,7 +23,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Tensor
+    from Lemma import Tensor
 
     n = Symbol(domain=Range(2, oo))
     S = Symbol(etype=dtype.integer[n])
@@ -36,7 +36,7 @@ def prove(Eq):
 
     Eq << Eq.swap.subs(Eq[-1])
 
-    Eq << Finset.All_In.of.All_In.swapn.permutation.apply(Eq[-1])
+    Eq << Tensor.All_InStack.of.All_InDotSwapMatrix.apply(Eq[-1])
 
 
 if __name__ == '__main__':

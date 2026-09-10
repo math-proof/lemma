@@ -19,7 +19,7 @@ def prove(Eq):
     Eq << Set.Eq.given.All_Imp.All_Imp.apply(Eq[0])
 
     Eq <<= Eq[-2].this.lhs.apply(Set.In.NotIn.of.In_SDiff, simplify=None), \
-    Eq[-1].this.rhs.apply(Set.In_SDiff.given.And, simplify=None)
+    Eq[-1].this.rhs.apply(Set.In_SDiff.given.In.NotIn, simplify=None)
 
     Eq <<= Eq[-2].this.lhs.find(Element).simplify(), Eq[-1].this.rhs.find(Element).simplify()
 

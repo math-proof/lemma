@@ -28,4 +28,3 @@ if __name__ == '__main__':
 
 del Ne
 from . import Ne
-from . import NotIn

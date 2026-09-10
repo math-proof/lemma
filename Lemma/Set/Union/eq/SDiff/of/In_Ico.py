@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.lhs.apply(Set.OrInS.of.In_Union), Eq[-1].this.rhs.apply(Set.In_Union.given.OrInS)
 
-    Eq <<= Eq[-2].this.rhs.apply(Set.In_SDiff.given.And, simplify=False), Eq[-1].this.lhs.apply(Set.In.NotIn.of.In_SDiff)
+    Eq <<= Eq[-2].this.rhs.apply(Set.In_SDiff.given.In.NotIn, simplify=False), Eq[-1].this.lhs.apply(Set.In.NotIn.of.In_SDiff)
 
     Eq <<= Eq[-2].this.find(Element).apply(Set.In_Ico.Is.And), Eq[-1].this.find(Element).apply(Set.In_Ico.Is.And)
 
