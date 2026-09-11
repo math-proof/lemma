@@ -11,7 +11,7 @@ def apply(eq, Q_def, V_def, A_def, lt):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Probability, Nat
+    from Lemma import Tensor, Random, Nat
 
     b, D = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), real=True, random=True) # states / observation
@@ -37,15 +37,15 @@ def prove(Eq):
 
     Eq << Eq.hypothesis.this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.rhs.find(Expectation).apply(Probability.Expect.eq.Add)
+    Eq << Eq[-1].this.rhs.find(Expectation).apply(Random.Expect.eq.Add)
 
-    Eq.hypothesis = Eq[-1].this.find(Expectation[Mul[NegativeOne]]).apply(Probability.Expect.eq.Mul)
+    Eq.hypothesis = Eq[-1].this.find(Expectation[Mul[NegativeOne]]).apply(Random.Expect.eq.Mul)
 
-    Eq << Eq.hypothesis.rhs.find(-~Expectation).this.apply(Probability.Expect.law_of_iterated_expectation, s[t])
+    Eq << Eq.hypothesis.rhs.find(-~Expectation).this.apply(Random.Expect.law_of_iterated_expectation, s[t])
 
-    Eq << Eq[-1].this.find(Expectation[~Expectation]).apply(Probability.Expect.eq.Mul)
+    Eq << Eq[-1].this.find(Expectation[~Expectation]).apply(Random.Expect.eq.Mul)
 
-    Eq << Eq[-1].this.find(Mul[~Expectation]).apply(Probability.Expect_ConditionedGrad_LogPr.eq.Zero)
+    Eq << Eq[-1].this.find(Mul[~Expectation]).apply(Random.Expect_ConditionedGrad_LogPr.eq.Zero)
 
     Eq << Eq.hypothesis.subs(Eq[-1])
 

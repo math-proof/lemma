@@ -12,7 +12,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Real
+    from Lemma import Random, Real
 
     b, D = Symbol(domain=Range(2, oo))
     # D denotes the size of the trainable weights
@@ -23,17 +23,17 @@ def prove(Eq):
     γ = Symbol(domain=Interval(0, 1, right_open=True)) # Discount factor: penalty to uncertainty of future rewards; myopic for γ = 0; and far-sighted for γ = 1
     Eq << apply(Expectation[r[t + 1:], s[t + 1:], a[t:]](Sum[k:oo](γ ** k * r[t + k + 1]) | s[t]))
 
-    Eq << Eq[-1].lhs.this.apply(Probability.Expect.eq.Sum)
+    Eq << Eq[-1].lhs.this.apply(Random.Expect.eq.Sum)
 
     Eq << Eq[-1].this.rhs.apply(Real.Sum.eq.Integral)
 
-    Eq << Eq[-1].this.find(Sum[Pr]).apply(Probability.Sum.eq.Pr)
+    Eq << Eq[-1].this.find(Sum[Pr]).apply(Random.Sum.eq.Pr)
 
     Eq << Eq[-1].this.find(Integral).apply(Real.Integral.limits.swap)
 
     Eq << Eq[-1].this.find(Integral).apply(Real.Integral.limits.separate)
 
-    Eq << Eq[-1].this.find(Mul[~Integral]).apply(Probability.Integral.ae.Pr.marginal)
+    Eq << Eq[-1].this.find(Mul[~Integral]).apply(Random.Integral.ae.Pr.of.Measurable.Measurable.Probability)
 
     # http://incompleteideas.net/book/bookdraft2017nov5.pdf (Bellman equation Eq. 3.14)
 

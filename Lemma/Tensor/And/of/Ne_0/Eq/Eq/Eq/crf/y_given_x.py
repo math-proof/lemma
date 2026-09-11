@@ -32,7 +32,7 @@ def apply(x_independence_assumption, y_independence_assumption, xy_independence_
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Set, Bool, Probability, Real, Int, Finset, Nat
+    from Lemma import Tensor, Set, Bool, Random, Real, Int, Finset, Nat
 
     from Lemma.Tensor.Eq.of.Ne_0.Eq.Eq.Eq.crf.markov import markov_assumptions
     d, n = Symbol(domain=Range(2, oo))
@@ -104,14 +104,14 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Nat.Ne.given.Gt)
 
-    Eq.xy_joint_nonzero = Probability.Ne_0.of.Ne_0.joint_slice.apply(Eq[3], (slice(0, t + 1), slice(0, t + 1)))
+    Eq.xy_joint_nonzero = Random.Ne_0.of.Ne_0.joint_slice.apply(Eq[3], (slice(0, t + 1), slice(0, t + 1)))
 
-    Eq << Probability.And.Ne_0.of.Ne_0.apply(Eq.xy_joint_nonzero)
+    Eq << Random.And.Ne_0.of.Ne_0.apply(Eq.xy_joint_nonzero)
 
     y = Eq[-1].lhs.arg.lhs.base
-    Eq << Probability.Pr.eq.Mul.Pr.of.Ne_0.bayes.apply(Eq[-2], y[:t + 1])
+    Eq << Random.Pr.eq.Mul.Pr.of.Ne_0.bayes.apply(Eq[-2], y[:t + 1])
 
-    Eq << Probability.Sum.eq.Pr.apply(Sum[pspace(y[:t + 1]).symbol](Eq[-1].lhs))
+    Eq << Random.Sum.eq.Pr.apply(Sum[pspace(y[:t + 1]).symbol](Eq[-1].lhs))
 
     Eq << Eq[-2].subs(Eq[-1].reversed)
 

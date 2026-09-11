@@ -35,7 +35,7 @@ def apply(x_independence_assumption, y_independence_assumption, xy_independence_
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Bool, Tensor, Nat, Rat, Finset
+    from Lemma import Random, Bool, Tensor, Nat, Rat, Finset
 
     d, n = Symbol(domain=Range(2, oo))
     x = Symbol(shape=(n, d), real=True, random=True)
@@ -46,33 +46,33 @@ def prove(Eq):
     y, k = Eq.first_order_markov_assumption.rhs.lhs.of(Indexed)
     Eq << Rat.Ne_0.of.Div1.gt.Zero.apply(Eq.x_independence)
 
-    Eq << Probability.And.Ne_0.of.Ne_0.apply(Eq[-1])
+    Eq << Random.And.Ne_0.of.Ne_0.apply(Eq[-1])
 
-    Eq << Probability.Ne_0.Conditioned.of.Ne_0.apply(Eq[-3], y[:k])
+    Eq << Random.Ne_0.Conditioned.of.Ne_0.apply(Eq[-3], y[:k])
 
-    Eq << Probability.Pr.eq.Mul.Pr.of.Ne_0.bayes.apply(Eq[-2], x[:k + 1], y[k])
+    Eq << Random.Pr.eq.Mul.Pr.of.Ne_0.bayes.apply(Eq[-2], x[:k + 1], y[k])
 
     Eq << Eq[-1].this.lhs.arg.apply(Tensor.Stack.Is.Stack.Eq, i=2, j=0)
 
-    Eq << Probability.Eq.of.Ne_0.bayes.Conditioned.apply(Eq[-3], x[k], y[k])
+    Eq << Random.Eq.of.Ne_0.bayes.Conditioned.apply(Eq[-3], x[k], y[k])
 
     Eq << Eq[-1].this.lhs.find(And).apply(Tensor.Stack.Is.Stack.Eq, i=2, j=0)
 
     Eq << Eq[-3].subs(Eq[-1])
 
-    Eq.xy_joint_probability = Probability.Pr.eq.Mul.Pr.of.Ne_0.bayes.apply(Eq[2], x[:k])
+    Eq.xy_joint_probability = Random.Pr.eq.Mul.Pr.of.Ne_0.bayes.apply(Eq[2], x[:k])
 
     Eq << Eq[-1].subs(Eq.xy_joint_probability.reversed)
 
     Eq.recursion = Nat.Eq_Div.of.Eq.Ne_0.apply(Eq[0], Eq[-1])
 
-    Eq << Probability.Ne_0.of.Ne_0.joint_slice.apply(Eq.xy_nonzero_assumption, [k, k])
+    Eq << Random.Ne_0.of.Ne_0.joint_slice.apply(Eq.xy_nonzero_assumption, [k, k])
 
-    Eq << Probability.EqConditioned.of.Eq_Conditioned.getitem.apply(Eq.x_independence)
+    Eq << Random.EqConditioned.of.Eq_Conditioned.getitem.apply(Eq.x_independence)
 
-    Eq << Probability.EqPr.of.Eq_Conditioned.Eq_Conditioned.joint.apply(Eq[-1], Eq.xy_independence)
+    Eq << Random.EqPr.of.Eq_Conditioned.Eq_Conditioned.joint.apply(Eq[-1], Eq.xy_independence)
 
-    Eq << Probability.EqConditioned.of.Ne_0.Eq_Conditioned.joint.apply(Eq[-1], Eq[0])
+    Eq << Random.EqConditioned.of.Ne_0.Eq_Conditioned.joint.apply(Eq[-1], Eq[0])
 
     Eq.recursion = Eq.recursion.subs(Eq[-1])
 
@@ -82,23 +82,23 @@ def prove(Eq):
 
     Eq << Bool.All.of.All_OrNot.apply(Eq[-1])
 
-    _, Eq.y_nonzero_assumption = Probability.And.Ne_0.of.Ne_0.apply(Eq.xy_nonzero_assumption)
+    _, Eq.y_nonzero_assumption = Random.And.Ne_0.of.Ne_0.apply(Eq.xy_nonzero_assumption)
 
     Eq <<= Eq[-1] & Eq.y_nonzero_assumption
 
     Eq.y_joint_y_historic = Eq[-1].this.lhs.arg.apply(Tensor.Slice.Get.of.Eq)
 
-    Eq << Probability.Ne_0.Conditioned.of.Ne_0.apply(Eq.y_joint_y_historic, y[:k])
+    Eq << Random.Ne_0.Conditioned.of.Ne_0.apply(Eq.y_joint_y_historic, y[:k])
 
-    Eq << Probability.Eq.of.Ne_0.bayes.Conditioned.apply(Eq[-1], Eq.x_independence.lhs.lhs)
+    Eq << Random.Eq.of.Ne_0.bayes.Conditioned.apply(Eq[-1], Eq.x_independence.lhs.lhs)
 
     Eq.recursion = Eq.recursion.subs(Eq[-1])
 
     Eq.recursion = Eq.recursion.subs(Eq.first_order_markov_assumption)
 
-    Eq << Probability.EqConditioned.of.Eq_Conditioned.getitem.apply(Eq.x_independence, wrt=y[:k])
+    Eq << Random.EqConditioned.of.Eq_Conditioned.getitem.apply(Eq.x_independence, wrt=y[:k])
 
-    Eq << Probability.EqConditioned.of.Ne_0.Eq_Conditioned.joint.apply(Eq.y_joint_y_historic, Eq[-1])
+    Eq << Random.EqConditioned.of.Ne_0.Eq_Conditioned.joint.apply(Eq.y_joint_y_historic, Eq[-1])
 
     Eq.recursion = Eq.recursion.subs(Eq[-1])
 

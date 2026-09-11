@@ -24,7 +24,7 @@ def apply(eq, γ=None, k=None, π=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability
+    from Lemma import Random
 
     b, D = Symbol(integer=True, positive=True)
     π = Symbol(real=True, shape=(D,))
@@ -37,13 +37,13 @@ def prove(Eq):
         Equal(r[t] | a[:t] & s[:t], r[t]), # history-irrelevant conditional independence assumption
         γ, k, π)
 
-    Eq << Eq[-1].lhs.this.apply(Probability.Expect.law_of_iterated_expectation, a[:t + 1], s[:t + 1])
+    Eq << Eq[-1].lhs.this.apply(Random.Expect.law_of_iterated_expectation, a[:t + 1], s[:t + 1])
 
-    Eq << Eq[-1].this.rhs.find(Expectation[Conditioned]).apply(Probability.Expect.eq.Mul)
+    Eq << Eq[-1].this.rhs.find(Expectation[Conditioned]).apply(Random.Expect.eq.Mul)
 
-    Eq << Eq[-1].this.find(Expectation[Conditioned[MatMul]]).apply(Probability.Expect.eq.Dot)
+    Eq << Eq[-1].this.find(Expectation[Conditioned[MatMul]]).apply(Random.Expect.eq.Dot)
 
-    Eq << Probability.EqConditioned.of.Eq_Conditioned.independence_assumption.bidirectional.forget_histories.apply(Eq[0])#.subs(t, t + 1)
+    Eq << Random.EqConditioned.of.Eq_Conditioned.independence_assumption.bidirectional.forget_histories.apply(Eq[0])#.subs(t, t + 1)
 
     Eq << Eq[-2].subs(Eq[-1])
 

@@ -12,7 +12,7 @@ def apply(eq, Q_def, V_def, A_def):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Tensor
+    from Lemma import Random, Tensor
 
     b, D = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), real=True, random=True) # states / observation
@@ -27,13 +27,13 @@ def prove(Eq):
                 Equal((V[π] ^ γ)(s[t].var), γ ** Stack[t](t) @ Expectation[r[t:], a:π](r[t:] | s[t])),
                 Equal((A[π] ^ γ)(s[t].var, a[t].var), (Q[π] ^ γ)(s[t].var, a[t].var) - (V[π] ^ γ)(s[t].var)))
 
-    Eq << Eq[-1].this.lhs.apply(Probability.Expect.eq.Add)
+    Eq << Eq[-1].this.lhs.apply(Random.Expect.eq.Add)
 
     Eq << Eq[-1] + Eq[-3]
 
     Eq << Eq[-1].reversed.simplify()
 
-    Eq << Eq[-1].this.rhs.apply(Probability.Add.Expect.eq.Expect)
+    Eq << Eq[-1].this.rhs.apply(Random.Add.Expect.eq.Expect)
 
     Eq << Tensor.And.Eq.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.Bellman.apply(*Eq[:3])[-1]
 

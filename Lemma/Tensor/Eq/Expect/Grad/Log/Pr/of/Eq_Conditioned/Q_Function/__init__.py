@@ -20,7 +20,7 @@ def apply(eq, k=None, π=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability
+    from Lemma import Random
 
     b, D = Symbol(integer=True, positive=True)
     π = Symbol(real=True, shape=(D,))
@@ -32,17 +32,17 @@ def prove(Eq):
         Equal(r[t] | a[:t] & s[:t], r[t]), # history-irrelevant conditional independence assumption
         k, π)
 
-    Eq << Eq[-1].lhs.this.apply(Probability.Expect.law_of_iterated_expectation, a[:t + 1], s[:t + 1])
+    Eq << Eq[-1].lhs.this.apply(Random.Expect.law_of_iterated_expectation, a[:t + 1], s[:t + 1])
 
-    Eq << Eq[-1].this.rhs.find(Expectation[Conditioned]).apply(Probability.Expect.eq.Mul)
+    Eq << Eq[-1].this.rhs.find(Expectation[Conditioned]).apply(Random.Expect.eq.Mul)
 
-    Eq << Eq[-1].this.rhs.find(Expectation[Conditioned[ReducedSum]]).apply(Probability.Expect.ReducedSum.eq.ReducedSum.Expect)
+    Eq << Eq[-1].this.rhs.find(Expectation[Conditioned[ReducedSum]]).apply(Random.Expect.ReducedSum.eq.ReducedSum.Expect)
 
-    Eq << Probability.EqConditioned.of.Eq_Conditioned.independence_assumption.bidirectional.forget_histories.apply(Eq[0])
+    Eq << Random.EqConditioned.of.Eq_Conditioned.independence_assumption.bidirectional.forget_histories.apply(Eq[0])
 
     Eq << Eq[-2].subs(Eq[-1])
 
-    Eq << Eq[-1].this.find(ReducedSum[Expectation]).apply(Probability.ReducedSum.Expect.eq.Expect.ReducedSum)
+    Eq << Eq[-1].this.find(ReducedSum[Expectation]).apply(Random.ReducedSum.Expect.eq.Expect.ReducedSum)
 
     # https://spinningup.openai.com/en/latest/spinningup/extra_pg_proof2.html
 

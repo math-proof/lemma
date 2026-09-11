@@ -54,7 +54,7 @@ def apply(sar_independence_assumption, ne, T=None, t=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Real
+    from Lemma import Random, Real
 
     b, d, L, D = Symbol(domain=Range(2, oo))
     s = Symbol(shape=(L + 1, b), real=True, random=True)
@@ -66,13 +66,13 @@ def prove(Eq):
 
     Eq << apply(*markov_assumptions(s, a, r, π), T)
 
-    Eq << Probability.And.Eq.Conditioned.of.Eq.apply(Eq[0])
+    Eq << Random.And.Eq.Conditioned.of.Eq.apply(Eq[0])
 
-    Eq << Probability.Eq.of.Ne_0.Eq.Eq.Eq.markov.decision.apply(Eq[-1], Eq[-3], Eq[-2], Eq[1], T, t)
+    Eq << Random.Eq.of.Ne_0.Eq.Eq.Eq.markov.decision.apply(Eq[-1], Eq[-3], Eq[-2], Eq[1], T, t)
 
     Eq << Eq[-1].subs(Eq[2])
 
-    Eq << Probability.Ne_0.of.Ne_0.joint_slice.apply(Eq[1], [slice(0, T), slice(0, T), slice(0, T + 1)])
+    Eq << Random.Ne_0.of.Ne_0.joint_slice.apply(Eq[1], [slice(0, T), slice(0, T), slice(0, T + 1)])
 
     Eq << Real.EqLog.of.Ne_0.Eq.apply(Eq[-1], Eq[-2])
 

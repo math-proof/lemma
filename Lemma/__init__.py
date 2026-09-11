@@ -1,6 +1,5 @@
 from . import Set
 from . import Tensor
-from . import Probability
 from . import Real
 from . import Nat
 from . import Int
@@ -10,3 +9,4 @@ from . import Complex
 from . import Vector
 from . import Fin
 from . import Bool
+from . import Random

@@ -12,7 +12,7 @@ def apply(eq, V_def, lt):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Probability
+    from Lemma import Tensor, Random
 
     b, D = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), real=True, random=True) # states / observation
@@ -49,9 +49,9 @@ def prove(Eq):
 
     Eq << Eq[-2].subs(Eq[-1].subs(s[t].var, s[t]).subs(a[t].var, a[t]))
 
-    Eq << Eq[-1].this.find(Mul[Expectation]).apply(Probability.Mul.eq.Expect)
+    Eq << Eq[-1].this.find(Mul[Expectation]).apply(Random.Mul.eq.Expect)
 
-    Eq << Eq[-1].this.find(Expectation[Expectation]).apply(Probability.Expect.law_of_total_expectation)
+    Eq << Eq[-1].this.find(Expectation[Expectation]).apply(Random.Expect.law_of_total_expectation)
 
 
 

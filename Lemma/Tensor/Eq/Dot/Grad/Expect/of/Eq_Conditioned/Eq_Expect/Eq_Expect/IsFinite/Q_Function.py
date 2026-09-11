@@ -11,7 +11,7 @@ def apply(eq, Q_def, V_def, lt):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Real, Probability, Bool, Nat
+    from Lemma import Tensor, Real, Random, Bool, Nat
 
     b, D = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), real=True, random=True) # states / observation
@@ -34,9 +34,9 @@ def prove(Eq):
 
     Eq.limit = Eq[-1].this.find(Limit).apply(Real.Lim.eq.Add)
 
-    Eq << Probability.AbsExpect.le.ExpectAbs.apply(Eq.limit.find(Expectation[Derivative]).subs(n, t))
+    Eq << Random.AbsExpect.le.ExpectAbs.apply(Eq.limit.find(Expectation[Derivative]).subs(n, t))
 
-    Eq << Probability.Expect.le.Sup.apply(Eq[-1].rhs)
+    Eq << Random.Expect.le.Sup.apply(Eq[-1].rhs)
 
     Eq.le_sup = Nat.Le.of.Le.Le.apply(Eq[-2], Eq[-1])
 
@@ -64,15 +64,15 @@ def prove(Eq):
 
     Eq << Eq.limit.subs(Eq[-1])
 
-    Eq << Eq[-1].this.rhs.find(Expectation[Sum]).apply(Probability.Expect.Sum.eq.Sum.Expect)
+    Eq << Eq[-1].this.rhs.find(Expectation[Sum]).apply(Random.Expect.Sum.eq.Sum.Expect)
 
-    Eq << Eq[-1].this.rhs.apply(Probability.Sum.Expect.eq.Expect.Sum)
+    Eq << Eq[-1].this.rhs.apply(Random.Sum.Expect.eq.Expect.Sum)
 
     Eq << Eq[-1].this.find(Sum).apply(Tensor.Sum.eq.Dot, 1)
 
-    Eq << Eq[-1].this.rhs.apply(Probability.Expect.eq.Dot)
+    Eq << Eq[-1].this.rhs.apply(Random.Expect.eq.Dot)
 
-    Eq << Eq[-1].this.rhs.find(Expectation).apply(Probability.Expect.Stack.eq.Stack.Expect)
+    Eq << Eq[-1].this.rhs.find(Expectation).apply(Random.Expect.Stack.eq.Stack.Expect)
 
     Eq << Eq[-1].this.rhs.find(Stack).apply(Tensor.Stack_PowGetS.eq.Pow)
 

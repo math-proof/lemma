@@ -12,7 +12,7 @@ def apply(eq, Q_def, V_def, A_def, lt, π_quote=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Probability
+    from Lemma import Tensor, Random
 
     b, D = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), real=True, random=True) # states / observation
@@ -33,13 +33,13 @@ def prove(Eq):
 
     Eq << Tensor.Eq.Dot.Grad.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.Eq_Sub.IsFinite.A_Function.apply(*Eq[:5])
 
-    Eq << Eq[-1].this.rhs.find(Expectation).apply(Probability.Expect.law_of_iterated_expectation, s[t])
+    Eq << Eq[-1].this.rhs.find(Expectation).apply(Random.Expect.law_of_iterated_expectation, s[t])
 
-    Eq << Eq[-1].this.rhs.find(Expectation[~Expectation]).apply(Probability.Expect.Conditioned.importance_sampling, π_quote)
+    Eq << Eq[-1].this.rhs.find(Expectation[~Expectation]).apply(Random.Expect.Conditioned.importance_sampling, π_quote)
 
     Eq << Eq[-1].this.rhs.find(Derivative).doit()
 
-    Eq << Eq[-1].this.rhs.find(Expectation).apply(Probability.Expect.law_of_total_expectation)
+    Eq << Eq[-1].this.rhs.find(Expectation).apply(Random.Expect.law_of_total_expectation)
 
     Eq << Eq.hypothesis.this.rhs.find(Expectation).simplify()
 

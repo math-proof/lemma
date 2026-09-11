@@ -11,7 +11,7 @@ def apply(eq_given):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Real, Bool, Vector, Finset
+    from Lemma import Random, Real, Bool, Vector, Finset
 
     m, n = Symbol(integer=True, positive=True)
     φ = Function(real=True, shape=(m, n))
@@ -19,7 +19,7 @@ def prove(Eq):
     s, a = Symbol(integer=True, random=True)
     Eq << apply(Equal(Stack[a.var:m](Pr[a:θ](a | s)), softmax(φ(s.var) @ θ)))
 
-    Eq << Eq[1].this.find(Expectation).apply(Probability.Expect.eq.Sum)
+    Eq << Eq[1].this.find(Expectation).apply(Random.Expect.eq.Sum)
 
     a = a.var
     Eq << Eq[0][a]

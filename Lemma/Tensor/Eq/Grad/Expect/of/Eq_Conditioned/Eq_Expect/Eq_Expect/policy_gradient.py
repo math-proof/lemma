@@ -15,7 +15,7 @@ def apply(eq, Q_def, V_def, n=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Real, Tensor, Finset, Nat
+    from Lemma import Random, Real, Tensor, Finset, Nat
 
     b, D = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), real=True, random=True) # states / observation
@@ -35,17 +35,17 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(s[0].var, s[0])
 
-    Eq << Probability.EqExpect.of.Eq.apply(Eq[-1])
+    Eq << Random.EqExpect.of.Eq.apply(Eq[-1])
 
-    Eq << Eq[-1].this.find(MatMul).apply(Probability.Dot.eq.Expect)
+    Eq << Eq[-1].this.find(MatMul).apply(Random.Dot.eq.Expect)
 
-    Eq << Eq[-1].this.rhs.apply(Probability.Expect.law_of_total_expectation)
+    Eq << Eq[-1].this.rhs.apply(Random.Expect.law_of_total_expectation)
 
     Eq << Real.EqGrad.of.Eq.apply(Eq[-1], [π])
 
-    Eq << Eq[-1].this.lhs.apply(Probability.Grad.Expect.eq.Expect.Grad).reversed
+    Eq << Eq[-1].this.lhs.apply(Random.Grad.Expect.eq.Expect.Grad).reversed
 
-    Eq << Eq[-1].this.rhs.apply(Probability.Expect.eq.Integral)
+    Eq << Eq[-1].this.rhs.apply(Random.Expect.eq.Integral)
 
     Eq << Tensor.EqGrad.of.Eq_Conditioned.Eq_Expect.Eq_Expect.policy_gradient.induct.apply(*Eq[:3], n)
 
@@ -77,27 +77,27 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Integral).apply(Real.Integral.limits.separate)
 
-    Eq << Eq[-1].this.find(Derivative * ~Integral).apply(Probability.Integral.Prod.eq.Pr)
+    Eq << Eq[-1].this.find(Derivative * ~Integral).apply(Random.Integral.Prod.eq.Pr)
 
-    Eq << Eq[-1].this.find(Integral).apply(Probability.Integral.eq.Expect)
+    Eq << Eq[-1].this.find(Integral).apply(Random.Integral.eq.Expect)
 
     Eq << Eq[-1].this.find(Integral).apply(Real.Integral.limits.separate)
 
-    Eq << Eq[-1].this.find(Integral[Pr * Product]).apply(Probability.Integral.Prod.eq.Pr)
+    Eq << Eq[-1].this.find(Integral[Pr * Product]).apply(Random.Integral.Prod.eq.Pr)
 
     Eq << Eq[-1].this.find(Derivative[Pr]).apply(Real.Grad.eq.Mul.Grad.Log)
 
-    Eq << Eq[-1].this.find(Pr * ~Sum).apply(Probability.Sum.eq.Expect)
+    Eq << Eq[-1].this.find(Pr * ~Sum).apply(Random.Sum.eq.Expect)
 
-    Eq << Eq[-1].this.find(Integral).apply(Probability.Integral.eq.Expect)
+    Eq << Eq[-1].this.find(Integral).apply(Random.Integral.eq.Expect)
 
-    Eq << Eq[-1].this.find(Expectation[Expectation]).apply(Probability.Expect.law_of_total_expectation)
+    Eq << Eq[-1].this.find(Expectation[Expectation]).apply(Random.Expect.law_of_total_expectation)
 
-    Eq << Eq[-1].this.find(Sum[~Mul[Expectation]]).apply(Probability.Mul.eq.Expect)
+    Eq << Eq[-1].this.find(Sum[~Mul[Expectation]]).apply(Random.Mul.eq.Expect)
 
-    Eq << Eq[-1].this.find(Sum[Expectation]).apply(Probability.Sum.Expect.eq.Expect.Sum)
+    Eq << Eq[-1].this.find(Sum[Expectation]).apply(Random.Sum.Expect.eq.Expect.Sum)
 
-    Eq << Eq[-1].this.lhs.find(Expectation).apply(Probability.Expect.eq.Dot)
+    Eq << Eq[-1].this.lhs.find(Expectation).apply(Random.Expect.eq.Dot)
 
     Eq << Eq[-1].this.lhs.apply(Real.Grad.Dot.eq.Dot.Grad)
 

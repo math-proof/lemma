@@ -55,7 +55,7 @@ def apply(eq, Q_def, V_def):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Bool, Probability
+    from Lemma import Tensor, Bool, Random
 
     b, D = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), real=True, random=True) # states / observation
@@ -73,7 +73,7 @@ def prove(Eq):
 
     Eq << Bool.Eq.of.Eq.Eq.apply(Eq[2], Eq[-1])
 
-    Eq << Probability.EqConditioned.of.Eq_Conditioned.getitem.apply(Eq[0], 1)
+    Eq << Random.EqConditioned.of.Eq_Conditioned.getitem.apply(Eq[0], 1)
 
     Eq << Tensor.EqExpect.of.Eq_Conditioned.Bellman.V_Function.apply(Eq[-1], γ, t, (a, π))
 

@@ -13,7 +13,7 @@ def apply(eq, Q_def, V_def, A_def, A_def_bar):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Tensor
+    from Lemma import Random, Tensor
 
     b, D = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), real=True, random=True) # states / observation
@@ -38,7 +38,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Expectation).subs(Eq[-2])
 
-    Eq << Eq[-1].this.find(Expectation[Expectation]).apply(Probability.Expect.law_of_total_expectation)
+    Eq << Eq[-1].this.find(Expectation[Expectation]).apply(Random.Expect.law_of_total_expectation)
 
     Eq << Tensor.EqDot.of.Eq_Conditioned.Eq_Expect.Eq_Expect.Eq_Sub.A_Function.apply(*Eq[:4], π_quote)
 

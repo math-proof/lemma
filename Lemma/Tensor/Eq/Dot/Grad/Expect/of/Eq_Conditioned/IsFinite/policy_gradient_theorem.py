@@ -13,7 +13,7 @@ def apply(eq, lt):
 
 @prove
 def prove(Eq):
-    from Lemma import Real, Tensor, Probability, Bool, Fin
+    from Lemma import Real, Tensor, Random, Bool, Fin
 
     b, D = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), real=True, random=True) # states / observation
@@ -52,9 +52,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Sum_MulGetS)
 
-    Eq << Eq[-1].this.find(Mul[Expectation]).apply(Probability.Mul.eq.Expect)
+    Eq << Eq[-1].this.find(Mul[Expectation]).apply(Random.Mul.eq.Expect)
 
-    Eq.eq_expect = Eq[-1].this.rhs.apply(Probability.Sum.Expect.eq.Expect.Sum)
+    Eq.eq_expect = Eq[-1].this.rhs.apply(Random.Sum.Expect.eq.Expect.Sum)
 
     Eq << Tensor.Eq.Expect.Grad.Log.Pr.of.Eq_Conditioned.Q_Function.discounted.apply(Eq[0], γ, t, π)
 
@@ -64,25 +64,25 @@ def prove(Eq):
 
     Eq << Eq[-1] * γ ** t
 
-    Eq << Eq[-1].this.lhs.apply(Probability.Mul.eq.Expect)
+    Eq << Eq[-1].this.lhs.apply(Random.Mul.eq.Expect)
 
-    Eq << Eq[-1].this.rhs.apply(Probability.Mul.eq.Expect)
+    Eq << Eq[-1].this.rhs.apply(Random.Mul.eq.Expect)
 
     Eq << Fin.Sum.of.All_Eq.apply(Eq[-1], (t, 0, oo))
 
-    Eq << Eq[-1].this.rhs.apply(Probability.Sum.Expect.eq.Expect.Sum)
+    Eq << Eq[-1].this.rhs.apply(Random.Sum.Expect.eq.Expect.Sum)
 
-    Eq << Eq[-1].this.lhs.apply(Probability.Sum.Expect.eq.Expect.Sum)
+    Eq << Eq[-1].this.lhs.apply(Random.Sum.Expect.eq.Expect.Sum)
 
     Eq << Bool.Eq.of.Eq.Eq.apply(Eq.eq_expect, Eq[-1])
 
     Eq << Eq[-1].this.find(Sum).apply(Tensor.Sum.eq.Dot, 1)
 
-    Eq << Eq[-1].this.rhs.apply(Probability.Expect.eq.Dot)
+    Eq << Eq[-1].this.rhs.apply(Random.Expect.eq.Dot)
 
     Eq << Eq[-1].this.rhs.find(Stack).apply(Tensor.Stack_PowGetS.eq.Pow)
 
-    Eq << Eq[-1].this.rhs.find(Expectation).apply(Probability.Expect.Stack.eq.Stack.Expect)
+    Eq << Eq[-1].this.rhs.find(Expectation).apply(Random.Expect.Stack.eq.Stack.Expect)
 
     # https://spinningup.openai.com/en/latest/spinningup/rl_intro.html# bellman-equations
     # http://incompleteideas.net/book/bookdraft2017nov5.pdf (Page 47)

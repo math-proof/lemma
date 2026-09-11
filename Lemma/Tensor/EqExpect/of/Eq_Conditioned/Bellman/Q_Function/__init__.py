@@ -26,7 +26,7 @@ def apply(eq, γ=None, k=None, weights=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Real, Tensor, Rat
+    from Lemma import Random, Real, Tensor, Rat
 
     b = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), real=True, random=True) # states / observation
@@ -38,47 +38,47 @@ def prove(Eq):
         Equal(r[t] | s[:t] & a[:t], r[t]), # history-irrelevant conditional independence assumption for rewards based on states and actions
         γ, k)
 
-    Eq << Eq[-1].this.rhs.apply(Probability.Expect.eq.Add)
+    Eq << Eq[-1].this.rhs.apply(Random.Expect.eq.Add)
 
-    Eq << Eq[-1].this.find(Expectation[2]).apply(Probability.Expect.eq.Integral)
+    Eq << Eq[-1].this.find(Expectation[2]).apply(Random.Expect.eq.Integral)
 
     Eq << Eq[-1].this.find(Integral[Mul]).apply(Real.Integral.eq.Mul)
 
-    Eq.final = Eq[-1].this.lhs.apply(Probability.Dot.eq.Expect)
+    Eq.final = Eq[-1].this.lhs.apply(Random.Dot.eq.Expect)
 
     Eq << Eq.final.lhs.this.find(MatMul).apply(Tensor.Dot.eq.Add.Mul.Dot.discounted_future_reward)
 
-    Eq << Eq[-1].this.rhs.apply(Probability.Expect.eq.Add)
+    Eq << Eq[-1].this.rhs.apply(Random.Expect.eq.Add)
 
-    Eq.eq_add = Eq[-1].this.find(Expectation[Conditioned[Mul]]).apply(Probability.Expect.eq.Mul)
+    Eq.eq_add = Eq[-1].this.find(Expectation[Conditioned[Mul]]).apply(Random.Expect.eq.Mul)
 
-    Eq << Eq.eq_add.find(Mul[~Expectation]).this.apply(Probability.Expect.eq.Integral)
+    Eq << Eq.eq_add.find(Mul[~Expectation]).this.apply(Random.Expect.eq.Integral)
 
-    Eq << Eq[-1].this.find(Pr).apply(Probability.Pr.eq.Integral.joint, s[t + 1])
+    Eq << Eq[-1].this.find(Pr).apply(Random.Pr.eq.Integral.joint, s[t + 1])
 
     Eq << Eq[-1].this.find(Mul[Integral]).apply(Real.Mul.eq.Integral)
 
     Eq << Eq[-1].this.find(Integral).apply(Real.Integral.limits.swap)
 
-    Eq << Eq[-1].this.find(Pr).apply(Probability.Pr.Conditioned.eq.Mul.Pr.Conditioned)
+    Eq << Eq[-1].this.find(Pr).apply(Random.Pr.Conditioned.eq.Mul.Pr.Conditioned)
 
     Eq.eq_expect = Eq[-1].this.rhs.apply(Real.Integral.limits.separate)
 
     Eq << Rat.Ne_0.of.Div1.gt.Zero.apply(Eq[0]).subs(t, t + 1)
 
-    Eq << Probability.Ne_0.of.Ne_0.joint_slice.apply(Eq[-1], [t, slice(t, t + 2)])
+    Eq << Random.Ne_0.of.Ne_0.joint_slice.apply(Eq[-1], [t, slice(t, t + 2)])
 
     Eq << Eq[-1].this.find(Equal[Sliced]).apply(Tensor.Eq.Is.And.Eq.split)
 
-    Eq << Probability.EqConditioned.of.Eq_Conditioned.joint.independence_assumption.apply(Eq[0])
+    Eq << Random.EqConditioned.of.Eq_Conditioned.joint.independence_assumption.apply(Eq[0])
 
-    Eq << Probability.EqConditioned.of.Ne_0.Eq_Conditioned.joint.apply(*Eq[-2:])
+    Eq << Random.EqConditioned.of.Ne_0.Eq_Conditioned.joint.apply(*Eq[-2:])
 
     Eq << Eq.eq_expect.subs(Eq[-1])
 
-    Eq << Eq.final.rhs.find(MatMul).this.apply(Probability.Dot.eq.Expect)
+    Eq << Eq.final.rhs.find(MatMul).this.apply(Random.Dot.eq.Expect)
 
-    Eq << Eq[-1].this.rhs.apply(Probability.Expect.eq.Integral)
+    Eq << Eq[-1].this.rhs.apply(Random.Expect.eq.Integral)
 
     Eq << Eq[-3].subs(Eq[-1].reversed)
 
