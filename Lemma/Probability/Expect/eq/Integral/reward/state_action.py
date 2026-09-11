@@ -24,7 +24,7 @@ def prove(Eq):
     t = Symbol(integer=True)
     Eq << apply(Expectation[r[t]](r[t] | s[t] & a[t]))
 
-    Eq << Integral[s[t + 1].var](Pr(s[t + 1] & r[t], given=s[t] & a[t])).this.apply(Probability.Integral.eq.Pr.marginal)
+    Eq << Integral[s[t + 1].var](Pr(s[t + 1] & r[t], given=s[t] & a[t])).this.apply(Probability.Integral.ae.Pr.marginal)
 
     Eq << Eq[0].this.lhs.apply(Probability.Expect.eq.Integral)
 

@@ -16,7 +16,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.expr.apply(Probability.Pr.eq.Div.Pr.bayes)
 
-    Eq << Eq[-1].this.find(Integral).apply(Probability.Integral.eq.Pr.marginal)
+    Eq << Eq[-1].this.find(Integral).apply(Probability.Integral.ae.Pr.marginal)
 
 
 

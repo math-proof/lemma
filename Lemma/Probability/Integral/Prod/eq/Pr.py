@@ -32,7 +32,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Pr[Conditioned]).apply(Probability.Pr.eq.Div.Pr.bayes)
 
-    Eq << Eq[-1].this.lhs.apply(Probability.Integral.eq.Pr.marginal)
+    Eq << Eq[-1].this.lhs.apply(Probability.Integral.ae.Pr.marginal)
 
 
     Eq << Imply(Eq.hypothesis, Eq.induct, plausible=True)

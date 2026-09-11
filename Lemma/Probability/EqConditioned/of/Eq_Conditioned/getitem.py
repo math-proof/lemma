@@ -37,8 +37,8 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq[0])
 
-    Eq <<= Probability.Integral.eq.Pr.marginal.apply(Integral[z.var](Eq[-1].lhs)), \
-        Probability.Integral.eq.Pr.marginal.apply(Integral[z.var](Eq[2].lhs)), \
+    Eq <<= Probability.Integral.ae.Pr.marginal.apply(Integral[z.var](Eq[-1].lhs)), \
+        Probability.Integral.ae.Pr.marginal.apply(Integral[z.var](Eq[2].lhs)), \
         Real.EqIntegral.of.Eq.apply(Eq[-1], (z.var,))
 
     Eq << Eq[-3].subs(Eq.xy_probability)

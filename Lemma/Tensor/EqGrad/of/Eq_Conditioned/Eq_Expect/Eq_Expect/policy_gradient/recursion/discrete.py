@@ -57,7 +57,7 @@ def prove(Eq):
     Eq << Eq[-1].this.find(Derivative[Sum]).apply(Real.Grad.eq.Sum)
     Eq << Eq[-1].this.find(Derivative[Integral]).apply(Real.Grad.eq.Integral)
     Eq << Eq[-1].this.find(Integral[Mul]).apply(Real.Integral.eq.Mul)
-    Eq << Eq[-1].this.find(Integral[Pr]).apply(Probability.Integral.eq.Pr.marginal)
+    Eq << Eq[-1].this.find(Integral[Pr]).apply(Probability.Integral.ae.Pr.marginal)
     Eq << Real.EqGrad.of.Eq.apply(Eq[4], [π])
     Eq << Eq[-1].this.find(Expectation).apply(Probability.Expect.eq.Sum)
     Eq << Eq[-1].this.rhs.apply(Real.Grad.eq.Sum)

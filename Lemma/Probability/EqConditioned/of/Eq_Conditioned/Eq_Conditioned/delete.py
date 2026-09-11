@@ -45,7 +45,7 @@ def prove(Eq):
     Eq << Eq[-1].subs(Eq[1])
 
     y_ = pspace(y).symbol
-    Eq << Probability.Integral.eq.Pr.marginal.apply(Integral[y_](Eq[-1].lhs))
+    Eq << Probability.Integral.ae.Pr.marginal.apply(Integral[y_](Eq[-1].lhs))
 
     Eq << Eq[-1].subs(Probability.Pr.eq.Mul.Pr.of.Ne_0.bayes.apply(Eq.z_nonzero, x))
 
@@ -53,7 +53,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq[-2])
 
-    Eq << Eq[-1].this.find(Integral).apply(Probability.Integral.eq.Pr.marginal)
+    Eq << Eq[-1].this.find(Integral).apply(Probability.Integral.ae.Pr.marginal)
 
     Eq << Nat.Eq_Div.of.Eq.Ne_0.apply(Eq[-1], Eq.z_nonzero)
 

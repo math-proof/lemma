@@ -28,9 +28,9 @@ def prove(Eq):
 
     Eq <<= Real.EqIntegral.of.Eq.apply(Eq[-1], (y.var,)), Real.EqIntegral.of.Eq.apply(Eq[-1], (x.var,))
 
-    Eq <<= Eq[-2].this.rhs.apply(Probability.Integral.eq.Pr.marginal), Eq[-1].this.rhs.apply(Probability.Integral.eq.Pr.marginal)
+    Eq <<= Eq[-2].this.rhs.apply(Probability.Integral.ae.Pr.marginal), Eq[-1].this.rhs.apply(Probability.Integral.ae.Pr.marginal)
 
-    Eq <<= Eq[-2].this.find(Integral).apply(Probability.Integral.eq.Pr.marginal), Eq[-1].this.find(Integral).apply(Probability.Integral.eq.Pr.marginal)
+    Eq <<= Eq[-2].this.find(Integral).apply(Probability.Integral.ae.Pr.marginal), Eq[-1].this.find(Integral).apply(Probability.Integral.ae.Pr.marginal)
 
 
 

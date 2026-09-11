@@ -34,9 +34,9 @@ def prove(Eq):
     x, y = Symbol(real=True, random=True)
     Eq << apply(Unequal(Pr(x, y), 0))
 
-    Eq.x_marginal_probability = Probability.Integral.eq.Pr.marginal.apply(Integral[x.var](Pr(x, y)))
+    Eq.x_marginal_probability = Probability.Integral.ae.Pr.marginal.apply(Integral[x.var](Pr(x, y)))
 
-    Eq.y_marginal_probability = Probability.Integral.eq.Pr.marginal.apply(Integral[y.var](Pr(x, y)))
+    Eq.y_marginal_probability = Probability.Integral.ae.Pr.marginal.apply(Integral[y.var](Pr(x, y)))
 
     Eq << Nat.Gt_0.of.Ne_0.apply(Eq[0])
 
