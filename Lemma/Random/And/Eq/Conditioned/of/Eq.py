@@ -22,9 +22,9 @@ def prove(Eq):
     x, y, z = Symbol(real=True, random=True)
     Eq << apply(Equal(Pr(x & y | z), Pr(x, y)))
 
-    Eq <<= Eq[-2].this.lhs.apply(Random.Pr.eq.Div.Pr.bayes), Eq[-1].this.lhs.apply(Random.Pr.eq.Div.Pr.bayes)
+    Eq <<= Eq[-2].this.lhs.apply(Random.Pr.eq.DivPrS), Eq[-1].this.lhs.apply(Random.Pr.eq.DivPrS)
 
-    Eq << Eq[0].this.lhs.apply(Random.Pr.eq.Div.Pr.bayes)
+    Eq << Eq[0].this.lhs.apply(Random.Pr.eq.DivPrS)
 
     Eq <<= Real.EqIntegral.of.Eq.apply(Eq[-1], (y.var,)), Real.EqIntegral.of.Eq.apply(Eq[-1], (x.var,))
 

@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq[0])
 
-    Eq << Eq[-1].this.find(Pr[Conditioned]).apply(Random.Pr.eq.Div.Pr.bayes)
+    Eq << Eq[-1].this.find(Pr[Conditioned]).apply(Random.Pr.eq.DivPrS)
 
     Eq << Eq[-1].this.find(Equal & Equal).apply(Tensor.Eq.Eq.Is.Eq.concat)
 

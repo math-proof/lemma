@@ -107,7 +107,7 @@ const sections = [
 	'Bool',
 	'Vector',
 	'Tensor',
-	'Probability',
+	'Random',
 	'Set',
 	'Finset',
 ];

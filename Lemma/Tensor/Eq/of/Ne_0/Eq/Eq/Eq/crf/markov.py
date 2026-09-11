@@ -86,7 +86,7 @@ def prove(Eq):
 
     Eq <<= Eq[-1] & Eq.y_nonzero_assumption
 
-    Eq.y_joint_y_historic = Eq[-1].this.lhs.arg.apply(Tensor.Slice.Get.of.Eq)
+    Eq.y_joint_y_historic = Eq[-1].this.lhs.arg.apply(Tensor.GetSlice.Get.of.Eq)
 
     Eq << Random.Ne_0.Conditioned.of.Ne_0.apply(Eq.y_joint_y_historic, y[:k])
 

@@ -35,7 +35,7 @@ def prove(Eq):
 
     Eq << Bool.Iff.given.Imp.Imp.apply(Eq[-1])
 
-    Eq << Eq[-2].this.lhs.apply(Tensor.Slice.Get.of.Eq)
+    Eq << Eq[-2].this.lhs.apply(Tensor.GetSlice.Get.of.Eq)
 
     Eq << Eq[-1].this.lhs.apply(Tensor.Stack.Is.Stack.Eq, 1, 0)
 

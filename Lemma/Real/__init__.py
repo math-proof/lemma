@@ -87,7 +87,6 @@ from . import Eq_0
 from . import EqIntegral
 from . import EqMul
 from . import Ge
-from . import GtIntegral
 from . import Imp
 from . import Integral
 from . import IntegralIcc

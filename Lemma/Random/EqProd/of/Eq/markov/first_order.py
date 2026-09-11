@@ -26,13 +26,13 @@ def prove(Eq):
 
     Eq << Finset.EqProd.of.Eq.apply(Eq[-1], (k, 1, n + 1))
 
-    Eq << Eq[-1].this.find(Pr).apply(Random.Pr.eq.Div.Pr.bayes)
+    Eq << Eq[-1].this.find(Pr).apply(Random.Pr.eq.DivPrS)
 
     Eq << Eq[-1].this.find(And).apply(Tensor.Eq.Eq.Is.Eq.concat)
 
     Eq << Eq[-1].this.find(Equal[Sliced]).apply(Tensor.Eq.Is.And.Eq.split, 1)
 
-    Eq << Eq[1].this.lhs.apply(Random.Pr.eq.Div.Pr.bayes)
+    Eq << Eq[1].this.lhs.apply(Random.Pr.eq.DivPrS)
 
 
 if __name__ == '__main__':

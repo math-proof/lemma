@@ -14,7 +14,7 @@ def prove(Eq):
     x, y = Symbol(real=True, random=True)
     Eq << apply(Equal(Pr(x, y), Piecewise((Exp(-x.var), And(0 < y.var, y.var < x.var)), (0, True))))
 
-    Eq << Eq[-1].lhs.this.apply(Random.Pr.eq.Div.Pr.bayes)
+    Eq << Eq[-1].lhs.this.apply(Random.Pr.eq.DivPrS)
 
     Eq << Eq[-1].rhs.find(Pr).this.apply(Random.Pr.eq.Integral)
 

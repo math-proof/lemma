@@ -14,7 +14,7 @@ def prove(Eq):
     x, y = Symbol(real=True, random=True)
     Eq << apply(Integral[x.var](Pr(x | y)))
 
-    Eq << Eq[-1].this.lhs.expr.apply(Random.Pr.eq.Div.Pr.bayes)
+    Eq << Eq[-1].this.lhs.expr.apply(Random.Pr.eq.DivPrS)
 
     Eq << Eq[-1].this.find(Integral).apply(Random.Integral.ae.Pr.of.Measurable.Measurable.Probability)
 

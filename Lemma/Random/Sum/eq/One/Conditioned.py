@@ -22,7 +22,7 @@ def prove(Eq):
     x, y = Symbol(integer=True, random=True)
     Eq << apply(Sum[x.var](Pr(x | y)))
 
-    Eq << Eq[-1].this.lhs.expr.apply(Random.Pr.eq.Div.Pr.bayes)
+    Eq << Eq[-1].this.lhs.expr.apply(Random.Pr.eq.DivPrS)
 
     Eq << Eq[-1].this.find(Sum).apply(Random.Sum.eq.Pr)
 

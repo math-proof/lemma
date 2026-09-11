@@ -30,11 +30,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Tensor.DotAppendSHstackS.eq.AppendHstackSAddSDotS, deep=True)
 
-    Eq << Tensor.Slice.Get.of.Eq.apply(Eq[-1], n)
+    Eq << Tensor.GetSlice.Get.of.Eq.apply(Eq[-1], n)
 
     Eq <<= Tensor.EqTranspose.of.Eq.apply(Eq[-2]), Tensor.EqTranspose.of.Eq.apply(Eq[-1])
 
-    Eq <<= Tensor.Slice.Get.of.Eq.apply(Eq[-2], n), Tensor.Slice.Get.of.Eq.apply(Eq[-1], n)
+    Eq <<= Tensor.GetSlice.Get.of.Eq.apply(Eq[-2], n), Tensor.GetSlice.Get.of.Eq.apply(Eq[-1], n)
 
     Eq.eq_identity_x = Eq[-4].T
 
