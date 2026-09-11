@@ -841,10 +841,15 @@ abstract class Lean extends IndentedNode
                     //Middle Dot token
                     return $this->parent->insert_word($this, $token);
             case '@':
-                if ($this instanceof LeanCaret)
-                    return $this->parent->insert_unary($this, 'LeanAttribute');
-                else
-                    return $this->push_binary('LeanMatMul');
+                if ($this instanceof LeanCaret) {
+                    // `@[` is an attribute; `@expr` is explicit argument application
+                    $next = $i + 1;
+                    while ($tokens[$next] == ' ') $next++;
+                    if ($tokens[$next] == '[')
+                        return $this->parent->insert_unary($this, 'LeanAttribute');
+                    return $this->parent->insert_word($this, '@');
+                }
+                return $this->push_binary('LeanMatMul');
             case 'end':
                 return $this->parent->insert_end($this);
             case 'only':

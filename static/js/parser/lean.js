@@ -906,7 +906,15 @@ export class Lean extends IndentedNode {
                     return this.parent.insert_unary(this, 'LeanTacticBlock');
                 return this.parent.insert_word(this, token);
             case '@':
-                if (this instanceof LeanCaret) return this.parent.insert_unary(this, 'LeanAttribute');
+                if (this instanceof LeanCaret) {
+                    // `@[` is an attribute; `@expr` is explicit argument application
+                    let next = self.start_idx + 1;
+                    while (tokens[next] === ' ') next++;
+                    if (tokens[next] === '[') {
+                        return this.parent.insert_unary(this, 'LeanAttribute');
+                    }
+                    return this.parent.insert_word(this, '@');
+                }
                 return this.push_binary(LeanMatMul);
             case 'end':
                 return this.parent.insert_end(this);
@@ -9559,7 +9567,8 @@ class LeanAttribute extends LeanUnary {
     }
 
     append($new, type) {
-        return this.push_accessibility($new, 'public');
+        const declType = typeof $new === 'string' ? $new : type;
+        return this.push_accessibility(declType, 'public');
     }
 
     insert_newline(caret, newline_count, indent, next) {

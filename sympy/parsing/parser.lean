@@ -50,9 +50,30 @@ def Expr.joinWithAnd : List Expr → Nat → Expr
   | head :: tail, level =>
     .Basic (.BinaryInfix ⟨`And⟩) [head, Expr.joinWithAnd tail level] level
 
-/-- Check if `leanType` is a non-Prop function type `Ω → β` where both
-domain and codomain have `MeasurableSpace` instances. If so, wrap the
-converted `type` in a `RandomVariable` marker for `isRandomVariable`. -/
+/-- True when the local context contains a measure on `domain` registered as a
+probability measure (`IsProbabilityMeasure`). This is what distinguishes a
+random variable `Ω → β` from an ordinary measurable function `ℝ → ℝ`:
+`MeasurableSpace` alone is not enough since `ℝ` carries one too. -/
+def isProbabilitySpace (domain : Lean.Expr) : MetaM Bool := do
+  for decl in (← getLCtx).decls do
+    if let some decl := decl then
+      let ty ← whnf (← Lean.instantiateMVars decl.type)
+      if let .const name _ := ty.getAppFn then
+        if name == `MeasureTheory.Measure then
+          if let some dom := ty.getAppArgs[0]? then
+            let eq ← withoutModifyingMCtx (isDefEq dom domain)
+            if eq then
+              -- use `synthInstance` (not `synthInstance?`), which throws on
+              -- failure: the latter returns pending synthesis metavariables
+              let prob? ← try? (Lean.Meta.synthInstance
+                (← Lean.Meta.mkAppM `MeasureTheory.IsProbabilityMeasure #[.fvar decl.fvarId]))
+              if prob?.isSome then return true
+  return false
+
+/-- Check if `leanType` is a random variable type `Ω → β`, i.e. a non-Prop
+function whose domain carries a probability measure and whose codomain has a
+`MeasurableSpace`. If so, wrap the converted `type` in a `RandomVariable`
+marker for `isRandomVariable`. -/
 def markRandomVariable (leanType : Lean.Expr) (type : Expr) : MetaM Expr := do
   -- `let`-bound variables without a type annotation store their type as an
   -- assigned metavariable; instantiate it to reveal the underlying `forallE`
@@ -62,11 +83,15 @@ def markRandomVariable (leanType : Lean.Expr) (type : Expr) : MetaM Expr := do
     -- skip Prop-valued functions (propositions, not random variables)
     if ← Lean.Meta.isProp codomain then
       return type
-    -- try synthesizing `MeasurableSpace domain` and `MeasurableSpace codomain`
-    let domMeas? ← try? (Lean.Meta.synthInstance? (← Lean.Meta.mkAppM `MeasurableSpace #[domain]))
-    let codMeas? ← try? (Lean.Meta.synthInstance? (← Lean.Meta.mkAppM `MeasurableSpace #[codomain]))
-    if domMeas?.isSome && codMeas?.isSome then
-      return .Basic (.ExprWithAttr (.Lean_operatorname `RandomVariable)) [type] type.level
+    -- the domain must be a probability space (`ℙ : Measure Ω`,
+    -- `[IsProbabilityMeasure ℙ]`) and the codomain must be measurable
+    if ← isProbabilitySpace domain then
+      let codMeas? ← try? (Lean.Meta.synthInstance
+        (← Lean.Meta.mkAppM `MeasurableSpace #[codomain]))
+      if codMeas?.isSome then
+        return .Basic (.ExprWithAttr (.Lean_operatorname `RandomVariable)) [type] type.level
+      else
+        return type
     else
       return type
   | _ =>
