@@ -2,7 +2,7 @@ import Lemma.Tensor.DetShiftMatrix.eq.PowNeg1Sub
 import Lemma.Tensor.GetInterleave.eq.Delta_ToSplit
 import Lemma.Tensor.EqMul1
 import Lemma.Tensor.ToMatrixDot.eq.MulToMatrixS
-open Matrix Nat Tensor Fin Vector
+open Matrix Tensor
 set_option maxHeartbeats 800000
 
 
@@ -22,7 +22,7 @@ private def shiftRow (d : ℕ) (i : Fin (d + d)) : Fin (d + d) :=
 private lemma cast_delta (a b : ℕ) :
     (↑(KroneckerDelta a b) : Tensor ℝ []) =
       if a = b then (1 : Tensor ℝ []) else (0 : Tensor ℝ []) := by
-  rw [Delta.eq.Ite]
+  rw [Nat.Delta.eq.Ite]
   split_ifs
   · exact Nat.cast_one
   · exact Nat.cast_zero
@@ -112,7 +112,7 @@ private lemma get_shift_mul
           (interleave d).toMatrix (shiftRow d i) j
         else
           (0 : Tensor ℝ []) := by
-    rw [get_shiftRow d hd i k, Delta.eq.Ite]
+    rw [get_shiftRow d hd i k, Nat.Delta.eq.Ite]
     by_cases hk : (shiftRow d i : ℕ) = (k : ℕ)
     · have hk' : k = shiftRow d i := Fin.ext hk.symm
       simp [hk, hk']
@@ -404,7 +404,7 @@ private lemma det_rec
       ext i
       fin_cases i
       simp [Mul.mul]
-      rw [Head.eq.Get_0.fin]
+      rw [Vector.Head.eq.Get_0.fin]
       erw [Vector.GetMul.eq.MulGetS.fin]
       erw [Vector.GetMul.eq.MulGetS.fin]
       simp [Neg.neg]
