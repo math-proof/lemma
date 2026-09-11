@@ -889,6 +889,124 @@ abstract class Lean extends IndentedNode
         return $this;
     }
 
+    /**
+     * Peel pure grouping wrappers: parentheses and singleton space-separated
+     * groups. Default leaves the node as-is; LeanParenthesis and singleton
+     * LeanArgsSpaceSeparated override to recurse into their single child.
+     */
+    public function peelGroup()
+    {
+        return $this;
+    }
+
+    /**
+     * Head text of an application chain `Measure Ω` / `M.Measure Ω` -> its head
+     * identifier (e.g. `Measure`, `M.Measure`); null if none can be extracted.
+     */
+    public function appHead()
+    {
+        $g = $this->peelGroup();
+        if ($g instanceof LeanToken) return $g->text;
+        if ($g instanceof LeanArgsSpaceSeparated && count($g->args) >= 1) {
+            $h = $g->args[0];
+            if ($h instanceof LeanToken || $h instanceof LeanProperty) return trim((string)$h);
+        }
+        return null;
+    }
+
+    /** True if this node's appHead() equals $name or ends with ".$name". */
+    public function headIs(string $name): bool
+    {
+        $h = $this->appHead();
+        return $h === $name || ($h !== null && str_ends_with($h, '.' . $name));
+    }
+
+    /**
+     * Binder names introduced by the lhs of `↦` / `x : T` / `x in s`.
+     * @param object $node
+     * @return string[]
+     */
+    protected static function binderNames($node): array
+    {
+        $names = [];
+        $go = function ($x) use (&$go, &$names) {
+            $y = $x->peelGroup();
+            if ($y instanceof LeanToken) $names[] = $y->text;
+            elseif ($y instanceof LeanColon) $go($y->lhs);
+            elseif ($y instanceof LeanArgsSpaceSeparated)
+                foreach ($y->args as $z) $go($z);
+            // LeanIn (`in s`) carries the domain, not a name: do not descend
+        };
+        $go($node);
+        return $names;
+    }
+
+    /**
+     * Mark FREE occurrences of random-variable names on $this subtree by
+     * calling setRandomVariable() on their tokens. Local binders
+     * (`fun … ↦`, `∀`, big operators, and preceding `let` statements) shadow
+     * same-named variables in their scope, so bound occurrences stay uncolored.
+     * @param string[] $rvNames
+     * @param string[] $letBound names introduced by preceding `let` statements
+     */
+    public function markRandomVarNames(array $rvNames, array &$letBound = []): void
+    {
+        /** @var array<string,bool> */
+        $rvSet = array_flip($rvNames);
+        /** @var string[][] */
+        $localFrames = [];
+
+        $isHidden = function ($name) use (&$letBound, &$localFrames) {
+            if (in_array($name, $letBound, true)) return true;
+            foreach ($localFrames as $f) if (in_array($name, $f, true)) return true;
+            return false;
+        };
+
+        $walk = function ($n) use (&$walk, &$letBound, &$localFrames, $isHidden, $rvSet) {
+            if (!$n || !is_object($n)) return;
+            if ($n instanceof LeanToken) {
+                if (isset($rvSet[$n->text]) && !$isHidden($n->text))
+                    $n->setRandomVariable();
+                return;
+            }
+            if ($n instanceof Lean_mapsto) {
+                $localFrames[] = Lean::binderNames($n->lhs);
+                $walk($n->rhs);
+                array_pop($localFrames);
+                return;
+            }
+            if ($n instanceof LeanBigOperator) {
+                $localFrames[] = $n->bound ? Lean::binderNames($n->bound) : [];
+                // domain/type of the bound variable is outside its own scope
+                if ($n->bound instanceof LeanColon) $walk($n->bound->rhs);
+                if ($n->scope) $walk($n->scope);
+                array_pop($localFrames);
+                return;
+            }
+            if ($n instanceof Lean_let) {
+                // RHS is evaluated first; the name binds only the continuation
+                $a = $n->args[0] ?? null;
+                if ($a instanceof LeanAssign) {
+                    if ($a->lhs instanceof LeanColon) {
+                        $walk($a->lhs->rhs);
+                        $walk($a->rhs);
+                        foreach (Lean::binderNames($a->lhs->lhs) as $nm) $letBound[] = $nm;
+                    } else {
+                        $walk($a->rhs);
+                        foreach (Lean::binderNames($a->lhs) as $nm) $letBound[] = $nm;
+                    }
+                } elseif ($a instanceof LeanColon && $a->rhs instanceof LeanAssign) {
+                    $walk($a->rhs->rhs);
+                    foreach (Lean::binderNames($a->rhs->lhs) as $nm) $letBound[] = $nm;
+                }
+                return;
+            }
+            if (isset($n->args) && is_array($n->args))
+                foreach ($n->args as $k) $walk($k);
+        };
+        $walk($this);
+    }
+
     public function push_accessibility($new, $accessibility)
     {
         if ($this->parent)
@@ -1223,6 +1341,12 @@ class LeanToken extends Lean
         $this->text = $text;
     }
 
+    /** Mark this occurrence as a free random variable (red LaTeX rendering). */
+    public function setRandomVariable()
+    {
+        $this->kwargs['isRandomVariable'] = true;
+    }
+
     public function append($new, $func)
     {
         if ($this->parent)
@@ -1285,6 +1409,8 @@ class LeanToken extends Lean
             if (str_starts_with($text, '_'))
                 $text = '\\' . $text;
         }
+        if (!empty($this->kwargs['isRandomVariable']))
+            return '{\\color{red} {' . $text . '}}';
         return $text;
     }
 
@@ -1991,6 +2117,11 @@ class LeanParenthesis extends LeanPairedGroup
         if ($this->arg instanceof LeanColon)
             return $this;
         return $this->arg->peelParen();
+    }
+
+    public function peelGroup()
+    {
+        return $this->arg->peelGroup();
     }
 
     public function regexp()
@@ -3673,8 +3804,10 @@ class LeanBitOr extends LeanArithmetic
         foreach ($this->args as $arg) {
             if ($arg instanceof LeanBitOr)
                 $tokens = [...$tokens, ...$arg->tokens_bar_separated()];
-            elseif ($arg instanceof LeanAngleBracket)
-                $tokens[] = $arg->tokens_comma_separated();
+            elseif ($arg instanceof LeanAngleBracket) {
+                $ts = $arg->tokens_comma_separated();
+                $tokens[] = count($ts) === 1 ? $ts[0] : new LeanArgsCommaSeparated($ts, $this->indent, $this->level);
+            }
             else
                 $tokens[] = $arg;
         }
@@ -5254,6 +5387,85 @@ class LeanStatements extends LeanArgs
 }
 
 
+/**
+ * Semantic pass over signature binders: braces `{m : Measure T}` plus brackets
+ * `[IsProbabilityMeasure m]` identify probability-space domains T, and explicit
+ * binders `(v : T → U)` on such a domain are random variables.
+ * @param object[] $binderRoots
+ * @return string[]
+ */
+function collect_random_var_names(array $binderRoots)
+{
+    $nodes = [];
+    $gather = function ($n) use (&$gather, &$nodes) {
+        if (!$n || !is_object($n)) return;
+        $nodes[] = $n;
+        if (isset($n->args) && is_array($n->args))
+            foreach ($n->args as $k) $gather($k);
+    };
+    foreach ($binderRoots as $r) $gather($r);
+
+    /** @var array<string,string> measure name -> domain text */
+    $measures = [];
+    foreach ($nodes as $n) {
+        if (!($n instanceof LeanBrace)) continue;
+        $cols = [];
+        $a = $n->arg;
+        if ($a instanceof LeanColon) $cols[] = $a;
+        elseif ($a instanceof LeanArgsSpaceSeparated)
+            foreach ($a->args as $c) if ($c instanceof LeanColon) $cols[] = $c;
+        foreach ($cols as $col) {
+            $rhs = $col->rhs->peelGroup();
+            if ($rhs->headIs('Measure') && $rhs instanceof LeanArgsSpaceSeparated
+                && count($rhs->args) >= 2) {
+                $dom = trim((string)$rhs->args[1]->peelGroup());
+                if ($dom !== '') $measures[trim((string)$col->lhs)] = $dom;
+            }
+        }
+    }
+
+    /** @var array<string,bool> */
+    $probDomains = [];
+    foreach ($nodes as $n) {
+        if (!($n instanceof LeanBracket)) continue;
+        $a = $n->arg->peelGroup();
+        if ($a instanceof LeanArgsSpaceSeparated && count($a->args) >= 2
+            && $a->headIs('IsProbabilityMeasure')) {
+            $m = trim((string)$a->args[1]->peelGroup());
+            if (isset($measures[$m])) $probDomains[$measures[$m]] = true;
+        }
+    }
+
+    /** @var array<string,bool> */
+    $rvs = [];
+    foreach ($nodes as $n) {
+        if (!($n instanceof LeanParenthesis)) continue;
+        $col = $n->arg instanceof LeanColon ? $n->arg : null;
+        if (!$col) continue;
+        $ty = $col->rhs->peelGroup();
+        if (!($ty instanceof Lean_rightarrow)) continue;
+        $dom = trim((string)$ty->lhs->peelGroup());
+        if (!isset($probDomains[$dom])) continue;
+        $addNames = function ($x) use (&$addNames, &$rvs) {
+            $y = $x->peelGroup();
+            if ($y instanceof LeanToken) $rvs[$y->text] = true;
+            elseif ($y instanceof LeanArgsSpaceSeparated)
+                foreach ($y->args as $z) $addNames($z);
+        };
+        $addNames($col->lhs);
+    }
+    return array_keys($rvs);
+}
+
+/** Mark a statement sequence; top-level `let q := …` hides `q` thereafter. */
+function mark_random_var_sequence(array $stmts, array $rvNames)
+{
+    $letBound = [];
+    foreach ($stmts as $st)
+        $st->markRandomVarNames($rvNames, $letBound);
+}
+
+
 class LeanModule extends LeanStatements
 {
     public function __get($vname)
@@ -5506,6 +5718,15 @@ class LeanModule extends LeanStatements
                         $imply = $declspec->rhs->args;
                         if ($imply[0] instanceof LeanLineComment && $imply[0]->text == 'imply')
                             array_shift($imply);
+
+                        // semantic pass: random variables are explicit binders
+                        // on a probability-space domain; mark their free
+                        // occurrences in the signature and imply statements
+                        $rvNames = collect_random_var_names([$declspec->lhs]);
+                        if ($rvNames) {
+                            $declspec->lhs->markRandomVarNames($rvNames);
+                            mark_random_var_sequence($imply, $rvNames);
+                        }
 
                         $proof = $stmt->assignment->rhs;
                         $by = $proof instanceof LeanBy ? 'by' : ($proof instanceof LeanCalc ? 'calc' : '');
@@ -6811,6 +7032,11 @@ class LeanArgsSpaceSeparated extends LeanArgs
         $tokens = $this->tokens_space_separated();
         $tree = std\eval_prefix($tokens, fn($arg) => $arg->operand_count());
         return $tree;
+    }
+
+    public function peelGroup()
+    {
+        return count($this->args) === 1 ? $this->args[0]->peelGroup() : $this;
     }
 
     public function get_type($vars, $arg)
@@ -9039,7 +9265,7 @@ class LeanTacticBlock extends LeanUnary
                             continue;
                         switch ($stmt->func) {
                             case 'rcases':
-                                if (($with = $stmt->with) instanceof LeanWith && ($tokens = $with->tokens_bar_separated())) {
+                                if (($with = $stmt->with) instanceof LeanWith && ($tokens = $with->tokens_bar_separated()) && $tacticBlockCount < count($tokens)) {
                                     $token = $tokens[$tacticBlockCount];
                                     $indent = $statements->indent;
                                     $level = $statements->level;
@@ -9070,7 +9296,7 @@ class LeanTacticBlock extends LeanUnary
                                 }
                                 break;
                             case "cases'":
-                                if (($with = $stmt->with) instanceof LeanWith && ($tokens = $with->tokens_space_separated())) {
+                                if (($with = $stmt->with) instanceof LeanWith && ($tokens = $with->tokens_space_separated()) && $tacticBlockCount < count($tokens)) {
                                     $token = $tokens[$tacticBlockCount];
                                     $token = clone $token;
                                     $token->indent = $statements->indent;
@@ -9084,7 +9310,7 @@ class LeanTacticBlock extends LeanUnary
                                 }
                                 break;
                             case 'obtain':
-                                if (($assign = $stmt->arg) instanceof LeanAssign && (($bitOr = $assign->lhs) instanceof LeanBitOr) && ($tokens = $bitOr->tokens_bar_separated())) {
+                                if (($assign = $stmt->arg) instanceof LeanAssign && (($bitOr = $assign->lhs) instanceof LeanBitOr) && ($tokens = $bitOr->tokens_bar_separated()) && $tacticBlockCount < count($tokens)) {
                                     $token = $tokens[$tacticBlockCount];
                                     $token = clone $token;
                                     $token->indent = $statements->indent;

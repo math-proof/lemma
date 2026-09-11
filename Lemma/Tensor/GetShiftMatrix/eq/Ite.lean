@@ -12,6 +12,7 @@ open Tensor
 @[main, fin]
 private lemma main
   [AddMonoidWithOne α] [CharZero α]
+-- given
   (n i₀ j₀ : ℕ)
   (i j : Fin n) :
 -- imply

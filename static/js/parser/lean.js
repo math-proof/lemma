@@ -965,6 +965,113 @@ export class Lean extends IndentedNode {
         return this;
     }
 
+    /**
+     * Peel pure grouping wrappers: parentheses and singleton space-separated
+     * groups. Default leaves the node as-is; `LeanParenthesis` and singleton
+     * `LeanArgsSpaceSeparated` override to recurse into their single child.
+     */
+    peelGroup() {
+        return this;
+    }
+
+    /**
+     * Head text of an application chain `Measure Ω` / `M.Measure Ω` -> its head
+     * identifier (e.g. `Measure`, `M.Measure`); `null` if none can be extracted.
+     */
+    appHead() {
+        const g = this.peelGroup();
+        if (g instanceof LeanToken) return g.text;
+        if (g instanceof LeanArgsSpaceSeparated && g.args.length >= 1) {
+            const h = g.args[0];
+            if (h instanceof LeanToken || h instanceof LeanProperty) return strStmt(h).trim();
+        }
+        return null;
+    }
+
+    /** True if this node's `appHead()` equals `name` or ends with `.<name>`. */
+    headIs(name) {
+        const h = this.appHead();
+        return h === name || (h != null && h.endsWith('.' + name));
+    }
+
+    /**
+     * Binder names introduced by the lhs of `↦` / `x : T` / `x in s`.
+     * @param {unknown} node
+     * @returns {string[]}
+     * @protected
+     */
+    static _binderNames(node) {
+        /** @type {string[]} */
+        const names = [];
+        const go = (x) => {
+            const y = x.peelGroup();
+            if (y instanceof LeanToken) names.push(y.text);
+            else if (y instanceof LeanColon) go(y.lhs);
+            else if (y instanceof LeanArgsSpaceSeparated) y.args.forEach(go);
+            // LeanIn (`in s`) carries the domain, not a name: do not descend
+        };
+        go(node);
+        return names;
+    }
+
+    /**
+     * Mark FREE occurrences of random-variable names on `this` subtree by
+     * setting `kwargs.isRandomVariable` on their tokens. Local binders
+     * (`fun … ↦`, `∀`, big operators, and preceding `let` statements) shadow
+     * same-named variables in their scope, so bound occurrences stay uncolored.
+     * @param {Set<string>} rvNames
+     * @param {string[]} [letBound] names introduced by preceding `let` statements
+     */
+    markRandomVarNames(rvNames, letBound = []) {
+        /** @type {string[][]} */
+        const localFrames = [];
+        const isHidden = (name) =>
+            letBound.includes(name) || localFrames.some((f) => f.includes(name));
+
+        const walk = (n) => {
+            if (!n || typeof n !== 'object') return;
+            if (n instanceof LeanToken) {
+                if (rvNames.has(n.text) && !isHidden(n.text))
+                    n.kwargs.isRandomVariable = true;
+                return;
+            }
+            if (n instanceof Lean_mapsto) {
+                localFrames.push(Lean._binderNames(n.lhs));
+                walk(n.rhs);
+                localFrames.pop();
+                return;
+            }
+            if (n instanceof LeanBigOperator) {
+                localFrames.push(n.bound ? Lean._binderNames(n.bound) : []);
+                // domain/type of the bound variable is outside its own scope
+                if (n.bound instanceof LeanColon) walk(n.bound.rhs);
+                if (n.scope) walk(n.scope);
+                localFrames.pop();
+                return;
+            }
+            if (n instanceof Lean_let) {
+                // RHS is evaluated first; the name binds only the continuation
+                const a = n.arg;
+                if (a instanceof LeanAssign) {
+                    if (a.lhs instanceof LeanColon) {
+                        walk(a.lhs.rhs);
+                        walk(a.rhs);
+                        letBound.push(...Lean._binderNames(a.lhs.lhs));
+                    } else {
+                        walk(a.rhs);
+                        letBound.push(...Lean._binderNames(a.lhs));
+                    }
+                } else if (a instanceof LeanColon && a.rhs instanceof LeanAssign) {
+                    walk(a.rhs.rhs);
+                    letBound.push(...Lean._binderNames(a.rhs.lhs));
+                }
+                return;
+            }
+            if (Array.isArray(n.args)) for (const k of n.args) walk(k);
+        };
+        walk(this);
+    }
+
     push_accessibility($new, accessibility) {
         if (this.parent) return this.parent.push_accessibility($new, accessibility);
     }
@@ -1364,6 +1471,7 @@ export class LeanToken extends Lean {
             }
             if (text.startsWith('_')) text = `\\${text}`;
         }
+        if (this.kwargs.isRandomVariable) return `{\\color{red} {${text}}}`;
         return text;
     }
 
@@ -2230,6 +2338,10 @@ export class LeanParenthesis extends LeanPairedGroup {
     peelParen() {
         if (this.arg instanceof LeanColon) return this;
         return this.arg.peelParen();
+    }
+
+    peelGroup() {
+        return this.arg.peelGroup();
     }
 
     regexp() {
@@ -3261,6 +3373,71 @@ export class LeanEq extends LeanRelational {
         return '=';
     }
 }
+
+/**
+ * Detect the marginal-density pattern and render clean LaTeX:
+ *   (fun ω ↦ lintegral μ (fun x ↦ p (x, y ω))) =ᵐ[ℙ] (fun ω ↦ ...rnDeriv... (y ω))
+ *   (fun ω ↦ lintegral μ (fun a ↦ ...density/rnDeriv... (a, y ω))) =ᵐ[ℙ] (...)
+ * →  ∫ 𝕡(x, 𝕪) dx =^m 𝕡(𝕪)   (sympy-style; density may be implicit via rnDeriv)
+ * @returns {string[] | null} [lhsLatex, rhsLatex] or null if pattern doesn't match
+ */
+function tryMarginalDensityLatex(lhs, rhs, modifier, syntax) {
+    // LHS must be: fun ω ↦ lintegral μ (fun x ↦ ...)
+    if (!(lhs instanceof Lean_fun) || !(lhs.arg instanceof Lean_mapsto)) return null;
+    const lhsBody = lhs.arg.rhs.peelGroup();
+    if (!lhsBody.headIs('lintegral')) return null;
+    // lintegral args: [lintegral, μ, (fun x ↦ ...)]
+    const lintegralArgs = lhsBody.args;
+    if (!lintegralArgs || lintegralArgs.length < 3) return null;
+    const innerFun = lintegralArgs[2].peelGroup();
+    if (!(innerFun instanceof Lean_fun) || !(innerFun.arg instanceof Lean_mapsto)) return null;
+    // Inner body: p (x, y ω)  OR  (...rnDeriv/density...) (x, y ω)
+    const innerBody = innerFun.arg.rhs.peelGroup();
+    const innerStr = strStmt(innerBody);
+    const impliedPdf = innerStr.includes('rnDeriv') || innerStr.includes('density');
+    const jointArgs = innerBody instanceof LeanArgsSpaceSeparated ? innerBody.args : null;
+    if (!jointArgs || jointArgs.length < 2) return null;
+    // jointArgs[0] is the density head; jointArgs[last] is the pair (x, y ω)
+    const densityName = impliedPdf ? '\\mathbb{p}' : strStmt(jointArgs[0]).trim();
+    // Find the random variable application: y ω (a 2-arg space-separated with lowercase head)
+    const findRvApp = (n) => {
+        if (!n || typeof n !== 'object') return null;
+        if (n instanceof LeanArgsSpaceSeparated && n.args.length === 2) {
+            const head = n.args[0];
+            const arg = n.args[1];
+            if (head instanceof LeanToken && arg instanceof LeanToken) {
+                const name = head.text;
+                if (name && name.length === 1 && name === name.toLowerCase())
+                    return name;
+            }
+        }
+        if (n.args) for (const k of n.args) { const r = findRvApp(k); if (r) return r; }
+        if (n.lhs) { const r = findRvApp(n.lhs); if (r) return r; }
+        if (n.rhs) { const r = findRvApp(n.rhs); if (r) return r; }
+        return null;
+    };
+    const pairArg = jointArgs[jointArgs.length - 1].peelGroup();
+    const rvName = findRvApp(pairArg);
+    if (!rvName) return null;
+
+    // RHS: unwrap LeanStatements / LeanParenthesis to reach Lean_fun
+    let rhsFun = rhs;
+    while (rhsFun && rhsFun.constructor?.name === 'LeanStatements' && rhsFun.args?.length > 0)
+        rhsFun = rhsFun.args[0];
+    while (rhsFun && rhsFun.constructor?.name === 'LeanParenthesis')
+        rhsFun = rhsFun.arg;
+    if (!(rhsFun instanceof Lean_fun) || !(rhsFun.arg instanceof Lean_mapsto)) return null;
+    // RHS body should involve rnDeriv
+    const rhsBody = rhsFun.arg.rhs.peelGroup();
+    if (!rhsBody || !strStmt(rhsBody).includes('rnDeriv')) return null;
+
+    // Build clean LaTeX — random variable highlighted red, matching the site convention
+    const rv = `{\\color{red} {${rvName}}}`;
+    const lhsLatex = `\\int ${densityName}(x, ${rv})\\,dx`;
+    const rhsLatex = `${densityName}(${rv})`;
+    return [lhsLatex, rhsLatex];
+}
+
 /** Modified equality `=ᵐ[ν]` — equality modulo a parameter. */
 export class LeanMEq extends LeanRelational {
     /** @type {string} */
@@ -3276,6 +3453,9 @@ export class LeanMEq extends LeanRelational {
 
     latexArgs(syntax) {
         if (syntax) syntax['=ᵐ'] = true;
+        const [lhs, rhs] = this.strip_parenthesis();
+        const pretty = tryMarginalDensityLatex(lhs, rhs, this.modifier, syntax);
+        if (pretty) return pretty;
         return super.latexArgs(syntax);
     }
 
@@ -3691,7 +3871,10 @@ export class LeanBitOr extends LeanArithmetic {
         const tokens = [];
         for (const arg of this.args) {
             if (arg instanceof LeanBitOr) tokens.push(...arg.tokens_bar_separated());
-            else if (arg instanceof LeanAngleBracket) tokens.push(arg.tokens_comma_separated());
+            else if (arg instanceof LeanAngleBracket) {
+                const ts = arg.tokens_comma_separated();
+                tokens.push(ts.length === 1 ? ts[0] : new LeanArgsCommaSeparated(ts, this.indent, this.level));
+            }
             else tokens.push(arg);
         }
         return tokens;
@@ -5048,6 +5231,85 @@ function parseVars(implicit) {
     return kwargs;
 }
 
+/**
+ * Semantic pass over signature binders: braces `{m : Measure T}` plus brackets
+ * `[IsProbabilityMeasure m]` identify probability-space domains T, and explicit
+ * binders `(v : T → U)` on such a domain are random variables — mirroring the
+ * elaborator-side check (`MeasurableSpace` alone would also match `ℝ → ℝ`).
+ * @param {unknown[]} binderRoots
+ * @returns {Set<string>}
+ */
+function collectRandomVarNames(binderRoots) {
+    const nodes = [];
+    const gather = (n) => {
+        if (!n || typeof n !== 'object') return;
+        nodes.push(n);
+        if (Array.isArray(n.args)) for (const k of n.args) gather(k);
+    };
+    for (const r of binderRoots) gather(r);
+
+    /** @type {Map<string, string>} measure name -> domain text */
+    const measures = new Map();
+    for (const n of nodes) {
+        if (!(n instanceof LeanBrace)) continue;
+        const cols = [];
+        const a = n.arg;
+        if (a instanceof LeanColon) cols.push(a);
+        else if (a instanceof LeanArgsSpaceSeparated)
+            for (const c of a.args) if (c instanceof LeanColon) cols.push(c);
+        for (const col of cols) {
+            const rhs = col.rhs.peelGroup();
+            if (rhs.headIs('Measure') && rhs instanceof LeanArgsSpaceSeparated
+                && rhs.args.length >= 2) {
+                const dom = strStmt(rhs.args[1].peelGroup()).trim();
+                if (dom) measures.set(strStmt(col.lhs).trim(), dom);
+            }
+        }
+    }
+
+    const probDomains = new Set();
+    for (const n of nodes) {
+        if (!(n instanceof LeanBracket)) continue;
+        const a = n.arg.peelGroup();
+        if (a instanceof LeanArgsSpaceSeparated && a.args.length >= 2
+            && a.headIs('IsProbabilityMeasure')) {
+            const m = strStmt(a.args[1].peelGroup()).trim();
+            if (measures.has(m)) probDomains.add(measures.get(m));
+        }
+    }
+
+    /** @type {Set<string>} */
+    const rvs = new Set();
+    for (const n of nodes) {
+        if (!(n instanceof LeanParenthesis)) continue;
+        const col = n.arg instanceof LeanColon ? n.arg : null;
+        if (!col) continue;
+        const ty = col.rhs.peelGroup();
+        if (!(ty instanceof Lean_rightarrow)) continue;
+        const dom = strStmt(ty.lhs.peelGroup()).trim();
+        if (!probDomains.has(dom)) continue;
+        /** @param {unknown} x */
+        const addNames = (x) => {
+            const y = x.peelGroup();
+            if (y instanceof LeanToken) rvs.add(y.text);
+            else if (y instanceof LeanArgsSpaceSeparated) y.args.forEach(addNames);
+        };
+        addNames(col.lhs);
+    }
+    return rvs;
+}
+
+/**
+ * Mark a sequence of statements in order: a top-level `let q := …` hides `q`
+ * for every following statement (the shared `letBound` frame accumulates).
+ * @param {unknown[]} stmts
+ * @param {Set<string>} rvNames
+ */
+function markRandomVarSequence(stmts, rvNames) {
+    const letBound = [];
+    for (const st of stmts) st.markRandomVarNames(rvNames, letBound);
+}
+
 function zipped(a, b) {
     const n = Math.min(a.length, b.length);
     /** @type {[T, U][]} */
@@ -5184,6 +5446,7 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                 let flatGiven = null;
 
                 let flatImplyStmts = [];
+                let flatRvNames = new Set();
                 if (assignIdx >= 0) {
                     let firstAssign = assignIdx;
                     for (let k = idx + 1; k < assignIdx; k++) {
@@ -5192,6 +5455,12 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                             break;
                         }
                     }
+                    // semantic pass: random-variable names + free-occurrence
+                    // marking, before any given/imply latex is generated
+                    const flatBinderNodes = args.slice(idx + 1, firstAssign);
+                    flatRvNames = collectRandomVarNames(flatBinderNodes);
+                    if (flatRvNames.size)
+                        for (const s of flatBinderNodes) s.markRandomVarNames(flatRvNames);
                     for (let k = idx + 1; k < firstAssign; k++) {
                         const s = args[k];
                         if (s instanceof Lean_let) {
@@ -5321,6 +5590,14 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                     let attribute = extractAttribute(stmt.attribute);
                     let imply =  rhsColon.args.slice()
                     if (imply[0] instanceof LeanLineComment && imply[0].text === 'imply') imply.shift();
+                    // semantic pass: random variables are explicit binders on a
+                    // probability-space domain; mark their free occurrences in
+                    // the signature propositions and the imply statements
+                    const rvNames = collectRandomVarNames([declspec.lhs]);
+                    if (rvNames.size) {
+                        declspec.lhs.markRandomVarNames(rvNames);
+                        markRandomVarSequence(imply, rvNames);
+                    }
                     const proof0 = assignment.rhs;
                     const by = proof0 instanceof LeanBy? 'by' : proof0 instanceof LeanCalc ? 'calc' : '';
                     const implyLean = unindentTwo(imply.map((s) => strStmt(s)).join('\n'));
@@ -5605,6 +5882,7 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                     let implyOut;
                     if (flatImplyStmts && flatImplyStmts.length > 0) {
                         const imply = [...flatImplyStmts, assignment.lhs];
+                        if (flatRvNames.size) markRandomVarSequence(imply, flatRvNames);
                         const implyLean = unindentTwo(imply.map((s) => strStmt(s)).join('\n'));
                         let implyLatex;
                         if (imply.length > 1 && imply[0] instanceof Lean_let) {
@@ -5622,6 +5900,7 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                         implyLatex += `\\tag*{ :=${by ? ` ${by}` : ''}}`;
                         implyOut = { lean: implyLean + ' :=' + (by ? ` ${by}` : ''), latex: implyLatex };
                     } else {
+                        if (flatRvNames.size) markRandomVarSequence([implyNode], flatRvNames);
                         const implyLean = unindentTwo(strStmt(implyNode)) + ' :=' + (by ? ` ${by}` : '');
                         const implyLatex =
                             (implyNode.toLatex ? implyNode.toLatex(syntax) : strStmt(implyNode)) +
@@ -6970,6 +7249,10 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         )
             return 18;
         return 80;
+    }
+
+    peelGroup() {
+        return this.args.length === 1 ? this.args[0].peelGroup() : this;
     }
 
     /**
@@ -9202,7 +9485,7 @@ class LeanTacticBlock extends LeanUnary {
                         case 'rcases': {
                             const $with = stmt.with;
                             const tokens = $with.tokens_bar_separated();
-                            if ($with && tokens.length) {
+                            if ($with && tokens.length && tacticBlockCount < tokens.length) {
                                 let token = tokens[tacticBlockCount];
                                 if (Array.isArray(token)) {
                                     token = token.filter((token) => token.text !== 'rfl');
@@ -9227,7 +9510,7 @@ class LeanTacticBlock extends LeanUnary {
                         case "cases'": {
                             const $with = stmt.with;
                             const tokens = w.tokens_space_separated();
-                            if ($with instanceof LeanWith && tokens.length) {
+                            if ($with instanceof LeanWith && tokens.length && tacticBlockCount < tokens.length) {
                                 const token = tokens[tacticBlockCount].clone();
                                 token.indent = indent;
                                 token.level = level;
@@ -9243,7 +9526,7 @@ class LeanTacticBlock extends LeanUnary {
                                 const bitOr = assign.lhs;
                                 if (bitOr instanceof LeanBitOr) {
                                     const tokens = bitOr.tokens_bar_separated();
-                                    if (tokens.length) {
+                                    if (tokens.length && tacticBlockCount < tokens.length) {
                                         const token = tokens[tacticBlockCount].clone();
                                         token.indent = indent;
                                         token.level = level;

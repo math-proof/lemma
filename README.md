@@ -277,7 +277,7 @@ Guidelines and prompts for using LLMs to write and refactor Lean 4 proofs in thi
 - use `grind`/`aesop` as much as possible
 - in `apply`/`exact`, use `_` as arguments as much as possible, prefer `_` instead of `?_`/`?identifier`
 - After a bullet tactic (`·`), put the next statement on a new line when that branch contains more than one step.
-- implicit/instance (instImplicit) arguments should be put before the `given` section
+- before the `given` section, put instance (instImplicit) first, then implicit arguments
 - default arguments should be put within the `given` section: propositions come first, expressions come next, unless otherwise specified
 - conclusion must be put within the `imply` section
 - proof body must be put within the `proof` section
