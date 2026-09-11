@@ -14,8 +14,7 @@ private lemma marginal
   [SFinite μ] [SFinite ν]
   (p : α × β → ENNReal)
   (hp : Measurable p) :
-  ν.withDensity (fun y ↦ lintegral μ (fun x ↦ p (x, y))) =
-      ((μ.prod ν).withDensity p).snd := by
+  ν.withDensity (fun y ↦ lintegral μ (fun x ↦ p (x, y))) = ((μ.prod ν).withDensity p).snd := by
   ext s hs
   rw [withDensity_apply _ hs]
   have h : ((μ.prod ν).withDensity p).snd s =
@@ -35,28 +34,25 @@ private lemma main
   [SFinite μ] [SigmaFinite ν]
   {ℙ : Measure Ω} [IsProbabilityMeasure ℙ]
 -- given
-  (X : Ω → α) (Y : Ω → β)
-  (hX : Measurable X) (hY : Measurable Y)
+  (x : Ω → α) (y : Ω → β)
+  (hx : Measurable x) (hy : Measurable y)
   (p : α × β → ENNReal)
   (hp : Measurable p)
-  (hjoint : Measure.map (fun ω ↦ (X ω, Y ω)) ℙ = (μ.prod ν).withDensity p) :
+  (hjoint : Measure.map (fun ω ↦ (x ω, y ω)) ℙ = (μ.prod ν).withDensity p) :
 -- imply
-  Filter.Eventually
-    (fun ω ↦ lintegral μ (fun x ↦ p (x, Y ω)) =
-        (Measure.map Y ℙ).rnDeriv ν (Y ω)) (MeasureTheory.ae ℙ) := by
+  (fun y ↦ lintegral μ (fun x ↦ p (x, y))) =ᵐ[ν] (Measure.map y ℙ).rnDeriv ν := by
 -- proof
   let q := fun y : β ↦ lintegral μ (fun x ↦ p (x, y))
   have hq : Measurable q := hp.lintegral_prod_left'
-  have hmap : Measure.map Y ℙ =
-      Measure.map Prod.snd (Measure.map (fun ω ↦ (X ω, Y ω)) ℙ) :=
+  have hmap : Measure.map y ℙ =
+      Measure.map Prod.snd (Measure.map (fun ω ↦ (x ω, y ω)) ℙ) :=
     (Measure.map_map measurable_snd
-      (by fun_prop : Measurable (fun ω ↦ (X ω, Y ω)))).symm
-  have hlaw : Measure.map Y ℙ = ν.withDensity q := by
+      (by fun_prop : Measurable (fun ω ↦ (x ω, y ω)))).symm
+  have hlaw : Measure.map y ℙ = ν.withDensity q := by
     rw [hmap, hjoint]
     exact (marginal p hp).symm
   rw [hlaw]
-  exact (ae_eq_comp' hY.aemeasurable (Measure.rnDeriv_withDensity ν hq)
-    (hlaw ▸ withDensity_absolutelyContinuous ν q)).symm
+  exact (Measure.rnDeriv_withDensity ν hq).symm
 
 
--- created on 2026-09-11
+-- created on 2020-12-07

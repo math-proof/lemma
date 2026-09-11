@@ -1,7 +1,10 @@
 # usage :
 # .\ps1\run.ps1
+# process only the given module(s)
+# .\ps1\run.ps1 -Modules Nat.Mul,Real.LtIntegralS.of.All_Lt
 param(
-    [int]$limit = 4096
+    [int]$limit = 4096,
+    [string[]]$Modules = @()
 )
 [Console]::OutputEncoding = [Text.Encoding]::UTF8
 $OutputEncoding = [Text.Encoding]::UTF8
@@ -15,6 +18,24 @@ $__file__ = $MyInvocation.MyCommand.Path | Resolve-Path
 $root = Split-Path -Path $__file__ -Parent | Split-Path -Parent
 $user = $root | Split-Path -Leaf
 Write-Host "user = $user"
+
+# Convert a Lemma .lean file path to its dotted module name (without the `Lemma.` prefix).
+function Get-ModuleFromLeanFile {
+    param([string]$FullName)
+    $rel = $FullName.Substring($root.Length + 1)
+    $lemma = Join-Path (Split-Path $rel -Parent) ([IO.Path]::GetFileNameWithoutExtension($rel))
+    ($lemma -replace '\\', '.') -creplace '^Lemma\.', ''
+}
+
+# When `-Modules` is supplied, keep only files whose dotted module name matches.
+function Test-ModuleIncluded {
+    param([string]$Module)
+    if ($Modules.Count -eq 0) { return $true }
+    foreach ($m in $Modules) {
+        if ($Module -like $m) { return $true }
+    }
+    return $false
+}
 
 function Get-LemmaDateJson {
     param(
@@ -98,6 +119,7 @@ function echo_import {
 
 Get-ChildItem -Path "Lemma" -Recurse -File -Filter "*.lean" |
 Where-Object { $_.Name -notlike "*.echo.lean" } |
+Where-Object { Test-ModuleIncluded (Get-ModuleFromLeanFile $_.FullName) } |
 ForEach-Object {
     echo_import $_.FullName
 }
@@ -209,7 +231,17 @@ function transformPrefix {
         $newS0 = if ($s0 -eq 'L') { 'G' } else { 'L' }
         return $newS0 + $s1
     }
-    
+
+    # `NotLt` → `NotGt`, `NotLe` → `NotGe`, `NotGt` → `NotLt`, `NotGe` → `NotLe`.
+    if ($s -cmatch '^Not(.+)$') {
+        return 'Not' + (transformPrefix $matches[1])
+    }
+
+    # `All_Gt` → `All_Lt`, `All_Le` → `All_Ge`, `All_Lt` → `All_Gt`, `All_Ge` → `All_Le`.
+    if ($s -cmatch '^All_(.+)$') {
+        return 'All_' + (transformPrefix $matches[1])
+    }
+
     # If no patterns matched, return original string
     return $s
 }
@@ -256,7 +288,9 @@ function Not($token) {
 }
 
 # Get all .lean files except *.echo.lean under Lemma/
-Get-ChildItem -Recurse -Path "Lemma" -Include *.lean -Exclude *.echo.lean | ForEach-Object {
+Get-ChildItem -Recurse -Path "Lemma" -Include *.lean -Exclude *.echo.lean |
+Where-Object { Test-ModuleIncluded (Get-ModuleFromLeanFile $_.FullName) } |
+ForEach-Object {
     $file = $_.FullName
     $file = Resolve-Path -Relative $file
     $content = Get-Content $file -Raw
@@ -342,16 +376,42 @@ Get-ChildItem -Recurse -Path "Lemma" -Include *.lean -Exclude *.echo.lean | ForE
                     $tokens[3] = $tmp
                 }
                 default {
-                    $deBruijn = [int]$deBruijn
-                    $index = $tokens.length - 1
-                    $increment = -1
-                    while ($deBruijn) {
-                        if ($deBruijn -band 1) {
-                            $found = $true
-                            $tokens[$index] = transformPrefix $tokens[$index]
+                    # The deBruijn value encodes which default binders to flip.
+                    # After Prop-filtering, set bits collapse to of-segment tokens
+                    # from the left (token 0, 1, ...). The first path token
+                    # (tokens[1]) is always flipped via transformPrefix.
+                    $ofIdx = [array]::IndexOf([object[]]$tokens, 'of')
+                    if ($ofIdx -ge 0 -and $ofIdx -lt $tokens.Length - 1) {
+                        $ofTokens = @($tokens[($ofIdx + 1)..($tokens.Length - 1)])
+                        $d = [int]$deBruijn
+                        $popCount = 0
+                        while ($d) {
+                            if ($d -band 1) { $popCount++ }
+                            $d = $d -shr 1
                         }
-                        $deBruijn = $deBruijn -shr 1
-                        $index += $increment
+                        $flipCount = [Math]::Min($popCount, $ofTokens.Length)
+                        for ($j = 0; $j -lt $flipCount; $j++) {
+                            $newTok = transformPrefix $ofTokens[$j]
+                            if ($newTok -ne $ofTokens[$j]) {
+                                $found = $true
+                                $ofTokens[$j] = $newTok
+                            }
+                        }
+                        for ($j = 0; $j -lt $ofTokens.Length; $j++) {
+                            $tokens[$ofIdx + 1 + $j] = $ofTokens[$j]
+                        }
+                    } else {
+                        $d = [int]$deBruijn
+                        $index = $tokens.length - 1
+                        $increment = -1
+                        while ($d) {
+                            if ($d -band 1) {
+                                $found = $true
+                                $tokens[$index] = transformPrefix $tokens[$index]
+                            }
+                            $d = $d -shr 1
+                            $index += $increment
+                        }
                     }
                     $first = transformPrefix $tokens[1]
                     if ($tokens[1] -ne $first) {

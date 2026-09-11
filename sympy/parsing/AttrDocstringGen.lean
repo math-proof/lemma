@@ -1,8 +1,9 @@
+import Lean
 import sympy.Basic
 import stdlib.String
 import stdlib.Lean.Name
 
-open String
+open String Lean
 
 def nameComponentString (n : Lean.Name) : String :=
   match n with
@@ -126,6 +127,42 @@ def mprCommLemmaTokens (tokens : List String) (parity : List Bool) : List String
   | some ts => ts
   | none => List.comm (List.mpr tokens) parity
 
+/-- Build the full module `Name` from the post-`Lemma/` tokens. -/
+def fullModuleName (tokens : List String) : Name :=
+  tokens.foldl Name.str `Lemma
+
+/-- Run a `CoreM` action in `IO` with a given environment. -/
+def runCore {α : Type} (env : Environment) (act : CoreM α) : IO α := do
+  let ctx : Core.Context := { fileName := "<gen>", fileMap := .ofString "" }
+  let st : Core.State := { env }
+  (·.1) <$> act.toIO ctx st
+
+/-- Find the private `main` declaration of a module in the environment.
+    `private lemma main ...` is stored as `_private.<Module>.<num>.main`. -/
+def findPrivateMain (env : Environment) (moduleDotted : String) : Option ConstantInfo :=
+  let pre := "_private." ++ moduleDotted ++ "."
+  env.constants.fold (fun acc n c =>
+    if acc.isSome then acc
+    else if n.toString.startsWith pre && n.toString.endsWith ".main" then some c else acc) none
+
+/-- Compute the exact `@[comm n]` generated name by replicating the real attribute
+    handler (`Expr.comm` → `extractParity` → `List.comm`). The module must already
+    be built so its private declarations are importable. -/
+def exactCommName (env : Environment) (tokens : List String) (n : Nat) : CoreM (Option Name) := do
+  let some info := findPrivateMain env (String.intercalate "." ("Lemma" :: tokens)) | return none
+  let ⟨parity, _, _⟩ := Expr.comm info.type (.const info.name (info.levelParams.map .param)) n
+  let i := tokens.idxOf "of"
+  let ofPart := (tokens.splitAt i).snd.tail
+  let parity ←
+    if parity.length > ofPart.length && ofPart.length > 0 then
+      parity.filterMapM fun ⟨comm, type⟩ =>
+        try if ← Meta.MetaM.run' type.is_Prop then return some comm else return none
+        catch _ => return none
+    else
+      pure (parity.map Prod.fst)
+  let path := (tokens.comm parity).foldl Name.str default
+  return path.lemmaName info.name
+
 def attrLemmaName (tokens : List String) (attr : String) : String :=
   let parts := attr.trimAscii.toString.splitOn " " |>.filter (· != "")
   match parts with
@@ -174,6 +211,25 @@ def attrLemmaName (tokens : List String) (attr : String) : String :=
   | ["subst", n] => moduleName (substTokens tokens n)
   | _ => panic! s!"unknown attribute: {attr}"
 
+/-- Resolve the lemma name for an attribute. For `comm n`, uses the exact
+    binder-aware engine algorithm by importing the built module; falls back to
+    the token-only approximation if the module cannot be imported. -/
+def attrLemmaNameIO (_rel : String) (tokens : List String) (attr : String) : IO String := do
+  let parts := attr.trimAscii.toString.splitOn " " |>.filter (· != "")
+  match parts with
+  | ["comm", n] =>
+    let modName := fullModuleName tokens
+    try
+      let env ← Lean.importModules #[{ module := modName }] {} 0
+      let name? ← runCore env (exactCommName env tokens n.toNat!)
+      match name? with
+      | some name => return name.toString
+      | none => return moduleName (commRunSh tokens n.toNat!)
+    catch _ =>
+      -- Module not built/importable (e.g. a failing lemma): use the token approximation.
+      return moduleName (commRunSh tokens n.toNat!)
+  | _ => return attrLemmaName tokens attr
+
 def formatAttrLabel (attr : String) : String :=
   let parts := attr.trimAscii.toString.splitOn " " |>.filter (· != "")
   match parts with
@@ -183,15 +239,14 @@ def formatAttrLabel (attr : String) : String :=
   | ["mpr.comm", "and"] => "mpr.comm and"
   | _ => String.intercalate " " parts
 
-def docstringFor (relPath : String) (attrs : List String) : String :=
+def docstringFor (relPath : String) (attrs : List String) : IO String := do
   let tokens := tokensFromRelPath relPath
   let customAttrs := attrs.filter (· != "main") |>.filter isCustomAttr
-  let rows :=
-    ("main" :: customAttrs).map fun attr =>
-      let label := formatAttrLabel attr
-      let name := escapeMd (attrLemmaName tokens attr)
-      s!"| {label} | {name} |"
-  "/--\n| attributes | lemma |\n| :---: | :---: |\n" ++ String.intercalate "\n" rows ++ "\n-/"
+  let rows ← ("main" :: customAttrs).mapM fun attr => do
+    let label := formatAttrLabel attr
+    let name ← attrLemmaNameIO relPath tokens attr
+    pure s!"| {label} | {escapeMd name} |"
+  return "/--\n| attributes | lemma |\n| :---: | :---: |\n" ++ String.intercalate "\n" rows ++ "\n-/"
 
 def main (args : List String) : IO Unit := do
   match args with
@@ -206,10 +261,10 @@ def main (args : List String) : IO Unit := do
         let rel := parts.head!.trimAscii.toString
         let attrs := parts.tail.map (·.trimAscii.toString)
         IO.println s!"FILE:{rel}"
-        IO.println (docstringFor rel attrs)
+        IO.println (← docstringFor rel attrs)
         IO.println "---"
   | rel :: attrs =>
-    IO.println (docstringFor rel attrs)
+    IO.println (← docstringFor rel attrs)
   | _ =>
     IO.println "usage: AttrDocstringGen <Lemma/.../File.lean> <attr> ..."
     IO.println "       AttrDocstringGen --batch <lines.txt>"

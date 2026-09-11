@@ -282,6 +282,27 @@ def Expr.asMatProd? : Expr → Option (String × Expr × Expr)
   | _ =>
     none
 
+/-- Whether a node is a `volume` measure constant (e.g. `MeasureTheory.MeasureSpace.volume`). -/
+def Expr.isVolume : Expr → Bool
+  | const (.ident name) => name.toString.endsWith "volume"
+  | Basic (.ExprWithAttr op) _ _ =>
+    match op with
+    | .Lean_function name
+    | .Lean_operatorname name
+    | .Lean_typeclass name
+    | .LeanLemma name
+    | .LeanMethod name _
+    | .LeanProperty name => name.toString.endsWith "volume"
+  | _ => false
+
+/-- `intervalIntegral (fun i => body) a b μ` → `(i, a, b, body, μ)`. -/
+def Expr.asIntervalIntegral? : Expr → Option (String × Expr × Expr × Expr × Expr)
+  | Basic (.ExprWithAttr (.Lean_operatorname `intervalIntegral))
+      [Basic (.ExprWithLimits .Lean_lambda) [fn, Binder .default binderName _ nil] _, a, b, μ] _ =>
+    some (binderName.escape_specials "\\ ", a, b, fn, μ)
+  | _ =>
+    none
+
 def LimTo.latex : LimTo → String
   | inf => "\\infty"
   | ninf => "-\\infty"
@@ -621,6 +642,17 @@ def Expr.latexFormat : Expr → String
             let args := args.map fun arg =>
               level.toColor (arg.priority > func.priority || arg.is_Div || arg.is_BlockMatrix)
             opStr ++ "\\ " ++ "\\ ".intercalate args
+        | `intervalIntegral =>
+          match Expr.asIntervalIntegral? e with
+          | some (_, _, _, _, μ) =>
+            if μ.isVolume then
+              "\\int\\limits_{%s}^{%s} {%s}\\,{\\color{blue}\\mathrm{d}}%s"
+            else
+              "\\int\\limits_{%s}^{%s} {%s}\\,\\partial\\!\\left(%s\\right)\\,{\\color{blue}\\mathrm{d}}%s"
+          | none =>
+            let args := args.map fun arg =>
+              level.toColor (arg.priority > func.priority || arg.is_Div || arg.is_BlockMatrix)
+            opStr ++ "\\ " ++ "\\ ".intercalate args
         | `Stack =>
           let arg := level.toColor (
             if let [_, Basic (.ExprWithLimits .Lean_lambda) [fn, Binder .default _ _ nil] _] := args then
@@ -803,8 +835,11 @@ where
   | sort u =>
     [u.toString]
 
-  | Symbol name _ =>
-    [name.escape_specials "."]
+  | Symbol name type =>
+    if type.isRandomVariable then
+      ["{\\color{red} {" ++ name.escape_specials "." ++ "}}"]
+    else
+      [name.escape_specials "."]
 
   | e@(Basic func args _) =>
     match func with
@@ -1023,6 +1058,15 @@ where
         match Expr.asMatProd? e with
         | some (i, n, fn) =>
           i :: map [n, fn]
+        | none =>
+          map args
+      | .Lean_operatorname `intervalIntegral =>
+        match Expr.asIntervalIntegral? e with
+        | some (i, a, b, fn, μ) =>
+          if μ.isVolume then
+            map [a, b, fn] ++ [i]
+          else
+            map [a, b, fn, μ] ++ [i]
         | none =>
           map args
       | .Lean_operatorname `letFun =>

@@ -77,7 +77,7 @@ export const token2classname = Object.freeze({
 
 /** Lean identifier continuation token (supports Unicode letters like Ξ). */
 function isIdentContinueToken(s) {
-    if ('ᵀ¹²³⁴'.includes(s)) return false;
+    if ('ᵀ²³⁴'.includes(s)) return false;
     return /^[\p{L}\p{N}_'!?₀-₉]+$/u.test(s);
 }
 
@@ -651,6 +651,20 @@ export class Lean extends IndentedNode {
                 if (tokens[self.start_idx + 1] === '=') {
                     self.start_idx++;
                     return this.push_binary(LeanBEq);
+                }
+                if (tokens[self.start_idx + 1] === '\u1D50' && tokens[self.start_idx + 2] === '[') {
+                    // `=ᵐ[ν]` — modified equality (LeanMEq)
+                    self.start_idx += 3; // skip `=ᵐ[`, point at first char inside brackets
+                    const startIdx = self.start_idx;
+                    while (self.start_idx < tokens.length && tokens[self.start_idx] !== ']') self.start_idx++;
+                    const arg = tokens.slice(startIdx, self.start_idx).join('');
+                    if (self.start_idx < tokens.length) self.start_idx++; // skip `]`
+                    self.start_idx--; // loop will increment
+                    const caret = this.push_binary(LeanMEq);
+                    let p = caret;
+                    while (p && !(p instanceof LeanMEq)) p = p.parent;
+                    if (p) p.modifier = arg;
+                    return caret;
                 }
                 return this.push_binary(LeanEq);
             case '!':
@@ -3237,6 +3251,34 @@ export class LeanEq extends LeanRelational {
 
     get operator() {
         return '=';
+    }
+}
+/** Modified equality `=ᵐ[ν]` — equality modulo a parameter. */
+export class LeanMEq extends LeanRelational {
+    /** @type {string} */
+    modifier = '';
+
+    get operator() {
+        return `=ᵐ[${this.modifier}]`;
+    }
+
+    get command() {
+        return `=^{\\mathrm{m}}_{[${this.modifier}]}`;
+    }
+
+    latexArgs(syntax) {
+        if (syntax) syntax['=ᵐ'] = true;
+        return super.latexArgs(syntax);
+    }
+
+    strFormat() {
+        const sep = this.sep();
+        return `%s =ᵐ[${this.modifier}]${sep}%s`;
+    }
+
+    latexFormat() {
+        const sep = this.sep();
+        return `{%s} =^{\\mathrm{m}}_{[${this.modifier}]}${sep}{%s}`;
     }
 }
 export class LeanBEq extends LeanRelational {
@@ -7659,12 +7701,10 @@ export class LeanArgsIndented extends LeanBinary {
 
     is_indented() {
         const p = this.parent;
-        // Under `have h :=` / multiline apps, this node carries the line indent for its lhs
-        // (e.g. `congrArg` in `have hget :=\n  congrArg\n    …`).
         return (
             p instanceof LeanStatements ||
             p instanceof LeanArgsNewLineSeparated ||
-            p instanceof LeanAssign
+            (p instanceof LeanAssign && p.sep() === '\n')
         );
     }
 
@@ -10261,13 +10301,11 @@ class Lean_int extends LeanBigOperator {
         return null;
     }
 
-    // Standard math notation: \int\limits_a^b f(x)\,\mathrm{d}x
-    // (cf. SymPy LatexPrinter._print_Integral).
     latexFormat() {
         const dom = this.intDomain();
-        if (dom instanceof LeanUpto) return '\\int\\limits_{%s}^{%s} %s\\, \\mathrm{d}%s';
-        if (dom != null) return '\\int\\limits_{%s} %s\\, \\mathrm{d}%s';
-        return '\\int %s\\, \\mathrm{d}%s';
+        if (dom instanceof LeanUpto) return '\\int\\limits_{%s}^{%s} %s\\, {\\color{blue}\\mathrm{d}}%s';
+        if (dom != null) return '\\int\\limits_{%s} %s\\, {\\color{blue}\\mathrm{d}}%s';
+        return '\\int %s\\, {\\color{blue}\\mathrm{d}}%s';
     }
 
     latexArgs(syntax) {
@@ -10545,6 +10583,7 @@ const LEAN_CLASSES = {
     Lean_ge,
     Lean_le,
     LeanEq,
+    LeanMEq,
     LeanBEq,
     Lean_ne,
     Lean_simeq,

@@ -315,15 +315,17 @@ def process_docstrings(
     if not attrs and "main" not in parse_attr_tokens(attr_blob):
         raise ValueError(f"no custom attributes found in @[main, {attr_blob}]")
 
+    # Build first so the (possibly parity-aware, binder-driven) generated names
+    # can be resolved by importing the compiled module inside AttrDocstringGen.
+    print(f"building {rel} ...")
+    build_module(lean_file)
+
     doc = generate_docstring(rel, attrs)
     names = lemma_names_from_docstring(doc)
     print(f"generated docstring for {rel}:")
     for line in doc.splitlines():
         if line.startswith("|") and "attributes" not in line and ":---" not in line:
             print(f"  {line.strip()}")
-
-    print(f"building {rel} ...")
-    build_module(lean_file)
 
     print("checking generated lemma names ...")
     failures = check_lemma_names(module, names)

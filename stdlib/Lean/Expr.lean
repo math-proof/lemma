@@ -11,7 +11,7 @@ def Lean.Expr.is_Prop (e : Expr) : MetaM Bool := do
       return body.isProp
 
   | .forallE (body := body) .. =>
-    return body.isProp
+    return ← body.is_Prop
 
   | .fvar fvarId =>
     if let some decl ← fvarId.findDecl? then
@@ -278,6 +278,8 @@ def Lean.Expr.comm : Expr → Expr
     (Expr.const `Nat.ModEq us).mkApp [n, b, a]
   | .app (.const `Not usNot) p =>
     (Expr.const `Not usNot).mkApp [p.comm]
+  | .forallE n t b i =>
+    .forallE n t b.comm i
   | e  =>
     panic! s!"Expected an operator of Eq, Iff, SEq, HEq, Ne, Lt, Le, Gt, Ge, And, Or, Not, ModEq, but got {e.ctorName} :\n{e}"
 
@@ -332,9 +334,16 @@ def Lean.Expr.symm_args : Expr → Name × List Level × List Expr
   | e  =>
     panic! s!"Expected an operator of Eq, Iff, SEq, HEq, Ne, Lt, Le, Gt, Ge, And, Or, Not, ModEq, but got {e.ctorName} :\n{e}"
 
-def Lean.Expr.symm (e : Expr) : Expr :=
-  let ⟨name, us, args⟩ := e.symm_args
-  (Expr.const (name ++ `symm) us).mkApp args
+def Lean.Expr.symm : Expr → Expr
+  | e@(.forallE binderName binderType body binderInfo) =>
+    .lam `h e (
+      .lam binderName (binderType.incDeBruijnIndex 1) (
+        .app (body.symm.incDeBruijnIndex 1 1) (.app (.bvar 1) (.bvar 0))
+      ) binderInfo
+    ) .default
+  | e =>
+    let ⟨name, us, args⟩ := e.symm_args
+    (Expr.const (name ++ `symm) us).mkApp args
 
 def Lean.Expr.decompose (e : Expr) (type : Nat → Expr → Expr) (value : Expr → Expr) (deBruijn : Nat := 0) : Expr × Expr :=
   match e with

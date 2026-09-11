@@ -8,7 +8,7 @@ import Lemma.Tensor.GetSum.eq.Sum_Get.of.GtLength_0
 import Lemma.Tensor.Mul
 import Lemma.Tensor.ToMatrixDot.eq.MulToMatrixS
 import sympy.matrices.expressions.matpow
-open Finset Matrix Nat Tensor
+open Matrix Nat Tensor
 
 
 /--
@@ -264,4 +264,4 @@ private lemma main
   exact (Tensor.Mul _ (id (α := Tensor α []) A.det)).symm
 
 
--- created on 2026-09-10
+-- created on 2020-10-03

@@ -50,6 +50,28 @@ def Expr.joinWithAnd : List Expr → Nat → Expr
   | head :: tail, level =>
     .Basic (.BinaryInfix ⟨`And⟩) [head, Expr.joinWithAnd tail level] level
 
+/-- Check if `leanType` is a non-Prop function type `Ω → β` where both
+domain and codomain have `MeasurableSpace` instances. If so, wrap the
+converted `type` in a `RandomVariable` marker for `isRandomVariable`. -/
+def markRandomVariable (leanType : Lean.Expr) (type : Expr) : MetaM Expr := do
+  -- `let`-bound variables without a type annotation store their type as an
+  -- assigned metavariable; instantiate it to reveal the underlying `forallE`
+  let leanType ← Lean.instantiateMVars leanType
+  match leanType with
+  | .forallE _ domain codomain bi =>
+    -- skip Prop-valued functions (propositions, not random variables)
+    if ← Lean.Meta.isProp codomain then
+      return type
+    -- try synthesizing `MeasurableSpace domain` and `MeasurableSpace codomain`
+    let domMeas? ← try? (Lean.Meta.synthInstance? (← Lean.Meta.mkAppM `MeasurableSpace #[domain]))
+    let codMeas? ← try? (Lean.Meta.synthInstance? (← Lean.Meta.mkAppM `MeasurableSpace #[codomain]))
+    if domMeas?.isSome && codMeas?.isSome then
+      return .Basic (.ExprWithAttr (.Lean_operatorname `RandomVariable)) [type] type.level
+    else
+      return type
+  | _ =>
+    return type
+
 partial def Expr.toExpr (e : Lean.Expr) (binders : List Expr) (level : Nat) : MetaM Expr := do
   match ← Expr.func e Expr.toExpr binders level with
   | .Operator func =>
@@ -85,7 +107,14 @@ e = {e}, e = {← ppExpr e}, e.ctorName = {e.ctorName}
 expr = {expr}, expr.ctorName = {expr.ctorName}
 "
 -/
-    return expr
+    -- bare fvar arguments (e.g. `y` in `Measure.map y ℙ`) bypass `get_args`,
+    -- so mark them here as well
+    match e.consumeMData, expr with
+    | .fvar fvarId, Symbol name type =>
+      match ← fvarId.findDecl? with
+      | some decl => return Symbol name (← markRandomVariable decl.type type)
+      | none => return expr
+    | _, _ => return expr
 where
   get_args (e : Lean.Expr) (binders : List Expr) (func : Operator) : MetaM (List Expr) := do
     match e with
@@ -101,7 +130,9 @@ where
       | .Special ⟨.anonymous⟩ =>
         match ← fvarId.findDecl? with
         | some decl =>
-          return [Symbol decl.userName (← Expr.toExpr decl.type [] level)]
+          let type ← Expr.toExpr decl.type [] level
+          let type ← markRandomVariable decl.type type
+          return [Symbol decl.userName type]
         | none =>
           panic! s!"fvarId.findDecl? failed for {fvarId}"
       | _ =>

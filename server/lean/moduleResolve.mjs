@@ -100,6 +100,12 @@ function transformPrefix(s) {
     const newS0 = s0 === 'L' ? 'G' : 'L';
     return newS0 + s1;
   }
+  // `NotLt` → `NotGt`, `NotLe` → `NotGe`, `NotGt` → `NotLt`, `NotGe` → `NotLe`.
+  m = s.match(/^Not(.+)$/);
+  if (m) return 'Not' + transformPrefix(m[1]);
+  // `All_Gt` → `All_Lt`, `All_Le` → `All_Ge`, `All_Lt` → `All_Gt`, `All_Ge` → `All_Le`.
+  m = s.match(/^All_(.+)$/);
+  if (m) return 'All_' + transformPrefix(m[1]);
   return s;
 }
 
@@ -222,8 +228,13 @@ export function resolveMissingModuleRedirect(moduleDot) {
     const parent = module.slice(0, lastDot);
     const lastToken = module.slice(lastDot + 1);
     /** Lowercase suffix → private lemma anchor in parent `.lean` (PHP `?module=Foo#bar`). */
-    if (/^[a-z]+$/.test(lastToken) && existsSync(parent)) {
-      return `${parent}#${lastToken}`;
+    if (/^[a-z]+$/.test(lastToken)) {
+      if (existsSync(parent)) {
+        return `${parent}#${lastToken}`;
+      }
+      // Parent may itself be a generated (e.g. `@[comm]`) counterpart with no `.lean` file.
+      const parentCanon = resolveMissingModuleRedirect(parent);
+      if (parentCanon) return `${parentCanon}#${lastToken}`;
     }
   }
 

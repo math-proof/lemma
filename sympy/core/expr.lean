@@ -821,6 +821,12 @@ def Expr.isProp : Expr → Bool
   | Symbol _ (sort .zero) => true
   | _ => false
 
+/-- True when `e` is marked as a random variable type via `RandomVariable` wrapper
+(see `parser.lean` where `MeasurableSpace` instances are synthesized). -/
+def Expr.isRandomVariable : Expr → Bool
+  | Basic (.ExprWithAttr (.Lean_operatorname `RandomVariable)) [_] _ => true
+  | _ => false
+
 
 def Binder.mk (binderinfo : BinderInfo) (binderType : Expr) : Binder :=
   match binderinfo with

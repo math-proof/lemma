@@ -206,6 +206,8 @@ partial def String.transformPrefix (s : String) : String :=
         String.ofList [s₀, s₁]
     | 'N', 'o', 't' :: expr =>
       "Not" ++ (String.ofList expr).transformPrefix
+    | 'A', 'l', 'l' :: '_' :: rest =>
+      "All_" ++ (String.ofList rest).transformPrefix
     | _, _, _ =>
       s
   | _ =>

@@ -570,6 +570,15 @@ abstract class Lean extends IndentedNode
                         return $new->push_binary('LeanRightarrow');
                     }
                     return $this->push_binary('LeanRightarrow');
+                } elseif ($tokens[$i + 1] == "\u{1D50}" && $tokens[$i + 2] == '[') {
+                    $i += 2;
+                    $start = $i + 1;
+                    while ($i < count($tokens) && $tokens[$i + 1] != ']') ++$i;
+                    $modifier = implode('', array_slice($tokens, $start, $i - $start + 1));
+                    $i++;
+                    $node = $this->push_binary('LeanMEq');
+                    $node->modifier = $modifier;
+                    return $node;
                 } elseif ($tokens[$i + 1] == '=') {
                     ++$i;
                     return $this->push_binary('LeanBEq');
@@ -776,6 +785,12 @@ abstract class Lean extends IndentedNode
                 return $this->parent->insert_unary($this, 'LeanQuarticRoot');
             case '↑':
                 return $this->parent->insert_unary($this, 'Lean_uparrow');
+            case '¹':
+                if ($this instanceof LeanToken) {
+                    $this->text .= $token;
+                    return $this;
+                }
+                return $this->parent->insert_word($this, $token);
             case '²':
                 return $this->push_post_unary('LeanSquare');
             case '³':
@@ -3027,6 +3042,41 @@ class LeanEq extends LeanRelational
             default:
                 return parent::__get($vname);
         }
+    }
+}
+
+class LeanMEq extends LeanRelational
+{
+    public $modifier = '';
+
+    public function __get($vname)
+    {
+        switch ($vname) {
+            case 'operator':
+                return "=ᵐ[{$this->modifier}]";
+            case 'command':
+                return "=^{\\mathrm{m}}_{[{$this->modifier}]}";
+            default:
+                return parent::__get($vname);
+        }
+    }
+
+    public function latexArgs(&$syntax = null)
+    {
+        $syntax['=ᵐ'] = true;
+        return parent::latexArgs($syntax);
+    }
+
+    public function strFormat()
+    {
+        $sep = $this->sep();
+        return "%s =ᵐ[{$this->modifier}]{$sep}%s";
+    }
+
+    public function latexFormat()
+    {
+        $sep = $this->sep();
+        return "{%s} =^{\\mathrm{m}}_{[{$this->modifier}]}{$sep}{%s}";
     }
 }
 
@@ -7420,11 +7470,9 @@ class LeanArgsIndented extends LeanBinary
     public function is_indented()
     {
         $parent = $this->parent;
-        // Under `have h :=` / multiline apps, this node carries the line indent for its lhs
-        // (e.g. `congrArg` in `have hget :=\n  congrArg\n    …`).
         return $parent instanceof LeanStatements ||
             $parent instanceof LeanArgsNewLineSeparated ||
-            $parent instanceof LeanAssign;
+            ($parent instanceof LeanAssign && $parent->sep() === "\n");
     }
 
     public function latexFormat()
@@ -10265,10 +10313,10 @@ class Lean_int extends LeanBigOperator
     {
         $dom = $this->intDomain();
         if ($dom instanceof LeanUpto)
-            return '\\int\\limits_{%s}^{%s} %s\\, \\mathrm{d}%s';
+            return '\\int\\limits_{%s}^{%s} %s\\, {\\color{blue}\\mathrm{d}}%s';
         if ($dom !== null)
-            return '\\int\\limits_{%s} %s\\, \\mathrm{d}%s';
-        return '\\int %s\\, \\mathrm{d}%s';
+            return '\\int\\limits_{%s} %s\\, {\\color{blue}\\mathrm{d}}%s';
+        return '\\int %s\\, {\\color{blue}\\mathrm{d}}%s';
     }
 
     public function latexArgs(&$syntax = null)

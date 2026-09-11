@@ -230,6 +230,7 @@ small-letter binary infix operators are short name for Capital-letter operator n
 | X.in.Y | ∈ | Membership |  Contains | 
 | X.is.Y | ↔ | Iff |  Equivalent | 
 | X.as.Y | ≃ | SEq |  -- | 
+| X.ae.Y | =ᵐ | MEq | Equal |
 | X.ou.Y | ∨ | Or |  Or | 
 | X.et.Y | ∧ | And |  And | 
 | X.at.Y | ≈ | XEq |  -- | 
