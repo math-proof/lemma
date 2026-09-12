@@ -10,10 +10,8 @@ def apply(self):
 
 @prove(provable=False)
 def prove(Eq):
-
     x, y = Symbol(real=True, random=True)
     Eq << apply(Integral[x.var](Pr(x, y)))
-
 
 
 if __name__ == '__main__':
