@@ -661,15 +661,17 @@ class Probability(Expr):
 
     def _latex(self, p):
         expr, *limits = self.args
-        symbol_P = 'p' if self.is_pdf else 'P'
+        # raw U+1D561 (𝕡) renders as double-struck small p in KaTeX,
+        # whereas \mathbb{p} silently falls back to math-italic p
+        symbol_P = '𝕡' if self.is_pdf else r'\mathbb{P}'
         if limits:
             limits = self.normalize_limits(limits)
-            return r'\mathbb{%s}_{%s}\left(%s\right)' % (
+            return r'%s_{%s}\left(%s\right)' % (
                 symbol_P,
-                ','.join([p._print(s) for s, *_ in limits]), 
+                ','.join([p._print(s) for s, *_ in limits]),
                 expr._latex(p))
         else:
-            return r'\mathbb{%s}\left(%s\right)' % (symbol_P, expr._latex(p))
+            return r'%s\left(%s\right)' % (symbol_P, expr._latex(p))
 
     def _sympystr(self, p):
         expr, *limits = self.args

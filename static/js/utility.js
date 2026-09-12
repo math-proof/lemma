@@ -93,7 +93,6 @@ function find_and_jump(event) {
 
 
 const sections = [
-	'Algebra',
 	'Fin',
 	'Nat',
 	'Int',
@@ -101,9 +100,6 @@ const sections = [
 	'Real',
 	'Hyperreal',
 	'Complex',
-	'Calculus',
-	'Discrete',
-	'Geometry',
 	'Bool',
 	'Vector',
 	'Tensor',
