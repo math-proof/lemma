@@ -30,7 +30,7 @@ def prove(Eq):
 
     Eq << Real.EqGrad.of.Eq.apply(Eq[-1], [π])
 
-    Eq << Eq[-1].this.find(Expectation).apply(Random.Expect.eq.Sum)
+    Eq << Eq[-1].this.find(Expectation).apply(Random.Expect.eq.Sum_Mul_Pr)
 
     Eq << Eq[-1].this.find(Sum).apply(Real.Sum.eq.Integral)
 
@@ -48,7 +48,7 @@ def prove(Eq):
 
     Eq << Real.EqGrad.of.Eq.apply(Eq[4], [π])
 
-    Eq << Eq[-1].this.find(Expectation).apply(Random.Expect.eq.Sum)
+    Eq << Eq[-1].this.find(Expectation).apply(Random.Expect.eq.Sum_Mul_Pr)
 
     Eq << Eq[-1].this.rhs.apply(Real.Grad.eq.Sum)
 

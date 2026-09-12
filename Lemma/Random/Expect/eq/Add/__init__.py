@@ -26,11 +26,11 @@ def prove(Eq):
     a, s = Symbol(integer=True, random=True)
     Eq << apply(Expectation[a:θ](f(a) + g(a) | s))
 
-    Eq << Eq[-1].this.lhs.apply(Random.Expect.eq.Sum)
+    Eq << Eq[-1].this.lhs.apply(Random.Expect.eq.Sum_Mul_Pr)
 
-    Eq << Eq[-1].this.find(Expectation).apply(Random.Expect.eq.Sum)
+    Eq << Eq[-1].this.find(Expectation).apply(Random.Expect.eq.Sum_Mul_Pr)
 
-    Eq << Eq[-1].this.find(Expectation).apply(Random.Expect.eq.Sum)
+    Eq << Eq[-1].this.find(Expectation).apply(Random.Expect.eq.Sum_Mul_Pr)
 
     Eq << Eq[-1].this.find(Add[Sum]).apply(Finset.AddSumS.eq.Sum_Add_Sum)
 

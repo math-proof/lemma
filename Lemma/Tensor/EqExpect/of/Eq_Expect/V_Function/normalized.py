@@ -31,7 +31,7 @@ def prove(Eq):
 
     Eq << Random.NePr_0.of.NePr__0.apply(Eq[-1], 0)
 
-    Eq << Eq[1].this.rhs.apply(Random.Expect.eq.Sum)
+    Eq << Eq[1].this.rhs.apply(Random.Expect.eq.Sum_Mul_Pr)
 
     Eq << Eq[-1].subs(Eq[0])
 

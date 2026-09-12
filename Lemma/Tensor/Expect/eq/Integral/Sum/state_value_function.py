@@ -23,7 +23,7 @@ def prove(Eq):
     γ = Symbol(domain=Interval(0, 1, right_open=True)) # Discount factor: penalty to uncertainty of future rewards; myopic for γ = 0; and far-sighted for γ = 1
     Eq << apply(Expectation[r[t + 1:], s[t + 1:], a[t:]](Sum[k:oo](γ ** k * r[t + k + 1]) | s[t]))
 
-    Eq << Eq[-1].lhs.this.apply(Random.Expect.eq.Sum)
+    Eq << Eq[-1].lhs.this.apply(Random.Expect.eq.Sum_Mul_Pr)
 
     Eq << Eq[-1].this.rhs.apply(Real.Sum.eq.Integral)
 

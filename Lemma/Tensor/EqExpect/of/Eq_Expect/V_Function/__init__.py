@@ -33,13 +33,13 @@ def prove(Eq):
 
     Eq << Random.NePr_0.NePr_0.of.NePr__0.apply(Eq[-1])
 
-    Eq << Eq[1].this.rhs.apply(Random.Expect.eq.Sum)
+    Eq << Eq[1].this.rhs.apply(Random.Expect.eq.Sum_Mul_Pr)
 
     Eq << Eq[-1].subs(Eq[0])
 
     Eq << Bool.And_And.given.And.Cond.apply(Eq[-1])
 
-    Eq << Eq[-1].this.rhs.find(Expectation).apply(Random.Expect.eq.Sum)
+    Eq << Eq[-1].this.rhs.find(Expectation).apply(Random.Expect.eq.Sum_Mul_Pr)
 
     Eq << Eq[-1].this.find(Sum[Integral]).apply(Real.Sum.eq.Integral)
 
@@ -59,7 +59,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Sum[Pr]).apply(Random.Sum.eq.Pr)
 
-    Eq << Eq[-1].this.find(Expectation).apply(Random.Expect.eq.Sum)
+    Eq << Eq[-1].this.find(Expectation).apply(Random.Expect.eq.Sum_Mul_Pr)
 
     Eq << Eq[-1].this.find(Sum).apply(Real.Sum.eq.Integral)
 

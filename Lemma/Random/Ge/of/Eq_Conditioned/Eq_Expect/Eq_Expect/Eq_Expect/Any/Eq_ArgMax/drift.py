@@ -51,7 +51,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.simplify()
 
-    Eq << Eq[-1].this.lhs.apply(Random.Expect.eq.Sum)
+    Eq << Eq[-1].this.lhs.apply(Random.Expect.eq.Sum_Mul_Pr)
 
     Eq.ge_sum = Eq[-1].this.lhs.apply(Finset.Sum.eq.AddSumS, cond={s[t].var})
 
@@ -64,7 +64,7 @@ def prove(Eq):
 
     Eq <<= Eq[-1].subs(π_quote, π_tilde), Eq[-1].subs(π_quote, π_hat), Eq[-1].subs(π_quote, π)
 
-    Eq.MDV_pi_tilde, Eq.MDV_pi_hat, Eq.MDV_pi = Eq[-3].this.find(Expectation).apply(Random.Expect.eq.Sum), Eq[-2].this.find(Expectation).apply(Random.Expect.eq.Sum), Eq[-1].this.find(Expectation).apply(Random.Expect.eq.Sum)
+    Eq.MDV_pi_tilde, Eq.MDV_pi_hat, Eq.MDV_pi = Eq[-3].this.find(Expectation).apply(Random.Expect.eq.Sum_Mul_Pr), Eq[-2].this.find(Expectation).apply(Random.Expect.eq.Sum_Mul_Pr), Eq[-1].this.find(Expectation).apply(Random.Expect.eq.Sum_Mul_Pr)
 
     Eq << Eq.infer.subs(Eq.MDV_pi_tilde, Eq.MDV_pi_hat)
 
