@@ -26,11 +26,11 @@ def prove(Eq):
         Equal(y_tilde_overline | y, y_tilde_overline),
         Equal(Pr(y_tilde_overline | x), 1 - Pr(y_tilde | x))
     )
-    Eq.ne_zero_xy = Random.Ne_0.of.Ne_0.delete.apply(Eq[0], 0)
+    Eq.ne_zero_xy = Random.NePr_0.of.NePr__0.apply(Eq[0], 0)
 
     Eq.eq_div = Random.Eq.Pr.Conditioned.eq.Div.Pr.Conditioned.of.Ne_0.bayes.apply(Eq[0], slice(2, None, -2))
 
-    Eq << Random.Ne_0.of.Ne_0.delete.apply(Eq.ne_zero_xy)
+    Eq << Random.NePr_0.of.NePr__0.apply(Eq.ne_zero_xy)
 
     Eq << Random.Pr.eq.Mul.Pr.of.Ne_0.bayes.apply(Eq[-1], y)
 

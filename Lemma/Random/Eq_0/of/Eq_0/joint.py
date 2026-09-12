@@ -15,7 +15,7 @@ def prove(Eq):
     x, y = Symbol(real=True, random=True)
     Eq << apply(Equal(Pr(x), 0), y)
 
-    Eq << Eq[1].invert().this.apply(Random.Ne_0.of.Ne_0.delete)
+    Eq << Eq[1].invert().this.apply(Random.NePr_0.of.NePr__0)
 
     Eq << Eq[-1].this.apply(Bool.Imp.Is.ImpNotS)
 

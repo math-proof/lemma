@@ -50,7 +50,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Equal[3]).apply(Tensor.Eq.Is.And.Eq.split)
 
-    Eq << Random.Ne_0.of.Ne_0.delete.apply(Eq[-1], slice(2, None))
+    Eq << Random.NePr_0.of.NePr__0.apply(Eq[-1], slice(2, None))
 
     Eq << Random.EqConditioned.of.Ne_0.Eq_Conditioned.Eq_Conditioned.joint.apply(Eq[-1], Eq.eq_at, Eq.eq_st)
 

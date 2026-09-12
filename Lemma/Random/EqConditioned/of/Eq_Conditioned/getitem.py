@@ -29,7 +29,7 @@ def prove(Eq):
 
     Eq << Rat.Ne_0.of.Div1.gt.Zero.apply(Eq[0])
 
-    Eq.y_nonzero, Eq.z_nonzero = Random.And.Ne_0.of.Ne_0.apply(Eq[-1])
+    Eq.y_nonzero, Eq.z_nonzero = Random.NePr_0.NePr_0.of.NePr__0.apply(Eq[-1])
 
     Eq.xy_probability = Random.Pr.eq.Mul.Pr.of.Ne_0.bayes.apply(Eq.y_nonzero, x)
 

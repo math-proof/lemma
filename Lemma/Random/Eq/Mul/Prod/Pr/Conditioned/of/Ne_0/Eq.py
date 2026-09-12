@@ -59,7 +59,7 @@ def prove(Eq):
 
     Eq << Bool.And_And.given.And.Cond.apply(Eq[-1])
 
-    Eq << Random.Ne_0.of.Ne_0.delete.apply(Eq[1], 0)
+    Eq << Random.NePr_0.of.NePr__0.apply(Eq[1], 0)
 
 
 

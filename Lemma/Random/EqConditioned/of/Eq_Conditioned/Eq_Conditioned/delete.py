@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq.y_nonzero, Eq.yz_nonzero = Bool.And_And.of.And.apply(Eq[-1])
 
-    _, Eq.z_nonzero = Random.And.Ne_0.of.Ne_0.apply(Eq.yz_nonzero)
+    _, Eq.z_nonzero = Random.NePr_0.NePr_0.of.NePr__0.apply(Eq.yz_nonzero)
 
     Eq << Random.Pr.eq.Mul.Pr.of.Ne_0.bayes.apply(Eq.yz_nonzero, x)
 

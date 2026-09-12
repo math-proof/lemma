@@ -46,7 +46,7 @@ def prove(Eq):
     y, k = Eq.first_order_markov_assumption.rhs.lhs.of(Indexed)
     Eq << Rat.Ne_0.of.Div1.gt.Zero.apply(Eq.x_independence)
 
-    Eq << Random.And.Ne_0.of.Ne_0.apply(Eq[-1])
+    Eq << Random.NePr_0.NePr_0.of.NePr__0.apply(Eq[-1])
 
     Eq << Random.Ne_0.Conditioned.of.Ne_0.apply(Eq[-3], y[:k])
 
@@ -82,7 +82,7 @@ def prove(Eq):
 
     Eq << Bool.All.of.All_OrNot.apply(Eq[-1])
 
-    _, Eq.y_nonzero_assumption = Random.And.Ne_0.of.Ne_0.apply(Eq.xy_nonzero_assumption)
+    _, Eq.y_nonzero_assumption = Random.NePr_0.NePr_0.of.NePr__0.apply(Eq.xy_nonzero_assumption)
 
     Eq <<= Eq[-1] & Eq.y_nonzero_assumption
 

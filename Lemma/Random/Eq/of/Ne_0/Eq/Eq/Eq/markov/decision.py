@@ -102,9 +102,9 @@ def prove(Eq):
 
     Eq.recursion = Eq.recursion.subs(Eq[-1])
 
-    Eq.ne_zero_a, Eq[-1] = Random.And.Ne_0.of.Ne_0.apply(Eq[3], 1)
+    Eq.ne_zero_a, Eq[-1] = Random.NePr_0.NePr_0.of.NePr__0.apply(Eq[3], 1)
 
-    Eq.ne_zero_r, Eq.ne_zero_s = Random.And.Ne_0.of.Ne_0.apply(Eq[-1])
+    Eq.ne_zero_r, Eq.ne_zero_s = Random.NePr_0.NePr_0.of.NePr__0.apply(Eq[-1])
 
     Eq << Random.EqPr.of.Eq_Conditioned.Eq_Conditioned.joint.apply(Eq[0], Eq[2])
 
@@ -128,7 +128,7 @@ def prove(Eq):
 
     Eq.final = Eq[-3].subs(Eq[-1])
 
-    Eq << Random.And.Ne_0.of.Ne_0.apply(Eq[3], slice(0, None, 2))[0]
+    Eq << Random.NePr_0.NePr_0.of.NePr__0.apply(Eq[3], slice(0, None, 2))[0]
 
     Eq << Random.Ne_0.of.Ne_0.joint_slice.apply(Eq[-1], [0, 0])
 

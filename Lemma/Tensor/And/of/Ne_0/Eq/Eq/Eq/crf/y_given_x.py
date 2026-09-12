@@ -106,7 +106,7 @@ def prove(Eq):
 
     Eq.xy_joint_nonzero = Random.Ne_0.of.Ne_0.joint_slice.apply(Eq[3], (slice(0, t + 1), slice(0, t + 1)))
 
-    Eq << Random.And.Ne_0.of.Ne_0.apply(Eq.xy_joint_nonzero)
+    Eq << Random.NePr_0.NePr_0.of.NePr__0.apply(Eq.xy_joint_nonzero)
 
     y = Eq[-1].lhs.arg.lhs.base
     Eq << Random.Pr.eq.Mul.Pr.of.Ne_0.bayes.apply(Eq[-2], y[:t + 1])

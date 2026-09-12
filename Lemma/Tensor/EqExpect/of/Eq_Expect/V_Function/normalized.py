@@ -29,7 +29,7 @@ def prove(Eq):
 
     Eq << Rat.Ne_0.of.Div1.gt.Zero.apply(Eq[0])
 
-    Eq << Random.Ne_0.of.Ne_0.delete.apply(Eq[-1], 0)
+    Eq << Random.NePr_0.of.NePr__0.apply(Eq[-1], 0)
 
     Eq << Eq[1].this.rhs.apply(Random.Expect.eq.Sum)
 
