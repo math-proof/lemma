@@ -82,7 +82,9 @@ function isIdentContinueToken(s) {
 }
 
 function escapeSpecialsForLatex(token) {
-    const s = String(token);
+    let s = String(token);
+    // `∂` reaches here fused with its measure (e.g. word `∂μ`); emit `\partial` as a command.
+    if (s.includes('∂')) s = s.replace(/∂/g, '\\partial\\,');
     const m = /^(\w+?)_(.+)$/.exec(s);
     if (m) {
         const [, head, tail] = m;
@@ -843,19 +845,51 @@ export class Lean extends IndentedNode {
             case '←':
                 return this.parent.insert_unary(this, 'Lean_leftarrow');
             case '∀':
-                return this.append('Lean_forall', 'operator');
-            case '∃':
-                return this.append('Lean_exists', 'operator');
-            case '∑':
-                return this.append('Lean_sum', 'operator');
+            case '∃': {
+                // `∀ᵐ` / `∃ᵐ` — almost-everywhere quantifier; the modifier letter U+1D50
+                // would otherwise be swallowed as an ordinary identifier inside the bound.
+                const ae = tokens[self.start_idx + 1] === 'ᵐ';
+                if (ae) self.start_idx++;
+                const caret = this.append(token === '∀' ? 'Lean_forall' : 'Lean_exists', 'operator');
+                if (ae) {
+                    let p = caret;
+                    while (p && !(p instanceof LeanQuantifier)) p = p.parent;
+                    if (p) p.superscript = 'ᵐ';
+                }
+                return caret;
+            }
+            case '∑': {
+                const caret = this.append('Lean_sum', 'operator');
+                // `∑'` (`tsum`): an apostrophe fused directly to `∑` (no whitespace) is
+                // part of the operator — otherwise it would open a character literal.
+                if (tokens[self.start_idx + 1] === "'") {
+                    self.start_idx++;
+                    let p = this;
+                    while (p && !(p instanceof Lean_sum)) p = p.parent;
+                    if (p) p.superscript = "'";
+                }
+                return caret;
+            }
             case '∏':
                 return this.append('Lean_prod', 'operator');
             case '⋃':
                 return this.append('Lean_bigcup', 'operator');
             case '⋂':
                 return this.append('Lean_bigcap', 'operator');
-            case '∫':
-                return this.append('Lean_int', 'operator');
+            case '∫': {
+                // `∫⁻` (lintegral): the superscript minus is fused to the operator —
+                // otherwise `⁻` would be mis-parsed as a `LeanNegPart` postfix
+                // between the operator and its binder (mirrors `∀ᵐ` above).
+                const neg = tokens[self.start_idx + 1] === '⁻';
+                if (neg) self.start_idx++;
+                const caret = this.append('Lean_int', 'operator');
+                if (neg) {
+                    let p = caret;
+                    while (p && !(p instanceof Lean_int)) p = p.parent;
+                    if (p) p.superscript = '⁻';
+                }
+                return caret;
+            }
             case '¬':
                 return this.parent.insert_unary(this, 'Lean_lnot');
             case '~':
@@ -3375,80 +3409,127 @@ export class LeanEq extends LeanRelational {
 }
 
 /**
- * Detect the marginal-density pattern and render clean LaTeX:
- *   (fun ω ↦ lintegral μ (fun x ↦ p (x, y ω))) =ᵐ[ℙ] (fun ω ↦ ...rnDeriv... (y ω))
- *   (fun ω ↦ lintegral μ (fun a ↦ ...density/rnDeriv... (a, y ω))) =ᵐ[ℙ] (...)
- * →  ∫ 𝕡(x, 𝕪) dx =^m 𝕡(𝕪)   (sympy-style; density may be implicit via rnDeriv)
+ * Detect the marginal-density pattern and render clean LaTeX.
+ *
+ * Marginalize the first variable (survivor = second component), e.g.
+ *   (fun b ↦ lintegral μ (fun a ↦ ...density... (a, b))) =ᵐ[ν]
+ *     (Measure.map y ℙ).rnDeriv ν
+ * →  ∫ 𝕡(x, 𝕪) dx =^m_ν 𝕡(𝕪)
+ *
+ * Marginalize the second variable (survivor = first component), e.g.
+ *   (fun a ↦ lintegral ν (fun b ↦ ...density... (a, b))) =ᵐ[μ]
+ *     (Measure.map x ℙ).rnDeriv μ
+ * →  ∫ 𝕡(𝕩, y) dy =^m_μ 𝕡(𝕩)
+ *
+ * sympy-style; density may be implicit via rnDeriv. Both sides are scalar-valued
+ * functions of the surviving value (not random quantities).
  * @returns {string[] | null} [lhsLatex, rhsLatex] or null if pattern doesn't match
  */
 function tryMarginalDensityLatex(lhs, rhs, modifier, syntax) {
-    // LHS must be: fun ω ↦ lintegral μ (fun x ↦ ...)
+    // LHS must be: fun s ↦ lintegral μ (fun i ↦ ... (pair of s, i))
     if (!(lhs instanceof Lean_fun) || !(lhs.arg instanceof Lean_mapsto)) return null;
     const lhsBody = lhs.arg.rhs.peelGroup();
     if (!lhsBody.headIs('lintegral')) return null;
-    // lintegral args: [lintegral, μ, (fun x ↦ ...)]
+    // lintegral args: [lintegral, μ, (fun i ↦ ...)]
     const lintegralArgs = lhsBody.args;
     if (!lintegralArgs || lintegralArgs.length < 3) return null;
     const innerFun = lintegralArgs[2].peelGroup();
     if (!(innerFun instanceof Lean_fun) || !(innerFun.arg instanceof Lean_mapsto)) return null;
-    // Inner body: p (x, y ω)  OR  (...rnDeriv/density...) (x, y ω)
+    // Inner body: p (a, b)  OR  (...rnDeriv/density...) (a, b)
     const innerBody = innerFun.arg.rhs.peelGroup();
     const innerStr = strStmt(innerBody);
     const impliedPdf = innerStr.includes('rnDeriv') || innerStr.includes('density');
     const jointArgs = innerBody instanceof LeanArgsSpaceSeparated ? innerBody.args : null;
     if (!jointArgs || jointArgs.length < 2) return null;
-    // jointArgs[0] is the density head; jointArgs[last] is the pair (x, y ω)
-    const densityName = impliedPdf ? '\\mathbb{p}' : strStmt(jointArgs[0]).trim();
-    // Find the random variable application: y ω (a 2-arg space-separated with lowercase head)
-    const findRvApp = (n) => {
-        if (!n || typeof n !== 'object') return null;
-        if (n instanceof LeanArgsSpaceSeparated && n.args.length === 2) {
-            const head = n.args[0];
-            const arg = n.args[1];
-            if (head instanceof LeanToken && arg instanceof LeanToken) {
-                const name = head.text;
-                if (name && name.length === 1 && name === name.toLowerCase())
-                    return name;
-            }
-        }
-        if (n.args) for (const k of n.args) { const r = findRvApp(k); if (r) return r; }
-        if (n.lhs) { const r = findRvApp(n.lhs); if (r) return r; }
-        if (n.rhs) { const r = findRvApp(n.rhs); if (r) return r; }
-        return null;
-    };
+    // KaTeX_AMS lacks a blackboard lowercase-p glyph (`\mathbb{p}` falls back to
+    // serif italic p), so emit the Unicode char — it renders as true 𝕡, matching
+    // the measure symbol's rendering elsewhere.
+    const densityName = impliedPdf ? '𝕡' : strStmt(jointArgs[0]).trim();
+    // jointArgs[last] is the pair (a, b): the values are bare tokens (scalar level, not x ω)
     const pairArg = jointArgs[jointArgs.length - 1].peelGroup();
-    const rvName = findRvApp(pairArg);
-    if (!rvName) return null;
+    const pairCtor = pairArg?.constructor?.name;
+    const valueArgs =
+        pairCtor === 'LeanArgsCommaSeparated' || pairCtor === 'LeanArgsSpaceSeparated'
+            ? pairArg.args
+            : null;
+    if (!valueArgs || valueArgs.length !== 2 ||
+        !(valueArgs[0] instanceof LeanToken) || !(valueArgs[1] instanceof LeanToken)) return null;
 
-    // RHS: unwrap LeanStatements / LeanParenthesis to reach Lean_fun
-    let rhsFun = rhs;
-    while (rhsFun && rhsFun.constructor?.name === 'LeanStatements' && rhsFun.args?.length > 0)
-        rhsFun = rhsFun.args[0];
-    while (rhsFun && rhsFun.constructor?.name === 'LeanParenthesis')
-        rhsFun = rhsFun.arg;
-    if (!(rhsFun instanceof Lean_fun) || !(rhsFun.arg instanceof Lean_mapsto)) return null;
-    // RHS body should involve rnDeriv
-    const rhsBody = rhsFun.arg.rhs.peelGroup();
-    if (!rhsBody || !strStmt(rhsBody).includes('rnDeriv')) return null;
+    // The outer binder survives (RHS argument); the inner lintegral binder is the
+    // integrated dummy. Match them against the pair slots to learn the direction:
+    //   survivor in slot 0 → marginalize the second variable (… dy = 𝕡(x))
+    //   survivor in slot 1 → marginalize the first variable  (… dx = 𝕡(y))
+    const surviveVal = strStmt(lhs.arg.lhs.peelGroup()).trim();
+    const integVal = strStmt(innerFun.arg.lhs.peelGroup()).trim();
+    const slot0 = strStmt(valueArgs[0]).trim();
+    const slot1 = strStmt(valueArgs[1]).trim();
+    let surviveSlot;
+    if (surviveVal === slot0 && integVal === slot1) surviveSlot = 0;
+    else if (surviveVal === slot1 && integVal === slot0) surviveSlot = 1;
+    else return null;
 
-    // Build clean LaTeX — random variable highlighted red, matching the site convention
-    const rv = `{\\color{red} {${rvName}}}`;
-    const lhsLatex = `\\int ${densityName}(x, ${rv})\\,dx`;
-    const rhsLatex = `${densityName}(${rv})`;
+    // RHS: (Measure.map y ℙ).rnDeriv ν — a scalar pdf, not a fun; extract the random variable
+    let rhsNode = rhs;
+    while (rhsNode && rhsNode.constructor?.name === 'LeanStatements' && rhsNode.args?.length > 0)
+        rhsNode = rhsNode.args[0];
+    while (rhsNode && rhsNode.constructor?.name === 'LeanParenthesis')
+        rhsNode = rhsNode.arg;
+    const rhsStr = strStmt(rhsNode);
+    if (!rhsStr.includes('rnDeriv')) return null;
+    const rvMatch = rhsStr.match(/Measure\.map\s+([a-z])\s/);
+    if (!rvMatch) return null;
+    const rvName = rvMatch[1];
+
+    // Random-variable names in pair order. With an explicit `density ℙ x y (a, b)`
+    // application the trailing args are [ℙ, x, y, pair], so the two names preceding
+    // the pair name x (slot 0) and y (slot 1). Otherwise fall back to the survivor
+    // name taken from the RHS and the canonical x/y for the integrated slot.
+    let rv0, rv1;
+    if (impliedPdf && jointArgs.length >= 4) {
+        rv0 = strStmt(jointArgs[jointArgs.length - 3]).trim();
+        rv1 = strStmt(jointArgs[jointArgs.length - 2]).trim();
+    } else if (surviveSlot === 0) {
+        rv0 = rvName;
+        rv1 = 'y';
+    } else {
+        rv0 = 'x';
+        rv1 = rvName;
+    }
+    const surviveName = surviveSlot === 0 ? rv0 : rv1;
+    const integName = surviveSlot === 0 ? rv1 : rv0;
+
+    // Build clean LaTeX — random variables highlighted red, matching the site convention
+    // `𝕡(x, y)` reads as the event `𝕡(x = x' ∧ y = y')`: the slots inside 𝕡(·) name
+    // random variables (red), while the dummy in `dx`/`dy` is the bound integration
+    // variable (black).
+    const red = (name) => `{\\color{red} {${name}}}`;
+    const lhsLatex = `\\int ${densityName}(${red(rv0)}, ${red(rv1)})\\,d${integName}`;
+    const rhsLatex = `${densityName}(${red(surviveName)})`;
     return [lhsLatex, rhsLatex];
 }
 
-/** Modified equality `=ᵐ[ν]` — equality modulo a parameter. */
+/**
+ * Modified equality `=ᵐ[ν]` — equality modulo a parameter.
+ *
+ * The parsed `modifier` is retained for echo output (`strFormat` must emit `=ᵐ[ν]`,
+ * the only notation Mathlib knows) and for marginal-density recognition, but display
+ * drops it entirely: both the operator glyph and the LaTeX command are plain `=ᵐ` /
+ * `=^{\mathrm{m}}` with no subscript.
+ */
 export class LeanMEq extends LeanRelational {
     /** @type {string} */
     modifier = '';
 
     get operator() {
-        return `=ᵐ[${this.modifier}]`;
+        return '=ᵐ';
+    }
+
+    latexOp() {
+        return '=^{\\mathrm{m}}';
     }
 
     get command() {
-        return `=^{\\mathrm{m}}_{[${this.modifier}]}`;
+        return this.latexOp();
     }
 
     latexArgs(syntax) {
@@ -3459,6 +3540,7 @@ export class LeanMEq extends LeanRelational {
         return super.latexArgs(syntax);
     }
 
+    /** Echo serialization keeps the bracketed measure (required by Lean's notation). */
     strFormat() {
         const sep = this.sep();
         return `%s =ᵐ[${this.modifier}]${sep}%s`;
@@ -3466,7 +3548,7 @@ export class LeanMEq extends LeanRelational {
 
     latexFormat() {
         const sep = this.sep();
-        return `{%s} =^{\\mathrm{m}}_{[${this.modifier}]}${sep}{%s}`;
+        return `{%s} ${this.latexOp()}${sep}{%s}`;
     }
 }
 export class LeanBEq extends LeanRelational {
@@ -4105,6 +4187,18 @@ export class LeanUnaryArithmeticPost extends LeanUnaryArithmetic {
     }
     latexFormat() {
         return `{%s}${this.command}`;
+    }
+    latexArgs(syntax) {
+        let arg = this.arg;
+        // Parens around a self-delimiting expression (`|x|`, `Bool.toNat x`,
+        // `\sqrt{x}`, `{…}`) are redundant before a postfix operator (`²`, `³`, `!`, …).
+        if (arg instanceof LeanParenthesis) {
+            const inner = arg.arg;
+            if (inner instanceof Lean_sqrt || inner instanceof LeanPairedGroup ||
+                (inner instanceof LeanArgsSpaceSeparated && (inner.is_Abs() || inner.is_Bool())))
+                arg = inner;
+        }
+        return [arg.toLatex(syntax)];
     }
 }
 
@@ -4818,8 +4912,24 @@ export class LeanStatements extends LeanMultipleLine(LeanArgs) {
                     result[1] = new LeanTactic('try', e, e.indent, e.level);
                 }
                 for (const echo of result) echo.parent = this;
+                // A head tactic followed by statement-level `LeanBitOr` lines
+                // forms one multi-line alternative group (`first | …`,
+                // `rcases … | …`): trailing `echo` placeholders must stay after
+                // the whole group, never between the head and its `|` branches
+                // (the latter generates invalid Lean: `first echo ⊢ | …`).
+                let barRun = 0;
+                for (let j = index + length; j < args.length - void_lines && args[j] instanceof LeanBitOr; j++) barRun++;
+                const trailingEchoes = [];
+                if (barRun) {
+                    while (result.length > 1 && result[result.length - 1] instanceof LeanTactic && result[result.length - 1].tacticName === 'echo') {
+                        trailingEchoes.unshift(result.pop());
+                    }
+                }
                 const increment = result.indexOf(args[index]);
                 args.splice(index, length, ...result);
+                if (trailingEchoes.length) {
+                    args.splice(index + result.length + barRun, 0, ...trailingEchoes);
+                }
                 index += increment;
             }
         }
@@ -5357,32 +5467,63 @@ function leanModuleMergeProof(proof, echo, syntax = {}) {
 
     const code = [];
     let last = [];
+    // Separator inserted BEFORE each statement in `last` (' ' for the rhs of a
+    // same-line `<;>` chain, '\n' otherwise).
+    let seps = [];
+    let nextSep = '\n';
+    // Goal LaTeX captured by an inline `<;> echo ⊢` marker for the open step.
+    let inlineLatex;
+
+    const echoLatex = (echoNode) => {
+        const {line} = echoNode;
+        return Number.isInteger(line) ? null : line == null ? null : line;
+    };
+    // A same-line `<;> echo ⊢` combinator (newlineBehind === false) is a goal
+    // snapshot INSIDE one source line, e.g. `split_ifs <;> echo ⊢ <;> first | …`:
+    // it must not become its own step nor print its marker text. The surrounding
+    // chain is glued onto one step and the snapshot is attached as its LaTeX.
+    const isInlineEchoMark = (stmt, echoNode) =>
+        !!echoNode
+        && stmt instanceof LeanSequentialTacticCombinator
+        && stmt.newlineBehind === false;
 
     if (echo) {
         for (const stmt of statements) {
             const echoNode = stmt.getEcho();
-            if (echoNode) {
-                const {line} = echoNode;
-
-                code.push([last, Number.isInteger(line) ? null : line == null ? null : line]);
+            if (isInlineEchoMark(stmt, echoNode)) {
+                if (inlineLatex === undefined || inlineLatex === null)
+                    inlineLatex = echoLatex(echoNode);
+                nextSep = ' ';
+            } else if (echoNode) {
+                code.push([last, inlineLatex !== undefined ? inlineLatex : echoLatex(echoNode), seps]);
                 last = [];
-            } else last.push(stmt);
+                seps = [];
+                nextSep = '\n';
+                inlineLatex = undefined;
+            } else {
+                seps.push(nextSep);
+                last.push(stmt);
+                nextSep = '\n';
+            }
         }
     } else {
         for (const stmt of statements) {
             if (stmt instanceof Lean_let || stmt instanceof LeanTactic) {
                 last.push(stmt);
-                code.push([last, null]);
+                code.push([last, null, seps]);
                 last = [];
             } else last.push(stmt);
         }
     }
-    if (last.length) code.push([last, null]);
+    if (last.length) code.push([last, inlineLatex !== undefined ? inlineLatex : null, seps]);
 
-    return code.map(([stmts, latex]) => ({
-        lean: unindentTwo(stmts.map((st) => strStmt(st)).join('\n')),
-        latex,
-    }));
+    return code.map(([stmts, latex, ss]) => {
+        let text = '';
+        stmts.forEach((st, i) => {
+            text += (i === 0 ? '' : (ss && ss[i] ? ss[i] : '\n')) + strStmt(st);
+        });
+        return {lean: unindentTwo(text), latex};
+    });
 }
 
 function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
@@ -6672,6 +6813,17 @@ export class Lean_mapsto extends LeanBinary {
 
     get operator() {
         return '↦';
+    }
+
+    insert(caret, func, type) {
+        // `fun x ↦ by …` — the term-level `by` fills the lambda body caret,
+        // mirroring `LeanRightarrow.insert` for `fun x => by …`.
+        if (this.rhs === caret && caret instanceof LeanCaret) {
+            const Ctor = typeof func === 'string' ? LEAN_CLASSES[func] : func;
+            this.replace(caret, new Ctor(caret, caret.indent, caret.level));
+            return caret;
+        }
+        if (this.parent) return this.parent.insert(this, func, type);
     }
 
     insert_newline(caret, newline_count, indent, next) {
@@ -8353,9 +8505,9 @@ export class LeanTactic extends LeanSyntax {
             const {by, with: $with} = this;
             if (by && by.arg instanceof LeanStatements) by.echo();
             if ($with && $with.args.length) $with.echo();
-            if (has_sequential_tactic_combinator && sequential_tactic_combinator.newlineBehind) {
+            if (has_sequential_tactic_combinator && !sequential_tactic_combinator.newlineBehind) {
                 echo.push(sequential_tactic_combinator);
-                this.sequential_tactic_combinator = new LeanSequentialTacticCombinator(echo, this.indent, this.level, false, true);
+                this.sequential_tactic_combinator = new LeanSequentialTacticCombinator(echo, this.indent, this.level, false, false);
                 sequential_tactic_combinator.echo();
                 return;
             }
@@ -8643,12 +8795,13 @@ export class LeanTactic extends LeanSyntax {
         const last = this.args[this.args.length - 1];
         if (caret !== last)
             throw new Error(`LeanTactic.insert_sequential_tactic_combinator: unexpected for ${this.constructor.name}`);
-        let construct = caret => new LeanSequentialTacticCombinator(caret, this.indent, caret.level, prevToken == '\n', nextToken == '\n');
         if (caret instanceof LeanCaret)
-            this.replace(caret, construct(caret));
+            this.replace(caret, new LeanSequentialTacticCombinator(caret, this.indent, caret.level, prevToken == '\n', nextToken == '\n'));
         else {
-            caret = new LeanCaret(this.indent, caret.level);
-            this.push(construct(caret));
+            caret = new LeanCaret(0, 0); // use 0 as the temporary indentation
+            // PHP constructs with default `newline=false` (multiline semantics);
+            // promoted to a real indent by insert_newline when the rhs lands on a new line.
+            this.push(new LeanSequentialTacticCombinator(caret, this.indent, caret.level, false, true));
         }
         return caret;
     }
@@ -8745,19 +8898,27 @@ export class LeanTactic extends LeanSyntax {
                     stmts.swap_echo_star(syntax, statements);
                     return statements;
                 }
-            } else if ((block instanceof LeanTactic || block instanceof Lean_let) && block.indent >= this.indent) {
+            } else if (
+                (block instanceof LeanTactic || block instanceof Lean_have || block instanceof Lean_let) &&
+                block.indent >= this.indent
+            ) {
                 const self = this.clone();
-                if (sequential_tactic_combinator.newlineBehind) {
-                    block = self.sequential_tactic_combinator;
+                const comb = self.sequential_tactic_combinator;
+                if (!comb.newlineBehind) {
+                    // same-line `<;> rhs`: head stands alone, rhs splits into following steps
                     const la = self.args[self.args.length - 1];
                     if (la instanceof LeanSequentialTacticCombinator) self.args.pop();
+                    const arr = [self];
+                    arr.push(...comb.split(syntax));
+                    return arr;
                 } else {
-                    block = self.sequential_tactic_combinator.arg;
-                    self.sequential_tactic_combinator.arg = new LeanCaret(0, 0);
+                    // newline after `<;>`: keep the operator with a hole, rhs follows indented
+                    const cont = comb.arg;
+                    comb.arg = new LeanCaret(0, 0);
+                    const arr = [self];
+                    arr.push(...cont.split(syntax));
+                    return arr;
                 }
-                const arr = [self];
-                arr.push(...block.split(syntax));
-                return arr;
             }
         } else {
             const rb = this.repeat_block();
@@ -9296,7 +9457,8 @@ export class LeanSequentialTacticCombinator extends LeanUnary {
             if (by_cases instanceof LeanTactic && by_cases.tacticName === 'by_cases' && by_cases.has_tactic_block_followed()) {
                 let sequential_tactic_combinator;
                 while ((sequential_tactic_combinator = arg.sequential_tactic_combinator) && sequential_tactic_combinator.arg.indent) arg = sequential_tactic_combinator;
-                arg.push(new LeanSequentialTacticCombinator(echo, indent, level, false, true));
+                // PHP passes newline=true (same-line): the echo boundary stays inline with the chain
+                arg.push(new LeanSequentialTacticCombinator(echo, indent, level, false, false));
             } else {
                 echo.push(new LeanSequentialTacticCombinator(arg, indent, level, false, this.newlineBehind));
                 this.arg = echo;
@@ -9306,7 +9468,7 @@ export class LeanSequentialTacticCombinator extends LeanUnary {
     }
 
     getEcho() {
-        if (this.newlineBehind) {
+        if (!this.newlineBehind) {
             const e = this.arg;
             if (e instanceof LeanTactic && e.tacticName === 'echo') return e;
         }
@@ -9346,13 +9508,16 @@ export class LeanSequentialTacticCombinator extends LeanUnary {
     }
 
     sep() {
-        if (this.newlineBehind || this.arg instanceof LeanCaret) return '\n'
+        // PHP: arg is a tactic block, or a genuinely indented rhs of a multiline `<;>`
+        if (this.arg instanceof LeanTacticBlock) return '\n';
+        if (this.newlineBehind && this.arg.indent > 0) return '\n';
+        if (this.arg instanceof LeanCaret) return '\n'; // split head renders a trailing `<;>` hole
         return ' ';
     }
 
     set_line(line) {
         this.line = line;
-        if (this.newlineBehind) line++;
+        if (this.newlineBehind && (this.arg instanceof LeanTacticBlock || this.arg.indent >= this.indent)) line++;
         return this.arg.set_line(line);
     }
 
@@ -9361,7 +9526,7 @@ export class LeanSequentialTacticCombinator extends LeanUnary {
      * @returns {Lean[]}
      */
     split(syntax) {
-        if (!this.newlineBehind) return [this];
+        if (this.newlineBehind) return [this];
         const arg = this.arg;
         const args = arg.split(syntax);
         const self = this.clone();
@@ -10140,7 +10305,7 @@ class Lean_let extends LeanSyntax {
                 );
             } else {
                 const c = new LeanCaret(0, 0);
-                this.push(new LeanSequentialTacticCombinator(c, this.indent, c.level));
+                this.push(new LeanSequentialTacticCombinator(c, this.indent, c.level, false, true));
             }
             return caret;
         }
@@ -10320,6 +10485,13 @@ class Lean_fun extends LeanUnary {
 
 class LeanBigOperator extends LeanArgs {
     /**
+     * Modifier fused directly to the operator and rendered as a superscript, e.g.
+     * `ᵐ` in `∀ᵐ`, `⁻` in `∫⁻` (lintegral), or `'` in `∑'` (`tsum`); `null` for
+     * the plain operator.
+     */
+    superscript = null;
+
+    /**
      * @param {Lean} bound
      * @param {number} indent
      * @param {number} level
@@ -10468,10 +10640,16 @@ class LeanBigOperator extends LeanArgs {
 class LeanQuantifier extends LeanProp(LeanBigOperator) {
     static input_priority = 24;
 
+    get operator() {
+        return this.superscript ? `${this.baseOperator}${this.superscript}` : this.baseOperator;
+    }
+
     latexFormat() {
-        const cmd = this.command;
-        if (this.args.length === 1) return `${cmd}\\ {%s},`;
-        return `${cmd}\\ {%s}, {%s}`;
+        const cmd = this.superscript
+            ? `${this.command}^{\\mathrm{m}}\\,`
+            : `${this.command}\\ `;
+        if (this.args.length === 1) return `${cmd}{%s},`;
+        return `${cmd}{%s}, {%s}`;
     }
 
     get stack_priority() {
@@ -10480,21 +10658,33 @@ class LeanQuantifier extends LeanProp(LeanBigOperator) {
 }
 
 class Lean_forall extends LeanQuantifier {
-    get operator() {
+    get baseOperator() {
         return '∀';
     }
 }
 
 class Lean_exists extends LeanQuantifier {
-    get operator() {
+    get baseOperator() {
         return '∃';
     }
 }
 
 class Lean_sum extends LeanBigOperator {
     static input_priority = 67;
-    get operator() {
+    /** Plain `∑` (`Finset.sum`); set `superscript = "'"` for `∑'` (`tsum`). */
+    get baseOperator() {
         return '∑';
+    }
+    get operator() {
+        return this.superscript ? `${this.baseOperator}${this.superscript}` : this.baseOperator;
+    }
+    latexFormat() {
+        if (!this.superscript) return super.latexFormat();
+        // `\sum'` carries the prime as a superscript, so wrap in `\mathop` to keep
+        // the bound below (`\limits`) like the plain `\sum` case.
+        if (this.finRangeBound())
+            return `\\mathop{\\sum'}\\limits_{%s < %s} {%s}`;
+        return `\\mathop{\\sum'}\\limits_{\\substack{%s}} {%s}`;
     }
 }
 
@@ -10572,7 +10762,7 @@ class Lean_prod extends LeanBigOperator {
 class Lean_int extends LeanBigOperator {
     static input_priority = 60;
     get operator() {
-        return '∫';
+        return this.superscript ? `∫${this.superscript}` : '∫';
     }
 
     /** The `x : ℝ` binder, peeling the space-separated domain wrapper and parentheses. */
@@ -10594,10 +10784,11 @@ class Lean_int extends LeanBigOperator {
     }
 
     latexFormat() {
+        const op = this.superscript ? '\\int^{-}' : '\\int';
         const dom = this.intDomain();
-        if (dom instanceof LeanUpto) return '\\int\\limits_{%s}^{%s} %s\\, {\\color{blue}\\mathrm{d}}%s';
-        if (dom != null) return '\\int\\limits_{%s} %s\\, {\\color{blue}\\mathrm{d}}%s';
-        return '\\int %s\\, {\\color{blue}\\mathrm{d}}%s';
+        if (dom instanceof LeanUpto) return `${op}\\limits_{%s}^{%s} %s\\, {\\color{blue}\\mathrm{d}}%s`;
+        if (dom != null) return `${op}\\limits_{%s} %s\\, {\\color{blue}\\mathrm{d}}%s`;
+        return `${op} %s\\, {\\color{blue}\\mathrm{d}}%s`;
     }
 
     latexArgs(syntax) {

@@ -55,6 +55,11 @@ probability measure (`IsProbabilityMeasure`). This is what distinguishes a
 random variable `Ω → β` from an ordinary measurable function `ℝ → ℝ`:
 `MeasurableSpace` alone is not enough since `ℝ` carries one too. -/
 def isProbabilitySpace (domain : Lean.Expr) : MetaM Bool := do
+  -- modules that don't (transitively) import the probability-measure typeclass
+  -- file can never confirm a probability space; bail out before `mkAppM`
+  -- throws `Unknown constant` inside the echo tactic
+  if !(← getEnv).contains `MeasureTheory.IsProbabilityMeasure then
+    return false
   for decl in (← getLCtx).decls do
     if let some decl := decl then
       let ty ← whnf (← Lean.instantiateMVars decl.type)
@@ -132,7 +137,7 @@ e = {e}, e = {← ppExpr e}, e.ctorName = {e.ctorName}
 expr = {expr}, expr.ctorName = {expr.ctorName}
 "
 -/
-    -- bare fvar arguments (e.g. `y` in `Measure.map y ℙ`) bypass `get_args`,
+    -- bare fvar arguments (e.g. `y` in `ℙ.map y`) bypass `get_args`,
     -- so mark them here as well
     match e.consumeMData, expr with
     | .fvar fvarId, Symbol name type =>
@@ -311,6 +316,10 @@ cond = {← ppExpr cond}
       | `DFunLike.coe =>
         if let const (.ident name) :: args@(.cons ..) := args then
           return Basic (.ExprWithAttr (.Lean_operatorname name)) args level
+        -- local FunLike carrier (e.g. `μ s` for a local `μ : Measure α`):
+        -- render as plain function application instead of the raw class name
+        if let sym@(Symbol _ _) :: args@(.cons ..) := args then
+          return Basic (.Special ⟨.anonymous⟩) (sym :: args) level
       | _ =>
         pure ()
     | .ExprWithLimits op =>

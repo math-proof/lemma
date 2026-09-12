@@ -764,7 +764,16 @@ abstract class Lean extends IndentedNode
             case '∃':
                 return $this->append('Lean_exists', 'operator');
             case '∑':
-                return $this->append('Lean_sum', 'operator');
+                $caret = $this->append('Lean_sum', 'operator');
+                // `∑'` (`tsum`): an apostrophe fused directly to `∑` (no whitespace) is
+                // part of the operator — otherwise it would open a character literal.
+                if ($tokens[$i + 1] === "'") {
+                    $i++;
+                    $p = $this;
+                    while ($p && !($p instanceof Lean_sum)) $p = $p->parent;
+                    if ($p) $p->prime = true;
+                }
+                return $caret;
             case '∏':
                 return $this->append('Lean_prod', 'operator');
             case '⋃':
@@ -3181,17 +3190,91 @@ class LeanEq extends LeanRelational
     }
 }
 
+/**
+ * Detect the marginal-density pattern and render clean LaTeX (mirror of the
+ * JS `tryMarginalDensityLatex`):
+ *   (fun b ↦ lintegral μ (fun a ↦ ...density/rnDeriv... (a, b))) =ᵐ[ν]
+ *     (Measure.map y ℙ).rnDeriv ν
+ * →  ∫ 𝕡(x, 𝕪) dx =^m 𝕡(𝕪)   (sympy-style; density may be implicit via rnDeriv)
+ * @return string[]|null [lhsLatex, rhsLatex] or null if pattern doesn't match
+ */
+function try_marginal_density_latex($lhs, $rhs)
+{
+    // LHS must be: fun b ↦ lintegral μ (fun a ↦ ... (a, b))
+    if (!($lhs instanceof Lean_fun) || !($lhs->arg instanceof Lean_mapsto))
+        return null;
+    $lhsBody = $lhs->arg->rhs->peelGroup();
+    if (!$lhsBody->headIs('lintegral'))
+        return null;
+    // lintegral args: [lintegral, μ, (fun a ↦ ...)]
+    $lintegralArgs = $lhsBody->args;
+    if (!is_array($lintegralArgs) || count($lintegralArgs) < 3)
+        return null;
+    $innerFun = $lintegralArgs[2]->peelGroup();
+    if (!($innerFun instanceof Lean_fun) || !($innerFun->arg instanceof Lean_mapsto))
+        return null;
+    // Inner body: p (a, b)  OR  (...rnDeriv/density...) (a, b)
+    $innerBody = $innerFun->arg->rhs->peelGroup();
+    $innerStr = (string)$innerBody;
+    $impliedPdf = str_contains($innerStr, 'rnDeriv') || str_contains($innerStr, 'density');
+    if (!($innerBody instanceof LeanArgsSpaceSeparated))
+        return null;
+    $jointArgs = $innerBody->args;
+    if (count($jointArgs) < 2)
+        return null;
+    // KaTeX_AMS lacks a blackboard lowercase-p glyph (`\mathbb{p}` falls back to
+    // serif italic p), so emit the Unicode char — it renders as true 𝕡.
+    $densityName = $impliedPdf ? '𝕡' : trim((string)$jointArgs[0]);
+    // last arg is the pair (a, b): value b is a bare token (scalar level, not y ω)
+    $pairArg = $jointArgs[count($jointArgs) - 1]->peelGroup();
+    if (!($pairArg instanceof LeanArgsCommaSeparated) && !($pairArg instanceof LeanArgsSpaceSeparated))
+        return null;
+    $valueArgs = $pairArg->args;
+    if (count($valueArgs) !== 2 || !($valueArgs[1] instanceof LeanToken))
+        return null;
+
+    // RHS: (Measure.map y ℙ).rnDeriv ν — a scalar pdf, not a fun; extract the random variable
+    $rhsNode = $rhs;
+    while ($rhsNode instanceof LeanStatements && count($rhsNode->args) > 0)
+        $rhsNode = $rhsNode->args[0];
+    while ($rhsNode instanceof LeanParenthesis)
+        $rhsNode = $rhsNode->arg;
+    $rhsStr = (string)$rhsNode;
+    if (!str_contains($rhsStr, 'rnDeriv'))
+        return null;
+    if (!preg_match('/Measure\.map\s+([a-z])\s/', $rhsStr, $m))
+        return null;
+    $rvName = $m[1];
+
+    // Build clean LaTeX — random variables highlighted red, matching the site convention.
+    // `𝕡(x, y)` reads as the event `𝕡(x = x' ∧ y = y')`: slots inside 𝕡(·) name random
+    // variables (red), while the `x` in `dx` is the bound integration dummy x' (black).
+    $rv = "{\\color{red} {$rvName}}";
+    return [
+        "\\int {$densityName}({\\color{red} {x}}, {$rv})\\,dx",
+        "{$densityName}({$rv})",
+    ];
+}
+
 class LeanMEq extends LeanRelational
 {
+    // The parsed `modifier` is retained for echo output (`strFormat` must emit `=ᵐ[ν]`,
+    // the only notation Mathlib knows) and for marginal-density recognition, but display
+    // drops it entirely: the operator glyph and LaTeX command are plain `=ᵐ` / `=^{\mathrm{m}}`.
     public $modifier = '';
+
+    private function latexOp(): string
+    {
+        return "=^{\\mathrm{m}}";
+    }
 
     public function __get($vname)
     {
         switch ($vname) {
             case 'operator':
-                return "=ᵐ[{$this->modifier}]";
+                return '=ᵐ';
             case 'command':
-                return "=^{\\mathrm{m}}_{[{$this->modifier}]}";
+                return $this->latexOp();
             default:
                 return parent::__get($vname);
         }
@@ -3200,6 +3283,10 @@ class LeanMEq extends LeanRelational
     public function latexArgs(&$syntax = null)
     {
         $syntax['=ᵐ'] = true;
+        [$lhs, $rhs] = $this->strip_parenthesis();
+        $pretty = try_marginal_density_latex($lhs, $rhs);
+        if ($pretty !== null)
+            return $pretty;
         return parent::latexArgs($syntax);
     }
 
@@ -3212,7 +3299,7 @@ class LeanMEq extends LeanRelational
     public function latexFormat()
     {
         $sep = $this->sep();
-        return "{%s} =^{\\mathrm{m}}_{[{$this->modifier}]}{$sep}{%s}";
+        return "{%s} {$this->latexOp()}{$sep}{%s}";
     }
 }
 
@@ -10393,14 +10480,24 @@ class Lean_exists extends LeanQuantifier
 class Lean_sum extends LeanBigOperator
 {
     public static $input_priority = 67;
+    /** `∑'` (`tsum` over a possibly infinite type) versus plain `∑` (`Finset.sum`). */
+    public $prime = false;
     public function __get($vname)
     {
         switch ($vname) {
             case 'operator':
-                return '∑';
+                return $this->prime ? "∑'" : '∑';
             default:
                 return parent::__get($vname);
         }
+    }
+    public function latexFormat()
+    {
+        if (!$this->prime)
+            return parent::latexFormat();
+        // `\sum'` carries the prime as a superscript; wrap in `\mathop` to keep
+        // the bound below (`\limits`) like the plain `\sum` case.
+        return "\\mathop{\\sum'}\\limits_{\\substack{%s}} {%s}";
     }
 }
 

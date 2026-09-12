@@ -1,7 +1,7 @@
 import Lemma.Tensor.Stack.eq.AppendStackS
 import Lemma.Tensor.Eq.is.All_EqGetS
 import Lemma.Tensor.EqGetStack
-import Lemma.Tensor.Slice.Eq.of.Eq
+import Lemma.Tensor.GetSlice.Get.of.Eq
 import Lemma.Tensor.GetSliceStack.as.Stack_UFn
 import Lemma.Bool.SEq.is.Eq
 open Tensor Bool
@@ -26,7 +26,7 @@ private lemma main
   constructor
   ·
     intro h
-    let ⟨h_slice, h_n⟩ := Tensor.Slice.Eq.of.Eq h
+    let ⟨h_slice, h_n⟩ := Tensor.GetSlice.Get.of.Eq h
     constructor
     ·
       apply Eq.of.SEq

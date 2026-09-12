@@ -40,6 +40,7 @@ export const tactics = [
     'fin_omega',
     'first',
     'funext',
+    'fun_prop',
     'gcongr',
     'generalize',
     'grind',
