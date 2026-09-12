@@ -50,7 +50,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.reversed
 
-    Eq << Eq[-1].this.lhs.apply(Random.Eq_0.of.Eq_0.joint, y)
+    Eq << Eq[-1].this.lhs.apply(Random.EqPr__0.of.EqPr_0, y)
 
     Eq << Bool.Imp.given.ImpEq.apply(Eq[-1])
 
