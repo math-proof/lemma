@@ -25,7 +25,7 @@ def apply(self):
             limits = [(x, *limit_lhs[1:])]
     else:
         limits = [(x,)]         
-    return Equal(self, Expectation(log(Pr(Equal(x, x.surrogate), *limits_lhs) / Pr(Equal(x_quote, x.surrogate), *limits_rhs)), *limits))
+    return Equal(self, Expectation(log(Pr(Equal(x, x.random_argument), *limits_lhs) / Pr(Equal(x_quote, x.random_argument), *limits_rhs)), *limits))
 
 
 @prove(provable=False)

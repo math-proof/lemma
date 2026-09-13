@@ -1180,9 +1180,9 @@ def imply(apply, **kwargs):
                             if not lhs.is_random:
                                 if rhs.is_random:
 #                                     print(rhs)
-                                    from sympy.stats.symbolic_probability import Surrogate
-                                    for surrogate in rhs.finditer(Surrogate):
-                                        rhs = rhs._subs(surrogate, surrogate.arg.var)
+                                    from sympy.stats.symbolic_probability import RandomArgument
+                                    for random_argument in rhs.finditer(RandomArgument):
+                                        rhs = rhs._subs(random_argument, random_argument.arg.var)
                                         
                                     assert not rhs.is_random
                                     statement = statement.func(lhs, rhs, evaluate=False)

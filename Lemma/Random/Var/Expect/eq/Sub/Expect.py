@@ -17,7 +17,7 @@ def prove(Eq):
     n = Symbol(integer=True, positive=True)
     y = Symbol(real=True, random=True, shape=(n,))
     x = Symbol(real=True, probable=True)
-    Eq << apply(Variance(Expectation(y | x.surrogate)))
+    Eq << apply(Variance(Expectation(y | x.random_argument)))
 
     Eq << Eq[0].this.lhs.apply(Random.Var.eq.Sub.Expect)
 

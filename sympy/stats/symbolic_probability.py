@@ -145,7 +145,7 @@ class Conditioned(Expr):
                     prob = prob.func(*prob._argset - {given})
                 elif given.is_Equal:
                     lhs, rhs = given.args
-                    if rhs.is_Surrogate:
+                    if rhs.is_RandomArgument:
                         _given = Equal(lhs, rhs.arg.var, evaluate=False)
                         if _given in prob._argset:
                             prob = prob.func(*prob._argset - {_given})
@@ -212,7 +212,7 @@ class Conditioned(Expr):
             
             elif rhs.is_Equal:
                 x, x_var = rhs.args
-                if x_var.is_Surrogate:
+                if x_var.is_RandomArgument:
                     rhs = Equal(x, x_var.arg.var, evaluate=False)
                     if rhs in _argset:
                         lhs = And(*{*_argset} - {rhs})
@@ -304,7 +304,7 @@ class Conditioned(Expr):
         return f'{lhs} | {rhs}'
 
 
-class Surrogate(AtomicExpr):
+class RandomArgument(AtomicExpr):
     is_symbol = True
     is_comparable = False
     
@@ -331,13 +331,13 @@ class Surrogate(AtomicExpr):
         raise TypeError
       
     def __getitem__(self, indices):
-        return Surrogate(self.arg.__getitem__(indices))
+        return RandomArgument(self.arg.__getitem__(indices))
     
     def _sympystr(self, p):
-        return self.arg._sympystr(p) + '.surrogate'
+        return self.arg._sympystr(p) + '.random_argument'
     
     def _lean(self, p):
-        return self.arg._sympystr(p) + '.surrogate'
+        return self.arg._sympystr(p) + '.random_argument'
     
     def _latex(self, p):
         return self.arg._latex(p, color='magenta')
@@ -414,7 +414,7 @@ class Surrogate(AtomicExpr):
                 other = other.as_boolean()
             return self.as_boolean() & other
 
-        return super(Surrogate, self).__and__(other)
+        return super(RandomArgument, self).__and__(other)
 
     def copy(self, **kwargs):
         return self.arg.copy(**kwargs)
@@ -539,7 +539,7 @@ class Probability(Expr):
             elif arg.is_Conditioned:
                 lhs, rhs = arg.args
                 if lhs.is_symbol:
-                    if lhs.is_Surrogate:
+                    if lhs.is_RandomArgument:
                         booleans.append(arg.func(Equal(lhs.arg, lhs), rhs))
                     else:
                         booleans.append(arg.func(Equal(lhs, pspace(lhs).symbol), rhs))
@@ -556,7 +556,7 @@ class Probability(Expr):
         if given is not None:
             expr = rv.given(expr, given)
 
-        vars = [v for v in expr.random_symbols if not v.is_Surrogate]
+        vars = [v for v in expr.random_symbols if not v.is_RandomArgument]
         std.deleteIndices(limits, lambda limits, i : cls.is_redundant(limits, i, vars))
 
         return Expr.__new__(cls, expr, *limits)
@@ -640,7 +640,7 @@ class Probability(Expr):
     @cacheit
     def _eval_is_pdf(self):
         expr = self.arg
-        random_symbols = {v for v in expr.random_symbols if not v.is_Surrogate}
+        random_symbols = {v for v in expr.random_symbols if not v.is_RandomArgument}
 
         if expr.is_Conditioned:
             expr = expr.lhs
@@ -700,11 +700,11 @@ class Probability(Expr):
         else:
             random_symbols = self.args[0].random_symbols
             if old in random_symbols:
-                if not old.is_Surrogate:
-                    old = old.surrogate
+                if not old.is_RandomArgument:
+                    old = old.random_argument
                     if old in random_symbols:
                         if new.is_random:
-                            new = new.surrogate
+                            new = new.random_argument
                     else:
                         return self
 
@@ -728,15 +728,15 @@ class Probability(Expr):
         if expr.is_Conditioned:
             lhs, rhs = expr.args
             for v in lhs.yield_random_symbols():
-                if v.is_Surrogate:
+                if v.is_RandomArgument:
                     yield v.arg
 
             for v in rhs.yield_random_symbols():
-                if v.is_Surrogate:
+                if v.is_RandomArgument:
                     yield v.arg
         else:
             for v in expr.yield_random_symbols():
-                if v.is_Surrogate:
+                if v.is_RandomArgument:
                     yield v.arg
 
         for x, *ab in limits:
@@ -751,12 +751,12 @@ class Probability(Expr):
             given = None
             
         for v in expr.random_symbols:
-            if v.is_Surrogate:
+            if v.is_RandomArgument:
                 return True
             
         if given is not None:
             for v in given.random_symbols:
-                if v.is_Surrogate:
+                if v.is_RandomArgument:
                     return True
 
     def __le__(self, other):
@@ -1157,7 +1157,7 @@ class Expectation(ExprWithLimits):
                 
         if expr.is_Conditioned:
             for v in expr.rhs.yield_random_symbols():
-                if v.is_Surrogate:
+                if v.is_RandomArgument:
                     return True
 
     def _eval_is_finite(self):
@@ -1237,7 +1237,7 @@ class Expectation(ExprWithLimits):
         expr = self.expr
         if expr.is_Conditioned:
             for v in expr.rhs.yield_random_symbols():
-                if v.is_Surrogate:
+                if v.is_RandomArgument:
                     yield v.arg
 
     def yield_random_symbols(self):
@@ -1256,12 +1256,12 @@ class Expectation(ExprWithLimits):
         if pattern.is_random:
             expr = self.expr
             if expr.is_Conditioned:
-                for surrogate in expr.rhs.finditer(Surrogate):
-                    if surrogate._has(pattern):
+                for random_argument in expr.rhs.finditer(RandomArgument):
+                    if random_argument._has(pattern):
                         return True
         else:
-            for surrogate in self.finditer(Surrogate):
-                if surrogate.arg.var._has(pattern):
+            for random_argument in self.finditer(RandomArgument):
+                if random_argument.arg.var._has(pattern):
                     return True
         
     def _has_indexed(self, pattern):
@@ -1317,7 +1317,7 @@ class Expectation(ExprWithLimits):
         expr = self.expr
         if expr.is_Conditioned:
             expr, given = expr.args
-            vars_given = {v for v in given.random_symbols if not v.is_Surrogate}
+            vars_given = {v for v in given.random_symbols if not v.is_RandomArgument}
         else:
             vars_given = set()
         
@@ -1870,7 +1870,7 @@ class Covariance(Expr):
             if lhs.rhs == rhs.rhs:
                 given = lhs.rhs
                 for v in given.random_symbols:
-                    if v.is_Surrogate:
+                    if v.is_RandomArgument:
                         return True
 
     def yield_random_symbols(self):
@@ -1879,7 +1879,7 @@ class Covariance(Expr):
             if lhs.rhs == rhs.rhs:
                 given = lhs.rhs
                 for v in given.random_symbols:
-                    if v.is_Surrogate:
+                    if v.is_RandomArgument:
                         yield v.arg
         
     @cacheit

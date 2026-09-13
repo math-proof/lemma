@@ -4,7 +4,7 @@ from util import *
 def rewrite(self, *vars):
     given = S.true
     for v in vars:
-        given &= v.surrogate
+        given &= v.random_argument
 
     expr, *limits_inner = self.of(Expectation)
     if expr.is_Conditioned:

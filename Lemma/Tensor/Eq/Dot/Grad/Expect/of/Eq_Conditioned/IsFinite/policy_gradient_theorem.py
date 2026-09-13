@@ -8,7 +8,7 @@ def apply(eq, lt):
 
     ((γ, (S[t], [S[t]])), (((S[r[t:]], S[s[t].as_boolean()]), (S[r[t:]],), (S[a], π)), [S[π], S[1]])), [S[s[t].var]], [S[t]] = lt.of(Sup[Abs[Pow[Stack] @ Derivative[Expectation[Conditioned]]]] < Infinity)
     return Equal(γ ** Stack[t](t) @ Derivative[π](Expectation[r, a:π](r)),
-                 γ ** Stack[t](t) @ Stack[t](Expectation[r, a:π, s](Derivative[π](log(Pr[a:π](a[t].surrogate | s[t].surrogate))) * (γ ** Stack[t](t) @ r[t:]))))
+                 γ ** Stack[t](t) @ Stack[t](Expectation[r, a:π, s](Derivative[π](log(Pr[a:π](a[t].random_argument | s[t].random_argument))) * (γ ** Stack[t](t) @ r[t:]))))
 
 
 @prove

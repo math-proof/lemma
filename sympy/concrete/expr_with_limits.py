@@ -1093,7 +1093,7 @@ class ExprWithLimits(Expr):
                     self = self.simplify()
             return self
             
-        if not old.is_Surrogate:
+        if not old.is_RandomArgument:
             if intersect := self._if_new_has_variables(old, new):
                 return self._subs_if_new_has_variables(old, new, intersect)
         

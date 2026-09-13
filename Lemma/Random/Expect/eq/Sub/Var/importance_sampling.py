@@ -5,7 +5,7 @@ from util import *
 def apply(self):
     (((x_eq, *weights_old), (S[x_eq], *weights_new)), fx), *limits_old = self.of(Expectation[(One - Pr / Pr) * Expr ** 2])
 
-    x, S[x.surrogate] = x_eq.of(Equal)
+    x, S[x.random_argument] = x_eq.of(Equal)
 
     λ = Pr(x_eq, *weights_old) / Pr(x_eq, *weights_new)
     limits_new = [(x, *weights_new[0][1:])]
@@ -20,7 +20,7 @@ def prove(Eq):
     x = Symbol(integer=True, random=True)
     θ, θ_quote = Symbol(real=True, shape=(D,))
     f = Function(real=True, shape=())
-    Eq << apply(Expectation[x:θ](f(x) ** 2 * (1 - Pr[x:θ](Equal(x, x.surrogate)) / Pr[x:θ_quote](Equal(x, x.surrogate)))))
+    Eq << apply(Expectation[x:θ](f(x) ** 2 * (1 - Pr[x:θ](Equal(x, x.random_argument)) / Pr[x:θ_quote](Equal(x, x.random_argument)))))
 
     Eq << Eq[-1].this.find(Variance).apply(Random.Var.eq.Sub.Expect)
 

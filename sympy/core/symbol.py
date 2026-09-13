@@ -605,10 +605,10 @@ class Symbol(AtomicExpr, NotIterable):
         return pspace(self).symbol
 
     @property
-    def surrogate(self):
+    def random_argument(self):
         assert self.is_random
-        from sympy.stats.symbolic_probability import Surrogate
-        return Surrogate(self)
+        from sympy.stats.symbolic_probability import RandomArgument
+        return RandomArgument(self)
 
     def __and__(self, other):
         """Overloading for & operator"""
@@ -1307,8 +1307,8 @@ class Symbol(AtomicExpr, NotIterable):
 
     def as_boolean(self, **kwargs):
         if self.is_random:            
-            if kwargs.get('surrogate'):
-                rhs = self.surrogate
+            if kwargs.get('random_argument'):
+                rhs = self.random_argument
             else:
                 from sympy.stats.rv import pspace
                 rhs = pspace(self).symbol

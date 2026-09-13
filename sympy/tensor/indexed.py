@@ -969,10 +969,10 @@ class Indexed(Expr):
         return self.base.var[self.indices]
 
     @property
-    def surrogate(self):
+    def random_argument(self):
         assert self.base.is_random
         assert not any(index.is_random for index in self.indices)
-        return self.base.surrogate[self.indices]
+        return self.base.random_argument[self.indices]
 
     def __and__(self, other):
         """Overloading for & operator"""
@@ -2093,10 +2093,10 @@ class Sliced(Expr):
         return self.base.var[self.indices]
     
     @property
-    def surrogate(self):
+    def random_argument(self):
         assert self.base.is_random
         assert not any(index.is_random for index in self.indices)
-        return self.base.surrogate[self.indices]
+        return self.base.random_argument[self.indices]
 
     def __and__(self, other):
         """Overloading for & operator"""
@@ -2953,10 +2953,10 @@ class SlicedIndexed(Expr):
         return self.base.var[self.indices]
 
     @property
-    def surrogate(self):
+    def random_argument(self):
         assert self.base.is_random
         assert not any(index.is_random for index in self.indices)
-        return self.base.surrogate[self.indices]
+        return self.base.random_argument[self.indices]
 
     def __and__(self, other):
         """Overloading for & operator"""

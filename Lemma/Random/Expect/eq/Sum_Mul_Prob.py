@@ -45,10 +45,10 @@ def extract(self):
         else:
             limits = limits[:j] + limits[j + 1:]
             
-        expr = expr._subs(x.surrogate, x.var)
+        expr = expr._subs(x.random_argument, x.var)
         if expr.is_random:
             expr = expr._subs(x, x.var)
-#         assert not expr._has(x), surrogate problem here!
+#         assert not expr._has(x), random_argument problem here!
 
         if x.is_Symbol:
             deletes = set()

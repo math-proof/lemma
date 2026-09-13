@@ -1089,7 +1089,7 @@ class Equal(Relational):
         if lhs.is_random and lhs.is_symbol:
             if rhs == lhs.var:
                 return lhs._latex(p)
-            if rhs.is_Surrogate and rhs.arg == lhs:
+            if rhs.is_RandomArgument and rhs.arg == lhs:
                 return rhs._latex(p)
             
         if lhs.is_Conditioned:
@@ -1115,7 +1115,7 @@ class Equal(Relational):
         if lhs.is_random and lhs.is_symbol:
             if rhs == lhs.var:
                 return lhs._sympystr(p)
-            if rhs.is_Surrogate and rhs.arg == lhs:
+            if rhs.is_RandomArgument and rhs.arg == lhs:
                 return rhs._sympystr(p)
             
         return "Equal(%s, %s)" % (p._print(lhs), p._print(rhs))
@@ -1127,7 +1127,7 @@ class Equal(Relational):
         if lhs.is_random and lhs.is_symbol:
             if rhs == lhs.var:
                 return lhs._sympystr(p)
-            if rhs.is_Surrogate and rhs.arg == lhs:
+            if rhs.is_RandomArgument and rhs.arg == lhs:
                 return rhs._sympystr(p)
             
         return "%s = %s" % (p._print(lhs), p._print(rhs))
@@ -1203,10 +1203,10 @@ class Equal(Relational):
         if lhs.is_random and lhs.is_symbol:
             if new == lhs and rhs == old:
                 if old == lhs.var or not rhs.is_random:
-                    new = new.surrogate
+                    new = new.random_argument
                     return self.func(lhs, new, evaluate=False)
             elif old == lhs:
-                if not rhs.is_random and not rhs.is_Surrogate:
+                if not rhs.is_random and not rhs.is_RandomArgument:
                     return self
 
         try:
@@ -1231,7 +1231,7 @@ class Equal(Relational):
         if rhs == _rhs:
             ...
         
-        if rhs.is_Surrogate:
+        if rhs.is_RandomArgument:
             if rhs.arg.var == _rhs:
                 return new._subs(_rhs, rhs)
 

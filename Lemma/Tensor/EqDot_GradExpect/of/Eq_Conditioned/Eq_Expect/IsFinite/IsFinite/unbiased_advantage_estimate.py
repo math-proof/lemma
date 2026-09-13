@@ -10,7 +10,7 @@ def apply(eq, V_def, lt_dV, lt_V):
 
     At = γ ** Stack[t](t) @ (r[t:] + γ * V_st_var._subs(s[t].var, s[t + 1:]) - V_st_var._subs(s[t].var, s[t:]))
     return Equal(γ ** Stack[t](t) @ Derivative[π](Expectation[r, a:π](r)),
-                 γ ** Stack[t](t) @ Stack[t](Expectation[r, a:π, s](Derivative[π](log(Pr[a:π](a[t].surrogate | s[t].surrogate))) * At)))
+                 γ ** Stack[t](t) @ Stack[t](Expectation[r, a:π, s](Derivative[π](log(Pr[a:π](a[t].random_argument | s[t].random_argument))) * At)))
 
 
 @prove

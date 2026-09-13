@@ -27,7 +27,7 @@ def apply(self, *indices):
     else:
         limits[i] = tuple(vars)
 
-    return Equal(self, Expectation(Expectation(expr | Equal(x[j], x[j].surrogate), *limits), (x[j],)))
+    return Equal(self, Expectation(Expectation(expr | Equal(x[j], x[j].random_argument), *limits), (x[j],)))
 
 
 @prove

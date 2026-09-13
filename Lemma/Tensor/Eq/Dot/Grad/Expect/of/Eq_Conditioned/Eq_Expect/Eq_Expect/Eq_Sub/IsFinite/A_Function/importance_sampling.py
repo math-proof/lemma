@@ -7,7 +7,7 @@ def apply(eq, Q_def, V_def, A_def, lt, π_quote=None):
     s, a, r, [π], γ, t, Q_st_var, V_st_var, A_st_var = extract_QVA(eq, Q_def, V_def, A_def, lt)
     assert π_quote.shape == π.shape
     return Equal(γ ** Stack[t](t) @ Derivative[π](Expectation[r, a:π](r)),
-                 γ ** Stack[t](t) @ Stack[t](Expectation[a:π_quote, s](Derivative[π](Pr[a:π](a[t].surrogate | s[t].surrogate)) / Pr[a:π_quote](a[t].surrogate | s[t].surrogate) * A_st_var._subs(s[t].var, s[t])._subs(a[t].var, a[t]))))
+                 γ ** Stack[t](t) @ Stack[t](Expectation[a:π_quote, s](Derivative[π](Pr[a:π](a[t].random_argument | s[t].random_argument)) / Pr[a:π_quote](a[t].random_argument | s[t].random_argument) * A_st_var._subs(s[t].var, s[t])._subs(a[t].var, a[t]))))
 
 
 @prove

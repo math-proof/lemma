@@ -1158,7 +1158,7 @@ class And(LatticeOp, BooleanFunction):
             children = And.connected_equations(conds)
             if children:
                 return " = ".join([p._print(next) for next in children])
-            if all(lhs.is_random and lhs.is_symbol and (rhs == lhs.var or rhs.is_Surrogate and rhs.arg == lhs) for lhs, rhs in conds):
+            if all(lhs.is_random and lhs.is_symbol and (rhs == lhs.var or rhs.is_RandomArgument and rhs.arg == lhs) for lhs, rhs in conds):
                 wedge = ','
             
         return wedge.join(args)

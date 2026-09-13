@@ -7,7 +7,7 @@ def apply(self):
     assert not x.is_Conditioned
     assert not y.is_Conditioned
 
-    return Equal(self, Covariance(x, Expectation(y | x.surrogate)))
+    return Equal(self, Covariance(x, Expectation(y | x.random_argument)))
 
 @prove
 def prove(Eq):

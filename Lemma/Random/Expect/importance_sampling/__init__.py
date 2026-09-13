@@ -27,7 +27,7 @@ def apply(self, *new_weights):
 
             limits_weighted.append((x, *weights))
             new_limits_weighted.append(limits[i])
-        conds.append(Equal(x, x.surrogate))
+        conds.append(Equal(x, x.random_argument))
 
     conds = And(*conds)
     return Equal(self,

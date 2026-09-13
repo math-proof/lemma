@@ -4,7 +4,7 @@ from util import *
 @apply
 def apply(self):
     grad, (x, θ) = self.of(Expectation)
-    (((S[x], S[x.surrogate]), [S[x], S[θ]]), (S[θ], S[1])) = grad.of(Derivative[Log[Pr[Equal]]])
+    (((S[x], S[x.random_argument]), [S[x], S[θ]]), (S[θ], S[1])) = grad.of(Derivative[Log[Pr[Equal]]])
     return Equal(self, Zeros(*θ.shape))
 
 
@@ -16,7 +16,7 @@ def prove(Eq):
     # D denotes the size of the trainable weights
     x = Symbol(real=True, shape=(n,), random=True)
     θ = Symbol(real=True, shape=(D,))
-    Eq << apply(Expectation[x:θ](Derivative[θ](log(Pr[x:θ](Equal(x, x.surrogate))))))
+    Eq << apply(Expectation[x:θ](Derivative[θ](log(Pr[x:θ](Equal(x, x.random_argument))))))
 
     Eq << Eq[-1].this.lhs.apply(Random.Expect.eq.Integral)
 

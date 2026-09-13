@@ -14,7 +14,7 @@ def prove(Eq):
     n = Symbol(integer=True, positive=True)
     x, y = Symbol(real=True, random=True, shape=(n,))
     z = Symbol(real=True, probable=True)
-    Eq << apply(Covariance(Expectation(x | z.surrogate), Expectation(y | z.surrogate)))
+    Eq << apply(Covariance(Expectation(x | z.random_argument), Expectation(y | z.random_argument)))
 
     Eq << Eq[0].this.lhs.apply(Random.Cov.eq.Sub.Expect)
 

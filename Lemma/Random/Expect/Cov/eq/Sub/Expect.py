@@ -27,7 +27,7 @@ def prove(Eq):
     n = Symbol(integer=True, positive=True)
     x, y = Symbol(real=True, random=True, shape=(n,))
     z = Symbol(real=True, probable=True)
-    Eq << apply(Expectation(Covariance(x, y, given=z.surrogate)))
+    Eq << apply(Expectation(Covariance(x, y, given=z.random_argument)))
 
     Eq << Eq[0].this.find(Covariance).apply(Random.Cov.eq.Sub.Expect)
 

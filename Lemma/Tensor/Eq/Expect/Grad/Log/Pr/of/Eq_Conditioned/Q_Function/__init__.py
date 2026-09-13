@@ -10,8 +10,8 @@ def apply(eq, k=None, π=None):
 
     assert s.is_random and r.is_random and a.is_random
 
-    st = s[t].as_boolean(surrogate=True)
-    at = a[t].as_boolean(surrogate=True)
+    st = s[t].as_boolean(random_argument=True)
+    at = a[t].as_boolean(random_argument=True)
     prob = Pr[a:π](at, given=st)
 
     return Equal(Expectation[r[t:], a[t]:π, s[t]](Derivative[π](log(prob)) * ReducedSum(r[t:])),

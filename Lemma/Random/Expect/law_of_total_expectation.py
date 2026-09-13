@@ -13,7 +13,7 @@ def rewrite(self):
         vars_given_dict = {}
         for eq in cond_outer:
             x, x_var = eq.of(Equal)
-            if x_var.is_Surrogate:
+            if x_var.is_RandomArgument:
                 x_var = x_var.arg.var
             vars_given_dict[x] = x_var
     else:
@@ -34,9 +34,9 @@ def rewrite(self):
     vars_given = set()
     for cond in conds:
         x, x_var = cond.of(Equal)
-        if x_var.is_Surrogate:
+        if x_var.is_RandomArgument:
             vars_given.add(x)
-            assert x_var == x.surrogate
+            assert x_var == x.random_argument
             assert x in vars_outer
         else:
             assert x_var == vars_given_dict[x]
@@ -102,7 +102,7 @@ def prove(Eq):
 
     x, y = Symbol(real=True, random=True)
     f = Function(real=True)
-    Eq << apply(Expectation(Expectation(f(x, y) | y.surrogate)))
+    Eq << apply(Expectation(Expectation(f(x, y) | y.random_argument)))
 
     Eq << Eq[-1].this.lhs.apply(Random.Expect.eq.Integral)
 

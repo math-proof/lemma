@@ -13,7 +13,7 @@ def prove(Eq):
 
     x, y, z = Symbol(real=True, random=True)
     f = Function(real=True)
-    Eq << apply(Expectation(Expectation(f(x, y, z) | y.surrogate & z) | z))
+    Eq << apply(Expectation(Expectation(f(x, y, z) | y.random_argument & z) | z))
 
     Eq << Eq[-1].this.lhs.apply(Random.Expect.eq.Integral)
 

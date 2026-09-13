@@ -10,7 +10,7 @@ def apply(eq, Q_def, V_def, MDV_def):
     return Equal(
         Subs[π_quote:π](Derivative[π_quote](MDV_st_var)),
         Expectation[a:π](
-            Subs[π_quote:π](Derivative[π_quote](Pr[a:π_quote](a[t].surrogate | s[t]))) / Pr[a:π](a[t].surrogate | s[t]) * Q_st_var._subs(a[t].var, a[t]) | s[t]))
+            Subs[π_quote:π](Derivative[π_quote](Pr[a:π_quote](a[t].random_argument | s[t]))) / Pr[a:π](a[t].random_argument | s[t]) * Q_st_var._subs(a[t].var, a[t]) | s[t]))
 
 
 @prove

@@ -7,7 +7,7 @@ def apply(eq, Q_def, V_def, n=None):
     s, a, r, [π], γ, t, Q_st_var, V_st_var = extract_QVA(eq, Q_def, V_def)
     assert n >= 0
     return Equal(γ ** Stack[t](t) @ Derivative[π](Expectation[r, a:π](r)),
-                 Expectation[a:π, s[:n]](Sum[t:n](γ ** t * Derivative[π](log(Pr[a:π](a[t].surrogate | s[t].surrogate))) * Q_st_var._subs(s[t].var, s[t])._subs(a[t].var, a[t]))) + \
+                 Expectation[a:π, s[:n]](Sum[t:n](γ ** t * Derivative[π](log(Pr[a:π](a[t].random_argument | s[t].random_argument))) * Q_st_var._subs(s[t].var, s[t])._subs(a[t].var, a[t]))) + \
                  γ ** n * Expectation(Derivative[π](V_st_var._subs(s[t].var, s[n]))))
 
 

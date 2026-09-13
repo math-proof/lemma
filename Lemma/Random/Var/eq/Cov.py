@@ -13,7 +13,7 @@ def apply(self):
     from sympy.tensor.indexed import index_complement
     vars_complement = index_complement(expr.random_symbols, vars_limited)
     for v in vars_complement:
-        expr = expr._subs(v, v.surrogate)
+        expr = expr._subs(v, v.random_argument)
         
     if given is not None:
         expr |= given

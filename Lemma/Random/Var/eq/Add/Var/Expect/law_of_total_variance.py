@@ -5,7 +5,7 @@ from util import *
 def apply(self, *vars):
     given = S.true
     for v in vars:
-        given &= Equal(v, v.surrogate)
+        given &= Equal(v, v.random_argument)
         assert v.is_probable
 
     expr, *limits_v = self.of(Variance)

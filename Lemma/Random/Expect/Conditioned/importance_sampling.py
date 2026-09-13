@@ -25,7 +25,7 @@ def apply(self, *new_weights):
         if len(vars) == 1:
             x, = vars
 
-        conds.append(Equal(x, x.surrogate))
+        conds.append(Equal(x, x.random_argument))
 
     conds = And(*conds)
     return Equal(self,

@@ -3967,7 +3967,7 @@ class Expr(Basic, EvalfMixin):
         
         assert self.is_random or expr.is_random
             # overload given operator in probability theorems
-        if expr.is_Surrogate:
+        if expr.is_RandomArgument:
             from sympy import Equal, Conditioned
             return Conditioned(self, Equal(expr.arg, expr, evaluate=False))
         else:

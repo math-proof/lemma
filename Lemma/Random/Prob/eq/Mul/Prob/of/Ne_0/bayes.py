@@ -11,7 +11,7 @@ def apply(eq, *expr, spread_weight=False):
 
     if isinstance(cond, tuple):
         cond, weight = cond
-        random_symbols = [v for v in cond.random_symbols if not v.is_Surrogate]
+        random_symbols = [v for v in cond.random_symbols if not v.is_RandomArgument]
         if spread_weight:
             limits = [weight]
         else:

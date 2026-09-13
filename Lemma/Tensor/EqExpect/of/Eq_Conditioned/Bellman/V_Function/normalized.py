@@ -23,7 +23,7 @@ def apply(eq, γ=None, k=None, weights=None):
         limits_coeff = []
 
     return Equal((1 - γ) * γ ** Stack[k](k) @ Expectation(r[t:] | s[t], *limits_curr),
-                 Expectation((γ * ((1 - γ) * γ ** Stack[k](k) @ Expectation(r[t + 1:] | s[t + 1].surrogate, *limits_next)) + (1 - γ) * r[t]) | s[t], *limits_coeff))
+                 Expectation((γ * ((1 - γ) * γ ** Stack[k](k) @ Expectation(r[t + 1:] | s[t + 1].random_argument, *limits_next)) + (1 - γ) * r[t]) | s[t], *limits_coeff))
 
 
 @prove
