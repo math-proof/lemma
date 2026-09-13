@@ -41,18 +41,7 @@ noncomputable instance ReferenceMeasure.prod [ReferenceMeasure α] [ReferenceMea
 
 
 /--
-[sympy Distribution](https://github.com/sympy/sympy/blob/master/sympy/stats/rv.py)
-
-A distribution bundles the ambient probability measure `𝕡` together with a density
-`π : α → ENNReal` w.r.t. the canonical state measure on `α`. It is the Lean counterpart
-of a py distribution object (e.g. `NormalDistribution(μ, σ²)`) and is the right operand of
-the binary operator `~`: given `D : Distribution 𝕡 π`, write `x ~ D`.
-
-The density measurability is bundled, so a `Distributed` hypothesis is self-sufficient and
-directly supplies the `PSpace` instance (`Distributed.pspace`).
-
-The packed parameters are recovered C++-style with dot notation: `D.measure` is the ambient
-probability measure `𝕡`, `D.density` is the density `π` (both are `rfl` to the parameter).
+[sympy.Distribution](https://github.com/sympy/sympy/blob/master/sympy/stats/rv.py)
 -/
 structure Distribution
     {Ω α : Type*}
@@ -60,11 +49,9 @@ structure Distribution
     [ReferenceMeasure α]
     (𝕡 : Measure Ω)
     (π : α → ENNReal) where
-  /-- the density `π` is measurable -/
   measurable_density : Measurable π
 
 
-/-- The ambient probability measure packed in a `Distribution 𝕡 π` (`D.measure`). -/
 def Distribution.measure
     {Ω α : Type*}
     [MeasurableSpace Ω]
@@ -75,7 +62,6 @@ def Distribution.measure
   𝕡
 
 
-/-- The density packed in a `Distribution 𝕡 π` (`D.density`). -/
 def Distribution.density
     {Ω α : Type*}
     [MeasurableSpace Ω]
@@ -90,11 +76,6 @@ def Distribution.density
 `x ~ D` — binary operator asserting that the random variable `x` follows the distribution
 `D : Distribution 𝕡 π`:
 `D.measure.map x = ReferenceMeasure.measure.withDensity D.density`.
-This is the Lean counterpart of the py framework's binary condition
-`Distributed(x, π)`, rendered `x ~ π`.
-
-Given a measurability proof `hπ : Measurable π`, an anonymous distribution bundle is
-written `(⟨hπ⟩ : Distribution 𝕡 π)`.
 -/
 def Distributed
     {Ω α : Type*}
@@ -110,20 +91,10 @@ notation:50 x:51 " ~ " D:52 => Distributed x D
 
 
 /--
-[sympy.SinglePSpace](https://github.com/sympy/sympy/blob/master/sympy/stats/rv.py)
+[sympy.PSpace](https://github.com/sympy/sympy/blob/master/sympy/stats/rv.py)
 
 The probability space of a single random variable `x`, whose distribution admits a
-probability density function — `Pr(x)` in sympy notation — w.r.t. the canonical state
-measure on `α`: there exists a distribution `D : Distribution 𝕡 π` that `x` follows
-(`x ~ D`), i.e. the law of `x` (the pushforward of `𝕡` along `x`) equals
-`ReferenceMeasure.measure.withDensity π`.
-
-Also packages that `𝕡` is a probability measure (so `[IsProbabilityMeasure 𝕡]` need not
-be stated separately once a `PSpace` instance is in scope).
-
-The density itself is not a separate hypothesis; it is recovered as `PSpace.density 𝕡 x`
-(a.e., in `sympy.stats.symbolic_probability`). The probability of an event is
-`Probability`.
+probability density function
 -/
 class PSpace
     {Ω α : Type*}
@@ -131,11 +102,6 @@ class PSpace
     [ReferenceMeasure α]
     (𝕡 : Measure Ω)
     (x : Ω → α) :
-    Prop where
-  /-- `𝕡` is a probability measure on `Ω`. -/
-  toIsProbabilityMeasure : IsProbabilityMeasure 𝕡
-  /-- there exists a distribution `D` (bundling a measurable density) that `x` follows -/
-  exists_distribution :
-    ∃ (π : α → ENNReal) (D : Distribution 𝕡 π), x ~ D
-
-attribute [instance] PSpace.toIsProbabilityMeasure
+    Prop extends IsProbabilityMeasure 𝕡 where
+  aemeasurable : AEMeasurable x 𝕡
+  exists_distribution : ∃ (π : α → ENNReal) (D : Distribution 𝕡 π), x ~ D

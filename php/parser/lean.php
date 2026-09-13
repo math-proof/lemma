@@ -7248,6 +7248,68 @@ class LeanArgsSpaceSeparated extends LeanArgs
         return [$binder->toLatex($syntax), $n->toLatex($syntax), $arrow->rhs->toLatex($syntax)];
     }
 
+    public function is_Expectation()
+    {
+        $args = $this->args;
+        return count($args) === 3
+            && $args[0] instanceof LeanToken
+            && $args[0]->text === 'Expectation';
+    }
+
+    /**
+     * LaTeX parts for `Expectation ν f` — the expectation of `f` under the law `ν`.
+     * The two common laws are pretty-printed sympy-style (nodes keep their own
+     * rv-coloring):
+     *   `Expectation (𝕡.map x) f` → 𝔼(f(x))
+     *   `Expectation (ReferenceMeasure.measure.withDensity (fun a ↦ 𝕡.condProb (x, y) (a, b))) f`
+     *                             → 𝔼(f(x) | y = b)
+     * otherwise the law is shown as the subscript: 𝔼_ν(f).
+     * @return array [kind, ...nodes] or null if not an Expectation application
+     */
+    public function expectationLatexParts()
+    {
+        if (!$this->is_Expectation())
+            return null;
+        $peel = fn($arg) => $arg instanceof LeanParenthesis ? $arg->arg : $arg;
+        $f = $this->args[2];
+        $nu = $peel($this->args[1]);
+        if ($nu instanceof LeanArgsSpaceSeparated && count($nu->args) === 2) {
+            $head = $nu->args[0];
+            $arg = $nu->args[1];
+            $isProperty = $head instanceof LeanProperty && $head->rhs instanceof LeanToken;
+            if ($isProperty && $head->rhs->text === 'map')
+                return ['map', $f, $arg];
+            if ($isProperty && $head->rhs->text === 'withDensity'
+                && ($fn = $peel($arg)) instanceof Lean_fun) {
+                $arrow = $fn->arg;
+                $body = $arrow->rhs->peelGroup();
+                if ($body instanceof LeanArgsSpaceSeparated && count($body->args) === 3
+                    && ($cd = $body->args[0]) instanceof LeanProperty
+                    && $cd->rhs instanceof LeanToken && $cd->rhs->text === 'condProb'
+                    && ($joint = $body->args[1]->peelGroup()) instanceof LeanArgsCommaSeparated
+                    && count($joint->args) === 2
+                    && ($val = $body->args[2]->peelGroup()) instanceof LeanArgsCommaSeparated
+                    && count($val->args) === 2
+                    && trim((string)$val->args[0]) === trim((string)$arrow->lhs->peelGroup()))
+                    return ['cond', $f, $joint->args[0], $joint->args[1], $val->args[1]];
+            }
+        }
+        return ['generic', $f, $nu];
+    }
+
+    /** Format for expectationLatexParts(). */
+    public function expectationLatexFormat(array $parts)
+    {
+        switch ($parts[0]) {
+            case 'map':
+                return '\mathop{\mathbb{E}}\left(%s\left(%s\right)\right)';
+            case 'cond':
+                return '\mathop{\mathbb{E}}\left(%s\left(%s\right)\ \mathrel{\bigg|}\ %s = %s\right)';
+            default:
+                return '\mathop{\mathbb{E}}\limits_{%s}\left(%s\right)';
+        }
+    }
+
     /** An explicit named-implicit argument `(name := value)`, as in `eye (α := α) m`. */
     public function is_named_implicit_arg($arg) : bool
     {
@@ -7365,6 +7427,10 @@ class LeanArgsSpaceSeparated extends LeanArgs
         $func = $args[0];
         if ($this->is_MatProd())
             return $this->matProdLatexParts($syntax);
+        if ($this->is_Expectation()) {
+            $parts = array_slice($this->expectationLatexParts(), 1);
+            return array_map(fn($n) => $n->toLatex($syntax), $parts);
+        }
         if ($this->eye_positional_args($args)) {
             if ($syntax !== null)
                 $syntax['eye'] = true;
@@ -7466,6 +7532,8 @@ class LeanArgsSpaceSeparated extends LeanArgs
             return '\\prod\\limits_{%s < %s} {%s}';
         if ($this->eye_positional_args($args))
             return '\\mathbb{I}';
+        if ($this->is_Expectation())
+            return $this->expectationLatexFormat($this->expectationLatexParts());
         if ($func instanceof LeanToken) {
             switch (count($args)) {
                 case 2:

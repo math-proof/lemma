@@ -3,18 +3,9 @@ import Lemma.Tensor.DetShiftMatrix.eq.PowNeg1Sub
 import Lemma.Tensor.GetInterleave.eq.Delta_ToSplit
 import Lemma.Tensor.EqMul1
 import Lemma.Tensor.ToMatrixDot.eq.MulToMatrixS
+import Lemma.Fin.ShiftRow.eq.Ite
 open Matrix Tensor
 set_option maxHeartbeats 800000
-
-
-private lemma Fin.shiftRow_val {n : ℕ} (i i₀ j₀ : Fin n) :
-    (i.shiftRow i₀ j₀ : ℕ) =
-      if (i : ℕ) = (j₀ : ℕ) then (i₀ : ℕ)
-      else if (j₀ : ℕ) < (i : ℕ) ∧ (i : ℕ) ≤ (i₀ : ℕ) then (i : ℕ) - 1
-      else if (i₀ : ℕ) ≤ (i : ℕ) ∧ (i : ℕ) < (j₀ : ℕ) then (i : ℕ) + 1
-      else (i : ℕ) := by
-  simp [Fin.shiftRow]
-  split_ifs <;> rfl
 
 
 /--
@@ -24,13 +15,13 @@ private lemma get_shiftRow
     (n : ℕ) (i₀ j₀ : Fin n) (i j : Fin n) :
     (ShiftMatrix (α := ℝ) n (i₀ : ℕ) (j₀ : ℕ)).toMatrix i j =
       (↑(KroneckerDelta (i.shiftRow i₀ j₀ : ℕ) (j : ℕ)) : Tensor ℝ []) := by
-  have hS := GetShiftMatrix.eq.Ite (α := ℝ) n (i₀ : ℕ) (j₀ : ℕ) i j
+  have hS := GetShiftMatrix.eq.Ite (α := ℝ) n (i₀ : ℕ) (j₀ : ℕ) i₀.isLt j₀.isLt i j
   simp only [Tensor.toMatrix] at hS ⊢
   rw [hS]
   have hδij : KroneckerDelta i j = KroneckerDelta (i : ℕ) (j : ℕ) := by
     simp [KroneckerDelta, Fin.ext_iff]
   rw [hδij]
-  simp only [Delta.eq.Ite, Fin.shiftRow_val i i₀ j₀]
+  simp only [Delta.eq.Ite, Fin.ShiftRow.eq.Ite i i₀ j₀]
   split_ifs <;> first
   | rfl
   | omega
@@ -90,27 +81,29 @@ private lemma entry_lt_lt
   simp only [Fin.toSplit]
   have hi01 : (i : ℕ) = 0 ∨ (i : ℕ) = 1 := by omega
   have hj01 : (j : ℕ) = 0 ∨ (j : ℕ) = 1 := by omega
-  obtain hi0 | hi1 := hi01 <;> obtain hj0 | hj1 := hj01
-  · have hσ : (i.shiftRow ⟨d, by omega⟩ ⟨1, by omega⟩ : ℕ) = 0 := by
-      rw [Fin.shiftRow_val]
-      simp [hi0]
-      omega
-    simp [hσ, hi0, hj0]
-  · have hσ : (i.shiftRow ⟨d, by omega⟩ ⟨1, by omega⟩ : ℕ) = 0 := by
-      rw [Fin.shiftRow_val]
-      simp [hi0]
-      omega
-    have : (0 : ℕ) ≠ d := by omega
-    simp [hσ, hi0, hj1, this]
-  · have hσ : (i.shiftRow ⟨d, by omega⟩ ⟨1, by omega⟩ : ℕ) = d := by
-      rw [Fin.shiftRow_val]
-      simp [hi1]
-    have : d ≠ 0 := by omega
-    simp [hσ, hi1, hj0, this]
-  · have hσ : (i.shiftRow ⟨d, by omega⟩ ⟨1, by omega⟩ : ℕ) = d := by
-      rw [Fin.shiftRow_val]
-      simp [hi1]
-    simp [hσ, hi1, hj1]
+  obtain hi0 | hi1 := hi01
+  · obtain hj0 | hj1 := hj01
+    · have hσ : (i.shiftRow ⟨d, by omega⟩ ⟨1, by omega⟩ : ℕ) = 0 := by
+        rw [Fin.ShiftRow.eq.Ite]
+        simp [hi0]
+        omega
+      simp [hσ, hi0, hj0]
+    · have hσ : (i.shiftRow ⟨d, by omega⟩ ⟨1, by omega⟩ : ℕ) = 0 := by
+        rw [Fin.ShiftRow.eq.Ite]
+        simp [hi0]
+        omega
+      have : (0 : ℕ) ≠ d := by omega
+      simp [hσ, hi0, hj1, this]
+  · obtain hj0 | hj1 := hj01
+    · have hσ : (i.shiftRow ⟨d, by omega⟩ ⟨1, by omega⟩ : ℕ) = d := by
+        rw [Fin.ShiftRow.eq.Ite]
+        simp [hi1]
+      have : d ≠ 0 := by omega
+      simp [hσ, hi1, hj0, this]
+    · have hσ : (i.shiftRow ⟨d, by omega⟩ ⟨1, by omega⟩ : ℕ) = d := by
+        rw [Fin.ShiftRow.eq.Ite]
+        simp [hi1]
+      simp [hσ, hi1, hj1]
 
 
 private lemma entry_lt_ge
@@ -122,7 +115,7 @@ private lemma entry_lt_ge
   have hi01 : (i : ℕ) = 0 ∨ (i : ℕ) = 1 := by omega
   obtain hi0 | hi1 := hi01
   · have hσ : (i.shiftRow ⟨d, by omega⟩ ⟨1, by omega⟩ : ℕ) = 0 := by
-      rw [Fin.shiftRow_val]
+      rw [Fin.ShiftRow.eq.Ite]
       simp [hi0]
       omega
     simp [hσ]
@@ -134,7 +127,7 @@ private lemma entry_lt_ge
       have : (0 : ℕ) ≠ (j : ℕ) / 2 + d := by omega
       simp [hjo, one_mul, this]
   · have hσ : (i.shiftRow ⟨d, by omega⟩ ⟨1, by omega⟩ : ℕ) = d := by
-      rw [Fin.shiftRow_val]
+      rw [Fin.ShiftRow.eq.Ite]
       simp [hi1]
     simp [hσ]
     if hje : (j : ℕ) % 2 = 0 then
@@ -156,7 +149,7 @@ private lemma entry_ge_lt
   if hmid : 1 < (i : ℕ) ∧ (i : ℕ) ≤ d then
     have hne : (i : ℕ) ≠ 1 := by omega
     have hσ : (i.shiftRow ⟨d, by omega⟩ ⟨1, by omega⟩ : ℕ) = (i : ℕ) - 1 := by
-      rw [Fin.shiftRow_val]
+      rw [Fin.ShiftRow.eq.Ite]
       simp [hne, hmid]
     simp [hσ]
     obtain hj0 | hj1 := hj01
@@ -168,7 +161,7 @@ private lemma entry_ge_lt
     have h3 : ¬((d : ℕ) ≤ (i : ℕ) ∧ (i : ℕ) < 1) := by omega
     have hne : (i : ℕ) ≠ 1 := by omega
     have hσ : (i.shiftRow ⟨d, by omega⟩ ⟨1, by omega⟩ : ℕ) = (i : ℕ) := by
-      rw [Fin.shiftRow_val]
+      rw [Fin.ShiftRow.eq.Ite]
       simp [hne, hmid]
       omega
     simp [hσ]
@@ -192,7 +185,7 @@ private lemma entry_ge_ge
   if hmid : 1 < (i : ℕ) ∧ (i : ℕ) ≤ d then
     have hne : (i : ℕ) ≠ 1 := by omega
     have hσ : (i.shiftRow ⟨d, by omega⟩ ⟨1, by omega⟩ : ℕ) = (i : ℕ) - 1 := by
-      rw [Fin.shiftRow_val]
+      rw [Fin.ShiftRow.eq.Ite]
       simp [hne, hmid]
     rw [hσ]
     if hje : (j : ℕ) % 2 = 0 then
@@ -212,7 +205,7 @@ private lemma entry_ge_ge
     have h3 : ¬((d : ℕ) ≤ (i : ℕ) ∧ (i : ℕ) < 1) := by omega
     have hne : (i : ℕ) ≠ 1 := by omega
     have hσ : (i.shiftRow ⟨d, by omega⟩ ⟨1, by omega⟩ : ℕ) = (i : ℕ) := by
-      rw [Fin.shiftRow_val]
+      rw [Fin.ShiftRow.eq.Ite]
       simp [hne, hmid]
       omega
     rw [hσ]
@@ -347,11 +340,17 @@ private lemma shift_mul_block
 
 @[main]
 private lemma main
+  {d : ℕ}
 -- given
-  (d : ℕ) (hd : 1 < d) :
+  (hd : 1 < d) :
 -- imply
-  (interleave d).toMatrix.det = Mul.mul ((-1 : Tensor ℝ []) ^ (d - 1)) (interleave (d - 1)).toMatrix.det := by
+  (interleave d).det = (-1) ^ (d - 1) * id (α := Tensor ℝ []) (interleave (d - 1)).det := by
 -- proof
+  rw [Det.eq.DetToMatrix (interleave d)]
+  rw [Det.eq.DetToMatrix (interleave (d - 1))]
+  erw [Tensor.Mul]
+  show (interleave d).toMatrix.det =
+    Mul.mul ((-1 : Tensor ℝ []) ^ (d - 1)) (interleave (d - 1)).toMatrix.det
   let S := ShiftMatrix (α := ℝ) (d + d) d 1
   let P := interleave d
   have hS : S.toMatrix.det = (-1 : Tensor ℝ []) ^ (d - 1) := by
@@ -397,3 +396,4 @@ private lemma main
 
 
 -- created on 2026-09-11
+-- updated on 2026-09-13

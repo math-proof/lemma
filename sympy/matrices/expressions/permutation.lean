@@ -89,7 +89,7 @@ Elementary row-shift matrix
 delete row `i` and insert after row `j` when `i < j`;
 delete row `i` and insert before row `j` when `j < i`.
 
-`(P)_{i,j} = δ(i.shiftRow i₀ j₀, j)`; out-of-range `i₀`, `j₀` are reduced modulo `n`.
+`(P)_{i,j} = δ(i.shiftRow i₀ j₀, j)`.
 
 \[
 \det(\mathrm{ShiftMatrix}(n,i,j))=(-1)^{j-i}
@@ -97,8 +97,9 @@ delete row `i` and insert before row `j` when `j < i`.
 
 (in ℤ; equivalently `(-1)^{|j-i|}`).
 -/
-def ShiftMatrix [AddMonoidWithOne α] [CharZero α] (n i₀ j₀ : ℕ) : Tensor α [n, n] :=
-  [i < n] [j < n] KroneckerDelta (i.shiftRow ⟨i₀ % n, Nat.mod_lt i₀ (Fin.pos i)⟩ ⟨j₀ % n, Nat.mod_lt j₀ (Fin.pos i)⟩) j
+def ShiftMatrix [AddMonoidWithOne α] [CharZero α] {n : ℕ} (i₀ j₀ : Fin n) :
+    Tensor α [n, n] :=
+  [i < n] [j < n] KroneckerDelta (i.shiftRow i₀ j₀) j
 
 
 /--

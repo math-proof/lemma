@@ -269,16 +269,37 @@ def Expr.traceCases (e : Expr) : ℕ × Expr :=
   | _ =>
     ⟨0, e⟩
 
+/-- Render a bound/observed-value name for LaTeX.
+
+The quoted name `«x.bvar»` denotes the observed value of the random variable
+`x`; it renders as the bare *black* letter `x`, while the random variable `x`
+itself is rendered red elsewhere. -/
+def String.bvarLatex (s : String) : String :=
+  if s.startsWith "«" && s.endsWith "»" then
+    let inner := (s.drop 1).dropEnd 1 |>.copy
+    if inner.endsWith ".bvar" then
+      inner.dropEnd ".bvar".length |>.copy
+    else s
+  else s
+
+/-- Name-level variant of `String.bvarLatex`; non-`.bvar` names use `escape_specials`. -/
+def Lean.Name.bvarLatex (name : Name) (sep : String) : String :=
+  let s := name.toString
+  if s.startsWith "«" && s.endsWith "»" then
+    s.bvarLatex
+  else
+    name.escape_specials sep
+
 def Expr.asStack? : Expr → Option (String × Expr × Expr)
   | Basic (.ExprWithAttr (.Lean_operatorname `Stack)) [n, Basic (.ExprWithLimits .Lean_lambda) [fn, Binder .default binderName _ nil] _] _ =>
-    some (binderName.escape_specials "\\ ", n, fn)
+    some (binderName.bvarLatex "\\ ", n, fn)
   | _ =>
     none
 
 /-- `Tensor.matProd n (fun i => body)` → `(i, n, body)`. -/
 def Expr.asMatProd? : Expr → Option (String × Expr × Expr)
   | Basic (.ExprWithAttr (.Lean_operatorname `Tensor.matProd)) [n, Basic (.ExprWithLimits .Lean_lambda) [fn, Binder .default binderName _ nil] _] _ =>
-    some (binderName.escape_specials "\\ ", n, fn)
+    some (binderName.bvarLatex "\\ ", n, fn)
   | _ =>
     none
 
@@ -299,9 +320,145 @@ def Expr.isVolume : Expr → Bool
 def Expr.asIntervalIntegral? : Expr → Option (String × Expr × Expr × Expr × Expr)
   | Basic (.ExprWithAttr (.Lean_operatorname `intervalIntegral))
       [Basic (.ExprWithLimits .Lean_lambda) [fn, Binder .default binderName _ nil] _, a, b, μ] _ =>
-    some (binderName.escape_specials "\\ ", a, b, fn, μ)
+    some (binderName.bvarLatex "\\ ", a, b, fn, μ)
   | _ =>
     none
+
+/-- Read final name segment from any `.Lean_function`/`.Lean_operatorname`/`.Lean_typeclass`/`.LeanLemma`/`.LeanProperty`/`.LeanMethod` attr. -/
+def Expr.getAttrNameSuffix : Expr → Option String
+  | Basic (.ExprWithAttr (.Lean_function name)) _ _
+  | Basic (.ExprWithAttr (.Lean_operatorname name)) _ _
+  | Basic (.ExprWithAttr (.Lean_typeclass name)) _ _
+  | Basic (.ExprWithAttr (.LeanLemma name)) _ _
+  | Basic (.ExprWithAttr (.LeanProperty name)) _ _
+  | Basic (.ExprWithAttr (.LeanMethod name _)) _ _ =>
+    let s := name.toString
+    some ((s.splitOn ".").getLastD s)
+  | Basic (.Special ⟨op⟩) _ _ => some op.toString
+  | _ => none
+
+/-- Look up a named application where the name suffix matches `suffix`. -/
+def Expr.isNamedApp (suffix : String) (e : Expr) : Bool :=
+  match e.getAttrNameSuffix with
+  | some name => name == suffix || name.endsWith suffix
+  | none => false
+
+/-- Inspect the args of an ExprWithAttr named application, returning (nameSuffix, args). -/
+def Expr.asNamedApp? (e : Expr) : Option (String × List Expr) :=
+  match e with
+  | Basic (.ExprWithAttr attr) args _ =>
+    let name : String :=
+      match attr with
+      | .Lean_function n | .Lean_operatorname n | .Lean_typeclass n
+      | .LeanLemma n | .LeanProperty n => n.toString
+      | .LeanMethod n _ => n.toString
+    some ((name.splitOn ".").getLastD name, args)
+  | _ => none
+
+/-- `lintegral μ (fun x ↦ body)` → `(x, body, μ)`. -/
+def Expr.asLintegral? : Expr → Option (String × Expr × Expr)
+  | e =>
+    if let some ("lintegral", args) := e.asNamedApp? then
+      let lambdaArg : Option Expr := args.findSome? fun arg =>
+        match arg with
+        | Basic (.ExprWithLimits .Lean_lambda) .. => some arg
+        | _ => none
+      match lambdaArg with
+      | some (Basic (.ExprWithLimits .Lean_lambda) [fn, Binder .default binderName _ nil] _) =>
+        let rest := args.filter (fun a : Expr => !match a with | Basic (.ExprWithLimits .Lean_lambda) .. => true | _ => false)
+        match rest with
+        | [μ] => some (binderName.bvarLatex "\\ ", fn, μ)
+        | _ => none
+      | some (Basic (.ExprWithLimits .Lean_lambda) [fn, Binder .instImplicit binderName _ nil] _) =>
+        let rest := args.filter (fun a : Expr => !match a with | Basic (.ExprWithLimits .Lean_lambda) .. => true | _ => false)
+        match rest with
+        | [μ] => some (binderName.bvarLatex "\\ ", fn, μ)
+        | _ => none
+      | _ => none
+    else none
+
+/-- See through `Prod.fst ⟨a, b⟩` / `Prod.snd ⟨a, b⟩` to the component `a` / `b`. -/
+def Expr.asPairProj? : Expr → Option Expr
+  | e =>
+    let isFst := e.isNamedApp "fst"
+    if isFst || e.isNamedApp "snd" then
+      match e with
+      | Basic _ [inner] _ =>
+        if inner.isNamedApp "mk" then
+          match inner, isFst with
+          | Basic _ [a, _] .., true => some a
+          | Basic _ [_, b] .., false => some b
+          | _, _ => none
+        else none
+      | _ => none
+    else none
+
+/-- `JointRandomSymbol x y` → `(x, y)`. -/
+def Expr.asJointRandomSymbol? : Expr → Option (Expr × Expr)
+  | e =>
+    if let some ("JointRandomSymbol", args) := e.asNamedApp? then
+      match args with
+      | [x, y] => some (x.asPairProj?.getD x, y.asPairProj?.getD y)
+      | _ => none
+    else none
+
+-- `𝕡.prob f₁ … fₙ pt` → `(𝕡, [f₁ … fₙ₋₁])`: the `.prob` accessor and the
+-- observed value (last argument) are dropped, mirroring the lean.js
+-- `probDensityParts` convention (`𝕡.prob (x, y) («x.bvar», «y.bvar»)` → `𝕡 (x, y)`).
+def Expr.asProb? : Expr → Option (Expr × List Expr)
+  | e =>
+    if let some ("prob", base :: rest) := e.asNamedApp? then
+      match rest with
+      | [] => none
+      | [_] => some (base, rest)
+      | _ => some (base, rest.take (rest.length - 1))
+    else none
+
+/-- Check if an Expr is of form `ae μ`. -/
+def Expr.isAeMeasure (e : Expr) : Bool :=
+  match e.asNamedApp? with
+  | some ("ae", _) => true
+  | _ => false
+
+/-- `EventuallyEq (ae μ) f g` → `(f, g)` — the filter is dropped, matching the
+lean.js `LeanMEq` rendering `f =^{m} g` for the source notation `f =ᵐ[μ] g`. -/
+def Expr.asEventuallyEq? : Expr → Option (Expr × Expr)
+  | e =>
+    if let some ("EventuallyEq", [μ, f, g]) := e.asNamedApp? then
+      if μ.isAeMeasure then some (f, g) else none
+    else none
+
+/-- `Prod.mk (Prod.fst p) (Prod.snd p)` — an eta-expanded pair function — renders
+like the source-level pair: `(a, b)` when `p = Prod.mk a b` literally, else
+`p.fst, p.snd`. -/
+def Expr.asEtaPair? : Expr → Option (List Expr)
+  | e =>
+    if let some ("mk", [p1, p2]) := e.asNamedApp? then
+      match p1.asNamedApp?, p2.asNamedApp? with
+      | some ("fst", [inner]), some ("snd", [p2']) =>
+        match inner.asNamedApp? with
+        | some ("mk", [a, b]) => some [a, b]
+        | _ => some [inner, p2']
+      | _, _ => none
+    else none
+
+/-- `Eventually (fun y ↦ body) (ae μ)` → `(y, body, μ)`. -/
+def Expr.asEventuallyAe? : Expr → Option (String × Expr × Expr)
+  | e =>
+    if let some ("Eventually", args) := e.asNamedApp? then
+      match args with
+      | [lambdaArg, aeApp] =>
+        if aeApp.isAeMeasure then
+          match lambdaArg with
+          | Basic (.ExprWithLimits .Lean_lambda) [fn, Binder .default binderName _ nil] _ =>
+            match aeApp with
+            | Basic (.ExprWithAttr _) [μ] _ =>
+              some (binderName.bvarLatex "\\ ", fn, μ)
+            | _ => none
+          | _ => none
+        else none
+      | _ => none
+    else none
 
 def LimTo.latex : LimTo → String
   | inf => "\\infty"
@@ -604,7 +761,29 @@ def Expr.latexFormat : Expr → String
       | _ =>
         opStr
     | .ExprWithAttr op =>
-      match op with
+      -- Pre-check foldings first (work for both Lean_function and Lean_operatorname)
+      if let some (_, _, _) := e.asLintegral? then
+        -- lean.js `Lean_int`: `\int^{⁻} body\, {\color{blue}\partial}{binder}`
+        "\\int^{⁻} {%s}\\, {\\color{blue}\\partial}{%s}"
+      else if let some (_, _) := e.asJointRandomSymbol? then
+        "%s, %s"
+      else if let some (_, _, _) := e.asEventuallyAe? then
+        -- lean.js `LeanQuantifier`: the measure is dropped from display
+        "\\forall^{ᵐ}\\,{%s}, {%s}"
+      else if let some (obj, fns) := e.asProb? then
+        -- lean.js `probDensityParts`: `𝕡.prob f₁ … fₙ pt` → `𝕡\ f₁ … fₙ`.
+        -- The density argument (e.g. the pair `(x, y)`) is boxed blue (`#99f`)
+        -- in lean.js regardless of nesting depth, so pin the color level to 0.
+        let obj := level.toColor (obj.priority > func.priority || obj.toList != none || obj.is_Eye)
+        let fns := fns.map fun arg =>
+          (0 : Nat).toColor (arg.priority > func.priority || arg.is_Div || arg.is_BlockMatrix)
+        "\\ ".intercalate (obj :: fns)
+      else if let some (_, _) := e.asEventuallyEq? then
+        -- lean.js `LeanMEq`: `f =ᵐ[μ] g` → `f =^{\mathrm{m}} g`
+        "{%s} {=^{\\mathrm{m}}} {%s}"
+      else if let some (_) := e.asEtaPair? then
+        "%s, %s"
+      else match op with
       | .Lean_function _ =>
         let args := args.map fun arg =>
           level.toColor (arg.priority > func.priority || arg.is_Div || arg.is_BlockMatrix)
@@ -809,8 +988,9 @@ def Expr.latexFormat : Expr → String
       | .LeanLemma _ =>
         opStr
 
+
   | Binder binder binderName _ value =>
-    let binderName := binderName.escape_specials "\\ "
+    let binderName := binderName.bvarLatex "\\ "
     match binder with
     | .instImplicit =>
       binder.func.command
@@ -837,9 +1017,9 @@ where
 
   | Symbol name type =>
     if type.isRandomVariable then
-      ["{\\color{red} {" ++ name.escape_specials "." ++ "}}"]
+      ["{\\color{red} {" ++ name.bvarLatex "." ++ "}}"]
     else
-      [name.escape_specials "."]
+      [name.bvarLatex "."]
 
   | e@(Basic func args _) =>
     match func with
@@ -852,7 +1032,7 @@ where
           | [returnType, Binder .given _ binderType nil] =>
             [binderType.toLatex, returnType.toLatex]
           | [scope, Binder .default binderName binderType nil] =>
-            [("%s : %s".format (binderName.escape_specials "\\ "), binderType.toLatex), scope.toLatex]
+            [("%s : %s".format (binderName.bvarLatex "\\ "), binderType.toLatex), scope.toLatex]
           | _ =>
             []
         | .Lean_lambda =>
@@ -861,7 +1041,7 @@ where
             let limits := limits.map fun arg =>
               match arg with
               | Binder .default name _ nil =>
-                name.escape_specials "\\ "
+                name.bvarLatex "\\ "
               | _ =>
                 arg.toLatex
             limits.reverse ++ [expr.toLatex]
@@ -870,7 +1050,7 @@ where
         | .Lean_let =>
           args.reverse.map fun expr =>
             if let Binder _ name type _ := expr then
-              "{%s : %s}".format name.toString.escape_specials, type.toLatex
+              "{%s : %s}".format name.toString.bvarLatex.escape_specials, type.toLatex
             else
               "{%s}".format expr.toLatex
         | .Lean_exists
@@ -880,9 +1060,9 @@ where
         | .Lean_bigcap =>
           match args with
           | [expr, Binder .default name (Basic (.ExprWithAttr (.Lean_typeclass `Fin)) [n] _) nil] =>
-            [("{%s < %s}".format name.toString.escape_specials, n.toLatex), expr.toLatex]
+            [("{%s < %s}".format name.toString.bvarLatex.escape_specials, n.toLatex), expr.toLatex]
           | [expr, Binder .default name type nil] =>
-            [("{%s : %s}".format name.toString.escape_specials, type.toLatex), expr.toLatex]
+            [("{%s : %s}".format name.toString.bvarLatex.escape_specials, type.toLatex), expr.toLatex]
           | _ =>
             []
         | .Lean_lim =>
@@ -894,7 +1074,7 @@ where
               | .nhdsPos x => x.toLatex ++ "^{+}"
               | .nhdsNeg x => x.toLatex ++ "^{-}"
               | d => d.latex
-            [n.escape_specials "\\ ", bound, fn.toLatex]
+            [n.bvarLatex "\\ ", bound, fn.toLatex]
           | none =>
             []
         | _ =>
@@ -1002,158 +1182,172 @@ where
       else
         map args
     | .ExprWithAttr op =>
-      match op with
-      | .LeanMethod op idx =>
+      -- Pre-check foldings first (work for both Lean_function and Lean_operatorname)
+      if let some (binderName, fn, _μ) := e.asLintegral? then
+        [fn.toLatex, binderName]
+      else if let some (x, y) := e.asJointRandomSymbol? then
+        [x.toLatex, y.toLatex]
+      else if let some (binderName, body, _μ) := e.asEventuallyAe? then
+        [binderName, body.toLatex]
+      else if let some (obj, fns) := e.asProb? then
+        obj.toLatex :: fns.map (·.toLatex)
+      else if let some (f, g) := e.asEventuallyEq? then
+        [f.toLatex, g.toLatex]
+      else if let some etaArgs := e.asEtaPair? then
+        etaArgs.map (·.toLatex)
+      else
         match op with
-        | .str _ "getSlice" =>
-          if let [base, Basic (.Special ⟨`Slice.mk⟩) [start, stop, step] _] := args then
-            if let const (.natVal 1) := step then
-              if let const (.natVal 0) := start then
-                map [base, stop]
+        | .LeanMethod op idx =>
+          match op with
+          | .str _ "getSlice" =>
+            if let [base, Basic (.Special ⟨`Slice.mk⟩) [start, stop, step] _] := args then
+              if let const (.natVal 1) := step then
+                if let const (.natVal 0) := start then
+                  map [base, stop]
+                else
+                  map [base, start, stop]
               else
-                map [base, start, stop]
+                if let const (.natVal 0) := start then
+                  map [base, stop, step]
+                else
+                  map [base, start, stop, step]
             else
-              if let const (.natVal 0) := start then
-                map [base, stop, step]
+              map args
+          | .str _ "image" =>
+            -- `s.image f` → latex args in Mathlib order `f '' s`
+            match args.swap 0 idx with
+            | [s, f] => map [f, s]
+            | swapped => map swapped
+          | .str _ "preimage" =>
+            match args.swap 0 idx with
+            | [s, f] => map [f, s]
+            | swapped => map swapped
+          | .str _ "hstack" =>
+            if let some rows := e.blockMatrixRows then
+              map rows.flatten
+            else
+              map (args.swap 0 idx)
+          | .str _ "sum"
+          | .str _ "prod" =>
+            match args.swap 0 idx with
+            | [X, dim] =>
+              if dim == const (.natVal 0) then
+                match Expr.asStack? X with
+                | some (i, n, fn) =>
+                  [s!"{i} < {n.toLatex}", fn.toLatex]
+                | none =>
+                  map (args.swap 0 idx)
               else
-                map [base, start, stop, step]
+                map (args.swap 0 idx)
+            | swapped =>
+              map swapped
+          | _ =>
+            map (args.swap 0 idx)
+        | .Lean_operatorname `Stack =>
+          if let [n, Basic (.ExprWithLimits .Lean_lambda) [fn, Binder .default i _ nil] _] := args then
+            i.bvarLatex "\\ " :: map [n, fn]
           else
             map args
-        | .str _ "image" =>
-          -- `s.image f` → latex args in Mathlib order `f '' s`
-          match args.swap 0 idx with
-          | [s, f] => map [f, s]
-          | swapped => map swapped
-        | .str _ "preimage" =>
-          match args.swap 0 idx with
-          | [s, f] => map [f, s]
-          | swapped => map swapped
-        | .str _ "hstack" =>
+        | .Lean_operatorname `Tensor.matProd =>
+          match Expr.asMatProd? e with
+          | some (i, n, fn) =>
+            i :: map [n, fn]
+          | none =>
+            map args
+        | .Lean_operatorname `intervalIntegral =>
+          match Expr.asIntervalIntegral? e with
+          | some (i, a, b, fn, μ) =>
+            if μ.isVolume then
+              map [a, b, fn] ++ [i]
+            else
+              map [a, b, fn, μ] ++ [i]
+          | none =>
+            map args
+        | .Lean_operatorname `letFun =>
+          if let [_, Basic (.ExprWithLimits .Lean_lambda) [fn, Binder _ h hType _] _] := args then
+            h.bvarLatex "\\ " :: map [hType, fn]
+          else
+            map args
+        | .Lean_operatorname `cast =>
+          match args with
+          | [Basic func .., a] =>
+            match func with
+            | .ExprWithAttr _
+            | .Special ⟨.anonymous⟩ =>
+              "\\cdots" :: map [a]
+            | _ =>
+              map args
+          | args =>
+            map args
+        | .Lean_operatorname `OfScientific.ofScientific =>
+          if let [mantissa, exponentSign, decimalExponent] := args then
+            let mantissa :=
+              if let const (.natVal mantissa) := mantissa then
+                mantissa
+              else
+                0
+            let decimalExponent :=
+              if let const (.natVal decimalExponent) := decimalExponent then
+                decimalExponent
+              else
+                0
+            let pow10 := 10 ^ decimalExponent
+            let integer := toString (mantissa / pow10)
+            let fraction := toString (mantissa % pow10)
+            let sign :=
+              if let const .true := exponentSign then
+                ""
+              else
+                "-"
+            [sign, integer, fraction]
+          else
+            map args
+        | .Lean_operatorname `Subtype =>
+          let args :=
+            match args with
+            -- consider special cases:
+            | [Basic (.ExprWithLimits .Lean_lambda) [Basic (.BinaryInfix ⟨`LT.lt⟩) [const (.natVal 0), Symbol binderName binderType] _, Binder .default binderName' binderType' nil] _] =>
+              -- ℝ⁺ = Subtype fun x : ℝ => 0 < x
+              if binderName == binderName' && binderType == binderType' then
+                [binderType]
+              else
+                args
+            | [Basic (.ExprWithLimits .Lean_lambda) [Basic (.BinaryInfix ⟨`LT.lt⟩) [Symbol binderName binderType, const (.natVal 0)] _, Binder .default binderName' binderType' nil] _] =>
+              -- ℝ⁻ = Subtype fun x : ℝ => x < 0
+              if binderName == binderName' && binderType == binderType' then
+                [binderType]
+              else
+                args
+            | _ =>
+              args
+          map args
+        | .Lean_typeclass `HEq =>
+          match args with
+          | [a, Basic (.ExprWithAttr _) ..] =>
+            map [a] ++ ["\\cdots"]
+          | args@([a, Basic (.UnaryPrefix op) ..]) =>
+            if op.func.priority == 76 then
+              map [a] ++ ["\\cdots"]
+            else
+              map args
+          | [Basic (.ExprWithAttr _) .., a] =>
+            "\\cdots" :: map [a]
+          | args@([Basic (.UnaryPrefix op) .., a]) =>
+            if op.func.priority == 76 then
+              "\\cdots" :: map [a]
+            else
+              map args
+          | args =>
+            map args
+        | .Lean_operatorname `id =>
           if let some rows := e.blockMatrixRows then
             map rows.flatten
           else
-            map (args.swap 0 idx)
-        | .str _ "sum"
-        | .str _ "prod" =>
-          match args.swap 0 idx with
-          | [X, dim] =>
-            if dim == const (.natVal 0) then
-              match Expr.asStack? X with
-              | some (i, n, fn) =>
-                [s!"{i} < {n.toLatex}", fn.toLatex]
-              | none =>
-                map (args.swap 0 idx)
-            else
-              map (args.swap 0 idx)
-          | swapped =>
-            map swapped
+            map args
+        | .Lean_operatorname `Tensor.eye =>
+          []
         | _ =>
-          map (args.swap 0 idx)
-      | .Lean_operatorname `Stack =>
-        if let [n, Basic (.ExprWithLimits .Lean_lambda) [fn, Binder .default i _ nil] _] := args then
-          i.toString.escape_specials :: map [n, fn]
-        else
           map args
-      | .Lean_operatorname `Tensor.matProd =>
-        match Expr.asMatProd? e with
-        | some (i, n, fn) =>
-          i :: map [n, fn]
-        | none =>
-          map args
-      | .Lean_operatorname `intervalIntegral =>
-        match Expr.asIntervalIntegral? e with
-        | some (i, a, b, fn, μ) =>
-          if μ.isVolume then
-            map [a, b, fn] ++ [i]
-          else
-            map [a, b, fn, μ] ++ [i]
-        | none =>
-          map args
-      | .Lean_operatorname `letFun =>
-        if let [_, Basic (.ExprWithLimits .Lean_lambda) [fn, Binder _ h hType _] _] := args then
-          h.toString.escape_specials :: map [hType, fn]
-        else
-          map args
-      | .Lean_operatorname `cast =>
-        match args with
-        | [Basic func .., a] =>
-          match func with
-          | .ExprWithAttr _
-          | .Special ⟨.anonymous⟩ =>
-            "\\cdots" :: map [a]
-          | _ =>
-            map args
-        | args =>
-          map args
-      | .Lean_operatorname `OfScientific.ofScientific =>
-        if let [mantissa, exponentSign, decimalExponent] := args then
-          let mantissa :=
-            if let const (.natVal mantissa) := mantissa then
-              mantissa
-            else
-              0
-          let decimalExponent :=
-            if let const (.natVal decimalExponent) := decimalExponent then
-              decimalExponent
-            else
-              0
-          let pow10 := 10 ^ decimalExponent
-          let integer := toString (mantissa / pow10)
-          let fraction := toString (mantissa % pow10)
-          let sign :=
-            if let const .true := exponentSign then
-              ""
-            else
-              "-"
-          [sign, integer, fraction]
-        else
-          map args
-      | .Lean_operatorname `Subtype =>
-        let args :=
-          match args with
-          -- consider special cases:
-          | [Basic (.ExprWithLimits .Lean_lambda) [Basic (.BinaryInfix ⟨`LT.lt⟩) [const (.natVal 0), Symbol binderName binderType] _, Binder .default binderName' binderType' nil] _] =>
-            -- ℝ⁺ = Subtype fun x : ℝ => 0 < x
-            if binderName == binderName' && binderType == binderType' then
-              [binderType]
-            else
-              args
-          | [Basic (.ExprWithLimits .Lean_lambda) [Basic (.BinaryInfix ⟨`LT.lt⟩) [Symbol binderName binderType, const (.natVal 0)] _, Binder .default binderName' binderType' nil] _] =>
-            -- ℝ⁻ = Subtype fun x : ℝ => x < 0
-            if binderName == binderName' && binderType == binderType' then
-              [binderType]
-            else
-              args
-          | _ =>
-            args
-        map args
-      | .Lean_typeclass `HEq =>
-        match args with
-        | [a, Basic (.ExprWithAttr _) ..] =>
-          map [a] ++ ["\\cdots"]
-        | args@([a, Basic (.UnaryPrefix op) ..]) =>
-          if op.func.priority == 76 then
-            map [a] ++ ["\\cdots"]
-          else
-            map args
-        | [Basic (.ExprWithAttr _) .., a] =>
-          "\\cdots" :: map [a]
-        | args@([Basic (.UnaryPrefix op) .., a]) =>
-          if op.func.priority == 76 then
-            "\\cdots" :: map [a]
-          else
-            map args
-        | args =>
-          map args
-      | .Lean_operatorname `id =>
-        if let some rows := e.blockMatrixRows then
-          map rows.flatten
-        else
-          map args
-      | .Lean_operatorname `Tensor.eye =>
-        []
-      | _ =>
-        map args
     | .UnaryPrefix ⟨`Not⟩ =>
       match args with
       | [arg] =>
@@ -1197,7 +1391,7 @@ where
       let ifBranch :=
         match ifBranch with
         | Binder .given name type nil =>
-          "{%s} : {%s}".format name.toString.escape_specials, type.toLatex
+          "{%s} : {%s}".format name.toString.bvarLatex.escape_specials, type.toLatex
         | _ =>
           ifBranch.toLatex
       let cases := cases.concat ("{{%s}} & {\\color{blue}\\text{if}}\\ %s ".format thenBranch.toLatex, ifBranch)

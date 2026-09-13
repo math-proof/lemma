@@ -24,12 +24,12 @@ private lemma main
   {𝕡 : Measure Ω}
   {x : Ω → α} {y : Ω → β}
 -- given
-  (hp : JointPSpace 𝕡 x y)
+  (hp : PSpace 𝕡 (x ⊗ y))
   (x' : α)
   (h : ∃ᵐ y' ∂ReferenceMeasure.measure,
-      JointPSpace.density 𝕡 x y (x', y') ≠ 0) :
+      𝕡.prob (x, y) (x', y') ≠ 0) :
 -- imply
-  ∫⁻ y', JointPSpace.density 𝕡 x y (x', y') ∂ReferenceMeasure.measure ≠ 0 := by
+  ∫⁻ y', 𝕡.prob (x, y) (x', y') ∂ReferenceMeasure.measure ≠ 0 := by
 -- proof
   exact (lintegral_eq_zero_iff
     ((Measure.measurable_rnDeriv _ _).comp (measurable_const.prodMk measurable_id))).not.mpr
@@ -37,4 +37,4 @@ private lemma main
 
 
 -- created on 2020-12-12
--- updated on 2026-09-12
+-- updated on 2026-09-13
