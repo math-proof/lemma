@@ -592,7 +592,7 @@ class Symbol(AtomicExpr, NotIterable):
         shape = self.shape
         if not shape:
             return domain
-        return CartesianSpace(domain, *shape)        
+        return CartesianSpace(domain, *shape)
 
     @property
     def definition(self):
