@@ -77,13 +77,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Integral).apply(Real.Integral.limits.separate)
 
-    Eq << Eq[-1].this.find(Derivative * ~Integral).apply(Random.Integral.Prod.eq.Pr)
+    Eq << Eq[-1].this.find(Derivative * ~Integral).apply(Random.Integral_Prod.eq.Prob)
 
     Eq << Eq[-1].this.find(Integral).apply(Random.Integral.eq.Expect)
 
     Eq << Eq[-1].this.find(Integral).apply(Real.Integral.limits.separate)
 
-    Eq << Eq[-1].this.find(Integral[Pr * Product]).apply(Random.Integral.Prod.eq.Pr)
+    Eq << Eq[-1].this.find(Integral[Pr * Product]).apply(Random.Integral_Prod.eq.Prob)
 
     Eq << Eq[-1].this.find(Derivative[Pr]).apply(Real.Grad.eq.Mul.Grad.Log)
 

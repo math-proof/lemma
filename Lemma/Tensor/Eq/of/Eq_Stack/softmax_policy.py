@@ -19,7 +19,7 @@ def prove(Eq):
     s, a = Symbol(integer=True, random=True)
     Eq << apply(Equal(Stack[a.var:m](Pr[a:θ](a | s)), softmax(φ(s.var) @ θ)))
 
-    Eq << Eq[1].this.find(Expectation).apply(Random.Expect.eq.Sum_Mul_Pr)
+    Eq << Eq[1].this.find(Expectation).apply(Random.Expect.eq.Sum_Mul_Prob)
 
     a = a.var
     Eq << Eq[0][a]

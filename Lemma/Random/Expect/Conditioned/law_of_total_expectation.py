@@ -21,13 +21,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Mul[Integral]).apply(Real.Mul.eq.Integral)
 
-    Eq << Eq[-1].this.find(Pr[Conditioned]).apply(Random.Pr.eq.DivPrS)
+    Eq << Eq[-1].this.find(Pr[Conditioned]).apply(Random.Prob.eq.DivProbS)
 
-    Eq << Eq[-1].this.find(Pr[Conditioned]).apply(Random.Pr.eq.DivPrS)
+    Eq << Eq[-1].this.find(Pr[Conditioned]).apply(Random.Prob.eq.DivProbS)
 
     Eq << Eq[-1].this.rhs.apply(Random.Expect.eq.Integral)
 
-    Eq << Eq[-1].this.find(Pr[Conditioned]).apply(Random.Pr.eq.DivPrS)
+    Eq << Eq[-1].this.find(Pr[Conditioned]).apply(Random.Prob.eq.DivProbS)
 
 
 

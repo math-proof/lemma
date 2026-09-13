@@ -18,7 +18,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Random.Expect.eq.Integral)
 
-    Eq << Random.Eq.Mul.Pr.of.Eq_Conditioned.apply(Eq[0])
+    Eq << Random.Eq.Mul.Prob.of.Eq_Conditioned.apply(Eq[0])
 
     Eq << Eq[-2].subs(Eq[-1])
 

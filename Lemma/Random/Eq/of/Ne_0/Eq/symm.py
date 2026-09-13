@@ -18,7 +18,7 @@ def prove(Eq):
 
     Eq << apply(Equal(x | y, x), Unequal(Pr(x), 0))
 
-    Eq << Random.Eq.Mul.Pr.of.Eq_Conditioned.apply(Eq[0])
+    Eq << Random.Eq.Mul.Prob.of.Eq_Conditioned.apply(Eq[0])
 
     Eq << Random.Eq.of.Ne_0.Eq.independence.apply(Eq[-1], Eq[1])
 

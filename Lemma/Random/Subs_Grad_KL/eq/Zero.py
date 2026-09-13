@@ -39,7 +39,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Real.Integral.eq.Grad)
 
-    Eq << Eq[-1].this.find(Integral).apply(Random.Integral.eq.One.Conditioned)
+    Eq << Eq[-1].this.find(Integral).apply(Random.Integral_Prob_Conditioned.eq.One)
 
     Eq << Eq[-1].this.find(Derivative).doit()
 

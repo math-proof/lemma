@@ -28,24 +28,24 @@ def prove(Eq):
     Eq << Eq.induct.this.lhs.apply(Finset.SumIco.eq.AddSumIco.of.Le)
 
     y = Symbol(real=True, nonnegative=True)
-    Eq << Random.Distributed.given.Eq.Pr.apply(Eq[-1], y)
+    Eq << Random.Distributed.given.Eq.Prob.apply(Eq[-1], y)
 
     Y = Symbol(Eq[-1].find(Sum))
     Eq.Y_def = Y.this.definition
 
     Eq << Eq[-1].subs(Eq.Y_def.reversed)
 
-    Eq.eq_grad = Eq[-1].this.lhs.apply(Random.Pr.eq.Grad)
+    Eq.eq_grad = Eq[-1].this.lhs.apply(Random.Prob.eq.Grad)
 
     Eq << Random.Eq.Conditioned.Sum.Square.of.Eq_Conditioned.apply(Eq[0], i=i, y=Y.var)
 
     Eq << Eq[-1].subs(Eq.Y_def.reversed)
 
-    Eq << Random.Eq.Mul.Pr.of.Eq_Conditioned.apply(Eq[-1])
+    Eq << Random.Eq.Mul.Prob.of.Eq_Conditioned.apply(Eq[-1])
 
     Eq << Eq[1].subs(i, k)
 
-    Eq << Random.EqPr.of.Distributed.apply(Eq[-1])
+    Eq << Random.EqProb.of.Distributed.apply(Eq[-1])
 
     Eq << Eq.eq_grad.subs(Eq[-3], Eq[-1])
 
@@ -77,7 +77,7 @@ def prove(Eq):
 
     Eq << Eq.eq_grad.subs(Eq[-1])
 
-    Eq << Random.EqPr.of.Distributed.apply(Eq[2], Y.var)
+    Eq << Random.EqProb.of.Distributed.apply(Eq[2], Y.var)
 
     Eq << Eq[-1].subs(Eq.Y_def.reversed)
 

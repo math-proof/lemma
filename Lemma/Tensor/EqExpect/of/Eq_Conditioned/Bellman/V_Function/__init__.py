@@ -55,7 +55,7 @@ def prove(Eq):
 
     Eq << Eq.eq_add.find(Mul[~Expectation]).this.apply(Random.Expect.eq.Integral)
 
-    Eq << Eq[-1].this.find(Pr).apply(Random.Pr.eq.Integral.joint, s[t + 1])
+    Eq << Eq[-1].this.find(Pr).apply(Random.Prob.eq.Integral.joint, s[t + 1])
 
     Eq << Eq[-1].this.find(Mul[Integral]).apply(Real.Mul.eq.Integral)
 
@@ -69,7 +69,7 @@ def prove(Eq):
 
 
 
-    Eq << Eq[-1].this.find(Pr).apply(Random.Pr.Conditioned.eq.Mul.Pr.Conditioned)
+    Eq << Eq[-1].this.find(Pr).apply(Random.CondProb.eq.Mul.CondProb)
 
     Eq.eq_expect = Eq[-1].this.rhs.apply(Real.Integral.limits.separate)
 

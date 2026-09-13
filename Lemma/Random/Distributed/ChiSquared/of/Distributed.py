@@ -15,12 +15,12 @@ def prove(Eq):
     n = Symbol(integer=True, positive=True)
     Eq << apply(Distributed(x, NormalDistribution(0, 1)))
 
-    Eq << Random.EqPr.of.Distributed.apply(Eq[0])
+    Eq << Random.EqProb.of.Distributed.apply(Eq[0])
 
     y = Symbol(real=True, nonnegative=True)
-    Eq << Random.Distributed.given.Eq.Pr.apply(Eq[1], y)
+    Eq << Random.Distributed.given.Eq.Prob.apply(Eq[1], y)
 
-    Eq << Eq[-1].lhs.this.apply(Random.Pr.eq.Grad)
+    Eq << Eq[-1].lhs.this.apply(Random.Prob.eq.Grad)
 
     Eq << Eq[-1].this.find(Integral).apply(Real.Integral.eq.Add.split, 0)
 

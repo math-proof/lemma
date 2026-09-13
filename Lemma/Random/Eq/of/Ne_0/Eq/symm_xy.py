@@ -21,7 +21,7 @@ def prove(Eq):
     x, y = Symbol(real=True, random=True)
     Eq << apply(Equal(x | y, x), Unequal(Pr(x, y), 0))
 
-    Eq << Random.NePr_0.NePr_0.of.NePr__0.apply(Eq[1])
+    Eq << Random.NeProb_0.NeProb_0.of.NeProb__0.apply(Eq[1])
 
 
 

@@ -19,17 +19,17 @@ def prove(Eq):
 
     Eq << Rat.Ne_0.of.Div1.gt.Zero.apply(Eq[0])
 
-    Eq << Random.Pr.eq.Mul.Pr.of.Ne_0.bayes.apply(Eq[-1], x, y)
+    Eq << Random.Prob.eq.Mul.Prob.of.Ne_0.bayes.apply(Eq[-1], x, y)
 
     Eq.lhs = Nat.Div.of.Eq.nonzero.apply(Eq[-2], Eq[-1])
 
     Eq << Random.Ne_0.of.Ne_0.joint.apply(Eq[0])
 
-    Eq << Random.Pr.eq.Mul.Pr.of.Ne_0.bayes.apply(Eq[-1], x)
+    Eq << Random.Prob.eq.Mul.Prob.of.Ne_0.bayes.apply(Eq[-1], x)
 
     Eq << Nat.Div.of.Eq.nonzero.apply(Eq[-2], Eq[-1]).reversed
 
-    Eq << Random.Pr.eq.Mul.Pr.of.Ne_0.bayes.apply(Eq[2], y)
+    Eq << Random.Prob.eq.Mul.Prob.of.Ne_0.bayes.apply(Eq[2], y)
 
     Eq << Nat.Div.of.Eq.nonzero.apply(Eq[2], Eq[-1]).reversed
 

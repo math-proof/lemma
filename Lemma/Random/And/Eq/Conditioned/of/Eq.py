@@ -22,15 +22,15 @@ def prove(Eq):
     x, y, z = Symbol(real=True, random=True)
     Eq << apply(Equal(Pr(x & y | z), Pr(x, y)))
 
-    Eq <<= Eq[-2].this.lhs.apply(Random.Pr.eq.DivPrS), Eq[-1].this.lhs.apply(Random.Pr.eq.DivPrS)
+    Eq <<= Eq[-2].this.lhs.apply(Random.Prob.eq.DivProbS), Eq[-1].this.lhs.apply(Random.Prob.eq.DivProbS)
 
-    Eq << Eq[0].this.lhs.apply(Random.Pr.eq.DivPrS)
+    Eq << Eq[0].this.lhs.apply(Random.Prob.eq.DivProbS)
 
     Eq <<= Real.EqIntegral.of.Eq.apply(Eq[-1], (y.var,)), Real.EqIntegral.of.Eq.apply(Eq[-1], (x.var,))
 
-    Eq <<= Eq[-2].this.rhs.apply(Random.Integral.ae.Pr.of.Measurable.Measurable.Probability), Eq[-1].this.rhs.apply(Random.Integral.ae.Pr.of.Measurable.Measurable.Probability)
+    Eq <<= Eq[-2].this.rhs.apply(Random.All_EqIntegral_Prob.of.PSpace_JointRandomSymbol), Eq[-1].this.rhs.apply(Random.All_EqIntegral_Prob.of.PSpace_JointRandomSymbol)
 
-    Eq <<= Eq[-2].this.find(Integral).apply(Random.Integral.ae.Pr.of.Measurable.Measurable.Probability), Eq[-1].this.find(Integral).apply(Random.Integral.ae.Pr.of.Measurable.Measurable.Probability)
+    Eq <<= Eq[-2].this.find(Integral).apply(Random.All_EqIntegral_Prob.of.PSpace_JointRandomSymbol), Eq[-1].this.find(Integral).apply(Random.All_EqIntegral_Prob.of.PSpace_JointRandomSymbol)
 
 
 

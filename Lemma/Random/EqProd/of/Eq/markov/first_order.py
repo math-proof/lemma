@@ -22,17 +22,17 @@ def prove(Eq):
     n = Symbol(integer=True, positive=True)  # total time step
     Eq << apply(Equal(s[k] | s[:k], s[k] | s[k - 1]), n)
 
-    Eq << Random.EqPr.of.Eq.apply(Eq[0], simplify=False)
+    Eq << Random.EqProb.of.Eq.apply(Eq[0], simplify=False)
 
     Eq << Finset.EqProd.of.Eq.apply(Eq[-1], (k, 1, n + 1))
 
-    Eq << Eq[-1].this.find(Pr).apply(Random.Pr.eq.DivPrS)
+    Eq << Eq[-1].this.find(Pr).apply(Random.Prob.eq.DivProbS)
 
     Eq << Eq[-1].this.find(And).apply(Tensor.Eq.Eq.Is.Eq.concat)
 
     Eq << Eq[-1].this.find(Equal[Sliced]).apply(Tensor.Eq.Is.And.Eq.split, 1)
 
-    Eq << Eq[1].this.lhs.apply(Random.Pr.eq.DivPrS)
+    Eq << Eq[1].this.lhs.apply(Random.Prob.eq.DivProbS)
 
 
 if __name__ == '__main__':

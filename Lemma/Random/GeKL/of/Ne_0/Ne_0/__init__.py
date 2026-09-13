@@ -24,9 +24,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(KL).apply(Random.KL.eq.Sum)
 
-    Eq << Random.Pr.eq.Mul.Pr.of.Ne_0.bayes.apply(Eq[0], y, spread_weight=True)
+    Eq << Random.Prob.eq.Mul.Prob.of.Ne_0.bayes.apply(Eq[0], y, spread_weight=True)
 
-    Eq << Random.Pr.eq.Mul.Pr.of.Ne_0.bayes.apply(Eq[1], y, spread_weight=True)
+    Eq << Random.Prob.eq.Mul.Prob.of.Ne_0.bayes.apply(Eq[1], y, spread_weight=True)
 
     Eq << Eq[-3].subs(Eq[-2], Eq[-1])
 
@@ -48,7 +48,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Sum[Mul[~Sum]]).apply(Random.Sum.eq.KL)
 
-    Eq << Random.KLPrSConditioned.ge.Zero.apply(*Eq[-1].find(KL).args)
+    Eq << Random.KLProbSConditioned.ge.Zero.apply(*Eq[-1].find(KL).args)
 
     Eq << Nat.Ge_0.Mul.of.Ge_0.apply(Eq[-1], Pr[θ](Equal(x, x.var)))
 

@@ -32,7 +32,7 @@ def prove(Eq):
     Eq << apply(Unequal(Pr(y), 0),
                 Unequal(Pr(x, y), 0))
 
-    Eq << Random.Pr.eq.Mul.Pr.of.Ne_0.bayes.apply(Eq[0], x)
+    Eq << Random.Prob.eq.Mul.Prob.of.Ne_0.bayes.apply(Eq[0], x)
 
     Eq << Nat.Div.of.Eq.nonzero.apply(Eq[0], Eq[-1])
 

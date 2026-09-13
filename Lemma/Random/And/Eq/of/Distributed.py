@@ -17,7 +17,7 @@ def prove(Eq):
     Σ = Symbol(shape=(n, n), real=True)
     Eq << apply(Distributed(x, NormalDistribution(μ, Σ)))
 
-    Eq << Random.EqPr.of.Distributed.apply(Eq[0])
+    Eq << Random.EqProb.of.Distributed.apply(Eq[0])
 
     Eq << Expectation(x).this.apply(Random.Expect.eq.Integral)
 

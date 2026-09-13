@@ -30,11 +30,11 @@ def prove(Eq):
 
     Eq << Real.EqGrad.of.Eq.apply(Eq[-1], [π])
 
-    Eq << Eq[-1].this.find(Expectation).apply(Random.Expect.eq.Sum_Mul_Pr)
+    Eq << Eq[-1].this.find(Expectation).apply(Random.Expect.eq.Sum_Mul_Prob)
 
     Eq << Eq[-1].this.find(Sum).apply(Real.Sum.eq.Integral)
 
-    Eq << Eq[-1].this.find(Sum[Pr]).apply(Random.Sum.eq.Pr)
+    Eq << Eq[-1].this.find(Sum[Pr]).apply(Random.Sum.eq.Prob)
 
     Eq << Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 
@@ -44,11 +44,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Integral).apply(Real.Integral.limits.separate)
 
-    Eq << Eq[-1].this.find(Integral[Pr]).apply(Random.Integral.ae.Pr.of.Measurable.Measurable.Probability)
+    Eq << Eq[-1].this.find(Integral[Pr]).apply(Random.All_EqIntegral_Prob.of.PSpace_JointRandomSymbol)
 
     Eq << Real.EqGrad.of.Eq.apply(Eq[4], [π])
 
-    Eq << Eq[-1].this.find(Expectation).apply(Random.Expect.eq.Sum_Mul_Pr)
+    Eq << Eq[-1].this.find(Expectation).apply(Random.Expect.eq.Sum_Mul_Prob)
 
     Eq << Eq[-1].this.rhs.apply(Real.Grad.eq.Sum)
 
@@ -66,13 +66,13 @@ def prove(Eq):
 
     Eq << Random.Ne_0.of.Ne_0.joint_slice.apply(Eq[-1], [-1, -1])
 
-    Eq << Random.Cond.Pr.of.Cond.weighted.apply(Eq[-1], (a, π))
+    Eq << Random.Cond.Prob.of.Cond.weighted.apply(Eq[-1], (a, π))
 
-    Eq << Random.Eq.Pr.Conditioned.eq.Mul.Pr.Conditioned.of.Ne_0.bayes.apply(Eq[-1], s[t + 1], a[t])
+    Eq << Random.Eq.CondProb.eq.Mul.CondProb.of.Ne_0.bayes.apply(Eq[-1], s[t + 1], a[t])
 
     Eq << Eq.eq_grad.subs(Eq[-1].reversed)
 
-    Eq << Eq[-1].this.find(Sum[Pr]).apply(Random.Sum.eq.Pr)
+    Eq << Eq[-1].this.find(Sum[Pr]).apply(Random.Sum.eq.Prob)
     # https://spinningup.openai.com/en/latest/spinningup/rl_intro.html# bellman-equations
     # http://incompleteideas.net/book/bookdraft2017nov5.pdf (Page 47)
     # https://lilianweng.github.io/posts/2018-04-08-policy-gradient/

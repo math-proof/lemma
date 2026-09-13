@@ -36,13 +36,13 @@ def prove(Eq):
 
     Eq << Real.All_Ge_Inf.apply(Eq[1].rhs)
 
-    Eq << Random.Pr.ge.Zero.apply(Eq[-2].find(Pr))
+    Eq << Random.Prob.ge.Zero.apply(Eq[-2].find(Pr))
 
     Eq << Nat.GeMul.of.Ge_0.Ge.apply(Eq[-1], Eq[-2])
 
     Eq << Real.GeIntegral.of.Ge.apply(Eq[-1], [x.var])
 
-    Eq << Eq[-1].this.find(Integral[Pr]).apply(Random.Integral.eq.One.Conditioned)
+    Eq << Eq[-1].this.find(Integral[Pr]).apply(Random.Integral_Prob_Conditioned.eq.One)
 
 
 

@@ -19,7 +19,7 @@ def prove(Eq):
     Eq << apply(a < 0, Distributed(x, NormalDistribution(mu, sigma ** 2)), b)
 
     y = Symbol(real=True)
-    Eq << Random.Distributed.given.Eq.Pr.apply(Eq[-1], y)
+    Eq << Random.Distributed.given.Eq.Prob.apply(Eq[-1], y)
 
     Eq << Int.Abs.eq.Neg.of.Lt_0.apply(Eq[0])
 
@@ -31,9 +31,9 @@ def prove(Eq):
 
     Eq << Complex.NeNorm_0.of.Ne_0.apply(Eq[-2])
 
-    Eq << Eq.eq_prob.lhs.this.apply(Random.Pr.eq.Grad)
+    Eq << Eq.eq_prob.lhs.this.apply(Random.Prob.eq.Grad)
 
-    Eq << Random.EqPr.of.Distributed.apply(Eq[1])
+    Eq << Random.EqProb.of.Distributed.apply(Eq[1])
 
     Eq << Eq[-2].subs(Eq[-1])
 

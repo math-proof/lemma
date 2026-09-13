@@ -1,3 +1,3 @@
 from . import Eq_Conditioned
-from . import Eq_Pr
 from . import Ne_0
+from . import Eq_Prob

@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Random.Expect.eq.Integral)
 
-    Eq << Random.Pr.ge.Zero.apply(Eq[-1].find(Pr))
+    Eq << Random.Prob.ge.Zero.apply(Eq[-1].find(Pr))
 
     Eq << Nat.GeMul.of.Ge_0.Ge.apply(Eq[-1], Eq[0])
 

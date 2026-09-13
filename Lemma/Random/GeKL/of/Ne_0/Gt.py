@@ -30,9 +30,9 @@ def prove(Eq):
     # we can only access it through a proven result that containing the expression we want
     Eq << Random.GeKL.of.Ne_0.Ne_0.pdf.apply(Eq[-4], Eq[-2], Eq[-1].lhs.arg.lhs)
 
-    Eq << Random.EqPr.of.Gt.joint.apply(Eq[2], Eq[0].lhs)
+    Eq << Random.EqProb.of.Gt.joint.apply(Eq[2], Eq[0].lhs)
 
-    Eq << Random.EqPr.of.Gt.joint.apply(Eq[2], Eq[1].lhs)
+    Eq << Random.EqProb.of.Gt.joint.apply(Eq[2], Eq[1].lhs)
 
     Eq << Eq[-3].subs(Eq[-1].reversed, Eq[-2].reversed)
 

@@ -18,7 +18,7 @@ def prove(Eq):
 
     Eq << Rat.Ne_0.of.Div1.gt.Zero.apply(Eq[0])
 
-    Eq << Random.Pr.eq.Mul.Pr.of.Ne_0.bayes.apply(Eq[-1], x)
+    Eq << Random.Prob.eq.Mul.Prob.of.Ne_0.bayes.apply(Eq[-1], x)
 
     Eq << Nat.Mul.ne.Zero.of.Ne_0.Ne_0.apply(Eq[0], Eq[2])
 

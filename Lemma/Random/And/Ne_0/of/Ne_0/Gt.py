@@ -29,7 +29,7 @@ def prove(Eq):
 
     Eq << Bool.Cond.of.Cond.All_Iff.apply(Eq[-1], Eq[0])
 
-    Eq << Random.NePr_0.NePr_0.of.NePr__0.apply(Eq[-1])
+    Eq << Random.NeProb_0.NeProb_0.of.NeProb__0.apply(Eq[-1])
 
 
 if __name__ == '__main__':

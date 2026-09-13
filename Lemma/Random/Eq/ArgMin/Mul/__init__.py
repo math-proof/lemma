@@ -1,1 +1,1 @@
-from . import Prod
+from . import Prod_CondProb

@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq <<= Eq[-1].subs(k, 1), Eq[-1].subs(k, k + 1)
 
-    Eq << Eq[1].this.lhs.find(Pr).apply(Random.Pr.eq.Integral.joint, s[1:k])
+    Eq << Eq[1].this.lhs.find(Pr).apply(Random.Prob.eq.Integral.joint, s[1:k])
 
     Eq << Eq[-1].this.lhs.find(Equal & Equal).apply(Tensor.Eq.Eq.Is.Eq.concat)
 
@@ -33,7 +33,7 @@ def prove(Eq):
     Eq << Bool.And_And.given.And.Cond.apply(Eq[-1], None)
     Eq << Eq[-1].this.lhs.apply(Real.Mul.eq.Integral)
     Eq << Eq[-1].this.find(Mul).apply(Finset.Mul.eq.Prod.limits.push)
-    Eq << Eq[-1].this.rhs.apply(Random.Pr.eq.Integral.joint, s[1:k])
+    Eq << Eq[-1].this.rhs.apply(Random.Prob.eq.Integral.joint, s[1:k])
     Eq << Eq[-1].this.find(And).args[::2].apply(Tensor.Eq.Eq.Is.Eq.concat)
     Eq << Eq[-1].this.find(And).apply(Tensor.Eq.Eq.Is.Eq.concat)
     Eq << Random.EqProd.of.Eq.markov.first_order.apply(Eq[0], k + 1)

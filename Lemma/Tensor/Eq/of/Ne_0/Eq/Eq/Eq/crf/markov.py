@@ -46,11 +46,11 @@ def prove(Eq):
     y, k = Eq.first_order_markov_assumption.rhs.lhs.of(Indexed)
     Eq << Rat.Ne_0.of.Div1.gt.Zero.apply(Eq.x_independence)
 
-    Eq << Random.NePr_0.NePr_0.of.NePr__0.apply(Eq[-1])
+    Eq << Random.NeProb_0.NeProb_0.of.NeProb__0.apply(Eq[-1])
 
     Eq << Random.Ne_0.Conditioned.of.Ne_0.apply(Eq[-3], y[:k])
 
-    Eq << Random.Pr.eq.Mul.Pr.of.Ne_0.bayes.apply(Eq[-2], x[:k + 1], y[k])
+    Eq << Random.Prob.eq.Mul.Prob.of.Ne_0.bayes.apply(Eq[-2], x[:k + 1], y[k])
 
     Eq << Eq[-1].this.lhs.arg.apply(Tensor.Stack.Is.Stack.Eq, i=2, j=0)
 
@@ -60,7 +60,7 @@ def prove(Eq):
 
     Eq << Eq[-3].subs(Eq[-1])
 
-    Eq.xy_joint_probability = Random.Pr.eq.Mul.Pr.of.Ne_0.bayes.apply(Eq[2], x[:k])
+    Eq.xy_joint_probability = Random.Prob.eq.Mul.Prob.of.Ne_0.bayes.apply(Eq[2], x[:k])
 
     Eq << Eq[-1].subs(Eq.xy_joint_probability.reversed)
 
@@ -70,7 +70,7 @@ def prove(Eq):
 
     Eq << Random.EqConditioned.of.Eq_Conditioned.getitem.apply(Eq.x_independence)
 
-    Eq << Random.EqPr.of.Eq_Conditioned.Eq_Conditioned.joint.apply(Eq[-1], Eq.xy_independence)
+    Eq << Random.EqProb.of.Eq_Conditioned.Eq_Conditioned.joint.apply(Eq[-1], Eq.xy_independence)
 
     Eq << Random.EqConditioned.of.Ne_0.Eq_Conditioned.joint.apply(Eq[-1], Eq[0])
 
@@ -82,7 +82,7 @@ def prove(Eq):
 
     Eq << Bool.All.of.All_OrNot.apply(Eq[-1])
 
-    _, Eq.y_nonzero_assumption = Random.NePr_0.NePr_0.of.NePr__0.apply(Eq.xy_nonzero_assumption)
+    _, Eq.y_nonzero_assumption = Random.NeProb_0.NeProb_0.of.NeProb__0.apply(Eq.xy_nonzero_assumption)
 
     Eq <<= Eq[-1] & Eq.y_nonzero_assumption
 

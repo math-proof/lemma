@@ -53,7 +53,7 @@ def prove(Eq):
     x, s = Symbol(integer=True, random=True)
     Eq << apply(Sum[x.var](Pr[x:θ](x | s) * f(x.var)))
 
-    Eq << Eq[-1].this.rhs.apply(Random.Expect.eq.Sum_Mul_Pr)
+    Eq << Eq[-1].this.rhs.apply(Random.Expect.eq.Sum_Mul_Prob)
 
 
 

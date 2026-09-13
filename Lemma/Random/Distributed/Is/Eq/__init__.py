@@ -1,1 +1,1 @@
-from . import Pr
+from . import Prob

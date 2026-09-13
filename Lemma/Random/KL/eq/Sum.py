@@ -61,7 +61,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(KL).apply(Random.KL.eq.Expect)
 
-    Eq << Eq[-1].this.find(Expectation).apply(Random.Expect.eq.Sum_Mul_Pr)
+    Eq << Eq[-1].this.find(Expectation).apply(Random.Expect.eq.Sum_Mul_Prob)
 
 
 

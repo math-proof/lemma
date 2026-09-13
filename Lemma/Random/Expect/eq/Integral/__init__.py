@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(self):
-    from Lemma.Random.Expect.eq.Sum_Mul_Pr import extract
+    from Lemma.Random.Expect.eq.Sum_Mul_Prob import extract
     assert not self.limits[-1][0].is_integer
     return Equal(self, extract(self))
 

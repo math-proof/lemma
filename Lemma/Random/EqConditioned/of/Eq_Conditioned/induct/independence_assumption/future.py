@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << Random.EqConditioned.of.Eq_Conditioned.induct.independence_assumption.historic.apply(Eq[0], k)
 
-    Eq << Random.EqPr.of.Eq_Conditioned.Eq_Conditioned.joint.apply(Eq[1], Eq[2])
+    Eq << Random.EqProb.of.Eq_Conditioned.Eq_Conditioned.joint.apply(Eq[1], Eq[2])
 
     Eq << Eq[-1].this.find(And).apply(Tensor.Eq.Eq.Is.Eq.concat)
 

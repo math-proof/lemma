@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Real.Integral.eq.Stack)
 
-    Eq << Eq[-1].this.expr.rhs.find(Pr).apply(Random.Pr.eq.Integral.joint, x[k + 1:n])
+    Eq << Eq[-1].this.expr.rhs.find(Pr).apply(Random.Prob.eq.Integral.joint, x[k + 1:n])
 
     Eq << Eq[-1].this.find(And).apply(Tensor.Eq.Eq.Is.Eq.concat)
 
@@ -35,7 +35,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Real.Integral.limits.concat)
 
-    Eq << Eq[-1].this.rhs.find(Pr).apply(Random.Pr.eq.Integral.joint, x[:k])
+    Eq << Eq[-1].this.rhs.find(Pr).apply(Random.Prob.eq.Integral.joint, x[:k])
 
     Eq << Eq[-1].this.find(And).apply(Tensor.Eq.Eq.Is.Eq.concat)
 

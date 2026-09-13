@@ -87,7 +87,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Expectation[~Expectation]).apply(Random.Expect.eq.Mul)
 
-    Eq << Eq[-1].this.find(Mul[~Expectation]).apply(Random.Expect_ConditionedGrad_LogPr.eq.Zero)
+    Eq << Eq[-1].this.find(Mul[~Expectation]).apply(Random.Expect_ConditionedGrad_LogProb.eq.Zero)
 
     Eq << Eq[-4].subs(Eq[-1])
 

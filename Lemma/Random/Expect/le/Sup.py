@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Real.All_Le_Sup.apply(Eq[1].rhs)
 
-    Eq << Random.Pr.ge.Zero.apply(Eq[-2].find(Pr))
+    Eq << Random.Prob.ge.Zero.apply(Eq[-2].find(Pr))
 
     Eq << Nat.LeMul.of.Ge_0.Le.apply(Eq[-1], Eq[-2])
 

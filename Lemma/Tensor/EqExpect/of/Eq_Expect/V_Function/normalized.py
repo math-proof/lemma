@@ -29,9 +29,9 @@ def prove(Eq):
 
     Eq << Rat.Ne_0.of.Div1.gt.Zero.apply(Eq[0])
 
-    Eq << Random.NePr_0.of.NePr__0.apply(Eq[-1], 0)
+    Eq << Random.NeProb_0.of.NeProb__0.apply(Eq[-1], 0)
 
-    Eq << Eq[1].this.rhs.apply(Random.Expect.eq.Sum_Mul_Pr)
+    Eq << Eq[1].this.rhs.apply(Random.Expect.eq.Sum_Mul_Prob)
 
     Eq << Eq[-1].subs(Eq[0])
 
@@ -43,11 +43,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Mul[Integral]).apply(Real.Mul.eq.Integral)
 
-    Eq << Eq[-1].this.find(Pr[2]).apply(Random.Pr.Conditioned.eq.Div.Pr.Conditioned)
+    Eq << Eq[-1].this.find(Pr[2]).apply(Random.CondProb.eq.Div.CondProb)
 
     Eq << Eq[-1].this.rhs.find(Sum).apply(Real.Sum.eq.Integral)
 
-    Eq << Eq[-1].this.find(Sum[Pr]).apply(Random.Sum.eq.Pr)
+    Eq << Eq[-1].this.find(Sum[Pr]).apply(Random.Sum.eq.Prob)
 
     Eq << Eq[-1].this.find(Expectation).apply(Random.Expect.eq.Integral)
 

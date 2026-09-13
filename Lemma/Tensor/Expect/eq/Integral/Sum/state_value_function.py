@@ -23,17 +23,17 @@ def prove(Eq):
     γ = Symbol(domain=Interval(0, 1, right_open=True)) # Discount factor: penalty to uncertainty of future rewards; myopic for γ = 0; and far-sighted for γ = 1
     Eq << apply(Expectation[r[t + 1:], s[t + 1:], a[t:]](Sum[k:oo](γ ** k * r[t + k + 1]) | s[t]))
 
-    Eq << Eq[-1].lhs.this.apply(Random.Expect.eq.Sum_Mul_Pr)
+    Eq << Eq[-1].lhs.this.apply(Random.Expect.eq.Sum_Mul_Prob)
 
     Eq << Eq[-1].this.rhs.apply(Real.Sum.eq.Integral)
 
-    Eq << Eq[-1].this.find(Sum[Pr]).apply(Random.Sum.eq.Pr)
+    Eq << Eq[-1].this.find(Sum[Pr]).apply(Random.Sum.eq.Prob)
 
     Eq << Eq[-1].this.find(Integral).apply(Real.Integral.limits.swap)
 
     Eq << Eq[-1].this.find(Integral).apply(Real.Integral.limits.separate)
 
-    Eq << Eq[-1].this.find(Mul[~Integral]).apply(Random.Integral.ae.Pr.of.Measurable.Measurable.Probability)
+    Eq << Eq[-1].this.find(Mul[~Integral]).apply(Random.All_EqIntegral_Prob.of.PSpace_JointRandomSymbol)
 
     # http://incompleteideas.net/book/bookdraft2017nov5.pdf (Bellman equation Eq. 3.14)
 

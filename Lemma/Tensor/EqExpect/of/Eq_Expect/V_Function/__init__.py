@@ -31,25 +31,25 @@ def prove(Eq):
 
     Eq << Rat.Ne_0.of.Div1.gt.Zero.apply(Eq[0])
 
-    Eq << Random.NePr_0.NePr_0.of.NePr__0.apply(Eq[-1])
+    Eq << Random.NeProb_0.NeProb_0.of.NeProb__0.apply(Eq[-1])
 
-    Eq << Eq[1].this.rhs.apply(Random.Expect.eq.Sum_Mul_Pr)
+    Eq << Eq[1].this.rhs.apply(Random.Expect.eq.Sum_Mul_Prob)
 
     Eq << Eq[-1].subs(Eq[0])
 
     Eq << Bool.And_And.given.And.Cond.apply(Eq[-1])
 
-    Eq << Eq[-1].this.rhs.find(Expectation).apply(Random.Expect.eq.Sum_Mul_Pr)
+    Eq << Eq[-1].this.rhs.find(Expectation).apply(Random.Expect.eq.Sum_Mul_Prob)
 
     Eq << Eq[-1].this.find(Sum[Integral]).apply(Real.Sum.eq.Integral)
 
-    Eq << Eq[-1].this.find(Sum[Pr]).apply(Random.Sum.eq.Pr)
+    Eq << Eq[-1].this.find(Sum[Pr]).apply(Random.Sum.eq.Prob)
 
     Eq << Eq[-1].this.find(Pow @ Integral).apply(Real.Dot.eq.Integral)
 
     Eq << Eq[-1].this.find(Mul[Integral]).apply(Real.Mul.eq.Integral)
 
-    Eq << Random.Eq.Pr.Conditioned.eq.Mul.Pr.Conditioned.of.Ne_0.bayes.apply(Eq[2], a[t], r[t:])
+    Eq << Random.Eq.CondProb.eq.Mul.CondProb.of.Ne_0.bayes.apply(Eq[2], a[t], r[t:])
 
     Eq << Eq[-2].subs(Eq[-1].reversed)
 
@@ -57,13 +57,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Real.Sum.eq.Integral)
 
-    Eq << Eq[-1].this.find(Sum[Pr]).apply(Random.Sum.eq.Pr)
+    Eq << Eq[-1].this.find(Sum[Pr]).apply(Random.Sum.eq.Prob)
 
-    Eq << Eq[-1].this.find(Expectation).apply(Random.Expect.eq.Sum_Mul_Pr)
+    Eq << Eq[-1].this.find(Expectation).apply(Random.Expect.eq.Sum_Mul_Prob)
 
     Eq << Eq[-1].this.find(Sum).apply(Real.Sum.eq.Integral)
 
-    Eq << Eq[-1].this.find(Sum[Pr]).apply(Random.Sum.eq.Pr)
+    Eq << Eq[-1].this.find(Sum[Pr]).apply(Random.Sum.eq.Prob)
 
 
     Eq << Eq[-1].this.lhs.apply(Real.Dot.eq.Integral)

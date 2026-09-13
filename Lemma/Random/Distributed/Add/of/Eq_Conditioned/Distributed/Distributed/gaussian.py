@@ -19,19 +19,19 @@ def prove(Eq):
     Eq << apply(Equal(x1 | x0, x1), Distributed(x0, NormalDistribution(mu0, sigma0 ** 2)), Distributed(x1, NormalDistribution(mu1, sigma1 ** 2)))
 
     y = Symbol(real=True)
-    Eq << Random.Distributed.given.Eq.Pr.apply(Eq[-1], y)
+    Eq << Random.Distributed.given.Eq.Prob.apply(Eq[-1], y)
 
-    Eq << Eq[-1].lhs.this.apply(Random.Pr.eq.Grad)
+    Eq << Eq[-1].lhs.this.apply(Random.Prob.eq.Grad)
 
-    Eq << Random.Eq.Mul.Pr.of.Eq_Conditioned.apply(Eq[0])
+    Eq << Random.Eq.Mul.Prob.of.Eq_Conditioned.apply(Eq[0])
 
     Eq << Eq[-2].subs(Eq[-1])
 
     Eq << Eq[-1].this.find(Integral).apply(Real.Integral.limits.separate)
 
 
-    Eq << Random.EqPr.of.Distributed.apply(Eq[1])
-    Eq << Random.EqPr.of.Distributed.apply(Eq[2])
+    Eq << Random.EqProb.of.Distributed.apply(Eq[1])
+    Eq << Random.EqProb.of.Distributed.apply(Eq[2])
 
     Eq << Eq[-3].subs(Eq[-2], Eq[-1])
 

@@ -30,9 +30,9 @@ def prove(Eq):
     b = Symbol(integer=True)
     Eq << apply(Expectation[a:θ](f(a) * g(b)))
 
-    Eq << Eq[-1].this.lhs.apply(Random.Expect.eq.Sum_Mul_Pr)
+    Eq << Eq[-1].this.lhs.apply(Random.Expect.eq.Sum_Mul_Prob)
 
-    Eq << Eq[-1].this.find(Expectation).apply(Random.Expect.eq.Sum_Mul_Pr)
+    Eq << Eq[-1].this.find(Expectation).apply(Random.Expect.eq.Sum_Mul_Prob)
 
     Eq << Eq[-1].this.lhs.apply(Finset.Sum_Mul.eq.Mul_Sum)
 

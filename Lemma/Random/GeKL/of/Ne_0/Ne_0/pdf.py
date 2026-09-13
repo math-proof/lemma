@@ -25,9 +25,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(KL).apply(Random.KL.eq.Integral)
 
-    Eq << Random.Pr.eq.Mul.Pr.of.Ne_0.bayes.apply(Eq[0], y, spread_weight=True)
+    Eq << Random.Prob.eq.Mul.Prob.of.Ne_0.bayes.apply(Eq[0], y, spread_weight=True)
 
-    Eq << Random.Pr.eq.Mul.Pr.of.Ne_0.bayes.apply(Eq[1], y, spread_weight=True)
+    Eq << Random.Prob.eq.Mul.Prob.of.Ne_0.bayes.apply(Eq[1], y, spread_weight=True)
 
     Eq << Eq[-3].subs(Eq[-2], Eq[-1])
 
@@ -41,7 +41,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.args[1].apply(Real.Integral.limits.separate)
 
-    Eq << Eq[-1].this.find(Integral[Pr[Conditioned]]).apply(Random.Integral.eq.One.Conditioned)
+    Eq << Eq[-1].this.find(Integral[Pr[Conditioned]]).apply(Random.Integral_Prob_Conditioned.eq.One)
 
     Eq << Eq[-1].this.lhs.apply(Real.Integral.limits.swap)
 
@@ -49,7 +49,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Integral[Mul[~Integral]]).apply(Random.Integral.eq.KL)
 
-    Eq << Random.KLPrSConditioned.ge.Zero.apply(*Eq[-1].find(KL).args)
+    Eq << Random.KLProbSConditioned.ge.Zero.apply(*Eq[-1].find(KL).args)
 
     Eq << Nat.Ge_0.Mul.of.Ge_0.apply(Eq[-1], Pr[θ](Equal(x, x.var)))
 
