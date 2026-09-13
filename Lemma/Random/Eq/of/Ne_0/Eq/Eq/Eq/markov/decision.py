@@ -20,10 +20,10 @@ def process_assumptions(s_independence_assumption, a_independence_assumption, r_
         ((r, k), S[given]), S[r[k]] = r_independence_assumption.of(regex)
         ((s, S[k + 1]), S[given]), S[s[k + 1]] = s_independence_assumption.of(regex)
 
-        ak, S[ak.var] = ak
+        ak, S[ak.bvar] = ak
         a, k = ak.of(Indexed)
 
-        (S[a[:k]], S[a.var[:k]]), (S[r[:k]], S[r.var[:k]]), (S[s[:k]], S[s.var[:k]]) = given
+        (S[a[:k]], S[a.bvar[:k]]), (S[r[:k]], S[r.bvar[:k]]), (S[s[:k]], S[s.bvar[:k]]) = given
         S[a], θ = aθ
         return s, a, r, (a, θ)
     else:
@@ -31,7 +31,7 @@ def process_assumptions(s_independence_assumption, a_independence_assumption, r_
         ((r, S[k]), S[given]), S[r[k]] = r_independence_assumption.of(regex)
         ((s, S[k + 1]), S[given]), S[s[k + 1]] = s_independence_assumption.of(regex)
 
-        (S[a[:k]], S[a.var[:k]]), (S[r[:k]], S[r.var[:k]]), (S[s[:k]], S[s.var[:k]]) = given
+        (S[a[:k]], S[a.bvar[:k]]), (S[r[:k]], S[r.bvar[:k]]), (S[s[:k]], S[s.bvar[:k]]) = given
 
         return s, a, r
 

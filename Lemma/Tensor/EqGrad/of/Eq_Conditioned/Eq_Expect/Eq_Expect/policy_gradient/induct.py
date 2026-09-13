@@ -6,9 +6,9 @@ def apply(eq, Q_def, V_def, n=None):
     from Lemma.Tensor.And.Eq.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.Bellman import extract_QVA
     s, a, r, [π], γ, t, Q_st_var, V_st_var = extract_QVA(eq, Q_def, V_def)
     assert n >= 0
-    return Equal(Derivative[π](V_st_var._subs(s[t].var, s[0].var)),
-                 Sum[t:n](γ ** t * Integral[s[1:t + 1].var](Product[t:t](Pr(s[t + 1] | s[t])) * Sum[a[t].var](Derivative[π](Pr[a:π](a[t] | s[t])) * Q_st_var))) + \
-                 γ ** n * Integral[s[1:n + 1].var](Product[t:n](Pr(s[t + 1] | s[t])) * Derivative[π](V_st_var._subs(s[t].var, s[n].var))))
+    return Equal(Derivative[π](V_st_var._subs(s[t].bvar, s[0].bvar)),
+                 Sum[t:n](γ ** t * Integral[s[1:t + 1].bvar](Product[t:t](Pr(s[t + 1] | s[t])) * Sum[a[t].bvar](Derivative[π](Pr[a:π](a[t] | s[t])) * Q_st_var))) + \
+                 γ ** n * Integral[s[1:n + 1].bvar](Product[t:n](Pr(s[t + 1] | s[t])) * Derivative[π](V_st_var._subs(s[t].bvar, s[n].bvar))))
 
 
 
@@ -28,8 +28,8 @@ def prove(Eq):
     n = Symbol(integer=True, nonnegative=True, given=False)
     *Eq[-3:], Eq.hypothesis = apply(
                 Equal(r[t] | s[:t] & a[:t], r[t]), # history-irrelevant conditional independence assumption for rewards based on states and actions
-                Equal((Q[π] ^ γ)(s[t].var, a[t].var), γ ** Stack[t](t) @ Expectation[r[t:], a:π](r[t:] | s[t] & a[t])),
-                Equal((V[π] ^ γ)(s[t].var), γ ** Stack[t](t) @ Expectation[r[t:], a:π](r[t:] | s[t])), n)
+                Equal((Q[π] ^ γ)(s[t].bvar, a[t].bvar), γ ** Stack[t](t) @ Expectation[r[t:], a:π](r[t:] | s[t] & a[t])),
+                Equal((V[π] ^ γ)(s[t].bvar), γ ** Stack[t](t) @ Expectation[r[t:], a:π](r[t:] | s[t])), n)
 
     Eq.recursion = Tensor.EqGrad.of.Eq_Conditioned.Eq_Expect.Eq_Expect.policy_gradient.recursion.apply(*Eq[:3])
 

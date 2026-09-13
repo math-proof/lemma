@@ -20,7 +20,7 @@ def probability_limits(condition, **kwargs):
         domain = condition.domain_conditioned(x)
         if domain.is_Interval:
             a, b = domain.args
-            return [(x.var, a, b)]
+            return [(x.bvar, a, b)]
 
 def compute_density(condition):
     limits = probability_limits(condition)

@@ -34,14 +34,14 @@ def prove(Eq):
     x, y = Symbol(real=True, random=True)
     Eq << apply(Unequal(Pr(x, y), 0))
 
-    Eq.x_marginal_probability = Random.All_EqIntegral_Prob.of.PSpace_JointRandomSymbol.apply(Integral[x.var](Pr(x, y)))
+    Eq.x_marginal_probability = Random.All_EqIntegral_Prob.of.PSpace_JointRandomSymbol.apply(Integral[x.bvar](Pr(x, y)))
 
-    Eq.y_marginal_probability = Random.All_EqIntegral_Prob.of.PSpace_JointRandomSymbol.apply(Integral[y.var](Pr(x, y)))
+    Eq.y_marginal_probability = Random.All_EqIntegral_Prob.of.PSpace_JointRandomSymbol.apply(Integral[y.bvar](Pr(x, y)))
 
     Eq << Nat.Gt_0.of.Ne_0.apply(Eq[0])
 
-    Eq <<= Real.GtIntegralS.of.All_Gt.bind.apply(Eq[-1], (y.var,)), \
-        Real.GtIntegralS.of.All_Gt.bind.apply(Eq[-1], (x.var,))
+    Eq <<= Real.GtIntegralS.of.All_Gt.bind.apply(Eq[-1], (y.bvar,)), \
+        Real.GtIntegralS.of.All_Gt.bind.apply(Eq[-1], (x.bvar,))
 
     Eq <<= Eq[-2].subs(Eq.y_marginal_probability), Eq[-1].subs(Eq.x_marginal_probability)
 

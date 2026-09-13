@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(eq, k=None, π=None):
-    ((r, t), (((a, (S[0], S[t])), S[a[:t].var]), ((s, (S[0], S[t])), S[s[:t].var]))), S[r[t]] = eq.of(Equal[Conditioned[Indexed, Equal[Sliced] & Equal[Sliced]]])
+    ((r, t), (((a, (S[0], S[t])), S[a[:t].bvar]), ((s, (S[0], S[t])), S[s[:t].bvar]))), S[r[t]] = eq.of(Equal[Conditioned[Indexed, Equal[Sliced] & Equal[Sliced]]])
 
     if k is None:
         k = Symbol(integer=True) # time counter

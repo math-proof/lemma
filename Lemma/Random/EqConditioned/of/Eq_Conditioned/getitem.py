@@ -37,9 +37,9 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq[0])
 
-    Eq <<= Random.All_EqIntegral_Prob.of.PSpace_JointRandomSymbol.apply(Integral[z.var](Eq[-1].lhs)), \
-        Random.All_EqIntegral_Prob.of.PSpace_JointRandomSymbol.apply(Integral[z.var](Eq[2].lhs)), \
-        Real.EqIntegral.of.Eq.apply(Eq[-1], (z.var,))
+    Eq <<= Random.All_EqIntegral_Prob.of.PSpace_JointRandomSymbol.apply(Integral[z.bvar](Eq[-1].lhs)), \
+        Random.All_EqIntegral_Prob.of.PSpace_JointRandomSymbol.apply(Integral[z.bvar](Eq[2].lhs)), \
+        Real.EqIntegral.of.Eq.apply(Eq[-1], (z.bvar,))
 
     Eq << Eq[-3].subs(Eq.xy_probability)
 

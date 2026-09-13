@@ -2603,7 +2603,7 @@ class Basic(Printable, metaclass=ManagedProperties):
         defun = [defun for var, defun in definition]
         from sympy.printing.str import StrPrinter
         p = StrPrinter(dict(order=None))
-        p._context['random_symbols'] = {v.var for v in random_symbols}
+        p._context['random_symbols'] = {v.bvar for v in random_symbols}
         defun.append(p._print(self))
         return '\n'.join(defun)
     

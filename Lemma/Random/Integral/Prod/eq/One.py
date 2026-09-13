@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(self):
-    ((((s, t), S[s[t + 1].var]), S[s[t].as_boolean()]), (S[t], S[0], n)), (S[s[1:n + 1].var],) = self.of(Integral[Product[Pr[Conditioned[Equal[Indexed[Symbol, Expr + 1]]]]]])
+    ((((s, t), S[s[t + 1].bvar]), S[s[t].as_boolean()]), (S[t], S[0], n)), (S[s[1:n + 1].bvar],) = self.of(Integral[Product[Pr[Conditioned[Equal[Indexed[Symbol, Expr + 1]]]]]])
     return Equal(self, 1)
 
 
@@ -15,7 +15,7 @@ def prove(Eq):
     s = Symbol(shape=(oo, b), real=True, random=True) # states / observation
     t = Symbol(integer=True) # time step counter
     n = Symbol(integer=True, nonnegative=True, given=False)
-    Eq.hypothesis = apply(Integral[s[1:n + 1].var](Product[t:n](Pr(s[t + 1] | s[t]))))
+    Eq.hypothesis = apply(Integral[s[1:n + 1].bvar](Product[t:n](Pr(s[t + 1] | s[t]))))
 
     Eq << Eq.hypothesis.subs(n, 0)
 

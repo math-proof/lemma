@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(eq, k):
-    ((r, t), ((s, (S[0], S[t])), S[s[:t].var])), S[r[t]] = eq.of(Equal[Conditioned[Indexed, Equal[Sliced]]])
+    ((r, t), ((s, (S[0], S[t])), S[s[:t].bvar])), S[r[t]] = eq.of(Equal[Conditioned[Indexed, Equal[Sliced]]])
     assert s.is_random and r.is_random
     assert k >= 0 and t >= 0
     return Equal(r[t + k] | s[:t], r[t + k])

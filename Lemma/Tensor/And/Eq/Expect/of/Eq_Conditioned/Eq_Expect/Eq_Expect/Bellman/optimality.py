@@ -11,9 +11,9 @@ def apply(eq, Q_def, V_def, Q_star_def, V_star_def):
 
     limits_V = [(r[t],), (s[t + 1],)]
 
-    V_star_st = V_star_st_var._subs(s[t].var, s[t + 1])
+    V_star_st = V_star_st_var._subs(s[t].bvar, s[t + 1])
 
-    return Equal(V_star_st_var, Maxima[a[t].var](Q_star_st_var)),\
+    return Equal(V_star_st_var, Maxima[a[t].bvar](Q_star_st_var)),\
         Equal(V_star_st_var, Expectation((r[t] + γ * V_star_st) | s[t], *limits_V)), \
         Equal(Q_star_st_var, Expectation((r[t] + γ * V_star_st) | s[t] & a[t], *limits_V))
 
@@ -32,10 +32,10 @@ def prove(Eq):
     γ = Symbol(domain=Interval(0, 1, right_open=True)) # Discount factor: penalty to uncertainty of future rewards; myopic for γ = 0; and far-sighted for γ = 1
     Eq << apply(
                 Equal(r[t] | s[:t] & a[:t], r[t]), # history-irrelevant conditional independence assumption for rewards based on states and actions
-                Equal((Q[π] ^ γ)(s[t].var, a[t].var), γ ** Stack[t](t) @ Expectation[r[t:], a:π](r[t:] | s[t] & a[t])),
-                Equal((V[π] ^ γ)(s[t].var), γ ** Stack[t](t) @ Expectation[r[t:], a:π](r[t:] | s[t])),
-                Equal((Q_star ^ γ)(s[t].var, a[t].var), Maxima[π]((Q[π] ^ γ)(s[t].var, a[t].var))),
-                Equal((V_star ^ γ)(s[t].var), Maxima[π]((V[π] ^ γ)(s[t].var))))
+                Equal((Q[π] ^ γ)(s[t].bvar, a[t].bvar), γ ** Stack[t](t) @ Expectation[r[t:], a:π](r[t:] | s[t] & a[t])),
+                Equal((V[π] ^ γ)(s[t].bvar), γ ** Stack[t](t) @ Expectation[r[t:], a:π](r[t:] | s[t])),
+                Equal((Q_star ^ γ)(s[t].bvar, a[t].bvar), Maxima[π]((Q[π] ^ γ)(s[t].bvar, a[t].bvar))),
+                Equal((V_star ^ γ)(s[t].bvar), Maxima[π]((V[π] ^ γ)(s[t].bvar))))
 
     Eq << Tensor.And.Eq.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.Bellman.apply(*Eq[:3])
 

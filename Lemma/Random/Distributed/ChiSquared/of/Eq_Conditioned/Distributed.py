@@ -37,7 +37,7 @@ def prove(Eq):
 
     Eq.eq_grad = Eq[-1].this.lhs.apply(Random.Prob.eq.Grad)
 
-    Eq << Random.Eq.Conditioned.Sum.Square.of.Eq_Conditioned.apply(Eq[0], i=i, y=Y.var)
+    Eq << Random.Eq.Conditioned.Sum.Square.of.Eq_Conditioned.apply(Eq[0], i=i, y=Y.bvar)
 
     Eq << Eq[-1].subs(Eq.Y_def.reversed)
 
@@ -67,7 +67,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Integral).apply(Real.Integral.eq.Add.split, 0)
 
-    Eq << Eq[-1].this.find(Integral[2]).apply(Real.Integral.limits.subst, x.var[k], -x.var[k])
+    Eq << Eq[-1].this.find(Integral[2]).apply(Real.Integral.limits.subst, x.bvar[k], -x.bvar[k])
 
     Eq << Eq[-1].this.find(-~Integral).apply(Real.Integral.eq.Neg)
 
@@ -77,7 +77,7 @@ def prove(Eq):
 
     Eq << Eq.eq_grad.subs(Eq[-1])
 
-    Eq << Random.EqProb.of.Distributed.apply(Eq[2], Y.var)
+    Eq << Random.EqProb.of.Distributed.apply(Eq[2], Y.bvar)
 
     Eq << Eq[-1].subs(Eq.Y_def.reversed)
 

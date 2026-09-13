@@ -3,10 +3,10 @@ from util import *
 
 @apply
 def apply(eq, lt):
-    ((r, t), (((a, (S[0], S[t])), S[a[:t].var]), ((s, (S[0], S[t])), S[s[:t].var]))), S[r[t]] = eq.of(Equal[Conditioned[Indexed, Equal[Sliced] & Equal[Sliced]]])
+    ((r, t), (((a, (S[0], S[t])), S[a[:t].bvar]), ((s, (S[0], S[t])), S[s[:t].bvar]))), S[r[t]] = eq.of(Equal[Conditioned[Indexed, Equal[Sliced] & Equal[Sliced]]])
     assert a.is_random and s.is_random and r.is_random
 
-    ((γ, (S[t], [S[t]])), (((S[r[t:]], S[s[t].as_boolean()]), (S[r[t:]],), (S[a], π)), [S[π], S[1]])), [S[s[t].var]], [S[t]] = lt.of(Sup[Abs[Pow[Stack] @ Derivative[Expectation[Conditioned]]]] < Infinity)
+    ((γ, (S[t], [S[t]])), (((S[r[t:]], S[s[t].as_boolean()]), (S[r[t:]],), (S[a], π)), [S[π], S[1]])), [S[s[t].bvar]], [S[t]] = lt.of(Sup[Abs[Pow[Stack] @ Derivative[Expectation[Conditioned]]]] < Infinity)
     return Equal(γ ** Stack[t](t) @ Derivative[π](Expectation[r, a:π](r)),
                  γ ** Stack[t](t) @ Stack[t](Expectation[r, a:π, s](Derivative[π](log(Pr[a:π](a[t].random_argument | s[t].random_argument))) * (γ ** Stack[t](t) @ r[t:]))))
 
@@ -25,7 +25,7 @@ def prove(Eq):
     γ = Symbol(domain=Interval(0, 1, right_open=True)) # Discount factor: penalty to uncertainty of future rewards; myopic for γ = 0; and far-sighted for γ = 1
     *Eq[-2:], Eq.hypothesis = apply(
                 Equal(r[t] | s[:t] & a[:t], r[t]), # history-irrelevant conditional independence assumption for rewards based on states and actions
-                Less(Sup[s[t].var, t](Abs(γ ** Stack[t](t) @ Derivative[π](Expectation[r[t:], a:π](r[t:] | s[t])))), oo))
+                Less(Sup[s[t].bvar, t](Abs(γ ** Stack[t](t) @ Derivative[π](Expectation[r[t:], a:π](r[t:] | s[t])))), oo))
 
     @Function(real=True, shape=())# Action-Value Function
     def Q(st, at, *limits):
@@ -34,7 +34,7 @@ def prove(Eq):
         a_var, S[t] = at.of(Indexed)
         assert s[t] != st and a[t] != at
         return γ ** Stack[t](t) @ Expectation[r[t:], a:π](r[t:] | Equal(s[t], st) & Equal(a[t], at))
-    Eq.Q_Function = (Q[π] ^ γ)(s[t].var, a[t].var).this.defun()
+    Eq.Q_Function = (Q[π] ^ γ)(s[t].bvar, a[t].bvar).this.defun()
 
     @Function(real=True, shape=())# State-Value Function
     def V(st, *limits):
@@ -42,7 +42,7 @@ def prove(Eq):
         s_var, t = st.of(Indexed)
         assert s[t] != st
         return γ ** Stack[t](t) @ Expectation[r[t:], a:π](r[t:] | Equal(s[t], st))
-    Eq.V_Function = (V[π] ^ γ)(s[t].var).this.defun()
+    Eq.V_Function = (V[π] ^ γ)(s[t].bvar).this.defun()
 
     Eq << Eq[1].this.find(MatMul).apply(Real.Dot.Grad.eq.Grad.Dot)
 
@@ -58,7 +58,7 @@ def prove(Eq):
 
     Eq << Tensor.Eq.Expect.Grad.Log.Pr.of.Eq_Conditioned.Q_Function.discounted.apply(Eq[0], γ, t, π)
 
-    Eq << Eq.Q_Function.subs(s[t].var, s[t]).subs(a[t].var, a[t])
+    Eq << Eq.Q_Function.subs(s[t].bvar, s[t]).subs(a[t].bvar, a[t])
 
     Eq << Eq[-2].subs(Eq[-1].reversed)
 

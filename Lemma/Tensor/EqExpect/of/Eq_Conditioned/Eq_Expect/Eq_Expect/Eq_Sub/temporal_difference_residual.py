@@ -7,7 +7,7 @@ def apply(eq, Q_def, V_def, A_def):
     s, a, r, *weights, γ, t, Q_st_var, V_st_var, A_st_var = extract_QVA(eq, Q_def, V_def, A_def)
 
     [π], = weights
-    return Equal(Expectation[r[t], s[t + 1], a:π](r[t] + γ * V_st_var._subs(s[t].var, s[t + 1]) - V_st_var, given=s[t] & a[t]), A_st_var)
+    return Equal(Expectation[r[t], s[t + 1], a:π](r[t] + γ * V_st_var._subs(s[t].bvar, s[t + 1]) - V_st_var, given=s[t] & a[t]), A_st_var)
 
 
 @prove
@@ -23,9 +23,9 @@ def prove(Eq):
     V, Q, A = Function(real=True, shape=()) # State-Value, Action-Value, Action-Value Function
     γ = Symbol(domain=Interval(0, 1, right_open=True)) # Discount factor: penalty to uncertainty of future rewards; myopic for γ = 0; and far-sighted for γ = 1
     Eq << apply(Equal(r[t] | s[:t] & a[:t], r[t]), # history-irrelevant conditional independence assumption for rewards based on states and actions
-                Equal((Q[π] ^ γ)(s[t].var, a[t].var), γ ** Stack[t](t) @ Expectation[r[t:], a:π](r[t:] | s[t] & a[t])),
-                Equal((V[π] ^ γ)(s[t].var), γ ** Stack[t](t) @ Expectation[r[t:], a:π](r[t:] | s[t])),
-                Equal((A[π] ^ γ)(s[t].var, a[t].var), (Q[π] ^ γ)(s[t].var, a[t].var) - (V[π] ^ γ)(s[t].var)))
+                Equal((Q[π] ^ γ)(s[t].bvar, a[t].bvar), γ ** Stack[t](t) @ Expectation[r[t:], a:π](r[t:] | s[t] & a[t])),
+                Equal((V[π] ^ γ)(s[t].bvar), γ ** Stack[t](t) @ Expectation[r[t:], a:π](r[t:] | s[t])),
+                Equal((A[π] ^ γ)(s[t].bvar, a[t].bvar), (Q[π] ^ γ)(s[t].bvar, a[t].bvar) - (V[π] ^ γ)(s[t].bvar)))
 
     Eq << Eq[-1].this.lhs.apply(Random.Expect.eq.Add)
 

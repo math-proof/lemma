@@ -5,7 +5,7 @@ from util import *
 def apply(eq, Q_def, V_def, MDV_def, ge):
     from Lemma.Tensor.And.Eq.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.Bellman import extract_QVA
     s, a, r, [π], γ, t, Q_st_var, V_st_var = extract_QVA(eq, Q_def, V_def)
-    (((S[Q_st_var._subs(a[t].var, a[t])], S[s[t].as_boolean()]), (a, π_quote)), ((S[Pr[a:π_quote](a[t] | s[t])], S[Pr[a:π](a[t] | s[t])]), S[Pr[π, π_quote](s[t])], S[Pr[s:π](s[t])])), MDV_st_var = MDV_def.of(Equal[Expectation[Conditioned] - KL * Expr / Expr])
+    (((S[Q_st_var._subs(a[t].bvar, a[t])], S[s[t].as_boolean()]), (a, π_quote)), ((S[Pr[a:π_quote](a[t] | s[t])], S[Pr[a:π](a[t] | s[t])]), S[Pr[π, π_quote](s[t])], S[Pr[s:π](s[t])])), MDV_st_var = MDV_def.of(Equal[Expectation[Conditioned] - KL * Expr / Expr])
     S[MDV_st_var], S[MDV_st_var._subs(π_quote, π)] = ge.of(Expr >= Expr)
 
     return V_st_var._subs(π, π_quote) >= V_st_var, \
@@ -26,10 +26,10 @@ def prove(Eq):
     γ = Symbol(domain=Interval(0, 1, right_open=True)) # Discount factor: penalty to uncertainty of future rewards; myopic for γ = 0; and far-sighted for γ = 1
     MDV = Function(r'\mathcal{M}_\mathfrak{D}V', real=True, shape=())
     *Eq[-5:], (Eq.ge_VF, Eq.ge_reward) = apply(Equal(r[t] | s[:t] & a[:t], r[t]), # history-irrelevant conditional independence assumption for rewards based on states and actions
-                Equal((Q[π] ^ γ)(s[t].var, a[t].var), γ ** Stack[t](t) @ Expectation[r[t:], a:π](r[t:] | s[t] & a[t])),
-                Equal((V[π] ^ γ)(s[t].var), γ ** Stack[t](t) @ Expectation[r[t:], a:π](r[t:] | s[t])),
-                Equal((MDV[π, π_quote] ^ γ)(s[t].var), Expectation[a:π_quote]((Q[π] ^ γ)(s[t].var, a[t]) | s[t]) - Pr[π, π_quote](s[t]) / Pr[s:π](s[t]) * KL(Pr[a:π_quote](a[t] | s[t]), Pr[a:π](a[t] | s[t]))),
-                GreaterEqual((MDV[π, π_quote] ^ γ)(s[t].var), (MDV[π, π] ^ γ)(s[t].var)))
+                Equal((Q[π] ^ γ)(s[t].bvar, a[t].bvar), γ ** Stack[t](t) @ Expectation[r[t:], a:π](r[t:] | s[t] & a[t])),
+                Equal((V[π] ^ γ)(s[t].bvar), γ ** Stack[t](t) @ Expectation[r[t:], a:π](r[t:] | s[t])),
+                Equal((MDV[π, π_quote] ^ γ)(s[t].bvar), Expectation[a:π_quote]((Q[π] ^ γ)(s[t].bvar, a[t]) | s[t]) - Pr[π, π_quote](s[t]) / Pr[s:π](s[t]) * KL(Pr[a:π_quote](a[t] | s[t]), Pr[a:π](a[t] | s[t]))),
+                GreaterEqual((MDV[π, π_quote] ^ γ)(s[t].bvar), (MDV[π, π] ^ γ)(s[t].bvar)))
 
     Eq << Nat.Ge.given.Ge_0.apply(Eq.ge_VF)
 
@@ -51,7 +51,7 @@ def prove(Eq):
 
     Eq << Nat.Ge.of.Ge.transport.apply(Eq[-1], lhs=0)
 
-    Eq << Eq.QV.subs(a[t].var, a[t])
+    Eq << Eq.QV.subs(a[t].bvar, a[t])
 
     Eq << Eq[-2].subs(Eq[-1])
 
@@ -83,9 +83,9 @@ def prove(Eq):
 
     Eq << Nat.GeAddS.of.Ge.Ge.apply(Eq[-1], Eq.ge)
 
-    Eq << Eq[-1].this.find(Inf).limits_subs(s[t + 1].var, s[t].var)
+    Eq << Eq[-1].this.find(Inf).limits_subs(s[t + 1].bvar, s[t].bvar)
 
-    Eq << Real.GeInf.of.Ge.apply(Eq[-1], (s[t].var,))
+    Eq << Real.GeInf.of.Ge.apply(Eq[-1], (s[t].bvar,))
 
     Eq << Eq[-1].this.lhs.apply(Nat.AddMulS.eq.Mul_Add)
 
@@ -99,7 +99,7 @@ def prove(Eq):
 
     Eq << Nat.GeMulS.of.Ge.Gt_0.apply(Eq[-1], Eq[-2])
 
-    Eq << Bool.All.of.Cond.apply(Eq[-1], s[t].var, simplify=None)
+    Eq << Bool.All.of.Cond.apply(Eq[-1], s[t].bvar, simplify=None)
 
     Eq << Real.GeInf.of.All_Ge.apply(Eq[-1])
 
@@ -109,7 +109,7 @@ def prove(Eq):
 
     Eq << Real.All.Ge.of.GeInf.apply(Eq[-1])
 
-    Eq <<= Eq[2].subs(s[t].var, s[t]).subs(t, 0), Eq.V_quote.subs(s[t].var, s[t]).subs(t, 0)
+    Eq <<= Eq[2].subs(s[t].bvar, s[t]).subs(t, 0), Eq.V_quote.subs(s[t].bvar, s[t]).subs(t, 0)
 
     Eq <<= Random.EqExpect.of.Eq.apply(Eq[-2]), Random.EqExpect.of.Eq.apply(Eq[-1])
 

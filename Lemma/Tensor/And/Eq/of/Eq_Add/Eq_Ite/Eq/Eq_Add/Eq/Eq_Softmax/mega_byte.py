@@ -22,11 +22,11 @@ def apply(eq_h_embed, eq_h_global_in, eq_h_global_out, eq_h_local_in, eq_h_local
     (h_local_in, S[k], p), (((S[h_global_out[k]], (S[p * D_G], S[p * D_G + D_G])), w_GL), ((E_local_pad, S[Equal(p, 0)]), (E_local_embed, S[True]))) = eq_h_local_in.of(Equal[Indexed, Sliced @ Symbol + Piecewise])
     E_local_embed, S[x_var[k * P + p - 1]] = E_local_embed.of(Indexed)
     (h_local_out, S[k]), (S[h_local_in], S[k]) = eq_h_local_out.of(Equal[Indexed, Function[Indexed]])
-    ((((x, S[P * k + p]), S[x[P * k + p].var]), S[x[:P * k + p].as_boolean()]), [S[x[P * k + p].var]]), (S[E_local_embed], S[h_local_out[k, p]]) = eq_prob.of(Equal[Stack[Pr[Conditioned[Equal[Indexed]]]], Softmax[MatMul]])
-    assert x.var == x_var
+    ((((x, S[P * k + p]), S[x[P * k + p].bvar]), S[x[:P * k + p].as_boolean()]), [S[x[P * k + p].bvar]]), (S[E_local_embed], S[h_local_out[k, p]]) = eq_prob.of(Equal[Stack[Pr[Conditioned[Equal[Indexed]]]], Softmax[MatMul]])
+    assert x.bvar == x_var
     return Equal(h_global_in, BlockMatrix(E_global_pad, Stack[i: P * D_G, k:K - 1](h_embed[P * k: P * k + P][i // P, i % P]))),\
         Equal(h_local_in[k], Stack[p:P](h_global_out[k, p * D_G: p * D_G + D_G]) @ w_GL + BlockMatrix(E_local_pad, Stack[p:P - 1](E_local_embed[x_var[k * P + p]]))),\
-        Equal(Pr(x[t] | x[:t]), softmax(E_local_embed @ h_local_out[t // P, t % P])[x.var[t]])
+        Equal(Pr(x[t] | x[:t]), softmax(E_local_embed @ h_local_out[t // P, t % P])[x.bvar[t]])
 
 
 @prove
@@ -70,12 +70,12 @@ def prove(Eq):
     transformer_global = Function('transformer^{global}', real=True)
     transformer_local = Function('transformer^{local}', real=True)
     *Eq[-6:], (Eq.h_global_in, Eq.h_local_in, Eq.prob) = apply(
-        Equal(h_embed[t], E_global_embed[x.var[t]] + E_pos[t]),
+        Equal(h_embed[t], E_global_embed[x.bvar[t]] + E_pos[t]),
         Equal(h_global_in[k], Piecewise((E_global_pad, Equal(k, 0)), (Stack[i:P * D_G](h_embed[k * P - P: k * P][i // P, i % P]), True))),
         Equal(h_global_out, transformer_global(h_global_in)),
-        Equal(h_local_in[k, p], h_global_out[k, p * D_G: p * D_G + D_G] @ w_GL + Piecewise((E_local_pad, Equal(p, 0)), (E_local_embed[x.var[k * P + p - 1]], True))),
+        Equal(h_local_in[k, p], h_global_out[k, p * D_G: p * D_G + D_G] @ w_GL + Piecewise((E_local_pad, Equal(p, 0)), (E_local_embed[x.bvar[k * P + p - 1]], True))),
         Equal(h_local_out[k], transformer_local(h_local_in[k])),
-        Equal(Stack[x.var[k * P + p]](Pr(x[k * P + p] | x[:k * P + p])), softmax(E_local_embed @ h_local_out[k, p])),
+        Equal(Stack[x.bvar[k * P + p]](Pr(x[k * P + p] | x[:k * P + p])), softmax(E_local_embed @ h_local_out[k, p])),
         )
 
     l = Symbol(domain=Range(K))
@@ -96,7 +96,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Piecewise).apply(Int.Ite.eq.AddMulS)
 
-    Eq << Eq[5][x.var[P * k + p]]
+    Eq << Eq[5][x.bvar[P * k + p]]
 
     Eq << Nat.Expr.eq.Add.Mod.apply(t, P)
 

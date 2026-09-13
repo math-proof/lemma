@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(self):
-    (((s, k), S[s[k].var]), S[s[:k].as_boolean()]), (S[k], S[0], n) = self.of(Product[Pr[Conditioned[Equal[Indexed]]]])
+    (((s, k), S[s[k].bvar]), S[s[:k].as_boolean()]), (S[k], S[0], n) = self.of(Product[Pr[Conditioned[Equal[Indexed]]]])
     return Equal(self, Pr(s[:n]), evaluate=False)
 
 

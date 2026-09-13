@@ -23,7 +23,7 @@ def apply(ne, *vars):
 
     rest = And(*rest)
     given = And(*given)
-    joint = And(*(Equal(x, x.var) for x in vars))
+    joint = And(*(Equal(x, x.bvar) for x in vars))
     return Equal(Pr(joint & rest, *weights, given=given), Pr(rest, *weights, given=given) * Pr(joint, *weights, given=rest & given))
 
 

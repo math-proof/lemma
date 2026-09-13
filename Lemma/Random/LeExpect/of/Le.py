@@ -6,8 +6,8 @@ def apply(le, *limits):
     fx, gx = le.of(LessEqual)
     for v, *ab in limits:
         if v.is_random:
-            fx = fx._subs(v.var, v)
-            gx = gx._subs(v.var, v)
+            fx = fx._subs(v.bvar, v)
+            gx = gx._subs(v.bvar, v)
 
     return Expectation(fx, *limits) <= Expectation(gx, *limits)
 
@@ -17,7 +17,7 @@ def prove(Eq):
 
     x = Symbol(real=True, random=True)
     f, g = Function(real=True)
-    Eq << apply(f(x.var) <= g(x.var), (x,))
+    Eq << apply(f(x.bvar) <= g(x.bvar), (x,))
 
     Eq << Eq[0].reversed
 

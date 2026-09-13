@@ -12,7 +12,7 @@ def prove(Eq):
     from Lemma import Random
 
     x, y = Symbol(real=True, random=True)
-    Eq << apply(Integral[x.var](Pr(x | y)))
+    Eq << apply(Integral[x.bvar](Pr(x | y)))
 
     Eq << Eq[-1].this.lhs.expr.apply(Random.Prob.eq.DivProbS)
 

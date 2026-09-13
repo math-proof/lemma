@@ -15,7 +15,7 @@ def prove(Eq):
     θ = Symbol(real=True, shape=(n, n))
     f = Function(real=True)
     x, s = Symbol(real=True, random=True)
-    Eq << apply(Integral[x.var](Pr[x:θ](x | s) * f(x.var)))
+    Eq << apply(Integral[x.bvar](Pr[x:θ](x | s) * f(x.bvar)))
 
     Eq << Eq[-1].this.rhs.apply(Random.Expect.eq.Integral)
 

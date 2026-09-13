@@ -1087,7 +1087,7 @@ class Equal(Relational):
         rhs = self.rhs
 
         if lhs.is_random and lhs.is_symbol:
-            if rhs == lhs.var:
+            if rhs == lhs.bvar:
                 return lhs._latex(p)
             if rhs.is_RandomArgument and rhs.arg == lhs:
                 return rhs._latex(p)
@@ -1113,7 +1113,7 @@ class Equal(Relational):
         rhs = self.rhs
 
         if lhs.is_random and lhs.is_symbol:
-            if rhs == lhs.var:
+            if rhs == lhs.bvar:
                 return lhs._sympystr(p)
             if rhs.is_RandomArgument and rhs.arg == lhs:
                 return rhs._sympystr(p)
@@ -1125,7 +1125,7 @@ class Equal(Relational):
         rhs = self.rhs
 
         if lhs.is_random and lhs.is_symbol:
-            if rhs == lhs.var:
+            if rhs == lhs.bvar:
                 return lhs._sympystr(p)
             if rhs.is_RandomArgument and rhs.arg == lhs:
                 return rhs._sympystr(p)
@@ -1202,7 +1202,7 @@ class Equal(Relational):
         lhs, rhs = self.args
         if lhs.is_random and lhs.is_symbol:
             if new == lhs and rhs == old:
-                if old == lhs.var or not rhs.is_random:
+                if old == lhs.bvar or not rhs.is_random:
                     new = new.random_argument
                     return self.func(lhs, new, evaluate=False)
             elif old == lhs:
@@ -1232,7 +1232,7 @@ class Equal(Relational):
             ...
         
         if rhs.is_RandomArgument:
-            if rhs.arg.var == _rhs:
+            if rhs.arg.bvar == _rhs:
                 return new._subs(_rhs, rhs)
 
     @classmethod

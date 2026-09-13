@@ -4,7 +4,7 @@ from util import *
 @apply
 def apply(given, x):
     cond = given.of(Equal[Pr, 0])
-    cond &= Equal(x, x.var)
+    cond &= Equal(x, x.bvar)
     return Equal(Pr(cond), 0)
 
 

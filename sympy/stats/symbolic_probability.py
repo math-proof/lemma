@@ -146,7 +146,7 @@ class Conditioned(Expr):
                 elif given.is_Equal:
                     lhs, rhs = given.args
                     if rhs.is_RandomArgument:
-                        _given = Equal(lhs, rhs.arg.var, evaluate=False)
+                        _given = Equal(lhs, rhs.arg.bvar, evaluate=False)
                         if _given in prob._argset:
                             prob = prob.func(*prob._argset - {_given})
                         
@@ -213,7 +213,7 @@ class Conditioned(Expr):
             elif rhs.is_Equal:
                 x, x_var = rhs.args
                 if x_var.is_RandomArgument:
-                    rhs = Equal(x, x_var.arg.var, evaluate=False)
+                    rhs = Equal(x, x_var.arg.bvar, evaluate=False)
                     if rhs in _argset:
                         lhs = And(*{*_argset} - {rhs})
                         return self.func(lhs, rhs, evaluate=False)
@@ -313,8 +313,8 @@ class RandomArgument(AtomicExpr):
         return obj
     
     @property
-    def var(self):
-        return self.arg.var
+    def bvar(self):
+        return self.arg.bvar
     
     @property
     def dtype(self):
@@ -1261,7 +1261,7 @@ class Expectation(ExprWithLimits):
                         return True
         else:
             for random_argument in self.finditer(RandomArgument):
-                if random_argument.arg.var._has(pattern):
+                if random_argument.arg.bvar._has(pattern):
                     return True
         
     def _has_indexed(self, pattern):

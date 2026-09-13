@@ -6,7 +6,7 @@ def apply(self, var=None):
     expr, dist = self.of(Distributed)
     if var is None:
         if expr.is_symbol:
-            var = expr.var
+            var = expr.bvar
         else:
             var = dist.generate_var(shape=expr.shape, **expr.dtype.dict)
 

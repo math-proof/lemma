@@ -12,7 +12,7 @@ def rewrite(Sum, self, *sym):
     limits = []
     for s in sym:
         conds &= s
-        limits.append((s.var,))
+        limits.append((s.bvar,))
 
     expr = Pr(conds, given=given)
 

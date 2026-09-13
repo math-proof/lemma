@@ -57,7 +57,7 @@ def prove(Eq):
     D = Symbol(integer=True, positive=True)
     θ, θ_quote = Symbol(real=True, shape=(D,))
     x = Symbol(random=True, integer=True)
-    Eq << apply(KL(Pr[θ](Equal(x, x.var)), Pr[θ_quote](Equal(x, x.var))))
+    Eq << apply(KL(Pr[θ](Equal(x, x.bvar)), Pr[θ_quote](Equal(x, x.bvar))))
 
     Eq << Eq[-1].this.find(KL).apply(Random.KL.eq.Expect)
 

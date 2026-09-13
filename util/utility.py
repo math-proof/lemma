@@ -1182,7 +1182,7 @@ def imply(apply, **kwargs):
 #                                     print(rhs)
                                     from sympy.stats.symbolic_probability import RandomArgument
                                     for random_argument in rhs.finditer(RandomArgument):
-                                        rhs = rhs._subs(random_argument, random_argument.arg.var)
+                                        rhs = rhs._subs(random_argument, random_argument.arg.bvar)
                                         
                                     assert not rhs.is_random
                                     statement = statement.func(lhs, rhs, evaluate=False)
@@ -1580,7 +1580,7 @@ def load_data(obj):
         if v.is_Equal:
             lhs, rhs = v.args
             if lhs.is_symbol and rhs.is_symbol:
-                if lhs.is_random and lhs.var == rhs:
+                if lhs.is_random and lhs.bvar == rhs:
                     continue
 
         data.append(dict(id=0, python=v.python, latex=v.latex, training=1))

@@ -5,10 +5,10 @@ from util import *
 def apply(eq, Q_def, V_def, A_def, A_def_bar):
     from Lemma.Tensor.And.Eq.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.Bellman import extract_QVA
     s, a, r, [π], γ, t, Q_st_var, V_st_var, A_st_var = extract_QVA(eq, Q_def, V_def, A_def)
-    ((S[A_st_var._subs(a[t].var, a[t])], S[s[t].as_boolean()]), (S[a], π_quote)), A_st_var_bar = A_def_bar.of(Equal[Expectation[Conditioned]])
+    ((S[A_st_var._subs(a[t].bvar, a[t])], S[s[t].as_boolean()]), (S[a], π_quote)), A_st_var_bar = A_def_bar.of(Equal[Expectation[Conditioned]])
     assert π_quote.shape == π.shape
     return Equal(γ ** Stack[t](t) @ (Expectation[r, a:π_quote](r) - Expectation[r, a:π](r)),
-                 γ ** Stack[t](t) @ Expectation(A_st_var_bar._subs(s[t].var, s)))
+                 γ ** Stack[t](t) @ Expectation(A_st_var_bar._subs(s[t].bvar, s)))
 
 
 @prove
@@ -27,12 +27,12 @@ def prove(Eq):
     γ = Symbol(domain=Interval(0, 1, right_open=True), given=True) # Discount factor: penalty to uncertainty of future rewards; myopic for γ = 0; and far-sighted for γ = 1
     *Eq[-5:], Eq.hypothesis = apply(
                 Equal(r[t] | s[:t] & a[:t], r[t]), # history-irrelevant conditional independence assumption for rewards based on states and actions
-                Equal((Q[π] ^ γ)(s[t].var, a[t].var), γ ** Stack[t](t) @ Expectation[r[t:], a:π](r[t:] | s[t] & a[t])),
-                Equal((V[π] ^ γ)(s[t].var), γ ** Stack[t](t) @ Expectation[r[t:], a:π](r[t:] | s[t])),
-                Equal((A[π] ^ γ)(s[t].var, a[t].var), (Q[π] ^ γ)(s[t].var, a[t].var) - (V[π] ^ γ)(s[t].var)),
-                Equal((A[π] ^ γ)(s[t].var), Expectation[a:π_quote]((A[π] ^ γ)(s[t].var, a[t]) | s[t])))
+                Equal((Q[π] ^ γ)(s[t].bvar, a[t].bvar), γ ** Stack[t](t) @ Expectation[r[t:], a:π](r[t:] | s[t] & a[t])),
+                Equal((V[π] ^ γ)(s[t].bvar), γ ** Stack[t](t) @ Expectation[r[t:], a:π](r[t:] | s[t])),
+                Equal((A[π] ^ γ)(s[t].bvar, a[t].bvar), (Q[π] ^ γ)(s[t].bvar, a[t].bvar) - (V[π] ^ γ)(s[t].bvar)),
+                Equal((A[π] ^ γ)(s[t].bvar), Expectation[a:π_quote]((A[π] ^ γ)(s[t].bvar, a[t]) | s[t])))
 
-    Eq << Eq[-1].subs(s[t].var, s[t])
+    Eq << Eq[-1].subs(s[t].bvar, s[t])
 
     Eq << Eq.hypothesis.this.rhs.find(Expectation).apply(Tensor.Expr.eq.Stack, t)
 

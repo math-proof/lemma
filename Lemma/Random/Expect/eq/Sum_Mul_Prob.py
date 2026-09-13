@@ -37,17 +37,17 @@ def extract(self):
             
         vars = index_complement(x, vars_given)
         if len(vars) > 1:
-            limits = limits[:j] + [(v.var,) for v in vars] + limits[j + 1:]
+            limits = limits[:j] + [(v.bvar,) for v in vars] + limits[j + 1:]
             j += len(vars)
         elif vars:  
-            limits[j] = (x.var,)
+            limits[j] = (x.bvar,)
             j += 1
         else:
             limits = limits[:j] + limits[j + 1:]
             
-        expr = expr._subs(x.random_argument, x.var)
+        expr = expr._subs(x.random_argument, x.bvar)
         if expr.is_random:
-            expr = expr._subs(x, x.var)
+            expr = expr._subs(x, x.bvar)
 #         assert not expr._has(x), random_argument problem here!
 
         if x.is_Symbol:

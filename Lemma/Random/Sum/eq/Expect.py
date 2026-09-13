@@ -51,7 +51,7 @@ def prove(Eq):
     θ = Symbol(real=True, shape=(n, n))
     f = Function(real=True)
     x, s = Symbol(integer=True, random=True)
-    Eq << apply(Sum[x.var](Pr[x:θ](x | s) * f(x.var)))
+    Eq << apply(Sum[x.bvar](Pr[x:θ](x | s) * f(x.bvar)))
 
     Eq << Eq[-1].this.rhs.apply(Random.Expect.eq.Sum_Mul_Prob)
 

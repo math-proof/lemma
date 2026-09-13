@@ -7,8 +7,8 @@ def apply(eq, Q_def, V_def, n=None):
     s, a, r, [π], γ, t, Q_st_var, V_st_var = extract_QVA(eq, Q_def, V_def)
     assert n >= 0
     return Equal(γ ** Stack[t](t) @ Derivative[π](Expectation[r, a:π](r)),
-                 Expectation[a:π, s[:n]](Sum[t:n](γ ** t * Derivative[π](log(Pr[a:π](a[t].random_argument | s[t].random_argument))) * Q_st_var._subs(s[t].var, s[t])._subs(a[t].var, a[t]))) + \
-                 γ ** n * Expectation(Derivative[π](V_st_var._subs(s[t].var, s[n]))))
+                 Expectation[a:π, s[:n]](Sum[t:n](γ ** t * Derivative[π](log(Pr[a:π](a[t].random_argument | s[t].random_argument))) * Q_st_var._subs(s[t].bvar, s[t])._subs(a[t].bvar, a[t]))) + \
+                 γ ** n * Expectation(Derivative[π](V_st_var._subs(s[t].bvar, s[n]))))
 
 
 
@@ -28,12 +28,12 @@ def prove(Eq):
     n = Symbol(integer=True, nonnegative=True, given=False)
     *Eq[-3:], Eq.hypothesis = apply(
                 Equal(r[t] | s[:t] & a[:t], r[t]), # history-irrelevant conditional independence assumption for rewards based on states and actions
-                Equal((Q[π] ^ γ)(s[t].var, a[t].var), γ ** Stack[t](t) @ Expectation[r[t:], a:π](r[t:] | s[t] & a[t])),
-                Equal((V[π] ^ γ)(s[t].var), γ ** Stack[t](t) @ Expectation[r[t:], a:π](r[t:] | s[t])), n)
+                Equal((Q[π] ^ γ)(s[t].bvar, a[t].bvar), γ ** Stack[t](t) @ Expectation[r[t:], a:π](r[t:] | s[t] & a[t])),
+                Equal((V[π] ^ γ)(s[t].bvar), γ ** Stack[t](t) @ Expectation[r[t:], a:π](r[t:] | s[t])), n)
 
     Eq << Eq[2].subs(t, 0)
 
-    Eq << Eq[-1].subs(s[0].var, s[0])
+    Eq << Eq[-1].subs(s[0].bvar, s[0])
 
     Eq << Random.EqExpect.of.Eq.apply(Eq[-1])
 

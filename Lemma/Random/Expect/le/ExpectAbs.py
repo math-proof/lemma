@@ -17,7 +17,7 @@ def prove(Eq):
     f = Function(real=True)
     Eq << apply(Expectation[θ](f(x)))
 
-    Eq << Int.GeAbs.apply(f(x.var))
+    Eq << Int.GeAbs.apply(f(x.bvar))
 
     Eq << Random.LeExpect.of.Le.apply(Eq[-1], (x,), (θ,))
 

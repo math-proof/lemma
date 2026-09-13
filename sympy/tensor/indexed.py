@@ -963,10 +963,10 @@ class Indexed(Expr):
         return self
         
     @property
-    def var(self):
+    def bvar(self):
         assert self.base.is_random
         assert not any(index.is_random for index in self.indices)
-        return self.base.var[self.indices]
+        return self.base.bvar[self.indices]
 
     @property
     def random_argument(self):
@@ -2087,10 +2087,10 @@ class Sliced(Expr):
         return self
     
     @property
-    def var(self):
+    def bvar(self):
         assert self.base.is_random
         assert not any(index.is_random for index in self.indices)
-        return self.base.var[self.indices]
+        return self.base.bvar[self.indices]
     
     @property
     def random_argument(self):
@@ -2947,10 +2947,10 @@ class SlicedIndexed(Expr):
         return self
 
     @property
-    def var(self):
+    def bvar(self):
         assert self.base.is_random
         assert not any(index.is_random for index in self.indices)
-        return self.base.var[self.indices]
+        return self.base.bvar[self.indices]
 
     @property
     def random_argument(self):

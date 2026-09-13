@@ -3,10 +3,10 @@ from util import *
 
 @apply
 def apply(eq_given):
-    ((((a, S[a.var]), (s, S[s.var])), [S[a], θ]), (S[a.var], S[0], m)), (phi_s, S[θ]) = eq_given.of(Equal[Stack[Pr[Conditioned[Equal[2]]]], Softmax[MatMul]])
+    ((((a, S[a.bvar]), (s, S[s.bvar])), [S[a], θ]), (S[a.bvar], S[0], m)), (phi_s, S[θ]) = eq_given.of(Equal[Stack[Pr[Conditioned[Equal[2]]]], Softmax[MatMul]])
     return Equal(
         Derivative[θ](log(Pr[a:θ](a | s))),
-        (phi_s[a.var] - Expectation[a:θ](phi_s[a], given=s)))
+        (phi_s[a.bvar] - Expectation[a:θ](phi_s[a], given=s)))
 
 
 @prove
@@ -17,11 +17,11 @@ def prove(Eq):
     φ = Function(real=True, shape=(m, n))
     θ = Symbol(real=True, shape=(n,))
     s, a = Symbol(integer=True, random=True)
-    Eq << apply(Equal(Stack[a.var:m](Pr[a:θ](a | s)), softmax(φ(s.var) @ θ)))
+    Eq << apply(Equal(Stack[a.bvar:m](Pr[a:θ](a | s)), softmax(φ(s.bvar) @ θ)))
 
     Eq << Eq[1].this.find(Expectation).apply(Random.Expect.eq.Sum_Mul_Prob)
 
-    a = a.var
+    a = a.bvar
     Eq << Eq[0][a]
 
     Eq << Bool.UFn.of.Eq.apply(Eq[-1], log)

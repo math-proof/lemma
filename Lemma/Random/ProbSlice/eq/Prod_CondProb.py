@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(self, k=None):
-    (s, (S[0], n)), S[s[:n].var] = self.of(Pr[Equal[Sliced]])
+    (s, (S[0], n)), S[s[:n].bvar] = self.of(Pr[Equal[Sliced]])
     return Equal(self, Product[k:n](Pr(s[k] | s[:k])), evaluate=False)
 
 

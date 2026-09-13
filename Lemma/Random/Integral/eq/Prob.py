@@ -41,7 +41,7 @@ def prove(Eq):
 
     x, y = Symbol(real=True, random=True)
     a, b = Symbol(real=True)
-    Eq << apply(Integral[x.var:a:oo, y.var:-oo:b](Pr(x, y)))
+    Eq << apply(Integral[x.bvar:a:oo, y.bvar:-oo:b](Pr(x, y)))
 
     Eq << Eq[0].this.rhs.apply(Random.Prob.eq.Integral)
 

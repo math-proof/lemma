@@ -5,13 +5,13 @@ from util import *
 def apply(Q_def):
     (discount, ((limit_rt, et), (S[limit_rt],), (a, π))), Q_st_var = Q_def.of(Equal[MatMul[Expectation[Conditioned]]])
     r, (t, S[oo]) = limit_rt.of(Sliced)
-    ((S[a], S[t]), S[a[t].var]), ((s, S[t]), S[s[t].var]) = et.of(Equal[Indexed] & Equal[Indexed])
+    ((S[a], S[t]), S[a[t].bvar]), ((s, S[t]), S[s[t].bvar]) = et.of(Equal[Indexed] & Equal[Indexed])
     γ, (k, [S[k]]) = discount.of(Pow[Stack])
 
     assert a.is_random and s.is_random and r.is_random
-    S[s[t].var], S[a[t].var], [S[π]], [S[γ]] = Q_st_var.of(Function)
+    S[s[t].bvar], S[a[t].bvar], [S[π]], [S[γ]] = Q_st_var.of(Function)
 
-    return Equal(discount @ Expectation[r[t:], a:π](r[t:] | s[t]), Expectation[a[t]:π](Q_st_var._subs(a[t].var, a[t]) | s[t]))
+    return Equal(discount @ Expectation[r[t:], a:π](r[t:] | s[t]), Expectation[a[t]:π](Q_st_var._subs(a[t].bvar, a[t]) | s[t]))
 
 
 @prove
@@ -27,7 +27,7 @@ def prove(Eq):
     Q = Function(real=True, shape=()) # Action-Value Function
     γ = Symbol(domain=Interval(0, 1, left_open=True)) # Discount factor: penalty to uncertainty of future rewards; myopic for γ = 0; and far-sighted for γ = 1
     # V Function : State-Value Function, aka expected cumulative reward
-    Eq << apply(Equal((Q[π] ^ γ)(s[t].var, a[t].var), γ ** Stack[k](k) @ Expectation[r[t:], a:π](r[t:] | s[t] & a[t])))
+    Eq << apply(Equal((Q[π] ^ γ)(s[t].bvar, a[t].bvar), γ ** Stack[k](k) @ Expectation[r[t:], a:π](r[t:] | s[t] & a[t])))
 
     Eq << Rat.Ne_0.of.Div1.gt.Zero.apply(Eq[0])
 

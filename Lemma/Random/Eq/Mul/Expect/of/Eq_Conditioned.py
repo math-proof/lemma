@@ -4,7 +4,7 @@ from util import *
 @apply
 def apply(self):
     (y, x), S[y] = self.of(Equal[Conditioned])
-    x, S[x.var] = x.of(Equal)
+    x, S[x.bvar] = x.of(Equal)
     assert y.is_random and x.is_random
     return Equal(Expectation(x * y), Expectation(x) * Expectation(y))
 

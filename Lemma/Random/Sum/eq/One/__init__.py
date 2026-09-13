@@ -15,7 +15,7 @@ def apply(self):
 @prove(provable=False)
 def prove(Eq):
     x = Symbol(integer=True, random=True)
-    Eq << apply(Sum[x.var](Pr(x)))
+    Eq << apply(Sum[x.bvar](Pr(x)))
 
 
 

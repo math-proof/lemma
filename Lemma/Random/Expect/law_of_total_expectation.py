@@ -14,7 +14,7 @@ def rewrite(self):
         for eq in cond_outer:
             x, x_var = eq.of(Equal)
             if x_var.is_RandomArgument:
-                x_var = x_var.arg.var
+                x_var = x_var.arg.bvar
             vars_given_dict[x] = x_var
     else:
         given_outer = None

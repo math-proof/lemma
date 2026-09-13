@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(eq):
-    ((r, t), (((s, (S[0], S[t])), S[s[:t].var]), ((a, (S[0], S[t])), S[a[:t].var]))), S[r[t]] = eq.of(Equal[Conditioned[Indexed, Equal[Sliced] & Equal[Sliced]]])
+    ((r, t), (((s, (S[0], S[t])), S[s[:t].bvar]), ((a, (S[0], S[t])), S[a[:t].bvar]))), S[r[t]] = eq.of(Equal[Conditioned[Indexed, Equal[Sliced] & Equal[Sliced]]])
     assert s.is_random and r.is_random and a.is_random
 
     return Equal(r[t:] | s[:t + 1] & a[:t + 1], r[t:] | s[t] & a[t])

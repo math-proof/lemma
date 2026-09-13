@@ -4,7 +4,7 @@ from util import *
 @apply
 def apply(eq):
     (r, t), (((S[t], n), r_human), kl) = eq.of(Equal[Indexed, Add[KroneckerDelta[Symbol - 1] * Symbol]])
-    (((((a, S[t]), S[a[t].var]), ((s, S[t]), S[s[t].var])), (θ,)), ((S[a[t].as_boolean()], S[s[t].as_boolean()]), (θ_quote,))), β = kl.of(-Log[Pr[Conditioned[Equal[Indexed], Equal[Indexed]]] / Pr[Conditioned]] * Symbol)
+    (((((a, S[t]), S[a[t].bvar]), ((s, S[t]), S[s[t].bvar])), (θ,)), ((S[a[t].as_boolean()], S[s[t].as_boolean()]), (θ_quote,))), β = kl.of(-Log[Pr[Conditioned[Equal[Indexed], Equal[Indexed]]] / Pr[Conditioned]] * Symbol)
     return Imply(t < n - 1, Equal(r[t], kl)), Equal(r[n - 1], kl._subs(t, n - 1) + r_human)
 
 

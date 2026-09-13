@@ -22,9 +22,9 @@ def prove(Eq):
     θ = Symbol(real=True, shape=(n,))
     σ = Symbol(real=True, positive=True)
     s, a = Symbol(integer=True, random=True)
-    Eq << apply(Equal(Pr[a:θ](a | s), Exp(-(a.var - φ(s.var) @ θ) ** 2 / (2 * σ ** 2)) / (sqrt(2 * S.Pi) * σ)))
+    Eq << apply(Equal(Pr[a:θ](a | s), Exp(-(a.bvar - φ(s.bvar) @ θ) ** 2 / (2 * σ ** 2)) / (sqrt(2 * S.Pi) * σ)))
 
-    a = a.var
+    a = a.bvar
     Eq << Bool.UFn.of.Eq.apply(Eq[0], log)
 
     Eq << Eq[-1].this.rhs.apply(Real.LogMul.eq.AddLogS.of.Ne_0.Ne_0)

@@ -5,13 +5,13 @@ from util import *
 def apply(Q_def):
     (γ, (discount, ((limit_rt, et), (S[limit_rt],), *weights))), Q_st_var = Q_def.of(Equal[(1 - Symbol) * MatMul[Expectation[Conditioned]]])
     r, (t, S[oo]) = limit_rt.of(Sliced)
-    ((a, S[t]), S[a[t].var]), ((s, S[t]), S[s[t].var]) = et.of(Equal[Indexed] & Equal[Indexed])
+    ((a, S[t]), S[a[t].bvar]), ((s, S[t]), S[s[t].bvar]) = et.of(Equal[Indexed] & Equal[Indexed])
     S[γ], (k, [S[k]]) = discount.of(Pow[Stack])
 
     assert a.is_random and s.is_random and r.is_random
-    S[s[t].var], S[a[t].var], *S[weights], [S[γ]] = Q_st_var.of(Function)
+    S[s[t].bvar], S[a[t].bvar], *S[weights], [S[γ]] = Q_st_var.of(Function)
 
-    return Equal((1 - γ) * discount @ Expectation(r[t:] | s[t]), Expectation(Q_st_var._subs(a[t].var, a[t]) | s[t]))
+    return Equal((1 - γ) * discount @ Expectation(r[t:] | s[t]), Expectation(Q_st_var._subs(a[t].bvar, a[t]) | s[t]))
 
 
 @prove
@@ -25,7 +25,7 @@ def prove(Eq):
     t, k = Symbol(integer=True) # time countor
     Q = Function(real=True, shape=()) # Action-Value Function
     γ = Symbol(domain=Interval(0, 1, left_open=True)) # Discount factor: penalty to uncertainty of future rewards; myopic for γ = 0; and far-sighted for γ = 1
-    Eq << apply(Equal((Q ^ γ)(s[t].var, a[t].var), (1 - γ) * γ ** Stack[k](k) @ Expectation(r[t:] | s[t] & a[t])))
+    Eq << apply(Equal((Q ^ γ)(s[t].bvar, a[t].bvar), (1 - γ) * γ ** Stack[k](k) @ Expectation(r[t:] | s[t] & a[t])))
 
     Eq << Rat.Ne_0.of.Div1.gt.Zero.apply(Eq[0])
 

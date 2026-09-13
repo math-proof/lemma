@@ -3,9 +3,9 @@ from util import *
 
 @apply
 def apply(self):
-    ((r, t), (((a, S[t]), S[a[t].var]), ((s, S[t]), S[s[t].var]), S[s[t + 1].as_boolean()])), (S[r[t]],) = self.of(Expectation[Conditioned[Indexed, Equal[Indexed] & Equal[Indexed]]])
+    ((r, t), (((a, S[t]), S[a[t].bvar]), ((s, S[t]), S[s[t].bvar]), S[s[t + 1].as_boolean()])), (S[r[t]],) = self.of(Expectation[Conditioned[Indexed, Equal[Indexed] & Equal[Indexed]]])
     assert s.is_random and a.is_random and r.is_random
-    return Equal(self, Integral[r[t].var](r[t].var * Pr(s[t + 1] & r[t], given=s[t] & a[t]) / Pr(s[t + 1] | s[t] & a[t])))
+    return Equal(self, Integral[r[t].bvar](r[t].bvar * Pr(s[t + 1] & r[t], given=s[t] & a[t]) / Pr(s[t + 1] | s[t] & a[t])))
 
 
 

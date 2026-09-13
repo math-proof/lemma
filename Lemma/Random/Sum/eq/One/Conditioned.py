@@ -20,7 +20,7 @@ def prove(Eq):
     from Lemma import Random
 
     x, y = Symbol(integer=True, random=True)
-    Eq << apply(Sum[x.var](Pr(x | y)))
+    Eq << apply(Sum[x.bvar](Pr(x | y)))
 
     Eq << Eq[-1].this.lhs.expr.apply(Random.Prob.eq.DivProbS)
 

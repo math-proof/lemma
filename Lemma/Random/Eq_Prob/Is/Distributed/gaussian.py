@@ -24,7 +24,7 @@ def prove(Eq):
     x = Symbol(real=True, random=True)
     μ = Symbol(real=True)
     σ = Symbol(positive=True)
-    Eq << apply(Equal(Pr(x), NormalDistribution(μ, σ ** 2)(x.var)))
+    Eq << apply(Equal(Pr(x), NormalDistribution(μ, σ ** 2)(x.bvar)))
 
     Eq << Eq[0].this.rhs.apply(Random.Distributed.Is.Eq.Prob)
 

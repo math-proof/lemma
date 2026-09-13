@@ -3,9 +3,9 @@ from util import *
 
 @apply
 def apply(self):
-    ((r, t), (((a, S[t]), S[a[t].var]), ((s, S[t]), S[s[t].var]))), (S[r[t]],) = self.of(Expectation[Conditioned[Indexed, Equal[Indexed] & Equal[Indexed]]])
+    ((r, t), (((a, S[t]), S[a[t].bvar]), ((s, S[t]), S[s[t].bvar]))), (S[r[t]],) = self.of(Expectation[Conditioned[Indexed, Equal[Indexed] & Equal[Indexed]]])
     assert s.is_random and a.is_random and r.is_random
-    return Equal(self, Integral[r[t].var](r[t].var * Integral[s[t + 1].var](Pr(s[t + 1] & r[t], given=s[t] & a[t]))))
+    return Equal(self, Integral[r[t].bvar](r[t].bvar * Integral[s[t + 1].bvar](Pr(s[t + 1] & r[t], given=s[t] & a[t]))))
 
 
 
@@ -24,7 +24,7 @@ def prove(Eq):
     t = Symbol(integer=True)
     Eq << apply(Expectation[r[t]](r[t] | s[t] & a[t]))
 
-    Eq << Integral[s[t + 1].var](Pr(s[t + 1] & r[t], given=s[t] & a[t])).this.apply(Random.All_EqIntegral_Prob.of.PSpace_JointRandomSymbol)
+    Eq << Integral[s[t + 1].bvar](Pr(s[t + 1] & r[t], given=s[t] & a[t])).this.apply(Random.All_EqIntegral_Prob.of.PSpace_JointRandomSymbol)
 
     Eq << Eq[0].this.lhs.apply(Random.Expect.eq.Integral)
 

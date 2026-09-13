@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(eq, i):
-    ((x, t), ((S[x], (S[0], S[t])), S[x[:t].var])), S[x[t]] = eq.of(Equal[Conditioned[Indexed, Equal[Sliced]]])
+    ((x, t), ((S[x], (S[0], S[t])), S[x[:t].bvar])), S[x[t]] = eq.of(Equal[Conditioned[Indexed, Equal[Sliced]]])
     # assert t >= 0
     assert x.is_random
     return Imply(Unequal(i, t), Equal(Covariance(x[t], x[i]), Zeros(*x[t].shape).outer_product(Zeros(*x[i].shape))))

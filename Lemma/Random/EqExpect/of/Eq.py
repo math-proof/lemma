@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Random.Expect.eq.Integral)
 
-    Eq << Eq[0].subs(x, x.var)
+    Eq << Eq[0].subs(x, x.bvar)
 
 
     Eq << Eq[-2].subs(Eq[-1])

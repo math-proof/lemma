@@ -777,7 +777,7 @@ def given(expr, condition, **kwargs):
         return expr
 
     if condition.is_symbol:
-        condition = Eq(condition, condition.var)
+        condition = Eq(condition, condition.bvar)
 
     # Get full probability space of both the expression and the condition
     fullspace = pspace(Tuple(expr, condition))

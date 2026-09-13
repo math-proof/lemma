@@ -4,7 +4,7 @@ from util import *
 @apply
 def apply(eq, *expr, spread_weight=False):
     assert expr
-    condition = And(*(Equal(y, y.var) for y in expr))
+    condition = And(*(Equal(y, y.bvar) for y in expr))
 
     given_probability = eq.of(Unequal[0])
     cond = given_probability.of(Pr)

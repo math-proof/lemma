@@ -6,7 +6,7 @@ def apply(ne_zero_lhs, ne_zero_rhs, y):
     (x_lhs, x_var), *weights_lhs = ne_zero_lhs.of(Unequal[Pr[Equal], 0])
     (x_rhs, S[x_var]), *weights_rhs = ne_zero_rhs.of(Unequal[Pr[Equal], 0])
 
-    return GreaterEqual(KL(Pr(Equal(x_lhs, x_var) & Equal(y, y.var), *weights_lhs), Pr(Equal(x_rhs, x_var) & Equal(y, y.var), *weights_rhs)),
+    return GreaterEqual(KL(Pr(Equal(x_lhs, x_var) & Equal(y, y.bvar), *weights_lhs), Pr(Equal(x_rhs, x_var) & Equal(y, y.bvar), *weights_rhs)),
                         KL(Pr(Equal(x_lhs, x_var), *weights_lhs), Pr(Equal(x_rhs, x_var), *weights_rhs)))
 
 @prove
@@ -50,9 +50,9 @@ def prove(Eq):
 
     Eq << Random.KLProbSConditioned.ge.Zero.apply(*Eq[-1].find(KL).args)
 
-    Eq << Nat.Ge_0.Mul.of.Ge_0.apply(Eq[-1], Pr[θ](Equal(x, x.var)))
+    Eq << Nat.Ge_0.Mul.of.Ge_0.apply(Eq[-1], Pr[θ](Equal(x, x.bvar)))
 
-    Eq << Finset.Ge_0.Sum.of.Ge_0.apply(Eq[-1], (x.var,))
+    Eq << Finset.Ge_0.Sum.of.Ge_0.apply(Eq[-1], (x.bvar,))
 
 
 

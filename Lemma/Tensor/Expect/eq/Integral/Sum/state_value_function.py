@@ -3,11 +3,11 @@ from util import *
 
 @apply
 def apply(self):
-    ((((γ, k), (r, (S[k], t))), (S[k], S[0], S[oo])), ((s, S[t]), S[s[t].var])), [S[r[t + 1:]]], [S[s[t + 1:]]], (at,) = self.of(Expectation[Conditioned[Sum[Pow * Indexed[Symbol, Add[1]]], Equal[Indexed]]])
+    ((((γ, k), (r, (S[k], t))), (S[k], S[0], S[oo])), ((s, S[t]), S[s[t].bvar])), [S[r[t + 1:]]], [S[s[t + 1:]]], (at,) = self.of(Expectation[Conditioned[Sum[Pow * Indexed[Symbol, Add[1]]], Equal[Indexed]]])
     a, (S[t], S[oo]) = at.of(Sliced)
     assert a.is_random and s.is_random and r.is_random
     return Equal(self,
-                 Integral[r.var[t + 1:]](Pr(r[t + 1:] | s[t]) * Sum[k:oo](γ ** k * r.var[k + t + 1])))
+                 Integral[r.bvar[t + 1:]](Pr(r[t + 1:] | s[t]) * Sum[k:oo](γ ** k * r.bvar[k + t + 1])))
 
 
 @prove

@@ -14,7 +14,7 @@ def prove(Eq):
     D = Symbol(integer=True, positive=True)
     θ, θ_quote = Symbol(real=True, shape=(D,))
     x = Symbol(random=True, real=True)
-    Eq << apply(Integral[x.var](log(Pr[θ](x) / Pr[θ_quote](x)) * Pr[θ](x)))
+    Eq << apply(Integral[x.bvar](log(Pr[θ](x) / Pr[θ_quote](x)) * Pr[θ](x)))
 
     Eq << Eq[-1].this.rhs.apply(Random.KL.eq.Integral)
 

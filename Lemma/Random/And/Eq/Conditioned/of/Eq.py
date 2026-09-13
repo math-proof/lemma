@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << Eq[0].this.lhs.apply(Random.Prob.eq.DivProbS)
 
-    Eq <<= Real.EqIntegral.of.Eq.apply(Eq[-1], (y.var,)), Real.EqIntegral.of.Eq.apply(Eq[-1], (x.var,))
+    Eq <<= Real.EqIntegral.of.Eq.apply(Eq[-1], (y.bvar,)), Real.EqIntegral.of.Eq.apply(Eq[-1], (x.bvar,))
 
     Eq <<= Eq[-2].this.rhs.apply(Random.All_EqIntegral_Prob.of.PSpace_JointRandomSymbol), Eq[-1].this.rhs.apply(Random.All_EqIntegral_Prob.of.PSpace_JointRandomSymbol)
 

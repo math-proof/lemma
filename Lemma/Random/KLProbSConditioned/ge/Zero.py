@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq << Nat.GeMul.of.Ge.apply(Eq[-1], Eq[1].find(Pr))
 
-    Eq << Finset.GeSum.of.Ge.apply(Eq[-1], (x.var,))
+    Eq << Finset.GeSum.of.Ge.apply(Eq[-1], (x.bvar,))
 
     Eq << Eq[-1].this.rhs.expr.apply(Nat.Mul_Add.eq.AddMulS)
 

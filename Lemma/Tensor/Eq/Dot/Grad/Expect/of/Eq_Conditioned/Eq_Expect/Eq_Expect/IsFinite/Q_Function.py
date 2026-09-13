@@ -6,7 +6,7 @@ def apply(eq, Q_def, V_def, lt):
     from Lemma.Tensor.And.Eq.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.Bellman import extract_QVA
     s, a, r, [π], γ, t, Q_st_var, V_st_var = extract_QVA(eq, Q_def, V_def, None, lt)
     return Equal(γ ** Stack[t](t) @ Derivative[π](Expectation[r, a:π](r)),
-                 γ ** Stack[t](t) @ Stack[t](Expectation[a:π, s](Derivative[π](log(Pr[a:π](a[t].random_argument | s[t].random_argument))) * Q_st_var._subs(s[t].var, s[t])._subs(a[t].var, a[t]))))
+                 γ ** Stack[t](t) @ Stack[t](Expectation[a:π, s](Derivative[π](log(Pr[a:π](a[t].random_argument | s[t].random_argument))) * Q_st_var._subs(s[t].bvar, s[t])._subs(a[t].bvar, a[t]))))
 
 
 @prove
@@ -23,9 +23,9 @@ def prove(Eq):
     γ = Symbol(domain=Interval(0, 1, right_open=True)) # Discount factor: penalty to uncertainty of future rewards; myopic for γ = 0; and far-sighted for γ = 1
     *Eq[-4:], Eq.hypothesis = apply(
                 Equal(r[t] | s[:t] & a[:t], r[t]), # history-irrelevant conditional independence assumption for rewards based on states and actions
-                Equal((Q[π] ^ γ)(s[t].var, a[t].var), γ ** Stack[t](t) @ Expectation[r[t:], a:π](r[t:] | s[t] & a[t])),
-                Equal((V[π] ^ γ)(s[t].var), γ ** Stack[t](t) @ Expectation[r[t:], a:π](r[t:] | s[t])),
-                Less(Sup[s[t].var, t](Abs(Derivative[π]((V[π] ^ γ)(s[t].var)))), oo))
+                Equal((Q[π] ^ γ)(s[t].bvar, a[t].bvar), γ ** Stack[t](t) @ Expectation[r[t:], a:π](r[t:] | s[t] & a[t])),
+                Equal((V[π] ^ γ)(s[t].bvar), γ ** Stack[t](t) @ Expectation[r[t:], a:π](r[t:] | s[t])),
+                Less(Sup[s[t].bvar, t](Abs(Derivative[π]((V[π] ^ γ)(s[t].bvar)))), oo))
 
     n = Symbol(integer=True, nonnegative=True)
     Eq.expect = Tensor.Eq.Grad.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.policy_gradient.apply(*Eq[:3], n)
@@ -42,7 +42,7 @@ def prove(Eq):
 
     Eq << Real.All_Le_Sup.apply(Eq[3].lhs)
 
-    Eq << Bool.All.of.Cond.apply(Eq[-1], s[t].var, simplify=None)
+    Eq << Bool.All.of.Cond.apply(Eq[-1], s[t].bvar, simplify=None)
 
     Eq << Real.LeSup.of.All_Le.apply(Eq[-1])
 

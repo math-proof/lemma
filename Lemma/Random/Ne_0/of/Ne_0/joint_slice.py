@@ -11,7 +11,7 @@ def apply(given, indices):
 
     args = []
     for eq, t in zip(eqs, indices):
-        x, S[x.var] = eq.of(Equal)
+        x, S[x.bvar] = eq.of(Equal)
         if isinstance(t, int) and t < 0:
             t += x.shape[0]
         args.append(x[t])

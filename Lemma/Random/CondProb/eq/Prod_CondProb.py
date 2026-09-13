@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(self, k=None):
-    ((s, (S[0], n)), S[s[:n].var]), Z = self.of(Pr[Conditioned[Equal[Sliced]]])
+    ((s, (S[0], n)), S[s[:n].bvar]), Z = self.of(Pr[Conditioned[Equal[Sliced]]])
     return Equal(self, Product[k:n](Pr(s[k] | s[:k] & Z)), evaluate=False)
 
 

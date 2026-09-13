@@ -600,7 +600,7 @@ class Symbol(AtomicExpr, NotIterable):
             return definition
 
     @property
-    def var(self):
+    def bvar(self):
         from sympy.stats.rv import pspace
         return pspace(self).symbol
 
@@ -988,7 +988,7 @@ class Symbol(AtomicExpr, NotIterable):
             sym = Symbol.subs_specials(self.name)
             if random_symbols := p._context.get('random_symbols'):
                 if self in random_symbols:
-                    sym += '.var' 
+                    sym += '.bvar' 
             return sym
         self, *attr = name
         return f'{self}.{".".join(attr)}'
@@ -999,7 +999,7 @@ class Symbol(AtomicExpr, NotIterable):
             sym = Symbol.subs_specials(self.name)
             if random_symbols := p._context.get('random_symbols'):
                 if self in random_symbols:
-                    sym += '.var' 
+                    sym += '.bvar' 
             return sym
         self, *attr = name
         return f'{self}.{".".join(attr)}'
@@ -1600,7 +1600,7 @@ class Symbol(AtomicExpr, NotIterable):
                         if next_sym.is_random == True:
                             if isinstance(last_sym, list):
                                 try:
-                                    index = last_sym.index(next_sym.var)
+                                    index = last_sym.index(next_sym.bvar)
                                     del last_sym[index]
                                     vars = m_last[1].split(", ")
                                     del vars[index]
@@ -1611,7 +1611,7 @@ class Symbol(AtomicExpr, NotIterable):
                                     definition[i] = last, f"{', '.join(vars)} = {m_last[2]}({m_last[3]})" 
                                 except:
                                     ...
-                            elif next_sym.var == last_sym:
+                            elif next_sym.bvar == last_sym:
                                 del definition[i]
                 
                     if isinstance(next_sym, list):
@@ -1658,7 +1658,7 @@ class Symbol(AtomicExpr, NotIterable):
                 
             if self.is_random:
                 kwargs.append("random=True")
-                free_symbols.add(self.var)
+                free_symbols.add(self.bvar)
                 random_symbols.add(self)
             else:
                 free_symbols.add(self)

@@ -13,8 +13,8 @@ def extract(self):
             continue
 
         assert not ab
-        vars.append((x.var,))
-        expr = expr._subs(x, x.var)
+        vars.append((x.bvar,))
+        expr = expr._subs(x, x.bvar)
     return expr, *vars
 
 @apply
@@ -40,7 +40,7 @@ def prove(Eq):
 
     Eq << Nat.GeMul.of.Ge_0.Ge.apply(Eq[-1], Eq[-2])
 
-    Eq << Real.GeIntegral.of.Ge.apply(Eq[-1], [x.var])
+    Eq << Real.GeIntegral.of.Ge.apply(Eq[-1], [x.bvar])
 
     Eq << Eq[-1].this.find(Integral[Pr]).apply(Random.Integral_Prob_Conditioned.eq.One)
 

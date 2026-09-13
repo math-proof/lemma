@@ -7,7 +7,7 @@ def apply(eq, Q_def, V_def, A_def, lt, π_quote=None):
     s, a, r, [π], γ, t, Q_st_var, V_st_var, A_st_var = extract_QVA(eq, Q_def, V_def, A_def, lt)
     assert π_quote.shape == π.shape
     return Equal(γ ** Stack[t](t) @ Derivative[π](Expectation[r, a:π](r)),
-                 γ ** Stack[t](t) @ Stack[t](Expectation[a:π_quote, s](Derivative[π](Pr[a:π](a[t].random_argument | s[t].random_argument)) / Pr[a:π_quote](a[t].random_argument | s[t].random_argument) * A_st_var._subs(s[t].var, s[t])._subs(a[t].var, a[t]))))
+                 γ ** Stack[t](t) @ Stack[t](Expectation[a:π_quote, s](Derivative[π](Pr[a:π](a[t].random_argument | s[t].random_argument)) / Pr[a:π_quote](a[t].random_argument | s[t].random_argument) * A_st_var._subs(s[t].bvar, s[t])._subs(a[t].bvar, a[t]))))
 
 
 @prove
@@ -25,10 +25,10 @@ def prove(Eq):
     γ = Symbol(domain=Interval(0, 1, right_open=True)) # Discount factor: penalty to uncertainty of future rewards; myopic for γ = 0; and far-sighted for γ = 1
     *Eq[-5:], Eq.hypothesis = apply(
                 Equal(r[t] | s[:t] & a[:t], r[t]), # history-irrelevant conditional independence assumption for rewards based on states and actions
-                Equal((Q[π] ^ γ)(s[t].var, a[t].var), γ ** Stack[t](t) @ Expectation[r[t:], a:π](r[t:] | s[t] & a[t])),
-                Equal((V[π] ^ γ)(s[t].var), γ ** Stack[t](t) @ Expectation[r[t:], a:π](r[t:] | s[t])),
-                Equal((A[π] ^ γ)(s[t].var, a[t].var), (Q[π] ^ γ)(s[t].var, a[t].var) - (V[π] ^ γ)(s[t].var)),
-                Less(Sup[s[t].var, t](Abs(Derivative[π]((V[π] ^ γ)(s[t].var)))), oo),
+                Equal((Q[π] ^ γ)(s[t].bvar, a[t].bvar), γ ** Stack[t](t) @ Expectation[r[t:], a:π](r[t:] | s[t] & a[t])),
+                Equal((V[π] ^ γ)(s[t].bvar), γ ** Stack[t](t) @ Expectation[r[t:], a:π](r[t:] | s[t])),
+                Equal((A[π] ^ γ)(s[t].bvar, a[t].bvar), (Q[π] ^ γ)(s[t].bvar, a[t].bvar) - (V[π] ^ γ)(s[t].bvar)),
+                Less(Sup[s[t].bvar, t](Abs(Derivative[π]((V[π] ^ γ)(s[t].bvar)))), oo),
                 π_quote)
 
     Eq << Tensor.Eq.Dot.Grad.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.Eq_Sub.IsFinite.A_Function.apply(*Eq[:5])

@@ -18,7 +18,7 @@ def prove(Eq):
     D = Symbol(integer=True, positive=True)
     θ, θ_quote = Symbol(real=True, shape=(D,))
     x = Symbol(random=True, integer=True)
-    Eq << apply(Sum[x.var](log(Pr[θ](x) / Pr[θ_quote](x)) * Pr[θ](x)))
+    Eq << apply(Sum[x.bvar](log(Pr[θ](x) / Pr[θ_quote](x)) * Pr[θ](x)))
 
     Eq << Eq[-1].this.rhs.apply(Random.KL.eq.Sum)
 

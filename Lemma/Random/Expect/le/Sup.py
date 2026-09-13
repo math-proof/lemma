@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq << Nat.LeMul.of.Ge_0.Le.apply(Eq[-1], Eq[-2])
 
-    Eq << Real.LeIntegral.of.Le.apply(Eq[-1], [x.var])
+    Eq << Real.LeIntegral.of.Le.apply(Eq[-1], [x.bvar])
 
     Eq << Eq[-1].this.find(Integral[Pr]).apply(Random.Integral.eq.One)
 

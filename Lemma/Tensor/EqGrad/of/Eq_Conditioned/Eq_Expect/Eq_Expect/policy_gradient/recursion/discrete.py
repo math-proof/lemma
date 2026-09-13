@@ -7,8 +7,8 @@ def apply(eq, Q_def, V_def):
     s, a, r, [π], γ, t, Q_st_var, V_st_var = extract_QVA(eq, Q_def, V_def)
 
     return Equal(Derivative[π](V_st_var),
-                 Sum[a[t].var](Derivative[π](Pr[a:π](a[t] | s[t])) * Q_st_var) + \
-                 γ * Sum[s[t + 1].var](Derivative[π](V_st_var._subs(t, t + 1)) * Pr(s[t + 1] | s[t])))
+                 Sum[a[t].bvar](Derivative[π](Pr[a:π](a[t] | s[t])) * Q_st_var) + \
+                 γ * Sum[s[t + 1].bvar](Derivative[π](V_st_var._subs(t, t + 1)) * Pr(s[t + 1] | s[t])))
 
 
 @prove
@@ -24,8 +24,8 @@ def prove(Eq):
     V, Q = Function(real=True, shape=()) # State-Value, Action-Value Function
     γ = Symbol(domain=Interval(0, 1, right_open=True)) # Discount factor: penalty to uncertainty of future rewards; myopic for γ = 0; and far-sighted for γ = 1
     Eq << apply(Equal(r[t] | s[:t] & a[:t], r[t]), # history-irrelevant conditional independence assumption for rewards based on states and actions
-                Equal((Q[π] ^ γ)(s[t].var, a[t].var), γ ** Stack[t](t) @ Expectation[r[t:], a:π](r[t:] | s[t] & a[t])),
-                Equal((V[π] ^ γ)(s[t].var), γ ** Stack[t](t) @ Expectation[r[t:], a:π](r[t:] | s[t])))
+                Equal((Q[π] ^ γ)(s[t].bvar, a[t].bvar), γ ** Stack[t](t) @ Expectation[r[t:], a:π](r[t:] | s[t] & a[t])),
+                Equal((V[π] ^ γ)(s[t].bvar), γ ** Stack[t](t) @ Expectation[r[t:], a:π](r[t:] | s[t])))
 
     Eq << Tensor.And.Eq.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.Bellman.apply(*Eq[:3])
 
