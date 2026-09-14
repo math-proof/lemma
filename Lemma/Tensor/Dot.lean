@@ -1,7 +1,7 @@
 import Lemma.Tensor.Dot.eq.SumMul__0
 import torch.Tensor.sum
 import Lemma.Tensor.Sum.of.Eq
-open Nat Tensor
+open Tensor
 
 
 @[main]
@@ -15,7 +15,7 @@ private lemma Comm
   rw [Dot.eq.SumMul__0]
   rw [Dot.eq.SumMul__0]
   apply Sum.of.Eq
-  apply Mul.comm
+  apply Nat.Mul.comm
 
 
 -- created on 2020-08-16

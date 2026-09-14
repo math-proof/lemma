@@ -280,8 +280,14 @@ def Lean.Expr.comm : Expr → Expr
     (Expr.const `Not usNot).mkApp [p.comm]
   | .forallE n t b i =>
     .forallE n t b.comm i
+  | .lam n t b i =>
+    .lam n t b.comm i
+  | .app (.app (.app (.const `Filter.Eventually us) α) p) f =>
+    (Expr.const `Filter.Eventually us).mkApp [α, p.comm, f]
+  | .app (.app (.app (.const `Filter.EventuallyEq us) l) f) g =>
+    (Expr.const `Filter.EventuallyEq us).mkApp [l, g, f]
   | e  =>
-    panic! s!"Expected an operator of Eq, Iff, SEq, HEq, Ne, Lt, Le, Gt, Ge, And, Or, Not, ModEq, but got {e.ctorName} :\n{e}"
+    panic! s!"Expected an operator of Eq, Iff, SEq, HEq, Ne, Lt, Le, Gt, Ge, And, Or, Not, ModEq, Eventually, EventuallyEq, but got {e.ctorName} :\n{e}"
 
 @[symm]
 theorem LT.symm [LT α] {a b : α} (h : a < b) : b > a := h
@@ -331,8 +337,10 @@ def Lean.Expr.symm_args : Expr → Name × List Level × List Expr
   | .app (.const `Not _) p =>
     let ⟨name, us, args⟩ := p.symm_args
     ⟨`Not ++ name, us, args⟩
+  | .app (.app (.app (.const `Filter.EventuallyEq us) l) f) g =>
+    ⟨`Filter.EventuallyEq, us, [l, f, g]⟩
   | e  =>
-    panic! s!"Expected an operator of Eq, Iff, SEq, HEq, Ne, Lt, Le, Gt, Ge, And, Or, Not, ModEq, but got {e.ctorName} :\n{e}"
+    panic! s!"Expected an operator of Eq, Iff, SEq, HEq, Ne, Lt, Le, Gt, Ge, And, Or, Not, ModEq, EventuallyEq, but got {e.ctorName} :\n{e}"
 
 def Lean.Expr.symm : Expr → Expr
   | e@(.forallE binderName binderType body binderInfo) =>
@@ -340,6 +348,23 @@ def Lean.Expr.symm : Expr → Expr
       .lam binderName (binderType.incDeBruijnIndex 1) (
         .app (body.symm.incDeBruijnIndex 1 1) (.app (.bvar 1) (.bvar 0))
       ) binderInfo
+    ) .default
+  | e@(.app (.app (.app (.const `Filter.Eventually us) α) (.lam binderName binderType body binderInfo)) f) =>
+    let p : Expr := .lam binderName binderType body binderInfo
+    let q : Expr := .lam binderName binderType body.comm binderInfo
+    Expr.lam `h e (
+      (Expr.const `Filter.Eventually.mono us).mkApp [
+        α.incDeBruijnIndex 1,
+        p.incDeBruijnIndex 1,
+        q.incDeBruijnIndex 1,
+        f.incDeBruijnIndex 1,
+        .bvar 0,
+        .lam binderName (binderType.incDeBruijnIndex 1) (
+          .lam `hx (body.incDeBruijnIndex 1 1) (
+            .app ((body.symm.incDeBruijnIndex 1 1).incDeBruijnIndex 1 0) (.bvar 0)
+          ) .default
+        ) binderInfo
+      ]
     ) .default
   | e =>
     let ⟨name, us, args⟩ := e.symm_args

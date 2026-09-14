@@ -6,7 +6,7 @@ import Lemma.Vector.EqSplitAt0_0
 import Lemma.Vector.EqSum_0
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import torch.Tensor.sum
-open Bool Fin List Nat Tensor Vector
+open Bool List Tensor Vector
 
 
 @[main]
@@ -30,7 +30,7 @@ private lemma main
     intro t
     have h_t := t.isLt
     rw [@Vector.EqGet0_0.fin]
-    let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul h_t
+    let ⟨q, r, h_qr⟩ := Fin.Any_Eq_AddMul.of.Lt_Mul h_t
     rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qr]
     simp
     rw [@Vector.EqGet0_0.fin]

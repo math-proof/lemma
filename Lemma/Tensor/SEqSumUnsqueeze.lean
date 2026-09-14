@@ -12,7 +12,7 @@ import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.GetSum.eq.SumMapGet
 import Lemma.Vector.SplitAt.eq.UnflattenCast
 import Lemma.Vector.Sum.eq.Head.of.Eq_1
-open Bool Fin Finset List Nat Tensor Vector
+open List Nat Tensor Vector
 
 
 @[main]
@@ -28,14 +28,14 @@ private lemma main
   erw [DataSum.eq.Cast_FlattenMapSplitAtData]
   unfold List.Vector.splitAt
   simp
-  apply SEqCast.of.SEq.Eq (by simp [MulProdS.eq.ProdEraseIdx])
+  apply Bool.SEqCast.of.SEq.Eq (by simp [MulProdS.eq.ProdEraseIdx])
   apply SEq.of.All_EqGetS.Eq.fin
   ·
     intro t
     have h_t := t.isLt
     have h_t : t < ((s.insertIdx i 1).take i).prod * (((s.insertIdx i 1).drop i).drop 1).prod := by
       grind
-    let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul h_t
+    let ⟨q, r, h_qr⟩ := Fin.Any_Eq_AddMul.of.Lt_Mul h_t
     let ⟨h_q_div, h_r_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qr
     rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qr]
     simp
