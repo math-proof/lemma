@@ -1,4 +1,5 @@
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
+import torch.Tensor.bmm
 import Lemma.Tensor.GetBmm.as.BmmGetS.of.Eq
 import Lemma.Tensor.GetOfVector.eq.Get
 import Lemma.Tensor.GetResize_0.as.Get.of.GtLength_0

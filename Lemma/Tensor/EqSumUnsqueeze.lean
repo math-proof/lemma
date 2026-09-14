@@ -1,9 +1,8 @@
 import Lemma.Tensor.DataSum_0.eq.SumSplitAtData
+import torch.Tensor.sum
+import torch.Tensor.unsqueeze
 import Lemma.Tensor.DataUnsqueeze.as.Data
-import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Vector.Get.of.SEq.Lt
-import Lemma.Vector.GetUnflatten.eq.Get_AddMul
-import Lemma.Vector.Head.eq.Get_0
 import Lemma.Vector.Sum.eq.Head
 open Tensor Vector
 

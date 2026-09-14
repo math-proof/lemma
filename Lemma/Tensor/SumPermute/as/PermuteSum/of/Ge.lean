@@ -1,8 +1,10 @@
 import Lemma.List.EqPermute
+import torch.Tensor.permute
 import Lemma.Nat.LeAdd_1
 import Lemma.Tensor.SumCast.as.Sum.of.Eq
 import Lemma.Tensor.SumPermute.as.PermuteSum.of.Ge.EqAdd_1Length
 import Lemma.Tensor.SumPermute.as.PermuteSum.of.Ge.LtAdd_1Length
+import torch.Tensor.sum
 open List Nat Tensor
 
 

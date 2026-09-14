@@ -1,4 +1,7 @@
 import Lemma.Bool.SEq.is.EqCast.of.Eq
+import torch.Tensor.unsqueeze
+import torch.Tensor.reshape
+import torch.Tensor.bmm
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.Tensor.Matmul.as.Bmm
 import Lemma.Tensor.ResizeUnsqueeze_Succ.as.UnsqueezeResize

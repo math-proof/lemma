@@ -2,6 +2,7 @@ import Lemma.Finset.All_EqCast.of.All_SEq.Ne_Empty
 import Lemma.Finset.Any_In.is.Ne_Empty
 import Lemma.Finset.Sum.of.All_Eq
 import Lemma.Tensor.Sum.as.Sum_Cast.of.Eq
+import torch.Tensor.sum
 open Finset Tensor
 
 

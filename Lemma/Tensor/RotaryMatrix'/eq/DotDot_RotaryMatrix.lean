@@ -1,4 +1,5 @@
 import Lemma.Fin.ToSplit.eq.Ite_Div_2
+import torch.Tensor.permute
 import Lemma.Nat.Delta.eq.Ite
 import Lemma.Tensor.Eq.is.All_EqGetS
 import Lemma.Tensor.EqMul0_0
@@ -15,7 +16,7 @@ import Lemma.Tensor.GetRotaryMatrix.eq.MulSin_Delta.of.Ge.Lt
 import Lemma.Tensor.GetRotaryMatrix'.eq.Ite_IteS
 import sympy.functions.special.tensor_functions
 import sympy.matrices.expressions.special
-import sympy.tensor.functions
+import torch.functions
 open Nat Tensor Fin
 
 

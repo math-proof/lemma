@@ -9,11 +9,10 @@ private lemma main
   (n : ℕ) (h : 0 < n)
   (i j : Fin n) :
 -- imply
-  (ShiftMatrix (α := α) n 0 (n - 1))[i, j] =
+  (ShiftMatrix (α := α) ⟨0, by omega⟩ ⟨n - 1, by omega⟩)[i, j] =
     (↑(KroneckerDelta (((i : ℕ) + 1) % n) (j : ℕ)) : Tensor α []) := by
 -- proof
-  have h := GetShiftMatrix.eq.Ite (α := α) n 0 (n - 1) i j
-  simp only [GetElem.getElem] at h ⊢
+  have h := GetShiftMatrix.eq.Ite (α := α) ⟨0, by omega⟩ ⟨n - 1, by omega⟩ i j
   rw [h]
   by_cases h1 : n = 1
   ·
@@ -22,7 +21,7 @@ private lemma main
     have hj : (j : Fin 1) = 0 := Fin.fin_one_eq_zero j
     subst hi
     subst hj
-    simp only [Delta.eq.Ite]
+    simp only [Nat.Delta.eq.Ite]
     simp
   ·
     have h2 : 1 < n := by omega

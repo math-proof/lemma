@@ -1,5 +1,5 @@
 import Lemma.Tensor.MapGetSlice.eq.GetSliceMap
-import sympy.tensor.functions
+import torch.functions
 open Tensor
 
 

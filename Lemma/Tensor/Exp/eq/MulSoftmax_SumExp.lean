@@ -1,5 +1,6 @@
 import Lemma.Tensor.Exp.eq.MulSoftmax_KeepdimSumExp
 import Lemma.Tensor.Mul_Keepdim.eq.Mul
+import torch.Tensor.sum
 open Tensor
 
 

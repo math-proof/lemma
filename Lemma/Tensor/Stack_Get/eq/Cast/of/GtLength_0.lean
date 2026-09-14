@@ -2,7 +2,7 @@ import Lemma.Bool.EqCast.of.SEq
 import Lemma.List.EqCons_Tail.of.GtLength_0
 import Lemma.Tensor.GtLength.of.GtLength_0
 import Lemma.Tensor.SEqStack_Get.of.GtLength_0
-import sympy.tensor.stack
+import torch.stack
 open Bool List Tensor
 
 

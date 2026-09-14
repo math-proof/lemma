@@ -1,4 +1,5 @@
 import Lemma.Tensor.ValDataGetToVector.eq.ValArraySliceData
+import torch.Tensor.prod
 open Tensor
 
 

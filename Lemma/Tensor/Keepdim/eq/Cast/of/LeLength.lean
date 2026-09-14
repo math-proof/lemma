@@ -1,5 +1,5 @@
 import sympy.tensor.Basic
-import sympy.tensor.functions
+import torch.functions
 
 
 @[main]

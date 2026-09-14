@@ -1,4 +1,5 @@
 import Lemma.Fin.Lt0Sum.of.All_Gt_0.Gt_0
+import torch.Tensor.prod
 import Lemma.List.Get.dvd.ProdTake.of.GtLength
 import Lemma.List.LengthSlice.eq.ProdTake.of.GtGet.GtLength
 import Lemma.List.MulLengthSlice.eq.ProdEraseIdx.of.GtGet.GtLength
@@ -27,6 +28,7 @@ import Lemma.Vector.GetGetSlice.eq.Get.of.GtGet.GtLength
 import Lemma.Vector.GetRepeat.eq.Get_Mod.of.Lt_Mul
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.GetSum.eq.Sum_Get
+import torch.Tensor.sum
 open Fin List Nat Real Tensor Vector
 
 

@@ -1,4 +1,6 @@
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
+import torch.Tensor.prod
+import torch.Tensor.permute
 import Lemma.List.Drop.eq.Nil.of.LeLength
 import Lemma.List.EqTake.of.LeLength
 import Lemma.List.ProdAppend.eq.MulProdS

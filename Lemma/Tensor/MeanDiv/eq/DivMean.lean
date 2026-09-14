@@ -1,6 +1,7 @@
 import Lemma.Tensor.SumDiv.eq.DivSum
 import Lemma.Tensor.Div.eq.Div_GetData_0
 import Lemma.Tensor.DivDiv
+import torch.Tensor.mean
 open Tensor
 
 

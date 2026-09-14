@@ -1,4 +1,5 @@
 import Lemma.Tensor.CosNeg.eq.Cos
+import torch.Tensor.permute
 import Lemma.Tensor.NegMul_Stack.eq.Mul_Stack_Neg
 import Lemma.Tensor.RotaryMatrix.eq.AppendHstackSMulSEye
 import Lemma.Tensor.SinNeg.eq.NegSin

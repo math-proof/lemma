@@ -1,4 +1,6 @@
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
+import torch.Tensor.reshape
+import torch.Tensor.prod
 import Lemma.List.EqProd_0.is.In0
 import Lemma.List.TailAppend.eq.AppendTail.of.Ne_Nil
 import Lemma.Nat.EqDivMul.of.Ne_0

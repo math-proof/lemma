@@ -1,4 +1,6 @@
 import Lemma.Tensor.GetPermute.as.PermuteGet.of.GtGet_0.LtAdd_1Length
+import torch.Tensor.sum
+import torch.Tensor.permute
 import Lemma.List.EraseIdxCons.eq.EraseIdx_Sub_1.of.Gt_0
 import Lemma.Nat.Lt.of.LtAdd
 import Lemma.List.PermuteCons.eq.Cons_Permute
@@ -14,7 +16,7 @@ import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.Eq
 import Lemma.Tensor.SumCast.as.Sum.of.Eq
 import Lemma.Tensor.SumCast.as.Sum.of.Eq
 import Lemma.Tensor.SumPermuteHead.as.Sum_0.of.GtLength
-import sympy.tensor.functions
+import torch.functions
 open Bool List Nat Tensor
 
 

@@ -2,7 +2,7 @@ import Lemma.Bool.SEq.is.Eq
 import Lemma.Tensor.Eq.is.All_EqGetS
 import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.GetSelect.as.SelectGet.of.GtGet_0.GtGet_Add_1.LtAdd_1Length
-import sympy.tensor.stack
+import torch.stack
 open Tensor Bool
 
 

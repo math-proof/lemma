@@ -1,6 +1,6 @@
 import Lemma.Tensor.EqStack_0'0
 import Lemma.Tensor.LeStackS.of.All_Le
-import sympy.tensor.stack
+import torch.stack
 open Tensor
 
 

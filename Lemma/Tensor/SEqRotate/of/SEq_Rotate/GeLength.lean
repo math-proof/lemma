@@ -1,4 +1,5 @@
 import stdlib.SEq
+import torch.Tensor.permute
 import Lemma.Tensor.SEqRotateRotate.of.GeLength
 import Lemma.Tensor.SEqRotateS.of.SEq
 import Lemma.Nat.EqSub_Sub.of.Ge

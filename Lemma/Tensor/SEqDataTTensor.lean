@@ -1,4 +1,6 @@
 import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
+import torch.Tensor.prod
+import torch.Tensor.permute
 import Lemma.List.EqPermute
 import Lemma.List.LengthSlice.eq.Min
 import Lemma.List.Permute__Neg1.eq.Swap.of.GtVal_0

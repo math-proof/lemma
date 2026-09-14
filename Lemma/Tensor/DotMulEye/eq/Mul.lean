@@ -1,4 +1,5 @@
 import Lemma.Bool.SEq.is.Eq
+import torch.Tensor.prod
 import Lemma.Nat.Delta.eq.Ite
 import Lemma.Tensor.DataCast.as.Data.of.Eq
 import Lemma.Tensor.Dot.eq.Stack_Sum_MulGetS

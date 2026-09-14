@@ -1,4 +1,7 @@
 import Lemma.Bool.Cast.of.SEq.Eq
+import torch.Tensor.sum
+import torch.Tensor.unsqueeze
+import torch.Tensor.repeat
 import Lemma.Bool.SEq.is.Eq
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq

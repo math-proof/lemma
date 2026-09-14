@@ -1,8 +1,7 @@
 import stdlib.SEq
 import sympy.Basic
 import sympy.tensor.Basic
-
-
+import torch.Tensor.sum
 @[main, cast]
 private lemma main
   [Add α] [Zero α]

@@ -1,4 +1,5 @@
 import Lemma.Tensor.NotInfiniteGetDataMul
+import torch.Tensor.permute
 import Lemma.Tensor.TMap.eq.MapT
 import Lemma.Tensor.GetData.eq.HeadDataGet.of.Lt
 import Lemma.Tensor.GetDot.eq.Dot_GetT

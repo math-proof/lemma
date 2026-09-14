@@ -1,5 +1,5 @@
 import sympy.tensor.Basic
-import sympy.tensor.stack
+import torch.stack
 import sympy.Basic
 
 

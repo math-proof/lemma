@@ -3,6 +3,7 @@ import Lemma.Nat.AddAdd.eq.Add_Add
 import Lemma.Tensor.EqSumStack
 import Lemma.Tensor.Sum.eq.Zero
 import Lemma.Tensor.SumStack.eq.AddSumSStack
+import torch.Tensor.sum
 open Nat Tensor
 
 

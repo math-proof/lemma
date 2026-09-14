@@ -1,6 +1,6 @@
 import Lemma.Tensor.GetMap.eq.MapGet
 import Lemma.Tensor.LengthMap.eq.Length
-import sympy.tensor.functions
+import torch.functions
 open Tensor
 
 

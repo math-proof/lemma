@@ -1,4 +1,5 @@
 import Lemma.Nat.Add
+import torch.Tensor.permute
 import Lemma.Nat.Le_Sub_1.of.Lt
 import Lemma.Nat.Lt.is.Le.Ne
 import Lemma.Tensor.SEqPermutePermute__Neg.of.Add.eq.SubLength_1

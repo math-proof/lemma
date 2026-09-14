@@ -4,7 +4,6 @@ import Lemma.Vector.GetDiv.eq.DivGet
 import Lemma.Vector.ExpAdd.eq.MulExpS
 import Lemma.Vector.Softmax.eq.Div_SumExp
 import Lemma.Vector.SumMul.eq.MulSum
-import sympy.tensor.functions
 open Rat Vector
 
 

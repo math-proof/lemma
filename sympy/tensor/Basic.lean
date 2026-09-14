@@ -71,8 +71,6 @@ def Tensor.length  (X : Tensor α shape)  : ℕ :=
   | [] => 0
   | length :: _ => length
 
-def Tensor.shape (_ : Tensor α s)  : List ℕ := s
-
 instance [Inhabited α] : Inhabited (Tensor α shape) where
   default := ⟨default⟩
 
@@ -144,17 +142,6 @@ instance : HAppend (Tensor α (b_z ++ m :: s)) (Tensor α (b_z ++ n :: s)) (Tens
     let b : List.Vector (List.Vector α (n * s.prod)) b_z.prod := cast (by simp) (B.data.splitAt b_z.length)
     ⟨cast (congrArg (List.Vector α) (by grind)) (List.Vector.map₂ HAppend.hAppend a b).flatten⟩
 
-/--
-[torch.hstack](https://docs.pytorch.org/docs/stable/generated/torch.hstack.html)
-
-Horizontal concatenation along the second axis. Rank ≥ 2 only (no 1D case).
--/
-def Tensor.hstack (A : Tensor α (d :: n :: s)) (B : Tensor α (d :: m :: s)) :
-    Tensor α (d :: (n + m) :: s) :=
-  let A : Tensor α ([d] ++ n :: s) := A
-  let B : Tensor α ([d] ++ m :: s) := B
-  A ++ B
-
 instance [LE α] : LE (Tensor α s) where
   le A B := A.data ≤ B.data
 
@@ -163,29 +150,6 @@ instance [LT α] : LT (Tensor α s) where
 
 def Tensor.OfVector (X : List.Vector (Tensor α s) n) : Tensor α (n :: s) :=
   ⟨(X.map Tensor.data).flatten⟩
-
-/--
-[torch.sum](https://docs.pytorch.org/docs/stable/generated/torch.sum.html)
-use (X.sum dim).keepdim to keep the dimension
--/
-def Tensor.sum [Add α] [Zero α] (X : Tensor α s) (dim : ℕ := s.length - 1) : Tensor α (s.eraseIdx dim) :=
-  ⟨cast (by simp; grind) ((X.data.splitAt dim).map fun x => (x.splitAt 1).sum).flatten⟩
-
-/--
-[torch.prod](https://docs.pytorch.org/docs/stable/generated/torch.prod.html)
-use (X.prod dim).keepdim to keep the dimension
--/
-def Tensor.prod [Mul α] [One α] (X : Tensor α s) (dim : ℕ := s.length - 1) : Tensor α (s.eraseIdx dim) :=
-  ⟨cast (by simp; grind) ((X.data.splitAt dim).map fun x => (x.splitAt 1).prod).flatten⟩
-
-/--
-[torch.mean](https://pytorch.org/docs/stable/generated/torch.mean.html)
-
-Compute the mean of a tensor along a given dimension.
--/
-def Tensor.mean [Add α] [Zero α] [Div α] [NatCast α] (X : Tensor α s) (dim : ℕ := s.length - 1) : Tensor α (s.eraseIdx dim) :=
-  let size := if h_dim : dim < s.length then s.get ⟨dim, h_dim⟩ else 1
-  X.sum dim / (size : α)
 
 /--
 index the tensor physically, i.e. calculate the (row-major (C-style)) index in the data vector
@@ -215,138 +179,6 @@ def Tensor.logicalIndices (index : ℕ) (shape : List ℕ) : List ℕ :=
     shape
   res
 
-/--
-[torch.reshape](https://docs.pytorch.org/docs/stable/generated/torch.reshape.html)
--/
-def Tensor.reshape (X : Tensor α s) (s' : List ℕ) (h : s.prod ∣ s'.prod) : Tensor α s' :=
-  ⟨cast (by rw [EqMulDiv.of.Dvd h]) (X.data.repeat (s'.prod / s.prod))⟩
-
-/--
-[torch.unsqueeze](https://docs.pytorch.org/docs/stable/generated/torch.unsqueeze.html)
-
-given :
-
-X : Tensor α [s₀, s₁, s₂, s₃, s₄, s₅, s₆, s₇, s₈, s₉]
-
-t' = X.unsqueeze 4
-
-t': Tensor α [s₀, s₁, s₂, s₃, 1, s₄, s₅, s₆, s₇, s₈, s₉]
-
-the following eqaulity holds:
-
-X[i₀, i₁, i₂, i₃, i₄, i₅, i₆, i₇, i₈, i₉] = t'[i₀, i₁, i₂, i₃, 0, i₄, i₅, i₆, i₇, i₈, i₉]
--/
-def Tensor.unsqueeze (X : Tensor α s) (dim : ℕ) : Tensor α (s.insertIdx dim 1) :=
-  X.reshape (s.insertIdx dim 1) (by simp [Prod.eq.ProdInsertIdx s dim])
-
-/--
-[torch.repeat_interleave](https://docs.pytorch.org/docs/stable/generated/torch.repeat_interleave.html)
-[numpy.repeat](https://numpy.org/doc/stable/reference/generated/numpy.repeat.html)
-
-given :
-
-X : Tensor α [s₀, s₁, s₂, s₃, s₄, s₅, s₆, s₇, s₈, s₉]
-
-t' = X.repeat 3 4
-
-t': Tensor α [s₀, s₁, s₂, s₃, s₄ * 3, s₅, s₆, s₇, s₈, s₉]
-
-the following eqaulity holds:
-∀ X : Fin 3,
-  X[i₀, i₁, i₂, i₃, i₄, i₅, i₆, i₇, i₈, i₉] = t'[i₀, i₁, i₂, i₃, i₄ + s₄ * X, i₅, i₆, i₇, i₈, i₉]
--/
-def Tensor.repeat (X : Tensor α s) (dim : Fin s.length) (n : ℕ) : Tensor α (s.set dim (n * s[dim])) :=
-  ⟨cast (by simp [ProdSet__Mul_Get.eq.MulProd_Mul_Prod.of.GtLength dim.isLt]) ((X.data.splitAt dim).map (·.repeat n)).flatten⟩
-
-def Tensor.rotate (X : Tensor α s) (i : ℕ): Tensor α (s.rotate i) :=
-  let k := i % s.length
-  let data : List.Vector α (List.drop k s ++ List.take k s).prod := cast (by simp) (X.data.splitAt k).transpose.flatten
-  ⟨cast (by rw [AppendDrop__Take.eq.Rotate s i]) data⟩
-
-def Tensor.permuteHead (X : Tensor α s) (size : ℕ) : Tensor α ((s.take size).rotate 1 ++ s.drop size) :=
-  let X : Tensor _ (s.take size) := ⟨X.data.splitAt size⟩
-  let X := X.rotate 1
-  ⟨cast (by simp_all) X.data.flatten⟩
-
-def Tensor.permuteTail (X : Tensor α s) (size : ℕ) : Tensor α (s.take (s.length - size) ++ (s.drop (s.length - size)).rotate (size ⊓ s.length - 1)) :=
-  let data : List.Vector (List.Vector α ((s.drop (s.length - size)).rotate (size ⊓ s.length - 1)).prod) (s.take (s.length - size)).prod := (X.data.splitAt (s.length - size)).map fun data =>
-    let X : Tensor _ (s.drop (s.length - size)) := ⟨data⟩
-    (X.rotate (size ⊓ s.length - 1)).data
-  ⟨cast (by simp_all) data.flatten⟩
-
-/--
-[torch.permute](https://docs.pytorch.org/docs/stable/generated/torch.permute.html)
--/
-def Tensor.permute (X : Tensor α s) (i : Fin s.length) (d : ℤ) : Tensor α (s.permute i d) :=
-  match d with
-  | .ofNat d =>
-    match d with
-    | 0 =>
-      cast (by simp [EqPermute]) X
-    | d + 1 =>
-      if h : i.val = 0 then
-        have := Permute.eq.AppendRotateTake___Drop.of.EqVal_0 h d.succ
-        cast (by simp_all) (X.permuteHead (d + 2))
-      else
-        have := ProdPermute.eq.MulProd_ProdAppend i d.succ
-        ⟨cast (by simp_all) ((X.data.splitAt i).map fun data => ((⟨data⟩ : Tensor α (s.drop i)).permuteHead (d + 2)).data).flatten⟩
-  | .negSucc d =>
-    if h : i.val = s.length - 1 then
-      have := Permute__Neg.eq.AppendTake__RotateDrop.of.Val.eq.SubLength_1 h d.succ
-      cast (by simp_all [NegSucc.eq.NegAdd_1]) (X.permuteTail (d + 2))
-    else
-      have h1 := ProdPermute__Neg.eq.MulProd_ProdDrop i d.succ
-      have h2 : (d + 2) ⊓ (↑i + 1) - 1 = (d + 1) ⊓ ↑i := by omega
-      ⟨cast (by simp_all [NegSucc.eq.NegCoeAdd_1]) ((⟨X.data.splitAt (i + 1)⟩ : Tensor (List.Vector α (s.drop (i + 1)).prod) (s.take (i + 1))).permuteTail (d + 2)).data.flatten⟩
-
-/--
-[torch.transpose](https://docs.pytorch.org/docs/stable/generated/torch.transpose.html)
--/
-def Tensor.transpose (X : Tensor α s) (i j : ℕ) : Tensor α (s.swap i j) :=
-  if h_eq : i = j then
-    cast (by simp_all [List.swap_self]) X
-  else if h : i ≥ s.length ∨ j ≥ s.length then
-    cast (by obtain hi | hj := h <;> simp_all) X
-  else
-    have h : i ⊔ j < s.length := by
-      simp_all
-    let args : ℕ × ℕ := if i > j then ⟨j, i⟩ else ⟨i, j⟩
-    have h_ite : (args : ℕ × ℕ) = if i > j then ⟨j, i⟩ else ⟨i, j⟩ := rfl
-    let ⟨i, j⟩ := args
-    have h_lt := Lt.of.Prod.eq.IteGt.Ne h_eq h_ite
-    have h : i ⊔ j < s.length := by
-      simp_all [Max.of.Prod.eq.IteGt h_ite]
-    have h_i : i < s.length := by
-      simp_all
-    have h_j : j < s.length := by
-      simp_all
-    let d := j - i
-    have h_j' : j < (s.permute ⟨i, h_i⟩ (d - 1)).length := by
-      simpa
-    cast
-      (by
-        apply UFn.of.Eq (f := Tensor α)
-        rw [PermutePermute.eq.Swap.of.Lt.GtLength h_j h_lt]
-        rw [Swap.of.Prod.eq.IteGt h_ite]
-      )
-      ((X.permute ⟨i, h_i⟩ (d - 1)).permute ⟨j, h_j'⟩ (-d))
-
-def Tensor.T (X : Tensor α s) : Tensor α (s.swap (s.length - 2) (s.length - 1)) :=
-  X.transpose (s.length - 2) (s.length - 1)
-
-postfix:1024 "ᵀ" => Tensor.T
-
-/--
-[torch.bmm](https://docs.pytorch.org/docs/stable/generated/torch.bmm.html)
--/
-def Tensor.bmm [Mul α] [Add α] [Zero α] (A : Tensor α (batch_size ++ [m, k])) (B : Tensor α (batch_size ++ [k, n])) : Tensor α (batch_size ++ [m, n]) :=
-  let A : Tensor α (batch_size ++ [m, 1, k]) := cast (by simp_all [InsertIdxAppend.eq.Append_InsertIdx]) (A.unsqueeze (batch_size.length + 1))
-  let A : Tensor α (batch_size ++ [m, n, k]) := cast (by simp) (A.repeat ⟨batch_size.length + 1, by simp⟩ n)
-  let B : Tensor α (batch_size ++ [n, k]) := cast (by simp_all [SwapAppend.eq.Append_Swap.of.LeLength.LeLength]) B.T
-  let B : Tensor α (batch_size ++ [1, n, k]) := cast (by simp_all [InsertIdxAppend.eq.Append_InsertIdx.of.LeLength]) (B.unsqueeze batch_size.length)
-  let B : Tensor α (batch_size ++ [m, n, k]) := cast (by simp) (B.repeat ⟨batch_size.length, by simp⟩ m)
-  cast (by simp_all [EraseIdxAppend.eq.Append_EraseIdx]) ((A * B).sum (batch_size.length + 2))
-
 def Tensor.map (f : α → β) (X : Tensor α s) : Tensor β s :=
   ⟨X.data.map f⟩
 
@@ -356,12 +188,6 @@ def Tensor.map₂ (f : α → β → γ) (X : Tensor α s) (Y : Tensor β s) : T
 
 instance : Coe α (Tensor α []) where
   coe x := ⟨[x], by simp⟩
-
-/--
-[torch.Tensor.item](https://docs.pytorch.org/docs/stable/generated/torch.Tensor.item.html)
--/
-def Tensor.item (X : Tensor α []) : α :=
-  X.data[0]
 
 instance [Coe α β] : Coe (Tensor α s) (Tensor β s) where
   coe X := X.map Coe.coe

@@ -1,4 +1,5 @@
 import Lemma.Tensor.Sum.eq.OfVectorMapToVector
+import torch.Tensor.sum
 open Tensor
 
 

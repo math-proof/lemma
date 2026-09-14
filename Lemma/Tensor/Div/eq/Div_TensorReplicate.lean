@@ -1,4 +1,5 @@
 import Lemma.Tensor.DataDiv.eq.DivDataS
+import torch.Tensor.prod
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Vector.Div.eq.Div_Replicate
 open Tensor Vector

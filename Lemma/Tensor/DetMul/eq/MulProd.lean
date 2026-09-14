@@ -1,4 +1,5 @@
 import Mathlib.Data.Matrix.Mul
+import torch.Tensor.prod
 import Lemma.Tensor.Det.eq.DetToMatrix
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Tensor.EqGetStack

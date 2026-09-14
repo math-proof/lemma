@@ -1,4 +1,5 @@
 import Lemma.Tensor.EqGetUnsqueeze_0
+import torch.Tensor.unsqueeze
 import Lemma.Tensor.GetOfVector.eq.Get
 import Lemma.Tensor.GetUnsqueeze.as.UnsqueezeGet.of.GtGet_0.Gt_0.GtLength_0
 import Lemma.Tensor.SEq.of.All_SEqGetS.Eq

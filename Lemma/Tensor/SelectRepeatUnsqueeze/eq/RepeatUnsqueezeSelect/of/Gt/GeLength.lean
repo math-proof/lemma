@@ -1,4 +1,6 @@
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
+import torch.Tensor.unsqueeze
+import torch.Tensor.repeat
 import Lemma.List.EraseIdxInsertIdx.eq.InsertIdxEraseIdx.of.Gt.GtLength
 import Lemma.List.EraseIdxSet.eq.SetEraseIdx.of.Gt
 import Lemma.Tensor.SEqRepeatS.of.SEq

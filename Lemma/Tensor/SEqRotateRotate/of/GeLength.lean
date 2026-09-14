@@ -1,4 +1,6 @@
 import Lemma.Vector.GetTranspose.eq.Get
+import torch.Tensor.prod
+import torch.Tensor.permute
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Lemma.List.EqRotateRotate.of.GeLength

@@ -5,9 +5,9 @@ import sympy.Basic
 | attributes | lemma |
 | :---: | :---: |
 | main | Nat.Min.eq.Zero.of.OrEqS_0 |
-| left | Nat.Min.eq.Zero.of.Eq_0 |
+| Or.inl | Nat.Min.eq.Zero.of.Eq_0 |
 -/
-@[main, left]
+@[main, Or.inl]
 private lemma main
   {n m : ℕ}
 -- given

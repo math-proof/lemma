@@ -1,4 +1,5 @@
 import Lemma.Tensor.BFn.eq.BFn_KeepdimTensorReplicateProdEraseIdx
+import torch.Tensor.prod
 open Tensor
 
 

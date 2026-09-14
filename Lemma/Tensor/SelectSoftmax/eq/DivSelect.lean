@@ -2,6 +2,7 @@ import Lemma.Nat.Div.of.Eq
 import Lemma.Tensor.SelectDiv.eq.DivSelectS
 import Lemma.Tensor.Softmax.eq.DivExp_KeepdimSumExp
 import Lemma.Tensor.Sum.eq.SelectKeepdimSum
+import torch.Tensor.sum
 open Nat Tensor
 
 

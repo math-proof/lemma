@@ -1,4 +1,5 @@
 import Lemma.Tensor.SEqSoftmaxS.of.SEq.Eq
+import torch.Tensor.permute
 import Lemma.Tensor.SEqPermutePermute.of.GtLength_Add
 import Lemma.Tensor.SEqPermuteS.of.SEq.Eq.Eq.GtLength
 import Lemma.Tensor.SoftmaxPermute.as.PermuteSoftmax.of.GtLength_Add

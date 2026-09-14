@@ -1,4 +1,4 @@
-import sympy.tensor.functions
+import torch.functions
 
 
 @[main]

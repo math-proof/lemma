@@ -1,4 +1,4 @@
-import sympy.tensor.functions
+import torch.functions
 import Lemma.List.EqEraseIdx.of.LeLength
 open List
 

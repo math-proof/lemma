@@ -1,4 +1,5 @@
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
+import torch.Tensor.prod
 import Lemma.Finset.Sum.of.All_Eq.Eq
 import Lemma.List.DropEraseIdx.eq.AppendDropTake.of.Ge
 import Lemma.List.DropEraseIdx.eq.Drop.of.Le
@@ -44,6 +45,7 @@ import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.GetSum.eq.Sum_Get
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import Lemma.Vector.Sum.of.All_Eq.Eq
+import torch.Tensor.sum
 open Bool Finset List Nat Tensor Vector Fin
 set_option maxHeartbeats 500000
 

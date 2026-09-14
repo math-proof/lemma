@@ -5,6 +5,7 @@ import Lemma.Vector.MapCast.as.Map.of.Eq
 import Lemma.Vector.SplitAtMap.eq.MapSplitAt
 import Lemma.Vector.TransposeMap.eq.MapTranspose
 import sympy.tensor.Basic
+import torch.Tensor.permute
 open List Vector
 
 

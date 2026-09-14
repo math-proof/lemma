@@ -1,4 +1,6 @@
 import Lemma.Nat.ModEq.of.EqMod
+import torch.Tensor.prod
+import torch.Tensor.permute
 import Lemma.Nat.ModEq.of.AddMul
 import Lemma.Nat.ModEq.of.EqAddMul
 import Lemma.Nat.Dvd_Mul

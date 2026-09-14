@@ -1,4 +1,5 @@
 import sympy.tensor.Basic
+import torch.Tensor.permute
 import Lemma.Tensor.SEqPermuteTailS.of.SEq
 open Tensor
 

@@ -1,4 +1,5 @@
 import Lemma.Bool.EqCast.of.SEq
+import torch.Tensor.prod
 import Lemma.Tensor.Eq.is.All_EqGetS
 import Lemma.Tensor.Softmax.eq.TensorSoftmaxData
 import Lemma.Tensor.Sum.eq.MkListSumData
@@ -9,6 +10,7 @@ import Lemma.Tensor.EqGet1_1
 import Lemma.Tensor.GetSum.as.SumGet.of.GtGet_0.Gt_0.GtLength
 import Lemma.Tensor.EqData1'1
 import Lemma.Tensor.GetSoftmax.eq.SoftmaxGet.of.GtGet_0.Gt_0.GtLength
+import torch.Tensor.sum
 open Tensor Vector Bool
 
 

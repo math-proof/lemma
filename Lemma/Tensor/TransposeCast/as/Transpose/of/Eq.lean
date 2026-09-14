@@ -1,6 +1,7 @@
 import stdlib.SEq
 import sympy.Basic
 import sympy.tensor.Basic
+import torch.Tensor.permute
 
 
 @[main, cast]

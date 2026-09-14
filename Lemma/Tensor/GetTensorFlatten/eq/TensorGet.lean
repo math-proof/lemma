@@ -1,4 +1,5 @@
 import Lemma.Tensor.Eq.is.EqDataS
+import torch.Tensor.prod
 import Lemma.Tensor.DataGet.eq.Get.of.EqData_Flatten
 import Lemma.Bool.UFn.of.Eq
 open Tensor Bool

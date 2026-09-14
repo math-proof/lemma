@@ -3,7 +3,8 @@ import Lemma.Tensor.Eq.is.ToMatrix
 import Lemma.Tensor.ToMatrixDot.eq.MulToMatrixS
 import Lemma.Tensor.ToMatrixEye.eq.One
 import sympy.matrices.expressions.special
-import sympy.tensor.functions
+import torch.eye
+import torch.functions
 open Tensor
 
 

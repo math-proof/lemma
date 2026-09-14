@@ -5,7 +5,7 @@ import Lemma.Tensor.DataSin.eq.SinData
 import Lemma.Tensor.DataSub.eq.SubDataS
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Vector.CosSub.eq.AddMulS
-import sympy.tensor.functions
+import torch.functions
 open Tensor Vector
 
 

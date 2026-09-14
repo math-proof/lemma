@@ -1,6 +1,8 @@
 import Lemma.Tensor.DataExp.eq.ExpData
+import torch.Tensor.prod
 import Lemma.Tensor.GtSumData_0.is.GtSum_0
 import Lemma.Vector.GtSumExp_0
+import torch.Tensor.sum
 open Tensor Vector
 
 

@@ -1,4 +1,5 @@
 import Lemma.Tensor.EqData0'0
+import torch.Tensor.prod
 import Lemma.Vector.EqGet0_0
 import Lemma.Vector.Le.is.All_Le
 open Tensor Vector

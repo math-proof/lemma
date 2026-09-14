@@ -1,4 +1,5 @@
 import Lemma.Tensor.LengthData.eq.Mul_Prod.of.GtLength_0
+import torch.Tensor.prod
 import Lemma.Nat.EqDivMul.of.Ne_0
 import Lemma.Nat.Ne_0
 import Lemma.Nat.EqMin.of.Le

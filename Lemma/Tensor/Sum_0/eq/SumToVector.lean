@@ -1,4 +1,5 @@
 import Lemma.Fin.Sum.of.All_Eq
+import torch.Tensor.sum
 import Lemma.Tensor.GetToVector.eq.Get
 import Lemma.Tensor.Sum_0.eq.Sum_Get
 import Lemma.Vector.Sum.eq.Sum_Get

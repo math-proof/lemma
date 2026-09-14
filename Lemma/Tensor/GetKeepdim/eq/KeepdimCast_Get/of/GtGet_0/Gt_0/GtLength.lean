@@ -1,4 +1,6 @@
 import Lemma.Tensor.LengthKeepdim.eq.Length.of.Gt_0
+import torch.Tensor.unsqueeze
+import torch.Tensor.repeat
 import Lemma.List.GetEraseIdx.eq.Get.of.Gt.GtLength
 import Lemma.List.GetTail.eq.Get_Add_1.of.GtLengthTail
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0

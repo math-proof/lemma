@@ -1,4 +1,6 @@
 import Lemma.Tensor.GetT.as.TGet
+import torch.Tensor.unsqueeze
+import torch.Tensor.repeat
 import Lemma.Tensor.GetUnsqueeze.as.UnsqueezeGet.of.GtGet_0.GtLength_0
 import Lemma.Tensor.GetRepeat.as.RepeatGet.of.GtGet_0.GtLength_0
 import Lemma.Tensor.GetSum.as.SumGet.of.GtGet_0.Gt_0.GtLength
@@ -17,6 +19,8 @@ import Lemma.Tensor.Repeat.of.Eq
 import Lemma.Tensor.Sum.of.Eq
 import Lemma.Tensor.Unsqueeze.of.Eq
 import Lemma.Tensor.GetMul.eq.MulGetS.of.GtGet_0.GtLength_0
+import torch.Tensor.bmm
+import torch.Tensor.sum
 open Bool Fin List Nat Tensor
 set_option maxHeartbeats 500000
 

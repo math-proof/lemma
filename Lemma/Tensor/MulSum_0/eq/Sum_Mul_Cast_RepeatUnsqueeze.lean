@@ -1,4 +1,6 @@
 import Lemma.Bool.EqCast.of.SEq
+import torch.Tensor.unsqueeze
+import torch.Tensor.repeat
 import Lemma.Fin.All_EqUFnS.of.All_Eq
 import Lemma.Nat.EqMod_1'0
 import Lemma.Tensor.EqGetUnsqueeze_0
@@ -8,6 +10,7 @@ import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
 import Lemma.Tensor.GetRepeat_0.as.Get_Mod_Get.of.GtMul_Get.GtLength_0
 import Lemma.Tensor.MulStack.eq.Stack_Mul
 import Lemma.Tensor.MulSumStack.eq.SumStack_Mul
+import torch.Tensor.sum
 open Fin Nat Tensor Bool
 
 

@@ -56,7 +56,7 @@ import Lemma.Rat.Div.eq.One.of.Ne_0
 import Lemma.Rat.DivAdd.eq.AddDivS
 import Lemma.Rat.DivSquareSub.eq.DivSubAddDivS.Ne_0.Ne_0
 import Lemma.Rat.DivSub.eq.SubDivS
-import Lemma.Rat.EqMul.is.Eq_Div.of.Ne_0
+import Lemma.Rat.Eq_Div.is.EqMul.of.Ne_0
 import Lemma.Rat.GtInv_0.is.Gt_0
 import Lemma.Rat.Lt0Div.is.Lt0Mul
 import Lemma.Rat.MulDivS.eq.One.of.Ne_0.Ne_0

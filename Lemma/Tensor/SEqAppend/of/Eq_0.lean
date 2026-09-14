@@ -1,4 +1,5 @@
 import Lemma.Vector.EqHeadSplitAt_0
+import torch.Tensor.prod
 import Lemma.Vector.GetMap₂.eq.BFnGetS
 import Lemma.Vector.Head.eq.Get_0
 import Lemma.Vector.Get.of.Eq.Lt

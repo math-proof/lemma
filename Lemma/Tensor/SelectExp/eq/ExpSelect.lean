@@ -8,7 +8,7 @@ import Lemma.Vector.ExpCast.as.Exp.of.Eq
 import Lemma.Vector.ExpFlatten.eq.FlattenExp
 import Lemma.Vector.ExpGetSlice.eq.GetSliceExp
 import Lemma.Vector.ExpSplitAt.eq.SplitAtExp
-import sympy.tensor.functions
+import torch.functions
 open Bool List Tensor Vector
 
 

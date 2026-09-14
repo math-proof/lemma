@@ -521,6 +521,14 @@ partial def List.Not (list : List String) : List String :=
       panic! s!"Expected the operator 'eq' or 'ne', got: {list[1]!}"
 
 
+def List.is.mt (list : List String) (parity : List Bool := []) : List String :=
+  list.decomposeOf parity fun list _ =>
+    let i := list.idxOf "is"
+    let ⟨lhs, rhs⟩ := list.splitAt i
+    let lhs := lhs.Not
+    let rhs := rhs.tail.Not
+    lhs ++ "is" :: rhs
+
 def List.mt (list : List String) (constructorOrder : Bool := false) (index : ℕ := 0) : Name :=
   let i := list.idxOf "of"
   let ⟨first, ofPart⟩ := list.splitAt i
@@ -607,6 +615,21 @@ def Expr.mt (type value : Expr) (parity : ℕ := 0) : ℕ × Expr × Expr :=
     h
   ])
   (index, (type, mp value).map (telescope Expr.forallE) (telescope .lam))
+
+def Expr.is.mt (type value : Expr) : Expr × Expr :=
+  let ⟨binders, type⟩ := type.decompose_forallE
+  let ⟨us, lhs, rhs⟩ := type.decomposeIff
+  let newType := (Expr.const `Iff us).mkApp [lhs.Not, rhs.Not]
+  let args := ((List.range binders.length).map fun i => .bvar i).reverse
+  let h := value.mkApp args
+  let newValue := (Expr.const `Iff.not us).mkApp [lhs, rhs, h]
+  let telescope := fun lam body =>
+    binders.foldl
+      (fun body ⟨binderName, binderType, binderInfo⟩ =>
+        lam binderName binderType body binderInfo
+      )
+      body
+  (newType, newValue).map (telescope Expr.forallE) (telescope .lam)
 
 
 def constructor_order (declName : Name) : CoreM Bool := do
@@ -704,6 +727,32 @@ initialize registerBuiltinAttribute {
     }
 }
 
+/--
+`@[is.mt]` attribute automatically generates the mt version (both sides negated) of an equivalence theorem.
+Usage:
+```lean
+@[is.mt]
+theorem Section.LHS.is.RHS {a : α} {b : β} : lhs a b ↔ rhs a b := proof
+-- Generates:
+theorem Section.NotLHS.is.NotRHS {a : α} {b : β} : ¬lhs a b ↔ ¬rhs a b := (Section.LHS.is.RHS a b).not
+```
+-/
+initialize registerBuiltinAttribute {
+  name := `is.mt
+  descr := "Automatically generate the mt version (both sides negated) of an equivalence theorem"
+  applicationTime := .afterCompilation
+  add := fun declName stx kind => do
+    let decl ← getConstInfo declName
+    let levelParams := decl.levelParams
+    let ⟨type, value⟩ := Expr.is.mt decl.type (.const declName (levelParams.map .param))
+    addAndCompile <| .thmDecl {
+      name := (List.is.mt (← getEnv).moduleTokens).foldl Name.str default |>.lemmaName declName
+      levelParams := levelParams
+      type := type
+      value := value
+    }
+}
+
 def List.disjunction (list : List String) (left : Bool := true): Name :=
   let i := list.idxOf "of"
   let ⟨first, ofPart⟩ := list.splitAt i
@@ -770,7 +819,7 @@ def Expr.disjunction (type value : Expr) (parity : ℕ := 0) (left : Bool := tru
   (index, (type, value).map (telescope Expr.forallE) (telescope .lam))
 
 initialize registerBuiltinAttribute {
-  name := `left
+  name := `Or.inl
   descr := "Automatically generate the left introduction of a disjunction theorem"
   applicationTime := .afterCompilation
   add := fun declName stx kind => do
@@ -787,7 +836,7 @@ initialize registerBuiltinAttribute {
 }
 
 initialize registerBuiltinAttribute {
-  name := `right
+  name := `Or.inr
   descr := "Automatically generate the right introduction of a disjunction theorem"
   applicationTime := .afterCompilation
   add := fun declName stx kind => do
@@ -798,6 +847,121 @@ initialize registerBuiltinAttribute {
     addAndCompile <| .thmDecl {
       name := ((← getEnv).moduleTokens.right).lemmaName declName
       levelParams := levelParams
+      type := type
+      value := value
+    }
+}
+
+/-- Split module tokens at the `"of"` segment into a prefix and the `of · givens` tail. -/
+def List.splitAtOf (list : List String) : List String × List String :=
+  list.splitAt (list.idxOf "of")
+
+/--
+`[Section, …, Type1, Type2, "of", Givens] → [Section, …, Type1, "of", Givens]`:
+drop the second conjunct segment of a conjunctive conclusion.
+-/
+def List.andLeftTokens (list : List String) : List String :=
+  let (pre, rest) := list.splitAtOf
+  pre.dropLast ++ rest
+
+/--
+`[Section, …, Type1, Type2, "of", Givens] → [Section, …, Type2, "of", Givens]`:
+drop the first conjunct segment of a conjunctive conclusion.
+-/
+def List.andRightTokens (list : List String) : List String :=
+  let (pre, rest) := list.splitAtOf
+  pre.dropLast.dropLast ++ [pre.getLast!] ++ rest
+
+/-- Peel consecutive top-level `letE`s (term-level `have`/`let` in the statement). -/
+def Lean.Expr.decompose_letE (lets : List (Name × Lean.Expr × Lean.Expr) := []) :
+    Lean.Expr → List (Name × Lean.Expr × Lean.Expr) × Lean.Expr
+  | .letE name ty val body _ => body.decompose_letE (⟨name, ty, val⟩ :: lets)
+  | e => (lets, e)
+
+/--
+Given a theorem `value : ∀ binders, (have/let …); A ∧ B`, produce the projected
+theorem `∀ binders, (have/let …); A` (`left = true`) or `… B` (`left = false`),
+proved by the anonymous projection `.1` / `.2`. The statement's term-level
+`have`/`let` bindings are preserved in the generated type.
+-/
+def Expr.andProj (type value : Expr) (left : Bool) : Expr × Expr :=
+  let (binders, rest) := type.decompose_forallE
+  let (lets, concl) := rest.decompose_letE
+  let (a, b) :=
+    match concl with
+    | .app (.app (.const ``And _) a) b => (a, b)
+    | _ => panic! "And projection expects a conjunctive conclusion `A ∧ B`"
+  let projected := if left then a else b
+  let withLets :=
+    lets.foldl (fun body ⟨name, ty, val⟩ => Expr.letE name ty val body false) projected
+  let typeTelescope :=
+    binders.foldl (fun body ⟨name, ty, bi⟩ => Expr.forallE name ty body bi) withLets
+  let args := (List.range binders.length).map Expr.bvar |>.reverse
+  let applied := value.mkApp args
+  let proj := Expr.proj ``And (if left then 0 else 1) applied
+  let valueTelescope :=
+    binders.foldl (fun body ⟨name, ty, bi⟩ => Expr.lam name ty body bi) proj
+  (typeTelescope, valueTelescope)
+
+/--
+Generated declaration name for an `And.left`/`And.right` projection.
+
+`Section.Type1.Type2.of.Givens` maps to `Section.Type1.of.Givens` (left) or
+`Section.Type2.of.Givens` (right). When `Type1 = Type2` both targets coincide, so a
+`.fst` / `.snd` suffix is appended.
+-/
+def Name.andProjName (moduleTokens : List String) (declName : Name) (left : Bool) : Name :=
+  let leftTokens := moduleTokens.andLeftTokens
+  let rightTokens := moduleTokens.andRightTokens
+  let base := (if left then leftTokens else rightTokens).foldl Name.str default
+  let base :=
+    if leftTokens == rightTokens then
+      base.str (if left then "fst" else "snd")
+    else
+      base
+  base.lemmaName declName
+
+/--
+`@[And.left]` extracts the left conjunct of a theorem's conjunctive conclusion.
+
+`theorem Section.Type1.Type2.of.Givens (…): A ∧ B` generates
+`theorem Section.Type1.of.Givens (…): A`, proved by `.1`.
+When `Type1 = Type2` the generated name is `Section.Type1.of.Givens.fst`.
+-/
+initialize registerBuiltinAttribute {
+  name := `And.left
+  descr := "Extract the left conjunct of the conclusion (Type1.Type2.of.G → Type1.of.G, .fst when Type1 = Type2)"
+  applicationTime := .afterCompilation
+  add := fun declName stx kind => do
+    let decl ← getConstInfo declName
+    let (type, value) :=
+      Expr.andProj decl.type (.const declName (decl.levelParams.map .param)) true
+    addAndCompile <| .thmDecl {
+      name := Name.andProjName (← getEnv).moduleTokens declName true
+      levelParams := decl.levelParams
+      type := type
+      value := value
+    }
+}
+
+/--
+`@[And.right]` extracts the right conjunct of a theorem's conjunctive conclusion.
+
+`theorem Section.Type1.Type2.of.Givens (…): A ∧ B` generates
+`theorem Section.Type2.of.Givens (…): B`, proved by `.2`.
+When `Type1 = Type2` the generated name is `Section.Type2.of.Givens.snd`.
+-/
+initialize registerBuiltinAttribute {
+  name := `And.right
+  descr := "Extract the right conjunct of the conclusion (Type1.Type2.of.G → Type2.of.G, .snd when Type1 = Type2)"
+  applicationTime := .afterCompilation
+  add := fun declName stx kind => do
+    let decl ← getConstInfo declName
+    let (type, value) :=
+      Expr.andProj decl.type (.const declName (decl.levelParams.map .param)) false
+    addAndCompile <| .thmDecl {
+      name := Name.andProjName (← getEnv).moduleTokens declName false
+      levelParams := decl.levelParams
       type := type
       value := value
     }

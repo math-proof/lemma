@@ -1,4 +1,6 @@
 import Lemma.Vector.EqHeadSplitAt_0
+import torch.Tensor.prod
+import torch.Tensor.permute
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul

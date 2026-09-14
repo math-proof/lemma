@@ -1,4 +1,6 @@
 import Lemma.Nat.EqMulDiv.of.Dvd
+import torch.Tensor.reshape
+import torch.Tensor.prod
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Vector.MapCast.as.Map.of.Eq
 import Lemma.Vector.RepeatMap.eq.MapRepeat

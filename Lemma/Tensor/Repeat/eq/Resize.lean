@@ -1,4 +1,5 @@
 import Lemma.Bool.SEq.is.Eq
+import torch.Tensor.repeat
 import Lemma.Tensor.Repeat.as.Resize.of.GtLength
 open Bool Tensor
 

@@ -1,4 +1,5 @@
 import Lemma.Nat.LtAdd.of.Lt_Sub
+import torch.Tensor.repeat
 import Lemma.Tensor.GetRepeat.as.RepeatGet.of.GtGet_0.GtVal_0
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.LengthRepeat.eq.Get_0.of.GtVal_0

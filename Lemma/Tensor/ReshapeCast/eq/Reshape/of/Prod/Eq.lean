@@ -1,4 +1,6 @@
 import sympy.tensor.Basic
+import torch.Tensor.prod
+import torch.Tensor.reshape
 
 
 @[main, comm]

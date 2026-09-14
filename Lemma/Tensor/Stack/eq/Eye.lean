@@ -1,5 +1,6 @@
 import sympy.functions.special.tensor_functions
 import sympy.matrices.expressions.special
+import torch.eye
 import sympy.Basic
 
 

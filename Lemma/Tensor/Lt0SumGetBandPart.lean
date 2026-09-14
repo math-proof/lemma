@@ -1,5 +1,5 @@
 import Lemma.Tensor.Lt0SumGetBandPart.of.LeSub
-import sympy.matrices.expressions.special
+import torch.Tensor.sum
 open Tensor
 
 

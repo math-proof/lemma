@@ -1,4 +1,5 @@
 import Lemma.List.Permute.of.Eq.Val.Eq
+import torch.Tensor.permute
 import Lemma.List.EqSwap.of.OrLeSLength
 import Lemma.List.Swap
 import Lemma.List.Swap.eq.PermutePermute.of.Lt.GtLength

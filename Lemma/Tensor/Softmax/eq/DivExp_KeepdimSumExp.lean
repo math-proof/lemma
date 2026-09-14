@@ -1,4 +1,5 @@
-import sympy.tensor.functions
+import torch.functions
+import torch.Tensor.sum
 import sympy.Basic
 
 

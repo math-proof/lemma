@@ -2,7 +2,7 @@ import Lemma.Nat.Eq_0.is.EqSquare_0
 import Lemma.Int.SquareSub.eq.SubAddSquareS_MulMul2
 import Lemma.Int.AddSub.eq.SubAdd
 import Lemma.Int.Sub.eq.Zero.is.Eq
-import Lemma.Rat.EqMul.is.Eq_Div.of.Ne_0
+import Lemma.Rat.Eq_Div.is.EqMul.of.Ne_0
 import Lemma.Nat.Square.eq.Mul
 import Lemma.Rat.Add_Inv.eq.DivAddMul.of.Ne_0
 open Rat Nat Int

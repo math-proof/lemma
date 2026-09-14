@@ -14,6 +14,7 @@ import Lemma.Tensor.GetHstack.eq.Get_Sub.of.GtAdd.Ge
 import Lemma.Tensor.SEqGetS.of.SEq.GtLength
 import sympy.matrices.determinant
 import sympy.matrices.expressions.special
+import torch.eye
 open Bool Equiv Matrix Nat Tensor
 set_option maxHeartbeats 800000
 

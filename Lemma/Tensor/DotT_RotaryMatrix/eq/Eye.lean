@@ -1,4 +1,5 @@
 import Lemma.Nat.Sub.eq.Zero
+import torch.Tensor.permute
 import Lemma.Tensor.DotT.eq.RotaryMatrixSub
 import Lemma.Tensor.RotaryMatrix0.eq.Eye
 open Nat Tensor

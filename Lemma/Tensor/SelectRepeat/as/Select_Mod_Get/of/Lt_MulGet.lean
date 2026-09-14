@@ -1,4 +1,5 @@
 import Lemma.Nat.LtMod.of.Lt_Mul
+import torch.Tensor.repeat
 import Lemma.Tensor.SelectRepeat.as.Select_Mod_Get.of.Lt_MulGet.GtLength
 open Tensor Nat
 

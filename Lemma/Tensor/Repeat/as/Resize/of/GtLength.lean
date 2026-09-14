@@ -1,4 +1,5 @@
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
+import torch.Tensor.repeat
 import Lemma.List.LengthSet.eq.Length
 import Lemma.List.Set_0.eq.Cons_Tail.of.GtLength_0
 import Lemma.Nat.EqDivMul.of.Ne_0

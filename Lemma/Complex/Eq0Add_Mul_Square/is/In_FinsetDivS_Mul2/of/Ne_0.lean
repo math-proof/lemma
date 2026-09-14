@@ -1,7 +1,7 @@
 import Lemma.Complex.EqSquare.is.In_FinsetSqrt_NegSqrt
 import Lemma.Int.Sub.eq.Zero.is.Eq
 import Lemma.Nat.Mul.eq.Zero.is.OrEqS_0
-import Lemma.Rat.EqMul.is.Eq_Div.of.Ne_0
+import Lemma.Rat.Eq_Div.is.EqMul.of.Ne_0
 import Lemma.Set.In_Finset.is.OrEqS
 open Int Nat Rat Complex Set
 

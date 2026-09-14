@@ -1,4 +1,5 @@
 import Lemma.Tensor.Dot_T.as.Dot
+import torch.Tensor.permute
 import Lemma.Tensor.GetDot.eq.DotGet
 import Lemma.Tensor.GetGetSlice.eq.Get_Add.of.GtSubMin
 open Tensor

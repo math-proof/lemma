@@ -1,4 +1,5 @@
 import Lemma.Tensor.GtLength_0.of.GtLength_0
+import torch.Tensor.prod
 import Lemma.Tensor.LengthData.eq.Prod
 import Lemma.List.Prod.eq.Mul_ProdTail.of.GtLength_0
 open Tensor List

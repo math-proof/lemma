@@ -1,7 +1,7 @@
 import Lemma.Tensor.CosSub.eq.AddMulS
 import Lemma.Tensor.GetAdd.eq.AddGetS
 import Lemma.Tensor.GetMul.eq.MulGetS
-import sympy.tensor.functions
+import torch.functions
 open Tensor
 
 

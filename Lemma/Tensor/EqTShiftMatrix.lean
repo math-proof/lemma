@@ -1,4 +1,5 @@
 import Lemma.Nat.Delta
+import torch.Tensor.permute
 import Lemma.Tensor.EqGetT
 import Lemma.Tensor.GetShiftMatrix.eq.Ite
 open Nat Tensor
@@ -8,19 +9,20 @@ set_option maxHeartbeats 1000000
 @[main]
 private lemma main
   [AddMonoidWithOne α] [CharZero α]
-  (n i₀ j₀ : ℕ) :
+  {n : ℕ}
+  (i₀ j₀ : Fin n) :
 -- imply
-  (ShiftMatrix (α := α) n i₀ j₀)ᵀ = ShiftMatrix n j₀ i₀ := by
+  (ShiftMatrix (α := α) i₀ j₀)ᵀ = ShiftMatrix (α := α) j₀ i₀ := by
 -- proof
-  let P := ShiftMatrix (α := α) n i₀ j₀
-  let Q := ShiftMatrix (α := α) n j₀ i₀
+  let P := ShiftMatrix (α := α) i₀ j₀
+  let Q := ShiftMatrix (α := α) j₀ i₀
   apply Eq.of.All_EqGetS.fin
   intro i
   apply Eq.of.All_EqGetS.fin
   intro j
   apply (EqGetT P j i).trans
-  have hL := GetShiftMatrix.eq.Ite (α := α) n i₀ j₀ j i
-  have hR := GetShiftMatrix.eq.Ite (α := α) n j₀ i₀ i j
+  have hL := GetShiftMatrix.eq.Ite (α := α) i₀ j₀ j i
+  have hR := GetShiftMatrix.eq.Ite (α := α) j₀ i₀ i j
   simp only [GetElem.getElem] at hL hR ⊢
   rw [hL]
   erw [hR]

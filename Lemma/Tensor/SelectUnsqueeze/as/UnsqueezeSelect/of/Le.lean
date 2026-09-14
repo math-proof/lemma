@@ -1,4 +1,6 @@
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
+import torch.Tensor.unsqueeze
+import torch.Tensor.prod
 import Lemma.Finset.Prod.eq.MulProdS
 import Lemma.List.DropInsertIdx.eq.Drop.of.Lt
 import Lemma.List.EraseIdxInsertIdx.eq.InsertIdxEraseIdx.of.Lt.GeLength

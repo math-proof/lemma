@@ -1,4 +1,5 @@
 import Lemma.Tensor.SEqPermuteHeadS.of.SEq
+import torch.Tensor.permute
 open Tensor
 
 

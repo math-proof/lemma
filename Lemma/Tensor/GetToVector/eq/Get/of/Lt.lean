@@ -1,4 +1,4 @@
-import sympy.tensor.stack
+import torch.stack
 import Lemma.Tensor.GetToVector.eq.Get
 open Tensor
 

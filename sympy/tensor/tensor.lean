@@ -1,4 +1,17 @@
 import sympy.tensor.Basic
+import torch.Tensor.select
+import torch.Tensor
+import torch.Tensor.shape
+import torch.Tensor.sum
+import torch.Tensor.mean
+import torch.Tensor.bmm
+import torch.Tensor.prod
+import torch.Tensor.reshape
+import torch.Tensor.unsqueeze
+import torch.Tensor.repeat
+import torch.Tensor.permute
+import torch.Tensor.item
+import torch.hstack
 import Lemma.Bool.HEq.of.All_HEq
 import Lemma.Nat.Le_Sub_1.of.Lt
 import Lemma.Nat.LtAddS.is.Lt
@@ -21,8 +34,6 @@ import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.GtLength
 import Lemma.List.GetEraseIdx.eq.Get.of.Gt.GtLength
 import Lemma.List.In_CartesianProduct.of.In_CartesianProductCons
 import Lemma.List.Lt.of.In_CartesianProductCons
-import Lemma.List.ProdSet.eq.MulProd_Mul_Prod.of.GtLength
-import Lemma.List.MulLengthSlice.eq.ProdEraseIdx.of.GtGet.GtLength
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.GtLength_0.of.GtLength_0
 import Lemma.Tensor.Eq.is.EqDataS
@@ -44,18 +55,6 @@ def Tensor.get (X : Tensor α s) (i : Fin X.length) : Tensor α s.tail :=
   have h_EqHeadD := HeadD.eq.Get_0.of.GtLength_0 h_GtLength_0 1
   have := Get_0.eq.Length.of.GtLength_0 h_GtLength_0 X
   X.toVector[i]
-
-/--
-[torch.select](https://docs.pytorch.org/docs/stable/generated/torch.select.html)
--/
-def Tensor.select (X : Tensor α s) (offset : Fin s.length) (i : Fin s[offset]) : Tensor α (s.eraseIdx offset) :=
-  ⟨cast (congrArg (List.Vector α) (MulLengthSlice.eq.ProdEraseIdx.of.GtGet.GtLength.simp offset.isLt i.isLt)) ((X.data.splitAt (offset + 1))[i : (s.take (offset + 1)).prod : s[offset]].flatten)⟩
-
-/--
-[numpy.resize](https://numpy.org/doc/stable/reference/generated/numpy.resize.html)
--/
-def Tensor.resize [Zero α] (X : Tensor α s) (dim : Fin s.length) (n : ℕ) : Tensor α (s.set dim n) :=
-  ⟨cast (congrArg (List.Vector α) (MulProd_Mul_Prod.eq.ProdSet.of.GtLength dim.isLt n)) ((X.data.splitAt dim).map (·.resize (n * (s.drop dim.succ).prod))).flatten⟩
 
 instance : GetElem (Tensor α s) ℕ (Tensor α s.tail) fun X i => i < X.length where
   getElem X i h := X.get ⟨i, h⟩

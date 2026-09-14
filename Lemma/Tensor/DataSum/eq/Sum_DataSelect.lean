@@ -1,5 +1,6 @@
 import Lemma.Tensor.DataSum.eq.Sum_Data
 import Lemma.Tensor.Sum.eq.Sum_Select
+import torch.Tensor.sum
 open Tensor
 
 

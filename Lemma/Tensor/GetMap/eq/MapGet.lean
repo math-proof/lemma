@@ -1,4 +1,5 @@
 import Lemma.List.Prod.eq.Foldr
+import torch.Tensor.prod
 import Lemma.Tensor.DataGet.eq.GetUnflattenData
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Vector.GetUnflatten.eq.Get_AddMul

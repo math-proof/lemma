@@ -54,6 +54,7 @@ export const token2classname = Object.freeze({
     '∩': 'Lean_cap',
     '\\': 'Lean_setminus',
     '|>.': 'LeanMethodChaining',
+    '<|': 'Lean_lazy',
     '⊆': 'Lean_subseteq',
     '⊂': 'Lean_subset',
     '⊇': 'Lean_supseteq',
@@ -534,7 +535,8 @@ export class Lean extends IndentedNode {
                         par instanceof Lean_namespace ||
                         par instanceof Lean_def ||
                         par instanceof Lean_theorem ||
-                        par instanceof Lean_lemma
+                        par instanceof Lean_lemma ||
+                        par instanceof LeanAttribute
                     )
                         return this.parent.insert_word(this, token);
                     p = p.parent;
@@ -602,6 +604,10 @@ export class Lean extends IndentedNode {
                     self.start_idx++;
                     return this.push_binary(Lean_le);
                 }
+                if (tokens[self.start_idx + 1] === '|') {
+                    self.start_idx++;
+                    return this.push_arithmetic('<|');
+                }
                 if (self.start_idx + 2 < count && tokens[self.start_idx + 1] === ';' && tokens[self.start_idx + 2] === '>') {
                     let p = self.start_idx - 1;
                     while (p >= 0 && tokens[p] === ' ') --p;
@@ -638,6 +644,27 @@ export class Lean extends IndentedNode {
                 return this.push_binary(Lean_le);
             case '≥':
                 return this.push_binary(Lean_ge);
+            case '⟂':
+                if (tokens[self.start_idx + 1] === 'ᵢ') {
+                    // `⟂ᵢ[𝕡]` — independence with a measure modifier; the modifier is
+                    // required by Lean's notation but elided in LaTeX (like `=ᵐ[ν]`)
+                    self.start_idx++; // consume `ᵢ`
+                    let modifier = '';
+                    if (tokens[self.start_idx + 1] === '[') {
+                        self.start_idx += 2; // skip `[`, point at first char inside
+                        const startIdx = self.start_idx;
+                        while (self.start_idx < tokens.length && tokens[self.start_idx] !== ']') self.start_idx++;
+                        modifier = tokens.slice(startIdx, self.start_idx).join('');
+                        if (self.start_idx < tokens.length) self.start_idx++; // skip `]`
+                        self.start_idx--; // loop will increment
+                    }
+                    const caret = this.push_binary(LeanIndep);
+                    let p = caret;
+                    while (p && !(p instanceof LeanIndep)) p = p.parent;
+                    if (p) p.modifier = modifier;
+                    return caret;
+                }
+                return this.parent.insert_word(this, token);
             case '=':
                 if (tokens[self.start_idx + 1] === '>') {
                     self.start_idx++;
@@ -2079,6 +2106,28 @@ class LeanPairedGroup extends Closable(LeanUnary) {
         return true;
     }
 
+    /**
+     * After the closing delimiter, a new token/space-separated arg arrives.
+     * Push it into the parent's arg list (or wrap self+new in LeanArgsSpaceSeparated),
+     * so tokens like `hsec_y` after `«y.bvar»` are not swallowed.
+     */
+    append($new, _func) {
+        const {indent, level} = this;
+        const caret = new LeanCaret(indent, level);
+        if (typeof $new === 'string') {
+            const Ctor = LEAN_CLASSES[$new];
+            const node = new Ctor(caret, indent, level);
+            if (this.parent instanceof LeanArgsSpaceSeparated) {
+                this.parent.push(node);
+            } else {
+                this.arg = new LeanArgsSpaceSeparated([this.arg, node], indent, level);
+            }
+            return caret;
+        }
+        this.parent.replace(this, new LeanArgsSpaceSeparated([this, $new], indent, level));
+        return $new;
+    }
+
     is_indented() {
         const parent = this.parent;
         return !(
@@ -2115,8 +2164,7 @@ class LeanPairedGroup extends Closable(LeanUnary) {
     set_line(line) {
         this.line = line;
         const arg = this.arg;
-        const hasNewline =
-            arg instanceof LeanArgsCommaNewLineSeparated || arg instanceof LeanStatements;
+        const hasNewline = arg instanceof LeanStatements;
         if (hasNewline) line++;
         line = arg.set_line(line);
         if (hasNewline) line++;
@@ -2175,23 +2223,6 @@ export class LeanParenthesis extends LeanPairedGroup {
 
     get operator() {
         return '()';
-    }
-
-    append($new, _func) {
-        const {indent, level} = this;
-        const caret = new LeanCaret(indent, level);
-        if (typeof $new === 'string') {
-            const Ctor = LEAN_CLASSES[$new];
-            const node = new Ctor(caret, indent, level);
-            if (this.parent instanceof LeanArgsSpaceSeparated) {
-                this.parent.push(node);
-            } else {
-                this.arg = new LeanArgsSpaceSeparated([this.arg, node], indent, level);
-            }
-            return caret;
-        }
-        this.parent.replace(this, new LeanArgsSpaceSeparated([this, $new], indent, level));
-        return $new;
     }
 
     argFormat() {
@@ -2442,7 +2473,8 @@ class LeanAngleBracket extends LeanPairedGroup {
             p instanceof LeanColon || 
             p instanceof LeanArgsCommaSeparated ||
             p instanceof LeanBitOr | 
-            p instanceof LeanWith
+            p instanceof LeanWith ||
+            p instanceof LeanAngleBracket
         );
     }
 
@@ -2458,11 +2490,7 @@ class LeanAngleBracket extends LeanPairedGroup {
     }
 
     strArgs() {
-        let arg = this.arg;
-        if (arg instanceof LeanArgsCommaNewLineSeparated) {
-            arg = `\n${arg}\n${' '.repeat(this.indent)}`;
-        }
-        return [arg];
+        return [this.arg];
     }
 
     tokens_comma_separated() {
@@ -2536,11 +2564,7 @@ class LeanBracket extends LeanPairedGroup {
     }
 
     strArgs() {
-        let arg = this.arg;
-        if (arg instanceof LeanArgsCommaNewLineSeparated) {
-            arg = `\n${arg}\n${' '.repeat(this.indent)}`;
-        }
-        return [arg];
+        return [this.arg];
     }
 }
 
@@ -2652,6 +2676,12 @@ class LeanDoubleAngleQuotation extends LeanPairedGroup {
     is_Expr() {
         return false;
     }
+
+    /** `«y.bvar»` is a term-level node — never add its own indentation. */
+    is_indented() {
+        return false;
+    }
+
     get stack_priority() {
         return 22;
     }
@@ -3286,6 +3316,9 @@ export class LeanAssign extends LeanBinary {
                 return '\n';
             }
         }
+        if (rhs instanceof LeanArgsIndented) {
+            return '\n';
+        }
         if (
             rhs instanceof Lean_blacktriangleright &&
             rhs.lhs instanceof LeanArgsNewLineSeparated &&
@@ -3444,6 +3477,42 @@ export class LeanMEq extends LeanRelational {
     strFormat() {
         const sep = this.sep();
         return `%s =ᵐ[${this.modifier}]${sep}%s`;
+    }
+
+    latexFormat() {
+        const sep = this.sep();
+        return `{%s} ${this.latexOp()}${sep}{%s}`;
+    }
+}
+
+/** `x ⟂ᵢ[𝕡] y` — independence; the bracketed measure is kept for echo but elided in LaTeX. */
+export class LeanIndep extends LeanRelational {
+    /** @type {string} */
+    modifier = '';
+
+    get operator() {
+        return '⟂ᵢ';
+    }
+
+    latexOp() {
+        return '⟂_{i}';
+    }
+
+    get command() {
+        return this.latexOp();
+    }
+
+    latexArgs(syntax) {
+        if (syntax) syntax['⟂ᵢ'] = true;
+        // keep a parenthesized pair rhs `(y, z)` intact — it is an argument, not grouping
+        return this.args.map((a) => a.toLatex(syntax));
+    }
+
+    /** Echo serialization keeps the bracketed measure (required by Lean's notation). */
+    strFormat() {
+        const sep = this.sep();
+        const op = this.modifier ? `⟂ᵢ[${this.modifier}]` : '⟂ᵢ';
+        return `%s ${op}${sep}%s`;
     }
 
     latexFormat() {
@@ -3976,6 +4045,14 @@ export class LeanConstruct extends LeanArithmetic {
 
     get operator() {
         return '::';
+    }
+}
+
+/** `<|` lazy application: `a <| b` = `b a`. Low precedence, right-associative. */
+export class Lean_lazy extends LeanBinary {
+    static input_priority = 20;
+    get stack_priority() {
+        return 19;
     }
 }
 
@@ -7643,12 +7720,75 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
             !(head.rhs instanceof LeanToken) || head.rhs.text !== 'prob')
             return null;
         if (args.length < 2) return null;
-        return [head.lhs, ...args.slice(1, args.length >= 3 ? -1 : undefined)];
+        if (args.length >= 3) {
+            const last = args[args.length - 1];
+            if (!LeanArgsSpaceSeparated.isBoundObservation(last)) return null;
+            return [head.lhs, ...args.slice(1, -1)];
+        }
+        return [head.lhs, ...args.slice(1)];
+    }
+
+    /**
+     * Returns true when `node` is a bound-variable observation point —
+     * either a single `«x.bvar»` or a pair `(«x.bvar», «y.bvar»)`.
+     * Only such nodes may be elided from `𝕡.prob …` / `𝕡.condProb …`.
+     */
+    static isBoundObservation(node) {
+        if (node instanceof LeanDoubleAngleQuotation)
+            return node.boundValueLhs() != null;
+        if (node instanceof LeanParenthesis) {
+            const inner = node.arg;
+            if (inner instanceof LeanArgsCommaSeparated && inner.args.length === 2)
+                return inner.args.every(
+                    (a) => a instanceof LeanDoubleAngleQuotation && a.boundValueLhs() != null
+                );
+        }
+        return false;
+    }
+
+    /**
+     * `𝕡.condProb (x, y) …` mirrors `probDensityParts` (the observation point is
+     * dropped), but the random-variable pair `(x, y)` is rendered as `(x | y)`.
+     * Returns `[measure, pairNode]` or null when the shape does not match.
+     */
+    condProbLatexParts() {
+        return LeanArgsSpaceSeparated.condProbParts(this.args);
+    }
+
+    static condProbParts(args) {
+        const head = args[0];
+        if (!(head instanceof LeanProperty) ||
+            !(head.rhs instanceof LeanToken) || head.rhs.text !== 'condProb')
+            return null;
+        if (args.length < 2) return null;
+        if (args.length >= 3) {
+            const last = args[args.length - 1];
+            if (!LeanArgsSpaceSeparated.isBoundObservation(last)) return null;
+        }
+        const kept = args.slice(1, args.length >= 3 ? -1 : undefined);
+        if (kept.length !== 1) return null;
+        const pair = kept[0];
+        const inner = pair instanceof LeanParenthesis ? pair.arg : pair;
+        if (!(inner instanceof LeanArgsCommaSeparated) || inner.args.length !== 2)
+            return null;
+        return [head.lhs, pair];
+    }
+
+    /** Render `condProbParts` as `[𝕡, \colorbox{…(x|y)…}]` latex strings. */
+    static condProbLatex(parts, syntax) {
+        const [measure, pair] = parts;
+        const inner = pair instanceof LeanParenthesis ? pair.arg : pair;
+        const [a, b] = inner.args;
+        const body = `${a.toLatex(syntax)}\\,\\middle|\\,${b.toLatex(syntax)}`;
+        const fmt = pair instanceof LeanParenthesis ? pair.toColor() : '\\left(%s\\right)';
+        return [measure.toLatex(syntax), String(fmt).format(body)];
     }
 
     latexArgs(syntax = null) {
         const density = this.probDensityLatexParts();
         if (density) return density.map((a) => a.toLatex(syntax));
+        const cond = this.condProbLatexParts();
+        if (cond) return LeanArgsSpaceSeparated.condProbLatex(cond, syntax);
         const matrixArgs = this.matrixLatexArgs(syntax);
         if (matrixArgs) return matrixArgs;
         const idInner = this.idLatexInner();
@@ -7807,6 +7947,8 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
             const densityParts = this.probDensityLatexParts();
             if (densityParts)
                 return Array(densityParts.length).fill('{%s}').join('\\ ');
+            if (this.condProbLatexParts())
+                return '{%s}\\ {%s}';
         }
         const n = args.length;
         return Array(n)
@@ -8081,6 +8223,7 @@ export class LeanArgsIndented extends LeanBinary {
         return (
             p instanceof LeanStatements ||
             p instanceof LeanArgsNewLineSeparated ||
+            p instanceof LeanArgsCommaNewLineSeparated ||
             (p instanceof LeanAssign && p.sep() === '\n')
         );
     }
@@ -8183,7 +8326,9 @@ export class LeanArgsCommaSeparated extends LeanArgs {
     }
 
     is_indented() {
-        return this.parent instanceof LeanArgsCommaNewLineSeparated;
+        if (this.parent instanceof LeanArgsCommaNewLineSeparated)
+            return this.parent.args.indexOf(this) > 0;
+        return false;
     }
 
     latexFormat() {
@@ -8294,7 +8439,7 @@ export class LeanArgsCommaNewLineSeparated extends LeanMultipleLine(LeanArgs) {
             return super.insert_newline(caret, newline_count, indent, next);
         }
         if (this.indent < indent) {
-            const $new = this.push_args_indented(indent, newline_count);
+            const $new = this.push_args_indented(indent, newline_count, false);
             if ($new) return $new;
             const c = new LeanCaret(indent, caret.level);
             this.push(c);
@@ -10760,6 +10905,9 @@ class Lean_int extends LeanBigOperator {
         const density = LeanArgsSpaceSeparated.probDensityParts(args);
         if (density)
             return density.map((a) => a.toLatex(syntax)).join('\\ ');
+        const cond = LeanArgsSpaceSeparated.condProbParts(args);
+        if (cond)
+            return LeanArgsSpaceSeparated.condProbLatex(cond, syntax).join('\\ ');
         return args.map((a) => a.toLatex(syntax)).join(' ');
     }
 
@@ -11054,8 +11202,10 @@ const LEAN_CLASSES = {
     Lean_gt,
     Lean_ge,
     Lean_le,
+    Lean_lazy,
     LeanEq,
     LeanMEq,
+    LeanIndep,
     LeanBEq,
     Lean_ne,
     Lean_simeq,

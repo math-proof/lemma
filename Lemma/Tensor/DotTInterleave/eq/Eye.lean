@@ -1,4 +1,5 @@
 import Lemma.Tensor.EqDot_Eye
+import torch.Tensor.permute
 import Lemma.Tensor.RotaryMatrix'0.eq.Eye
 open Tensor
 

@@ -147,12 +147,12 @@ const PRUNABLE_SYNTAX_IMPORTS = [
   'sympy.core.power',
   'sympy.sets.sets',
   'sympy.concrete.quantifier',
-  'sympy.tensor.stack',
+  'torch.stack',
   'sympy.tensor.Basic',
   'sympy.polys.domains',
   'sympy.functions.special.tensor_functions',
   'sympy.matrices.expressions.special',
-  'sympy.tensor.functions',
+  'torch.functions',
 ];
 
 /**

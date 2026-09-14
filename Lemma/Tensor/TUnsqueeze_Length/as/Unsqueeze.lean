@@ -1,4 +1,7 @@
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
+import torch.Tensor.unsqueeze
+import torch.Tensor.prod
+import torch.Tensor.permute
 import Lemma.Bool.SEqCast.of.Eq
 import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Fin.Eq_Fin.of.EqVal

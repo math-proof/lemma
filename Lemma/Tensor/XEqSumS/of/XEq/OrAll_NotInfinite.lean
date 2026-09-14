@@ -1,4 +1,5 @@
 import sympy.core.relational
+import torch.Tensor.prod
 import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Hyperreal.XEqSumS.of.All_XEq.OrAll_NotInfinite
 import Lemma.List.EqEraseIdx.of.LeLength
@@ -21,6 +22,7 @@ import Lemma.Vector.GetSum.eq.Sum_Get
 import Lemma.Vector.GetGetSlice.eq.Get.of.GtGet.GtLength
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.XEq.is.All_XEqGetS
+import torch.Tensor.sum
 open Hyperreal Tensor Fin Vector List Nat
 
 

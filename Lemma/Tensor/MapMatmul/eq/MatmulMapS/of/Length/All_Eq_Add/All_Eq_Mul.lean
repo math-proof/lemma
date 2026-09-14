@@ -1,4 +1,5 @@
 import Lemma.Bool.SEq.is.Eq
+import torch.Tensor.bmm
 import Lemma.Bool.SEqCast.of.Eq
 import Lemma.List.SetAppend.eq.Append_Set.of.GtLength
 import Lemma.List.Set_0.eq.Cons_Tail.of.GtLength_0

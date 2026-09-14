@@ -1,4 +1,5 @@
 import Lemma.Bool.EqCast.of.SEq
+import torch.Tensor.reshape
 import Lemma.Nat.Any_Eq_AddMul
 import Lemma.Nat.Div.eq.HDiv
 import Lemma.Tensor.DataDiv.eq.DivData
@@ -16,6 +17,7 @@ import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Vector.GetMap.eq.UFnGet
 import Lemma.Vector.MapMap.eq.Map_Comp
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
+import torch.Tensor.sum
 open Bool Nat Tensor Vector
 
 

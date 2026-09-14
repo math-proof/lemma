@@ -82,16 +82,14 @@ private lemma main
       rfl
     | succ n =>
       have hd : 1 < n + 2 := by omega
-      apply Eq.trans (Det.eq.DetToMatrix (interleave (n + 2)))
-      have hrec := DetInterleave.eq.MulPowNeg1Sub_Det (n + 2) hd
+      have hrec := DetInterleave.eq.MulPowNeg1Sub_Det (hd := hd)
       have hdim : n + 2 - 1 = n + 1 := Nat.add_sub_cancel (n + 1) 1
       simp [hdim] at hrec
-      rw [hrec]
-      have ih' : (interleave (n + 1)).toMatrix.det = (-1) ^ ((n + 1) / 2) :=
-        (Det.eq.DetToMatrix (interleave (n + 1))).symm.trans ih
-      rw [ih']
+      rw [hrec, ih]
+      simp only [id]
+      erw [Tensor.Mul]
       exact pow_neg_one_step (n + 2) hd
 
 
 -- created on 2026-09-07
--- updated on 2026-09-11
+-- updated on 2026-09-13

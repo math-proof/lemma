@@ -8,13 +8,14 @@ open Tensor
 private lemma main
   [Semiring α] [CharZero α]
 -- given
+  {n : ℕ}
   (x : Tensor α [n])
   (i j : Fin n) :
 -- imply
-  (x @ ShiftMatrix (α := α) n i j) @ ShiftMatrix (α := α) n j i = x := by
+  (x @ ShiftMatrix (α := α) i j) @ ShiftMatrix (α := α) j i = x := by
 -- proof
   rw [DotDot.eq.Dot_Dot.vmm]
-  rw [DotTShiftMatrix.eq.Eye n j i j.isLt i.isLt]
+  rw [DotTShiftMatrix.eq.Eye j i]
   apply EqDot_Eye.vm
 
 

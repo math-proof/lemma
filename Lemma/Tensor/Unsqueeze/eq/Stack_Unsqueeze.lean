@@ -1,4 +1,5 @@
 import Lemma.Tensor.Unsqueeze.eq.OfVectorMap_FunUnsqueeze
+import torch.Tensor.unsqueeze
 import Lemma.Tensor.OfVectorMapToVector.eq.Stack
 open Tensor
 

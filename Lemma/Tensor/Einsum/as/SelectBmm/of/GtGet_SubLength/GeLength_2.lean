@@ -1,4 +1,5 @@
 import Lemma.Bool.SEq.is.Eq
+import torch.Tensor.reshape
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.List.Drop.eq.ListGet.of.GtLength_0
@@ -12,6 +13,7 @@ import Lemma.Tensor.SEqReshapeS.of.SEq.Eq.Dvd
 import Lemma.Tensor.SEqResize.of.Eq_Get
 import Lemma.Tensor.SEqSelectS.of.SEq
 import sympy.matrices.expressions.matmul
+import torch.Tensor.bmm
 open Bool List Nat Tensor
 set_option maxHeartbeats 400000
 

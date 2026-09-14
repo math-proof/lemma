@@ -1,4 +1,5 @@
-import sympy.tensor.stack
+import torch.stack
+import torch.Tensor.prod
 import sympy.Basic
 
 

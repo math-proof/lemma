@@ -1,4 +1,5 @@
 import Lemma.Tensor.Einsum.eq.Bmm
+import torch.Tensor.bmm
 open Tensor
 
 

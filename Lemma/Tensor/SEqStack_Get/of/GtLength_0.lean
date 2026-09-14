@@ -1,6 +1,6 @@
 import Lemma.Tensor.EqStack_Get
 import Lemma.Tensor.GtLength.of.GtLength_0
-import sympy.tensor.stack
+import torch.stack
 open Tensor
 
 

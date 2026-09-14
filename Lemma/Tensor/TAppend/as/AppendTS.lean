@@ -1,4 +1,5 @@
 import Lemma.Bool.SEq.is.Eq
+import torch.Tensor.permute
 import Lemma.Bool.SEqCast.of.Eq
 import Lemma.List.EqSwap_0'1
 import Lemma.Tensor.Eq.is.All_EqGetS

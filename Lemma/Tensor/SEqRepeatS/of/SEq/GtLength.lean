@@ -1,4 +1,5 @@
 import sympy.tensor.Basic
+import torch.Tensor.repeat
 import Lemma.Tensor.EqTFnS.of.Eq.GtLength
 open Tensor
 

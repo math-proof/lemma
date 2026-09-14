@@ -1,4 +1,6 @@
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
+import torch.Tensor.prod
+import torch.Tensor.permute
 import Lemma.Int.OfNat.eq.Cast
 import Lemma.List.DropLast.eq.Take_SubLength_1
 import Lemma.List.EqPermute

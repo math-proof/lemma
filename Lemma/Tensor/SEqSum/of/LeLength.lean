@@ -1,4 +1,5 @@
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
+import torch.Tensor.prod
 import Lemma.List.DropDrop.eq.Drop_Add
 import Lemma.List.EqEraseIdx.of.LeLength
 import Lemma.List.EqTake.of.LeLength
@@ -12,6 +13,7 @@ import Lemma.Vector.MapCast.as.Map.of.Eq
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import Lemma.Vector.SplitAt.as.VectorList.of.LeLength
 import Lemma.Vector.Sum.eq.Head.of.Eq_1
+import torch.Tensor.sum
 open Bool List Tensor Vector
 
 

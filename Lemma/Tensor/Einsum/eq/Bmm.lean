@@ -1,4 +1,5 @@
 import Lemma.Bool.EqCast.of.SEq
+import torch.Tensor.bmm
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.Bool.SEqCast.of.Eq
 import Lemma.Nat.EqMax

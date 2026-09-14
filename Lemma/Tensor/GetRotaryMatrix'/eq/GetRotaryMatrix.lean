@@ -1,4 +1,5 @@
 import Lemma.Bool.SEq.is.Eq
+import torch.Tensor.permute
 import Lemma.Bool.SEqCast.of.Eq
 import Lemma.Fin.ToSplit.eq.Ite_Div_2
 import Lemma.Nat.Delta.eq.Ite
@@ -13,7 +14,7 @@ import Lemma.Tensor.RotaryMatrix'.eq.DotDot_RotaryMatrix
 import Lemma.Tensor.SEqDotS.of.SEq
 import sympy.functions.special.tensor_functions
 import sympy.matrices.expressions.special
-import sympy.tensor.functions
+import torch.functions
 open Bool Nat Tensor Fin
 
 

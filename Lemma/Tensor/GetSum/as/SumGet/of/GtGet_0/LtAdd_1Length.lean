@@ -3,6 +3,7 @@ import Lemma.Tensor.LengthSum.eq.Length.of.Gt_0.GtLength
 import Lemma.Tensor.Sum.as.Stack_Sum.of.GtLength
 import Lemma.Tensor.SEqGetS.of.SEq.GtLength
 import Lemma.Tensor.EqGetStack
+import torch.Tensor.sum
 open Tensor
 
 

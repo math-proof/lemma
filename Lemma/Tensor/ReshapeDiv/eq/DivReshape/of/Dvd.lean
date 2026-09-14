@@ -1,4 +1,6 @@
 import Lemma.Tensor.ReshapeBFn.eq.BFnReshape.of.Dvd
+import torch.Tensor.reshape
+import torch.Tensor.prod
 open Tensor
 
 

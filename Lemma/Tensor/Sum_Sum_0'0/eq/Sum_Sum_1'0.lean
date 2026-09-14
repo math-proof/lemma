@@ -1,6 +1,7 @@
 import Lemma.Bool.SEq.is.Eq
 import Lemma.Tensor.Sum_Sum
 import Lemma.Tensor.Sum_Sum_0'0.as.Sum_Sum_1'0
+import torch.Tensor.sum
 open Bool Tensor
 
 

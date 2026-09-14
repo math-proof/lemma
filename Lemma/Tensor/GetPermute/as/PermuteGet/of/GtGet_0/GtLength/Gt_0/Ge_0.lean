@@ -1,4 +1,5 @@
 import Lemma.Tensor.GetPermute.as.PermuteGet.of.GtGet_0.GtLength.Gt_0
+import torch.Tensor.permute
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.LengthPermute.eq.Get_0.of.Ge_0.GtVal_0
 open Tensor

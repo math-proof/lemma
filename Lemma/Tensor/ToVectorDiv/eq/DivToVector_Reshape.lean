@@ -1,4 +1,5 @@
 import Lemma.Tensor.ToVector.eq.MapRange_Get
+import torch.Tensor.reshape
 import Lemma.Vector.EqGetRange
 import Lemma.Tensor.GetDiv.eq.DivGet
 import Lemma.Vector.GetDiv.eq.DivGet

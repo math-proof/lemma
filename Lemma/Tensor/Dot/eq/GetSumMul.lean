@@ -1,4 +1,7 @@
 import Lemma.Bool.EqCast.of.SEq
+import torch.Tensor.unsqueeze
+import torch.Tensor.repeat
+import torch.Tensor.permute
 import Lemma.Bool.SEq.is.Eq
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
@@ -15,6 +18,7 @@ import Lemma.Tensor.SEqResize_0.of.Eq_Get_0.GtLength_0
 import Lemma.Tensor.SEqSumS.of.SEq.Eq
 import Lemma.Tensor.SEqTS.of.SEq
 import Lemma.Tensor.SEqUnsqueezeS.of.SEq.Eq
+import torch.Tensor.sum
 open Bool Nat Tensor
 
 

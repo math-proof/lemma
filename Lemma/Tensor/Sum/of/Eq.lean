@@ -1,5 +1,6 @@
 import sympy.tensor.Basic
 import sympy.Basic
+import torch.Tensor.sum
 
 
 @[main]

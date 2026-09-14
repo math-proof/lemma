@@ -1,4 +1,4 @@
-import sympy.tensor.functions
+import torch.functions
 import stdlib.SEq
 import sympy.tensor.Basic
 

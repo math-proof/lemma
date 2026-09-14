@@ -1,9 +1,7 @@
-import Lemma.Bool.SEq.is.SEqCast.of.Eq
-import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
-import Lemma.Finset.Prod.eq.MulProdS
-import Lemma.List.ProdEraseIdx.eq.MulProdS
-import Lemma.List.ProdInsertIdx.eq.Prod
 import Lemma.List.ProdTakeDropInsertIdx.eq.One
+import torch.Tensor.sum
+import torch.Tensor.unsqueeze
+import torch.Tensor.prod
 import Lemma.Nat.Eq_Div.Eq_Mod.of.Eq_AddMul
 import Lemma.Tensor.DataSum.as.FlattenMapSplitAtData
 import Lemma.Tensor.DataUnsqueeze.as.Data
@@ -12,8 +10,6 @@ import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.GetSum.eq.SumMapGet
-import Lemma.Vector.GetUnflatten.eq.Get_AddMul
-import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import Lemma.Vector.SplitAt.eq.UnflattenCast
 import Lemma.Vector.Sum.eq.Head.of.Eq_1
 open Bool Fin Finset List Nat Tensor Vector

@@ -1,4 +1,5 @@
 import Lemma.Tensor.SEqPermutePermute__Neg.of.GtLength_Add
+import torch.Tensor.permute
 import Lemma.Tensor.SEqPermuteS.of.SEq.Eq.Eq.GtLength
 open Tensor
 

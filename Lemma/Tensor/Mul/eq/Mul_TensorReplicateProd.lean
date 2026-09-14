@@ -1,4 +1,5 @@
 import Lemma.Tensor.DataMul.eq.MulDataS
+import torch.Tensor.prod
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Vector.GetMul.eq.MulGetS
 open Tensor Vector

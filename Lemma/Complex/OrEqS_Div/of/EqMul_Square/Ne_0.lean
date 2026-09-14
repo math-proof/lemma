@@ -1,4 +1,4 @@
-import Lemma.Rat.EqMul.is.Eq_Div.of.Ne_0
+import Lemma.Rat.Eq_Div.is.EqMul.of.Ne_0
 import Lemma.Complex.EqSquareSqrt
 import Lemma.Real.OrEqS.of.Square
 import Lemma.Rat.SquareDiv.eq.DivSquareS

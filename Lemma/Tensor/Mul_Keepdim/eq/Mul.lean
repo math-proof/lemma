@@ -1,4 +1,6 @@
 import Lemma.Bool.UFn.of.Eq
+import torch.Tensor.unsqueeze
+import torch.Tensor.prod
 import Lemma.Nat.EqMod_1'0
 import Lemma.Tensor.DataCast.as.Data.of.Eq
 import Lemma.Tensor.DataMul.eq.MulDataS
@@ -11,7 +13,7 @@ import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Vector.Head.eq.Get_0
 import Lemma.Vector.Mul.eq.Mul_Replicate
 import Lemma.Vector.EqGetReplicate
-import sympy.tensor.functions
+import torch.functions
 open Bool Nat Tensor Vector
 
 

@@ -1,6 +1,7 @@
 import sympy.tensor.Basic
+import torch.Tensor.prod
 import Lemma.List.EqEraseIdx.of.LeLength
-import sympy.tensor.functions
+import torch.functions
 open List
 
 

@@ -5,7 +5,7 @@ import Lemma.Tensor.DotRotaryMatrix.eq.AddMulSAppend
 import Lemma.Tensor.RotaryMatrix.eq.AppendHstackSMulSEye
 import Lemma.Tensor.SEq_Append
 import Lemma.Tensor.SEqAppendS.of.SEq.SEq
-import sympy.tensor.functions
+import torch.functions
 open Bool List Tensor
 set_option maxHeartbeats 600000
 

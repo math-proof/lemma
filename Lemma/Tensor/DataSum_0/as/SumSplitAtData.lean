@@ -2,6 +2,7 @@ import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.Tensor.DataSum_0.eq.SumSplitAtData
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import Lemma.Vector.HeadMap.eq.UFnHead
+import torch.Tensor.sum
 open Bool Tensor Vector
 
 

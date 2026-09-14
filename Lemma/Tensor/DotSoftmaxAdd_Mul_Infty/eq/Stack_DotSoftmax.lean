@@ -46,6 +46,7 @@ import Lemma.Tensor.GetSum.as.SumGet.of.GtGet_0.LtAdd_1Length
 import Lemma.Tensor.XEq.is.All_XEqGetS
 import Lemma.Tensor.Softmax.eq.DivExp_KeepdimSumExp
 import Lemma.Tensor.XEqGetS.of.XEq.GtLength
+import torch.Tensor.sum
 open Tensor Hyperreal
 set_option maxHeartbeats 4000000
 

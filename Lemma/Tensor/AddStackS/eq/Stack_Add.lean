@@ -1,5 +1,5 @@
 import Lemma.Tensor.Eq.is.EqDataS
-import sympy.tensor.stack
+import torch.stack
 import Lemma.Nat.Add
 import Lemma.Vector.AddFlattenS.eq.FlattenAdd
 import Lemma.Vector.AddMapS.eq.Map_FunAdd

@@ -1,4 +1,5 @@
 import Lemma.Tensor.SEqRepeatS.of.SEq.Val.Eq
+import torch.Tensor.repeat
 open Tensor
 
 

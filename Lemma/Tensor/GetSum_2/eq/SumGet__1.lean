@@ -1,5 +1,6 @@
 import Lemma.Bool.SEq.is.Eq
 import Lemma.Tensor.GetSum.as.SumGet.of.GtGet_0.Gt_0.GtLength
+import torch.Tensor.sum
 open Tensor Bool
 
 

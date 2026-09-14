@@ -1,4 +1,5 @@
 import Lemma.List.ProdTail.eq.MulProdTakeTail
+import torch.Tensor.prod
 import Lemma.Nat.DivAdd.eq.AddDivS.of.Dvd
 import Lemma.Nat.EqAddMulDiv
 import Lemma.Nat.EqDivMul.of.Ne_0

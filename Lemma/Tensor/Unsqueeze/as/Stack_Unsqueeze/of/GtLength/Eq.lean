@@ -1,4 +1,5 @@
 import Lemma.Tensor.Unsqueeze.eq.Stack_Unsqueeze
+import torch.Tensor.unsqueeze
 import Lemma.Tensor.SEqStackS_UFnGet.of.Eq
 open Tensor
 

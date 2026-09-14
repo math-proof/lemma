@@ -1,4 +1,5 @@
 import Lemma.Bool.SEq.is.Eq
+import torch.Tensor.reshape
 import Lemma.Bool.SEqUFnS.of.SEq
 import Lemma.List.EqAppendTake__ListGet.of.GeLength_2
 import Lemma.Tensor.BmmBFn.eq.BFnBmm
@@ -10,6 +11,8 @@ import Lemma.Tensor.Einsum.as.SelectBmm.of.Gt_Get_SubLength.GeLength_2
 import Lemma.Tensor.ReshapeBFn.eq.BFnReshape.of.Dvd
 import Lemma.Tensor.ResizeBFn.eq.BFnResize
 import Lemma.Tensor.SelectBFn.eq.BFnSelect
+import torch.Tensor.bmm
+import torch.Tensor.sum
 open Bool List Tensor
 set_option maxHeartbeats 1000000
 

@@ -1,4 +1,6 @@
 import Lemma.Bool.SEq.is.Eq
+import torch.Tensor.reshape
+import torch.Tensor.prod
 import Lemma.Tensor.SEqReshapeS.of.SEq.Eq.Dvd
 open Tensor Bool
 

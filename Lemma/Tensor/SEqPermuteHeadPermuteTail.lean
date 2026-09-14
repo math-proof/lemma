@@ -1,4 +1,5 @@
 import Lemma.Tensor.SEqPermuteHead_0
+import torch.Tensor.permute
 import Lemma.Tensor.SEqPermuteTail_0
 import Lemma.Tensor.SEqPermuteHeadPermuteTail.of.Ne_Nil
 open Tensor

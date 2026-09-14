@@ -1,4 +1,6 @@
 import Lemma.Finset.Sum.of.All_Eq.Eq
+import torch.Tensor.sum
+import torch.Tensor.prod
 import Lemma.List.Get.dvd.Mul_ProdTake.of.GtLength
 import Lemma.List.Get.dvd.ProdTake.of.GtLength
 import Lemma.List.LengthSlice.eq.Div.of.Lt.Dvd

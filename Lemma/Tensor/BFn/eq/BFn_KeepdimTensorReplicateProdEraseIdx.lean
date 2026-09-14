@@ -1,4 +1,5 @@
 import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
+import torch.Tensor.prod
 import Lemma.List.EqEraseIdx.of.LeLength
 import Lemma.List.MulProdInsertIdxEraseIdx.eq.Prod.of.GtLength
 import Lemma.List.ProdInsertIdx.eq.Prod

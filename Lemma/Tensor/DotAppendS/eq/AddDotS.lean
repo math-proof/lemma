@@ -1,4 +1,5 @@
 import Lemma.Fin.Sum.of.All_Eq
+import torch.Tensor.sum
 import Lemma.Tensor.DataAppend.as.AppendDataS
 import Lemma.Tensor.Dot.eq.TensorDotDataS
 import Lemma.Tensor.DotHstack.eq.AddDotS

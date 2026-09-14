@@ -1,7 +1,7 @@
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Tensor.Eq_Stack
-import sympy.tensor.functions
-import sympy.tensor.stack
+import torch.functions
+import torch.stack
 import Lemma.Vector.FlattenPow.eq.PowFlattenS
 import Lemma.Vector.PowMapSRange.eq.MapFunPow
 import Lemma.Vector.MapMap.eq.Map_Comp

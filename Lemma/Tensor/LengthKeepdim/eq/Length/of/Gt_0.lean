@@ -1,4 +1,4 @@
-import sympy.tensor.functions
+import torch.functions
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.List.EraseIdxCons.eq.EraseIdx_Sub_1.of.Gt_0
 open Tensor List

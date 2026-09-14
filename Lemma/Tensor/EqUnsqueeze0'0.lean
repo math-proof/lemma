@@ -1,4 +1,6 @@
 import Lemma.List.ProdInsertIdx.eq.Prod
+import torch.Tensor.unsqueeze
+import torch.Tensor.prod
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Tensor.EqData0'0
 import Lemma.Tensor.Unsqueeze.eq.TensorCast_Data

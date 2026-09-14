@@ -1,4 +1,5 @@
 import sympy.tensor.Basic
+import torch.Tensor.prod
 import Lemma.Tensor.GtLength_0.of.GtLength_0
 import Lemma.List.ProdTake_1.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0

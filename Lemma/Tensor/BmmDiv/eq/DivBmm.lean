@@ -1,6 +1,7 @@
 import Lemma.Tensor.BmmBFn.eq.BFnBmm
 import Lemma.Tensor.MulDiv.eq.DivMul
 import Lemma.Tensor.SumDiv.eq.DivSum
+import torch.Tensor.bmm
 open Tensor
 
 

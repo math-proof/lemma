@@ -57,6 +57,7 @@ $token2classname = [
     '∩' => 'Lean_cap',
     "\\" => 'Lean_setminus',
     '|>.' => 'LeanMethodChaining',
+    '<|' => 'Lean_lazy',
     '⊆' => 'Lean_subseteq',
     '⊂' => 'Lean_subset',
     '⊇' => 'Lean_supseteq',
@@ -530,6 +531,10 @@ abstract class Lean extends IndentedNode
                     ++$i;
                     return $this->push_binary('Lean_le');
                 }
+                if ($tokens[$i + 1] == '|') {
+                    ++$i;
+                    return $this->push_arithmetic('<|');
+                }
                 if ($i + 2 < $count && $tokens[$i + 1] == ';' && $tokens[$i + 2] == '>') {
                     $i += 2;
                     return $this->parent->insert_sequential_tactic_combinator($this, $tokens[$i + 1]);
@@ -560,6 +565,27 @@ abstract class Lean extends IndentedNode
                 return $this->push_binary('Lean_le');
             case '≥':
                 return $this->push_binary('Lean_ge');
+            case '⟂':
+                if ($tokens[$i + 1] == "\u{1D62}") {
+                    // `⟂ᵢ[𝕡]` — independence with a measure modifier; the modifier is
+                    // required by Lean's notation but elided in LaTeX (like `=ᵐ[ν]`)
+                    ++$i; // consume `ᵢ`
+                    $modifier = '';
+                    if ($tokens[$i + 1] == '[') {
+                        $i += 2; // skip `[`, point at first char inside
+                        $start = $i;
+                        while ($i < $count && $tokens[$i] != ']') ++$i;
+                        $modifier = implode('', array_slice($tokens, $start, $i - $start));
+                        if ($i < $count) ++$i; // skip `]`
+                        --$i; // loop will increment
+                    }
+                    $caret = $this->push_binary('LeanIndep');
+                    $p = $caret;
+                    while ($p && !($p instanceof LeanIndep)) $p = $p->parent;
+                    if ($p) $p->modifier = $modifier;
+                    return $caret;
+                }
+                return $this->parent->insert_word($this, $token);
             case '=':
                 if ($tokens[$i + 1] == '>') {
                     ++$i;
@@ -3303,6 +3329,57 @@ class LeanMEq extends LeanRelational
     }
 }
 
+/** `x ⟂ᵢ[𝕡] y` — independence; the bracketed measure is kept for echo but elided in LaTeX. */
+class LeanIndep extends LeanRelational
+{
+    // The parsed `modifier` is retained for echo output (`strFormat` must emit `⟂ᵢ[𝕡]`,
+    // the only notation Mathlib knows), but display drops it entirely, like `=ᵐ[ν]`.
+    public $modifier = '';
+
+    private function latexOp(): string
+    {
+        return '⟂_{i}';
+    }
+
+    public function __get($vname)
+    {
+        switch ($vname) {
+            case 'operator':
+                return '⟂ᵢ';
+            case 'command':
+                return $this->latexOp();
+            default:
+                return parent::__get($vname);
+        }
+    }
+
+    public function latexArgs(&$syntax = null)
+    {
+        $syntax['⟂ᵢ'] = true;
+        // keep a parenthesized pair rhs `(y, z)` intact — it is an argument, not grouping
+        return array_map(
+            function ($arg) use (&$syntax) {
+                return $arg->toLatex($syntax);
+            },
+            $this->args
+        );
+    }
+
+    /** Echo serialization keeps the bracketed measure (required by Lean's notation). */
+    public function strFormat()
+    {
+        $sep = $this->sep();
+        $op = $this->modifier !== '' ? "⟂ᵢ[{$this->modifier}]" : '⟂ᵢ';
+        return "%s {$op}{$sep}%s";
+    }
+
+    public function latexFormat()
+    {
+        $sep = $this->sep();
+        return "{%s} {$this->latexOp()}{$sep}{%s}";
+    }
+}
+
 class LeanBEq extends LeanRelational
 {
     public function __get($vname)
@@ -4073,6 +4150,36 @@ class LeanConstruct extends LeanArithmetic
             default:
                 return parent::__get($vname);
         }
+    }
+}
+
+/** `<|` lazy application: `a <| b` = `b a`. Low precedence, right-associative. */
+class Lean_lazy extends LeanBinary
+{
+    public static $input_priority = 20;
+
+    public function __get($vname)
+    {
+        switch ($vname) {
+            case 'stack_priority':
+                // below input_priority, so a following `<|` nests on the right
+                return 19;
+            case 'operator':
+                return '<|';
+            default:
+                return parent::__get($vname);
+        }
+    }
+
+    public function sep()
+    {
+        return $this->rhs instanceof LeanStatements ? "\n" : ' ';
+    }
+
+    public function strFormat()
+    {
+        $sep = $this->sep();
+        return "%s <|{$sep}%s";
     }
 }
 

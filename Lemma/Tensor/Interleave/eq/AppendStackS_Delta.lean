@@ -1,5 +1,5 @@
 import sympy.functions.special.tensor_functions
-import sympy.tensor.stack
+import torch.stack
 
 
 def Tensor.interleave (d : ℕ) : Tensor ℝ [d + d, d + d] :=

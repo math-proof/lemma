@@ -1,9 +1,13 @@
 import Lemma.Tensor.Dot.eq.SumMul
+import torch.Tensor.unsqueeze
+import torch.Tensor.repeat
+import torch.Tensor.permute
 import Lemma.Tensor.Einsum.eq.SumMulDataS
 import Lemma.Tensor.MapCast.as.MapBFn.of.Eq
 import Lemma.Tensor.RepeatBFn.eq.BFnRepeat
 import Lemma.Tensor.ResizeBFn.eq.BFnResize
 import Lemma.Tensor.UnsqueezeBFn.eq.BFnUnsqueeze
+import torch.Tensor.sum
 open Tensor
 
 

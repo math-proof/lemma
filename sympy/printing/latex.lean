@@ -402,16 +402,93 @@ def Expr.asJointRandomSymbol? : Expr → Option (Expr × Expr)
       | _ => none
     else none
 
+/-- Check if an Expr is a bound observation — either a single `«x.bvar»`
+or a pair `(«x.bvar», «y.bvar»)`. Only such nodes may be elided from
+`𝕡.prob …` / `𝕡.condProb …`. Mirrors lean.js `isBoundObservation`. -/
+def Expr.isBoundObservation : Expr → Bool
+  | Symbol name _ =>
+    let s := name.toString
+    s.startsWith "«" && s.endsWith "»" && s.contains ".bvar"
+  | Basic (.Special ⟨.str _ "mk"⟩) [a, b] _ =>
+    a.isBoundObservation && b.isBoundObservation
+  | _ => false
+
+/-- Unwrap `Basic (.Special ⟨.anonymous⟩) [𝕡.prob rv, pt]` — the method result
+applied to a point — returning `("prob", [𝕡, rv, pt])`. -/
+def Expr.asProbApp? : Expr → Option (String × List Expr)
+  | Basic (.Special ⟨.anonymous⟩) [inner, pt] _ =>
+    if let some ("prob", base :: rest) := inner.asNamedApp? then
+      some ("prob", base :: rest ++ [pt])
+    else none
+  | _ => none
+
 -- `𝕡.prob f₁ … fₙ pt` → `(𝕡, [f₁ … fₙ₋₁])`: the `.prob` accessor and the
 -- observed value (last argument) are dropped, mirroring the lean.js
 -- `probDensityParts` convention (`𝕡.prob (x, y) («x.bvar», «y.bvar»)` → `𝕡 (x, y)`).
+-- The observation point is dropped only when it is a bound observation
+-- (`«x.bvar»` or `(«x.bvar», «y.bvar»)`); otherwise no simplification occurs.
 def Expr.asProb? : Expr → Option (Expr × List Expr)
   | e =>
+    -- Direct match: `𝕡.prob rv` (method call without extra application)
     if let some ("prob", base :: rest) := e.asNamedApp? then
       match rest with
       | [] => none
       | [_] => some (base, rest)
-      | _ => some (base, rest.take (rest.length - 1))
+      | _ =>
+        if rest.getLast!.isBoundObservation then
+          some (base, rest.take (rest.length - 1))
+        else
+          none
+    -- Nested match: `(𝕡.prob rv) pt` (method result applied to a point)
+    else if let some ("prob", base :: rest) := e.asProbApp? then
+      match rest with
+      | [] => none
+      | _ =>
+        if rest.getLast!.isBoundObservation then
+          some (base, rest.take (rest.length - 1))
+        else
+          none
+    else none
+
+/-- Unwrap `Basic (.Special ⟨.anonymous⟩) [𝕡.condProb rv, pt]` — the method
+result applied to a point — returning `("condProb", [𝕡, rv, pt])`. -/
+def Expr.asCondProbApp? : Expr → Option (String × List Expr)
+  | Basic (.Special ⟨.anonymous⟩) [inner, pt] _ =>
+    if let some ("condProb", base :: rest) := inner.asNamedApp? then
+      some ("condProb", base :: rest ++ [pt])
+    else none
+  | _ => none
+
+/-- `𝕡.condProb (x, y) pt` → `(𝕡, x, y)`: mirrors lean.js `condProbParts`.
+The observation point `pt` is dropped (as in `asProb?`), and the single
+surviving random-variable pair is required to be a two-component pair so it can
+render as `(x | y)`. -/
+def Expr.asCondProb? : Expr → Option (Expr × Expr × Expr)
+  | e =>
+    if let some ("condProb", base :: rest) := e.asNamedApp? then
+      match rest with
+      | [pair] =>
+        match pair.asJointRandomSymbol? with
+        | some (x, y) => some (base, x, y)
+        | none => none
+      | [pair, point] =>
+        if point.isBoundObservation then
+          match pair.asJointRandomSymbol? with
+          | some (x, y) => some (base, x, y)
+          | none => none
+        else
+          none
+      | _ => none
+    else if let some ("condProb", base :: rest) := e.asCondProbApp? then
+      match rest with
+      | [pair, point] =>
+        if point.isBoundObservation then
+          match pair.asJointRandomSymbol? with
+          | some (x, y) => some (base, x, y)
+          | none => none
+        else
+          none
+      | _ => none
     else none
 
 /-- Check if an Expr is of form `ae μ`. -/
@@ -778,6 +855,14 @@ def Expr.latexFormat : Expr → String
         let fns := fns.map fun arg =>
           (0 : Nat).toColor (arg.priority > func.priority || arg.is_Div || arg.is_BlockMatrix)
         "\\ ".intercalate (obj :: fns)
+      else if let some (obj, _, _) := e.asCondProb? then
+        -- lean.js `condProbLatex`: `𝕡.condProb (x, y) pt` → `𝕡 (x | y)`.
+        -- The observation point is dropped; the pair keeps its depth colorbox
+        -- (`pair.toColor()` always boxes in lean.js), and the comma becomes
+        -- `\,\middle|\,`. The single colorbox `%s` is widened to two slots.
+        let obj := level.toColor (obj.priority > func.priority || obj.toList != none || obj.is_Eye)
+        let pair := (level.toColor false).replaceFirst "%s" "%s\\,\\middle|\\,%s"
+        "{" ++ obj ++ "}\\ " ++ pair
       else if let some (_, _) := e.asEventuallyEq? then
         -- lean.js `LeanMEq`: `f =ᵐ[μ] g` → `f =^{\mathrm{m}} g`
         "{%s} {=^{\\mathrm{m}}} {%s}"
@@ -1191,6 +1276,8 @@ where
         [binderName, body.toLatex]
       else if let some (obj, fns) := e.asProb? then
         obj.toLatex :: fns.map (·.toLatex)
+      else if let some (obj, x, y) := e.asCondProb? then
+        [obj.toLatex, x.toLatex, y.toLatex]
       else if let some (f, g) := e.asEventuallyEq? then
         [f.toLatex, g.toLatex]
       else if let some etaArgs := e.asEtaPair? then

@@ -2,7 +2,7 @@ import Lemma.Tensor.DataCos.eq.CosData
 import Lemma.Tensor.DataNeg.eq.NegData
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Vector.CosNeg.eq.Cos
-import sympy.tensor.functions
+import torch.functions
 open Tensor Vector
 
 

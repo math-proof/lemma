@@ -1,4 +1,5 @@
 import Lemma.Bool.SEq.is.EqCast.of.Eq
+import torch.Tensor.repeat
 import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.List.ProdSet__Mul_Get.eq.MulProd_Mul_Prod.of.GtLength
 import Lemma.Tensor.DataNeg.eq.NegData
@@ -10,7 +11,7 @@ import Lemma.Vector.GetNeg.eq.NegGet
 import Lemma.Vector.GetRepeat.eq.Get_Mod
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import Lemma.Vector.SplitAtNeg.eq.NegSplitAt
-import sympy.tensor.functions
+import torch.functions
 open Bool Fin List Tensor Vector
 
 

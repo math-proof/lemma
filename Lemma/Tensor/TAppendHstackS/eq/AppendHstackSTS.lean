@@ -5,6 +5,7 @@ import Lemma.Tensor.GetHstack.eq.Get.of.Lt
 import Lemma.Tensor.GetHstack.eq.Get_Sub.of.GtAdd.Ge
 import Lemma.Tensor.EqGetT
 import sympy.tensor.Basic
+import torch.Tensor.permute
 open Tensor
 set_option maxHeartbeats 4000000
 

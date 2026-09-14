@@ -2,7 +2,7 @@ import Lemma.Tensor.GetUnflattenDataStack.eq.Data
 import Lemma.Vector.Eq.is.All_EqGetS
 import Lemma.Vector.EqGetRange
 import Lemma.Vector.EqUnflatten.is.Eq_Flatten
-import sympy.tensor.stack
+import torch.stack
 open Tensor Vector
 
 

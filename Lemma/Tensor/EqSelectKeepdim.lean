@@ -1,10 +1,12 @@
 import Lemma.Bool.SEq.is.EqCast.of.Eq
+import torch.Tensor.unsqueeze
+import torch.Tensor.repeat
 import Lemma.List.EqSetInsertIdxEraseIdx.of.GtLength
 import Lemma.List.LengthInsertIdxEraseIdx.eq.Length.of.GtLength
 import Lemma.List.LengthSet.eq.Length
 import Lemma.Tensor.EqSelectRepeatUnsqueeze.of.Lt.GeLength
 import Lemma.Tensor.SelectCast.as.Select.of.Eq
-import sympy.tensor.functions
+import torch.functions
 open Bool List Tensor
 
 

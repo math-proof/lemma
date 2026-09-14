@@ -7,6 +7,7 @@ import Lemma.Tensor.Sum.eq.Zero
 import Lemma.Tensor.SumStack.eq.AddSumSStack
 import Lemma.Tensor.SumStack.of.All_Eq
 import Lemma.Tensor.Sum_Add.eq.AddSumS
+import torch.Tensor.sum
 open Bool Tensor
 set_option maxHeartbeats 1000000
 

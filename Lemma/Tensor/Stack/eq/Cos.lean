@@ -1,4 +1,4 @@
-import sympy.tensor.functions
+import torch.functions
 import Lemma.Tensor.Eq_Stack
 import Lemma.Tensor.MapStack.eq.Stack_Map
 open Tensor

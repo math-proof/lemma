@@ -1,4 +1,5 @@
 import Lemma.Tensor.Lt.is.LtDataS
+import torch.Tensor.prod
 import Lemma.Vector.Ne.of.Lt.Ne_0
 open Tensor Vector
 

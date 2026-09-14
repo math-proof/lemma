@@ -1,9 +1,10 @@
 import Lemma.Bool.SEq.is.Eq
+import torch.Tensor.reshape
 import Lemma.Tensor.Eq.is.All_EqGetS
 import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.GetReshape.as.Reshape.of.GtLength_0
 import Lemma.Tensor.SEqReshape.of.Eq
-import sympy.tensor.stack
+import torch.stack
 open Bool Tensor
 
 

@@ -479,6 +479,12 @@ ForEach-Object {
             Add-Content -Path "test.sql" -Value (Format-LemmaInsertRow -Module $new_module -Synthetic)
         }
     }
+    if ($attributes -cmatch '\bis\.mt\b') {
+        if ($module -cmatch '^([a-zA-Z0-9_]+)\.(.+?)\.is\.(.+?)(\.of\..+)?$') {
+            $new_module = "$($matches[1]).$(Not $matches[2]).is.$(Not $matches[3])$($matches[4])"
+            Add-Content -Path "test.sql" -Value (Format-LemmaInsertRow -Module $new_module -Synthetic)
+        }
+    }
     if ($attributes -cmatch '\bcomm\.is\b') {
         if ($module -cmatch '^([a-zA-Z0-9_]+)\.(.+)\.is\.(.+?)(\.of\..+)?$') {
             $section = $matches[1]

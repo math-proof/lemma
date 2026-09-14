@@ -1,4 +1,5 @@
 import Lemma.Tensor.EqGetT
+import torch.Tensor.permute
 import sympy.matrices.dense
 open Matrix Tensor
 

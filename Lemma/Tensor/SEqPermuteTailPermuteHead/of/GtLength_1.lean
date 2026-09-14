@@ -1,3 +1,4 @@
+import torch.Tensor.permute
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.GetTranspose.eq.Get
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq

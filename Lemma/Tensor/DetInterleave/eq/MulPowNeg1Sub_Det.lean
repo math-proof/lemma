@@ -1,6 +1,7 @@
 import Lemma.Tensor.Delta.eq.Ite
 import Lemma.Tensor.DetShiftMatrix.eq.PowNeg1Sub
 import Lemma.Tensor.GetInterleave.eq.Delta_ToSplit
+import Lemma.Tensor.GetShiftMatrix.eq.DeltaShiftRow
 import Lemma.Tensor.EqMul1
 import Lemma.Tensor.ToMatrixDot.eq.MulToMatrixS
 import Lemma.Fin.ShiftRow.eq.Ite
@@ -8,36 +9,20 @@ open Matrix Tensor
 set_option maxHeartbeats 800000
 
 
-/--
-Entry of `ShiftMatrix(n, i₀, j₀)`: row `i` is sent to `i.shiftRow i₀ j₀`.
--/
-private lemma get_shiftRow
-    (n : ℕ) (i₀ j₀ : Fin n) (i j : Fin n) :
-    (ShiftMatrix (α := ℝ) n (i₀ : ℕ) (j₀ : ℕ)).toMatrix i j =
-      (↑(KroneckerDelta (i.shiftRow i₀ j₀ : ℕ) (j : ℕ)) : Tensor ℝ []) := by
-  have hS := GetShiftMatrix.eq.Ite (α := ℝ) n (i₀ : ℕ) (j₀ : ℕ) i₀.isLt j₀.isLt i j
-  simp only [Tensor.toMatrix] at hS ⊢
-  rw [hS]
-  have hδij : KroneckerDelta i j = KroneckerDelta (i : ℕ) (j : ℕ) := by
-    simp [KroneckerDelta, Fin.ext_iff]
-  rw [hδij]
-  simp only [Delta.eq.Ite, Fin.ShiftRow.eq.Ite i i₀ j₀]
-  split_ifs <;> first
-  | rfl
-  | omega
-
 private lemma get_shift_mul
     (d : ℕ) (hd : 1 < d) (i j : Fin (d + d)) :
-    ((ShiftMatrix (α := ℝ) (d + d) d 1) @ (interleave d)).toMatrix i j =
+    ((ShiftMatrix (α := ℝ) (⟨d, by omega⟩ : Fin (d + d)) ⟨1, by omega⟩) @ (interleave d)).toMatrix i j =
       (interleave d).toMatrix (i.shiftRow ⟨d, by omega⟩ ⟨1, by omega⟩) j := by
   rw [ToMatrixDot.eq.MulToMatrixS, Matrix.mul_apply]
   have hSR (k : Fin (d + d)) :
-      (ShiftMatrix (α := ℝ) (d + d) d 1).toMatrix i k =
-        (↑(KroneckerDelta (i.shiftRow ⟨d, by omega⟩ ⟨1, by omega⟩ : ℕ) (k : ℕ)) : Tensor ℝ []) :=
-    get_shiftRow (d + d) ⟨d, by omega⟩ ⟨1, by omega⟩ i k
+      (ShiftMatrix (α := ℝ) (⟨d, by omega⟩ : Fin (d + d)) ⟨1, by omega⟩).toMatrix i k =
+        (↑(KroneckerDelta (i.shiftRow ⟨d, by omega⟩ ⟨1, by omega⟩ : ℕ) (k : ℕ)) : Tensor ℝ []) := by
+    simp only [Tensor.toMatrix]
+    exact Tensor.GetShiftMatrix.eq.DeltaShiftRow
+      ⟨d, by omega⟩ ⟨1, by omega⟩ i k
   have hterm (k : Fin (d + d)) :
       @HMul.hMul (Tensor ℝ []) (Tensor ℝ []) (Tensor ℝ []) instHMul
-          ((ShiftMatrix (α := ℝ) (d + d) d 1).toMatrix i k)
+          ((ShiftMatrix (α := ℝ) (⟨d, by omega⟩ : Fin (d + d)) ⟨1, by omega⟩).toMatrix i k)
           ((interleave d).toMatrix k j) =
         if k = i.shiftRow ⟨d, by omega⟩ ⟨1, by omega⟩ then
           (interleave d).toMatrix (i.shiftRow ⟨d, by omega⟩ ⟨1, by omega⟩) j
@@ -56,7 +41,7 @@ private lemma get_shift_mul
       exact zero_mul ((interleave d).toMatrix k j)
   change ∑ k ∈ Finset.univ,
       @HMul.hMul (Tensor ℝ []) (Tensor ℝ []) (Tensor ℝ []) instHMul
-        ((ShiftMatrix (α := ℝ) (d + d) d 1).toMatrix i k)
+        ((ShiftMatrix (α := ℝ) (⟨d, by omega⟩ : Fin (d + d)) ⟨1, by omega⟩).toMatrix i k)
         ((interleave d).toMatrix k j) = _
   rw [Finset.sum_congr rfl fun k _ => hterm k]
   rw [Finset.sum_ite_eq']
@@ -75,7 +60,7 @@ private lemma get_interleave_toMatrix
 private lemma entry_lt_lt
     (d : ℕ) (hd : 1 < d) (i j : Fin (d + d))
     (hi : (i : ℕ) < 2) (hj : (j : ℕ) < 2) :
-    ((ShiftMatrix (α := ℝ) (d + d) d 1) @ (interleave d)).toMatrix i j =
+    ((ShiftMatrix (α := ℝ) (⟨d, by omega⟩ : Fin (d + d)) ⟨1, by omega⟩) @ (interleave d)).toMatrix i j =
       if (i : ℕ) = (j : ℕ) then (1 : Tensor ℝ []) else 0 := by
   rw [get_shift_mul d hd i j, get_interleave_toMatrix, Delta.eq.Ite]
   simp only [Fin.toSplit]
@@ -109,7 +94,7 @@ private lemma entry_lt_lt
 private lemma entry_lt_ge
     (d : ℕ) (hd : 1 < d) (i j : Fin (d + d))
     (hi : (i : ℕ) < 2) (hj : 2 ≤ (j : ℕ)) :
-    ((ShiftMatrix (α := ℝ) (d + d) d 1) @ (interleave d)).toMatrix i j = 0 := by
+    ((ShiftMatrix (α := ℝ) (⟨d, by omega⟩ : Fin (d + d)) ⟨1, by omega⟩) @ (interleave d)).toMatrix i j = 0 := by
   rw [get_shift_mul d hd i j, get_interleave_toMatrix, Delta.eq.Ite]
   simp only [Fin.toSplit]
   have hi01 : (i : ℕ) = 0 ∨ (i : ℕ) = 1 := by omega
@@ -142,7 +127,7 @@ private lemma entry_lt_ge
 private lemma entry_ge_lt
     (d : ℕ) (hd : 1 < d) (i j : Fin (d + d))
     (hi : 2 ≤ (i : ℕ)) (hj : (j : ℕ) < 2) :
-    ((ShiftMatrix (α := ℝ) (d + d) d 1) @ (interleave d)).toMatrix i j = 0 := by
+    ((ShiftMatrix (α := ℝ) (⟨d, by omega⟩ : Fin (d + d)) ⟨1, by omega⟩) @ (interleave d)).toMatrix i j = 0 := by
   rw [get_shift_mul d hd i j, get_interleave_toMatrix, Delta.eq.Ite]
   simp only [Fin.toSplit]
   have hj01 : (j : ℕ) = 0 ∨ (j : ℕ) = 1 := by omega
@@ -175,7 +160,7 @@ private lemma entry_ge_lt
 private lemma entry_ge_ge
     (d : ℕ) (hd : 1 < d) (i j : Fin (d + d))
     (hi : 2 ≤ (i : ℕ)) (hj : 2 ≤ (j : ℕ)) :
-    ((ShiftMatrix (α := ℝ) (d + d) d 1) @ (interleave d)).toMatrix i j =
+    ((ShiftMatrix (α := ℝ) (⟨d, by omega⟩ : Fin (d + d)) ⟨1, by omega⟩) @ (interleave d)).toMatrix i j =
       (interleave (d - 1)).toMatrix
         ⟨(i : ℕ) - 2, by have := i.isLt; omega⟩
         ⟨(j : ℕ) - 2, by have := j.isLt; omega⟩ := by
@@ -316,7 +301,7 @@ private lemma reindex_fromBlocks_apply
 
 private lemma shift_mul_block
     (d : ℕ) (hd : 1 < d) :
-    ((ShiftMatrix (α := ℝ) (d + d) d 1) @ (interleave d)).toMatrix =
+    ((ShiftMatrix (α := ℝ) (⟨d, by omega⟩ : Fin (d + d)) ⟨1, by omega⟩) @ (interleave d)).toMatrix =
       reindex (blockEquiv d (by omega)) (blockEquiv d (by omega))
         (fromBlocks (1 : Matrix (Fin 2) (Fin 2) (Tensor ℝ [])) 0 0
           (interleave (d - 1)).toMatrix) := by
@@ -351,11 +336,12 @@ private lemma main
   erw [Tensor.Mul]
   show (interleave d).toMatrix.det =
     Mul.mul ((-1 : Tensor ℝ []) ^ (d - 1)) (interleave (d - 1)).toMatrix.det
-  let S := ShiftMatrix (α := ℝ) (d + d) d 1
+  let S := ShiftMatrix (α := ℝ) (⟨d, by omega⟩ : Fin (d + d)) ⟨1, by omega⟩
   let P := interleave d
   have hS : S.toMatrix.det = (-1 : Tensor ℝ []) ^ (d - 1) := by
     apply Eq.trans (Det.eq.DetToMatrix S).symm
-    apply DetShiftMatrix.eq.PowNeg1Sub (α := ℝ) _ _ _ (by omega) hd
+    apply DetShiftMatrix.eq.PowNeg1Sub (α := ℝ)
+      (⟨d, by omega⟩ : Fin (d + d)) ⟨1, by omega⟩ hd
   have hSP : (S @ P).toMatrix.det = (interleave (d - 1)).toMatrix.det := by
     rw [shift_mul_block d hd, det_reindex_self, det_fromBlocks_zero₂₁, det_one,
       one_mul]

@@ -1,4 +1,5 @@
 import Lemma.Tensor.RepeatBFn.eq.BFnRepeat
+import torch.Tensor.repeat
 open Tensor
 
 

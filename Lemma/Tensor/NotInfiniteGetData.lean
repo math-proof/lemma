@@ -1,4 +1,5 @@
 import Lemma.Hyperreal.Any_IsSt.is.NotInfinite
+import torch.Tensor.prod
 import sympy.core.relational
 import sympy.tensor.Basic
 open Hyperreal

@@ -1,4 +1,7 @@
 import Lemma.Fin.MulSum.eq.Sum_Mul
+import torch.Tensor.sum
+import torch.Tensor.unsqueeze
+import torch.Tensor.permute
 import Lemma.Fin.Sum.of.All_Eq
 import Lemma.Fin.Sum_BFn
 import Lemma.Finset.Mul_Sum.eq.Sum_Mul

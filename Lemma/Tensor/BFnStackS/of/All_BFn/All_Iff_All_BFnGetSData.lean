@@ -1,9 +1,10 @@
 import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
+import torch.Tensor.prod
 import Lemma.List.Prod.eq.Foldr
 import Lemma.Tensor.DataOfVector.eq.FlattenMapData
 import Lemma.Vector.EqGetRange
 import Lemma.Vector.GetFlatten_AddMul.eq.Get
-import sympy.tensor.stack
+import torch.stack
 open Fin List Tensor Vector
 
 

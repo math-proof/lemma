@@ -1,4 +1,5 @@
 import Lemma.Tensor.DataSelect.as.FlattenGetSliceSplitAtData.of.GtLength
+import torch.Tensor.prod
 open Tensor
 
 

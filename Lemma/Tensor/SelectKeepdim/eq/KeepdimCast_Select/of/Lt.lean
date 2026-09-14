@@ -1,4 +1,6 @@
 import Lemma.Bool.Cast.of.SEq.Eq
+import torch.Tensor.unsqueeze
+import torch.Tensor.repeat
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.List.EqGetInsertIdx.of.GeLength
 import Lemma.List.EqSetInsertIdxEraseIdx.of.GtLength
@@ -21,7 +23,7 @@ import Lemma.Tensor.SelectCast.as.Select.of.Eq
 import Lemma.Tensor.SelectRepeat.as.RepeatSelect.of.Lt
 import Lemma.Tensor.SelectUnsqueeze.as.UnsqueezeSelect.of.Le
 import Lemma.Tensor.UnsqueezeCast.as.Unsqueeze.of.Eq
-import sympy.tensor.functions
+import torch.functions
 open Bool List Nat Tensor
 
 

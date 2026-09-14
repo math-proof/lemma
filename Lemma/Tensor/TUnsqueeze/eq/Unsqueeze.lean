@@ -1,4 +1,6 @@
 import Lemma.Bool.SEq.is.Eq
+import torch.Tensor.unsqueeze
+import torch.Tensor.permute
 import Lemma.Tensor.TUnsqueeze_Length.as.Unsqueeze
 open Bool Tensor
 

@@ -1,7 +1,7 @@
 import Lemma.Tensor.Eq.is.All_EqGetS
 import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.GetAdd.eq.AddGetS
-import sympy.tensor.stack
+import torch.stack
 open Tensor
 
 

@@ -1,10 +1,13 @@
 import Lemma.Nat.Delta.eq.Ite
+import torch.Tensor.prod
+import torch.Tensor.permute
 import Lemma.Tensor.Eq.is.All_EqGetS
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Tensor.GetMulEye_Stack.eq.MulDelta
 import Lemma.Tensor.EqGetT
 import Lemma.Tensor.Mul
 import sympy.matrices.expressions.special
+import torch.eye
 open Nat Tensor
 set_option maxHeartbeats 4000000
 

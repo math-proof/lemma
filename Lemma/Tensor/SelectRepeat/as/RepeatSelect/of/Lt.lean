@@ -1,4 +1,6 @@
 import Lemma.List.MulLengthSlice_Mul.eq.ProdEraseIdx.of.GtGet.GtLength
+import torch.Tensor.repeat
+import torch.Tensor.prod
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.List.DropSet.eq.Drop.of.Lt
 import Lemma.List.EraseIdxSet.eq.SetEraseIdx.of.Lt

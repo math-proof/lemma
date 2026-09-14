@@ -1,14 +1,11 @@
 import Lemma.Bool.EqCast.of.SEq
-import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.List.ProdEraseIdx.eq.MulProdS
-import Lemma.Nat.Eq_Div.Eq_Mod.of.Eq_AddMul
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Tensor.EqData0'0
-import Lemma.Vector.EqGet0_0
 import Lemma.Vector.EqSplitAt0_0
 import Lemma.Vector.EqSum_0
-import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
+import torch.Tensor.sum
 open Bool Fin List Nat Tensor Vector
 
 

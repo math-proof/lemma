@@ -1,4 +1,5 @@
 import Lemma.List.Ne_Nil.is.GeLength_1
+import torch.Tensor.permute
 import Lemma.Tensor.SEqPermuteHeadPermuteTail.of.GtLength_1
 import Lemma.Tensor.SEqPermuteHeadS.of.SEq.Eq
 import Lemma.Tensor.SEqPermuteHead_1

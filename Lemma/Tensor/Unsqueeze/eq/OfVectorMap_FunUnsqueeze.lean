@@ -1,4 +1,6 @@
 import Lemma.Bool.EqCast.of.HEq
+import torch.Tensor.unsqueeze
+import torch.Tensor.prod
 import Lemma.Fin.HEqFinS.of.Eq.Eq.Lt
 import Lemma.List.ProdInsertIdx.eq.Prod
 import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul

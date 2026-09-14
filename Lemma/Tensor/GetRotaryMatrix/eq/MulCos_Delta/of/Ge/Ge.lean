@@ -5,7 +5,7 @@ import Lemma.Tensor.Mul
 import Lemma.Tensor.RotaryMatrix.eq.AppendHstackSMulSEye
 import sympy.functions.special.tensor_functions
 import sympy.matrices.expressions.special
-import sympy.tensor.functions
+import torch.functions
 open Tensor
 
 

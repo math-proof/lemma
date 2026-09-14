@@ -2,7 +2,7 @@ import Lemma.Bool.SEq.is.Eq
 import Lemma.Tensor.Eq.is.All_EqGetS
 import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.GetSoftmax.eq.SoftmaxGet.of.GtGet_0.LtAdd_1Length
-import sympy.tensor.stack
+import torch.stack
 open Bool Tensor
 
 

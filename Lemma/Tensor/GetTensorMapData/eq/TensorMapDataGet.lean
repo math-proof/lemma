@@ -1,4 +1,5 @@
 import Lemma.Tensor.LengthTensorMapData.eq.Length
+import torch.Tensor.prod
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.List.ProdTake_1.eq.HeadD_1
 import Lemma.Tensor.ProdTake_1.eq.Length.of.GtLength_0

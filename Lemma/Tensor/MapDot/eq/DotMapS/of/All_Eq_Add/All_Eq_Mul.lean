@@ -1,4 +1,5 @@
 import Lemma.Bool.SEq.is.Eq
+import torch.Tensor.reshape
 import Lemma.List.EqAppendTake__ListGet.of.GeLength_2
 import Lemma.Tensor.Dot.eq.TensorDotDataS
 import Lemma.Tensor.Einsum.as.SelectBmm.of.Eq_Get_SubLength.GeLength_2
@@ -24,6 +25,7 @@ import Lemma.Vector.Eq.is.All_EqGetS
 import Lemma.Vector.GetMap.eq.UFnGet
 import Lemma.Vector.MapMul.eq.MulMapS.of.All_Eq_Mul
 import Lemma.Vector.MapSum.eq.SumMap.of.All_EqUFnAdd
+import torch.Tensor.bmm
 open Bool List Tensor Vector
 set_option maxHeartbeats 2000000
 

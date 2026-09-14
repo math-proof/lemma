@@ -12,7 +12,7 @@ import Lemma.Tensor.Pow.eq.TensorListPow
 import Lemma.Vector.Eq.is.All_EqGetS
 import Lemma.Vector.GetMul.eq.MulGet
 import Lemma.Vector.GetMul.eq.Mul_Get
-import sympy.tensor.stack
+import torch.stack
 import sympy.tensor.tensor
 open Tensor
 

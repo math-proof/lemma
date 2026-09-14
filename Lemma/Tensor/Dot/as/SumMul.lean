@@ -1,4 +1,8 @@
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
+import torch.Tensor.unsqueeze
+import torch.Tensor.bmm
+import torch.Tensor.repeat
+import torch.Tensor.permute
 import Lemma.Bool.SEqCast.of.Eq
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.List.InsertIdxAppend.eq.Append_Cons
@@ -11,6 +15,7 @@ import Lemma.Tensor.SEqRepeatS.of.SEq.Val.Eq
 import Lemma.Tensor.SEqSumS.of.SEq.Eq
 import Lemma.Tensor.SEqTS.of.SEq
 import Lemma.Tensor.SEqUnsqueezeS.of.SEq.Eq
+import torch.Tensor.sum
 open Bool List Tensor
 
 

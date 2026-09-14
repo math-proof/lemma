@@ -1,4 +1,5 @@
 import Lemma.Bool.SEq.is.EqCast.of.Eq
+import torch.Tensor.sum
 import Lemma.Bool.SEqCast.of.Eq
 import Lemma.Fin.DivSum.eq.Sum_Div.of.All_EqDivAdd.All_EqDiv0
 import Lemma.Fin.Sum.of.All_Eq
@@ -13,7 +14,7 @@ import Lemma.Tensor.SEqDivS.of.SEq.SEq
 import Lemma.Tensor.SelectDiv.eq.DivSelectS
 import Lemma.Tensor.Sum.as.Sum.of.LeLength
 import Lemma.Tensor.Sum.eq.Sum_Select.of.GtLength
-import sympy.tensor.functions
+import torch.functions
 open Bool Fin List Nat Tensor
 
 

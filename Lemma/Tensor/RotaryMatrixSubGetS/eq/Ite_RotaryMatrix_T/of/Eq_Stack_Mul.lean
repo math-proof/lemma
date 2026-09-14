@@ -1,4 +1,5 @@
 import Lemma.Int.Sub.eq.NegSub
+import torch.Tensor.permute
 import Lemma.Tensor.RotaryMatrixNeg.eq.TRotaryMatrix
 import Lemma.Tensor.SubGetS.eq.Get_Sub.of.Eq_Stack_Mul.Ge
 open Int Tensor

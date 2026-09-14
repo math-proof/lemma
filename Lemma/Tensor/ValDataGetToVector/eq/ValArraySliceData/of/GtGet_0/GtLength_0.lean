@@ -1,4 +1,5 @@
 import Lemma.List.HeadD.eq.Get_0.of.GtLength_0
+import torch.Tensor.prod
 import Lemma.Tensor.ValDataGetToVector.eq.ValArraySliceData.of.Lt
 open Tensor List
 

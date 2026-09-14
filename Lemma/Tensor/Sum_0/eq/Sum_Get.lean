@@ -1,4 +1,5 @@
 import Lemma.Fin.HEq.of.All_Eq.Eq
+import torch.Tensor.sum
 import Lemma.Tensor.DataSum.eq.Sum_Data
 import Lemma.Tensor.DataSum_0.eq.SumSplitAtData
 import Lemma.Tensor.Eq.is.EqDataS

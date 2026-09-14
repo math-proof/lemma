@@ -5,7 +5,7 @@ import Lemma.List.LengthSlice.eq.SubMin
 import Lemma.Nat.CoeAdd.eq.AddCoeS
 import Lemma.Bool.SEq.is.Eq
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
-import sympy.tensor.stack
+import torch.stack
 import sympy.tensor.tensor
 open Tensor List Bool Nat
 

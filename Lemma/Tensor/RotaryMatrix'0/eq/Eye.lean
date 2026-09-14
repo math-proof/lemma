@@ -6,6 +6,7 @@ import Lemma.Tensor.GetEye.eq.Delta
 import Lemma.Tensor.GetRotaryMatrix'.eq.GetRotaryMatrix
 import Lemma.Tensor.RotaryMatrix0.eq.Eye
 import sympy.matrices.expressions.special
+import torch.eye
 open Fin Nat Tensor
 
 

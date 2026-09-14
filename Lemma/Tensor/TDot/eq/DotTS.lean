@@ -1,4 +1,5 @@
 import Lemma.Tensor.Dot
+import torch.Tensor.permute
 import Lemma.Tensor.Eq.is.All_EqGetS
 import Lemma.Tensor.EqTT
 import Lemma.Tensor.GetDot.eq.DotGetS

@@ -440,6 +440,53 @@ initialize registerBuiltinAttribute {
     }
 }
 
+def List.is.mt' (list : List String) (parity : List Bool := []) : List String :=
+  list.decomposeOf parity fun list _ =>
+    let i := list.idxOf "is"
+    let ⟨lhs, rhs⟩ := list.splitAt i
+    let lhs := lhs.Not
+    let rhs := rhs.tail.Not
+    lhs ++ "is" :: rhs
+
+def Expr.is.mt' (type value : Lean.Expr) : CoreM (Lean.Expr × Lean.Expr) := do
+  let ⟨binders, type⟩ := type.decompose_forallE
+  let ⟨us, lhs, rhs⟩ := type.decomposeIff
+  let context := binders.map fun ⟨binderName, binderType, _⟩ => (binderName, binderType)
+  type.println context "old type"
+  let newType := (Lean.Expr.const `Iff us).mkApp [lhs.Not, rhs.Not]
+  newType.println context "new type"
+  let args := ((List.range binders.length).map fun i => .bvar i).reverse
+  let h := value.mkApp args
+  let newValue := (Lean.Expr.const `Iff.not us).mkApp [lhs, rhs, h]
+  let telescope := fun lam hint body => do
+    body.println context s!"prior {hint}"
+    let body := binders.foldl
+      (fun body ⟨binderName, binderType, binderInfo⟩ =>
+        lam binderName binderType body binderInfo
+      )
+      body
+    body.println [] s!"final {hint}"
+    return body
+  return (← (newType, newValue).mapM (telescope Expr.forallE "type") (telescope .lam "value"))
+
+initialize registerBuiltinAttribute {
+  name := `is.mt'
+  descr := "Automatically generate the mt version (both sides negated) of an equivalence theorem"
+  applicationTime := .afterCompilation
+  add := fun declName stx kind => do
+    let decl ← getConstInfo declName
+    let levelParams := decl.levelParams
+    let ⟨type, value⟩ ← Expr.is.mt' decl.type (.const declName (levelParams.map .param))
+    let name := (List.is.mt' (← getEnv).moduleTokens).foldl Name.str default |>.lemmaName declName
+    println! s!"name = {name}"
+    addAndCompile <| .thmDecl {
+      name := name
+      levelParams := levelParams
+      type := type
+      value := value
+    }
+}
+
 def Expr.disjunction' (type value : Lean.Expr) (parity : ℕ := 0) (left : Bool := true) : CoreM (ℕ × Lean.Expr × Lean.Expr) := do
   let ⟨binders, type⟩ := type.decompose_forallE
   let defaultCount := binders.countP (·.snd.snd == .default)
@@ -859,3 +906,54 @@ initialize registerBuiltinAttribute {
       value := value
     }
 }
+
+/--
+`@[And.left']` — debug variant of the official `@[And.left]` attribute, kept in
+`Basic'` for experimentation; it shares the same projection machinery
+(`Expr.andProj` / `Name.andProjName`) defined in `sympy.Basic`.
+
+`theorem Section.Type1.Type2.of.Givens (…): A ∧ B` generates
+`theorem Section.Type1.of.Givens (…): A`, proved by `.1`.
+When `Type1 = Type2` the generated name is `Section.Type1.of.Givens.fst`.
+-/
+initialize registerBuiltinAttribute {
+  name := `And.left'
+  descr := "Debug: extract the left conjunct of the conclusion (Type1.Type2.of.G → Type1.of.G, .fst when Type1 = Type2)"
+  applicationTime := .afterCompilation
+  add := fun declName stx kind => do
+    let decl ← getConstInfo declName
+    let (type, value) :=
+      Expr.andProj decl.type (.const declName (decl.levelParams.map .param)) true
+    addAndCompile <| .thmDecl {
+      name := Name.andProjName (← getEnv).moduleTokens declName true
+      levelParams := decl.levelParams
+      type := type
+      value := value
+    }
+}
+
+/--
+`@[And.right']` — debug variant of the official `@[And.right]` attribute, kept in
+`Basic'` for experimentation; it shares the same projection machinery
+(`Expr.andProj` / `Name.andProjName`) defined in `sympy.Basic`.
+
+`theorem Section.Type1.Type2.of.Givens (…): A ∧ B` generates
+`theorem Section.Type2.of.Givens (…): B`, proved by `.2`.
+When `Type1 = Type2` the generated name is `Section.Type2.of.Givens.snd`.
+-/
+initialize registerBuiltinAttribute {
+  name := `And.right'
+  descr := "Debug: extract the right conjunct of the conclusion (Type1.Type2.of.G → Type2.of.G, .snd when Type1 = Type2)"
+  applicationTime := .afterCompilation
+  add := fun declName stx kind => do
+    let decl ← getConstInfo declName
+    let (type, value) :=
+      Expr.andProj decl.type (.const declName (decl.levelParams.map .param)) false
+    addAndCompile <| .thmDecl {
+      name := Name.andProjName (← getEnv).moduleTokens declName false
+      levelParams := decl.levelParams
+      type := type
+      value := value
+    }
+}
+

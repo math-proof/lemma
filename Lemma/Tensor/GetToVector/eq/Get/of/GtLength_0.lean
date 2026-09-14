@@ -1,4 +1,4 @@
-import sympy.tensor.stack
+import torch.stack
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.List.HeadD.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.GetToVector.eq.Get

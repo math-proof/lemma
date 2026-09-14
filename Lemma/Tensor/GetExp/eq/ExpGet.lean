@@ -1,4 +1,4 @@
-import sympy.tensor.functions
+import torch.functions
 import Lemma.Tensor.LengthExp.eq.Length
 import Lemma.Tensor.GetTensorMapData.eq.TensorMapDataGet
 open Tensor

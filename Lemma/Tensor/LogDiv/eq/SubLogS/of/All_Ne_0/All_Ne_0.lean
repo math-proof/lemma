@@ -1,8 +1,9 @@
 import Lemma.Tensor.DataDiv.eq.DivDataS
+import torch.Tensor.prod
 import Lemma.Tensor.DataSub.eq.SubDataS
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Vector.LogDiv.eq.SubLogS.of.All_Ne_0.All_Ne_0
-import sympy.tensor.functions
+import torch.functions
 open Tensor Vector
 
 

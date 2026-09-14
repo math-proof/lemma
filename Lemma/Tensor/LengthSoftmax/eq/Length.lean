@@ -1,6 +1,6 @@
 import Lemma.Tensor.EqLength_0.of.Eq_Nil
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
-import sympy.tensor.functions
+import torch.functions
 open Tensor
 
 

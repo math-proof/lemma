@@ -1,4 +1,5 @@
 import Lemma.Bool.Bool.eq.Ite
+import torch.Tensor.sum
 import Lemma.Fin.Sum.of.All_Eq
 import Lemma.Int.EqToNat
 import Lemma.Int.Icc_Sub_1.eq.Ico

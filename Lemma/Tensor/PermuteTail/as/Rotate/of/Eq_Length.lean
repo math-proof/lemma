@@ -1,4 +1,5 @@
 import Lemma.Tensor.PermuteTail.as.Rotate
+import torch.Tensor.permute
 open Tensor
 
 

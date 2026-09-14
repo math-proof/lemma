@@ -18,4 +18,7 @@ leanOptions = {linter.dupNamespace = false, linter.unusedTactic = false, linter.
 name = "sympy"
 
 [[lean_lib]]
+name = "torch"
+
+[[lean_lib]]
 name = "stdlib"

@@ -1,5 +1,5 @@
 import Lemma.Int.Eq_Neg.of.Add.eq.Zero
-import Lemma.Rat.EqMul.is.Eq_Div.of.Ne_0
+import Lemma.Rat.Eq_Div.is.EqMul.of.Ne_0
 open Int Rat
 
 

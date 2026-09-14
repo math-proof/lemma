@@ -1,4 +1,6 @@
 import Lemma.Tensor.DataMul.eq.MulDataS
+import torch.Tensor.unsqueeze
+import torch.Tensor.permute
 import Lemma.Tensor.Dot.eq.GetDotUnsqueeze_0
 import Lemma.Tensor.Dot.eq.SumMul__0
 import Lemma.Tensor.Eq.is.EqDataS

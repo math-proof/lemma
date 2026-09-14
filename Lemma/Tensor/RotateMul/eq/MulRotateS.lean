@@ -1,4 +1,5 @@
 import Lemma.List.ProdAppend.eq.MulProdS
+import torch.Tensor.permute
 import Lemma.List.Rotate.eq.AppendDrop__Take
 import Lemma.Tensor.DataMul.eq.MulDataS
 import Lemma.Tensor.TensorMul.eq.MulTensorS

@@ -1,4 +1,6 @@
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
+import torch.Tensor.prod
+import torch.Tensor.permute
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.Int.OfNat.eq.Cast
 import Lemma.List.Append_TakeDrop.eq.Take.of.Ge
@@ -58,6 +60,7 @@ import Lemma.Vector.GetGetSlice.eq.Get.of.GtGet.GtLength
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.GetTranspose.eq.Get
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
+import torch.Tensor.sum
 open Nat Vector List Bool Int Tensor Fin
 set_option maxHeartbeats 500000
 

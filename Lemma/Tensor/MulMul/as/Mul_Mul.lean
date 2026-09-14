@@ -1,4 +1,5 @@
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
+import torch.Tensor.prod
 import Lemma.Vector.Eq.of.Val
 import sympy.core.mul
 open Tensor Vector

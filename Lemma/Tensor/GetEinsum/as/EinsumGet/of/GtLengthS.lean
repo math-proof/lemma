@@ -1,4 +1,6 @@
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
+import torch.Tensor.reshape
+import torch.Tensor.prod
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.List.AppendAppend.eq.Append_Append
 import Lemma.List.Cons_Append_List.eq.AppendTake_Length

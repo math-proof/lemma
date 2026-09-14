@@ -2,6 +2,7 @@ import Lemma.Tensor.Div.eq.Div_GetData_0
 import Lemma.Tensor.Div.eq.Div_KeepdimTensorReplicateProdEraseIdx
 import Lemma.Tensor.Div.eq.Div_TensorReplicate
 import Lemma.Tensor.SumDiv_Keepdim.eq.DivSum
+import torch.Tensor.sum
 open Tensor
 
 

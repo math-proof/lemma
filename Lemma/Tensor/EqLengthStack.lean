@@ -1,4 +1,4 @@
-import sympy.tensor.stack
+import torch.stack
 import Lemma.Vector.MapMap.eq.Map_Comp
 open Vector
 

@@ -1,4 +1,5 @@
 import Lemma.Tensor.Sum.eq.Zero
+import torch.Tensor.sum
 open Tensor
 
 

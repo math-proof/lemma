@@ -1,4 +1,4 @@
-import sympy.tensor.stack
+import torch.stack
 import Lemma.Vector.EqGetRange
 import Lemma.Vector.GetMap.eq.UFnGet
 open Vector

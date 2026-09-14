@@ -1,4 +1,5 @@
 import Lemma.List.Ne_Nil.is.GtLength_0
+import torch.Tensor.permute
 import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.List.EqRotate_1.of.LeLength_1

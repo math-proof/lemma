@@ -1,4 +1,5 @@
 import sympy.tensor.Basic
+import torch.Tensor.prod
 import sympy.Basic
 
 

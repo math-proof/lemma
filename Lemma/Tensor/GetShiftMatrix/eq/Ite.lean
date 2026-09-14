@@ -1,4 +1,6 @@
-import Lemma.Tensor.EqGetStack
+import Lemma.Tensor.Delta.eq.Ite
+import Lemma.Tensor.GetShiftMatrix.eq.DeltaShiftRow
+import Lemma.Fin.ShiftRow.eq.Ite
 import sympy.matrices.expressions.permutation
 open Tensor
 
@@ -12,72 +14,34 @@ open Tensor
 @[main, fin]
 private lemma main
   [AddMonoidWithOne α] [CharZero α]
+  {n : ℕ}
 -- given
-  (n i₀ j₀ : ℕ)
-  (i j : Fin n) :
+  (i₀ j₀ i j : Fin n) :
 -- imply
-  (ShiftMatrix (α := α) n i₀ j₀)[i, j] =
-    if i₀ = j₀ then
+  (ShiftMatrix (α := α) i₀ j₀)[i, j] =
+    if (i₀ : ℕ) = (j₀ : ℕ) then
       (↑(KroneckerDelta i j) : Tensor α [])
-    else if i₀ < j₀ then
-      if (i : ℕ) = j₀ then
-        (↑(KroneckerDelta i₀ (j : ℕ)) : Tensor α [])
-      else if i₀ ≤ (i : ℕ) ∧ (i : ℕ) < j₀ then
+    else if (i₀ : ℕ) < (j₀ : ℕ) then
+      if (i : ℕ) = (j₀ : ℕ) then
+        (↑(KroneckerDelta (i₀ : ℕ) (j : ℕ)) : Tensor α [])
+      else if (i₀ : ℕ) ≤ (i : ℕ) ∧ (i : ℕ) < (j₀ : ℕ) then
         (↑(KroneckerDelta ((i : ℕ) + 1) (j : ℕ)) : Tensor α [])
       else
         (↑(KroneckerDelta i j) : Tensor α [])
     else
-      if (j : ℕ) = i₀ then
-        (↑(KroneckerDelta (i : ℕ) j₀) : Tensor α [])
-      else if j₀ ≤ (j : ℕ) ∧ (j : ℕ) < i₀ then
+      if (j : ℕ) = (i₀ : ℕ) then
+        (↑(KroneckerDelta (i : ℕ) (j₀ : ℕ)) : Tensor α [])
+      else if (j₀ : ℕ) ≤ (j : ℕ) ∧ (j : ℕ) < (i₀ : ℕ) then
         (↑(KroneckerDelta (i : ℕ) ((j : ℕ) + 1)) : Tensor α [])
       else
         (↑(KroneckerDelta i j) : Tensor α []) := by
 -- proof
-  simp [ShiftMatrix]
-  have hrow :=
-    EqGetStack.fin
-      (fun i : Fin n =>
-        [j < n]
-          (if i₀ = j₀ then
-            (↑(KroneckerDelta i j) : Tensor α [])
-          else if i₀ < j₀ then
-            if (i : ℕ) = j₀ then
-              (↑(KroneckerDelta i₀ (j : ℕ)) : Tensor α [])
-            else if i₀ ≤ (i : ℕ) ∧ (i : ℕ) < j₀ then
-              (↑(KroneckerDelta ((i : ℕ) + 1) (j : ℕ)) : Tensor α [])
-            else
-              (↑(KroneckerDelta i j) : Tensor α [])
-          else
-            if (j : ℕ) = i₀ then
-              (↑(KroneckerDelta (i : ℕ) j₀) : Tensor α [])
-            else if j₀ ≤ (j : ℕ) ∧ (j : ℕ) < i₀ then
-              (↑(KroneckerDelta (i : ℕ) ((j : ℕ) + 1)) : Tensor α [])
-            else
-              (↑(KroneckerDelta i j) : Tensor α [])))
-      i
-  have hcol :=
-    EqGetStack.fin
-      (fun j : Fin n =>
-        if i₀ = j₀ then
-          (↑(KroneckerDelta i j) : Tensor α [])
-        else if i₀ < j₀ then
-          if (i : ℕ) = j₀ then
-            (↑(KroneckerDelta i₀ (j : ℕ)) : Tensor α [])
-          else if i₀ ≤ (i : ℕ) ∧ (i : ℕ) < j₀ then
-            (↑(KroneckerDelta ((i : ℕ) + 1) (j : ℕ)) : Tensor α [])
-          else
-            (↑(KroneckerDelta i j) : Tensor α [])
-        else
-          if (j : ℕ) = i₀ then
-            (↑(KroneckerDelta (i : ℕ) j₀) : Tensor α [])
-          else if j₀ ≤ (j : ℕ) ∧ (j : ℕ) < i₀ then
-            (↑(KroneckerDelta (i : ℕ) ((j : ℕ) + 1)) : Tensor α [])
-          else
-            (↑(KroneckerDelta i j) : Tensor α []))
-      j
-  simp [GetElem.getElem] at hrow hcol ⊢
-  erw [hrow, hcol]
+  rw [GetShiftMatrix.eq.DeltaShiftRow i₀ j₀ i j]
+  simp only [Tensor.Delta.eq.Ite, Fin.ShiftRow.eq.Ite i i₀ j₀]
+  split_ifs <;> first
+  | rfl
+  | omega
 
 
 -- created on 2026-09-10
+-- updated on 2026-09-13

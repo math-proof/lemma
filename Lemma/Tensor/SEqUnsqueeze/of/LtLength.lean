@@ -1,4 +1,5 @@
 import Lemma.List.EqInsertIdx.of.LtLength
+import torch.Tensor.unsqueeze
 import Lemma.List.InsertIdx.ne.Nil.of.Ne_Nil
 import Lemma.Nat.Gt_0.of.Gt
 import Lemma.Tensor.GetUnsqueeze.as.UnsqueezeGet.of.GtGet_0.Gt_0.GtLength_0

@@ -2,6 +2,7 @@ import Lemma.List.EqEraseIdx.of.LeLength
 import Lemma.Nat.NotLt.of.Ge
 import Lemma.Tensor.CastDiv.eq.DivCast.of.Eq
 import Lemma.Tensor.SEqSum.of.LeLength
+import torch.Tensor.sum
 open List Nat Tensor
 
 

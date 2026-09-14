@@ -2,6 +2,7 @@ import Lemma.List.GetAppend.eq.Get.of.GtLength
 import Lemma.List.GetRotate.eq.Ite.of.GeLength.GtLength
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import sympy.tensor.Basic
+import torch.Tensor.permute
 open List Tensor
 
 

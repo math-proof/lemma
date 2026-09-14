@@ -1,5 +1,6 @@
 import sympy.matrices.expressions.special
-import sympy.tensor.functions
+import torch.eye
+import torch.functions
 
 
 noncomputable def Tensor.rotaryMatrix (θ : Tensor ℝ [d]) : Tensor ℝ [d + d, d + d] :=

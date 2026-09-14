@@ -1,4 +1,6 @@
 import Lemma.Bool.UFn.of.Eq
+import torch.Tensor.unsqueeze
+import torch.Tensor.prod
 import Lemma.List.Prod.eq.MulProdS
 import Lemma.Nat.EqMod_1'0
 import Lemma.Tensor.DataCast.as.Data.of.Eq
@@ -15,6 +17,7 @@ import Lemma.Vector.GetSum.eq.SumMapGet
 import Lemma.Vector.GetUnflatten.eq.Get_AddMul
 import Lemma.Vector.Head.eq.Get_0
 import Lemma.Vector.EqGetReplicate
+import torch.Tensor.sum
 open Bool List Nat Tensor Vector
 
 

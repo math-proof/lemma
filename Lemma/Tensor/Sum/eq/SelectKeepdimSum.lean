@@ -1,4 +1,7 @@
-import sympy.tensor.functions
+import torch.functions
+import torch.Tensor.sum
+import torch.Tensor.unsqueeze
+import torch.Tensor.repeat
 import Lemma.Nat.EqMod_1'0
 import Lemma.Tensor.SelectCast.as.Select.of.Eq
 import Lemma.Bool.SEq.is.EqCast.of.Eq

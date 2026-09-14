@@ -1,4 +1,5 @@
 import Lemma.Vector.HEq.of.Val
+import torch.Tensor.prod
 import Lemma.Tensor.ValDataGetToVector.eq.ValArraySliceData
 import Lemma.Nat.Le_SubMulS
 open Tensor Vector Nat

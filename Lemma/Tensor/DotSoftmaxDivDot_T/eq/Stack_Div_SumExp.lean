@@ -1,4 +1,5 @@
 import Lemma.Fin.Sum.of.All_Eq
+import torch.Tensor.permute
 import Lemma.List.EqSwap_0'1
 import Lemma.Tensor.Div_KeepdimSum.eq.Div_Sum
 import Lemma.Tensor.Dot.eq.Sum_MulGetS
@@ -15,6 +16,7 @@ import Lemma.Tensor.SEqExpS.of.SEq
 import Lemma.Tensor.SEqSoftmaxS.of.SEq
 import Lemma.Tensor.SEqSumS.of.SEq
 import Lemma.Tensor.Softmax.eq.DivExp_KeepdimSumExp
+import torch.Tensor.sum
 open Fin List Tensor
 set_option maxHeartbeats 4000000
 

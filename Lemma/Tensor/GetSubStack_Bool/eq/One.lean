@@ -3,8 +3,8 @@ import Lemma.Nat.Sub.eq.Zero
 import Lemma.Tensor.EqGet1_1
 import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.GetSub.eq.SubGetS
-import sympy.tensor.functions
-import sympy.tensor.stack
+import torch.functions
+import torch.stack
 open Tensor Int Nat
 set_option maxHeartbeats 2000000
 

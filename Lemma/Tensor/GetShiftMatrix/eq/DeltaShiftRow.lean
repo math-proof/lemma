@@ -1,30 +1,29 @@
-import Lemma.Tensor.Delta.eq.Ite
-import Lemma.Tensor.GetShiftMatrix.eq.Ite
-import Lemma.Fin.ShiftRow.eq.Ite
+import Lemma.Tensor.EqGetStack
 import sympy.matrices.expressions.permutation
 open Tensor
 
 
 /--
-Entry of `ShiftMatrix(n, i₀, j₀)`: row `i` is sent to `i.shiftRow i₀ j₀`.
+Entry of `ShiftMatrix i₀ j₀`: row `i` is sent to `i.shiftRow i₀ j₀`.
 -/
 @[main]
 private lemma main
+  [AddMonoidWithOne α] [CharZero α]
+  {n : ℕ}
 -- given
-  (n : ℕ)
-  (i₀ j₀ : Fin n)
-  (i j : Fin n) :
+  (i₀ j₀ i j : Fin n) :
 -- imply
-  (ShiftMatrix (α := ℝ) n (i₀ : ℕ) (j₀ : ℕ))[i, j] =
-    (↑(KroneckerDelta (i.shiftRow i₀ j₀ : ℕ) (j : ℕ)) : Tensor ℝ []) := by
+  (ShiftMatrix (α := α) i₀ j₀)[i, j] =
+    (↑(KroneckerDelta (i.shiftRow i₀ j₀ : ℕ) (j : ℕ)) : Tensor α []) := by
 -- proof
-  have hS := GetShiftMatrix.eq.Ite (α := ℝ) n (i₀ : ℕ) (j₀ : ℕ) i₀.isLt j₀.isLt i j
-  rw [hS]
-  have hδij : KroneckerDelta i j = KroneckerDelta (i : ℕ) (j : ℕ) := by
-    simp [KroneckerDelta, Fin.ext_iff]
-  rw [hδij]
-  simp only [Delta.eq.Ite, Fin.ShiftRow.eq.Ite i i₀ j₀]
-  split_ifs <;> first | rfl | omega
+  simp only [ShiftMatrix]
+  have hrow := EqGetStack.fin
+    (fun i : Fin n => [j < n] (↑(KroneckerDelta (i.shiftRow i₀ j₀) j) : Tensor α [])) i
+  have hcol := EqGetStack.fin
+    (fun j : Fin n => (↑(KroneckerDelta (i.shiftRow i₀ j₀) j) : Tensor α [])) j
+  simp [GetElem.getElem] at hrow hcol ⊢
+  erw [hrow, hcol]
+  simp [KroneckerDelta, Fin.ext_iff]
 
 
 -- created on 2026-09-13

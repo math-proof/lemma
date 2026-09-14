@@ -1,4 +1,5 @@
 import Lemma.Bool.SEq.is.Eq
+import torch.Tensor.reshape
 import Lemma.Bool.SEqCast.of.Eq
 import Lemma.Bool.SEqUFnS.of.SEq
 import Lemma.List.EqAppendTake__ListGet.of.GeLength_2
@@ -11,6 +12,7 @@ import Lemma.Tensor.SEqTensordotS.of.SEq.SEq.Eq.Eq
 import Lemma.Tensor.Tensordot.as.Matmul.of.GeLengthS
 import Lemma.Tensor.Tensordot.as.Matmul.of.LtLengthS
 import Lemma.Tensor.Tensordot.eq.Matmul.of.Length
+import torch.Tensor.sum
 open Bool List Tensor
 set_option maxHeartbeats 1000000
 

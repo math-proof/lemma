@@ -74,10 +74,10 @@ export async function mergeSyntaxDrivenImports(imports, leanSource) {
         await maybeUnshift('sympy.concrete.quantifier');
         break;
       case 'LeanStack':
-        await maybeUnshift('sympy.tensor.stack');
+        await maybeUnshift('torch.stack');
         break;
       case 'Tensor':
-        if (!has('sympy.tensor.tensor') && !has('sympy.tensor.stack')) {
+        if (!has('sympy.tensor.tensor') && !has('torch.stack')) {
           await maybeUnshift('sympy.tensor.Basic');
         }
         break;
@@ -97,7 +97,7 @@ export async function mergeSyntaxDrivenImports(imports, leanSource) {
         await maybeUnshift('sympy.core.relational');
         break;
       case 'softmax':
-        await maybeUnshift('sympy.tensor.functions');
+        await maybeUnshift('torch.nn.functional.softmax');
         break;
       case 'sigmoid':
         await maybeUnshift('sympy.vector.functions');

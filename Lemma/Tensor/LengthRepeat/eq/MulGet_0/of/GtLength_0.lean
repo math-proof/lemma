@@ -1,4 +1,5 @@
 import Lemma.Tensor.LengthRepeat.eq.Mul_Get_0.of.GtLength_0
+import torch.Tensor.repeat
 import Lemma.Nat.Mul
 open Tensor Nat
 

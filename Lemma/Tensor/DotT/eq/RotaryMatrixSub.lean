@@ -1,4 +1,5 @@
 import Lemma.Tensor.AddMulS_Stack.eq.Mul_Stack_Add
+import torch.Tensor.permute
 import Lemma.Tensor.CosSub.eq.AddMulS
 import Lemma.Tensor.DotAppendSHstackS.eq.AppendHstackSAddSDotS
 import Lemma.Tensor.DotMulSEye.eq.MulEye

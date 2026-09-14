@@ -1,4 +1,5 @@
 import Lemma.Bool.SEq.is.Eq
+import torch.Tensor.bmm
 import Lemma.Bool.SEqCast.of.Eq
 import Lemma.Bool.SEqUFnS.of.SEq
 import Lemma.List.SetAppend.eq.Append_Set.of.GtLength
@@ -13,6 +14,7 @@ import Lemma.Tensor.Matmul.as.Bmm
 import Lemma.Tensor.Matmul.as.MatmulResizeS.of.Length.GtLength_0
 import Lemma.Tensor.ResizeBFn.eq.BFnResize
 import Lemma.Tensor.SEqMatmulS.of.SEq.SEq
+import torch.Tensor.sum
 open Bool List Tensor
 set_option maxHeartbeats 1000000
 

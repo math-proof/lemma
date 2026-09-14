@@ -1,5 +1,5 @@
 import Lemma.Vector.GeExp_0
-import sympy.tensor.functions
+import torch.functions
 open Vector
 
 

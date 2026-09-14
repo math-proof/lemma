@@ -1,4 +1,5 @@
 import Lemma.Bool.SEq.is.Eq
+import torch.Tensor.reshape
 import Lemma.Tensor.MapMatmul.eq.MatmulMapS.of.Length.All_Eq_Add.All_Eq_Mul
 import Lemma.Tensor.ReshapeMap.eq.MapReshape.of.Dvd
 import Lemma.Tensor.SEqMapS.of.SEq

@@ -1,4 +1,6 @@
 import Lemma.Tensor.GetReshape.as.Reshape.of.Prod.GtLength_0
+import torch.Tensor.reshape
+import torch.Tensor.prod
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 open Tensor
 

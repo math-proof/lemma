@@ -1,4 +1,6 @@
 import Lemma.Tensor.SEqSoftmaxS.of.SEq.Eq
+import torch.Tensor.bmm
+import torch.Tensor.permute
 import Lemma.Tensor.DotSoftmaxAdd_Mul_Infty.eq.Stack_DotSoftmax
 import Lemma.Tensor.GetDot_TGetSlice.as.Dot_Get
 import Lemma.Tensor.GetSliceGetDiv.eq.DivGetSliceGet

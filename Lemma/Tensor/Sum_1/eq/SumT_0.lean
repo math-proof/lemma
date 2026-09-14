@@ -1,8 +1,10 @@
 import Lemma.Bool.EqCast.of.SEq
+import torch.Tensor.permute
 import Lemma.List.Swap.eq.Permute__Neg1.of.GtLength
 import Lemma.Tensor.SumCast.as.Sum.of.Eq
 import Lemma.Tensor.SumPermute.as.PermuteSum.of.Ge
 import Lemma.Tensor.T.as.Permute__Neg1.of.GtLength_0
+import torch.Tensor.sum
 open Bool List Tensor
 
 

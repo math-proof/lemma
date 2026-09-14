@@ -1,4 +1,5 @@
 import Lemma.Tensor.SEqPermuteTailS.of.SEq.Eq
+import torch.Tensor.permute
 open Tensor
 
 

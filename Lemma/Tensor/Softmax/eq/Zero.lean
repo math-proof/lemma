@@ -1,4 +1,8 @@
 import Lemma.Tensor.Unsqueeze.eq.TensorCast_Data
+import torch.Tensor.sum
+import torch.Tensor.unsqueeze
+import torch.Tensor.repeat
+import torch.Tensor.prod
 import Lemma.Tensor.EqData0'0
 import Lemma.Tensor.EqDiv_0'0
 import Lemma.Tensor.EqTensor0'0
@@ -8,7 +12,7 @@ import Lemma.Vector.EqCast_0'0.of.Eq
 import Lemma.Vector.Flatten0.eq.Zero
 import Lemma.Vector.MapRange.eq.Zero
 import Lemma.Vector.Repeat0.eq.Zero
-import sympy.tensor.functions
+import torch.functions
 open Tensor Vector
 
 

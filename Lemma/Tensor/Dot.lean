@@ -1,5 +1,5 @@
-import Lemma.Nat.Mul
 import Lemma.Tensor.Dot.eq.SumMul__0
+import torch.Tensor.sum
 import Lemma.Tensor.Sum.of.Eq
 open Nat Tensor
 

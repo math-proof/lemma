@@ -1,4 +1,5 @@
 import sympy.tensor.Basic
+import torch.Tensor.prod
 import Lemma.Tensor.ProdTake_1.eq.Length.of.GtLength_0
 open Tensor
 

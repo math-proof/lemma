@@ -1,4 +1,6 @@
 import Lemma.List.GtLengthInsertIdx
+import torch.Tensor.unsqueeze
+import torch.Tensor.repeat
 import Lemma.Tensor.SelectRepeat.as.Select_Mod_Get.of.Lt_MulGet
 import Lemma.List.LengthInsertIdx.eq.Add1Length.of.GeLength
 import Lemma.Tensor.SEqSelectUnsqueeze.of.GeLength

@@ -1,4 +1,5 @@
 import Lemma.Tensor.Matmul.as.Bmm
+import torch.Tensor.bmm
 open Tensor
 
 

@@ -1,6 +1,6 @@
 import Lemma.Tensor.EqGetStack
 import sympy.matrices.dense
-import sympy.tensor.stack
+import torch.stack
 open Tensor
 
 

@@ -1,4 +1,5 @@
 import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
+import torch.Tensor.prod
 import Lemma.Fin.Eq_Fin.of.EqVal
 import Lemma.Nat.AddMul.lt.Mul
 import Lemma.Tensor.DataGet.eq.GetUnflattenData

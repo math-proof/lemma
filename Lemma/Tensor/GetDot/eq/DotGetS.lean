@@ -1,4 +1,7 @@
 import Lemma.Bool.SEq.is.Eq
+import torch.Tensor.unsqueeze
+import torch.Tensor.repeat
+import torch.Tensor.permute
 import Lemma.Nat.EqMod_1'0
 import Lemma.Nat.Mul.of.Eq.Eq
 import Lemma.Tensor.Dot.eq.SumMul
@@ -12,6 +15,7 @@ import Lemma.Tensor.GetRepeat_0.as.Get_Mod_Get.of.GtMul_Get.GtLength_0
 import Lemma.Tensor.GetSum_2.eq.SumGet__0
 import Lemma.Tensor.GetUnsqueeze.as.UnsqueezeGet.of.GtGet_0.GtLength_0
 import Lemma.Tensor.SEqGetS.of.SEq.GtLength
+import torch.Tensor.sum
 open Bool Nat Tensor
 set_option maxHeartbeats 2500000
 

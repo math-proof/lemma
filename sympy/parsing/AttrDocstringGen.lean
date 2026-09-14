@@ -72,9 +72,20 @@ def customAttrHead (attr : String) : String :=
   | _ => ""
 
 def customAttrHeads : List String :=
-  ["main", "comm", "mp", "mpr", "mp.comm", "mpr.comm", "comm.is", "is.comm", "mt", "mp.mt", "mpr.mt",
-   "left", "right", "mpr.left", "mpr.right", "fin", "fin.comm", "fin.mp", "fin.mpr",
+  ["main", "comm", "mp", "mpr", "mp.comm", "mpr.comm", "comm.is", "is.comm", "mt", "mp.mt", "mpr.mt", "is.mt",
+   "Or.inl", "Or.inr", "mpr.left", "mpr.right", "And.left", "And.right",
+   "fin", "fin.comm", "fin.mp", "fin.mpr",
    "val", "subst", "cast", "cast.fin", "cast.comm", "mp and", "mpr and", "mp.comm and", "mpr.comm and"]
+
+/-- Generated module name for an `And.left`/`And.right` projection
+    (mirrors `Name.andProjName`): drop the other conjunct segment; append
+    `.fst` / `.snd` when both targets coincide. -/
+def andProjModuleName (tokens : List String) (left : Bool) : String :=
+  let leftTokens := tokens.andLeftTokens
+  let rightTokens := tokens.andRightTokens
+  let base := if left then leftTokens else rightTokens
+  let base := if leftTokens == rightTokens then base ++ [if left then "fst" else "snd"] else base
+  moduleName base
 
 def isCustomAttr (attr : String) : Bool :=
   customAttrHead attr ∈ customAttrHeads
@@ -196,10 +207,12 @@ def attrLemmaName (tokens : List String) (attr : String) : String :=
   | ["cast", "fin"] => moduleName (List.castPath tokens true ++ ["fin"])
   | ["cast.comm"] => moduleName (List.comm (List.castPath tokens true) (ofParityFromTokens tokens))
   | ["cast.comm", n] => moduleName (List.comm (List.castPath tokens true) (parityBits n.toNat!))
-  | ["left"] => nameToModule (tokens.left : Lean.Name)
-  | ["right"] => nameToModule (tokens.right : Lean.Name)
+  | ["Or.inl"] => nameToModule (tokens.left : Lean.Name)
+  | ["Or.inr"] => nameToModule (tokens.right : Lean.Name)
   | ["mpr.left"] => nameToModule ((List.mpr tokens).left : Lean.Name)
   | ["mpr.right"] => nameToModule ((List.mpr tokens).right : Lean.Name)
+  | ["And.left"] => andProjModuleName tokens true
+  | ["And.right"] => andProjModuleName tokens false
   | ["val"] => moduleName (tokens ++ ["val"])
   | ["mt"] => nameToModule (List.mt tokens : Lean.Name)
   | ["mt", n] => nameToModule (List.mt tokens false n.toNat! : Lean.Name)
@@ -207,6 +220,7 @@ def attrLemmaName (tokens : List String) (attr : String) : String :=
   | ["mp.mt", n] => nameToModule (List.mt (List.mp tokens) false n.toNat! : Lean.Name)
   | ["mpr.mt"] => nameToModule (List.mt (List.mpr tokens) : Lean.Name)
   | ["mpr.mt", n] => nameToModule (List.mt (List.mpr tokens) false n.toNat! : Lean.Name)
+  | ["is.mt"] => moduleName (List.is.mt tokens)
   | ["subst"] => moduleName (substTokens tokens "1")
   | ["subst", n] => moduleName (substTokens tokens n)
   | _ => panic! s!"unknown attribute: {attr}"

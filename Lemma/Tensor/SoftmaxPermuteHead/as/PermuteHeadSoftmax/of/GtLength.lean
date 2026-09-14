@@ -1,4 +1,5 @@
 import Lemma.Tensor.SelectSoftmax.eq.SoftmaxSelect.of.Lt
+import torch.Tensor.permute
 import Lemma.Tensor.SEqPermuteHeadS.of.SEq
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.List.EraseIdxAppend.eq.Append_EraseIdx.of.LeLength
@@ -17,7 +18,7 @@ import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.GtLength_0
 import Lemma.Tensor.SEqPermuteHead_1
 import Lemma.Tensor.SEqSoftmaxS.of.SEq
 import Lemma.Tensor.SEqSumS.of.SEq
-import sympy.tensor.functions
+import torch.functions
 open Bool List Nat Tensor
 set_option maxHeartbeats 500000
 

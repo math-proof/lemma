@@ -1,4 +1,6 @@
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
+import torch.Tensor.repeat
+import torch.Tensor.prod
 import Lemma.List.EqProd_0.of.Eq0Get
 import Lemma.List.EqSet.of.EqGet
 import Lemma.Nat.MulMul.eq.Mul_Mul

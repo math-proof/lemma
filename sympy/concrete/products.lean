@@ -1,4 +1,5 @@
 import sympy.matrices.expressions.special
+import torch.eye
 import sympy.matrices.expressions.matmul
 
 

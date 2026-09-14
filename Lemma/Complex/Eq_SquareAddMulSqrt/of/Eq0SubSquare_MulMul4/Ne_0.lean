@@ -2,7 +2,7 @@ import Lemma.Nat.SquareAdd.eq.AddAddSquareS_MulMul2
 import Lemma.Nat.SquareMul.eq.MulSquareS
 import Lemma.Nat.Eq_0.is.EqSquare_0
 import Lemma.Rat.SquareDiv.eq.DivSquareS
-import Lemma.Rat.EqMul.is.Eq_Div.of.Ne_0
+import Lemma.Rat.Eq_Div.is.EqMul.of.Ne_0
 import Lemma.Int.Sub.eq.Zero.is.Eq
 import Lemma.Complex.EqSquareSqrt
 open Nat Rat Int Complex

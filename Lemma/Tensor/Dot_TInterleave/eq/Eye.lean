@@ -1,8 +1,10 @@
 import Lemma.Tensor.Dot.eq.Eye.of.Dot.eq.Eye
+import torch.Tensor.permute
 import Lemma.Tensor.DotTInterleave.eq.Eye
 import Lemma.Tensor.Interleave.eq.AppendStackS_Delta
 import sympy.matrices.expressions.special
-import sympy.tensor.functions
+import torch.eye
+import torch.functions
 open Tensor
 
 

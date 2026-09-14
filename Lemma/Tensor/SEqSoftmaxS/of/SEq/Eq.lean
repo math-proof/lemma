@@ -1,5 +1,5 @@
 import Lemma.Tensor.SEqSoftmaxS.of.SEq
-import sympy.tensor.functions
+import torch.functions
 open Tensor
 
 

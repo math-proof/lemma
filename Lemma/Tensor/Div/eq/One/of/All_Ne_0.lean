@@ -1,4 +1,5 @@
 import Lemma.Tensor.DataDiv.eq.DivDataS
+import torch.Tensor.prod
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Tensor.EqData1'1
 import Lemma.Vector.Div.eq.One.of.All_Ne_0

@@ -1,4 +1,5 @@
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
+import torch.Tensor.repeat
 import Lemma.Tensor.LengthRepeat.eq.Length.of.GtVal_0
 open Tensor
 

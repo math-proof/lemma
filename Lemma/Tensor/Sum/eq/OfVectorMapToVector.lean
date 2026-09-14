@@ -1,4 +1,5 @@
 import Lemma.Bool.EqCast.of.SEq
+import torch.Tensor.prod
 import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Fin.Eq_Fin.of.EqVal
 import Lemma.List.DropDrop.eq.Drop_Add
@@ -20,6 +21,7 @@ import Lemma.Vector.GetSum.eq.SumMapGet
 import Lemma.Vector.GetUnflatten.eq.Get_AddMul
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import Lemma.Vector.MapMap.eq.Map_Comp
+import torch.Tensor.sum
 open Bool Fin List Nat Tensor Vector
 
 

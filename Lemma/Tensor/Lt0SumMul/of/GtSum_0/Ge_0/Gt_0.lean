@@ -1,6 +1,7 @@
 import Lemma.Tensor.GtSumData_0.is.GtSum_0
 import Lemma.Tensor.Le.is.LeDataS
 import Lemma.Vector.Lt0SumMul.of.GtSum_0.Ge_0.Gt_0
+import torch.Tensor.sum
 open Tensor
 
 

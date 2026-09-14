@@ -1,4 +1,5 @@
 import Lemma.Finset.GtSumS.of.Any_Gt.All_Ge
+import torch.Tensor.prod
 import Lemma.Rat.LeCeil_Floor.is.Any_And_Dvd_AddSub
 import Lemma.Tensor.BandPart.eq.Stack_BoolAnd_Dvd
 import Lemma.Tensor.Eq.is.EqDataS
@@ -13,6 +14,7 @@ import Lemma.Tensor.Sum.eq.MkListSumData
 import Lemma.Vector.EqGet1_1
 import Lemma.Vector.Sum.eq.Sum_Get
 import sympy.sets.sets
+import torch.Tensor.sum
 open Finset Rat Tensor Vector
 
 

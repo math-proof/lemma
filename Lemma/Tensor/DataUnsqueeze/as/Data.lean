@@ -1,4 +1,6 @@
 import Lemma.Bool.SEqCast.of.Eq
+import torch.Tensor.unsqueeze
+import torch.Tensor.prod
 import Lemma.List.ProdInsertIdx.eq.Prod
 import Lemma.Tensor.Unsqueeze.eq.TensorCast_Data
 open Bool List Tensor

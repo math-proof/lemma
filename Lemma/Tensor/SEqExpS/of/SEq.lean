@@ -1,5 +1,5 @@
 import Lemma.Bool.SEqUFnS.of.SEq
-import sympy.tensor.functions
+import torch.functions
 open Bool
 
 
