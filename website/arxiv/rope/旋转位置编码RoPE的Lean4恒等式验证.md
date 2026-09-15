@@ -291,7 +291,7 @@ RoFormer 矩阵由共轭满足同一律。
 
 把定理 7.1 与 \(\theta\) 对下标的线性合成，得到按 token 下标的形式。
 
-**命题 7.4**（[DotT.eq.RotaryMatrixSub.of.Eq_Stack_Mul.Ge](http://www.lemma.cn/lean/?module=Tensor.DotT.eq.RotaryMatrixSub.of.Eq_Stack_Mul.Ge)）。设 \(\theta\in\mathbb{R}^{n\times d}\) 满足 \(\theta_{i}=i\,\tau\)（固定 \(\tau\in\mathbb{R}^{d}\)），且 \(k,t:\mathrm{Fin}\,n\)、\(k\ge t\)。则
+**命题 7.4**（[DotT.eq.RotaryMatrixGet_Sub.of.Eq_Stack_Mul.Ge](http://www.lemma.cn/lean/?module=Tensor.DotT.eq.RotaryMatrixGet_Sub.of.Eq_Stack_Mul.Ge)）。设 \(\theta\in\mathbb{R}^{n\times d}\) 满足 \(\theta_{i}=i\,\tau\)（固定 \(\tau\in\mathbb{R}^{d}\)），且 \(k,t:\mathrm{Fin}\,n\)、\(k\ge t\)。则
 
 \[
 \mathrm{R}(\theta_{t})^{\top} @ \mathrm{R}(\theta_{k}) = \mathrm{R}(\theta_{k-t}).
