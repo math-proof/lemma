@@ -3,49 +3,6 @@ open Matrix Tensor
 set_option maxHeartbeats 800000
 
 
-private lemma pow_neg_one_step (d : ℕ) (hd : 1 < d) :
-    Mul.mul ((-1 : Tensor ℝ []) ^ (d - 1)) ((-1 : Tensor ℝ []) ^ ((d - 1) / 2)) =
-      (-1 : Tensor ℝ []) ^ (d / 2) := by
-  obtain ⟨k, hk⟩ | ⟨k, hk⟩ := Nat.even_or_odd d
-  · rw [hk]
-    have hk0 : 0 < k := by omega
-    have h2 : k + k = 2 * k := (two_mul k).symm
-    simp [h2]
-    have hodd : Odd (2 * k - 1) := ⟨k - 1, by omega⟩
-    have hs : (-1 : Tensor ℝ []) ^ (2 * k - 1) = -1 := Odd.neg_one_pow hodd
-    have hdiv : (2 * k - 1) / 2 = k - 1 := by omega
-    rw [hs, hdiv]
-    obtain ⟨m, hm⟩ | ⟨m, hm⟩ := Nat.even_or_odd k
-    · have hkm : Odd (k - 1) := ⟨m - 1, by omega⟩
-      have h1 : (-1 : Tensor ℝ []) ^ (k - 1) = -1 := Odd.neg_one_pow hkm
-      have h2' : (-1 : Tensor ℝ []) ^ k = 1 := Even.neg_one_pow ⟨m, hm⟩
-      simp [h1, h2']
-      exact (neg_mul_neg (1 : Tensor ℝ []) 1).trans (one_mul 1)
-    · have hkm : Even (k - 1) := ⟨m, by omega⟩
-      have h1 : (-1 : Tensor ℝ []) ^ (k - 1) = 1 := Even.neg_one_pow hkm
-      have h2' : (-1 : Tensor ℝ []) ^ k = -1 := Odd.neg_one_pow ⟨m, hm⟩
-      simp [h1, h2']
-      exact mul_one (-1 : Tensor ℝ [])
-  · rw [hk]
-    have he : Even (2 * k) := even_two_mul k
-    have hs : (-1 : Tensor ℝ []) ^ (2 * k + 1 - 1) = 1 := by
-      change (-1 : Tensor ℝ []) ^ (2 * k) = 1
-      exact Even.neg_one_pow he
-    have hdiv : (2 * k + 1 - 1) / 2 = k := by omega
-    have hgoal : (2 * k + 1) / 2 = k := by omega
-    rw [hs, hdiv, hgoal]
-    exact one_mul _
-
-
-/--
-Even/odd gather \(\boldsymbol{P}=\mathrm{interleave}\,d\) has determinant
-\(\det\boldsymbol{P}=(-1)^{d/2}\) (Nat floor division).
-
-Proof plan (row shift / induction): left-multiply by `ShiftMatrix(2d, d, 1)`
-moves row `d` to index `1` with sign `(-1)^(d-1)`; the leading `2×2` is `I`
-and the trailing block is `interleave (d-1)`, so
-`det P_d = (-1)^(d-1) · det P_{d-1}`.
--/
 @[main]
 private lemma main
   {d : ℕ} :
@@ -88,8 +45,38 @@ private lemma main
       rw [hrec, ih]
       simp only [id]
       erw [Tensor.Mul]
-      exact pow_neg_one_step (n + 2) hd
+      show Mul.mul ((-1 : Tensor ℝ []) ^ (n + 2 - 1))
+          ((-1 : Tensor ℝ []) ^ ((n + 2 - 1) / 2)) = (-1 : Tensor ℝ []) ^ ((n + 2) / 2)
+      obtain ⟨k, hk⟩ | ⟨k, hk⟩ := Nat.even_or_odd (n + 2)
+      · rw [hk]
+        have hk0 : 0 < k := by omega
+        have h2 : k + k = 2 * k := (two_mul k).symm
+        simp [h2]
+        have hodd : Odd (2 * k - 1) := ⟨k - 1, by omega⟩
+        have hs : (-1 : Tensor ℝ []) ^ (2 * k - 1) = -1 := Odd.neg_one_pow hodd
+        have hdiv : (2 * k - 1) / 2 = k - 1 := by omega
+        rw [hs, hdiv]
+        obtain ⟨m, hm⟩ | ⟨m, hm⟩ := Nat.even_or_odd k
+        · have hkm : Odd (k - 1) := ⟨m - 1, by omega⟩
+          have h1 : (-1 : Tensor ℝ []) ^ (k - 1) = -1 := Odd.neg_one_pow hkm
+          have h2' : (-1 : Tensor ℝ []) ^ k = 1 := Even.neg_one_pow ⟨m, hm⟩
+          simp [h1, h2']
+          exact (neg_mul_neg (1 : Tensor ℝ []) 1).trans (one_mul 1)
+        · have hkm : Even (k - 1) := ⟨m, by omega⟩
+          have h1 : (-1 : Tensor ℝ []) ^ (k - 1) = 1 := Even.neg_one_pow hkm
+          have h2' : (-1 : Tensor ℝ []) ^ k = -1 := Odd.neg_one_pow ⟨m, hm⟩
+          simp [h1, h2']
+          exact mul_one (-1 : Tensor ℝ [])
+      · rw [hk]
+        have he : Even (2 * k) := even_two_mul k
+        have hs : (-1 : Tensor ℝ []) ^ (2 * k + 1 - 1) = 1 := by
+          change (-1 : Tensor ℝ []) ^ (2 * k) = 1
+          exact Even.neg_one_pow he
+        have hdiv : (2 * k + 1 - 1) / 2 = k := by omega
+        have hgoal : (2 * k + 1) / 2 = k := by omega
+        rw [hs, hdiv, hgoal]
+        exact one_mul _
 
 
 -- created on 2026-09-07
--- updated on 2026-09-13
+-- updated on 2026-09-15

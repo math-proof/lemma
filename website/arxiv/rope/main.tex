@@ -345,6 +345,10 @@ The matrix \(\boldsymbol{P}\) is orthogonal:
 and
 \(\boldsymbol{P}@\boldsymbol{P}^\top=\eye_{d+d}\)
 (\lmod{Tensor.Dot_TInterleave.eq.Eye}).
+Its determinant is also formalized as
+\(\det(\boldsymbol{P})=(-1)^{d/2}\)
+(\lmod{Tensor.DetInterleave.eq.PowNeg1Div_2}),
+which records the parity of the even/odd gather permutation.
 
 \begin{theorem}[Conjugation]
 \label{thm:conj}

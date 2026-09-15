@@ -506,7 +506,16 @@ export class Lean extends IndentedNode {
                     }
                 }
                 if (indent === 0 && tokens[self.start_idx + k] === 'end') newline_count -= 1;
-                const caret = this.parent.insert_newline(this, newline_count, indent, tokens[self.start_idx + k]);
+                let caret = null;
+                if (
+                    tokens[self.start_idx + k] === '|' &&
+                    tokens[self.start_idx + k + 1] !== '|' &&
+                    tokens[self.start_idx + k + 1] !== '>'
+                ) {
+                    caret = LeanWith.findAlternativeCaret(this.parent, indent);
+                }
+                if (!caret)
+                    caret = this.parent.insert_newline(this, newline_count, indent, tokens[self.start_idx + k]);
                 self.start_idx += j - 1;
                 console.assert(caret != null);
                 return caret;
@@ -3994,7 +4003,10 @@ export class LeanPow extends LeanArithmetic {
         }
         if (rhs instanceof LeanParenthesis)
             rhs = rhs.arg;
-        return [lhs.toLatex(syntax), rhs.toLatex(syntax)];
+        const rhsLatex = rhs instanceof LeanDiv
+            ? '\\left. {%s} \\right/ {%s}'.format(...rhs.latexArgs(syntax))
+            : rhs.toLatex(syntax);
+        return [lhs.toLatex(syntax), rhsLatex];
     }
 }
 
@@ -9954,6 +9966,24 @@ class LeanTacticBlock extends LeanUnary {
 }
 
 class LeanWith extends LeanArgs {
+    static findAlternativeCaret(node, indent) {
+        for (let p = node; p; p = p.parent) {
+            if (p instanceof LeanWith && p.indent === indent) {
+                const cases = p.args;
+                if (cases.length > 0) {
+                    const c = cases[cases.length - 1];
+                    if (c instanceof LeanCaret) return c;
+                    if (c instanceof LeanBar || c.is_comment()) {
+                        const nc = new LeanCaret(p.indent, c.level);
+                        p.push(nc);
+                        return nc;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
     /**
      * @param {Lean} arg
      * @param {number} indent

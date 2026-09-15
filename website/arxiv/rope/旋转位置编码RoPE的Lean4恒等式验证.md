@@ -1,6 +1,6 @@
 项目工件：<https://github.com/math-proof/lemma>
 
-相对：[softmax](http://www.lemma.cn/lean/?module=Tensor.DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul)，配对：[配对](http://www.lemma.cn/lean/?module=Tensor.DotDotSRotaryMatrix.eq.Dot_DotRotaryMatrixSub)，布局：[共轭](http://www.lemma.cn/lean/?module=Tensor.RotaryMatrix%27.eq.DotDot_RotaryMatrix)，实现：[kernel](http://www.lemma.cn/lean/?module=Tensor.DotRotaryMatrix.eq.AddMulS)，加法：[群律](http://www.lemma.cn/lean/?module=Tensor.DotRotaryMatrixS.eq.RotaryMatrixAdd)，正交：[正交](http://www.lemma.cn/lean/?module=Tensor.DotT_RotaryMatrix.eq.Eye)
+相对：[softmax](http://www.lemma.cn/lean/?module=Tensor.DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul)，配对：[内积](http://www.lemma.cn/lean/?module=Tensor.DotDotSRotaryMatrix.eq.Dot_DotRotaryMatrixSub)，布局：[共轭](http://www.lemma.cn/lean/?module=Tensor.RotaryMatrix%27.eq.DotDot_RotaryMatrix)，实现：[kernel](http://www.lemma.cn/lean/?module=Tensor.DotRotaryMatrix.eq.AddMulS)，加法：[群律](http://www.lemma.cn/lean/?module=Tensor.DotRotaryMatrixS.eq.RotaryMatrixAdd)，正交：[单位阵](http://www.lemma.cn/lean/?module=Tensor.DotT_RotaryMatrix.eq.Eye)
 
 # 摘要
 
@@ -155,6 +155,9 @@ I_{d} \odot \sin\alpha & \phantom{-}I_{d} \odot \cos\alpha
 于是 \((\boldsymbol{P}x)_{i}=x_{2i}\)、\((\boldsymbol{P}x)_{i+d}=x_{2i+1}\)。
 
 \(\boldsymbol{P}\) 正交：\(\boldsymbol{P}^{\top}@\boldsymbol{P}=I_{d+d}\)（[DotTInterleave.eq.Eye](http://www.lemma.cn/lean/?module=Tensor.DotTInterleave.eq.Eye)），且 \(\boldsymbol{P}@\boldsymbol{P}^{\top}=I_{d+d}\)（[Dot_TInterleave.eq.Eye](http://www.lemma.cn/lean/?module=Tensor.Dot_TInterleave.eq.Eye)）。
+其行列式也已形式化为
+\(\det(\boldsymbol{P})=(-1)^{d/2}\)
+（[DetInterleave.eq.PowNeg1Div_2](http://www.lemma.cn/lean/?module=Tensor.DetInterleave.eq.PowNeg1Div_2)），刻画了该奇偶聚集置换的奇偶性。
 
 **定理 4.4**（共轭，[RotaryMatrix%27.eq.DotDot_RotaryMatrix](http://www.lemma.cn/lean/?module=Tensor.RotaryMatrix%27.eq.DotDot_RotaryMatrix)）。对每一 \(\alpha\in\mathbb{R}^{d}\)，
 
@@ -496,8 +499,6 @@ R(i-k)^{\top} & \text{若 }k<i,
 一维 RoPE 的代数骨架，是关于平面旋转块矩阵的少数几条恒等式，布局可以是 Hugging Face 对半，也可以是苏剑林等的交错。我们在 Lean 4 中陈述了这两种矩阵，证明它们被固定的奇偶聚集共轭，并在实现所乘的 Hugging Face 矩阵上，证明了 kernel 求值、自由角的正交与加法群律、RoFormer 配对，以及线性频率假设下 softmax 注意力的相对偏移形式。引言中点名的模块即该发展的公开接口。
 
 # 参考文献
-
-与 `main.tex` 参考文献表一致（arXiv 接收后在此补充 PDF 链接）。勿链到仓库里的 `main.pdf`。
 
 [1] math-proof. lemma: machine-checked tensor calculus. 2026. <https://github.com/math-proof/lemma>
 
