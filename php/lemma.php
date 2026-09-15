@@ -360,7 +360,13 @@ function lemma_shell_render_lemma(array $lemma, string $module): void
     if (is_array($proof)) {
         $by = $proof['by'] ?? null;
         $calc = $proof['calc'] ?? null;
-        $lines = is_array($by) ? $by : (is_array($calc) ? $calc : (is_array($proof) && array_is_list($proof) ? $proof : null));
+        // array_is_list() is PHP 8.1+; WAMP/lemma.cn may still be on 8.0.
+        $proofIsList = is_array($proof) && (
+            function_exists('array_is_list')
+                ? array_is_list($proof)
+                : array_keys($proof) === range(0, count($proof) - 1)
+        );
+        $lines = is_array($by) ? $by : (is_array($calc) ? $calc : ($proofIsList ? $proof : null));
         if ($lines) {
             echo "<hr>\n<span class=\"green\"><b>-- proof</b></span><br>\n";
             foreach ($lines as $line) {

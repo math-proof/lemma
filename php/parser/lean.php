@@ -456,7 +456,20 @@ abstract class Lean extends IndentedNode
                 if ($indent == 0 && $tokens[$i + $k] == 'end')
                     // end of namespace
                     $newline_count -= 1;
-                $caret = $this->parent->insert_newline($this, $newline_count, $indent, $tokens[$i + $k]);
+                $caret = null;
+                $nextTok = $tokens[$i + $k] ?? null;
+                // Match JS: when the next token is a with-alternative bar (|), attach the
+                // caret under the LeanWith at this indent instead of bubbling insert_newline
+                // (which can hit LeanStatements and throw).
+                if (
+                    $nextTok === '|' &&
+                    ($tokens[$i + $k + 1] ?? null) !== '|' &&
+                    ($tokens[$i + $k + 1] ?? null) !== '>'
+                ) {
+                    $caret = LeanWith::findAlternativeCaret($this->parent, $indent);
+                }
+                if (!$caret)
+                    $caret = $this->parent->insert_newline($this, $newline_count, $indent, $nextTok);
                 $i += $j - 1;
                 return $caret;
             case '.':
@@ -5449,9 +5462,11 @@ class LeanStatements extends LeanArgs
             return parent::insert_newline($caret, $newline_count, $indent, $next);
 
         if ($this->indent < $indent) {
-            if ($caret = $this->push_args_indented($indent, $newline_count))
-                return $caret;
-            throw new Exception(__METHOD__ . " is unexpected for " . get_class($this));
+            $wrapped = $this->push_args_indented($indent, $newline_count);
+            if ($wrapped)
+                return $wrapped;
+            // Match JS LeanStatements.insert_newline: if the last arg cannot be
+            // wrapped, fall through and append carets at the deeper indent.
         }
 
         for ($i = 0; $i < $newline_count; ++$i) {
@@ -7838,15 +7853,17 @@ class LeanArgsNewLineSeparated extends LeanArgs
             return parent::insert_newline($caret, $newline_count, $indent, $next);
         }
         if ($this->indent < $indent) {
-            // Multiline app already has ≥2 lines: next indented line is another arg,
+            // Multiline app already has >=2 lines: next indented line is another arg,
             // not nested under a bare Property/Parenthesis (e.g. `(x).isLt` then more args).
             if (count($this->args) >= 2) {
                 $caret = new LeanCaret($indent, $caret->level);
                 $this->push($caret);
                 return $caret;
             }
-            if ($caret = $this->push_args_indented($indent, $newline_count))
-                return $caret;
+            $wrapped = $this->push_args_indented($indent, $newline_count);
+            if ($wrapped)
+                return $wrapped;
+            // Do not assign over $caret before reading $caret->level (PHP clobber bug).
             $caret = new LeanCaret($indent, $caret->level);
             $this->push($caret);
             return $caret;
@@ -9825,6 +9842,30 @@ class LeanTacticBlock extends LeanUnary
 
 class LeanWith extends LeanArgs
 {
+    /**
+     * Walk ancestors for a LeanWith at $indent and return/create a caret for the next
+     * alternative bar (|). Mirrors LeanWith.findAlternativeCaret in static/js/parser/lean.js.
+     */
+    public static function findAlternativeCaret($node, $indent)
+    {
+        for ($p = $node; $p; $p = $p->parent) {
+            if ($p instanceof LeanWith && $p->indent === $indent) {
+                $cases = $p->args;
+                if (count($cases) > 0) {
+                    $c = end($cases);
+                    if ($c instanceof LeanCaret)
+                        return $c;
+                    if ($c instanceof LeanBar || $c->is_comment()) {
+                        $nc = new LeanCaret($p->indent, $c->level);
+                        $p->push($nc);
+                        return $nc;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
     public function __construct($arg, $indent, $level, $parent = null)
     {
         parent::__construct([$arg], $indent, $level, $parent);
