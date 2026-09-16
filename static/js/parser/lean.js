@@ -7116,6 +7116,7 @@ export class LeanIte extends LeanArgs {
         if (!this.else) {
             const c = new LeanCaret(this.indent + 2, caret.level);
             this.else = c;
+            this.newlineBehindElse = false;
             return c;
         }
         if (this.parent) return this.parent.insert_else(this);
@@ -7124,7 +7125,8 @@ export class LeanIte extends LeanArgs {
     insert_if(caret) {
         if (caret instanceof LeanCaret) {
             if (caret === this.else) {
-                this.else = new LeanIte([caret], this.indent, caret.level);
+                const indent = this.newlineBehindElse ? caret.indent : this.indent;
+                this.else = new LeanIte([caret], indent, caret.level);
                 return caret;
             }
             if (caret === this.then) {
@@ -7151,8 +7153,10 @@ export class LeanIte extends LeanArgs {
             return caret;
         }
         if (caret === this.else) {
-            if (caret instanceof LeanCaret || caret instanceof LeanTactic || caret instanceof Lean_let)
+            if (caret instanceof LeanCaret || caret instanceof LeanTactic || caret instanceof Lean_let) {
                 this.not_inline();
+                this.newlineBehindElse = true;
+            }
             if (caret instanceof LeanCaret) return caret;
             if (indent > this.indent && (caret instanceof LeanTactic || caret instanceof Lean_let)) {
                 const stmt = new LeanStatements([caret], caret.indent, caret.level);
@@ -7480,6 +7484,19 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         const newTok = new LeanToken(word, this.indent, caret.level);
         this.push(newTok);
         return newTok;
+    }
+
+    push_post_unary(funcName) {
+        const last = this.args[this.args.length - 1];
+        if (!(last instanceof LeanCaret) && last != null) {
+            // A postfix operator (`ᵀ`, `²`, `⁻¹`, …) right after the final argument binds to
+            // that argument only: `f x yᵀ` parses as `f x (yᵀ)`, not `(f x y)ᵀ`.
+            const Ctor = LEAN_CLASSES[funcName];
+            const created = new Ctor(last, last.indent, last.level);
+            this.replace(last, created);
+            return created;
+        }
+        return super.push_post_unary(funcName);
     }
 
     is_Abs() {
@@ -8889,10 +8906,10 @@ export class LeanTactic extends LeanSyntax {
         if (caret instanceof LeanCaret)
             this.replace(caret, new LeanSequentialTacticCombinator(caret, this.indent, caret.level, prevToken == '\n', nextToken == '\n'));
         else {
-            caret = new LeanCaret(0, 0); // use 0 as the temporary indentation
+            caret = new LeanCaret(this.indent, caret.level);
             // PHP constructs with default `newline=false` (multiline semantics);
             // promoted to a real indent by insert_newline when the rhs lands on a new line.
-            this.push(new LeanSequentialTacticCombinator(caret, this.indent, caret.level, false, true));
+            this.push(new LeanSequentialTacticCombinator(caret, this.indent, caret.level, false, nextToken == '\n'));
         }
         return caret;
     }
