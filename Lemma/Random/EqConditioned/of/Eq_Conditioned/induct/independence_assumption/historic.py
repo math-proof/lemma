@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Equal).apply(Tensor.Eq.Is.And.Eq.split)
 
-    Eq << Random.EqConditioned.of.Eq_Conditioned.getitem.apply(Eq[-1], s[:t])
+    Eq << Random.Indep.of.Indep_Joint.apply(Eq[-1], s[:t])
 
     Eq << Imply(Eq[1], Eq.induct, plausible=True)
 

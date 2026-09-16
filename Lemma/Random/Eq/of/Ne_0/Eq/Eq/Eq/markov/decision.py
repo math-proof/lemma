@@ -70,7 +70,7 @@ def prove(Eq):
     a, k = Eq[1].rhs.of(Indexed)
     Eq.ne_zero = Random.Ne_0.of.Ne_0.joint_slice.apply(Eq[3], [slice(0, k), slice(0, k), slice(0, k + 1)])
 
-    Eq << Random.Prob.eq.Mul.Prob.of.Ne_0.bayes.apply(Eq.ne_zero, s[k + 1], a[k], r[k])
+    Eq << Random.All_Eq_MulCondProb.apply(Eq.ne_zero, s[k + 1], a[k], r[k])
 
     Eq << Eq[-1].this.lhs.arg.apply(Tensor.Stack.Is.Stack.Eq, i=3, j=0)
 
@@ -124,7 +124,7 @@ def prove(Eq):
 
     Eq << Random.Ne_0.Slice.of.Ne_0.apply(Eq.ne_zero_s, 0)
 
-    Eq << Random.Prob.eq.Mul.Prob.of.Ne_0.bayes.apply(Eq[-1], a[0], r[0], s[1])
+    Eq << Random.All_Eq_MulCondProb.apply(Eq[-1], a[0], r[0], s[1])
 
     Eq.final = Eq[-3].subs(Eq[-1])
 

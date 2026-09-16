@@ -33,7 +33,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Integral).apply(Real.Integral.limits.separate)
 
-    Eq << Eq[-1].this.find(Mul[~Integral]).apply(Random.All_EqIntegral_Prob.of.PSpace_JointRandomSymbol)
+    Eq << Eq[-1].this.find(Mul[~Integral]).apply(Random.All_EqIntegral_ProbJoint.of.PSpace_Joint)
 
     # http://incompleteideas.net/book/bookdraft2017nov5.pdf (Bellman equation Eq. 3.14)
 

@@ -17,7 +17,7 @@ def prove(Eq):
 
     Eq << Random.EqProb.of.Eq.apply(Eq[0], simplify=False)
 
-    Eq << Eq[-1].this.lhs.apply(Random.Prob.eq.DivProbS)
+    Eq << Eq[-1].this.lhs.apply(Random.All_Eq_DivProbS)
 
 
 

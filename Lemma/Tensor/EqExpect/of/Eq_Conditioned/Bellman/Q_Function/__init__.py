@@ -54,7 +54,7 @@ def prove(Eq):
 
     Eq << Eq.eq_add.find(Mul[~Expectation]).this.apply(Random.Expect.eq.Integral)
 
-    Eq << Eq[-1].this.find(Pr).apply(Random.Prob.eq.Integral.joint, s[t + 1])
+    Eq << Eq[-1].this.find(Pr).apply(Random.All_Eq_Integral_ProbJoint.of.PSpace_Joint, s[t + 1])
 
     Eq << Eq[-1].this.find(Mul[Integral]).apply(Real.Mul.eq.Integral)
 

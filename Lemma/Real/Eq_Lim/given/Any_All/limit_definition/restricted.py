@@ -26,12 +26,12 @@ def prove(Eq):
 
     Eq << Bool.Cond.of.All.subst.apply(Eq.all, ε, S.One / 2)
 
-    Eq << Eq[-1].this.find(Less).apply(Nat.Lt.of.Lt.relax, 1)
+    Eq << Eq[-1].this.find(Less).apply(Nat.Lt_Add_1.of.Lt, 1)
 
     χ = Symbol(domain=Interval.open(1, oo))
     Eq << Bool.Cond.of.All.subst.apply(Eq.all, ε, 1 / χ)
 
-    Eq << Eq[-1].this.find(Less).apply(Nat.Lt.of.Lt.relax, χ)
+    Eq << Eq[-1].this.find(Less).apply(Nat.Lt_Add_1.of.Lt, χ)
 
     Eq << Bool.All.of.Cond.apply(Eq[-1], χ)
 

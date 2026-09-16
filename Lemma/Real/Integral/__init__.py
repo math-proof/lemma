@@ -8,3 +8,4 @@ from . import le
 from . import as_polar_coordinate
 from . import Mul
 from . import Pow
+from . import of

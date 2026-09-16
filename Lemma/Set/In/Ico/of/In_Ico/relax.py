@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << Set.Ge.Le_Sub_1.of.In_Ico.apply(Eq[0])
 
-    Eq << Nat.Lt.of.Lt.relax.apply(Eq[-1], upper=b + 1)
+    Eq << Nat.Lt_Add_1.of.Lt.apply(Eq[-1], upper=b + 1)
 
 
 

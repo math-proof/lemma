@@ -18,7 +18,7 @@ def prove(Eq):
 
     Eq << Nat.Ne.of.Lt.apply(Eq[2])
 
-    Eq << Nat.Lt.of.Lt.relax.apply(Eq[2], a + 1)
+    Eq << Nat.Lt_Add_1.of.Lt.apply(Eq[2], a + 1)
 
 
 

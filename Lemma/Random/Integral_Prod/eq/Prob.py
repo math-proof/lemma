@@ -30,9 +30,9 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq.hypothesis)
 
-    Eq << Eq[-1].this.find(Pr[Conditioned]).apply(Random.Prob.eq.DivProbS)
+    Eq << Eq[-1].this.find(Pr[Conditioned]).apply(Random.All_Eq_DivProbS)
 
-    Eq << Eq[-1].this.lhs.apply(Random.All_EqIntegral_Prob.of.PSpace_JointRandomSymbol)
+    Eq << Eq[-1].this.lhs.apply(Random.All_EqIntegral_ProbJoint.of.PSpace_Joint)
 
 
     Eq << Imply(Eq.hypothesis, Eq.induct, plausible=True)

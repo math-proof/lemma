@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(And).apply(Nat.LtSquare.of.Ge_0.Lt)
 
-    Eq << Eq[-1].this.args[1].apply(Nat.Lt.of.Lt.relax, Eq[2].rhs)
+    Eq << Eq[-1].this.args[1].apply(Nat.Lt_Add_1.of.Lt, Eq[2].rhs)
 
     Eq << Eq[1].apply(Bool.AndOrS.of.Cond, cond=x > 0)
 
@@ -38,7 +38,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(And).apply(Int.LtSquare.of.Le_0.Gt)
 
-    Eq << Eq[-1].this.find(Less).apply(Nat.Lt.of.Lt.relax, Eq[2].rhs)
+    Eq << Eq[-1].this.find(Less).apply(Nat.Lt_Add_1.of.Lt, Eq[2].rhs)
 
     Eq << Eq[-1].this.find(Greater).apply(Nat.Ge.of.Gt)
 

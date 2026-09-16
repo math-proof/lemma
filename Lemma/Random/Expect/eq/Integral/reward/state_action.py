@@ -24,7 +24,7 @@ def prove(Eq):
     t = Symbol(integer=True)
     Eq << apply(Expectation[r[t]](r[t] | s[t] & a[t]))
 
-    Eq << Integral[s[t + 1].bvar](Pr(s[t + 1] & r[t], given=s[t] & a[t])).this.apply(Random.All_EqIntegral_Prob.of.PSpace_JointRandomSymbol)
+    Eq << Integral[s[t + 1].bvar](Pr(s[t + 1] & r[t], given=s[t] & a[t])).this.apply(Random.All_EqIntegral_ProbJoint.of.PSpace_Joint)
 
     Eq << Eq[0].this.lhs.apply(Random.Expect.eq.Integral)
 

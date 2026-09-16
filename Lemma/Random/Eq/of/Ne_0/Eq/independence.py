@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq << Eq[-1].simplify()
 
-    Eq << Random.Prob.eq.Mul.Prob.of.Ne_0.bayes.apply(Eq[1], y)
+    Eq << Random.All_Eq_MulCondProb.apply(Eq[1], y)
 
     Eq << Eq[-1].subs(Eq[0])
 

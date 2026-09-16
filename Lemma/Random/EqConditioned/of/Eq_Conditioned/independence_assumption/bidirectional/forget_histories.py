@@ -21,11 +21,11 @@ def prove(Eq):
     Eq << apply(
         Equal(r[t] | s[:t] & a[:t], r[t])) # history-irrelevant conditional independence assumption
 
-    Eq << Random.EqConditioned.of.Eq_Conditioned.getitem.apply(Eq[0], 0)
+    Eq << Random.Indep.of.Indep_Joint.apply(Eq[0], 0)
 
     Eq << Random.Eq.Conditioned.Infty.of.Eq_Conditioned.independence_assumption.apply(Eq[-1])
 
-    Eq << Random.EqConditioned.of.Eq_Conditioned.getitem.apply(Eq[0], 1)
+    Eq << Random.Indep.of.Indep_Joint.apply(Eq[0], 1)
 
     Eq << Random.Eq.Conditioned.Infty.of.Eq_Conditioned.independence_assumption.apply(Eq[-1])
 

@@ -22,7 +22,7 @@ def prove(Eq):
     Eq << apply(
         Equal(r[t] | s[:t] & a[:t], r[t])) # history-irrelevant conditional independence assumption
 
-    Eq << Random.EqConditioned.of.Eq_Conditioned.getitem.apply(Eq[0])
+    Eq << Random.Indep.of.Indep_Joint.apply(Eq[0])
 
     Eq << Random.Eq.Conditioned.Infty.of.Eq_Conditioned.independence_assumption.apply(Eq[-1])
 
@@ -30,9 +30,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Equal).apply(Tensor.Eq.Is.And.Eq.split)
 
-    Eq.eq_at = Random.EqConditioned.of.Eq_Conditioned.getitem.apply(Eq[-1], 0)
+    Eq.eq_at = Random.Indep.of.Indep_Joint.apply(Eq[-1], 0)
 
-    Eq << Random.EqConditioned.of.Eq_Conditioned.getitem.apply(Eq[0], 1)
+    Eq << Random.Indep.of.Indep_Joint.apply(Eq[0], 1)
 
     Eq << Random.Eq.Conditioned.Infty.of.Eq_Conditioned.independence_assumption.apply(Eq[-1])
 
@@ -40,7 +40,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Equal).apply(Tensor.Eq.Is.And.Eq.split)
 
-    Eq.eq_st = Random.EqConditioned.of.Eq_Conditioned.getitem.apply(Eq[-1], 0)
+    Eq.eq_st = Random.Indep.of.Indep_Joint.apply(Eq[-1], 0)
 
     Eq << Rat.Ne_0.of.Div1.gt.Zero.apply(Eq[0])
 

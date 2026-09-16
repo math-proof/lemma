@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq << Random.NeProb_0.NeProb_0.of.NeProb__0.apply(Eq[0])
 
-    Eq <<= Random.Prob.eq.Mul.Prob.of.Ne_0.bayes.apply(Eq[-2], y), Random.Prob.eq.Mul.Prob.of.Ne_0.bayes.apply(Eq[-1], x)
+    Eq <<= Random.All_Eq_MulCondProb.apply(Eq[-2], y), Random.All_Eq_MulCondProb.apply(Eq[-1], x)
 
     Eq << Nat.Eq_Div.of.Eq.Ne_0.apply(Eq[-1], Eq[-3]).reversed
 

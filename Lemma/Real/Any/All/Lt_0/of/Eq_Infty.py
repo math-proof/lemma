@@ -34,7 +34,7 @@ def prove(Eq):
     delta = Eq[-1].variable
     Eq << Real.Any.All.of.Eq_Lim.limit_definition.apply(Eq[0], epsilon, delta)
 
-    Eq << Eq[-1].this.find(Less).apply(Nat.Lt.of.Lt.relax, upper=0)
+    Eq << Eq[-1].this.find(Less).apply(Nat.Lt_Add_1.of.Lt, upper=0)
 
 
 

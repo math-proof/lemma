@@ -50,7 +50,7 @@ def prove(Eq):
 
     Eq << Random.Ne_0.Conditioned.of.Ne_0.apply(Eq[-3], y[:k])
 
-    Eq << Random.Prob.eq.Mul.Prob.of.Ne_0.bayes.apply(Eq[-2], x[:k + 1], y[k])
+    Eq << Random.All_Eq_MulCondProb.apply(Eq[-2], x[:k + 1], y[k])
 
     Eq << Eq[-1].this.lhs.arg.apply(Tensor.Stack.Is.Stack.Eq, i=2, j=0)
 
@@ -60,7 +60,7 @@ def prove(Eq):
 
     Eq << Eq[-3].subs(Eq[-1])
 
-    Eq.xy_joint_probability = Random.Prob.eq.Mul.Prob.of.Ne_0.bayes.apply(Eq[2], x[:k])
+    Eq.xy_joint_probability = Random.All_Eq_MulCondProb.apply(Eq[2], x[:k])
 
     Eq << Eq[-1].subs(Eq.xy_joint_probability.reversed)
 
@@ -68,7 +68,7 @@ def prove(Eq):
 
     Eq << Random.Ne_0.of.Ne_0.joint_slice.apply(Eq.xy_nonzero_assumption, [k, k])
 
-    Eq << Random.EqConditioned.of.Eq_Conditioned.getitem.apply(Eq.x_independence)
+    Eq << Random.Indep.of.Indep_Joint.apply(Eq.x_independence)
 
     Eq << Random.EqProb.of.Eq_Conditioned.Eq_Conditioned.joint.apply(Eq[-1], Eq.xy_independence)
 
@@ -96,7 +96,7 @@ def prove(Eq):
 
     Eq.recursion = Eq.recursion.subs(Eq.first_order_markov_assumption)
 
-    Eq << Random.EqConditioned.of.Eq_Conditioned.getitem.apply(Eq.x_independence, wrt=y[:k])
+    Eq << Random.Indep.of.Indep_Joint.apply(Eq.x_independence, wrt=y[:k])
 
     Eq << Random.EqConditioned.of.Ne_0.Eq_Conditioned.joint.apply(Eq.y_joint_y_historic, Eq[-1])
 

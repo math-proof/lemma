@@ -54,7 +54,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this(i).find(GreaterEqual).simplify()
 
-    Eq.lt = Nat.Lt.of.Lt.relax.apply(Eq[-1], upper=Min(n, u))
+    Eq.lt = Nat.Lt_Add_1.of.Lt.apply(Eq[-1], upper=Min(n, u))
 
     Eq << Bool.BFn.of.BFnIte.Cond.apply(Eq.lt, Eq.eq)
 

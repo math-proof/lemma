@@ -12,18 +12,18 @@ def apply(given, *wrt):
 
 @prove
 def prove(Eq):
-    from Lemma import Random, Nat
+    from Lemma import Random, Rat
 
     x, y, z = Symbol(real=True, random=True)
     Eq << apply(Unequal(Pr(x, y, z), 0), y, z)
 
     Eq << Random.NeProb_0.NeProb_0.of.NeProb__0.apply(Eq[0], 1)
 
-    Eq << Random.Prob.eq.Mul.Prob.of.Ne_0.bayes.apply(Eq[-1], x)
+    Eq << Random.All_Eq_MulCondProb.apply(Eq[-1], x)
 
     Eq << Eq[0].subs(Eq[-1])
 
-    Eq << Nat.Ne.of.Ne_0.Ne.scalar.apply(Eq[-3], Eq[-1])
+    Eq << Rat.Ne_Div.of.NeMul.Ne_0.apply(Eq[-3], Eq[-1])
 
 
 

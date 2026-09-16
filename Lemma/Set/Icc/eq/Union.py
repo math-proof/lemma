@@ -34,7 +34,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Set.Ge.of.Ge.In_Iic, a)
 
-    Eq << Eq[-2].this.lhs.apply(Nat.Lt.of.Lt.relax, b)
+    Eq << Eq[-2].this.lhs.apply(Nat.Lt_Add_1.of.Lt, b)
 
     Eq << Bool.Imp.given.Or_Not.apply(Eq[-1])
 

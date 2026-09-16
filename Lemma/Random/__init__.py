@@ -35,9 +35,6 @@ from . import EqMul
 from . import Ge
 from . import Lim
 from . import Conditioned
-from . import All_EqIntegral_Prob
-from . import Integral_Prob_Conditioned
-from . import Integral_Prod
 from . import ProbSlice
 from . import Eq_Prob
 from . import Prob
@@ -48,6 +45,13 @@ from . import ProbGeAbs
 from . import ExpectGradLogProb
 from . import Expect_ConditionedGrad_LogProb
 from . import NeProb_0
-from . import EqProb__0
-from . import Prod_CondProb
 from . import CondProb
+from . import Indep
+from . import All_Eq_MulCondProb
+from . import Prod_CondProb
+from . import All_Eq_DivProbS
+from . import All_EqIntegral_ProbJoint
+from . import All_Eq1Integral_CondProb
+from . import Integral_Prod
+from . import All_Eq_Integral_ProbJoint
+from . import All_Imp_All_EqProbJoint__0

@@ -16,19 +16,19 @@ def prove(Eq):
 
     Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[0], cond=Equal(Pr(x), 0))
 
-    Eq << Eq[-1].this.lhs.apply(Random.Prob.eq.Mul.Prob.of.Ne_0.bayes, y)
+    Eq << Eq[-1].this.lhs.apply(Random.All_Eq_MulCondProb, y)
 
     Eq << Bool.Imp.given.ImpEq.apply(Eq[-1])
 
     Eq << Eq[-1].this.find(Integral).simplify()
 
-    Eq << Eq[-1].this.find(Integral).apply(Random.Integral_Prob_Conditioned.eq.One)
+    Eq << Eq[-1].this.find(Integral).apply(Random.All_Eq1Integral_CondProb)
 
     Eq << Bool.Imp.given.ImpEq.apply(Eq[1])
 
     Eq << Eq[-1].this.rhs.reversed
 
-    Eq << Eq[-1].this.lhs.apply(Random.EqProb__0.of.EqProb_0, y)
+    Eq << Eq[-1].this.lhs.apply(Random.All_Imp_All_EqProbJoint__0, y)
 
     Eq << Bool.Imp.given.ImpEq.apply(Eq[-1])
 

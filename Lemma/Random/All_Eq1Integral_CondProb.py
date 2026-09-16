@@ -14,9 +14,9 @@ def prove(Eq):
     x, y = Symbol(real=True, random=True)
     Eq << apply(Integral[x.bvar](Pr(x | y)))
 
-    Eq << Eq[-1].this.lhs.expr.apply(Random.Prob.eq.DivProbS)
+    Eq << Eq[-1].this.lhs.expr.apply(Random.All_Eq_DivProbS)
 
-    Eq << Eq[-1].this.find(Integral).apply(Random.All_EqIntegral_Prob.of.PSpace_JointRandomSymbol)
+    Eq << Eq[-1].this.find(Integral).apply(Random.All_EqIntegral_ProbJoint.of.PSpace_Joint)
 
 
 

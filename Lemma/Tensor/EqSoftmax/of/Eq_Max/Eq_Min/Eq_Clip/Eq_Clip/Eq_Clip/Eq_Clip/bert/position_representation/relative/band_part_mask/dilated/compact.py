@@ -76,7 +76,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.subs(Eq.zeta[i])
 
-    Eq << Nat.Lt.of.Lt.relax.apply(Eq[-1], upper=n)
+    Eq << Nat.Lt_Add_1.of.Lt.apply(Eq[-1], upper=n)
 
     Eq.le_ceiling = Nat.Le_Sub_1.of.Lt.apply(Eq[-1])
 

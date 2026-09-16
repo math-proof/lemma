@@ -22,15 +22,15 @@ def prove(Eq):
     x, y, z = Symbol(real=True, random=True)
     Eq << apply(Equal(Pr(x & y | z), Pr(x, y)))
 
-    Eq <<= Eq[-2].this.lhs.apply(Random.Prob.eq.DivProbS), Eq[-1].this.lhs.apply(Random.Prob.eq.DivProbS)
+    Eq <<= Eq[-2].this.lhs.apply(Random.All_Eq_DivProbS), Eq[-1].this.lhs.apply(Random.All_Eq_DivProbS)
 
-    Eq << Eq[0].this.lhs.apply(Random.Prob.eq.DivProbS)
+    Eq << Eq[0].this.lhs.apply(Random.All_Eq_DivProbS)
 
-    Eq <<= Real.EqIntegral.of.Eq.apply(Eq[-1], (y.bvar,)), Real.EqIntegral.of.Eq.apply(Eq[-1], (x.bvar,))
+    Eq <<= Real.Integral.of.All_Eq.apply(Eq[-1], (y.bvar,)), Real.Integral.of.All_Eq.apply(Eq[-1], (x.bvar,))
 
-    Eq <<= Eq[-2].this.rhs.apply(Random.All_EqIntegral_Prob.of.PSpace_JointRandomSymbol), Eq[-1].this.rhs.apply(Random.All_EqIntegral_Prob.of.PSpace_JointRandomSymbol)
+    Eq <<= Eq[-2].this.rhs.apply(Random.All_EqIntegral_ProbJoint.of.PSpace_Joint), Eq[-1].this.rhs.apply(Random.All_EqIntegral_ProbJoint.of.PSpace_Joint)
 
-    Eq <<= Eq[-2].this.find(Integral).apply(Random.All_EqIntegral_Prob.of.PSpace_JointRandomSymbol), Eq[-1].this.find(Integral).apply(Random.All_EqIntegral_Prob.of.PSpace_JointRandomSymbol)
+    Eq <<= Eq[-2].this.find(Integral).apply(Random.All_EqIntegral_ProbJoint.of.PSpace_Joint), Eq[-1].this.find(Integral).apply(Random.All_EqIntegral_ProbJoint.of.PSpace_Joint)
 
 
 

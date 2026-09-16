@@ -42,7 +42,7 @@ def prove(Eq):
 
     Eq << Real.GeIntegral.of.Ge.apply(Eq[-1], [x.bvar])
 
-    Eq << Eq[-1].this.find(Integral[Pr]).apply(Random.Integral_Prob_Conditioned.eq.One)
+    Eq << Eq[-1].this.find(Integral[Pr]).apply(Random.All_Eq1Integral_CondProb)
 
 
 

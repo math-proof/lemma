@@ -14,7 +14,7 @@ def prove(Eq):
     x, y = Symbol(real=True, random=True)
     Eq << apply(Equal(Pr(x, y), Piecewise((Exp(-x.bvar), And(0 < y.bvar, y.bvar < x.bvar)), (0, True))))
 
-    Eq << Eq[-1].lhs.this.apply(Random.Prob.eq.DivProbS)
+    Eq << Eq[-1].lhs.this.apply(Random.All_Eq_DivProbS)
 
     Eq << Eq[-1].rhs.find(Pr).this.apply(Random.Prob.eq.Integral)
 
@@ -32,7 +32,7 @@ def prove(Eq):
 
     Eq << Eq.plausible.rhs.find(Pr).this.apply(Random.Prob.eq.Integral)
 
-    Eq << Eq[-1].this.rhs.find(Pr).apply(Random.Prob.eq.Integral.joint, x)
+    Eq << Eq[-1].this.rhs.find(Pr).apply(Random.All_Eq_Integral_ProbJoint.of.PSpace_Joint, x)
 
     Eq << Eq[-1].subs(Eq[0])
 

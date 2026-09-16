@@ -109,7 +109,7 @@ def prove(Eq):
     Eq << Random.NeProb_0.NeProb_0.of.NeProb__0.apply(Eq.xy_joint_nonzero)
 
     y = Eq[-1].lhs.arg.lhs.base
-    Eq << Random.Prob.eq.Mul.Prob.of.Ne_0.bayes.apply(Eq[-2], y[:t + 1])
+    Eq << Random.All_Eq_MulCondProb.apply(Eq[-2], y[:t + 1])
 
     Eq << Random.Sum.eq.Prob.apply(Sum[pspace(y[:t + 1]).symbol](Eq[-1].lhs))
 

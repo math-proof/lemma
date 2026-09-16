@@ -1,7 +1,7 @@
 from util import *
 
 
-@apply
+@apply(given=True)
 def apply(given, x):
     cond = given.of(Equal[Pr, 0])
     cond &= Equal(x, x.bvar)

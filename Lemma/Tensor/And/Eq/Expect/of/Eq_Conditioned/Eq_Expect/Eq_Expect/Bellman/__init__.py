@@ -73,7 +73,7 @@ def prove(Eq):
 
     Eq << Bool.Eq.of.Eq.Eq.apply(Eq[2], Eq[-1])
 
-    Eq << Random.EqConditioned.of.Eq_Conditioned.getitem.apply(Eq[0], 1)
+    Eq << Random.Indep.of.Indep_Joint.apply(Eq[0], 1)
 
     Eq << Tensor.EqExpect.of.Eq_Conditioned.Bellman.V_Function.apply(Eq[-1], γ, t, (a, π))
 

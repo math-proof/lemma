@@ -44,7 +44,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Integral).apply(Real.Integral.limits.separate)
 
-    Eq << Eq[-1].this.find(Integral[Pr]).apply(Random.All_EqIntegral_Prob.of.PSpace_JointRandomSymbol)
+    Eq << Eq[-1].this.find(Integral[Pr]).apply(Random.All_EqIntegral_ProbJoint.of.PSpace_Joint)
 
     Eq << Real.EqGrad.of.Eq.apply(Eq[4], [π])
 

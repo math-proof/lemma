@@ -74,7 +74,7 @@ def prove(Eq):
 
     Eq <<= -Eq[-2].this(i).find(GreaterEqual).simplify(), Eq[-1].this(i).find(GreaterEqual).simplify()
 
-    Eq.lt = Nat.Lt.of.Lt.relax.apply(Eq[-1], upper=Min(n, u))
+    Eq.lt = Nat.Lt_Add_1.of.Lt.apply(Eq[-1], upper=Min(n, u))
 
     Eq << Nat.Le.of.Le.relax.apply(Eq[-2], upper=Min(l - 1, n - 1))
 

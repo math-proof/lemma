@@ -32,7 +32,7 @@ def prove(Eq):
 
     Eq << Random.NeProb_0.of.NeProb__0.apply(Eq.ne_zero_xy)
 
-    Eq << Random.Prob.eq.Mul.Prob.of.Ne_0.bayes.apply(Eq[-1], y)
+    Eq << Random.All_Eq_MulCondProb.apply(Eq[-1], y)
 
     Eq << Random.Eq.CondProb.eq.Mul.CondProb.of.Ne_0.bayes.apply(Eq.ne_zero_xy, y_tilde_overline, y)
 

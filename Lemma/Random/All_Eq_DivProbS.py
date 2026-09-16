@@ -1,7 +1,7 @@
 from util import *
 
 
-@apply
+@apply(given=True)
 def apply(self):
     cond, given = self.of(Pr[Conditioned])
     return Equal(self, Pr(cond & given) / Pr(given))

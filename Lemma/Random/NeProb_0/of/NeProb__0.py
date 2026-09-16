@@ -19,7 +19,7 @@ def prove(Eq):
     x, y = Symbol(real=True, random=True)
     Eq << apply(Unequal(Pr(x, y), 0))
 
-    Eq.y_marginal_probability = Random.All_EqIntegral_Prob.of.PSpace_JointRandomSymbol.apply(Integral[y.bvar](Pr(x, y)))
+    Eq.y_marginal_probability = Random.All_EqIntegral_ProbJoint.of.PSpace_Joint.apply(Integral[y.bvar](Pr(x, y)))
 
     Eq << Nat.Gt_0.of.Ne_0.apply(Eq[0])
 

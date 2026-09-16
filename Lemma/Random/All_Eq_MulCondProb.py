@@ -1,7 +1,7 @@
 from util import *
 
 
-@apply
+@apply(given=True)
 def apply(eq, *expr, spread_weight=False):
     assert expr
     condition = And(*(Equal(y, y.bvar) for y in expr))
@@ -29,7 +29,7 @@ def prove(Eq):
     x, y = Symbol(real=True, random=True)
     Eq << apply(Unequal(Pr(y), 0), x)
 
-    Eq << Eq[-1].this.find(Pr[Conditioned]).apply(Random.Prob.eq.DivProbS)
+    Eq << Eq[-1].this.find(Pr[Conditioned]).apply(Random.All_Eq_DivProbS)
 
 
 if __name__ == '__main__':
