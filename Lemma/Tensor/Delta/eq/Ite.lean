@@ -1,5 +1,5 @@
 import Lemma.Nat.Delta.eq.Ite
-import sympy.tensor.tensor
+import torch.Tensor
 open Nat
 
 

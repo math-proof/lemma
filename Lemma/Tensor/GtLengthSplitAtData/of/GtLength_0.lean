@@ -1,5 +1,5 @@
 import Lemma.List.ProdTake_1.eq.Get_0.of.GtLength_0
-import sympy.tensor.Basic
+import torch.Tensor.Basic
 open List
 
 

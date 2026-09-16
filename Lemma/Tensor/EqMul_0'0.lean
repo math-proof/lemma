@@ -4,7 +4,7 @@ import Lemma.Tensor.EqData0'0
 import Lemma.Tensor.Mul
 import Lemma.Vector.EqGet0_0
 import Lemma.Vector.GetMul.eq.MulGet
-import sympy.tensor.tensor
+import torch.Tensor
 open Tensor Vector
 
 
@@ -36,6 +36,38 @@ private lemma main
   rw [GetMul.eq.MulGet.fin]
   erw [EqGet0_0.fin]
   apply MulZeroClass.mul_zero
+
+
+@[main]
+private lemma left
+  [MulZeroClass α]
+  {s : List ℕ}
+-- given
+  (a : α) :
+-- imply
+  a * (0 : Tensor α s) = 0 := by
+-- proof
+  apply Eq.of.EqDataS
+  ext i
+  simp [HMul.hMul, EqData0'0, Vector.Zero.eq.Replicate,
+    List.Vector.get_replicate]
+  exact MulZeroClass.mul_zero a
+
+
+@[main]
+private lemma right
+  [MulZeroClass α]
+  {s : List ℕ}
+-- given
+  (X : Tensor α s) :
+-- imply
+  X * (0 : α) = 0 := by
+-- proof
+  apply Eq.of.EqDataS
+  ext i
+  simp [HMul.hMul, EqData0'0, Vector.Zero.eq.Replicate,
+    List.Vector.get_replicate]
+  exact MulZeroClass.mul_zero (X.data.get i)
 
 
 -- created on 2026-09-04

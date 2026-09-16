@@ -1,4 +1,4 @@
-import sympy.tensor.tensor
+import torch.Tensor
 import Lemma.List.EqPermute
 import Lemma.List.Permute.eq.AppendRotateTake___Drop.of.Gt_0.EqVal_0
 import Lemma.List.ProdPermute.eq.MulProd_ProdAppend.of.Gt_0

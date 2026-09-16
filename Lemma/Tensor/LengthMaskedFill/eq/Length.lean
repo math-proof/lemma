@@ -1,5 +1,5 @@
 import sympy.matrices.expressions.special
-import sympy.tensor.Basic
+import torch.Tensor.Basic
 
 
 @[main]

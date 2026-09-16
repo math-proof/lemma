@@ -6,7 +6,7 @@ import Lemma.Nat.CoeAdd.eq.AddCoeS
 import Lemma.Bool.SEq.is.Eq
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import torch.stack
-import sympy.tensor.tensor
+import torch.Tensor
 open Tensor List Bool Nat
 
 

@@ -1,4 +1,4 @@
-import sympy.tensor.Basic
+import torch.Tensor.Basic
 import torch.Tensor.reshape
 import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Nat.EqMulDiv.of.Dvd

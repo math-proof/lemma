@@ -171,6 +171,7 @@ def UnaryPostfix.func: UnaryPostfix → Func
 
 inductive ExprWithLimits where
   | Lean_sum
+  | Lean_tsum
   | Lean_prod
   | Lean_int (name : Name)
   | Lean_bigcap
@@ -189,6 +190,7 @@ deriving BEq, Repr
 
 def ExprWithLimits.func : ExprWithLimits → Func
   | Lean_sum  => ⟨66, "∑", "\\sum"⟩
+  | Lean_tsum => ⟨66, "∑'", "\\sum\\nolimits'"⟩
   | Lean_prod => ⟨71, "∏", "\\prod"⟩
   | Lean_int _ => ⟨52, "∫", "\\int"⟩
   | Lean_bigcap => ⟨52, "⋂", "\\bigcap"⟩
@@ -207,6 +209,7 @@ def ExprWithLimits.name : ExprWithLimits → Name
   | Lean_forall => default
   | Lean_exists => `Exists
   | Lean_sum => `Finset.sum
+  | Lean_tsum => `tsum
   | Lean_prod => `Finset.prod
   | Lean_int name
   | Lean_bigcap => `Set.iInter
@@ -592,9 +595,12 @@ e = {e}, e = {← ppExpr e}, e.type = {← inferType e}"
     | `Rat.cast
     | `Fin.val
     | `Finset.toSet
-    | `Subtype.val
-    | `DFunLike.coe =>
+    | `Subtype.val =>
       return .Operator (.UnaryPrefix ⟨declName⟩)
+
+    | `DFunLike.coe =>
+      -- `coe` has two explicit args (F, a) despite being unary notation `⇑ F` in source
+      return .Operator (.ExprWithAttr (.Lean_operatorname declName))
 
     | `Inv.inv =>
       return .Operator (.UnaryPostfix ⟨declName⟩)
@@ -705,6 +711,8 @@ e = {e}, e = {← ppExpr e}, e.type = {← inferType e}"
 
     | `Finset.sum =>
       return .Operator (.ExprWithLimits .Lean_sum)
+    | `tsum =>
+      return .Operator (.ExprWithLimits .Lean_tsum)
     | `Finset.prod =>
       return .Operator (.ExprWithLimits .Lean_prod)
     | `Filter.limUnder =>
@@ -799,14 +807,10 @@ def Expr.filter_default (func : Operator) (args : List Expr) : MetaM (List Expr 
     return ⟨args, []⟩
   else
     let binderInfo ← name.binderInfo
-    return ⟨
-      List.zip binderInfo args |>.filterMap fun (binderInfo, arg) =>
-        if binderInfo == .default then
-          some arg
-        else
-          none,
-      args.drop binderInfo.length
-    ⟩
+    let filtered := List.zip binderInfo args |>.filterMap fun (binderInfo, arg) =>
+      if binderInfo == .default then some arg else none
+    let extra := args.drop binderInfo.length
+    return ⟨filtered, extra⟩
 
 
 def Expr.isProp : Expr → Bool

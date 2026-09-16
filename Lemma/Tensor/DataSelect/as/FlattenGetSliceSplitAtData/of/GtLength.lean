@@ -1,6 +1,6 @@
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.List.MulLengthSlice.eq.ProdEraseIdx.of.GtGet.GtLength
-import sympy.tensor.tensor
+import torch.Tensor
 open Bool List
 
 

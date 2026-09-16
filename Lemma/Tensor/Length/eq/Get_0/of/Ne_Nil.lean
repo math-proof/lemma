@@ -1,4 +1,4 @@
-import sympy.tensor.Basic
+import torch.Tensor.Basic
 import Lemma.List.Ne_Nil.is.GtLength_0
 open List
 

@@ -1,5 +1,5 @@
 import Lemma.Vector.Le0Mul.of.Ge_0.Ge_0
-import sympy.tensor.tensor
+import torch.Tensor
 open Vector
 
 

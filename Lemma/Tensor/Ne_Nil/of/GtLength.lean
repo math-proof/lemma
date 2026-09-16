@@ -1,6 +1,6 @@
 import Lemma.List.Ne_Nil.is.GtLength_0
 import Lemma.Tensor.GtLength_0.of.GtLength
-import sympy.tensor.Basic
+import torch.Tensor.Basic
 open Tensor List
 
 

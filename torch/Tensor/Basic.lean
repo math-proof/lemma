@@ -39,7 +39,7 @@ the concept of a Tensor is a generalization of a matrix, like the Tensor concept
 the declaration syntax is similar
 ```lean
 -- in lean:
-import sympy.tensor.tensor
+import torch.Tensor
 def n : ℕ := 2
 def m : ℕ := 2
 def l : ℕ := 2

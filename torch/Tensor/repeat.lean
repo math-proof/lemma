@@ -1,4 +1,4 @@
-import sympy.tensor.Basic
+import torch.Tensor.Basic
 import Lemma.List.ProdSet__Mul_Get.eq.MulProd_Mul_Prod.of.GtLength
 open Tensor List
 

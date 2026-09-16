@@ -1,4 +1,4 @@
-import sympy.tensor.tensor
+import torch.Tensor
 import Lemma.List.LengthJoin.eq.SumMap_FunLength
 import Lemma.List.ProdCons.eq.Mul_Prod
 import Lemma.Nat.Mul

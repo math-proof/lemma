@@ -1,4 +1,4 @@
-import sympy.tensor.tensor
+import torch.Tensor
 import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Tensor.ProdTake_1.eq.Length.of.GtLength
 import Lemma.Vector.GetMap.eq.UFnGet.of.Lt

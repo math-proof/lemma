@@ -1,4 +1,4 @@
-import sympy.tensor.tensor
+import torch.Tensor
 import Lemma.Vector.EqFlattenUnflatten
 import Lemma.Bool.UFn.of.Eq
 import Lemma.Nat.NotLt.is.Ge

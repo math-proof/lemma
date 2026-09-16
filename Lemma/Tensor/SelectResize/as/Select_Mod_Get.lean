@@ -1,4 +1,4 @@
-import sympy.tensor.tensor
+import torch.Tensor
 import Lemma.Tensor.SelectResize.as.Select_Mod_Get.of.Lt.GtLength
 open Tensor
 

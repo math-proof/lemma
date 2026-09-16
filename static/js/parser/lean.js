@@ -1097,6 +1097,15 @@ export class Lean extends IndentedNode {
                     n.kwargs.isRandomVariable = true;
                 return;
             }
+            // `Measure.map X` (e.g. `𝕡.map a`) — the argument is a random variable
+            if (n instanceof LeanArgsSpaceSeparated) {
+                const head = n.args[0];
+                if (head instanceof LeanProperty && head.rhs instanceof LeanToken
+                    && head.rhs.text === 'map') {
+                    const rv = n.args[1];
+                    if (rv instanceof LeanToken) rv.kwargs.isRandomVariable = true;
+                }
+            }
             if (n instanceof Lean_mapsto) {
                 localFrames.push(Lean._binderNames(n.lhs));
                 walk(n.rhs);
@@ -5605,8 +5614,7 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                     // marking, before any given/imply latex is generated
                     const flatBinderNodes = args.slice(idx + 1, firstAssign);
                     flatRvNames = collectRandomVarNames(flatBinderNodes);
-                    if (flatRvNames.size)
-                        for (const s of flatBinderNodes) s.markRandomVarNames(flatRvNames);
+                    for (const s of flatBinderNodes) s.markRandomVarNames(flatRvNames);
                     for (let k = idx + 1; k < firstAssign; k++) {
                         const s = args[k];
                         if (s instanceof Lean_let) {
@@ -5715,7 +5723,6 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                             rhsColon instanceof LeanArgsNewLineSeparated);
                     if (!rhsColon || !rhsArgs || !isImplyList) {
                         if (
-                            assignIdx >= 0 &&
                             assignment.lhs &&
                             (typeof assignment.lhs.toLatex === 'function' || flatImplyStmts.length > 0)
                         ) {
@@ -5740,10 +5747,10 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                     // probability-space domain; mark their free occurrences in
                     // the signature propositions and the imply statements
                     const rvNames = collectRandomVarNames([declspec.lhs]);
-                    if (rvNames.size) {
-                        declspec.lhs.markRandomVarNames(rvNames);
-                        markRandomVarSequence(imply, rvNames);
-                    }
+                    // Always run: `.map` argument detection marks random
+                    // variables even when no PSpace hypothesis is present.
+                    declspec.lhs.markRandomVarNames(rvNames);
+                    markRandomVarSequence(imply, rvNames);
                     const proof0 = assignment.rhs;
                     const by = proof0 instanceof LeanBy? 'by' : proof0 instanceof LeanCalc ? 'calc' : '';
                     const implyLean = unindentTwo(imply.map((s) => strStmt(s)).join('\n'));
@@ -5989,46 +5996,76 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                     const by = proof0 instanceof LeanBy? 'by' : proof0 instanceof LeanCalc? 'calc': '';
 
                     let simpleExplicit = flatExplicit;
+                    let simpleName = null;
                     let implyNode = declspec;
                     if (declspec instanceof LeanColon && declspec.lhs && !flatExplicit) {
                         const inner = declspec.lhs;
 
-                        const binderNode =
-                            inner.lhs instanceof LeanColon
-                                ? inner.lhs.lhs
-                                : inner;
-                        const collectParens = n => {
-                            if (!n) return [];
-                            if (n instanceof LeanParenthesis) return [n];
-                            const a = n.args ?? (n.lhs != null && n.rhs != null ? [n.lhs, n.rhs] : []);
-                            return a.flatMap(collectParens);
-                        };
-                        const parens = collectParens(binderNode);
-                        if (parens.length > 0) {
-                            const lines = parens.map((p) => {
-                                const arg = p.arg;
-                                if (arg instanceof LeanColon && arg.lhs && arg.rhs)
-                                    return `(${strStmt(arg.lhs).trim()} : ${normalizeTypeStr(strStmt(arg.rhs))})`;
-                                return strStmt(p);
-                            });
-                            if (lines.length) {
-                                lines[lines.length - 1] += ' :';
-                                simpleExplicit = lines.join('\n');
+                        if (inner.lhs instanceof LeanColon) {
+                            const binderNode = inner.lhs.lhs;
+                            const collectParens = n => {
+                                if (!n) return [];
+                                if (n instanceof LeanParenthesis) return [n];
+                                const a = n.args ?? (n.lhs != null && n.rhs != null ? [n.lhs, n.rhs] : []);
+                                return a.flatMap(collectParens);
+                            };
+                            const parens = collectParens(binderNode);
+                            if (parens.length > 0) {
+                                const lines = parens.map((p) => {
+                                    const arg = p.arg;
+                                    if (arg instanceof LeanColon && arg.lhs && arg.rhs)
+                                        return `(${strStmt(arg.lhs).trim()} : ${normalizeTypeStr(strStmt(arg.rhs))})`;
+                                    return strStmt(p);
+                                });
+                                if (lines.length) {
+                                    lines[lines.length - 1] += ' :';
+                                    simpleExplicit = lines.join('\n');
+                                }
                             }
-                        }
 
-                        const innerLhs = inner.lhs;
-                        implyNode =
-                            (innerLhs &&
-                                innerLhs.rhs &&
-                                (innerLhs.rhs instanceof LeanStatements || innerLhs.rhs instanceof LeanArgsNewLineSeparated))
-                                ? innerLhs.rhs
-                                : inner.rhs || declspec;
+                            const innerLhs = inner.lhs;
+                            implyNode =
+                                (innerLhs &&
+                                    innerLhs.rhs &&
+                                    (innerLhs.rhs instanceof LeanStatements || innerLhs.rhs instanceof LeanArgsNewLineSeparated))
+                                    ? innerLhs.rhs
+                                    : inner.rhs || declspec;
+                        } else if (declspec.rhs) {
+                            // Standard `name (binders) : proposition := by …`
+                            // binders live in the colon LHS, proposition in RHS.
+                            const nameNode =
+                                (inner.lhs instanceof LeanToken || inner.lhs instanceof LeanProperty)
+                                    ? inner.lhs
+                                    : (inner instanceof LeanToken || inner instanceof LeanProperty)
+                                        ? inner
+                                        : null;
+                            if (nameNode) simpleName = nameNode;
+                            const collectParens = n => {
+                                if (!n) return [];
+                                if (n instanceof LeanParenthesis) return [n];
+                                const a = n.args ?? (n.lhs != null && n.rhs != null ? [n.lhs, n.rhs] : []);
+                                return a.flatMap(collectParens);
+                            };
+                            const parens = collectParens(nameNode === inner ? null : inner);
+                            if (parens.length > 0) {
+                                const lines = parens.map((p) => {
+                                    const arg = p.arg;
+                                    if (arg instanceof LeanColon && arg.lhs && arg.rhs)
+                                        return `(${strStmt(arg.lhs).trim()} : ${normalizeTypeStr(strStmt(arg.rhs))})`;
+                                    return strStmt(p);
+                                });
+                                if (lines.length) {
+                                    lines[lines.length - 1] += ' :';
+                                    simpleExplicit = lines.join('\n');
+                                }
+                            }
+                            implyNode = declspec.rhs;
+                        }
                     }
                     let implyOut;
                     if (flatImplyStmts && flatImplyStmts.length > 0) {
                         const imply = [...flatImplyStmts, assignment.lhs];
-                        if (flatRvNames.size) markRandomVarSequence(imply, flatRvNames);
+                        markRandomVarSequence(imply, flatRvNames);
                         const implyLean = unindentTwo(imply.map((s) => strStmt(s)).join('\n'));
                         let implyLatex;
                         if (imply.length > 1 && imply[0] instanceof Lean_let) {
@@ -6046,7 +6083,7 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                         implyLatex += `\\tag*{ :=${by ? ` ${by}` : ''}}`;
                         implyOut = { lean: implyLean + ' :=' + (by ? ` ${by}` : ''), latex: implyLatex };
                     } else {
-                        if (flatRvNames.size) markRandomVarSequence([implyNode], flatRvNames);
+                        markRandomVarSequence([implyNode], flatRvNames);
                         const implyLean = unindentTwo(strStmt(implyNode)) + ' :=' + (by ? ` ${by}` : '');
                         const implyLatex =
                             (implyNode.toLatex ? implyNode.toLatex(syntax) : strStmt(implyNode)) +
@@ -6064,7 +6101,7 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                         proofOut = hasProofArgs ? leanModuleMergeProof(proofArg, echo, syntax) : [{ lean: strStmt(proof || ''), latex: null }];
                     }
                     let attribute = extractAttribute(stmt.attribute);
-                    const name = stmt.assignment;
+                    const name = simpleName ?? stmt.assignment;
                     lemma.push({
                         comment,
                         accessibility: String(stmt.accessibility),
@@ -7813,11 +7850,107 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         return [measure.toLatex(syntax), String(fmt).format(body)];
     }
 
+    /**
+     * `𝕡.map X {«x.bvar»}` — the pushforward measure evaluated at a singleton
+     * observation point is simplified to `𝕡 X` (the observation point is dropped,
+     * mirroring `prob` / `condProb`).
+     * Returns `[measure, randomVar]` or null when the shape does not match.
+     */
+    mapLatexParts() {
+        const {args} = this;
+        if (args.length !== 3) return null;
+        const head = args[0];
+        if (!(head instanceof LeanProperty) ||
+            !(head.rhs instanceof LeanToken) || head.rhs.text !== 'map')
+            return null;
+        const obs = args[2];
+        if (!(obs instanceof LeanBrace)) return null;
+        const inner = obs.arg;
+        if (!(inner instanceof LeanDoubleAngleQuotation) || !inner.boundValueLhs())
+            return null;
+        return [head.lhs, args[1]];
+    }
+
+    /** `Expectation ν f` — true when this node is `Expectation` applied to 2 args. */
+    isExpectation() {
+        return this.args.length === 3
+            && this.args[0] instanceof LeanToken
+            && this.args[0].text === 'Expectation';
+    }
+
+    /**
+     * LaTeX parts for `Expectation ν f` — the expectation of `f` under the law `ν`.
+     *   `Expectation (𝕡.map x) f` → ['map', f, x]
+     *   `Expectation (…withDensity (fun a ↦ 𝕡.condProb (x, y) (a, b))) f`
+     *                        → ['cond', f, x, y, b]
+     * otherwise → ['generic', f, ν].
+     */
+    expectationLatexParts() {
+        if (!this.isExpectation()) return null;
+        const peel = (arg) => (arg instanceof LeanParenthesis ? arg.arg : arg);
+        const markRV = (n) => {
+            if (n instanceof LeanToken) n.kwargs.isRandomVariable = true;
+        };
+        const f = this.args[2];
+        const nu = peel(this.args[1]);
+        if (nu instanceof LeanArgsSpaceSeparated && nu.args.length === 2) {
+            const head = nu.args[0];
+            const arg = nu.args[1];
+            const isProperty = head instanceof LeanProperty && head.rhs instanceof LeanToken;
+            if (isProperty && head.rhs.text === 'map') {
+                markRV(arg);
+                return ['map', arg, f, arg];
+            }
+            if (isProperty && head.rhs.text === 'withDensity') {
+                const fn = peel(arg);
+                if (fn instanceof Lean_fun) {
+                    const arrow = fn.arg;
+                    const body = arrow.rhs.peelGroup();
+                    if (body instanceof LeanArgsSpaceSeparated && body.args.length === 3) {
+                        const cd = body.args[0];
+                        const isCondProb = cd instanceof LeanProperty
+                            && cd.rhs instanceof LeanToken && cd.rhs.text === 'condProb';
+                        const joint = body.args[1].peelGroup();
+                        const val = body.args[2].peelGroup();
+                        if (isCondProb
+                            && joint instanceof LeanArgsCommaSeparated && joint.args.length === 2
+                            && val instanceof LeanArgsCommaSeparated && val.args.length === 2
+                            && String(val.args[0]).trim() === String(arrow.lhs.peelGroup()).trim()) {
+                            markRV(joint.args[0]);
+                            markRV(joint.args[1]);
+                            return ['cond', joint.args[0], f, joint.args[0], joint.args[1]];
+                        }
+                    }
+                }
+            }
+        }
+        return ['generic', f, nu];
+    }
+
+    /** Format string for `expectationLatexParts()`. */
+    expectationLatexFormat(parts) {
+        switch (parts[0]) {
+            case 'map':
+                return '\\mathop{\\mathbb{E}}\\limits_{%s}\\left(%s\\left(%s\\right)\\right)';
+            case 'cond':
+                return '\\mathop{\\mathbb{E}}\\limits_{%s}\\left(%s\\left(%s\\right)\\ \\mathrel{\\bigg|}\\ %s\\right)';
+            default:
+                return '\\mathop{\\mathbb{E}}\\limits_{%s}\\left(%s\\right)';
+        }
+    }
+
     latexArgs(syntax = null) {
         const density = this.probDensityLatexParts();
         if (density) return density.map((a) => a.toLatex(syntax));
         const cond = this.condProbLatexParts();
         if (cond) return LeanArgsSpaceSeparated.condProbLatex(cond, syntax);
+        const map = this.mapLatexParts();
+        if (map) return map.map((a) => a.toLatex(syntax));
+        const exp = this.expectationLatexParts();
+        if (exp) {
+            const [, ...rest] = exp;
+            return rest.map((a) => a.toLatex(syntax));
+        }
         const matrixArgs = this.matrixLatexArgs(syntax);
         if (matrixArgs) return matrixArgs;
         const idInner = this.idLatexInner();
@@ -7919,6 +8052,8 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         if (this.idLatexInner()) return '%s';
         const {args} = this;
         const func = args[0];
+        const exp = this.expectationLatexParts();
+        if (exp) return this.expectationLatexFormat(exp);
         if (this.is_Abs()) return '\\left|{%s}\\right|';
         if (this.is_MatProd()) return '\\prod\\limits_{%s < %s} {%s}';
         if (this.eyePositionalArgs(args)) return '\\mathbb{I}';
@@ -7977,6 +8112,8 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
             if (densityParts)
                 return Array(densityParts.length).fill('{%s}').join('\\ ');
             if (this.condProbLatexParts())
+                return '{%s}\\ {%s}';
+            if (this.mapLatexParts())
                 return '{%s}\\ {%s}';
         }
         const n = args.length;

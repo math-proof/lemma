@@ -2,7 +2,7 @@ import Lemma.Tensor.GetMap.eq.MapGet
 import Lemma.Tensor.MapData.eq.DataMap
 import Lemma.Vector.FlattenMap.eq.MapFlatten
 import Lemma.Vector.GetMap.eq.UFnGet
-import sympy.tensor.tensor
+import torch.Tensor
 open Tensor Vector
 
 

@@ -3,6 +3,7 @@ import stdlib.Lean.Name
 import stdlib.List
 import sympy.core.expr
 open Lean (Name)
+set_option linter.unusedVariables false
 
 /--
 | index |   hex  | color|
@@ -54,7 +55,8 @@ def Expr.peelLatexCoe : Expr → Expr
     | `Complex.ofReal
     | `Hyperreal.ofReal
     | `Fin.val
-    | `Subtype.val =>
+    | `Subtype.val
+    | `DFunLike.coe =>
       arg.peelLatexCoe
     | _ =>
       e
@@ -411,6 +413,9 @@ def Expr.isBoundObservation : Expr → Bool
     s.startsWith "«" && s.endsWith "»" && s.contains ".bvar"
   | Basic (.Special ⟨.str _ "mk"⟩) [a, b] _ =>
     a.isBoundObservation && b.isBoundObservation
+  | Basic (.Special ⟨`Singleton.singleton⟩) [x] _
+  | Basic (.Special ⟨`Insert.insert⟩) [x] _ =>
+    x.isBoundObservation
   | _ => false
 
 /-- Unwrap `Basic (.Special ⟨.anonymous⟩) [𝕡.prob rv, pt]` — the method result
@@ -448,6 +453,161 @@ def Expr.asProb? : Expr → Option (Expr × List Expr)
           some (base, rest.take (rest.length - 1))
         else
           none
+    else none
+
+/-- `tsum (fun a ↦ body) (SummationFilter.unconditional α)` → `(a, α, body)`:
+extract the binder name, domain type, and body from a `tsum` expression.
+Mirrors lean.js `∑' «a.bvar» : α, f «a.bvar»` rendering. -/
+def Expr.asTsum? : Expr → Option (String × Expr × Expr)
+  | Basic (.ExprWithLimits .Lean_tsum) args _ =>
+    match args with
+    | [Basic (.ExprWithLimits .Lean_lambda) [body, Binder .default name type nil] _] =>
+      -- No explicit summation filter; type comes from binder type
+      some (name.toString.bvarLatex.escape_specials, type, body)
+    | [Basic (.ExprWithLimits .Lean_lambda) [body, Binder .default name type nil] _, _filter] =>
+      -- Filter present; type still from binder
+      some (name.toString.bvarLatex.escape_specials, type, body)
+    | _ => none
+  | _ => none
+
+/-- Extract the last name segment from any ExprWithAttr or ExprWithLimits. -/
+def Expr.getAttrNameSuffix? : Expr → Option String
+  | Basic (.ExprWithAttr (.LeanProperty name)) _ _
+  | Basic (.ExprWithAttr (.Lean_function name)) _ _
+  | Basic (.ExprWithAttr (.Lean_operatorname name)) _ _
+  | Basic (.ExprWithAttr (.Lean_typeclass name)) _ _
+  | Basic (.ExprWithAttr (.LeanLemma name)) _ _
+  | Basic (.ExprWithAttr (.LeanMethod name _)) _ _ =>
+    some (name.toString.splitOn "." |>.getLastD "")
+  | Basic (.Special ⟨name⟩) _ _ =>
+    let s := name.toString
+    some ((s.splitOn ".").getLastD s)
+  | _ => none
+
+/-- Unwrap `Basic (.Special ⟨.anonymous⟩) [𝕡.map X, pt]` — the method
+result applied to a point — returning `("map", [𝕡, X, pt])`.
+Matches both LeanProperty `.map` and Lean_function/Lean_operatorname `Measure.map`,
+by scanning args for anything with suffix "map". -/
+def Expr.asMapApp? : Expr → Option (String × List Expr)
+  | Basic (.Special ⟨.anonymous⟩) args _ =>
+    args.findSome? fun arg =>
+      match arg.getAttrNameSuffix? with
+      | some "map" =>
+        match arg with
+        | Basic (.ExprWithAttr (.LeanProperty _)) propArgs _ =>
+          let rest := args.erase arg
+          if rest.length == 1 then some ("map", propArgs ++ rest) else none
+        | Basic (.ExprWithAttr _) funcArgs _ =>
+          let n := funcArgs.length
+          if n >= 2 then
+            let μ := funcArgs[n - 1]!
+            let rv := funcArgs.take (n - 1)
+            let rest := args.erase arg
+            if rest.length == 1 then
+              some ("map", μ :: rv ++ rest)
+            else none
+          else none
+        | _ => none
+      | _ => none
+  | _ => none
+
+/-- Wrap a `Symbol`'s type in `RandomVariable` so `isRandomVariable` returns true
+and it renders red. Mirrors the JS `Measure.map` special case in
+`markRandomVarNames` which marks the map argument as a random variable
+regardless of whether `IsProbabilityMeasure` is present. -/
+def Expr.markAsRandomVariable : Expr → Expr
+  | Symbol name type =>
+    if type.isRandomVariable then Symbol name type
+    else Symbol name (.Basic (.ExprWithAttr (.Lean_operatorname `RandomVariable)) [type] type.level)
+  | e => e
+
+/-- `𝕡.map X` or `Measure.map a 𝕡` → `(𝕡, [X])`: mirrors lean.js `mapLatexParts`.
+Also handles `(𝕡.map X) {pt}` / `(Measure.map a 𝕡) {pt}` with singleton
+observation point dropped when `pt` is a bound observation.
+
+LeanProperty `.map` args are [𝕡, X] → return (𝕡, [X]).
+Lean_function/Lean_operatorname `Measure.map a 𝕡` args are [a, 𝕡] → return (𝕡, [a]). -/
+def Expr.asMapDirect? : Expr → Option (Expr × List Expr)
+  | e =>
+    match e.getAttrNameSuffix? with
+    | some "map" =>
+      match e with
+      | Basic (.ExprWithAttr (.LeanProperty _)) args _ =>
+        let n := args.length
+        if n >= 3 then
+          if args[n - 1]!.isBoundObservation then
+            some (args[0]!, args.take (n - 1) |>.tail!)
+          else none
+        else if n >= 2 then
+          some (args[0]!, args.tail!)
+        else none
+      | Basic (.ExprWithAttr _) args _ =>
+        let n := args.length
+        if n == 2 then
+          some (args[1]!, [args[0]!])
+        else if n >= 3 then
+          some (args[1]!, args.take 1)
+        else none
+      | _ => none
+    | _ => none
+
+/-- `𝕡.map X` or `Measure.map a 𝕡` → `(𝕡, [X])`: mirrors lean.js `mapLatexParts`.
+Also handles `(𝕡.map X) {pt}` / `(Measure.map a 𝕡) {pt}` with singleton
+observation point dropped when `pt` is a bound observation.
+
+LeanProperty `.map` args are [𝕡, X] → return (𝕡, [X]).
+Lean_function/Lean_operatorname `Measure.map a 𝕡` args are [a, 𝕡] → return (𝕡, [a]).
+DFunLike.coe wrapping: (`map_expr`) `{pt}` → fold if pt is bound observation. -/
+def Expr.asMap? : Expr → Option (Expr × List Expr)
+  | Basic (.ExprWithAttr (.Lean_operatorname `DFunLike.coe)) [F, a] _ =>
+    if a.isBoundObservation then
+      F.asMapDirect?.map (fun (obj, fns) => (obj, fns.map markAsRandomVariable))
+    else none
+  | e =>
+    match e.asMapDirect? with
+    | some (obj, fns) => some (obj, fns.map markAsRandomVariable)
+    | none =>
+      if let some ("map", args) := e.asMapApp? then
+        match args with
+        | base :: rest =>
+          if rest.length ≥ 2 then
+            some (base, (rest.take (rest.length - 1)).map markAsRandomVariable)
+          else none
+        | _ => none
+      else none
+
+/-- How an `Expectation` term is displayed.
+- `map f rv`: `Expectation (𝕡.map rv) f` → `𝔼_rv(f(rv))`
+- `cond f x y`: `Expectation (μ.withDensity (fun a ↦ 𝕡.condProb (x, y) (a, b))) f`
+  → `𝔼_x(f(x) | y)`. -/
+inductive ExpectationView where
+  | map (f rv : Expr)
+  | cond (f x y : Expr)
+
+/-- Decompose an `Expectation` term into either the pushforward (`map`) or
+conditional-density (`cond`) view, mirroring lean.js `expectationLatexParts`. -/
+def Expr.asExpectation? : Expr → Option ExpectationView
+  | e =>
+    if let some ("Expectation", [nu, f]) := e.asNamedApp? then
+      -- `Expectation (𝕡.map rv) f` → 𝔼_rv(f(rv))
+      if let some (_obj, rv :: _) := nu.asMap? then
+        some (.map f rv)
+      -- `Expectation (μ.withDensity (fun a ↦ 𝕡.condProb (x, y) (a, b))) f`
+      else if let some ("withDensity",
+            [_μ, Basic (.ExprWithLimits .Lean_lambda)
+              [body, Binder .default binderName _ nil] _]) := nu.asNamedApp? then
+        if let some ("condProb", _𝕡 :: joint :: point :: _) := body.asNamedApp? then
+          if let some (x, y) := joint.asJointRandomSymbol? then
+            -- observation point must be `(«a.bvar», …)` whose first component
+            -- is the lambda's bound variable (mirrors the JS binder check)
+            if let Basic (.Special ⟨.str _ "mk"⟩) [Symbol ptX _, _] _ := point then
+              if ptX == binderName then
+                some (.cond f (markAsRandomVariable x) (markAsRandomVariable y))
+              else none
+            else none
+          else none
+        else none
+      else none
     else none
 
 /-- Unwrap `Basic (.Special ⟨.anonymous⟩) [𝕡.condProb rv, pt]` — the method
@@ -736,6 +896,8 @@ def Expr.latexFormat : Expr → String
               s!"{opStr}%s"
             else
               ""
+          | `DFunLike.coe =>
+            ""  -- hide `coe` coercion; render just the underlying measure
           | _ =>
             ""
         if format.isEmpty then
@@ -775,6 +937,13 @@ def Expr.latexFormat : Expr → String
           opStr ++ "\\ %s".repeat (args.length - 1) ++ "\\mapsto\\ %s"
         | .Lean_let =>
           "{\\begin{align*}" ++ ("\\\\".intercalate ([s!"&{opStr}\\ %s := ⋯"].repeat (args.length - 1))) ++ "\\\\&%s\\end{align*}}"
+        | .Lean_tsum =>
+          if let some (name, type, body) := e.asTsum? then
+            -- \mathop{\sum\nolimits'} puts ' atop ∑ (right-top corner),
+            -- matching the imply's JS-templated format exactly.
+            "\\mathop{\\sum\\nolimits'}\\limits_{\\substack{%s : %s}} {%s}"
+          else
+            opStr ++ "\\ %s".repeat (args.length - 1) ++ ",\\ %s"
         | .Lean_sum
         | .Lean_prod
         | .Lean_bigcup
@@ -796,9 +965,16 @@ def Expr.latexFormat : Expr → String
     | .Special ⟨op⟩ =>
       match op with
       | .anonymous =>
-        let args := args.zipIdx.map fun ⟨arg, i⟩ =>
-          level.toColor ((i == 0 || arg.priority > func.priority) && (i > 0 || arg.priority ≥ func.priority) || arg.is_Div || arg.is_BlockMatrix)
-        "\\ ".intercalate args
+        if let some (obj, fns) := e.asMap? then
+          -- lean.js `mapLatexParts`: `(𝕡.map X) {pt}` → `𝕡 X`.
+          let obj := level.toColor (obj.priority > func.priority || obj.toList != none || obj.is_Eye)
+          let fns := fns.map fun arg =>
+            (0 : Nat).toColor (arg.priority > func.priority || arg.is_Div || arg.is_BlockMatrix)
+          "\\ ".intercalate (obj :: fns)
+        else
+          let args := args.zipIdx.map fun ⟨arg, i⟩ =>
+            level.toColor ((i == 0 || arg.priority > func.priority) && (i > 0 || arg.priority ≥ func.priority) || arg.is_Div || arg.is_BlockMatrix)
+          "\\ ".intercalate args
       | `ite =>
         let ⟨n, last⟩ := e.traceCases
         if last == .nil then
@@ -839,9 +1015,17 @@ def Expr.latexFormat : Expr → String
         opStr
     | .ExprWithAttr op =>
       -- Pre-check foldings first (work for both Lean_function and Lean_operatorname)
-      if let some (_, _, _) := e.asLintegral? then
-        -- lean.js `Lean_int`: `\int^{⁻} body\, {\color{blue}\partial}{binder}`
-        "\\int^{⁻} {%s}\\, {\\color{blue}\\partial}{%s}"
+      if let some (_binderName, _fn, _μ) := e.asLintegral? then
+        -- `\int^{⁻} body\, {\color{blue}\partial}(measure)` — binder implicit in the body
+        "\\int^{⁻} {%s}\\, {\\color{blue}\\partial}{{%s}}"
+      else if let some view := e.asExpectation? then
+        match view with
+        | .map _ _ =>
+          -- `𝔼_rv(f(rv))` — expectation under pushforward measure `𝕡.map rv`
+          "\\mathop{\\mathbb{E}}\\limits_{%s}\\left(%s\\left(%s\\right)\\right)"
+        | .cond _ _ _ =>
+          -- `𝔼_x(f(x) | y)` — expectation under a conditional density
+          "\\mathop{\\mathbb{E}}\\limits_{%s}\\left(%s\\left(%s\\right)\\ \\mathrel{\\bigg|}\\ %s\\right)"
       else if let some (_, _) := e.asJointRandomSymbol? then
         "%s, %s"
       else if let some (_, _, _) := e.asEventuallyAe? then
@@ -851,6 +1035,13 @@ def Expr.latexFormat : Expr → String
         -- lean.js `probDensityParts`: `𝕡.prob f₁ … fₙ pt` → `𝕡\ f₁ … fₙ`.
         -- The density argument (e.g. the pair `(x, y)`) is boxed blue (`#99f`)
         -- in lean.js regardless of nesting depth, so pin the color level to 0.
+        let obj := level.toColor (obj.priority > func.priority || obj.toList != none || obj.is_Eye)
+        let fns := fns.map fun arg =>
+          (0 : Nat).toColor (arg.priority > func.priority || arg.is_Div || arg.is_BlockMatrix)
+        "\\ ".intercalate (obj :: fns)
+      else if let some (obj, fns) := e.asMap? then
+        -- lean.js `mapLatexParts`: `𝕡.map X {pt}` → `𝕡 X`.
+        -- Direct case: `𝕡.map X` → `𝕡 X` (one arg, no observation point)
         let obj := level.toColor (obj.priority > func.priority || obj.toList != none || obj.is_Eye)
         let fns := fns.map fun arg =>
           (0 : Nat).toColor (arg.priority > func.priority || arg.is_Div || arg.is_BlockMatrix)
@@ -875,6 +1066,20 @@ def Expr.latexFormat : Expr → String
         opStr ++ "\\ " ++ "\\ ".intercalate args
       | .Lean_operatorname name =>
         match name with
+        | `DFunLike.coe =>
+          -- hide `coe` coercion: render as `F a` (the underlying measure applied to a point)
+          match args with
+          | [F, a] =>
+            let f := level.toColor (F.priority ≥ func.priority || F.toList != none || F.is_Eye)
+            let a := level.toColor (a.priority ≥ func.priority || a.is_EnclosedGroup)
+            s!"{f} {a}"
+          | [F] =>
+            let f := level.toColor (F.priority ≥ func.priority || F.toList != none || F.is_Eye)
+            f
+          | _ =>
+            let args := args.map fun arg =>
+              level.toColor (arg.priority > func.priority || arg.is_Div || arg.is_BlockMatrix)
+            opStr ++ "\\ " ++ "\\ ".intercalate args
         | `id =>
           if let some rows@(row0 :: _) := e.blockMatrixRows then
             Expr.bmatrixFormat rows.length row0.length
@@ -1138,6 +1343,12 @@ where
               "{%s : %s}".format name.toString.bvarLatex.escape_specials, type.toLatex
             else
               "{%s}".format expr.toLatex
+        | .Lean_tsum =>
+          match e.asTsum? with
+          | some (name, type, body) =>
+            [name, type.toLatex, body.toLatex]
+          | none =>
+            args.reverse.map (·.toLatex)
         | .Lean_exists
         | .Lean_sum
         | .Lean_prod
@@ -1229,6 +1440,11 @@ where
           [toString n, dims]
         | _ =>
           map args
+      | .anonymous =>
+        if let some (obj, fns) := e.asMap? then
+          obj.toLatex :: fns.map (·.toLatex)
+        else
+          map args
       | _ =>
         map args
     | .BinaryInfix ⟨`Div.div⟩
@@ -1268,13 +1484,19 @@ where
         map args
     | .ExprWithAttr op =>
       -- Pre-check foldings first (work for both Lean_function and Lean_operatorname)
-      if let some (binderName, fn, _μ) := e.asLintegral? then
-        [fn.toLatex, binderName]
+      if let some (_binderName, fn, μ) := e.asLintegral? then
+        [fn.toLatex, μ.toLatex]
+      else if let some view := e.asExpectation? then
+        match view with
+        | .map f rv => [rv.toLatex, f.toLatex, rv.toLatex]
+        | .cond f x y => [x.toLatex, f.toLatex, x.toLatex, y.toLatex]
       else if let some (x, y) := e.asJointRandomSymbol? then
         [x.toLatex, y.toLatex]
       else if let some (binderName, body, _μ) := e.asEventuallyAe? then
         [binderName, body.toLatex]
       else if let some (obj, fns) := e.asProb? then
+        obj.toLatex :: fns.map (·.toLatex)
+      else if let some (obj, fns) := e.asMap? then
         obj.toLatex :: fns.map (·.toLatex)
       else if let some (obj, x, y) := e.asCondProb? then
         [obj.toLatex, x.toLatex, y.toLatex]
@@ -1487,7 +1709,6 @@ where
       cases
   | e, cases =>
     cases.concat e.toLatex
-
 
 def Expr.latex_tagged (expr : Expr) (hypId : Name) (color : String := "green") : String :=
   "%s\\tag*{$\\color{%s}%s$}".format expr.toLatex, color, (hypId.escape_specials ".")

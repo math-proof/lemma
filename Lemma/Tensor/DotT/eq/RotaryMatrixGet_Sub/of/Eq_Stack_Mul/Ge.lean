@@ -20,5 +20,5 @@ private lemma main
   exact congrArg rotaryMatrix (SubGetS.eq.Get_Sub.of.Eq_Stack_Mul.Ge h hθ)
 
 
--- created on 2023-05-30
+-- created on 2023-09-16
 -- updated on 2026-09-05

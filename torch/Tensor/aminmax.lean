@@ -1,4 +1,4 @@
-import sympy.tensor.tensor
+import torch.Tensor
 import sympy.vector.functions
 import Lemma.Nat.Lt_Sub.of.LtAdd
 import Lemma.List.ProdTake_1.eq.Get_0.of.GtLength_0

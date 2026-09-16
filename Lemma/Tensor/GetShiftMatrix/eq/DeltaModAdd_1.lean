@@ -6,13 +6,14 @@ open Nat Tensor
 @[main, fin]
 private lemma main
   [AddMonoidWithOne α] [CharZero α]
-  (n : ℕ) (h : 0 < n)
+  (n : ℕ)
   (i j : Fin n) :
 -- imply
-  (ShiftMatrix (α := α) ⟨0, by omega⟩ ⟨n - 1, by omega⟩)[i, j] =
+  (ShiftMatrix (α := α) ⟨0, i.size_positive⟩ ⟨n - 1, by have := i.size_positive; omega⟩)[i, j] =
     (↑(KroneckerDelta (((i : ℕ) + 1) % n) (j : ℕ)) : Tensor α []) := by
 -- proof
-  have h := GetShiftMatrix.eq.Ite (α := α) ⟨0, by omega⟩ ⟨n - 1, by omega⟩ i j
+  have hn : 0 < n := i.size_positive
+  have h := GetShiftMatrix.eq.Ite (α := α) ⟨0, hn⟩ ⟨n - 1, by omega⟩ i j
   rw [h]
   by_cases h1 : n = 1
   ·
@@ -38,3 +39,4 @@ private lemma main
 
 
 -- created on 2026-09-11
+-- updated on 2026-09-16

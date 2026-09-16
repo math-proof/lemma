@@ -1,4 +1,4 @@
-import sympy.tensor.tensor
+import torch.Tensor
 import Lemma.Nat.NotLt.is.Ge
 import Lemma.List.EqSetInsertIdxEraseIdx.of.GtLength
 import Lemma.List.GtLengthInsertIdxEraseIdx.of.GtLength

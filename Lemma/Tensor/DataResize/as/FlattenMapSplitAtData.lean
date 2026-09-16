@@ -1,6 +1,6 @@
 import Lemma.List.ProdSet__Mul_Get.eq.MulProd_Mul_Prod.of.GtLength
 import Lemma.Bool.SEq.is.EqCast.of.Eq
-import sympy.tensor.tensor
+import torch.Tensor
 open List Bool
 
 

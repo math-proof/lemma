@@ -1,5 +1,5 @@
 import Mathlib.LinearAlgebra.Matrix.Defs
-import sympy.tensor.tensor
+import torch.Tensor
 
 
 /--

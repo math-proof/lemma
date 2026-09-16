@@ -1,5 +1,5 @@
 import Mathlib.Data.Nat.GCD.Basic
-import sympy.tensor.Basic
+import torch.Tensor.Basic
 
 namespace Tensor
 

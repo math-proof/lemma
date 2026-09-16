@@ -1,5 +1,5 @@
 import Lemma.Bool.SEq.is.Eq
-import sympy.tensor.Basic
+import torch.Tensor.Basic
 open Bool
 
 

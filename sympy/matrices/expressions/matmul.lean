@@ -7,7 +7,7 @@ import Lemma.List.EraseIdx.eq.Append_Drop_Add_1
 import Lemma.List.EraseIdxAppend.eq.Append_EraseIdx.of.LeLength
 import Lemma.List.ZipWith_Append.eq.AppendZipWithS
 import Lemma.List.ZipWith__Append.eq.AppendZipWithS
-import sympy.tensor.tensor
+import torch.Tensor
 open List Tensor
 
 

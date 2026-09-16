@@ -1,4 +1,4 @@
-import sympy.tensor.tensor
+import torch.Tensor
 import Lemma.Tensor.GtLength.of.Eq
 open Tensor
 

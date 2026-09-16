@@ -4,7 +4,7 @@ import Lemma.Vector.FlattenMap.eq.MapFlatten
 import Lemma.Vector.MapCast.as.Map.of.Eq
 import Lemma.Vector.MapGetSlice.eq.GetSliceMap
 import Lemma.Vector.SplitAtMap.eq.MapSplitAt
-import sympy.tensor.tensor
+import torch.Tensor
 open List Tensor Vector
 
 

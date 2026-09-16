@@ -287,6 +287,36 @@ function Not($token) {
     return Not-Token $token
 }
 
+# Mirror List.andLeftTokens / List.andRightTokens / Name.andProjName from sympy/Basic.lean:
+# Section.Type1.Type2.of.Givens -> Section.Type1.of.Givens (left) or Section.Type2.of.Givens (right);
+# when Type1 = Type2, append .fst / .snd.
+function Get-AndProjModule {
+    param(
+        [string]$Module,
+        [bool]$Left
+    )
+    $tokens = @($Module -split '\.')
+    $ofIdx = [array]::IndexOf([object[]]$tokens, 'of')
+    if ($ofIdx -lt 2) {
+        return $null
+    }
+    $pre = @($tokens[0..($ofIdx - 1)])
+    $rest = @($tokens[$ofIdx..($tokens.Length - 1)])
+    if ($pre.Length -lt 3) {
+        return $null
+    }
+    $leftTokens = @($pre[0..($pre.Length - 2)]) + $rest
+    $rightTokens = @($pre[0..($pre.Length - 3)]) + @($pre[$pre.Length - 1]) + $rest
+    $leftModule = $leftTokens -join '.'
+    $rightModule = $rightTokens -join '.'
+    if ($leftModule -eq $rightModule) {
+        if ($Left) { return "$leftModule.fst" }
+        return "$rightModule.snd"
+    }
+    if ($Left) { return $leftModule }
+    return $rightModule
+}
+
 # Get all .lean files except *.echo.lean under Lemma/
 Get-ChildItem -Recurse -Path "Lemma" -Include *.lean -Exclude *.echo.lean |
 Where-Object { Test-ModuleIncluded (Get-ModuleFromLeanFile $_.FullName) } |
@@ -538,8 +568,25 @@ ForEach-Object {
             Add-Content -Path "test.sql" -Value (Format-LemmaInsertRow -Module $new_module -Synthetic)
         }
     }
+    if ($attributes -cmatch '\bAnd\.left\b') {
+        $new_module = Get-AndProjModule -Module $module -Left $true
+        if ($new_module) {
+            Add-Content -Path "test.sql" -Value (Format-LemmaInsertRow -Module $new_module -Synthetic)
+        }
+        else {
+            Write-Host "Ignoring @[main, And.left] at $file"
+        }
+    }
+    if ($attributes -cmatch '\bAnd\.right\b') {
+        $new_module = Get-AndProjModule -Module $module -Left $false
+        if ($new_module) {
+            Add-Content -Path "test.sql" -Value (Format-LemmaInsertRow -Module $new_module -Synthetic)
+        }
+        else {
+            Write-Host "Ignoring @[main, And.right] at $file"
+        }
+    }
 }
-
 # Modify the last line to complete the SQL statement
 $content = Get-Content -Path test.sql
 if ($content.Count -gt 0) {

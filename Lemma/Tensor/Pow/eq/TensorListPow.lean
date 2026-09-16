@@ -1,5 +1,5 @@
 import Lemma.Tensor.Eq.is.EqDataS
-import sympy.tensor.tensor
+import torch.Tensor
 open Tensor
 
 

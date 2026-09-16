@@ -1,4 +1,4 @@
-import sympy.tensor.Basic
+import torch.Tensor.Basic
 import torch.Tensor.sum
 import torch.Tensor.unsqueeze
 import torch.Tensor.repeat

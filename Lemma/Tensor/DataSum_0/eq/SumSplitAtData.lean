@@ -5,7 +5,7 @@ import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Vector.GetSum.eq.SumMapGet
 import Lemma.Vector.Head.eq.Get_0
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
-import sympy.tensor.tensor
+import torch.Tensor
 open Bool Vector
 
 

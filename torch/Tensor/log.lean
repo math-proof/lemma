@@ -1,4 +1,4 @@
-import sympy.tensor.tensor
+import torch.Tensor
 import sympy.vector.functions
 import sympy.functions.elementary.exponential
 open Tensor

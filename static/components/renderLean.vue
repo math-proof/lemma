@@ -10,6 +10,40 @@ console.log('import renderLean.vue');
 
 const props = defineProps(['text', 'index']);
 
+/**
+ * `renderLean` is a nested per-lemma tree ({instImplicit, given[i], proof.by[i], …});
+ * its leaves are renderLean instances with a mounted CodeMirror in `editor`.
+ * Return the first/last leaf in document (on-page) order.
+ */
+function extremeEditorSibling(root, first) {
+    var editors = [];
+    (function walk(node) {
+        if (node == null)
+            return;
+        // A renderLean component (leaf); its data always carries `editor`.
+        // Stop here so we never descend into Vue's internal instance links.
+        if ('editor' in node) {
+            if (node.editor)
+                editors.push(node);
+            return;
+        }
+        if (Array.isArray(node) || typeof node === 'object') {
+            for (var key of Object.keys(node))
+                walk(node[key]);
+        }
+    })(root);
+    if (!editors.length)
+        return;
+    editors.sort((a, b) => {
+        var top = (el) => {
+            var rect = el.editor.getWrapperElement().getBoundingClientRect();
+            return rect.top + window.scrollY;
+        };
+        return top(a) - top(b);
+    });
+    return first ? editors[0] : editors[editors.length - 1];
+}
+
 const self = new Vue({
     props,
 
@@ -38,7 +72,7 @@ const self = new Vue({
         },
 
         firstSibling() {
-            return this.$parent.renderLean[0];
+            return extremeEditorSibling(this.$parent.renderLean, true);
         },
 
         nextSibling() {
@@ -202,8 +236,7 @@ const self = new Vue({
         },
 
         lastSibling() {
-            var prove = this.$parent.renderLean;
-            return prove[prove.length - 1];
+            return extremeEditorSibling(this.$parent.renderLean, false);
         },
 
         leanSourceCode() {

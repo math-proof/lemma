@@ -3,7 +3,7 @@ import torch.Tensor.prod
 import Lemma.Tensor.Det.eq.DetToMatrix
 import Lemma.Tensor.DetStack_Ite.eq.MulPowNeg1
 import Lemma.Tensor.EqGetStack
-import Lemma.Tensor.GetMatPowShiftMatrix.eq.Mod
+import Lemma.Tensor.GetMatPowShiftMatrix.eq.DeltaModAdd
 import Lemma.Tensor.GetSum.eq.Sum_Get.of.GtLength_0
 import Lemma.Tensor.Mul
 import Lemma.Tensor.Pow.eq.TensorListPow
@@ -71,7 +71,7 @@ private lemma main
         (↑(KroneckerDelta (((i : ℕ) + c) % n) (j : ℕ)) : Tensor α []) := by
       intro c _
       simp only [f, Tensor.toMatrix]
-      exact Tensor.GetMatPowShiftMatrix.eq.Mod n h c i j
+      exact Tensor.GetMatPowShiftMatrix.eq.DeltaModAdd n c i j
     rw [Finset.sum_congr rfl hdelta]
     erw [← Nat.cast_sum]
     rw [Fin.Sum_Delta.eq.Ite i j]
@@ -153,4 +153,4 @@ private lemma main
 
 
 -- created on 2020-10-03
--- updated on 2026-09-13
+-- updated on 2026-09-16

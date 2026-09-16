@@ -1,5 +1,5 @@
 import sympy.core.power
-import sympy.tensor.tensor
+import torch.Tensor
 import Lemma.Tensor.ItemMul.eq.MulItemS
 open Tensor
 

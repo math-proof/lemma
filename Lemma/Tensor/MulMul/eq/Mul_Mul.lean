@@ -1,5 +1,5 @@
 import Lemma.Tensor.Mul
-import sympy.tensor.tensor
+import torch.Tensor
 open Tensor
 
 

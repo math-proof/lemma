@@ -1,6 +1,6 @@
 import Lemma.Bool.SEq.is.Eq
 import Lemma.Fin.Eq.of.Val
-import sympy.tensor.tensor
+import torch.Tensor
 open Bool Fin
 
 

@@ -1,6 +1,6 @@
 import stdlib.SEq
 import sympy.Basic
-import sympy.tensor.tensor
+import torch.Tensor
 
 
 @[main]

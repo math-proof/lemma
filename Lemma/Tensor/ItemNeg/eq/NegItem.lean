@@ -1,4 +1,4 @@
-import sympy.tensor.Basic
+import torch.Tensor.Basic
 import torch.Tensor.item
 import Lemma.Tensor.DataNeg.eq.NegData
 import Lemma.Vector.GetNeg.eq.NegGet

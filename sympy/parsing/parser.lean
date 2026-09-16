@@ -112,19 +112,7 @@ partial def Expr.toExpr (e : Lean.Expr) (binders : List Expr) (level : Nat) : Me
 
     let full_args ← get_args e binders func
     let ⟨args, extra_args⟩ ← Expr.filter_default func full_args
-/-
-    if e.toString == "" then
-      Lean.logInfo s!"Expr.toExpr.Operator :
-e ← {← ppExpr e}
-e : {e.ctorName} = \n{e}
-func : {func.ctorName} = {func}
-binders = {binders}
-full_args.length = {full_args.length} :
-{"\n".intercalate (full_args.map fun arg => arg.toString)}
-args (with level: {args.map fun arg => arg.level}) :
-{"\n".intercalate (args.map fun arg => arg.toString)}
-"
--/
+
     let expr ← construct_from_args e binders func args
     if extra_args == .nil then
       return expr

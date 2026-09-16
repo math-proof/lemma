@@ -1,4 +1,4 @@
-import sympy.tensor.tensor
+import torch.Tensor
 
 
 @[main]

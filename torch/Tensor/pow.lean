@@ -1,4 +1,4 @@
-import sympy.tensor.tensor
+import torch.Tensor
 open Tensor
 
 instance [HPow α β α] : HPow (Tensor α s) (Tensor β s) (Tensor α s) where

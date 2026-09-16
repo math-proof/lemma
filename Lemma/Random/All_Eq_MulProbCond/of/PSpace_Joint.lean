@@ -8,20 +8,6 @@ import Lemma.Random.All_Eq_DivProbS
 open Random MeasureTheory
 
 
-/--
-Multiplication rule for probability densities (the continuous analogue of the event
-formula `Pr(y ∧ (x = a)) = Pr(x = a | y) · Pr(y)`): the joint density equals the
-conditional density of `x` given `y` times the marginal density of `y` —
-
-  `𝕡(x, y) = 𝕡(x | y) · 𝕡(y)`
-
-The identity holds almost everywhere with respect to the product of the reference
-measures, which is exactly where `All_Eq_DivProbS` (the Bayes division formula) is valid;
-the sympy premise `Pr(y) ≠ 0` is handled a.e. rather than by a hypothesis: where the
-marginal density vanishes the joint density vanishes a.e. on the same fiber (a zero
-section integral), and the marginal density is finite a.e. because it integrates to the
-total mass `1` of the probability measure.
--/
 @[main]
 private lemma main
   {Ω α β : Type*}

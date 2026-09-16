@@ -8,13 +8,6 @@ import Lemma.Random.All_EqIntegral_ProbJoint.of.PSpace_Joint
 open Random MeasureTheory
 
 
-/--
-| attributes | lemma |
-| :---: | :---: |
-| main | Random.NeProb_0.NeProb_0.of.NeProb__0 |
-| And.left | Random.NeProb_0.of.NeProb__0.fst |
-| And.right | Random.NeProb_0.of.NeProb__0.snd |
--/
 @[main, And.left, And.right]
 private lemma main
   {Ω α β : Type*}

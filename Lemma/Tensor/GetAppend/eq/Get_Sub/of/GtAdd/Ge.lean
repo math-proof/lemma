@@ -1,4 +1,4 @@
-import sympy.tensor.tensor
+import torch.Tensor
 import Lemma.Nat.LtSub.is.Lt_Add.of.Ge
 import Lemma.Bool.SEq.of.SEq.SEq
 import Lemma.List.ProdConsAdd.eq.AddProdSCons

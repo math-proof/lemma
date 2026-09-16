@@ -1,4 +1,4 @@
-import sympy.tensor.tensor
+import torch.Tensor
 import sympy.vector.functions
 import sympy.core.relational
 open Tensor

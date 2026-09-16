@@ -34,7 +34,7 @@ import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop.of.Lt_ProdTake.Lt_ProdDrop
 import Lemma.Vector.GetSplitAt.of.Lt_Mul_ProdTail.Gt_0.GtGet_0.GtLength_0
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import Lemma.Vector.SEqFlattenSSplitAt.of.SEq
-import sympy.tensor.tensor
+import torch.Tensor
 open Bool List Nat Tensor Vector
 
 

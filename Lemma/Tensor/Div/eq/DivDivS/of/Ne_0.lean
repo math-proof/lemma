@@ -1,4 +1,4 @@
-import sympy.tensor.Basic
+import torch.Tensor.Basic
 import Lemma.Vector.GetDiv.eq.DivGetS
 import Lemma.Rat.Div.eq.DivDivS.of.Ne_0
 import Lemma.Nat.Div.eq.HDiv

@@ -3,7 +3,7 @@ import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Tensor.EqData0'0
 import Lemma.Tensor.Mul
 import Lemma.Vector.EqMul0_0
-import sympy.tensor.tensor
+import torch.Tensor
 open Vector Tensor
 
 

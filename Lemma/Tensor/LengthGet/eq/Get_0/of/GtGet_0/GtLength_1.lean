@@ -2,7 +2,7 @@ import Lemma.List.GetEraseIdx.eq.Get.of.Gt.GtLength
 import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.GtLength
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
-import sympy.tensor.tensor
+import torch.Tensor
 open List Tensor
 
 

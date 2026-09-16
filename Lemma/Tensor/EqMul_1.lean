@@ -1,7 +1,7 @@
 import Lemma.Tensor.DataMul.eq.MulData
 import Lemma.Vector.GetMul.eq.MulGet
 import Lemma.Tensor.Mul
-import sympy.tensor.tensor
+import torch.Tensor
 open Tensor Vector
 
 

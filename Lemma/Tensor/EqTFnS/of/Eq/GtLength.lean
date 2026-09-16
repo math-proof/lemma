@@ -1,4 +1,4 @@
-import sympy.tensor.Basic
+import torch.Tensor.Basic
 import Lemma.Vector.HEq.of.Val
 import Lemma.Bool.IffEqS.of.Eq
 import Lemma.Tensor.Length.of.SEq

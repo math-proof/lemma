@@ -1,5 +1,5 @@
 import sympy.Basic
-import sympy.tensor.Basic
+import torch.Tensor.Basic
 
 
 @[main, grind =]

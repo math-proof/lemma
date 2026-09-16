@@ -519,14 +519,19 @@ where
             'Ctrl-End': cm => {
                 cm = self.lastSibling.editor;
                 cm.focus();
-                return cm.extendSelection(CodeMirror.Pos(cm.lastLine()));
+                cm.extendSelection(CodeMirror.Pos(cm.lastLine()));
+                // Editors grow to full height (`scrollbarStyle: null`), so the whole page
+                // scrolls via the window; jump it to the document bottom as well.
+                window.scrollTo(0, document.documentElement.scrollHeight);
             },
 
             'Ctrl-Home': cm => {
                 cm = self.firstSibling.editor;
                 cm.focus();
-                return cm.extendSelection(CodeMirror.Pos(cm.firstLine(), 0));
-            },       
+                cm.extendSelection(CodeMirror.Pos(cm.firstLine(), 0));
+                // Return to the home of the entire page, not merely scroll the first editor into view.
+                window.scrollTo(0, 0);
+            },
             
 			'Shift-Ctrl-B': function(cm) {
 				var line = cm.getCursor().line;

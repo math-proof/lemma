@@ -1,7 +1,7 @@
 import Lemma.Bool.SEq.is.Eq
 import Lemma.Tensor.DataUnsqueeze.as.Data
 import Lemma.Tensor.Eq.is.EqDataS
-import sympy.tensor.tensor
+import torch.Tensor
 open Bool Tensor
 
 

@@ -2,7 +2,7 @@ import Lemma.Nat.Delta.eq.Ite
 import Lemma.Tensor.EqMul0_0
 import Lemma.Tensor.GetDot.eq.Sum_MulGetS
 import Lemma.Tensor.GetEye.eq.Delta
-import Lemma.Tensor.GetShiftMatrix.eq.ModAddOne
+import Lemma.Tensor.GetShiftMatrix.eq.DeltaModAdd_1
 import Lemma.Tensor.MatProd.eq.DotMatProd
 import Lemma.Tensor.Mul
 import sympy.matrices.expressions.matpow
@@ -12,14 +12,15 @@ open Nat Tensor
 @[main, fin]
 private lemma main
   [CommRing α] [CharZero α]
-  (n : ℕ) (h : 0 < n)
+  (n : ℕ)
   (k : ℕ)
   (i j : Fin n) :
 -- imply
-  (ShiftMatrix (α := α) ⟨0, by omega⟩ ⟨n - 1, by omega⟩ ^ (k : ℤ))[i, j] =
+  (ShiftMatrix (α := α) ⟨0, i.size_positive⟩ ⟨n - 1, by have := i.size_positive; omega⟩ ^ (k : ℤ))[i, j] =
     (↑(KroneckerDelta (((i : ℕ) + k) % n) (j : ℕ)) : Tensor α []) := by
 -- proof
-  let e0 : Fin n := ⟨0, by omega⟩
+  have hn : 0 < n := i.size_positive
+  let e0 : Fin n := ⟨0, hn⟩
   let e1 : Fin n := ⟨n - 1, by omega⟩
   induction k generalizing j with
   | zero =>
@@ -44,7 +45,7 @@ private lemma main
     rw [hpow]
     apply (GetDot.eq.Sum_MulGetS (ShiftMatrix (α := α) e0 e1 ^ ((k : ℕ) : ℤ))
       (ShiftMatrix (α := α) e0 e1) i j).trans
-    have hx : ((i : ℕ) + k) % n < n := Nat.mod_lt _ h
+    have hx : ((i : ℕ) + k) % n < n := Nat.mod_lt _ hn
     obtain ⟨a, ha⟩ : ∃ a : Fin n, (a : ℕ) = ((i : ℕ) + k) % n := ⟨⟨_, hx⟩, rfl⟩
     have hmul_one : ∀ X : Tensor α [], (↑(1 : ℕ) : Tensor α []) * X = X := by
       intro X
@@ -53,7 +54,7 @@ private lemma main
     rw [Finset.sum_eq_single a]
     ·
       have hiha := ih a
-      have hsa := GetShiftMatrix.eq.ModAddOne.fin (α := α) n h a j
+      have hsa := GetShiftMatrix.eq.DeltaModAdd_1.fin (α := α) n a j
       rw [hiha, ha]
       simp only [id, Nat.Delta.eq.Ite, if_true]
       have hmod : (((a : ℕ) + 1) % n) = (((i : ℕ) + (k + 1)) % n) := by
@@ -72,3 +73,4 @@ private lemma main
 
 
 -- created on 2026-09-11
+-- updated on 2026-09-16

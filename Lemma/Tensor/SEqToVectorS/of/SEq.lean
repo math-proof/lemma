@@ -1,6 +1,6 @@
 import Lemma.Bool.SEq.is.Eq
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
-import sympy.tensor.tensor
+import torch.Tensor
 open Bool
 
 

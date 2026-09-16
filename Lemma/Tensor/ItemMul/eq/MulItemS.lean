@@ -1,4 +1,4 @@
-import sympy.tensor.Basic
+import torch.Tensor.Basic
 import torch.Tensor.item
 import Lemma.Vector.GetMul.eq.MulGetS
 open Vector

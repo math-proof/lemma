@@ -5,7 +5,7 @@ import Lemma.List.GtProdTail_0.of.GtProd_0
 import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Vector.GetSplitAt_1.eq.GetUnflattenCast
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
-import sympy.tensor.tensor
+import torch.Tensor
 open Vector List Tensor Nat
 
 

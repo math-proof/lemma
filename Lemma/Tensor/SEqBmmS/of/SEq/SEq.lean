@@ -2,7 +2,7 @@ import Lemma.Tensor.LengthBmm.eq.Length
 import Lemma.Bool.SEqUFnS.of.SEq
 import Lemma.Bool.SEq.is.Eq
 import Lemma.List.Eq.of.Append.Length
-import sympy.tensor.Basic
+import torch.Tensor.Basic
 import torch.Tensor.bmm
 open Bool List
 

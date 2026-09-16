@@ -1,7 +1,7 @@
 import Lemma.Tensor.Eq.is.EqDataS
 import torch.Tensor.prod
 import Lemma.Vector.Map₂.eq.Map.of.Eq_1
-import sympy.tensor.Basic
+import torch.Tensor.Basic
 open Tensor Vector
 
 

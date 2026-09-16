@@ -1,4 +1,4 @@
-import sympy.tensor.Basic
+import torch.Tensor.Basic
 import Lemma.Nat.Gt_0
 import Lemma.Tensor.GtLength_0.of.GtLength_0
 open Tensor Nat

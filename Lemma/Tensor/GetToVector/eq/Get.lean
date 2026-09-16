@@ -1,4 +1,4 @@
-import sympy.tensor.tensor
+import torch.Tensor
 import Lemma.Tensor.Lt_HeadD
 import Lemma.Tensor.GtLength_0
 open Tensor

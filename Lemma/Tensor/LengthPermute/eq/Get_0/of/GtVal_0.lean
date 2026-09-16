@@ -1,6 +1,6 @@
 import Lemma.List.GetPermute.eq.Get.of.Gt
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
-import sympy.tensor.Basic
+import torch.Tensor.Basic
 import torch.Tensor.permute
 open Tensor List
 

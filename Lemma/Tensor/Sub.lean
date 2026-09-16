@@ -4,7 +4,7 @@ import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Vector.GetAdd.eq.AddGetS
 import Lemma.Vector.GetNeg.eq.NegGet
 import Lemma.Vector.GetSub.eq.SubGet
-import sympy.tensor.tensor
+import torch.Tensor
 open Tensor Vector
 
 

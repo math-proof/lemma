@@ -1,5 +1,5 @@
 import stdlib.SEq
-import sympy.tensor.tensor
+import torch.Tensor
 
 
 /--

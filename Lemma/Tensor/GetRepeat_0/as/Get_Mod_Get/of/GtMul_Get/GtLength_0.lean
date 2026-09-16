@@ -1,4 +1,4 @@
-import sympy.tensor.tensor
+import torch.Tensor
 import Lemma.Tensor.LengthRepeat.eq.Mul_Get_0.of.GtLength_0
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
