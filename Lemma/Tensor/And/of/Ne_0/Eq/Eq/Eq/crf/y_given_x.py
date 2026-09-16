@@ -106,10 +106,10 @@ def prove(Eq):
 
     Eq.xy_joint_nonzero = Random.Ne_0.of.Ne_0.joint_slice.apply(Eq[3], (slice(0, t + 1), slice(0, t + 1)))
 
-    Eq << Random.NeProb_0.NeProb_0.of.NeProb__0.apply(Eq.xy_joint_nonzero)
+    Eq << Random.All_NeProb_0.All_NeProb_0.of.All_NeProb_0.apply(Eq.xy_joint_nonzero)
 
     y = Eq[-1].lhs.arg.lhs.base
-    Eq << Random.All_Eq_MulCondProb.apply(Eq[-2], y[:t + 1])
+    Eq << Random.All_Eq_MulProbCond.of.PSpace_Joint.apply(Eq[-2], y[:t + 1])
 
     Eq << Random.Sum.eq.Prob.apply(Sum[pspace(y[:t + 1]).symbol](Eq[-1].lhs))
 

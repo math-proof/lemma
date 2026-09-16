@@ -17,9 +17,9 @@ def prove(Eq):
     x, y, z = Symbol(real=True, random=True)
     Eq << apply(Unequal(Pr(x, y, z), 0), y, z)
 
-    Eq << Random.NeProb_0.NeProb_0.of.NeProb__0.apply(Eq[0], 1)
+    Eq << Random.All_NeProb_0.All_NeProb_0.of.All_NeProb_0.apply(Eq[0], 1)
 
-    Eq << Random.All_Eq_MulCondProb.apply(Eq[-1], x)
+    Eq << Random.All_Eq_MulProbCond.of.PSpace_Joint.apply(Eq[-1], x)
 
     Eq << Eq[0].subs(Eq[-1])
 

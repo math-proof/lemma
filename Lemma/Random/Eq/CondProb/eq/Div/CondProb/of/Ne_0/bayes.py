@@ -23,9 +23,9 @@ def prove(Eq):
     x, y = Symbol(real=True, random=True)
     Eq << apply(Unequal(Pr(x, y), 0))
 
-    Eq << Random.NeProb_0.NeProb_0.of.NeProb__0.apply(Eq[0])
+    Eq << Random.All_NeProb_0.All_NeProb_0.of.All_NeProb_0.apply(Eq[0])
 
-    Eq <<= Random.All_Eq_MulCondProb.apply(Eq[-2], y), Random.All_Eq_MulCondProb.apply(Eq[-1], x)
+    Eq <<= Random.All_Eq_MulProbCond.of.PSpace_Joint.apply(Eq[-2], y), Random.All_Eq_MulProbCond.of.PSpace_Joint.apply(Eq[-1], x)
 
     Eq << Nat.Eq_Div.of.Eq.Ne_0.apply(Eq[-1], Eq[-3]).reversed
 

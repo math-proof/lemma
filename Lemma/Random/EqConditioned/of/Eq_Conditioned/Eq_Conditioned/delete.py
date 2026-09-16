@@ -28,17 +28,17 @@ def prove(Eq):
 
     Eq.y_nonzero, Eq.yz_nonzero = Bool.And_And.of.And.apply(Eq[-1])
 
-    _, Eq.z_nonzero = Random.NeProb_0.NeProb_0.of.NeProb__0.apply(Eq.yz_nonzero)
+    _, Eq.z_nonzero = Random.All_NeProb_0.All_NeProb_0.of.All_NeProb_0.apply(Eq.yz_nonzero)
 
-    Eq << Random.All_Eq_MulCondProb.apply(Eq.yz_nonzero, x)
+    Eq << Random.All_Eq_MulProbCond.of.PSpace_Joint.apply(Eq.yz_nonzero, x)
 
     Eq << Eq[-1].subs(Eq[0])
 
-    Eq << Random.All_Eq_MulCondProb.apply(Eq.y_nonzero, z)
+    Eq << Random.All_Eq_MulProbCond.of.PSpace_Joint.apply(Eq.y_nonzero, z)
 
     Eq << Eq[-2].subs(Eq[-1])
 
-    Eq.xy_probability = Random.All_Eq_MulCondProb.apply(Eq.y_nonzero, x)
+    Eq.xy_probability = Random.All_Eq_MulProbCond.of.PSpace_Joint.apply(Eq.y_nonzero, x)
 
     Eq << Eq[-1].subs(Eq.xy_probability.reversed)
 
@@ -47,7 +47,7 @@ def prove(Eq):
     y_ = pspace(y).symbol
     Eq << Random.All_EqIntegral_ProbJoint.of.PSpace_Joint.apply(Integral[y_](Eq[-1].lhs))
 
-    Eq << Eq[-1].subs(Random.All_Eq_MulCondProb.apply(Eq.z_nonzero, x))
+    Eq << Eq[-1].subs(Random.All_Eq_MulProbCond.of.PSpace_Joint.apply(Eq.z_nonzero, x))
 
     Eq << Real.Integral.of.All_Eq.apply(Eq[-3], (y_,))
 

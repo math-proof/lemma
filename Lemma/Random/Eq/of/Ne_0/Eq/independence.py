@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq << Eq[-1].simplify()
 
-    Eq << Random.All_Eq_MulCondProb.apply(Eq[1], y)
+    Eq << Random.All_Eq_MulProbCond.of.PSpace_Joint.apply(Eq[1], y)
 
     Eq << Eq[-1].subs(Eq[0])
 

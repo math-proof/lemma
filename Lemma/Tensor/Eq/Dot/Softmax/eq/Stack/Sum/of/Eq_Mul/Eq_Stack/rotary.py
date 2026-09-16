@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(eq_theta, eq_R, Q, K, V):
-    from Lemma.Tensor.Dot.eq.Stack.of.Eq_Stack.position_representation.rotary import extract
+    from Lemma.Tensor.DotRotaryMatrix.eq.Stack_IteEven_SubMulS import extract
     (Ri, d), b, (i, j, k) = extract(eq_R)
     (S[k], (S[b], ((S[i], (S[i], S[0], S[d / 2])), S[d]))), (θ, S[k]) = eq_theta.of(Equal[Symbol * Symbol ** (-2 * Stack / Symbol), Indexed])
     n = Q.shape[0]
@@ -14,7 +14,7 @@ def apply(eq_theta, eq_R, Q, K, V):
 @prove
 def prove(Eq):
     from Lemma import Tensor, Finset, Bool, Nat
-    from Lemma.Tensor.Dot.eq.Stack.of.Eq_Stack.position_representation.rotary import rotary_matrix
+    from Lemma.Tensor.DotRotaryMatrix.eq.Stack_IteEven_SubMulS import rotary_matrix
     # n denotes sequence length (seq_length)
     # b denotes 10000
     n, b = Symbol(integer=True, positive=True)
@@ -42,7 +42,7 @@ def prove(Eq):
 
     Eq.final = Eq[-2].subs(Eq[-1])
 
-    Eq << Tensor.Dot.eq.Stack.of.Eq_Stack.position_representation.rotary.apply(Eq[1], K[k])
+    Eq << Tensor.DotRotaryMatrix.eq.Stack_IteEven_SubMulS.apply(Eq[1], K[k])
 
     Eq << Eq[-1].subs(i, k - i)
 

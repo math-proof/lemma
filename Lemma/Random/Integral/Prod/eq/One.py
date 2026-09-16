@@ -29,7 +29,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Real.Integral.limits.separate)
 
-    Eq << Eq[-1].this.find(Integral[Pr]).apply(Random.All_Eq1Integral_CondProb)
+    Eq << Eq[-1].this.find(Integral[Pr]).apply(Random.All_Eq1Integral_ProbCond)
 
     Eq << Imply(Eq.hypothesis, Eq.induct, plausible=True)
     Eq << Bool.Eq_Ite.of.All_Imp.apply(Eq[-1], n=n, start=0)

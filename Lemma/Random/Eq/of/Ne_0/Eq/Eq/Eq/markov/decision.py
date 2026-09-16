@@ -70,7 +70,7 @@ def prove(Eq):
     a, k = Eq[1].rhs.of(Indexed)
     Eq.ne_zero = Random.Ne_0.of.Ne_0.joint_slice.apply(Eq[3], [slice(0, k), slice(0, k), slice(0, k + 1)])
 
-    Eq << Random.All_Eq_MulCondProb.apply(Eq.ne_zero, s[k + 1], a[k], r[k])
+    Eq << Random.All_Eq_MulProbCond.of.PSpace_Joint.apply(Eq.ne_zero, s[k + 1], a[k], r[k])
 
     Eq << Eq[-1].this.lhs.arg.apply(Tensor.Stack.Is.Stack.Eq, i=3, j=0)
 
@@ -102,9 +102,9 @@ def prove(Eq):
 
     Eq.recursion = Eq.recursion.subs(Eq[-1])
 
-    Eq.ne_zero_a, Eq[-1] = Random.NeProb_0.NeProb_0.of.NeProb__0.apply(Eq[3], 1)
+    Eq.ne_zero_a, Eq[-1] = Random.All_NeProb_0.All_NeProb_0.of.All_NeProb_0.apply(Eq[3], 1)
 
-    Eq.ne_zero_r, Eq.ne_zero_s = Random.NeProb_0.NeProb_0.of.NeProb__0.apply(Eq[-1])
+    Eq.ne_zero_r, Eq.ne_zero_s = Random.All_NeProb_0.All_NeProb_0.of.All_NeProb_0.apply(Eq[-1])
 
     Eq << Random.EqProb.of.Eq_Conditioned.Eq_Conditioned.joint.apply(Eq[0], Eq[2])
 
@@ -124,11 +124,11 @@ def prove(Eq):
 
     Eq << Random.Ne_0.Slice.of.Ne_0.apply(Eq.ne_zero_s, 0)
 
-    Eq << Random.All_Eq_MulCondProb.apply(Eq[-1], a[0], r[0], s[1])
+    Eq << Random.All_Eq_MulProbCond.of.PSpace_Joint.apply(Eq[-1], a[0], r[0], s[1])
 
     Eq.final = Eq[-3].subs(Eq[-1])
 
-    Eq << Random.NeProb_0.NeProb_0.of.NeProb__0.apply(Eq[3], slice(0, None, 2))[0]
+    Eq << Random.All_NeProb_0.All_NeProb_0.of.All_NeProb_0.apply(Eq[3], slice(0, None, 2))[0]
 
     Eq << Random.Ne_0.of.Ne_0.joint_slice.apply(Eq[-1], [0, 0])
 

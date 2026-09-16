@@ -32,7 +32,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.arg.args[0].apply(Tensor.GetSlice.Get.of.Eq, t)
 
-    Eq << Random.NeProb_0.NeProb_0.of.NeProb__0.apply(Eq[-1])
+    Eq << Random.All_NeProb_0.All_NeProb_0.of.All_NeProb_0.apply(Eq[-1])
 
     Eq << Random.All_NeProb_0.of.All_NeProb__0.apply(Eq[-2], index=1)
 

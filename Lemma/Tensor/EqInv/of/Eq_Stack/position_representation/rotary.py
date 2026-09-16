@@ -3,14 +3,14 @@ from util import *
 
 @apply
 def apply(eq_R):
-    from Lemma.Tensor.Dot.eq.Stack.of.Eq_Stack.position_representation.rotary import extract
+    from Lemma.Tensor.DotRotaryMatrix.eq.Stack_IteEven_SubMulS import extract
     (Ri, d), b, (i, j, k) = extract(eq_R)
     return Equal(Ri.T, Ri ^ -1)
 
 @prove
 def prove(Eq):
     from Lemma import Tensor, Int
-    from Lemma.Tensor.Dot.eq.Stack.of.Eq_Stack.position_representation.rotary import rotary_matrix
+    from Lemma.Tensor.DotRotaryMatrix.eq.Stack_IteEven_SubMulS import rotary_matrix
     # b denotes 10000
     b = Symbol(integer=True, positive=True)
     # d denotes embedding size which must be even

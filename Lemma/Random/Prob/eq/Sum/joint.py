@@ -38,7 +38,7 @@ def prove(Eq):
 
     Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[0], cond=Equal(Pr(x), 0))
 
-    Eq << Eq[-1].this.lhs.apply(Random.All_Eq_MulCondProb, y)
+    Eq << Eq[-1].this.lhs.apply(Random.All_Eq_MulProbCond.of.PSpace_Joint, y)
 
     Eq << Bool.Imp.given.ImpEq.apply(Eq[-1])
 

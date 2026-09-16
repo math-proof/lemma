@@ -24,9 +24,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(KL).apply(Random.KL.eq.Sum)
 
-    Eq << Random.All_Eq_MulCondProb.apply(Eq[0], y, spread_weight=True)
+    Eq << Random.All_Eq_MulProbCond.of.PSpace_Joint.apply(Eq[0], y, spread_weight=True)
 
-    Eq << Random.All_Eq_MulCondProb.apply(Eq[1], y, spread_weight=True)
+    Eq << Random.All_Eq_MulProbCond.of.PSpace_Joint.apply(Eq[1], y, spread_weight=True)
 
     Eq << Eq[-3].subs(Eq[-2], Eq[-1])
 

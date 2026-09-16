@@ -29,11 +29,11 @@ def prove(Eq):
 
     Eq << Rat.Ne_0.of.Div1.gt.Zero.apply(Eq[0])
 
-    Eq.y_nonzero, Eq.z_nonzero = Random.NeProb_0.NeProb_0.of.NeProb__0.apply(Eq[-1])
+    Eq.y_nonzero, Eq.z_nonzero = Random.All_NeProb_0.All_NeProb_0.of.All_NeProb_0.apply(Eq[-1])
 
-    Eq.xy_probability = Random.All_Eq_MulCondProb.apply(Eq.y_nonzero, x)
+    Eq.xy_probability = Random.All_Eq_MulProbCond.of.PSpace_Joint.apply(Eq.y_nonzero, x)
 
-    Eq << Random.All_Eq_MulCondProb.apply(Eq[2], x)
+    Eq << Random.All_Eq_MulProbCond.of.PSpace_Joint.apply(Eq[2], x)
 
     Eq << Eq[-1].subs(Eq[0])
 

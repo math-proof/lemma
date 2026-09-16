@@ -38,7 +38,7 @@ def extract(eq_R):
     return (Ri, d), b, (i, j, k)
 
 
-@apply
+@apply(given=True)
 def apply(eq_R, x):
     (Ri, d), b, (i, j, k) = extract(eq_R)
     return Equal(
