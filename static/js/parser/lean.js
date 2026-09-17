@@ -3040,6 +3040,12 @@ export class LeanProperty extends LeanBinary {
                         arg = arg.arg;
                     return [arg.toLatex(syntax)];
                 }
+                case 'natAbs': {
+                    let arg = this.lhs;
+                    if (arg instanceof LeanParenthesis) arg = arg.arg;
+                    if (arg instanceof LeanColon) arg = arg.lhs;
+                    return [arg.toLatex(syntax)];
+                }
             }
         }
         return super.latexArgs(syntax);
@@ -3105,6 +3111,8 @@ export class LeanProperty extends LeanBinary {
                 case 'factorial':
                     return '{%s}!';
                 case 'det':
+                    return '\\left|{%s}\\right|';
+                case 'natAbs':
                     return '\\left|{%s}\\right|';
             }
         }
@@ -4890,6 +4898,11 @@ export class LeanStatements extends LeanMultipleLine(LeanArgs) {
             return this.insert_word(caret, token);
         }
         return super.insert_tactic(caret, token);
+    }
+
+    insert_semicolon(caret) {
+        if (caret instanceof LeanTactic) return caret.insert_semicolon(caret.arg);
+        return super.insert_semicolon(caret);
     }
 
     echo() {
@@ -7966,6 +7979,7 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
             const stripped = this.strip_parenthesis();
             return [stripped[1].toLatex(syntax)];
         }
+
         if (this.intervalLatexFormat()) {
             const s = this.strip_parenthesis();
             if (syntax && func instanceof LeanToken) syntax[func.text] = true;
@@ -8055,6 +8069,7 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         const exp = this.expectationLatexParts();
         if (exp) return this.expectationLatexFormat(exp);
         if (this.is_Abs()) return '\\left|{%s}\\right|';
+
         if (this.is_MatProd()) return '\\prod\\limits_{%s < %s} {%s}';
         if (this.eyePositionalArgs(args)) return '\\mathbb{I}';
         const interval = this.intervalLatexFormat();
@@ -11074,16 +11089,31 @@ class Lean_int extends LeanBigOperator {
 
     measurePartial() {
         const s = this.scope;
-        if (!(s instanceof LeanArgsSpaceSeparated)) return null;
-        for (let i = s.args.length - 1; i >= 0; i--) {
-            if (s.args[i] instanceof LeanCaret) continue;
-            return s.args[i] instanceof Lean_partial ? s.args[i] : null;
+        if (s instanceof LeanArgsSpaceSeparated) {
+            for (let i = s.args.length - 1; i >= 0; i--) {
+                if (s.args[i] instanceof LeanCaret) continue;
+                return s.args[i] instanceof Lean_partial ? s.args[i] : null;
+            }
+            return null;
+        }
+        if (s instanceof Lean_int) {
+            const innerPartial = s.measurePartial();
+            if (!innerPartial) return null;
+            const a = innerPartial.arg;
+            if (a instanceof LeanArgsSpaceSeparated) {
+                for (let i = a.args.length - 1; i >= 0; i--) {
+                    if (a.args[i] instanceof LeanCaret) continue;
+                    return a.args[i] instanceof Lean_partial ? a.args[i] : null;
+                }
+            }
+            return null;
         }
         return null;
     }
 
     integrandLatex(syntax, partial) {
         if (!partial) return this.scope ? this.scope.toLatex(syntax) : '';
+        if (!(this.scope instanceof LeanArgsSpaceSeparated)) return this.scope.toLatex(syntax);
         const args = this.scope.args
             .filter((a) => a !== partial && !(a instanceof LeanCaret));
         const density = LeanArgsSpaceSeparated.probDensityParts(args);

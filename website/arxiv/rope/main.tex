@@ -27,6 +27,9 @@
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\Tensor}{\operatorname{Tensor}}
 \newcommand{\rot}{\mathrm{R}}
+\newcommand{\blk}{\mathrm{B}}
+\newcommand{\blkcos}{\mathrm{B}_{\cos}}
+\newcommand{\blksin}{\mathrm{B}_{\sin}}
 \newcommand{\eye}{\mathrm{I}}
 \newcommand{\softmax}{\mathrm{softmax}}
 \newcommand{\concat}{\mathbin{+\mkern-4mu+}}
@@ -438,6 +441,8 @@ The identity \((-x_1)\concat x_0\) is exactly \texttt{rotate\_half} in Hugging F
 Theorem~\ref{thm:real} is therefore the certificate that the kernel and the Hugging Face matrix are the same map.
 The interleaved matrix \(\rot'\) is recovered afterwards by Theorem~\ref{thm:conj}.
 
+The interleaved layout carries the same kernel with half-duplication replaced by pairwise duplication and \texttt{rotate\_half} by the pairwise swap-and-negate~$J$ (\lmod{Tensor.RotaryMatrix'.eq.AddMulSAppendRotaryMatrix'}).
+
 \section{Orthogonality}
 \label{sec:orth}
 
@@ -502,6 +507,14 @@ A corollary, combining Lemma~\ref{lem:neg-T} and Theorem~\ref{thm:orth}, is the 
 \begin{equation}
   \rot(-\alpha)\,@\,\rot(\alpha) = \eye_{d+d}.
 \end{equation}
+
+\paragraph{Interleaved layout.}
+All three identities carry over to~\(\rot'\).
+\lmod{Tensor.RotaryMatrix'Neg.eq.TRotaryMatrix'} gives \(\rot'(-\alpha)=\rot'(\alpha)^\top\),
+\lmod{Tensor.RotaryMatrix'0.eq.Eye} gives \(\rot'(0)=\eye_{d+d}\) (Lemma~\ref{lem:R0}),
+and \lmod{Tensor.DotT_RotaryMatrix'.eq.Eye} gives
+\(\rot'(\alpha)^\top @ \rot'(\alpha) = \eye_{d+d}\).
+Each follows from the corresponding identity for~\(\rot\) by conjugation (Theorem~\ref{thm:conj}), or directly from the pairwise \(2\times 2\) structure of~\eqref{eq:rot-su}.
 
 \section{Additivity}
 \label{sec:add}
@@ -656,6 +669,10 @@ Substituting~\eqref{eq:pair-step4} into~\eqref{eq:pair-step3} and then into~\eqr
 No token index and no schedule on \(\Theta\) appear in Theorem~\ref{thm:pair}.
 The classical notation \(\rot_{\Theta,n-m}\) is recovered in the next subsection, once \(\theta_i=i\,\tau\) identifies \(\beta-\alpha\) with a row of \(\theta\).
 
+The same pairing holds on the interleaved layout by conjugation (Theorem~\ref{thm:conj}):
+\((\rot'(\alpha)\,q)^\top(\rot'(\beta)\,k)=q^\top\rot'(\beta-\alpha)\,k\)
+(\lmod{Tensor.DotDotSRotaryMatrix'.eq.Dot_DotRotaryMatrix'Sub}).
+
 \subsection{Linear frequencies}
 
 Relative \emph{indexing}---replacing \(\theta_k-\theta_i\) by a row of \(\theta\) itself---needs a relation among the rows of \(\theta\).
@@ -766,7 +783,8 @@ Second, the partition function is not rewritten with \(\Rel\): it remains
 \(\sum\exp\bigl((R(i)@Q_i)@(K^R)^\top/\sqrt{d+d}\bigr)\).
 The two forms are equal by the same pairing, but the certified identity only rewrites the weights that multiply \(V\).
 
-Equation~\eqref{eq:soft} is the sense in which ``RoPE is a relative position embedding'': after the rotations are applied, every unnormalized weight is an ordinary inner product of the unrotated query against a key that has been rotated by a matrix depending only on \(k-i\).
+Equation~\eqref{eq:soft} is the sense in which ``RoPE is a relative position embedding'': after the rotations are applied, every unnormalized weight is an ordinary inner product of the unrotated query against a key that has been rotated by a matrix depending only on $k-i$.
+The same reduction holds with $\rot'$ everywhere on the interleaved layout, by conjugation at every step (\lmod{Tensor.DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul}, \lmod{Tensor.RotaryMatrix'.eq.DotDot_RotaryMatrix}).
 
 \section{Library structure}
 \label{sec:artifact}
@@ -877,12 +895,9 @@ We certify equalities of tensors, not approximation quality, length extrapolatio
 Theorem~\ref{thm:soft} is an identity for every \(Q,K,V\) and every linear \(\theta\); it does not say that a trained model uses the relative matrix in a particular way at inference time, nor that attention decays with distance~\cite{barbero2025round}.
 
 \paragraph{Layout.}
-We formalize both pairings.
-\texttt{rotaryMatrix} is the Hugging Face split-half matrix~\eqref{eq:rot-hf};
-\texttt{rotaryMatrix'} is Su et al.'s interleaved matrix~\eqref{eq:rot-su}.
-Theorem~\ref{thm:conj} is the permutation lemma that earlier drafts left informal.
-Kernel realization (Theorem~\ref{thm:real}) and the inner-product pairing (Theorem~\ref{thm:pair}) are stated for the Hugging Face layout, which is the map \texttt{rotate\_half} implements.
-The matching matrix identity on the RoFormer layout is Theorem~\ref{thm:dotTp}.
+Both pairings are formalized (\lmod{Tensor.RotaryMatrix.eq.AppendHstackSMulSEye}, \lmod{Tensor.RotaryMatrix'.eq.Stack_Ite_IteS}); the permutation lemma is \lmod{Tensor.RotaryMatrix'.eq.DotDot_RotaryMatrix}.
+Kernel realization (\lmod{Tensor.DotRotaryMatrix.eq.AddMulS}) and pairing (\lmod{Tensor.DotDotSRotaryMatrix.eq.Dot_DotRotaryMatrixSub}) are stated for the Hugging Face layout; the interleaved counterparts (\lmod{Tensor.RotaryMatrix'.eq.AddMulSAppendRotaryMatrix'}, \lmod{Tensor.DotDotSRotaryMatrix'.eq.Dot_DotRotaryMatrix'Sub}, \lmod{Tensor.DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul}) follow by conjugation.
+The matching matrix identity on the RoFormer layout is \lmod{Tensor.DotT_RotaryMatrix'.eq.RotaryMatrix'Sub}.
 
 \paragraph{Frequencies.}
 Definition~\ref{def:lin} is sufficient for Lemma~\ref{lem:ite} and strictly weaker than the classical geometric schedule.
@@ -907,7 +922,7 @@ This is a library elaboration fact, not a mathematical hypothesis.
 \label{sec:conclusion}
 
 The algebraic skeleton of one-dimensional RoPE is a handful of identities about a block matrix of plane rotations, in either the Hugging Face split-half layout or Su et al.'s interleaved layout.
-We have stated both matrices in Lean~4, proved they are conjugate by a fixed even/odd gather, and, on the Hugging Face matrix that implementations multiply, proved the kernel evaluation formula, the orthogonal and additive group laws for free angle vectors, the RoFormer pairing~\eqref{eq:roformer-rel}, and the relative-offset form of softmax attention under a linear frequency hypothesis.
+We have stated both matrices in Lean~4, proved they are conjugate by a fixed even/odd gather, and, on both layouts, proved the kernel evaluation formula, the orthogonal and additive group laws for free angle vectors, the RoFormer pairing~\eqref{eq:roformer-rel}, and the relative-offset form of softmax attention under a linear frequency hypothesis.
 The modules named in the introduction are the public interface of that development~\cite{lemma_rope_rel,lemma_rope_pair,lemma_rope_conj,lemma_rope_real,lemma_rope_add,lemma_rope_orth}.
 
 \section*{Acknowledgements}

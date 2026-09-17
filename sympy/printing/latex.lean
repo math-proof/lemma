@@ -379,6 +379,30 @@ def Expr.asLintegral? : Expr → Option (String × Expr × Expr)
       | _ => none
     else none
 
+/-- `integral μ (fun x ↦ body)` → `(x, body, μ)`.
+Mirrors lean.js `Lean_int`: the measure is dropped from display and the
+binder variable is shown after `∂` (or `d` for `volume`). -/
+def Expr.asIntegral? : Expr → Option (String × Expr × Expr)
+  | e =>
+    if let some ("integral", args) := e.asNamedApp? then
+      let lambdaArg : Option Expr := args.findSome? fun arg =>
+        match arg with
+        | Basic (.ExprWithLimits .Lean_lambda) .. => some arg
+        | _ => none
+      match lambdaArg with
+      | some (Basic (.ExprWithLimits .Lean_lambda) [fn, Binder .default binderName _ nil] _) =>
+        let rest := args.filter (fun a : Expr => !match a with | Basic (.ExprWithLimits .Lean_lambda) .. => true | _ => false)
+        match rest with
+        | [μ] => some (binderName.bvarLatex "\\ ", fn, μ)
+        | _ => none
+      | some (Basic (.ExprWithLimits .Lean_lambda) [fn, Binder .instImplicit binderName _ nil] _) =>
+        let rest := args.filter (fun a : Expr => !match a with | Basic (.ExprWithLimits .Lean_lambda) .. => true | _ => false)
+        match rest with
+        | [μ] => some (binderName.bvarLatex "\\ ", fn, μ)
+        | _ => none
+      | _ => none
+    else none
+
 /-- See through `Prod.fst ⟨a, b⟩` / `Prod.snd ⟨a, b⟩` to the component `a` / `b`. -/
 def Expr.asPairProj? : Expr → Option Expr
   | e =>
@@ -1005,6 +1029,10 @@ def Expr.latexFormat : Expr → String
           s!"{list}_{index}"
         | _ =>
           opStr
+      | .str `Prod "mk" =>
+        let args := ["%s"].repeat args.length
+        let args := ", ".intercalate args
+        ((0 : Nat).toColor false).replaceFirst "%s" args
       | .str _ "mk" =>
         let args := ["%s"].repeat args.length
         let args := ", ".intercalate args
@@ -1015,7 +1043,12 @@ def Expr.latexFormat : Expr → String
         opStr
     | .ExprWithAttr op =>
       -- Pre-check foldings first (work for both Lean_function and Lean_operatorname)
-      if let some (_binderName, _fn, _μ) := e.asLintegral? then
+      if let some (_binderName, _fn, μ) := e.asIntegral? then
+        if μ.isVolume then
+          "\\int {%s}\\, {\\color{blue}\\mathrm{d}}{%s}"
+        else
+          "\\int {%s}\\, {\\color{blue}\\partial}{%s}"
+      else if let some (_binderName, _fn, _μ) := e.asLintegral? then
         -- `\int^{⁻} body\, {\color{blue}\partial}(measure)` — binder implicit in the body
         "\\int^{⁻} {%s}\\, {\\color{blue}\\partial}{{%s}}"
       else if let some view := e.asExpectation? then
@@ -1484,7 +1517,9 @@ where
         map args
     | .ExprWithAttr op =>
       -- Pre-check foldings first (work for both Lean_function and Lean_operatorname)
-      if let some (_binderName, fn, μ) := e.asLintegral? then
+      if let some (binderName, fn, _μ) := e.asIntegral? then
+        [fn.toLatex, binderName]
+      else if let some (_binderName, fn, μ) := e.asLintegral? then
         [fn.toLatex, μ.toLatex]
       else if let some view := e.asExpectation? then
         match view with

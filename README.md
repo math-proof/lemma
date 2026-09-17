@@ -153,6 +153,8 @@ Now you can work on yourLeanProject on your Target machine with no trouble.
 # related resources
 ## paper to read
 ```
+https://arxiv.org/abs/2511.03618
+https://github.com/ShangtongZhang/rl-theory-in-lean
 https://lean-lang.org/doc/reference/latest/
 https://zhuanlan.zhihu.com/p/695704489
 https://github.com/Goedel-LM/Goedel-Prover

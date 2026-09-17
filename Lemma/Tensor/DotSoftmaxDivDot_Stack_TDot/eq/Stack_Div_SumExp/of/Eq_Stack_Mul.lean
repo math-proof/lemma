@@ -1,3 +1,4 @@
+import sympy.matrices.expressions.matpow
 import Lemma.Fin.Sum.of.All_Eq
 import torch.Tensor.permute
 import Lemma.Tensor.DotDotSRotaryMatrix.eq.Dot_DotRotaryMatrixSub
@@ -27,11 +28,7 @@ private lemma main
   (Q K V : Tensor ℝ [n, d + d]) :
 -- imply
   let R (i : Fin n) := θ[i].rotaryMatrix
-  let Rel (i k : Fin n) : Tensor ℝ [d + d, d + d] :=
-    if k ≥ i then
-      R (k - i)
-    else
-      (R (i - k))ᵀ
+  let Rel (i k : Fin n) := (R ⟨(k - i : ℤ).natAbs, by grind⟩) ^ (k - i : ℤ).sign
   (([i < n] (R i) @ Q[i]) @ ([i < n] (R i) @ K[i])ᵀ / √↑(d + d)).softmax @ V = [i < n] [j < d + d] (∑ k : Fin n, V[k][j] * exp (id (α := Tensor ℝ []) (Q[i] @ ((Rel i k) @ K[k]) / √↑(d + d)))) / id (α := Tensor ℝ []) (exp (((R i) @ Q[i]) @ ([i < n] (R i) @ K[i])ᵀ / √↑(d + d))).sum := by
 -- proof
   intro R Rel
@@ -79,11 +76,7 @@ private lemma interleave
   (Q K V : Tensor ℝ [n, d + d]) :
 -- imply
   let R (i : Fin n) := θ[i].rotaryMatrix'
-  let Rel (i k : Fin n) : Tensor ℝ [d + d, d + d] :=
-    if k ≥ i then
-      R (k - i)
-    else
-      (R (i - k))ᵀ
+  let Rel (i k : Fin n) := (R ⟨(k - i : ℤ).natAbs, by grind⟩) ^ (k - i : ℤ).sign
   (([i < n] (R i) @ Q[i]) @ ([i < n] (R i) @ K[i])ᵀ / √↑(d + d)).softmax @ V = [i < n] [j < d + d] (∑ k : Fin n, V[k][j] * exp (id (α := Tensor ℝ []) (Q[i] @ ((Rel i k) @ K[k]) / √↑(d + d)))) / id (α := Tensor ℝ []) (exp (((R i) @ Q[i]) @ ([i < n] (R i) @ K[i])ᵀ / √↑(d + d))).sum := by
 -- proof
   intro R Rel

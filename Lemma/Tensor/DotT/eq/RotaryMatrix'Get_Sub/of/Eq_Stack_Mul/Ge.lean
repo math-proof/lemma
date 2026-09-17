@@ -20,4 +20,4 @@ private lemma main
   apply congrArg rotaryMatrix' (SubGetS.eq.Get_Sub.of.Eq_Stack_Mul.Ge h hθ)
 
 
--- created on 2026-09-05
+-- created on 2023-09-16

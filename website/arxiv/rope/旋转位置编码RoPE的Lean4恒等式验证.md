@@ -219,6 +219,8 @@ x \odot \bigl(\cos(\alpha\mathbin{+\mkern-4mu+}\alpha)\bigr)
 
 证明先在库的形状 cast 相等 \(\simeq\) 下认出 \(x=x_{0}\mathbin{+\mkern-4mu+}x_{1}\)，再套已拆开的恒等式 [DotRotaryMatrix.eq.AddMulSAppend](http://www.lemma.cn/lean/?module=Tensor.DotRotaryMatrix.eq.AddMulSAppend)：展开定义 4.1，四块乘 \(x_{0}\mathbin{+\mkern-4mu+}x_{1}\)，再拼回。\((-x_{1})\mathbin{+\mkern-4mu+}x_{0}\) 正是 Hugging Face 的 `rotate_half`[[4]](https://github.com/huggingface/transformers/blob/main/docs/source/en/internal/rope_utils.md)。定理 5.1 因此证明 kernel 与 Hugging Face 矩阵是同一映射。交错矩阵 \(\mathrm{R}'\) 随后由定理 4.4 恢复。
 
+交错布局的 kernel 完全类似：对半复制变为逐对复制，`rotate_half` 变为逐对交换取反 \(J\)（[Tensor.RotaryMatrix'.eq.AddMulSAppendRotaryMatrix'](http://www.lemma.cn/lean/?module=Tensor.RotaryMatrix'.eq.AddMulSAppendRotaryMatrix')）。
+
 # 6 正交性
 
 每一对坐标 \((x_{0,p},x_{1,p})\) 被标准 \(2\times 2\) 矩阵
@@ -249,6 +251,8 @@ x \odot \bigl(\cos(\alpha\mathbin{+\mkern-4mu+}\alpha)\bigr)
 \]
 
 由 §7 的差恒等式得 \(\mathrm{R}(\alpha)^{\top}@\mathrm{R}(\alpha)=\mathrm{R}(\alpha-\alpha)=\mathrm{R}(0)\)，再套引理 6.2。结合引理 6.1 得另一侧左逆（[DotRotaryMatrixNeg.eq.Eye](http://www.lemma.cn/lean/?module=Tensor.DotRotaryMatrixNeg.eq.Eye)）：\(\mathrm{R}(-\alpha)\,@\,\mathrm{R}(\alpha)=I_{d+d}\)。
+
+**交错布局。** 三条恒等式均直接迁移到 \(\mathrm{R}'\)：\(\mathrm{R}'(-\alpha)=\mathrm{R}'(\alpha)^{\top}\)（[RotaryMatrix%27Neg.eq.TRotaryMatrix%27](http://www.lemma.cn/lean/?module=Tensor.RotaryMatrix%27Neg.eq.TRotaryMatrix%27)），\(\mathrm{R}'(0)=I_{d+d}\)（[RotaryMatrix%270.eq.Eye](http://www.lemma.cn/lean/?module=Tensor.RotaryMatrix%270.eq.Eye)），\(\mathrm{R}'(\alpha)^{\top}@\mathrm{R}'(\alpha)=I_{d+d}\)（[DotT_RotaryMatrix%27.eq.Eye](http://www.lemma.cn/lean/?module=Tensor.DotT_RotaryMatrix%27.eq.Eye)）。
 
 # 7 可加性
 
@@ -352,6 +356,8 @@ q\,@\,\bigl(\mathrm{R}(\alpha)^{\top} @ (\mathrm{R}(\beta)\,@\,k)\bigr).
 
 定理 8.1 中没有 token 下标，也没有 \(\Theta\) 上的频率表。古典记号 \(\mathrm{R}_{\Theta,n-m}\) 在下一小节、用 \(\theta_{i}=i\,\tau\) 把 \(\beta-\alpha\) 认成 \(\theta\) 的一行之后恢复。
 
+同一配对在交错布局上由共轭直接得到：\((\mathrm{R}'(\alpha)\,q)^{\top}(\mathrm{R}'(\beta)\,k)=q^{\top}\mathrm{R}'(\beta-\alpha)\,k\)（[Tensor.DotDotSRotaryMatrix%27.eq.Dot_DotRotaryMatrix%27Sub](http://www.lemma.cn/lean/?module=Tensor.DotDotSRotaryMatrix%27.eq.Dot_DotRotaryMatrix%27Sub)）。
+
 ## 8.2 线性频率
 
 相对*下标*——用 \(\theta\) 自身的一行替换 \(\theta_{k}-\theta_{i}\)——需要 \(\theta\) 各行之间的关系。
@@ -433,7 +439,7 @@ R(i-k)^{\top} & \text{若 }k<i,
 
 两点簿记与 Lean 陈述完全对齐。第一，\(\mathrm{Rel}\) 用 \(R\) 绑定，不再第二次写出 `rotaryMatrix`，故相对矩阵定义上就是旋转矩阵或其转置。第二，配分函数不用 \(\mathrm{Rel}\) 改写：它仍是 \(\sum\exp\bigl((R(i)@Q_{i})@(K^{R})^{\top}/\sqrt{d+d}\bigr)\)。两种形式由同一配对相等，但已认证的恒等式只改写乘 \(V\) 的那些权重。
 
-这就是「RoPE 是相对位置编码」的含义：旋转作用之后，每个未归一化权重是未旋转 query 与只依赖 \(k-i\) 的矩阵所旋转的 key 的普通内积。
+这就是「RoPE 是相对位置编码」的含义：旋转作用之后，每个未归一化权重是未旋转 query 与只依赖 \(k-i\) 的矩阵所旋转的 key 的普通内积。交错布局上同一归约处处由共轭得到（[DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul](http://www.lemma.cn/lean/?module=Tensor.DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul)，[RotaryMatrix'.eq.DotDot_RotaryMatrix](http://www.lemma.cn/lean/?module=Tensor.RotaryMatrix%27.eq.DotDot_RotaryMatrix)）。
 
 # 9 形式化工件
 
@@ -486,7 +492,7 @@ R(i-k)^{\top} & \text{若 }k<i,
 
 **检验了什么，没检验什么。** 我们认证的是张量相等，不是近似质量、长度外推，也不是 RoPE 与训练权重的相互作用。定理 8.4 对每一 \(Q,K,V\) 与每一线性 \(\theta\) 都是恒等式；它不说训练模型在推理时以某种特定方式使用相对矩阵，也不说注意力随距离衰减[[9]](https://arxiv.org/abs/2410.06205)。
 
-**布局。** 两种配对都形式化了。`rotaryMatrix` 是 Hugging Face 对半矩阵；`rotaryMatrix'` 是苏剑林等的交错矩阵。定理 4.4 即早先草稿里未写出的置换引理。Kernel 实现（定理 5.1）与内积配对（定理 8.1）写在 Hugging Face 布局上，那是 `rotate_half` 实现的映射。RoFormer 布局上匹配的矩阵恒等式是定理 7.2。
+**布局。** 两种配对都形式化了（[RotaryMatrix.eq.AppendHstackSMulSEye](http://www.lemma.cn/lean/?module=Tensor.RotaryMatrix.eq.AppendHstackSMulSEye)，[RotaryMatrix'.eq.Stack_Ite_IteS](http://www.lemma.cn/lean/?module=Tensor.RotaryMatrix%27.eq.Stack_Ite_IteS)）；置换引理为 [RotaryMatrix'.eq.DotDot_RotaryMatrix](http://www.lemma.cn/lean/?module=Tensor.RotaryMatrix%27.eq.DotDot_RotaryMatrix)。Kernel 实现（[DotRotaryMatrix.eq.AddMulS](http://www.lemma.cn/lean/?module=Tensor.DotRotaryMatrix.eq.AddMulS)）与配对（[DotDotSRotaryMatrix.eq.Dot_DotRotaryMatrixSub](http://www.lemma.cn/lean/?module=Tensor.DotDotSRotaryMatrix.eq.Dot_DotRotaryMatrixSub)）写在 Hugging Face 布局上；交错版本（[RotaryMatrix'.eq.AddMulSAppendRotaryMatrix'](http://www.lemma.cn/lean/?module=Tensor.RotaryMatrix%27.eq.AddMulSAppendRotaryMatrix%27)，[DotDotSRotaryMatrix'.eq.Dot_DotRotaryMatrix'Sub](http://www.lemma.cn/lean/?module=Tensor.DotDotSRotaryMatrix%27.eq.Dot_DotRotaryMatrix%27Sub)，[DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul](http://www.lemma.cn/lean/?module=Tensor.DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul)）由共轭直接得到。RoFormer 布局上匹配的矩阵恒等式为 [DotT_RotaryMatrix'.eq.RotaryMatrix'Sub](http://www.lemma.cn/lean/?module=Tensor.DotT_RotaryMatrix%27.eq.RotaryMatrix%27Sub)。
 
 **频率。** 定义 8.2 对引理 8.3 充分，且严格弱于古典几何表。它并非必要：任何满足 \(\theta_{k}-\theta_{t}\equiv\theta_{k-t}\pmod{2\pi}\) 的 \(\theta\) 给出同一 \(\mathrm{R}\)。
 
@@ -496,7 +502,7 @@ R(i-k)^{\top} & \text{若 }k<i,
 
 # 11 结语
 
-一维 RoPE 的代数骨架，是关于平面旋转块矩阵的少数几条恒等式，布局可以是 Hugging Face 对半，也可以是苏剑林等的交错。我们在 Lean 4 中陈述了这两种矩阵，证明它们被固定的奇偶聚集共轭，并在实现所乘的 Hugging Face 矩阵上，证明了 kernel 求值、自由角的正交与加法群律、RoFormer 配对，以及线性频率假设下 softmax 注意力的相对偏移形式。引言中点名的模块即该发展的公开接口。
+一维 RoPE 的代数骨架，是关于平面旋转块矩阵的少数几条恒等式，布局可以是 Hugging Face 对半，也可以是苏剑林等的交错。我们在 Lean 4 中陈述了这两种矩阵，证明它们被固定的奇偶聚集共轭，并在两种布局上证明了 kernel 求值、自由角的正交与加法群律、RoFormer 配对，以及线性频率假设下 softmax 注意力的相对偏移形式。引言中点名的模块即该发展的公开接口。
 
 # 参考文献
 
