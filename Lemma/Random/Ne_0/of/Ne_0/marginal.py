@@ -16,7 +16,7 @@ def prove(Eq):
 
     Eq << Random.Ne_0.of.Ne_0.joint.apply(Eq[0])
 
-    Eq << Random.All_NeProb_0.All_NeProb_0.of.All_NeProb_0.apply(Eq[-1])
+    Eq << Random.All_NeProb_0.All_NeProb_0.of.All_Ne0ProbJoint.apply(Eq[-1])
 
 
 if __name__ == '__main__':

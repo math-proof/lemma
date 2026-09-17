@@ -31,7 +31,7 @@ def prove(Eq):
 
     Eq << Rat.Ne_0.of.Div1.gt.Zero.apply(Eq[0])
 
-    Eq << Random.All_NeProb_0.All_NeProb_0.of.All_NeProb_0.apply(Eq[-1])
+    Eq << Random.All_NeProb_0.All_NeProb_0.of.All_Ne0ProbJoint.apply(Eq[-1])
 
     Eq << Eq[1].this.rhs.apply(Random.Expect.eq.Sum_Mul_Prob)
 

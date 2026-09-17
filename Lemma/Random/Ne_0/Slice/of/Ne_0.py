@@ -20,7 +20,7 @@ def prove(Eq):
     t = Symbol(domain=Range(1, n))
     Eq << Eq[0].this.lhs.arg.apply(Tensor.GetSlice.Get.of.Eq, t)
 
-    Eq << Random.All_NeProb_0.All_NeProb_0.of.All_NeProb_0.apply(Eq[-1])
+    Eq << Random.All_NeProb_0.All_NeProb_0.of.All_Ne0ProbJoint.apply(Eq[-1])
 
 
 
