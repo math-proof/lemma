@@ -37,6 +37,17 @@ private lemma Comm
   rw [Nat.Mul.comm]
 
 
+@[main]
+private lemma hComm
+-- given
+  (X Y : Tensor ℝ []) :
+-- imply
+  X * Y = Y * X := by
+-- proof
+  rw [main, main (X := Y) (Y := X)]
+  apply Comm
+
+
 @[main, comm]
 private lemma nat
   [Semiring α]
@@ -60,4 +71,4 @@ private lemma nat
 
 
 -- created on 2026-09-02
--- updated on 2026-09-10
+-- updated on 2026-09-17
