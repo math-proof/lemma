@@ -16,7 +16,7 @@ def prove(Eq):
 
     Eq << Eq[0].lhs.this.apply(Random.Var.eq.Expect)
 
-    Eq << Eq[-1].this.rhs.find(Expectation[Add]).apply(Random.Expect.eq.Add)
+    Eq << Eq[-1].this.rhs.find(Expectation[Add]).apply(Random.ExpectAdd.eq.AddExpectS)
 
     Eq << Eq[-1].this.rhs.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 
@@ -28,9 +28,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.rhs.find(Expectation[Add]).apply(Random.Expect.eq.Add)
+    Eq << Eq[-1].this.rhs.find(Expectation[Add]).apply(Random.ExpectAdd.eq.AddExpectS)
 
-    Eq << Eq[-1].this.rhs.find(Expectation[Add]).apply(Random.Expect.eq.Add)
+    Eq << Eq[-1].this.rhs.find(Expectation[Add]).apply(Random.ExpectAdd.eq.AddExpectS)
 
     Eq << Eq[0].this.rhs.apply(Random.Var.eq.Expect)
 

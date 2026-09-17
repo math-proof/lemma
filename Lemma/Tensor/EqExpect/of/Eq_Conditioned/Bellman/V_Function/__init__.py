@@ -39,7 +39,7 @@ def prove(Eq):
         Equal(r[t] | s[:t], r[t]), # history-irrelevant conditional independence assumption for rewards based on states
         γ, k)
 
-    Eq << Eq[-1].this.rhs.apply(Random.Expect.eq.Add)
+    Eq << Eq[-1].this.rhs.apply(Random.ExpectAdd.eq.AddExpectS)
 
     Eq << Eq[-1].this.find(Expectation[2]).apply(Random.Expect.eq.Integral)
 
@@ -49,7 +49,7 @@ def prove(Eq):
 
     Eq << Eq.final.lhs.this.find(MatMul).apply(Tensor.Dot.eq.Add.Mul.Dot.discounted_future_reward)
 
-    Eq << Eq[-1].this.rhs.apply(Random.Expect.eq.Add)
+    Eq << Eq[-1].this.rhs.apply(Random.ExpectAdd.eq.AddExpectS)
 
     Eq.eq_add = Eq[-1].this.find(Expectation[Conditioned[Mul]]).apply(Random.Expect.eq.Mul)
 

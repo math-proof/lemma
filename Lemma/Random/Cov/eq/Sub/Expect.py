@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS, deep=True)
 
-    Eq << Eq[-1].this.lhs.apply(Random.Expect.eq.Add)
+    Eq << Eq[-1].this.lhs.apply(Random.ExpectAdd.eq.AddExpectS)
 
     Eq << Eq[-1].this.find(Expectation[Conditioned[Mul]]).apply(Random.Expect.eq.Mul)
 
@@ -37,9 +37,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.find(Expectation[Conditioned[Add]]).apply(Random.Expect.eq.Add)
+    Eq << Eq[-1].this.find(Expectation[Conditioned[Add]]).apply(Random.ExpectAdd.eq.AddExpectS)
 
-    Eq << Eq[-1].this.find(Expectation[Conditioned[Add]]).apply(Random.Expect.eq.Add)
+    Eq << Eq[-1].this.find(Expectation[Conditioned[Add]]).apply(Random.ExpectAdd.eq.AddExpectS)
 
     Eq << Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 

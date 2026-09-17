@@ -52,7 +52,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Sum).apply(Finset.SumIco.eq.AddSumIco.of.Le)
 
-    Eq << Eq[-1].this.lhs.apply(Random.Expect.eq.Add)
+    Eq << Eq[-1].this.lhs.apply(Random.ExpectAdd.eq.AddExpectS)
 
     Eq << Imply(Eq[0], Eq.induct, plausible=True)
 

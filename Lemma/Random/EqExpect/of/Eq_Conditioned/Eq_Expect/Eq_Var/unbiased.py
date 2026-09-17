@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Random.Expect.eq.Mul) * (n - 1)
 
-    Eq << Eq[-1].this.lhs.apply(Random.Expect.eq.Add)
+    Eq << Eq[-1].this.lhs.apply(Random.ExpectAdd.eq.AddExpectS)
 
     Eq << Eq[-1].this.find(Expectation).apply(Random.Expect.eq.Mul)
 
@@ -51,7 +51,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.expr.apply(Finset.Square.Sum.eq.Add.Sum)
 
-    Eq << Eq[-1].this.lhs.apply(Random.Expect.eq.Add)
+    Eq << Eq[-1].this.lhs.apply(Random.ExpectAdd.eq.AddExpectS)
 
     Eq << Eq[-1].this.find(Expectation).apply(Random.Expect.eq.Mul)
 

@@ -27,7 +27,7 @@ def prove(Eq):
                 Equal((V[π] ^ γ)(s[t].bvar), γ ** Stack[t](t) @ Expectation[r[t:], a:π](r[t:] | s[t])),
                 Equal((A[π] ^ γ)(s[t].bvar, a[t].bvar), (Q[π] ^ γ)(s[t].bvar, a[t].bvar) - (V[π] ^ γ)(s[t].bvar)))
 
-    Eq << Eq[-1].this.lhs.apply(Random.Expect.eq.Add)
+    Eq << Eq[-1].this.lhs.apply(Random.ExpectAdd.eq.AddExpectS)
 
     Eq << Eq[-1] + Eq[-3]
 
