@@ -17,7 +17,7 @@ def prove(Eq):
     f = Function(real=True, shape=())
     Eq << apply(Integral[x[i], x[i + 1:n + 1]](f(x[i:n])))
 
-    Eq << Eq[0].this.rhs.apply(Real.Integral.limits.shift.Slice)
+    Eq << Eq[0].this.rhs.apply(Real.Integral.eq.Integral_UFnProd)
 
 
 
