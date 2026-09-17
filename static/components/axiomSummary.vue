@@ -200,8 +200,8 @@ where
 		where 
 			_s.user = 'lean' and 
 			(
-				_s.module = _t.module or 
-				_s.module = regexp_replace(_t.module, '\\\\.[a-z_0-9]+$', '', 1, 0, 'c')
+				REPLACE(_s.module, CHAR(39), '') = _t.module or 
+				REPLACE(_s.module, CHAR(39), '') = regexp_replace(_t.module, '\\\\.[a-z_0-9]+$', '', 1, 0, 'c')
 			)
 	)
 order by depth desc
@@ -228,8 +228,8 @@ select
 		where 
 			_s.user = 'lean' and 
 			(
-				_s.module = REPLACE(_t.axiom, '.given.', '.of.') or 
-				_s.module = regexp_replace(REPLACE(_t.axiom, '.given.', '.of.'), '\\\\.[a-z_0-9]+$', '', 1, 0, 'c')
+				REPLACE(_s.module, CHAR(39), '') = REPLACE(_t.axiom, '.given.', '.of.') or 
+				REPLACE(_s.module, CHAR(39), '') = regexp_replace(REPLACE(_t.axiom, '.given.', '.of.'), '\\\\.[a-z_0-9]+$', '', 1, 0, 'c')
 			)
 	), 1, 0) as status 
 from 

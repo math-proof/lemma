@@ -8,7 +8,9 @@ not), path segment ``In`` is normalized to ``in`` (Python reserves ``in``),
 then any trailing lowercase identifier segment is dropped (e.g.
 ``Nat.AddAdd.comm`` and ``Nat.AddAdd`` share path ``Nat.AddAdd``;
 ``Bool.Imp.given.ImpEq`` matches ``Bool.Imp.of.ImpEq``;
-``Bool.And_Or.Is.OrAndS`` matches ``Bool.And_Or.is.OrAndS``). When the Python
+``Bool.And_Or.Is.OrAndS`` matches ``Bool.And_Or.is.OrAndS``). Lean prime markers
+(``'``) are ignored, so ``Tensor.DotT_RotaryMatrix'.eq.Stack_IteEven_SubMulS``
+matches ``Tensor.DotT_RotaryMatrix.eq.Stack_IteEven_SubMulS``. When the Python
 ``# created on YYYY-MM-DD`` date differs from the Lean file, it is written as
 ``-- created on YYYY-MM-DD``.
 
@@ -66,9 +68,10 @@ def lean_keyword_to_py_segment(module: str) -> str:
 
 
 def normalize_lemma_path(module: str) -> str:
-    """Normalize for cross-repo comparison (given→of, keyword segments, suffix)."""
+    """Normalize for cross-repo comparison (given→of, prime markers, keyword segments, suffix)."""
     module = module.replace(".given.", ".of.")
     module = py_keyword_to_lean_segment(module)
+    module = module.replace("'", "")
     return lemma_path(module)
 
 

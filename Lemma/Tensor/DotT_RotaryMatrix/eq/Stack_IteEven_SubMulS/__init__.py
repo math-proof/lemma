@@ -1,7 +1,7 @@
 from util import *
 
 
-@apply
+@apply(given=True)
 def apply(eq_theta, eq_R, Q, K, V):
     from Lemma.Tensor.DotRotaryMatrix.eq.Stack_IteEven_SubMulS import extract
     (Ri, d), b, (i, j, k) = extract(eq_R)
@@ -86,3 +86,4 @@ if __name__ == '__main__':
     run()
 # created on 2023-05-30
 # updated on 2023-09-16
+from . import interleave

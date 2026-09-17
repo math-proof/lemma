@@ -1,7 +1,7 @@
 from util import *
 
 
-@apply
+@apply(given=True)
 def apply(eq_R):
     from Lemma.Tensor.DotRotaryMatrix.eq.Stack_IteEven_SubMulS import extract
     (Ri, d), b, (i, j, k) = extract(eq_R)

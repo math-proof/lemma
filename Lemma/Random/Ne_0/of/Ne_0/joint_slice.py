@@ -34,7 +34,7 @@ def prove(Eq):
 
     Eq << Random.All_NeProb_0.All_NeProb_0.of.All_NeProb_0.apply(Eq[-1])
 
-    Eq << Random.All_NeProb_0.of.All_NeProb__0.apply(Eq[-2], index=1)
+    Eq << Random.All_NeProb_0.of.All_Ne0ProbJoint.apply(Eq[-2], index=1)
 
 
 
