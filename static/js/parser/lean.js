@@ -7555,6 +7555,18 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         return func instanceof LeanToken && args.length === 2 && func.text === 'abs';
     }
 
+    /** `Tendsto f a b` (or `Filter.Tendsto f a b`) → `a \xrightarrow{\,f\,} b`. */
+    is_Tendsto() {
+        const args = this.args;
+        if (args.length !== 4) return false;
+        const func = args[0];
+        if (func instanceof LeanToken) return func.text === 'Tendsto';
+        return (
+            func instanceof LeanProperty &&
+            func.rhs instanceof LeanToken && func.rhs.text === 'Tendsto'
+        );
+    }
+
     /** `Ico` / `Finset.Ico` / `Set.Ico` (and Icc, Ioc, Ioo, Ici, Iic, Ioi, Iio). */
     intervalCtor() {
         const func = this.args[0];
@@ -7739,9 +7751,16 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
                 case 'Infinite':
                 case 'InfinitePos':
                 case 'InfiniteNeg':
+                case 'Tendsto':
                     return true;
                 default:
             }
+        } else if (
+            func instanceof LeanProperty &&
+            func.rhs instanceof LeanToken &&
+            func.rhs.text === 'Tendsto'
+        ) {
+            return true;
         }
         if (args.length == 3 && args[1] instanceof LeanToken && args[1].text === 'is')
             return true;
@@ -7798,6 +7817,8 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         if (!(head instanceof LeanProperty) ||
             !(head.rhs instanceof LeanToken) || head.rhs.text !== 'prob')
             return null;
+        if (args.length > 2 && args[args.length - 1] instanceof Lean_partial)
+            args = args.slice(0, -1);
         if (args.length < 2) return null;
         if (args.length >= 3) {
             const last = args[args.length - 1];
@@ -7825,11 +7846,6 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         return false;
     }
 
-    /**
-     * `𝕡.condProb (x, y) …` mirrors `probDensityParts` (the observation point is
-     * dropped), but the random-variable pair `(x, y)` is rendered as `(x | y)`.
-     * Returns `[measure, pairNode]` or null when the shape does not match.
-     */
     condProbLatexParts() {
         return LeanArgsSpaceSeparated.condProbParts(this.args);
     }
@@ -7839,6 +7855,8 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         if (!(head instanceof LeanProperty) ||
             !(head.rhs instanceof LeanToken) || head.rhs.text !== 'condProb')
             return null;
+        if (args.length > 2 && args[args.length - 1] instanceof Lean_partial)
+            args = args.slice(0, -1);
         if (args.length < 2) return null;
         if (args.length >= 3) {
             const last = args[args.length - 1];
@@ -7896,7 +7914,7 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
      *   `Expectation (𝕡.map x) f` → ['map', f, x]
      *   `Expectation (…withDensity (fun a ↦ 𝕡.condProb (x, y) (a, b))) f`
      *                        → ['cond', f, x, y, b]
-     * otherwise → ['generic', f, ν].
+     * otherwise → ['generic', ν, f].
      */
     expectationLatexParts() {
         if (!this.isExpectation()) return null;
@@ -7906,9 +7924,11 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         };
         const f = this.args[2];
         const nu = peel(this.args[1]);
-        if (nu instanceof LeanArgsSpaceSeparated && nu.args.length === 2) {
+        if ((nu instanceof LeanArgsSpaceSeparated || nu instanceof LeanArgsIndented) && nu.args.length === 2) {
             const head = nu.args[0];
-            const arg = nu.args[1];
+            let arg = nu.args[1];
+            while (arg instanceof LeanArgsNewLineSeparated && arg.args.length === 1)
+                arg = arg.args[0];
             const isProperty = head instanceof LeanProperty && head.rhs instanceof LeanToken;
             if (isProperty && head.rhs.text === 'map') {
                 markRV(arg);
@@ -7937,7 +7957,7 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
                 }
             }
         }
-        return ['generic', f, nu];
+        return ['generic', nu, f];
     }
 
     /** Format string for `expectationLatexParts()`. */
@@ -7948,7 +7968,7 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
             case 'cond':
                 return '\\mathop{\\mathbb{E}}\\limits_{%s}\\left(%s\\left(%s\\right)\\ \\mathrel{\\bigg|}\\ %s\\right)';
             default:
-                return '\\mathop{\\mathbb{E}}\\limits_{%s}\\left(%s\\right)';
+                return '{\\mathop{\\mathbb{E}}}\\ %s\\ %s';
         }
     }
 
@@ -7978,6 +7998,9 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         if (this.is_Abs()) {
             const stripped = this.strip_parenthesis();
             return [stripped[1].toLatex(syntax)];
+        }
+        if (this.is_Tendsto()) {
+            return [args[2].toLatex(syntax), args[1].toLatex(syntax), args[3].toLatex(syntax)];
         }
 
         if (this.intervalLatexFormat()) {
@@ -8069,6 +8092,7 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         const exp = this.expectationLatexParts();
         if (exp) return this.expectationLatexFormat(exp);
         if (this.is_Abs()) return '\\left|{%s}\\right|';
+        if (this.is_Tendsto()) return '{%s} \\xrightarrow{\\,%s\\,} {%s}';
 
         if (this.is_MatProd()) return '\\prod\\limits_{%s < %s} {%s}';
         if (this.eyePositionalArgs(args)) return '\\mathbb{I}';
@@ -11096,6 +11120,13 @@ class Lean_int extends LeanBigOperator {
             }
             return null;
         }
+        if (s != null && s.rhs instanceof LeanArgsSpaceSeparated) {
+            const args = s.rhs.args;
+            for (let i = args.length - 1; i >= 0; i--) {
+                if (args[i] instanceof LeanCaret) continue;
+                return args[i] instanceof Lean_partial ? args[i] : null;
+            }
+        }
         if (s instanceof Lean_int) {
             const innerPartial = s.measurePartial();
             if (!innerPartial) return null;
@@ -11476,10 +11507,6 @@ const LEAN_CLASSES = {
     LeanUsing,
 };
 
-/**
- * Port of global `compile`.
- * @param {string} code
- */
 export function compile(code) {
     return LeanParser.instance.build(code);
 }

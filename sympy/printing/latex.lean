@@ -1049,46 +1049,32 @@ def Expr.latexFormat : Expr → String
         else
           "\\int {%s}\\, {\\color{blue}\\partial}{%s}"
       else if let some (_binderName, _fn, _μ) := e.asLintegral? then
-        -- `\int^{⁻} body\, {\color{blue}\partial}(measure)` — binder implicit in the body
-        "\\int^{⁻} {%s}\\, {\\color{blue}\\partial}{{%s}}"
+        "\\int^{⁻} {%s}\\, {\\color{blue}\\partial}{%s}"
       else if let some view := e.asExpectation? then
         match view with
         | .map _ _ =>
-          -- `𝔼_rv(f(rv))` — expectation under pushforward measure `𝕡.map rv`
           "\\mathop{\\mathbb{E}}\\limits_{%s}\\left(%s\\left(%s\\right)\\right)"
         | .cond _ _ _ =>
-          -- `𝔼_x(f(x) | y)` — expectation under a conditional density
           "\\mathop{\\mathbb{E}}\\limits_{%s}\\left(%s\\left(%s\\right)\\ \\mathrel{\\bigg|}\\ %s\\right)"
       else if let some (_, _) := e.asJointRandomSymbol? then
         "%s, %s"
       else if let some (_, _, _) := e.asEventuallyAe? then
-        -- lean.js `LeanQuantifier`: the measure is dropped from display
         "\\forall^{ᵐ}\\,{%s}, {%s}"
       else if let some (obj, fns) := e.asProb? then
-        -- lean.js `probDensityParts`: `𝕡.prob f₁ … fₙ pt` → `𝕡\ f₁ … fₙ`.
-        -- The density argument (e.g. the pair `(x, y)`) is boxed blue (`#99f`)
-        -- in lean.js regardless of nesting depth, so pin the color level to 0.
         let obj := level.toColor (obj.priority > func.priority || obj.toList != none || obj.is_Eye)
         let fns := fns.map fun arg =>
           (0 : Nat).toColor (arg.priority > func.priority || arg.is_Div || arg.is_BlockMatrix)
         "\\ ".intercalate (obj :: fns)
       else if let some (obj, fns) := e.asMap? then
-        -- lean.js `mapLatexParts`: `𝕡.map X {pt}` → `𝕡 X`.
-        -- Direct case: `𝕡.map X` → `𝕡 X` (one arg, no observation point)
         let obj := level.toColor (obj.priority > func.priority || obj.toList != none || obj.is_Eye)
         let fns := fns.map fun arg =>
           (0 : Nat).toColor (arg.priority > func.priority || arg.is_Div || arg.is_BlockMatrix)
         "\\ ".intercalate (obj :: fns)
       else if let some (obj, _, _) := e.asCondProb? then
-        -- lean.js `condProbLatex`: `𝕡.condProb (x, y) pt` → `𝕡 (x | y)`.
-        -- The observation point is dropped; the pair keeps its depth colorbox
-        -- (`pair.toColor()` always boxes in lean.js), and the comma becomes
-        -- `\,\middle|\,`. The single colorbox `%s` is widened to two slots.
         let obj := level.toColor (obj.priority > func.priority || obj.toList != none || obj.is_Eye)
         let pair := (level.toColor false).replaceFirst "%s" "%s\\,\\middle|\\,%s"
         "{" ++ obj ++ "}\\ " ++ pair
       else if let some (_, _) := e.asEventuallyEq? then
-        -- lean.js `LeanMEq`: `f =ᵐ[μ] g` → `f =^{\mathrm{m}} g`
         "{%s} {=^{\\mathrm{m}}} {%s}"
       else if let some (_) := e.asEtaPair? then
         "%s, %s"
@@ -1100,7 +1086,6 @@ def Expr.latexFormat : Expr → String
       | .Lean_operatorname name =>
         match name with
         | `DFunLike.coe =>
-          -- hide `coe` coercion: render as `F a` (the underlying measure applied to a point)
           match args with
           | [F, a] =>
             let f := level.toColor (F.priority ≥ func.priority || F.toList != none || F.is_Eye)
@@ -1180,15 +1165,12 @@ def Expr.latexFormat : Expr → String
         | `Subtype =>
           let postOp :=
             match args with
-            -- consider special cases:
             | [Basic (.ExprWithLimits .Lean_lambda) [Basic (.BinaryInfix ⟨`LT.lt⟩) [const (.natVal 0), Symbol binderName binderType] _, Binder .default binderName' binderType' nil] _] =>
-              -- ℝ⁺ = Subtype fun x : ℝ => 0 < x
               if binderName == binderName' && binderType == binderType' then
                 "%s^{+}"
               else
                 ""
             | [Basic (.ExprWithLimits .Lean_lambda) [Basic (.BinaryInfix ⟨`LT.lt⟩) [Symbol binderName binderType, const (.natVal 0)] _, Binder .default binderName' binderType' nil] _] =>
-              -- ℝ⁻ = Subtype fun x : ℝ => x < 0
               if binderName == binderName' && binderType == binderType' then
                 "%s^{-}"
               else
@@ -1234,7 +1216,6 @@ def Expr.latexFormat : Expr → String
         | "choose", [_, _] =>
           "\\binom{%s}{%s}"
         | "image", _ =>
-          -- `s.image f` → Mathlib `f '' s`
           if args.length > idx then
             "{%s}\\mathrel{\\text{''}}{%s}"
           else
@@ -1519,8 +1500,8 @@ where
       -- Pre-check foldings first (work for both Lean_function and Lean_operatorname)
       if let some (binderName, fn, _μ) := e.asIntegral? then
         [fn.toLatex, binderName]
-      else if let some (_binderName, fn, μ) := e.asLintegral? then
-        [fn.toLatex, μ.toLatex]
+      else if let some (binderName, fn, _μ) := e.asLintegral? then
+        [fn.toLatex, binderName]
       else if let some view := e.asExpectation? then
         match view with
         | .map f rv => [rv.toLatex, f.toLatex, rv.toLatex]
