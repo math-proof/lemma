@@ -3,7 +3,7 @@ from util import *
 
 # given: Pr(x | y) != 0
 # imply: Pr(x, y) != 0
-@apply
+@apply(given=True)
 def apply(given):
     lhs, rhs = given.of(Unequal[Pr[Conditioned], 0])
     return Unequal(Pr(lhs, rhs), 0)

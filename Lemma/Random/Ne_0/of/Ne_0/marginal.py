@@ -14,7 +14,7 @@ def prove(Eq):
     x, y = Symbol(real=True, random=True)
     Eq << apply(Unequal(Pr(x | y), 0))
 
-    Eq << Random.Ne0ProbJoint.of.Ne0ProbCond.apply(Eq[0])
+    Eq << Random.All_ImpNeSProb_0.apply(Eq[0])
 
     Eq << Random.All_NeProb_0.All_NeProb_0.of.All_Ne0ProbJoint.apply(Eq[-1])
 

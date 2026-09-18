@@ -3,6 +3,8 @@ param(
     [bool]$continue = $false
 )
 
+$env:OPENBLAS_NUM_THREADS = "1"
+
 while ($true) {
     # Set up process start info
     $psi = New-Object Diagnostics.ProcessStartInfo
@@ -16,6 +18,7 @@ while ($true) {
     $psi.RedirectStandardError = $false
 
     # Start the process
+    # $psi.WorkingDirectory = Split-Path $PSScriptRoot -Parent
     $process = [Diagnostics.Process]::Start($psi)
 
     # Wait for 2 minutes (120,000 milliseconds)
