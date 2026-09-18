@@ -832,7 +832,37 @@ export class Lean extends IndentedNode {
                     self.start_idx++;
                     return this.push_arithmetic('//');
                 }
-                // fallthrough: bare '/' uses same rule as '%'
+            case '→': {
+                // `→ₗ[ℝ]` / `→L[ℝ]` — (continuous) linear-map arrow with a subscript
+                // letter and an optional bracketed scalar-ring modifier.
+                const sub = tokens[self.start_idx + 1];
+                let subscript = '';
+                let modifier = '';
+                if (sub === 'ₗ' || sub === 'L') {
+                    subscript = sub;
+                    self.start_idx++; // consume subscript
+                    if (tokens[self.start_idx + 1] === '[') {
+                        self.start_idx += 2; // skip `[`, point inside
+                        const startIdx = self.start_idx;
+                        while (self.start_idx < tokens.length && tokens[self.start_idx] !== ']')
+                            self.start_idx++;
+                        modifier = tokens.slice(startIdx, self.start_idx).join('');
+                        if (self.start_idx < tokens.length) self.start_idx++; // skip `]`
+                        self.start_idx--; // loop will increment
+                    }
+                }
+                const caret = this.push_arithmetic(token);
+                if (subscript) {
+                    let p = caret;
+                    while (p && !(p instanceof Lean_rightarrow)) p = p.parent;
+                    if (p) {
+                        p.subscript = subscript;
+                        p.modifier = modifier;
+                    }
+                }
+                return caret;
+            }
+            // fallthrough: bare '/' uses same rule as '%'
             case '%':
             case '×':
             case '⬝':
@@ -863,7 +893,6 @@ export class Lean extends IndentedNode {
             case '⊇':
             case '⊂':
             case '⊃':
-            case '→':
             case '↦':
             case '↔':
             case '∧':
@@ -2596,15 +2625,26 @@ class LeanBrace extends LeanPairedGroup {
                 caret.indent = indent;
                 this.arg = new LeanStatements([caret], indent, caret.level);
                 return caret;
-            } else {
-                if (indent === this.indent) {
-                    return caret;
-                }
-                throw new Error(`${this.constructor.name}.insert_newline is unexpected for ${caret.constructor.name}`);
             }
-        } else {
-            return super.insert_newline(caret, newline_count, indent, next);
+            if (indent > this.indent) {
+                const newIndent = this.indent + 2;
+                const current = this.arg;
+                let stmts;
+                if (current instanceof LeanStatements) {
+                    stmts = current;
+                } else {
+                    stmts = new LeanStatements([current], newIndent, current.level ?? this.level);
+                    this.arg = stmts;
+                }
+                const out = new LeanCaret(newIndent, stmts.level);
+                stmts.push(out);
+                for (let i = 1; i < newline_count; i++)
+                    stmts.push(new LeanCaret(newIndent, stmts.level));
+                return out;
+            }
+            if (indent === this.indent) return caret;
         }
+        return super.insert_newline(caret, newline_count, indent, next);
     }
 
     is_Expr() {
@@ -3325,7 +3365,11 @@ export class LeanAssign extends LeanBinary {
 
     is_indented() {
         const p = this.parent;
-        return !p || p instanceof LeanArgsNewLineSeparated || (p instanceof LeanArgsIndented && p.rhs === this);
+        if (!p || p instanceof LeanArgsNewLineSeparated) return true;
+        if (p instanceof LeanArgsIndented && p.rhs === this) return true;
+        // Structure-instance fields inside a brace: `{ toFun := …, map_add' := … }`
+        if (p instanceof LeanStatements && p.parent instanceof LeanBrace) return true;
+        return false;
     }
 
     relocate_last_comment() {
@@ -4893,6 +4937,29 @@ export class LeanStatements extends LeanMultipleLine(LeanArgs) {
         return LeanColon.input_priority;
     }
 
+    push_binary(Ctor) {
+        const parent = this.parent;
+        if (!parent) return undefined;
+        if (Ctor.input_priority > this.stack_priority)
+            return super.push_binary(Ctor);
+        if ((Ctor !== LeanAssign && Ctor !== LeanColon) || !(parent instanceof LeanBrace))
+            return super.push_binary(Ctor);
+        let idx = this.args.length - 1;
+        while (idx >= 0) {
+            const c = this.args[idx];
+            if (c instanceof LeanCaret || c instanceof LeanLineComment || c instanceof LeanBlockComment) {
+                idx--;
+                continue;
+            }
+            break;
+        }
+        if (idx < 0) return super.push_binary(Ctor);
+        const origin = this.args[idx];
+        const caret = new LeanCaret(origin.indent, origin.level);
+        this.replace(origin, new Ctor(origin, caret, origin.indent, origin.level));
+        return caret;
+    }
+
     insert_tactic(caret, token) {
         if (caret instanceof LeanCaret && leanStatementsPreferWordOverTactic(this)) {
             return this.insert_word(caret, token);
@@ -4957,6 +5024,10 @@ export class LeanStatements extends LeanMultipleLine(LeanArgs) {
         }
         const tactic = args[index];
         if (tactic instanceof LeanTactic || tactic instanceof Lean_match) {
+            if (tactic.tacticName === 'case') {
+                const arrow = tactic.arrow;
+                if (arrow && arrow.rhs instanceof LeanStatements) arrow.rhs.echo();
+            }
             const w = tactic.with;
             if (w) {
                 if (w.sep() === '\n') {
@@ -6802,12 +6873,36 @@ export class LeanRightarrow extends LeanBinary {
 export class Lean_rightarrow extends LeanBinary {
     static input_priority = 25;
 
+    /** `→ₗ` / `→L` — the subscript letter (e.g. the `ₗ` in `→ₗ[ℝ]`). */
+    subscript = '';
+    /** `→ₗ[ℝ]` — the bracketed scalar ring modifier (e.g. `ℝ`). */
+    modifier = '';
+
     get stack_priority() {
         return 24;
     }
 
     get operator() {
         return '→';
+    }
+
+    /** `→ₗ` or `→L` rendered with the subscript attached (for echo / str). */
+    arrowStr() {
+        return this.subscript ? `→${this.subscript}` : '→';
+    }
+
+    /** LaTeX for the arrow including subscript and optional `[modifier]`. */
+    arrowLatex() {
+        let op = '\\to';
+        if (this.subscript) {
+            const map = LeanToken.subscript;
+            const inner = [...this.subscript]
+                .map((ch) => (map[ch] !== undefined ? map[ch] : ch))
+                .join('');
+            op += `_{${inner}}`;
+        }
+        if (this.modifier) op += `[${this.modifier}]`;
+        return op;
     }
 
     insert_newline(caret, newline_count, indent, next) {
@@ -6857,7 +6952,13 @@ export class Lean_rightarrow extends LeanBinary {
 
     strFormat() {
         const sep = this.sep();
-        return `%s ${this.operator}${sep}%s`;
+        const arrow = this.arrowStr() + (this.modifier ? `[${this.modifier}]` : '');
+        return `%s ${arrow}${sep}%s`;
+    }
+
+    latexFormat() {
+        const sep = this.sep();
+        return `{%s} ${this.arrowLatex()}${sep}{%s}`;
     }
 }
 
@@ -8789,6 +8890,10 @@ export class LeanTactic extends LeanSyntax {
             const {by, with: $with} = this;
             if (by && by.arg instanceof LeanStatements) by.echo();
             if ($with && $with.args.length) $with.echo();
+            if (this.tacticName === 'case') {
+                const arrow = this.arrow;
+                if (arrow && arrow.rhs instanceof LeanStatements) arrow.rhs.echo();
+            }
             if (has_sequential_tactic_combinator && !sequential_tactic_combinator.newlineBehind) {
                 echo.push(sequential_tactic_combinator);
                 this.sequential_tactic_combinator = new LeanSequentialTacticCombinator(echo, this.indent, this.level, false, false);
@@ -9233,6 +9338,18 @@ export class LeanTactic extends LeanSyntax {
             calc.arg = new LeanCaret(using.indent, using.level);
             statements[0] = self;
             return statements;
+        }
+        if (this.tacticName === 'case') {
+            const arrow = this.arrow;
+            if (arrow && arrow.rhs instanceof LeanStatements) {
+                const self = this.clone();
+                const clonedArrow = self.arrow;
+                const stmts = clonedArrow.rhs;
+                clonedArrow.rhs = new LeanCaret(clonedArrow.indent, stmts.level);
+                const statements = [self];
+                stmts.swap_echo_star(syntax, statements);
+                return statements;
+            }
         }
         return [this];
     }
@@ -10089,7 +10206,7 @@ class LeanTacticBlock extends LeanUnary {
                         case 'split': {
                             const at = stmt.at;
                             if (at) {
-                                const token = at.arg;
+                                let token = at.arg;
                                 if (token instanceof LeanToken) {
                                     token = token.clone();
                                     token.indent = indent;

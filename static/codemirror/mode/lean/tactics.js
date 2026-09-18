@@ -44,6 +44,7 @@ export const tactics = [
     'gcongr',
     'generalize',
     'grind',
+    'grw',
     'induction',
     'infer_instance',
     'injection',

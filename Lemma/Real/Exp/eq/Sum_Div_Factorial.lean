@@ -3,7 +3,6 @@ import sympy.functions.combinatorial.factorials
 import sympy.functions.elementary.exponential
 import sympy.series.limits
 import sympy.sets.sets
-open Filter
 
 
 @[main]

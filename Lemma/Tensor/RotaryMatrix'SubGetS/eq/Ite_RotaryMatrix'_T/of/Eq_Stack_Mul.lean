@@ -9,7 +9,7 @@ import Lemma.Tensor.EqMatPow
 import Lemma.Tensor.MatPow.eq.Inv
 import Lemma.Tensor.RotaryMatrix'0.eq.Eye
 import Lemma.Tensor.RotaryMatrix'Neg.eq.TRotaryMatrix'
-import Lemma.Tensor.RotaryMatrix'Inv.eq.TRotaryMatrix'
+import Lemma.Tensor.InvRotaryMatrix'.eq.TRotaryMatrix'
 import Lemma.Tensor.SubGetS.eq.Get_Sub.of.Eq_Stack_Mul.Ge
 import sympy.matrices.expressions.matpow
 open Fin Int Tensor
@@ -34,7 +34,7 @@ private lemma main
     rw [MatPow.eq.Inv.of.Eq_1 rfl]
     rw [(Sub.eq.NegSub θ[j] θ[i]).trans
       (congrArg Neg.neg (SubGetS.eq.Get_Sub.of.Eq_Stack_Mul.Ge (le_of_lt hlt) hθ))]
-    exact Eq.trans (RotaryMatrix'Neg.eq.TRotaryMatrix' _) (RotaryMatrix'Inv.eq.TRotaryMatrix' _).symm
+    exact Eq.trans (RotaryMatrix'Neg.eq.TRotaryMatrix' _) (InvRotaryMatrix'.eq.TRotaryMatrix' _).symm
   ·
     -- j = i
     rw [SignSub.eq.Zero.of.Eq heq]

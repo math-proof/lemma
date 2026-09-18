@@ -19,12 +19,6 @@ private lemma main
   exact lintegral_add_left hf g
 
 
-/--
-Conditional version of `AddExpectS`: under the conditional law of `a` given
-`s = «s.bvar»` (the reference measure with density `𝕡.condProb (a, s)`),
-expectation distributes over addition. Additivity holds for an arbitrary measure,
-so no discreteness hypothesis on the reference measure is needed.
--/
 private lemma given
   [MeasurableSpace Ω]
   [ReferenceMeasure α] [ReferenceMeasure β]

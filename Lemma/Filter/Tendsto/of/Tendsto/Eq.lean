@@ -1,6 +1,6 @@
 import Mathlib.Order.Filter.Basic
 import sympy.Basic
-open Filter
+open Filter (Tendsto)
 
 
 @[main]

@@ -4,7 +4,6 @@ import sympy.functions.elementary.trigonometric
 import sympy.series.limits
 import sympy.sets.sets
 import sympy.Basic
-open Filter
 
 
 @[main]
