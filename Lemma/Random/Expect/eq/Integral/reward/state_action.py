@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << Integral[s[t + 1].bvar](Pr(s[t + 1] & r[t], given=s[t] & a[t])).this.apply(Random.All_EqIntegral_ProbJoint.of.PSpace_Joint)
 
-    Eq << Eq[0].this.lhs.apply(Random.Expect.eq.Integral)
+    Eq << Eq[0].this.lhs.apply(Random.Expect.eq.Integral_Mul_Prob)
 
     Eq << Eq[-1].subs(Eq[-2].reversed)
 

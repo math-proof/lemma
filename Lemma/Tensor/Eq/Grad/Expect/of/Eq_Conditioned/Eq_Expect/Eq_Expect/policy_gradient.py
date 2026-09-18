@@ -45,7 +45,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Random.Grad.Expect.eq.Expect.Grad).reversed
 
-    Eq << Eq[-1].this.rhs.apply(Random.Expect.eq.Integral)
+    Eq << Eq[-1].this.rhs.apply(Random.Expect.eq.Integral_Mul_Prob)
 
     Eq << Tensor.EqGrad.of.Eq_Conditioned.Eq_Expect.Eq_Expect.policy_gradient.induct.apply(*Eq[:3], n)
 

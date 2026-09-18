@@ -32,7 +32,7 @@ def prove(Eq):
     f = Function(real=True)
     Eq << apply(Expectation[θ](f(x) | y))
 
-    Eq << Eq[-1].this.lhs.apply(Random.Expect.eq.Integral)
+    Eq << Eq[-1].this.lhs.apply(Random.Expect.eq.Integral_Mul_Prob)
 
     Eq << Real.All_Ge_Inf.apply(Eq[1].rhs)
 

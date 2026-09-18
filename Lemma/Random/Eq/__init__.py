@@ -7,4 +7,4 @@ from . import ArgMax
 from . import Expect
 from . import Lim
 from . import given
-from . import CondProb
+from . import ProbCond

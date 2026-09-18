@@ -44,9 +44,7 @@ from . import KLProbSConditioned
 from . import ProbGeAbs
 from . import ExpectGradLogProb
 from . import Expect_ConditionedGrad_LogProb
-from . import CondProb
 from . import Indep
-from . import Prod_CondProb
 from . import All_Eq_DivProbS
 from . import All_EqIntegral_ProbJoint
 from . import Integral_Prod
@@ -56,3 +54,6 @@ from . import All_NeProb_0
 from . import All_Eq1Integral_ProbCond
 from . import All_Eq_MulProbCond
 from . import ExpectAdd
+from . import Ne0ProbJoint
+from . import ProbCond
+from . import Prod_ProbCond

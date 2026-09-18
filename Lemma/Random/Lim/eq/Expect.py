@@ -19,9 +19,9 @@ def prove(Eq):
     x = Symbol(real=True, random=True)
     Eq << apply(Limit[n:oo](Expectation(f[n](x))))
 
-    Eq << Eq[0].this.find(Expectation).apply(Random.Expect.eq.Integral)
+    Eq << Eq[0].this.find(Expectation).apply(Random.Expect.eq.Integral_Mul_Prob)
 
-    Eq << Eq[-1].this.find(Expectation).apply(Random.Expect.eq.Integral)
+    Eq << Eq[-1].this.find(Expectation).apply(Random.Expect.eq.Integral_Mul_Prob)
 
     Eq << Eq[-1].this.lhs.find(Limit).apply(Real.Lim.eq.Mul)
 

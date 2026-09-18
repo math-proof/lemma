@@ -16,7 +16,7 @@ def prove(Eq):
     y, x = Symbol(real=True, random=True) # rewards
     Eq << apply(Equal(y | x, y))
 
-    Eq << Eq[-1].this.lhs.apply(Random.Expect.eq.Integral)
+    Eq << Eq[-1].this.lhs.apply(Random.Expect.eq.Integral_Mul_Prob)
 
     Eq << Random.Eq.Mul.Prob.of.Eq_Conditioned.apply(Eq[0])
 

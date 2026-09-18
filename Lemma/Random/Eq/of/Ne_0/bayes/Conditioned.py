@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq.lhs = Nat.Div.of.Eq.nonzero.apply(Eq[-2], Eq[-1])
 
-    Eq << Random.Ne_0.of.Ne_0.joint.apply(Eq[0])
+    Eq << Random.Ne0ProbJoint.of.Ne0ProbCond.apply(Eq[0])
 
     Eq << Random.All_Eq_MulProbCond.of.PSpace_Joint.apply(Eq[-1], x)
 

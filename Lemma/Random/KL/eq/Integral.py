@@ -17,7 +17,7 @@ def prove(Eq):
     Eq << apply(KL(Pr[θ](Equal(x, x.bvar)), Pr[θ_quote](Equal(x, x.bvar))))
 
     Eq << Eq[-1].this.find(KL).apply(Random.KL.eq.Expect)
-    Eq << Eq[-1].this.find(Expectation).apply(Random.Expect.eq.Integral)
+    Eq << Eq[-1].this.find(Expectation).apply(Random.Expect.eq.Integral_Mul_Prob)
 
 
 if __name__ == '__main__':

@@ -68,7 +68,7 @@ def prove(Eq):
 
     Eq << Random.Cond.Prob.of.Cond.weighted.apply(Eq[-1], (a, π))
 
-    Eq << Random.Eq.CondProb.eq.Mul.CondProb.of.Ne_0.bayes.apply(Eq[-1], s[t + 1], a[t])
+    Eq << Random.Eq.ProbCond.eq.Mul.ProbCond.of.Ne_0.bayes.apply(Eq[-1], s[t + 1], a[t])
 
     Eq << Eq.eq_grad.subs(Eq[-1].reversed)
 

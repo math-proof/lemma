@@ -40,7 +40,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Random.ExpectAdd.eq.AddExpectS)
 
-    Eq << Eq[-1].this.find(Expectation[2]).apply(Random.Expect.eq.Integral)
+    Eq << Eq[-1].this.find(Expectation[2]).apply(Random.Expect.eq.Integral_Mul_Prob)
 
     Eq << Eq[-1].this.find(Integral[Mul]).apply(Real.Integral.eq.Mul)
 
@@ -52,7 +52,7 @@ def prove(Eq):
 
     Eq.eq_add = Eq[-1].this.find(Expectation[Conditioned[Mul]]).apply(Random.Expect.eq.Mul)
 
-    Eq << Eq.eq_add.find(Mul[~Expectation]).this.apply(Random.Expect.eq.Integral)
+    Eq << Eq.eq_add.find(Mul[~Expectation]).this.apply(Random.Expect.eq.Integral_Mul_Prob)
 
     Eq << Eq[-1].this.find(Pr).apply(Random.All_Eq_Integral_ProbJoint.of.PSpace_Joint, s[t + 1])
 
@@ -60,7 +60,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Integral).apply(Real.Integral.limits.swap)
 
-    Eq << Eq[-1].this.find(Pr).apply(Random.CondProb.eq.Mul.CondProb)
+    Eq << Eq[-1].this.find(Pr).apply(Random.ProbCond.eq.Mul.ProbCond)
 
     Eq.eq_expect = Eq[-1].this.rhs.apply(Real.Integral.limits.separate)
 
@@ -78,7 +78,7 @@ def prove(Eq):
 
     Eq << Eq.final.rhs.find(MatMul).this.apply(Random.Dot.eq.Expect)
 
-    Eq << Eq[-1].this.rhs.apply(Random.Expect.eq.Integral)
+    Eq << Eq[-1].this.rhs.apply(Random.Expect.eq.Integral_Mul_Prob)
 
     Eq << Eq[-3].subs(Eq[-1].reversed)
 

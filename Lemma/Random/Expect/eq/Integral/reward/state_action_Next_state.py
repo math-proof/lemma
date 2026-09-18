@@ -32,7 +32,7 @@ def prove(Eq):
 
     Eq << Bool.Imp.given.ImpEq.apply(Eq[-1])
 
-    Eq << Eq[-1].this.find(Expectation).apply(Random.Expect.eq.Integral)
+    Eq << Eq[-1].this.find(Expectation).apply(Random.Expect.eq.Integral_Mul_Prob)
 
     # the expected rewards for state–action–next-state triples as a three-argument function r
     # http://incompleteideas.net/book/bookdraft2017nov5.pdf (Eq. 3.6)

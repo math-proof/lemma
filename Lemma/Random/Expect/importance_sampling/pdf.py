@@ -36,9 +36,9 @@ def prove(Eq):
     f = Function(real=True, shape=())
     Eq << apply(Expectation[x:θ](f(x)), θ_quote)
 
-    Eq << Eq[-1].this.lhs.apply(Random.Expect.eq.Integral)
+    Eq << Eq[-1].this.lhs.apply(Random.Expect.eq.Integral_Mul_Prob)
 
-    Eq << Eq[-1].this.rhs.apply(Random.Expect.eq.Integral)
+    Eq << Eq[-1].this.rhs.apply(Random.Expect.eq.Integral_Mul_Prob)
 
 
 

@@ -18,7 +18,7 @@ def prove(Eq):
     θ = Symbol(real=True, shape=(D,))
     Eq << apply(Expectation[x:θ](Derivative[θ](log(Pr[x:θ](Equal(x, x.random_argument))))))
 
-    Eq << Eq[-1].this.lhs.apply(Random.Expect.eq.Integral)
+    Eq << Eq[-1].this.lhs.apply(Random.Expect.eq.Integral_Mul_Prob)
 
     Eq << Eq[-1].this.find(Derivative).doit()
 

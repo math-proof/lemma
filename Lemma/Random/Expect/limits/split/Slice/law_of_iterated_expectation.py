@@ -44,11 +44,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(f[~Sliced]).apply(Tensor.SEq_Append, i)
 
-    Eq << Eq[-1].this.rhs.find(Expectation).apply(Random.Expect.eq.Integral)
+    Eq << Eq[-1].this.rhs.find(Expectation).apply(Random.Expect.eq.Integral_Mul_Prob)
 
 
 
-    Eq << Eq[-1].this.rhs.apply(Random.Expect.eq.Integral)
+    Eq << Eq[-1].this.rhs.apply(Random.Expect.eq.Integral_Mul_Prob)
 
     Eq << Eq[-1].this.find(Mul[Integral]).apply(Real.Mul.eq.Integral)
 
@@ -58,7 +58,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Real.Integral.limits.concat)
 
-    Eq << Eq[-1].this.lhs.apply(Random.Expect.eq.Integral)
+    Eq << Eq[-1].this.lhs.apply(Random.Expect.eq.Integral_Mul_Prob)
 
     Eq << Eq[-1].this.find(f[~Sliced]).apply(Tensor.SEq_Append, i)
 

@@ -18,9 +18,9 @@ def prove(Eq):
     f, g = Function(real=True)
     Eq << apply(f(x.bvar) >= g(x.bvar), (x,))
 
-    Eq << Eq[-1].this.lhs.apply(Random.Expect.eq.Integral)
+    Eq << Eq[-1].this.lhs.apply(Random.Expect.eq.Integral_Mul_Prob)
 
-    Eq << Eq[-1].this.rhs.apply(Random.Expect.eq.Integral)
+    Eq << Eq[-1].this.rhs.apply(Random.Expect.eq.Integral_Mul_Prob)
 
     Eq << Random.Prob.ge.Zero.apply(Eq[-1].find(Pr))
 

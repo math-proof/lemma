@@ -37,19 +37,19 @@ def prove(Eq):
 
     Eq << Bool.And_And.given.And.Cond.apply(Eq[-1])
 
-    Eq << Eq[-1].this.rhs.find(Expectation).apply(Random.Expect.eq.Integral)
+    Eq << Eq[-1].this.rhs.find(Expectation).apply(Random.Expect.eq.Integral_Mul_Prob)
 
     Eq << Eq[-1].this.find(Pow @ Integral).apply(Real.Dot.eq.Integral)
 
     Eq << Eq[-1].this.find(Mul[Integral]).apply(Real.Mul.eq.Integral)
 
-    Eq << Eq[-1].this.find(Pr[2]).apply(Random.CondProb.eq.Div.CondProb)
+    Eq << Eq[-1].this.find(Pr[2]).apply(Random.ProbCond.eq.Div.ProbCond)
 
     Eq << Eq[-1].this.rhs.find(Sum).apply(Real.Sum.eq.Integral)
 
     Eq << Eq[-1].this.find(Sum[Pr]).apply(Random.Sum.eq.Prob)
 
-    Eq << Eq[-1].this.find(Expectation).apply(Random.Expect.eq.Integral)
+    Eq << Eq[-1].this.find(Expectation).apply(Random.Expect.eq.Integral_Mul_Prob)
 
     Eq << Eq[-1].this.lhs.find(MatMul).apply(Real.Dot.eq.Integral)
 

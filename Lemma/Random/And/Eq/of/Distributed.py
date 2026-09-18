@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq << Random.EqProb.of.Distributed.apply(Eq[0])
 
-    Eq << Expectation(x).this.apply(Random.Expect.eq.Integral)
+    Eq << Expectation(x).this.apply(Random.Expect.eq.Integral_Mul_Prob)
 
     Eq << Eq[-1].subs(Eq[-2])
 

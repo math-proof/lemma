@@ -110,7 +110,7 @@ def prove(Eq):
 
     Eq << Random.Ne_0.Conditioned.of.Ne_0.apply(Eq.ne_zero_sar, a[k], s[k])
 
-    Eq << Random.Conditioned.of.CondProb.ne.Zero.EqConditioned.joint.apply(Eq[-2], Eq[-1])
+    Eq << Random.Conditioned.of.ProbCond.ne.Zero.EqConditioned.joint.apply(Eq[-2], Eq[-1])
 
     Eq.recursion = Eq.recursion.subs(Eq[-1])
 

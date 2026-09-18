@@ -22,9 +22,9 @@ def prove(Eq):
     f = Function(real=True)
     Eq << apply(Expectation[x](Derivative[θ](f[θ](x))))
 
-    Eq << Eq[-1].this.lhs.apply(Random.Expect.eq.Integral)
+    Eq << Eq[-1].this.lhs.apply(Random.Expect.eq.Integral_Mul_Prob)
 
-    Eq << Eq[-1].this.find(Expectation).apply(Random.Expect.eq.Integral)
+    Eq << Eq[-1].this.find(Expectation).apply(Random.Expect.eq.Integral_Mul_Prob)
 
     Eq << Eq[-1].this.rhs.apply(Real.Grad.eq.Integral)
 
