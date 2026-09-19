@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.find(Expectation).apply(Random.Expect.eq.Integral_Mul_Prob)
 
-    Eq << Eq[-1].this.find(Mul[Integral]).apply(Real.Mul.eq.Integral)
+    Eq << Eq[-1].this.find(Mul[Integral]).apply(Real.Mul_Integral.eq.Integral_Mul)
 
     Eq << Eq[-1].this.find(Pr[Conditioned]).apply(Random.All_Eq_DivProbS)
 

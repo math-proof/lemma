@@ -20,13 +20,13 @@ def prove(Eq):
 
     Eq << Set.Eq.given.All_Imp.All_Imp.apply(Eq[0])
 
-    Eq <<= Eq[-2].this.find(Element[Interval]).apply(Set.In_Icc.Is.And), Eq[-1].this.find(Element[Interval]).apply(Set.In_Icc.Is.And)
+    Eq <<= Eq[-2].this.find(Element[Interval]).apply(Set.In_Ico.Is.Le.Lt), Eq[-1].this.find(Element[Interval]).apply(Set.In_Ico.Is.Le.Lt)
 
     Eq <<= Eq[-2].this.find(Element[Union]).apply(Set.In_Union.Is.OrInS), Eq[-1].this.find(Element[Union]).apply(Set.In_Union.Is.OrInS)
 
-    Eq <<= Eq[-2].this.find(Element).apply(Set.In_Icc.Is.And), Eq[-1].this.find(Element).apply(Set.In_Icc.Is.And)
+    Eq <<= Eq[-2].this.find(Element).apply(Set.In_Ico.Is.Le.Lt), Eq[-1].this.find(Element).apply(Set.In_Ico.Is.Le.Lt)
 
-    Eq <<= Eq[-2].this.find(Element).apply(Set.In_Icc.Is.And), Eq[-1].this.find(Element).apply(Set.In_Icc.Is.And)
+    Eq <<= Eq[-2].this.find(Element).apply(Set.In_Ico.Is.Le.Lt), Eq[-1].this.find(Element).apply(Set.In_Ico.Is.Le.Lt)
 
     Eq << Bool.ImpOr.given.Imp.Imp.apply(Eq[-1])
 

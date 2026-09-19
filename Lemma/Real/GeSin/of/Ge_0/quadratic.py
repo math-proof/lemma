@@ -49,7 +49,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Set.In_Icc.Is.InAdd, S.Pi)
 
-    Eq << Eq[-1].this.lhs.apply(Set.In_Icc.Is.And)
+    Eq << Eq[-1].this.lhs.apply(Set.In_Ico.Is.Le.Lt)
 
     Eq << Eq[-1].this.find(And[~GreaterEqual]).apply(Nat.Ge.given.Gt)
 

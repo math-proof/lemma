@@ -31,7 +31,7 @@ def apply(self, index=None):
     if func.is_Add:
         arg = arg.expand()
     elif func.is_Stack:
-        from Lemma.Tensor.Mul.eq.Stack import rewrite
+        from Lemma.Tensor.Mul_Stack.eq.Stack_Mul import rewrite
         arg = rewrite(arg)
 
     args[index] = arg

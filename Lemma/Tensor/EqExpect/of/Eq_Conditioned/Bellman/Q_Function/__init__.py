@@ -56,7 +56,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Pr).apply(Random.All_Eq_Integral_ProbJoint.of.PSpace_Joint, s[t + 1])
 
-    Eq << Eq[-1].this.find(Mul[Integral]).apply(Real.Mul.eq.Integral)
+    Eq << Eq[-1].this.find(Mul[Integral]).apply(Real.Mul_Integral.eq.Integral_Mul)
 
     Eq << Eq[-1].this.find(Integral).apply(Real.Integral.limits.swap)
 
@@ -68,7 +68,7 @@ def prove(Eq):
 
     Eq << Random.Ne_0.of.Ne_0.joint_slice.apply(Eq[-1], [t, slice(t, t + 2)])
 
-    Eq << Eq[-1].this.find(Equal[Sliced]).apply(Tensor.Eq.Is.And.Eq.split)
+    Eq << Eq[-1].this.find(Equal[Sliced]).apply(Tensor.Eq.Is.GetSlice.Get)
 
     Eq << Random.EqConditioned.of.Eq_Conditioned.joint.independence_assumption.apply(Eq[0])
 

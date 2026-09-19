@@ -15,7 +15,7 @@ def prove(Eq):
     x = Symbol(extended_real=True)
     Eq << apply(Abs(x) < oo)
 
-    Eq << Eq[0].this.rhs.apply(Set.In_Icc.Is.And)
+    Eq << Eq[0].this.rhs.apply(Set.In_Ico.Is.Le.Lt)
 
 
     Eq << Eq[-1].this.lhs.apply(Int.LtAbs.Is.And)

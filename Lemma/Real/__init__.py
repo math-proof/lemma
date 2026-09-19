@@ -212,3 +212,5 @@ from . import EqSup
 from . import Lim_Prod
 from . import GtIntegralS
 from . import Integral_Stack
+from . import Integral_UFnProd
+from . import Mul_Integral

@@ -16,7 +16,7 @@ def prove(Eq):
     x, a = Symbol(real=True)
     Eq << apply(x ** 2 < a ** 2)
 
-    Eq << Eq[0].this.rhs.apply(Set.In_Icc.Is.And)
+    Eq << Eq[0].this.rhs.apply(Set.In_Ico.Is.Le.Lt)
 
     Eq << Eq[-1].this.find(Greater).reversed
 

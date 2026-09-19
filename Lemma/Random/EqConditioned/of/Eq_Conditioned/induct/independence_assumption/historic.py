@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << Eq[1].subs(t, t + 1)
 
-    Eq << Eq[-1].this.find(Equal).apply(Tensor.Eq.Is.And.Eq.split)
+    Eq << Eq[-1].this.find(Equal).apply(Tensor.Eq.Is.GetSlice.Get)
 
     Eq << Random.Indep.of.Indep_Joint.apply(Eq[-1], s[:t])
 

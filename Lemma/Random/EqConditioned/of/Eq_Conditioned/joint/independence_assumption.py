@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(t, t + 1)
 
-    Eq << Eq[-1].this.find(Equal).apply(Tensor.Eq.Is.And.Eq.split)
+    Eq << Eq[-1].this.find(Equal).apply(Tensor.Eq.Is.GetSlice.Get)
 
     Eq.eq_at = Random.Indep.of.Indep_Joint.apply(Eq[-1], 0)
 
@@ -38,7 +38,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(t, t + 1)
 
-    Eq << Eq[-1].this.find(Equal).apply(Tensor.Eq.Is.And.Eq.split)
+    Eq << Eq[-1].this.find(Equal).apply(Tensor.Eq.Is.GetSlice.Get)
 
     Eq.eq_st = Random.Indep.of.Indep_Joint.apply(Eq[-1], 0)
 
@@ -46,9 +46,9 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(t, t + 1)
 
-    Eq << Eq[-1].this.find(Equal).apply(Tensor.Eq.Is.And.Eq.split)
+    Eq << Eq[-1].this.find(Equal).apply(Tensor.Eq.Is.GetSlice.Get)
 
-    Eq << Eq[-1].this.find(Equal[3]).apply(Tensor.Eq.Is.And.Eq.split)
+    Eq << Eq[-1].this.find(Equal[3]).apply(Tensor.Eq.Is.GetSlice.Get)
 
     Eq << Random.All_NeProb_0.of.All_Ne0ProbJoint.apply(Eq[-1], slice(2, None))
 

@@ -35,15 +35,15 @@ def prove(Eq):
 
     Eq << Eq[-2].subs(t, t + 1)
 
-    Eq << Eq[-1].this.find(Equal).apply(Tensor.Eq.Is.And.Eq.split)
+    Eq << Eq[-1].this.find(Equal).apply(Tensor.Eq.Is.GetSlice.Get)
 
-    Eq << Eq[-1].this.find(Equal[3]).apply(Tensor.Eq.Is.And.Eq.split)
+    Eq << Eq[-1].this.find(Equal[3]).apply(Tensor.Eq.Is.GetSlice.Get)
 
     Eq << Random.EqConditioned.of.Ne_0.Eq_Conditioned.joint.apply(Eq[-1], Eq[-4])
 
-    Eq << Eq[-1].this.find(And).args[::2].apply(Tensor.Eq.Eq.Is.Eq.concat)
+    Eq << Eq[-1].this.find(And).args[::2].apply(Tensor.Stack.UFn.Is.Stack)
 
-    Eq << Eq[-1].this.find(And).args[::2].apply(Tensor.Eq.Eq.Is.Eq.concat)
+    Eq << Eq[-1].this.find(And).args[::2].apply(Tensor.Stack.UFn.Is.Stack)
 
 
 

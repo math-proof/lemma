@@ -26,11 +26,11 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(t, t + 1)
 
-    Eq << Eq[-1].this.find(Equal).apply(Tensor.Eq.Is.And.Eq.split)
+    Eq << Eq[-1].this.find(Equal).apply(Tensor.Eq.Is.GetSlice.Get)
 
     Eq << Random.EqConditioned.of.Ne_0.Eq_Conditioned.joint.apply(Eq[-1], Eq[2])
 
-    Eq << Eq[-1].this.find(Equal & Equal).apply(Tensor.Eq.Eq.Is.Eq.concat)
+    Eq << Eq[-1].this.find(Equal & Equal).apply(Tensor.Stack.UFn.Is.Stack)
 
 
 

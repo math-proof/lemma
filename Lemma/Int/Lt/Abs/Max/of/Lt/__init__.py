@@ -17,7 +17,7 @@ def prove(Eq):
 
     Eq << apply(Less(abs(a - b), M))
 
-    Eq << Int.Lt.of.Lt.split.Abs.apply(Eq[0]) + b
+    Eq << Int.LtNeg.of.LtAbs.apply(Eq[0]) + b
 
     Eq << Int.GeAbs.apply(M + b)
 
@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq.strict_less_than = Nat.Lt.of.Lt.Le.apply(Eq[-2], Eq[-1])
 
-    Eq << Int.Lt.of.Lt.split.Abs.apply(Eq[0], negate=True) - b
+    Eq << Int.LtNeg.of.LtAbs.apply(Eq[0], negate=True) - b
 
     Eq << Int.GeAbs.apply(M - b)
 

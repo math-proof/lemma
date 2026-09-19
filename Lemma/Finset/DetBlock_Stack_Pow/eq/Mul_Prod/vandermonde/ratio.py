@@ -21,9 +21,9 @@ def prove(Eq):
     E = BlockMatrix(Stack[j:d, i:m]((-λ) ** (j - i) * binomial(j, i)).T, Stack[j:m - d, i:m]((-λ) ** (d + j - i) * binomial(d, i - j)).T).T
     Eq << (Eq[0].lhs.arg @ E).this.apply(Tensor.DotAppendSHstackS.eq.AppendHstackSAddSDotS)
 
-    Eq << Eq[-1].this.rhs.find(Mul[Stack]).apply(Tensor.Mul.eq.Stack, simplify=None)
+    Eq << Eq[-1].this.rhs.find(Mul[Stack]).apply(Tensor.Mul_Stack.eq.Stack_Mul, simplify=None)
 
-    Eq << Eq[-1].this.rhs.find(Mul[Stack]).apply(Tensor.Mul.eq.Stack, simplify=None)
+    Eq << Eq[-1].this.rhs.find(Mul[Stack]).apply(Tensor.Mul_Stack.eq.Stack_Mul, simplify=None)
 
     Eq << Eq[-1].this.rhs.args[0].args[1].apply(Tensor.Dot.Stack.eq.Zero.vandermonde.col_transformation)
 

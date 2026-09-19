@@ -41,7 +41,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Pow @ Integral).apply(Real.Dot.eq.Integral)
 
-    Eq << Eq[-1].this.find(Mul[Integral]).apply(Real.Mul.eq.Integral)
+    Eq << Eq[-1].this.find(Mul[Integral]).apply(Real.Mul_Integral.eq.Integral_Mul)
 
     Eq << Eq[-1].this.find(Pr[2]).apply(Random.ProbCond.eq.Div.ProbCond)
 

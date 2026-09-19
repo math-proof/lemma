@@ -16,9 +16,9 @@ def prove(Eq):
 
     Eq << apply(abs(x) < a)
 
-    Eq << Int.Lt.of.Lt.split.Abs.apply(Eq[0])
+    Eq << Int.LtNeg.of.LtAbs.apply(Eq[0])
 
-    Eq << -Int.Lt.of.Lt.split.Abs.apply(Eq[0], negate=True)
+    Eq << -Int.LtNeg.of.LtAbs.apply(Eq[0], negate=True)
 
 
 if __name__ == '__main__':

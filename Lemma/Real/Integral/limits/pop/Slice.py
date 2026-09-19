@@ -17,7 +17,7 @@ def prove(Eq):
     f = Function(real=True, shape=())
     Eq << apply(Integral[x[i:n + 1]](f(x[i:n + 1])))
 
-    Eq << Eq[0].this.rhs.apply(Real.Integral.limits.concat)
+    Eq << Eq[0].this.rhs.apply(Real.Integral_UFnProd.eq.Integral)
 
 
 if __name__ == '__main__':

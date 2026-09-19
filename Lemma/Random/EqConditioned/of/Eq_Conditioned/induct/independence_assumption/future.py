@@ -29,9 +29,9 @@ def prove(Eq):
 
     Eq << Random.EqProb.of.Eq_Conditioned.Eq_Conditioned.joint.apply(Eq[1], Eq[2])
 
-    Eq << Eq[-1].this.find(And).apply(Tensor.Eq.Eq.Is.Eq.concat)
+    Eq << Eq[-1].this.find(And).apply(Tensor.Stack.UFn.Is.Stack)
 
-    Eq << Eq[-1].this.find(And).apply(Tensor.Eq.Eq.Is.Eq.concat)
+    Eq << Eq[-1].this.find(And).apply(Tensor.Stack.UFn.Is.Stack)
 
     Eq << Imply(Eq[1], Eq.induct, plausible=True)
 

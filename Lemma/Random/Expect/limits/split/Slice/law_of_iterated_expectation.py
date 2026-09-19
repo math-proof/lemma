@@ -50,13 +50,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Random.Expect.eq.Integral_Mul_Prob)
 
-    Eq << Eq[-1].this.find(Mul[Integral]).apply(Real.Mul.eq.Integral)
+    Eq << Eq[-1].this.find(Mul[Integral]).apply(Real.Mul_Integral.eq.Integral_Mul)
 
     Eq << Eq[-1].this.find(Pr[Conditioned]).apply(Random.All_Eq_DivProbS)
 
-    Eq << Eq[-1].this.find(And).apply(Tensor.Eq.Eq.Is.Eq.concat)
+    Eq << Eq[-1].this.find(And).apply(Tensor.Stack.UFn.Is.Stack)
 
-    Eq << Eq[-1].this.rhs.apply(Real.Integral.limits.concat)
+    Eq << Eq[-1].this.rhs.apply(Real.Integral_UFnProd.eq.Integral)
 
     Eq << Eq[-1].this.lhs.apply(Random.Expect.eq.Integral_Mul_Prob)
 

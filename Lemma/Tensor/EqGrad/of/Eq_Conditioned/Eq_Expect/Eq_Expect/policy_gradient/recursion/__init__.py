@@ -58,7 +58,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Derivative[Integral]).apply(Real.Grad.eq.Integral)
 
-    Eq << Eq[-1].this.find(Pr * Integral).apply(Real.Mul.eq.Integral)
+    Eq << Eq[-1].this.find(Pr * Integral).apply(Real.Mul_Integral.eq.Integral_Mul)
 
     Eq.eq_grad = Eq[-1].this.find(Sum[Integral]).apply(Real.Sum.eq.Integral)
 

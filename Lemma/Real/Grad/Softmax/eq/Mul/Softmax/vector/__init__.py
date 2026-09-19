@@ -31,7 +31,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Sum[Mul[~Derivative]]).apply(Real.Grad.eq.Stack.Mul)
 
-    Eq << Eq[-1].this.find(Mul[Stack]).apply(Tensor.Mul.eq.Stack)
+    Eq << Eq[-1].this.find(Mul[Stack]).apply(Tensor.Mul_Stack.eq.Stack_Mul)
 
     Eq << Eq[-1].this.find(Sum).apply(Tensor.Sum.eq.Stack)
 

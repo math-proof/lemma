@@ -23,7 +23,7 @@ def prove(Eq):
     f, g = Function(real=True)
     Eq << apply(Integral[x:a:b, y:c:d](f(y) * g(x, y)))
 
-    Eq << Eq[-1].this.rhs.expr.apply(Real.Mul.eq.Integral)
+    Eq << Eq[-1].this.rhs.expr.apply(Real.Mul_Integral.eq.Integral_Mul)
 
 
 if __name__ == '__main__':

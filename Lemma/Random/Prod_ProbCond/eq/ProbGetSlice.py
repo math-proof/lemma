@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Pr[Conditioned]).apply(Random.All_Eq_DivProbS)
 
-    Eq << Eq[-1].this.find(Equal & Equal).apply(Tensor.Eq.Eq.Is.Eq.concat)
+    Eq << Eq[-1].this.find(Equal & Equal).apply(Tensor.Stack.UFn.Is.Stack)
 
     Eq << Imply(Eq[0], Eq[1], plausible=True)
 

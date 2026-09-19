@@ -51,11 +51,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Symbol * Pow).powsimp()
 
-    Eq << Eq[-1].this.find(Integral[Mul[Pr]] * Product).apply(Real.Mul.eq.Integral)
+    Eq << Eq[-1].this.find(Integral[Mul[Pr]] * Product).apply(Real.Mul_Integral.eq.Integral_Mul)
 
     Eq << Eq[-1].this.find(Pr * Product).args[1:].apply(Finset.Mul.eq.Prod.limits.push)
 
-    Eq << Eq[-1].this.find(Integral[Derivative * Product]).apply(Real.Integral.limits.concat)
+    Eq << Eq[-1].this.find(Integral[Derivative * Product]).apply(Real.Integral_UFnProd.eq.Integral)
 
     Eq << Imply(Eq.hypothesis, Eq.induct, plausible=True)
 

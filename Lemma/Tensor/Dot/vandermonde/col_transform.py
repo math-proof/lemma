@@ -22,11 +22,11 @@ def prove(Eq):
 
     Eq << Eq[-1].T
 
-    Eq << Eq[-1].this.find(Mul[Stack]).apply(Tensor.Mul.eq.Stack, simplify=None)
+    Eq << Eq[-1].this.find(Mul[Stack]).apply(Tensor.Mul_Stack.eq.Stack_Mul, simplify=None)
 
     Eq << Eq[-1].this.lhs.apply(Tensor.Dot.vandermonde.row_transform)
 
-    Eq << Eq[-1].this.find(Mul[Stack]).apply(Tensor.Mul.eq.Stack, simplify=None)
+    Eq << Eq[-1].this.find(Mul[Stack]).apply(Tensor.Mul_Stack.eq.Stack_Mul, simplify=None)
 
 
 

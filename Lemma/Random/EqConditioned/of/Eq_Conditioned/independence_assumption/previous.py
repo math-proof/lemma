@@ -25,13 +25,13 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(t, t + 1)
 
-    Eq << Eq[-1].this.find(Equal).apply(Tensor.Eq.Is.And.Eq.split)
+    Eq << Eq[-1].this.find(Equal).apply(Tensor.Eq.Is.GetSlice.Get)
 
     Eq << Random.Eq.Conditioned.Infty.of.Eq_Conditioned.independence_assumption.apply(Eq[0])
 
     Eq << Random.EqConditioned.of.Ne_0.Eq_Conditioned.joint.apply(Eq[-2], Eq[-1])
 
-    Eq << Eq[-1].this.find(And).apply(Tensor.Eq.Eq.Is.Eq.concat)
+    Eq << Eq[-1].this.find(And).apply(Tensor.Stack.UFn.Is.Stack)
 
 
 

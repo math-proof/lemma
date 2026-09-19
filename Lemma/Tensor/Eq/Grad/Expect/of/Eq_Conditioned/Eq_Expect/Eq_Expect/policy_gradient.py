@@ -63,13 +63,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Sum[~Integral[Mul]]).apply(Real.Integral.eq.Mul)
 
-    Eq << Eq[-1].this.find(Integral[~Mul[Integral]]).apply(Real.Mul.eq.Integral)
+    Eq << Eq[-1].this.find(Integral[~Mul[Integral]]).apply(Real.Mul_Integral.eq.Integral_Mul)
 
-    Eq << Eq[-1].this.find(Integral[~Mul[Integral]]).apply(Real.Mul.eq.Integral)
+    Eq << Eq[-1].this.find(Integral[~Mul[Integral]]).apply(Real.Mul_Integral.eq.Integral_Mul)
 
-    Eq << Eq[-1].this.find(Integral).apply(Real.Integral.limits.concat)
+    Eq << Eq[-1].this.find(Integral).apply(Real.Integral_UFnProd.eq.Integral)
 
-    Eq << Eq[-1].this.find(Sum[Mul[~Integral]]).apply(Real.Integral.limits.concat)
+    Eq << Eq[-1].this.find(Sum[Mul[~Integral]]).apply(Real.Integral_UFnProd.eq.Integral)
 
     Eq << Eq[-1].this.find(Integral).apply(Real.Integral.limits.pop.Slice)
 
