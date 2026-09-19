@@ -273,7 +273,7 @@ export async function assembleLeanSourceFromPostBody(body) {
   let set_option = parseJsonField(body.set_option, []);
   if (!Array.isArray(set_option)) set_option = [];
 
-  const defParts = coerceIndexedStrings(body.def).filter((s) => String(s).trim() !== '');
+  const preambleParts = coerceIndexedStrings(body.preamble).filter((s) => String(s).trim() !== '');
 
   const lemmaArr = coerceLemmaArray(body.lemma);
   if (lemmaArr.length === 0) {
@@ -344,7 +344,7 @@ export async function assembleLeanSourceFromPostBody(body) {
 
   /**
    * Match `php/std.php` `Text::writelines`: `implode("\n", $leanCode)`.
-   * Never push a def chunk that is only newlines (empty `def[*]` fields caused
+   * Never push a preamble chunk that is only newlines (empty `preamble[*]` fields caused
    * extra blank lines before `@[` when joined with the `\n\n` lemma prefix).
    * @type {string[]}
    */
@@ -369,8 +369,8 @@ export async function assembleLeanSourceFromPostBody(body) {
     }
   }
 
-  if (defParts.length) {
-    parts.push(`\n\n${defParts.join('\n\n\n')}`);
+  if (preambleParts.length) {
+    parts.push(`\n\n${preambleParts.join('\n\n\n')}`);
   }
 
   const lemmaCode = lemmaArr.map((L) => buildLemmaBlock(L)).join('\n\n\n');

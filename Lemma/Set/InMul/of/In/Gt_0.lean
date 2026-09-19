@@ -1,5 +1,4 @@
 import sympy.Basic
-open Set Nat
 
 
 class ClosedUnderAdd (A : Set ℕ) : Prop where

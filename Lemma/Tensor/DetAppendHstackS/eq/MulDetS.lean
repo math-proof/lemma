@@ -8,7 +8,7 @@ import Lemma.Tensor.GetHstack.eq.Get_Sub.of.GtAdd.Ge
 import Lemma.Tensor.Mul
 import sympy.matrices.dense
 import sympy.matrices.determinant
-open Matrix Tensor
+open Tensor
 
 
 private lemma get_blockUpper_castAdd_castAdd
@@ -143,24 +143,24 @@ private lemma triu
   apply Eq.trans (congrArg (id (α := Tensor α [])) (Det.eq.DetToMatrix T))
   have hT :
       T.toMatrix =
-        (reindex finSumFinEquiv finSumFinEquiv
-          (fromBlocks A.toMatrix C.toMatrix 0 B.toMatrix)) := by
+        (Matrix.reindex finSumFinEquiv finSumFinEquiv
+          (Matrix.fromBlocks A.toMatrix C.toMatrix 0 B.toMatrix)) := by
     ext i j
     simp [T, Tensor.toMatrix, Matrix.reindex, Matrix.submatrix]
     refine Fin.addCases (fun i => ?_) (fun i => ?_) i
     · refine Fin.addCases (fun j => ?_) (fun j => ?_) j
-      · simp [finSumFinEquiv_symm_apply_castAdd, fromBlocks_apply₁₁, Tensor.toMatrix]
+      · simp [finSumFinEquiv_symm_apply_castAdd, Matrix.fromBlocks_apply₁₁, Tensor.toMatrix]
         simpa [GetElem.getElem, id] using get_blockUpper_castAdd_castAdd A B C i j
       · simp [finSumFinEquiv_symm_apply_castAdd, finSumFinEquiv_symm_apply_natAdd,
-          fromBlocks_apply₁₂, Tensor.toMatrix]
+          Matrix.fromBlocks_apply₁₂, Tensor.toMatrix]
         simpa [GetElem.getElem, id] using get_blockUpper_castAdd_natAdd A B C i j
     · refine Fin.addCases (fun j => ?_) (fun j => ?_) j
       · simp [finSumFinEquiv_symm_apply_natAdd, finSumFinEquiv_symm_apply_castAdd,
-          fromBlocks_apply₂₁]
+          Matrix.fromBlocks_apply₂₁]
         simpa [GetElem.getElem, id] using get_blockUpper_natAdd_castAdd A B C i j
-      · simp [finSumFinEquiv_symm_apply_natAdd, fromBlocks_apply₂₂, Tensor.toMatrix]
+      · simp [finSumFinEquiv_symm_apply_natAdd, Matrix.fromBlocks_apply₂₂, Tensor.toMatrix]
         simpa [GetElem.getElem, id] using get_blockUpper_natAdd_natAdd A B C i j
-  rw [hT, det_reindex_self, det_fromBlocks_zero₂₁]
+  rw [hT, Matrix.det_reindex_self, Matrix.det_fromBlocks_zero₂₁]
   rw [← Det.eq.DetToMatrix A, ← Det.eq.DetToMatrix B]
   simp only [id]
   erw [Tensor.Mul]
@@ -299,24 +299,24 @@ private lemma main
   apply Eq.trans (congrArg (id (α := Tensor α [])) (Det.eq.DetToMatrix T))
   have hT :
       T.toMatrix =
-        (reindex finSumFinEquiv finSumFinEquiv
-          (fromBlocks A.toMatrix 0 C.toMatrix B.toMatrix)) := by
+        (Matrix.reindex finSumFinEquiv finSumFinEquiv
+          (Matrix.fromBlocks A.toMatrix 0 C.toMatrix B.toMatrix)) := by
     ext i j
     simp [T, Tensor.toMatrix, Matrix.reindex, Matrix.submatrix]
     refine Fin.addCases (fun i => ?_) (fun i => ?_) i
     · refine Fin.addCases (fun j => ?_) (fun j => ?_) j
-      · simp [finSumFinEquiv_symm_apply_castAdd, fromBlocks_apply₁₁, Tensor.toMatrix]
+      · simp [finSumFinEquiv_symm_apply_castAdd, Matrix.fromBlocks_apply₁₁, Tensor.toMatrix]
         simpa [GetElem.getElem, id] using get_blockLower_castAdd_castAdd A B C i j
       · simp [finSumFinEquiv_symm_apply_castAdd, finSumFinEquiv_symm_apply_natAdd,
-          fromBlocks_apply₁₂]
+          Matrix.fromBlocks_apply₁₂]
         simpa [GetElem.getElem, id] using get_blockLower_castAdd_natAdd A B C i j
     · refine Fin.addCases (fun j => ?_) (fun j => ?_) j
       · simp [finSumFinEquiv_symm_apply_natAdd, finSumFinEquiv_symm_apply_castAdd,
-          fromBlocks_apply₂₁, Tensor.toMatrix]
+          Matrix.fromBlocks_apply₂₁, Tensor.toMatrix]
         simpa [GetElem.getElem, id] using get_blockLower_natAdd_castAdd A B C i j
-      · simp [finSumFinEquiv_symm_apply_natAdd, fromBlocks_apply₂₂, Tensor.toMatrix]
+      · simp [finSumFinEquiv_symm_apply_natAdd, Matrix.fromBlocks_apply₂₂, Tensor.toMatrix]
         simpa [GetElem.getElem, id] using get_blockLower_natAdd_natAdd A B C i j
-  rw [hT, det_reindex_self, det_fromBlocks_zero₁₂]
+  rw [hT, Matrix.det_reindex_self, Matrix.det_fromBlocks_zero₁₂]
   rw [← Det.eq.DetToMatrix A, ← Det.eq.DetToMatrix B]
   simp only [id]
   erw [Tensor.Mul]

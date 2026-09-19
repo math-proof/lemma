@@ -272,6 +272,11 @@ abstract class Lean extends IndentedNode
         if ($self instanceof LeanCaret) {
             $caret = $self;
             $new = new $func($caret, $self->indent, $self->level);
+        } elseif ($self instanceof LeanArgsSpaceSeparated) {
+            $caret = new LeanCaret($self->indent, $self->level);
+            $new = new $func($caret, $self->indent, $self->level);
+            $self->push($new);
+            return $caret;
         } else {
             $caret = new LeanCaret($self->indent, $self->level);
             $new = new $func($caret, $self->indent, $self->level);
@@ -821,6 +826,8 @@ abstract class Lean extends IndentedNode
                 return $this->append('Lean_bigcap', 'operator');
             case '∫':
                 return $this->append('Lean_int', 'operator');
+            case '∂':
+                return $this->parent->insert_unary($this, 'Lean_partial');
             case '¬':
                 return $this->parent->insert_unary($this, 'Lean_lnot');
             case '~':
@@ -4532,6 +4539,20 @@ class LeanNegPart extends LeanUnaryArithmeticPost
     }
 }
 
+class Lean_partial extends LeanUnaryArithmeticPre
+{
+    public static $input_priority = 75;
+    public function __get($vname)
+    {
+        switch ($vname) {
+            case 'operator':
+                return '∂';
+            default:
+                return parent::__get($vname);
+        }
+    }
+}
+
 class Lean_sqrt extends LeanUnaryArithmeticPre
 {
     public static $input_priority = 72;
@@ -5901,7 +5922,7 @@ class LeanModule extends LeanStatements
         $import = [];
         $open = [];
         $set_option = [];
-        $def = [];
+        $preamble = [];
         $lemma = [];
         $date = [];
         $error = [];
@@ -6169,7 +6190,7 @@ class LeanModule extends LeanStatements
                         'type' => 'linter'
                     ];
             } elseif ($stmt instanceof Lean_def)
-                $def[] = "$stmt";
+                $preamble[] = "$stmt";
             elseif ($stmt instanceof Lean_open) {
                 $stmt = $stmt->arg;
                 if ($stmt instanceof LeanArgsSpaceSeparated) {
@@ -6202,7 +6223,7 @@ class LeanModule extends LeanStatements
             'imports' => $import,
             'open' => $open,
             'set_option' => $set_option,
-            'def' => $def,
+            'preamble' => $preamble,
             'lemma' => $lemma,
             'date' => $date,
             'error' => $error,
@@ -10851,29 +10872,98 @@ class Lean_int extends LeanBigOperator
         return null;
     }
 
+    /** Find the trailing `∂μ` measure node in the scope, if any. */
+    private function measurePartial()
+    {
+        $s = $this->scope;
+        if ($s instanceof LeanArgsSpaceSeparated) {
+            for ($i = count($s->args) - 1; $i >= 0; $i--) {
+                if ($s->args[$i] instanceof LeanCaret) continue;
+                return $s->args[$i] instanceof Lean_partial ? $s->args[$i] : null;
+            }
+            return null;
+        }
+        // Binary operator scope (e.g. `c • f x ∂μ` → Lean_bullet(c, LeanArgsSpaceSeparated[f, x, ∂μ]))
+        if ($s !== null && isset($s->rhs) && $s->rhs instanceof LeanArgsSpaceSeparated) {
+            $args = $s->rhs->args;
+            for ($i = count($args) - 1; $i >= 0; $i--) {
+                if ($args[$i] instanceof LeanCaret) continue;
+                return $args[$i] instanceof Lean_partial ? $args[$i] : null;
+            }
+        }
+        if ($s instanceof Lean_int) {
+            $innerPartial = $s->measurePartial();
+            if (!$innerPartial) return null;
+            $a = $innerPartial->arg;
+            if ($a instanceof LeanArgsSpaceSeparated) {
+                for ($i = count($a->args) - 1; $i >= 0; $i--) {
+                    if ($a->args[$i] instanceof LeanCaret) continue;
+                    return $a->args[$i] instanceof Lean_partial ? $a->args[$i] : null;
+                }
+            }
+            return null;
+        }
+        return null;
+    }
+
+    /** Render the integrand, filtering out the measure partial. */
+    private function integrandLatex(&$syntax = null, $partial = null)
+    {
+        if (!$partial) return $this->scope ? $this->scope->toLatex($syntax) : '';
+        if ($this->scope instanceof LeanArgsSpaceSeparated) {
+            $args = array_filter($this->scope->args, function ($a) use ($partial) {
+                return $a !== $partial && !($a instanceof LeanCaret);
+            });
+            $args = array_values($args);
+            return implode(' ', array_map(function ($a) use (&$syntax) {
+                return $a->toLatex($syntax);
+            }, $args));
+        }
+        // Binary operator scope (e.g. `c • f x ∂μ`): partial is in scope.rhs
+        if ($this->scope !== null && isset($this->scope->rhs) && $this->scope->rhs instanceof LeanArgsSpaceSeparated &&
+            in_array($partial, $this->scope->rhs->args, true)) {
+            $filteredRhs = array_filter($this->scope->rhs->args, function ($a) use ($partial) {
+                return $a !== $partial && !($a instanceof LeanCaret);
+            });
+            $filteredRhs = array_values($filteredRhs);
+            $lhsLatex = $this->scope->lhs->toLatex($syntax);
+            $rhsLatex = implode(' ', array_map(function ($a) use (&$syntax) {
+                return $a->toLatex($syntax);
+            }, $filteredRhs));
+            $op = $this->scope->command ?? $this->scope->operator;
+            return "{$lhsLatex} {$op} {$rhsLatex}";
+        }
+        return $this->scope->toLatex($syntax);
+    }
+
     // Standard math notation: \int\limits_a^b f(x)\,\mathrm{d}x
     // (cf. SymPy LatexPrinter._print_Integral).
     public function latexFormat()
     {
+        $partial = $this->measurePartial();
+        $diff = $partial ? '\\partial' : '\\mathrm{d}';
+        $tail = "{\\color{blue}{$diff}}{%s}";
         $dom = $this->intDomain();
         if ($dom instanceof LeanUpto)
-            return '\\int\\limits_{%s}^{%s} %s\\, {\\color{blue}\\mathrm{d}}%s';
+            return "\\int\\limits_{%s}^{%s} %s\\, {$tail}";
         if ($dom !== null)
-            return '\\int\\limits_{%s} %s\\, {\\color{blue}\\mathrm{d}}%s';
-        return '\\int %s\\, {\\color{blue}\\mathrm{d}}%s';
+            return "\\int\\limits_{%s} %s\\, {$tail}";
+        return "\\int %s\\, {$tail}";
     }
 
     public function latexArgs(&$syntax = null)
     {
+        $partial = $this->measurePartial();
+        $body = $this->integrandLatex($syntax, $partial);
         $colon = $this->binderColon();
         $x = $colon ? $colon->lhs->toLatex($syntax) : '';
-        $body = $this->scope ? $this->scope->toLatex($syntax) : '';
+        $tail = $x ?: ($partial ? $partial->arg->toLatex($syntax) : '');
         $dom = $this->intDomain();
         if ($dom instanceof LeanUpto)
-            return [$dom->lhs->toLatex($syntax), $dom->rhs->toLatex($syntax), $body, $x];
+            return [$dom->lhs->toLatex($syntax), $dom->rhs->toLatex($syntax), $body, $tail];
         if ($dom !== null)
-            return [$dom->toLatex($syntax), $body, $x];
-        return [$body, $x];
+            return [$dom->toLatex($syntax), $body, $tail];
+        return [$body, $tail];
     }
 }
 

@@ -2,7 +2,7 @@ import Lemma.Tensor.Eq.is.ToMatrix
 import Lemma.Tensor.EqToMatrix0'0
 import Lemma.Tensor.ToMatrixDot.eq.MulToMatrixS
 import sympy.matrices.expressions.matmul
-open Matrix Tensor
+open Tensor
 
 
 @[main]

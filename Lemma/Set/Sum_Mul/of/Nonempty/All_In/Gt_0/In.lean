@@ -1,4 +1,3 @@
-import sympy.Basic
 import Mathlib.Algebra.Order.BigOperators.Ring.Finset
 import Mathlib.Data.Finset.Insert
 import Lemma.Set.InMul.of.In.Gt_0

@@ -1,5 +1,5 @@
 import Lemma.Tensor.DetInterleave.eq.MulPowNeg1Sub_Det
-open Matrix Tensor
+open Tensor
 set_option maxHeartbeats 800000
 
 
@@ -35,7 +35,7 @@ private lemma main
         · simp [hi0, hj1, Fin.ext_iff]
         · simp [hi1, hj0, Fin.ext_iff]
         · simp [hi1, hj1, Fin.ext_iff]
-      rw [hP, det_one]
+      rw [hP, Matrix.det_one]
       rfl
     | succ n =>
       have hd : 1 < n + 2 := by omega

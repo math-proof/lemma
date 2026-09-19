@@ -1,20 +1,12 @@
 import Lemma.Tensor.Stack.eq.AppendStackS
 import Lemma.Tensor.Eq.is.All_EqGetS
 import Lemma.Tensor.EqGetStack
-import Lemma.Tensor.GetSlice.Get.of.Eq
+import Lemma.Tensor.Eq.is.GetSlice.Get
 import Lemma.Tensor.GetSliceStack.as.Stack_UFn
 import Lemma.Bool.SEq.is.Eq
 open Tensor Bool
 
 
-/--
-| attributes | lemma |
-| :---: | :---: |
-| main | Tensor.Stack.is.Stack.Eq |
-| comm | Tensor.EqStackS.Eq.is.EqStackS |
-| mp | Tensor.EqStackS.Eq.of.EqStackS |
-| mpr | Tensor.EqStackS.of.EqStackS.Eq |
--/
 @[main, comm, mp, mpr]
 private lemma main
 -- given

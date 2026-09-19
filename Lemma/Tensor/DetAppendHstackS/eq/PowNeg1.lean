@@ -15,7 +15,7 @@ import Lemma.Tensor.SEqGetS.of.SEq.GtLength
 import sympy.matrices.determinant
 import sympy.matrices.expressions.special
 import torch.eye
-open Bool Equiv Matrix Nat Tensor
+open Bool Equiv Nat Tensor
 set_option maxHeartbeats 800000
 
 
@@ -257,7 +257,7 @@ private lemma main
           grind
         simp [hi, hj, hne]
   _ = (-1) ^ (m * n) := by
-    rw [det_permute', det_one, mul_one]
+    rw [Matrix.det_permute', Matrix.det_one, mul_one]
     rw [map_pow, sign_finRotate, ← pow_mul]
     rw [show (m + n - 1) * m = m * n + m * (m - 1) by
       cases m with

@@ -387,7 +387,7 @@ $code = fetch_from_mysql(get_project_name(), $module);
 if ($code) {
     $code['imports'] = std\decode($code['imports']);
     $code['open'] = std\decode($code['open']);
-    $code['def'] = std\decode($code['def']);
+    $code['preamble'] = std\decode($code['preamble']);
     $code['lemma'] = std\decode($code['lemma']);
     $code['error'] = std\decode($code['error']);
     $code['date'] = std\decode($code['date']);
@@ -486,10 +486,10 @@ span.date {
 <div id="lemma-shell">
 <?php
 if ($code && !empty($code['lemma'])) {
-    if (!empty($code['def']) && is_array($code['def'])) {
-        foreach ($code['def'] as $def)
-            if (is_string($def) && $def !== '')
-                lemma_shell_render_lean_line($def);
+    if (!empty($code['preamble']) && is_array($code['preamble'])) {
+        foreach ($code['preamble'] as $preamble)
+            if (is_string($preamble) && $preamble !== '')
+                lemma_shell_render_lean_line($preamble);
     }
     foreach ($code['lemma'] as $lemma) {
         if (is_array($lemma))

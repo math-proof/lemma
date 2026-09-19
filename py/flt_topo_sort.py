@@ -29,9 +29,13 @@ last position as requested.
 
 Output
 ------
-The full list is written to a ``.log`` file and echoed to stdout.  Each entry is
-a Markdown link whose text is the theorem key and whose target is the theorem's
-proof file on GitHub (``P2M/Sol/S_<key>.lean``).
+Only the first ``--limit`` theorems that are ready to port (all their FLT
+prerequisites are already ported) are written to the ``.log`` file and echoed
+to stdout.  Ready theorems never reference one another, so agents can process
+them simultaneously without conflicts.  Each entry is a Markdown link whose
+text is the theorem key and whose target is the theorem's proof file on GitHub
+(``P2M/Sol/S_<key>.lean``).  Theorems already ported (detected by scanning the
+``Lemma`` tree for their source link) are excluded.
 
 Note: some theorem file names exceed Windows' 260-character ``MAX_PATH`` limit,
 so every file is opened through the ``\\\\?\\`` extended-length path prefix.
@@ -42,12 +46,19 @@ from __future__ import annotations
 import argparse
 import heapq
 import os
+import re
 import sys
 import time
 
 DEFAULT_BASE = r"E:\github\lean\fermats-last-theorem"
 DEFAULT_ROOT = "fermat_last_theorem"
 DEFAULT_BASE_URL = "https://github.com/anthropics/fermats-last-theorem/blob/main"
+DEFAULT_PORTED_ROOT = r"E:\github\lean\Lemma"
+DEFAULT_LIMIT = 20
+
+# A ported theorem's file carries a doc comment linking back to its FLT source,
+# e.g.  [Key](https://github.com/.../P2M/Sol/S_Key.lean) - capture the Key.
+PORTED_RE = re.compile(r"P2M/Sol/S_([A-Za-z0-9_]+)\.lean")
 
 
 def ext_path(path: str) -> str:
@@ -84,6 +95,32 @@ def read_dependencies(key: str, sol_dir: str) -> list[str]:
     return deps
 
 
+def ported_keys(ported_root: str) -> set[str]:
+    """Return the FLT theorem keys that have already been ported.
+
+    A ported theorem's file carries a doc comment linking back to its FLT
+    source, e.g. ``[Key](.../P2M/Sol/S_Key.lean)``.  Scan every ``.lean`` file
+    under ``ported_root`` and collect the ``Key`` inside that link.
+    """
+    keys: set[str] = set()
+    if not os.path.isdir(ported_root):
+        return keys
+    for dirpath, dirnames, filenames in os.walk(ported_root):
+        dirnames[:] = [d for d in dirnames if d not in (".lake", ".git")]
+        for name in filenames:
+            if not name.endswith(".lean"):
+                continue
+            try:
+                with open(ext_path(os.path.join(dirpath, name)),
+                          "r", encoding="utf-8", errors="replace") as f:
+                    text = f.read()
+            except OSError:
+                continue
+            for m in PORTED_RE.finditer(text):
+                keys.add(m.group(1))
+    return keys
+
+
 def topological_sort(keys: list[str], deps_of: dict[str, list[str]]):
     """Kahn's algorithm.  Returns ``(order, rank, acyclic)``.
 
@@ -118,7 +155,8 @@ def topological_sort(keys: list[str], deps_of: dict[str, list[str]]):
 
 
 def build_summary(base: str, root: str, n_nodes: int, n_edges: int,
-                  max_rank: int, acyclic: bool, secs: float) -> str:
+                  max_rank: int, acyclic: bool, secs: float,
+                  n_ported: int, n_out: int) -> str:
     lines = [
         "=" * 80,
         "Topological sort of lemmas/theorems",
@@ -130,6 +168,8 @@ def build_summary(base: str, root: str, n_nodes: int, n_edges: int,
         f"edges (imports)   : {n_edges}",
         f"max depth (rank)  : {max_rank}",
         f"acyclic           : {acyclic}",
+        f"already ported    : {n_ported} (excluded)",
+        f"listed            : {n_out} (independent batch)",
         f"elapsed           : {secs:.2f}s",
         "-" * 80,
     ]
@@ -146,6 +186,10 @@ def main() -> int:
                     help="Path of the .log file (default: alongside this script).")
     ap.add_argument("--base-url", default=DEFAULT_BASE_URL,
                     help="GitHub base URL used to link each theorem to its proof file.")
+    ap.add_argument("--ported-root", default=DEFAULT_PORTED_ROOT,
+                    help="Directory scanned for already-ported theorems (Lemma tree).")
+    ap.add_argument("--limit", type=int, default=DEFAULT_LIMIT,
+                    help="How many ready, mutually-independent theorems to list.")
     args = ap.parse_args()
 
     base = args.base
@@ -170,6 +214,10 @@ def main() -> int:
     if not acyclic:
         print("ERROR: dependency graph contains a cycle.", file=sys.stderr)
 
+    # Already-ported theorems: found by scanning the Lemma tree for a link back
+    # to their FLT source file.
+    ported = ported_keys(args.ported_root)
+
     # Simplest -> most complex: rank ascending, then lexicographic.
     final = sorted(keys, key=lambda k: (rank[k], k))
 
@@ -181,12 +229,25 @@ def main() -> int:
         print(f"WARNING: root theorem '{root}' not found among nodes.",
               file=sys.stderr)
 
+    # Keep only the first --limit unported theorems that are ready to port
+    # (every FLT prerequisite already ported).  Such theorems never reference
+    # one another, so agents can process them simultaneously without conflicts.
+    batch = []
+    for k in final:
+        if k in ported:
+            continue
+        if all(d in ported for d in deps_of[k]):
+            batch.append(k)
+            if len(batch) >= args.limit:
+                break
+
     max_rank = max(rank.values()) if rank else 0
     secs = time.time() - t0
 
-    header = build_summary(base, root, len(keys), n_edges, max_rank, acyclic, secs)
+    header = build_summary(base, root, len(keys), n_edges, max_rank, acyclic, secs,
+                           len(ported), len(batch))
 
-    body_lines = [f"[{k}]({args.base_url}/P2M/Sol/S_{k}.lean)" for k in final]
+    body_lines = [f"[{k}]({args.base_url}/P2M/Sol/S_{k}.lean)" for k in batch]
     out_text = header + "\n\n" + "\n".join(body_lines) + "\n"
 
     # Where to write the log.

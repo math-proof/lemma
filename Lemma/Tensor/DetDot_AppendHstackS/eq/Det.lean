@@ -2,7 +2,7 @@ import Lemma.Tensor.DetAppendHstackS.eq.MulDetS
 import Lemma.Tensor.EqMul1
 import Lemma.Tensor.ToMatrixDot.eq.MulToMatrixS
 import Lemma.Tensor.ToMatrixEye.eq.One
-open Matrix Tensor
+open Tensor
 
 
 @[main]
@@ -17,10 +17,10 @@ private lemma main
   let I : Tensor α [n, n] := Tensor.eye n
   let P := I.hstack B ++ (0 : Tensor α [n, n]).hstack I
   apply Eq.trans (Det.eq.DetToMatrix (A @ P))
-  rw [ToMatrixDot.eq.MulToMatrixS, det_mul]
+  rw [ToMatrixDot.eq.MulToMatrixS, Matrix.det_mul]
   have hI : I.toMatrix.det = 1 := by
     rw [ToMatrixEye.eq.One]
-    exact det_one
+    exact Matrix.det_one
   have hP : P.toMatrix.det = 1 := by
     have h := DetAppendHstackS.eq.MulDetS.triu I I B
     rw [Det.eq.DetToMatrix P, Det.eq.DetToMatrix I] at h

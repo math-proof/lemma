@@ -5,7 +5,7 @@ import Lemma.Tensor.GetShiftMatrix.eq.DeltaShiftRow
 import Lemma.Tensor.EqMul1
 import Lemma.Tensor.ToMatrixDot.eq.MulToMatrixS
 import Lemma.Fin.ShiftRow.eq.Ite
-open Matrix Tensor
+open Tensor
 set_option maxHeartbeats 800000
 
 
@@ -265,8 +265,8 @@ private lemma blockEquiv_symm_ge
 
 private lemma reindex_fromBlocks_apply
     (d : ℕ) (hd : 1 < d) (i j : Fin (d + d)) :
-    (reindex (blockEquiv d (by omega)) (blockEquiv d (by omega))
-        (fromBlocks (1 : Matrix (Fin 2) (Fin 2) (Tensor ℝ [])) 0 0
+    (Matrix.reindex (blockEquiv d (by omega)) (blockEquiv d (by omega))
+        (Matrix.fromBlocks (1 : Matrix (Fin 2) (Fin 2) (Tensor ℝ [])) 0 0
           (interleave (d - 1)).toMatrix)) i j =
       if hi : (i : ℕ) < 2 then
         if _hj : (j : ℕ) < 2 then
@@ -285,25 +285,25 @@ private lemma reindex_fromBlocks_apply
     have hbi := blockEquiv_symm_lt d (by omega) i hi
     if hj : (j : ℕ) < 2 then
       have hbj := blockEquiv_symm_lt d (by omega) j hj
-      simp [hbi, hbj, fromBlocks_apply₁₁, Matrix.one_apply, Fin.ext_iff, hi, hj]
+      simp [hbi, hbj, Matrix.fromBlocks_apply₁₁, Matrix.one_apply, Fin.ext_iff, hi, hj]
     else
       have hbj := blockEquiv_symm_ge d (by omega) j (Nat.le_of_not_lt hj)
-      simp [hbi, hbj, fromBlocks_apply₁₂, hi, hj]
+      simp [hbi, hbj, Matrix.fromBlocks_apply₁₂, hi, hj]
   else
     have hbi := blockEquiv_symm_ge d (by omega) i (Nat.le_of_not_lt hi)
     if hj : (j : ℕ) < 2 then
       have hbj := blockEquiv_symm_lt d (by omega) j hj
-      simp [hbi, hbj, fromBlocks_apply₂₁, hi, hj]
+      simp [hbi, hbj, Matrix.fromBlocks_apply₂₁, hi, hj]
     else
       have hbj := blockEquiv_symm_ge d (by omega) j (Nat.le_of_not_lt hj)
-      simp [hbi, hbj, fromBlocks_apply₂₂, hi, hj]
+      simp [hbi, hbj, Matrix.fromBlocks_apply₂₂, hi, hj]
 
 
 private lemma shift_mul_block
     (d : ℕ) (hd : 1 < d) :
     ((ShiftMatrix (α := ℝ) (⟨d, by omega⟩ : Fin (d + d)) ⟨1, by omega⟩) @ (interleave d)).toMatrix =
-      reindex (blockEquiv d (by omega)) (blockEquiv d (by omega))
-        (fromBlocks (1 : Matrix (Fin 2) (Fin 2) (Tensor ℝ [])) 0 0
+      Matrix.reindex (blockEquiv d (by omega)) (blockEquiv d (by omega))
+        (Matrix.fromBlocks (1 : Matrix (Fin 2) (Fin 2) (Tensor ℝ [])) 0 0
           (interleave (d - 1)).toMatrix) := by
   ext i j
   rw [reindex_fromBlocks_apply d hd i j]
@@ -343,7 +343,7 @@ private lemma main
     apply DetShiftMatrix.eq.PowNeg1Sub (α := ℝ)
       (⟨d, by omega⟩ : Fin (d + d)) ⟨1, by omega⟩ hd
   have hSP : (S @ P).toMatrix.det = (interleave (d - 1)).toMatrix.det := by
-    rw [shift_mul_block d hd, det_reindex_self, det_fromBlocks_zero₂₁, det_one,
+    rw [shift_mul_block d hd, Matrix.det_reindex_self, Matrix.det_fromBlocks_zero₂₁, Matrix.det_one,
       one_mul]
   have hprod : Mul.mul S.toMatrix.det P.toMatrix.det =
       (interleave (d - 1)).toMatrix.det :=

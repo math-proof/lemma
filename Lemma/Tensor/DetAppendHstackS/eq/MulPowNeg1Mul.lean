@@ -7,7 +7,7 @@ import Lemma.Tensor.EqDot_0'0
 import Lemma.Tensor.EqDot_Eye
 import Lemma.Tensor.EqMul1
 import Lemma.Tensor.MulMul.eq.Mul_Mul
-open Matrix Tensor
+open Tensor
 
 
 private lemma det_cast_add_comm

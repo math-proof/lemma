@@ -2,7 +2,6 @@ import sympy.Basic
 import Mathlib.Data.Int.GCD
 import Mathlib.Algebra.GCDMonoid.Finset
 import Mathlib.Algebra.Order.BigOperators.Ring.Finset
-open Finset
 
 
 @[main]
@@ -11,9 +10,9 @@ private lemma main
 -- given
   (hs : s.Nonempty) :
 -- imply
-  ∃ c : ℕ → ℤ, s.gcd id = s.sum fun i => i * c i := by
+  ∃ c : ℕ → ℤ, s.gcd id = ∑ i ∈ s, i * c i := by
 -- proof
-  refine Nonempty.cons_induction (singleton := ?singleton) (cons := ?cons) hs
+  refine Finset.Nonempty.cons_induction (singleton := ?singleton) (cons := ?cons) hs
   case singleton =>
     intro a
     refine ⟨fun i => if i = a then 1 else 0, ?_⟩
@@ -23,21 +22,21 @@ private lemma main
     obtain ⟨c, hc⟩ := hbase
     set g := s.gcd id with hg
     refine ⟨fun i => if i = e then Nat.gcdB g e else Nat.gcdA g e * c i, ?_⟩
-    have hlhs : (cons e s he).gcd id = Nat.gcd g e := by
-      rw [gcd_cons he, hg]
+    have hlhs : (Finset.cons e s he).gcd id = Nat.gcd g e := by
+      rw [Finset.gcd_cons he, hg]
       simp only [id]
       exact Nat.gcd_comm e g
     rw [hlhs]
-    have hcons : (cons e s he : Finset ℕ) = s ∪ {e} := by
-      rw [cons_eq_insert]
+    have hcons : (Finset.cons e s he : Finset ℕ) = s ∪ {e} := by
+      rw [Finset.cons_eq_insert]
       ext x
       simp
-    rw [hcons, sum_union (h := by simp [he])]
+    rw [hcons, Finset.sum_union (h := by simp [he])]
     simp
     rw [Nat.gcd_eq_gcd_ab, hc, Finset.sum_mul]
     have hAC : ∑ x ∈ s, (x : ℤ) * c x * Nat.gcdA g e =
         ∑ x ∈ s, (x : ℤ) * (Nat.gcdA g e * c x) := by
-      apply sum_congr rfl
+      apply Finset.sum_congr rfl
       intro x hx
       ring
     rw [hAC]
@@ -47,7 +46,7 @@ private lemma main
       split_ifs with hie
       · exact (he (hie ▸ hi)).elim
       · rfl
-    rw [sum_congr rfl hif]
+    rw [Finset.sum_congr rfl hif]
 
 
 

@@ -5,7 +5,7 @@ import Lemma.Tensor.Det.eq.DetToMatrix
 import Lemma.Tensor.GetShiftMatrix.eq.Ite
 import sympy.matrices.dense
 import sympy.matrices.expressions.permutation
-open Equiv Matrix Tensor
+open Equiv Tensor
 
 
 /--

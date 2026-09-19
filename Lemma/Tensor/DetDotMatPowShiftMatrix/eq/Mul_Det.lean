@@ -12,7 +12,7 @@ import Lemma.Tensor.ToMatrixDot.eq.MulToMatrixS
 import sympy.matrices.expressions.matpow
 import sympy.matrices.expressions.permutation
 import torch.stack
-open Matrix Tensor
+open Tensor
 
 
 @[main]

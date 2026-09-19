@@ -6,7 +6,7 @@ import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.Pow.eq.TensorListPow
 import sympy.matrices.dense
 import torch.stack
-open Matrix Tensor
+open Tensor
 
 
 /--

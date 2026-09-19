@@ -151,7 +151,7 @@ export function codeFromMysqlRow(row, module, user) {
   const code = { ...row };
   code.imports = decode(code.imports);
   code.open = decode(code.open);
-  code.def = decode(code.def);
+  code.preamble = decode(code.preamble);
   code.lemma = decode(code.lemma);
   code.error = decode(code.error);
   code.date = decode(code.date);

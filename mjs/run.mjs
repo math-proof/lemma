@@ -79,7 +79,7 @@ function resolveLeanFile(input) {
 async function replaceLemmaRow(conn, module, code) {
   const [result] = await conn.query(
     `REPLACE INTO lemma
-      (user, module, imports, \`open\`, set_option, \`def\`, lemma, error, date)
+      (user, module, imports, \`open\`, set_option, preamble, lemma, error, date)
      VALUES (?, ?, CAST(? AS JSON), CAST(? AS JSON), CAST(? AS JSON), CAST(? AS JSON), CAST(? AS JSON), CAST(? AS JSON), CAST(? AS JSON))`,
     [
       USER,
@@ -87,7 +87,7 @@ async function replaceLemmaRow(conn, module, code) {
       jsonCol(code.imports ?? []),
       jsonCol(code.open ?? []),
       jsonCol(code.set_option ?? []),
-      jsonCol(code.def ?? []),
+      jsonCol(code.preamble ?? []),
       jsonCol(code.lemma ?? []),
       jsonCol(code.error ?? []),
       jsonCol(code.date ?? {}),

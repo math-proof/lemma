@@ -1,6 +1,6 @@
 import Lemma.Tensor.Det.eq.DetToMatrix
 import Lemma.Tensor.ToMatrixDot.eq.MulToMatrixS
-open Matrix Tensor
+open Tensor
 
 
 @[main]
@@ -13,7 +13,7 @@ private lemma main
   (A @ B).det = A.det * B.det := by
 -- proof
   apply Eq.trans (congrArg (id (α := Tensor α [])) (Det.eq.DetToMatrix (A @ B)))
-  rw [ToMatrixDot.eq.MulToMatrixS, det_mul]
+  rw [ToMatrixDot.eq.MulToMatrixS, Matrix.det_mul]
   rw [← Det.eq.DetToMatrix A, ← Det.eq.DetToMatrix B]
   rfl
 

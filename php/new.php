@@ -241,7 +241,7 @@ EOT;
     $code = [
         'imports' => [],
         'open' => [],
-        'def' => [],
+        'preamble' => [],
         'lemma' => [$lemma],
         'error' => [],
         'date' => [

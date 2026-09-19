@@ -1,5 +1,5 @@
 <template>
-    <div class=def>
+    <div class=preamble>
         <renderLean :text=lean :index="[index]"></renderLean>
     </div>
 </template>
@@ -8,7 +8,7 @@
 import Vue from "../js/vue.js";
 import renderLean from "./renderLean.vue";
 
-console.log('import def.vue');
+console.log('import preamble.vue');
 
 const props = defineProps(['lean', 'index']);
 
@@ -17,7 +17,7 @@ const self = new Vue({
 
     data() {
         return {
-            postname: 'def',
+            postname: 'preamble',
         };
     },
 
@@ -35,11 +35,11 @@ const self = new Vue({
 </script>
 
 <style>
-div.def .cm-s-indent {
+div.preamble .cm-s-indent {
 	margin-left: -0.2em;
 }
 
-div.def {
+div.preamble {
     margin-bottom: 1em;
 }
 </style>

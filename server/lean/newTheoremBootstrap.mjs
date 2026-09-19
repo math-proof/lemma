@@ -81,7 +81,7 @@ export function buildNewTheoremCodeFromMathlibRow(row, module) {
   return {
     imports: [],
     open: [],
-    def: [],
+    preamble: [],
     lemma: [lemma],
     error: [],
     date: { created: today },

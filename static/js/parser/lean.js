@@ -63,7 +63,6 @@ export const token2classname = Object.freeze({
     '⊓': 'Lean_sqcap',
     '++': 'LeanAppend',
     '::': 'LeanConstruct',
-    '::ᵥ': 'LeanVConstruct',
     '→': 'Lean_rightarrow',
     '↦': 'Lean_mapsto',
     '↔': 'Lean_leftrightarrow',
@@ -343,6 +342,11 @@ export class Lean extends IndentedNode {
         if (self instanceof LeanCaret) {
             caret = self;
             replacement = new Ctor(caret, self.indent, self.level);
+        } else if (self instanceof LeanArgsSpaceSeparated) {
+            caret = new LeanCaret(self.indent, self.level);
+            replacement = new Ctor(caret, self.indent, self.level);
+            self.push(replacement);
+            return caret;
         } else {
             caret = new LeanCaret(self.indent, self.level);
             replacement = new Ctor(caret, self.indent, self.level);
@@ -350,10 +354,6 @@ export class Lean extends IndentedNode {
         }
         parent.replace(self, replacement);
         return caret;
-    }
-
-    insert_vconstruct(caret) {
-        return caret.push_binary(LeanVConstruct);
     }
 
     insert_word(caret, word) {
@@ -426,14 +426,30 @@ export class Lean extends IndentedNode {
 
         switch (token) {
             case 'import':
-            case 'open':
             case 'namespace':
             case 'def':
             case 'abbrev':
             case 'theorem':
             case 'lemma':
             case 'set_option':
+            case 'class':
+            case 'instance':
+            case 'macro':
+            case 'syntax':
                 return this.append(`Lean_${token}`, 'delspec');
+            case 'open': {
+                let i = self.start_idx + 1;
+                while (tokens[i] === ' ') i++;
+                if (tokens[i] === 'scoped') {
+                    self.start_idx = i; // loop ++ skips `scoped`
+                    const caret = this.append('Lean_open', 'delspec');
+                    let p = caret;
+                    while (p && !(p instanceof Lean_open)) p = p.parent;
+                    if (p instanceof Lean_open) p.scoped = true;
+                    return caret;
+                }
+                return this.append('Lean_open', 'delspec');
+            }
             case 'fun':
             case 'match': {
                 const asPropertyField = self.parseKeywordAsPropertyField(this, token);
@@ -719,11 +735,13 @@ export class Lean extends IndentedNode {
                 }
                 if (tokens[self.start_idx + 1] === ':') {
                     self.start_idx++;
+                    const caret = this.parent.insert_construct(this);
                     if (tokens[self.start_idx + 1] === 'ᵥ') {
                         self.start_idx++;
-                        return this.parent.insert_vconstruct(this);
+                        const node = caret && caret.parent;
+                        if (node instanceof LeanConstruct) node.subscript = 'ᵥ';
                     }
-                    return this.parent.insert_construct(this);
+                    return caret;
                 }
                 return this.parent.insert_colon(this);
             case ';':
@@ -745,7 +763,15 @@ export class Lean extends IndentedNode {
                     this.text += '*';
                     return this;
                 }
-                return this.push_arithmetic(token);
+                {
+                    const caret = this.push_arithmetic(token);
+                    if (tokens[self.start_idx + 1] === 'ᵥ') {
+                        self.start_idx++;
+                        const node = caret && caret.parent;
+                        if (node instanceof LeanMul) node.subscript = 'ᵥ';
+                    }
+                    return caret;
+                }
             case '|': {
                 const next = tokens[self.start_idx + 1];
                 if (next === '|') {
@@ -862,10 +888,30 @@ export class Lean extends IndentedNode {
                 }
                 return caret;
             }
+            case '⬝': {
+                const caret = this.push_arithmetic(token);
+                if (tokens[self.start_idx + 1] === 'ᵥ') {
+                    self.start_idx++;
+                    const node = caret && caret.parent;
+                    if (node instanceof Lean_cdotp) node.subscript = 'ᵥ';
+                }
+                return caret;
+            }
+            case 'ᵥ':
+                if (tokens[self.start_idx + 1] === '*') {
+                    self.start_idx++; // consume `*`
+                    const caret = this.push_arithmetic('*');
+                    const node = caret && caret.parent;
+                    if (node instanceof LeanMul) {
+                        node.subscript = 'ᵥ';
+                        node.isLeftSubscript = true;
+                    }
+                    return caret;
+                }
+                return this.parent.insert_word(this, token);
             // fallthrough: bare '/' uses same rule as '%'
             case '%':
             case '×':
-            case '⬝':
             case '∘':
             case '•':
             case '⊙':
@@ -900,11 +946,22 @@ export class Lean extends IndentedNode {
             case '≠':
             case '≡':
             case '≢':
-            case '≃':
             case '≍':
             case '≈':
             case '∣':
                 return this.push_arithmetic(token);
+            case '≃': {
+                // `≃ᵐ` — measurable equivalence; U+1D50 would otherwise be an ordinary identifier.
+                const ae = tokens[self.start_idx + 1] === 'ᵐ';
+                if (ae) self.start_idx++;
+                const caret = this.push_arithmetic('≃');
+                if (ae) {
+                    let p = caret;
+                    while (p && !(p instanceof Lean_simeq)) p = p.parent;
+                    if (p) p.superscript = 'ᵐ';
+                }
+                return caret;
+            }
             case '←':
                 return this.parent.insert_unary(this, 'Lean_leftarrow');
             case '∀':
@@ -923,8 +980,6 @@ export class Lean extends IndentedNode {
             }
             case '∑': {
                 const caret = this.append('Lean_sum', 'operator');
-                // `∑'` (`tsum`): an apostrophe fused directly to `∑` (no whitespace) is
-                // part of the operator — otherwise it would open a character literal.
                 if (tokens[self.start_idx + 1] === "'") {
                     self.start_idx++;
                     let p = this;
@@ -964,6 +1019,8 @@ export class Lean extends IndentedNode {
                 return this.parent.insert_unary(this, 'LeanQuarticRoot');
             case '↑':
                 return this.parent.insert_unary(this, 'Lean_uparrow');
+            case '⇑':
+                return this.parent.insert_unary(this, 'LeanUparrow');
             case '²':
                 return this.push_post_unary('LeanSquare');
             case '³':
@@ -991,6 +1048,10 @@ export class Lean extends IndentedNode {
                 const asPropertyField = self.parseKeywordAsPropertyField(this, token);
                 if (asPropertyField) return asPropertyField;
                 return this.parent.insert(this, `Lean${token[0].toUpperCase() + token.slice(1)}`, 'modifier');
+            }
+            case 'where': {
+                // `class … where <body>` / `instance … where <body>`: split header from body.
+                return this.push_binary(Lean_where);
             }
             case 'calc': {
                 const asPropertyField = self.parseKeywordAsPropertyField(this, token);
@@ -1375,7 +1436,11 @@ export class LeanCaret extends Lean {
     }
 
     push_accessibility($new, $accessibility) {
-        this.parent.replace(this, new (LEAN_CLASSES[$new])($accessibility, this, this.indent, this.level));
+        const Ctor = LEAN_CLASSES[$new];
+        if (!Ctor) {
+            throw new Error(`push_accessibility: unknown class "${$new}" (accessibility modifier "${$accessibility}")`);
+        }
+        this.parent.replace(this, new Ctor($accessibility, this, this.indent, this.level));
         return this;
     }
 
@@ -2565,6 +2630,17 @@ class LeanBracket extends LeanPairedGroup {
         return '[]';
     }
 
+    insert_newline(caret, newline_count, indent, next) {
+        if (this.indent <= indent && caret === this.arg) {
+            if (this.indent === indent) {
+                if (next != ']')
+                    indent = this.indent + 2;
+            }
+            return this.push_args_indented(indent, newline_count, false);
+        }
+        return super.insert_newline(caret, newline_count, indent, next);
+    }
+
     push_right(funcName) {
         if (funcName === this.constructor.name) {
             let lt = null;
@@ -2890,15 +2966,15 @@ export class LeanUpto extends LeanBinary {
     }
 
     strFormat() {
-        return '%s..%s';
+        return '%s' + this.sep() + '..%s';
     }
 
     latexFormat() {
-        return '%s..%s';
+        return '%s' + this.sep() + '..%s';
     }
 
     sep() {
-        return '';
+        return this.rhs instanceof LeanCaret ? ' ' : '';
     }
 }
 
@@ -2987,6 +3063,7 @@ export class LeanProperty extends LeanBinary {
         const parent = this.parent;
         return parent instanceof LeanArgsCommaNewLineSeparated ||
             parent instanceof LeanArgsNewLineSeparated ||
+            parent instanceof LeanStatements ||
             (parent instanceof LeanArgsIndented && parent.rhs === this) ||
             (parent instanceof LeanIte && !parent.inline && parent.else === this);
     }
@@ -3634,12 +3711,15 @@ export class LeanNotEquiv extends LeanRelational {
 export class Lean_simeq extends LeanRelational {
     static input_priority = 50;
 
+    /** @type {string | null} */
+    superscript = null;
+
     get operator() {
-        return '≃';
+        return this.superscript ? `≃${this.superscript}` : '≃';
     }
 
     latexArgs(syntax) {
-        if (syntax) syntax['≃'] = true;
+        if (syntax) syntax[this.operator] = true;
         return super.latexArgs(syntax);
     }
 }
@@ -3763,8 +3843,16 @@ export class LeanSub extends LeanArithmetic {
 export class LeanMul extends LeanArithmetic {
     static input_priority = 70;
 
-    /** LaTeX: `\\cdot`, thin space, or empty for juxtaposition. */
     get command() {
+        if (this.subscript) {
+            const map = LeanToken.subscript;
+            const inner = [...this.subscript]
+                .map((ch) => (map[ch] !== undefined ? map[ch] : ch))
+                .join('');
+            return this.isLeftSubscript
+                ? `_${inner}{\\color{red}*}`
+                : `{\\color{red}*}_${inner}`;
+        }
         const lhs = this.lhs;
         const rhs = this.rhs;
         if (
@@ -3792,7 +3880,8 @@ export class LeanMul extends LeanArithmetic {
     }
 
     get operator() {
-        return '*';
+        if (!this.subscript) return '*';
+        return this.isLeftSubscript ? `${this.subscript}*` : `*${this.subscript}`;
     }
 
     latexArgs(syntax) {
@@ -4113,11 +4202,16 @@ export class LeanConstruct extends LeanArithmetic {
     static input_priority = 67;
 
     get command() {
-        return '::';
+        if (!this.subscript) return '::';
+        const map = LeanToken.subscript;
+        const inner = [...this.subscript]
+            .map((ch) => (map[ch] !== undefined ? map[ch] : ch))
+            .join('');
+        return `::_${inner}`;
     }
 
     get operator() {
-        return '::';
+        return this.subscript ? `::${this.subscript}` : '::';
     }
 }
 
@@ -4126,18 +4220,6 @@ export class Lean_lazy extends LeanBinary {
     static input_priority = 20;
     get stack_priority() {
         return 19;
-    }
-}
-
-export class LeanVConstruct extends LeanArithmetic {
-    static input_priority = 67;
-
-    get command() {
-        return '::_v';
-    }
-
-    get operator() {
-        return '::ᵥ';
     }
 }
 
@@ -4192,11 +4274,17 @@ export class Lean_cdotp extends LeanArithmetic {
     static input_priority = 71;
 
     get operator() {
-        return '⬝';
+        return this.subscript ? `⬝${this.subscript}` : '⬝';
     }
 
     get command() {
-        return '{\\color{red}\\cdotp}';
+        const base = '{\\color{red}\\cdotp}';
+        if (!this.subscript) return base;
+        const map = LeanToken.subscript;
+        const inner = [...this.subscript]
+            .map((ch) => (map[ch] !== undefined ? map[ch] : ch))
+            .join('');
+        return `${base}_${inner}`;
     }
 }
 
@@ -5629,7 +5717,7 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
     const $import = [];
     const open = [];
     const set_option = [];
-    const def = [];
+    const preamble = [];
     const lemma = [];
     const date = {};
     const error = [];
@@ -6217,7 +6305,7 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                 });
             }
         } else if (stmt instanceof Lean_def) {
-            def.push(strStmt(stmt));
+            preamble.push(strStmt(stmt));
         } else if (stmt instanceof Lean_open) {
             let o = stmt.arg;
             if (o instanceof LeanArgsSpaceSeparated) {
@@ -6247,7 +6335,7 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
         imports: $import,
         open,
         set_option,
-        def,
+        preamble,
         lemma,
         date,
         error,
@@ -6589,13 +6677,12 @@ class Lean_import extends LeanCommand {
     }
 }
 
-/** `open %s`. */
 class Lean_open extends LeanCommand {
     get stack_priority() {
         return 27;
     }
     get operator() {
-        return 'open';
+        return this.scoped ? 'open scoped' : 'open';
     }
 
     append(func, type) {
@@ -8052,6 +8139,33 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
                             && String(val.args[0]).trim() === String(arrow.lhs.peelGroup()).trim()) {
                             markRV(joint.args[0]);
                             markRV(joint.args[1]);
+                            // Beta-reduce `fun «a.bvar» ↦ body` so we print
+                            // E_a (body | s) instead of E_a ((λ a ↦ body)(a) | s).
+                            let integrand = peel(f);
+                            if (integrand instanceof Lean_fun) {
+                                const fArrow = integrand.arg;
+                                const fBinder = fArrow.lhs.peelGroup();
+                                if (String(fBinder).trim() === String(arrow.lhs.peelGroup()).trim()) {
+                                    integrand = fArrow.rhs.peelGroup();
+                                    const rvName = joint.args[0] instanceof LeanToken
+                                        ? joint.args[0].text
+                                        : String(joint.args[0]).trim();
+                                    const markBvars = (n) => {
+                                        if (!n || typeof n !== 'object') return;
+                                        if (n instanceof LeanDoubleAngleQuotation) {
+                                            const lhs = n.boundValueLhs();
+                                            if (lhs instanceof LeanToken && lhs.text === rvName)
+                                                lhs.kwargs.isRandomVariable = true;
+                                        }
+                                        if (Array.isArray(n.args)) n.args.forEach(markBvars);
+                                        for (const k of ['arg', 'lhs', 'rhs']) {
+                                            if (n[k]) markBvars(n[k]);
+                                        }
+                                    };
+                                    markBvars(integrand);
+                                    return ['cond-body', joint.args[0], integrand, joint.args[1]];
+                                }
+                            }
                             return ['cond', joint.args[0], f, joint.args[0], joint.args[1]];
                         }
                     }
@@ -8068,6 +8182,9 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
                 return '\\mathop{\\mathbb{E}}\\limits_{%s}\\left(%s\\left(%s\\right)\\right)';
             case 'cond':
                 return '\\mathop{\\mathbb{E}}\\limits_{%s}\\left(%s\\left(%s\\right)\\ \\mathrel{\\bigg|}\\ %s\\right)';
+            case 'cond-body':
+                // Integrand already applied (beta-reduced fun body): E_a (c f a | s)
+                return '\\mathop{\\mathbb{E}}\\limits_{%s}\\left(%s\\ \\mathrel{\\bigg|}\\ %s\\right)';
             default:
                 return '{\\mathop{\\mathbb{E}}}\\ %s\\ %s';
         }
@@ -8870,6 +8987,9 @@ export class LeanTactic extends LeanSyntax {
         for (let i = this.args.length - 1; i >= 0; i--) {
             if (this.args[i] instanceof LeanBy) return this.args[i];
         }
+        let a = this.arg;
+        if (a instanceof LeanColon && a.rhs instanceof LeanAssign) a = a.rhs;
+        if (a instanceof LeanAssign && a.rhs instanceof LeanBy) return a.rhs;
     }
 
     get arrow() {
@@ -9015,7 +9135,8 @@ export class LeanTactic extends LeanSyntax {
             case 'obtain': {
                 const assign = arg;
                 if (assign instanceof LeanAssign) {
-                    const lhs = assign.lhs;
+                    let {lhs} = assign;
+                    if (lhs instanceof LeanColon) lhs = lhs.lhs;
                     if (lhs instanceof LeanAngleBracket) {
                         for (const t of lhs.tokens_comma_separated()) {
                             if (t.text !== 'rfl') token.push(t);
@@ -10094,9 +10215,20 @@ class LeanTacticBlock extends LeanUnary {
                         case 'obtain': {
                             const assign = stmt.arg;
                             if (assign instanceof LeanAssign) {
-                                const bitOr = assign.lhs;
-                                if (bitOr instanceof LeanBitOr) {
-                                    const tokens = bitOr.tokens_bar_separated();
+                                let {lhs} = assign;
+                                if (lhs instanceof LeanColon) lhs = lhs.lhs;
+                                if (lhs instanceof LeanAngleBracket) {
+                                    const tokens = lhs.tokens_comma_separated();
+                                    if (tokens.length && tacticBlockCount < tokens.length) {
+                                        const token = tokens[tacticBlockCount].clone();
+                                        token.indent = indent;
+                                        token.level = level;
+                                        statements.unshift(
+                                            new LeanTactic('echo', token, indent, level),
+                                        );
+                                    }
+                                } else if (lhs instanceof LeanBitOr) {
+                                    const tokens = lhs.tokens_bar_separated();
                                     if (tokens.length && tacticBlockCount < tokens.length) {
                                         const token = tokens[tacticBlockCount].clone();
                                         token.indent = indent;
@@ -10624,6 +10756,44 @@ export class Lean_def extends LeanArgs {
 export class Lean_theorem extends Lean_def {}
 
 export class Lean_abbrev extends Lean_def {}
+
+class Lean_where extends LeanBinary {
+    static input_priority = 18;
+
+    get operator() {
+        return 'where';
+    }
+
+    get command() {
+        return 'where';
+    }
+
+    sep() {
+        return this.rhs instanceof LeanCaret ? ' ' : '\n';
+    }
+
+    /**
+     * Capture the indented field block after `where` (mirrors `Lean_def::insert_newline`
+     * wrapping the `:=` rhs into a `LeanStatements`).
+     */
+    insert_newline(caret, newline_count, indent, next) {
+        if (this.indent < indent && caret === this.rhs && this.rhs instanceof LeanCaret) {
+            const rhs = this.rhs;
+            rhs.indent = indent;
+            this.rhs = new LeanStatements([rhs], indent, rhs.level);
+            return rhs;
+        }
+        return super.insert_newline(caret, newline_count, indent, next);
+    }
+}
+
+export class Lean_class extends Lean_def {}
+
+export class Lean_instance extends Lean_def {}
+
+export class Lean_macro extends Lean_def {}
+
+export class Lean_syntax extends Lean_def {}
 
 export class Lean_lemma extends Lean_def {
     echo() {
@@ -11261,16 +11431,28 @@ class Lean_int extends LeanBigOperator {
 
     integrandLatex(syntax, partial) {
         if (!partial) return this.scope ? this.scope.toLatex(syntax) : '';
-        if (!(this.scope instanceof LeanArgsSpaceSeparated)) return this.scope.toLatex(syntax);
-        const args = this.scope.args
-            .filter((a) => a !== partial && !(a instanceof LeanCaret));
-        const density = LeanArgsSpaceSeparated.probDensityParts(args);
-        if (density)
-            return density.map((a) => a.toLatex(syntax)).join('\\ ');
-        const cond = LeanArgsSpaceSeparated.condProbParts(args);
-        if (cond)
-            return LeanArgsSpaceSeparated.condProbLatex(cond, syntax).join('\\ ');
-        return args.map((a) => a.toLatex(syntax)).join(' ');
+        if (this.scope instanceof LeanArgsSpaceSeparated) {
+            const args = this.scope.args
+                .filter((a) => a !== partial && !(a instanceof LeanCaret));
+            const density = LeanArgsSpaceSeparated.probDensityParts(args);
+            if (density)
+                return density.map((a) => a.toLatex(syntax)).join('\\ ');
+            const cond = LeanArgsSpaceSeparated.condProbParts(args);
+            if (cond)
+                return LeanArgsSpaceSeparated.condProbLatex(cond, syntax).join('\\ ');
+            return args.map((a) => a.toLatex(syntax)).join(' ');
+        }
+        // Binary operator scope (e.g. `c • f x ∂μ`): partial is in scope.rhs
+        if (this.scope != null && this.scope.rhs instanceof LeanArgsSpaceSeparated &&
+            this.scope.rhs.args.includes(partial)) {
+            const filteredRhs = this.scope.rhs.args
+                .filter((a) => a !== partial && !(a instanceof LeanCaret));
+            const lhsLatex = this.scope.lhs.toLatex(syntax);
+            const rhsLatex = filteredRhs.map((a) => a.toLatex(syntax)).join(' ');
+            const op = this.scope.command ?? this.scope.operator;
+            return `${lhsLatex} ${op} ${rhsLatex}`;
+        }
+        return this.scope.toLatex(syntax);
     }
 
     latexFormat() {
@@ -11475,6 +11657,11 @@ const LEAN_CLASSES = {
     Lean_abbrev,
     Lean_theorem,
     Lean_lemma,
+    Lean_class,
+    Lean_instance,
+    Lean_macro,
+    Lean_syntax,
+    Lean_where,
     LeanCaret,
     Lean_let,
     Lean_have,
@@ -11519,7 +11706,6 @@ const LEAN_CLASSES = {
     Lean_times,
     LeanPow,
     LeanConstruct,
-    LeanVConstruct,
     LeanAppend,
     Lean_bigcap,
     Lean_bigcup,

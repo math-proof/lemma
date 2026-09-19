@@ -34,6 +34,7 @@ SH_DIR = ROOT / "sh"
 CUSTOM_ATTR_HEADS = frozenset({
     "main", "comm", "mp", "mpr", "mp.comm", "mpr.comm", "comm.is", "is.comm",
     "mt", "mp.mt", "mpr.mt", "Or.inl", "Or.inr", "mpr.left", "mpr.right",
+    "mp.left", "mp.right",
     "And.left", "And.right",
     "fin", "fin.comm", "fin.mp", "fin.mpr", "val", "subst", "cast", "cast.fin",
     "mp and", "mpr and", "mp.comm and", "mpr.comm and",

@@ -90,7 +90,7 @@ function Format-LemmaInsertRow {
     }
 
     $submodules = $Submodules -replace "'", "''"
-    return "  ('$user', `"$Module`", '$submodules', '[]', '[]', '[]', '[]', $dateJson),"
+    return "  ('$user', `"$Module`", '$submodules', '[]', '[]', '[]', '[]', '[]', $dateJson),"
 }
 
 Set-Content -Path test.lean -Value $null
@@ -157,7 +157,7 @@ Set-Content test.lean -Value $null
 Write-Output "modules:"
 
 # Create or clear the test.sql file with the initial INSERT statement
-"INSERT INTO lemma (user, module, imports, open, def, lemma, error, date) VALUES " | Out-File -FilePath test.sql -Encoding utf8
+"INSERT INTO lemma (user, module, imports, open, set_option, preamble, lemma, error, date) VALUES " | Out-File -FilePath test.sql -Encoding utf8
 
 # Process each module in the imports array
 foreach ($module in $imports) {
@@ -466,6 +466,58 @@ ForEach-Object {
         if ($module -cmatch '^([a-zA-Z0-9_]+)\.(.+)\.is\.(.+?)(?:\.of(\..+))?$') {
             $new_module = "$($matches[1]).$($matches[2]).of.$($matches[3])$($matches[4])"
             Add-Content -Path "test.sql" -Value (Format-LemmaInsertRow -Module $new_module -Synthetic)
+        }
+    }
+    if ($attributes -cmatch '\bmp\.left\b') {
+        # Apply `mp` (commutateIs "of") then And.left projection.
+        # Mirrors `List.mpProjTokens` / `Name.mpProjName` in sympy/Basic.lean.
+        $tokens = $module -split '\.'
+        $rest = @($tokens[1..($tokens.Length - 1)])
+        $isIdx = [array]::IndexOf([object[]]$rest, 'is')
+        if ($isIdx -ge 0) {
+            $first = @()
+            if ($isIdx -gt 0) { $first = @($rest[0..($isIdx - 1)]) }
+            $afterIs = @()
+            if ($isIdx -lt $rest.Length - 1) { $afterIs = @($rest[($isIdx + 1)..($rest.Length - 1)]) }
+            # commutateIs "of": section + afterIs + "of" + first
+            $mpTokens = @($tokens[0]) + $afterIs + @('of') + $first
+            $mpModule = $mpTokens -join '.'
+            $new_module = Get-AndProjModule -Module $mpModule -Left $true
+            if ($new_module) {
+                Add-Content -Path "test.sql" -Value (Format-LemmaInsertRow -Module $new_module -Synthetic)
+            }
+            else {
+                Write-Host "Ignoring @[main, mp.left] at $file"
+            }
+        }
+        else {
+            Write-Host "Ignoring @[main, mp.left] at $file (no `is` segment)"
+        }
+    }
+    if ($attributes -cmatch '\bmp\.right\b') {
+        # Apply `mp` (commutateIs "of") then And.right projection.
+        # Mirrors `List.mpProjTokens` / `Name.mpProjName` in sympy/Basic.lean.
+        $tokens = $module -split '\.'
+        $rest = @($tokens[1..($tokens.Length - 1)])
+        $isIdx = [array]::IndexOf([object[]]$rest, 'is')
+        if ($isIdx -ge 0) {
+            $first = @()
+            if ($isIdx -gt 0) { $first = @($rest[0..($isIdx - 1)]) }
+            $afterIs = @()
+            if ($isIdx -lt $rest.Length - 1) { $afterIs = @($rest[($isIdx + 1)..($rest.Length - 1)]) }
+            # commutateIs "of": section + afterIs + "of" + first
+            $mpTokens = @($tokens[0]) + $afterIs + @('of') + $first
+            $mpModule = $mpTokens -join '.'
+            $new_module = Get-AndProjModule -Module $mpModule -Left $false
+            if ($new_module) {
+                Add-Content -Path "test.sql" -Value (Format-LemmaInsertRow -Module $new_module -Synthetic)
+            }
+            else {
+                Write-Host "Ignoring @[main, mp.right] at $file"
+            }
+        }
+        else {
+            Write-Host "Ignoring @[main, mp.right] at $file (no `is` segment)"
         }
     }
     if ($attributes -cmatch '\bmp\.comm\b') {

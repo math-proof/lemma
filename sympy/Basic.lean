@@ -258,6 +258,31 @@ def Expr.mp (type value : Expr) (parity : ℕ := 0) (reverse : Bool := false) (a
   )
 
 def List.mp (list : List String) : List String := list.decomposeOf [] (fun list _ => list.commutateIs "of") 1
+
+/--
+Module-name tokens for an `mp.left` / `mp.right` projection.
+
+Given source tokens `[Section, LHS, "is", T1, T2]` (a biconditional whose right-hand
+side is a conjunction `T1 ∧ T2`), `List.mp` produces
+`[Section, T1, T2, "of", LHS]`. Then:
+
+- `left = true`: drop the second conjunct type `T2` →
+  `[Section, T1, "of", LHS]`
+- `left = false`: drop the first conjunct type `T1` →
+  `[Section, T2, "of", LHS]`
+
+When `T1 = T2` both targets coincide, so a `.fst` / `.snd` suffix is appended.
+-/
+def List.mpProjTokens (tokens : List String) (left : Bool) : List String :=
+  let mpTokens := tokens.mp
+  let ofIdx := mpTokens.idxOf "of"
+  let pre := mpTokens.take ofIdx                  -- [Section, T1, T2]
+  let rest := mpTokens.drop (ofIdx + 1)          -- [LHS]
+  let secLen := pre.length - 2
+  let sectionTypes :=
+    if left then pre.take (secLen + 1)            -- [Section, T1]
+    else           pre.take secLen ++ [pre.getLast!]  -- [Section, T2]
+  sectionTypes ++ "of" :: rest
 def List.comm.is (list : List String) (parity : List Bool) : List String :=
   list.decomposeOf parity fun list _ =>
     let i := list.idxOf "is"
@@ -922,6 +947,24 @@ def Name.andProjName (moduleTokens : List String) (declName : Name) (left : Bool
   base.lemmaName declName
 
 /--
+Generated declaration name for an `mp.left` / `mp.right` projection.
+
+Applies the `mp` transformation to the source tokens (replacing `is` with `of`),
+then drops the appropriate conjunct type. Mirrors `Name.andProjName` for the
+`Type1.is.Type2.Type3` biconditional shape.
+-/
+def Name.mpProjName (moduleTokens : List String) (declName : Name) (left : Bool) : Name :=
+  let leftTokens := moduleTokens.mpProjTokens true
+  let rightTokens := moduleTokens.mpProjTokens false
+  let base := (if left then leftTokens else rightTokens).foldl Name.str default
+  let base :=
+    if leftTokens == rightTokens then
+      base.str (if left then "fst" else "snd")
+    else
+      base
+  base.lemmaName declName
+
+/--
 `@[And.left]` extracts the left conjunct of a theorem's conjunctive conclusion.
 
 `theorem Section.Type1.Type2.of.Givens (…): A ∧ B` generates
@@ -962,6 +1005,64 @@ initialize registerBuiltinAttribute {
     addAndCompile <| .thmDecl {
       name := Name.andProjName (← getEnv).moduleTokens declName false
       levelParams := decl.levelParams
+      type := type
+      value := value
+    }
+}
+
+/--
+`@[mp.left]` applies `@[mp]` to an equivalence and then projects the LEFT
+conjunct of the resulting `∧`-conclusion.
+
+For `theorem Section.Type1.is.Type2.Type3 (…): A ↔ (B ∧ C)` generates
+`theorem Section.Type2.of.Type1 (…): A → B`, proved by `.mp.left`.
+When `Type2 = Type3` the generated name carries a `.fst` suffix.
+-/
+initialize registerBuiltinAttribute {
+  name := `mp.left
+  descr := "Apply mp to an equivalence, then project the LEFT conjunct (Int.LtAbs.is.LtNeg.Lt → Int.LtNeg.of.LtAbs)"
+  applicationTime := .afterCompilation
+  add := fun declName stx kind => do
+    let decl ← getConstInfo declName
+    let levelParams := decl.levelParams
+    let parity := stx.getNum
+    -- Step 1: mp (P ↔ Q  →  P → Q)
+    let ⟨_, mpType, mpValue⟩ :=
+      Expr.mp decl.type (if parity > 0 then decl.proof else .const declName (levelParams.map .param))
+        parity (and := stx.getIdent == `and)
+    -- Step 2: And.left on the result (P → B ∧ C  →  P → B)
+    let (type, value) := Expr.andProj mpType mpValue true
+    addAndCompile <| .thmDecl {
+      name := Name.mpProjName (← getEnv).moduleTokens declName true
+      levelParams := levelParams
+      type := type
+      value := value
+    }
+}
+
+/--
+`@[mp.right]` applies `@[mp]` to an equivalence and then projects the RIGHT
+conjunct of the resulting `∧`-conclusion.
+
+For `theorem Section.Type1.is.Type2.Type3 (…): A ↔ (B ∧ C)` generates
+`theorem Section.Type3.of.Type1 (…): A → C`, proved by `.mp.right`.
+When `Type2 = Type3` the generated name carries a `.snd` suffix.
+-/
+initialize registerBuiltinAttribute {
+  name := `mp.right
+  descr := "Apply mp to an equivalence, then project the RIGHT conjunct (Int.LtAbs.is.LtNeg.Lt → Int.Lt.of.LtAbs)"
+  applicationTime := .afterCompilation
+  add := fun declName stx kind => do
+    let decl ← getConstInfo declName
+    let levelParams := decl.levelParams
+    let parity := stx.getNum
+    let ⟨_, mpType, mpValue⟩ :=
+      Expr.mp decl.type (if parity > 0 then decl.proof else .const declName (levelParams.map .param))
+        parity (and := stx.getIdent == `and)
+    let (type, value) := Expr.andProj mpType mpValue false
+    addAndCompile <| .thmDecl {
+      name := Name.mpProjName (← getEnv).moduleTokens declName false
+      levelParams := levelParams
       type := type
       value := value
     }

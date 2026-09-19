@@ -3,11 +3,11 @@
         <form name=form spellcheck=false method=post :action=action>
             <input type=hidden name=module :value=module />
             <input type=hidden name=imports :value=JSON.stringify(imports) />
-            <input type=hidden name=def :value=JSON.stringify(self.def) />
+            <input type=hidden name=preamble :value=JSON.stringify(self.preamble) />
             <input type=hidden name=open :value=JSON.stringify(open) />
             <input type=hidden name=set_option :value=JSON.stringify(set_option) />
             <input type=hidden name=date :value=JSON.stringify(date) />
-            <def v-for="lean, index in self.def" :lean=lean :index=index />
+            <preamble v-for="lean, index in self.preamble" :lean=lean :index=index />
             <lemma v-for="lemma, index in self.lemma" :comment=lemma.comment :attribute=lemma.attribute :accessibility=lemma.accessibility :name=lemma.name :instImplicit=lemma.instImplicit :strictImplicit=lemma.strictImplicit :implicit=lemma.implicit :explicit=lemma.explicit :given=lemma.given :default=lemma.default :imply=lemma.imply :proof=lemma.proof :index=index />
         </form>
 
@@ -38,7 +38,7 @@
 
 <script setup>
 import lemma from "./lemma.vue"
-import def from "./def.vue"
+import preamble from "./preamble.vue"
 import Vue from "../js/vue.js";
 import { mounted, click_left as clickLeftDocument, fetch_lemma } from "../js/lemma.js";
 import { tactics } from "../codemirror/mode/lean/tactics.js";
@@ -49,7 +49,7 @@ const props = defineProps([
 	'imports',
 	'open',
 	'set_option',
-	'def',
+	'preamble',
 	'lemma',
 	'error',
 	'module',
@@ -545,14 +545,14 @@ order by depth desc`);
             console.log(sql);
             var topology = await form_post('php/request/execute.php', {sql, resultType: 1});
             for (var obj of topology) {
-                var {module, imports, lemma, open, def} = obj;
+                var {module, imports, lemma, open, preamble} = obj;
                 Object.assign(
                     obj, 
                     {
                         imports: JSON.parse(imports),
                         lemma: JSON.parse(lemma),
                         open: JSON.parse(open),
-                        def: JSON.parse(def)
+                        preamble: JSON.parse(preamble)
                     }
                 );
             }
@@ -561,7 +561,7 @@ order by depth desc`);
                 imports: this.imports,
                 lemma: deepCopy(this.lemma, ['think', 'final']),
                 open: this.open,
-                def: this.def
+                preamble: this.preamble
             });
             await this.fetch_lemma_sequentially(topology, axiom);
             if (axiom)
@@ -702,8 +702,8 @@ order by depth desc`);
                     axiom = axiom.map(name => {
                         var index = requisites.findIndex(code => code.module == name);
                         if (index >= 0) {
-                            var {def, lemma} = requisites[index];
-                            return [...def, ...lemma].join("\n\n");
+                            var {preamble, lemma} = requisites[index];
+                            return [...preamble, ...lemma].join("\n\n");
                         }
                     }).filter(code => code);
                     codes.push(...axiom);
@@ -746,7 +746,7 @@ where
                         codeObject.lemma = JSON.parse(codeObject.lemma);
                         codeObject.open = JSON.parse(codeObject.open);
                         codeObject.set_option = JSON.parse(codeObject.set_option);
-                        codeObject.def = JSON.parse(codeObject.def);
+                        codeObject.preamble = JSON.parse(codeObject.preamble);
                         await this.fetch_lemma(codeObject, axiom, parent);
                     }
                     else {
@@ -952,13 +952,13 @@ where
         },
 
         fetch_dependency(topology) {
-            var def = [];
+            var preamble = [];
             var lemma = [];
             for (var codeObject of topology) {
-                def.push(...codeObject.def);
+                preamble.push(...codeObject.preamble);
                 lemma.push(...codeObject.lemma);
             }
-            return [...def, ...lemma];
+            return [...preamble, ...lemma];
         },
 
         update(indices, value) {
@@ -1073,17 +1073,18 @@ where
         line2indices(find) {
             find -= 1;
             var line = this.initial_line;
-            var {def} = this;
-            if (def) {
-                for (let index of range(def.length)) {
+            var {preamble} = this;
+            if (preamble) {
+                for (let index of range(preamble.length)) {
                     line += 2;
-                    // def function_name: (x : α) := ...
+                    // preamble declaration, e.g. `def f (x : α) := …`
                     var line_def = line;
-                    line += def[index].split("\n").length;
+                    line += preamble[index].split("\n").length;
                     if (find < line)
-                        return ['def', index, find - line_def];
+                        return ['preamble', index, find - line_def];
                 }
             }
+
 
             for (let index of range(this.lemma.length)) {
                 line += 2;
@@ -1470,7 +1471,7 @@ GROUP BY l.user, l.module`;
         async echo(module){
             var code = await form_post('php/request/echo.php', {module});
             console.log(JSON.stringify(code, null, "\t"));
-            var {imports, open, set_option, def, lemma, error, date} = code;
+            var {imports, open, set_option, preamble, lemma, error, date} = code;
             this.lemma.array_assign(lemma);
             this.error.array_assign(error);
             this.refresh = true;
@@ -1478,14 +1479,14 @@ GROUP BY l.user, l.module`;
             var sql = `
 replace into 
     axiom.lemma
-    (user, module, imports, open, set_option, def, lemma, error, date) 
+    (user, module, imports, open, set_option, preamble, lemma, error, date) 
     values (
         '${user}',
         "${module}",
         ${JSON.stringify(imports).mysqlStr()},
         ${JSON.stringify(open).mysqlStr()},
         ${JSON.stringify(set_option).mysqlStr()},
-        ${JSON.stringify(def).mysqlStr()},
+        ${JSON.stringify(preamble).mysqlStr()},
         ${JSON.stringify(lemma).mysqlStr()},
         ${JSON.stringify(error).mysqlStr()},
         ${JSON.stringify(date).mysqlStr()}

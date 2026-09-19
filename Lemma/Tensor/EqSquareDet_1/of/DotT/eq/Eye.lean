@@ -4,7 +4,7 @@ import Lemma.Tensor.Det.eq.DetToMatrix
 import Lemma.Tensor.ToMatrixDot.eq.MulToMatrixS
 import Lemma.Tensor.ToMatrixEye.eq.One
 import Lemma.Tensor.ToMatrixT.eq.TToMatrix
-open Tensor Matrix
+open Tensor
 
 
 @[main]
@@ -21,9 +21,9 @@ private lemma main
   have hm : (XT @ X).toMatrix = (Tensor.eye (α := α) n).toMatrix :=
     congrArg Tensor.toMatrix h'
   rw [ToMatrixDot.eq.MulToMatrixS, ToMatrixT.eq.TToMatrix, ToMatrixEye.eq.One] at hm
-  have hd : (X.toMatrixᵀ * X.toMatrix).det = (1 : Matrix (Fin n) (Fin n) (Tensor α [])).det :=
+  have hd : ((X.toMatrix).transpose * X.toMatrix).det = (1 : Matrix (Fin n) (Fin n) (Tensor α [])).det :=
     congrArg Matrix.det hm
-  rw [det_mul, det_transpose, ← pow_two, det_one] at hd
+  rw [Matrix.det_mul, Matrix.det_transpose, ← pow_two, Matrix.det_one] at hd
   apply Eq.trans _ hd
   rw [Det.eq.DetToMatrix]
   rfl

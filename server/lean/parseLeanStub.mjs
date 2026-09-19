@@ -97,7 +97,7 @@ export function buildRenderPropsFromSource(source, module, { user = 'lean' } = {
       imports,
       open: openParts.length ? openParts : [],
       set_option: '[]',
-      def: [],
+      preamble: [],
       lemma: [],
       error: [
         {
@@ -117,7 +117,7 @@ export function buildRenderPropsFromSource(source, module, { user = 'lean' } = {
     imports,
     open: openParts.length ? openParts : [],
     set_option: '[]',
-    def: [],
+    preamble: [],
     lemma: [parsed],
     error: [],
     date,

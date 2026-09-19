@@ -1,4 +1,5 @@
 import Mathlib.MeasureTheory.Measure.WithDensity
+import Mathlib.Data.EReal.Operations
 import Mathlib.MeasureTheory.Measure.Decomposition.RadonNikodym
 import sympy.stats.rv
 open MeasureTheory
@@ -55,6 +56,32 @@ noncomputable def Expectation
     (f : α → ENNReal) :
     ENNReal :=
   ∫⁻ a, f a ∂ν
+
+
+/--
+Extended-real (signed) expectation of an observable `f : α → EReal` under a law
+`ν : Measure α`, via the classical Lebesgue splitting into positive and negative
+parts:
+
+  `ExpectationEx ν f = (∫⁻ a, (f a).toENNReal ∂ν) - (∫⁻ a, (-f a).toENNReal ∂ν)`
+
+(with `ENNReal` coerced into `EReal`). Here `EReal.toENNReal` is `max(·, 0)` into
+`[0, ∞]`, so the two integrals are the usual `E[f⁺]` and `E[f⁻]`.
+
+This is the signed counterpart of `Expectation` (which only handles
+`f : α → ENNReal`). The value may be `⊤`, `⊥`, or finite; Mathlib's `EReal`
+arithmetic sends the indeterminate form `⊤ - ⊤` to `⊥`.
+
+For a random variable `x : Ω → α` use `ExpectationEx (𝕡.map x) f`, as with
+`Expectation`. Conditioning is again by swapping in the conditional law.
+-/
+noncomputable def ExpectationEx
+    {α : Type*}
+    [MeasurableSpace α]
+    (ν : Measure α)
+    (f : α → EReal) :
+    EReal :=
+  (∫⁻ a, (f a).toENNReal ∂ν : EReal) - (∫⁻ a, (-f a).toENNReal ∂ν : EReal)
 
 
 /--

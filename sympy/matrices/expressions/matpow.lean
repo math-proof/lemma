@@ -1,5 +1,4 @@
 import sympy.concrete.products
-import sympy.matrices.dense
 import torch.stack
 import torch.linalg.inv
 import Mathlib.LinearAlgebra.Matrix.NonsingularInverse

@@ -957,3 +957,69 @@ initialize registerBuiltinAttribute {
     }
 }
 
+/--
+`@[mp.left']` — debug mirror of the production `@[mp.left]`. Identical body
+shape but uses `Expr.mp'` (which logs intermediate steps) and re-uses the
+production name helper `Name.mpProjName` from `sympy.Basic`.
+-/
+initialize registerBuiltinAttribute {
+  name := `mp.left'
+  descr := "Debug mirror of @[mp.left]; uses Expr.mp' with logging"
+  applicationTime := .afterCompilation
+  add := fun declName stx kind => do
+    let decl ← getConstInfo declName
+    let levelParams := decl.levelParams
+    let parity := stx.getNum
+    let and := stx.getIdent == `and
+    Lean.logInfo s!"[mp.left'] declName = {declName}, parity = {parity}, and = {and}"
+    let ⟨_, mpType, mpValue⟩ ←
+      Expr.mp' decl.type
+        (if parity > 0 then decl.proof
+         else .const declName (levelParams.map .param))
+        parity (and := and)
+    Lean.logInfo s!"[mp.left'] mpType = {mpType}"
+    let (type, value) := Expr.andProj mpType mpValue true
+    Lean.logInfo s!"[mp.left'] final type = {type}"
+    let name := Name.mpProjName (← getEnv).moduleTokens declName true
+    Lean.logInfo s!"[mp.left'] name = {name}"
+    addAndCompile <| .thmDecl {
+      name := name
+      levelParams := levelParams
+      type := type
+      value := value
+    }
+}
+
+/--
+`@[mp.right']` — debug mirror of the production `@[mp.right]`. Identical body
+shape but uses `Expr.mp'` (which logs intermediate steps) and re-uses the
+production name helper `Name.mpProjName` from `sympy.Basic`.
+-/
+initialize registerBuiltinAttribute {
+  name := `mp.right'
+  descr := "Debug mirror of @[mp.right]; uses Expr.mp' with logging"
+  applicationTime := .afterCompilation
+  add := fun declName stx kind => do
+    let decl ← getConstInfo declName
+    let levelParams := decl.levelParams
+    let parity := stx.getNum
+    let and := stx.getIdent == `and
+    Lean.logInfo s!"[mp.right'] declName = {declName}, parity = {parity}, and = {and}"
+    let ⟨_, mpType, mpValue⟩ ←
+      Expr.mp' decl.type
+        (if parity > 0 then decl.proof
+         else .const declName (levelParams.map .param))
+        parity (and := and)
+    Lean.logInfo s!"[mp.right'] mpType = {mpType}"
+    let (type, value) := Expr.andProj mpType mpValue false
+    Lean.logInfo s!"[mp.right'] final type = {type}"
+    let name := Name.mpProjName (← getEnv).moduleTokens declName false
+    Lean.logInfo s!"[mp.right'] name = {name}"
+    addAndCompile <| .thmDecl {
+      name := name
+      levelParams := levelParams
+      type := type
+      value := value
+    }
+}
+

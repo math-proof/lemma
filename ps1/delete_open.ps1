@@ -23,16 +23,21 @@ foreach ($package in $packages) {
         # Modify file content
         $newContent = foreach ($line in $content) {
             if ($line -match '^open ') {
-                # Remove package name
-                $newLine = $line -replace "\b$escapedPackage\b", ''
-                # Collapse spaces
-                $newLine = $newLine -replace ' +', ' '
-                # Trim trailing space
-                $newLine = $newLine.TrimEnd()
-                # Skip empty 'open' lines
-                if ($newLine -eq 'open') { continue }
-                Write-Host "in $($file.FullName), removing '$package' from 'open' statements: $line"
-                $newLine
+                # Keep `open scoped <Package>` intact, e.g. `open scoped Matrix`
+                if ($line -match "^open scoped $escapedPackage\b") {
+                    $line
+                } else {
+                    # Remove package name
+                    $newLine = $line -replace "\b$escapedPackage\b", ''
+                    # Collapse spaces
+                    $newLine = $newLine -replace ' +', ' '
+                    # Trim trailing space
+                    $newLine = $newLine.TrimEnd()
+                    # Skip empty 'open' lines
+                    if ($newLine -eq 'open') { continue }
+                    Write-Host "in $($file.FullName), removing '$package' from 'open' statements: $line"
+                    $newLine
+                }
             } else {
                 $line
             }

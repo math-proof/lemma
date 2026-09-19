@@ -421,7 +421,7 @@ SELECT
     l.imports,
     l.open,
     l.set_option,
-    l.def,
+    l.preamble,
     l.error,
     l.date,
     JSON_ARRAYAGG(
@@ -457,7 +457,7 @@ CROSS JOIN JSON_TABLE(
     )
 ) AS j
 WHERE l.user = '$user' AND l.module = "$module"
-GROUP BY l.user, l.module, l.imports, l.open, l.set_option, l.def, l.error, l.date
+GROUP BY l.user, l.module, l.imports, l.open, l.set_option, l.preamble, l.error, l.date
 EOT;
     foreach (get_rows($sql) as $code) {
         return $code;

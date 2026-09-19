@@ -3,7 +3,7 @@ import Lemma.Tensor.DetAppendHstackS.eq.PowNeg1
 import Lemma.Tensor.Mul
 import Lemma.Tensor.SEqDotS.of.SEq
 import Lemma.Tensor.ToMatrixDot.eq.MulToMatrixS
-open Matrix Tensor
+open Tensor
 
 
 private lemma det_eq_toMatrix_add_comm
@@ -71,7 +71,7 @@ private lemma main
   apply Eq.trans (toMatrix_det_eq_toMatrix_det_cast (A @ P))
   rw [hAP]
   apply Eq.trans (congrArg Matrix.det (ToMatrixDot.eq.MulToMatrixS A Pcast))
-  rw [det_mul]
+  rw [Matrix.det_mul]
   rw [← Det.eq.DetToMatrix A]
   have hP : Pcast.toMatrix.det = (P.det : Tensor α []) := by
     apply Eq.trans (toMatrix_det_eq_toMatrix_det_cast P).symm

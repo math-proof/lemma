@@ -4,7 +4,7 @@ CREATE TABLE `lemma` (
   imports json NOT NULL,
   open json NOT NULL,
   set_option json,
-  def json NOT NULL,
+  preamble json NOT NULL,
   lemma json NOT NULL,
   error json,
   date json NOT NULL,

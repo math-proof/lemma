@@ -1,7 +1,7 @@
 import Lemma.Tensor.EqGetT
 import torch.Tensor.permute
 import sympy.matrices.dense
-open Matrix Tensor
+open scoped Matrix
 
 
 @[main, comm]
@@ -9,10 +9,10 @@ private lemma main
 -- given
   (X : Tensor α [m, n]) :
 -- imply
-  Xᵀ.toMatrix = X.toMatrixᵀ := by
+  Xᵀ.toMatrix = (X.toMatrix)ᵀ := by
 -- proof
   ext i j
-  exact EqGetT X j i
+  exact Tensor.EqGetT X j i
 
 
 -- created on 2026-09-07

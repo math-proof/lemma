@@ -73,7 +73,8 @@ def customAttrHead (attr : String) : String :=
 
 def customAttrHeads : List String :=
   ["main", "comm", "mp", "mpr", "mp.comm", "mpr.comm", "comm.is", "is.comm", "mt", "mp.mt", "mpr.mt", "is.mt",
-   "Or.inl", "Or.inr", "mpr.left", "mpr.right", "And.left", "And.right",
+   "Or.inl", "Or.inr", "mpr.left", "mpr.right", "mp.left", "mp.right",
+   "And.left", "And.right",
    "fin", "fin.comm", "fin.mp", "fin.mpr",
    "val", "subst", "cast", "cast.fin", "cast.comm", "mp and", "mpr and", "mp.comm and", "mpr.comm and"]
 
@@ -211,6 +212,8 @@ def attrLemmaName (tokens : List String) (attr : String) : String :=
   | ["Or.inr"] => nameToModule (tokens.right : Lean.Name)
   | ["mpr.left"] => nameToModule ((List.mpr tokens).left : Lean.Name)
   | ["mpr.right"] => nameToModule ((List.mpr tokens).right : Lean.Name)
+  | ["mp.left"] => moduleName (List.mpProjTokens tokens true)
+  | ["mp.right"] => moduleName (List.mpProjTokens tokens false)
   | ["And.left"] => andProjModuleName tokens true
   | ["And.right"] => andProjModuleName tokens false
   | ["val"] => moduleName (tokens ++ ["val"])

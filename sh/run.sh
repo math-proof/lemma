@@ -41,7 +41,7 @@ echo "modules:"
 touch test.sql
 
 output_file=test.sql
-echo "INSERT INTO lemma (user, module, imports, open, def, lemma, error, date) VALUES " > test.sql
+echo "INSERT INTO lemma (user, module, imports, open, set_option, preamble, lemma, error, date) VALUES " > test.sql
 for module in ${imports[*]}; do
   # echo "${module//.//}.lean"
   module=${module#Lemma.}
@@ -51,7 +51,7 @@ for module in ${imports[*]}; do
   fi
   submodules=${imports_dict[$module]}
   submodules=${submodules//\'/\'\'}
-  echo "  ('$user', \"$module\", '$submodules', '[]', '[]', '[]', '[]', '[]')," >> test.sql
+  echo "  ('$user', \"$module\", '$submodules', '[]', '[]', '[]', '[]', '[]', '[]')," >> test.sql
 done
 
 transformExpr() {
