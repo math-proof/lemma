@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.find(Mul).apply(Tensor.Mul.eq.Stack)
 
-    Eq << Eq[-1].this.lhs.apply(Real.Integral.eq.Stack)
+    Eq << Eq[-1].this.lhs.apply(Real.Integral_Stack.eq.Stack_Integral)
 
     Eq << Eq[-1].this.expr.rhs.find(Pr).apply(Random.All_Eq_Integral_ProbJoint.of.PSpace_Joint, x[k + 1:n])
 

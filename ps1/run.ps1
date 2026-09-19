@@ -18,7 +18,7 @@ while ($true) {
     $psi.RedirectStandardError = $false
 
     # Start the process
-    # $psi.WorkingDirectory = Split-Path $PSScriptRoot -Parent
+    $psi.WorkingDirectory = Split-Path $PSScriptRoot -Parent
     $process = [Diagnostics.Process]::Start($psi)
 
     # Wait for 2 minutes (120,000 milliseconds)

@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.expr.apply(Tensor.Dot.eq.Stack_Sum_MulGetS)
 
-    Eq << Eq[-1].this.rhs.apply(Real.Integral.eq.Stack)
+    Eq << Eq[-1].this.rhs.apply(Real.Integral_Stack.eq.Stack_Integral)
 
     Eq << Eq[-1].this.lhs.apply(Tensor.Dot.eq.Stack_Sum_MulGetS)
 
