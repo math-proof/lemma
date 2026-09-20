@@ -53,7 +53,6 @@ from . import All_Imp_All_EqProbJoint__0
 from . import All_NeProb_0
 from . import All_Eq1Integral_ProbCond
 from . import All_Eq_MulProbCond
-from . import ExpectAdd
 from . import All_ImpNeSProb_0
 from . import Prod_ProbCond
 from . import ProbCond
@@ -63,3 +62,5 @@ from . import IndepGetSlice
 from . import IndepJoint
 from . import Expect_Mul
 from . import Expect_Stack
+from . import Expect_Add
+from . import All_EqProbCondJoint

@@ -60,7 +60,7 @@ def prove(Eq):
     a, s, b = Symbol(integer=True, random=True)
     Eq << apply(Expectation[a:θ](f(a) | s) + Expectation[a:θ](g(a) | s))
 
-    Eq << Eq[0].this.rhs.apply(Random.ExpectAdd.eq.AddExpectS)
+    Eq << Eq[0].this.rhs.apply(Random.Expect_Add.eq.AddExpectS)
 
 
 if __name__ == '__main__':

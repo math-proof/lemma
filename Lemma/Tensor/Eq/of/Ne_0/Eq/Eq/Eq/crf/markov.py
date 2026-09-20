@@ -54,7 +54,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.arg.apply(Tensor.Stack.Is.Stack.UFn, i=2, j=0)
 
-    Eq << Random.ProbCondJoint.eq.MulProbSCond.of.Ne0ProbCond.apply(Eq[-3], x[k], y[k])
+    Eq << Random.All_EqProbCondJoint.apply(Eq[-3], x[k], y[k])
 
     Eq << Eq[-1].this.lhs.find(And).apply(Tensor.Stack.Is.Stack.UFn, i=2, j=0)
 
@@ -90,7 +90,7 @@ def prove(Eq):
 
     Eq << Random.Ne_0.Conditioned.of.Ne_0.apply(Eq.y_joint_y_historic, y[:k])
 
-    Eq << Random.ProbCondJoint.eq.MulProbSCond.of.Ne0ProbCond.apply(Eq[-1], Eq.x_independence.lhs.lhs)
+    Eq << Random.All_EqProbCondJoint.apply(Eq[-1], Eq.x_independence.lhs.lhs)
 
     Eq.recursion = Eq.recursion.subs(Eq[-1])
 

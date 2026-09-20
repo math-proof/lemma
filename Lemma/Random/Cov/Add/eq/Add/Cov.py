@@ -32,9 +32,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.find(Expectation[Add]).apply(Random.ExpectAdd.eq.AddExpectS)
+    Eq << Eq[-1].this.find(Expectation[Add]).apply(Random.Expect_Add.eq.AddExpectS)
 
-    Eq << Eq[-1].this.find(Expectation[Add]).apply(Random.ExpectAdd.eq.AddExpectS)
+    Eq << Eq[-1].this.find(Expectation[Add]).apply(Random.Expect_Add.eq.AddExpectS)
 
     Eq << Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 

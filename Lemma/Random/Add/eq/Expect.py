@@ -36,7 +36,7 @@ def prove(Eq):
     a, s, b = Symbol(integer=True, random=True)
     Eq << apply(Expectation[a:θ](f(a) | s) + g(b))
 
-    Eq << Eq[0].this.rhs.apply(Random.ExpectAdd.eq.AddExpectS)
+    Eq << Eq[0].this.rhs.apply(Random.Expect_Add.eq.AddExpectS)
 
 
 

@@ -47,13 +47,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Symbol * Pow).args[:2].apply(Real.MulPowS.eq.Pow_Add.of.Gt_0)
 
-    Eq << Eq[-1].this.rhs.find(Sum[~Expectation]).apply(Random.ExpectAdd.eq.AddExpectS)
+    Eq << Eq[-1].this.rhs.find(Sum[~Expectation]).apply(Random.Expect_Add.eq.AddExpectS)
 
     Eq << Eq[-1].this.rhs.find(Sum).apply(Finset.Sum_Add.eq.AddSumS)
 
     Eq << Eq[-1].this.rhs.find(Expectation[Conditioned[Pow * Function]]).apply(Random.Expect_Mul.eq.Mul_Expect)
 
-    Eq << Eq[-1].this.rhs.apply(Random.ExpectAdd.eq.AddExpectS)
+    Eq << Eq[-1].this.rhs.apply(Random.Expect_Add.eq.AddExpectS)
 
     Eq << Eq[-1].this.find(Expectation[-Sum]).apply(Random.Expect_Mul.eq.Mul_Expect)
 

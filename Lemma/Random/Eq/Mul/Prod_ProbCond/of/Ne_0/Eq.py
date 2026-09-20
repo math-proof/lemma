@@ -38,7 +38,7 @@ def prove(Eq):
 
     Eq.yt_given_x_nonzero = Random.Ne_0.Conditioned.of.Ne_0.apply(Eq[-1], x)
 
-    Eq << Random.ProbCondJoint.eq.MulProbSCond.of.Ne0ProbCond.apply(Eq.yt_given_x_nonzero, y[t])
+    Eq << Random.All_EqProbCondJoint.apply(Eq.yt_given_x_nonzero, y[t])
 
     Eq << Eq[-1].this.lhs.find(And).apply(Tensor.Stack.of.Stack.UFn)
 

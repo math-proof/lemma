@@ -37,7 +37,7 @@ def prove(Eq):
 
     Eq << Eq.hypothesis.this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.rhs.find(Expectation).apply(Random.ExpectAdd.eq.AddExpectS)
+    Eq << Eq[-1].this.rhs.find(Expectation).apply(Random.Expect_Add.eq.AddExpectS)
 
     Eq.hypothesis = Eq[-1].this.find(Expectation[Mul[NegativeOne]]).apply(Random.Expect_Mul.eq.Mul_Expect)
 

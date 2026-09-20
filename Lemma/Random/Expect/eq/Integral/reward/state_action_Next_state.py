@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Random.Ne_0.Conditioned.of.Ne_0, a[t], s[t])
 
-    Eq << Eq[-1].this.lhs.apply(Random.ProbCondJoint.eq.MulProbSCond.of.Ne0ProbCond, r[t])
+    Eq << Eq[-1].this.lhs.apply(Random.All_EqProbCondJoint, r[t])
 
     Eq << Bool.Imp.given.ImpEq.apply(Eq[-1])
 
