@@ -21,12 +21,12 @@ private lemma fst
   {Ω α β γ : Type*}
   [MeasurableSpace Ω]
   [ReferenceMeasure α] [ReferenceMeasure β] [ReferenceMeasure γ]
-  {𝕡 : Measure Ω}
+  {π : Measure Ω}
   {x : Ω → α} {y : Ω → β} {z : Ω → γ}
 -- given
-  (h : x ⟂ᵢ[𝕡] (y, z)) :
+  (h : x ⟂ᵢ[π] (y, z)) :
 -- imply
-  x ⟂ᵢ[𝕡] y :=
+  x ⟂ᵢ[π] y :=
 -- proof
   h.comp measurable_id measurable_fst
 
@@ -40,12 +40,12 @@ private lemma snd
   {Ω α β γ : Type*}
   [MeasurableSpace Ω]
   [ReferenceMeasure α] [ReferenceMeasure β] [ReferenceMeasure γ]
-  {𝕡 : Measure Ω}
+  {π : Measure Ω}
   {x : Ω → α} {y : Ω → β} {z : Ω → γ}
 -- given
-  (h : x ⟂ᵢ[𝕡] (y, z)) :
+  (h : x ⟂ᵢ[π] (y, z)) :
 -- imply
-  x ⟂ᵢ[𝕡] z :=
+  x ⟂ᵢ[π] z :=
 -- proof
   h.comp measurable_id measurable_snd
 

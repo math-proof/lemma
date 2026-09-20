@@ -1,5 +1,6 @@
 import Lemma.Random.All_Eq_MulProbCond.of.PSpace_Joint
 import Lemma.Random.PSpace_JointJoint.is.PSpace_Joint_Joint
+import sympy.stats.joint_rv
 open Random MeasureTheory
 
 
@@ -7,36 +8,36 @@ open Random MeasureTheory
 private lemma main
   [MeasurableSpace Ω]
   [ReferenceMeasure α] [ReferenceMeasure β] [ReferenceMeasure γ]
-  {𝕡 : Measure Ω}
+  {π : Measure Ω}
   {x : Ω → α} {y : Ω → β} {z : Ω → γ}
 -- given
-  (hP : PSpace 𝕡 (x, y, z)) :
+  (hP : PSpace π (x, y, z)) :
 -- imply
-  have _hPxy_z : PSpace 𝕡 ((x, y), z) := PSpace_JointJoint.of.PSpace_Joint_Joint hP
-  have _hPyz : PSpace 𝕡 (y, z) := PSpace.of.PSpace_Joint.snd hP
+  have _hPxy_z : PSpace π ((x, y), z) := PSpace_JointJoint.of.PSpace_Joint_Joint hP
+  have _hPyz : PSpace π (y, z) := PSpace.of.PSpace_Joint.snd hP
   ∀ᵐ «x.bvar» ∂ReferenceMeasure.measure,
     ∀ᵐ «y.bvar» ∂ReferenceMeasure.measure,
       ∀ᵐ «z.bvar» ∂ReferenceMeasure.measure,
-        𝕡.condProb ((x, y), z) ((«x.bvar», «y.bvar»), «z.bvar») =
-          𝕡.condProb (x, (y, z)) («x.bvar», («y.bvar», «z.bvar»)) *
-            𝕡.condProb (y, z) («y.bvar», «z.bvar») := by
+        ℙ[π](x = «x.bvar» ∧ y = «y.bvar» | z = «z.bvar») =
+          ℙ[π](x = «x.bvar» | y = «y.bvar» ∧ z = «z.bvar») *
+            ℙ[π](y = «y.bvar» | z = «z.bvar») := by
 -- proof
   let μ : Measure α := ReferenceMeasure.measure
   let ν : Measure β := ReferenceMeasure.measure
   let ξ : Measure γ := ReferenceMeasure.measure
   let e : (α × β) × γ ≃ᵐ α × (β × γ) := MeasurableEquiv.prodAssoc
-  have hP_left : PSpace 𝕡 ((x, y), z) := PSpace_JointJoint.of.PSpace_Joint_Joint hP
-  have hPyz : PSpace 𝕡 (y, z) := PSpace.of.PSpace_Joint.snd hP
-  have hPz : PSpace 𝕡 z := PSpace.of.PSpace_Joint.snd hP_left
+  have hP_left : PSpace π ((x, y), z) := PSpace_JointJoint.of.PSpace_Joint_Joint hP
+  have hPyz : PSpace π (y, z) := PSpace.of.PSpace_Joint.snd hP
+  have hPz : PSpace π z := PSpace.of.PSpace_Joint.snd hP_left
   let xyz : Ω → α × (β × γ) := (x, (y, z))
-  let p3 : (α × β) × γ → ENNReal := 𝕡.prob ((x, y), z)
-  let p3' : α × (β × γ) → ENNReal := 𝕡.prob xyz
-  let p2 : β × γ → ENNReal := 𝕡.prob (y, z)
-  let pz : γ → ENNReal := 𝕡.prob z
+  let p3 : (α × β) × γ → ENNReal := π.prob ((x, y), z)
+  let p3' : α × (β × γ) → ENNReal := π.prob xyz
+  let p2 : β × γ → ENNReal := π.prob (y, z)
+  let pz : γ → ENNReal := π.prob z
   -- The marginal density of (y, z) is finite almost everywhere
-  have hlaw2m : 𝕡.map (y, z) = (ν.prod ξ).withDensity p2 :=
+  have hlaw2m : π.map (y, z) = (ν.prod ξ).withDensity p2 :=
     PSpace.map_eq_withDensity_density
-  have hi2 : IsProbabilityMeasure (𝕡.map (y, z)) :=
+  have hi2 : IsProbabilityMeasure (π.map (y, z)) :=
     Measure.isProbabilityMeasure_map hPyz.aemeasurable
   have htot2 : ∫⁻ bc, p2 bc ∂(ν.prod ξ) = 1 := by
     have h : (ν.prod ξ).withDensity p2 Set.univ = ∫⁻ bc, p2 bc ∂(ν.prod ξ) := by
@@ -50,23 +51,23 @@ private lemma main
   have hI := All_Eq_MulProbCond.of.PSpace_Joint hP
   have hI3 : ∀ᵐ a ∂μ, ∀ᵐ b ∂ν, ∀ᵐ c ∂ξ,
       p3' (a, (b, c)) =
-        𝕡.condProb xyz (a, (b, c)) * p2 (b, c) := by
+        π.condProb xyz (a, (b, c)) * p2 (b, c) := by
     filter_upwards [hI] with a ha
     exact Measure.ae_ae_of_ae_prod ha
   -- The two associations of the triple density agree a.e. (rnDeriv transported by prodAssoc)
-  have hmap : 𝕡.map xyz = Measure.map e (𝕡.map ((x, y), z)) :=
+  have hmap : π.map xyz = Measure.map e (π.map ((x, y), z)) :=
     (AEMeasurable.map_map_of_aemeasurable e.measurable.aemeasurable
       hP_left.aemeasurable).symm
   have hρ : Measure.map e ((μ.prod ν).prod ξ) = μ.prod (ν.prod ξ) :=
     Measure.prodAssoc_prod
   have hrn :=
     (MeasurableEquiv.measurableEmbedding e).rnDeriv_map
-      (𝕡.map ((x, y), z)) ((μ.prod ν).prod ξ)
+      (π.map ((x, y), z)) ((μ.prod ν).prod ξ)
   have htrans' :
       (fun t : (α × β) × γ ↦ p3' (e t)) =ᵐ[(μ.prod ν).prod ξ] p3 := by
     simp only [← hmap, hρ] at hrn
-    show (fun t ↦ (𝕡.map xyz).rnDeriv (μ.prod (ν.prod ξ)) (e t)) =ᵐ[(μ.prod ν).prod ξ]
-      (𝕡.map ((x, y), z)).rnDeriv ((μ.prod ν).prod ξ)
+    show (fun t ↦ (π.map xyz).rnDeriv (μ.prod (ν.prod ξ)) (e t)) =ᵐ[(μ.prod ν).prod ξ]
+      (π.map ((x, y), z)).rnDeriv ((μ.prod ν).prod ξ)
     exact hrn
   have htrans : ∀ᵐ a ∂μ, ∀ᵐ b ∂ν, ∀ᵐ c ∂ξ,
       p3 ((a, b), c) = p3' (a, (b, c)) := by
@@ -80,9 +81,9 @@ private lemma main
     filter_upwards with a
     exact hfin2
   -- Denominator maps in the condProb definitions
-  have hdenz : 𝕡.map (fun ω ↦ (((x, y), z) ω).2) = 𝕡.map z := by congr
-  have hden2 : 𝕡.map (fun ω ↦ ((y, z) ω).2) = 𝕡.map z := by congr
-  have hdenyz : 𝕡.map (fun ω ↦ (xyz ω).2) = 𝕡.map (y, z) := by congr
+  have hdenz : π.map (fun ω ↦ (((x, y), z) ω).2) = π.map z := by congr
+  have hden2 : π.map (fun ω ↦ ((y, z) ω).2) = π.map z := by congr
+  have hdenyz : π.map (fun ω ↦ (xyz ω).2) = π.map (y, z) := by congr
   filter_upwards [htrans, hI3, hfin3] with a htr hI hlt
   filter_upwards [htr, hI, hlt] with b htr hI hlt
   filter_upwards [htr, hI, hlt] with c htr hI hlt
@@ -90,13 +91,13 @@ private lemma main
     intro h; rw [hI, h, mul_zero]
   have hcan : (p3' (a, (b, c)) / p2 (b, c)) * p2 (b, c) = p3' (a, (b, c)) :=
     ENNReal.div_mul_cancel' h0 (fun h ↦ (hlt.ne h).elim)
-  have hA : 𝕡.condProb ((x, y), z) ((a, b), c) = p3 ((a, b), c) / pz c := by
+  have hA : π.condProb ((x, y), z) ((a, b), c) = p3 ((a, b), c) / pz c := by
     unfold Measure.condProb Measure.prob
     rw [hdenz]; rfl
-  have hB : 𝕡.condProb (y, z) (b, c) = p2 (b, c) / pz c := by
+  have hB : π.condProb (y, z) (b, c) = p2 (b, c) / pz c := by
     unfold Measure.condProb Measure.prob
     rw [hden2]; rfl
-  have hC : 𝕡.condProb xyz (a, (b, c)) = p3' (a, (b, c)) / p2 (b, c) := by
+  have hC : π.condProb xyz (a, (b, c)) = p3' (a, (b, c)) / p2 (b, c) := by
     unfold Measure.condProb Measure.prob
     rw [hdenyz]; rfl
   rw [hA, hB, hC, htr]
@@ -107,4 +108,5 @@ private lemma main
     _ = p3' (a, (b, c)) / pz c := by rw [hcan]
 
 
--- created on 2026-09-19
+-- created on 2020-12-11
+-- updated on 2026-09-20

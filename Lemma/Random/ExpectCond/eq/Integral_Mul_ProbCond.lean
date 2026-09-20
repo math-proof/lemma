@@ -8,30 +8,30 @@ open MeasureTheory
 private lemma main
   [MeasurableSpace Ω]
   [ReferenceMeasure α] [ReferenceMeasure β]
-  {𝕡 : Measure Ω}
+  {π : Measure Ω}
   {a : Ω → α} {s : Ω → β}
   {f : α → ENNReal}
 -- given
-  (hP : PSpace 𝕡 (a, s))
+  (hP : PSpace π (a, s))
   (hf : Measurable f)
   («s.bvar» : β) :
 -- imply
-  Expectation (ReferenceMeasure.measure.withDensity
-      (fun «a.bvar» ↦ 𝕡.condProb (a, s) («a.bvar», «s.bvar»))) f =
-    ∫⁻ «a.bvar», f «a.bvar» * 𝕡.condProb (a, s) («a.bvar», «s.bvar») ∂ReferenceMeasure.measure := by
+  𝔼[a: π](f a | s = «s.bvar») =
+    ∫⁻ «a.bvar», f «a.bvar» * ℙ[π](a = «a.bvar» | s = «s.bvar») ∂ReferenceMeasure.measure := by
 -- proof
-  simp only [Expectation]
-  have hmp : Measurable (𝕡.prob (a, s)) := by
-    simpa [Measure.prob] using Measure.measurable_rnDeriv (𝕡.map (a, s)) ReferenceMeasure.measure
-  have hmc : Measurable (𝕡.condProb (a, s)) := by
-    change Measurable (fun z : α × β ↦ 𝕡.prob (a, s) z /
-      (𝕡.map (fun ω ↦ ((a, s) ω).2)).rnDeriv ReferenceMeasure.measure z.2)
-    exact hmp.div ((Measure.measurable_rnDeriv (𝕡.map (fun ω ↦ ((a, s) ω).2))
+  simp only [Expectation.condRV, expectation_ennreal]
+  have hmp : Measurable (π.prob (a, s)) := by
+    simpa [Measure.prob] using Measure.measurable_rnDeriv (π.map (a, s)) ReferenceMeasure.measure
+  have hmc : Measurable (π.condProb (a, s)) := by
+    change Measurable (fun z : α × β ↦ π.prob (a, s) z /
+      (π.map (fun ω ↦ ((a, s) ω).2)).rnDeriv ReferenceMeasure.measure z.2)
+    exact hmp.div ((Measure.measurable_rnDeriv (π.map (fun ω ↦ ((a, s) ω).2))
       ReferenceMeasure.measure).comp measurable_snd)
-  have hcd : Measurable (fun «a.bvar» : α ↦ 𝕡.condProb (a, s) («a.bvar», «s.bvar»)) :=
+  have hcd : Measurable (fun «a.bvar» : α ↦ π.condProb (a, s) («a.bvar», «s.bvar»)) :=
     hmc.comp (Measurable.prodMk measurable_id measurable_const)
   rw [lintegral_withDensity_eq_lintegral_mul _ hcd hf]
   simp only [Pi.mul_apply, mul_comm]
 
 
 -- created on 2026-09-18
+-- updated on 2026-09-20

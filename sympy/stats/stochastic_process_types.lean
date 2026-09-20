@@ -3,6 +3,17 @@ import Mathlib.Analysis.Normed.Lp.PiLp
 import Mathlib.Data.Matrix.Basic
 import Lemma.Set.InMul.of.In.Gt_0
 import Lemma.Set.Any_All_In.of.ClosedUnderAdd.FiniteGCDOne
+
+/-!
+# Stochastic process types (DiscreteMarkovChain)
+
+Finite discrete-time homogeneous Markov-chain primitives, aligned with
+[sympy.stats.stochastic_process_types.DiscreteMarkovChain](https://github.com/sympy/sympy/blob/master/sympy/stats/stochastic_process_types.py).
+
+In Lean these are typeclasses on a transition matrix `P : Matrix S S ℝ`
+(`RowStochastic`, `StochasticIrreducible`, `Aperiodic`) plus the probability
+simplex `StochasticVec` / `Simplex`, rather than a single Python class.
+-/
 open Finset Matrix WithLp Set
 open scoped Matrix BigOperators
 

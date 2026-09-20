@@ -428,9 +428,6 @@ def Expr.asJointRandomSymbol? : Expr → Option (Expr × Expr)
       | _ => none
     else none
 
-/-- Check if an Expr is a bound observation — either a single `«x.bvar»`
-or a pair `(«x.bvar», «y.bvar»)`. Only such nodes may be elided from
-`𝕡.prob …` / `𝕡.condProb …`. Mirrors lean.js `isBoundObservation`. -/
 def Expr.isBoundObservation : Expr → Bool
   | Symbol name _ =>
     let s := name.toString
@@ -442,8 +439,6 @@ def Expr.isBoundObservation : Expr → Bool
     x.isBoundObservation
   | _ => false
 
-/-- Unwrap `Basic (.Special ⟨.anonymous⟩) [𝕡.prob rv, pt]` — the method result
-applied to a point — returning `("prob", [𝕡, rv, pt])`. -/
 def Expr.asProbApp? : Expr → Option (String × List Expr)
   | Basic (.Special ⟨.anonymous⟩) [inner, pt] _ =>
     if let some ("prob", base :: rest) := inner.asNamedApp? then
@@ -451,15 +446,11 @@ def Expr.asProbApp? : Expr → Option (String × List Expr)
     else none
   | _ => none
 
--- `𝕡.prob f₁ … fₙ pt` → `(𝕡, [f₁ … fₙ₋₁])`: the `.prob` accessor and the
--- observed value (last argument) are dropped, mirroring the lean.js
--- `probDensityParts` convention (`𝕡.prob (x, y) («x.bvar», «y.bvar»)` → `𝕡 (x, y)`).
--- The observation point is dropped only when it is a bound observation
--- (`«x.bvar»` or `(«x.bvar», «y.bvar»)`); otherwise no simplification occurs.
 def Expr.asProb? : Expr → Option (Expr × List Expr)
   | e =>
-    -- Direct match: `𝕡.prob rv` (method call without extra application)
-    if let some ("prob", base :: rest) := e.asNamedApp? then
+    if let some ("probRA", base :: x :: _) := e.asNamedApp? then
+      some (base, [x])
+    else if let some ("prob", base :: rest) := e.asNamedApp? then
       match rest with
       | [] => none
       | [_] => some (base, rest)
@@ -468,7 +459,6 @@ def Expr.asProb? : Expr → Option (Expr × List Expr)
           some (base, rest.take (rest.length - 1))
         else
           none
-    -- Nested match: `(𝕡.prob rv) pt` (method result applied to a point)
     else if let some ("prob", base :: rest) := e.asProbApp? then
       match rest with
       | [] => none
@@ -508,10 +498,6 @@ def Expr.getAttrNameSuffix? : Expr → Option String
     some ((s.splitOn ".").getLastD s)
   | _ => none
 
-/-- Unwrap `Basic (.Special ⟨.anonymous⟩) [𝕡.map X, pt]` — the method
-result applied to a point — returning `("map", [𝕡, X, pt])`.
-Matches both LeanProperty `.map` and Lean_function/Lean_operatorname `Measure.map`,
-by scanning args for anything with suffix "map". -/
 def Expr.asMapApp? : Expr → Option (String × List Expr)
   | Basic (.Special ⟨.anonymous⟩) args _ =>
     args.findSome? fun arg =>
@@ -545,12 +531,6 @@ def Expr.markAsRandomVariable : Expr → Expr
     else Symbol name (.Basic (.ExprWithAttr (.Lean_operatorname `RandomVariable)) [type] type.level)
   | e => e
 
-/-- `𝕡.map X` or `Measure.map a 𝕡` → `(𝕡, [X])`: mirrors lean.js `mapLatexParts`.
-Also handles `(𝕡.map X) {pt}` / `(Measure.map a 𝕡) {pt}` with singleton
-observation point dropped when `pt` is a bound observation.
-
-LeanProperty `.map` args are [𝕡, X] → return (𝕡, [X]).
-Lean_function/Lean_operatorname `Measure.map a 𝕡` args are [a, 𝕡] → return (𝕡, [a]). -/
 def Expr.asMapDirect? : Expr → Option (Expr × List Expr)
   | e =>
     match e.getAttrNameSuffix? with
@@ -575,13 +555,6 @@ def Expr.asMapDirect? : Expr → Option (Expr × List Expr)
       | _ => none
     | _ => none
 
-/-- `𝕡.map X` or `Measure.map a 𝕡` → `(𝕡, [X])`: mirrors lean.js `mapLatexParts`.
-Also handles `(𝕡.map X) {pt}` / `(Measure.map a 𝕡) {pt}` with singleton
-observation point dropped when `pt` is a bound observation.
-
-LeanProperty `.map` args are [𝕡, X] → return (𝕡, [X]).
-Lean_function/Lean_operatorname `Measure.map a 𝕡` args are [a, 𝕡] → return (𝕡, [a]).
-DFunLike.coe wrapping: (`map_expr`) `{pt}` → fold if pt is bound observation. -/
 def Expr.asMap? : Expr → Option (Expr × List Expr)
   | Basic (.ExprWithAttr (.Lean_operatorname `DFunLike.coe)) [F, a] _ =>
     if a.isBoundObservation then
@@ -600,42 +573,84 @@ def Expr.asMap? : Expr → Option (Expr × List Expr)
         | _ => none
       else none
 
-/-- How an `Expectation` term is displayed.
-- `map f rv`: `Expectation (𝕡.map rv) f` → `𝔼_rv(f(rv))`
-- `cond f x y`: `Expectation (μ.withDensity (fun a ↦ 𝕡.condProb (x, y) (a, b))) f`
-  → `𝔼_x(f(x) | y)`. -/
 inductive ExpectationView where
   | map (f rv : Expr)
+  | mapBody (body rv μ : Expr)
   | cond (f x y : Expr)
+  | condBody (body x y μ : Expr)
 
-/-- Decompose an `Expectation` term into either the pushforward (`map`) or
-conditional-density (`cond`) view, mirroring lean.js `expectationLatexParts`. -/
+partial def Expr.peelExpectLets : Expr → Expr × List Name
+  | e@(Basic (.ExprWithLimits .Lean_let) args _) =>
+    match args with
+    | body :: binders =>
+      let names := binders.filterMap fun b =>
+        match b with
+        | Binder _ name _ _ => some name
+        | _ => none
+      let (body', more) := body.peelExpectLets
+      (body', names ++ more)
+    | _ => (e, [])
+  | e => (e, [])
+
+def Expr.peelExpectObservable? : Expr → Option (Expr × List Name)
+  | Basic (.ExprWithLimits .Lean_lambda) (body :: _) _ =>
+    some body.peelExpectLets
+  | _ => none
+
+def Expr.symbolName? : Expr → Option Name
+  | Symbol name _ => some name
+  | _ => none
+
+partial def Expr.markNamesAsRandomVariable (e : Expr) (names : List Name) : Expr :=
+  if names.isEmpty then e
+  else match e with
+  | Symbol name type =>
+    if names.contains name then markAsRandomVariable (Symbol name type)
+    else Symbol name type
+  | Basic func args level =>
+    Basic func (args.map (·.markNamesAsRandomVariable names)) level
+  | Binder b n t v =>
+    Binder b n (t.markNamesAsRandomVariable names) (v.markNamesAsRandomVariable names)
+  | other => other
+
+def Expr.expectationFromObservable (μ x f : Expr) (mkApp : Expr → Expr → ExpectationView)
+    (mkBody : Expr → Expr → Expr → ExpectationView) : ExpectationView :=
+  let rv := markAsRandomVariable x
+  match f.peelExpectObservable? with
+  | some (body, letNames) =>
+    let names := rv.symbolName?.toList ++ letNames
+    mkBody (body.markNamesAsRandomVariable names) rv μ
+  | none => mkApp f rv
+
 def Expr.asExpectation? : Expr → Option ExpectationView
   | e =>
-    if let some ("Expectation", [nu, f]) := e.asNamedApp? then
-      -- `Expectation (𝕡.map rv) f` → 𝔼_rv(f(rv))
-      if let some (_obj, rv :: _) := nu.asMap? then
-        some (.map f rv)
-      -- `Expectation (μ.withDensity (fun a ↦ 𝕡.condProb (x, y) (a, b))) f`
-      else if let some ("withDensity",
-            [_μ, Basic (.ExprWithLimits .Lean_lambda)
-              [body, Binder .default binderName _ nil] _]) := nu.asNamedApp? then
-        if let some ("condProb", _𝕡 :: joint :: point :: _) := body.asNamedApp? then
-          if let some (x, y) := joint.asJointRandomSymbol? then
-            -- observation point must be `(«a.bvar», …)` whose first component
-            -- is the lambda's bound variable (mirrors the JS binder check)
-            if let Basic (.Special ⟨.str _ "mk"⟩) [Symbol ptX _, _] _ := point then
-              if ptX == binderName then
-                some (.cond f (markAsRandomVariable x) (markAsRandomVariable y))
-              else none
-            else none
-          else none
-        else none
-      else none
-    else none
+    match e.asNamedApp? with
+    | some ("ofRV", μ :: x :: f :: _) =>
+      some (expectationFromObservable μ x f
+        (fun f rv => .map f rv)
+        (fun body rv μ => .mapBody body rv μ))
+    | some ("condRV", μ :: x :: y :: f :: _) =>
+      some (expectationFromObservable μ x f
+        (fun f rv => .cond f rv (markAsRandomVariable y))
+        (fun body rv μ => .condBody body rv (markAsRandomVariable y) μ))
+    | some ("condRA", μ :: x :: y :: f :: _) =>
+      some (expectationFromObservable μ x f
+        (fun f rv => .cond f rv (markAsRandomVariable y))
+        (fun body rv μ => .condBody body rv (markAsRandomVariable y) μ))
+    | some ("partialRV", μ :: x :: y :: f :: _) =>
+      some (expectationFromObservable μ x f
+        (fun f rv => .cond f rv (markAsRandomVariable y))
+        (fun body rv μ => .condBody body rv (markAsRandomVariable y) μ))
+    | some ("partialRV_cond", μ :: x :: y :: _r :: f :: _) =>
+      some (expectationFromObservable μ x f
+        (fun f rv => .cond f rv (markAsRandomVariable y))
+        (fun body rv μ => .condBody body rv (markAsRandomVariable y) μ))
+    | some ("partialRV_RA", μ :: x :: y :: _r :: f :: _) =>
+      some (expectationFromObservable μ x f
+        (fun f rv => .cond f rv (markAsRandomVariable y))
+        (fun body rv μ => .condBody body rv (markAsRandomVariable y) μ))
+    | _ => none
 
-/-- Unwrap `Basic (.Special ⟨.anonymous⟩) [𝕡.condProb rv, pt]` — the method
-result applied to a point — returning `("condProb", [𝕡, rv, pt])`. -/
 def Expr.asCondProbApp? : Expr → Option (String × List Expr)
   | Basic (.Special ⟨.anonymous⟩) [inner, pt] _ =>
     if let some ("condProb", base :: rest) := inner.asNamedApp? then
@@ -643,35 +658,28 @@ def Expr.asCondProbApp? : Expr → Option (String × List Expr)
     else none
   | _ => none
 
-/-- `𝕡.condProb (x, y) pt` → `(𝕡, x, y)`: mirrors lean.js `condProbParts`.
-The observation point `pt` is dropped (as in `asProb?`), and the single
-surviving random-variable pair is required to be a two-component pair so it can
-render as `(x | y)`. -/
 def Expr.asCondProb? : Expr → Option (Expr × Expr × Expr)
   | e =>
+    let fromJoint (base pair : Expr) : Option (Expr × Expr × Expr) :=
+      match pair.asJointRandomSymbol? with
+      | some (x, y) => some (base, markAsRandomVariable x, markAsRandomVariable y)
+      | none => none
     if let some ("condProb", base :: rest) := e.asNamedApp? then
       match rest with
-      | [pair] =>
-        match pair.asJointRandomSymbol? with
-        | some (x, y) => some (base, x, y)
-        | none => none
+      | [pair] => fromJoint base pair
       | [pair, point] =>
-        if point.isBoundObservation then
-          match pair.asJointRandomSymbol? with
-          | some (x, y) => some (base, x, y)
-          | none => none
-        else
-          none
+        if point.isBoundObservation then fromJoint base pair else none
       | _ => none
+    else if let some ("probCond", base :: xy :: _) := e.asNamedApp? then
+      fromJoint base xy
+    else if let some ("probCondRA", base :: xy :: _) := e.asNamedApp? then
+      fromJoint base xy
+    else if let some ("condProbRA", base :: xy :: _) := e.asNamedApp? then
+      fromJoint base xy
     else if let some ("condProb", base :: rest) := e.asCondProbApp? then
       match rest with
       | [pair, point] =>
-        if point.isBoundObservation then
-          match pair.asJointRandomSymbol? with
-          | some (x, y) => some (base, x, y)
-          | none => none
-        else
-          none
+        if point.isBoundObservation then fromJoint base pair else none
       | _ => none
     else none
 
@@ -681,17 +689,12 @@ def Expr.isAeMeasure (e : Expr) : Bool :=
   | some ("ae", _) => true
   | _ => false
 
-/-- `EventuallyEq (ae μ) f g` → `(f, g)` — the filter is dropped, matching the
-lean.js `LeanMEq` rendering `f =^{m} g` for the source notation `f =ᵐ[μ] g`. -/
 def Expr.asEventuallyEq? : Expr → Option (Expr × Expr)
   | e =>
     if let some ("EventuallyEq", [μ, f, g]) := e.asNamedApp? then
       if μ.isAeMeasure then some (f, g) else none
     else none
 
-/-- `Prod.mk (Prod.fst p) (Prod.snd p)` — an eta-expanded pair function — renders
-like the source-level pair: `(a, b)` when `p = Prod.mk a b` literally, else
-`p.fst, p.snd`. -/
 def Expr.asEtaPair? : Expr → Option (List Expr)
   | e =>
     if let some ("mk", [p1, p2]) := e.asNamedApp? then
@@ -805,7 +808,6 @@ def BinaryInfix.latexFormat (op : BinaryInfix) (left right : Expr) (level : ℕ)
     (command : Option String := none) : String :=
   let func := op.func
   let opStr := command.getD func.command
-  -- left associative operators
   let left := level.toColor (left.priority ≥ func.priority || left.is_EnclosedGroup)
   let right := level.toColor (right.priority > func.priority || right.is_Div || right.is_BlockMatrix)
   s!"{left} {opStr} {right}"
@@ -990,7 +992,6 @@ def Expr.latexFormat : Expr → String
       match op with
       | .anonymous =>
         if let some (obj, fns) := e.asMap? then
-          -- lean.js `mapLatexParts`: `(𝕡.map X) {pt}` → `𝕡 X`.
           let obj := level.toColor (obj.priority > func.priority || obj.toList != none || obj.is_Eye)
           let fns := fns.map fun arg =>
             (0 : Nat).toColor (arg.priority > func.priority || arg.is_Div || arg.is_BlockMatrix)
@@ -1053,27 +1054,27 @@ def Expr.latexFormat : Expr → String
       else if let some view := e.asExpectation? then
         match view with
         | .map _ _ =>
-          "\\mathop{\\mathbb{E}}\\limits_{%s}\\left(%s\\left(%s\\right)\\right)"
+          "\\mathop{\\mathbb{E}}\\limits_{%s}\\left(%s\\ %s\\right)"
+        | .mapBody _ _ _ =>
+          "\\mathop{\\mathbb{E}}\\limits_{%s : %s}\\left(%s\\right)"
         | .cond _ _ _ =>
-          "\\mathop{\\mathbb{E}}\\limits_{%s}\\left(%s\\left(%s\\right)\\ \\mathrel{\\bigg|}\\ %s\\right)"
+          "\\mathop{\\mathbb{E}}\\limits_{%s}\\left(%s\\ %s\\,\\mid\\,%s\\right)"
+        | .condBody _ _ _ _ =>
+          "\\mathop{\\mathbb{E}}\\limits_{%s : %s}\\left(%s\\,\\mid\\,%s\\right)"
       else if let some (_, _) := e.asJointRandomSymbol? then
         "%s, %s"
       else if let some (_, _, _) := e.asEventuallyAe? then
         "\\forall^{ᵐ}\\,{%s}, {%s}"
-      else if let some (obj, fns) := e.asProb? then
-        let obj := level.toColor (obj.priority > func.priority || obj.toList != none || obj.is_Eye)
-        let fns := fns.map fun arg =>
-          (0 : Nat).toColor (arg.priority > func.priority || arg.is_Div || arg.is_BlockMatrix)
-        "\\ ".intercalate (obj :: fns)
+      else if let some (_obj, fns) := e.asProb? then
+        let slots := ", ".intercalate (List.replicate fns.length "%s")
+        "{\\mathbb{P}}_{%s}\\left(" ++ slots ++ "\\right)"
       else if let some (obj, fns) := e.asMap? then
         let obj := level.toColor (obj.priority > func.priority || obj.toList != none || obj.is_Eye)
         let fns := fns.map fun arg =>
           (0 : Nat).toColor (arg.priority > func.priority || arg.is_Div || arg.is_BlockMatrix)
         "\\ ".intercalate (obj :: fns)
-      else if let some (obj, _, _) := e.asCondProb? then
-        let obj := level.toColor (obj.priority > func.priority || obj.toList != none || obj.is_Eye)
-        let pair := (level.toColor false).replaceFirst "%s" "%s\\,\\middle|\\,%s"
-        "{" ++ obj ++ "}\\ " ++ pair
+      else if let some (_obj, _, _) := e.asCondProb? then
+        "{\\mathbb{P}}_{%s}\\left(%s\\,\\middle|\\,%s\\right)"
       else if let some (_, _) := e.asEventuallyEq? then
         "{%s} {=^{\\mathrm{m}}} {%s}"
       else if let some (_) := e.asEtaPair? then
@@ -1505,7 +1506,9 @@ where
       else if let some view := e.asExpectation? then
         match view with
         | .map f rv => [rv.toLatex, f.toLatex, rv.toLatex]
+        | .mapBody body rv μ => [rv.toLatex, μ.toLatex, body.toLatex]
         | .cond f x y => [x.toLatex, f.toLatex, x.toLatex, y.toLatex]
+        | .condBody body x y μ => [x.toLatex, μ.toLatex, body.toLatex, y.toLatex]
       else if let some (x, y) := e.asJointRandomSymbol? then
         [x.toLatex, y.toLatex]
       else if let some (binderName, body, _μ) := e.asEventuallyAe? then

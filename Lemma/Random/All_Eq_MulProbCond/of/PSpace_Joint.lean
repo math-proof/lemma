@@ -10,32 +10,30 @@ open Random MeasureTheory
 
 @[main]
 private lemma main
-  {Ω α β : Type*}
   [MeasurableSpace Ω]
   [ReferenceMeasure α] [ReferenceMeasure β]
-  {𝕡 : Measure Ω}
-  {x : Ω → α} {y : Ω → β}
+  {π : Measure Ω} {x : Ω → α} {y : Ω → β}
 -- given
-  (hP : PSpace 𝕡 (x, y)) :
+  (hP : PSpace π (x, y)) :
 -- imply
   have := PSpace.of.PSpace_Joint.snd hP
   ∀ᵐ «x.bvar» ∂ReferenceMeasure.measure, ∀ᵐ «y.bvar» ∂ReferenceMeasure.measure,
-    𝕡.prob (x, y) («x.bvar», «y.bvar») =
-      𝕡.condProb (x, y) («x.bvar», «y.bvar») * 𝕡.prob y «y.bvar» := by
+    ℙ[π](x = «x.bvar» ∧ y = «y.bvar») =
+      ℙ[π](x = «x.bvar» | y = «y.bvar») * ℙ[π](y = «y.bvar») := by
 -- proof
-  have := PSpace.of.PSpace_Joint.snd hP
+  intro _
   let μ : Measure α := ReferenceMeasure.measure
   let ν : Measure β := ReferenceMeasure.measure
   obtain ⟨p, D, hjoint⟩ := hP.exists_distribution
   have hp : Measurable p := D.measurable_density
-  have hjoint : 𝕡.map (x, y) = (μ.prod ν).withDensity p := hjoint
+  have hjoint : π.map (x, y) = (μ.prod ν).withDensity p := hjoint
   let q : β → ENNReal := fun b ↦ lintegral μ (fun a ↦ p (a, b))
   have hq : Measurable q := hp.lintegral_prod_left'
-  have hmap : 𝕡.map y =
-      (𝕡.map (x, y)).map Prod.snd :=
+  have hmap : π.map y =
+      (π.map (x, y)).map Prod.snd :=
     (AEMeasurable.map_map_of_aemeasurable measurable_snd.aemeasurable
       hP.aemeasurable).symm
-  have hlaw : 𝕡.map y = ν.withDensity q := by
+  have hlaw : π.map y = ν.withDensity q := by
     rw [hmap, hjoint]
     have hmarg : ν.withDensity (fun y ↦ lintegral μ (fun x ↦ p (x, y))) =
         ((μ.prod ν).withDensity p).snd := by
@@ -49,21 +47,21 @@ private lemma main
         simp only [setLIntegral_univ]
       exact h.symm
     exact hmarg.symm
-  have hm : 𝕡.prob y =ᵐ[ν] q := by
-    show (𝕡.map y).rnDeriv ν =ᵐ[ν] q
+  have hm : π.prob y =ᵐ[ν] q := by
+    show (π.map y).rnDeriv ν =ᵐ[ν] q
     rw [hlaw]
     exact Measure.rnDeriv_withDensity ν hq
-  have hd : 𝕡.prob (x, y) =ᵐ[μ.prod ν] p := by
-    show (𝕡.map (x, y)).rnDeriv (μ.prod ν) =ᵐ[μ.prod ν] p
+  have hd : π.prob (x, y) =ᵐ[μ.prod ν] p := by
+    show (π.map (x, y)).rnDeriv (μ.prod ν) =ᵐ[μ.prod ν] p
     rw [hjoint]
     exact Measure.rnDeriv_withDensity (μ.prod ν) hp
-  have hmd : (fun z ↦ 𝕡.prob y z.2) =ᵐ[μ.prod ν] (fun z ↦ q z.2) :=
+  have hmd : (fun z ↦ π.prob y z.2) =ᵐ[μ.prod ν] (fun z ↦ q z.2) :=
     Measure.quasiMeasurePreserving_snd.ae_eq_comp hm
   have htot : lintegral ν q = 1 := by
     have h : (ν.withDensity q) Set.univ = lintegral ν q := by
       rw [withDensity_apply _ MeasurableSet.univ, setLIntegral_univ]
     rw [← h, ← hlaw]
-    have : IsProbabilityMeasure (𝕡.map y) :=
+    have : IsProbabilityMeasure (π.map y) :=
       Measure.isProbabilityMeasure_map (AEMeasurable.snd hP.aemeasurable)
     exact measure_univ
   have hfin : ∀ᵐ b ∂ν, q b < ⊤ :=
@@ -100,31 +98,31 @@ private lemma main
     Measure.measurePreserving_swap.quasiMeasurePreserving.ae
       ((Measure.ae_prod_iff_ae_ae hPms).mpr hzero)
   have hdiv : ∀ᵐ a ∂μ, ∀ᵐ b ∂ν,
-      𝕡.condProb (x, y) (a, b) = 𝕡.prob (x, y) (a, b) / 𝕡.prob y b :=
+      π.condProb (x, y) (a, b) = π.prob (x, y) (a, b) / π.prob y b :=
     All_Eq_DivProbS hP
-  have hmp : Measurable (𝕡.prob (x, y)) := by
-    simpa [Measure.prob] using Measure.measurable_rnDeriv (𝕡.map (x, y)) ReferenceMeasure.measure
-  have hmy2 : Measurable (𝕡.prob y) := by
-    simpa [Measure.prob] using Measure.measurable_rnDeriv (𝕡.map y) ReferenceMeasure.measure
-  have hmc : Measurable (𝕡.condProb (x, y)) := by
-    change Measurable (fun z : α × β ↦ 𝕡.prob (x, y) z /
-      (𝕡.map (fun ω ↦ ((x, y) ω).2)).rnDeriv ReferenceMeasure.measure z.2)
-    exact hmp.div ((Measure.measurable_rnDeriv (𝕡.map (fun ω ↦ ((x, y) ω).2))
+  have hmp : Measurable (π.prob (x, y)) := by
+    simpa [Measure.prob] using Measure.measurable_rnDeriv (π.map (x, y)) ReferenceMeasure.measure
+  have hmy2 : Measurable (π.prob y) := by
+    simpa [Measure.prob] using Measure.measurable_rnDeriv (π.map y) ReferenceMeasure.measure
+  have hmc : Measurable (π.condProb (x, y)) := by
+    change Measurable (fun z : α × β ↦ π.prob (x, y) z /
+      (π.map (fun ω ↦ ((x, y) ω).2)).rnDeriv ReferenceMeasure.measure z.2)
+    exact hmp.div ((Measure.measurable_rnDeriv (π.map (fun ω ↦ ((x, y) ω).2))
       ReferenceMeasure.measure).comp measurable_snd)
-  have hcdms : MeasurableSet {z : α × β | 𝕡.condProb (x, y) z = 𝕡.prob (x, y) z / 𝕡.prob y z.2} :=
+  have hcdms : MeasurableSet {z : α × β | π.condProb (x, y) z = π.prob (x, y) z / π.prob y z.2} :=
     measurableSet_eq_fun hmc (hmp.div (hmy2.comp measurable_snd))
-  have hcd : (fun z ↦ 𝕡.condProb (x, y) z) =ᵐ[μ.prod ν]
-      (fun z ↦ 𝕡.prob (x, y) z / 𝕡.prob y z.2) :=
+  have hcd : (fun z ↦ π.condProb (x, y) z) =ᵐ[μ.prod ν]
+      (fun z ↦ π.prob (x, y) z / π.prob y z.2) :=
     (Measure.ae_prod_iff_ae_ae hcdms).mpr hdiv
   have hcancel :
-      (fun z ↦ 𝕡.prob (x, y) z) =ᵐ[μ.prod ν]
-        (fun z ↦ 𝕡.condProb (x, y) z * 𝕡.prob y z.2) := by
+      (fun z ↦ π.prob (x, y) z) =ᵐ[μ.prod ν]
+        (fun z ↦ π.condProb (x, y) z * π.prob y z.2) := by
     filter_upwards [hmd, hd, hcd, hfinp, hzero'] with z hmy hpz hcdz hlt hz
     have hqz : q z.2 = 0 → p z = 0 := by
       intro hq0
       exact hz hq0
-    have hpy : 𝕡.prob y z.2 = q z.2 := hmy
-    have hrhs : 𝕡.condProb (x, y) z * 𝕡.prob y z.2 = (p z / q z.2) * q z.2 := by
+    have hpy : π.prob y z.2 = q z.2 := hmy
+    have hrhs : π.condProb (x, y) z * π.prob y z.2 = (p z / q z.2) * q z.2 := by
       simp only [hcdz, hpz, hpy]
     rw [hpz, hrhs]
     exact (ENNReal.div_mul_cancel' hqz (fun h ↦ (hlt.ne h).elim)).symm
@@ -132,4 +130,4 @@ private lemma main
 
 
 -- created on 2020-12-09
--- updated on 2026-09-14
+-- updated on 2026-09-20

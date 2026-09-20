@@ -7,22 +7,21 @@ import Lemma.Random.PSpace.PSpace.of.PSpace_Joint
 open Random MeasureTheory
 
 
-/-- `𝕡.prob (x, y)` is a.e. equal to any witnessing density `p` supplied by
+/-- `π.prob (x, y)` is a.e. equal to any witnessing density `p` supplied by
 `PSpace.exists_distribution` (the joint law equals `μ.prod ν` with density `p`). -/
 private lemma densityAe
   [MeasurableSpace Ω]
   [ReferenceMeasure α] [ReferenceMeasure β]
-  {𝕡 : Measure Ω}
-  {x : Ω → α} {y : Ω → β}
-  [PSpace 𝕡 (x, y)]
+  {π : Measure Ω} {x : Ω → α} {y : Ω → β}
+  [PSpace π (x, y)]
 -- given
   (p : α × β → ENNReal)
   (hp : Measurable p)
-  (hjoint : 𝕡.map (x, y) = (ReferenceMeasure.measure.prod ReferenceMeasure.measure).withDensity p) :
+  (hjoint : π.map (x, y) = (ReferenceMeasure.measure.prod ReferenceMeasure.measure).withDensity p) :
 -- imply
-  𝕡.prob (x, y) =ᵐ[ReferenceMeasure.measure.prod ReferenceMeasure.measure] p := by
+  π.prob (x, y) =ᵐ[ReferenceMeasure.measure.prod ReferenceMeasure.measure] p := by
 -- proof
-  show (𝕡.map (x, y)).rnDeriv _ =ᵐ[_] p
+  show (π.map (x, y)).rnDeriv _ =ᵐ[_] p
   rw [hjoint]
   apply Measure.rnDeriv_withDensity _ hp
 
@@ -31,15 +30,14 @@ private lemma densityAe
 private lemma left
   [MeasurableSpace Ω]
   [ReferenceMeasure α] [ReferenceMeasure β]
-  {𝕡 : Measure Ω}
-  {x : Ω → α} {y : Ω → β}
+  {π : Measure Ω} {x : Ω → α} {y : Ω → β}
 -- given
-  (hP : PSpace 𝕡 (x, y)) :
+  (hP : PSpace π (x, y)) :
 -- imply
   have := PSpace.of.PSpace_Joint.snd hP
   ∀ᵐ «y.bvar» ∂ReferenceMeasure.measure,
-    ∫⁻ «x.bvar», 𝕡.prob (x, y) («x.bvar», «y.bvar») ∂ReferenceMeasure.measure =
-      𝕡.prob y «y.bvar» := by
+    ∫⁻ «x.bvar», ℙ[π](x = «x.bvar» ∧ y = «y.bvar») ∂ReferenceMeasure.measure =
+      ℙ[π](y = «y.bvar») := by
 -- proof
   simp
   obtain ⟨p, D, hjoint⟩ := hP.exists_distribution
@@ -47,7 +45,7 @@ private lemma left
   let μ : Measure α := ReferenceMeasure.measure
   let ν : Measure β := ReferenceMeasure.measure
   let q := fun «y.bvar» : β ↦ lintegral μ (fun «x.bvar» ↦ p («x.bvar», «y.bvar»))
-  have hlaw : 𝕡.map y = ν.withDensity q := by
+  have hlaw : π.map y = ν.withDensity q := by
     erw [← AEMeasurable.map_map_of_aemeasurable measurable_snd.aemeasurable hP.aemeasurable, hjoint]
     symm
     ext s hs
@@ -62,12 +60,12 @@ private lemma left
   apply Filter.EventuallyEq.trans (g := q)
   · apply (Measure.ae_ae_of_ae_prod
         (ae_eq_comp measurable_swap.aemeasurable
-          (_ : 𝕡.prob (x, y) =ᵐ[(ν.prod μ).map Prod.swap] p))).mono
+          (_ : π.prob (x, y) =ᵐ[(ν.prod μ).map Prod.swap] p))).mono
     · intro _ hb
       apply lintegral_congr_ae hb
     · simpa [Measure.prod_swap] using densityAe p hp hjoint
   · symm
-    change (𝕡.map y).rnDeriv ν =ᵐ[ν] q
+    change (π.map y).rnDeriv ν =ᵐ[ν] q
     rw [hlaw]
     apply Measure.rnDeriv_withDensity ν hp.lintegral_prod_left'
 
@@ -82,15 +80,14 @@ private lemma left
 private lemma main
   [MeasurableSpace Ω]
   [ReferenceMeasure α] [ReferenceMeasure β]
-  {𝕡 : Measure Ω}
-  {x : Ω → α} {y : Ω → β}
+  {π : Measure Ω} {x : Ω → α} {y : Ω → β}
 -- given
-  (hP : PSpace 𝕡 (x, y)) :
+  (hP : PSpace π (x, y)) :
 -- imply
   have := PSpace.of.PSpace_Joint.fst hP
   ∀ᵐ «x.bvar» ∂ReferenceMeasure.measure,
-    ∫⁻ «y.bvar», 𝕡.prob (x, y) («x.bvar», «y.bvar») ∂ReferenceMeasure.measure =
-      𝕡.prob x «x.bvar» := by
+    ∫⁻ «y.bvar», ℙ[π](x = «x.bvar» ∧ y = «y.bvar») ∂ReferenceMeasure.measure =
+      ℙ[π](x = «x.bvar») := by
 -- proof
   simp
   obtain ⟨p, D, hjoint⟩ := hP.exists_distribution
@@ -98,7 +95,7 @@ private lemma main
   let μ : Measure α := ReferenceMeasure.measure
   let ν : Measure β := ReferenceMeasure.measure
   let q := fun «x.bvar» : α ↦ lintegral ν (fun «y.bvar» ↦ p («x.bvar», «y.bvar»))
-  have hlaw : 𝕡.map x = μ.withDensity q := by
+  have hlaw : π.map x = μ.withDensity q := by
     erw [← AEMeasurable.map_map_of_aemeasurable measurable_fst.aemeasurable hP.aemeasurable, hjoint]
     symm
     ext s hs
@@ -115,10 +112,10 @@ private lemma main
     intro _ hb
     apply lintegral_congr_ae hb
   · symm
-    change (𝕡.map x).rnDeriv μ =ᵐ[μ] q
+    change (π.map x).rnDeriv μ =ᵐ[μ] q
     rw [hlaw]
     apply Measure.rnDeriv_withDensity μ hp.lintegral_prod_right'
 
 
 -- created on 2020-12-07
--- updated on 2026-09-14
+-- updated on 2026-09-20

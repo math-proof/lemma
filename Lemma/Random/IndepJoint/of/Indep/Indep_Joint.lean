@@ -8,23 +8,23 @@ open ProbabilityTheory MeasureTheory
 private lemma main
   [MeasurableSpace Ω]
   [ReferenceMeasure α] [ReferenceMeasure β] [ReferenceMeasure γ]
-  {𝕡 : Measure Ω}
+  {π : Measure Ω}
   {x : Ω → α} {y : Ω → β} {z : Ω → γ}
-  [PSpace 𝕡 x] [PSpace 𝕡 y] [PSpace 𝕡 z]
+  [PSpace π x] [PSpace π y] [PSpace π z]
 -- given
-  (hx : x ⟂ᵢ[𝕡] z)
-  (hy : y ⟂ᵢ[𝕡] (x, z)) :
+  (hx : x ⟂ᵢ[π] z)
+  (hy : y ⟂ᵢ[π] (x, z)) :
 -- imply
-  (x, y) ⟂ᵢ[𝕡] z := by
+  (x, y) ⟂ᵢ[π] z := by
 -- proof
-  have hx_m : AEMeasurable x 𝕡 := PSpace.aemeasurable
-  have hy_m : AEMeasurable y 𝕡 := PSpace.aemeasurable
-  have hz_m : AEMeasurable z 𝕡 := PSpace.aemeasurable
-  have hxz_m : AEMeasurable (x, z) 𝕡 := hx_m.prodMk hz_m
-  have hxy_m : AEMeasurable (x, y) 𝕡 := hx_m.prodMk hy_m
-  have hyxz_m : AEMeasurable (y, (x, z)) 𝕡 := hy_m.prodMk hxz_m
+  have hx_m : AEMeasurable x π := PSpace.aemeasurable
+  have hy_m : AEMeasurable y π := PSpace.aemeasurable
+  have hz_m : AEMeasurable z π := PSpace.aemeasurable
+  have hxz_m : AEMeasurable (x, z) π := hx_m.prodMk hz_m
+  have hxy_m : AEMeasurable (x, y) π := hx_m.prodMk hy_m
+  have hyxz_m : AEMeasurable (y, (x, z)) π := hy_m.prodMk hxz_m
   -- `y ⊥ (x, z)` ⇒ `y ⊥ x` ⇒ `x ⊥ y`
-  have hxy : x ⟂ᵢ[𝕡] y := (hy.comp measurable_id measurable_fst).symm
+  have hxy : x ⟂ᵢ[π] y := (hy.comp measurable_id measurable_fst).symm
   -- `(b, (a, c)) ↦ ((a, b), c)`
   let e : β × (α × γ) ≃ᵐ (α × β) × γ :=
     MeasurableEquiv.prodAssoc.symm.trans
@@ -73,26 +73,26 @@ private lemma main
               ((ν.prod μ).prod ξ) := by rw [h1]
       _ = (μ.prod ν).prod ξ := h2
   have hy_law :
-      𝕡.map (y, (x, z)) = (𝕡.map y).prod (𝕡.map (x, z)) :=
+      π.map (y, (x, z)) = (π.map y).prod (π.map (x, z)) :=
     IndepFun.map_prod_eq_prod_map_map hy_m hxz_m hy
   have hx_law :
-      𝕡.map (x, z) = (𝕡.map x).prod (𝕡.map z) :=
+      π.map (x, z) = (π.map x).prod (π.map z) :=
     IndepFun.map_prod_eq_prod_map_map hx_m hz_m hx
   have hxy_law :
-      𝕡.map (x, y) = (𝕡.map x).prod (𝕡.map y) :=
+      π.map (x, y) = (π.map x).prod (π.map y) :=
     IndepFun.map_prod_eq_prod_map_map hx_m hy_m hxy
   rw [indepFun_iff_map_prod_eq_prod_map_map hxy_m hz_m]
   have hmap :
-      𝕡.map ((x, y), z) = Measure.map e (𝕡.map (y, (x, z))) := by
+      π.map ((x, y), z) = Measure.map e (π.map (y, (x, z))) := by
     rw [h_comp]
     exact (AEMeasurable.map_map_of_aemeasurable e.measurable.aemeasurable hyxz_m).symm
   calc
-    _ = 𝕡.map ((x, y), z) := rfl
-    _ = Measure.map e (𝕡.map (y, (x, z))) := hmap
-    _ = Measure.map e ((𝕡.map y).prod (𝕡.map (x, z))) := by rw [hy_law]
-    _ = Measure.map e ((𝕡.map y).prod ((𝕡.map x).prod (𝕡.map z))) := by rw [hx_law]
-    _ = ((𝕡.map x).prod (𝕡.map y)).prod (𝕡.map z) := hassoc _ _ _
-    _ = (𝕡.map (x, y)).prod (𝕡.map z) := by rw [← hxy_law]
+    _ = π.map ((x, y), z) := rfl
+    _ = Measure.map e (π.map (y, (x, z))) := hmap
+    _ = Measure.map e ((π.map y).prod (π.map (x, z))) := by rw [hy_law]
+    _ = Measure.map e ((π.map y).prod ((π.map x).prod (π.map z))) := by rw [hx_law]
+    _ = ((π.map x).prod (π.map y)).prod (π.map z) := hassoc _ _ _
+    _ = (π.map (x, y)).prod (π.map z) := by rw [← hxy_law]
 
 
--- created on 2026-09-19
+-- created on 2023-04-01

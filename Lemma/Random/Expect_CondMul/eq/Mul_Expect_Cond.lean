@@ -8,21 +8,21 @@ open MeasureTheory
 @[main, comm]
 private lemma main
   [MeasurableSpace Ω]
-  [ReferenceMeasure α] [ReferenceMeasure β]
-  {𝕡 : Measure Ω}
-  {a : Ω → α} {s : Ω → β}
+  [ReferenceMeasure α] [ReferenceMeasure γ]
+  {π : Measure Ω}
+  {a : Ω → α} {s : Ω → γ}
   {f : α → ENNReal}
 -- given
-  (hP : PSpace 𝕡 (a, s))
+  (hP : PSpace π (a, s))
   (hf : Measurable f)
   (c : ENNReal)
-  («s.bvar» : β) :
+  («s.bvar» : γ) :
 -- imply
-  Expectation (ReferenceMeasure.measure.withDensity (fun «a.bvar» ↦ 𝕡.condProb (a, s) («a.bvar», «s.bvar»))) (fun «a.bvar» ↦ c * f «a.bvar») =
-    c * Expectation (ReferenceMeasure.measure.withDensity (fun «a.bvar» ↦ 𝕡.condProb (a, s) («a.bvar», «s.bvar»))) f := by
+  𝔼[a: π](c * f a | s = «s.bvar») = c * 𝔼[a: π](f a | s = «s.bvar») := by
 -- proof
-  simp only [Expectation]
+  simp only [Expectation.condRV, expectation_ennreal]
   exact lintegral_const_mul c hf
 
 
 -- created on 2026-09-19
+-- updated on 2026-09-20

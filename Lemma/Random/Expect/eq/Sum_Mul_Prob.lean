@@ -8,18 +8,24 @@ open MeasureTheory
 @[main]
 private lemma main
   [MeasurableSpace Ω]
-  [MeasurableSpace α]
+  [ReferenceMeasure α]
   [Countable α]
   [MeasurableSingletonClass α]
-  {𝕡 : Measure Ω}
-  {a : Ω → α}
-  {f : α → ENNReal} :
+  {π : Measure Ω} {a : Ω → α} {f : α → ENNReal}
+-- given
+  (hP : PSpace π a)
+  (hf : Measurable f)
+  (hμ : ReferenceMeasure.measure (α := α) = Measure.count) :
 -- imply
-  Expectation (𝕡.map a) f = ∑' «a.bvar» : α, f «a.bvar» * 𝕡.map a {«a.bvar»} := by
+  𝔼[a: π](f a) = ∑' «a.bvar» : α, f «a.bvar» * ℙ[π](a = «a.bvar») := by
 -- proof
-  simp only [Expectation]
-  exact lintegral_countable' f
+  simp only [Expectation.ofRV, expectation_ennreal]
+  have hmp : Measurable (π.prob a) :=
+    Measure.measurable_rnDeriv (π.map a) ReferenceMeasure.measure
+  rw [PSpace.map_eq_withDensity_density,
+    lintegral_withDensity_eq_lintegral_mul _ hmp hf, hμ, lintegral_count]
+  exact tsum_congr fun _ => mul_comm _ _
 
 
 -- created on 2023-03-20
--- updated on 2026-09-16
+-- updated on 2026-09-20

@@ -14,15 +14,15 @@ private lemma main
   {Ω α β : Type*}
   [MeasurableSpace Ω]
   [ReferenceMeasure α] [ReferenceMeasure β]
-  {𝕡 : Measure Ω}
+  {π : Measure Ω}
   {r : ℕ → Ω → α} {s : ℕ → Ω → β}
 -- given
-  (h : ∀ t : ℕ, r t ⟂ᵢ[𝕡] (fun (ω : Ω) (i : Fin t) ↦ s i ω)) :
+  (h : ∀ t : ℕ, r t ⟂ᵢ[π] (fun (ω : Ω) (i : Fin t) ↦ s i ω)) :
 -- imply
-  ∀ (t k : ℕ), r (t + k) ⟂ᵢ[𝕡] (fun (ω : Ω) (i : Fin t) ↦ s i ω) := by
+  ∀ (t k : ℕ), r (t + k) ⟂ᵢ[π] (fun (ω : Ω) (i : Fin t) ↦ s i ω) := by
 -- proof
   intro t k
-  have htk : r (t + k) ⟂ᵢ[𝕡] (fun (ω : Ω) (i : Fin (t + k)) ↦ s i ω) := h (t + k)
+  have htk : r (t + k) ⟂ᵢ[π] (fun (ω : Ω) (i : Fin (t + k)) ↦ s i ω) := h (t + k)
   let restrict : (Fin (t + k) → β) → (Fin t → β) :=
     fun f i ↦ f (Fin.castLE (by linarith) i)
   have hres : Measurable restrict := by
@@ -37,4 +37,4 @@ private lemma main
   exact htk.comp measurable_id hres
 
 
--- created on 2026-09-19
+-- created on 2023-04-01

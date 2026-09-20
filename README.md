@@ -16,6 +16,7 @@ The main objectives of this project are formalizing in Lean4:
   The commonly used SymPy operators:  
   - `Range`, `Complex.Sign`
   - `descFactorial`(FallingFactorial), `ascFactorial`(RisingFactorial)
+  - `Expectation`, `Probability`
 
 * **mathematical foundations of reinforcement learning**
   This part is based on the reference book [*Mathematical Foundation of Reinforcement Learning*](https://github.com/MathFoundationRL/Book-Mathematical-Foundation-of-Reinforcement-Learning) and is still in progress.
@@ -240,6 +241,8 @@ small-letter binary infix operators are short name for Capital-letter operator n
 | X.dvd.Y | \| | Dvd |  -- | 
 | X.sub.Y | ⊆ | Subset | Subset | 
 | X.sup.Y | ⊇ | Superset | Supset | 
+| X.ll.Y | ≪ | AbsolutelyContinuous |  -- | 
+| X.gg.Y | ≫ | CategoryStruct.comp |  -- | 
 
 ## Plural S
 The English Plural Letter S is used to denote double occurrence of types:

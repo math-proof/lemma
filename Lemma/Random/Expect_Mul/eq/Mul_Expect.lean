@@ -7,17 +7,21 @@ open MeasureTheory
 
 @[main, comm]
 private lemma main
-  [MeasurableSpace α]
-  {ν : Measure α}
+  [MeasurableSpace Ω]
+  [ReferenceMeasure α]
+  {π : Measure Ω}
+  {a : Ω → α}
   {f : α → ENNReal}
 -- given
-  (c : ENNReal)
-  (hf : Measurable f) :
+  (hP : PSpace π a)
+  (hf : Measurable f)
+  (c : ENNReal) :
 -- imply
-  Expectation ν (fun a ↦ c * f a) = c * Expectation ν f := by
+  𝔼[a: π](c * f a) = c * 𝔼[a: π](f a) := by
 -- proof
-  simp only [Expectation]
+  simp only [Expectation.ofRV, expectation_ennreal]
   exact lintegral_const_mul c hf
 
 
--- created on 2026-09-19
+-- created on 2023-03-24
+-- updated on 2026-09-20

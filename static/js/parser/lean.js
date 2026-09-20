@@ -41,11 +41,11 @@ export const token2classname = Object.freeze({
     '^^': 'LeanLogicXor',
     '^^^': 'LeanBitwiseXor',
     '<': 'Lean_lt',
-    '<<': 'Lean_ll',
+    '≪': 'Lean_ll',
     '<<<': 'Lean_lll',
     '<=': 'Lean_le',
     '>': 'Lean_gt',
-    '>>': 'Lean_gg',
+    '≫': 'Lean_gg',
     '>>>': 'Lean_ggg',
     '>=': 'Lean_ge',
     '∨': 'Lean_lor',
@@ -643,32 +643,28 @@ export class Lean extends IndentedNode {
                     self.start_idx += 2;
                     return this.parent.insert_sequential_tactic_combinator(this, prevToken, nextToken);
                 }
-                if (tokens[self.start_idx + 1] === '<') {
-                    self.start_idx++;
-                    token += '<';
-                    if (tokens[self.start_idx + 1] === '<') {
-                        self.start_idx++;
-                        token += '<';
-                    }
+                if (tokens[self.start_idx + 1] === '<' && tokens[self.start_idx + 2] === '<') {
+                    self.start_idx += 2;
+                    token = '<<<';
                 }
                 return this.push_arithmetic(token);
             case '>':
                 if (tokens[self.start_idx + 1] === '=') {
                     self.start_idx++;
                     token += '=';
-                } else if (tokens[self.start_idx + 1] === '>') {
-                    self.start_idx++;
-                    token += '>';
-                    if (tokens[self.start_idx + 1] === '>') {
-                        self.start_idx++;
-                        token += '>';
-                    }
+                } else if (tokens[self.start_idx + 1] === '>' && tokens[self.start_idx + 2] === '>') {
+                    self.start_idx += 2;
+                    token = '>>>';
                 }
                 return this.push_arithmetic(token);
             case '≤':
                 return this.push_binary(Lean_le);
             case '≥':
                 return this.push_binary(Lean_ge);
+            case '≪':
+                return this.push_binary(Lean_ll);
+            case '≫':
+                return this.push_binary(Lean_gg);
             case '⟂':
                 if (tokens[self.start_idx + 1] === 'ᵢ') {
                     // `⟂ᵢ[𝕡]` — independence with a measure modifier; the modifier is
@@ -909,9 +905,19 @@ export class Lean extends IndentedNode {
                     return caret;
                 }
                 return this.parent.insert_word(this, token);
+            case '×': {
+                const sprod = tokens[self.start_idx + 1] === 'ˢ';
+                if (sprod) self.start_idx++;
+                const caret = this.push_arithmetic('×');
+                if (sprod) {
+                    let p = caret;
+                    while (p && !(p instanceof Lean_times)) p = p.parent;
+                    if (p) p.superscript = 'ˢ';
+                }
+                return caret;
+            }
             // fallthrough: bare '/' uses same rule as '%'
             case '%':
-            case '×':
             case '∘':
             case '•':
             case '⊙':
@@ -1034,6 +1040,10 @@ export class Lean extends IndentedNode {
             case '⁻':
                 if (tokens[self.start_idx + 1] === '¹') {
                     self.start_idx++;
+                    if (tokens[self.start_idx + 1] === "'") {
+                        self.start_idx++;
+                        return this.push_post_unary('LeanPreimage');
+                    }
                     return this.push_post_unary('LeanInv');
                 }
                 return this.push_post_unary('LeanNegPart');
@@ -1350,7 +1360,7 @@ export class Lean extends IndentedNode {
         if (Ctor.input_priority > parent.stack_priority) {
             const created = new Ctor(this, this.indent, this.level);
             parent.replace(this, created);
-            return created;
+            return created.arg;
         }
         return parent.push_post_unary(funcName);
     }
@@ -1574,6 +1584,18 @@ export class LeanToken extends Lean {
     }
 
     append($new, $func) {
+        // `f fun a ↦ body` / `lintegral_congr fun a ↦ …` — expr keywords arrive via
+        // append(Lean_fun,'expr'), not push_token. Climbing to LeanAssign drops the
+        // lambda (echo becomes `f ↦ body`). Mirror push_token: space-separate onto this.
+        if (typeof $new === 'string' && ($func === 'expr' || $func === 'operator')) {
+            const Ctor = LEAN_CLASSES[$new];
+            if (Ctor && this.parent) {
+                const c = new LeanCaret(this.indent, this.level);
+                const node = new Ctor(c, this.indent, this.level);
+                this.parent.replace(this, new LeanArgsSpaceSeparated([this, node], this.indent, this.level));
+                return c;
+            }
+        }
         if (this.parent) return this.parent.insert(this, $new, $func);
     }
 
@@ -1636,6 +1658,7 @@ export class LeanToken extends Lean {
             }
             if (text.startsWith('_')) text = `\\${text}`;
         }
+        if (this.kwargs.isRandomArgument) return `{\\color{magenta} {${text}}}`;
         if (this.kwargs.isRandomVariable) return `{\\color{red} {${text}}}`;
         return text;
     }
@@ -2441,8 +2464,54 @@ export class LeanParenthesis extends LeanPairedGroup {
         return this.arg.isProp(vars);
     }
 
+    isProbEventParen() {
+        const p = this.parent;
+        return (
+            p instanceof LeanArgsSpaceSeparated &&
+            p.args.length >= 2 &&
+            p.args[1] === this &&
+            LeanArgsSpaceSeparated.isProbBinderHead(p.args[0])
+        );
+    }
+
+    isExpectBodyParen() {
+        const p = this.parent;
+        return (
+            p instanceof LeanArgsSpaceSeparated &&
+            p.args.length >= 2 &&
+            p.args[1] === this &&
+            LeanArgsSpaceSeparated.isExpectBinderHead(p.args[0])
+        );
+    }
+
     latexArgs(syntax) {
         const arg = this.arg;
+        if (this.isProbEventParen()) {
+            const rvs = LeanArgsSpaceSeparated.collectProbEventRVs(arg);
+            if (rvs) return [rvs.map((t) => t.toLatex(syntax)).join(', ')];
+            const peel = (n) => (n instanceof LeanParenthesis ? n.arg : n);
+            const body = peel(arg);
+            if (body instanceof LeanBitOr) {
+                const left = LeanArgsSpaceSeparated.collectProbEventRVs(body.lhs);
+                const right = LeanArgsSpaceSeparated.collectProbEventRVs(body.rhs);
+                if (left && right) {
+                    const L = left.map((t) => t.toLatex(syntax)).join(', ');
+                    const R = right.map((t) => t.toLatex(syntax)).join(', ');
+                    return [`${L} \\mid ${R}`];
+                }
+            }
+        }
+        if (this.isExpectBodyParen()) {
+            const peel = (n) => (n instanceof LeanParenthesis ? n.arg : n);
+            const body = peel(arg);
+            if (body instanceof LeanBitOr) {
+                const right = LeanArgsSpaceSeparated.collectProbEventRVs(body.rhs);
+                if (right) {
+                    const R = right.map((t) => t.toLatex(syntax)).join(', ');
+                    return [`${body.lhs.toLatex(syntax)} \\mid ${R}`];
+                }
+            }
+        }
         if (arg.matrixLatexSpec())
             return [arg.toLatex(syntax)];
         if (arg instanceof LeanColon) {
@@ -3287,6 +3356,20 @@ export class LeanColon extends LeanBinary {
         return ':';
     }
 
+    insert(caret, func, type) {
+        if (this.rhs === caret && !(caret instanceof LeanCaret) && type !== 'modifier') {
+            const c = new LeanCaret(this.indent, caret.level);
+            const Ctor = typeof func === 'string' ? LEAN_CLASSES[func] : func;
+            this.rhs = new LeanArgsSpaceSeparated(
+                [caret, new Ctor(c, this.indent, caret.level)],
+                this.indent,
+                caret.level,
+            );
+            return c;
+        }
+        if (this.parent) return this.parent.insert(this, func, type);
+    }
+
     insert_newline(caret, newline_count, indent, next) {
         if (this.rhs === caret) {
             if (caret instanceof LeanCaret && indent >= this.indent) {
@@ -3759,6 +3842,18 @@ export class LeanDvd extends LeanRelational {
     }
 }
 
+export class Lean_ll extends LeanRelational {
+    get operator() {
+        return '≪';
+    }
+}
+
+export class Lean_gg extends LeanRelational {
+    get operator() {
+        return '≫';
+    }
+}
+
 /** Set / arrow: `∈` (membership). */
 export class Lean_in extends LeanBinaryBoolean {
     static input_priority = 50;
@@ -3912,8 +4007,11 @@ export class LeanMul extends LeanArithmetic {
 export class Lean_times extends LeanArithmetic {
     static input_priority = 72;
 
+    /** @type {string | null} */
+    superscript = null;
+
     get operator() {
-        return '×';
+        return this.superscript ? `×${this.superscript}` : '×';
     }
 }
 
@@ -4044,6 +4142,14 @@ export class LeanBitwiseXor extends LeanArithmetic {
 }
 
 export class LeanBitOr extends LeanArithmetic {
+    // Below Eq (50) and ∧ (35): Prob conditional `x = «x.bvar» | y = «y.bvar»`
+    // must wrap whole equations, not nest `|` inside the first `=`.
+    static input_priority = 33;
+
+    get stack_priority() {
+        return 32;
+    }
+
     get operator() {
         return '|';
     }
@@ -4160,21 +4266,9 @@ export class LeanPow extends LeanArithmetic {
     }
 }
 
-export class Lean_ll extends LeanArithmetic {
-    get operator() {
-        return '<<';
-    }
-}
-
 export class Lean_lll extends LeanArithmetic {
     get operator() {
         return '<<<';
-    }
-}
-
-export class Lean_gg extends LeanArithmetic {
-    get operator() {
-        return '>>';
     }
 }
 
@@ -4338,6 +4432,51 @@ export class LeanUnaryArithmeticPost extends LeanUnaryArithmetic {
         }
         return [arg.toLatex(syntax)];
     }
+
+    replace(oldNode, newNode) {
+        if (
+            oldNode === this.arg &&
+            newNode instanceof LeanArgsSpaceSeparated &&
+            newNode.args[0] === oldNode
+        ) {
+            // Capture parent *before* constructing `app`: Args ctor reparents `this`.
+            const parent = this.parent;
+            if (!parent) throw new Error('LeanUnaryArithmeticPost.replace: no parent');
+            // Keep operand under the postfix; lift juxtaposition above it.
+            this.arg = oldNode;
+            oldNode.parent = this;
+            const app = new LeanArgsSpaceSeparated(
+                [this, ...newNode.args.slice(1)],
+                this.indent,
+                this.level,
+            );
+            return parent.replace(this, app);
+        }
+        return super.replace(oldNode, newNode);
+    }
+
+    insert(caret, func, type) {
+        if (this.arg === caret)
+            return this.parent.insert(this, func, type);
+        return super.insert(caret, func, type);
+    }
+
+    append($new, _func) {
+        const {indent, level} = this;
+        if (typeof $new === 'string') {
+            const Ctor = LEAN_CLASSES[$new];
+            const caret = new LeanCaret(indent, level);
+            const node = new Ctor(caret, indent, level);
+            if (this.parent instanceof LeanArgsSpaceSeparated) {
+                this.parent.push(node);
+            } else {
+                this.parent.replace(this, new LeanArgsSpaceSeparated([this, node], indent, level));
+            }
+            return caret;
+        }
+        this.parent.replace(this, new LeanArgsSpaceSeparated([this, $new], indent, level));
+        return $new;
+    }
 }
 
 class LeanUnaryArithmeticPre extends LeanUnaryArithmetic {
@@ -4409,6 +4548,23 @@ class LeanInv extends LeanUnaryArithmeticPost {
     }
     latexArgs(syntax) {
         return [this.arg.peelLatexCoe().toLatex(syntax)];
+    }
+}
+
+/** Postfix preimage `⁻¹'`. Lean `postfix:max` (same tightness as `⁻¹`). */
+class LeanPreimage extends LeanUnaryArithmeticPost {
+    static input_priority = 1024;
+    get operator() {
+        return "⁻¹'";
+    }
+    get command() {
+        return '^{-1}';
+    }
+    latexArgs(syntax) {
+        return [this.arg.peelLatexCoe().toLatex(syntax)];
+    }
+    strFormat() {
+        return "%s⁻¹'";
     }
 }
 
@@ -4621,11 +4777,28 @@ export class LeanGetElem extends LeanGetElemBaseBinary(LeanBinary) {
         return {base: node, indices};
     }
 
+    static expectBinderIndexLatex(ix, syntax) {
+        if (ix instanceof LeanColon) {
+            let ty = ix.rhs;
+            if (ty instanceof LeanParenthesis) ty = ty.arg;
+            if (ty instanceof LeanBitOr) {
+                return `{${ix.lhs.toLatex(syntax)}} : {${ty.lhs.toLatex(syntax)}}`;
+            }
+        }
+        return ix.toLatex(syntax);
+    }
+
     latexArgs(syntax) {
         // Nested segment of a longer chain: outer node owns multi-index LaTeX.
         if (this.parent instanceof LeanGetElem) return super.latexArgs(syntax);
 
         const {base, indices} = this.collectGetElemChain();
+        if (base instanceof LeanToken && base.text === '𝔼') {
+            return [
+                base.toLatex(syntax),
+                ...indices.map((ix) => LeanGetElem.expectBinderIndexLatex(ix, syntax)),
+            ];
+        }
         const indexParts = indices.map((ix) => ix.toLatex(syntax));
         const indexLatex = indexParts.join(', ');
 
@@ -4652,6 +4825,11 @@ export class LeanGetElem extends LeanGetElemBaseBinary(LeanBinary) {
         if (base instanceof LeanProperty && base.rhs instanceof LeanToken) {
             const fmt = base.latexFormat();
             if (fmt.includes('%s')) return fmt;
+        }
+        if (base instanceof LeanToken && base.text === '𝔼') {
+            if (indices.length >= 2)
+                return `\\mathop{{%s}}\\limits_{${indices.map(() => '%s').join(', ')}}`;
+            return '\\mathop{{%s}}\\limits_{%s}';
         }
         if (indices.length >= 2) {
             return `{%s}_{${indices.map(() => '%s').join(', ')}}`;
@@ -5181,6 +5359,7 @@ export class LeanStatements extends LeanMultipleLine(LeanArgs) {
     latexFormat() {
         const n = this.args.length;
         if (n === 0) return '';
+        if (n === 1) return '%s';
         const stmt = Array(n).fill('&{%s}&& ').join('\\\\\n');
         const p = this.parent;
         if (p && p instanceof LeanBy) return stmt;
@@ -7996,212 +8175,191 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         return inner.constructor.input_priority > parent.stack_priority;
     }
 
-    probDensityLatexParts() {
-        return LeanArgsSpaceSeparated.probDensityParts(this.args);
+    static isProbBinderHead(node) {
+        return (
+            node instanceof LeanGetElem &&
+            node.args[0] instanceof LeanToken &&
+            node.args[0].text === 'ℙ'
+        );
     }
 
-    static probDensityParts(args) {
-        const head = args[0];
-        if (!(head instanceof LeanProperty) ||
-            !(head.rhs instanceof LeanToken) || head.rhs.text !== 'prob')
-            return null;
-        if (args.length > 2 && args[args.length - 1] instanceof Lean_partial)
-            args = args.slice(0, -1);
-        if (args.length < 2) return null;
-        if (args.length >= 3) {
-            const last = args[args.length - 1];
-            if (!LeanArgsSpaceSeparated.isBoundObservation(last)) return null;
-            return [head.lhs, ...args.slice(1, -1)];
-        }
-        return [head.lhs, ...args.slice(1)];
-    }
-
-    /**
-     * Returns true when `node` is a bound-variable observation point —
-     * either a single `«x.bvar»` or a pair `(«x.bvar», «y.bvar»)`.
-     * Only such nodes may be elided from `𝕡.prob …` / `𝕡.condProb …`.
-     */
-    static isBoundObservation(node) {
-        if (node instanceof LeanDoubleAngleQuotation)
-            return node.boundValueLhs() != null;
-        if (node instanceof LeanParenthesis) {
-            const inner = node.arg;
-            if (inner instanceof LeanArgsCommaSeparated && inner.args.length === 2)
-                return inner.args.every(
-                    (a) => a instanceof LeanDoubleAngleQuotation && a.boundValueLhs() != null
-                );
-        }
-        return false;
-    }
-
-    condProbLatexParts() {
-        return LeanArgsSpaceSeparated.condProbParts(this.args);
-    }
-
-    static condProbParts(args) {
-        const head = args[0];
-        if (!(head instanceof LeanProperty) ||
-            !(head.rhs instanceof LeanToken) || head.rhs.text !== 'condProb')
-            return null;
-        if (args.length > 2 && args[args.length - 1] instanceof Lean_partial)
-            args = args.slice(0, -1);
-        if (args.length < 2) return null;
-        if (args.length >= 3) {
-            const last = args[args.length - 1];
-            if (!LeanArgsSpaceSeparated.isBoundObservation(last)) return null;
-        }
-        const kept = args.slice(1, args.length >= 3 ? -1 : undefined);
-        if (kept.length !== 1) return null;
-        const pair = kept[0];
-        const inner = pair instanceof LeanParenthesis ? pair.arg : pair;
-        if (!(inner instanceof LeanArgsCommaSeparated) || inner.args.length !== 2)
-            return null;
-        return [head.lhs, pair];
-    }
-
-    /** Render `condProbParts` as `[𝕡, \colorbox{…(x|y)…}]` latex strings. */
-    static condProbLatex(parts, syntax) {
-        const [measure, pair] = parts;
-        const inner = pair instanceof LeanParenthesis ? pair.arg : pair;
-        const [a, b] = inner.args;
-        const body = `${a.toLatex(syntax)}\\,\\middle|\\,${b.toLatex(syntax)}`;
-        const fmt = pair instanceof LeanParenthesis ? pair.toColor() : '\\left(%s\\right)';
-        return [measure.toLatex(syntax), String(fmt).format(body)];
-    }
-
-    /**
-     * `𝕡.map X {«x.bvar»}` — the pushforward measure evaluated at a singleton
-     * observation point is simplified to `𝕡 X` (the observation point is dropped,
-     * mirroring `prob` / `condProb`).
-     * Returns `[measure, randomVar]` or null when the shape does not match.
-     */
-    mapLatexParts() {
-        const {args} = this;
-        if (args.length !== 3) return null;
-        const head = args[0];
-        if (!(head instanceof LeanProperty) ||
-            !(head.rhs instanceof LeanToken) || head.rhs.text !== 'map')
-            return null;
-        const obs = args[2];
-        if (!(obs instanceof LeanBrace)) return null;
-        const inner = obs.arg;
-        if (!(inner instanceof LeanDoubleAngleQuotation) || !inner.boundValueLhs())
-            return null;
-        return [head.lhs, args[1]];
-    }
-
-    /** `Expectation ν f` — true when this node is `Expectation` applied to 2 args. */
-    isExpectation() {
-        return this.args.length === 3
-            && this.args[0] instanceof LeanToken
-            && this.args[0].text === 'Expectation';
-    }
-
-    /**
-     * LaTeX parts for `Expectation ν f` — the expectation of `f` under the law `ν`.
-     *   `Expectation (𝕡.map x) f` → ['map', f, x]
-     *   `Expectation (…withDensity (fun a ↦ 𝕡.condProb (x, y) (a, b))) f`
-     *                        → ['cond', f, x, y, b]
-     * otherwise → ['generic', ν, f].
-     */
-    expectationLatexParts() {
-        if (!this.isExpectation()) return null;
-        const peel = (arg) => (arg instanceof LeanParenthesis ? arg.arg : arg);
+    static markProbBinderArgs(node) {
+        const peel = (n) => (n instanceof LeanParenthesis ? n.arg : n);
+        const markRA = (n) => {
+            if (n instanceof LeanToken) n.kwargs.isRandomArgument = true;
+        };
         const markRV = (n) => {
             if (n instanceof LeanToken) n.kwargs.isRandomVariable = true;
         };
-        const f = this.args[2];
-        const nu = peel(this.args[1]);
-        if ((nu instanceof LeanArgsSpaceSeparated || nu instanceof LeanArgsIndented) && nu.args.length === 2) {
-            const head = nu.args[0];
-            let arg = nu.args[1];
-            while (arg instanceof LeanArgsNewLineSeparated && arg.args.length === 1)
-                arg = arg.args[0];
-            const isProperty = head instanceof LeanProperty && head.rhs instanceof LeanToken;
-            if (isProperty && head.rhs.text === 'map') {
-                markRV(arg);
-                return ['map', arg, f, arg];
+        const markFactor = (n) => {
+            if (!n) return;
+            n = peel(n);
+            if (n instanceof LeanToken) {
+                markRA(n);
+                return;
             }
-            if (isProperty && head.rhs.text === 'withDensity') {
-                const fn = peel(arg);
-                if (fn instanceof Lean_fun) {
-                    const arrow = fn.arg;
-                    const body = arrow.rhs.peelGroup();
-                    if (body instanceof LeanArgsSpaceSeparated && body.args.length === 3) {
-                        const cd = body.args[0];
-                        const isCondProb = cd instanceof LeanProperty
-                            && cd.rhs instanceof LeanToken && cd.rhs.text === 'condProb';
-                        const joint = body.args[1].peelGroup();
-                        const val = body.args[2].peelGroup();
-                        if (isCondProb
-                            && joint instanceof LeanArgsCommaSeparated && joint.args.length === 2
-                            && val instanceof LeanArgsCommaSeparated && val.args.length === 2
-                            && String(val.args[0]).trim() === String(arrow.lhs.peelGroup()).trim()) {
-                            markRV(joint.args[0]);
-                            markRV(joint.args[1]);
-                            // Beta-reduce `fun «a.bvar» ↦ body` so we print
-                            // E_a (body | s) instead of E_a ((λ a ↦ body)(a) | s).
-                            let integrand = peel(f);
-                            if (integrand instanceof Lean_fun) {
-                                const fArrow = integrand.arg;
-                                const fBinder = fArrow.lhs.peelGroup();
-                                if (String(fBinder).trim() === String(arrow.lhs.peelGroup()).trim()) {
-                                    integrand = fArrow.rhs.peelGroup();
-                                    const rvName = joint.args[0] instanceof LeanToken
-                                        ? joint.args[0].text
-                                        : String(joint.args[0]).trim();
-                                    const markBvars = (n) => {
-                                        if (!n || typeof n !== 'object') return;
-                                        if (n instanceof LeanDoubleAngleQuotation) {
-                                            const lhs = n.boundValueLhs();
-                                            if (lhs instanceof LeanToken && lhs.text === rvName)
-                                                lhs.kwargs.isRandomVariable = true;
-                                        }
-                                        if (Array.isArray(n.args)) n.args.forEach(markBvars);
-                                        for (const k of ['arg', 'lhs', 'rhs']) {
-                                            if (n[k]) markBvars(n[k]);
-                                        }
-                                    };
-                                    markBvars(integrand);
-                                    return ['cond-body', joint.args[0], integrand, joint.args[1]];
-                                }
-                            }
-                            return ['cond', joint.args[0], f, joint.args[0], joint.args[1]];
-                        }
-                    }
-                }
+            if (n instanceof LeanEq) {
+                markRV(peel(n.lhs));
+                return;
             }
-        }
-        return ['generic', nu, f];
+            if (n instanceof LeanBitOr) {
+                markFactor(n.lhs);
+                markFactor(n.rhs);
+                return;
+            }
+            if (n instanceof LeanArgsCommaSeparated) {
+                for (const a of n.args) markFactor(a);
+                return;
+            }
+            if (typeof Lean_land !== 'undefined' && n instanceof Lean_land) {
+                markFactor(n.lhs);
+                markFactor(n.rhs);
+                return;
+            }
+        };
+        markFactor(node);
     }
 
-    /** Format string for `expectationLatexParts()`. */
-    expectationLatexFormat(parts) {
-        switch (parts[0]) {
-            case 'map':
-                return '\\mathop{\\mathbb{E}}\\limits_{%s}\\left(%s\\left(%s\\right)\\right)';
-            case 'cond':
-                return '\\mathop{\\mathbb{E}}\\limits_{%s}\\left(%s\\left(%s\\right)\\ \\mathrel{\\bigg|}\\ %s\\right)';
-            case 'cond-body':
-                // Integrand already applied (beta-reduced fun body): E_a (c f a | s)
-                return '\\mathop{\\mathbb{E}}\\limits_{%s}\\left(%s\\ \\mathrel{\\bigg|}\\ %s\\right)';
-            default:
-                return '{\\mathop{\\mathbb{E}}}\\ %s\\ %s';
+    static bvarQuotationName(n) {
+        const peel = (x) => (x instanceof LeanParenthesis ? x.arg : x);
+        n = peel(n);
+        if (!(n instanceof LeanDoubleAngleQuotation)) return null;
+        const lhs = n.boundValueLhs();
+        return lhs instanceof LeanToken ? lhs : null;
+    }
+
+    static rvEqToken(n) {
+        const peel = (x) => (x instanceof LeanParenthesis ? x.arg : x);
+        n = peel(n);
+        if (!(n instanceof LeanEq)) return null;
+        const lhs = peel(n.lhs);
+        if (!(lhs instanceof LeanToken)) return null;
+        const bname = LeanArgsSpaceSeparated.bvarQuotationName(n.rhs);
+        if (!bname || bname.text !== lhs.text) return null;
+        return lhs;
+    }
+
+    static collectProbEventRVs(n) {
+        const peel = (x) => (x instanceof LeanParenthesis ? x.arg : x);
+        const out = [];
+        const walk = (node) => {
+            node = peel(node);
+            if (typeof Lean_land !== 'undefined' && node instanceof Lean_land) {
+                return walk(node.lhs) && walk(node.rhs);
+            }
+            const tok = LeanArgsSpaceSeparated.rvEqToken(node);
+            if (!tok) return false;
+            out.push(tok);
+            return true;
+        };
+        if (!walk(n) || out.length === 0) return null;
+        return out;
+    }
+
+    markProbBinderColors() {
+        const {args} = this;
+        if (args.length < 2 || !LeanArgsSpaceSeparated.isProbBinderHead(args[0])) return;
+        LeanArgsSpaceSeparated.markProbBinderArgs(args[1]);
+    }
+
+    static isExpectBinderHead(node) {
+        return (
+            node instanceof LeanGetElem &&
+            node.args[0] instanceof LeanToken &&
+            node.args[0].text === '𝔼'
+        );
+    }
+
+    /** Collect bound names (`x`) and free RA names (`y`) from `x: 𝕡 | y`. */
+    static expectBinderNames(index) {
+        const bound = new Set();
+        const free = new Set();
+        const peel = (n) => (n instanceof LeanParenthesis ? n.arg : n);
+        const addTok = (n, into) => {
+            n = peel(n);
+            if (n instanceof LeanToken) into.add(n.text);
+            else if (n instanceof LeanArgsCommaSeparated)
+                for (const a of n.args) addTok(a, into);
+        };
+        const ix = peel(index);
+        if (ix instanceof LeanColon) {
+            addTok(ix.lhs, bound);
+            let ty = peel(ix.rhs);
+            if (ty instanceof LeanBitOr) {
+                addTok(ty.rhs, free);
+            }
+        } else if (ix instanceof LeanBitOr) {
+            // rare: bare `x | y` without colon
+            addTok(ix.lhs, bound);
+            addTok(ix.rhs, free);
         }
+        return {bound, free};
+    }
+
+    /** Walk body; mark free names magenta, bound names red (bound wins if overlap). */
+    static markExpectBodyColors(body, bound, free) {
+        const walk = (n) => {
+            if (!n || typeof n !== 'object') return;
+            if (n instanceof LeanToken) {
+                if (bound.has(n.text)) n.kwargs.isRandomVariable = true;
+                else if (free.has(n.text)) n.kwargs.isRandomArgument = true;
+                return;
+            }
+            // Body `(expr | y)` — also treat RHS of BitOr as free-RA list when present.
+            if (n instanceof LeanBitOr) {
+                walk(n.lhs);
+                const peel = (x) => (x instanceof LeanParenthesis ? x.arg : x);
+                let rhs = peel(n.rhs);
+                const condRVs = LeanArgsSpaceSeparated.collectProbEventRVs(rhs);
+                if (condRVs) {
+                    for (const t of condRVs) t.kwargs.isRandomVariable = true;
+                    return;
+                }
+                const markFreeList = (x) => {
+                    x = peel(x);
+                    if (x instanceof LeanToken) {
+                        if (!bound.has(x.text)) x.kwargs.isRandomArgument = true;
+                        return;
+                    }
+                    if (x instanceof LeanArgsCommaSeparated)
+                        for (const a of x.args) markFreeList(a);
+                };
+                markFreeList(rhs);
+                return;
+            }
+            if (Array.isArray(n.args)) for (const a of n.args) walk(a);
+        };
+        walk(body);
+    }
+
+    markExpectBinderColors() {
+        const {args} = this;
+        if (args.length < 2 || !LeanArgsSpaceSeparated.isExpectBinderHead(args[0])) return;
+        const head = args[0];
+        const {bound, free} = LeanArgsSpaceSeparated.expectBinderNames(head.rhs);
+        // Also collect free names from body's `| y` if binder omitted them.
+        const peel = (n) => (n instanceof LeanParenthesis ? n.arg : n);
+        const body = args[1];
+        const b = peel(body);
+        if (b instanceof LeanBitOr) {
+            const addTok = (n) => {
+                n = peel(n);
+                if (n instanceof LeanToken) free.add(n.text);
+                else if (n instanceof LeanArgsCommaSeparated)
+                    for (const a of n.args) addTok(a);
+            };
+            addTok(b.rhs);
+        }
+        LeanArgsSpaceSeparated.markExpectBodyColors(body, bound, free);
+        // Bound name under 𝔼 (the `x` in `x: 𝕡`) should be red too.
+        const ix = peel(head.rhs);
+        if (ix instanceof LeanColon && ix.lhs instanceof LeanToken && bound.has(ix.lhs.text))
+            ix.lhs.kwargs.isRandomVariable = true;
     }
 
     latexArgs(syntax = null) {
-        const density = this.probDensityLatexParts();
-        if (density) return density.map((a) => a.toLatex(syntax));
-        const cond = this.condProbLatexParts();
-        if (cond) return LeanArgsSpaceSeparated.condProbLatex(cond, syntax);
-        const map = this.mapLatexParts();
-        if (map) return map.map((a) => a.toLatex(syntax));
-        const exp = this.expectationLatexParts();
-        if (exp) {
-            const [, ...rest] = exp;
-            return rest.map((a) => a.toLatex(syntax));
-        }
+        this.markProbBinderColors();
+        this.markExpectBinderColors();
         const matrixArgs = this.matrixLatexArgs(syntax);
         if (matrixArgs) return matrixArgs;
         const idInner = this.idLatexInner();
@@ -8307,8 +8465,6 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         if (this.idLatexInner()) return '%s';
         const {args} = this;
         const func = args[0];
-        const exp = this.expectationLatexParts();
-        if (exp) return this.expectationLatexFormat(exp);
         if (this.is_Abs()) return '\\left|{%s}\\right|';
         if (this.is_Tendsto()) return '{%s} \\xrightarrow{\\,%s\\,} {%s}';
 
@@ -8365,13 +8521,6 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
             if (func.rhs.text === 'fmod' && args.length === 2) return '{%s}{%s}';
             if (func.rhs.text === 'choose' && (args.length === 2 || args.length === 3))
                 return '\\binom{%s}{%s}';
-            const densityParts = this.probDensityLatexParts();
-            if (densityParts)
-                return Array(densityParts.length).fill('{%s}').join('\\ ');
-            if (this.condProbLatexParts())
-                return '{%s}\\ {%s}';
-            if (this.mapLatexParts())
-                return '{%s}\\ {%s}';
         }
         const n = args.length;
         return Array(n)
@@ -8566,6 +8715,7 @@ export class LeanArgsNewLineSeparated extends LeanMultipleLine(LeanArgs) {
     latexFormat() {
         const n = this.args.length;
         if (n === 0) return '';
+        if (n === 1) return '%s';
         const stmt = Array(n).fill('&{%s}&& ').join('\\\\\n');
         const p = this.parent;
         let align = (p instanceof LeanStatements) ? 'align*' : 'aligned';
@@ -11005,7 +11155,20 @@ class Lean_have extends Lean_let {
     }
 
     strFormat() {
-        return `${this.operator}${this.sep()}%s`;
+        const parts = [];
+        for (let i = 0; i < this.args.length; i++) {
+            const arg = this.args[i];
+            if (i === 0) parts.push(this.sep());
+            else if (arg instanceof LeanCaret);
+            else if (
+                arg instanceof LeanSequentialTacticCombinator &&
+                (arg.newlineBehind || arg.newlineBefore)
+            ) {
+                parts.push('\n');
+            } else parts.push(' ');
+            parts.push('%s');
+        }
+        return this.operator + parts.join('');
     }
 }
 
@@ -11434,12 +11597,6 @@ class Lean_int extends LeanBigOperator {
         if (this.scope instanceof LeanArgsSpaceSeparated) {
             const args = this.scope.args
                 .filter((a) => a !== partial && !(a instanceof LeanCaret));
-            const density = LeanArgsSpaceSeparated.probDensityParts(args);
-            if (density)
-                return density.map((a) => a.toLatex(syntax)).join('\\ ');
-            const cond = LeanArgsSpaceSeparated.condProbParts(args);
-            if (cond)
-                return LeanArgsSpaceSeparated.condProbLatex(cond, syntax).join('\\ ');
             return args.map((a) => a.toLatex(syntax)).join(' ');
         }
         // Binary operator scope (e.g. `c • f x ∂μ`): partial is in scope.rhs
@@ -11785,6 +11942,7 @@ const LEAN_CLASSES = {
     Lean_import,
     LeanIn,
     LeanInv,
+    LeanPreimage,
     LeanFactorial,
     Lean_lnot,
     LeanConj,
@@ -11815,3 +11973,91 @@ export function compile(code) {
 }
 
 LeanParser.instance = new LeanParser();
+/**
+ * Parse a Lean source file and extract the theorem structure.
+ *
+ * Designed for FLT solution files (`S_<key>.lean`) which carry a theorem named
+ * `solution` (the convention); some files also define helper theorems first.
+ *
+ * Returns a JSON object:
+ *   { imports, namespace, theoremName, binders, conclusion, proof, key }
+ *
+ * @param {string} source - Lean source text
+ * @param {string} [key] - the FLT key (from `S_<key>.lean`); used verbatim when
+ *   supplied, otherwise derived from a `P2MW.S_<key>` / `P2M.S_<key>` namespace.
+ * @returns {{imports:string[],namespace:string,theoremName:string,binders:string,conclusion:string,proof:string,key:string}|null}
+ */
+export function parseTheoremFile(source, key) {
+    const ast = compile(source);
+    if (!(ast instanceof LeanModule)) return null;
+
+    const imports = [];
+    let namespace = '';
+    for (const node of ast.args) {
+        if (!node) continue;
+        if (node instanceof Lean_import) {
+            imports.push(String(node).replace(/^import\s+/, '').trim());
+        } else if (node instanceof Lean_namespace) {
+            namespace = String(node).replace(/^namespace\s+/, '').trim();
+        }
+    }
+
+    if (key == null) {
+        if (namespace.startsWith('P2MW.S_')) {
+            key = namespace.slice('P2MW.S_'.length);
+        } else if (namespace.startsWith('P2M.S_')) {
+            key = namespace.slice('P2M.S_'.length);
+        } else {
+            key = null;
+        }
+    }
+
+    // Prefer `theorem/lemma solution`, then `theorem/lemma main`, otherwise the
+    // first theorem/lemma in the file.
+    let declMatch = /\b(?:theorem|lemma)\s+solution\b/.exec(source);
+    if (!declMatch) declMatch = /\b(?:theorem|lemma)\s+main\b/.exec(source);
+    if (!declMatch) declMatch = /\b(?:theorem|lemma)\s+(\S+)/.exec(source);
+    if (!declMatch) return null;
+    const theoremName = declMatch[0].trim().split(/\s+/)[1];
+    const declStart = declMatch.index;
+
+    // The declaration's terminating ':=' is the first ':=' after the keyword.
+    const restart = source.slice(declStart);
+    const assignMatch = /:=/.exec(restart);
+    if (!assignMatch) return null;
+    const assignIdx = declStart + assignMatch.index;
+
+    // Declaration text: from the theorem keyword up to (but not including) ':='.
+    let fullDecl = source.slice(declStart, assignIdx);
+    fullDecl = fullDecl.replace(/^(?:theorem|lemma)\s+\S+\s*/, '').trim();
+
+    // Split binders from conclusion at the first ':' at bracket depth 0.
+    let depth = 0;
+    let colonIdx = -1;
+    for (let i = 0; i < fullDecl.length; i++) {
+        const ch = fullDecl[i];
+        if (ch === '{' || ch === '[' || ch === '(') depth++;
+        else if (ch === '}' || ch === ']' || ch === ')') depth--;
+        else if (ch === ':' && depth === 0) {
+            colonIdx = i;
+            break;
+        }
+    }
+    if (colonIdx < 0) return null;
+    const binders = fullDecl.slice(0, colonIdx).trim();
+    const conclusion = fullDecl.slice(colonIdx + 1).trim();
+
+    // Proof: raw source after ':='.  Drop a leading 'by' keyword so the rest is
+    // the tactic block; otherwise keep the proof term verbatim.
+    let proofStyle = 'term';
+    let proof = source.slice(assignIdx + 2);
+    const byTail = proof.match(/^[\s\n]*\bby\b/);
+    if (byTail) {
+        proofStyle = 'by';
+        proof = proof.slice(byTail[0].length);
+    }
+    proof = proof.replace(/^\s*\n/, '');
+    proof = proof.replace(/\n\s*(end\b[^\n]*)?\s*$/, '\n');
+
+    return { imports, namespace, theoremName, binders, conclusion, proof, proofStyle, key };
+}

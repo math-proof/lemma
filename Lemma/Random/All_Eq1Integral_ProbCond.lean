@@ -9,16 +9,15 @@ open Random MeasureTheory
 
 @[main]
 private lemma main
-  {Ω α β : Type*}
   [MeasurableSpace Ω]
   [ReferenceMeasure α] [ReferenceMeasure β]
-  {𝕡 : Measure Ω}
+  {π : Measure Ω}
   {x : Ω → α} {y : Ω → β}
 -- given
-  (hP : PSpace 𝕡 (x, y)) :
+  (hP : PSpace π (x, y)) :
 -- imply
-  ∀ᵐ «y.bvar» ∂𝕡.map y,
-    ∫⁻ «x.bvar», 𝕡.condProb (x, y) («x.bvar», «y.bvar») ∂ReferenceMeasure.measure = 1 := by
+  ∀ᵐ «y.bvar» ∂π.map y,
+    ∫⁻ «x.bvar», ℙ[π](x = «x.bvar» | y = «y.bvar») ∂ReferenceMeasure.measure = 1 := by
 -- proof
   have := PSpace.of.PSpace_Joint.snd hP
   let μ : Measure α := ReferenceMeasure.measure
@@ -27,7 +26,7 @@ private lemma main
   have hp : Measurable p := D.measurable_density
   let q : β → ENNReal := fun «y.bvar» ↦ lintegral μ (fun «x.bvar» ↦ p («x.bvar», «y.bvar»))
   have hq : Measurable q := hp.lintegral_prod_left'
-  have hlaw : 𝕡.map y = ν.withDensity q := by
+  have hlaw : π.map y = ν.withDensity q := by
     erw [← AEMeasurable.map_map_of_aemeasurable measurable_snd.aemeasurable hP.aemeasurable, hjoint]
     have hmarg : ν.withDensity (fun «y.bvar» ↦ lintegral μ (fun «x.bvar» ↦ p («x.bvar», «y.bvar»))) =
         ((μ.prod ν).withDensity p).snd := by
@@ -41,24 +40,24 @@ private lemma main
         simp only [setLIntegral_univ]
       exact h.symm
     exact hmarg.symm
-  have hd : 𝕡.prob (x, y) =ᵐ[μ.prod ν] p := by
-    show (𝕡.map (x, y)).rnDeriv _ =ᵐ[_] p
+  have hd : π.prob (x, y) =ᵐ[μ.prod ν] p := by
+    show (π.map (x, y)).rnDeriv _ =ᵐ[_] p
     rw [hjoint]
     exact Measure.rnDeriv_withDensity _ hp
   have hsec :
-      (fun «y.bvar» ↦ lintegral μ (fun «x.bvar» ↦ 𝕡.prob (x, y) («x.bvar», «y.bvar»))) =ᵐ[ν] q := by
-    have hjp' : 𝕡.prob (x, y) =ᵐ[(ν.prod μ).map Prod.swap] p := by
+      (fun «y.bvar» ↦ lintegral μ (fun «x.bvar» ↦ π.prob (x, y) («x.bvar», «y.bvar»))) =ᵐ[ν] q := by
+    have hjp' : π.prob (x, y) =ᵐ[(ν.prod μ).map Prod.swap] p := by
       rwa [Measure.prod_swap]
     have hswap :
-        (fun z : β × α ↦ 𝕡.prob (x, y) (z.2, z.1)) =ᵐ[ν.prod μ]
+        (fun z : β × α ↦ π.prob (x, y) (z.2, z.1)) =ᵐ[ν.prod μ]
           fun z ↦ p (z.2, z.1) :=
       ae_eq_comp measurable_swap.aemeasurable hjp'
     exact (Measure.ae_ae_of_ae_prod hswap).mono fun _ hb ↦ lintegral_congr_ae hb
-  have hm : 𝕡.prob y =ᵐ[ν] q := by
-    show (𝕡.map y).rnDeriv ν =ᵐ[ν] q
+  have hm : π.prob y =ᵐ[ν] q := by
+    show (π.map y).rnDeriv ν =ᵐ[ν] q
     rw [hlaw]
     exact Measure.rnDeriv_withDensity ν hq
-  have : IsProbabilityMeasure (𝕡.map y) :=
+  have : IsProbabilityMeasure (π.map y) :=
     Measure.isProbabilityMeasure_map PSpace.aemeasurable
   have h1 : lintegral ν q = 1 := by
     have h : (ν.withDensity q) Set.univ = lintegral ν q := by
@@ -69,13 +68,13 @@ private lemma main
     (ae_lt_top hq (h1 ▸ ENNReal.one_ne_top)).mono fun _ hb ↦ hb.ne
   rw [hlaw, ae_withDensity_iff hq]
   filter_upwards [hsec, hm, htop] with «y.bvar» hsec_y hm_y htop_y hnz_y
-  have hsec_m : Measurable (fun («x.bvar» : α) ↦ 𝕡.prob (x, y) («x.bvar», «y.bvar»)) := by
+  have hsec_m : Measurable (fun («x.bvar» : α) ↦ π.prob (x, y) («x.bvar», «y.bvar»)) := by
     unfold Measure.prob
     fun_prop
-  show ∫⁻ «x.bvar», 𝕡.prob (x, y) («x.bvar», «y.bvar») / 𝕡.prob y «y.bvar» ∂μ = 1
+  show ∫⁻ «x.bvar», π.prob (x, y) («x.bvar», «y.bvar») / π.prob y «y.bvar» ∂μ = 1
   have key :
-      (fun «x.bvar» : α ↦ 𝕡.prob (x, y) («x.bvar», «y.bvar») / 𝕡.prob y «y.bvar») =
-        fun «x.bvar» ↦ (𝕡.prob y «y.bvar»)⁻¹ * 𝕡.prob (x, y) («x.bvar», «y.bvar») := by
+      (fun «x.bvar» : α ↦ π.prob (x, y) («x.bvar», «y.bvar») / π.prob y «y.bvar») =
+        fun «x.bvar» ↦ (π.prob y «y.bvar»)⁻¹ * π.prob (x, y) («x.bvar», «y.bvar») := by
     funext «x.bvar»
     rw [div_eq_mul_inv, mul_comm]
   rw [key, lintegral_const_mul'' _ hsec_m.aemeasurable, hsec_y, hm_y]
@@ -83,3 +82,4 @@ private lemma main
 
 
 -- created on 2021-07-20
+-- updated on 2026-09-20

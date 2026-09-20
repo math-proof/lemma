@@ -44,9 +44,12 @@ so every file is opened through the ``\\\\?\\`` extended-length path prefix.
 from __future__ import annotations
 
 import argparse
+import datetime
 import heapq
+import json
 import os
 import re
+import subprocess
 import sys
 import time
 
@@ -55,6 +58,8 @@ DEFAULT_ROOT = "fermat_last_theorem"
 DEFAULT_BASE_URL = "https://github.com/anthropics/fermats-last-theorem/blob/main"
 DEFAULT_PORTED_ROOT = r"E:\github\lean\Lemma"
 DEFAULT_LIMIT = 20
+DEFAULT_REPO_ROOT = r"E:\github\lean"
+DEFAULT_PORT_MJS = os.path.join("mjs", "port_flt_lemma.mjs")
 
 # A ported theorem's file carries a doc comment linking back to its FLT source,
 # e.g.  [Key](https://github.com/.../P2M/Sol/S_Key.lean) - capture the Key.
@@ -176,6 +181,180 @@ def build_summary(base: str, root: str, n_nodes: int, n_edges: int,
     return "\n".join(lines)
 
 
+# ---------------------------------------------------------------------------
+# Auto-porting pipeline
+# ---------------------------------------------------------------------------
+
+# Segments that stay lowercase in the file path (connectives / quantifiers).
+_LOWERCASE_SEGMENTS = frozenset({
+    "of", "eq", "sub", "lt", "le", "gt", "ge", "ne", "not", "is", "and", "or",
+    "in", "ae", "mp", "mpr", "mt", "comm", "exists", "forall", "pairwise",
+    "imp", "iff", "ne0", "pos", "neg", "fin", "val", "cast",
+})
+
+
+def key_to_path(key: str) -> list[str]:
+    """Convert an FLT key like ``AbsoluteValue_exists_forall_sub_lt_of_…``
+    into a list of path segments for the ``Lemma/`` tree.
+
+    Rules:
+    - Split on ``_``.
+    - First segment stays as-is (already PascalCase).
+    - Known connective / quantifier words stay lowercase.
+    - Everything else: capitalise the first letter.
+    """
+    parts = key.split("_")
+    result = [parts[0]]
+    for seg in parts[1:]:
+        if seg in _LOWERCASE_SEGMENTS:
+            result.append(seg)
+        else:
+            result.append(seg[0].upper() + seg[1:] if seg else seg)
+    return result
+
+
+def split_binders(binders: str) -> tuple[str, str]:
+    """Split a binder string into ``(type_vars, hypotheses)``.
+
+    A binder is a *type variable or instance* (goes before ``-- given``) if it
+    is ``{X : Type*}`` / ``{X : Type _}`` or an instance ``[…]``.
+    Everything else is a hypothesis.
+    """
+    # Extract top-level binder groups: {…}, […], (…)
+    groups: list[str] = []
+    depth = 0
+    start = -1
+    for i, ch in enumerate(binders):
+        if ch in "{[(":
+            if depth == 0:
+                start = i
+            depth += 1
+        elif ch in "}])":
+            depth -= 1
+            if depth == 0 and start >= 0:
+                groups.append(binders[start:i + 1])
+                start = -1
+
+    type_vars: list[str] = []
+    hypotheses: list[str] = []
+    for g in groups:
+        if g.startswith("["):
+            type_vars.append(g)
+        elif g.startswith("{") and re.search(r":\s*Type", g):
+            type_vars.append(g)
+        else:
+            hypotheses.append(g)
+
+    return " ".join(type_vars), " ".join(hypotheses)
+
+
+def parse_flt_file(key: str, sol_dir: str, repo_root: str,
+                   port_mjs: str) -> dict | None:
+    """Call ``node mjs/port_flt_lemma.mjs`` to parse the FLT solution file
+    and return the JSON result, or *None* on failure."""
+    flt_path = os.path.join(sol_dir, "S_" + key + ".lean")
+    mjs_path = os.path.join(repo_root, port_mjs)
+    try:
+        proc = subprocess.run(
+            ["node", mjs_path, flt_path],
+            capture_output=True, text=True, timeout=30,
+            cwd=repo_root,
+        )
+    except (subprocess.TimeoutExpired, FileNotFoundError) as exc:
+        print(f"ERROR calling lean.js: {exc}", file=sys.stderr)
+        return None
+    if proc.returncode != 0:
+        print(f"ERROR lean.js failed: {proc.stderr}", file=sys.stderr)
+        return None
+    try:
+        return json.loads(proc.stdout)
+    except json.JSONDecodeError as exc:
+        print(f"ERROR parsing lean.js JSON: {exc}", file=sys.stderr)
+        return None
+
+
+def generate_lean_file(key: str, parsed: dict, base_url: str,
+                       date_str: str,
+                       imports: list[str] | None = None) -> str:
+    """Generate the content of the ported ``.lean`` file."""
+    type_vars, hypotheses = split_binders(parsed["binders"])
+    conclusion = parsed["conclusion"].strip()
+    proof = parsed["proof"].rstrip()
+    proof_style = parsed.get("proofStyle", "by")  # 'by' (tactic) or 'term'
+
+    # `haveI` → `have`: the linter prefers `have` for a proposition goal, and
+    # both register local instances identically in Lean 4.
+    proof = proof.replace("haveI ", "have ")
+
+    if imports is None:
+        imports = ["sympy.Basic", "Mathlib"]
+
+    url = f"{base_url}/P2M/Sol/S_{key}.lean"
+
+    lines: list[str] = [f"import {m}" for m in imports]
+    lines += [
+        "",
+        "/--",
+        f"[{key}]({url})",
+        "-/",
+        "@[main]",
+        "private lemma main",
+    ]
+
+    if type_vars:
+        lines.append(f"  {type_vars}")
+    lines.append("-- given")
+    if hypotheses:
+        lines.append(f"  {hypotheses} :")
+    else:
+        lines.append("  :")
+    lines.append("-- imply")
+    if proof_style == "by":
+        lines.append(f"  {conclusion} := by")
+    else:
+        lines.append(f"  {conclusion} :=")
+    lines.append("-- proof")
+    for proof_line in proof.split("\n"):
+        lines.append(proof_line)
+    lines.append("")
+    lines.append(f"-- created on {date_str}")
+    lines.append("")
+
+    return "\n".join(lines)
+
+
+def port_lemma(key: str, sol_dir: str, ported_root: str, base_url: str,
+               repo_root: str, port_mjs: str, dry_run: bool = False,
+               imports: list[str] | None = None) -> str | None:
+    """Port a single FLT lemma into the ``Lemma/`` tree.
+
+    Returns the path of the written file, or *None* on failure.
+    """
+    parsed = parse_flt_file(key, sol_dir, repo_root, port_mjs)
+    if parsed is None:
+        return None
+
+    segments = key_to_path(key)
+    date_str = datetime.date.today().isoformat()
+
+    content = generate_lean_file(key, parsed, base_url, date_str, imports)
+
+    # Lemma/AbsoluteValue/exists/forall/…/IsEquiv.lean
+    rel_path = os.path.join(ported_root, *segments) + ".lean"
+    abs_path = ext_path(rel_path)
+
+    if dry_run:
+        print(f"[dry-run] would write: {rel_path}")
+        print(content)
+        return rel_path
+
+    os.makedirs(os.path.dirname(rel_path), exist_ok=True)
+    with open(abs_path, "w", encoding="utf-8") as f:
+        f.write(content)
+    print(f"Ported: {key} -> {rel_path}")
+    return rel_path
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description="Topological sort of the FLT proof tree.")
     ap.add_argument("--base", default=DEFAULT_BASE,
@@ -190,6 +369,18 @@ def main() -> int:
                     help="Directory scanned for already-ported theorems (Lemma tree).")
     ap.add_argument("--limit", type=int, default=DEFAULT_LIMIT,
                     help="How many ready, mutually-independent theorems to list.")
+    ap.add_argument("--port", action="store_true",
+                    help="Auto-port the top ready lemma into the Lemma/ tree.")
+    ap.add_argument("--port-n", type=int, default=1,
+                    help="Number of top lemmas to auto-port (default 1).")
+    ap.add_argument("--dry-run", action="store_true",
+                    help="With --port, print the generated file instead of writing.")
+    ap.add_argument("--imports", default=None,
+                    help="Whitespace-separated imports to emit (default: sympy.Basic Mathlib).")
+    ap.add_argument("--repo-root", default=DEFAULT_REPO_ROOT,
+                    help="Root of the target Lean repo (for calling lean.js).")
+    ap.add_argument("--port-mjs", default=DEFAULT_PORT_MJS,
+                    help="Path to the mjs script that calls lean.js (relative to repo-root).")
     args = ap.parse_args()
 
     base = args.base
@@ -265,6 +456,23 @@ def main() -> int:
     for line in body_lines:
         print(line)
     print(f"\nLog written to: {out}")
+
+    # --- Auto-port the top lemma(s) ----------------------------------------
+    if args.port and batch:
+        print()
+        imports = args.imports.split() if args.imports else None
+        for i, k in enumerate(batch[:args.port_n]):
+            print(f"--- Porting [{i + 1}/{args.port_n}] {k} ---")
+            port_lemma(
+                key=k,
+                sol_dir=sol_dir,
+                ported_root=args.ported_root,
+                base_url=args.base_url,
+                repo_root=args.repo_root,
+                port_mjs=args.port_mjs,
+                dry_run=args.dry_run,
+                imports=imports,
+            )
 
     return 0
 

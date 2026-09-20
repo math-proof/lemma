@@ -18,10 +18,10 @@ open MeasureTheory
 private lemma main
   [MeasurableSpace Ω]
   [ReferenceMeasure α] [ReferenceMeasure β] [ReferenceMeasure γ]
-  {𝕡 : Measure Ω}
+  {π : Measure Ω}
   {x : Ω → α} {y : Ω → β} {z : Ω → γ} :
 -- imply
-  PSpace 𝕡 ((x, y), z) ↔ PSpace 𝕡 (x, (y, z)) := by
+  PSpace π ((x, y), z) ↔ PSpace π (x, (y, z)) := by
 -- proof
   let μ : Measure α := ReferenceMeasure.measure
   let ν : Measure β := ReferenceMeasure.measure
@@ -40,7 +40,7 @@ private lemma main
     obtain ⟨p, D, hjoint⟩ := hP.exists_distribution
     let p' : α × (β × γ) → ENNReal := p ∘ e.symm
     have hp' : Measurable p' := (D.measurable_density).comp e.symm.measurable
-    have hmap : 𝕡.map (x, (y, z)) = Measure.map e (𝕡.map ((x, y), z)) :=
+    have hmap : π.map (x, (y, z)) = Measure.map e (π.map ((x, y), z)) :=
       (AEMeasurable.map_map_of_aemeasurable e.measurable.aemeasurable
         hP.aemeasurable).symm
     have hwd : Measure.map e (((μ.prod ν).prod ξ).withDensity p) =
@@ -49,7 +49,7 @@ private lemma main
       simp only [Measure.map_apply e.measurable hs, withDensity_apply _ (e.measurable hs),
         withDensity_apply _ hs, setLIntegral_map hs hp' e.measurable]
       congr
-    have hlaw : 𝕡.map (x, (y, z)) = (μ.prod (ν.prod ξ)).withDensity p' := by
+    have hlaw : π.map (x, (y, z)) = (μ.prod (ν.prod ξ)).withDensity p' := by
       rw [hmap, hjoint]
       show Measure.map e (((μ.prod ν).prod ξ).withDensity p) =
         (μ.prod (ν.prod ξ)).withDensity p'
@@ -64,7 +64,7 @@ private lemma main
     obtain ⟨p, D, hjoint⟩ := hP.exists_distribution
     let p' : (α × β) × γ → ENNReal := p ∘ e
     have hp' : Measurable p' := (D.measurable_density).comp e.measurable
-    have hmap : 𝕡.map ((x, y), z) = Measure.map e.symm (𝕡.map (x, (y, z))) :=
+    have hmap : π.map ((x, y), z) = Measure.map e.symm (π.map (x, (y, z))) :=
       (AEMeasurable.map_map_of_aemeasurable e.symm.measurable.aemeasurable
         hP.aemeasurable).symm
     have hwd : Measure.map e.symm ((μ.prod (ν.prod ξ)).withDensity p) =
@@ -73,7 +73,7 @@ private lemma main
       simp only [Measure.map_apply e.symm.measurable hs, withDensity_apply _ (e.symm.measurable hs),
         withDensity_apply _ hs, setLIntegral_map hs hp' e.symm.measurable]
       congr
-    have hlaw : 𝕡.map ((x, y), z) = ((μ.prod ν).prod ξ).withDensity p' := by
+    have hlaw : π.map ((x, y), z) = ((μ.prod ν).prod ξ).withDensity p' := by
       rw [hmap, hjoint]
       show Measure.map e.symm ((μ.prod (ν.prod ξ)).withDensity p) =
         ((μ.prod ν).prod ξ).withDensity p'

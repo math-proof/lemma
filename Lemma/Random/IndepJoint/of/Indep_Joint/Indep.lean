@@ -8,16 +8,16 @@ open ProbabilityTheory MeasureTheory Random
 private lemma main
   [MeasurableSpace Ω]
   [ReferenceMeasure α] [ReferenceMeasure β] [ReferenceMeasure γ]
-  {𝕡 : Measure Ω}
+  {π : Measure Ω}
   {x : Ω → α} {y : Ω → β} {z : Ω → γ}
-  [PSpace 𝕡 x] [PSpace 𝕡 y] [PSpace 𝕡 z]
+  [PSpace π x] [PSpace π y] [PSpace π z]
 -- given
-  (hx : x ⟂ᵢ[𝕡] (y, z))
-  (hy : y ⟂ᵢ[𝕡] z) :
+  (hx : x ⟂ᵢ[π] (y, z))
+  (hy : y ⟂ᵢ[π] z) :
 -- imply
-  (x, y) ⟂ᵢ[𝕡] z := by
+  (x, y) ⟂ᵢ[π] z := by
 -- proof
-  have h : (y, x) ⟂ᵢ[𝕡] z := IndepJoint.of.Indep.Indep_Joint hy hx
+  have h : (y, x) ⟂ᵢ[π] z := IndepJoint.of.Indep.Indep_Joint hy hx
   have hcomp : (x, y) = Prod.swap ∘ (y, x) := by
     funext ω; rfl
   rw [hcomp]

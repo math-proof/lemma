@@ -14,6 +14,7 @@ export const tactics = [
     'cases',
     "cases'",
     'change',
+    'choose',
     'classical',
     'clear',
     'congr',

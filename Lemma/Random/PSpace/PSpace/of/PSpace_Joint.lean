@@ -19,26 +19,26 @@ private lemma main
   [MeasurableSpace Ω]
   [ReferenceMeasure α]
   [ReferenceMeasure β]
-  {𝕡 : Measure Ω}
+  {π : Measure Ω}
   {x : Ω → α} {y : Ω → β}
 -- given
-  (hP : PSpace 𝕡 (x, y)) :
+  (hP : PSpace π (x, y)) :
 -- imply
-  PSpace 𝕡 x ∧ PSpace 𝕡 y := by
+  PSpace π x ∧ PSpace π y := by
 -- proof
   let μ : Measure α := ReferenceMeasure.measure
   let ν : Measure β := ReferenceMeasure.measure
   obtain ⟨p, D, hjoint⟩ := hP.exists_distribution
   have hp : Measurable p := D.measurable_density
-  have hx : PSpace 𝕡 x := by
+  have hx : PSpace π x := by
     let q : α → ENNReal := fun «x.bvar» ↦ lintegral ν (fun «y.bvar» ↦ p («x.bvar», «y.bvar»))
     have hq : Measurable q := hp.lintegral_prod_right'
-    have hmap : 𝕡.map x =
-        (𝕡.map (x, y)).map Prod.fst :=
+    have hmap : π.map x =
+        (π.map (x, y)).map Prod.fst :=
       (AEMeasurable.map_map_of_aemeasurable measurable_fst.aemeasurable
         hP.aemeasurable).symm
-    have hlaw : 𝕡.map x = μ.withDensity q := by
-      have hjoint : 𝕡.map (x, y) = (μ.prod ν).withDensity p := hjoint
+    have hlaw : π.map x = μ.withDensity q := by
+      have hjoint : π.map (x, y) = (μ.prod ν).withDensity p := hjoint
       rw [hmap, hjoint]
       have hmarg :
           μ.withDensity (fun «x.bvar» ↦ lintegral ν (fun «y.bvar» ↦ p («x.bvar», «y.bvar»))) =
@@ -54,15 +54,15 @@ private lemma main
         exact h.symm
       exact hmarg.symm
     exact { toIsProbabilityMeasure := inferInstance, aemeasurable := AEMeasurable.fst hP.aemeasurable, exists_distribution := ⟨q, ⟨hq⟩, hlaw⟩ }
-  have hy : PSpace 𝕡 y := by
+  have hy : PSpace π y := by
     let q : β → ENNReal := fun «y.bvar» ↦ lintegral μ (fun «x.bvar» ↦ p («x.bvar», «y.bvar»))
     have hq : Measurable q := hp.lintegral_prod_left'
-    have hmap : 𝕡.map y =
-        (𝕡.map (x, y)).map Prod.snd :=
+    have hmap : π.map y =
+        (π.map (x, y)).map Prod.snd :=
       (AEMeasurable.map_map_of_aemeasurable measurable_snd.aemeasurable
         hP.aemeasurable).symm
-    have hlaw : 𝕡.map y = ν.withDensity q := by
-      have hjoint : 𝕡.map (x, y) = (μ.prod ν).withDensity p := hjoint
+    have hlaw : π.map y = ν.withDensity q := by
+      have hjoint : π.map (x, y) = (μ.prod ν).withDensity p := hjoint
       rw [hmap, hjoint]
       have hmarg :
           ν.withDensity (fun «y.bvar» ↦ lintegral μ (fun «x.bvar» ↦ p («x.bvar», «y.bvar»))) =
