@@ -34,7 +34,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Random.ExpectAdd.eq.AddExpectS)
 
-    Eq << Eq[-1].this.lhs.apply(Random.Expect.eq.Mul)
+    Eq << Eq[-1].this.lhs.apply(Random.Expect_Mul.eq.Mul_Expect)
 
 
 if __name__ == '__main__':

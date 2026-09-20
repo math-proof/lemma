@@ -25,11 +25,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Sum).apply(Tensor.Sum.Square.ReducedSum.eq.Add.Sum.Square)
 
-    Eq << Eq[-1].this.lhs.apply(Random.Expect.eq.Mul) * (n - 1)
+    Eq << Eq[-1].this.lhs.apply(Random.Expect_Mul.eq.Mul_Expect) * (n - 1)
 
     Eq << Eq[-1].this.lhs.apply(Random.ExpectAdd.eq.AddExpectS)
 
-    Eq << Eq[-1].this.find(Expectation).apply(Random.Expect.eq.Mul)
+    Eq << Eq[-1].this.find(Expectation).apply(Random.Expect_Mul.eq.Mul_Expect)
 
     Eq << Eq[-1].this.find(ReducedSum).apply(Vector.Sum.eq.Sum_Get, k)
 
@@ -53,7 +53,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Random.ExpectAdd.eq.AddExpectS)
 
-    Eq << Eq[-1].this.find(Expectation).apply(Random.Expect.eq.Mul)
+    Eq << Eq[-1].this.find(Expectation).apply(Random.Expect_Mul.eq.Mul_Expect)
 
     Eq << Eq[-1].this.find(Expectation).apply(Random.Expect.Sum.eq.Sum.Expect)
 

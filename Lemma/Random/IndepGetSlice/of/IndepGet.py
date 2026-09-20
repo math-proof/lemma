@@ -25,9 +25,9 @@ def prove(Eq):
 
     Eq.induct = Eq[1].subs(k, k + 1)
 
-    Eq << Random.EqConditioned.of.Eq_Conditioned.induct.independence_assumption.historic.apply(Eq[0], k)
+    Eq << Random.IndepGetAdd.of.IndepGet.apply(Eq[0], k)
 
-    Eq << Random.EqProb.of.Eq_Conditioned.Eq_Conditioned.joint.apply(Eq[1], Eq[2])
+    Eq << Random.IndepJoint.of.Indep.Indep_Joint.apply(Eq[1], Eq[2])
 
     Eq << Eq[-1].this.find(And).apply(Tensor.Stack.UFn.Is.Stack)
 

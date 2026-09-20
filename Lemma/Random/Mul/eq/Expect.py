@@ -24,7 +24,7 @@ def prove(Eq):
     b = Symbol(integer=True)
     Eq << apply(g(b) * Expectation[a:θ](f(a) | s))
 
-    Eq << Eq[-1].this.rhs.apply(Random.Expect.eq.Mul)
+    Eq << Eq[-1].this.rhs.apply(Random.Expect_Mul.eq.Mul_Expect)
 
 
 

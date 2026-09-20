@@ -36,7 +36,7 @@ def prove(Eq):
 
     Eq << Random.Ne_0.Conditioned.of.Ne_0.apply(Eq[0], z)
 
-    Eq << Random.Eq.of.Ne_0.bayes.Conditioned.apply(Eq[-1], x)
+    Eq << Random.ProbCondJoint.eq.MulProbSCond.of.Ne0ProbCond.apply(Eq[-1], x)
 
 
 

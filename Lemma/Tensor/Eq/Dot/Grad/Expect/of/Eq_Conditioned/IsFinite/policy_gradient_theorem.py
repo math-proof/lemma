@@ -82,7 +82,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Stack).apply(Tensor.Stack_PowGetS.eq.Pow)
 
-    Eq << Eq[-1].this.rhs.find(Expectation).apply(Random.Expect.Stack.eq.Stack.Expect)
+    Eq << Eq[-1].this.rhs.find(Expectation).apply(Random.Expect_Stack.eq.Stack_Expect)
 
     # https://spinningup.openai.com/en/latest/spinningup/rl_intro.html# bellman-equations
     # http://incompleteideas.net/book/bookdraft2017nov5.pdf (Page 47)

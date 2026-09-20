@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Random.Expect.le.ExpectAbs.apply(Eq[0].lhs.find(Expectation)._subs(f(x), -f(x)))
 
-    Eq << -Eq[-1].this.lhs.apply(Random.Expect.eq.Mul)
+    Eq << -Eq[-1].this.lhs.apply(Random.Expect_Mul.eq.Mul_Expect)
 
     Eq << Int.LeAbs.of.LeNeg.Le.apply(Eq[-3], Eq[-1])
 

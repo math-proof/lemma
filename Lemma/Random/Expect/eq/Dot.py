@@ -31,7 +31,7 @@ def prove(Eq):
 
     Eq << Eq[0].this.rhs.find(Sliced).apply(Tensor.Slice.eq.Stack)
 
-    Eq << Eq[-1].this.rhs.find(Expectation).apply(Random.Expect.Stack.eq.Stack.Expect)
+    Eq << Eq[-1].this.rhs.find(Expectation).apply(Random.Expect_Stack.eq.Stack_Expect)
 
     Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Stack_Sum_MulGetS)
 

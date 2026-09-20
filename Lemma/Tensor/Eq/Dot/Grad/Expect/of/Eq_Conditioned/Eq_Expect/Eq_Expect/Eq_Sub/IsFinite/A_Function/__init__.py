@@ -39,11 +39,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Expectation).apply(Random.ExpectAdd.eq.AddExpectS)
 
-    Eq.hypothesis = Eq[-1].this.find(Expectation[Mul[NegativeOne]]).apply(Random.Expect.eq.Mul)
+    Eq.hypothesis = Eq[-1].this.find(Expectation[Mul[NegativeOne]]).apply(Random.Expect_Mul.eq.Mul_Expect)
 
     Eq << Eq.hypothesis.rhs.find(-~Expectation).this.apply(Random.Expect.law_of_iterated_expectation, s[t])
 
-    Eq << Eq[-1].this.find(Expectation[~Expectation]).apply(Random.Expect.eq.Mul)
+    Eq << Eq[-1].this.find(Expectation[~Expectation]).apply(Random.Expect_Mul.eq.Mul_Expect)
 
     Eq << Eq[-1].this.find(Mul[~Expectation]).apply(Random.Expect_ConditionedGrad_LogProb.eq.Zero)
 

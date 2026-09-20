@@ -72,11 +72,11 @@ def prove(Eq):
 
     Eq << Random.All_Eq_MulProbCond.of.PSpace_Joint.apply(Eq.ne_zero, s[k + 1], a[k], r[k])
 
-    Eq << Eq[-1].this.lhs.arg.apply(Tensor.Stack.Is.Stack.Eq, i=3, j=0)
+    Eq << Eq[-1].this.lhs.arg.apply(Tensor.Stack.Is.Stack.UFn, i=3, j=0)
 
-    Eq << Eq[-1].this.lhs.arg.apply(Tensor.Stack.Is.Stack.Eq, i=3, j=0)
+    Eq << Eq[-1].this.lhs.arg.apply(Tensor.Stack.Is.Stack.UFn, i=3, j=0)
 
-    Eq << Eq[-1].this.lhs.arg.apply(Tensor.Stack.Is.Stack.Eq, i=3, j=0)
+    Eq << Eq[-1].this.lhs.arg.apply(Tensor.Stack.Is.Stack.UFn, i=3, j=0)
 
     Eq.recursion = Nat.Eq_Div.of.Eq.Ne_0.apply(Eq.ne_zero, Eq[-1])
 
@@ -88,7 +88,7 @@ def prove(Eq):
 
     Eq << Random.Ne_0.Conditioned.of.Ne_0.Ne_0.apply(Eq.ne_zero, Eq[-1])
 
-    Eq << Random.Eq.of.Ne_0.bayes.Conditioned.apply(Eq[-1], r[k], s[k + 1])
+    Eq << Random.ProbCondJoint.eq.MulProbSCond.of.Ne0ProbCond.apply(Eq[-1], r[k], s[k + 1])
 
     Eq << Eq[-1].this.rhs.find(Conditioned).rhs.args[-1].apply(Tensor.Eq.Is.GetSlice.Get)
 
@@ -106,7 +106,7 @@ def prove(Eq):
 
     Eq.ne_zero_r, Eq.ne_zero_s = Random.All_NeProb_0.All_NeProb_0.of.All_Ne0ProbJoint.apply(Eq[-1])
 
-    Eq << Random.EqProb.of.Eq_Conditioned.Eq_Conditioned.joint.apply(Eq[0], Eq[2])
+    Eq << Random.IndepJoint.of.Indep.Indep_Joint.apply(Eq[0], Eq[2])
 
     Eq << Random.Ne_0.Conditioned.of.Ne_0.apply(Eq.ne_zero_sar, a[k], s[k])
 
@@ -134,7 +134,7 @@ def prove(Eq):
 
     Eq << Random.Ne_0.Conditioned.of.Ne_0.apply(Eq[-1], s[0])
 
-    Eq << Random.Eq.of.Ne_0.bayes.Conditioned.apply(Eq[-1], r[0], s[1])
+    Eq << Random.ProbCondJoint.eq.MulProbSCond.of.Ne0ProbCond.apply(Eq[-1], r[0], s[1])
 
     Eq << Eq.final.subs(Eq[-1])
 

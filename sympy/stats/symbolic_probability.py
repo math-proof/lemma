@@ -661,9 +661,9 @@ class Probability(Expr):
 
     def _latex(self, p):
         expr, *limits = self.args
-        # raw U+1D561 (𝕡) renders as double-struck small p in KaTeX,
-        # whereas \mathbb{p} silently falls back to math-italic p
-        symbol_P = '𝕡' if self.is_pdf else r'\mathbb{P}'
+        # Always capital double-struck P (ℙ), same as the Lean `ℙ` sugar / KaTeX \mathbb{P}.
+        # (PDF vs PMF is not distinguished by glyph size.)
+        symbol_P = r'\mathbb{P}'
         if limits:
             limits = self.normalize_limits(limits)
             return r'%s_{%s}\left(%s\right)' % (

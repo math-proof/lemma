@@ -39,13 +39,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Expectation[Add]).apply(Random.ExpectAdd.eq.AddExpectS)
 
-    Eq << Eq[-1].this.find(Expectation[-Symbol * Function]).apply(Random.Expect.eq.Mul)
+    Eq << Eq[-1].this.find(Expectation[-Symbol * Function]).apply(Random.Expect_Mul.eq.Mul_Expect)
 
     Eq << Eq[-1].subs(Eq[0])
 
-    Eq << Eq[-1].this.find(Expectation).apply(Random.Expect.eq.Mul)
+    Eq << Eq[-1].this.find(Expectation).apply(Random.Expect_Mul.eq.Mul_Expect)
 
-    Eq << Eq[-1].this.find(Expectation[2]).apply(Random.Expect.eq.Mul)
+    Eq << Eq[-1].this.find(Expectation[2]).apply(Random.Expect_Mul.eq.Mul_Expect)
 
     Eq << Eq[-1].this.rhs.apply(Random.Var.eq.Sub.Expect)
 
@@ -67,7 +67,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Random.ExpectAdd.eq.AddExpectS)
 
-    Eq << Eq[-1].this.lhs.apply(Random.Expect.eq.Mul)
+    Eq << Eq[-1].this.lhs.apply(Random.Expect_Mul.eq.Mul_Expect)
 
     Eq << Eq[-1].subs(Eq[0])
 

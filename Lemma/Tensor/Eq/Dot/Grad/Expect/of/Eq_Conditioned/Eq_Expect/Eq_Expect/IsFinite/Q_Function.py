@@ -72,7 +72,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Random.Expect.eq.Dot)
 
-    Eq << Eq[-1].this.rhs.find(Expectation).apply(Random.Expect.Stack.eq.Stack.Expect)
+    Eq << Eq[-1].this.rhs.find(Expectation).apply(Random.Expect_Stack.eq.Stack_Expect)
 
     Eq << Eq[-1].this.rhs.find(Stack).apply(Tensor.Stack_PowGetS.eq.Pow)
 

@@ -34,7 +34,7 @@ def prove(Eq):
 
     Eq.eq_var = Eq[-1].subs(Eq[-2])
 
-    Eq << Expectation(sample_mean).this.apply(Random.Expect.eq.Mul)
+    Eq << Expectation(sample_mean).this.apply(Random.Expect_Mul.eq.Mul_Expect)
 
     Eq << Eq[-1].this.rhs.find(ReducedSum).apply(Vector.Sum.eq.Sum_Get, k)
 

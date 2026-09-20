@@ -18,7 +18,7 @@ def prove(Eq):
     s = Symbol(real=True, random=True)
     Eq << apply(Stack[k:n](Expectation(f(x[k]) | s)), simplify=False)
 
-    Eq << Eq[-1].this.rhs.apply(Random.Expect.Stack.eq.Stack.Expect)
+    Eq << Eq[-1].this.rhs.apply(Random.Expect_Stack.eq.Stack_Expect)
 
 
 

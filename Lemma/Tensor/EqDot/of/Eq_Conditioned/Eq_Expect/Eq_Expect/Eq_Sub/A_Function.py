@@ -51,11 +51,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Sum).apply(Finset.Sum_Add.eq.AddSumS)
 
-    Eq << Eq[-1].this.rhs.find(Expectation[Conditioned[Pow * Function]]).apply(Random.Expect.eq.Mul)
+    Eq << Eq[-1].this.rhs.find(Expectation[Conditioned[Pow * Function]]).apply(Random.Expect_Mul.eq.Mul_Expect)
 
     Eq << Eq[-1].this.rhs.apply(Random.ExpectAdd.eq.AddExpectS)
 
-    Eq << Eq[-1].this.find(Expectation[-Sum]).apply(Random.Expect.eq.Mul)
+    Eq << Eq[-1].this.find(Expectation[-Sum]).apply(Random.Expect_Mul.eq.Mul_Expect)
 
     Eq << Eq[-1].this.find(Expectation[Sum[Expectation]]).apply(Random.Expect.Sum.eq.Sum.Expect)
 
@@ -71,7 +71,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Expectation[Sum]).apply(Random.Expect.Sum.eq.Sum.Expect)
 
-    Eq << Eq[-1].this.find(Sum[~Expectation]).apply(Random.Expect.eq.Mul)
+    Eq << Eq[-1].this.find(Sum[~Expectation]).apply(Random.Expect_Mul.eq.Mul_Expect)
 
     Eq << Eq[-1].this.find(Sum[Mul[~Expectation]]).simplify()
 
@@ -81,7 +81,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Expectation[Sum]).apply(Random.Expect.Sum.eq.Sum.Expect)
 
-    Eq << Eq[-1].this.find(Sum[~Expectation]).apply(Random.Expect.eq.Mul)
+    Eq << Eq[-1].this.find(Sum[~Expectation]).apply(Random.Expect_Mul.eq.Mul_Expect)
 
     Eq << Eq[-1].this.find(-~Sum).apply(Finset.Sum.eq.Add.shift)
 

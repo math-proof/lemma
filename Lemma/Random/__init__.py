@@ -57,3 +57,9 @@ from . import ExpectAdd
 from . import All_ImpNeSProb_0
 from . import Prod_ProbCond
 from . import ProbCond
+from . import ProbCondJoint
+from . import IndepGetAdd
+from . import IndepGetSlice
+from . import IndepJoint
+from . import Expect_Mul
+from . import Expect_Stack

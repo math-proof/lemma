@@ -46,7 +46,7 @@ def prove(Eq):
 
     Eq <<= Bool.Imp_And.given.Imp.delete.apply(Eq[-2]), Eq[-1].this.lhs.args[0].apply(Tensor.GetSlice.Get.of.Eq, simplify=None)
 
-    Eq << Eq[-1].this.lhs.apply(Tensor.Stack.of.Stack.Eq, simplify=None)
+    Eq << Eq[-1].this.lhs.apply(Tensor.Stack.of.Stack.UFn, simplify=None)
 
 
 

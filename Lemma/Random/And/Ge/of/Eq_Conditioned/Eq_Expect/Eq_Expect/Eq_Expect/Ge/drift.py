@@ -69,7 +69,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Add).apply(Nat.AddMulS.eq.Mul_Add)
 
-    Eq << Eq[-1].this.rhs.apply(Random.Expect.eq.Mul)
+    Eq << Eq[-1].this.rhs.apply(Random.Expect_Mul.eq.Mul_Expect)
 
     Eq.ge = Eq.ge + Eq[-1]
 

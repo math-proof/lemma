@@ -39,7 +39,7 @@ def prove(Eq):
 
     Eq << Eq[-1].lhs.this.apply(Random.Expect.law_of_iterated_expectation, a[:t + 1], s[:t + 1])
 
-    Eq << Eq[-1].this.rhs.find(Expectation[Conditioned]).apply(Random.Expect.eq.Mul)
+    Eq << Eq[-1].this.rhs.find(Expectation[Conditioned]).apply(Random.Expect_Mul.eq.Mul_Expect)
 
     Eq << Eq[-1].this.find(Expectation[Conditioned[MatMul]]).apply(Random.Expect.eq.Dot)
 

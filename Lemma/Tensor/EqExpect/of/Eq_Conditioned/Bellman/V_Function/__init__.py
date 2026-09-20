@@ -51,7 +51,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Random.ExpectAdd.eq.AddExpectS)
 
-    Eq.eq_add = Eq[-1].this.find(Expectation[Conditioned[Mul]]).apply(Random.Expect.eq.Mul)
+    Eq.eq_add = Eq[-1].this.find(Expectation[Conditioned[Mul]]).apply(Random.Expect_Mul.eq.Mul_Expect)
 
     Eq << Eq.eq_add.find(Mul[~Expectation]).this.apply(Random.Expect.eq.Integral_Mul_Prob)
 

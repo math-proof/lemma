@@ -23,7 +23,7 @@ def prove(Eq):
     n = Symbol(domain=Range(2, oo))
     Eq << apply(Equal(x[k] | x[:k], x[k]), Equal(Expectation(x[k]), μ), Equal(Variance(x[k]), σ ** 2), n)
 
-    Eq << Eq[-1].this.lhs.apply(Random.Expect.eq.Mul) * n
+    Eq << Eq[-1].this.lhs.apply(Random.Expect_Mul.eq.Mul_Expect) * n
 
     Eq << Eq[-1].this.find(Add ** 2).apply(Nat.SquareAdd.eq.AddAdd_SquareS_Mul2Add)
 
@@ -31,7 +31,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Random.ExpectAdd.eq.AddExpectS)
 
-    Eq << Eq[-1].this.find(Expectation).apply(Random.Expect.eq.Mul)
+    Eq << Eq[-1].this.find(Expectation).apply(Random.Expect_Mul.eq.Mul_Expect)
 
     Eq << Eq[-1].this.find(Expectation).apply(Random.Expect.Sum.eq.Sum.Expect)
 

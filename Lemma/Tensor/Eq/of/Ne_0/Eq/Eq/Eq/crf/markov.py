@@ -52,11 +52,11 @@ def prove(Eq):
 
     Eq << Random.All_Eq_MulProbCond.of.PSpace_Joint.apply(Eq[-2], x[:k + 1], y[k])
 
-    Eq << Eq[-1].this.lhs.arg.apply(Tensor.Stack.Is.Stack.Eq, i=2, j=0)
+    Eq << Eq[-1].this.lhs.arg.apply(Tensor.Stack.Is.Stack.UFn, i=2, j=0)
 
-    Eq << Random.Eq.of.Ne_0.bayes.Conditioned.apply(Eq[-3], x[k], y[k])
+    Eq << Random.ProbCondJoint.eq.MulProbSCond.of.Ne0ProbCond.apply(Eq[-3], x[k], y[k])
 
-    Eq << Eq[-1].this.lhs.find(And).apply(Tensor.Stack.Is.Stack.Eq, i=2, j=0)
+    Eq << Eq[-1].this.lhs.find(And).apply(Tensor.Stack.Is.Stack.UFn, i=2, j=0)
 
     Eq << Eq[-3].subs(Eq[-1])
 
@@ -70,7 +70,7 @@ def prove(Eq):
 
     Eq << Random.Indep.of.Indep_Joint.apply(Eq.x_independence)
 
-    Eq << Random.EqProb.of.Eq_Conditioned.Eq_Conditioned.joint.apply(Eq[-1], Eq.xy_independence)
+    Eq << Random.IndepJoint.of.Indep.Indep_Joint.apply(Eq[-1], Eq.xy_independence)
 
     Eq << Random.EqConditioned.of.Ne_0.Eq_Conditioned.joint.apply(Eq[-1], Eq[0])
 
@@ -90,7 +90,7 @@ def prove(Eq):
 
     Eq << Random.Ne_0.Conditioned.of.Ne_0.apply(Eq.y_joint_y_historic, y[:k])
 
-    Eq << Random.Eq.of.Ne_0.bayes.Conditioned.apply(Eq[-1], Eq.x_independence.lhs.lhs)
+    Eq << Random.ProbCondJoint.eq.MulProbSCond.of.Ne0ProbCond.apply(Eq[-1], Eq.x_independence.lhs.lhs)
 
     Eq.recursion = Eq.recursion.subs(Eq[-1])
 

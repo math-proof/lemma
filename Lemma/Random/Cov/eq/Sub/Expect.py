@@ -29,7 +29,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Random.ExpectAdd.eq.AddExpectS)
 
-    Eq << Eq[-1].this.find(Expectation[Conditioned[Mul]]).apply(Random.Expect.eq.Mul)
+    Eq << Eq[-1].this.find(Expectation[Conditioned[Mul]]).apply(Random.Expect_Mul.eq.Mul_Expect)
 
     Eq << Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 
@@ -43,7 +43,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.find(Expectation[Conditioned[Mul]]).apply(Random.Expect.eq.Mul)
+    Eq << Eq[-1].this.find(Expectation[Conditioned[Mul]]).apply(Random.Expect_Mul.eq.Mul_Expect)
 
     i = Symbol(domain=Range(n))
     Eq << Tensor.Eq.given.All_EqGetS.apply(Eq[-1], i)
