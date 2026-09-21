@@ -29,7 +29,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.rhs.apply(Real.Integral.eq.Add)
+    Eq << Eq[-1].this.rhs.apply(Real.Integral_Add.eq.AddIntegralS)
 
     Eq << Set.Ge.of.Ge.In_Iic.apply(Eq[-1], Eq[-1].rhs.find(Integral))
 
@@ -49,7 +49,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.find(-~Integral).apply(Real.Integral.eq.Add)
+    Eq << Eq[-1].this.find(-~Integral).apply(Real.Integral_Add.eq.AddIntegralS)
 
     Eq << Eq[-1].this.find(Integral[-Expr]).apply(Real.Integral.eq.Mul)
 

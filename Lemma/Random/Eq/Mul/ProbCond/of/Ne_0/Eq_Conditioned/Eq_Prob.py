@@ -34,9 +34,9 @@ def prove(Eq):
 
     Eq << Random.All_Eq_MulProbCond.of.PSpace_Joint.apply(Eq[-1], y)
 
-    Eq << Random.Eq.ProbCond.eq.Mul.ProbCond.of.Ne_0.bayes.apply(Eq.ne_zero_xy, y_tilde_overline, y)
+    Eq << Random.All_EqProbCondJoint.apply(Eq.ne_zero_xy, y_tilde_overline, y)
 
-    Eq << Random.EqConditioned.of.Ne_0.Eq_Conditioned.joint.apply(Eq.ne_zero_xy, Eq[1])
+    Eq << Random.ProbCond.of.Indep.Ne_0.apply(Eq.ne_zero_xy, Eq[1])
 
     Eq << Eq[-3].reversed
 

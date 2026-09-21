@@ -35,7 +35,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.expr.apply(Nat.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.lhs.apply(Real.Integral.eq.Add)
+    Eq << Eq[-1].this.lhs.apply(Real.Integral_Add.eq.AddIntegralS)
 
     Eq << Eq[-1].this.lhs.args[1].apply(Real.Integral.limits.swap)
 

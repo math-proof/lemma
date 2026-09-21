@@ -17,7 +17,7 @@ def prove(Eq):
 
     Eq << Set.IsReal.of.Le.apply(Eq[0], simplify=None)
 
-    Eq << Set.Or.of.In_Icc.apply(Eq[-1], 0, left_open=True)
+    Eq << Set.OrInS.of.In_Icc.apply(Eq[-1], 0, left_open=True)
 
     Eq <<= Eq[0] & Eq[-1]
 

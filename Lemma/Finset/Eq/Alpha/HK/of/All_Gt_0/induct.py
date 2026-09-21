@@ -57,7 +57,7 @@ def prove(Eq):
 
     Eq << Bool.Imp.given.Imp_And.apply(Eq[-1])
 
-    Eq << Eq[-1].this.rhs.apply(Nat.Ne_0.Eq.given.And.Mul)
+    Eq << Eq[-1].this.rhs.apply(Nat.Mul.given.Eq)
 
     Eq << Eq[-1].this.rhs.lhs.ratsimp()
 

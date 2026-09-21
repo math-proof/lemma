@@ -49,7 +49,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Mul[Integral]).apply(Real.Mul_Integral.eq.Integral_Mul)
 
-    Eq << Random.Eq.ProbCond.eq.Mul.ProbCond.of.Ne_0.bayes.apply(Eq[2], a[t], r[t:])
+    Eq << Random.All_EqProbCondJoint.apply(Eq[2], a[t], r[t:])
 
     Eq << Eq[-2].subs(Eq[-1].reversed)
 

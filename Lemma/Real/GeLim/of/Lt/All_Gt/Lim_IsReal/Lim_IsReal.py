@@ -28,7 +28,7 @@ def apply(lt, all_gt, limit_is_real_fx, limit_is_real_gx):
 
 @prove
 def prove(Eq):
-    from Lemma import Real, Set, Bool, Nat
+    from Lemma import Real, Set, Bool, Nat, Int
 
     a, b = Symbol(real=True, given=True)
     x = Symbol(real=True)
@@ -49,7 +49,7 @@ def prove(Eq):
 
     Eq <<= Eq[-1] & Eq[-2]
 
-    Eq <<= Eq[-1].this.expr.apply(Nat.Gt.of.Eq.Gt.subst)
+    Eq <<= Eq[-1].this.expr.apply(Int.Gt_Add_Mul.of.Eq_Add_Mul.Gt)
 
     Eq <<= Bool.Imp.of.AllSetOf.apply(Eq[-1])
 

@@ -35,13 +35,13 @@ def prove(Eq):
 
     Eq << Eq.hypothesis.subs(Eq[-1])
 
-    Eq << Eq[-1].this.rhs.find(Stack).apply(Random.Stack.Expect.eq.Expect.Stack)
+    Eq << Eq[-1].this.rhs.find(Stack).apply(Random.Stack_Expect.eq.Expect_Stack)
 
     Eq << Eq[-1].this.rhs.apply(Random.Dot.eq.Expect)
 
     Eq << Eq[-1].this.rhs.find(MatMul).apply(Tensor.Dot.eq.Sum_MulGetS)
 
-    Eq << Eq[-1].this.rhs.find(Mul[Expectation]).apply(Random.Mul.eq.Expect)
+    Eq << Eq[-1].this.rhs.find(Mul[Expectation]).apply(Random.Mul_Expect.eq.Expect_Mul)
 
     Eq << Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 
@@ -63,7 +63,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Sum[~Expectation]).apply(Random.Expect.law_of_total_expectation)
 
-    Eq << Eq[-1].this.find(Sum[Expectation]).apply(Random.Sum.Expect.eq.Expect.Sum)
+    Eq << Eq[-1].this.find(Sum[Expectation]).apply(Random.Sum_Expect.eq.Expect_Sum)
 
     Eq << Eq[-1].this.find(Expectation[~Sum]).apply(Tensor.Sum.eq.Dot)
 
@@ -83,7 +83,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Sum[~Expectation]).apply(Random.Expect_Mul.eq.Mul_Expect)
 
-    Eq << Eq[-1].this.find(-~Sum).apply(Finset.Sum.eq.Add.shift)
+    Eq << Eq[-1].this.find(-~Sum).apply(Finset.SumIco.eq.Add_SumIco.of.Lt)
 
     Eq << Eq[2].subs(s[t].bvar, s[t]).subs(t, 0)
 

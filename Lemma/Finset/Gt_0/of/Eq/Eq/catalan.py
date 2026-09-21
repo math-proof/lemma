@@ -25,7 +25,7 @@ def apply(eq, eq1):
 
 @prove
 def prove(Eq):
-    from Lemma import Bool, Nat, Finset
+    from Lemma import Bool, Nat, Finset, Int
 
     k = Symbol(integer=True)
     n = Symbol(integer=True, given=False)
@@ -49,7 +49,7 @@ def prove(Eq):
     Eq << Eq[-1].this.lhs.limits_subs(k, k.copy(domain=None))
 
     Eq << Eq[-1] + Eq[1]
-    Eq << Eq[-1].this.apply(Nat.Gt.transport)
+    Eq << Eq[-1].this.apply(Int.GtAdd.Is.Gt_Sub)
 
     Eq << Imply(Eq.hypothsis_k, Eq.induct, plausible=True)
 

@@ -22,11 +22,11 @@ def prove(Eq):
     x = Symbol(hyper_real=True)
     Eq << apply(Element(x, ExtendedReals))
 
-    Eq << Set.Or.of.In_Icc.apply(Eq[0], oo)
+    Eq << Set.OrInS.of.In_Icc.apply(Eq[0], oo)
 
     Eq << Eq[-1].this.find(Element[FiniteSet]).simplify()
 
-    Eq << Eq[-1].this.args[1].apply(Set.Or.of.In_Icc, -oo, simplify=None, left_open=True)
+    Eq << Eq[-1].this.args[1].apply(Set.OrInS.of.In_Icc, -oo, simplify=None, left_open=True)
 
     Eq << Eq[-1].this.find(Element[FiniteSet]).simplify()
 

@@ -43,9 +43,9 @@ def prove(Eq):
 
     Eq << Eq[0].subs(Eq[-1], Eq[-2])
 
-    Eq << Eq[-1].this.lhs.apply(Real.Integral.eq.Add)
+    Eq << Eq[-1].this.lhs.apply(Real.Integral_Add.eq.AddIntegralS)
 
-    Eq << Eq[-1].this.rhs.apply(Real.Integral.eq.Add)
+    Eq << Eq[-1].this.rhs.apply(Real.Integral_Add.eq.AddIntegralS)
 
     Eq << Real.EqIntegral.of.Ge_0.limits.offset.apply(Eq.fp_is_nonnegative, Eq[-1].lhs.args[1], d)
 

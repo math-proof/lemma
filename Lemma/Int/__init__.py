@@ -68,10 +68,6 @@ from . import EqSub
 from . import Eq_Ceil
 from . import Expr
 from . import Frac
-from . import GeMul
-from . import GeSquare
-from . import GeSub
-from . import GtMul
 from . import GtSquare
 from . import GtSub
 from . import GeFloorS
@@ -83,8 +79,6 @@ from . import Mul
 from . import LtAbs
 from . import Mod
 from . import Mul_CeilDiv
-from . import LtMul
-from . import LtSquare
 from . import LtSub
 from . import Pow
 from . import Sign
@@ -99,3 +93,13 @@ from . import Square
 from . import AllIco
 from . import AnyIco
 from . import LtNeg
+from . import GtAdd
+from . import Gt0Mul
+from . import EqAbsSub
+from . import GeMulS
+from . import LtMulS
+from . import Gt_Add_Mul
+from . import GeSub
+from . import LtSquare
+from . import GeSquare
+from . import GtMul

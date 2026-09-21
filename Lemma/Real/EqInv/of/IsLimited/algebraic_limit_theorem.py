@@ -51,7 +51,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.expr.apply(Nat.LtMul.of.Gt_0.Lt)
 
-    Eq << Bool.Any.All.And.of.Any_All.Any_All.limits_Inter.apply(Eq[2], Eq[-1])
+    Eq << Bool.Any_AllInter.of.Any_All.Any_All.apply(Eq[2], Eq[-1])
 
     Eq << Eq[-1].this.expr.expr.apply(Nat.LtMulS.of.Lt.Lt.Ge_0.Ge_0)
 

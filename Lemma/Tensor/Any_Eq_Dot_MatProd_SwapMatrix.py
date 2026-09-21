@@ -28,11 +28,11 @@ def prove(Eq):
 
     Eq << Eq.initial.doit(deep=True)
 
-    Eq << Eq[-1].this.find(Sliced).apply(Tensor.GetSlice.As.Stack.of.LeAdd)
+    Eq << Eq[-1].this.find(Sliced).apply(Tensor.GetSlice.eq.Tensor)
 
-    Eq << Eq[-1].this.find(Sliced).apply(Tensor.GetSlice.As.Stack.of.LeAdd)
+    Eq << Eq[-1].this.find(Sliced).apply(Tensor.GetSlice.eq.Tensor)
 
-    Eq << Eq[-1].this.find(Sliced).apply(Tensor.GetSlice.As.Stack.of.LeAdd)
+    Eq << Eq[-1].this.find(Sliced).apply(Tensor.GetSlice.eq.Tensor)
 
     p0 = Eq[-1].variable
     Eq << Eq[-1].this.expr.apply(Bool.Any_UFn.given.UFnUFn, b[:2], Matrix((0, KroneckerDelta(p0, 0))))

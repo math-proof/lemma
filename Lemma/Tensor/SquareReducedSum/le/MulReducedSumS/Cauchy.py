@@ -10,7 +10,7 @@ def apply(a, b):
 
 @prove
 def prove(Eq):
-    from Lemma import Nat, Real, Tensor
+    from Lemma import Nat, Real, Tensor, Int
 
     n = Symbol(domain=Range(2, oo))
     a, b = Symbol(shape=(n,), real=True, given=True)
@@ -31,7 +31,7 @@ def prove(Eq):
 
     Eq << Eq[-1] / 4
 
-    Eq << Eq[-1].this.apply(Nat.Gt.transport, lhs=0)
+    Eq << Eq[-1].this.apply(Int.GtAdd.Is.Gt_Sub, lhs=0)
 
     Eq << ~Eq[-1]
 

@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Set.Lt_0.of.IsNegative.apply(Eq[0])
 
-    Eq << Int.LtMul.of.Lt_0.Gt.apply(Eq[-1], Eq[1], simplify=None)
+    Eq << Int.LtMulS.of.Gt.Lt_0.apply(Eq[-1], Eq[1], simplify=None)
 
 
 if __name__ == '__main__':

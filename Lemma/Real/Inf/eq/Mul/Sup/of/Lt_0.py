@@ -32,11 +32,11 @@ def prove(Eq):
 
     Eq <<= Bool.Imp_And.of.Cond.Imp.apply(Eq[0], Eq[-2]), Eq[-1].subs(z, z * Eq.reciprocal.lhs)
 
-    Eq <<= Eq[-2].this.rhs.apply(Int.GeMul.of.Lt_0.Le), Bool.ImpAndS.of.Imp.apply(Eq[-1], cond=Eq[0])
+    Eq <<= Eq[-2].this.rhs.apply(Int.GeMulS.of.Le.Lt_0), Bool.ImpAndS.of.Imp.apply(Eq[-1], cond=Eq[0])
 
     Eq << Eq[-1].this.rhs.apply(Bool.Any_And.of.Any.All, simplify=None)
 
-    Eq << Eq[-1].this.rhs.expr.apply(Int.LtMul.of.Lt_0.Gt)
+    Eq << Eq[-1].this.rhs.expr.apply(Int.LtMulS.of.Gt.Lt_0)
 
     Eq << Eq[-1].this.lhs.args[1].apply(Int.Lt.given.And.scale.negative, a)
 

@@ -34,15 +34,15 @@ def prove(Eq):
 
     Eq << Set.Ne_0.of.In.apply(Eq[0])
 
-    Eq << Eq[-2].this.apply(Real.EqLim.Is.All_Any_All, delta=delta, epsilon=epsilon)
+    Eq << Eq[-2].this.apply(Real.EqLim.Is.All_Any_All_LtAbsSub, delta=delta, epsilon=epsilon)
 
     Eq << Eq[-1].this.expr.expr.lhs.arg.apply(Real.Add.eq.Log)
 
-    Eq << Eq[2].this.expr.expr.apply(Int.And.of.Lt.split.Abs)
+    Eq << Eq[2].this.expr.expr.apply(Int.LtNeg.Lt.of.LtAbs)
 
     Eq << Eq[-1].this.expr.expr.args[0].apply(Nat.Lt.transport, lhs=0)
 
-    Eq << Eq[-1].this.expr.expr.args[0].apply(Nat.Gt.transport, lhs=0)
+    Eq << Eq[-1].this.expr.expr.args[0].apply(Int.GtAdd.Is.Gt_Sub, lhs=0)
 
     Eq << Eq[-1].this.expr.expr.apply(Set.In.Icc.of.Lt.Gt)
 

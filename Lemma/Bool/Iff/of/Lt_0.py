@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << Eq[-2].this.lhs.apply(Rat.GtDiv.of.Lt_0.Lt)
 
-    Eq << Eq[-1].this.lhs.apply(Int.LtMul.of.Lt_0.Gt)
+    Eq << Eq[-1].this.lhs.apply(Int.LtMulS.of.Gt.Lt_0)
 
     Eq << Eq[-1].this.lhs.lhs.apply(Nat.Mul_Add.eq.AddMulS)
 

@@ -17,7 +17,7 @@ def prove(Eq):
     S = Symbol(etype=dtype.real)
     Eq << apply(All[x:S](f(x) <= M))
 
-    Eq << Eq[1].this.lhs.apply(Real.Sup.eq.ReducedMin)
+    Eq << Eq[1].this.lhs.apply(Real.Sup.eq.Min)
 
     m = Symbol(Eq[-1].lhs)
     Eq << m.this.definition

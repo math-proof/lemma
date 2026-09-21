@@ -21,9 +21,9 @@ def prove(Eq):
 
     Eq << Bool.ImpAnd.given.ImpAndS.apply(Eq[-1], -1)
 
-    Eq << Eq[-1].this.rhs.apply(Nat.Ne_0.Eq.given.And.Mul)
+    Eq << Eq[-1].this.rhs.apply(Nat.Mul.given.Eq)
 
-    Eq << Eq[-1].this.lhs.args[1].apply(Random.Eq.ProbCond.eq.Mul.ProbCond.of.Ne_0.bayes, x, y)
+    Eq << Eq[-1].this.lhs.args[1].apply(Random.All_EqProbCondJoint, x, y)
 
     Eq << Eq[-1].this.rhs.reversed
 

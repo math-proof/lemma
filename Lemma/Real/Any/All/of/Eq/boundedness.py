@@ -22,7 +22,7 @@ def prove(Eq):
     a = Symbol(real=True, given=True)
     Eq << apply(Equal(Limit[n:oo](x[n]), a))
 
-    Eq << Real.Any.All.of.Eq_Lim.limit_definition.apply(Eq[0])
+    Eq << Real.All_Any_All_LtAbsSub.of.EqLim.apply(Eq[0])
 
     ε = Eq[-1].expr.expr.rhs
     Eq << Eq[-1].this.expr.expr.apply(Int.Lt.Abs.Max.of.Lt)
@@ -52,7 +52,7 @@ def prove(Eq):
 
     Eq.any = Bool.Any.All.of.Any_All.All.apply(Eq.less_than, Eq[-1])
 
-    Eq << Bool.Any.given.Any.subst.apply(Eq[1], Eq[1].variable, M)
+    Eq << Bool.Any_UFn.given.Any_UFnUFn.apply(Eq[1], Eq[1].variable, M)
 
     Eq << Eq[-1].this.find(Element).apply(Set.In.given.Gt_0)
     Eq << Eq[-1].this.find(All).apply(Bool.All.limits.domain_defined)

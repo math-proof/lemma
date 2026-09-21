@@ -21,7 +21,7 @@ def prove(Eq):
 
     a = Eq[-1].variable
 
-    Eq << Bool.Any.given.Any.subst.apply(Eq[-1], a, x)
+    Eq << Bool.Any_UFn.given.Any_UFnUFn.apply(Eq[-1], a, x)
 
     Eq << Set.Any_In.given.Ne_Empty.apply(Eq[-1])
 

@@ -13,7 +13,7 @@ def apply(lt, contains, contains_y):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Bool, Real, Nat
+    from Lemma import Set, Bool, Real, Nat, Int
 
     x, y = Symbol(real=True)
     Eq << apply(x < y, Element(x, Interval(-1, 1)), Element(y, Interval(-1, 1, right_open=True)))
@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << Nat.Gt_0.of.Gt.apply(Eq[-1])
 
-    Eq.sin_is_positive = Nat.Gt.of.Eq.Gt.subst.apply(Eq[-3], Eq[-1])
+    Eq.sin_is_positive = Int.Gt_Add_Mul.of.Eq_Add_Mul.Gt.apply(Eq[-3], Eq[-1])
 
     Eq << Real.Arccos.In.Icc.apply(x)
 
@@ -34,7 +34,7 @@ def prove(Eq):
 
     Eq << Set.Sub.In.Ioc.of.In.In.apply(Eq[-2], Eq[-1])
 
-    Eq << Set.Or.of.In_Icc.apply(Eq[-1], 0, left_open=True)
+    Eq << Set.OrInS.of.In_Icc.apply(Eq[-1], 0, left_open=True)
 
     Eq << Eq[-1].this.args[1].apply(Real.Le_0.Sin.of.In_Icc)
 

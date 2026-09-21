@@ -21,7 +21,7 @@ def prove(Eq):
 
     y = Eq[-1].lhs
     δ_0 = Symbol(positive=True)
-    Eq <<= Real.Any.All.of.Eq_Lim.limit_definition.apply(Eq[-1], delta=δ_0), Eq[1].subs(Eq[-1].reversed)
+    Eq <<= Real.All_Any_All_LtAbsSub.of.EqLim.apply(Eq[-1], delta=δ_0), Eq[1].subs(Eq[-1].reversed)
 
     δ = Symbol(positive=True)
     Eq << Real.Eq_Lim.given.Any_All.limit_definition.apply(Eq[-1], delta=δ)
@@ -33,13 +33,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Greater).apply(Nat.Gt_Sub_1.of.Gt, 0)
 
-    Eq << Bool.Any.All.And.of.Any_All.Any_All.limits_Inter.apply(Eq[-1], Eq[3])
+    Eq << Bool.Any_AllInter.of.Any_All.Any_All.apply(Eq[-1], Eq[3])
 
-    Eq << Eq[-1].this.find(Less & Less).args[:2].apply(Nat.Lt.Lt.given.Lt.Min)
+    Eq << Eq[-1].this.find(Less & Less).args[:2].apply(Nat.Lt.Lt.given.Lt_Min)
 
     Eq << Bool.Any.of.Any_UFn.apply(Eq[-1], Min(δ_0, δ_1), δ)
 
-    Eq << Eq[-1].this.find(Greater).apply(Int.EqAbs.of.Gt)
+    Eq << Eq[-1].this.find(Greater).apply(Int.EqAbsSub.of.Gt)
 
     Eq << Eq[-1].this.find(And).apply(Bool.UFn.of.UFn.Eq, reverse=True)
 

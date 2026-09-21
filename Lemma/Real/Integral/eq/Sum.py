@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.find(Sum).apply(Finset.SumIco.eq.AddSumIco.of.Le)
 
-    Eq << Eq[-1].this.lhs.apply(Real.Integral.eq.Add)
+    Eq << Eq[-1].this.lhs.apply(Real.Integral_Add.eq.AddIntegralS)
 
     Eq << Imply(Eq[0], Eq[1], plausible=True)
 

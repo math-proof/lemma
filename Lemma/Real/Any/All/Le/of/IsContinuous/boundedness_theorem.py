@@ -27,7 +27,7 @@ def prove(Eq):
     Eq << Bool.Any.of.Any.limits.relax.apply(Eq[-1], domain=Reals)
 
     m = Eq[1].variable
-    Eq << Bool.Any.given.Any.subst.apply(Eq[1], m, f(Eq[-1].variable))
+    Eq << Bool.Any_UFn.given.Any_UFnUFn.apply(Eq[1], m, f(Eq[-1].variable))
 
 
 if __name__ == '__main__':

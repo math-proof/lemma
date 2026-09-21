@@ -55,7 +55,7 @@ def prove(Eq):
 
     Eq << Bool.And_Imp.given.And_ImpAnd.apply(Eq.lt_zero, Eq[-1])
 
-    Eq << Eq[-1].this.lhs.apply(Int.LtMul.of.Lt_0.Gt)
+    Eq << Eq[-1].this.lhs.apply(Int.LtMulS.of.Gt.Lt_0)
 
 
 

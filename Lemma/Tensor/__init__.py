@@ -154,3 +154,4 @@ from . import Card
 from . import EqDot_DotShiftMatrix
 from . import EqDotDot_ShiftMatrix
 from . import Mul_Stack
+from . import Stack_Sum_MulGetS

@@ -20,7 +20,7 @@ def prove(Eq):
 
     delta = Eq[-1].variable
     epsilon = Eq[-1].expr.expr.rhs
-    Eq << Real.Any.All.of.Eq_Lim.limit_definition.apply(Eq[0], epsilon, delta)
+    Eq << Real.All_Any_All_LtAbsSub.of.EqLim.apply(Eq[0], epsilon, delta)
 
     Eq << Eq[-1].this.find(Greater).apply(Int.GtAbs.Is.Or)
 

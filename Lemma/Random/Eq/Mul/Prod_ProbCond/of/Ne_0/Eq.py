@@ -34,11 +34,11 @@ def prove(Eq):
 
     Eq << Random.Ne_0.of.Ne_0.joint_slice.apply(Eq[1], [None, slice(0, t)])
 
-    Eq.yt_given_y_historic = Random.EqConditioned.of.Ne_0.Eq_Conditioned.joint.apply(Eq[0], Eq[-1])
+    Eq.yt_given_y_historic = Random.ProbCond.of.Indep.Ne_0.apply(Eq[0], Eq[-1])
 
     Eq.yt_given_x_nonzero = Random.All_Imp_Ne0ProbCond.apply(Eq[-1], x)
 
-    Eq << Random.All_EqProbCondJoint.apply(Eq.yt_given_x_nonzero, y[t])
+    Eq << Random.All_EqProbCondJoint.cond.apply(Eq.yt_given_x_nonzero, y[t])
 
     Eq << Eq[-1].this.lhs.find(And).apply(Tensor.Stack.of.Stack.UFn)
 

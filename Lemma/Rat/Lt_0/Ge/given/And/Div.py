@@ -15,7 +15,7 @@ def prove(Eq):
     x, y, z = Symbol(integer=True)
     Eq << apply(x < 0, GreaterEqual(x + y, z))
 
-    Eq << Int.GeMul.of.Lt_0.Le.apply(Eq[0], Eq[2])
+    Eq << Int.GeMulS.of.Le.Lt_0.apply(Eq[0], Eq[2])
 
     Eq << Eq[-1].this.lhs.apply(Nat.Mul_Add.eq.AddMulS)
 

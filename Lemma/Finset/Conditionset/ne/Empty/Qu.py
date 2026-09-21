@@ -36,7 +36,7 @@ def prove(Eq):
 
     Eq << Eq.plausible.this.expr.rhs.definition
 
-    Eq << Bool.Any.given.Any.subst.apply(Eq[-1], x[:n + 1], a, simplify=None)
+    Eq << Bool.Any_UFn.given.Any_UFnUFn.apply(Eq[-1], x[:n + 1], a, simplify=None)
 
     Eq << Bool.Any.given.Cond.apply(Eq[-1])
 

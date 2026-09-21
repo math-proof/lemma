@@ -52,9 +52,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Sum_MulGetS)
 
-    Eq << Eq[-1].this.find(Mul[Expectation]).apply(Random.Mul.eq.Expect)
+    Eq << Eq[-1].this.find(Mul[Expectation]).apply(Random.Mul_Expect.eq.Expect_Mul)
 
-    Eq.eq_expect = Eq[-1].this.rhs.apply(Random.Sum.Expect.eq.Expect.Sum)
+    Eq.eq_expect = Eq[-1].this.rhs.apply(Random.Sum_Expect.eq.Expect_Sum)
 
     Eq << Tensor.Eq.Expect.Grad.Log.Pr.of.Eq_Conditioned.Q_Function.discounted.apply(Eq[0], γ, t, π)
 
@@ -64,15 +64,15 @@ def prove(Eq):
 
     Eq << Eq[-1] * γ ** t
 
-    Eq << Eq[-1].this.lhs.apply(Random.Mul.eq.Expect)
+    Eq << Eq[-1].this.lhs.apply(Random.Mul_Expect.eq.Expect_Mul)
 
-    Eq << Eq[-1].this.rhs.apply(Random.Mul.eq.Expect)
+    Eq << Eq[-1].this.rhs.apply(Random.Mul_Expect.eq.Expect_Mul)
 
     Eq << Fin.Sum.of.All_Eq.apply(Eq[-1], (t, 0, oo))
 
-    Eq << Eq[-1].this.rhs.apply(Random.Sum.Expect.eq.Expect.Sum)
+    Eq << Eq[-1].this.rhs.apply(Random.Sum_Expect.eq.Expect_Sum)
 
-    Eq << Eq[-1].this.lhs.apply(Random.Sum.Expect.eq.Expect.Sum)
+    Eq << Eq[-1].this.lhs.apply(Random.Sum_Expect.eq.Expect_Sum)
 
     Eq << Bool.Eq.of.Eq.Eq.apply(Eq.eq_expect, Eq[-1])
 

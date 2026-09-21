@@ -4,7 +4,6 @@ from . import IsReal
 from . import Le
 from . import Ge
 from . import Gt_0
-from . import Gt
 from . import Abs_Lt_Infty
 from . import Lt_0
 from . import Lt

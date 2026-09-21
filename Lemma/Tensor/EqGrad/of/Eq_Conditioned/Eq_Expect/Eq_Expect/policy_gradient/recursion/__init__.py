@@ -38,7 +38,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.find(Integral).apply(Real.Integral.eq.Add)
+    Eq << Eq[-1].this.find(Integral).apply(Real.Integral_Add.eq.AddIntegralS)
 
     Eq << Eq[-1].this.rhs.apply(Real.Grad.eq.Add)
 
@@ -68,7 +68,7 @@ def prove(Eq):
 
     Eq << Random.Cond.Prob.of.Cond.weighted.apply(Eq[-1], (a, π))
 
-    Eq << Random.Eq.ProbCond.eq.Mul.ProbCond.of.Ne_0.bayes.apply(Eq[-1], s[t + 1], a[t])
+    Eq << Random.All_EqProbCondJoint.apply(Eq[-1], s[t + 1], a[t])
 
     Eq << Eq.eq_grad.subs(Eq[-1].reversed)
 

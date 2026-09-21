@@ -24,13 +24,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.args[0].args[0].apply(Nat.Lt.transport, lhs=0)
 
-    Eq << Eq[-1].this.args[0].args[1].apply(Nat.Gt.transport, lhs=1)
+    Eq << Eq[-1].this.args[0].args[1].apply(Int.GtAdd.Is.Gt_Sub, lhs=1)
 
     Eq << Eq[-1].this.args[0].apply(Set.In.Icc.of.Lt.Gt)
 
     Eq << Eq[-1].this.args[1].args[0].apply(Nat.Lt.transport, lhs=1)
 
-    Eq << Eq[-1].this.args[1].args[1].apply(Nat.Gt.transport, lhs=0)
+    Eq << Eq[-1].this.args[1].args[1].apply(Int.GtAdd.Is.Gt_Sub, lhs=0)
 
     Eq << Eq[-1].this.args[1].apply(Set.In.Icc.of.Lt.Gt)
 

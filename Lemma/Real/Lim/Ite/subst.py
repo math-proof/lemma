@@ -49,18 +49,18 @@ def prove(Eq):
     A = Symbol(Eq[0].rhs, real=True)
     Eq << A.this.definition
 
-    Eq << Real.Any.All.of.Eq_Lim.limit_definition.apply(Eq[-1])
+    Eq << Real.All_Any_All_LtAbsSub.of.EqLim.apply(Eq[-1])
 
     Eq << Eq[0].subs(Eq[1].reversed)
 
-    Eq << Eq[-1].this.apply(Real.EqLim.Is.All_Any_All)
+    Eq << Eq[-1].this.apply(Real.EqLim.Is.All_Any_All_LtAbsSub)
 
     Eq << Eq[-1].this.find(Less).apply(Bool.BFn_Ite.given.OrAndS)
 
     Eq << Eq[-1].this.expr.apply(Bool.All_Or.given.All)
 
     N = Eq[-1].variable
-    Eq << Bool.Any.given.Any.subst.apply(Eq[-1], N, Max(N, a))
+    Eq << Bool.Any_UFn.given.Any_UFnUFn.apply(Eq[-1], N, Max(N, a))
 
     Eq << Eq[2].this.expr.apply(Set.AllSDiff.of.All, Range(Max(N + 1, a + 1), oo))
 

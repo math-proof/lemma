@@ -16,7 +16,7 @@ def prove(Eq):
     n = Symbol(integer=True, positive=True)
     Eq << apply(Sum[k:n + 1](Binomial(n, k) * x ** k * k ** 3))
 
-    Eq << Eq[0].this.lhs.apply(Finset.Sum.eq.Add.shift)
+    Eq << Eq[0].this.lhs.apply(Finset.SumIco.eq.Add_SumIco.of.Lt)
 
     Eq << Eq[-1].this.lhs().find(Binomial).apply(Finset.Binom.eq.Div.Binom)
 

@@ -46,7 +46,7 @@ def prove(Eq):
         Eq[-2].this.rhs.args[::2].apply(Bool.UFn.of.UFn.Eq), \
         Bool.Imp.given.Cond.apply(Eq[-1]).reversed
 
-    Eq <<= Eq[-3].this.rhs.rhs.args[1].apply(Nat.Gt.transport, lhs=0), \
+    Eq <<= Eq[-3].this.rhs.rhs.args[1].apply(Int.GtAdd.Is.Gt_Sub, lhs=0), \
         Eq[-2].this.rhs.rhs.args[2].apply(Nat.Le.transport), \
         Eq[-1].this.rhs.apply(Real.Any.GtSquare.of.Ge_0.Lt.Lt)
 

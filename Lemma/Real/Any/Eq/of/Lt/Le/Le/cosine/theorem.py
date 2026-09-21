@@ -66,7 +66,7 @@ def prove(Eq):
 
     Eq << Set.In.Arccos.Icc.of.In.apply(Eq[-1])
 
-    Eq << Bool.Any.given.Any.subst.apply(Eq.cos, Eq.cos.variable, Eq[-1].lhs)
+    Eq << Bool.Any_UFn.given.Any_UFnUFn.apply(Eq.cos, Eq.cos.variable, Eq[-1].lhs)
 
     Eq << Bool.Any.given.Cond.apply(Eq[-1])
 

@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Nat.Mul_Add.eq.AddMulS, deep=True)
 
-    Eq << Eq[-1].this.apply(Nat.Gt.transport, lhs=1)
+    Eq << Eq[-1].this.apply(Int.GtAdd.Is.Gt_Sub, lhs=1)
 
 
 

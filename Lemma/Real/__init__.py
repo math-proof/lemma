@@ -214,3 +214,5 @@ from . import GtIntegralS
 from . import Integral_Stack
 from . import Integral_UFnProd
 from . import Mul_Integral
+from . import All_Any_All_LtAbsSub
+from . import Integral_Add

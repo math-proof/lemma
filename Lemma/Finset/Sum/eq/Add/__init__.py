@@ -3,4 +3,3 @@ from . import split
 from . import Abel
 from . import by_parts
 from . import telescope
-from . import shift

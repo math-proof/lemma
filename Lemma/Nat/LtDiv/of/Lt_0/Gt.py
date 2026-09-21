@@ -18,7 +18,7 @@ def prove(Eq):
 
     Eq << Rat.Div.lt.Zero.of.Lt_0.apply(Eq[0])
 
-    Eq << Int.LtMul.of.Lt_0.Gt.apply(Eq[-1], Eq[1])
+    Eq << Int.LtMulS.of.Gt.Lt_0.apply(Eq[-1], Eq[1])
 
 
 if __name__ == '__main__':

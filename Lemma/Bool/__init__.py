@@ -89,3 +89,4 @@ from . import All_UFn
 from . import AnyOr
 from . import All_Any_UFn
 from . import All_Any_And
+from . import Any_AllInter

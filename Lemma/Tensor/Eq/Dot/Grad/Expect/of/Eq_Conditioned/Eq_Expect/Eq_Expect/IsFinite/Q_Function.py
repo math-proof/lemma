@@ -66,7 +66,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Expectation[Sum]).apply(Random.Expect_Sum.eq.Sum_Expect)
 
-    Eq << Eq[-1].this.rhs.apply(Random.Sum.Expect.eq.Expect.Sum)
+    Eq << Eq[-1].this.rhs.apply(Random.Sum_Expect.eq.Expect_Sum)
 
     Eq << Eq[-1].this.find(Sum).apply(Tensor.Sum.eq.Dot, 1)
 

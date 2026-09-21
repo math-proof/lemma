@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq << Eq[-2].this.lhs.apply(Nat.LtMin.of.Lt.Lt)
 
-    Eq << Eq[-1].this.rhs.apply(Nat.Lt.Lt.given.Lt.Min)
+    Eq << Eq[-1].this.rhs.apply(Nat.Lt.Lt.given.Lt_Min)
 
 
 

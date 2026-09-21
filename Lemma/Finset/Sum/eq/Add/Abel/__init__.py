@@ -37,7 +37,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Mul - Mul).apply(Nat.AddMulS.eq.Mul_Add)
 
-    Eq << Eq[-1].this.rhs.find(Sum)().find(~Sum - Sum).apply(Finset.Sum.eq.Add.shift)
+    Eq << Eq[-1].this.rhs.find(Sum)().find(~Sum - Sum).apply(Finset.SumIco.eq.Add_SumIco.of.Lt)
 
 
 

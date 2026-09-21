@@ -36,7 +36,7 @@ def prove(Eq):
 
     Eq.g_squared = Bool.Eq.of.Eq.Eq.apply(Eq[-2], Eq[-1])
 
-    Eq << Eq.g_definition.this.rhs.apply(Finset.Sum.eq.Add.shift)
+    Eq << Eq.g_definition.this.rhs.apply(Finset.SumIco.eq.Add_SumIco.of.Lt)
 
     Eq << Eq[-1].subs(Eq[0])
 
@@ -144,7 +144,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.args[1].expr.powsimp()
 
-    Eq << Eq[-1].this.rhs.args[1].apply(Finset.Sum.eq.Add.shift)
+    Eq << Eq[-1].this.rhs.args[1].apply(Finset.SumIco.eq.Add_SumIco.of.Lt)
 
     Eq << 1 - Eq[-1]
 

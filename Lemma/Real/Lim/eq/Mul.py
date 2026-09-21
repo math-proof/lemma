@@ -26,7 +26,7 @@ def prove(Eq):
     Eq << A.this.definition
 
     epsilon, delta = Symbol(positive=True)
-    Eq << Real.Any.All.of.Eq_Lim.limit_definition.apply(Eq[1], epsilon=epsilon, delta=delta)
+    Eq << Real.All_Any_All_LtAbsSub.of.EqLim.apply(Eq[1], epsilon=epsilon, delta=delta)
 
     Eq << Eq[-1].this.find(Less) * abs(y)
 
@@ -34,7 +34,7 @@ def prove(Eq):
 
     Eq.lhs = Equal(Eq[0].lhs, A * y, plausible=True)
 
-    Eq << Eq.lhs.this.apply(Real.EqLim.Is.All_Any_All, epsilon=epsilon, delta=delta)
+    Eq << Eq.lhs.this.apply(Real.EqLim.Is.All_Any_All_LtAbsSub, epsilon=epsilon, delta=delta)
 
     Eq << Eq[-1].this.expr.expr.find(Add).apply(Nat.AddMulS.eq.Mul_Add)
 

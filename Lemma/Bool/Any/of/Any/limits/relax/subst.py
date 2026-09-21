@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq << Eq[1].limits_subs(y, z)
 
-    Eq << Bool.Any.given.Any.subst.apply(Eq[-1], z, x)
+    Eq << Bool.Any_UFn.given.Any_UFnUFn.apply(Eq[-1], z, x)
 
 
 if __name__ == '__main__':

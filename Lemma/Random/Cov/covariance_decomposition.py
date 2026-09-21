@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Expectation[Expectation]).apply(Random.Expect.law_of_total_expectation)
 
-    Eq << Eq[-1].this.find(Mul[Expectation]).apply(Random.Mul.eq.Expect)
+    Eq << Eq[-1].this.find(Mul[Expectation]).apply(Random.Mul_Expect.eq.Expect_Mul)
 
     Eq << Eq[-1].this.rhs.apply(Random.Expect.law_of_total_expectation)
 

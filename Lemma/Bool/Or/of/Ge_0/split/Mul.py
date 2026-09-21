@@ -9,7 +9,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Bool, Int, Nat
+    from Lemma import Bool, Int
 
     x, y = Symbol(real=True, given=True)
     Eq << apply(x * y >= 0)
@@ -30,7 +30,7 @@ def prove(Eq):
 
     Eq << Bool.OrAndS.of.And_Or.apply(Eq[-1])
 
-    Eq << Eq[-1].apply(Nat.Lt_0.of.Lt_0.Gt_0)
+    Eq << Eq[-1].apply(Int.Gt0Mul.of.Gt_0.Lt_0)
 
     Eq <<= Eq[-1] & Eq[0]
 

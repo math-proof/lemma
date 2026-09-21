@@ -22,9 +22,9 @@ def prove(Eq):
 
     Eq << Int.Lt_Abs.given.And.apply(Eq[-1])
 
-    Eq << Int.And.of.Lt.split.Abs.apply(Eq[0])
+    Eq << Int.LtNeg.Lt.of.LtAbs.apply(Eq[0])
 
-    Eq << Int.And.of.Lt.split.Abs.apply(Eq[1])
+    Eq << Int.LtNeg.Lt.of.LtAbs.apply(Eq[1])
 
     Eq <<= Eq[-4] + Eq[-2], Eq[-3] + Eq[-1]
 

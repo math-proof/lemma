@@ -49,7 +49,7 @@ def prove(Eq):
 
     Eq << Eq[-2].subs(Eq[-1].subs(s[t].bvar, s[t]).subs(a[t].bvar, a[t]))
 
-    Eq << Eq[-1].this.find(Mul[Expectation]).apply(Random.Mul.eq.Expect)
+    Eq << Eq[-1].this.find(Mul[Expectation]).apply(Random.Mul_Expect.eq.Expect_Mul)
 
     Eq << Eq[-1].this.find(Expectation[Expectation]).apply(Random.Expect.law_of_total_expectation)
 

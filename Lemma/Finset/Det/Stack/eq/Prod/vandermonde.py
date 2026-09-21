@@ -36,7 +36,7 @@ def prove(Eq):
 
     Eq << Finset.Det.eq.Sum.expansion_by_minors.apply(Det(Eq.expand.rhs), i=0)
 
-    Eq << Eq[-1].this.rhs.apply(Finset.Sum.eq.Add.shift)
+    Eq << Eq[-1].this.rhs.apply(Finset.SumIco.eq.Add_SumIco.of.Lt)
 
     Eq << Eq[-1].this.rhs.find(Stack)().expr.simplify()
 

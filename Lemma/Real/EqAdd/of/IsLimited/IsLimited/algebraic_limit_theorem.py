@@ -31,7 +31,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(ε_1, ε / 2)
 
-    Eq << Bool.Any.All.And.of.Any_All.Any_All.limits_Inter.apply(Eq[-1], Eq[-3])
+    Eq << Bool.Any_AllInter.of.Any_All.Any_All.apply(Eq[-1], Eq[-3])
 
     Eq << Eq[-1].this.expr.expr.apply(Int.Lt.Abs.Add.of.Lt.Lt)
 

@@ -10,14 +10,14 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Bool
+    from Lemma import Set, Bool, ENNReal
 
     x = Symbol(complex=True)
     Eq << apply(x > 0)
 
-    Eq << Set.IsReal.of.Gt.apply(Eq[0], simplify=None)
+    Eq << ENNReal.In_Range.of.Lt_Infty.apply(Eq[0], simplify=None)
 
-    Eq << Set.Or.of.In_Icc.apply(Eq[-1], 0, left_open=True)
+    Eq << Set.OrInS.of.In_Icc.apply(Eq[-1], 0, left_open=True)
 
     Eq <<= Eq[0] & Eq[-1]
 

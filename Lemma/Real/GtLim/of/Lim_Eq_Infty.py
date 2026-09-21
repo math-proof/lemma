@@ -17,20 +17,20 @@ def apply(eq_limit):
 
 @prove(proved=False)
 def prove(Eq):
-    from Lemma import Real, Set, Bool, Nat
+    from Lemma import Real, Set, Bool, Nat, Int
 
     x, epsilon = Symbol(real=True)
     f = Function(real=True)
     Eq << apply(Equal(Limit[epsilon:S.Infinitesimal]((f(x + epsilon) - f(x)) / epsilon), oo))
 
-    Eq << Real.Any.All.of.Eq_Lim.limit_definition.apply(Eq[0], 'chi')
+    Eq << Real.All_Any_All_LtAbsSub.of.EqLim.apply(Eq[0], 'chi')
 
     Eq << Eq[-1].this.expr.apply(Bool.All.And.of.All)
 
     Eq << Eq[-1].this.find(Element).apply(Set.Gt.of.In_Icc)
 
     Eq << Eq[-1].this.expr.expr.apply(Nat.GtMul.of.Gt_0.Gt)
-    Eq << Eq[-1].this.expr.expr.apply(Nat.Gt.transport, lhs=0)
+    Eq << Eq[-1].this.expr.expr.apply(Int.GtAdd.Is.Gt_Sub, lhs=0)
 
 
 if __name__ == '__main__':

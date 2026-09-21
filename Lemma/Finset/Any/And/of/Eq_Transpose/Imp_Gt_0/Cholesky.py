@@ -52,7 +52,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.apply(Finset.And.of.Eq_Transpose.Imp_Gt_0.Eq_Ite.Cholesky, simplify=False, ret=0)
 
-    Eq << Bool.Any.given.Any.subst.apply(Eq[2], L, L_quote)
+    Eq << Bool.Any_UFn.given.Any_UFnUFn.apply(Eq[2], L, L_quote)
 
 
 

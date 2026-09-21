@@ -12,7 +12,7 @@ def apply(is_real, given, epsilon=None, delta=None):
 
     _a = l.generate_var(excludes=l.variable, real=True)
     given = given._subs(a, _a)
-    from Lemma.Real.EqLim.Is.All_Any_All import Any_All
+    from Lemma.Real.EqLim.Is.All_Any_All_LtAbsSub import Any_All
     given = Any_All(given, epsilon, delta)
     return given._subs(_a, a)
 
@@ -33,7 +33,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.apply(Bool.UFn.of.UFn.Eq, ret=0)
 
-    Eq << Eq[-1].this.expr.args[1].apply(Real.Any.All.of.Eq_Lim.limit_definition)
+    Eq << Eq[-1].this.expr.args[1].apply(Real.All_Any_All_LtAbsSub.of.EqLim)
 
     Eq << Eq[-1].this.expr.apply(Bool.UFn.of.UFn.Eq, reverse=True)
 

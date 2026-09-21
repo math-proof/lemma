@@ -10,7 +10,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Bool, Real, Nat
+    from Lemma import Bool, Real, Nat, Int
 
     x, y = Symbol(real=True)
     Eq << apply(Less(x, y))
@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq << Nat.Gt_0.of.Lt.apply(Eq[0])
 
-    Eq.gt_zero = Nat.Gt.of.Eq.Gt.subst.apply(Eq[-2], Eq[-1])
+    Eq.gt_zero = Int.Gt_Add_Mul.of.Eq_Add_Mul.Gt.apply(Eq[-2], Eq[-1])
 
     Eq << Eq[-2] + x
 

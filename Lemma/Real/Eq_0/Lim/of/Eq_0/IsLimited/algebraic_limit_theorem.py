@@ -24,7 +24,7 @@ def prove(Eq):
 
     ε = Symbol(real=True, positive=True)
     δ_0 = Symbol(real=True, positive=True)
-    Eq << Real.Any.All.of.Eq_Lim.limit_definition.apply(Eq[0], ε, δ_0)
+    Eq << Real.All_Any_All_LtAbsSub.of.EqLim.apply(Eq[0], ε, δ_0)
 
     δ_1 = Symbol(real=True, positive=True)
     Eq << Real.Any.All.Le.of.IsLimited.boundedness.apply(Eq[1], delta=δ_1, var='B')
@@ -33,7 +33,7 @@ def prove(Eq):
     assert B > 0
     Eq << Eq[-2].subs(ε, ε / B)
 
-    Eq << Bool.Any.All.And.of.Any_All.Any_All.limits_Inter.apply(Eq[-1], Eq[-2])
+    Eq << Bool.Any_AllInter.of.Any_All.Any_All.apply(Eq[-1], Eq[-2])
 
     Eq << Eq[-1].this.expr.expr.apply(Int.Lt.Abs.Mul.of.Lt.Lt)
 

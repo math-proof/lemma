@@ -6,4 +6,4 @@ from . import NegInf
 from . import Max
 from . import Neg
 from . import Add
-from . import ReducedMin
+from . import Min

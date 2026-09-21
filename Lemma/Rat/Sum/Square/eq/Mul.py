@@ -30,9 +30,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Sum).apply(Rat.Sum.eq.Mul.series.arithmetic)
 
-    Eq << Eq[-1].this.rhs.find(Sum).apply(Finset.Sum.eq.Add.shift)
+    Eq << Eq[-1].this.rhs.find(Sum).apply(Finset.SumIco.eq.Add_SumIco.of.Lt)
 
-    Eq << Eq[-1].this.rhs.find(Sum).apply(Finset.Sum.eq.Add.shift)
+    Eq << Eq[-1].this.rhs.find(Sum).apply(Finset.SumIco.eq.Add_SumIco.of.Lt)
 
     Eq << Eq[-1].this.rhs.find(Sum).apply(Finset.SumIco.eq.Sum_UFnAdd, 2)
 

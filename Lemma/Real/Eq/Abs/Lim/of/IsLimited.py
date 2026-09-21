@@ -17,9 +17,9 @@ def prove(Eq):
     g = Function(real=True)
     Eq << apply(Element(Limit[x:x0](g(x)), Reals))
 
-    Eq << Set.Or.of.In_Icc.apply(Eq[0], 0)
+    Eq << Set.OrInS.of.In_Icc.apply(Eq[0], 0)
 
-    Eq << Eq[-1].this.args[1].apply(Set.Or.of.In_Icc, 0, left_open=True, simplify=None)
+    Eq << Eq[-1].this.args[1].apply(Set.OrInS.of.In_Icc, 0, left_open=True, simplify=None)
 
     Eq << Eq[-1].this.find(Element[FiniteSet]).apply(Set.Eq.of.In_Finset, simplify=None)
 

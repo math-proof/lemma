@@ -78,7 +78,7 @@ def prove(Eq):
     Eq << Eq[-1].this.find(Equal[Sliced]).apply(Tensor.Eq.Is.GetSlice.Get)
     Eq << Random.EqConditioned.of.Eq_Conditioned.independence_assumption.future.apply(Eq[0])
 
-    Eq << Random.EqConditioned.of.Ne_0.Eq_Conditioned.joint.apply(*Eq[-2:])
+    Eq << Random.ProbCond.of.Indep.Ne_0.apply(*Eq[-2:])
 
     Eq << Eq.eq_expect.subs(Eq[-1])
 

@@ -42,7 +42,7 @@ def prove(Eq):
 
     Eq << apply(Any[e, a:A(b), b:B](f(e) * a > g(f(e)) * b), f(e), x)
 
-    Eq << Bool.Any.given.Any.subst.apply(Eq[1], x, f(e))
+    Eq << Bool.Any_UFn.given.Any_UFnUFn.apply(Eq[1], x, f(e))
 
     Eq << ~Eq[-1]
 

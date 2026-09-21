@@ -38,7 +38,7 @@ def prove(Eq):
 
     Eq <<= Bool.And_Imp.given.And_ImpAnd.apply(Eq[0], Eq[-2]), Bool.Imp.given.Imp_And.comm.apply(Eq[-1], cond=Eq[0])
 
-    Eq <<= Eq[-2].this.lhs.apply(Rat.LeDivS.of.Ge.Lt_0), Eq[-1].this.rhs.apply(Int.GeMul.of.Lt_0.Le)
+    Eq <<= Eq[-2].this.lhs.apply(Rat.LeDivS.of.Ge.Lt_0), Eq[-1].this.rhs.apply(Int.GeMulS.of.Le.Lt_0)
 
     Eq << Bool.UFnIte.given.UFnIte.Iff.apply(Eq.eq, old=Eq.equivalent.lhs, new=Eq.equivalent.rhs)
 

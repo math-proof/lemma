@@ -42,7 +42,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.expr.args[0].powsimp()
 
-    Eq << Eq[-1].this.rhs.apply(Real.Integral.eq.Add)
+    Eq << Eq[-1].this.rhs.apply(Real.Integral_Add.eq.AddIntegralS)
 
     Eq << Eq[-1].this.find(Integral[-Expr]).simplify()
 

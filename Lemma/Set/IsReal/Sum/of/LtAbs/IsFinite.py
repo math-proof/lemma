@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << Bool.Imp.given.ImpEq.apply(Eq.is_zero)
 
-    Eq << Eq[-1].this.find(Sum).apply(Finset.Sum.eq.Add.shift)
+    Eq << Eq[-1].this.find(Sum).apply(Finset.SumIco.eq.Add_SumIco.of.Lt)
 
     Eq << Eq[-1].this.find(Sum)().expr.simplify()
 

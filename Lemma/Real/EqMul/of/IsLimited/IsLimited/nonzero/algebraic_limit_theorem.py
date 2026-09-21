@@ -64,11 +64,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.expr.apply(Set.LtMul.of.Lt.IsPositive, Eq.abs_is_positive)
 
-    Eq << Bool.Any.All.And.of.Any_All.Any_All.limits_Inter.apply(Eq[-1], Eq.lt_fx)
+    Eq << Bool.Any_AllInter.of.Any_All.Any_All.apply(Eq[-1], Eq.lt_fx)
 
     Eq << Eq[-1].this.expr.expr.apply(Nat.LtAdd.of.Lt.Lt)
 
-    Eq << Bool.Any.All.And.of.Any_All.Any_All.limits_Inter.apply(Eq.le, Eq[-1])
+    Eq << Bool.Any_AllInter.of.Any_All.Any_All.apply(Eq.le, Eq[-1])
 
     Eq << Eq[-1].this.expr.expr.apply(Nat.Lt.of.Lt.Le)
 

@@ -10,7 +10,7 @@ def apply(is_nonnegative, strict_greater_than):
 
 @prove
 def prove(Eq):
-    from Lemma import Nat
+    from Lemma import Nat, Int
 
     x, a, y = Symbol(real=True)
     Eq << apply(x >= 0, y > x)
@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Nat.Mul_Add.eq.AddMulS, deep=True)
 
-    Eq << Eq[-1].this.apply(Nat.Gt.transport, lhs=1)
+    Eq << Eq[-1].this.apply(Int.GtAdd.Is.Gt_Sub, lhs=1)
 
 
 

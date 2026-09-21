@@ -54,7 +54,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Derivative).apply(Real.Grad.eq.Sum)
 
-    Eq << Eq[-1].this.lhs.apply(Tensor.Stack.eq.Dot)
+    Eq << Eq[-1].this.lhs.apply(Tensor.Stack_Sum_MulGetS.eq.Dot)
 
 
     Eq << Eq[-1].this.find(Stack).apply(Tensor.Stack.eq.Eye)

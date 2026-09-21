@@ -29,7 +29,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.find(Integral).apply(Real.Integral.eq.Add)
+    Eq << Eq[-1].this.find(Integral).apply(Real.Integral_Add.eq.AddIntegralS)
 
     Eq << Eq[-1].this.find(Integral[2]).apply(Real.Integral.eq.Mul)
 

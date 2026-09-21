@@ -43,7 +43,7 @@ def prove(Eq):
 
     Eq << Eq[-1] * (1 - γ)
 
-    Eq << Eq[-1].this.rhs.apply(Random.Mul.eq.Expect)
+    Eq << Eq[-1].this.rhs.apply(Random.Mul_Expect.eq.Expect_Mul)
 
     Eq << Eq[-1].this.rhs.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS, i=1)
 

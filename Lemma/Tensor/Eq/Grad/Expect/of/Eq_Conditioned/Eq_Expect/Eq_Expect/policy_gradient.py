@@ -53,7 +53,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.rhs.apply(Real.Integral.eq.Add)
+    Eq << Eq[-1].this.rhs.apply(Real.Integral_Add.eq.AddIntegralS)
 
     Eq << Eq[-1].this.find(Mul[Sum]).apply(Finset.Mul_Sum.eq.Sum_Mul)
 
@@ -93,9 +93,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Expectation[Expectation]).apply(Random.Expect.law_of_total_expectation)
 
-    Eq << Eq[-1].this.find(Sum[~Mul[Expectation]]).apply(Random.Mul.eq.Expect)
+    Eq << Eq[-1].this.find(Sum[~Mul[Expectation]]).apply(Random.Mul_Expect.eq.Expect_Mul)
 
-    Eq << Eq[-1].this.find(Sum[Expectation]).apply(Random.Sum.Expect.eq.Expect.Sum)
+    Eq << Eq[-1].this.find(Sum[Expectation]).apply(Random.Sum_Expect.eq.Expect_Sum)
 
     Eq << Eq[-1].this.lhs.find(Expectation).apply(Random.Expect.eq.Dot)
 

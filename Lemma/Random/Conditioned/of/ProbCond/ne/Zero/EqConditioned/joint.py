@@ -31,7 +31,7 @@ def prove(Eq):
 
     Eq << Random.All_ImpNe0ProbCond.apply(Eq[0])
 
-    Eq << Random.EqConditioned.of.Ne_0.Eq_Conditioned.joint.apply(Eq[-1], Eq[1])
+    Eq << Random.ProbCond.of.Indep.Ne_0.apply(Eq[-1], Eq[1])
 
 
 

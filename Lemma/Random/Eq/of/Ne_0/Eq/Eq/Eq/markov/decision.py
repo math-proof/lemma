@@ -88,7 +88,7 @@ def prove(Eq):
 
     Eq << Random.Ne_0.Conditioned.of.Ne_0.Ne_0.apply(Eq.ne_zero, Eq[-1])
 
-    Eq << Random.All_EqProbCondJoint.apply(Eq[-1], r[k], s[k + 1])
+    Eq << Random.All_EqProbCondJoint.cond.apply(Eq[-1], r[k], s[k + 1])
 
     Eq << Eq[-1].this.rhs.find(Conditioned).rhs.args[-1].apply(Tensor.Eq.Is.GetSlice.Get)
 
@@ -96,7 +96,7 @@ def prove(Eq):
 
     Eq << Eq.ne_zero.this.find(Equal[3]).apply(Tensor.Eq.Is.GetSlice.Get)
 
-    Eq << Random.EqConditioned.of.Ne_0.Eq_Conditioned.joint.apply(Eq[1], Eq[-1])
+    Eq << Random.ProbCond.of.Indep.Ne_0.apply(Eq[1], Eq[-1])
 
     Eq << Eq[-3].subs(Eq[-1])
 
@@ -134,7 +134,7 @@ def prove(Eq):
 
     Eq << Random.All_Imp_Ne0ProbCond.apply(Eq[-1], s[0])
 
-    Eq << Random.All_EqProbCondJoint.apply(Eq[-1], r[0], s[1])
+    Eq << Random.All_EqProbCondJoint.cond.apply(Eq[-1], r[0], s[1])
 
     Eq << Eq.final.subs(Eq[-1])
 

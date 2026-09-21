@@ -16,7 +16,7 @@ def prove(Eq):
     Eq << apply(Integral[x:a:b](f(x)) + Integral[x:a:b](g(x)))
 
 
-    Eq << Eq[0].this.rhs.apply(Real.Integral.eq.Add)
+    Eq << Eq[0].this.rhs.apply(Real.Integral_Add.eq.AddIntegralS)
 
 
 

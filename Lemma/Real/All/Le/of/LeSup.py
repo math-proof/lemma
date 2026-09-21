@@ -15,7 +15,7 @@ def prove(Eq):
     f = Function(real=True)
     Eq << apply(Sup[x:Interval(m, M, left_open=True, right_open=True)](f(x)) <= M)
 
-    Eq << Eq[0].this.lhs.apply(Real.Sup.eq.ReducedMin)
+    Eq << Eq[0].this.lhs.apply(Real.Sup.eq.Min)
 
     Eq << Eq[-1].this.lhs.apply(Tensor.ReducedMin.eq.Minima)
 

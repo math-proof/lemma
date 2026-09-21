@@ -23,13 +23,13 @@ def prove(Eq):
     f = Function(real=True)
     Eq << apply(Equal(Limit[epsilon:-S.Infinitesimal]((f(x + epsilon) - f(x)) / epsilon), oo))
 
-    Eq << Real.Any.All.of.Eq_Lim.limit_definition.apply(Eq[0], 'chi')
+    Eq << Real.All_Any_All_LtAbsSub.of.EqLim.apply(Eq[0], 'chi')
 
     Eq << Eq[-1].this.expr.apply(Bool.All.And.of.All)
 
     Eq << Eq[-1].this.find(Element).apply(Set.Lt.of.In_Icc)
 
-    Eq << Eq[-1].this.expr.expr.apply(Int.LtMul.of.Lt_0.Gt)
+    Eq << Eq[-1].this.expr.expr.apply(Int.LtMulS.of.Gt.Lt_0)
 
     Eq << Eq[-1].this.expr.expr.apply(Nat.Lt.transport, lhs=0)
 

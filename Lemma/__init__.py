@@ -10,3 +10,4 @@ from . import Vector
 from . import Fin
 from . import Bool
 from . import Random
+from . import ENNReal

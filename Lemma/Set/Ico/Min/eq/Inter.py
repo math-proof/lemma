@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.lhs.apply(Set.Ge.Le_Sub_1.of.In_Ico), Eq[-1].this.rhs.apply(Set.In_Ico.given.Ge.Le_Sub_1)
 
-    Eq <<= Eq[-2].this.find(Less).apply(Nat.And.Lt.of.Lt_Min), Eq[-1].this.find(Less).apply(Nat.Lt_Min.given.And.Lt)
+    Eq <<= Eq[-2].this.find(Less).apply(Nat.Lt.Lt.of.Lt_Min), Eq[-1].this.find(Less).apply(Nat.Lt_Min.given.And.Lt)
 
     Eq <<= Eq[-2].this.find(Element).apply(Set.In_Inter.given.In.In, simplify=None), Eq[-1].this.find(Element).apply(Set.In.In.of.In_Inter, simplify=None)
 

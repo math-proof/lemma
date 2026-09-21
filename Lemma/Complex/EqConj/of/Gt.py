@@ -9,12 +9,12 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set
+    from Lemma import Set, ENNReal
 
     x, y = Symbol(complex=True)
     Eq << apply(x > y)
 
-    Eq << Set.IsReal.of.Gt.apply(Eq[0], simplify=None)
+    Eq << ENNReal.In_Range.of.Lt_Infty.apply(Eq[0], simplify=None)
 
     Eq << Set.EqConj.of.IsReal.apply(Eq[-1])
 

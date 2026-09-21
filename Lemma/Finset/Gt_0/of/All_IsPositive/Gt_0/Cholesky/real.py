@@ -32,7 +32,7 @@ def prove(Eq):
 
     Eq << Eq.hypothesis.find(Norm **  2).this.apply(Tensor.Sum.Square.Abs.eq.Add.Norm.Dot.recursive.real)
 
-    Eq << Eq.hypothesis.find(Sum).this.apply(Finset.Sum.eq.Add.shift)
+    Eq << Eq.hypothesis.find(Sum).this.apply(Finset.SumIco.eq.Add_SumIco.of.Lt)
 
     Eq.gt_zero = Eq.hypothesis.subs(*Eq[-2:])
 

@@ -17,7 +17,7 @@ def prove(Eq):
 
     Eq << Real.Eq_Lim.given.Any_All.limit_definition.apply(Eq[1])
 
-    Eq << Real.Any.All.of.Eq_Lim.limit_definition.apply(Eq[0])
+    Eq << Real.All_Any_All_LtAbsSub.of.EqLim.apply(Eq[0])
 
 
 if __name__ == '__main__':

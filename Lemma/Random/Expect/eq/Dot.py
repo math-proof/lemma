@@ -29,19 +29,19 @@ def prove(Eq):
     x = Symbol(real=True, random=True, shape=(oo,))
     Eq << apply(Expectation(A @ x[:n] | s))
 
-    Eq << Eq[0].this.rhs.find(Sliced).apply(Tensor.Slice.eq.Stack)
+    Eq << Eq[0].this.rhs.find(Sliced).apply(Tensor.GetSlice.As.Stack.of.LeAdd)
 
     Eq << Eq[-1].this.rhs.find(Expectation).apply(Random.Expect_Stack.eq.Stack_Expect)
 
     Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Stack_Sum_MulGetS)
 
-    Eq << Eq[-1].this.find(Mul).apply(Random.Mul.eq.Expect)
+    Eq << Eq[-1].this.find(Mul).apply(Random.Mul_Expect.eq.Expect_Mul)
 
-    Eq << Eq[-1].this.find(Sum).apply(Random.Sum.Expect.eq.Expect.Sum)
+    Eq << Eq[-1].this.find(Sum).apply(Random.Sum_Expect.eq.Expect_Sum)
 
-    Eq << Eq[-1].this.find(Stack).apply(Random.Stack.Expect.eq.Expect.Stack)
+    Eq << Eq[-1].this.find(Stack).apply(Random.Stack_Expect.eq.Expect_Stack)
 
-    Eq << Eq[-1].this.find(Stack).apply(Tensor.Stack.eq.Dot)
+    Eq << Eq[-1].this.find(Stack).apply(Tensor.Stack_Sum_MulGetS.eq.Dot)
 
 
 

@@ -30,7 +30,7 @@ def of_limited(given, **kwargs):
 
 @apply
 def apply(given, ε=None, δ=None):
-    from Lemma.Real.EqLim.Is.All_Any_All import Any_All
+    from Lemma.Real.EqLim.Is.All_Any_All_LtAbsSub import Any_All
     fn, (x, x0) = of_limited(given, real=True)
     A = fn.generate_var(excludes={x}, **fn.type.dict)
 

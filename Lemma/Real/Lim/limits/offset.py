@@ -21,7 +21,7 @@ def prove(Eq):
     A = Symbol(Eq[0].rhs, real=True)
     Eq << A.this.definition
 
-    Eq << Real.Any.All.of.Eq_Lim.limit_definition.apply(Eq[-1])
+    Eq << Real.All_Any_All_LtAbsSub.of.EqLim.apply(Eq[-1])
 
     Eq << Eq[-1].this.expr.apply(Int.AllIco.of.AllIco.offset, -x0)
 

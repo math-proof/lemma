@@ -54,7 +54,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.arg.apply(Tensor.Stack.Is.Stack.UFn, i=2, j=0)
 
-    Eq << Random.All_EqProbCondJoint.apply(Eq[-3], x[k], y[k])
+    Eq << Random.All_EqProbCondJoint.cond.apply(Eq[-3], x[k], y[k])
 
     Eq << Eq[-1].this.lhs.find(And).apply(Tensor.Stack.Is.Stack.UFn, i=2, j=0)
 
@@ -72,7 +72,7 @@ def prove(Eq):
 
     Eq << Random.IndepJoint.of.Indep.Indep_Joint.apply(Eq[-1], Eq.xy_independence)
 
-    Eq << Random.EqConditioned.of.Ne_0.Eq_Conditioned.joint.apply(Eq[-1], Eq[0])
+    Eq << Random.ProbCond.of.Indep.Ne_0.apply(Eq[-1], Eq[0])
 
     Eq.recursion = Eq.recursion.subs(Eq[-1])
 
@@ -90,7 +90,7 @@ def prove(Eq):
 
     Eq << Random.All_Imp_Ne0ProbCond.apply(Eq.y_joint_y_historic, y[:k])
 
-    Eq << Random.All_EqProbCondJoint.apply(Eq[-1], Eq.x_independence.lhs.lhs)
+    Eq << Random.All_EqProbCondJoint.cond.apply(Eq[-1], Eq.x_independence.lhs.lhs)
 
     Eq.recursion = Eq.recursion.subs(Eq[-1])
 
@@ -98,7 +98,7 @@ def prove(Eq):
 
     Eq << Random.Indep.of.Indep_Joint.apply(Eq.x_independence, wrt=y[:k])
 
-    Eq << Random.EqConditioned.of.Ne_0.Eq_Conditioned.joint.apply(Eq.y_joint_y_historic, Eq[-1])
+    Eq << Random.ProbCond.of.Indep.Ne_0.apply(Eq.y_joint_y_historic, Eq[-1])
 
     Eq.recursion = Eq.recursion.subs(Eq[-1])
 
