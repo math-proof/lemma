@@ -29,7 +29,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(ReducedSum).apply(Vector.Sum.eq.Sum_Get)
 
-    Eq << Eq[-1].this.lhs.apply(Random.Expect.Sum.eq.Sum.Expect)
+    Eq << Eq[-1].this.lhs.apply(Random.Expect_Sum.eq.Sum_Expect)
 
 
 if __name__ == '__main__':

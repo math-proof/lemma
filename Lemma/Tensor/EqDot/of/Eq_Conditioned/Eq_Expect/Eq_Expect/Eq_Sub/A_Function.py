@@ -57,7 +57,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Expectation[-Sum]).apply(Random.Expect_Mul.eq.Mul_Expect)
 
-    Eq << Eq[-1].this.find(Expectation[Sum[Expectation]]).apply(Random.Expect.Sum.eq.Sum.Expect)
+    Eq << Eq[-1].this.find(Expectation[Sum[Expectation]]).apply(Random.Expect_Sum.eq.Sum_Expect)
 
     Eq << Eq[-1].this.find(Sum[~Expectation]).simplify()
 
@@ -69,7 +69,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Expectation[MatMul]).apply(Random.Expect.eq.Dot)
 
-    Eq << Eq[-1].this.find(Expectation[Sum]).apply(Random.Expect.Sum.eq.Sum.Expect)
+    Eq << Eq[-1].this.find(Expectation[Sum]).apply(Random.Expect_Sum.eq.Sum_Expect)
 
     Eq << Eq[-1].this.find(Sum[~Expectation]).apply(Random.Expect_Mul.eq.Mul_Expect)
 
@@ -79,7 +79,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Sum).apply(Finset.SumIco.eq.Sum_UFnAdd, -1)
 
-    Eq << Eq[-1].this.find(Expectation[Sum]).apply(Random.Expect.Sum.eq.Sum.Expect)
+    Eq << Eq[-1].this.find(Expectation[Sum]).apply(Random.Expect_Sum.eq.Sum_Expect)
 
     Eq << Eq[-1].this.find(Sum[~Expectation]).apply(Random.Expect_Mul.eq.Mul_Expect)
 

@@ -1,0 +1,36 @@
+from util import *
+
+
+@apply(given=True)
+def apply(given, *wrt):
+    assert wrt
+    probability = given.of(Unequal[Expr, 0])
+    p = probability.marginalize(*wrt)
+
+    return Unequal(Pr(p.arg, given=And(*(w.as_boolean() for w in wrt))), 0)
+
+
+@prove
+def prove(Eq):
+    from Lemma import Random, Rat
+
+    x, y, z = Symbol(real=True, random=True)
+    Eq << apply(Unequal(Pr(x, y, z), 0), y, z)
+
+    Eq << Random.All_NeProb_0.All_NeProb_0.of.All_Ne0ProbJoint.apply(Eq[0], 1)
+
+    Eq << Random.All_Eq_MulProbCond.of.PSpace_Joint.apply(Eq[-1], x)
+
+    Eq << Eq[0].subs(Eq[-1])
+
+    Eq << Rat.Ne_Div.of.NeMul.Ne_0.apply(Eq[-3], Eq[-1])
+
+
+
+
+
+if __name__ == '__main__':
+    run()
+# created on 2020-12-10
+# updated on 2023-03-22
+

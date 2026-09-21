@@ -40,7 +40,7 @@ def prove(Eq):
     Eq << Eq[-1].this.find(Min).apply(Nat.Min.eq.Add)
 
     δ = Symbol(real=True, positive=True)
-    Eq << Bool.Any.of.Any.subst.apply(Eq[-1], Min(δ_0, δ_1), δ)
+    Eq << Bool.Any.of.Any_UFn.apply(Eq[-1], Min(δ_0, δ_1), δ)
     Eq << Real.Eq.of.Any_All.limit_definition.apply(Eq[-1])
 
 

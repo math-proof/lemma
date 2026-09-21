@@ -36,7 +36,7 @@ def prove(Eq):
 
     Eq.yt_given_y_historic = Random.EqConditioned.of.Ne_0.Eq_Conditioned.joint.apply(Eq[0], Eq[-1])
 
-    Eq.yt_given_x_nonzero = Random.Ne_0.Conditioned.of.Ne_0.apply(Eq[-1], x)
+    Eq.yt_given_x_nonzero = Random.All_Imp_Ne0ProbCond.apply(Eq[-1], x)
 
     Eq << Random.All_EqProbCondJoint.apply(Eq.yt_given_x_nonzero, y[t])
 

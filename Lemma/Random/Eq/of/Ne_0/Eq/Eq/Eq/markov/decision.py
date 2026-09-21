@@ -108,7 +108,7 @@ def prove(Eq):
 
     Eq << Random.IndepJoint.of.Indep.Indep_Joint.apply(Eq[0], Eq[2])
 
-    Eq << Random.Ne_0.Conditioned.of.Ne_0.apply(Eq.ne_zero_sar, a[k], s[k])
+    Eq << Random.All_Imp_Ne0ProbCond.apply(Eq.ne_zero_sar, a[k], s[k])
 
     Eq << Random.Conditioned.of.ProbCond.ne.Zero.EqConditioned.joint.apply(Eq[-2], Eq[-1])
 
@@ -132,7 +132,7 @@ def prove(Eq):
 
     Eq << Random.Ne_0.of.Ne_0.joint_slice.apply(Eq[-1], [0, 0])
 
-    Eq << Random.Ne_0.Conditioned.of.Ne_0.apply(Eq[-1], s[0])
+    Eq << Random.All_Imp_Ne0ProbCond.apply(Eq[-1], s[0])
 
     Eq << Random.All_EqProbCondJoint.apply(Eq[-1], r[0], s[1])
 

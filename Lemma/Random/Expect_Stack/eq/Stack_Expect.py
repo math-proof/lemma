@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(self):
-    from Lemma.Random.Expect.Sum.eq.Sum.Expect import extract
+    from Lemma.Random.Expect_Sum.eq.Sum_Expect import extract
     return Equal(self, extract(Stack, self))
 
 

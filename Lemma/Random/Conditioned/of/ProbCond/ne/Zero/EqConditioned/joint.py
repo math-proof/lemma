@@ -29,7 +29,7 @@ def prove(Eq):
     x, y, z = Symbol(real=True, random=True)
     Eq << apply(Unequal(Pr(z | y), 0), Equal(x | y, x))
 
-    Eq << Random.All_ImpNeSProb_0.apply(Eq[0])
+    Eq << Random.All_ImpNe0ProbCond.apply(Eq[0])
 
     Eq << Random.EqConditioned.of.Ne_0.Eq_Conditioned.joint.apply(Eq[-1], Eq[1])
 

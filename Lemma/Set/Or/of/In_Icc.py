@@ -20,7 +20,7 @@ def prove(Eq):
     c = Symbol(domain=Interval(a, b))
     Eq << apply(Element(x, Interval(a, b)), c)
 
-    Eq << Eq[0].this.rhs.apply(Set.Icc.eq.Union, c)
+    Eq << Eq[0].this.rhs.apply(Set.Icc.eq.Union_Icc.of.Le.Le, c)
 
     Eq << Set.OrInS.of.In_Union.apply(Eq[-1])
 

@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq << Set.Or.given.In.apply(Eq[1])
 
-    Eq << Eq[0].this.rhs.apply(Set.Icc.eq.Union, c)
+    Eq << Eq[0].this.rhs.apply(Set.Icc.eq.Union_Icc.of.Le.Le, c)
 
 
 

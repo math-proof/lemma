@@ -1,7 +1,7 @@
 from util import *
 
 
-@apply
+@apply(given=True)
 def apply(eq, *vars):
     given_probability = eq.of(Unequal[0])
     cond, given = given_probability.of(Pr[Conditioned])
@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq.lhs = Nat.Div.of.Eq.nonzero.apply(Eq[-2], Eq[-1])
 
-    Eq << Random.All_ImpNeSProb_0.apply(Eq[0])
+    Eq << Random.All_ImpNe0ProbCond.apply(Eq[0])
 
     Eq << Random.All_Eq_MulProbCond.of.PSpace_Joint.apply(Eq[-1], x)
 

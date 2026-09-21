@@ -24,9 +24,9 @@ def prove(Eq):
     t = Symbol(integer=True)
     Eq << apply(Expectation[r[t]](r[t] | s[t] & a[t] & s[t + 1]))
 
-    Eq << Bool.Cond.given.Imp.domain_defined.apply(Eq[0])
+    Eq << Bool.Cond.given.Imp.ImpNot.domain_defined.apply(Eq[0])
 
-    Eq << Eq[-1].this.lhs.apply(Random.Ne_0.Conditioned.of.Ne_0, a[t], s[t])
+    Eq << Eq[-1].this.lhs.apply(Random.All_Imp_Ne0ProbCond, a[t], s[t])
 
     Eq << Eq[-1].this.lhs.apply(Random.All_EqProbCondJoint, r[t])
 

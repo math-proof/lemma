@@ -79,7 +79,7 @@ def prove(Eq):
     Eq << Eq[-1].this.find(Add[Min]).apply(Nat.Add.eq.Min)
 
     delta = Symbol(real=True, positive=True)
-    Eq << Bool.Any.of.Any.subst.apply(Eq[-1], Min(δ_0, δ_1, δ_2), delta)
+    Eq << Bool.Any.of.Any_UFn.apply(Eq[-1], Min(δ_0, δ_1, δ_2), delta)
 
     Eq << Eq[-1].this.find(Element).apply(Set.In_Icc.given.InAdd, x0)
 

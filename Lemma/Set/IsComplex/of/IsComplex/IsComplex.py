@@ -24,7 +24,7 @@ def prove(Eq):
     Eq << Eq[-1].this.expr.apply(Nat.EqMul.of.Eq.Eq)
     a, b = Eq[-1].variables
     c = Symbol(complex=True)
-    Eq << Bool.Any.of.Any.subst.apply(Eq[-1], a * b, c)
+    Eq << Bool.Any.of.Any_UFn.apply(Eq[-1], a * b, c)
 
 
 

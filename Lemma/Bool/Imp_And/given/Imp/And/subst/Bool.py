@@ -26,7 +26,7 @@ def prove(Eq):
     t, f, g = Function(integer=True)
     Eq << apply(Imply(Equal(t(x), y) & (f(x) > y), Equal(g(x), Piecewise((f(x), (f(x) > y)), (t(x), True)))), index=1)
 
-    Eq << Bool.Imp_And.given.Imp_And.And.apply(Eq[0], 1)
+    Eq << Bool.ImpAnd.given.ImpAndS.apply(Eq[0], 1)
 
     Eq << Eq[-1].this.rhs.apply(Bool.And_BFnIte.given.And_BFn)
 

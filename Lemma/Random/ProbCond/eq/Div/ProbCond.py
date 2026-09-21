@@ -17,9 +17,9 @@ def prove(Eq):
     x, y, z = Symbol(real=True, random=True)
     Eq << apply(Pr(y | x & z))
 
-    Eq << Bool.Cond.given.Imp.domain_defined.apply(Eq[0])
+    Eq << Bool.Cond.given.Imp.ImpNot.domain_defined.apply(Eq[0])
 
-    Eq << Bool.Imp_And.given.Imp_And.And.apply(Eq[-1], -1)
+    Eq << Bool.ImpAnd.given.ImpAndS.apply(Eq[-1], -1)
 
     Eq << Eq[-1].this.rhs.apply(Nat.Ne_0.Eq.given.And.Mul)
 

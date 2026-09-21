@@ -38,7 +38,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(ReducedSum).apply(Vector.Sum.eq.Sum_Get, k)
 
-    Eq << Eq[-1].this.find(Expectation[Sum]).apply(Random.Expect.Sum.eq.Sum.Expect)
+    Eq << Eq[-1].this.find(Expectation[Sum]).apply(Random.Expect_Sum.eq.Sum_Expect)
 
     Eq << Eq[-1].subs(Eq[1])
 

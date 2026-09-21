@@ -33,9 +33,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Expectation).apply(Random.Expect_Mul.eq.Mul_Expect)
 
-    Eq << Eq[-1].this.find(Expectation).apply(Random.Expect.Sum.eq.Sum.Expect)
+    Eq << Eq[-1].this.find(Expectation).apply(Random.Expect_Sum.eq.Sum_Expect)
 
-    Eq << Eq[-1].this.find(Expectation).apply(Random.Expect.Sum.eq.Sum.Expect)
+    Eq << Eq[-1].this.find(Expectation).apply(Random.Expect_Sum.eq.Sum_Expect)
 
     Eq << Eq[-1].subs(Eq[1])
 

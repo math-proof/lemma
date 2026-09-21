@@ -24,7 +24,7 @@ def prove(Eq):
 
 
 
-    Eq << Set.In.Icc.of.Gt.apply(Eq[1])
+    Eq << Set.In_Ioi.of.Gt.apply(Eq[1])
 
 
 

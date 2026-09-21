@@ -48,7 +48,7 @@ def prove(Eq):
 
     Eq << Random.All_NeProb_0.All_NeProb_0.of.All_Ne0ProbJoint.apply(Eq[-1])
 
-    Eq << Random.Ne_0.Conditioned.of.Ne_0.apply(Eq[-3], y[:k])
+    Eq << Random.All_Imp_Ne0ProbCond.apply(Eq[-3], y[:k])
 
     Eq << Random.All_Eq_MulProbCond.of.PSpace_Joint.apply(Eq[-2], x[:k + 1], y[k])
 
@@ -88,7 +88,7 @@ def prove(Eq):
 
     Eq.y_joint_y_historic = Eq[-1].this.lhs.arg.apply(Tensor.GetSlice.Get.of.Eq)
 
-    Eq << Random.Ne_0.Conditioned.of.Ne_0.apply(Eq.y_joint_y_historic, y[:k])
+    Eq << Random.All_Imp_Ne0ProbCond.apply(Eq.y_joint_y_historic, y[:k])
 
     Eq << Random.All_EqProbCondJoint.apply(Eq[-1], Eq.x_independence.lhs.lhs)
 

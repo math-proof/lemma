@@ -1,6 +1,5 @@
 from . import le
 from . import limits
-from . import Sum
 from . import eq
 from . import importance_sampling
 from . import Var

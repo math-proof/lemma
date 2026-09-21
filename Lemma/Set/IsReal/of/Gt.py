@@ -16,7 +16,7 @@ def prove(Eq):
     b = Symbol(real=True, given=True)
     Eq << apply(x > b)
 
-    Eq << Set.In.Icc.of.Gt.apply(Eq[0])
+    Eq << Set.In_Ioi.of.Gt.apply(Eq[0])
 
     Eq << Set.In_Union.of.In.apply(Eq[-1], Interval(-oo, oo), simplify=None)
 

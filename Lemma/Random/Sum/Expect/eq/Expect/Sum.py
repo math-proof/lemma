@@ -39,7 +39,7 @@ def prove(Eq):
     s = Symbol(real=True, random=True)
     Eq << apply(Sum[k:n](Expectation(f(x[k]) | s)))
 
-    Eq << Eq[-1].this.rhs.apply(Random.Expect.Sum.eq.Sum.Expect)
+    Eq << Eq[-1].this.rhs.apply(Random.Expect_Sum.eq.Sum_Expect)
 
 
 

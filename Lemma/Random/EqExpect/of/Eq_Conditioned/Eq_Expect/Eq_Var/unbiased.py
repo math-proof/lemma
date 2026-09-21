@@ -35,7 +35,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(ReducedSum).apply(Vector.Sum.eq.Sum_Get, k)
 
-    Eq << Eq[-1].this.find(Expectation).apply(Random.Expect.Sum.eq.Sum.Expect)
+    Eq << Eq[-1].this.find(Expectation).apply(Random.Expect_Sum.eq.Sum_Expect)
 
     Eq << Eq[2].this.lhs.apply(Random.Var.eq.Sub.Expect)
 
@@ -55,7 +55,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Expectation).apply(Random.Expect_Mul.eq.Mul_Expect)
 
-    Eq << Eq[-1].this.find(Expectation).apply(Random.Expect.Sum.eq.Sum.Expect)
+    Eq << Eq[-1].this.find(Expectation).apply(Random.Expect_Sum.eq.Sum_Expect)
 
     Eq << Eq[-1].subs(Eq.eq_expect_square)
 
@@ -65,7 +65,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Nat.AddMulS.eq.Mul_Add)
 
-    Eq << Eq[-1].this.lhs.apply(Random.Expect.Sum.eq.Sum.Expect)
+    Eq << Eq[-1].this.lhs.apply(Random.Expect_Sum.eq.Sum_Expect)
 
     Eq << Eq[-1].this.rhs.args[1::2].apply(Finset.Mul.eq.Mul.Binom)
 

@@ -34,7 +34,7 @@ def prove(Eq):
     x, y, z = Symbol(real=True, random=True)
     Eq << apply(Unequal(Pr(y, z), 0), x, y)
 
-    Eq << Random.Ne_0.Conditioned.of.Ne_0.apply(Eq[0], z)
+    Eq << Random.All_Imp_Ne0ProbCond.apply(Eq[0], z)
 
     Eq << Random.All_EqProbCondJoint.apply(Eq[-1], x)
 
