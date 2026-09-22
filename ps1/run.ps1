@@ -317,7 +317,23 @@ function Get-AndProjModule {
     return $rightModule
 }
 
-# Get all .lean files except *.echo.lean under Lemma/
+
+function Replace-IffToken {
+    param(
+        [string]$Module,
+        [string]$Replacement
+    )
+    $tokens = @($Module -split '\.')
+    for ($i = 0; $i -lt $tokens.Length; $i++) {
+        $idx = $tokens[$i].IndexOf('Iff')
+        if ($idx -ge 0) {
+            $tokens[$i] = $tokens[$i].Substring(0, $idx) + $Replacement + $tokens[$i].Substring($idx + 3)
+            return ($tokens -join '.')
+        }
+    }
+    return $null
+}
+
 Get-ChildItem -Recurse -Path "Lemma" -Include *.lean -Exclude *.echo.lean |
 Where-Object { Test-ModuleIncluded (Get-ModuleFromLeanFile $_.FullName) } |
 ForEach-Object {
@@ -406,10 +422,6 @@ ForEach-Object {
                     $tokens[3] = $tmp
                 }
                 default {
-                    # The deBruijn value encodes which default binders to flip.
-                    # After Prop-filtering, set bits collapse to of-segment tokens
-                    # from the left (token 0, 1, ...). The first path token
-                    # (tokens[1]) is always flipped via transformPrefix.
                     $ofIdx = [array]::IndexOf([object[]]$tokens, 'of')
                     if ($ofIdx -ge 0 -and $ofIdx -lt $tokens.Length - 1) {
                         $ofTokens = @($tokens[($ofIdx + 1)..($tokens.Length - 1)])
@@ -456,16 +468,28 @@ ForEach-Object {
             Add-Content -Path "test.sql" -Value (Format-LemmaInsertRow -Module $new_module -Synthetic)
         }
     }
-    if ($attributes -cmatch '\bmp\b') {
+    if ($attributes -cmatch '\b(?<!\.)mp(?!\.)\b') {
         if ($module -cmatch '^([a-zA-Z0-9_]+)\.(.+)\.is\.(.+?)(?:\.of(\..+))?$') {
             $new_module = "$($matches[1]).$($matches[3]).of.$($matches[2])$($matches[4])"
             Add-Content -Path "test.sql" -Value (Format-LemmaInsertRow -Module $new_module -Synthetic)
         }
+        else {
+            $iffModule = Replace-IffToken -Module $module -Replacement 'Imp_'
+            if ($iffModule) {
+                Add-Content -Path "test.sql" -Value (Format-LemmaInsertRow -Module $iffModule -Synthetic)
+            }
+        }
     }
-    if ($attributes -cmatch '\bmpr\b') {
+    if ($attributes -cmatch '\b(?<!\.)mpr(?!\.)\b') {
         if ($module -cmatch '^([a-zA-Z0-9_]+)\.(.+)\.is\.(.+?)(?:\.of(\..+))?$') {
             $new_module = "$($matches[1]).$($matches[2]).of.$($matches[3])$($matches[4])"
             Add-Content -Path "test.sql" -Value (Format-LemmaInsertRow -Module $new_module -Synthetic)
+        }
+        else {
+            $iffModule = Replace-IffToken -Module $module -Replacement 'Imp'
+            if ($iffModule) {
+                Add-Content -Path "test.sql" -Value (Format-LemmaInsertRow -Module $iffModule -Synthetic)
+            }
         }
     }
     if ($attributes -cmatch '\bmp\.left\b') {

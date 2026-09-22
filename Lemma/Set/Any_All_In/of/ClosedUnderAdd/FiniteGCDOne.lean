@@ -4,12 +4,8 @@ import Mathlib.Algebra.Order.BigOperators.Ring.Finset
 import Lemma.Set.InMul.of.In.Gt_0
 import Lemma.Set.Sum_Mul.of.Nonempty.All_In.Gt_0.In
 import Lemma.Finset.Any_EqGcd.of.Nonempty
+import sympy.core.intfunc
 open Set Finset
-
-
-class FiniteGCDOne (A : Set ℕ) : Prop where
-  finite_gcd_one : ∃ s : Finset ℕ,
-    (s : Set ℕ) ⊆ A ∧ s.gcd id = 1 ∧ 0 ∉ s ∧ s.Nonempty
 
 
 @[main]

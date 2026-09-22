@@ -1,8 +1,5 @@
 import sympy.Basic
-
-
-class ClosedUnderAdd (A : Set ℕ) : Prop where
-  closed_under_add : ∀ ⦃a b⦄, a ∈ A → b ∈ A → a + b ∈ A
+import sympy.sets.handlers.add
 
 
 @[main]

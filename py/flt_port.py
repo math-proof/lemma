@@ -15,38 +15,53 @@ theorems are ready.  Where that script only *lists* the next batch, this one
 * a ``@[main] private lemma main`` placeholder with ``sorry`` as the proof
   body, so the porter only has to fill in the proof.
 
-Path derivation
----------------
-The mechanical default path is::
+Path derivation (two phases)
+----------------------------
+Lemma naming is intentionally two-phase:
 
-    Lemma/<word_1>/<word_2>/.../<word_n>.lean
+1. **Rough** (lean.js) — ``node mjs/suggestLemmaPath.mjs`` parses the
+   skeleton source with lean.js and proposes a provisional ``Lemma/…`` path
+   *before* a finished proof.  Used when scaffolding.
+2. **Precise** (``Name.toJson`` / ``imply.struct``) — ``node
+   mjs/suggestFromLean.mjs`` enumerates elaborator-faithful alts after the
+   statement typechecks (proof may still be ``sorry``).  Used by
+   ``--finalize``.
 
-i.e. the FLT key split on ``_`` becomes directory segments and the last word
-becomes the filename (with the original casing preserved).  Example::
+Fallback for phase 1 if lean.js suggest fails: mechanical key split::
 
     AbsoluteValue_Completion_norm_coe_and_exists_one_lt_norm
         -> Lemma/AbsoluteValue/Completion/norm/coe/and/exists/one/lt/norm.lean
 
-The porter may rename/move the file after the proof is in place.
-
 Usage::
 
-    # Default: use the topo-sort log next to this script.
+    # Scaffold the next *one* ready theorem (default --limit 1).
     python py/flt_port.py
 
-    # Dry-run (print what would happen, write nothing).
+    # Dry-run.
     python py/flt_port.py --dry-run
 
-    # Limit the number of skeletons created.
+    # Later, when single-lemma flow is solid: batch N independent keys.
     python py/flt_port.py --limit 5
+
+    # Phase 1 only (same as default scaffold; explicit).
+    python py/flt_port.py --rough-only
+
+    # Phase 2: check / suggest precise paths for existing files.
+    python py/flt_port.py --finalize Lemma/Foo/Bar.lean
+
+    # Phase 2 + actually move when inconsistent.
+    python py/flt_port.py --finalize --apply-rename Lemma/Foo/Bar.lean
 """
 
 from __future__ import annotations
 
 import argparse
+import json
 import os
 import re
+import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -55,6 +70,10 @@ DEFAULT_PORTED_ROOT = r"E:\github\lean\Lemma"
 DEFAULT_BASE_URL = "https://github.com/anthropics/fermats-last-theorem/blob/main"
 DEFAULT_LOG = Path(__file__).resolve().parent / "flt_topo_sort.log"
 DEFAULT_DATE = "2026-09-20"
+
+# Phase-1 / phase-2 suggesters (orchestration only; naming lives in mjs/).
+SUGGEST_ROUGH = ROOT / "mjs" / "suggestLemmaPath.mjs"
+SUGGEST_PRECISE = ROOT / "mjs" / "suggestFromLean.mjs"
 
 LINK_RE = re.compile(r"^\[([A-Za-z0-9_]+)\]\(https://[^)]+\)\s*$")
 # Captures the text between `theorem <name>` and `:=`.  Handles the typical
@@ -89,6 +108,113 @@ def key_to_path(key: str, ported_root: Path) -> Path:
     """
     words = key.split("_")
     return ported_root.joinpath(*words).with_suffix(".lean")
+
+
+def _run_node_json(script: Path, *args: str) -> dict:
+    """Run ``node <script> --json …`` and parse stdout as JSON."""
+    cmd = ["node", str(script), "--json", *args]
+    proc = subprocess.run(
+        cmd,
+        cwd=str(ROOT),
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+    )
+    if proc.returncode != 0:
+        err = (proc.stderr or proc.stdout or "").strip()
+        raise RuntimeError(err or f"node exited {proc.returncode}")
+    return json.loads(proc.stdout)
+
+
+
+# Structural path segments allowed at length 1–2 (lemma naming connectives).
+_ROUGH_STRUCT = {
+    "eq", "ne", "is", "as", "of", "ae", "et", "ou", "lt", "gt", "le", "ge",
+    "in", "to", "dvd", "sub", "sup", "ll", "gg",
+}
+
+
+def _rough_path_sane(rel: str) -> bool:
+    """Reject lean.js rough paths that are clearly junk for scaffolding.
+
+    FLT Mathlib statements often emit Greek binder glyphs or 1-char atoms;
+    those should fall back to the mechanical key path.
+    """
+    parts = [x for x in rel.replace("\\", "/").split("/") if x]
+    if not parts or not parts[-1].endswith(".lean"):
+        return False
+    segs = parts[:-1] + [parts[-1][: -len(".lean")]]
+    for seg in segs:
+        if not seg:
+            return False
+        if any(ord(c) > 127 for c in seg):
+            return False
+        soft = seg.lower()
+        if soft in _ROUGH_STRUCT:
+            continue
+        # Content atoms should be CamelCase-ish and longer than 1 char.
+        if len(seg) < 2:
+            return False
+    return True
+
+
+def rough_path_from_source(source: str, ported_root: Path) -> Path | None:
+    """Phase 1: lean.js rough path from skeleton source text.
+
+    Writes ``source`` to a temp ``.lean`` file, runs
+    ``mjs/suggestLemmaPath.mjs --json``, and maps ``suggestedPath`` under
+    ``ported_root``.  Returns ``None`` on any failure (caller falls back to
+    :func:`key_to_path`).
+    """
+    if not SUGGEST_ROUGH.is_file():
+        return None
+    tmp: Path | None = None
+    try:
+        with tempfile.NamedTemporaryFile(
+            mode="w",
+            suffix=".lean",
+            delete=False,
+            encoding="utf-8",
+        ) as fh:
+            fh.write(source)
+            tmp = Path(fh.name)
+        data = _run_node_json(SUGGEST_ROUGH, str(tmp))
+        rel = str(data.get("suggestedPath") or "").replace(chr(92), "/").lstrip("/")
+        if rel.startswith("Lemma/"):
+            rel = rel[len("Lemma/") :]
+        if not rel.endswith(".lean"):
+            return None
+        if not _rough_path_sane(rel):
+            print(f"  (rough suggest rejected: {rel})", file=sys.stderr)
+            return None
+        return ported_root.joinpath(*rel.split("/"))
+    except Exception as exc:  # noqa: BLE001 — fallback is intentional
+        print(f"  (rough suggest failed: {exc})", file=sys.stderr)
+        return None
+    finally:
+        if tmp is not None:
+            try:
+                tmp.unlink()
+            except OSError:
+                pass
+
+
+def precise_suggest(lean_file: Path) -> dict:
+    """Phase 2: elaborator-precise alts via ``mjs/suggestFromLean.mjs --json``."""
+    return _run_node_json(SUGGEST_PRECISE, str(lean_file))
+
+
+def best_precise_target(result: dict, ported_root: Path) -> str | None:
+    """Pick rename target: matched path if consistent, else shortest free alt."""
+    if result.get("consistent") and result.get("matchedSuggestion"):
+        return result["matchedSuggestion"]
+    for alt in result.get("suggestions") or []:
+        abs_path = ported_root / Path(alt)
+        if not abs_path.exists():
+            return alt
+    all_alts = result.get("allSuggestions") or []
+    return all_alts[0] if all_alts else None
 
 
 # ---------------------------------------------------------------------------
@@ -276,9 +402,8 @@ def ported_keys(ported_root: Path) -> set[str]:
 def main() -> int:
     ap = argparse.ArgumentParser(
         description=(
-            "Scaffold skeleton .lean files for the next FLT port batch. "
-            "Reads flt_topo_sort.log to discover the next batch, then for "
-            "each unported key creates a mechanical-path skeleton."
+            "Scaffold FLT port skeletons (phase-1 lean.js rough path) and/or "
+            "finalize paths with phase-2 Name.toJson suggestFromLean."
         ),
     )
     ap.add_argument("--base", default=DEFAULT_BASE,
@@ -289,16 +414,45 @@ def main() -> int:
                     help="GitHub base URL used in the source-link docstring.")
     ap.add_argument("--log", type=Path, default=DEFAULT_LOG,
                     help="Path of the topo-sort log to read.")
-    ap.add_argument("--limit", type=int, default=20,
-                    help="Maximum number of skeleton files to create.")
+    ap.add_argument("--limit", type=int, default=1,
+                    help="Max skeletons to create (default 1; raise later for batch).")
     ap.add_argument("--dry-run", action="store_true",
                     help="Print what would happen, write nothing.")
     ap.add_argument("--date", default=DEFAULT_DATE,
                     help="Date stamp inserted in `-- created on` footer.")
+    ap.add_argument(
+        "--rough-only",
+        action="store_true",
+        help="Scaffold only (phase 1). Same as default create flow.",
+    )
+    ap.add_argument(
+        "--finalize",
+        action="store_true",
+        help="Phase 2: run suggestFromLean on existing .lean paths.",
+    )
+    ap.add_argument(
+        "--apply-rename",
+        action="store_true",
+        help="With --finalize, move file to best precise path when inconsistent.",
+    )
+    ap.add_argument(
+        "paths",
+        nargs="*",
+        help="With --finalize: Lemma/.../.lean files (or absolute paths) to check.",
+    )
     args = ap.parse_args()
 
-    base = Path(args.base)
     ported_root = Path(args.ported_root)
+
+    if args.finalize:
+        return _cmd_finalize(args, ported_root)
+
+    # Default / --rough-only: scaffold next batch with phase-1 paths.
+    return _cmd_scaffold(args, ported_root)
+
+
+def _cmd_scaffold(args: argparse.Namespace, ported_root: Path) -> int:
+    base = Path(args.base)
     theorems_dir = base / "Theorems"
 
     if not args.log.exists():
@@ -313,65 +467,127 @@ def main() -> int:
     print(f"topo log keys      : {len(keys)}")
     print(f"already ported     : {len(ported)}")
     print(f"to port (in batch) : {len(todo)}")
+    print(f"phase-1 rough      : {SUGGEST_ROUGH.name}")
     print()
 
-    created: list[tuple[str, Path]] = []
+    if not todo:
+        print("log batch exhausted (all listed keys already ported).")
+        print("Re-run: python py/flt_topo_sort.py")
+        print("Then:   python py/flt_port.py")
+        return 0
+
+    created: list[tuple[str, Path, str]] = []
     skipped: list[tuple[str, Path]] = []
     missing_theorem: list[str] = []
 
     for key in todo:
         if len(created) >= args.limit:
             break
-        path = key_to_path(key, ported_root)
-        if path.exists():
-            skipped.append((key, path))
-            continue
 
         statement = extract_statement(theorems_dir, key)
         if statement is None:
             missing_theorem.append(key)
 
         proof = extract_proof(Path(args.base) / "P2M" / "Sol", key)
+        text = make_skeleton(key, args.base_url, statement, proof, args.date)
+
+        fallback = key_to_path(key, ported_root)
+        rough = rough_path_from_source(text, ported_root)
+        path = rough if rough is not None else fallback
+        how = "rough" if rough is not None else "key"
+
+        if path.exists():
+            skipped.append((key, path))
+            continue
 
         if args.dry_run:
-            created.append((key, path))
+            created.append((key, path, how))
             continue
 
         path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(
-            make_skeleton(key, args.base_url, statement, proof, args.date),
-            encoding="utf-8",
-        )
-        created.append((key, path))
+        path.write_text(text, encoding="utf-8")
+        created.append((key, path, how))
 
     print(f"created {len(created)} skeleton file(s):")
-    for key, path in created:
-        rel = path.relative_to(ROOT) if path.is_absolute() else path
-        print(f"  {key} -> {rel}")
+    for key, path, how in created:
+        try:
+            rel = path.relative_to(ROOT)
+        except ValueError:
+            rel = path
+        print(f"  [{how}] {key} -> {rel}")
 
     if skipped:
-        print()
-        print(f"skipped {len(skipped)} (already exist):")
-        for key, path in skipped[:5]:
-            rel = path.relative_to(ROOT) if path.is_absolute() else path
+        print(f"\nskipped {len(skipped)} (already on disk):")
+        for key, path in skipped:
+            try:
+                rel = path.relative_to(ROOT)
+            except ValueError:
+                rel = path
             print(f"  {key} -> {rel}")
-        if len(skipped) > 5:
-            print(f"  ... and {len(skipped) - 5} more")
 
     if missing_theorem:
-        print()
-        print(f"warning: {len(missing_theorem)} key(s) had no Thm_<key>.lean:")
-        for key in missing_theorem[:5]:
+        print(f"\nWARNING: no Theorems/Thm_*.lean for {len(missing_theorem)} key(s):")
+        for key in missing_theorem:
             print(f"  {key}")
-        if len(missing_theorem) > 5:
-            print(f"  ... and {len(missing_theorem) - 5} more")
 
-    print()
-    print("Next step: read each FLT solution at")
-    print(f"  {base}\\P2M\\Sol\\S_<key>.lean")
-    print("and replace the `sorry` with the actual proof.  When done, re-run")
-    print("`python py/flt_topo_sort.py` to advance the queue.")
+    if args.rough_only:
+        print("\n(--rough-only: scaffold done; run --finalize later for phase 2)")
+
     return 0
+
+
+def _cmd_finalize(args: argparse.Namespace, ported_root: Path) -> int:
+    if not SUGGEST_PRECISE.is_file():
+        print(f"ERROR: missing {SUGGEST_PRECISE}", file=sys.stderr)
+        return 1
+    if not args.paths:
+        print(
+            "ERROR: --finalize needs one or more Lemma/.../.lean paths",
+            file=sys.stderr,
+        )
+        return 1
+
+    print(f"phase-2 precise : {SUGGEST_PRECISE.name}")
+    print(f"apply rename    : {args.apply_rename}")
+    print()
+
+    rc = 0
+    for raw in args.paths:
+        lean = Path(raw)
+        if not lean.is_absolute():
+            cand = ROOT / lean
+            lean = cand if cand.exists() else Path(raw)
+        if not lean.exists():
+            print(f"MISSING {raw}")
+            rc = 1
+            continue
+        try:
+            result = precise_suggest(lean)
+        except Exception as exc:  # noqa: BLE001
+            print(f"FAIL {lean}: {exc}")
+            rc = 1
+            continue
+
+        cur = result.get("currentPath") or ""
+        ok = bool(result.get("consistent"))
+        target = best_precise_target(result, ported_root)
+        status = "consistent" if ok else "inconsistent"
+        print(f"{status}: Lemma/{cur}")
+        if target and not ok:
+            print(f"  suggest: Lemma/{target}")
+            dest = ported_root / Path(target)
+            if args.apply_rename and not args.dry_run:
+                if dest.exists():
+                    print(f"  SKIP rename (exists): {dest}")
+                else:
+                    dest.parent.mkdir(parents=True, exist_ok=True)
+                    lean.rename(dest)
+                    print(f"  renamed -> Lemma/{target}")
+            elif args.apply_rename and args.dry_run:
+                print(f"  dry-run rename -> Lemma/{target}")
+        elif ok:
+            print("  (exact match among alts)")
+    return rc
 
 
 if __name__ == "__main__":

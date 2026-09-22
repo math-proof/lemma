@@ -8,7 +8,6 @@ import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.DataGet.eq.GetUnflattenData
 import Lemma.Vector.Eq.is.All_EqGetS
 import Lemma.Vector.GetUnflatten.eq.Get_AddMul
-import sympy.Basic
 open MeasureTheory Tensor Vector
 set_option maxHeartbeats 2000000
 
@@ -68,7 +67,7 @@ private lemma expect_get
   rfl
 
 
-@[main]
+@[main, comm]
 private lemma main
   [MeasurableSpace Ω]
   [ReferenceMeasure α] [ReferenceMeasure γ]

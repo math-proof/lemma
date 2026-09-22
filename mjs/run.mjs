@@ -132,9 +132,40 @@ async function main() {
     process.exit(2);
   }
 
-  const { module, abs } = await runLeanFile(leanInput);
-  console.log(`replaced axiom.lemma user=${USER} module=${module}`);
+  const { module, abs, code } = await runLeanFile(leanInput);
   console.log(abs);
+
+  // MySQL REPLACE is persistence, not success — Lean errors decide the exit status.
+  const errors = Array.isArray(code?.error) ? code.error : [];
+  const isCrlf = (e) => /Carriage return/i.test(String(e?.info ?? ''));
+  const crlf = errors.filter(isCrlf);
+  const real = errors.filter((e) => !isCrlf(e));
+
+  if (crlf.length) {
+    console.error(
+      `(note: ${crlf.length}× "Carriage return is not allowed in Lean" — convert the .lean file to LF)`,
+    );
+  }
+  if (real.length) {
+    console.error(`\n${real.length} Lean error(s):`);
+    for (const err of real) {
+      const loc = err.line != null ? `:${err.line}` : '';
+      const col = err.col != null ? `:${err.col}` : '';
+      const typ = err.type || 'error';
+      console.error(`--- ${typ}${loc}${col} ---`);
+      if (err.code) console.error(err.code);
+      if (err.info) console.error(err.info);
+    }
+  }
+
+  if (errors.length) {
+    console.error(
+      `FAILED: wrote axiom.lemma user=${USER} module=${module} (${errors.length} Lean error(s))`,
+    );
+    process.exitCode = 1;
+  } else {
+    console.log(`OK: replaced axiom.lemma user=${USER} module=${module}`);
+  }
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === path.resolve(fileURLToPath(import.meta.url))) {

@@ -4,7 +4,7 @@ import Lemma.Measure.ProdCountSFinset.eq.One
 open MeasureTheory Measure
 
 
-@[main]
+@[main, comm]
 private lemma main
   [MeasurableSpace α] [MeasurableSpace β]
   [Countable α] [Countable β]

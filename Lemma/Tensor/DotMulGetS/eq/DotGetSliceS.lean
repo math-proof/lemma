@@ -68,8 +68,8 @@ private lemma main
     rw [Nat.AddCoeS.eq.CoeAdd]
     rw [EqToNat]
     rw [ToNatSubCoeS.eq.Sub]
-  conv_lhs => erw [Dot.eq.Stack_Sum_MulGetS.une]
-  conv_rhs => erw [Dot.eq.Stack_Sum_MulGetS.une]
+  conv_lhs => erw [Dot.eq.Stack_Sum_MulGetS.vm]
+  conv_rhs => erw [Dot.eq.Stack_Sum_MulGetS.vm]
   apply Eq.of.All_EqGetS.fin
   intro j
   rw [EqGetStack.fin]

@@ -20,7 +20,7 @@ private lemma main
 -- proof
   change id (α := Tensor α [p + q]) (x @ (X.hstack Y)) = id (α := Tensor α [p]) (x @ X) ++ id (α := Tensor α [q]) (x @ Y)
   simp only [id]
-  rw [Dot.eq.Stack_Sum_MulGetS.une x (X.hstack Y), Dot.eq.Stack_Sum_MulGetS.une x X, Dot.eq.Stack_Sum_MulGetS.une x Y]
+  rw [Dot.eq.Stack_Sum_MulGetS.vm x (X.hstack Y), Dot.eq.Stack_Sum_MulGetS.vm x X, Dot.eq.Stack_Sum_MulGetS.vm x Y]
   let f : ℕ → Tensor α [] := fun j =>
     if h : j < p + q then
       ∑ r : Fin k, (id (α := Tensor α []) x[r]) * (id (α := Tensor α []) (id (α := Tensor α [p + q]) (X.hstack Y)[r])[j])

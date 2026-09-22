@@ -4,8 +4,18 @@ import Mathlib.MeasureTheory.Measure.Decomposition.Lebesgue
 import Mathlib.MeasureTheory.Measure.Decomposition.RadonNikodym
 import Mathlib.MeasureTheory.MeasurableSpace.Constructions
 import Mathlib.Probability.Independence.Basic
+import Mathlib.Probability.Independence.Conditional
 import sympy.stats.symbolic_probability
 open MeasureTheory
+open scoped ProbabilityTheory
+
+/-- CondIndepFun sugar. Precedence 100 beats Mathlib’s `x ⟂ᵢ[π] y` (50) so the
+trailing `| z` is not left behind. `‹Measurable Z›` picks up a local `hz`. -/
+notation:100 X:100 " ⟂ᵢ[" μ "] " Y:100 " | " Z:100 =>
+  ProbabilityTheory.CondIndepFun
+    (MeasurableSpace.comap Z inferInstance)
+    (Measurable.comap_le ‹Measurable Z›)
+    X Y μ
 
 
 /--

@@ -710,9 +710,12 @@ abstract class Lean extends IndentedNode
                     $this->parent->replace($this, new LeanGetElemQuote([$lhs, $rhs, $caret], $this->indent, $this->level));
                     return $caret;
                 }
+                $prev_token = $tokens[$i - 1] ?? null;
                 while (preg_match("/[\w'!?₀-₉]/u", $tokens[$i + 1]))
                     $token .= $tokens[++$i];
-                return $this->push_quote($token);
+                if ($prev_token !== null && preg_match("/[\w'!?₀-₉]/u", (string)$prev_token))
+                    return $this->push_quote($token);
+                return $this->push_token($token);
             case '+':
                 if ($this instanceof LeanCaret)
                     return $this->parent->insert_unary($this, 'LeanPlus');

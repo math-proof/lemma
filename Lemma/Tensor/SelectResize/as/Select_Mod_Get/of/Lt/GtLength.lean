@@ -23,7 +23,7 @@ import Lemma.Tensor.Select.as.OfVectorMapToVector.of.GtVal_0
 import Lemma.Tensor.SelectCast.as.Select.of.Eq
 import Lemma.Tensor.Select_0.as.Get.of.GtGet_0.GtLength_0
 import Lemma.Tensor.ToVector.eq.MapRange_Get.of.GtLength_0
-import Lemma.Tensor.ToVectorResize.as.Map_FunResizeGet.of.GtGet_0.GtVal_0
+import Lemma.Tensor.ToVectorResize.eq.Map_FunResizeGet.of.GtVal_0
 import Lemma.Vector.EqGetRange
 open Bool List Nat Tensor Vector
 
@@ -64,7 +64,7 @@ private lemma main
       apply EqCons_Tail.of.Eq_Get_0.GtLength_0
       rw [GetEraseIdx.eq.Get.of.Gt.GtLength (by simpa) (by simp)]
     ·
-      rw [ToVectorResize.as.Map_FunResizeGet.of.GtGet_0.GtVal_0 (by simp)]
+      rw [ToVectorResize.eq.Map_FunResizeGet.of.GtVal_0 (by simp)]
       simp
       have h_d := Lt_Sub.of.LtAdd h_d
       have ih := ih (s := s.tail) (by simp [h_d]) (by rwa [GetTail.eq.Get_Add_1.of.Lt_SubLength_1 (by omega)])

@@ -55,6 +55,8 @@ initialize registerBuiltinAttribute {
     }
 }
 
+/-- One `Filter.Eventually` layer peeled from a type (outer → inner). -/
+
 def Expr.mp' (type value : Lean.Expr) (parity : ℕ := 0) (reverse : Bool := false) (and : Bool := false) : CoreM (ℕ × Lean.Expr × Lean.Expr) := do
   let ⟨binders, type⟩ := type.decompose_forallE
   let deBruijn := (binders.zipParity parity .instImplicit).zipIdx.filterMap fun ⟨⟨bit, _⟩, deBruijn⟩ => if bit then some deBruijn else none
@@ -72,22 +74,40 @@ def Expr.mp' (type value : Lean.Expr) (parity : ℕ := 0) (reverse : Bool := fal
     )
     binders
   let context := binders.map fun ⟨binderName, binderType, _⟩ => (binderName, binderType)
-  type.println context "original type"
+  try
+    type.println context "original type"
+  catch _ =>
+    Lean.logInfo "original type (println failed)"
+  let ⟨layers, type⟩ := type.decomposeEventually
+  try
+    type.println context "after Eventually peel"
+  catch _ =>
+    Lean.logInfo "after Eventually peel (println failed)"
   let ⟨us, lhs, rhs⟩ := type.decomposeIff
   let ⟨given, imply, mp⟩ := if reverse then (rhs, lhs.incDeBruijnIndex 1, `Iff.mpr) else (lhs, rhs.incDeBruijnIndex 1, `Iff.mp)
-  given.println context "hypothesis"
+  try
+    given.println context "hypothesis"
+  catch _ =>
+    Lean.logInfo "hypothesis (println failed)"
   let binders : List (Name × Lean.Expr × BinderInfo) := binders.zipIdx.map fun ⟨⟨binderName, binderType, binderInfo⟩, deBruijn⟩ =>
     (binderName, binderType, (if binderInfo == .default && given.containsBVar deBruijn then .implicit else binderInfo))
   let telescope := fun lam hint body => do
-    body.println context s!"prior {hint}"
+    try
+      body.println context s!"prior {hint}"
+    catch _ =>
+      Lean.logInfo "println failed"
     let body := binders.foldl
       (fun body ⟨binderName, binderType, binderInfo⟩ =>
         lam binderName binderType body binderInfo
       )
       body
-    body.println [] s!"final {hint}"
+    try
+      body.println [] s!"final {hint}"
+    catch _ =>
+      Lean.logInfo "println failed"
     return body
-  let value ←
+  -- Raw theorem application (or extracted mp under parity), before optional Iff.mp/mpr.
+  let hThm ←
     if parity > 0 then
       let ⟨lamBinders, intro⟩ := value.decompose_lam []
       let ⟨us, mp, mpr⟩ := intro.decomposeIff
@@ -100,7 +120,24 @@ def Expr.mp' (type value : Lean.Expr) (parity : ℕ := 0) (reverse : Bool := fal
           throwError "The proof of the mp/mpr theorem must not contain the given TypeClass[#{deBruijn}] {instType.getAppFn.constName!}."
       pure (decDeBruijnIndex mp)
     else
-      pure ((Lean.Expr.const mp us).mkApp [lhs, rhs, value.mkApp ((List.range binders.length).map fun i => .bvar i).reverse])
+      pure (value.mkApp ((List.range binders.length).map fun i => .bvar i).reverse)
+  if !layers.isEmpty then
+    if parity > 0 then
+      panic! "mp'/mpr' Eventually peeling does not support parity > 0 yet"
+    let givenCore := if reverse then rhs else lhs
+    let implyCore := if reverse then lhs else rhs
+    let impCore := Lean.Expr.forallE `h givenCore (implyCore.incDeBruijnIndex 1) .default
+    let typeBody := layers.wrapEventually impCore
+    let valueBody := layers.buildEventuallyMp hThm us lhs rhs reverse
+    return (
+      binders.countP (·.snd.snd == .default),
+      ← (typeBody, valueBody).mapM (telescope Expr.forallE "type") (telescope .lam "value")
+    )
+  let value :=
+    if parity > 0 then
+      hThm
+    else
+      (Lean.Expr.const mp us).mkApp [lhs, rhs, hThm]
   let ⟨h_curr, h_next⟩ := if and then ⟨[given], []⟩ else given.decomposeAnd
   Lean.logInfo s!"and = {and}"
   let h_name := (List.range h_curr.length).map fun i => .str default ("h" ++ i.toSubscriptString)
@@ -127,6 +164,7 @@ def Expr.mp' (type value : Lean.Expr) (parity : ℕ := 0) (reverse : Bool := fal
     ← (.forallE h₀ h₀Type imply .default, .lam h₀ h₀Type value .default).mapM (telescope Expr.forallE "type") (telescope .lam "value")
   )
 
+
 initialize registerBuiltinAttribute {
   name := `mp'
   descr := "Automatically generate the mp implication of an equivalence theorem"
@@ -139,7 +177,14 @@ initialize registerBuiltinAttribute {
     Lean.logInfo s!"parity = {parity}"
     Lean.logInfo s!"and = {and}"
     let ⟨_, type, value⟩ ← Expr.mp' decl.type (if parity > 0 then decl.proof else .const declName (levelParams.map .param)) parity (and := and)
-    let name := ((← getEnv).moduleTokens.mp.foldl Name.str default).lemmaName declName
+    let moduleTokens := (← getEnv).moduleTokens
+    let name :=
+      if moduleTokens.contains "is" then
+        (moduleTokens.mp.foldl Name.str default).lemmaName declName
+      else
+        match moduleTokens.replaceIffToken "Imp_" with
+        | some tokens => (tokens.foldl Name.str default).lemmaName declName
+        | none => (moduleTokens.mp.foldl Name.str default).lemmaName declName
     Lean.logInfo s!"name = {name}"
     Lean.logInfo s!"(← getEnv).moduleTokens = {(← getEnv).moduleTokens}"
     addAndCompile <| .thmDecl {
@@ -149,6 +194,8 @@ initialize registerBuiltinAttribute {
       value := value
     }
 }
+
+
 
 def Expr.mpr' (type value : Lean.Expr) (parity : ℕ := 0) (and : Bool := false) : CoreM (ℕ × Lean.Expr × Lean.Expr) := Expr.mp' type value parity true and
 
@@ -162,7 +209,14 @@ initialize registerBuiltinAttribute {
     let parity := stx.getNum
     let and := stx.getIdent == `and
     let ⟨_, type, value⟩ ← Expr.mpr' decl.type (if parity > 0 then decl.proof else .const declName (levelParams.map .param)) parity and
-    let name := ((← getEnv).moduleTokens.mpr.foldl Name.str default).lemmaName declName
+        let moduleTokens := (← getEnv).moduleTokens
+    let name :=
+      if moduleTokens.contains "is" then
+        (moduleTokens.mpr.foldl Name.str default).lemmaName declName
+      else
+        match moduleTokens.replaceIffToken "Imp" with
+        | some tokens => (tokens.foldl Name.str default).lemmaName declName
+        | none => (moduleTokens.mpr.foldl Name.str default).lemmaName declName
     println! s!"name = {name}"
     addAndCompile <| .thmDecl {
       name := name
@@ -1022,4 +1076,3 @@ initialize registerBuiltinAttribute {
       value := value
     }
 }
-

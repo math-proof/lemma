@@ -1,8 +1,8 @@
 import Mathlib.Analysis.Normed.Lp.WithLp
 import Mathlib.Analysis.Normed.Lp.PiLp
 import Mathlib.Data.Matrix.Basic
-import Lemma.Set.InMul.of.In.Gt_0
-import Lemma.Set.Any_All_In.of.ClosedUnderAdd.FiniteGCDOne
+import sympy.sets.handlers.add
+import sympy.core.intfunc
 
 /-!
 # Stochastic process types (DiscreteMarkovChain)
@@ -17,33 +17,40 @@ simplex `StochasticVec` / `Simplex`, rather than a single Python class.
 open Finset Matrix WithLp Set
 open scoped Matrix BigOperators
 
-namespace StochasticMatrix
-
 universe u
 
+-- L1 space over S (typically, Fin n)
 abbrev l1Space (S : Type u) := WithLp 1 (S → ℝ)
 
+-- reinterpret a score vector as a point of l1Space
 noncomputable abbrev ofL1 {S : Type u} (x : S → ℝ) : l1Space S :=
   (WithLp.equiv 1 (S → ℝ)).symm x
 
+-- categorical distribution on finite S ↔ StochasticVec x (e.g. a softmax output)
 class StochasticVec {S : Type u} [Fintype S] (x : S → ℝ) : Prop where
   nonneg : ∀ s, 0 ≤ x s
   rowsum : ∑ s, x s = 1
 
+-- Probability simplex on S: {x | x ≥ 0, ∑ x = 1} inside l1Space S.
+-- Geometrically: a 0-simplex is a point, 1-simplex a segment, 2-simplex a triangle, 3-simplex a tetrahedron, … (here dimension is |S| - 1).
 abbrev Simplex (S : Type u) [Fintype S] :=
   {x : l1Space S | StochasticVec (WithLp.ofLp x)}
 
+-- asserts that P is a Markov transition matrix, wherein P i j is the probability of going from current tag/state i to next tag/state j in one step.
 class RowStochastic {S : Type u} [Fintype S] (P : Matrix S S ℝ) : Prop where
   stochastic : ∀ s, StochasticVec (P s)
 
+-- assumes every state can reach every other with positive probability in finite steps
 class StochasticIrreducible {S : Type u} [Fintype S] [DecidableEq S]
     (P : Matrix S S ℝ) [RowStochastic P] : Prop where
   irreducible : ∀ i j, ∃ n : ℕ, 0 < (P ^ n) i j
 
+-- step counts at which a tag/state i can recur with positive probability in sequence-modeling tasks
 noncomputable def return_times {S : Type u} [Fintype S] [DecidableEq S]
     (P : Matrix S S ℝ) [RowStochastic P] (i : S) : Set ℕ :=
   {n : ℕ | 1 ≤ n ∧ 0 < (P ^ n) i i}
 
+-- no fixed period for revisiting a tag/state (useful so long tag sequences are not stuck on even/odd steps, etc.)
 class Aperiodic {S : Type u} [Fintype S] [DecidableEq S]
     (P : Matrix S S ℝ) [RowStochastic P] : Prop where
   aperiodic : ∀ i, FiniteGCDOne (return_times P i)
@@ -53,14 +60,19 @@ instance {S : Type u} [Fintype S] [DecidableEq S]
     FiniteGCDOne (return_times P i) :=
   Aperiodic.aperiodic (P := P) i
 
+-- shared background next-tag floor: every row of P keeps at least mass ε on the same categorical ν
 class DoeblinMinorization {S : Type u} [Fintype S]
     (P : Matrix S S ℝ) [RowStochastic P] : Prop where
   minorize : ∃ (ε : ℝ) (ν : S → ℝ),
     0 < ε ∧ ε < 1 ∧ StochasticVec ν ∧ ∀ i j, P i j ≥ ε * ν j
 
+-- stationary / equilibrium tag distribution: long-run tag frequencies μ unchanged by one more transition
 class Stationary {S : Type u} [Fintype S] (μ : S → ℝ) (P : Matrix S S ℝ) : Prop where
   stationary : μ ᵥ* P = μ
 
+-- no matter how you start to utter, finally you will utter the same kind of stories you like to utter
+-- tag mix → stationary μ
+-- ρ = forget-rate, geometric convergence to μ
 class GeometricMixing {S : Type u} [Fintype S] [DecidableEq S]
     (P : Matrix S S ℝ) [RowStochastic P] : Prop where
   mixing : ∃ (C ρ : ℝ) (μ : S → ℝ),
@@ -68,9 +80,11 @@ class GeometricMixing {S : Type u} [Fintype S] [DecidableEq S]
     ∀ (x : S → ℝ) [StochasticVec x] (n : ℕ),
       (∑ s, |(x ᵥ* (P ^ n) - μ) s|) ≤ C * ρ ^ n
 
+-- broadcast a vector to a matrix row-wisely
 def broadcast {S : Type u} [Fintype S] (ν : S → ℝ) : Matrix S S ℝ :=
   Matrix.of fun _ s' => ν s'
 
+-- the ordinary sample mean of the path, x₀, x₀P, …, x₀Pⁿ
 noncomputable def cesaro_average {S : Type u} [Fintype S] [DecidableEq S]
     (x₀ : S → ℝ) [StochasticVec x₀] (P : Matrix S S ℝ) [RowStochastic P] (n : ℕ) :
     S → ℝ :=
@@ -79,6 +93,7 @@ noncomputable def cesaro_average {S : Type u} [Fintype S] [DecidableEq S]
 noncomputable abbrev uniform_distribution {S : Type u} [Fintype S] : S → ℝ :=
   fun _ => 1 / Fintype.card S
 
+-- result of composing two tag-transition matrices is still a valid transition matrix
 instance smat_mul_smat_is_smat {S : Type u} [Fintype S]
     (P Q : Matrix S S ℝ) [hP : RowStochastic P] [hQ : RowStochastic Q] :
     RowStochastic (P * Q) where
@@ -110,7 +125,7 @@ instance smat_pow_is_smat {S : Type u} [Fintype S] [DecidableEq S]
       · simp [Matrix.one_apply_ne h]
     · simp [Matrix.one_apply]
   | succ n ih =>
-    haveI := ih
+    have := ih
     simpa [pow_succ] using smat_mul_smat_is_smat (P ^ n) P
 
 instance svec_mul_smat_is_svec {S : Type u} [Fintype S]
@@ -131,10 +146,9 @@ instance svec_mul_smat_is_svec {S : Type u} [Fintype S]
           apply sum_congr rfl; intro i _; rw [(hP.stochastic i).rowsum, mul_one]
       _ = 1 := hμ.rowsum
 
+-- uniform_distribution is always stochastic
 instance uniform_distribution_stochastic {S : Type u} [Fintype S] [Nonempty S] :
     StochasticVec (S := S) uniform_distribution where
   nonneg s := by simp [uniform_distribution]
   rowsum := by
     simp [uniform_distribution, Finset.sum_const, Finset.card_univ]
-
-end StochasticMatrix

@@ -1,5 +1,5 @@
 import torch.Tensor
-import Lemma.List.LengthJoin.eq.SumMap_FunLength
+import Lemma.List.LengthFlatten.eq.SumMap_FunLength
 import Lemma.List.ProdCons.eq.Mul_Prod
 import Lemma.Nat.Mul
 import Lemma.Nat.MulMul.eq.Mul_Mul
@@ -19,7 +19,7 @@ private lemma main
   intro head_dimension tail_dimension
   let data := (s.map fun X => X.data.val).flatten
   have h : data.length = ((s.map fun X => X.data.val).map fun X => X.length).sum :=
-    LengthJoin.eq.SumMap_FunLength
+    LengthFlatten.eq.SumMap_FunLength
   have h_eq_prod := ProdCons.eq.Mul_Prod head_dimension tail_dimension
   rw [h, h_eq_prod]
   simp

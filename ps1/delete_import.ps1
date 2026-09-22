@@ -31,7 +31,7 @@ foreach ($entry in $modules) {
         Write-Host "Processing file: $($file.FullName)"
 
         # Find matching import lines
-        $matchingLines = [regex]::Matches($content, "^import $escapedModule`$", [System.Text.RegularExpressions.RegexOptions]::Multiline)
+        $matchingLines = [regex]::Matches($content, "^import $escapedModule\r?`$", [System.Text.RegularExpressions.RegexOptions]::Multiline)
         
         if ($matchingLines.Count -gt 0) {
             Write-Host "The following line(s) will be removed:"
@@ -40,7 +40,7 @@ foreach ($entry in $modules) {
             }
 
             # Remove the import lines and save the file without BOM
-            $newContent = [regex]::Replace($content, "^import $escapedModule`$\r?\n?", '', [System.Text.RegularExpressions.RegexOptions]::Multiline)
+            $newContent = [regex]::Replace($content, "^import $escapedModule\r?`$\r?\n?", '', [System.Text.RegularExpressions.RegexOptions]::Multiline)
             [System.IO.File]::WriteAllText($file.FullName, $newContent, [System.Text.UTF8Encoding]::new($false))
         }
     }

@@ -202,6 +202,100 @@ initialize registerBuiltinAttribute {
     }
 }
 
+structure EventuallyLayer where
+  us : List Level
+  α : Lean.Expr
+  binderName : Name
+  binderType : Lean.Expr
+  binderInfo : BinderInfo
+  f : Lean.Expr
+
+/-- Peel nested `Filter.Eventually` (`∀ᵐ`) wrappers. Layers are outer-first; core is the innermost body. -/
+partial def Lean.Expr.decomposeEventually : Lean.Expr → List EventuallyLayer × Lean.Expr
+  | .app (.app (.app (.const `Filter.Eventually us) α) (.lam binderName binderType body binderInfo)) f =>
+    let ⟨layers, core⟩ := body.decomposeEventually
+    (⟨us, α, binderName, binderType, binderInfo, f⟩ :: layers, core)
+  | e =>
+    ([], e)
+
+def EventuallyLayer.wrap (layer : EventuallyLayer) (body : Lean.Expr) : Lean.Expr :=
+  let p := Lean.Expr.lam layer.binderName layer.binderType body layer.binderInfo
+  (Lean.Expr.const `Filter.Eventually layer.us).mkApp [layer.α, p, layer.f]
+
+def List.wrapEventually (layers : List EventuallyLayer) (body : Lean.Expr) : Lean.Expr :=
+  layers.foldr (fun layer body => layer.wrap body) body
+
+/--
+Under `n` pairs `(xᵢ, hᵢ)` as `x₀,h₀,…,xₙ₋₁,hₙ₋₁`, map bvars from an `n`-deep
+Eventually body (`bvar k` = `xₙ₋₁₋ₖ`) to `bvar (2*k+1)`, and shift outer free bvars by `n`.
+-/
+partial def Lean.Expr.liftAeIffBVars (n : Nat) : Lean.Expr → Lean.Expr
+  | .bvar i => if i < n then .bvar (2 * i + 1) else .bvar (i + n)
+  | .app f a => .app (f.liftAeIffBVars n) (a.liftAeIffBVars n)
+  | .lam n' t b bi => .lam n' (t.liftAeIffBVars n) (b.liftAeIffBVars n) bi
+  | .forallE n' t b bi => .forallE n' (t.liftAeIffBVars n) (b.liftAeIffBVars n) bi
+  | .letE n' t v b nd =>
+      .letE n' (t.liftAeIffBVars n) (v.liftAeIffBVars n) (b.liftAeIffBVars n) nd
+  | .mdata m e => .mdata m (e.liftAeIffBVars n)
+  | .proj N i e => .proj N i (e.liftAeIffBVars n)
+  | e => e
+
+/--
+`hAeIff` proves `wrapEventually layers (Iff …)`.
+Proof of `wrapEventually layers (Imp)` via nested `Filter.Eventually.mono`.
+Uses `Iff` projections at the core, and `incDeBruijnIndex 1 1` when crossing each `(x,hx)` pair
+so remaining Eventually-bvars stay aligned.
+-/
+def List.buildEventuallyMp (layers : List EventuallyLayer) (hAeIff : Lean.Expr)
+    (usIff : List Level) (lhs rhs : Lean.Expr) (reverse : Bool) : Lean.Expr :=
+  let iffCore := (Lean.Expr.const `Iff usIff).mkApp [lhs, rhs]
+  let given := if reverse then rhs else lhs
+  let imply := (if reverse then lhs else rhs).incDeBruijnIndex 1
+  let impCore := Lean.Expr.forallE `h given imply .default
+  let mpIdx : Nat := if reverse then 1 else 0
+  -- `shift` = how many (x,hx) pairs we have crossed; remaining Eventually-relative exprs
+  -- are adjusted with repeated `incDeBruijnIndex 1 1`.
+  let adjust (e : Lean.Expr) (pairs : Nat) : Lean.Expr :=
+    (List.range pairs).foldl (fun e _ => e.incDeBruijnIndex 1 1) e
+  let rec go (rest : List EventuallyLayer) (h : Lean.Expr) (pairs : Nat) : Lean.Expr :=
+    match rest with
+    | [] =>
+      .proj ``Iff mpIdx h
+    | layer :: rest' =>
+      let iffU := adjust iffCore pairs
+      let impU := adjust impCore pairs
+      let pBody := rest'.wrapEventually iffU
+      let qBody := rest'.wrapEventually impU
+      -- also adjust layer α/f/binderType for surrounding pairs
+      let α := adjust layer.α pairs
+      let binderType := adjust layer.binderType pairs
+      let f := adjust layer.f pairs
+      let pPred := Lean.Expr.lam layer.binderName binderType pBody layer.binderInfo
+      let qPred := Lean.Expr.lam layer.binderName binderType qBody layer.binderInfo
+      let inner := go rest' (.bvar 0) (pairs + 1)
+      let hq :=
+        Lean.Expr.lam layer.binderName binderType
+          (Lean.Expr.lam `hx pBody inner .default)
+          layer.binderInfo
+      (Lean.Expr.const `Filter.Eventually.mono layer.us).mkApp [
+        α, pPred, qPred, f, h, hq
+      ]
+  go layers hAeIff 0
+
+
+
+/-- Replace the first module token containing substring `Iff` by substituting that substring with `replacement`. -/
+def List.replaceIffToken (tokens : List String) (replacement : String) : Option (List String) :=
+  let rec loop (acc : List String) : List String → Option (List String)
+    | [] => none
+    | t :: ts =>
+      let parts := t.splitOn "Iff"
+      if parts.length ≥ 2 then
+        some (acc.reverse ++ (parts.head! ++ replacement ++ String.intercalate "Iff" parts.tail!) :: ts)
+      else
+        loop (t :: acc) ts
+  loop [] tokens
+
 def Expr.mp (type value : Expr) (parity : ℕ := 0) (reverse : Bool := false) (and : Bool := false) : ℕ × Expr × Expr :=
   let ⟨binders, type⟩ := type.decompose_forallE
   let deBruijn := (binders.zipParity parity .instImplicit).zipIdx.filterMap fun ⟨⟨bit, _⟩, deBruijn⟩ => if bit then some deBruijn else none
@@ -214,48 +308,71 @@ def Expr.mp (type value : Expr) (parity : ℕ := 0) (reverse : Bool := false) (a
       lowerPart ++ higherPart.tail
     )
     binders
-  let ⟨us, lhs, rhs⟩ := type.decomposeIff
+  let ⟨layers, core⟩ := type.decomposeEventually
+  let ⟨us, lhs, rhs⟩ := core.decomposeIff
   let ⟨given, imply, mp⟩ := if reverse then (rhs, lhs.incDeBruijnIndex 1, `Iff.mpr) else (lhs, rhs.incDeBruijnIndex 1, `Iff.mp)
+  let nLayers := layers.length
   let binders : List (Name × Expr × BinderInfo) := binders.zipIdx.map fun ⟨⟨binderName, binderType, binderInfo⟩, deBruijn⟩ =>
-    (binderName, binderType, (if binderInfo == .default && given.containsBVar deBruijn then .implicit else binderInfo))
+    (binderName, binderType, (if binderInfo == .default && given.containsBVar (deBruijn + nLayers) then .implicit else binderInfo))
   let telescope := fun lam body =>
     binders.foldl
       (fun body ⟨binderName, binderType, binderInfo⟩ =>
         lam binderName binderType body binderInfo
       )
       body
-  let value :=
+  let binderArgs := ((List.range binders.length).map fun i => Expr.bvar i).reverse
+  let hThm :=
     if parity > 0 then
       let ⟨_, intro⟩ := value.decompose_lam []
       let ⟨_, mp, mpr⟩ := intro.decomposeIff
       let mp := if reverse then mpr else mp
       decDeBruijnIndex mp
     else
-      (Expr.const mp us).mkApp [lhs, rhs, value.mkApp ((List.range binders.length).map fun i => .bvar i).reverse]
-  let ⟨h_curr, h_next⟩ := if and then ⟨[given], []⟩ else given.decomposeAnd
-  let h_name := (List.range h_curr.length).map fun i => .str default ("h" ++ i.toSubscriptString)
-  let pNameType := h_name.zip h_curr
-  let ⟨h₀, h₀Type⟩ := pNameType.head!
-  let pNameType := pNameType.tail
-  let size := h_curr.length
-  let deBruijn := (List.range size).drop 1
-  let bvar := (deBruijn.reverse.zip (h_curr.zip h_next)).foldr
-    (fun ⟨deBruijn, h_curr, h_next⟩ bvar =>
-      (Expr.const `And.intro us).mkApp [
-        h_curr.incDeBruijnIndex size,
-        h_next.incDeBruijnIndex size,
-        .bvar deBruijn,
-        bvar
-      ]
+      value.mkApp binderArgs
+  if !layers.isEmpty then
+    if parity > 0 then
+      panic! "mp/mpr Eventually peeling does not support parity > 0 yet"
+    else
+      let givenCore := if reverse then rhs else lhs
+      let implyCore := if reverse then lhs else rhs
+      let impCore := Expr.forallE `h givenCore (implyCore.incDeBruijnIndex 1) .default
+      let typeBody := layers.wrapEventually impCore
+      let valueBody := layers.buildEventuallyMp hThm us lhs rhs reverse
+      (
+        binders.countP (·.snd.snd == .default),
+        (typeBody, valueBody).map (telescope Expr.forallE) (telescope .lam)
+      )
+  else
+    let value :=
+      if parity > 0 then
+        hThm
+      else
+        (Expr.const mp us).mkApp [lhs, rhs, hThm]
+    let ⟨h_curr, h_next⟩ := if and then ⟨[given], []⟩ else given.decomposeAnd
+    let h_name := (List.range h_curr.length).map fun i => .str default ("h" ++ i.toSubscriptString)
+    let pNameType := h_name.zip h_curr
+    let ⟨h₀, h₀Type⟩ := pNameType.head!
+    let pNameType := pNameType.tail
+    let size := h_curr.length
+    let deBruijn := (List.range size).drop 1
+    let bvar := (deBruijn.reverse.zip (h_curr.zip h_next)).foldr
+      (fun ⟨deBruijn, h_curr, h_next⟩ bvar =>
+        (Expr.const `And.intro us).mkApp [
+          h_curr.incDeBruijnIndex size,
+          h_next.incDeBruijnIndex size,
+          .bvar deBruijn,
+          bvar
+        ]
+      )
+      (.bvar 0)
+    let imply := pNameType.foldr (fun ⟨name, type⟩ imply => (Expr.forallE name type imply .default).incDeBruijnIndex 1) imply
+    let value := Expr.app (value.incDeBruijnIndex size) bvar
+    let value := (deBruijn.zip pNameType).foldr (fun ⟨deBruijn, name, type⟩ value => (.lam name (type.incDeBruijnIndex deBruijn) value .default)) value
+    (
+      binders.countP (·.snd.snd == .default),
+      (.forallE h₀ h₀Type imply .default, .lam h₀ h₀Type value .default).map (telescope Expr.forallE) (telescope .lam)
     )
-    (.bvar 0)
-  let imply := pNameType.foldr (fun ⟨name, type⟩ imply => (Expr.forallE name type imply .default).incDeBruijnIndex 1) imply
-  let value := Expr.app (value.incDeBruijnIndex size) bvar
-  let value := (deBruijn.zip pNameType).foldr (fun ⟨deBruijn, name, type⟩ value => (.lam name (type.incDeBruijnIndex deBruijn) value .default)) value
-  (
-    binders.countP (·.snd.snd == .default),
-    (.forallE h₀ h₀Type imply .default, .lam h₀ h₀Type value .default).map (telescope Expr.forallE) (telescope .lam)
-  )
+
 
 def List.mp (list : List String) : List String := list.decomposeOf [] (fun list _ => list.commutateIs "of") 1
 
@@ -325,8 +442,16 @@ initialize registerBuiltinAttribute {
     let levelParams := decl.levelParams
     let parity := stx.getNum
     let ⟨_, type, value⟩ := Expr.mp decl.type (if parity > 0 then decl.proof else .const declName (levelParams.map .param)) parity (and := stx.getIdent == `and)
+    let moduleTokens := (← getEnv).moduleTokens
+    let name :=
+      if moduleTokens.contains "is" then
+        (moduleTokens.mp.foldl Name.str default).lemmaName declName
+      else
+        match moduleTokens.replaceIffToken "Imp_" with
+        | some tokens => (tokens.foldl Name.str default).lemmaName declName
+        | none => (moduleTokens.mp.foldl Name.str default).lemmaName declName
     addAndCompile <| .thmDecl {
-      name := ((← getEnv).moduleTokens.mp.foldl Name.str default).lemmaName declName
+      name := name
       levelParams := levelParams
       type := type
       value := value
@@ -361,8 +486,16 @@ initialize registerBuiltinAttribute {
     let levelParams := decl.levelParams
     let parity := stx.getNum
     let ⟨_, type, value⟩ := Expr.mpr decl.type (if parity > 0 then decl.proof else .const declName (levelParams.map .param)) parity (stx.getIdent == `and)
+    let moduleTokens := (← getEnv).moduleTokens
+    let name :=
+      if moduleTokens.contains "is" then
+        (moduleTokens.mpr.foldl Name.str default).lemmaName declName
+      else
+        match moduleTokens.replaceIffToken "Imp" with
+        | some tokens => (tokens.foldl Name.str default).lemmaName declName
+        | none => (moduleTokens.mpr.foldl Name.str default).lemmaName declName
     addAndCompile <| .thmDecl {
-      name := ((← getEnv).moduleTokens.mpr.foldl Name.str default).lemmaName declName
+      name := name
       levelParams := levelParams
       type := type
       value := value

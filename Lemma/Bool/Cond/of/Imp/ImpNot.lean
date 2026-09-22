@@ -11,13 +11,7 @@ private lemma main
 -- imply
   q := by
 -- proof
-  cases Or_Not p with
-  | inl hp =>
-    -- Case 1: `hp` is a proof of `p`
-    exact h₀ hp
-  | inr hnp =>
-    -- Case 2: `hnp` is a proof of `¬p`
-    exact h₁ hnp
+  grind
 
 
 -- created on 2018-05-07

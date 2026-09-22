@@ -213,12 +213,24 @@ def key_to_path(key: str) -> list[str]:
     return result
 
 
+def _is_type_var_or_instance(group: str) -> bool:
+    """A binder goes before ``-- given`` if it is an instance ``[…]`` or a
+    type variable ``{X : Type*}`` / ``{X : Type _}``."""
+    if group.startswith("["):
+        return True
+    if group.startswith("{") and re.search(r":\s*Type", group):
+        return True
+    return False
+
+
 def split_binders(binders: str) -> tuple[str, str]:
     """Split a binder string into ``(type_vars, hypotheses)``.
 
-    A binder is a *type variable or instance* (goes before ``-- given``) if it
-    is ``{X : Type*}`` / ``{X : Type _}`` or an instance ``[…]``.
-    Everything else is a hypothesis.
+    Only the *leading consecutive prefix* of type variables / instances goes
+    before ``-- given``.  Once a hypothesis binder (e.g. ``(M : ℕ)``) is seen,
+    every subsequent binder — even a later instance like ``[NeZero M]`` that
+    depends on it — is treated as a hypothesis, so the binder order is
+    preserved and the result type-checks.
     """
     # Extract top-level binder groups: {…}, […], (…)
     groups: list[str] = []
@@ -237,12 +249,12 @@ def split_binders(binders: str) -> tuple[str, str]:
 
     type_vars: list[str] = []
     hypotheses: list[str] = []
+    seen_hypothesis = False
     for g in groups:
-        if g.startswith("["):
-            type_vars.append(g)
-        elif g.startswith("{") and re.search(r":\s*Type", g):
+        if not seen_hypothesis and _is_type_var_or_instance(g):
             type_vars.append(g)
         else:
+            seen_hypothesis = True
             hypotheses.append(g)
 
     return " ".join(type_vars), " ".join(hypotheses)

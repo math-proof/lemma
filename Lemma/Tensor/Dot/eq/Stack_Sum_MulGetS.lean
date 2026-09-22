@@ -4,7 +4,7 @@ import Lemma.Tensor.GetDot.eq.Sum_MulGetS
 open Tensor
 
 
-@[main, fin]
+@[main, fin, comm, fin.comm]
 private lemma main
   [Mul α] [AddCommMonoid α]
 -- given
@@ -23,8 +23,8 @@ private lemma main
   apply GetDot.eq.Sum_MulGetS.fin
 
 
-@[main, fin]
-private lemma une
+@[main, fin, comm, fin.comm]
+private lemma vm
   [Mul α] [AddCommMonoid α]
 -- given
   (A : Tensor α [l])
@@ -42,7 +42,7 @@ private lemma une
 /--
 Matrix–vector product as a stack of inner products.
 -/
-@[main, fin]
+@[main, fin, comm, fin.comm]
 private lemma mv
   [Mul α] [AddCommMonoid α]
 -- given

@@ -108,5 +108,5 @@ private lemma main
     _ = p3' (a, (b, c)) / pz c := by rw [hcan]
 
 
--- created on 2020-12-11
+-- created on 2023-03-27
 -- updated on 2026-09-20

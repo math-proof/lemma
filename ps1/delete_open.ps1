@@ -3,7 +3,7 @@ $packages = Get-ChildItem -Path "Lemma" -Directory | Select-Object -ExpandProper
 # Loop over each package
 foreach ($package in $packages) {
     $escapedPackage = [regex]::Escape($package)
-    $patternOpen = "open ([\w]+ )*$escapedPackage\b(?! [(])"
+    $patternOpen = "open(?! scoped\b) ([\w]+ )*$escapedPackage\b(?! [(])"
     $importPattern = "import Lemma\.$escapedPackage\."
 
     # Find files with open statement but without import
@@ -22,22 +22,19 @@ foreach ($package in $packages) {
         $newContent = @()
         # Modify file content
         $newContent = foreach ($line in $content) {
-            if ($line -match '^open ') {
-                # Keep `open scoped <Package>` intact, e.g. `open scoped Matrix`
-                if ($line -match "^open scoped $escapedPackage\b") {
-                    $line
-                } else {
-                    # Remove package name
-                    $newLine = $line -replace "\b$escapedPackage\b", ''
-                    # Collapse spaces
-                    $newLine = $newLine -replace ' +', ' '
-                    # Trim trailing space
-                    $newLine = $newLine.TrimEnd()
-                    # Skip empty 'open' lines
-                    if ($newLine -eq 'open') { continue }
+            if ($line -match $patternOpen) {
+                # Remove package name
+                $newLine = $line -replace "\b$escapedPackage\b", ''
+                # Collapse spaces
+                $newLine = $newLine -replace ' +', ' '
+                # Trim trailing space
+                $newLine = $newLine.TrimEnd()
+                # Skip empty 'open' lines
+                if ($newLine -eq 'open') { continue }
+                if ($newLine -ne $line) {
                     Write-Host "in $($file.FullName), removing '$package' from 'open' statements: $line"
-                    $newLine
                 }
+                $newLine
             } else {
                 $line
             }

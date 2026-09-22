@@ -175,18 +175,34 @@ def exactCommName (env : Environment) (tokens : List String) (n : Nat) : CoreM (
   let path := (tokens.comm parity).foldl Name.str default
   return path.lemmaName info.name
 
+/-- Replicate the `mp` attribute handler's naming: use `replaceIffToken "Imp_"`
+    when the tokens don't contain `is` (matching `Basic.lean` lines 442-448). -/
+def mpLemmaName (tokens : List String) : String :=
+  if tokens.contains "is" then moduleName (List.mp tokens)
+  else match tokens.replaceIffToken "Imp_" with
+       | some ts => moduleName ts
+       | none => moduleName (List.mp tokens)
+
+/-- Replicate the `mpr` attribute handler's naming: use `replaceIffToken "Imp"`
+    when the tokens don't contain `is` (matching `Basic.lean` lines 487-492). -/
+def mprLemmaName (tokens : List String) : String :=
+  if tokens.contains "is" then moduleName (List.mpr tokens)
+  else match tokens.replaceIffToken "Imp" with
+       | some ts => moduleName ts
+       | none => moduleName (List.mpr tokens)
+
 def attrLemmaName (tokens : List String) (attr : String) : String :=
   let parts := attr.trimAscii.toString.splitOn " " |>.filter (· != "")
   match parts with
   | ["main"] => moduleName tokens
   | ["comm"] => moduleName (List.comm tokens (ofParityFromTokens tokens))
   | ["comm", n] => moduleName (commRunSh tokens n.toNat!)
-  | ["mp"] => moduleName (List.mp tokens)
-  | ["mp", "and"] => moduleName (List.mp tokens)
-  | ["mp", _] => moduleName (List.mp tokens)
-  | ["mpr"] => moduleName (List.mpr tokens)
-  | ["mpr", "and"] => moduleName (List.mpr tokens)
-  | ["mpr", _] => moduleName (List.mpr tokens)
+  | ["mp"] => mpLemmaName tokens
+  | ["mp", "and"] => mpLemmaName tokens
+  | ["mp", _] => mpLemmaName tokens
+  | ["mpr"] => mprLemmaName tokens
+  | ["mpr", "and"] => mprLemmaName tokens
+  | ["mpr", _] => mprLemmaName tokens
   | ["mp.comm"] => moduleName (mpCommLemmaTokens tokens (ofParityFromTokens tokens))
   | ["mp.comm", "and"] => moduleName (mpCommLemmaTokens tokens (ofParityFromTokens tokens))
   | ["mp.comm", _] => moduleName (mpCommLemmaTokens tokens (parityBits parts[1]!.toNat!))
