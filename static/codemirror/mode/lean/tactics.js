@@ -61,6 +61,7 @@ export const tactics = [
     'nlinarith',
     'norm_cast',
     'norm_num',
+    'nth_rewrite',
     'nth_rw',
     'obtain',
     'omega',

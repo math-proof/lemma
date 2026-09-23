@@ -27,7 +27,7 @@ universe u
 variable {S : Type u} [Fintype S]
 
 -- everything in the Simplex space is stochastic
-instance (x : ↑(Simplex S)) : StochasticVec (WithLp.ofLp (x : l1Space S)) :=
+instance (x : Simplex S) : StochasticVec (WithLp.ofLp (x : l1Space S)) :=
   x.property
 
 omit [Fintype S] in
@@ -59,7 +59,7 @@ instance : IsClosed (Simplex S) := by
   · intro ⟨hnonneg, hsum⟩
     exact ⟨hnonneg, hsum⟩
 
-instance : CompleteSpace (↑(Simplex S) : Type _) :=
+instance : CompleteSpace (Simplex S : Type _) :=
   IsClosed.completeSpace_coe (hs := inferInstance)
 
 instance : ProperSpace (l1Space S) := by
@@ -68,7 +68,7 @@ instance : ProperSpace (l1Space S) := by
 -- Markov operator on the simplex
 
 noncomputable def smat_as_operator (P : Matrix S S ℝ) [RowStochastic P] :
-    ↑(Simplex S) → ↑(Simplex S) :=
+    Simplex S → Simplex S :=
   fun μ =>
     ⟨WithLp.toLp 1 (WithLp.ofLp (μ : l1Space S) ᵥ* P), by
       have : StochasticVec (WithLp.ofLp (μ : l1Space S) ᵥ* P) :=
@@ -77,6 +77,6 @@ noncomputable def smat_as_operator (P : Matrix S S ℝ) [RowStochastic P] :
 
 -- Simplex nonempty (uniform distribution)
 
-instance [Nonempty S] : Nonempty (↑(Simplex S)) :=
+instance [Nonempty S] : Nonempty (Simplex S) :=
   ⟨ofL1 (uniform_distribution (S := S)), by
     simpa [ofL1] using (uniform_distribution_stochastic (S := S))⟩

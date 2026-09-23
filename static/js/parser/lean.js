@@ -2869,6 +2869,13 @@ class LeanBracket extends LeanPairedGroup {
     push_token(word) {
         const level = this.level;
         const newTok = new LeanToken(word, this.indent, level);
+        const pow = this.parent;
+        if (pow instanceof LeanPow && pow.rhs === this) {
+            const grandparent = pow.parent;
+            const wrapper = new LeanArgsSpaceSeparated([pow, newTok], this.indent, level);
+            grandparent.replace(pow, wrapper);
+            return newTok;
+        }
         this.parent.replace(this, new LeanArgsSpaceSeparated([this, newTok], this.indent, level));
         return newTok;
     }
@@ -4114,7 +4121,7 @@ export class LeanMul extends LeanArithmetic {
                 .map((ch) => (map[ch] !== undefined ? map[ch] : ch))
                 .join('');
             return this.isLeftSubscript
-                ? `_${inner}{\\color{red}*}`
+                ? `\\;{}_${inner}\\!{\\color{red}*}`
                 : `{\\color{red}*}_${inner}`;
         }
         const lhs = this.lhs;

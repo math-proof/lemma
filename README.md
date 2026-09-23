@@ -46,19 +46,6 @@ lake build
 bash sh/run.sh
 ```
 
-### Node.js lemma server
-
-`server/app.mjs` serves `http://localhost/lean/?module=…` using **Node + EJS** and **`server/lean/compiler/index.mjs`** (JS parser + `render2vue.mjs`; falls back to regex stub on error). See **`server/lean/compiler/README.md`**.
-
-```bash
-npm install
-npm start
-```
-
-Example: `http://localhost/lean/?module=Tensor.DotSoftmaxAdd_Mul_Infty.eq.Stack_DotSoftmax`
-
-Details: [`server/README.md`](server/README.md).
-
 # install
 ## lean
 ### build from binary
@@ -117,14 +104,6 @@ in windows (https://github.com/PowerShell/PowerShell/releases/download/v7.5.3/Po
 elan default leanprover/lean4:v$versionNumber
 # install a particular version
 elan toolchain install leanprover/lean4:$versionNumber
-```
-## Update mathlib4 using commit-id
-use the following script to automatically and incrementally update the dependency git projects required by mathlib4
-```sh
-bash sh/update.sh
-```
-```ps1
-. ps1/update.ps1
 ```
 
 # trouble-shooting for VSCode
@@ -193,78 +172,9 @@ https://www.leanprover.cn/projects/lean4web/
 https://github.com/hhu-adam/lean4web-tools
 https://github.com/leanprover-community/lean4web
 
-# Lemma Naming Convention
-Rule of thumb: implyCondition.of.givenCondition.givenCondition...givenCondition  
-The givenConditions are listed using DeBruijn, in the reverse order as indexed in lean code, unless otherwise stated, e.g.: constructor order wherein givenConditions are listed according to the parameter order of the constructor indicated by implyCondition.  
-if implyCondition is a conjunction, it is written as:
-implyCondition.implyCondition...implyCondition.of.givenCondition.givenCondition...givenCondition  
-
-## CamelCase
-CamelCase is used for unary function, eg:  
-LogSumExp denotes the expression: (exp x).sum.log
-generally, if F is a unary function, and X is its argument, then
-FX denote the expression: F X
-
-## Snake_Case
-Snake_Case is used for binary function, eg:  
-Eq_Log  
-generally, if F is a binary function, and Y is its second argument, then
-F_Y denote the expression: F _ Y
-wherein:
-- `_` (placeholder / hole) denotes the term to be inferred by Lean, i.e. any type for X
-- Y is the given type for the second argument of F
-
-## Apostrophe
-Apostrophe is used to separate consecutive digits, eg: 
-Div1'2 denotes: 1 / 2
-Apostrophe is introduced to resolve ambiguity, otherwise 1 / 2 will have to be written as:  
-DivOneTwo, etc.
-
-## Infix Operators
-small-letter binary infix operators are short name for Capital-letter operator name, eg:
-| infix operators  | prefix operators | Lean class | sympy equivalent |
-| :--: |  :--: |  :--: |   :--: | 
-| X.eq.Y | = | Eq |  Equal | 
-| X.ne.Y | ≠  | Ne |  Unequal | 
-| X.gt.Y | > | Gt | Greater |
-| X.lt.Y | < | Le | Less |
-| X.ge.Y | ≥ | Ge | GreaterThan |
-| X.le.Y | ≤ | Le | LessThan|
-| X.in.Y | ∈ | Membership |  Contains | 
-| X.is.Y | ↔ | Iff |  Equivalent | 
-| X.as.Y | ≃ | SEq |  -- | 
-| X.ae.Y | =ᵐ | MEq | Equal |
-| X.ou.Y | ∨ | Or |  Or | 
-| X.et.Y | ∧ | And |  And | 
-| X.at.Y | ≈ | XEq |  -- | 
-| X.to.Y | → | ·.stdPart = · |  -- | 
-| X.dvd.Y | \| | Dvd |  -- | 
-| X.sub.Y | ⊆ | Subset | Subset | 
-| X.sup.Y | ⊇ | Superset | Supset | 
-| X.ll.Y | ≪ | AbsolutelyContinuous |  -- | 
-| X.gg.Y | ≫ | CategoryStruct.comp |  -- | 
-
-## Plural S
-The English Plural Letter S is used to denote double occurrence of types:
-- SEqSumSGet is short for : SumGet.as.SumGet
-
-## Identity
-The Identity is a simplified version of an Equality/Equivalence of the same type:
-- Sum is short for : EqSumS (which as rule of `Plural S`, is defined as Sum.eq.Sum)
-- And is abbreviated from : IffAndS (which as rule of `Plural S`, is defined as And.is.And)
-
-## Variadic Functions
-List, Finset are considered variadic functions, eg:
-- In_ListNeg denotes: _ ∈ [Neg]
-- In_Finset_AddMulS denotes: _ ∈ {_, AddMul, AddMul}
-
 # LLM-Assisted Proving
 
 Guidelines and prompts for using LLMs to write and refactor Lean 4 proofs in this repository.
-
-### Naming and file layout
-- Create new lemmas according to the [Lemma Naming Convention](#lemma-naming-convention) above.
-- Mirror the directory path in the module name (e.g. `Lemma/Tensor/Foo/of/Bar.lean` → `Tensor.Foo.of.Bar`).
 
 ### Proof style
 - Attribute-generated lemmas
@@ -275,13 +185,14 @@ Guidelines and prompts for using LLMs to write and refactor Lean 4 proofs in thi
   - Use `obtain` instead of `rcases`, `if … then … else …` instead of `by_cases` (if it is not followed by `<;>`), `have` instead of `haveI`, and `let` instead of `letI`.
   - inline `have` without introducing `show` if it is referenced only once, e.g.: prefer `apply` instead of `exact`, perhaps by creating some holes.
   - use `calc` instead of `by calc`, start `calc` with `_`
+  - avoid `calc` within [] block of `rw`/`erw`/`simp`, or within () as arguments;
   - no multi-line tactics inside parentheses, the tactic within compact type-ascribed `by` term (by tactic : Type) should be one-liner with no `;`
-  - avoid `calc` within [] block of `rw`/`erw`/`simp`:
   - follow `show` with `from`/`by` instead of `from by`
   - `by exact expr` should be simplifed to `expr`
   - use `grind`/`aesop` as much as possible
   - in `apply`/`exact`, use `_` as arguments as much as possible, prefer `_` instead of `?_`/`?identifier`
 - lemma layout
+  - codes must be strictly 2-indented
   - After a bullet tactic (`·`), put the next statement on a new line when that branch contains more than one step.
   - before the `given` section, list in order:
     - line(s) of standalone instances (instImplicit)
@@ -289,8 +200,15 @@ Guidelines and prompts for using LLMs to write and refactor Lean 4 proofs in thi
     - line(s) of bare implicit binders
   - default arguments should be put within the `given` section: propositions come first, expressions come next, unless otherwise specified
   - conclusion must be put within the `imply` section
-  - proof body must be put within the `proof` section
+  - proof body must be put within the `proof` section, within proof:
+    - binary operators below should not be indented by new lines:
+      - `:`, e.g., (ident : Type) 
+      - arithmetic operators: `+` `-` `*` `/` 
+      - relational operators: `=` `≠` `>` `<` `≥` `≤` 
   - date created must be today, if date updated is the same as date created, it should be omitted.
+- lemma path 
+  - it conveys the lemma semantic per se, thus facilitating search
+  - it must be consistent with what is suggested by lemmaPath.mjs
 
 ### Formatting
 Run `python py/format.py <leanFile>` if necessary. It will:
