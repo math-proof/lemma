@@ -233,3 +233,4 @@ from . import Bool
 from . import Imageset_And
 from . import Delta0
 from . import In_Ioi
+from . import SInfImage

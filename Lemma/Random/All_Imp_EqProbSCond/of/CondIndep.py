@@ -2,7 +2,7 @@ from util import *
 
 
 @apply
-def apply(ne, eq):
+def apply(eq, ne):
     [*conds] = ne.of(Unequal[Pr[And], 0])
     lhs, x = eq.of(Equal)
     if lhs.is_Probability:
@@ -27,7 +27,7 @@ def apply(ne, eq):
 @prove(provable=False)
 def prove(Eq):
     x, y, z = Symbol(real=True, random=True)
-    Eq << apply(Unequal(Pr(y, z), 0), Equal(x | y, x))
+    Eq << apply(Equal(x | y, x), Unequal(Pr(y, z), 0))
 
     
     

@@ -45,3 +45,4 @@ if __name__ == '__main__':
     run()
 # created on 2023-04-01
 # updated on 2023-04-05
+from . import infty

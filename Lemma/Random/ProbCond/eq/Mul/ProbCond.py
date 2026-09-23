@@ -18,7 +18,7 @@ def prove(Eq):
     Eq << apply(Pr(y & x | z))
 
 
-    Eq << Eq[0].this.rhs.args[1].apply(Random.ProbCond.eq.Div.ProbCond)
+    Eq << Eq[0].this.rhs.args[1].apply(Random.ProbCond_Joint.eq.DivProbSCond)
 
 
 

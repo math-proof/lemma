@@ -13,7 +13,7 @@ def apply(self, var=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Real, Tensor
+    from Lemma import Real, Set
 
     n = Symbol(integer=True, positive=True)
     x = Symbol(real=True, shape=(n,))
@@ -22,7 +22,7 @@ def prove(Eq):
     i = Eq[0].variable
     Eq << Real.All_Ge_Minima.apply(Minima[i:n](x[i]))
 
-    Eq << Eq[0].this.expr.rhs.apply(Tensor.ReducedMin.eq.Minima, var=i)
+    Eq << Eq[0].this.expr.rhs.apply(Set.SInfImage.eq.Inf, var=i)
 
 
 

@@ -37,7 +37,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Less & Less).args[:2].apply(Nat.Lt.Lt.given.Lt_Min)
 
-    Eq << Bool.Any.of.Any_UFn.apply(Eq[-1], Min(δ_0, δ_1), δ)
+    Eq << Bool.Any_UFn.of.Any_UFnUFn.apply(Eq[-1], Min(δ_0, δ_1), δ)
 
     Eq << Eq[-1].this.find(Greater).apply(Int.EqAbsSub.of.Gt)
 

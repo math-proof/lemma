@@ -19,7 +19,7 @@ def prove(Eq):
 
 
     Eq << ~Eq[-1]
-    Eq << Real.Any.Le.of.LeMinima.apply(Eq[-1])
+    Eq << Real.Any_Le.of.LeMin.apply(Eq[-1])
     Eq << ~Eq[-1]
 
 

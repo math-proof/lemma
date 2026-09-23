@@ -23,15 +23,15 @@ def prove(Eq):
 
     Eq << Random.Indep.of.Indep_Joint.apply(Eq[0], 0)
 
-    Eq << Random.Eq.Conditioned.Infty.of.Eq_Conditioned.independence_assumption.apply(Eq[-1])
+    Eq << Random.IndepGetSlice.of.IndepGet.infty.apply(Eq[-1])
 
     Eq << Random.Indep.of.Indep_Joint.apply(Eq[0], 1)
 
-    Eq << Random.Eq.Conditioned.Infty.of.Eq_Conditioned.independence_assumption.apply(Eq[-1])
+    Eq << Random.IndepGetSlice.of.IndepGet.infty.apply(Eq[-1])
 
     Eq << Rat.Ne_0.of.Div1.gt.Zero.apply(Eq[0])
 
-    Eq << Random.EqConditioned.of.Ne_0.Eq_Conditioned.Eq_Conditioned.joint.apply(Eq[-1], Eq[-2], Eq[-4])
+    Eq << Random.Indep_Joint.of.CondIndep.Indep.apply(Eq[-1], Eq[-2], Eq[-4])
 
     Eq << Eq[-2].subs(t, t + 1)
 
@@ -39,7 +39,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Equal[3]).apply(Tensor.Eq.Is.GetSlice.Get)
 
-    Eq << Random.ProbCond.of.Indep.Ne_0.apply(Eq[-1], Eq[-4])
+    Eq << Random.All_Imp_EqProbSCond.of.CondIndep.apply(Eq[-1], Eq[-4])
 
     Eq << Eq[-1].this.find(And).args[::2].apply(Tensor.Stack.UFn.Is.Stack)
 

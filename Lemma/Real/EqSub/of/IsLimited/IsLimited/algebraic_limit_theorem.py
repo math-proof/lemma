@@ -35,7 +35,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.expr.apply(Int.Lt.Abs.Sub.of.Lt.Lt)
 
-    Eq << Bool.Any.of.Any_UFn.apply(Eq[-1], Max(N0, N1), N)
+    Eq << Bool.Any_UFn.of.Any_UFnUFn.apply(Eq[-1], Max(N0, N1), N)
 
     Eq << Real.Eq.of.Any_All.limit_definition.apply(Eq[-1])
 

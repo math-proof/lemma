@@ -9,14 +9,14 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Bool, Real, Nat, Tensor
+    from Lemma import Set, Bool, Real, Nat
 
     n = Symbol(integer=True, positive=True)
     x = Symbol(real=True, shape=(oo,))
     c = Symbol(real=True)
     Eq << apply(Element(c, x[:n].cup_finset()))
 
-    Eq << Eq[1].this.rhs.apply(Tensor.ReducedMin.eq.Minima)
+    Eq << Eq[1].this.rhs.apply(Set.SInfImage.eq.Inf)
 
     Eq << Real.All_Ge_Minima.apply(Eq[-1].rhs)
 

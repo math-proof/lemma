@@ -9,7 +9,7 @@ def apply(sup):
 
 @prove
 def prove(Eq):
-    from Lemma import Bool, Real, Tensor
+    from Lemma import Bool, Real, Set
 
     x = Symbol(real=True)
     S = Symbol(etype=dtype.real)
@@ -18,7 +18,7 @@ def prove(Eq):
 
     Eq << Eq[0].this.lhs.apply(Real.Sup.eq.Min)
 
-    Eq << Eq[-1].this.lhs.apply(Tensor.ReducedMin.eq.Minima)
+    Eq << Eq[-1].this.lhs.apply(Set.SInfImage.eq.Inf)
 
     Eq << Real.GeMinima.given.All.Ge.apply(Eq[-1])
 

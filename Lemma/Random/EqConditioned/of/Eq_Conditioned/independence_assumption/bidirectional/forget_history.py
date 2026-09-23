@@ -20,7 +20,7 @@ def prove(Eq):
     Eq << apply(
         Equal(r[t] | s[:t], r[t])) # history-irrelevant conditional independence assumption
 
-    Eq << Random.Eq.Conditioned.Infty.of.Eq_Conditioned.independence_assumption.apply(Eq[0])
+    Eq << Random.IndepGetSlice.of.IndepGet.infty.apply(Eq[0])
 
     Eq << Rat.Ne_0.of.Div1.gt.Zero.apply(Eq[0])
 
@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Equal).apply(Tensor.Eq.Is.GetSlice.Get)
 
-    Eq << Random.ProbCond.of.Indep.Ne_0.apply(Eq[-1], Eq[2])
+    Eq << Random.All_Imp_EqProbSCond.of.CondIndep.apply(Eq[-1], Eq[2])
 
     Eq << Eq[-1].this.find(Equal & Equal).apply(Tensor.Stack.UFn.Is.Stack)
 

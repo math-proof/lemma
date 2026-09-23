@@ -28,7 +28,7 @@ def prove(Eq):
 
     a, b = Eq[-1].variables
     c = Symbol(real=True)
-    Eq << Bool.Any.of.Any_UFn.apply(Eq[-1], a + b, c)
+    Eq << Bool.Any_UFn.of.Any_UFnUFn.apply(Eq[-1], a + b, c)
 
 
 

@@ -21,7 +21,7 @@ def prove(Eq):
     Eq << apply(
         Equal(r[t] | s[:t], r[t])) # history-irrelevant conditional independence assumption
 
-    Eq << Random.Eq.Conditioned.Infty.of.Eq_Conditioned.independence_assumption.apply(Eq[0])
+    Eq << Random.IndepGetSlice.of.IndepGet.infty.apply(Eq[0])
 
     Eq << Eq[-1].subs(t, t + 1)
 

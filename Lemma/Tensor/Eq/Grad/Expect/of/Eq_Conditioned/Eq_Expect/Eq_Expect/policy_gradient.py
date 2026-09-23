@@ -97,7 +97,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Sum[Expectation]).apply(Random.Sum_Expect.eq.Expect_Sum)
 
-    Eq << Eq[-1].this.lhs.find(Expectation).apply(Random.Expect.eq.Dot)
+    Eq << Eq[-1].this.lhs.find(Expectation).apply(Random.Expect_Dot.eq.Dot_Expect)
 
     Eq << Eq[-1].this.lhs.apply(Real.Grad.Dot.eq.Dot.Grad)
 

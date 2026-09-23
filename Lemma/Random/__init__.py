@@ -66,3 +66,8 @@ from . import All_EqProbCondJoint
 from . import Mul_Expect
 from . import Stack_Expect
 from . import Sum_Expect
+from . import All_Imp_EqProbSCond
+from . import Indep_Joint
+from . import Expect_Dot
+from . import ProbCond_Joint
+from . import Expect_CondDot

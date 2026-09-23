@@ -9,7 +9,7 @@ def apply(le):
 
 @prove
 def prove(Eq):
-    from Lemma import Bool, Nat, Real, Tensor
+    from Lemma import Bool, Nat, Real, Set
 
     m, M, x = Symbol(real=True)
     f = Function(real=True)
@@ -17,9 +17,9 @@ def prove(Eq):
 
     Eq << Eq[0].this.lhs.apply(Real.Sup.eq.Min)
 
-    Eq << Eq[-1].this.lhs.apply(Tensor.ReducedMin.eq.Minima)
+    Eq << Eq[-1].this.lhs.apply(Set.SInfImage.eq.Inf)
 
-    Eq << Real.Any.Le.of.LeMinima.apply(Eq[-1])
+    Eq << Real.Any_Le.of.LeMin.apply(Eq[-1])
 
     Eq << Bool.Any_And.of.AnySetOf_AnySetOf.apply(Eq[-1])
 

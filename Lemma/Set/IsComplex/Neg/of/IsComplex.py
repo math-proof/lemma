@@ -22,7 +22,7 @@ def prove(Eq):
     a = Eq[-1].variable
 
     c = Symbol(complex=True)
-    Eq << Bool.Any.of.Any_UFn.apply(Eq[-1], -a, c)
+    Eq << Bool.Any_UFn.of.Any_UFnUFn.apply(Eq[-1], -a, c)
 
 
 if __name__ == '__main__':

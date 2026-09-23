@@ -67,7 +67,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Expectation[~Sum]).apply(Tensor.Sum.eq.Dot)
 
-    Eq << Eq[-1].this.find(Expectation[MatMul]).apply(Random.Expect.eq.Dot)
+    Eq << Eq[-1].this.find(Expectation[MatMul]).apply(Random.Expect_Dot.eq.Dot_Expect)
 
     Eq << Eq[-1].this.find(Expectation[Sum]).apply(Random.Expect_Sum.eq.Sum_Expect)
 
@@ -89,7 +89,7 @@ def prove(Eq):
 
     Eq << Eq[-2].subs(Eq[-1])
 
-    Eq << Eq[-1].this.find(Expectation[MatMul]).apply(Random.Expect.eq.Dot)
+    Eq << Eq[-1].this.find(Expectation[MatMul]).apply(Random.Expect_Dot.eq.Dot_Expect)
 
     Eq << Eq[-1].this.find(Expectation[Expectation]).apply(Random.Expect.law_of_total_expectation)
 

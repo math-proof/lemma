@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq << Random.Indep.of.Indep_Joint.apply(Eq[0])
 
-    Eq << Random.Eq.Conditioned.Infty.of.Eq_Conditioned.independence_assumption.apply(Eq[-1])
+    Eq << Random.IndepGetSlice.of.IndepGet.infty.apply(Eq[-1])
 
     Eq << Eq[-1].subs(t, t + 1)
 
@@ -34,7 +34,7 @@ def prove(Eq):
 
     Eq << Random.Indep.of.Indep_Joint.apply(Eq[0], 1)
 
-    Eq << Random.Eq.Conditioned.Infty.of.Eq_Conditioned.independence_assumption.apply(Eq[-1])
+    Eq << Random.IndepGetSlice.of.IndepGet.infty.apply(Eq[-1])
 
     Eq << Eq[-1].subs(t, t + 1)
 
@@ -52,7 +52,7 @@ def prove(Eq):
 
     Eq << Random.All_NeProb_0.of.All_Ne0ProbJoint.apply(Eq[-1], slice(2, None))
 
-    Eq << Random.EqConditioned.of.Ne_0.Eq_Conditioned.Eq_Conditioned.joint.apply(Eq[-1], Eq.eq_at, Eq.eq_st)
+    Eq << Random.Indep_Joint.of.CondIndep.Indep.apply(Eq[-1], Eq.eq_at, Eq.eq_st)
 
 
 

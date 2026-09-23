@@ -41,7 +41,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Expectation[Conditioned]).apply(Random.Expect_Mul.eq.Mul_Expect)
 
-    Eq << Eq[-1].this.find(Expectation[Conditioned[MatMul]]).apply(Random.Expect.eq.Dot)
+    Eq << Eq[-1].this.find(Expectation[Conditioned[MatMul]]).apply(Random.Expect_Dot.eq.Dot_Expect)
 
     Eq << Random.EqConditioned.of.Eq_Conditioned.independence_assumption.bidirectional.forget_histories.apply(Eq[0])#.subs(t, t + 1)
 

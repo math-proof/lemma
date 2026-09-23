@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq[0])
 
-    Eq << Eq[-1].this.lhs.args[1].apply(Random.ProbCond.eq.Div.ProbCond, pivot=slice(1, None))
+    Eq << Eq[-1].this.lhs.args[1].apply(Random.ProbCond_Joint.eq.DivProbSCond, pivot=slice(1, None))
 
 
     Eq << Eq[-1].this.find(Equal & Equal).apply(Tensor.Stack.UFn.Is.Stack)

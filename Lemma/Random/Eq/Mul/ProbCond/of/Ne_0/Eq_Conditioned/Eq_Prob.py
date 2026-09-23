@@ -36,7 +36,7 @@ def prove(Eq):
 
     Eq << Random.All_EqProbCondJoint.apply(Eq.ne_zero_xy, y_tilde_overline, y)
 
-    Eq << Random.ProbCond.of.Indep.Ne_0.apply(Eq.ne_zero_xy, Eq[1])
+    Eq << Random.All_Imp_EqProbSCond.of.CondIndep.apply(Eq.ne_zero_xy, Eq[1])
 
     Eq << Eq[-3].reversed
 

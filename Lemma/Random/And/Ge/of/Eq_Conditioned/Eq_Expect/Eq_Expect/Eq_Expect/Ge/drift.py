@@ -117,7 +117,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.rhs.apply(Random.Expect.law_of_total_expectation), Eq[-1].this.rhs.apply(Random.Expect.law_of_total_expectation)
 
-    Eq <<= Eq[-2].this.rhs.apply(Random.Expect.eq.Dot), Eq[-1].this.rhs.apply(Random.Expect.eq.Dot)
+    Eq <<= Eq[-2].this.rhs.apply(Random.Expect_Dot.eq.Dot_Expect), Eq[-1].this.rhs.apply(Random.Expect_Dot.eq.Dot_Expect)
 
     Eq << Eq.ge_VF.subs(t, 0)
 

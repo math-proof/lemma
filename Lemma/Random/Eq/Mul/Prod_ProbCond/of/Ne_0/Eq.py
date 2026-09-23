@@ -34,7 +34,7 @@ def prove(Eq):
 
     Eq << Random.Ne_0.of.Ne_0.joint_slice.apply(Eq[1], [None, slice(0, t)])
 
-    Eq.yt_given_y_historic = Random.ProbCond.of.Indep.Ne_0.apply(Eq[0], Eq[-1])
+    Eq.yt_given_y_historic = Random.All_Imp_EqProbSCond.of.CondIndep.apply(Eq[0], Eq[-1])
 
     Eq.yt_given_x_nonzero = Random.All_Imp_Ne0ProbCond.apply(Eq[-1], x)
 

@@ -96,7 +96,7 @@ def prove(Eq):
 
     Eq << Eq.ne_zero.this.find(Equal[3]).apply(Tensor.Eq.Is.GetSlice.Get)
 
-    Eq << Random.ProbCond.of.Indep.Ne_0.apply(Eq[1], Eq[-1])
+    Eq << Random.All_Imp_EqProbSCond.of.CondIndep.apply(Eq[1], Eq[-1])
 
     Eq << Eq[-3].subs(Eq[-1])
 

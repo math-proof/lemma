@@ -11,13 +11,13 @@ def apply(self, var=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Real, Tensor
+    from Lemma import Real, Tensor, Set
 
     n = Symbol(integer=True, positive=True)
     x = Symbol(real=True, shape=(oo,))
     Eq << apply(ReducedMin(x[:n]))
 
-    Eq << Eq[-1].this.lhs.apply(Tensor.ReducedMin.eq.Minima)
+    Eq << Eq[-1].this.lhs.apply(Set.SInfImage.eq.Inf)
 
     Eq << Eq[-1].this.find(ReducedMax).apply(Tensor.ReducedMax.eq.Maxima)
 

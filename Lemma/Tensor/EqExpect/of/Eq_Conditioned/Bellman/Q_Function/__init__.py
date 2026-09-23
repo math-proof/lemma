@@ -72,7 +72,7 @@ def prove(Eq):
 
     Eq << Random.EqConditioned.of.Eq_Conditioned.joint.independence_assumption.apply(Eq[0])
 
-    Eq << Random.ProbCond.of.Indep.Ne_0.apply(*Eq[-2:])
+    Eq << Random.All_Imp_EqProbSCond.of.CondIndep.apply(*Eq[-2:])
 
     Eq << Eq.eq_expect.subs(Eq[-1])
 

@@ -27,9 +27,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Equal).apply(Tensor.Eq.Is.GetSlice.Get)
 
-    Eq << Random.Eq.Conditioned.Infty.of.Eq_Conditioned.independence_assumption.apply(Eq[0])
+    Eq << Random.IndepGetSlice.of.IndepGet.infty.apply(Eq[0])
 
-    Eq << Random.ProbCond.of.Indep.Ne_0.apply(Eq[-2], Eq[-1])
+    Eq << Random.All_Imp_EqProbSCond.of.CondIndep.apply(Eq[-2], Eq[-1])
 
     Eq << Eq[-1].this.find(And).apply(Tensor.Stack.UFn.Is.Stack)
 
