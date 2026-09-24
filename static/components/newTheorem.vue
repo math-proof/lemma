@@ -1,7 +1,7 @@
 <template>
 	module :
 	<newInput :ref="$refs.newInput" :module=module></newInput>
-	<render :ref="$refs.render" :imports=imports :open=open :lemma=lemma :error=error :module=module :date=date></render>
+	<render :ref="$refs.render" :imports=imports :open=open :lemma=lemma :meta=meta :module=module :date=date></render>
 </template>
 
 <script setup>
@@ -11,7 +11,7 @@ import newInput from "./newInput.vue";
 
 console.log('import newTheorem.vue');
 
-const props = defineProps(['name', 'imports', 'open', 'lemma', 'error', 'date']);
+const props = defineProps(['name', 'imports', 'open', 'lemma', 'meta', 'date']);
 
 const self = new Vue({
 	props,

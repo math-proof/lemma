@@ -1,4 +1,3 @@
-import Lemma.Bool.SEq.is.Eq
 import Lemma.Bool.SEq.of.SEq.SEq
 import Lemma.Bool.SEqBFnS.of.SEq.SEq
 import Lemma.Tensor.Eq.is.EqDataS

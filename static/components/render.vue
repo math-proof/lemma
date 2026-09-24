@@ -11,12 +11,12 @@
             <lemma v-for="lemma, index in self.lemma" :comment=lemma.comment :attribute=lemma.attribute :accessibility=lemma.accessibility :name=lemma.name :instImplicit=lemma.instImplicit :strictImplicit=lemma.strictImplicit :implicit=lemma.implicit :explicit=lemma.explicit :given=lemma.given :default=lemma.default :imply=lemma.imply :proof=lemma.proof :index=index />
         </form>
 
-        <template v-if="error.length != 0">
+        <template v-if="meta.error.length != 0">
             <br><br>
             <h3>Error Information</h3>
         </template>
 
-        <div v-for="err of error">
+        <div v-for="err of meta.error">
             <h5>{{err.type}}:</h5>
             <p class="pre-wrap warning">{{err.info}}</p>
             <h5>code:{{ err.line }}:{{ err.col }}</h5>
@@ -51,7 +51,7 @@ const props = defineProps([
 	'set_option',
 	'preamble',
 	'lemma',
-	'error',
+	'meta',
 	'module',
 	'date',
 ]);
@@ -441,7 +441,11 @@ where
             }
         }
 
-        var {error} = this;
+        if (!this.meta || typeof this.meta !== 'object' || Array.isArray(this.meta))
+            this.meta = {error: []};
+        else if (!Array.isArray(this.meta.error))
+            this.meta.error = [];
+        var {error} = this.meta;
         var sorry = [];
         for (var err of reversed(error)) {
             var {line, col, info} = err;
@@ -1471,15 +1475,20 @@ GROUP BY l.user, l.module`;
         async echo(module){
             var code = await form_post('php/request/echo.php', {module});
             console.log(JSON.stringify(code, null, "\t"));
-            var {imports, open, set_option, preamble, lemma, error, date} = code;
+            var {imports, open, set_option, preamble, lemma, meta, date} = code;
+            if (!meta || typeof meta !== 'object' || Array.isArray(meta))
+                meta = {error: []};
+            if (!Array.isArray(meta.error))
+                meta.error = [];
             this.lemma.array_assign(lemma);
-            this.error.array_assign(error);
+            this.meta.error.array_assign(meta.error);
             this.refresh = true;
             var {user} = this;
+            meta = meta.error.length ? {error: meta.error} : null;
             var sql = `
 replace into 
     axiom.lemma
-    (user, module, imports, open, set_option, preamble, lemma, error, date) 
+    (user, module, imports, open, set_option, preamble, lemma, meta, date) 
     values (
         '${user}',
         "${module}",
@@ -1488,7 +1497,7 @@ replace into
         ${JSON.stringify(set_option).mysqlStr()},
         ${JSON.stringify(preamble).mysqlStr()},
         ${JSON.stringify(lemma).mysqlStr()},
-        ${JSON.stringify(error).mysqlStr()},
+        ${meta == null ? 'NULL' : JSON.stringify(meta).mysqlStr()},
         ${JSON.stringify(date).mysqlStr()}
     )
 `;

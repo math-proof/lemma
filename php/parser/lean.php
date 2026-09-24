@@ -5865,7 +5865,7 @@ class LeanModule extends LeanStatements
 
         array_shift($this->args);
         $codes = $this->render2vue(true);
-        array_push($codes['error'], ...$error);
+        array_push($codes['meta']['error'], ...$error);
         return $codes;
     }
 
@@ -6229,7 +6229,7 @@ class LeanModule extends LeanStatements
             'preamble' => $preamble,
             'lemma' => $lemma,
             'date' => $date,
-            'error' => $error,
+            'meta' => ['error' => $error],
         ];
     }
 

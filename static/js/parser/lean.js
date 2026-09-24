@@ -5505,7 +5505,7 @@ export class LeanStatements extends LeanMultipleLine(LeanArgs) {
         for (; index < args.length - void_lines - 1; ++index) {
             const result = args[index].echo();
             if (Array.isArray(result)) {
-                const length = /** @type {number} */ (result.shift());
+                const length = result.shift();
                 if (
                     index + 1 < args.length - void_lines &&
                     args[index + 1] instanceof LeanTactic &&
@@ -5542,26 +5542,40 @@ export class LeanStatements extends LeanMultipleLine(LeanArgs) {
         }
         const tactic = args[index];
         if (tactic instanceof LeanTactic || tactic instanceof Lean_match) {
-            if (tactic.tacticName === 'case') {
+            const result = tactic.echo();
+            if (Array.isArray(result)) {
+                const length = result.shift();
+                const pos = result.indexOf(tactic);
+                if (pos >= 0) {
+                    while (result.length > pos + 1) {
+                        const tail = result[result.length - 1];
+                        if (tail instanceof LeanTactic && tail.tacticName === 'echo') result.pop();
+                        else break;
+                    }
+                }
+                for (const echo of result) echo.parent = this;
+                args.splice(index, length, ...result);
+            } else if (tactic.tacticName === 'case') {
                 const arrow = tactic.arrow;
                 if (arrow && arrow.rhs instanceof LeanStatements) arrow.rhs.echo();
-            }
-            const w = tactic.with;
-            if (w) {
-                if (w.sep() === '\n') {
-                    for (const c of w.args) c.echo();
-                } else if (tactic.sequential_tactic_combinator) {
-                    const block = tactic.sequential_tactic_combinator.arg;
-                    if (block instanceof LeanTacticBlock) block.echo();
-                    else tactic.sequential_tactic_combinator.echo();
-                }
-            } else if (tactic.sequential_tactic_combinator) {
-                tactic.sequential_tactic_combinator.echo();
             } else {
-                const rb = tactic.repeat_block();
-                if (rb) rb.echo();
-                const {using} = tactic;
-                if (using) using.echo();
+                const w = tactic.with;
+                if (w) {
+                    if (w.sep() === '\n') {
+                        for (const c of w.args) c.echo();
+                    } else if (tactic.sequential_tactic_combinator) {
+                        const block = tactic.sequential_tactic_combinator.arg;
+                        if (block instanceof LeanTacticBlock) block.echo();
+                        else tactic.sequential_tactic_combinator.echo();
+                    }
+                } else if (tactic.sequential_tactic_combinator) {
+                    tactic.sequential_tactic_combinator.echo();
+                } else {
+                    const rb = tactic.repeat_block();
+                    if (rb) rb.echo();
+                    const {using} = tactic;
+                    if (using) using.echo();
+                }
             }
         } else if (tactic instanceof LeanTacticBlock || tactic instanceof LeanIte || tactic instanceof LeanCalc) {
             tactic.echo();
@@ -6200,7 +6214,10 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
             }
             if (assignment instanceof LeanAssign) {
                 const accessibility = stmt.accessibility;
-                let declspec = assignment.lhs;
+                let innerAssign = assignment;
+                while (innerAssign.lhs instanceof LeanAssign) innerAssign = innerAssign.lhs;
+                let declspec = innerAssign.lhs;
+                while (declspec instanceof LeanAssign) declspec = declspec.lhs;
                 let flatInstImplicit = [];
                 let flatExplicit = '';
                 let flatGiven = null;
@@ -6356,7 +6373,7 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                     // variables even when no PSpace hypothesis is present.
                     declspec.lhs.markRandomVarNames(rvNames);
                     markRandomVarSequence(imply, rvNames);
-                    const proof0 = assignment.rhs;
+                    const proof0 = innerAssign.rhs;
                     const by = proof0 instanceof LeanBy? 'by' : proof0 instanceof LeanCalc ? 'calc' : '';
                     const implyLean = unindentTwo(imply.map((s) => strStmt(s)).join('\n'));
                     let implyLatex;
@@ -6551,7 +6568,7 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                         }
                     }
 
-                    const proof = assignment.rhs;
+                    const proof = innerAssign.rhs;
                     let proofOut;
                     let proofNode = proof;
                     if (
@@ -6597,7 +6614,7 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                     });
                     comment = null;
                 } else if (declspec && (typeof declspec.toLatex === 'function' || flatImplyStmts.length > 0)) {
-                    const proof0 = assignment.rhs;
+                    const proof0 = innerAssign.rhs;
                     const by = proof0 instanceof LeanBy? 'by' : proof0 instanceof LeanCalc? 'calc': '';
 
                     let simpleExplicit = flatExplicit;
@@ -6696,7 +6713,7 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                         implyOut = { lean: implyLean, latex: implyLatex };
                     }
                     syntax.letBindings = buildLetBindings(flatImplyStmts ?? []);
-                    const proof = assignment.rhs;
+                    const proof = innerAssign.rhs;
                     let proofOut;
                     const proofArg = proof && typeof proof === 'object' && 'arg' in proof ? proof.arg : proof;
                     const hasProofArgs = proofArg && typeof proofArg === 'object' && Array.isArray(proofArg.args);
@@ -10092,9 +10109,14 @@ class LeanCalc extends LeanUnary {
                 const $new = this.push_args_indented(indent, newline_count, false);
                 if ($new) return $new;
             }
-            // `calc <term>` with the first relation on a following line: keep the
-            // head as the relation's lhs instead of letting the relation lines
-            // escape into the enclosing statement list
+            if (caret instanceof LeanArgsNewLineSeparated) {
+                const c = new LeanCaret(indent, caret.level);
+                caret.push(c);
+                for (let i = 1; i < newline_count; ++i) {
+                    caret.push(new LeanCaret(indent, caret.level));
+                }
+                return c;
+            }
             if (leanIsInfixContinue(next))
                 return caret;
         }

@@ -16,7 +16,7 @@ function cteType(u) {
     from
         lemma
         cross join json_table(
-            error,
+            JSON_EXTRACT(meta, '$.error'),
             '$[*]' columns(type text path '$.type')
         ) as jt
     where
@@ -32,7 +32,7 @@ function cteMatrix(u) {
     from
         lemma
         cross join json_table(
-            error,
+            JSON_EXTRACT(meta, '$.error'),
             '$[*]' columns(type text path '$.type')
         ) as jt
     where

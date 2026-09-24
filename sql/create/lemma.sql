@@ -6,7 +6,7 @@ CREATE TABLE `lemma` (
   set_option json,
   preamble json NOT NULL,
   lemma json NOT NULL,
-  error json,
+  meta json,
   date json NOT NULL,
   PRIMARY KEY (user, module)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4

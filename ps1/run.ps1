@@ -27,6 +27,19 @@ function Get-ModuleFromLeanFile {
     ($lemma -replace '\\', '.') -creplace '^Lemma\.', ''
 }
 
+# Quote module names as a SQL list; names may contain `'` (e.g. RotaryMatrix'Sub).
+function Format-SqlList {
+    param([string[]]$Items)
+    ($Items | ForEach-Object { "'" + ($_ -replace "'", "''") + "'" }) -join ','
+}
+
+# Send SQL through stdin: `-e "..."` overflows the Windows command-line limit
+# once the module lists hold thousands of names. Returns $true on success.
+function Invoke-Sql {
+    param([string]$Sql)
+    $Sql | mysql @mysql -D axiom 2>&1 | Tee-Object -FilePath test.log -Append | Out-Host
+    return ($LASTEXITCODE -eq 0)
+}
 # When `-Modules` is supplied, keep only files whose dotted module name matches.
 function Test-ModuleIncluded {
     param([string]$Module)
@@ -81,6 +94,7 @@ function Format-LemmaInsertRow {
 
     if ($Synthetic) {
         $dateJson = "'[]'"
+        $script:syntheticModules[$Module] = $true
     } else {
         if (-not $LeanFile) {
             $rel = $Module -replace '\.', '/'
@@ -90,12 +104,13 @@ function Format-LemmaInsertRow {
     }
 
     $submodules = $Submodules -replace "'", "''"
-    return "  ('$user', `"$Module`", '$submodules', '[]', '[]', '[]', '[]', '[]', $dateJson),"
+    return "  ('$user', `"$Module`", '$submodules', '[]', '[]', '[]', '[]', '{`"error`":[]}', $dateJson),"
 }
 
 Set-Content -Path test.lean -Value $null
 
 $imports_dict = @{}
+$syntheticModules = @{}
 
 function echo_import {
     param(
@@ -122,6 +137,16 @@ Where-Object { $_.Name -notlike "*.echo.lean" } |
 Where-Object { Test-ModuleIncluded (Get-ModuleFromLeanFile $_.FullName) } |
 ForEach-Object {
     echo_import $_.FullName
+}
+
+$importsSet = @{}
+foreach ($m in $imports_dict.Keys) {
+    $set = @{}
+    $arr = $imports_dict[$m] | ConvertFrom-Json
+    foreach ($imp in $arr) {
+        if ($imp) { $set[($imp -creplace '^Lemma\.', '')] = $true }
+    }
+    $importsSet[$m] = $set
 }
 
 # Read the contents of test.lean into $imports
@@ -157,7 +182,7 @@ Set-Content test.lean -Value $null
 Write-Output "modules:"
 
 # Create or clear the test.sql file with the initial INSERT statement
-"INSERT INTO lemma (user, module, imports, open, set_option, preamble, lemma, error, date) VALUES " | Out-File -FilePath test.sql -Encoding utf8
+"INSERT INTO lemma (user, module, imports, open, set_option, preamble, lemma, meta, date) VALUES " | Out-File -FilePath test.sql -Encoding utf8
 
 # Process each module in the imports array
 foreach ($module in $imports) {
@@ -667,9 +692,13 @@ ForEach-Object {
 $content = Get-Content -Path test.sql
 if ($content.Count -gt 0) {
     $content[-1] = $content[-1] -replace ',$', ''
-    $content += "ON DUPLICATE KEY UPDATE imports = VALUES(imports), error = VALUES(error), date = VALUES(date);"
+    $content += "ON DUPLICATE KEY UPDATE imports = VALUES(imports), date = VALUES(date);"
     $content | Set-Content -Path test.sql
 }
+
+# Clear error for all disk modules (preserves meta.callee via JSON_SET)
+$diskModuleList = Format-SqlList @($imports_dict.Keys)
+Add-Content -Path test.sql -Value "UPDATE lemma SET meta = JSON_SET(IFNULL(meta, '{}'), '$.error', CAST('[]' AS JSON)) WHERE user = '$user' AND module IN ($diskModuleList);"
 
 Write-Output "plausible:"
 
@@ -698,7 +727,7 @@ foreach ($module in $sorryModules) {
     
     # Generate SQL statement and append to test.sql
     $sqlLine = @"
-UPDATE lemma set error = '[{"code": "", "file": "", "info": "declaration uses ''sorry''", "line": 0, "type": "warning"}]' where user = '$user' and module = "$module";
+UPDATE lemma set meta = JSON_SET(IFNULL(meta, '{}'), '$.error', CAST('[{"code": "", "file": "", "info": "declaration uses ''sorry''", "line": 0, "type": "warning"}]' AS JSON)) where user = '$user' and module = "$module";
 "@
     Add-Content -Path test.sql -Value $sqlLine
 }
@@ -742,7 +771,7 @@ foreach ($module in $failingModules) {
 
     # Generate SQL statement
     $sql = @"
-UPDATE lemma set error = '[{"code": "", "file": "", "info": "", "line": 0, "type": "error"}]' where user = '$user' and module = "$modifiedModule";
+UPDATE lemma set meta = JSON_SET(IFNULL(meta, '{}'), '$.error', CAST('[{"code": "", "file": "", "info": "", "line": 0, "type": "error"}]' AS JSON)) where user = '$user' and module = "$modifiedModule";
 "@
     
     # Append to SQL file
@@ -754,9 +783,9 @@ $mysql = @(
     "--default-character-set=utf8mb4"
 )
 
-# Run the initial MySQL command and log output
-
-mysql @mysql -D axiom -e "update lemma set error = NULL where user = '$user'" 2>&1 | Tee-Object -FilePath test.log
+# Query existing modules and imports for change detection
+$dbImports = @{}
+$dbQueryResult = mysql @mysql -D axiom -e "SELECT module, imports FROM lemma WHERE user = '$user'" --batch --skip-column-names 2>&1 | Tee-Object -FilePath test.log
 
 # Check for database existence error
 if (Select-String -Path test.log -Pattern "ERROR \d+ \(\d+\): Unknown database 'axiom'") {
@@ -779,6 +808,15 @@ if (Select-String -Path test.log -Pattern "ERROR \d+ \(\d+\): Unknown database '
     }
 }
 
+# Parse DB query results for change detection
+foreach ($line in $dbQueryResult) {
+    if ($line -match "ERROR" -or $line -notmatch "`t") { continue }
+    $parts = $line -split "`t", 2
+    if ($parts.Count -eq 2) {
+        $dbImports[$parts[0]] = $parts[1]
+    }
+}
+
 # Run the MySQL command and log output
 
 Get-Content test.sql -Encoding UTF8 | mysql @mysql -D axiom 2>&1 | Tee-Object -FilePath test.log
@@ -797,8 +835,56 @@ if (Select-String -Path test.log -Pattern "ERROR \d+ \(\w+\) at line \d+: Table 
     }
 }
 
-# Execute MySQL command and log output
-mysql @mysql -D axiom -e "delete from lemma where user = '$user' and error is NULL" 2>&1 | Tee-Object -FilePath test.log
+if ($Modules.Count -eq 0) {
+    $keepList = Format-SqlList (@($imports_dict.Keys) + @($syntheticModules.Keys))
+    if (-not (Invoke-Sql "DELETE FROM lemma WHERE user = '$user' AND module NOT IN ($keepList);")) {
+        Write-Host "orphan delete failed" -ForegroundColor Red
+    }
+} else {
+    Write-Host "-Modules set: skipping orphan delete"
+}
+
+# Detect changes: deleted, new, and modified-imports modules
+$affected = @{}
+foreach ($m in $dbImports.Keys) {
+    if ($syntheticModules.ContainsKey($m)) { continue }  # dual row, still generated above
+    if ($Modules.Count -gt 0 -and -not (Test-ModuleIncluded $m)) { continue }  # outside -Modules scope
+    if (-not $imports_dict.ContainsKey($m)) { $affected[$m] = $true }  # deleted
+}
+foreach ($m in $imports_dict.Keys) {
+    if (-not $dbImports.ContainsKey($m)) {
+        $affected[$m] = $true  # new
+    } else {
+        $diskImports = $imports_dict[$m] -replace '\s', ''
+        $oldImports = $dbImports[$m] -replace '\s', ''
+        if ($diskImports -ne $oldImports) { $affected[$m] = $true }  # modified
+    }
+}
+
+$invalidate = @{} + $affected
+$changed = $true
+while ($changed) {
+    $changed = $false
+    foreach ($m in $imports_dict.Keys) {
+        if ($invalidate.ContainsKey($m)) { continue }
+        $set = $importsSet[$m]
+        foreach ($a in @($invalidate.Keys)) {
+            if ($set.ContainsKey($a)) {
+                $invalidate[$m] = $true
+                $changed = $true
+                break
+            }
+        }
+    }
+}
+if ($invalidate.Count -gt 0) {
+    $invalidateList = Format-SqlList @($invalidate.Keys)
+    if (Invoke-Sql "UPDATE lemma SET meta = JSON_SET(IFNULL(meta, '{}'), '$.callee', CAST('null' AS JSON)) WHERE user = '$user' AND module IN ($invalidateList);") {
+        Write-Host "invalidated meta.callee for $($invalidate.Count) module(s)"
+    } else {
+        Write-Host "meta.callee invalidation FAILED for $($invalidate.Count) module(s)" -ForegroundColor Red
+    }
+}
 
 # Calculate time cost
 $end_time = [DateTimeOffset]::Now.ToUnixTimeSeconds()
@@ -904,12 +990,6 @@ Write-Output "seconds cost    = $time_cost"
 Write-Output "total theorems  = $($imports.Count)"
 Write-Output "total plausible = $($sorryModules.Count)"
 Write-Output "total failed    = $($failingModules.Count)"
-
-# Execute the delete_open.ps1 script located in the ps1 directory
-.\ps1\delete_open.ps1
-
-# Execute the delete_import.ps1 script located in the ps1 directory
-.\ps1\delete_import.ps1
 
 $Lines = (Get-ChildItem -Path @("Lemma", "sympy", "stdlib") -Filter "*.lean" -Exclude "*.echo.lean" -Recurse -File | Get-Content | Measure-Object -Line).Lines
 Write-Output "total lines     = $Lines"

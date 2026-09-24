@@ -1,36 +1,151 @@
 # usage :
 # bash sh/run.sh
+# process only the given module(s)
+# bash sh/run.sh -Modules Nat.Mul,Real.LtIntegralS.of.All_Lt
+# batch size for `lake setup-file` runs
+# bash sh/run.sh -limit 4096
 start_time=$(date +%s)
 source ./sh/utility.sh
+
+# Split test.lean into batches of this many imports per `lake setup-file` run.
+limit=4096
+# Process only modules matching one of these patterns (empty = all modules).
+MODULES=()
+while [ $# -gt 0 ]; do
+  case "$1" in
+    -Modules|-modules)
+      IFS=',' read -ra MODULES <<< "$2"
+      shift 2
+      ;;
+    -limit|-Limit)
+      limit="$2"
+      shift 2
+      ;;
+    *)
+      shift
+      ;;
+  esac
+done
+
+if [ -z "$LEAN_NUM_THREADS" ]; then
+  export LEAN_NUM_THREADS=4
+fi
 
 user=$(basename $(dirname $(cd $(dirname $0) && pwd)))
 echo "user = $user"
 
+# SQL string-literal list ('v1','v2', ...) with ' doubled; empty when no args.
+sql_in_list() {
+  local out="" m
+  for m in "$@"; do
+    m=${m//\'/\'\'}
+    out+="${out:+,}'$m'"
+  done
+  printf '%s' "$out"
+}
+
+# Compact JSON array of strings. Import names are validated in echo_import to
+# [\w.'] form, so no JSON escaping is ever needed; avoids a jq dependency.
+json_array() {
+  local out="[" e
+  for e in "$@"; do out+="\"$e\","; done
+  printf '%s]' "${out%,}"
+}
+
+# When `-Modules` is supplied, keep only files whose dotted module name matches.
+module_included() {
+  local module=$1 m
+  if [ ${#MODULES[@]} -eq 0 ]; then return 0; fi
+  for m in "${MODULES[@]}"; do
+    [[ "$module" == $m ]] && return 0
+  done
+  return 1
+}
+
+# Date comments are always in the last 3 lines of a lemma file.
+get_lemma_date_json() {
+  local file=$1 created="" updated="" line json
+  if [ ! -f "$file" ]; then
+    echo "'[]'"
+    return
+  fi
+  while IFS= read -r line; do
+    if [[ "$line" =~ ^[[:space:]]*--[[:space:]]*created\ on\ ([0-9]{4}-[0-9]{2}-[0-9]{2})[[:space:]]*$ ]]; then
+      created="${BASH_REMATCH[1]}"
+    elif [[ "$line" =~ ^[[:space:]]*--[[:space:]]*updated\ on\ ([0-9]{4}-[0-9]{2}-[0-9]{2})[[:space:]]*$ ]]; then
+      updated="${BASH_REMATCH[1]}"
+    fi
+  done < <(tail -n 3 "$file")
+  if [ -z "$created" ]; then
+    echo "'[]'"
+    return
+  fi
+  # dates are digits and dashes only, so no JSON escaping is needed here
+  if [ -n "$updated" ] && [ "$updated" != "$created" ]; then
+    json="{\"created\":\"$created\",\"updated\":\"$updated\"}"
+  else
+    json="{\"created\":\"$created\"}"
+  fi
+  json=${json//\'/\'\'}
+  echo "'$json'"
+}
+
 > test.lean
 
 declare -A imports_dict
+declare -A syntheticModules
 function echo_import {
   file=$1
   lemma=${file%.lean}
   module=${lemma////.}
+  if ! module_included "${module#Lemma.}"; then return; fi
   echo "import $module" >> test.lean
   # extract import statements from the lean file
   module=${module#Lemma.}
-  mapfile -t lines < <(grep -E '^import[[:space:]]+' $file | sed -E 's/^import[[:space:]]+//')
+  mapfile -t lines < <(grep -E '^import[[:space:]]+' $file | sed -E 's/^import[[:space:]]+//; s/\r$//')
   if [ ${#lines[@]} -eq 0 ]; then
     imports_dict[$module]="[]"
   else
-    imports_dict[$module]=$(printf '%s\n' "${lines[@]}" | jq -R . | jq -s .)
+    for line in "${lines[@]}"; do
+      case "$line" in
+        *'"'*|*'\'*|'') echo "ERROR: unexpected import name '$line' in $file" >&2; exit 1;;
+      esac
+    done
+    # compact JSON array, matching what run.ps1 and py/delete_import.py write
+    imports_dict[$module]=$(json_array "${lines[@]}")
   fi
 }
 
 while read -r file; do
   echo_import "$file"
-done < <(find Lemma -type f -name "*.lean" -not -name "*.echo.lean") 
+done < <(find Lemma -type f -name "*.lean" -not -name "*.echo.lean")
 
-touch test.log
-# lake setup-file test.lean 2>&1 | head -n -1 | tee test.log
-lake setup-file test.lean 2>&1 | sed '$d' | tee test.log
+> test.log
+
+# Split test.lean into batches of $limit imports and elaborate each with lake
+i=0
+n=0
+: > "test.$i.lean"
+while IFS= read -r line; do
+  if [ "$n" -ge "$limit" ]; then
+    i=$((i + 1))
+    n=0
+    : > "test.$i.lean"
+  fi
+  printf '%s\n' "$line" >> "test.$i.lean"
+  n=$((n + 1))
+done < test.lean
+batch_count=$((i + 1))
+
+# Elaborate each batch; drop the last (summary) line of each lake run
+j=0
+while [ "$j" -lt "$batch_count" ]; do
+  if [ "$limit" -eq 1 ]; then
+    echo "executing: $(tr '\n' ' ' < "test.$j.lean")"
+  fi
+  lake setup-file "test.$j.lean" 2>&1 | sed '$d' | tee -a test.log
+  j=$((j + 1))
+done
 
 sed -i -E "s/^import //" test.lean
 imports=$(cat test.lean)
@@ -41,7 +156,7 @@ echo "modules:"
 touch test.sql
 
 output_file=test.sql
-echo "INSERT INTO lemma (user, module, imports, open, set_option, preamble, lemma, error, date) VALUES " > test.sql
+echo "INSERT INTO lemma (user, module, imports, open, set_option, preamble, lemma, meta, date) VALUES " > test.sql
 for module in ${imports[*]}; do
   # echo "${module//.//}.lean"
   module=${module#Lemma.}
@@ -51,7 +166,8 @@ for module in ${imports[*]}; do
   fi
   submodules=${imports_dict[$module]}
   submodules=${submodules//\'/\'\'}
-  echo "  ('$user', \"$module\", '$submodules', '[]', '[]', '[]', '[]', '[]', '[]')," >> test.sql
+  date_json=$(get_lemma_date_json "Lemma/${module//./\/}.lean")
+  echo "  ('$user', \"$module\", '$submodules', '[]', '[]', '[]', '[]', '{\"error\":[]}', $date_json)," >> test.sql
 done
 
 transformExpr() {
@@ -178,7 +294,61 @@ Not() {
 }
 
 emit_synthetic() {
-  echo "  ('$user', \"$1\", '[]', '[]', '[]', '[]', '[]', '[]')," >> test.sql
+  # Record synthetic dual rows so the orphan DELETE and the
+  # deleted-module detection below do not treat them as gone.
+  syntheticModules[$1]=1
+  echo "  ('$user', \"$1\", '[]', '[]', '[]', '[]', '[]', '{\"error\":[]}', '[]')," >> test.sql
+}
+
+# Mirror List.andLeftTokens / List.andRightTokens / Name.andProjName from sympy/Basic.lean:
+# Section.Type1.Type2.of.Givens -> Section.Type1.of.Givens (left) or Section.Type2.of.Givens (right);
+# when Type1 = Type2, append .fst / .snd.
+and_proj_module() {
+  local module=$1 left=$2
+  local -a tokens pre rest leftTokens rightTokens
+  IFS='.' read -ra tokens <<< "$module"
+  local ofIdx=-1 i
+  for i in "${!tokens[@]}"; do
+    if [[ "${tokens[$i]}" == "of" ]]; then ofIdx=$i; break; fi
+  done
+  if [ "$ofIdx" -lt 2 ]; then return 1; fi
+  pre=("${tokens[@]:0:$ofIdx}")
+  rest=("${tokens[@]:$ofIdx}")
+  if [ "${#pre[@]}" -lt 3 ]; then return 1; fi
+  leftTokens=("${pre[@]:0:$((${#pre[@]} - 1))}" "${rest[@]}")
+  rightTokens=("${pre[@]:0:$((${#pre[@]} - 2))}" "${pre[@]:$((${#pre[@]} - 1))}" "${rest[@]}")
+  local IFS=.
+  local leftModule="${leftTokens[*]}" rightModule="${rightTokens[*]}"
+  if [ "$leftModule" == "$rightModule" ]; then
+    if [ "$left" == "true" ]; then
+      echo "${leftModule}.fst"
+    else
+      echo "${rightModule}.snd"
+    fi
+  elif [ "$left" == "true" ]; then
+    echo "$leftModule"
+  else
+    echo "$rightModule"
+  fi
+}
+
+# Replace the first `Iff` occurrence inside the first token that has one.
+replace_iff_token() {
+  local module=$1 replacement=$2
+  local -a tokens
+  IFS='.' read -ra tokens <<< "$module"
+  local i tok prefix
+  for i in "${!tokens[@]}"; do
+    tok="${tokens[$i]}"
+    prefix="${tok%%Iff*}"
+    if [ "$prefix" != "$tok" ]; then
+      tokens[$i]="${tok:0:${#prefix}}${replacement}${tok:$((${#prefix} + 3))}"
+      local IFS=.
+      printf '%s\n' "${tokens[*]}"
+      return 0
+    fi
+  done
+  return 1
 }
 
 # Sets _section _lhs _rhs _of_suffix _of_args for `Section.LHS.is.RHS[.of.Args]`.
@@ -260,7 +430,7 @@ comm_swap_is() {
 }
 
 # Find all .lean files except *.echo.lean under Lemma/
-find Lemma -type f -name "*.lean" ! -name "*.echo.lean" | while read -r file; do
+while read -r file; do
   # Get relative path
   rel_file="${file#./}"
   content=$(<"$file")
@@ -279,6 +449,7 @@ find Lemma -type f -name "*.lean" ! -name "*.echo.lean" | while read -r file; do
   module="${rel_file#Lemma/}"
   module="${module//\\/.}"
   module="${module%.lean}"
+  if ! module_included "$module"; then continue; fi
   constructor_order=false
   if [[ $constructor_comment == *"constructor order"* ]]; then
     constructor_order=true
@@ -319,17 +490,44 @@ find Lemma -type f -name "*.lean" ! -name "*.echo.lean" | while read -r file; do
           new_module=$(IFS=. ; echo "${tokens[*]}")
           ;;
         *)
-          deBruijn=${deBruijn:-0}
-          index=$((${#tokens[@]}-1))
-          increment=-1
-          while [[ $deBruijn -gt 0 ]]; do
-            if ((deBruijn & 1)); then
-              found=true
-              tokens[$index]=$(transformPrefix "${tokens[$index]}")
-            fi
-            deBruijn=$((deBruijn >> 1))
-            index=$((index + increment))
+          ofIdx=-1
+          for i in "${!tokens[@]}"; do
+            if [[ "${tokens[$i]}" == "of" ]]; then ofIdx=$i; break; fi
           done
+          deBruijn=${deBruijn:-0}
+          if [ "$ofIdx" -ge 0 ] && [ "$ofIdx" -lt $((${#tokens[@]} - 1)) ]; then
+            # flip the first popCount(deBruijn) tokens after `of`
+            ofTokens=("${tokens[@]:$((ofIdx + 1))}")
+            d=$deBruijn
+            popCount=0
+            while [ "$d" -gt 0 ]; do
+              if (( d & 1 )); then popCount=$((popCount + 1)); fi
+              d=$(( d >> 1 ))
+            done
+            flipCount=$popCount
+            if [ "$flipCount" -gt "${#ofTokens[@]}" ]; then flipCount=${#ofTokens[@]}; fi
+            for (( k = 0; k < flipCount; k++ )); do
+              newTok=$(transformPrefix "${ofTokens[$k]}")
+              if [ "$newTok" != "${ofTokens[$k]}" ]; then
+                found=true
+                ofTokens[$k]="$newTok"
+              fi
+            done
+            for (( k = 0; k < ${#ofTokens[@]}; k++ )); do
+              tokens[$((ofIdx + 1 + k))]="${ofTokens[$k]}"
+            done
+          else
+            index=$((${#tokens[@]} - 1))
+            increment=-1
+            while [ "$deBruijn" -gt 0 ]; do
+              if (( deBruijn & 1 )); then
+                found=true
+                tokens[$index]=$(transformPrefix "${tokens[$index]}")
+              fi
+              deBruijn=$(( deBruijn >> 1 ))
+              index=$(( index + increment ))
+            done
+          fi
           first=$(transformPrefix "${tokens[1]}")
           if [[ "${tokens[1]}" != "$first" ]]; then
             found=true
@@ -348,6 +546,8 @@ find Lemma -type f -name "*.lean" ! -name "*.echo.lean" | while read -r file; do
   if [[ $attributes =~ $re_mp ]]; then
     if parse_is_module "$module"; then
       emit_synthetic "${_section}.${_rhs}.of.${_lhs}${_of_suffix}"
+    elif new_module=$(replace_iff_token "$module" "Imp_"); then
+      emit_synthetic "$new_module"
     fi
   fi
   # Handle mpr attribute
@@ -355,6 +555,58 @@ find Lemma -type f -name "*.lean" ! -name "*.echo.lean" | while read -r file; do
   if [[ $attributes =~ $re_mpr ]]; then
     if parse_is_module "$module"; then
       emit_synthetic "${_section}.${_lhs}.of.${_rhs}${_of_suffix}"
+    elif new_module=$(replace_iff_token "$module" "Imp"); then
+      emit_synthetic "$new_module"
+    fi
+  fi
+  # Handle mp.left: apply `mp` (commutateIs "of") then And.left projection.
+  if [[ $attributes == *mp.left* ]]; then
+    IFS='.' read -ra tokens <<< "$module"
+    rest=("${tokens[@]:1}")
+    isIdx=-1
+    for i in "${!rest[@]}"; do
+      if [[ "${rest[$i]}" == "is" ]]; then isIdx=$i; break; fi
+    done
+    if [ "$isIdx" -ge 0 ]; then
+      first=()
+      if [ "$isIdx" -gt 0 ]; then first=("${rest[@]:0:$isIdx}"); fi
+      afterIs=()
+      if [ $((isIdx + 1)) -lt ${#rest[@]} ]; then afterIs=("${rest[@]:$((isIdx + 1))}"); fi
+      # commutateIs "of": section + afterIs + "of" + first
+      mpTokens=("${tokens[0]}" "${afterIs[@]}" of "${first[@]}")
+      mpModule=$(IFS=. ; echo "${mpTokens[*]}")
+      if new_module=$(and_proj_module "$mpModule" true); then
+        emit_synthetic "$new_module"
+      else
+        echo "Ignoring @[main, mp.left] at $file"
+      fi
+    else
+      printf 'Ignoring @[main, mp.left] at %s (no `is` segment)\n' "$file"
+    fi
+  fi
+  # Handle mp.right: apply `mp` (commutateIs "of") then And.right projection.
+  if [[ $attributes == *mp.right* ]]; then
+    IFS='.' read -ra tokens <<< "$module"
+    rest=("${tokens[@]:1}")
+    isIdx=-1
+    for i in "${!rest[@]}"; do
+      if [[ "${rest[$i]}" == "is" ]]; then isIdx=$i; break; fi
+    done
+    if [ "$isIdx" -ge 0 ]; then
+      first=()
+      if [ "$isIdx" -gt 0 ]; then first=("${rest[@]:0:$isIdx}"); fi
+      afterIs=()
+      if [ $((isIdx + 1)) -lt ${#rest[@]} ]; then afterIs=("${rest[@]:$((isIdx + 1))}"); fi
+      # commutateIs "of": section + afterIs + "of" + first
+      mpTokens=("${tokens[0]}" "${afterIs[@]}" of "${first[@]}")
+      mpModule=$(IFS=. ; echo "${mpTokens[*]}")
+      if new_module=$(and_proj_module "$mpModule" false); then
+        emit_synthetic "$new_module"
+      else
+        echo "Ignoring @[main, mp.right] at $file"
+      fi
+    else
+      printf 'Ignoring @[main, mp.right] at %s (no `is` segment)\n' "$file"
     fi
   fi
   # Handle mp.comm
@@ -404,6 +656,12 @@ find Lemma -type f -name "*.lean" ! -name "*.echo.lean" | while read -r file; do
       emit_synthetic "${_section}.$(Not "$_rhs").of.$(Not "$_lhs")${_of_suffix}"
     fi
   fi
+  # Handle is.mt
+  if [[ $attributes == *is.mt* ]]; then
+    if parse_is_module "$module"; then
+      emit_synthetic "${_section}.$(Not "$_lhs").is.$(Not "$_rhs")${_of_args}"
+    fi
+  fi
   # Handle comm.is
   if [[ $attributes == *comm.is* ]]; then
     if parse_is_module "$module"; then
@@ -432,7 +690,11 @@ find Lemma -type f -name "*.lean" ! -name "*.echo.lean" | while read -r file; do
       given="${BASH_REMATCH[3]}"
       IFS='.' read -ra given_array <<< "$given"
       if [[ -n "$mt_val" ]]; then
-        i=$((${#given_array[@]}-1-$(echo "l($mt_val)/l(2)" | bc -l | awk '{printf("%d\n",$1+0.5)}')))
+        # floor(log2(mt_val)), matching BitOperations.Log2 in run.ps1
+        l2=0
+        v=$mt_val
+        while [ "$v" -gt 1 ]; do l2=$((l2 + 1)); v=$((v >> 1)); done
+        i=$((${#given_array[@]} - 1 - l2))
       else
         i=0
       fi
@@ -459,10 +721,32 @@ find Lemma -type f -name "*.lean" ! -name "*.echo.lean" | while read -r file; do
     fi
     attr_subst="${attr_subst/${BASH_REMATCH[0]}/}"
   done
-done
-sed -i '$ s/,$/\nON DUPLICATE KEY UPDATE imports = VALUES(imports), error = VALUES(error);/' test.sql
+  # Handle And.left / And.right projections
+  if [[ $attributes == *And.left* ]]; then
+    if new_module=$(and_proj_module "$module" true); then
+      emit_synthetic "$new_module"
+    else
+      echo "Ignoring @[main, And.left] at $file"
+    fi
+  fi
+  if [[ $attributes == *And.right* ]]; then
+    if new_module=$(and_proj_module "$module" false); then
+      emit_synthetic "$new_module"
+    else
+      echo "Ignoring @[main, And.right] at $file"
+    fi
+  fi
+done < <(find Lemma -type f -name "*.lean" ! -name "*.echo.lean")
+sed -i '$ s/,$/\nON DUPLICATE KEY UPDATE imports = VALUES(imports), date = VALUES(date);/' test.sql
+
+# Clear error for all disk modules (preserves meta.callee via JSON_SET)
+diskModuleList=$(sql_in_list "${!imports_dict[@]}")
+if [ -n "$diskModuleList" ]; then
+  echo "UPDATE lemma SET meta = JSON_SET(IFNULL(meta, '{}'), '\$.error', CAST('[]' AS JSON)) WHERE user = '$user' AND module IN ($diskModuleList);" >> test.sql
+fi
 
 echo "plausible:"
+
 sorryModules=($(grep -P "^warning: (\./)*[\w'!₀-₉/]+\.lean:\d+:\d+: declaration uses 'sorry'" test.log | sed -E 's#^warning: ([.]/)*##' | sed -E "s/\.lean:[0-9]+:[0-9]+: declaration uses 'sorry'//" | sed 's#/#.#g' | sort -u))
 for module in ${sorryModules[*]}; do
   echo "${module//.//}.lean"
@@ -470,18 +754,23 @@ for module in ${sorryModules[*]}; do
   if [[ $module =~ ^sympy ]]; then
     continue
   fi
-  echo "UPDATE lemma set error = '[{\"code\": \"\", \"file\": \"\", \"info\": \"declaration uses ''sorry''\", \"line\": 0, \"type\": \"warning\"}]' where user = '$user' and module = \"$module\";" >> test.sql
+  cat >> test.sql << EOF
+UPDATE lemma set meta = JSON_SET(IFNULL(meta, '{}'), '\$.error', CAST('[{"code": "", "file": "", "info": "declaration uses ''sorry''", "line": 0, "type": "warning"}]' AS JSON)) where user = '$user' and module = "$module";
+EOF
 done
 
 echo "failed:"
-failingModules=($(awk '/Some required builds logged failures:/{flag=1;next}/^[^-]/{flag=0}flag' test.log | sed 's/^- //'))
+
+failingModules=($(awk '/Some required (targets|builds) logged failures:/{flag=1;next}/^[^-]/{flag=0}flag' test.log | sed 's/^- //'))
 for module in ${failingModules[*]}; do
   echo "${module//.//}.lean"
   module=${module#Lemma.}
   if [[ $module =~ ^sympy ]]; then
     continue
   fi
-  echo "UPDATE lemma set error = '[{\"code\": \"\", \"file\": \"\", \"info\": \"\", \"line\": 0, \"type\": \"error\"}]' where user = '$user' and module = \"$module\";" >> test.sql
+  cat >> test.sql << EOF
+UPDATE lemma set meta = JSON_SET(IFNULL(meta, '{}'), '\$.error', CAST('[{"code": "", "file": "", "info": "", "line": 0, "type": "error"}]' AS JSON)) where user = '$user' and module = "$module";
+EOF
 done
 
 MYSQL_PORT=${MYSQL_PORT:-3306}
@@ -493,9 +782,16 @@ cat > "$tempConfigPath" << EOF
 [client]
 password = $MYSQL_PWD
 port = $MYSQL_PORT
+default-character-set = utf8mb4
 EOF
 
-mysql --defaults-extra-file="$tempConfigPath" -D axiom -e "update lemma set error = NULL where user = '$user'" 2>&1 | tee test.log
+# Query existing modules and imports for change detection
+declare -A dbImports
+while IFS=$'\t' read -r mod imps; do
+  case "$mod" in ""|ERROR*) continue ;; esac
+  [ -n "$imps" ] || continue  # skip mysql warnings and other non-tab lines
+  dbImports[$mod]="$imps"
+done < <(mysql --defaults-extra-file="$tempConfigPath" --batch --skip-column-names -D axiom -e "SELECT module, imports FROM lemma WHERE user = '$user'" 2>&1 | tee test.log)
 
 grep -P "ERROR \d+ \(\d+\): Unknown database 'axiom'" test.log
 if [ $? -eq 0 ]; then
@@ -525,7 +821,75 @@ if [ $? -eq 0 ]; then
     exit 1
   fi
 fi
-mysql --defaults-extra-file="$tempConfigPath" -D axiom -e "delete from lemma where user = '$user' and error is NULL" 2>&1 | tee test.log
+
+# Delete orphan modules (in DB but no longer on disk).
+# Skipped for -Modules runs: imports_dict only holds the filtered subset, so
+# everything outside the filter would look like an orphan. Synthetic dual rows
+# are kept explicitly — they are regenerated above but are not in imports_dict.
+if [ ${#MODULES[@]} -eq 0 ]; then
+  keepList=$(sql_in_list "${!imports_dict[@]}" "${!syntheticModules[@]}")
+  if [ -n "$keepList" ]; then
+    # piped via stdin: with thousands of modules the IN list overflows the
+    # per-argument execve limit (~128KB) when passed with -e
+    echo "DELETE FROM lemma WHERE user = '$user' AND module NOT IN ($keepList)" | mysql --defaults-extra-file="$tempConfigPath" -D axiom 2>&1 | tee test.log
+  fi
+else
+  echo "-Modules set: skipping orphan delete"
+fi
+
+# Detect changes: deleted, new, and modified-imports modules
+declare -A invalidate
+for m in "${!dbImports[@]}"; do
+  [ -n "${syntheticModules[$m]}" ] && continue      # dual row, still generated above
+  if [ ${#MODULES[@]} -gt 0 ] && ! module_included "$m"; then continue; fi  # outside -Modules scope
+  [ -z "${imports_dict[$m]+x}" ] && invalidate[$m]=1  # deleted
+done
+for m in "${!imports_dict[@]}"; do
+  if [ -z "${dbImports[$m]+x}" ]; then
+    invalidate[$m]=1  # new
+  else
+    diskImports=${imports_dict[$m]//[[:space:]]/}
+    oldImports=${dbImports[$m]//[[:space:]]/}
+    [ "$diskImports" != "$oldImports" ] && invalidate[$m]=1  # modified
+  fi
+done
+
+# Invalidate meta.callee for affected modules and ALL their transitive callers.
+# Direct importer lists are built once from the normalized (unprefixed) import
+# sets, then walked outward — the same fixpoint run.ps1 computes, without
+# re-scanning the whole graph once per layer.
+declare -A callers
+for m in "${!imports_dict[@]}"; do
+  s=${imports_dict[$m]}
+  s=${s:1:${#s}-2}  # strip [ ]
+  [ -n "$s" ] || continue
+  IFS=',' read -ra elems <<< "$s"
+  for e in "${elems[@]}"; do
+    imp=${e:1:${#e}-2}  # strip surrounding quotes
+    callers[${imp#Lemma.}]+="$m"$'\n'
+  done
+done
+
+queue=("${!invalidate[@]}")
+qi=0
+while [ "$qi" -lt "${#queue[@]}" ]; do
+  a=${queue[$qi]}
+  qi=$((qi + 1))
+  while IFS= read -r m; do
+    [ -n "$m" ] || continue
+    if [ -z "${invalidate[$m]+x}" ]; then
+      invalidate[$m]=1
+      queue+=("$m")
+    fi
+  done <<< "${callers[$a]:-}"
+done
+
+if [ ${#invalidate[@]} -gt 0 ]; then
+  invalidateList=$(sql_in_list "${!invalidate[@]}")
+  # piped via stdin: the IN list can exceed the per-argument execve limit
+  echo "UPDATE lemma SET meta = JSON_SET(IFNULL(meta, '{}'), '\$.callee', CAST('null' AS JSON)) WHERE user = '$user' AND module IN ($invalidateList)" | mysql --defaults-extra-file="$tempConfigPath" -D axiom 2>&1 | tee test.log
+  echo "invalidated meta.callee for ${#invalidate[@]} module(s)"
+fi
 end_time=$(date +%s)
 time_cost=$((end_time - start_time))
 
@@ -579,8 +943,6 @@ echo "total theorems  = ${#imports[@]}"
 echo "total plausible = ${#sorryModules[@]}"
 echo "total failed    = ${#failingModules[@]}"
 bash sh/delete_open.sh
-bash sh/delete_import.sh
 rm -f "$tempConfigPath"
 
 echo "total lines     = $(find Lemma -type f -name '*.lean' -not -name '*.echo.lean' -exec awk 'END{print NR}' {} + 2>/dev/null | awk '{s+=$1} END{print s}')"
-

@@ -389,7 +389,11 @@ if ($code) {
     $code['open'] = std\decode($code['open']);
     $code['preamble'] = std\decode($code['preamble']);
     $code['lemma'] = std\decode($code['lemma']);
-    $code['error'] = std\decode($code['error']);
+    $code['meta'] = std\decode($code['meta']) ?? [];
+    if (!is_array($code['meta']))
+        $code['meta'] = [];
+    if (!isset($code['meta']['error']) || !is_array($code['meta']['error']))
+        $code['meta']['error'] = [];
     $code['date'] = std\decode($code['date']);
 }
 
@@ -399,6 +403,15 @@ if (!$code || !$code['lemma'] || !$code['date']) {
     else {
         $leanCode = compile(file_get_contents($leanFile));
         $code = $leanCode->render2vue(false);
+        if (!isset($code['meta']) || !is_array($code['meta']))
+            $code['meta'] = [];
+        if (isset($code['error'])) {
+            if (!isset($code['meta']['error']))
+                $code['meta']['error'] = $code['error'];
+            unset($code['error']);
+        }
+        if (!isset($code['meta']['error']) || !is_array($code['meta']['error']))
+            $code['meta']['error'] = [];
     }
 }
 

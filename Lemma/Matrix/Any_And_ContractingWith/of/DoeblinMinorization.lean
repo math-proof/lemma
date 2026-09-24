@@ -4,7 +4,7 @@ import Lemma.Matrix.Nonexpansive.of.RowStochastic
 import Lemma.Matrix.OfL1.eq.SMul
 import Lemma.Matrix.OfL1.eq.Sub
 import Lemma.Real.Nndist.eq.NormOfL1Sub
-open WithLp Matrix Metric NNReal
+open WithLp Matrix Metric NNReal Real
 open scoped Matrix BigOperators Topology NNReal
 
 
@@ -36,27 +36,27 @@ private lemma main
     set xv : S → ℝ := WithLp.ofLp (x : l1Space S)
     set yv : S → ℝ := WithLp.ofLp (y : l1Space S)
     have hxB : xv ᵥ* broadcast ν = ν := by
-      rw [Matrix.VecMulBroadcast.eq.Mul_Sum]
+      rw [VecMulBroadcast.eq.Mul_Sum]
       funext j
       simp [xv, x.property.rowsum]
     have hyB : yv ᵥ* broadcast ν = ν := by
-      rw [Matrix.VecMulBroadcast.eq.Mul_Sum]
+      rw [VecMulBroadcast.eq.Mul_Sum]
       funext j
       simp [yv, y.property.rowsum]
     have hxP : xv ᵥ* P = ε • (xv ᵥ* broadcast ν) + (1 - ε) • (xv ᵥ* Q) := by
       rw [h_decomp]
-      simp [Matrix.vecMul_add, Matrix.VecMul_SMul.eq.SMul_VecMul]
+      simp [vecMul_add, VecMul_SMul.eq.SMul_VecMul]
     have hyP : yv ᵥ* P = ε • (yv ᵥ* broadcast ν) + (1 - ε) • (yv ᵥ* Q) := by
       rw [h_decomp]
-      simp [Matrix.vecMul_add, Matrix.VecMul_SMul.eq.SMul_VecMul]
+      simp [vecMul_add, VecMul_SMul.eq.SMul_VecMul]
     rw [edist_nndist, edist_nndist, ← ENNReal.coe_mul]
     apply ENNReal.coe_le_coe.mpr
     have hL : (nndist (smat_as_operator P x : l1Space S) (smat_as_operator P y : l1Space S) : ℝ) = ‖ofL1 (xv ᵥ* P - yv ᵥ* P)‖ := by
       change (nndist (WithLp.toLp 1 (xv ᵥ* P)) (WithLp.toLp 1 (yv ᵥ* P)) : ℝ) = _
-      simpa [ofL1] using nndist_ofL1 (xv ᵥ* P) (yv ᵥ* P)
+      simpa [ofL1] using Nndist.eq.NormOfL1Sub (xv ᵥ* P) (yv ᵥ* P)
     have hR : (nndist (x : l1Space S) (y : l1Space S) : ℝ) = ‖ofL1 (xv - yv)‖ := by
       rw [show (x : l1Space S) = ofL1 xv by simp [xv, ofL1], show (y : l1Space S) = ofL1 yv by simp [yv, ofL1]]
-      apply nndist_ofL1
+      apply Nndist.eq.NormOfL1Sub
     apply NNReal.coe_le_coe.mp
     rw [NNReal.coe_mul]
     change (nndist (smat_as_operator P x : l1Space S) (smat_as_operator P y : l1Space S) : ℝ) ≤ (K : ℝ) * (nndist (x : l1Space S) (y : l1Space S) : ℝ)
@@ -69,9 +69,9 @@ private lemma main
         simp [Pi.sub_apply, Pi.smul_apply]
         ring
       _ = (1 - ε) * ‖ofL1 (xv ᵥ* Q - yv ᵥ* Q)‖ := by
-        rw [Matrix.OfL1.eq.SMul, norm_smul, Real.norm_eq_abs, abs_of_nonneg hε0]
+        rw [OfL1.eq.SMul, norm_smul, norm_eq_abs, abs_of_nonneg hε0]
       _ ≤ (1 - ε) * ‖ofL1 (xv - yv)‖ := by
-        refine mul_le_mul_of_nonneg_left (Matrix.Nonexpansive.of.RowStochastic ?_ xv yv) hε0
+        refine mul_le_mul_of_nonneg_left (Nonexpansive.of.RowStochastic ?_ xv yv) hε0
         constructor
         intro i
         constructor

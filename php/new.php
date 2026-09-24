@@ -243,7 +243,7 @@ EOT;
         'open' => [],
         'preamble' => [],
         'lemma' => [$lemma],
-        'error' => [],
+        'meta' => ['error' => []],
         'date' => [
             'created' => date('Y-m-d')
         ],

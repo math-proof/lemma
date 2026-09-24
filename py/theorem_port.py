@@ -63,15 +63,14 @@ cleanup after scaffolding.
 
 Path derivation (two phases)
 ----------------------------
-Lemma naming is intentionally two-phase:
+Lemma naming is intentionally two-phase; both call ``mjs/lemmaPath.mjs``:
 
-1. **Rough** (lean.js) — ``node mjs/suggestLemmaPath.mjs`` parses the
-   skeleton source with lean.js and proposes a provisional ``Lemma/…`` path
-   *before* a finished proof.  Used when scaffolding.
-2. **Precise** (``Name.toJson`` / ``imply.struct``) — ``node
-   mjs/suggestFromLean.mjs`` enumerates elaborator-faithful alts after the
-   statement typechecks (proof may still be ``sorry``).  Used by
-   ``--finalize``.
+1. **Rough** — ``node mjs/lemmaPath.mjs --json`` on a temp file of the
+   skeleton source proposes a provisional ``Lemma/…`` path *before* a
+   finished proof.  Used when scaffolding (falls back to :func:`key_to_path`
+   on failure).
+2. **Finalize** — ``node mjs/lemmaPath.mjs --json`` re-checks an existing
+   ``Lemma/…`` path against the statement AST.  Used by ``--finalize``.
 
 Usage
 -----
@@ -116,9 +115,8 @@ ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_PORTED_ROOT = ROOT / "Lemma"
 DEFAULT_DATE = date.today().isoformat()
 
-# Phase-1 / phase-2 suggesters (orchestration only; naming lives in mjs/).
-SUGGEST_ROUGH = ROOT / "mjs" / "suggestLemmaPath.mjs"
-SUGGEST_PRECISE = ROOT / "mjs" / "suggestFromLean.mjs"
+# Path suggester for phase 1 (scaffold) and phase 2 (finalize); naming lives in mjs/.
+SUGGEST_LEMMAPATH = ROOT / "mjs" / "lemmaPath.mjs"
 
 # --- Regex patterns ---------------------------------------------------------
 
@@ -207,11 +205,11 @@ def rough_path_from_source(source: str, ported_root: Path) -> Path | None:
     """Phase 1: lean.js rough path from skeleton source text.
 
     Writes ``source`` to a temp ``.lean`` file, runs
-    ``mjs/suggestLemmaPath.mjs --json``, and maps ``suggestedPath`` under
+    ``mjs/lemmaPath.mjs --json``, and maps ``suggestedPath`` under
     ``ported_root``.  Returns ``None`` on any failure (caller falls back to
     :func:`key_to_path`).
     """
-    if not SUGGEST_ROUGH.is_file():
+    if not SUGGEST_LEMMAPATH.is_file():
         return None
     tmp: Path | None = None
     try:
@@ -223,7 +221,7 @@ def rough_path_from_source(source: str, ported_root: Path) -> Path | None:
         ) as fh:
             fh.write(source)
             tmp = Path(fh.name)
-        data = _run_node_json(SUGGEST_ROUGH, str(tmp))
+        data = _run_node_json(SUGGEST_LEMMAPATH, str(tmp))
         rel = str(data.get("suggestedPath") or "").replace(chr(92), "/").lstrip("/")
         if rel.startswith("Lemma/"):
             rel = rel[len("Lemma/") :]
@@ -245,20 +243,31 @@ def rough_path_from_source(source: str, ported_root: Path) -> Path | None:
 
 
 def precise_suggest(lean_file: Path) -> dict:
-    """Phase 2: elaborator-precise alts via ``mjs/suggestFromLean.mjs --json``."""
-    return _run_node_json(SUGGEST_PRECISE, str(lean_file))
+    """Phase 2: path check via ``mjs/lemmaPath.mjs --json``."""
+    return _run_node_json(SUGGEST_LEMMAPATH, str(lean_file))
+
+
+def _consistent_ok(result: dict) -> bool:
+    c = result.get("consistent")
+    if isinstance(c, dict):
+        return bool(c.get("ok"))
+    return bool(c)
 
 
 def best_precise_target(result: dict, ported_root: Path) -> str | None:
-    """Pick rename target: matched path if consistent, else shortest free alt."""
-    if result.get("consistent") and result.get("matchedSuggestion"):
-        return result["matchedSuggestion"]
-    for alt in result.get("suggestions") or []:
+    """Pick rename target: current path if consistent, else suggestedPath / free alt."""
+    if _consistent_ok(result):
+        return result.get("currentPath")
+    candidates = []
+    sp = result.get("suggestedPath")
+    if sp:
+        candidates.append(sp)
+    candidates.extend(result.get("suggestions") or [])
+    for alt in candidates:
         abs_path = ported_root / Path(alt)
         if not abs_path.exists():
             return alt
-    all_alts = result.get("allSuggestions") or []
-    return all_alts[0] if all_alts else None
+    return candidates[0] if candidates else None
 
 
 # ---------------------------------------------------------------------------
@@ -582,7 +591,7 @@ def main() -> int:
         description=(
             "Scaffold port skeletons from any source Lean file "
             "(phase-1 lean.js rough path) and/or finalize paths with "
-            "phase-2 Name.toJson suggestFromLean."
+            "mjs/lemmaPath.mjs."
         ),
     )
     ap.add_argument(
@@ -604,7 +613,7 @@ def main() -> int:
     ap.add_argument(
         "--finalize",
         action="store_true",
-        help="Phase 2: run suggestFromLean on existing .lean paths.",
+        help="Phase 2: run mjs/lemmaPath.mjs --json on existing .lean paths.",
     )
     ap.add_argument(
         "--apply-rename",
@@ -690,8 +699,8 @@ def _cmd_scaffold(args: argparse.Namespace, ported_root: Path) -> int:
 
 
 def _cmd_finalize(args: argparse.Namespace, ported_root: Path) -> int:
-    if not SUGGEST_PRECISE.is_file():
-        print(f"ERROR: missing {SUGGEST_PRECISE}", file=sys.stderr)
+    if not SUGGEST_LEMMAPATH.is_file():
+        print(f"ERROR: missing {SUGGEST_LEMMAPATH}", file=sys.stderr)
         return 1
     if not args.paths:
         print(
@@ -700,7 +709,7 @@ def _cmd_finalize(args: argparse.Namespace, ported_root: Path) -> int:
         )
         return 1
 
-    print(f"phase-2 precise : {SUGGEST_PRECISE.name}")
+    print(f"phase-2 precise : {SUGGEST_LEMMAPATH.name}")
     print(f"apply rename    : {args.apply_rename}")
     print()
 
@@ -722,7 +731,7 @@ def _cmd_finalize(args: argparse.Namespace, ported_root: Path) -> int:
             continue
 
         cur = result.get("currentPath") or ""
-        ok = bool(result.get("consistent"))
+        ok = _consistent_ok(result)
         target = best_precise_target(result, ported_root)
         status = "consistent" if ok else "inconsistent"
         print(f"{status}: Lemma/{cur}")

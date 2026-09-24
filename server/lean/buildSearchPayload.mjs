@@ -44,7 +44,7 @@ WITH _t_matrix AS (
   SELECT module, jt.type AS type
   FROM lemma
   CROSS JOIN JSON_TABLE(
-    error,
+    JSON_EXTRACT(meta, '$.error'),
     '$[*]' COLUMNS (type VARCHAR(191) PATH '$.type')
   ) AS jt
   WHERE user = ?

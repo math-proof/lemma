@@ -65,6 +65,20 @@ const PORT = Number(process.env.PORT || 80);
 const PROJECT_USER =
   process.env.LEAN_PROJECT_USER || path.basename(REPO_ROOT);
 
+/**
+ * `render2vue` / `echo2vue` still emit `error`; the `lemma` DB column and the
+ * render/newTheorem Vue pages now use `meta.error` — same move as php/lemma.php.
+ * render.vue reads `meta.error` in its template, so embedded payloads must carry `meta`.
+ */
+function normalizeCodeMeta(code) {
+  let meta = code.meta;
+  if (!meta || typeof meta !== 'object' || Array.isArray(meta)) meta = {};
+  if (!Array.isArray(meta.error)) meta.error = Array.isArray(code.error) ? code.error : [];
+  code.meta = meta;
+  if ('error' in code) delete code.error;
+  return code;
+}
+
 function ensureProjectUser(req, res, next) {
   if (req.params.userSegment !== PROJECT_USER) {
     res.status(404).type('html').send(
@@ -234,7 +248,7 @@ app.post('/:userSegment/php/request/echo.php', ensureProjectUser, async (req, re
       leanAbsPath: abs,
     });
     code.user = PROJECT_USER;
-    res.json(code);
+    res.json(normalizeCodeMeta(code));
   } catch (e) {
     console.error('[lean echo]', e);
     res.status(500).json({ error: String(e?.message || e) });
@@ -351,7 +365,7 @@ async function renderLemmaPage(res, module, userSegment) {
   }
 
   const title = titleFromModule(module);
-  const codeJson = jsonForScriptEmbed(code);
+  const codeJson = jsonForScriptEmbed(normalizeCodeMeta(code));
   res.set('Content-Type', 'text/html; charset=utf-8');
   res.render('lemma', { title, codeJson, userSegment });
 }
@@ -591,7 +605,7 @@ async function renderNewTheoremPage(res, module, userSegment) {
   code.date.created = new Date().toISOString().slice(0, 10);
   delete code.date.updated;
   code.name = module;
-  const newTheoremJson = jsonForScriptEmbed(code);
+  const newTheoremJson = jsonForScriptEmbed(normalizeCodeMeta(code));
   res.set('Content-Type', 'text/html; charset=utf-8');
   if (process.env.NODE_ENV !== 'production') {
     res.set('Cache-Control', 'no-store');

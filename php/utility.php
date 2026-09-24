@@ -348,7 +348,7 @@ _t_type as (
     from
         lemma
         cross join json_table(
-            error,
+            JSON_EXTRACT(meta, '$.error'),
             '$[*]' columns(type text path '$.type')
         ) as jt
     where
@@ -366,7 +366,7 @@ _t_matrix as (
     from
         lemma
         cross join json_table(
-            error,
+            JSON_EXTRACT(meta, '$.error'),
             '$[*]' columns(type text path '$.type')
         ) as jt
     where
@@ -422,7 +422,7 @@ SELECT
     l.open,
     l.set_option,
     l.preamble,
-    l.error,
+    l.meta,
     l.date,
     JSON_ARRAYAGG(
         JSON_OBJECT(
@@ -457,7 +457,7 @@ CROSS JOIN JSON_TABLE(
     )
 ) AS j
 WHERE l.user = '$user' AND l.module = "$module"
-GROUP BY l.user, l.module, l.imports, l.open, l.set_option, l.preamble, l.error, l.date
+GROUP BY l.user, l.module, l.imports, l.open, l.set_option, l.preamble, l.meta, l.date
 EOT;
     foreach (get_rows($sql) as $code) {
         return $code;

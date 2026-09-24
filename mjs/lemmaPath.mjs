@@ -1,86 +1,4 @@
-/**
- * lemmaPath.mjs
- * Suggest Lemma/ path from lean.js AST + README naming.
- *
- * Steps:
- *   1. Section from typeclasses/datatypes (TYPE_TO_SECTION).
- *   2. Imply from conclusion AST (root→leaf). Equality → LHS/eq/RHS.
- *   3. Prop givens same way; path order = reverse Lean order.
- *
- * Usage: node mjs/lemmaPath.mjs [--json] <path-to.lean>
- *
- * Path atoms:
- *   - binder leaves (n, A, …) are holes — not emitted (same idea as pathFromStruct symbols)
- *   - `_/eq/One` collapses to `Eq_One`, then `Eq_1` (README Snake_Case; Windows-safe)
- *   - bare segment `1` alone is spelled `One` (not `/1/`) so Windows lake can build
- *
- * # Lemma Naming Convention
- * Rule of thumb: implyCondition.of.givenCondition.givenCondition...givenCondition
- * The givenConditions are listed using DeBruijn, in the reverse order as indexed in lean code,
- * unless otherwise stated, e.g.: constructor order wherein givenConditions are listed according
- * to the parameter order of the constructor indicated by implyCondition.
- * if implyCondition is a conjunction, it is written as:
- * implyCondition.implyCondition...implyCondition.of.givenCondition.givenCondition...givenCondition
- *
- * ## CamelCase
- * CamelCase is used for unary function, eg:
- * LogSumExp denotes the expression: (exp x).sum.log
- * generally, if F is a unary function, and X is its argument, then
- * FX denote the expression: F X
- *
- * ## Snake_Case
- * Snake_Case is used for binary function, eg:
- * Eq_Log
- * generally, if F is a binary function, and Y is its second argument, then
- * F_Y denote the expression: F _ Y
- * wherein:
- * - `_` (placeholder / hole) denotes the term to be inferred by Lean, i.e. any type for X
- * - Y is the given type for the second argument of F
- *
- * ## Apostrophe
- * Apostrophe is used to separate consecutive digits, eg:
- * Div1'2 denotes: 1 / 2
- * Apostrophe is introduced to resolve ambiguity, otherwise 1 / 2 will have to be written as:
- * DivOneTwo, etc.
- *
- * ## Infix Operators
- * small-letter binary infix operators are short name for Capital-letter operator name, eg:
- * | infix operators  | prefix operators | Lean class | sympy equivalent |
- * | :--: |  :--: |  :--: |   :--: |
- * | X.eq.Y | = | Eq |  Equal |
- * | X.ne.Y | ≠  | Ne |  Unequal |
- * | X.gt.Y | > | Gt | Greater |
- * | X.lt.Y | < | Le | Less |
- * | X.ge.Y | ≥ | Ge | GreaterThan |
- * | X.le.Y | ≤ | Le | LessThan|
- * | X.in.Y | ∈ | Membership |  Contains |
- * | X.is.Y | ↔ | Iff |  Equivalent |
- * | X.as.Y | ≃ | SEq |  -- |
- * | X.ae.Y | =ᵐ | MEq | Equal |
- * | X.ou.Y | ∨ | Or |  Or |
- * | X.et.Y | ∧ | And |  And |
- * | X.at.Y | ≈ | XEq |  -- |
- * | X.to.Y | → | ·.stdPart = · |  -- |
- * | X.dvd.Y | \| | Dvd |  -- |
- * | X.sub.Y | ⊆ | Subset | Subset |
- * | X.sup.Y | ⊇ | Superset | Supset |
- * | X.ll.Y | ≪ | AbsolutelyContinuous |  -- |
- * | X.gg.Y | ≫ | CategoryStruct.comp |  -- |
- *
- * ## Plural S
- * The English Plural Letter S is used to denote double occurrence of types:
- * - SEqSumSGet is short for : SumGet.as.SumGet
- *
- * ## Identity
- * The Identity is a simplified version of an Equality/Equivalence of the same type:
- * - Sum is short for : EqSumS (which as rule of `Plural S`, is defined as Sum.eq.Sum)
- * - And is abbreviated from : IffAndS (which as rule of `Plural S`, is defined as And.is.And)
- *
- * ## Variadic Functions
- * List, Finset are considered variadic functions, eg:
- * - In_ListNeg denotes: _ ∈ [Neg]
- * - In_Finset_AddMulS denotes: _ ∈ {_, AddMul, AddMul}
- */
+
 import fs from "fs";
 import path from "path";
 import { fileURLToPath, pathToFileURL } from "url";
@@ -171,7 +89,13 @@ function sameChildS(name) {
   return name + "S";
 }
 
-/** Cartesian join of alt lists via joiner(L, R). Empty side acts as identity. */
+function pluralMidS(name) {
+  if (!name) return "";
+  const m = /^([A-Z][a-z0-9]*)([\s\S]*)$/.exec(name);
+  if (!m) return name + "S";
+  return m[1] + "S" + m[2];
+}
+
 function cartJoin(leftAlts, rightAlts, joiner) {
   const L = leftAlts?.length ? leftAlts : [""];
   const R = rightAlts?.length ? rightAlts : [""];
@@ -334,12 +258,18 @@ function nameToken(text) {
 function collectLeafBinders(node, out = new Set()) {
   if (!node || typeof node !== "object") return out;
   const name = cls(node);
-  // {x : T} or (h : P)
   if (name === "LeanBrace" || name === "LeanParenthesis") {
     const colon = node.args?.[0];
-    if (cls(colon) === "LeanColon" && cls(colon.args?.[0]) === "LeanToken") {
-      const t = colon.args[0].text;
-      if (t) out.add(t);
+    if (cls(colon) === "LeanColon") {
+      const binders = colon.args?.[0];
+      if (cls(binders) === "LeanToken") {
+        if (binders.text) out.add(binders.text);
+      } else if (cls(binders) === "LeanArgsSpaceSeparated") {
+        const bs = binders.args || [];
+        if (bs.every((x) => cls(x) === "LeanToken")) {
+          for (const a of bs) if (a.text) out.add(a.text);
+        }
+      }
     }
   }
   // ∀ a ∈ A, ... / ∃ a ∈ A, ...
@@ -371,7 +301,7 @@ function snakeFocus(tag, focus) {
 /**
  * Bare path segment `1` → `One` (Windows `lake` rejects `/1/` folders).
  * Keep `0` and compound atoms like `Eq_1` / `Ge_1` unchanged.
- * Same rule as pathFromStruct.mjs (nat literal 1 → One).
+ * Nat literal 1 is spelled One in path segments (Windows-safe).
  */
 function sanitizePathSeg(seg) {
   return seg === "1" ? "One" : seg;
@@ -503,6 +433,33 @@ function isAeQuantifier(node) {
   return foundPartial || foundBvar;
 }
 
+const GUARD_REL = new Set(["Lean_lt", "Lean_gt", "Lean_le", "Lean_ge", "Lean_in", "LeanIn"]);
+
+function guardRestConjunct(node) {
+  let n = node;
+  while (n && (cls(n) === "LeanParenthesis" || cls(n) === "LeanStatements" || cls(n) === "LeanArgsNewLineSeparated")) {
+    n = cls(n) === "LeanParenthesis" ? n.args?.[0] : firstConclusion(n);
+  }
+  if (!n || (cls(n) !== "Lean_and" && cls(n) !== "Lean_land")) return null;
+  const [left, right] = n.args || [];
+  if (!right) return null;
+  let l = left;
+  while (cls(l) === "LeanParenthesis") l = l.args?.[0];
+  return GUARD_REL.has(cls(l)) ? right : null;
+}
+
+function splitTopConjunction(node) {
+  let n = node;
+  while (n && (cls(n) === "LeanParenthesis" || cls(n) === "LeanStatements" || cls(n) === "LeanArgsNewLineSeparated")) {
+    n = cls(n) === "LeanParenthesis" ? n.args?.[0] : firstConclusion(n);
+  }
+  if (!n || (cls(n) !== "Lean_and" && cls(n) !== "Lean_land")) return null;
+  const [left, right] = n.args || [];
+  if (!left || !right) return null;
+  const leftParts = splitTopConjunction(left);
+  return [...(leftParts || [left]), right];
+}
+
 function firstConclusion(node) {
   const args = node?.args || [];
   const meaningful = args.filter((a) => {
@@ -515,7 +472,7 @@ function firstConclusion(node) {
 
 /**
  * Rough lean.js path atom(s). Offline fallback for phase-1 scaffolding;
- * precise alts live in pathFromStruct / suggestFromLean.
+ * naming alts for structured expressions also live in nameExprAlts.
  */
 function nameExpr(node, opts = {}) {
   if (!node) return "";
@@ -544,9 +501,12 @@ function nameExpr(node, opts = {}) {
     if (name === "Lean_exists" || name === "Lean_forall") {
       const body = nameExpr(args[args.length - 1], opts);
       if (!body) return tag;
-      // Ae/bvar measure binders are path noise — keep mathematical ∀ as All_.
       if (isAeQuantifier(node)) return body;
-      // Also drop All_ when body is already a structured Prob/Eq path atom.
+      const rest = guardRestConjunct(args[args.length - 1]);
+      if (rest) {
+        const restName = nameExpr(rest, opts);
+        if (restName) return tag + "_And_" + restName;
+      }
       if (body.includes("/") || /^(Prob|DivProb|MulProb|Eq)/.test(body)) return body;
       return tag + "_" + body;
     }
@@ -622,7 +582,7 @@ function nameExpr(node, opts = {}) {
   }
 
   if (name === "LeanProperty") {
-    // AST fallback only: Lean JSON (suggestFromLean) owns const vs method.
+    // AST heuristic for const vs method naming.
     // Bare-token receiver (ns.f or x.f) -> prop only; structured receiver -> PropReceiver.
     const obj = node.args?.[0];
     const prop = node.args?.[1];
@@ -655,6 +615,17 @@ function nameExpr(node, opts = {}) {
     }
     const last = args[args.length - 1];
     if (cls(last) === "LeanParenthesis" && cls(last.args?.[0]) === "LeanSub") return "UFnSub";
+    if (cls(head) === "LeanParenthesis" && cls(unwrapParen(head)) !== "LeanToken") {
+      const headName = nameExpr(head, opts);
+      if (headName) {
+        let acc = joinHeadChild("Get", headName);
+        for (const a of args.slice(1)) {
+          const an = nameExpr(a, opts);
+          if (an) acc = joinHeadChild(acc, an);
+        }
+        return acc;
+      }
+    }
     if (cls(head) === "LeanProperty") {
       const method = nameExpr(head, opts);
       const argNames = args.slice(1).map((a) => nameExpr(a, opts)).filter(Boolean);
@@ -716,19 +687,18 @@ function nameExpr(node, opts = {}) {
     }
     const left = nameExpr(args[0], opts);
     const right = nameExpr(args[1], opts);
-    if (left && right) return tag + left + right;
-    return left || right || tag;
+    if (left && right) return left === right ? tag + pluralMidS(left) : tag + left + right;
+    if (right) return snakeFocus(tag, right);
+    if (left) return snakeFocus(tag, left);
+    return tag;
   }
   if (name === "LeanDoubleAngleQuotation") {
-    return ""; // non-bvar «…» still a hole for path purposes
+    return "";
   }
   if (name === "LeanGetElem") {
-    // Bare ℙ[π] without an applied event.
     if (cls(node.args?.[0]) === "LeanToken" && node.args[0].text === "ℙ") return "Prob";
   }
   if (name === "LeanBitOr") {
-    // Bare `|` is also CondIndep (`x ⟂ᵢ y | z`). Only ℙ[π](·|·) apps
-    // (via nameProbApp) should become ProbCond*; leave other bars unnamed.
     return "";
   }
   if (Array.isArray(node.args)) {
@@ -748,10 +718,6 @@ function joinHeadChild(head, child) {
   return head + child;
 }
 
-/**
- * Generate ALL naming alternatives for an AST node (array of strings).
- * Mirrors nameExpr() but returns multiple variants at each decision point.
- */
 function nameExprAlts(node, opts = {}) {
   if (!node) return [];
   const name = cls(node);
@@ -772,19 +738,21 @@ function nameExprAlts(node, opts = {}) {
       const tag = CLASS_TOKEN[name];
       const args = node.args || [];
       if (name === "Lean_exists" || name === "Lean_forall") {
-        const bodyAlts = nameExprAlts(args[args.length - 1], opts);
-        if (!bodyAlts.length) return [tag];
-        if (isAeQuantifier(node)) return bodyAlts;
+        const bodyNode = args[args.length - 1];
+        const bodyAlts = nameExprAlts(bodyNode, opts);
+        const rest = guardRestConjunct(bodyNode);
+        const guardAlts = rest ? nameExprAlts(rest, opts).map((r) => tag + "_And_" + r) : [];
+        if (!bodyAlts.length) return uniq([...guardAlts, tag]);
+        if (isAeQuantifier(node)) return uniq([...bodyAlts, ...guardAlts]);
         if (bodyAlts.some(b => b.includes("/") || /^(Prob|DivProb|MulProb|Eq)/.test(b))) {
-          return bodyAlts;
+          return uniq([...bodyAlts, ...guardAlts]);
         }
-        // Generate both Tag_body and TagBody styles
         const out = [];
         for (const b of bodyAlts) {
           out.push(tag + "_" + b);
           out.push(tag + b);
         }
-        return uniq(out);
+        return uniq([...guardAlts, ...out]);
       }
       if (name === "Lean_lnot" || name === "Lean_not") {
         const bodyAlts = nameExprAlts(args[args.length - 1], opts);
@@ -932,6 +900,23 @@ function nameExprAlts(node, opts = {}) {
     const last = args[args.length - 1];
     if (cls(last) === "LeanParenthesis" && cls(last.args?.[0]) === "LeanSub") return ["UFnSub"];
 
+    // Matrix/vector indexing: `(M expr) i j` parses with a parenthesized
+    // compound head (GetElem via coeFun) → Get + head alts; binder indices
+    // are holes. (P ^ m) i k → GetPow, (P ^ (m+n)) i j → GetPow_Add.
+    if (cls(head) === "LeanParenthesis" && cls(unwrapParen(head)) !== "LeanToken") {
+      const headAlts = nameExprAlts(head, opts);
+      if (headAlts.length) {
+        const argAltLists = args.slice(1).map(a => nameExprAlts(a, opts)).filter(a => a.length);
+        let acc = cartJoin(["Get"], headAlts, joinHeadChild);
+        const all = [...acc];
+        for (const aa of argAltLists) {
+          acc = cartJoin(acc, aa, joinHeadChild);
+          all.push(...acc);
+        }
+        return uniq(all);
+      }
+    }
+
     // Property head: method(args)
     if (cls(head) === "LeanProperty") {
       const methodAlts = nameExprAlts(head, opts);
@@ -1013,6 +998,7 @@ function nameExprAlts(node, opts = {}) {
       for (const r of rightAlts) {
         if (l && r) {
           if (l === r) {
+            out.push(tag + pluralMidS(l));
             out.push(tag + sameChildS(l));
           }
           out.push(tag + l + r);
@@ -1024,8 +1010,8 @@ function nameExprAlts(node, opts = {}) {
     }
     if (!leftAlts.length && rightAlts.length) {
       for (const r of rightAlts) {
-        out.push(tag + r);
         out.push(tag + "_" + r);
+        out.push(tag + r);
       }
     }
     if (leftAlts.length && !rightAlts.length) {
@@ -1119,11 +1105,26 @@ function extractLemma(ast, lemmaName) {
   return lemmas.find(hasMainAttr) || lemmas[0];
 }
 
+function findColonDeep(node) {
+  if (!node || typeof node !== "object") return null;
+  if (cls(node) === "LeanColon") return node;
+  if (Array.isArray(node.args)) {
+    for (const c of node.args) {
+      const r = findColonDeep(c);
+      if (r) return r;
+    }
+  }
+  return null;
+}
+
 function extractSignature(lemma) {
   const outerAssign = (lemma.args || []).find((a) => cls(a) === "LeanAssign");
   if (!outerAssign) return null;
-  const nested = (outerAssign.args || []).find((a) => cls(a) === "LeanAssign");
-  const colon = (nested?.args || []).find((a) => cls(a) === "LeanColon") || (outerAssign.args || []).find((a) => cls(a) === "LeanColon");
+  let colon = (outerAssign.args || []).find((a) => cls(a) === "LeanColon");
+  if (!colon) {
+    const wrapped = (outerAssign.args || []).find((a) => cls(a) === "LeanAssign");
+    colon = wrapped ? findColonDeep(wrapped) : null;
+  }
   if (!colon) return null;
   const indented = (colon.args || []).find((a) => cls(a) === "LeanArgsIndented");
   const implyStmts = (colon.args || []).find((a) => cls(a) === "LeanStatements");
@@ -1163,8 +1164,18 @@ export function suggest(filePath, lemmaName) {
   if (relCurrent.startsWith("..")) relCurrent = path.relative(REPO, abs).replace(/\\/g, "/");
   const leaves = collectLeafBinders(lemma);
   const nameOpts = { leaves };
-  // Generate ALL naming alternatives
-  const implyAlts = nameExprAlts(sig.implyStmts, nameOpts).filter(Boolean);
+  const implyAlts = (() => {
+    const joined = nameExprAlts(sig.implyStmts, nameOpts).filter(Boolean);
+    const parts = splitTopConjunction(sig.implyStmts);
+    if (!parts || parts.length < 2) return joined;
+    const perConjunct = parts.map((p) => nameExprAlts(p, nameOpts).filter(Boolean));
+    if (!perConjunct.every((a) => a.length)) return joined;
+    const splitAlts = perConjunct.reduce(
+      (acc, a) => acc.flatMap((pfx) => a.map((x) => (pfx ? pfx + "/" + x : x))),
+      [""],
+    );
+    return uniq([...splitAlts, ...joined]);
+  })();
   const implyName = implyAlts[0] || "Imply";
   const implyChain = classChain(sig.implyStmts);
   const hyps = extractGivens(sig.nls);

@@ -153,7 +153,12 @@ export function codeFromMysqlRow(row, module, user) {
   code.open = decode(code.open);
   code.preamble = decode(code.preamble);
   code.lemma = decode(code.lemma);
-  code.error = decode(code.error);
+  let meta = decode(code.meta);
+  if (meta == null || typeof meta !== 'object' || Array.isArray(meta))
+    meta = {};
+  if (!Array.isArray(meta.error))
+    meta.error = [];
+  code.meta = meta;
   code.date = decode(code.date);
   code.module = module;
   code.user = user;
