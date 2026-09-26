@@ -1,5 +1,5 @@
 # usage:
-# .\ps1\update.ps1 -clean
+# .\ps1\setup.ps1 [-clean] [-version vX.Y.Z]
 param(
     [switch]$clean,
     [String]$version = "v4.33.1"
@@ -159,7 +159,7 @@ foreach ($package in $mathlibManifest.packages) {
         $current_rev = & git -C $packagePath rev-parse HEAD 2>$null
         # Compare with the desired rev
         if ($current_rev -eq $rev) {
-            Write-Host "Package $name is already at revision $rev. Skipping."
+            Write-Host "Package $name is already at revision $rev. Skipping fetch."
             continue
         }
     } else {
@@ -184,27 +184,29 @@ if ($updated) {
     Write-Host "🌟 lake-manifest.json updated successfully."
 }
 
-# Check if Node.js is installed
-$node = Get-Command node -ErrorAction SilentlyContinue
-# make sure node is available https://nodejs.org/en/download
-if ($null -ne $node) {
-    Write-Host "✅ Node.js is already installed. Version: $(node -v)"
-} else {
-    $installDir = "D:\Program Files\nodejs"
-
-    Write-Host "⚠️ Node.js not found. Installing latest LTS version..."
-
-    # Download latest Node.js LTS installer (x64 .msi)
-    $nodeInstaller = "$env:TEMP\node-lts.msi"
-    Invoke-WebRequest -Uri "https://nodejs.org/dist/v22.20.0/node-v22.20.0-x64.msi" -OutFile $nodeInstaller
-
-    # Install silently
-    Start-Process msiexec.exe -Wait -ArgumentList "/i `"$nodeInstaller`" INSTALLDIR=`"$installDir`" /quiet /norestart"
-
-    # Clean up installer
-    Remove-Item $nodeInstaller -Force
-
-    Write-Host "✅ Node.js installation complete. Version: $(node -v)"
+$currentManifest = Get-Content -Raw -Path "lake-manifest.json" | ConvertFrom-Json
+foreach ($package in $currentManifest.packages) {
+    $name = $package.name
+    $rev = $package.rev
+    $packagePath = ".lake/packages/$name"
+    if (-Not (Test-Path $packagePath)) {
+        Write-Host "warning: package $name missing at $packagePath; skip clean reset"
+        continue
+    }
+    Write-Host "🧹 reset package $name to clean manifest rev $rev"
+    git -C $packagePath cat-file -e "${rev}^{commit}" 2>$null
+    if ($LASTEXITCODE -ne 0) {
+        git -C $packagePath fetch --depth 1 origin $rev
+        if ($LASTEXITCODE -ne 0) {
+            throw "Git fetch failed for $name with exit code $LASTEXITCODE"
+        }
+    }
+    git -C $packagePath checkout --force $rev
+    if ($LASTEXITCODE -ne 0) {
+        throw "Git checkout failed for $name with exit code $LASTEXITCODE"
+    }
+    git -C $packagePath reset --hard HEAD
+    git -C $packagePath clean -fd
 }
 
 # Run lake commands
@@ -213,14 +215,53 @@ if ($needsClean -or $clean) {
     Write-Host "Lean toolchain changed recently — running lake clean"
     lake clean
 }
-# build proofwidgets to eliminate the following error:
-# error: ProofWidgets not up-to-date. Please run `lake exe cache get` to fetch the latest ProofWidgets. 
-$name = "proofwidgets"
-Write-Host "⏳ build package $name..."
-$packagePath = ".lake/packages/$name"
+# Mathlib oleans come from the cache.
+Write-Host "⏳ lake exe cache get..."
+lake exe cache get
+if ($LASTEXITCODE -ne 0) {
+    throw "lake exe cache get failed with exit code $LASTEXITCODE"
+}
+
+# Ensure Node.js (needed to build ProofWidgets widget JS).
+# make sure node is available https://nodejs.org/en/download
+$node = Get-Command node -ErrorAction SilentlyContinue
+if ($null -ne $node) {
+    Write-Host "✅ Node.js is already installed. Version: $(node -v)"
+} else {
+    $installDir = "D:\Program Files\nodejs"
+    Write-Host "⚠️ Node.js not found. Installing v22.20.0 to $installDir ..."
+    $nodeInstaller = "$env:TEMP\node-lts.msi"
+    Invoke-WebRequest -Uri "https://nodejs.org/dist/v22.20.0/node-v22.20.0-x64.msi" -OutFile $nodeInstaller
+    $proc = Start-Process msiexec.exe -Wait -PassThru -ArgumentList "/i `"$nodeInstaller`" INSTALLDIR=`"$installDir`" /quiet /norestart"
+    Remove-Item $nodeInstaller -Force
+    if ($proc.ExitCode -ne 0) {
+        throw "Node.js MSI install failed with exit code $($proc.ExitCode)"
+    }
+    # Refresh PATH for this session (machine + user) and include installDir.
+    $env:Path = [Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [Environment]::GetEnvironmentVariable("Path", "User")
+    if ($env:Path -notlike "*$installDir*") {
+        $env:Path = "$installDir;$env:Path"
+    }
+    if ($null -eq (Get-Command node -ErrorAction SilentlyContinue)) {
+        throw "Node.js installed but node is still not on PATH"
+    }
+    Write-Host "✅ Node.js installation complete. Version: $(node -v)"
+}
+
+# Build ProofWidgets (incl. widget JS) directly inside the package.
+$packagePath = ".lake/packages/proofwidgets"
+if (-Not (Test-Path $packagePath)) {
+    throw "$packagePath not found"
+}
+Write-Host "⏳ build package proofwidgets (Node)..."
 Push-Location $packagePath
 lake build
+$pwExit = $LASTEXITCODE
 Pop-Location
+if ($pwExit -ne 0) {
+    throw "lake build in $packagePath failed with exit code $pwExit"
+}
+
 # now build the entire project
 Write-Host "⏳ building the entire project..."
 lake build

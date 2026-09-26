@@ -106,11 +106,14 @@ function isIdentContinueToken(s) {
 
 function escapeSpecialsForLatex(token) {
     let s = String(token);
-    const m = /^(\w+?)_(.+)$/.exec(s);
+    if (s.startsWith('.')) return s.replace(/_/g, '\\_');
+    // leading underscores (`_hPxy_z`) are part of the name, never a subscript
+    const m = /^(_*)([^\W_]\w*?)_(.+)$/.exec(s);
     if (m) {
-        const [, head, tail] = m;
+        const [, lead, head, tail] = m;
         const escTail = tail.replace(/[{}_]/g, (c) => `\\${c}`);
-        return head.length === 1 ? `${head}_{${escTail}}` : `${head}\\_${escTail}`;
+        const escLead = lead.replace(/_/g, '\\_');
+        return !lead && head.length === 1 ? `${head}_{${escTail}}` : `${escLead}${head}\\_${escTail}`;
     }
     if (/\w_$/.test(s)) return s.slice(0, -1) + '\\_';
     return s;
@@ -447,6 +450,21 @@ export class Lean extends IndentedNode {
         const tokens = self.tokens;
         const count = tokens.length;
 
+        // `ℝ≥0` / `ℝ≥0∞` / `ℚ≥0` — Mathlib type notations glued into one identifier
+        if ((token === 'ℝ' || token === 'ℚ') && tokens[self.start_idx + 1] === '≥' && tokens[self.start_idx + 2] === '0') {
+            token += '≥0';
+            self.start_idx += 2;
+            if (tokens[self.start_idx + 1] === '∞') {
+                token += '∞';
+                self.start_idx++;
+            }
+        }
+
+        // `𝓝[>] x` / `𝓝[≠] x` — a lone relation symbol as the whole bracket content is a word.
+        if (this instanceof LeanCaret && tokens[self.start_idx - 1] === '[' && tokens[self.start_idx + 1] === ']' &&
+            (token === '>' || token === '<' || token === '≠' || token === '≥' || token === '≤'))
+            return this.parent.insert_word(this, token);
+
         switch (token) {
             case 'import':
             case 'namespace':
@@ -553,6 +571,10 @@ export class Lean extends IndentedNode {
                 ) {
                     caret = LeanWith.findAlternativeCaret(this.parent, indent);
                 }
+                if (!caret && tokens[self.start_idx + k] === '∂' && indent > 0)
+                    caret = Lean_int.continueMeasure(this, indent);
+                if (!caret && tokens[self.start_idx + k] === '_' && indent > 0)
+                    caret = LeanCalc.continueStep(this, newline_count, indent);
                 if (!caret)
                     caret = this.parent.insert_newline(this, newline_count, indent, tokens[self.start_idx + k]);
                 self.start_idx += j - 1;
@@ -569,6 +591,24 @@ export class Lean extends IndentedNode {
                     (this.parent instanceof LeanStatements || this.parent instanceof LeanSequentialTacticCombinator)
                 )
                     return this.parent.insert_unary(this, 'LeanTacticBlock');
+                // `integral_fintype .of_finite` / `(.inl x)` — leading-dot identifier (dot notation on the
+                // expected type) is a separate argument, never a field access on the previous term.
+                if (
+                    /^[\s(\[⟨,]$/u.test(tokens[self.start_idx - 1] ?? '') &&
+                    /^[A-Za-z]/.test(tokens[self.start_idx + 1] ?? '')
+                ) {
+                    let word = '.';
+                    while (isIdentContinueToken(tokens[self.start_idx + 1] ?? '')) word += tokens[++self.start_idx];
+                    return this.parent.insert_word(this, word);
+                }
+                // `X⁻¹.data` / `Aᵀ.det` — the caret sits on the postfix operand; the field
+                // access applies to the whole postfix term.
+                if (
+                    this.parent instanceof LeanUnaryArithmeticPost &&
+                    this.parent.arg === this &&
+                    tokens[self.start_idx - 1] === [...this.parent.operator].pop()
+                )
+                    return this.parent.push_binary(LeanProperty);
                 return this.push_binary(LeanProperty);
             case 'is': {
                 const asPropertyField = self.parseKeywordAsPropertyField(this, token);
@@ -620,12 +660,26 @@ export class Lean extends IndentedNode {
                 return this.parent.push_right('LeanAngleBracket');
             case '⌈':
                 return this.parent.insert_left(this, 'LeanCeil');
-            case '⌉':
-                return this.parent.push_right('LeanCeil');
+            case '⌉': {
+                const node = this.parent.push_right('LeanCeil');
+                // `⌈x⌉₊` — `Nat.ceil`
+                if (tokens[self.start_idx + 1] === '₊' && node instanceof LeanCeil) {
+                    self.start_idx++;
+                    node.nat = true;
+                }
+                return node;
+            }
             case '⌊':
                 return this.parent.insert_left(this, 'LeanFloor');
-            case '⌋':
-                return this.parent.push_right('LeanFloor');
+            case '⌋': {
+                const node = this.parent.push_right('LeanFloor');
+                // `⌊x⌋₊` — `Nat.floor`
+                if (tokens[self.start_idx + 1] === '₊' && node instanceof LeanFloor) {
+                    self.start_idx++;
+                    node.nat = true;
+                }
+                return node;
+            }
             case '⟦':
                 return this.parent.insert_left(this, 'LeanWhiteSquareBracket', self.start_idx ? tokens[self.start_idx - 1] : '');
             case '⟧':
@@ -634,6 +688,21 @@ export class Lean extends IndentedNode {
                 return this.parent.insert_left(this, 'LeanDoubleAngleQuotation');
             case '»':
                 return this.parent.push_right('LeanDoubleAngleQuotation');
+            case '⟪':
+                return this.parent.insert_left(this, 'LeanInner');
+            case '⟫': {
+                const node = this.parent.push_right('LeanInner');
+                // `⟪x, y⟫_ℝ` — Mathlib inner-product notation with its scalar field
+                if (node instanceof LeanInner) {
+                    if (tokens[self.start_idx + 1] === '_' && /^[ℝℂ𝕜]$/u.test(tokens[self.start_idx + 2] ?? '')) {
+                        node.field = '_' + tokens[self.start_idx + 2];
+                        self.start_idx += 2;
+                    } else if (/^_[ℝℂ𝕜]$/u.test(tokens[self.start_idx + 1] ?? '')) {
+                        node.field = tokens[++self.start_idx];
+                    }
+                }
+                return node;
+            }
             case '‹':
                 return this.parent.insert_left(this, 'LeanSingleAngleQuotation');
             case '›':
@@ -649,6 +718,9 @@ export class Lean extends IndentedNode {
                 if (tokens[self.start_idx + 1] === '_') {
                     self.start_idx++;
                     token += '_';
+                } else if (/^[A-Za-z]/.test(tokens[self.start_idx + 1] ?? '')) {
+                    // named metavariable `?N` / `?hN` is one identifier
+                    while (isIdentContinueToken(tokens[self.start_idx + 1] ?? '')) token += tokens[++self.start_idx];
                 }
                 return this.parent.insert_word(this, token);
             case '<':
@@ -685,9 +757,40 @@ export class Lean extends IndentedNode {
                 }
                 return this.push_arithmetic(token);
             case '≤':
-                return this.push_binary(Lean_le);
-            case '≥':
-                return this.push_binary(Lean_ge);
+            case '≥': {
+                // `≤ᵐ[μ]` / `≥ᶠ[l]` — optional unicode superscript + optional [modifier], like `=ᵐ[μ]`.
+                const Ctor = token === '≤' ? Lean_le : Lean_ge;
+                let superscript = '';
+                let modifier = '';
+                const sup = tokens[self.start_idx + 1];
+                if (sup === 'ᵐ' || sup === 'ᶠ') {
+                    superscript = sup;
+                    self.start_idx++;
+                    if (tokens[self.start_idx + 1] === '[') {
+                        self.start_idx += 2;
+                        const startIdx = self.start_idx;
+                        let depth = 0;
+                        while (self.start_idx < tokens.length && (tokens[self.start_idx] !== ']' || depth > 0)) {
+                            if (tokens[self.start_idx] === '[') depth++;
+                            else if (tokens[self.start_idx] === ']') depth--;
+                            self.start_idx++;
+                        }
+                        modifier = tokens.slice(startIdx, self.start_idx).join('');
+                        if (self.start_idx < tokens.length) self.start_idx++;
+                        self.start_idx--;
+                    }
+                }
+                const caret = this.push_binary(Ctor);
+                if (superscript) {
+                    let p = caret;
+                    while (p && !(p instanceof Ctor)) p = p.parent;
+                    if (p) {
+                        p.superscript = superscript;
+                        p.modifier = modifier;
+                    }
+                }
+                return caret;
+            }
             case '≪':
                 return this.push_binary(Lean_ll);
             case '≫':
@@ -832,6 +935,18 @@ export class Lean extends IndentedNode {
                     }
                     return this.push_post_unary('LeanPipeForward');
                 }
+                if (
+                    tokens[self.start_idx - 1] === '[' &&
+                    this instanceof LeanCaret &&
+                    (this.parent instanceof LeanGetElem || this.parent instanceof LeanBracket)
+                ) {
+                    // `μ[|s]` — ProbabilityTheory `cond μ s`: the bar belongs to the bracket, never to `|x|`.
+                    const parent = this.parent;
+                    const bar = new LeanCondBar(this, this.indent, this.level);
+                    parent.replace(this, bar);
+                    bar.parent = parent;
+                    return this;
+                }
                 return this.parent.insert_bar(this, self.start_idx ? tokens[self.start_idx - 1] : '', next);
             }
             case '&':
@@ -921,6 +1036,14 @@ export class Lean extends IndentedNode {
                         if (self.start_idx < tokens.length) self.start_idx++; // skip `]`
                         self.start_idx--; // loop will increment
                     }
+                } else if (sub === '+' || sub === '*') {
+                    // bundled hom arrows `→+`, `→*`, `→+*`
+                    subscript = sub;
+                    self.start_idx++;
+                    if (sub === '+' && tokens[self.start_idx + 1] === '*') {
+                        subscript = '+*';
+                        self.start_idx++;
+                    }
                 }
                 const caret = this.push_arithmetic(token);
                 if (subscript) {
@@ -973,14 +1096,15 @@ export class Lean extends IndentedNode {
                 return caret;
             }
             case '⊗': {
-                // `⊗ₘ` — tensor product of kernels with a subscript letter.
-                const hasSub = tokens[self.start_idx + 1] === 'ₘ';
+                // `μ ⊗ₘ κ` / `κ ⊗ₖ η` — (measure / kernel) composition-product with a subscript letter.
+                const sub = tokens[self.start_idx + 1];
+                const hasSub = sub === 'ₘ' || sub === 'ₖ';
                 if (hasSub) self.start_idx++; // consume subscript
-                const caret = this.push_arithmetic(token);
+                const caret = hasSub ? this.push_binary(Lean_otimesSub) : this.push_arithmetic(token);
                 if (hasSub) {
                     let p = caret;
                     while (p && !(p instanceof Lean_otimes)) p = p.parent;
-                    if (p) p.subscript = 'ₘ';
+                    if (p) p.subscript = sub;
                 }
                 return caret;
             }
@@ -1064,13 +1188,23 @@ export class Lean extends IndentedNode {
             case '∃': {
                 // `∀ᵐ` / `∃ᵐ` — almost-everywhere quantifier; the modifier letter U+1D50
                 // would otherwise be swallowed as an ordinary identifier inside the bound.
-                const ae = tokens[self.start_idx + 1] === 'ᵐ';
+                // `∀ᶠ x in l, p` / `∃ᶠ x in l, p` — eventually / frequently along a filter.
+                const sup = tokens[self.start_idx + 1];
+                const ae = sup === 'ᵐ' || sup === 'ᶠ';
                 if (ae) self.start_idx++;
+                // `∃!` — unique existence; the `!` would otherwise parse as `‹! x›` (negation) in the bound.
+                const uq = token === '∃' && tokens[self.start_idx + 1] === '!';
+                if (uq) self.start_idx++;
                 const caret = this.append(token === '∀' ? 'Lean_forall' : 'Lean_exists', 'operator');
                 if (ae) {
                     let p = caret;
                     while (p && !(p instanceof LeanQuantifier)) p = p.parent;
-                    if (p) p.superscript = 'ᵐ';
+                    if (p) p.superscript = sup;
+                }
+                if (uq) {
+                    let p = caret;
+                    while (p && !(p instanceof LeanQuantifier)) p = p.parent;
+                    if (p) p.unique = true;
                 }
                 return caret;
             }
@@ -1136,7 +1270,15 @@ export class Lean extends IndentedNode {
                     self.start_idx++;
                     if (tokens[self.start_idx + 1] === "'") {
                         self.start_idx++;
-                        return this.push_post_unary('LeanPreimage');
+                        // Mathlib `infixl:80 " ⁻¹' "`: application binds tighter, so `s t ⁻¹' A` is `(s t) ⁻¹' A`.
+                        const spaced = tokens[self.start_idx - 3] === ' ';
+                        const app = this.parent;
+                        const node = app instanceof LeanArgsSpaceSeparated && app.args[app.args.length - 1] === this &&
+                            app.args.filter((a) => !(a instanceof LeanCaret)).length >= 2
+                            ? Lean.prototype.push_post_unary.call(app, 'LeanPreimage')
+                            : this.push_post_unary('LeanPreimage');
+                        if (node instanceof LeanPreimage) node.spaced = spaced;
+                        return node;
                     }
                     return this.push_post_unary('LeanInv');
                 }
@@ -1174,12 +1316,23 @@ export class Lean extends IndentedNode {
                     if (tokens[next] === '[') {
                         return this.parent.insert_unary(this, 'LeanAttribute');
                     }
+                    // `@f` — explicit-argument marker glued to the identifier
+                    if (/^[A-Za-z]/.test(tokens[self.start_idx + 1] ?? '')) {
+                        let word = '@';
+                        while (isIdentContinueToken(tokens[self.start_idx + 1] ?? '')) word += tokens[++self.start_idx];
+                        return this.parent.insert_word(this, word);
+                    }
                     return this.parent.insert_word(this, '@');
                 }
                 return this.push_binary(LeanMatMul);
             case 'end':
                 return this.parent.insert_end(this);
             case 'only':
+                // `<;> (simp only [h]; rfl)` — tactics inside `( … )` are plain words; `only` too.
+                for (let p = this.parent; p; p = p.parent) {
+                    if (p instanceof LeanTactic) break;
+                    if (p instanceof LeanParenthesis) return this.parent.insert_word(this, token);
+                }
                 return this.parent.insert_only(this);
             case 'if': {
                 let n = this.parent;
@@ -1379,6 +1532,7 @@ export class Lean extends IndentedNode {
             case 'LeanNorm':
             case 'LeanWhiteSquareBracket':
             case 'LeanDoubleAngleQuotation':
+            case 'LeanInner':
             case 'LeanSingleAngleQuotation': {
                 const {indent, level} = this;
                 const caret = new LeanCaret(indent, level);
@@ -1469,11 +1623,17 @@ export class Lean extends IndentedNode {
     push_post_unary(funcName) {
         const parent = this.parent;
         if (!parent) return undefined;
+        // `a.b⁻¹` / `Prod.snd⁻¹' s` — the postfix applies to the whole dotted name
+        if (parent instanceof LeanProperty && parent.rhs === this && this instanceof LeanToken)
+            return parent.push_post_unary(funcName);
         const Ctor = LEAN_CLASSES[funcName];
         if (Ctor.input_priority > parent.stack_priority) {
             const created = new Ctor(this, this.indent, this.level);
             parent.replace(this, created);
-            return created.arg;
+            // The caret is the postfix node itself, so a following binary operator
+            // (`x⁻¹ * b`, `x² + 1`) takes `x⁻¹` as its lhs instead of splitting `x`
+            // out of the postfix (which printed `x * b⁻¹`).
+            return created;
         }
         return parent.push_post_unary(funcName);
     }
@@ -1753,6 +1913,8 @@ export class LeanToken extends Lean {
 
     latexFormat() {
         if (this.text === '∞') return '\\infty';
+        if (/^[ℝℚ]≥0∞?$/u.test(this.text))
+            return `${this.text[0]}_{\\ge 0}${this.text.endsWith('∞') ? '^{\\infty}' : ''}`;
         let text = escapeSpecialsForLatex(this.text);
         if (text === this.text) {
             const sk = LeanToken.subscript_keys;
@@ -2034,6 +2196,20 @@ export function LeanGetElemBase(Base) {
             const newTok = new LeanToken(word, this.indent, level);
             this.parent.replace(this, new LeanArgsSpaceSeparated([this, newTok], this.indent, level));
             return newTok;
+        }
+
+        /** `Measurable[m] fun ω => …` — like `LeanToken.append`: the `fun`/`match` is the next argument. */
+        append($new, $func) {
+            if (typeof $new === 'string' && ($func === 'expr' || $func === 'operator')) {
+                const Ctor = LEAN_CLASSES[$new];
+                if (Ctor && this.parent) {
+                    const c = new LeanCaret(this.indent, this.level);
+                    const node = new Ctor(c, this.indent, this.level);
+                    this.parent.replace(this, new LeanArgsSpaceSeparated([this, node], this.indent, this.level));
+                    return c;
+                }
+            }
+            return super.append($new, $func);
         }
 
         is_space_separated() {
@@ -2400,6 +2576,7 @@ class LeanPairedGroup extends Closable(LeanUnary) {
             parent instanceof LeanColon ||
             parent instanceof LeanUnaryArithmeticPost ||
             parent instanceof LeanPairedGroup ||
+            parent instanceof LeanBigOperator ||
             parent instanceof LeanGetElem ||
             parent instanceof LeanGetElemQue ||
             parent instanceof LeanGetElemQuote
@@ -2659,7 +2836,7 @@ export class LeanParenthesis extends LeanPairedGroup {
         }
         if (this.isLatexGetElemOperand())
             return '%s';
-        if (String(arg).includes('\n'))
+        if (String(arg).includes('\n') && !(arg instanceof LeanArgsIndented && arg.isMultilineApplication()))
             // Multi-row content (e.g. `(by …)` tactic block rendering as `align*`):
             // `\mathord{\left(...\right)}` would stretch to the full block height.
             return '%s';
@@ -2669,11 +2846,24 @@ export class LeanParenthesis extends LeanPairedGroup {
     /** Parenthesized GetElem base/index: `(e)[i]` → `e_i`, not `(e)_i`. */
     isLatexGetElemOperand() {
         const p = this.parent;
-        return (
+        if (!(
             p instanceof LeanGetElem ||
             p instanceof LeanGetElemQue ||
             p instanceof LeanGetElemQuote
-        );
+        )) return false;
+        // Base of `(f x)[i]` / `(a + b)[i]`: dropping the parens would read as `f x_i`.
+        if (p.args[0] === this) {
+            const arg = this.arg;
+            return (
+                arg instanceof LeanToken ||
+                arg instanceof LeanProperty ||
+                arg instanceof LeanPairedGroup ||
+                arg instanceof LeanGetElem ||
+                arg instanceof LeanGetElemQue ||
+                arg instanceof LeanGetElemQuote
+            );
+        }
+        return true;
     }
 
     isLatexArgAscription() {
@@ -2683,6 +2873,15 @@ export class LeanParenthesis extends LeanPairedGroup {
         if (arg.lhs instanceof LeanBrace) return false;
         if (arg.rhs instanceof LeanToken && arg.rhs.text === 'Bool') return false;
         const p = this.parent;
+        // Binder of a lambda (`fun s (_ : Iic 0) => s`): the type is part of the binder.
+        if (
+            p instanceof LeanArgsSpaceSeparated &&
+            (p.parent instanceof LeanRightarrow || p.parent instanceof Lean_mapsto) &&
+            p.parent.lhs === p && p.parent.parent instanceof Lean_fun
+        ) return false;
+        // Only elide simple casts like `(n : ℝ)`; a structured type such as
+        // `(μ : Measure (ℕ → S))` carries information the reader needs.
+        if (!(arg.rhs instanceof LeanToken)) return false;
         return (
             p instanceof LeanArgsSpaceSeparated ||
             p instanceof LeanArgsCommaSeparated ||
@@ -2979,16 +3178,30 @@ class LeanNorm extends LeanPairedGroup {
     }
 }
 
+/** Inner product `⟪x, y⟫` (Mathlib `inner` notation). */
+class LeanInner extends LeanPairedGroup {
+    static input_priority = 72;
+    get stack_priority() {
+        return 10;
+    }
+    get operator() {
+        return ['⟪', '⟫' + (this.field ?? '')];
+    }
+    latexFormat() {
+        return '\\left\\langle {%s} \\right\\rangle';
+    }
+}
+
 class LeanCeil extends LeanPairedGroup {
     static input_priority = 72;
     get stack_priority() {
         return 22;
     }
     get operator() {
-        return ['⌈', '⌉'];
+        return ['⌈', this.nat ? '⌉₊' : '⌉'];
     }
     latexFormat() {
-        return '\\left\\lceil {%s} \\right\\rceil';
+        return this.nat ? '\\left\\lceil {%s} \\right\\rceil_{+}' : '\\left\\lceil {%s} \\right\\rceil';
     }
 }
 
@@ -2998,10 +3211,10 @@ class LeanFloor extends LeanPairedGroup {
         return 22;
     }
     get operator() {
-        return ['⌊', '⌋'];
+        return ['⌊', this.nat ? '⌋₊' : '⌋'];
     }
     latexFormat() {
-        return '\\left\\lfloor {%s} \\right\\rfloor';
+        return this.nat ? '\\left\\lfloor {%s} \\right\\rfloor_{+}' : '\\left\\lfloor {%s} \\right\\rfloor';
     }
 }
 
@@ -3631,6 +3844,7 @@ export class LeanAssign extends LeanBinary {
 
     echo() {
         this.rhs.echo();
+        if (this.lhs && typeof this.lhs.echo === 'function') this.lhs.echo();
     }
 
     insert(caret, func, type) {
@@ -3808,7 +4022,47 @@ export class Lean_gt extends LeanRelational {
         return '>';
     }
 }
-export class Lean_ge extends LeanRelational {
+/**
+ * `≤ᵐ[μ]` / `≥ᶠ[l]` — relation with an optional `ᵐ`/`ᶠ` superscript and bracketed measure/filter.
+ * @template {typeof LeanRelational} T
+ * @param {T} Base
+ */
+function LeanFilterRelational(Base) {
+    return class extends Base {
+        superscript = '';
+        modifier = '';
+
+        opStr() {
+            let op = this.operator + (this.superscript || '');
+            if (this.modifier) op += `[${this.modifier}]`;
+            return op;
+        }
+
+        /** Like `LeanEq.opLatex`: the ambient measure of `ᵐ` is elided, a filter `ᶠ[l]` is shown. */
+        opLatex() {
+            let op = this.command;
+            if (this.superscript) {
+                const map = LeanToken.supscript;
+                op += `^{${[...this.superscript].map((ch) => (map[ch] !== undefined ? map[ch] : ch)).join('')}}`;
+                if (this.superscript === 'ᶠ' && this.modifier)
+                    op += `_{${escapeSpecialsForLatex(this.modifier.trim())}}`;
+            }
+            return op;
+        }
+
+        strFormat() {
+            if (!this.superscript) return super.strFormat();
+            return `%s ${this.opStr()}${this.sep()}%s`;
+        }
+
+        latexFormat() {
+            if (!this.superscript) return super.latexFormat();
+            return `{%s} ${this.opLatex()}${this.sep()}{%s}`;
+        }
+    };
+}
+
+export class Lean_ge extends LeanFilterRelational(LeanRelational) {
     get operator() {
         return '≥';
     }
@@ -3818,7 +4072,7 @@ export class Lean_lt extends LeanRelational {
         return '<';
     }
 }
-export class Lean_le extends LeanRelational {
+export class Lean_le extends LeanFilterRelational(LeanRelational) {
     get operator() {
         return '≤';
     }
@@ -3855,6 +4109,9 @@ export class LeanEq extends LeanRelational {
                 .join('');
             op += `^{${inner}}`;
         }
+        // `=ᶠ[l]` — the filter is not implied by context (unlike the ambient measure of `=ᵐ[μ]`)
+        if (this.superscript === 'ᶠ' && this.modifier)
+            op += `_{${escapeSpecialsForLatex(this.modifier.trim())}}`;
         return op;
     }
 
@@ -4134,7 +4391,13 @@ export class LeanMul extends LeanArithmetic {
             lhs.is_space_separated() ||
             lhs instanceof LeanFDiv ||
             rhs instanceof LeanPow || 
-            lhs instanceof LeanModular
+            lhs instanceof LeanModular ||
+            // juxtaposition would read as function application / swallow the lambda
+            rhs instanceof Lean_fun ||
+            (lhs instanceof LeanParenthesis && lhs.arg instanceof Lean_fun) ||
+            (rhs.is_space_separated() && !(lhs instanceof LeanToken)) ||
+            // `x.item * y.item` — two field accesses side by side read as one term
+            (lhs instanceof LeanProperty && rhs instanceof LeanProperty)
         ) {
             return '\\cdot';
         }
@@ -4254,6 +4517,11 @@ export class Lean_otimes extends LeanArithmetic {
             .join('');
         return `\\otimes_{${inner}}`;
     }
+}
+
+/** Mathlib `⊗ₘ` / `⊗ₖ` (`infixl:100`): binds tighter than `*` and relations, unlike the repo's bare `⊗`. */
+class Lean_otimesSub extends Lean_otimes {
+    static input_priority = 72;
 }
 
 export class Lean_oplus extends LeanArithmetic {
@@ -4451,6 +4719,12 @@ export class LeanPow extends LeanArithmetic {
 
     get stack_priority() {
         return 79;
+    }
+
+    strFormat() {
+        if (this.rhs instanceof LeanBracket)
+            return '%s^%s';
+        return super.strFormat();
     }
 
     latexArgs(syntax) {
@@ -4705,6 +4979,20 @@ class LeanUnaryArithmeticPre extends LeanUnaryArithmetic {
     }
 }
 
+/** Leading bar of `μ[|s]` (Mathlib `ProbabilityTheory.cond`); lives directly inside the `[…]`. */
+class LeanCondBar extends LeanUnaryArithmeticPre {
+    static input_priority = 10;
+    get stack_priority() {
+        return 5;
+    }
+    get operator() {
+        return '|';
+    }
+    get command() {
+        return '\\mid ';
+    }
+}
+
 class Lean_partial extends LeanUnaryArithmeticPre {
     static input_priority = 75;
     get operator() {
@@ -4778,10 +5066,13 @@ class LeanPreimage extends LeanUnaryArithmeticPost {
         return '^{-1}';
     }
     latexArgs(syntax) {
-        return [this.arg.peelLatexCoe().toLatex(syntax)];
+        const {arg} = this;
+        // `(s t)⁻¹` — an applied function must be bracketed, or it reads as `s (t⁻¹)`
+        if (arg instanceof LeanArgsSpaceSeparated) return [`\\left(${arg.toLatex(syntax)}\\right)`];
+        return [arg.peelLatexCoe().toLatex(syntax)];
     }
     strFormat() {
-        return "%s⁻¹'";
+        return this.spaced ? "%s ⁻¹'" : "%s⁻¹'";
     }
 }
 
@@ -5016,6 +5307,10 @@ export class LeanGetElem extends LeanGetElemBaseBinary(LeanBinary) {
                 ...indices.map((ix) => LeanGetElem.expectBinderIndexLatex(ix, syntax)),
             ];
         }
+        if (indices.length === 1 && indices[0] instanceof LeanCondBar)
+            return [base.toLatex(syntax), indices[0].arg.toLatex(syntax)];
+        const condExp = indices.length === 1 ? LeanGetElem.condExpLatex(indices[0], syntax) : null;
+        if (condExp) return [base.toLatex(syntax), ...condExp];
         const indexParts = indices.map((ix) => ix.toLatex(syntax));
         const indexLatex = indexParts.join(', ');
 
@@ -5035,10 +5330,40 @@ export class LeanGetElem extends LeanGetElemBaseBinary(LeanBinary) {
         return super.latexArgs(syntax);
     }
 
+    /**
+     * `μ[f | m]` — Mathlib conditional expectation `condExp m μ f`. The `|` may sit inside a
+     * lambda body (`μ[fun ω => f ω | ℱ n]`), since `fun` extends as far as possible.
+     * @returns {[string, string] | null} LaTeX of `f` and `m`
+     */
+    static condExpLatex(ix, syntax) {
+        if (ix instanceof LeanBitOr) return [ix.lhs.toLatex(syntax), ix.rhs.toLatex(syntax)];
+        if (ix instanceof Lean_fun && ix.arg instanceof LeanBinary && ix.arg.rhs instanceof LeanBitOr) {
+            const arrow = ix.arg;
+            const bar = arrow.rhs;
+            const saved = arrow.args[1];
+            arrow.args[1] = bar.lhs;
+            let fn;
+            try {
+                fn = ix.toLatex(syntax);
+            } finally {
+                arrow.args[1] = saved;
+            }
+            return [fn, bar.rhs.toLatex(syntax)];
+        }
+        return null;
+    }
+
     latexFormat() {
         if (this.parent instanceof LeanGetElem) return '{%s}_{%s}';
 
         const {base, indices} = this.collectGetElemChain();
+        // `μ[|s]` — conditional measure `cond μ s`
+        if (indices.length === 1 && indices[0] instanceof LeanCondBar)
+            return '{%s}\\left[\\,\\cdot \\,\\middle|\\, {%s}\\right]';
+        if (indices.length === 1 && !(base instanceof LeanToken && base.text === '𝔼') &&
+            (indices[0] instanceof LeanBitOr ||
+                (indices[0] instanceof Lean_fun && indices[0].arg instanceof LeanBinary && indices[0].arg.rhs instanceof LeanBitOr)))
+            return '\\mathbb{E}_{%s}\\left[{%s} \\,\\middle|\\, {%s}\\right]';
         if (base instanceof LeanProperty && base.rhs instanceof LeanToken) {
             const fmt = base.latexFormat();
             if (fmt.includes('%s')) return fmt;
@@ -5883,13 +6208,54 @@ function extractAttribute(attr) {
 }
 
 /**
+ * `(hS : StochasticIrreducible P)` / `(h₁ : Measurable Y)` — a hypothesis-named binder whose
+ * type is a predicate application (capitalized head, not a known type former). `isProp` cannot
+ * see the declaration of such predicates, so the naming convention decides.
+ * @param {Lean} name
+ * @param {Lean} type
+ */
+function looksLikeClassHypothesis(name, type) {
+    if (!(name instanceof LeanToken)) return false;
+    let head = type instanceof LeanArgsSpaceSeparated ? type.args[0] : type;
+    if (head instanceof LeanProperty && head.rhs instanceof LeanToken) head = head.rhs;
+    if (!(head instanceof LeanToken) || !/^[A-Z]/.test(head.text)) return false;
+    // Well-known Prop-valued predicates: a hypothesis whatever the binder is called
+    // (`(mono : Monotone t)`, `(f_mono : Monotone f)`).
+    if (/^(Monotone|Antitone|StrictMono|StrictAnti|MonotoneOn|AntitoneOn|StrictMonoOn|StrictAntiOn|Summable|HasSum|Continuous|ContinuousOn|ContinuousAt|Differentiable|DifferentiableOn|DifferentiableAt|HasDerivAt|Integrable|IntegrableOn|Measurable|AEMeasurable|StronglyMeasurable|AEStronglyMeasurable|Injective|Surjective|Bijective|Tendsto|Nonempty|Convex|ConvexOn|ConcaveOn|IsCompact|IsOpen|IsClosed|Pairwise|Irreducible|Prime|Even|Odd|Squarefree|Coprime|IsUnit)$/.test(head.text))
+        return true;
+    // Otherwise rely on the naming convention: `h`, `h₁`, `hf`, `hmono`, `hμ`, …
+    if (!/^h/u.test(name.text)) return false;
+    return !/^(Type|Sort|Prop|Fin|Set|Finset|Multiset|List|Array|Vector|Matrix|Tensor|Measure|MeasurableSpace|Option|Nat|Int|Real|Complex|Bool|String|Prod|Sum|Sigma|Subtype|Filter|EuclideanSpace|PMF|ProbabilityMeasure|FiniteMeasure)$/.test(head.text);
+}
+
+/**
+ * `(f : S → α)`: a function-valued data argument (codomain is a type), not a hypothesis.
+ * `Lean_rightarrow.isProp` defaults undeclared tokens to `Prop`, which misfiles such binders
+ * as givens while `(n : ℕ)` stays explicit.
+ * @param {Lean} type
+ * @param {Record<string, unknown>} vars
+ * @param {Set<string>} typeVars
+ */
+function looksLikeDataArrow(type, vars, typeVars) {
+    if (!(type instanceof Lean_rightarrow)) return false;
+    let cod = type;
+    while (cod instanceof Lean_rightarrow) cod = cod.rhs;
+    if (!(cod instanceof LeanToken)) return false;
+    const t = cod.text;
+    if (vars[t] === 'Prop') return false;
+    return typeVars.has(t) ||
+        /^(ℕ|ℤ|ℚ|ℝ|ℂ|Bool|Prop|Type|Nat|Int|Rat|Real|Complex|ENNReal|NNReal|EReal|ℝ≥0|ℝ≥0∞)$/u.test(t);
+}
+
+/**
  * PHP `escape_specials` (php/parser/lean.php ~9331–9341).
  * @param {string} token
  */
 function escapeSpecials(token) {
-    return token.replace(/^(\w+?)_(.+)/, (_m, head, tail) => {
+    return token.replace(/^(_*)([^\W_]\w*?)_(.+)/, (_m, lead, head, tail) => {
         const escTail = tail.replace(/[{}_]/g, (c) => `\\${c}`);
-        return head.length === 1 ? `${head}_{${escTail}}` : `${head}\\_${escTail}`;
+        const escLead = lead.replace(/_/g, '\\_');
+        return !lead && head.length === 1 ? `${head}_{${escTail}}` : `${escLead}${head}\\_${escTail}`;
     });
 }
 
@@ -5954,7 +6320,13 @@ function arrayPushVars(vars, lhs, rhs) {
  */
 function parseVars(implicit) {
     const vars = [];
-    for (const brace of implicit) {
+    // `{S : Type*} [Fintype S]` on one line arrives as a single space-separated node
+    const flat = [];
+    for (const b of implicit) {
+        if (b instanceof LeanArgsSpaceSeparated) flat.push(...b.args);
+        else flat.push(b);
+    }
+    for (const brace of flat) {
         if (brace instanceof LeanBrace) {
             const colon = brace.arg;
             if (colon instanceof LeanColon) arrayPushVars(vars, colon.lhs, colon.rhs);
@@ -6430,6 +6802,7 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                     let given = null;
                     let default_ = [];
                     const decidables = [];
+                    const typeVars = new Set();
                     const declList = declspec;
                     for (let i = 0; i < declList.length; ++i) {
                         const st = declList[i];
@@ -6441,6 +6814,11 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                                 if (l instanceof LeanToken && l.text === 'Decidable' && r instanceof LeanToken)
                                     decidables.push(strStmt(r));
                             }
+                            // `[Fintype S]`, `[NormedAddCommGroup α]`: class arguments are types
+                            if (ia instanceof LeanArgsSpaceSeparated && ia.args[0] instanceof LeanToken && ia.args[0].text !== 'Decidable') {
+                                for (const a of ia.args.slice(1))
+                                    if (a instanceof LeanToken) typeVars.add(a.text);
+                            }
                         } else if (st instanceof LeanBrace) {
                             st.toLatex(syntax);
                             implicit.push(st);
@@ -6448,7 +6826,16 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                             if (st.args.some((a) => a instanceof LeanParenthesis)) {
                                 declList.splice(i, 1, ...st.args);
                                 --i;
-                            } else if (st.args[0] instanceof LeanBracket) instImplicit.push(strStmt(st));
+                            } else if (st.args[0] instanceof LeanBracket) {
+                                instImplicit.push(strStmt(st));
+                                for (const b of st.args) {
+                                    const ia = b instanceof LeanBracket ? b.arg : null;
+                                    if (ia instanceof LeanArgsSpaceSeparated && ia.args[0] instanceof LeanToken && ia.args[0].text !== 'Decidable') {
+                                        for (const a of ia.args.slice(1))
+                                            if (a instanceof LeanToken) typeVars.add(a.text);
+                                    }
+                                }
+                            }
                             else if (st.args[0] instanceof LeanBrace) implicit.push(st);
                             else
                                 error.push({
@@ -6495,8 +6882,13 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                                     if (vars == null) {
                                         vars = parseVars(implicit);
                                         for (const p of decidables) vars[p] = 'Prop';
+                                        for (const v of Object.values(vars))
+                                            if (typeof v === 'string' && /^[^\s()]+$/u.test(v) && v !== 'Prop') typeVars.add(v);
                                     }
-                                    if (prop.isProp(vars)) {
+                                    // Only before the first hypothesis: a data arrow in the middle
+                                    // would end the given run and push later hypotheses to `default`.
+                                    const isData = givenStart === null && looksLikeDataArrow(prop, vars, typeVars);
+                                    if ((prop.isProp(vars) && !isData) || looksLikeClassHypothesis(colon.lhs, prop)) {
                                         latex.push([prop.toLatex(syntax), latexTag(strStmt(colon.lhs))]);
                                         if (givenStart === null) givenStart = i;
                                     } else if (givenStart !== null) {
@@ -6506,8 +6898,11 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                                 } else if (colon instanceof LeanAssign) {
                                     break;
                                 }
-                            } else if (st.is_comment()) latex.push(null);
-                            else if (st instanceof LeanBrace) {
+                            } else if (st.is_comment()) {
+                                // Comments before the first hypothesis stay with `explicit`;
+                                // a slot here would shift every given's LaTeX by one.
+                                if (givenStart !== null) latex.push(null);
+                            } else if (st instanceof LeanBrace) {
                                 const pivot = i;
                                 const par = new LeanParenthesis(st.arg, st.indent, st.parent);
                                 par.is_closed = true;
@@ -8193,6 +8588,19 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         return func instanceof LeanToken && args.length === 2 && func.text === 'abs';
     }
 
+    /** `inner 𝕜 x y` (or legacy `inner x y`) → `⟪x, y⟫`; returns `[x, y]` or null. */
+    innerOperands() {
+        const args = this.args;
+        const func = args[0];
+        const isInner = func instanceof LeanToken ? func.text === 'inner'
+            : func instanceof LeanProperty && func.rhs instanceof LeanToken && func.rhs.text === 'inner' &&
+                func.lhs instanceof LeanToken && func.lhs.text === 'Inner';
+        if (!isInner) return null;
+        if (args.length === 4) return [args[2], args[3]];
+        if (args.length === 3) return [args[1], args[2]];
+        return null;
+    }
+
     /** `Tendsto f a b` (or `Filter.Tendsto f a b`) → `a \xrightarrow{\,f\,} b`. */
     is_Tendsto() {
         const args = this.args;
@@ -8649,6 +9057,11 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         if (this.is_Tendsto()) {
             return [args[2].toLatex(syntax), args[1].toLatex(syntax), args[3].toLatex(syntax)];
         }
+        const innerArgs = this.innerOperands();
+        if (innerArgs) {
+            const peel = (arg) => (arg instanceof LeanParenthesis ? arg.arg : arg);
+            return innerArgs.map((a) => peel(a).toLatex(syntax));
+        }
 
         if (this.intervalLatexFormat()) {
             const s = this.strip_parenthesis();
@@ -8738,6 +9151,7 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         const func = args[0];
         if (this.is_Abs()) return '\\left|{%s}\\right|';
         if (this.is_Tendsto()) return '{%s} \\xrightarrow{\\,%s\\,} {%s}';
+        if (this.innerOperands()) return '\\left\\langle {%s}, {%s} \\right\\rangle';
 
         if (this.is_MatProd()) return '\\prod\\limits_{%s < %s} {%s}';
         if (this.eyePositionalArgs(args)) return '\\mathbb{I}';
@@ -8745,6 +9159,8 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         if (interval) return interval;
         const factorialPower = this.factorialPowerLatexFormat();
         if (factorialPower) return factorialPower;
+        // `f ⁻¹' s` — preimage as `f^{-1}[s]` (not to be read as an inverse applied to `s`)
+        if (func instanceof LeanPreimage && args.length === 2) return '%s\\left[%s\\right]';
         if (func instanceof LeanToken) {
             switch (args.length) {
                 case 2:
@@ -9051,7 +9467,15 @@ export class LeanArgsIndented extends LeanBinary {
         if (this.parent instanceof LeanAssign) {
             return super.insert_newline(caret, newline_count, indent, next);
         }
-        if (this.parent instanceof LeanTactic && !leanIsInfixContinue(next)) {
+        if ((this.parent instanceof LeanTactic || this.parent instanceof Lean_show) && !leanIsInfixContinue(next)) {
+            return super.insert_newline(caret, newline_count, indent, next);
+        }
+        // `∫ ω, f ω\n    ∂μ` integrand (see `Lean_int.continueMeasure`): a line that is not deeper ends the integral.
+        if (this.parent instanceof Lean_int && this.parent.scope === this) {
+            return super.insert_newline(caret, newline_count, indent, next);
+        }
+        // `calc first\n    _ = c := q\n  exact h` — only a `_` step continues the calc at this column.
+        if (this.parent instanceof LeanCalc && next !== '_') {
             return super.insert_newline(caret, newline_count, indent, next);
         }
         const last = this.args[this.args.length - 1];
@@ -9075,7 +9499,22 @@ export class LeanArgsIndented extends LeanBinary {
         );
     }
 
+    /**
+     * `f\n  (g\n    (h x))` — a function applied to a single argument on the next line
+     * (the argument itself may again be a multi-line application).
+     */
+    isMultilineApplication() {
+        const {lhs, rhs} = this;
+        if (!(lhs instanceof LeanToken || lhs instanceof LeanProperty)) return false;
+        if (rhs instanceof LeanParenthesis) return true;
+        return rhs instanceof LeanArgsNewLineSeparated &&
+            rhs.args.filter((a) => !(a instanceof LeanCaret)).length === 1 &&
+            rhs.args[0] instanceof LeanParenthesis;
+    }
+
     latexFormat() {
+        // LaTeX ignores the newline; without a space the head and argument run together.
+        if (this.isMultilineApplication()) return '%s\\ %s';
         const sep = this.sep();
         return `%s${sep}%s`;
     }
@@ -10076,7 +10515,9 @@ class LeanFrom extends LeanUnary {
 class LeanCalc extends LeanUnary {
     is_indented() {
         const p = this.parent;
-        return !p || p instanceof LeanStatements || (p instanceof LeanIte && !p.inline);
+        return !p || p instanceof LeanStatements || (p instanceof LeanIte && !p.inline) ||
+            // `have h : a ≤ c :=\n    calc …` — term-mode calc on its own line keeps its column
+            p instanceof LeanArgsNewLineSeparated;
     }
 
     sep() {
@@ -10125,6 +10566,33 @@ class LeanCalc extends LeanUnary {
 
     relocate_last_comment() {
         this.arg.relocate_last_comment();
+    }
+
+    /**
+     * `calc a ≤ b := by gcongr; exact h\n    _ ≤ c := …` — a `_` line after a step whose proof is a
+     * `by` block starts the next step of the innermost enclosing calc instead of continuing the tactic.
+     * @returns {LeanCaret | null | undefined}
+     */
+    static continueStep(leaf, newline_count, indent) {
+        let sawBy = false;
+        for (let child = leaf, p = leaf.parent; p; child = p, p = p.parent) {
+            if (p instanceof LeanBy) sawBy = true;
+            if (p instanceof LeanCalc) {
+                if (child !== p.arg || !(child instanceof LeanAssign) || !sawBy || indent < p.indent) return null;
+                return p.insert_newline(child, newline_count, indent, '_');
+            }
+            const calc =
+                p instanceof LeanArgsIndented && p.parent instanceof LeanCalc ? p.parent
+                : p instanceof LeanArgsNewLineSeparated && p.parent instanceof LeanArgsIndented &&
+                    p.parent.rhs === p && p.parent.parent instanceof LeanCalc ? p.parent.parent
+                : null;
+            if (calc) {
+                if (!sawBy || indent < calc.indent || !(child instanceof LeanAssign)) return null;
+                if (p instanceof LeanArgsIndented && child !== p.lhs) return null;
+                return p.insert_newline(child, newline_count, indent, '_');
+            }
+        }
+        return null;
     }
 
     get operator() {
@@ -11334,12 +11802,15 @@ class Lean_let extends LeanSyntax {
     get_echo_token() {
         const assign = this.args[0];
         if (assign instanceof LeanAssign) {
-            const angleBracket = assign.lhs;
-            if (angleBracket instanceof LeanAngleBracket) {
-                const token = angleBracket.tokens_comma_separated();
+            const lhs = assign.lhs;
+            if (lhs instanceof LeanAngleBracket) {
+                const token = lhs.tokens_comma_separated();
                 if (token.length === 1) return token[0];
-                return new LeanArgsCommaSeparated(token, this.indent, angleBracket.level);
+                return new LeanArgsCommaSeparated(token, this.indent, lhs.level);
             }
+            if (lhs instanceof LeanToken) return lhs;
+            if (lhs instanceof LeanColon && lhs.lhs instanceof LeanToken) return lhs.lhs;
+            if (lhs instanceof LeanArgsSpaceSeparated && lhs.args[0] instanceof LeanToken) return lhs.args[0];
         }
     }
 
@@ -11691,6 +12162,9 @@ class LeanBigOperator extends LeanArgs {
             this.scope = c;
             return c;
         }
+        // `⟨∑ s, ‖x s‖, 1⟩` — a comma after a finished body closes the big operator.
+        if (caret === this.scope && !(caret instanceof LeanCaret) && this.parent)
+            return this.parent.insert_comma(this);
         throw new Error(`${this.constructor.name}.insert_comma: unexpected`);
     }
 
@@ -11739,21 +12213,31 @@ class LeanQuantifier extends LeanProp(LeanBigOperator) {
     }
 
     latexFormat() {
+        const sup = this.superscript === 'ᶠ' ? '\\mathrm{f}' : this.superscript;
         const cmd = this.superscript
-            ? `${this.command}^{${this.superscript}}\\,`
+            ? `${this.command}^{${sup}}\\,`
             : `${this.command}\\ `;
         if (this.args.length === 1) return `${cmd}{%s},`;
         return `${cmd}{%s}, {%s}`;
     }
 
     latexArgs(syntax) {
+        // `∀ᶠ x in l, p` — `in` is a keyword, not a product of the letters i and n
+        if (this.superscript === 'ᶠ' && this.bound instanceof LeanArgsSpaceSeparated && this.scope) {
+            const bound = this.bound.args
+                .filter((a) => !(a instanceof LeanCaret))
+                .map((a) => (a instanceof LeanIn ? `\\text{ in }{${a.arg.toLatex(syntax)}}` : a.toLatex(syntax)))
+                .join('\\ ');
+            return [bound, this.scope.toLatex(syntax)];
+        }
         const partial = this.measurePartial();
         if (!partial) return super.latexArgs(syntax);
         const bound = this.bound.args
             .filter((a) => a !== partial && !(a instanceof LeanCaret))
             .map((a) => a.toLatex(syntax))
             .join(' ');
-        return [bound, this.scope.toLatex(syntax)];
+        // keep the measure: `∀ᵐ a ∂μ, p` → `∀ᵐ a ∂μ, p`
+        return [`${bound}\\ \\partial {${partial.arg.toLatex(syntax)}}`, this.scope.toLatex(syntax)];
     }
 
     get stack_priority() {
@@ -11768,13 +12252,24 @@ class Lean_forall extends LeanQuantifier {
 }
 
 class Lean_exists extends LeanQuantifier {
+    unique = false;
+
     get baseOperator() {
-        return '∃';
+        return this.unique ? '∃!' : '∃';
+    }
+
+    get command() {
+        return this.unique ? '\\exists!' : '\\exists';
     }
 }
 
 class Lean_sum extends LeanBigOperator {
     static input_priority = 67;
+    /** Mathlib parses big-operator bodies at precedence 67: `∑ i ∈ s, f i + c` is `(∑ i ∈ s, f i) + c`.
+     *  Only operators below 67 (`+`/`-`/`++`/`∪`, input 65) close the body; postfix `²` (input 66) stays inside. */
+    get stack_priority() {
+        return this.scope ? LeanAdd.input_priority : super.stack_priority;
+    }
     get baseOperator() {
         return '∑';
     }
@@ -11853,6 +12348,11 @@ class Lean_lim extends LeanBigOperator {
 
 class Lean_prod extends LeanBigOperator {
     static input_priority = 67;
+    /** Mathlib parses big-operator bodies at precedence 67: `∑ i ∈ s, f i + c` is `(∑ i ∈ s, f i) + c`.
+     *  Only operators below 67 (`+`/`-`/`++`/`∪`, input 65) close the body; postfix `²` (input 66) stays inside. */
+    get stack_priority() {
+        return this.scope ? LeanAdd.input_priority : super.stack_priority;
+    }
     get baseOperator() {
         return '∏';
     }
@@ -11882,8 +12382,30 @@ class Lean_int extends LeanBigOperator {
         return null;
     }
 
+    /**
+     * `∫ ω, f ω\n    ∂μ` — a continuation line starting with `∂` supplies the measure of the innermost
+     * enclosing integral whose integrand holds `leaf` and has no measure yet. The integrand becomes
+     * `LeanArgsIndented(integrand, [∂…])` so the line break survives.
+     * @returns {LeanCaret | null}
+     */
+    static continueMeasure(leaf, indent) {
+        for (let child = leaf, p = leaf.parent; p; child = p, p = p.parent) {
+            if (!(p instanceof Lean_int)) continue;
+            if (p.scope !== child || child instanceof LeanCaret || p.measurePartial()) continue;
+            const caret = new LeanCaret(indent, child.level);
+            const nl = new LeanArgsNewLineSeparated([caret], indent, child.level);
+            p.scope = new LeanArgsIndented(child, nl, p.indent, child.level);
+            return caret;
+        }
+        return null;
+    }
+
     measurePartial() {
         const s = this.scope;
+        if (s instanceof LeanArgsIndented && s.rhs instanceof LeanArgsNewLineSeparated) {
+            const rest = s.rhs.args.filter((a) => !(a instanceof LeanCaret));
+            return rest.length === 1 && rest[0] instanceof Lean_partial ? rest[0] : null;
+        }
         if (s instanceof LeanArgsSpaceSeparated) {
             for (let i = s.args.length - 1; i >= 0; i--) {
                 if (s.args[i] instanceof LeanCaret) continue;
@@ -11915,10 +12437,13 @@ class Lean_int extends LeanBigOperator {
 
     integrandLatex(syntax, partial) {
         if (!partial) return this.scope ? this.scope.toLatex(syntax) : '';
+        if (this.scope instanceof LeanArgsIndented && this.scope.rhs instanceof LeanArgsNewLineSeparated &&
+            this.scope.rhs.args.includes(partial))
+            return this.scope.lhs.toLatex(syntax);
         if (this.scope instanceof LeanArgsSpaceSeparated) {
             const args = this.scope.args
                 .filter((a) => a !== partial && !(a instanceof LeanCaret));
-            return args.map((a) => a.toLatex(syntax)).join(' ');
+            return args.map((a) => `{${a.toLatex(syntax)}}`).join('\\ ');
         }
         // Binary operator scope (e.g. `c • f x ∂μ`): partial is in scope.rhs
         if (this.scope != null && this.scope.rhs instanceof LeanArgsSpaceSeparated &&
@@ -11926,7 +12451,7 @@ class Lean_int extends LeanBigOperator {
             const filteredRhs = this.scope.rhs.args
                 .filter((a) => a !== partial && !(a instanceof LeanCaret));
             const lhsLatex = this.scope.lhs.toLatex(syntax);
-            const rhsLatex = filteredRhs.map((a) => a.toLatex(syntax)).join(' ');
+            const rhsLatex = filteredRhs.map((a) => `{${a.toLatex(syntax)}}`).join('\\ ');
             const op = this.scope.command ?? this.scope.operator;
             return `${lhsLatex} ${op} ${rhsLatex}`;
         }
@@ -11949,10 +12474,12 @@ class Lean_int extends LeanBigOperator {
         const partial = this.measurePartial();
         const body = this.integrandLatex(syntax, partial);
         const v = this.binderVar();
-        const tail = v && !(v instanceof LeanCaret)
-            ? v.toLatex(syntax)
-            : partial
-                ? partial.arg.toLatex(syntax)
+        // `∂μ` names the measure: show it rather than the bound variable
+        // (which already appears in the integrand).
+        const tail = partial
+            ? partial.arg.toLatex(syntax)
+            : v && !(v instanceof LeanCaret)
+                ? v.toLatex(syntax)
                 : '';
         const dom = this.intDomain();
         if (dom instanceof LeanUpto) {
@@ -12183,7 +12710,9 @@ const LEAN_CLASSES = {
     LeanBrace,
     LeanAngleBracket,
     LeanAbs,
+    LeanCondBar,
     LeanNorm,
+    LeanInner,
     LeanCeil,
     LeanFloor,
     LeanWhiteSquareBracket,

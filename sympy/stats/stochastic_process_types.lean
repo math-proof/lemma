@@ -128,6 +128,38 @@ instance smat_pow_is_smat {S : Type u} [Fintype S] [DecidableEq S]
     have := ih
     simpa [pow_succ] using smat_mul_smat_is_smat (P ^ n) P
 
+-- probability of an m+n-step i→j path is at least the product of an m-step i→k
+-- path and an n-step k→j path (all other decompositions are nonneg)
+lemma get_pow_add_ge_mul_get_s_pow {S : Type u} [Fintype S] [DecidableEq S]
+    {P : Matrix S S ℝ} [RowStochastic P] (m n : ℕ) (i j k : S) :
+    (P ^ (m + n)) i j ≥ (P ^ m) i k * (P ^ n) k j := by
+  have := smat_pow_is_smat (P := P) m
+  have := smat_pow_is_smat (P := P) n
+  rw [pow_add]
+  simp [Matrix.mul_apply]
+  rw [← Finset.sum_erase_add (a := k)]
+  · apply le_add_of_nonneg_left
+    apply Finset.sum_nonneg
+    intro l hl
+    apply mul_nonneg <;>
+      apply (RowStochastic.stochastic _).nonneg
+  · simp
+
+-- return times are closed under addition: positive i→i paths of lengths a and b
+-- concatenate into a positive i→i path of length a + b
+instance return_times_closedUnderAdd {S : Type u} [Fintype S] [DecidableEq S]
+    (P : Matrix S S ℝ) [RowStochastic P] (i : S) :
+    ClosedUnderAdd (return_times P i) where
+  closed_under_add a b ha hb := by
+    simp only [return_times, Set.mem_ofPred_eq] at ha hb ⊢
+    obtain ⟨ha1, ha2⟩ := ha
+    obtain ⟨hb1, hb2⟩ := hb
+    refine ⟨by linarith, ?_⟩
+    calc
+      _ < (P ^ a) i i * (P ^ b) i i := mul_pos ha2 hb2
+      _ ≤ (P ^ (a + b)) i i :=
+          (get_pow_add_ge_mul_get_s_pow (P := P) a b i i i).le
+
 instance svec_mul_smat_is_svec {S : Type u} [Fintype S]
     (μ : S → ℝ) [hμ : StochasticVec μ] (P : Matrix S S ℝ) [hP : RowStochastic P] :
     StochasticVec (μ ᵥ* P) where

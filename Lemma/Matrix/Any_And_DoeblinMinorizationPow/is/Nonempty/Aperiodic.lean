@@ -1,6 +1,5 @@
 import sympy.stats.stochastic_process_types
 import Lemma.Matrix.Any_All_Gt_0.of.DoeblinMinorization
-import Lemma.Matrix.GetPow_Add.ge.MulGetSPow
 import Lemma.Matrix.Any_All_Imp_Gt_0.of.Aperiodic.StochasticIrreducible
 import Mathlib.Algebra.GCDMonoid.Finset
 import Mathlib.Data.Finset.Lattice.Fold
@@ -43,7 +42,7 @@ private lemma main
           le_antisymm (hnone k) (hrow.nonneg k)
         have : ∑ k, P i k = 0 := Finset.sum_eq_zero fun k _ => hz k
         linarith [hrow.rowsum]
-      have hineq := (@Matrix.GetPow_Add.ge.MulGetSPow _ _ _ P _ 1 N i j₀ k).le
+      have hineq := (@get_pow_add_ge_mul_get_s_pow _ _ _ P _ 1 N i j₀ k).le
       rw [pow_one, Nat.add_comm] at hineq
       exact lt_of_lt_of_le (mul_pos hk (hj₀ k)) hineq
     refine ⟨fun i => ?_⟩
@@ -62,14 +61,14 @@ private lemma main
         _ < (P ^ N) i j₀ * (P ^ b) j₀ i := mul_pos (hj₀ i) hb
         _ ≤ (P ^ n₁) i i := by
           simp only [n₁]
-          exact (@Matrix.GetPow_Add.ge.MulGetSPow _ _ _ P _ N b i i j₀).le
+          exact (@get_pow_add_ge_mul_get_s_pow _ _ _ P _ N b i i j₀).le
     have hn₂pos : 0 < (P ^ n₂) i i := by
       calc
         0
         _ < (P ^ (N + 1)) i j₀ * (P ^ b) j₀ i := mul_pos (hPN1 i) hb
         _ ≤ (P ^ n₂) i i := by
           simp only [n₂]
-          exact (@Matrix.GetPow_Add.ge.MulGetSPow _ _ _ P _ (N + 1) b i i j₀).le
+          exact (@get_pow_add_ge_mul_get_s_pow _ _ _ P _ (N + 1) b i i j₀).le
     refine ⟨{n₁, n₂}, ?_, ?_, ?_, ?_⟩
     · intro x hx
       simp only [Finset.mem_coe, Finset.mem_insert, Finset.mem_singleton] at hx

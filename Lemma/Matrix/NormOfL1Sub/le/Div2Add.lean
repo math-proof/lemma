@@ -42,7 +42,7 @@ private lemma main
       rw [← show (1 : ℝ) + 1 = 2 by ring]
       apply le_trans (norm_sub_le _ _)
       apply add_le_add <;>
-      · exact Matrix.L1Norm.eq.One.of.StochasticVec.le
+      · exact (Matrix.L1Norm.eq.One.of.StochasticVec inferInstance).le
     _ = 2 / (n + 1) := by unfold c; field_simp
 
 
