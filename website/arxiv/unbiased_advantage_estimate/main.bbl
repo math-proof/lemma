@@ -1,5 +1,11 @@
 \begin{thebibliography}{10}
 
+\bibitem{chevallier2021isabelle}
+Mark Chevallier and Jacques Fleuriot.
+\newblock Formalising the foundations of discrete reinforcement learning in
+  {Isabelle/HOL}.
+\newblock arXiv:2112.05996, \url{https://arxiv.org/abs/2112.05996}, 2021.
+
 \bibitem{moura2021lean4}
 Leonardo de~Moura and Sebastian Ullrich.
 \newblock The {Lean} 4 theorem prover and programming language.
@@ -16,6 +22,12 @@ Evan Greensmith, Peter~L. Bartlett, and Jonathan Baxter.
 Olav Kallenberg.
 \newblock {\em Foundations of Modern Probability}.
 \newblock Springer, 2nd edition, 2002.
+
+\bibitem{torchlean}
+{lean-dojo}.
+\newblock {TorchLean}: Formalizing neural networks in {Lean}.
+\newblock GitHub repository, \url{https://github.com/lean-dojo/TorchLean},
+  2026.
 
 \bibitem{lemma_repo}
 math proof.
@@ -147,11 +159,24 @@ Koundinya Vajjha, Avraham Shinnar, Barry Trager, Vasily Pestun, and Nathan
 \newblock In {\em Proceedings of the 10th {ACM} {SIGPLAN} International
   Conference on Certified Programs and Proofs ({CPP})}, pages 18--31. ACM,
   2021.
+\newblock arXiv:2009.11403.
 
 \bibitem{williams1992simple}
 Ronald~J. Williams.
 \newblock Simple statistical gradient-following algorithms for connectionist
   reinforcement learning.
 \newblock {\em Machine Learning}, 8(3--4):229--256, 1992.
+
+\bibitem{zhang2026pg}
+Shangtong Zhang.
+\newblock {rl-theory-in-lean}:
+  \texttt{RLTheory/\allowbreak{}Algorithm/\allowbreak{}PolicyGradient.lean},
+  commit \texttt{2a9d01a}.
+\newblock GitHub, 30 March 2026,
+  \url{https://github.com/ShangtongZhang/rl-theory-in-lean/commit/2a9d01a236961b1c9bc451a8926346364fc66e7f},
+  2026.
+\newblock Experimental, largely machine-generated development (commits
+  co-authored with an AI assistant), committed in March 2026 and later
+  withdrawn from the project's main branch; still accessible at this commit.
 
 \end{thebibliography}

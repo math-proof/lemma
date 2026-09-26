@@ -70,7 +70,9 @@ we prove
 \tsum_{t}\gamma^t\,\grad\E_\theta[\rw_t]
 =\tsum_{t}\gamma^t\,\E_\theta\bigl[\hat A_t\,\grad\log\pi_\theta(\av_t\mid\sv_t)\bigr].
 \]
-On the way we present a textbook-style limit notation for Lean, formalize the Bellman equations of the model, a one-step recursion for $\grad V_t$, and its unrolling by induction into an exact truncated policy-gradient identity with remainder $\gamma^n\E[\grad V_n(\sv_n)]$, whose limit $n\to\infty$ gives the action-value and REINFORCE forms of the policy gradient theorem.
+The action-value (occupancy-measure) form of the policy gradient theorem for finite MDPs has been formalized in Lean~4 before, by Zhang~\cite{zhang2026pg}.
+Our development works at the level of trajectories: we formalize the Bellman equations of the model, a one-step recursion for $\grad V_t$, and its unrolling by induction into an exact truncated policy-gradient identity with remainder $\gamma^n\E[\grad V_n(\sv_n)]$, whose limit $n\to\infty$ gives the action-value and the REINFORCE (return-weighted) forms of the theorem; the unbiased advantage estimate above is the main result.
+We also present a textbook-style limit notation for Lean.
 All theorems depend only on the axioms \texttt{propext}, \texttt{Classical.choice} and \texttt{Quot.sound}.
 We also report that the reward-independence hypothesis carried by these statements is not used by any proof.
 \end{abstract}
@@ -87,15 +89,16 @@ Those lines hide several analytic steps: the objective is an infinite discounted
 This paper records a Lean~4~\cite{moura2021lean4} development, built on mathlib~\cite{mathlib2020,mathlib} inside the \texttt{lemma} library~\cite{lemma_repo}, in which each of these steps is checked.
 
 \paragraph{Contributions.}
-Each item is a Lean module; the module path is the statement's name and a link to its interactive page.
+The action-value form of the policy gradient theorem for finite MDPs was formalized in Lean~4 earlier by Zhang~\cite{zhang2026pg}; Section~\ref{sec:related} compares the two developments.
+Relative to that work, this paper contributes the four items below.
+Each Lean statement is named by its module path, which links to its interactive page.
 \begin{enumerate}[leftmargin=1.6em,itemsep=0.35em]
-  \item \textbf{Limits} (Section~\ref{sec:lim}). The library's textbook-style notation $\lim [n\to\infty]\,e=a$, which elaborates to mathlib's \texttt{Filter.Tendsto}; illustrated by \lmod{Real.Eq_0.Lim.of.LtAbs.IsFinite}~\cite{lemma_lim}.
-  \item \textbf{Expectations and probabilities} (Section~\ref{sec:notation}). The library's $\E$/$\Prb$ binder notation and the colour convention of its renderer: red random variables, magenta random arguments, black observed values.
-  \item \textbf{Model} (Section~\ref{sec:model}). A discounted MDP with finite $S$, $A$, a parametrised policy and the Ionescu-Tulcea trajectory measure; the value functions $V_t$, $Q_t$ as conditional expectations.
-  \item \textbf{Bellman equations} (Section~\ref{sec:bellman}). \lmod{Tensor.And.Eq.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.Bellman}~\cite{lemma_bellman}.
-  \item \textbf{Policy gradient by induction} (Section~\ref{sec:induct}). The recursion \lmod{Tensor.EqGrad.of.Eq_Conditioned.Eq_Expect.Eq_Expect.policy_gradient.recursion}~\cite{lemma_recursion}, its unrolling \lmod{Tensor.EqGrad.of.Eq_Conditioned.Eq_Expect.Eq_Expect.policy_gradient.induct}~\cite{lemma_induct}, the truncated identity \lmod{Tensor.Eq.Grad.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.policy_gradient}~\cite{lemma_pgn}, and its limit in the action-value form \lmod{Tensor.Eq.Dot.Grad.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.IsFinite.Q_Function}~\cite{lemma_pgq} and the REINFORCE form \lmod{Tensor.Eq.Dot.Grad.Expect.of.Eq_Conditioned.IsFinite.policy_gradient_theorem}~\cite{lemma_pgt}.
-  \item \textbf{Main result} (Section~\ref{sec:main}). \lmod{Tensor.EqDot_GradExpect.of.Eq_Conditioned.Eq_Expect.IsFinite.IsFinite.unbiased_advantage_estimate}~\cite{lemma_uae}.
+  \item \textbf{Unbiased advantage estimate} (Section~\ref{sec:main}, the main result). Weighting the score by the discounted sum of temporal-difference residuals of the value function leaves the policy gradient unchanged: \lmod{Tensor.EqDot_GradExpect.of.Eq_Conditioned.Eq_Expect.IsFinite.IsFinite.unbiased_advantage_estimate}~\cite{lemma_uae}.
+  \item \textbf{REINFORCE form} (Section~\ref{sec:passlimit}). The policy gradient theorem with the score weighted by the return, \lmod{Tensor.Eq.Dot.Grad.Expect.of.Eq_Conditioned.IsFinite.policy_gradient_theorem}~\cite{lemma_pgt}; the action-value form \lmod{Tensor.Eq.Dot.Grad.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.IsFinite.Q_Function}~\cite{lemma_pgq} is obtained on the way.
+  \item \textbf{Proof by induction} (Section~\ref{sec:induct}). A one-step recursion for $\grad V_t$, \lmod{Tensor.EqGrad.of.Eq_Conditioned.Eq_Expect.Eq_Expect.policy_gradient.recursion}~\cite{lemma_recursion}, its unrolling by induction, \lmod{Tensor.EqGrad.of.Eq_Conditioned.Eq_Expect.Eq_Expect.policy_gradient.induct}~\cite{lemma_induct}, into an exact truncated identity with remainder $\gamma^n\E[\grad V_n(\sv_n)]$, \lmod{Tensor.Eq.Grad.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.policy_gradient}~\cite{lemma_pgn}, and the passage to the limit $n\to\infty$. To our knowledge, this is the first Lean~4 proof of the theorem that follows the textbook derivation, made rigorous by induction (Section~\ref{sec:related}).
+  \item \textbf{Trajectory-level model} (Sections~\ref{sec:model} and~\ref{sec:bellman}). A discounted MDP with finite $S$, $A$ and a parametrised policy whose parameter ranges over an arbitrary real normed space; the law of a trajectory is mathlib's Ionescu-Tulcea measure \texttt{Kernel.trajMeasure}, the value functions $V_t$, $Q_t$ are conditional expectations, and the Bellman equations are \lmod{Tensor.And.Eq.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.Bellman}~\cite{lemma_bellman}.
 \end{enumerate}
+Sections~\ref{sec:lim} and~\ref{sec:notation} introduce the notation these statements are displayed with: the library's textbook-style limit notation $\lim [n\to\infty]\,e=a$, illustrated by \lmod{Real.Eq_0.Lim.of.LtAbs.IsFinite}~\cite{lemma_lim}, and its $\E$/$\Prb$ binder notation with the colour convention of its renderer.
 
 \section{Related work}
 \label{sec:related}
@@ -103,8 +106,21 @@ Each item is a Lean module; the module path is the statement's name and a link t
 The policy gradient theorem is due to Sutton et al.~\cite{sutton2000policy}; the likelihood-ratio estimator and the use of a reinforcement baseline go back to Williams~\cite{williams1992simple}.
 Greensmith, Bartlett and Baxter~\cite{greensmith2004variance} analyse baselines as variance-reduction devices, and Schulman et al.~\cite{schulman2016gae} introduce generalized advantage estimation, whose $\lambda=1$ case is the advantage studied here.
 Standard references for finite MDPs are Puterman~\cite{puterman1994markov} and Sutton and Barto~\cite{sutton2018reinforcement}.
-On the formal side, CertRL~\cite{vajjha2021certrl} formalizes convergence of value and policy iteration in Coq; it does not treat stochastic policy gradients.
-Our trajectory measure is mathlib's \texttt{Kernel.trajMeasure}~\cite{mathlib}, an implementation of the Ionescu-Tulcea theorem~\cite{kallenberg2002foundations}.
+
+\paragraph{Formalizations.}
+CertRL~\cite{vajjha2021certrl} formalizes convergence of value and policy iteration in Coq, and Chevallier and Fleuriot~\cite{chevallier2021isabelle} formalize finite MDPs with rewards in Isabelle/HOL, including the Bellman equation, the existence of an optimal policy for $\gamma<1$, and value and policy iteration; neither treats policy gradients.
+In Lean~4, TorchLean~\cite{torchlean} proves structural and dynamic-programming facts about MDPs and Bellman operators and contains policy-gradient and PPO training code, but no policy gradient theorem.
+Closest to this paper is the \texttt{PolicyGradient} module of Zhang's \texttt{rl-theory-in-lean}~\cite{zhang2026pg}, an experimental, largely machine-generated development (its commits are co-authored with an AI assistant) that was committed in March 2026 and later withdrawn from the project's main branch; it remains accessible at the cited commit.
+For finite state and action spaces and a policy with finitely many real parameters, it proves in Lean~4 the discounted policy gradient theorem in the occupancy-measure form
+\[
+\grad J(\theta)=(1-\gamma)^{-1}\sum_{s,a}d^{\pi_\theta}(s)\,\pi_\theta(a\mid s)\,Q^{\pi_\theta}(s,a)\,\grad\log\pi_\theta(a\mid s),
+\]
+together with a recursion for the gradient of the value function, the log-derivative trick, the Fisher information matrix and the natural policy gradient.
+That development defines the value function as the fixed point of the Bellman operator (Banach's fixed-point theorem), obtains its differentiability from $V=(I-\gamma P_\theta)^{-1}r_\theta$, solves the gradient recursion by linear algebra and expands the solution as a Neumann series, which it repackages through the discounted state-occupancy measure $d^{\pi_\theta}$; it requires a strictly positive policy and has no trajectories, returns or advantages.
+Ours works at the level of trajectories: the law of a trajectory is mathlib's \texttt{Kernel.trajMeasure}~\cite{mathlib}, an implementation of the Ionescu-Tulcea theorem~\cite{kallenberg2002foundations}, the value functions are conditional expectations, and the parameter ranges over an arbitrary real normed space; besides the action-value form we prove the REINFORCE form and, as the main result, the unbiased advantage estimate.
+To the best of our knowledge (based on searches of GitHub, arXiv and the web), this is the first Lean~4 proof of the policy gradient theorem that follows the textbook's pen-and-paper derivation and makes it rigorous by mathematical induction: the textbook~\cite[\S13.2]{sutton2018reinforcement} repeatedly unrolls the one-step recursion and ends with an ellipsis, whereas we prove, by induction on the number $n$ of unrolled steps, an exact finite-$n$ identity with an explicit remainder $\gamma^n\E[\grad V_n(\sv_n)]$ over the trajectory measure, from which the infinite-horizon theorem follows by a limit $n\to\infty$.
+The only other formal proof we are aware of~\cite{zhang2026pg} instead uses a fixed-point characterization and a Neumann series and does not proceed by induction.
+The two proofs share only their textbook starting point, the one-step gradient recursion of Sutton et al.~\cite{sutton2000policy} and the log-derivative trick; otherwise they differ in their definitions, proof route and final statements, and ours was developed independently.
 
 \section{Limits as in textbooks}
 \label{sec:lim}
