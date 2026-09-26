@@ -1,0 +1,472 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,bm}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{url}
+\makeatletter
+\g@addto@macro{\UrlBreaks}{\do\.\do\_\do\-}
+\makeatother
+\newcommand{\lmod}[1]{\href{http://www.lemma.cn/lean/?module=#1}{\nolinkurl{#1}}}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue,
+  citecolor=blue,
+  urlcolor=blue
+}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Prb}{\mathbb{P}}
+% colour convention of the lemma.cn renderer
+\newcommand{\rv}[1]{{\color{red}#1}}       % random variable
+\newcommand{\ra}[1]{{\color{magenta}#1}}   % random argument
+\newcommand{\sv}{\rv{s}}
+\newcommand{\av}{\rv{a}}
+\newcommand{\rw}{\rv{r}}
+\newcommand{\grad}{\nabla_{\theta}}
+\newcommand{\tsum}{\textstyle\sum'}
+\emergencystretch=3em
+
+\title{A Lean~4 Proof that the Discounted Advantage\\Is an Unbiased Policy-Gradient Weight}
+\author{LiZhi Zhou\\[0.3em]
+\small Project artifact: \href{https://github.com/math-proof/lemma}{github.com/math-proof/lemma}\\[0.4em]
+\small
+Bellman:
+\href{http://www.lemma.cn/lean/?module=Tensor.And.Eq.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.Bellman}{$V,Q$},
+\quad
+induction:
+\href{http://www.lemma.cn/lean/?module=Tensor.Eq.Grad.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.policy_gradient}{truncated},
+\quad
+limit:
+\href{http://www.lemma.cn/lean/?module=Tensor.Eq.Dot.Grad.Expect.of.Eq_Conditioned.IsFinite.policy_gradient_theorem}{REINFORCE}\\[0.25em]
+Unbiased advantage estimate:
+\href{http://www.lemma.cn/lean/?module=Tensor.EqDot_GradExpect.of.Eq_Conditioned.Eq_Expect.IsFinite.IsFinite.unbiased_advantage_estimate}{Lean~4}}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Advantage-weighted policy gradients replace the Monte-Carlo return in REINFORCE by a return minus a state-value baseline, usually written as a discounted sum of temporal-difference errors.
+That this substitution leaves the gradient unchanged is standard folklore, but the classical arguments are informal about conditioning on null events, about exchanging gradients, infinite sums and expectations, and about the telescoping of an infinite series.
+We machine-check the statement in Lean~4 with mathlib.
+The model is a discounted Markov decision process with finite state and action spaces, bounded rewards, and a differentiable stochastic policy $\pi_\theta$ whose parameter $\theta$ ranges over an arbitrary real normed space; the law of a trajectory is mathlib's Ionescu-Tulcea measure.
+With the exact state values $V_t$ and the advantage
+$\hat A_t=\sum_{k\ge0}\gamma^k\bigl(\rw_{t+k}+\gamma V_{t+k+1}(\sv_{t+k+1})-V_{t+k}(\sv_{t+k})\bigr)$,
+we prove
+\[
+\tsum_{t}\gamma^t\,\grad\E_\theta[\rw_t]
+=\tsum_{t}\gamma^t\,\E_\theta\bigl[\hat A_t\,\grad\log\pi_\theta(\av_t\mid\sv_t)\bigr].
+\]
+On the way we present a textbook-style limit notation for Lean, formalize the Bellman equations of the model, a one-step recursion for $\grad V_t$, and its unrolling by induction into an exact truncated policy-gradient identity with remainder $\gamma^n\E[\grad V_n(\sv_n)]$, whose limit $n\to\infty$ gives the action-value and REINFORCE forms of the policy gradient theorem.
+All theorems depend only on the axioms \texttt{propext}, \texttt{Classical.choice} and \texttt{Quot.sound}.
+We also report that the reward-independence hypothesis carried by these statements is not used by any proof.
+\end{abstract}
+
+\section{Introduction}
+\label{sec:intro}
+
+The policy gradient theorem~\cite{sutton2000policy} expresses the gradient of the expected discounted return of a parametrised policy as an expectation of the score $\grad\log\pi_\theta(a\mid s)$ weighted by an action value.
+REINFORCE~\cite{williams1992simple} weights the score by the sampled return instead.
+Subtracting a state-dependent baseline does not change the expectation and can reduce variance~\cite{williams1992simple,greensmith2004variance}; with the state-value function as baseline one obtains the advantage, and a discounted sum of temporal-difference residuals of the value function is the $\lambda=1$ member of generalized advantage estimation~\cite{schulman2016gae}.
+Textbook treatments~\cite{sutton2018reinforcement} derive all of this in a few lines.
+
+Those lines hide several analytic steps: the objective is an infinite discounted series, the derivative must be exchanged with that series and with expectations over infinite trajectories, conditional expectations such as $\E[\,\cdot\mid s_t=x]$ are undefined at unreachable states, and the telescoping of $\sum_k\gamma^k(\gamma V(s_{t+k+1})-V(s_{t+k}))$ needs convergence of the boundary term.
+This paper records a Lean~4~\cite{moura2021lean4} development, built on mathlib~\cite{mathlib2020,mathlib} inside the \texttt{lemma} library~\cite{lemma_repo}, in which each of these steps is checked.
+
+\paragraph{Contributions.}
+Each item is a Lean module; the module path is the statement's name and a link to its interactive page.
+\begin{enumerate}[leftmargin=1.6em,itemsep=0.35em]
+  \item \textbf{Limits} (Section~\ref{sec:lim}). The library's textbook-style notation $\lim [n\to\infty]\,e=a$, which elaborates to mathlib's \texttt{Filter.Tendsto}; illustrated by \lmod{Real.Eq_0.Lim.of.LtAbs.IsFinite}~\cite{lemma_lim}.
+  \item \textbf{Expectations and probabilities} (Section~\ref{sec:notation}). The library's $\E$/$\Prb$ binder notation and the colour convention of its renderer: red random variables, magenta random arguments, black observed values.
+  \item \textbf{Model} (Section~\ref{sec:model}). A discounted MDP with finite $S$, $A$, a parametrised policy and the Ionescu-Tulcea trajectory measure; the value functions $V_t$, $Q_t$ as conditional expectations.
+  \item \textbf{Bellman equations} (Section~\ref{sec:bellman}). \lmod{Tensor.And.Eq.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.Bellman}~\cite{lemma_bellman}.
+  \item \textbf{Policy gradient by induction} (Section~\ref{sec:induct}). The recursion \lmod{Tensor.EqGrad.of.Eq_Conditioned.Eq_Expect.Eq_Expect.policy_gradient.recursion}~\cite{lemma_recursion}, its unrolling \lmod{Tensor.EqGrad.of.Eq_Conditioned.Eq_Expect.Eq_Expect.policy_gradient.induct}~\cite{lemma_induct}, the truncated identity \lmod{Tensor.Eq.Grad.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.policy_gradient}~\cite{lemma_pgn}, and its limit in the action-value form \lmod{Tensor.Eq.Dot.Grad.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.IsFinite.Q_Function}~\cite{lemma_pgq} and the REINFORCE form \lmod{Tensor.Eq.Dot.Grad.Expect.of.Eq_Conditioned.IsFinite.policy_gradient_theorem}~\cite{lemma_pgt}.
+  \item \textbf{Main result} (Section~\ref{sec:main}). \lmod{Tensor.EqDot_GradExpect.of.Eq_Conditioned.Eq_Expect.IsFinite.IsFinite.unbiased_advantage_estimate}~\cite{lemma_uae}.
+\end{enumerate}
+
+\section{Related work}
+\label{sec:related}
+
+The policy gradient theorem is due to Sutton et al.~\cite{sutton2000policy}; the likelihood-ratio estimator and the use of a reinforcement baseline go back to Williams~\cite{williams1992simple}.
+Greensmith, Bartlett and Baxter~\cite{greensmith2004variance} analyse baselines as variance-reduction devices, and Schulman et al.~\cite{schulman2016gae} introduce generalized advantage estimation, whose $\lambda=1$ case is the advantage studied here.
+Standard references for finite MDPs are Puterman~\cite{puterman1994markov} and Sutton and Barto~\cite{sutton2018reinforcement}.
+On the formal side, CertRL~\cite{vajjha2021certrl} formalizes convergence of value and policy iteration in Coq; it does not treat stochastic policy gradients.
+Our trajectory measure is mathlib's \texttt{Kernel.trajMeasure}~\cite{mathlib}, an implementation of the Ionescu-Tulcea theorem~\cite{kallenberg2002foundations}.
+
+\section{Limits as in textbooks}
+\label{sec:lim}
+
+Mathlib states convergence with filters, $\mathtt{Filter.Tendsto}\ f\ \mathtt{atTop}\ (\mathcal N\,a)$, and names a limit value with \texttt{Filter.limUnder}; it has no notation that reads like $\lim_{n\to\infty}e=a$ in a textbook.
+The library adds a family of macros for that purpose.
+The two forms used below are
+\begin{align*}
+\texttt{lim [n $\to$ $\infty$] e = a}\quad&\Longrightarrow\quad\texttt{Filter.Tendsto (fun n => e) Filter.atTop (nhds a)},\\
+\texttt{lim [n $\to$ $\infty$] e}\quad&\Longrightarrow\quad\texttt{Filter.limUnder Filter.atTop (fun n => e)}.
+\end{align*}
+The same scheme covers $n\to-\infty$ (\texttt{atBot}), a point $x\to x_0$ (the punctured neighbourhood filter $\mathcal N_{\ne}(x_0)$), and one-sided limits $x\to x_0^{+}$, $x\to x_0^{-}$; the type of the bound variable may be given explicitly, as in \texttt{lim [(n : $\mathbb N$) $\to$ $\infty$] e = a}.
+The library also defines the arrows \texttt{x $\to$ $\infty$} and \texttt{x $\to$ 0} for ordered fields with infinitesimals, meaning that $x$ is infinite, respectively infinitesimal (via \texttt{ArchimedeanClass.mk}); they play no role in this paper.
+In the other direction, an unexpander prints \texttt{Filter.Tendsto (fun n => e) atTop (nhds a)} back as \texttt{lim [n $\to$ $\infty$] e = a} in the Lean infoview, and the lemma.cn renderer typesets it as $\lim_{n\to\infty}e=a$.
+
+Two points matter.
+\begin{enumerate}[leftmargin=1.6em,itemsep=0.25em]
+  \item \textbf{Pure syntax.} The notation consists of macros and pretty-printer unexpanders only.
+  After elaboration nothing of it remains: the metaprogram of Section~\ref{sec:artifact} finds \emph{no} constant of the notation's module in the dependency graph of any theorem in this paper.
+  It adds nothing to the trusted base.
+  \item \textbf{Equation means convergence.} The equation form is parsed as a whole, at higher priority than the bare form, so \texttt{lim [n $\to$ $\infty$] e = a} asserts that the sequence converges to $a$.
+  It is not the equation $\mathtt{limUnder}\,(\ldots)=a$: \texttt{limUnder} is defined through a choice and returns an unspecified value when the sequence diverges, so such an equation could hold for a divergent sequence.
+  We therefore always use the equation form.
+\end{enumerate}
+
+\begin{lemma}[\lmod{Real.Eq_0.Lim.of.LtAbs.IsFinite}~\cite{lemma_lim}]
+\label{lem:lim}
+Let $\gamma\in\R$ and $x:\N\to\R$ with $|\gamma|<1$ and $\{|x_n|:n\in\N\}$ bounded above.
+Then $\displaystyle\lim_{n\to\infty}\gamma^n x_n=0$.
+\end{lemma}
+In Lean the conclusion is written \texttt{lim [n $\to$ $\infty$] $\gamma$ \^{} n * x n = 0}, which elaborates to \texttt{Filter.Tendsto (fun n => $\gamma$ \^{} n * x n) atTop (nhds 0)}.
+The proof splits on the sign of $\gamma$; for $0<\gamma<1$ it squeezes $|\gamma^nx_n|\le\gamma^nM$ with mathlib's \texttt{tendsto\_pow\_atTop\_nhds\_zero\_of\_lt\_one} and \texttt{squeeze\_zero\_norm}.
+Lemma~\ref{lem:lim} is used twice below: for the remainder of the truncated policy gradient (Section~\ref{sec:passlimit}) and for the boundary term of the telescoping sum (Section~\ref{sec:main}).
+
+\section{Expectation and probability notation}
+\label{sec:notation}
+
+\subsection{Binder syntax}
+The library defines a binder syntax for expectations of random variables $x:\Omega\to\alpha$ on a probability space $(\Omega,\pi)$.
+Brackets list what is integrated; parentheses hold the integrand, optionally followed by a condition after $\mid$.
+\begin{center}
+\begin{tabular}{@{}ll@{}}
+\toprule
+Lean surface form & meaning \\
+\midrule
+\texttt{$\mathbb{E}$[x: $\pi$](f x)} & scalar $\E_\pi[f(\rv{x})]$ \\
+\texttt{$\mathbb{E}$[x: $\pi$](f x | y = y0)} & scalar, conditioned on the observation $\rv{y}=y_0$ \\
+\texttt{$\mathbb{E}$[x: $\pi$](f x | y)} & random in $y$: $\omega\mapsto\E_\pi[f(\rv{x})\mid \rv{y}=y(\omega)]$ \\
+\texttt{$\mathbb{E}$[x: $\pi$ | y]((x + y)\^{}2)} & integrate $x$, leave $y$ free: a random variable in $\ra{y}$\\
+\bottomrule
+\end{tabular}
+\end{center}
+Several integrated variables (\texttt{$\mathbb{E}$[x, z: $\pi$](\dots)}) are packed into their joint law, which is not the product of marginals unless the variables are independent.
+Probabilities use the same pattern: \texttt{$\mathbb{P}$[$\pi$](x = x0)} is the probability that $\rv{x}$ takes the value $x_0$, \texttt{$\mathbb{P}$[$\pi$](x = x0 | y = y0)} is a conditional probability at a fixed observation, \texttt{$\mathbb{P}$[$\pi$](x = x0 | y)} is the random quantity $\omega\mapsto\Prb(\rv{x}=x_0\mid\rv{y}=y(\omega))$, and a bare \texttt{$\mathbb{P}$[$\pi$](x)} is the density evaluated at the random point $x(\omega)$.
+In these forms $=$ reads ``evaluated at'', $\wedge$ packs a joint point, and $\mid$ is conditioning.
+
+\subsection{Colours}
+The lemma.cn renderer typesets every Lean statement in \LaTeX{} and colours identifiers by their probabilistic role.
+The rules, read off the renderer's source, are:
+\begin{itemize}[leftmargin=1.6em,itemsep=0.2em]
+  \item \textbf{\rv{red}: random variable.} A variable declared as a function $\Omega\to\alpha$ out of the sample space of a probability measure (a measure carrying \texttt{IsProbabilityMeasure} or the library's \texttt{PSpace} instance); the integrated variable of an $\E$ binder; the variable on the left of $=$ in a $\Prb$ event.
+  \item \textbf{\ra{magenta}: random argument.} A random variable used as the argument of a function, so that the whole expression is itself random: the free variables after $\mid$ inside $\E$ brackets, the conditioning list in $\E(\ldots\mid y)$, and the bare factors in $\Prb(x)$ or $\Prb(x\mid y)$.
+  \item \textbf{Black: observed value.} Ordinary, deterministic terms, such as the fixed values $x_0,y_0$ of an observation.
+\end{itemize}
+Thus $\E[\rv{y}\mid\rv{x}=x]$ is a number, while $\E[\rv{y}\mid\ra{x}]$ is the random variable obtained by substituting $\rv{x}(\omega)$ for $x$ in it.
+We use the same convention in this paper: $\sv_t,\av_t,\rw_t$ are red, $x,u,y$ are black states and actions, and $V_t(\ra{s}_t)$, printed with a magenta argument, is a function of the state evaluated along the trajectory.
+
+\subsection{What the policy-gradient statements use}
+The theorems of Sections~\ref{sec:bellman}--\ref{sec:main} are written directly with mathlib's Bochner integral and conditional measure rather than with the binder syntax:
+$\E_\theta[f]$ is \texttt{$\int$ $\omega$, f $\omega$ $\partial$M.traj $\theta$}, and $\E_\theta[f\mid B]$ is the integral against \texttt{(M.traj $\theta$)[|B]}, where mathlib defines $\mu[|B]=\mu(B)^{-1}\,\mu|_B$.
+When $\mu(B)=0$ this is the zero measure, so a conditional expectation at an unreachable state is $0$; several hypotheses below are therefore restricted to \emph{reachable} pairs $(t,x)$, those with $\Prb_\theta(\sv_t=x)\neq0$.
+We also recall that Lean's \texttt{tsum} ($\tsum$) is the sum of a summable family and $0$ otherwise.
+
+\section{The MDP model}
+\label{sec:model}
+
+\begin{definition}[Model]
+\label{def:model}
+Let $S$ and $A$ be finite types with the discrete $\sigma$-algebra and let $\Theta$ be a real normed space.
+A \emph{policy} is a function $\pi:\Theta\to S\to A\to\R$, written $\pi_\theta(u\mid x)$, with $\pi_\theta(u\mid x)\ge0$ and $\sum_u\pi_\theta(u\mid x)=1$.
+An \emph{environment} consists of an initial probability measure $\iota$ on $S$, a Markov kernel $T$ from $S\times A$ to $S$, a Markov kernel $R$ from $S\times A$ to $\R$ (the reward law), and a bound $R_{\max}$ with $R(x,u)\bigl(\R\setminus[-R_{\max},R_{\max}]\bigr)=0$ for all $(x,u)$.
+A model $M$ is an environment together with a policy.
+\end{definition}
+
+A trajectory is a sequence $\omega\in(S\times A\times\R)^{\N}$ of stages; the coordinates are $\sv_t(\omega)$, $\av_t(\omega)$, $\rw_t(\omega)$.
+One stage from a state $x$ is drawn by the kernel
+$\kappa_\theta(x)=\delta_x\otimes\bigl(\pi_\theta(\cdot\mid x)\otimes R\bigr)$: the action is sampled from the policy and the reward from $R(x,\cdot)$.
+The stage chain has kernel $K_\theta(x,u,\rho)=(\kappa_\theta\circ T)(x,u)$, which ignores the reward $\rho$, and first-stage law $\mu_0=\kappa_\theta\circ\iota$.
+
+\begin{definition}[Trajectory measure]
+$\Prb_\theta=\mathtt{Kernel.trajMeasure}\;\mu_0\;(K_\theta)_n$ on $(S\times A\times\R)^{\N}$, where the $n$-th kernel reads only the last stage of the history.
+\end{definition}
+
+This is the Ionescu-Tulcea extension~\cite{kallenberg2002foundations} of the stage chain, provided by mathlib~\cite{mathlib}; it is a probability measure.
+The law is time-homogeneous and Markov by construction: nothing beyond the kernels is assumed about the trajectory.
+
+\begin{definition}[Value functions]
+For $\gamma\in\R$, $t\in\N$, $x\in S$, $u\in A$,
+\[
+V_t^\theta(x)=\tsum_{k}\gamma^k\,\E_\theta[\rw_{t+k}\mid\sv_t=x],\qquad
+Q_t^\theta(x,u)=\tsum_{k}\gamma^k\,\E_\theta[\rw_{t+k}\mid\sv_t=x,\av_t=u].
+\]
+The discounted return from time $t$ is $G_t=\tsum_k\gamma^k\rw_{t+k}$.
+\end{definition}
+
+The model file also proves that on reachable states $V_t^\theta(x)$ equals a time-free closed form $V^\theta_c(x)$, that $|Q_t^\theta|\le(1-\gamma)^{-1}|R_{\max}|$, and that almost surely $G_t$ is a convergent series with the same bound.
+The objective is $J(\theta)=\tsum_t\gamma^t\E_\theta[\rw_t]$; a model lemma (\texttt{obj\_hasFDerivAt}) shows that, for $\gamma\in[0,1)$ and a differentiable policy with uniformly bounded gradient, $J$ is Fr\'echet differentiable with
+\begin{equation}
+\label{eq:obj}
+\grad J(\theta)=\tsum_t\gamma^t\,\grad\E_\theta[\rw_t].
+\end{equation}
+All policy-gradient statements below have the right-hand side of~\eqref{eq:obj} as their left-hand side.
+
+\paragraph{Standing hypotheses.}
+We abbreviate the recurring hypotheses:
+\begin{itemize}[leftmargin=1.6em,itemsep=0.1em]
+  \item[(D)] $\gamma\in[0,1)$;
+  \item[(P1)] $\theta\mapsto\pi_\theta(u\mid x)$ is differentiable for every $x,u$;
+  \item[(P2)] $\sup_{\theta,x,u}\|\grad\pi_\theta(u\mid x)\|<\infty$;
+  \item[(I)] for every $t$, $\rw_t$ is independent of the history $(\sv_i,\av_i)_{i<t}$ under $\Prb_\theta$.
+\end{itemize}
+Hypothesis (I) appears in the statements; Section~\ref{sec:artifact} shows it is not used by their proofs.
+
+\section{Bellman equations}
+\label{sec:bellman}
+
+\begin{theorem}[Bellman equations~\cite{lemma_bellman}]
+\label{thm:bellman}
+Assume (I) at time $t$ and (D), and let $V_t=V_t^\theta$, $Q_t=Q_t^\theta$.
+Then for all $x\in S$, $u\in A$:
+\begin{align*}
+V_t(x)&=\E_\theta\bigl[Q_t(x,\av_t)\bigm|\sv_t=x\bigr],\\
+V_t(x)&=\E_\theta\bigl[\rw_t+\gamma\,V_{t+1}(\ra{s}_{t+1})\bigm|\sv_t=x\bigr],\\
+Q_t(x,u)&=\E_\theta\bigl[\rw_t+\gamma\,V_{t+1}(\ra{s}_{t+1})\bigm|\sv_t=x,\ \av_t=u\bigr].
+\end{align*}
+\end{theorem}
+The three equalities are assembled from
+\lmod{Tensor.EqExpect.of.Eq_Expect.V_Function} (the policy average of $Q_t$),
+\lmod{Tensor.EqExpect.of.Eq_Conditioned.Bellman.V_Function} and
+\lmod{Tensor.EqExpect.of.Eq_Conditioned.Bellman.Q_Function}.
+Both sides vanish when the conditioning event is null.
+The first lemma needs only (D); the doc comments of the other two record that their independence hypothesis is unnecessary for a Markov model, and in Lean it is an unused, underscore-named argument.
+For $\gamma=1$ the Lean series \texttt{tsum} of a non-summable family is $0$, and the first identity fails, which is why (D) is required.
+
+\section{The policy gradient theorem by induction}
+\label{sec:induct}
+
+The route to the policy gradient theorem in the library differentiates the Bellman equation once, unrolls the result by induction on the horizon, integrates over the initial state, and finally lets the horizon tend to infinity.
+
+\subsection{One-step recursion}
+
+\begin{theorem}[Recursion~\cite{lemma_recursion}]
+\label{thm:rec}
+Assume (I) at time $t$, (D), (P1), (P2), and let $x$ be reachable at time $t$.
+Then
+\[
+\grad V_t(x)=\sum_{u}Q_t(x,u)\,\grad\pi_\theta(u\mid x)
++\gamma\sum_{y}\Prb_\theta(\sv_{t+1}=y\mid\sv_t=x)\,\grad V_{t+1}(y),
+\]
+where $\grad V_t(x)$ is the Fr\'echet derivative of $\theta\mapsto V^\theta_t(x)$, and $Q$, $V$ are the value functions of the model regarded as functions of $\theta$.
+\end{theorem}
+The proof rewrites $V_t$ by its closed form and uses the model lemma \texttt{grad\_V\_rec}, the derivative of the Bellman equation of Theorem~\ref{thm:bellman}; the conditional transition probability is then identified with the kernel $\sum_u\pi_\theta(u\mid x)T(x,u,y)$.
+
+\subsection{Unrolling by induction}
+
+\begin{theorem}[Unrolled recursion~\cite{lemma_induct}]
+\label{thm:induct}
+Assume (I) for every $t$, (D), (P1), (P2), and let $x$ be reachable at time $0$.
+Then for every $n\in\N$,
+\begin{multline*}
+\grad V_0(x)=\sum_{t<n}\gamma^t\sum_y\Prb_\theta(\sv_t=y\mid\sv_0=x)\sum_u Q_t(y,u)\,\grad\pi_\theta(u\mid y)\\
++\gamma^n\sum_y\Prb_\theta(\sv_n=y\mid\sv_0=x)\,\grad V_n(y).
+\end{multline*}
+\end{theorem}
+\begin{proof}[Proof sketch]
+The conditional probabilities are replaced by the $t$-step kernel $P^t_\theta(x,y)$.
+Induction on $n$: the case $n=0$ is trivial.
+For $n+1$, the remainder $\gamma^n\sum_yP^n_\theta(x,y)\grad V_n(y)$ is expanded with Theorem~\ref{thm:rec} at every $y$ with $P^n_\theta(x,y)\ne0$ (such $y$ are reachable at time $n$); the resulting double sum is collapsed by the Chapman--Kolmogorov identity $P^{n+1}_\theta(x,z)=\sum_yP^n_\theta(x,y)P^1_\theta(y,z)$.
+\end{proof}
+
+\subsection{The truncated identity}
+
+\begin{theorem}[Truncated policy gradient~\cite{lemma_pgn}]
+\label{thm:trunc}
+Assume (I) for every $t$, (D), (P1), (P2).
+Then for every $n\in\N$,
+\[
+\tsum_t\gamma^t\grad\E_\theta[\rw_t]
+=\E_\theta\Bigl[\sum_{t<n}\gamma^tQ_t(\ra{s}_t,\ra{a}_t)\,\grad\log\pi_\theta(\av_t\mid\sv_t)\Bigr]
++\gamma^n\,\E_\theta\bigl[\grad V_n(\ra{s}_n)\bigr].
+\]
+\end{theorem}
+\begin{proof}[Proof sketch]
+By the model lemma \texttt{grad\_obj}, the left-hand side equals $\sum_x\iota(x)\,\grad V_c^\theta(x)$.
+For each $x$ with $\iota(x)\neq0$, Theorem~\ref{thm:induct} expands $\grad V_0(x)$.
+On the right, the lemma \texttt{E\_score} evaluates
+$\E_\theta[g(\sv_t,\av_t)\grad\log\pi_\theta(\av_t\mid\sv_t)]=\sum_y\Prb_\theta(\sv_t=y)\sum_ug(y,u)\grad\pi_\theta(u\mid y)$,
+which is the log-derivative identity $\pi\,\grad\log\pi=\grad\pi$ summed against the law of $(\sv_t,\av_t)$; the state marginal is $\Prb_\theta(\sv_t=y)=\sum_x\iota(x)P^t_\theta(x,y)$.
+Both sides are then equal finite sums.
+\end{proof}
+
+Despite the finite sum over $t<n$, Theorem~\ref{thm:trunc} concerns the discounted infinite-horizon objective: it is an exact identity for every truncation level, with an explicit remainder.
+It is not a statement about a finite-horizon MDP.
+
+\subsection{Passing to the limit}
+\label{sec:passlimit}
+
+Letting $n\to\infty$ in Theorem~\ref{thm:trunc} gives the policy gradient theorem, first with action values and then in REINFORCE form.
+
+\begin{theorem}[Policy gradient, action-value form~\cite{lemma_pgq}]
+\label{thm:pgq}
+Assume (I) for every $t$, (D), (P1), (P2), and
+\begin{itemize}[leftmargin=1.6em]
+  \item[(B$_{\nabla V}$)] $\sup\{\|\grad V_t(x)\| : \Prb_\theta(\sv_t=x)\neq0\}<\infty$.
+\end{itemize}
+Then
+\[
+\tsum_t\gamma^t\grad\E_\theta[\rw_t]=\tsum_t\gamma^t\,\E_\theta\bigl[Q_t(\ra{s}_t,\ra{a}_t)\,\grad\log\pi_\theta(\av_t\mid\sv_t)\bigr].
+\]
+\end{theorem}
+\begin{proof}[Proof sketch]
+The remainder satisfies $\|\E_\theta[\grad V_n(\sv_n)]\|\le\max(B,0)$, because only reachable states carry mass; hence $\lim_{n\to\infty}\gamma^n\|\E_\theta[\grad V_n(\sv_n)]\|=0$ by Lemma~\ref{lem:lim}, and \texttt{tendsto\_zero\_iff\_norm\_tendsto\_zero} turns this into $\lim_{n\to\infty}\gamma^n\E_\theta[\grad V_n(\sv_n)]=0$.
+Each term of the right-hand series is bounded by $\gamma^t\,|A|\,(1-\gamma)^{-1}|R_{\max}|\max(C,0)$, with $C$ the bound of (P2), so the series is summable.
+Integral and finite sum are exchanged, the partial sums of the right-hand series converge to its \texttt{tsum} (\texttt{HasSum.tendsto\_sum\_nat}), and the two limits coincide by uniqueness of limits (\texttt{tendsto\_nhds\_unique}).
+\end{proof}
+
+\begin{lemma}[Tower property~\cite{lemma_tower}]
+\label{lem:tower}
+Under (I) at time $t$ and (D),
+$\E_\theta\bigl[G_t\,\grad\log\pi_\theta(\av_t\mid\sv_t)\bigr]=\E_\theta\bigl[Q_t(\ra{s}_t,\ra{a}_t)\,\grad\log\pi_\theta(\av_t\mid\sv_t)\bigr]$.
+\end{lemma}
+
+\begin{theorem}[Policy gradient, REINFORCE form~\cite{lemma_pgt}]
+\label{thm:pgt}
+Assume (I) for every $t$, (D), (P1), (P2), and that
+$\bigl\|\tsum_k\gamma^k\grad\E_\theta[\rw_{t+k}\mid\sv_t=x]\bigr\|$ is bounded over reachable pairs $(t,x)$.
+Then
+\[
+\tsum_t\gamma^t\grad\E_\theta[\rw_t]=\tsum_t\gamma^t\,\E_\theta\bigl[G_t\,\grad\log\pi_\theta(\av_t\mid\sv_t)\bigr].
+\]
+\end{theorem}
+The bound is converted into (B$_{\nabla V}$) by the model lemma \texttt{sum\_grad\_cond}, which exchanges $\grad$ with the series on reachable states; then Theorem~\ref{thm:pgq} and Lemma~\ref{lem:tower} give the claim termwise.
+
+\paragraph{How limits are handled.}
+Throughout, infinite sums are Lean's \texttt{tsum} and every limit is an explicit \texttt{Filter.Tendsto} statement (written with the notation of Section~\ref{sec:lim} where convenient).
+The objective and the returns are \texttt{tsum}s whose summability comes from domination by a geometric series (\texttt{summable\_geometric\_of\_lt\_one}, \texttt{Summable.of\_norm\_bounded}, \texttt{Summable.mul\_right}; for the returns also \texttt{hasSum\_geometric\_of\_lt\_one}).
+The gradient is exchanged with the discounted series by mathlib's \texttt{hasFDerivAt\_tsum}, which yields~\eqref{eq:obj} and the analogous statement for $V_c^\theta$.
+Passing from partial sums to the \texttt{tsum} uses \texttt{HasSum.tendsto\_sum\_nat} together with \texttt{tendsto\_nhds\_unique}.
+No dominated-convergence theorem and no interchange of an integral with a series is cited: expectations of functions of $(\sv_t,\av_t)$ reduce to finite sums over $S\times A$ (model lemmas \texttt{E\_score} and \texttt{E\_s1}), which is where finiteness of the state and action spaces is used.
+
+\section{Main result: the unbiased advantage estimate}
+\label{sec:main}
+
+\begin{theorem}[Unbiased advantage estimate~\cite{lemma_uae}]
+\label{thm:main}
+Let $V:\Theta\to\N\to S\to\R$ satisfy
+$V^\theta_t(x)=\tsum_k\gamma^k\E_\theta[\rw_{t+k}\mid\sv_t=x]$ for all $\theta,t,x$.
+Assume (I) for every $t$, (D), (P1), (P2), and
+\begin{itemize}[leftmargin=1.6em]
+  \item[(B$_{\nabla V}$)] $\sup\{\|\grad V_t(x)\| : \Prb_\theta(\sv_t=x)\neq0\}<\infty$;
+  \item[(B$_V$)] $\sup\{|V^\theta_t(x)| : \Prb_\theta(\sv_t=x)\neq0\}<\infty$.
+\end{itemize}
+Define the advantage
+\[
+\hat A_t=\tsum_k\gamma^k\bigl(\rw_{t+k}+\gamma\,V^\theta_{t+k+1}(\ra{s}_{t+k+1})-V^\theta_{t+k}(\ra{s}_{t+k})\bigr).
+\]
+Then
+\[
+\tsum_t\gamma^t\grad\E_\theta[\rw_t]=\tsum_t\gamma^t\,\E_\theta\bigl[\hat A_t\,\grad\log\pi_\theta(\av_t\mid\sv_t)\bigr].
+\]
+\end{theorem}
+
+By~\eqref{eq:obj} the left-hand side is $\grad J(\theta)$.
+The summand of $\hat A_t$ is $\gamma^k\delta_{t+k}$ with the temporal-difference residual $\delta_j=\rw_j+\gamma V_{j+1}(\sv_{j+1})-V_j(\sv_j)$, so $\hat A_t$ is the generalized advantage estimator with $\lambda=1$~\cite{schulman2016gae} computed with the exact value function.
+
+\begin{proof}[Proof]
+\emph{Step 1: reduce to REINFORCE.}
+Hypothesis (B$_{\nabla V}$) is rewritten, through \texttt{sum\_grad\_cond}, into the bound required by Theorem~\ref{thm:pgt}, which turns the left-hand side into\[\tsum_t\gamma^t\,\E_\theta\bigl[G_t\,\grad\log\pi_\theta(\av_t\mid\sv_t)\bigr].\]
+It remains to show, for each $t$,
+\[
+\E_\theta\bigl[\hat A_t\,\grad\log\pi_\theta(\av_t\mid\sv_t)\bigr]=\E_\theta\bigl[G_t\,\grad\log\pi_\theta(\av_t\mid\sv_t)\bigr].
+\]
+
+\emph{Step 2: telescoping, almost surely.}
+Almost surely the series $\sum_k\gamma^k\rw_{t+k}$ converges to $G_t$ (model lemma \texttt{G\_hasSum}), and every visited state is reachable (\texttt{reach\_ae}), so (B$_V$) gives $|V_k(\sv_k(\omega))|\le B$ for all $k$.
+Put $b_k=\gamma^kV_{t+k}(\sv_{t+k}(\omega))$.
+Then $\gamma^k\delta_{t+k}=\gamma^k\rw_{t+k}+(b_{k+1}-b_k)$, the differences are summable because $|b_{k+1}-b_k|\le2B\gamma^k$, and $\lim_{k\to\infty}b_k=0$ by Lemma~\ref{lem:lim}; hence $\sum_k(b_{k+1}-b_k)=-b_0$ and
+\[
+\hat A_t=G_t-V_t(\ra{s}_t)\qquad\Prb_\theta\text{-almost surely.}
+\]
+
+\emph{Step 3: the baseline vanishes.}
+By linearity of the integral (both integrands are integrable),
+$\E_\theta[\hat A_t\,\grad\log\pi_\theta]=\E_\theta[G_t\,\grad\log\pi_\theta]-\E_\theta[V_t(\sv_t)\,\grad\log\pi_\theta]$.
+The model lemma \texttt{E\_h\_score} states $\E_\theta[h(\sv_t)\,\grad\log\pi_\theta(\av_t\mid\sv_t)]=0$ for every $h:S\to\R$; it rests on the zero-mean score identity $\sum_u\pi_\theta(u\mid x)\,\grad\log\pi_\theta(u\mid x)=0$ (\texttt{score\_zero}), which in Lean needs no positivity of $\pi$ because the terms with $\pi_\theta(u\mid x)=0$ vanish.
+A conditional version with a positivity hypothesis is \lmod{Random.Expect_ConditionedGrad_LogProb.eq.Zero.policy}~\cite{lemma_score}.
+\end{proof}
+
+\begin{remark}
+Steps 2 and 3 use only that $V$ is a function of $(t,x)$ bounded along reachable states; the defining equation of $V$ is used in Step 1 and through (B$_{\nabla V}$).
+This suggests that the same identity holds for any bounded critic in place of the exact value function.
+The Lean statement does not claim this.
+\end{remark}
+
+\section{Formalization artifact}
+\label{sec:artifact}
+
+\paragraph{Modules.}
+Each theorem above links to its module at commit \texttt{c7c71c4} of~\cite{lemma_repo} (prefix \texttt{Lemma.} omitted).
+The model, its Markov-chain lemmas and its differentiability lemmas live in three further files under the namespace \texttt{PolicyGradient}.
+
+\paragraph{Checking.}
+The project uses Lean~\texttt{v4.33.1} with mathlib.
+\texttt{lake build} of the main module completes without errors, and neither it nor any of the local modules it imports contains \texttt{sorry}, \texttt{admit} or a new \texttt{axiom}.
+\texttt{\#print axioms}, run from a scratch file outside the repository, reports for Theorems~\ref{thm:bellman}, \ref{thm:rec}, \ref{thm:induct}, \ref{thm:trunc}, \ref{thm:pgq}, \ref{thm:pgt} and~\ref{thm:main}, for Lemma~\ref{lem:tower} and for the three Bellman components the axioms
+\texttt{propext}, \texttt{Classical.choice}, \texttt{Quot.sound}
+and nothing else.
+A metaprogram run from the same scratch file walks the dependency graphs of Theorems~\ref{thm:rec}, \ref{thm:induct}, \ref{thm:trunc}, \ref{thm:pgq}, \ref{thm:pgt} and~\ref{thm:main}: the notation module of Section~\ref{sec:lim} is imported, but none of its 94 declarations occurs in any of them.
+
+\paragraph{The independence hypothesis is unused.}
+In the chain leading to Theorem~\ref{thm:main}, hypothesis (I) is passed down unchanged and is finally received only by Theorem~\ref{thm:rec} and Lemma~\ref{lem:tower}.
+In both, the argument is named \texttt{\_h}$_0$.
+A second metaprogram, run from the same file, opens the proof terms of these two lemmas and confirms that the bound variable for (I) does not occur in their bodies.
+Hence the whole chain, including Theorem~\ref{thm:main}, remains valid with (I) deleted; the current statements simply carry a redundant hypothesis.
+
+\section{Discussion and limitations}
+\label{sec:discussion}
+
+\paragraph{The reward-independence hypothesis.}
+Taken at face value, (I) is restrictive: in an MDP the reward $\rw_t$ depends on $(\sv_t,\av_t)$, which is correlated with the earlier states and actions, so (I) fails for most reward kernels.
+As shown in Section~\ref{sec:artifact}, no proof uses it.
+It survives in the statements as a legacy of how the conjectures were first written; removing it from the signatures is the most immediate clean-up.
+
+\paragraph{Regularity hypotheses.}
+(P2) asks for a gradient bound uniform in $\theta$, $x$ and $u$.
+It holds for example for a softmax policy with bounded features, since then $\grad\pi_\theta(u\mid x)=\pi_\theta(u\mid x)\bigl(\phi(x,u)-\sum_{u'}\pi_\theta(u'\mid x)\phi(x,u')\bigr)$, but it excludes policies whose gradient grows with $\theta$.
+(B$_{\nabla V}$) is a hypothesis on a derived quantity; we expect it to follow from (P2) and the reward bound for $\gamma<1$, and (B$_V$) to follow from $|V_t|\le(1-\gamma)^{-1}|R_{\max}|$, which the model already proves for $Q_t$.
+Neither derivation is formalized yet.
+
+\paragraph{Scope.}
+The state and action spaces are finite, rewards are bounded, and the discount satisfies $\gamma<1$; average-reward, undiscounted episodic, and continuous-space settings are not covered.
+The parameter space $\Theta$ is an arbitrary real normed space, so the result is not limited to tabular parametrisations.
+The statements are about exact expectations and the exact value function.
+They say nothing about variance, about sampled or bootstrapped estimates with a learned critic, about GAE with $\lambda<1$, or about convergence of stochastic gradient ascent.
+The value functions carry a time index; the model proves that on reachable states they agree with a time-independent closed form, but the statements are phrased with the indexed version.
+Finally, the left-hand side of every theorem is $\tsum_t\gamma^t\grad\E_\theta[\rw_t]$; its identification with $\grad J(\theta)$ is the separate lemma~\eqref{eq:obj}.
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+We have formalized, in Lean~4 on top of mathlib, a discounted MDP with a parametrised policy and its Ionescu-Tulcea trajectory law; its Bellman equations; a recursion for the gradient of the value function and its unrolling by induction into an exact truncated policy-gradient identity; the limit in both the action-value and the REINFORCE form; and the fact that replacing the return by the discounted sum of temporal-difference residuals of the value function leaves the policy gradient unchanged.
+The proofs use only the standard axioms, and the one restrictive-looking hypothesis in the statements is unused and can be removed.
+
+\section*{Acknowledgements}
+
+The formalization uses Lean~4 and mathlib~\cite{moura2021lean4,mathlib2020}.
+Interactive statements of the modules cited in this paper are available at \href{http://www.lemma.cn/}{lemma.cn}.
+
+\begingroup
+\sloppy
+\bibliographystyle{plain}
+\bibliography{refs}
+\endgroup
+
+\end{document}

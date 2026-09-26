@@ -1,0 +1,157 @@
+\begin{thebibliography}{10}
+
+\bibitem{moura2021lean4}
+Leonardo de~Moura and Sebastian Ullrich.
+\newblock The {Lean} 4 theorem prover and programming language.
+\newblock In {\em Automated Deduction -- {CADE} 28}, volume 12699 of {\em
+  LNCS}, pages 625--635. Springer, 2021.
+
+\bibitem{greensmith2004variance}
+Evan Greensmith, Peter~L. Bartlett, and Jonathan Baxter.
+\newblock Variance reduction techniques for gradient estimates in reinforcement
+  learning.
+\newblock {\em Journal of Machine Learning Research}, 5:1471--1530, 2004.
+
+\bibitem{kallenberg2002foundations}
+Olav Kallenberg.
+\newblock {\em Foundations of Modern Probability}.
+\newblock Springer, 2nd edition, 2002.
+
+\bibitem{lemma_repo}
+math proof.
+\newblock lemma: machine-checked tensor calculus.
+\newblock \url{https://github.com/math-proof/lemma}, 2026.
+
+\bibitem{lemma_score}
+math proof.
+\newblock
+  {Random.\allowbreak{}Expect\_ConditionedGrad\_LogProb.\allowbreak{}eq.\allowbreak{}Zero.\allowbreak{}policy}.
+\newblock
+  \url{http://www.lemma.cn/lean/?module=Random.Expect_ConditionedGrad_LogProb.eq.Zero.policy},
+  2026.
+
+\bibitem{lemma_lim}
+math proof.
+\newblock
+  {Real.\allowbreak{}Eq\_0.\allowbreak{}Lim.\allowbreak{}of.\allowbreak{}LtAbs.\allowbreak{}IsFinite}.
+\newblock
+  \url{http://www.lemma.cn/lean/?module=Real.Eq_0.Lim.of.LtAbs.IsFinite}, 2026.
+
+\bibitem{lemma_bellman}
+math proof.
+\newblock
+  {Tensor.\allowbreak{}And.\allowbreak{}Eq.\allowbreak{}Expect.\allowbreak{}of.\allowbreak{}Eq\_Conditioned.\allowbreak{}Eq\_Expect.\allowbreak{}Eq\_Expect.\allowbreak{}Bellman}.
+\newblock
+  \url{http://www.lemma.cn/lean/?module=Tensor.And.Eq.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.Bellman},
+  2026.
+
+\bibitem{lemma_pgq}
+math proof.
+\newblock
+  {Tensor.\allowbreak{}Eq.\allowbreak{}Dot.\allowbreak{}Grad.\allowbreak{}Expect.\allowbreak{}of.\allowbreak{}Eq\_Conditioned.\allowbreak{}Eq\_Expect.\allowbreak{}Eq\_Expect.\allowbreak{}IsFinite.\allowbreak{}Q\_Function}.
+\newblock
+  \url{http://www.lemma.cn/lean/?module=Tensor.Eq.Dot.Grad.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.IsFinite.Q_Function},
+  2026.
+
+\bibitem{lemma_pgt}
+math proof.
+\newblock
+  {Tensor.\allowbreak{}Eq.\allowbreak{}Dot.\allowbreak{}Grad.\allowbreak{}Expect.\allowbreak{}of.\allowbreak{}Eq\_Conditioned.\allowbreak{}IsFinite.\allowbreak{}policy\_gradient\_theorem}.
+\newblock
+  \url{http://www.lemma.cn/lean/?module=Tensor.Eq.Dot.Grad.Expect.of.Eq_Conditioned.IsFinite.policy_gradient_theorem},
+  2026.
+
+\bibitem{lemma_tower}
+math proof.
+\newblock
+  {Tensor.\allowbreak{}Eq.\allowbreak{}Expect.\allowbreak{}Grad.\allowbreak{}Log.\allowbreak{}Pr.\allowbreak{}of.\allowbreak{}Eq\_Conditioned.\allowbreak{}Q\_Function.\allowbreak{}discounted}.
+\newblock
+  \url{http://www.lemma.cn/lean/?module=Tensor.Eq.Expect.Grad.Log.Pr.of.Eq_Conditioned.Q_Function.discounted},
+  2026.
+
+\bibitem{lemma_pgn}
+math proof.
+\newblock
+  {Tensor.\allowbreak{}Eq.\allowbreak{}Grad.\allowbreak{}Expect.\allowbreak{}of.\allowbreak{}Eq\_Conditioned.\allowbreak{}Eq\_Expect.\allowbreak{}Eq\_Expect.\allowbreak{}policy\_gradient}.
+\newblock
+  \url{http://www.lemma.cn/lean/?module=Tensor.Eq.Grad.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.policy_gradient},
+  2026.
+
+\bibitem{lemma_uae}
+math proof.
+\newblock
+  {Tensor.\allowbreak{}EqDot\_GradExpect.\allowbreak{}of.\allowbreak{}Eq\_Conditioned.\allowbreak{}Eq\_Expect.\allowbreak{}IsFinite.\allowbreak{}IsFinite.\allowbreak{}unbiased\_advantage\_estimate}.
+\newblock
+  \url{http://www.lemma.cn/lean/?module=Tensor.EqDot_GradExpect.of.Eq_Conditioned.Eq_Expect.IsFinite.IsFinite.unbiased_advantage_estimate},
+  2026.
+
+\bibitem{lemma_induct}
+math proof.
+\newblock
+  {Tensor.\allowbreak{}EqGrad.\allowbreak{}of.\allowbreak{}Eq\_Conditioned.\allowbreak{}Eq\_Expect.\allowbreak{}Eq\_Expect.\allowbreak{}policy\_gradient.\allowbreak{}induct}.
+\newblock
+  \url{http://www.lemma.cn/lean/?module=Tensor.EqGrad.of.Eq_Conditioned.Eq_Expect.Eq_Expect.policy_gradient.induct},
+  2026.
+
+\bibitem{lemma_recursion}
+math proof.
+\newblock
+  {Tensor.\allowbreak{}EqGrad.\allowbreak{}of.\allowbreak{}Eq\_Conditioned.\allowbreak{}Eq\_Expect.\allowbreak{}Eq\_Expect.\allowbreak{}policy\_gradient.\allowbreak{}recursion}.
+\newblock
+  \url{http://www.lemma.cn/lean/?module=Tensor.EqGrad.of.Eq_Conditioned.Eq_Expect.Eq_Expect.policy_gradient.recursion},
+  2026.
+
+\bibitem{mathlib}
+{Mathlib community}.
+\newblock The {Lean} mathematical library.
+\newblock \url{https://leanprover-community.github.io/mathlib4_docs/}, 2026.
+
+\bibitem{puterman1994markov}
+Martin~L. Puterman.
+\newblock {\em Markov Decision Processes: Discrete Stochastic Dynamic
+  Programming}.
+\newblock Wiley, 1994.
+
+\bibitem{schulman2016gae}
+John Schulman, Philipp Moritz, Sergey Levine, Michael Jordan, and Pieter
+  Abbeel.
+\newblock High-dimensional continuous control using generalized advantage
+  estimation.
+\newblock In {\em International Conference on Learning Representations}, 2016.
+\newblock arXiv:1506.02438.
+
+\bibitem{sutton2018reinforcement}
+Richard~S. Sutton and Andrew~G. Barto.
+\newblock {\em Reinforcement Learning: An Introduction}.
+\newblock MIT Press, 2nd edition, 2018.
+
+\bibitem{sutton2000policy}
+Richard~S. Sutton, David McAllester, Satinder Singh, and Yishay Mansour.
+\newblock Policy gradient methods for reinforcement learning with function
+  approximation.
+\newblock In {\em Advances in Neural Information Processing Systems},
+  volume~12, pages 1057--1063. MIT Press, 2000.
+
+\bibitem{mathlib2020}
+{The mathlib Community}.
+\newblock The {Lean} mathematical library.
+\newblock In {\em Proceedings of the 9th {ACM} {SIGPLAN} International
+  Conference on Certified Programs and Proofs ({CPP})}, pages 367--381. ACM,
+  2020.
+
+\bibitem{vajjha2021certrl}
+Koundinya Vajjha, Avraham Shinnar, Barry Trager, Vasily Pestun, and Nathan
+  Fulton.
+\newblock {CertRL}: Formalizing convergence proofs for value and policy
+  iteration in {Coq}.
+\newblock In {\em Proceedings of the 10th {ACM} {SIGPLAN} International
+  Conference on Certified Programs and Proofs ({CPP})}, pages 18--31. ACM,
+  2021.
+
+\bibitem{williams1992simple}
+Ronald~J. Williams.
+\newblock Simple statistical gradient-following algorithms for connectionist
+  reinforcement learning.
+\newblock {\em Machine Learning}, 8(3--4):229--256, 1992.
+
+\end{thebibliography}

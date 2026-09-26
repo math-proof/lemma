@@ -2553,7 +2553,8 @@ class LeanPairedGroup extends Closable(LeanUnary) {
             if (this.parent instanceof LeanArgsSpaceSeparated) {
                 this.parent.push(node);
             } else {
-                this.arg = new LeanArgsSpaceSeparated([this.arg, node], indent, level);
+                // Wrap the closed group itself (not its contents): `(a _) fun t => ?_` must not become `(a _ fun t => ?_)`.
+                this.parent.replace(this, new LeanArgsSpaceSeparated([this, node], indent, level));
             }
             return caret;
         }
@@ -3740,6 +3741,19 @@ export class LeanColon extends LeanBinary {
             }
             if (caret instanceof LeanStatements && indent === this.indent && this.parent instanceof LeanParenthesis)
                 return caret;
+            // `have h : Tendsto (f)\n      atTop (𝓝 0) := …` — a deeper line continues a complete type;
+            // without this the line escapes to the enclosing statements and `:=` binds outside the `have`.
+            if (
+                this.parent instanceof Lean_let && indent > this.indent && next !== ':' &&
+                (caret instanceof LeanArgsSpaceSeparated || caret instanceof LeanToken ||
+                    caret instanceof LeanProperty || caret instanceof LeanParenthesis)
+            ) {
+                const $new = new LeanCaret(indent, caret.level);
+                const nl = new LeanArgsNewLineSeparated([$new], indent, $new.level);
+                const c = nl.push_newlines(newline_count - 1);
+                this.replace(caret, new LeanArgsIndented(caret, nl, caret.indent, c.level));
+                return c;
+            }
         }
         return super.insert_newline(caret, newline_count, indent, next);
     }
@@ -10366,7 +10380,7 @@ export class LeanTactic extends LeanSyntax {
         for (const arg of this.args) {
             if (arg instanceof LeanCaret);
             else if (arg instanceof LeanSequentialTacticCombinator && arg.newlineBefore) parts.push('\n');
-            else if (arg instanceof LeanArgsNewLineSeparated || arg instanceof LeanArgsIndented) parts.push('\n');
+            else if (arg instanceof LeanArgsNewLineSeparated) parts.push('\n');
             else parts.push(' ');
             parts.push('%s');
         }
@@ -10380,7 +10394,7 @@ export class LeanTactic extends LeanSyntax {
             if (arg == null) continue;
             if (arg instanceof LeanCaret);
             else if (arg instanceof LeanSequentialTacticCombinator && arg.newlineBefore) L++;
-            else if (arg instanceof LeanArgsNewLineSeparated || arg instanceof LeanArgsIndented) L++;
+            else if (arg instanceof LeanArgsNewLineSeparated) L++;
             L = arg.set_line(L);
         }
         return L;
