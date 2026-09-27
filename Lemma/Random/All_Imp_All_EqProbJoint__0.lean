@@ -1,14 +1,14 @@
 import Lemma.Random.PSpace.PSpace.of.PSpace_Joint
 import Lemma.Random.All_EqIntegral_ProbJoint.of.PSpace_Joint
 import sympy.stats.joint_rv
-open Random MeasureTheory
+open Random
 
 
 @[main]
 private lemma main
   [MeasurableSpace Ω]
   [ReferenceMeasure α] [ReferenceMeasure β]
-  {π : Measure Ω}
+  {π : MeasureTheory.Measure Ω}
   {x : Ω → α} {y : Ω → β}
 -- given
   (hP : PSpace π (x, y)) :
@@ -19,14 +19,10 @@ private lemma main
     ∀ᵐ «y.bvar» ∂ReferenceMeasure.measure,
       ℙ[π](x = «x.bvar» ∧ y = «y.bvar») = 0 := by
 -- proof
-  have hsec := All_EqIntegral_ProbJoint.of.PSpace_Joint hP
-  refine hsec.mono fun z hz hzero => ?_
-  have hmeas : Measurable (fun «y.bvar» => π.prob (x, y) (z, «y.bvar»)) :=
-    (Measure.measurable_rnDeriv _ _).comp (measurable_const.prodMk measurable_id)
-  have hint : ∫⁻ «y.bvar», π.prob (x, y) (z, «y.bvar») ∂ReferenceMeasure.measure = 0 := by
-    rw [hz, hzero]
-  exact (lintegral_eq_zero_iff hmeas).mp hint
+  refine (All_EqIntegral_ProbJoint.of.PSpace_Joint hP).mono fun z hz hzero => ?_
+  apply (MeasureTheory.lintegral_eq_zero_iff (f := fun «y.bvar» => π.prob (x, y) (z, «y.bvar»)) ((MeasureTheory.Measure.measurable_rnDeriv _ _).comp (measurable_const.prodMk measurable_id))).mp
+  rw [hz, hzero]
 
 
 -- created on 2023-03-21
--- updated on 2026-09-20
+-- updated on 2026-09-26

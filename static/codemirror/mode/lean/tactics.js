@@ -8,6 +8,7 @@ export const tactics = [
     'apply_fun',
     'arg',
     'assumption',
+    'beta_reduce',
     'by_cases',
     'by_contra',
     'case',

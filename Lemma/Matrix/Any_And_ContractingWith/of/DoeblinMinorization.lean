@@ -1,6 +1,6 @@
 import Lemma.Matrix.VecMul_SMul.eq.SMul_VecMul
-import Lemma.Matrix.VecMulBroadcast.eq.Mul_Sum
-import Lemma.Matrix.Nonexpansive.of.RowStochastic
+import Lemma.Matrix.VecMul_Broadcast.eq.FunMulSum
+import Lemma.Matrix.LeNormOfL1SubVecMulS.of.RowStochastic
 import Lemma.Matrix.OfL1.eq.SMul
 import Lemma.Matrix.OfL1.eq.Sub
 import Lemma.Real.Nndist.eq.NormOfL1Sub
@@ -36,11 +36,11 @@ private lemma main
     set xv : S → ℝ := WithLp.ofLp (x : l1Space S)
     set yv : S → ℝ := WithLp.ofLp (y : l1Space S)
     have hxB : xv ᵥ* broadcast ν = ν := by
-      rw [VecMulBroadcast.eq.Mul_Sum]
+      rw [VecMul_Broadcast.eq.FunMulSum]
       funext j
       simp [xv, x.property.rowsum]
     have hyB : yv ᵥ* broadcast ν = ν := by
-      rw [VecMulBroadcast.eq.Mul_Sum]
+      rw [VecMul_Broadcast.eq.FunMulSum]
       funext j
       simp [yv, y.property.rowsum]
     have hxP : xv ᵥ* P = ε • (xv ᵥ* broadcast ν) + (1 - ε) • (xv ᵥ* Q) := by
@@ -71,7 +71,7 @@ private lemma main
       _ = (1 - ε) * ‖ofL1 (xv ᵥ* Q - yv ᵥ* Q)‖ := by
         rw [OfL1.eq.SMul, norm_smul, norm_eq_abs, abs_of_nonneg hε0]
       _ ≤ (1 - ε) * ‖ofL1 (xv - yv)‖ := by
-        refine mul_le_mul_of_nonneg_left (Nonexpansive.of.RowStochastic ?_ xv yv) hε0
+        refine mul_le_mul_of_nonneg_left (LeNormOfL1SubVecMulS.of.RowStochastic ?_ xv yv) hε0
         constructor
         intro i
         constructor

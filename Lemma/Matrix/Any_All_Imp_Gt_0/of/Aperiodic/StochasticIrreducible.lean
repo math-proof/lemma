@@ -1,7 +1,5 @@
 import sympy.stats.stochastic_process_types
 import Lemma.Set.Any_All_In.of.ClosedUnderAdd.FiniteGCDOne
-import Lemma.Matrix.GetPow_Add.ge.MulGetSPow
-import Lemma.Matrix.ReturnTimes.ClosedUnderAdd
 
 
 @[main]
@@ -58,7 +56,7 @@ private lemma main
       0
       _ < (P ^ ij) i j * (P ^ (n - ij)) j j := mul_pos hPnij hPn₀
       _ ≤ (P ^ n) i j := by
-        have hineq := @Matrix.GetPow_Add.ge.MulGetSPow _ _ _ P _ ij (n - ij) i j j
+        have hineq := @get_pow_add_ge_mul_get_s_pow _ _ _ P _ ij (n - ij) i j j
         have : ij + (n - ij) = n := Nat.add_sub_of_le hnijn
         rwa [this] at hineq
 

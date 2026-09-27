@@ -199,12 +199,12 @@ Expands to `Filter.limUnder (nhdsWithin x₀ {x₀}ᶜ) fun x => e`.
 Priority 1002 so `∞` / `x₀⁺` / `x₀⁻` still use the 1003 macros. -/
 macro:max (priority := 1002) "lim " "[" n:binderIdent " → " x₀:term "] " e:term:67 : term =>
   match n with
-  | `(binderIdent| _) => `(Filter.limUnder (nhdsWithin $x₀ (Set.singleton $x₀)ᶜ) fun _ => $e)
-  | `(binderIdent| $n:ident) => `(Filter.limUnder (nhdsWithin $x₀ (Set.singleton $x₀)ᶜ) fun $n => $e)
+  | `(binderIdent| _) => `(Filter.limUnder (nhdsWithin $x₀ (@singleton _ (Set _) Set.instSingletonSet $x₀)ᶜ) fun _ => $e)
+  | `(binderIdent| $n:ident) => `(Filter.limUnder (nhdsWithin $x₀ (@singleton _ (Set _) Set.instSingletonSet $x₀)ᶜ) fun $n => $e)
   | _ => Lean.Macro.throwUnsupported
 
 macro:max (priority := 1002) "lim " "[" "(" n:ident " : " ty:term ")" " → " x₀:term "] " e:term:67 : term =>
-  `(Filter.limUnder (nhdsWithin ($x₀ : $ty) (Set.singleton ($x₀ : $ty))ᶜ) fun $n : $ty => $e)
+  `(Filter.limUnder (nhdsWithin ($x₀ : $ty) (@singleton _ (Set _) Set.instSingletonSet ($x₀ : $ty))ᶜ) fun $n : $ty => $e)
 
 /-- `lim [n → ∞] e = a` stands for `Tendsto (fun n => e) atTop (𝓝 a)`.
 Bare `lim [n → ∞] e` remains `Filter.limUnder`. -/
@@ -258,12 +258,12 @@ Also `lim [x → 0] e = a`.
 Priority 2000 so `∞` / `x₀⁺` / `x₀⁻` still use the 2001 macros. -/
 macro:max (priority := 2000) "lim " "[" n:binderIdent " → " x₀:term "] " e:term:67 " = " a:term:50 : term =>
   match n with
-  | `(binderIdent| _) => `(Filter.Tendsto (fun _ => $e) (nhdsWithin $x₀ (Set.singleton $x₀)ᶜ) (nhds $a))
-  | `(binderIdent| $n:ident) => `(Filter.Tendsto (fun $n => $e) (nhdsWithin $x₀ (Set.singleton $x₀)ᶜ) (nhds $a))
+  | `(binderIdent| _) => `(Filter.Tendsto (fun _ => $e) (nhdsWithin $x₀ (@singleton _ (Set _) Set.instSingletonSet $x₀)ᶜ) (nhds $a))
+  | `(binderIdent| $n:ident) => `(Filter.Tendsto (fun $n => $e) (nhdsWithin $x₀ (@singleton _ (Set _) Set.instSingletonSet $x₀)ᶜ) (nhds $a))
   | _ => Lean.Macro.throwUnsupported
 
 macro:max (priority := 2000) "lim " "[" "(" n:ident " : " ty:term ")" " → " x₀:term "] " e:term:67 " = " a:term:50 : term =>
-  `(Filter.Tendsto (fun $n : $ty => $e) (nhdsWithin ($x₀ : $ty) (Set.singleton ($x₀ : $ty))ᶜ) (nhds $a))
+  `(Filter.Tendsto (fun $n : $ty => $e) (nhdsWithin ($x₀ : $ty) (@singleton _ (Set _) Set.instSingletonSet ($x₀ : $ty))ᶜ) (nhds $a))
 
 private def isAtTopSyntax? : Syntax → Bool
   | `(Filter.atTop) | `(atTop) => true

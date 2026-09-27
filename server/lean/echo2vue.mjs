@@ -220,6 +220,8 @@ export async function runEcho2Vue(tree, leanFileAbs, opts = {}) {
   };
 
   for (const jsonline of outputLines) {
+    // lake noise (e.g. `warning: proofwidgets: repository '…' has local changes`) is not a Lean diagnostic
+    if (/^warning: [^:]+: repository .* has local changes/.test(jsonline)) continue;
     let parsed = null;
     try {
       parsed = JSON.parse(jsonline);
