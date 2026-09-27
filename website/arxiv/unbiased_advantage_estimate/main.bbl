@@ -23,6 +23,11 @@ Olav Kallenberg.
 \newblock {\em Foundations of Modern Probability}.
 \newblock Springer, 2nd edition, 2002.
 
+\bibitem{landin1964mechanical}
+Peter~J. Landin.
+\newblock The mechanical evaluation of expressions.
+\newblock {\em The Computer Journal}, 6(4):308--320, 1964.
+
 \bibitem{torchlean}
 {lean-dojo}.
 \newblock {TorchLean}: Formalizing neural networks in {Lean}.
