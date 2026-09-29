@@ -17,7 +17,7 @@ private lemma main
   {π : Measure Ω}
   {x : Ω → α} {y : Ω → β}
 -- given
-  (hP : PSpace π (x, y)) :
+  (hP : SinglePSpace π (x, y)) :
 -- imply
   ∀ᵐ «x.bvar» ∂ReferenceMeasure.measure, ∀ᵐ «y.bvar» ∂ReferenceMeasure.measure,
     ℙ[π](x = «x.bvar» ∧ y = «y.bvar») ≠ 0 ↔

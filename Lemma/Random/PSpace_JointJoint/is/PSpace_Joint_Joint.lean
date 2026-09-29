@@ -21,7 +21,7 @@ private lemma main
   {π : Measure Ω}
   {x : Ω → α} {y : Ω → β} {z : Ω → γ} :
 -- imply
-  PSpace π ((x, y), z) ↔ PSpace π (x, (y, z)) := by
+  SinglePSpace π ((x, y), z) ↔ SinglePSpace π (x, (y, z)) := by
 -- proof
   let μ : Measure α := ReferenceMeasure.measure
   let ν : Measure β := ReferenceMeasure.measure

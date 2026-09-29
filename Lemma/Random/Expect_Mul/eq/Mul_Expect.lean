@@ -13,13 +13,13 @@ private lemma main
   {a : Ω → α}
   {f : α → ENNReal}
 -- given
-  (hP : PSpace π a)
+  (hP : SinglePSpace π a)
   (hf : Measurable f)
   (c : ENNReal) :
 -- imply
   𝔼[a: π](c * f a) = c * 𝔼[a: π](f a) := by
 -- proof
-  simp only [Expectation.ofRV, expectation_ennreal]
+  simp only [Expectation.asRV_function, Expectation.ofRV, expectation_ennreal]
   exact lintegral_const_mul c hf
 
 

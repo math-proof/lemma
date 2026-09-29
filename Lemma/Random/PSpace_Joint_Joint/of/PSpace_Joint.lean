@@ -83,13 +83,13 @@ private lemma main
   {π : Measure Ω}
   {x : Ω → α} {y : Ω → γ}
 -- given
-  (hP : PSpace π (x, y))
+  (hP : SinglePSpace π (x, y))
   (hα : ReferenceMeasure.measure (α := α) = Measure.count)
   (hγ : ReferenceMeasure.measure (α := γ) = Measure.count) :
 -- imply
-  PSpace π (x, y, y) := by
+  SinglePSpace π (x, y, y) := by
 -- proof
-  change PSpace π (JointRandomSymbol x (JointRandomSymbol y y))
+  change SinglePSpace π (JointRandomSymbol x (JointRandomSymbol y y))
   have hxym : AEMeasurable (JointRandomSymbol x y) π := by
     simpa [JointRandomSymbol] using hP.aemeasurable
   have hcomp :

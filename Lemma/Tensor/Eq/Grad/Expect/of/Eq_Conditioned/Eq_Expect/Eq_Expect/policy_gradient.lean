@@ -1,4 +1,5 @@
 import Lemma.Tensor.EqGrad.of.Eq_Conditioned.Eq_Expect.Eq_Expect.policy_gradient.induct
+import sympy.concrete.sup
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model
 
 
@@ -18,12 +19,11 @@ private lemma main
   {Q : Θ → ℕ → S → A → ℝ}
   {V : Θ → ℕ → S → ℝ}
 -- given
-  (h₀ : ∀ t, IndepFun (r t) (fun ω (i : Fin t) => (s i ω, a i ω)) (M.traj θ))
   (h₁ : ∀ θ t x u, Q θ t x u = ∑' k, γ ^ k * ∫ ω, r (t + k) ω ∂(M.traj θ)[|s t ⁻¹' {x} ∩ a t ⁻¹' {u}])
-  (h₂ : ∀ θ t x, V θ t x = ∑' k, γ ^ k * ∫ ω, r (t + k) ω ∂(M.traj θ)[|s t ⁻¹' {x}])
+  (h₂ : ∀ θ t x, V θ t x = ∫ ω, ∑' k, γ ^ k * r (t + k) ω ∂(M.traj θ)[|s t ⁻¹' {x}])
   (h₃ : γ ∈ Set.Ico 0 1)
   (h₄ : ∀ x u, Differentiable ℝ (fun θ => M.pol.prob θ x u))
-  (h₅ : BddAbove (Set.range fun p : Θ × S × A => ‖fderiv ℝ (fun θ => M.pol.prob θ p.2.1 p.2.2) p.1‖))
+  (h₅ : Sup[θ, x, u] ‖fderiv ℝ (fun θ => M.pol.prob θ x u) θ‖ < ∞)
   (n : ℕ) :
 -- imply
   ∑' t, γ ^ t • fderiv ℝ (fun θ => ∫ ω, r t ω ∂(M.traj θ)) θ =
@@ -32,7 +32,7 @@ private lemma main
 -- proof
   have hQ : Q = fun θ => M.Q θ γ :=
     funext fun θ => funext fun t => funext fun x => funext fun u => h₁ θ t x u
-  have hV : V = fun θ => M.V θ γ := funext fun θ => funext fun t => funext fun x => h₂ θ t x
+  have hV : V = fun θ => M.V θ γ := funext fun θ => funext fun t => funext fun x => (h₂ θ t x).trans (M.V_eq_integral θ γ t x).symm
   subst hQ hV
   obtain ⟨C, hC⟩ := id h₅
   have h₇ : ∀ θ x u, ‖fderiv ℝ (fun θ => M.pol.prob θ x u) θ‖ ≤ C := fun θ x u => hC ⟨(θ, x, u), rfl⟩
@@ -47,13 +47,13 @@ private lemma main
     · rw [hx, zero_smul, zero_smul]
     have hP : (M.traj θ).real (s 0 ⁻¹' {x}) ≠ 0 := by rwa [P_zero]
     have h := Tensor.EqGrad.of.Eq_Conditioned.Eq_Expect.Eq_Expect.policy_gradient.induct
-      (Q := fun θ => M.Q θ γ) (V := fun θ => M.V θ γ) h₀ (fun _ _ _ _ => rfl) (fun _ _ _ => rfl)
+      (Q := fun θ => M.Q θ γ) (V := fun θ => M.V θ γ) (fun _ _ _ _ => rfl) (fun θ t x => M.V_eq_integral θ γ t x)
       h₃ h₄ h₅ hP n
     have h' : ∀ t y, ((M.traj θ)[|s 0 ⁻¹' {x}]).real (s t ⁻¹' {y}) = M.Pn θ t x y := fun t y => by
       have h'' := cond_Pn M θ 0 t x y hP
       rwa [zero_add] at h''
     simp_rw [h'] at h
-    rw [← grad_V_eq M h₄ h₇ γ 0 x θ hP, h]
+    rw [← grad_V_eq M h₄ h₇ h₃ 0 x θ hP, h]
   have h₉ : ∀ t, ∫ ω, (γ ^ t * M.Q θ γ t (s t ω) (a t ω)) •
       fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' (s t ω) (a t ω))) θ ∂(M.traj θ) =
       ∑ y, (M.traj θ).real (s t ⁻¹' {y}) •

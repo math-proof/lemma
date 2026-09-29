@@ -1,0 +1,17 @@
+import sympy.sets.sets
+import sympy.Basic
+
+
+@[main]
+private lemma main
+  {A B : Set ℤ}
+  {f : ℤ → ℤ} :
+-- imply
+  {x ∈ A | f x > 0} \ B = {x ∈ A \ B | f x > 0} := by
+-- proof
+  ext x
+  simp only [Set.mem_sdiff, Set.mem_ofPred_eq]
+  tauto
+
+
+-- created on 2026-09-27

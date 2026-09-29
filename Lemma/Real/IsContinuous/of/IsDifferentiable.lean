@@ -1,0 +1,18 @@
+import Mathlib.MeasureTheory.Integral.IntervalIntegral.IntegrationByParts
+import sympy.sets.sets
+import sympy.Basic
+
+
+@[main]
+private lemma main
+  {f : ℝ → ℝ}
+  {a b : ℝ}
+-- given
+  (h : DifferentiableOn ℝ f (Set.Icc a b)) :
+-- imply
+  ContinuousOn f (Set.Icc a b) := by
+-- proof
+  exact h.continuousOn
+
+
+-- created on 2026-09-27

@@ -25,7 +25,7 @@ private lemma main
   {a : Ω → α} {s : Ω → γ}
   {f : α → Fin n → ENNReal}
 -- given
-  (hP : PSpace π (a, s))
+  (hP : SinglePSpace π (a, s))
   (A : Matrix (Fin m) (Fin n) ENNReal)
   (hf : ∀ i : Fin n, Measurable (fun x : α ↦ f x i))
   («s.bvar» : γ) :
@@ -34,7 +34,7 @@ private lemma main
     Matrix.mulVec A (fun i : Fin n ↦ 𝔼[a: π](f a i | s = «s.bvar»)) := by
 -- proof
   ext j
-  simp only [Expectation.condRV, expectation_ennreal, Matrix.mulVec, dotProduct]
+  simp only [Expectation.asRV_function, Expectation.condRV, expectation_ennreal, Matrix.mulVec, dotProduct]
   rw [MeasureTheory.lintegral_finsetSum (μ := _) (Finset.univ : Finset (Fin n))
     fun i _ => (hf i).const_mul (A j i)]
   refine Finset.sum_congr rfl ?_

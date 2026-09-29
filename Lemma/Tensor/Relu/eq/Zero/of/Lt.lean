@@ -1,0 +1,17 @@
+import torch.nn.functional.relu
+import sympy.Basic
+
+
+@[main]
+private lemma main
+  {i l : ℤ}
+-- given
+  (h : i < l) :
+-- imply
+  relu (i + 1 - l) = 0 := by
+-- proof
+  unfold relu
+  exact max_eq_right (by omega)
+
+
+-- created on 2026-09-27

@@ -575,6 +575,14 @@ export class Lean extends IndentedNode {
                     caret = Lean_int.continueMeasure(this, indent);
                 if (!caret && tokens[self.start_idx + k] === '_' && indent > 0)
                     caret = LeanCalc.continueStep(this, newline_count, indent);
+                if (
+                    !caret &&
+                    indent > 0 &&
+                    tokens[self.start_idx + k] === '<' &&
+                    tokens[self.start_idx + k + 1] === ';' &&
+                    tokens[self.start_idx + k + 2] === '>'
+                )
+                    caret = LeanTactic.continueSequentialTacticCombinator(this, indent);
                 if (!caret)
                     caret = this.parent.insert_newline(this, newline_count, indent, tokens[self.start_idx + k]);
                 self.start_idx += j - 1;
@@ -1171,14 +1179,34 @@ export class Lean extends IndentedNode {
             case '∣':
                 return this.push_arithmetic(token);
             case '≃': {
-                // `≃ᵐ` — measurable equivalence; U+1D50 would otherwise be an ordinary identifier.
                 const ae = tokens[self.start_idx + 1] === 'ᵐ';
                 if (ae) self.start_idx++;
+                let subscript = '';
+                let modifier = '';
+                if (!ae && tokens[self.start_idx + 1] === 'L' &&
+                        tokens[self.start_idx + 2] === '[') {
+                    subscript = 'L';
+                    self.start_idx += 3; // skip `L[`, point inside
+                    const startIdx = self.start_idx;
+                    while (self.start_idx < tokens.length && tokens[self.start_idx] !== ']')
+                        self.start_idx++;
+                    modifier = tokens.slice(startIdx, self.start_idx).join('');
+                    if (self.start_idx < tokens.length) self.start_idx++; // skip `]`
+                    self.start_idx--; // loop will increment
+                }
                 const caret = this.push_arithmetic('≃');
                 if (ae) {
                     let p = caret;
                     while (p && !(p instanceof Lean_simeq)) p = p.parent;
                     if (p) p.superscript = 'ᵐ';
+                }
+                if (subscript) {
+                    let p = caret;
+                    while (p && !(p instanceof Lean_simeq)) p = p.parent;
+                    if (p) {
+                        p.subscript = subscript;
+                        p.modifier = modifier;
+                    }
                 }
                 return caret;
             }
@@ -4241,11 +4269,48 @@ export class LeanNotEquiv extends LeanRelational {
 export class Lean_simeq extends LeanRelational {
     static input_priority = 50;
 
-    /** @type {string | null} */
+    /** @type {string | null} unicode superscript glyph, e.g. `ᵐ` (measurable equivalence) */
     superscript = null;
+    /** @type {string} right-script suffix letter, e.g. `L` in `≃L[ℝ]` (continuous linear equivalence) */
+    subscript = '';
+    /** @type {string} bracketed scalar ring, e.g. `ℝ` — required by Lean notation, elided in LaTeX */
+    modifier = '';
+
+    /** Plain `≃`, measurable `≃ᵐ`, or continuous linear `≃L[ℝ]`. */
+    opStr() {
+        let op = '≃';
+        if (this.subscript) {
+            op += this.subscript;
+            if (this.modifier) op += `[${this.modifier}]`;
+        } else if (this.superscript) {
+            op += this.superscript;
+        }
+        return op;
+    }
 
     get operator() {
-        return this.superscript ? `≃${this.superscript}` : '≃';
+        return this.opStr();
+    }
+
+    get command() {
+        return '\\simeq';
+    }
+
+    /** `≃L[ℝ]` renders as `\simeq_L`; the scalar bracket is omitted (same convention as `⟂ᵢ[π]`). */
+    opLatex() {
+        let op = this.command;
+        if (this.subscript) op += `_{${this.subscript}}`;
+        return op;
+    }
+
+    strFormat() {
+        const sep = this.sep();
+        return `%s ${this.opStr()}${sep}%s`;
+    }
+
+    latexFormat() {
+        const sep = this.sep();
+        return `{%s} ${this.opLatex()}${sep}{%s}`;
     }
 
     latexArgs(syntax) {
@@ -6534,7 +6599,12 @@ function leanModuleMergeProof(proof, echo, syntax = {}) {
             } else last.push(stmt);
         }
     }
-    if (last.length) code.push([last, inlineLatex !== undefined ? inlineLatex : null, seps]);
+    if (last.length) {
+        let finalLatex = inlineLatex !== undefined ? inlineLatex : null;
+        if (finalLatex === null && last[0] instanceof LeanCalc && last[0].originalCalc)
+            finalLatex = last[0].originalCalc.toLatex(syntax);
+        code.push([last, finalLatex, seps]);
+    }
 
     return code.map(([stmts, latex, ss]) => {
         let text = '';
@@ -6768,7 +6838,7 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                     else
                         implyLatex = imply.map(st => st.toLatex(syntax)).join('\n');
                     const assignSuffix = ' :=' + (by ? ` ${by}` : '');
-                    implyLatex += `\\tag*{${assignSuffix}}`;
+
                     const implyOut = { lean: implyLean + assignSuffix, latex: implyLatex };
                     declspec = declspec.lhs;
                     let collectedExplicit = null;
@@ -6947,11 +7017,7 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                             } else {
                                 explicit = givenSlice.slice(0, givenStart);
                                 givenSlice = givenSlice.slice(givenStart);
-                                const L = latex;
-                                if (L.length) {
-                                    const lastPair = L[L.length - 1];
-                                    if (lastPair) lastPair[1] += ' :';
-                                }
+
                                 if (givenSlice.length)
                                     givenSlice[givenSlice.length - 1] += ' :';
                             }
@@ -7111,14 +7177,13 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                                 .map((st) => (st.toLatex ? st.toLatex(syntax) : strStmt(st)))
                                 .join('\n');
                         }
-                        implyLatex += `\\tag*{ :=${by ? ` ${by}` : ''}}`;
+
                         implyOut = { lean: implyLean + ' :=' + (by ? ` ${by}` : ''), latex: implyLatex };
                     } else {
                         markRandomVarSequence([implyNode], flatRvNames);
                         const implyLean = unindentTwo(strStmt(implyNode)) + ' :=' + (by ? ` ${by}` : '');
                         const implyLatex =
-                            (implyNode.toLatex ? implyNode.toLatex(syntax) : strStmt(implyNode)) +
-                            `\\tag*{ :=${by ? ` ${by}` : ''}}`;
+                            (implyNode.toLatex ? implyNode.toLatex(syntax) : strStmt(implyNode));
                         implyOut = { lean: implyLean, latex: implyLatex };
                     }
                     syntax.letBindings = buildLetBindings(flatImplyStmts ?? []);
@@ -8615,7 +8680,50 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         return null;
     }
 
-    /** `Tendsto f a b` (or `Filter.Tendsto f a b`) → `a \xrightarrow{\,f\,} b`. */
+    substOperands() {
+        const {args} = this;
+        if (args.length !== 2) return null;
+        const [func, paren] = args;
+        if (!(func instanceof LeanToken) || func.text !== 'Subst') return null;
+        if (!(paren instanceof LeanParenthesis)) return null;
+        const inner = paren.arg;
+        if (!(inner instanceof LeanBitOr)) return null;
+        const bindings = [];
+        const split = (n) => {
+            if (n instanceof LeanEq && n.lhs instanceof LeanToken) return {name: n.lhs, value: n.rhs};
+            if (n instanceof LeanBinaryBoolean && !(n instanceof LeanLogic)) {
+                const inner = split(n.lhs);
+                if (!inner) return null;
+                const value = n.clone();
+                value.args = [inner.value, n.rhs];
+                return {name: inner.name, value};
+            }
+            return null;
+        };
+        const collect = (n) => {
+            if (n instanceof Lean_land) return collect(n.lhs) && collect(n.rhs);
+            const binding = split(n);
+            if (!binding) return false;
+            bindings.push(binding);
+            return true;
+        };
+        if (!collect(inner.rhs)) return null;
+        return {body: inner.lhs, bindings};
+    }
+
+    gradientOperands() {
+        const {args} = this;
+        if (args.length < 2) return null;
+        const head = args[0];
+        if (!(head instanceof LeanGetElem)) return null;
+        const [base, index] = head.args;
+        if (!(base instanceof LeanToken) || base.text !== '∇') return null;
+        if (index instanceof LeanToken) return {name: index, point: null, body: args.slice(1)};
+        if (index instanceof LeanEq && index.lhs instanceof LeanToken)
+            return {name: index.lhs, point: index.rhs, body: args.slice(1)};
+        return null;
+    }
+
     is_Tendsto() {
         const args = this.args;
         if (args.length !== 4) return false;
@@ -9057,6 +9165,27 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         if (matrixArgs) return matrixArgs;
         const idInner = this.idLatexInner();
         if (idInner) return [idInner.toLatex(syntax)];
+        const grad = this.gradientOperands();
+        if (grad) {
+            const body = grad.body.map((arg) => {
+                if (arg instanceof LeanParenthesis && arg.arg instanceof LeanDiv) arg = arg.arg;
+                return arg.toLatex(syntax);
+            });
+            const name = grad.name.toLatex(syntax);
+            if (!grad.point) return [name, ...body];
+            const point = grad.point instanceof LeanParenthesis ? grad.point.arg : grad.point;
+            return [name, ...body, name, point.toLatex(syntax)];
+        }
+        const subst = this.substOperands();
+        if (subst)
+            return [
+                subst.body.toLatex(syntax),
+                // a compound value is parenthesized in Lean (`term:max`); the subscript needs no parentheses
+                ...subst.bindings.flatMap(({name, value}) => [
+                    name.toLatex(syntax),
+                    (value instanceof LeanParenthesis ? value.arg : value).toLatex(syntax),
+                ]),
+            ];
         const {args} = this;
         const func = args[0];
         if (this.is_MatProd()) return this.matProdLatexParts(syntax);
@@ -9161,6 +9290,21 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         const rows = this.matrixLatexSpec();
         if (rows) return LeanAppend.bmatrixFormat(rows.length, rows[0].length);
         if (this.idLatexInner()) return '%s';
+        const grad = this.gradientOperands();
+        if (grad) {
+            // `\nabla_{θ} body`, or `\left. \nabla_{θ} body \right|_{θ = θ_0}` for `∇[θ = θ₀] body`
+            const body = grad.body.map(() => '{%s}').join('\\ ');
+            const nabla = `\\nabla_{%s} {${body}}`;
+            if (!grad.point) return nabla;
+            return `\\left. ${nabla} \\right|_{{%s} = {%s}}`;
+        }
+        const subst = this.substOperands();
+        if (subst) {
+            // sympy `_print_Subs`: `\left. expr \right|_{\substack{x=x_0 \\ y=y_0}}`
+            const subs = subst.bindings.map(() => '{%s} = {%s}').join(' \\\\ ');
+            if (subst.bindings.length === 1) return `\\left. {%s} \\right|_{${subs}}`;
+            return `\\left. {%s} \\right|_{\\substack{${subs}}}`;
+        }
         const {args} = this;
         const func = args[0];
         if (this.is_Abs()) return '\\left|{%s}\\right|';
@@ -9842,6 +9986,19 @@ export class LeanTactic extends LeanSyntax {
         this.only = undefined;
     }
 
+    static continueSequentialTacticCombinator(node, indent) {
+        for (let p = node.parent, c = node; p; c = p, p = p.parent) {
+            if (p instanceof Lean_def || p instanceof LeanModule) return null;
+            if (!(p instanceof LeanTactic || p instanceof Lean_let)) continue;
+            if (p.indent > indent) continue;
+            if (c !== p.args[p.args.length - 1]) return null;
+            const caret = new LeanCaret(indent, c.level);
+            p.push(caret);
+            return caret;
+        }
+        return null;
+    }
+
     get stack_priority() {
         if (this.parent instanceof LeanBy) return LeanColon.input_priority;
         if (this.tacticName === 'obtain') return LeanAssign.input_priority - 1;
@@ -10204,7 +10361,7 @@ export class LeanTactic extends LeanSyntax {
         if (caret !== last)
             throw new Error(`LeanTactic.insert_sequential_tactic_combinator: unexpected for ${this.constructor.name}`);
         if (caret instanceof LeanCaret)
-            this.replace(caret, new LeanSequentialTacticCombinator(caret, this.indent, caret.level, prevToken == '\n', nextToken == '\n'));
+            this.replace(caret, new LeanSequentialTacticCombinator(caret, prevToken == '\n' ? caret.indent : this.indent, caret.level, prevToken == '\n', nextToken == '\n'));
         else {
             caret = new LeanCaret(this.indent, caret.level);
             // PHP constructs with default `newline=false` (multiline semantics);
@@ -10654,6 +10811,7 @@ class LeanCalc extends LeanUnary {
             const self = this.clone();
             const stmts = self.arg.args;
             self.arg = new LeanCaret(this.indent, this.level);
+            self.originalCalc = this;
             const statements = [self];
             for (const stmt of stmts) statements.push(...stmt.split(syntax));
             return statements;
@@ -10664,6 +10822,7 @@ class LeanCalc extends LeanUnary {
             const a = self.arg;
             const content = a.rhs;
             a.rhs = new LeanCaret(content.indent, content.level);
+            self.originalCalc = this;
             const statements = [self];
             statements.push(...content.split(syntax));
             return statements;
@@ -11847,7 +12006,7 @@ class Lean_let extends LeanSyntax {
                     caret,
                     new LeanSequentialTacticCombinator(
                         caret,
-                        this.indent,
+                        prevToken == '\n' ? caret.indent : this.indent,
                         caret.level,
                         prevToken == '\n',
                         nextToken == '\n'

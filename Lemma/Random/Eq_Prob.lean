@@ -7,7 +7,7 @@ import sympy.Basic
 private lemma main
   [MeasurableSpace Ω]
   [ReferenceMeasure α]
-  {π : MeasureTheory.Measure Ω} {x : Ω → α} [PSpace π x]
+  {π : MeasureTheory.Measure Ω} {x : Ω → α} [SinglePSpace π x]
 -- given
   (ω : Ω) :
 -- imply

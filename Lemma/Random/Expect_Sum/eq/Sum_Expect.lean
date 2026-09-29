@@ -13,13 +13,13 @@ private lemma main
   {x : Ω → Fin n → α}
   {f : α → ENNReal}
 -- given
-  (hP : PSpace π x)
+  (hP : SinglePSpace π x)
   (hf : Measurable f) :
 -- imply
   𝔼[x: π](∑ k, f (x k)) =
     ∑ k, 𝔼[x: π](f (x k)) := by
 -- proof
-  simp only [Expectation.ofRV, expectation_ennreal]
+  simp only [Expectation.asRV_function, Expectation.ofRV, expectation_ennreal]
   have hfk : ∀ k : Fin n, Measurable (fun xv : Fin n → α ↦ f (xv k)) :=
     fun k => hf.comp (measurable_pi_apply k)
   exact lintegral_finsetSum (Finset.univ : Finset (Fin n)) fun k _ => hfk k

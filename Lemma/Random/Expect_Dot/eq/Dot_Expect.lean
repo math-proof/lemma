@@ -118,7 +118,7 @@ private lemma main
   {a : Ω → α}
   {f : α → Tensor ENNReal [k]}
 -- given
-  (hP : PSpace π a)
+  (hP : SinglePSpace π a)
   (A : Tensor ENNReal [m, k])
   (hf : ∀ p : Fin k, Measurable (fun x : α ↦ (f x)[p].item)) :
 -- imply
@@ -128,7 +128,7 @@ private lemma main
   apply Eq.of.All_EqGetS.fin
   intro i
   apply Eq.of.Item
-  simp only [Expectation.ofRV]
+  simp only [Expectation.asRV_function, Expectation.ofRV]
   have hL := expect_get_item (π.map a) (fun x ↦ A @ f x) i
   refine Eq.trans hL ?_
   have hlin :

@@ -15,7 +15,7 @@ private lemma main
   (hx : Measurable x)
   (hμ : ReferenceMeasure.measure (α := α) = Measure.count) :
 -- imply
-  PSpace π x := by
+  SinglePSpace π x := by
 -- proof
   have hx_m : AEMeasurable x π := hx.aemeasurable
   have hacc : π.map x ≪ ReferenceMeasure.measure := by

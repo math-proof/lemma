@@ -16,7 +16,7 @@ private lemma main
   {γ : ℝ}
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
-  (B : Set (ℕ → Step S A))
+  (B : Set (ℕ → S × A × ℝ))
   (t : ℕ) :
 -- imply
   Summable (fun k => γ ^ k * ∫ ω, r (t + k) ω ∂(M.traj θ)[|B]) := by

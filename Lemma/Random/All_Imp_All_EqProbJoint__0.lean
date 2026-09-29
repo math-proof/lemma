@@ -11,7 +11,7 @@ private lemma main
   {π : MeasureTheory.Measure Ω}
   {x : Ω → α} {y : Ω → β}
 -- given
-  (hP : PSpace π (x, y)) :
+  (hP : SinglePSpace π (x, y)) :
 -- imply
   have := PSpace.of.PSpace_Joint.fst hP
   ∀ᵐ «x.bvar» ∂ReferenceMeasure.measure,

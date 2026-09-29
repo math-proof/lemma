@@ -21,7 +21,7 @@ private lemma main
   [MeasurableSingletonClass α] [MeasurableSingletonClass β]
   {π : Measure Ω}
   {x : Ω → α} {g : α → β}
-  [PSpace π x]
+  [SinglePSpace π x]
 -- given
   (hα : ReferenceMeasure.measure (α := α) = Measure.count)
   (hβ : ReferenceMeasure.measure (α := β) = Measure.count)
@@ -30,7 +30,7 @@ private lemma main
   (v : α)
   (h : ℙ[π](x = v) ≠ 0) :
 -- imply
-  have : PSpace π (g ∘ x) :=
+  have : SinglePSpace π (g ∘ x) :=
     PSpace.of.Measure.eq.Count.Measurable (hg.comp hx) hβ
   Measure.prob π (g ∘ x) (g v) ≠ 0 := by
 -- proof

@@ -25,12 +25,12 @@ private lemma main
   {π : Measure Ω}
   {x : Ω → α} {y : Ω → β}
 -- given
-  (hP : PSpace π (x, y))
+  (hP : SinglePSpace π (x, y))
   (hα : ReferenceMeasure.measure (α := α) = Measure.count)
   (hβ : ReferenceMeasure.measure (α := β) = Measure.count)
   («y.bvar» : β) :
 -- imply
-  have : PSpace π y := PSpace.of.PSpace_Joint.snd hP
+  have : SinglePSpace π y := PSpace.of.PSpace_Joint.snd hP
   ∑' «x.bvar» : α, ℙ[π](x = «x.bvar» ∧ y = «y.bvar») =
     ℙ[π](y = «y.bvar») := by
 -- proof

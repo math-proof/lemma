@@ -13,7 +13,7 @@ marginal conditional `Pr(x | y) = Pr(x)`.
 
 The proof is a direct application of `IndepFun.comp`: independence of `x` from `(y, z)`
 is preserved under post-composing the second argument with the measurable projection
-`Prod.fst`, and `Prod.fst ∘ (y, z) = y`. No density / `PSpace` assumptions are needed —
+`Prod.fst`, and `Prod.fst ∘ (y, z) = y`. No density / `SinglePSpace` assumptions are needed —
 independence is a σ-algebra property.
 -/
 @[main]

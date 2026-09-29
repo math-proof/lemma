@@ -116,7 +116,7 @@ private lemma main
   {a : Ω → α} {s : Ω → γ}
   {f : α → Tensor ENNReal [k]}
 -- given
-  (hP : PSpace π (a, s))
+  (hP : SinglePSpace π (a, s))
   (A : Tensor ENNReal [m, k])
   (hf : ∀ p : Fin k, Measurable (fun x : α ↦ (f x)[p].item))
   («s.bvar» : γ) :
@@ -127,7 +127,7 @@ private lemma main
   apply Eq.of.All_EqGetS.fin
   intro i
   apply Eq.of.Item
-  simp only [Expectation.condRV]
+  simp only [Expectation.asRV_function, Expectation.condRV]
   let ν := ReferenceMeasure.measure.withDensity fun x ↦
     π.condProb (a, s) (x, «s.bvar»)
   change (expectation ν fun x ↦ A @ f x)[i].item =

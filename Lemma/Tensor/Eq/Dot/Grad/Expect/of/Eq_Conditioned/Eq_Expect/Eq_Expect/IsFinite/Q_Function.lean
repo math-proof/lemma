@@ -1,5 +1,6 @@
 import Lemma.Tensor.Eq.Grad.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.policy_gradient
 import Lemma.Real.Eq_0.Lim.of.LtAbs.IsFinite
+import sympy.concrete.sup
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Filter Topology
 
 
@@ -20,21 +21,20 @@ private lemma main
   {Q : Θ → ℕ → S → A → ℝ}
   {V : Θ → ℕ → S → ℝ}
 -- given
-  (h₀ : ∀ t, IndepFun (r t) (fun ω (i : Fin t) => (s i ω, a i ω)) (M.traj θ))
   (h₁ : ∀ θ t x u, Q θ t x u = ∑' k, γ ^ k * ∫ ω, r (t + k) ω ∂(M.traj θ)[|s t ⁻¹' {x} ∩ a t ⁻¹' {u}])
-  (h₂ : ∀ θ t x, V θ t x = ∑' k, γ ^ k * ∫ ω, r (t + k) ω ∂(M.traj θ)[|s t ⁻¹' {x}])
-  (h₃ : BddAbove ((fun p : ℕ × S => ‖fderiv ℝ (fun θ => V θ p.1 p.2) θ‖) '' {p | (M.traj θ).real (s p.1 ⁻¹' {p.2}) ≠ 0}))
+  (h₂ : ∀ θ t x, V θ t x = ∫ ω, ∑' k, γ ^ k * r (t + k) ω ∂(M.traj θ)[|s t ⁻¹' {x}])
+  (h₃ : Sup[t, x | (M.traj θ).real (s t ⁻¹' {x}) ≠ 0] ‖fderiv ℝ (fun θ => V θ t x) θ‖ < ∞)
   (h₄ : γ ∈ Set.Ico 0 1)
   (h₅ : ∀ x u, Differentiable ℝ (fun θ => M.pol.prob θ x u))
-  (h₆ : BddAbove (Set.range fun p : Θ × S × A => ‖fderiv ℝ (fun θ => M.pol.prob θ p.2.1 p.2.2) p.1‖)) :
+  (h₆ : Sup[θ, x, u] ‖fderiv ℝ (fun θ => M.pol.prob θ x u) θ‖ < ∞) :
 -- imply
   ∑' t, γ ^ t • fderiv ℝ (fun θ => ∫ ω, r t ω ∂(M.traj θ)) θ =
     ∑' t, γ ^ t • ∫ ω, Q θ t (s t ω) (a t ω) • fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' (s t ω) (a t ω))) θ ∂(M.traj θ) := by
 -- proof
-  have h₇ := Tensor.Eq.Grad.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.policy_gradient h₀ h₁ h₂ h₄ h₅ h₆
+  have h₇ := Tensor.Eq.Grad.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.policy_gradient (θ := θ) h₁ h₂ h₄ h₅ h₆
   have hQ : Q = fun θ => M.Q θ γ :=
     funext fun θ => funext fun t => funext fun x => funext fun u => h₁ θ t x u
-  have hV : V = fun θ => M.V θ γ := funext fun θ => funext fun t => funext fun x => h₂ θ t x
+  have hV : V = fun θ => M.V θ γ := funext fun θ => funext fun t => funext fun x => (h₂ θ t x).trans (M.V_eq_integral θ γ t x).symm
   subst hQ hV
   obtain ⟨C, hC⟩ := id h₆
   have h₈ : ∀ θ x u, ‖fderiv ℝ (fun θ => M.pol.prob θ x u) θ‖ ≤ C := fun θ x u => hC ⟨(θ, x, u), rfl⟩

@@ -10,7 +10,7 @@ private lemma main
   [ReferenceMeasure α]
   (π : Measure Ω)
   (x : Ω → α)
-  [PSpace π x]
+  [SinglePSpace π x]
   (s : Set α) :
 -- imply
   0 ≤ Probability π x s :=

@@ -13,4 +13,17 @@ private lemma main
   sub_nonneg.mp h
 
 
+@[main]
+private lemma scale
+  {a t : ℝ}
+-- given
+  (ht : t ≥ 1)
+  (h : a ≥ 0) :
+-- imply
+  t * a ≥ a := by
+-- proof
+  nlinarith
+
+
 -- created on 2026-09-26
+-- updated on 2026-09-27

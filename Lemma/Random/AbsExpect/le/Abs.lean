@@ -14,7 +14,7 @@ private lemma main
   {M : Model Θ S A}
   {θ : Θ}
 -- given
-  (B : Set (ℕ → Step S A))
+  (B : Set (ℕ → S × A × ℝ))
   (t : ℕ) :
 -- imply
   ‖∫ ω, r t ω ∂(M.traj θ)[|B]‖ ≤ ‖M.env.R‖ := by

@@ -38,8 +38,8 @@ omit [MeasurableSingletonClass A] [DecidableEq S] [DecidableEq A] in
 theorem joint_succ (M : Model Θ S A) (θ : Θ) (t : ℕ) :
     (M.traj θ).map (fun ω => (ω t, ω (t + 1))) = ((M.traj θ).map (fun ω => ω t)) ⊗ₘ M.K θ := by
   have h := Kernel.map_frestrictLe_trajMeasure_compProd_eq_map_trajMeasure
-    (X := fun _ ↦ Step S A) (μ₀ := M.μ₀ θ) (κ := M.step θ) (a := t)
-  let e : (Π _ : Iic t, Step S A) → Step S A := fun h ↦ h ⟨t, mem_Iic.2 le_rfl⟩
+    (X := fun _ ↦ S × A × ℝ) (μ₀ := M.μ₀ θ) (κ := M.step θ) (a := t)
+  let e : (Π _ : Iic t, S × A × ℝ) → S × A × ℝ := fun h ↦ h ⟨t, mem_Iic.2 le_rfl⟩
   have he : Measurable e := measurable_pi_apply _
   have h₂ := congrArg (Measure.map (Prod.map e id)) h
   rw [Measure.map_map (he.prodMap measurable_id) (by fun_prop)] at h₂
@@ -52,15 +52,15 @@ theorem stage_zero (M : Model Θ S A) (θ : Θ) :
     (M.traj θ).map (fun ω => ω 0) = M.μ₀ θ := by
   unfold Model.traj Kernel.trajMeasure
   rw [Measure.map_comp _ _ (measurable_pi_apply 0)]
-  have h₁ : (Kernel.traj (X := fun _ ↦ Step S A) (M.step θ) 0).map (fun ω => ω 0)
-      = ((Kernel.traj (X := fun _ ↦ Step S A) (M.step θ) 0).map (Preorder.frestrictLe 0)).map
+  have h₁ : (Kernel.traj (X := fun _ ↦ S × A × ℝ) (M.step θ) 0).map (fun ω => ω 0)
+      = ((Kernel.traj (X := fun _ ↦ S × A × ℝ) (M.step θ) 0).map (Preorder.frestrictLe 0)).map
           (fun h => h ⟨0, mem_Iic.2 le_rfl⟩) := by
     rw [← Kernel.map_comp_right _ (by fun_prop) (by fun_prop)]
     rfl
   rw [h₁, Kernel.traj_map_frestrictLe, Kernel.partialTraj_self, Kernel.id_map (by fun_prop),
     Measure.deterministic_comp_eq_map, Measure.map_map (by fun_prop) (by fun_prop)]
-  have h₂ : ((fun h : (Π _ : Iic 0, Step S A) => h ⟨0, mem_Iic.2 le_rfl⟩) ∘
-      ⇑(MeasurableEquiv.piUnique (fun i : Iic 0 => (fun _ => Step S A) i)).symm) = id := by
+  have h₂ : ((fun h : (Π _ : Iic 0, S × A × ℝ) => h ⟨0, mem_Iic.2 le_rfl⟩) ∘
+      ⇑(MeasurableEquiv.piUnique (fun i : Iic 0 => (fun _ => (S × A × ℝ)) i)).symm) = id := by
     funext x; rfl
   rw [h₂, Measure.map_id]
 
@@ -110,7 +110,7 @@ theorem integral_comp_bdd {α β E : Type*} [MeasurableSpace α] [MeasurableSpac
 
 omit [DecidableEq S] [DecidableEq A] in
 theorem integral_stageK (M : Model Θ S A) (θ : Θ) {E : Type*} [NormedAddCommGroup E]
-    [NormedSpace ℝ E] [CompleteSpace E] {f : Step S A → E} (hf : StronglyMeasurable f) {C : ℝ}
+    [NormedSpace ℝ E] [CompleteSpace E] {f : S × A × ℝ → E} (hf : StronglyMeasurable f) {C : ℝ}
     (hC : ∀ z, ‖f z‖ ≤ C) (y : S) :
     ∫ z, f z ∂(M.stageK θ y) = ∑ u, M.pol.prob θ y u • ∫ ρ, f (y, u, ρ) ∂(M.env.reward (y, u)) := by
   have := M.env.reward_markov
@@ -139,7 +139,7 @@ theorem integral_stageK (M : Model Θ S A) (θ : Θ) {E : Type*} [NormedAddCommG
   simp [M.pol.nonneg θ y u]
 
 omit [MeasurableSingletonClass A] [DecidableEq S] [DecidableEq A] in
-theorem Kf_bdd (M : Model Θ S A) (θ : Θ) {f : Step S A → ℝ} (hf : StronglyMeasurable f) {C : ℝ}
+theorem Kf_bdd (M : Model Θ S A) (θ : Θ) {f : S × A × ℝ → ℝ} (hf : StronglyMeasurable f) {C : ℝ}
     (hC : ∀ z, ‖f z‖ ≤ C) (j : ℕ) :
     StronglyMeasurable (M.Kf θ f j) ∧ ∀ z, ‖M.Kf θ f j z‖ ≤ C := by
   induction j with
@@ -154,13 +154,13 @@ theorem Kf_bdd (M : Model Θ S A) (θ : Θ) {f : Step S A → ℝ} (hf : Strongl
 
 omit [MeasurableSingletonClass A] [DecidableEq S] [DecidableEq A] in
 theorem hist_step (M : Model Θ S A) (θ : Θ) (n : ℕ)
-    {φ : (Π _ : Iic n, Step S A) × Step S A → ℝ} (hφ : StronglyMeasurable φ) {C : ℝ}
+    {φ : (Π _ : Iic n, S × A × ℝ) × (S × A × ℝ) → ℝ} (hφ : StronglyMeasurable φ) {C : ℝ}
     (hC : ∀ p, ‖φ p‖ ≤ C) :
     ∫ ω, φ (Preorder.frestrictLe n ω, ω (n + 1)) ∂(M.traj θ) =
       ∫ h, ∫ z, φ (h, z) ∂(M.K θ (h ⟨n, mem_Iic.2 le_rfl⟩))
         ∂((M.traj θ).map (Preorder.frestrictLe n)) := by
   have h := Kernel.map_frestrictLe_trajMeasure_compProd_eq_map_trajMeasure
-    (X := fun _ ↦ Step S A) (μ₀ := M.μ₀ θ) (κ := M.step θ) (a := n)
+    (X := fun _ ↦ S × A × ℝ) (μ₀ := M.μ₀ θ) (κ := M.step θ) (a := n)
   have e : ∫ ω, φ (Preorder.frestrictLe n ω, ω (n + 1)) ∂(M.traj θ) =
       ∫ p, φ p ∂((M.traj θ).map (fun x ↦ (Preorder.frestrictLe n x, x (n + 1)))) := by
     rw [integral_map (by fun_prop) hφ.aestronglyMeasurable]
@@ -171,9 +171,9 @@ theorem hist_step (M : Model Θ S A) (θ : Θ) (n : ℕ)
   · exact Integrable.of_bound hφ.aestronglyMeasurable C (Filter.Eventually.of_forall hC)
 
 omit [MeasurableSingletonClass A] [DecidableEq S] [DecidableEq A] in
-theorem hist_mul (M : Model Θ S A) (θ : Θ) (n : ℕ) {G : (Π _ : Iic n, Step S A) → ℝ}
+theorem hist_mul (M : Model Θ S A) (θ : Θ) (n : ℕ) {G : (Π _ : Iic n, S × A × ℝ) → ℝ}
     (hG : StronglyMeasurable G) {CG : ℝ} (hCG : ∀ h, ‖G h‖ ≤ CG)
-    {g : Step S A → ℝ} (hg : StronglyMeasurable g) {C : ℝ} (hC : ∀ z, ‖g z‖ ≤ C) :
+    {g : S × A × ℝ → ℝ} (hg : StronglyMeasurable g) {C : ℝ} (hC : ∀ z, ‖g z‖ ≤ C) :
     ∫ ω, G (Preorder.frestrictLe n ω) * g (ω (n + 1)) ∂(M.traj θ) =
       ∫ ω, G (Preorder.frestrictLe n ω) * ∫ z, g z ∂(M.K θ (ω n)) ∂(M.traj θ) := by
   rw [hist_step M θ n (φ := fun p => G p.1 * g p.2)
@@ -182,7 +182,7 @@ theorem hist_mul (M : Model Θ S A) (θ : Θ) (n : ℕ) {G : (Π _ : Iic n, Step
       rw [norm_mul]
       exact mul_le_mul (hCG _) (hC _) (norm_nonneg _) ((norm_nonneg _).trans (hCG p.1)))]
   simp_rw [integral_const_mul]
-  have hm : StronglyMeasurable (fun h : (Π _ : Iic n, Step S A) =>
+  have hm : StronglyMeasurable (fun h : (Π _ : Iic n, S × A × ℝ) =>
       G h * ∫ z, g z ∂(M.K θ (h ⟨n, mem_Iic.2 le_rfl⟩))) := by
     refine hG.mul ?_
     exact (hg.comp_measurable measurable_snd).integral_kernel_prod_right' (κ := M.step θ n)
@@ -190,16 +190,16 @@ theorem hist_mul (M : Model Θ S A) (θ : Θ) (n : ℕ) {G : (Π _ : Iic n, Step
   rfl
 
 omit [MeasurableSingletonClass A] [DecidableEq S] [DecidableEq A] in
-theorem hist_iter (M : Model Θ S A) (θ : Θ) {f : Step S A → ℝ} (hf : StronglyMeasurable f) {C : ℝ}
+theorem hist_iter (M : Model Θ S A) (θ : Θ) {f : S × A × ℝ → ℝ} (hf : StronglyMeasurable f) {C : ℝ}
     (hC : ∀ z, ‖f z‖ ≤ C) (j : ℕ) :
-    ∀ n {G : (Π _ : Iic n, Step S A) → ℝ}, StronglyMeasurable G → ∀ {CG : ℝ}, (∀ h, ‖G h‖ ≤ CG) →
+    ∀ n {G : (Π _ : Iic n, S × A × ℝ) → ℝ}, StronglyMeasurable G → ∀ {CG : ℝ}, (∀ h, ‖G h‖ ≤ CG) →
       ∫ ω, G (Preorder.frestrictLe n ω) * f (ω (n + j)) ∂(M.traj θ) =
         ∫ ω, G (Preorder.frestrictLe n ω) * M.Kf θ f j (ω n) ∂(M.traj θ) := by
   induction j with
   | zero => intro n G _ _ _; rfl
   | succ j ih =>
     intro n G hG CG hCG
-    have h₁ := ih (n + 1) (G := G ∘ Preorder.frestrictLe₂ (π := fun _ : ℕ => Step S A) (by omega : n ≤ n + 1))
+    have h₁ := ih (n + 1) (G := G ∘ Preorder.frestrictLe₂ (π := fun _ : ℕ => (S × A × ℝ)) (by omega : n ≤ n + 1))
       (hG.comp_measurable (Preorder.measurable_frestrictLe₂ _)) (CG := CG) (fun _ => hCG _)
     have e : n + (j + 1) = n + 1 + j := by omega
     rw [e]
@@ -225,7 +225,7 @@ theorem ite_mul_bdd {α : Type*} (p : α → Prop) [DecidablePred p] {g : α →
 
 omit [MeasurableSingletonClass
   S] [Fintype S] [MeasurableSingletonClass A] [DecidableEq S] [DecidableEq A] in
-theorem rc_bdd (M : Model Θ S A) (z : Step S A) : ‖M.rc z‖ ≤ |M.env.R| := by
+theorem rc_bdd (M : Model Θ S A) (z : S × A × ℝ) : ‖M.rc z‖ ≤ |M.env.R| := by
   rw [Real.norm_eq_abs, abs_le]
   exact ⟨le_trans (neg_le_neg (le_abs_self _)) (le_max_left _ _),
     max_le (neg_le_abs _) ((min_le_left _ _).trans (le_abs_self _))⟩
@@ -238,19 +238,19 @@ theorem rc_sm (M : Model Θ S A) : StronglyMeasurable M.rc :=
 omit [MeasurableSingletonClass A] [DecidableEq S] [DecidableEq A] in
 theorem stageK_null (M : Model Θ S A) (θ : Θ) (y : S) :
     M.stageK θ y {z | z.2.2 ∉ Set.Icc (-M.env.R) M.env.R} = 0 := by
-  have hs : MeasurableSet {z : Step S A | z.2.2 ∉ Set.Icc (-M.env.R) M.env.R} :=
+  have hs : MeasurableSet {z : S × A × ℝ | z.2.2 ∉ Set.Icc (-M.env.R) M.env.R} :=
     (measurableSet_Icc.compl).preimage measurable_snd.snd
   have := M.env.reward_markov
   unfold Model.stageK
   rw [Kernel.prod_apply, Kernel.deterministic_apply, id, Measure.dirac_prod,
     Measure.map_apply measurable_prodMk_left hs, Kernel.compProd_apply (measurable_prodMk_left hs)]
   have h : ∀ b, M.env.reward (y, b) (Prod.mk b ⁻¹' (Prod.mk y ⁻¹'
-      {z : Step S A | z.2.2 ∉ Set.Icc (-M.env.R) M.env.R})) = 0 := fun b => M.env.reward_bdd (y, b)
+      {z : S × A × ℝ | z.2.2 ∉ Set.Icc (-M.env.R) M.env.R})) = 0 := fun b => M.env.reward_bdd (y, b)
   simp only [h, lintegral_zero]
 
 omit [MeasurableSingletonClass A] [DecidableEq S] [DecidableEq A] in
 theorem r_ae (M : Model Θ S A) (θ : Θ) (t : ℕ) : ∀ᵐ ω ∂(M.traj θ), r t ω = M.rc (ω t) := by
-  have hs : MeasurableSet {z : Step S A | z.2.2 ∉ Set.Icc (-M.env.R) M.env.R} :=
+  have hs : MeasurableSet {z : S × A × ℝ | z.2.2 ∉ Set.Icc (-M.env.R) M.env.R} :=
     (measurableSet_Icc.compl).preimage measurable_snd.snd
   have h : (M.traj θ).map (fun ω => ω t) {z | z.2.2 ∉ Set.Icc (-M.env.R) M.env.R} = 0 := by
     rw [stage_law, Measure.bind_apply hs (Kernel.aemeasurable _)]
@@ -265,28 +265,28 @@ theorem r_ae (M : Model Θ S A) (θ : Θ) (t : ℕ) : ∀ᵐ ω ∂(M.traj θ), 
   rw [min_eq_right hI.2, max_eq_right hI.1]
 
 omit [DecidableEq A] in
-theorem split_inner (M : Model Θ S A) (θ : Θ) {g : Step S A → ℝ} (hg : StronglyMeasurable g) {C : ℝ}
+theorem split_inner (M : Model Θ S A) (θ : Θ) {g : S × A × ℝ → ℝ} (hg : StronglyMeasurable g) {C : ℝ}
     (hC : ∀ z, ‖g z‖ ≤ C) (y y' : S) :
     ∫ z, (if z.1 = y then (1:ℝ) else 0) * g z ∂(M.stageK θ y') =
       (if y' = y then 1 else 0) * ∫ z, g z ∂(M.stageK θ y') := by
-  have hm : StronglyMeasurable (fun z : Step S A => (if z.1 = y then (1:ℝ) else 0) * g z) :=
+  have hm : StronglyMeasurable (fun z : S × A × ℝ => (if z.1 = y then (1:ℝ) else 0) * g z) :=
     ((disc_sm (fun x : S => if x = y then (1:ℝ) else 0)).comp_measurable measurable_fst).mul hg
-  rw [integral_stageK M θ hm (ite_mul_bdd (fun z : Step S A => z.1 = y) hC), integral_stageK M θ hg hC]
+  rw [integral_stageK M θ hm (ite_mul_bdd (fun z : S × A × ℝ => z.1 = y) hC), integral_stageK M θ hg hC]
   by_cases h : y' = y <;> simp [h]
 
 omit [DecidableEq A] in
-theorem stage_split (M : Model Θ S A) (θ : Θ) (t : ℕ) {g : Step S A → ℝ} (hg : StronglyMeasurable g)
+theorem stage_split (M : Model Θ S A) (θ : Θ) (t : ℕ) {g : S × A × ℝ → ℝ} (hg : StronglyMeasurable g)
     {C : ℝ} (hC : ∀ z, ‖g z‖ ≤ C) (x : S) :
     ∫ ω, (if s t ω = x then (1:ℝ) else 0) * g (ω t) ∂(M.traj θ) =
       (M.traj θ).real (s t ⁻¹' {x}) * ∫ z, g z ∂(M.stageK θ x) := by
-  have hm : StronglyMeasurable (fun z : Step S A => (if z.1 = x then (1:ℝ) else 0) * g z) :=
+  have hm : StronglyMeasurable (fun z : S × A × ℝ => (if z.1 = x then (1:ℝ) else 0) * g z) :=
     ((disc_sm (fun y : S => if y = x then (1:ℝ) else 0)).comp_measurable measurable_fst).mul hg
   have : IsProbabilityMeasure ((M.traj θ).map (s t)) :=
     Measure.isProbabilityMeasure_map (s_meas t).aemeasurable
   have e1 : ∫ ω, (if s t ω = x then (1:ℝ) else 0) * g (ω t) ∂(M.traj θ) =
       ∫ z, (if z.1 = x then (1:ℝ) else 0) * g z ∂((M.traj θ).map (fun ω => ω t)) := by
     rw [integral_map (measurable_pi_apply t).aemeasurable hm.aestronglyMeasurable]; rfl
-  rw [e1, stage_law, integral_comp_bdd _ _ hm (ite_mul_bdd (fun z : Step S A => z.1 = x) hC)]
+  rw [e1, stage_law, integral_comp_bdd _ _ hm (ite_mul_bdd (fun z : S × A × ℝ => z.1 = x) hC)]
   simp_rw [split_inner M θ hg hC x]
   have h₂ : ∀ y', (if y' = x then (1:ℝ) else 0) * ∫ z, g z ∂(M.stageK θ y') =
       (if y' = x then 1 else 0) * ∫ z, g z ∂(M.stageK θ x) := by
@@ -300,8 +300,8 @@ theorem stage_split (M : Model Θ S A) (θ : Θ) (t : ℕ) {g : Step S A → ℝ
     Measure.map_apply (s_meas t) (measurableSet_singleton x)]
 
 omit [MeasurableSingletonClass A] [DecidableEq S] [DecidableEq A] in
-theorem Kf_succ (M : Model Θ S A) (θ : Θ) {f : Step S A → ℝ} (hf : StronglyMeasurable f) {C : ℝ}
-    (hC : ∀ z, ‖f z‖ ≤ C) (j : ℕ) (z : Step S A) :
+theorem Kf_succ (M : Model Θ S A) (θ : Θ) {f : S × A × ℝ → ℝ} (hf : StronglyMeasurable f) {C : ℝ}
+    (hC : ∀ z, ‖f z‖ ≤ C) (j : ℕ) (z : S × A × ℝ) :
     M.Kf θ f (j + 1) z = ∑ y, M.T z.1 z.2.1 y * M.W θ f j y := by
   have := M.env.trans_markov
   show ∫ w, M.Kf θ f j w ∂(M.K θ z) = _
@@ -312,7 +312,7 @@ theorem Kf_succ (M : Model Θ S A) (θ : Θ) {f : Step S A → ℝ} (hf : Strong
   rfl
 
 omit [DecidableEq S] [DecidableEq A] in
-theorem W_succ (M : Model Θ S A) (θ : Θ) {f : Step S A → ℝ} (hf : StronglyMeasurable f) {C : ℝ}
+theorem W_succ (M : Model Θ S A) (θ : Θ) {f : S × A × ℝ → ℝ} (hf : StronglyMeasurable f) {C : ℝ}
     (hC : ∀ z, ‖f z‖ ≤ C) (j : ℕ) (x : S) :
     M.W θ f (j + 1) x = ∑ u, M.pol.prob θ x u * ∑ y, M.T x u y * M.W θ f j y := by
   have := M.env.reward_markov
@@ -324,7 +324,7 @@ theorem W_succ (M : Model Θ S A) (θ : Θ) {f : Step S A → ℝ} (hf : Strongl
   rfl
 
 omit [DecidableEq S] [DecidableEq A] in
-theorem W_zero (M : Model Θ S A) (θ : Θ) {f : Step S A → ℝ} (hf : StronglyMeasurable f) {C : ℝ}
+theorem W_zero (M : Model Θ S A) (θ : Θ) {f : S × A × ℝ → ℝ} (hf : StronglyMeasurable f) {C : ℝ}
     (hC : ∀ z, ‖f z‖ ≤ C) (x : S) :
     M.W θ f 0 x = ∑ u, M.pol.prob θ x u * ∫ ρ, f (x, u, ρ) ∂(M.env.reward (x, u)) := by
   show ∫ z, f z ∂(M.stageK θ x) = _
@@ -332,11 +332,11 @@ theorem W_zero (M : Model Θ S A) (θ : Θ) {f : Step S A → ℝ} (hf : Strongl
   rfl
 
 omit [MeasurableSingletonClass A] [Fintype A] [DecidableEq A] in
-theorem ind_fst_sm (x : S) : StronglyMeasurable (fun z : Step S A => if z.1 = x then (1:ℝ) else 0) :=
+theorem ind_fst_sm (x : S) : StronglyMeasurable (fun z : S × A × ℝ => if z.1 = x then (1:ℝ) else 0) :=
   (disc_sm (fun y : S => if y = x then (1:ℝ) else 0)).comp_measurable measurable_fst
 
 omit [MeasurableSingletonClass S] [Fintype S] [DecidableEq S] in
-theorem ind_snd_sm (u : A) : StronglyMeasurable (fun z : Step S A => if z.2.1 = u then (1:ℝ) else 0) :=
+theorem ind_snd_sm (u : A) : StronglyMeasurable (fun z : S × A × ℝ => if z.2.1 = u then (1:ℝ) else 0) :=
   (disc_sm (fun v : A => if v = u then (1:ℝ) else 0)).comp_measurable measurable_snd.fst
 
 theorem ind_bdd {α : Type*} (p : α → Prop) [DecidablePred p] (z : α) :
@@ -344,16 +344,16 @@ theorem ind_bdd {α : Type*} (p : α → Prop) [DecidablePred p] (z : α) :
   split_ifs <;> simp
 
 omit [MeasurableSingletonClass A] [DecidableEq S] [DecidableEq A] in
-theorem stage_iter (M : Model Θ S A) (θ : Θ) {f : Step S A → ℝ} (hf : StronglyMeasurable f) {C : ℝ}
-    (hC : ∀ z, ‖f z‖ ≤ C) (t j : ℕ) {G : Step S A → ℝ} (hG : StronglyMeasurable G) {CG : ℝ}
+theorem stage_iter (M : Model Θ S A) (θ : Θ) {f : S × A × ℝ → ℝ} (hf : StronglyMeasurable f) {C : ℝ}
+    (hC : ∀ z, ‖f z‖ ≤ C) (t j : ℕ) {G : S × A × ℝ → ℝ} (hG : StronglyMeasurable G) {CG : ℝ}
     (hCG : ∀ z, ‖G z‖ ≤ CG) :
     ∫ ω, G (ω t) * f (ω (t + j)) ∂(M.traj θ) = ∫ ω, G (ω t) * M.Kf θ f j (ω t) ∂(M.traj θ) :=
   hist_iter M θ hf hC j t (G := fun h => G (h ⟨t, mem_Iic.2 le_rfl⟩))
     (hG.comp_measurable (measurable_pi_apply _)) (CG := CG) (fun _ => hCG _)
 
 omit [MeasurableSingletonClass A] [DecidableEq S] [DecidableEq A] in
-theorem cond_int (M : Model Θ S A) (θ : Θ) {B : Set (ℕ → Step S A)} (hB : MeasurableSet B)
-    (f : (ℕ → Step S A) → ℝ) :
+theorem cond_int (M : Model Θ S A) (θ : Θ) {B : Set (ℕ → S × A × ℝ)} (hB : MeasurableSet B)
+    (f : (ℕ → S × A × ℝ) → ℝ) :
     ∫ ω, f ω ∂(M.traj θ)[|B] = ((M.traj θ).real B)⁻¹ * ∫ ω, B.indicator 1 ω * f ω ∂(M.traj θ) := by
   rw [ProbabilityTheory.cond, integral_smul_measure, ← integral_indicator hB, ENNReal.toReal_inv,
     ← measureReal_def, smul_eq_mul]
@@ -375,12 +375,12 @@ theorem E_s_r (M : Model Θ S A) (θ : Θ) (t j : ℕ) (x : S) :
     (stage_split M θ t hK.1 hK.2 x)
 
 omit [DecidableEq S] in
-theorem stageK_ind_snd (M : Model Θ S A) (θ : Θ) {g : Step S A → ℝ} (hg : StronglyMeasurable g)
+theorem stageK_ind_snd (M : Model Θ S A) (θ : Θ) {g : S × A × ℝ → ℝ} (hg : StronglyMeasurable g)
     {C : ℝ} (hC : ∀ z, ‖g z‖ ≤ C) (x : S) (u : A) :
     ∫ z, (if z.2.1 = u then (1:ℝ) else 0) * g z ∂(M.stageK θ x) =
       M.pol.prob θ x u * ∫ ρ, g (x, u, ρ) ∂(M.env.reward (x, u)) := by
   rw [integral_stageK M θ (f := fun z => (if z.2.1 = u then (1:ℝ) else 0) * g z)
-    ((ind_snd_sm u).mul hg) (ite_mul_bdd (fun z : Step S A => z.2.1 = u) hC)]
+    ((ind_snd_sm u).mul hg) (ite_mul_bdd (fun z : S × A × ℝ => z.2.1 = u) hC)]
   rw [Finset.sum_eq_single u (fun b _ hb => by simp [hb]) (by simp)]
   simp [smul_eq_mul]
 
@@ -389,7 +389,7 @@ theorem P_xu (M : Model Θ S A) (θ : Θ) (t : ℕ) (x : S) (u : A) :
       (M.traj θ).real (s t ⁻¹' {x}) * M.pol.prob θ x u := by
   have := M.env.reward_markov
   have h₁ : ∀ ω, (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) =
-      (if s t ω = x then (1:ℝ) else 0) * (fun z : Step S A => if z.2.1 = u then (1:ℝ) else 0) (ω t) := by
+      (if s t ω = x then (1:ℝ) else 0) * (fun z : S × A × ℝ => if z.2.1 = u then (1:ℝ) else 0) (ω t) := by
     intro ω; simp only [s, a]
     by_cases h1 : (ω t).1 = x <;> by_cases h2 : (ω t).2.1 = u <;> simp [h1, h2]
   simp_rw [h₁]
@@ -406,23 +406,23 @@ theorem E_xu_r0 (M : Model Θ S A) (θ : Θ) (t : ℕ) (x : S) (u : A) :
     integral_congr_ae ((r_ae M θ t).mono fun ω h => by dsimp only; rw [h])
   have h₁ : ∀ ω, (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) * M.rc (ω t) =
       (if s t ω = x then (1:ℝ) else 0) *
-        (fun z : Step S A => (if z.2.1 = u then (1:ℝ) else 0) * M.rc z) (ω t) := by
+        (fun z : S × A × ℝ => (if z.2.1 = u then (1:ℝ) else 0) * M.rc z) (ω t) := by
     intro ω; simp only [s, a]
     by_cases h1 : (ω t).1 = x <;> by_cases h2 : (ω t).2.1 = u <;> simp [h1, h2]
   rw [h₀]
   simp_rw [h₁]
-  rw [stage_split M θ t (g := fun z => (if z.2.1 = u then (1:ℝ) else 0) * M.rc z) ((ind_snd_sm u).mul (rc_sm M)) (ite_mul_bdd (fun z : Step S A => z.2.1 = u) (rc_bdd M)) x,
+  rw [stage_split M θ t (g := fun z => (if z.2.1 = u then (1:ℝ) else 0) * M.rc z) ((ind_snd_sm u).mul (rc_sm M)) (ite_mul_bdd (fun z : S × A × ℝ => z.2.1 = u) (rc_bdd M)) x,
     stageK_ind_snd M θ (rc_sm M) (rc_bdd M) x u, mul_assoc]
 
 theorem ind_xu_sm (x : S) (u : A) :
-    StronglyMeasurable (fun z : Step S A => if z.1 = x ∧ z.2.1 = u then (1:ℝ) else 0) :=
+    StronglyMeasurable (fun z : S × A × ℝ => if z.1 = x ∧ z.2.1 = u then (1:ℝ) else 0) :=
   (disc_sm (fun p : S × A => if p.1 = x ∧ p.2 = u then (1:ℝ) else 0)).comp_measurable
     (measurable_fst.prodMk measurable_snd.fst)
 
 theorem E_xu_const (M : Model Θ S A) (θ : Θ) (t : ℕ) (x : S) (u : A) (φ : S → A → ℝ) :
     ∫ ω, (if (ω t).1 = x ∧ (ω t).2.1 = u then (1:ℝ) else 0) * φ (ω t).1 (ω t).2.1 ∂(M.traj θ) =
       (M.traj θ).real (s t ⁻¹' {x}) * M.pol.prob θ x u * φ x u := by
-  have h₁ : ∀ ω : ℕ → Step S A, (if (ω t).1 = x ∧ (ω t).2.1 = u then (1:ℝ) else 0) * φ (ω t).1 (ω t).2.1 =
+  have h₁ : ∀ ω : ℕ → S × A × ℝ, (if (ω t).1 = x ∧ (ω t).2.1 = u then (1:ℝ) else 0) * φ (ω t).1 (ω t).2.1 =
       (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) * φ x u := by
     intro ω; simp only [s, a]
     by_cases h1 : (ω t).1 = x <;> by_cases h2 : (ω t).2.1 = u <;> simp [h1, h2]
@@ -454,7 +454,7 @@ theorem W_fst_zero (M : Model Θ S A) (θ : Θ) (h : S → ℝ) (y : S) :
 theorem E_xu_h (M : Model Θ S A) (θ : Θ) (t : ℕ) (x : S) (u : A) (h : S → ℝ) :
     ∫ ω, (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) * h (s (t + 1) ω) ∂(M.traj θ) =
       (M.traj θ).real (s t ⁻¹' {x}) * M.pol.prob θ x u * ∑ y, M.T x u y * h y := by
-  have hf : StronglyMeasurable (fun z : Step S A => h z.1) := (disc_sm h).comp_measurable measurable_fst
+  have hf : StronglyMeasurable (fun z : S × A × ℝ => h z.1) := (disc_sm h).comp_measurable measurable_fst
   refine (stage_iter M θ hf (fun z => h_bdd h z.1) t 1 (ind_xu_sm x u) (ind_bdd _)).trans ?_
   simp_rw [Kf_succ M θ hf (fun z => h_bdd h z.1) 0, W_fst_zero]
   exact E_xu_const M θ t x u (fun x' u' => ∑ y, M.T x' u' y * h y)
@@ -463,7 +463,7 @@ omit [DecidableEq A] in
 theorem E_s_h (M : Model Θ S A) (θ : Θ) (t : ℕ) (x : S) (h : S → ℝ) :
     ∫ ω, (if s t ω = x then (1:ℝ) else 0) * h (s (t + 1) ω) ∂(M.traj θ) =
       (M.traj θ).real (s t ⁻¹' {x}) * ∑ u, M.pol.prob θ x u * ∑ y, M.T x u y * h y := by
-  have hf : StronglyMeasurable (fun z : Step S A => h z.1) := (disc_sm h).comp_measurable measurable_fst
+  have hf : StronglyMeasurable (fun z : S × A × ℝ => h z.1) := (disc_sm h).comp_measurable measurable_fst
   have hK := Kf_bdd M θ hf (fun z => h_bdd h z.1) 1
   refine (stage_iter M θ hf (fun z => h_bdd h z.1) t 1 (ind_fst_sm x) (ind_bdd _)).trans ?_
   refine (stage_split M θ t hK.1 hK.2 x).trans ?_
@@ -473,7 +473,7 @@ theorem E_s_h (M : Model Θ S A) (θ : Θ) (t : ℕ) (x : S) (h : S → ℝ) :
   simp_rw [W_fst_zero]
 
 omit [MeasurableSingletonClass A] [DecidableEq A] in
-theorem cond_s (M : Model Θ S A) (θ : Θ) (t : ℕ) (x : S) (f : (ℕ → Step S A) → ℝ) :
+theorem cond_s (M : Model Θ S A) (θ : Θ) (t : ℕ) (x : S) (f : (ℕ → S × A × ℝ) → ℝ) :
     ∫ ω, f ω ∂(M.traj θ)[|s t ⁻¹' {x}] =
       ((M.traj θ).real (s t ⁻¹' {x}))⁻¹ * ∫ ω, (if s t ω = x then (1:ℝ) else 0) * f ω ∂(M.traj θ) := by
   rw [cond_int M θ (s_meas t (measurableSet_singleton x))]
@@ -489,7 +489,7 @@ theorem real_sa (M : Model Θ S A) (θ : Θ) (t : ℕ) (x : S) (u : A) :
   funext ω
   by_cases h1 : s t ω = x <;> by_cases h2 : a t ω = u <;> simp [h1, h2]
 
-theorem cond_sa (M : Model Θ S A) (θ : Θ) (t : ℕ) (x : S) (u : A) (f : (ℕ → Step S A) → ℝ) :
+theorem cond_sa (M : Model Θ S A) (θ : Θ) (t : ℕ) (x : S) (u : A) (f : (ℕ → S × A × ℝ) → ℝ) :
     ∫ ω, f ω ∂(M.traj θ)[|s t ⁻¹' {x} ∩ a t ⁻¹' {u}] =
       ((M.traj θ).real (s t ⁻¹' {x}) * M.pol.prob θ x u)⁻¹ *
         ∫ ω, (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) * f ω ∂(M.traj θ) := by
@@ -515,7 +515,7 @@ theorem summable_W (M : Model Θ S A) (θ : Θ) {γ : ℝ} (hγ : γ ∈ Set.Ico
   exact mul_le_mul_of_nonneg_left (W_bdd M θ k y) (pow_nonneg hγ.1 k)
 
 omit [MeasurableSingletonClass A] [DecidableEq S] [DecidableEq A] in
-theorem cond_r_bdd (M : Model Θ S A) (θ : Θ) (B : Set (ℕ → Step S A)) (t : ℕ) :
+theorem cond_r_bdd (M : Model Θ S A) (θ : Θ) (B : Set (ℕ → S × A × ℝ)) (t : ℕ) :
     ‖∫ ω, r t ω ∂(M.traj θ)[|B]‖ ≤ |M.env.R| := by
   have hae : ∀ᵐ ω ∂(M.traj θ)[|B], ‖r t ω‖ ≤ |M.env.R| :=
     cond_absolutelyContinuous.ae_le ((r_ae M θ t).mono fun ω h => by rw [h]; exact rc_bdd M _)
@@ -527,7 +527,7 @@ theorem cond_r_bdd (M : Model Θ S A) (θ : Θ) (B : Set (ℕ → Step S A)) (t 
 
 omit [MeasurableSingletonClass A] [DecidableEq S] [DecidableEq A] in
 theorem summable_cond (M : Model Θ S A) (θ : Θ) {γ : ℝ} (hγ : γ ∈ Set.Ico 0 1)
-    (B : Set (ℕ → Step S A)) (t : ℕ) :
+    (B : Set (ℕ → S × A × ℝ)) (t : ℕ) :
     Summable (fun k => γ ^ k * ∫ ω, r (t + k) ω ∂(M.traj θ)[|B]) := by
   refine Summable.of_norm_bounded ((summable_geometric_of_lt_one hγ.1 hγ.2).mul_right |M.env.R|) ?_
   intro k
@@ -535,7 +535,7 @@ theorem summable_cond (M : Model Θ S A) (θ : Θ) {γ : ℝ} (hγ : γ ∈ Set.
   exact mul_le_mul_of_nonneg_left (cond_r_bdd M θ B (t + k)) (pow_nonneg hγ.1 k)
 
 omit [MeasurableSingletonClass A] [DecidableEq S] [DecidableEq A] in
-theorem meas_zero_of_real (M : Model Θ S A) (θ : Θ) {B : Set (ℕ → Step S A)}
+theorem meas_zero_of_real (M : Model Θ S A) (θ : Θ) {B : Set (ℕ → S × A × ℝ)}
     (h : (M.traj θ).real B = 0) : M.traj θ B = 0 :=
   (measureReal_eq_zero_iff (measure_ne_top _ _)).1 h
 
@@ -559,11 +559,43 @@ theorem summable_pull {ι : Type*} [Fintype ι] {γ : ℝ} (c : ι → ℝ) (w :
   simp_rw [Finset.mul_sum]
   exact summable_sum (fun i _ => ((hw i).mul_left (c i)).congr (fun k => by ring))
 
+omit [MeasurableSingletonClass A] [DecidableEq S] [DecidableEq A] in
+theorem integral_G_cond (M : Model Θ S A) (θ : Θ) {γ : ℝ} (hγ : γ ∈ Set.Ico 0 1)
+    (B : Set (ℕ → S × A × ℝ)) (t : ℕ) :
+    ∫ ω, G γ t ω ∂(M.traj θ)[|B] = ∑' k, γ ^ k * ∫ ω, r (t + k) ω ∂(M.traj θ)[|B] := by
+  by_cases hB : M.traj θ B = 0
+  · simp [cond_eq_zero_of_meas_eq_zero hB]
+  · have := cond_isProbabilityMeasure (μ := M.traj θ) hB
+    have hae : ∀ᵐ ω ∂(M.traj θ)[|B], ∀ k, ‖r k ω‖ ≤ |M.env.R| := by
+      have h0 : ∀ᵐ ω ∂(M.traj θ), ∀ k, ‖r k ω‖ ≤ |M.env.R| :=
+        ae_all_iff.2 fun k => (r_ae M θ k).mono fun ω h => by rw [h]; exact rc_bdd M _
+      exact cond_absolutelyContinuous.ae_le h0
+    have hm : ∀ k, Measurable (r (S := S) (A := A) k) := fun k =>
+      measurable_snd.snd.comp (measurable_pi_apply k)
+    have hF : ∀ k, Integrable (fun ω => γ ^ k * r (t + k) ω) (M.traj θ)[|B] := fun k =>
+      Integrable.of_bound ((hm (t + k)).const_mul (γ ^ k)).aestronglyMeasurable (γ ^ k * |M.env.R|)
+        (hae.mono fun ω h => by
+          rw [norm_mul, norm_pow, Real.norm_of_nonneg hγ.1]
+          exact mul_le_mul_of_nonneg_left (h (t + k)) (pow_nonneg hγ.1 k))
+    have hS : Summable (fun k => ∫ ω, ‖γ ^ k * r (t + k) ω‖ ∂(M.traj θ)[|B]) := by
+      refine Summable.of_nonneg_of_le (fun k => integral_nonneg fun ω => norm_nonneg _) (fun k => ?_)
+        ((summable_geometric_of_lt_one hγ.1 hγ.2).mul_right |M.env.R|)
+      have hb : ∀ᵐ ω ∂(M.traj θ)[|B], ‖‖γ ^ k * r (t + k) ω‖‖ ≤ γ ^ k * |M.env.R| :=
+        hae.mono fun ω h => by
+          rw [norm_norm, norm_mul, norm_pow, Real.norm_of_nonneg hγ.1]
+          exact mul_le_mul_of_nonneg_left (h (t + k)) (pow_nonneg hγ.1 k)
+      have := norm_integral_le_of_norm_le_const hb
+      simp only [probReal_univ, mul_one] at this
+      exact (Real.le_norm_self _).trans this
+    simp only [G]
+    rw [← (hasSum_integral_of_summable_integral_norm hF hS).tsum_eq]
+    congr 1; funext k
+    exact integral_const_mul _ _
 omit [DecidableEq A] in
-theorem V_eq (M : Model Θ S A) (θ : Θ) (γ : ℝ) (t : ℕ) (x : S)
+theorem V_eq (M : Model Θ S A) (θ : Θ) {γ : ℝ} (hγ : γ ∈ Set.Ico 0 1) (t : ℕ) (x : S)
     (hP : (M.traj θ).real (s t ⁻¹' {x}) ≠ 0) :
     M.V θ γ t x = ∑' k, γ ^ k * M.W θ M.rc k x := by
-  unfold Model.V
+  rw [V_eq_integral, integral_G_cond M θ hγ]
   congr 1; funext k
   rw [cond_s, E_s_r, inv_mul_cancel_left₀ hP]
 
@@ -604,7 +636,7 @@ theorem integrable_ind_sa (M : Model Θ S A) (θ : Θ) (t : ℕ) (x : S) (u : A)
 
 omit [MeasurableSingletonClass A] [DecidableEq S] [DecidableEq A] in
 theorem integrable_ind_h {B : Type*} [MeasurableSpace B] [MeasurableSingletonClass B] [Fintype B]
-    (M : Model Θ S A) (θ : Θ) (X : (ℕ → Step S A) → B) (hX : Measurable X) (φ : B → ℝ) :
+    (M : Model Θ S A) (θ : Θ) (X : (ℕ → S × A × ℝ) → B) (hX : Measurable X) (φ : B → ℝ) :
     Integrable (fun ω => φ (X ω)) (M.traj θ) := by
   refine Integrable.of_bound (C := ∑ b, ‖φ b‖) ((disc_sm φ).comp_measurable hX).aestronglyMeasurable
     (Filter.Eventually.of_forall fun ω => ?_)
@@ -612,7 +644,7 @@ theorem integrable_ind_h {B : Type*} [MeasurableSpace B] [MeasurableSingletonCla
 
 omit [MeasurableSingletonClass A] [DecidableEq S] [DecidableEq A] in
 theorem integrable_ind_r (M : Model Θ S A) (θ : Θ) {B : Type*} [MeasurableSpace B]
-    [MeasurableSingletonClass B] [Fintype B] (X : (ℕ → Step S A) → B) (hX : Measurable X)
+    [MeasurableSingletonClass B] [Fintype B] (X : (ℕ → S × A × ℝ) → B) (hX : Measurable X)
     (φ : B → ℝ) (t : ℕ) :
     Integrable (fun ω => φ (X ω) * r t ω) (M.traj θ) := by
   refine Integrable.of_bound (C := (∑ b, ‖φ b‖) * |M.env.R|) ?_ ((r_ae M θ t).mono fun ω h => ?_)
@@ -656,13 +688,13 @@ theorem alg1 {c γ Y Z : ℝ} (hc : c ≠ 0) : c⁻¹ * (γ * (c * Y) + c * Z) =
   rw [mul_add, mul_left_comm γ, inv_mul_cancel_left₀ hc, inv_mul_cancel_left₀ hc, add_comm]
 
 omit [DecidableEq A] in
-theorem V_succ_eq (M : Model Θ S A) (θ : Θ) (γ : ℝ) (t : ℕ) (x : S) (u : A)
+theorem V_succ_eq (M : Model Θ S A) (θ : Θ) {γ : ℝ} (hγ : γ ∈ Set.Ico 0 1) (t : ℕ) (x : S) (u : A)
     (hP : (M.traj θ).real (s t ⁻¹' {x}) ≠ 0) (y : S) :
     M.pol.prob θ x u * (M.T x u y * M.V θ γ (t + 1) y) =
       M.pol.prob θ x u * (M.T x u y * ∑' k, γ ^ k * M.W θ M.rc k y) := by
   by_cases hz : M.pol.prob θ x u * M.T x u y = 0
   · rw [← mul_assoc, ← mul_assoc, hz, zero_mul, zero_mul]
-  · rw [V_eq M θ γ (t + 1) y (reach M θ t x u y hP hz)]
+  · rw [V_eq M θ hγ (t + 1) y (reach M θ t x u y hP hz)]
 
 end Model
 

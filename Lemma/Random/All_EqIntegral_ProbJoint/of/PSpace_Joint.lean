@@ -8,12 +8,12 @@ open Random MeasureTheory
 
 
 /-- `π.prob (x, y)` is a.e. equal to any witnessing density `p` supplied by
-`PSpace.exists_distribution` (the joint law equals `μ.prod ν` with density `p`). -/
+`SinglePSpace.exists_distribution` (the joint law equals `μ.prod ν` with density `p`). -/
 private lemma densityAe
   [MeasurableSpace Ω]
   [ReferenceMeasure α] [ReferenceMeasure β]
   {π : Measure Ω} {x : Ω → α} {y : Ω → β}
-  [PSpace π (x, y)]
+  [SinglePSpace π (x, y)]
 -- given
   (p : α × β → ENNReal)
   (hp : Measurable p)
@@ -32,7 +32,7 @@ private lemma left
   [ReferenceMeasure α] [ReferenceMeasure β]
   {π : Measure Ω} {x : Ω → α} {y : Ω → β}
 -- given
-  (hP : PSpace π (x, y)) :
+  (hP : SinglePSpace π (x, y)) :
 -- imply
   have := PSpace.of.PSpace_Joint.snd hP
   ∀ᵐ «y.bvar» ∂ReferenceMeasure.measure,
@@ -82,7 +82,7 @@ private lemma main
   [ReferenceMeasure α] [ReferenceMeasure β]
   {π : Measure Ω} {x : Ω → α} {y : Ω → β}
 -- given
-  (hP : PSpace π (x, y)) :
+  (hP : SinglePSpace π (x, y)) :
 -- imply
   have := PSpace.of.PSpace_Joint.fst hP
   ∀ᵐ «x.bvar» ∂ReferenceMeasure.measure,

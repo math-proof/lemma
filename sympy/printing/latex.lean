@@ -573,6 +573,64 @@ def Expr.asMap? : Expr → Option (Expr × List Expr)
         | _ => none
       else none
 
+/-- Spine of a `Subst` application: `«Subst» f x₀` or the curried `(«Subst» f x₀) y₀ …`
+(a `Special .anonymous` application) → `(f, [x₀, y₀, …])`. -/
+def Expr.substSpine? : Expr → Option (Expr × List Expr)
+  | Basic (.Special ⟨.anonymous⟩) (inner :: rest) _ =>
+    match inner.substSpine? with
+    | some (f, vs) => some (f, vs ++ rest)
+    | none => none
+  | e =>
+    match e.asNamedApp? with
+    | some ("Subst", f :: vs@(_ :: _)) => some (f, vs)
+    | _ => none
+
+/-- sympy `Subs(expr, (x, y), (x0, y0))`: `Subst (expr | x = x₀ ∧ y = y₀)`, i.e.
+`«Subst» (fun x y ↦ expr) x₀ y₀` → `(expr, [(x, x₀), (y, y₀)])`; `none` unless every binder of the
+lambda receives a value. -/
+def Expr.asSubst? (e : Expr) : Option (Expr × List (String × Expr)) :=
+  match e.substSpine? with
+  | some (Basic (.ExprWithLimits .Lean_lambda) (body :: limits) _, vs) =>
+    -- same-typed binders are merged into one `Binder` with the hierarchical name `x.y`
+    let binders := limits.reverse.filterMap fun
+      | Binder .default name _ nil => some (name.components.map (·.bvarLatex "\\ "))
+      | _ => none
+    let names := binders.flatten
+    if binders.length == limits.length && names.length == vs.length then
+      some (body, names.zip vs)
+    else
+      none
+  | _ => none
+
+/-- `\left. expr \right|_{x = x₀}` (one variable) or
+`\left. expr \right|_{\substack{x = x₀ \\ y = y₀}}` (sympy `_print_Subs`). -/
+def Expr.substLatexFormat (n : Nat) : String :=
+  let subs := " \\\\ ".intercalate (List.replicate n "{%s} = {%s}")
+  if n == 1 then
+    "\\left. {%s} \\right|_{" ++ subs ++ "}"
+  else
+    "\\left. {%s} \\right|_{\\substack{" ++ subs ++ "}}"
+
+/-- LaTeX slots of `Expr.substLatexFormat`: body, then `name, value` per substitution. -/
+def Expr.substLatexArgs (body : Expr) (subs : List (String × Expr)) (toLatex : Expr → String) :
+    List String :=
+  toLatex body :: subs.flatMap fun (x, v) => [x, toLatex v]
+
+/-- sympy `Gradient`: `gradient (fun θ ↦ expr) p` → `(θ, expr, point)`, where `point` is `none` when `p` is
+the bound name itself (`∇[θ] expr`) and `some p` otherwise (`∇[θ = p] expr`). Under
+`Subst (∇[θ] expr | θ = θ₀)` the point is the `Subst` variable `θ`, so the inner form is `∇[θ] expr`. -/
+def Expr.asGradient? (e : Expr) : Option (String × Expr × Option Expr) :=
+  match e.asNamedApp? with
+  | some ("gradient", [Basic (.ExprWithLimits .Lean_lambda) [body, Binder .default name _ nil] _, p]) =>
+    match p with
+    | Symbol point _ =>
+      if name == point then
+        some (name.bvarLatex "\\ ", body, none)
+      else
+        some (name.bvarLatex "\\ ", body, some p)
+    | _ => some (name.bvarLatex "\\ ", body, some p)
+  | _ => none
+
 inductive ExpectationView where
   | map (f rv : Expr)
   | mapBody (body rv μ : Expr)
@@ -991,7 +1049,9 @@ def Expr.latexFormat : Expr → String
     | .Special ⟨op⟩ =>
       match op with
       | .anonymous =>
-        if let some (obj, fns) := e.asMap? then
+        if let some (_, subs) := e.asSubst? then
+          Expr.substLatexFormat subs.length
+        else if let some (obj, fns) := e.asMap? then
           let obj := level.toColor (obj.priority > func.priority || obj.toList != none || obj.is_Eye)
           let fns := fns.map fun arg =>
             (0 : Nat).toColor (arg.priority > func.priority || arg.is_Div || arg.is_BlockMatrix)
@@ -1044,13 +1104,22 @@ def Expr.latexFormat : Expr → String
         opStr
     | .ExprWithAttr op =>
       -- Pre-check foldings first (work for both Lean_function and Lean_operatorname)
-      if let some (_binderName, _fn, μ) := e.asIntegral? then
+      if let some (_, subs) := e.asSubst? then
+        Expr.substLatexFormat subs.length
+      else if let some (_, _, point) := e.asGradient? then
+        match point with
+        | none => "\\nabla_{%s} {%s}"
+        | some _ => "\\left. \\nabla_{%s} {%s} \\right|_{{%s} = {%s}}"
+      else if let some (_binderName, _fn, μ) := e.asIntegral? then
         if μ.isVolume then
           "\\int {%s}\\, {\\color{blue}\\mathrm{d}}{%s}"
         else
           "\\int {%s}\\, {\\color{blue}\\partial}{%s}"
-      else if let some (_binderName, _fn, _μ) := e.asLintegral? then
-        "\\int^{⁻} {%s}\\, {\\color{blue}\\partial}{%s}"
+      else if let some (_binderName, _fn, μ) := e.asLintegral? then
+        if μ.isVolume then
+          "\\int^{⁻} {%s}\\, {\\color{blue}\\mathrm{d}}{%s}"
+        else
+          "\\int^{⁻} {%s}\\, {\\color{blue}\\partial}{%s}"
       else if let some view := e.asExpectation? then
         match view with
         | .map _ _ =>
@@ -1456,7 +1525,9 @@ where
         | _ =>
           map args
       | .anonymous =>
-        if let some (obj, fns) := e.asMap? then
+        if let some (body, subs) := e.asSubst? then
+          Expr.substLatexArgs body subs (·.toLatex)
+        else if let some (obj, fns) := e.asMap? then
           obj.toLatex :: fns.map (·.toLatex)
         else
           map args
@@ -1499,10 +1570,16 @@ where
         map args
     | .ExprWithAttr op =>
       -- Pre-check foldings first (work for both Lean_function and Lean_operatorname)
-      if let some (binderName, fn, _μ) := e.asIntegral? then
-        [fn.toLatex, binderName]
-      else if let some (binderName, fn, _μ) := e.asLintegral? then
-        [fn.toLatex, binderName]
+      if let some (body, subs) := e.asSubst? then
+        Expr.substLatexArgs body subs (·.toLatex)
+      else if let some (x, body, point) := e.asGradient? then
+        match point with
+        | none => [x, body.toLatex]
+        | some p => [x, body.toLatex, x, p.toLatex]
+      else if let some (binderName, fn, μ) := e.asIntegral? then
+        if μ.isVolume then [fn.toLatex, binderName] else [fn.toLatex, μ.toLatex]
+      else if let some (binderName, fn, μ) := e.asLintegral? then
+        if μ.isVolume then [fn.toLatex, binderName] else [fn.toLatex, μ.toLatex]
       else if let some view := e.asExpectation? then
         match view with
         | .map f rv => [rv.toLatex, f.toLatex, rv.toLatex]

@@ -35,7 +35,7 @@ wherever an `Ω → α × β` is expected — e.g. `let prod : Ω → α × β :
 `CoeFun` instance also makes application `(x, y) ω` well-typed. The coe body delegates
 to `JointRandomSymbol` (rather than re-using an anonymous `fun`) so typeclass search
 sees the same head symbol: e.g. a hypothesis written as a bare pair `(x, y)`
-also supplies `PSpace π (x, y)`.
+also supplies `SinglePSpace π (x, y)`.
 -/
 instance Function.coeProdPi {ι α β : Type*} :
     Coe ((ι → α) × (ι → β)) (ι → α × β) :=
@@ -70,7 +70,7 @@ instance Function.coeFunProdPi3R {ι α β γ : Type*} :
 
 
 /--
-Build a joint `PSpace π (x, y)` from an explicit density `p` of the joint law: if
+Build a joint `SinglePSpace π (x, y)` from an explicit density `p` of the joint law: if
 `π.map (x, y)` equals the product reference measure with density `p`, then `(x, y)` admits
 `p` as its distribution. The a.e. measurability of the pair is supplied directly.
 -/
@@ -85,19 +85,19 @@ theorem JointRandomSymbol.of_density
     (hp : Measurable p)
     (hjoint : π.map (x, y) =
       (ReferenceMeasure.measure.prod ReferenceMeasure.measure).withDensity p) :
-    PSpace π (x, y) :=
+    SinglePSpace π (x, y) :=
   { toIsProbabilityMeasure := inferInstance
     aemeasurable := hxy
     exists_distribution := ⟨p, ⟨hp⟩, hjoint⟩ }
 
 
 /--
-Two random variables whose laws each admit a density (`PSpace π x` and
-`PSpace π y`) also span a **joint** probability space with density when they are
+Two random variables whose laws each admit a density (`SinglePSpace π x` and
+`SinglePSpace π y`) also span a **joint** probability space with density when they are
 independent: by `IndepFun`, the joint law is the product of the marginal laws, and the
 product of two measures with densities `px`, `py` is the product measure with density
 `fun z ↦ px z.1 * py z.2`. The a.e. measurability of `x` and `y` needed by `IndepFun` is
-read off the `PSpace` instances (which package `AEMeasurable`); plain `Measurable`
+read off the `SinglePSpace` instances (which package `AEMeasurable`); plain `Measurable`
 hypotheses are not required. The converse is false without independence — two ac
 marginals can have a singular joint law (e.g. `y = x` over a Lebesgue state space).
 -/
@@ -107,9 +107,9 @@ theorem JointRandomSymbol.of_indep
     [ReferenceMeasure α] [ReferenceMeasure β]
     {π : Measure Ω}
     {x : Ω → α} {y : Ω → β}
-    [PSpace π x] [PSpace π y]
+    [SinglePSpace π x] [SinglePSpace π y]
     (hxy : ProbabilityTheory.IndepFun x y π) :
-    PSpace π (x, y) := by
+    SinglePSpace π (x, y) := by
   let μ : Measure α := ReferenceMeasure.measure
   let ν : Measure β := ReferenceMeasure.measure
   let px := π.prob x
@@ -124,8 +124,8 @@ theorem JointRandomSymbol.of_indep
   have hindep : π.map (x, y) = (π.map x).prod (π.map y) :=
     ProbabilityTheory.IndepFun.map_prod_eq_prod_map_map haex haey hxy
   have hjoint : π.map (x, y) = (μ.prod ν).withDensity p := by
-    rw [hindep, PSpace.map_eq_withDensity_density,
-      PSpace.map_eq_withDensity_density, prod_withDensity hpx hpy]
+    rw [hindep, SinglePSpace.map_eq_withDensity_density,
+      SinglePSpace.map_eq_withDensity_density, prod_withDensity hpx hpy]
   exact JointRandomSymbol.of_density (haex.prodMk haey) hp hjoint
 
 /--
@@ -140,7 +140,7 @@ usual “apply `f` to the RV `x`” reading.
 noncomputable def Expectation.ofRV
     {Ω α β : Type*}
     [MeasurableSpace Ω]
-    [ReferenceMeasure α]
+    [MeasurableSpace α]
     [Expectation β]
     (π : Measure Ω)
     (x : Ω → α)
@@ -166,7 +166,7 @@ noncomputable def Expectation.condRV
     [Expectation β]
     (π : Measure Ω)
     (x : Ω → α) (y : Ω → γ)
-    [PSpace π (x, y)]
+    [SinglePSpace π (x, y)]
     (f : α → β)
     (y0 : γ) :
     β :=
@@ -193,7 +193,7 @@ noncomputable def Expectation.condRA
     [Expectation β]
     (π : Measure Ω)
     (x : Ω → α) (y : Ω → γ)
-    [PSpace π (x, y)]
+    [SinglePSpace π (x, y)]
     (f : α → β) :
     Ω → β :=
   fun ω ↦ Expectation.condRV π x y f (y ω)
@@ -218,7 +218,7 @@ noncomputable def Expectation.partialRV
     [Expectation β]
     (π : Measure Ω)
     (x : Ω → α) (y : Ω → γ)
-    [PSpace π (x, y)]
+    [SinglePSpace π (x, y)]
     (f : α → γ → β) :
     Ω → β :=
   fun ω ↦ Expectation.condRV π x y (fun a ↦ f a (y ω)) (y ω)
@@ -243,7 +243,7 @@ noncomputable def Expectation.partialRV_cond
     [Expectation β]
     (π : Measure Ω)
     (x : Ω → α) (y : Ω → γ) (r : Ω → ρ)
-    [PSpace π (x, y, r)]
+    [SinglePSpace π (x, y, r)]
     (f : α → γ → β)
     (r0 : ρ) :
     Ω → β :=
@@ -270,10 +270,88 @@ noncomputable def Expectation.partialRV_RA
     [Expectation β]
     (π : Measure Ω)
     (x : Ω → α) (y : Ω → γ) (r : Ω → ρ)
-    [PSpace π (x, y, r)]
+    [SinglePSpace π (x, y, r)]
     (f : α → γ → β) :
     Ω → β :=
   fun ω ↦ Expectation.partialRV_cond π x y r f (r ω) ω
+
+/-! ### Path-valued reading of time-indexed processes
+
+A binder `x` in `𝔼[x: π](…)` is turned into an `Ω → _` random variable by
+`Expectation.asRV` (`AsPathRV`). Ordinary RVs `x : Ω → α` stay themselves (reducible);
+a process `X : ℕ → Ω → α` flips to the path-valued RV `fun ω t ↦ X t ω`. That lets one write
+
+  `𝔼[s, a, r : M.traj θ](∑' t, γ ^ t * r t)`
+
+for the joint law of the three infinite-horizon processes (still a *finite* `JointRandomSymbol`
+of path RVs), with `s`, `a`, `r` bound in the body as values of type `ℕ → _`.
+-/
+
+/--
+Interpret a binder as an `Ω → α` random variable.
+
+* `Ω → α` — identity (ordinary RV);
+* `ℕ → Ω → α` — flip to the path `ω ↦ (t ↦ X t ω)` (process / infinite family of coordinates).
+
+The process instance is higher priority so it wins on the overlap
+`ℕ → Ω → α = (ℕ → (Ω → α))`, which also matches the identity instance with domain `ℕ`.
+-/
+class AsPathRV (X : Type*) (Ω : outParam Type*) (α : outParam Type*) where
+  /-- Underlying `Ω → α` random variable for binder `X`. -/
+  path : X → Ω → α
+
+/-- Ordinary random variable: binder is already `Ω → α`. -/
+@[reducible]
+instance (priority := 100) AsPathRV.ofFunction {Ω α : Type*} : AsPathRV (Ω → α) Ω α where
+  path f := f
+
+/-- Time-indexed process: binder `X` becomes the path-valued RV `fun ω t ↦ X t ω`. -/
+@[reducible]
+instance (priority := 1000) AsPathRV.process {Ω α : Type*} :
+    AsPathRV (ℕ → Ω → α) Ω (ℕ → α) where
+  path f := fun ω t ↦ f t ω
+
+/-- `AsPathRV.path` is the identity on an ordinary random variable. -/
+@[simp] theorem AsPathRV.path_function {Ω α : Type*} (f : Ω → α) :
+    AsPathRV.path f = f :=
+  rfl
+
+/-- `AsPathRV.path` flips a process to its path-valued random variable. -/
+@[simp] theorem AsPathRV.path_process {Ω α : Type*} (X : ℕ → Ω → α) :
+    AsPathRV.path X = fun ω t ↦ X t ω :=
+  rfl
+
+/--
+Transparent binder coercion used by the `𝔼` macro.
+
+Reducible so that for an ordinary RV `x : Ω → α` one has `Expectation.asRV x = x`
+(definitionally), and proofs that rewrite with `π.map x` keep working. For a process
+`X : ℕ → Ω → α`, this is the path `fun ω t ↦ X t ω`.
+-/
+@[reducible, inline]
+def Expectation.asRV {X : Type*} {Ω α : Type*} [AsPathRV X Ω α] (x : X) : Ω → α :=
+  AsPathRV.path x
+
+@[simp] theorem Expectation.asRV_function {Ω α : Type*} (f : Ω → α) :
+    Expectation.asRV f = f :=
+  rfl
+
+@[simp] theorem Expectation.asRV_process {Ω α : Type*} (X : ℕ → Ω → α) :
+    Expectation.asRV X = fun ω t ↦ X t ω :=
+  rfl
+
+/--
+Path of a process with a.e. measurable coordinates is a.e. measurable (product σ-algebra).
+
+Not an `instance`: synthesizing `IsProbabilityMeasure π` via `PSpace` would otherwise loop
+through a metavariable process `X`.
+-/
+theorem PSpace.of_process_path
+    {Ω α : Type*} [MeasurableSpace Ω] [MeasurableSpace α]
+    {π : Measure Ω} {X : ℕ → Ω → α} (h : ∀ t, PSpace π (X t)) :
+    PSpace π (AsPathRV.path X) where
+  toIsProbabilityMeasure := (h 0).toIsProbabilityMeasure
+  aemeasurable := (aemeasurable_pi_iff (μ := π)).2 fun t => (h t).aemeasurable
 
 /-! ### Binder notation `𝔼`
 
@@ -284,10 +362,12 @@ Python-aligned surface form (cf. `Expectation[x ~ D](f, given=…)` in `../py/sy
 * Integrated slot is always `ident,+`: one RV is bare; two or more pack
   right-nested `JointRandomSymbol` (joint law). That is **not** the same as
   nested `𝔼[x: π](𝔼[y: π](…))` (product of marginals) unless independence.
+  Process binders `ℕ → Ω → α` are read via `Expectation.asRV` as path RVs
+  `Ω → (ℕ → α)` (e.g. `𝔼[s, a, r : M.traj θ](…)`); ordinary RVs stay definitionally themselves.
 
 * **Scalar (integrate out completely):**
-  `𝔼[x: π](f x)` → `Expectation.ofRV π x …`
-  `𝔼[x, y: π](f x y)` → `Expectation.ofRV π (JointRandomSymbol x y) …`
+  `𝔼[x: π](f x)` → `Expectation.ofRV π (Expectation.asRV x) …`
+  `𝔼[x, y: π](f x y)` → `Expectation.ofRV π (JointRandomSymbol (Expectation.asRV x) (Expectation.asRV y)) …`
 * **Scalar conditional at a fixed observation:**
   `𝔼[x: π](f x | y = y0)` / `𝔼[x, z: π](f | y = y0)` → `Expectation.condRV …`
   Joint observations: `| (y, z) = (y0, z0)` (any term on the left of `=`).
@@ -305,25 +385,35 @@ Python-aligned surface form (cf. `Expectation[x ~ D](f, given=…)` in `../py/sy
   Free names in the brackets may appear in the body; trailing `| r, s` only condition.
 -/
 
-syntax:max "𝔼[" ident,+ ":" term:max "]" "(" term:51 ")" : term
-syntax:max "𝔼[" ident,+ ":" term:max "]" "(" term:51 "|" term:max "=" term:51 ")" : term
-syntax:max "𝔼[" ident,+ ":" term:max "]" "(" term:51 "|" ident,+ ")" : term
-syntax:max "𝔼[" ident,+ ":" term:max "|" ident,+ "]" "(" term:51 ")" : term
-syntax:max "𝔼[" ident,+ ":" term:max "|" ident,+ "]" "(" term:51 "|" term:max "=" term:51 ")" : term
-syntax:max "𝔼[" ident,+ ":" term:max "|" ident,+ "]" "(" term:51 "|" ident,+ ")" : term
+/-- Measure slot of `𝔼[xs: π | ys]`: a head applied to arguments, e.g. `M.traj θ` or `(M.traj θ)`.
+It is `term:max` followed by `term:max` arguments, none of which may start with `|`: a plain `term` slot
+would let the application parser read `|y …` as Mathlib's `|x|` abs and fail instead of stopping before
+the `| ys` of the bracket. (A parenthesised measure is still accepted, and an abs argument can be written
+`(|c|)`.) The forms where the measure is followed directly by `]` take a full `term`. -/
+syntax expectMeasure := term:max (ppSpace !"|" term:max)*
+
+syntax:max "𝔼[" ident,+ ":" term "]" "(" term:51 ")" : term
+syntax:max "𝔼[" ident,+ ":" term "]" "(" term:51 "|" term:max "=" term:51 ")" : term
+syntax:max "𝔼[" ident,+ ":" term "]" "(" term:51 "|" ident,+ ")" : term
+syntax:max "𝔼[" ident,+ ":" expectMeasure "|" ident,+ "]" "(" term:51 ")" : term
+syntax:max "𝔼[" ident,+ ":" expectMeasure "|" ident,+ "]" "(" term:51 "|" term:max "=" term:51 ")" : term
+syntax:max "𝔼[" ident,+ ":" expectMeasure "|" ident,+ "]" "(" term:51 "|" ident,+ ")" : term
 
 open Lean
 
-/-- Right-nested `JointRandomSymbol` chain: `#[x,y,z]` ↦ `JointRandomSymbol x (JointRandomSymbol y z)`.
-One element returns that ident bare. -/
+/-- Right-nested `JointRandomSymbol` chain of `Expectation.asRV` binders:
+`#[x,y,z]` ↦ `JointRandomSymbol (Expectation.asRV x) (JointRandomSymbol (Expectation.asRV y) (Expectation.asRV z))`.
+One element returns `Expectation.asRV y` (ordinary RV or flipped process path). -/
 partial def Expectation.Macro.mkRestJoint (ys : Array Syntax) : MacroM Term := do
   match ys.toList with
   | [] => Macro.throwError "𝔼[…](…) requires at least one random variable in this slot"
-  | [y] => pure ⟨y⟩
+  | [y] =>
+    let y : Term := ⟨y⟩
+    `(Expectation.asRV $y)
   | y :: rest =>
     let y : Term := ⟨y⟩
     let tail ← Expectation.Macro.mkRestJoint rest.toArray
-    `(JointRandomSymbol $y $tail)
+    `(JointRandomSymbol (Expectation.asRV $y) $tail)
 
 /-- Unpack a right-nested product into `let y := nest.1; …; body`. -/
 partial def Expectation.Macro.unpackRest
@@ -338,6 +428,13 @@ partial def Expectation.Macro.unpackRest
     let nest2 ← `(Prod.snd $nest)
     let body' ← Expectation.Macro.unpackRest rest.toArray nest2 body
     `(let $y := Prod.fst $nest; $body')
+
+/-- The measure term of an `expectMeasure` slot: `f a b` ↦ the application `f a b`. -/
+def Expectation.Macro.measure (π : TSyntax `expectMeasure) : MacroM Term :=
+  match π with
+  | `(expectMeasure| $f:term $[$args:term]*) =>
+    if args.isEmpty then pure f else `($f $args*)
+  | _ => Macro.throwUnsupported
 
 macro_rules
   | `(𝔼[$xs:ident,* : $π]($body)) => do
@@ -360,7 +457,8 @@ macro_rules
       let nest := mkIdent `«integ»
       let unpacked ← Expectation.Macro.unpackRest xs nest body
       `(Expectation.condRA $π $joint $ra (fun $nest ↦ $unpacked))
-  | `(𝔼[$xs:ident,* : $π | $ys,*]($body | $r:term = $r0)) => do
+  | `(𝔼[$xs:ident,* : $π:expectMeasure | $ys,*]($body | $r:term = $r0)) => do
+      let π ← Expectation.Macro.measure π
       let xs := xs.getElems
       let ys := ys.getElems
       let integ ← Expectation.Macro.mkRestJoint xs
@@ -370,7 +468,8 @@ macro_rules
       let bodyY ← Expectation.Macro.unpackRest ys nestY body
       let bodyXY ← Expectation.Macro.unpackRest xs nestX bodyY
       `(Expectation.partialRV_cond $π $integ $free $r (fun $nestX $nestY ↦ $bodyXY) $r0)
-  | `(𝔼[$xs:ident,* : $π | $ys,*]($body | $rs,*)) => do
+  | `(𝔼[$xs:ident,* : $π:expectMeasure | $ys,*]($body | $rs,*)) => do
+      let π ← Expectation.Macro.measure π
       let xs := xs.getElems
       let ys := ys.getElems
       let rs := rs.getElems
@@ -382,7 +481,8 @@ macro_rules
       let bodyY ← Expectation.Macro.unpackRest ys nestY body
       let bodyXY ← Expectation.Macro.unpackRest xs nestX bodyY
       `(Expectation.partialRV_RA $π $integ $free $ra (fun $nestX $nestY ↦ $bodyXY))
-  | `(𝔼[$xs:ident,* : $π | $ys,*]($body)) => do
+  | `(𝔼[$xs:ident,* : $π:expectMeasure | $ys,*]($body)) => do
+      let π ← Expectation.Macro.measure π
       let xs := xs.getElems
       let ys := ys.getElems
       let integ ← Expectation.Macro.mkRestJoint xs
@@ -440,12 +540,12 @@ partial def Probability.Macro.mkProd (ts : Array Syntax) : MacroM Term := do
     let tail ← Probability.Macro.mkProd rest.toArray
     `(($t, $tail))
 
-syntax:max "ℙ[" term:max "]" "(" ident,+ ")" : term
-syntax:max "ℙ[" term:max "]" "(" ident,+ "|" ident,+ ")" : term
-syntax:max "ℙ[" term:max "]" "(" ident,+ "|" sepBy1(term:max "=" term:lead, "∧") ")" : term
-syntax:max "ℙ[" term:max "]" "(" sepBy1(term:max "=" term:lead, "∧") ")" : term
-syntax:max "ℙ[" term:max "]" "(" sepBy1(term:max "=" term:lead, "∧") "|" sepBy1(term:max "=" term:lead, "∧") ")" : term
-syntax:max "ℙ[" term:max "]" "(" sepBy1(term:max "=" term:lead, "∧") "|" ident,+ ")" : term
+syntax:max "ℙ[" term "]" "(" ident,+ ")" : term
+syntax:max "ℙ[" term "]" "(" ident,+ "|" ident,+ ")" : term
+syntax:max "ℙ[" term "]" "(" ident,+ "|" sepBy1(term:max "=" term:lead, "∧") ")" : term
+syntax:max "ℙ[" term "]" "(" sepBy1(term:max "=" term:lead, "∧") ")" : term
+syntax:max "ℙ[" term "]" "(" sepBy1(term:max "=" term:lead, "∧") "|" sepBy1(term:max "=" term:lead, "∧") ")" : term
+syntax:max "ℙ[" term "]" "(" sepBy1(term:max "=" term:lead, "∧") "|" ident,+ ")" : term
 
 macro_rules
   | `(ℙ[$π]($xs:ident,*)) => do

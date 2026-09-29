@@ -25,7 +25,7 @@ private lemma main
   {a : Ω → α} {s : Ω → γ}
   {f : α → Tensor ENNReal [k]}
 -- given
-  (hP : PSpace π (a, s))
+  (hP : SinglePSpace π (a, s))
   (A : Tensor ENNReal [m, k])
   (hf : ∀ p : Fin k, Measurable (fun x : α ↦ (f x)[p].item))
   («s.bvar» : γ) :

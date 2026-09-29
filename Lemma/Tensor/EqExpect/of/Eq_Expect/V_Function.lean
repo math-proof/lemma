@@ -23,17 +23,19 @@ private lemma main
   (h₁ : ∀ x u, Q x u = ∑' k, γ ^ k * ∫ ω, r (t + k) ω ∂(M.traj θ)[|s t ⁻¹' {x} ∩ a t ⁻¹' {u}])
   (x : S) :
 -- imply
-  ∑' k, γ ^ k * ∫ ω, r (t + k) ω ∂(M.traj θ)[|s t ⁻¹' {x}] =
+  ∫ ω, ∑' k, γ ^ k * r (t + k) ω ∂(M.traj θ)[|s t ⁻¹' {x}] =
     ∫ ω, Q x (a t ω) ∂(M.traj θ)[|s t ⁻¹' {x}] := by
 -- proof
   classical
   have h₂ : Q = M.Q θ γ t := funext fun x => funext fun u => h₁ x u
   subst h₂
-  show M.V θ γ t x = _
+  have hVi : ∀ t x, ∫ ω, ∑' k, γ ^ k * r (t + k) ω ∂(M.traj θ)[|s t ⁻¹' {x}] = M.V θ γ t x :=
+    fun t x => (M.V_eq_integral θ γ t x).symm
+  simp only [hVi]
   by_cases hP : (M.traj θ).real (s t ⁻¹' {x}) = 0
   · have h₃ := cond_eq_zero_of_meas_eq_zero (meas_zero_of_real M θ hP)
-    simp [Model.V, h₃]
-  · rw [V_eq M θ γ t x hP, cond_s]
+    simp [M.V_eq_integral, h₃]
+  · rw [V_eq M θ h₀ t x hP, cond_s]
     have h₃ : ∀ ω, (if s t ω = x then (1:ℝ) else 0) * M.Q θ γ t x (a t ω) =
         ∑ u, (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) * M.Q θ γ t x u := by
       intro ω

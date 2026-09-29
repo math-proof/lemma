@@ -1,0 +1,18 @@
+import Mathlib.Algebra.Order.Floor.Ring
+import sympy.sets.sets
+import sympy.Basic
+
+
+@[main]
+private lemma main
+  {x : ℤ}
+  {y : ℝ}
+-- given
+  (h : x < y) :
+-- imply
+  x ≤ ⌊y⌋ := by
+-- proof
+  exact Int.le_floor.mpr h.le
+
+
+-- created on 2026-09-27

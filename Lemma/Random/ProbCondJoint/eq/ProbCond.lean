@@ -20,14 +20,14 @@ private lemma main
   {π : Measure Ω}
   {x : Ω → α} {y : Ω → γ}
 -- given
-  (hP : PSpace π (x, y))
+  (hP : SinglePSpace π (x, y))
   (hα : ReferenceMeasure.measure (α := α) = Measure.count)
   (hγ : ReferenceMeasure.measure (α := γ) = Measure.count)
   («x.bvar» : α)
   («y.bvar» : γ) :
 -- imply
-  have hPxyy : PSpace π (x, y, y) := Random.PSpace_Joint_Joint.of.PSpace_Joint hP hα hγ
-  have : PSpace π ((x, y), y) := PSpace_JointJoint.of.PSpace_Joint_Joint hPxyy
+  have hPxyy : SinglePSpace π (x, y, y) := Random.PSpace_Joint_Joint.of.PSpace_Joint hP hα hγ
+  have : SinglePSpace π ((x, y), y) := PSpace_JointJoint.of.PSpace_Joint_Joint hPxyy
   ℙ[π](x = «x.bvar» ∧ y = «y.bvar» | y = «y.bvar») = ℙ[π](x = «x.bvar» | y = «y.bvar») := by
 -- proof
   intro _ hP_left

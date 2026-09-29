@@ -15,15 +15,15 @@ private lemma main
   {π : MeasureTheory.Measure Ω}
   {x : Ω → α} {y : Ω → β} {z : Ω → γ}
 -- given
-  (hP : PSpace π (x, y, z)) :
+  (hP : SinglePSpace π (x, y, z)) :
 -- imply
-  have _hPxy_z : PSpace π ((x, y), z) := PSpace_JointJoint.of.PSpace_Joint_Joint hP
-  have _hPxz : PSpace π (x, z) :=
+  have _hPxy_z : SinglePSpace π ((x, y), z) := PSpace_JointJoint.of.PSpace_Joint_Joint hP
+  have _hPxz : SinglePSpace π (x, z) :=
     PSpace_Joint.comm
       (PSpace.of.PSpace_Joint.fst
         (PSpace_JointJoint.of.PSpace_Joint_Joint
           (PSpace_Joint.comm (PSpace_JointJoint.of.PSpace_Joint_Joint hP))))
-  have _hPyxz : PSpace π (y, x, z) := PSpace_Joint_Joint.of.PSpace_Joint_Joint hP
+  have _hPyxz : SinglePSpace π (y, x, z) := PSpace_Joint_Joint.of.PSpace_Joint_Joint hP
   ∀ᵐ «y.bvar» ∂ReferenceMeasure.measure,
     ∀ᵐ «x.bvar» ∂ReferenceMeasure.measure,
       ∀ᵐ «z.bvar» ∂ReferenceMeasure.measure,
@@ -35,8 +35,8 @@ private lemma main
   let μ : MeasureTheory.Measure α := ReferenceMeasure.measure
   let ν : MeasureTheory.Measure β := ReferenceMeasure.measure
   let ξ : MeasureTheory.Measure γ := ReferenceMeasure.measure
-  have hL_yx : PSpace π ((y, x), z) := PSpace_JointJoint.of.PSpace_Joint_Joint hPyxz
-  have hPz : PSpace π z := PSpace.of.PSpace_Joint.snd hPxz
+  have hL_yx : SinglePSpace π ((y, x), z) := PSpace_JointJoint.of.PSpace_Joint_Joint hPyxz
+  have hPz : SinglePSpace π z := PSpace.of.PSpace_Joint.snd hPxz
   have hchain :
       ∀ᵐ b ∂ReferenceMeasure.measure,
         ∀ᵐ a ∂ReferenceMeasure.measure,
@@ -128,7 +128,7 @@ private lemma main
   let p2 : α × γ → ENNReal := π.prob (x, z)
   let pz : γ → ENNReal := π.prob z
   have hlaw2m : π.map (x, z) = (μ.prod ξ).withDensity p2 :=
-    PSpace.map_eq_withDensity_density
+    SinglePSpace.map_eq_withDensity_density
   have htot2 : ∫⁻ ac, p2 ac ∂(μ.prod ξ) = 1 := by
     have h : (μ.prod ξ).withDensity p2 Set.univ = ∫⁻ ac, p2 ac ∂(μ.prod ξ) := by
       rw [MeasureTheory.withDensity_apply _ MeasurableSet.univ, MeasureTheory.setLIntegral_univ]
@@ -142,7 +142,7 @@ private lemma main
     MeasureTheory.Measure.ae_ae_of_ae_prod (MeasureTheory.ae_lt_top hmp2 (by rw [htot2]; norm_num))
   have hmp_z : Measurable pz := by
     simpa [pz, MeasureTheory.Measure.prob] using MeasureTheory.Measure.measurable_rnDeriv (π.map z) ReferenceMeasure.measure
-  have hlaw_z : π.map z = ξ.withDensity pz := PSpace.map_eq_withDensity_density
+  have hlaw_z : π.map z = ξ.withDensity pz := SinglePSpace.map_eq_withDensity_density
   have htot_z : ∫⁻ c, pz c ∂ξ = 1 := by
     have h : ξ.withDensity pz Set.univ = ∫⁻ c, pz c ∂ξ := by
       rw [MeasureTheory.withDensity_apply _ MeasurableSet.univ, MeasureTheory.setLIntegral_univ]

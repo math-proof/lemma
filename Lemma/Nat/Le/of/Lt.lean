@@ -17,5 +17,17 @@ private lemma main
   le_of_lt h
 
 
+@[main]
+private lemma relax.given
+  {x y : ℤ}
+-- given
+  (h : x < y + 1) :
+-- imply
+  x ≤ y := by
+-- proof
+  omega
+
+
 -- created on 2018-12-29
 -- updated on 2025-04-18
+-- updated on 2026-09-27
