@@ -521,6 +521,21 @@ theorem G_int (M : Model Θ S A) (θ : Θ) {γ : ℝ} (hγ : γ ∈ Set.Ico 0 1)
     · exact (G_hasSum M θ hγ t).mono fun ω h => h.1.tendsto_sum_nat
   exact Integrable.of_bound hm _ ((G_hasSum M θ hγ t).mono fun ω h => h.2)
 
+omit [MeasurableSingletonClass A] [DecidableEq S] [DecidableEq A] in
+/-- the state-value function is bounded by the discounted reward bound, at every `t` and `x` -/
+theorem V_bdd (M : Model Θ S A) (θ : Θ) {γ : ℝ} (hγ : γ ∈ Set.Ico 0 1) (t : ℕ) (x : S) :
+    ‖M.V θ γ t x‖ ≤ (1 - γ)⁻¹ * |M.env.R| := by
+  have hq : 0 ≤ (1 - γ)⁻¹ * |M.env.R| := mul_nonneg (inv_nonneg.2 (by linarith [hγ.2])) (abs_nonneg _)
+  rw [V_eq_integral]
+  have hae : ∀ᵐ ω ∂(M.traj θ)[|s t ⁻¹' {x}], ‖G γ t ω‖ ≤ (1 - γ)⁻¹ * |M.env.R| :=
+    cond_absolutelyContinuous.ae_le ((G_hasSum M θ hγ t).mono fun ω h => h.2)
+  if hB : M.traj θ (s t ⁻¹' {x}) = 0 then
+    rw [cond_eq_zero_of_meas_eq_zero hB]
+    simpa using hq
+  else
+    have := cond_isProbabilityMeasure (μ := M.traj θ) hB
+    simpa using norm_integral_le_of_norm_le_const hae
+
 theorem E_ind_G (M : Model Θ S A) (θ : Θ) {γ : ℝ} (hγ : γ ∈ Set.Ico 0 1) (t : ℕ) (x : S) (u : A) :
     ∫ ω, (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) * G γ t ω ∂(M.traj θ) =
       ((M.traj θ).real (s t ⁻¹' {x}) * M.pol.prob θ x u) * M.Q θ γ t x u := by
@@ -775,6 +790,20 @@ theorem sum_grad_cond (M : Model Θ S A) {Cp : ℝ}
     exact cond_r_W M θ' t k x h
   simp_rw [hk]
   rw [grad_V_eq M hd hC hγ t x θ hP, (Vc_hasFDerivAt M hd hC hγ x θ).fderiv]
+
+omit [DecidableEq A] in
+/-- the gradients of the state-value function are bounded over the reachable pairs `(t, x)`:
+by time-homogeneity (`grad_V_eq`) `∇V(t, x) = ∇Vc(x)`, and `S` is finite -/
+theorem gradV_bdd (M : Model Θ S A) {Cp : ℝ}
+    (hd : ∀ x u, Differentiable ℝ (fun θ => M.pol.prob θ x u))
+    (hC : ∀ θ x u, ‖fderiv ℝ (fun θ => M.pol.prob θ x u) θ‖ ≤ Cp) {γ : ℝ} (hγ : γ ∈ Set.Ico 0 1) (θ : Θ) :
+    BddAbove ((fun p : ℕ × S => ‖fderiv ℝ (fun θ => M.V θ γ p.1 p.2) θ‖) ''
+      {p | (M.traj θ).real (s p.1 ⁻¹' {p.2}) ≠ 0}) := by
+  refine ⟨∑ x, ‖fderiv ℝ (fun θ => M.Vc θ γ x) θ‖, ?_⟩
+  rintro _ ⟨p, hp, rfl⟩
+  beta_reduce
+  rw [grad_V_eq M hd hC hγ p.1 p.2 θ hp]
+  apply Finset.single_le_sum (f := fun x => ‖fderiv ℝ (fun θ => M.Vc θ γ x) θ‖) (fun _ _ => norm_nonneg _) (Finset.mem_univ p.2)
 
 end grad3
 

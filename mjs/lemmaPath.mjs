@@ -425,6 +425,9 @@ function collectTokenWeights(node, w = 1, out = new Map()) {
  * LyapunovCandidate): a conclusion token or given head naming the folder (`Iterates …`,
  * `IteratesOfResidual …`) decides the section; conclusion first, then givens in Lean order.
  */
+/** Lemma folders named after typeclasses: sections are data types, so these are never chosen from binders. */
+const TYPECLASS_FOLDERS = new Set(["NormedSpace", "NormedAddCommGroup", "NormedField", "InnerProductSpace"]);
+
 function customSection(sections, conclNode, givenTypes, importDecls = new Map(), binders = null) {
   const custom = sections.filter((s) => !DATA_TYPE_SECTIONS.has(s) && !TYPE_TO_SECTION[s]);
   // a normalized weight function among the hypotheses (`∀ θ, ∑ a, p θ a = 1`) makes it a probability lemma
@@ -529,7 +532,8 @@ function customSection(sections, conclNode, givenTypes, importDecls = new Map(),
     if (hit) return hit;
   }
   // a variable typed by a custom notion: {x : LpSpace p d} → LpSpace
-  for (const t of conclTokens(binders)) if (custom.includes(t)) return t;
+  // typeclasses (NormedSpace, …) name no data type, so they never pick a section
+  for (const t of conclTokens(binders)) if (custom.includes(t) && !TYPECLASS_FOLDERS.has(t)) return t;
   return null;
 }
 

@@ -21,11 +21,11 @@ private lemma main
   w * f x₀ + (1 - w) * f x₁ ≥ f (w * x₀ + (1 - w) * x₁) := by
 -- proof
   if h : x₀ ≤ x₁ then
-    exact Real.Ge.of.Le.Gt_0.jensen h h₀ h₁ h₂ h₃ h₄
+    exact Real.Ge.of.Le.Gt_0.jensen h₀ h₁ h₂ h₃ h₄
   else
     have h : x₁ ≤ x₀ := le_of_not_ge h
     have h₅ : 1 - w ∈ Set.Icc (0 : ℝ) 1 := ⟨sub_nonneg.mpr h₂.2, sub_le_self 1 h₂.1⟩
-    have h₆ := Real.Ge.of.Le.Gt_0.jensen h h₀ h₁ h₅ h₄ h₃
+    have h₆ := Real.Ge.of.Le.Gt_0.jensen h₀ h₁ h₅ h₄ h₃
     rw [sub_sub_self] at h₆
     rw [show w * x₀ + (1 - w) * x₁ = (1 - w) * x₁ + w * x₀ from add_comm _ _]
     linarith [h₆]

@@ -1,28 +1,28 @@
-import sympy.functions.elementary.masked_softmax
+import Lemma.Tensor.ExpAdd_MulInfty.eq.Mul_Stack_Bool.rect
 import sympy.Basic
+open Tensor Hyperreal
 
 
+/--
+py: `Ξ = I + [[0, 1], [1, 0]]` (identity plus the off-diagonal block mask) gives
+`exp(a + (Ξ - 1) * ∞) ≈ Ξ * exp(a)` (hyperreal masked exponential).
+Here `Ξ i j = 1` if `i = j ∨ ¬(i < h ↔ j < h)`, else `0`.
+-/
 @[main]
 private lemma mask.cross_attention
   {n h : ℕ}
-  {a Ξ : Fin n → Fin n → ℝ}
 -- given
-  (h_Ξ : Ξ = fun i j => (if i = j then 1 else 0) + if (i.val < h ↔ j.val < h) then 0 else 1) :
+  (Ξ : Tensor ℝ* [n, n])
+  (a : Tensor ℝ [n, n])
+  (h_Ξ : Ξ = [i < n] [j < n] (Bool.toNat (decide (i = j ∨ ¬(i.val < h ↔ j.val < h))))) :
 -- imply
-  (fun i j => maskedExp (a i j) (Ξ i j)) = fun i j => Ξ i j * Real.exp (a i j) := by
+  let a : Tensor ℝ* [n, n] := a
+  Exp.exp (a + (Ξ - 1) * ∞) ≈ Ξ * exp a := by
 -- proof
+  intro a'
   subst h_Ξ
-  funext i j
-  by_cases hij : i = j
-  ·
-    subst hij
-    simp [maskedExp]
-  ·
-    by_cases hc : (i.val < h ↔ j.val < h)
-    ·
-      simp [maskedExp, hij, hc]
-    ·
-      simp [maskedExp, hij, hc]
+  rw [mul_comm]
+  exact ExpAdd_MulInfty.eq.Mul_Stack_Bool.rect (fun (i : Fin n) (j : Fin n) => decide (i = j ∨ ¬(i.val < h ↔ j.val < h))) a
 
 
 -- created on 2026-09-27

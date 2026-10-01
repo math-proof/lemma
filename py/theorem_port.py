@@ -55,8 +55,28 @@ rules in order:
    that reference them without forward-declaration issues, and matches
    the repo's top-to-bottom readability convention.
 
+6. **Source docstring is a ``[label](url)`` link.**
+   The docstring before the ported lemma must be exactly
+   ``/--\n[<theorem_name>](https://github.com/anthropics/fermats-last-theorem/blob/main/...)\n-/`` — a markdown link whose label
+   names the source theorem (for FLT, the file stem without ``S_``; for
+   Mathlib/RL, the project name) — never a bare URL.  It is the clue that this theorem is already proven elsewhere,
+   so tooling and readers can find the original proof.  Applied by
+   :func:`make_skeleton` via :func:`source_link`.
+
+7. **Signature layout (see AGENTS.md).**  Strictly 2-indented.  Before
+   ``-- given``, in order: (a) one line of standalone instances
+   ``[NormedAddCommGroup E] [NormedSpace ℝ E]``; (b) one line per implicit
+   binder with its dependent instances, e.g. ``{p : Prop} [Decidable p]``;
+   (c) one line per bare implicit binder ``{d : ℕ}``.  Bare ``{E : Type*}``
+   binders are dropped (autoImplicit binds ``E`` from the instances).  After ``-- given``:
+   the explicit binders in source order, ending with
+   `` :`` on the same line, e.g. ``(χ : AddChar E Circle) (hχ : Continuous χ) :``.
+   Never put ``{..}``/``[..]`` binders under ``-- given`` and never put the
+   ``:`` on its own line.  The proof body is also 2-indented.  Applied by
+   :func:`layout_binders`.
+
 Rules 1–3 and 5 are applied mechanically by :func:`transform_source`.
-Rule 4 is applied by :func:`make_skeleton` which wraps the main theorem
+Rules 4, 6 and 7 are applied by :func:`make_skeleton` which wraps the main theorem
 in ``@[main] private lemma main``.  Edge cases (multi-line attributes,
 hypothesis-carrying ``variable``, nested namespaces) may require manual
 cleanup after scaffolding.
@@ -105,6 +125,7 @@ import argparse
 import json
 import os
 import re
+import textwrap
 import subprocess
 import sys
 import tempfile
@@ -134,6 +155,7 @@ THEOREM_SIG_RE = re.compile(
     re.DOTALL | re.MULTILINE,
 )
 NAMESPACE_START_RE = re.compile(r'^\s*namespace\b')
+SECTION_START_RE = re.compile(r'^\s*section\b')
 END_RE = re.compile(r'^\s*end\b')
 VARIABLE_RE = re.compile(r'^\s*variable\b')
 THEOREM_TO_LEMMA_RE = re.compile(r'^(\s*)theorem\b')
@@ -151,6 +173,39 @@ def key_to_path(key: str, ported_root: Path) -> Path:
     """
     words = key.split("_")
     return ported_root.joinpath(*words).with_suffix(".lean")
+
+
+def flt_key_from_source(source: Path) -> str | None:
+    """Return the FLT theorem key encoded in an ``S_<key>.lean`` /
+    ``Thm_<key>.lean`` file name, or ``None`` for other sources."""
+    for prefix in ("S_", "Thm_"):
+        if source.stem.startswith(prefix):
+            return source.stem[len(prefix):]
+    return None
+
+
+def fallback_path_for(
+    source: Path, main_name: str, ported_root: Path,
+) -> Path:
+    """Phase-1 fallback when the rough path suggester fails.
+
+    For FLT sources the main theorem is almost always named ``solution``,
+    so deriving a path from the theorem name collapses every file onto
+    ``Lemma/solution.lean``; derive the path from the ``S_<key>`` file
+    name instead, reusing ``flt_topo_sort.key_to_path``.  Other sources
+    fall back to the theorem-name key path.
+    """
+    flt_key = flt_key_from_source(source)
+    if flt_key is not None:
+        try:
+            sys.path.insert(0, str(Path(__file__).resolve().parent))
+            from flt_topo_sort import key_to_path as flt_key_to_path
+
+            segments = flt_key_to_path(flt_key)
+            return ported_root.joinpath(*segments).with_suffix(".lean")
+        except Exception:  # noqa: BLE001 — generic fallback must still work
+            pass
+    return key_to_path(main_name, ported_root)
 
 
 def _run_node_json(script: Path, *args: str) -> dict:
@@ -296,7 +351,7 @@ def transform_source(text: str) -> str:
     dedent = 0
     for line in lines:
         stripped = line.lstrip()
-        if NAMESPACE_START_RE.match(line):
+        if NAMESPACE_START_RE.match(line) or SECTION_START_RE.match(line):
             dedent += 1
             continue
         if END_RE.match(line) and dedent > 0:
@@ -325,26 +380,88 @@ def transform_source(text: str) -> str:
     return text
 
 
-def _reorder_def_before_lemma(text: str) -> str:
-    """Move all ``def`` blocks before ``lemma``/``theorem`` blocks.
+def _decl_chunks(text: str) -> list[tuple[str | None, str]]:
+    """Split text into top-level ``(kind, chunk)`` pieces.
 
-    Splits text into top-level blocks separated by blank lines, classifies
-    each as ``def``, ``lemma``, or ``other`` (imports, comments, etc.),
-    and re-emits them as: ``other`` (preserving original order) → ``def``
-    → ``lemma``.
+    A declaration piece spans from its ``def``/``lemma``/``theorem`` start
+    line to the line just before the next top-level declaration — blank
+    lines and the entire (possibly multi-paragraph) proof stay attached.
+    ``kind`` is ``None`` for anything else (imports, options, comments,
+    ``structure``, section markers, …).  Column-0 ``@[…]`` attribute lines
+    (including multi-line attribute blocks) are attached to the declaration
+    they precede.
+
+    Splitting on blank lines, as an earlier version did, severed a proof
+    written as ``:= by\\n\\n  <proof>`` from its theorem.
     """
-    blocks = re.split(r"\n{2,}", text)
+    chunks: list[tuple[str | None, list[str]]] = []
+    kind: str | None = None
+    buf: list[str] = []
+    pending: list[str] = []
+    balance = 0
+
+    def flush() -> None:
+        nonlocal buf, kind, pending
+        if pending:  # balanced attributes not followed by a declaration
+            buf = pending + buf
+            pending = []
+        if buf:
+            chunks.append((kind, buf))
+        buf = []
+        kind = None
+
+    for line in text.splitlines():
+        m = DECL_START_RE.match(line) if not line[:1].isspace() else None
+        if m:
+            flush()
+            kind = m.group(1)
+            buf = list(pending)
+            pending = []
+            balance = 0
+            buf.append(line)
+            continue
+        if not line[:1].isspace() and line.lstrip().startswith("@["):
+            pending.append(line)
+            balance += line.count("[") - line.count("]")
+            continue
+        if pending:
+            if balance > 0:
+                pending.append(line)
+                balance += line.count("[") - line.count("]")
+            else:
+                buf.extend(pending)
+                pending = []
+                buf.append(line)
+            continue
+        buf.append(line)
+    flush()
+
+    out: list[tuple[str | None, str]] = []
+    for k, lines in chunks:
+        chunk = "\n".join(lines).strip()
+        if chunk:
+            out.append((k, chunk))
+    return out
+
+
+def _reorder_def_before_lemma(text: str) -> str:
+    """Move all ``def`` declarations before ``lemma``/``theorem`` blocks.
+
+    Splits text into top-level declaration chunks (see
+    :func:`_decl_chunks`), classifies each as ``def``, ``lemma``, or
+    ``other`` (imports, comments, etc.), and re-emits them as: ``other``
+    (preserving original order) → ``def`` → ``lemma``.
+    """
     others: list[str] = []
     defs: list[str] = []
     lemmas: list[str] = []
-    for block in blocks:
-        stripped = block.lstrip()
-        if re.match(r"^(?:noncomputable\s+)?def\b", stripped):
-            defs.append(block)
-        elif re.match(r"^(?:private\s+|protected\s+)?(?:lemma|theorem)\b", stripped):
-            lemmas.append(block)
+    for kind, chunk in _decl_chunks(text):
+        if kind == "def":
+            defs.append(chunk)
+        elif kind in ("lemma", "theorem"):
+            lemmas.append(chunk)
         else:
-            others.append(block)
+            others.append(chunk)
     return "\n\n".join(others + defs + lemmas)
 
 
@@ -368,26 +485,41 @@ def find_declarations(text: str) -> list[tuple[int, str, str]]:
     return decls
 
 
+def _select_lemma(
+    lemmas: list[tuple[int, str, str]], theorem_name: str | None,
+) -> tuple[int, str, str] | None:
+    """Pick the main theorem among ``(line, kind, name)`` declarations.
+
+    If ``theorem_name`` is given, find that specific theorem/lemma.
+    Otherwise prefer one named ``solution`` (the FLT convention — helpers
+    may follow it in the file), falling back to the last theorem/lemma
+    (the generic convention: the main result comes after helpers).
+    """
+    if theorem_name is not None:
+        matches = [d for d in lemmas if d[2] == theorem_name]
+        return matches[0] if matches else None
+    solutions = [d for d in lemmas if d[2] == "solution"]
+    if solutions:
+        return solutions[0]
+    return lemmas[-1] if lemmas else None
+
+
 def extract_statement_from_text(
     text: str, theorem_name: str | None = None,
 ) -> tuple[str, str] | None:
     """Extract ``(name, signature)`` from source Lean text.
 
     If ``theorem_name`` is given, find that specific theorem/lemma.
-    Otherwise, return the last theorem/lemma in the file (convention:
-    the main result comes after helpers).
+    Otherwise, prefer ``solution`` (FLT) and fall back to the last
+    theorem/lemma in the file (see :func:`_select_lemma`).
     """
     decls = find_declarations(text)
     lemmas = [(i, k, n) for i, k, n in decls if k in ("theorem", "lemma")]
     if not lemmas:
         return None
-    if theorem_name is not None:
-        matches = [d for d in lemmas if d[2] == theorem_name]
-        if not matches:
-            return None
-        target = matches[0]
-    else:
-        target = lemmas[-1]  # last lemma = main theorem (convention)
+    target = _select_lemma(lemmas, theorem_name)
+    if target is None:
+        return None
 
     lines = text.splitlines()
     start = target[0]
@@ -414,13 +546,9 @@ def extract_proof_from_text(
     lemmas = [(i, k, n) for i, k, n in decls if k in ("theorem", "lemma")]
     if not lemmas:
         return None
-    if theorem_name is not None:
-        matches = [d for d in lemmas if d[2] == theorem_name]
-        if not matches:
-            return None
-        target = matches[0]
-    else:
-        target = lemmas[-1]
+    target = _select_lemma(lemmas, theorem_name)
+    if target is None:
+        return None
 
     # Find the next declaration after the target.
     next_start = len(text.splitlines())
@@ -445,7 +573,15 @@ def extract_proof_from_text(
     proof_lines.extend(lines[proof_start + 1 : next_start])
     proof = "\n".join(proof_lines).strip()
     # Strip leading "by" if present (the skeleton adds ":= by").
-    proof = re.sub(r"^by\s+", "", proof)
+    proof = re.sub(r"^by\b\s*", "", proof)
+    # Drop trailing interpreter commands (FLT files end with
+    # `#print axioms solution`) and surrounding blank lines.
+    proof_parts = proof.splitlines()
+    while proof_parts and (
+        not proof_parts[-1].strip() or proof_parts[-1].lstrip().startswith("#")
+    ):
+        proof_parts.pop()
+    proof = "\n".join(proof_parts).strip()
     return proof if proof else None
 
 
@@ -481,31 +617,139 @@ def extract_defs_and_helpers(
 def split_signature(sig: str) -> tuple[str, str]:
     """Split a theorem signature into ``(binders, conclusion)``.
 
-    Looks for the rightmost ``:`` at paren/bracket depth 0 — the separator
-    between binders and the conclusion in a Lean theorem signature.  Returns
-    ``("", sig)`` if no such separator is found.
+    The separator is the *first* ``:`` at paren/bracket depth 0: theorem
+    binders are always bracketed groups (``(…)``/``{…}``/``[…]``), so any
+    colon they contain is at depth ≥ 1, whereas the conclusion may contain
+    later depth-0 colons inside unbracketed existential binders such as
+    ``∃ l : E →L[ℝ] ℝ, P`` (or ``Σ x : α, …``).  Taking the *last* such
+    colon, as an earlier version did, split the conclusion at ``∃ l :``.
+    Returns ``("", sig)`` if no separator is found.
     """
     open_chars = set("([{⟨⟪")
     close_chars = set(")]}⟩⟫")
     depth = 0
-    last_colon = -1
     for i, c in enumerate(sig):
         if c in open_chars:
             depth += 1
         elif c in close_chars:
             depth -= 1
         elif c == ":" and depth == 0:
-            last_colon = i
-    if last_colon == -1:
-        return ("", sig)
-    binders = sig[:last_colon].rstrip()
-    conclusion = sig[last_colon + 1 :].lstrip()
-    return (binders, conclusion)
+            binders = sig[:i].rstrip()
+            conclusion = sig[i + 1 :].lstrip()
+            return (binders, conclusion)
+    return ("", sig)
+
+
+def split_binder_groups(binders: str) -> list[str]:
+    """Split a binder string into its top-level ``(..)``/``{..}``/``[..]`` groups."""
+    open_chars = set("([{⟨⟪")
+    close_chars = set(")]}⟩⟫")
+    groups, depth, start = [], 0, None
+    for i, c in enumerate(binders):
+        if c in open_chars:
+            if depth == 0:
+                start = i
+            depth += 1
+        elif c in close_chars:
+            depth -= 1
+            if depth == 0 and start is not None:
+                groups.append(" ".join(binders[start:i + 1].split()))
+                start = None
+    return groups
+
+
+def layout_binders(binders: str) -> tuple[str, str]:
+    """Lay binders out per AGENTS.md (PORTING RULE 7).
+
+    Returns ``(pre_given, given)``: the text before ``-- given`` and the
+    explicit binders after it.  Before ``-- given``, in order:
+      1. one line of standalone instances ``[..]`` (no implicit binder here
+         declares the variables they mention),
+      2. one line per implicit binder ``{..}`` followed by its dependent
+         instances ``[..]``,
+      3. one line per bare implicit binder (no dependent instance).
+    Explicit ``(..)`` binders go after ``-- given`` in source order.  Bare
+    ``{E : Type*}`` binders are dropped (autoImplicit).  Lines are 2-indented.
+    """
+    groups = split_binder_groups(binders)
+    implicit = [g for g in groups if g.startswith("{") or g.startswith("⦃")]
+    # autoImplicit is on: bare universe binders such as {E : Type*} are dropped;
+    # the instances mentioning E bind it implicitly.
+    implicit = [g for g in implicit if not re.fullmatch(r"\{[^:]+:\s*(Type|Sort)[^}]*\}", g)]
+    inst = [g for g in groups if g.startswith("[")]
+    explicit = [g for g in groups if g.startswith("(")]
+
+    def names(g):
+        head = g[1:-1].split(":", 1)[0]
+        return set(head.split())
+
+    def idents(g):
+        return set(re.findall(r"[^\s()\[\]{}:,→∀∃]+", g[1:-1]))
+
+    attached = {i: [] for i in range(len(implicit))}
+    standalone = []
+    for g in inst:
+        used = idents(g)
+        hits = [i for i, b in enumerate(implicit) if names(b) & used]
+        if hits:
+            attached[hits[-1]].append(g)
+        else:
+            standalone.append(g)
+
+    lines = []
+    if standalone:
+        lines.append("  " + " ".join(standalone))
+    for i, b in enumerate(implicit):
+        if attached[i]:
+            lines.append("  " + " ".join([b] + attached[i]))
+    for i, b in enumerate(implicit):
+        if not attached[i]:
+            lines.append("  " + b)
+
+    def is_prop(g):
+        ty = g[1:-1].split(":", 1)[1] if ":" in g else ""
+        return bool(re.search(r"[=≠<>≤≥∈∉→∧∨¬↔]|Continuous|Prop", ty))
+
+    # Source order is kept: later hypotheses depend on earlier variables.
+    return "\n".join(lines), " ".join(explicit)
 
 
 # ---------------------------------------------------------------------------
 # Skeleton generation (PORTING RULE 4)
 # ---------------------------------------------------------------------------
+
+SOURCE_LABELS = {
+    "fermats-last-theorem": "FLT",
+    "mathlib4": "Mathlib",
+    "mathlib": "Mathlib",
+    "rl-theory-in-lean": "RL",
+}
+
+
+def source_link(source_url: str, label: str | None = None) -> str:
+    """Return ``[label](url)`` (PORTING RULE 6).
+
+    If *label* is not given it is derived from the repository name in the URL
+    (mathlib4 -> Mathlib); for fermats-last-theorem the label is the source
+    theorem name (file stem without ``S_``), as in existing FLT ports.
+    """
+    source_url = source_url.strip()
+    m = re.match(r"\[[^\]]+\]\(.+\)$", source_url)
+    if m:  # already a markdown link
+        return source_url
+    if not label:
+        m = re.search(r"github\.com/[^/]+/([^/]+)", source_url)
+        repo = m.group(1) if m else None
+        if repo == "fermats-last-theorem":
+            # Existing FLT ports label the link with the source theorem name:
+            # the file stem minus ``.lean`` and the leading ``S_``.
+            stem = source_url.rstrip("/").rsplit("/", 1)[-1]
+            stem = re.sub(r"\.lean$", "", stem)
+            label = re.sub(r"^S_", "", stem)
+        else:
+            label = SOURCE_LABELS.get(repo, repo) if repo else "source"
+    return f"[{label}]({source_url})"
+
 
 def make_skeleton(
     source_url: str | None,
@@ -514,6 +758,7 @@ def make_skeleton(
     defs: str = "",
     helpers: str = "",
     date: str = DEFAULT_DATE,
+    source_label: str | None = None,
 ) -> str:
     """Build the contents of the skeleton ``.lean`` file.
 
@@ -530,27 +775,21 @@ def make_skeleton(
         _, sig = statement
         binders, conclusion = split_signature(sig)
 
-    # Indent each binder line with two extra spaces so the body lines up
-    # under the ``-- given`` header.
-    binder_lines = binders.splitlines() if binders else []
-    indented_binders = "\n  ".join(
-        ("  " + line if line else line) for line in binder_lines
-    )
-    if indented_binders:
-        indented_binders += "\n  "
-    else:
-        indented_binders = ""
+    # Rule 7: AGENTS.md layout -- instances/implicits before ``-- given``,
+    # explicit binders after it, ``:`` ending the last binder line.
+    pre_given, given = layout_binders(binders)
+    pre_given_block = pre_given + "\n" if pre_given else ""
+    given_line = ("  " + given + " :") if given else None
 
-    proof_body = proof if proof else "sorry"
-    # Indent each line of the proof body by two spaces so it nests under
-    # ``-- proof``.
-    indented_proof = "\n  ".join(
-        ("  " + line if line else line) for line in proof_body.splitlines()
+    proof_body = textwrap.dedent(proof) if proof else "sorry"
+    # Proof body is strictly 2-indented under ``-- proof``.
+    indented_proof = "\n".join(
+        ("  " + line if line.strip() else "") for line in proof_body.splitlines()
     )
 
     # Source link docstring
     if source_url:
-        docstring = f"/--\n{source_url}\n-/"
+        docstring = f"/--\n{source_link(source_url, source_label)}\n-/"
     else:
         docstring = "/-- ported from external source -/"
 
@@ -562,20 +801,22 @@ def make_skeleton(
         preamble_parts.append(helpers)
     preamble = "\n\n".join(preamble_parts)
 
+    if given_line:
+        signature = f"{pre_given_block}-- given\n{given_line}\n-- imply\n"
+    else:
+        # No explicit binders: ``:`` closes the last binder line.
+        pre = pre_given_block.rstrip("\n")
+        signature = (f"{pre} :\n" if pre else "  :\n") + "-- imply\n"
     return f"""import Mathlib
 import sympy.Basic
 
 
 {preamble}
-
 @[main]
 private lemma main
--- given
-  {indented_binders}:
--- imply
-  {conclusion} := by
+{signature}  {conclusion} := by
 -- proof
-  {indented_proof}
+{indented_proof}
 
 
 -- created on {date}
@@ -599,7 +840,10 @@ def main() -> int:
         help="Source .lean file containing the theorem to port.",
     )
     ap.add_argument("--source-url", default=None,
-                    help="Source URL for the docstring link.")
+                    help="Source URL; written as a [label](url) docstring link "
+                         "(PORTING RULE 6) marking the theorem as already proven.")
+    ap.add_argument("--source-label", default=None,
+                    help="Link label (default: theorem name for FLT URLs, else repo label).")
     ap.add_argument("--theorem-name", default=None,
                     help="Name of the theorem to port (default: last in file).")
     ap.add_argument("--ported-root", default=DEFAULT_PORTED_ROOT,
@@ -666,10 +910,11 @@ def _cmd_scaffold(args: argparse.Namespace, ported_root: Path) -> int:
     # Build the skeleton (rule 4: @[main] private lemma main).
     skeleton = make_skeleton(
         args.source_url, statement, proof, defs, helpers, args.date,
+        source_label=args.source_label,
     )
 
     # Derive path (phase 1 rough).
-    fallback = key_to_path(main_name, ported_root)
+    fallback = fallback_path_for(source, main_name, ported_root)
     rough = rough_path_from_source(skeleton, ported_root)
     path = rough if rough is not None else fallback
     how = "rough" if rough is not None else "key"

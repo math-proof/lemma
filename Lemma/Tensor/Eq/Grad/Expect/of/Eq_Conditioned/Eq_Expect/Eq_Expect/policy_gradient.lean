@@ -19,11 +19,11 @@ private lemma main
   {Q : Θ → ℕ → S → A → ℝ}
   {V : Θ → ℕ → S → ℝ}
 -- given
+  (h₀ : γ ∈ Set.Ico 0 1)
   (h₁ : ∀ θ t x u, Q θ t x u = ∑' k, γ ^ k * ∫ ω, r (t + k) ω ∂(M.traj θ)[|s t ⁻¹' {x} ∩ a t ⁻¹' {u}])
   (h₂ : ∀ θ t x, V θ t x = ∫ ω, ∑' k, γ ^ k * r (t + k) ω ∂(M.traj θ)[|s t ⁻¹' {x}])
-  (h₃ : γ ∈ Set.Ico 0 1)
-  (h₄ : ∀ x u, Differentiable ℝ (fun θ => M.pol.prob θ x u))
-  (h₅ : Sup[θ, x, u] ‖fderiv ℝ (fun θ => M.pol.prob θ x u) θ‖ < ∞)
+  (h₃ : ∀ x u, Differentiable ℝ (fun θ => M.pol.prob θ x u))
+  (h₄ : sup[θ, x, u] ‖fderiv ℝ (fun θ => M.pol.prob θ x u) θ‖ < ∞)
   (n : ℕ) :
 -- imply
   ∑' t, γ ^ t • fderiv ℝ (fun θ => ∫ ω, r t ω ∂(M.traj θ)) θ =
@@ -34,7 +34,7 @@ private lemma main
     funext fun θ => funext fun t => funext fun x => funext fun u => h₁ θ t x u
   have hV : V = fun θ => M.V θ γ := funext fun θ => funext fun t => funext fun x => (h₂ θ t x).trans (M.V_eq_integral θ γ t x).symm
   subst hQ hV
-  obtain ⟨C, hC⟩ := id h₅
+  obtain ⟨C, hC⟩ := id h₄
   have h₇ : ∀ θ x u, ‖fderiv ℝ (fun θ => M.pol.prob θ x u) θ‖ ≤ C := fun θ x u => hC ⟨(θ, x, u), rfl⟩
   classical
   beta_reduce
@@ -47,22 +47,22 @@ private lemma main
     · rw [hx, zero_smul, zero_smul]
     have hP : (M.traj θ).real (s 0 ⁻¹' {x}) ≠ 0 := by rwa [P_zero]
     have h := Tensor.EqGrad.of.Eq_Conditioned.Eq_Expect.Eq_Expect.policy_gradient.induct
-      (Q := fun θ => M.Q θ γ) (V := fun θ => M.V θ γ) (fun _ _ _ _ => rfl) (fun θ t x => M.V_eq_integral θ γ t x)
-      h₃ h₄ h₅ hP n
+      h₀ (Q := fun θ => M.Q θ γ) (V := fun θ => M.V θ γ) (fun _ _ _ _ => rfl) (fun θ t x => M.V_eq_integral θ γ t x)
+      h₃ h₄ hP n
     have h' : ∀ t y, ((M.traj θ)[|s 0 ⁻¹' {x}]).real (s t ⁻¹' {y}) = M.Pn θ t x y := fun t y => by
       have h'' := cond_Pn M θ 0 t x y hP
       rwa [zero_add] at h''
     simp_rw [h'] at h
-    rw [← grad_V_eq M h₄ h₇ h₃ 0 x θ hP, h]
+    rw [← grad_V_eq M h₃ h₇ h₀ 0 x θ hP, h]
   have h₉ : ∀ t, ∫ ω, (γ ^ t * M.Q θ γ t (s t ω) (a t ω)) •
       fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' (s t ω) (a t ω))) θ ∂(M.traj θ) =
       ∑ y, (M.traj θ).real (s t ⁻¹' {y}) •
         ∑ u, (γ ^ t * M.Q θ γ t y u) • fderiv ℝ (fun θ' => M.pol.prob θ' y u) θ :=
-    fun t => E_score M h₄ θ t (fun y u => γ ^ t * M.Q θ γ t y u)
+    fun t => E_score M h₃ θ t (fun y u => γ ^ t * M.Q θ γ t y u)
   have h₁₀ : ∫ ω, fderiv ℝ (fun θ' => M.V θ' γ n (s n ω)) θ ∂(M.traj θ) =
       ∑ y, (M.traj θ).real (s n ⁻¹' {y}) • fderiv ℝ (fun θ' => M.V θ' γ n y) θ :=
     E_s1 M θ n (fun y => fderiv ℝ (fun θ' => M.V θ' γ n y) θ)
-  rw [grad_obj M h₄ h₇ h₃ θ, Finset.sum_congr rfl fun x _ => h₈ x,
+  rw [grad_obj M h₃ h₇ h₀ θ, Finset.sum_congr rfl fun x _ => h₈ x,
     integral_finsetSum _ fun t _ => integrable_sa M θ t
       (fun y u => (γ ^ t * M.Q θ γ t y u) • fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' y u)) θ)]
   simp_rw [h₉, h₁₀, P_eq M θ]

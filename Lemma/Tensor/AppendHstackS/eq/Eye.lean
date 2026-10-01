@@ -62,10 +62,7 @@ private lemma main
     apply Eq.of.All_EqGetS.fin
     intro i
     rw [hrow0]
-    show
-      id (α := Tensor α [n + m]) (In' ++ Znm')[i] =
-        id (α := Tensor α [n + m])
-          ([i < n] [j < n + m] (↑(KroneckerDelta (i : ℕ) (j : ℕ)) : Tensor α []))[i]
+    show id (α := Tensor α [n + m]) (In' ++ Znm')[i] = id (α := Tensor α [n + m]) ([i < n] [j < n + m] (↑(KroneckerDelta (i : ℕ) (j : ℕ)) : Tensor α []))[i]
     have happ := GetAppend.eq.AppendGetS (A := In') (B := Znm') i
     simp only [id] at happ ⊢
     rw [happ]

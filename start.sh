@@ -4,7 +4,7 @@ cd "$(dirname "$0")"
 
 # Optional MySQL (see server/lean/fetchLemmaMysql.mjs, server/app.mjs):
 
-# Multi-processing: default 8 workers; set LEAN_WORKERS=max, 4, 1, etc.
+# Multi-processing: default 8 workers; set LEAN_NUM_THREADS=max, 4, 1, etc.
 # One stuck request blocks one worker; others keep serving. Change count: pm2 delete lemma; ./start.sh
 #
 # PM2: use global if present; otherwise local via npx (install if missing).
@@ -21,15 +21,15 @@ run_pm2() {
   fi
 }
 
-LEAN_WORKERS="${LEAN_WORKERS:-8}"
-if [ "$LEAN_WORKERS" = max ]; then
+LEAN_NUM_THREADS="${LEAN_NUM_THREADS:-8}"
+if [ "$LEAN_NUM_THREADS" = max ]; then
   PM2_INSTANCES=max
-elif [ "$LEAN_WORKERS" = 1 ]; then
+elif [ "$LEAN_NUM_THREADS" = 1 ]; then
   PM2_INSTANCES=1
-elif [[ "$LEAN_WORKERS" =~ ^[1-9][0-9]*$ ]]; then
-  PM2_INSTANCES="$LEAN_WORKERS"
+elif [[ "$LEAN_NUM_THREADS" =~ ^[1-9][0-9]*$ ]]; then
+  PM2_INSTANCES="$LEAN_NUM_THREADS"
 else
-  echo "LEAN_WORKERS='$LEAN_WORKERS' not recognized; using 8" >&2
+  echo "LEAN_NUM_THREADS='$LEAN_NUM_THREADS' not recognized; using 8" >&2
   PM2_INSTANCES=8
 fi
 

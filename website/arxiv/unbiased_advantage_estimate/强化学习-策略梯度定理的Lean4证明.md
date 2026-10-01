@@ -8,7 +8,7 @@ Bellman：[V 与 Q](http://www.lemma.cn/lean/?module=Tensor.And.Eq.Expect.of.Eq_
 
 在 REINFORCE 里把蒙特卡洛回报换成“回报减去状态价值基线”，也就是常说的优势（advantage），通常写成价值函数时序差分误差的折扣和。“这样换不改变梯度”几乎人人都会说，但教科书上的推导对几件事一带而过：在零概率事件上取条件、梯度与无穷级数及期望的交换、无穷级数的裂项相消。
 
-我们用 Lean 4 + mathlib 把这件事完整地机器验证了一遍。模型是折扣马尔可夫决策过程（MDP）：状态、动作空间有限，奖励有界，策略 \(\pi_\theta\) 可微，参数 \(\theta\) 取值于任意实赋范空间；整条轨迹的分布就是 mathlib 里的 Ionescu-Tulcea 测度。取精确的状态价值 \(V_t\)，定义优势
+我们用 Lean 4 + mathlib 把这件事完整地机器验证了一遍。模型是折扣马尔可夫决策过程（MDP）：状态、动作空间有限，奖励有界，策略 \(\pi_\theta\) 可微，参数 \(\theta\) 取值于任意实赋范空间（在用梯度 \(\nabla_\theta\) 书写的两条陈述里是实 Hilbert 空间）；整条轨迹的分布就是 mathlib 里的 Ionescu-Tulcea 测度。取精确的状态价值 \(V_t\)，定义优势
 
 \[
 \hat A_t=\sum_{k\ge0}\gamma^k\bigl({\color{red}r}_{t+k}+\gamma V_{t+k+1}({\color{red}s}_{t+k+1})-V_{t+k}({\color{red}s}_{t+k})\bigr),
@@ -17,11 +17,11 @@ Bellman：[V 与 Q](http://www.lemma.cn/lean/?module=Tensor.And.Eq.Expect.of.Eq_
 我们证明了
 
 \[
-\sum_{t}{}'\,\gamma^t\,\nabla_\theta\mathbb E_\theta[{\color{red}r}_t]
-=\sum_{t}{}'\,\gamma^t\,\mathbb E_\theta\bigl[\hat A_t\,\nabla_\theta\log\pi_\theta({\color{red}a}_t\mid{\color{red}s}_t)\bigr].
+\nabla_\theta\mathbb E_\theta\Bigl[\sum_{t}{}'\,\gamma^t{\color{red}r}_t\Bigr]
+=\mathbb E_\theta\Bigl[\sum_{t}{}'\,\gamma^t\,\hat A_t\,\nabla_\theta\log\pi_\theta({\color{red}a}_t\mid{\color{red}s}_t)\Bigr].
 \]
 
-对有限 MDP，策略梯度定理的动作价值（占用测度）形式此前已由 Zhang 在 Lean 4 中形式化 [[26]](https://github.com/ShangtongZhang/rl-theory-in-lean/commit/2a9d01a236961b1c9bc451a8926346364fc66e7f)。我们的形式化建立在轨迹层面：形式化了模型的 Bellman 方程、\(\nabla_\theta V_t\) 的一步递推，并用归纳法把递推展开成带余项 \(\gamma^n\mathbb E[\nabla_\theta V_n({\color{red}s}_n)]\) 的精确截断策略梯度恒等式；再令 \(n\to\infty\)，得到动作价值形式和 REINFORCE（回报加权）形式的策略梯度定理；上面的无偏优势估计是本文的主结果。这项开发背后的主要创新，是我们称为教科书语法糖的一套 Lean 写法，用于书写极限、期望与概率：它把冗长的测度论表达式压缩成接近教科书的形式，展开后仍是完整的、可机器检查的定义。所有定理只依赖 `propext`、`Classical.choice`、`Quot.sound` 三条公理。另外我们发现：这些定理陈述里带着的“奖励独立性”假设，其实没有任何证明用到它。
+对有限 MDP，策略梯度定理的动作价值（占用测度）形式此前已由 Zhang 在 Lean 4 中形式化 [[26]](https://github.com/ShangtongZhang/rl-theory-in-lean/commit/2a9d01a236961b1c9bc451a8926346364fc66e7f)。我们的形式化建立在轨迹层面：形式化了模型的 Bellman 方程、\(\nabla_\theta V_t\) 的一步递推，并用归纳法把递推展开成带余项 \(\gamma^n\mathbb E[\nabla_\theta V_n({\color{red}s}_n)]\) 的精确截断策略梯度恒等式；再令 \(n\to\infty\)，得到动作价值形式和 REINFORCE（回报加权）形式的策略梯度定理；上面的无偏优势估计是本文的主结果。这项开发背后的主要创新，是我们称为教科书语法糖的一套 Lean 写法，用于书写极限、期望与概率：它把冗长的测度论表达式压缩成接近教科书的形式，展开后仍是完整的、可机器检查的定义。所有定理只依赖 `propext`、`Classical.choice`、`Quot.sound` 三条公理。
 
 # 1 引言
 
@@ -31,7 +31,7 @@ Bellman：[V 与 Q](http://www.lemma.cn/lean/?module=Tensor.And.Eq.Expect.of.Eq_
 
 **贡献。** 对有限 MDP，策略梯度定理的动作价值形式此前已由 Zhang 在 Lean 4 中形式化 [[26]](https://github.com/ShangtongZhang/rl-theory-in-lean/commit/2a9d01a236961b1c9bc451a8926346364fc66e7f)，两者的比较见第 2 节。在此基础之外，本文的贡献是下面五项。每条 Lean 陈述都以模块路径命名，点开就是交互页面。
 
-1. **教科书语法糖**（第 3、4 节，本文的首要创新）：mathlib 的概率记号是测度论层面的，它为积分、给定子 σ-代数的条件期望、集合上的条件测度提供了记号，但没有教科书式的极限记号，也没有“具名随机变量在观测值条件下的期望与概率”这样的记号。库里为此在 Lean 4 中为 \(\lim\)、\(\mathbb E\)、\(\mathbb P\) 加了一套表层写法，把这类测度论表达式压缩成接近教科书的写法，如 `lim [n → ∞] e = a`、`𝔼[x: π](f x | y = y0)`、`ℙ[π](x = x0 | y = y0)`，同时保留完整语义：极限写法是展开为 mathlib 滤子命题的宏，\(\mathbb E\) / \(\mathbb P\) 写法是建立在少量库定义之上的宏，这些定义由 mathlib 的推前测度、Radon–Nikodym 导数和积分构成，不引入新公理。我们称之为**教科书语法糖**：表层写法与教科书记号一致，展开后是完整的、可机器检查的定义；本质上是一种信息压缩，用最简洁的记号承载完整的语义（“语法糖”这一通用术语源自 Landin [5]）。用它写出的陈述读起来几乎就是教科书里的公式。本文中极限记号用在引理 3.1；策略梯度的定理陈述仍用 mathlib 的积分记号书写（见 4.3 节）。
+1. **教科书语法糖**（第 3、4 节，本文的首要创新）：mathlib 的概率记号是测度论层面的，它为积分、给定子 σ-代数的条件期望、集合上的条件测度提供了记号，但没有教科书式的极限记号，也没有“具名随机变量在观测值条件下的期望与概率”这样的记号。库里为此在 Lean 4 中为 \(\lim\)、\(\mathbb E\)、\(\mathbb P\) 加了一套表层写法，把这类测度论表达式压缩成接近教科书的写法，如 `lim [n → ∞] e = a`、`𝔼[x: π](f x | y = y0)`、`ℙ[π](x = x0 | y = y0)`，同时保留完整语义：极限写法是展开为 mathlib 滤子命题的宏，\(\mathbb E\) / \(\mathbb P\) 写法是建立在少量库定义之上的宏，这些定义由 mathlib 的推前测度、Radon–Nikodym 导数和积分构成，不引入新公理。我们称之为**教科书语法糖**：表层写法与教科书记号一致，展开后是完整的、可机器检查的定义；本质上是一种信息压缩，用最简洁的记号承载完整的语义（“语法糖”这一通用术语源自 Landin [5]）。用它写出的陈述读起来几乎就是教科书里的公式。最终的两条陈述，即 REINFORCE 形式和无偏优势估计，就是用这套写法书写的，策略的梯度界写成读作 \(\sup e<\infty\) 的 `sup[…] < ∞`。本文中极限记号用在引理 3.1；REINFORCE 形式和无偏优势估计使用推广到轨迹上的 \(\mathbb E\) / \(\mathbb P\) 写法，外加梯度记号 `∇[θ] e` 和读作 \(\sup e<\infty\) 的有界性记号 `sup[x] e < ∞`；其余策略梯度陈述仍用 mathlib 的积分记号，策略的梯度界同样写成 `sup` 形式（见 4.3 节）。
 2. **无偏优势估计**（第 8 节，主结果）：用价值函数时序差分残差的折扣和给得分函数加权，策略梯度不变：[Tensor.EqDot_GradExpect.of.Eq_Conditioned.Eq_Expect.IsFinite.IsFinite.unbiased_advantage_estimate](http://www.lemma.cn/lean/?module=Tensor.EqDot_GradExpect.of.Eq_Conditioned.Eq_Expect.IsFinite.IsFinite.unbiased_advantage_estimate) [[15]](http://www.lemma.cn/lean/?module=Tensor.EqDot_GradExpect.of.Eq_Conditioned.Eq_Expect.IsFinite.IsFinite.unbiased_advantage_estimate)。
 3. **REINFORCE 形式**（第 7.4 节）：用回报给得分函数加权的策略梯度定理 [Tensor.Eq.Dot.Grad.Expect.of.Eq_Conditioned.IsFinite.policy_gradient_theorem](http://www.lemma.cn/lean/?module=Tensor.Eq.Dot.Grad.Expect.of.Eq_Conditioned.IsFinite.policy_gradient_theorem) [[12]](http://www.lemma.cn/lean/?module=Tensor.Eq.Dot.Grad.Expect.of.Eq_Conditioned.IsFinite.policy_gradient_theorem)；途中也得到动作价值形式 [Tensor.Eq.Dot.Grad.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.IsFinite.Q_Function](http://www.lemma.cn/lean/?module=Tensor.Eq.Dot.Grad.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.IsFinite.Q_Function) [[11]](http://www.lemma.cn/lean/?module=Tensor.Eq.Dot.Grad.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.IsFinite.Q_Function)。
 4. **归纳法证明**（第 7 节）：\(\nabla_\theta V_t\) 的一步递推 [Tensor.EqGrad.of.Eq_Conditioned.Eq_Expect.Eq_Expect.policy_gradient.recursion](http://www.lemma.cn/lean/?module=Tensor.EqGrad.of.Eq_Conditioned.Eq_Expect.Eq_Expect.policy_gradient.recursion) [[17]](http://www.lemma.cn/lean/?module=Tensor.EqGrad.of.Eq_Conditioned.Eq_Expect.Eq_Expect.policy_gradient.recursion)，用归纳法展开 [Tensor.EqGrad.of.Eq_Conditioned.Eq_Expect.Eq_Expect.policy_gradient.induct](http://www.lemma.cn/lean/?module=Tensor.EqGrad.of.Eq_Conditioned.Eq_Expect.Eq_Expect.policy_gradient.induct) [[16]](http://www.lemma.cn/lean/?module=Tensor.EqGrad.of.Eq_Conditioned.Eq_Expect.Eq_Expect.policy_gradient.induct)，得到带余项 \(\gamma^n\mathbb E[\nabla_\theta V_n({\color{red}s}_n)]\) 的精确截断恒等式 [Tensor.Eq.Grad.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.policy_gradient](http://www.lemma.cn/lean/?module=Tensor.Eq.Grad.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.policy_gradient) [[14]](http://www.lemma.cn/lean/?module=Tensor.Eq.Grad.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.policy_gradient)，再令 \(n\to\infty\) 取极限。据我们所知，这是第一个沿教科书推导路线、以归纳法严格化的策略梯度定理 Lean 4 证明（见第 2 节）。
@@ -79,12 +79,14 @@ Lean 里的结论写作 `lim [n → ∞] γ ^ n * x n = 0`，展开后就是 `Fi
 
 # 4 期望与概率记号
 
-**动机。** mathlib 的概率记号是测度论层面的。`Mathlib/Probability/Notation.lean` 提供了 `P[X]` 与 `𝔼[X]`（\(X\) 对 \(P\) 或对环境测度 `volume` 的积分）、`P[X|m]` 与 `𝔼[X|m]`（给定子 σ-代数 \(m\) 的条件期望）、表示 `volume` 本身的 `ℙ`，以及几乎处处（不）等式和 Radon–Nikodym 导数的记号；`Mathlib/Probability/ConditionalProbability.lean` 提供了条件测度 `μ[|s]`（即 \(\mu(s)^{-1}\mu|_s\)）、它的取值 `μ[t|s]`，以及在 \(\{X=x\}\) 上取条件的变体 `μ[|X ← x]`。这些写法里，测度、作为样本空间上函数的随机变量、作为条件的集合或 σ-代数都要显式写出。缺的是教科书式的写法：在给定分布下、以观测值为条件的具名随机变量的期望或概率，如 \(\mathbb E[G_t\mid S_t=s]\)、\(\mathbb P(X=x\mid Y=y)\)，以及随机变量与观测值的区分。这类量只能写成对条件测度或推前测度的显式积分。第 5 节的价值函数就是一例，而本节的绑定式语法压缩的正是同类的条件期望：
+**动机。** mathlib 的概率记号是测度论层面的。`Mathlib/Probability/Notation.lean` 提供了 `P[X]` 与 `𝔼[X]`（\(X\) 对 \(P\) 或对环境测度 `volume` 的积分）、`𝔼[X|m]`（对 `volume`、给定子 σ-代数 \(m\) 的条件期望）、表示 `volume` 本身的 `ℙ`，以及几乎处处（不）等式和 Radon–Nikodym 导数的记号；`Mathlib/MeasureTheory/Function/ConditionalExpectation/Basic.lean` 提供了 `P[X|m]`（对测度 \(P\) 的、给定 \(m\) 的条件期望）；`Mathlib/Probability/ConditionalProbability.lean` 提供了条件测度 `μ[|s]`（即 \(\mu(s)^{-1}\mu|_s\)）、它的取值 `μ[t|s]`，以及在 \(\{X=x\}\) 上取条件的变体 `μ[|X ← x]`。这些写法里，测度、作为样本空间上函数的随机变量、作为条件的集合或 σ-代数都要显式写出。缺的是教科书式的写法：在给定分布下、以观测值为条件的具名随机变量的期望或概率，如 \(\mathbb E[G_t\mid S_t=s]\)、\(\mathbb P(X=x\mid Y=y)\)，以及随机变量与观测值的区分。这类量只能写成对条件测度或推前测度的显式积分。第 5 节的价值函数就是一例，而本节的绑定式语法压缩的正是同类的条件期望。
+*简写约定：*黑色的 \(s_t,a_t\) 表示函数的自变量（取值），红色的 \({\color{red}s}_t,{\color{red}a}_t\) 表示被条件化的随机变量，品红色的自变量 \({\color{magenta}s}_t,{\color{magenta}a}_t\) 表示在期望内部作为自变量出现的随机变量；自变量位置上的 \(s_t\) 与竖线之后的 \({\color{red}s}_t\) 是同一个符号，仅靠颜色区分。于是 \(V_t(s_t)=\mathbb E[G_t\mid{\color{red}s}_t]\) 是 \(V_t(x)=\mathbb E[G_t\mid{\color{red}s}_t=x]\) 在 \(x=s_t\) 处的简写。
 
 | | 写法 |
 |---|---|
-| 教科书 | \(V^\theta_t(x)=\sum_k{}'\,\gamma^k\,\mathbb E_\theta[{\color{red}r}_{t+k}\mid{\color{red}s}_t=x]\) |
-| mathlib 写法（本文模型） | `∑' k, γ ^ k * ∫ ω, r (t + k) ω ∂(M.traj θ)[\|s t ⁻¹' {x}]` |
+| 教科书（简写） | \(V^\theta_t(s_t)=\mathbb E_\theta[G_t\mid{\color{red}s}_t]\)，\(G_t=\sum_k{}'\,\gamma^k{\color{red}r}_{t+k}\) |
+| mathlib 写法（本文模型，在 \(s_t=x\) 处不简写） | `∫ ω, ∑' k, γ ^ k * r (t + k) ω ∂(M.traj θ)[\|s t ⁻¹' {x}]` |
+| 绑定式写法（本文模型，不简写） | `𝔼[R : (M.traj θ)[\|s t ⁻¹' {x}]](R)`，其中 `R := G γ t` |
 | 绑定式语法 | `𝔼[x: π](f x \| y = y0)` |
 | 展开到 mathlib | `∫ a, f a ∂(ReferenceMeasure.measure.withDensity fun a ↦ ((π.map fun ω ↦ (x ω, y ω)).rnDeriv ReferenceMeasure.measure (a, y0) / (π.map y).rnDeriv ReferenceMeasure.measure y0))` |
 
@@ -111,11 +113,32 @@ lemma.cn 的渲染器会把每条 Lean 定理排成 LaTeX，并按概率角色�
 - **品红：随机自变量（random argument）。** 作为函数自变量出现、使整个表达式本身变成随机量的随机变量：\(\mathbb E\) 方括号里 `|` 后面保留的自由变量、\(\mathbb E(\ldots\mid y)\) 里的条件列表、\(\mathbb P(x)\) 或 \(\mathbb P(x\mid y)\) 里的光秃因子。
 - **黑色：观测值。** 普通的确定性项，比如观测里固定的 \(x_0,y_0\)。
 
-所以 \(\mathbb E[{\color{red}y}\mid{\color{red}x}=x]\) 是一个数，而 \(\mathbb E[{\color{red}y}\mid{\color{magenta}x}]\) 是把 \({\color{red}x}(\omega)\) 代入它得到的随机变量。本文沿用同样的配色：\({\color{red}s}_t,{\color{red}a}_t,{\color{red}r}_t\) 是红色，\(x,u,y\) 是黑色的具体状态和动作，而 \(V_t({\color{magenta}s}_t)\) 用品红自变量表示“沿轨迹取值的状态函数”。
+所以 \(\mathbb E[{\color{red}y}\mid{\color{red}x}=x]\) 是一个数，而 \(\mathbb E[{\color{red}y}\mid{\color{magenta}x}]\) 是把 \({\color{red}x}(\omega)\) 代入它得到的随机变量。本文沿用同样的配色：\({\color{red}s}_t,{\color{red}a}_t,{\color{red}r}_t\) 是红色，黑色的 \(s_t,a_t\)（以及 \(x,u,y\)）是状态和动作的取值，而 \(V_t({\color{magenta}s}_t)\) 用品红自变量表示“沿轨迹取值的状态函数”。
 
 ## 4.3 策略梯度定理中实际使用的写法
 
-第 6 到第 8 节的定理并没有用上面的绑定式语法，而是直接用 mathlib 的 Bochner 积分和条件测度：\(\mathbb E_\theta[f]\) 就是 `∫ ω, f ω ∂M.traj θ`，\(\mathbb E_\theta[f\mid B]\) 是对 `(M.traj θ)[|B]` 积分，mathlib 里 \(\mu[|B]=\mu(B)^{-1}\,\mu|_B\)。当 \(\mu(B)=0\) 时这是零测度，所以在到达不了的状态上条件期望等于 \(0\)；这也是为什么下面好几条假设只要求在**可达**的 \((t,x)\) 上成立，即 \(\mathbb P_\theta({\color{red}s}_t=x)\neq0\)。另外提醒一句：Lean 的 `tsum`（记作 \(\sum{}'\)）对可和族是它的和，对不可和族定义为 \(0\)。
+REINFORCE 形式（定理 7.6）和无偏优势估计（定理 8.1）是用本节的写法书写的，并推广到了轨迹上；Bellman 方程、递推、展开、截断恒等式和动作价值形式（定理 6.1 到 7.4）仍用 mathlib 的积分记号；唯一的有界性假设 (P2) 写成下面的 `sup` 形式。新增的写法有：
+
+| Lean 写法 | 含义 |
+|---|---|
+| `𝔼[r: M.traj θ]((fun t : ℕ => γ ^ t) @ r)` | \(\mathbb E_\theta\bigl[\sum_t{}'\,\gamma^t{\color{red}r}_t\bigr]\)；`f @ r` 是配对 \(\sum_t{}'\,f(t)\,r_t\) |
+| `𝔼[s, a, r: M.traj θ](e)` | \(e\) 对整条轨迹 \(({\color{red}s},{\color{red}a},{\color{red}r})\) 的期望 |
+| `ℙ[M.traj θ]((PolicyGradient.a t) = a t \| (PolicyGradient.s t) = s t)` | \(\mathbb P_\theta({\color{red}a}_t=a_t\mid{\color{red}s}_t=s_t)\)，简写为 \(\mathbb P_\theta({\color{red}a}_t\mid{\color{red}s}_t)\) |
+| `𝔼[R: (M.traj θ)[\|s t ⁻¹' {x}]](R)` | 具名随机变量 \(R\) 的 \(\mathbb E_\theta[R\mid{\color{red}s}_t=x]\)，即 \(\mathbb E_\theta[R\mid{\color{red}s}_t]\) 在取值 \(s_t=x\) 处 |
+| `∇[θ] e` | \(\nabla_\theta e\) |
+| `sup[x, y] e < ∞` | \(\sup_{x,y}e<\infty\) |
+
+Lean 写法是简写的完整展开：条件化的取值被明确写出（集合 `s t ⁻¹' {x}`、等式 `(PolicyGradient.s t) = s t`），而教科书简写 \(\mathbb E_\theta[R\mid{\color{red}s}_t]\)、\(\mathbb P_\theta({\color{red}a}_t\mid{\color{red}s}_t)\) 把它隐含为函数自变量。
+
+**过程绑定。** 当被积掉的名字是过程 \(x:\mathbb N\to\Omega\to\alpha\)（如 \({\color{red}s},{\color{red}a},{\color{red}r}\) 在 \(\Omega=(S\times A\times\mathbb R)^{\mathbb N}\) 上）时，绑定式会把它打包成路径随机变量（类 `AsPathRV`），于是被积式里的 `x t` 就是过程在时刻 \(t\) 的取值。测度那一格现在可以是任意项，所以 `M.traj θ` 这样的应用形式测度和条件测度都能写。在 \(\mathbb P\) 写法里，`=` 左边是随机变量、右边是被绑定的路径取值：左边必须加括号，并且在 `𝔼[s, a, r: M.traj θ]` 这样的绑定式内部必须写成限定名（`(PolicyGradient.a t) = a t`），因为那里的 `a` 是被绑定的路径取值；在绑定式之外写 `(a t) = u` 即可。
+
+**梯度。** `∇[θ] e` 就是 mathlib 的 `gradient (fun θ ↦ e) θ`，在当前作用域里的 \(\theta\) 处取值；点形式 `∇[θ = θ₀] e` 则在 \(\theta_0\) 处取值。它需要内积，所以在这两条定理里 \(\Theta\) 是完备的实内积空间（实 Hilbert 空间），\(\nabla_\theta\) 是 Fréchet 导数的 Riesz 表示元；其余陈述仍用 `fderiv ℝ`，两者在这一同构下一致。
+
+**计数测度。** \(\mathbb P\) 和条件 \(\mathbb E\) 是通过关于 \(S\)、\(A\) 的参考测度的密度定义的；这两条定理假设参考测度就是计数测度（假设 `hS`、`hA`），于是密度就是概率质量。
+
+**上确界。** `sup[x, y] e < ∞` 表示 \((x,y)\mapsto e\) 有上界，也就是 \(\sup e<\infty\)，它展开为 `BddAbove (Set.range fun (x, y) ↦ e)`。被积式的优先级紧贴在 `<` 之上，所以 `sup[x] ‖f x‖ < ∞` 表示 \(f\) 的范数有界；过滤形式 `sup[x | c] e < ∞` 只在满足 `c` 的点上要求 \(e\) 有界（它展开为该集合像的 `BddAbove`）。记号的写法是小写的 `sup`，与教科书一致，本文把它排成 \(\sup\)；它是表示有界性的记号，不是 mathlib 的 `sSup`。用它写，(P2) 就是 `sup[θ, x, u] ‖∇[θ] M.pol.prob θ x u‖ < ∞`。
+
+**mathlib 的写法。** 其余陈述直接用 mathlib 的 Bochner 积分和条件测度：\(\mathbb E_\theta[f]\) 就是 `∫ ω, f ω ∂M.traj θ`，\(\mathbb E_\theta[f\mid B]\) 是对 `(M.traj θ)[|B]` 积分，mathlib 里 \(\mu[|B]=\mu(B)^{-1}\,\mu|_B\)。当 \(\mu(B)=0\) 时这是零测度，所以在到达不了的状态上条件期望等于 \(0\)；这也是为什么定理 8.1 中关于 \(V\) 的假设只要求在**可达**的取值 \(s_t\) 上成立，即 \(\mathbb P_\theta({\color{red}s}_t=s_t)\neq0\)。另外提醒一句：Lean 的 `tsum`（记作 \(\sum{}'\)）对可和族是它的和，对不可和族定义为 \(0\)。
 
 # 5 MDP 模型
 
@@ -127,45 +150,44 @@ lemma.cn 的渲染器会把每条 Lean 定理排成 LaTeX，并按概率角色�
 
 这就是阶段链的 Ionescu-Tulcea 扩张 [4]，由 mathlib [[18]](https://leanprover-community.github.io/mathlib4_docs/) 提供，是一个概率测度。时间齐次性和马尔可夫性都是构造出来的：除了这些核，关于轨迹没有任何额外假设。
 
-**定义 5.3（价值函数）。** 对 \(\gamma\in\mathbb R\)、\(t\in\mathbb N\)、\(x\in S\)、\(u\in A\)，
+**定义 5.3（价值函数）。** 对 \(\gamma\in\mathbb R\)、\(t\in\mathbb N\)，以及时刻 \(t\) 的状态与动作的取值 \(s_t\in S\)、\(a_t\in A\)（黑色，约定见第 4 节），记从 \(t\) 开始的折扣回报为 \(G_t=\sum_k{}'\,\gamma^k{\color{red}r}_{t+k}\)，
 
 \[
-V_t^\theta(x)=\sum_{k}{}'\,\gamma^k\,\mathbb E_\theta[{\color{red}r}_{t+k}\mid{\color{red}s}_t=x],\qquad
-Q_t^\theta(x,u)=\sum_{k}{}'\,\gamma^k\,\mathbb E_\theta[{\color{red}r}_{t+k}\mid{\color{red}s}_t=x,{\color{red}a}_t=u].
+V_t^\theta(s_t)=\mathbb E_\theta[G_t\mid{\color{red}s}_t],\qquad
+Q_t^\theta(s_t,a_t)=\sum_{k}{}'\,\gamma^k\,\mathbb E_\theta[{\color{red}r}_{t+k}\mid{\color{red}s}_t,{\color{red}a}_t].
 \]
 
-从 \(t\) 开始的折扣回报是 \(G_t=\sum_k{}'\,\gamma^k{\color{red}r}_{t+k}\)。
+也就是说 \(V_t^\theta(s_t)\) 是级数 \(G_t\) 对条件测度的积分，在到达不了的取值 \(s_t\) 上等于 \(0\)（Lean 里是 `V_eq_integral`；Lean 陈述把这个取值写成约束变量 `x`，条件是 `s t ⁻¹' {x}`）。对 \(\gamma\in[0,1)\)，它等于 \(\sum_k{}'\,\gamma^k\,\mathbb E_\theta[{\color{red}r}_{t+k}\mid{\color{red}s}_t]\)，即 \(Q_t^\theta\) 所用的形式（模型引理 `integral_G_cond`）。
 
-模型文件里还证明了：在可达状态上 \(V_t^\theta(x)\) 等于一个与时间无关的闭式 \(V^\theta_c(x)\)；\(|Q_t^\theta|\le(1-\gamma)^{-1}|R_{\max}|\)；并且几乎处处 \(G_t\) 是收敛级数、满足同样的界。目标函数是 \(J(\theta)=\sum_t{}'\,\gamma^t\mathbb E_\theta[{\color{red}r}_t]\)。模型引理 `obj_hasFDerivAt` 说明：当 \(\gamma\in[0,1)\)、策略可微且梯度一致有界时，\(J\) 是 Fréchet 可微的，并且
+模型文件里还证明了：在可达状态上 \(V_t^\theta(s_t)\) 等于一个与时间无关的闭式 \(V^\theta_c(s_t)\)；\(|V_t^\theta|\le(1-\gamma)^{-1}|R_{\max}|\)；\(|Q_t^\theta|\le(1-\gamma)^{-1}|R_{\max}|\)；并且几乎处处 \(G_t\) 是收敛级数、满足同样的界。目标函数是 \(J(\theta)=\mathbb E_\theta\bigl[\sum_t{}'\,\gamma^t{\color{red}r}_t\bigr]=\sum_t{}'\,\gamma^t\mathbb E_\theta[{\color{red}r}_t]\)，两种写法相等是因为奖励有界，级数可以移到期望之内。模型引理 `obj_hasFDerivAt` 说明：当 \(\gamma\in[0,1)\)、策略可微且梯度一致有界时，\(J\) 是 Fréchet 可微的，并且
 
 \[
 \nabla_\theta J(\theta)=\sum_t{}'\,\gamma^t\,\nabla_\theta\mathbb E_\theta[{\color{red}r}_t].\tag{1}
 \]
 
-下面所有策略梯度定理的左边都是 (1) 的右边。
+REINFORCE 形式和无偏优势估计的左边是 \(\nabla_\theta J(\theta)=\nabla_\theta\mathbb E_\theta\bigl[\sum_t{}'\,\gamma^t{\color{red}r}_t\bigr]\)，级数在期望之内，与 Lean 陈述完全一致；动作价值形式和截断恒等式的左边是 (1) 的右边，级数在期望之外。
 
 **常用假设。** 为了简洁，记：
 
 - (D) \(\gamma\in[0,1)\)；
 - (P1) 对每个 \(x,u\)，\(\theta\mapsto\pi_\theta(u\mid x)\) 可微；
-- (P2) \(\sup_{\theta,x,u}\|\nabla_\theta\pi_\theta(u\mid x)\|<\infty\)；
-- (I) 对每个 \(t\)，在 \(\mathbb P_\theta\) 下 \({\color{red}r}_t\) 与历史 \(({\color{red}s}_i,{\color{red}a}_i)_{i<t}\) 独立。
+- (P2) \(\sup_{\theta,x,u}\|\nabla_\theta\pi_\theta(u\mid x)\|<\infty\)。
 
-(I) 出现在定理陈述里；第 9 节会说明证明并没有用到它。
+不再假设关于 \(V_t\) 或 \(\nabla V_t\) 的任何有界性：这两个界都由 (D)、(P1)、(P2) 以及 \(S\)、\(A\) 有限推出（见第 10 节）。
 
 # 6 Bellman 方程
 
-**定理 6.1（Bellman 方程 [[10]](http://www.lemma.cn/lean/?module=Tensor.And.Eq.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.Bellman)）。** 设 (I) 在时刻 \(t\) 成立且 (D) 成立，记 \(V_t=V_t^\theta\)、\(Q_t=Q_t^\theta\)。则对所有 \(x\in S\)、\(u\in A\)：
+**定理 6.1（Bellman 方程 [[10]](http://www.lemma.cn/lean/?module=Tensor.And.Eq.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.Bellman)）。** 设 (D) 成立，记 \(V_t=V_t^\theta\)、\(Q_t=Q_t^\theta\)。则对时刻 \(t\) 的状态与动作的所有取值 \(s_t\in S\)、\(a_t\in A\)：
 
 \[
 \begin{aligned}
-V_t(x)&=\mathbb E_\theta\bigl[Q_t(x,{\color{red}a}_t)\bigm|{\color{red}s}_t=x\bigr],\\
-V_t(x)&=\mathbb E_\theta\bigl[{\color{red}r}_t+\gamma\,V_{t+1}({\color{magenta}s}_{t+1})\bigm|{\color{red}s}_t=x\bigr],\\
-Q_t(x,u)&=\mathbb E_\theta\bigl[{\color{red}r}_t+\gamma\,V_{t+1}({\color{magenta}s}_{t+1})\bigm|{\color{red}s}_t=x,\ {\color{red}a}_t=u\bigr].
+V_t(s_t)&=\mathbb E_\theta\bigl[Q_t(s_t,{\color{red}a}_t)\bigm|{\color{red}s}_t\bigr],\\
+V_t(s_t)&=\mathbb E_\theta\bigl[{\color{red}r}_t+\gamma\,V_{t+1}({\color{magenta}s}_{t+1})\bigm|{\color{red}s}_t\bigr],\\
+Q_t(s_t,a_t)&=\mathbb E_\theta\bigl[{\color{red}r}_t+\gamma\,V_{t+1}({\color{magenta}s}_{t+1})\bigm|{\color{red}s}_t,\ {\color{red}a}_t\bigr].
 \end{aligned}
 \]
 
-三个等式分别由 [Tensor.EqExpect.of.Eq_Expect.V_Function](http://www.lemma.cn/lean/?module=Tensor.EqExpect.of.Eq_Expect.V_Function)（\(Q_t\) 的策略平均）、[Tensor.EqExpect.of.Eq_Conditioned.Bellman.V_Function](http://www.lemma.cn/lean/?module=Tensor.EqExpect.of.Eq_Conditioned.Bellman.V_Function) 和 [Tensor.EqExpect.of.Eq_Conditioned.Bellman.Q_Function](http://www.lemma.cn/lean/?module=Tensor.EqExpect.of.Eq_Conditioned.Bellman.Q_Function) 组装而成。条件事件为零测时两边都是 \(0\)。第一个引理只需要 (D)；后两个引理的文档注释里就写明，对马尔可夫模型而言独立性假设是多余的，在 Lean 里它是一个以下划线开头、未被使用的参数。若 \(\gamma=1\)，Lean 中不可和级数的 `tsum` 为 \(0\)，第一个等式就不成立了，所以 (D) 是必须的。
+三个等式分别由 [Tensor.EqExpect.of.Eq_Expect.V_Function](http://www.lemma.cn/lean/?module=Tensor.EqExpect.of.Eq_Expect.V_Function)（\(Q_t\) 的策略平均）、[Tensor.EqExpect.of.Eq_Conditioned.Bellman.V_Function](http://www.lemma.cn/lean/?module=Tensor.EqExpect.of.Eq_Conditioned.Bellman.V_Function) 和 [Tensor.EqExpect.of.Eq_Conditioned.Bellman.Q_Function](http://www.lemma.cn/lean/?module=Tensor.EqExpect.of.Eq_Conditioned.Bellman.Q_Function) 组装而成。条件事件为零测时两边都是 \(0\)。三个引理都只需要 (D)。若 \(\gamma=1\)，Lean 中不可和级数的 `tsum` 为 \(0\)，第一个等式就不成立了，所以 (D) 是必须的。
 
 # 7 归纳法证明策略梯度定理
 
@@ -173,31 +195,31 @@ Q_t(x,u)&=\mathbb E_\theta\bigl[{\color{red}r}_t+\gamma\,V_{t+1}({\color{magenta
 
 ## 7.1 一步递推
 
-**定理 7.1（递推 [[17]](http://www.lemma.cn/lean/?module=Tensor.EqGrad.of.Eq_Conditioned.Eq_Expect.Eq_Expect.policy_gradient.recursion)）。** 设 (I) 在时刻 \(t\) 成立，(D)、(P1)、(P2) 成立，\(x\) 在时刻 \(t\) 可达。则
+**定理 7.1（递推 [[17]](http://www.lemma.cn/lean/?module=Tensor.EqGrad.of.Eq_Conditioned.Eq_Expect.Eq_Expect.policy_gradient.recursion)）。** 设 (D)、(P1)、(P2) 成立，取值 \(s_t\) 在时刻 \(t\) 可达，即 \(\mathbb P_\theta({\color{red}s}_t=s_t)\neq0\)。则
 
 \[
-\nabla_\theta V_t(x)=\sum_{u}Q_t(x,u)\,\nabla_\theta\pi_\theta(u\mid x)
-+\gamma\sum_{y}\mathbb P_\theta({\color{red}s}_{t+1}=y\mid{\color{red}s}_t=x)\,\nabla_\theta V_{t+1}(y),
+\nabla_\theta V_t(s_t)=\sum_{u}Q_t(s_t,u)\,\nabla_\theta\pi_\theta(u\mid s_t)
++\gamma\sum_{y}\mathbb P_\theta({\color{red}s}_{t+1}=y\mid{\color{red}s}_t)\,\nabla_\theta V_{t+1}(y),
 \]
 
-其中 \(\nabla_\theta V_t(x)\) 是 \(\theta\mapsto V^\theta_t(x)\) 的 Fréchet 导数，\(Q\)、\(V\) 看作 \(\theta\) 的函数。
+其中 \(\nabla_\theta V_t(s_t)\) 是 \(\theta\mapsto V^\theta_t(s_t)\) 的 Fréchet 导数，\(Q\)、\(V\) 看作 \(\theta\) 的函数。
 
 证明先把 \(V_t\) 改写成闭式，再用模型引理 `grad_V_rec`（即定理 6.1 中 Bellman 方程的导数），最后把条件转移概率认出来就是核 \(\sum_u\pi_\theta(u\mid x)T(x,u,y)\)。
 
 ## 7.2 归纳展开
 
-**定理 7.2（展开的递推 [[16]](http://www.lemma.cn/lean/?module=Tensor.EqGrad.of.Eq_Conditioned.Eq_Expect.Eq_Expect.policy_gradient.induct)）。** 设 (I) 对每个 \(t\) 成立，(D)、(P1)、(P2) 成立，\(x\) 在时刻 \(0\) 可达。则对每个 \(n\in\mathbb N\)，
+**定理 7.2（展开的递推 [[16]](http://www.lemma.cn/lean/?module=Tensor.EqGrad.of.Eq_Conditioned.Eq_Expect.Eq_Expect.policy_gradient.induct)）。** 设 (D)、(P1)、(P2) 成立，取值 \(s_0\) 在时刻 \(0\) 可达。则对每个 \(n\in\mathbb N\)，
 
 \[
-\nabla_\theta V_0(x)=\sum_{t<n}\gamma^t\sum_y\mathbb P_\theta({\color{red}s}_t=y\mid{\color{red}s}_0=x)\sum_u Q_t(y,u)\,\nabla_\theta\pi_\theta(u\mid y)
-+\gamma^n\sum_y\mathbb P_\theta({\color{red}s}_n=y\mid{\color{red}s}_0=x)\,\nabla_\theta V_n(y).
+\nabla_\theta V_0(s_0)=\sum_{t<n}\gamma^t\sum_y\mathbb P_\theta({\color{red}s}_t=y\mid{\color{red}s}_0)\sum_u Q_t(y,u)\,\nabla_\theta\pi_\theta(u\mid y)
++\gamma^n\sum_y\mathbb P_\theta({\color{red}s}_n=y\mid{\color{red}s}_0)\,\nabla_\theta V_n(y).
 \]
 
-证明思路：先把条件概率换成 \(t\) 步核 \(P^t_\theta(x,y)\)，然后对 \(n\) 归纳。\(n=0\) 平凡。从 \(n\) 到 \(n+1\)：在每个 \(P^n_\theta(x,y)\neq0\) 的 \(y\) 上（这样的 \(y\) 在时刻 \(n\) 可达）用定理 7.1 展开余项 \(\gamma^n\sum_yP^n_\theta(x,y)\nabla_\theta V_n(y)\)，得到的二重和再用 Chapman–Kolmogorov 恒等式 \(P^{n+1}_\theta(x,z)=\sum_yP^n_\theta(x,y)P^1_\theta(y,z)\) 合并。
+证明思路：先把条件概率换成 \(t\) 步核 \(P^t_\theta(x,y)\)（\(x=s_0\) 是初始状态的取值），然后对 \(n\) 归纳。\(n=0\) 平凡。从 \(n\) 到 \(n+1\)：在每个 \(P^n_\theta(x,y)\neq0\) 的 \(y\) 上（这样的 \(y\) 在时刻 \(n\) 可达）用定理 7.1 展开余项 \(\gamma^n\sum_yP^n_\theta(x,y)\nabla_\theta V_n(y)\)，得到的二重和再用 Chapman–Kolmogorov 恒等式 \(P^{n+1}_\theta(x,z)=\sum_yP^n_\theta(x,y)P^1_\theta(y,z)\) 合并。
 
 ## 7.3 截断恒等式
 
-**定理 7.3（截断策略梯度 [[14]](http://www.lemma.cn/lean/?module=Tensor.Eq.Grad.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.policy_gradient)）。** 设 (I) 对每个 \(t\) 成立，(D)、(P1)、(P2) 成立。则对每个 \(n\in\mathbb N\)，
+**定理 7.3（截断策略梯度 [[14]](http://www.lemma.cn/lean/?module=Tensor.Eq.Grad.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.policy_gradient)）。** 设 (D)、(P1)、(P2) 成立。则对每个 \(n\in\mathbb N\)，
 
 \[
 \sum_t{}'\,\gamma^t\nabla_\theta\mathbb E_\theta[{\color{red}r}_t]
@@ -219,42 +241,35 @@ Q_t(x,u)&=\mathbb E_\theta\bigl[{\color{red}r}_t+\gamma\,V_{t+1}({\color{magenta
 
 在定理 7.3 中令 \(n\to\infty\)，就得到策略梯度定理：先是动作价值形式，再是 REINFORCE 形式。
 
-**定理 7.4（策略梯度，动作价值形式 [[11]](http://www.lemma.cn/lean/?module=Tensor.Eq.Dot.Grad.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.IsFinite.Q_Function)）。** 设 (I) 对每个 \(t\) 成立，(D)、(P1)、(P2) 成立，并且
-
-- (B\(_{\nabla V}\)) \(\sup\{\|\nabla_\theta V_t(x)\| : \mathbb P_\theta({\color{red}s}_t=x)\neq0\}<\infty\)。
-
-则
+**定理 7.4（策略梯度，动作价值形式 [[11]](http://www.lemma.cn/lean/?module=Tensor.Eq.Dot.Grad.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.IsFinite.Q_Function)）。** 设 (D)、(P1)、(P2) 成立。则
 
 \[
 \sum_t{}'\,\gamma^t\nabla_\theta\mathbb E_\theta[{\color{red}r}_t]=\sum_t{}'\,\gamma^t\,\mathbb E_\theta\bigl[Q_t({\color{magenta}s}_t,{\color{magenta}a}_t)\,\nabla_\theta\log\pi_\theta({\color{red}a}_t\mid{\color{red}s}_t)\bigr].
 \]
 
-证明思路：只有可达状态带质量，所以余项满足 \(\|\mathbb E_\theta[\nabla_\theta V_n({\color{red}s}_n)]\|\le\max(B,0)\)，于是由引理 3.1 得 \(\lim_{n\to\infty}\gamma^n\|\mathbb E_\theta[\nabla_\theta V_n({\color{red}s}_n)]\|=0\)，再用 `tendsto_zero_iff_norm_tendsto_zero` 化为 \(\lim_{n\to\infty}\gamma^n\mathbb E_\theta[\nabla_\theta V_n({\color{red}s}_n)]=0\)。右边级数每一项不超过 \(\gamma^t\,|A|\,(1-\gamma)^{-1}|R_{\max}|\max(C,0)\)（\(C\) 是 (P2) 的界），因此可和。交换积分与有限和；右边级数的部分和收敛到它的 `tsum`（`HasSum.tendsto_sum_nat`），两个极限由极限唯一性（`tendsto_nhds_unique`）相等。
+证明思路：由时间齐次性（可达状态上 \(\nabla V_t(x)=\nabla V_c(x)\)，模型引理 `grad_V_eq`）和 \(S\) 有限，模型引理 `gradV_bdd` 给出在可达的 \((t,x)\) 上 \(\|\nabla_\theta V_t(x)\|\le B:=\sum_x\|\nabla V_c(x)\|\)。只有可达状态带质量，所以余项满足 \(\|\mathbb E_\theta[\nabla_\theta V_n({\color{red}s}_n)]\|\le B\)，于是由引理 3.1 得 \(\lim_{n\to\infty}\gamma^n\|\mathbb E_\theta[\nabla_\theta V_n({\color{red}s}_n)]\|=0\)，再用 `tendsto_zero_iff_norm_tendsto_zero` 化为 \(\lim_{n\to\infty}\gamma^n\mathbb E_\theta[\nabla_\theta V_n({\color{red}s}_n)]=0\)。右边级数每一项不超过 \(\gamma^t\,|A|\,(1-\gamma)^{-1}|R_{\max}|\max(C,0)\)（\(C\) 是 (P2) 的界），因此可和。交换积分与有限和；右边级数的部分和收敛到它的 `tsum`（`HasSum.tendsto_sum_nat`），两个极限由极限唯一性（`tendsto_nhds_unique`）相等。
 
-**引理 7.5（塔性质 [[13]](http://www.lemma.cn/lean/?module=Tensor.Eq.Expect.Grad.Log.Pr.of.Eq_Conditioned.Q_Function.discounted)）。** 在时刻 \(t\) 的 (I) 与 (D) 下，
+**引理 7.5（塔性质 [[13]](http://www.lemma.cn/lean/?module=Tensor.Eq.Expect.Grad.Log.Pr.of.Eq_Conditioned.Q_Function.discounted)）。** 在 (D) 下，
 
 \[
 \mathbb E_\theta\bigl[G_t\,\nabla_\theta\log\pi_\theta({\color{red}a}_t\mid{\color{red}s}_t)\bigr]=\mathbb E_\theta\bigl[Q_t({\color{magenta}s}_t,{\color{magenta}a}_t)\,\nabla_\theta\log\pi_\theta({\color{red}a}_t\mid{\color{red}s}_t)\bigr].
 \]
 
-**定理 7.6（策略梯度，REINFORCE 形式 [[12]](http://www.lemma.cn/lean/?module=Tensor.Eq.Dot.Grad.Expect.of.Eq_Conditioned.IsFinite.policy_gradient_theorem)）。** 设 (I) 对每个 \(t\) 成立，(D)、(P1)、(P2) 成立，且 \(\bigl\|\sum_k{}'\,\gamma^k\nabla_\theta\mathbb E_\theta[{\color{red}r}_{t+k}\mid{\color{red}s}_t=x]\bigr\|\) 在可达的 \((t,x)\) 上有界。则
+**定理 7.6（策略梯度，REINFORCE 形式 [[12]](http://www.lemma.cn/lean/?module=Tensor.Eq.Dot.Grad.Expect.of.Eq_Conditioned.IsFinite.policy_gradient_theorem)）。** 设 \(\Theta\) 是实 Hilbert 空间，\(S\)、\(A\) 以计数测度为参考测度，(D)、(P1)、(P2) 成立。则
 
 \[
-\sum_t{}'\,\gamma^t\nabla_\theta\mathbb E_\theta[{\color{red}r}_t]=\sum_t{}'\,\gamma^t\,\mathbb E_\theta\bigl[G_t\,\nabla_\theta\log\pi_\theta({\color{red}a}_t\mid{\color{red}s}_t)\bigr].
+\nabla_\theta\mathbb E_\theta\Bigl[\sum_t{}'\,\gamma^t{\color{red}r}_t\Bigr]=\mathbb E_\theta\Bigl[\sum_t{}'\,\gamma^t\,G_t\,\nabla_\theta\log\pi_\theta({\color{red}a}_t\mid{\color{red}s}_t)\Bigr].
 \]
 
-模型引理 `sum_grad_cond` 在可达状态上交换 \(\nabla_\theta\) 与级数，把这个界化成 (B\(_{\nabla V}\))；再逐项用定理 7.4 和引理 7.5 即得。
+这里两边的级数都在期望之内，与 Lean 陈述一致。这是因为奖励有界：权重 \(X={\color{red}r}\) 与 \(X=\hat A\) 的尾部 \(\sum_k{}'\,\gamma^kX_{t+k}\) 几乎处处有界，共用引理 [Tensor.Eq.Expect.Sum.Grad.Log.Pr.of.Bounded](http://www.lemma.cn/lean/?module=Tensor.Eq.Expect.Sum.Grad.Log.Pr.of.Bounded) 把期望之和 \(\sum_t{}'\,\gamma^t\mathbb E_\theta[(\sum_k{}'\,\gamma^kX_{t+k})\,\nabla_\theta\log\pi_\theta({\color{red}a}_t\mid{\color{red}s}_t)]\) 化成级数的期望。
 
-**极限是如何处理的。** 全程无穷和都是 Lean 的 `tsum`，每个极限都是明确的 `Filter.Tendsto` 命题（方便时用第 3 节的记号书写）。目标函数和回报都是 `tsum`，其可和性来自几何级数控制（`summable_geometric_of_lt_one`、`Summable.of_norm_bounded`、`Summable.mul_right`；回报还用到 `hasSum_geometric_of_lt_one`）。梯度与折扣级数的交换由 mathlib 的 `hasFDerivAt_tsum` 完成，由此得到 (1) 以及 \(V_c^\theta\) 的同类结论。从部分和到 `tsum` 用的是 `HasSum.tendsto_sum_nat` 加 `tendsto_nhds_unique`。整个证明没有引用控制收敛定理，也没有交换积分与级数：关于 \(({\color{red}s}_t,{\color{red}a}_t)\) 的函数的期望都化成了 \(S\times A\) 上的有限和（模型引理 `E_score`、`E_s1`），状态与动作空间有限正是在这里用上的。
+定理 7.4 所需的、在可达 \((t,x)\) 上对 \(\nabla V_t\) 的界由模型引理 `gradV_bdd` 提供；再逐项用定理 7.4 和引理 7.5 即得。
+
+**极限是如何处理的。** 全程无穷和都是 Lean 的 `tsum`，每个极限都是明确的 `Filter.Tendsto` 命题（方便时用第 3 节的记号书写）。目标函数和回报都是 `tsum`，其可和性来自几何级数控制（`summable_geometric_of_lt_one`、`Summable.of_norm_bounded`、`Summable.mul_right`；回报还用到 `hasSum_geometric_of_lt_one`）。梯度与折扣级数的交换由 mathlib 的 `hasFDerivAt_tsum` 完成，由此得到 (1) 以及 \(V_c^\theta\) 的同类结论。从部分和到 `tsum` 用的是 `HasSum.tendsto_sum_nat` 加 `tendsto_nhds_unique`。整个证明不需要专门的控制收敛论证，交换积分与级数时也不涉及极限记号：这由 mathlib 的 `integral_tsum_of_summable_integral_norm` 和 `hasSum_integral_of_summable_integral_norm` 作用在有界级数上完成（用在共用引理 [Tensor.Eq.Expect.Sum.Grad.Log.Pr.of.Bounded](http://www.lemma.cn/lean/?module=Tensor.Eq.Expect.Sum.Grad.Log.Pr.of.Bounded)、模型引理 `integral_G_cond` 以及定理 7.6 的证明里）。关于 \(({\color{red}s}_t,{\color{red}a}_t)\) 的函数的期望都化成了 \(S\times A\) 上的有限和（模型引理 `E_score`、`E_s1`），状态与动作空间有限正是在这里用上的。
 
 # 8 主结果：优势估计的无偏性
 
-**定理 8.1（无偏优势估计 [[15]](http://www.lemma.cn/lean/?module=Tensor.EqDot_GradExpect.of.Eq_Conditioned.Eq_Expect.IsFinite.IsFinite.unbiased_advantage_estimate)）。** 设 \(V:\Theta\to\mathbb N\to S\to\mathbb R\) 对所有 \(\theta,t,x\) 满足 \(V^\theta_t(x)=\sum_k{}'\,\gamma^k\mathbb E_\theta[{\color{red}r}_{t+k}\mid{\color{red}s}_t=x]\)。设 (I) 对每个 \(t\) 成立，(D)、(P1)、(P2) 成立，并且
-
-- (B\(_{\nabla V}\)) \(\sup\{\|\nabla_\theta V_t(x)\| : \mathbb P_\theta({\color{red}s}_t=x)\neq0\}<\infty\)；
-- (B\(_V\)) \(\sup\{|V^\theta_t(x)| : \mathbb P_\theta({\color{red}s}_t=x)\neq0\}<\infty\)。
-
-定义优势
+**定理 8.1（无偏优势估计 [[15]](http://www.lemma.cn/lean/?module=Tensor.EqDot_GradExpect.of.Eq_Conditioned.Eq_Expect.IsFinite.IsFinite.unbiased_advantage_estimate)）。** 设 \(\Theta\) 是实 Hilbert 空间，\(S\)、\(A\) 以计数测度为参考测度，\(V:\Theta\to\mathbb N\to S\to\mathbb R\) 对所有 \(\theta\)、\(t\) 和所有可达的取值 \(s_t\)（即 \(\mathbb P_\theta({\color{red}s}_t=s_t)\neq0\)）满足 \(V^\theta_t(s_t)=\mathbb E_\theta[G_t\mid{\color{red}s}_t]\)。设 (D)、(P1)、(P2) 成立。定义优势
 
 \[
 \hat A_t=\sum_k{}'\,\gamma^k\bigl({\color{red}r}_{t+k}+\gamma\,V^\theta_{t+k+1}({\color{magenta}s}_{t+k+1})-V^\theta_{t+k}({\color{magenta}s}_{t+k})\bigr).
@@ -263,26 +278,28 @@ Q_t(x,u)&=\mathbb E_\theta\bigl[{\color{red}r}_t+\gamma\,V_{t+1}({\color{magenta
 则
 
 \[
-\sum_t{}'\,\gamma^t\nabla_\theta\mathbb E_\theta[{\color{red}r}_t]=\sum_t{}'\,\gamma^t\,\mathbb E_\theta\bigl[\hat A_t\,\nabla_\theta\log\pi_\theta({\color{red}a}_t\mid{\color{red}s}_t)\bigr].
+\nabla_\theta\mathbb E_\theta\Bigl[\sum_t{}'\,\gamma^t{\color{red}r}_t\Bigr]=\mathbb E_\theta\Bigl[\sum_t{}'\,\gamma^t\,\hat A_t\,\nabla_\theta\log\pi_\theta({\color{red}a}_t\mid{\color{red}s}_t)\Bigr].
 \]
 
-由 (1)，左边就是 \(\nabla_\theta J(\theta)\)。\(\hat A_t\) 的每一项是 \(\gamma^k\delta_{t+k}\)，其中 \(\delta_j={\color{red}r}_j+\gamma V_{j+1}({\color{red}s}_{j+1})-V_j({\color{red}s}_j)\) 是时序差分残差，所以 \(\hat A_t\) 就是用精确价值函数算出的 \(\lambda=1\) 的 GAE [[20]](https://arxiv.org/abs/1506.02438)。
+左边就是 \(\nabla_\theta J(\theta)\)。两边的级数都在期望之内；奖励有界，所以尾部 \(\hat A_t\) 几乎处处关于 \(t\) 一致有界，界为 \((1-\gamma)^{-1}\bigl(|R_{\max}|+(1+\gamma)B\bigr)=(1-\gamma)^{-1}|R_{\max}|\bigl(1+(1+\gamma)(1-\gamma)^{-1}\bigr)\)（其中 \(B=(1-\gamma)^{-1}|R_{\max}|\) 是 \(|V|\) 的界，模型引理 `V_bdd`），因此级数可以移到期望之内。\(\hat A_t\) 的每一项是 \(\gamma^k\delta_{t+k}\)，其中 \(\delta_j={\color{red}r}_j+\gamma V_{j+1}({\color{red}s}_{j+1})-V_j({\color{red}s}_j)\) 是时序差分残差，所以 \(\hat A_t\) 就是用精确价值函数算出的 \(\lambda=1\) 的 GAE [[20]](https://arxiv.org/abs/1506.02438)。
 
 **证明。**
 
-*第一步：化归到 REINFORCE。* 借助 `sum_grad_cond`，把 (B\(_{\nabla V}\)) 改写成定理 7.6 所需的界，左边就变成
+*第一步：化归到 REINFORCE。* 定理 7.6 不需要对 \(\nabla V\) 另加界，由它左边就变成
 
 \[
-\sum_t{}'\,\gamma^t\,\mathbb E_\theta\bigl[G_t\,\nabla_\theta\log\pi_\theta({\color{red}a}_t\mid{\color{red}s}_t)\bigr].
+\mathbb E_\theta\Bigl[\sum_t{}'\,\gamma^t\,G_t\,\nabla_\theta\log\pi_\theta({\color{red}a}_t\mid{\color{red}s}_t)\Bigr].
 \]
 
 剩下只需对每个 \(t\) 证明
 
 \[
-\mathbb E_\theta\bigl[\hat A_t\,\nabla_\theta\log\pi_\theta({\color{red}a}_t\mid{\color{red}s}_t)\bigr]=\mathbb E_\theta\bigl[G_t\,\nabla_\theta\log\pi_\theta({\color{red}a}_t\mid{\color{red}s}_t)\bigr].
+\mathbb E_\theta\bigl[\hat A_t\,\nabla_\theta\log\pi_\theta({\color{red}a}_t\mid{\color{red}s}_t)\bigr]=\mathbb E_\theta\bigl[G_t\,\nabla_\theta\log\pi_\theta({\color{red}a}_t\mid{\color{red}s}_t)\bigr],
 \]
 
-*第二步：几乎处处裂项。* 几乎处处，级数 \(\sum_k\gamma^k{\color{red}r}_{t+k}\) 收敛到 \(G_t\)（模型引理 `G_hasSum`），并且经过的每个状态都可达（`reach_ae`），于是由 (B\(_V\)) 对所有 \(k\) 有 \(|V_k({\color{red}s}_k(\omega))|\le B\)。令 \(b_k=\gamma^kV_{t+k}({\color{red}s}_{t+k}(\omega))\)，则 \(\gamma^k\delta_{t+k}=\gamma^k{\color{red}r}_{t+k}+(b_{k+1}-b_k)\)；由 \(|b_{k+1}-b_k|\le2B\gamma^k\) 知差分可和，又由引理 3.1 知 \(\lim_{k\to\infty}b_k=0\)，故 \(\sum_k(b_{k+1}-b_k)=-b_0\)，从而
+因为由上述有界性引理，\(\mathbb E_\theta\bigl[\sum_t{}'\,\gamma^t\hat A_t\,\nabla_\theta\log\pi_\theta\bigr]\) 与 \(\mathbb E_\theta\bigl[\sum_t{}'\,\gamma^tG_t\,\nabla_\theta\log\pi_\theta\bigr]\) 都等于这些期望按 \(\gamma^t\) 加权的 \(t\) 上的级数。
+
+*第二步：几乎处处裂项。* 几乎处处，级数 \(\sum_k\gamma^k{\color{red}r}_{t+k}\) 收敛到 \(G_t\)（模型引理 `G_hasSum`），并且经过的每个状态都可达（`reach_ae`），于是由 `V_bdd` 的界对所有 \(k\) 有 \(|V_k({\color{red}s}_k(\omega))|\le B\)。令 \(b_k=\gamma^kV_{t+k}({\color{red}s}_{t+k}(\omega))\)，则 \(\gamma^k\delta_{t+k}=\gamma^k{\color{red}r}_{t+k}+(b_{k+1}-b_k)\)；由 \(|b_{k+1}-b_k|\le2B\gamma^k\) 知差分可和，又由引理 3.1 知 \(\lim_{k\to\infty}b_k=0\)，故 \(\sum_k(b_{k+1}-b_k)=-b_0\)，从而
 
 \[
 \hat A_t=G_t-V_t({\color{magenta}s}_t)\qquad\mathbb P_\theta\text{-几乎处处}.
@@ -290,29 +307,25 @@ Q_t(x,u)&=\mathbb E_\theta\bigl[{\color{red}r}_t+\gamma\,V_{t+1}({\color{magenta
 
 *第三步：基线项为零。* 由积分的线性（两个被积函数都可积），\(\mathbb E_\theta[\hat A_t\,\nabla_\theta\log\pi_\theta]=\mathbb E_\theta[G_t\,\nabla_\theta\log\pi_\theta]-\mathbb E_\theta[V_t({\color{red}s}_t)\,\nabla_\theta\log\pi_\theta]\)。模型引理 `E_h_score` 说：对任意 \(h:S\to\mathbb R\)，\(\mathbb E_\theta[h({\color{red}s}_t)\,\nabla_\theta\log\pi_\theta({\color{red}a}_t\mid{\color{red}s}_t)]=0\)。它依赖于得分零均值恒等式 \(\sum_u\pi_\theta(u\mid x)\,\nabla_\theta\log\pi_\theta(u\mid x)=0\)（`score_zero`）；在 Lean 里这条不需要 \(\pi\) 为正，因为 \(\pi_\theta(u\mid x)=0\) 的项自然消失。带正性假设的条件版本是 [Random.Expect_ConditionedGrad_LogProb.eq.Zero.policy](http://www.lemma.cn/lean/?module=Random.Expect_ConditionedGrad_LogProb.eq.Zero.policy) [[8]](http://www.lemma.cn/lean/?module=Random.Expect_ConditionedGrad_LogProb.eq.Zero.policy)。证毕。
 
-**注 8.2。** 第二、三步只用到“\(V\) 是 \((t,x)\) 的函数、且在可达状态上有界”；\(V\) 的定义式只在第一步以及 (B\(_{\nabla V}\)) 中用到。这提示：把精确价值函数换成任意有界的 critic，同样的恒等式应当仍然成立。不过 Lean 里的陈述并没有声称这一点。
+**注 8.2。** 第二、三步只用到“\(V\) 是 \((t,x)\) 的函数、且在可达状态上有界”；\(V\) 的定义式只通过它在可达状态上与模型价值函数的等同出现，由此得到 `V_bdd` 的界。这提示：把精确价值函数换成任意有界的 critic，同样的恒等式应当仍然成立。不过 Lean 里的陈述并没有声称这一点。
 
 # 9 形式化工件
 
-**模块。** 上文每条定理都链接到 [[7]](https://github.com/math-proof/lemma) 仓库提交 `c7c71c4` 中对应的模块（省略前缀 `Lemma.`）。模型本身、它的马尔可夫链引理和可微性引理在另外三个文件中，位于命名空间 `PolicyGradient` 下。
+**模块。** 上文每条定理都链接到 [[7]](https://github.com/math-proof/lemma) 仓库提交 `2e0b153b8` 中对应的模块（省略前缀 `Lemma.`）。模型本身、它的马尔可夫链引理和可微性引理在另外三个文件中，位于命名空间 `PolicyGradient` 下；取代原先对 \(V\) 与 \(\nabla V\) 之假设的两个界 `V_bdd` 与 `gradV_bdd` 在可微性文件里。本版本的陈述（已去掉这两条假设）对应该提交之后的工作区。
 
-**检查。** 项目使用 Lean `v4.33.1` 与 mathlib。主模块 `lake build` 无错误通过，主模块及其导入的所有本地模块中都没有 `sorry`、`admit` 或新增 `axiom`。在仓库之外的临时文件里运行 `#print axioms`，定理 6.1、7.1、7.2、7.3、7.4、7.6、8.1，引理 7.5，以及三个 Bellman 组成引理，依赖的公理都只有 `propext`、`Classical.choice`、`Quot.sound`。我们还在同一个临时文件里用一段元程序遍历了定理 7.1、7.2、7.3、7.4、7.6、8.1 的依赖图：第 3 节的记号模块虽然被导入，但它的 94 个声明没有一个出现在其中。
-
-**独立性假设没有被用到。** 在通向定理 8.1 的链条里，假设 (I) 原封不动地一路往下传，最终只被定理 7.1 和引理 7.5 接收；而在这两处，参数名都是 `_h₀`。我们在同一个临时文件里又写了一段元程序，打开这两个引理的证明项，确认 (I) 对应的约束变量在证明体中根本没有出现。因此整条链——包括定理 8.1——删去 (I) 之后依然成立；现在的陈述只是多带了一个冗余假设。
+**检查。** 项目使用 Lean `v4.33.1` 与 mathlib。主模块 `lake build` 无错误通过，主模块及其导入的所有本地模块中都没有 `sorry`、`admit` 或新增 `axiom`。在仓库之外的临时文件里运行 `#print axioms`，定理 6.1、7.1、7.2、7.3、7.4、7.6、8.1，引理 7.5，以及三个 Bellman 组成引理、`V_bdd` 与 `gradV_bdd`，依赖的公理都只有 `propext`、`Classical.choice`、`Quot.sound`。我们还在同一个临时文件里用一段元程序遍历了定理 7.1、7.2、7.3、7.4、7.6、8.1 的依赖图：第 3 节的记号模块虽然被导入，但它的 94 个声明没有一个出现在其中。相反，定理 7.6 和 8.1 里的 \(\mathbb E\) / \(\mathbb P\) 写法会展开为 `Expectation.ofRV` 等库定义；它们是普通的 Lean 定义，不引入公理，而 `sup` 和 `∇` 展开后只剩 mathlib 的 `BddAbove` 与 `gradient`。
 
 # 10 讨论与局限
 
-**奖励独立性假设。** 字面上看，(I) 很强：MDP 中奖励 \({\color{red}r}_t\) 依赖 \(({\color{red}s}_t,{\color{red}a}_t)\)，而后者与更早的状态、动作相关，所以对大多数奖励核来说 (I) 并不成立。但如第 9 节所示，没有任何证明用到它。它留在陈述里只是早期写猜想时的遗留，把它从签名里删掉是最直接的清理工作。
+**正则性假设。** 只假设 (P1) 和 (P2)。(P2) 要求梯度界对 \(\theta\)、\(x\)、\(u\) 一致，而且必须是这种一致的形式：它用来把价值函数的求导穿过级数和轨迹分布，而逐点可微的策略并不保证梯度局部有界。比如特征有界的 softmax 策略就满足它，因为此时 \(\nabla_\theta\pi_\theta(u\mid x)=\pi_\theta(u\mid x)\bigl(\phi(x,u)-\sum_{u'}\pi_\theta(u'\mid x)\phi(x,u')\bigr)\)；但梯度随 \(\theta\) 增长的策略就被排除了。对 \(V_t\) 和 \(\nabla V_t\) 的有界性不再假设：\(|V_t|\le(1-\gamma)^{-1}|R_{\max}|\) 由奖励界得到；在可达状态上 \(V_t\) 等于与时间无关的闭式 \(V_c\)，所以由时间齐次性和 \(S\) 有限，\(\sup_{t,x}\|\nabla V_t(x)\|\le\sum_x\|\nabla V_c(x)\|<\infty\)。
 
-**正则性假设。** (P2) 要求梯度界对 \(\theta\)、\(x\)、\(u\) 一致。比如特征有界的 softmax 策略就满足它，因为此时 \(\nabla_\theta\pi_\theta(u\mid x)=\pi_\theta(u\mid x)\bigl(\phi(x,u)-\sum_{u'}\pi_\theta(u'\mid x)\phi(x,u')\bigr)\)；但梯度随 \(\theta\) 增长的策略就被排除了。(B\(_{\nabla V}\)) 是对导出量的假设，我们预期在 \(\gamma<1\) 时它可以由 (P2) 和奖励界推出；(B\(_V\)) 也应能由 \(|V_t|\le(1-\gamma)^{-1}|R_{\max}|\) 推出（模型已经对 \(Q_t\) 证明了同样的界）。这两个推导都还没有形式化。
-
-**适用范围。** 状态与动作空间有限、奖励有界、折扣 \(\gamma<1\)；平均奖励、无折扣的回合制以及连续空间都不在范围内。参数空间 \(\Theta\) 是任意实赋范空间，所以并不局限于表格型参数化。所有陈述都针对精确期望和精确价值函数，不涉及方差、不涉及用学习到的 critic 做采样或自举估计、不涉及 \(\lambda<1\) 的 GAE，也不涉及随机梯度上升的收敛性。价值函数带有时间下标；模型证明了它们在可达状态上等于与时间无关的闭式，但定理陈述用的是带下标的版本。最后，每个定理的左边都是 \(\sum_t{}'\,\gamma^t\nabla_\theta\mathbb E_\theta[{\color{red}r}_t]\)，它与 \(\nabla_\theta J(\theta)\) 相等是另一条引理 (1)。
+**适用范围。** 状态与动作空间有限、奖励有界、折扣 \(\gamma<1\)；平均奖励、无折扣的回合制以及连续空间都不在范围内。参数空间 \(\Theta\) 对模型以及用 Fréchet 导数书写的引理是任意实赋范空间，对用梯度 \(\nabla_\theta\) 书写的两条陈述是实 Hilbert 空间，所以并不局限于表格型参数化。所有陈述都针对精确期望和精确价值函数，不涉及方差、不涉及用学习到的 critic 做采样或自举估计、不涉及 \(\lambda<1\) 的 GAE，也不涉及随机梯度上升的收敛性。价值函数带有时间下标；模型证明了它们在可达状态上等于与时间无关的闭式，但定理陈述用的是带下标的版本。最后，REINFORCE 形式和无偏优势估计的左边是 \(\nabla_\theta\mathbb E_\theta\bigl[\sum_t{}'\,\gamma^t{\color{red}r}_t\bigr]=\nabla_\theta J(\theta)\)，动作价值形式和截断恒等式的左边是 \(\sum_t{}'\,\gamma^t\nabla_\theta\mathbb E_\theta[{\color{red}r}_t]\)；两者由模型引理 (1) 相等。
 
 # 11 结论
 
-我们在 Lean 4 与 mathlib 之上形式化了：带参数化策略的折扣 MDP 及其 Ionescu-Tulcea 轨迹分布；它的 Bellman 方程；价值函数梯度的递推，及其用归纳法展开得到的精确截断策略梯度恒等式；动作价值形式与 REINFORCE 形式下的极限；以及“把回报换成价值函数时序差分残差的折扣和，策略梯度不变”这一事实。证明只用到标准公理，而陈述中唯一看起来很强的假设其实没被用到，可以删去。
+我们在 Lean 4 与 mathlib 之上形式化了：带参数化策略的折扣 MDP 及其 Ionescu-Tulcea 轨迹分布；它的 Bellman 方程；价值函数梯度的递推，及其用归纳法展开得到的精确截断策略梯度恒等式；动作价值形式与 REINFORCE 形式下的极限；以及“把回报换成价值函数时序差分残差的折扣和，策略梯度不变”这一事实。证明只用到标准公理。
 
-完善第 3、4 节的教科书语法糖，是今后代码优化的主要方向。本文的策略梯度定理陈述仍用 mathlib 的积分与条件测度记号书写；把 \(\mathbb E\) / \(\mathbb P\) 绑定式写法扩展到能直接书写这类陈述（例如支持实值被积式——库中期望类目前有 \([0,\infty]\) 值、广义实数值、复数值以及向量/张量值观测量的实例——以及轨迹测度下对事件取条件），并扩展到更多教科书构造，会让形式化陈述更接近文中的公式。
+完善第 3、4 节的教科书语法糖，是今后代码优化的主要方向。本文的 REINFORCE 形式和无偏优势估计现在已用推广到轨迹上的 \(\mathbb E\) / \(\mathbb P\) 写法书写，并配上第 4.3 节的梯度与 \(\sup\) 记号，而 Bellman、递推、展开、截断恒等式和动作价值形式的陈述仍用 mathlib 的积分与条件测度记号；把这套写法扩展到这些剩余陈述（例如动作价值函数和对条件测度的积分），并扩展到更多教科书构造，会让全部形式化陈述更接近文中的公式。
 
 # 致谢
 

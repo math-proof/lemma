@@ -13,7 +13,6 @@ private lemma main
   {x₀ x₁ : ℝ}
   {w : ℝ}
 -- given
-  (_h₀ : x₀ ≤ x₁)
   (h₁ : ContinuousOn f (Set.Ioo a b))
   (h₂ : ∀ x ∈ Set.Ioo a b, 0 < deriv^[2] f x)
   (h₃ : w ∈ Set.Icc (0 : ℝ) 1)

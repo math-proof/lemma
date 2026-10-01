@@ -21,9 +21,9 @@ private lemma main
   {Q : ℕ → S → A → ℝ}
   {V : ℕ → S → ℝ}
 -- given
+  (h₀ : γ ∈ Set.Ico 0 1)
   (h₁ : ∀ t x u, Q t x u = ∑' k, γ ^ k * ∫ ω, r (t + k) ω ∂(M.traj θ)[|s t ⁻¹' {x} ∩ a t ⁻¹' {u}])
   (h₂ : ∀ t x, V t x = ∫ ω, ∑' k, γ ^ k * r (t + k) ω ∂(M.traj θ)[|s t ⁻¹' {x}])
-  (h₃ : γ ∈ Set.Ico 0 1)
   (x : S)
   (u : A) :
 -- imply
@@ -35,13 +35,13 @@ private lemma main
   have h₅ : V = M.V θ γ := funext fun t => funext fun x => (h₂ t x).trans (M.V_eq_integral θ γ t x).symm
   subst h₄ h₅
   simp only [M.V_eq_integral]
-  refine ⟨Tensor.EqExpect.of.Eq_Expect.V_Function h₃ (fun x u => rfl) x, ?_, ?_⟩
-  · refine (Tensor.EqExpect.of.Eq_Conditioned.Bellman.V_Function h₃ x).trans ?_
+  refine ⟨Tensor.EqExpect.of.Eq_Expect.V_Function h₀ (fun x u => rfl) x, ?_, ?_⟩
+  · refine (Tensor.EqExpect.of.Eq_Conditioned.Bellman.V_Function h₀ x).trans ?_
     congr 1
     funext ω
     rw [add_comm]
     rfl
-  · refine (Tensor.EqExpect.of.Eq_Conditioned.Bellman.Q_Function h₃ x u).trans ?_
+  · refine (Tensor.EqExpect.of.Eq_Conditioned.Bellman.Q_Function h₀ x u).trans ?_
     congr 1
     funext ω
     rw [add_comm]

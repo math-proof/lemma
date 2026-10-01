@@ -20,7 +20,7 @@ private lemma main
   {γ : ℝ}
   {t : ℕ}
 -- given
-  (h₁ : γ ∈ Set.Ico 0 1)
+  (h₀ : γ ∈ Set.Ico 0 1)
   (x : S)
   (u : A) :
 -- imply
@@ -50,10 +50,10 @@ private lemma main
         (fun p => (if p.1.1 = x ∧ p.1.2 = u then (1:ℝ) else 0) * M.V θ γ (t + 1) p.2)).const_mul γ)
       (integrable_ind_r M θ (fun ω => (s t ω, a t ω)) ((s_meas t).prodMk (a_meas t))
         (fun p => if p.1 = x ∧ p.2 = u then (1:ℝ) else 0) t),
-      integral_const_mul, E_xu_h, E_xu_r0, alg1 hP, Q_eq M θ h₁ t x u hP]
+      integral_const_mul, E_xu_h, E_xu_r0, alg1 hP, Q_eq M θ h₀ t x u hP]
     congr 2
     refine Finset.sum_congr rfl (fun y _ => ?_)
-    have h₃ := V_succ_eq M θ h₁ t x u hP₀ y
+    have h₃ := V_succ_eq M θ h₀ t x u hP₀ y
     exact (mul_left_cancel₀ hu h₃).symm
 
 

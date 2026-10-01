@@ -441,7 +441,7 @@ The identity \((-x_1)\concat x_0\) is exactly \texttt{rotate\_half} in Hugging F
 Theorem~\ref{thm:real} is therefore the certificate that the kernel and the Hugging Face matrix are the same map.
 The interleaved matrix \(\rot'\) is recovered afterwards by Theorem~\ref{thm:conj}.
 
-The interleaved layout carries the same kernel with half-duplication replaced by pairwise duplication and \texttt{rotate\_half} by the pairwise swap-and-negate~$J$ (\lmod{Tensor.RotaryMatrix'.eq.AddMulSAppendRotaryMatrix'}).
+The interleaved layout carries the same kernel with half-duplication replaced by pairwise duplication and \texttt{rotate\_half} by the pairwise swap-and-negate~$J$ (\lmod{Tensor.DotRotaryMatrix'.eq.Stack_IteEven_SubMulS}).
 
 \section{Orthogonality}
 \label{sec:orth}
@@ -896,8 +896,8 @@ Theorem~\ref{thm:soft} is an identity for every \(Q,K,V\) and every linear \(\th
 
 \paragraph{Layout.}
 Both pairings are formalized (\lmod{Tensor.RotaryMatrix.eq.AppendHstackSMulSEye}, \lmod{Tensor.RotaryMatrix'.eq.Stack_Ite_IteS}); the permutation lemma is \lmod{Tensor.RotaryMatrix'.eq.DotDot_RotaryMatrix}.
-Kernel realization (\lmod{Tensor.DotRotaryMatrix.eq.AddMulS}) and pairing (\lmod{Tensor.DotDotSRotaryMatrix.eq.Dot_DotRotaryMatrixSub}) are stated for the Hugging Face layout; the interleaved counterparts (\lmod{Tensor.RotaryMatrix'.eq.AddMulSAppendRotaryMatrix'}, \lmod{Tensor.DotDotSRotaryMatrix'.eq.Dot_DotRotaryMatrix'Sub}, \lmod{Tensor.DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul}) follow by conjugation.
-The matching matrix identity on the RoFormer layout is \lmod{Tensor.DotT_RotaryMatrix'.eq.RotaryMatrix'Sub}.
+Kernel realization (\lmod{Tensor.DotRotaryMatrix.eq.AddMulS}) and pairing (\lmod{Tensor.DotDotSRotaryMatrix.eq.Dot_DotRotaryMatrixSub}) are stated for the Hugging Face layout; the interleaved counterparts (\lmod{Tensor.DotRotaryMatrix'.eq.Stack_IteEven_SubMulS}, \lmod{Tensor.DotDotSRotaryMatrix'.eq.Dot_DotRotaryMatrix'Sub}, \lmod{Tensor.DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul}) follow by conjugation.
+The matching matrix identity on the RoFormer layout is \lmod{Tensor.DotT.eq.RotaryMatrix'Sub}.
 
 \paragraph{Frequencies.}
 Definition~\ref{def:lin} is sufficient for Lemma~\ref{lem:ite} and strictly weaker than the classical geometric schedule.

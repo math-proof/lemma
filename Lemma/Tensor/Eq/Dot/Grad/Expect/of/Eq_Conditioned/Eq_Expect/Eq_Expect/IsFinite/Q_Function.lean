@@ -7,8 +7,8 @@ open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Filter 
 /--
 Policy-gradient theorem with action values:
 `γ ** Stack[t](t) @ ∇𝔼[r] = ∑' t, γ ^ t • 𝔼[Q(s[t], a[t]) • ∇ log π(a[t] | s[t])]`,
-the limit `n → ∞` of `policy_gradient`: `γ ^ n • 𝔼[∇V(s[n])] → 0` by the bound `h₃`
-(sympy `Sup[s[t], t] |∇V(s[t])| < ∞`, over the reachable pairs `Pr(s[t] = x) ≠ 0`).
+the limit `n → ∞` of `policy_gradient`: `γ ^ n • 𝔼[∇V(s[n])] → 0`, because `∇V(s[t])` is bounded over
+the reachable pairs `Pr(s[t] = x) ≠ 0` (`gradV_bdd`: time-homogeneity and the finiteness of `S`).
 -/
 @[main]
 private lemma main
@@ -21,26 +21,25 @@ private lemma main
   {Q : Θ → ℕ → S → A → ℝ}
   {V : Θ → ℕ → S → ℝ}
 -- given
+  (h₀ : γ ∈ Set.Ico 0 1)
   (h₁ : ∀ θ t x u, Q θ t x u = ∑' k, γ ^ k * ∫ ω, r (t + k) ω ∂(M.traj θ)[|s t ⁻¹' {x} ∩ a t ⁻¹' {u}])
   (h₂ : ∀ θ t x, V θ t x = ∫ ω, ∑' k, γ ^ k * r (t + k) ω ∂(M.traj θ)[|s t ⁻¹' {x}])
-  (h₃ : Sup[t, x | (M.traj θ).real (s t ⁻¹' {x}) ≠ 0] ‖fderiv ℝ (fun θ => V θ t x) θ‖ < ∞)
-  (h₄ : γ ∈ Set.Ico 0 1)
-  (h₅ : ∀ x u, Differentiable ℝ (fun θ => M.pol.prob θ x u))
-  (h₆ : Sup[θ, x, u] ‖fderiv ℝ (fun θ => M.pol.prob θ x u) θ‖ < ∞) :
+  (h₃ : ∀ x u, Differentiable ℝ (fun θ => M.pol.prob θ x u))
+  (h₄ : sup[θ, x, u] ‖fderiv ℝ (fun θ => M.pol.prob θ x u) θ‖ < ∞) :
 -- imply
   ∑' t, γ ^ t • fderiv ℝ (fun θ => ∫ ω, r t ω ∂(M.traj θ)) θ =
     ∑' t, γ ^ t • ∫ ω, Q θ t (s t ω) (a t ω) • fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' (s t ω) (a t ω))) θ ∂(M.traj θ) := by
 -- proof
-  have h₇ := Tensor.Eq.Grad.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.policy_gradient (θ := θ) h₁ h₂ h₄ h₅ h₆
+  have h₇ := Tensor.Eq.Grad.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.policy_gradient (θ := θ) h₀ h₁ h₂ h₃ h₄
   have hQ : Q = fun θ => M.Q θ γ :=
     funext fun θ => funext fun t => funext fun x => funext fun u => h₁ θ t x u
   have hV : V = fun θ => M.V θ γ := funext fun θ => funext fun t => funext fun x => (h₂ θ t x).trans (M.V_eq_integral θ γ t x).symm
   subst hQ hV
-  obtain ⟨C, hC⟩ := id h₆
+  obtain ⟨C, hC⟩ := id h₄
   have h₈ : ∀ θ x u, ‖fderiv ℝ (fun θ => M.pol.prob θ x u) θ‖ ≤ C := fun θ x u => hC ⟨(θ, x, u), rfl⟩
   classical
-  beta_reduce at h₇ h₃ ⊢
-  obtain ⟨B, hB⟩ := h₃
+  beta_reduce at h₇ ⊢
+  obtain ⟨B, hB⟩ := gradV_bdd M h₃ h₈ h₀ θ
   have h₉ : ∀ n, ‖∫ ω, fderiv ℝ (fun θ' => M.V θ' γ n (s n ω)) θ ∂(M.traj θ)‖ ≤ max B 0 := by
     intro n
     rw [E_s1 M θ n (fun y => fderiv ℝ (fun θ' => M.V θ' γ n y) θ)]
@@ -55,18 +54,18 @@ private lemma main
               measureReal_nonneg
       _ = max B 0 := by rw [← Finset.sum_mul, P_sum, one_mul]
   have h₁₀ : Tendsto (fun n => γ ^ n * ‖∫ ω, fderiv ℝ (fun θ' => M.V θ' γ n (s n ω)) θ ∂(M.traj θ)‖) atTop (𝓝 0) :=
-    Real.Eq_0.Lim.of.LtAbs.IsFinite (by rw [abs_of_nonneg h₄.1]; exact h₄.2)
+    Real.Eq_0.Lim.of.LtAbs.IsFinite (by rw [abs_of_nonneg h₀.1]; exact h₀.2)
       ⟨max B 0, by rintro _ ⟨n, rfl⟩; exact (abs_norm _).trans_le (h₉ n)⟩
   have h₁₁ : Tendsto (fun n => γ ^ n • ∫ ω, fderiv ℝ (fun θ' => M.V θ' γ n (s n ω)) θ ∂(M.traj θ)) atTop (𝓝 0) := by
     rw [tendsto_zero_iff_norm_tendsto_zero]
     refine h₁₀.congr fun n => ?_
-    rw [norm_smul, norm_pow, Real.norm_of_nonneg h₄.1]
-  have hq : 0 ≤ (1 - γ)⁻¹ * |M.env.R| := mul_nonneg (inv_nonneg.2 (by linarith [h₄.2])) (abs_nonneg _)
+    rw [norm_smul, norm_pow, Real.norm_of_nonneg h₀.1]
+  have hq : 0 ≤ (1 - γ)⁻¹ * |M.env.R| := mul_nonneg (inv_nonneg.2 (by linarith [h₀.2])) (abs_nonneg _)
   have h₁₂ : ∀ t, ‖∫ ω, M.Q θ γ t (s t ω) (a t ω) •
       fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' (s t ω) (a t ω))) θ ∂(M.traj θ)‖ ≤
       Fintype.card A * ((1 - γ)⁻¹ * |M.env.R| * max C 0) := by
     intro t
-    rw [E_score M h₅ θ t (fun y u => M.Q θ γ t y u)]
+    rw [E_score M h₃ θ t (fun y u => M.Q θ γ t y u)]
     calc _ ≤ ∑ y, ‖(M.traj θ).real (s t ⁻¹' {y}) •
           ∑ u, M.Q θ γ t y u • fderiv ℝ (fun θ' => M.pol.prob θ' y u) θ‖ := norm_sum_le _ _
       _ ≤ ∑ y, (M.traj θ).real (s t ⁻¹' {y}) * (Fintype.card A * ((1 - γ)⁻¹ * |M.env.R| * max C 0)) := by
@@ -77,16 +76,16 @@ private lemma main
             _ ≤ ∑ _u : A, (1 - γ)⁻¹ * |M.env.R| * max C 0 := by
                 refine Finset.sum_le_sum fun u _ => ?_
                 rw [norm_smul]
-                exact mul_le_mul (Q_bdd M θ h₄ t y u) ((h₈ θ y u).trans (le_max_left _ _))
+                exact mul_le_mul (Q_bdd M θ h₀ t y u) ((h₈ θ y u).trans (le_max_left _ _))
                   (norm_nonneg _) hq
             _ = _ := by rw [Finset.sum_const, Finset.card_univ, nsmul_eq_mul]
       _ = _ := by rw [← Finset.sum_mul, P_sum, one_mul]
   have h₁₃ : Summable (fun t => γ ^ t • ∫ ω, M.Q θ γ t (s t ω) (a t ω) •
       fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' (s t ω) (a t ω))) θ ∂(M.traj θ)) := by
-    have hs := (summable_geometric_of_lt_one h₄.1 h₄.2).mul_right (Fintype.card A * ((1 - γ)⁻¹ * |M.env.R| * max C 0))
+    have hs := (summable_geometric_of_lt_one h₀.1 h₀.2).mul_right (Fintype.card A * ((1 - γ)⁻¹ * |M.env.R| * max C 0))
     refine Summable.of_norm_bounded hs fun t => ?_
-    rw [norm_smul, norm_pow, Real.norm_of_nonneg h₄.1]
-    exact mul_le_mul_of_nonneg_left (h₁₂ t) (pow_nonneg h₄.1 t)
+    rw [norm_smul, norm_pow, Real.norm_of_nonneg h₀.1]
+    exact mul_le_mul_of_nonneg_left (h₁₂ t) (pow_nonneg h₀.1 t)
   have h₁₄ : ∀ n, ∫ ω, ∑ t ∈ Finset.range n, (γ ^ t * M.Q θ γ t (s t ω) (a t ω)) •
       fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' (s t ω) (a t ω))) θ ∂(M.traj θ) =
       ∑ t ∈ Finset.range n, γ ^ t • ∫ ω, M.Q θ γ t (s t ω) (a t ω) •

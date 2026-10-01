@@ -19,7 +19,7 @@ private lemma main
   {γ : ℝ}
   {t : ℕ}
 -- given
-  (h₁ : γ ∈ Set.Ico 0 1)
+  (h₀ : γ ∈ Set.Ico 0 1)
   (x : S) :
 -- imply
   ∫ ω, ∑' k, γ ^ k * r (t + k) ω ∂(M.traj θ)[|s t ⁻¹' {x}] =
@@ -47,11 +47,11 @@ private lemma main
     have h₃ := E_s_r M θ t 0 x
     simp only [add_zero] at h₃
     have h₄ := E_s_h M θ t x (M.V θ γ (t + 1))
-    rw [h₃, h₄, V_eq M θ h₁ t x hP, v_closed M θ h₁ x, alg1 hP]
+    rw [h₃, h₄, V_eq M θ h₀ t x hP, v_closed M θ h₀ x, alg1 hP]
     congr 2
     refine Finset.sum_congr rfl (fun u _ => ?_)
     rw [Finset.mul_sum, Finset.mul_sum]
-    exact Finset.sum_congr rfl (fun y _ => (V_succ_eq M θ h₁ t x u hP y).symm)
+    exact Finset.sum_congr rfl (fun y _ => (V_succ_eq M θ h₀ t x u hP y).symm)
 
 
 -- created on 2023-03-27

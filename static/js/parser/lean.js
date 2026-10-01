@@ -9975,6 +9975,13 @@ export class LeanSyntax extends LeanArgs {
             caret.push($new);
             return $new;
         }
+        // Bare keyword whose operand starts on the following, deeper-indented line
+        // (a `show` followed by a deeper-indented operand line): the operand belongs to this node, not to a new statement.
+        if (caret === this.arg && caret instanceof LeanCaret && this.indent < indent && !leanIsInfixContinue(next)) {
+            const $new = new LeanCaret(indent, caret.level);
+            this.replace(caret, $new);
+            return $new;
+        }
         return super.insert_newline(caret, newline_count, indent, next);
     }
 }

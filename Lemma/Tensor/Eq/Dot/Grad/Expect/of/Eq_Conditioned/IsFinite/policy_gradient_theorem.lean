@@ -17,9 +17,9 @@ open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Filter 
 /--
 Policy-gradient theorem (REINFORCE form), with the discounted return `γ ** Stack[t](t) @ r`:
 `∇𝔼[γ ** Stack[t](t) @ r] = 𝔼[∑' t, γ ^ t • (γ ** Stack[k](k) @ r[t:]) • ∇ log π(a[t] | s[t])]`.
-`h₁` is the sympy bound `Sup[s[t], t] |γ ** Stack[k](k) @ ∇𝔼[r[t:] | s[t]]| < ∞` (over the reachable
-pairs `Pr(s[t] = x) ≠ 0`); `h₂`, `h₃`: `θ ↦ π_θ(u | x)` is differentiable with a bounded gradient
-(without them the statement is false, see modelling.md). Densities are taken w.r.t. the counting
+`h₁`, `h₂`: `θ ↦ π_θ(u | x)` is differentiable with a uniformly bounded gradient
+(without them the statement is false). The bound on `∇V` over the reachable pairs
+`(t, x)` is not assumed: it follows from time-homogeneity and the finiteness of `S` (`gradV_bdd`). Densities are taken w.r.t. the counting
 measures (`hS`, `hA`), so `ℙ[M.traj θ](a[t] = u | s[t] = x)` is the policy `π_θ(u | x)` at reachable states.
 -/
 @[main]
@@ -34,10 +34,8 @@ private lemma main
   (h₀ : γ ∈ Set.Ico 0 1)
   (hS : (ReferenceMeasure.measure : Measure S) = Measure.count)
   (hA : (ReferenceMeasure.measure : Measure A) = Measure.count)
-  (h₁ : Sup[t, x | (M.traj θ).real (s t ⁻¹' {x}) ≠ 0]
-    ‖∑' k, γ ^ k • fderiv ℝ (fun θ => ∫ ω, r (t + k) ω ∂(M.traj θ)[|s t ⁻¹' {x}]) θ‖ < ∞)
-  (h₂ : ∀ x u, Differentiable ℝ (fun θ => M.pol.prob θ x u))
-  (h₃ : Sup[θ, x, u] ‖∇[θ] M.pol.prob θ x u‖ < ∞) :
+  (h₁ : ∀ x u, Differentiable ℝ (fun θ => M.pol.prob θ x u))
+  (h₂ : sup[θ, x, u] ‖∇[θ] M.pol.prob θ x u‖ < ∞) :
 -- imply
   have : ∀ θ t, SinglePSpace (M.traj θ) (JointRandomSymbol (a t) (s t)) := fun _ t =>
     Random.PSpace.of.Measure.eq.Count.Measurable ((a_meas t).prodMk (s_meas t)) (by
@@ -70,27 +68,20 @@ private lemma main
   classical
   let _ : MeasurableSpace Θ := borel Θ
   have _ : BorelSpace Θ := ⟨rfl⟩
-  have h₃o := h₃
-  simp only [gradient, LinearIsometryEquiv.norm_map] at h₃
+  have h₂o := h₂
+  simp only [gradient, LinearIsometryEquiv.norm_map] at h₂
   have hfd : ∑' t, γ ^ t • fderiv ℝ (fun θ => ∫ ω, r t ω ∂(M.traj θ)) θ =
       ∑' t, γ ^ t • ∫ ω, (∑' k, γ ^ k * r (t + k) ω) • fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' (s t ω) (a t ω))) θ ∂(M.traj θ) := by
-    obtain ⟨C, hC⟩ := id h₃
+    obtain ⟨C, hC⟩ := id h₂
     have hCb : ∀ θ x u, ‖fderiv ℝ (fun θ => M.pol.prob θ x u) θ‖ ≤ C := fun θ x u => hC ⟨(θ, x, u), rfl⟩
     classical
-    have hVb : BddAbove ((fun p : ℕ × S => ‖fderiv ℝ (fun θ => M.V θ γ p.1 p.2) θ‖) '' {p | (M.traj θ).real (s p.1 ⁻¹' {p.2}) ≠ 0}) := by
-      obtain ⟨B, hB⟩ := h₁
-      refine ⟨B, ?_⟩
-      rintro _ ⟨p, hp, rfl⟩
-      have h := hB ⟨p, hp, rfl⟩
-      simp only [sum_grad_cond M h₂ hCb h₀ p.1 p.2 θ hp] at h
-      exact h
-    rw [Tensor.Eq.Dot.Grad.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.IsFinite.Q_Function
-      (Q := fun θ => M.Q θ γ) (V := fun θ => M.V θ γ) (fun _ _ _ _ => rfl) (fun θ t x => M.V_eq_integral θ γ t x) hVb h₀ h₂ h₃]
+    rw [Tensor.Eq.Dot.Grad.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.IsFinite.Q_Function h₀
+      (Q := fun θ => M.Q θ γ) (V := fun θ => M.V θ γ) (fun _ _ _ _ => rfl) (fun θ t x => M.V_eq_integral θ γ t x) h₁ h₂]
     congr 1
     funext t
     congr 1
     exact (Tensor.Eq.Expect.Grad.Log.Pr.of.Eq_Conditioned.Q_Function.discounted h₀).symm
-  obtain ⟨C, hC⟩ := id h₃
+  obtain ⟨C, hC⟩ := id h₂
   have h₄ : ∀ θ x u, ‖fderiv ℝ (fun θ => M.pol.prob θ x u) θ‖ ≤ C := fun θ x u => hC ⟨(θ, x, u), rfl⟩
   have hscore : ∀ t, ∀ᵐ ω ∂(M.traj θ),
       fderiv ℝ (fun θ' => Real.log (ℙ[M.traj θ']((a t) = (a t ω) | (s t) = (s t ω))).toReal) θ =
@@ -98,7 +89,7 @@ private lemma main
     intro t
     filter_upwards [reach_ae M θ] with ω hω
     have hc : ContinuousAt (fun θ' => (M.traj θ').real (s t ⁻¹' {s t ω})) θ :=
-      (P_diff M h₂ h₄ t (s t ω) θ).continuousAt
+      (P_diff M h₁ h₄ t (s t ω) θ).continuousAt
     refine Filter.EventuallyEq.fderiv_eq ((hc.eventually_ne (hω t)).mono fun θ' h => ?_)
     beta_reduce
     rw [Random.ProbCond.eq.OfRealPol.of.Ne_0 hS hA (hP θ' t) h,
@@ -144,9 +135,9 @@ private lemma main
       calc _ ≤ ∫ _, γ ^ t * |M.env.R| ∂(M.traj θ') := integral_mono_ae (hri t).norm (integrable_const _) (hrb t)
         _ = γ ^ t * |M.env.R| := by simp
   have hRb := Tensor.Eq.Expect.Sum.Grad.Log.Pr.of.Bounded (X := fun _ _ r k => r k)
-    h₀ hS hA (fun k => r_meas k) hA' h₂ h₃o
+    h₀ hS hA (fun k => r_meas k) hA' h₁ h₂o
   refine Eq.trans ?_ ((congrArg L hold).trans hRb)
-  · rw [← (obj_hasFDerivAt M h₂ h₄ h₀ θ).fderiv, gradient, hL]
+  · rw [← (obj_hasFDerivAt M h₁ h₄ h₀ θ).fderiv, gradient, hL]
     congr 2
     funext θ'
     -- `𝔼[r: M.traj θ']((fun t => γ ^ t) @ r)` is the Bochner integral of the return
@@ -168,4 +159,4 @@ private lemma main
 
 
 -- created on 2023-04-07
--- updated on 2026-09-29
+-- updated on 2026-10-01

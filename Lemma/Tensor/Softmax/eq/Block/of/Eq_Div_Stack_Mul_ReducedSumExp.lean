@@ -1,33 +1,27 @@
-import sympy.functions.elementary.masked_softmax
+import Lemma.Tensor.SoftmaxAdd_Mul_Infty.eq.Cast_Stack_Ite_Block
 import sympy.Basic
+open Tensor Hyperreal
 
 
+/--
+Hyperreal masked softmax (py: `softmax(A + (Ξ - 1) * oo)` with the block mask `Ξ`): the masked entries are exactly `0`,
+the unmasked ones carry the given weights, with every row having an unmasked entry.
+-/
 @[main]
 private lemma upper_triangle
   {n u : ℕ}
   {A : Fin n → Fin n → ℝ}
   {z : Fin n → ℤ → ℝ}
 -- given
+  (h_u : 0 < u)
   (h : ∀ i j : Fin n, ((i.val : ℤ) ≤ (j.val : ℤ) ∧ (j.val : ℤ) < (i.val : ℤ) + u) → z i ((j.val : ℤ) - i.val) = Real.exp (A i j) / (∑ k ∈ Finset.univ.filter (fun k : Fin n => ((i.val : ℤ) ≤ (k.val : ℤ) ∧ (k.val : ℤ) < (i.val : ℤ) + u)), Real.exp (A i k))) :
 -- imply
-  ∀ i j : Fin n, maskedSoftmax (fun j => (A i j)) (fun j : Fin n => if ((i.val : ℤ) ≤ (j.val : ℤ) ∧ (j.val : ℤ) < (i.val : ℤ) + u) then 1 else 0) j = if ((i.val : ℤ) ≤ (j.val : ℤ) ∧ (j.val : ℤ) < (i.val : ℤ) + u) then z i ((j.val : ℤ) - i.val) else 0 := by
+  let Ξ : Tensor ℝ* [n, n] := [i < n] [j < n] (Bool.toNat (decide ((i.val : ℤ) ≤ (j.val : ℤ) ∧ (j.val : ℤ) < (i.val : ℤ) + u)))
+  let A : Tensor ℝ* [n, n] := ([i < n] [j < n] (((A i j) : ℝ) : Tensor ℝ []) : Tensor ℝ [n, n])
+  (A + (Ξ - 1) * ∞).softmax ≈
+    (([i < n] [j < n] (((if ((i.val : ℤ) ≤ (j.val : ℤ) ∧ (j.val : ℤ) < (i.val : ℤ) + u) then z i ((j.val : ℤ) - i.val) else 0 : ℝ) : Tensor ℝ [])) : Tensor ℝ [n, n]) : Tensor ℝ* [n, n]) := by
 -- proof
-  have key : ∀ (p : Prop) [Decidable p] (x : ℝ), maskedExp x (if p then 1 else 0) = if p then Real.exp x else 0 := by
-    intro p _ x
-    by_cases hp : p
-    ·
-      simp [maskedExp, hp]
-    ·
-      simp [maskedExp, hp]
-  intro i j
-  simp only [maskedSoftmax, key]
-  rw [← Finset.sum_filter]
-  by_cases hp : ((i.val : ℤ) ≤ (j.val : ℤ) ∧ (j.val : ℤ) < (i.val : ℤ) + u)
-  ·
-    simp only [if_pos hp]
-    rw [h i j hp]
-  ·
-    simp only [if_neg hp, zero_div]
+  exact SoftmaxAdd_Mul_Infty.eq.Cast_Stack_Ite_Block (n := n) (m := n) (fun i j => ((i.val : ℤ) ≤ (j.val : ℤ) ∧ (j.val : ℤ) < (i.val : ℤ) + u)) (fun i j => ((A i j) : ℝ)) (fun i j => z i ((j.val : ℤ) - i.val)) (fun i => ⟨i, by omega⟩) h
 
 
 -- created on 2022-01-02

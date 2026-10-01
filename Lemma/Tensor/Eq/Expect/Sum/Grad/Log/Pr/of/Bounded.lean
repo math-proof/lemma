@@ -39,7 +39,7 @@ private lemma main
   (h₂ : ∀ᵐ ω ∂(M.traj θ), ∀ t,
     ‖∑' k, γ ^ k * X (fun j => s j ω) (fun j => a j ω) (fun j => r j ω) (t + k)‖ ≤ B)
   (h₃ : ∀ x u, Differentiable ℝ (fun θ => M.pol.prob θ x u))
-  (h₄ : Sup[θ, x, u] ‖∇[θ] M.pol.prob θ x u‖ < ∞) :
+  (h₄ : sup[θ, x, u] ‖∇[θ] M.pol.prob θ x u‖ < ∞) :
 -- imply
   have : ∀ θ t, SinglePSpace (M.traj θ) (JointRandomSymbol (a t) (s t)) := fun _ t =>
     Random.PSpace.of.Measure.eq.Count.Measurable ((a_meas t).prodMk (s_meas t)) (by
