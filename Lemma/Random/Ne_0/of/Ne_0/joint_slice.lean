@@ -26,7 +26,7 @@ private lemma main
   {π : Measure Ω}
   {x : Ω → α} {y : Ω → β}
   {g : α → α'} {k : β → β'}
-  [PSpace π (x, y)]
+  [SinglePSpace π (x, y)]
 -- given
   (hα : ReferenceMeasure.measure (α := α) = Measure.count)
   (hβ : ReferenceMeasure.measure (α := β) = Measure.count)
@@ -48,7 +48,7 @@ private lemma main
     change (ReferenceMeasure.measure (α := α')).prod
         ReferenceMeasure.measure = Measure.count
     rw [hα', hβ', ← Count.eq.ProdCountS]
-  have : PSpace π (g ∘ x, k ∘ y) :=
+  have : SinglePSpace π (g ∘ x, k ∘ y) :=
     PSpace.of.Measure.eq.Count.Measurable
       ((hg.comp hx).prodMk (hk.comp hy)) ‹_›
   Measure.prob π (g ∘ x, k ∘ y) (g v, k w) ≠ 0 := by

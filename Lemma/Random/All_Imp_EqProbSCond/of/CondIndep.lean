@@ -15,12 +15,12 @@ private lemma main
   {x : Ω → α} {y : Ω → β} {z : Ω → γ}
 -- given
   (hx : Measurable x) (hy : Measurable y) (hz : Measurable z)
-  (hPxyz : PSpace π (x, y, z))
+  (hPxyz : SinglePSpace π (x, y, z))
   (hCI : x ⟂ᵢ[π] y | z) :
 -- imply
-  have : PSpace π (y, z) := PSpace.of.PSpace_Joint.snd hPxyz
-  have : PSpace π z := PSpace.of.PSpace_Joint.snd this
-  have : PSpace π (x, z) := PSpace_Joint.comm
+  have : SinglePSpace π (y, z) := PSpace.of.PSpace_Joint.snd hPxyz
+  have : SinglePSpace π z := PSpace.of.PSpace_Joint.snd this
+  have : SinglePSpace π (x, z) := PSpace_Joint.comm
     (PSpace.of.PSpace_Joint.fst (PSpace_JointJoint.of.PSpace_Joint_Joint (PSpace_Joint.comm (PSpace_JointJoint.of.PSpace_Joint_Joint hPxyz))))
   ∀ᵐ «x.bvar» ∂ReferenceMeasure.measure,
     ∀ᵐ «y.bvar» ∂ReferenceMeasure.measure,
@@ -40,13 +40,13 @@ private lemma main
   let pyz := π.prob (y, z)
   let pxyz := π.prob (x, (y, z))
   let ρ : Measure (α × β × γ) := μ.prod (ν.prod ξ)
-  have hlaw_z : π.map z = ξ.withDensity pz := PSpace.map_eq_withDensity_density
+  have hlaw_z : π.map z = ξ.withDensity pz := SinglePSpace.map_eq_withDensity_density
   have hlaw_xz : π.map (x, z) = (μ.prod ξ).withDensity pxz :=
-    PSpace.map_eq_withDensity_density
+    SinglePSpace.map_eq_withDensity_density
   have hlaw_yz : π.map (y, z) = (ν.prod ξ).withDensity pyz :=
-    PSpace.map_eq_withDensity_density
+    SinglePSpace.map_eq_withDensity_density
   have hlaw_xyz : π.map (x, (y, z)) = ρ.withDensity pxyz :=
-    PSpace.map_eq_withDensity_density
+    SinglePSpace.map_eq_withDensity_density
   have hκ_dis : π.map (fun ω ↦ (z ω, x ω)) = π.map z ⊗ₘ κ :=
     (compProd_map_condDistrib (Y := x) (X := z) (μ := π) hx.aemeasurable).symm
   have hη_dis : π.map (fun ω ↦ (z ω, y ω)) = π.map z ⊗ₘ η :=

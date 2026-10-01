@@ -1,0 +1,15 @@
+import sympy.functions.elementary.complexes
+import sympy.Basic
+open Real
+
+
+@[main]
+private lemma main
+  {z w : ℂ} :
+-- imply
+  im (z + w) = im z + im w := by
+-- proof
+  exact Complex.add_im z w
+
+
+-- created on 2026-09-27

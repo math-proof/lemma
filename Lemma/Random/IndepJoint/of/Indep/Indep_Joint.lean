@@ -10,7 +10,7 @@ private lemma main
   [ReferenceMeasure α] [ReferenceMeasure β] [ReferenceMeasure γ]
   {π : Measure Ω}
   {x : Ω → α} {y : Ω → β} {z : Ω → γ}
-  [PSpace π x] [PSpace π y] [PSpace π z]
+  [SinglePSpace π x] [SinglePSpace π y] [SinglePSpace π z]
 -- given
   (hx : x ⟂ᵢ[π] z)
   (hy : y ⟂ᵢ[π] (x, z)) :

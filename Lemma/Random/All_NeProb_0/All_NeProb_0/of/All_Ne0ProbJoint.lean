@@ -21,7 +21,7 @@ private lemma main
   [ReferenceMeasure α] [ReferenceMeasure β]
   {π : Measure Ω} {x : Ω → α} {y : Ω → β}
 -- given
-  (hP : PSpace π (x, y))
+  (hP : SinglePSpace π (x, y))
   (h : ∀ᵐ z ∂(ReferenceMeasure.measure : Measure (α × β)), ℙ[π](x = z.1 ∧ y = z.2) ≠ 0) :
 -- imply
   (have := PSpace.of.PSpace_Joint.fst hP; ∀ᵐ «x.bvar» ∂ReferenceMeasure.measure, ℙ[π](x = «x.bvar») ≠ 0) ∧
@@ -47,8 +47,8 @@ private lemma main
   have hsecy : ∀ᵐ b ∂ν, ∫⁻ a, π.prob (x, y) (a, b) ∂μ = π.prob y b :=
     All_EqIntegral_ProbJoint.of.PSpace_Joint.left hP
   -- Marginal integrals = 1, so reference measures are nonzero
-  have hlawx : π.map x = μ.withDensity (π.prob x) := PSpace.map_eq_withDensity_density
-  have hlawy : π.map y = ν.withDensity (π.prob y) := PSpace.map_eq_withDensity_density
+  have hlawx : π.map x = μ.withDensity (π.prob x) := SinglePSpace.map_eq_withDensity_density
+  have hlawy : π.map y = ν.withDensity (π.prob y) := SinglePSpace.map_eq_withDensity_density
   have hix : IsProbabilityMeasure (π.map x) :=
     Measure.isProbabilityMeasure_map PSpace.aemeasurable
   have hiy : IsProbabilityMeasure (π.map y) :=

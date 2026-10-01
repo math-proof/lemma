@@ -18,5 +18,17 @@ private lemma main
   rfl
 
 
+@[main]
+private lemma trois
+  [CommRing α]
+-- given
+  (A B C : Tensor α [n, n]) :
+-- imply
+  ((A @ B : Tensor α [n, n]) @ C).det = A.det * B.det * C.det := by
+-- proof
+  exact (main (A @ B) C).trans (congrArg (· * C.det) (main A B))
+
+
 -- created on 2020-08-20
 -- updated on 2026-09-07
+-- updated on 2026-09-27

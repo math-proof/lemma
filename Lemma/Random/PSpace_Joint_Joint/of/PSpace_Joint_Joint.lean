@@ -10,15 +10,15 @@ private lemma main
   {π : MeasureTheory.Measure Ω}
   {x : Ω → α} {y : Ω → β} {z : Ω → γ}
 -- given
-  (hP : PSpace π (x, y, z)) :
+  (hP : SinglePSpace π (x, y, z)) :
 -- imply
-  PSpace π (y, x, z) := by
+  SinglePSpace π (y, x, z) := by
 -- proof
   let μ : MeasureTheory.Measure α := ReferenceMeasure.measure
   let ν : MeasureTheory.Measure β := ReferenceMeasure.measure
   let ξ : MeasureTheory.Measure γ := ReferenceMeasure.measure
-  have hL : PSpace π ((x, y), z) := PSpace_JointJoint.of.PSpace_Joint_Joint hP
-  have hL' : PSpace π ((y, x), z) := by
+  have hL : SinglePSpace π ((x, y), z) := PSpace_JointJoint.of.PSpace_Joint_Joint hP
+  have hL' : SinglePSpace π ((y, x), z) := by
     obtain ⟨p, D, hjoint⟩ := hL.exists_distribution
     let swap1 : (α × β) × γ → (β × α) × γ := Prod.map Prod.swap (id : γ → γ)
     have hswap1 : Measurable swap1 := measurable_swap.prodMap measurable_id

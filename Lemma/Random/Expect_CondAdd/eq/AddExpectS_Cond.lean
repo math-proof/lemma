@@ -13,14 +13,14 @@ private lemma main
   {a : Ω → α} {s : Ω → β}
   {f g : α → ENNReal}
 -- given
-  (hP : PSpace π (a, s))
+  (hP : SinglePSpace π (a, s))
   (hf : Measurable f)
   («s.bvar» : β) :
 -- imply
   𝔼[a: π](f a + g a | s = «s.bvar») =
     𝔼[a: π](f a | s = «s.bvar») + 𝔼[a: π](g a | s = «s.bvar») := by
 -- proof
-  simp only [Expectation.condRV, expectation_ennreal]
+  simp only [Expectation.asRV_function, Expectation.condRV, expectation_ennreal]
   exact lintegral_add_left hf g
 
 

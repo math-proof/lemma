@@ -1,0 +1,14 @@
+import sympy.sets.sets
+import sympy.Basic
+
+
+@[main]
+private lemma main
+  {x y : ℝ} :
+-- imply
+  |x| + |y| ≥ |x + y| := by
+-- proof
+  exact abs_add_le x y
+
+
+-- created on 2026-09-27

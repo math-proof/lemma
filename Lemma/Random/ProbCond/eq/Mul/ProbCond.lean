@@ -25,7 +25,7 @@ private lemma main
   [MeasurableSingletonClass γ]
   {π : Measure Ω}
   {x : Ω → α} {y : Ω → β} {z : Ω → γ}
-  [PSpace π (x, y, z)]
+  [SinglePSpace π (x, y, z)]
 -- given
   (hα : ReferenceMeasure.measure (α := α) = Measure.count)
   (hβ : ReferenceMeasure.measure (α := β) = Measure.count)
@@ -37,18 +37,18 @@ private lemma main
   («y.bvar» : β)
   («z.bvar» : γ) :
 -- imply
-  have : PSpace π ((x, y), z) :=
-    PSpace_JointJoint.of.PSpace_Joint_Joint ‹PSpace π (x, y, z)›
-  have : PSpace π (x, z) :=
+  have : SinglePSpace π ((x, y), z) :=
+    PSpace_JointJoint.of.PSpace_Joint_Joint ‹SinglePSpace π (x, y, z)›
+  have : SinglePSpace π (x, z) :=
     PSpace_Joint.comm
       (PSpace.of.PSpace_Joint.fst
         (PSpace_JointJoint.of.PSpace_Joint_Joint
           (PSpace_Joint.comm (PSpace_JointJoint.of.PSpace_Joint_Joint
-            ‹PSpace π (x, y, z)›))))
-  have : PSpace π (y, (x, z)) :=
-    PSpace_Joint_Joint.of.PSpace_Joint_Joint ‹PSpace π (x, y, z)›
-  have : PSpace π z :=
-    PSpace.of.PSpace_Joint.snd ‹PSpace π (x, z)›
+            ‹SinglePSpace π (x, y, z)›))))
+  have : SinglePSpace π (y, (x, z)) :=
+    PSpace_Joint_Joint.of.PSpace_Joint_Joint ‹SinglePSpace π (x, y, z)›
+  have : SinglePSpace π z :=
+    PSpace.of.PSpace_Joint.snd ‹SinglePSpace π (x, z)›
   have : ReferenceMeasure.measure (α := α × β) = Measure.count := by
     change (ReferenceMeasure.measure (α := α)).prod
         ReferenceMeasure.measure = Measure.count

@@ -14,4 +14,31 @@ private lemma main
   exact h x
 
 
+@[main]
+private lemma domain_defined
+  {D : Set α}
+  {p : α → Prop}
+  {x : α}
+-- given
+  (h₀ : ∀ x ∈ D, p x)
+  (h₁ : x ∈ D) :
+-- imply
+  p x :=
+-- proof
+  h₀ x h₁
+
+
+@[main]
+private lemma subst
+  {n : ℕ}
+  {p : ℕ → Prop}
+-- given
+  (h : ∀ x < n + 1, p x) :
+-- imply
+  p n :=
+-- proof
+  h n (Nat.lt_succ_self n)
+
+
 -- created on 2026-09-26
+-- updated on 2026-09-27

@@ -1,4 +1,6 @@
 import Mathlib.Data.Vector.MapLemmas
+import Mathlib.Topology.Algebra.InfiniteSum.Basic
+import Mathlib.Data.Matrix.Mul
 import Lemma.Nat.EqMin_SubMulS
 import Lemma.Nat.EqAddMulDiv
 import Lemma.List.LengthRange.eq.Length
@@ -10,6 +12,12 @@ class Dot (α : Type u) (β : Type v) (γ : outParam (Type w)) where
   dot : α → β → γ
 
 infixl:70 " @ " => Dot.dot
+
+/-- Outer product typeclass: `a @ᵒ b` is the matrix `(i, j) ↦ a i * b j`. -/
+class OuterProd (α : Type u) (β : Type v) (γ : outParam (Type w)) where
+  outer : α → β → γ
+
+infixl:70 " @ᵒ " => OuterProd.outer
 
 namespace List.Vector
 
@@ -169,3 +177,21 @@ instance (priority := low) [Add α] [Zero α] [Mul α] : Dot (List.Vector α m) 
   dot v1 v2 :=
     let n := m ⊔ n
     (v1.resize n * v2.resize n).sum
+
+/-- Infinite-sequence (path) dot product: `f @ g = ∑' t, f t * g t`.
+Specializes to `(ℕ → ℝ) @ (ℕ → ℝ)` for discounted returns, e.g. `(γ ^ ·) @ r`. -/
+noncomputable instance (priority := low) instDotNatArrow
+    [TopologicalSpace α] [AddCommMonoid α] [Mul α] : Dot (ℕ → α) (ℕ → α) α where
+  dot f g := ∑' t, f t * g t
+
+/-- Outer product of two vectors: `(a @ᵒ b) i j = a i * b j`, i.e. `a @ᵒ b = Matrix.vecMulVec a b`. -/
+instance [Mul α] : OuterProd (m → α) (n → α) (Matrix m n α) where
+  outer := Matrix.vecMulVec
+
+@[simp]
+lemma OuterProd.eq.vecMulVec [Mul α] (a : m → α) (b : n → α) : a @ᵒ b = Matrix.vecMulVec a b :=
+  rfl
+
+@[simp]
+lemma OuterProd.apply [Mul α] (a : m → α) (b : n → α) (i : m) (j : n) : (a @ᵒ b) i j = a i * b j :=
+  rfl

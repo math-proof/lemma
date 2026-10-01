@@ -22,15 +22,15 @@ private lemma main
   {π : Measure Ω}
   {x : Ω → α} {y : Ω → β}
 -- given
-  (hP : PSpace π (x, y)) :
+  (hP : SinglePSpace π (x, y)) :
 -- imply
-  PSpace π x ∧ PSpace π y := by
+  SinglePSpace π x ∧ SinglePSpace π y := by
 -- proof
   let μ : Measure α := ReferenceMeasure.measure
   let ν : Measure β := ReferenceMeasure.measure
   obtain ⟨p, D, hjoint⟩ := hP.exists_distribution
   have hp : Measurable p := D.measurable_density
-  have hx : PSpace π x := by
+  have hx : SinglePSpace π x := by
     let q : α → ENNReal := fun «x.bvar» ↦ lintegral ν (fun «y.bvar» ↦ p («x.bvar», «y.bvar»))
     have hq : Measurable q := hp.lintegral_prod_right'
     have hmap : π.map x =
@@ -54,7 +54,7 @@ private lemma main
         exact h.symm
       exact hmarg.symm
     exact { toIsProbabilityMeasure := inferInstance, aemeasurable := AEMeasurable.fst hP.aemeasurable, exists_distribution := ⟨q, ⟨hq⟩, hlaw⟩ }
-  have hy : PSpace π y := by
+  have hy : SinglePSpace π y := by
     let q : β → ENNReal := fun «y.bvar» ↦ lintegral μ (fun «x.bvar» ↦ p («x.bvar», «y.bvar»))
     have hq : Measurable q := hp.lintegral_prod_left'
     have hmap : π.map y =

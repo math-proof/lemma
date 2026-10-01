@@ -12,14 +12,14 @@ private lemma main
   {a : Ω → α} {s : Ω → β}
   {f : α → ENNReal}
 -- given
-  (hP : PSpace π (a, s))
+  (hP : SinglePSpace π (a, s))
   (hf : Measurable f)
   («s.bvar» : β) :
 -- imply
   𝔼[a: π](f a | s = «s.bvar») =
     ∫⁻ «a.bvar», f «a.bvar» * ℙ[π](a = «a.bvar» | s = «s.bvar») ∂ReferenceMeasure.measure := by
 -- proof
-  simp only [Expectation.condRV, expectation_ennreal]
+  simp only [Expectation.asRV_function, Expectation.condRV, expectation_ennreal]
   have hmp : Measurable (π.prob (a, s)) := by
     simpa [Measure.prob] using Measure.measurable_rnDeriv (π.map (a, s)) ReferenceMeasure.measure
   have hmc : Measurable (π.condProb (a, s)) := by

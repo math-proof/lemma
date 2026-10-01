@@ -9,9 +9,9 @@ private lemma Comm
   {π : MeasureTheory.Measure Ω}
   {x : Ω → α} {y : Ω → β}
 -- given
-  (hP : PSpace π (x, y)) :
+  (hP : SinglePSpace π (x, y)) :
 -- imply
-  PSpace π (y, x) := by
+  SinglePSpace π (y, x) := by
 -- proof
   let μ : MeasureTheory.Measure α := ReferenceMeasure.measure
   let ν : MeasureTheory.Measure β := ReferenceMeasure.measure

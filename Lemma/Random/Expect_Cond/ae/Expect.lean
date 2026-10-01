@@ -43,7 +43,7 @@ private lemma lintegral_partialRV_mul
   {f : α → γ → ENNReal}
   {u : γ → ENNReal}
 -- given
-  (hP : PSpace π (x, y))
+  (hP : SinglePSpace π (x, y))
   (hf : Measurable (uncurry f))
   (hu : Measurable u) :
 -- imply
@@ -52,7 +52,7 @@ private lemma lintegral_partialRV_mul
 -- proof
   have hym : AEMeasurable y π := (PSpace.of.PSpace_Joint.snd hP).aemeasurable
   have hxym : AEMeasurable (JointRandomSymbol x y) π := hP.aemeasurable
-  have hPy : PSpace π y := PSpace.of.PSpace_Joint.snd hP
+  have hPy : SinglePSpace π y := PSpace.of.PSpace_Joint.snd hP
   let μ : MeasureTheory.Measure α := ReferenceMeasure.measure
   let ν : MeasureTheory.Measure γ := ReferenceMeasure.measure
   let p : α × γ → ENNReal := π.prob (JointRandomSymbol x y)
@@ -60,8 +60,8 @@ private lemma lintegral_partialRV_mul
   have hp : Measurable p := MeasureTheory.Measure.measurable_rnDeriv _ _
   have hm : Measurable m := MeasureTheory.Measure.measurable_rnDeriv _ _
   have hlaw : π.map (JointRandomSymbol x y) = (μ.prod ν).withDensity p :=
-    PSpace.map_eq_withDensity_density
-  have hlawy : π.map y = ν.withDensity m := PSpace.map_eq_withDensity_density
+    SinglePSpace.map_eq_withDensity_density
+  have hlawy : π.map y = ν.withDensity m := SinglePSpace.map_eq_withDensity_density
   have hden : π.map (fun ω ↦ (JointRandomSymbol x y ω).2) = π.map y := rfl
   have hunf :
       Expectation.partialRV π x y f =
@@ -233,7 +233,7 @@ private lemma lintegral_partialRV_RA_mul
   {f : α → γ → ENNReal}
   {u : γ → ENNReal}
 -- given
-  (hPyy : PSpace π (x, y, y))
+  (hPyy : SinglePSpace π (x, y, y))
   (hf : Measurable (uncurry f))
   (hu : Measurable u) :
 -- imply
@@ -244,7 +244,7 @@ private lemma lintegral_partialRV_RA_mul
     (PSpace.of.PSpace_Joint.snd hPyy).aemeasurable
   have hxyym : AEMeasurable (JointRandomSymbol x (JointRandomSymbol y y)) π :=
     hPyy.aemeasurable
-  have hPyy2 : PSpace π (y, y) := PSpace.of.PSpace_Joint.snd hPyy
+  have hPyy2 : SinglePSpace π (y, y) := PSpace.of.PSpace_Joint.snd hPyy
   have hym : AEMeasurable y π := (PSpace.of.PSpace_Joint.fst hPyy2).aemeasurable
   let μ : MeasureTheory.Measure α := ReferenceMeasure.measure
   let ν : MeasureTheory.Measure γ := ReferenceMeasure.measure
@@ -255,9 +255,9 @@ private lemma lintegral_partialRV_RA_mul
   have hp' : Measurable p' := MeasureTheory.Measure.measurable_rnDeriv _ _
   have hm' : Measurable m' := MeasureTheory.Measure.measurable_rnDeriv _ _
   have hlaw : π.map (JointRandomSymbol x (JointRandomSymbol y y)) =
-      (μ.prod νν).withDensity p' := PSpace.map_eq_withDensity_density
+      (μ.prod νν).withDensity p' := SinglePSpace.map_eq_withDensity_density
   have hlawyy : π.map (JointRandomSymbol y y) = νν.withDensity m' :=
-    PSpace.map_eq_withDensity_density
+    SinglePSpace.map_eq_withDensity_density
   have hden :
       π.map (fun ω ↦ (JointRandomSymbol x (JointRandomSymbol y y) ω).2) =
         π.map (JointRandomSymbol y y) := rfl
@@ -441,18 +441,18 @@ private lemma main
   {π : MeasureTheory.Measure Ω} {x : Ω → α} {y : Ω → γ}
   {f : α → γ → ENNReal}
 -- given
-  (hP : PSpace π (x, y))
-  (hPyy : PSpace π (x, y, y))
+  (hP : SinglePSpace π (x, y))
+  (hPyy : SinglePSpace π (x, y, y))
   (hf : Measurable (uncurry f)) :
 -- imply
   𝔼[x: π | y](f x y | y) =ᵐ[π] 𝔼[x: π | y](f x y) := by
 -- proof
   change Expectation.partialRV_RA π x y y f =ᵐ[π] Expectation.partialRV π x y f
   have hym : AEMeasurable y π := (PSpace.of.PSpace_Joint.snd hP).aemeasurable
-  have hPy : PSpace π y := PSpace.of.PSpace_Joint.snd hP
+  have hPy : SinglePSpace π y := PSpace.of.PSpace_Joint.snd hP
   let μ : MeasureTheory.Measure α := ReferenceMeasure.measure
   let ν : MeasureTheory.Measure γ := ReferenceMeasure.measure
-  have hPyy2 : PSpace π (y, y) := PSpace.of.PSpace_Joint.snd hPyy
+  have hPyy2 : SinglePSpace π (y, y) := PSpace.of.PSpace_Joint.snd hPyy
   let p : α × γ → ENNReal := π.prob (JointRandomSymbol x y)
   let m : γ → ENNReal := π.prob y
   let p' : α × (γ × γ) → ENNReal :=
@@ -523,7 +523,7 @@ private lemma main
       hf.comp (measurable_id.prodMk measurable_const)
     rw [MeasureTheory.lintegral_withDensity_eq_lintegral_mul μ hdens hf']
     exact MeasureTheory.lintegral_congr fun a ↦ mul_comm _ _
-  have hlawy : π.map y = ν.withDensity m := PSpace.map_eq_withDensity_density
+  have hlawy : π.map y = ν.withDensity m := SinglePSpace.map_eq_withDensity_density
   have hgg' : g =ᵐ[π.map y] g' := by
     refine MeasureTheory.ae_eq_of_forall_setLIntegral_eq_of_sigmaFinite hg hg' ?_
     intro s hs _

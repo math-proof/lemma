@@ -1,0 +1,15 @@
+import sympy.functions.elementary.complexes
+import sympy.Basic
+open Real
+
+
+@[main]
+private lemma main
+  {z : ℂ} :
+-- imply
+  im z = -im (~z) := by
+-- proof
+  simp
+
+
+-- created on 2026-09-27

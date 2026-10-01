@@ -6,6 +6,7 @@ import Mathlib.Probability.Independence.Basic
 import Mathlib.Analysis.Calculus.FDeriv.Basic
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
 import Mathlib.Topology.Algebra.InfiniteSum.Basic
+import sympy.stats.variance
 
 /-!
 # Shared trajectory model for the policy-gradient lemmas (standard MDP)
@@ -34,9 +35,6 @@ open MeasureTheory ProbabilityTheory Finset
 
 namespace PolicyGradient
 
-/-- one time step of a trajectory: `(state, action, reward)` -/
-abbrev Step (S A : Type*) := S × A × ℝ
-
 /-- a stochastic policy `π_θ(a | s)` on a finite action space, parametrised by `θ : Θ` -/
 structure Policy (Θ S A : Type*) [Fintype A] where
   prob : Θ → S → A → ℝ
@@ -60,14 +58,14 @@ structure Model (Θ S A : Type*) [MeasurableSpace S] [MeasurableSpace A] [Fintyp
   pol : Policy Θ S A
 
 /-- state at time `t` -/
-def s {S A : Type*} (t : ℕ) (ω : ℕ → Step S A) : S := (ω t).1
+def s {S A : Type*} (t : ℕ) (ω : ℕ → S × A × ℝ) : S := (ω t).1
 /-- action at time `t` -/
-def a {S A : Type*} (t : ℕ) (ω : ℕ → Step S A) : A := (ω t).2.1
+def a {S A : Type*} (t : ℕ) (ω : ℕ → S × A × ℝ) : A := (ω t).2.1
 /-- reward at time `t` -/
-def r {S A : Type*} (t : ℕ) (ω : ℕ → Step S A) : ℝ := (ω t).2.2
+def r {S A : Type*} (t : ℕ) (ω : ℕ → S × A × ℝ) : ℝ := (ω t).2.2
 
 /-- discounted return from time `t`: `γ ** Stack[k](k) @ r[t:]` -/
-noncomputable def G {S A : Type*} (γ : ℝ) (t : ℕ) (ω : ℕ → Step S A) : ℝ :=
+noncomputable def G {S A : Type*} (γ : ℝ) (t : ℕ) (ω : ℕ → S × A × ℝ) : ℝ :=
   ∑' k, γ ^ k * r (t + k) ω
 
 variable {Θ S A : Type*}
@@ -103,7 +101,7 @@ namespace Model
 variable (M : Model Θ S A)
 
 /-- law of one stage `(s, a, r)` given its state `s`: `a ∼ π_θ(· | s)`, `r ∼ reward (s, a)` -/
-noncomputable def stageK (θ : Θ) : Kernel S (Step S A) :=
+noncomputable def stageK (θ : Θ) : Kernel S (S × A × ℝ) :=
   Kernel.deterministic id measurable_id ×ₖ (M.pol.kernel θ ⊗ₖ M.env.reward)
 
 instance (θ : Θ) : IsMarkovKernel (M.stageK θ) := by
@@ -111,7 +109,7 @@ instance (θ : Θ) : IsMarkovKernel (M.stageK θ) := by
   unfold stageK; infer_instance
 
 /-- transition kernel of the stage chain: `(s, a, r) ↦` law of the next stage -/
-noncomputable def K (θ : Θ) : Kernel (Step S A) (Step S A) :=
+noncomputable def K (θ : Θ) : Kernel (S × A × ℝ) (S × A × ℝ) :=
   M.stageK θ ∘ₖ M.env.trans.comap (fun z ↦ (z.1, z.2.1)) (by fun_prop)
 
 instance (θ : Θ) : IsMarkovKernel (M.K θ) := by
@@ -119,37 +117,37 @@ instance (θ : Θ) : IsMarkovKernel (M.K θ) := by
   unfold K; infer_instance
 
 /-- `j`-step kernel expectation of `f` along the stage chain: `z ↦ 𝔼[f (ω (t + j)) | ω t = z]` -/
-noncomputable def Kf (θ : Θ) (f : Step S A → ℝ) : ℕ → Step S A → ℝ
+noncomputable def Kf (θ : Θ) (f : S × A × ℝ → ℝ) : ℕ → S × A × ℝ → ℝ
   | 0 => f
   | j + 1 => fun z ↦ ∫ w, Kf θ f j w ∂(M.K θ z)
 
 /-- `y ↦ 𝔼[f (ω (t + j)) | s t = y]`, the same for every time `t` (time-homogeneous chain) -/
-noncomputable def W (θ : Θ) (f : Step S A → ℝ) (j : ℕ) (y : S) : ℝ :=
+noncomputable def W (θ : Θ) (f : S × A × ℝ → ℝ) (j : ℕ) (y : S) : ℝ :=
   ∫ z, M.Kf θ f j z ∂(M.stageK θ y)
 
 /-- law of the first stage -/
-noncomputable def μ₀ (θ : Θ) : Measure (Step S A) := M.stageK θ ∘ₘ M.env.init
+noncomputable def μ₀ (θ : Θ) : Measure (S × A × ℝ) := M.stageK θ ∘ₘ M.env.init
 
 instance (θ : Θ) : IsProbabilityMeasure (M.μ₀ θ) := by
   have := M.env.init_prob
   unfold μ₀; infer_instance
 
 /-- the stage chain seen as history-dependent kernels (only the last stage matters) -/
-noncomputable def step (θ : Θ) (n : ℕ) : Kernel (Π _ : Iic n, Step S A) (Step S A) :=
+noncomputable def step (θ : Θ) (n : ℕ) : Kernel (Π _ : Iic n, S × A × ℝ) (S × A × ℝ) :=
   (M.K θ).comap (fun h ↦ h ⟨n, mem_Iic.2 le_rfl⟩) (measurable_pi_apply _)
 
 instance (θ : Θ) (n : ℕ) : IsMarkovKernel (M.step θ n) := by
   unfold step; infer_instance
 
 /-- law of the whole trajectory under the weights `θ` (Ionescu-Tulcea) -/
-noncomputable def traj (θ : Θ) : Measure (ℕ → Step S A) :=
-  Kernel.trajMeasure (X := fun _ ↦ Step S A) (M.μ₀ θ) (M.step θ)
+noncomputable def traj (θ : Θ) : Measure (ℕ → S × A × ℝ) :=
+  Kernel.trajMeasure (X := fun _ ↦ S × A × ℝ) (M.μ₀ θ) (M.step θ)
 
 instance (θ : Θ) : IsProbabilityMeasure (M.traj θ) := by
   unfold traj; infer_instance
 
 /-- the reward coordinate of a stage clamped to `[-R, R]` (almost surely equal to it) -/
-noncomputable def rc (z : Step S A) : ℝ := max (-M.env.R) (min M.env.R z.2.2)
+noncomputable def rc (z : S × A × ℝ) : ℝ := max (-M.env.R) (min M.env.R z.2.2)
 
 /-- transition probability `Pr(s[t+1] = y | s[t] = x, a[t] = u)` -/
 noncomputable def T (x : S) (u : A) (y : S) : ℝ := (M.env.trans (x, u)).real {y}
@@ -157,9 +155,40 @@ noncomputable def T (x : S) (u : A) (y : S) : ℝ := (M.env.trans (x, u)).real {
 /-- `Pr[a:π](a[t] = u | s[t] = x)`: the policy probability -/
 def Pr (θ : Θ) (x : S) (u : A) : ℝ := M.pol.prob θ x u
 
-/-- state-value function `V(s[t] = x) = γ ** Stack[k](k) @ 𝔼[r[t:] | s[t] = x]` -/
+omit [MeasurableSingletonClass S] [Fintype S] [MeasurableSingletonClass A] [Fintype A] in
+theorem r_meas' (t : ℕ) : Measurable (r (S := S) (A := A) t) :=
+  measurable_snd.comp (measurable_snd.comp (measurable_pi_apply t))
+
+omit [MeasurableSingletonClass S] [Fintype S] [MeasurableSingletonClass A] [Fintype A] in
+theorem G_meas (γ : ℝ) (t : ℕ) : Measurable (G (S := S) (A := A) γ t) :=
+  Measurable.tsum fun k => (r_meas' (t + k)).const_mul (γ ^ k)
+
+/-- state-value function `V(s[t] = x) = 𝔼[G[t] | s[t] = x] = 𝔼[γ ** Stack[k](k) @ r[t:] | s[t] = x]`,
+the expectation of the return `G[t]` under the conditional law `(M.traj θ)[| s t ⁻¹' {x}]`
+(`0` at unreachable `x`, where that measure is not a probability measure) -/
 noncomputable def V (θ : Θ) (γ : ℝ) (t : ℕ) (x : S) : ℝ :=
-  ∑' k, γ ^ k * ∫ ω, r (t + k) ω ∂(M.traj θ)[| s t ⁻¹' {x}]
+  if h : (M.traj θ) (s t ⁻¹' {x}) ≠ 0 then
+    haveI : IsProbabilityMeasure ((M.traj θ)[|s t ⁻¹' {x}]) := cond_isProbabilityMeasure h
+    haveI : PSpace ((M.traj θ)[|s t ⁻¹' {x}]) (G (S := S) (A := A) γ t) :=
+      ⟨(G_meas γ t).aemeasurable⟩
+    let R := G (S := S) (A := A) γ t
+    𝔼[R : (M.traj θ)[|s t ⁻¹' {x}]](R)
+  else 0
+
+omit [MeasurableSingletonClass A] in
+/-- `V` is the Bochner integral of `G` against the conditional measure (also at unreachable `x`,
+where the conditional measure is `0`) -/
+theorem V_eq_integral (θ : Θ) (γ : ℝ) (t : ℕ) (x : S) :
+    M.V θ γ t x = ∫ ω, G γ t ω ∂(M.traj θ)[|s t ⁻¹' {x}] := by
+  unfold V
+  by_cases h : (M.traj θ) (s t ⁻¹' {x}) ≠ 0
+  · rw [dif_pos h]
+    have : IsProbabilityMeasure ((M.traj θ)[|s t ⁻¹' {x}]) := cond_isProbabilityMeasure h
+    have : PSpace ((M.traj θ)[|s t ⁻¹' {x}]) (G (S := S) (A := A) γ t) :=
+      ⟨(G_meas γ t).aemeasurable⟩
+    exact Expectation.ofRV_self _ _
+  · rw [dif_neg h, not_not.1 h |> cond_eq_zero_of_meas_eq_zero]
+    simp
 
 /-- action-value function `Q(s[t] = x, a[t] = u) = γ ** Stack[k](k) @ 𝔼[r[t:] | s[t] = x ∧ a[t] = u]` -/
 noncomputable def Q (θ : Θ) (γ : ℝ) (t : ℕ) (x : S) (u : A) : ℝ :=

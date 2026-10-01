@@ -13,7 +13,7 @@ import Lemma.Random.PSpace.PSpace.of.PSpace_Joint
 open ProbabilityTheory MeasureTheory Random
 
 
-/-- Under counting references, measurability of x, z yields PSpace (x, z). -/
+/-- Under counting references, measurability of x, z yields SinglePSpace (x, z). -/
 private lemma of_xz
   [MeasurableSpace Ω]
   [ReferenceMeasure α] [ReferenceMeasure γ]
@@ -26,7 +26,7 @@ private lemma of_xz
   (hμα : ReferenceMeasure.measure (α := α) = Measure.count)
   (hμγ : ReferenceMeasure.measure (α := γ) = Measure.count) :
 -- imply
-  PSpace π (x, z) := by
+  SinglePSpace π (x, z) := by
 -- proof
   have hxz_m : AEMeasurable (x, z) π := (hx.prodMk hz).aemeasurable
   have href : (ReferenceMeasure.measure : Measure (α × γ)) =
@@ -71,15 +71,15 @@ private lemma main
   {x : Ω → α} {y : Ω → β} {z : Ω → γ}
 -- given
   (hx : Measurable x) (hy : Measurable y) (hz : Measurable z)
-  (hPxyz : PSpace π (x, y, z))
+  (hPxyz : SinglePSpace π (x, y, z))
   (hμα : ReferenceMeasure.measure (α := α) = Measure.count)
   (hμβ : ReferenceMeasure.measure (α := β) = Measure.count)
   (hμγ : ReferenceMeasure.measure (α := γ) = Measure.count)
   (hCI : x ⟂ᵢ[π] y | z) :
 -- imply
-  have _hPyz : PSpace π (y, z) := PSpace.of.PSpace_Joint.snd hPxyz
-  have _hPz : PSpace π z := PSpace.of.PSpace_Joint.snd _hPyz
-  have _hPxz : PSpace π (x, z) := of_xz hx hz hμα hμγ
+  have _hPyz : SinglePSpace π (y, z) := PSpace.of.PSpace_Joint.snd hPxyz
+  have _hPz : SinglePSpace π z := PSpace.of.PSpace_Joint.snd _hPyz
+  have _hPxz : SinglePSpace π (x, z) := of_xz hx hz hμα hμγ
   ∀ᵐ «x.bvar» ∂ReferenceMeasure.measure,
     ∀ᵐ «y.bvar» ∂ReferenceMeasure.measure,
       ∀ᵐ «z.bvar» ∂ReferenceMeasure.measure,
@@ -87,9 +87,9 @@ private lemma main
           ℙ[π](x = «x.bvar» | y = «y.bvar» ∧ z = «z.bvar») =
             ℙ[π](x = «x.bvar» | z = «z.bvar») := by
 -- proof
-  have hPyz : PSpace π (y, z) := PSpace.of.PSpace_Joint.snd hPxyz
-  have hPz : PSpace π z := PSpace.of.PSpace_Joint.snd hPyz
-  have hPxz : PSpace π (x, z) := of_xz hx hz hμα hμγ
+  have hPyz : SinglePSpace π (y, z) := PSpace.of.PSpace_Joint.snd hPxyz
+  have hPz : SinglePSpace π z := PSpace.of.PSpace_Joint.snd hPyz
+  have hPxz : SinglePSpace π (x, z) := of_xz hx hz hμα hμγ
   have hDens :
       ∀ᵐ «x.bvar» ∂ReferenceMeasure.measure,
         ∀ᵐ «y.bvar» ∂ReferenceMeasure.measure,
@@ -198,12 +198,12 @@ private lemma main
 
     -- Under counting references, `prob` = pushforward singleton mass.
     have hsing_z : π.map z {c} = π.prob z c := by
-      have hlaw := PSpace.map_eq_withDensity_density (π := π) (x := z)
+      have hlaw := SinglePSpace.map_eq_withDensity_density (π := π) (x := z)
       rw [hlaw, show ReferenceMeasure.measure (α := γ) = Measure.count from hμγ,
         withDensity_apply _ (MeasurableSet.singleton _), lintegral_singleton,
         Measure.count_singleton, mul_one]
     have hsing_xz : π.map (x, z) {(a, c)} = π.prob (x, z) (a, c) := by
-      have hlaw := PSpace.map_eq_withDensity_density (π := π) (x := (x, z))
+      have hlaw := SinglePSpace.map_eq_withDensity_density (π := π) (x := (x, z))
       have href : ReferenceMeasure.measure (α := α × γ) =
           (Measure.count (α := α)).prod (Measure.count (α := γ)) := by
         change (ReferenceMeasure.measure (α := α)).prod (ReferenceMeasure.measure (α := γ)) = _
@@ -215,7 +215,7 @@ private lemma main
         rw [hset, Measure.prod_prod, Measure.count_singleton, Measure.count_singleton, mul_one]
       rw [this, mul_one]
     have hsing_yz : π.map (y, z) {(b, c)} = π.prob (y, z) (b, c) := by
-      have hlaw := PSpace.map_eq_withDensity_density (π := π) (x := (y, z))
+      have hlaw := SinglePSpace.map_eq_withDensity_density (π := π) (x := (y, z))
       have href : ReferenceMeasure.measure (α := β × γ) =
           (Measure.count (α := β)).prod (Measure.count (α := γ)) := by
         change (ReferenceMeasure.measure (α := β)).prod (ReferenceMeasure.measure (α := γ)) = _
@@ -228,7 +228,7 @@ private lemma main
       rw [this, mul_one]
     have hsing_xyz :
         π.map (fun ω ↦ (x ω, y ω, z ω)) {(a, b, c)} = π.prob (x, (y, z)) (a, (b, c)) := by
-      have hlaw := PSpace.map_eq_withDensity_density (π := π) (x := (x, (y, z)))
+      have hlaw := SinglePSpace.map_eq_withDensity_density (π := π) (x := (x, (y, z)))
       have href : ReferenceMeasure.measure (α := α × β × γ) =
           (Measure.count (α := α)).prod
             ((Measure.count (α := β)).prod (Measure.count (α := γ))) := by
@@ -264,9 +264,9 @@ private lemma main
   have hpyz : Measurable (π.prob (y, z)) := Measure.measurable_rnDeriv _ _
   have hpz : Measurable (π.prob z) := Measure.measurable_rnDeriv _ _
   have hlaw_yz : π.map (y, z) = (ν.prod ξ).withDensity (π.prob (y, z)) :=
-    PSpace.map_eq_withDensity_density
+    SinglePSpace.map_eq_withDensity_density
   have hlaw_z : π.map z = ξ.withDensity (π.prob z) :=
-    PSpace.map_eq_withDensity_density
+    SinglePSpace.map_eq_withDensity_density
   have hyz_m : AEMeasurable (y, z) π := hPyz.aemeasurable
   have hz_m : AEMeasurable z π := hPz.aemeasurable
   have htot_yz : ∫⁻ bc, π.prob (y, z) bc ∂(ν.prod ξ) = 1 := by

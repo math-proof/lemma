@@ -1,0 +1,17 @@
+import sympy.sets.sets
+import sympy.Basic
+
+
+@[main]
+private lemma main
+  {x a : ℝ}
+-- given
+  (h₀ : x > 0)
+  (h₁ : a < 0) :
+-- imply
+  x * a < 0 := by
+-- proof
+  exact mul_neg_of_pos_of_neg h₀ h₁
+
+
+-- created on 2026-09-27

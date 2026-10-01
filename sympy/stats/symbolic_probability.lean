@@ -27,7 +27,7 @@ noncomputable def Probability
     [ReferenceMeasure α]
     (π : Measure Ω)
     (x : Ω → α)
-    [PSpace π x]
+    [SinglePSpace π x]
     (s : Set α) :
     ENNReal :=
   π.map x s
@@ -57,7 +57,9 @@ Polymorphic expectation via `[Expectation β]`: write `expectation ν f` for
 
 * `β = ENNReal` — Lebesgue integral `∫⁻ a, f a ∂ν` (non-negative; existing lemmas)
 * `β = EReal` — signed extended expectation via positive/negative parts
+* `β = ℝ` — Bochner integral `∫ a, f a ∂ν` (meaningful when integrable)
 * `β = ℂ` — Bochner integral `∫ a, f a ∂ν` (meaningful when integrable)
+* complete real normed spaces `E` (e.g. `Θ →L[ℝ] ℝ`) — Bochner integral (low-priority fallback)
 * vectors / tensors — componentwise (import `sympy.stats.symbolic_multivariate_probability`)
 
 sympy's `Expectation` carries the distribution in its limits (`Expectation[a:θ](f(a))`
@@ -99,9 +101,44 @@ noncomputable instance : Expectation ℂ where
   expectation ν f := ∫ a, f a ∂ν
 
 /--
+Real (Bochner) expectation. Equals the classical integral when `f` is integrable;
+Mathlib's Bochner integral is `0` when not integrable — treat integrability as a
+side condition in theorems that need a meaningful value.
+-/
+noncomputable instance : Expectation ℝ where
+  expectation ν f := ∫ a, f a ∂ν
+
+/-- Unfolding rule for the `ℝ` instance (use `simp only [expectation_real]`). -/
+@[simp] theorem expectation_real
+    {α : Type*} [MeasurableSpace α]
+    (ν : Measure α) (f : α → ℝ) :
+    expectation ν f = ∫ a, f a ∂ν :=
+  rfl
+
+/--
+Vector-valued (Bochner) expectation for any complete real normed space `E`
+(e.g. `Θ →L[ℝ] ℝ` gradients), `expectation ν f = ∫ a, f a ∂ν`. Declared with low priority so
+that the dedicated instances (`ℝ`, `ℂ`, and the componentwise `List.Vector` / `Tensor` ones
+of `sympy.stats.symbolic_multivariate_probability`) are preferred wherever they apply;
+for `ℝ` and `ℂ` it agrees definitionally with them.
+-/
+noncomputable instance (priority := low) instExpectationBochner
+    {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E] :
+    Expectation E where
+  expectation ν f := ∫ a, f a ∂ν
+
+/-- Unfolding rule for the Bochner instance (use `simp only [expectation_bochner]`). -/
+@[simp] theorem expectation_bochner
+    {α E : Type*} [MeasurableSpace α]
+    [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E]
+    (ν : Measure α) (f : α → E) :
+    expectation ν f = ∫ a, f a ∂ν :=
+  rfl
+
+/--
 Canonical density `Pr(x)` of a single random variable (Radon–Nikodym derivative of its
 law w.r.t. the canonical state measure). Equal a.e. to any witnessing density from
-`PSpace.exists_distribution`. Lives in `MeasureTheory.Measure` (alongside `map` and
+`SinglePSpace.exists_distribution`. Lives in `MeasureTheory.Measure` (alongside `map` and
 `rnDeriv`) so it reads in dot form `π.prob x`, next to `π.map x`.
 -/
 noncomputable def MeasureTheory.Measure.prob
@@ -110,7 +147,7 @@ noncomputable def MeasureTheory.Measure.prob
     [ReferenceMeasure α]
     (π : Measure Ω)
     (x : Ω → α)
-    [PSpace π x] :
+    [SinglePSpace π x] :
     α → ENNReal :=
   (π.map x).rnDeriv ReferenceMeasure.measure
 
@@ -127,7 +164,7 @@ noncomputable def MeasureTheory.Measure.condProb
     [ReferenceMeasure α] [ReferenceMeasure β]
     (π : Measure Ω)
     (xy : Ω → α × β)
-    [PSpace π xy] :
+    [SinglePSpace π xy] :
     α × β → ENNReal :=
   fun z ↦ π.prob xy z /
     (π.map (fun ω ↦ (xy ω).2)).rnDeriv ReferenceMeasure.measure z.2
@@ -147,7 +184,7 @@ noncomputable def MeasureTheory.Measure.probRA
     [ReferenceMeasure α]
     (π : Measure Ω)
     (x : Ω → α)
-    [PSpace π x] :
+    [SinglePSpace π x] :
     Ω → ENNReal :=
   fun ω ↦ π.prob x (x ω)
 
@@ -166,7 +203,7 @@ noncomputable def MeasureTheory.Measure.probCond
     [ReferenceMeasure α] [ReferenceMeasure γ]
     (π : Measure Ω)
     (xy : Ω → α × γ)
-    [PSpace π xy]
+    [SinglePSpace π xy]
     (y0 : γ) :
     Ω → ENNReal :=
   fun ω ↦ π.condProb xy ((xy ω).1, y0)
@@ -186,7 +223,7 @@ noncomputable def MeasureTheory.Measure.probCondRA
     [ReferenceMeasure α] [ReferenceMeasure γ]
     (π : Measure Ω)
     (xy : Ω → α × γ)
-    [PSpace π xy] :
+    [SinglePSpace π xy] :
     Ω → ENNReal :=
   fun ω ↦ π.condProb xy (xy ω)
 
@@ -207,7 +244,7 @@ noncomputable def MeasureTheory.Measure.condProbRA
     [ReferenceMeasure α] [ReferenceMeasure γ]
     (π : Measure Ω)
     (xy : Ω → α × γ)
-    [PSpace π xy]
+    [SinglePSpace π xy]
     (x0 : α) :
     Ω → ENNReal :=
   fun ω ↦ π.condProb xy (x0, (xy ω).2)
@@ -215,26 +252,26 @@ noncomputable def MeasureTheory.Measure.condProbRA
 
 /--
 The law of `x` equals the state measure with density `π.prob x`: the
-distribution in `PSpace.exists_distribution` gives absolute continuity, and the
+distribution in `SinglePSpace.exists_distribution` gives absolute continuity, and the
 Radon–Nikodym theorem reconstructs the measure from its canonical derivative.
 -/
-theorem PSpace.map_eq_withDensity_density
+theorem SinglePSpace.map_eq_withDensity_density
     {Ω α : Type*}
     [MeasurableSpace Ω]
     [ReferenceMeasure α]
     {π : Measure Ω}
     {x : Ω → α}
-    [PSpace π x] :
+    [SinglePSpace π x] :
     π.map x =
       ReferenceMeasure.measure.withDensity (π.prob x) := by
-  have hp : PSpace π x := inferInstance
+  have hp : SinglePSpace π x := inferInstance
   obtain ⟨ρ, _, hlaw⟩ := hp.exists_distribution
   exact (Measure.withDensity_rnDeriv_eq (π.map x) _
     (hlaw ▸ withDensity_absolutelyContinuous _ _)).symm
 
 
 /-- An `x ~ D` hypothesis, together with an a.e. measurability proof for `x`, supplies the
-`PSpace D.measure x` instance. -/
+`SinglePSpace D.measure x` instance. -/
 theorem Distributed.pspace
     {Ω α : Type*}
     [MeasurableSpace Ω]
@@ -244,7 +281,7 @@ theorem Distributed.pspace
     {D : Distribution π ρ}
     (h : x ~ D)
     (hx : AEMeasurable x π) :
-    PSpace π x :=
+    SinglePSpace π x :=
   { toIsProbabilityMeasure := inferInstance
     aemeasurable := hx
     exists_distribution := ⟨D.density, D, h⟩ }
@@ -260,7 +297,7 @@ theorem Distributed_iff
     [ReferenceMeasure α]
     {π : Measure Ω}
     {x : Ω → α} {ρ : α → ENNReal}
-    [PSpace π x]
+    [SinglePSpace π x]
     (D : Distribution π ρ) :
     x ~ D ↔ π.prob x =ᵐ[ReferenceMeasure.measure] ρ := by
   refine ⟨fun h ↦ ?_, fun h ↦ ?_⟩
@@ -269,5 +306,5 @@ theorem Distributed_iff
     show (D.measure.map x).rnDeriv ReferenceMeasure.measure =ᵐ[ReferenceMeasure.measure] D.density
     rw [h]
     exact Measure.rnDeriv_withDensity _ D.measurable_density
-  · exact (@PSpace.map_eq_withDensity_density Ω α _ _ π x _).trans
+  · exact (@SinglePSpace.map_eq_withDensity_density Ω α _ _ π x _).trans
       (withDensity_congr_ae h)

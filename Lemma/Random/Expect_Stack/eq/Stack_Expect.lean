@@ -76,13 +76,13 @@ private lemma main
   {x : Ω → Fin n → α} {y : Ω → γ}
   {f : α → Tensor ENNReal s}
 -- given
-  (hP : PSpace π (x, y))
+  (hP : SinglePSpace π (x, y))
   («y.bvar» : γ) :
 -- imply
   𝔼[x: π]([k < n] f (x k) | y = «y.bvar») =
     [k < n] (𝔼[x: π](f (x k) | y = «y.bvar»)) := by
 -- proof
-  simp only [Expectation.condRV]
+  simp only [Expectation.asRV_function, Expectation.condRV]
   let ν := ReferenceMeasure.measure.withDensity fun a ↦
     π.condProb (x, y) (a, «y.bvar»)
   change

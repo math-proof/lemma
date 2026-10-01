@@ -13,12 +13,12 @@ private lemma main
   {a : Ω → α}
   {f g : α → ENNReal}
 -- given
-  (hP : PSpace π a)
+  (hP : SinglePSpace π a)
   (hf : Measurable f) :
 -- imply
   𝔼[a: π](f a + g a) = 𝔼[a: π](f a) + 𝔼[a: π](g a) := by
 -- proof
-  simp only [Expectation.ofRV, expectation_ennreal]
+  simp only [Expectation.asRV_function, Expectation.ofRV, expectation_ennreal]
   exact lintegral_add_left hf g
 
 

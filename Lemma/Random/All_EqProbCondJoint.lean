@@ -11,10 +11,10 @@ private lemma main
   {π : Measure Ω}
   {x : Ω → α} {y : Ω → β} {z : Ω → γ}
 -- given
-  (hP : PSpace π (x, y, z)) :
+  (hP : SinglePSpace π (x, y, z)) :
 -- imply
-  have _hPxy_z : PSpace π ((x, y), z) := PSpace_JointJoint.of.PSpace_Joint_Joint hP
-  have _hPyz : PSpace π (y, z) := PSpace.of.PSpace_Joint.snd hP
+  have _hPxy_z : SinglePSpace π ((x, y), z) := PSpace_JointJoint.of.PSpace_Joint_Joint hP
+  have _hPyz : SinglePSpace π (y, z) := PSpace.of.PSpace_Joint.snd hP
   ∀ᵐ «x.bvar» ∂ReferenceMeasure.measure,
     ∀ᵐ «y.bvar» ∂ReferenceMeasure.measure,
       ∀ᵐ «z.bvar» ∂ReferenceMeasure.measure,
@@ -26,9 +26,9 @@ private lemma main
   let ν : Measure β := ReferenceMeasure.measure
   let ξ : Measure γ := ReferenceMeasure.measure
   let e : (α × β) × γ ≃ᵐ α × (β × γ) := MeasurableEquiv.prodAssoc
-  have hP_left : PSpace π ((x, y), z) := PSpace_JointJoint.of.PSpace_Joint_Joint hP
-  have hPyz : PSpace π (y, z) := PSpace.of.PSpace_Joint.snd hP
-  have hPz : PSpace π z := PSpace.of.PSpace_Joint.snd hP_left
+  have hP_left : SinglePSpace π ((x, y), z) := PSpace_JointJoint.of.PSpace_Joint_Joint hP
+  have hPyz : SinglePSpace π (y, z) := PSpace.of.PSpace_Joint.snd hP
+  have hPz : SinglePSpace π z := PSpace.of.PSpace_Joint.snd hP_left
   let xyz : Ω → α × (β × γ) := (x, (y, z))
   let p3 : (α × β) × γ → ENNReal := π.prob ((x, y), z)
   let p3' : α × (β × γ) → ENNReal := π.prob xyz
@@ -36,7 +36,7 @@ private lemma main
   let pz : γ → ENNReal := π.prob z
   -- The marginal density of (y, z) is finite almost everywhere
   have hlaw2m : π.map (y, z) = (ν.prod ξ).withDensity p2 :=
-    PSpace.map_eq_withDensity_density
+    SinglePSpace.map_eq_withDensity_density
   have hi2 : IsProbabilityMeasure (π.map (y, z)) :=
     Measure.isProbabilityMeasure_map hPyz.aemeasurable
   have htot2 : ∫⁻ bc, p2 bc ∂(ν.prod ξ) = 1 := by
@@ -108,5 +108,31 @@ private lemma main
     _ = p3' (a, (b, c)) / pz c := by rw [hcan]
 
 
+@[main]
+private lemma Cond
+  [MeasurableSpace Ω]
+  [ReferenceMeasure α] [ReferenceMeasure β] [ReferenceMeasure γ]
+  {π : Measure Ω}
+  {x : Ω → α} {y : Ω → β} {z : Ω → γ}
+-- given
+  (hP : SinglePSpace π (x, y, z)) :
+-- imply
+  have _hPxy_z : SinglePSpace π ((x, y), z) := PSpace_JointJoint.of.PSpace_Joint_Joint hP
+  have _hPyz : SinglePSpace π (y, z) := PSpace.of.PSpace_Joint.snd hP
+  ∀ᵐ «x.bvar» ∂ReferenceMeasure.measure,
+    ∀ᵐ «y.bvar» ∂ReferenceMeasure.measure,
+      ∀ᵐ «z.bvar» ∂ReferenceMeasure.measure,
+        ℙ[π](x = «x.bvar» ∧ y = «y.bvar» | z = «z.bvar») =
+          ℙ[π](y = «y.bvar» | z = «z.bvar») *
+            ℙ[π](x = «x.bvar» | y = «y.bvar» ∧ z = «z.bvar») := by
+-- proof
+  intro _ _
+  filter_upwards [main hP] with a ha
+  filter_upwards [ha] with b hb
+  filter_upwards [hb] with c hc
+  rw [hc, mul_comm]
+
+
 -- created on 2023-03-27
 -- updated on 2026-09-20
+-- updated on 2026-09-27

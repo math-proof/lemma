@@ -1,0 +1,15 @@
+import sympy.Basic
+
+
+@[main]
+private lemma main
+  {m p q : ℕ}
+  {a : Fin m → Fin p → ℝ}
+  {b : Fin m → Fin q → ℝ} :
+-- imply
+  (fun i => Fin.append (a i) (b i)) = fun i j => Fin.append (a i) (b i) j :=
+-- proof
+  rfl
+
+
+-- created on 2026-09-27

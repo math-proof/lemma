@@ -6,7 +6,7 @@ open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model
 /--
 `𝔼[∇ log π(a[t] | s[t]) * (γ ** Stack[k](k) @ r[t:])] =
   𝔼[∇ log π(a[t] | s[t]) * (γ ** Stack[k](k) @ 𝔼[r[t:] | s[t], a[t]])]`
-(law of iterated expectation on `(s[t], a[t])`); `h₀` is the sympy reward hypothesis.
+(law of iterated expectation on `(s[t], a[t])`).
 -/
 @[main]
 private lemma main
@@ -18,7 +18,6 @@ private lemma main
   {γ : ℝ}
   {t : ℕ}
 -- given
-  (_h₀ : IndepFun (r t) (fun ω (i : Fin t) => (s i ω, a i ω)) (M.traj θ))
   (h₁ : γ ∈ Set.Ico 0 1) :
 -- imply
   ∫ ω, (∑' k, γ ^ k * r (t + k) ω) • fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' (s t ω) (a t ω))) θ ∂(M.traj θ) =
