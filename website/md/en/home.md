@@ -44,7 +44,7 @@ basics of [continued fraction](../?module=Finset.Add.eq.Pow.HK.recurrence); as w
 * [Probability](../?module=Probability) refers to statistics and probability theory, comprising: the derivation of the probability density formula of some common distribution (such as, binomial distribution, Gaussian distribution, poisson distribution, die distribution, Χ<sup>2</sup>distribution)，as well as propositions related to [Bayes theorem](../?module=Probability.Pr.eq.Div.Pr.bayes), and the [law of large numbers](../?module=Probability.Eq.Limit.Pr.of.Eq_Conditioned.Eq_Expect.Eq_Var.law_of_large_numbers);  
 * [Tensor](../?module=Tensor) section is related to the mathematical theories behind the contemporary deep learning / machine learning techniques, including the mathematical modeling used in natural language processing / understanding, formulae deduction or proof of
 [KV-Cache](../?module=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.GetSlice.eq.DotSoftmaxAdd_DivDot_Transpose.kv_cache),
-Conditional Random Field [CRF](../?module=Tensor.And.of.Ne_0.Eq.Eq.Eq.crf.y_given_x),
+Conditional Random Field [CRF](../?module=Tensor.Imp_Eq_Add_LogSumExp.EqNegLogProb.of.Ne0ProbJoint.Indep.y_given_x),
 KMeans [clustering convergence](../?module=Set.LeAddSSumS_SquareSub_Sum.of.In.NotIn.LeAbsSSub_Sum), [General Rotary Position Embedding](../?module=Tensor.Dot.eq.Add.of.Eq_Mul.Eq_Mul.Eq_Block.position_representation.plane) for Vision Transformer, [Policy Gradient Theorem](../?module=Tensor.EqDot_GradExpect.of.Eq_Conditioned.Eq_Expect.IsFinite.IsFinite.unbiased_advantage_estimate) from Reinforcement Learning. 
 Probability theory provides the fundamental theoretical basis for machine learning so that this contemporary technique can be  explainable.  
 

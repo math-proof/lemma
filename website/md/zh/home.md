@@ -50,7 +50,7 @@
 * [Probability](../?module=Probability) 概率统计学，比如[Bayes公式](../?module=Probability.Pr.eq.Div.Pr.bayes)，[大数定理](../?module=Probability.Eq.Limit.Pr.of.Eq_Conditioned.Eq_Expect.Eq_Var.law_of_large_numbers)；
 * [Tensor](../?module=Tensor) 机器学习，深度学习中的数学模型，
 [KV-Cache](../?module=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.GetSlice.eq.DotSoftmaxAdd_DivDot_Transpose.kv_cache)，
-条件自由场[CRF](../?module=Tensor.And.of.Ne_0.Eq.Eq.Eq.crf.y_given_x)，KMeans
+条件自由场[CRF](../?module=Tensor.Imp_Eq_Add_LogSumExp.EqNegLogProb.of.Ne0ProbJoint.Indep.y_given_x)，KMeans
 [聚类收敛性](../?module=Set.LeAddSSumS_SquareSub_Sum.of.In.NotIn.LeAbsSSub_Sum)、用于Vision Transformer的[广义旋转位置编码](../?module=Tensor.Dot.eq.Add.of.Eq_Mul.Eq_Mul.Eq_Block.position_representation.plane)、强化学习的[策略梯度定理](../?module=Tensor.EqDot_GradExpect.of.Eq_Conditioned.Eq_Expect.IsFinite.IsFinite.unbiased_advantage_estimate)的推导及证明。  
 
 <br><br>
