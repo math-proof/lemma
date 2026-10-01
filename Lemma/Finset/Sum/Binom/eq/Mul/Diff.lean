@@ -37,4 +37,4 @@ private lemma main
       show (n : ℤ) + i - j + ((n : ℤ) - m) = j - (i + m) + 2 * (n + i - j) by ring, hsign]
 
 
--- created on 2026-09-27
+-- created on 2021-11-26

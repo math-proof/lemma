@@ -14,4 +14,4 @@ private lemma main
   fun i hi _ hy => h (Set.mem_iUnion₂.mpr ⟨i, hi, hy⟩)
 
 
--- created on 2026-09-27
+-- created on 2020-07-28

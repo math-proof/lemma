@@ -24,4 +24,4 @@ private lemma main
   rw [integral_add (hf.const_mul c) (hg.const_mul d), integral_const_mul, integral_const_mul]
 
 
--- created on 2026-09-27
+-- created on 2023-04-13

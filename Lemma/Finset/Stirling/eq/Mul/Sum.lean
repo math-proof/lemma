@@ -88,4 +88,4 @@ private lemma main
   rw [h, mul_div_cancel_left₀ _ (by positivity)]
 
 
--- created on 2026-09-27
+-- created on 2020-10-13

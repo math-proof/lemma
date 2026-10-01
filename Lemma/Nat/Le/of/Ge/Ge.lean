@@ -14,4 +14,4 @@ private lemma main
   exact le_trans h₁ h₀
 
 
--- created on 2026-09-27
+-- created on 2019-05-20

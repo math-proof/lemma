@@ -13,4 +13,4 @@ private lemma main
   exact Finset.nonempty_iff_ne_empty.mp (Finset.card_pos.mp h)
 
 
--- created on 2026-09-27
+-- created on 2020-07-13

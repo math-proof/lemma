@@ -18,4 +18,4 @@ private lemma main
   exact intervalIntegral.integral_mono_on hab hf hg h
 
 
--- created on 2026-09-27
+-- created on 2019-01-25

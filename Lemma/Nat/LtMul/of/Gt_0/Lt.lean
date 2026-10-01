@@ -14,4 +14,4 @@ private lemma main
   mul_lt_mul_of_pos_right h₁ h₀
 
 
--- created on 2026-09-27
+-- created on 2019-06-26

@@ -31,4 +31,4 @@ private lemma split
   exact (intervalIntegral.integral_add_adjacent_intervals hab hbc).symm
 
 
--- created on 2026-09-27
+-- created on 2020-06-07

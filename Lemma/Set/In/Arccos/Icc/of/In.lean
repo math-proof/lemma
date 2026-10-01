@@ -14,4 +14,4 @@ private lemma main
   exact ⟨Real.arccos_le_arccos h.2, Real.arccos_le_arccos h.1⟩
 
 
--- created on 2026-09-27
+-- created on 2020-12-04

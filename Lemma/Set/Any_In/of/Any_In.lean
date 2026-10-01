@@ -26,4 +26,4 @@ private lemma limits_restricted
   exact ⟨t, ht, e, he, he⟩
 
 
--- created on 2026-09-27
+-- created on 2020-07-14

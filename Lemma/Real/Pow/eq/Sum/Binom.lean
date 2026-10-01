@@ -22,4 +22,4 @@ private lemma main
   simp only [binomialSeries, FormalMultilinearSeries.ofScalars_apply_eq, smul_eq_mul]
 
 
--- created on 2026-09-27
+-- created on 2020-10-20

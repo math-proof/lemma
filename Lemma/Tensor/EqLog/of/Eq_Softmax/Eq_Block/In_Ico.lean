@@ -152,4 +152,4 @@ private lemma lower_triangle.tf
   rw [← Finset.sum_filter, if_pos hp, h i j hp, Real.log_div (Real.exp_pos _).ne' (hpos i j hp).ne', Real.log_exp]
 
 
--- created on 2026-09-27
+-- created on 2022-01-05

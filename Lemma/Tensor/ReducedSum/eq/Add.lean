@@ -41,4 +41,4 @@ private lemma shift
   exact Finset.sum_range_succ' _ _
 
 
--- created on 2026-09-27
+-- created on 2022-04-02

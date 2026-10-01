@@ -13,4 +13,4 @@ private lemma main
   exact ⟨h ▸ min_le_left a b, h ▸ min_le_right a b⟩
 
 
--- created on 2026-09-27
+-- created on 2019-04-25

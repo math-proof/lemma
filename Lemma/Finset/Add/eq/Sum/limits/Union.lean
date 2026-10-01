@@ -13,4 +13,4 @@ private lemma main
   rw [← Finset.sum_union (Finset.disjoint_sdiff_inter A B), Finset.sdiff_union_inter]
 
 
--- created on 2026-09-27
+-- created on 2018-08-09

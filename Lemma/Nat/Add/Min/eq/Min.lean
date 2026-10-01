@@ -11,4 +11,4 @@ private lemma main
   rw [← min_add_add_right, ← min_add_add_left, ← min_add_add_left]
 
 
--- created on 2026-09-27
+-- created on 2023-03-26

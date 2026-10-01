@@ -167,4 +167,4 @@ private lemma bilinear.symm
   rw [Matrix.dotProduct_mulVec, ← Matrix.mulVec_transpose, ← h, dotProduct_comm]
 
 
--- created on 2026-09-27
+-- created on 2023-06-17

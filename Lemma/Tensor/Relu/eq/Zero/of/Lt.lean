@@ -14,4 +14,4 @@ private lemma main
   exact max_eq_right (by omega)
 
 
--- created on 2026-09-27
+-- created on 2022-04-01

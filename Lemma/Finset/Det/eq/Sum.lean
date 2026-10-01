@@ -27,4 +27,4 @@ private lemma expansion_by_minors
   ring
 
 
--- created on 2026-09-27
+-- created on 2021-09-26

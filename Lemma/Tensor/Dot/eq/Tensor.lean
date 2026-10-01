@@ -14,4 +14,4 @@ private lemma main
   simp [Matrix.mul_apply, Fin.sum_univ_three]
 
 
--- created on 2026-09-27
+-- created on 2021-09-21

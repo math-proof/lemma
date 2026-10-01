@@ -17,4 +17,4 @@ private lemma main
   exact Finset.mem_biUnion.mpr ⟨i, Finset.mem_range.mpr h₁, Finset.mem_singleton_self _⟩
 
 
--- created on 2026-09-27
+-- created on 2020-08-04

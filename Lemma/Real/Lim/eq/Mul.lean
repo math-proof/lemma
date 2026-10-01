@@ -17,4 +17,4 @@ private lemma main
   exact h.const_mul y
 
 
--- created on 2026-09-26
+-- created on 2020-04-20

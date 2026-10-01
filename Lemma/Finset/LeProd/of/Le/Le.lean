@@ -34,4 +34,4 @@ private lemma unshift
   exact mul_le_mul h₀ h₁ (Finset.prod_nonneg (fun k _ => hg k)) (le_trans (hg a) h₀)
 
 
--- created on 2026-09-27
+-- created on 2019-09-26

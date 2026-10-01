@@ -14,4 +14,4 @@ private lemma main
   (Int.fract_eq_self.mpr ⟨h₀, h₁⟩).symm
 
 
--- created on 2026-09-27
+-- created on 2019-03-07

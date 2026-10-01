@@ -18,4 +18,4 @@ private lemma recurrence
     ring
 
 
--- created on 2026-09-27
+-- created on 2020-08-14

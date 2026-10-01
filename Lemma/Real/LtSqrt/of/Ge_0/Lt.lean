@@ -15,4 +15,4 @@ private lemma main
   exact Real.sqrt_lt_sqrt h₀ h₁
 
 
--- created on 2026-09-27
+-- created on 2019-06-28

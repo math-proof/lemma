@@ -15,4 +15,4 @@ private lemma main
   rw [Matrix.zpow_neg_natCast, Matrix.det_nonsing_inv, Matrix.det_pow, Ring.inverse_eq_inv, zpow_neg, zpow_natCast]
 
 
--- created on 2026-09-27
+-- created on 2023-05-01

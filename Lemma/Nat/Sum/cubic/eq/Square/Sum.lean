@@ -24,4 +24,4 @@ private lemma main
       linear_combination (-((m : ℤ) + 1)) * h
 
 
--- created on 2026-09-27
+-- created on 2023-12-13

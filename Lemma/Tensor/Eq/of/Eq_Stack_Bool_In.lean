@@ -47,4 +47,4 @@ private lemma conv1d
     rw [mul_zero]
 
 
--- created on 2026-09-27
+-- created on 2021-01-01

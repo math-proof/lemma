@@ -16,4 +16,4 @@ private lemma subst
   exact ⟨x, hx, he ▸ h₁ x hx⟩
 
 
--- created on 2026-09-27
+-- created on 2019-02-25

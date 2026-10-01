@@ -15,4 +15,4 @@ private lemma main
   · rw [max_eq_left hxy, min_eq_left (mul_le_mul_of_nonpos_left hxy h.le), mul_comm]
 
 
--- created on 2026-09-27
+-- created on 2021-10-02

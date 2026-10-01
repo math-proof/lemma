@@ -39,4 +39,4 @@ private lemma definition
   exact (IsGreatest.csSup_eq ⟨Set.mem_image_of_mem f hs.1, by rintro _ ⟨y, hy, rfl⟩; exact hs.2 y hy⟩).symm
 
 
--- created on 2026-09-27
+-- created on 2019-04-04

@@ -15,4 +15,4 @@ private lemma main
   · rw [intervalIntegral.integral_of_le (not_lt.mp h), MeasureTheory.integral_Icc_eq_integral_Ioc]
 
 
--- created on 2026-09-27
+-- created on 2020-05-24

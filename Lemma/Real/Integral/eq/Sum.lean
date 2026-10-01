@@ -16,4 +16,4 @@ private lemma main
   intervalIntegral.integral_finsetSum fun k _ => h k
 
 
--- created on 2026-09-26
+-- created on 2023-04-04

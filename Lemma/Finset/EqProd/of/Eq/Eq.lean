@@ -30,4 +30,4 @@ private lemma unshift
   rw [Finset.prod_eq_prod_Ico_succ_bot h, Finset.prod_eq_prod_Ico_succ_bot h, h₀, h₁]
 
 
--- created on 2026-09-27
+-- created on 2019-03-25

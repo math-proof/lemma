@@ -13,4 +13,4 @@ private lemma main
   exact ⟨GtStack.of.All_Gt, All_Gt.of.Gt.Stack⟩
 
 
--- created on 2026-09-27
+-- created on 2022-03-31

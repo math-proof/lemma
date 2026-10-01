@@ -18,4 +18,4 @@ private lemma main
   exact exists_deriv_eq_zero h hc he
 
 
--- created on 2026-09-27
+-- created on 2020-06-16

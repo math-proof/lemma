@@ -14,4 +14,4 @@ private lemma main
   exact Nat.mul_factorial_pred (by omega)
 
 
--- created on 2026-09-27
+-- created on 2020-08-07

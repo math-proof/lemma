@@ -17,4 +17,4 @@ private lemma swap
   simp [swapMatrix, Matrix.mulVec, dotProduct]
 
 
--- created on 2026-09-27
+-- created on 2020-08-26

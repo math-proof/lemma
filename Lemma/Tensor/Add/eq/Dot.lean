@@ -13,4 +13,4 @@ private lemma main
   (Matrix.mul_add x a b).symm
 
 
--- created on 2026-09-27
+-- created on 2021-12-26

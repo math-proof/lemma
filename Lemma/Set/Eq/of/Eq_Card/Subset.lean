@@ -14,4 +14,4 @@ private lemma main
   exact Finset.eq_of_subset_of_card_le h₁ h₀.symm.le
 
 
--- created on 2026-09-27
+-- created on 2020-07-20

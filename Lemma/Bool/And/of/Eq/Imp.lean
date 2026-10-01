@@ -20,4 +20,4 @@ private lemma induct
     exact ⟨h₁ n x (ih x), h₁ n (x + 1) (ih (x + 1))⟩
 
 
--- created on 2026-09-27
+-- created on 2019-04-17

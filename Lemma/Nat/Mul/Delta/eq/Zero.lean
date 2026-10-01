@@ -15,4 +15,4 @@ private lemma main
   · rw [mul_zero]
 
 
--- created on 2026-09-27
+-- created on 2022-10-11

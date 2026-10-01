@@ -18,4 +18,4 @@ private lemma main
     exact ⟨x, fun h' => absurd h' hp, fun _ => hx⟩
 
 
--- created on 2026-09-27
+-- created on 2023-07-01

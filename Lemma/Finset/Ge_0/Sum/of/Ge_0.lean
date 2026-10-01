@@ -13,4 +13,4 @@ private lemma main
   Finset.sum_nonneg fun k _ => h₀ k
 
 
--- created on 2026-09-27
+-- created on 2019-06-15

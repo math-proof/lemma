@@ -35,4 +35,4 @@ private lemma upper
   exact Set.Ioc_subset_Ioc_left h
 
 
--- created on 2026-09-27
+-- created on 2020-06-03

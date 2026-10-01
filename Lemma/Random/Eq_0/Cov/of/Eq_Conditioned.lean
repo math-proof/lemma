@@ -30,4 +30,4 @@ private lemma main
   rw [Covariance.eq_integral, hm, h0, zero_mul]
 
 
--- created on 2026-09-27
+-- created on 2023-04-19

@@ -22,4 +22,4 @@ private lemma vandermonde
   exact Vandermonde.det_left h
 
 
--- created on 2026-09-27
+-- created on 2022-01-15

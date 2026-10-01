@@ -21,4 +21,4 @@ private lemma main
   simp only [Variance.eq_integral, integral_const_mul, e]
 
 
--- created on 2026-09-27
+-- created on 2023-04-19

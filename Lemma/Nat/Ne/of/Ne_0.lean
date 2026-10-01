@@ -13,4 +13,4 @@ private lemma main
   exact sub_ne_zero.mp h
 
 
--- created on 2026-09-27
+-- created on 2021-09-19

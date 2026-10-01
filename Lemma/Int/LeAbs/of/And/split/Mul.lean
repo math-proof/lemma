@@ -15,4 +15,4 @@ private lemma given
   exact mul_le_mul h₀ h₁ (abs_nonneg _) ((abs_nonneg _).trans h₀)
 
 
--- created on 2026-09-27
+-- created on 2023-04-15

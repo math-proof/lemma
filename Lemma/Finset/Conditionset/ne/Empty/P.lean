@@ -18,4 +18,4 @@ private lemma main
   exact ⟨fun ⟨a, _, e⟩ => e ▸ a.isLt, fun h => ⟨⟨y, h⟩, Finset.mem_univ _, rfl⟩⟩
 
 
--- created on 2026-09-27
+-- created on 2020-11-06

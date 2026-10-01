@@ -14,4 +14,4 @@ private lemma main
   exact Finset.single_le_sum (fun j _ => h j) (Finset.mem_univ i)
 
 
--- created on 2026-09-27
+-- created on 2022-04-01

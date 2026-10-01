@@ -12,4 +12,4 @@ private lemma strengthen
   omega
 
 
--- created on 2026-09-27
+-- created on 2021-04-14

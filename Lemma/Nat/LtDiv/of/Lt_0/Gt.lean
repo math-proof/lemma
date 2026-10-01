@@ -20,4 +20,4 @@ private lemma main
   exact Int.LtMulS.of.Gt.Lt_0 h hi
 
 
--- created on 2026-09-26
+-- created on 2019-12-15

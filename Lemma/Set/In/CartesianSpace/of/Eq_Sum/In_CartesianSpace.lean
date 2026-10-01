@@ -19,4 +19,4 @@ private lemma main
   exact Finset.single_le_sum (fun j _ => (h₁ j (Set.mem_univ j) : (0 : ℝ) ≤ t j)) (Finset.mem_univ i)
 
 
--- created on 2026-09-27
+-- created on 2023-08-20

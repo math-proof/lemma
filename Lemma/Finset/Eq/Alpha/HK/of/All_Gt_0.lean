@@ -43,4 +43,4 @@ private lemma offset0
   exact alpha_eq_of_tail_pos x h₀ (fun j _ h2 => h j h2)
 
 
--- created on 2026-09-27
+-- created on 2020-09-24

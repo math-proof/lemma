@@ -15,4 +15,4 @@ private lemma main
   exact div_ne_zero h₀ h₁
 
 
--- created on 2026-09-27
+-- created on 2023-03-22

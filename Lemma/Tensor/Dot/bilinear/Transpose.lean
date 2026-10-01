@@ -15,4 +15,4 @@ private lemma main
   rw [Matrix.vecMul_transpose, dotProduct_comm (W *ᵥ y), ← Matrix.dotProduct_mulVec]
 
 
--- created on 2026-09-27
+-- created on 2021-01-04

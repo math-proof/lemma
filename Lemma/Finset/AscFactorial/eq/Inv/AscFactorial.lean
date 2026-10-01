@@ -18,4 +18,4 @@ private lemma main
   · rw [if_pos hi.le, if_neg (show ¬(0 ≤ -i) by omega), neg_neg, Int.cast_neg, add_neg_cancel_right, one_div_one_div]
 
 
--- created on 2026-09-27
+-- created on 2023-08-20

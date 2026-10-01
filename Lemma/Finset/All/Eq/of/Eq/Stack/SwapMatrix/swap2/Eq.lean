@@ -30,4 +30,4 @@ private lemma main
   simp only [Matrix.of_apply, swapMatrix, key, Equiv.swap_apply_self]
 
 
--- created on 2026-09-27
+-- created on 2020-08-23

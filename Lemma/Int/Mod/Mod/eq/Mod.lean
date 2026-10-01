@@ -11,4 +11,4 @@ private lemma main
   exact Int.emod_emod_of_dvd n (dvd_mul_right d k)
 
 
--- created on 2026-09-27
+-- created on 2023-12-26

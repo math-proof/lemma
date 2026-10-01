@@ -17,4 +17,4 @@ private lemma main
   intervalIntegral.integral_mono_on_of_le_Ioo hab.le hgi hfi h
 
 
--- created on 2026-09-26
+-- created on 2019-01-25

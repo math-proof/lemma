@@ -13,4 +13,4 @@ private lemma main
   ⟨LeStack.of.All_Le, All_Le.of.Le.Stack⟩
 
 
--- created on 2026-09-27
+-- created on 2022-03-31

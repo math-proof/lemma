@@ -34,4 +34,4 @@ private lemma unshift
   exact mul_lt_mul'' h₀ h₁ (hg a).le (Finset.prod_nonneg (fun k _ => (hg k).le))
 
 
--- created on 2026-09-27
+-- created on 2019-09-29

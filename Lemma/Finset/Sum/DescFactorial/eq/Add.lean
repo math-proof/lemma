@@ -44,4 +44,4 @@ private lemma telescope
   rw [show -(i : ℤ) - 1 = -((i + 1 : ℕ) : ℤ) by push_cast; ring, ff _ (i + 1) (by omega)]
 
 
--- created on 2026-09-27
+-- created on 2023-08-17

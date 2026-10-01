@@ -22,4 +22,4 @@ private lemma main
   exact hA.cholesky_step h₂ t h₃
 
 
--- created on 2026-09-27
+-- created on 2023-06-22

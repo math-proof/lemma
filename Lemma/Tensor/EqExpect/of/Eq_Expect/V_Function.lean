@@ -60,4 +60,4 @@ private lemma main
     exact Finset.sum_congr rfl (fun u _ => by ring)
 
 
--- created on 2026-09-26
+-- created on 2023-03-29

@@ -12,4 +12,4 @@ private lemma main
   ⟨Any.of.Any.limits.Neg, Any.of.Any.limits.Neg.given⟩
 
 
--- created on 2026-09-27
+-- created on 2019-02-19

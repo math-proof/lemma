@@ -15,4 +15,4 @@ private lemma main
   · exact Or.inr (Set.mem_Iio.mpr (one_div_neg.mpr (Set.mem_Iio.mp h)))
 
 
--- created on 2026-09-27
+-- created on 2020-04-14

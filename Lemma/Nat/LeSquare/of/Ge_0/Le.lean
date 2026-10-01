@@ -13,4 +13,4 @@ private lemma main
   mul_self_le_mul_self h₀ h₁
 
 
--- created on 2026-09-27
+-- created on 2019-06-17

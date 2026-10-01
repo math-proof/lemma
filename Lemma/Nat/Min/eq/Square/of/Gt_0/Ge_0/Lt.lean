@@ -16,4 +16,4 @@ private lemma main
   exact min_eq_left (mul_le_mul_of_nonneg_right h h₀.le)
 
 
--- created on 2026-09-27
+-- created on 2021-10-02

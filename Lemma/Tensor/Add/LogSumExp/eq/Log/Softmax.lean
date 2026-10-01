@@ -12,4 +12,4 @@ private lemma main
   Log.Softmax.eq.Add.LogSumExp.symm
 
 
--- created on 2026-09-27
+-- created on 2022-03-31

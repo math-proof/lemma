@@ -14,4 +14,4 @@ private lemma domain_defined
   h₀.resolve_right (not_not.mpr h₁)
 
 
--- created on 2026-09-27
+-- created on 2019-03-16

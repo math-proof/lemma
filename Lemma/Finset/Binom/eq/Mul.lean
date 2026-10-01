@@ -35,4 +35,4 @@ private lemma half
   rw [mul_comm, mul_assoc, mul_inv_cancel₀ h5, mul_one]
 
 
--- created on 2026-09-27
+-- created on 2020-10-21

@@ -12,4 +12,4 @@ private lemma main
   (Complex.mul_conj' x).symm
 
 
--- created on 2026-09-27
+-- created on 2023-06-24

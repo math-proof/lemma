@@ -12,4 +12,4 @@ private lemma main
   rw [Real.sign_neg, neg_neg]
 
 
--- created on 2026-09-27
+-- created on 2023-05-25

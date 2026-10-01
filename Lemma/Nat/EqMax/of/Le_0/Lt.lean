@@ -14,4 +14,4 @@ private lemma main
   exact max_eq_left (by nlinarith)
 
 
--- created on 2026-09-27
+-- created on 2019-09-04

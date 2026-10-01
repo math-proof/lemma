@@ -23,4 +23,4 @@ private lemma main
   rw [e1, e2, max_comm (min x b) a, max_min_distrib_left, max_eq_right hab, max_comm]
 
 
--- created on 2026-09-27
+-- created on 2023-03-26

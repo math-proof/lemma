@@ -16,4 +16,4 @@ private lemma main
   exact Finset.card_image_iff.mp (h.trans (Finset.card_range n).symm)
 
 
--- created on 2026-09-27
+-- created on 2021-03-20

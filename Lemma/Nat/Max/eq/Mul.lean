@@ -13,4 +13,4 @@ private lemma main
   rw [← max_mul_of_nonneg _ _ hr.le, mul_comm]
 
 
--- created on 2026-09-27
+-- created on 2019-08-17

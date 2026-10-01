@@ -14,4 +14,4 @@ private lemma continued.given
   ⟨h₀.trans h₁.symm, h₁.trans h₂.symm⟩
 
 
--- created on 2026-09-27
+-- created on 2021-11-24

@@ -15,4 +15,4 @@ private lemma main
   exact pow_le_pow_left₀ ha h n
 
 
--- created on 2026-09-27
+-- created on 2023-04-15

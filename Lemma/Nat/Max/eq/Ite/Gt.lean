@@ -14,4 +14,4 @@ private lemma main
   · exact max_eq_right (not_lt.mp h)
 
 
--- created on 2026-09-27
+-- created on 2019-06-18

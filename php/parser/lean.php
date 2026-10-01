@@ -5975,7 +5975,7 @@ class LeanModule extends LeanStatements
                                     $imply
                                 )
                             );
-                            $implyLatex = "\\begin{align}\n$implyLatex\n\\end{align}";
+                            $implyLatex = "\\begin{align*}\n$implyLatex\n\\end{align*}";
                         } else
                             $implyLatex = implode(
                                 "\n",

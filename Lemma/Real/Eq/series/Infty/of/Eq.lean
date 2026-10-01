@@ -44,4 +44,4 @@ private lemma coefficient
   simpa [FormalMultilinearSeries.ofScalars_apply_eq] using hn
 
 
--- created on 2026-09-27
+-- created on 2020-05-18

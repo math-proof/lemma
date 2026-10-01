@@ -16,4 +16,4 @@ private lemma main
   exact Finset.sum_range fun i => f (a i)
 
 
--- created on 2026-09-27
+-- created on 2022-01-10

@@ -10,4 +10,4 @@ private lemma main
   (max_sub_sub_right x y z).symm
 
 
--- created on 2026-09-27
+-- created on 2018-08-06

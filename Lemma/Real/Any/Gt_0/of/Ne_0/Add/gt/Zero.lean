@@ -29,4 +29,4 @@ private lemma main
         mul_nonneg (sub_nonneg.mpr hX1) (by positivity : (0 : ℝ) ≤ |c| + 1), neg_abs_le c]⟩
 
 
--- created on 2026-09-27
+-- created on 2022-04-03

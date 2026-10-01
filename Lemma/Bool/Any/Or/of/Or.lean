@@ -20,4 +20,4 @@ private lemma main
     exact Any.Or.Distributed.of.Or (Or.inr (Any.Cond.of.Cond h₀ h))
 
 
--- created on 2026-09-27
+-- created on 2020-02-19

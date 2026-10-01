@@ -13,4 +13,4 @@ private lemma main
   rw [show B - C = -(C - B) by abel, Matrix.mul_neg, Matrix.neg_mul]
 
 
--- created on 2026-09-27
+-- created on 2023-04-30

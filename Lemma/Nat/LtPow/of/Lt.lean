@@ -16,4 +16,4 @@ private lemma main
   exact pow_lt_pow_left₀ h hx (by omega)
 
 
--- created on 2026-09-27
+-- created on 2023-04-15

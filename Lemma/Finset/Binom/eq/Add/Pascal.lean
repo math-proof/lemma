@@ -15,4 +15,4 @@ private lemma main
   rw [Nat.add_sub_cancel, Nat.add_sub_cancel, Nat.choose_succ_succ, add_comm]
 
 
--- created on 2026-09-27
+-- created on 2020-09-28

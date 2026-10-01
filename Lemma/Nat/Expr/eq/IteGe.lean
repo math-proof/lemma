@@ -14,4 +14,4 @@ private lemma main
     exact (max_eq_left (le_of_lt (not_le.mp h))).symm
 
 
--- created on 2026-09-27
+-- created on 2021-12-23

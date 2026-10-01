@@ -15,4 +15,4 @@ private lemma main
   exact Int.floor_eq_iff.mpr ⟨h.1, h.2⟩
 
 
--- created on 2026-09-27
+-- created on 2019-12-05

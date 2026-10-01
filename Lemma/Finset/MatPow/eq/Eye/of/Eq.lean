@@ -24,4 +24,4 @@ private lemma main
   by_cases hab : a = b <;> simp [hab, eq_comm]
 
 
--- created on 2026-09-27
+-- created on 2020-08-24

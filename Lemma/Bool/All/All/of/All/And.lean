@@ -12,4 +12,4 @@ private lemma main
   ⟨fun e he => (h₀ e he).1, fun e he => (h₀ e he).2⟩
 
 
--- created on 2026-09-27
+-- created on 2018-11-30

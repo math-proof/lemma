@@ -50,4 +50,4 @@ private lemma main
   exact Finset.card_eq_zero.mp h₄
 
 
--- created on 2026-09-27
+-- created on 2021-03-19

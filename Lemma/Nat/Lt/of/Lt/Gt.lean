@@ -15,4 +15,4 @@ private lemma main
   exact lt_trans h₀ h₁
 
 
--- created on 2026-09-27
+-- created on 2019-12-20

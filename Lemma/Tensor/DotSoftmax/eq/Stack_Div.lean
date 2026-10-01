@@ -18,4 +18,4 @@ private lemma scaled_dot_product_attention
   exact Finset.sum_congr rfl fun j _ => by ring
 
 
--- created on 2026-09-27
+-- created on 2023-06-18

@@ -27,4 +27,4 @@ private lemma main
   rw [h₂, add_zero]
 
 
--- created on 2026-09-27
+-- created on 2023-06-23

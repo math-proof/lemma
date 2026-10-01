@@ -13,4 +13,4 @@ private lemma main
   Set.nonempty_iff_ne_empty.mp ⟨x, h⟩
 
 
--- created on 2026-09-27
+-- created on 2019-09-22

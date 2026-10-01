@@ -42,4 +42,4 @@ private lemma swap2
   exact h1 i _ (h1 j _ (h1 i x hx))
 
 
--- created on 2026-09-27
+-- created on 2020-08-25

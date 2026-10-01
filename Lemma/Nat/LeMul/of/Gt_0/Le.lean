@@ -14,4 +14,4 @@ private lemma main
   mul_le_mul_of_nonneg_right h₁ h₀.le
 
 
--- created on 2026-09-26
+-- created on 2019-07-31

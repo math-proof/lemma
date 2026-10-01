@@ -15,4 +15,4 @@ private lemma main
   rw [Matrix.inv_def, Ring.inverse_eq_inv']
 
 
--- created on 2026-09-27
+-- created on 2020-02-12

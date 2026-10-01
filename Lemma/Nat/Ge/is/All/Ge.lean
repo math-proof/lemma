@@ -21,4 +21,4 @@ private lemma main
     rwa [EqStack_Get, EqStack_Get] at this
 
 
--- created on 2026-09-27
+-- created on 2022-03-31

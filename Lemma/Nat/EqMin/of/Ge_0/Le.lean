@@ -14,4 +14,4 @@ private lemma main
   exact min_eq_right (by nlinarith)
 
 
--- created on 2026-09-27
+-- created on 2019-06-20

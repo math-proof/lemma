@@ -14,4 +14,4 @@ private lemma main
   rw [Real.log_div (Real.exp_pos (x i)).ne' hs, Real.log_exp]
 
 
--- created on 2026-09-27
+-- created on 2022-03-31

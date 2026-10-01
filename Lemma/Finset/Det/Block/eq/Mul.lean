@@ -54,4 +54,4 @@ private lemma anti_diagonal.lower
   Matrix.BlockSwap.det_zero₂₂ B A C
 
 
--- created on 2026-09-27
+-- created on 2021-11-21

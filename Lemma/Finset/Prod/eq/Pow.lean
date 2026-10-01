@@ -16,4 +16,4 @@ private lemma main
   exact Real.finsetProd_rpow _ _ (fun i _ => h i) a
 
 
--- created on 2026-09-27
+-- created on 2023-03-30

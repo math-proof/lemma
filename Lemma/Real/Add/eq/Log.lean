@@ -14,4 +14,4 @@ private lemma main
   rw [Real.log_mul h₀ (inv_ne_zero h₁), Real.log_inv, sub_eq_add_neg]
 
 
--- created on 2026-09-27
+-- created on 2018-08-05

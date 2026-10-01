@@ -16,4 +16,4 @@ private lemma main
   (integral_const_mul c f).symm
 
 
--- created on 2026-09-26
+-- created on 2023-04-02

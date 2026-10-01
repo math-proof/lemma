@@ -12,4 +12,4 @@ private lemma main
   by_cases hp : p <;> simp [hp]
 
 
--- created on 2026-09-27
+-- created on 2023-11-05

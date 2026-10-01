@@ -19,4 +19,4 @@ private lemma main
   exact (IsGreatest.csSup_eq (isGLB_csInf (h₀.image f) h₁)).symm
 
 
--- created on 2026-09-27
+-- created on 2018-12-30

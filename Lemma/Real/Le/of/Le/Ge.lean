@@ -19,4 +19,4 @@ private lemma quadratic
     exact le_max_of_le_right (by nlinarith [mul_nonneg (sub_nonneg.mpr h₁) hc'])
 
 
--- created on 2026-09-27
+-- created on 2019-10-26

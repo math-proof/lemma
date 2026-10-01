@@ -10,4 +10,4 @@ private lemma main
   (Set.inter_union_sdiff A B).symm
 
 
--- created on 2026-09-27
+-- created on 2020-10-05

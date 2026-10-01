@@ -15,4 +15,4 @@ private lemma main
   exact Finset.sum_pos (fun i hi => h i (Finset.mem_range.mp hi)) (Finset.nonempty_range_iff.mpr (by omega))
 
 
--- created on 2026-09-27
+-- created on 2019-01-23

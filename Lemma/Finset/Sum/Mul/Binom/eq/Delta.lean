@@ -29,4 +29,4 @@ private lemma main
   · rw [if_neg hd, if_neg (by omega), mul_zero]
 
 
--- created on 2026-09-27
+-- created on 2023-06-17

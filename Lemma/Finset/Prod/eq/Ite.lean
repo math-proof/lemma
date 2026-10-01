@@ -16,4 +16,4 @@ private lemma main
   · simp only [if_neg hx]
 
 
--- created on 2026-09-27
+-- created on 2020-03-10

@@ -13,4 +13,4 @@ private lemma main
   exact Finset.prod_sdiff Finset.inter_subset_left
 
 
--- created on 2026-09-27
+-- created on 2020-02-02

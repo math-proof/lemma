@@ -10,4 +10,4 @@ private lemma main
   rcases Int.emod_two_eq_zero_or_one n with h | h <;> simp [h]
 
 
--- created on 2026-09-27
+-- created on 2022-01-20

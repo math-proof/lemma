@@ -19,4 +19,4 @@ private lemma main
   Finset.card_bij' (fun a _ => f a) (fun b _ => g b) h₀ h₁ (fun a ha => (h₂ a ha).symm) (fun b hb => (h₃ b hb).symm)
 
 
--- created on 2026-09-27
+-- created on 2020-07-31

@@ -13,4 +13,4 @@ private lemma vandermonde
   exact Vandermonde.det_powAdd
 
 
--- created on 2026-09-27
+-- created on 2020-10-14

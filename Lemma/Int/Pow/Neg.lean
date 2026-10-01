@@ -13,4 +13,4 @@ private lemma main
   rw [show y - x = -(x - y) by ring, Even.neg_zpow h]
 
 
--- created on 2026-09-27
+-- created on 2021-11-25

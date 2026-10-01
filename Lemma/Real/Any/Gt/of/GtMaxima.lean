@@ -20,4 +20,4 @@ private lemma main
   exact not_lt.mp (fun hx' => hc ⟨x, hx, hx'⟩)
 
 
--- created on 2026-09-27
+-- created on 2018-12-31

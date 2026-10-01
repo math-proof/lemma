@@ -27,4 +27,4 @@ private lemma main
   simpa [smul_eq_mul] using h
 
 
--- created on 2026-10-01
+-- created on 2020-06-01

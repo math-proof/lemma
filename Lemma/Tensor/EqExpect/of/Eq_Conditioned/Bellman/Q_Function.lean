@@ -57,4 +57,4 @@ private lemma main
     exact (mul_left_cancel₀ hu h₃).symm
 
 
--- created on 2026-09-26
+-- created on 2023-03-29

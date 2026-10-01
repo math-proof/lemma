@@ -12,4 +12,4 @@ private lemma main
   exact Real.cos_sq' x
 
 
--- created on 2026-09-27
+-- created on 2023-06-21

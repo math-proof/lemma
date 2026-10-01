@@ -12,4 +12,4 @@ private lemma main
   Finset.card_pos.mpr (Finset.nonempty_iff_ne_empty.mpr h)
 
 
--- created on 2026-09-27
+-- created on 2020-07-12

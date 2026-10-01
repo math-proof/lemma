@@ -14,4 +14,4 @@ private lemma cancel
   rw [show a * c * d + d = (a + 1 / c) * (c * d) by field_simp, show b * c * d + c = (b + 1 / d) * (c * d) by field_simp, mul_div_mul_right _ _ (mul_ne_zero h₀ h₁)]
 
 
--- created on 2026-09-27
+-- created on 2020-06-29

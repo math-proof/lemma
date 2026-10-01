@@ -14,4 +14,4 @@ private lemma quotient
   rw [add_div, mul_div_cancel_left₀ _ hd, Int.floor_add_intCast]
 
 
--- created on 2026-09-27
+-- created on 2018-08-10

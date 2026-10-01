@@ -12,4 +12,4 @@ private lemma main
   exact Fin.addCases (fun i => by simp) (fun i => by simp) i
 
 
--- created on 2026-09-27
+-- created on 2021-10-07

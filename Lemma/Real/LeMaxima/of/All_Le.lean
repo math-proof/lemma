@@ -17,4 +17,4 @@ private lemma main
   exact csSup_le (h₀.image f) (by rintro _ ⟨x, hx, rfl⟩; exact h x hx)
 
 
--- created on 2026-09-27
+-- created on 2019-01-01

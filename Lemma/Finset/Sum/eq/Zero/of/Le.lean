@@ -14,4 +14,4 @@ private lemma main
   rw [Finset.Ico_eq_empty_of_le h, Finset.sum_empty]
 
 
--- created on 2026-09-27
+-- created on 2019-11-18

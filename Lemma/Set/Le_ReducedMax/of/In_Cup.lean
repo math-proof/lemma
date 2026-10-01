@@ -19,4 +19,4 @@ private lemma main
   exact le_csSup (Set.finite_univ.image _).bddAbove ⟨⟨i, Finset.mem_range.mp hi⟩, Set.mem_univ _, rfl⟩
 
 
--- created on 2026-09-27
+-- created on 2023-11-12

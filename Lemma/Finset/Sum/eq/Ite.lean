@@ -49,4 +49,4 @@ private lemma unshift
     rw [Finset.Ico_eq_empty (by omega), Finset.sum_empty]
 
 
--- created on 2026-09-27
+-- created on 2020-03-17

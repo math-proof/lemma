@@ -35,4 +35,4 @@ private lemma main
   rw [Finset.prod_eq_zero (f := fun i => M (σ i) i) (Finset.mem_univ j) (h₃ (σ j) j hσ hj), smul_zero]
 
 
--- created on 2026-09-27
+-- created on 2020-10-14

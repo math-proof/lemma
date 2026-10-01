@@ -17,4 +17,4 @@ private lemma given
     exact Or.inr ⟨x, hx, h⟩
 
 
--- created on 2026-09-27
+-- created on 2020-02-17

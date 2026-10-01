@@ -20,4 +20,4 @@ private lemma quadratic
     mul_pos (mul_pos (mul_pos ha (sub_pos.mpr h₀)) (sub_pos.mpr h₁)) (sub_pos.mpr (lt_trans h₁ h₀))]
 
 
--- created on 2026-09-27
+-- created on 2019-12-19

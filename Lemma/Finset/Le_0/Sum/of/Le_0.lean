@@ -14,4 +14,4 @@ private lemma main
   exact Finset.sum_nonpos (fun k hk => h₀ k (Finset.mem_range.mp hk))
 
 
--- created on 2026-09-27
+-- created on 2019-12-06

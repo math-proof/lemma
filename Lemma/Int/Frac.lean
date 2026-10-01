@@ -16,4 +16,4 @@ private lemma half
       show ((2 * k + 1 : ℤ) : ℝ) / 2 = ((k : ℤ) : ℝ) + 1 / 2 by push_cast; ring, Int.fract_intCast_add, Int.fract_intCast_add]
 
 
--- created on 2026-09-27
+-- created on 2019-05-10

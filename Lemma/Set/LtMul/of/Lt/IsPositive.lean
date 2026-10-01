@@ -14,4 +14,4 @@ private lemma main
   exact mul_lt_mul_of_pos_right h₀ (Set.mem_Ioi.mp h₁)
 
 
--- created on 2026-09-27
+-- created on 2021-10-02

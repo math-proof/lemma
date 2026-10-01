@@ -16,4 +16,4 @@ private lemma main
   · exact lt_of_lt_of_le (by nlinarith) (le_max_left _ _)
 
 
--- created on 2026-09-27
+-- created on 2019-08-31

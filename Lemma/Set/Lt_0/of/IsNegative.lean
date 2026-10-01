@@ -13,4 +13,4 @@ private lemma main
   h₀
 
 
--- created on 2026-09-26
+-- created on 2020-04-25

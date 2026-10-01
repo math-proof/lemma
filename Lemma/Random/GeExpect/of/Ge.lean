@@ -22,4 +22,4 @@ private lemma main
   · exact EReal.coe_ennreal_le_coe_ennreal_iff.2 (lintegral_mono (μ := π.map a) fun x => EReal.toENNReal_le_toENNReal (EReal.neg_le_neg_iff.2 (h₀ x)))
 
 
--- created on 2026-09-26
+-- created on 2023-04-04

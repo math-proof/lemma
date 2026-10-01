@@ -14,4 +14,4 @@ private lemma main
   exact mul_neg_of_neg_of_pos h₀ h₁
 
 
--- created on 2026-09-27
+-- created on 2020-01-21

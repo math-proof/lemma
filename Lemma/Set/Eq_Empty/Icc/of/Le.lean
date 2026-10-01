@@ -13,4 +13,4 @@ private lemma main
   exact Set.Ico_eq_empty_of_le h
 
 
--- created on 2026-09-27
+-- created on 2019-07-09

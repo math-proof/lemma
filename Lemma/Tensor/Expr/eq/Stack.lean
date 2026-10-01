@@ -12,4 +12,4 @@ private lemma main
   Eq_Stack X
 
 
--- created on 2026-09-27
+-- created on 2019-05-08

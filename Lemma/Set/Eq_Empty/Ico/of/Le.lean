@@ -13,4 +13,4 @@ private lemma main
   Set.Ico_eq_empty (not_lt.mpr h)
 
 
--- created on 2026-09-27
+-- created on 2021-05-22

@@ -13,4 +13,4 @@ private lemma absorb
   rw [neg_mul, Finset.sum_mul]
 
 
--- created on 2026-09-27
+-- created on 2023-03-17

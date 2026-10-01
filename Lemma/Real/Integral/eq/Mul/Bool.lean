@@ -15,4 +15,4 @@ private lemma main
   · rw [mul_zero, Set.Icc_eq_empty h, MeasureTheory.setIntegral_empty]
 
 
--- created on 2026-09-27
+-- created on 2023-06-19

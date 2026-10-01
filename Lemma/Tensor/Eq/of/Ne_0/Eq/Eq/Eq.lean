@@ -44,4 +44,4 @@ private lemma policy_gradient_theorem
   rw [e, fderiv_const_add, fderiv_fun_sum (fun t _ => (h₂ θ₀ t).log (h₁ θ₀ t).ne')]
 
 
--- created on 2026-09-27
+-- created on 2023-03-22

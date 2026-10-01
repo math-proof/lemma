@@ -13,4 +13,4 @@ private lemma main
   (not_and_or.mp h).imp id not_not.mp
 
 
--- created on 2026-09-27
+-- created on 2020-10-01

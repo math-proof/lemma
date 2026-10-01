@@ -44,4 +44,4 @@ private lemma offset
     rwa [show i + a + b = i + (a + b) by ring] at this
 
 
--- created on 2026-09-27
+-- created on 2020-09-22

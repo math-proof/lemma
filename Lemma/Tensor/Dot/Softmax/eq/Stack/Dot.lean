@@ -37,5 +37,5 @@ private lemma gpt.batched
   simp only [maskedSoftmax, key, ite_div, zero_div, ite_mul, zero_mul, Finset.sum_filter]
 
 
--- created on 2026-09-27
+-- created on 2021-08-07
 -- updated on 2026-09-27

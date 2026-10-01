@@ -13,4 +13,4 @@ private lemma main
   · exact abs_of_nonneg (le_of_lt (not_le.mp h))
 
 
--- created on 2026-09-27
+-- created on 2018-01-18

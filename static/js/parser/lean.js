@@ -6834,7 +6834,7 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                     const implyLean = unindentTwo(imply.map((s) => strStmt(s)).join('\n'));
                     let implyLatex;
                     if (imply.length > 1 && imply[0] instanceof Lean_let)
-                        implyLatex = '\\begin{align}\n' + imply.map((st) => `&${st.toLatex(syntax)}&& `).join('\\\\\n') + '\n\\end{align}';
+                        implyLatex = '\\begin{align*}\n' + imply.map((st) => `&${st.toLatex(syntax)}&& `).join('\\\\\n') + '\n\\end{align*}';
                     else
                         implyLatex = imply.map(st => st.toLatex(syntax)).join('\n');
                     const assignSuffix = ' :=' + (by ? ` ${by}` : '');
@@ -7167,11 +7167,11 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                         let implyLatex;
                         if (imply.length > 1 && imply[0] instanceof Lean_let) {
                             implyLatex =
-                                '\\begin{align}\n' +
+                                '\\begin{align*}\n' +
                                 imply
                                     .map((st) => `&${st.toLatex ? st.toLatex(syntax) : strStmt(st)}&& `)
                                     .join('\\\\\n') +
-                                '\n\\end{align}';
+                                '\n\\end{align*}';
                         } else {
                             implyLatex = imply
                                 .map((st) => (st.toLatex ? st.toLatex(syntax) : strStmt(st)))

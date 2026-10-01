@@ -9,4 +9,4 @@ private lemma main :
   by_cases hp : p <;> by_cases hq : q <;> simp [hp, hq]
 
 
--- created on 2026-09-27
+-- created on 2022-01-27

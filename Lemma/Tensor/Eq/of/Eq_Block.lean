@@ -34,5 +34,5 @@ private lemma mask.cross_attention
     simp [maskedExp, hc]
 
 
--- created on 2026-09-27
+-- created on 2022-02-18
 -- updated on 2026-09-27

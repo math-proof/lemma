@@ -16,4 +16,4 @@ private lemma constant_fn
   exact ⟨f 0, fun x => is_const_of_deriv_eq_zero hd h x 0⟩
 
 
--- created on 2026-09-27
+-- created on 2020-06-12

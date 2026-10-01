@@ -54,4 +54,4 @@ private lemma main
     exact Finset.sum_congr rfl (fun y _ => (V_succ_eq M θ h₁ t x u hP y).symm)
 
 
--- created on 2026-09-26
+-- created on 2023-03-27

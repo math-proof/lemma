@@ -16,4 +16,4 @@ private lemma main
   exact ⟨fun hx => h₀ x hx, fun hx => h₁ x hx⟩
 
 
--- created on 2026-09-27
+-- created on 2020-07-09

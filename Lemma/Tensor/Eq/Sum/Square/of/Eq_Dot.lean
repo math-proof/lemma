@@ -94,4 +94,4 @@ private lemma offset
   exact (Equiv.sum_comp (Equiv.swap i j) (fun k => (x k - a) ^ 2)).symm
 
 
--- created on 2026-09-27
+-- created on 2019-11-13

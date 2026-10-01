@@ -12,4 +12,4 @@ private lemma main
   exact Stirling.conditionset.stirlingSecond_eq_ncard n k
 
 
--- created on 2026-09-27
+-- created on 2020-10-04

@@ -14,4 +14,4 @@ private lemma main
   exact Rat.Sum.Square.eq.Div.Sum.Square hn
 
 
--- created on 2026-09-27
+-- created on 2023-10-08

@@ -36,4 +36,4 @@ private lemma main
   rw [hset, Set.ncard_range_of_injective hinj, Nat.card_eq_fintype_card, Fintype.card_perm, Fintype.card_fin]
 
 
--- created on 2026-09-27
+-- created on 2020-08-07

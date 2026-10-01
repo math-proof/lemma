@@ -17,4 +17,4 @@ private lemma main
     exact ⟨x, hx, Or.inr hf⟩
 
 
--- created on 2026-09-27
+-- created on 2020-02-19

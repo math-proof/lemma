@@ -46,4 +46,4 @@ private lemma collapse
     exact absurd ((h i j).mp ⟨hiA, hj⟩).2 hiB
 
 
--- created on 2026-09-27
+-- created on 2019-09-13

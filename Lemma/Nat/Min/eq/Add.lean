@@ -10,4 +10,4 @@ private lemma main
   rw [min_add_add_right, add_comm]
 
 
--- created on 2026-09-27
+-- created on 2019-05-13

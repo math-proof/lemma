@@ -31,4 +31,4 @@ private lemma finite
   exact intervalIntegral.integral_mono_on hab hf hg (fun x _ => h x)
 
 
--- created on 2026-09-27
+-- created on 2021-09-22

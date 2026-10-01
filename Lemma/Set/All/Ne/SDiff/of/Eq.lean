@@ -19,4 +19,4 @@ private lemma main
   exact hj.2 (inj hi hj.1 e).symm
 
 
--- created on 2026-09-27
+-- created on 2020-07-19

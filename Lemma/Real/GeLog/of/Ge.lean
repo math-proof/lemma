@@ -14,4 +14,4 @@ private lemma main
   Real.log_le_log h₁ h₀
 
 
--- created on 2026-09-27
+-- created on 2019-05-26

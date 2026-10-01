@@ -13,4 +13,4 @@ private lemma main
   rw [Matrix.det_smul, Matrix.det_one, mul_one, Fintype.card_fin]
 
 
--- created on 2026-09-27
+-- created on 2021-08-31

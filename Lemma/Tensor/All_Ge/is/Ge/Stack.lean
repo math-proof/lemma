@@ -13,4 +13,4 @@ private lemma main
   ⟨GeStack.of.All_Ge, All_Ge.of.Ge.Stack⟩
 
 
--- created on 2026-09-27
+-- created on 2022-03-31

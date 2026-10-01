@@ -13,4 +13,4 @@ private lemma main
   (div_lt_div_iff_of_pos_right h₀).mpr h₁
 
 
--- created on 2026-09-27
+-- created on 2019-06-27

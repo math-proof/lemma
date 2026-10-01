@@ -16,4 +16,4 @@ private lemma main
   exact ⟨e, he, h₁ e⟩
 
 
--- created on 2026-09-27
+-- created on 2019-03-17

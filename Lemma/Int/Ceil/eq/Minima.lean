@@ -14,4 +14,4 @@ private lemma main
   exact (IsLeast.csInf_eq (s := {n : ℤ | (n : ℝ) ≥ x}) ⟨Int.le_ceil x, fun n (hn : x ≤ (n : ℝ)) => Int.ceil_le.mpr hn⟩).symm
 
 
--- created on 2026-09-27
+-- created on 2021-09-11

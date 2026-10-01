@@ -11,4 +11,4 @@ private lemma lower
   exact Set.Icc_subset_Icc_right (le_abs_self b)
 
 
--- created on 2026-09-27
+-- created on 2019-07-09

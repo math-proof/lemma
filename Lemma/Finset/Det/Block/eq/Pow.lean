@@ -12,4 +12,4 @@ private lemma main
   rw [Matrix.BlockSwap.det_zero₁₁, Matrix.det_one, Matrix.det_one, mul_one, mul_one]
 
 
--- created on 2026-09-27
+-- created on 2021-08-23

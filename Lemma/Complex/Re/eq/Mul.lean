@@ -13,4 +13,4 @@ private lemma main
   rw [← mul_add, Complex.re_ofReal_mul]
 
 
--- created on 2026-09-27
+-- created on 2023-06-23

@@ -15,4 +15,4 @@ private lemma main
   exact Finset.sum_eq_zero (fun i hi => by rw [h i (Finset.mem_range.mp hi), zero_mul])
 
 
--- created on 2026-09-27
+-- created on 2019-01-24

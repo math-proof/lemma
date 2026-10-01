@@ -13,4 +13,4 @@ private lemma given
   exact ⟨ne_of_gt h, by linarith⟩
 
 
--- created on 2026-09-27
+-- created on 2023-04-13

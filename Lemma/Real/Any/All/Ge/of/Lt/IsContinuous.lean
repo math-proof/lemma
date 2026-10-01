@@ -17,4 +17,4 @@ private lemma extreme_value_theorem
   exact ⟨ξ, hξ, fun z hz => isMinOn_iff.mp hmin z hz⟩
 
 
--- created on 2026-09-27
+-- created on 2023-10-15

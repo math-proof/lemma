@@ -28,4 +28,4 @@ private lemma main
   rw [key p h₂, key a ha, h₀, h₁]
 
 
--- created on 2026-09-27
+-- created on 2020-10-22

@@ -11,4 +11,4 @@ private lemma main
   Finset.card_le_card Finset.subset_union_left
 
 
--- created on 2026-09-27
+-- created on 2020-08-09

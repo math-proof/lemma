@@ -13,4 +13,4 @@ private lemma main
   not_forall.mp (fun h' => h ((Eq.is.All_EqGetS A B).mpr h'))
 
 
--- created on 2026-09-27
+-- created on 2023-05-01

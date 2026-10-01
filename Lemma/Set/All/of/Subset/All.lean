@@ -16,4 +16,4 @@ private lemma main
   exact fun x hx => h₁ x (h₀ hx)
 
 
--- created on 2026-09-27
+-- created on 2020-04-01

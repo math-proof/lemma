@@ -26,4 +26,4 @@ private lemma left_open
   exact ⟨mul_lt_mul_of_pos_right h₁.1 h₀, mul_le_mul_of_nonneg_right h₁.2 h₀.le⟩
 
 
--- created on 2026-09-27
+-- created on 2020-04-21

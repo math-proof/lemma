@@ -14,4 +14,4 @@ private lemma main
   max_lt (lt_max_of_lt_left h₀) (lt_max_of_lt_right h₁)
 
 
--- created on 2026-09-27
+-- created on 2020-01-08

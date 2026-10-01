@@ -26,4 +26,4 @@ private lemma main
   linear_combination (-((-1 : ℤ) ^ k * (k : ℤ) ^ n * (n.choose k : ℤ))) * h2
 
 
--- created on 2026-09-27
+-- created on 2023-06-17

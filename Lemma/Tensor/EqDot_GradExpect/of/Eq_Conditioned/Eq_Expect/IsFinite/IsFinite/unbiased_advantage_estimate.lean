@@ -281,5 +281,5 @@ private lemma main
   exact hT.trans (hRb.symm.trans ((congrArg (InnerProductSpace.toDual ℝ Θ).symm holdRA).trans hAb))
 
 
--- created on 2026-09-26
+-- created on 2023-04-13
 -- updated on 2026-09-28

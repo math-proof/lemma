@@ -15,4 +15,4 @@ private lemma main
   rw [fwdDiff_iter_pow_eq_zero_of_lt h, Pi.zero_apply]
 
 
--- created on 2026-09-27
+-- created on 2021-12-01

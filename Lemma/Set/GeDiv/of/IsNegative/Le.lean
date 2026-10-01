@@ -14,4 +14,4 @@ private lemma main
   exact (div_le_div_right_of_neg (Set.mem_Iio.mp h₀)).mpr h₁
 
 
--- created on 2026-09-27
+-- created on 2023-10-15

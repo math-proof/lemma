@@ -16,4 +16,4 @@ private lemma main
   · rw [if_neg h₁, zero_mul]
 
 
--- created on 2026-09-27
+-- created on 2020-02-06

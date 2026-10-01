@@ -17,4 +17,4 @@ private lemma main
   intervalIntegral.integral_mono h₀ h₂ h₁ h₃
 
 
--- created on 2026-09-26
+-- created on 2020-05-20

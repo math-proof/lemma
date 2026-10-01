@@ -13,4 +13,4 @@ private lemma main
   Set.mem_inter h₀ h₁
 
 
--- created on 2026-09-27
+-- created on 2020-12-23

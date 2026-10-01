@@ -45,4 +45,4 @@ private lemma step2
     (K x (m + 1) * hH - H x (m + 1) * hK + x (m + 1 + 1) * HK_det x (m + 1))
 
 
--- created on 2026-09-27
+-- created on 2020-09-26

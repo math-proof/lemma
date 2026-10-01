@@ -127,4 +127,4 @@ private lemma upper_triangle
   rw [e1, e2]
 
 
--- created on 2026-09-27
+-- created on 2022-01-03

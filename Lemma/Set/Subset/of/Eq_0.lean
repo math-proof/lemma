@@ -13,4 +13,4 @@ private lemma main
   exact Finset.sdiff_eq_empty_iff_subset.mp (Finset.card_eq_zero.mp h.symm)
 
 
--- created on 2026-09-27
+-- created on 2020-09-06

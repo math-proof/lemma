@@ -26,5 +26,5 @@ private lemma base
   exact apply_ite (· ^ t) _ _ _
 
 
--- created on 2026-09-27
+-- created on 2020-02-29
 -- updated on 2026-09-27

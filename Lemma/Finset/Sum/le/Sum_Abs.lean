@@ -12,4 +12,4 @@ private lemma main
   exact Finset.sum_le_sum fun k _ => le_abs_self (f k)
 
 
--- created on 2026-09-27
+-- created on 2023-04-15

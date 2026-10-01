@@ -14,4 +14,4 @@ private lemma main
   exact Int.floor_eq_zero_iff.mp h
 
 
--- created on 2026-09-27
+-- created on 2020-01-19

@@ -12,4 +12,4 @@ private lemma as_multiple_limits
   exact Finset.sum_mul_sum _ _ _ _
 
 
--- created on 2026-09-27
+-- created on 2020-02-02

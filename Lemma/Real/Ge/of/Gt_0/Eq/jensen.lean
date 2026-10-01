@@ -23,4 +23,4 @@ private lemma main
   exact Real.Imp.of.Gt_0.jensen h₀ h₁ h₃ h₄ h₂
 
 
--- created on 2026-10-01
+-- created on 2020-06-02

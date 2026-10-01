@@ -33,4 +33,4 @@ private lemma cross_attention
   simp only [div_mul_eq_mul_div, ← Finset.sum_div, add_div]
 
 
--- created on 2026-09-27
+-- created on 2021-01-02

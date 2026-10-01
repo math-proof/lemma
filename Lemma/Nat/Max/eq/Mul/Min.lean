@@ -16,4 +16,4 @@ private lemma main
     rw [min_eq_right hxy, max_eq_right (by nlinarith), mul_comm]
 
 
--- created on 2026-09-27
+-- created on 2020-01-24

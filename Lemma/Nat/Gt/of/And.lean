@@ -26,4 +26,4 @@ private lemma given.strengthen
   exact lt_of_le_of_lt h₁ h₀
 
 
--- created on 2026-09-27
+-- created on 2023-11-12

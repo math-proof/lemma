@@ -103,4 +103,4 @@ private lemma main
   rw [h₇ n, h₁₄ n]
 
 
--- created on 2026-09-26
+-- created on 2023-03-30

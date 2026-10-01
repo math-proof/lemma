@@ -14,4 +14,4 @@ private lemma main
   rw [Complex.norm_real, Real.norm_eq_abs, ← Complex.ofReal_pow, ← Complex.ofReal_pow, sq_abs]
 
 
--- created on 2026-09-27
+-- created on 2023-06-26

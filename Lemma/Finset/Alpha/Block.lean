@@ -20,4 +20,4 @@ private lemma main
   simp only [Fin.snoc_castSucc, Fin.snoc_last, ofFn_eq_map_range]
 
 
--- created on 2026-09-27
+-- created on 2020-09-19

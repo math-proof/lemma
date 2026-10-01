@@ -15,4 +15,4 @@ private lemma main
   exact Nat.Lt.of.Le.Lt h₁ h
 
 
--- created on 2026-09-26
+-- created on 2018-07-27

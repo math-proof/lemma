@@ -13,4 +13,4 @@ private lemma main
   exact (Fintype.sum_equiv ((Equiv.prodComm _ _).trans (Fin.snocEquiv fun _ => β)) _ _ (fun _ => rfl)).symm
 
 
--- created on 2026-09-27
+-- created on 2020-12-20

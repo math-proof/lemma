@@ -20,4 +20,4 @@ private lemma main
     rw [show a + ((k + 1 : ℕ) : ℤ) = a + k + 1 by push_cast; ring, h _ (by omega), ih]
 
 
--- created on 2026-09-27
+-- created on 2019-01-07

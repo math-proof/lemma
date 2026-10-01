@@ -11,4 +11,4 @@ private lemma main
   simp only [imp_iff_not_or]
 
 
--- created on 2026-09-27
+-- created on 2018-12-23

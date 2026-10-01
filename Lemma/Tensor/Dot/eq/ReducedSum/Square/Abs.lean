@@ -15,4 +15,4 @@ private lemma main
   rw [Complex.mul_conj, Complex.normSq_eq_norm_sq]
 
 
--- created on 2026-09-27
+-- created on 2023-06-23

@@ -17,4 +17,4 @@ private lemma main
   exact Finset.card_nbij' f g (fun a ha => (h₀ a ha).1) (fun b hb => (h₁ b hb).1) (fun a ha => (h₀ a ha).2) (fun b hb => (h₁ b hb).2)
 
 
--- created on 2026-09-27
+-- created on 2020-08-01

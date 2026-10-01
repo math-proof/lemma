@@ -24,4 +24,4 @@ private lemma main
   simp only [intervalIntegral.integral_const_mul]
 
 
--- created on 2026-09-26
+-- created on 2020-06-06

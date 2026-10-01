@@ -19,4 +19,4 @@ private lemma binary
     exact ⟨hc, by rw [h, if_neg hc]⟩
 
 
--- created on 2026-09-27
+-- created on 2018-01-07

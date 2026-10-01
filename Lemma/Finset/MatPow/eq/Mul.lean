@@ -26,4 +26,4 @@ private lemma main
     rw [Matrix.nonsing_inv_apply_not_isUnit _ hu, Matrix.nonsing_inv_apply_not_isUnit _ hu', smul_zero]
 
 
--- created on 2026-09-27
+-- created on 2023-04-30

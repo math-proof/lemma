@@ -14,4 +14,4 @@ private lemma both
   exact (abs_le.mpr ⟨by linarith, h₀⟩).trans (le_abs_self y)
 
 
--- created on 2026-09-27
+-- created on 2019-05-30

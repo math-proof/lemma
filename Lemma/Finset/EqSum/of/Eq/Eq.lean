@@ -35,4 +35,4 @@ private lemma unshift
   rw [e, Finset.sum_insert (by simp), Finset.sum_insert (by simp), h₁, h₂]
 
 
--- created on 2026-09-27
+-- created on 2019-03-26

@@ -24,4 +24,4 @@ private lemma main
   · rw [if_neg hab, if_neg (fun e => hab (hinj e))]
 
 
--- created on 2026-09-27
+-- created on 2020-10-25

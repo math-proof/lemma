@@ -139,4 +139,4 @@ private lemma mod_3
   exact sub hp hq hδ' hD hδ hy' hy₀ hy₁ h hβ
 
 
--- created on 2026-09-27
+-- created on 2018-11-27

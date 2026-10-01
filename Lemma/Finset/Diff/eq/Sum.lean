@@ -19,4 +19,4 @@ private lemma main
     simp [fwdDiff, Finset.sum_sub_distrib]
 
 
--- created on 2026-09-27
+-- created on 2020-10-11

@@ -17,4 +17,4 @@ private lemma main
     mul_one_div_cancel hβ.ne', Real.rpow_one]
 
 
--- created on 2026-09-27
+-- created on 2024-07-06

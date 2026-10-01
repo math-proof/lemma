@@ -14,4 +14,4 @@ private lemma given
   exact ⟨le_of_mul_le_mul_right h.1 hd, le_of_mul_le_mul_right h.2 hd⟩
 
 
--- created on 2026-09-27
+-- created on 2019-06-25

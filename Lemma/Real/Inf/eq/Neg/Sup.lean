@@ -12,4 +12,4 @@ private lemma main
   rw [Real.sInf_def, ← Set.image_neg_eq_neg, Set.image_image]
 
 
--- created on 2026-09-27
+-- created on 2021-09-30

@@ -15,4 +15,4 @@ private lemma main
   exact ⟨x, hx, y, hy, hr, hx, hy⟩
 
 
--- created on 2026-09-27
+-- created on 2019-02-19

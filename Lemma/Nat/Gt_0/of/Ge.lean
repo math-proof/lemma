@@ -14,4 +14,4 @@ private lemma main
   exact lt_of_lt_of_le h₀ h
 
 
--- created on 2026-09-27
+-- created on 2019-06-02

@@ -25,4 +25,4 @@ private lemma symmetric_mean_inequality
   exact B
 
 
--- created on 2026-09-27
+-- created on 2020-11-05

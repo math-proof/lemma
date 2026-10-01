@@ -38,4 +38,4 @@ private lemma main
   exact Finset.sum_congr rfl fun k _ => by rw [Real.norm_eq_abs, sq_abs, sq]
 
 
--- created on 2026-09-27
+-- created on 2023-06-28

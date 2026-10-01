@@ -57,4 +57,4 @@ private lemma position_representation.relative.gather
   rw [Finset.sum_image hinj, Finset.sum_image hinj]
 
 
--- created on 2026-09-27
+-- created on 2022-01-09

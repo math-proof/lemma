@@ -14,4 +14,4 @@ private lemma main
   exact (Finset.sum_pos (fun k _ => Real.exp_pos (x i k)) Finset.univ_nonempty).ne'
 
 
--- created on 2026-09-27
+-- created on 2022-01-10

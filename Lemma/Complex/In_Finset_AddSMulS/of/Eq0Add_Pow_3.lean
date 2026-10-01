@@ -61,4 +61,4 @@ private lemma mod
       right; right; linear_combination e3 + A * ω * hω3
 
 
--- created on 2026-09-27
+-- created on 2018-11-15

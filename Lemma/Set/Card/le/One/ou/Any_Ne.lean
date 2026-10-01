@@ -13,4 +13,4 @@ private lemma main
   · exact Or.inr (Finset.one_lt_card.mp (by omega))
 
 
--- created on 2026-09-27
+-- created on 2020-07-16

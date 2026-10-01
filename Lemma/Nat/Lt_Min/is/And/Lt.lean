@@ -12,4 +12,4 @@ private lemma main
   exact lt_min_iff
 
 
--- created on 2026-09-27
+-- created on 2022-01-01

@@ -17,4 +17,4 @@ private lemma main
     exact le_max_of_le_left (by nlinarith)
 
 
--- created on 2026-09-27
+-- created on 2019-10-25

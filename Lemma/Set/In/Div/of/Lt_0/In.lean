@@ -15,4 +15,4 @@ private lemma main
   ⟨div_le_div_of_nonpos_of_le h₀.le h₁.2, div_lt_div_of_neg_of_lt h₀ h₁.1⟩
 
 
--- created on 2026-09-26
+-- created on 2021-06-03

@@ -15,4 +15,4 @@ private lemma given
   exact fun i _ => h (Finset.mem_coe.mpr (Finset.mem_image_of_mem x (Finset.mem_univ i)))
 
 
--- created on 2026-09-27
+-- created on 2022-09-20

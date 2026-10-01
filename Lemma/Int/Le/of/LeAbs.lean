@@ -24,4 +24,4 @@ private lemma negate
   linarith [(abs_le.mp h).1]
 
 
--- created on 2026-09-27
+-- created on 2018-07-30

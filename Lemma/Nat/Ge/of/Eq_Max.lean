@@ -13,4 +13,4 @@ private lemma main
   exact h ▸ le_max_left a b
 
 
--- created on 2026-09-27
+-- created on 2019-04-23

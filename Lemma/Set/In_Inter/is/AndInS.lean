@@ -11,4 +11,4 @@ private lemma main
   Set.mem_inter_iff e A B
 
 
--- created on 2026-09-27
+-- created on 2022-01-01

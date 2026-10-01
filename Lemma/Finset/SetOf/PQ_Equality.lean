@@ -40,4 +40,4 @@ private lemma main
     rw [hl, h, Finset.range_add_one]
 
 
--- created on 2026-09-27
+-- created on 2020-07-09

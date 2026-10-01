@@ -14,4 +14,4 @@ private lemma given
   exact ⟨h₀, (div_left_inj' h₀).mp h₁⟩
 
 
--- created on 2026-09-27
+-- created on 2023-03-26

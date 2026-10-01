@@ -40,5 +40,5 @@ private lemma subst
   h n (Nat.lt_succ_self n)
 
 
--- created on 2026-09-26
+-- created on 2019-03-15
 -- updated on 2026-09-27

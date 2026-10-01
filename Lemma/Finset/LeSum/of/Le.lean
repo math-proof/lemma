@@ -14,4 +14,4 @@ private lemma main
   exact Finset.sum_le_sum fun i _ => h i
 
 
--- created on 2026-09-27
+-- created on 2019-11-16

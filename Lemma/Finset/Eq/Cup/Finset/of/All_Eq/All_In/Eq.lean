@@ -46,4 +46,4 @@ private lemma main
   rw [hS, Finset.card_image_of_injective _ hF, Finset.card_univ, Fintype.card_perm, Fintype.card_fin]
 
 
--- created on 2026-09-27
+-- created on 2020-09-11

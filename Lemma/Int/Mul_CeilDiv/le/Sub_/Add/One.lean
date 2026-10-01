@@ -20,4 +20,4 @@ private lemma main
   exact Int.le_sub_one_of_lt h₃
 
 
--- created on 2026-09-27
+-- created on 2019-10-01

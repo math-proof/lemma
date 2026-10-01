@@ -14,4 +14,4 @@ private lemma given
   exact max_lt h₀ h₁
 
 
--- created on 2026-09-27
+-- created on 2022-01-01

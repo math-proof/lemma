@@ -15,4 +15,4 @@ private lemma main
   exact ⟨by simpa using this.1, by simpa using this.2⟩
 
 
--- created on 2026-09-27
+-- created on 2019-08-12

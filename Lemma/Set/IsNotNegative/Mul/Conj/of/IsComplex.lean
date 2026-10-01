@@ -14,4 +14,4 @@ private lemma main
   ⟨Complex.normSq x, Complex.normSq_nonneg x, (Complex.mul_conj x).symm⟩
 
 
--- created on 2026-09-27
+-- created on 2023-05-03

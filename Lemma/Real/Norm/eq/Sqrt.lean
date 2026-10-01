@@ -12,4 +12,4 @@ private lemma main
   simp only [Real.norm_eq_abs]
 
 
--- created on 2026-09-27
+-- created on 2020-12-25

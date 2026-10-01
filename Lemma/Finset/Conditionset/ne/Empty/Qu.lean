@@ -20,4 +20,4 @@ private lemma main
   · rw [Function.comp_apply, Equiv.swap_apply_left]
 
 
--- created on 2026-09-27
+-- created on 2020-11-07

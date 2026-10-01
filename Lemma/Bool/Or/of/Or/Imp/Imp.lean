@@ -13,4 +13,4 @@ private lemma main
   h₀.imp (fun h => ⟨h, h₁ h⟩) (fun h => ⟨h, h₂ h⟩)
 
 
--- created on 2026-09-27
+-- created on 2022-04-01

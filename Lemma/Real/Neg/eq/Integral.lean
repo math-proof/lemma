@@ -13,4 +13,4 @@ private lemma main
   exact (intervalIntegral.integral_symm a b).symm
 
 
--- created on 2026-09-27
+-- created on 2020-05-24

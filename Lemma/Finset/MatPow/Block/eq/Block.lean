@@ -15,4 +15,4 @@ private lemma main
   simp only [Matrix.of_apply, Matrix.sum_apply, Matrix.mul_apply]
 
 
--- created on 2026-09-27
+-- created on 2023-09-16

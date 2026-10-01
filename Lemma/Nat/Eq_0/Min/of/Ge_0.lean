@@ -13,4 +13,4 @@ private lemma main
   exact min_eq_right h
 
 
--- created on 2026-09-27
+-- created on 2019-05-27

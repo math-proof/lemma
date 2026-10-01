@@ -13,4 +13,4 @@ private lemma just_intonation
   exact ⟨h₁.trans h₂, h₂⟩
 
 
--- created on 2026-09-27
+-- created on 2021-11-24

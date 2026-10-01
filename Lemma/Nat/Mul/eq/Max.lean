@@ -13,4 +13,4 @@ private lemma main
   exact mul_max_of_nonneg _ _ ht.le
 
 
--- created on 2026-09-27
+-- created on 2020-01-29

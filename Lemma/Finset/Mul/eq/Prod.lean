@@ -35,4 +35,4 @@ private lemma limits.push
   (Finset.prod_Ico_succ_top h f).symm
 
 
--- created on 2026-09-27
+-- created on 2023-08-20

@@ -13,4 +13,4 @@ private lemma main
   rw [mul_comm n 2, Nat.doubleFactorial_two_mul, mul_comm]
 
 
--- created on 2026-09-27
+-- created on 2023-06-03

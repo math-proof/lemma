@@ -13,4 +13,4 @@ private lemma main
   Finset.prod_pow_eq_pow_sum s f a
 
 
--- created on 2026-09-27
+-- created on 2022-01-15

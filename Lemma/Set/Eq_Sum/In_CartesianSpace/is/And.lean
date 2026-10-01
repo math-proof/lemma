@@ -22,4 +22,4 @@ private lemma main
     exact ⟨hs, fun i _ => ⟨(ht i (Set.mem_univ i)).1, by linarith [(ht i (Set.mem_univ i)).2]⟩⟩
 
 
--- created on 2026-09-27
+-- created on 2023-08-20

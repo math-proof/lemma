@@ -12,4 +12,4 @@ private lemma main
   (Finset.sum_sub_distrib f g).symm
 
 
--- created on 2026-09-27
+-- created on 2018-08-09

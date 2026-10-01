@@ -30,4 +30,4 @@ private lemma main
   rwa [Matrix.conjTranspose_eq_transpose_of_trivial] at h
 
 
--- created on 2026-09-27
+-- created on 2023-05-01

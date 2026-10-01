@@ -41,4 +41,4 @@ private lemma main
       (fun θ' => M.pol.sum_eq_one θ' x) h₀ h₁
 
 
--- created on 2026-09-26
+-- created on 2023-04-03

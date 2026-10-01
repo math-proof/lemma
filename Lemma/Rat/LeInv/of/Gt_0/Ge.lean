@@ -14,4 +14,4 @@ private lemma main
   exact one_div_le_one_div_of_le h₀ h₁
 
 
--- created on 2026-09-27
+-- created on 2019-08-09

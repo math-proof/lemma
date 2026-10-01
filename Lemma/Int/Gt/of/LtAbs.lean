@@ -18,4 +18,4 @@ private lemma main
   exact Nat.Gt.of.Ge.Gt h₂ h₃
 
 
--- created on 2026-09-26
+-- created on 2018-07-27

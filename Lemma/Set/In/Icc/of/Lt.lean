@@ -13,4 +13,4 @@ private lemma average
   exact ⟨by linarith, by linarith⟩
 
 
--- created on 2026-09-27
+-- created on 2019-06-21

@@ -29,4 +29,4 @@ private lemma permutation
     rw [← Finset.image_image, Finset.image_univ_equiv, ih]
 
 
--- created on 2026-09-27
+-- created on 2020-11-02

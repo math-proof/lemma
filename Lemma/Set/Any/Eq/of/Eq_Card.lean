@@ -73,4 +73,4 @@ private lemma two
   exact Finset.card_eq_two.mp h
 
 
--- created on 2026-09-27
+-- created on 2020-09-10

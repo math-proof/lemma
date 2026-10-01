@@ -15,4 +15,4 @@ private lemma main
     exact Set.union_eq_right.mpr fun t ht => ⟨h.trans ht.1, ht.2.trans h⟩
 
 
--- created on 2026-09-27
+-- created on 2020-06-04

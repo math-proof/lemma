@@ -15,4 +15,4 @@ private lemma main
   Iff.of.In_Ico.split.Eq ⟨h₀, h₁⟩
 
 
--- created on 2026-09-27
+-- created on 2023-03-26

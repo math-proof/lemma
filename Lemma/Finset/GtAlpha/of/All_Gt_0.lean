@@ -29,4 +29,4 @@ private lemma main
   linarith [h (2 * n + 1) (by omega)]
 
 
--- created on 2026-09-27
+-- created on 2021-09-13

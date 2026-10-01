@@ -13,4 +13,4 @@ private lemma main
   exact ⟨LtStack.of.All_Lt, All_Lt.of.Lt.Stack⟩
 
 
--- created on 2026-09-27
+-- created on 2022-03-31

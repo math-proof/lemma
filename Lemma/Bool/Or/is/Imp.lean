@@ -10,4 +10,4 @@ private lemma main
   or_iff_not_imp_left
 
 
--- created on 2026-09-27
+-- created on 2020-02-21

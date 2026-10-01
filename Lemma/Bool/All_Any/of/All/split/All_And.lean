@@ -14,4 +14,4 @@ private lemma given
   fun x hx => ⟨h₀ x hx, h₁ x hx⟩
 
 
--- created on 2026-09-27
+-- created on 2021-08-25

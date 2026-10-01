@@ -13,4 +13,4 @@ private lemma main
   fin_cases i <;> rfl
 
 
--- created on 2026-09-27
+-- created on 2022-07-08

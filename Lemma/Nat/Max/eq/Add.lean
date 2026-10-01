@@ -11,4 +11,4 @@ private lemma main
   rw [max_add_add_right, add_comm]
 
 
--- created on 2026-09-27
+-- created on 2019-03-10

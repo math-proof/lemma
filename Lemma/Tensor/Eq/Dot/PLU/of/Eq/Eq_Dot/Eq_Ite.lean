@@ -40,4 +40,4 @@ private lemma telescope
   pluUndo_spec h₀ h₁ h₂ h₃ h₄
 
 
--- created on 2026-09-27
+-- created on 2023-08-19

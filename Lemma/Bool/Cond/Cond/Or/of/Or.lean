@@ -16,4 +16,4 @@ private lemma given
     exact ⟨h₁, h₂, Or.inr hq⟩
 
 
--- created on 2026-09-27
+-- created on 2019-03-15

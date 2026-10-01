@@ -24,4 +24,4 @@ private lemma main
       exact ⟨x, by rw [if_neg ha, if_neg hb]; exact hx⟩
 
 
--- created on 2026-09-27
+-- created on 2023-07-01

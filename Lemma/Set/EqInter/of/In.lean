@@ -14,4 +14,4 @@ private lemma main
   exact Set.inter_eq_left.mpr (Set.singleton_subset_iff.mpr h)
 
 
--- created on 2026-09-27
+-- created on 2020-10-28

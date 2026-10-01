@@ -15,4 +15,4 @@ private lemma vandermonde
   exact Vandermonde.det_cons_pow
 
 
--- created on 2026-09-27
+-- created on 2021-10-04

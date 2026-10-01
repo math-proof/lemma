@@ -15,4 +15,4 @@ private lemma main
   exact fun i _ => h i i.isLt
 
 
--- created on 2026-09-27
+-- created on 2022-09-20

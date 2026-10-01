@@ -12,4 +12,4 @@ private lemma main
   exact Finset.sum_congr rfl fun i _ => add_mul _ _ _
 
 
--- created on 2026-09-27
+-- created on 2020-03-27

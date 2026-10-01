@@ -25,4 +25,4 @@ private lemma symbol.domain_defined
   lt_of_lt_of_le h.1 h.2
 
 
--- created on 2026-09-27
+-- created on 2019-07-06

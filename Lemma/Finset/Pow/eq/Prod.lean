@@ -12,4 +12,4 @@ private lemma main
   exact (Finset.prod_pow _ _ _).symm
 
 
--- created on 2026-09-27
+-- created on 2020-01-31

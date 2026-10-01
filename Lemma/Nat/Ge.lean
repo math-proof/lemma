@@ -36,4 +36,4 @@ private lemma simp.common_terms
   linarith
 
 
--- created on 2026-09-27
+-- created on 2019-09-03

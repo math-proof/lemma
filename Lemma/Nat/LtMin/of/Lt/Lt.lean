@@ -27,4 +27,4 @@ private lemma both
   lt_min (lt_of_le_of_lt (min_le_left x a) h₀) (lt_of_le_of_lt (min_le_right x a) h₁)
 
 
--- created on 2026-09-27
+-- created on 2019-05-12

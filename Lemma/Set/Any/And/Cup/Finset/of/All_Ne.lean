@@ -52,4 +52,4 @@ private lemma main
   exact mono i (n - 1) i.isLt (by omega)
 
 
--- created on 2026-09-27
+-- created on 2023-11-12

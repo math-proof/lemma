@@ -13,4 +13,4 @@ private lemma main
   integral_const_mul h f
 
 
--- created on 2026-09-26
+-- created on 2023-03-27

@@ -11,4 +11,4 @@ private lemma main
   simp only [Set.mem_union, or_imp, forall_and]
 
 
--- created on 2026-09-27
+-- created on 2019-05-07

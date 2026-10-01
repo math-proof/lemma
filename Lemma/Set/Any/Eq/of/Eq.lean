@@ -16,4 +16,4 @@ private lemma size_deduction
   exact ⟨x, hx, by rw [Finset.sdiff_singleton_eq_erase, Finset.card_erase_of_mem hx, h]⟩
 
 
--- created on 2026-09-27
+-- created on 2020-09-07

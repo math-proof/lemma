@@ -91,4 +91,4 @@ private lemma limits.domain_defined
   exact h i (Finset.mem_range.mpr hi.1)
 
 
--- created on 2026-09-27
+-- created on 2024-06-25

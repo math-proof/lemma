@@ -12,4 +12,4 @@ private lemma main
   rw [← Int.floor_intCast_add, Int.floor_mono.map_min]
 
 
--- created on 2026-09-27
+-- created on 2020-01-25

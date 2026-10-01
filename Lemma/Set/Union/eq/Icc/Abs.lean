@@ -13,4 +13,4 @@ private lemma main
   · rw [abs_of_nonpos h, neg_neg, Set.Ioo_eq_empty_of_le (by linarith : x ≤ -x), Set.union_empty]
 
 
--- created on 2026-09-27
+-- created on 2023-06-18

@@ -14,4 +14,4 @@ private lemma main
   Real.log_neg h₀.1 h₀.2
 
 
--- created on 2026-09-26
+-- created on 2023-04-17

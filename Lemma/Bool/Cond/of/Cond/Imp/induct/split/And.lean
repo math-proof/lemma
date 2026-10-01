@@ -20,4 +20,4 @@ private lemma main
     exact h₁ n x ⟨ih x, ih (t x)⟩
 
 
--- created on 2026-09-27
+-- created on 2019-03-21

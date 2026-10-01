@@ -17,4 +17,4 @@ private lemma main
   exact K_pos_of x n h₀ h
 
 
--- created on 2026-09-27
+-- created on 2020-09-15

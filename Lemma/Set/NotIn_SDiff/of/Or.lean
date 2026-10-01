@@ -13,4 +13,4 @@ private lemma main
   fun ⟨h₁, h₂⟩ => h.elim (· h₁) h₂
 
 
--- created on 2026-09-27
+-- created on 2018-02-25

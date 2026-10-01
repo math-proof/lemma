@@ -16,4 +16,4 @@ private lemma collect.given
     exact ⟨Or.inl hp, Or.inl hq, Or.inl hr⟩
 
 
--- created on 2026-09-27
+-- created on 2021-09-09

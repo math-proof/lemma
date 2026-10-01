@@ -25,4 +25,4 @@ private lemma back
   rw [Nat.add_sub_cancel, eq_div_iff (by positivity), ← Nat.cast_mul, ← Nat.factorial_eq_mul_doubleFactorial]
 
 
--- created on 2026-09-27
+-- created on 2023-06-03

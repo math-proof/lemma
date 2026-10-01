@@ -43,4 +43,4 @@ private lemma double_limits
     exact absurd e (h i (Finset.mem_range.mpr hi) j (Finset.mem_range.mpr hij))
 
 
--- created on 2026-09-27
+-- created on 2019-02-04

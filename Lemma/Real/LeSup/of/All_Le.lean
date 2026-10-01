@@ -17,4 +17,4 @@ private lemma main
   exact h₁ x hx
 
 
--- created on 2026-09-26
+-- created on 2019-01-17

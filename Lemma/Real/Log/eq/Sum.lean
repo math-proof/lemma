@@ -16,4 +16,4 @@ private lemma main
   exact Finset.sum_congr rfl fun j _ => Real.log_prod fun i _ => by exact_mod_cast h j i
 
 
--- created on 2026-09-27
+-- created on 2019-12-11

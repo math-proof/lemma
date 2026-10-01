@@ -16,4 +16,4 @@ private lemma subst
   rwa [if_neg h₀] at h₁
 
 
--- created on 2026-09-27
+-- created on 2020-07-18

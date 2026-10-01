@@ -25,4 +25,4 @@ private lemma main
   rw [h₁.csSup_eq, h₂.csSup_eq]
 
 
--- created on 2026-09-27
+-- created on 2020-12-19

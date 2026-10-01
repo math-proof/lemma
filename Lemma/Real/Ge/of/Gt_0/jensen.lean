@@ -31,4 +31,4 @@ private lemma main
     linarith [h₆]
 
 
--- created on 2026-10-01
+-- created on 2020-05-12

@@ -15,4 +15,4 @@ private lemma main
   exact Finset.sum_lt_sum_of_nonempty ⟨0, Finset.mem_range.mpr h₀⟩ h
 
 
--- created on 2026-09-27
+-- created on 2019-01-22

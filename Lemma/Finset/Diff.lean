@@ -25,4 +25,4 @@ private lemma split
   rw [← Function.iterate_add_apply, Nat.sub_add_cancel h]
 
 
--- created on 2026-09-27
+-- created on 2020-10-12

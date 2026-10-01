@@ -16,4 +16,4 @@ private lemma main
       Real.log_le_log (Real.exp_pos (x i)) (Finset.single_le_sum (fun j _ => (Real.exp_pos (x j)).le) (Finset.mem_univ i))
 
 
--- created on 2026-09-27
+-- created on 2022-03-31

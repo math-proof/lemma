@@ -17,4 +17,4 @@ private lemma subst
   exact ⟨c, hc, h₀ c hc ▸ hp⟩
 
 
--- created on 2026-09-27
+-- created on 2019-01-06

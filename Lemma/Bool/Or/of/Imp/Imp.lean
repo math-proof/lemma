@@ -19,4 +19,4 @@ private lemma main
     exact Or.inr ⟨h', h₁ h'⟩
 
 
--- created on 2026-09-27
+-- created on 2022-04-01

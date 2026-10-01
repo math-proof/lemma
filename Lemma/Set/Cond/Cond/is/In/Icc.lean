@@ -20,4 +20,4 @@ private lemma left_close
   exact ⟨fun h => ⟨h.2, h.1⟩, fun h => ⟨h.2, h.1⟩⟩
 
 
--- created on 2026-09-27
+-- created on 2022-01-07

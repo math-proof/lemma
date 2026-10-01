@@ -21,4 +21,4 @@ private lemma main
   · exact (Int.le_ediv_iff_mul_le hr).mpr (by linarith)
 
 
--- created on 2026-09-27
+-- created on 2019-12-29

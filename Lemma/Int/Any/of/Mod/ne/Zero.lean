@@ -13,4 +13,4 @@ private lemma main
   exact ⟨n / 2, by omega⟩
 
 
--- created on 2026-09-27
+-- created on 2019-05-10

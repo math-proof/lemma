@@ -19,4 +19,4 @@ private lemma main
   rw [e, abs_div, abs_of_pos hn]
 
 
--- created on 2026-09-27
+-- created on 2018-08-02

@@ -20,4 +20,4 @@ private lemma main
     exact hN n (Nat.le_of_not_lt hn)
 
 
--- created on 2026-09-27
+-- created on 2019-02-23

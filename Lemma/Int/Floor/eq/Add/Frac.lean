@@ -12,4 +12,4 @@ private lemma main
   exact (Int.self_sub_fract x).symm
 
 
--- created on 2026-09-27
+-- created on 2019-05-11

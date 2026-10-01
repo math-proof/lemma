@@ -68,4 +68,4 @@ private lemma bilinear_matrix_attention.biased
     simp only [if_neg hp, zero_div]
 
 
--- created on 2026-09-27
+-- created on 2022-03-14

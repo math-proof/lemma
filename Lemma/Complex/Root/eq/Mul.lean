@@ -39,4 +39,4 @@ private lemma cubic_root
   rw [e2, Complex.exp_add, Complex.exp_log hp]
 
 
--- created on 2026-09-27
+-- created on 2020-03-11

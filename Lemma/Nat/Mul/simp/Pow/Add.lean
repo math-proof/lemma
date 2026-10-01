@@ -14,4 +14,4 @@ private lemma exponent
   rw [Real.rpow_add_one ht]
 
 
--- created on 2026-09-27
+-- created on 2022-07-07

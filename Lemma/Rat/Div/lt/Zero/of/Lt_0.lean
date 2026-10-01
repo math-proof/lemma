@@ -14,4 +14,4 @@ private lemma main
   div_neg_of_pos_of_neg hd hx
 
 
--- created on 2026-09-26
+-- created on 2019-05-20

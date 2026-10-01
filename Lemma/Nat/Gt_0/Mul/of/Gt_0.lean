@@ -14,4 +14,4 @@ private lemma main
   exact mul_pos h₀ h₁
 
 
--- created on 2026-09-27
+-- created on 2019-08-21

@@ -23,4 +23,4 @@ private lemma main
   exact Real.Ge.of.Gt_0.jensen h₃ h₄ ⟨h₀.1, h₀.2.le⟩ h₁ h₂
 
 
--- created on 2026-10-01
+-- created on 2020-05-12

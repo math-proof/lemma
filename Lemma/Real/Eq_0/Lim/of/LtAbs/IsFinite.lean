@@ -29,4 +29,4 @@ private lemma main
     exact Real.Eq_0.Lim.of.In_Icc.IsFinite h₃ h₁
 
 
--- created on 2026-09-26
+-- created on 2023-03-30

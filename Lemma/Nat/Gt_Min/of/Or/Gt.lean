@@ -13,4 +13,4 @@ private lemma given
   min_lt_iff.mpr h
 
 
--- created on 2026-09-27
+-- created on 2022-01-02

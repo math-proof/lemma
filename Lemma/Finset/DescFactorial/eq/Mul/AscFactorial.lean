@@ -13,4 +13,4 @@ private lemma main
   rw [ascPochhammer_eval_neg_eq_descPochhammer ℝ x n, ← mul_assoc, ← mul_pow, neg_one_mul, neg_neg, one_pow, one_mul]
 
 
--- created on 2026-09-27
+-- created on 2023-08-20

@@ -11,4 +11,4 @@ private lemma main
   h.elim Or.inl (fun hq => Or.inr (Or.inl hq))
 
 
--- created on 2026-09-27
+-- created on 2019-07-08

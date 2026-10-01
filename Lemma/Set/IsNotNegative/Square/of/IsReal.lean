@@ -14,4 +14,4 @@ private lemma main
   exact ⟨r ^ 2, sq_nonneg r, Complex.ofReal_pow r 2⟩
 
 
--- created on 2026-09-27
+-- created on 2023-06-29

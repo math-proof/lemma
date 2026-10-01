@@ -16,4 +16,4 @@ private lemma main
   exact Finset.sum_lt_sum_of_nonempty ⟨0, by simp⟩ fun i _ => mul_lt_mul_of_pos_left (h i) hn
 
 
--- created on 2026-09-27
+-- created on 2019-07-25

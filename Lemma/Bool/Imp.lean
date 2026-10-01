@@ -17,4 +17,4 @@ private lemma fold :
   ⟨fun h hb ha => h ⟨ha, hb⟩, fun h hab => h hab.2 hab.1⟩
 
 
--- created on 2026-09-27
+-- created on 2019-09-01

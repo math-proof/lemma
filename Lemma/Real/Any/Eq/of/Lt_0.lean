@@ -12,4 +12,4 @@ private lemma main
   ⟨-x, by linarith, by ring⟩
 
 
--- created on 2026-09-27
+-- created on 2020-01-17

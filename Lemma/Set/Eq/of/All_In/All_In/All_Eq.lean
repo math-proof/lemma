@@ -24,4 +24,4 @@ private lemma main
     exact ⟨f a, h₀ a ha, (h₂ a ha).symm⟩
 
 
--- created on 2026-09-27
+-- created on 2020-07-30

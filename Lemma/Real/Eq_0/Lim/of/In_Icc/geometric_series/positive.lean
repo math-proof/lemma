@@ -19,4 +19,4 @@ private lemma main
   simpa using tendsto_pow_atTop_nhds_zero_of_lt_one h.1.le h.2
 
 
--- created on 2026-10-01
+-- created on 2023-04-16

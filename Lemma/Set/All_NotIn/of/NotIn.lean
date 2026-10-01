@@ -15,4 +15,4 @@ private lemma main
   exact fun k hk hx => h (Set.mem_iUnion₂.mpr ⟨k, Finset.mem_range.mpr hk, hx⟩)
 
 
--- created on 2026-09-27
+-- created on 2020-09-09

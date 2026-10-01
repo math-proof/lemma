@@ -22,4 +22,4 @@ private lemma squeeze
   exact (Finset.sum_eq_zero_iff_of_nonneg hnn).mp hS0 i (Finset.mem_range.mpr hi)
 
 
--- created on 2026-09-27
+-- created on 2019-04-27

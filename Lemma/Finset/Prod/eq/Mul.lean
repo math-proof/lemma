@@ -106,4 +106,4 @@ private lemma unshift
   rw [Finset.prod_eq_prod_Ico_succ_bot h₀, mul_comm (f 0), mul_assoc, mul_inv_cancel₀ h₁, mul_one]
 
 
--- created on 2026-09-27
+-- created on 2023-03-22

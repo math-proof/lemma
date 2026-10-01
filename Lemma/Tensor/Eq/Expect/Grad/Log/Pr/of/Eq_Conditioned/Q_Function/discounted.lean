@@ -28,4 +28,4 @@ private lemma main
   exact E_G_smul M θ h₁ t (fun x u => fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' x u)) θ)
 
 
--- created on 2026-09-26
+-- created on 2023-04-01

@@ -19,4 +19,4 @@ private lemma main
   rw [if_neg (Finset.mem_Ico.mp hr).2.ne]
 
 
--- created on 2026-09-27
+-- created on 2023-06-27

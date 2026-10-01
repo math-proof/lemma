@@ -16,4 +16,4 @@ private lemma main
   exact mul_le_mul h₀ h₁ hy (le_trans hb h₀)
 
 
--- created on 2026-09-27
+-- created on 2019-01-10

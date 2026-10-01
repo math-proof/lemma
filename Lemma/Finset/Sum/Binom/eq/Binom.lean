@@ -15,4 +15,4 @@ private lemma main
     rw [Finset.sum_range_succ, ih, show n + 1 + i = (n + i) + 1 by omega, Nat.choose_succ_succ, add_comm i n, add_comm]
 
 
--- created on 2026-09-27
+-- created on 2023-06-03

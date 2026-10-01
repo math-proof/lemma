@@ -13,4 +13,4 @@ private lemma upper
   exact Set.Icc_subset_Icc_left (by linarith)
 
 
--- created on 2026-09-27
+-- created on 2019-09-07

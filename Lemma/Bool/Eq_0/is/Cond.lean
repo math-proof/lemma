@@ -12,4 +12,4 @@ private lemma invert
   ⟨Cond.of.Eq_0.invert, Eq_0.of.Cond.invert.given⟩
 
 
--- created on 2026-09-27
+-- created on 2023-11-05

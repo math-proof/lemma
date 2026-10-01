@@ -20,4 +20,4 @@ private lemma main
   exact div_neg_of_neg_of_pos (by linarith) (by linarith)
 
 
--- created on 2026-09-27
+-- created on 2022-04-03

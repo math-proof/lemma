@@ -46,4 +46,4 @@ private lemma main
   exact mono (i - 1) i (by omega) hi.2
 
 
--- created on 2026-09-27
+-- created on 2023-11-12

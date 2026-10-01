@@ -15,4 +15,4 @@ private lemma main
   exact Set.mem_iUnion₂.mpr ⟨i, Finset.mem_range.mpr i.isLt, Set.mem_singleton_iff.mpr e.symm⟩
 
 
--- created on 2026-09-27
+-- created on 2023-11-12
