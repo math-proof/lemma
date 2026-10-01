@@ -122,6 +122,9 @@ $mathlibManifest.packages += [PSCustomObject]@{
 
 $updated = $false
 $currentManifest = Get-Content -Raw -Path "lake-manifest.json" | ConvertFrom-Json
+# Sync project lake-manifest from mathlib so proofwidgets (and other deps) land
+# on revs whose lean-toolchain matches the project (avoids e.g. PW on v4.33.0
+# while the project is on v4.33.1).
 foreach ($package in $mathlibManifest.packages) {
     $name = $package.name
     Write-Host "updating $name in lake-manifest.json from mathlib"
@@ -184,6 +187,28 @@ if ($updated) {
     Write-Host "🌟 lake-manifest.json updated successfully."
 }
 
+# ---------------------------------------------------------------------------
+# ProofWidgets / Lake trap (read before changing this section)
+# ---------------------------------------------------------------------------
+# Dirty trees under .lake/packages (especially proofwidgets) break Lake's
+# reuse of pre-built artifacts ("failed to reuse pre-built JS"). So every
+# package is hard-reset to a clean tree at its manifest revision below.
+# Local edits under .lake/packages WILL BE WIPED by this setup — intentional.
+#
+# Version alignment: mathlib was checked out to tag $version and the project
+# lake-manifest.json was synced from mathlib's, so proofwidgets (and friends)
+# land on revs whose lean-toolchain matches the project when possible.
+#
+# Build strategy:
+#   * `lake exe cache get` supplies Mathlib oleans (keep it).
+#   * ProofWidgets widget JS is built DIRECTLY with Node via `lake build`
+#     inside .lake/packages/proofwidgets, because Mathlib's errorOnBuild
+#     blocks building it as a dependency, and reusing cached widget JS has
+#     proven unreliable. Hence Node v22.20.0 is always ensured below.
+# ---------------------------------------------------------------------------
+
+# Hard-reset ALL packages to clean manifest revs. Even when HEAD already
+# matches rev, dirty files / leftover outputs still break artifact reuse.
 $currentManifest = Get-Content -Raw -Path "lake-manifest.json" | ConvertFrom-Json
 foreach ($package in $currentManifest.packages) {
     $name = $package.name

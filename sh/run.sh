@@ -7,6 +7,16 @@
 start_time=$(date +%s)
 source ./sh/utility.sh
 
+# Make sure the Lean toolchain is available; fail loudly instead of silently
+# elaborating nothing (the sed below would swallow a "command not found").
+if ! command -v lake >/dev/null 2>&1 && [ -f "$HOME/.elan/env" ]; then
+  . "$HOME/.elan/env"
+fi
+if ! command -v lake >/dev/null 2>&1; then
+  echo "ERROR: lake not found on PATH. Install elan or run: . \"\$HOME/.elan/env\"" >&2
+  exit 1
+fi
+
 # Split test.lean into batches of this many imports per `lake setup-file` run.
 limit=4096
 # Process only modules matching one of these patterns (empty = all modules).
@@ -942,7 +952,6 @@ echo "seconds cost    = $time_cost"
 echo "total theorems  = ${#imports[@]}"
 echo "total plausible = ${#sorryModules[@]}"
 echo "total failed    = ${#failingModules[@]}"
-bash sh/delete_open.sh
 rm -f "$tempConfigPath"
 
 echo "total lines     = $(find Lemma -type f -name '*.lean' -not -name '*.echo.lean' -exec awk 'END{print NR}' {} + 2>/dev/null | awk '{s+=$1} END{print s}')"
