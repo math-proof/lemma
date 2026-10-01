@@ -84,4 +84,5 @@ private lemma mega_byte
       exact Nat.div_add_mod t (P' + 1)
     simpa [ht] using h
 
--- created on 2026-10-01
+
+-- created on 2023-06-04

@@ -59,4 +59,5 @@ private lemma vector
   vector.using.Stack h j
 
 
--- created on 2026-10-01
+-- created on 2023-03-18
+-- updated on 2023-03-19
