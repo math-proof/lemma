@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(x_independence_assumption, y_independence_assumption, xy_independence_assumption, xy_nonzero_assumption, eq_s, eq_x, eq_G):
-    from Lemma.Tensor.Prob.eq.Mul_Prod_MulProbS.of.Ne_0.Eq.Eq.Eq import process_assumptions
+    from Lemma.Random.Prob.eq.Mul_Prod_MulProbS.of.Ne_0.Eq.Eq.Eq import process_assumptions
     x, y = process_assumptions(x_independence_assumption, y_independence_assumption, xy_independence_assumption, xy_nonzero_assumption)
     y = pspace(y).symbol
     x = pspace(x).symbol
@@ -15,12 +15,12 @@ def apply(x_independence_assumption, y_independence_assumption, xy_independence_
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Bool, Real, Finset
+    from Lemma import Tensor, Bool, Real, Finset, Random
 
     d, n = Symbol(domain=Range(2, oo))
     X = Symbol("x", shape=(n, d), real=True, random=True)
     Y = Symbol("y", shape=(n,), domain=Range(d), random=True)
-    from Lemma.Tensor.Prob.eq.Mul_Prod_MulProbS.of.Ne_0.Eq.Eq.Eq import markov_assumptions
+    from Lemma.Random.Prob.eq.Mul_Prod_MulProbS.of.Ne_0.Eq.Eq.Eq import markov_assumptions
     t = Symbol(integer=True)
     y = pspace(Y).symbol
     s = Symbol(shape=(n,), real=True)
@@ -31,7 +31,7 @@ def prove(Eq):
                                                           Equal(x[t, y[t]], log(Pr(X[t] | Y[t]))),
                                                           Equal(G[y[t], y[t - 1]], log(Pr(Y[t] | Y[t - 1]))))
 
-    Eq << Tensor.Prob.eq.Mul_Prod_MulProbS.of.Ne_0.Eq.Eq.Eq.apply(*Eq[:4], t=t)
+    Eq << Random.Prob.eq.Mul_Prod_MulProbS.of.Ne_0.Eq.Eq.Eq.apply(*Eq[:4], t=t)
 
     Eq << Eq.eq_s.this.rhs.subs(Eq[-1])
 
