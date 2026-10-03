@@ -20,7 +20,7 @@ private lemma main
   (hμ : ReferenceMeasure.measure (α := α) = Measure.count)
   («s.bvar» : β) :
 -- imply
-  𝔼[a: π](f a | s = «s.bvar») =
+  Expectation.condRV π a s f «s.bvar» =
     ∑' «a.bvar» : α, f «a.bvar» * ℙ[π](a = «a.bvar» | s = «s.bvar») := by
 -- proof
   simp only [Expectation.asRV_function, Expectation.condRV, expectation_ennreal]

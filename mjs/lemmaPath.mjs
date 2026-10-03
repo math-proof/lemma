@@ -367,6 +367,29 @@ function hasRandomAstCues(node) {
   return found;
 }
 
+/**
+ * Strong Random signal: a random-variable binder (x : … → Ω → X, a function out of the sample space)
+ * together with probability structure: ℙ / 𝔼 notation, an observed-value «x.bvar» binder or a PSpace instance.
+ */
+function hasRandomVariableCues(node) {
+  let rv = false;
+  let prob = false;
+  const walk = (n) => {
+    if (!n || typeof n !== "object" || (rv && prob)) return;
+    if (cls(n) === "Lean_rightarrow") {
+      const left = n.args?.[0];
+      if (cls(left) === "LeanToken" && (left.text === "Ω" || left.text === "Omega")) rv = true;
+    }
+    if (cls(n) === "LeanToken" && typeof n.text === "string") {
+      const t = n.text;
+      if (t === "ℙ" || t === "𝔼" || /PSpace$/.test(t) || /\.bvar$/.test(t)) prob = true;
+    }
+    if (Array.isArray(n.args)) for (const c of n.args) walk(c);
+  };
+  walk(node);
+  return rv && prob;
+}
+
 function conclusionLhsHeadToken(colonNode) {
   let type = colonNode?.args?.[colonNode.args.length - 1];
   while (type && (cls(type) === "LeanStatements" || cls(type) === "LeanArgsNewLineSeparated")) {
@@ -607,6 +630,11 @@ function pickSection(sigNode, sections, extra = {}) {
   // RV binders (Ω → _) / PSpace overweight Measure from {π : Measure Ω}.
   if (hasRandomAstCues(sigNode) && scores.has("Random"))
     scores.set("Random", scores.get("Random") + 5);
+  // random variables with their observed values / probability-expectation sugar
+  // ({x : ℕ → Ω → X} {«x.bvar» : ℕ → X}, ℙ[π](x = «x.bvar»), 𝔼[π] x, SinglePSpace π x) are Random lemmas,
+  // even though Measure / Measurable hypotheses also score for the Measure section.
+  if (hasRandomVariableCues(sigNode) && scores.has("Random"))
+    scores.set("Random", scores.get("Random") + 4);
   // pure set identities / inclusions between set constructions ({ω | …} ∪ {ω | …} = {ω | …}) are Set lemmas
   {
     const INTERVAL = /^(Set\.)?I(cc|co|oc|oo|ci|ic|oi|io)$/;

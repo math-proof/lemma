@@ -54,8 +54,8 @@ private lemma main
   Measure.prob π (g ∘ x, k ∘ y) (g v, k w) ≠ 0 := by
 -- proof
   intro href href' _
-  let z : Ω → α' × β' := JointRandomSymbol (g ∘ x) (k ∘ y)
-  have hxym : AEMeasurable (JointRandomSymbol x y) π :=
+  let z : Ω → α' × β' := (g ∘ x, k ∘ y)
+  have hxym : AEMeasurable (x, y) π :=
     (hx.prodMk hy).aemeasurable
   have hzm : AEMeasurable z π :=
     ((hg.comp hx).prodMk (hk.comp hy)).aemeasurable

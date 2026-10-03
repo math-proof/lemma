@@ -1,7 +1,10 @@
 import sympy.Basic
-import sympy.functions.elementary.masked_softmax
+import Lemma.Tensor.DotSoftmaxAdd_Mul_Infty.eq.Stack_DotSoftmax
+import Lemma.Tensor.EqGetStack
+import Lemma.Tensor.XEq.is.All_XEqGetS
 import Mathlib.Analysis.SpecialFunctions.Exp
-open Matrix
+open Matrix Tensor Hyperreal
+set_option maxHeartbeats 1000000
 
 
 @[main]
@@ -17,24 +20,30 @@ private lemma scaled_dot_product_attention
   rfl
 
 
+/--
+batched causal attention: for every batch index \(b\), the hyperreal masked softmax
+\(\operatorname{softmax}(A_b + (\Xi - 1) \cdot \infty) V_b\) with the lower-triangular band \(\Xi\)
+is infinitely close to the softmax over the causal window \([0, i]\) of each row.
+-/
 @[main]
 private lemma gpt.batched
-  {m n d : ℕ}
-  {A : Fin m → Fin n → Fin n → ℝ}
-  {V : Fin m → Fin n → Fin d → ℝ} :
+  [NeZero n]
+  {m d : ℕ}
+-- given
+  (A : Tensor ℝ [m, n, n])
+  (V : Tensor ℝ [m, n, d]) :
 -- imply
-  (fun b i l => ∑ j, maskedSoftmax (A b i) (fun j => if j ≤ i then 1 else 0) j * V b j l) =
-    fun b i l => ∑ j ∈ Finset.univ.filter (· ≤ i), Real.exp (A b i j) / (∑ k ∈ Finset.univ.filter (· ≤ i), Real.exp (A b i k)) * V b j l := by
+  let Ξ := (1 : Tensor ℝ* [n, n]).band_part (n - 1) 0
+  let Aᵦ : Fin m → Tensor ℝ [n, n] := fun b => A[b]
+  let Vᵦ : Fin m → Tensor ℝ [n, d] := fun b => V[b]
+  [b < m] (((Aᵦ b : Tensor ℝ [n, n]) : Tensor ℝ* [n, n]) + (Ξ - 1) * ∞).softmax @ ((Vᵦ b : Tensor ℝ [n, d]) : Tensor ℝ* [n, d]) ≈
+    [b < m] [i < n] (((Aᵦ b : Tensor ℝ [n, n]) : Tensor ℝ* [n, n])[i, (i + 1 - n : ℕ):(i + 1 : ℕ)].softmax @ ((Vᵦ b : Tensor ℝ [n, d]) : Tensor ℝ* [n, d])[(i + 1 - n : ℕ):(i + 1 : ℕ)]) := by
 -- proof
-  have key : ∀ (p : Prop) [Decidable p] (x : ℝ), maskedExp x (if p then 1 else 0) = if p then Real.exp x else 0 := by
-    intro p _ x
-    by_cases hp : p
-    ·
-      simp [maskedExp, hp]
-    ·
-      simp [maskedExp, hp]
-  funext b i l
-  simp only [maskedSoftmax, key, ite_div, zero_div, ite_mul, zero_mul, Finset.sum_filter]
+  intro Ξ Aᵦ Vᵦ
+  apply XEq.of.All_XEqGetS.fin
+  intro b
+  erw [EqGetStack.fin, EqGetStack.fin]
+  exact Tensor.DotSoftmaxAdd_Mul_Infty.eq.Stack_DotSoftmax (l := n) (u := 1) (Aᵦ b) (Vᵦ b)
 
 
 -- created on 2021-08-07

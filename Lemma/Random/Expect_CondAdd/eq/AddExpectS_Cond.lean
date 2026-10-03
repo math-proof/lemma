@@ -1,6 +1,7 @@
 import Mathlib.MeasureTheory.Integral.Lebesgue.Add
 import Mathlib.MeasureTheory.Measure.WithDensity
 import sympy.stats.joint_rv
+import sympy.stats.cond_expectation
 import sympy.Basic
 open MeasureTheory
 
@@ -13,14 +14,13 @@ private lemma main
   {a : Ω → α} {s : Ω → β}
   {f g : α → ENNReal}
 -- given
-  (hP : SinglePSpace π (a, s))
   (hf : Measurable f)
   («s.bvar» : β) :
 -- imply
   𝔼[a: π](f a + g a | s = «s.bvar») =
     𝔼[a: π](f a | s = «s.bvar») + 𝔼[a: π](g a | s = «s.bvar») := by
 -- proof
-  simp only [Expectation.asRV_function, Expectation.condRV, expectation_ennreal]
+  simp only [Expectation.asRV_function, Expectation.condEvent, expectation_ennreal]
   exact lintegral_add_left hf g
 
 

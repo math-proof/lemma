@@ -15,7 +15,7 @@ private lemma main
   (hf : Measurable f)
   («s.bvar» : β) :
 -- imply
-  ∫⁻ «a.bvar», ℙ[π](a = «a.bvar» | s = «s.bvar») * f «a.bvar» ∂ReferenceMeasure.measure = 𝔼[a: π](f a | s = «s.bvar») := by
+  ∫⁻ «a.bvar», ℙ[π](a = «a.bvar» | s = «s.bvar») * f «a.bvar» ∂ReferenceMeasure.measure = Expectation.condRV π a s f «s.bvar» := by
 -- proof
   rw [ExpectCond.eq.Integral_Mul_ProbCond hP hf]
   apply lintegral_congr fun _ => mul_comm _ _

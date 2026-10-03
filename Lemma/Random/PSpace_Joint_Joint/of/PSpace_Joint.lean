@@ -89,13 +89,13 @@ private lemma main
 -- imply
   SinglePSpace π (x, y, y) := by
 -- proof
-  change SinglePSpace π (JointRandomSymbol x (JointRandomSymbol y y))
-  have hxym : AEMeasurable (JointRandomSymbol x y) π := by
+  change SinglePSpace π (x, (y, y))
+  have hxym : AEMeasurable (x, y) π := by
     simpa [JointRandomSymbol] using hP.aemeasurable
   have hcomp :
-      JointRandomSymbol x (JointRandomSymbol y y) =
-        jointDiag α γ ∘ JointRandomSymbol x y := rfl
-  have hxyym : AEMeasurable (JointRandomSymbol x (JointRandomSymbol y y)) π := by
+      (x, (y, y)) =
+        jointDiag α γ ∘ (x, y) := rfl
+  have hxyym : AEMeasurable (x, (y, y)) π := by
     rw [hcomp]
     exact measurable_jointDiag.comp_aemeasurable hxym
   obtain ⟨p, D, hlaw⟩ := hP.exists_distribution
@@ -111,8 +111,8 @@ private lemma main
       (Measure.count : Measure (α × (γ × γ)))
     rw [hα, hγ, ← count_eq_prod (α := γ) (β := γ), ← count_eq_prod]
   have hlaw' :
-      π.map (JointRandomSymbol x y) = (Measure.count : Measure (α × γ)).withDensity p := by
-    have h : π.map (JointRandomSymbol x y) =
+      π.map (x, y) = (Measure.count : Measure (α × γ)).withDensity p := by
+    have h : π.map (x, y) =
         (ReferenceMeasure.measure (α := α × γ)).withDensity p := by
       simpa [Distributed, JointRandomSymbol] using hlaw
     rw [h, href_xy]
@@ -122,13 +122,13 @@ private lemma main
     refine Measurable.ite ?_ (hp.comp (measurable_fst.prodMk measurable_snd.fst)) measurable_const
     exact measurableSet_eq_fun measurable_snd.fst measurable_snd.snd
   have hmap :
-      π.map (JointRandomSymbol x (JointRandomSymbol y y)) =
-        (π.map (JointRandomSymbol x y)).map (jointDiag α γ) := by
+      π.map (x, (y, y)) =
+        (π.map (x, y)).map (jointDiag α γ) := by
     rw [hcomp]
     exact (AEMeasurable.map_map_of_aemeasurable
       measurable_jointDiag.aemeasurable hxym).symm
   have htarget :
-      π.map (JointRandomSymbol x (JointRandomSymbol y y)) =
+      π.map (x, (y, y)) =
         (Measure.count : Measure (α × γ × γ)).withDensity ρ := by
     rw [hmap, hlaw']
     refine Measure.ext_iff_singleton.mpr fun z => ?_
@@ -150,6 +150,6 @@ private lemma main
     aemeasurable := hxyym
     exists_distribution := ⟨ρ, ⟨hρ⟩, ?_⟩
   }
-  show π.map (JointRandomSymbol x (JointRandomSymbol y y)) =
+  show π.map (x, (y, y)) =
     ReferenceMeasure.measure.withDensity ρ
   rw [htarget, href_xyy]

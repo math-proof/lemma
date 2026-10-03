@@ -1,6 +1,7 @@
 import Mathlib.MeasureTheory.Integral.Lebesgue.Add
 import Mathlib.MeasureTheory.Measure.WithDensity
 import sympy.stats.joint_rv
+import sympy.stats.cond_expectation
 import sympy.stats.symbolic_multivariate_probability
 import sympy.matrices.expressions.matmul
 import torch.Tensor.item
@@ -110,13 +111,12 @@ Python: Random.Expect_CondDot.eq.Dot_Expect_Cond.
 @[main, comm]
 private lemma main
   [MeasurableSpace Ω]
-  [ReferenceMeasure α] [ReferenceMeasure γ]
+  [MeasurableSpace α]
   [Countable α] [MeasurableSingletonClass α]
   {π : MeasureTheory.Measure Ω} {m k : ℕ}
   {a : Ω → α} {s : Ω → γ}
   {f : α → Tensor ENNReal [k]}
 -- given
-  (hP : SinglePSpace π (a, s))
   (A : Tensor ENNReal [m, k])
   (hf : ∀ p : Fin k, Measurable (fun x : α ↦ (f x)[p].item))
   («s.bvar» : γ) :
@@ -127,9 +127,8 @@ private lemma main
   apply Eq.of.All_EqGetS.fin
   intro i
   apply Eq.of.Item
-  simp only [Expectation.asRV_function, Expectation.condRV]
-  let ν := ReferenceMeasure.measure.withDensity fun x ↦
-    π.condProb (a, s) (x, «s.bvar»)
+  simp only [Expectation.asRV_function, Expectation.condEvent]
+  let ν := (ProbabilityTheory.cond π (s ⁻¹' {«s.bvar»})).map a
   change (expectation ν fun x ↦ A @ f x)[i].item =
     (A @ expectation ν f)[i].item
   have hL := expect_get_item ν (fun x ↦ A @ f x) i

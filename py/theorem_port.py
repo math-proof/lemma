@@ -68,15 +68,61 @@ rules in order:
    ``[NormedAddCommGroup E] [NormedSpace ℝ E]``; (b) one line per implicit
    binder with its dependent instances, e.g. ``{p : Prop} [Decidable p]``;
    (c) one line per bare implicit binder ``{d : ℕ}``.  Bare ``{E : Type*}``
-   binders are dropped (autoImplicit binds ``E`` from the instances).  After ``-- given``:
-   the explicit binders in source order, ending with
-   `` :`` on the same line, e.g. ``(χ : AddChar E Circle) (hχ : Continuous χ) :``.
+   binders are dropped (autoImplicit binds ``E`` from the instances).
+   Everything above ``-- given`` is implicit or instance-implicit ONLY:
+   explicit data binders (non-propositions, e.g. ``(n N : ℕ)``,
+   ``(f : α → Set β)``) are converted to ``{n N : ℕ}``/``{f : α → Set β}``
+   and join the pre-``-- given`` block, one per line, since hypotheses
+   reference them.  Only proposition binders stay explicit, under
+   ``-- given``, one per line (readability), with
+   `` :`` ending the last binder line, e.g.::
+
+       private lemma main
+         {t : AddCircle (1 : ℚ)}
+         {n N : ℕ}
+       -- given
+         (hN : 0 < N)
+         (hnN : n ∣ N)
+         (ht : n • t = 0) :
+
+   Proposition detection: name convention ``h…``, proposition-former head
+   (``∀``/``∃``/``Is…``/``Continuous``/…), ``Prop`` type, or a relational
+   operator at bracket depth 0.  Plain ``→`` is not a prop signal.
+   Exception — promoted instance hypotheses: a Prop-valued instance binder
+   ``[T]`` (head segment ``Is…``/``Has…`` or a known property class such as
+   ``Continuous``/``Measurable``/``Module.Flat``) that the proof consumes
+   EXPLICITLY via ``(inferInstance : T)`` is a hypothesis, not ambient
+   structure.  It is rewritten to ``(h : T)`` under ``-- given`` and every
+   ``(inferInstance : T)`` in the proof is replaced by ``h`` (names
+   ``h``, ``h1``, ``h2``, …).  Non-Prop instances (``[Field k]``) and
+   instances used only by typeclass search stay instImplicit.  Applied by
+   :func:`promote_infer_instance_hyps`.
    Never put ``{..}``/``[..]`` binders under ``-- given`` and never put the
    ``:`` on its own line.  The proof body is also 2-indented.  Applied by
    :func:`layout_binders`.
 
+8. **Term vs tactic proofs.** A source proof ``:= by …`` keeps tactic mode:
+   the skeleton emits ``conclusion := by`` with the body under ``-- proof``.
+   A bare term proof ``:= f x`` is emitted as ``conclusion :=`` with the
+   term under ``-- proof`` and NO ``by`` (never ``by exact expr``, per
+   AGENTS.md).  The extractor returns whether the source used ``by``.
+   Applied by :func:`extract_proof_from_text` + :func:`make_skeleton`.
+
+FLT extraction (``S_<key>.lean``)
+---------------------------------
+Sources from ``fermats-last-theorem`` are parsed with the canonical lean.js
+AST parser ``mjs/port_flt_lemma.mjs`` (:func:`parse_flt_solution`) instead
+of the regex extractors.  Per FLT's ``PROOF-PATH.md``, ``S_<key>.lean``
+proves the ``solution`` theorem and the AST returns its exact
+``{imports, namespace, theoremName, binders, conclusion, proof,
+proofStyle, key}`` — no signature guessing, no binder reordering, exact
+term/``by`` style.  Rules 4–8 are still applied by :func:`make_skeleton`,
+which on the AST path keeps shared-universe type binders (``{k G : Type}``)
+that regex extraction would wrongly drop.  Regex extraction remains the
+fallback when the parser rejects the file.
+
 Rules 1–3 and 5 are applied mechanically by :func:`transform_source`.
-Rules 4, 6 and 7 are applied by :func:`make_skeleton` which wraps the main theorem
+Rules 4, 6, 7 and 8 are applied by :func:`make_skeleton` which wraps the main theorem
 in ``@[main] private lemma main``.  Edge cases (multi-line attributes,
 hypothesis-carrying ``variable``, nested namespaces) may require manual
 cleanup after scaffolding.
@@ -158,6 +204,7 @@ NAMESPACE_START_RE = re.compile(r'^\s*namespace\b')
 SECTION_START_RE = re.compile(r'^\s*section\b')
 END_RE = re.compile(r'^\s*end\b')
 VARIABLE_RE = re.compile(r'^\s*variable\b')
+OPEN_LINE_RE = re.compile(r'^[ \t]*open[ \t]+([^\n]+)$', re.MULTILINE)
 THEOREM_TO_LEMMA_RE = re.compile(r'^(\s*)theorem\b')
 
 
@@ -223,6 +270,41 @@ def _run_node_json(script: Path, *args: str) -> dict:
         err = (proc.stderr or proc.stdout or "").strip()
         raise RuntimeError(err or f"node exited {proc.returncode}")
     return json.loads(proc.stdout)
+
+
+# Canonical FLT solution-file parser (lean.js AST).  For ``S_<key>.lean``
+# sources this is the authoritative extractor: regex extraction drops
+# universe-pinned type binders and can reorder binders past their
+# dependencies; the AST returns the exact signature pieces.
+SUGGEST_FLT_PARSE = ROOT / "mjs" / "port_flt_lemma.mjs"
+
+
+def parse_flt_solution(source: Path) -> dict | None:
+    """Parse an FLT ``S_<key>.lean`` solution via ``port_flt_lemma.mjs``.
+
+    Returns ``{imports, namespace, theoremName, binders, conclusion, proof,
+    proofStyle, key}`` or *None* when the source is not an FLT solution or
+    the lean.js parser rejects it (callers fall back to regex extraction).
+    """
+    if not source.stem.startswith("S_"):
+        return None
+    proc = subprocess.run(
+        ["node", str(SUGGEST_FLT_PARSE), str(source)],
+        cwd=str(ROOT),
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+    )
+    if proc.returncode != 0:
+        return None
+    try:
+        data = json.loads(proc.stdout)
+    except json.JSONDecodeError:
+        return None
+    if not isinstance(data, dict) or data.get("binders") is None:
+        return None
+    return data
 
 
 # Structural path segments allowed at length 1–2 (lemma naming connectives).
@@ -347,13 +429,30 @@ def transform_source(text: str) -> str:
     lines = text.splitlines()
 
     # --- Rule 1: Remove namespace/end and dedent ---
+    # But only if the namespace contains no declarations that reference the
+    # namespace name (e.g. `CharDecomp.main`).  If helpers are inside a
+    # namespace and the main theorem calls them by qualified name, removing
+    # the namespace breaks the code.  In that case keep the namespace and
+    # only transform theorem → private lemma.
+    namespace_names: list[str] = []
+    for line in lines:
+        m = re.match(r"^\s*namespace\s+([A-Za-z0-9_.']+)", line)
+        if m:
+            namespace_names.append(m.group(1))
+    text_lower = text.lower()
+    keep_namespaces = any(
+        re.search(rf"\b{re.escape(ns.lower())}\.", text_lower)
+        for ns in namespace_names
+    )
+
     transformed: list[str] = []
     dedent = 0
     for line in lines:
         stripped = line.lstrip()
         if NAMESPACE_START_RE.match(line) or SECTION_START_RE.match(line):
-            dedent += 1
-            continue
+            if not keep_namespaces:
+                dedent += 1
+                continue
         if END_RE.match(line) and dedent > 0:
             dedent -= 1
             continue
@@ -538,8 +637,9 @@ def extract_proof_from_text(
 ) -> str | None:
     """Extract the proof body of a theorem/lemma from source Lean text.
 
-    Returns the text after ``:=`` (or ``:= by``) up to the next declaration
-    or end of file.  If ``theorem_name`` is given, find that specific
+    Returns ``(proof_text, had_by)``: the text after ``:=`` (or ``:= by``)
+    up to the next declaration or end of file, and whether the source used
+    tactic mode.  If ``theorem_name`` is given, find that specific
     declaration; otherwise use the last theorem/lemma.
     """
     decls = find_declarations(text)
@@ -572,8 +672,15 @@ def extract_proof_from_text(
     proof_lines = [after_eq.strip()]
     proof_lines.extend(lines[proof_start + 1 : next_start])
     proof = "\n".join(proof_lines).strip()
-    # Strip leading "by" if present (the skeleton adds ":= by").
+    # Remember whether the source proof was tactic-mode (``:= by``); a bare
+    # term proof (``:= f x``) is emitted without ``by`` (PORTING RULE 8).
+    had_by = bool(re.match(r"^by\b", proof))
+    # Strip leading "by" if present (the skeleton re-adds ":= by").
     proof = re.sub(r"^by\b\s*", "", proof)
+    # AGENTS.md convention: ``have``/``let`` instead of ``haveI``/``letI``
+    # (plain ``have``/``let`` register instances since Lean 4.10+).
+    proof = re.sub(r"\bhaveI\b", "have", proof)
+    proof = re.sub(r"\bletI\b", "let", proof)
     # Drop trailing interpreter commands (FLT files end with
     # `#print axioms solution`) and surrounding blank lines.
     proof_parts = proof.splitlines()
@@ -582,7 +689,7 @@ def extract_proof_from_text(
     ):
         proof_parts.pop()
     proof = "\n".join(proof_parts).strip()
-    return proof if proof else None
+    return (proof, had_by) if proof else None
 
 
 def extract_defs_and_helpers(
@@ -658,7 +765,7 @@ def split_binder_groups(binders: str) -> list[str]:
     return groups
 
 
-def layout_binders(binders: str) -> tuple[str, str]:
+def layout_binders(binders: str, keep_type_binders: bool = False) -> tuple[str, str]:
     """Lay binders out per AGENTS.md (PORTING RULE 7).
 
     Returns ``(pre_given, given)``: the text before ``-- given`` and the
@@ -668,55 +775,229 @@ def layout_binders(binders: str) -> tuple[str, str]:
       2. one line per implicit binder ``{..}`` followed by its dependent
          instances ``[..]``,
       3. one line per bare implicit binder (no dependent instance).
-    Explicit ``(..)`` binders go after ``-- given`` in source order.  Bare
-    ``{E : Type*}`` binders are dropped (autoImplicit).  Lines are 2-indented.
+    Explicit ``(..)`` binders go after ``-- given`` in source order.
+    Anonymous ``{E : Type*}`` binders are dropped (autoImplicit).  When
+    ``keep_type_binders`` (the authoritative AST path), a type binder is
+    dropped only when it declares a single name re-introduced by a later
+    group; multi-name binders such as ``{k G : Type}`` stay — the two names
+    share one auto-bound universe that ``Rep.{0}`` style conclusions pin.
     """
     groups = split_binder_groups(binders)
-    implicit = [g for g in groups if g.startswith("{") or g.startswith("⦃")]
-    # autoImplicit is on: bare universe binders such as {E : Type*} are dropped;
-    # the instances mentioning E bind it implicitly.
-    implicit = [g for g in implicit if not re.fullmatch(r"\{[^:]+:\s*(Type|Sort)[^}]*\}", g)]
-    inst = [g for g in groups if g.startswith("[")]
-    explicit = [g for g in groups if g.startswith("(")]
 
-    def names(g):
+    def is_prop(g):
+        """Heuristic: is an explicit ``(..)`` binder a hypothesis (Prop)?
+
+        Hypotheses go under ``-- given``; data binders (e.g. ``(n N : ℕ)``,
+        ``(f : α → Set β)``) are converted to implicit ``{..}``.  A binder
+        is a proposition iff
+          - all its names follow the hypothesis convention ``h…``, or
+          - its type head is a proposition former (``∀``/``∃``/``Is…``/
+            ``Continuous``/``Measurable``/…), or it is/returns ``Prop``, or
+          - its type has a relational operator at bracket depth 0.
+        Plain ``→`` is NOT a prop signal: ``α → Set β`` is data.
+        """
+        inner = g[1:-1]
+        if ":" not in inner:
+            return False
+        head, ty = inner.split(":", 1)
+        bnames = head.split()
+        if bnames and all(n.startswith("h") for n in bnames):
+            return True
+        t = ty.strip()
+        if t.startswith(("∀", "∃")) or re.match(
+            r"^(Is|Continuous|Measurable|Pairwise|Unique|Nonempty|Finite)\b", t
+        ):
+            return True
+        if t == "Prop" or re.search(r"→\s*Prop$", t):
+            return True
+        depth = 0
+        for c in t:
+            if c in "([{":
+                depth += 1
+            elif c in ")]}":
+                depth -= 1
+            elif depth == 0 and c in "=≠<>≤≥∈∉∣∤~≃≡↔∧∨¬":
+                return True
+        return False
+
+    # Drop ONLY anonymous universe binders ``{X : Type}``/``Type*``/``Type _}``
+    # — autoImplicit rebinds those identically.  Explicit universe pins like
+    # ``{k : Type u}`` must be kept: the conclusion's ``Scheme.{u}`` /
+    # ``Rep.{0}`` relies on the shared level, and autoImplicit would mint a
+    # fresh one.
+    type_star_re = re.compile(r"\{(?P<head>[^:]+):\s*(?:Type|Sort)\s*[*_]?\}")
+
+    # Names mentioned anywhere outside a candidate binder's own group decide
+    # whether autoImplicit would re-introduce it.
+    def mentioned_elsewhere(names, idx):
+        for k, g in enumerate(groups):
+            if k == idx:
+                continue
+            body = g[1:-1]
+            if any(re.search(rf"(?<![A-Za-z0-9_'.↥↑]){re.escape(n)}(?![A-Za-z0-9_'])", body)
+                   for n in names):
+                return True
+        return False
+
+    # Pool of brace binders in SOURCE ORDER: original ``{..}`` plus explicit
+    # data binders ``(..)`` converted to ``{..}`` (everything above
+    # ``-- given`` is implicit/instImplicit only).  Propositions stay
+    # explicit under ``-- given``.  Anonymous ``Type*`` binders are dropped
+    # for autoImplicit; on the AST path multi-name / unmentioned ones stay.
+    pool = []  # (source_idx, brace_text)
+    props = []
+    for i, g in enumerate(groups):
+        if g.startswith("{") or g.startswith("⦃"):
+            pool.append((i, g))
+        elif g.startswith("("):
+            if is_prop(g):
+                props.append(g)
+            else:
+                pool.append((i, "{" + g[1:-1] + "}"))
+
+    def keep_type_binder(i, g):
+        m = type_star_re.fullmatch(g)
+        if not m:
+            return True  # universe-pinned or not a plain type binder
+        if not keep_type_binders:
+            return False
+        names = m.group("head").split()
+        if len(names) > 1:
+            return True  # shared auto-bound universe (e.g. {k G : Type})
+        return not mentioned_elsewhere(names, i)
+
+    pool = [(i, g) for i, g in pool if keep_type_binder(i, g)]
+
+    def bnames(g):
         head = g[1:-1].split(":", 1)[0]
         return set(head.split())
 
     def idents(g):
-        return set(re.findall(r"[^\s()\[\]{}:,→∀∃]+", g[1:-1]))
+        # Coercion prefixes (↥Bflat, ↑x) must not hide the binder name.
+        body = g[1:-1].replace("↥", " ").replace("↑", " ")
+        return set(re.findall(r"[^\s()\[\]{},:→∀∃.]+", body))
 
-    attached = {i: [] for i in range(len(implicit))}
+    # Attach each instance to the LAST PRECEDING brace binder (source order)
+    # whose variables it mentions — e.g. ``(G : Type*) [Group G]`` keeps
+    # ``[Group G]`` on the ``{G}`` line, never emitted before it.
+    attached = {i: [] for i, _ in pool}
     standalone = []
-    for g in inst:
+    for j, g in enumerate(groups):
+        if not g.startswith("["):
+            continue
         used = idents(g)
-        hits = [i for i, b in enumerate(implicit) if names(b) & used]
+        hits = [k for k, (i, b) in enumerate(pool) if i < j and bnames(b) & used]
         if hits:
-            attached[hits[-1]].append(g)
+            attached[pool[hits[-1]][0]].append(g)
         else:
             standalone.append(g)
 
     lines = []
     if standalone:
         lines.append("  " + " ".join(standalone))
-    for i, b in enumerate(implicit):
+    # One pass in SOURCE ORDER: a binder may depend on an earlier "bare"
+    # brace binder (e.g. ``{X : Scheme.{u}} {t : X ⟶ …}``), so never emit
+    # instance-bearing lines before preceding bare lines.
+    for i, b in pool:
         if attached[i]:
             lines.append("  " + " ".join([b] + attached[i]))
-    for i, b in enumerate(implicit):
-        if not attached[i]:
+        else:
             lines.append("  " + b)
-
-    def is_prop(g):
-        ty = g[1:-1].split(":", 1)[1] if ":" in g else ""
-        return bool(re.search(r"[=≠<>≤≥∈∉→∧∨¬↔]|Continuous|Prop", ty))
-
-    # Source order is kept: later hypotheses depend on earlier variables.
-    return "\n".join(lines), " ".join(explicit)
+    return "\n".join(lines), "\n".join("  " + g for g in props)
 
 
 # ---------------------------------------------------------------------------
 # Skeleton generation (PORTING RULE 4)
 # ---------------------------------------------------------------------------
+
+# Prop-valued instance heads consumed explicitly become explicit givens.
+PROP_INSTANCE_HEADS = {
+    "Continuous", "ContinuousOn", "Measurable", "MeasurableSet",
+    "AEMeasurable", "StronglyMeasurable", "Pairwise", "Unique", "Nonempty",
+    "Finite", "Infinite", "Nontrivial", "Module.Flat", "Module.Finite",
+    "Module.Projective", "Module.IsTorsionFree", "Algebra.FiniteType",
+    "Algebra.IsIntegral",
+}
+
+
+def _prop_instance_type(t: str) -> bool:
+    toks = t.split()
+    if not toks:
+        return False
+    head = toks[0]
+    last = head.rsplit(".", 1)[-1]
+    if last.startswith(("Is", "Has")):
+        return True
+    return head in PROP_INSTANCE_HEADS
+
+
+def promote_infer_instance_hyps(binders: str, proof: str) -> tuple[str, str]:
+    """[T] consumed via ``(inferInstance : T)`` in the proof becomes
+    ``(h : T)`` under ``-- given``; proof occurrences are rewritten to ``h``.
+    Non-Prop instances and instances used only by search are untouched."""
+    if not binders or not proof:
+        return binders, proof
+    groups = split_binder_groups(binders)
+    norm = lambda s: " ".join(s.split())
+    targets: dict[str, int] = {}
+    for i, g in enumerate(groups):
+        if g.startswith("["):
+            t = g[1:-1].strip()
+            if _prop_instance_type(t):
+                targets[norm(t)] = i
+
+    spans: list[tuple[int, int, str]] = []
+    needle = "(inferInstance"
+    start = 0
+    while True:
+        j = proof.find(needle, start)
+        if j < 0:
+            break
+        start = j + 1
+        depth = 0
+        k = j
+        colon = -1
+        while k < len(proof):
+            c = proof[k]
+            if c in "([{":
+                depth += 1
+            elif c in ")]}":
+                depth -= 1
+                if depth == 0:
+                    break
+            elif c == ":" and depth == 1:
+                colon = k
+            k += 1
+        if depth != 0 or colon < 0:
+            continue
+        ty = proof[colon + 1:k].strip()
+        if norm(ty) in targets:
+            spans.append((j, k + 1, norm(ty)))
+
+    if not spans:
+        return binders, proof
+
+    name_of: dict[str, str] = {}
+    counter = 0
+
+    def fresh_name() -> str:
+        nonlocal counter
+        n = "h" if counter == 0 else f"h{counter}"
+        counter += 1
+        return n
+
+    new_groups = list(groups)
+    for ty, idx in targets.items():
+        if any(t == ty for _, _, t in spans):
+            name_of[ty] = fresh_name()
+            new_groups[idx] = f"({name_of[ty]} : {groups[idx][1:-1]})"
+    new_binders = " ".join(new_groups)
+
+    out = proof
+    for lo, hi, ty in sorted(spans, reverse=True):
+        out = out[:lo] + name_of[ty] + out[hi:]
+    return new_binders, out
+
 
 SOURCE_LABELS = {
     "fermats-last-theorem": "FLT",
@@ -751,6 +1032,29 @@ def source_link(source_url: str, label: str | None = None) -> str:
     return f"[{label}]({source_url})"
 
 
+def extract_opens(text: str) -> str:
+    """Collect ``open`` command lines the source relied on.
+
+    Identifiers that resolved via an ``open`` in the source (e.g.
+    ``open groupCohomology`` making ``inhomogeneousCochains`` visible)
+    fail as unknown identifiers in the skeleton unless the open is
+    preserved.  Emitted after the imports; prune later with
+    ``delete_open.*`` per AGENTS.md.
+
+    Lines ending in ``in`` are command modifiers (``open Foo in <cmd>``)
+    scoping a single source declaration that is not ported — skipped.
+    """
+    seen: list[str] = []
+    for m in OPEN_LINE_RE.finditer(text):
+        body = m.group(1).strip()
+        if body == "in" or body.endswith(" in"):
+            continue
+        line = f"open {body}"
+        if line not in seen:
+            seen.append(line)
+    return "\n".join(seen)
+
+
 def make_skeleton(
     source_url: str | None,
     statement: tuple[str, str] | None,
@@ -759,6 +1063,9 @@ def make_skeleton(
     helpers: str = "",
     date: str = DEFAULT_DATE,
     source_label: str | None = None,
+    proof_tactic: bool = True,
+    opens: str = "",
+    keep_type_binders: bool = False,
 ) -> str:
     """Build the contents of the skeleton ``.lean`` file.
 
@@ -775,13 +1082,23 @@ def make_skeleton(
         _, sig = statement
         binders, conclusion = split_signature(sig)
 
+    # A Prop-valued instance consumed explicitly via ``(inferInstance : T)``
+    # in the proof is a hypothesis: promote its ``[T]`` binder to ``(h : T)``
+    # and rewrite the proof to use the name.
+    binders, proof = promote_infer_instance_hyps(binders, proof or "")
+
     # Rule 7: AGENTS.md layout -- instances/implicits before ``-- given``,
     # explicit binders after it, ``:`` ending the last binder line.
-    pre_given, given = layout_binders(binders)
+    pre_given, given = layout_binders(binders, keep_type_binders=keep_type_binders)
     pre_given_block = pre_given + "\n" if pre_given else ""
-    given_line = ("  " + given + " :") if given else None
+    # ``given`` is already one 2-indented line per explicit binder;
+    # ``:`` ends the last binder line.
+    given_line = (given + " :") if given else None
 
     proof_body = textwrap.dedent(proof) if proof else "sorry"
+    # Tactic proofs follow ``:= by``; term proofs follow a bare ``:=``
+    # (PORTING RULE 8 — no ``by exact expr``).
+    proof_head = " by" if proof_tactic else ""
     # Proof body is strictly 2-indented under ``-- proof``.
     indented_proof = "\n".join(
         ("  " + line if line.strip() else "") for line in proof_body.splitlines()
@@ -807,14 +1124,14 @@ def make_skeleton(
         # No explicit binders: ``:`` closes the last binder line.
         pre = pre_given_block.rstrip("\n")
         signature = (f"{pre} :\n" if pre else "  :\n") + "-- imply\n"
+    open_block = f"\n{opens}\n" if opens else "\n"
     return f"""import Mathlib
 import sympy.Basic
-
-
+{open_block}
 {preamble}
 @[main]
 private lemma main
-{signature}  {conclusion} := by
+{signature}  {conclusion} :={proof_head}
 -- proof
 {indented_proof}
 
@@ -826,6 +1143,30 @@ private lemma main
 # ---------------------------------------------------------------------------
 # Driver
 # ---------------------------------------------------------------------------
+
+def find_existing_port(source: Path, ported_root: Path) -> Path | None:
+    """Return the ``Lemma/…`` file that already ports ``source``, if any.
+
+    A ported file is recognised by the source file name appearing in its
+    docstring link (PORTING RULE 6), e.g. ``S_<key>.lean``.  Falls back to a
+    ``git grep``-style scan of the ported tree; returns the first match.
+    """
+    needle = source.name  # e.g. S_AddChar_foo.lean
+    try:
+        proc = subprocess.run(
+            ["grep", "-rl", "-F", needle, str(ported_root)],
+            capture_output=True, text=True, timeout=120,
+        )
+        for hit in proc.stdout.splitlines():
+            hit = hit.strip()
+            if hit.endswith(".lean") and ".echo." not in hit:
+                return Path(hit)
+    except Exception:  # noqa: BLE001 — best-effort guard
+        pass
+    return None
+
+
+
 
 def main() -> int:
     ap = argparse.ArgumentParser(
@@ -890,28 +1231,64 @@ def _cmd_scaffold(args: argparse.Namespace, ported_root: Path) -> int:
         print(f"ERROR: source file not found: {source}", file=sys.stderr)
         return 1
 
-    text = source.read_text(encoding="utf-8", errors="replace")
+    raw_text = source.read_text(encoding="utf-8", errors="replace")
 
     # Apply porting rules (1, 2, 3, 5) unless --no-transform.
+    text = raw_text
     if not args.no_transform:
         text = transform_source(text)
 
-    # Extract the main statement and proof.
-    statement = extract_statement_from_text(text, args.theorem_name)
-    if statement is None:
-        print(f"ERROR: no theorem/lemma found in {source}", file=sys.stderr)
-        return 1
-    main_name = statement[0]
-    proof = extract_proof_from_text(text, args.theorem_name)
+    # FLT ``S_<key>.lean`` solutions: prefer the canonical lean.js AST
+    # extractor (mjs/port_flt_lemma.mjs) over regexes.  The AST returns the
+    # exact binders / conclusion / proof / proofStyle, avoiding dropped
+    # universe-pinned type binders and binder reordering.  Fall back to
+    # regex extraction when the parser rejects the file.
+    flt = None if args.theorem_name else parse_flt_solution(source)
+    if flt is not None:
+        main_name = flt.get("theoremName") or "solution"
+        sig = f'{flt["binders"].strip()} : {flt["conclusion"].strip()}'
+        statement = (main_name, sig)
+        proof = (flt.get("proof") or "").rstrip() or None
+        proof_tactic = flt.get("proofStyle", "by") == "by"
+    else:
+        # Extract the main statement and proof.
+        statement = extract_statement_from_text(text, args.theorem_name)
+        if statement is None:
+            print(f"ERROR: no theorem/lemma found in {source}", file=sys.stderr)
+            return 1
+        main_name = statement[0]
+        extracted = extract_proof_from_text(text, args.theorem_name)
+        proof, proof_tactic = extracted if extracted is not None else (None, True)
 
     # Extract defs and helpers (rule 5: before main lemma).
     defs, helpers = extract_defs_and_helpers(text, main_name)
 
+    # Auto-derive the source URL for known repos (rule 6) when not given.
+    source_url = args.source_url
+    if source_url is None:
+        parts = source.resolve().parts
+        if "fermats-last-theorem" in parts:
+            i = parts.index("fermats-last-theorem")
+            rel = "/".join(parts[i + 1:])
+            source_url = (
+                "https://github.com/anthropics/fermats-last-theorem"
+                f"/blob/main/{rel}"
+            )
+
     # Build the skeleton (rule 4: @[main] private lemma main).
     skeleton = make_skeleton(
-        args.source_url, statement, proof, defs, helpers, args.date,
-        source_label=args.source_label,
+        source_url, statement, proof, defs, helpers, args.date,
+        source_label=args.source_label, proof_tactic=proof_tactic,
+        opens=extract_opens(text), keep_type_binders=flt is not None,
     )
+
+    # Duplicate guard: an existing Lemma file whose docstring links back to
+    # this source file means the theorem was already ported (possibly at a
+    # different path or as an iff).  Search before spending time on paths.
+    existing = find_existing_port(source, ported_root)
+    if existing is not None:
+        print(f"SKIP (already ported): {existing}")
+        return 0
 
     # Derive path (phase 1 rough).
     fallback = fallback_path_for(source, main_name, ported_root)

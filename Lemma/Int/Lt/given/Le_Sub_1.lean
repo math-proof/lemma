@@ -1,0 +1,15 @@
+import sympy.Basic
+
+
+@[main]
+private lemma main
+  {x y : ℤ}
+-- given
+  (h : x < y) :
+-- imply
+  x ≤ y - 1 := by
+-- proof
+  omega
+
+
+-- created on 2026-10-03

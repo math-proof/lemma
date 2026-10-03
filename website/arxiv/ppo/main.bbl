@@ -1,0 +1,422 @@
+\begin{thebibliography}{10}
+
+\bibitem{andor2016global}
+Daniel Andor, Chris Alberti, David Weiss, Aliaksei Severyn, Alessandro Presta,
+  Kuzman Ganchev, Slav Petrov, and Michael Collins.
+\newblock Globally normalized transition-based neural networks.
+\newblock In {\em Proceedings of the 54th Annual Meeting of the Association for
+  Computational Linguistics (ACL)}, 2016.
+\newblock ACL Anthology P16-1231; arXiv:1603.06042.
+
+\bibitem{bahdanau2015nmt}
+Dzmitry Bahdanau, Kyunghyun Cho, and Yoshua Bengio.
+\newblock Neural machine translation by jointly learning to align and
+  translate.
+\newblock In {\em International Conference on Learning Representations}, 2015.
+\newblock arXiv:1409.0473.
+
+\bibitem{bengio2015scheduled}
+Samy Bengio, Oriol Vinyals, Navdeep Jaitly, and Noam Shazeer.
+\newblock Scheduled sampling for sequence prediction with recurrent neural
+  networks.
+\newblock In {\em Advances in Neural Information Processing Systems},
+  volume~28, 2015.
+\newblock arXiv:1506.03099.
+
+\bibitem{chevallier2021isabelle}
+Mark Chevallier and Jacques Fleuriot.
+\newblock Formalising the foundations of discrete reinforcement learning in
+  {Isabelle/HOL}.
+\newblock arXiv:2112.05996, \url{https://arxiv.org/abs/2112.05996}, 2021.
+
+\bibitem{collobert2011nlp}
+Ronan Collobert, Jason Weston, L{\'e}on Bottou, Michael Karlen, Koray
+  Kavukcuoglu, and Pavel Kuksa.
+\newblock Natural language processing (almost) from scratch.
+\newblock {\em Journal of Machine Learning Research}, 12:2493--2537, 2011.
+\newblock arXiv:1103.0398.
+
+\bibitem{moura2021lean4}
+Leonardo de~Moura and Sebastian Ullrich.
+\newblock The {Lean} 4 theorem prover and programming language.
+\newblock In {\em Automated Deduction -- {CADE} 28}, volume 12699 of {\em
+  LNCS}, pages 625--635. Springer, 2021.
+
+\bibitem{greensmith2004variance}
+Evan Greensmith, Peter~L. Bartlett, and Jonathan Baxter.
+\newblock Variance reduction techniques for gradient estimates in reinforcement
+  learning.
+\newblock {\em Journal of Machine Learning Research}, 5:1471--1530, 2004.
+
+\bibitem{huang2015bilstmcrf}
+Zhiheng Huang, Wei Xu, and Kai Yu.
+\newblock Bidirectional {LSTM}-{CRF} models for sequence tagging, 2015.
+\newblock arXiv:1508.01991.
+
+\bibitem{kallenberg2002foundations}
+Olav Kallenberg.
+\newblock {\em Foundations of Modern Probability}.
+\newblock Springer, 2nd edition, 2002.
+
+\bibitem{lafferty2001crf}
+John~D. Lafferty, Andrew McCallum, and Fernando C.~N. Pereira.
+\newblock Conditional random fields: Probabilistic models for segmenting and
+  labeling sequence data.
+\newblock In {\em Proceedings of the 18th International Conference on Machine
+  Learning (ICML)}, pages 282--289, 2001.
+
+\bibitem{lample2016ner}
+Guillaume Lample, Miguel Ballesteros, Sandeep Subramanian, Kazuya Kawakami, and
+  Chris Dyer.
+\newblock Neural architectures for named entity recognition.
+\newblock In {\em Proceedings of NAACL-HLT 2016}, pages 260--270, 2016.
+\newblock arXiv:1603.01360.
+
+\bibitem{landin1964mechanical}
+Peter~J. Landin.
+\newblock The mechanical evaluation of expressions.
+\newblock {\em The Computer Journal}, 6(4):308--320, 1964.
+
+\bibitem{torchlean}
+{lean-dojo}.
+\newblock {TorchLean}: Formalizing neural networks in {Lean}.
+\newblock GitHub repository, \url{https://github.com/lean-dojo/TorchLean},
+  2026.
+
+\bibitem{ma2016bilstmcnnscrf}
+Xuezhe Ma and Eduard Hovy.
+\newblock End-to-end sequence labeling via bi-directional {LSTM}-{CNNs}-{CRF}.
+\newblock In {\em Proceedings of the 54th Annual Meeting of the Association for
+  Computational Linguistics (ACL)}, pages 1064--1074, 2016.
+\newblock arXiv:1603.01354.
+
+\bibitem{lemma_repo}
+math proof.
+\newblock lemma: machine-checked tensor calculus.
+\newblock \url{https://github.com/math-proof/lemma}, 2026.
+
+\bibitem{lemma_zero}
+math proof.
+\newblock
+  {Random.\allowbreak{}Expect\_ConditionedGrad\_LogProb.\allowbreak{}eq.\allowbreak{}Zero}.
+\newblock
+  \url{http://www.lemma.cn/lean/?module=Random.Expect_ConditionedGrad_LogProb.eq.Zero},
+  2026.
+
+\bibitem{lemma_score}
+math proof.
+\newblock
+  {Random.\allowbreak{}Expect\_ConditionedGrad\_LogProb.\allowbreak{}eq.\allowbreak{}Zero.\allowbreak{}policy}.
+\newblock
+  \url{http://www.lemma.cn/lean/?module=Random.Expect_ConditionedGrad_LogProb.eq.Zero.policy},
+  2026.
+
+\bibitem{lemma_crf_markov}
+math proof.
+\newblock
+  {Random.\allowbreak{}Prob.\allowbreak{}eq.\allowbreak{}Mul\_Prod\_MulProbS.\allowbreak{}of.\allowbreak{}Ne\_0.\allowbreak{}Eq.\allowbreak{}Eq.\allowbreak{}Eq}.
+\newblock
+  \url{http://www.lemma.cn/lean/?module=Random.Prob.eq.Mul_Prod_MulProbS.of.Ne_0.Eq.Eq.Eq},
+  2026.
+
+\bibitem{lemma_lim}
+math proof.
+\newblock
+  {Real.\allowbreak{}Eq\_0.\allowbreak{}Lim.\allowbreak{}of.\allowbreak{}LtAbs.\allowbreak{}IsFinite}.
+\newblock
+  \url{http://www.lemma.cn/lean/?module=Real.Eq_0.Lim.of.LtAbs.IsFinite}, 2026.
+
+\bibitem{lemma_bellman}
+math proof.
+\newblock
+  {Tensor.\allowbreak{}And.\allowbreak{}Eq.\allowbreak{}Expect.\allowbreak{}of.\allowbreak{}Eq\_Conditioned.\allowbreak{}Eq\_Expect.\allowbreak{}Eq\_Expect.\allowbreak{}Bellman}.
+\newblock
+  \url{http://www.lemma.cn/lean/?module=Tensor.And.Eq.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.Bellman},
+  2026.
+
+\bibitem{lemma_crf_fb}
+math proof.
+\newblock
+  {Tensor.\allowbreak{}And.\allowbreak{}of.\allowbreak{}All\_Eq\_Sum\_Mul.\allowbreak{}All\_Eq\_1.\allowbreak{}All\_Eq\_Mul.\allowbreak{}All\_Eq.\allowbreak{}forward\_backward}.
+\newblock
+  \url{http://www.lemma.cn/lean/?module=Tensor.And.of.All_Eq_Sum_Mul.All_Eq_1.All_Eq_Mul.All_Eq.forward_backward},
+  2026.
+
+\bibitem{lemma_crf_viterbi}
+math proof.
+\newblock
+  {Tensor.\allowbreak{}And.\allowbreak{}of.\allowbreak{}Ne\_0.\allowbreak{}Eq.\allowbreak{}Eq.\allowbreak{}Eq}.
+\newblock \url{http://www.lemma.cn/lean/?module=Tensor.And.of.Ne_0.Eq.Eq.Eq},
+  2026.
+
+\bibitem{lemma_pgq}
+math proof.
+\newblock
+  {Tensor.\allowbreak{}Eq.\allowbreak{}Dot.\allowbreak{}Grad.\allowbreak{}Expect.\allowbreak{}of.\allowbreak{}Eq\_Conditioned.\allowbreak{}Eq\_Expect.\allowbreak{}Eq\_Expect.\allowbreak{}IsFinite.\allowbreak{}Q\_Function}.
+\newblock
+  \url{http://www.lemma.cn/lean/?module=Tensor.Eq.Dot.Grad.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.IsFinite.Q_Function},
+  2026.
+
+\bibitem{lemma_pgt}
+math proof.
+\newblock
+  {Tensor.\allowbreak{}Eq.\allowbreak{}Dot.\allowbreak{}Grad.\allowbreak{}Expect.\allowbreak{}of.\allowbreak{}Eq\_Conditioned.\allowbreak{}IsFinite.\allowbreak{}policy\_gradient\_theorem}.
+\newblock
+  \url{http://www.lemma.cn/lean/?module=Tensor.Eq.Dot.Grad.Expect.of.Eq_Conditioned.IsFinite.policy_gradient_theorem},
+  2026.
+
+\bibitem{lemma_tower}
+math proof.
+\newblock
+  {Tensor.\allowbreak{}Eq.\allowbreak{}Expect.\allowbreak{}Grad.\allowbreak{}Log.\allowbreak{}Pr.\allowbreak{}of.\allowbreak{}Eq\_Conditioned.\allowbreak{}Q\_Function.\allowbreak{}discounted}.
+\newblock
+  \url{http://www.lemma.cn/lean/?module=Tensor.Eq.Expect.Grad.Log.Pr.of.Eq_Conditioned.Q_Function.discounted},
+  2026.
+
+\bibitem{lemma_pgn}
+math proof.
+\newblock
+  {Tensor.\allowbreak{}Eq.\allowbreak{}Grad.\allowbreak{}Expect.\allowbreak{}of.\allowbreak{}Eq\_Conditioned.\allowbreak{}Eq\_Expect.\allowbreak{}Eq\_Expect.\allowbreak{}policy\_gradient}.
+\newblock
+  \url{http://www.lemma.cn/lean/?module=Tensor.Eq.Grad.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.policy_gradient},
+  2026.
+
+\bibitem{lemma_crf_markov_logits}
+math proof.
+\newblock
+  {Tensor.\allowbreak{}Eq.\allowbreak{}of.\allowbreak{}Ne\_0.\allowbreak{}Eq.\allowbreak{}Eq.\allowbreak{}Eq.\allowbreak{}Eq\_log.\allowbreak{}Eq\_log.\allowbreak{}Eq\_log}.
+\newblock
+  \url{http://www.lemma.cn/lean/?module=Tensor.Eq.of.Ne_0.Eq.Eq.Eq.Eq_log.Eq_log.Eq_log},
+  2026.
+
+\bibitem{lemma_gae_series}
+math proof.
+\newblock
+  {Tensor.\allowbreak{}EqDot.\allowbreak{}of.\allowbreak{}IsFinite.\allowbreak{}generalized\_advantage\_estimate}.
+\newblock
+  \url{http://www.lemma.cn/lean/?module=Tensor.EqDot.of.IsFinite.generalized_advantage_estimate},
+  2026.
+
+\bibitem{lemma_gae}
+math proof.
+\newblock
+  {Tensor.\allowbreak{}EqDot\_GradExpect.\allowbreak{}of.\allowbreak{}Eq\_Conditioned.\allowbreak{}Eq\_Expect.\allowbreak{}IsFinite.\allowbreak{}IsFinite.\allowbreak{}generalized\_advantage\_estimate}.
+\newblock
+  \url{http://www.lemma.cn/lean/?module=Tensor.EqDot_GradExpect.of.Eq_Conditioned.Eq_Expect.IsFinite.IsFinite.generalized_advantage_estimate},
+  2026.
+
+\bibitem{lemma_gae_avg}
+math proof.
+\newblock
+  {Tensor.\allowbreak{}EqDot\_GradExpect.\allowbreak{}of.\allowbreak{}Eq\_Conditioned.\allowbreak{}Eq\_Expect.\allowbreak{}IsFinite.\allowbreak{}IsFinite.\allowbreak{}In\_Ico.\allowbreak{}generalized\_advantage\_estimate}.
+\newblock
+  \url{http://www.lemma.cn/lean/?module=Tensor.EqDot_GradExpect.of.Eq_Conditioned.Eq_Expect.IsFinite.IsFinite.In_Ico.generalized_advantage_estimate},
+  2026.
+
+\bibitem{lemma_uae}
+math proof.
+\newblock
+  {Tensor.\allowbreak{}EqDot\_GradExpect.\allowbreak{}of.\allowbreak{}Eq\_Conditioned.\allowbreak{}Eq\_Expect.\allowbreak{}IsFinite.\allowbreak{}IsFinite.\allowbreak{}unbiased\_advantage\_estimate}.
+\newblock
+  \url{http://www.lemma.cn/lean/?module=Tensor.EqDot_GradExpect.of.Eq_Conditioned.Eq_Expect.IsFinite.IsFinite.unbiased_advantage_estimate},
+  2026.
+
+\bibitem{lemma_induct}
+math proof.
+\newblock
+  {Tensor.\allowbreak{}EqGrad.\allowbreak{}of.\allowbreak{}Eq\_Conditioned.\allowbreak{}Eq\_Expect.\allowbreak{}Eq\_Expect.\allowbreak{}policy\_gradient.\allowbreak{}induct}.
+\newblock
+  \url{http://www.lemma.cn/lean/?module=Tensor.EqGrad.of.Eq_Conditioned.Eq_Expect.Eq_Expect.policy_gradient.induct},
+  2026.
+
+\bibitem{lemma_recursion}
+math proof.
+\newblock
+  {Tensor.\allowbreak{}EqGrad.\allowbreak{}of.\allowbreak{}Eq\_Conditioned.\allowbreak{}Eq\_Expect.\allowbreak{}Eq\_Expect.\allowbreak{}policy\_gradient.\allowbreak{}recursion}.
+\newblock
+  \url{http://www.lemma.cn/lean/?module=Tensor.EqGrad.of.Eq_Conditioned.Eq_Expect.Eq_Expect.policy_gradient.recursion},
+  2026.
+
+\bibitem{lemma_crf_logits}
+math proof.
+\newblock {Tensor.\allowbreak{}Imp.\allowbreak{}of.\allowbreak{}Eq}.
+\newblock \url{http://www.lemma.cn/lean/?module=Tensor.Imp.of.Eq}, 2026.
+
+\bibitem{lemma_crf_nll}
+math proof.
+\newblock
+  {Tensor.\allowbreak{}Imp\_Eq\_Add\_LogSumExp.\allowbreak{}EqNegLogProb.\allowbreak{}of.\allowbreak{}Ne0ProbJoint.\allowbreak{}Indep.\allowbreak{}y\_given\_x}.
+\newblock
+  \url{http://www.lemma.cn/lean/?module=Tensor.Imp_Eq_Add_LogSumExp.EqNegLogProb.of.Ne0ProbJoint.Indep.y_given_x},
+  2026.
+
+\bibitem{mathlib}
+{Mathlib community}.
+\newblock The {Lean} mathematical library.
+\newblock \url{https://leanprover-community.github.io/mathlib4_docs/}, 2026.
+
+\bibitem{mccallum2000memm}
+Andrew McCallum, Dayne Freitag, and Fernando C.~N. Pereira.
+\newblock Maximum entropy {Markov} models for information extraction and
+  segmentation.
+\newblock In {\em Proceedings of the 17th International Conference on Machine
+  Learning (ICML)}, pages 591--598, 2000.
+
+\bibitem{ouyang2022instructgpt}
+Long Ouyang, Jeffrey Wu, Xu~Jiang, Diogo Almeida, Carroll~L. Wainwright, Pamela
+  Mishkin, Chong Zhang, Sandhini Agarwal, Katarina Slama, Alex Ray, John
+  Schulman, Jacob Hilton, Fraser Kelton, Luke Miller, Maddie Simens, Amanda
+  Askell, Peter Welinder, Paul Christiano, Jan Leike, and Ryan Lowe.
+\newblock Training language models to follow instructions with human feedback.
+\newblock In {\em Advances in Neural Information Processing Systems},
+  volume~35, 2022.
+\newblock arXiv:2203.02155.
+
+\bibitem{puterman1994markov}
+Martin~L. Puterman.
+\newblock {\em Markov Decision Processes: Discrete Stochastic Dynamic
+  Programming}.
+\newblock Wiley, 1994.
+
+\bibitem{rabiner1989hmm}
+Lawrence~R. Rabiner.
+\newblock A tutorial on hidden {Markov} models and selected applications in
+  speech recognition.
+\newblock {\em Proceedings of the {IEEE}}, 77(2):257--286, 1989.
+
+\bibitem{ranzato2016mixer}
+Marc'Aurelio Ranzato, Sumit Chopra, Michael Auli, and Wojciech Zaremba.
+\newblock Sequence level training with recurrent neural networks.
+\newblock In {\em International Conference on Learning Representations}, 2016.
+\newblock arXiv:1511.06732.
+
+\bibitem{schulman2015trpo}
+John Schulman, Sergey Levine, Philipp Moritz, Michael Jordan, and Pieter
+  Abbeel.
+\newblock Trust region policy optimization.
+\newblock In {\em Proceedings of the 32nd International Conference on Machine
+  Learning}, 2015.
+\newblock arXiv:1502.05477.
+
+\bibitem{schulman2016gae}
+John Schulman, Philipp Moritz, Sergey Levine, Michael Jordan, and Pieter
+  Abbeel.
+\newblock High-dimensional continuous control using generalized advantage
+  estimation.
+\newblock In {\em International Conference on Learning Representations}, 2016.
+\newblock arXiv:1506.02438.
+
+\bibitem{schulman2017ppo}
+John Schulman, Filip Wolski, Prafulla Dhariwal, Alec Radford, and Oleg Klimov.
+\newblock Proximal policy optimization algorithms, 2017.
+\newblock arXiv:1707.06347.
+
+\bibitem{shao2024deepseekmath}
+Zhihong Shao, Peiyi Wang, Qihao Zhu, Runxin Xu, Junxiao Song, Xiao Bi, Haowei
+  Zhang, Mingchuan Zhang, Y.~K. Li, Y.~Wu, and Daya Guo.
+\newblock {DeepSeekMath}: Pushing the limits of mathematical reasoning in open
+  language models, 2024.
+\newblock arXiv:2402.03300.
+
+\bibitem{su2017crf}
+Jianlin Su.
+\newblock {CRF} in a nutshell ({Guoke} zhong de tiaojian suiji chang).
+\newblock Scientific Spaces (kexue.fm) blog post, in Chinese,
+  \url{https://spaces.ac.cn/archives/4695}, 2017.
+
+\bibitem{su2018search}
+Jianlin Su.
+\newblock Scientific spaces: search results for ``{CRF}''.
+\newblock \url{https://spaces.ac.cn/search/CRF/},
+  2026.
+
+\bibitem{su2022globalpointer}
+Jianlin Su, Ahmed Murtadha, Shengfeng Pan, Jing Hou, Jun Sun, Wanwei Huang,
+  Bo~Wen, and Yunfeng Liu.
+\newblock Global pointer: Novel efficient span-based approach for named entity
+  recognition, 2022.
+\newblock arXiv:2208.03054.
+
+\bibitem{sutskever2014seq2seq}
+Ilya Sutskever, Oriol Vinyals, and Quoc~V. Le.
+\newblock Sequence to sequence learning with neural networks.
+\newblock In {\em Advances in Neural Information Processing Systems},
+  volume~27, 2014.
+\newblock arXiv:1409.3215.
+
+\bibitem{sutton2012crf}
+Charles Sutton and Andrew McCallum.
+\newblock An introduction to conditional random fields.
+\newblock {\em Foundations and Trends in Machine Learning}, 4(4):267--373,
+  2012.
+\newblock arXiv:1011.4088.
+
+\bibitem{sutton2018reinforcement}
+Richard~S. Sutton and Andrew~G. Barto.
+\newblock {\em Reinforcement Learning: An Introduction}.
+\newblock MIT Press, 2nd edition, 2018.
+
+\bibitem{sutton2000policy}
+Richard~S. Sutton, David McAllester, Satinder Singh, and Yishay Mansour.
+\newblock Policy gradient methods for reinforcement learning with function
+  approximation.
+\newblock In {\em Advances in Neural Information Processing Systems},
+  volume~12, pages 1057--1063. MIT Press, 2000.
+
+\bibitem{mathlib2020}
+{The mathlib Community}.
+\newblock The {Lean} mathematical library.
+\newblock In {\em Proceedings of the 9th {ACM} {SIGPLAN} International
+  Conference on Certified Programs and Proofs ({CPP})}, pages 367--381. ACM,
+  2020.
+
+\bibitem{vajjha2021certrl}
+Koundinya Vajjha, Avraham Shinnar, Barry Trager, Vasily Pestun, and Nathan
+  Fulton.
+\newblock {CertRL}: Formalizing convergence proofs for value and policy
+  iteration in {Coq}.
+\newblock In {\em Proceedings of the 10th {ACM} {SIGPLAN} International
+  Conference on Certified Programs and Proofs ({CPP})}, pages 18--31. ACM,
+  2021.
+\newblock arXiv:2009.11403.
+
+\bibitem{vaswani2017attention}
+Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones,
+  Aidan~N. Gomez, {\L}ukasz Kaiser, and Illia Polosukhin.
+\newblock Attention is all you need.
+\newblock In {\em Advances in Neural Information Processing Systems},
+  volume~30, 2017.
+\newblock arXiv:1706.03762.
+
+\bibitem{williams1992simple}
+Ronald~J. Williams.
+\newblock Simple statistical gradient-following algorithms for connectionist
+  reinforcement learning.
+\newblock {\em Machine Learning}, 8(3--4):229--256, 1992.
+
+\bibitem{wiseman2016bso}
+Sam Wiseman and Alexander~M. Rush.
+\newblock Sequence-to-sequence learning as beam-search optimization.
+\newblock In {\em Proceedings of the 2016 Conference on Empirical Methods in
+  Natural Language Processing (EMNLP)}, 2016.
+\newblock arXiv:1606.02960.
+
+\bibitem{zhang2026pg}
+Shangtong Zhang.
+\newblock {rl-theory-in-lean}:
+  \texttt{RLTheory/\allowbreak{}Algorithm/\allowbreak{}PolicyGradient.lean},
+  commit \texttt{2a9d01a}.
+\newblock GitHub, 30 March 2026,
+  \url{https://github.com/ShangtongZhang/rl-theory-in-lean/commit/2a9d01a236961b1c9bc451a8926346364fc66e7f},
+  2026.
+\newblock Experimental, largely machine-generated development (commits
+  co-authored with an AI assistant), committed in March 2026 and later
+  withdrawn from the project's main branch; still accessible at this commit.
+
+\bibitem{ziegler2019finetuning}
+Daniel~M. Ziegler, Nisan Stiennon, Jeffrey Wu, Tom~B. Brown, Alec Radford,
+  Dario Amodei, Paul Christiano, and Geoffrey Irving.
+\newblock Fine-tuning language models from human preferences, 2019.
+\newblock arXiv:1909.08593.
+
+\end{thebibliography}

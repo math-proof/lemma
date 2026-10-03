@@ -16,7 +16,7 @@ private lemma main
   (hf : Measurable f)
   («s.bvar» : β) :
 -- imply
-  𝔼[a: π](f a | s = «s.bvar») =
+  Expectation.condRV π a s f «s.bvar» =
     ∫⁻ «a.bvar», f «a.bvar» * ℙ[π](a = «a.bvar» | s = «s.bvar») ∂ReferenceMeasure.measure := by
 -- proof
   simp only [Expectation.asRV_function, Expectation.condRV, expectation_ennreal]

@@ -1585,6 +1585,7 @@ export class Lean extends IndentedNode {
                         this instanceof LeanGetElemQuote ||
                         this instanceof LeanUnaryArithmeticPost ||
                         this instanceof LeanBracket ||
+                        this instanceof LeanDoubleAngleQuotation ||
                         (this instanceof LeanPairedGroup && this.is_Expr())
                     ) {
                         this.parent.replace(this, new LeanGetElem(this, caret, indent, level));
@@ -5767,9 +5768,54 @@ export class Lean_land extends LeanLogic {
         return '∧';
     }
 
+    insert_newline(caret, newline_count, indent, next) {
+        if (caret === this.rhs && caret instanceof LeanCaret) {
+            if (indent >= this.indent) {
+                if (indent === this.indent) indent = this.indent + 2;
+                this.hanging_indentation = true;
+                caret.indent = indent;
+                return caret;
+            }
+        }
+        return super.insert_newline(caret, newline_count, indent, next);
+    }
+
     toJSON() {
         return { [this.func]: [this.lhs.toJSON(), this.rhs.toJSON()] };
     }
+}
+
+/**
+ * Conjuncts of a `∧` chain whose source breaks a line after some `∧`, else null.
+ * @param {unknown} node
+ */
+function landMultilineConjuncts(node) {
+    if (!(node instanceof Lean_land)) return null;
+    const out = [];
+    let multiline = false;
+    const walk = (n) => {
+        if (n instanceof Lean_land) {
+            if (n.hanging_indentation) multiline = true;
+            walk(n.lhs);
+            walk(n.rhs);
+        } else out.push(n);
+    };
+    walk(node);
+    return multiline && out.length > 1 ? out : null;
+}
+
+/**
+ * LaTeX for an `imply` conclusion: a `∧` chain written on several lines renders one conjunct per line.
+ * @param {any} node
+ * @param {any} syntax
+ */
+function implyConclusionLatex(node, syntax) {
+    const parts = landMultilineConjuncts(node);
+    if (!parts) return node.toLatex ? node.toLatex(syntax) : strStmt(node);
+    const rows = parts.map(
+        (c, i) => `&${c.toLatex ? c.toLatex(syntax) : strStmt(c)}${i < parts.length - 1 ? ' \\land' : ''}`,
+    );
+    return '\\begin{align*}\n' + rows.join('\\\\\n') + '\n\\end{align*}';
 }
 
 /** `⊆`. */
@@ -6836,7 +6882,7 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                     if (imply.length > 1 && imply[0] instanceof Lean_let)
                         implyLatex = '\\begin{align*}\n' + imply.map((st) => `&${st.toLatex(syntax)}&& `).join('\\\\\n') + '\n\\end{align*}';
                     else
-                        implyLatex = imply.map(st => st.toLatex(syntax)).join('\n');
+                        implyLatex = imply.map(st => implyConclusionLatex(st, syntax)).join('\n');
                     const assignSuffix = ' :=' + (by ? ` ${by}` : '');
 
                     const implyOut = { lean: implyLean + assignSuffix, latex: implyLatex };
@@ -7174,7 +7220,7 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                                 '\n\\end{align*}';
                         } else {
                             implyLatex = imply
-                                .map((st) => (st.toLatex ? st.toLatex(syntax) : strStmt(st)))
+                                .map((st) => implyConclusionLatex(st, syntax))
                                 .join('\n');
                         }
 
@@ -7182,8 +7228,7 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                     } else {
                         markRandomVarSequence([implyNode], flatRvNames);
                         const implyLean = unindentTwo(strStmt(implyNode)) + ' :=' + (by ? ` ${by}` : '');
-                        const implyLatex =
-                            (implyNode.toLatex ? implyNode.toLatex(syntax) : strStmt(implyNode));
+                        const implyLatex = implyConclusionLatex(implyNode, syntax);
                         implyOut = { lean: implyLean, latex: implyLatex };
                     }
                     syntax.letBindings = buildLetBindings(flatImplyStmts ?? []);
@@ -8991,6 +9036,12 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         };
         const markRV = (n) => {
             if (n instanceof LeanToken) n.kwargs.isRandomVariable = true;
+            // a slice of a sequence of random variables, e.g. `x[:t + 1]`
+            else if (n instanceof LeanGetElem && n.args[0] instanceof LeanToken)
+                n.args[0].kwargs.isRandomVariable = true;
+            // a random variable sequence applied to an index, e.g. `x 0`
+            else if (n instanceof LeanArgsSpaceSeparated && n.args[0] instanceof LeanToken)
+                n.args[0].kwargs.isRandomVariable = true;
         };
         const markFactor = (n) => {
             if (!n) return;
@@ -9034,9 +9085,21 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         n = peel(n);
         if (!(n instanceof LeanEq)) return null;
         const lhs = peel(n.lhs);
-        if (!(lhs instanceof LeanToken)) return null;
-        const bname = LeanArgsSpaceSeparated.bvarQuotationName(n.rhs);
-        if (!bname || bname.text !== lhs.text) return null;
+        // `x`, a slice `x[:t + 1]`, or an indexed variable `x 0`
+        if (
+            !(
+                lhs instanceof LeanToken ||
+                (lhs instanceof LeanGetElem && lhs.args[0] instanceof LeanToken) ||
+                (lhs instanceof LeanArgsSpaceSeparated && lhs.args[0] instanceof LeanToken)
+            )
+        )
+            return null;
+        // rhs spells the same expression with its base wrapped as a bound value:
+        // `«x.bvar»`, `«x.bvar»[:t + 1]` or `«x[:t + 1].bvar»`
+        const rhsText = strStmt(n.rhs).trim();
+        if (!/«[^»]*\.bvar»/.test(rhsText)) return null;
+        const plain = rhsText.replace(/«([^»]*?)\.bvar»/g, '$1');
+        if (plain !== strStmt(lhs).trim()) return null;
         return lhs;
     }
 
@@ -12297,9 +12360,34 @@ class LeanBigOperator extends LeanArgs {
         return null;
     }
 
+    /**
+     * `∑/∏ i ∈ Finset.Ico a (b + 1), f` → `[i, a, b]`, rendered as `\\prod_{i=a}^{b}`.
+     */
+    icoClosedBound() {
+        if (!(this instanceof Lean_sum || this instanceof Lean_prod)) return null;
+        const peel = (n) => (n instanceof LeanParenthesis ? n.arg : n);
+        const bound = this.bound;
+        if (!(bound instanceof Lean_in)) return null;
+        const set = peel(bound.rhs);
+        if (!(set instanceof LeanArgsSpaceSeparated) || set.args.length !== 3) return null;
+        const fn = set.args[0];
+        const isIco =
+            (fn instanceof LeanToken && fn.text === 'Ico') ||
+            (fn instanceof LeanProperty &&
+                fn.rhs instanceof LeanToken && fn.rhs.text === 'Ico' &&
+                fn.lhs instanceof LeanToken && fn.lhs.text === 'Finset');
+        if (!isIco) return null;
+        const top = peel(set.args[2]);
+        if (!(top instanceof LeanAdd) || !(top.rhs instanceof LeanToken) || top.rhs.text !== '1')
+            return null;
+        return [bound.lhs, peel(set.args[1]), top.lhs];
+    }
+
     latexFormat() {
         if (!(this instanceof LeanQuantifier) && this.finRangeBound())
             return `${this.command}\\limits_{%s < %s} {%s}`;
+        if (!this.superscript && this.icoClosedBound())
+            return `${this.command}\\limits_{%s=%s}^{%s} {%s}`;
         const cmd = this.command;
         return `${cmd}\\limits_{\\substack{%s}} {%s}`;
     }
@@ -12311,6 +12399,11 @@ class LeanBigOperator extends LeanArgs {
                 const [i, n] = fin;
                 const peel = (arg) => (arg instanceof LeanParenthesis ? arg.arg : arg);
                 return [i.toLatex(syntax), peel(n).toLatex(syntax), this.scope.toLatex(syntax)];
+            }
+            const ico = !this.superscript && this.icoClosedBound();
+            if (ico) {
+                const [i, a, b] = ico;
+                return [i.toLatex(syntax), a.toLatex(syntax), b.toLatex(syntax), this.scope.toLatex(syntax)];
             }
         }
         return super.latexArgs(syntax);

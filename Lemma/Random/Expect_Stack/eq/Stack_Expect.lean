@@ -1,5 +1,6 @@
 import Mathlib.MeasureTheory.Measure.WithDensity
 import sympy.stats.joint_rv
+import sympy.stats.cond_expectation
 import sympy.stats.symbolic_multivariate_probability
 import torch.stack
 import Lemma.Tensor.Eq.is.All_EqGetS
@@ -70,21 +71,19 @@ private lemma expect_get
 @[main, comm]
 private lemma main
   [MeasurableSpace Ω]
-  [ReferenceMeasure α] [ReferenceMeasure γ]
+  [MeasurableSpace α]
   [Countable α] [MeasurableSingletonClass α]
   {π : Measure Ω} {n : ℕ} {s : List ℕ}
   {x : Ω → Fin n → α} {y : Ω → γ}
   {f : α → Tensor ENNReal s}
 -- given
-  (hP : SinglePSpace π (x, y))
   («y.bvar» : γ) :
 -- imply
   𝔼[x: π]([k < n] f (x k) | y = «y.bvar») =
     [k < n] (𝔼[x: π](f (x k) | y = «y.bvar»)) := by
 -- proof
-  simp only [Expectation.asRV_function, Expectation.condRV]
-  let ν := ReferenceMeasure.measure.withDensity fun a ↦
-    π.condProb (x, y) (a, «y.bvar»)
+  simp only [Expectation.asRV_function, Expectation.condEvent]
+  let ν := (ProbabilityTheory.cond π (y ⁻¹' {«y.bvar»})).map x
   change
     expectation ν (fun xv ↦ [k < n] f (xv k)) =
       [k < n] (expectation ν (fun xv ↦ f (xv k)))

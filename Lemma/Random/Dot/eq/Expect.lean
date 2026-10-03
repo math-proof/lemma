@@ -1,5 +1,6 @@
 import Lemma.Random.Expect_CondDot.eq.Dot_Expect_Cond
 import sympy.stats.joint_rv
+import sympy.stats.cond_expectation
 import sympy.stats.symbolic_multivariate_probability
 import sympy.matrices.expressions.matmul
 open Random Tensor
@@ -19,13 +20,12 @@ Python: Random.Dot.eq.Expect.
 @[main, comm]
 private lemma main
   [MeasurableSpace Ω]
-  [ReferenceMeasure α] [ReferenceMeasure γ]
+  [MeasurableSpace α]
   [Countable α] [MeasurableSingletonClass α]
   {π : MeasureTheory.Measure Ω} {m k : ℕ}
   {a : Ω → α} {s : Ω → γ}
   {f : α → Tensor ENNReal [k]}
 -- given
-  (hP : SinglePSpace π (a, s))
   (A : Tensor ENNReal [m, k])
   (hf : ∀ p : Fin k, Measurable (fun x : α ↦ (f x)[p].item))
   («s.bvar» : γ) :
@@ -33,7 +33,7 @@ private lemma main
   A @ 𝔼[a: π](f a | s = «s.bvar») =
     𝔼[a: π](A @ f a | s = «s.bvar») :=
 -- proof
-  (Expect_CondDot.eq.Dot_Expect_Cond (hP := hP) (A := A)
+  (Expect_CondDot.eq.Dot_Expect_Cond (A := A)
     (hf := hf) («s.bvar» := «s.bvar»)).symm
 
 

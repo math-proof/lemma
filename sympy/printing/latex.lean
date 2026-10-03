@@ -691,6 +691,14 @@ def Expr.asExpectation? : Expr → Option ExpectationView
       some (expectationFromObservable μ x f
         (fun f rv => .cond f rv (markAsRandomVariable y))
         (fun body rv μ => .condBody body rv (markAsRandomVariable y) μ))
+    | some ("condEvent", μ :: x :: y :: f :: _) =>
+      some (expectationFromObservable μ x f
+        (fun f rv => .cond f rv (markAsRandomVariable y))
+        (fun body rv μ => .condBody body rv (markAsRandomVariable y) μ))
+    | some ("condEventRA", μ :: x :: y :: f :: _) =>
+      some (expectationFromObservable μ x f
+        (fun f rv => .cond f rv (markAsRandomVariable y))
+        (fun body rv μ => .condBody body rv (markAsRandomVariable y) μ))
     | some ("condRA", μ :: x :: y :: f :: _) =>
       some (expectationFromObservable μ x f
         (fun f rv => .cond f rv (markAsRandomVariable y))

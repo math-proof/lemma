@@ -1,4 +1,6 @@
 import Mathlib.Analysis.Calculus.Deriv.Add
+import Mathlib.Analysis.Calculus.Deriv.Mul
+import Mathlib.Analysis.Calculus.Deriv.Prod
 import sympy.Basic
 open BigOperators
 
@@ -14,18 +16,17 @@ private lemma main
 -- imply
   deriv (fun x' => A ⬝ᵥ f x') x = A ⬝ᵥ deriv f x := by
 -- proof
-  have hdot : ∀ (x' : ℝ), A ⬝ᵥ f x' = ∑ i : Fin n, A i * f x' i := by
-    intro x'; simp [dotProduct]
-  rw [funext hdot]
+  have hdot : (fun x' => A ⬝ᵥ f x') = fun x' => ∑ i : Fin n, A i * f x' i := by
+    funext x'; simp [dotProduct]
+  rw [hdot]
   have hi : ∀ i ∈ (Finset.univ : Finset (Fin n)), DifferentiableAt ℝ (fun x' => A i * f x' i) x := by
     intro i _
-    have hfd := DifferentiableAt.hasDerivAt (h i)
-    exact (hfd.const_mul (A i)).differentiableAt
-  rw [deriv_sum hi]
-  congr with i
-  rw [deriv_mul_const_field (A i)]
+    exact DifferentiableAt.const_mul (h i) (A i)
+  rw [deriv_fun_sum hi]
   rw [deriv_pi h]
-  rfl
+  simp only [dotProduct]
+  refine Finset.sum_congr rfl fun i _ => ?_
+  exact deriv_const_mul_field (A i)
 
 
 -- created on 2026-10-01

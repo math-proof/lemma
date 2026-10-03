@@ -1,60 +1,59 @@
-import sympy.functions.elementary.masked_softmax
+import Lemma.Tensor.DotSoftmaxAdd_Mul_Infty.eq.Cast_Stack_Sum_Image
 import sympy.Basic
+open Tensor Hyperreal
 
 
+/--
+py: `softmax(Q @ K.T / sqrt(d_z) + (Stack[i:n](Bool(i ∈ ⋃ {d[j]})) - Ones(n, n)) * oo) @ V = softmax(Q @ Stack[j:m](K[d[j]]).T / sqrt(d_z)) @ Stack[j:m](V[d[j]])`
+in the hyperreal masked softmax, for logits \( A_{ij} \): the mask keeps exactly the \( m \) distinct columns \( d_j \), so
+\[
+\operatorname{softmax}(A + ([j \in \operatorname{im} d] - 1)\infty)\, V \approx
+\Bigl[ \sum_{j < m} \frac{e^{A_{i, d_j}}}{\sum_{k < m} e^{A_{i, d_k}}}\, V_{d_j \ell} \Bigr]_{i\ell} .
+\]
+-/
 @[main]
 private lemma gather
   {n m d_z : ℕ}
   {d : Fin m → Fin n}
-  {A : Fin n → Fin n → ℝ}
-  {V : Fin n → Fin d_z → ℝ}
 -- given
-  (h₀ : (Finset.univ.image d).card = m) :
+  (h₀ : (Finset.univ.image d).card = m)
+  (h_m : 0 < m)
+  (A : Fin n → Fin n → ℝ)
+  (V : Fin n → Fin d_z → ℝ) :
 -- imply
-  (fun i l => ∑ j, maskedSoftmax (A i) (fun j => if j ∈ Finset.univ.image d then 1 else 0) j * V j l) =
-    fun i l => ∑ j, Real.exp (A i (d j)) / (∑ k, Real.exp (A i (d k))) * V (d j) l := by
+  let Ξ : Tensor ℝ* [n, n] := [i < n] [j < n] (Bool.toNat (decide (j ∈ Finset.univ.image d)))
+  let A' : Tensor ℝ* [n, n] := ([i < n] [j < n] (A i j : Tensor ℝ []) : Tensor ℝ [n, n])
+  let V' : Tensor ℝ [n, d_z] := [j < n] [l < d_z] (V j l : Tensor ℝ [])
+  (A' + (Ξ - 1) * ∞).softmax @ (V' : Tensor ℝ* [n, d_z]) ≈
+    ((([i < n] [l < d_z] ((∑ j, Real.exp (A i (d j)) / (∑ k, Real.exp (A i (d k))) * V (d j) l : ℝ) : Tensor ℝ [])) : Tensor ℝ [n, d_z]) : Tensor ℝ* [n, d_z]) := by
 -- proof
-  have key : ∀ (p : Prop) [Decidable p] (x : ℝ), maskedExp x (if p then 1 else 0) = if p then Real.exp x else 0 := by
-    intro p _ x
-    by_cases hp : p
-    ·
-      simp [maskedExp, hp]
-    ·
-      simp [maskedExp, hp]
-  have hd : Set.InjOn d (Finset.univ : Finset (Fin m)) := by
-    rw [← Finset.card_image_iff, h₀, Finset.card_univ, Fintype.card_fin]
-  have hinj : ∀ x ∈ (Finset.univ : Finset (Fin m)), ∀ y ∈ (Finset.univ : Finset (Fin m)), d x = d y → x = y :=
-    fun x hx y hy hxy => hd (Finset.mem_coe.mpr hx) (Finset.mem_coe.mpr hy) hxy
-  funext i l
-  simp only [maskedSoftmax, key, ite_div, zero_div, ite_mul, zero_mul, Finset.sum_ite_mem, Finset.univ_inter]
-  rw [Finset.sum_image hinj, Finset.sum_image hinj]
+  exact DotSoftmaxAdd_Mul_Infty.eq.Cast_Stack_Sum_Image h₀ h_m A V
 
 
+/--
+py (`position_representation.relative`): the same gather for \( \operatorname{softmax}\bigl(Q (K + K')^{\top} / \sqrt{d_z} + ([j \in \operatorname{im} d] - 1)\infty\bigr)(V + V') \):
+\[
+\operatorname{softmax}(A + ([j \in \operatorname{im} d] - 1)\infty)(V + V') \approx
+\Bigl[ \sum_{j < m} \frac{e^{A_{i, d_j}}}{\sum_{k < m} e^{A_{i, d_k}}}\, (V + V')_{d_j \ell} \Bigr]_{i\ell},
+\qquad A_{ij} = \frac{\sum_t Q_{it}(K_{jt} + K'_{jt})}{\sqrt{d_z}} .
+\]
+-/
 @[main]
 private lemma position_representation.relative.gather
   {n m d_z : ℕ}
   {d : Fin m → Fin n}
   {Q K K' V V' : Fin n → Fin d_z → ℝ}
 -- given
-  (h₀ : (Finset.univ.image d).card = m) :
+  (h₀ : (Finset.univ.image d).card = m)
+  (h_m : 0 < m) :
 -- imply
-  (fun i l => ∑ j, maskedSoftmax (fun j => (∑ t, Q i t * (K j t + K' j t)) / √d_z) (fun j => if j ∈ Finset.univ.image d then 1 else 0) j * (V j l + V' j l)) =
-    fun i l => ∑ j, Real.exp ((∑ t, Q i t * (K (d j) t + K' (d j) t)) / √d_z) / (∑ k, Real.exp ((∑ t, Q i t * (K (d k) t + K' (d k) t)) / √d_z)) * (V (d j) l + V' (d j) l) := by
+  let Ξ : Tensor ℝ* [n, n] := [i < n] [j < n] (Bool.toNat (decide (j ∈ Finset.univ.image d)))
+  let A : Tensor ℝ* [n, n] := ([i < n] [j < n] (((∑ t, Q i t * (K j t + K' j t)) / √(d_z : ℝ) : ℝ) : Tensor ℝ []) : Tensor ℝ [n, n])
+  let W : Tensor ℝ [n, d_z] := [j < n] [l < d_z] ((V j l + V' j l : ℝ) : Tensor ℝ [])
+  (A + (Ξ - 1) * ∞).softmax @ (W : Tensor ℝ* [n, d_z]) ≈
+    ((([i < n] [l < d_z] ((∑ j, Real.exp ((∑ t, Q i t * (K (d j) t + K' (d j) t)) / √(d_z : ℝ)) / (∑ k, Real.exp ((∑ t, Q i t * (K (d k) t + K' (d k) t)) / √(d_z : ℝ))) * (V (d j) l + V' (d j) l) : ℝ) : Tensor ℝ [])) : Tensor ℝ [n, d_z]) : Tensor ℝ* [n, d_z]) := by
 -- proof
-  have key : ∀ (p : Prop) [Decidable p] (x : ℝ), maskedExp x (if p then 1 else 0) = if p then Real.exp x else 0 := by
-    intro p _ x
-    by_cases hp : p
-    ·
-      simp [maskedExp, hp]
-    ·
-      simp [maskedExp, hp]
-  have hd : Set.InjOn d (Finset.univ : Finset (Fin m)) := by
-    rw [← Finset.card_image_iff, h₀, Finset.card_univ, Fintype.card_fin]
-  have hinj : ∀ x ∈ (Finset.univ : Finset (Fin m)), ∀ y ∈ (Finset.univ : Finset (Fin m)), d x = d y → x = y :=
-    fun x hx y hy hxy => hd (Finset.mem_coe.mpr hx) (Finset.mem_coe.mpr hy) hxy
-  funext i l
-  simp only [maskedSoftmax, key, ite_div, zero_div, ite_mul, zero_mul, Finset.sum_ite_mem, Finset.univ_inter]
-  rw [Finset.sum_image hinj, Finset.sum_image hinj]
+  exact DotSoftmaxAdd_Mul_Infty.eq.Cast_Stack_Sum_Image h₀ h_m (fun i j => (∑ t, Q i t * (K j t + K' j t)) / √(d_z : ℝ)) (fun j l => V j l + V' j l)
 
 
 -- created on 2022-01-09

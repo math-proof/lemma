@@ -11,7 +11,7 @@ private lemma map_yy_support_diag
 -- imply
   ∀ᵐ z ∂(π.map (y, y)), z.1 = z.2 := by
 -- proof
-  have hyym : AEMeasurable (JointRandomSymbol y y) π :=
+  have hyym : AEMeasurable (y, y) π :=
     (measurable_id.prodMk measurable_id).comp_aemeasurable hym
   have hp : MeasurableSet {z : γ × γ | z.1 = z.2} :=
     measurableSet_eq_fun measurable_fst measurable_snd
@@ -51,25 +51,25 @@ private lemma lintegral_partialRV_mul
     ∫⁻ ω, f (x ω) (y ω) * u (y ω) ∂π := by
 -- proof
   have hym : AEMeasurable y π := (PSpace.of.PSpace_Joint.snd hP).aemeasurable
-  have hxym : AEMeasurable (JointRandomSymbol x y) π := hP.aemeasurable
+  have hxym : AEMeasurable (x, y) π := hP.aemeasurable
   have hPy : SinglePSpace π y := PSpace.of.PSpace_Joint.snd hP
   let μ : MeasureTheory.Measure α := ReferenceMeasure.measure
   let ν : MeasureTheory.Measure γ := ReferenceMeasure.measure
-  let p : α × γ → ENNReal := π.prob (JointRandomSymbol x y)
+  let p : α × γ → ENNReal := π.prob (x, y)
   let m : γ → ENNReal := π.prob y
   have hp : Measurable p := MeasureTheory.Measure.measurable_rnDeriv _ _
   have hm : Measurable m := MeasureTheory.Measure.measurable_rnDeriv _ _
-  have hlaw : π.map (JointRandomSymbol x y) = (μ.prod ν).withDensity p :=
+  have hlaw : π.map (x, y) = (μ.prod ν).withDensity p :=
     SinglePSpace.map_eq_withDensity_density
   have hlawy : π.map y = ν.withDensity m := SinglePSpace.map_eq_withDensity_density
-  have hden : π.map (fun ω ↦ (JointRandomSymbol x y ω).2) = π.map y := rfl
+  have hden : π.map (fun ω ↦ ((x, y) ω).2) = π.map y := rfl
   have hunf :
       Expectation.partialRV π x y f =
         fun ω ↦ ∫⁻ a, f a (y ω) * (p (a, y ω) / m (y ω)) ∂μ := by
     funext ω
     simp only [Expectation.partialRV, Expectation.condRV, expectation_ennreal]
     have hcond :
-        (fun a ↦ π.condProb (JointRandomSymbol x y) (a, y ω)) =
+        (fun a ↦ π.condProb (x, y) (a, y ω)) =
           fun a ↦ p (a, y ω) / m (y ω) := by
       funext a
       dsimp [MeasureTheory.Measure.condProb, MeasureTheory.Measure.prob]
@@ -109,7 +109,7 @@ private lemma lintegral_partialRV_mul
     -- Marginal: ∫ p(·,b) =ᵐ m
     have hmarg : (fun b ↦ ∫⁻ a, p (a, b) ∂μ) =ᵐ[ν] m := by
       have hsnd :
-          MeasureTheory.Measure.map Prod.snd (π.map (JointRandomSymbol x y)) = π.map y := by
+          MeasureTheory.Measure.map Prod.snd (π.map (x, y)) = π.map y := by
         rw [AEMeasurable.map_map_of_aemeasurable measurable_snd.aemeasurable hxym]
         rfl
       have hL :
@@ -161,7 +161,7 @@ private lemma lintegral_partialRV_mul
           ν.withDensity m = ν.withDensity fun b ↦ ∫⁻ a, p (a, b) ∂μ :=
         calc
           ν.withDensity m = π.map y := hlawy.symm
-          _ = MeasureTheory.Measure.map Prod.snd (π.map (JointRandomSymbol x y)) := hsnd.symm
+          _ = MeasureTheory.Measure.map Prod.snd (π.map (x, y)) := hsnd.symm
           _ = MeasureTheory.Measure.map Prod.snd ((μ.prod ν).withDensity p) := by rw [hlaw]
           _ = ν.withDensity fun b ↦ ∫⁻ a, p (a, b) ∂μ := hL
       have hmInt : Measurable fun b ↦ ∫⁻ a, p (a, b) ∂μ :=
@@ -240,9 +240,9 @@ private lemma lintegral_partialRV_RA_mul
   ∫⁻ ω, Expectation.partialRV_RA π x y y f ω * u (y ω) ∂π =
     ∫⁻ ω, f (x ω) (y ω) * u (y ω) ∂π := by
 -- proof
-  have hyym : AEMeasurable (JointRandomSymbol y y) π :=
+  have hyym : AEMeasurable (y, y) π :=
     (PSpace.of.PSpace_Joint.snd hPyy).aemeasurable
-  have hxyym : AEMeasurable (JointRandomSymbol x (JointRandomSymbol y y)) π :=
+  have hxyym : AEMeasurable (x, (y, y)) π :=
     hPyy.aemeasurable
   have hPyy2 : SinglePSpace π (y, y) := PSpace.of.PSpace_Joint.snd hPyy
   have hym : AEMeasurable y π := (PSpace.of.PSpace_Joint.fst hPyy2).aemeasurable
@@ -250,24 +250,24 @@ private lemma lintegral_partialRV_RA_mul
   let ν : MeasureTheory.Measure γ := ReferenceMeasure.measure
   let νν : MeasureTheory.Measure (γ × γ) := ReferenceMeasure.measure
   let p' : α × (γ × γ) → ENNReal :=
-    π.prob (JointRandomSymbol x (JointRandomSymbol y y))
-  let m' : γ × γ → ENNReal := π.prob (JointRandomSymbol y y)
+    π.prob (x, (y, y))
+  let m' : γ × γ → ENNReal := π.prob (y, y)
   have hp' : Measurable p' := MeasureTheory.Measure.measurable_rnDeriv _ _
   have hm' : Measurable m' := MeasureTheory.Measure.measurable_rnDeriv _ _
-  have hlaw : π.map (JointRandomSymbol x (JointRandomSymbol y y)) =
+  have hlaw : π.map (x, (y, y)) =
       (μ.prod νν).withDensity p' := SinglePSpace.map_eq_withDensity_density
-  have hlawyy : π.map (JointRandomSymbol y y) = νν.withDensity m' :=
+  have hlawyy : π.map (y, y) = νν.withDensity m' :=
     SinglePSpace.map_eq_withDensity_density
   have hden :
-      π.map (fun ω ↦ (JointRandomSymbol x (JointRandomSymbol y y) ω).2) =
-        π.map (JointRandomSymbol y y) := rfl
+      π.map (fun ω ↦ ((x, (y, y)) ω).2) =
+        π.map (y, y) := rfl
   have hunf :
       Expectation.partialRV_RA π x y y f =
         fun ω ↦ ∫⁻ a, f a (y ω) * (p' (a, (y ω, y ω)) / m' (y ω, y ω)) ∂μ := by
     funext ω
     simp only [Expectation.partialRV_RA, Expectation.partialRV_cond, expectation_ennreal]
     have hcond :
-        (fun a ↦ π.condProb (JointRandomSymbol x (JointRandomSymbol y y))
+        (fun a ↦ π.condProb (x, (y, y))
             (a, (y ω, y ω))) =
           fun a ↦ p' (a, (y ω, y ω)) / m' (y ω, y ω) := by
       funext a
@@ -295,12 +295,12 @@ private lemma lintegral_partialRV_RA_mul
       ∫⁻ ω, (∫⁻ a, f a (y ω) * (p' (a, (y ω, y ω)) / m' (y ω, y ω)) ∂μ) *
           u (y ω) ∂π =
         ∫⁻ z, (∫⁻ a, f a z.1 * (p' (a, z) / m' z) ∂μ) * u z.1
-          ∂(π.map (JointRandomSymbol y y)) := by
-    have : JointRandomSymbol y y = fun ω ↦ (y ω, y ω) := rfl
+          ∂(π.map (y, y)) := by
+    have : (y, y) = fun ω ↦ (y ω, y ω) := rfl
     simpa [this] using (MeasureTheory.lintegral_map' hMeas.aemeasurable hyym).symm
   rw [hmap, hlawyy]
   have hfin : ∀ᵐ z ∂νν, m' z < ⊤ := by
-    have : MeasureTheory.IsProbabilityMeasure (π.map (JointRandomSymbol y y)) :=
+    have : MeasureTheory.IsProbabilityMeasure (π.map (y, y)) :=
       MeasureTheory.Measure.isProbabilityMeasure_map hyym
     have htot : ∫⁻ z, m' z ∂νν = 1 := by
       have h := congrArg (fun μ : MeasureTheory.Measure (γ × γ) ↦ μ Set.univ) hlawyy
@@ -314,8 +314,8 @@ private lemma lintegral_partialRV_RA_mul
     rw [MeasureTheory.lintegral_withDensity_eq_lintegral_mul νν hm' hMeas]
     have hmarg : (fun z ↦ ∫⁻ a, p' (a, z) ∂μ) =ᵐ[νν] m' := by
       have hsnd :
-          MeasureTheory.Measure.map Prod.snd (π.map (JointRandomSymbol x (JointRandomSymbol y y))) =
-            π.map (JointRandomSymbol y y) := by
+          MeasureTheory.Measure.map Prod.snd (π.map (x, (y, y))) =
+            π.map (y, y) := by
         rw [AEMeasurable.map_map_of_aemeasurable measurable_snd.aemeasurable hxyym]
         rfl
       have hL :
@@ -366,9 +366,9 @@ private lemma lintegral_partialRV_RA_mul
       have hμeq :
           νν.withDensity m' = νν.withDensity fun z ↦ ∫⁻ a, p' (a, z) ∂μ :=
         calc
-          νν.withDensity m' = π.map (JointRandomSymbol y y) := hlawyy.symm
+          νν.withDensity m' = π.map (y, y) := hlawyy.symm
           _ = MeasureTheory.Measure.map Prod.snd
-                (π.map (JointRandomSymbol x (JointRandomSymbol y y))) := hsnd.symm
+                (π.map (x, (y, y))) := hsnd.symm
           _ = MeasureTheory.Measure.map Prod.snd ((μ.prod νν).withDensity p') := by rw [hlaw]
           _ = νν.withDensity fun z ↦ ∫⁻ a, p' (a, z) ∂μ := hL
       have hmInt : Measurable fun z ↦ ∫⁻ a, p' (a, z) ∂μ :=
@@ -453,11 +453,11 @@ private lemma main
   let μ : MeasureTheory.Measure α := ReferenceMeasure.measure
   let ν : MeasureTheory.Measure γ := ReferenceMeasure.measure
   have hPyy2 : SinglePSpace π (y, y) := PSpace.of.PSpace_Joint.snd hPyy
-  let p : α × γ → ENNReal := π.prob (JointRandomSymbol x y)
+  let p : α × γ → ENNReal := π.prob (x, y)
   let m : γ → ENNReal := π.prob y
   let p' : α × (γ × γ) → ENNReal :=
-    π.prob (JointRandomSymbol x (JointRandomSymbol y y))
-  let m' : γ × γ → ENNReal := π.prob (JointRandomSymbol y y)
+    π.prob (x, (y, y))
+  let m' : γ × γ → ENNReal := π.prob (y, y)
   have hp : Measurable p := MeasureTheory.Measure.measurable_rnDeriv _ _
   have hm : Measurable m := MeasureTheory.Measure.measurable_rnDeriv _ _
   have hp' : Measurable p' := MeasureTheory.Measure.measurable_rnDeriv _ _
@@ -485,9 +485,9 @@ private lemma main
     have h := lintegral_partialRV_mul (u := fun _ ↦ 1) hP hf measurable_const
     -- better: reuse unfold from helper — do direct unfold
     simp only [Expectation.partialRV, Expectation.condRV, expectation_ennreal]
-    have hden : π.map (fun ω ↦ (JointRandomSymbol x y ω).2) = π.map y := rfl
+    have hden : π.map (fun ω ↦ ((x, y) ω).2) = π.map y := rfl
     have hcond :
-        (fun a ↦ π.condProb (JointRandomSymbol x y) (a, y ω)) =
+        (fun a ↦ π.condProb (x, y) (a, y ω)) =
           fun a ↦ p (a, y ω) / m (y ω) := by
       funext a
       dsimp [MeasureTheory.Measure.condProb, MeasureTheory.Measure.prob]
@@ -506,10 +506,10 @@ private lemma main
     simp only [g', Expectation.partialRV_RA, Expectation.partialRV_cond,
       expectation_ennreal]
     have hden :
-        π.map (fun ω ↦ (JointRandomSymbol x (JointRandomSymbol y y) ω).2) =
-          π.map (JointRandomSymbol y y) := rfl
+        π.map (fun ω ↦ ((x, (y, y)) ω).2) =
+          π.map (y, y) := rfl
     have hcond :
-        (fun a ↦ π.condProb (JointRandomSymbol x (JointRandomSymbol y y))
+        (fun a ↦ π.condProb (x, (y, y))
             (a, (y ω, y ω))) =
           fun a ↦ p' (a, (y ω, y ω)) / m' (y ω, y ω) := by
       funext a

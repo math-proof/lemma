@@ -36,13 +36,13 @@ private lemma main
     (measurable_pi_lambda _ fun i ↦ measurable_pi_apply i.castSucc).prodMk
       (measurable_pi_apply i_last)
   have h_eq :
-      JointRandomSymbol (s_past t) (s t) = unsnoc ∘ s_past (t + 1) := by
+      (s_past t, s t) = unsnoc ∘ s_past (t + 1) := by
     funext ω
     simp only [unsnoc, JointRandomSymbol, s_past]
     rfl
   have h1 : r_slice (t + 1) k ⟂ᵢ[π] s_past (t + 1) :=
     IndepGetSlice.of.IndepGet hr hs h (t + 1) k
-  have h2 : r_slice (t + 1) k ⟂ᵢ[π] JointRandomSymbol (s_past t) (s t) := by
+  have h2 : r_slice (t + 1) k ⟂ᵢ[π] (s_past t, s t) := by
     rw [h_eq]
     exact h1.comp measurable_id hunsnoc
   exact h2.comp measurable_id measurable_snd

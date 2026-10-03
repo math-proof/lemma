@@ -2,6 +2,7 @@ import Mathlib.Data.Matrix.Mul
 import Mathlib.MeasureTheory.Integral.Lebesgue.Add
 import Mathlib.MeasureTheory.Measure.WithDensity
 import sympy.stats.joint_rv
+import sympy.stats.cond_expectation
 import sympy.Basic
 
 
@@ -19,13 +20,12 @@ Renamed out of `Expect_CondDot` (which is reserved for Tensor `@` / `Dot.dot`).
 @[main, comm]
 private lemma main
   [MeasurableSpace Ω]
-  [ReferenceMeasure α] [ReferenceMeasure γ]
+  [MeasurableSpace α]
   [Countable α] [MeasurableSingletonClass α]
   {π : MeasureTheory.Measure Ω} {m n : ℕ}
   {a : Ω → α} {s : Ω → γ}
   {f : α → Fin n → ENNReal}
 -- given
-  (hP : SinglePSpace π (a, s))
   (A : Matrix (Fin m) (Fin n) ENNReal)
   (hf : ∀ i : Fin n, Measurable (fun x : α ↦ f x i))
   («s.bvar» : γ) :
@@ -34,7 +34,7 @@ private lemma main
     Matrix.mulVec A (fun i : Fin n ↦ 𝔼[a: π](f a i | s = «s.bvar»)) := by
 -- proof
   ext j
-  simp only [Expectation.asRV_function, Expectation.condRV, expectation_ennreal, Matrix.mulVec, dotProduct]
+  simp only [Expectation.asRV_function, Expectation.condEvent, expectation_ennreal, Matrix.mulVec, dotProduct]
   rw [MeasureTheory.lintegral_finsetSum (μ := _) (Finset.univ : Finset (Fin n))
     fun i _ => (hf i).const_mul (A j i)]
   refine Finset.sum_congr rfl ?_
