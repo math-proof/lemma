@@ -17,14 +17,18 @@ fi
 # WSL often has python3 only
 if command -v python > /dev/null; then PY=python; else PY=python3; fi
 
+# seconds before a run is killed (it also guards against memory blow-up); "import Lemma"
+# alone takes ~2.5 minutes when the repo is on /mnt/e under WSL, so raise it there:
+#   RUN_TIMEOUT=600 sh/run.sh
+RUN_TIMEOUT=${RUN_TIMEOUT:-120}
+
 while true; do
-    # Run the Python program with a timeout of 2 minutes (120 seconds);
     # -k force-kills it 5 seconds later if it ignores the termination signal
-    timeout -k 5 120 "$PY" run.py
+    timeout -k 5 "$RUN_TIMEOUT" "$PY" run.py
     exit_status=$?
 
     if [ $exit_status -eq 124 ] || [ $exit_status -eq 137 ]; then
-        echo "Python program was halted because it took more than 2 minutes."
+        echo "Python program was halted because it took more than $RUN_TIMEOUT seconds."
     elif [ $exit_status -eq 0 ]; then
         echo "Python program completed within the time limit."
         [ $continue_after_success -eq 1 ] || break
