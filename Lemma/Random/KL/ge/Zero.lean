@@ -16,9 +16,9 @@ private lemma main
   [MeasurableSpace Ω] [MeasurableSpace α]
   {π π' : Measure Ω}
   {x : Ω → α}
--- given
   [IsProbabilityMeasure π]
   [IsProbabilityMeasure π']
+-- given
   (hx : Measurable x)
   (h_ac : π.map x ≪ π'.map x)
   (h_int : Integrable (llr (π.map x) (π'.map x)) (π.map x)) :

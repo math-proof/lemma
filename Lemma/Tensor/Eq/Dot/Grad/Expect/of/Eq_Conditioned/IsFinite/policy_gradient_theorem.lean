@@ -12,6 +12,7 @@ import sympy.vector.Basic
 import sympy.vector.operators
 import sympy.concrete.sup
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Filter Topology
+open scoped ENNReal.ToRealCoe
 
 
 /--
@@ -37,7 +38,7 @@ private lemma main
   (h₁ : ∀ x u, Differentiable ℝ (fun θ => M.pol.prob θ x u))
   (h₂ : sup[θ, x, u] ‖∇[θ] M.pol.prob θ x u‖ < ∞) :
 -- imply
-  have : ∀ θ t, SinglePSpace (M.traj θ) (JointRandomSymbol (a t) (s t)) := fun _ t =>
+  have : ∀ θ t, SinglePSpace (M.traj θ) (a (S := S) (A := A) t, s (S := S) (A := A) t) := fun _ t =>
     Random.PSpace.of.Measure.eq.Count.Measurable ((a_meas t).prodMk (s_meas t)) (by
       show (ReferenceMeasure.measure : Measure A).prod (ReferenceMeasure.measure : Measure S) = _
       rw [hA, hS, Measure.Count.eq.ProdCountS])
@@ -62,7 +63,7 @@ private lemma main
     𝔼[s, a, r : M.traj θ](
       ∑' t, γ ^ t •
         (((fun k : ℕ => γ ^ k) @ (fun k : ℕ => r (t + k))) •
-          ∇[θ] Real.log (ℙ[M.traj θ]((PolicyGradient.a t) = a t | (PolicyGradient.s t) = s t)).toReal)) := by
+          ∇[θ] (ℙ[M.traj θ]((PolicyGradient.a t) = a t | (PolicyGradient.s t) = s t) : ℝ).log)) := by
 -- proof
   intro hP _hs _ha _hr _hps _hpa _hpr
   classical
@@ -84,7 +85,7 @@ private lemma main
   obtain ⟨C, hC⟩ := id h₂
   have h₄ : ∀ θ x u, ‖fderiv ℝ (fun θ => M.pol.prob θ x u) θ‖ ≤ C := fun θ x u => hC ⟨(θ, x, u), rfl⟩
   have hscore : ∀ t, ∀ᵐ ω ∂(M.traj θ),
-      fderiv ℝ (fun θ' => Real.log (ℙ[M.traj θ']((a t) = (a t ω) | (s t) = (s t ω))).toReal) θ =
+      fderiv ℝ (fun θ' => (ℙ[M.traj θ']((a t) = (a t ω) | (s t) = (s t ω)) : ℝ).log) θ =
         fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' (s t ω) (a t ω))) θ := by
     intro t
     filter_upwards [reach_ae M θ] with ω hω
@@ -96,7 +97,7 @@ private lemma main
       ENNReal.toReal_ofReal (M.pol.nonneg θ' _ _)]
   have hold : ∑' t, γ ^ t • fderiv ℝ (fun θ => ∫ ω, r t ω ∂(M.traj θ)) θ =
       ∑' t, γ ^ t • ∫ ω, (∑' k, γ ^ k * r (t + k) ω) •
-          fderiv ℝ (fun θ' => Real.log (ℙ[M.traj θ']((a t) = (a t ω) | (s t) = (s t ω))).toReal) θ ∂(M.traj θ) := by
+          fderiv ℝ (fun θ' => (ℙ[M.traj θ']((a t) = (a t ω) | (s t) = (s t ω)) : ℝ).log) θ ∂(M.traj θ) := by
     rw [hfd]
     refine tsum_congr fun t => ?_
     congr 1

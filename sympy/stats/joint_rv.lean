@@ -199,6 +199,33 @@ noncomputable def Expectation.condRA
   fun ω ↦ Expectation.condRV π x y f (y ω)
 
 /--
+Conditional expectation of an ordinary observable of `x` given the event `y = y0`, under the
+conditional law `(π[|y ⁻¹' {y0}]).map x`. Needs no density: `x` can be a reward, a path, ...;
+`y` is meant to be discrete so that `{y = y0}` is an event. At an event of probability `0` the
+conditional measure is `0`, so the value is `0`. This is the meaning of `𝔼[x: π](f x | y = y0)`. -/
+noncomputable def Expectation.condEvent
+    {Ω α γ β : Type*}
+    [MeasurableSpace Ω] [MeasurableSpace α]
+    [Expectation β]
+    (π : Measure Ω)
+    (x : Ω → α) (y : Ω → γ)
+    (f : α → β)
+    (y0 : γ) :
+    β :=
+  expectation ((ProbabilityTheory.cond π (y ⁻¹' {y0})).map x) f
+
+/-- The random variable `ω ↦ 𝔼[x: π](f x | y = y ω)`; the meaning of `𝔼[x: π](f x | y)`. -/
+noncomputable def Expectation.condEventRA
+    {Ω α γ β : Type*}
+    [MeasurableSpace Ω] [MeasurableSpace α]
+    [Expectation β]
+    (π : Measure Ω)
+    (x : Ω → α) (y : Ω → γ)
+    (f : α → β) :
+    Ω → β :=
+  fun ω ↦ Expectation.condEvent π x y f (y ω)
+
+/--
 Partial / “leave other RVs free” expectation in `x`.
 
 For each outcome `ω`, this is the conditional expectation of `f (·) (y ω)` given
@@ -393,7 +420,7 @@ the `| ys` of the bracket. (A parenthesised measure is still accepted, and an ab
 syntax expectMeasure := term:max (ppSpace !"|" term:max)*
 
 syntax:max "𝔼[" ident,+ ":" term "]" "(" term:51 ")" : term
-syntax:max "𝔼[" ident,+ ":" term "]" "(" term:51 "|" term:max "=" term:51 ")" : term
+syntax:max "𝔼[" ident,+ ":" term "]" "(" term:51 "|" term:51 "=" term:51 ")" : term
 syntax:max "𝔼[" ident,+ ":" term "]" "(" term:51 "|" ident,+ ")" : term
 syntax:max "𝔼[" ident,+ ":" expectMeasure "|" ident,+ "]" "(" term:51 ")" : term
 syntax:max "𝔼[" ident,+ ":" expectMeasure "|" ident,+ "]" "(" term:51 "|" term:max "=" term:51 ")" : term
@@ -448,7 +475,7 @@ macro_rules
       let joint ← Expectation.Macro.mkRestJoint xs
       let nest := mkIdent `«integ»
       let unpacked ← Expectation.Macro.unpackRest xs nest body
-      `(Expectation.condRV $π $joint $y (fun $nest ↦ $unpacked) $y0)
+      `(Expectation.condEvent $π $joint $y (fun $nest ↦ $unpacked) $y0)
   | `(𝔼[$xs:ident,* : $π]($body | $ys,*)) => do
       let xs := xs.getElems
       let ys := ys.getElems
@@ -456,7 +483,7 @@ macro_rules
       let ra ← Expectation.Macro.mkRestJoint ys
       let nest := mkIdent `«integ»
       let unpacked ← Expectation.Macro.unpackRest xs nest body
-      `(Expectation.condRA $π $joint $ra (fun $nest ↦ $unpacked))
+      `(Expectation.condEventRA $π $joint $ra (fun $nest ↦ $unpacked))
   | `(𝔼[$xs:ident,* : $π:expectMeasure | $ys,*]($body | $r:term = $r0)) => do
       let π ← Expectation.Macro.measure π
       let xs := xs.getElems

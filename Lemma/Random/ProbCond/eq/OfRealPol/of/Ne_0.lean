@@ -21,7 +21,7 @@ private lemma main
 -- given
   (hS : (ReferenceMeasure.measure : Measure S) = Measure.count)
   (hA : (ReferenceMeasure.measure : Measure A) = Measure.count)
-  (hP : SinglePSpace (M.traj θ) (JointRandomSymbol (a t) (s t)))
+  (hP : SinglePSpace (M.traj θ) (a (S := S) (A := A) t, s (S := S) (A := A) t))
   (h : (M.traj θ).real (s t ⁻¹' {x}) ≠ 0) :
 -- imply
   ℙ[(M.traj θ)]((a t) = u | (s t) = x) = ENNReal.ofReal (M.pol.prob θ x u) := by
@@ -31,16 +31,16 @@ private lemma main
   have hAS : (ReferenceMeasure.measure : Measure (A × S)) = Measure.count := by
     show (ReferenceMeasure.measure : Measure A).prod (ReferenceMeasure.measure : Measure S) = _
     rw [hA, hS, Measure.Count.eq.ProdCountS]
-  have hxy : Measurable (JointRandomSymbol (a t) (s t) : _ → A × S) :=
+  have hxy : Measurable (a (S := S) (A := A) t, s (S := S) (A := A) t) :=
     (a_meas t).prodMk (s_meas t)
-  have hnum : π.prob (JointRandomSymbol (a t) (s t)) (u, x) =
+  have hnum : π.prob (a (S := S) (A := A) t, s (S := S) (A := A) t) (u, x) =
       π (s t ⁻¹' {x} ∩ a t ⁻¹' {u}) := by
     unfold Measure.prob
     rw [hAS, Measure.EqRnDeriv_Count, Measure.map_apply hxy (measurableSet_singleton _)]
     congr 1
     ext ω
     simp [JointRandomSymbol, and_comm]
-  have hden : (π.map (fun ω ↦ (JointRandomSymbol (a t) (s t) ω).2)).rnDeriv
+  have hden : (π.map (fun ω ↦ ((a (S := S) (A := A) t, s (S := S) (A := A) t) ω).2)).rnDeriv
       ReferenceMeasure.measure x = π (s t ⁻¹' {x}) := by
     rw [hS, Measure.EqRnDeriv_Count]
     exact Measure.map_apply (s_meas t) (measurableSet_singleton _)
@@ -54,8 +54,8 @@ private lemma main
     ext ω
     by_cases h1 : s t ω = x <;> by_cases h2 : a t ω = u <;>
       simp [Set.indicator, h1, h2]
-  show π.prob (JointRandomSymbol (a t) (s t)) (u, x) /
-      (π.map (fun ω ↦ (JointRandomSymbol (a t) (s t) ω).2)).rnDeriv ReferenceMeasure.measure x = _
+  show π.prob (a (S := S) (A := A) t, s (S := S) (A := A) t) (u, x) /
+      (π.map (fun ω ↦ ((a (S := S) (A := A) t, s (S := S) (A := A) t) ω).2)).rnDeriv ReferenceMeasure.measure x = _
   rw [hnum, hden, ← ofReal_measureReal (measure_ne_top _ _), ← ofReal_measureReal (measure_ne_top _ _),
     hxu, ENNReal.ofReal_mul measureReal_nonneg]
   have h0 : ENNReal.ofReal (π.real (s t ⁻¹' {x})) ≠ 0 := by

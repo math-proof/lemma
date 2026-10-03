@@ -87,45 +87,45 @@ private lemma main
   let T : ENNReal := π sT
   let B : ENNReal := π sB
   let C : ENNReal := π sC
-  have hxym : AEMeasurable (JointRandomSymbol x y) π :=
+  have hxym : AEMeasurable (x, y) π :=
     (hx.prodMk hy).aemeasurable
   have hxyzm :
-      AEMeasurable (JointRandomSymbol (JointRandomSymbol x y) z) π :=
+      AEMeasurable ((x, y), z) π :=
     hxym.prodMk hz.aemeasurable
-  have hxzm : AEMeasurable (JointRandomSymbol x z) π :=
+  have hxzm : AEMeasurable (x, z) π :=
     hx.aemeasurable.prodMk hz.aemeasurable
   have hyxzm :
-      AEMeasurable (JointRandomSymbol y (JointRandomSymbol x z)) π :=
+      AEMeasurable (y, (x, z)) π :=
     hy.aemeasurable.prodMk hxzm
   have hpreT :
-      (JointRandomSymbol (JointRandomSymbol x y) z) ⁻¹'
+      ((x, y), z) ⁻¹'
         {((«x.bvar», «y.bvar»), «z.bvar»)} = sT := by
     ext ω
     simp only [JointRandomSymbol, Set.mem_preimage, Set.mem_singleton_iff,
       hsT, Set.mem_ofPred_eq, Prod.ext_iff, and_assoc]
-  have hpreB : (JointRandomSymbol x z) ⁻¹' {(«x.bvar», «z.bvar»)} = sB := by
+  have hpreB : (x, z) ⁻¹' {(«x.bvar», «z.bvar»)} = sB := by
     ext ω
     simp only [JointRandomSymbol, Set.mem_preimage, Set.mem_singleton_iff,
       hsB, Set.mem_ofPred_eq, Prod.ext_iff]
   have hpreC : z ⁻¹' {«z.bvar»} = sC := by
     ext ω; simp [hsC]
   have hpreT' :
-      (JointRandomSymbol y (JointRandomSymbol x z)) ⁻¹'
+      (y, (x, z)) ⁻¹'
         {(«y.bvar», («x.bvar», «z.bvar»))} = sT := by
     ext ω
     simp only [JointRandomSymbol, Set.mem_preimage, Set.mem_singleton_iff,
       hsT, Set.mem_ofPred_eq, Prod.ext_iff, and_left_comm]
-  have hpreDC : (fun ω ↦ ((JointRandomSymbol (JointRandomSymbol x y) z) ω).2) ⁻¹'
+  have hpreDC : (fun ω ↦ (((x, y), z) ω).2) ⁻¹'
       {«z.bvar»} = sC := by
     ext ω
     simp only [JointRandomSymbol, Set.mem_preimage, Set.mem_singleton_iff,
       hsC, Set.mem_ofPred_eq]
-  have hpreDC' : (fun ω ↦ ((JointRandomSymbol x z) ω).2) ⁻¹'
+  have hpreDC' : (fun ω ↦ ((x, z) ω).2) ⁻¹'
       {«z.bvar»} = sC := by
     ext ω
     simp only [JointRandomSymbol, Set.mem_preimage, Set.mem_singleton_iff,
       hsC, Set.mem_ofPred_eq]
-  have hpreBC : (fun ω ↦ ((JointRandomSymbol y (JointRandomSymbol x z)) ω).2) ⁻¹'
+  have hpreBC : (fun ω ↦ ((y, (x, z)) ω).2) ⁻¹'
       {(«x.bvar», «z.bvar»)} = sB := by
     ext ω
     simp only [JointRandomSymbol, Set.mem_preimage, Set.mem_singleton_iff,
@@ -139,42 +139,39 @@ private lemma main
   have htopT : T ≠ ⊤ := ne_top_of_le_ne_top ENNReal.one_ne_top
     ((measure_mono hTB).trans (measure_mono hBC) |>.trans hleC)
   have eq_lhs :
-      π.condProb (JointRandomSymbol (JointRandomSymbol x y) z)
+      π.condProb ((x, y), z)
         ((«x.bvar», «y.bvar»), «z.bvar») = T / C := by
     unfold Measure.condProb Measure.prob
     rw [href_abg,
-      EqRnDeriv_Count (μ := π.map (JointRandomSymbol (JointRandomSymbol x y) z)) _,
+      EqRnDeriv_Count (μ := π.map ((x, y), z)) _,
       Measure.map_apply_of_aemeasurable hxyzm (measurableSet_singleton _), hpreT,
       hγ,
       EqRnDeriv_Count (μ := π.map (fun ω ↦
-        ((JointRandomSymbol (JointRandomSymbol x y) z) ω).2)) _,
+        (((x, y), z) ω).2)) _,
       Measure.map_apply_of_aemeasurable hxyzm.snd (measurableSet_singleton _),
       hpreDC]
-  have eq_mid : π.condProb (JointRandomSymbol x z) («x.bvar», «z.bvar») = B / C := by
+  have eq_mid : π.condProb (x, z) («x.bvar», «z.bvar») = B / C := by
     unfold Measure.condProb Measure.prob
-    rw [href_ag, EqRnDeriv_Count (μ := π.map (JointRandomSymbol x z)) _,
+    rw [href_ag, EqRnDeriv_Count (μ := π.map (x, z)) _,
       Measure.map_apply_of_aemeasurable hxzm (measurableSet_singleton _), hpreB,
       hγ,
-      EqRnDeriv_Count (μ := π.map (fun ω ↦ ((JointRandomSymbol x z) ω).2)) _,
+      EqRnDeriv_Count (μ := π.map (fun ω ↦ ((x, z) ω).2)) _,
       Measure.map_apply_of_aemeasurable hxzm.snd (measurableSet_singleton _),
       hpreDC']
   have eq_rhs :
-      π.condProb (JointRandomSymbol y (JointRandomSymbol x z))
+      π.condProb (y, (x, z))
         («y.bvar», («x.bvar», «z.bvar»)) = T / B := by
     unfold Measure.condProb Measure.prob
     rw [href_bag,
-      EqRnDeriv_Count (μ := π.map (JointRandomSymbol y (JointRandomSymbol x z))) _,
+      EqRnDeriv_Count (μ := π.map (y, (x, z))) _,
       Measure.map_apply_of_aemeasurable hyxzm (measurableSet_singleton _), hpreT',
       href_ag,
       EqRnDeriv_Count (μ := π.map (fun ω ↦
-        ((JointRandomSymbol y (JointRandomSymbol x z)) ω).2)) _,
+        ((y, (x, z)) ω).2)) _,
       Measure.map_apply_of_aemeasurable hyxzm.snd (measurableSet_singleton _), hpreBC]
   rw [eq_lhs, eq_mid, eq_rhs]
-  by_cases hB0 : B = 0
-  · have hT0 : T = 0 := measure_mono_null hTB hB0
-    rw [hT0, hB0]
-    simp
-  · have hC0 : C ≠ 0 := fun h ↦ hB0 (measure_mono_null hBC h)
+  have key : B ≠ 0 → T / C = B / C * (T / B) := by
+    intro hB0
     have : (B / C) * (T / B) = T / C := by
       rw [div_eq_mul_inv, div_eq_mul_inv, div_eq_mul_inv]
       calc
@@ -183,6 +180,9 @@ private lemma main
         _ = T * 1 * C⁻¹ := by rw [ENNReal.inv_mul_cancel hB0 htopB]
         _ = T * C⁻¹ := by rw [mul_one]
     exact this.symm
-
+  by_cases hB0 : B = 0
+  · rw [show T = 0 from measure_mono_null hTB hB0, hB0]
+    simp
+  · exact key hB0
 
 -- created on 2023-10-14

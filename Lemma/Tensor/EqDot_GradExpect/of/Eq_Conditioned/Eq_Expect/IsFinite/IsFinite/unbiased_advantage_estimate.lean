@@ -10,7 +10,9 @@ import sympy.stats.variance
 import sympy.vector.Basic
 import sympy.vector.operators
 import sympy.concrete.sup
+import sympy.stats.cond_expectation
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Filter Topology
+open scoped ENNReal.ToRealCoe
 
 
 /--
@@ -39,15 +41,12 @@ private lemma main
   (h₀ : γ ∈ Set.Ico 0 1)
   (hS : (ReferenceMeasure.measure : Measure S) = Measure.count)
   (hA : (ReferenceMeasure.measure : Measure A) = Measure.count)
-  (h₁ : ∀ θ t x, (h : (M.traj θ) (s t ⁻¹' {x}) ≠ 0) →
-    have : IsProbabilityMeasure ((M.traj θ)[|s t ⁻¹' {x}]) := cond_isProbabilityMeasure h
-    have : PSpace ((M.traj θ)[|s t ⁻¹' {x}]) (G γ t) := ⟨(G_meas γ t).aemeasurable⟩
-    let R := G γ t
-    V θ t x = 𝔼[R : (M.traj θ)[|s t ⁻¹' {x}]](R))
+  (h₁ : ∀ θ t x, ((M.traj θ) (s t ⁻¹' {x}) ≠ 0) →
+    V θ t x = 𝔼[r : M.traj θ](∑' k, γ ^ k * r (t + k) | s t = x))
   (h₂ : ∀ x u, Differentiable ℝ (fun θ => M.pol.prob θ x u))
   (h₃ : sup[θ, x, u] ‖∇[θ] M.pol.prob θ x u‖ < ∞) :
 -- imply
-  have : ∀ θ t, SinglePSpace (M.traj θ) (JointRandomSymbol (a t) (s t)) := fun _ t =>
+  have : ∀ θ t, SinglePSpace (M.traj θ) (a (S := S) (A := A) t, s (S := S) (A := A) t) := fun _ t =>
     Random.PSpace.of.Measure.eq.Count.Measurable ((a_meas t).prodMk (s_meas t)) (by
       show (ReferenceMeasure.measure : Measure A).prod (ReferenceMeasure.measure : Measure S) = _
       rw [hA, hS, Measure.Count.eq.ProdCountS])
@@ -72,19 +71,19 @@ private lemma main
     𝔼[s, a, r : M.traj θ](
       ∑' t, γ ^ t •
         (((fun k : ℕ => γ ^ k) @ (fun k : ℕ => r (t + k) + γ * V θ (t + k + 1) (s (t + k + 1)) - V θ (t + k) (s (t + k)))) •
-          ∇[θ] Real.log (ℙ[M.traj θ]((PolicyGradient.a t) = a t | (PolicyGradient.s t) = s t)).toReal)) := by
+          ∇[θ] (ℙ[M.traj θ]((PolicyGradient.a t) = a t | (PolicyGradient.s t) = s t) : ℝ).log)) := by
 -- proof
   intro hP _hs _ha _hr _hps _hpa _hpr
   classical
   let _ : MeasurableSpace Θ := borel Θ
   have _ : BorelSpace Θ := ⟨rfl⟩
-  let G : (ℕ → S × A × ℝ) → Θ := fun ω => ∑' t, γ ^ t • ((∑' k, γ ^ k * (r (t + k) ω + γ * V θ (t + k + 1) (s (t + k + 1) ω) - V θ (t + k) (s (t + k) ω))) • ∇[θ] Real.log (ℙ[M.traj θ]((a t) = (a t ω) | (s t) = (s t ω))).toReal)
+  let G : (ℕ → S × A × ℝ) → Θ := fun ω => ∑' t, γ ^ t • ((∑' k, γ ^ k * (r (t + k) ω + γ * V θ (t + k + 1) (s (t + k + 1) ω) - V θ (t + k) (s (t + k) ω))) • ∇[θ] (ℙ[M.traj θ]((a t) = (a t ω) | (s t) = (s t ω)) : ℝ).log)
   have hG : PSpace (M.traj θ) G := ⟨(StronglyMeasurable.tsum fun t => (StronglyMeasurable.smul
       (Measurable.tsum fun k =>
         (((r_meas (t + k)).add (((measurable_of_countable (V θ (t + k + 1))).comp (s_meas (t + k + 1))).const_mul γ)).sub
           ((measurable_of_countable (V θ (t + k))).comp (s_meas (t + k)))).const_mul (γ ^ k)).stronglyMeasurable
       ((StronglyMeasurable.of_discrete (f := fun p : S × A =>
-        ∇[θ] Real.log (ℙ[M.traj θ]((a t) = p.2 | (s t) = p.1)).toReal)).comp_measurable
+        ∇[θ] (ℙ[M.traj θ]((a t) = p.2 | (s t) = p.1) : ℝ).log)).comp_measurable
           ((s_meas t).prodMk (a_meas t)))).const_smul (γ ^ t)).aestronglyMeasurable.aemeasurable⟩
   have h₃o := h₃
   simp only [gradient, LinearIsometryEquiv.norm_map] at h₃
@@ -93,7 +92,7 @@ private lemma main
   have hPs : ∀ θ t, SinglePSpace (M.traj θ) (s t) := fun _ t =>
     Random.PSpace.of.Measure.eq.Count.Measurable (s_meas t) hS
   have hscore : ∀ t, ∀ᵐ ω ∂(M.traj θ),
-      fderiv ℝ (fun θ' => Real.log (ℙ[M.traj θ']((a t) = (a t ω) | (s t) = (s t ω))).toReal) θ =
+      fderiv ℝ (fun θ' => (ℙ[M.traj θ']((a t) = (a t ω) | (s t) = (s t ω)) : ℝ).log) θ =
         fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' (s t ω) (a t ω))) θ := by
     intro t
     filter_upwards [reach_ae M θ] with ω hω
@@ -106,12 +105,16 @@ private lemma main
   have hVbd : ∀ t x, |M.V θ γ t x| ≤ (1 - γ)⁻¹ * |M.env.R| := fun t x => by
     simpa only [Real.norm_eq_abs] using V_bdd M θ h₀ t x
   obtain ⟨B, hBd⟩ : ∃ B : ℝ, ∀ t x, |M.V θ γ t x| ≤ B := ⟨_, hVbd⟩
+  have hpR : Measurable (fun ω t ↦ r (S := S) (A := A) t ω) := measurable_pi_lambda _ fun t => r_meas t
+  have hfG : ∀ t, Measurable (fun integ : ℕ → ℝ ↦ ∑' k, γ ^ k * integ (t + k)) := fun t =>
+    Measurable.tsum fun k => (measurable_pi_apply (t + k)).const_mul _
   have hVr : ∀ θ' t x, ((M.traj θ').real (s t ⁻¹' {x}) ≠ 0) → (V θ' t x = M.V θ' γ t x) := fun θ' t x hp => by
     have hp' : (M.traj θ') (s t ⁻¹' {x}) ≠ 0 := fun h0 =>
       hp ((measureReal_eq_zero_iff (measure_ne_top _ _)).2 h0)
     rw [h₁ θ' t x hp']
-    unfold Model.V
-    rw [dif_pos hp']
+    simp only [Expectation.asRV_process]
+    rw [Expectation.condEvent_eq_integral hpR.aemeasurable (hfG t), M.V_eq_integral θ' γ t x]
+    rfl
   have key : ∑' t, γ ^ t • ∫ ω, (∑' k, γ ^ k * r (t + k) ω) •
         fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' (s t ω) (a t ω))) θ ∂(M.traj θ) =
       ∑' t, γ ^ t • ∫ ω, (∑' k, γ ^ k * (r (t + k) ω + γ * V θ (t + k + 1) (s (t + k + 1) ω) -
@@ -178,12 +181,12 @@ private lemma main
           beta_reduce at h
           rw [h, sub_zero]
   have holdRA : ∑' t, γ ^ t • ∫ ω, (∑' k, γ ^ k * r (t + k) ω) •
-          fderiv ℝ (fun θ' => Real.log (ℙ[M.traj θ']((a t) = (a t ω) | (s t) = (s t ω))).toReal) θ ∂(M.traj θ) =
+          fderiv ℝ (fun θ' => (ℙ[M.traj θ']((a t) = (a t ω) | (s t) = (s t ω)) : ℝ).log) θ ∂(M.traj θ) =
       ∑' t, γ ^ t • ∫ ω, (∑' k, γ ^ k * (r (t + k) ω + γ * V θ (t + k + 1) (s (t + k + 1) ω) -
         V θ (t + k) (s (t + k) ω))) •
-          fderiv ℝ (fun θ' => Real.log (ℙ[M.traj θ']((a t) = (a t ω) | (s t) = (s t ω))).toReal) θ ∂(M.traj θ) := by
+          fderiv ℝ (fun θ' => (ℙ[M.traj θ']((a t) = (a t ω) | (s t) = (s t ω)) : ℝ).log) θ ∂(M.traj θ) := by
     have e1 : ∑' t, γ ^ t • ∫ ω, (∑' k, γ ^ k * r (t + k) ω) •
-          fderiv ℝ (fun θ' => Real.log (ℙ[M.traj θ']((a t) = (a t ω) | (s t) = (s t ω))).toReal) θ ∂(M.traj θ) =
+          fderiv ℝ (fun θ' => (ℙ[M.traj θ']((a t) = (a t ω) | (s t) = (s t ω)) : ℝ).log) θ ∂(M.traj θ) =
         ∑' t, γ ^ t • ∫ ω, (∑' k, γ ^ k * r (t + k) ω) •
           fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' (s t ω) (a t ω))) θ ∂(M.traj θ) := by
       refine tsum_congr fun t => ?_
@@ -196,7 +199,7 @@ private lemma main
           fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' (s t ω) (a t ω))) θ ∂(M.traj θ) =
         ∑' t, γ ^ t • ∫ ω, (∑' k, γ ^ k * (r (t + k) ω + γ * V θ (t + k + 1) (s (t + k + 1) ω) -
         V θ (t + k) (s (t + k) ω))) •
-          fderiv ℝ (fun θ' => Real.log (ℙ[M.traj θ']((a t) = (a t ω) | (s t) = (s t ω))).toReal) θ ∂(M.traj θ) := by
+          fderiv ℝ (fun θ' => (ℙ[M.traj θ']((a t) = (a t ω) | (s t) = (s t ω)) : ℝ).log) θ ∂(M.traj θ) := by
       refine tsum_congr fun t => ?_
       congr 1
       refine integral_congr_ae ?_
@@ -227,7 +230,7 @@ private lemma main
       𝔼[s, a, r : M.traj θ](
         ∑' t, γ ^ t •
           (((fun k : ℕ => γ ^ k) @ (fun k : ℕ => r (t + k))) •
-            ∇[θ] Real.log (ℙ[M.traj θ]((PolicyGradient.a t) = a t | (PolicyGradient.s t) = s t)).toReal)) :=
+            ∇[θ] (ℙ[M.traj θ]((PolicyGradient.a t) = a t | (PolicyGradient.s t) = s t) : ℝ).log)) :=
     Tensor.Eq.Dot.Grad.Expect.of.Eq_Conditioned.IsFinite.policy_gradient_theorem h₀ hS hA h₂ h₃o
   have hRae : ∀ᵐ ω ∂(M.traj θ), ∀ t, ‖∑' k, γ ^ k * r (t + k) ω‖ ≤ (1 - γ)⁻¹ * |M.env.R| := by
     filter_upwards [r_bdd_ae M θ] with ω hr t

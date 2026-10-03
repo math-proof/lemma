@@ -13,7 +13,7 @@ with the `Expectation ℝ` (Bochner) instance. Only the weak `PSpace` is needed.
 instance PSpace.joint
     {Ω α β : Type*} [MeasurableSpace Ω] [MeasurableSpace α] [MeasurableSpace β]
     {π : Measure Ω} {x : Ω → α} {y : Ω → β} [hx : PSpace π x] [hy : PSpace π y] :
-    PSpace π (JointRandomSymbol x y) where
+    PSpace π (x, y) where
   toIsProbabilityMeasure := hx.toIsProbabilityMeasure
   aemeasurable := hx.aemeasurable.prodMk hy.aemeasurable
 
@@ -40,7 +40,7 @@ noncomputable def Variance
 /-- [sympy.Covariance]: `Cov[x, y] = 𝔼[(x - 𝔼[x]) (y - 𝔼[y])]`, over the joint law of `(x, y)`. -/
 noncomputable def Covariance
     {Ω : Type*} [MeasurableSpace Ω] (π : Measure Ω) (x y : Ω → ℝ) [PSpace π x] [PSpace π y] : ℝ :=
-  Expectation.ofRV π (JointRandomSymbol x y)
+  Expectation.ofRV π (x, y)
     (fun p : ℝ × ℝ ↦ (p.1 - Expectation.ofRV π x (fun a : ℝ ↦ a)) * (p.2 - Expectation.ofRV π y (fun a : ℝ ↦ a)))
 
 theorem Variance.eq_integral

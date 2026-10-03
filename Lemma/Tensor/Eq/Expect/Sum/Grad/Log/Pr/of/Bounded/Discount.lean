@@ -13,12 +13,11 @@ open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Filter 
 
 
 /--
-Turning the pointwise integral of the discounted weighted score into the `𝔼[s, a, r : M.traj θ]` sugar.
-For a weight `X` (a function of the paths `s`, `a`, `r`) whose discounted tails
-`∑' k, γ ^ k * X[t + k]` are almost surely bounded by `B`, the `L`-image (Riesz representative) of
-`∑' t, γ ^ t • ∫ (∑' k, γ ^ k * X[t + k]) • d log π(a[t] | s[t])` equals
-`𝔼[s, a, r : M.traj θ](∑' t, γ ^ t • ((γ ** Stack[k](k) @ X[t:]) • ∇ log π(a[t] | s[t])))`.
-Shared by `policy_gradient_theorem` (`X = r`) and `unbiased_advantage_estimate` (`X = ` advantage).
+`Bounded` with a separate discount `c` for the tails: for a weight `X` whose tails
+`∑' k, c ^ k * X[t + k]` are almost surely bounded by `B`, the `L`-image of
+`∑' t, γ ^ t • ∫ (∑' k, c ^ k * X[t + k]) • d log π(a[t] | s[t])` equals
+`𝔼[s, a, r : M.traj θ](∑' t, γ ^ t • (((c ** Stack[k](k)) @ X[t:]) • ∇ log π(a[t] | s[t])))`.
+`c = γ` is `Bounded`; `c = γ * λ` gives the generalized advantage estimate.
 -/
 @[main]
 private lemma main
@@ -27,7 +26,7 @@ private lemma main
   [ReferenceMeasure A] [MeasurableSingletonClass A] [Fintype A]
   {M : Model Θ S A}
   {θ : Θ}
-  {γ : ℝ}
+  {γ c : ℝ}
   {X : (ℕ → S) → (ℕ → A) → (ℕ → ℝ) → ℕ → ℝ}
   {B : ℝ}
 -- given
@@ -37,11 +36,11 @@ private lemma main
   (h₁ : ∀ k, Measurable fun ω : ℕ → S × A × ℝ =>
     X (fun j => s j ω) (fun j => a j ω) (fun j => r j ω) k)
   (h₂ : ∀ᵐ ω ∂(M.traj θ), ∀ t,
-    ‖∑' k, γ ^ k * X (fun j => s j ω) (fun j => a j ω) (fun j => r j ω) (t + k)‖ ≤ B)
+    ‖∑' k, c ^ k * X (fun j => s j ω) (fun j => a j ω) (fun j => r j ω) (t + k)‖ ≤ B)
   (h₃ : ∀ x u, Differentiable ℝ (fun θ => M.pol.prob θ x u))
   (h₄ : sup[θ, x, u] ‖∇[θ] M.pol.prob θ x u‖ < ∞) :
 -- imply
-  have : ∀ θ t, SinglePSpace (M.traj θ) (a (S := S) (A := A) t, s (S := S) (A := A) t) := fun _ t =>
+  have : ∀ θ t, SinglePSpace (M.traj θ) (JointRandomSymbol (a t) (s t)) := fun _ t =>
     Random.PSpace.of.Measure.eq.Count.Measurable ((a_meas t).prodMk (s_meas t)) (by
       show (ReferenceMeasure.measure : Measure A).prod (ReferenceMeasure.measure : Measure S) = _
       rw [hA, hS, Measure.Count.eq.ProdCountS])
@@ -60,11 +59,11 @@ private lemma main
   let : MeasurableSpace Θ := borel Θ
   have : BorelSpace Θ := ⟨rfl⟩
   (InnerProductSpace.toDual ℝ Θ).symm (∑' t, γ ^ t • ∫ ω,
-      (∑' k, γ ^ k * X (fun j => s j ω) (fun j => a j ω) (fun j => r j ω) (t + k)) •
+      (∑' k, c ^ k * X (fun j => s j ω) (fun j => a j ω) (fun j => r j ω) (t + k)) •
         fderiv ℝ (fun θ' => Real.log (ℙ[M.traj θ']((a t) = (a t ω) | (s t) = (s t ω))).toReal) θ ∂(M.traj θ)) =
     𝔼[s, a, r : M.traj θ](
       ∑' t, γ ^ t •
-        (((fun k : ℕ => γ ^ k) @ (fun k : ℕ => X s a r (t + k))) •
+        (((fun k : ℕ => c ^ k) @ (fun k : ℕ => X s a r (t + k))) •
           ∇[θ] Real.log (ℙ[M.traj θ]((PolicyGradient.a t) = a t | (PolicyGradient.s t) = s t)).toReal)) := by
 -- proof
   intro hP _hs _ha _hr _hps _hpa _hpr
@@ -95,12 +94,12 @@ private lemma main
       continuous_toFun := (InnerProductSpace.toDual ℝ Θ).symm.continuous
       continuous_invFun := (InnerProductSpace.toDual ℝ Θ).continuous }
   have hL : ∀ φ, (InnerProductSpace.toDual ℝ Θ).symm φ = L φ := fun _ => rfl
-  let G : (ℕ → S × A × ℝ) → Θ := fun ω => ∑' t, γ ^ t • ((∑' k, γ ^ k * X (fun j => s j ω) (fun j => a j ω) (fun j => r j ω) (t + k)) •
+  let G : (ℕ → S × A × ℝ) → Θ := fun ω => ∑' t, γ ^ t • ((∑' k, c ^ k * X (fun j => s j ω) (fun j => a j ω) (fun j => r j ω) (t + k)) •
     ∇[θ] Real.log (ℙ[M.traj θ]((a t) = (a t ω) | (s t) = (s t ω))).toReal)
   have hg := fun t : ℕ =>
     StronglyMeasurable.smul
       (Measurable.tsum (L := SummationFilter.unconditional ℕ) fun k =>
-        (h₁ (t + k)).const_mul (γ ^ k)).stronglyMeasurable
+        (h₁ (t + k)).const_mul (c ^ k)).stronglyMeasurable
       ((StronglyMeasurable.of_discrete (f := fun p : S × A =>
         gradient (fun θ' => Real.log (ℙ[M.traj θ']((a t) = p.2 | (s t) = p.1)).toReal) θ)).comp_measurable
           ((s_meas t).prodMk (a_meas t)))
@@ -117,7 +116,7 @@ private lemma main
     exact h
   obtain ⟨K, hK⟩ : ∃ K : ℝ, K = B * Ms := ⟨_, rfl⟩
   have hFb : ∀ t, ∀ᵐ ω ∂(M.traj θ),
-      ‖γ ^ t • ((∑' k, γ ^ k * X (fun j => s j ω) (fun j => a j ω) (fun j => r j ω) (t + k)) •
+      ‖γ ^ t • ((∑' k, c ^ k * X (fun j => s j ω) (fun j => a j ω) (fun j => r j ω) (t + k)) •
         gradient (fun θ' => Real.log (ℙ[M.traj θ']((a t) = (a t ω) | (s t) = (s t ω))).toReal) θ)‖ ≤ γ ^ t * K := by
     intro t
     filter_upwards [h₂, hsc t] with ω h1 h2
@@ -125,11 +124,11 @@ private lemma main
     exact mul_le_mul_of_nonneg_left (mul_le_mul (h1 t) h2 (norm_nonneg _)
       ((norm_nonneg _).trans (h1 t))) (pow_nonneg h₀.1 t)
   have hint : ∀ t, Integrable (fun ω =>
-      γ ^ t • ((∑' k, γ ^ k * X (fun j => s j ω) (fun j => a j ω) (fun j => r j ω) (t + k)) •
+      γ ^ t • ((∑' k, c ^ k * X (fun j => s j ω) (fun j => a j ω) (fun j => r j ω) (t + k)) •
         gradient (fun θ' => Real.log (ℙ[M.traj θ']((a t) = (a t ω) | (s t) = (s t ω))).toReal) θ)) (M.traj θ) :=
     fun t => Integrable.of_bound ((hg t).const_smul (γ ^ t)).aestronglyMeasurable _ (hFb t)
   have hsum : Summable fun t => ∫ ω,
-      ‖γ ^ t • ((∑' k, γ ^ k * X (fun j => s j ω) (fun j => a j ω) (fun j => r j ω) (t + k)) •
+      ‖γ ^ t • ((∑' k, c ^ k * X (fun j => s j ω) (fun j => a j ω) (fun j => r j ω) (t + k)) •
         gradient (fun θ' => Real.log (ℙ[M.traj θ']((a t) = (a t ω) | (s t) = (s t ω))).toReal) θ)‖ ∂(M.traj θ) := by
     refine Summable.of_nonneg_of_le (fun t => integral_nonneg fun _ => norm_nonneg _) (fun t => ?_)
       ((summable_geometric_of_lt_one h₀.1 h₀.2).mul_right K)
@@ -150,7 +149,7 @@ private lemma main
   have hpath :
       𝔼[s, a, r : M.traj θ](
         ∑' t, γ ^ t •
-          (((fun k : ℕ => γ ^ k) @ (fun k : ℕ => X s a r (t + k))) •
+          (((fun k : ℕ => c ^ k) @ (fun k : ℕ => X s a r (t + k))) •
             ∇[θ] Real.log (ℙ[M.traj θ]((PolicyGradient.a t) = (a t) | (PolicyGradient.s t) = (s t))).toReal)) =
         ∫ ω, G ω ∂(M.traj θ) := by
     have hx : AEMeasurable
@@ -173,5 +172,4 @@ private lemma main
   rw [map_smul, gradient, hL]
 
 
--- created on 2026-09-30
--- updated on 2026-09-30
+-- created on 2026-10-01
