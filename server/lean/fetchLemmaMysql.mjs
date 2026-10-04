@@ -43,11 +43,48 @@ export function getMysqlConfig() {
   const host = (process.env.MYSQL_HOST || '').trim();
   if (!host) return null;
   const port = Number(process.env.MYSQL_PORT || 3306);
-  const user = process.env.USER || process.env.USERNAME;
-  const password = process.env.MYSQL_PWD;
   const database = 'axiom';
+  if (probedLogin) return { host, port, database, ...probedLogin };
+  const user = process.env.MYSQL_USER || process.env.USER || process.env.USERNAME;
+  const password = process.env.MYSQL_PWD;
   return { host, port, user, password, database };
 }
+
+/**
+ * The OS user name is not always a MySQL account (e.g. WSL user `cosmos`, while the DB has
+ * `prod` / `Administrator`), which made every query fail with "Access denied" and the lemma
+ * page fall back to re-rendering from source. Same candidates as `mjs/run.mjs`.
+ * @type {{ user: string, password: string } | null}
+ */
+let probedLogin = null;
+
+async function probeMysqlLogin() {
+  const host = (process.env.MYSQL_HOST || '').trim();
+  if (!host) return;
+  const port = Number(process.env.MYSQL_PORT || 3306);
+  const pwd = process.env.MYSQL_PWD;
+  const candidates = [];
+  if (process.env.MYSQL_USER) candidates.push({ user: process.env.MYSQL_USER, password: pwd });
+  const osUser = process.env.USER || process.env.USERNAME;
+  if (osUser) candidates.push({ user: osUser, password: pwd });
+  candidates.push({ user: 'prod', password: pwd }, { user: 'prod', password: 'prod' });
+  candidates.push({ user: 'user', password: 'user' });
+  for (const c of candidates) {
+    if (c.password == null) continue;
+    try {
+      const conn = await mysql.createConnection({
+        host, port, database: 'axiom', user: c.user, password: c.password, connectTimeout: 3000,
+      });
+      await conn.end();
+      probedLogin = c;
+      return;
+    } catch {
+      /* try next */
+    }
+  }
+}
+
+await probeMysqlLogin();
 
 export function getMysqlPool() {
   if (pool) return pool;

@@ -1,7 +1,7 @@
 import Mathlib.Probability.Independence.Conditional
 import Lemma.Measure.Count.eq.ProdCountS
 import Lemma.Random.All_Imp_EqProbSCond.of.CondIndep
-import Lemma.Random.PSpace.of.Measure.eq.Count.Measurable
+import Lemma.Random.SinglePSpace.of.EqMeasureCount.Measurable
 import Lemma.Random.Prob.eq.Measure.of.Eq_Count
 import Lemma.Random.ProbCond.eq.Div.of.Eq_Count.Eq_Count
 import sympy.stats.joint_rv
@@ -47,11 +47,11 @@ private lemma main
     change (ReferenceMeasure.measure (α := α)).prod ReferenceMeasure.measure = Measure.count
     rw [hα, hγ, ← Count.eq.ProdCountS]
   have hPxyz : SinglePSpace π (x, y, z) :=
-    PSpace.of.Measure.eq.Count.Measurable (hx.prodMk (hy.prodMk hz)) hαβγ
+    SinglePSpace.of.EqMeasureCount.Measurable (hx.prodMk (hy.prodMk hz)) hαβγ
   have hPyz : SinglePSpace π (y, z) :=
-    PSpace.of.Measure.eq.Count.Measurable (hy.prodMk hz) hβγ
+    SinglePSpace.of.EqMeasureCount.Measurable (hy.prodMk hz) hβγ
   have hPxz : SinglePSpace π (x, z) :=
-    PSpace.of.Measure.eq.Count.Measurable (hx.prodMk hz) hαγ
+    SinglePSpace.of.EqMeasureCount.Measurable (hx.prodMk hz) hαγ
   have h := All_Imp_EqProbSCond.of.CondIndep hx hy hz hPxyz hCI
   simp only [hα, hβ, hγ, ae_count_iff] at h
   have h := h u v w

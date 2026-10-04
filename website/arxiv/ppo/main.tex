@@ -47,7 +47,7 @@
 \small Project artifact: \href{https://github.com/math-proof/lemma}{math-proof/lemma}\\[0.4em]
 \small
 Markov product:
-\href{http://www.lemma.cn/lean/?module=Random.Prob.eq.Mul_Prod_MulProbS.of.Ne_0.Eq.Eq.Eq}{$P_t$},
+\href{http://www.lemma.cn/lean/?module=Random.ProbJoint.eq.Mul_Prod_MulProbSCond.of.All_CondIndep.All_CondIndep.EqMeasure_Count.EqMeasure_Count.All_Measurable.All_Measurable}{$P_t$},
 \quad
 forward recursion, NLL:
 \href{http://www.lemma.cn/lean/?module=Tensor.Imp_Eq_Add_LogSumExp.EqNegLogProb.of.Ne0ProbJoint.Indep.y_given_x}{$\log Z-\text{score}$},
@@ -113,7 +113,7 @@ Second, when each step factor sums to one, $\sum_a p(a)=1$ implies $\E_{a\sim p}
 
 \paragraph{Contributions.}
 \begin{enumerate}[leftmargin=1.6em,itemsep=0.25em]
-  \item CRF propagation (Sections~\ref{sec:markov} and~\ref{sec:crf}): the Markov product \lmod{crf.markov}{Random.Prob.eq.Mul_Prod_MulProbS.of.Ne_0.Eq.Eq.Eq}, the log-score \lmod{crf.markov.logits}{Tensor.Eq.of.Ne_0.Eq.Eq.Eq.Eq_log.Eq_log.Eq_log} and \lmod{crf.logits}{Tensor.Imp.of.Eq}, the forward recursion with $-\log p(y\mid x)=\log Z-\text{score}$, \lmod{y_given_x}{Tensor.Imp_Eq_Add_LogSumExp.EqNegLogProb.of.Ne0ProbJoint.Indep.y_given_x}, the Viterbi value recursion \lmod{crf.viterbi}{Tensor.And.of.Ne_0.Eq.Eq.Eq}, and the new forward--backward theorem \lmod{crf.forward_backward}{Tensor.And.of.All_Eq_Sum_Mul.All_Eq_1.All_Eq_Mul.All_Eq.forward_backward}, whose hypotheses are the one-step prefix factorization and the backward recursion (Theorem~\ref{thm:fb}).
+  \item CRF propagation (Sections~\ref{sec:markov} and~\ref{sec:crf}): the Markov product \lmod{crf.markov}{Random.ProbJoint.eq.Mul_Prod_MulProbSCond.of.All_CondIndep.All_CondIndep.EqMeasure_Count.EqMeasure_Count.All_Measurable.All_Measurable}, the log-score \lmod{crf.markov.logits}{Tensor.Eq.of.Ne_0.Eq.Eq.Eq.Eq_log.Eq_log.Eq_log} and \lmod{crf.logits}{Tensor.Imp.of.Eq}, the forward recursion with $-\log p(y\mid x)=\log Z-\text{score}$, \lmod{y_given_x}{Tensor.Imp_Eq_Add_LogSumExp.EqNegLogProb.of.Ne0ProbJoint.Indep.y_given_x}, the Viterbi value recursion \lmod{crf.viterbi}{Tensor.And.of.Ne_0.Eq.Eq.Eq}, and the new forward--backward theorem \lmod{crf.forward_backward}{Tensor.And.of.All_Eq_Sum_Mul.All_Eq_1.All_Eq_Mul.All_Eq.forward_backward}, whose hypotheses are the one-step prefix factorization and the backward recursion (Theorem~\ref{thm:fb}).
   \item The Bellman equation \lmod{Bellman}{Tensor.And.Eq.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.Bellman} on a trajectory-level MDP whose trajectory law has a proved Markov property (\texttt{joint\_succ}, \texttt{hist\_step}) (Section~\ref{sec:bellman}).
   \item The policy gradient theorem by induction on the horizon, in truncated, action-value and REINFORCE form (\lmod{policy_gradient_theorem}{Tensor.Eq.Dot.Grad.Expect.of.Eq_Conditioned.IsFinite.policy_gradient_theorem}), the unbiased advantage estimate \lmod{unbiased_advantage_estimate}{Tensor.EqDot_GradExpect.of.Eq_Conditioned.Eq_Expect.IsFinite.IsFinite.unbiased_advantage_estimate} and GAE with the exact value function for all $\lambda\in[0,1]$, \lmod{generalized_advantage_estimate}{Tensor.EqDot_GradExpect.of.Eq_Conditioned.Eq_Expect.IsFinite.IsFinite.generalized_advantage_estimate}, with its weighted-average form (Section~\ref{sec:pg}).
   \item An explicit statement of what is \emph{not} covered, in particular the ingredients of PPO (Sections~\ref{sec:ppo} and~\ref{sec:discussion}), and two comparison tables (Section~\ref{sec:tables}).
@@ -236,11 +236,19 @@ For the probabilistic version \texttt{IsHiddenMarkovPr} the factorization is \em
 An observation depends on the past only through the current label, $x_{t+1}\perp(x[{:}t{+}1],y[{:}t{+}1])\mid y_{t+1}$, and a label depends on the past only through its predecessor, $y_{t+1}\perp(x[{:}t{+}1],y[{:}t])\mid y_t$.
 Theorem~\ref{thm:markov} shows that these two conditional independences imply the product form, and \lmod{IsHiddenMarkovPr.of.CondIndep.CondIndep}{Random.IsHiddenMarkovPr.of.CondIndep.CondIndep} packages the one-step equations as \texttt{IsHiddenMarkovPr}.
 They have to be read as \emph{conditional} independences: the marginal independences (for instance $x_{t+1}\perp(x[{:}t{+}1],y[{:}t{+}1])$ without conditioning on $y_{t+1}$) do not imply the factorization (take $x_0$ constant, $y_0,y_1$ independent fair bits and $x_1=y_0\oplus y_1$, with a little noise to make all probabilities positive).
-By contrast, the Markov property of the MDP trajectory law of Section~\ref{sec:mdp} follows from the construction of the law (\texttt{joint\_succ}, \texttt{hist\_step}), not from assumed independences; the treatment of the two sides is asymmetric.
+The same factorization has a decision-process instance in the same Lean file as Theorem~\ref{thm:markov}
+(declaration \lmod{crf.markov.mdp}{Random.ProbJoint.eq.Mul_Prod_MulProbSCond.of.All_CondIndep.All_CondIndep.EqMeasure_Count.EqMeasure_Count.All_Measurable.All_Measurable\#mdp}).
+Let $s_i$ be the states and $a_i$ the actions (countable ranges, counting reference measures), and assume the two conditional independences
+$a_t\perp(s[{:}t],a[{:}t])\mid s_t$ and $s_{t+1}\perp(s[{:}t],a[{:}t])\mid(s_t,a_t)$.
+Then $\Prb(s[{:}t{+}1]=\bar s[{:}t{+}1]\wedge a[{:}t]=\bar a[{:}t])$ is the product of $\Prb(s_0=\bar s_0)$ and the factors $\Prb(a_i=\bar a_i\mid s_i=\bar s_i)\,\Prb(s_{i+1}=\bar s_{i+1}\mid s_i=\bar s_i\wedge a_i=\bar a_i)$.
+The roles correspond as (label, observation) $\leftrightarrow$ (state, action): in both cases the joint is a product of one-step conditionals obtained from two conditional independences by induction on $t$.
+Two differences should be kept in mind.
+First, this Lean statement is over states and actions only: the Python version also carries the rewards, but $\R^t$ has no reference measure here, and its marginal independence hypotheses are too weak for the factorization (as for the HMM above), so the Lean version uses conditional ones.
+Second, for the MDP of Section~\ref{sec:mdp} the Markov property is not assumed but follows from the construction of the trajectory law (\texttt{joint\_succ}, \texttt{hist\_step}); \texttt{mdp} is the corresponding statement for an arbitrary law on a general probability space satisfying the independences.
 \end{remark}
 
 \subsection{The product form}
-\begin{theorem}[\lmod{crf.markov}{Random.Prob.eq.Mul_Prod_MulProbS.of.Ne_0.Eq.Eq.Eq}~\cite{lemma_crf_markov}]
+\begin{theorem}[\lmod{crf.markov}{Random.ProbJoint.eq.Mul_Prod_MulProbSCond.of.All_CondIndep.All_CondIndep.EqMeasure_Count.EqMeasure_Count.All_Measurable.All_Measurable}~\cite{lemma_crf_markov}]
 \label{thm:markov}
 Let $x_i,y_i$ be measurable discrete random variables (countable ranges, counting reference measures) on a probability space with a standard Borel sample space, and suppose that for every $t$
 \[
@@ -444,7 +452,8 @@ An \emph{environment} consists of an initial probability measure $\iota$ on $S$,
 A trajectory is a sequence $\omega\in(S\times A\times\R)^{\N}$ of stages with coordinates $\sv_t,\av_t,\rw_t$.
 One stage from $x$ is drawn by $\kappa_\theta(x)=\delta_x\otimes(\pi_\theta(\cdot\mid x)\otimes R)$ and the stage chain has kernel $K_\theta(x,u,\rho)=(\kappa_\theta\circ T)(x,u)$.
 The trajectory measure $\Prb_\theta=\mathtt{Kernel.trajMeasure}\;\mu_0\;(K_\theta)_n$ is the Ionescu-Tulcea extension~\cite{kallenberg2002foundations} provided by mathlib, with $n$-th kernel reading only the last stage of the history.
-Informally (the product formula is not a separate Lean statement), the finite-dimensional marginals have the Markov-product shape $\iota(s_0)\prod_t\pi_\theta(a_t\mid s_t)\,T(s_{t+1}\mid s_t,a_t)\,R(\cdot\mid s_t,a_t)$.
+The finite-dimensional marginals have the Markov-product shape $\iota(s_0)\prod_t\pi_\theta(a_t\mid s_t)\,T(s_{t+1}\mid s_t,a_t)\,R(\cdot\mid s_t,a_t)$.
+For states and actions alone, the product formula is the declaration \texttt{mdp} discussed in Section~\ref{sec:markov}, proved from conditional independences on a general probability space; it is not instantiated for \texttt{Kernel.trajMeasure}.
 Its logarithm is a sum of per-step terms, and since the transition and reward factors do not depend on $\theta$, \emph{the score of a trajectory is the sum of the scores of its actions}, $\sum_t\grad\log\pi_\theta(a_t\mid s_t)$.
 This is the MDP counterpart of the CRF score of Theorem~\ref{thm:logits}; Lean uses it only through the expectation lemma \texttt{E\_score} below.
 

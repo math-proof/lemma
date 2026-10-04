@@ -116,7 +116,7 @@ math proof.
 \newblock
   {Random.\allowbreak{}Prob.\allowbreak{}eq.\allowbreak{}Mul\_Prod\_MulProbS.\allowbreak{}of.\allowbreak{}Ne\_0.\allowbreak{}Eq.\allowbreak{}Eq.\allowbreak{}Eq}.
 \newblock
-  \url{http://www.lemma.cn/lean/?module=Random.Prob.eq.Mul_Prod_MulProbS.of.Ne_0.Eq.Eq.Eq},
+  \url{http://www.lemma.cn/lean/?module=Random.ProbJoint.eq.Mul_Prod_MulProbSCond.of.All_CondIndep.All_CondIndep.EqMeasure_Count.EqMeasure_Count.All_Measurable.All_Measurable},
   2026.
 
 \bibitem{lemma_lim}

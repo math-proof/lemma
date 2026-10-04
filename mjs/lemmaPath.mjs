@@ -1347,6 +1347,8 @@ function postAlts(node, opts, alts, canon) {
   const c = cls(node);
   const args = node.args || [];
   const A = (n) => (canon ? [nameExpr(n, opts)].filter(Boolean) : nameExprAlts(n, opts));
+  if (c === "LeanMul" && chainRuleProdName(node)) return uniq([chainRuleProdName(node), ...alts]);
+  if (c === "Lean_land" && probJointStepConjName(node)) return uniq([probJointStepConjName(node), ...alts]);
   if (c === "LeanPow" && cls(args[1]) === "LeanToken" && args[1].text === "2") {
     const b = A(args[0]);
     const sq = b.length ? b.flatMap((y) => ["Square" + y, "Square_" + y]) : ["Square"];
@@ -1385,6 +1387,42 @@ function postAlts(node, opts, alts, canon) {
 }
 
 const NODE_ALT_CAP = 1000;
+/**
+ * `x ⟂ᵢ[π] y` → Indep, conditional `(x ⟂ᵢ[π] y) | z` → CondIndep (Random/…/of/CondIndep/CondIndep).
+ * Returns "" for anything else.
+ */
+function indepAtom(node) {
+  // the left side of `a ⟂ᵢ[π] b | c` spanning two lines is wrapped in LeanArgsNewLineSeparated
+  const strip = (n) => {
+    let u = unwrapParen(n);
+    while ((cls(u) === "LeanArgsNewLineSeparated" || cls(u) === "LeanStatements") && (u.args || []).filter((a) => cls(a) !== "LeanLineComment").length === 1) {
+      u = unwrapParen((u.args || []).find((a) => cls(a) !== "LeanLineComment"));
+    }
+    return u;
+  };
+  const u = strip(node);
+  if (cls(u) === "Lean_perp") return "Indep";
+  if (cls(u) === "LeanBitOr" && cls(strip(u.args?.[0])) === "Lean_perp") return "CondIndep";
+  return "";
+}
+
+/**
+ * `∀ t, ∀ _ : Measurable (y t), P` — an inner ∀ over an anonymous hypothesis binder is just an implication
+ * guard, so it is not a second quantifier in the name (All_CondIndep, not All_All_CondIndep).
+ * Returns the body with such guard quantifiers peeled off.
+ */
+function isGuardForall(node) {
+  const u = unwrapParen(node);
+  if (cls(u) !== "Lean_forall" || (u.args || []).length !== 2) return false;
+  const colon = u.args[0];
+  return cls(colon) === "LeanColon" && cls(colon.args?.[0]) === "LeanToken" && colon.args[0].text === "_" && isPropHyp(colon.args?.[1]);
+}
+function peelGuardForalls(node) {
+  let n = node;
+  while (isGuardForall(n)) n = unwrapParen(n).args[1];
+  return n;
+}
+
 function nameExprAlts(node, opts = {}) {
   if (!node) return [];
   const pre = preAlts(node, opts, false);
@@ -1474,6 +1512,75 @@ function nameProbApp(node) {
   const event = matchProbApp(node);
   if (!event) return "";
   return nameProbEvent(event);
+}
+
+/**
+ * Joint of sequence slices with their observed values: `x[:n] = «x.bvar»[:n] ∧ y[:n] = «y.bvar»[:n]`.
+ * Such a joint reads ProbJoint (ProbJointGetSliceS), not ProbS, in Random/ProbJoint/eq/Mul_Prod_MulProbSCond/….
+ */
+function isBvarSliceJointEvent(event) {
+  const conj = [];
+  const flat = (n) => {
+    const u = unwrapParen(n);
+    if (cls(u) === "Lean_land") (u.args || []).forEach(flat);
+    else conj.push(u);
+  };
+  flat(event);
+  const isSlice = (n) => cls(n) === "LeanGetElem" && cls(n.args?.[1]) === "LeanColon";
+  return conj.length >= 2 && conj.every((c) => {
+    if (cls(c) !== "LeanEq" || (c.args || []).length !== 2) return false;
+    const [l, r] = c.args.map(unwrapParen);
+    return isSlice(l) && isSlice(r) && isBvarQuotation(r.args[0]);
+  });
+}
+
+/** `ℙ(a | b) * ℙ(c) * ∏ i ∈ s, ℙ(d | e) * ℙ(f | g)` — chain-rule factorization: the leading factors are absorbed. */
+function chainRuleProdName(node) {
+  const n = unwrapParen(node);
+  if (cls(n) !== "LeanMul" || (n.args || []).length !== 2) return "";
+  const head = unwrapParen(n.args[0]);
+  const prod = unwrapParen(n.args[1]);
+  if (cls(head) !== "LeanMul" || (head.args || []).length !== 2 || cls(prod) !== "Lean_prod") return "";
+  let body = unwrapParen(prod.args[prod.args.length - 1]);
+  while ((cls(body) === "LeanArgsNewLineSeparated" || cls(body) === "LeanStatements") && (body.args || []).filter((a) => cls(a) !== "LeanLineComment").length === 1) {
+    body = unwrapParen((body.args || []).find((a) => cls(a) !== "LeanLineComment"));
+  }
+  if (cls(body) !== "LeanMul" || (body.args || []).length !== 2) return "";
+  const nm = (x) => { const ev = matchProbApp(x); return ev ? nameProbEvent(ev) : ""; };
+  return nm(head.args[0]) === "ProbCond" && nm(head.args[1]) === "Prob" && nm(body.args[0]) === "ProbCond" && nm(body.args[1]) === "ProbCond"
+    ? "Mul_Prod_MulProbSCond" : "";
+}
+
+/**
+ * `ℙ[π](s[:0+1] = «s.bvar»[:0+1] ∧ a[:0] = «a.bvar»[:0]) = ℙ[π](s 0 = «s.bvar» 0) ∧
+ *   ∀ t, ℙ[π](slice-joint) = ℙ[π](slice-joint) * (ℙ(a | s) * ℙ(s' | s ∧ a))` — the chain-rule recursion of a
+ * bvar-slice joint (Random/EqProbJoint/All_Eq_Mul_MulProbSCond/of/All_CondIndep/…). Deliberately narrow.
+ */
+function probJointStepConjName(node) {
+  const n = unwrapParen(node);
+  if (cls(n) !== "Lean_land" || (n.args || []).length !== 2) return "";
+  const strip = (x) => {
+    let u = unwrapParen(x);
+    while ((cls(u) === "LeanArgsNewLineSeparated" || cls(u) === "LeanStatements") && (u.args || []).filter((a) => cls(a) !== "LeanLineComment").length === 1) {
+      u = unwrapParen((u.args || []).find((a) => cls(a) !== "LeanLineComment"));
+    }
+    return u;
+  };
+  const prob = (x) => { const ev = matchProbApp(strip(x)); return ev ? { ev, name: nameProbEvent(ev) } : null; };
+  const joint = (x) => { const p = prob(x); return !!p && p.name === "ProbS" && isBvarSliceJointEvent(p.ev); };
+  const eq2 = (x) => { const u = strip(x); return cls(u) === "LeanEq" && (u.args || []).length === 2 ? u.args : null; };
+  const mul2 = (x) => { const u = strip(x); return cls(u) === "LeanMul" && (u.args || []).length === 2 ? u.args : null; };
+  const base = eq2(n.args[0]);
+  if (!base || !joint(base[0]) || prob(base[1])?.name !== "Prob") return "";
+  const all = strip(n.args[1]);
+  if (cls(all) !== "Lean_forall") return "";
+  const step = eq2(peelGuardForalls(all.args[all.args.length - 1]));
+  if (!step || !joint(step[0])) return "";
+  const m = mul2(step[1]);
+  if (!m || !joint(m[0])) return "";
+  const conds = mul2(m[1]);
+  return conds && prob(conds[0])?.name === "ProbCond" && prob(conds[1])?.name === "ProbCond_Joint"
+    ? "EqProbJoint/All_Eq_Mul_MulProbSCond" : "";
 }
 
 /**
@@ -1608,11 +1715,12 @@ function nameExprBase(node, opts = {}) {
   // Local `have` in imply is proof scaffolding — never a path atom.
   if (name === "Lean_have") return "";
   if (isBvarQuotation(node)) return "";
+  if (indepAtom(node)) return indepAtom(node);
 
   // ℙ[π](E) / ℙ[π](E | C) → Prob / ProbS / ProbCond*
   {
     const probName = nameProbApp(node);
-    if (probName) return probName;
+    if (probName) return probName === "ProbS" && isBvarSliceJointEvent(matchProbApp(node)) ? "ProbJoint" : probName;
   }
 
   if (name === "LeanStatements" || name === "LeanArgsNewLineSeparated") {
@@ -1630,7 +1738,7 @@ function nameExprBase(node, opts = {}) {
       return core ? core + "/Unique" : "Unique";
     }
     if (name === "Lean_exists" || name === "Lean_forall") {
-      const body = nameExpr(args[args.length - 1], opts);
+      const body = nameExpr(name === "Lean_forall" ? peelGuardForalls(args[args.length - 1]) : args[args.length - 1], opts);
       if (!body) return tag;
       // `∀ᵐ x ∂μ, P` → AeP (AeTendsto, AeAll_Le…); ReferenceMeasure binders stay implicit
       if (isAeQuantifier(node)) return node.superscript === "ᵐ" ? "Ae" + body : body;
@@ -1930,10 +2038,11 @@ function nameExprAltsBase(node, opts = {}) {
   }
 
   if (name === "Lean_have" || isBvarQuotation(node)) return [];
+  if (indepAtom(node)) return [indepAtom(node)];
 
   // ℙ[π](E) probability idioms
   const probName = nameProbApp(node);
-  if (probName) return [probName];
+  if (probName) return probName === "ProbS" && isBvarSliceJointEvent(matchProbApp(node)) ? ["ProbJoint", "ProbJointGetSliceS", probName] : [probName];
 
   if (name === "LeanStatements" || name === "LeanArgsNewLineSeparated") {
     return nameExprAlts(firstConclusion(node), opts);
@@ -1949,7 +2058,7 @@ function nameExprAltsBase(node, opts = {}) {
         return core.length ? uniq(core.map((c) => c + "/Unique")) : ["Unique"];
       }
       if (name === "Lean_exists" || name === "Lean_forall") {
-        const bodyNode = args[args.length - 1];
+        const bodyNode = name === "Lean_forall" ? peelGuardForalls(args[args.length - 1]) : args[args.length - 1];
         const bodyAlts = nameExprAlts(bodyNode, opts);
         const rest = existsRestConjunct(node);
         const guardAlts = rest ? nameExprAlts(rest, opts).map((r) => tag + "_And_" + r) : [];

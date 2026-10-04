@@ -1,5 +1,5 @@
 import Lemma.Measure.Count.eq.ProdCountS
-import Lemma.Random.PSpace.of.Measure.eq.Count.Measurable
+import Lemma.Random.SinglePSpace.of.EqMeasureCount.Measurable
 import sympy.stats.joint_rv
 import sympy.Basic
 open MeasureTheory
@@ -26,7 +26,7 @@ private lemma main
 -- imply
   SinglePSpace π (x, y) := by
 -- proof
-  apply Random.PSpace.of.Measure.eq.Count.Measurable (hx.prodMk hy)
+  apply Random.SinglePSpace.of.EqMeasureCount.Measurable (hx.prodMk hy)
   show (ReferenceMeasure.measure : Measure α).prod (ReferenceMeasure.measure : Measure β) = _
   rw [hα, hβ, Measure.Count.eq.ProdCountS]
 

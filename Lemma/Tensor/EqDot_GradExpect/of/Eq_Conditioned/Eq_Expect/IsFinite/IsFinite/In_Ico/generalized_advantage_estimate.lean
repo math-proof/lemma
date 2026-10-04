@@ -1,7 +1,7 @@
 import Lemma.Tensor.EqDot_GradExpect.of.Eq_Conditioned.Eq_Expect.IsFinite.IsFinite.generalized_advantage_estimate
 import Lemma.Tensor.EqDot.of.IsFinite.generalized_advantage_estimate
 import Lemma.Random.ProbCond.eq.OfRealPol.of.Ne_0
-import Lemma.Random.PSpace.of.Measure.eq.Count.Measurable
+import Lemma.Random.SinglePSpace.of.EqMeasureCount.Measurable
 import Lemma.Measure.Count.eq.ProdCountS
 import Mathlib.MeasureTheory.Constructions.Polish.Basic
 import Mathlib.Analysis.Calculus.Gradient.Basic
@@ -46,7 +46,7 @@ private lemma main
   (h₄ : ℓ ∈ Set.Ico 0 1) :
 -- imply
   have : ∀ θ t, SinglePSpace (M.traj θ) (JointRandomSymbol (a t) (s t)) := fun _ t =>
-    Random.PSpace.of.Measure.eq.Count.Measurable ((a_meas t).prodMk (s_meas t)) (by
+    Random.SinglePSpace.of.EqMeasureCount.Measurable ((a_meas t).prodMk (s_meas t)) (by
       show (ReferenceMeasure.measure : Measure A).prod (ReferenceMeasure.measure : Measure S) = _
       rw [hA, hS, Measure.Count.eq.ProdCountS])
   have hs : ∀ t, PSpace (M.traj θ) (s (S := S) (A := A) t) := fun t =>

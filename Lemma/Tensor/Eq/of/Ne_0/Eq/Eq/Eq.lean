@@ -1,5 +1,5 @@
 import Mathlib.Analysis.SpecialFunctions.Log.Deriv
-import Lemma.Random.Prob.eq.Mul_Prod_MulProbS.of.CondIndep.CondIndep
+import Lemma.Random.ProbJoint.eq.Mul_Prod_MulProbSCond.of.All_CondIndep.All_CondIndep.EqMeasure_Count.EqMeasure_Count.All_Measurable.All_Measurable
 import sympy.stats.hidden_markov_sequence
 import sympy.stats.ennreal_coe
 import sympy.Basic
@@ -19,7 +19,7 @@ trajectory has nonzero probability, then
   `∇[θ] log Pr(s[:T + 1] = sv[:T + 1] ∧ a[:T] = av[:T]) = ∑ t < T, ∇[θ] log Pr(a[t] = av[t] | s[t] = sv[t])`.
 
 The factorization `Pr(s[:T + 1], a[:T]) = C * ∏ t < T, Pr(a[t] | s[t])`, with `C` independent of `θ`, is
-derived (`Random.Prob.eq.Mul_Prod_MulProbS.of.CondIndep.CondIndep`), not assumed.
+derived (`Random.ProbJoint.eq.Mul_Prod_MulProbSCond.of.All_CondIndep.All_CondIndep.EqMeasure_Count.EqMeasure_Count.All_Measurable.All_Measurable.mdp`), not assumed.
 
 Python: Tensor.Eq.of.Ne_0.Eq.Eq.Eq.policy_gradient_theorem.
 -/
@@ -34,7 +34,7 @@ private lemma policy_gradient_theorem
   {s : ℕ → Ω → S} {a : ℕ → Ω → A} {sv : ℕ → S} {av : ℕ → A}
   [∀ θ i, SinglePSpace (π θ) (s i)]
   [∀ θ i j, SinglePSpace (π θ) (a i, s j)]
-  [∀ θ i, SinglePSpace (π θ) (JointRandomSymbol (s (i + 1)) (JointRandomSymbol (s i) (a i)))]
+  [∀ θ i, SinglePSpace (π θ) (s (i + 1), s i, a i)]
   [∀ θ n, SinglePSpace (π θ) (s[:n + 1], a[:n])]
 -- given
   (hs : ∀ k, Measurable (s k))
@@ -43,8 +43,8 @@ private lemma policy_gradient_theorem
   (hA : ReferenceMeasure.measure (α := A) = Measure.count)
   (hpol : ∀ θ t, ∀ _ : Measurable (s t),
     a t ⟂ᵢ[π θ] (s[:t], a[:t]) | s t)
-  (htrans : ∀ θ t, ∀ _ : Measurable (JointRandomSymbol (s t) (a t)),
-    s (t + 1) ⟂ᵢ[π θ] (s[:t], a[:t]) | JointRandomSymbol (s t) (a t))
+  (htrans : ∀ θ t, ∀ _ : Measurable (s t, a t),
+    s (t + 1) ⟂ᵢ[π θ] (s[:t], a[:t]) | (s t, a t))
   (hinit : ∀ θ θ', (ℙ[π θ]((s 0) = sv 0) : ℝ) = (ℙ[π θ']((s 0) = sv 0) : ℝ))
   (htr : ∀ θ θ' i, (ℙ[π θ]((s (i + 1)) = sv (i + 1) | (s i) = sv i ∧ (a i) = av i) : ℝ) =
     (ℙ[π θ']((s (i + 1)) = sv (i + 1) | (s i) = sv i ∧ (a i) = av i) : ℝ))
@@ -61,8 +61,8 @@ private lemma policy_gradient_theorem
     ⟨_, rfl⟩
   have hfac : ∀ θ, (ℙ[π θ](s[:T + 1] = sv[:T + 1] ∧ a[:T] = av[:T]) : ℝ) = C * ∏ t ∈ Finset.range T, p θ t := by
     intro θ
-    have h := Random.Prob.eq.Mul_Prod_MulProbS.of.CondIndep.CondIndep (π := π θ)
-      (sv := sv) (av := av) hs ha hS hA (hpol θ) (htrans θ) T
+    have h := Random.ProbJoint.eq.Mul_Prod_MulProbSCond.of.All_CondIndep.All_CondIndep.EqMeasure_Count.EqMeasure_Count.All_Measurable.All_Measurable.mdp (π := π θ)
+      («s.bvar» := sv) («a.bvar» := av) hs ha hS hA (hpol θ) (htrans θ) T
     rw [h, ENNReal.toReal_mul, ENNReal.toReal_prod]
     simp only [ENNReal.toReal_mul]
     rw [Finset.prod_mul_distrib, hC, hinit θ θ₀, mul_assoc]

@@ -428,7 +428,9 @@ def Expr.asJointRandomSymbol? : Expr → Option (Expr × Expr)
       | _ => none
     else none
 
-def Expr.isBoundObservation : Expr → Bool
+/-- An observed value: `«x.bvar»`, an indexed `«x.bvar» i`, a slice `«x.bvar»[a:b]`, or a
+tuple / singleton / insert of those. Mirrors lean.js, which drops all of these from `ℙ[π](x = «x.bvar»)`. -/
+partial def Expr.isBoundObservation : Expr → Bool
   | Symbol name _ =>
     let s := name.toString
     s.startsWith "«" && s.endsWith "»" && s.contains ".bvar"
@@ -437,7 +439,58 @@ def Expr.isBoundObservation : Expr → Bool
   | Basic (.Special ⟨`Singleton.singleton⟩) [x] _
   | Basic (.Special ⟨`Insert.insert⟩) [x] _ =>
     x.isBoundObservation
+  -- `«x.bvar» i` : application of a local variable (`get_args` builds `Special .anonymous (f :: args)`)
+  | Basic (.Special ⟨.anonymous⟩) (f@(Symbol ..) :: _ :: _) _ =>
+    f.isBoundObservation
+  -- `«x.bvar»[a:b]` : `getSlice «x.bvar» (Slice.mk ..)`
+  | e@(Basic _ _ _) =>
+    match e.asNamedApp? with
+    | some ("getSlice", b :: _) => b.isBoundObservation
+    | _ => false
   | _ => false
+
+/-- Wrap a `Symbol`'s type in `RandomVariable` so `isRandomVariable` returns true
+and it renders red. Mirrors the JS `Measure.map` special case in
+`markRandomVarNames` which marks the map argument as a random variable
+regardless of whether `IsProbabilityMeasure` is present.
+
+Like lean.js `markProbBinderArgs.markRV`, it also reaches the random-variable symbol inside an
+applied family `x i` (`Special .anonymous (x :: _)`), a slice `x[a:b]` (`getSlice x _`) and a
+tuple `(a, b)` of those. -/
+partial def Expr.markAsRandomVariable : Expr → Expr
+  | Symbol name type =>
+    if type.isRandomVariable then Symbol name type
+    else Symbol name (.Basic (.ExprWithAttr (.Lean_operatorname `RandomVariable)) [type] type.level)
+  | Basic f@(.Special ⟨.anonymous⟩) (x@(Symbol ..) :: rest) level =>
+    Basic f (x.markAsRandomVariable :: rest) level
+  | Basic f@(.Special ⟨.str _ "mk"⟩) [a, b] level =>
+    Basic f [a.markAsRandomVariable, b.markAsRandomVariable] level
+  | e@(Basic f (x :: rest) level) =>
+    match e.asNamedApp? with
+    | some ("getSlice", _) => Basic f (x.markAsRandomVariable :: rest) level
+    | some ("JointRandomSymbol", _) => Basic f ((x :: rest).map markAsRandomVariable) level
+    | _ => e
+  | e => e
+
+/-- `∑/∏ i ∈ Finset.Ico a (b + 1), f` → `(i, a, b, f)`; rendered `\\prod_{i=a}^{b}` like lean.js
+`icoClosedBound`. -/
+def Expr.asIcoClosed? : Expr → Option (String × Expr × Expr × Expr)
+  | Basic (.ExprWithLimits op) [body, Binder .contains name set nil] _ =>
+    match op with
+    | .Lean_sum | .Lean_prod =>
+      match set.asNamedApp? with
+      | some ("Ico", [a, Basic (.BinaryInfix ⟨`HAdd.hAdd⟩) [b, const (.natVal 1)] _]) =>
+        some (name.toString.bvarLatex.escape_specials, a, b, body)
+      | _ => none
+    | _ => none
+  | _ => none
+
+/-- Slice bounds are `ℤ`, so `x[:t + 1]` elaborates to `x.getSlice ⟨0, ↑t + 1, 1⟩`; lean.js shows the
+source `t + 1`. Drop the `ℕ → ℤ` casts in such arithmetic. -/
+partial def Expr.stripNatCast : Expr → Expr
+  | Basic (.UnaryPrefix ⟨`Nat.cast⟩) [a] _ => a.stripNatCast
+  | Basic f@(.BinaryInfix _) args level => Basic f (args.map stripNatCast) level
+  | e => e
 
 def Expr.asProbApp? : Expr → Option (String × List Expr)
   | Basic (.Special ⟨.anonymous⟩) [inner, pt] _ =>
@@ -449,14 +502,14 @@ def Expr.asProbApp? : Expr → Option (String × List Expr)
 def Expr.asProb? : Expr → Option (Expr × List Expr)
   | e =>
     if let some ("probRA", base :: x :: _) := e.asNamedApp? then
-      some (base, [x])
+      some (base, [x.markAsRandomVariable])
     else if let some ("prob", base :: rest) := e.asNamedApp? then
       match rest with
       | [] => none
-      | [_] => some (base, rest)
+      | [_] => some (base, rest.map markAsRandomVariable)
       | _ =>
         if rest.getLast!.isBoundObservation then
-          some (base, rest.take (rest.length - 1))
+          some (base, (rest.take (rest.length - 1)).map markAsRandomVariable)
         else
           none
     else if let some ("prob", base :: rest) := e.asProbApp? then
@@ -464,7 +517,7 @@ def Expr.asProb? : Expr → Option (Expr × List Expr)
       | [] => none
       | _ =>
         if rest.getLast!.isBoundObservation then
-          some (base, rest.take (rest.length - 1))
+          some (base, (rest.take (rest.length - 1)).map markAsRandomVariable)
         else
           none
     else none
@@ -520,16 +573,6 @@ def Expr.asMapApp? : Expr → Option (String × List Expr)
         | _ => none
       | _ => none
   | _ => none
-
-/-- Wrap a `Symbol`'s type in `RandomVariable` so `isRandomVariable` returns true
-and it renders red. Mirrors the JS `Measure.map` special case in
-`markRandomVarNames` which marks the map argument as a random variable
-regardless of whether `IsProbabilityMeasure` is present. -/
-def Expr.markAsRandomVariable : Expr → Expr
-  | Symbol name type =>
-    if type.isRandomVariable then Symbol name type
-    else Symbol name (.Basic (.ExprWithAttr (.Lean_operatorname `RandomVariable)) [type] type.level)
-  | e => e
 
 def Expr.asMapDirect? : Expr → Option (Expr × List Expr)
   | e =>
@@ -1040,7 +1083,10 @@ def Expr.latexFormat : Expr → String
         | .Lean_prod
         | .Lean_bigcup
         | .Lean_bigcap =>
-          opStr ++ "\\limits_{\\substack{%s}} {%s}"
+          if e.asIcoClosed?.isSome then
+            opStr ++ "\\limits_{%s=%s}^{%s} {%s}"
+          else
+            opStr ++ "\\limits_{\\substack{%s}} {%s}"
         | .Lean_lim =>
           match Expr.asLimBound? args with
           | some _ =>
@@ -1228,6 +1274,15 @@ def Expr.latexFormat : Expr → String
           s!"\\left[%s < %s\\right] {arg}"
         | `letFun => "{\\begin{align*}&{\\color{blue}let}\\ %s : %s := ⋯\\\\&%s\\end{align*}}"
         | `KroneckerDelta => "\\delta_{%s %s}"
+        | `Function.getSlice =>
+          -- `x[start:stop:step]` for a family `x : ℕ → β` (same shapes as the `LeanMethod` `getSlice` below)
+          match args with
+          | [_, Basic (.Special ⟨`Slice.mk⟩) [start, _, step] _] =>
+            if let const (.natVal 1) := step then
+              if let const (.natVal 0) := start then "{%s}_{:%s}" else "{%s}_{%s:%s}"
+            else
+              if let const (.natVal 0) := start then "{%s}_{:%s:%s}" else "{%s}_{%s:%s:%s}"
+          | _ => opStr ++ "\\ " ++ "\\ ".intercalate (args.map fun arg => level.toColor (arg.priority > func.priority || arg.is_Div || arg.is_BlockMatrix))
         | `descFactorial
         | `Nat.descFactorial => "{%s}^{\\underline{%s}}"
         | `ascFactorial
@@ -1238,8 +1293,8 @@ def Expr.latexFormat : Expr → String
           -- Mathlib: `f '' s` (text so KaTeX does not treat '' as double-prime)
           "{%s}\\mathrel{\\text{''}}{%s}"
         | `Set.preimage =>
-          -- Mathlib: `f ⁻¹' s`
-          "{%s}^{-1}'{%s}"
+          -- Mathlib: `f ⁻¹' s`; `f^{-1}[s]` like lean.js (a trailing `'` after `^{-1}` is a KaTeX double superscript)
+          "{%s}^{-1}\\left[{%s}\\right]"
         | `Subtype =>
           let postOp :=
             match args with
@@ -1300,7 +1355,7 @@ def Expr.latexFormat : Expr → String
             opStr
         | "preimage", _ =>
           if args.length > idx then
-            "{%s}^{-1}'{%s}"
+            "{%s}^{-1}\\left[{%s}\\right]"
           else
             opStr
         | "descFactorial", [_, _] =>
@@ -1446,12 +1501,14 @@ where
         | .Lean_prod
         | .Lean_bigcup
         | .Lean_bigcap =>
-          match args with
-          | [expr, Binder .default name (Basic (.ExprWithAttr (.Lean_typeclass `Fin)) [n] _) nil] =>
+          match e.asIcoClosed?, args with
+          | some (i, a, b, body), _ =>
+            [i, a.toLatex, b.toLatex, body.toLatex]
+          | none, [expr, Binder .default name (Basic (.ExprWithAttr (.Lean_typeclass `Fin)) [n] _) nil] =>
             [("{%s < %s}".format name.toString.bvarLatex.escape_specials, n.toLatex), expr.toLatex]
-          | [expr, Binder .default name type nil] =>
+          | none, [expr, Binder .default name type nil] =>
             [("{%s : %s}".format name.toString.bvarLatex.escape_specials, type.toLatex), expr.toLatex]
-          | _ =>
+          | _, _ =>
             []
         | .Lean_lim =>
           match Expr.asLimBound? args with
@@ -1633,7 +1690,7 @@ where
             | swapped => map swapped
           | .str _ "preimage" =>
             match args.swap 0 idx with
-            | [s, f] => map [f, s]
+            | [s, f] => preimageBase f :: map [s]
             | swapped => map swapped
           | .str _ "hstack" =>
             if let some rows := e.blockMatrixRows then
@@ -1757,6 +1814,27 @@ where
             map rows.flatten
           else
             map args
+        | .Lean_operatorname `Set.preimage =>
+          match args with
+          | [f, s] => preimageBase f :: map [s]
+          | _ => map args
+        | .Lean_operatorname `Function.getSlice =>
+          if let [base, Basic (.Special ⟨`Slice.mk⟩) [start, stop, step] _] := args.map (fun a =>
+              match a with
+              | Basic f@(.Special ⟨`Slice.mk⟩) bounds level => Basic f (bounds.map stripNatCast) level
+              | a => a) then
+            if let const (.natVal 1) := step then
+              if let const (.natVal 0) := start then
+                map [base, stop]
+              else
+                map [base, start, stop]
+            else
+              if let const (.natVal 0) := start then
+                map [base, stop, step]
+              else
+                map [base, start, stop, step]
+          else
+            map args
         | .Lean_operatorname `Tensor.eye =>
           []
         | _ =>
@@ -1780,6 +1858,16 @@ where
       [binderType.toLatex]
     else
       [binderType.toLatex, value.toLatex]
+
+  /-- Base of `f^{-1}[s]`: like lean.js `LeanPreimage`, an applied function or a tuple is bracketed
+  (`(s t)^{-1}[…]`), or it reads as `s (t^{-1})`. -/
+  preimageBase (f : Expr) : String :=
+    let paren : Bool :=
+      match f with
+      | Basic (.Special ⟨.anonymous⟩) .. => true
+      | Basic (.Special ⟨.str _ "mk"⟩) .. => true
+      | _ => (f.asNamedApp?.map (·.1)) == some "JointRandomSymbol"
+    if paren then "{\\left(" ++ f.toLatex ++ "\\right)}" else "{" ++ f.toLatex ++ "}"
 
   map : List Expr → List String
   | [] => []

@@ -1,7 +1,7 @@
 import Mathlib.MeasureTheory.Measure.Count
 import Lemma.Measure.EqRnDeriv_Count
 import Lemma.Measure.Count.eq.ProdCountS
-import Lemma.Random.PSpace.of.Measure.eq.Count.Measurable
+import Lemma.Random.SinglePSpace.of.EqMeasureCount.Measurable
 import sympy.stats.joint_rv
 open MeasureTheory Measure Random
 
@@ -49,7 +49,7 @@ private lemma main
         ReferenceMeasure.measure = Measure.count
     rw [hα', hβ', ← Count.eq.ProdCountS]
   have : SinglePSpace π (g ∘ x, k ∘ y) :=
-    PSpace.of.Measure.eq.Count.Measurable
+    SinglePSpace.of.EqMeasureCount.Measurable
       ((hg.comp hx).prodMk (hk.comp hy)) ‹_›
   Measure.prob π (g ∘ x, k ∘ y) (g v, k w) ≠ 0 := by
 -- proof

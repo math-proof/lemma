@@ -264,6 +264,61 @@ def compare(
     return 0
 
 
+_FILE_IMPORTS: dict[str, list[str]] = {}
+
+
+def file_direct_imports(module: str) -> list[str]:
+    """Direct ``import`` lines of a repo-local module (``Lemma.*``, ``sympy.*``, ``stdlib.*``),
+    parsed from its ``.lean`` file.  Modules without a file here (e.g. ``Mathlib.*``) are leaves."""
+    if module not in _FILE_IMPORTS:
+        deps: list[str] = []
+        path = ROOT / (module.replace(".", "/") + ".lean")
+        if path.is_file():
+            for line in read_text(path).split("\n"):
+                match = IMPORT_LINE_RE.match(line)
+                if match:
+                    deps.append(match.group(1))
+                elif line.strip() and not line.startswith("--"):
+                    break
+        _FILE_IMPORTS[module] = deps
+    return _FILE_IMPORTS[module]
+
+
+def file_closure(module: str) -> set[str]:
+    """Transitive imports of ``module`` computed from the ``.lean`` files (no database)."""
+    seen: set[str] = set()
+    stack = [module]
+    while stack:
+        for dep in file_direct_imports(stack.pop()):
+            if dep not in seen:
+                seen.add(dep)
+                stack.append(dep)
+    return seen
+
+
+def find_redundant_file_imports(imports: list[tuple[str, str]]) -> list[str]:
+    """Redundant imports among pairs that involve a non-``Lemma`` (``sympy.*``) import.
+
+    ``sympy.*`` modules have no ``lemma`` row, so reachability is read from the ``.lean`` files:
+    a ``Lemma.*`` or ``sympy.*`` import is redundant when another import of the file reaches it.
+    ``Lemma.*`` / ``Lemma.*`` pairs stay with ``find_redundant_imports`` (database)."""
+    modules = list(dict.fromkeys(mod for mod, _ in imports))
+    closures: dict[str, set[str]] = {}
+    redundant: set[str] = set()
+    for b in modules:
+        if not (b.startswith("sympy.") or b.startswith("Lemma")):
+            continue
+        for a in modules:
+            if a == b or (a.startswith("Lemma") and b.startswith("Lemma")):
+                continue
+            if a not in closures:
+                closures[a] = file_closure(a)
+            if b in closures[a]:
+                redundant.add(b)
+                break
+    return [mod for mod in modules if mod in redundant]
+
+
 def find_redundant_imports(
     imports: list[tuple[str, str]],
     direct: dict[str, set[str]],
@@ -299,9 +354,9 @@ def update_module_after_prune(
     they are no longer direct but remain reachable.  Unknown (null) callee
     stays null; a missing row is left for run.ps1 to insert.
     """
-    rows = MySQL.instance.query(
+    rows = list(MySQL.instance.query(
         f"SELECT JSON_EXTRACT(meta, '$.callee') FROM lemma WHERE module = {sql_str(module)}"
-    )
+    ))
     if not rows:
         print(f"note: {module} not in lemma table; DB update skipped "
               f"(run.ps1 will insert it)")
@@ -347,24 +402,35 @@ def process_file(lean_file: Path, *, dry_run: bool = False) -> None:
         for mod in unknown:
             print(f"  {mod}")
     redundant = find_redundant_imports(imports, direct, indirect)
+    redundant += [m for m in find_redundant_file_imports(imports) if m not in redundant]
+    names = [mod for mod, _ in imports]
+    duplicates = sorted({m for m in names if names.count(m) > 1} - set(redundant))
 
-    if not redundant:
-        print("imports ok: no redundant Lemma imports")
+    if not redundant and not duplicates:
+        print("imports ok: no redundant imports")
         return
 
     print("redundant imports:")
     for mod in redundant:
         print(f"  import {mod}")
+    for mod in duplicates:
+        print(f"  import {mod}  (duplicate)")
 
     if dry_run:
-        print(f"dry-run: would remove {len(redundant)} import(s) from {rel}")
+        print(f"dry-run: would remove {len(redundant) + len(duplicates)} import(s) from {rel}")
         return
 
     redundant_set = set(redundant)
-    kept = [(mod, line) for mod, line in imports if mod not in redundant_set]
+    kept = []
+    seen_mods: set[str] = set()
+    for mod, line in imports:
+        if mod in redundant_set or mod in seen_mods:
+            continue
+        seen_mods.add(mod)
+        kept.append((mod, line))
     new_content = "".join(line for _, line in kept) + rest
     write_text(lean_file, new_content)
-    print(f"removed {len(redundant)} import(s) from {rel}")
+    print(f"removed {len(imports) - len(kept)} import(s) from {rel}")
 
     db_module = normalize_module(rel[:-len(".lean")].replace("/", "."))
     update_module_after_prune(db_module, [mod for mod, _ in kept], redundant)

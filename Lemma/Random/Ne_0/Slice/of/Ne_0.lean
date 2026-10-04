@@ -1,6 +1,6 @@
 import Mathlib.MeasureTheory.Measure.Count
 import Lemma.Measure.EqRnDeriv_Count
-import Lemma.Random.PSpace.of.Measure.eq.Count.Measurable
+import Lemma.Random.SinglePSpace.of.EqMeasureCount.Measurable
 import sympy.stats.joint_rv
 open MeasureTheory Measure Random
 
@@ -31,7 +31,7 @@ private lemma main
   (h : ℙ[π](x = v) ≠ 0) :
 -- imply
   have : SinglePSpace π (g ∘ x) :=
-    PSpace.of.Measure.eq.Count.Measurable (hg.comp hx) hβ
+    SinglePSpace.of.EqMeasureCount.Measurable (hg.comp hx) hβ
   Measure.prob π (g ∘ x) (g v) ≠ 0 := by
 -- proof
   intro hPg

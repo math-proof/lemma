@@ -9,10 +9,12 @@ Guidelines and prompts for using LLMs to write and refactor Lean 4 proofs in thi
   - For `LHS.eq.RHS` tagged with `@[comm]`, prefer the generated commutative lemma `RHS.eq.LHS` over `simp [← LHS.eq.RHS]` or `rw [LHS.eq.RHS.symm]`.
   - Run `python py/docstring.py <leanFile>` if necessary. It'll generate the attribute docstring table if the lemma uses attributes other than `@[main]`.
 - code layout strictly 2-indented
-  - before the `given` section, list in order:
-    - line(s) of standalone instances (instImplicit)
-    - line(s) of implicit binder(s) and their dependent instances (instImplicit) on the same line, if any
-    - line(s) of bare implicit binders
+  - before the `given` section, 
+    - omit auto-bound implicits
+    - list in order:
+      - line(s) of standalone instances (instImplicit)
+      - line(s) of implicit binder(s) and their dependent instances (instImplicit) on the same line, if any
+      - line(s) of bare implicit binders
   - default arguments should be put within the `given` section: propositions come first, expressions come next, unless otherwise specified
   - conclusion must be put within the `imply` section
   - proof body must be put within the `proof` section, within proof:
@@ -34,7 +36,7 @@ Guidelines and prompts for using LLMs to write and refactor Lean 4 proofs in thi
   - date created must be today, if date updated is the same as date created, it should be omitted.
 - [lemma path](mjs/README.md)
   - it conveys the lemma semantic per se, thus facilitating search
-  - it must be consistent with what is suggested by mjs/lemmaPath.mjs
+  - suggest a better lemma path if it isn't consistent with what is suggested by mjs/lemmaPath.mjs
 - `import` statements
   - check py/delete_import.py to simplify `import` statements
 - `open` statements

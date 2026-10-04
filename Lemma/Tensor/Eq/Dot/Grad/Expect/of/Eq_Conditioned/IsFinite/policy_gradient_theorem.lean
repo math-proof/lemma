@@ -2,7 +2,7 @@ import Lemma.Tensor.Eq.Dot.Grad.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.IsF
 import Lemma.Tensor.Eq.Expect.Grad.Log.Pr.of.Eq_Conditioned.Q_Function.discounted
 import Lemma.Tensor.Eq.Expect.Sum.Grad.Log.Pr.of.Bounded
 import Lemma.Random.ProbCond.eq.OfRealPol.of.Ne_0
-import Lemma.Random.PSpace.of.Measure.eq.Count.Measurable
+import Lemma.Random.SinglePSpace.of.EqMeasureCount.Measurable
 import Lemma.Measure.Count.eq.ProdCountS
 import Lemma.Measure.EqRnDeriv_Count
 import Mathlib.MeasureTheory.Constructions.Polish.Basic
@@ -39,7 +39,7 @@ private lemma main
   (h₂ : sup[θ, x, u] ‖∇[θ] M.pol.prob θ x u‖ < ∞) :
 -- imply
   have : ∀ θ t, SinglePSpace (M.traj θ) (a (S := S) (A := A) t, s (S := S) (A := A) t) := fun _ t =>
-    Random.PSpace.of.Measure.eq.Count.Measurable ((a_meas t).prodMk (s_meas t)) (by
+    Random.SinglePSpace.of.EqMeasureCount.Measurable ((a_meas t).prodMk (s_meas t)) (by
       show (ReferenceMeasure.measure : Measure A).prod (ReferenceMeasure.measure : Measure S) = _
       rw [hA, hS, Measure.Count.eq.ProdCountS])
   have hs : ∀ t, PSpace (M.traj θ) (s (S := S) (A := A) t) := fun t =>
