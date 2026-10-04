@@ -68,7 +68,7 @@ def prove(Eq):
 
     Eq << Random.And.Eq.Conditioned.of.Eq.apply(Eq[0])
 
-    Eq << Random.Eq.of.Ne_0.Eq.Eq.Eq.markov.decision.apply(Eq[-1], Eq[-3], Eq[-2], Eq[1], T, t)
+    Eq << Random.ProbJoint.eq.Mul_Prod_MulProbSCond.of.All_CondIndep.All_CondIndep.EqMeasure_Count.EqMeasure_Count.All_Measurable.All_Measurable.mdp.apply(Eq[-1], Eq[-3], Eq[-2], Eq[1], T, t)
 
     Eq << Eq[-1].subs(Eq[2])
 

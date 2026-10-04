@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(x_independence_assumption, y_independence_assumption, xy_independence_assumption, xy_nonzero_assumption):
-    from Lemma.Random.ProbS.eq.MulMulProbCondProbProd_MulProbCond.of.All_CondIndep.All_CondIndep.EqMeasure_Count.EqMeasure_Count.All_Measurable.All_Measurable import process_assumptions
+    from Lemma.Random.ProbJoint.eq.Mul_Prod_MulProbSCond.of.All_CondIndep.All_CondIndep.EqMeasure_Count.EqMeasure_Count.All_Measurable.All_Measurable import process_assumptions
     x, y = process_assumptions(x_independence_assumption, y_independence_assumption, xy_independence_assumption, xy_nonzero_assumption)
     n, d = x.shape
 
@@ -34,7 +34,7 @@ def apply(x_independence_assumption, y_independence_assumption, xy_independence_
 def prove(Eq):
     from Lemma import Tensor, Set, Bool, Random, Real, Int, Finset, Nat
 
-    from Lemma.Random.ProbS.eq.MulMulProbCondProbProd_MulProbCond.of.All_CondIndep.All_CondIndep.EqMeasure_Count.EqMeasure_Count.All_Measurable.All_Measurable import markov_assumptions
+    from Lemma.Random.ProbJoint.eq.Mul_Prod_MulProbSCond.of.All_CondIndep.All_CondIndep.EqMeasure_Count.EqMeasure_Count.All_Measurable.All_Measurable import markov_assumptions
     d, n = Symbol(domain=Range(2, oo))
     x = Symbol(shape=(n, d), real=True, random=True)
     y = Symbol(shape=(n,), domain=Range(d), random=True)
@@ -46,7 +46,7 @@ def prove(Eq):
     s, t = Eq[4].lhs.args
     Eq.z_definition = Eq[5].apply(Tensor.Stack.of.All_Eq.fin, (Eq[5].lhs.indices[-1],))
 
-    Eq << Random.ProbS.eq.MulMulProbCondProbProd_MulProbCond.of.All_CondIndep.All_CondIndep.EqMeasure_Count.EqMeasure_Count.All_Measurable.All_Measurable.apply(*Eq[:4])
+    Eq << Random.ProbJoint.eq.Mul_Prod_MulProbSCond.of.All_CondIndep.All_CondIndep.EqMeasure_Count.EqMeasure_Count.All_Measurable.All_Measurable.apply(*Eq[:4])
 
     Eq << Tensor.Imp.of.Eq.crf.logits.apply(Eq[-1], Eq[8].lhs.base, Eq[7].lhs.base, s)
 

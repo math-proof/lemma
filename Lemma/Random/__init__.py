@@ -71,4 +71,4 @@ from . import Indep_Joint
 from . import Expect_Dot
 from . import ProbCond_Joint
 from . import Expect_CondDot
-from . import ProbS
+from . import ProbJoint
