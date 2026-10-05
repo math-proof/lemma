@@ -2795,13 +2795,24 @@ export class LeanParenthesis extends LeanPairedGroup {
     }
 
     isProbEventParen() {
-        const p = this.parent;
-        return (
-            p instanceof LeanArgsSpaceSeparated &&
-            p.args.length >= 2 &&
-            p.args[1] === this &&
-            LeanArgsSpaceSeparated.isProbBinderHead(p.args[0])
-        );
+        // `.toReal` is postfix:max, so `ℙ[μ] (e).toReal` is applied to `(e).toReal`.
+        // `∇[θ] ℙ[μ] e` is one flat application: the event is the argument after `ℙ`, not `args[1]`.
+        let node = this;
+        let p = this.parent;
+        if (
+            p instanceof LeanProperty &&
+            p.lhs === this &&
+            p.rhs instanceof LeanToken &&
+            p.rhs.text === 'toReal'
+        ) {
+            node = p;
+            p = p.parent;
+        }
+        if (!(p instanceof LeanArgsSpaceSeparated)) return false;
+        const i = p.args.indexOf(node);
+        if (i <= 0 || !LeanArgsSpaceSeparated.isProbBinderHead(p.args[i - 1])) return false;
+        // `ℙ e`, or `∇[θ] ℙ e` (one flat application). Not `f ℙ e`, where `e` is an argument of `f`.
+        return i === 1 || p.gradientOperands() != null;
     }
 
     isExpectBodyParen() {
@@ -9056,7 +9067,10 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
     }
 
     static markProbBinderArgs(node) {
-        const peel = (n) => (n instanceof LeanParenthesis ? n.arg : n);
+        const peel = (n) => {
+            while (n instanceof LeanParenthesis) n = n.arg;
+            return n;
+        };
         const markRA = (n) => {
             if (n instanceof LeanToken) n.kwargs.isRandomArgument = true;
         };
@@ -9065,7 +9079,7 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
             // a slice of a sequence of random variables, e.g. `x[:t + 1]`
             else if (n instanceof LeanGetElem && n.args[0] instanceof LeanToken)
                 n.args[0].kwargs.isRandomVariable = true;
-            // a random variable sequence applied to an index, e.g. `x 0`
+            // a random variable sequence applied to an index, e.g. `(a t)` / `x 0`
             else if (n instanceof LeanArgsSpaceSeparated && n.args[0] instanceof LeanToken)
                 n.args[0].kwargs.isRandomVariable = true;
         };
@@ -9107,11 +9121,16 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
     }
 
     static rvEqToken(n) {
-        const peel = (x) => (x instanceof LeanParenthesis ? x.arg : x);
+        const peel = (x) => {
+            while (x instanceof LeanParenthesis) x = x.arg;
+            return x;
+        };
+        // Grouping parens are not part of the RV: `(a t)` and `(«a.bvar» t)` spell `a t`.
+        const norm = (s) => s.replace(/[()]/g, '').replace(/\s+/g, ' ').trim();
         n = peel(n);
         if (!(n instanceof LeanEq)) return null;
         const lhs = peel(n.lhs);
-        // `x`, a slice `x[:t + 1]`, or an indexed variable `x 0`
+        // `x`, a slice `x[:t + 1]`, or an indexed variable `(a t)` / `x 0`
         if (
             !(
                 lhs instanceof LeanToken ||
@@ -9121,11 +9140,11 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         )
             return null;
         // rhs spells the same expression with its base wrapped as a bound value:
-        // `«x.bvar»`, `«x.bvar»[:t + 1]` or `«x[:t + 1].bvar»`
-        const rhsText = strStmt(n.rhs).trim();
+        // `«x.bvar»`, `(«a.bvar» t)`, `«x.bvar»[:t + 1]` or `«x[:t + 1].bvar»`
+        const rhsText = strStmt(peel(n.rhs)).trim();
         if (!/«[^»]*\.bvar»/.test(rhsText)) return null;
         const plain = rhsText.replace(/«([^»]*?)\.bvar»/g, '$1');
-        if (plain !== strStmt(lhs).trim()) return null;
+        if (norm(plain) !== norm(strStmt(lhs))) return null;
         return lhs;
     }
 
@@ -9148,8 +9167,21 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
 
     markProbBinderColors() {
         const {args} = this;
-        if (args.length < 2 || !LeanArgsSpaceSeparated.isProbBinderHead(args[0])) return;
-        LeanArgsSpaceSeparated.markProbBinderArgs(args[1]);
+        const grad = this.gradientOperands() != null;
+        for (let i = 0; i < args.length - 1; i++) {
+            if (!grad && i !== 0) break;
+            if (!LeanArgsSpaceSeparated.isProbBinderHead(args[i])) continue;
+            let event = args[i + 1];
+            // `ℙ[μ] (e).toReal` — the coercion is the application argument, the event is its lhs.
+            if (
+                event instanceof LeanProperty &&
+                event.lhs instanceof LeanParenthesis &&
+                event.rhs instanceof LeanToken &&
+                event.rhs.text === 'toReal'
+            )
+                event = event.lhs;
+            LeanArgsSpaceSeparated.markProbBinderArgs(event);
+        }
     }
 
     static isExpectBinderHead(node) {
@@ -9202,7 +9234,15 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
                 let rhs = peel(n.rhs);
                 const condRVs = LeanArgsSpaceSeparated.collectProbEventRVs(rhs);
                 if (condRVs) {
-                    for (const t of condRVs) t.kwargs.isRandomVariable = true;
+                    for (const t of condRVs) {
+                        // `x`, `x[:t + 1]`, or `(a t)` — the colour lives on the head token.
+                        const head =
+                            (t instanceof LeanGetElem || t instanceof LeanArgsSpaceSeparated) &&
+                            t.args[0] instanceof LeanToken
+                                ? t.args[0]
+                                : t;
+                        if (head instanceof LeanToken) head.kwargs.isRandomVariable = true;
+                    }
                     return;
                 }
                 const markFreeList = (x) => {
@@ -12584,8 +12624,8 @@ class Lean_sum extends LeanBigOperator {
         return '∑';
     }
     /**
-     * `∑ «y.bvar» t, f`: a bound variable is never red, so the index and the body's `y t` that stands
-     * for the bound value (`(y t) = «y.bvar» t` inside `ℙ[π](…)`) are drawn in the normal colour.
+     * `∑ «y.bvar» t, f`: the index `«y.bvar»` is a bound value, so it stays in the normal colour.
+     * The random variable on the left of `(y t) = «y.bvar» t` inside `ℙ[π](…)` stays red.
      */
     latexArgs(syntax) {
         const bnd = this.bound;
@@ -12595,23 +12635,7 @@ class Lean_sum extends LeanBigOperator {
             bnd.args[0] instanceof LeanDoubleAngleQuotation
         ) {
             const base = bnd.args[0].boundValueLhs();
-            if (base instanceof LeanToken) {
-                const key = strStmt(bnd).trim();
-                const seen = new Set();
-                const walk = (n) => {
-                    if (!n || typeof n !== 'object' || seen.has(n)) return;
-                    seen.add(n);
-                    if (n instanceof LeanEq && strStmt(n.rhs).trim() === key) {
-                        let l = n.lhs;
-                        while (l instanceof LeanParenthesis) l = l.arg;
-                        if (l instanceof LeanArgsSpaceSeparated) l = l.args[0];
-                        if (l instanceof LeanToken && l.text === base.text) l.kwargs.neverRed = true;
-                    }
-                    if (Array.isArray(n.args)) n.args.forEach(walk);
-                };
-                walk(this.scope);
-                base.kwargs.neverRed = true;
-            }
+            if (base instanceof LeanToken) base.kwargs.neverRed = true;
         }
         return super.latexArgs(syntax);
     }
