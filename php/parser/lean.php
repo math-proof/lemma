@@ -3828,69 +3828,7 @@ class LeanBar extends LeanUnary
 
 require_once dirname(__FILE__) . '/lean/arrows.php';
 
-class Lean_lnot extends LeanUnary
-{
-    public static $input_priority = 40;
-    use LeanProp;
-
-    public function __get($vname)
-    {
-        switch ($vname) {
-            case 'operator':
-                return '¬';
-            default:
-                return parent::__get($vname);
-        }
-    }
-    public function is_indented()
-    {
-        return $this->parent instanceof LeanStatements;
-    }
-
-    public function latexFormat()
-    {
-        return "$this->command %s";
-    }
-
-    public function strFormat()
-    {
-        return "$this->operator%s";
-    }
-
-}
-
-class LeanNot extends LeanUnary
-{
-    public static $input_priority = 40;
-    use LeanProp;
-
-    public function __get($vname)
-    {
-        switch ($vname) {
-            case 'operator':
-                return '!';
-            case 'command':
-                return '\text{!}';
-            default:
-                return parent::__get($vname);
-        }
-    }
-    public function is_indented()
-    {
-        return $this->parent instanceof LeanStatements;
-    }
-
-    public function latexFormat()
-    {
-        return "$this->command %s";
-    }
-
-    public function strFormat()
-    {
-        return "$this->operator%s";
-    }
-
-}
+require_once dirname(__FILE__) . '/lean/negation.php';
 
 class Lean_match extends LeanArgs
 {

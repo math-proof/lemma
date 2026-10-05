@@ -11,6 +11,7 @@ import { createQuantifierFamily } from './lean/quantifier.js';
 import { createBigOpsFamily } from './lean/bigops.js';
 import { createIndexingFamily } from './lean/indexing.js';
 import { createArrowsFamily } from './lean/arrows.js';
+import { createNegationFamily } from './lean/negation.js';
 
 /** Relational / comparison ops; reused by token2classname and leanInfixContinue. */
 const leanRelationalTokens = Object.freeze({
@@ -5393,42 +5394,13 @@ export const Lean_rightarrow = arrowsFamily.Lean_rightarrow;
 export const Lean_mapsto = arrowsFamily.Lean_mapsto;
 const Lean_leftarrow = arrowsFamily.Lean_leftarrow;
 
-/** Logical not `¬`. */
-class Lean_lnot extends LeanProp(LeanUnary) {
-    static input_priority = 40;
-
-    get operator() {
-        return '¬';
-    }
-
-    strFormat() {
-        return `${this.operator}%s`;
-    }
-}
-
-class LeanNot extends LeanProp(LeanUnary) {
-    static input_priority = 40;
-
-    get operator() {
-        return '!';
-    }
-
-    get command() {
-        return '\\text{!}';
-    }
-
-    is_indented() {
-        return this.parent instanceof LeanStatements;
-    }
-
-    latexFormat() {
-        return `${this.command} %s`;
-    }
-
-    strFormat() {
-        return `${this.operator}%s`;
-    }
-}
+const negationFamily = createNegationFamily({
+    LeanUnary,
+    LeanProp,
+    LeanStatements,
+});
+const Lean_lnot = negationFamily.Lean_lnot;
+const LeanNot = negationFamily.LeanNot;
 
 class Lean_match extends LeanArgs {
     /**

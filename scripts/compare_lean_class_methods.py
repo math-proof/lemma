@@ -16,6 +16,7 @@ QUANTIFIER = ROOT / "php" / "parser" / "lean" / "quantifier.php"
 BIGOPS = ROOT / "php" / "parser" / "lean" / "bigops.php"
 INDEXING = ROOT / "php" / "parser" / "lean" / "indexing.php"
 ARROWS = ROOT / "php" / "parser" / "lean" / "arrows.php"
+NEGATION = ROOT / "php" / "parser" / "lean" / "negation.php"
 ARITHMETIC_PRESETS = frozenset({
     "leanarithmetic",
     "leanmul",
@@ -79,6 +80,10 @@ ARROWS_PRESETS = frozenset({
     "leanmapsto",
     "leanleftarrow",
 })
+NEGATION_PRESETS = frozenset({
+    "leanlnot",
+    "leannot",
+})
 
 
 def preset_path(preset: str) -> Path:
@@ -98,6 +103,8 @@ def preset_path(preset: str) -> Path:
         return INDEXING
     if preset in ARROWS_PRESETS:
         return ARROWS
+    if preset in NEGATION_PRESETS:
+        return NEGATION
     return LEAN
 
 PRESETS: dict[str, tuple[str, str]] = {
@@ -335,7 +342,7 @@ PRESETS: dict[str, tuple[str, str]] = {
     ),
     "leanleftarrow": (
         "class Lean_leftarrow extends LeanUnary\n{",
-        "\n}\n\n// END OF arrows family (Lean_lnot stays in lean.php)\n",
+        "\n}\n\n// END OF arrows family (Lean_match stays in lean.php)\n",
     ),
     "leanlnot": (
         "class Lean_lnot extends LeanUnary\n{",
@@ -343,7 +350,7 @@ PRESETS: dict[str, tuple[str, str]] = {
     ),
     "leannot": (
         "class LeanNot extends LeanUnary\n{",
-        "\n}\n\nclass Lean_match extends LeanArgs",
+        "\n}\n\n// END OF negation family (Lean_match stays in lean.php)\n",
     ),
     "leanmatch": (
         "class Lean_match extends LeanArgs\n{",

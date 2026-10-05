@@ -1,6 +1,6 @@
 # Lean PHP parser (`lean.php`)
 
-Parser and AST classes for Lean 4 source. Main file: `lean.php` (router). Arithmetic operators live in `lean/arithmetic.php` (loaded after `LeanBinary` / `LeanUnary`). Paired delimiters live in `lean/paired.php` (loaded after `LeanUnary`). Logic connectives live in `lean/logic.php` (loaded after `LeanBinaryBoolean`). Set operators and inclusion live in `lean/set.php` (loaded after `LeanLogic`, because `⊇` / `⊃` extend it). Relational comparisons live in `lean/relational.php` (loaded after `LeanBinaryBoolean`). Membership and iff live in `lean/membership.php` (loaded after `relational.php`). Quantifiers live in `lean/quantifier.php` (loaded after `LeanBigOperator`). The remaining big operators live in `lean/bigops.php` (loaded after `quantifier.php`). Indexing lives in `lean/indexing.php` (loaded after the `LeanGetElemBase` traits). Arrows live in `lean/arrows.php` (loaded after `LeanBar`). Reorder presets for those families read the family file.
+Parser and AST classes for Lean 4 source. Main file: `lean.php` (router). Arithmetic operators live in `lean/arithmetic.php` (loaded after `LeanBinary` / `LeanUnary`). Paired delimiters live in `lean/paired.php` (loaded after `LeanUnary`). Logic connectives live in `lean/logic.php` (loaded after `LeanBinaryBoolean`). Set operators and inclusion live in `lean/set.php` (loaded after `LeanLogic`, because `⊇` / `⊃` extend it). Relational comparisons live in `lean/relational.php` (loaded after `LeanBinaryBoolean`). Membership and iff live in `lean/membership.php` (loaded after `relational.php`). Quantifiers live in `lean/quantifier.php` (loaded after `LeanBigOperator`). The remaining big operators live in `lean/bigops.php` (loaded after `quantifier.php`). Indexing lives in `lean/indexing.php` (loaded after the `LeanGetElemBase` traits). Arrows live in `lean/arrows.php` (loaded after `LeanBar`). Negation lives in `lean/negation.php` (loaded after `arrows.php`). Reorder presets for those families read the family file.
 
 ---
 
@@ -86,6 +86,7 @@ Use this workflow when you want a class in `lean.php` to follow a consistent met
 | `lean/bigops.php` | Big operators (`∑`, `lim`, `∏`, `∫`, `⋂`, `⋃`, `Stack`) |
 | `lean/indexing.php` | Indexing (`LeanGetElem`, `LeanGetElemQue`, `LeanGetElemQuote`) |
 | `lean/arrows.php` | Arrows (`LeanRightarrow`, `Lean_rightarrow`, `Lean_mapsto`, `Lean_leftarrow`) |
+| `lean/negation.php` | Negation (`Lean_lnot` / `¬`, `LeanNot` / `!`) |
 | `../std.php`, `newline_skipping_comment.php`, etc. | Dependencies |
 | `../../scripts/reorder_lean_class.py` | Reorder one class block in `lean.php` |
 | `../../scripts/compare_lean_class_methods.py` | **Required** after reorder: method list + body equality vs `HEAD` |
