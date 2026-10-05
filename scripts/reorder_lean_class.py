@@ -120,6 +120,7 @@ LOGIC = ROOT / "php" / "parser" / "lean" / "logic.php"
 RELATIONAL = ROOT / "php" / "parser" / "lean" / "relational.php"
 QUANTIFIER = ROOT / "php" / "parser" / "lean" / "quantifier.php"
 BIGOPS = ROOT / "php" / "parser" / "lean" / "bigops.php"
+INDEXING = ROOT / "php" / "parser" / "lean" / "indexing.php"
 ARITHMETIC_PRESETS = frozenset({
     "leanarithmetic",
     "leanmul",
@@ -172,6 +173,11 @@ BIGOPS_PRESETS = frozenset({
     "leanbigcup",
     "leanstack",
 })
+INDEXING_PRESETS = frozenset({
+    "leangotelem",
+    "leangotelemque",
+    "leangotelemquote",
+})
 
 
 def preset_path(preset: str) -> Path:
@@ -187,6 +193,8 @@ def preset_path(preset: str) -> Path:
         return QUANTIFIER
     if preset in BIGOPS_PRESETS:
         return BIGOPS
+    if preset in INDEXING_PRESETS:
+        return INDEXING
     return LEAN
 
 PRESETS: dict[str, tuple[str, str]] = {
@@ -352,7 +360,7 @@ PRESETS: dict[str, tuple[str, str]] = {
     ),
     "leangotelemquote": (
         "class LeanGetElemQuote extends LeanArgs\n{",
-        "\n}\n\nclass Lean_is extends LeanBinary",
+        "\n}\n\n// END OF indexing family (Lean_is stays in lean.php)\n",
     ),
     "leanis": (
         "class Lean_is extends LeanBinary\n{",
