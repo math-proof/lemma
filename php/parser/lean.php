@@ -8092,47 +8092,7 @@ class LeanBigOperator extends LeanArgs
 }
 
 
-class LeanQuantifier extends LeanBigOperator
-{
-    use LeanProp;
-    public static $input_priority = 24;
-    public function latexFormat()
-    {
-        if (count($this->args) == 1)
-            return "$this->command\\ {%s},";
-        return "$this->command\\ {%s}, {%s}";
-    }
-}
-
-
-// universal quantifier
-class Lean_forall extends LeanQuantifier
-{
-    public function __get($vname)
-    {
-        switch ($vname) {
-            case 'operator':
-                return '∀';
-            default:
-                return parent::__get($vname);
-        }
-    }
-}
-
-// existential quantifier
-class Lean_exists extends LeanQuantifier
-{
-    public function __get($vname)
-    {
-        switch ($vname) {
-            case 'operator':
-                return '∃';
-            default:
-                return parent::__get($vname);
-        }
-    }
-}
-
+require_once dirname(__FILE__) . '/lean/quantifier.php';
 
 class Lean_sum extends LeanBigOperator
 {

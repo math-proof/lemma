@@ -12,6 +12,7 @@ ARITHMETIC = ROOT / "php" / "parser" / "lean" / "arithmetic.php"
 PAIRED = ROOT / "php" / "parser" / "lean" / "paired.php"
 LOGIC = ROOT / "php" / "parser" / "lean" / "logic.php"
 RELATIONAL = ROOT / "php" / "parser" / "lean" / "relational.php"
+QUANTIFIER = ROOT / "php" / "parser" / "lean" / "quantifier.php"
 ARITHMETIC_PRESETS = frozenset({
     "leanarithmetic",
     "leanmul",
@@ -52,6 +53,11 @@ LOGIC_PRESETS = frozenset({
 RELATIONAL_PRESETS = frozenset({
     "leanrelational",
 })
+QUANTIFIER_PRESETS = frozenset({
+    "leanquantifier",
+    "leanforall",
+    "leanexists",
+})
 
 
 def preset_path(preset: str) -> Path:
@@ -63,6 +69,8 @@ def preset_path(preset: str) -> Path:
         return LOGIC
     if preset in RELATIONAL_PRESETS:
         return RELATIONAL
+    if preset in QUANTIFIER_PRESETS:
+        return QUANTIFIER
     return LEAN
 
 PRESETS: dict[str, tuple[str, str]] = {
@@ -420,7 +428,7 @@ PRESETS: dict[str, tuple[str, str]] = {
     ),
     "leanbigoperator": (
         "class LeanBigOperator extends LeanArgs\n{",
-        "\n}\n\n\nclass LeanQuantifier extends LeanBigOperator",
+        "\n}\n\n\nrequire_once dirname(__FILE__) . '/lean/quantifier.php';",
     ),
     "leanquantifier": (
         "class LeanQuantifier extends LeanBigOperator\n{",
@@ -432,7 +440,7 @@ PRESETS: dict[str, tuple[str, str]] = {
     ),
     "leanexists": (
         "class Lean_exists extends LeanQuantifier\n{",
-        "\n}\n\n\nclass Lean_sum extends LeanBigOperator",
+        "\n}\n\n// END OF quantifier family (Lean_sum stays in lean.php)\n",
     ),
     "leansum": (
         "class Lean_sum extends LeanBigOperator\n{",

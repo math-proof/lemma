@@ -7,6 +7,7 @@ import { createLogicFamily } from './lean/logic.js';
 import { createSetFamily } from './lean/set.js';
 import { createRelationalFamily } from './lean/relational.js';
 import { createMembershipFamily } from './lean/membership.js';
+import { createQuantifierFamily } from './lean/quantifier.js';
 
 /** Relational / comparison ops; reused by token2classname and leanInfixContinue. */
 const leanRelationalTokens = Object.freeze({
@@ -10230,71 +10231,19 @@ class LeanBigOperator extends LeanArgs {
     }
 }
 
-/** Port of `LeanQuantifier`. */
-class LeanQuantifier extends LeanProp(LeanBigOperator) {
-    static input_priority = 24;
-
-    measurePartial() {
-        if (this.superscript !== 'ᵐ') return null;
-        const b = this.bound;
-        if (!(b instanceof LeanArgsSpaceSeparated)) return null;
-        for (let i = b.args.length - 1; i >= 0; i--) {
-            if (b.args[i] instanceof LeanCaret) continue;
-            return b.args[i] instanceof Lean_partial ? b.args[i] : null;
-        }
-        return null;
-    }
-
-    latexFormat() {
-        const sup = this.superscript === 'ᶠ' ? '\\mathrm{f}' : this.superscript;
-        const cmd = this.superscript
-            ? `${this.command}^{${sup}}\\,`
-            : `${this.command}\\ `;
-        if (this.args.length === 1) return `${cmd}{%s},`;
-        return `${cmd}{%s}, {%s}`;
-    }
-
-    latexArgs(syntax) {
-        // `∀ᶠ x in l, p` — `in` is a keyword, not a product of the letters i and n
-        if (this.superscript === 'ᶠ' && this.bound instanceof LeanArgsSpaceSeparated && this.scope) {
-            const bound = this.bound.args
-                .filter((a) => !(a instanceof LeanCaret))
-                .map((a) => (a instanceof LeanIn ? `\\text{ in }{${a.arg.toLatex(syntax)}}` : a.toLatex(syntax)))
-                .join('\\ ');
-            return [bound, this.scope.toLatex(syntax)];
-        }
-        const partial = this.measurePartial();
-        if (!partial) return super.latexArgs(syntax);
-        const bound = this.bound.args
-            .filter((a) => a !== partial && !(a instanceof LeanCaret))
-            .map((a) => a.toLatex(syntax))
-            .join(' ');
-        // keep the measure: `∀ᵐ a ∂μ, p` → `∀ᵐ a ∂μ, p`
-        return [`${bound}\\ \\partial {${partial.arg.toLatex(syntax)}}`, this.scope.toLatex(syntax)];
-    }
-
-    get stack_priority() {
-        return LeanColon.input_priority - 1;
-    }
-}
-
-class Lean_forall extends LeanQuantifier {
-    get baseOperator() {
-        return '∀';
-    }
-}
-
-class Lean_exists extends LeanQuantifier {
-    unique = false;
-
-    get baseOperator() {
-        return this.unique ? '∃!' : '∃';
-    }
-
-    get command() {
-        return this.unique ? '\\exists!' : '\\exists';
-    }
-}
+const quantifierLate = {};
+const quantifierFamily = createQuantifierFamily({
+    LeanProp,
+    LeanBigOperator,
+    LeanArgsSpaceSeparated,
+    LeanCaret,
+    LeanIn,
+    LeanColon,
+    quantifierLate,
+});
+const LeanQuantifier = quantifierFamily.LeanQuantifier;
+const Lean_forall = quantifierFamily.Lean_forall;
+const Lean_exists = quantifierFamily.Lean_exists;
 
 class Lean_sum extends LeanBigOperator {
     static input_priority = 67;
@@ -10869,6 +10818,7 @@ const {
     LeanTranspose,
     LeanPipeForward,
 } = leanArithmeticFamily;
+quantifierLate.Lean_partial = Lean_partial;
 
 /** Concrete AST / parser node classes only (keys = `constructor.name`). No abstract/intermediate bases (`Lean`, `LeanArgs`, `LeanBinary`, …). */
 const LEAN_CLASSES = {
