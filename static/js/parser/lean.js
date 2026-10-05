@@ -6,6 +6,7 @@ import { createPairedFamily } from './lean/paired.js';
 import { createLogicFamily } from './lean/logic.js';
 import { createSetFamily } from './lean/set.js';
 import { createRelationalFamily } from './lean/relational.js';
+import { createMembershipFamily } from './lean/membership.js';
 
 /** Relational / comparison ops; reused by token2classname and leanInfixContinue. */
 const leanRelationalTokens = Object.freeze({
@@ -3233,43 +3234,15 @@ export const LeanDvd = relationalFamily.LeanDvd;
 export const Lean_ll = relationalFamily.Lean_ll;
 export const Lean_gg = relationalFamily.Lean_gg;
 
-/** Set / arrow: `∈` (membership). */
-export class Lean_in extends LeanBinaryBoolean {
-    static input_priority = 50;
-
-    get operator() {
-        return '∈';
-    }
-
-    latexArgs(syntax) {
-        let lhs = this.lhs;
-        if (lhs instanceof LeanParenthesis && !(lhs.arg instanceof LeanColon)) lhs = lhs.arg;
-        let rhs = this.rhs;
-        if (rhs instanceof LeanParenthesis && rhs.arg instanceof LeanIte) rhs = rhs.arg;
-        return [lhs.toLatex(syntax), rhs.toLatex(syntax)];
-    }
-}
-export class Lean_notin extends LeanBinaryBoolean {
-    static input_priority = 50;
-
-    get operator() {
-        return '∉';
-    }
-
-    latexArgs(syntax) {
-        let lhs = this.lhs;
-        if (lhs instanceof LeanParenthesis) lhs = lhs.arg;
-        return [lhs.toLatex(syntax), this.rhs.toLatex(syntax)];
-    }
-}
-/** `↔`. */
-export class Lean_leftrightarrow extends LeanBinaryBoolean {
-    static input_priority = 20;
-
-    get operator() {
-        return '↔';
-    }
-}
+const membershipLate = {};
+const membershipFamily = createMembershipFamily({
+    LeanBinaryBoolean,
+    LeanColon,
+    membershipLate,
+});
+export const Lean_in = membershipFamily.Lean_in;
+export const Lean_notin = membershipFamily.Lean_notin;
+export const Lean_leftrightarrow = membershipFamily.Lean_leftrightarrow;
 
 // Arithmetic operators live in ./lean/arithmetic.js and are registered beside LEAN_CLASSES.
 
@@ -10795,6 +10768,8 @@ const pairedFamily = createPairedFamily({
     arithmeticLate,
 });
 export const LeanParenthesis = pairedFamily.LeanParenthesis;
+membershipLate.LeanParenthesis = LeanParenthesis;
+membershipLate.LeanIte = LeanIte;
 const LeanPairedGroup = pairedFamily.LeanPairedGroup;
 const LeanAngleBracket = pairedFamily.LeanAngleBracket;
 const LeanBracket = pairedFamily.LeanBracket;

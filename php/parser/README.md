@@ -1,6 +1,6 @@
 # Lean PHP parser (`lean.php`)
 
-Parser and AST classes for Lean 4 source. Main file: `lean.php` (router). Arithmetic operators live in `lean/arithmetic.php` (loaded after `LeanBinary` / `LeanUnary`). Paired delimiters live in `lean/paired.php` (loaded after `LeanUnary`). Logic connectives live in `lean/logic.php` (loaded after `LeanBinaryBoolean`). Set operators and inclusion live in `lean/set.php` (loaded after `LeanLogic`, because `⊇` / `⊃` extend it). Relational comparisons live in `lean/relational.php` (loaded after `LeanBinaryBoolean`). Reorder presets for those families read the family file.
+Parser and AST classes for Lean 4 source. Main file: `lean.php` (router). Arithmetic operators live in `lean/arithmetic.php` (loaded after `LeanBinary` / `LeanUnary`). Paired delimiters live in `lean/paired.php` (loaded after `LeanUnary`). Logic connectives live in `lean/logic.php` (loaded after `LeanBinaryBoolean`). Set operators and inclusion live in `lean/set.php` (loaded after `LeanLogic`, because `⊇` / `⊃` extend it). Relational comparisons live in `lean/relational.php` (loaded after `LeanBinaryBoolean`). Membership and iff live in `lean/membership.php` (loaded after `relational.php`). Reorder presets for those families read the family file.
 
 ---
 
@@ -81,6 +81,7 @@ Use this workflow when you want a class in `lean.php` to follow a consistent met
 | `lean/logic.php` | Logic connectives (`LeanLogic`, `&&` / `||` / `^^` / `∨` / `∧`) |
 | `lean/set.php` | Set operators and inclusion (`LeanSetOperator`, `\\`, `∪`, `∩`, `⊆`, `⊂`, `⊇`, `⊃`) |
 | `lean/relational.php` | Relational comparisons (`LeanRelational`, `>`, `<`, `=`, `≠`, `≡`, `≃`, `≈`, `∣`, …) |
+| `lean/membership.php` | Membership and iff (`∈`, `∉`, `↔`) |
 | `../std.php`, `newline_skipping_comment.php`, etc. | Dependencies |
 | `../../scripts/reorder_lean_class.py` | Reorder one class block in `lean.php` |
 | `../../scripts/compare_lean_class_methods.py` | **Required** after reorder: method list + body equality vs `HEAD` |
