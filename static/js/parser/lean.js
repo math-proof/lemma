@@ -25,6 +25,7 @@ import { createRangeFamily } from './lean/range.js';
 import { createPropertyFamily } from './lean/property.js';
 import { createColonFamily } from './lean/colon.js';
 import { createAssignFamily } from './lean/assign.js';
+import { createBooleanFamily } from './lean/boolean.js';
 
 /** Relational / comparison ops; reused by token2classname and leanInfixContinue. */
 const leanRelationalTokens = Object.freeze({
@@ -383,55 +384,16 @@ const assignFamily = createAssignFamily({
 });
 export const LeanAssign = assignFamily.LeanAssign;
 
-export class LeanBinaryBoolean extends LeanProp(LeanBinary) {
-    append(new_, type) {
-        const {indent, level} = this;
-        const caret = new LeanCaret(indent, level);
-        if (typeof new_ === 'string') {
-            const Ctor = LEAN_CLASSES[new_];
-            const newNode = new Ctor(caret, indent, level);
-            this.rhs = new LeanArgsSpaceSeparated([this.rhs, newNode], indent, level);
-            return caret;
-        } else {
-            this.parent.replace(this, new LeanArgsSpaceSeparated([this, new_], indent, level));
-            return new_;
-        }
-    }
-
-    insert_colon(caret) {
-        if (caret === this.rhs) {
-            const newCaret = new LeanCaret(caret.indent, caret.level);
-            this.parent.replace(this, new LeanColon(this, newCaret, caret.indent, caret.level));
-            return newCaret;
-        }
-        return caret.push_binary(LeanColon);
-    }
-
-    insert_newline(caret, newline_count, indent, next) {
-        if (this.rhs === caret && caret instanceof LeanCaret && indent >= this.indent) {
-            caret.indent = indent;
-            return caret;
-        }
-        if (this.rhs === caret && indent > this.indent) {
-            return this.parent.push_args_indented(indent, newline_count, false);
-        }
-        return super.insert_newline(caret, newline_count, indent, next);
-    }
-
-    is_indented() {
-        const {parent} = this;
-        return parent instanceof LeanStatements || (parent instanceof LeanArgsNewLineSeparated && this.indent > 0);
-    }
-
-    sep() {
-        return this.rhs instanceof LeanStatements ? '\n' : ' ';
-    }
-
-    strFormat() {
-        const sep = this.sep();
-        return `%s ${this.operator}${sep}%s`;
-    }
-}
+const booleanLate = {};
+const booleanFamily = createBooleanFamily({
+    LeanBinary,
+    LeanProp,
+    LeanCaret,
+    LeanColon,
+    classRegistry: arithmeticClassRegistry,
+    booleanLate,
+});
+export const LeanBinaryBoolean = booleanFamily.LeanBinaryBoolean;
 
 const relationalFamily = createRelationalFamily({
     LeanBinaryBoolean,
@@ -3261,6 +3223,11 @@ Object.assign(assignLate, {
     LeanCalc,
     LeanStatements,
     Lean_blacktriangleright,
+});
+Object.assign(booleanLate, {
+    LeanArgsNewLineSeparated,
+    LeanArgsSpaceSeparated,
+    LeanStatements,
 });
 Object.assign(abstractLate, {
     LeanArgsIndented,

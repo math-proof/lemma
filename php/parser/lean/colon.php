@@ -117,4 +117,4 @@ class LeanColon extends LeanBinary
 
 }
 
-// END OF colon family (LeanBinaryBoolean stays in lean.php)
+// END OF colon family (Lean_lazy stays in lean.php)

@@ -1,7 +1,7 @@
 /**
  * Logic / boolean connectives: `LeanLogic` and `&&` / `||` / `^^` / `∨` / `∧`.
  *
- * `LeanBinaryBoolean` stays in `lean.js`. `LeanStatements` is filled on
+ * `LeanBinaryBoolean` is passed in from the boolean family. `LeanStatements` is filled on
  * `logicLate` after that class exists; methods only use it via `instanceof`.
  *
  * @param {object} deps

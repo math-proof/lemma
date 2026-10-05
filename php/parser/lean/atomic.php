@@ -436,4 +436,4 @@ class LeanDocString extends LeanBlockComment
 
 }
 
-// END OF atomic family (LeanBinaryBoolean stays in lean.php)
+// END OF atomic family (Lean_lazy stays in lean.php)
