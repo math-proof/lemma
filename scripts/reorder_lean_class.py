@@ -124,6 +124,7 @@ INDEXING = ROOT / "php" / "parser" / "lean" / "indexing.php"
 ARROWS = ROOT / "php" / "parser" / "lean" / "arrows.php"
 NEGATION = ROOT / "php" / "parser" / "lean" / "negation.php"
 MATCH = ROOT / "php" / "parser" / "lean" / "match.php"
+ITE = ROOT / "php" / "parser" / "lean" / "ite.php"
 ARITHMETIC_PRESETS = frozenset({
     "leanarithmetic",
     "leanmul",
@@ -194,6 +195,9 @@ NEGATION_PRESETS = frozenset({
 MATCH_PRESETS = frozenset({
     "leanmatch",
 })
+ITE_PRESETS = frozenset({
+    "leanite",
+})
 
 
 def preset_path(preset: str) -> Path:
@@ -217,6 +221,8 @@ def preset_path(preset: str) -> Path:
         return NEGATION
     if preset in MATCH_PRESETS:
         return MATCH
+    if preset in ITE_PRESETS:
+        return ITE
     return LEAN
 
 PRESETS: dict[str, tuple[str, str]] = {
@@ -454,7 +460,7 @@ PRESETS: dict[str, tuple[str, str]] = {
     ),
     "leanleftarrow": (
         "class Lean_leftarrow extends LeanUnary\n{",
-        "\n}\n\n// END OF arrows family (LeanIte stays in lean.php)\n",
+        "\n}\n\n// END OF arrows family (LeanArgsSpaceSeparated stays in lean.php)\n",
     ),
     "leanlnot": (
         "class Lean_lnot extends LeanUnary\n{",
@@ -462,15 +468,15 @@ PRESETS: dict[str, tuple[str, str]] = {
     ),
     "leannot": (
         "class LeanNot extends LeanUnary\n{",
-        "\n}\n\n// END OF negation family (LeanIte stays in lean.php)\n",
+        "\n}\n\n// END OF negation family (LeanArgsSpaceSeparated stays in lean.php)\n",
     ),
     "leanmatch": (
         "class Lean_match extends LeanArgs\n{",
-        "\n}\n\n// END OF match family (LeanIte stays in lean.php)\n",
+        "\n}\n\n// END OF match family (LeanArgsSpaceSeparated stays in lean.php)\n",
     ),
     "leanite": (
         "class LeanIte extends LeanArgs\n{",
-        "\n}\n\nclass LeanArgsSpaceSeparated extends LeanArgs",
+        "\n}\n\n// END OF ite family (LeanArgsSpaceSeparated stays in lean.php)\n",
     ),
     "leanargsspaceseparated": (
         "class LeanArgsSpaceSeparated extends LeanArgs\n{",
