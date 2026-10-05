@@ -279,4 +279,4 @@ class Lean_leftarrow extends LeanUnary
 
 }
 
-// END OF arrows family (Lean_match stays in lean.php)
+// END OF arrows family (LeanIte stays in lean.php)
