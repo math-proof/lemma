@@ -115,6 +115,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 LEAN = ROOT / "php" / "parser" / "lean.php"
 ARITHMETIC = ROOT / "php" / "parser" / "lean" / "arithmetic.php"
+PAIRED = ROOT / "php" / "parser" / "lean" / "paired.php"
 ARITHMETIC_PRESETS = frozenset({
     "leanarithmetic",
     "leanmul",
@@ -136,10 +137,23 @@ ARITHMETIC_PRESETS = frozenset({
     "leandiv",
     "leanbitor",
 })
+PAIRED_PRESETS = frozenset({
+    "leanpairedgroup",
+    "leanparenthesis",
+    "leananglebracket",
+    "leanbracket",
+    "leanbrace",
+    "leanabs",
+    "leandoubleanglequotation",
+})
 
 
 def preset_path(preset: str) -> Path:
-    return ARITHMETIC if preset in ARITHMETIC_PRESETS else LEAN
+    if preset in ARITHMETIC_PRESETS:
+        return ARITHMETIC
+    if preset in PAIRED_PRESETS:
+        return PAIRED
+    return LEAN
 
 PRESETS: dict[str, tuple[str, str]] = {
     "lean": (
@@ -168,7 +182,7 @@ PRESETS: dict[str, tuple[str, str]] = {
     ),
     "leanunary": (
         "abstract class LeanUnary extends LeanArgs\n{",
-        "\n}\n\nabstract class LeanPairedGroup extends LeanUnary",
+        "\n}\n\nrequire_once dirname(__FILE__) . '/lean/paired.php';",
     ),
     "leanpairedgroup": (
         "abstract class LeanPairedGroup extends LeanUnary\n{",
@@ -196,7 +210,7 @@ PRESETS: dict[str, tuple[str, str]] = {
     ),
     "leandoubleanglequotation": (
         "class LeanDoubleAngleQuotation extends LeanPairedGroup\n{",
-        "\n}\n\nabstract class LeanBinary extends LeanArgs",
+        "\n}\n\n// END OF paired family (LeanBinary stays in lean.php)\n",
     ),
     "leanbinary": (
         "abstract class LeanBinary extends LeanArgs\n{",
