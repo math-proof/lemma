@@ -8,6 +8,32 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 LEAN = ROOT / "php" / "parser" / "lean.php"
+ARITHMETIC = ROOT / "php" / "parser" / "lean" / "arithmetic.php"
+ARITHMETIC_PRESETS = frozenset({
+    "leanarithmetic",
+    "leanmul",
+    "leanneg",
+    "leanplus",
+    "leaninv",
+    "leanpospart",
+    "leannegpart",
+    "leansqrt",
+    "leansquare",
+    "leancubicroot",
+    "leanuparrow",
+    "leanuparrowuc",
+    "leancube",
+    "leanquarticroot",
+    "leantesseract",
+    "leantranspose",
+    "leanpipeforward",
+    "leandiv",
+    "leanbitor",
+})
+
+
+def preset_path(preset: str) -> Path:
+    return ARITHMETIC if preset in ARITHMETIC_PRESETS else LEAN
 
 PRESETS: dict[str, tuple[str, str]] = {
     "lean": (
@@ -156,7 +182,7 @@ PRESETS: dict[str, tuple[str, str]] = {
     ),
     "leanpipeforward": (
         "class LeanPipeForward extends LeanUnaryArithmeticPost\n{",
-        "\n}\n\nclass LeanMethodChaining extends LeanBinary",
+        "\n}\n\n// END OF arithmetic family (LeanMethodChaining stays in lean.php)\n",
     ),
     "leanmethodchaining": (
         "class LeanMethodChaining extends LeanBinary\n{",
@@ -518,9 +544,10 @@ def main() -> int:
     )
     args = ap.parse_args()
     marker_start, marker_end = PRESETS[args.preset]
+    path = preset_path(args.preset)
 
     r = subprocess.run(
-        ["git", "show", f"HEAD:{LEAN.relative_to(ROOT).as_posix()}"],
+        ["git", "show", f"HEAD:{path.relative_to(ROOT).as_posix()}"],
         cwd=ROOT,
         capture_output=True,
         text=True,
@@ -529,7 +556,7 @@ def main() -> int:
         check=True,
     )
     head_text = r.stdout
-    work_text = LEAN.read_text(encoding="utf-8")
+    work_text = path.read_text(encoding="utf-8")
 
     hb = extract_class_body(head_text, marker_start, marker_end)
     wb = extract_class_body(work_text, marker_start, marker_end)

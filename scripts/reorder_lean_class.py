@@ -114,6 +114,32 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 LEAN = ROOT / "php" / "parser" / "lean.php"
+ARITHMETIC = ROOT / "php" / "parser" / "lean" / "arithmetic.php"
+ARITHMETIC_PRESETS = frozenset({
+    "leanarithmetic",
+    "leanmul",
+    "leanneg",
+    "leanplus",
+    "leaninv",
+    "leanpospart",
+    "leannegpart",
+    "leansqrt",
+    "leansquare",
+    "leancubicroot",
+    "leanuparrow",
+    "leanuparrowuc",
+    "leancube",
+    "leanquarticroot",
+    "leantesseract",
+    "leantranspose",
+    "leanpipeforward",
+    "leandiv",
+    "leanbitor",
+})
+
+
+def preset_path(preset: str) -> Path:
+    return ARITHMETIC if preset in ARITHMETIC_PRESETS else LEAN
 
 PRESETS: dict[str, tuple[str, str]] = {
     "lean": (
@@ -262,7 +288,7 @@ PRESETS: dict[str, tuple[str, str]] = {
     ),
     "leanpipeforward": (
         "class LeanPipeForward extends LeanUnaryArithmeticPost\n{",
-        "\n}\n\nclass LeanMethodChaining extends LeanBinary",
+        "\n}\n\n// END OF arithmetic family (LeanMethodChaining stays in lean.php)\n",
     ),
     "leanmethodchaining": (
         "class LeanMethodChaining extends LeanBinary\n{",
@@ -659,12 +685,13 @@ def main() -> int:
     )
     args = ap.parse_args()
     start, end = PRESETS[args.preset]
-    text = LEAN.read_text(encoding="utf-8")
+    path = preset_path(args.preset)
+    text = path.read_text(encoding="utf-8")
     if args.preset in MEMBERS_FIRST_PRESETS:
         new_text = reorder_class_members_first(text, start, end)
     else:
         new_text = reorder_class(text, start, end)
-    LEAN.write_text(new_text, encoding="utf-8", newline="\n")
+    path.write_text(new_text, encoding="utf-8", newline="\n")
     # count methods
     body = new_text[new_text.index(start) + len(start) : new_text.index(end, new_text.index(start))]
     if args.preset in MEMBERS_FIRST_PRESETS:
@@ -672,7 +699,7 @@ def main() -> int:
         n = sum(1 for seg in segs if _is_method_segment(seg))
     else:
         n = len(list(pat.finditer(body)))
-    print(f"reordered preset={args.preset!r}: {n} methods in {LEAN.relative_to(ROOT)}")
+    print(f"reordered preset={args.preset!r}: {n} methods in {path.relative_to(ROOT)}")
     return 0
 
 

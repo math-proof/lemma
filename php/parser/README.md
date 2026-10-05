@@ -1,6 +1,6 @@
 # Lean PHP parser (`lean.php`)
 
-Parser and AST classes for Lean 4 source. Main file: `lean.php`.
+Parser and AST classes for Lean 4 source. Main file: `lean.php` (router). Arithmetic operators live in `lean/arithmetic.php`, which `lean.php` loads after `LeanBinary` / `LeanUnary`; reorder presets for that family read `lean/arithmetic.php`.
 
 ---
 
@@ -75,7 +75,8 @@ Use this workflow when you want a class in `lean.php` to follow a consistent met
 
 | Path | Role |
 |------|------|
-| `lean.php` | Parser + AST |
+| `lean.php` | Parser + AST router |
+| `lean/arithmetic.php` | Arithmetic operator family (`LeanArithmetic`, unary arithmetic) |
 | `../std.php`, `newline_skipping_comment.php`, etc. | Dependencies |
 | `../../scripts/reorder_lean_class.py` | Reorder one class block in `lean.php` |
 | `../../scripts/compare_lean_class_methods.py` | **Required** after reorder: method list + body equality vs `HEAD` |
