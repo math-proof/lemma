@@ -28,6 +28,7 @@ import { createAssignFamily } from './lean/assign.js';
 import { createBooleanFamily } from './lean/boolean.js';
 import { createLazyFamily } from './lean/lazy.js';
 import { createPipelineFamily } from './lean/pipeline.js';
+import { createIsInstanceFamily } from './lean/isinstance.js';
 
 /** Relational / comparison ops; reused by token2classname and leanInfixContinue. */
 const leanRelationalTokens = Object.freeze({
@@ -459,73 +460,13 @@ export const LeanGetWhiteSquareBracket = indexingFamily.LeanGetWhiteSquareBracke
 export const LeanGetElemQue = indexingFamily.LeanGetElemQue;
 export const LeanGetElemQuote = indexingFamily.LeanGetElemQuote;
 
-/** `is`. */
-export class Lean_is extends LeanBinary {
-    static input_priority = 62;
-
-    get operator() {
-        return 'is';
-    }
-
-    get command() {
-        return '{\\color{blue}\\text{is}}';
-    }
-
-    is_indented() {
-        return this.parent instanceof LeanStatements;
-    }
-
-    /**
-     * @param {Record<string, unknown>} [_vars]
-     */
-    isProp(_vars) {
-        return true;
-    }
-
-    latexFormat() {
-        return `{%s}\\ ${this.command}\\ {%s}`;
-    }
-
-    sep() {
-        return ' ';
-    }
-
-    strFormat() {
-        return `%s ${this.operator} %s`;
-    }
-}
-
-/** `is not`. */
-export class Lean_is_not extends LeanBinary {
-    static input_priority = 62;
-
-    get command() {
-        return '{\\color{blue}\\text{is not}}';
-    }
-
-    get operator() {
-        return 'is not';
-    }
-
-    is_indented() {
-        return this.parent instanceof LeanStatements;
-    }
-
-    /**
-     * @param {Record<string, unknown>} [_vars]
-     */
-    isProp(_vars) {
-        return true;
-    }
-
-    sep() {
-        return ' ';
-    }
-
-    strFormat() {
-        return `%s ${this.operator} %s`;
-    }
-}
+const isinstanceLate = {};
+const isinstanceFamily = createIsInstanceFamily({
+    LeanBinary,
+    isinstanceLate,
+});
+export const Lean_is = isinstanceFamily.Lean_is;
+export const Lean_is_not = isinstanceFamily.Lean_is_not;
 
 const logicLate = {};
 const logicFamily = createLogicFamily({
@@ -3210,6 +3151,9 @@ Object.assign(assignLate, {
 Object.assign(booleanLate, {
     LeanArgsNewLineSeparated,
     LeanArgsSpaceSeparated,
+    LeanStatements,
+});
+Object.assign(isinstanceLate, {
     LeanStatements,
 });
 Object.assign(abstractLate, {

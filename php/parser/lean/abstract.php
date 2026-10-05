@@ -247,4 +247,4 @@ abstract class LeanBinary extends LeanArgs
 
 }
 
-// END OF abstract family (Lean_is stays in lean.php)
+// END OF abstract family (LeanStatements stays in lean.php)

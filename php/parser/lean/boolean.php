@@ -67,4 +67,4 @@ abstract class LeanBinaryBoolean extends LeanBinary
 
 }
 
-// END OF boolean family (Lean_is stays in lean.php)
+// END OF boolean family (LeanStatements stays in lean.php)

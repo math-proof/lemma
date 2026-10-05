@@ -118,4 +118,4 @@ class LeanAssign extends LeanBinary
 
 }
 
-// END OF assign family (Lean_is stays in lean.php)
+// END OF assign family (LeanStatements stays in lean.php)
