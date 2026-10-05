@@ -47,4 +47,4 @@ class Lean_exists extends LeanQuantifier
     }
 }
 
-// END OF quantifier family (Lean_sum stays in lean.php)
+// END OF quantifier family

@@ -13,6 +13,7 @@ PAIRED = ROOT / "php" / "parser" / "lean" / "paired.php"
 LOGIC = ROOT / "php" / "parser" / "lean" / "logic.php"
 RELATIONAL = ROOT / "php" / "parser" / "lean" / "relational.php"
 QUANTIFIER = ROOT / "php" / "parser" / "lean" / "quantifier.php"
+BIGOPS = ROOT / "php" / "parser" / "lean" / "bigops.php"
 ARITHMETIC_PRESETS = frozenset({
     "leanarithmetic",
     "leanmul",
@@ -58,6 +59,13 @@ QUANTIFIER_PRESETS = frozenset({
     "leanforall",
     "leanexists",
 })
+BIGOPS_PRESETS = frozenset({
+    "leansum",
+    "leanprod",
+    "leanbigcap",
+    "leanbigcup",
+    "leanstack",
+})
 
 
 def preset_path(preset: str) -> Path:
@@ -71,6 +79,8 @@ def preset_path(preset: str) -> Path:
         return RELATIONAL
     if preset in QUANTIFIER_PRESETS:
         return QUANTIFIER
+    if preset in BIGOPS_PRESETS:
+        return BIGOPS
     return LEAN
 
 PRESETS: dict[str, tuple[str, str]] = {
@@ -440,15 +450,15 @@ PRESETS: dict[str, tuple[str, str]] = {
     ),
     "leanexists": (
         "class Lean_exists extends LeanQuantifier\n{",
-        "\n}\n\n// END OF quantifier family (Lean_sum stays in lean.php)\n",
+        "\n}\n\n// END OF quantifier family\n",
     ),
     "leansum": (
         "class Lean_sum extends LeanBigOperator\n{",
-        "\n}\n\nclass Lean_prod extends LeanBigOperator",
+        "\n}\n\nclass Lean_lim extends LeanBigOperator",
     ),
     "leanprod": (
         "class Lean_prod extends LeanBigOperator\n{",
-        "\n}\n\nclass Lean_bigcap extends LeanBigOperator",
+        "\n}\n\nclass Lean_int extends LeanBigOperator",
     ),
     "leanbigcap": (
         "class Lean_bigcap extends LeanBigOperator\n{",
@@ -460,7 +470,7 @@ PRESETS: dict[str, tuple[str, str]] = {
     ),
     "leanstack": (
         "class LeanStack extends LeanBigOperator\n{",
-        "\n}\n\nfunction compile($code) {",
+        "\n}\n\n// END OF big operator family (LeanParser stays in lean.php)\n",
     ),
     "leanparser": (
         "class LeanParser extends AbstractParser {\n",
