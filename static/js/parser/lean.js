@@ -23,6 +23,7 @@ import { createAtomicFamily } from './lean/atomic.js';
 import { createAbstractFamily } from './lean/abstract.js';
 import { createRangeFamily } from './lean/range.js';
 import { createPropertyFamily } from './lean/property.js';
+import { createColonFamily } from './lean/colon.js';
 
 /** Relational / comparison ops; reused by token2classname and leanInfixContinue. */
 const leanRelationalTokens = Object.freeze({
@@ -359,149 +360,17 @@ const propertyFamily = createPropertyFamily({
 });
 export const LeanProperty = propertyFamily.LeanProperty;
 
-/** Type ascription / declaration colon. */
-export class LeanColon extends LeanBinary {
-    static input_priority = 19;
-
-    get operator() {
-        return ':';
-    }
-
-    get command() {
-        return ':';
-    }
-
-    insert(caret, func, type) {
-        if (this.rhs === caret && !(caret instanceof LeanCaret) && type !== 'modifier') {
-            const c = new LeanCaret(this.indent, caret.level);
-            const Ctor = typeof func === 'string' ? LEAN_CLASSES[func] : func;
-            this.rhs = new LeanArgsSpaceSeparated(
-                [caret, new Ctor(c, this.indent, caret.level)],
-                this.indent,
-                caret.level,
-            );
-            return c;
-        }
-        if (this.parent) return this.parent.insert(this, func, type);
-    }
-
-    insert_newline(caret, newline_count, indent, next) {
-        if (this.rhs === caret) {
-            if (!(caret instanceof LeanCaret) && indent > this.indent && leanIsInfixContinue(next)) {
-                return caret;
-            }
-            if (caret instanceof LeanCaret && indent >= this.indent) {
-                if (indent === this.indent) indent = this.indent + 2;
-                caret.indent = indent;
-                const stmts = new LeanStatements([caret], indent, caret.level);
-                this.replace(caret, stmts);
-                return caret;
-            }
-            if (caret instanceof LeanStatements && indent === this.indent && this.parent instanceof LeanParenthesis)
-                return caret;
-            // `have h : Tendsto (f)\n      atTop (𝓝 0) := …` — a deeper line continues a complete type;
-            // without this the line escapes to the enclosing statements and `:=` binds outside the `have`.
-            if (
-                this.parent instanceof Lean_let && indent > this.indent && next !== ':' &&
-                (caret instanceof LeanArgsSpaceSeparated || caret instanceof LeanToken ||
-                    caret instanceof LeanProperty || caret instanceof LeanParenthesis)
-            ) {
-                const $new = new LeanCaret(indent, caret.level);
-                const nl = new LeanArgsNewLineSeparated([$new], indent, $new.level);
-                const c = nl.push_newlines(newline_count - 1);
-                this.replace(caret, new LeanArgsIndented(caret, nl, caret.indent, c.level));
-                return c;
-            }
-        }
-        return super.insert_newline(caret, newline_count, indent, next);
-    }
-
-    is_indented() {
-        return false;
-    }
-
-    peelLatexCoe() {
-        return this.lhs.peelLatexCoe();
-    }
-
-    /**
-     * `(0 : Tensor α [n, m])` / `(1 : Tensor α [n, m])` → shape cells for `\mathbf{0}_{n,m}`.
-     * @returns {Lean[] | null}
-     */
-    tensorTypeShape() {
-        let ty = this.rhs;
-        if (ty instanceof LeanParenthesis) ty = ty.arg;
-        if (!(ty instanceof LeanArgsSpaceSeparated)) return null;
-        const args = ty.args.filter((a) => !(a instanceof LeanCaret));
-        if (args.length < 2) return null;
-        const head = args[0];
-        if (!(head instanceof LeanToken) || head.text !== 'Tensor') return null;
-        const shape = args[args.length - 1];
-        if (shape instanceof LeanBracket) {
-            const inner = shape.arg;
-            if (!inner || inner instanceof LeanCaret) return [];
-            if (inner instanceof LeanArgsCommaSeparated)
-                return inner.args.filter((a) => !(a instanceof LeanCaret));
-            return [inner];
-        }
-        return [shape];
-    }
-
-    isZeroOneTensor() {
-        const lhs = this.lhs;
-        return (
-            lhs instanceof LeanToken &&
-            (lhs.text === '0' || lhs.text === '1') &&
-            this.tensorTypeShape() != null
-        );
-    }
-
-    latexFormat() {
-        if (this.isZeroOneTensor()) return `\\mathbf{${this.lhs.text}}_{%s}`;
-        return super.latexFormat();
-    }
-
-    latexArgs(syntax) {
-        if (this.isZeroOneTensor()) {
-            const dims = this.tensorTypeShape();
-            return [dims.map((d) => d.toLatex(syntax)).join(',')];
-        }
-        return super.latexArgs(syntax);
-    }
-
-    sep() {
-        const rhs = this.rhs;
-        return rhs instanceof LeanStatements ? '\n' : (rhs instanceof LeanCaret || this.parent instanceof LeanGetElem ? '' : ' ');
-    }
-
-    strArgs() {
-        let lhs = this.lhs;
-        const rhs = this.rhs;
-        if (lhs instanceof LeanArgsNewLineSeparated) {
-            const la = lhs.args;
-            const tail = la.slice(1).map((arg) => String(arg));
-            lhs = [String(la[0]), ...tail].join('\n');
-        }
-        return [lhs, rhs];
-    }
-
-    strFormat() {
-        const sep = this.sep();
-        let first = '%s';
-        if (!(this.parent instanceof LeanGetElem)) {
-            if (sep === ' ') {
-                first += ' ';
-            } else if (sep === '\n') {
-                const L = this.lhs;
-                // `lemma main:\n-- imply` stays tight; `{binders} :\n-- imply` and indented binder blocks
-                // `  (h : …) :\n-- imply` keep a space before `:`.
-                if (L instanceof LeanBrace || L instanceof LeanParenthesis || L instanceof LeanArgsIndented)
-                    first += ' ';
-            }
-        }
-        return `${first}${this.operator}${sep}%s`;
-    }
-}
+const colonLate = {};
+const colonFamily = createColonFamily({
+    LeanBinary,
+    LeanCaret,
+    LeanToken,
+    LeanProperty,
+    leanIsInfixContinue,
+    classRegistry: arithmeticClassRegistry,
+    colonLate,
+});
+export const LeanColon = colonFamily.LeanColon;
 
 export class LeanAssign extends LeanBinary {
     static input_priority = 18;
@@ -3482,6 +3351,18 @@ Object.assign(propertyLate, {
     LeanParenthesis,
     LeanStatements,
     LeanTactic,
+});
+Object.assign(colonLate, {
+    LeanArgsCommaSeparated,
+    LeanArgsIndented,
+    LeanArgsNewLineSeparated,
+    LeanArgsSpaceSeparated,
+    LeanBrace,
+    LeanBracket,
+    LeanGetElem,
+    LeanParenthesis,
+    LeanStatements,
+    Lean_let,
 });
 Object.assign(abstractLate, {
     LeanArgsIndented,

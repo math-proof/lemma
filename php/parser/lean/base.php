@@ -1185,4 +1185,4 @@ abstract class Lean extends IndentedNode
 
 }
 
-// END OF base family (LeanColon stays in lean.php)
+// END OF base family (LeanAssign stays in lean.php)
