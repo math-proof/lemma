@@ -10,6 +10,7 @@ ROOT = Path(__file__).resolve().parent.parent
 LEAN = ROOT / "php" / "parser" / "lean.php"
 ARITHMETIC = ROOT / "php" / "parser" / "lean" / "arithmetic.php"
 PAIRED = ROOT / "php" / "parser" / "lean" / "paired.php"
+LOGIC = ROOT / "php" / "parser" / "lean" / "logic.php"
 ARITHMETIC_PRESETS = frozenset({
     "leanarithmetic",
     "leanmul",
@@ -40,6 +41,13 @@ PAIRED_PRESETS = frozenset({
     "leanabs",
     "leandoubleanglequotation",
 })
+LOGIC_PRESETS = frozenset({
+    "leanlogic",
+    "leanlogicand",
+    "leanlogicor",
+    "leanlogicxor",
+    "leanlor",
+})
 
 
 def preset_path(preset: str) -> Path:
@@ -47,6 +55,8 @@ def preset_path(preset: str) -> Path:
         return ARITHMETIC
     if preset in PAIRED_PRESETS:
         return PAIRED
+    if preset in LOGIC_PRESETS:
+        return LOGIC
     return LEAN
 
 PRESETS: dict[str, tuple[str, str]] = {

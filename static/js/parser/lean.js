@@ -3,6 +3,7 @@ import { IndentedNode, AbstractParser, Closable } from './node.js';
 import { tactics } from '../../codemirror/mode/lean/tactics.js';
 import { createArithmeticFamily } from './lean/arithmetic.js';
 import { createPairedFamily } from './lean/paired.js';
+import { createLogicFamily } from './lean/logic.js';
 
 /** Relational / comparison ops; reused by token2classname and leanInfixContinue. */
 const leanRelationalTokens = Object.freeze({
@@ -3887,160 +3888,19 @@ export class Lean_cap extends LeanSetOperator {
     }
 }
 
-export class LeanLogic extends LeanBinaryBoolean {
-    /** @type {boolean|undefined} */
-    hanging_indentation;
+const logicLate = {};
+const logicFamily = createLogicFamily({
+    LeanBinaryBoolean,
+    LeanCaret,
+    logicLate,
+});
+export const LeanLogic = logicFamily.LeanLogic;
+export const LeanLogicAnd = logicFamily.LeanLogicAnd;
+export const LeanLogicOr = logicFamily.LeanLogicOr;
+export const LeanLogicXor = logicFamily.LeanLogicXor;
+export const Lean_lor = logicFamily.Lean_lor;
+export const Lean_land = logicFamily.Lean_land;
 
-    is_indented() {
-        return this.parent instanceof LeanStatements;
-    }
-
-    sep() {
-        if (this.hanging_indentation) {
-            const indent = this.rhs.indent ?? 0;
-            return '\n' + ' '.repeat(indent);
-        }
-        return ' ';
-    }
-
-    strFormat() {
-        const sep = this.sep();
-        return `%s ${this.operator}${sep}%s`;
-    }
-}
-
-export class LeanLogicAnd extends LeanLogic {
-    static input_priority = 37;
-
-    get stack_priority() {
-        return 50;
-    }
-
-    get command() {
-        return '\\&\\&';
-    }
-
-    get operator() {
-        return '&&';
-    }
-
-    toJSON() {
-        const lhs = this.lhs.toJSON();
-        const rhs = this.rhs.toJSON();
-        const f = this.func;
-        const rec = lhs && typeof lhs === 'object' ? lhs : null;
-        if (this.lhs instanceof LeanLogicAnd && rec && Array.isArray(rec[f])) {
-            return { [f]: [.../** @type {unknown[]} */ (rec[f]), rhs] };
-        }
-        return { [f]: [lhs, rhs] };
-    }
-
-    strFormat() {
-        return `%s ${this.operator} %s`;
-    }
-}
-
-export class LeanLogicOr extends LeanLogic {
-    static input_priority = 37;
-
-    get stack_priority() {
-        return 36;
-    }
-
-    get command() {
-        return '\\|\\|';
-    }
-
-    get operator() {
-        return '||';
-    }
-
-    toJSON() {
-        const lhs = this.lhs.toJSON();
-        const rhs = this.rhs.toJSON();
-        const f = this.func;
-        const rec = lhs && typeof lhs === 'object' ? lhs : null;
-        if (this.lhs instanceof LeanLogicOr && rec && Array.isArray(rec[f])) {
-            return { [f]: [.../** @type {unknown[]} */ (rec[f]), rhs] };
-        }
-        return { [f]: [lhs, rhs] };
-    }
-
-    strFormat() {
-        return `%s ${this.operator} %s`;
-    }
-}
-
-export class LeanLogicXor extends LeanLogic {
-    static input_priority = 33;
-
-    get command() {
-        return '\\^\\^';
-    }
-
-    get operator() {
-        return '^^';
-    }
-
-    strFormat() {
-        return `%s ${this.operator} %s`;
-    }
-}
-
-export class Lean_lor extends LeanLogic {
-    static input_priority = 30;
-
-    get stack_priority() {
-        return 29;
-    }
-
-    get operator() {
-        return '∨';
-    }
-
-    insert_newline(caret, newline_count, indent, next) {
-        if (caret === this.rhs && caret instanceof LeanCaret) {
-            if (indent >= this.indent) {
-                if (indent === this.indent) indent = this.indent + 2;
-                this.hanging_indentation = true;
-                caret.indent = indent;
-                return caret;
-            }
-        }
-        return super.insert_newline(caret, newline_count, indent, next);
-    }
-
-    toJSON() {
-        return { [this.func]: [this.lhs.toJSON(), this.rhs.toJSON()] };
-    }
-}
-
-export class Lean_land extends LeanLogic {
-    static input_priority = 35;
-
-    get stack_priority() {
-        return 34;
-    }
-
-    get operator() {
-        return '∧';
-    }
-
-    insert_newline(caret, newline_count, indent, next) {
-        if (caret === this.rhs && caret instanceof LeanCaret) {
-            if (indent >= this.indent) {
-                this.hanging_indentation = true;
-                caret.indent = indent;
-                return caret;
-            }
-        }
-        return super.insert_newline(caret, newline_count, indent, next);
-    }
-
-    toJSON() {
-        return { [this.func]: [this.lhs.toJSON(), this.rhs.toJSON()] };
-    }
-}
 
 /**
  * Conjuncts of a `∧` chain whose source breaks a line after some `∧`, else null.
@@ -11245,6 +11105,7 @@ export const LeanEDiv = class extends LeanBinary {
     static input_priority = 70;
 };
 
+logicLate.LeanStatements = LeanStatements;
 const arithmeticClassRegistry = { map: null };
 const arithmeticLate = {};
 const pairedFamily = createPairedFamily({
