@@ -26,6 +26,7 @@ import { createPropertyFamily } from './lean/property.js';
 import { createColonFamily } from './lean/colon.js';
 import { createAssignFamily } from './lean/assign.js';
 import { createBooleanFamily } from './lean/boolean.js';
+import { createLazyFamily } from './lean/lazy.js';
 
 /** Relational / comparison ops; reused by token2classname and leanInfixContinue. */
 const leanRelationalTokens = Object.freeze({
@@ -431,13 +432,10 @@ export const Lean_leftrightarrow = membershipFamily.Lean_leftrightarrow;
 
 // Arithmetic operators live in ./lean/arithmetic.js and are registered beside LEAN_CLASSES.
 
-/** `<|` lazy application: `a <| b` = `b a`. Low precedence, right-associative. */
-export class Lean_lazy extends LeanBinary {
-    static input_priority = 20;
-    get stack_priority() {
-        return 19;
-    }
-}
+const lazyFamily = createLazyFamily({
+    LeanBinary,
+});
+export const Lean_lazy = lazyFamily.Lean_lazy;
 
 /** Pipeline `|>.`. */
 export class LeanMethodChaining extends LeanBinary {

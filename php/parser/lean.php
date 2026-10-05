@@ -124,35 +124,7 @@ require_once dirname(__FILE__) . '/lean/membership.php';
 
 require_once dirname(__FILE__) . '/lean/arithmetic.php';
 
-/** `<|` lazy application: `a <| b` = `b a`. Low precedence, right-associative. */
-class Lean_lazy extends LeanBinary
-{
-    public static $input_priority = 20;
-
-    public function __get($vname)
-    {
-        switch ($vname) {
-            case 'stack_priority':
-                // below input_priority, so a following `<|` nests on the right
-                return 19;
-            case 'operator':
-                return '<|';
-            default:
-                return parent::__get($vname);
-        }
-    }
-
-    public function sep()
-    {
-        return $this->rhs instanceof LeanStatements ? "\n" : ' ';
-    }
-
-    public function strFormat()
-    {
-        $sep = $this->sep();
-        return "%s <|{$sep}%s";
-    }
-}
+require_once dirname(__FILE__) . '/lean/lazy.php';
 
 class LeanMethodChaining extends LeanBinary
 {

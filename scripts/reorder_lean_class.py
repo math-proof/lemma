@@ -39,6 +39,7 @@ Presets (see php/parser/README.md):
   leantesseract   — class LeanTesseract
   leantranspose   — class LeanTranspose
   leanpipeforward — class LeanPipeForward
+  leanlazy        — class Lean_lazy
   leanmethodchaining — class LeanMethodChaining
   leangotelem     — class LeanGetElem (members-first: use + methods)
   leangotelemque  — class LeanGetElemQue (members-first)
@@ -137,6 +138,7 @@ PROPERTY = ROOT / "php" / "parser" / "lean" / "property.php"
 COLON = ROOT / "php" / "parser" / "lean" / "colon.php"
 ASSIGN = ROOT / "php" / "parser" / "lean" / "assign.php"
 BOOLEAN = ROOT / "php" / "parser" / "lean" / "boolean.php"
+LAZY = ROOT / "php" / "parser" / "lean" / "lazy.php"
 ARITHMETIC_PRESETS = frozenset({
     "leanarithmetic",
     "leanmul",
@@ -274,6 +276,9 @@ ASSIGN_PRESETS = frozenset({
 BOOLEAN_PRESETS = frozenset({
     "leanbinaryboolean",
 })
+LAZY_PRESETS = frozenset({
+    "leanlazy",
+})
 
 
 def preset_path(preset: str) -> Path:
@@ -323,12 +328,14 @@ def preset_path(preset: str) -> Path:
         return ASSIGN
     if preset in BOOLEAN_PRESETS:
         return BOOLEAN
+    if preset in LAZY_PRESETS:
+        return LAZY
     return LEAN
 
 PRESETS: dict[str, tuple[str, str]] = {
     "lean": (
         "abstract class Lean extends IndentedNode\n{",
-        "\n}\n\n// END OF base family (Lean_lazy stays in lean.php)\n",
+        "\n}\n\n// END OF base family (LeanMethodChaining stays in lean.php)\n",
     ),
     "leancaret": (
         "class LeanCaret extends Lean\n{",
@@ -344,7 +351,7 @@ PRESETS: dict[str, tuple[str, str]] = {
     ),
     "leandocstring": (
         "class LeanDocString extends LeanBlockComment\n{",
-        "\n}\n\n// END OF atomic family (Lean_lazy stays in lean.php)\n",
+        "\n}\n\n// END OF atomic family (LeanMethodChaining stays in lean.php)\n",
     ),
     "leanargs": (
         "abstract class LeanArgs extends Lean\n{",
@@ -380,31 +387,31 @@ PRESETS: dict[str, tuple[str, str]] = {
     ),
     "leandoubleanglequotation": (
         "class LeanDoubleAngleQuotation extends LeanPairedGroup\n{",
-        "\n}\n\n// END OF paired family (Lean_lazy stays in lean.php)\n",
+        "\n}\n\n// END OF paired family (LeanMethodChaining stays in lean.php)\n",
     ),
     "leanbinary": (
         "abstract class LeanBinary extends LeanArgs\n{",
-        "\n}\n\n// END OF abstract family (Lean_lazy stays in lean.php)\n",
+        "\n}\n\n// END OF abstract family (LeanMethodChaining stays in lean.php)\n",
     ),
     "leanupto": (
         "class LeanUpto extends LeanBinary\n{",
-        "\n}\n\n// END OF range family (Lean_lazy stays in lean.php)\n",
+        "\n}\n\n// END OF range family (LeanMethodChaining stays in lean.php)\n",
     ),
     "leanproperty": (
         "class LeanProperty extends LeanBinary\n{",
-        "\n}\n\n// END OF property family (Lean_lazy stays in lean.php)\n",
+        "\n}\n\n// END OF property family (LeanMethodChaining stays in lean.php)\n",
     ),
     "leancolon": (
         "class LeanColon extends LeanBinary\n{",
-        "\n}\n\n// END OF colon family (Lean_lazy stays in lean.php)\n",
+        "\n}\n\n// END OF colon family (LeanMethodChaining stays in lean.php)\n",
     ),
     "leanassign": (
         "class LeanAssign extends LeanBinary\n{",
-        "\n}\n\n// END OF assign family (Lean_lazy stays in lean.php)\n",
+        "\n}\n\n// END OF assign family (LeanMethodChaining stays in lean.php)\n",
     ),
     "leanbinaryboolean": (
         "abstract class LeanBinaryBoolean extends LeanBinary\n{",
-        "\n}\n\n// END OF boolean family (Lean_lazy stays in lean.php)\n",
+        "\n}\n\n// END OF boolean family (LeanMethodChaining stays in lean.php)\n",
     ),
     "leanrelational": (
         "abstract class LeanRelational extends LeanBinaryBoolean\n{",
@@ -477,6 +484,10 @@ PRESETS: dict[str, tuple[str, str]] = {
     "leanpipeforward": (
         "class LeanPipeForward extends LeanUnaryArithmeticPost\n{",
         "\n}\n\n// END OF arithmetic family (LeanMethodChaining stays in lean.php)\n",
+    ),
+    "leanlazy": (
+        "class Lean_lazy extends LeanBinary\n{",
+        "\n}\n\n// END OF lazy family (LeanMethodChaining stays in lean.php)\n",
     ),
     "leanmethodchaining": (
         "class LeanMethodChaining extends LeanBinary\n{",
