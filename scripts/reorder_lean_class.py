@@ -133,6 +133,7 @@ BASE = ROOT / "php" / "parser" / "lean" / "base.php"
 ATOMIC = ROOT / "php" / "parser" / "lean" / "atomic.php"
 ABSTRACT = ROOT / "php" / "parser" / "lean" / "abstract.php"
 RANGE = ROOT / "php" / "parser" / "lean" / "range.php"
+PROPERTY = ROOT / "php" / "parser" / "lean" / "property.php"
 ARITHMETIC_PRESETS = frozenset({
     "leanarithmetic",
     "leanmul",
@@ -258,6 +259,9 @@ ABSTRACT_PRESETS = frozenset({
 RANGE_PRESETS = frozenset({
     "leanupto",
 })
+PROPERTY_PRESETS = frozenset({
+    "leanproperty",
+})
 
 
 def preset_path(preset: str) -> Path:
@@ -299,12 +303,14 @@ def preset_path(preset: str) -> Path:
         return ABSTRACT
     if preset in RANGE_PRESETS:
         return RANGE
+    if preset in PROPERTY_PRESETS:
+        return PROPERTY
     return LEAN
 
 PRESETS: dict[str, tuple[str, str]] = {
     "lean": (
         "abstract class Lean extends IndentedNode\n{",
-        "\n}\n\n// END OF base family (LeanProperty stays in lean.php)\n",
+        "\n}\n\n// END OF base family (LeanColon stays in lean.php)\n",
     ),
     "leancaret": (
         "class LeanCaret extends Lean\n{",
@@ -320,7 +326,7 @@ PRESETS: dict[str, tuple[str, str]] = {
     ),
     "leandocstring": (
         "class LeanDocString extends LeanBlockComment\n{",
-        "\n}\n\n// END OF atomic family (LeanProperty stays in lean.php)\n",
+        "\n}\n\n// END OF atomic family (LeanColon stays in lean.php)\n",
     ),
     "leanargs": (
         "abstract class LeanArgs extends Lean\n{",
@@ -356,19 +362,19 @@ PRESETS: dict[str, tuple[str, str]] = {
     ),
     "leandoubleanglequotation": (
         "class LeanDoubleAngleQuotation extends LeanPairedGroup\n{",
-        "\n}\n\n// END OF paired family (LeanProperty stays in lean.php)\n",
+        "\n}\n\n// END OF paired family (LeanColon stays in lean.php)\n",
     ),
     "leanbinary": (
         "abstract class LeanBinary extends LeanArgs\n{",
-        "\n}\n\n// END OF abstract family (LeanProperty stays in lean.php)\n",
+        "\n}\n\n// END OF abstract family (LeanColon stays in lean.php)\n",
     ),
     "leanupto": (
         "class LeanUpto extends LeanBinary\n{",
-        "\n}\n\n// END OF range family (LeanProperty stays in lean.php)\n",
+        "\n}\n\n// END OF range family (LeanColon stays in lean.php)\n",
     ),
     "leanproperty": (
         "class LeanProperty extends LeanBinary\n{",
-        "\n}\n\nclass LeanColon extends LeanBinary",
+        "\n}\n\n// END OF property family (LeanColon stays in lean.php)\n",
     ),
     "leancolon": (
         "class LeanColon extends LeanBinary\n{",

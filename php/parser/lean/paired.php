@@ -644,4 +644,4 @@ class LeanDoubleAngleQuotation extends LeanPairedGroup
     }
 }
 
-// END OF paired family (LeanProperty stays in lean.php)
+// END OF paired family (LeanColon stays in lean.php)

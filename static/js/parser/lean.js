@@ -22,6 +22,7 @@ import { createBaseFamily } from './lean/base.js';
 import { createAtomicFamily } from './lean/atomic.js';
 import { createAbstractFamily } from './lean/abstract.js';
 import { createRangeFamily } from './lean/range.js';
+import { createPropertyFamily } from './lean/property.js';
 
 /** Relational / comparison ops; reused by token2classname and leanInfixContinue. */
 const leanRelationalTokens = Object.freeze({
@@ -348,302 +349,15 @@ const rangeFamily = createRangeFamily({
     LeanCaret,
 });
 export const LeanUpto = rangeFamily.LeanUpto;
-export class LeanProperty extends LeanBinary {
-    static input_priority = 81; // LeanPow::$input_priority + 1
-
-    get stack_priority() {
-        return 87;
-    }
-
-    get operator() {
-        return '.';
-    }
-
-    get command() {
-        return '.';
-    }
-
-    equals(other) {
-        if (other instanceof LeanProperty) {
-            return this.lhs.equals(other.lhs) && this.rhs.equals(other.rhs);
-        }
-        return false;
-    }
-
-    insert(caret, func, type) {
-        if (this.rhs === caret) {
-            if (caret instanceof LeanCaret) {
-                if (func.startsWith('Lean_')) {
-                    return this.insert_word(caret, func.slice(5));
-                }
-            } else if (type === 'modifier') {
-                return this.parent.insert(this, func, type);
-            } else {
-                const newCaret = new LeanCaret(this.indent, caret.level);
-                this.parent.replace(
-                    this,
-                    new LeanArgsSpaceSeparated(
-                        [this, new (LEAN_CLASSES[func])(newCaret, newCaret.indent, newCaret.level)],
-                        this.indent,
-                        newCaret.level
-                    )
-                );
-                return newCaret;
-            }
-        }
-        throw new Error(`insert is unexpected for ${this.constructor.name}`);
-    }
-
-    insert_left(caret, func, prevToken = '') {
-        if (func === 'LeanDoubleAngleQuotation') {
-            return caret.push_left(func, prevToken);
-        }
-        if (this.parent) {
-            return this.parent.insert_left(this, func, prevToken);
-        }
-    }
-
-    insert_newline(caret, newline_count, indent, next) {
-        if (this.parent instanceof LeanTactic && indent > this.indent) {
-            return this.parent.push_args_indented(indent, newline_count, false);
-        }
-        return this.parent.insert_newline(this, newline_count, indent, next);
-    }
-
-    insert_tactic(caret, token) {
-        return this.insert_word(caret, token);
-    }
-
-    insert_unary(caret, func) {
-        if (this.parent) {
-            return this.parent.insert_unary(this, func);
-        }
-    }
-
-    insert_word(caret, word) {
-        if (caret instanceof LeanCaret) {
-            return super.insert_word(caret, word);
-        }
-        if (this.parent) {
-            return this.parent.insert_word(this, word);
-        }
-    }
-
-    is_indented() {
-        const parent = this.parent;
-        return parent instanceof LeanArgsCommaNewLineSeparated ||
-            parent instanceof LeanArgsNewLineSeparated ||
-            parent instanceof LeanStatements ||
-            (parent instanceof LeanArgsIndented && parent.rhs === this) ||
-            (parent instanceof LeanIte && !parent.inline && parent.else === this);
-    }
-
-    isProp(vars) {
-        const rhs = this.rhs;
-        if (rhs instanceof LeanToken) {
-            switch (rhs.text) {
-                case 'Infinite':
-                case 'Infinitesimal':
-                case 'InfinitePos':
-                case 'InfiniteNeg':
-                    return true;
-            }
-        }
-    }
-
-    is_space_separated() {
-        const rhs = this.rhs;
-        if (rhs instanceof LeanToken) {
-            switch (rhs.text) {
-                case 'cos':
-                case 'sin':
-                case 'tan':
-                case 'log':
-                    return true;
-            }
-        }
-        return false;
-    }
-
-    latexArgs(syntax = null) {
-        const [lhs, rhs] = this.args;
-        var arg;
-        if (rhs instanceof LeanToken) {
-            switch (rhs.text) {
-                case 'exp':
-                    arg = '%s';
-                    if (lhs instanceof LeanToken) {
-                        switch (lhs.text) {
-                            case 'Real':
-                            case 'Complex':
-                            case 'Exp':
-                                arg = null;
-                        }
-                    }
-                    if (arg) {
-                        const exponent = this.lhs instanceof LeanParenthesis ? this.lhs.arg : this.lhs;
-                        return [exponent.toLatex(syntax)];
-                    }
-                    break;
-                case 'cos':
-                case 'sin':
-                case 'tan':
-                case 'log':
-                    arg = '%s';
-                    if (lhs instanceof LeanToken) {
-                        switch (lhs.text) {
-                            case 'Real':
-                            case 'Complex':
-                            case 'Cos':
-                            case 'Sin':
-                            case 'Tan':
-                            case 'Log':
-                                arg = null;
-                        }
-                    }
-                    if (arg)
-                        return [this.lhs.toLatex(syntax)];
-                    break;
-                case 'fmod':
-                    return [this.lhs.toLatex(syntax)];
-                case 'card':
-                    if (!(lhs instanceof LeanToken && this.parent instanceof LeanArgsSpaceSeparated && this.parent.args[0] === this)) {
-                        let arg = this.lhs;
-                        if (arg instanceof LeanParenthesis && !(arg.arg instanceof LeanColon))
-                            arg = arg.arg;
-                        return [arg.toLatex(syntax)];
-                    }
-                    break;
-                case 'softmax':
-                    if (syntax) syntax.softmax = true;
-                    break;
-                case 'sigmoid':
-                    return [this.lhs.toLatex(syntax)];
-                case 'factorial':
-                    return [this.lhs.toLatex(syntax)];
-                case 'det': {
-                    let arg = this.lhs;
-                    if (arg instanceof LeanParenthesis && !(arg.arg instanceof LeanColon))
-                        arg = arg.arg;
-                    return [arg.toLatex(syntax)];
-                }
-                case 'natAbs': {
-                    let arg = this.lhs;
-                    if (arg instanceof LeanParenthesis) arg = arg.arg;
-                    if (arg instanceof LeanColon) arg = arg.lhs;
-                    return [arg.toLatex(syntax)];
-                }
-            }
-        }
-        return super.latexArgs(syntax);
-    }
-
-    latexFormat() {
-        const [lhs, rhs] = this.args;
-        var arg;
-        if (rhs instanceof LeanToken) {
-            switch (rhs.text) {
-                case 'exp':
-                    arg = '%s';
-                    if (lhs instanceof LeanToken) {
-                        switch (lhs.text) {
-                            case 'Real':
-                            case 'Complex':
-                            case 'Exp':
-                                arg = null;
-                        }
-                    }
-                    if (arg) {
-                        return '{\\color{RoyalBlue} e} ^ {%s}';
-                    }
-                    break;
-                case 'cos':
-                case 'sin':
-                case 'tan':
-                case 'log':
-                    arg = '%s';
-                    if (lhs instanceof LeanToken) {
-                        switch (lhs.text) {
-                            case 'Real':
-                            case 'Complex':
-                            case 'Cos':
-                            case 'Sin':
-                            case 'Tan':
-                            case 'Log':
-                                arg = null;
-                        }
-                    }
-                    if (arg)
-                        return `\\\\${rhs.text} {%s}`;
-                    break;
-                case 'fmod':
-                    return '{%s} {\\color{red}\\%%}';
-                case 'card':
-                    if (!(lhs instanceof LeanToken && this.parent instanceof LeanArgsSpaceSeparated && this.parent.args[0] === this)) {
-                        return '\\left|{%s}\\right|';
-                    }
-                    break;
-                case 'epsilon':
-                    if (lhs instanceof LeanToken && lhs.text === 'Hyperreal') {
-                        return '0^+';
-                    }
-                    break;
-                case 'omega':
-                    if (lhs instanceof LeanToken && lhs.text === 'Hyperreal') {
-                        return '\\infty';
-                    }
-                    break;
-                case 'sigmoid':
-                    return '{\\color{RoyalBlue}\\sigma}\\left(%s\\right)';
-                case 'factorial':
-                    return '{%s}!';
-                case 'det':
-                    return '\\left|{%s}\\right|';
-                case 'natAbs':
-                    return '\\left|{%s}\\right|';
-            }
-        }
-        return `{%s}${this.command}{%s}`;
-    }
-
-    push_attr(caret) {
-        return super.push_attr(caret);
-    }
-
-    push_token(word) {
-        const level = this.level;
-        const newToken = new LeanToken(word, this.indent, level);
-        this.parent.replace(this, new LeanArgsSpaceSeparated([this, newToken], this.indent, level));
-        return newToken;
-    }
-
-    regexp() {
-        const str = String(this.rhs);
-        const func = str.charAt(0).toUpperCase() + str.slice(1);
-        let regexp = this.lhs.regexp().map(expr => `${func}${expr}`);
-        regexp.push(`${func}_`);
-        return regexp;
-    }
-
-    sep() {
-        return '';
-    }
-
-    strFormat() {
-        return `%s${this.operator}%s`;
-    }
-
-    // JS-only extensions (alphabetical order)
-
-    /** Unwrap LeanArgsSpaceSeparated to get the actual token (handles import/open dotted names). */
-    strArgs() {
-        let rhs = this.rhs;
-        if (rhs instanceof LeanArgsSpaceSeparated && rhs.args.length === 2 && rhs.args[0] instanceof LeanCaret) {
-            rhs = rhs.args[1];
-        }
-        return [this.lhs, rhs];
-    }
-}
+const propertyLate = {};
+const propertyFamily = createPropertyFamily({
+    LeanBinary,
+    LeanCaret,
+    LeanToken,
+    classRegistry: arithmeticClassRegistry,
+    propertyLate,
+});
+export const LeanProperty = propertyFamily.LeanProperty;
 
 /** Type ascription / declaration colon. */
 export class LeanColon extends LeanBinary {
@@ -3757,6 +3471,17 @@ Object.assign(atomicLate, {
     LeanStatements,
     LeanTactic,
     Lean_lemma,
+});
+Object.assign(propertyLate, {
+    LeanArgsCommaNewLineSeparated,
+    LeanArgsIndented,
+    LeanArgsNewLineSeparated,
+    LeanArgsSpaceSeparated,
+    LeanColon,
+    LeanIte,
+    LeanParenthesis,
+    LeanStatements,
+    LeanTactic,
 });
 Object.assign(abstractLate, {
     LeanArgsIndented,
