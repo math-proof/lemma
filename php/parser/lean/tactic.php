@@ -1826,4 +1826,4 @@ class LeanAttribute extends LeanUnary
 
 }
 
-// END OF tactic family (Lean_def stays in lean.php)
+// END OF tactic family (Lean_fun stays in lean.php)
