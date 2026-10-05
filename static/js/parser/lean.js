@@ -4,6 +4,7 @@ import { tactics } from '../../codemirror/mode/lean/tactics.js';
 import { createArithmeticFamily } from './lean/arithmetic.js';
 import { createPairedFamily } from './lean/paired.js';
 import { createLogicFamily } from './lean/logic.js';
+import { createSetFamily } from './lean/set.js';
 
 /** Relational / comparison ops; reused by token2classname and leanInfixContinue. */
 const leanRelationalTokens = Object.freeze({
@@ -3853,41 +3854,6 @@ export class Lean_is_not extends LeanBinary {
     }
 }
 
-/** Set-theoretic binary (`\\`, `∪`, `∩`); abstract base like `LeanSetOperator`. */
-export class LeanSetOperator extends LeanBinary {
-    sep() {
-        return ' ';
-    }
-
-    strFormat() {
-        return `%s ${this.operator} %s`;
-    }
-}
-
-export class Lean_setminus extends LeanSetOperator {
-    static input_priority = 70;
-
-    get operator() {
-        return '\\';
-    }
-}
-
-export class Lean_cup extends LeanSetOperator {
-    static input_priority = 65;
-
-    get operator() {
-        return '∪';
-    }
-}
-
-export class Lean_cap extends LeanSetOperator {
-    static input_priority = 70;
-
-    get operator() {
-        return '∩';
-    }
-}
-
 const logicLate = {};
 const logicFamily = createLogicFamily({
     LeanBinaryBoolean,
@@ -3900,6 +3866,20 @@ export const LeanLogicOr = logicFamily.LeanLogicOr;
 export const LeanLogicXor = logicFamily.LeanLogicXor;
 export const Lean_lor = logicFamily.Lean_lor;
 export const Lean_land = logicFamily.Lean_land;
+
+const setFamily = createSetFamily({
+    LeanBinary,
+    LeanBinaryBoolean,
+    LeanLogic,
+});
+export const LeanSetOperator = setFamily.LeanSetOperator;
+export const Lean_setminus = setFamily.Lean_setminus;
+export const Lean_cup = setFamily.Lean_cup;
+export const Lean_cap = setFamily.Lean_cap;
+export const Lean_subseteq = setFamily.Lean_subseteq;
+export const Lean_subset = setFamily.Lean_subset;
+export const Lean_supseteq = setFamily.Lean_supseteq;
+export const Lean_supset = setFamily.Lean_supset;
 
 
 /**
@@ -3951,43 +3931,6 @@ function implyLetAlignLatex(imply, syntax) {
     }
     return '\\begin{align*}\n' + rows.join('\\\\\n') + '\n\\end{align*}';
 }
-
-/** `⊆`. */
-export class Lean_subseteq extends LeanBinaryBoolean {
-    static input_priority = 50;
-
-    get operator() {
-        return '⊆';
-    }
-}
-
-/** `⊂`. */
-export class Lean_subset extends LeanBinaryBoolean {
-    static input_priority = 50;
-
-    get operator() {
-        return '⊂';
-    }
-}
-
-/** `⊇`. */
-export class Lean_supseteq extends LeanLogic {
-    static input_priority = 50;
-
-    get operator() {
-        return '⊇';
-    }
-}
-
-/** `⊃`. */
-export class Lean_supset extends LeanLogic {
-    static input_priority = 50;
-
-    get operator() {
-        return '⊃';
-    }
-}
-
 
 /**
  * Multiline `LeanStatements` is used both for proof scripts (`by …`) and for proposition/type text after `:`.

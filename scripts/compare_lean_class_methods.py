@@ -230,7 +230,7 @@ PRESETS: dict[str, tuple[str, str]] = {
     ),
     "leanisnot": (
         "class Lean_is_not extends LeanBinary\n{",
-        "\n}\n\nabstract class LeanSetOperator extends LeanBinary {",
+        "\n}\n\nrequire_once dirname(__FILE__) . '/lean/logic.php';",
     ),
     "leanlogic": (
         "abstract class LeanLogic extends LeanBinaryBoolean\n{",
