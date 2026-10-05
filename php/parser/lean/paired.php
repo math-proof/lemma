@@ -257,6 +257,8 @@ class LeanParenthesis extends LeanPairedGroup
         }
         if ($this->isLatexGetElemOperand())
             return [$arg->toLatex($syntax)];
+        if ($this->isLatexRedundantPrecedence())
+            return [$arg->toLatex($syntax)];
         return parent::latexArgs($syntax);
     }
 
@@ -277,7 +279,23 @@ class LeanParenthesis extends LeanPairedGroup
         }
         if ($this->isLatexGetElemOperand())
             return '%s';
+        if ($this->isLatexRedundantPrecedence())
+            return '%s';
         return $this->toColor();
+    }
+
+    /**
+     * `(γ ^ id) * r` — the inner op binds tighter than the parent, so the
+     * parens are only a parse grouping. Drop the colorbox / `\left(\right)`.
+     * `(a + b) * c` keeps them: `+` binds looser than `*`.
+     */
+    public function isLatexRedundantPrecedence()
+    {
+        $parent = $this->parent;
+        $child = $this->arg;
+        if (!($parent instanceof LeanArithmetic && $child instanceof LeanArithmetic))
+            return false;
+        return get_class($child)::$input_priority > get_class($parent)::$input_priority;
     }
 
     public function isLatexGetElemOperand()

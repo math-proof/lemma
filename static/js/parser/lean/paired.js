@@ -461,6 +461,8 @@ export function createPairedFamily(deps) {
             }
             if (this.isLatexGetElemOperand())
                 return [arg.toLatex(syntax)];
+            if (this.isLatexRedundantPrecedence())
+                return [arg.toLatex(syntax)];
             return super.latexArgs(syntax);
         }
 
@@ -476,11 +478,26 @@ export function createPairedFamily(deps) {
             }
             if (this.isLatexGetElemOperand())
                 return '%s';
+            if (this.isLatexRedundantPrecedence())
+                return '%s';
             if (String(arg).includes('\n') && !(arg instanceof LeanArgsIndented && arg.isMultilineApplication()))
                 // Multi-row content (e.g. `(by …)` tactic block rendering as `align*`):
                 // `\mathord{\left(...\right)}` would stretch to the full block height.
                 return '%s';
             return this.toColor();
+        }
+
+        /**
+         * `(γ ^ id) * r` — the inner op binds tighter than the parent, so the
+         * parens are only a parse grouping. Drop the colorbox / `\left(\right)`.
+         * `(a + b) * c` keeps them: `+` binds looser than `*`.
+         */
+        isLatexRedundantPrecedence() {
+            const parent = this.parent;
+            const child = this.arg;
+            if (!(parent instanceof LeanArithmetic && child instanceof LeanArithmetic))
+                return false;
+            return child.constructor.input_priority > parent.constructor.input_priority;
         }
 
         /** Parenthesized GetElem base/index: `(e)[i]` → `e_i`, not `(e)_i`. */
