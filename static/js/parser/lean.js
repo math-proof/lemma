@@ -21,6 +21,7 @@ import { createFunFamily } from './lean/fun.js';
 import { createBaseFamily } from './lean/base.js';
 import { createAtomicFamily } from './lean/atomic.js';
 import { createAbstractFamily } from './lean/abstract.js';
+import { createRangeFamily } from './lean/range.js';
 
 /** Relational / comparison ops; reused by token2classname and leanInfixContinue. */
 const leanRelationalTokens = Object.freeze({
@@ -342,34 +343,11 @@ export const LeanLineComment = atomicFamily.LeanLineComment;
 const LeanBlockComment = atomicFamily.LeanBlockComment;
 const LeanDocString = atomicFamily.LeanDocString;
 
-/**
- * Interval notation `a..b` used by `∫ x in a..b, f x` (Mathlib `notation3 "a".."b"`).
- * Binds looser than arithmetic/relational nodes, matching the term-level parsing of the bounds.
- */
-export class LeanUpto extends LeanBinary {
-    static input_priority = 49; // LeanRelational::$input_priority - 1
-
-    get operator() {
-        return '..';
-    }
-
-    get command() {
-        return '..';
-    }
-
-    strFormat() {
-        return '%s' + this.sep() + '..%s';
-    }
-
-    latexFormat() {
-        return '%s' + this.sep() + '..%s';
-    }
-
-    sep() {
-        return this.rhs instanceof LeanCaret ? ' ' : '';
-    }
-}
-
+const rangeFamily = createRangeFamily({
+    LeanBinary,
+    LeanCaret,
+});
+export const LeanUpto = rangeFamily.LeanUpto;
 export class LeanProperty extends LeanBinary {
     static input_priority = 81; // LeanPow::$input_priority + 1
 

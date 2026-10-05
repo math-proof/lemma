@@ -100,40 +100,7 @@ require_once dirname(__FILE__) . '/lean/abstract.php';
 
 require_once dirname(__FILE__) . '/lean/paired.php';
 
-/**
- * Interval notation `a..b` used by `∫ x in a..b, f x` (Mathlib `notation3 "a".."b"`).
- * Binds looser than arithmetic/relational nodes, matching the term-level parsing of the bounds.
- */
-class LeanUpto extends LeanBinary
-{
-    public static $input_priority = 49; // LeanRelational::$input_priority - 1
-
-    public function __get($vname)
-    {
-        switch ($vname) {
-            case 'operator':
-            case 'command':
-                return '..';
-            default:
-                return parent::__get($vname);
-        }
-    }
-
-    public function sep()
-    {
-        return '';
-    }
-
-    public function strFormat()
-    {
-        return '%s..%s';
-    }
-
-    public function latexFormat()
-    {
-        return '%s..%s';
-    }
-}
+require_once dirname(__FILE__) . '/lean/range.php';
 
 class LeanProperty extends LeanBinary
 {
