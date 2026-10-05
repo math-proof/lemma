@@ -142,4 +142,4 @@ class Lean_match extends LeanArgs
 
 }
 
-// END OF match family (LeanBy stays in lean.php)
+// END OF match family (Lean_def stays in lean.php)
