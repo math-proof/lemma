@@ -279,4 +279,4 @@ class Lean_leftarrow extends LeanUnary
 
 }
 
-// END OF arrows family (Lean_fun stays in lean.php)
+// END OF arrows family (LeanParser stays in lean.php)

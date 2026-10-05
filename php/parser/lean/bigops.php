@@ -1,11 +1,122 @@
 <?php
 /**
- * Big operators (`∑`, `lim`, `∏`, `∫`, `⋂`, `⋃`, `Stack`).
+ * Big operators (`LeanBigOperator`, `∑`, `lim`, `∏`, `∫`, `⋂`, `⋃`, `Stack`).
  *
- * Loaded by lean.php after LeanBigOperator and quantifier.php.
+ * Loaded by lean.php after `fun.php` and before `quantifier.php`, because
+ * `LeanQuantifier` extends `LeanBigOperator`.
  * JS also has `LeanInf` / `LeanSup` (`⨅` / `⨆`); this file does not.
  * Mirrors static/js/parser/lean/bigops.js. Not a standalone entry point.
  */
+
+class LeanBigOperator extends LeanArgs
+{
+    public function __construct($bound, $indent, $level, $parent = null)
+    {
+        parent::__construct([$bound], $indent, $level, $parent);
+    }
+
+    public function __get($vname)
+    {
+        switch ($vname) {
+            case 'bound':
+                // bound variable or quantified variable.
+                return $this->args[0];
+            case 'scope':
+                // body or scope of the quantifier.
+                return $this->args[1] ?? null;
+            case 'stack_priority':
+                return LeanColon::$input_priority - 1;
+            default:
+                return parent::__get($vname);
+        }
+    }
+
+    public function __set($vname, $val)
+    {
+        switch ($vname) {
+            case 'bound':
+                $this->args[0] = $val;
+                break;
+            case 'scope':
+                $this->args[1] = $val;
+                break;
+            default:
+                parent::__set($vname, $val);
+                return;
+        }
+        $val->parent = $this;
+    }
+
+    /**
+     * `∫ x : ℝ in a..b, f x` — the `in` domain modifier attaches to the bound as a sibling:
+     * bound becomes `LeanArgsSpaceSeparated [oldBound, LeanIn domain]`.
+     */
+    public function insert($caret, $func, $type)
+    {
+        if ($func === 'LeanIn' && $type === 'modifier' && $caret === $this->bound && $this->scope === null) {
+            $c = new LeanCaret($this->indent, $caret->level);
+            $domain = new LeanIn($c, $this->indent, $caret->level);
+            $this->bound = new LeanArgsSpaceSeparated([$caret, $domain], $this->indent, $caret->level);
+            return $c;
+        }
+        if ($this->parent)
+            return $this->parent->insert($this, $func, $type);
+    }
+
+    public function insert_comma($caret)
+    {
+        if ($caret === $this->bound) {
+            $caret = new LeanCaret($this->indent, $caret->level);
+            $this->scope = $caret;
+            return $caret;
+        }
+        throw new Exception(__METHOD__ . " is unexpected for " . get_class($this));
+    }
+
+    public function insert_if($caret)
+    {
+        if ($this->scope === $caret) {
+            if ($caret instanceof LeanCaret) {
+                $this->scope = new LeanIte([$caret], $caret->indent, $caret->level);
+                return $caret;
+            }
+        }
+        throw new Exception(__METHOD__ . " is unexpected for " . get_class($this));
+    }
+
+    public function insert_newline($caret, $newline_count, $indent, $next)
+    {
+        if ($caret === $this->scope) {
+            if ($new = $this->push_args_indented($this->indent + 2, $newline_count))
+                return $new;
+        }
+        return parent::insert_newline($caret, $newline_count, $indent, $next);
+    }
+    public function is_indented()
+    {
+        return ($parent = $this->parent) instanceof LeanStatements || $parent instanceof LeanIte;
+    }
+
+    public function jsonSerialize(): mixed
+    {
+        return [
+            $this->func => parent::jsonSerialize()
+        ];
+    }
+
+    public function latexFormat()
+    {
+        return "$this->command\\limits_{\\substack{%s}} {%s}";
+    }
+
+    public function strFormat()
+    {
+        if (count($this->args) == 1)
+            return "$this->operator %s,";
+        return "$this->operator %s, %s";
+    }
+
+}
 
 class Lean_sum extends LeanBigOperator
 {

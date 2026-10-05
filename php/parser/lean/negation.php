@@ -70,4 +70,4 @@ class LeanNot extends LeanUnary
 
 }
 
-// END OF negation family (Lean_fun stays in lean.php)
+// END OF negation family (LeanParser stays in lean.php)

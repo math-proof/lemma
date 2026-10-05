@@ -277,4 +277,4 @@ class LeanIte extends LeanArgs
     }
 }
 
-// END OF ite family (Lean_fun stays in lean.php)
+// END OF ite family (LeanParser stays in lean.php)

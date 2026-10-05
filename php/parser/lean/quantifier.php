@@ -2,7 +2,7 @@
 /**
  * Quantifiers (`LeanQuantifier`, ∀, ∃).
  *
- * Loaded by lean.php after LeanBigOperator. ∑ / ∏ / ∫ stay in lean.php.
+ * Loaded by lean.php after `bigops.php` (`LeanQuantifier` extends `LeanBigOperator`).
  * Mirrors static/js/parser/lean/quantifier.js. Not a standalone entry point.
  */
 

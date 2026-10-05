@@ -17,6 +17,7 @@ import { createIteFamily } from './lean/ite.js';
 import { createArgsFamily } from './lean/args.js';
 import { createTacticFamily } from './lean/tactic.js';
 import { createDeclFamily } from './lean/decl.js';
+import { createFunFamily } from './lean/fun.js';
 
 /** Relational / comparison ops; reused by token2classname and leanInfixContinue. */
 const leanRelationalTokens = Object.freeze({
@@ -5606,242 +5607,16 @@ const Lean_set = declFamily.Lean_set;
 const Lean_replace = declFamily.Lean_replace;
 const Lean_show = declFamily.Lean_show;
 
-/** `fun` (λ-style binder head). */
-class Lean_fun extends LeanUnary {
-    static input_priority = 18;
-    get operator() {
-        return 'fun';
-    }
-    get command() {
-        return '\\lambda';
-    }
-    is_indented() {
-        const parent = this.parent;
-        return parent instanceof LeanArgsNewLineSeparated || parent instanceof LeanStatements;
-    }
-    toJSON() {
-        return { [this.operator]: this.arg.toJSON() };
-    }
-    latexFormat() {
-        return `${this.command}\\ %s`;
-    }
-    strFormat() {
-        return `${this.operator} %s`;
-    }
-}
-
-class LeanBigOperator extends LeanArgs {
-    superscript = null;
-
-    get baseOperator() {
-        throw new Error(`${this.constructor.name} must define baseOperator or override operator`);
-    }
-
-    get operator() {
-        return this.superscript ? `${this.baseOperator}${this.superscript}` : this.baseOperator;
-    }
-
-    /**
-     * @param {Lean} bound
-     * @param {number} indent
-     * @param {number} level
-     * @param {import('./node.js').Node | null} [parent]
-     */
-    constructor(bound, indent, level, parent = null) {
-        super([bound], indent, level, parent);
-    }
-
-    get bound() {
-        return this.args[0];
-    }
-    set bound(v) {
-        this.args[0] = v;
-        if (v) v.parent = this;
-    }
-
-    get scope() {
-        return this.args[1] ?? null;
-    }
-    set scope(v) {
-        if (this.args.length < 2) this.args.push(v);
-        else this.args[1] = v;
-        if (v) v.parent = this;
-    }
-
-    get stack_priority() {
-        if (this.scope) return LeanRelational.input_priority;
-        return LeanColon.input_priority - 1;
-    }
-
-    is_indented() {
-        const parent = this.parent;
-        return parent instanceof LeanArgsCommaNewLineSeparated ||
-            parent instanceof LeanArgsNewLineSeparated ||
-            parent instanceof LeanStatements ||
-            (parent instanceof LeanIte && !parent.inline);
-    }
-
-    sep() {
-        if (this.scope instanceof LeanArgsNewLineSeparated) return "\n";
-        return ' ';
-    }
-
-    set_line(line) {
-        this.line = line;
-        line = this.bound.set_line(line);
-        const s = this.sep();
-        if (s && s[0] === '\n') line++;
-        return this.scope.set_line(line);
-    }
-
-    strFormat() {
-        const op = this.operator;
-        if (this.args.length === 1) return `${op} %s,`;
-        var sep = this.sep();
-        return `${op} %s,${sep}%s`;
-    }
-
-    /** `i : Fin k` in ∑/∏ → subscript `i < k`. */
-    finRangeBound() {
-        const bound = this.bound;
-        if (!(bound instanceof LeanColon)) return null;
-        let ty = bound.rhs;
-        if (ty instanceof LeanParenthesis) ty = ty.arg;
-        if (ty instanceof LeanArgsSpaceSeparated && ty.args.length === 2) {
-            const [fn, n] = ty.args;
-            if (fn instanceof LeanToken && fn.text === 'Fin')
-                return [bound.lhs, n];
-        }
-        return null;
-    }
-
-    /**
-     * `∑/∏ i ∈ Finset.Ico a (b + 1), f` → `[i, a, b]`, rendered as `\\prod_{i=a}^{b}`.
-     */
-    icoClosedBound() {
-        if (!(this instanceof Lean_sum || this instanceof Lean_prod)) return null;
-        const peel = (n) => (n instanceof LeanParenthesis ? n.arg : n);
-        const bound = this.bound;
-        if (!(bound instanceof Lean_in)) return null;
-        const set = peel(bound.rhs);
-        if (!(set instanceof LeanArgsSpaceSeparated) || set.args.length !== 3) return null;
-        const fn = set.args[0];
-        const isIco =
-            (fn instanceof LeanToken && fn.text === 'Ico') ||
-            (fn instanceof LeanProperty &&
-                fn.rhs instanceof LeanToken && fn.rhs.text === 'Ico' &&
-                fn.lhs instanceof LeanToken && fn.lhs.text === 'Finset');
-        if (!isIco) return null;
-        const top = peel(set.args[2]);
-        if (!(top instanceof LeanAdd) || !(top.rhs instanceof LeanToken) || top.rhs.text !== '1')
-            return null;
-        return [bound.lhs, peel(set.args[1]), top.lhs];
-    }
-
-    latexFormat() {
-        if (!(this instanceof LeanQuantifier) && this.finRangeBound())
-            return `${this.command}\\limits_{%s < %s} {%s}`;
-        if (!this.superscript && this.icoClosedBound())
-            return `${this.command}\\limits_{%s=%s}^{%s} {%s}`;
-        const cmd = this.command;
-        return `${cmd}\\limits_{\\substack{%s}} {%s}`;
-    }
-
-    latexArgs(syntax) {
-        if (!(this instanceof LeanQuantifier)) {
-            const fin = this.finRangeBound();
-            if (fin) {
-                const [i, n] = fin;
-                const peel = (arg) => (arg instanceof LeanParenthesis ? arg.arg : arg);
-                return [i.toLatex(syntax), peel(n).toLatex(syntax), this.scope.toLatex(syntax)];
-            }
-            const ico = !this.superscript && this.icoClosedBound();
-            if (ico) {
-                const [i, a, b] = ico;
-                return [i.toLatex(syntax), a.toLatex(syntax), b.toLatex(syntax), this.scope.toLatex(syntax)];
-            }
-        }
-        return super.latexArgs(syntax);
-    }
-
-    toJSON() {
-        return {
-            [this.func]: super.toJSON(),
-        };
-    }
-
-    /**
-     * `∫ x : ℝ in a..b, f x` — the `in` domain modifier attaches to the bound as a sibling:
-     * bound becomes `LeanArgsSpaceSeparated [oldBound, LeanIn domain]`.
-     */
-    insert(caret, func, type) {
-        if (func === 'LeanIn' && type === 'modifier' && caret === this.bound && this.scope == null) {
-            const c = new LeanCaret(this.indent, caret.level);
-            const domain = new LeanIn(c, this.indent, caret.level);
-            this.bound = new LeanArgsSpaceSeparated([caret, domain], this.indent, caret.level);
-            return c;
-        }
-        if (this.parent) return this.parent.insert(this, func, type);
-    }
-
-    insert_comma(caret) {
-        if (caret === this.bound) {
-            const c = new LeanCaret(this.indent, caret.level);
-            this.scope = c;
-            return c;
-        }
-        // `⟨∑ s, ‖x s‖, 1⟩` — a comma after a finished body closes the big operator.
-        if (caret === this.scope && !(caret instanceof LeanCaret) && this.parent)
-            return this.parent.insert_comma(this);
-        throw new Error(`${this.constructor.name}.insert_comma: unexpected`);
-    }
-
-    insert_if(caret) {
-        if (this.scope === caret && caret instanceof LeanCaret) {
-            this.scope = new LeanIte([caret], caret.indent, caret.level);
-            return caret;
-        }
-        throw new Error(`${this.constructor.name}.insert_if: unexpected`);
-    }
-
-    insert_newline(caret, newline_count, indent, next) {
-        if (caret === this.scope) {
-            if (caret instanceof LeanCaret) {
-                caret.indent = indent;
-                const nl = new LeanArgsNewLineSeparated([caret], indent, caret.level);
-                caret = nl.push_newlines(newline_count - 1);
-                this.scope = nl;
-                return caret;
-            }
-            else if (indent > this.indent) {
-                // a more-indented line continues the scope (e.g. a dangling
-                // operator); a dedent closes this statement entirely — let the
-                // enclosing statement list handle it instead of absorbing it
-                const $new = this.push_args_indented(indent, newline_count);
-                if ($new) return $new;
-            }
-        }
-        return super.insert_newline(caret, newline_count, indent, next);
-    }
-}
-
-const quantifierLate = {};
-const quantifierFamily = createQuantifierFamily({
-    LeanProp,
-    LeanBigOperator,
-    LeanArgsSpaceSeparated,
-    LeanCaret,
-    LeanIn,
-    LeanColon,
-    quantifierLate,
+const funFamily = createFunFamily({
+    LeanUnary,
+    LeanArgsNewLineSeparated,
+    LeanStatements,
 });
-const LeanQuantifier = quantifierFamily.LeanQuantifier;
-const Lean_forall = quantifierFamily.Lean_forall;
-const Lean_exists = quantifierFamily.Lean_exists;
+const Lean_fun = funFamily.Lean_fun;
 
 const bigopsLate = {};
 const bigopsFamily = createBigOpsFamily({
-    LeanBigOperator,
+    LeanArgs,
     LeanArgsCommaNewLineSeparated,
     LeanArgsIndented,
     LeanArgsNewLineSeparated,
@@ -5861,6 +5636,7 @@ const bigopsFamily = createBigOpsFamily({
     strStmt,
     bigopsLate,
 });
+const LeanBigOperator = bigopsFamily.LeanBigOperator;
 const Lean_sum = bigopsFamily.Lean_sum;
 const Lean_lim = bigopsFamily.Lean_lim;
 const Lean_prod = bigopsFamily.Lean_prod;
@@ -5870,6 +5646,20 @@ const Lean_bigcup = bigopsFamily.Lean_bigcup;
 const LeanInf = bigopsFamily.LeanInf;
 const LeanSup = bigopsFamily.LeanSup;
 const LeanStack = bigopsFamily.LeanStack;
+
+const quantifierLate = {};
+const quantifierFamily = createQuantifierFamily({
+    LeanProp,
+    LeanBigOperator,
+    LeanArgsSpaceSeparated,
+    LeanCaret,
+    LeanIn,
+    LeanColon,
+    quantifierLate,
+});
+const LeanQuantifier = quantifierFamily.LeanQuantifier;
+const Lean_forall = quantifierFamily.Lean_forall;
+const Lean_exists = quantifierFamily.Lean_exists;
 
 export class LeanParser extends AbstractParser {
     constructor() {
@@ -6114,6 +5904,7 @@ quantifierLate.Lean_partial = Lean_partial;
 Object.assign(bigopsLate, {
     LeanAdd,
     LeanPlus,
+    LeanQuantifier,
     Lean_partial,
     LeanParenthesis,
     LeanDoubleAngleQuotation,

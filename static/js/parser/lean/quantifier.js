@@ -1,8 +1,9 @@
 /**
  * Quantifiers: `LeanQuantifier`, `∀` (`Lean_forall`), and `∃` (`Lean_exists`).
  *
- * They extend `LeanProp(LeanBigOperator)`. Big operators (`∑` / `∏` / `∫`) stay
- * in `lean.js`. `Lean_partial` is filled on `quantifierLate` after the arithmetic
+ * They extend `LeanProp(LeanBigOperator)`. `LeanBigOperator` and the concrete
+ * big operators live in `bigops.js` and are created before this factory.
+ * `Lean_partial` is filled on `quantifierLate` after the arithmetic
  * factory returns; methods only use it via `instanceof`.
  * This factory does not import `lean.js`.
  *

@@ -455,4 +455,4 @@ class Lean_show extends LeanSyntax
 
 }
 
-// END OF decl family (Lean_fun stays in lean.php)
+// END OF decl family (LeanParser stays in lean.php)

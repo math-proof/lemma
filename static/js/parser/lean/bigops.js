@@ -1,18 +1,23 @@
 /**
- * Big operators that extend `LeanBigOperator`: `∑` / `lim` / `∏` / `∫` /
+ * Big operators: `LeanBigOperator` and `∑` / `lim` / `∏` / `∫` /
  * `⋂` / `⋃` / `⨅` / `⨆` / `Stack`.
  *
- * Quantifiers stay in `quantifier.js`. `LeanAdd` is read for `input_priority`;
+ * `LeanArgs` and the classes already declared above this factory stay in
+ * `lean.js` and are passed in. Quantifiers stay in `quantifier.js` and are
+ * created after this factory returns; `LeanBigOperator` sees `LeanQuantifier`
+ * through `bigopsLate`. `LeanAdd` is read for `input_priority` and `instanceof`.
  * `LeanPlus`, `Lean_partial`, `LeanParenthesis`, and `LeanDoubleAngleQuotation`
- * are only used via `instanceof`. All five are filled on `bigopsLate` after
- * the paired and arithmetic factories return. This factory does not import `lean.js`.
+ * are only used via `instanceof`. Those classes are filled on `bigopsLate`
+ * after the paired and arithmetic factories return. This factory does not
+ * import `lean.js`.
  *
  * @param {object} deps
+ * @param {Function} deps.LeanArgs
  * @param {object} deps.bigopsLate
  */
 export function createBigOpsFamily(deps) {
     const {
-        LeanBigOperator,
+        LeanArgs,
         LeanArgsCommaNewLineSeparated,
         LeanArgsIndented,
         LeanArgsNewLineSeparated,
@@ -48,6 +53,7 @@ export function createBigOpsFamily(deps) {
             get(_target, prop) {
                 const real = bigopsLate[name];
                 if (real == null) throw new Error(`${name} used before big-operator registration`);
+                if (prop === Symbol.hasInstance) return (inst) => inst instanceof real;
                 return real[prop];
             },
         });
@@ -57,6 +63,202 @@ export function createBigOpsFamily(deps) {
     const Lean_partial = lateClass('Lean_partial');
     const LeanParenthesis = lateClass('LeanParenthesis');
     const LeanDoubleAngleQuotation = lateClass('LeanDoubleAngleQuotation');
+    const LeanQuantifier = lateClass('LeanQuantifier');
+
+    class LeanBigOperator extends LeanArgs {
+        superscript = null;
+
+        get baseOperator() {
+            throw new Error(`${this.constructor.name} must define baseOperator or override operator`);
+        }
+
+        get operator() {
+            return this.superscript ? `${this.baseOperator}${this.superscript}` : this.baseOperator;
+        }
+
+        /**
+         * @param {Lean} bound
+         * @param {number} indent
+         * @param {number} level
+         * @param {import('./node.js').Node | null} [parent]
+         */
+        constructor(bound, indent, level, parent = null) {
+            super([bound], indent, level, parent);
+        }
+
+        get bound() {
+            return this.args[0];
+        }
+        set bound(v) {
+            this.args[0] = v;
+            if (v) v.parent = this;
+        }
+
+        get scope() {
+            return this.args[1] ?? null;
+        }
+        set scope(v) {
+            if (this.args.length < 2) this.args.push(v);
+            else this.args[1] = v;
+            if (v) v.parent = this;
+        }
+
+        get stack_priority() {
+            if (this.scope) return LeanRelational.input_priority;
+            return LeanColon.input_priority - 1;
+        }
+
+        is_indented() {
+            const parent = this.parent;
+            return parent instanceof LeanArgsCommaNewLineSeparated ||
+                parent instanceof LeanArgsNewLineSeparated ||
+                parent instanceof LeanStatements ||
+                (parent instanceof LeanIte && !parent.inline);
+        }
+
+        sep() {
+            if (this.scope instanceof LeanArgsNewLineSeparated) return "\n";
+            return ' ';
+        }
+
+        set_line(line) {
+            this.line = line;
+            line = this.bound.set_line(line);
+            const s = this.sep();
+            if (s && s[0] === '\n') line++;
+            return this.scope.set_line(line);
+        }
+
+        strFormat() {
+            const op = this.operator;
+            if (this.args.length === 1) return `${op} %s,`;
+            var sep = this.sep();
+            return `${op} %s,${sep}%s`;
+        }
+
+        /** `i : Fin k` in ∑/∏ → subscript `i < k`. */
+        finRangeBound() {
+            const bound = this.bound;
+            if (!(bound instanceof LeanColon)) return null;
+            let ty = bound.rhs;
+            if (ty instanceof LeanParenthesis) ty = ty.arg;
+            if (ty instanceof LeanArgsSpaceSeparated && ty.args.length === 2) {
+                const [fn, n] = ty.args;
+                if (fn instanceof LeanToken && fn.text === 'Fin')
+                    return [bound.lhs, n];
+            }
+            return null;
+        }
+
+        /**
+         * `∑/∏ i ∈ Finset.Ico a (b + 1), f` → `[i, a, b]`, rendered as `\\prod_{i=a}^{b}`.
+         */
+        icoClosedBound() {
+            if (!(this instanceof Lean_sum || this instanceof Lean_prod)) return null;
+            const peel = (n) => (n instanceof LeanParenthesis ? n.arg : n);
+            const bound = this.bound;
+            if (!(bound instanceof Lean_in)) return null;
+            const set = peel(bound.rhs);
+            if (!(set instanceof LeanArgsSpaceSeparated) || set.args.length !== 3) return null;
+            const fn = set.args[0];
+            const isIco =
+                (fn instanceof LeanToken && fn.text === 'Ico') ||
+                (fn instanceof LeanProperty &&
+                    fn.rhs instanceof LeanToken && fn.rhs.text === 'Ico' &&
+                    fn.lhs instanceof LeanToken && fn.lhs.text === 'Finset');
+            if (!isIco) return null;
+            const top = peel(set.args[2]);
+            if (!(top instanceof LeanAdd) || !(top.rhs instanceof LeanToken) || top.rhs.text !== '1')
+                return null;
+            return [bound.lhs, peel(set.args[1]), top.lhs];
+        }
+
+        latexFormat() {
+            if (!(this instanceof LeanQuantifier) && this.finRangeBound())
+                return `${this.command}\\limits_{%s < %s} {%s}`;
+            if (!this.superscript && this.icoClosedBound())
+                return `${this.command}\\limits_{%s=%s}^{%s} {%s}`;
+            const cmd = this.command;
+            return `${cmd}\\limits_{\\substack{%s}} {%s}`;
+        }
+
+        latexArgs(syntax) {
+            if (!(this instanceof LeanQuantifier)) {
+                const fin = this.finRangeBound();
+                if (fin) {
+                    const [i, n] = fin;
+                    const peel = (arg) => (arg instanceof LeanParenthesis ? arg.arg : arg);
+                    return [i.toLatex(syntax), peel(n).toLatex(syntax), this.scope.toLatex(syntax)];
+                }
+                const ico = !this.superscript && this.icoClosedBound();
+                if (ico) {
+                    const [i, a, b] = ico;
+                    return [i.toLatex(syntax), a.toLatex(syntax), b.toLatex(syntax), this.scope.toLatex(syntax)];
+                }
+            }
+            return super.latexArgs(syntax);
+        }
+
+        toJSON() {
+            return {
+                [this.func]: super.toJSON(),
+            };
+        }
+
+        /**
+         * `∫ x : ℝ in a..b, f x` — the `in` domain modifier attaches to the bound as a sibling:
+         * bound becomes `LeanArgsSpaceSeparated [oldBound, LeanIn domain]`.
+         */
+        insert(caret, func, type) {
+            if (func === 'LeanIn' && type === 'modifier' && caret === this.bound && this.scope == null) {
+                const c = new LeanCaret(this.indent, caret.level);
+                const domain = new LeanIn(c, this.indent, caret.level);
+                this.bound = new LeanArgsSpaceSeparated([caret, domain], this.indent, caret.level);
+                return c;
+            }
+            if (this.parent) return this.parent.insert(this, func, type);
+        }
+
+        insert_comma(caret) {
+            if (caret === this.bound) {
+                const c = new LeanCaret(this.indent, caret.level);
+                this.scope = c;
+                return c;
+            }
+            // `⟨∑ s, ‖x s‖, 1⟩` — a comma after a finished body closes the big operator.
+            if (caret === this.scope && !(caret instanceof LeanCaret) && this.parent)
+                return this.parent.insert_comma(this);
+            throw new Error(`${this.constructor.name}.insert_comma: unexpected`);
+        }
+
+        insert_if(caret) {
+            if (this.scope === caret && caret instanceof LeanCaret) {
+                this.scope = new LeanIte([caret], caret.indent, caret.level);
+                return caret;
+            }
+            throw new Error(`${this.constructor.name}.insert_if: unexpected`);
+        }
+
+        insert_newline(caret, newline_count, indent, next) {
+            if (caret === this.scope) {
+                if (caret instanceof LeanCaret) {
+                    caret.indent = indent;
+                    const nl = new LeanArgsNewLineSeparated([caret], indent, caret.level);
+                    caret = nl.push_newlines(newline_count - 1);
+                    this.scope = nl;
+                    return caret;
+                }
+                else if (indent > this.indent) {
+                    // a more-indented line continues the scope (e.g. a dangling
+                    // operator); a dedent closes this statement entirely — let the
+                    // enclosing statement list handle it instead of absorbing it
+                    const $new = this.push_args_indented(indent, newline_count);
+                    if ($new) return $new;
+                }
+            }
+            return super.insert_newline(caret, newline_count, indent, next);
+        }
+    }
 
     class Lean_sum extends LeanBigOperator {
         static input_priority = 67;
@@ -393,6 +595,7 @@ export function createBigOpsFamily(deps) {
 
 
     return {
+        LeanBigOperator,
         Lean_sum,
         Lean_lim,
         Lean_prod,
