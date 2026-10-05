@@ -436,4 +436,4 @@ class LeanDocString extends LeanBlockComment
 
 }
 
-// END OF atomic family (LeanArgs stays in lean.php)
+// END OF atomic family (LeanUpto stays in lean.php)

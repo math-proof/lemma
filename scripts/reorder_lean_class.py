@@ -131,6 +131,7 @@ TACTIC = ROOT / "php" / "parser" / "lean" / "tactic.php"
 DECL = ROOT / "php" / "parser" / "lean" / "decl.php"
 BASE = ROOT / "php" / "parser" / "lean" / "base.php"
 ATOMIC = ROOT / "php" / "parser" / "lean" / "atomic.php"
+ABSTRACT = ROOT / "php" / "parser" / "lean" / "abstract.php"
 ARITHMETIC_PRESETS = frozenset({
     "leanarithmetic",
     "leanmul",
@@ -248,6 +249,11 @@ ATOMIC_PRESETS = frozenset({
     "leanblockcomment",
     "leandocstring",
 })
+ABSTRACT_PRESETS = frozenset({
+    "leanargs",
+    "leanunary",
+    "leanbinary",
+})
 
 
 def preset_path(preset: str) -> Path:
@@ -285,12 +291,14 @@ def preset_path(preset: str) -> Path:
         return BASE
     if preset in ATOMIC_PRESETS:
         return ATOMIC
+    if preset in ABSTRACT_PRESETS:
+        return ABSTRACT
     return LEAN
 
 PRESETS: dict[str, tuple[str, str]] = {
     "lean": (
         "abstract class Lean extends IndentedNode\n{",
-        "\n}\n\n// END OF base family (LeanArgs stays in lean.php)\n",
+        "\n}\n\n// END OF base family (LeanUpto stays in lean.php)\n",
     ),
     "leancaret": (
         "class LeanCaret extends Lean\n{",
@@ -306,7 +314,7 @@ PRESETS: dict[str, tuple[str, str]] = {
     ),
     "leandocstring": (
         "class LeanDocString extends LeanBlockComment\n{",
-        "\n}\n\n// END OF atomic family (LeanArgs stays in lean.php)\n",
+        "\n}\n\n// END OF atomic family (LeanUpto stays in lean.php)\n",
     ),
     "leanargs": (
         "abstract class LeanArgs extends Lean\n{",
@@ -314,7 +322,7 @@ PRESETS: dict[str, tuple[str, str]] = {
     ),
     "leanunary": (
         "abstract class LeanUnary extends LeanArgs\n{",
-        "\n}\n\nrequire_once dirname(__FILE__) . '/lean/paired.php';",
+        "\n}\n\nabstract class LeanBinary extends LeanArgs",
     ),
     "leanpairedgroup": (
         "abstract class LeanPairedGroup extends LeanUnary\n{",
@@ -342,11 +350,11 @@ PRESETS: dict[str, tuple[str, str]] = {
     ),
     "leandoubleanglequotation": (
         "class LeanDoubleAngleQuotation extends LeanPairedGroup\n{",
-        "\n}\n\n// END OF paired family (LeanBinary stays in lean.php)\n",
+        "\n}\n\n// END OF paired family (LeanUpto stays in lean.php)\n",
     ),
     "leanbinary": (
         "abstract class LeanBinary extends LeanArgs\n{",
-        "\n}\n\nclass LeanProperty extends LeanBinary",
+        "\n}\n\n// END OF abstract family (LeanUpto stays in lean.php)\n",
     ),
     "leanproperty": (
         "class LeanProperty extends LeanBinary\n{",
