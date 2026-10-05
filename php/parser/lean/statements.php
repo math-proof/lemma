@@ -218,4 +218,4 @@ class LeanStatements extends LeanArgs
 
 }
 
-// END OF statements family (LeanCommand stays in lean.php)
+// END OF statements family (LeanBar stays in lean.php)

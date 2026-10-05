@@ -31,6 +31,7 @@ import { createPipelineFamily } from './lean/pipeline.js';
 import { createIsInstanceFamily } from './lean/isinstance.js';
 import { createStatementsFamily } from './lean/statements.js';
 import { createModuleFamily } from './lean/module.js';
+import { createCommandFamily } from './lean/command.js';
 
 /** Relational / comparison ops; reused by token2classname and leanInfixContinue. */
 const leanRelationalTokens = Object.freeze({
@@ -537,134 +538,20 @@ const moduleFamily = createModuleFamily({
 });
 export const LeanModule = moduleFamily.LeanModule;
 
-/** Top-level commands (`import` / `open` / `set_option` / `namespace`): `stack_priority` 27 except `namespace` (inherits unary 47). */
-class LeanCommand extends LeanUnary {
-    get command() {
-        return this.operator;
-    }
-
-    is_indented() {
-        return false;
-    }
-
-    toJSON() {
-        return { [this.func]: this.arg.toJSON() };
-    }
-
-    latexFormat() {
-        return `${this.command} %s`;
-    }
-
-    strFormat() {
-        return `${this.operator} %s`;
-    }
-}
-
-/** `import %s`. */
-class Lean_import extends LeanCommand {
-    get stack_priority() {
-        return 27;
-    }
-    get operator() {
-        return 'import';
-    }
-
-    append(func, type) {
-        if (typeof func !== 'string') {
-            throw new Error(`append is unexpected for ${this.constructor.name}`);
-        }
-        const Ctor = LEAN_CLASSES[func];
-        const level = this.arg.level;
-        const c = new LeanCaret(this.indent, level);
-        this.arg = new Ctor(c, this.indent, level);
-        return c;
-    }
-
-    push_attr(caret) {
-        if (caret === this.arg) {
-            const $new = new LeanCaret(this.indent, caret.level);
-            this.arg = new LeanProperty(this.arg, $new, this.indent, caret.level);
-            return $new;
-        }
-        throw new Error(`push_attr is unexpected for ${this.constructor.name}`);
-    }
-}
-
-class Lean_open extends LeanCommand {
-    get stack_priority() {
-        return 27;
-    }
-    get operator() {
-        return this.scoped ? 'open scoped' : 'open';
-    }
-
-    append(func, type) {
-        if (typeof func !== 'string') {
-            throw new Error(`append is unexpected for ${this.constructor.name}`);
-        }
-        const Ctor = LEAN_CLASSES[func];
-        const level = this.arg.level;
-        const c = new LeanCaret(this.indent, level);
-        this.arg = new Ctor(c, this.indent, level);
-        return c;
-    }
-
-    push_attr(caret) {
-        if (caret === this.arg) {
-            const $new = new LeanCaret(this.indent, caret.level);
-            this.arg = new LeanProperty(this.arg, $new, this.indent, caret.level);
-            return $new;
-        }
-        throw new Error(`push_attr is unexpected for ${this.constructor.name}`);
-    }
-}
-
-/** `set_option %s`. */
-class Lean_set_option extends LeanCommand {
-    get stack_priority() {
-        return 27;
-    }
-    get operator() {
-        return 'set_option';
-    }
-
-    append(func, type) {
-        if (typeof func !== 'string') {
-            throw new Error(`append is unexpected for ${this.constructor.name}`);
-        }
-        const Ctor = LEAN_CLASSES[func];
-        const level = this.arg.level;
-        const c = new LeanCaret(this.indent, level);
-        this.arg = new Ctor(c, this.indent, level);
-        return c;
-    }
-
-    echo() {
-        const {arg} = this;
-        if (arg instanceof LeanArgsSpaceSeparated && arg.args.length === 2) {
-            const {args} = arg;
-            if (args[0] instanceof LeanToken && args[1] instanceof LeanToken && args[0].text === 'maxHeartbeats') {
-                args[1].text = String(parseInt(String(args[1].text), 10) * 5);
-            }
-        }
-    }
-
-    push_attr(caret) {
-        if (caret === this.arg) {
-            const $new = new LeanCaret(this.indent, caret.level);
-            this.arg = new LeanProperty(this.arg, $new, this.indent, caret.level);
-            return $new;
-        }
-        throw new Error(`push_attr is unexpected for ${this.constructor.name}`);
-    }
-}
-
-/** `namespace %s`. */
-class Lean_namespace extends LeanCommand {
-    get operator() {
-        return 'namespace';
-    }
-}
+const commandLate = {};
+const commandFamily = createCommandFamily({
+    LeanUnary,
+    LeanCaret,
+    LeanProperty,
+    LeanToken,
+    classRegistry: arithmeticClassRegistry,
+    commandLate,
+});
+const LeanCommand = commandFamily.LeanCommand;
+const Lean_import = commandFamily.Lean_import;
+const Lean_open = commandFamily.Lean_open;
+const Lean_set_option = commandFamily.Lean_set_option;
+const Lean_namespace = commandFamily.Lean_namespace;
 
 /** Bar, then `=>` and related arrow nodes. */
 class LeanBar extends LeanUnary {
@@ -1453,6 +1340,9 @@ Object.assign(moduleLate, {
     Lean_open,
     Lean_rightarrow,
     Lean_set_option,
+});
+Object.assign(commandLate, {
+    LeanArgsSpaceSeparated,
 });
 Object.assign(abstractLate, {
     LeanArgsIndented,

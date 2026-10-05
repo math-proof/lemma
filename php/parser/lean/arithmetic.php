@@ -1243,4 +1243,4 @@ class LeanPipeForward extends LeanUnaryArithmeticPost
 
 }
 
-// END OF arithmetic family (LeanCommand stays in lean.php)
+// END OF arithmetic family (LeanBar stays in lean.php)
