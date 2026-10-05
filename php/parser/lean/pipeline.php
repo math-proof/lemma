@@ -35,4 +35,4 @@ class LeanMethodChaining extends LeanBinary
     }
 }
 
-// END OF pipeline family (LeanModule stays in lean.php)
+// END OF pipeline family (LeanCommand stays in lean.php)

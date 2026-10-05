@@ -83,4 +83,4 @@ class Lean_is_not extends LeanBinary
 
 }
 
-// END OF isinstance family (LeanModule stays in lean.php)
+// END OF isinstance family (LeanCommand stays in lean.php)

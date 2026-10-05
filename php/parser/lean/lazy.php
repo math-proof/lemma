@@ -37,4 +37,4 @@ class Lean_lazy extends LeanBinary
     }
 }
 
-// END OF lazy family (LeanModule stays in lean.php)
+// END OF lazy family (LeanCommand stays in lean.php)
