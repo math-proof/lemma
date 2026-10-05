@@ -16,6 +16,7 @@ Guidelines and prompts for using LLMs to write and refactor Lean 4 proofs in thi
       - line(s) of implicit binder(s) and their dependent instances (instImplicit) on the same line, if any
       - line(s) of bare implicit binders
   - default arguments should be put within the `given` section: propositions come first, expressions come next, unless otherwise specified
+  - arguments of the same type should be combined, eg: {a b: Type} or (a b: Type)
   - conclusion must be put within the `imply` section
   - proof body must be put within the `proof` section, within proof:
     - binary operators below should not be indented by new lines:
@@ -32,7 +33,7 @@ Guidelines and prompts for using LLMs to write and refactor Lean 4 proofs in thi
       - follow `show` with `from`/`by` instead of `from by`
       - `by exact expr` should be simplifed to `expr`
       - use `grind`/`aesop` as much as possible
-      - in `apply`/`exact`, use `_` as arguments as much as possible, prefer `_` instead of `?_`/`?identifier`
+      - use `_` as unused binders or unnamed holes, prefer `_` instead of `?_`/`?identifier`
   - date created must be today, if date updated is the same as date created, it should be omitted.
 - [lemma path](mjs/README.md)
   - it conveys the lemma semantic per se, thus facilitating search

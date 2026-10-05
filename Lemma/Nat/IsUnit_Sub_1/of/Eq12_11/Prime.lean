@@ -10,7 +10,7 @@ private lemma main
   [CommRing R] [IsLocalRing R] [CharP (IsLocalRing.ResidueField R) 3]
   {ℓg : ℕ}
 -- given
-  (hℓg : ℓg.Prime)
+  (_hℓg : ℓg.Prime)
   (hℓg12 : ℓg % 12 = 11) :
 -- imply
   IsUnit ((ℓg - 1 : ℕ) : R) := by

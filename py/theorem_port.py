@@ -205,6 +205,11 @@ SECTION_START_RE = re.compile(r'^\s*section\b')
 END_RE = re.compile(r'^\s*end\b')
 VARIABLE_RE = re.compile(r'^\s*variable\b')
 OPEN_LINE_RE = re.compile(r'^[ \t]*open[ \t]+([^\n]+)$', re.MULTILINE)
+# FLT P2M.Util: p2m_open "NS1 NS2~alias" / p2m_open_scoped "NS"; skip ``... in`` modifiers.
+P2M_OPEN_RE = re.compile(
+    r'^[ \t]*p2m_open(_scoped)?[ \t]+"([^"\n]+)"(?!\s+in\b)[^\n]*$',
+    re.MULTILINE,
+)
 THEOREM_TO_LEMMA_RE = re.compile(r'^(\s*)theorem\b')
 
 
@@ -1043,6 +1048,12 @@ def extract_opens(text: str) -> str:
 
     Lines ending in ``in`` are command modifiers (``open Foo in <cmd>``)
     scoping a single source declaration that is not ported — skipped.
+
+    FLT's ``P2M.Util`` also provides ``p2m_open "A B~h1~h2"`` (equivalent to
+    ``open A B (h1 h2)`` — ``~`` separates a namespace from its aliased names)
+    and ``p2m_open_scoped "A"`` (``open scoped A``).  Words naming the source
+    file's private ``P2MW.S_*`` namespace are dropped: that namespace exists
+    only inside the unported source.
     """
     seen: list[str] = []
     for m in OPEN_LINE_RE.finditer(text):
@@ -1050,6 +1061,25 @@ def extract_opens(text: str) -> str:
         if body == "in" or body.endswith(" in"):
             continue
         line = f"open {body}"
+        if line not in seen:
+            seen.append(line)
+
+    def p2m_words(s: str) -> str:
+        out: list[str] = []
+        for w in s.split():
+            parts = w.split("~")
+            ns = parts[0]
+            if ns.startswith("P2MW."):
+                continue
+            hidden = [h for h in parts[1:] if h]
+            out.append(ns + (f" ({' '.join(hidden)})" if hidden else ""))
+        return " ".join(out)
+
+    for m in P2M_OPEN_RE.finditer(text):
+        body = p2m_words(m.group(2))
+        if not body:
+            continue
+        line = ("open scoped " if m.group(1) else "open ") + body
         if line not in seen:
             seen.append(line)
     return "\n".join(seen)

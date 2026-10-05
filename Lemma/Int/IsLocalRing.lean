@@ -12,7 +12,7 @@ private lemma main
 -- imply
   IsLocalRing (TrivSqZeroExt R M) := by
 -- proof
-  haveI : Nontrivial (TrivSqZeroExt R M) := (TrivSqZeroExt.inl_injective (R := R) (M := M)).nontrivial
+  have : Nontrivial (TrivSqZeroExt R M) := (TrivSqZeroExt.inl_injective (R := R) (M := M)).nontrivial
   refine IsLocalRing.of_isUnit_or_isUnit_one_sub_self fun x => ?_
   rcases IsLocalRing.isUnit_or_isUnit_one_sub_self x.fst with h | h
   · exact Or.inl (isUnit_iff_isUnit_fst.2 h)

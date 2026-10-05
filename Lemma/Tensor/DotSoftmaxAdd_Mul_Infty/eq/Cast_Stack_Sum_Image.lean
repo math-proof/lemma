@@ -105,7 +105,7 @@ private lemma main
   (a : Fin n → Fin n → ℝ)
   (v : Fin n → Fin d → ℝ) :
 -- imply
-  let Ξ : Tensor ℝ* [n, n] := [i < n] [j < n] (Bool.toNat (decide (j ∈ Finset.univ.image dm)))
+  let Ξ : Tensor ℝ* [n, n] := [_i < n] [j < n] (Bool.toNat (decide (j ∈ Finset.univ.image dm)))
   let A : Tensor ℝ* [n, n] := ([i < n] [j < n] (a i j : Tensor ℝ []) : Tensor ℝ [n, n])
   let V : Tensor ℝ [n, d] := [j < n] [l < d] (v j l : Tensor ℝ [])
   (A + (Ξ - 1) * ∞).softmax @ (V : Tensor ℝ* [n, d]) ≈

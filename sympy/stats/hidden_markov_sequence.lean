@@ -157,7 +157,7 @@ theorem Function.getSlice_zero {Ω α : Type*} (x : ℕ → Ω → α) (n : ℕ)
 theorem Function.getSlice_zero' {α : Type*} (f : ℕ → α) (n : ℕ) (i : Fin n) :
     f[:n] i = f i := rfl
 
-/-- The py first-order hidden Markov assumptions in probability notation (py `markov_assumptions` + `Random.ProbJoint.eq.Mul_Prod_MulProbSCond.of.All_CondIndep.All_CondIndep.EqMeasure_Count.EqMeasure_Count.All_Measurable.All_Measurable`):
+/-- The py first-order hidden Markov assumptions in probability notation (py `markov_assumptions` + `Random.ProbJoint.eq.Mul_Prod_MulProbSCond.of.IsDiscreteHMM`):
 for every label sequence `ys`,
 
   `Pr(x[:1] = xo[:1], y[:1] = ys[:1]) = Pr(x[0] = xo[0] | y[0] = ys[0]) * Pr(y[0] = ys[0])`,

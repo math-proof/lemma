@@ -1348,6 +1348,7 @@ function postAlts(node, opts, alts, canon) {
   const args = node.args || [];
   const A = (n) => (canon ? [nameExpr(n, opts)].filter(Boolean) : nameExprAlts(n, opts));
   if (c === "LeanMul" && chainRuleProdName(node)) return uniq([chainRuleProdName(node), ...alts]);
+  if (c === "LeanMul" && jointCondMulName(node)) return uniq([jointCondMulName(node), ...alts]);
   if (c === "Lean_land" && probJointStepConjName(node)) return uniq([probJointStepConjName(node), ...alts]);
   if (c === "LeanPow" && cls(args[1]) === "LeanToken" && args[1].text === "2") {
     const b = A(args[0]);
@@ -1581,6 +1582,232 @@ function probJointStepConjName(node) {
   const conds = mul2(m[1]);
   return conds && prob(conds[0])?.name === "ProbCond" && prob(conds[1])?.name === "ProbCond_Joint"
     ? "EqProbJoint/All_Eq_Mul_MulProbSCond" : "";
+}
+
+/** Structural signature of a node (class, token text, children) for comparing two sub-trees. */
+function nodeSig(n) {
+  if (!n || typeof n !== "object") return String(n);
+  return cls(n) + (n.text !== undefined ? ":" + n.text : "") + "(" + (n.args || []).map(nodeSig).join(",") + ")";
+}
+
+/**
+ * `ℙ[π](x[:t + 1] = «x.bvar»[:t + 1] ∧ y t = «y.bvar» t) * ℙ[π](x[t + 1:n] = «x.bvar»[t + 1:n] | y t = «y.bvar» t)` —
+ * the forward × backward product of a hidden Markov model cut at time t: a JOINT probability of an observed bvar
+ * slice and the hidden state at t times the CONDITIONAL probability of the observed future given that same state
+ * (Random/Sum_Mul_ProbCond/eq/Prob/of/IsDiscreteHMM). The joint factor is left implicit (not spelled `ProbS`), so the
+ * product reads `Mul_ProbCond` instead of `MulProbSProbCond`. Deliberately narrow: both factors must pin the same `y t = «y.bvar» t`.
+ */
+function jointCondMulName(node) {
+  const n = unwrapParen(node);
+  if (cls(n) !== "LeanMul" || (n.args || []).length !== 2) return "";
+  const lEv = matchProbApp(n.args[0]);
+  const rEv = matchProbApp(n.args[1]);
+  if (!lEv || !rEv || nameProbEvent(lEv) !== "ProbS" || nameProbEvent(rEv) !== "ProbCond") return "";
+  const isSlice = (x) => cls(x) === "LeanGetElem" && cls(x.args?.[1]) === "LeanColon";
+  const eq2 = (x) => { const u = unwrapParen(x); return cls(u) === "LeanEq" && (u.args || []).length === 2 ? u.args.map(unwrapParen) : null; };
+  const sliceEq = (x) => { const e = eq2(x); return !!e && isSlice(e[0]) && isSlice(e[1]) && isBvarQuotation(e[1].args[0]); };
+  // `(y t) = «y.bvar» t`: a non-slice left side against a bvar application
+  const stateEq = (x) => {
+    const e = eq2(x);
+    return !!e && !isSlice(e[0]) && cls(e[1]) === "LeanArgsSpaceSeparated" && isBvarQuotation(e[1].args?.[0]);
+  };
+  const conj = [];
+  (function flat(x) { const u = unwrapParen(x); if (cls(u) === "Lean_land") (u.args || []).forEach(flat); else conj.push(u); })(lEv);
+  if (conj.length !== 2 || !sliceEq(conj[0]) || !stateEq(conj[1])) return "";
+  if (cls(rEv) !== "LeanBitOr") return "";
+  const [fut, given] = rEv.args.map(unwrapParen);
+  if (!sliceEq(fut) || !stateEq(given) || nodeSig(given) !== nodeSig(conj[1])) return "";
+  return "Mul_ProbCond";
+}
+
+/**
+ * `«y.bvar»`-quantified hypotheses / conclusions are normally spelled without the `All_` tag (`Eq_LogProbCond`,
+ * see isAeQuantifier). In the HMM log-posterior shape
+ *   `(∀ t, t + 1 < n → …) ∧ ∀ «y.bvar», -(ℙ(y[:n] = … | x[:n] = …) : ℝ).log = …`
+ * the tagged spelling (`All_Eq_LogProbCond`, `All_Lt0Prob`, `All_EqNegLogProb`) is accepted as well.
+ * Deliberately narrow: the extras only widen what altMatch accepts; the displayed suggestions are unchanged.
+ */
+function hasBvarBinder(quant) {
+  const u = unwrapParen(quant);
+  if (cls(u) !== "Lean_forall" || u.superscript === "ᵐ") return false;
+  let found = false;
+  (function walk(n) {
+    if (!n || typeof n !== "object" || found) return;
+    if (isBvarQuotation(n)) { found = true; return; }
+    for (const a of n.args || []) walk(a);
+  })(u.args?.[0]);
+  return found;
+}
+function isHmmNegLogCondShape(implyStmts) {
+  const parts = splitTopConjunction(implyStmts);
+  if (!parts || parts.length !== 2) return false;
+  const strip = (x) => {
+    let u = unwrapParen(x);
+    while ((cls(u) === "LeanArgsNewLineSeparated" || cls(u) === "LeanStatements") && (u.args || []).filter((a) => cls(a) !== "LeanLineComment").length === 1) {
+      u = unwrapParen((u.args || []).find((a) => cls(a) !== "LeanLineComment"));
+    }
+    return u;
+  };
+  const [steps, post] = parts.map(strip);
+  // ∀ t, t + 1 < n → …
+  if (cls(steps) !== "Lean_forall" || hasBvarBinder(steps)) return false;
+  const imp = strip(steps.args[steps.args.length - 1]);
+  if (cls(imp) !== "Lean_rightarrow" || cls(strip(imp.args?.[0])) !== "Lean_lt") return false;
+  // ∀ «y.bvar», -(ℙ(… | …) : ℝ).log = …
+  if (!hasBvarBinder(post)) return false;
+  const eq = strip(post.args[post.args.length - 1]);
+  if (cls(eq) !== "LeanEq" || (eq.args || []).length !== 2) return false;
+  const lhs = strip(eq.args[0]);
+  if (cls(lhs) !== "LeanNeg") return false;
+  const lg = strip(lhs.args?.[0]);
+  if (cls(lg) !== "LeanProperty" || cls(lg.args?.[1]) !== "LeanToken" || lg.args[1].text !== "log") return false;
+  let cond = false;
+  (function walk(n) {
+    if (!n || typeof n !== "object" || cond) return;
+    const ev = matchProbApp(n);
+    if (ev) { cond = nameProbEvent(ev) === "ProbCond"; return; }
+    for (const a of n.args || []) walk(a);
+  })(lg.args[0]);
+  return cond;
+}
+/**
+ * Extra alternatives (accepted by altMatch, never enumerated into the displayed suggestions) for a
+ * `«y.bvar»`-quantified statement of the isHmmNegLogCondShape lemma.
+ */
+function hmmBvarAllAlts(alts) {
+  const out = [];
+  for (const b of alts) {
+    out.push("All_" + b);
+    const bare = b.replace(/Prob(?:JointGetSliceS|Joint|S)(?![A-Za-z])/g, "Prob"); // Lt0ProbS → Lt0Prob
+    if (bare !== b) out.push("All_" + bare);
+    const neg = /^Eq_?NegLogProbCond/.test(b) ? "EqNegLogProb" : ""; // right-hand side and Cond left implicit
+    if (neg) out.push("All_" + neg);
+  }
+  const have = new Set(alts);
+  return uniq(out.filter((x) => !have.has(x)));
+}
+
+/**
+ * Hypothesis `∀ t («y.bvar» : ℕ → Y), 0 < ℙ[π](x[:t + 1] = «x.bvar»[:t + 1] ∧ y[:t + 1] = «y.bvar»[:t + 1])`:
+ * a `∀` over plain binders (t) and a `«…bvar»` binder, whose body is `0 < ℙ(joint of ≥ 2 bvar-slice equations)`.
+ * It reads `All_Lt0ProbJoint` (`Lt0` = `Lt _ _` with 0 in the first slot, `Joint` = joint probability of x and y);
+ * returns that name (ranked first, see givenAltLists) or "". Deliberately narrow: a lone `∀ «y.bvar»,` (no plain
+ * binder; IsDiscreteHMM … All_Lt0Prob) and non-bvar slice events are untouched.
+ */
+function bvarAllLt0ProbJointName(typeNode) {
+  const u = unwrapParen(typeNode);
+  if (cls(u) !== "Lean_forall" || u.superscript === "ᵐ" || !hasBvarBinder(u)) return "";
+  const hasBvar = (n) => { let f = false; (function w(x) { if (!x || typeof x !== "object" || f) return; if (isBvarQuotation(x)) { f = true; return; } for (const a of x.args || []) w(a); })(n); return f; };
+  const items = (u.args || []).slice(0, -1).flatMap((b) => (cls(b) === "LeanArgsSpaceSeparated" ? b.args || [] : [b]));
+  if (!items.some((b) => !hasBvar(b))) return ""; // needs a plain binder next to the bvar one
+  const body = unwrapParen(u.args[u.args.length - 1]);
+  if (cls(body) !== "Lean_lt" || (body.args || []).length !== 2) return "";
+  const zero = unwrapParen(body.args[0]);
+  if (cls(zero) !== "LeanToken" || zero.text !== "0") return "";
+  let rhs = unwrapParen(body.args[1]);
+  if (cls(rhs) === "LeanColon") rhs = unwrapParen(rhs.args[0]); // `(ℙ[π](…) : ℝ)`
+  const ev = matchProbApp(rhs);
+  return ev && nameProbEvent(ev) === "ProbS" && isBvarSliceJointEvent(ev) ? "All_Lt0ProbJoint" : "";
+}
+
+/**
+ * Viterbi shape: a `max[«y.bvar» : Fin n → Y]` big operator over the joint probability of bvar-valued x/y slices.
+ * `Max` is the max big operator (not an applied function), so its LHS reads `EqMax_ProbJoint`, not `GetMax`.
+ */
+function stripStmt(x) {
+  let u = unwrapParen(x);
+  while ((cls(u) === "LeanArgsNewLineSeparated" || cls(u) === "LeanStatements") && (u.args || []).filter((a) => cls(a) !== "LeanLineComment").length === 1) {
+    u = unwrapParen((u.args || []).find((a) => cls(a) !== "LeanLineComment"));
+  }
+  return u;
+}
+function unwrapAscribed(n) {
+  let u = unwrapParen(n);
+  while (cls(u) === "LeanColon") u = unwrapParen(u.args?.[0]);
+  return u;
+}
+/** Joint event of equations `slice = «bvar» | slice = «bvar»[:k]` (at least two, one of them a bvar value). */
+function isBvarJointEvent(event) {
+  const conj = [];
+  const flat = (n) => {
+    const u = unwrapParen(n);
+    if (cls(u) === "Lean_land") (u.args || []).forEach(flat);
+    else conj.push(u);
+  };
+  flat(event);
+  const isSlice = (n) => cls(n) === "LeanGetElem" && cls(n.args?.[1]) === "LeanColon";
+  return conj.length >= 2 && conj.every((c) => {
+    if (cls(c) !== "LeanEq" || (c.args || []).length !== 2) return false;
+    const [l, r] = c.args.map(unwrapParen);
+    return isSlice(l) && (isBvarQuotation(r) || (isSlice(r) && isBvarQuotation(r.args[0])));
+  });
+}
+/** `max[«y.bvar» : …] a b …` → [a, b, …] (the applied arguments), else null. */
+function maxBvarOperands(node) {
+  const n = unwrapParen(node);
+  if (cls(n) !== "LeanArgsSpaceSeparated") return null;
+  const head = n.args?.[0];
+  if (cls(head) !== "LeanGetElem" || cls(head.args?.[0]) !== "LeanToken" || head.args[0].text !== "max") return null;
+  const bind = head.args?.[1];
+  if (cls(bind) !== "LeanColon" || !isBvarQuotation(bind.args?.[0])) return null;
+  return n.args.slice(1);
+}
+/** `(ℙ[π](joint) : ℝ)` with a bvar joint event of x/y slices → true. */
+function isBvarProbJoint(node, log = false) {
+  let u = unwrapParen(node);
+  if (log) {
+    if (cls(u) !== "LeanProperty" || cls(u.args?.[1]) !== "LeanToken" || u.args[1].text !== "log") return false;
+    u = u.args[0];
+  }
+  const ev = matchProbApp(unwrapAscribed(u));
+  return !!ev && nameProbEvent(ev) === "ProbS" && isBvarJointEvent(ev);
+}
+/** Conjunct `max[«y.bvar» : …] (ℙ(joint) : ℝ) = rhs`. */
+function isMaxProbJointEq(node) {
+  const u = stripStmt(node);
+  if (cls(u) !== "LeanEq" || (u.args || []).length !== 2) return false;
+  const ops = maxBvarOperands(u.args[0]);
+  return !!ops && ops.length === 1 && isBvarProbJoint(ops[0]);
+}
+/** GetMax → EqMax_ProbJoint (whole component), EqGetMax… → EqMax_ProbJoint…, other GetMax → Max_ProbJoint. */
+function fixMaxProbJointName(a) {
+  return String(a)
+    .replace(/(^|\/)GetMax(?=\/|$)/g, "$1EqMax_ProbJoint")
+    .replace(/EqGetMax/g, "EqMax_ProbJoint")
+    .replace(/GetMax/g, "Max_ProbJoint");
+}
+/** Names of functions `s` with a hypothesis `∀ …, s … = (ℙ(joint) : ℝ).log`. */
+function logProbJointFnNames(typeNodes) {
+  const out = new Set();
+  for (const t of typeNodes) {
+    let u = stripStmt(t);
+    while (cls(u) === "Lean_forall") u = stripStmt(u.args[u.args.length - 1]);
+    if (cls(u) !== "LeanEq" || (u.args || []).length !== 2) continue;
+    const lhs = unwrapParen(u.args[0]);
+    const head = cls(lhs) === "LeanArgsSpaceSeparated" ? lhs.args?.[0] : null;
+    if (cls(head) === "LeanToken" && isBvarProbJoint(u.args[1], true)) out.add(head.text);
+  }
+  return out;
+}
+/**
+ * Hypothesis `∀ t a, x t a = max[«y.bvar» : Fin t → Y] s t (…)` where `s` is the log joint probability
+ * (another hypothesis `s t «y.bvar» = (ℙ(joint) : ℝ).log`): reads `All_Eq_Max` (not `All_Eq_GetMaxH`; `All_Eq_Max_LogProbJoint` stays accepted).
+ * Returns { name, extras } (extras: accepted spellings that leave the Log implicit) or null.
+ */
+function maxLogProbJointGiven(typeNode, fns) {
+  if (!fns || !fns.size) return null;
+  let u = stripStmt(typeNode);
+  let all = false;
+  if (cls(u) === "Lean_forall") {
+    if (u.superscript === "ᵐ" || hasBvarBinder(u)) return null;
+    all = true;
+    u = stripStmt(u.args[u.args.length - 1]);
+  }
+  if (cls(u) !== "LeanEq" || (u.args || []).length !== 2) return null;
+  const ops = maxBvarOperands(u.args[1]);
+  if (!ops || !ops.length || cls(ops[0]) !== "LeanToken" || !fns.has(ops[0].text)) return null;
+  const A = all ? "All_" : "";
+  return { name: A + "Eq_Max", extras: uniq([A + "Eq_Max_LogProbJoint", A + "Eq_Max_ProbJoint", "Eq_Max", "Eq_Max_LogProbJoint", "Eq_Max_ProbJoint"]) };
 }
 
 /**
@@ -2645,13 +2872,28 @@ export function suggest(filePath, lemmaName, options = {}) {
     const joined = nameExprAlts(sg.implyStmts, no).filter(Boolean);
     const parts = splitTopConjunction(sg.implyStmts);
     if (!parts || parts.length < 2) return joined;
+    // `… ∧ max[«y.bvar» : …] ℙ(joint) = …`: Max is the big operator → EqMax_ProbJoint (ranked first, replaces GetMax)
+    const fixJ = parts.length === 2 && isMaxProbJointEq(parts[1]) ? fixMaxProbJointName : (x) => x;
     const perConjunct = parts.map((p) => nameExprAlts(p, no).filter(Boolean));
-    if (!perConjunct.every((a) => a.length)) return joined;
+    if (!perConjunct.every((a) => a.length)) return joined.map(fixJ);
     const splitAlts = perConjunct.reduce(
       (acc, a) => acc.flatMap((pfx) => a.map((x) => (pfx ? pfx + "/" + x : x))),
       [""],
     );
-    return uniq([...splitAlts, ...joined]);
+    const res = uniq([...splitAlts, ...joined].map(fixJ));
+    if (fixJ === fixMaxProbJointName) {
+      // Viterbi: the second conjunct reads just `EqMax_ProbJoint` (the `eq/<rhs>` suffix is dropped); the longer spellings stay accepted
+      const short = perConjunct[0].map((x) => x + "/EqMax_ProbJoint");
+      const full = res.slice();
+      const out = uniq([...short, ...full.filter((x) => !short.includes(x))]);
+      out.extra = full;
+      return out;
+    }
+    if (isHmmNegLogCondShape(sg.implyStmts)) {
+      const ex2 = hmmBvarAllAlts(perConjunct[1]);
+      res.extra = perConjunct[0].flatMap((x) => ex2.map((y) => x + "/" + y));
+    }
+    return res;
   };
   const implyAltsA = implyAltsOf(sig, nameOpts);
   // Canonical rendering (nameExpr) first when it is among the alternatives.
@@ -2686,6 +2928,7 @@ export function suggest(filePath, lemmaName, options = {}) {
     }
   })();
   const implyAlts = uniq([...implyAltsA, ...(passB?.implyAlts || [])]);
+  const implyExtraAlts = [...(implyAltsA.extra || []), ...(passB?.implyAlts?.extra || [])]; // accepted, not enumerated
   // lowercase ASCII components (`min/…` from a stripped `μmin`) are not names; soft relations are
   const SOFT = /^(of|is|in|sub|eq|ne|lt|gt|le|ge|dvd|ae[A-Za-z]*)$/;
   const lowerComp = (p) => sanitizeRelPath(p || "").split("/").some((c) => /^[a-z]/.test(c) && !SOFT.test(c));
@@ -2749,17 +2992,26 @@ export function suggest(filePath, lemmaName, options = {}) {
     return h;
   });
   // Generate ALL given name alternatives (reverse order for path); pass-B (Greek) renderings appended
+  const hmmShape = isHmmNegLogCondShape(sig.implyStmts);
+  const logJointFns = logProbJointFnNames(hyps.filter((h) => h.prop).map((h) => h.typeNode));
   const givenAltLists = [...hyps.filter((h) => h.prop)].reverse().map((h) => {
     const b = passB?.givens?.[h.idx];
     const altsA = nameExprAlts(h.typeNode, { ...nameOpts, asGiven: true }).filter(Boolean);
     const nameA = nameExpr(h.typeNode, { ...nameOpts, asGiven: true }) || "Given";
+    const lt0Joint = bvarAllLt0ProbJointName(h.typeNode); // All_Lt0ProbJoint, ranked first for this shape
+    // max over the log joint probability (`x' t a = max[«y.bvar» …] s t …`): All_Eq_Max replaces GetMax
+    const maxLog = maxLogProbJointGiven(h.typeNode, logJointFns);
+    const allAlts = maxLog
+      ? uniq([maxLog.name, ...[...altsA, ...(b?.alts || [])].filter((x) => !/GetMax/.test(x))])
+      : uniq([...(lt0Joint ? [lt0Joint] : []), ...altsA, ...(b?.alts || [])]);
     return {
       binder: h.name,
       optional: !!h.optional,
       canonSkip: !!h.canonSkip,
-      alts: uniq([...altsA, ...(b?.alts || [])]),
-      name: nameA,
-      nameB: b ? pickCanon(b.alts, b.name) : null,
+      alts: allAlts,
+      extraAlts: maxLog ? maxLog.extras : hmmShape && hasBvarBinder(h.typeNode) ? hmmBvarAllAlts(allAlts) : [], // accepted, not enumerated
+      name: maxLog?.name || lt0Joint || nameA,
+      nameB: maxLog?.name || lt0Joint || (b ? pickCanon(b.alts, b.name) : null),
       chain: classChain(h.typeNode),
     };
   });
@@ -2815,8 +3067,8 @@ export function suggest(filePath, lemmaName, options = {}) {
   ).filter((p) => !/\[anonymous\]|anonymous/i.test(p));
   // Membership without enumerating: section / imply alt / given alts in order (+ ≤3 instance hyps).
   const altSet = (alts) => new Set(alts.map((a) => sanitizeRelPath(a)));
-  const implySet = altSet(implyAlts);
-  const gSets = givenAltLists.map((g) => { const s = g.alts.length ? altSet(g.alts) : new Set(["Given"]); if (g.optional) s.__optional = true; return s; });
+  const implySet = altSet(implyExtraAlts.length ? [...implyAlts, ...implyExtraAlts] : implyAlts);
+  const gSets = givenAltLists.map((g) => { const s = g.alts.length ? altSet(g.extraAlts?.length ? [...g.alts, ...g.extraAlts] : g.alts) : new Set(["Given"]); if (g.optional) s.__optional = true; return s; });
   const iSets = instAltLists.length && instAltLists.length <= 3
     ? instAltLists.map((g) => (g.alts.length ? altSet(g.alts) : new Set(["Given"])))
     : null;
@@ -2908,7 +3160,7 @@ export function suggest(filePath, lemmaName, options = {}) {
     sectionScore: picked.score,
     sectionTokens: picked.tokens,
     imply: { name: implyPath, chain: implyChain },
-    givensLeanOrder: hyps.map((h) => ({ binder: h.name, prop: h.prop, name: nameExpr(h.typeNode, { ...nameOpts, asGiven: true }) })),
+    givensLeanOrder: hyps.map((h) => ({ binder: h.name, prop: h.prop, name: maxLogProbJointGiven(h.typeNode, logJointFns)?.name || bvarAllLt0ProbJointName(h.typeNode) || nameExpr(h.typeNode, { ...nameOpts, asGiven: true }) })),
     givensPathOrder: givenNames,
     warnings: [],
   };

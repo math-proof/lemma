@@ -34,8 +34,7 @@ private lemma main
   have hneg : -polar_radial θ = WithLp.toLp 2 ![-Real.cos θ, -Real.sin θ] := by
     ext i
     fin_cases i <;>
-      simp [polar_radial, PiLp.neg_apply, Matrix.cons_val_zero, Matrix.cons_val_one,
-        Matrix.head_cons]
+      simp [polar_radial, PiLp.neg_apply, Matrix.cons_val_zero, Matrix.cons_val_one]
   rw [show polar_angular = fun φ => e.symm ![-Real.sin φ, Real.cos φ] from rfl, hneg,
     show WithLp.toLp 2 ![-Real.cos θ, -Real.sin θ] = e.symm ![-Real.cos θ, -Real.sin θ] from rfl]
   exact h

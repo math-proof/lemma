@@ -23,7 +23,7 @@ private lemma main
   Expectation.condRV π a s f «s.bvar» =
     ∑' «a.bvar» : α, f «a.bvar» * ℙ[π](a = «a.bvar» | s = «s.bvar») := by
 -- proof
-  simp only [Expectation.asRV_function, Expectation.condRV, expectation_ennreal]
+  simp only [Expectation.condRV, expectation_ennreal]
   have hcd : Measurable (fun «a.bvar» : α ↦ π.condProb (a, s) («a.bvar», «s.bvar»)) := by
     unfold Measure.condProb
     fun_prop

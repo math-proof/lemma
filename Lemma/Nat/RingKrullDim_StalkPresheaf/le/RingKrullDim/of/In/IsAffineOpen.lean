@@ -17,8 +17,8 @@ private lemma main
 -- imply
   ringKrullDim (X.presheaf.stalk x) ≤ ringKrullDim Γ(X, U) := by
 -- proof
-  letI : Algebra Γ(X, U) (X.presheaf.stalk x) := (X.presheaf.germ U x hx).hom.toAlgebra
-  haveI := hU.isLocalization_stalk ⟨x, hx⟩
+  let : Algebra Γ(X, U) (X.presheaf.stalk x) := (X.presheaf.germ U x hx).hom.toAlgebra
+  have := hU.isLocalization_stalk ⟨x, hx⟩
   rw [IsLocalization.AtPrime.ringKrullDim_eq_height (hU.primeIdealOf ⟨x, hx⟩).asIdeal (X.presheaf.stalk x)]
   exact Ideal.height_le_ringKrullDim_of_isPrime
 

@@ -8,7 +8,7 @@ private lemma main
   [Add α]
   [AddLeftMono α]
   [AddRightMono α]
-  {x a b c : α}
+  {x a b : α}
 -- given
   (h : x ∈ Icc a b)
   (c : α) :

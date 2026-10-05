@@ -399,6 +399,7 @@ abstract class Lean extends IndentedNode
                 if ($this instanceof LeanCaret && $this->parent instanceof Lean_def)
                     return $this->parent->insert_word($this, $token);
             case 'have':
+            case 'replace':
             case 'let':
             case 'show':
                 if ($this instanceof LeanCaret && $this->parent instanceof LeanProperty) {
@@ -10473,6 +10474,20 @@ class Lean_set extends Lean_let
             case 'operator':
             case 'command':
                 return 'set';
+            default:
+                return parent::__get($vname);
+        }
+    }
+}
+
+class Lean_replace extends Lean_have
+{
+    public function __get($vname)
+    {
+        switch ($vname) {
+            case 'operator':
+            case 'command':
+                return 'replace';
             default:
                 return parent::__get($vname);
         }

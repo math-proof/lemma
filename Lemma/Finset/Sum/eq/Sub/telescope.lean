@@ -29,7 +29,7 @@ private lemma main
   have hr : (n + 1 - i).toNat = d := by omega
   rw [hr, show n + 1 = i + d from hdi.symm]
   convert hsum using 3
-  ring
+  ring_nf
 
 
 -- created on 2020-03-24

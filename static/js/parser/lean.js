@@ -505,6 +505,7 @@ export class Lean extends IndentedNode {
                 if (this instanceof LeanCaret && this.parent instanceof Lean_def)
                     return this.parent.insert_word(this, token);
             case 'have':
+            case 'replace':
             case 'let':
             case 'show': {
                 const asPropertyField = self.parseKeywordAsPropertyField(this, token);
@@ -1965,7 +1966,7 @@ export class LeanToken extends Lean {
             if (text.startsWith('_')) text = `\\${text}`;
         }
         if (this.kwargs.isRandomArgument) return `{\\color{magenta} {${text}}}`;
-        if (this.kwargs.isRandomVariable) return `{\\color{red} {${text}}}`;
+        if (this.kwargs.isRandomVariable && !this.kwargs.neverRed) return `{\\color{red} {${text}}}`;
         return text;
     }
 
@@ -5365,6 +5366,16 @@ export class LeanGetElem extends LeanGetElemBaseBinary(LeanBinary) {
         return {base: node, indices};
     }
 
+    /**
+     * `max[y : T] f y` / `min[…]` / `sup[…]` / `inf[…]` — a big operator whose bound
+     * variable is drawn under the operator, not as a subscript.
+     * @returns {string | null} the LaTeX command (`\\max`, …)
+     */
+    static limitsOperator(base, indices) {
+        if (!(base instanceof LeanToken) || indices.length !== 1) return null;
+        return ['max', 'min', 'sup', 'inf'].includes(base.text) ? `\\${base.text}` : null;
+    }
+
     static expectBinderIndexLatex(ix, syntax) {
         if (ix instanceof LeanColon) {
             let ty = ix.rhs;
@@ -5387,6 +5398,8 @@ export class LeanGetElem extends LeanGetElemBaseBinary(LeanBinary) {
                 ...indices.map((ix) => LeanGetElem.expectBinderIndexLatex(ix, syntax)),
             ];
         }
+        if (LeanGetElem.limitsOperator(base, indices))
+            return [LeanGetElem.expectBinderIndexLatex(indices[0], syntax)];
         if (indices.length === 1 && indices[0] instanceof LeanCondBar)
             return [base.toLatex(syntax), indices[0].arg.toLatex(syntax)];
         const condExp = indices.length === 1 ? LeanGetElem.condExpLatex(indices[0], syntax) : null;
@@ -5438,6 +5451,8 @@ export class LeanGetElem extends LeanGetElemBaseBinary(LeanBinary) {
 
         const {base, indices} = this.collectGetElemChain();
         // `μ[|s]` — conditional measure `cond μ s`
+        const limitsOp = LeanGetElem.limitsOperator(base, indices);
+        if (limitsOp) return `${limitsOp}\\limits_{%s}`;
         if (indices.length === 1 && indices[0] instanceof LeanCondBar)
             return '{%s}\\left[\\,\\cdot \\,\\middle|\\, {%s}\\right]';
         if (indices.length === 1 && !(base instanceof LeanToken && base.text === '𝔼') &&
@@ -5771,7 +5786,6 @@ export class Lean_land extends LeanLogic {
     insert_newline(caret, newline_count, indent, next) {
         if (caret === this.rhs && caret instanceof LeanCaret) {
             if (indent >= this.indent) {
-                if (indent === this.indent) indent = this.indent + 2;
                 this.hanging_indentation = true;
                 caret.indent = indent;
                 return caret;
@@ -5798,7 +5812,7 @@ function landMultilineConjuncts(node) {
             if (n.hanging_indentation) multiline = true;
             walk(n.lhs);
             walk(n.rhs);
-        } else out.push(n);
+        } else out.push(n instanceof LeanParenthesis ? n.arg : n); // own line: parentheses are redundant
     };
     walk(node);
     return multiline && out.length > 1 ? out : null;
@@ -5815,6 +5829,23 @@ function implyConclusionLatex(node, syntax) {
     const rows = parts.map(
         (c, i) => `&${c.toLatex ? c.toLatex(syntax) : strStmt(c)}${i < parts.length - 1 ? ' \\land' : ''}`,
     );
+    return '\\begin{align*}\n' + rows.join('\\\\\n') + '\n\\end{align*}';
+}
+
+/**
+ * `align*` for imply statements that start with `have`/`let`: one row per statement, and a
+ * `∧` chain written on several lines contributes one row per conjunct.
+ * @param {any[]} imply
+ * @param {any} syntax
+ */
+function implyLetAlignLatex(imply, syntax) {
+    const tex = (n) => (n.toLatex ? n.toLatex(syntax) : strStmt(n));
+    const rows = [];
+    for (const st of imply) {
+        const parts = landMultilineConjuncts(st);
+        if (parts) parts.forEach((c, i) => rows.push(`&${tex(c)}${i < parts.length - 1 ? ' \\land' : ''}&& `));
+        else rows.push(`&${tex(st)}&& `);
+    }
     return '\\begin{align*}\n' + rows.join('\\\\\n') + '\n\\end{align*}';
 }
 
@@ -6880,7 +6911,7 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                     const implyLean = unindentTwo(imply.map((s) => strStmt(s)).join('\n'));
                     let implyLatex;
                     if (imply.length > 1 && imply[0] instanceof Lean_let)
-                        implyLatex = '\\begin{align*}\n' + imply.map((st) => `&${st.toLatex(syntax)}&& `).join('\\\\\n') + '\n\\end{align*}';
+                        implyLatex = implyLetAlignLatex(imply, syntax);
                     else
                         implyLatex = imply.map(st => implyConclusionLatex(st, syntax)).join('\n');
                     const assignSuffix = ' :=' + (by ? ` ${by}` : '');
@@ -7212,12 +7243,7 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                         const implyLean = unindentTwo(imply.map((s) => strStmt(s)).join('\n'));
                         let implyLatex;
                         if (imply.length > 1 && imply[0] instanceof Lean_let) {
-                            implyLatex =
-                                '\\begin{align*}\n' +
-                                imply
-                                    .map((st) => `&${st.toLatex ? st.toLatex(syntax) : strStmt(st)}&& `)
-                                    .join('\\\\\n') +
-                                '\n\\end{align*}';
+                            implyLatex = implyLetAlignLatex(imply, syntax);
                         } else {
                             implyLatex = imply
                                 .map((st) => implyConclusionLatex(st, syntax))
@@ -12217,6 +12243,17 @@ class Lean_set extends Lean_let {
     }
 }
 
+/** `replace h : T := proof` — same shape as `have`, but replaces the hypothesis `h`. */
+class Lean_replace extends Lean_have {
+    get command() {
+        return 'replace';
+    }
+
+    get operator() {
+        return 'replace';
+    }
+}
+
 class Lean_show extends LeanSyntax {
     constructor(arg, indent, level, parent = null) {
         super([arg], indent, level, parent);
@@ -12545,6 +12582,38 @@ class Lean_sum extends LeanBigOperator {
     }
     get baseOperator() {
         return '∑';
+    }
+    /**
+     * `∑ «y.bvar» t, f`: a bound variable is never red, so the index and the body's `y t` that stands
+     * for the bound value (`(y t) = «y.bvar» t` inside `ℙ[π](…)`) are drawn in the normal colour.
+     */
+    latexArgs(syntax) {
+        const bnd = this.bound;
+        if (
+            this.scope &&
+            bnd instanceof LeanArgsSpaceSeparated && bnd.args.length === 2 &&
+            bnd.args[0] instanceof LeanDoubleAngleQuotation
+        ) {
+            const base = bnd.args[0].boundValueLhs();
+            if (base instanceof LeanToken) {
+                const key = strStmt(bnd).trim();
+                const seen = new Set();
+                const walk = (n) => {
+                    if (!n || typeof n !== 'object' || seen.has(n)) return;
+                    seen.add(n);
+                    if (n instanceof LeanEq && strStmt(n.rhs).trim() === key) {
+                        let l = n.lhs;
+                        while (l instanceof LeanParenthesis) l = l.arg;
+                        if (l instanceof LeanArgsSpaceSeparated) l = l.args[0];
+                        if (l instanceof LeanToken && l.text === base.text) l.kwargs.neverRed = true;
+                    }
+                    if (Array.isArray(n.args)) n.args.forEach(walk);
+                };
+                walk(this.scope);
+                base.kwargs.neverRed = true;
+            }
+        }
+        return super.latexArgs(syntax);
     }
     latexFormat() {
         if (!this.superscript) return super.latexFormat();
@@ -12964,6 +13033,7 @@ const LEAN_CLASSES = {
     LeanCaret,
     Lean_let,
     Lean_have,
+    Lean_replace,
     Lean_set,
     Lean_fun,
     Lean_match,

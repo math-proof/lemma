@@ -19,7 +19,7 @@ private lemma main
   Expectation.condRV π a s f «s.bvar» =
     ∫⁻ «a.bvar», f «a.bvar» * ℙ[π](a = «a.bvar» | s = «s.bvar») ∂ReferenceMeasure.measure := by
 -- proof
-  simp only [Expectation.asRV_function, Expectation.condRV, expectation_ennreal]
+  simp only [Expectation.condRV, expectation_ennreal]
   have hmp : Measurable (π.prob (a, s)) := by
     simpa [Measure.prob] using Measure.measurable_rnDeriv (π.map (a, s)) ReferenceMeasure.measure
   have hmc : Measurable (π.condProb (a, s)) := by

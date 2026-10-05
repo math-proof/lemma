@@ -4,6 +4,7 @@ import Lemma.Random.MulMeasure.eq.MulMeasure.of.CondIndep
 import Lemma.Random.Prob.eq.Measure.of.Eq_Count
 import Lemma.Random.ProbCond.eq.Div.of.Eq_Count.Eq_Count
 import sympy.stats.hidden_markov_sequence
+import sympy.stats.discrete_hmm
 import sympy.Basic
 open MeasureTheory
 
@@ -29,18 +30,9 @@ private lemma main
   {π : Measure Ω} [IsProbabilityMeasure π]
   {x : ℕ → Ω → X} {y : ℕ → Ω → Y} {xo : ℕ → X}
   [∀ i, SinglePSpace π (y i)]
-  [∀ i j, SinglePSpace π (x i, y j)]
   [∀ i j, SinglePSpace π (y i, y j)]
-  [∀ n, SinglePSpace π (x[:n], y[:n])]
 -- given
-  (hx : ∀ k, Measurable (x k))
-  (hy : ∀ k, Measurable (y k))
-  (hX : ReferenceMeasure.measure (α := X) = Measure.count)
-  (hY : ReferenceMeasure.measure (α := Y) = Measure.count)
-  (h_emit : ∀ t, ∀ _ : Measurable (y (t + 1)),
-    x (t + 1) ⟂ᵢ[π] (x[:t + 1], y[:t + 1]) | y (t + 1))
-  (h_markov : ∀ t, ∀ _ : Measurable (y t),
-    y (t + 1) ⟂ᵢ[π] (x[:t + 1], y[:t]) | y t)
+  (h : IsDiscreteHMM π x y)
   (ys : ℕ → Y) :
 -- imply
   ℙ[π](x[:0 + 1] = xo[:0 + 1] ∧ y[:0 + 1] = ys[:0 + 1]) =
@@ -50,6 +42,7 @@ private lemma main
         (ℙ[π]((y (t + 1)) = ys (t + 1) | (y t) = ys t) *
           ℙ[π]((x (t + 1)) = xo (t + 1) | (y (t + 1)) = ys (t + 1))) := by
 -- proof
+  have ⟨hx, hy, hX, hY, h_emit, h_markov⟩ := h
   have : Nonempty X := ⟨xo 0⟩
   have : Nonempty Y := ⟨ys 0⟩
   have hpair : ∀ m n : ℕ, ReferenceMeasure.measure (α := (Fin m → X) × (Fin n → Y)) = Measure.count := fun m n => by

@@ -9,7 +9,7 @@ private lemma main
   {M₀ : ℝ}
 -- given
   (h₀ : S.Nonempty)
-  (h₁ : BddAbove (f '' S))
+  (_h₁ : BddAbove (f '' S))
   (h : sSup (f '' S) ≥ M₀) :
 -- imply
   ∀ M < M₀, ∃ x ∈ S, f x > M := by

@@ -8,7 +8,7 @@ private lemma main
   {f : α → ℝ}
   {M : ℝ}
 -- given
-  (h₀ : S.Nonempty)
+  (_h₀ : S.Nonempty)
   (h₁ : BddAbove (f '' S))
   (h : sSup (f '' S) ≤ M) :
 -- imply

@@ -13,8 +13,8 @@ private lemma main
 -- imply
   Algebra.Etale O C := by
 -- proof
-  haveI : Algebra.FinitePresentation O C := (Algebra.FinitePresentation.of_finiteType).mp inferInstance
-  haveI : Algebra.FormallyUnramified O C :=
+  have : Algebra.FinitePresentation O C := (Algebra.FinitePresentation.of_finiteType).mp inferInstance
+  have : Algebra.FormallyUnramified O C :=
     Algebra.formallyUnramified_iff_forall.mpr fun q => h q.asIdeal
   exact Algebra.Etale.of_formallyUnramified_of_flat
 

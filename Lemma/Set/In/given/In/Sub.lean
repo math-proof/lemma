@@ -6,7 +6,7 @@ open Set Int
 @[main]
 private lemma main
   [AddCommGroup α] [PartialOrder α] [IsOrderedAddMonoid α]
-  {x a b d : α}
+  {x a b : α}
 -- given
   (h : x ∈ Icc a b)
   (d : α) :

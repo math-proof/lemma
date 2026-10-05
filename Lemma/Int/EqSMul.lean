@@ -14,7 +14,7 @@ private lemma main
   (⟨-1, 0, -W.a₁, -W.a₃⟩ : VariableChange R) • W = W := by
 -- proof
   ext <;> simp only [variableChange_a₁, variableChange_a₂, variableChange_a₃, variableChange_a₄,
-    variableChange_a₆, inv_neg_one, inv_one, Units.val_neg, Units.val_one] <;> ring
+    variableChange_a₆, inv_neg_one, Units.val_neg, Units.val_one] <;> ring
 
 
 -- created on 2026-10-03

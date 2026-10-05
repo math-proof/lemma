@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+# ensure the remote git repo is up to date before sync:
+# ssh "${env:REMOTE_MYSQL_USER}@${env:REMOTE_MYSQL_HOST}" "git -C github/lean pull"
+# ssh "${env:REMOTE_MYSQL_USER}@${env:REMOTE_MYSQL_HOST}" "git -C github/py pull"
 # Scoped upsert of lemma rows from the local MySQL (axiom.lemma) to the remote server.
 #
 # usage:

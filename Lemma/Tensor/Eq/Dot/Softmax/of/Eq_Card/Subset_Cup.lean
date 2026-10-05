@@ -21,7 +21,7 @@ private lemma gather
   (A : Fin n → Fin n → ℝ)
   (V : Fin n → Fin d_z → ℝ) :
 -- imply
-  let Ξ : Tensor ℝ* [n, n] := [i < n] [j < n] (Bool.toNat (decide (j ∈ Finset.univ.image d)))
+  let Ξ : Tensor ℝ* [n, n] := [_i < n] [j < n] (Bool.toNat (decide (j ∈ Finset.univ.image d)))
   let A' : Tensor ℝ* [n, n] := ([i < n] [j < n] (A i j : Tensor ℝ []) : Tensor ℝ [n, n])
   let V' : Tensor ℝ [n, d_z] := [j < n] [l < d_z] (V j l : Tensor ℝ [])
   (A' + (Ξ - 1) * ∞).softmax @ (V' : Tensor ℝ* [n, d_z]) ≈
@@ -47,7 +47,7 @@ private lemma position_representation.relative.gather
   (h₀ : (Finset.univ.image d).card = m)
   (h_m : 0 < m) :
 -- imply
-  let Ξ : Tensor ℝ* [n, n] := [i < n] [j < n] (Bool.toNat (decide (j ∈ Finset.univ.image d)))
+  let Ξ : Tensor ℝ* [n, n] := [_i < n] [j < n] (Bool.toNat (decide (j ∈ Finset.univ.image d)))
   let A : Tensor ℝ* [n, n] := ([i < n] [j < n] (((∑ t, Q i t * (K j t + K' j t)) / √(d_z : ℝ) : ℝ) : Tensor ℝ []) : Tensor ℝ [n, n])
   let W : Tensor ℝ [n, d_z] := [j < n] [l < d_z] ((V j l + V' j l : ℝ) : Tensor ℝ [])
   (A + (Ξ - 1) * ∞).softmax @ (W : Tensor ℝ* [n, d_z]) ≈

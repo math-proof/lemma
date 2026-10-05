@@ -14,7 +14,7 @@ private lemma main
 -- imply
   p.height = 1 := by
 -- proof
-  haveI := h
+  have := h
   have hnf : ¬ IsField (Localization.AtPrime p) := fun hF =>
     IsDiscreteValuationRing.not_a_field (R := Localization.AtPrime p)
       ((IsLocalRing.isField_iff_maximalIdeal_eq).mp hF)

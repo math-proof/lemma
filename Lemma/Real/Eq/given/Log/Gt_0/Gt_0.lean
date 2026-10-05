@@ -5,8 +5,8 @@ import sympy.functions.elementary.exponential
 private lemma main
   {x y : ℝ}
 -- given
-  (h₀ : 0 < x)
-  (h₁ : 0 < y)
+  (_h₀ : 0 < x)
+  (_h₁ : 0 < y)
   (h : x = y) :
 -- imply
   Real.log x = Real.log y := by
