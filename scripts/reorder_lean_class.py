@@ -129,6 +129,7 @@ ITE = ROOT / "php" / "parser" / "lean" / "ite.php"
 ARGS = ROOT / "php" / "parser" / "lean" / "args.php"
 TACTIC = ROOT / "php" / "parser" / "lean" / "tactic.php"
 DECL = ROOT / "php" / "parser" / "lean" / "decl.php"
+BASE = ROOT / "php" / "parser" / "lean" / "base.php"
 ARITHMETIC_PRESETS = frozenset({
     "leanarithmetic",
     "leanmul",
@@ -236,6 +237,9 @@ DECL_PRESETS = frozenset({
     "leanhave",
     "leanshow",
 })
+BASE_PRESETS = frozenset({
+    "lean",
+})
 
 
 def preset_path(preset: str) -> Path:
@@ -269,12 +273,14 @@ def preset_path(preset: str) -> Path:
         return TACTIC
     if preset in DECL_PRESETS:
         return DECL
+    if preset in BASE_PRESETS:
+        return BASE
     return LEAN
 
 PRESETS: dict[str, tuple[str, str]] = {
     "lean": (
         "abstract class Lean extends IndentedNode\n{",
-        "\n}\n\nclass LeanCaret extends Lean",
+        "\n}\n\n// END OF base family (LeanCaret stays in lean.php)\n",
     ),
     "leancaret": (
         "class LeanCaret extends Lean\n{",
