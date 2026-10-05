@@ -284,4 +284,4 @@ class LeanProperty extends LeanBinary
 
 }
 
-// END OF property family (LeanStatements stays in lean.php)
+// END OF property family (LeanModule stays in lean.php)
