@@ -125,6 +125,7 @@ ARROWS = ROOT / "php" / "parser" / "lean" / "arrows.php"
 NEGATION = ROOT / "php" / "parser" / "lean" / "negation.php"
 MATCH = ROOT / "php" / "parser" / "lean" / "match.php"
 ITE = ROOT / "php" / "parser" / "lean" / "ite.php"
+ARGS = ROOT / "php" / "parser" / "lean" / "args.php"
 ARITHMETIC_PRESETS = frozenset({
     "leanarithmetic",
     "leanmul",
@@ -198,6 +199,14 @@ MATCH_PRESETS = frozenset({
 ITE_PRESETS = frozenset({
     "leanite",
 })
+ARGS_PRESETS = frozenset({
+    "leanargsspaceseparated",
+    "leanargsnewlineseparated",
+    "leanargsindented",
+    "leanargscommaseparated",
+    "leanargssemicolonseparated",
+    "leanargscommanewlineseparated",
+})
 
 
 def preset_path(preset: str) -> Path:
@@ -223,6 +232,8 @@ def preset_path(preset: str) -> Path:
         return MATCH
     if preset in ITE_PRESETS:
         return ITE
+    if preset in ARGS_PRESETS:
+        return ARGS
     return LEAN
 
 PRESETS: dict[str, tuple[str, str]] = {
@@ -460,7 +471,7 @@ PRESETS: dict[str, tuple[str, str]] = {
     ),
     "leanleftarrow": (
         "class Lean_leftarrow extends LeanUnary\n{",
-        "\n}\n\n// END OF arrows family (LeanArgsSpaceSeparated stays in lean.php)\n",
+        "\n}\n\n// END OF arrows family (LeanSyntax stays in lean.php)\n",
     ),
     "leanlnot": (
         "class Lean_lnot extends LeanUnary\n{",
@@ -468,15 +479,15 @@ PRESETS: dict[str, tuple[str, str]] = {
     ),
     "leannot": (
         "class LeanNot extends LeanUnary\n{",
-        "\n}\n\n// END OF negation family (LeanArgsSpaceSeparated stays in lean.php)\n",
+        "\n}\n\n// END OF negation family (LeanSyntax stays in lean.php)\n",
     ),
     "leanmatch": (
         "class Lean_match extends LeanArgs\n{",
-        "\n}\n\n// END OF match family (LeanArgsSpaceSeparated stays in lean.php)\n",
+        "\n}\n\n// END OF match family (LeanSyntax stays in lean.php)\n",
     ),
     "leanite": (
         "class LeanIte extends LeanArgs\n{",
-        "\n}\n\n// END OF ite family (LeanArgsSpaceSeparated stays in lean.php)\n",
+        "\n}\n\n// END OF ite family (LeanSyntax stays in lean.php)\n",
     ),
     "leanargsspaceseparated": (
         "class LeanArgsSpaceSeparated extends LeanArgs\n{",
@@ -500,7 +511,7 @@ PRESETS: dict[str, tuple[str, str]] = {
     ),
     "leanargscommanewlineseparated": (
         "class LeanArgsCommaNewLineSeparated extends LeanArgs\n{",
-        "\n}\n\nabstract class LeanSyntax extends LeanArgs",
+        "\n}\n\n// END OF args family (LeanSyntax stays in lean.php)\n",
     ),
     "leantactic": (
         "class LeanTactic extends LeanSyntax\n{",

@@ -279,4 +279,4 @@ class Lean_leftarrow extends LeanUnary
 
 }
 
-// END OF arrows family (LeanArgsSpaceSeparated stays in lean.php)
+// END OF arrows family (LeanSyntax stays in lean.php)

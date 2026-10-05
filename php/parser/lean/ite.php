@@ -277,4 +277,4 @@ class LeanIte extends LeanArgs
     }
 }
 
-// END OF ite family (LeanArgsSpaceSeparated stays in lean.php)
+// END OF ite family (LeanSyntax stays in lean.php)

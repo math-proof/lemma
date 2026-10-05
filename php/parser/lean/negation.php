@@ -70,4 +70,4 @@ class LeanNot extends LeanUnary
 
 }
 
-// END OF negation family (LeanArgsSpaceSeparated stays in lean.php)
+// END OF negation family (LeanSyntax stays in lean.php)

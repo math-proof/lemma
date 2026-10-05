@@ -142,4 +142,4 @@ class Lean_match extends LeanArgs
 
 }
 
-// END OF match family (LeanArgsSpaceSeparated stays in lean.php)
+// END OF match family (LeanSyntax stays in lean.php)
