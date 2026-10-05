@@ -121,6 +121,7 @@ RELATIONAL = ROOT / "php" / "parser" / "lean" / "relational.php"
 QUANTIFIER = ROOT / "php" / "parser" / "lean" / "quantifier.php"
 BIGOPS = ROOT / "php" / "parser" / "lean" / "bigops.php"
 INDEXING = ROOT / "php" / "parser" / "lean" / "indexing.php"
+ARROWS = ROOT / "php" / "parser" / "lean" / "arrows.php"
 ARITHMETIC_PRESETS = frozenset({
     "leanarithmetic",
     "leanmul",
@@ -178,6 +179,12 @@ INDEXING_PRESETS = frozenset({
     "leangotelemque",
     "leangotelemquote",
 })
+ARROWS_PRESETS = frozenset({
+    "leanRightarrow",
+    "leanrightarrow",
+    "leanmapsto",
+    "leanleftarrow",
+})
 
 
 def preset_path(preset: str) -> Path:
@@ -195,6 +202,8 @@ def preset_path(preset: str) -> Path:
         return BIGOPS
     if preset in INDEXING_PRESETS:
         return INDEXING
+    if preset in ARROWS_PRESETS:
+        return ARROWS
     return LEAN
 
 PRESETS: dict[str, tuple[str, str]] = {
@@ -416,7 +425,7 @@ PRESETS: dict[str, tuple[str, str]] = {
     ),
     "leanbar": (
         "class LeanBar extends LeanUnary\n{",
-        "\n}\n\nclass LeanRightarrow extends LeanBinary",
+        "\n}\n\nrequire_once dirname(__FILE__) . '/lean/arrows.php';",
     ),
     "leanRightarrow": (
         "class LeanRightarrow extends LeanBinary\n{",
@@ -432,7 +441,7 @@ PRESETS: dict[str, tuple[str, str]] = {
     ),
     "leanleftarrow": (
         "class Lean_leftarrow extends LeanUnary\n{",
-        "\n}\n\nclass Lean_lnot extends LeanUnary",
+        "\n}\n\n// END OF arrows family (Lean_lnot stays in lean.php)\n",
     ),
     "leanlnot": (
         "class Lean_lnot extends LeanUnary\n{",
