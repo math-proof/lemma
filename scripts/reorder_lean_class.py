@@ -117,6 +117,7 @@ LEAN = ROOT / "php" / "parser" / "lean.php"
 ARITHMETIC = ROOT / "php" / "parser" / "lean" / "arithmetic.php"
 PAIRED = ROOT / "php" / "parser" / "lean" / "paired.php"
 LOGIC = ROOT / "php" / "parser" / "lean" / "logic.php"
+RELATIONAL = ROOT / "php" / "parser" / "lean" / "relational.php"
 ARITHMETIC_PRESETS = frozenset({
     "leanarithmetic",
     "leanmul",
@@ -154,6 +155,9 @@ LOGIC_PRESETS = frozenset({
     "leanlogicxor",
     "leanlor",
 })
+RELATIONAL_PRESETS = frozenset({
+    "leanrelational",
+})
 
 
 def preset_path(preset: str) -> Path:
@@ -163,6 +167,8 @@ def preset_path(preset: str) -> Path:
         return PAIRED
     if preset in LOGIC_PRESETS:
         return LOGIC
+    if preset in RELATIONAL_PRESETS:
+        return RELATIONAL
     return LEAN
 
 PRESETS: dict[str, tuple[str, str]] = {
@@ -240,7 +246,7 @@ PRESETS: dict[str, tuple[str, str]] = {
     ),
     "leanbinaryboolean": (
         "abstract class LeanBinaryBoolean extends LeanBinary\n{",
-        "\n}\n\nabstract class LeanRelational extends LeanBinaryBoolean",
+        "\n}\n\nrequire_once dirname(__FILE__) . '/lean/relational.php';",
     ),
     "leanrelational": (
         "abstract class LeanRelational extends LeanBinaryBoolean\n{",
