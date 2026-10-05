@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(eq, V_def, lt_dV, lt_V):
-    from Lemma.Tensor.And.Eq.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.Bellman import extract_QVA
+    from Lemma.Random.Eq_Expect.Eq_Expect.Eq_Expect.of.All_Eq_Expect.All_Eq_Expect.In_Ico import extract_QVA
     s, a, r, [π], γ, t, V_st_var = extract_QVA(eq, None, V_def, None, lt_dV)
 
     S[V_st_var], [S[s[t].bvar]], [S[t]] = lt_V.of(Sup[Abs] < Infinity)

@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(eq, Q_def, V_def, A_def, lt):
-    from Lemma.Tensor.And.Eq.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.Bellman import extract_QVA
+    from Lemma.Random.Eq_Expect.Eq_Expect.Eq_Expect.of.All_Eq_Expect.All_Eq_Expect.In_Ico import extract_QVA
     s, a, r, [π], γ, t, Q_st_var, V_st_var, A_st_var = extract_QVA(eq, Q_def, V_def, A_def, lt)
     return Equal(γ ** Stack[t](t) @ Derivative[π](Expectation[r, a:π](r)),
                  γ ** Stack[t](t) @ Stack[t](Expectation[a:π, s](Derivative[π](log(Pr[a:π](a[t].random_argument | s[t].random_argument))) * A_st_var._subs(s[t].bvar, s[t])._subs(a[t].bvar, a[t]))))

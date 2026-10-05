@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(eq, Q_def, V_def, MDV_def, any, eq_argmax):
-    from Lemma.Tensor.And.Eq.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.Bellman import extract_QVA
+    from Lemma.Random.Eq_Expect.Eq_Expect.Eq_Expect.of.All_Eq_Expect.All_Eq_Expect.In_Ico import extract_QVA
     s, a, r, [π], γ, t, Q_st_var, V_st_var = extract_QVA(eq, Q_def, V_def)
     (((S[Q_st_var._subs(a[t].bvar, a[t])], S[s[t].as_boolean()]), (a, π_quote)), ((S[Pr[a:π_quote](a[t] | s[t])], S[Pr[a:π](a[t] | s[t])]), S[Pr[π, π_quote](s[t])], S[Pr[s:π](s[t])])), MDV_st_var = MDV_def.of(Equal[Expectation[Conditioned] - KL * Expr / Expr])
     ((S[MDV_st_var._subs(s[t].bvar, s[t])._subs(t, 0)], (s, π)), [S[π_quote]]), π_tilde = eq_argmax.of(Equal[ArgMax[Expectation]])

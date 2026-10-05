@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(eq, Q_def, V_def, MDV_def, ge):
-    from Lemma.Tensor.And.Eq.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.Bellman import extract_QVA
+    from Lemma.Random.Eq_Expect.Eq_Expect.Eq_Expect.of.All_Eq_Expect.All_Eq_Expect.In_Ico import extract_QVA
     s, a, r, [π], γ, t, Q_st_var, V_st_var = extract_QVA(eq, Q_def, V_def)
     (((S[Q_st_var._subs(a[t].bvar, a[t])], S[s[t].as_boolean()]), (a, π_quote)), ((S[Pr[a:π_quote](a[t] | s[t])], S[Pr[a:π](a[t] | s[t])]), S[Pr[π, π_quote](s[t])], S[Pr[s:π](s[t])])), MDV_st_var = MDV_def.of(Equal[Expectation[Conditioned] - KL * Expr / Expr])
     S[MDV_st_var], S[MDV_st_var._subs(π_quote, π)] = ge.of(Expr >= Expr)
@@ -14,7 +14,7 @@ def apply(eq, Q_def, V_def, MDV_def, ge):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Random, Bool, Nat, Rat, Int, Real
+    from Lemma import Random, Bool, Nat, Rat, Int, Real
 
     b, D = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), real=True, random=True) # states / observation
@@ -33,13 +33,13 @@ def prove(Eq):
 
     Eq << Nat.Ge.given.Ge_0.apply(Eq.ge_VF)
 
-    Eq.VQ, Eq.VV, Eq.QV = Tensor.And.Eq.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.Bellman.apply(*Eq[:3])
+    Eq.VQ, Eq.VV, Eq.QV = Random.Eq_Expect.Eq_Expect.Eq_Expect.of.All_Eq_Expect.All_Eq_Expect.In_Ico.apply(*Eq[:3])
 
     Eq.Q_quote = Eq[1].subs(π, π_quote)
 
     Eq.V_quote = Eq[2].subs(π, π_quote)
 
-    Eq.VQ_quote, Eq.VV_quote, Eq.QV_quote = Tensor.And.Eq.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.Bellman.apply(Eq[0], Eq.Q_quote, Eq.V_quote)
+    Eq.VQ_quote, Eq.VV_quote, Eq.QV_quote = Random.Eq_Expect.Eq_Expect.Eq_Expect.of.All_Eq_Expect.All_Eq_Expect.In_Ico.apply(Eq[0], Eq.Q_quote, Eq.V_quote)
 
     Eq << Eq[3].subs(π_quote, π)
 

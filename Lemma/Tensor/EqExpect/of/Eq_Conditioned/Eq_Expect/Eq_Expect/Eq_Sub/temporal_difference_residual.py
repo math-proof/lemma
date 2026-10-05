@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(eq, Q_def, V_def, A_def):
-    from Lemma.Tensor.And.Eq.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.Bellman import extract_QVA
+    from Lemma.Random.Eq_Expect.Eq_Expect.Eq_Expect.of.All_Eq_Expect.All_Eq_Expect.In_Ico import extract_QVA
     s, a, r, *weights, γ, t, Q_st_var, V_st_var, A_st_var = extract_QVA(eq, Q_def, V_def, A_def)
 
     [π], = weights
@@ -12,7 +12,7 @@ def apply(eq, Q_def, V_def, A_def):
 
 @prove
 def prove(Eq):
-    from Lemma import Random, Tensor
+    from Lemma import Random
 
     b, D = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), real=True, random=True) # states / observation
@@ -35,7 +35,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Random.Add.Expect.eq.Expect)
 
-    Eq << Tensor.And.Eq.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.Bellman.apply(*Eq[:3])[-1]
+    Eq << Random.Eq_Expect.Eq_Expect.Eq_Expect.of.All_Eq_Expect.All_Eq_Expect.In_Ico.apply(*Eq[:3])[-1]
 
     # https://arxiv.org/pdf/1506.02438.pdf#page=4
 

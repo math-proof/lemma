@@ -72,3 +72,6 @@ from . import Expect_Dot
 from . import ProbCond_Joint
 from . import Expect_CondDot
 from . import ProbJoint
+from . import All_Eq_AddLogSumExpAdd
+from . import All_Eq_Add_MaxAdd
+from . import Eq_Expect

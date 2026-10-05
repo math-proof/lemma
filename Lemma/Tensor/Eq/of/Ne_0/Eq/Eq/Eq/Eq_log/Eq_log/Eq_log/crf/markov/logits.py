@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(x_independence_assumption, y_independence_assumption, xy_independence_assumption, xy_nonzero_assumption, eq_s, eq_x, eq_G):
-    from Lemma.Random.ProbJoint.eq.Mul_Prod_MulProbSCond.of.All_CondIndep.All_CondIndep.EqMeasure_Count.EqMeasure_Count.All_Measurable.All_Measurable import process_assumptions
+    from Lemma.Random.ProbJoint.eq.Mul_Prod_MulProbSCond.of.IsDiscreteHMM import process_assumptions
     x, y = process_assumptions(x_independence_assumption, y_independence_assumption, xy_independence_assumption, xy_nonzero_assumption)
     y = pspace(y).symbol
     x = pspace(x).symbol
@@ -20,7 +20,7 @@ def prove(Eq):
     d, n = Symbol(domain=Range(2, oo))
     X = Symbol("x", shape=(n, d), real=True, random=True)
     Y = Symbol("y", shape=(n,), domain=Range(d), random=True)
-    from Lemma.Random.ProbJoint.eq.Mul_Prod_MulProbSCond.of.All_CondIndep.All_CondIndep.EqMeasure_Count.EqMeasure_Count.All_Measurable.All_Measurable import markov_assumptions
+    from Lemma.Random.ProbJoint.eq.Mul_Prod_MulProbSCond.of.IsDiscreteHMM import markov_assumptions
     t = Symbol(integer=True)
     y = pspace(Y).symbol
     s = Symbol(shape=(n,), real=True)
@@ -31,7 +31,7 @@ def prove(Eq):
                                                           Equal(x[t, y[t]], log(Pr(X[t] | Y[t]))),
                                                           Equal(G[y[t], y[t - 1]], log(Pr(Y[t] | Y[t - 1]))))
 
-    Eq << Random.ProbJoint.eq.Mul_Prod_MulProbSCond.of.All_CondIndep.All_CondIndep.EqMeasure_Count.EqMeasure_Count.All_Measurable.All_Measurable.apply(*Eq[:4], t=t)
+    Eq << Random.ProbJoint.eq.Mul_Prod_MulProbSCond.of.IsDiscreteHMM.apply(*Eq[:4], t=t)
 
     Eq << Eq.eq_s.this.rhs.subs(Eq[-1])
 

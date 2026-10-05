@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(eq, Q_def, V_def, n=None):
-    from Lemma.Tensor.And.Eq.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.Bellman import extract_QVA
+    from Lemma.Random.Eq_Expect.Eq_Expect.Eq_Expect.of.All_Eq_Expect.All_Eq_Expect.In_Ico import extract_QVA
     s, a, _, [π], γ, t, Q_st_var, V_st_var = extract_QVA(eq, Q_def, V_def)
     assert n >= 0
     return Equal(Derivative[π](V_st_var._subs(s[t].bvar, s[0].bvar)),

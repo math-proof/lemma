@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(eq, Q_def, V_def, A_def, A_def_bar):
-    from Lemma.Tensor.And.Eq.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.Bellman import extract_QVA
+    from Lemma.Random.Eq_Expect.Eq_Expect.Eq_Expect.of.All_Eq_Expect.All_Eq_Expect.In_Ico import extract_QVA
     s, a, r, [π], γ, t, Q_st_var, V_st_var, A_st_var = extract_QVA(eq, Q_def, V_def, A_def)
     ((S[A_st_var._subs(a[t].bvar, a[t])], S[s[t].as_boolean()]), (S[a], π_quote)), A_st_var_bar = A_def_bar.of(Equal[Expectation[Conditioned]])
     assert π_quote.shape == π.shape

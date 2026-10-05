@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(eq, Q_def, V_def):
-    from Lemma.Tensor.And.Eq.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.Bellman import extract_QVA
+    from Lemma.Random.Eq_Expect.Eq_Expect.Eq_Expect.of.All_Eq_Expect.All_Eq_Expect.In_Ico import extract_QVA
     s, a, r, [π], γ, t, Q_st_var, V_st_var = extract_QVA(eq, Q_def, V_def)
     return Equal(Derivative[π](V_st_var),
                  Sum[a[t].bvar](Derivative[π](Pr[a:π](a[t] | s[t])) * Q_st_var) + \
@@ -12,7 +12,7 @@ def apply(eq, Q_def, V_def):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Real, Random, Finset, Rat, Nat
+    from Lemma import Real, Random, Finset, Rat, Nat
 
     b, D = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), real=True, random=True) # states / observation
@@ -26,7 +26,7 @@ def prove(Eq):
                 Equal((Q[π] ^ γ)(s[t].bvar, a[t].bvar), γ ** Stack[t](t) @ Expectation[r[t:], a:π](r[t:] | s[t] & a[t])),
                 Equal((V[π] ^ γ)(s[t].bvar), γ ** Stack[t](t) @ Expectation[r[t:], a:π](r[t:] | s[t])))
 
-    Eq << Tensor.And.Eq.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.Bellman.apply(*Eq[:3])
+    Eq << Random.Eq_Expect.Eq_Expect.Eq_Expect.of.All_Eq_Expect.All_Eq_Expect.In_Ico.apply(*Eq[:3])
 
     Eq << Real.EqGrad.of.Eq.apply(Eq[-1], [π])
 
