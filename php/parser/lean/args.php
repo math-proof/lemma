@@ -1024,4 +1024,4 @@ class LeanArgsCommaNewLineSeparated extends LeanArgs
     }
 }
 
-// END OF args family (LeanSyntax stays in lean.php)
+// END OF args family (LeanBy stays in lean.php)
