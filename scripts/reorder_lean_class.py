@@ -130,6 +130,7 @@ ARGS = ROOT / "php" / "parser" / "lean" / "args.php"
 TACTIC = ROOT / "php" / "parser" / "lean" / "tactic.php"
 DECL = ROOT / "php" / "parser" / "lean" / "decl.php"
 BASE = ROOT / "php" / "parser" / "lean" / "base.php"
+ATOMIC = ROOT / "php" / "parser" / "lean" / "atomic.php"
 ARITHMETIC_PRESETS = frozenset({
     "leanarithmetic",
     "leanmul",
@@ -240,6 +241,13 @@ DECL_PRESETS = frozenset({
 BASE_PRESETS = frozenset({
     "lean",
 })
+ATOMIC_PRESETS = frozenset({
+    "leancaret",
+    "leantoken",
+    "leanlinecomment",
+    "leanblockcomment",
+    "leandocstring",
+})
 
 
 def preset_path(preset: str) -> Path:
@@ -275,12 +283,14 @@ def preset_path(preset: str) -> Path:
         return DECL
     if preset in BASE_PRESETS:
         return BASE
+    if preset in ATOMIC_PRESETS:
+        return ATOMIC
     return LEAN
 
 PRESETS: dict[str, tuple[str, str]] = {
     "lean": (
         "abstract class Lean extends IndentedNode\n{",
-        "\n}\n\n// END OF base family (LeanCaret stays in lean.php)\n",
+        "\n}\n\n// END OF base family (LeanArgs stays in lean.php)\n",
     ),
     "leancaret": (
         "class LeanCaret extends Lean\n{",
@@ -296,7 +306,7 @@ PRESETS: dict[str, tuple[str, str]] = {
     ),
     "leandocstring": (
         "class LeanDocString extends LeanBlockComment\n{",
-        "\n}\n\n\ntrait LeanMultipleLine",
+        "\n}\n\n// END OF atomic family (LeanArgs stays in lean.php)\n",
     ),
     "leanargs": (
         "abstract class LeanArgs extends Lean\n{",
