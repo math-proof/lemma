@@ -126,33 +126,7 @@ require_once dirname(__FILE__) . '/lean/arithmetic.php';
 
 require_once dirname(__FILE__) . '/lean/lazy.php';
 
-class LeanMethodChaining extends LeanBinary
-{
-    public static $input_priority = 67;
-    public function __get($vname)
-    {
-        switch ($vname) {
-            case 'stack_priority':
-                return 59;
-            default:
-                return parent::__get($vname);
-        }
-    }
-
-    public function latexFormat()
-    {
-        return '%s\\ \texttt{|>.}%s';
-    }
-    public function sep()
-    {
-        return '';
-    }
-
-    public function strFormat()
-    {
-        return '%s |>.%s';
-    }
-}
+require_once dirname(__FILE__) . '/lean/pipeline.php';
 
 trait LeanGetElemBase
 {

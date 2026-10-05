@@ -27,6 +27,7 @@ import { createColonFamily } from './lean/colon.js';
 import { createAssignFamily } from './lean/assign.js';
 import { createBooleanFamily } from './lean/boolean.js';
 import { createLazyFamily } from './lean/lazy.js';
+import { createPipelineFamily } from './lean/pipeline.js';
 
 /** Relational / comparison ops; reused by token2classname and leanInfixContinue. */
 const leanRelationalTokens = Object.freeze({
@@ -437,26 +438,10 @@ const lazyFamily = createLazyFamily({
 });
 export const Lean_lazy = lazyFamily.Lean_lazy;
 
-/** Pipeline `|>.`. */
-export class LeanMethodChaining extends LeanBinary {
-    static input_priority = 67;
-
-    get stack_priority() {
-        return 59;
-    }
-
-    latexFormat() {
-        return '%s\\ \\texttt{|>.}%s';
-    }
-
-    sep() {
-        return '';
-    }
-
-    strFormat() {
-        return '%s |>.%s';
-    }
-}
+const pipelineFamily = createPipelineFamily({
+    LeanBinary,
+});
+export const LeanMethodChaining = pipelineFamily.LeanMethodChaining;
 
 const indexingLate = {};
 const indexingFamily = createIndexingFamily({
