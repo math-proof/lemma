@@ -2,7 +2,7 @@
 
 CRF 损失函数：[CRF loss function](http://www.lemma.cn/lean/?module=Random.All_Eq_AddLogSumExpAdd.All_EqNegLogProb.of.All_Eq_Log.All_Eq_Sum_Exp.All_Eq_LogProbCond.All_Eq_LogProbCond.All_Eq_LogProbJoint.All_Lt0Prob.IsDiscreteHMM)，Viterbi：[crf.viterbi](http://www.lemma.cn/lean/?module=Random.All_Eq_Add_MaxAdd.EqMax_ProbJoint.of.All_Eq_Max.Eq_LogProbCond.Eq_LogProbCond.Eq_LogProbJoint.All_Lt0ProbJoint.IsDiscreteHMM)，HMM 恒等式：[hmm_identity](http://www.lemma.cn/lean/?module=Random.Sum_Mul_ProbCond.eq.Prob.of.IsDiscreteHMM)
 
-Bellman：[Bellman](http://www.lemma.cn/lean/?module=Tensor.And.Eq.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.Bellman)，REINFORCE：[Lean 4](http://www.lemma.cn/lean/?module=Tensor.Eq.Dot.Grad.Expect.of.Eq_Conditioned.IsFinite.policy_gradient_theorem)
+Bellman：[Bellman](http://www.lemma.cn/lean/?module=Random.Eq_Expect.Eq_Expect.Eq_Expect.of.All_Eq_Expect.All_Eq_Expect.In_Ico)，REINFORCE：[Lean 4](http://www.lemma.cn/lean/?module=Tensor.Eq.Dot.Grad.Expect.of.Eq_Conditioned.IsFinite.policy_gradient_theorem)
 
 无偏优势估计：[Lean 4](http://www.lemma.cn/lean/?module=Tensor.EqDot_GradExpect.of.Eq_Conditioned.Eq_Expect.IsFinite.IsFinite.unbiased_advantage_estimate)，广义优势估计：[Lean 4](http://www.lemma.cn/lean/?module=Tensor.EqDot_GradExpect.of.Eq_Conditioned.Eq_Expect.IsFinite.IsFinite.generalized_advantage_estimate)
 
@@ -29,7 +29,7 @@ CRF 一侧，我们形式化了：对数得分分解为转移项与发射项、l
 **贡献**
 
 1. CRF 传播（第 4、5 节）：对数得分 [crf.markov.logits](http://www.lemma.cn/lean/?module=Tensor.Eq.of.Ne_0.Eq.Eq.Eq.Eq_log.Eq_log.Eq_log) 与 [crf.logits](http://www.lemma.cn/lean/?module=Tensor.Imp.of.Eq)，满足 \(-\log p(y\mid x)=\log Z-\text{score}\) 的前向递推 [CRF loss function](http://www.lemma.cn/lean/?module=Random.All_Eq_AddLogSumExpAdd.All_EqNegLogProb.of.All_Eq_Log.All_Eq_Sum_Exp.All_Eq_LogProbCond.All_Eq_LogProbCond.All_Eq_LogProbJoint.All_Lt0Prob.IsDiscreteHMM)，Viterbi 数值递推 [crf.viterbi](http://www.lemma.cn/lean/?module=Random.All_Eq_Add_MaxAdd.EqMax_ProbJoint.of.All_Eq_Max.Eq_LogProbCond.Eq_LogProbCond.Eq_LogProbJoint.All_Lt0ProbJoint.IsDiscreteHMM)，以及HMM 恒等式 [hmm_identity](http://www.lemma.cn/lean/?module=Random.Sum_Mul_ProbCond.eq.Prob.of.IsDiscreteHMM)，针对离散隐马尔可夫模型。
-2. Bellman 方程 [Bellman](http://www.lemma.cn/lean/?module=Tensor.And.Eq.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.Bellman)，建立在轨迹层面的 MDP 上，其轨迹律的马尔可夫性是已证明的（`joint_succ`、`hist_step`）（第 6 节）。
+2. Bellman 方程 [Bellman](http://www.lemma.cn/lean/?module=Random.Eq_Expect.Eq_Expect.Eq_Expect.of.All_Eq_Expect.All_Eq_Expect.In_Ico)，建立在轨迹层面的 MDP 上，其轨迹律的马尔可夫性是已证明的（`joint_succ`、`hist_step`）（第 6 节）。
 3. 对时间跨度归纳证明的策略梯度定理，截断、动作价值与 REINFORCE 三种形式（[policy_gradient_theorem](http://www.lemma.cn/lean/?module=Tensor.Eq.Dot.Grad.Expect.of.Eq_Conditioned.IsFinite.policy_gradient_theorem)）；无偏优势估计 [unbiased_advantage_estimate](http://www.lemma.cn/lean/?module=Tensor.EqDot_GradExpect.of.Eq_Conditioned.Eq_Expect.IsFinite.IsFinite.unbiased_advantage_estimate)；以及对精确价值函数、所有 \(\lambda\in[0,1]\) 的 GAE [generalized_advantage_estimate](http://www.lemma.cn/lean/?module=Tensor.EqDot_GradExpect.of.Eq_Conditioned.Eq_Expect.IsFinite.IsFinite.generalized_advantage_estimate) 及其加权平均形式（第 7 节）。
 4. 两张对比表（第 9 节）。
 
@@ -189,7 +189,7 @@ p(y\mid x)=\frac1{Z(x)}\prod_{t}\psi_t(y_{t-1},y_t,x),\qquad Z(x)=\sum_{y'\in\ma
 
 对 \(\gamma\in[0,1)\)，从 \(t\) 起的折扣回报是 \(G_t=\sum_k{}'\,\gamma^k{\color{red}r}_{t+k}\)，\(V_t^\theta(s_t)=\mathbb E_\theta[G_t\mid{\color{red}s}_t]\)，\(Q_t^\theta(s_t,a_t)=\mathbb E_\theta[G_t\mid{\color{red}s}_t,{\color{red}a}_t]\)。目标函数是 \(J(\theta)=\mathbb E_\theta[\sum_t{}'\,\gamma^t{\color{red}r}_t]=\sum_t{}'\,\gamma^t\mathbb E_\theta[{\color{red}r}_t]\)。模型文件证明了：在可达状态上 \(V_t^\theta\) 等于一个与时间无关的闭式，\(|V_t|,|Q_t|\le(1-\gamma)^{-1}R_{\max}\)，并且对可微且梯度一致有界的策略，\(J\) 是 Fréchet 可微的。我们始终假设：(D) \(\gamma\in[0,1)\)；(P1) \(\theta\mapsto\pi_\theta(u\mid x)\) 可微；(P2) \(\sup_{\theta,x,u}\|\nabla_\theta\pi_\theta(u\mid x)\|<\infty\)。对 \(V_t\) 与 \(\nabla V_t\) 的界是推出来的，不是假设。
 
-**定理 6.2（Bellman 方程 [Bellman](http://www.lemma.cn/lean/?module=Tensor.And.Eq.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.Bellman)）** 设 (D) 成立，\(V\)、\(Q\) 满足 \(V_t(s_t)=\mathbb E_\theta[G_t\mid{\color{red}s}_t]\)、\(Q_t(s_t,a_t)=\mathbb E_\theta[G_t\mid{\color{red}s}_t,{\color{red}a}_t]\)。则
+**定理 6.2（Bellman 方程 [Bellman](http://www.lemma.cn/lean/?module=Random.Eq_Expect.Eq_Expect.Eq_Expect.of.All_Eq_Expect.All_Eq_Expect.In_Ico)）** 设 (D) 成立，\(V\)、\(Q\) 满足 \(V_t(s_t)=\mathbb E_\theta[G_t\mid{\color{red}s}_t]\)、\(Q_t(s_t,a_t)=\mathbb E_\theta[G_t\mid{\color{red}s}_t,{\color{red}a}_t]\)。则
 
 \[
 \begin{aligned}
@@ -222,7 +222,7 @@ Q_t(s_t,a_t)&=\mathbb E_\theta\bigl[{\color{red}r}_t+\gamma\,V_{t+1}({\color{mag
 
 ## 7.1 归纳法证明策略梯度定理
 
-**定理 7.1（递推 [policy_gradient.recursion](http://www.lemma.cn/lean/?module=Tensor.EqGrad.of.Eq_Conditioned.Eq_Expect.Eq_Expect.policy_gradient.recursion)，展开 [policy_gradient.induct](http://www.lemma.cn/lean/?module=Tensor.EqGrad.of.Eq_Conditioned.Eq_Expect.Eq_Expect.policy_gradient.induct)）** 设 (D)、(P1)、(P2) 成立，\(s_0\) 可达。则在可达的 \(s_t\) 上 \(\nabla V_t(s_t)=\sum_uQ_t(s_t,u)\nabla\pi_\theta(u\mid s_t)+\gamma\sum_y\mathbb P_\theta({\color{red}s}_{t+1}=y\mid{\color{red}s}_t)\nabla V_{t+1}(y)\)，并且对每个 \(n\)，
+**定理 7.1（递推 [policy_gradient.recursion.discrete](http://www.lemma.cn/lean/?module=Tensor.EqGrad.of.Eq_Conditioned.Eq_Expect.Eq_Expect.policy_gradient.recursion.discrete)，展开 [policy_gradient.induct](http://www.lemma.cn/lean/?module=Tensor.EqGrad.of.Eq_Conditioned.Eq_Expect.Eq_Expect.policy_gradient.induct)）** 设 (D)、(P1)、(P2) 成立，\(s_0\) 可达。则在可达的 \(s_t\) 上 \(\nabla V_t(s_t)=\sum_uQ_t(s_t,u)\nabla\pi_\theta(u\mid s_t)+\gamma\sum_y\mathbb P_\theta({\color{red}s}_{t+1}=y\mid{\color{red}s}_t)\nabla V_{t+1}(y)\)，并且对每个 \(n\)，
 
 \[
 \nabla_\theta V_0(s_0)=\sum_{t<n}\gamma^t\sum_y\mathbb P_\theta({\color{red}s}_t=y\mid{\color{red}s}_0)\sum_uQ_t(y,u)\nabla_\theta\pi_\theta(u\mid y)+\gamma^n\sum_y\mathbb P_\theta({\color{red}s}_n=y\mid{\color{red}s}_0)\nabla_\theta V_n(y).

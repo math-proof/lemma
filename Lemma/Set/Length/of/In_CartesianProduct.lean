@@ -1,4 +1,3 @@
-import stdlib.List
 import Lemma.Set.Length.of.In_Product
 import Lemma.List.LengthMap.eq.Length
 open Set List

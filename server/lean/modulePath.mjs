@@ -8,24 +8,45 @@ export const REPO_ROOT = path.join(__dirname, '..', '..');
 /**
  * Map a `.lean` filesystem path to dotted module under `Lemma/`, matching PHP `lean_to_module`
  * (`php/utility.php`) and `index.php` (redirect when `module` ends with `.lean`).
- * Accepts absolute paths or paths relative to `Lemma/`.
+ * Accepts absolute paths (this repo or another checkout that still contains a `Lemma/` segment,
+ * e.g. `/home/cosmos/src/lean/Lemma/Random/Foo.lean` → `Random.Foo`) or paths relative to `Lemma/`.
  */
 export function leanPathToModule(input, repoRoot = REPO_ROOT) {
   const trimmed = String(input).trim();
-  if (!trimmed.endsWith('.lean')) {
+  if (!trimmed.endsWith(".lean")) {
     return null;
   }
-  const lemmaRoot = path.join(repoRoot, 'Lemma');
+  // PHP lean_to_module: walk parents until basename is Lemma, then join the collected segments.
+  // Do not require the path to live under this machine's REPO_ROOT — VS Code / remote copy-paste
+  // often hands `/home/.../Lemma/...` to `?module=`.
+  const segs = trimmed.replace(/\\/g, "/").split("/").filter(Boolean);
+  let lemmaAt = -1;
+  for (let i = segs.length - 2; i >= 0; i--) {
+    if (segs[i] === "Lemma") {
+      lemmaAt = i;
+      break;
+    }
+  }
+  if (lemmaAt >= 0) {
+    const parts = segs.slice(lemmaAt + 1);
+    if (parts.length === 0 || parts.some((p) => p === ".." || p === ".")) return null;
+    const last = parts[parts.length - 1];
+    if (!last.endsWith(".lean")) return null;
+    parts[parts.length - 1] = last.slice(0, -".lean".length);
+    return parts.join(".");
+  }
+  // No Lemma segment: treat as relative to this repo's Lemma/ (existing Node behavior).
+  const lemmaRoot = path.join(repoRoot, "Lemma");
   const resolved = path.isAbsolute(trimmed)
     ? path.normalize(trimmed)
     : path.normalize(
         path.join(
           lemmaRoot,
-          trimmed.replace(/\//g, path.sep).replace(/^Lemma[/\\]/, '')
+          trimmed.replace(/\//g, path.sep).replace(/^Lemma[/\\]/, "")
         )
       );
   const rel = path.relative(path.resolve(lemmaRoot), path.resolve(resolved));
-  if (!rel || rel.startsWith('..') || path.isAbsolute(rel)) {
+  if (!rel || rel.startsWith("..") || path.isAbsolute(rel)) {
     return null;
   }
   const parts = rel.split(/[/\\]/).filter(Boolean);
@@ -33,11 +54,11 @@ export function leanPathToModule(input, repoRoot = REPO_ROOT) {
     return null;
   }
   const last = parts[parts.length - 1];
-  if (!last.endsWith('.lean')) {
+  if (!last.endsWith(".lean")) {
     return null;
   }
-  parts[parts.length - 1] = last.slice(0, -'.lean'.length);
-  return parts.join('.');
+  parts[parts.length - 1] = last.slice(0, -".lean".length);
+  return parts.join(".");
 }
 
 /**

@@ -1,4 +1,3 @@
-import stdlib.List
 import Lemma.Nat.EqSub.of.EqAdd
 import Lemma.Nat.EqAdd_Sub.of.Ge
 import Lemma.List.DropPermute.eq.ListGet

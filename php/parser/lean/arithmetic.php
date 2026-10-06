@@ -369,6 +369,9 @@ class LeanBitOr extends LeanArithmetic
     {
         if ($this->parent instanceof LeanQuantifier)
             $syntax['setOf'] = true;
+        // CondIndep `X ⟂ᵢ[π] Y | Z`: the conditioner `Z` is a random variable too (red).
+        if (LeanIndep::independenceOf($this->args[0]))
+            LeanIndep::markRandomVariableTerm($this->args[1]);
         return parent::latexArgs($syntax);
     }
     public function tokens_bar_separated()
@@ -1243,4 +1246,4 @@ class LeanPipeForward extends LeanUnaryArithmeticPost
 
 }
 
-// END OF arithmetic family (LeanMethodChaining stays in lean.php)
+// END OF arithmetic family (LeanParser stays in lean.php)

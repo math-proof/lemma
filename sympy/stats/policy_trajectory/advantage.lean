@@ -36,13 +36,13 @@ noncomputable def deltaBound (M : Model Θ S A) (γ : ℝ) : ℝ :=
 
 omit [MeasurableSingletonClass A] [Fintype A] [DecidableEq S] [DecidableEq A] in
 theorem delta_meas (V : S → ℝ) (γ : ℝ) (j : ℕ) :
-    Measurable (fun ω : ℕ → S × A × ℝ => r j ω + γ * V (s (j + 1) ω) - V (s j ω)) :=
+    Measurable (fun ω : ℕ → ℝ × S × A => r j ω + γ * V (s (j + 1) ω) - V (s j ω)) :=
   ((r_meas j).add (((measurable_of_countable V).comp (s_meas (j + 1))).const_mul γ)).sub
     ((measurable_of_countable V).comp (s_meas j))
 
 omit [MeasurableSingletonClass A] [DecidableEq S] [DecidableEq A] in
 theorem delta_ae_bdd (M : Model Θ S A) (θ : Θ) {γ : ℝ} (hγ : γ ∈ Set.Ico 0 1) :
-    ∀ᵐ ω ∂(M.traj θ), ∀ j, ‖r j ω + γ * M.Vc θ γ (s (j + 1) ω) - M.Vc θ γ (s j ω)‖ ≤
+    ∀ᵐ ω ∂(M θ), ∀ j, ‖r j ω + γ * M.Vc θ γ (s (j + 1) ω) - M.Vc θ γ (s j ω)‖ ≤
       M.deltaBound γ := by
   filter_upwards [r_bdd_ae M θ] with ω hr j
   calc _ ≤ ‖r j ω‖ + ‖γ * M.Vc θ γ (s (j + 1) ω)‖ + ‖M.Vc θ γ (s j ω)‖ :=
@@ -56,7 +56,7 @@ omit [MeasurableSingletonClass A] [DecidableEq S] [DecidableEq A] in
 /-- almost surely the `c`-discounted sums of residuals are bounded, uniformly in `t` -/
 theorem delta_sum_bdd (M : Model Θ S A) (θ : Θ) {γ c : ℝ} (hγ : γ ∈ Set.Ico 0 1)
     (hc : c ∈ Set.Ico 0 1) :
-    ∀ᵐ ω ∂(M.traj θ), ∀ t, ‖∑' k, c ^ k * (r (t + k) ω + γ * M.Vc θ γ (s (t + k + 1) ω) -
+    ∀ᵐ ω ∂(M θ), ∀ t, ‖∑' k, c ^ k * (r (t + k) ω + γ * M.Vc θ γ (s (t + k + 1) ω) -
       M.Vc θ γ (s (t + k) ω))‖ ≤ (1 - c)⁻¹ * M.deltaBound γ := by
   filter_upwards [delta_ae_bdd M θ hγ] with ω h t
   refine tsum_of_norm_bounded ((hasSum_geometric_of_lt_one hc.1 hc.2).mul_right _) fun k => ?_
@@ -64,25 +64,25 @@ theorem delta_sum_bdd (M : Model Θ S A) (θ : Θ) {γ c : ℝ} (hγ : γ ∈ Se
   exact mul_le_mul_of_nonneg_left (h (t + k)) (pow_nonneg hc.1 k)
 
 omit [DecidableEq S] [DecidableEq A] in
-theorem Kf_delta (M : Model Θ S A) (θ : Θ) {γ : ℝ} (hγ : γ ∈ Set.Ico 0 1) (z : S × A × ℝ) :
-    M.Kf θ M.rc 1 z + γ * M.Kf θ (fun w => M.Vc θ γ w.1) 2 z -
-      M.Kf θ (fun w => M.Vc θ γ w.1) 1 z = 0 := by
-  have hf : StronglyMeasurable (fun w : S × A × ℝ => M.Vc θ γ w.1) :=
-    (disc_sm (M.Vc θ γ)).comp_measurable measurable_fst
-  have hC : ∀ w : S × A × ℝ, ‖(fun w : S × A × ℝ => M.Vc θ γ w.1) w‖ ≤ ∑ y', ‖M.Vc θ γ y'‖ :=
-    fun w => h_bdd (M.Vc θ γ) w.1
-  have w0 : ∀ y, M.W θ (fun w : S × A × ℝ => M.Vc θ γ w.1) 0 y = M.Vc θ γ y :=
+theorem Kf_delta (M : Model Θ S A) (θ : Θ) {γ : ℝ} (hγ : γ ∈ Set.Ico 0 1) (z : ℝ × S × A) :
+    M.Kf θ M.rc 1 z + γ * M.Kf θ (fun w => M.Vc θ γ w.2.1) 2 z -
+      M.Kf θ (fun w => M.Vc θ γ w.2.1) 1 z = 0 := by
+  have hf : StronglyMeasurable (fun w : ℝ × S × A => M.Vc θ γ w.2.1) :=
+    (disc_sm (M.Vc θ γ)).comp_measurable measurable_snd.fst
+  have hC : ∀ w : ℝ × S × A, ‖(fun w : ℝ × S × A => M.Vc θ γ w.2.1) w‖ ≤ ∑ y', ‖M.Vc θ γ y'‖ :=
+    fun w => h_bdd (M.Vc θ γ) w.2.1
+  have w0 : ∀ y, M.W θ (fun w : ℝ × S × A => M.Vc θ γ w.2.1) 0 y = M.Vc θ γ y :=
     W_fst_zero M θ (M.Vc θ γ)
-  have w1 : ∀ y, M.W θ (fun w : S × A × ℝ => M.Vc θ γ w.1) 1 y =
+  have w1 : ∀ y, M.W θ (fun w : ℝ × S × A => M.Vc θ γ w.2.1) 1 y =
       ∑ u, M.pol.prob θ y u * ∑ y', M.T y u y' * M.Vc θ γ y' := fun y => by
-    show M.W θ (fun w : S × A × ℝ => M.Vc θ γ w.1) (0 + 1) y = _
+    show M.W θ (fun w : ℝ × S × A => M.Vc θ γ w.2.1) (0 + 1) y = _
     rw [W_succ M θ hf hC 0 y]
     simp_rw [w0]
   have e1 := Kf_succ M θ (rc_sm M) (rc_bdd M) 0 z
   have e2 := Kf_succ M θ hf hC 1 z
   have e3 := Kf_succ M θ hf hC 0 z
-  show M.Kf θ M.rc (0 + 1) z + γ * M.Kf θ (fun w => M.Vc θ γ w.1) (1 + 1) z -
-      M.Kf θ (fun w => M.Vc θ γ w.1) (0 + 1) z = 0
+  show M.Kf θ M.rc (0 + 1) z + γ * M.Kf θ (fun w => M.Vc θ γ w.2.1) (1 + 1) z -
+      M.Kf θ (fun w => M.Vc θ γ w.2.1) (0 + 1) z = 0
   rw [e1, e2, e3]
   simp_rw [w0, w1]
   rw [Finset.mul_sum, ← Finset.sum_add_distrib, ← Finset.sum_sub_distrib]
@@ -93,10 +93,10 @@ theorem Kf_delta (M : Model Θ S A) (θ : Θ) {γ : ℝ} (hγ : γ ∈ Set.Ico 0
   ring
 
 omit [MeasurableSingletonClass A] [DecidableEq S] [DecidableEq A] in
-theorem int_hist_mul (M : Model Θ S A) (θ : Θ) (n k : ℕ) {G : (Π _ : Iic n, S × A × ℝ) → ℝ}
+theorem int_hist_mul (M : Model Θ S A) (θ : Θ) (n k : ℕ) {G : (Π _ : Iic n, ℝ × S × A) → ℝ}
     (hG : StronglyMeasurable G) {CG : ℝ} (hCG : ∀ h, ‖G h‖ ≤ CG)
-    {g : S × A × ℝ → ℝ} (hg : StronglyMeasurable g) {C : ℝ} (hC : ∀ z, ‖g z‖ ≤ C) :
-    Integrable (fun ω => G (Preorder.frestrictLe n ω) * g (ω k)) (M.traj θ) := by
+    {g : ℝ × S × A → ℝ} (hg : StronglyMeasurable g) {C : ℝ} (hC : ∀ z, ‖g z‖ ≤ C) :
+    Integrable (fun ω => G (Preorder.frestrictLe n ω) * g (ω k)) (M θ) := by
   refine Integrable.of_bound (C := CG * C) ?_ (Filter.Eventually.of_forall fun ω => ?_)
   · exact ((hG.comp_measurable (Preorder.measurable_frestrictLe n)).mul
       (hg.comp_measurable (measurable_pi_apply k))).aestronglyMeasurable
@@ -107,8 +107,8 @@ omit [DecidableEq S] [DecidableEq A] in
 theorem integrable_delta_smul (M : Model Θ S A) (θ : Θ) {γ : ℝ} (hγ : γ ∈ Set.Ico 0 1) {E : Type*}
     [NormedAddCommGroup E] [NormedSpace ℝ E] (t j : ℕ) (ψ : S → A → E) :
     Integrable (fun ω => (r j ω + γ * M.Vc θ γ (s (j + 1) ω) - M.Vc θ γ (s j ω)) •
-      ψ (s t ω) (a t ω)) (M.traj θ) := by
-  have hX : Measurable (fun ω : ℕ → S × A × ℝ => (s t ω, a t ω)) := (s_meas t).prodMk (a_meas t)
+      ψ (s t ω) (a t ω)) (M θ) := by
+  have hX : Measurable (fun ω : ℕ → ℝ × S × A => (s t ω, a t ω)) := (s_meas t).prodMk (a_meas t)
   refine Integrable.of_bound (C := M.deltaBound γ * ∑ p : S × A, ‖ψ p.1 p.2‖)
     ((delta_meas (M.Vc θ γ) γ j).stronglyMeasurable.smul
       ((StronglyMeasurable.of_discrete (f := fun p : S × A => ψ p.1 p.2)).comp_measurable
@@ -122,19 +122,19 @@ theorem integrable_delta_smul (M : Model Θ S A) (θ : Θ) {γ : ℝ} (hγ : γ 
 theorem E_ind_delta (M : Model Θ S A) (θ : Θ) {γ : ℝ} (hγ : γ ∈ Set.Ico 0 1) (t n : ℕ)
     (htn : t ≤ n) (x : S) (u : A) :
     ∫ ω, (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) *
-      (r (n + 1) ω + γ * M.Vc θ γ (s (n + 1 + 1) ω) - M.Vc θ γ (s (n + 1) ω)) ∂(M.traj θ) = 0 := by
-  let Gh : (Π _ : Iic n, S × A × ℝ) → ℝ := fun h =>
-    if (h ⟨t, mem_Iic.2 htn⟩).1 = x ∧ (h ⟨t, mem_Iic.2 htn⟩).2.1 = u then (1:ℝ) else 0
+      (r (n + 1) ω + γ * M.Vc θ γ (s (n + 1 + 1) ω) - M.Vc θ γ (s (n + 1) ω)) ∂(M θ) = 0 := by
+  let Gh : (Π _ : Iic n, ℝ × S × A) → ℝ := fun h =>
+    if (h ⟨t, mem_Iic.2 htn⟩).2.1 = x ∧ (h ⟨t, mem_Iic.2 htn⟩).2.2 = u then (1:ℝ) else 0
   have hG : StronglyMeasurable Gh :=
     (disc_sm (fun p : S × A => if p.1 = x ∧ p.2 = u then (1:ℝ) else 0)).comp_measurable
-      ((measurable_fst.comp (measurable_pi_apply _)).prodMk
-        (measurable_fst.comp (measurable_snd.comp (measurable_pi_apply _))))
+      ((measurable_snd.fst.comp (measurable_pi_apply _)).prodMk
+        (measurable_snd.snd.comp (measurable_pi_apply _)))
   have hCG : ∀ h, ‖Gh h‖ ≤ 1 := fun h => by dsimp only [Gh]; split_ifs <;> simp
-  have hGω : ∀ ω : ℕ → S × A × ℝ, Gh (Preorder.frestrictLe n ω) =
+  have hGω : ∀ ω : ℕ → ℝ × S × A, Gh (Preorder.frestrictLe n ω) =
       (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) := fun ω => rfl
-  let f : S × A × ℝ → ℝ := fun w => M.Vc θ γ w.1
-  have hf : StronglyMeasurable f := (disc_sm (M.Vc θ γ)).comp_measurable measurable_fst
-  have hC : ∀ w, ‖f w‖ ≤ ∑ y', ‖M.Vc θ γ y'‖ := fun w => h_bdd (M.Vc θ γ) w.1
+  let f : ℝ × S × A → ℝ := fun w => M.Vc θ γ w.2.1
+  have hf : StronglyMeasurable f := (disc_sm (M.Vc θ γ)).comp_measurable measurable_snd.fst
+  have hC : ∀ w, ‖f w‖ ≤ ∑ y', ‖M.Vc θ γ y'‖ := fun w => h_bdd (M.Vc θ γ) w.2.1
   have h1 := hist_iter M θ (rc_sm M) (rc_bdd M) 1 n hG hCG
   have h2 := hist_iter M θ hf hC 2 n hG hCG
   have h3 := hist_iter M θ hf hC 1 n hG hCG
@@ -147,7 +147,7 @@ theorem E_ind_delta (M : Model Θ S A) (θ : Θ) {γ : ℝ} (hγ : γ ∈ Set.Ic
   have j1 := int_hist_mul M θ n n hG hCG k1.1 k1.2
   have j2 := int_hist_mul M θ n n hG hCG k2.1 k2.2
   have j3 := int_hist_mul M θ n n hG hCG k3.1 k3.2
-  have hae : ∀ᵐ ω ∂(M.traj θ),
+  have hae : ∀ᵐ ω ∂(M θ),
       (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) *
         (r (n + 1) ω + γ * M.Vc θ γ (s (n + 1 + 1) ω) - M.Vc θ γ (s (n + 1) ω)) =
       Gh (Preorder.frestrictLe n ω) * M.rc (ω (n + 1)) +
@@ -155,23 +155,23 @@ theorem E_ind_delta (M : Model Θ S A) (θ : Θ) {γ : ℝ} (hγ : γ ∈ Set.Ic
         Gh (Preorder.frestrictLe n ω) * f (ω (n + 1)) := by
     filter_upwards [r_ae M θ (n + 1)] with ω hω
     rw [hGω, hω]
-    show _ * (M.rc (ω (n + 1)) + γ * M.Vc θ γ (ω (n + 2)).1 - M.Vc θ γ (ω (n + 1)).1) = _
+    show _ * (M.rc (ω (n + 1)) + γ * M.Vc θ γ (ω (n + 2)).2.1 - M.Vc θ γ (ω (n + 1)).2.1) = _
     ring
-  have hz : ∀ ω : ℕ → S × A × ℝ, Gh (Preorder.frestrictLe n ω) * M.Kf θ M.rc 1 (ω n) +
+  have hz : ∀ ω : ℕ → ℝ × S × A, Gh (Preorder.frestrictLe n ω) * M.Kf θ M.rc 1 (ω n) +
       γ * (Gh (Preorder.frestrictLe n ω) * M.Kf θ f 2 (ω n)) -
       Gh (Preorder.frestrictLe n ω) * M.Kf θ f 1 (ω n) = 0 := fun ω => by
     have := Kf_delta M θ hγ (ω n)
     calc _ = Gh (Preorder.frestrictLe n ω) *
         (M.Kf θ M.rc 1 (ω n) + γ * M.Kf θ f 2 (ω n) - M.Kf θ f 1 (ω n)) := by ring
       _ = 0 := by rw [this, mul_zero]
-  have i23 : Integrable (fun ω => γ * (Gh (Preorder.frestrictLe n ω) * f (ω (n + 2)))) (M.traj θ) :=
+  have i23 : Integrable (fun ω => γ * (Gh (Preorder.frestrictLe n ω) * f (ω (n + 2)))) (M θ) :=
     i2.const_mul γ
-  have j23 : Integrable (fun ω => γ * (Gh (Preorder.frestrictLe n ω) * M.Kf θ f 2 (ω n))) (M.traj θ) :=
+  have j23 : Integrable (fun ω => γ * (Gh (Preorder.frestrictLe n ω) * M.Kf θ f 2 (ω n))) (M θ) :=
     j2.const_mul γ
   have ia : Integrable (fun ω => Gh (Preorder.frestrictLe n ω) * M.rc (ω (n + 1)) +
-      γ * (Gh (Preorder.frestrictLe n ω) * f (ω (n + 2)))) (M.traj θ) := i1.add i23
+      γ * (Gh (Preorder.frestrictLe n ω) * f (ω (n + 2)))) (M θ) := i1.add i23
   have ja : Integrable (fun ω => Gh (Preorder.frestrictLe n ω) * M.Kf θ M.rc 1 (ω n) +
-      γ * (Gh (Preorder.frestrictLe n ω) * M.Kf θ f 2 (ω n))) (M.traj θ) := j1.add j23
+      γ * (Gh (Preorder.frestrictLe n ω) * M.Kf θ f 2 (ω n))) (M θ) := j1.add j23
   rw [integral_congr_ae hae, integral_sub ia i3, integral_add i1 i23, integral_const_mul,
     h1, h2, h3]
   have e := integral_sub ja j3
@@ -185,9 +185,9 @@ theorem E_delta_psi (M : Model Θ S A) (θ : Θ) {γ : ℝ} (hγ : γ ∈ Set.Ic
     (htn : t ≤ n) {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E]
     (ψ : S → A → E) :
     ∫ ω, (r (n + 1) ω + γ * M.Vc θ γ (s (n + 1 + 1) ω) - M.Vc θ γ (s (n + 1) ω)) •
-      ψ (s t ω) (a t ω) ∂(M.traj θ) = 0 := by
+      ψ (s t ω) (a t ω) ∂(M θ) = 0 := by
   have hI : ∀ x u, Integrable (fun ω => (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) *
-      (r (n + 1) ω + γ * M.Vc θ γ (s (n + 1 + 1) ω) - M.Vc θ γ (s (n + 1) ω))) (M.traj θ) := by
+      (r (n + 1) ω + γ * M.Vc θ γ (s (n + 1 + 1) ω) - M.Vc θ γ (s (n + 1) ω))) (M θ) := by
     intro x u
     refine (integrable_delta_smul M θ hγ t (n + 1)
       (fun x' u' => if x' = x ∧ u' = u then (1:ℝ) else 0)).congr
@@ -209,35 +209,35 @@ theorem E_sum_delta (M : Model Θ S A) (θ : Θ) {γ c : ℝ} (hγ : γ ∈ Set.
     (hc : c ∈ Set.Ico 0 1) (t : ℕ) {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
     [CompleteSpace E] (ψ : S → A → E) :
     ∫ ω, (∑' k, c ^ k * (r (t + k) ω + γ * M.Vc θ γ (s (t + k + 1) ω) -
-        M.Vc θ γ (s (t + k) ω))) • ψ (s t ω) (a t ω) ∂(M.traj θ) =
+        M.Vc θ γ (s (t + k) ω))) • ψ (s t ω) (a t ω) ∂(M θ) =
       ∫ ω, (r t ω + γ * M.Vc θ γ (s (t + 1) ω) - M.Vc θ γ (s t ω)) • ψ (s t ω) (a t ω)
-        ∂(M.traj θ) := by
+        ∂(M θ) := by
   classical
-  let F : ℕ → (ℕ → S × A × ℝ) → E := fun k ω =>
+  let F : ℕ → (ℕ → ℝ × S × A) → E := fun k ω =>
     (c ^ k * (r (t + k) ω + γ * M.Vc θ γ (s (t + k + 1) ω) - M.Vc θ γ (s (t + k) ω))) •
       ψ (s t ω) (a t ω)
   have hF : ∀ k ω, F k ω = c ^ k • ((r (t + k) ω + γ * M.Vc θ γ (s (t + k + 1) ω) -
       M.Vc θ γ (s (t + k) ω)) • ψ (s t ω) (a t ω)) := fun k ω => by
     simp only [F, mul_smul]
-  have hFi : ∀ k, Integrable (F k) (M.traj θ) := fun k => by
+  have hFi : ∀ k, Integrable (F k) (M θ) := fun k => by
     have := (integrable_delta_smul M θ hγ t (t + k) ψ).smul (c ^ k)
     exact this.congr (Filter.Eventually.of_forall fun ω => (hF k ω).symm)
   obtain ⟨Ψ, hΨ⟩ : ∃ Ψ : ℝ, Ψ = ∑ p : S × A, ‖ψ p.1 p.2‖ := ⟨_, rfl⟩
-  have hFb : ∀ k, ∀ᵐ ω ∂(M.traj θ), ‖F k ω‖ ≤ c ^ k * (M.deltaBound γ * Ψ) := fun k => by
+  have hFb : ∀ k, ∀ᵐ ω ∂(M θ), ‖F k ω‖ ≤ c ^ k * (M.deltaBound γ * Ψ) := fun k => by
     filter_upwards [delta_ae_bdd M θ hγ] with ω h
     rw [hF, norm_smul, norm_smul, norm_pow, Real.norm_of_nonneg hc.1, hΨ]
     refine mul_le_mul_of_nonneg_left ?_ (pow_nonneg hc.1 k)
     exact mul_le_mul (h _) (Finset.single_le_sum (f := fun p : S × A => ‖ψ p.1 p.2‖)
       (fun _ _ => norm_nonneg _) (Finset.mem_univ (s t ω, a t ω))) (norm_nonneg _)
       ((norm_nonneg _).trans (h 0))
-  have hsum : Summable (fun k => ∫ ω, ‖F k ω‖ ∂(M.traj θ)) := by
+  have hsum : Summable (fun k => ∫ ω, ‖F k ω‖ ∂(M θ)) := by
     refine Summable.of_nonneg_of_le (fun k => integral_nonneg fun _ => norm_nonneg _) (fun k => ?_)
       ((summable_geometric_of_lt_one hc.1 hc.2).mul_right (M.deltaBound γ * Ψ))
-    calc _ ≤ ∫ _, c ^ k * (M.deltaBound γ * Ψ) ∂(M.traj θ) :=
+    calc _ ≤ ∫ _, c ^ k * (M.deltaBound γ * Ψ) ∂(M θ) :=
           integral_mono_ae (hFi k).norm (integrable_const _) (hFb k)
       _ = c ^ k * (M.deltaBound γ * Ψ) := by simp
   have hHas := hasSum_integral_of_summable_integral_norm hFi hsum
-  have hzero : ∀ k, k ≠ 0 → ∫ ω, F k ω ∂(M.traj θ) = 0 := by
+  have hzero : ∀ k, k ≠ 0 → ∫ ω, F k ω ∂(M θ) = 0 := by
     intro k hk
     obtain ⟨k', rfl⟩ := Nat.exists_eq_succ_of_ne_zero hk
     simp_rw [hF]
@@ -247,8 +247,8 @@ theorem E_sum_delta (M : Model Θ S A) (θ : Θ) {γ c : ℝ} (hγ : γ ∈ Set.
         M.Vc θ γ (s (t + k'.succ) ω)) • ψ (s t ω) (a t ω)) = fun ω => (r (t + k' + 1) ω +
         γ * M.Vc θ γ (s (t + k' + 1 + 1) ω) - M.Vc θ γ (s (t + k' + 1) ω)) • ψ (s t ω) (a t ω)
         from rfl, this, smul_zero]
-  have h0 : ∑' k, ∫ ω, F k ω ∂(M.traj θ) = ∫ ω, F 0 ω ∂(M.traj θ) := tsum_eq_single 0 hzero
-  have hae : ∀ᵐ ω ∂(M.traj θ), (∑' k, c ^ k * (r (t + k) ω + γ * M.Vc θ γ (s (t + k + 1) ω) -
+  have h0 : ∑' k, ∫ ω, F k ω ∂(M θ) = ∫ ω, F 0 ω ∂(M θ) := tsum_eq_single 0 hzero
+  have hae : ∀ᵐ ω ∂(M θ), (∑' k, c ^ k * (r (t + k) ω + γ * M.Vc θ γ (s (t + k + 1) ω) -
         M.Vc θ γ (s (t + k) ω))) • ψ (s t ω) (a t ω) = ∑' k, F k ω := by
     filter_upwards [delta_ae_bdd M θ hγ] with ω h
     have hs : Summable (fun k => c ^ k * (r (t + k) ω + γ * M.Vc θ γ (s (t + k + 1) ω) -

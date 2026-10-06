@@ -21,7 +21,7 @@ The main objectives of this project are formalizing in Lean4:
 * **mathematical foundations of reinforcement learning**
   This part is based on the reference book [*Mathematical Foundation of Reinforcement Learning*](https://github.com/MathFoundationRL/Book-Mathematical-Foundation-of-Reinforcement-Learning):
   - [Markov Decision Process](http://www.lemma.cn/lean/?module=Random.EqConditioned.of.Eq_Conditioned.independence_assumption.future)
-  - [Bellman Equation](http://www.lemma.cn/lean/?module=Tensor.And.Eq.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.Bellman)
+  - [Bellman Equation](http://www.lemma.cn/lean/?module=Random.Eq_Expect.Eq_Expect.Eq_Expect.of.All_Eq_Expect.All_Eq_Expect.In_Ico)
   - [Policy Gradient Theorem](http://www.lemma.cn/lean/?module=Tensor.Eq.Grad.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.policy_gradient)
 
 * **mathematical arguments from arXiv machine learning papers.**

@@ -1,4 +1,3 @@
-import stdlib.List
 import Lemma.List.Slice.eq.Nil.of.Gt
 open List
 

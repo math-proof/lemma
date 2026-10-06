@@ -21,6 +21,7 @@ import Lemma.Fin.Eq_Fin.of.EqVal
 import Lemma.Nat.Ge_1
 import Lemma.Nat.Gt_0
 import Lemma.Nat.LeAdd_1
+import Lemma.Nat.NotLe.is.Gt
 import Lemma.Nat.Sub.eq.Zero.of.Lt
 import Lemma.Nat.SubAdd.eq.Add_Sub.of.Ge
 import Lemma.Nat.SubAdd.eq.Sub_Sub.of.Ge

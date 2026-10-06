@@ -445,7 +445,7 @@ private lemma main
   (hPyy : SinglePSpace π (x, y, y))
   (hf : Measurable (uncurry f)) :
 -- imply
-  𝔼[x: π | y](f x y | y) =ᵐ[π] 𝔼[x: π | y](f x y) := by
+  Expectation.partialRV_RA π x y y f =ᵐ[π] 𝔼[x: π | y](f x y) := by
 -- proof
   change Expectation.partialRV_RA π x y y f =ᵐ[π] Expectation.partialRV π x y f
   have hym : AEMeasurable y π := (PSpace.of.PSpace_Joint.snd hP).aemeasurable

@@ -1,5 +1,4 @@
 import Lemma.List.TailRotate.eq.Take.of.GtLength_0
-import stdlib.List
 open List
 
 

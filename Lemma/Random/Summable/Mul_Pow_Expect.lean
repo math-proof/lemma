@@ -16,10 +16,10 @@ private lemma main
   {γ : ℝ}
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
-  (B : Set (ℕ → S × A × ℝ))
+  (B : Set (ℕ → ℝ × S × A))
   (t : ℕ) :
 -- imply
-  Summable (fun k => γ ^ k * ∫ ω, r (t + k) ω ∂(M.traj θ)[|B]) := by
+  Summable (fun k => γ ^ k * ∫ ω, r (t + k) ω ∂(M θ)[|B]) := by
 -- proof
   classical
   exact summable_cond M θ h₀ B t

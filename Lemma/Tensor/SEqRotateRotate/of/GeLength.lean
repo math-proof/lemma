@@ -19,7 +19,6 @@ import Lemma.List.TakeRotate.eq.Drop
 import Lemma.Nat.EqMod.of.Lt
 import Lemma.List.DropRotate.eq.Take
 import Lemma.Tensor.SEqRotate_Length
-import Lemma.List.LengthRotate.eq.Length
 import Lemma.Tensor.SEqRotate_0
 import Lemma.Nat.Sub.eq.Zero
 open Vector Tensor List Bool Nat Fin
@@ -43,7 +42,7 @@ private lemma main
       apply SEqRotate_Length
     ·
       have := SEqRotate_Length (X.rotate 0)
-      rw [← LengthRotate.eq.Length s 0]
+      rw [← List.length_rotate s 0]
       apply this.trans
       apply SEqRotate_0
   else

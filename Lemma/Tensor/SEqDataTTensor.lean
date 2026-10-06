@@ -82,7 +82,7 @@ private lemma main
         erw [List.TailPermute__Neg.eq.EraseIdx]
         simp [h_permute]
     ·
-      erw [LengthPermute.eq.Length]
+      erw [List.length_permute]
       grind
     .
       erw [ProdPermute.eq.Prod]
@@ -152,7 +152,7 @@ private lemma row
         simp
         rwa [LengthSlice.eq.One.of.Lt]
     ·
-      erw [LengthPermute.eq.Length]
+      erw [List.length_permute]
       grind
     ·
       erw [ProdPermute.eq.Prod]

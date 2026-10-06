@@ -139,7 +139,7 @@ math proof.
 \newblock
   {Tensor.\allowbreak{}And.\allowbreak{}Eq.\allowbreak{}Expect.\allowbreak{}of.\allowbreak{}Eq\_Conditioned.\allowbreak{}Eq\_Expect.\allowbreak{}Eq\_Expect.\allowbreak{}Bellman}.
 \newblock
-  \url{http://www.lemma.cn/lean/?module=Tensor.And.Eq.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.Bellman},
+  \url{http://www.lemma.cn/lean/?module=Random.Eq_Expect.Eq_Expect.Eq_Expect.of.All_Eq_Expect.All_Eq_Expect.In_Ico},
   2026.
 
 \bibitem{lemma_pgq}
@@ -225,9 +225,9 @@ math proof.
 \bibitem{lemma_recursion}
 math proof.
 \newblock
-  {Tensor.\allowbreak{}EqGrad.\allowbreak{}of.\allowbreak{}Eq\_Conditioned.\allowbreak{}Eq\_Expect.\allowbreak{}Eq\_Expect.\allowbreak{}policy\_gradient.\allowbreak{}recursion}.
+  {Tensor.\allowbreak{}EqGrad.\allowbreak{}of.\allowbreak{}Eq\_Conditioned.\allowbreak{}Eq\_Expect.\allowbreak{}Eq\_Expect.\allowbreak{}policy\_gradient.\allowbreak{}recursion.\allowbreak{}discrete}.
 \newblock
-  \url{http://www.lemma.cn/lean/?module=Tensor.EqGrad.of.Eq_Conditioned.Eq_Expect.Eq_Expect.policy_gradient.recursion},
+  \url{http://www.lemma.cn/lean/?module=Tensor.EqGrad.of.Eq_Conditioned.Eq_Expect.Eq_Expect.policy_gradient.recursion.discrete},
   2026.
 
 \bibitem{lemma_crf_logits}

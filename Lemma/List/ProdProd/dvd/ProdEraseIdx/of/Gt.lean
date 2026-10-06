@@ -3,7 +3,7 @@ import Lemma.List.DvdProdSDrop.of.Ge
 import Lemma.List.Prod.eq.MulProdS
 import Lemma.List.ProdEraseIdx.eq.Mul_ProdDrop_2
 import Lemma.Nat.Dvd_Mul.of.Dvd
-import stdlib.List.Basic
+import stdlib.List
 open List Nat
 
 

@@ -22,19 +22,19 @@ private lemma main
   (h₀ : γ ∈ Set.Ico 0 1)
   (x : S) :
 -- imply
-  ∫ ω, ∑' k, γ ^ k * r (t + k) ω ∂(M.traj θ)[|s t ⁻¹' {x}] =
-    ∫ ω, γ * (∫ ω', ∑' k, γ ^ k * r (t + 1 + k) ω' ∂(M.traj θ)[|s (t + 1) ⁻¹' {s (t + 1) ω}]) + r t ω
-      ∂(M.traj θ)[|s t ⁻¹' {x}] := by
+  ∫ ω, ∑' k, γ ^ k * r (t + k) ω ∂(M θ)[|s t ⁻¹' {x}] =
+    ∫ ω, γ * (∫ ω', ∑' k, γ ^ k * r (t + 1 + k) ω' ∂(M θ)[|s (t + 1) ⁻¹' {s (t + 1) ω}]) + r t ω
+      ∂(M θ)[|s t ⁻¹' {x}] := by
 -- proof
   classical
-  have hVi : ∀ t x, ∫ ω, ∑' k, γ ^ k * r (t + k) ω ∂(M.traj θ)[|s t ⁻¹' {x}] = M.V θ γ t x :=
+  have hVi : ∀ t x, ∫ ω, ∑' k, γ ^ k * r (t + k) ω ∂(M θ)[|s t ⁻¹' {x}] = M.V θ γ t x :=
     fun t x => (M.V_eq_integral θ γ t x).symm
   simp only [hVi]
-  by_cases hP : (M.traj θ).real (s t ⁻¹' {x}) = 0
+  by_cases hP : (M θ).real (s t ⁻¹' {x}) = 0
   · have h₂ := cond_eq_zero_of_meas_eq_zero (meas_zero_of_real M θ hP)
     simp [M.V_eq_integral, h₂]
   · rw [cond_s]
-    have h₂ : ∀ ω : ℕ → S × A × ℝ, (if s t ω = x then (1:ℝ) else 0) *
+    have h₂ : ∀ ω : ℕ → ℝ × S × A, (if s t ω = x then (1:ℝ) else 0) *
         (γ * M.V θ γ (t + 1) (s (t + 1) ω) + r t ω) =
         γ * ((if s t ω = x then (1:ℝ) else 0) * M.V θ γ (t + 1) (s (t + 1) ω)) +
           (if s t ω = x then (1:ℝ) else 0) * r t ω := fun ω => by ring

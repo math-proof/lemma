@@ -1,4 +1,3 @@
-import stdlib.List
 import Batteries.Data.List.Lemmas
 import Lemma.List.Set.eq.AppendTake__Cons_Drop.of.GtLength
 import Lemma.List.DropSet.eq.Drop.of.Lt

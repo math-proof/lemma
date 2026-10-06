@@ -9,11 +9,11 @@ private lemma main
   (h_i : s.length ≥ i)
   (h_j : j < i) :
 -- imply
-  (s.rotate i)[s.length - i + j]'(by grind) = s[j] := by
+  (s.rotate i)[s.length - i + j]'(by grind [List.length_rotate]) = s[j] := by
 -- proof
   if h_i : s.length > i then
     rw [GetRotate.eq.Ite.of.GeLength.GtLength]
-    repeat grind
+    repeat grind [List.length_rotate]
   else
     have h_i : s.length = i := by omega
     subst h_i

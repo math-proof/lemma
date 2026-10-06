@@ -4,7 +4,7 @@ import Lemma.Random.Prob.eq.Measure.of.Eq_Count
 import Lemma.Random.MulMeasure.eq.MulMeasure.of.CondIndep
 import Lemma.Random.Measure.eq.Mul_MulDivS.of.Subset
 import sympy.stats.discrete_hmm
-import sympy.concrete.sum_at
+import sympy.concrete.summations
 import sympy.Basic
 open MeasureTheory
 open IsDiscreteHMM

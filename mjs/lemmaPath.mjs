@@ -17,6 +17,8 @@ const TYPE_TO_SECTION = {
   MeasureSpace: "Random",
   AEMeasurable: "Random",
   PSpace: "Random",
+  // PolicyGradient trajectory MDP (`{M : Model Θ S A}`, 𝔼[· : M θ](· | ·)).
+  Model: "Random",
   Measurable: "Measure",
   Measure: "Measure",
   Kernel: "Kernel",
@@ -67,6 +69,8 @@ const TYPE_TO_SECTION = {
 const SECTION_WEIGHT = {
   StochasticVec: 2, RowStochastic: 2, StochasticIrreducible: 2, Stationary: 2,
   Aperiodic: 2, DoeblinMinorization: 2, Simplex: 2, broadcast: 2,
+  // Model / conditional-expectation lemmas: beat incidental `γ ∈ Set.Ico 0 1` (Set score 3).
+  Model: 4,
 };
 
 const DATA_TYPE_SECTIONS = new Set(Object.values(TYPE_TO_SECTION));
@@ -355,7 +359,9 @@ function hasRandomAstCues(node) {
       if (
         t === "PSpace" ||
         t === "ProbabilityMeasure" ||
-        t === "IsProbabilityMeasure"
+        t === "IsProbabilityMeasure" ||
+        t === "Model" ||
+        t === "𝔼"
       ) {
         found = true;
         return;
@@ -382,6 +388,8 @@ function hasRandomVariableCues(node) {
     }
     if (cls(n) === "LeanToken" && typeof n.text === "string") {
       const t = n.text;
+      // PolicyGradient.Model is the trajectory law (stand-in for Ω → · binders).
+      if (t === "Model") rv = true;
       if (t === "ℙ" || t === "𝔼" || /PSpace$/.test(t) || /\.bvar$/.test(t)) prob = true;
     }
     if (Array.isArray(n.args)) for (const c of n.args) walk(c);
@@ -732,7 +740,7 @@ const TOKEN_ALIAS = {
 };
 
 /** Non-ASCII notation → ASCII atom ("" drops it); path atoms are ASCII only. */
-const SYMBOL_NAME = { "𝔼": "Expect", "∅": "Empty", "⊤": "Top", "⊥": "Bot", "π": "Pi", "√": "Sqrt", "𝓝": "", atTop: "", atBot: "" };
+const SYMBOL_NAME = { "𝔼": "Expect", "∅": "Empty", "⊤": "Top", "⊥": "Bot", "∞": "Infty", "π": "Pi", "√": "Sqrt", "𝓝": "", atTop: "", atBot: "" };
 
 /** Second naming pass: Greek / subscript letters are kept (`spec.η`, `maxₐ`, `μmin`), as the repo does. */
 let KEEP_GREEK = false;
@@ -888,7 +896,7 @@ function joinDigits(a, b) {
 function isConstNode(node) {
   const n = unwrapParen(node);
   const c = cls(n);
-  if (c === "LeanToken") return /^-?\d+(\.\d+)?$/.test(n.text || "") || n.text === "π";
+  if (c === "LeanToken") return /^-?\d+(\.\d+)?$/.test(n.text || "") || n.text === "π" || n.text === "∞";
   if (c === "LeanAdd" || c === "LeanSub" || c === "LeanMul" || c === "LeanDiv" || c === "LeanPow" || c === "LeanNeg" || c === "Lean_sqrt") {
     return (n.args || []).length > 0 && n.args.every(isConstNode);
   }
@@ -1201,10 +1209,30 @@ function appSlice(proto, xs) {
   n.args = xs;
   return n;
 }
+/** `∞` / `oo` on a comparison side. */
+function isInftyToken(n) {
+  const u = unwrapParen(n);
+  return cls(u) === "LeanToken" && (u.text === "∞" || u.text === "oo");
+}
+/**
+ * `sup[x, y] e < ∞` (sympy/concrete/sup.lean): GetElem `sup[…]` compared with infinity.
+ * Literal given atom: `LtSup__Infty` (`Sup _ < ∞`; body of `sup` is a hole).
+ * Short form (preferred in paths): `GtInftySup` (`∞ > Sup`, constant mirrored to the front).
+ */
+function isSupLtInfty(node) {
+  const u = unwrapParen(node);
+  if (cls(u) !== "Lean_lt" || (u.args || []).length !== 2) return false;
+  if (!isInftyToken(u.args[1])) return false;
+  let lhs = unwrapParen(u.args[0]);
+  const head = cls(lhs) === "LeanArgsSpaceSeparated" ? lhs.args?.[0] : lhs;
+  return cls(head) === "LeanGetElem" && cls(head.args?.[0]) === "LeanToken" && head.args[0].text === "sup";
+}
 function preAlts(node, opts, canon) {
   const c = cls(node);
   const args = node.args || [];
   const A = (n) => (canon ? [nameExpr(n, opts)].filter(Boolean) : nameExprAlts(n, opts));
+  // `sup[t, ω] |r t ω| < ∞` → GtInftySup (short for LtSup__Infty)
+  if (isSupLtInfty(node)) return canon ? ["GtInftySup"] : ["GtInftySup", "LtSup__Infty"];
   // `{ω | P ω}` → SetOfP (Set/Union_SetOfEq_Add_1/eq/SetOfLe_Add_1)
   if (isSetBuilder(node)) {
     const p = setCondNames(node, opts, canon);
@@ -1844,6 +1872,36 @@ function isAeQuantifier(node) {
   return foundPartial || foundBvar;
 }
 
+/**
+ * `∀ t («s.bvar» : ℕ → S), V t («s.bvar» t) = …`: a plain `∀` (no `ᵐ`, no reference measure) that binds an
+ * ordinary variable (t) next to the `«…bvar»` ones is a genuine universal statement, so it keeps the `All_` tag
+ * (Random/…/of/All_Eq_Expect/All_Eq_Expect/In_Ico, cf. All_Lt0ProbJoint); a lone `∀ «y.bvar»,` stays implicit.
+ * Probability bodies keep the HMM spelling (`∀ t «y.bvar», s t «y.bvar» = (ℙ[π](…) : ℝ).log` → Eq_LogProbJoint,
+ * see hmmBvarAllAlts), so only non-ℙ bodies (expectations, …) are tagged here.
+ */
+function isMixedBvarForall(node) {
+  const u = unwrapParen(node);
+  if (cls(u) !== "Lean_forall" || u.superscript === "ᵐ" || !hasBvarBinder(u)) return false;
+  let measure = false;
+  (function walk(n) {
+    if (!n || typeof n !== "object" || measure) return;
+    const c = cls(n);
+    if (c === "Lean_partial" || c === "LeanPartial" || (c === "LeanToken" && (n.text === "ReferenceMeasure" || n.text === "measure"))) { measure = true; return; }
+    for (const a of n.args || []) walk(a);
+  })(u.args?.[0]);
+  if (measure) return false;
+  let prob = false;
+  (function walk(n) {
+    if (!n || typeof n !== "object" || prob) return;
+    if (matchProbApp(n)) { prob = true; return; }
+    for (const a of n.args || []) walk(a);
+  })(u.args?.[u.args.length - 1]);
+  if (prob) return false;
+  const items = (u.args || []).slice(0, -1).flatMap((b) => (cls(b) === "LeanArgsSpaceSeparated" ? b.args || [] : [b]));
+  const hasBvar = (n) => { let f = false; (function w(x) { if (!x || typeof x !== "object" || f) return; if (isBvarQuotation(x)) { f = true; return; } for (const c of x.args || []) w(c); })(n); return f; };
+  return items.some((b) => !hasBvar(b));
+}
+
 const MIRROR_REL = { Lt: "Gt", Gt: "Lt", Le: "Ge", Ge: "Le" };
 /** `0 < _` → Gt_0, `1 ≤ _` → Ge_1 (literal on the left, hole on the right). */
 function mirroredFocus(tag, left) {
@@ -1903,7 +1961,7 @@ function existsRestConjunct(quant) {
   return mentionsAny(n.args[0], quantBinderNames(quant.args?.[0])) ? n.args[1] : null;
 }
 
-function splitTopConjunction(node) {
+function splitTopConjunction(node, flattenRight = false) {
   let n = node;
   while (n && (cls(n) === "LeanParenthesis" || cls(n) === "LeanStatements" || cls(n) === "LeanArgsNewLineSeparated")) {
     n = cls(n) === "LeanParenthesis" ? n.args?.[0] : firstConclusion(n);
@@ -1911,8 +1969,21 @@ function splitTopConjunction(node) {
   if (!n || cls(n) !== "Lean_land") return null;
   const [left, right] = n.args || [];
   if (!left || !right) return null;
-  const leftParts = splitTopConjunction(left);
-  return [...(leftParts || [left]), right];
+  const leftParts = splitTopConjunction(left, flattenRight);
+  // Default: only flatten left (historic). `flattenRight` also splits right-nested
+  // `A ∧ (B ∧ C)` — used only for pure equation conjunctions (see implyAltsOf).
+  if (!flattenRight) return [...(leftParts || [left]), right];
+  const rightParts = splitTopConjunction(right, flattenRight);
+  return [...(leftParts || [left]), ...(rightParts || [right])];
+}
+
+/** Top-level imply conjunct that is an equation (A = B), after statement wrappers. */
+function isEqConjunct(node) {
+  let n = node;
+  while (n && (cls(n) === "LeanParenthesis" || cls(n) === "LeanStatements" || cls(n) === "LeanArgsNewLineSeparated")) {
+    n = cls(n) === "LeanParenthesis" ? n.args?.[0] : firstConclusion(n);
+  }
+  return cls(n) === "LeanEq";
 }
 
 function firstConclusion(node) {
@@ -1937,6 +2008,7 @@ function isCoeAscription(node) {
 function nameExprBase(node, opts = {}) {
   if (!node) return "";
   const name = cls(node);
+  if (isSupLtInfty(node)) return "GtInftySup";
   if (isCoeAscription(node)) return "Coe" + nameExpr(node.args[0], opts);
 
   // Local `have` in imply is proof scaffolding — never a path atom.
@@ -1968,7 +2040,7 @@ function nameExprBase(node, opts = {}) {
       const body = nameExpr(name === "Lean_forall" ? peelGuardForalls(args[args.length - 1]) : args[args.length - 1], opts);
       if (!body) return tag;
       // `∀ᵐ x ∂μ, P` → AeP (AeTendsto, AeAll_Le…); ReferenceMeasure binders stay implicit
-      if (isAeQuantifier(node)) return node.superscript === "ᵐ" ? "Ae" + body : body;
+      if (isAeQuantifier(node) && !isMixedBvarForall(node)) return node.superscript === "ᵐ" ? "Ae" + body : body;
       const rest = existsRestConjunct(node);
       const multi = ""; // `∀ x y` is usually spelled All (Iterates/Any_Ge_0AndAll_LeNormSub_MulNormSub); All_All kept as alternative
       // ∃ C, 0 ≤ C ∧ Q → Any_Ge_0AndQ, relations inline (Any_Ge_0AndAll_LeNormSub_MulNormSub)
@@ -2290,7 +2362,7 @@ function nameExprAltsBase(node, opts = {}) {
         const rest = existsRestConjunct(node);
         const guardAlts = rest ? nameExprAlts(rest, opts).map((r) => tag + "_And_" + r) : [];
         if (!bodyAlts.length) return uniq([...guardAlts, tag]);
-        if (isAeQuantifier(node)) {
+        if (isAeQuantifier(node) && !isMixedBvarForall(node)) {
           // `∀ᵐ x ∂μ, P` → AeP preferred (AeTendsto, AeAll_…); All_P / bare P kept (Random/All_Summable)
           return uniq(node.superscript === "ᵐ" ? [...bodyAlts.map((b) => "Ae" + b), ...bodyAlts.map((b) => tag + "_" + b), ...bodyAlts, ...guardAlts] : [...bodyAlts, ...guardAlts]);
         }
@@ -2870,7 +2942,13 @@ export function suggest(filePath, lemmaName, options = {}) {
   const nameOpts = { leaves, typeLeaves: collectTypeBinders(sig.indented), section };
   const implyAltsOf = (sg, no) => {
     const joined = nameExprAlts(sg.implyStmts, no).filter(Boolean);
-    const parts = splitTopConjunction(sg.implyStmts);
+    // Left-only flatten is the historic default (keeps nested non-eq And intact).
+    const partsLeft = splitTopConjunction(sg.implyStmts, false);
+    // Full flatten only for pure equation conjunctions `A = B ∧ C = D ∧ …`
+    // (Bellman); avoids OOM on Bool/Complex lemmas with deep nested And.
+    const partsFull = splitTopConjunction(sg.implyStmts, true);
+    const eqConj = partsFull && partsFull.length >= 2 && partsFull.length <= 6 && partsFull.every(isEqConjunct);
+    const parts = eqConj ? partsFull : partsLeft;
     if (!parts || parts.length < 2) return joined;
     // `… ∧ max[«y.bvar» : …] ℙ(joint) = …`: Max is the big operator → EqMax_ProbJoint (ranked first, replaces GetMax)
     const fixJ = parts.length === 2 && isMaxProbJointEq(parts[1]) ? fixMaxProbJointName : (x) => x;
@@ -2881,17 +2959,35 @@ export function suggest(filePath, lemmaName, options = {}) {
       [""],
     );
     const res = uniq([...splitAlts, ...joined].map(fixJ));
+    // Equation conjunction → prefer `Eq_A/Eq_B/Eq_C` over `Eq_AAndEq_BAndEq_C`.
+    if (eqConj && splitAlts.length) {
+      // each segment is that conjunct's canonical rendering (nameExpr) when it is among its alternatives
+      const canonParts = parts.map((p, i) => {
+        const c = sanitizeRelPath(nameExpr(p, no) || "");
+        return perConjunct[i].find((x) => sanitizeRelPath(x) === c) || perConjunct[i][0];
+      });
+      res.preferred = fixJ(canonParts.join("/"));
+      // Keep left-only partial splits accepted (older paths like Eq_Dvd/EqMapAndIsPullback).
+      if (partsLeft && partsLeft.length >= 2 && partsLeft.length < partsFull.length) {
+        const perL = partsLeft.map((p) => nameExprAlts(p, no).filter(Boolean));
+        if (perL.every((a) => a.length)) {
+          const leftSplits = perL.reduce((acc, a) => acc.flatMap((pfx) => a.map((x) => (pfx ? pfx + "/" + x : x))), [""]);
+          res.extra = uniq([...(res.extra || []), ...leftSplits.map(fixJ)]);
+        }
+      }
+    }
     if (fixJ === fixMaxProbJointName) {
       // Viterbi: the second conjunct reads just `EqMax_ProbJoint` (the `eq/<rhs>` suffix is dropped); the longer spellings stay accepted
       const short = perConjunct[0].map((x) => x + "/EqMax_ProbJoint");
       const full = res.slice();
       const out = uniq([...short, ...full.filter((x) => !short.includes(x))]);
       out.extra = full;
+      if (res.preferred) out.preferred = res.preferred;
       return out;
     }
     if (isHmmNegLogCondShape(sg.implyStmts)) {
       const ex2 = hmmBvarAllAlts(perConjunct[1]);
-      res.extra = perConjunct[0].flatMap((x) => ex2.map((y) => x + "/" + y));
+      res.extra = uniq([...(res.extra || []), ...perConjunct[0].flatMap((x) => ex2.map((y) => x + "/" + y))]);
     }
     return res;
   };
@@ -2902,7 +2998,8 @@ export function suggest(filePath, lemmaName, options = {}) {
   const pickCanon = (alts, preferred) =>
     alts.find((a) => sanitizeRelPath(a) === sanitizeRelPath(preferred || "")) ||
     (preferred ? alts.find((a) => /\d'\d/.test(a) && undig(a) === undig(preferred)) : null) || alts[0] || preferred;
-  const implyNameA = pickCanon(implyAltsA, nameExpr(sig.implyStmts, nameOpts)) || "Imply";
+  // Equation conjunctions: prefer slash-separated segments over And-glued nameExpr.
+  const implyNameA = pickCanon(implyAltsA, implyAltsA.preferred || nameExpr(sig.implyStmts, nameOpts)) || "Imply";
   // Second pass keeping Greek / subscript letters and Greek projections (`spec.η`, `maxₐ`, `μmin`).
   const passB = (() => {
     KEEP_GREEK = true;
@@ -2915,7 +3012,7 @@ export function suggest(filePath, lemmaName, options = {}) {
       for (const r of new Set([sigB.nls, sigB.implyStmts])) holeBundleProjections(r, bundlesB, leavesB);
       const optsB = { leaves: leavesB, typeLeaves: collectTypeBinders(sigB.indented), section };
       const implyAlts = implyAltsOf(sigB, optsB);
-      const implyName = pickCanon(implyAlts, nameExpr(sigB.implyStmts, optsB)) || "Imply";
+      const implyName = pickCanon(implyAlts, implyAlts.preferred || nameExpr(sigB.implyStmts, optsB)) || "Imply";
       const givens = extractGivens(sigB.nls).map((h) => ({
         alts: nameExprAlts(h.typeNode, { ...optsB, asGiven: true }).filter(Boolean),
         name: nameExpr(h.typeNode, { ...optsB, asGiven: true }) || "Given",

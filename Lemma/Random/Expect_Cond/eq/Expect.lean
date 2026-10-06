@@ -18,7 +18,7 @@ private lemma main
   (hγ : ReferenceMeasure.measure (α := γ) = Measure.count) :
 -- imply
   have : SinglePSpace π (x, y, y) := Random.PSpace_Joint_Joint.of.PSpace_Joint hP hα hγ
-  𝔼[x: π | y](f x y | y) = 𝔼[x: π | y](f x y) := by
+  Expectation.partialRV_RA π x y y f = 𝔼[x: π | y](f x y) := by
 -- proof
   intro _
   change Expectation.partialRV_RA π x y y f = Expectation.partialRV π x y f

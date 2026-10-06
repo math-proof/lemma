@@ -1,6 +1,5 @@
 import Lemma.List.Drop.eq.Nil.of.LeLength
 import Lemma.List.Tail.eq.Drop_1
-import stdlib.List
 open List
 
 

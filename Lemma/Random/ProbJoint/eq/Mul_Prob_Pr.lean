@@ -18,7 +18,7 @@ private lemma main
   (x : S)
   (u : A) :
 -- imply
-  (M.traj θ).real (s t ⁻¹' {x} ∩ a t ⁻¹' {u}) = (M.traj θ).real (s t ⁻¹' {x}) * M.Pr θ x u := by
+  (M θ).real (s t ⁻¹' {x} ∩ a t ⁻¹' {u}) = (M θ).real (s t ⁻¹' {x}) * M.Pr θ x u := by
 -- proof
   classical
   exact real_sa M θ t x u

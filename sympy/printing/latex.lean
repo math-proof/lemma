@@ -445,7 +445,8 @@ partial def Expr.isBoundObservation : Expr → Bool
   -- `«x.bvar»[a:b]` : `getSlice «x.bvar» (Slice.mk ..)`
   | e@(Basic _ _ _) =>
     match e.asNamedApp? with
-    | some ("getSlice", b :: _) => b.isBoundObservation
+    | some ("getSlice", b :: _)
+    | some ("getSliceFrom", b :: _) => b.isBoundObservation
     | _ => false
   | _ => false
 
@@ -467,10 +468,73 @@ partial def Expr.markAsRandomVariable : Expr → Expr
     Basic f [a.markAsRandomVariable, b.markAsRandomVariable] level
   | e@(Basic f (x :: rest) level) =>
     match e.asNamedApp? with
-    | some ("getSlice", _) => Basic f (x.markAsRandomVariable :: rest) level
+    | some ("getSlice", _)
+    | some ("getSliceFrom", _) => Basic f (x.markAsRandomVariable :: rest) level
     | some ("JointRandomSymbol", _) => Basic f ((x :: rest).map markAsRandomVariable) level
     | _ => e
   | e => e
+
+/-- True when `e` is marked as a random-argument type via the `RandomArgument` wrapper
+(see `Expr.markAsRandomArgument`); such a `Symbol` renders magenta. -/
+def Expr.isRandomArgument : Expr → Bool
+  | Basic (.ExprWithAttr (.Lean_operatorname `RandomArgument)) [_] _ => true
+  | _ => false
+
+/-- Like `markAsRandomVariable`, but marks a *random argument* (magenta, lean.js `isRandomArgument`):
+the conditioners `y` of `𝔼[x: π](f x | y t, z (t + 1))`. Only the head symbol is marked (lean.js
+`markConditionerTerm` / `Lean.headTokens`: in `s t` only `s` is magenta, the index `t` stays black);
+it reaches the same shapes as `markAsRandomVariable`. -/
+partial def Expr.markAsRandomArgument : Expr → Expr
+  | Symbol name type =>
+    if type.isRandomArgument then Symbol name type
+    else
+      let type := match type with
+        | Basic (.ExprWithAttr (.Lean_operatorname `RandomVariable)) [t] _ => t
+        | t => t
+      Symbol name (.Basic (.ExprWithAttr (.Lean_operatorname `RandomArgument)) [type] type.level)
+  | Basic f@(.Special ⟨.anonymous⟩) (x@(Symbol ..) :: rest) level =>
+    Basic f (x.markAsRandomArgument :: rest) level
+  | Basic f@(.Special ⟨.str _ "mk"⟩) [a, b] level =>
+    Basic f [a.markAsRandomArgument, b.markAsRandomArgument] level
+  | e@(Basic f (x :: rest) level) =>
+    match e.asNamedApp? with
+    | some ("getSlice", _)
+    | some ("getSliceFrom", _) => Basic f (x.markAsRandomArgument :: rest) level
+    | some ("JointRandomSymbol", _) => Basic f ((x :: rest).map markAsRandomArgument) level
+    | _ => e
+  | e => e
+
+/-- `Expectation.asRV x` (the transparent `𝔼` binder coercion `AsPathRV.path`) → `x`, also inside a
+`JointRandomSymbol` chain, so `𝔼[r: π](…)` over a process `r : ℕ → Ω → ℝ` shows the binder `r`. -/
+partial def Expr.stripAsRV : Expr → Expr
+  | e@(Basic f args level) =>
+    match e.asNamedApp? with
+    | some ("asRV", [x]) => x.stripAsRV
+    | some ("JointRandomSymbol", _) => Basic f (args.map stripAsRV) level
+    | _ => e
+  | e => e
+
+/-- A bare `Expectation.asRV x` (outside an `𝔼` binder, e.g. `Measurable (Expectation.asRV r[t + 1:])`)
+→ the random variable `x` marked red; applied, `Expectation.asRV x ω` → the application `x ω`. -/
+def Expr.unwrapAsRV? (e : Expr) : Option Expr :=
+  match e with
+  | Basic (.ExprWithAttr _) _ level =>
+    match e.asNamedApp? with
+    | some ("asRV", [x]) => some x.stripAsRV.markAsRandomVariable
+    | some ("asRV", x :: rest) =>
+      some (Basic (.Special ⟨.anonymous⟩) (x.stripAsRV.markAsRandomVariable :: rest) level)
+    | _ => none
+  | _ => none
+
+/-- Names of the random variables in a (right-nested) `JointRandomSymbol` chain of binders
+`y` / `Expectation.asRV y` / `JointRandomSymbol (Expectation.asRV y) (Expectation.asRV z)`. -/
+partial def Expr.jointSymbolNames (e : Expr) : List Name :=
+  match e.stripAsRV with
+  | Symbol name _ => [name]
+  | e' =>
+    match e'.asNamedApp? with
+    | some ("JointRandomSymbol", args) => args.flatMap jointSymbolNames
+    | _ => []
 
 /-- `∑/∏ i ∈ Finset.Ico a (b + 1), f` → `(i, a, b, f)`; rendered `\\prod_{i=a}^{b}` like lean.js
 `icoClosedBound`. -/
@@ -679,6 +743,11 @@ inductive ExpectationView where
   | mapBody (body rv μ : Expr)
   | cond (f x y : Expr)
   | condBody (body x y μ : Expr)
+  /-- `Expectation.condSigma` (`𝔼[x: π](f x | y t, z)`) and the partial forms `partialRV*`
+  (`𝔼[x: π | y](…)`): stretchy `\middle|` followed by the conditioners `ys` (magenta random arguments;
+  the observed variable of `partialRV_cond` stays red). -/
+  | condSigma (f x : Expr) (ys : List Expr)
+  | condSigmaBody (body x : Expr) (ys : List Expr) (μ : Expr)
 
 partial def Expr.peelExpectLets : Expr → Expr × List Name
   | e@(Basic (.ExprWithLimits .Lean_let) args _) =>
@@ -714,13 +783,30 @@ partial def Expr.markNamesAsRandomVariable (e : Expr) (names : List Name) : Expr
     Binder b n (t.markNamesAsRandomVariable names) (v.markNamesAsRandomVariable names)
   | other => other
 
+/-- Like `markNamesAsRandomVariable`, marking the named symbols as random arguments (magenta). -/
+partial def Expr.markNamesAsRandomArgument (e : Expr) (names : List Name) : Expr :=
+  if names.isEmpty then e
+  else match e with
+  | Symbol name type =>
+    if names.contains name then markAsRandomArgument (Symbol name type)
+    else Symbol name type
+  | Basic func args level =>
+    Basic func (args.map (·.markNamesAsRandomArgument names)) level
+  | Binder b n t v =>
+    Binder b n (t.markNamesAsRandomArgument names) (v.markNamesAsRandomArgument names)
+  | other => other
+
+/-- `free`: names bound in the observable that are free random arguments (the `y` of
+`𝔼[x: π | y](…)`, lean.js `expectBinderNames.free`); they render magenta instead of red. -/
 def Expr.expectationFromObservable (μ x f : Expr) (mkApp : Expr → Expr → ExpectationView)
-    (mkBody : Expr → Expr → Expr → ExpectationView) : ExpectationView :=
-  let rv := markAsRandomVariable x
+    (mkBody : Expr → Expr → Expr → ExpectationView) (free : List Name := []) : ExpectationView :=
+  let rv := markAsRandomVariable x.stripAsRV
   match f.peelExpectObservable? with
   | some (body, letNames) =>
-    let names := rv.symbolName?.toList ++ letNames
-    mkBody (body.markNamesAsRandomVariable names) rv μ
+    let names := rv.symbolName?.toList ++ letNames.filter (!free.contains ·)
+    let body := (body.markNamesAsRandomVariable names).markNamesAsRandomArgument
+      (letNames.filter free.contains)
+    mkBody body rv μ
   | none => mkApp f rv
 
 def Expr.asExpectation? : Expr → Option ExpectationView
@@ -738,26 +824,29 @@ def Expr.asExpectation? : Expr → Option ExpectationView
       some (expectationFromObservable μ x f
         (fun f rv => .cond f rv (markAsRandomVariable y))
         (fun body rv μ => .condBody body rv (markAsRandomVariable y) μ))
-    | some ("condEventRA", μ :: x :: y :: f :: _) =>
+    | some ("condSigma", μ :: x :: y :: f :: _) =>
+      let ys := [markAsRandomArgument y]
       some (expectationFromObservable μ x f
-        (fun f rv => .cond f rv (markAsRandomVariable y))
-        (fun body rv μ => .condBody body rv (markAsRandomVariable y) μ))
-    | some ("condRA", μ :: x :: y :: f :: _) =>
-      some (expectationFromObservable μ x f
-        (fun f rv => .cond f rv (markAsRandomVariable y))
-        (fun body rv μ => .condBody body rv (markAsRandomVariable y) μ))
+        (fun f rv => .condSigma f rv ys)
+        (fun body rv μ => .condSigmaBody body rv ys μ))
+    -- `𝔼[x: π | y](body)`: the free `y` is a random argument (magenta, also in the body)
     | some ("partialRV", μ :: x :: y :: f :: _) =>
+      let ys := [markAsRandomArgument y.stripAsRV]
       some (expectationFromObservable μ x f
-        (fun f rv => .cond f rv (markAsRandomVariable y))
-        (fun body rv μ => .condBody body rv (markAsRandomVariable y) μ))
-    | some ("partialRV_cond", μ :: x :: y :: _r :: f :: _) =>
+        (fun f rv => .condSigma f rv ys)
+        (fun body rv μ => .condSigmaBody body rv ys μ) y.jointSymbolNames)
+    -- `𝔼[x: π | y](body | r = r0)`: like lean.js, the observed `r` is a red random variable (`r0` dropped)
+    | some ("partialRV_cond", μ :: x :: y :: r :: f :: _) =>
+      let ys := [markAsRandomArgument y.stripAsRV, markAsRandomVariable r.stripAsRV]
       some (expectationFromObservable μ x f
-        (fun f rv => .cond f rv (markAsRandomVariable y))
-        (fun body rv μ => .condBody body rv (markAsRandomVariable y) μ))
-    | some ("partialRV_RA", μ :: x :: y :: _r :: f :: _) =>
+        (fun f rv => .condSigma f rv ys)
+        (fun body rv μ => .condSigmaBody body rv ys μ) y.jointSymbolNames)
+    -- `partialRV_RA π x y r f`: `y` free, `r` conditioning random argument(s), both magenta
+    | some ("partialRV_RA", μ :: x :: y :: r :: f :: _) =>
+      let ys := [markAsRandomArgument y.stripAsRV, markAsRandomArgument r.stripAsRV]
       some (expectationFromObservable μ x f
-        (fun f rv => .cond f rv (markAsRandomVariable y))
-        (fun body rv μ => .condBody body rv (markAsRandomVariable y) μ))
+        (fun f rv => .condSigma f rv ys)
+        (fun body rv μ => .condSigmaBody body rv ys μ) y.jointSymbolNames)
     | _ => none
 
 def Expr.asCondProbApp? : Expr → Option (String × List Expr)
@@ -1158,7 +1247,9 @@ def Expr.latexFormat : Expr → String
         opStr
     | .ExprWithAttr op =>
       -- Pre-check foldings first (work for both Lean_function and Lean_operatorname)
-      if let some (_, subs) := e.asSubst? then
+      if e.unwrapAsRV?.isSome then
+        "%s"
+      else if let some (_, subs) := e.asSubst? then
         Expr.substLatexFormat subs.length
       else if let some (_, _, point) := e.asGradient? then
         match point with
@@ -1184,6 +1275,12 @@ def Expr.latexFormat : Expr → String
           "\\mathop{\\mathbb{E}}\\limits_{%s}\\left(%s\\ %s\\,\\mid\\,%s\\right)"
         | .condBody _ _ _ _ =>
           "\\mathop{\\mathbb{E}}\\limits_{%s : %s}\\left(%s\\,\\mid\\,%s\\right)"
+        | .condSigma _ _ ys =>
+          "\\mathop{\\mathbb{E}}\\limits_{%s}\\left(%s\\ %s\\,\\middle|\\," ++
+            ", ".intercalate (ys.map fun _ => "%s") ++ "\\right)"
+        | .condSigmaBody _ _ ys _ =>
+          "\\mathop{\\mathbb{E}}\\limits_{%s : %s}\\left(%s\\,\\middle|\\," ++
+            ", ".intercalate (ys.map fun _ => "%s") ++ "\\right)"
       else if let some (_, _) := e.asJointRandomSymbol? then
         "%s, %s"
       else if let some (_, _, _) := e.asEventuallyAe? then
@@ -1274,6 +1371,9 @@ def Expr.latexFormat : Expr → String
           s!"\\left[%s < %s\\right] {arg}"
         | `letFun => "{\\begin{align*}&{\\color{blue}let}\\ %s : %s := ⋯\\\\&%s\\end{align*}}"
         | `KroneckerDelta => "\\delta_{%s %s}"
+        | `Function.getSliceFrom =>
+          -- Python open slice `f[t:]` = `Function.getSliceFrom f t` → `{f}_{t:}` (lean.js `{f}_{t : }`)
+          "{%s}_{%s:}"
         | `Function.getSlice =>
           -- `x[start:stop:step]` for a family `x : ℕ → β` (same shapes as the `LeanMethod` `getSlice` below)
           match args with
@@ -1362,6 +1462,13 @@ def Expr.latexFormat : Expr → String
           "{%s}^{\\underline{%s}}"
         | "ascFactorial", [_, _] =>
           "{%s}^{\\overline{%s}}"
+        | "traj", [M, θ] =>
+          -- `Model.traj M θ` / `M.traj θ` / CoeFun `M θ` → `M θ` (lean.js + `traj.unexpand`)
+          let M := level.toColor (M.priority > func.priority || M.toList != none || M.is_Eye)
+          let θ := level.toColor (θ.priority > func.priority || θ.is_Div || θ.is_BlockMatrix)
+          s!"{M}\\ {θ}"
+        | "getSliceFrom", [_, _] =>
+          "{%s}_{%s:}"
         | "getSlice", [_, Basic (.Special ⟨`Slice.mk⟩) [start, _, step] _] =>
           if let const (.natVal 1) := step then
             if let const (.natVal 0) := start then
@@ -1453,7 +1560,9 @@ where
     [u.toString]
 
   | Symbol name type =>
-    if type.isRandomVariable then
+    if type.isRandomArgument then
+      ["{\\color{magenta} {" ++ name.bvarLatex "." ++ "}}"]
+    else if type.isRandomVariable then
       ["{\\color{red} {" ++ name.bvarLatex "." ++ "}}"]
     else
       [name.bvarLatex "."]
@@ -1635,7 +1744,9 @@ where
         map args
     | .ExprWithAttr op =>
       -- Pre-check foldings first (work for both Lean_function and Lean_operatorname)
-      if let some (body, subs) := e.asSubst? then
+      if let some x := e.unwrapAsRV? then
+        [x.toLatex]
+      else if let some (body, subs) := e.asSubst? then
         Expr.substLatexArgs body subs (·.toLatex)
       else if let some (x, body, point) := e.asGradient? then
         match point with
@@ -1651,6 +1762,8 @@ where
         | .mapBody body rv μ => [rv.toLatex, μ.toLatex, body.toLatex]
         | .cond f x y => [x.toLatex, f.toLatex, x.toLatex, y.toLatex]
         | .condBody body x y μ => [x.toLatex, μ.toLatex, body.toLatex, y.toLatex]
+        | .condSigma f x ys => [x.toLatex, f.toLatex, x.toLatex] ++ ys.map (·.toLatex)
+        | .condSigmaBody body x ys μ => [x.toLatex, μ.toLatex, body.toLatex] ++ ys.map (·.toLatex)
       else if let some (x, y) := e.asJointRandomSymbol? then
         [x.toLatex, y.toLatex]
       else if let some (binderName, body, _μ) := e.asEventuallyAe? then
@@ -1669,6 +1782,8 @@ where
         match op with
         | .LeanMethod op idx =>
           match op with
+          | .str _ "getSliceFrom" =>
+            map args  -- `f[t:]` → format `{%s}_{%s:}`, args [f, t]
           | .str _ "getSlice" =>
             if let [base, Basic (.Special ⟨`Slice.mk⟩) [start, stop, step] _] := args then
               if let const (.natVal 1) := step then
@@ -1818,6 +1933,9 @@ where
           match args with
           | [f, s] => preimageBase f :: map [s]
           | _ => map args
+        | .Lean_operatorname `Function.getSliceFrom =>
+          -- `Function.getSliceFrom f t` → args [f, t] for `{%s}_{%s:}`
+          map args
         | .Lean_operatorname `Function.getSlice =>
           if let [base, Basic (.Special ⟨`Slice.mk⟩) [start, stop, step] _] := args.map (fun a =>
               match a with

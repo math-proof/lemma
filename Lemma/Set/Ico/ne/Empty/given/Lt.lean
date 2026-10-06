@@ -1,0 +1,16 @@
+import sympy.sets.sets
+import sympy.Basic
+
+
+@[main]
+private lemma main
+  {a b : ℤ}
+-- given
+  (h : Finset.Ico a b ≠ ∅) :
+-- imply
+  a < b := by
+-- proof
+  exact Finset.nonempty_Ico.mp (Finset.nonempty_iff_ne_empty.mpr h)
+
+
+-- created on 2021-06-20

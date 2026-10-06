@@ -71,7 +71,7 @@ private lemma main
       simp
       rw [TailRotate.eq.DropLast.of.GtLength_0 (by omega)]
     ·
-      rw [DataGet.eq.Cast_GetSplitAtData.of.GtLength_0.fin (i := ⟨k, ?_⟩) (by grind)]
+      rw [DataGet.eq.Cast_GetSplitAtData.of.GtLength_0.fin (i := ⟨k, ?_⟩) (by grind [List.length_rotate])]
       ·
         rw [DataSelect.eq.Cast_FlattenGetSliceSplitAtData.simp]
         apply SEqCastS.of.SEq.Eq.Eq

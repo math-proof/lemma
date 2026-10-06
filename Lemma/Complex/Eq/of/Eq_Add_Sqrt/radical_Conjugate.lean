@@ -48,8 +48,9 @@ private lemma main
   calc
     x = (d - a ^ 2) / (2 * a) := by
       rw [eq_div_iff (show (2 * a : ℂ) ≠ 0 from mul_ne_zero (by norm_num) ha)]
-      <;> ring_nf at h2 ⊢ <;> exact h2
-    _ = (d / a - a) / 2 := by field_simp [ha] <;> ring
+      ring_nf at h2 ⊢
+      exact h2
+    _ = (d / a - a) / 2 := by field_simp [ha]
 
 
 -- created on 2021-11-09

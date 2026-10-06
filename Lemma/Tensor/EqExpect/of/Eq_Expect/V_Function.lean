@@ -20,19 +20,19 @@ private lemma main
   {Q : S → A → ℝ}
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
-  (h₁ : ∀ x u, Q x u = ∑' k, γ ^ k * ∫ ω, r (t + k) ω ∂(M.traj θ)[|s t ⁻¹' {x} ∩ a t ⁻¹' {u}])
+  (h₁ : ∀ x u, Q x u = ∑' k, γ ^ k * ∫ ω, r (t + k) ω ∂(M θ)[|s t ⁻¹' {x} ∩ a t ⁻¹' {u}])
   (x : S) :
 -- imply
-  ∫ ω, ∑' k, γ ^ k * r (t + k) ω ∂(M.traj θ)[|s t ⁻¹' {x}] =
-    ∫ ω, Q x (a t ω) ∂(M.traj θ)[|s t ⁻¹' {x}] := by
+  ∫ ω, ∑' k, γ ^ k * r (t + k) ω ∂(M θ)[|s t ⁻¹' {x}] =
+    ∫ ω, Q x (a t ω) ∂(M θ)[|s t ⁻¹' {x}] := by
 -- proof
   classical
   have h₂ : Q = M.Q θ γ t := funext fun x => funext fun u => h₁ x u
   subst h₂
-  have hVi : ∀ t x, ∫ ω, ∑' k, γ ^ k * r (t + k) ω ∂(M.traj θ)[|s t ⁻¹' {x}] = M.V θ γ t x :=
+  have hVi : ∀ t x, ∫ ω, ∑' k, γ ^ k * r (t + k) ω ∂(M θ)[|s t ⁻¹' {x}] = M.V θ γ t x :=
     fun t x => (M.V_eq_integral θ γ t x).symm
   simp only [hVi]
-  by_cases hP : (M.traj θ).real (s t ⁻¹' {x}) = 0
+  by_cases hP : (M θ).real (s t ⁻¹' {x}) = 0
   · have h₃ := cond_eq_zero_of_meas_eq_zero (meas_zero_of_real M θ hP)
     simp [M.V_eq_integral, h₃]
   · rw [V_eq M θ h₀ t x hP, cond_s]
@@ -45,9 +45,9 @@ private lemma main
     rw [integral_finsetSum _ (fun u _ => integrable_ind_sa M θ t x u _)]
     simp_rw [integral_mul_const, P_xu]
     rw [Finset.mul_sum]
-    have h₄ : ∀ u, ((M.traj θ).real (s t ⁻¹' {x}))⁻¹ *
-        ((M.traj θ).real (s t ⁻¹' {x}) * M.pol.prob θ x u * M.Q θ γ t x u) =
-        M.pol.prob θ x u * ((∫ ρ, M.rc (x, u, ρ) ∂(M.env.reward (x, u))) +
+    have h₄ : ∀ u, ((M θ).real (s t ⁻¹' {x}))⁻¹ *
+        ((M θ).real (s t ⁻¹' {x}) * M.pol.prob θ x u * M.Q θ γ t x u) =
+        M.pol.prob θ x u * ((∫ ρ, M.rc (ρ, x, u) ∂(M.env.reward (x, u))) +
           γ * ∑ y, M.T x u y * ∑' k, γ ^ k * M.W θ M.rc k y) := by
       intro u
       rw [mul_assoc, inv_mul_cancel_left₀ hP]

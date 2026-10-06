@@ -8,7 +8,6 @@ import Lemma.List.EraseIdxAppend.eq.AppendEraseIdx.of.GtLength
 import Lemma.List.EraseIdxRotate.eq.Append_EraseIdxTake.of.LeLength_Add.GeLength
 import Lemma.List.GetRotate.eq.Get_0.of.Gt_0.GeLength
 import Lemma.List.Get_0.dvd.Prod.of.GtLength_0
-import Lemma.List.LengthRotate.eq.Length
 import Lemma.List.LengthSlice.eq.ProdTake.of.GtGet.GtLength
 import Lemma.List.Prod.eq.MulProdTail.of.GtLength_0
 import Lemma.List.ProdRotate.eq.Prod
@@ -47,7 +46,7 @@ private lemma main
   (h_k : k < s[0])
   (X : Tensor α s) :
 -- imply
-  have h_s_length : s.length - 1 < (s.rotate 1).length := by rw [LengthRotate.eq.Length]; omega
+  have h_s_length : s.length - 1 < (s.rotate 1).length := by rw [List.length_rotate]; omega
   have h_rotate : (s.rotate 1)[s.length - 1] = s[0] := by rw [GetRotate.eq.Get_0.of.Gt_0.GeLength (by omega) (by omega)]
   have h_k_rotate : k < (s.rotate 1)[s.length - 1] := by rwa [h_rotate]
   (X.permuteHead s.length).select ⟨s.length - 1, by simpa⟩ ⟨k, by grind⟩ ≃ X.get ⟨k, by rwa [← Length.eq.Get_0.of.GtLength_0 (by omega) X] at h_k⟩ := by
@@ -159,7 +158,7 @@ private lemma main
               simpa [h_EqAddSub]
           ·
             simp [h_length_slice]
-            rw [Drop.eq.Nil.of.LeLength (by grind)]
+            rw [Drop.eq.Nil.of.LeLength (by grind [List.length_rotate])]
             simp [TakeRotate.eq.Tail]
       ·
         assumption

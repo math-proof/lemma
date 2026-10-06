@@ -15,7 +15,7 @@ private lemma main
 -- imply
   {c : k | ∃ x : k, P.eval x = c ∧ (derivative P).eval x = 0}.Finite := by
 -- proof
-  have hfin : {x : k | (derivative P).eval x = 0}.Finite := (derivative P).finite_setOf_isRoot hP
+  have hfin : {x : k | (derivative P).eval x = 0}.Finite := (derivative P).finite_setOfPred_isRoot hP
   refine (hfin.image fun x => P.eval x).subset ?_
   rintro c ⟨x, rfl, hx⟩
   exact ⟨x, hx, rfl⟩

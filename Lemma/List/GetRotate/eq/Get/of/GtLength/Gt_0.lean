@@ -9,7 +9,7 @@ private lemma main
   (h_pos : i > 0)
   (h_i : s.length > i) :
 -- imply
-  (s.rotate (s.length - i))[0]'(by grind) = s[s.length - i] := by
+  (s.rotate (s.length - i))[0]'(by grind [List.length_rotate]) = s[s.length - i] := by
 -- proof
   have := GetRotate.eq.Get.of.Ge.GtLength.Gt_0 h_pos h_i (by rfl)
   simp_all

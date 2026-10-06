@@ -9,7 +9,7 @@ open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model
 /--
 Bridge between the `ℙ` binder sugar and the policy of a policy-gradient model:
 with counting reference measures on the finite state / action spaces, the canonical
-conditional density `ℙ[M.traj θ](a[t] = u | s[t] = x)` of the trajectory law equals the policy
+conditional density `ℙ[M θ](a[t] = u | s[t] = x)` of the trajectory law equals the policy
 probability `π_θ(u | x)` at every reachable state `x` (`Pr(s[t] = x) ≠ 0`).
 -/
 @[main]
@@ -21,13 +21,13 @@ private lemma main
 -- given
   (hS : (ReferenceMeasure.measure : Measure S) = Measure.count)
   (hA : (ReferenceMeasure.measure : Measure A) = Measure.count)
-  (hP : SinglePSpace (M.traj θ) (a (S := S) (A := A) t, s (S := S) (A := A) t))
-  (h : (M.traj θ).real (s t ⁻¹' {x}) ≠ 0) :
+  (hP : SinglePSpace (M θ) (a (S := S) (A := A) t, s (S := S) (A := A) t))
+  (h : (M θ).real (s t ⁻¹' {x}) ≠ 0) :
 -- imply
-  ℙ[(M.traj θ)]((a t) = u | (s t) = x) = ENNReal.ofReal (M.pol.prob θ x u) := by
+  ℙ[(M θ)]((a t) = u | (s t) = x) = ENNReal.ofReal (M.pol.prob θ x u) := by
 -- proof
   classical
-  set π := M.traj θ
+  set π := M θ
   have hAS : (ReferenceMeasure.measure : Measure (A × S)) = Measure.count := by
     show (ReferenceMeasure.measure : Measure A).prod (ReferenceMeasure.measure : Measure S) = _
     rw [hA, hS, Measure.Count.eq.ProdCountS]

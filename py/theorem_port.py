@@ -211,6 +211,19 @@ P2M_OPEN_RE = re.compile(
     re.MULTILINE,
 )
 THEOREM_TO_LEMMA_RE = re.compile(r'^(\s*)theorem\b')
+# Standalone diagnostic commands referencing source declaration names.
+DIAGNOSTIC_CMD_RE = re.compile(
+    r'^\s*#(print|check|eval|reduce|guard_msgs|guard_expr)\b'
+)
+# A column-0 top-level command that marks the end of a tactic/term proof:
+# the AST proof span runs to EOF and can swallow trailing ``example``/etc.
+PROOF_TERMINATOR_RE = re.compile(
+    r'^(?:@\[[^\n]*\]\s*)?'
+    r'(?:noncomputable\s+|private\s+|protected\s+|partial\s+)*'
+    r'(?:example|theorem|lemma|def|abbrev|instance|structure|inductive|'
+    r'notation|elab|syntax|macro)\b'
+    r'|^(?:end|section|namespace|open|universe|set_option|import)\b|^#'
+)
 
 
 # ---------------------------------------------------------------------------
@@ -416,6 +429,154 @@ def best_precise_target(result: dict, ported_root: Path) -> str | None:
 # Source transformation (PORTING RULES 1, 2, 3, 5)
 # ---------------------------------------------------------------------------
 
+def _binder_group_names(group: str) -> list[str]:
+    """Bound variable names of one binder group (``"{A B : Type*}"``).
+
+    Anonymous binders (``"[CommRing A]"``) return an empty list.
+    """
+    g = group.strip()
+    if len(g) >= 2 and g[0] in "([{⟨⟪" and g[-1] in ")]}⟩⟫":
+        g = g[1:-1].strip()
+    if ":" not in g:
+        return []
+    return [
+        t for t in g.split(":", 1)[0].split()
+        if re.fullmatch(r"[A-Za-z_][A-Za-z0-9_']*", t)
+    ]
+
+
+def _signature_end_line(lines: list[str], start: int) -> int:
+    """Line index of the first ``:=`` that ends a declaration signature."""
+    j = start
+    while j < len(lines) and ":=" not in lines[j]:
+        j += 1
+    return min(j, len(lines) - 1)
+
+
+def _inline_section_variables(text: str) -> str:
+    """Inline active ``variable`` binders into each declaration.
+
+    Lean's ``variable (x : α) [Inst α]`` binders are implicitly added to
+    every declaration in their section/namespace scope; the scaffold deletes
+    the ``variable`` lines, so their binders are inserted explicitly here.
+    Groups whose bound names already appear in the declaration's binders are
+    skipped (an explicit binder shadows the variable).  Over-approximating
+    Lean's name-based filtering is harmless: unused binders are linter
+    warnings, not errors, and in-file helper calls apply them fully.
+    """
+    lines = text.splitlines()
+    root_vars: list[str] = []
+    frames: list[list[str]] = []
+    out: list[str] = []
+
+    def active() -> list[str]:
+        res: list[str] = []
+        seen: set[str] = set()
+        for g in root_vars + [g for f in frames for g in f]:
+            if g not in seen:
+                seen.add(g)
+                res.append(g)
+        return res
+
+    i = 0
+    while i < len(lines):
+        line = lines[i]
+        if NAMESPACE_START_RE.match(line) or SECTION_START_RE.match(line):
+            frames.append([])
+            out.append(line)
+            i += 1
+            continue
+        if END_RE.match(line):
+            if frames:
+                frames.pop()
+            out.append(line)
+            i += 1
+            continue
+        vm = re.match(r"^\s*variable\b\s*(.*)$", line)
+        if vm:
+            target = frames[-1] if frames else root_vars
+            for g in split_binder_groups(vm.group(1)):
+                if g not in target:
+                    target.append(g)
+            i += 1
+            continue
+        if DECL_START_RE.match(line):
+            end = _signature_end_line(lines, i)
+            sig = "\n".join(lines[i:end + 1]).split(":=", 1)[0]
+            binder_region = split_signature(sig)[0]
+            region_norm = " ".join(binder_region.split())
+            # Names already *bound* by the declaration's own binders (a mere
+            # mention inside an instance type, e.g. ``[Module.Free A B]``, is
+            # not a binding and must NOT suppress the ``{A B : Type*}``
+            # variable).
+            bound: set[str] = set()
+            for own in split_binder_groups(binder_region):
+                bound.update(_binder_group_names(own))
+            add: list[str] = []
+            for g in active():
+                names = _binder_group_names(g)
+                if names:
+                    if all(n in bound for n in names):
+                        continue
+                elif " ".join(g.split()) in region_norm:
+                    continue
+                add.append(g)
+            if add:
+                head_m = re.match(
+                    r"^(.*?\b(?:def|theorem|lemma)\s+[A-Za-z0-9_.']+)(.*)$",
+                    line,
+                )
+                head, tail = head_m.group(1), head_m.group(2)
+                cont_indent = "  "
+                for ln in lines[i + 1:end + 1]:
+                    cm = re.match(r"^(\s+)\S", ln)
+                    if cm:
+                        cont_indent = cm.group(1)
+                        break
+                out.append(head)
+                out.extend(f"{cont_indent}{g}" for g in add)
+                if tail.strip():
+                    out.append(f"{cont_indent}{tail.strip()}")
+                i += 1
+                while i <= end:
+                    out.append(lines[i])
+                    i += 1
+                continue
+        out.append(line)
+        i += 1
+    return "\n".join(out)
+
+
+def _local_namespace_names(text: str) -> list[str]:
+    return [
+        m.group(1)
+        for m in re.finditer(r"^\s*namespace\s+([A-Za-z0-9_.']+)", text, re.M)
+    ]
+
+
+def _rewrite_local_ns_refs(
+    line: str, ns_names: list[str], decl_names: set[str],
+) -> str:
+    """Rewrite ``Ns.helper`` to ``helper`` for stripped local namespaces.
+
+    Only the last identifier of a qualified chain is rewritten when it is a
+    declaration present in the same file; qualifications of external
+    namespaces (e.g. Mathlib's ``CategoryTheory.foo``) are left untouched.
+    """
+    if not ns_names:
+        return line
+    alt = "|".join(
+        sorted((re.escape(n) for n in ns_names), key=len, reverse=True)
+    )
+    pat = re.compile(rf"(?<![A-Za-z0-9_.'])(?:{alt})\.([A-Za-z0-9_.']+)")
+
+    def rep(m: re.Match[str]) -> str:
+        last = m.group(1).split(".")[-1]
+        return last if last in decl_names else m.group(0)
+
+    return pat.sub(rep, line)
+
+
 def transform_source(text: str) -> str:
     """Apply porting rules 1, 2, 3, 5 to source Lean text.
 
@@ -431,48 +592,60 @@ def transform_source(text: str) -> str:
     ``variable``, nested namespaces, multi-line attributes) may need
     manual review — see the PORTING RULES in the module docstring.
     """
+    # Inline ``variable`` binders while section/namespace scopes are intact.
+    text = _inline_section_variables(text)
     lines = text.splitlines()
 
-    # --- Rule 1: Remove namespace/end and dedent ---
-    # But only if the namespace contains no declarations that reference the
-    # namespace name (e.g. `CharDecomp.main`).  If helpers are inside a
-    # namespace and the main theorem calls them by qualified name, removing
-    # the namespace breaks the code.  In that case keep the namespace and
-    # only transform theorem → private lemma.
-    namespace_names: list[str] = []
-    for line in lines:
-        m = re.match(r"^\s*namespace\s+([A-Za-z0-9_.']+)", line)
-        if m:
-            namespace_names.append(m.group(1))
-    text_lower = text.lower()
-    keep_namespaces = any(
-        re.search(rf"\b{re.escape(ns.lower())}\.", text_lower)
-        for ns in namespace_names
-    )
+    # Local declarations (theorem/lemma/def names) and the namespaces that
+    # enclose them: after stripping the frames, qualified references such as
+    # ``Ws10Flat.helper`` are rewritten to the bare ``helper``.
+    decl_names = {n for _, _, n in find_declarations(text)}
+    namespace_names = _local_namespace_names(text)
 
+    # --- Rule 1: Remove namespace/end and dedent ---
     transformed: list[str] = []
-    dedent = 0
+    # Each removed namespace/section frame contributes a dedent delta that is
+    # unknown until its first body line appears: FLT does NOT indent namespace
+    # bodies (declarations sit at column 0, proofs at 2), so blindly removing
+    # 2 spaces per frame would eat the indentation of the proofs inside.
+    frames: list[int | None] = []
     for line in lines:
         stripped = line.lstrip()
         if NAMESPACE_START_RE.match(line) or SECTION_START_RE.match(line):
-            if not keep_namespaces:
-                dedent += 1
-                continue
-        if END_RE.match(line) and dedent > 0:
-            dedent -= 1
+            frames.append(None)
             continue
-        if dedent > 0:
+        if END_RE.match(line) and frames:
+            frames.pop()
+            continue
+        if frames and stripped:
             indent = len(line) - len(stripped)
-            new_indent = max(0, indent - 2 * dedent)
-            line = " " * new_indent + stripped
+            known = sum(d for d in frames if d is not None)
+            avail = max(0, indent - known)
+            for i, d in enumerate(frames):
+                if d is None:
+                    take = min(2, avail)
+                    frames[i] = take
+                    avail -= take
+            delta = sum(d for d in frames if d is not None)
+            line = " " * max(0, indent - delta) + stripped
         transformed.append(line)
 
     # --- Rule 2: Remove variable lines ---
     transformed = [l for l in transformed if not VARIABLE_RE.match(l)]
 
+    # Remove diagnostic commands (``#print axioms solution`` and friends):
+    # they reference the source theorem name, which never survives porting.
+    transformed = [l for l in transformed if not DIAGNOSTIC_CMD_RE.match(l)]
+
     # --- Rule 3: Convert theorem → private lemma ---
     transformed = [
         THEOREM_TO_LEMMA_RE.sub(r"\1private lemma ", l, count=1)
+        for l in transformed
+    ]
+
+    # Rewrite references to helpers through the now-stripped namespaces.
+    transformed = [
+        _rewrite_local_ns_refs(l, namespace_names, decl_names)
         for l in transformed
     ]
 
@@ -1278,7 +1451,22 @@ def _cmd_scaffold(args: argparse.Namespace, ported_root: Path) -> int:
         main_name = flt.get("theoremName") or "solution"
         sig = f'{flt["binders"].strip()} : {flt["conclusion"].strip()}'
         statement = (main_name, sig)
-        proof = (flt.get("proof") or "").rstrip() or None
+        # The AST proof span runs to EOF, so trailing commands such as
+        # ``#print axioms solution`` or a trailing ``example := solution f``
+        # get swallowed into the proof — drop diagnostics and truncate at the
+        # first column-0 top-level command that starts a new declaration.
+        ns_names = _local_namespace_names(raw_text)
+        raw_decl_names = {n for _, _, n in find_declarations(raw_text)}
+        proof_lines: list[str] = []
+        for i, l in enumerate((flt.get("proof") or "").splitlines()):
+            if DIAGNOSTIC_CMD_RE.match(l):
+                continue
+            if i > 0 and PROOF_TERMINATOR_RE.match(l):
+                break
+            proof_lines.append(
+                _rewrite_local_ns_refs(l, ns_names, raw_decl_names)
+            )
+        proof = "\n".join(proof_lines).rstrip() or None
         proof_tactic = flt.get("proofStyle", "by") == "by"
     else:
         # Extract the main statement and proof.

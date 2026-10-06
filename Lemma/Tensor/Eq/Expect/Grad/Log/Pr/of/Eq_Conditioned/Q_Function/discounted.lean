@@ -1,5 +1,6 @@
 import sympy.stats.policy_trajectory.gradient
 import sympy.Basic
+import Lemma.Random.Integral_SMul.of.In_Ico
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model
 
 
@@ -20,12 +21,12 @@ private lemma main
 -- given
   (h₀ : γ ∈ Set.Ico 0 1) :
 -- imply
-  ∫ ω, (∑' k, γ ^ k * r (t + k) ω) • fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' (s t ω) (a t ω))) θ ∂(M.traj θ) =
-    ∫ ω, (∑' k, γ ^ k * ∫ ω', r (t + k) ω' ∂(M.traj θ)[|s t ⁻¹' {s t ω} ∩ a t ⁻¹' {a t ω}]) •
-      fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' (s t ω) (a t ω))) θ ∂(M.traj θ) := by
+  ∫ ω, (∑' k, γ ^ k * r (t + k) ω) • fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' (s t ω) (a t ω))) θ ∂(M θ) =
+    ∫ ω, (∑' k, γ ^ k * ∫ ω', r (t + k) ω' ∂(M θ)[|s t ⁻¹' {s t ω} ∩ a t ⁻¹' {a t ω}]) •
+      fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' (s t ω) (a t ω))) θ ∂(M θ) := by
 -- proof
   classical
-  exact E_G_smul M θ h₀ t (fun x u => fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' x u)) θ)
+  exact Random.Integral_SMul.of.In_Ico (M := M) θ h₀ t (fun x u => fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' x u)) θ)
 
 
 -- created on 2023-04-01

@@ -3,7 +3,7 @@ import Mathlib.Algebra.BigOperators.Intervals
 import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Data.Fintype.Pi
 import sympy.stats.joint_rv
-import stdlib.List.Basic
+import stdlib.List
 import sympy.stats.ennreal_coe
 
 /-- Sequential (first-order, hidden) Markov structure of the prefix joint probabilities used by the
@@ -104,7 +104,7 @@ theorem IsHiddenMarkovFac.prefix {Ω Y X : Type*} [MeasurableSpace Ω] [Referenc
 
 /-- Slicing of a function `ℕ → β`, dispatched on its value type `β` (instances: `β = α` for a plain
 sequence `f : ℕ → α`, and `β = Ω → α` for a family of random variables `x : ℕ → Ω → α`).  Used by
-`Function.getSlice`, i.e. by the shared `x[start:stop]` syntax of `stdlib.List.Basic`. -/
+`Function.getSlice`, i.e. by the shared `x[start:stop]` syntax of `stdlib.List`. -/
 class FunSlice (β : Type*) where
   Out : Slice → Type*
   slice : (ℕ → β) → (s : Slice) → Out s
@@ -140,7 +140,7 @@ instance Function.coeFunProdPiSlice {Ω α β : Type*} {s t : Slice} :
   ⟨fun p ↦ JointRandomSymbol p.1 p.2⟩
 
 /-- Python slicing of a function on `ℕ` (`f[:n]`, `f[a:b]`, via the shared `x[start:stop]` syntax of
-`stdlib.List.Basic`, which expands to `x.getSlice ⟨start, stop, 1⟩`).  For a family of random
+`stdlib.List`, which expands to `x.getSlice ⟨start, stop, 1⟩`).  For a family of random
 variables `x : ℕ → Ω → α` it is the random vector `ω ↦ (x a ω, …, x (b-1) ω)`, for a plain
 sequence `f : ℕ → α` it is `(f a, …, f (b-1)) : Fin (b - a) → α`.  Only unit step is supported. -/
 def Function.getSlice {β : Type*} [FunSlice β] (x : ℕ → β) (s : Slice) : FunSlice.Out β s :=
@@ -157,6 +157,26 @@ theorem Function.getSlice_zero {Ω α : Type*} (x : ℕ → Ω → α) (n : ℕ)
 theorem Function.getSlice_zero' {α : Type*} (f : ℕ → α) (n : ℕ) (i : Fin n) :
     f[:n] i = f i := rfl
 
+/-! ### Joint history of several processes: `(x, y, …)[:n]`
+
+`(r, s, a)[:n]` (a tuple of processes `r s a : ℕ → Ω → _`, prefix slice) is the joint history random
+vector `fun ω (i : Fin n) ↦ (r i, s i, a i) ω : Ω → Fin n → ℝ × S × A`, i.e. the vector of the joint
+random variables `(r i, s i, a i)` (`JointRandomSymbol`, see `Function.coeProdPi3R`) for `i < n`; it
+is syntactically that term, so it can replace it in statements without changing proofs. For pairs and
+triples the components are packed by the tuple coercion `(x i, y i) ω` / `(x i, y i, z i) ω`, for
+four or more components by right-nested `JointRandomSymbol`. Only a literal tuple receiver is
+rewritten; every other `x[:n]` (lists, vectors, tensors, a single process `x[:n]`, a parenthesized
+`(e)[:n]`) keeps the generic `x.getSlice ⟨0, n, 1⟩` of `stdlib.List`. Used e.g. as the history in
+`(a n, r n, s (n + 1)) ⟂ᵢ[π] (r, s, a)[:n] | s n`. -/
+open Lean in
+macro_rules
+  | `(($x, $ys,*)[:$n]) => do
+    let comps ← (#[x] ++ ys.getElems).mapM fun z => `($z i)
+    let tuple : Term ← if comps.size ≤ 3 then
+        `(($(comps[0]!), $(comps.extract 1 comps.size),*))
+      else
+        comps.pop.foldrM (fun c acc => `(JointRandomSymbol $c $acc)) comps.back!
+    `(fun ω (i : Fin $n) ↦ $tuple ω)
 /-- The py first-order hidden Markov assumptions in probability notation (py `markov_assumptions` + `Random.ProbJoint.eq.Mul_Prod_MulProbSCond.of.IsDiscreteHMM`):
 for every label sequence `ys`,
 

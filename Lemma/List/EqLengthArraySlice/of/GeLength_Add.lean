@@ -1,4 +1,4 @@
-import stdlib.List.Basic
+import stdlib.List
 
 
 @[main]

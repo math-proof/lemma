@@ -55,7 +55,7 @@ HMM identity:
 \href{http://www.lemma.cn/lean/?module=Random.Sum_Mul_ProbCond.eq.Prob.of.IsDiscreteHMM}{$\sum_a\text{fwd}\cdot\text{bwd}$},
 \quad
 Bellman:
-\href{http://www.lemma.cn/lean/?module=Tensor.And.Eq.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.Bellman}{$V,Q$},
+\href{http://www.lemma.cn/lean/?module=Random.Eq_Expect.Eq_Expect.Eq_Expect.of.All_Eq_Expect.All_Eq_Expect.In_Ico}{$V,Q$},
 \quad
 REINFORCE:
 \href{http://www.lemma.cn/lean/?module=Tensor.Eq.Dot.Grad.Expect.of.Eq_Conditioned.IsFinite.policy_gradient_theorem}{Lean~4}\\[0.25em]
@@ -109,7 +109,7 @@ Second, when each step factor sums to one, $\sum_a p(a)=1$ implies $\E_{a\sim p}
 \paragraph{Contributions.}
 \begin{enumerate}[leftmargin=1.6em,itemsep=0.25em]
   \item CRF propagation (Sections~\ref{sec:markov} and~\ref{sec:crf}): the log-score \lmod{crf.markov.logits}{Tensor.Eq.of.Ne_0.Eq.Eq.Eq.Eq_log.Eq_log.Eq_log} and \lmod{crf.logits}{Tensor.Imp.of.Eq}, the forward recursion with $-\log p(y\mid x)=\log Z-\text{score}$, \lmod{CRF loss function}{Random.All_Eq_AddLogSumExpAdd.All_EqNegLogProb.of.All_Eq_Log.All_Eq_Sum_Exp.All_Eq_LogProbCond.All_Eq_LogProbCond.All_Eq_LogProbJoint.All_Lt0Prob.IsDiscreteHMM}, the Viterbi value recursion \lmod{crf.viterbi}{Random.All_Eq_Add_MaxAdd.EqMax_ProbJoint.of.All_Eq_Max.Eq_LogProbCond.Eq_LogProbCond.Eq_LogProbJoint.All_Lt0ProbJoint.IsDiscreteHMM}, and the HMM identity \lmod{hmm_identity}{Random.Sum_Mul_ProbCond.eq.Prob.of.IsDiscreteHMM} for a discrete hidden Markov model.
-  \item The Bellman equation \lmod{Bellman}{Tensor.And.Eq.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.Bellman} on a trajectory-level MDP whose trajectory law has a proved Markov property (\texttt{joint\_succ}, \texttt{hist\_step}) (Section~\ref{sec:bellman}).
+  \item The Bellman equation \lmod{Bellman}{Random.Eq_Expect.Eq_Expect.Eq_Expect.of.All_Eq_Expect.All_Eq_Expect.In_Ico} on a trajectory-level MDP whose trajectory law has a proved Markov property (\texttt{joint\_succ}, \texttt{hist\_step}) (Section~\ref{sec:bellman}).
   \item The policy gradient theorem by induction on the horizon, in truncated, action-value and REINFORCE form (\lmod{policy_gradient_theorem}{Tensor.Eq.Dot.Grad.Expect.of.Eq_Conditioned.IsFinite.policy_gradient_theorem}), the unbiased advantage estimate \lmod{unbiased_advantage_estimate}{Tensor.EqDot_GradExpect.of.Eq_Conditioned.Eq_Expect.IsFinite.IsFinite.unbiased_advantage_estimate} and GAE with the exact value function for all $\lambda\in[0,1]$, \lmod{generalized_advantage_estimate}{Tensor.EqDot_GradExpect.of.Eq_Conditioned.Eq_Expect.IsFinite.IsFinite.generalized_advantage_estimate}, with its weighted-average form (Section~\ref{sec:pg}).
   \item Two comparison tables (Section~\ref{sec:tables}).
 \end{enumerate}

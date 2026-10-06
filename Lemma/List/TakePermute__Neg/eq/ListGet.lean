@@ -22,7 +22,7 @@ private lemma main
     rw [TakeAppend.eq.Take.of.GeLength (by simp)]
     simp
   ·
-    grind
+    grind [List.length_rotate]
 
 
 -- created on 2025-10-27

@@ -11,6 +11,8 @@ import sympy.stats.policy_trajectory.advantage
 import sympy.vector.Basic
 import sympy.vector.operators
 import sympy.concrete.sup
+import Lemma.Tensor.Differentiable_RealPreimageS.of.IsFinite.All_Differentiable_Prob
+import Lemma.Random.AeRealPreimageSS.ne.Zero
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Filter Topology
 open scoped ENNReal.ToRealCoe
 
@@ -39,38 +41,38 @@ private lemma main
   (h₀ : γ ∈ Set.Ico 0 1)
   (hS : (ReferenceMeasure.measure : Measure S) = Measure.count)
   (hA : (ReferenceMeasure.measure : Measure A) = Measure.count)
-  (h₁ : ∀ θ t x, ((M.traj θ) (s t ⁻¹' {x}) ≠ 0) →
-    V θ t x = 𝔼[r : M.traj θ](∑' k, γ ^ k * r (t + k) | s t = x))
+  (h₁ : ∀ θ t x, ((M θ) (s t ⁻¹' {x}) ≠ 0) →
+    V θ t x = 𝔼[r : M θ](∑' k, γ ^ k * r (t + k) | s t = x))
   (h₂ : ∀ x u, Differentiable ℝ (fun θ => M.pol.prob θ x u))
   (h₃ : sup[θ, x, u] ‖∇[θ] M.pol.prob θ x u‖ < ∞)
   (h₄ : ℓ ∈ Set.Icc 0 1) :
 -- imply
-  have : ∀ θ t, SinglePSpace (M.traj θ) (JointRandomSymbol (a t) (s t)) := fun _ t =>
+  have : ∀ θ t, SinglePSpace (M θ) (JointRandomSymbol (a t) (s t)) := fun _ t =>
     Random.SinglePSpace.of.EqMeasureCount.Measurable ((a_meas t).prodMk (s_meas t)) (by
       show (ReferenceMeasure.measure : Measure A).prod (ReferenceMeasure.measure : Measure S) = _
       rw [hA, hS, Measure.Count.eq.ProdCountS])
-  have hs : ∀ t, PSpace (M.traj θ) (s (S := S) (A := A) t) := fun t =>
+  have hs : ∀ t, PSpace (M θ) (s (S := S) (A := A) t) := fun t =>
     ⟨(s_meas t).aemeasurable⟩
-  have ha : ∀ t, PSpace (M.traj θ) (a (S := S) (A := A) t) := fun t =>
+  have ha : ∀ t, PSpace (M θ) (a (S := S) (A := A) t) := fun t =>
     ⟨(a_meas t).aemeasurable⟩
-  have hr : ∀ t, PSpace (M.traj θ) (r (S := S) (A := A) t) := fun t =>
+  have hr : ∀ t, PSpace (M θ) (r (S := S) (A := A) t) := fun t =>
     ⟨(r_meas t).aemeasurable⟩
-  have : PSpace (M.traj θ) (AsPathRV.path (s (S := S) (A := A))) :=
+  have : PSpace (M θ) (AsPathRV.path (s (S := S) (A := A))) :=
     PSpace.of_process_path hs
-  have : PSpace (M.traj θ) (AsPathRV.path (a (S := S) (A := A))) :=
+  have : PSpace (M θ) (AsPathRV.path (a (S := S) (A := A))) :=
     PSpace.of_process_path ha
-  have : PSpace (M.traj θ) (AsPathRV.path (r (S := S) (A := A))) :=
+  have : PSpace (M θ) (AsPathRV.path (r (S := S) (A := A))) :=
     PSpace.of_process_path hr
   let : MeasurableSpace Θ := borel Θ
   have : BorelSpace Θ := ⟨rfl⟩
   ∇[θ] (
-    have : PSpace (M.traj θ) (AsPathRV.path (r (S := S) (A := A))) :=
+    have : PSpace (M θ) (AsPathRV.path (r (S := S) (A := A))) :=
       PSpace.of_process_path (fun t => ⟨(r_meas t).aemeasurable⟩)
-    𝔼[r: M.traj θ](((fun t : ℕ => γ ^ t) @ r))) =
-    𝔼[s, a, r : M.traj θ](
+    𝔼[r: M θ](((fun t : ℕ => γ ^ t) @ r))) =
+    𝔼[s, a, r : M θ](
       ∑' t, γ ^ t •
         (((fun k : ℕ => (γ * ℓ) ^ k) @ (fun k : ℕ => r (t + k) + γ * V θ (t + k + 1) (s (t + k + 1)) - V θ (t + k) (s (t + k)))) •
-          ∇[θ] (ℙ[M.traj θ]((PolicyGradient.a t) = a t | (PolicyGradient.s t) = s t) : ℝ).log)) := by
+          ∇[θ] (ℙ[M θ]((PolicyGradient.a t) = a t | (PolicyGradient.s t) = s t) : ℝ).log)) := by
 -- proof
   intro hP _hs _ha _hr _hps _hpa _hpr
   classical
@@ -82,13 +84,13 @@ private lemma main
   have h₇ : ∀ θ x u, ‖fderiv ℝ (fun θ => M.pol.prob θ x u) θ‖ ≤ C := fun θ x u => hC ⟨(θ, x, u), rfl⟩
   have hc : γ * ℓ ∈ Set.Ico 0 1 :=
     ⟨mul_nonneg h₀.1 h₄.1, (mul_le_of_le_one_right h₀.1 h₄.2).trans_lt h₀.2⟩
-  have hscore : ∀ t, ∀ᵐ ω ∂(M.traj θ),
-      fderiv ℝ (fun θ' => (ℙ[M.traj θ']((a t) = (a t ω) | (s t) = (s t ω)) : ℝ).log) θ =
+  have hscore : ∀ t, ∀ᵐ ω ∂(M θ),
+      fderiv ℝ (fun θ' => (ℙ[M θ']((a t) = (a t ω) | (s t) = (s t ω)) : ℝ).log) θ =
         fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' (s t ω) (a t ω))) θ := by
     intro t
-    filter_upwards [reach_ae M θ] with ω hω
-    have hc : ContinuousAt (fun θ' => (M.traj θ').real (s t ⁻¹' {s t ω})) θ :=
-      (P_diff M h₂ h₇ t (s t ω) θ).continuousAt
+    filter_upwards [Random.AeRealPreimageSS.ne.Zero (M := M) θ] with ω hω
+    have hc : ContinuousAt (fun θ' => (M θ').real (s t ⁻¹' {s t ω})) θ :=
+      (Tensor.Differentiable_RealPreimageS.of.IsFinite.All_Differentiable_Prob (M := M) h₂ h₇ t (s t ω) θ).continuousAt
     refine Filter.EventuallyEq.fderiv_eq ((hc.eventually_ne (hω t)).mono fun θ' h => ?_)
     beta_reduce
     rw [Random.ProbCond.eq.OfRealPol.of.Ne_0 hS hA (hP θ' t) h,
@@ -96,20 +98,20 @@ private lemma main
   have hpR : Measurable (fun ω t ↦ r (S := S) (A := A) t ω) := measurable_pi_lambda _ fun t => r_meas t
   have hfG : ∀ t, Measurable (fun integ : ℕ → ℝ ↦ ∑' k, γ ^ k * integ (t + k)) := fun t =>
     Measurable.tsum fun k => (measurable_pi_apply (t + k)).const_mul _
-  have hVr : ∀ θ' t x, ((M.traj θ').real (s t ⁻¹' {x}) ≠ 0) → (V θ' t x = M.V θ' γ t x) := fun θ' t x hp => by
-    have hp' : (M.traj θ') (s t ⁻¹' {x}) ≠ 0 := fun h0 =>
+  have hVr : ∀ θ' t x, ((M θ').real (s t ⁻¹' {x}) ≠ 0) → (V θ' t x = M.V θ' γ t x) := fun θ' t x hp => by
+    have hp' : (M θ') (s t ⁻¹' {x}) ≠ 0 := fun h0 =>
       hp ((measureReal_eq_zero_iff (measure_ne_top _ _)).2 h0)
     rw [h₁ θ' t x hp']
     simp only [Expectation.asRV_process]
     rw [Expectation.condEvent_eq_integral hpR.aemeasurable (hfG t), M.V_eq_integral θ' γ t x]
     rfl
   -- almost surely the learned value is the time-free value function
-  have hVc : ∀ᵐ ω ∂(M.traj θ), ∀ k, V θ k (s k ω) = M.Vc θ γ (s k ω) :=
-    (reach_ae M θ).mono fun ω h k => (hVr θ k _ (h k)).trans (V_eq_Vc M θ h₀ k _ (h k))
-  have hδ : ∀ᵐ ω ∂(M.traj θ), ∀ j, r j ω + γ * V θ (j + 1) (s (j + 1) ω) - V θ j (s j ω) =
+  have hVc : ∀ᵐ ω ∂(M θ), ∀ k, V θ k (s k ω) = M.Vc θ γ (s k ω) :=
+    (Random.AeRealPreimageSS.ne.Zero (M := M) θ).mono fun ω h k => (hVr θ k _ (h k)).trans (V_eq_Vc M θ h₀ k _ (h k))
+  have hδ : ∀ᵐ ω ∂(M θ), ∀ j, r j ω + γ * V θ (j + 1) (s (j + 1) ω) - V θ j (s j ω) =
       r j ω + γ * M.Vc θ γ (s (j + 1) ω) - M.Vc θ γ (s j ω) :=
     hVc.mono fun ω h j => by rw [h j, h (j + 1)]
-  have hbd : ∀ c ∈ Set.Ico (0:ℝ) 1, ∀ᵐ ω ∂(M.traj θ), ∀ t,
+  have hbd : ∀ c ∈ Set.Ico (0:ℝ) 1, ∀ᵐ ω ∂(M θ), ∀ t,
       ‖∑' k, c ^ k * (r (t + k) ω + γ * V θ (t + k + 1) (s (t + k + 1) ω) - V θ (t + k) (s (t + k) ω))‖ ≤
         (1 - c)⁻¹ * M.deltaBound γ := by
     intro c hc'
@@ -122,9 +124,9 @@ private lemma main
   -- the `c`-discounted advantage against the score only sees the first residual
   have hinner : ∀ c ∈ Set.Ico (0:ℝ) 1, ∀ t, ∫ ω,
       (∑' k, c ^ k * (r (t + k) ω + γ * V θ (t + k + 1) (s (t + k + 1) ω) - V θ (t + k) (s (t + k) ω))) •
-        fderiv ℝ (fun θ' => (ℙ[M.traj θ']((a t) = (a t ω) | (s t) = (s t ω)) : ℝ).log) θ ∂(M.traj θ) =
+        fderiv ℝ (fun θ' => (ℙ[M θ']((a t) = (a t ω) | (s t) = (s t ω)) : ℝ).log) θ ∂(M θ) =
       ∫ ω, (r t ω + γ * M.Vc θ γ (s (t + 1) ω) - M.Vc θ γ (s t ω)) •
-        fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' (s t ω) (a t ω))) θ ∂(M.traj θ) := by
+        fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' (s t ω) (a t ω))) θ ∂(M θ) := by
     intro c hc' t
     refine (integral_congr_ae ?_).trans
       (E_sum_delta M θ h₀ hc' t (fun y u => fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' y u)) θ))
@@ -133,19 +135,19 @@ private lemma main
     beta_reduce
     congr 1
     exact tsum_congr fun k => by rw [h2 (t + k)]
-  have hmeas : ∀ k, Measurable fun ω : ℕ → S × A × ℝ =>
+  have hmeas : ∀ k, Measurable fun ω : ℕ → ℝ × S × A =>
       (fun (s : ℕ → S) (_ : ℕ → A) (r : ℕ → ℝ) (k : ℕ) => r k + γ * V θ (k + 1) (s (k + 1)) - V θ k (s k))
         (fun j => s j ω) (fun j => a j ω) (fun j => r j ω) k := fun k =>
     ((r_meas k).add (((measurable_of_countable (V θ (k + 1))).comp (s_meas (k + 1))).const_mul γ)).sub
       ((measurable_of_countable (V θ k)).comp (s_meas k))
   have hbase : ∇[θ] (
-      have : PSpace (M.traj θ) (AsPathRV.path (r (S := S) (A := A))) :=
+      have : PSpace (M θ) (AsPathRV.path (r (S := S) (A := A))) :=
         PSpace.of_process_path (fun t => ⟨(r_meas t).aemeasurable⟩)
-      𝔼[r: M.traj θ](((fun t : ℕ => γ ^ t) @ r))) =
-      𝔼[s, a, r : M.traj θ](
+      𝔼[r: M θ](((fun t : ℕ => γ ^ t) @ r))) =
+      𝔼[s, a, r : M θ](
         ∑' t, γ ^ t •
           (((fun k : ℕ => γ ^ k) @ (fun k : ℕ => r (t + k) + γ * V θ (t + k + 1) (s (t + k + 1)) - V θ (t + k) (s (t + k)))) •
-            ∇[θ] (ℙ[M.traj θ]((PolicyGradient.a t) = a t | (PolicyGradient.s t) = s t) : ℝ).log)) :=
+            ∇[θ] (ℙ[M θ]((PolicyGradient.a t) = a t | (PolicyGradient.s t) = s t) : ℝ).log)) :=
     Tensor.EqDot_GradExpect.of.Eq_Conditioned.Eq_Expect.IsFinite.IsFinite.unbiased_advantage_estimate
       h₀ hS hA h₁ h₂ h₃o
   have hA₁ := Tensor.Eq.Expect.Sum.Grad.Log.Pr.of.Bounded.Discount
@@ -156,10 +158,10 @@ private lemma main
     h₀ hS hA hmeas (hbd (γ * ℓ) hc) h₂ h₃o
   have e : ∑' t, γ ^ t • ∫ ω,
       (∑' k, γ ^ k * (r (t + k) ω + γ * V θ (t + k + 1) (s (t + k + 1) ω) - V θ (t + k) (s (t + k) ω))) •
-        fderiv ℝ (fun θ' => (ℙ[M.traj θ']((a t) = (a t ω) | (s t) = (s t ω)) : ℝ).log) θ ∂(M.traj θ) =
+        fderiv ℝ (fun θ' => (ℙ[M θ']((a t) = (a t ω) | (s t) = (s t ω)) : ℝ).log) θ ∂(M θ) =
       ∑' t, γ ^ t • ∫ ω,
       (∑' k, (γ * ℓ) ^ k * (r (t + k) ω + γ * V θ (t + k + 1) (s (t + k + 1) ω) - V θ (t + k) (s (t + k) ω))) •
-        fderiv ℝ (fun θ' => (ℙ[M.traj θ']((a t) = (a t ω) | (s t) = (s t ω)) : ℝ).log) θ ∂(M.traj θ) :=
+        fderiv ℝ (fun θ' => (ℙ[M θ']((a t) = (a t ω) | (s t) = (s t ω)) : ℝ).log) θ ∂(M θ) :=
     tsum_congr fun t => by rw [hinner γ h₀ t, hinner (γ * ℓ) hc t]
   exact hbase.trans (hA₁.symm.trans ((congrArg (InnerProductSpace.toDual ℝ Θ).symm e).trans hA₂))
 

@@ -14,7 +14,7 @@ private lemma main
 -- proof
   obtain ⟨i, hi, hsi⟩ := h
   intro y hy
-  simp only [Set.mem_iUnion₂, Finset.mem_coe]
+  simp only [Set.mem_iUnion₂]
   exact ⟨i, hi, hsi hy⟩
 
 

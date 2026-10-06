@@ -39,6 +39,7 @@ Presets (see php/parser/README.md):
   leantesseract   — class LeanTesseract
   leantranspose   — class LeanTranspose
   leanpipeforward — class LeanPipeForward
+  leanlazy        — class Lean_lazy
   leanmethodchaining — class LeanMethodChaining
   leangotelem     — class LeanGetElem (members-first: use + methods)
   leangotelemque  — class LeanGetElemQue (members-first)
@@ -114,11 +115,267 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 LEAN = ROOT / "php" / "parser" / "lean.php"
+ARITHMETIC = ROOT / "php" / "parser" / "lean" / "arithmetic.php"
+PAIRED = ROOT / "php" / "parser" / "lean" / "paired.php"
+LOGIC = ROOT / "php" / "parser" / "lean" / "logic.php"
+RELATIONAL = ROOT / "php" / "parser" / "lean" / "relational.php"
+QUANTIFIER = ROOT / "php" / "parser" / "lean" / "quantifier.php"
+BIGOPS = ROOT / "php" / "parser" / "lean" / "bigops.php"
+FUN = ROOT / "php" / "parser" / "lean" / "fun.php"
+INDEXING = ROOT / "php" / "parser" / "lean" / "indexing.php"
+ARROWS = ROOT / "php" / "parser" / "lean" / "arrows.php"
+NEGATION = ROOT / "php" / "parser" / "lean" / "negation.php"
+MATCH = ROOT / "php" / "parser" / "lean" / "match.php"
+ITE = ROOT / "php" / "parser" / "lean" / "ite.php"
+ARGS = ROOT / "php" / "parser" / "lean" / "args.php"
+TACTIC = ROOT / "php" / "parser" / "lean" / "tactic.php"
+DECL = ROOT / "php" / "parser" / "lean" / "decl.php"
+BASE = ROOT / "php" / "parser" / "lean" / "base.php"
+ATOMIC = ROOT / "php" / "parser" / "lean" / "atomic.php"
+ABSTRACT = ROOT / "php" / "parser" / "lean" / "abstract.php"
+RANGE = ROOT / "php" / "parser" / "lean" / "range.php"
+PROPERTY = ROOT / "php" / "parser" / "lean" / "property.php"
+COLON = ROOT / "php" / "parser" / "lean" / "colon.php"
+ASSIGN = ROOT / "php" / "parser" / "lean" / "assign.php"
+BOOLEAN = ROOT / "php" / "parser" / "lean" / "boolean.php"
+LAZY = ROOT / "php" / "parser" / "lean" / "lazy.php"
+PIPELINE = ROOT / "php" / "parser" / "lean" / "pipeline.php"
+ISINSTANCE = ROOT / "php" / "parser" / "lean" / "isinstance.php"
+STATEMENTS = ROOT / "php" / "parser" / "lean" / "statements.php"
+MODULE = ROOT / "php" / "parser" / "lean" / "module.php"
+COMMAND = ROOT / "php" / "parser" / "lean" / "command.php"
+BAR = ROOT / "php" / "parser" / "lean" / "bar.php"
+ARITHMETIC_PRESETS = frozenset({
+    "leanarithmetic",
+    "leanmul",
+    "leanneg",
+    "leanplus",
+    "leaninv",
+    "leanpospart",
+    "leannegpart",
+    "leansqrt",
+    "leansquare",
+    "leancubicroot",
+    "leanuparrow",
+    "leanuparrowuc",
+    "leancube",
+    "leanquarticroot",
+    "leantesseract",
+    "leantranspose",
+    "leanpipeforward",
+    "leandiv",
+    "leanbitor",
+})
+PAIRED_PRESETS = frozenset({
+    "leanpairedgroup",
+    "leanparenthesis",
+    "leananglebracket",
+    "leanbracket",
+    "leanbrace",
+    "leanabs",
+    "leandoubleanglequotation",
+})
+LOGIC_PRESETS = frozenset({
+    "leanlogic",
+    "leanlogicand",
+    "leanlogicor",
+    "leanlogicxor",
+    "leanlor",
+})
+RELATIONAL_PRESETS = frozenset({
+    "leanrelational",
+})
+QUANTIFIER_PRESETS = frozenset({
+    "leanquantifier",
+    "leanforall",
+    "leanexists",
+})
+BIGOPS_PRESETS = frozenset({
+    "leanbigoperator",
+    "leansum",
+    "leanprod",
+    "leanbigcap",
+    "leanbigcup",
+    "leanstack",
+})
+FUN_PRESETS = frozenset({
+    "lean_fun",
+})
+INDEXING_PRESETS = frozenset({
+    "leangotelem",
+    "leangotelemque",
+    "leangotelemquote",
+})
+ARROWS_PRESETS = frozenset({
+    "leanRightarrow",
+    "leanrightarrow",
+    "leanmapsto",
+    "leanleftarrow",
+})
+NEGATION_PRESETS = frozenset({
+    "leanlnot",
+    "leannot",
+})
+MATCH_PRESETS = frozenset({
+    "leanmatch",
+})
+ITE_PRESETS = frozenset({
+    "leanite",
+})
+ARGS_PRESETS = frozenset({
+    "leanargsspaceseparated",
+    "leanargsnewlineseparated",
+    "leanargsindented",
+    "leanargscommaseparated",
+    "leanargssemicolonseparated",
+    "leanargscommanewlineseparated",
+})
+TACTIC_PRESETS = frozenset({
+    "leantactic",
+    "leanby",
+    "leanfrom",
+    "leancalc",
+    "leanmod",
+    "leanusing",
+    "leanat",
+    "leanin",
+    "leangeneralizing",
+    "leansequentialtacticcombinator",
+    "leantacticblock",
+    "leanwith",
+    "leanattribute",
+})
+DECL_PRESETS = frozenset({
+    "lean_def",
+    "lean_lemma",
+    "leanlet",
+    "leanhave",
+    "leanshow",
+})
+BASE_PRESETS = frozenset({
+    "lean",
+})
+ATOMIC_PRESETS = frozenset({
+    "leancaret",
+    "leantoken",
+    "leanlinecomment",
+    "leanblockcomment",
+    "leandocstring",
+})
+ABSTRACT_PRESETS = frozenset({
+    "leanargs",
+    "leanunary",
+    "leanbinary",
+})
+RANGE_PRESETS = frozenset({
+    "leanupto",
+})
+PROPERTY_PRESETS = frozenset({
+    "leanproperty",
+})
+COLON_PRESETS = frozenset({
+    "leancolon",
+})
+ASSIGN_PRESETS = frozenset({
+    "leanassign",
+})
+BOOLEAN_PRESETS = frozenset({
+    "leanbinaryboolean",
+})
+LAZY_PRESETS = frozenset({
+    "leanlazy",
+})
+PIPELINE_PRESETS = frozenset({
+    "leanmethodchaining",
+})
+ISINSTANCE_PRESETS = frozenset({
+    "leanis",
+    "leanisnot",
+})
+STATEMENTS_PRESETS = frozenset({
+    "leanstatements",
+})
+MODULE_PRESETS = frozenset({
+    "leanmodule",
+})
+COMMAND_PRESETS = frozenset({
+    "leancommand",
+    "leanimport",
+    "leanopen",
+    "leansetoption",
+})
+BAR_PRESETS = frozenset({
+    "leanbar",
+})
+
+
+def preset_path(preset: str) -> Path:
+    if preset in ARITHMETIC_PRESETS:
+        return ARITHMETIC
+    if preset in PAIRED_PRESETS:
+        return PAIRED
+    if preset in LOGIC_PRESETS:
+        return LOGIC
+    if preset in RELATIONAL_PRESETS:
+        return RELATIONAL
+    if preset in QUANTIFIER_PRESETS:
+        return QUANTIFIER
+    if preset in BIGOPS_PRESETS:
+        return BIGOPS
+    if preset in FUN_PRESETS:
+        return FUN
+    if preset in INDEXING_PRESETS:
+        return INDEXING
+    if preset in ARROWS_PRESETS:
+        return ARROWS
+    if preset in NEGATION_PRESETS:
+        return NEGATION
+    if preset in MATCH_PRESETS:
+        return MATCH
+    if preset in ITE_PRESETS:
+        return ITE
+    if preset in ARGS_PRESETS:
+        return ARGS
+    if preset in TACTIC_PRESETS:
+        return TACTIC
+    if preset in DECL_PRESETS:
+        return DECL
+    if preset in BASE_PRESETS:
+        return BASE
+    if preset in ATOMIC_PRESETS:
+        return ATOMIC
+    if preset in ABSTRACT_PRESETS:
+        return ABSTRACT
+    if preset in RANGE_PRESETS:
+        return RANGE
+    if preset in PROPERTY_PRESETS:
+        return PROPERTY
+    if preset in COLON_PRESETS:
+        return COLON
+    if preset in ASSIGN_PRESETS:
+        return ASSIGN
+    if preset in BOOLEAN_PRESETS:
+        return BOOLEAN
+    if preset in LAZY_PRESETS:
+        return LAZY
+    if preset in PIPELINE_PRESETS:
+        return PIPELINE
+    if preset in ISINSTANCE_PRESETS:
+        return ISINSTANCE
+    if preset in STATEMENTS_PRESETS:
+        return STATEMENTS
+    if preset in MODULE_PRESETS:
+        return MODULE
+    if preset in COMMAND_PRESETS:
+        return COMMAND
+    if preset in BAR_PRESETS:
+        return BAR
+    return LEAN
 
 PRESETS: dict[str, tuple[str, str]] = {
     "lean": (
         "abstract class Lean extends IndentedNode\n{",
-        "\n}\n\nclass LeanCaret extends Lean",
+        "\n}\n\n// END OF base family (LeanParser stays in lean.php)\n",
     ),
     "leancaret": (
         "class LeanCaret extends Lean\n{",
@@ -134,7 +391,7 @@ PRESETS: dict[str, tuple[str, str]] = {
     ),
     "leandocstring": (
         "class LeanDocString extends LeanBlockComment\n{",
-        "\n}\n\n\ntrait LeanMultipleLine",
+        "\n}\n\n// END OF atomic family (LeanParser stays in lean.php)\n",
     ),
     "leanargs": (
         "abstract class LeanArgs extends Lean\n{",
@@ -142,7 +399,7 @@ PRESETS: dict[str, tuple[str, str]] = {
     ),
     "leanunary": (
         "abstract class LeanUnary extends LeanArgs\n{",
-        "\n}\n\nabstract class LeanPairedGroup extends LeanUnary",
+        "\n}\n\nabstract class LeanBinary extends LeanArgs",
     ),
     "leanpairedgroup": (
         "abstract class LeanPairedGroup extends LeanUnary\n{",
@@ -170,27 +427,31 @@ PRESETS: dict[str, tuple[str, str]] = {
     ),
     "leandoubleanglequotation": (
         "class LeanDoubleAngleQuotation extends LeanPairedGroup\n{",
-        "\n}\n\nabstract class LeanBinary extends LeanArgs",
+        "\n}\n\n// END OF paired family (LeanParser stays in lean.php)\n",
     ),
     "leanbinary": (
         "abstract class LeanBinary extends LeanArgs\n{",
-        "\n}\n\nclass LeanProperty extends LeanBinary",
+        "\n}\n\n// END OF abstract family (LeanParser stays in lean.php)\n",
+    ),
+    "leanupto": (
+        "class LeanUpto extends LeanBinary\n{",
+        "\n}\n\n// END OF range family (LeanParser stays in lean.php)\n",
     ),
     "leanproperty": (
         "class LeanProperty extends LeanBinary\n{",
-        "\n}\n\nclass LeanColon extends LeanBinary",
+        "\n}\n\n// END OF property family (LeanParser stays in lean.php)\n",
     ),
     "leancolon": (
         "class LeanColon extends LeanBinary\n{",
-        "\n}\n\nclass LeanAssign extends LeanBinary",
+        "\n}\n\n// END OF colon family (LeanParser stays in lean.php)\n",
     ),
     "leanassign": (
         "class LeanAssign extends LeanBinary\n{",
-        "\n}\n\ntrait LeanProp",
+        "\n}\n\n// END OF assign family (LeanParser stays in lean.php)\n",
     ),
     "leanbinaryboolean": (
         "abstract class LeanBinaryBoolean extends LeanBinary\n{",
-        "\n}\n\nabstract class LeanRelational extends LeanBinaryBoolean",
+        "\n}\n\n// END OF boolean family (LeanParser stays in lean.php)\n",
     ),
     "leanrelational": (
         "abstract class LeanRelational extends LeanBinaryBoolean\n{",
@@ -262,11 +523,15 @@ PRESETS: dict[str, tuple[str, str]] = {
     ),
     "leanpipeforward": (
         "class LeanPipeForward extends LeanUnaryArithmeticPost\n{",
-        "\n}\n\nclass LeanMethodChaining extends LeanBinary",
+        "\n}\n\n// END OF arithmetic family (LeanParser stays in lean.php)\n",
+    ),
+    "leanlazy": (
+        "class Lean_lazy extends LeanBinary\n{",
+        "\n}\n\n// END OF lazy family (LeanParser stays in lean.php)\n",
     ),
     "leanmethodchaining": (
         "class LeanMethodChaining extends LeanBinary\n{",
-        "\n}\n\ntrait LeanGetElemBase",
+        "\n}\n\n// END OF pipeline family (LeanParser stays in lean.php)\n",
     ),
     "leangotelem": (
         "class LeanGetElem extends LeanBinary\n{",
@@ -278,7 +543,7 @@ PRESETS: dict[str, tuple[str, str]] = {
     ),
     "leangotelemquote": (
         "class LeanGetElemQuote extends LeanArgs\n{",
-        "\n}\n\nclass Lean_is extends LeanBinary",
+        "\n}\n\n// END OF indexing family (LeanParser stays in lean.php)\n",
     ),
     "leanis": (
         "class Lean_is extends LeanBinary\n{",
@@ -286,7 +551,7 @@ PRESETS: dict[str, tuple[str, str]] = {
     ),
     "leanisnot": (
         "class Lean_is_not extends LeanBinary\n{",
-        "\n}\n\nabstract class LeanSetOperator extends LeanBinary {",
+        "\n}\n\n// END OF isinstance family (LeanParser stays in lean.php)\n",
     ),
     "leanlogic": (
         "abstract class LeanLogic extends LeanBinaryBoolean\n{",
@@ -310,11 +575,11 @@ PRESETS: dict[str, tuple[str, str]] = {
     ),
     "leanstatements": (
         "class LeanStatements extends LeanArgs\n{",
-        "\n}\n\n\nclass LeanModule extends LeanStatements",
+        "\n}\n\n// END OF statements family (LeanParser stays in lean.php)\n",
     ),
     "leanmodule": (
         "class LeanModule extends LeanStatements\n{",
-        "\n}\n\nabstract class LeanCommand extends LeanUnary",
+        "\n}\n\n// END OF module family (LeanParser stays in lean.php)\n",
     ),
     "leancommand": (
         "abstract class LeanCommand extends LeanUnary\n{",
@@ -334,7 +599,7 @@ PRESETS: dict[str, tuple[str, str]] = {
     ),
     "leanbar": (
         "class LeanBar extends LeanUnary\n{",
-        "\n}\n\nclass LeanRightarrow extends LeanBinary",
+        "\n}\n\n// END OF bar family (LeanParser stays in lean.php)\n",
     ),
     "leanRightarrow": (
         "class LeanRightarrow extends LeanBinary\n{",
@@ -350,7 +615,7 @@ PRESETS: dict[str, tuple[str, str]] = {
     ),
     "leanleftarrow": (
         "class Lean_leftarrow extends LeanUnary\n{",
-        "\n}\n\nclass Lean_lnot extends LeanUnary",
+        "\n}\n\n// END OF arrows family (LeanParser stays in lean.php)\n",
     ),
     "leanlnot": (
         "class Lean_lnot extends LeanUnary\n{",
@@ -358,15 +623,15 @@ PRESETS: dict[str, tuple[str, str]] = {
     ),
     "leannot": (
         "class LeanNot extends LeanUnary\n{",
-        "\n}\n\nclass Lean_match extends LeanArgs",
+        "\n}\n\n// END OF negation family (LeanParser stays in lean.php)\n",
     ),
     "leanmatch": (
         "class Lean_match extends LeanArgs\n{",
-        "\n}\n\nclass LeanIte extends LeanArgs",
+        "\n}\n\n// END OF match family (LeanParser stays in lean.php)\n",
     ),
     "leanite": (
         "class LeanIte extends LeanArgs\n{",
-        "\n}\n\nclass LeanArgsSpaceSeparated extends LeanArgs",
+        "\n}\n\n// END OF ite family (LeanParser stays in lean.php)\n",
     ),
     "leanargsspaceseparated": (
         "class LeanArgsSpaceSeparated extends LeanArgs\n{",
@@ -390,7 +655,7 @@ PRESETS: dict[str, tuple[str, str]] = {
     ),
     "leanargscommanewlineseparated": (
         "class LeanArgsCommaNewLineSeparated extends LeanArgs\n{",
-        "\n}\n\nabstract class LeanSyntax extends LeanArgs",
+        "\n}\n\n// END OF args family (LeanParser stays in lean.php)\n",
     ),
     "leantactic": (
         "class LeanTactic extends LeanSyntax\n{",
@@ -442,7 +707,7 @@ PRESETS: dict[str, tuple[str, str]] = {
     ),
     "leanattribute": (
         "class LeanAttribute extends LeanUnary\n{",
-        "\n}\n\nclass Lean_def extends LeanArgs",
+        "\n}\n\n// END OF tactic family (LeanParser stays in lean.php)\n",
     ),
     "lean_def": (
         "class Lean_def extends LeanArgs\n{",
@@ -458,19 +723,19 @@ PRESETS: dict[str, tuple[str, str]] = {
     ),
     "leanhave": (
         "class Lean_have extends Lean_let\n{",
-        "\n}\n\n\nclass Lean_show extends LeanSyntax",
+        "\n}\n\nclass Lean_set extends Lean_let",
     ),
     "leanshow": (
         "class Lean_show extends LeanSyntax\n{",
-        "\n}\n\nclass Lean_fun extends LeanUnary",
+        "\n}\n\n// END OF decl family (LeanParser stays in lean.php)\n",
     ),
     "lean_fun": (
         "class Lean_fun extends LeanUnary\n{",
-        "\n}\n\nclass LeanBigOperator extends LeanArgs",
+        "\n}\n\n// END OF fun family (LeanParser stays in lean.php)\n",
     ),
     "leanbigoperator": (
         "class LeanBigOperator extends LeanArgs\n{",
-        "\n}\n\n\nclass LeanQuantifier extends LeanBigOperator",
+        "\n}\n\nclass Lean_sum extends LeanBigOperator",
     ),
     "leanquantifier": (
         "class LeanQuantifier extends LeanBigOperator\n{",
@@ -482,15 +747,15 @@ PRESETS: dict[str, tuple[str, str]] = {
     ),
     "leanexists": (
         "class Lean_exists extends LeanQuantifier\n{",
-        "\n}\n\n\nclass Lean_sum extends LeanBigOperator",
+        "\n}\n\n// END OF quantifier family\n",
     ),
     "leansum": (
         "class Lean_sum extends LeanBigOperator\n{",
-        "\n}\n\nclass Lean_prod extends LeanBigOperator",
+        "\n}\n\nclass Lean_lim extends LeanBigOperator",
     ),
     "leanprod": (
         "class Lean_prod extends LeanBigOperator\n{",
-        "\n}\n\nclass Lean_bigcap extends LeanBigOperator",
+        "\n}\n\nclass Lean_int extends LeanBigOperator",
     ),
     "leanbigcap": (
         "class Lean_bigcap extends LeanBigOperator\n{",
@@ -502,7 +767,7 @@ PRESETS: dict[str, tuple[str, str]] = {
     ),
     "leanstack": (
         "class LeanStack extends LeanBigOperator\n{",
-        "\n}\n\nfunction compile($code) {",
+        "\n}\n\n// END OF big operator family (LeanParser stays in lean.php)\n",
     ),
     "leanparser": (
         "class LeanParser extends AbstractParser {\n",
@@ -659,12 +924,13 @@ def main() -> int:
     )
     args = ap.parse_args()
     start, end = PRESETS[args.preset]
-    text = LEAN.read_text(encoding="utf-8")
+    path = preset_path(args.preset)
+    text = path.read_text(encoding="utf-8")
     if args.preset in MEMBERS_FIRST_PRESETS:
         new_text = reorder_class_members_first(text, start, end)
     else:
         new_text = reorder_class(text, start, end)
-    LEAN.write_text(new_text, encoding="utf-8", newline="\n")
+    path.write_text(new_text, encoding="utf-8", newline="\n")
     # count methods
     body = new_text[new_text.index(start) + len(start) : new_text.index(end, new_text.index(start))]
     if args.preset in MEMBERS_FIRST_PRESETS:
@@ -672,7 +938,7 @@ def main() -> int:
         n = sum(1 for seg in segs if _is_method_segment(seg))
     else:
         n = len(list(pat.finditer(body)))
-    print(f"reordered preset={args.preset!r}: {n} methods in {LEAN.relative_to(ROOT)}")
+    print(f"reordered preset={args.preset!r}: {n} methods in {path.relative_to(ROOT)}")
     return 0
 
 

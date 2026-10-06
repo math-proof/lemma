@@ -14,10 +14,10 @@ private lemma main
   {M : Model Θ S A}
   {θ : Θ}
 -- given
-  (B : Set (ℕ → S × A × ℝ))
+  (B : Set (ℕ → ℝ × S × A))
   (t : ℕ) :
 -- imply
-  ‖∫ ω, r t ω ∂(M.traj θ)[|B]‖ ≤ ‖M.env.R‖ := by
+  ‖∫ ω, r t ω ∂(M θ)[|B]‖ ≤ ‖M.env.R‖ := by
 -- proof
   classical
   simpa [Real.norm_eq_abs] using cond_r_bdd M θ B t
