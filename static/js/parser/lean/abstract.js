@@ -1,0 +1,337 @@
+/**
+ * Abstract argument bases: `LeanArgs`, `LeanUnary`, `LeanBinary`.
+ *
+ * `Lean` already exists and is passed in. `token2classname` and
+ * `leanSubtreeContains` stay in `lean.js`. Later classes are filled on
+ * `abstractLate` after the atomic factory returns (`LeanCaret` / `LeanToken`)
+ * and the other families exist. This factory does not import `lean.js`.
+ *
+ * PHP `LeanUnary` / `LeanBinary` are `abstract`; these JS classes are concrete.
+ *
+ * @param {object} deps
+ * @param {Function} deps.Lean
+ * @param {object} deps.token2classname
+ * @param {Function} deps.leanSubtreeContains
+ * @param {object} deps.abstractLate
+ */
+export function createAbstractFamily(deps) {
+    const {
+        Lean,
+        token2classname,
+        leanSubtreeContains,
+        abstractLate,
+    } = deps;
+
+    function lateCtor(name) {
+        function Ctor() {}
+        return new Proxy(Ctor, {
+            construct(_target, args) {
+                const real = abstractLate[name];
+                if (real == null) throw new Error(`${name} used before abstract registration`);
+                return new real(...args);
+            },
+            get(_target, prop) {
+                const real = abstractLate[name];
+                if (real == null) throw new Error(`${name} used before abstract registration`);
+                if (prop === Symbol.hasInstance) return (inst) => inst instanceof real;
+                const value = real[prop];
+                return typeof value === 'function' ? value.bind(real) : value;
+            },
+        });
+    }
+    const LeanArgsIndented = lateCtor('LeanArgsIndented');
+    const LeanArgsNewLineSeparated = lateCtor('LeanArgsNewLineSeparated');
+    const LeanCalc = lateCtor('LeanCalc');
+    const LeanCaret = lateCtor('LeanCaret');
+    const LeanColon = lateCtor('LeanColon');
+    const LeanIte = lateCtor('LeanIte');
+    const LeanMethodChaining = lateCtor('LeanMethodChaining');
+    const LeanParenthesis = lateCtor('LeanParenthesis');
+    const LeanProperty = lateCtor('LeanProperty');
+    const LeanStatements = lateCtor('LeanStatements');
+    const LeanTactic = lateCtor('LeanTactic');
+    const LeanToken = lateCtor('LeanToken');
+    const Lean_rightarrow = lateCtor('Lean_rightarrow');
+
+    /**
+     * Cartesian product of string columns (port of `itertools\product` in `LeanArgs::regexp`).
+     * @param {string[][]} cols
+     * @returns {string[][]}
+     */
+    function regexpProductCols(cols) {
+        if (cols.length === 0) return [[]];
+        const [first, ...rest] = cols;
+        const tail = regexpProductCols(rest);
+        const out = [];
+        for (const x of first) {
+            for (const t of tail) {
+                out.push([x, ...t]);
+            }
+        }
+        return out;
+    }
+
+    class LeanArgs extends Lean {
+        static input_priority = 47;
+
+        /**
+         * Deep-clone `args` and reparent children (same pattern as `LeanArgs::__clone` / `Lean.prototype.clone`).
+         * @returns {this}
+         */
+        clone() {
+            const copy = Object.create(Object.getPrototypeOf(this));
+            Object.assign(copy, this);
+            copy.parent = null;
+            copy.args = this.args.map((a) => {
+                if (a == null) return a;
+                if (typeof a.clone === 'function') return a.clone();
+                return a;
+            });
+            for (const a of copy.args) {
+                if (a && typeof a === 'object') a.parent = copy;
+            }
+            return copy;
+        }
+
+        /**
+         * @param {Lean[]} args
+         * @param {number} indent
+         * @param {number} level
+         * @param {import('./node.js').Node | null} [parent]
+         */
+        constructor(args, indent, level, parent = null) {
+            super(indent, level, parent);
+            this.args = args;
+            for (const a of args) if (a) a.parent = this;
+        }
+
+        get func() {
+            return this.constructor.name.replace(/^Lean_?/, '');
+        }
+
+        get command() {
+            return '\\' + this.func;
+        }
+
+        insert_calc(caret) {
+            const last = this.args[this.args.length - 1];
+            if (last === caret && caret instanceof LeanCaret) {
+                this.replace(caret, new LeanCalc(caret, caret.indent, caret.level));
+                return caret;
+            }
+            throw new Error(`insert_calc: unexpected for ${this.constructor.name}`);
+        }
+
+        insert_tactic(caret, func) {
+            if (caret instanceof LeanCaret) {
+                this.replace(caret, new LeanTactic(func, caret, caret.indent, caret.level));
+                return caret;
+            }
+            return this.insert_word(caret, func);
+        }
+
+        toJSON() {
+            const mapped = this.args.map((a) => (a == null ? a : a.toJSON()));
+            let i = 0;
+            while (i < mapped.length && mapped[i] === '') i++;
+            let j = mapped.length;
+            while (j > i && mapped[j - 1] === '') j--;
+            return i === 0 && j === mapped.length ? mapped : mapped.slice(i, j);
+        }
+
+        push_args_indented(indent, newline_count, functionCall = true) {
+            const end = this.args[this.args.length - 1];
+            if (
+                !functionCall ||
+                end instanceof LeanToken ||
+                end instanceof LeanProperty ||
+                end instanceof LeanParenthesis
+            ) {
+                const caret = new LeanCaret(indent, end.level);
+                const nl = new LeanArgsNewLineSeparated([caret], indent, caret.level);
+                const c = nl.push_newlines(newline_count - 1);
+                this.replace(end, new LeanArgsIndented(end, nl, this.indent, c.level));
+                return c;
+            }
+        }
+
+        regexp() {
+            const f = this.func;
+            const head = f.length > 0 ? f.charAt(0).toUpperCase() + f.slice(1) : f;
+            const cols = this.args.map((arg) => [...arg.regexp(), '_']);
+            return regexpProductCols(cols).map((list) => head + list.join(''));
+        }
+
+        set_line(line) {
+            this.line = line;
+            for (const arg of this.args) {
+                if (arg != null) line = arg.set_line(line);
+            }
+            return line;
+        }
+
+        /**
+         * @returns {Lean[]}
+         */
+        strip_parenthesis() {
+            return this.args.map((arg) => {
+                if (!(arg instanceof LeanParenthesis)) return arg;
+                const inner = arg.arg;
+                if (
+                    inner instanceof LeanMethodChaining ||
+                    inner instanceof Lean_rightarrow ||
+                    inner instanceof LeanColon
+                )
+                    return arg;
+                return inner;
+            });
+        }
+
+        *traverse() {
+            yield this;
+            for (const arg of this.args) {
+                if (arg != null) yield* arg.traverse();
+            }
+        }
+    }
+
+    class LeanUnary extends LeanArgs {
+        static input_priority = 47;
+
+        constructor(arg, indent, level, parent = null) {
+            super([], indent, level, parent);
+            this.args = [arg];
+            arg.parent = this;
+        }
+
+        get arg() {
+            return this.args[0];
+        }
+        set arg(v) {
+            this.args[0] = v;
+            v.parent = this;
+        }
+
+        insert_if(caret) {
+            if (this.arg === caret && caret instanceof LeanCaret) {
+                this.arg = new LeanIte([caret], caret.indent, caret.level);
+                return caret;
+            }
+            if (this.parent && typeof this.parent.insert_if === 'function') return this.parent.insert_if(caret);
+            throw new Error(`insert_if is unexpected for ${this.constructor.name}`);
+        }
+
+        toJSON() {
+            return this.arg.toJSON();
+        }
+
+        replace(oldNode, newNode) {
+            if (this.arg !== oldNode) {
+                throw new Error(`replace: assert failed in ${this.constructor.name}`);
+            }
+            this.arg = newNode;
+        }
+    }
+
+    // Paired delimiters live in ./lean/paired.js and are registered beside LEAN_CLASSES.
+
+    class LeanBinary extends LeanArgs {
+        static input_priority = 47;
+
+        /**
+         * @param {Lean} lhs
+         * @param {Lean} rhs
+         * @param {number} indent
+         * @param {number} level
+         */
+        constructor(lhs, rhs, indent, level) {
+            super([lhs, rhs], indent, level);
+        }
+
+        get lhs() {
+            return this.args[0];
+        }
+
+        set lhs(v) {
+            this.args[0] = v;
+            if (v) v.parent = this;
+        }
+
+        get rhs() {
+            return this.args[1];
+        }
+
+        set rhs(v) {
+            this.args[1] = v;
+            if (v) v.parent = this;
+        }
+
+        insert_if(caret) {
+            if (this instanceof LeanArgsIndented && caret instanceof LeanCaret) {
+                const last = this.args[this.args.length - 1];
+                if (last === caret) return caret.parent.insert_ite(caret);
+                if (this.parent && typeof this.parent.insert_if === 'function') return this.parent.insert_if(caret);
+                throw new Error(`insert_if is unexpected for ${this.constructor.name}`);
+            }
+            if (this.rhs === caret || (this.rhs != null && leanSubtreeContains(this.rhs, caret))) {
+                return caret.parent.insert_ite(caret);
+            }
+            if (this.parent && typeof this.parent.insert_if === 'function') return this.parent.insert_if(caret);
+            throw new Error(`insert_if is unexpected for ${this.constructor.name}`);
+        }
+
+        insert_tactic(caret, func) {
+            // consider the case where `arg` is a tactic within (LeanColon/LeanAdd):
+            // (h : arg x + arg y ∈ Ioc (-Real.pi) Real.pi) :
+            return this.insert_word(caret, func);
+        }
+
+        toJSON() {
+            return { [this.func]: [this.lhs.toJSON(), this.rhs.toJSON()] };
+        }
+
+        latexFormat() {
+            return `{%s} ${this.command} {%s}`;
+        }
+
+        sep() {
+            return this.rhs instanceof LeanStatements ? '\n' : ' ';
+        }
+
+        set_line(line) {
+            this.line = line;
+            line = this.lhs.set_line(line);
+            const s = this.sep();
+            if (s && s[0] === '\n') line++;
+            return this.rhs.set_line(line);
+        }
+
+        insert_newline(caret, newline_count, indent, next) {
+            if (this.parent instanceof LeanTactic && indent > this.indent) {
+                return this.parent.push_args_indented(indent, newline_count, false);
+            }
+            if (this.parent) return this.parent.insert_newline(this, newline_count, indent, next);
+        }
+
+        /** Source-code operator token; derived from token2classname reverse lookup. */
+        get operator() {
+            const name = this.constructor.name;
+            const pair = Object.entries(token2classname).find(([, cls]) => cls === name);
+            return pair ? pair[0] : null;
+        }
+
+        /** String format using operator token. */
+        strFormat() {
+            const op = this.operator;
+            if (op == null) return super.strFormat();
+            const sep = this.sep();
+            return `%s ${op}${sep}%s`;
+        }
+    }
+
+    return {
+        LeanArgs,
+        LeanUnary,
+        LeanBinary,
+    };
+}

@@ -1,6 +1,6 @@
 # Lean PHP parser (`lean.php`)
 
-Parser and AST classes for Lean 4 source. Main file: `lean.php`.
+Parser and AST classes for Lean 4 source. Main file: `lean.php` (router). The abstract AST base (`Lean`) lives in `lean/base.php` (loaded before the leaf nodes). Leaf nodes (`LeanCaret`, `LeanToken`, comments) live in `lean/atomic.php` (loaded after `base.php`). Abstract argument bases (`LeanArgs`, `LeanUnary`, `LeanBinary`) live in `lean/abstract.php` (loaded after `LeanMultipleLine` and before `paired.php`). Interval notation (`LeanUpto`, `a..b`) lives in `lean/range.php` (loaded after `paired.php`). Field access (`LeanProperty`, `a.b`) lives in `lean/property.php` (loaded after `range.php`). Type ascription (`LeanColon`, `a : T`) lives in `lean/colon.php` (loaded after `property.php`). Assignment (`LeanAssign`, `:=`) lives in `lean/assign.php` (loaded after `colon.php`). The boolean-binary base (`LeanBinaryBoolean`) lives in `lean/boolean.php` (loaded after the `LeanProp` trait and before `relational.php`). Lazy application (`Lean_lazy`, `<|`) lives in `lean/lazy.php` (loaded after `arithmetic.php`). Pipeline dot (`LeanMethodChaining`, `|>.`) lives in `lean/pipeline.php` (loaded after `lazy.php`). Type tests (`Lean_is`, `Lean_is_not`) live in `lean/isinstance.php` (loaded after `indexing.php`). Statement lists (`LeanStatements`) live in `lean/statements.php` (loaded after `set.php`). The source file (`LeanModule`) lives in `lean/module.php` (loaded after `statements.php`). Top-level commands (`LeanCommand`, `import` / `open` / `set_option` / `namespace`) live in `lean/command.php` (loaded after `module.php`). The bar separator (`LeanBar`, `|`) lives in `lean/bar.php` (loaded after `command.php`). Arithmetic operators live in `lean/arithmetic.php` (loaded after `LeanBinary` / `LeanUnary`). Paired delimiters live in `lean/paired.php` (loaded after `LeanUnary`). Logic connectives live in `lean/logic.php` (loaded after `LeanBinaryBoolean`). Set operators and inclusion live in `lean/set.php` (loaded after `LeanLogic`, because `⊇` / `⊃` extend it). Relational comparisons live in `lean/relational.php` (loaded after `LeanBinaryBoolean`). Membership and iff live in `lean/membership.php` (loaded after `relational.php`). The big-operator base and the remaining big operators live in `lean/bigops.php` (loaded after `fun.php`). Quantifiers live in `lean/quantifier.php` (loaded after `bigops.php`). Binders (`fun`) live in `lean/fun.php` (loaded after `decl.php`). Indexing lives in `lean/indexing.php` (loaded after the `LeanGetElemBase` traits). Arrows live in `lean/arrows.php` (loaded after `LeanBar`). Negation lives in `lean/negation.php` (loaded after `arrows.php`). Match lives in `lean/match.php` (loaded after `negation.php`). If-then-else lives in `lean/ite.php` (loaded after `match.php`). Argument lists live in `lean/args.php` (loaded after `ite.php`). Tactics (`LeanSyntax`, `LeanTactic`, `by` / `from` / `calc` / `at` / `<;>` / tactic blocks / `with` / attributes) live in `lean/tactic.php` (loaded after `args.php`). Declarations (`def` / `theorem` / `abbrev` / `lemma`, `let` / `have` / `set` / `replace` / `show`) live in `lean/decl.php` (loaded after `tactic.php`). Reorder presets for those families read the family file.
 
 ---
 
@@ -75,7 +75,36 @@ Use this workflow when you want a class in `lean.php` to follow a consistent met
 
 | Path | Role |
 |------|------|
-| `lean.php` | Parser + AST |
+| `lean.php` | Parser + AST router |
+| `lean/base.php` | Abstract AST base (`Lean`) |
+| `lean/atomic.php` | Leaf nodes (`LeanCaret`, `LeanToken`, comments) |
+| `lean/abstract.php` | Abstract argument bases (`LeanArgs`, `LeanUnary`, `LeanBinary`) |
+| `lean/range.php` | Interval notation (`LeanUpto`, `a..b`) |
+| `lean/property.php` | Field access (`LeanProperty`, `a.b`) |
+| `lean/colon.php` | Type ascription (`LeanColon`, `a : T`) |
+| `lean/assign.php` | Assignment (`LeanAssign`, `:=`) |
+| `lean/boolean.php` | Boolean-binary base (`LeanBinaryBoolean`) |
+| `lean/lazy.php` | Lazy application (`Lean_lazy`, `<|`) |
+| `lean/pipeline.php` | Pipeline dot (`LeanMethodChaining`, `|>.`) |
+| `lean/isinstance.php` | Type tests (`Lean_is`, `Lean_is_not`) |
+| `lean/statements.php` | Statement lists (`LeanStatements`) |
+| `lean/arithmetic.php` | Arithmetic operator family (`LeanArithmetic`, unary arithmetic) |
+| `lean/paired.php` | Paired delimiters (`LeanPairedGroup` and children) |
+| `lean/logic.php` | Logic connectives (`LeanLogic`, `&&` / `||` / `^^` / `∨` / `∧`) |
+| `lean/set.php` | Set operators and inclusion (`LeanSetOperator`, `\\`, `∪`, `∩`, `⊆`, `⊂`, `⊇`, `⊃`) |
+| `lean/relational.php` | Relational comparisons (`LeanRelational`, `>`, `<`, `=`, `≠`, `≡`, `≃`, `≈`, `∣`, …) |
+| `lean/membership.php` | Membership and iff (`∈`, `∉`, `↔`) |
+| `lean/quantifier.php` | Quantifiers (`LeanQuantifier`, `∀`, `∃`) |
+| `lean/bigops.php` | Big operators (`LeanBigOperator`, `∑`, `lim`, `∏`, `∫`, `⋂`, `⋃`, `Stack`) |
+| `lean/fun.php` | Lambda binder (`Lean_fun` / `fun`) |
+| `lean/indexing.php` | Indexing (`LeanGetElem`, `LeanGetElemQue`, `LeanGetElemQuote`) |
+| `lean/arrows.php` | Arrows (`LeanRightarrow`, `Lean_rightarrow`, `Lean_mapsto`, `Lean_leftarrow`) |
+| `lean/negation.php` | Negation (`Lean_lnot` / `¬`, `LeanNot` / `!`) |
+| `lean/match.php` | Match (`Lean_match`) |
+| `lean/ite.php` | If-then-else (`LeanIte`) |
+| `lean/args.php` | Argument lists (space, newline, indented, comma, semicolon) |
+| `lean/tactic.php` | Syntax and tactics (`LeanSyntax`, `LeanTactic`, `by` through attributes) |
+| `lean/decl.php` | Declarations (`def`, `theorem`, `abbrev`, `lemma`, `let`, `have`, `show`) |
 | `../std.php`, `newline_skipping_comment.php`, etc. | Dependencies |
 | `../../scripts/reorder_lean_class.py` | Reorder one class block in `lean.php` |
 | `../../scripts/compare_lean_class_methods.py` | **Required** after reorder: method list + body equality vs `HEAD` |
