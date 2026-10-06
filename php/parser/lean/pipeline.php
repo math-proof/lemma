@@ -35,4 +35,4 @@ class LeanMethodChaining extends LeanBinary
     }
 }
 
-// END OF pipeline family (LeanBar stays in lean.php)
+// END OF pipeline family (LeanParser stays in lean.php)

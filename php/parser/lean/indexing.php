@@ -99,4 +99,4 @@ class LeanGetElemQuote extends LeanArgs
     }
 }
 
-// END OF indexing family (LeanBar stays in lean.php)
+// END OF indexing family (LeanParser stays in lean.php)

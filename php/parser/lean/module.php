@@ -667,4 +667,4 @@ class LeanModule extends LeanStatements
 
 }
 
-// END OF module family (LeanBar stays in lean.php)
+// END OF module family (LeanParser stays in lean.php)

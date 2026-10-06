@@ -42,4 +42,4 @@ class LeanUpto extends LeanBinary
     }
 }
 
-// END OF range family (LeanBar stays in lean.php)
+// END OF range family (LeanParser stays in lean.php)

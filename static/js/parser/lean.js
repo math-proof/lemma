@@ -32,6 +32,7 @@ import { createIsInstanceFamily } from './lean/isinstance.js';
 import { createStatementsFamily } from './lean/statements.js';
 import { createModuleFamily } from './lean/module.js';
 import { createCommandFamily } from './lean/command.js';
+import { createBarFamily } from './lean/bar.js';
 
 /** Relational / comparison ops; reused by token2classname and leanInfixContinue. */
 const leanRelationalTokens = Object.freeze({
@@ -553,75 +554,15 @@ const Lean_open = commandFamily.Lean_open;
 const Lean_set_option = commandFamily.Lean_set_option;
 const Lean_namespace = commandFamily.Lean_namespace;
 
-/** Bar, then `=>` and related arrow nodes. */
-class LeanBar extends LeanUnary {
-    get stack_priority() {
-        return LeanAssign.input_priority ?? 20;
-    }
-
-    get operator() {
-        return '|';
-    }
-
-    get command() {
-        return '|';
-    }
-
-    echo() {
-        this.arg.echo();
-    }
-
-    insert_bar(caret, prevToken, next) {
-        const p = this.parent;
-        if (p instanceof LeanTactic) {
-            const c = new LeanCaret(this.indent, caret.level);
-            p.push(new LeanBar(c, this.indent, c.level));
-            return c;
-        }
-        return super.insert_bar(caret, prevToken, next);
-    }
-
-    insert_comma(caret) {
-        if (caret === this.arg) {
-            const $new = new LeanCaret(this.indent, caret.level);
-            this.replace(caret, new LeanArgsCommaSeparated([caret, $new], this.indent, caret.level));
-            return $new;
-        }
-        throw new Error(`LeanBar.insert_comma: unexpected for ${this.constructor.name}`);
-    }
-
-    insert_tactic(caret, token) {
-        return this.insert_word(caret, token);
-    }
-
-    is_indented() {
-        return !(this.parent instanceof LeanTactic);
-    }
-
-    latexFormat() {
-        return `${this.command} %s`;
-    }
-
-    split(syntax) {
-        const arrow = this.arg;
-        if (arrow instanceof LeanRightarrow) {
-            const self = this.clone();
-            const statements = [self];
-            const clonedArrow = /** @type {LeanRightarrow} */ (self.arg);
-            const stmts = clonedArrow.rhs;
-            if (stmts instanceof LeanStatements) {
-                clonedArrow.rhs = new LeanCaret(clonedArrow.indent, stmts.level);
-                stmts.swap_echo_star(syntax, statements);
-            }
-            return statements;
-        }
-        return [this];
-    }
-
-    strFormat() {
-        return `${this.operator} %s`;
-    }
-}
+const barLate = {};
+const barFamily = createBarFamily({
+    LeanUnary,
+    LeanAssign,
+    LeanCaret,
+    LeanStatements,
+    barLate,
+});
+const LeanBar = barFamily.LeanBar;
 
 const arrowsLate = {};
 const arrowsFamily = createArrowsFamily({
@@ -1343,6 +1284,11 @@ Object.assign(moduleLate, {
 });
 Object.assign(commandLate, {
     LeanArgsSpaceSeparated,
+});
+Object.assign(barLate, {
+    LeanArgsCommaSeparated,
+    LeanRightarrow,
+    LeanTactic,
 });
 Object.assign(abstractLate, {
     LeanArgsIndented,

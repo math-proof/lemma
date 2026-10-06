@@ -174,4 +174,4 @@ class Lean_namespace extends LeanCommand
     }
 }
 
-// END OF command family (LeanBar stays in lean.php)
+// END OF command family (LeanParser stays in lean.php)

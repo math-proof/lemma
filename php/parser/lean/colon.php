@@ -117,4 +117,4 @@ class LeanColon extends LeanBinary
 
 }
 
-// END OF colon family (LeanBar stays in lean.php)
+// END OF colon family (LeanParser stays in lean.php)

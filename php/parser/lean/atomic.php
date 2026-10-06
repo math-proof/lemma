@@ -436,4 +436,4 @@ class LeanDocString extends LeanBlockComment
 
 }
 
-// END OF atomic family (LeanBar stays in lean.php)
+// END OF atomic family (LeanParser stays in lean.php)
