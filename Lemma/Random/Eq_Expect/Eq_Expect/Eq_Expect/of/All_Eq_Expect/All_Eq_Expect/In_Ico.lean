@@ -8,7 +8,7 @@ import sympy.stats.cond_expectation
 import sympy.core.power
 import sympy.vector.Basic
 import Lemma.Random.Integrable_G.of.In_Ico
-import Lemma.Random.AeR.eq.Rc
+import Lemma.Random.MEqR_Rc
 import Lemma.Random.Integrable.of.Measurable
 import Lemma.Random.Measurable_A
 import Lemma.Random.Measurable_S
@@ -83,7 +83,7 @@ private lemma main
   have hR : ∀ t (ω : ℕ → ℝ × S × A), |M.rc (ω t)| ≤ |M.env.R| := fun t ω ↦
     (Real.norm_eq_abs _).symm.trans_le (NormRc.le.Abs_R (M := M) (ω t))
   have hG : ∀ n, (fun ω : ℕ → ℝ × S × A ↦ (γ ^ (id : ℕ → ℕ)) @ (fun k : ℕ ↦ M.rc (ω k))[n:]) =ᵐ[M θ] G γ n :=
-    fun n ↦ (ae_all_iff.2 fun k ↦ AeR.eq.Rc (M := M) θ k).mono fun ω h ↦ by
+    fun n ↦ (ae_all_iff.2 fun k ↦ MEqR_Rc (M := M) θ k).mono fun ω h ↦ by
       show ∑' k, γ ^ k * M.rc (ω (n + k)) = ∑' k, γ ^ k * r (n + k) ω
       simp only [h]
   have hGi : ∀ n, Integrable (G (S := S) (A := A) γ n) (M θ) := Integrable_G.of.In_Ico (M := M) θ h₀
@@ -100,10 +100,12 @@ private lemma main
   have hσ : MeasurableSpace.comap (fun ω : ℕ → ℝ × S × A ↦ ((s t ω, a t ω), s (t + 1) ω)) inferInstance =
       MeasurableSpace.comap (JointRandomSymbol (s t) (JointRandomSymbol (a t) (s (t + 1)))) inferInstance := by
     apply le_antisymm
-    · apply Measurable.comap_le
+    ·
+      apply Measurable.comap_le
       exact (show Measurable fun p : S × A × S ↦ ((p.1, p.2.1), p.2.2) by fun_prop).comp
         (comap_measurable (JointRandomSymbol (s t) (JointRandomSymbol (a t) (s (t + 1)))))
-    · apply Measurable.comap_le
+    ·
+      apply Measurable.comap_le
       exact (show Measurable fun p : (S × A) × S ↦ (p.1.1, p.1.2, p.2) by fun_prop).comp
         (comap_measurable fun ω : ℕ → ℝ × S × A ↦ ((s t ω, a t ω), s (t + 1) ω))
   rw [hσ] at h₇
@@ -114,18 +116,19 @@ private lemma main
   -- back to the raw rewards
   have hri : Integrable (r (S := S) (A := A) t) (M θ) :=
     Integrable.of_bound (hr t).aestronglyMeasurable |M.env.R|
-      ((AeR.eq.Rc (M := M) θ t).mono fun ω h ↦ by rw [h]; exact NormRc.le.Abs_R (M := M) _)
+      ((MEqR_Rc (M := M) θ t).mono fun ω h ↦ by rw [h]; exact NormRc.le.Abs_R (M := M) _)
   have hF : Integrable (fun ω ↦ r t ω + γ * V (t + 1) (s (t + 1) ω)) (M θ) :=
     hri.add ((Integrable.of.Measurable (M := M) (s (t + 1)) (hs (t + 1)) θ (V (t + 1))).const_mul γ)
   have hFae : (fun ω : ℕ → ℝ × S × A ↦ M.rc (ω t) + γ * V (t + 1) (s (t + 1) ω)) =ᵐ[M θ]
       fun ω ↦ r t ω + γ * V (t + 1) (s (t + 1) ω) :=
-    (AeR.eq.Rc (M := M) θ t).mono fun ω h ↦ by dsimp only; rw [h]
+    (MEqR_Rc (M := M) θ t).mono fun ω h ↦ by dsimp only; rw [h]
   have hQi : Integrable (fun ω ↦ Q t (s t ω) (a t ω)) (M θ) :=
     Integrable.of.Measurable (M := M) (fun ω ↦ (s t ω, a t ω)) (hsa t) θ (fun p ↦ Q t p.1 p.2)
   have hx : ∀ {B : Set (ℕ → ℝ × S × A)} (f : (ℕ → ℝ × S × A) → ℝ), M θ B = 0 → ∫ ω, f ω ∂(M θ)[|B] = 0 :=
     fun f h ↦ by rw [cond_eq_zero_of_meas_eq_zero h, integral_zero_measure]
   refine ⟨?_, ?_, ?_⟩
-  · simp only [Expectation.asRV_process]
+  ·
+    simp only [Expectation.asRV_process]
     rw [Expectation.condEvent_eq_integral hpa.aemeasurable (by fun_prop)]
     if h : M θ (s t ⁻¹' {x}) = 0 then
       rw [hV, hx _ h, hx _ h]
@@ -135,7 +138,8 @@ private lemma main
       exact integral_congr_ae ((ae_cond_mem (hs t (measurableSet_singleton x))).mono fun ω hω ↦ by
         dsimp only
         rw [show s t ω = x from hω])
-  · simp only [Expectation.asRV_process]
+  ·
+    simp only [Expectation.asRV_process]
     rw [Expectation.condEvent_eq_integral hpr.aemeasurable hf]
     if h : M θ (s t ⁻¹' {x}) = 0 then
       rw [hV, hx _ h, hx _ h]
@@ -143,7 +147,8 @@ private lemma main
       exact Eq.of.Ne_0.MEq (u := V t)
         (v := fun y ↦ ∫ ω, r t ω + γ * V (t + 1) (s (t + 1) ω) ∂(M θ)[|s t ⁻¹' {y}])
         (h₉.trans ((condExp_congr_ae hFae).trans (MEqCondExp_Integral.of.Integrable.Measurable (hs t) hF))) h
-  · simp only [Expectation.asRV_process]
+  ·
+    simp only [Expectation.asRV_process]
     rw [Expectation.condEvent_eq_integral hpr.aemeasurable hf]
     if h : M θ ((fun ω ↦ (s t ω, a t ω)) ⁻¹' {(x, u)}) = 0 then
       rw [hQ, hx _ h]

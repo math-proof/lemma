@@ -1,6 +1,6 @@
 import sympy.stats.policy_trajectory
 import sympy.Basic
-import Lemma.Random.AeR.eq.Rc
+import Lemma.Random.MEqR_Rc
 import Lemma.Random.Integral_Mul.eq.Integral_Mul_Kf.of.All_LeNorm.StronglyMeasurable.All_LeNorm.StronglyMeasurable
 import Lemma.Random.Integral_MulEqS.eq.MulRealPreimageSIntegral.of.All_LeNorm.StronglyMeasurable
 import Lemma.Random.NormRc.le.Abs_R
@@ -28,7 +28,7 @@ private lemma main
 -- proof
   have h₁ : ∫ ω, (if s t ω = x then (1:ℝ) else 0) * r (t + j) ω ∂(M θ) =
       ∫ ω, (if s t ω = x then (1:ℝ) else 0) * M.rc (ω (t + j)) ∂(M θ) :=
-    integral_congr_ae ((AeR.eq.Rc (M := M) θ (t + j)).mono fun ω h => by dsimp only; rw [h])
+    integral_congr_ae ((MEqR_Rc (M := M) θ (t + j)).mono fun ω h => by dsimp only; rw [h])
   have hK := StronglyMeasurable_KfAndAll_LeNormKf.of.All_LeNorm.StronglyMeasurable (M := M) (Random.StronglyMeasurableRc (M := M)) (NormRc.le.Abs_R (M := M)) θ j
   rw [h₁]
   exact (Integral_Mul.eq.Integral_Mul_Kf.of.All_LeNorm.StronglyMeasurable.All_LeNorm.StronglyMeasurable (M := M) (Random.StronglyMeasurableRc (M := M)) (NormRc.le.Abs_R (M := M)) (Real.StronglyMeasurable_Eq12 x) (Norm_1.le.One) θ t j).trans

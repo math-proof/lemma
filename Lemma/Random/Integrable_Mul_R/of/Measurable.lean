@@ -1,6 +1,6 @@
 import sympy.stats.policy_trajectory
 import sympy.Basic
-import Lemma.Random.AeR.eq.Rc
+import Lemma.Random.MEqR_Rc
 import Lemma.Random.NormRc.le.Abs_R
 import Lemma.Real.StronglyMeasurable.discrete
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random Real
@@ -22,7 +22,7 @@ private lemma main
 -- imply
   Integrable (fun ω => φ (X ω) * r t ω) (M θ) := by
 -- proof
-  refine Integrable.of_bound (C := (∑ b, ‖φ b‖) * |M.env.R|) ?_ ((AeR.eq.Rc (M := M) θ t).mono fun ω h => ?_)
+  refine Integrable.of_bound (C := (∑ b, ‖φ b‖) * |M.env.R|) ?_ ((MEqR_Rc (M := M) θ t).mono fun ω h => ?_)
   · exact (((StronglyMeasurable.discrete φ).comp_measurable hX).mul
       (measurable_fst.comp (measurable_pi_apply t)).stronglyMeasurable).aestronglyMeasurable
   ·

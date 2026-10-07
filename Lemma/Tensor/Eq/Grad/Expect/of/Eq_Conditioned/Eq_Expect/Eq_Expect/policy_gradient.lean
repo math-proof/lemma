@@ -14,7 +14,7 @@ import Lemma.Random.Integral_SMul.eq.Sum_SMul.of.All_Differentiable_Prob
 import Lemma.Random.TSum_SMul.eq.Sum_SMul.of.In_Ico.GtInftySup.All_Differentiable_Prob
 import Lemma.Random.Integrable_Fun
 import Lemma.Random.Integral_G.eq.TSum_MulPowIntegral_R_Add.of.In_Ico
-open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
+open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random Tensor
 
 
 /--
@@ -97,23 +97,24 @@ private lemma main
           ∑ u, M.Q θ γ t y u • fderiv ℝ (fun θ => M.pol.prob θ y u) θ +
         γ ^ n • ∑ y, M.Pn θ n x y • fderiv ℝ (fun θ => M.V θ γ n y) θ) := by
     intro x
-    by_cases hx : M.env.init.real {x} = 0
-    · rw [hx, zero_smul, zero_smul]
-    have hP : (M θ).real (s 0 ⁻¹' {x}) ≠ 0 := by rwa [RealPreimageS0.eq.Real]
-    have hg := Tensor.EqGrad.of.Eq_Conditioned.Eq_Expect.Eq_Expect.policy_gradient.induct
-      h₀ hS hA (Q := fun θ => M.Q θ γ) (V := fun θ => M.V θ γ) hQ_expect hV_expect
-      h₃ h₄n hP n
-    have h' : ∀ t y, ((M θ)[|s 0 ⁻¹' {x}]).real (s t ⁻¹' {y}) = M.Pn θ t x y := fun t y => by
-      have h'' := RealPreimageSPreimageS_Add.eq.Pn.of.Ne0Real_Preimage (M := M) θ 0 t x y hP
-      rwa [zero_add] at h''
-    simp_rw [h'] at hg
-    have h : fderiv ℝ (fun θ => M.V θ γ 0 x) θ =
-        ∑ t ∈ Finset.range n, γ ^ t • ∑ y, M.Pn θ t x y •
-            ∑ u, M.Q θ γ t y u • fderiv ℝ (fun θ => M.pol.prob θ y u) θ +
-          γ ^ n • ∑ y, M.Pn θ n x y • fderiv ℝ (fun θ => M.V θ γ n y) θ := by
-      apply (InnerProductSpace.toDual ℝ Θ).symm.injective
-      simpa [gradient, map_add, map_smul, map_sum] using hg
-    rw [← Fderiv_V.eq.Fderiv_Vc.of.Ne0Real_Preimage.In_Ico.GtInftySup.All_Differentiable_Prob (M := M) h₃ h₄n h₀ 0 x θ hP, h]
+    if hx : M.env.init.real {x} = 0 then
+      rw [hx, zero_smul, zero_smul]
+    else
+      have hP : (M θ).real (s 0 ⁻¹' {x}) ≠ 0 := by rwa [RealPreimageS0.eq.Real]
+      have hg := EqGrad.of.Eq_Conditioned.Eq_Expect.Eq_Expect.policy_gradient.induct
+        h₀ hS hA (Q := fun θ => M.Q θ γ) (V := fun θ => M.V θ γ) hQ_expect hV_expect
+        h₃ h₄n hP n
+      have h' : ∀ t y, ((M θ)[|s 0 ⁻¹' {x}]).real (s t ⁻¹' {y}) = M.Pn θ t x y := fun t y => by
+        have h'' := RealPreimageSPreimageS_Add.eq.Pn.of.Ne0Real_Preimage (M := M) θ 0 t x y hP
+        rwa [zero_add] at h''
+      simp_rw [h'] at hg
+      have h : fderiv ℝ (fun θ => M.V θ γ 0 x) θ =
+          ∑ t ∈ Finset.range n, γ ^ t • ∑ y, M.Pn θ t x y •
+              ∑ u, M.Q θ γ t y u • fderiv ℝ (fun θ => M.pol.prob θ y u) θ +
+            γ ^ n • ∑ y, M.Pn θ n x y • fderiv ℝ (fun θ => M.V θ γ n y) θ := by
+        apply (InnerProductSpace.toDual ℝ Θ).symm.injective
+        simpa [gradient, map_add, map_smul, map_sum] using hg
+      rw [← Fderiv_V.eq.Fderiv_Vc.of.Ne0Real_Preimage.In_Ico.GtInftySup.All_Differentiable_Prob (M := M) h₃ h₄n h₀ 0 x θ hP, h]
   have h₉ : ∀ t, ∫ ω, (γ ^ t * M.Q θ γ t (s t ω) (a t ω)) •
       fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' (s t ω) (a t ω))) θ ∂(M θ) =
       ∑ y, (M θ).real (s t ⁻¹' {y}) •
@@ -129,7 +130,8 @@ private lemma main
   simp only [smul_add, Finset.sum_add_distrib, Finset.smul_sum, Finset.sum_smul, smul_smul,
     Finset.sum_mul]
   congr 1
-  · conv_lhs => rw [Finset.sum_comm]
+  ·
+    conv_lhs => rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun t _ => ?_
     conv_lhs => rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun y _ => ?_
@@ -137,7 +139,8 @@ private lemma main
     refine Finset.sum_congr rfl fun u _ => Finset.sum_congr rfl fun x _ => ?_
     congr 1
     ring
-  · conv_lhs => rw [Finset.sum_comm]
+  ·
+    conv_lhs => rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun y _ => Finset.sum_congr rfl fun x _ => ?_
     congr 1
     ring

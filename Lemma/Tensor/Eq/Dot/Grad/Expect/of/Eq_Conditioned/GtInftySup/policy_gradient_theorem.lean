@@ -22,7 +22,7 @@ import Lemma.Random.Measurable_R
 import Lemma.Random.Integral_G.eq.TSum_MulPowIntegral_R_Add.of.In_Ico
 import Lemma.Random.Measurable_A
 import Lemma.Random.Measurable_S
-open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Filter Topology Random
+open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Filter Topology Random Tensor Measure
 open scoped ENNReal.ToRealCoe
 
 
@@ -52,7 +52,7 @@ private lemma main
   have : ∀ θ t, SinglePSpace (M θ) (a (S := S) (A := A) t, s (S := S) (A := A) t) := fun _ t =>
     SinglePSpace.of.EqMeasureCount.Measurable ((Random.Measurable_A t).prodMk (Random.Measurable_S t)) (by
       show (ReferenceMeasure.measure : Measure A).prod (ReferenceMeasure.measure : Measure S) = _
-      rw [hA, hS, Measure.Count.eq.ProdCountS])
+      rw [hA, hS, Count.eq.ProdCountS])
   have hs : ∀ t, PSpace (M θ) (s (S := S) (A := A) t) := fun t =>
     ⟨(Random.Measurable_S t).aemeasurable⟩
   have ha : ∀ t, PSpace (M θ) (a (S := S) (A := A) t) := fun t =>
@@ -76,7 +76,7 @@ private lemma main
         (((fun k : ℕ => γ ^ k) @ (fun k : ℕ => r (t + k))) •
           ∇[θ] (ℙ[M θ]((PolicyGradient.a t) = a t | (PolicyGradient.s t) = s t) : ℝ).log)) := by
 -- proof
-  intro hP _hs _ha _hr _hps _hpa _hpr
+  intro hP _ _ _ _ _ _
   classical
   let _ : MeasurableSpace Θ := borel Θ
   have _ : BorelSpace Θ := ⟨rfl⟩
@@ -112,12 +112,12 @@ private lemma main
       simp only [Expectation.asRV_process]
       rw [Expectation.condEvent_eq_integral hpR.aemeasurable (hfG t)]
       rfl
-    rw [Tensor.Eq.Dot.Grad.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.GtInftySup.Q_Function h₀ hS hA
+    rw [Eq.Dot.Grad.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.GtInftySup.Q_Function h₀ hS hA
       (Q := fun θ => M.Q θ γ) (V := fun θ => M.V θ γ) hQ_expect hV_expect h₁ h₂o]
     congr 1
     funext t
     congr 1
-    exact (Tensor.Eq.Expect.Grad.Log.Pr.of.Eq_Conditioned.Q_Function.discounted h₀).symm
+    exact (Eq.Expect.Grad.Log.Pr.of.Eq_Conditioned.Q_Function.discounted h₀).symm
   have hscore : ∀ t, ∀ᵐ ω ∂(M θ),
       fderiv ℝ (fun θ' => (ℙ[M θ']((a t) = (a t ω) | (s t) = (s t ω)) : ℝ).log) θ =
         fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' (s t ω) (a t ω))) θ := by
@@ -157,32 +157,29 @@ private lemma main
       Integrable.of_bound ((Random.Measurable_R t).const_mul (γ ^ t)).aestronglyMeasurable _ (hrb t)
     rw [← integral_tsum_of_summable_integral_norm hri]
     · exact tsum_congr fun t => integral_const_mul _ _
-    · refine Summable.of_nonneg_of_le (fun t => integral_nonneg fun _ => norm_nonneg _) (fun t => ?_)
+    ·
+      refine Summable.of_nonneg_of_le (fun t => integral_nonneg fun _ => norm_nonneg _) (fun t => ?_)
         ((summable_geometric_of_lt_one h₀.1 h₀.2).mul_right |M.env.R|)
       calc _ ≤ ∫ _, γ ^ t * |M.env.R| ∂(M θ') := integral_mono_ae (hri t).norm (integrable_const _) (hrb t)
         _ = γ ^ t * |M.env.R| := by simp
-  have hRb := Tensor.Eq.Expect.Sum.Grad.Log.Pr.of.Bounded (X := fun _ _ r k => r k)
+  have hRb := Eq.Expect.Sum.Grad.Log.Pr.of.Bounded (X := fun _ _ r k => r k)
     h₀ hS hA (fun k => Random.Measurable_R k) hA' h₁ h₂o
   refine Eq.trans ?_ ((congrArg L hold).trans hRb)
-  · rw [← (GetTSum_SMul.of.In_Ico.GtInftySup.All_Differentiable_Prob (M := M) h₁ h₂o h₀ θ).fderiv, gradient, hL]
-    congr 2
-    funext θ'
-    -- `𝔼[r: M θ']((fun t => γ ^ t) @ r)` is the Bochner integral of the return
-    have hr' : ∀ t, PSpace (M θ') (r (S := S) (A := A) t) := fun t =>
-      ⟨(Random.Measurable_R t).aemeasurable⟩
-    have hpr' : PSpace (M θ') (AsPathRV.path (r (S := S) (A := A))) :=
-      PSpace.of_process_path hr'
-    have hpathR :
-        Expectation.ofRV (M θ') (Expectation.asRV (r (S := S) (A := A)))
-          (fun r => (fun t : ℕ => γ ^ t) @ r) =
-          ∫ ω, ∑' t, γ ^ t * r t ω ∂(M θ') := by
-      simp only [Expectation.asRV_process, Dot.dot]
-      rw [Expectation.ofRV, expectation_real]
-      refine (integral_map hpr'.aemeasurable ?_).trans ?_
-      · exact (Measurable.tsum (L := SummationFilter.unconditional ℕ) fun t =>
-          (measurable_pi_apply t).const_mul (γ ^ t)).aestronglyMeasurable
-      · rfl
-    exact hpathR.trans (hRint θ')
+  rw [← (GetTSum_SMul.of.In_Ico.GtInftySup.All_Differentiable_Prob (M := M) h₁ h₂o h₀ θ).fderiv, gradient, hL]
+  congr 2
+  funext θ'
+  -- `𝔼[r: M θ']((fun t => γ ^ t) @ r)` is the Bochner integral of the return
+  have hr' : ∀ t, PSpace (M θ') (r (S := S) (A := A) t) := fun t =>
+    ⟨(Random.Measurable_R t).aemeasurable⟩
+  have hpr' : PSpace (M θ') (AsPathRV.path (r (S := S) (A := A))) :=
+    PSpace.of_process_path hr'
+  refine Eq.trans ?_ (hRint θ')
+  simp only [Expectation.asRV_process, Dot.dot]
+  rw [Expectation.ofRV, expectation_real]
+  refine (integral_map hpr'.aemeasurable ?_).trans ?_
+  · exact (Measurable.tsum (L := SummationFilter.unconditional ℕ) fun t =>
+      (measurable_pi_apply t).const_mul (γ ^ t)).aestronglyMeasurable
+  · rfl
 
 
 -- created on 2023-04-07

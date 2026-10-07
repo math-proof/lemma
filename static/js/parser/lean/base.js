@@ -334,6 +334,14 @@ export class Lean extends IndentedNode {
             }
         }
 
+        // `rv%[μ] x` — sympy's `liftRV` syntax (`syntax "rv%[" term "] " term:max`, stats/joint_rv.lean): the Lean token
+        // is `rv%[`, so this `%` is never `HMod.hMod`. The tokenizer splits it into `rv` `%` `[`; glue `rv%` into one word so
+        // `[μ]` attaches as its index (`LeanGetElem`) and the source / echo keep `rv%[μ]` instead of `rv % [μ]` (Lean rejects that).
+        if (token === 'rv' && tokens[self.start_idx + 1] === '%' && tokens[self.start_idx + 2] === '[' && tokens[self.start_idx - 1] !== '.') {
+            self.start_idx++;
+            return this.parent.insert_word(this, 'rv%');
+        }
+
         // `𝓝[>] x` / `𝓝[≠] x` — a lone relation symbol as the whole bracket content is a word.
         if (this instanceof L.LeanCaret && tokens[self.start_idx - 1] === '[' && tokens[self.start_idx + 1] === ']' &&
             (token === '>' || token === '<' || token === '≠' || token === '≥' || token === '≤'))

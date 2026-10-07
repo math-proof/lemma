@@ -3,7 +3,7 @@ import sympy.vector.Basic
 import sympy.vector.operators
 import sympy.concrete.sup
 import Lemma.Random.Fderiv.eq.AddSum_SMulSMul.of.Ne0Real_Preimage.In_Ico.GtInftySup.All_Differentiable_Prob
-open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model
+open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 
 
 /--
@@ -36,7 +36,7 @@ private lemma main
   classical
   simpa [gradient, map_add, map_smul, map_sum] using
     congrArg (InnerProductSpace.toDual ℝ Θ).symm
-      (Random.Fderiv.eq.AddSum_SMulSMul.of.Ne0Real_Preimage.In_Ico.GtInftySup.All_Differentiable_Prob h₁ h₂ h₀ t x θ h₃)
+      (Fderiv.eq.AddSum_SMulSMul.of.Ne0Real_Preimage.In_Ico.GtInftySup.All_Differentiable_Prob t x θ h₁ h₂ h₀ h₃)
 
 
 -- created on 2026-10-06

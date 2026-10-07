@@ -4,7 +4,7 @@ import Lemma.Random.AeNe_0
 import sympy.core.power
 import sympy.vector.Basic
 import Lemma.Random.Integrable_G.of.In_Ico
-import Lemma.Random.AeR.eq.Rc
+import Lemma.Random.MEqR_Rc
 import Lemma.Random.All_EqIntegral_MulGIntegral_MulGKf.of.All_LeNorm.StronglyMeasurable
 import Lemma.Random.Integral.eq.Integral_Integral.of.All_LeNorm.StronglyMeasurable
 import Lemma.Random.Integral.eq.MulRealIntegral_MulIndicator1.of.MeasurableSet
@@ -24,7 +24,7 @@ import Lemma.Real.Norm_1.le.One
 import Lemma.Real.StronglyMeasurable.discrete
 import Lemma.Real.StronglyMeasurable_Eq12
 import Lemma.Real.StronglyMeasurable_Eq12AndEq22
-open MeasureTheory ProbabilityTheory PolicyGradient Random
+open MeasureTheory ProbabilityTheory PolicyGradient Random Real
 
 
 /--
@@ -58,8 +58,8 @@ private lemma main
     have hK : M.K θ w = M.stageK θ ∘ₘ M.env.trans (w.2.1, w.2.2) := by
       rw [Model.K, Kernel.comp_apply, Kernel.comap_apply]
     rw [hK, Integral.eq.Integral_Integral.of.All_LeNorm.StronglyMeasurable (f := fun z : ℝ × S × A ↦ (if z.2.1 = y then (1 : ℝ) else 0) * M.Kf θ M.rc k z)
-      (((Real.StronglyMeasurable.discrete (fun x : S ↦ if x = y then (1 : ℝ) else 0)).comp_measurable
-        measurable_snd.fst).mul (hKf k).1) (Real.LeNorm_Mul1.of.All_LeNorm (p := (fun z : ℝ × S × A ↦ z.2.1 = y)) (hKf k).2),
+      (((StronglyMeasurable.discrete (fun x : S ↦ if x = y then (1 : ℝ) else 0)).comp_measurable
+        measurable_snd.fst).mul (hKf k).1) (LeNorm_Mul1.of.All_LeNorm (p := (fun z : ℝ × S × A ↦ z.2.1 = y)) (hKf k).2),
       integral_fintype Integrable.of_finite]
     simp_rw [Integral_MulEq12.eq.MulEqIntegral.of.All_LeNorm.StronglyMeasurable (M := M) (hKf k).1 (hKf k).2 θ y]
     rw [Finset.sum_eq_single y (fun b _ hb ↦ by simp [hb]) (by simp)]
@@ -83,17 +83,17 @@ private lemma main
       (Real.StronglyMeasurable_Eq12 (A := A) y).mul (hKf k).1
     calc _ = ∫ ω, (if (ω t).2.1 = x ∧ (ω t).2.2 = u then (1 : ℝ) else 0) * (if (ω (t + 1)).2.1 = y then (1 : ℝ) else 0) *
           M.rc (ω (t + 1 + k)) ∂(M θ) :=
-        integral_congr_ae ((AeR.eq.Rc (M := M) θ (t + 1 + k)).mono fun ω h ↦ by dsimp only; rw [h])
+        integral_congr_ae ((MEqR_Rc (M := M) θ (t + 1 + k)).mono fun ω h ↦ by dsimp only; rw [h])
       _ = ∫ ω, (if (ω t).2.1 = x ∧ (ω t).2.2 = u then (1 : ℝ) else 0) * (if (ω (t + 1)).2.1 = y then (1 : ℝ) else 0) *
           M.Kf θ M.rc k (ω (t + 1)) ∂(M θ) :=
         All_EqIntegral_MulGIntegral_MulGKf.of.All_LeNorm.StronglyMeasurable (M := M) (Random.StronglyMeasurableRc (M := M)) (NormRc.le.Abs_R (M := M)) θ k (t + 1) hGh (CG := 1)
-          (fun h ↦ by rw [norm_mul]; exact mul_le_one₀ (Real.Norm_1.le.One _) (norm_nonneg _) (Real.Norm_1.le.One _))
+          (fun h ↦ by rw [norm_mul]; exact mul_le_one₀ (Norm_1.le.One _) (norm_nonneg _) (Norm_1.le.One _))
       _ = ∫ ω, (if (ω t).2.1 = x ∧ (ω t).2.2 = u then (1 : ℝ) else 0) *
           ((if (ω (t + 1)).2.1 = y then (1 : ℝ) else 0) * M.Kf θ M.rc k (ω (t + 1))) ∂(M θ) := by
         simp_rw [mul_assoc]
       _ = ∫ ω, (if (ω t).2.1 = x ∧ (ω t).2.2 = u then (1 : ℝ) else 0) *
           ∫ z, (if z.2.1 = y then (1 : ℝ) else 0) * M.Kf θ M.rc k z ∂(M.K θ (ω t)) ∂(M θ) :=
-        Integral_Mul.eq.Integral_Mul_Integral.of.All_LeNorm.StronglyMeasurable.All_LeNorm.StronglyMeasurable (M := M) (n := t) (CG := 1) hGt (fun h ↦ Real.Norm_1.le.One _) hg (Real.LeNorm_Mul1.of.All_LeNorm (hKf k).2) θ
+        Integral_Mul.eq.Integral_Mul_Integral.of.All_LeNorm.StronglyMeasurable.All_LeNorm.StronglyMeasurable (M := M) (n := t) (CG := 1) hGt (fun h ↦ Norm_1.le.One _) hg (LeNorm_Mul1.of.All_LeNorm (hKf k).2) θ
       _ = ∫ ω, (if (ω t).2.1 = x ∧ (ω t).2.2 = u then (1 : ℝ) else 0) *
           (fun x' u' ↦ M.T x' u' y * M.W θ M.rc k y) (ω t).2.1 (ω t).2.2 ∂(M θ) := by
         simp_rw [hstep]
@@ -133,7 +133,7 @@ private lemma main
       (M θ).real B * M.W θ M.rc k y by rw [hPB]; ring, inv_mul_cancel_left₀ hc]
   refine (MEqCondExp_Integral.of.Integrable.Measurable hX hF).trans
     (Filter.EventuallyEq.trans ?_ (MEqCondExp_Integral.of.Integrable.Measurable (Random.Measurable_S (t + 1)) hF).symm)
-  filter_upwards [Random.AeNe_0 (π := M θ) (X := fun ω ↦ ((s (S := S) (A := A) t ω, a (S := S) (A := A) t ω), s (S := S) (A := A) (t + 1) ω))] with ω hω
+  filter_upwards [(Random.AeNe_0 (X := fun ω ↦ ((s (S := S) (A := A) t ω, a (S := S) (A := A) t ω), s (S := S) (A := A) (t + 1) ω)) : ∀ᵐ ω ∂(M θ), _)] with ω hω
   exact hatom _ _ _ hω
 
 

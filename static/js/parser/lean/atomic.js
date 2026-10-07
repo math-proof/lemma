@@ -259,6 +259,7 @@ export class LeanToken extends Lean {
             }
             if (text.startsWith('_')) text = `\\${text}`;
         }
+        if (text.includes('%')) text = text.replace(/%/g, '\\%'); // `rv%` (rv-lifting sugar): `%` starts a LaTeX comment
         if (this.kwargs.isRandomArgument) return `{\\color{magenta} {${text}}}`;
         if (this.kwargs.isRandomVariable && !this.kwargs.neverRed) return `{\\color{red} {${text}}}`;
         return text;

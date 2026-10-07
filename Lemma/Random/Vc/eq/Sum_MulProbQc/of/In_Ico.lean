@@ -16,8 +16,8 @@ private lemma main
   {M : Model Θ S A}
   {γ : ℝ}
 -- given
-  (θ : Θ)
   (h₀ : γ ∈ Set.Ico 0 1)
+  (θ : Θ)
   (x : S) :
 -- imply
   M.Vc θ γ x = ∑ u, M.pol.prob θ x u * M.Qc θ γ x u := by

@@ -10,22 +10,27 @@ import Lemma.Random.Differentiable_RealPreimageS.of.GtInftySup.All_Differentiabl
 import Lemma.Random.Integral_G.eq.TSum_MulPowIntegral_R_Add.of.In_Ico
 import Lemma.Random.Measurable_A
 import Lemma.Random.Measurable_S
-open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Filter Topology Random
+open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Topology Random
 open scoped ENNReal.ToRealCoe
 
 
 /--
-Policy-gradient recursion: on a reachable state «s.bvar» t (h₅ : Pr(s[t] = s.bvar[t]) ≠ 0),
-∇V(s[t] = s.bvar[t]) = ∑ a.bvar[t], Q(s.bvar[t], a.bvar[t]) • ∇π(a.bvar[t] | s.bvar[t]) + γ • ∑ s.bvar[t+1], Pr(s[t+1] = s.bvar[t+1] | s[t] = s.bvar[t]) • ∇V(s[t+1] = s.bvar[t+1]),
-the gradient of the Bellman equations of extract_QVA. Q, V are the action and state values
-(h₁, h₂, the sympy Q_def, V_def) as functions of the weights θ; h₃, h₄: θ ↦ π_θ(u | x) is differentiable with a bounded gradient.
-Cond.Prob.of.Cond.weighted is definitional here: every probability is taken under M θ.
-Densities are taken w.r.t. the counting measures (hS, hA), so
-ℙ[M θ](a[t] = u | s[t] = x) is the policy π_θ(u | x) at reachable states (OfRealPol);
-h₃/h₄ stay as M.pol.prob so they apply GradV.eq.AddSum_SMulSMul.of.Ne0Real_Preimage.GtInftySup.All_Differentiable_Prob.In_Ico definitionally (simp/rfl bridge via OfRealPol).
-h₁/h₂ match Random.…In_Ico (with an outer θ binder). Applying that lemma yields the
-Bellman identities, not the ∇ goal; the proof therefore reuses its Q = M.Q / V = M.V
-identification, then finishes with GradV.eq.AddSum_SMulSMul.of.Ne0Real_Preimage.GtInftySup.All_Differentiable_Prob.In_Ico.
+Policy-gradient recursion with a discrete (finite) state space and a discrete (finite) action space:
+∇V(s[t] = s.bvar[t]) = ∑ a.bvar[t], Q(s.bvar[t], a.bvar[t]) • ∇Pr(a[t] = a.bvar[t] | s[t] = s.bvar[t]) + γ • ∑ s.bvar[t+1], Pr(s[t+1] = s.bvar[t+1] | s[t] = s.bvar[t]) • ∇V(s[t+1] = s.bvar[t+1]),
+the gradient of the Bellman equations of extract_QVA on a reachable state s.bvar[t] (h₇ : Pr(s[t] = s.bvar[t]) ≠ 0).
+It is the discrete/discrete case next to the continuous-state/discrete-action
+`Random.GradVk.eq.Add_SMul_Integral_SMul.of.All_EqWithDensity.All_Ge_0.All_Measurable.All_Measurable_Prob.GtInftySup.All_Differentiable_Prob.In_Ico`,
+the continuous/continuous
+`Random.GradVkd.eq.AddIntegral_SMul_Integral_SMul.of.All_EqWithDensity.All_Ge_0.All_Measurable.All_Measurable_Prob.GtInftySup.All_Integrable.All_LeNormGrad.All_Differentiable_Prob.In_Ico`
+and the discrete-state/continuous-action
+`Random.GradVkd.eq.AddIntegral_SMul_Sum_SMul.of.All_EqReal.All_Measurable_Prob.GtInftySup.All_Integrable.All_LeNormGrad.All_Differentiable_Prob.In_Ico`
+versions. The reference measures of `S` and `A` are the counting measures (h₁, h₂), so the conditional probabilities are
+elementary: Pr(a[t] = u | s[t] = x) = π_θ(u | x) on reachable states and Pr(s[t+1] = y | s[t] = x) = P1 θ x y.
+h₃, h₄: Q, V are the action and state values, i.e. the conditional expectations of the discounted return
+`γ ** Stack[k](k) @ r[t:]` given `s[t] = x, a[t] = u` (resp. `s[t] = x`), as functions of the weights θ;
+h₅, h₆: θ ↦ π_θ(u | x) is differentiable with a bounded gradient.
+The proof identifies Q, V with `M.Q`, `M.V` and applies
+`Random.GradV.eq.AddSum_SMulSMul.of.Ne0Real_Preimage.GtInftySup.All_Differentiable_Prob.In_Ico`.
 -/
 @[main]
 private lemma main
@@ -41,21 +46,21 @@ private lemma main
   {V : Θ → ℕ → S → ℝ}
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
-  (hS : (ReferenceMeasure.measure : Measure S) = Measure.count)
-  (hA : (ReferenceMeasure.measure : Measure A) = Measure.count)
-  (h₁ : ∀ θ t («s.bvar» : ℕ → S) («a.bvar» : ℕ → A), Q θ t («s.bvar» t) («a.bvar» t) = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «s.bvar» t ∧ a t = «a.bvar» t))
-  (h₂ : ∀ θ t («s.bvar» : ℕ → S), V θ t («s.bvar» t) = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «s.bvar» t))
-  (h₃ : ∀ x u, Differentiable ℝ (fun θ => M.pol.prob θ x u))
-  (h₄ : sup[θ, x, u] ‖∇[θ] M.pol.prob θ x u‖ < ∞)
-  (h₅ : (M θ).real (s t ⁻¹' {«s.bvar» t}) ≠ 0) :
+  (h₁ : (ReferenceMeasure.measure : Measure S) = Measure.count)
+  (h₂ : (ReferenceMeasure.measure : Measure A) = Measure.count)
+  (h₃ : ∀ θ t («s.bvar» : ℕ → S) («a.bvar» : ℕ → A), Q θ t («s.bvar» t) («a.bvar» t) = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «s.bvar» t ∧ a t = «a.bvar» t))
+  (h₄ : ∀ θ t («s.bvar» : ℕ → S), V θ t («s.bvar» t) = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «s.bvar» t))
+  (h₅ : ∀ x u, Differentiable ℝ (fun θ => M.pol.prob θ x u))
+  (h₆ : sup[θ, x, u] ‖∇[θ] M.pol.prob θ x u‖ < ∞)
+  (h₇ : (M θ).real (s t ⁻¹' {«s.bvar» t}) ≠ 0) :
 -- imply
   have : ∀ θ t, SinglePSpace (M θ) (a (S := S) (A := A) t, s (S := S) (A := A) t) := fun _ t =>
     SinglePSpace.of.EqMeasureCount.Measurable ((Random.Measurable_A t).prodMk (Random.Measurable_S t)) (by
       show (ReferenceMeasure.measure : Measure A).prod (ReferenceMeasure.measure : Measure S) = _
-      rw [hA, hS, Measure.Count.eq.ProdCountS])
+      rw [h₂, h₁, Measure.Count.eq.ProdCountS])
   have : ∀ θ t, SinglePSpace (M θ) (s (S := S) (A := A) (t + 1), s (S := S) (A := A) t) := fun _ t =>
     SinglePSpace.of.EqMeasureCount.EqMeasureCount.Measurable.Measurable
-      (Random.Measurable_S (t + 1)) (Random.Measurable_S t) hS hS
+      (Random.Measurable_S (t + 1)) (Random.Measurable_S t) h₁ h₁
   ∇[θ] V θ t («s.bvar» t) =
     ∑ «a.bvar» t, Q θ t («s.bvar» t) («a.bvar» t) •
         ∇[θ] (ℙ[M θ]((a t) = («a.bvar» t) | (s t) = («s.bvar» t)) : ℝ) +
@@ -63,23 +68,21 @@ private lemma main
         ∇[θ] V θ (t + 1) («s.bvar» (t + 1))) := by
 -- proof
   intro hP hPs
-  -- In_Ico-style identification Q = fun θ => M.Q θ γ, V = fun θ => M.V θ γ
-  -- (In_Ico.main itself is the Bellman equation, not usable for this ∇ goal).
-  have hr : ∀ t, Measurable (r (S := S) (A := A) t) := Model.r_meas' (S := S) (A := A)
-  have hpR : Measurable (fun ω t ↦ r (S := S) (A := A) t ω) := measurable_pi_lambda _ hr
+  have hpR : Measurable (fun ω t ↦ r (S := S) (A := A) t ω) := measurable_pi_lambda _ (Model.r_meas' (S := S) (A := A))
   have hfG : ∀ t, Measurable (fun integ : ℕ → ℝ ↦ (γ ^ (id : ℕ → ℕ)) @ integ[t:]) := fun t =>
     Measurable.tsum fun k => (measurable_pi_apply (t + k)).const_mul _
   have hQ : Q = fun θ => M.Q θ γ := funext fun θ => funext fun t => funext fun x => funext fun u => by
-    rw [h₁ θ t (fun _ ↦ x) (fun _ ↦ u)]
+    rw [h₃ θ t (fun _ ↦ x) (fun _ ↦ u)]
     simp only [Expectation.asRV_process]
     rw [Expectation.condEvent_eq_integral hpR.aemeasurable (hfG t)]
     have hpre : JointRandomSymbol (s (S := S) (A := A) t) (a (S := S) (A := A) t) ⁻¹' {(x, u)} =
         s t ⁻¹' {x} ∩ a t ⁻¹' {u} := by
-      ext ω; simp [JointRandomSymbol, Prod.ext_iff]
+      ext ω
+      simp [JointRandomSymbol, Prod.ext_iff]
     rw [hpre]
-    exact Integral_G.eq.TSum_MulPowIntegral_R_Add.of.In_Ico (M := M) h₀ θ _ t
+    apply Integral_G.eq.TSum_MulPowIntegral_R_Add.of.In_Ico (M := M) h₀ θ _ t
   have hV : V = fun θ => M.V θ γ := funext fun θ => funext fun t => funext fun x => by
-    rw [h₂ θ t (fun _ ↦ x), M.V_eq_integral θ γ t x]
+    rw [h₄ θ t (fun _ ↦ x), M.V_eq_integral θ γ t x]
     simp only [Expectation.asRV_process]
     rw [Expectation.condEvent_eq_integral hpR.aemeasurable (hfG t)]
     rfl
@@ -89,27 +92,19 @@ private lemma main
   set x := «s.bvar» t
   have hπ : ∀ u, ∇[θ] (ℙ[M θ]((a t) = u | (s t) = x) : ℝ) = ∇[θ] M.pol.prob θ x u := by
     intro u
-    have hc : ContinuousAt (fun θ' => (M θ').real (s t ⁻¹' {x})) θ :=
-      (Differentiable_RealPreimageS.of.GtInftySup.All_Differentiable_Prob (M := M) h₃ h₄ t x θ).continuousAt
     refine Filter.EventuallyEq.gradient_eq ?_
-    filter_upwards [hc.eventually_ne h₅] with θ' h
-    beta_reduce
-    rw [ProbCond.eq.OfRealPol.of.Ne_0 hS hA (hP θ' t) h,
-      ENNReal.toReal_ofReal (M.pol.nonneg θ' _ _)]
+    filter_upwards [(Differentiable_RealPreimageS.of.GtInftySup.All_Differentiable_Prob (M := M) h₅ h₆ t x θ).continuousAt.eventually_ne h₇] with θ' h
+    rw [ProbCond.eq.OfRealPol.of.Ne_0 h₁ h₂ (hP θ' t) h, ENNReal.toReal_ofReal (M.pol.nonneg θ' _ _)]
   simp_rw [hπ]
-  rw [GradV.eq.AddSum_SMulSMul.of.Ne0Real_Preimage.GtInftySup.All_Differentiable_Prob.In_Ico h₀ h₃ h₄ h₅]
+  rw [GradV.eq.AddSum_SMulSMul.of.Ne0Real_Preimage.GtInftySup.All_Differentiable_Prob.In_Ico h₀ h₅ h₆ h₇]
   have hP1 : ∀ y, (ℙ[M θ]((s (t + 1)) = y | (s t) = x) : ℝ) = M.P1 θ x y := by
     intro y
-    have hDiv := ProbCond.eq.Div.of.Eq_Count.Eq_Count (π := M θ)
-      (x := s (S := S) (A := A) (t + 1)) (y := s (S := S) (A := A) t) hS hS y x
-    rw [hDiv, ENNReal.toReal_div, ← RealPreimageSPreimageS_Add_1.eq.P1.of.Ne0Real_Preimage (M := M) θ t x y h₅]
-    rw [measureReal_def, cond_apply (Random.Measurable_S t (measurableSet_singleton x)),
+    rw [ProbCond.eq.Div.of.Eq_Count.Eq_Count (π := M θ) (x := s (S := S) (A := A) (t + 1)) (y := s (S := S) (A := A) t) h₁ h₁ y x,
+      ENNReal.toReal_div, ← RealPreimageSPreimageS_Add_1.eq.P1.of.Ne0Real_Preimage (M := M) θ t x y h₇,
+      measureReal_def, cond_apply (Random.Measurable_S t (measurableSet_singleton x)),
       ENNReal.toReal_mul, ENNReal.toReal_inv, mul_comm, div_eq_mul_inv]
-    congr 1
-    ·
-      congr 1
-      congr 1
-      exact Set.inter_comm _ _
+    congr 3
+    apply Set.inter_comm
   simp_rw [hP1]
 
 

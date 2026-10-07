@@ -103,6 +103,7 @@ const CLASS_TOKEN = {
   LeanIn: "In",
   LeanInf: "Inf",
   Lean_cdotp: "Dot", // x ⬝ᵥ y → Dot (FiniteMRP/DotVecMul_D)
+  LeanMatMul: "Dot", // A @ x (Dot.dot) → Dot (Random/Expect_Dot/eq/Dot_Expect, Random/Expect_CondDot/eq/Dot_Expect_Cond)
   Lean_subseteq: "Subset", // A ⊆ B → A/sub/B, Subset_B (Real/AbsorbingSet/sub/PhaseSpace, Random/Quantile/sub/QuantileLower)
 };
 
@@ -876,6 +877,8 @@ function conclusionNode(colonNode) {
 
 function isPropHyp(typeNode) {
   if (!typeNode) return false;
+  // `x ⟂ᵢ[π] y` (Indep) and `x ⟂ᵢ[π] y | z` (CondIndep, a top-level `|` whose left side is `⟂ᵢ`) are propositions
+  if (indepAtom(typeNode)) return true;
   const name = cls(typeNode);
   if (["Lean_forall","Lean_exists","Lean_lt","Lean_gt","Lean_le","Lean_ge","LeanEq","Lean_ne","LeanNe","Lean_leftrightarrow","Lean_land","Lean_lor","Lean_lnot","Lean_in","LeanIn","Lean_subseteq"].includes(name)) return true;
   if (name === "LeanArgsSpaceSeparated") {
@@ -1624,6 +1627,15 @@ function preAlts(node, opts, canon) {
     }
     // 𝔼[a : π](f a) → ExpectF (Random/GeExpect/of/Ge)
     if (cls(head) === "LeanGetElem" && cls(head.args?.[0]) === "LeanToken" && head.args[0].text === "𝔼" && args.length === 2) {
+      // conditional 𝔼[a : π](X | C) → Expect_Cond + X (Random/Expect_CondMul/eq/Mul_Expect_Cond, Random/Expect_CondDot/eq/Dot_Expect_Cond,
+      // Random/Expect_CondSum/eq/Sum_ExpectCond); the condition C itself is not spelled
+      const bar = unwrapParen(args[1]);
+      if (cls(bar) === "LeanBitOr" && bar.args?.length === 2 && cls(unwrapParen(bar.args[0])) !== "Lean_perp") {
+        const x = A(bar.args[0]);
+        const cond = x.length ? x.flatMap((y) => ["Expect_Cond" + y, "ExpectCond" + y]) : ["Expect_Cond", "ExpectCond"];
+        // the body may be left out (Dot_Expect_Cond for `fun k => 𝔼[r : M θ](r (t + k) | …)`); keep it near the front (node caps)
+        return canon ? cond.slice(0, 1) : uniq([...cond.slice(0, 2), "Expect_Cond", "ExpectCond", "Expect", ...cond]);
+      }
       const b = A(args[1]);
       return b.length ? uniq(b.flatMap((y) => ["Expect" + y, "Expect_" + y])) : ["Expect"];
     }
@@ -2374,7 +2386,7 @@ function nameExprBase(node, opts = {}) {
 
   if (CLASS_TOKEN[name]) {
     // Arith ops stay Camel (DivLeftRight) / Prob idioms — not Left/div/Right paths.
-    const ARITH = new Set(["LeanSub", "LeanAdd", "LeanMul", "LeanDiv", "LeanPow", "LeanNeg"]);
+    const ARITH = new Set(["LeanSub", "LeanAdd", "LeanMul", "LeanDiv", "LeanPow", "LeanNeg", "LeanMatMul"]);
     if (!ARITH.has(name)) {
     const tag = CLASS_TOKEN[name];
     const args = node.args || [];
@@ -2582,7 +2594,7 @@ function nameExprBase(node, opts = {}) {
     if (named.length === 1) return named[0];
     return named.join("");
   }
-  if (name === "LeanSub" || name === "LeanAdd" || name === "LeanMul" || name === "LeanDiv" || name === "LeanPow" || name === "LeanNeg" || (name === "Lean_cdotp" && node.subscript === "ᵥ")) {
+  if (name === "LeanSub" || name === "LeanAdd" || name === "LeanMul" || name === "LeanDiv" || name === "LeanPow" || name === "LeanNeg" || (name === "Lean_cdotp" && node.subscript === "ᵥ") || name === "LeanMatMul") {
     let tag = CLASS_TOKEN[name] || name.replace(/^Lean/, "");
     const args = node.args || [];
     if (name === "LeanPow" && cls(args[1]) === "LeanBracket") tag = "Iterate";
@@ -2694,7 +2706,7 @@ function nameExprAltsBase(node, opts = {}) {
   }
 
   if (CLASS_TOKEN[name]) {
-    const ARITH = new Set(["LeanSub", "LeanAdd", "LeanMul", "LeanDiv", "LeanPow", "LeanNeg"]);
+    const ARITH = new Set(["LeanSub", "LeanAdd", "LeanMul", "LeanDiv", "LeanPow", "LeanNeg", "LeanMatMul"]);
     if (!ARITH.has(name)) {
       const tag = CLASS_TOKEN[name];
       const args = node.args || [];
@@ -2950,7 +2962,7 @@ function nameExprAltsBase(node, opts = {}) {
   }
 
   // Arithmetic ops: Sub, Add, Mul, Div, Pow, Neg
-  if (name === "LeanSub" || name === "LeanAdd" || name === "LeanMul" || name === "LeanDiv" || name === "LeanPow" || name === "LeanNeg" || (name === "Lean_cdotp" && node.subscript === "ᵥ")) {
+  if (name === "LeanSub" || name === "LeanAdd" || name === "LeanMul" || name === "LeanDiv" || name === "LeanPow" || name === "LeanNeg" || (name === "Lean_cdotp" && node.subscript === "ᵥ") || name === "LeanMatMul") {
     let tag = CLASS_TOKEN[name] || name.replace(/^Lean/, "");
     const args = node.args || [];
     if (name === "LeanPow" && cls(args[1]) === "LeanBracket") tag = "Iterate";
@@ -3060,6 +3072,20 @@ function nameExprAltsBase(node, opts = {}) {
     }
     // exponent/base details may be omitted: SummableSquarePow, TendstoSumPow
     if (name === "LeanPow" && (leftAlts.length || rightAlts.length)) out.push(tag);
+    // `@` (Dot.dot) operands are vectors/matrices whose spelling may be omitted, so these come first (node caps):
+    // (γ ^ id) @ r[t:] → Dot, (γ ^ id) @ fun k => 𝔼[…](… | …) → Dot_Expect_Cond (Random/Expect_CondDot/eq/Dot_Expect_Cond/of/In_Ico)
+    // the `@` itself may also stay implicit, naming its first operand (Random/CondExpPow_Id/of/In_Ico)
+    if (name === "LeanMatMul") {
+      // same operand on both sides still first (DotDotSRotaryMatrix), then the omissions, then the implicit-`@` spelling
+      // (kept near the front: the identity pairs of `=ᵐ` / `=` combine them under node caps), then the rest
+      const same = [];
+      for (const l of leftAlts) if (l && rightSet.has(l)) same.push(...(pluralSnakeS(l) ? [tag + pluralSnakeS(l)] : []), tag + pluralMidS(l), ...(pluralLetterS(l) ? [tag + pluralLetterS(l)] : []), tag + sameChildS(l));
+      if (!leftAlts.length) return uniq([...out, ...rightAlts]);
+      const omit = [];
+      for (const r of rightAlts) omit.push(tag + "_" + r, tag + r);
+      omit.push(tag);
+      return uniq([...same, ...omit, ...leftAlts, ...out]);
+    }
     return uniq(out);
   }
 
@@ -3442,6 +3468,8 @@ export function suggest(filePath, lemmaName, options = {}) {
       let b = t;
       while (cls(b) === "Lean_forall") b = unwrapParen(b.args?.[b.args.length - 1]);
       if (typeHead(b) === "Integrable") return { ...h, optional: true };
+      // so may measurability side conditions of an expectation (Random/Expect_CondDot/eq/Dot_Expect_Cond, Random/Expect_CondMul/eq/Mul_Expect_Cond)
+      if (conclTokenSet.has("𝔼") && /^(AE)?(Strongly)?Measurable$/.test(typeHead(b))) return { ...h, optional: true };
     }
     return h;
   });

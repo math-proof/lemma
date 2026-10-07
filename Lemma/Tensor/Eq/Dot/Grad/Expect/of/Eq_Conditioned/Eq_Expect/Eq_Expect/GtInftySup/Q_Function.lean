@@ -13,7 +13,7 @@ import Lemma.Random.Sum_RealPreimageS.eq.One
 import Lemma.Random.Integrable_Fun
 import Lemma.Random.BddAbove_ImageNormFderiv.of.In_Ico.GtInftySup.All_Differentiable_Prob
 import Lemma.Random.Integral_G.eq.TSum_MulPowIntegral_R_Add.of.In_Ico
-open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Filter Topology Random
+open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Filter Topology Random Tensor Real
 
 
 /--
@@ -46,7 +46,7 @@ private lemma main
 -- proof
   have h₄n := h₄
   simp only [gradient, LinearIsometryEquiv.norm_map] at h₄
-  have h₇ := Tensor.Eq.Grad.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.policy_gradient (θ := θ) h₀ hS hA h₁ h₂ h₃ h₄n
+  have h₇ := Eq.Grad.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.policy_gradient (θ := θ) h₀ hS hA h₁ h₂ h₃ h₄n
   have hr : ∀ t, Measurable (r (S := S) (A := A) t) := Model.r_meas' (S := S) (A := A)
   have hpR : Measurable (fun ω t ↦ r (S := S) (A := A) t ω) := measurable_pi_lambda _ hr
   have hfG : ∀ t, Measurable (fun integ : ℕ → ℝ ↦ (γ ^ (id : ℕ → ℕ)) @ integ[t:]) := fun t =>
@@ -79,13 +79,13 @@ private lemma main
       _ ≤ ∑ y, (M θ).real (s n ⁻¹' {y}) * max B 0 := by
           refine Finset.sum_le_sum fun y _ => ?_
           rw [norm_smul, Real.norm_of_nonneg measureReal_nonneg]
-          by_cases hy : (M θ).real (s n ⁻¹' {y}) = 0
-          · rw [hy, zero_mul, zero_mul]
-          · exact mul_le_mul_of_nonneg_left ((hB ⟨(n, y), hy, rfl⟩).trans (le_max_left _ _))
-              measureReal_nonneg
+          if hy : (M θ).real (s n ⁻¹' {y}) = 0 then
+            rw [hy, zero_mul, zero_mul]
+          else
+            exact mul_le_mul_of_nonneg_left ((hB ⟨(n, y), hy, rfl⟩).trans (le_max_left _ _)) measureReal_nonneg
       _ = max B 0 := by rw [← Finset.sum_mul, Sum_RealPreimageS.eq.One, one_mul]
   have h₁₀ : Tendsto (fun n => γ ^ n * ‖∫ ω, fderiv ℝ (fun θ' => M.V θ' γ n (s n ω)) θ ∂(M θ)‖) atTop (𝓝 0) :=
-    Real.Eq_0.Lim.of.LtAbs.GtInftySup (by rw [abs_of_nonneg h₀.1]; exact h₀.2)
+    Eq_0.Lim.of.LtAbs.GtInftySup (by rw [abs_of_nonneg h₀.1]; exact h₀.2)
       ⟨max B 0, by rintro _ ⟨n, rfl⟩; exact (abs_norm _).trans_le (h₉ n)⟩
   have h₁₁ : Tendsto (fun n => γ ^ n • ∫ ω, fderiv ℝ (fun θ' => M.V θ' γ n (s n ω)) θ ∂(M θ)) atTop (𝓝 0) := by
     rw [tendsto_zero_iff_norm_tendsto_zero]
@@ -104,7 +104,7 @@ private lemma main
           rw [norm_smul, Real.norm_of_nonneg measureReal_nonneg]
           refine mul_le_mul_of_nonneg_left ?_ measureReal_nonneg
           calc _ ≤ ∑ u, ‖M.Q θ γ t y u • fderiv ℝ (fun θ' => M.pol.prob θ' y u) θ‖ := norm_sum_le _ _
-            _ ≤ ∑ _u : A, (1 - γ)⁻¹ * |M.env.R| * max C 0 := by
+            _ ≤ ∑ _ : A, (1 - γ)⁻¹ * |M.env.R| * max C 0 := by
                 refine Finset.sum_le_sum fun u _ => ?_
                 rw [norm_smul]
                 exact mul_le_mul (NormQ.le.MulSub1Abs_R.of.In_Ico (M := M) θ h₀ t y u) ((h₈ θ y u).trans (le_max_left _ _))

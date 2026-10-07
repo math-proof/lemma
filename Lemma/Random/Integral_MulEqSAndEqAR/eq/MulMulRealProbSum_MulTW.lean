@@ -1,6 +1,6 @@
 import sympy.stats.policy_trajectory
 import sympy.Basic
-import Lemma.Random.AeR.eq.Rc
+import Lemma.Random.MEqR_Rc
 import Lemma.Random.Integral_Mul.eq.Integral_Mul_Kf.of.All_LeNorm.StronglyMeasurable.All_LeNorm.StronglyMeasurable
 import Lemma.Random.Integral_MulEq12AndEq22.eq.MulMulRealProb
 import Lemma.Random.Kf.eq.Sum_MulTW.of.All_LeNorm.StronglyMeasurable
@@ -29,7 +29,7 @@ private lemma main
 -- proof
   have h₀ : ∫ ω, (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) * r (t + (j + 1)) ω ∂(M θ) =
       ∫ ω, (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) * M.rc (ω (t + (j + 1))) ∂(M θ) :=
-    integral_congr_ae ((AeR.eq.Rc (M := M) θ (t + (j + 1))).mono fun ω h => by dsimp only; rw [h])
+    integral_congr_ae ((MEqR_Rc (M := M) θ (t + (j + 1))).mono fun ω h => by dsimp only; rw [h])
   rw [h₀]
   refine (Integral_Mul.eq.Integral_Mul_Kf.of.All_LeNorm.StronglyMeasurable.All_LeNorm.StronglyMeasurable (M := M) (Random.StronglyMeasurableRc (M := M)) (NormRc.le.Abs_R (M := M)) (Real.StronglyMeasurable_Eq12AndEq22 x u) (Norm_1.le.One) θ t (j + 1)).trans ?_
   simp_rw [Kf.eq.Sum_MulTW.of.All_LeNorm.StronglyMeasurable (M := M) (Random.StronglyMeasurableRc (M := M)) (NormRc.le.Abs_R (M := M)) θ j]

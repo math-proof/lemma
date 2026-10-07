@@ -1,7 +1,7 @@
 import sympy.stats.policy_trajectory.advantage
 import sympy.Basic
 import Lemma.Random.SubAddKfMul_KfKf.eq.Zero.of.In_Ico
-import Lemma.Random.AeR.eq.Rc
+import Lemma.Random.MEqR_Rc
 import Lemma.Random.All_EqIntegral_MulGIntegral_MulGKf.of.All_LeNorm.StronglyMeasurable
 import Lemma.Random.NormRc.le.Abs_R
 import Lemma.Random.StronglyMeasurableRc
@@ -12,11 +12,12 @@ open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Mode
 
 
 private lemma int_hist_mul [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [Fintype A] (M : Model Θ S A) (θ : Θ) (n k : ℕ) {G : (Π _ : Iic n, ℝ × S × A) → ℝ} (hG : StronglyMeasurable G) {CG : ℝ} (hCG : ∀ h, ‖G h‖ ≤ CG) {g : ℝ × S × A → ℝ} (hg : StronglyMeasurable g) {C : ℝ} (hC : ∀ z, ‖g z‖ ≤ C) :
-    Integrable (fun ω => G (Preorder.frestrictLe n ω) * g (ω k)) (M θ) := by
+  Integrable (fun ω => G (Preorder.frestrictLe n ω) * g (ω k)) (M θ) := by
   refine Integrable.of_bound (C := CG * C) ?_ (Filter.Eventually.of_forall fun ω => ?_)
   · exact ((hG.comp_measurable (Preorder.measurable_frestrictLe n)).mul
       (hg.comp_measurable (measurable_pi_apply k))).aestronglyMeasurable
-  · rw [norm_mul]
+  ·
+    rw [norm_mul]
     exact mul_le_mul (hCG _) (hC _) (norm_nonneg _) ((norm_nonneg _).trans (hCG (Preorder.frestrictLe n ω)))
 
 /--
@@ -68,7 +69,7 @@ private lemma main
       Gh (Preorder.frestrictLe n ω) * M.rc (ω (n + 1)) +
         γ * (Gh (Preorder.frestrictLe n ω) * f (ω (n + 2))) -
         Gh (Preorder.frestrictLe n ω) * f (ω (n + 1)) := by
-    filter_upwards [AeR.eq.Rc (M := M) θ (n + 1)] with ω hω
+    filter_upwards [MEqR_Rc (M := M) θ (n + 1)] with ω hω
     rw [hGω, hω]
     show _ * (M.rc (ω (n + 1)) + γ * M.Vc θ γ (ω (n + 2)).2.1 - M.Vc θ γ (ω (n + 1)).2.1) = _
     ring

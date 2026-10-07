@@ -4,7 +4,7 @@ import sympy.vector.operators
 import sympy.concrete.sup
 import Lemma.Random.Vc.eq.Sum_MulProbQc.of.In_Ico
 import Lemma.Tensor.DifferentiableAt.Fderiv.eq.SMul.of.In_Ico.GtInftySup.All_Differentiable_Prob
-open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model
+open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random Tensor
 
 
 /--
@@ -26,13 +26,8 @@ private lemma main
     ∑ u, M.Qc θ γ x u • fderiv ℝ (fun θ => M.pol.prob θ x u) θ +
     γ • ∑ y, M.P1 θ x y • fderiv ℝ (fun θ => M.Vc θ γ y) θ := by
 -- proof
-  obtain ⟨Cp, hCp⟩ := id h₁
-  have hC : ∀ θ x u, ‖fderiv ℝ (fun θ => M.pol.prob θ x u) θ‖ ≤ Cp := fun θ x u => by
-    simpa [gradient, LinearIsometryEquiv.norm_map] using hCp ⟨(θ, x, u), rfl⟩
-  have hb : (fun θ => M.Vc θ γ x) = fun θ => ∑ u, M.pol.prob θ x u * M.Qc θ γ x u :=
-    funext fun θ => Random.Vc.eq.Sum_MulProbQc.of.In_Ico (M := M) θ h₂ x
-  have hQ := fun u => Tensor.DifferentiableAt.Fderiv.eq.SMul.of.In_Ico.GtInftySup.All_Differentiable_Prob (M := M) h₀ h₁ h₂ x u θ
-  rw [hb, fderiv_fun_sum fun u _ => ((h₀ x u) θ).fun_mul (hQ u).1]
+  have hQ := fun u => DifferentiableAt.Fderiv.eq.SMul.of.In_Ico.GtInftySup.All_Differentiable_Prob (M := M) h₀ h₁ h₂ x u θ
+  rw [funext fun θ => Vc.eq.Sum_MulProbQc.of.In_Ico (M := M) h₂ θ x, fderiv_fun_sum fun u _ => ((h₀ x u) θ).fun_mul (hQ u).1]
   simp_rw [fderiv_fun_mul ((h₀ _ _) θ) (hQ _).1, (hQ _).2]
   rw [Finset.sum_add_distrib, add_comm]
   congr 1

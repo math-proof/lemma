@@ -1,6 +1,6 @@
 import sympy.stats.policy_trajectory
 import sympy.Basic
-import Lemma.Random.AeR.eq.Rc
+import Lemma.Random.MEqR_Rc
 import Lemma.Random.Integral_MulEq22.eq.MulProbIntegral.of.All_LeNorm.StronglyMeasurable
 import Lemma.Random.Integral_MulEqS.eq.MulRealPreimageSIntegral.of.All_LeNorm.StronglyMeasurable
 import Lemma.Random.NormRc.le.Abs_R
@@ -28,7 +28,7 @@ private lemma main
 -- proof
   have h₀ : ∫ ω, (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) * r t ω ∂(M θ) =
       ∫ ω, (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) * M.rc (ω t) ∂(M θ) :=
-    integral_congr_ae ((AeR.eq.Rc (M := M) θ t).mono fun ω h => by dsimp only; rw [h])
+    integral_congr_ae ((MEqR_Rc (M := M) θ t).mono fun ω h => by dsimp only; rw [h])
   have h₁ : ∀ ω, (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) * M.rc (ω t) =
       (if s t ω = x then (1:ℝ) else 0) *
         (fun z : ℝ × S × A => (if z.2.2 = u then (1:ℝ) else 0) * M.rc z) (ω t) := by
