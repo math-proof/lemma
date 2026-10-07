@@ -1,6 +1,6 @@
 import sympy.stats.policy_trajectory.gradient
 import sympy.Basic
-open MeasureTheory ProbabilityTheory Finset Filter Topology PolicyGradient PolicyGradient.Model
+open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model
 
 
 /--

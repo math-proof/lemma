@@ -6,8 +6,8 @@ import Lemma.Random.AeTendsto.of.LyapunovFunction.Measurable.Measurable.Lipschit
 import Lemma.Random.Any_Ge_0AndAll_LeNormSub_MulNormSub.of.Any_Ge_0AndAll_All_LeNormSub_MulNormSub.All_Eq_Sum_Sum_SMul
 import Lemma.Random.AdaptedOnSamplePath.of.IteratesOfResidual
 import Lemma.Random.Measurable.of.AdaptedOnSamplePath
-import Lemma.Anchors.RobbinsMonroβ
-import Lemma.Anchors.StrictMonoTime
+import Lemma.Real.Anchors.RobbinsMonroβ
+import Lemma.Real.Anchors.StrictMonoTime
 import Lemma.Real.Any_Ge_0AndAll_All_LeNorm_MulAddNorm1.of.Any_Ge_0AndAll_All_LeNormSub_MulNormSub
 import Lemma.Measure.Measurable_Apply_PiLE
 import Lemma.Random.Iterates
@@ -17,7 +17,7 @@ import Lemma.Random.Any_Ge_0AndAll_All_LeNormSub_MulNormSub
 import Lemma.Random.Any_Ge_0AndAeAll_All_LeNormCondExp_MulAddNorm1
 import Lemma.Random.Any_Ge_0AndAll_All_LeNormE₂₁
 import Lemma.Random.Any_Ge_0AndAeAll_LeNormE₂₂
-open Filter MeasureTheory Finset Topology Iterates Real Measure Random
+open MeasureTheory Topology Iterates Real Measure Random Filter Finset
 
 
 @[main]
@@ -37,9 +37,9 @@ private lemma main
   ∀ᵐ ω ∂sk.mrp.markov_samples, Tendsto (fun n => sk.x (sk.anc.t n) ω) atTop (𝓝 z) := by
 -- proof
   have hα : RobbinsMonro sk.α := sk.anc.hα
-  have : RobbinsMonro sk.anc.β := Anchors.RobbinsMonroβ
+  have : RobbinsMonro sk.anc.β := Real.Anchors.RobbinsMonroβ
   have : IsProbabilityMeasure sk.mrp.markov_samples := sk.mrp.aug_chain_markov.traj_prob.prop
-  have hmono : Monotone sk.anc.t := Anchors.StrictMonoTime.monotone
+  have hmono : Monotone sk.anc.t := Real.Anchors.StrictMonoTime.monotone
   obtain ⟨L, hL, hf⟩ := Any_Ge_0AndAll_LeNormSub_MulNormSub.of.Any_Ge_0AndAll_All_LeNormSub_MulNormSub.All_Eq_Sum_Sum_SMul sk.hfF sk.hFlip
   have hLip : LipschitzWith ⟨L, hL⟩ sk.f := lipschitzWith_iff_norm_sub_le.2 hf
   have hxm := Measurable.of.AdaptedOnSamplePath (AdaptedOnSamplePath.of.IteratesOfResidual sk.hx)

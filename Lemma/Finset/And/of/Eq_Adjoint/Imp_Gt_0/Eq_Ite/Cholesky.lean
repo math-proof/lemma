@@ -1,5 +1,6 @@
 import sympy.matrices.cholesky
 import sympy.Basic
+import Lemma.Matrix.All_Eq_0_And_All_Gt_0_And_Eq_Mul.of.IsCholeskyRec.PosDef
 open Matrix
 open scoped ComplexOrder
 
@@ -17,7 +18,7 @@ private lemma main
   A = L * Lᴴ := by
 -- proof
   have hA : A.PosDef := Matrix.PosDef.of_dotProduct_mulVec_pos h₀ (fun x hx => h₁ x hx)
-  exact (hA.cholesky_of_rec h₂).2.2
+  exact (All_Eq_0_And_All_Gt_0_And_Eq_Mul.of.IsCholeskyRec.PosDef hA h₂).2.2
 
 
 -- created on 2023-05-01

@@ -1,6 +1,6 @@
 import Lemma.Real.Eq_0.Lim.of.In_Icc.GtInftySup
 import Lemma.Real.PowMul.eq.MulPowS
-open Filter Topology
+open Topology
 
 
 @[main]

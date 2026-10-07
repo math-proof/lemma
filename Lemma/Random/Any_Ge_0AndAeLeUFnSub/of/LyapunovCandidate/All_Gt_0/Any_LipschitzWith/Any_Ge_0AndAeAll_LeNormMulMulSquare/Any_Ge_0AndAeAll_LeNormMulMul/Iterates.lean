@@ -1,6 +1,6 @@
 import sympy.stats.lyapunov
 import Lemma.Random.Any_Ge_0AndAeLeNorm.of.All_Gt_0.Any_LipschitzWith.Any_Ge_0AndAeAll_LeNormMulMulSquare.Any_Ge_0AndAeAll_LeNormMulMul.Iterates
-open Filter MeasureTheory
+open MeasureTheory
 
 
 @[main]

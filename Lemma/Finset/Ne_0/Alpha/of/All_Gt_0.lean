@@ -1,7 +1,8 @@
 import sympy.concrete.continued_fraction
 import sympy.sets.sets
 import sympy.Basic
-open Continuant
+import Lemma.Finset.All_Imp_GtAlpha_0
+open Finset Continuant
 
 
 @[main]
@@ -15,7 +16,7 @@ private lemma main
   alpha ((List.range n).map x) ≠ 0 := by
 -- proof
   apply ne_of_gt
-  apply alpha_pos
+  apply All_Imp_GtAlpha_0
   · rw [Ne, List.map_eq_nil_iff, List.range_eq_nil]
     omega
   · intro a ha
@@ -34,7 +35,7 @@ private lemma offset
   alpha ((List.range (n - a)).map fun i => x (i + (a + b))) ≠ 0 := by
 -- proof
   apply ne_of_gt
-  apply alpha_pos
+  apply All_Imp_GtAlpha_0
   · rw [Ne, List.map_eq_nil_iff, List.range_eq_nil]
     omega
   · intro c hc

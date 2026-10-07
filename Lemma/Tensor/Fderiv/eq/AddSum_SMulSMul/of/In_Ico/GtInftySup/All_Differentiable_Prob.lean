@@ -4,7 +4,7 @@ import sympy.vector.operators
 import sympy.concrete.sup
 import Lemma.Random.Vc.eq.Sum_MulProbQc.of.In_Ico
 import Lemma.Tensor.DifferentiableAt.Fderiv.eq.SMul.of.In_Ico.GtInftySup.All_Differentiable_Prob
-open MeasureTheory ProbabilityTheory Finset Filter Topology PolicyGradient PolicyGradient.Model
+open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model
 
 
 /--

@@ -1,5 +1,5 @@
 import Lemma.LpSpace.PowNorm.eq.Sum_PowAbs.of.Ge_1
-open Finset LpSpace
+open LpSpace
 
 
 @[main]

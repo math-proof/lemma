@@ -1,5 +1,7 @@
 import sympy.matrices.cholesky
 import sympy.Basic
+import Lemma.Matrix.GetMul_L.eq.AddSum_Mul_Star.of.All_All_Eq_0
+import Lemma.Matrix.All_Eq_0_And_All_Gt_0_And_Eq_Mul.of.IsCholeskyRec.PosDef
 open Matrix
 
 
@@ -27,10 +29,10 @@ private lemma main
     intro i j
     rw [h₂ i j]
     simp only [star_trivial, RCLike.re_to_real, RCLike.ofReal_real_eq_id, id]
-  obtain ⟨hlow, hpos, hL⟩ := hA.cholesky_of_rec hrec
+  obtain ⟨hlow, hpos, hL⟩ := All_Eq_0_And_All_Gt_0_And_Eq_Mul.of.IsCholeskyRec.PosDef hA hrec
   have hs : ∀ i j, A i j = ∑ k ∈ Finset.Iic j, L i k * L j k := by
     intro i j
-    rw [hL, Matrix.mul_conjTranspose_apply_of_lower hlow, ← Finset.Iio_insert, Finset.sum_insert (by simp), add_comm]
+    rw [hL, GetMul_L.eq.AddSum_Mul_Star.of.All_All_Eq_0 hlow, ← Finset.Iio_insert, Finset.sum_insert (by simp), add_comm]
     simp only [star_trivial]
   intro i _hi
   refine ⟨by simpa using (RCLike.pos_iff.mp (hpos i)).1, ?_, fun j _ => hs i j⟩

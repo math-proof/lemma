@@ -22,11 +22,4 @@ def H (x : ℕ → R) : ℕ → R
   | 1 => x 0
   | n + 2 => H x (n + 1) * x (n + 1) + H x n
 
-theorem K_two (x : ℕ → R) : K x 2 = x 1 := by
-  simp [K]
-
-theorem H_two (x : ℕ → R) : H x 2 = x 1 * x 0 + 1 := by
-  simp only [H]
-  ring
-
 end Continuant

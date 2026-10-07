@@ -34,7 +34,6 @@ private lemma key
   simp only [h_a, h_v]
 
 
-open Hyperreal
 
 
 private lemma sc_ext {x y : ℝ} (h : x = y) : (x : Tensor ℝ []) = (y : Tensor ℝ []) := by rw [h]

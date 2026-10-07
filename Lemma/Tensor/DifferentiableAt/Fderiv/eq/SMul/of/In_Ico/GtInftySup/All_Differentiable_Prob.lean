@@ -3,7 +3,7 @@ import sympy.Basic
 import sympy.vector.operators
 import sympy.concrete.sup
 import Lemma.Tensor.Differentiable_Vc.of.In_Ico.GtInftySup.All_Differentiable_Prob
-open MeasureTheory ProbabilityTheory Finset Filter Topology PolicyGradient PolicyGradient.Model
+open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model
 
 
 /--

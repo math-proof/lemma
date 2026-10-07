@@ -21,7 +21,7 @@ def shift (ℱ : Filtration ℕ m₀) (n : ℕ) : Filtration ℕ m₀ where
   le' t := ℱ.le (t + n)
 
 @[simp]
-lemma shift_apply (ℱ : Filtration ℕ m₀) (n t : ℕ) : ℱ.shift n t = ℱ (t + n) := rfl
+theorem shift_apply (ℱ : Filtration ℕ m₀) (n t : ℕ) : ℱ.shift n t = ℱ (t + n) := rfl
 
 -- the filtration along a monotone time change: n ↦ ℱ (t n) (rl: `MeasureTheory.Filtration.subsequence`)
 def subsequence (ℱ : Filtration ℕ m₀) {t : ℕ → ℕ} (ht : Monotone t) : Filtration ℕ m₀ where
@@ -30,7 +30,7 @@ def subsequence (ℱ : Filtration ℕ m₀) {t : ℕ → ℕ} (ht : Monotone t) 
   le' n := ℱ.le (t n)
 
 @[simp]
-lemma subsequence_apply (ℱ : Filtration ℕ m₀) {t : ℕ → ℕ} (ht : Monotone t) (n : ℕ) :
+theorem subsequence_apply (ℱ : Filtration ℕ m₀) {t : ℕ → ℕ} (ht : Monotone t) (n : ℕ) :
     ℱ.subsequence ht n = ℱ (t n) := rfl
 
 end MeasureTheory.Filtration

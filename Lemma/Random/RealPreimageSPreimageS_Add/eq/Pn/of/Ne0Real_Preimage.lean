@@ -2,14 +2,16 @@ import sympy.stats.policy_trajectory.gradient
 import sympy.Basic
 import Lemma.Real.Norm_Eq12.le.One
 import Lemma.Random.Integral_MulEqS.eq.MulRealW.of.All_LeNorm.StronglyMeasurable
-open MeasureTheory ProbabilityTheory Finset Filter Topology PolicyGradient PolicyGradient.Model
+import Lemma.Random.Measurable_S
+import Lemma.Real.StronglyMeasurable_Eq12
+open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random Real
 
 
 private lemma real_inter [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [Fintype A] [DecidableEq S] (M : Model Θ S A) (θ : Θ) (t t' : ℕ) (x y : S) :
     (M θ).real (s t ⁻¹' {x} ∩ s t' ⁻¹' {y}) =
       ∫ ω, (if s t ω = x then (1:ℝ) else 0) * (if s t' ω = y then (1:ℝ) else 0) ∂(M θ) := by
-  rw [← integral_indicator_one ((s_meas t (measurableSet_singleton x)).inter
-    (s_meas t' (measurableSet_singleton y)))]
+  rw [← integral_indicator_one ((Random.Measurable_S t (measurableSet_singleton x)).inter
+    (Random.Measurable_S t' (measurableSet_singleton y)))]
   congr 1
   funext ω
   by_cases h1 : s t ω = x <;> by_cases h2 : s t' ω = y <;> simp [Set.indicator, h1, h2]
@@ -29,10 +31,10 @@ private lemma main
 -- imply
   ((M θ)[|s t ⁻¹' {x}]).real (s (t + n) ⁻¹' {y}) = M.Pn θ n x y := by
 -- proof
-  rw [measureReal_def, cond_apply (s_meas t (measurableSet_singleton x)), ENNReal.toReal_mul,
+  rw [measureReal_def, cond_apply (Random.Measurable_S t (measurableSet_singleton x)), ENNReal.toReal_mul,
     ENNReal.toReal_inv, ← measureReal_def, ← measureReal_def, real_inter,
     show (∫ ω, (if s t ω = x then (1:ℝ) else 0) * (if s (t + n) ω = y then (1:ℝ) else 0) ∂(M θ)) =
-      (M θ).real (s t ⁻¹' {x}) * M.Pn θ n x y from Random.Integral_MulEqS.eq.MulRealW.of.All_LeNorm.StronglyMeasurable (M := M) θ (ind_fst_sm y) (Real.Norm_Eq12.le.One y) t n x,
+      (M θ).real (s t ⁻¹' {x}) * M.Pn θ n x y from Integral_MulEqS.eq.MulRealW.of.All_LeNorm.StronglyMeasurable (M := M) θ (Real.StronglyMeasurable_Eq12 y) (Norm_Eq12.le.One y) t n x,
     inv_mul_cancel_left₀ h₀]
 
 

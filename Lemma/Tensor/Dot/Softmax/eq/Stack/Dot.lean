@@ -3,7 +3,7 @@ import Lemma.Tensor.DotSoftmaxAdd_Mul_Infty.eq.Stack_DotSoftmax
 import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.XEq.is.All_XEqGetS
 import Mathlib.Analysis.SpecialFunctions.Exp
-open Matrix Tensor Hyperreal
+open Tensor
 set_option maxHeartbeats 1000000
 
 

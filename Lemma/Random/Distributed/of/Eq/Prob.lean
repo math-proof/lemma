@@ -2,6 +2,7 @@ import Mathlib.Probability.Independence.Integration
 import sympy.stats.joint_rv
 import sympy.stats.variance
 import sympy.Basic
+import Lemma.Random.Distributed.is.EqAe_Prob
 open MeasureTheory
 
 
@@ -19,7 +20,7 @@ private lemma given
 -- imply
   x ~ D := by
 -- proof
-  exact (Distributed_iff D).mpr h
+  exact (Random.Distributed.is.EqAe_Prob D).mpr h
 
 
 -- created on 2023-04-30

@@ -32,7 +32,7 @@ instance (x : Simplex S) : StochasticVec (WithLp.ofLp (x : l1Space S)) :=
 
 omit [Fintype S] in
 /-- Evaluation on coordinates is continuous in ℓ¹. -/
-lemma continuous_coord (s : S) :
+theorem continuous_coord (s : S) :
     Continuous fun f : l1Space S => WithLp.ofLp f s :=
   PiLp.continuous_apply (p := (1 : ENNReal)) (β := fun _ : S => ℝ) s
 

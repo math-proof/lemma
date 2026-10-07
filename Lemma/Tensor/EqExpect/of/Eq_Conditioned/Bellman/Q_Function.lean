@@ -1,6 +1,18 @@
-import sympy.stats.policy_trajectory.markov
+import sympy.stats.policy_trajectory
 import sympy.Basic
-open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model
+import Lemma.Random.Eq_0.of.EqReal_0
+import Lemma.Random.Integrable.of.Measurable
+import Lemma.Random.Integrable_Mul_R.of.Measurable
+import Lemma.Random.Integral.eq.MulMulRealPreimageSProbIntegral_MulEqSAndEqA
+import Lemma.Random.Integral_MulEqSAndEqA.eq.MulMulRealProbSum_MulT
+import Lemma.Random.Integral_MulEqSAndEqAR.eq.MulMulRealPreimageSProbIntegral_Rc
+import Lemma.Random.Measurable_A
+import Lemma.Random.Measurable_S
+import Lemma.Random.MulProbMulTV.eq.MulProbMulTTSum_MulPowW.of.Ne0Real_Preimage.In_Ico
+import Lemma.Random.Q.eq.AddIntegral_RcMul_Sum_MulTTSum_MulPowW.of.NeMulRealPreimageSProb_0.In_Ico
+import Lemma.Random.RealInterPreimageS_PreimageA.eq.MulRealPreimageSProb
+import Lemma.Real.Mul_AddMul_MulMul.eq.Add_Mul.of.Ne_0
+open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random Real
 
 
 /--
@@ -34,26 +46,26 @@ private lemma main
   show M.Q θ γ t x u = _
   simp only [hVi]
   by_cases hP : (M θ).real (s t ⁻¹' {x}) * M.pol.prob θ x u = 0
-  · rw [← real_sa] at hP
-    have h₂ := cond_eq_zero_of_meas_eq_zero (meas_zero_of_real M θ hP)
+  · rw [← RealInterPreimageS_PreimageA.eq.MulRealPreimageSProb] at hP
+    have h₂ := cond_eq_zero_of_meas_eq_zero (Eq_0.of.EqReal_0 (M := M) θ hP)
     simp [Model.Q, h₂]
   · have hP₀ : (M θ).real (s t ⁻¹' {x}) ≠ 0 := left_ne_zero_of_mul hP
     have hu : M.pol.prob θ x u ≠ 0 := right_ne_zero_of_mul hP
-    rw [cond_sa]
+    rw [Integral.eq.MulMulRealPreimageSProbIntegral_MulEqSAndEqA]
     have h₂ : ∀ ω : ℕ → ℝ × S × A, (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) *
         (γ * M.V θ γ (t + 1) (s (t + 1) ω) + r t ω) =
         γ * ((if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) * M.V θ γ (t + 1) (s (t + 1) ω)) +
           (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) * r t ω := fun ω => by ring
     simp_rw [h₂]
-    rw [integral_add ((integrable_ind_h M θ (fun ω => ((s t ω, a t ω), s (t + 1) ω))
-        (((s_meas t).prodMk (a_meas t)).prodMk (s_meas (t + 1)))
+    rw [integral_add ((Integrable.of.Measurable (M := M) (fun ω => ((s t ω, a t ω), s (t + 1) ω)) (((Random.Measurable_S t).prodMk (Random.Measurable_A t)).prodMk (Random.Measurable_S (t + 1)))
+        θ
         (fun p => (if p.1.1 = x ∧ p.1.2 = u then (1:ℝ) else 0) * M.V θ γ (t + 1) p.2)).const_mul γ)
-      (integrable_ind_r M θ (fun ω => (s t ω, a t ω)) ((s_meas t).prodMk (a_meas t))
+      (Integrable_Mul_R.of.Measurable (M := M) (fun ω => (s t ω, a t ω)) ((Random.Measurable_S t).prodMk (Random.Measurable_A t)) θ
         (fun p => if p.1 = x ∧ p.2 = u then (1:ℝ) else 0) t),
-      integral_const_mul, E_xu_h, E_xu_r0, alg1 hP, Q_eq M θ h₀ t x u hP]
+      integral_const_mul, Integral_MulEqSAndEqA.eq.MulMulRealProbSum_MulT, Integral_MulEqSAndEqAR.eq.MulMulRealPreimageSProbIntegral_Rc, Mul_AddMul_MulMul.eq.Add_Mul.of.Ne_0 hP, Q.eq.AddIntegral_RcMul_Sum_MulTTSum_MulPowW.of.NeMulRealPreimageSProb_0.In_Ico (M := M) θ t x u h₀ hP]
     congr 2
     refine Finset.sum_congr rfl (fun y _ => ?_)
-    have h₃ := V_succ_eq M θ h₀ t x u hP₀ y
+    have h₃ := MulProbMulTV.eq.MulProbMulTTSum_MulPowW.of.Ne0Real_Preimage.In_Ico (M := M) θ t x h₀ hP₀ u y
     exact (mul_left_cancel₀ hu h₃).symm
 
 

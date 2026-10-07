@@ -1,6 +1,6 @@
 import Lemma.Tensor.LogGetGetSoftmaxAdd_Mul_Infty.eq.Coe_Z
 import sympy.Basic
-open Tensor Hyperreal
+open Tensor
 
 
 /--

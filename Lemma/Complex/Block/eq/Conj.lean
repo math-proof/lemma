@@ -1,6 +1,5 @@
 import sympy.functions.elementary.complexes
 import sympy.Basic
-open Complex
 
 
 @[main]

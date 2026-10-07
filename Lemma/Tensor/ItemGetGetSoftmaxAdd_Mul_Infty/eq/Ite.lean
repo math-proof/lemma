@@ -6,7 +6,7 @@ import Lemma.Tensor.GetMap.eq.MapGet
 import Lemma.Tensor.EqGetStack
 import torch.Tensor.item
 import sympy.Basic
-open Tensor Hyperreal
+open Tensor
 set_option maxHeartbeats 1000000
 
 private lemma entry {n m : ℕ} (f : Fin n → Fin m → ℝ) (i : Fin n) (j : Fin m) :

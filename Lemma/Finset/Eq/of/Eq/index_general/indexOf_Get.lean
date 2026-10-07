@@ -1,6 +1,7 @@
 import sympy.tensor.index_of
 import sympy.sets.sets
 import sympy.Basic
+import Lemma.Nat.EqIndexGet.of.Lt.InjOnRange
 
 
 @[main]
@@ -16,7 +17,7 @@ private lemma main
   have hc : ((Finset.range n).image x).card = (Finset.range n).card := by
     rw [h, Int.card_Ico, Finset.card_range]
     omega
-  exact IndexOf.index_get x n (Finset.card_image_iff.mp hc) hj
+  exact Nat.EqIndexGet.of.Lt.InjOnRange x n (Finset.card_image_iff.mp hc) hj
 
 
 -- created on 2020-10-26

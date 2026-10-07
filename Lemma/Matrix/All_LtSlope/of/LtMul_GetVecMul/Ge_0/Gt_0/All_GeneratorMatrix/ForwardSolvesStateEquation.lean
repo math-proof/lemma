@@ -7,7 +7,7 @@ import sympy.dynamics.actor_critic
 import sympy.Basic
 import Lemma.Matrix.NegGetVecMul.le.GetVecMul.of.Le_0.GeneratorMatrix
 import Lemma.Matrix.GetVecMul.ge.Zero.of.Ge_0.GeneratorMatrix
-open Matrix Filter Topology
+open Matrix Topology
 
 
 @[main]

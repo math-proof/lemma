@@ -1,6 +1,6 @@
 import sympy.Basic
 import sympy.stats.stochastic_process_types
-open scoped Matrix BigOperators
+open scoped BigOperators
 
 
 @[main]

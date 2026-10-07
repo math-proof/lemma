@@ -4,6 +4,7 @@ import Mathlib.Analysis.Complex.Basic
 import Mathlib.MeasureTheory.Integral.Bochner.Basic
 import Mathlib.MeasureTheory.Measure.Decomposition.RadonNikodym
 import sympy.stats.rv
+
 open MeasureTheory
 
 
@@ -250,61 +251,3 @@ noncomputable def MeasureTheory.Measure.condProbRA
   fun ω ↦ π.condProb xy (x0, (xy ω).2)
 
 
-/--
-The law of `x` equals the state measure with density `π.prob x`: the
-distribution in `SinglePSpace.exists_distribution` gives absolute continuity, and the
-Radon–Nikodym theorem reconstructs the measure from its canonical derivative.
--/
-theorem SinglePSpace.map_eq_withDensity_density
-    {Ω α : Type*}
-    [MeasurableSpace Ω]
-    [ReferenceMeasure α]
-    {π : Measure Ω}
-    {x : Ω → α}
-    [SinglePSpace π x] :
-    π.map x =
-      ReferenceMeasure.measure.withDensity (π.prob x) := by
-  have hp : SinglePSpace π x := inferInstance
-  obtain ⟨ρ, _, hlaw⟩ := hp.exists_distribution
-  exact (Measure.withDensity_rnDeriv_eq (π.map x) _
-    (hlaw ▸ withDensity_absolutelyContinuous _ _)).symm
-
-
-/-- An `x ~ D` hypothesis, together with an a.e. measurability proof for `x`, supplies the
-`SinglePSpace D.measure x` instance. -/
-theorem Distributed.pspace
-    {Ω α : Type*}
-    [MeasurableSpace Ω]
-    [ReferenceMeasure α]
-    {π : Measure Ω} [IsProbabilityMeasure π]
-    {x : Ω → α} {ρ : α → ENNReal}
-    {D : Distribution π ρ}
-    (h : x ~ D)
-    (hx : AEMeasurable x π) :
-    SinglePSpace π x :=
-  { toIsProbabilityMeasure := inferInstance
-    aemeasurable := hx
-    exists_distribution := ⟨D.density, D, h⟩ }
-
-
-/--
-`x ~ D` is equivalent to the canonical density of `x` being a.e. equal to `D`'s density
-(`π.prob x =ᵐ[ReferenceMeasure.measure] ρ`).
--/
-theorem Distributed_iff
-    {Ω α : Type*}
-    [MeasurableSpace Ω]
-    [ReferenceMeasure α]
-    {π : Measure Ω}
-    {x : Ω → α} {ρ : α → ENNReal}
-    [SinglePSpace π x]
-    (D : Distribution π ρ) :
-    x ~ D ↔ π.prob x =ᵐ[ReferenceMeasure.measure] ρ := by
-  refine ⟨fun h ↦ ?_, fun h ↦ ?_⟩
-  · have h : D.measure.map x =
-        ReferenceMeasure.measure.withDensity D.density := h
-    show (D.measure.map x).rnDeriv ReferenceMeasure.measure =ᵐ[ReferenceMeasure.measure] D.density
-    rw [h]
-    exact Measure.rnDeriv_withDensity _ D.measurable_density
-  · exact (@SinglePSpace.map_eq_withDensity_density Ω α _ _ π x _).trans
-      (withDensity_congr_ae h)

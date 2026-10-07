@@ -1,5 +1,6 @@
 import sympy.matrices.cholesky
 import sympy.Basic
+import Lemma.Matrix.Lt_Sum_SquareNorm.et.All_Eq_Sum_Mul_Star.of.All_And.All_Eq_Div.PosDef
 open Matrix
 open scoped ComplexOrder
 
@@ -19,7 +20,7 @@ private lemma main
   ((∑ k ∈ Finset.Iio t, ‖L t k‖ ^ 2 : ℝ) : ℂ) < A t t ∧ ∀ j, j < t → A t j = ∑ k ∈ Finset.Iic j, L t k * star (L j k) := by
 -- proof
   have hA : A.PosDef := Matrix.PosDef.of_dotProduct_mulVec_pos h₀ (fun x hx => h₁ x hx)
-  exact hA.cholesky_step h₂ t h₃
+  exact Lt_Sum_SquareNorm.et.All_Eq_Sum_Mul_Star.of.All_And.All_Eq_Div.PosDef hA h₂ t h₃
 
 
 -- created on 2023-06-22

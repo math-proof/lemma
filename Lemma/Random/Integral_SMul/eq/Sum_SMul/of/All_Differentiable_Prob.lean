@@ -2,7 +2,7 @@ import sympy.stats.policy_trajectory.gradient
 import sympy.Basic
 import Lemma.Tensor.SMul.eq.Fderiv.of.All_Differentiable_Prob
 import Lemma.Random.Integral.eq.Sum_Sum_SMul
-open MeasureTheory ProbabilityTheory Finset Filter Topology PolicyGradient PolicyGradient.Model
+open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model
 
 
 /--

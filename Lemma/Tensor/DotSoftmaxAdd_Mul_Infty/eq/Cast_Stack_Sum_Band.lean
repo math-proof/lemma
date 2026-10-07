@@ -1,6 +1,9 @@
 import Lemma.Tensor.DotSoftmaxAdd_Mul_Infty.eq.Cast_Stack_Sum_Gather
-import sympy.functions.elementary.band
-open Tensor Hyperreal
+import sympy.concrete.expr_with_limits
+import Lemma.Fin.SumFilter.eq.Sum
+import Lemma.Nat.LtAdd_Mul.of.Lt_DivSubAddSub1.Gt_0
+import Lemma.Fin.SumFilter.eq.Sum.of.All_Le.EqEMod.Lt.Gt_0
+open Tensor
 set_option maxHeartbeats 2000000
 
 
@@ -32,7 +35,7 @@ private lemma window
   intro Ξ A Vᵢ
   exact DotSoftmaxAdd_Mul_Infty.eq.Cast_Stack_Sum_Gather (fun i j => ((i.val : ℤ) < (j.val : ℤ) + l ∧ (j.val : ℤ) < (i.val : ℤ) + u)) a v
     (fun t : Fin (min n (i.val + u) - (i.val + 1 - l)) => (⟨i.val + 1 - l + t, by have := t.2; omega⟩ : Fin n))
-    (fun i => ⟨i, ⟨by omega, by omega⟩⟩) i (fun g => Band.sum_filter_eq_window i l u g)
+    (fun i => ⟨i, ⟨by omega, by omega⟩⟩) i (fun g => Fin.SumFilter.eq.Sum i l u g)
 
 
 /--
@@ -61,13 +64,13 @@ private lemma dilated
   let Vᵢ : Tensor ℝ [n, d_v] := [j < n] [s < d_v] (v i j s : Tensor ℝ [])
   ((A + (Ξ - 1) * ∞).softmax.get ⟨i, by grind⟩) @ (Vᵢ : Tensor ℝ* [n, d_v]) ≈
     ((([t < d_v] ((∑ m : Fin ((min n (i.val + u) - b + d - 1) / d),
-        Real.exp (a i ⟨b + m * d, by have := Band.win_lt hd m.2; omega⟩) / (∑ m' : Fin ((min n (i.val + u) - b + d - 1) / d), Real.exp (a i ⟨b + m' * d, by have := Band.win_lt hd m'.2; omega⟩)) *
-          v i ⟨b + m * d, by have := Band.win_lt hd m.2; omega⟩ t : ℝ) : Tensor ℝ [])) : Tensor ℝ [d_v]) : Tensor ℝ* [d_v]) := by
+        Real.exp (a i ⟨b + m * d, by have := Nat.LtAdd_Mul.of.Lt_DivSubAddSub1.Gt_0 hd m.2; omega⟩) / (∑ m' : Fin ((min n (i.val + u) - b + d - 1) / d), Real.exp (a i ⟨b + m' * d, by have := Nat.LtAdd_Mul.of.Lt_DivSubAddSub1.Gt_0 hd m'.2; omega⟩)) *
+          v i ⟨b + m * d, by have := Nat.LtAdd_Mul.of.Lt_DivSubAddSub1.Gt_0 hd m.2; omega⟩ t : ℝ) : Tensor ℝ [])) : Tensor ℝ [d_v]) : Tensor ℝ* [d_v]) := by
 -- proof
   intro Ξ A Vᵢ
   exact DotSoftmaxAdd_Mul_Infty.eq.Cast_Stack_Sum_Gather (fun i j => ((i.val : ℤ) < (j.val : ℤ) + l ∧ (j.val : ℤ) < (i.val : ℤ) + u ∧ ((j.val : ℤ) - (i.val : ℤ)) % d = 0)) a v
-    (fun m : Fin ((min n (i.val + u) - b + d - 1) / d) => (⟨b + m * d, by have := Band.win_lt hd m.2; omega⟩ : Fin n))
-    (fun i => ⟨i, ⟨by omega, by omega, by simp⟩⟩) i (fun g => Band.sum_filter_eq_dilated i l u d b hd hb1 hb2 hb3 g)
+    (fun m : Fin ((min n (i.val + u) - b + d - 1) / d) => (⟨b + m * d, by have := Nat.LtAdd_Mul.of.Lt_DivSubAddSub1.Gt_0 hd m.2; omega⟩ : Fin n))
+    (fun i => ⟨i, ⟨by omega, by omega, by simp⟩⟩) i (fun g => Fin.SumFilter.eq.Sum.of.All_Le.EqEMod.Lt.Gt_0 i l u d b hd hb1 hb2 hb3 g)
 
 
 -- created on 2026-10-01

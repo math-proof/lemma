@@ -1,6 +1,6 @@
 import Lemma.LpSpace.PowNorm.eq.Sum_PowAbs.of.Ge_1
 import Lemma.Real.HasDerivAtPowAbs.of.Ge_2
-open Finset LpSpace Real
+open LpSpace Real
 
 
 @[main]

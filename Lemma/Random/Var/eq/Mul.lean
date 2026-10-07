@@ -2,6 +2,7 @@ import Mathlib.Probability.Independence.Integration
 import sympy.stats.joint_rv
 import sympy.stats.variance
 import sympy.Basic
+import Lemma.Random.Var.eq.Integral
 open MeasureTheory
 
 
@@ -18,7 +19,7 @@ private lemma main
   Variance π (fun ω => c * x ω) = c ^ 2 * Variance π x := by
 -- proof
   have e : ∀ ω, (c * x ω - c * ∫ ω', x ω' ∂π) ^ 2 = c ^ 2 * (x ω - ∫ ω', x ω' ∂π) ^ 2 := fun ω => by ring
-  simp only [Variance.eq_integral, integral_const_mul, e]
+  simp only [Random.Var.eq.Integral, integral_const_mul, e]
 
 
 -- created on 2023-04-19

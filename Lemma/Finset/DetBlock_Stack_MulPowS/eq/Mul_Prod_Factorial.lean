@@ -1,6 +1,9 @@
-import sympy.matrices.confluent_vandermonde
+import Mathlib.Algebra.Group.ForwardDiff
+import Mathlib.Data.Matrix.ColumnRowPartitioned
+import Mathlib.LinearAlgebra.Vandermonde
 import sympy.Basic
-open Finset Nat
+import Lemma.Matrix.DetOf.eq.MulPowSProdProd.of.Le
+open Matrix Finset Nat
 
 
 @[main]
@@ -15,7 +18,7 @@ private lemma vandermonde
     x₂ ^ ((m - d).choose 2) * x₁ ^ (d.choose 2) * (x₂ - x₁) ^ (d * (m - d)) *
       (∏ i ∈ Finset.range d, (i ! : ℝ)) * ∏ i ∈ Finset.range (m - d), (i ! : ℝ) := by
 -- proof
-  exact Vandermonde.confluent_det (by omega)
+  exact DetOf.eq.MulPowSProdProd.of.Le (by omega)
 
 
 -- created on 2022-07-11

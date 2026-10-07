@@ -1,6 +1,16 @@
-import sympy.stats.policy_trajectory.markov
+import sympy.stats.policy_trajectory
 import sympy.Basic
-open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model
+import Lemma.Random.Eq_0.of.EqReal_0
+import Lemma.Random.Integrable_MulEqSAndEqA
+import Lemma.Random.Integral.eq.MulRealPreimageSIntegral_MulEqS
+import Lemma.Random.Integral_EqSAndEqA.eq.MulRealPreimageSProb
+import Lemma.Random.NormRc.le.Abs_R
+import Lemma.Random.Q.eq.AddIntegral_RcMul_Sum_MulTTSum_MulPowW.of.NeMulRealPreimageSProb_0.In_Ico
+import Lemma.Random.StronglyMeasurableRc
+import Lemma.Random.TSum_MulPowW.eq.AddWMul_Sum_MulProbSum_MulTTSum_MulPowW.of.In_Ico
+import Lemma.Random.V.eq.TSum_MulPowWRc.of.Ne0Real_Preimage.In_Ico
+import Lemma.Random.W0.eq.Sum_MulProbIntegral.of.All_LeNorm.StronglyMeasurable
+open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 
 
 /--
@@ -33,17 +43,17 @@ private lemma main
     fun t x => (M.V_eq_integral θ γ t x).symm
   simp only [hVi]
   by_cases hP : (M θ).real (s t ⁻¹' {x}) = 0
-  · have h₃ := cond_eq_zero_of_meas_eq_zero (meas_zero_of_real M θ hP)
+  · have h₃ := cond_eq_zero_of_meas_eq_zero (Eq_0.of.EqReal_0 (M := M) θ hP)
     simp [M.V_eq_integral, h₃]
-  · rw [V_eq M θ h₀ t x hP, cond_s]
+  · rw [V.eq.TSum_MulPowWRc.of.Ne0Real_Preimage.In_Ico (M := M) θ t x h₀ hP, Integral.eq.MulRealPreimageSIntegral_MulEqS]
     have h₃ : ∀ ω, (if s t ω = x then (1:ℝ) else 0) * M.Q θ γ t x (a t ω) =
         ∑ u, (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) * M.Q θ γ t x u := by
       intro ω
       rw [Finset.sum_eq_single (a t ω) (fun b _ hb => by simp [Ne.symm hb]) (by simp)]
       by_cases h : s t ω = x <;> simp [h]
     simp_rw [h₃]
-    rw [integral_finsetSum _ (fun u _ => integrable_ind_sa M θ t x u _)]
-    simp_rw [integral_mul_const, P_xu]
+    rw [integral_finsetSum _ (fun u _ => Random.Integrable_MulEqSAndEqA (M := M) θ t x u _)]
+    simp_rw [integral_mul_const, Integral_EqSAndEqA.eq.MulRealPreimageSProb]
     rw [Finset.mul_sum]
     have h₄ : ∀ u, ((M θ).real (s t ⁻¹' {x}))⁻¹ *
         ((M θ).real (s t ⁻¹' {x}) * M.pol.prob θ x u * M.Q θ γ t x u) =
@@ -53,9 +63,9 @@ private lemma main
       rw [mul_assoc, inv_mul_cancel_left₀ hP]
       by_cases hu : M.pol.prob θ x u = 0
       · simp [hu]
-      · rw [Q_eq M θ h₀ t x u (mul_ne_zero hP hu)]
+      · rw [Random.Q.eq.AddIntegral_RcMul_Sum_MulTTSum_MulPowW.of.NeMulRealPreimageSProb_0.In_Ico (M := M) θ t x u h₀ (mul_ne_zero hP hu)]
     simp_rw [h₄]
-    rw [v_closed M θ h₀ x, W_zero M θ (rc_sm M) (rc_bdd M) x, Finset.mul_sum,
+    rw [TSum_MulPowW.eq.AddWMul_Sum_MulProbSum_MulTTSum_MulPowW.of.In_Ico (M := M) h₀ θ x, W0.eq.Sum_MulProbIntegral.of.All_LeNorm.StronglyMeasurable (M := M) (Random.StronglyMeasurableRc (M := M)) (NormRc.le.Abs_R (M := M)) θ x, Finset.mul_sum,
       ← Finset.sum_add_distrib]
     exact Finset.sum_congr rfl (fun u _ => by ring)
 

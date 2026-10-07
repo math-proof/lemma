@@ -1,7 +1,7 @@
-import sympy.concrete.continued_fraction_tail
 import sympy.sets.sets
 import sympy.Basic
-open Continuant
+import Lemma.Finset.Alpha_MapRange.eq.DivHK.of.All_Imp_Gt_0.Gt_0
+open Finset Continuant
 
 
 @[main]
@@ -14,7 +14,7 @@ private lemma main
 -- imply
   alpha ((List.range n).map x) = H x n / K x n := by
 -- proof
-  exact alpha_eq_of_tail_pos x h₀ h
+  exact Alpha_MapRange.eq.DivHK.of.All_Imp_Gt_0.Gt_0 x h₀ h
 
 
 @[main]
@@ -27,7 +27,7 @@ private lemma induct
 -- imply
   alpha ((List.range n).map x) = H x n / K x n := by
 -- proof
-  exact alpha_eq_of_tail_pos x (by omega) (fun j h1 h2 => h j h1 (by omega))
+  exact Alpha_MapRange.eq.DivHK.of.All_Imp_Gt_0.Gt_0 x (by omega) (fun j h1 h2 => h j h1 (by omega))
 
 
 @[main]
@@ -40,7 +40,7 @@ private lemma offset0
 -- imply
   alpha ((List.range n).map x) = H x n / K x n := by
 -- proof
-  exact alpha_eq_of_tail_pos x h₀ (fun j _ h2 => h j h2)
+  exact Alpha_MapRange.eq.DivHK.of.All_Imp_Gt_0.Gt_0 x h₀ (fun j _ h2 => h j h2)
 
 
 -- created on 2020-09-24

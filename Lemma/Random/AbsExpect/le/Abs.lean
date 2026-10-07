@@ -1,6 +1,7 @@
-import sympy.stats.policy_trajectory.markov
+import sympy.stats.policy_trajectory
 import sympy.Basic
-open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model
+import Lemma.Random.Norm_Integral_R.le.Abs_R
+open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 
 
 /--
@@ -20,7 +21,7 @@ private lemma main
   ‖∫ ω, r t ω ∂(M θ)[|B]‖ ≤ ‖M.env.R‖ := by
 -- proof
   classical
-  simpa [Real.norm_eq_abs] using cond_r_bdd M θ B t
+  simpa [Real.norm_eq_abs] using Norm_Integral_R.le.Abs_R (M := M) θ B t
 
 
 -- created on 2026-09-26

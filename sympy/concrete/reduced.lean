@@ -68,17 +68,9 @@ def Function.max {α β δ : Type*} [Function.ReduceMax (α → β) δ] (v : α 
 
 @[simp] theorem Function.log_apply {α : Type*} (v : α → ℝ) (b : α) : v.log b = Real.log (v b) := rfl
 
-theorem Function.sum_eq {α : Type*} [Fintype α] (v : α → ℝ) :
-    v.sum = ∑ b, v b := rfl
-
-theorem Function.max_eq {α : Type*} [Fintype α] [Nonempty α] (v : α → ℝ) :
-    v.max = Finset.univ.sup' Finset.univ_nonempty v := rfl
 
 @[simp] theorem Function.max_apply {α β : Type*} [Fintype β] [Nonempty β] (v : α → β → ℝ) (a : α) :
     v.max a = (v a).max := rfl
-
-theorem Function.add_max_apply {α : Type*} [Fintype α] [Nonempty α] (G : α → α → ℝ) (v : α → ℝ) (a : α) :
-    (G + v).max a = Finset.univ.sup' Finset.univ_nonempty (fun b => G a b + v b) := rfl
 
 
 -- created on 2026-10-02

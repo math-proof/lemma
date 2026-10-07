@@ -1,7 +1,6 @@
 import sympy.functions.elementary.complexes
 import sympy.Basic
 import Mathlib.Data.Matrix.Mul
-open Complex
 open scoped ComplexOrder
 
 

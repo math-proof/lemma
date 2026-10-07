@@ -18,7 +18,9 @@ import Lemma.Random.Measurable_R
 import Lemma.Random.AeAll_LeNorm_TSum_MulPowSubAddRMul_VcVcMulSub1DeltaBound.of.In_Ico.In_Ico
 import Lemma.Random.Integral_SMul.eq.Zero.of.Le.In_Ico
 import Lemma.Random.Integral_SMul.of.In_Ico.In_Ico
-open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Filter Topology
+import Lemma.Random.Measurable_A
+import Lemma.Random.Measurable_S
+open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Filter Topology Random
 open scoped ENNReal.ToRealCoe
 
 
@@ -53,13 +55,13 @@ private lemma main
   (h₄ : ℓ ∈ Set.Icc 0 1) :
 -- imply
   have : ∀ θ t, SinglePSpace (M θ) (JointRandomSymbol (a t) (s t)) := fun _ t =>
-    Random.SinglePSpace.of.EqMeasureCount.Measurable ((a_meas t).prodMk (s_meas t)) (by
+    SinglePSpace.of.EqMeasureCount.Measurable ((Random.Measurable_A t).prodMk (Random.Measurable_S t)) (by
       show (ReferenceMeasure.measure : Measure A).prod (ReferenceMeasure.measure : Measure S) = _
       rw [hA, hS, Measure.Count.eq.ProdCountS])
   have hs : ∀ t, PSpace (M θ) (s (S := S) (A := A) t) := fun t =>
-    ⟨(s_meas t).aemeasurable⟩
+    ⟨(Random.Measurable_S t).aemeasurable⟩
   have ha : ∀ t, PSpace (M θ) (a (S := S) (A := A) t) := fun t =>
-    ⟨(a_meas t).aemeasurable⟩
+    ⟨(Random.Measurable_A t).aemeasurable⟩
   have hr : ∀ t, PSpace (M θ) (r (S := S) (A := A) t) := fun t =>
     ⟨(Random.Measurable_R t).aemeasurable⟩
   have : PSpace (M θ) (AsPathRV.path (s (S := S) (A := A))) :=
@@ -89,12 +91,12 @@ private lemma main
       fderiv ℝ (fun θ' => (ℙ[M θ']((a t) = (a t ω) | (s t) = (s t ω)) : ℝ).log) θ =
         fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' (s t ω) (a t ω))) θ := by
     intro t
-    filter_upwards [Random.AeRealPreimageSS.ne.Zero (M := M) θ] with ω hω
+    filter_upwards [AeRealPreimageSS.ne.Zero (M := M) θ] with ω hω
     have hc : ContinuousAt (fun θ' => (M θ').real (s t ⁻¹' {s t ω})) θ :=
-      (Random.Differentiable_RealPreimageS.of.GtInftySup.All_Differentiable_Prob (M := M) h₂ h₃ t (s t ω) θ).continuousAt
+      (Differentiable_RealPreimageS.of.GtInftySup.All_Differentiable_Prob (M := M) h₂ h₃ t (s t ω) θ).continuousAt
     refine Filter.EventuallyEq.fderiv_eq ((hc.eventually_ne (hω t)).mono fun θ' h => ?_)
     beta_reduce
-    rw [Random.ProbCond.eq.OfRealPol.of.Ne_0 hS hA (hP θ' t) h,
+    rw [ProbCond.eq.OfRealPol.of.Ne_0 hS hA (hP θ' t) h,
       ENNReal.toReal_ofReal (M.pol.nonneg θ' _ _)]
   have hpR : Measurable (fun ω t ↦ r (S := S) (A := A) t ω) := measurable_pi_lambda _ fun t => Random.Measurable_R t
   have hfG : ∀ t, Measurable (fun integ : ℕ → ℝ ↦ ∑' k, γ ^ k * integ (t + k)) := fun t =>
@@ -108,7 +110,7 @@ private lemma main
     rfl
   -- almost surely the learned value is the time-free value function
   have hVc : ∀ᵐ ω ∂(M θ), ∀ k, V θ k (s k ω) = M.Vc θ γ (s k ω) :=
-    (Random.AeRealPreimageSS.ne.Zero (M := M) θ).mono fun ω h k => (hVr θ k _ (h k)).trans (Random.V.eq.Vc.of.Ne0Real_Preimage.In_Ico (M := M) θ h₀ k _ (h k))
+    (AeRealPreimageSS.ne.Zero (M := M) θ).mono fun ω h k => (hVr θ k _ (h k)).trans (Random.V.eq.Vc.of.Ne0Real_Preimage.In_Ico (M := M) θ h₀ k _ (h k))
   have hδ : ∀ᵐ ω ∂(M θ), ∀ j, r j ω + γ * V θ (j + 1) (s (j + 1) ω) - V θ j (s j ω) =
       r j ω + γ * M.Vc θ γ (s (j + 1) ω) - M.Vc θ γ (s j ω) :=
     hVc.mono fun ω h j => by rw [h j, h (j + 1)]
@@ -116,7 +118,7 @@ private lemma main
       ‖∑' k, c ^ k * (r (t + k) ω + γ * V θ (t + k + 1) (s (t + k + 1) ω) - V θ (t + k) (s (t + k) ω))‖ ≤
         (1 - c)⁻¹ * M.deltaBound γ := by
     intro c hc'
-    filter_upwards [Random.AeAll_LeNorm_TSum_MulPowSubAddRMul_VcVcMulSub1DeltaBound.of.In_Ico.In_Ico (M := M) θ h₀ hc', hδ] with ω h1 h2 t
+    filter_upwards [AeAll_LeNorm_TSum_MulPowSubAddRMul_VcVcMulSub1DeltaBound.of.In_Ico.In_Ico (M := M) θ h₀ hc', hδ] with ω h1 h2 t
     have e : ∑' k, c ^ k * (r (t + k) ω + γ * V θ (t + k + 1) (s (t + k + 1) ω) - V θ (t + k) (s (t + k) ω)) =
         ∑' k, c ^ k * (r (t + k) ω + γ * M.Vc θ γ (s (t + k + 1) ω) - M.Vc θ γ (s (t + k) ω)) :=
       tsum_congr fun k => by rw [h2 (t + k)]
@@ -130,7 +132,7 @@ private lemma main
         fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' (s t ω) (a t ω))) θ ∂(M θ) := by
     intro c hc' t
     refine (integral_congr_ae ?_).trans
-      (Random.Integral_SMul.of.In_Ico.In_Ico (M := M) θ h₀ hc' t (fun y u => fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' y u)) θ))
+      (Integral_SMul.of.In_Ico.In_Ico (M := M) θ h₀ hc' t (fun y u => fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' y u)) θ))
     filter_upwards [hscore t, hδ] with ω h1 h2
     rw [h1]
     beta_reduce
@@ -139,8 +141,8 @@ private lemma main
   have hmeas : ∀ k, Measurable fun ω : ℕ → ℝ × S × A =>
       (fun (s : ℕ → S) (_ : ℕ → A) (r : ℕ → ℝ) (k : ℕ) => r k + γ * V θ (k + 1) (s (k + 1)) - V θ k (s k))
         (fun j => s j ω) (fun j => a j ω) (fun j => r j ω) k := fun k =>
-    ((Random.Measurable_R k).add (((measurable_of_countable (V θ (k + 1))).comp (s_meas (k + 1))).const_mul γ)).sub
-      ((measurable_of_countable (V θ k)).comp (s_meas k))
+    ((Random.Measurable_R k).add (((measurable_of_countable (V θ (k + 1))).comp (Random.Measurable_S (k + 1))).const_mul γ)).sub
+      ((measurable_of_countable (V θ k)).comp (Random.Measurable_S k))
   have hbase : ∇[θ] (
       have : PSpace (M θ) (AsPathRV.path (r (S := S) (A := A))) :=
         PSpace.of_process_path (fun t => ⟨(Random.Measurable_R t).aemeasurable⟩)

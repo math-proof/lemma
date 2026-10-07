@@ -9,7 +9,7 @@ import '../../../static/js/std.js';
 import { compile, Lean, LeanModule } from '../../../static/js/parser/lean.js';
 
 /** rule ids implemented here; their text-scan versions only run when the AST is unavailable */
-export const AST_RULES = new Set(['have-inline-once', 'given-prop-first', 'tactic-haveI', 'tactic-letI', 'calc-after-assign']);
+export const AST_RULES = new Set(['have-inline-once', 'given-prop-first', 'given-prop-consecutive', 'tactic-haveI', 'tactic-letI', 'calc-after-assign', 'decl-keyword-dir']);
 
 /** parse `source`, or null when the parser throws / does not return a module */
 export function parseAst(source) {
@@ -178,25 +178,129 @@ function givenBinders(decl) {
     return out;
 }
 
-/** in `-- given`, propositions come first: an expression binder followed by an independent proposition binder */
-function givenPropFirst(ctx, decl) {
-    const bs = givenBinders(decl);
-    if (!bs) return;
+/** names bound by the binder part of a quantifier / big operator / `fun`, and its parts evaluated outside the scope */
+function binderParts(b) {
+    const { LeanToken, LeanColon, LeanArgsSpaceSeparated, LeanParenthesis, LeanBrace } = Lean.classes;
+    const names = [];
+    const outside = [];
+    const visit = (x) => {
+        if (x instanceof LeanToken) names.push(x.text);
+        else if (x instanceof LeanArgsSpaceSeparated) x.args.forEach(visit);
+        else if (x instanceof LeanParenthesis || x instanceof LeanBrace) visit(x.arg);
+        else if (x instanceof LeanColon || (x && x.lhs != null && x.rhs != null)) { visit(x.lhs); outside.push(x.rhs); } // `i : Fin n`, `k ∈ s`, `x > 0`
+        else if (x) outside.push(x);
+    };
+    visit(b);
+    return { names, outside };
+}
+
+/** does `node` mention `name` free (not re-bound by `∀ name, …` / `∑ name ∈ s, …` / `fun name => …`)? */
+function mentions(node, name) {
+    const { LeanToken, LeanBigOperator, Lean_fun, LeanRightarrow } = Lean.classes;
+    if (!node || typeof node !== 'object') return false;
+    if (node instanceof LeanToken) return node.text === name;
+    let scope = null;
+    if (node instanceof LeanBigOperator && node.args?.length === 2) scope = [node.args[0], node.args[1]];
+    else if (node instanceof Lean_fun && node.arg instanceof LeanRightarrow) scope = [node.arg.lhs, node.arg.rhs];
+    if (scope) {
+        const { names, outside } = binderParts(scope[0]);
+        if (outside.some((o) => mentions(o, name))) return true;
+        return names.includes(name) ? false : mentions(scope[1], name);
+    }
+    return Array.isArray(node.args) && node.args.some((c) => mentions(c, name));
+}
+
+/**
+ * Names of the `given` expressions the propositions need: an expression whose name a proposition's type mentions,
+ * closed over the types of those expressions (`(n : ℕ) (i : Fin n) (h : i < 3)` needs `i` and `n`).
+ * Free occurrences only (`mentions`): a name re-bound inside a proposition (`∀ x, …`, `fun θ => …`) does not count.
+ */
+function neededExprs(bs) {
+    const exprs = bs.filter((b) => b.kind === 'expr');
+    const need = new Set();
+    let grow = bs.filter((b) => b.kind === 'prop').map((b) => b.type);
+    while (grow.length) {
+        const next = [];
+        for (const t of grow) {
+            for (const e of exprs) {
+                if (e.names.every((n) => need.has(n)) || !e.names.some((n) => mentions(t, n))) continue;
+                for (const n of e.names) need.add(n);
+                next.push(e.type);
+            }
+        }
+        grow = next;
+    }
+    return need;
+}
+
+/**
+ * In `-- given`, propositions come first: an expression binder followed by an independent proposition binder.
+ * An expression some proposition needs (`neededExprs`) must stay above the propositions — moving a proposition
+ * above it would split the proposition run (`given-prop-consecutive`), so it is not reported here.
+ * Returns true when it warned.
+ */
+function givenPropFirst(ctx, decl, bs = givenBinders(decl)) {
+    if (!bs) return false;
+    const need = neededExprs(bs);
     for (let a = 0; a < bs.length; a++) {
-        if (bs[a].kind !== 'expr') continue;
+        if (bs[a].kind !== 'expr' || bs[a].names.some((n) => need.has(n))) continue;
         // a proposition can move above `bs[a]` only if it mentions no name bound from `bs[a]` up to itself
         let bound = [];
         let prop = null;
         for (let b = a; b < bs.length; b++) {
             const x = bs[b];
-            if (b > a && x.kind === 'prop' && !bound.some((n) => tokens(x.type, n) > 0)) { prop = x; break; }
+            if (b > a && x.kind === 'prop' && !bound.some((n) => mentions(x.type, n))) { prop = x; break; }
             bound = bound.concat(x.names);
         }
         if (!prop) continue;
         ctx.warnAst('given-prop-first', prop.node,
             `proposition \`${quote(prop.node, 60, 1)}\` comes after the expression \`${quote(bs[a].node, 60, 1)}\` and does not depend on it: in \`given\`, propositions come first`);
-        break;
+        return true;
     }
+    return false;
+}
+
+/**
+ * `given-prop-consecutive`: the propositions of `-- given` must form one consecutive run. The page
+ * (`render2vue` → `static/components/lemma.vue`) shows `given` as: `explicit` (binders before the first
+ * proposition, raw Lean) → `given` (the first run of propositions, one LaTeX block each) → `default` (everything
+ * from the first expression after that run, raw Lean) — so a proposition after the gap is never typeset.
+ * Canonical order: the expressions the propositions need, then all propositions, then the other expressions.
+ */
+function givenPropConsecutive(ctx, decl, bs = givenBinders(decl)) {
+    if (!bs) return false;
+    const typed = bs.filter((b) => b.kind === 'prop' || b.kind === 'expr');
+    const p0 = typed.findIndex((b) => b.kind === 'prop');
+    if (p0 < 0) return false;
+    const g0 = typed.findIndex((b, i) => i > p0 && b.kind === 'expr');
+    if (g0 < 0) return false;
+    const late = typed.findIndex((b, i) => i > g0 && b.kind === 'prop');
+    if (late < 0) return false;
+    const prop = typed[late];
+    const gap = typed.slice(g0, late).filter((b) => b.kind === 'expr');
+    const props = typed.filter((b) => b.kind === 'prop');
+    const need = neededExprs(bs);
+    const exprs = typed.filter((b) => b.kind === 'expr');
+    const before = exprs.filter((b) => b.names.some((n) => need.has(n)));
+    const after = exprs.filter((b) => !b.names.some((n) => need.has(n)));
+    const deps = gap.flatMap((b) => b.names).filter((n) => mentions(prop.type, n));
+    const names = (xs) => xs.flatMap((b) => b.names).join(' ');
+    const first = quote(typed[p0].node, 40, 1);
+    let fix;
+    if (gap.some((b) => b.names.some((n) => need.has(n)))) {
+        // the gap holds expressions the propositions need: they go above the first proposition
+        const move = before.filter((b) => typed.indexOf(b) > p0);
+        // an expression typed by a proposition (`(x : Fin n)` after `(h : 0 < n)` is fine; `(y : {z // h z})` is not) cannot move
+        if (move.some((b) => props.some((q) => q.names.some((n) => mentions(b.type, n))))) return false;
+        const order = [before, props, after].filter((xs) => xs.length).map((xs) => `\`${names(xs)}\``).join(', then ');
+        fix = (deps.length ? `it mentions ${deps.map((n) => `\`${n}\``).join(', ')}, so it cannot move above them; ` : '')
+            + `move ${move.map((b) => `\`${quote(b.node, 40, 1)}\``).join(' ')} before \`${first}\` (order: ${order})`;
+    } else {
+        fix = `move it up to the propositions above (it does not depend on ${gap.map((b) => `\`${quote(b.node, 40, 1)}\``).join(' ')})`;
+    }
+    ctx.warnAst('given-prop-consecutive', prop.node,
+        `proposition \`${quote(prop.node, 60, 1)}\` is separated from the propositions above by ${gap.map((b) => `\`${quote(b.node, 40, 1)}\``).join(' ')}: in \`given\`, keep all propositions consecutive (only the first run is typeset); ${fix}`);
+    return true;
 }
 
 // ---------------------------------------------------------------------------------------------------------------
@@ -222,17 +326,69 @@ function calcAfterAssign(ctx, node) {
     ctx.warnAst('calc-after-assign', node, `put \`calc\` on the same line right after \`:=\` (\`${node.keyword} … := calc\`), not on the next line`, 1);
 }
 
+/** is the repo-relative path a `Lemma/…` file? */
+export function isLemmaPath(file) {
+    return /(^|\/)Lemma\//.test(String(file ?? '').replace(/\\/g, '/'));
+}
+
+/**
+ * `decl-keyword-dir`: a `theorem` in a `Lemma/` file (AGENTS.md: `Lemma/` holds only `lemma`s). The keyword is the
+ * node class (`Lean_theorem`), so modifiers (`private`, `noncomputable`, `@[…]`), comments, strings and names like
+ * `theorem_foo` never match. Quotes the declaration head (the reprint's line holding the keyword).
+ * (`sympy/` files are never rendered or linted, so the `lemma`-in-`sympy/` half is not checked.)
+ */
+function declKeywordDir(ctx, decl) {
+    const { Lean_theorem } = Lean.classes;
+    if (!(decl instanceof Lean_theorem)) return;
+    // the reprint without the `@[…]` prefix (a mis-parsed attribute can swallow the previous declaration)
+    let text = String(decl).replace(/^\n+/, '');
+    const attr = decl.attribute != null ? String(decl.attribute) : '';
+    if (attr && text.startsWith(attr)) text = text.slice(attr.length);
+    const lines = text.replace(/^\s+/, '').split('\n');
+    const head = (lines.find((l) => /(^|\s)theorem\b/.test(l)) ?? lines[0]).trim();
+    const name = declName(decl) ?? /(?:^|\s)theorem\s+([^\s:({[⦃]+)/.exec(head)?.[1];
+    const stmt = head.length > 120 ? `${head.slice(0, 120)}…` : head;
+    // located on its own (not with the shared forward cursor): a mis-parsed `@[…]` can nest one declaration in the
+    // next, so tree order need not be source order; repeated heads take the next unused matching line
+    ctx.declHeadLines ??= new Set();
+    const first = locate(ctx.P.raw, stmt, 0);
+    let line = first;
+    while (line != null && ctx.declHeadLines.has(line)) line = locate(ctx.P.raw, stmt, line);
+    // every matching source line already reported: the parser produced this declaration twice (mis-nesting)
+    if (first != null && line == null) return;
+    if (line != null) ctx.declHeadLines.add(line);
+    ctx.warn('decl-keyword-dir', line, null, `\`theorem${name ? ` ${name}` : ''}\` in \`Lemma/\`: declare it with \`lemma\``, { stmt });
+}
+
+/**
+ * Number of distinct `lemma` / `theorem` declarations in the tree. `lintLean` compares it with the text scan
+ * (`ctx.decls`) and leaves `decl-keyword-dir` to the text fallback when they disagree (a mis-parse).
+ */
+export function countLemmaTheoremNodes(tree) {
+    const { Lean_lemma, Lean_theorem } = Lean.classes;
+    const seen = new Set();
+    for (const n of walk(tree)) if (n instanceof Lean_lemma || n instanceof Lean_theorem) seen.add(n);
+    return seen.size;
+}
+
 export function astRules(ctx, tree) {
     const { LeanStatements, LeanArgsNewLineSeparated, Lean_lemma, Lean_theorem, Lean_def, Lean_let } = Lean.classes;
     // findings are emitted in source order (pre-order index of the quoted node) so that `ctx.warnAst` can locate
     // each statement with a forward-moving cursor
     const order = new Map();
     const found = [];
-    const sink = { warnAst: (rule, node, msg, maxLines, follow) => found.push({ rule, node, msg, maxLines, follow }) };
+    const lemmaFile = ctx.astCovered.has('decl-keyword-dir') && isLemmaPath(ctx.file);
+    // `quoteAs`: text to quote instead of the node's own reprint (the node still fixes the source order)
+    const sink = { warnAst: (rule, node, msg, maxLines, follow, quoteAs) => found.push({ rule, node, msg, maxLines, follow, quoteAs }) };
     for (const node of walk(tree)) {
         order.set(node, order.size);
         if (node instanceof Lean_lemma || node instanceof Lean_theorem || node instanceof Lean_def) found.push({ anchor: declName(node), node });
-        if (node instanceof Lean_lemma || node instanceof Lean_theorem) givenPropFirst(sink, node);
+        if (node instanceof Lean_theorem && lemmaFile) declKeywordDir(ctx, node);
+        if (node instanceof Lean_lemma || node instanceof Lean_theorem) {
+            const bs = givenBinders(node);
+            // one finding per lemma: the consecutive check only when no independent proposition can simply move up
+            if (!givenPropFirst(sink, node, bs)) givenPropConsecutive(sink, node, bs);
+        }
         else if (node instanceof LeanStatements || node instanceof LeanArgsNewLineSeparated) haveInlineOnce(sink, node);
         else if (node instanceof Lean_let) {
             instanceVariant(sink, node);
@@ -241,7 +397,7 @@ export function astRules(ctx, tree) {
     }
     found.sort((a, b) => order.get(a.node) - order.get(b.node));
     for (const f of found) {
-        if (!('anchor' in f)) ctx.warnAst(f.rule, f.node, f.msg, f.maxLines, f.follow);
+        if (!('anchor' in f)) ctx.warnAst(f.rule, f.quoteAs != null ? { toString: () => f.quoteAs } : f.node, f.msg, f.maxLines, f.follow);
         else {
             // a declaration: restart the search at its line (from the text scanner) so repeated binders resolve per lemma
             const d = ctx.decls.find((x) => x.name === f.anchor && x.line >= ctx.astCursor);

@@ -2,6 +2,7 @@ import Mathlib.Probability.Independence.Integration
 import sympy.stats.joint_rv
 import sympy.stats.variance
 import sympy.Basic
+import Lemma.Random.Cov.eq.Integral
 open MeasureTheory
 
 
@@ -27,7 +28,7 @@ private lemma main
   have hm : ∫ ω, (x ω - ∫ ω', x ω' ∂π) * (y ω - ∫ ω', y ω' ∂π) ∂π = (∫ ω, (x ω - ∫ ω', x ω' ∂π) ∂π) * ∫ ω, (y ω - ∫ ω', y ω' ∂π) ∂π :=
     hi.integral_mul_eq_mul_integral (hx.aestronglyMeasurable.sub aestronglyMeasurable_const)
       (hy.aestronglyMeasurable.sub aestronglyMeasurable_const)
-  rw [Covariance.eq_integral, hm, h0, zero_mul]
+  rw [Random.Cov.eq.Integral, hm, h0, zero_mul]
 
 
 -- created on 2023-04-19

@@ -29,17 +29,19 @@ Two passes:
 | AST rule | how the tree is used | text fallback |
 |---|---|---|
 | `have-inline-once` | `Lean_have` in a statement list (`LeanStatements`, or the list after a bare `·` line); the next statement is a `LeanTactic` `exact` / `apply` without `LeanAt`; the name occurs as a `LeanToken` exactly once there and nowhere else in the rest of the block (until rebound) | `proofRules.mjs` |
-| `given-prop-first` | binders after `-- given`; proposition = type node is a relation / connective / quantifier / negation (`LeanBinaryBoolean`, `LeanQuantifier`, `LeanNot`, …) or an `h…` name; expression = a type token / arrow / applied type not headed by a predicate (`Is…`, `Continuous`, `Measurable`, …); never a proposition when headed by `Decidable`/`Fintype`/`Set`/…; warns when a proposition mentions none of the names bound from the expression up to itself (so it can really move up) | `signatureRules.mjs` |
+| `given-prop-first` | binders after `-- given`; proposition = type node is a relation / connective / quantifier / negation (`LeanBinaryBoolean`, `LeanQuantifier`, `LeanNot`, …) or an `h…` name; expression = a type token / arrow / applied type not headed by a predicate (`Is…`, `Continuous`, `Measurable`, …); never a proposition when headed by `Decidable`/`Fintype`/`Set`/…; warns when a proposition mentions none of the names bound from the expression up to itself (so it can really move up). Expressions some proposition needs (free occurrences, closed over expression types) are skipped: moving a proposition above them would split the proposition run (`given-prop-consecutive`) | `signatureRules.mjs` |
+| `given-prop-consecutive` | same binder classification; the propositions of `-- given` must be one consecutive run (prop … expr … prop is reported at the first proposition after the gap). Suggests the canonical order: the expressions the propositions need, then all propositions, then the other expressions ("it mentions `t`, … so it cannot move above them; move `(t : ℕ)` … before `(h₀ …)`"). Runs only when `given-prop-first` did not fire for the lemma (one finding per lemma, never contradicting it). Free occurrences via `mentions` (a name re-bound by `∀`/`∃`/`∑`/`fun` inside a proposition does not count). Not an AGENTS.md rule (no quote) | `signatureRules.mjs` (token-based) |
 | `tactic-haveI`, `tactic-letI` | `Lean_have` / `Lean_let` with the parser flag `inst` (parsed from `haveI` / `letI`), outside declaration signatures | `proofRules.mjs` |
 | `calc-after-assign` | `have` / `let` (incl. `haveI` / `letI`) whose `:=` value is a `LeanArgsNewLineSeparated` holding only a `LeanCalc`, i.e. `:=⏎ calc`; the same-line form `:= calc` has the `LeanCalc` itself as the value. Not an AGENTS.md rule (no quote) | — (AST only) |
+| `decl-keyword-dir` | `Lean_theorem` node in a `Lemma/…` file (the keyword is the node class, so modifiers / `@[…]` / comments / strings / `theorem_foo` never match); quotes the declaration head line, located on its own (repeated heads take the next unused line). The tree is trusted only when it has as many `lemma`/`theorem` nodes as the text scan finds declarations; otherwise (and on a parse failure) the text fallback runs | `headerRules.mjs` `declKeywordDirText` (`ctx.decls`, keyword at the start of a declaration line) |
 
 | file | rules |
 |---|---|
-| `headerRules.mjs` | `open-section`, `open-duplicate`, `open-unused` (off by default), `open-prefix`, `attr-docstring`, `date-*` |
-| `signatureRules.mjs` | `section-imply`, `section-proof`, `binder-order`, `binder-dep-inst`, `binder-auto-bound`, `default-arg-given`, `given-prop-first`, `binder-combine` |
+| `headerRules.mjs` | `open-section`, `open-duplicate`, `open-unused` (off by default), `open-prefix`, `decl-keyword-dir` (text fallback), `attr-docstring`, `date-*` |
+| `signatureRules.mjs` | `section-imply`, `section-proof`, `binder-order`, `binder-dep-inst`, `binder-auto-bound`, `default-arg-given`, `given-prop-first`, `given-prop-consecutive`, `binder-combine` |
 | `proofRules.mjs` | `indent-odd`, `indent-deep`, `proof-binop-newline`, `bullet-newline`, `tactic-rcases`, `tactic-by-cases`, `tactic-haveI`, `tactic-letI`, `have-inline-once`, `by-calc`, `calc-start-underscore`, `calc-in-brackets`, `paren-by-multiline`, `paren-by-semicolon`, `from-by`, `by-exact`, `hole-question`, `binder-underscore-name` |
 | `attrRules.mjs` | `attr-mp`, `attr-comm` (read the cited lemma's `@[…]` from `Lemma/…`) |
-| `astRules.mjs` | `have-inline-once`, `given-prop-first`, `tactic-haveI`, `tactic-letI` (text versions above are their fallbacks), `calc-after-assign` |
+| `astRules.mjs` | `have-inline-once`, `given-prop-first`, `given-prop-consecutive`, `tactic-haveI`, `tactic-letI`, `decl-keyword-dir` (text versions above are their fallbacks), `calc-after-assign` |
 
 `open-prefix` (text scan): when `open Random` (plain, not selective/`scoped`) and the source
 writes `Random.Foo.Bar`, warn to drop the leading `Random.` **only if** (1) `Lemma/Random/Foo/Bar.lean`
@@ -47,6 +49,18 @@ exists (filesystem resolve; attribute-generated names with no `.lean` are skippe
 currently open section (plus the file's own `Lemma/<Section>/`) also has a lemma at that short path.
 Quoted as `stmt: Random.Foo.Bar`. AGENTS.md has no exact bullet yet — the warning paraphrases the
 open-simplification idea (`after \`open Section\`, prefer the short lemma name when unambiguous`).
+
+Why `given-prop-consecutive`: the page (`render2vue` in `static/js/parser/lean/module.js` → `static/components/lemma.vue`)
+splits the `given` binders into `explicit` (before the first proposition, raw Lean), `given` (the first run of
+propositions, one LaTeX block each) and `default` (from the first expression after that run, raw Lean), shown in that
+order under `-- given`. A proposition after the gap lands in `default` and is never typeset. A proposition cannot move
+above an expression it mentions (Lean would auto-bind the name as a fresh implicit: `autoImplicit` is on), so the
+dependent expressions move up instead.
+
+`decl-keyword-dir` checks only the `Lemma/` half of the AGENTS.md rule ("never put a `theorem` in `Lemma/`", removed
+from AGENTS.md since the warning quotes it). `sympy/` files are never rendered or linted (`mjs/run.mjs` rejects paths
+outside `Lemma/`, the web `echo.php` route maps a module to `Lemma/<module>.lean`), so "never put a `lemma` in
+`sympy/`" stays in AGENTS.md.
 
 `RULES` in `index.mjs` maps every id to the quoted AGENTS.md rule; `DISABLED` lists rules that are off by default
 (`lintLean(src, { rules: ['open-unused'] })` still runs them).

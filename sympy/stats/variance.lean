@@ -43,16 +43,4 @@ noncomputable def Covariance
   Expectation.ofRV π (x, y)
     (fun p : ℝ × ℝ ↦ (p.1 - Expectation.ofRV π x (fun a : ℝ ↦ a)) * (p.2 - Expectation.ofRV π y (fun a : ℝ ↦ a)))
 
-theorem Variance.eq_integral
-    {Ω : Type*} [MeasurableSpace Ω] {π : Measure Ω} {x : Ω → ℝ} [PSpace π x] :
-    Variance π x = ∫ ω, (x ω - ∫ ω', x ω' ∂π) ^ 2 ∂π := by
-  unfold Variance
-  rw [Expectation.ofRV_self]
-  exact Expectation.ofRV_eq_integral (Continuous.aestronglyMeasurable (by fun_prop))
 
-theorem Covariance.eq_integral
-    {Ω : Type*} [MeasurableSpace Ω] {π : Measure Ω} {x y : Ω → ℝ} [PSpace π x] [PSpace π y] :
-    Covariance π x y = ∫ ω, (x ω - ∫ ω', x ω' ∂π) * (y ω - ∫ ω', y ω' ∂π) ∂π := by
-  unfold Covariance
-  rw [Expectation.ofRV_self, Expectation.ofRV_self]
-  exact Expectation.ofRV_eq_integral (Continuous.aestronglyMeasurable (by fun_prop))

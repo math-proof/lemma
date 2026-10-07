@@ -2,7 +2,10 @@ import sympy.stats.policy_trajectory.gradient
 import sympy.Basic
 import Lemma.Random.RealPreimageS0.eq.Real
 import Lemma.Real.Sum_Eq.eq.One
-open MeasureTheory ProbabilityTheory Finset Filter Topology PolicyGradient PolicyGradient.Model
+import Lemma.Random.Integrable_Mul_R.of.Measurable
+import Lemma.Random.Integral_MulEqSR_Add.eq.MulRealPreimageSWRc
+import Lemma.Random.Measurable_S
+open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
 
 
 /--
@@ -22,10 +25,10 @@ private lemma main
     intro ω
     rw [← Finset.sum_mul, Real.Sum_Eq.eq.One, one_mul, zero_add]
   simp_rw [h₁]
-  rw [integral_finsetSum _ (fun x _ => integrable_ind_r M θ (s 0) (s_meas 0)
+  rw [integral_finsetSum _ (fun x _ => Integrable_Mul_R.of.Measurable (M := M) (s 0) (Random.Measurable_S 0) θ
     (fun y => if y = x then (1:ℝ) else 0) (0 + t))]
   refine Finset.sum_congr rfl fun x _ => ?_
-  rw [E_s_r M θ 0 t x, Random.RealPreimageS0.eq.Real]
+  rw [Integral_MulEqSR_Add.eq.MulRealPreimageSWRc (M := M) θ 0 t x, RealPreimageS0.eq.Real]
 
 
 -- created on 2026-10-06

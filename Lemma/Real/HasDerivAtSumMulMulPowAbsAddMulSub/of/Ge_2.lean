@@ -1,6 +1,6 @@
 import Mathlib.Analysis.Calculus.Deriv.Add
 import Lemma.Real.HasDerivAtMulMulPowAbs.of.Ge_2
-open Finset Real
+open Real
 
 
 @[main]

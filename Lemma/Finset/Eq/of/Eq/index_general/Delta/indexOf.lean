@@ -1,6 +1,7 @@
 import sympy.tensor.index_of
 import sympy.sets.sets
 import sympy.Basic
+import Lemma.Nat.EqGetIndex.of.Any_Eq
 
 
 @[main]
@@ -28,7 +29,7 @@ private lemma main
     intro e
     apply hij
     have := congrArg x e
-    rw [IndexOf.get_index (ex i hi), IndexOf.get_index (ex j hj)] at this
+    rw [Nat.EqGetIndex.of.Any_Eq (ex i hi), Nat.EqGetIndex.of.Any_Eq (ex j hj)] at this
     exact_mod_cast this
 
 

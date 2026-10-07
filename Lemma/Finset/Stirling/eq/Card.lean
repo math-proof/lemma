@@ -1,5 +1,6 @@
 import sympy.sets.stirling_partition
 import sympy.Basic
+import Lemma.Finset.StirlingSecond.eq.NcardParts
 open Finset
 
 
@@ -9,7 +10,7 @@ private lemma main
 -- imply
   (Stirling n k : ℕ) = ((fun x : Fin k → Finset ℕ => Finset.univ.image x) '' Stirling.conditionset n k).ncard := by
 -- proof
-  exact Stirling.conditionset.stirlingSecond_eq_ncard n k
+  exact StirlingSecond.eq.NcardParts n k
 
 
 -- created on 2020-10-04

@@ -1,6 +1,9 @@
-import sympy.matrices.confluent_vandermonde
+import Mathlib.Algebra.Group.ForwardDiff
+import Mathlib.Data.Matrix.ColumnRowPartitioned
+import Mathlib.LinearAlgebra.Vandermonde
 import sympy.Basic
-open Finset Nat
+import Lemma.Matrix.DetOfVecCons2_FunPow.eq.MulMulMulPowSProd
+open Matrix Finset Nat
 
 
 @[main]
@@ -14,7 +17,7 @@ private lemma vandermonde.n2
       (fun (i : Fin n) (j : Fin (n + 2)) => (j : ℝ) ^ (i : ℕ))))).det =
     r * (1 - r) ^ (2 * n) * ∏ j ∈ Finset.range n, (j ! : ℝ) := by
 -- proof
-  have := Vandermonde.det_n2 (n := n) (x₁ := r) (x₂ := 1)
+  have := DetOfVecCons2_FunPow.eq.MulMulMulPowSProd (n := n) (x₁ := r) (x₂ := 1)
   simp only [one_pow, mul_one] at this
   linear_combination this
 

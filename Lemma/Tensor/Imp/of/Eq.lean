@@ -1,6 +1,7 @@
 import sympy.stats.hidden_markov_sequence
 import sympy.core.numbers
 import sympy.Basic
+import Lemma.Random.IsHiddenMarkovFac.of.All_Eq.IsHiddenMarkovPr
 open MeasureTheory
 open scoped ENNReal.ToRealCoe
 
@@ -33,7 +34,7 @@ private lemma crf.logits
 -- proof
   intro ys
   obtain ⟨P, hPdef⟩ : ∃ P : ℕ → (ℕ → Y) → ℝ, ∀ t ys, P t ys = (ℙ[π](x[:t + 1] = xo[:t + 1] ∧ y[:t + 1] = ys[:t + 1]) : ℝ) := ⟨fun t ys => (ℙ[π](x[:t + 1] = xo[:t + 1] ∧ y[:t + 1] = ys[:t + 1]) : ℝ), fun _ _ => rfl⟩
-  have h₀ := h₀.toFac hPdef
+  have h₀ := Random.IsHiddenMarkovFac.of.All_Eq.IsHiddenMarkovPr h₀ hPdef
   have h₄ : ∀ t ys, s t ys = (P t ys).log := fun t ys => by rw [h₄, hPdef]
   have hP : ∀ t, 0 < P t ys := by
     intro t

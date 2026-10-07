@@ -1,9 +1,12 @@
 import sympy.stats.joint_rv
-import sympy.stats.policy_trajectory.markov
+import sympy.stats.policy_trajectory
 import Lemma.Measure.Count.eq.ProdCountS
 import Lemma.Measure.EqRnDeriv_Count
 import sympy.Basic
-open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model
+import Lemma.Random.Integral_EqSAndEqA.eq.MulRealPreimageSProb
+import Lemma.Random.Measurable_A
+import Lemma.Random.Measurable_S
+open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 
 
 /--
@@ -32,7 +35,7 @@ private lemma main
     show (ReferenceMeasure.measure : Measure A).prod (ReferenceMeasure.measure : Measure S) = _
     rw [hA, hS, Measure.Count.eq.ProdCountS]
   have hxy : Measurable (a (S := S) (A := A) t, s (S := S) (A := A) t) :=
-    (a_meas t).prodMk (s_meas t)
+    (Random.Measurable_A t).prodMk (Random.Measurable_S t)
   have hnum : π.prob (a (S := S) (A := A) t, s (S := S) (A := A) t) (u, x) =
       π (s t ⁻¹' {x} ∩ a t ⁻¹' {u}) := by
     unfold Measure.prob
@@ -43,12 +46,12 @@ private lemma main
   have hden : (π.map (fun ω ↦ ((a (S := S) (A := A) t, s (S := S) (A := A) t) ω).2)).rnDeriv
       ReferenceMeasure.measure x = π (s t ⁻¹' {x}) := by
     rw [hS, Measure.EqRnDeriv_Count]
-    exact Measure.map_apply (s_meas t) (measurableSet_singleton _)
+    exact Measure.map_apply (Random.Measurable_S t) (measurableSet_singleton _)
   have hxu : π.real (s t ⁻¹' {x} ∩ a t ⁻¹' {u}) =
       π.real (s t ⁻¹' {x}) * M.pol.prob θ x u := by
-    rw [← P_xu M θ t x u]
+    rw [← Integral_EqSAndEqA.eq.MulRealPreimageSProb (M := M) θ t x u]
     have hset : MeasurableSet (s t ⁻¹' {x} ∩ a t ⁻¹' {u}) :=
-      (s_meas t (measurableSet_singleton _)).inter (a_meas t (measurableSet_singleton _))
+      (Random.Measurable_S t (measurableSet_singleton _)).inter (Random.Measurable_A t (measurableSet_singleton _))
     rw [← integral_indicator_one hset]
     congr 1
     ext ω

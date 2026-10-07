@@ -1,6 +1,7 @@
-import sympy.stats.policy_trajectory.markov
+import sympy.stats.policy_trajectory
 import sympy.Basic
-open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model
+import Lemma.Random.RealInterPreimageS_PreimageA.eq.MulRealPreimageSProb
+open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 
 
 /--
@@ -21,7 +22,7 @@ private lemma main
   (M θ).real (s t ⁻¹' {x} ∩ a t ⁻¹' {u}) = (M θ).real (s t ⁻¹' {x}) * M.Pr θ x u := by
 -- proof
   classical
-  exact real_sa M θ t x u
+  exact RealInterPreimageS_PreimageA.eq.MulRealPreimageSProb (M := M) θ t x u
 
 
 -- created on 2026-09-26

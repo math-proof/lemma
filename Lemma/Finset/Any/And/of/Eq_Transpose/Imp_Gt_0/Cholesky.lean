@@ -1,5 +1,7 @@
 import sympy.matrices.cholesky
 import sympy.Basic
+import Lemma.Matrix.IsCholeskyRec_Mul_L.of.All_Gt_0.All_All_Eq_0
+import Lemma.Matrix.Any_Eq_0_And_All_Gt_0_And_Eq_Mul.of.PosDef
 open Matrix
 
 
@@ -20,8 +22,8 @@ private lemma main
     ·
       rw [star_trivial]
       exact h₁ x hx
-  obtain ⟨L, hlow, hpos, hL⟩ := hA.exists_cholesky
-  have h := IsCholeskyRec.of_factor hlow hpos
+  obtain ⟨L, hlow, hpos, hL⟩ := Any_Eq_0_And_All_Gt_0_And_Eq_Mul.of.PosDef hA
+  have h := IsCholeskyRec_Mul_L.of.All_Gt_0.All_All_Eq_0 hlow hpos
   rw [← hL] at h
   refine ⟨L, by rwa [Matrix.conjTranspose_eq_transpose_of_trivial] at hL, fun i j => ?_⟩
   have hij := h i j

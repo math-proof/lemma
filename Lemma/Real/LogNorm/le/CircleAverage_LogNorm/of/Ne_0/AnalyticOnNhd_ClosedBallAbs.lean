@@ -1,7 +1,7 @@
 import Mathlib
 import sympy.Basic
 
-open Real MeasureTheory Metric
+open MeasureTheory Metric
 
 /--
 [AnalyticOnNhd_log_norm_le_circleAverage_log_norm](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AnalyticOnNhd_log_norm_le_circleAverage_log_norm.lean)

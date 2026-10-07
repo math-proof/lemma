@@ -1,6 +1,14 @@
 import sympy.stats.policy_trajectory.advantage
 import sympy.Basic
-open MeasureTheory ProbabilityTheory Finset Filter Topology PolicyGradient PolicyGradient.Model
+import Lemma.Random.EqW
+import Lemma.Random.Kf.eq.Sum_MulTW.of.All_LeNorm.StronglyMeasurable
+import Lemma.Random.NormRc.le.Abs_R
+import Lemma.Random.StronglyMeasurableRc
+import Lemma.Random.TSum_MulPowW.eq.AddWMul_Sum_MulProbSum_MulTTSum_MulPowW.of.In_Ico
+import Lemma.Random.WAdd_1.eq.Sum_MulProbSum_MulTW.of.All_LeNorm.StronglyMeasurable
+import Lemma.Real.Norm.le.Sum_Norm
+import Lemma.Real.StronglyMeasurable.discrete
+open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random Real
 
 
 /--
@@ -21,19 +29,19 @@ private lemma main
     M.Kf θ (fun w => M.Vc θ γ w.2.1) 1 z = 0 := by
 -- proof
   have hf : StronglyMeasurable (fun w : ℝ × S × A => M.Vc θ γ w.2.1) :=
-    (disc_sm (M.Vc θ γ)).comp_measurable measurable_snd.fst
+    (StronglyMeasurable.discrete (M.Vc θ γ)).comp_measurable measurable_snd.fst
   have hC : ∀ w : ℝ × S × A, ‖(fun w : ℝ × S × A => M.Vc θ γ w.2.1) w‖ ≤ ∑ y', ‖M.Vc θ γ y'‖ :=
-    fun w => h_bdd (M.Vc θ γ) w.2.1
+    fun w => Norm.le.Sum_Norm (M.Vc θ γ) w.2.1
   have w0 : ∀ y, M.W θ (fun w : ℝ × S × A => M.Vc θ γ w.2.1) 0 y = M.Vc θ γ y :=
-    W_fst_zero M θ (M.Vc θ γ)
+    Random.EqW (M := M) θ (M.Vc θ γ)
   have w1 : ∀ y, M.W θ (fun w : ℝ × S × A => M.Vc θ γ w.2.1) 1 y =
       ∑ u, M.pol.prob θ y u * ∑ y', M.T y u y' * M.Vc θ γ y' := fun y => by
     show M.W θ (fun w : ℝ × S × A => M.Vc θ γ w.2.1) (0 + 1) y = _
-    rw [W_succ M θ hf hC 0 y]
+    rw [WAdd_1.eq.Sum_MulProbSum_MulTW.of.All_LeNorm.StronglyMeasurable (M := M) hf hC θ 0 y]
     simp_rw [w0]
-  have e1 := Kf_succ M θ (rc_sm M) (rc_bdd M) 0 z
-  have e2 := Kf_succ M θ hf hC 1 z
-  have e3 := Kf_succ M θ hf hC 0 z
+  have e1 := Kf.eq.Sum_MulTW.of.All_LeNorm.StronglyMeasurable (M := M) (Random.StronglyMeasurableRc (M := M)) (NormRc.le.Abs_R (M := M)) θ 0 z
+  have e2 := Kf.eq.Sum_MulTW.of.All_LeNorm.StronglyMeasurable (M := M) hf hC θ 1 z
+  have e3 := Kf.eq.Sum_MulTW.of.All_LeNorm.StronglyMeasurable (M := M) hf hC θ 0 z
   show M.Kf θ M.rc (0 + 1) z + γ * M.Kf θ (fun w => M.Vc θ γ w.2.1) (1 + 1) z -
       M.Kf θ (fun w => M.Vc θ γ w.2.1) (0 + 1) z = 0
   rw [e1, e2, e3]
@@ -41,7 +49,7 @@ private lemma main
   rw [Finset.mul_sum, ← Finset.sum_add_distrib, ← Finset.sum_sub_distrib]
   refine Finset.sum_eq_zero fun y _ => ?_
   have hrec : M.Vc θ γ y = M.W θ M.rc 0 y +
-      γ * ∑ u, M.pol.prob θ y u * ∑ y', M.T y u y' * M.Vc θ γ y' := v_closed M θ h₀ y
+      γ * ∑ u, M.pol.prob θ y u * ∑ y', M.T y u y' * M.Vc θ γ y' := TSum_MulPowW.eq.AddWMul_Sum_MulProbSum_MulTTSum_MulPowW.of.In_Ico (M := M) h₀ θ y
   rw [hrec]
   ring
 

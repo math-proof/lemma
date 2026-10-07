@@ -1,10 +1,10 @@
 import sympy.stats.markov_samples
 import sympy.Basic
-import Lemma.Anchors.RobbinsMonroβ
+import Lemma.Real.Anchors.RobbinsMonroβ
 import Lemma.Real.Any_And_Ge_0_All_Le.of.Summable
 import Lemma.Random.Any_Ge_0AndAll_All_LeNormSub_MulNormSub
 import Lemma.Random.Any_Ge_0AndAll_All_LeNormSub_MulSumIco_Exp.of.Any_Ge_0AndAll_All_LeNormSub_MulNormSub.All_Ge_0.IteratesOfResidual
-open Finset Real Iterates Random
+open Real Iterates Random Finset
 
 
 @[main]
@@ -16,7 +16,7 @@ private lemma main
   ∃ C, 0 ≤ C ∧ ∀ ω n, ‖sk.e₂₁ (n + 1) ω‖ ≤ C * sk.anc.β n ^ 2 * (‖sk.x (sk.anc.t n) ω‖ + 1) := by
 -- proof
   have hα : RobbinsMonro sk.α := sk.anc.hα
-  have hβ : RobbinsMonro sk.anc.β := Anchors.RobbinsMonroβ
+  have hβ : RobbinsMonro sk.anc.β := Real.Anchors.RobbinsMonroβ
   obtain ⟨C₁, hC₁, hβC⟩ := Any_And_Ge_0_All_Le.of.Summable hβ.sqsum
   obtain ⟨C₂, hC₂, hgrowth⟩ := Any_Ge_0AndAll_All_LeNormSub_MulSumIco_Exp.of.Any_Ge_0AndAll_All_LeNormSub_MulNormSub.All_Ge_0.IteratesOfResidual sk.hx (fun n => (hα.pos n).le) sk.hFlip
   obtain ⟨C₃, hC₃, hG⟩ := Random.Any_Ge_0AndAll_All_LeNormSub_MulNormSub (sk := sk)

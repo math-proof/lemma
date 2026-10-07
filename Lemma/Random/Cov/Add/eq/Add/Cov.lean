@@ -2,6 +2,7 @@ import Mathlib.Probability.Independence.Integration
 import sympy.stats.joint_rv
 import sympy.stats.variance
 import sympy.Basic
+import Lemma.Random.Cov.eq.Integral
 open MeasureTheory
 
 
@@ -43,7 +44,7 @@ private lemma main
         (x ω - ∫ ω', x ω' ∂π) * (z ω - ∫ ω', z ω' ∂π) := fun ω => by
     rw [Pi.add_apply]
     ring
-  rw [Covariance.eq_integral, Covariance.eq_integral, Covariance.eq_integral, hE]
+  rw [Random.Cov.eq.Integral, Random.Cov.eq.Integral, Random.Cov.eq.Integral, hE]
   simp only [e]
   rw [integral_add hL hR]
 

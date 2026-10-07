@@ -3,7 +3,7 @@ import sympy.Basic
 import Lemma.Random.AeNormSub.le.DeltaBound.of.In_Ico
 import Lemma.Random.Integrable_SMulSubAddRMul_VcVc.of.In_Ico
 import Lemma.Random.Integral_SMul.eq.Zero.of.Le.In_Ico
-open MeasureTheory ProbabilityTheory Finset Filter Topology PolicyGradient PolicyGradient.Model
+open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model
 
 
 /--

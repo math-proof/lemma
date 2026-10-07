@@ -1,8 +1,8 @@
 import Lemma.Tensor.ItemGetGetSoftmaxAdd_Mul_Infty.eq.Ite
 import Lemma.Hyperreal.Lt.of.XEqCoe.XEqCoe.Lt
-import sympy.functions.elementary.band
 import sympy.concrete.expr_with_limits
 import sympy.Basic
+import Lemma.Set.EqArgMax.of.All_Lt.In
 open Tensor Hyperreal
 set_option maxHeartbeats 2000000
 
@@ -42,7 +42,7 @@ private lemma main
   have hitem : ∀ j : Fin n, (((A + (Ξ - 1) * ∞).softmax.get ⟨i, by simp [Tensor.length]⟩).get ⟨j, by simp [Tensor.length]⟩ : Tensor ℝ* []).item ≈ (((if P i j then w i j else 0 : ℝ)) : ℝ*) :=
     fun j => ItemGetGetSoftmaxAdd_Mul_Infty.eq.Ite P a w h_ne (fun _ _ _ => rfl) i j
   have hw₀ : 0 < w i j₀ := div_pos (Real.exp_pos _) hD₀
-  refine ⟨j₀, Band.ArgMax_eq_of_strict (Set.mem_univ _) (fun j _ hj => ?_), Band.ArgMax_eq_of_strict (hS j₀ hP₀) (fun o ho hne => ?_)⟩
+  refine ⟨j₀, Set.EqArgMax.of.All_Lt.In (Set.mem_univ _) (fun j _ hj => ?_), Set.EqArgMax.of.All_Lt.In (hS j₀ hP₀) (fun o ho hne => ?_)⟩
   · have h₀ : (((A + (Ξ - 1) * ∞).softmax.get ⟨i, by simp [Tensor.length]⟩).get ⟨j₀, by simp [Tensor.length]⟩ : Tensor ℝ* []).item ≈ ((w i j₀ : ℝ) : ℝ*) := by
       simpa [hP₀] using hitem j₀
     refine Hyperreal.Lt.of.XEqCoe.XEqCoe.Lt (hitem j) h₀ ?_

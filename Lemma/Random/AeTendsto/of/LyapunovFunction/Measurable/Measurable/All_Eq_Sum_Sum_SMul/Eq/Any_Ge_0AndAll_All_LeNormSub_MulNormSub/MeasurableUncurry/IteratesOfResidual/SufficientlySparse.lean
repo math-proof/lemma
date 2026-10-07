@@ -3,11 +3,12 @@ import sympy.stats.lyapunov
 import sympy.Basic
 import Lemma.Random.AeTendsto.of.LyapunovFunction.Measurable.Measurable.Eq
 import Lemma.Random.Any_Ge_0AndAll_All_LeNormSub_MulSumIco_Exp.of.Any_Ge_0AndAll_All_LeNormSub_MulNormSub.All_Ge_0.IteratesOfResidual
-import Lemma.Anchors.RobbinsMonroβ
-import Lemma.Anchors.StrictMonoTime
+import Lemma.Real.Anchors.RobbinsMonroβ
+import Lemma.Real.Anchors.StrictMonoTime
 import Lemma.Real.Any_And_Ge_0_All_Le.of.Summable
 import Lemma.Nat.Any_In_Ico.of.Eq_0.StrictMono
-open Filter MeasureTheory Finset Topology Real
+import Lemma.Real.Anchors.Time0.eq.Zero
+open MeasureTheory Topology Real Filter Finset
 
 
 @[main]
@@ -38,8 +39,8 @@ private lemma main
 -- proof
   let sk : Skeleton S d := ⟨F, h₂, h₃, f, α, anc, h₀, x, x₀, h₁, MRP, h₅⟩
   have hα : RobbinsMonro α := anc.hα
-  have hβ : RobbinsMonro anc.β := Anchors.RobbinsMonroβ
-  have hmono : StrictMono anc.t := Anchors.StrictMonoTime
+  have hβ : RobbinsMonro anc.β := Real.Anchors.RobbinsMonroβ
+  have hmono : StrictMono anc.t := Real.Anchors.StrictMonoTime
   obtain ⟨C₁, hC₁, hgrowth⟩ := Random.Any_Ge_0AndAll_All_LeNormSub_MulSumIco_Exp.of.Any_Ge_0AndAll_All_LeNormSub_MulNormSub.All_Ge_0.IteratesOfResidual h₁ (fun n => (hα.pos n).le) h₃
   obtain ⟨C₂, hC₂, hβC⟩ := Any_And_Ge_0_All_Le.of.Summable hβ.sqsum
   have hβ0 : Tendsto anc.β atTop (𝓝 0) := by
@@ -52,7 +53,7 @@ private lemma main
   refine Metric.tendsto_atTop.2 fun ε hε => ?_
   obtain ⟨M, hM⟩ := Metric.tendsto_atTop.1 hh ε hε
   refine ⟨anc.t M, fun N hN => ?_⟩
-  obtain ⟨m, hm⟩ := Nat.Any_In_Ico.of.Eq_0.StrictMono hmono anc.t_zero N
+  obtain ⟨m, hm⟩ := Nat.Any_In_Ico.of.Eq_0.StrictMono hmono (Real.Anchors.Time0.eq.Zero anc) N
   have hmM : M ≤ m := Nat.lt_succ_iff.1 (hmono.lt_iff_lt.1 (hN.trans_lt (mem_Ico.1 hm).2))
   have hg := hgrowth ω (anc.t m) (anc.t (m + 1)) N hm
   simp only [← sum_mul] at hg

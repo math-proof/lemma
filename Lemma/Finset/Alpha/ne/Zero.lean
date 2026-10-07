@@ -1,7 +1,8 @@
 import sympy.concrete.continued_fraction
 import sympy.sets.sets
 import sympy.Basic
-open Continuant
+import Lemma.Finset.All_Imp_GtAlpha_0
+open Finset Continuant
 
 
 @[main]
@@ -14,7 +15,7 @@ private lemma main
 -- imply
   alpha ((List.range n).map x) ≠ 0 := by
 -- proof
-  refine (alpha_pos ?_ ?_).ne'
+  refine (All_Imp_GtAlpha_0 ?_ ?_).ne'
   · simp only [ne_eq, List.map_eq_nil_iff, List.range_eq_nil]
     omega
   · intro a ha

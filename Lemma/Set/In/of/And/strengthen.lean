@@ -1,6 +1,5 @@
 import sympy.sets.sets
 import sympy.Basic
-open Set
 
 
 @[main]

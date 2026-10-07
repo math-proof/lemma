@@ -1,4 +1,5 @@
 import Lemma.Random.PSpace.PSpace.of.PSpace_Joint
+import Lemma.Random.Map.eq.WithDensityProb
 open Function Random
 open scoped Classical
 
@@ -60,8 +61,8 @@ private lemma lintegral_partialRV_mul
   have hp : Measurable p := MeasureTheory.Measure.measurable_rnDeriv _ _
   have hm : Measurable m := MeasureTheory.Measure.measurable_rnDeriv _ _
   have hlaw : π.map (x, y) = (μ.prod ν).withDensity p :=
-    SinglePSpace.map_eq_withDensity_density
-  have hlawy : π.map y = ν.withDensity m := SinglePSpace.map_eq_withDensity_density
+    Map.eq.WithDensityProb
+  have hlawy : π.map y = ν.withDensity m := Map.eq.WithDensityProb
   have hden : π.map (fun ω ↦ ((x, y) ω).2) = π.map y := rfl
   have hunf :
       Expectation.partialRV π x y f =
@@ -255,9 +256,9 @@ private lemma lintegral_partialRV_RA_mul
   have hp' : Measurable p' := MeasureTheory.Measure.measurable_rnDeriv _ _
   have hm' : Measurable m' := MeasureTheory.Measure.measurable_rnDeriv _ _
   have hlaw : π.map (x, (y, y)) =
-      (μ.prod νν).withDensity p' := SinglePSpace.map_eq_withDensity_density
+      (μ.prod νν).withDensity p' := Map.eq.WithDensityProb
   have hlawyy : π.map (y, y) = νν.withDensity m' :=
-    SinglePSpace.map_eq_withDensity_density
+    Map.eq.WithDensityProb
   have hden :
       π.map (fun ω ↦ ((x, (y, y)) ω).2) =
         π.map (y, y) := rfl
@@ -523,7 +524,7 @@ private lemma main
       hf.comp (measurable_id.prodMk measurable_const)
     rw [MeasureTheory.lintegral_withDensity_eq_lintegral_mul μ hdens hf']
     exact MeasureTheory.lintegral_congr fun a ↦ mul_comm _ _
-  have hlawy : π.map y = ν.withDensity m := SinglePSpace.map_eq_withDensity_density
+  have hlawy : π.map y = ν.withDensity m := Map.eq.WithDensityProb
   have hgg' : g =ᵐ[π.map y] g' := by
     refine MeasureTheory.ae_eq_of_forall_setLIntegral_eq_of_sigmaFinite hg hg' ?_
     intro s hs _

@@ -1,7 +1,6 @@
 import sympy.functions.elementary.complexes
 import sympy.Basic
 import sympy.sets.sets
-open Complex
 
 
 @[main]

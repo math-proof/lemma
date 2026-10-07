@@ -1,7 +1,7 @@
 import Lemma.Tensor.ArgMaxItemGetSoftmaxAdd_Mul_Infty.eq.Shift
 import sympy.concrete.expr_with_limits
 import sympy.Basic
-open Tensor Hyperreal
+open Tensor
 set_option maxHeartbeats 1000000
 
 

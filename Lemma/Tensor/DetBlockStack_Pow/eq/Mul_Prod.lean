@@ -1,6 +1,9 @@
-import sympy.matrices.confluent_vandermonde
+import Mathlib.Algebra.Group.ForwardDiff
+import Mathlib.Data.Matrix.ColumnRowPartitioned
+import Mathlib.LinearAlgebra.Vandermonde
 import sympy.Basic
-open Finset Nat
+import Lemma.Matrix.DetOfVecCons4_FunPow.eq.MulMulMul12PowChoosePowSub1Prod
+open Matrix Finset Nat
 
 
 @[main]
@@ -14,7 +17,7 @@ private lemma vandermonde.n4
       (Matrix.vecCons (fun j : Fin (n + 4) => (j : ℝ) ^ 3 * r ^ (j : ℕ)) (fun (i : Fin n) (j : Fin (n + 4)) => (j : ℝ) ^ (i : ℕ))))))).det =
     12 * r ^ (Nat.choose 4 2) * (1 - r) ^ (4 * n) * ∏ i ∈ Finset.range n, (i ! : ℝ) := by
 -- proof
-  exact Vandermonde.det_n4
+  exact DetOfVecCons4_FunPow.eq.MulMulMul12PowChoosePowSub1Prod
 
 
 -- created on 2026-09-27

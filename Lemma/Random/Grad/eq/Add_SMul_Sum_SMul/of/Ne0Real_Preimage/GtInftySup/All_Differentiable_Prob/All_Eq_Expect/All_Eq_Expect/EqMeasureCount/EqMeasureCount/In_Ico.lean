@@ -7,6 +7,9 @@ import Lemma.Random.ProbCond.eq.Div.of.Eq_Count.Eq_Count
 import Lemma.Random.SinglePSpace.of.EqMeasureCount.EqMeasureCount.Measurable.Measurable
 import Lemma.Random.RealPreimageSPreimageS_Add_1.eq.P1.of.Ne0Real_Preimage
 import Lemma.Random.Differentiable_RealPreimageS.of.GtInftySup.All_Differentiable_Prob
+import Lemma.Random.Integral_G.eq.TSum_MulPowIntegral_R_Add.of.In_Ico
+import Lemma.Random.Measurable_A
+import Lemma.Random.Measurable_S
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Filter Topology Random
 open scoped ENNReal.ToRealCoe
 
@@ -47,12 +50,12 @@ private lemma main
   (h₅ : (M θ).real (s t ⁻¹' {«s.bvar» t}) ≠ 0) :
 -- imply
   have : ∀ θ t, SinglePSpace (M θ) (a (S := S) (A := A) t, s (S := S) (A := A) t) := fun _ t =>
-    SinglePSpace.of.EqMeasureCount.Measurable ((a_meas t).prodMk (s_meas t)) (by
+    SinglePSpace.of.EqMeasureCount.Measurable ((Random.Measurable_A t).prodMk (Random.Measurable_S t)) (by
       show (ReferenceMeasure.measure : Measure A).prod (ReferenceMeasure.measure : Measure S) = _
       rw [hA, hS, Measure.Count.eq.ProdCountS])
   have : ∀ θ t, SinglePSpace (M θ) (s (S := S) (A := A) (t + 1), s (S := S) (A := A) t) := fun _ t =>
     SinglePSpace.of.EqMeasureCount.EqMeasureCount.Measurable.Measurable
-      (s_meas (t + 1)) (s_meas t) hS hS
+      (Random.Measurable_S (t + 1)) (Random.Measurable_S t) hS hS
   ∇[θ] V θ t («s.bvar» t) =
     ∑ «a.bvar» t, Q θ t («s.bvar» t) («a.bvar» t) •
         ∇[θ] (ℙ[M θ]((a t) = («a.bvar» t) | (s t) = («s.bvar» t)) : ℝ) +
@@ -74,7 +77,7 @@ private lemma main
         s t ⁻¹' {x} ∩ a t ⁻¹' {u} := by
       ext ω; simp [JointRandomSymbol, Prod.ext_iff]
     rw [hpre]
-    exact Model.integral_G_cond M θ h₀ _ t
+    exact Integral_G.eq.TSum_MulPowIntegral_R_Add.of.In_Ico (M := M) h₀ θ _ t
   have hV : V = fun θ => M.V θ γ := funext fun θ => funext fun t => funext fun x => by
     rw [h₂ θ t (fun _ ↦ x), M.V_eq_integral θ γ t x]
     simp only [Expectation.asRV_process]
@@ -100,7 +103,7 @@ private lemma main
     have hDiv := ProbCond.eq.Div.of.Eq_Count.Eq_Count (π := M θ)
       (x := s (S := S) (A := A) (t + 1)) (y := s (S := S) (A := A) t) hS hS y x
     rw [hDiv, ENNReal.toReal_div, ← RealPreimageSPreimageS_Add_1.eq.P1.of.Ne0Real_Preimage (M := M) θ t x y h₅]
-    rw [measureReal_def, cond_apply (s_meas t (measurableSet_singleton x)),
+    rw [measureReal_def, cond_apply (Random.Measurable_S t (measurableSet_singleton x)),
       ENNReal.toReal_mul, ENNReal.toReal_inv, mul_comm, div_eq_mul_inv]
     congr 1
     ·

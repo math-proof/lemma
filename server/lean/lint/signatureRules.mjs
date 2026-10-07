@@ -139,11 +139,24 @@ export function signatureRules(ctx) {
             if (!inGiven) ctx.warn('default-arg-given', g.line + 1, g.col + 1, `default argument \`${g.open}${g.flat}${closeOf(g.open)}\` must be inside the \`-- given\` section`);
         }
 
-        // ---- given: propositions first, expressions next --------------------------------------------------------
+        // ---- given: propositions first, expressions next; propositions consecutive --------------------------------
         if (given != null && !ctx.astCovered.has('given-prop-first')) {
             const gg = groups.filter((g) => g.line > given && (imply == null || g.line < imply));
+            // expressions the propositions need (closed over expression types): they must stay above the propositions
+            const need = new Set();
+            let grow = gg.filter((g) => propKind(g) === 'prop').map((g) => g.type);
+            while (grow.length) {
+                const next = [];
+                for (const t of grow) for (const g of gg) {
+                    if (propKind(g) !== 'expr' || g.names.every((n) => need.has(n)) || !g.names.some((n) => hasWord(t, n))) continue;
+                    for (const n of g.names) need.add(n);
+                    next.push(g.type);
+                }
+                grow = next;
+            }
+            let warned = false;
             for (let a = 0; a < gg.length; a++) {
-                if (propKind(gg[a]) !== 'expr') continue;
+                if (propKind(gg[a]) !== 'expr' || gg[a].names.some((n) => need.has(n))) continue;
                 const names = gg[a].names;
                 const later = gg.slice(a + 1);
                 // the proposition must not mention the expression (dependency forces the order)
@@ -153,7 +166,29 @@ export function signatureRules(ctx) {
                 const between = gg.slice(a + 1, gg.indexOf(prop));
                 if (between.some((g) => names.some((n) => hasWord(g.flat, n)))) continue;
                 ctx.warn('given-prop-first', prop.line + 1, prop.col + 1, `proposition \`(${prop.flat})\` after the expression \`(${gg[a].flat})\` (line ${gg[a].line + 1}): in \`given\`, propositions come first`);
+                warned = true;
                 break;
+            }
+            // `given-prop-consecutive` (text fallback of the AST rule): prop … expr … prop
+            if (!warned) {
+                const typed = gg.filter((g) => g.deflt == null && propKind(g) != null);
+                const p0 = typed.findIndex((g) => propKind(g) === 'prop');
+                const g0 = p0 < 0 ? -1 : typed.findIndex((g, i) => i > p0 && propKind(g) === 'expr');
+                const late = g0 < 0 ? -1 : typed.findIndex((g, i) => i > g0 && propKind(g) === 'prop');
+                if (late >= 0) {
+                    const prop = typed[late];
+                    const gap = typed.slice(g0, late).filter((g) => propKind(g) === 'expr');
+                    const exprs = typed.filter((g) => propKind(g) === 'expr');
+                    const before = exprs.filter((g) => g.names.some((n) => need.has(n)));
+                    const after = exprs.filter((g) => !g.names.some((n) => need.has(n)));
+                    const props = typed.filter((g) => propKind(g) === 'prop');
+                    const nm = (xs) => xs.flatMap((g) => g.names).join(' ');
+                    const fix = gap.some((g) => g.names.some((n) => need.has(n)))
+                        ? `move ${before.filter((g) => typed.indexOf(g) > p0).map((g) => `\`(${g.flat})\``).join(' ')} before \`(${typed[p0].flat})\` (order: ${[before, props, after].filter((xs) => xs.length).map((xs) => `\`${nm(xs)}\``).join(', then ')})`
+                        : 'move it up to the propositions above';
+                    ctx.warn('given-prop-consecutive', prop.line + 1, prop.col + 1,
+                        `proposition \`(${prop.flat})\` is separated from the propositions above by ${gap.map((g) => `\`(${g.flat})\``).join(' ')}: in \`given\`, keep all propositions consecutive (only the first run is typeset); ${fix}`);
+                }
             }
         }
 

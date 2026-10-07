@@ -1,6 +1,8 @@
 import sympy.stats.policy_trajectory.gradient
 import sympy.Basic
-open MeasureTheory ProbabilityTheory Finset Filter Topology PolicyGradient PolicyGradient.Model
+import Lemma.Random.Measurable_A
+import Lemma.Random.Measurable_S
+open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
 
 
 /--
@@ -19,7 +21,7 @@ private lemma main
 -- imply
   Integrable (fun ω => φ (s t ω) (a t ω)) (M θ) := by
 -- proof
-  have hX : Measurable (fun ω : ℕ → ℝ × S × A => (s t ω, a t ω)) := (s_meas t).prodMk (a_meas t)
+  have hX : Measurable (fun ω : ℕ → ℝ × S × A => (s t ω, a t ω)) := (Random.Measurable_S t).prodMk (Random.Measurable_A t)
   refine Integrable.of_bound (C := ∑ p : S × A, ‖φ p.1 p.2‖)
     ((StronglyMeasurable.of_discrete (f := fun p : S × A => φ p.1 p.2)).comp_measurable
       hX).aestronglyMeasurable (Filter.Eventually.of_forall fun ω => ?_)

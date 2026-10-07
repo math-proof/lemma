@@ -1,6 +1,8 @@
 import sympy.Basic
 import Mathlib.LinearAlgebra.Matrix.Block
 import sympy.matrices.block_swap
+import Lemma.Matrix.DetSq_FromBlocks0.eq.MulMulPowNeg1_DetDet
+import Lemma.Matrix.DetSq_FromBlocks_0.eq.MulMulPowNeg1_DetDet
 open Matrix
 
 
@@ -38,7 +40,7 @@ private lemma anti_diagonal
 -- imply
   (Matrix.BlockSwap.sq (Matrix.fromBlocks 0 A C D)).det = (-1) ^ (a * b) * A.det * C.det :=
 -- proof
-  Matrix.BlockSwap.det_zero₁₁ A C D
+  DetSq_FromBlocks0.eq.MulMulPowNeg1_DetDet A C D
 
 
 @[main]
@@ -51,7 +53,7 @@ private lemma anti_diagonal.lower
 -- imply
   (Matrix.BlockSwap.sq (Matrix.fromBlocks B A C 0)).det = (-1) ^ (a * b) * A.det * C.det :=
 -- proof
-  Matrix.BlockSwap.det_zero₂₂ B A C
+  DetSq_FromBlocks_0.eq.MulMulPowNeg1_DetDet B A C
 
 
 -- created on 2021-11-21

@@ -1,7 +1,9 @@
 import sympy.stats.policy_trajectory.gradient
 import sympy.Basic
 import Lemma.Real.Norm_Eq12.le.One
-open MeasureTheory ProbabilityTheory Finset Filter Topology PolicyGradient PolicyGradient.Model
+import Lemma.Random.WAdd_1.eq.Sum_MulProbSum_MulTW.of.All_LeNorm.StronglyMeasurable
+import Lemma.Real.StronglyMeasurable_Eq12
+open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random Real
 
 
 /--
@@ -19,7 +21,7 @@ private lemma main
 -- imply
   M.Pn θ (n + 1) x y = ∑ u, M.pol.prob θ x u * ∑ y', M.T x u y' * M.Pn θ n y' y := by
 -- proof
-  exact W_succ M θ (ind_fst_sm y) (Real.Norm_Eq12.le.One y) n x
+  exact WAdd_1.eq.Sum_MulProbSum_MulTW.of.All_LeNorm.StronglyMeasurable (M := M) (Real.StronglyMeasurable_Eq12 y) (Norm_Eq12.le.One y) θ n x
 
 
 -- created on 2026-10-06

@@ -12,11 +12,11 @@ import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { listLemmaTopLevelDirs } from '../lemmaSections.mjs';
 import { prepare, findDecls } from './scan.mjs';
-import { scanImportsAndOpens, openSection, openUnusedAndDuplicate, openPrefix, attrDocstring, dates } from './headerRules.mjs';
+import { scanImportsAndOpens, openSection, openUnusedAndDuplicate, openPrefix, attrDocstring, dates, declKeywordDirText } from './headerRules.mjs';
 import { signatureRules } from './signatureRules.mjs';
 import { indentRules, proofRules, underscoreNameRule } from './proofRules.mjs';
 import { attrRules } from './attrRules.mjs';
-import { AST_RULES, parseAst, astRules, quote, locate } from './astRules.mjs';
+import { AST_RULES, parseAst, astRules, quote, locate, countLemmaTheoremNodes } from './astRules.mjs';
 
 const Q = {
     indent: 'code layout strictly 2-indented',
@@ -43,6 +43,7 @@ const Q = {
     openPrefix: 'after `open Section`, prefer the short lemma name when unambiguous',
     mp: 'For `LHS.is.RHS` tagged with `@[mp]` / `@[mpr]`, prefer the generated one-direction lemmas `RHS.of.LHS` / `LHS.of.RHS` over calling `.mp` / `.mpr` on the iff.',
     comm: 'For `LHS.eq.RHS` tagged with `@[comm]`, prefer the generated commutative lemma `RHS.eq.LHS` over `simp [← LHS.eq.RHS]` or `rw [LHS.eq.RHS.symm]`.',
+    declDir: 'Never put a `theorem` in `Lemma/`.', // removed from AGENTS.md: this warning checks it
     docstring: 'Run `python py/docstring.py <leanFile>` if necessary. It\'ll generate the attribute docstring table if the lemma uses attributes other than `@[main]`.',
 };
 
@@ -55,6 +56,8 @@ export const RULES = {
     'binder-dep-inst': Q.order,
     'default-arg-given': Q.deflt,
     'given-prop-first': Q.propFirst,
+    // not an AGENTS.md rule (user request): the page typesets only the first run of `given` propositions
+    'given-prop-consecutive': null,
     'binder-combine': Q.combine,
     'section-imply': Q.imply,
     'section-proof': Q.proof,
@@ -87,6 +90,7 @@ export const RULES = {
     'attr-mp': Q.mp,
     'attr-comm': Q.comm,
     'attr-docstring': Q.docstring,
+    'decl-keyword-dir': Q.declDir,
 };
 
 /** rules switched off by default (too noisy on the corpus; see the calibration notes in the README) */
@@ -153,7 +157,10 @@ export function lintLean(source, opts = {}) {
     // AST pass (lean.js); on a parse failure only the text rules run
     const tree = opts.ast === false ? null : parseAst(source);
     if (tree) for (const r of AST_RULES) ctx.astCovered.add(r);
-    const steps = [openSection, openUnusedAndDuplicate, openPrefix, attrDocstring, dates, signatureRules, indentRules, proofRules, underscoreNameRule, attrRules];
+    // `decl-keyword-dir`: trust the tree only when it sees the same lemma/theorem declarations as the text scan
+    if (tree && countLemmaTheoremNodes(tree) !== ctx.decls.filter((d) => d.kind === 'lemma' || d.kind === 'theorem').length)
+        ctx.astCovered.delete('decl-keyword-dir');
+    const steps = [openSection, openUnusedAndDuplicate, openPrefix, declKeywordDirText, attrDocstring, dates, signatureRules, indentRules, proofRules, underscoreNameRule, attrRules];
     for (const step of steps) {
         try {
             step(ctx);

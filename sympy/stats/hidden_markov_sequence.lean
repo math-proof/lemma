@@ -16,52 +16,6 @@ def IsHiddenMarkovSeq {Y : Type*} (P : ℕ → (ℕ → Y) → ℝ) (π : Y → 
   ∀ ys : ℕ → Y, P 0 ys = E 0 (ys 0) * π (ys 0) ∧
     ∀ t, P (t + 1) ys = P t ys * (T (ys t) (ys (t + 1)) * E (t + 1) (ys (t + 1)))
 
-/-- `P t` only depends on the prefix `ys 0, …, ys t`. -/
-theorem IsHiddenMarkovSeq.prefix {Y : Type*} {P : ℕ → (ℕ → Y) → ℝ} {π : Y → ℝ} {T : Y → Y → ℝ} {E : ℕ → Y → ℝ}
-    (h : IsHiddenMarkovSeq P π T E) : ∀ t (w w' : ℕ → Y), (∀ i ≤ t, w i = w' i) → P t w = P t w' := by
-  intro t
-  induction t with
-  | zero =>
-    intro w w' hw
-    rw [(h w).1, (h w').1, hw 0 le_rfl]
-  | succ t ih =>
-    intro w w' hw
-    rw [(h w).2 t, (h w').2 t, ih w w' (fun i hi => hw i (by omega)), hw t (by omega), hw (t + 1) le_rfl]
-
-theorem dite_snoc_eq {Y : Type*} {t : ℕ} (ys : Fin t → Y) (b a : Y) {i : ℕ} (hi : i ≤ t) :
-    (if h : i < t + 1 then Fin.snoc (α := fun _ => Y) ys b ⟨i, h⟩ else a) = if h : i < t then ys ⟨i, h⟩ else b := by
-  rcases hi.lt_or_eq with h | rfl
-  · rw [dif_pos (by omega), dif_pos h]
-    exact Fin.snoc_castSucc (α := fun _ => Y) (p := ys) (x := b) (i := ⟨i, h⟩)
-  · rw [dif_pos (Nat.lt_succ_self _), dif_neg (lt_irrefl _)]
-    exact Fin.snoc_last (α := fun _ => Y) (p := ys) (x := b)
-
-theorem Fin.snoc_mk_last {Y : Type*} {t : ℕ} (ys : Fin t → Y) (b : Y) (h : t < t + 1) :
-    Fin.snoc (α := fun _ => Y) ys b ⟨t, h⟩ = b :=
-  Fin.snoc_last (α := fun _ => Y) (p := ys) (x := b)
-
-theorem Fintype.sum_snoc {Y : Type*} [Fintype Y] {t : ℕ} (F : (Fin (t + 1) → Y) → ℝ) :
-    ∑ ys, F ys = ∑ b, ∑ ys0 : Fin t → Y, F (Fin.snoc (α := fun _ => Y) ys0 b) := by
-  rw [← (Fin.snocEquiv (fun _ => Y)).sum_comp, Fintype.sum_prod_type]
-  rfl
-
-theorem Finset.sup'_snoc {Y : Type*} [Fintype Y] [Nonempty Y] {t : ℕ} (F : (Fin (t + 1) → Y) → ℝ) :
-    Finset.univ.sup' Finset.univ_nonempty F =
-      Finset.univ.sup' Finset.univ_nonempty (fun b => Finset.univ.sup' Finset.univ_nonempty
-        (fun ys0 : Fin t → Y => F (Fin.snoc (α := fun _ => Y) ys0 b))) := by
-  apply le_antisymm
-  · refine Finset.sup'_le _ _ fun ys _ => ?_
-    refine Finset.le_sup'_of_le _ (Finset.mem_univ (ys (Fin.last t))) (Finset.le_sup'_of_le _ (Finset.mem_univ (Fin.init ys)) ?_)
-    simp only [Fin.snoc_init_self, le_refl]
-  · exact Finset.sup'_le _ _ fun b _ => Finset.sup'_le _ _ fun ys0 _ => Finset.le_sup' F (Finset.mem_univ _)
-
-theorem Finset.sup'_add_const_real {ι : Type*} (s : Finset ι) (H : s.Nonempty) (g : ι → ℝ) (c : ℝ) :
-    s.sup' H (fun i => g i + c) = s.sup' H g + c := by
-  apply le_antisymm
-  · exact Finset.sup'_le _ _ fun i hi => add_le_add_left (Finset.le_sup' g hi) c
-  · obtain ⟨i, hi, he⟩ := Finset.exists_mem_eq_sup' H g
-    rw [he]
-    exact Finset.le_sup' (f := fun i => g i + c) hi
 
 open MeasureTheory
 open scoped ENNReal.ToRealCoe
@@ -87,20 +41,6 @@ def IsHiddenMarkovFac {Ω Y X : Type*} [MeasurableSpace Ω] [ReferenceMeasure Y]
     ∀ t, P (t + 1) ys = P t ys * ((ℙ[π]((y (t + 1)) = ys (t + 1) | (y t) = ys t) : ℝ) *
       (ℙ[π]((x (t + 1)) = xo (t + 1) | (y (t + 1)) = ys (t + 1)) : ℝ))
 
-/-- `P t` only depends on the prefix `ys 0, …, ys t`. -/
-theorem IsHiddenMarkovFac.prefix {Ω Y X : Type*} [MeasurableSpace Ω] [ReferenceMeasure Y] [ReferenceMeasure X]
-    {π : MeasureTheory.Measure Ω} {x : ℕ → Ω → X} {y : ℕ → Ω → Y} {xo : ℕ → X} {P : ℕ → (ℕ → Y) → ℝ}
-    [∀ i, SinglePSpace π (y i)] [∀ i j, SinglePSpace π (x i, y j)]
-    [∀ i j, SinglePSpace π (y i, y j)]
-    (h : IsHiddenMarkovFac π x y xo P) : ∀ t (w w' : ℕ → Y), (∀ i ≤ t, w i = w' i) → P t w = P t w' := by
-  intro t
-  induction t with
-  | zero =>
-    intro w w' hw
-    rw [(h w).1, (h w').1, hw 0 le_rfl]
-  | succ t ih =>
-    intro w w' hw
-    rw [(h w).2 t, (h w').2 t, ih w w' (fun i hi => hw i (by omega)), hw t (by omega), hw (t + 1) le_rfl]
 
 /-- Slicing of a function `ℕ → β`, dispatched on its value type `β` (instances: `β = α` for a plain
 sequence `f : ℕ → α`, and `β = Ω → α` for a family of random variables `x : ℕ → Ω → α`).  Used by
@@ -149,13 +89,6 @@ def Function.getSlice {β : Type*} [FunSlice β] (x : ℕ → β) (s : Slice) : 
 @[app_unexpander Function.getSlice]
 def Function.getSlice.unexpand := Slice.getSliceUnexpand
 
-/-- `x[:n]` for a family of random variables: the random vector `ω ↦ (x 0 ω, …, x (n-1) ω)`. -/
-theorem Function.getSlice_zero {Ω α : Type*} (x : ℕ → Ω → α) (n : ℕ) (ω : Ω) (i : Fin n) :
-    x[:n] ω i = x i ω := rfl
-
-/-- `f[:n]` for a plain sequence `f : ℕ → α`. -/
-theorem Function.getSlice_zero' {α : Type*} (f : ℕ → α) (n : ℕ) (i : Fin n) :
-    f[:n] i = f i := rfl
 
 /-! ### Joint history of several processes: `(x, y, …)[:n]`
 
@@ -167,7 +100,8 @@ triples the components are packed by the tuple coercion `(x i, y i) ω` / `(x i,
 four or more components by right-nested `JointRandomSymbol`. Only a literal tuple receiver is
 rewritten; every other `x[:n]` (lists, vectors, tensors, a single process `x[:n]`, a parenthesized
 `(e)[:n]`) keeps the generic `x.getSlice ⟨0, n, 1⟩` of `stdlib.List`. Used e.g. as the history in
-`(a n, r n, s (n + 1)) ⟂ᵢ[π] (r, s, a)[:n] | s n`. -/
+`(a n, r n, s (n + 1)) ⟂ᵢ[π] (r, s, a)[:n] | s n`.
+-/
 open Lean in
 macro_rules
   | `(($x, $ys,*)[:$n]) => do
@@ -196,19 +130,6 @@ def IsHiddenMarkovPr {Ω Y X : Type*} [MeasurableSpace Ω] [ReferenceMeasure Y] 
       (ℙ[π](x[:t + 1] = xo[:t + 1] ∧ y[:t + 1] = ys[:t + 1]) : ℝ) *
         ((ℙ[π]((y (t + 1)) = ys (t + 1) | (y t) = ys t) : ℝ) *
           (ℙ[π]((x (t + 1)) = xo (t + 1) | (y (t + 1)) = ys (t + 1)) : ℝ))
-
-/-- The probability-notation assumptions give the abstract factorization for the family of prefix joint probabilities
-`P t ys = Pr(x[:t+1] = xo[:t+1], y[:t+1] = ys[:t+1])`. -/
-theorem IsHiddenMarkovPr.toFac {Ω Y X : Type*} [MeasurableSpace Ω] [ReferenceMeasure Y] [ReferenceMeasure X]
-    [Countable Y] [MeasurableSingletonClass Y] [Countable X] [MeasurableSingletonClass X]
-    {π : Measure Ω} {x : ℕ → Ω → X} {y : ℕ → Ω → Y} {xo : ℕ → X} {P : ℕ → (ℕ → Y) → ℝ}
-    [∀ i, SinglePSpace π (y i)] [∀ i j, SinglePSpace π (x i, y j)]
-    [∀ i j, SinglePSpace π (y i, y j)]
-    [∀ n, SinglePSpace π (x[:n], y[:n])]
-    (h : IsHiddenMarkovPr π x y xo)
-    (hP : ∀ t ys, P t ys = (ℙ[π](x[:t + 1] = xo[:t + 1] ∧ y[:t + 1] = ys[:t + 1]) : ℝ)) :
-    IsHiddenMarkovFac π x y xo P := fun ys =>
-  ⟨by rw [hP]; exact (h ys).1, fun t => by rw [hP, hP]; exact (h ys).2 t⟩
 
 
 -- created on 2026-09-27

@@ -1,5 +1,4 @@
 import sympy.matrices.expressions.matmul
-open Tensor
 
 
 @[main]

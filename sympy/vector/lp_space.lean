@@ -30,10 +30,10 @@ def ofL2 (p : ℕ) (x : EuclideanVec d) : LpSpace p d :=
   WithLp.toLp p (WithLp.ofLp x)
 
 @[simp]
-lemma toL2_ofL2 (x : EuclideanVec d) : (ofL2 p x).toL2 = x := rfl
+theorem toL2_ofL2 (x : EuclideanVec d) : (ofL2 p x).toL2 = x := rfl
 
 @[simp]
-lemma ofL2_toL2 (x : LpSpace p d) : ofL2 p x.toL2 = x := rfl
+theorem ofL2_toL2 (x : LpSpace p d) : ofL2 p x.toL2 = x := rfl
 
 -- ½ ‖x‖ₚ² (rl: `half_sq_Lp`)
 noncomputable def half_sq (x : LpSpace p d) : ℝ :=

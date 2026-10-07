@@ -5,6 +5,7 @@ import Mathlib.MeasureTheory.MeasurableSpace.Constructions
 import sympy.stats.joint_rv
 import Lemma.Random.PSpace.PSpace.of.PSpace_Joint
 import Lemma.Random.All_EqIntegral_ProbJoint.of.PSpace_Joint
+import Lemma.Random.Map.eq.WithDensityProb
 open Random MeasureTheory
 
 
@@ -47,8 +48,8 @@ private lemma main
   have hsecy : ∀ᵐ b ∂ν, ∫⁻ a, π.prob (x, y) (a, b) ∂μ = π.prob y b :=
     All_EqIntegral_ProbJoint.of.PSpace_Joint.left hP
   -- Marginal integrals = 1, so reference measures are nonzero
-  have hlawx : π.map x = μ.withDensity (π.prob x) := SinglePSpace.map_eq_withDensity_density
-  have hlawy : π.map y = ν.withDensity (π.prob y) := SinglePSpace.map_eq_withDensity_density
+  have hlawx : π.map x = μ.withDensity (π.prob x) := Map.eq.WithDensityProb
+  have hlawy : π.map y = ν.withDensity (π.prob y) := Map.eq.WithDensityProb
   have hix : IsProbabilityMeasure (π.map x) :=
     Measure.isProbabilityMeasure_map PSpace.aemeasurable
   have hiy : IsProbabilityMeasure (π.map y) :=

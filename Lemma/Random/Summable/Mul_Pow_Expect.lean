@@ -1,6 +1,7 @@
-import sympy.stats.policy_trajectory.markov
+import sympy.stats.policy_trajectory
 import sympy.Basic
-open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model
+import Lemma.Random.Summable_MulPowIntegral_R_Add.of.In_Ico
+open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 
 
 /--
@@ -22,7 +23,7 @@ private lemma main
   Summable (fun k => γ ^ k * ∫ ω, r (t + k) ω ∂(M θ)[|B]) := by
 -- proof
   classical
-  exact summable_cond M θ h₀ B t
+  exact Summable_MulPowIntegral_R_Add.of.In_Ico (M := M) h₀ θ B t
 
 
 -- created on 2026-09-26

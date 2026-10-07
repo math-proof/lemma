@@ -1,5 +1,6 @@
 import sympy.matrices.cholesky
 import sympy.Basic
+import Lemma.Matrix.Any_Eq_0_And_All_Gt_0_And_Eq_Mul.of.PosDef
 open Matrix
 
 
@@ -20,7 +21,7 @@ private lemma main
     ·
       rw [star_trivial]
       exact h₁ x hx
-  obtain ⟨L, hlow, hpos, hL⟩ := hA.exists_cholesky
+  obtain ⟨L, hlow, hpos, hL⟩ := Any_Eq_0_And_All_Gt_0_And_Eq_Mul.of.PosDef hA
   refine ⟨L, hlow, fun i => ?_, by rwa [Matrix.conjTranspose_eq_transpose_of_trivial] at hL⟩
   have := (RCLike.pos_iff.mp (hpos i)).1
   simpa using this

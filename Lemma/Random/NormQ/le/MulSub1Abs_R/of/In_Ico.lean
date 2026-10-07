@@ -1,6 +1,7 @@
 import sympy.stats.policy_trajectory.gradient
 import sympy.Basic
-open MeasureTheory ProbabilityTheory Finset Filter Topology PolicyGradient PolicyGradient.Model
+import Lemma.Random.Norm_Integral_R.le.Abs_R
+open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
 
 
 /--
@@ -23,7 +24,7 @@ private lemma main
   unfold Model.Q
   refine tsum_of_norm_bounded ((hasSum_geometric_of_lt_one h₀.1 h₀.2).mul_right _) fun k => ?_
   rw [norm_mul, norm_pow, Real.norm_of_nonneg h₀.1]
-  exact mul_le_mul_of_nonneg_left (cond_r_bdd M θ _ (t + k)) (pow_nonneg h₀.1 k)
+  exact mul_le_mul_of_nonneg_left (Norm_Integral_R.le.Abs_R (M := M) θ _ (t + k)) (pow_nonneg h₀.1 k)
 
 
 -- created on 2026-10-06

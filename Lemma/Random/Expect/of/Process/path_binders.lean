@@ -3,7 +3,9 @@ import sympy.stats.variance
 import sympy.stats.policy_trajectory.gradient
 import sympy.Basic
 import Lemma.Random.Measurable_R
-open MeasureTheory PolicyGradient PolicyGradient.Model
+import Lemma.Random.Measurable_A
+import Lemma.Random.Measurable_S
+open MeasureTheory PolicyGradient PolicyGradient.Model Random
 
 set_option linter.unusedVariables false
 
@@ -22,9 +24,9 @@ private lemma main
   (_hγ : γ ∈ Set.Ico 0 1) :
 -- imply
   have hs : ∀ t, PSpace (M θ) (s (S := S) (A := A) t) := fun t =>
-    ⟨(s_meas t).aemeasurable⟩
+    ⟨(Random.Measurable_S t).aemeasurable⟩
   have ha : ∀ t, PSpace (M θ) (a (S := S) (A := A) t) := fun t =>
-    ⟨(a_meas t).aemeasurable⟩
+    ⟨(Random.Measurable_A t).aemeasurable⟩
   have hr : ∀ t, PSpace (M θ) (r (S := S) (A := A) t) := fun t =>
     ⟨(Random.Measurable_R t).aemeasurable⟩
   have : PSpace (M θ) (AsPathRV.path (s (S := S) (A := A))) :=

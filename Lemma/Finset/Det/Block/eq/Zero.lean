@@ -1,7 +1,6 @@
 import sympy.Basic
 import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
 import Mathlib.Data.Fintype.Fin
-open Matrix
 
 
 @[main]

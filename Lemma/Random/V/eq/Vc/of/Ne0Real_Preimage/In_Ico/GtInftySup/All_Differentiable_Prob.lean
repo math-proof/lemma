@@ -4,7 +4,7 @@ import sympy.vector.operators
 import sympy.concrete.sup
 import Lemma.Random.Differentiable_RealPreimageS.of.GtInftySup.All_Differentiable_Prob
 import Lemma.Random.V.eq.Vc.of.Ne0Real_Preimage.In_Ico
-open MeasureTheory ProbabilityTheory Finset Filter Topology PolicyGradient PolicyGradient.Model
+open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model
 
 
 /--

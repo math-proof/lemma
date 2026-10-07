@@ -1,6 +1,9 @@
 import sympy.stats.policy_trajectory.gradient
 import sympy.Basic
-open MeasureTheory ProbabilityTheory Finset Filter Topology PolicyGradient PolicyGradient.Model
+import Lemma.Random.EqMapStageK_12
+import Lemma.Random.EqMap_Apply
+import Lemma.Random.Measurable_S
+open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
 
 
 /--
@@ -18,8 +21,8 @@ private lemma main
 -- proof
   have h : (M θ).map (s 0) = ((M θ).map (fun ω => ω 0)).map (fun z => z.2.1) := by
     rw [Measure.map_map measurable_snd.fst (measurable_pi_apply 0)]; rfl
-  rw [measureReal_def, ← Measure.map_apply (s_meas 0) (measurableSet_singleton x), h, stage_zero,
-    Model.μ₀, fst_stageK_comp, measureReal_def]
+  rw [measureReal_def, ← Measure.map_apply (Random.Measurable_S 0) (measurableSet_singleton x), h, Random.EqMap_Apply,
+    Model.μ₀, Random.EqMapStageK_12, measureReal_def]
 
 
 -- created on 2026-10-06

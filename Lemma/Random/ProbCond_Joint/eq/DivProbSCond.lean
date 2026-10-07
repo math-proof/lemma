@@ -5,6 +5,7 @@ import Lemma.Random.PSpace_Joint
 import Lemma.Random.PSpace.PSpace.of.PSpace_Joint
 import Lemma.Random.PSpace_Joint_Joint.of.PSpace_Joint_Joint
 import sympy.stats.joint_rv
+import Lemma.Random.Map.eq.WithDensityProb
 open Random
 
 
@@ -128,7 +129,7 @@ private lemma main
   let p2 : α × γ → ENNReal := π.prob (x, z)
   let pz : γ → ENNReal := π.prob z
   have hlaw2m : π.map (x, z) = (μ.prod ξ).withDensity p2 :=
-    SinglePSpace.map_eq_withDensity_density
+    Map.eq.WithDensityProb
   have htot2 : ∫⁻ ac, p2 ac ∂(μ.prod ξ) = 1 := by
     have h : (μ.prod ξ).withDensity p2 Set.univ = ∫⁻ ac, p2 ac ∂(μ.prod ξ) := by
       rw [MeasureTheory.withDensity_apply _ MeasurableSet.univ, MeasureTheory.setLIntegral_univ]
@@ -142,7 +143,7 @@ private lemma main
     MeasureTheory.Measure.ae_ae_of_ae_prod (MeasureTheory.ae_lt_top hmp2 (by rw [htot2]; norm_num))
   have hmp_z : Measurable pz := by
     simpa [pz, MeasureTheory.Measure.prob] using MeasureTheory.Measure.measurable_rnDeriv (π.map z) ReferenceMeasure.measure
-  have hlaw_z : π.map z = ξ.withDensity pz := SinglePSpace.map_eq_withDensity_density
+  have hlaw_z : π.map z = ξ.withDensity pz := Map.eq.WithDensityProb
   have htot_z : ∫⁻ c, pz c ∂ξ = 1 := by
     have h : ξ.withDensity pz Set.univ = ∫⁻ c, pz c ∂ξ := by
       rw [MeasureTheory.withDensity_apply _ MeasurableSet.univ, MeasureTheory.setLIntegral_univ]

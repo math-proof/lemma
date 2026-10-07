@@ -2,6 +2,7 @@ import Mathlib.Probability.Independence.Integration
 import sympy.stats.joint_rv
 import sympy.stats.variance
 import sympy.Basic
+import Lemma.Random.Cov.eq.Integral
 open MeasureTheory
 
 
@@ -26,7 +27,7 @@ private lemma main
   have hB : Integrable (fun ω => (∫ ω', y ω' ∂π) * x ω) π := hx.const_mul _
   have hAB : Integrable (fun ω => (∫ ω', x ω' ∂π) * y ω + (∫ ω', y ω' ∂π) * x ω) π := hA.add hB
   have hABC : Integrable (fun ω => (∫ ω', x ω' ∂π) * y ω + (∫ ω', y ω' ∂π) * x ω - (∫ ω', x ω' ∂π) * ∫ ω', y ω' ∂π) π := hAB.sub (integrable_const _)
-  rw [Covariance.eq_integral]
+  rw [Random.Cov.eq.Integral]
   simp only [e]
   rw [integral_sub hxy hABC, integral_sub hAB (integrable_const _), integral_add hA hB, integral_const_mul, integral_const_mul, hc]
   ring

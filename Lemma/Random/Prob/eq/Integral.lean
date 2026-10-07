@@ -2,6 +2,7 @@ import Mathlib.Probability.Independence.Integration
 import sympy.stats.joint_rv
 import sympy.stats.variance
 import sympy.Basic
+import Lemma.Random.Map.eq.WithDensityProb
 open MeasureTheory
 
 
@@ -19,7 +20,7 @@ private lemma main
   Probability π x s = ∫⁻ a in s, π.prob x a ∂ReferenceMeasure.measure := by
 -- proof
   unfold Probability
-  rw [SinglePSpace.map_eq_withDensity_density, withDensity_apply _ hs]
+  rw [Random.Map.eq.WithDensityProb, withDensity_apply _ hs]
 
 
 -- created on 2023-03-20

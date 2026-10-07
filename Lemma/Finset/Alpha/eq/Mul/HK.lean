@@ -1,7 +1,8 @@
 import sympy.concrete.continued_fraction
 import sympy.sets.sets
 import sympy.Basic
-open Continuant
+import Lemma.Finset.Alpha_MapRange.eq.DivHK.of.All_Gt_0
+open Finset Continuant
 
 
 @[main]
@@ -14,7 +15,7 @@ private lemma induct
 -- imply
   alpha ((List.range (n + 1)).map x) = H x (n + 1) / K x (n + 1) := by
 -- proof
-  exact alpha_eq x h n
+  exact Alpha_MapRange.eq.DivHK.of.All_Gt_0 x h n
 
 
 -- created on 2020-09-19

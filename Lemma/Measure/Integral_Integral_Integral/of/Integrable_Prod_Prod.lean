@@ -1,7 +1,7 @@
 import Mathlib
 import sympy.Basic
 
-open MeasureTheory Set
+open MeasureTheory
 
 /--
 [MeasureTheory_integral_integral_integral_comm_of_integrable_prod_prod](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_MeasureTheory_integral_integral_integral_comm_of_integrable_prod_prod.lean)

@@ -6,7 +6,7 @@ import Lemma.Tensor.Eq.is.All_EqGetS
 import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.Softmax.eq.DivExp_KeepdimSumExp
 import Lemma.Tensor.XEq.of.Eq
-open Tensor Hyperreal
+open Tensor
 set_option maxHeartbeats 400000
 
 

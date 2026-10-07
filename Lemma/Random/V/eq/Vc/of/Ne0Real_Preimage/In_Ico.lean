@@ -1,6 +1,7 @@
 import sympy.stats.policy_trajectory.gradient
 import sympy.Basic
-open MeasureTheory ProbabilityTheory Finset Filter Topology PolicyGradient PolicyGradient.Model
+import Lemma.Random.V.eq.TSum_MulPowWRc.of.Ne0Real_Preimage.In_Ico
+open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
 
 
 /--
@@ -20,7 +21,7 @@ private lemma main
 -- imply
   M.V θ γ t x = M.Vc θ γ x := by
 -- proof
-  exact V_eq M θ h₀ t x h₁
+  exact V.eq.TSum_MulPowWRc.of.Ne0Real_Preimage.In_Ico (M := M) θ t x h₀ h₁
 
 
 -- created on 2026-10-06

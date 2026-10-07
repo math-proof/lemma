@@ -1,7 +1,7 @@
 import sympy.stats.policy_trajectory.gradient
 import sympy.Basic
 import Lemma.Tensor.Fderiv_Prob.eq.Zero.of.EqProb_0
-open MeasureTheory ProbabilityTheory Finset Filter Topology PolicyGradient PolicyGradient.Model
+open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model
 
 
 /--

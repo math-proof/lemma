@@ -1,7 +1,8 @@
 import sympy.concrete.continued_fraction
 import sympy.sets.sets
 import sympy.Basic
-open Continuant
+import Lemma.List.OfFn_Fun.eq.MapRange
+open List Continuant
 
 
 @[main]
@@ -17,7 +18,7 @@ private lemma main
   alpha (List.ofFn (Fin.snoc (α := fun _ => ℝ) (fun i : Fin n => x i) y)) = alpha ((List.range n).map x ++ [y]) := by
 -- proof
   rw [List.ofFn_succ', List.concat_eq_append]
-  simp only [Fin.snoc_castSucc, Fin.snoc_last, ofFn_eq_map_range]
+  simp only [Fin.snoc_castSucc, Fin.snoc_last, OfFn_Fun.eq.MapRange]
 
 
 -- created on 2020-09-19

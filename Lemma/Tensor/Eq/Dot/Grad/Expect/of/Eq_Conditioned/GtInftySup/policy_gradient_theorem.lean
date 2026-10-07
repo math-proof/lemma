@@ -19,7 +19,10 @@ import Lemma.Random.AeRealPreimageSS.ne.Zero
 import Lemma.Random.BddAbove_ImageNormFderiv.of.In_Ico.GtInftySup.All_Differentiable_Prob
 import Lemma.Random.AeNormR.le.Abs_R
 import Lemma.Random.Measurable_R
-open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Filter Topology
+import Lemma.Random.Integral_G.eq.TSum_MulPowIntegral_R_Add.of.In_Ico
+import Lemma.Random.Measurable_A
+import Lemma.Random.Measurable_S
+open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Filter Topology Random
 open scoped ENNReal.ToRealCoe
 
 
@@ -47,13 +50,13 @@ private lemma main
   (h₂ : sup[θ, x, u] ‖∇[θ] M.pol.prob θ x u‖ < ∞) :
 -- imply
   have : ∀ θ t, SinglePSpace (M θ) (a (S := S) (A := A) t, s (S := S) (A := A) t) := fun _ t =>
-    Random.SinglePSpace.of.EqMeasureCount.Measurable ((a_meas t).prodMk (s_meas t)) (by
+    SinglePSpace.of.EqMeasureCount.Measurable ((Random.Measurable_A t).prodMk (Random.Measurable_S t)) (by
       show (ReferenceMeasure.measure : Measure A).prod (ReferenceMeasure.measure : Measure S) = _
       rw [hA, hS, Measure.Count.eq.ProdCountS])
   have hs : ∀ t, PSpace (M θ) (s (S := S) (A := A) t) := fun t =>
-    ⟨(s_meas t).aemeasurable⟩
+    ⟨(Random.Measurable_S t).aemeasurable⟩
   have ha : ∀ t, PSpace (M θ) (a (S := S) (A := A) t) := fun t =>
-    ⟨(a_meas t).aemeasurable⟩
+    ⟨(Random.Measurable_A t).aemeasurable⟩
   have hr : ∀ t, PSpace (M θ) (r (S := S) (A := A) t) := fun t =>
     ⟨(Random.Measurable_R t).aemeasurable⟩
   have : PSpace (M θ) (AsPathRV.path (s (S := S) (A := A))) :=
@@ -99,7 +102,7 @@ private lemma main
           s t ⁻¹' {sb t} ∩ a t ⁻¹' {ab t} := by
         ext ω; simp [JointRandomSymbol, Prod.ext_iff]
       rw [hpre]
-      exact Model.integral_G_cond M θ h₀ _ t
+      exact Integral_G.eq.TSum_MulPowIntegral_R_Add.of.In_Ico (M := M) h₀ θ _ t
     have hV_expect : ∀ θ t («s.bvar» : ℕ → S),
         M.V θ γ t («s.bvar» t) =
           𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «s.bvar» t) := by
@@ -119,12 +122,12 @@ private lemma main
       fderiv ℝ (fun θ' => (ℙ[M θ']((a t) = (a t ω) | (s t) = (s t ω)) : ℝ).log) θ =
         fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' (s t ω) (a t ω))) θ := by
     intro t
-    filter_upwards [Random.AeRealPreimageSS.ne.Zero (M := M) θ] with ω hω
+    filter_upwards [AeRealPreimageSS.ne.Zero (M := M) θ] with ω hω
     have hc : ContinuousAt (fun θ' => (M θ').real (s t ⁻¹' {s t ω})) θ :=
-      (Random.Differentiable_RealPreimageS.of.GtInftySup.All_Differentiable_Prob (M := M) h₁ h₂o t (s t ω) θ).continuousAt
+      (Differentiable_RealPreimageS.of.GtInftySup.All_Differentiable_Prob (M := M) h₁ h₂o t (s t ω) θ).continuousAt
     refine Filter.EventuallyEq.fderiv_eq ((hc.eventually_ne (hω t)).mono fun θ' h => ?_)
     beta_reduce
-    rw [Random.ProbCond.eq.OfRealPol.of.Ne_0 hS hA (hP θ' t) h,
+    rw [ProbCond.eq.OfRealPol.of.Ne_0 hS hA (hP θ' t) h,
       ENNReal.toReal_ofReal (M.pol.nonneg θ' _ _)]
   have hold : ∑' t, γ ^ t • fderiv ℝ (fun θ => ∫ ω, r t ω ∂(M θ)) θ =
       ∑' t, γ ^ t • ∫ ω, (∑' k, γ ^ k * r (t + k) ω) •
@@ -139,7 +142,7 @@ private lemma main
   have hL : ∀ φ, (InnerProductSpace.toDual ℝ Θ).symm φ = L φ := fun _ => rfl
   -- almost sure bound of the discounted return from `t`
   have hA' : ∀ᵐ ω ∂(M θ), ∀ t, ‖∑' k, γ ^ k * r (t + k) ω‖ ≤ (1 - γ)⁻¹ * |M.env.R| := by
-    filter_upwards [Random.AeNormR.le.Abs_R (M := M) θ] with ω hr t
+    filter_upwards [AeNormR.le.Abs_R (M := M) θ] with ω hr t
     refine tsum_of_norm_bounded ((hasSum_geometric_of_lt_one h₀.1 h₀.2).mul_right _) fun k => ?_
     rw [norm_mul, norm_pow, Real.norm_of_nonneg h₀.1]
     exact mul_le_mul_of_nonneg_left (hr _) (pow_nonneg h₀.1 k)
@@ -147,7 +150,7 @@ private lemma main
   have hRint : ∀ θ' : Θ, ∫ ω, ∑' t, γ ^ t * r t ω ∂(M θ') = ∑' t, γ ^ t * ∫ ω, r t ω ∂(M θ') := by
     intro θ'
     have hrb : ∀ t, ∀ᵐ ω ∂(M θ'), ‖γ ^ t * r t ω‖ ≤ γ ^ t * |M.env.R| := fun t =>
-      (Random.AeNormR.le.Abs_R (M := M) θ').mono fun ω h => by
+      (AeNormR.le.Abs_R (M := M) θ').mono fun ω h => by
         rw [norm_mul, norm_pow, Real.norm_of_nonneg h₀.1]
         exact mul_le_mul_of_nonneg_left (h t) (pow_nonneg h₀.1 t)
     have hri : ∀ t, Integrable (fun ω => γ ^ t * r t ω) (M θ') := fun t =>
@@ -161,7 +164,7 @@ private lemma main
   have hRb := Tensor.Eq.Expect.Sum.Grad.Log.Pr.of.Bounded (X := fun _ _ r k => r k)
     h₀ hS hA (fun k => Random.Measurable_R k) hA' h₁ h₂o
   refine Eq.trans ?_ ((congrArg L hold).trans hRb)
-  · rw [← (Random.GetTSum_SMul.of.In_Ico.GtInftySup.All_Differentiable_Prob (M := M) h₁ h₂o h₀ θ).fderiv, gradient, hL]
+  · rw [← (GetTSum_SMul.of.In_Ico.GtInftySup.All_Differentiable_Prob (M := M) h₁ h₂o h₀ θ).fderiv, gradient, hL]
     congr 2
     funext θ'
     -- `𝔼[r: M θ']((fun t => γ ^ t) @ r)` is the Bochner integral of the return

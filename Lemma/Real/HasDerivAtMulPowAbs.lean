@@ -3,7 +3,7 @@ import Mathlib.Analysis.Calculus.Deriv.Pow
 import Mathlib.Analysis.Calculus.Deriv.Mul
 import Mathlib.Analysis.Asymptotics.Lemmas
 import sympy.Basic
-open Asymptotics Filter Topology
+open Asymptotics Topology
 
 
 @[main]

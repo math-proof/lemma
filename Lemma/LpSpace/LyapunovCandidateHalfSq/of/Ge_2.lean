@@ -4,7 +4,7 @@ import Lemma.LpSpace.Norm.le.NormToL2.of.Ge_2
 import Lemma.LpSpace.Any_And_Ge_0_All_LeNormToL2_MulNorm.of.Ge_2
 import Lemma.LpSpace.InnerToL2HalfSq'_ToL2.eq.SquareNorm.of.Ge_1
 import Lemma.LpSpace.SumMulAbsHalfSq'_Abs.le.MulNormS.of.Ge_2
-open Finset LpSpace
+open LpSpace
 
 
 @[main]

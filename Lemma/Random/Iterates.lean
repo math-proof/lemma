@@ -1,6 +1,6 @@
 import sympy.stats.markov_samples
 import sympy.Basic
-import Lemma.Anchors.Time.lt.TimeAdd1
+import Lemma.Real.Anchors.Time.lt.TimeAdd1
 open Finset
 
 
@@ -20,7 +20,7 @@ private lemma main
       rw [sum_Ico_succ_top hb, ← add_assoc, ← ih, sk.hx.step]
       rfl
   show sk.x (sk.anc.t (n + 1)) ω = sk.x (sk.anc.t n) ω + sk.anc.β n • (sk.f (sk.x (sk.anc.t n) ω) - sk.x (sk.anc.t n) ω) + sk.e₁ (n + 1) ω + sk.e₂ (n + 1) ω
-  rw [tel _ Anchors.Time.lt.TimeAdd1.le]
+  rw [tel _ Real.Anchors.Time.lt.TimeAdd1.le]
   simp only [Skeleton.e₂, Skeleton.e₁, Skeleton.e₂₁, Skeleton.e₂₂, Nat.add_sub_cancel, Anchors.β, sum_smul, add_assoc, ← sum_add_distrib]
   congr 1
   refine sum_congr rfl fun i _ => ?_

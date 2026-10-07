@@ -11,7 +11,6 @@ open MeasureTheory
 open scoped ProbabilityTheory
 
 
-
 /--
 [sympy.JointRandomSymbol](https://github.com/sympy/sympy/blob/master/sympy/stats/joint_rv.py)
 -/
@@ -62,65 +61,6 @@ instance Function.coeFunProdPi3R {ι α β γ : Type*} :
     CoeFun ((ι → α) × ((ι → β) × (ι → γ))) (fun _ => ι → α × (β × γ)) :=
   ⟨fun p ↦ JointRandomSymbol p.1 (JointRandomSymbol p.2.1 p.2.2)⟩
 
-
-/--
-Build a joint `SinglePSpace π (x, y)` from an explicit density `p` of the joint law: if
-`π.map (x, y)` equals the product reference measure with density `p`, then `(x, y)` admits
-`p` as its distribution. The a.e. measurability of the pair is supplied directly.
--/
-theorem JointRandomSymbol.of_density
-    {Ω α β : Type*}
-    [MeasurableSpace Ω]
-    [ReferenceMeasure α] [ReferenceMeasure β]
-    {π : Measure Ω}
-    {x : Ω → α} {y : Ω → β} [IsProbabilityMeasure π]
-    {p : α × β → ENNReal}
-    (hxy : AEMeasurable (x, y) π)
-    (hp : Measurable p)
-    (hjoint : π.map (x, y) =
-      (ReferenceMeasure.measure.prod ReferenceMeasure.measure).withDensity p) :
-    SinglePSpace π (x, y) :=
-  { toIsProbabilityMeasure := inferInstance
-    aemeasurable := hxy
-    exists_distribution := ⟨p, ⟨hp⟩, hjoint⟩ }
-
-
-/--
-Two random variables whose laws each admit a density (`SinglePSpace π x` and
-`SinglePSpace π y`) also span a **joint** probability space with density when they are
-independent: by `IndepFun`, the joint law is the product of the marginal laws, and the
-product of two measures with densities `px`, `py` is the product measure with density
-`fun z ↦ px z.1 * py z.2`. The a.e. measurability of `x` and `y` needed by `IndepFun` is
-read off the `SinglePSpace` instances (which package `AEMeasurable`); plain `Measurable`
-hypotheses are not required. The converse is false without independence — two ac
-marginals can have a singular joint law (e.g. `y = x` over a Lebesgue state space).
--/
-theorem JointRandomSymbol.of_indep
-    {Ω α β : Type*}
-    [MeasurableSpace Ω]
-    [ReferenceMeasure α] [ReferenceMeasure β]
-    {π : Measure Ω}
-    {x : Ω → α} {y : Ω → β}
-    [SinglePSpace π x] [SinglePSpace π y]
-    (hxy : ProbabilityTheory.IndepFun x y π) :
-    SinglePSpace π (x, y) := by
-  let μ : Measure α := ReferenceMeasure.measure
-  let ν : Measure β := ReferenceMeasure.measure
-  let px := π.prob x
-  let py := π.prob y
-  let p : α × β → ENNReal := fun z ↦ px z.1 * py z.2
-  have hpx : Measurable px := Measure.measurable_rnDeriv _ _
-  have hpy : Measurable py := Measure.measurable_rnDeriv _ _
-  have hp : Measurable p :=
-    (hpx.comp measurable_fst).mul (hpy.comp measurable_snd)
-  have haex : AEMeasurable x π := PSpace.aemeasurable
-  have haey : AEMeasurable y π := PSpace.aemeasurable
-  have hindep : π.map (x, y) = (π.map x).prod (π.map y) :=
-    ProbabilityTheory.IndepFun.map_prod_eq_prod_map_map haex haey hxy
-  have hjoint : π.map (x, y) = (μ.prod ν).withDensity p := by
-    rw [hindep, SinglePSpace.map_eq_withDensity_density,
-      SinglePSpace.map_eq_withDensity_density, prod_withDensity hpx hpy]
-  exact JointRandomSymbol.of_density (haex.prodMk haey) hp hjoint
 
 /--
 Unconditional expectation of an ordinary observable of a random variable:
@@ -203,17 +143,6 @@ noncomputable def Expectation.condSigma
     Ω → β :=
   MeasureTheory.condExp (MeasurableSpace.comap y inferInstance) π (fun ω ↦ f (x ω))
 
-/-- Unfold `𝔼[x: π](f x | y)` to Mathlib's `π[fun ω ↦ f (x ω) | MeasurableSpace.comap y inferInstance]`. -/
-theorem Expectation.condSigma_eq_condExp
-    {Ω α γ β : Type*}
-    [MeasurableSpace Ω] [MeasurableSpace γ]
-    [NormedAddCommGroup β] [NormedSpace ℝ β] [CompleteSpace β]
-    (π : Measure Ω)
-    (x : Ω → α) (y : Ω → γ)
-    (f : α → β) :
-    Expectation.condSigma π x y f =
-      MeasureTheory.condExp (MeasurableSpace.comap y inferInstance) π (fun ω ↦ f (x ω)) :=
-  rfl
 
 /--
 Partial / “leave other RVs free” expectation in `x`.

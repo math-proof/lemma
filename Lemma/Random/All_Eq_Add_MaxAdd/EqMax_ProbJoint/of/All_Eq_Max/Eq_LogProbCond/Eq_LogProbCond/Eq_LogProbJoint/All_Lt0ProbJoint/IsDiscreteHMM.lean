@@ -8,7 +8,14 @@ import sympy.concrete.max
 import sympy.concrete.reduced
 import sympy.core.numbers
 import sympy.Basic
-open MeasureTheory Measure Random
+import Lemma.Finset.Max.eq.SupUniv
+import Lemma.Fin.IteSnoc.eq.Ite.of.Le
+import Lemma.Fin.Snoc_Last.eq.Last
+import Lemma.Finset.SupUniv.eq.SupUnivSupUnivSnoc
+import Lemma.Finset.SupAdd.eq.AddSup
+import Lemma.Random.All_Imp_Eq.of.IsHiddenMarkovFac
+import Lemma.Random.IsHiddenMarkovFac.of.All_Eq.IsHiddenMarkovPr
+open Finset MeasureTheory Measure Random
 open IsDiscreteHMM
 open scoped ENNReal.ToRealCoe
 
@@ -84,9 +91,9 @@ private lemma main
     exact ENNReal.toReal_pos (ENNReal.div_pos_iff.mpr ⟨hne, measure_ne_top _ _⟩).ne' (ENNReal.div_lt_top (measure_ne_top _ _) hne').ne
   obtain ⟨P, hPdef⟩ : ∃ P : ℕ → (ℕ → Y) → ℝ, ∀ t «y.bvar», P t «y.bvar» = (ℙ[π](x[:t + 1] = «x.bvar»[:t + 1] ∧ y[:t + 1] = «y.bvar»[:t + 1]) : ℝ) := ⟨fun t «y.bvar» => (ℙ[π](x[:t + 1] = «x.bvar»[:t + 1] ∧ y[:t + 1] = «y.bvar»[:t + 1]) : ℝ), fun _ _ => rfl⟩
   have h₁ : ∀ t «y.bvar», 0 < P t «y.bvar» := fun t «y.bvar» => by rw [hPdef]; exact h₁ t «y.bvar»
-  have h₀ : IsHiddenMarkovFac π x y «x.bvar» P := (Random.IsHiddenMarkovPr.of.CondIndep.CondIndep h₀).toFac hPdef
+  have h₀ : IsHiddenMarkovFac π x y «x.bvar» P := IsHiddenMarkovFac.of.All_Eq.IsHiddenMarkovPr (IsHiddenMarkovPr.of.CondIndep.CondIndep h₀) hPdef
   have h₂ : ∀ t «y.bvar», s t «y.bvar» = (P t «y.bvar»).log := fun t «y.bvar» => by rw [h₂, hPdef]
-  have hpre := h₀.prefix
+  have hpre := All_Imp_Eq.of.IsHiddenMarkovFac h₀
   have h₃ : ∀ t a, e t a = (ℙ[π]((x t) = «x.bvar» t | (y t) = a) : ℝ).log := fun t a => h₃ t (fun _ => a)
   have hTt := hT
   have h₄ : ∀ i a b, G a b = (ℙ[π]((y (i + 1)) = a | (y i) = b) : ℝ).log := fun i a b => by
@@ -96,16 +103,16 @@ private lemma main
       s (t + 1) (fun i => if h : i < t + 1 then Fin.snoc (α := fun _ => Y) ys0 b ⟨i, h⟩ else a) =
         s t (fun i => if h : i < t then ys0 ⟨i, h⟩ else b) + G a b + e (t + 1) a := by
     intro t a b ys0
-    rw [h₂, h₂, (h₀ _).2 t, hpre t _ _ fun i hi => dite_snoc_eq ys0 b a hi]
-    rw [dif_neg (lt_irrefl (t + 1)), dif_pos (Nat.lt_succ_self t), Fin.snoc_mk_last,
+    rw [h₂, h₂, (h₀ _).2 t, hpre t _ _ fun i hi => Fin.IteSnoc.eq.Ite.of.Le hi ys0 b a]
+    rw [dif_neg (lt_irrefl (t + 1)), dif_pos (Nat.lt_succ_self t), Fin.Snoc_Last.eq.Last,
       Real.log_mul (h₁ _ _).ne' (mul_pos (hTt t a b) (hE _ a)).ne', Real.log_mul (hTt t a b).ne' (hE _ a).ne', hGt t a b, h₃]
     ring
   refine ⟨fun t => ?_, ?_⟩
   ·
     funext a
     show x' (t + 1) a = e (t + 1) a + Finset.univ.sup' Finset.univ_nonempty (fun b => G a b + x' t b)
-    rw [h₅, Finset.sup'_snoc]
-    simp only [hstep, Finset.sup'_add_const_real]
+    rw [h₅, SupUniv.eq.SupUnivSupUnivSnoc]
+    simp only [hstep, SupAdd.eq.AddSup]
     rw [add_comm]
     congr 1
     refine Finset.sup'_congr _ rfl fun b _ => ?_
@@ -124,7 +131,7 @@ private lemma main
       rw [Nat.add_sub_cancel, hPdef]
       exact congrArg (fun w => (ℙ[π](x[:(m + 1 : ℕ)] = «x.bvar»[:(m + 1 : ℕ)] ∧ y[:(m + 1 : ℕ)] = w) : ℝ)) (pad (m + 1) (Classical.arbitrary Y) «y.bvar»).symm
     simp only [e]
-    rw [Nat.add_sub_cancel, Finset.sup'_snoc, Function.max_eq,
+    rw [Nat.add_sub_cancel, SupUniv.eq.SupUnivSupUnivSnoc, Max.eq.SupUniv,
       Finset.apply_sup'_eq_sup'_comp _ Real.exp (fun u v => Real.exp_monotone.map_sup u v)]
     refine Finset.sup'_congr _ rfl fun b _ => ?_
     rw [Function.comp_apply]
@@ -132,7 +139,7 @@ private lemma main
     rw [h₅, Finset.apply_sup'_eq_sup'_comp _ Real.exp (fun u v => Real.exp_monotone.map_sup u v)]
     refine Finset.sup'_congr _ rfl fun ys0 _ => ?_
     rw [Function.comp_apply, h₂, Real.exp_log (h₁ _ _)]
-    exact hpre m _ _ fun i hi => dite_snoc_eq ys0 b _ hi
+    exact hpre m _ _ fun i hi => Fin.IteSnoc.eq.Ite.of.Le hi ys0 b _
 
 
 -- created on 2020-12-20

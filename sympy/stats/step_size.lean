@@ -45,7 +45,7 @@ noncomputable instance (m tm : ℕ) : DecidablePred (anc.le m tm) :=
   Classical.decPred _
 
 -- the partial sums of α beyond tm eventually exceed T m (rl: `Anchors.exists_le`)
-lemma exists_le (m tm : ℕ) : ∃ k, anc.le m tm k := by
+theorem exists_le (m tm : ℕ) : ∃ k, anc.le m tm k := by
   have h := (tendsto_add_atTop_iff_nat tm).2 anc.hα.sum
   obtain ⟨k, hk⟩ := (h.eventually_ge_atTop (anc.T m + ∑ i ∈ range tm, α i)).exists
   refine ⟨k + tm, ?_⟩
@@ -59,9 +59,6 @@ noncomputable def t : ℕ → ℕ
   | 0 => 0
   | n + 1 => Nat.find (anc.exists_le n (t n))
 
-lemma t_zero : anc.t 0 = 0 := rfl
-
-lemma t_succ (n : ℕ) : anc.t (n + 1) = Nat.find (anc.exists_le n (anc.t n)) := rfl
 
 -- aggregated steps β n = ∑ i ∈ [t n, t (n+1)), α i (rl: `Anchors.β`)
 noncomputable def β (n : ℕ) : ℝ :=

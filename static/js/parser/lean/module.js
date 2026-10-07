@@ -785,7 +785,14 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                     ) {
                         const dargs = declspec.args;
                         name = dargs[0];
-                        const binders = dargs[1] && dargs[1].args ? dargs[1].args : (dargs.length > 2 ? dargs.slice(1) : []);
+                        // one-line signature `name [A] {x : T} (h : P) :` puts the binders themselves in `dargs`
+                        // (a multi-line one wraps them in one container, `LeanArgsNewLineSeparated`, …);
+                        // `[A].args` / `{x}.args` is the bracket content, not a binder list.
+                        // (A one-line `name (x : T) [A] :` keeps the old lenient reading: an instance after an
+                        // explicit binder would be rejected by the `given` check below.)
+                        const d1 = dargs[1];
+                        const isBinder = d1 instanceof L.LeanBracket || d1 instanceof L.LeanBrace;
+                        const binders = d1 && !isBinder && d1.args ? d1.args : (isBinder || dargs.length > 2 ? dargs.slice(1) : []);
                         declspec = binders;
                     } else if (declspec && (declspec.lhs != null || declspec.args)) {
                         const collectParens = n => {

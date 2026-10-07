@@ -5,12 +5,14 @@ import sympy.concrete.sup
 import Lemma.Random.Differentiable_RealPreimageS.of.GtInftySup.All_Differentiable_Prob
 import Lemma.Tensor.HasFDerivAt.of.In_Ico.GtInftySup.All_Differentiable_Prob
 import Lemma.Random.Fderiv_V.eq.Fderiv_Vc.of.Ne0Real_Preimage.In_Ico.GtInftySup.All_Differentiable_Prob
-open MeasureTheory ProbabilityTheory Finset Filter Topology PolicyGradient PolicyGradient.Model
+import Lemma.Random.Integral.eq.MulRealPreimageSIntegral_MulEqS
+import Lemma.Random.Integral_MulEqSR_Add.eq.MulRealPreimageSWRc
+open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
 
 
 private lemma cond_r_W [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A] [DecidableEq S] (M : Model Θ S A) (θ : Θ) (t k : ℕ) (x : S) (hP : (M θ).real (s t ⁻¹' {x}) ≠ 0) :
     ∫ ω, r (t + k) ω ∂(M θ)[|s t ⁻¹' {x}] = M.W θ M.rc k x := by
-  rw [cond_s, E_s_r, inv_mul_cancel_left₀ hP]
+  rw [Integral.eq.MulRealPreimageSIntegral_MulEqS, Integral_MulEqSR_Add.eq.MulRealPreimageSWRc, inv_mul_cancel_left₀ hP]
 
 /--
 on a reachable state, `∑' k, γ ^ k • ∇ 𝔼[r[t+k] | s[t] = x] = ∇ V(s[t] = x)`
@@ -36,7 +38,7 @@ private lemma main
   have hC : ∀ θ x u, ‖fderiv ℝ (fun θ => M.pol.prob θ x u) θ‖ ≤ Cp := fun θ x u => by
     simpa [gradient, LinearIsometryEquiv.norm_map] using hCp ⟨(θ, x, u), rfl⟩
   have hc : ContinuousAt (fun θ' => (M θ').real (s t ⁻¹' {x})) θ :=
-    (Random.Differentiable_RealPreimageS.of.GtInftySup.All_Differentiable_Prob (M := M) h₀ h₁ t x θ).continuousAt
+    (Differentiable_RealPreimageS.of.GtInftySup.All_Differentiable_Prob (M := M) h₀ h₁ t x θ).continuousAt
   have hk : ∀ k, fderiv ℝ (fun θ => ∫ ω, r (t + k) ω ∂(M θ)[|s t ⁻¹' {x}]) θ =
       fderiv ℝ (fun θ => M.W θ M.rc k x) θ := by
     intro k
@@ -44,7 +46,7 @@ private lemma main
     filter_upwards [hc.eventually_ne h₃] with θ' h
     exact cond_r_W M θ' t k x h
   simp_rw [hk]
-  rw [Random.Fderiv_V.eq.Fderiv_Vc.of.Ne0Real_Preimage.In_Ico.GtInftySup.All_Differentiable_Prob (M := M) h₀ h₁ h₂ t x θ h₃, (Tensor.HasFDerivAt.of.In_Ico.GtInftySup.All_Differentiable_Prob (M := M) h₀ h₁ h₂ x θ).fderiv]
+  rw [Fderiv_V.eq.Fderiv_Vc.of.Ne0Real_Preimage.In_Ico.GtInftySup.All_Differentiable_Prob (M := M) h₀ h₁ h₂ t x θ h₃, (Tensor.HasFDerivAt.of.In_Ico.GtInftySup.All_Differentiable_Prob (M := M) h₀ h₁ h₂ x θ).fderiv]
 
 
 -- created on 2026-10-06

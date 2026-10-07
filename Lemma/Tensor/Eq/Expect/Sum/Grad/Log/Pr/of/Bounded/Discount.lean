@@ -12,7 +12,9 @@ import sympy.concrete.sup
 import Lemma.Random.Differentiable_RealPreimageS.of.GtInftySup.All_Differentiable_Prob
 import Lemma.Random.AeRealPreimageSS.ne.Zero
 import Lemma.Random.Measurable_R
-open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Filter Topology
+import Lemma.Random.Measurable_A
+import Lemma.Random.Measurable_S
+open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Filter Topology Random
 
 
 /--
@@ -44,13 +46,13 @@ private lemma main
   (h₄ : sup[θ, x, u] ‖∇[θ] M.pol.prob θ x u‖ < ∞) :
 -- imply
   have : ∀ θ t, SinglePSpace (M θ) (JointRandomSymbol (a t) (s t)) := fun _ t =>
-    Random.SinglePSpace.of.EqMeasureCount.Measurable ((a_meas t).prodMk (s_meas t)) (by
+    SinglePSpace.of.EqMeasureCount.Measurable ((Random.Measurable_A t).prodMk (Random.Measurable_S t)) (by
       show (ReferenceMeasure.measure : Measure A).prod (ReferenceMeasure.measure : Measure S) = _
       rw [hA, hS, Measure.Count.eq.ProdCountS])
   have hs : ∀ t, PSpace (M θ) (s (S := S) (A := A) t) := fun t =>
-    ⟨(s_meas t).aemeasurable⟩
+    ⟨(Random.Measurable_S t).aemeasurable⟩
   have ha : ∀ t, PSpace (M θ) (a (S := S) (A := A) t) := fun t =>
-    ⟨(a_meas t).aemeasurable⟩
+    ⟨(Random.Measurable_A t).aemeasurable⟩
   have hr : ∀ t, PSpace (M θ) (r (S := S) (A := A) t) := fun t =>
     ⟨(Random.Measurable_R t).aemeasurable⟩
   have : PSpace (M θ) (AsPathRV.path (s (S := S) (A := A))) :=
@@ -77,12 +79,12 @@ private lemma main
       fderiv ℝ (fun θ' => Real.log (ℙ[M θ']((a t) = (a t ω) | (s t) = (s t ω))).toReal) θ =
         fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' (s t ω) (a t ω))) θ := by
     intro t
-    filter_upwards [Random.AeRealPreimageSS.ne.Zero (M := M) θ] with ω hω
+    filter_upwards [AeRealPreimageSS.ne.Zero (M := M) θ] with ω hω
     have hc : ContinuousAt (fun θ' => (M θ').real (s t ⁻¹' {s t ω})) θ :=
-      (Random.Differentiable_RealPreimageS.of.GtInftySup.All_Differentiable_Prob (M := M) h₃ h₄ t (s t ω) θ).continuousAt
+      (Differentiable_RealPreimageS.of.GtInftySup.All_Differentiable_Prob (M := M) h₃ h₄ t (s t ω) θ).continuousAt
     refine Filter.EventuallyEq.fderiv_eq ((hc.eventually_ne (hω t)).mono fun θ' h => ?_)
     beta_reduce
-    rw [Random.ProbCond.eq.OfRealPol.of.Ne_0 hS hA (hP θ' t) h,
+    rw [ProbCond.eq.OfRealPol.of.Ne_0 hS hA (hP θ' t) h,
       ENNReal.toReal_ofReal (M.pol.nonneg θ' _ _)]
   let L : StrongDual ℝ Θ ≃L[ℝ] Θ := (InnerProductSpace.toDual ℝ Θ).symm.toContinuousLinearEquiv
   have hL : ∀ φ, (InnerProductSpace.toDual ℝ Θ).symm φ = L φ := fun _ => rfl
@@ -94,7 +96,7 @@ private lemma main
         (h₁ (t + k)).const_mul (c ^ k)).stronglyMeasurable
       ((StronglyMeasurable.of_discrete (f := fun p : S × A =>
         gradient (fun θ' => Real.log (ℙ[M θ']((a t) = p.2 | (s t) = p.1)).toReal) θ)).comp_measurable
-          ((s_meas t).prodMk (a_meas t)))
+          ((Random.Measurable_S t).prodMk (Random.Measurable_A t)))
   -- bound of the score at the realized pair
   obtain ⟨Ms, hMs⟩ : ∃ Ms : ℝ, Ms = ∑ q : S × A, ‖fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' q.1 q.2)) θ‖ :=
     ⟨_, rfl⟩

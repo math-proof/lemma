@@ -2,6 +2,7 @@ import Mathlib.MeasureTheory.Integral.Lebesgue.Countable
 import Mathlib.MeasureTheory.Measure.WithDensity
 import sympy.stats.joint_rv
 import sympy.Basic
+import Lemma.Random.Map.eq.WithDensityProb
 open MeasureTheory
 
 
@@ -22,7 +23,7 @@ private lemma main
   simp only [Expectation.asRV_function, Expectation.ofRV, expectation_ennreal]
   have hmp : Measurable (π.prob a) :=
     Measure.measurable_rnDeriv (π.map a) ReferenceMeasure.measure
-  rw [SinglePSpace.map_eq_withDensity_density,
+  rw [Random.Map.eq.WithDensityProb,
     lintegral_withDensity_eq_lintegral_mul _ hmp hf, hμ, lintegral_count]
   exact tsum_congr fun _ => mul_comm _ _
 

@@ -1,6 +1,8 @@
 import Lemma.Tensor.DotSoftmaxAdd_Mul_Infty.eq.Cast_Stack_Sum_Band
 import sympy.Basic
-open Tensor Hyperreal
+import Lemma.Nat.LtAdd_Mul.of.Lt_DivSubAddSub1.Gt_0
+import Lemma.Int.Lt_Add.et.EqEMod.et.All_Le.of.Eq_Max.Dvd.Gt_0
+open Tensor
 set_option maxHeartbeats 2000000
 
 
@@ -34,18 +36,18 @@ private lemma main
   let A₀ : Tensor ℝ* [n, n] := ([i < n] [j < n] ((((∑ t, Q i t * (K j t + K' i j t)) / √(d_z : ℝ)) : ℝ) : Tensor ℝ []) : Tensor ℝ [n, n])
   let Vᵢ : Tensor ℝ [n, d_z] := [j < n] [s < d_z] ((V j s + V' i j s : ℝ) : Tensor ℝ [])
   ((A₀ + (Ξ - 1) * ∞).softmax.get ⟨i, by grind⟩) @ (Vᵢ : Tensor ℝ* [n, d_z]) ≈
-    ((([s < d_z] ((∑ m : Fin ((min n (i.val + u) - β i + d - 1) / d), Real.exp ((∑ t, Q i t * (K ⟨β i + m * d, by have := Band.win_lt h_d m.2; omega⟩ t + K'' i (m * d) t)) / √(d_z : ℝ)) / (∑ m' : Fin ((min n (i.val + u) - β i + d - 1) / d), Real.exp ((∑ t, Q i t * (K ⟨β i + m' * d, by have := Band.win_lt h_d m'.2; omega⟩ t + K'' i (m' * d) t)) / √(d_z : ℝ))) * (V ⟨β i + m * d, by have := Band.win_lt h_d m.2; omega⟩ s + V'' i (m * d) s) : ℝ) : Tensor ℝ [])) : Tensor ℝ [d_z]) : Tensor ℝ* [d_z]) := by
+    ((([s < d_z] ((∑ m : Fin ((min n (i.val + u) - β i + d - 1) / d), Real.exp ((∑ t, Q i t * (K ⟨β i + m * d, by have := Nat.LtAdd_Mul.of.Lt_DivSubAddSub1.Gt_0 h_d m.2; omega⟩ t + K'' i (m * d) t)) / √(d_z : ℝ)) / (∑ m' : Fin ((min n (i.val + u) - β i + d - 1) / d), Real.exp ((∑ t, Q i t * (K ⟨β i + m' * d, by have := Nat.LtAdd_Mul.of.Lt_DivSubAddSub1.Gt_0 h_d m'.2; omega⟩ t + K'' i (m' * d) t)) / √(d_z : ℝ))) * (V ⟨β i + m * d, by have := Nat.LtAdd_Mul.of.Lt_DivSubAddSub1.Gt_0 h_d m.2; omega⟩ s + V'' i (m * d) s) : ℝ) : Tensor ℝ [])) : Tensor ℝ [d_z]) : Tensor ℝ* [d_z]) := by
 -- proof
   intro Ξ A₀ Vᵢ
-  obtain ⟨hb1, hb2, hb3⟩ := Band.beta_props h_d h_dl (h_β i)
+  obtain ⟨hb1, hb2, hb3⟩ := Int.Lt_Add.et.EqEMod.et.All_Le.of.Eq_Max.Dvd.Gt_0 h_d h_dl (h_β i)
   have h_main := DotSoftmaxAdd_Mul_Infty.eq.Cast_Stack_Sum_Band.dilated h_l h_u h_d (fun i j => ((∑ t, Q i t * (K j t + K' i j t)) / √(d_z : ℝ))) (fun i j s => V j s + V' i j s) i hb1 hb2 hb3
   refine h_main.trans (Tensor.XEq.of.Eq ?_)
   congr 1
   congr 1
   funext s
   apply sc_ext
-  have e : ∀ m : Fin ((min n (i.val + u) - β i + d - 1) / d), ((⟨min (n - 1) (m.val * d + β i), by have := i.2; omega⟩ : Fin n)) = ⟨β i + m * d, by have := Band.win_lt h_d m.2; omega⟩ :=
-    fun m => Fin.ext (by have := Band.win_lt h_d m.2; simp only; omega)
+  have e : ∀ m : Fin ((min n (i.val + u) - β i + d - 1) / d), ((⟨min (n - 1) (m.val * d + β i), by have := i.2; omega⟩ : Fin n)) = ⟨β i + m * d, by have := Nat.LtAdd_Mul.of.Lt_DivSubAddSub1.Gt_0 h_d m.2; omega⟩ :=
+    fun m => Fin.ext (by have := Nat.LtAdd_Mul.of.Lt_DivSubAddSub1.Gt_0 h_d m.2; simp only; omega)
   simp only [h₀, h₁, h₂, h₃, e]
 
 
@@ -76,18 +78,18 @@ private lemma compact
   let A₀ : Tensor ℝ* [n, n] := ([i < n] [j < n] ((((∑ t, Q i t * (K j t + K' i j t)) / √(d_z : ℝ)) : ℝ) : Tensor ℝ []) : Tensor ℝ [n, n])
   let Vᵢ : Tensor ℝ [n, d_z] := [j < n] [s < d_z] ((V j s + V' i j s : ℝ) : Tensor ℝ [])
   ((A₀ + (Ξ - 1) * ∞).softmax.get ⟨i, by grind⟩) @ (Vᵢ : Tensor ℝ* [n, d_z]) ≈
-    ((([s < d_z] ((∑ m : Fin ((min n (i.val + u) - β i + d - 1) / d), Real.exp ((∑ t, Q i t * (K ⟨β i + m * d, by have := Band.win_lt h_d m.2; omega⟩ t + K'' i m t)) / √(d_z : ℝ)) / (∑ m' : Fin ((min n (i.val + u) - β i + d - 1) / d), Real.exp ((∑ t, Q i t * (K ⟨β i + m' * d, by have := Band.win_lt h_d m'.2; omega⟩ t + K'' i m' t)) / √(d_z : ℝ))) * (V ⟨β i + m * d, by have := Band.win_lt h_d m.2; omega⟩ s + V'' i m s) : ℝ) : Tensor ℝ [])) : Tensor ℝ [d_z]) : Tensor ℝ* [d_z]) := by
+    ((([s < d_z] ((∑ m : Fin ((min n (i.val + u) - β i + d - 1) / d), Real.exp ((∑ t, Q i t * (K ⟨β i + m * d, by have := Nat.LtAdd_Mul.of.Lt_DivSubAddSub1.Gt_0 h_d m.2; omega⟩ t + K'' i m t)) / √(d_z : ℝ)) / (∑ m' : Fin ((min n (i.val + u) - β i + d - 1) / d), Real.exp ((∑ t, Q i t * (K ⟨β i + m' * d, by have := Nat.LtAdd_Mul.of.Lt_DivSubAddSub1.Gt_0 h_d m'.2; omega⟩ t + K'' i m' t)) / √(d_z : ℝ))) * (V ⟨β i + m * d, by have := Nat.LtAdd_Mul.of.Lt_DivSubAddSub1.Gt_0 h_d m.2; omega⟩ s + V'' i m s) : ℝ) : Tensor ℝ [])) : Tensor ℝ [d_z]) : Tensor ℝ* [d_z]) := by
 -- proof
   intro Ξ A₀ Vᵢ
-  obtain ⟨hb1, hb2, hb3⟩ := Band.beta_props h_d h_dl (h_β i)
+  obtain ⟨hb1, hb2, hb3⟩ := Int.Lt_Add.et.EqEMod.et.All_Le.of.Eq_Max.Dvd.Gt_0 h_d h_dl (h_β i)
   have h_main := DotSoftmaxAdd_Mul_Infty.eq.Cast_Stack_Sum_Band.dilated h_l h_u h_d (fun i j => ((∑ t, Q i t * (K j t + K' i j t)) / √(d_z : ℝ))) (fun i j s => V j s + V' i j s) i hb1 hb2 hb3
   refine h_main.trans (Tensor.XEq.of.Eq ?_)
   congr 1
   congr 1
   funext s
   apply sc_ext
-  have e : ∀ m : Fin ((min n (i.val + u) - β i + d - 1) / d), ((⟨min (n - 1) (d * m.val + β i), by have := i.2; omega⟩ : Fin n)) = ⟨β i + m * d, by have := Band.win_lt h_d m.2; omega⟩ :=
-    fun m => Fin.ext (by have := Band.win_lt h_d m.2; simp only [Nat.mul_comm d m.val]; omega)
+  have e : ∀ m : Fin ((min n (i.val + u) - β i + d - 1) / d), ((⟨min (n - 1) (d * m.val + β i), by have := i.2; omega⟩ : Fin n)) = ⟨β i + m * d, by have := Nat.LtAdd_Mul.of.Lt_DivSubAddSub1.Gt_0 h_d m.2; omega⟩ :=
+    fun m => Fin.ext (by have := Nat.LtAdd_Mul.of.Lt_DivSubAddSub1.Gt_0 h_d m.2; simp only [Nat.mul_comm d m.val]; omega)
   simp only [h₀, h₁, h₂, h₃, e]
 
 

@@ -1,6 +1,7 @@
 import sympy.stats.policy_trajectory.gradient
 import sympy.Basic
-open MeasureTheory ProbabilityTheory Finset Filter Topology PolicyGradient PolicyGradient.Model
+import Lemma.Random.EqW
+open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
 
 
 /--
@@ -16,7 +17,7 @@ private lemma main
 -- imply
   M.Pn θ 0 x y = if x = y then 1 else 0 := by
 -- proof
-  exact W_fst_zero M θ (fun x' => if x' = y then (1:ℝ) else 0) x
+  exact Random.EqW (M := M) θ (fun x' => if x' = y then (1:ℝ) else 0) x
 
 
 -- created on 2026-10-06

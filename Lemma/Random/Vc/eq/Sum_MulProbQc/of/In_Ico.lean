@@ -1,6 +1,10 @@
 import sympy.stats.policy_trajectory.gradient
 import sympy.Basic
-open MeasureTheory ProbabilityTheory Finset Filter Topology PolicyGradient PolicyGradient.Model
+import Lemma.Random.NormRc.le.Abs_R
+import Lemma.Random.StronglyMeasurableRc
+import Lemma.Random.TSum_MulPowW.eq.AddWMul_Sum_MulProbSum_MulTTSum_MulPowW.of.In_Ico
+import Lemma.Random.W0.eq.Sum_MulProbIntegral.of.All_LeNorm.StronglyMeasurable
+open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
 
 
 /--
@@ -19,7 +23,7 @@ private lemma main
   M.Vc θ γ x = ∑ u, M.pol.prob θ x u * M.Qc θ γ x u := by
 -- proof
   unfold Model.Qc Model.Vc
-  rw [v_closed M θ h₀ x, W_zero M θ (rc_sm M) (rc_bdd M) x, Finset.mul_sum, ← Finset.sum_add_distrib]
+  rw [TSum_MulPowW.eq.AddWMul_Sum_MulProbSum_MulTTSum_MulPowW.of.In_Ico (M := M) h₀ θ x, W0.eq.Sum_MulProbIntegral.of.All_LeNorm.StronglyMeasurable (M := M) (Random.StronglyMeasurableRc (M := M)) (NormRc.le.Abs_R (M := M)) θ x, Finset.mul_sum, ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun u _ => ?_
   ring
 

@@ -2,7 +2,6 @@ import sympy.series.limits
 import sympy.Basic
 
 
-open Filter
 
 
 @[main]

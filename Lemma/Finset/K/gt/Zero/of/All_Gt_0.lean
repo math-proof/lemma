@@ -1,7 +1,8 @@
-import sympy.concrete.continuant_shift
+import sympy.concrete.continuant
 import sympy.sets.sets
 import sympy.Basic
-open Continuant
+import Lemma.Finset.K.gt.Zero.of.All_Imp_Gt_0.Gt_0
+open Finset Continuant
 
 
 @[main]
@@ -14,7 +15,7 @@ private lemma main
 -- imply
   K x n > 0 := by
 -- proof
-  exact K_pos_of x n h₀ h
+  exact K.gt.Zero.of.All_Imp_Gt_0.Gt_0 x n h₀ h
 
 
 -- created on 2020-09-15

@@ -1,5 +1,7 @@
 import sympy.matrices.cholesky
 import sympy.Basic
+import Lemma.Matrix.GetMul_L.eq.AddSum_Mul_Star.of.All_All_Eq_0
+import Lemma.Matrix.All_Eq_0_And_All_Gt_0_And_Eq_Mul.of.IsCholeskyRec.PosDef
 open Matrix
 open scoped ComplexOrder
 
@@ -18,10 +20,10 @@ private lemma main
   ∀ i : Fin n, i.val < t → 0 < L i i ∧ A i i = ((∑ k ∈ Finset.Iic i, ‖L i k‖ ^ 2 : ℝ) : ℂ) ∧ ∀ j, j < i → A i j = ∑ k ∈ Finset.Iic j, L i k * star (L j k) := by
 -- proof
   have hA : A.PosDef := Matrix.PosDef.of_dotProduct_mulVec_pos h₀ (fun x hx => h₁ x hx)
-  obtain ⟨hlow, hpos, hL⟩ := hA.cholesky_of_rec h₂
+  obtain ⟨hlow, hpos, hL⟩ := All_Eq_0_And_All_Gt_0_And_Eq_Mul.of.IsCholeskyRec.PosDef hA h₂
   have hs : ∀ i j, A i j = ∑ k ∈ Finset.Iic j, L i k * star (L j k) := by
     intro i j
-    rw [hL, Matrix.mul_conjTranspose_apply_of_lower hlow, ← Finset.Iio_insert, Finset.sum_insert (by simp), add_comm]
+    rw [hL, GetMul_L.eq.AddSum_Mul_Star.of.All_All_Eq_0 hlow, ← Finset.Iio_insert, Finset.sum_insert (by simp), add_comm]
   intro i _hi
   refine ⟨hpos i, ?_, fun j _ => hs i j⟩
   rw [hs i i]

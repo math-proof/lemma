@@ -1,6 +1,5 @@
 import sympy.Basic
 import Mathlib.Analysis.SpecialFunctions.Exp
-open Matrix
 
 
 @[main]

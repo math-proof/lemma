@@ -1,6 +1,9 @@
-import sympy.matrices.confluent_vandermonde
+import Mathlib.Algebra.Group.ForwardDiff
+import Mathlib.Data.Matrix.ColumnRowPartitioned
+import Mathlib.LinearAlgebra.Vandermonde
 import sympy.Basic
-open Finset Nat
+import Lemma.Matrix.DetMulOfOfPowNegChoose.eq.MulPowProd.of.Le
+open Matrix Nat
 
 
 @[main]
@@ -19,7 +22,7 @@ private lemma vandermonde
     ext i j
     simp [mul_comm]
   rw [hA]
-  exact Vandermonde.det_left h
+  exact DetMulOfOfPowNegChoose.eq.MulPowProd.of.Le h
 
 
 -- created on 2022-01-15

@@ -1,6 +1,7 @@
 import Lemma.Random.All_Eq_MulProbCond.of.PSpace_Joint
 import Lemma.Random.PSpace_JointJoint.is.PSpace_Joint_Joint
 import sympy.stats.joint_rv
+import Lemma.Random.Map.eq.WithDensityProb
 open Random MeasureTheory
 
 
@@ -36,7 +37,7 @@ private lemma main
   let pz : γ → ENNReal := π.prob z
   -- The marginal density of (y, z) is finite almost everywhere
   have hlaw2m : π.map (y, z) = (ν.prod ξ).withDensity p2 :=
-    SinglePSpace.map_eq_withDensity_density
+    Map.eq.WithDensityProb
   have hi2 : IsProbabilityMeasure (π.map (y, z)) :=
     Measure.isProbabilityMeasure_map hPyz.aemeasurable
   have htot2 : ∫⁻ bc, p2 bc ∂(ν.prod ξ) = 1 := by

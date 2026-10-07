@@ -10,6 +10,12 @@ import Lemma.Random.SinglePSpace.of.EqMeasureCount.Measurable
 import Lemma.Random.Sum.eq.Prob
 import sympy.concrete.reduced
 import sympy.stats.discrete_hmm
+import Lemma.Real.Sum.eq.Sum
+import Lemma.Fin.IteSnoc.eq.Ite.of.Le
+import Lemma.Fin.Snoc_Last.eq.Last
+import Lemma.Fin.Sum.eq.SumSumSnoc
+import Lemma.Random.All_Imp_Eq.of.IsHiddenMarkovFac
+import Lemma.Random.IsHiddenMarkovFac.of.All_Eq.IsHiddenMarkovPr
 open MeasureTheory Measure Random ENNReal.ToRealCoe
 open IsDiscreteHMM
 
@@ -105,9 +111,9 @@ private lemma main
     exact ENNReal.toReal_pos (ENNReal.div_pos_iff.mpr ⟨hne, measure_ne_top _ _⟩).ne' (ENNReal.div_lt_top (measure_ne_top _ _) hne').ne
   have h₀ : IsHiddenMarkovPr π x y «x.bvar» :=
     Random.IsHiddenMarkovPr.of.CondIndep.CondIndep h
-  have h₀ := h₀.toFac hPdef
+  have h₀ := IsHiddenMarkovFac.of.All_Eq.IsHiddenMarkovPr h₀ hPdef
   have h₂ : ∀ t «y.bvar», s t «y.bvar» = (P t «y.bvar»).log := fun t «y.bvar» => by rw [h₂, hPdef]
-  have hpre := h₀.prefix
+  have hpre := All_Imp_Eq.of.IsHiddenMarkovFac h₀
   have hz : ∀ t ≤ m, ∀ a, z t a = ∑ ys0 : Fin t → Y, P t (fun i => if h : i < t then ys0 ⟨i, h⟩ else a) := by
     intro t ht a
     rw [h₅]
@@ -120,12 +126,12 @@ private lemma main
     exact Finset.sum_pos (fun _ _ => h₁ t ht _) Finset.univ_nonempty
   have hrec : ∀ t, t + 1 ≤ m → ∀ a, z (t + 1) a = (∑ b, z t b * (ℙ[π]((y (t + 1)) = a | (y t) = b) : ℝ)) * (ℙ[π]((x (t + 1)) = «x.bvar» (t + 1) | (y (t + 1)) = a) : ℝ) := by
     intro t ht a
-    rw [hz (t + 1) ht, Fintype.sum_snoc, Finset.sum_mul]
+    rw [hz (t + 1) ht, Fin.Sum.eq.SumSumSnoc, Finset.sum_mul]
     refine Finset.sum_congr rfl fun b _ => ?_
     rw [hz t (by omega), Finset.sum_mul, Finset.sum_mul]
     refine Finset.sum_congr rfl fun ys1 _ => ?_
-    rw [(h₀ _).2 t, hpre t _ _ fun i hi => dite_snoc_eq ys1 b a hi]
-    rw [dif_neg (lt_irrefl (t + 1)), dif_pos (Nat.lt_succ_self t), Fin.snoc_mk_last]
+    rw [(h₀ _).2 t, hpre t _ _ fun i hi => Fin.IteSnoc.eq.Ite.of.Le hi ys1 b a]
+    rw [dif_neg (lt_irrefl (t + 1)), dif_pos (Nat.lt_succ_self t), Fin.Snoc_Last.eq.Last]
     ring
   refine ⟨fun t ht => ?_, fun «y.bvar» => ?_⟩
   ·
@@ -150,11 +156,11 @@ private lemma main
       rw [hPdef]
       exact congrArg (fun w => (ℙ[π](x[:m + 1] = «x.bvar»[:m + 1] ∧ y[:m + 1] = w) : ℝ)) (pad (m + 1) («y.bvar» 0) ys').symm
     have hD : ∑ ys' : Fin (m + 1) → Y, P m (fun i => if h : i < m + 1 then ys' ⟨i, h⟩ else «y.bvar» 0) = (x' m).exp.sum := by
-      rw [Function.sum_eq, Fintype.sum_snoc]
+      rw [Real.Sum.eq.Sum, Fin.Sum.eq.SumSumSnoc]
       refine Finset.sum_congr rfl fun b _ => ?_
       show _ = Real.exp (x' m b)
       rw [h₆, Real.exp_log (hzpos m le_rfl b), hz m le_rfl]
-      exact Finset.sum_congr rfl fun ys0 _ => hpre m _ _ fun i hi => dite_snoc_eq ys0 b («y.bvar» 0) hi
+      exact Finset.sum_congr rfl fun ys0 _ => hpre m _ _ fun i hi => Fin.IteSnoc.eq.Ite.of.Le hi ys0 b («y.bvar» 0)
     have hDpos : 0 < (x' m).exp.sum := Finset.sum_pos (fun b _ => Real.exp_pos _) Finset.univ_nonempty
     -- Bayes: Pr(y | x) = Pr(x ∧ y) / Pr(x), with Pr(x) = ∑ over the finite label space (total probability)
     have hrefXY : ReferenceMeasure.measure (α := (Fin (m + 1) → X) × (Fin (m + 1) → Y)) = Measure.count :=

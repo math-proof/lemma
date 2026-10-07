@@ -1,6 +1,8 @@
 import Lemma.Random.ProbCond.eq.Pr.of.Ne_0
 import Lemma.Random.Expect_ConditionedGrad_LogProb.eq.Zero
-open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model
+import Lemma.Random.Eq_0.of.EqReal_0
+import Lemma.Random.Measurable_A
+open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 
 
 /--
@@ -25,19 +27,19 @@ private lemma main
   by_cases hP : M θ (s t ⁻¹' {x}) = 0
   · simp [cond_eq_zero_of_meas_eq_zero hP]
   · have := cond_isProbabilityMeasure (μ := M θ) hP
-    have hP' : (M θ).real (s t ⁻¹' {x}) ≠ 0 := fun h => hP (meas_zero_of_real M θ h)
+    have hP' : (M θ).real (s t ⁻¹' {x}) ≠ 0 := fun h => hP (Eq_0.of.EqReal_0 (M := M) θ h)
     let φ : A → (Θ →L[ℝ] ℝ) := fun u => fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' x u)) θ
     have h₂ : ∫ ω, φ (a t ω) ∂(M θ)[|s t ⁻¹' {x}] =
         ∫ u, φ u ∂(((M θ)[|s t ⁻¹' {x}]).map (a t)) :=
-      (integral_map (a_meas t).aemeasurable StronglyMeasurable.of_discrete.aestronglyMeasurable).symm
+      (integral_map (Random.Measurable_A t).aemeasurable StronglyMeasurable.of_discrete.aestronglyMeasurable).symm
     have h₃ : ∀ u, (((M θ)[|s t ⁻¹' {x}]).map (a t)).real {u} = M.pol.prob θ x u := by
       intro u
-      rw [measureReal_def, Measure.map_apply (a_meas t) (measurableSet_singleton u), ← measureReal_def]
-      exact Random.ProbCond.eq.Pr.of.Ne_0 hP' u
+      rw [measureReal_def, Measure.map_apply (Random.Measurable_A t) (measurableSet_singleton u), ← measureReal_def]
+      exact ProbCond.eq.Pr.of.Ne_0 hP' u
     show ∫ ω, φ (a t ω) ∂(M θ)[|s t ⁻¹' {x}] = 0
     rw [h₂, integral_fintype Integrable.of_finite]
     simp_rw [h₃]
-    exact Random.Expect_ConditionedGrad_LogProb.eq.Zero (p := fun θ' u => M.pol.prob θ' x u)
+    exact Expect_ConditionedGrad_LogProb.eq.Zero (p := fun θ' u => M.pol.prob θ' x u)
       (fun θ' => M.pol.sum_eq_one θ' x) h₀ h₁
 
 

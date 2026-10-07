@@ -1,7 +1,8 @@
-import sympy.sets.partition
+import Mathlib.Algebra.Order.BigOperators.Group.Finset
 import sympy.concrete.expr_with_limits
 import Mathlib.Analysis.InnerProductSpace.PiL2
 import sympy.Basic
+import Lemma.Finset.Eq.of.In.In.Lt.Lt.EqBiUnion.EqSum_Card
 
 
 @[main]
@@ -47,7 +48,7 @@ private lemma kmeans.monotony
   have hdisj : ((Finset.range k : Finset ℕ) : Set ℕ).PairwiseDisjoint w := by
     intro i1 hi1 i2 hi2 hne
     exact Finset.disjoint_left.mpr fun j hj1 hj2 =>
-      hne (Finset.eq_of_mem_of_sum_card_eq h₀ h₁ (Finset.mem_range.mp (Finset.mem_coe.mp hi1))
+      hne (Finset.Eq.of.In.In.Lt.Lt.EqBiUnion.EqSum_Card h₀ h₁ (Finset.mem_range.mp (Finset.mem_coe.mp hi1))
         (Finset.mem_range.mp (Finset.mem_coe.mp hi2)) hj1 hj2)
   set F : ℕ → ℝ := fun j => ‖x j - (((w (A j : ℕ)).card : ℝ)⁻¹ • ∑ j' ∈ w (A j : ℕ), x j')‖ ^ 2 with hF
   calc _ ≤ ∑ i ∈ Finset.range k, ∑ j ∈ w' i, ‖x j - (((w i).card : ℝ)⁻¹ • ∑ j' ∈ w i, x j')‖ ^ 2 :=

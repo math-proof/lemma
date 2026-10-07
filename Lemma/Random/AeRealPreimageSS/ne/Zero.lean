@@ -1,6 +1,7 @@
 import sympy.stats.policy_trajectory.gradient
 import sympy.Basic
-open MeasureTheory ProbabilityTheory Finset Filter Topology PolicyGradient PolicyGradient.Model
+import Lemma.Random.Eq_0.of.EqReal_0
+open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
 
 
 /--
@@ -22,7 +23,7 @@ private lemma main
       ⋃ y ∈ {y : S | (M θ).real (s (A := A) k ⁻¹' {y}) = 0}, s (A := A) k ⁻¹' {y} := by
     ext ω; simp
   rw [e]
-  exact (measure_biUnion_null_iff (Set.to_countable _)).2 fun y hy => meas_zero_of_real M θ hy
+  exact (measure_biUnion_null_iff (Set.to_countable _)).2 fun y hy => Eq_0.of.EqReal_0 (M := M) θ hy
 
 
 -- created on 2026-10-06

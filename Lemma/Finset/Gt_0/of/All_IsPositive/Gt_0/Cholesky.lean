@@ -1,5 +1,4 @@
 import sympy.Basic
-open Matrix
 open scoped ComplexOrder
 
 

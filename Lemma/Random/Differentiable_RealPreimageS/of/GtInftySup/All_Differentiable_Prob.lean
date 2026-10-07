@@ -5,7 +5,8 @@ import sympy.concrete.sup
 import Lemma.Real.Norm_Eq12.le.One
 import Lemma.Random.RealPreimageS.eq.Sum_MulRealPn
 import Lemma.Tensor.Differentiable.All_LeNormFderivMulAdd_1MulMulCard.of.All_LeNorm.StronglyMeasurable.All_LeNormFderiv.All_Differentiable_Prob
-open MeasureTheory ProbabilityTheory Finset Filter Topology PolicyGradient PolicyGradient.Model
+import Lemma.Real.StronglyMeasurable_Eq12
+open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Real
 
 
 /--
@@ -30,7 +31,7 @@ private lemma main
     funext fun θ => Random.RealPreimageS.eq.Sum_MulRealPn (M := M) θ t y
   rw [e]
   exact fun θ => DifferentiableAt.fun_sum fun x _ =>
-    ((Tensor.Differentiable.All_LeNormFderivMulAdd_1MulMulCard.of.All_LeNorm.StronglyMeasurable.All_LeNormFderiv.All_Differentiable_Prob (M := M) h₀ hC (ind_fst_sm y) (Real.Norm_Eq12.le.One y) t x).1 θ).const_mul _
+    ((Tensor.Differentiable.All_LeNormFderivMulAdd_1MulMulCard.of.All_LeNorm.StronglyMeasurable.All_LeNormFderiv.All_Differentiable_Prob (M := M) h₀ hC (Real.StronglyMeasurable_Eq12 y) (Norm_Eq12.le.One y) t x).1 θ).const_mul _
 
 
 -- created on 2026-10-06

@@ -1,5 +1,6 @@
 import sympy.matrices.cholesky
 import sympy.Basic
+import Lemma.Matrix.Lt_Sum_SquareNorm.et.All_Eq_Sum_Mul_Star.of.All_And.All_Eq_Div.PosDef
 open Matrix
 
 
@@ -24,7 +25,7 @@ private lemma main
     ·
       rw [star_trivial]
       exact h₁ x hx
-  obtain ⟨p, q⟩ := hA.cholesky_step (L := L) (fun i j h => by rw [h₂ i j h]; simp only [star_trivial]) t
+  obtain ⟨p, q⟩ := Lt_Sum_SquareNorm.et.All_Eq_Sum_Mul_Star.of.All_And.All_Eq_Div.PosDef hA (L := L) (fun i j h => by rw [h₂ i j h]; simp only [star_trivial]) t
     (fun i hi => by
       obtain ⟨a, b, c⟩ := h₃ i hi
       exact ⟨by rw [a]; simp, RCLike.pos_iff.mpr ⟨by simpa using b, by simp⟩, fun j hj => by rw [c j hj]; simp only [star_trivial]⟩)

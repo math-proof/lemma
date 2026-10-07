@@ -1,7 +1,6 @@
 import sympy.functions.elementary.complexes
 import sympy.Basic
 import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
-open Complex
 
 
 @[main]

@@ -24,6 +24,10 @@ Guidelines and prompts for using LLMs to write and refactor Lean 4 proofs in thi
     - inline `have` without introducing `show` if it is referenced only once
     - use `grind`/`aesop` as much as possible
 
+## Folder layout
+- `Lemma/` holds only lemmas (`lemma`); these are the public results that get rendered.
+- `sympy/` holds definitions plus only `theorem`s; these theorems are an internal API used by the definitions and are not rendered publicly. Never put a `lemma` in `sympy/`.
+
 ## Debugging
 - print logging info via `sympy.printing.echo` by creating *.echo.lean tracing files for debugging.
 - Confirm the file compiles with `lake build <Module.Name>` or `lake env lean <path/to/file.lean>`.

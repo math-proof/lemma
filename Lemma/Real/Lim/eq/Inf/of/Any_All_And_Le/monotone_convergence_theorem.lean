@@ -5,7 +5,6 @@ import sympy.Basic
 import Lemma.Real.Lim.eq.Inf.of.Le.Any_All_Ge.monotone_convergence_theorem
 
 
-open Filter
 
 
 @[main]

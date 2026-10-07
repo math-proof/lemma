@@ -2,7 +2,14 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+/--
+| attributes | lemma |
+| :---: | :---: |
+| main | Nat.Ne_0.is.Eq_odd |
+| mp | Nat.Eq_odd.of.Ne_0 |
+| mpr | Nat.Ne_0.of.Eq_odd |
+-/
+@[main, mp, mpr]
 private lemma main
   {n : ℤ} :
 -- imply
@@ -12,3 +19,4 @@ private lemma main
 
 
 -- created on 2020-01-27
+-- updated on 2026-10-07

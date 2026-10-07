@@ -1,6 +1,5 @@
 import sympy.functions.combinatorial.numbers
 import sympy.Basic
-open Finset
 
 
 @[main]

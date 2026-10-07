@@ -1,6 +1,7 @@
 import Lemma.Random.All_Eq_MulProbCond.of.PSpace_Joint
 import Lemma.Random.PSpace_JointJoint.is.PSpace_Joint_Joint
 import Lemma.Random.PSpace_Joint
+import Lemma.Random.Map.eq.WithDensityProb
 open ProbabilityTheory MeasureTheory Random MeasurableSpace
 open scoped ENNReal
 
@@ -40,13 +41,13 @@ private lemma main
   let pyz := π.prob (y, z)
   let pxyz := π.prob (x, (y, z))
   let ρ : Measure (α × β × γ) := μ.prod (ν.prod ξ)
-  have hlaw_z : π.map z = ξ.withDensity pz := SinglePSpace.map_eq_withDensity_density
+  have hlaw_z : π.map z = ξ.withDensity pz := Map.eq.WithDensityProb
   have hlaw_xz : π.map (x, z) = (μ.prod ξ).withDensity pxz :=
-    SinglePSpace.map_eq_withDensity_density
+    Map.eq.WithDensityProb
   have hlaw_yz : π.map (y, z) = (ν.prod ξ).withDensity pyz :=
-    SinglePSpace.map_eq_withDensity_density
+    Map.eq.WithDensityProb
   have hlaw_xyz : π.map (x, (y, z)) = ρ.withDensity pxyz :=
-    SinglePSpace.map_eq_withDensity_density
+    Map.eq.WithDensityProb
   have hκ_dis : π.map (fun ω ↦ (z ω, x ω)) = π.map z ⊗ₘ κ :=
     (compProd_map_condDistrib (Y := x) (X := z) (μ := π) hx.aemeasurable).symm
   have hη_dis : π.map (fun ω ↦ (z ω, y ω)) = π.map z ⊗ₘ η :=

@@ -1,5 +1,6 @@
 import sympy.matrices.cholesky
 import sympy.Basic
+import Lemma.Matrix.All_Eq_0_And_All_Gt_0_And_Eq_Mul.of.IsCholeskyRec.PosDef
 open Matrix
 
 
@@ -26,7 +27,7 @@ private lemma main
     intro i j
     rw [h₂ i j]
     simp only [star_trivial, RCLike.re_to_real, RCLike.ofReal_real_eq_id, id]
-  have h := (hA.cholesky_of_rec hrec).2.2
+  have h := (All_Eq_0_And_All_Gt_0_And_Eq_Mul.of.IsCholeskyRec.PosDef hA hrec).2.2
   rwa [Matrix.conjTranspose_eq_transpose_of_trivial] at h
 
 

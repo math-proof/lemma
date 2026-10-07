@@ -2,7 +2,7 @@ import Mathlib
 import sympy.Basic
 
 open scoped ArithmeticFunction.Moebius ArithmeticFunction.zeta
-open ArithmeticFunction Finset
+open ArithmeticFunction
 
 /--
 [ArithmeticFunction_sum_moebius_filter_dvd](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_ArithmeticFunction_sum_moebius_filter_dvd.lean)

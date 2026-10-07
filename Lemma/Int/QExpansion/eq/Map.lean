@@ -1,7 +1,7 @@
 import Mathlib
 import sympy.Basic
 
-open UpperHalfPlane ModularForm Finset
+open UpperHalfPlane ModularForm
 
 /--
 [ModularCurve_qExpansion_E6_eq_map_mk](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_ModularCurve_qExpansion_E6_eq_map_mk.lean)

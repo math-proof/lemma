@@ -1,7 +1,12 @@
 import sympy.functions.elementary.complexes
 import sympy.Basic
-import sympy.polys.cardano
-open Real
+import Lemma.Complex.PowAddDivNeg1'2DivMulISqrt3'2'3.eq.One
+import Lemma.Complex.AddAddSquareAddDivNeg1'2DivMulISqrt3'2AddDivNeg1'2DivMulISqrt3'2'1.eq.Zero
+import Lemma.Complex.ConjAddDivNeg1'2DivMulISqrt3'2.eq.SquareAddDivNeg1'2DivMulISqrt3'2
+import Lemma.Complex.PowPowAddDivNeg1'2DivMulISqrt3'2'3.eq.One
+import Lemma.Complex.PowAddDivNeg1'2DivMulISqrt3'2.eq.PowAddDivNeg1'2DivMulISqrt3'2EMod3
+import Lemma.Complex.AddPowPowPowPow.eq.Neg
+import Lemma.Complex.MulMulPowPowPow.eq.DivNeg3.of.EqSubCeil.Eq_AddDivMul4Pow3'27Square
 
 
 @[main]
@@ -20,15 +25,15 @@ private lemma mod
   (D % 3 = 1 → x = A * ω + B ∨ x = A * ~ω + B * ~ω ∨ x = A + B * ω) ∧
   (D % 3 = 2 → x = A * ~ω + B ∨ x = A + B * ~ω ∨ x = A * ω + B * ω) := by
 -- proof
-  have hK := Cardano.key hδ hD.symm
-  have hsum := Cardano.cube_add (q := q) (δ := δ)
+  have hK := Complex.MulMulPowPowPow.eq.DivNeg3.of.EqSubCeil.Eq_AddDivMul4Pow3'27Square hδ hD.symm
+  have hsum := Complex.AddPowPowPowPow.eq.Neg (q := q) (δ := δ)
   rw [← hA, ← hB, ← hω] at hK
   rw [← hA, ← hB] at hsum
-  have hω2 : ω ^ 2 + ω + 1 = 0 := hω ▸ Cardano.omega_sq_add
-  have hω3 : ω ^ 3 = 1 := hω ▸ Cardano.omega_cube
-  have hc : ~ω = ω ^ 2 := hω ▸ Cardano.omega_conj
-  have hWm : ω ^ D = ω ^ (D % 3) := hω ▸ Cardano.zpow_emod
-  have hW3 : (ω ^ D) ^ 3 = 1 := hω ▸ Cardano.zpow_cube
+  have hω2 : ω ^ 2 + ω + 1 = 0 := hω ▸ Complex.AddAddSquareAddDivNeg1'2DivMulISqrt3'2AddDivNeg1'2DivMulISqrt3'2'1.eq.Zero
+  have hω3 : ω ^ 3 = 1 := hω ▸ Complex.PowAddDivNeg1'2DivMulISqrt3'2'3.eq.One
+  have hc : ~ω = ω ^ 2 := hω ▸ Complex.ConjAddDivNeg1'2DivMulISqrt3'2.eq.SquareAddDivNeg1'2DivMulISqrt3'2
+  have hWm : ω ^ D = ω ^ (D % 3) := hω ▸ Complex.PowAddDivNeg1'2DivMulISqrt3'2.eq.PowAddDivNeg1'2DivMulISqrt3'2EMod3
+  have hW3 : (ω ^ D) ^ 3 = 1 := hω ▸ Complex.PowPowAddDivNeg1'2DivMulISqrt3'2'3.eq.One
   set W := ω ^ D with hW_def
   have fac : (x - (A * W + B)) * (x - (A * W * ω + B * ω ^ 2)) * (x - (A * W * ω ^ 2 + B * ω)) = 0 := by
     linear_combination (-(-A * W - B + x) * (-A ^ 2 * W ^ 2 * ω + A ^ 2 * W ^ 2 - A * B * W * ω ^ 2 + A * B * W * ω - A * B * W + A * W * x - B ^ 2 * ω + B ^ 2 + B * x)) * hω2 + h - 3 * x * hK - A ^ 3 * hW3 - hsum

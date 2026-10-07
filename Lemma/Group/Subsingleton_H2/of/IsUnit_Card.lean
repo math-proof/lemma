@@ -1,7 +1,7 @@
 import Mathlib
 import sympy.Basic
 
-open CategoryTheory Finset
+open CategoryTheory
 
 /--
 [groupCohomology_subsingleton_H2_of_isUnit_card](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_groupCohomology_subsingleton_H2_of_isUnit_card.lean)

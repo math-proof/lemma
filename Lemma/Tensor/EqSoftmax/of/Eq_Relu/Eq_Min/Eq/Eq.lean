@@ -1,6 +1,6 @@
 import Lemma.Tensor.DotSoftmaxAdd_Mul_Infty.eq.Cast_Stack_Sum_Band
 import sympy.Basic
-open Tensor Hyperreal
+open Tensor
 set_option maxHeartbeats 2000000
 
 

@@ -130,7 +130,7 @@ instance smat_pow_is_smat {S : Type u} [Fintype S] [DecidableEq S]
 
 -- probability of an m+n-step i→j path is at least the product of an m-step i→k
 -- path and an n-step k→j path (all other decompositions are nonneg)
-lemma get_pow_add_ge_mul_get_s_pow {S : Type u} [Fintype S] [DecidableEq S]
+theorem get_pow_add_ge_mul_get_s_pow {S : Type u} [Fintype S] [DecidableEq S]
     {P : Matrix S S ℝ} [RowStochastic P] (m n : ℕ) (i j k : S) :
     (P ^ (m + n)) i j ≥ (P ^ m) i k * (P ^ n) k j := by
   have := smat_pow_is_smat (P := P) m

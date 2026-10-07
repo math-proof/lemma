@@ -3,7 +3,7 @@ import sympy.series.limits
 import sympy.sets.sets
 import sympy.Basic
 import sympy.concrete.sup
-open Filter Topology
+open Topology
 
 
 @[main]

@@ -1,9 +1,10 @@
 import sympy.stats.step_size
 import sympy.Basic
-import Lemma.Anchors.SumRangeT.le.SumRangeTime
+import Lemma.Real.Anchors.SumRangeT.le.SumRangeTime
 import Lemma.Real.RobbinsMonroInvPoly.of.Ge_1.Le_1.Gt_Div1'2
 import Lemma.Real.SumRangeInvPoly.le.DivSubPow.of.Lt_1.Ge_0
-open Finset Real
+import Lemma.Real.Anchors.Time0.eq.Zero
+open Real Finset
 
 
 @[main]
@@ -40,7 +41,7 @@ private lemma main
   refine ⟨max 1 (4 * c), by positivity, fun n => ?_⟩
   show inv_poly ν 2 (anc.t n : ℝ) ≤ _
   have hT : 0 < anc.T n := rpow_pos_of_pos (by positivity) _
-  have hTβ := Anchors.T.le.β (anc := anc) (n := n)
+  have hTβ := Real.Anchors.T.le.β (anc := anc) (n := n)
   have hTβ2 : anc.T n ^ 2 ≤ anc.β n ^ 2 := pow_le_pow_left₀ hT.le hTβ 2
   have hT2 : anc.T n ^ 2 = ((n : ℝ) + 1) ^ (-(2 * z)) := by
     show ((((n : ℕ) : ℝ) + ((1 : ℕ) : ℝ)) ^ (-z)) ^ 2 = _
@@ -51,7 +52,7 @@ private lemma main
   rw [hT2]
   if hn : n = 0 then
     subst hn
-    rw [anc.t_zero]
+    rw [(Real.Anchors.Time0.eq.Zero anc)]
     simp only [inv_poly, Nat.cast_zero, zero_add, one_rpow, mul_one]
     calc ((2 : ℕ) : ℝ) ^ (-ν) ≤ 1 := rpow_le_one_of_one_le_of_nonpos (by norm_num) (by linarith)
       _ ≤ _ := le_max_left _ _
@@ -68,7 +69,7 @@ private lemma main
             push_cast
             exact rpow_le_rpow_of_nonpos (by positivity) this (by linarith)
     have hup := SumRangeInvPoly.le.DivSubPow.of.Lt_1.Ge_0 (a := anc.t n) (by linarith) h₁
-    have hsum := Anchors.SumRangeT.le.SumRangeTime (anc := anc) (m := n)
+    have hsum := Real.Anchors.SumRangeT.le.SumRangeTime (anc := anc) (m := n)
     have hkey : (1 - ν) * (n : ℝ) ^ (1 - z) ≤ ((anc.t n : ℝ) + 1) ^ (1 - ν) := by
       have := hlow.trans (hsum.trans hup)
       rw [le_div_iff₀ h1ν] at this

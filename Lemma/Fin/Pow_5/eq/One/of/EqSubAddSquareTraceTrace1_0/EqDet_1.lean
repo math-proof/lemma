@@ -2,7 +2,6 @@ import Mathlib
 import sympy.Basic
 
 open Polynomial
-open Matrix
 
 /--
 [Matrix_pow_five_eq_one_of_trace_sq_add_trace_sub_one](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Matrix_pow_five_eq_one_of_trace_sq_add_trace_sub_one.lean)

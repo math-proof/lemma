@@ -189,9 +189,9 @@ instance [Mul α] : OuterProd (m → α) (n → α) (Matrix m n α) where
   outer := Matrix.vecMulVec
 
 @[simp]
-lemma OuterProd.eq.vecMulVec [Mul α] (a : m → α) (b : n → α) : a @ᵒ b = Matrix.vecMulVec a b :=
+theorem OuterProd.eq.vecMulVec [Mul α] (a : m → α) (b : n → α) : a @ᵒ b = Matrix.vecMulVec a b :=
   rfl
 
 @[simp]
-lemma OuterProd.apply [Mul α] (a : m → α) (b : n → α) (i : m) (j : n) : (a @ᵒ b) i j = a i * b j :=
+theorem OuterProd.apply [Mul α] (a : m → α) (b : n → α) (i : m) (j : n) : (a @ᵒ b) i j = a i * b j :=
   rfl

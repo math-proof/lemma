@@ -2,7 +2,7 @@ import sympy.stats.iterates
 import sympy.Basic
 import Mathlib.MeasureTheory.MeasurableSpace.Pi
 import Mathlib.Analysis.Normed.Lp.MeasurableSpace
-open Finset Preorder
+open Preorder
 
 
 @[main]

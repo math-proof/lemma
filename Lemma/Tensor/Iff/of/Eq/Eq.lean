@@ -1,7 +1,8 @@
-import sympy.sets.partition
+import Mathlib.Algebra.Order.BigOperators.Group.Finset
 import sympy.concrete.expr_with_limits
 import Mathlib.Analysis.InnerProductSpace.PiL2
 import sympy.Basic
+import Lemma.Finset.Eq.of.In.In.Lt.Lt.EqBiUnion.EqSum_Card
 
 
 @[main]
@@ -20,7 +21,7 @@ private lemma kmeans
     rw [Finset.sum_eq_single i0]
     · simp [hj]
     · intro b hb hne
-      rw [if_neg (fun hb' => hne (Finset.eq_of_mem_of_sum_card_eq h₀ h₁ (Finset.mem_range.mp hb) hi0 hb' hj)), mul_zero]
+      rw [if_neg (fun hb' => hne (Finset.Eq.of.In.In.Lt.Lt.EqBiUnion.EqSum_Card h₀ h₁ (Finset.mem_range.mp hb) hi0 hb' hj)), mul_zero]
     · intro h
       exact absurd (Finset.mem_range.mpr hi0) h
   constructor

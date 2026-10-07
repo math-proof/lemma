@@ -3,7 +3,9 @@ import sympy.Basic
 import Lemma.Random.Integral_R.eq.Sum_MulRealWRc
 import Lemma.Random.Sum_Real.eq.One
 import Lemma.Tensor.Differentiable.All_LeNormFderivMulAdd_1MulMulCard.of.All_LeNorm.StronglyMeasurable.All_LeNormFderiv.All_Differentiable_Prob
-open MeasureTheory ProbabilityTheory Finset Filter Topology PolicyGradient PolicyGradient.Model
+import Lemma.Random.NormRc.le.Abs_R
+import Lemma.Random.StronglyMeasurableRc
+open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
 
 
 /--
@@ -25,9 +27,9 @@ private lemma main
     (t + 1) * (Fintype.card A * Cp * |M.env.R|) := by
 -- proof
   have e : (fun θ => ∫ ω, r t ω ∂(M θ)) = fun θ => ∑ x, M.env.init.real {x} * M.W θ M.rc t x :=
-    funext fun θ => Random.Integral_R.eq.Sum_MulRealWRc (M := M) θ t
+    funext fun θ => Integral_R.eq.Sum_MulRealWRc (M := M) θ t
   rw [e]
-  have hW := fun x => Tensor.Differentiable.All_LeNormFderivMulAdd_1MulMulCard.of.All_LeNorm.StronglyMeasurable.All_LeNormFderiv.All_Differentiable_Prob (M := M) h₀ h₁ (rc_sm M) (rc_bdd M) t x
+  have hW := fun x => Tensor.Differentiable.All_LeNormFderivMulAdd_1MulMulCard.of.All_LeNorm.StronglyMeasurable.All_LeNormFderiv.All_Differentiable_Prob (M := M) h₀ h₁ (Random.StronglyMeasurableRc (M := M)) (NormRc.le.Abs_R (M := M)) t x
   refine ⟨fun θ => DifferentiableAt.fun_sum fun x _ => ((hW x).1 θ).const_mul _, fun θ => ?_⟩
   rw [fderiv_fun_sum fun x _ => ((hW x).1 θ).const_mul _]
   calc _ ≤ ∑ x, ‖fderiv ℝ (fun θ => M.env.init.real {x} * M.W θ M.rc t x) θ‖ := norm_sum_le _ _
@@ -35,7 +37,7 @@ private lemma main
         refine Finset.sum_le_sum fun x _ => ?_
         rw [fderiv_const_mul ((hW x).1 θ), norm_smul, Real.norm_of_nonneg measureReal_nonneg]
         exact mul_le_mul_of_nonneg_left ((hW x).2 θ) measureReal_nonneg
-    _ = _ := by rw [← Finset.sum_mul, Random.Sum_Real.eq.One, one_mul]
+    _ = _ := by rw [← Finset.sum_mul, Sum_Real.eq.One, one_mul]
 
 
 -- created on 2026-10-06

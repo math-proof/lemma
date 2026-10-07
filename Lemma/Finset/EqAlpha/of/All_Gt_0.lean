@@ -1,7 +1,8 @@
 import sympy.concrete.continued_fraction
 import sympy.sets.sets
 import sympy.Basic
-open Continuant
+import Lemma.Finset.AlphaAppend.eq.AlphaAppend_AddDiv
+open Finset Continuant
 
 
 @[main]
@@ -16,7 +17,7 @@ private lemma recurrence
 -- proof
   show alpha ((List.range (n + 1 + 1)).map x) = _
   rw [List.range_succ, List.range_succ, List.map_append, List.map_append, List.append_assoc]
-  exact alpha_append_pair _ _ _
+  exact AlphaAppend.eq.AlphaAppend_AddDiv _ _ _
 
 
 -- created on 2020-09-24

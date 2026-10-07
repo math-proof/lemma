@@ -1,7 +1,8 @@
 import sympy.functions.elementary.complexes
 import sympy.Basic
-import sympy.polys.cardano
-open Real
+import Lemma.Complex.PowPowAddDivNeg1'2DivMulISqrt3'2'3.eq.One
+import Lemma.Complex.AddPowPowPowPow.eq.Neg
+import Lemma.Complex.MulMulPowPowPow.eq.DivNeg3.of.EqSubCeil.Eq_AddDivMul4Pow3'27Square
 
 
 @[main]
@@ -15,9 +16,9 @@ private lemma sub.given
 -- imply
   x ^ 3 + p * x + q = 0 := by
 -- proof
-  have hK := Cardano.key hδ h₀
-  have hW3 := Cardano.zpow_cube (d := d)
-  have hsum := Cardano.cube_add (q := q) (δ := δ)
+  have hK := Complex.MulMulPowPowPow.eq.DivNeg3.of.EqSubCeil.Eq_AddDivMul4Pow3'27Square hδ h₀
+  have hW3 := Complex.PowPowAddDivNeg1'2DivMulISqrt3'2'3.eq.One (d := d)
+  have hsum := Complex.AddPowPowPowPow.eq.Neg (q := q) (δ := δ)
   rw [h₁]
   linear_combination (3 * ((δ ^ (1 / 2 : ℂ) / 2 - q / 2) ^ (1 / 3 : ℂ) * (-1 / 2 + Complex.I * √3 / 2) ^ d + (-δ ^ (1 / 2 : ℂ) / 2 - q / 2) ^ (1 / 3 : ℂ))) * hK + ((δ ^ (1 / 2 : ℂ) / 2 - q / 2) ^ (1 / 3 : ℂ)) ^ 3 * hW3 + hsum
 

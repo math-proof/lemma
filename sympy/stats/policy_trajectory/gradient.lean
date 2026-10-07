@@ -1,4 +1,4 @@
-import sympy.stats.policy_trajectory.markov
+import sympy.stats.policy_trajectory
 import Mathlib.Analysis.Calculus.SmoothSeries
 import Mathlib.Analysis.Calculus.LocalExtr.Basic
 import Mathlib.Analysis.SpecialFunctions.Log.Deriv

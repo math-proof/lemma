@@ -1,6 +1,5 @@
 import Mathlib.Data.Finset.Basic
 import sympy.Basic
-open Finset
 
 
 @[main]

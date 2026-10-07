@@ -1,6 +1,9 @@
-import sympy.matrices.confluent_vandermonde
+import Mathlib.Algebra.Group.ForwardDiff
+import Mathlib.Data.Matrix.ColumnRowPartitioned
+import Mathlib.LinearAlgebra.Vandermonde
 import sympy.Basic
-open Finset Nat
+import Lemma.Matrix.DetOf.eq.MulPowSProdProd.of.Gt
+open Matrix Finset Nat
 
 
 @[main]
@@ -12,7 +15,7 @@ private lemma vandermonde.ratio
   (Matrix.of fun (a j : Fin m) => if (a : ℕ) < d then (j : ℝ) ^ (a : ℕ) * r ^ (j : ℕ) else (j : ℝ) ^ ((a : ℕ) - d)).det =
     r ^ (d.choose 2) * (1 - r) ^ (d * (m - d)) * (∏ i ∈ Finset.range d, (i ! : ℝ)) * ∏ i ∈ Finset.range (m - d), (i ! : ℝ) := by
 -- proof
-  exact Vandermonde.det_ratio h
+  exact DetOf.eq.MulPowSProdProd.of.Gt h
 
 
 -- created on 2026-09-27

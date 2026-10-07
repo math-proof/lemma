@@ -261,3 +261,17 @@ export function dates(ctx) {
         ctx.warn('date-created-today', created.line, 1, `new file: the created date should be today, \`-- created on ${today}\``);
     }
 }
+
+/**
+ * `decl-keyword-dir` (text fallback; the AST rule in `astRules.mjs` reads the keyword from the node class):
+ * `theorem` in a `Lemma/` file. `ctx.decls` comes from the comment/string-blanked source and only matches the keyword
+ * at the start of a declaration line (after `@[…]` / modifiers).
+ */
+export function declKeywordDirText(ctx) {
+    if (ctx.astCovered.has('decl-keyword-dir')) return;
+    if (!/(^|\/)Lemma\//.test(String(ctx.file ?? '').replace(/\\/g, '/'))) return;
+    for (const d of ctx.decls) {
+        if (d.kind !== 'theorem') continue;
+        ctx.warn('decl-keyword-dir', d.line + 1, 1, `\`theorem${d.name ? ` ${d.name}` : ''}\` in \`Lemma/\`: declare it with \`lemma\``);
+    }
+}

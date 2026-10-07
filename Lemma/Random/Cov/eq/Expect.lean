@@ -2,6 +2,7 @@ import Mathlib.Probability.Independence.Integration
 import sympy.stats.joint_rv
 import sympy.stats.variance
 import sympy.Basic
+import Lemma.Random.Cov.eq.Integral
 open MeasureTheory
 
 
@@ -16,7 +17,7 @@ private lemma main
 -- imply
   Covariance π x y = ∫ ω, (x ω - ∫ ω', x ω' ∂π) * (y ω - ∫ ω', y ω' ∂π) ∂π := by
 -- proof
-  exact Covariance.eq_integral
+  exact Random.Cov.eq.Integral
 
 
 -- created on 2023-03-24

@@ -1,7 +1,6 @@
 import sympy.matrices.plu
 import sympy.sets.sets
 import sympy.Basic
-open Matrix
 
 
 @[main]

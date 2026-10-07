@@ -1,6 +1,9 @@
-import sympy.matrices.confluent_vandermonde
+import Mathlib.Algebra.Group.ForwardDiff
+import Mathlib.Data.Matrix.ColumnRowPartitioned
+import Mathlib.LinearAlgebra.Vandermonde
 import sympy.Basic
-open Finset Nat
+import Lemma.Matrix.MulOfPowAddOfPowNegChoose.eq.MulOfChooseSumOf
+open Matrix
 
 
 @[main]
@@ -14,7 +17,7 @@ private lemma vandermonde.col_transform
       ∑ h ∈ Finset.range (d + 1), (d.choose h : ℝ) * (-l) ^ (d - h) * (h : ℝ) ^ ((i : ℤ) - (j : ℕ))) *
     (Matrix.of fun (i : Fin n) (j : Fin (m - d)) => ((j : ℝ) + δ) ^ (i : ℕ)) := by
 -- proof
-  exact Vandermonde.col_transform_S
+  exact MulOfPowAddOfPowNegChoose.eq.MulOfChooseSumOf
 
 
 -- created on 2026-09-27

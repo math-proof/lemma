@@ -1,7 +1,6 @@
 import Mathlib.Analysis.Calculus.Deriv.Add
 import sympy.dynamics.actor_critic
 import sympy.Basic
-open Matrix
 
 
 @[main]

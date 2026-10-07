@@ -1,3 +1,4 @@
+
 notation:max x "²" => x ^ 2  -- square
 notation:max x "³" => x ^ 3  -- cube
 notation:max x "⁴" => x ^ 4  -- tesseract
@@ -11,5 +12,3 @@ instance Function.instHPowNatSeq {α : Type u} [HPow α Nat α] : HPow α (Nat �
 theorem Function.hPow_apply {α : Type u} [HPow α Nat α] (γ : α) (f : Nat → Nat) (k : Nat) :
     (γ ^ f) k = γ ^ f k := rfl
 
-theorem Function.hPow_id {α : Type u} [HPow α Nat α] (γ : α) :
-    γ ^ (id : Nat → Nat) = fun k ↦ γ ^ k := rfl

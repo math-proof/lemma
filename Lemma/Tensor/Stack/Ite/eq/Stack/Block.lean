@@ -1,5 +1,6 @@
 import sympy.tensor.stack_ite
 import sympy.Basic
+import Lemma.Tensor.StackIte.eq.Fun
 
 
 @[main]
@@ -11,7 +12,7 @@ private lemma main
 -- imply
   (fun i : Fin (∑ j, s j) => Tensor.stackIte m s f i) = fun i => f (finSigmaFinEquiv.symm i).1 (finSigmaFinEquiv.symm i).2 := by
 -- proof
-  exact Tensor.stackIte_eq_block m s f
+  exact Tensor.StackIte.eq.Fun m s f
 
 
 @[main]

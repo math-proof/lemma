@@ -1,6 +1,11 @@
-import sympy.matrices.confluent_vandermonde
+import Mathlib.Algebra.Group.ForwardDiff
+import Mathlib.Data.Matrix.ColumnRowPartitioned
+import Mathlib.LinearAlgebra.Vandermonde
 import sympy.Basic
-open Finset Nat
+import Lemma.Matrix.DetOf.eq.MulPowSProdProd.of.Le
+import Lemma.Matrix.DetOfVecCons2_FunPow.eq.MulMulMulPowSProd
+import Lemma.Matrix.DetOfVecCons_FunPow.eq.MulMulPowSProd
+open Matrix Finset Nat
 
 
 @[main]
@@ -14,7 +19,7 @@ private lemma vandermonde.n2
       (fun (i : Fin n) (j : Fin (n + 2)) => (j : ℝ) ^ (i : ℕ) * x₂ ^ (j : ℕ))))).det =
     x₁ * x₂ ^ (n.choose 2) * (x₂ - x₁) ^ (2 * n) * ∏ i ∈ Finset.range n, (i ! : ℝ) := by
 -- proof
-  exact Vandermonde.det_n2
+  exact DetOfVecCons2_FunPow.eq.MulMulMulPowSProd
 
 
 @[main]
@@ -30,7 +35,7 @@ private lemma vandermonde.mn
     x₂ ^ ((m - d).choose 2) * x₁ ^ (d.choose 2) * (x₂ - x₁) ^ (d * (m - d)) *
       (∏ i ∈ Finset.range d, (i ! : ℝ)) * ∏ i ∈ Finset.range (m - d), (i ! : ℝ) := by
 -- proof
-  exact Vandermonde.confluent_det (by omega)
+  exact DetOf.eq.MulPowSProdProd.of.Le (by omega)
 
 
 @[main]
@@ -44,7 +49,7 @@ private lemma vandermonde.n1
       (fun (i : Fin n) (j : Fin (n + 1)) => (j : ℝ) ^ (i : ℕ) * x₁ ^ (j : ℕ)))).det =
     x₁ ^ (n.choose 2) * (x₁ - x₂) ^ n * ∏ i ∈ Finset.range n, (i ! : ℝ) := by
 -- proof
-  exact Vandermonde.det_n1
+  exact DetOfVecCons_FunPow.eq.MulMulPowSProd
 
 
 -- created on 2026-09-27

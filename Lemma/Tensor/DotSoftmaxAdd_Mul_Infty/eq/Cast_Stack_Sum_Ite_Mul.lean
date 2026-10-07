@@ -10,7 +10,7 @@ import Lemma.Tensor.GetDot.eq.DotGet
 import Lemma.Tensor.XEq.is.All_XEqGetS.of.GtLength_0
 import Lemma.Tensor.Eq.is.EqDataS
 import sympy.Basic
-open Tensor Hyperreal
+open Tensor
 set_option maxHeartbeats 2000000
 
 

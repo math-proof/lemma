@@ -1,5 +1,7 @@
 import sympy.matrices.cholesky
 import sympy.Basic
+import Lemma.Matrix.GetMul_L.eq.AddSum_Mul_Star.of.All_All_Eq_0
+import Lemma.Matrix.All_Eq_0_And_All_Gt_0_And_Eq_Mul.of.IsCholeskyRec.PosDef
 open Matrix
 open scoped ComplexOrder
 
@@ -16,12 +18,12 @@ private lemma l11
   A 1 0 = L 0 0 * L 1 0 ∧ 0 < L 1 1 ∧ A 1 1 = ((‖L 1 0‖ ^ 2 + ‖L 1 1‖ ^ 2 : ℝ) : ℂ) := by
 -- proof
   have hA : A.PosDef := Matrix.PosDef.of_dotProduct_mulVec_pos h₀ (fun x hx => h₁ x hx)
-  obtain ⟨hlow, hpos, hL⟩ := hA.cholesky_of_rec h₂
+  obtain ⟨hlow, hpos, hL⟩ := All_Eq_0_And_All_Gt_0_And_Eq_Mul.of.IsCholeskyRec.PosDef hA h₂
   have hst : ∀ j, star (L j j) = L j j := fun j => by
     rw [RCLike.star_def, RCLike.conj_eq_iff_im]
     exact (RCLike.pos_iff.mp (hpos j)).2
   have e : ∀ i j, A i j = ∑ k ∈ Finset.Iio j, L i k * star (L j k) + L i j * star (L j j) := fun i j => by
-    rw [hL, Matrix.mul_conjTranspose_apply_of_lower hlow]
+    rw [hL, GetMul_L.eq.AddSum_Mul_Star.of.All_All_Eq_0 hlow]
   have i0 : Finset.Iio (0 : Fin (n + 3)) = ∅ := by
     ext k
     simp only [Finset.mem_Iio, Finset.notMem_empty, iff_false, not_lt]
@@ -52,12 +54,12 @@ private lemma l00
   0 < L 0 0 ∧ A 0 0 = L 0 0 ^ 2 := by
 -- proof
   have hA : A.PosDef := Matrix.PosDef.of_dotProduct_mulVec_pos h₀ (fun x hx => h₁ x hx)
-  obtain ⟨hlow, hpos, hL⟩ := hA.cholesky_of_rec h₂
+  obtain ⟨hlow, hpos, hL⟩ := All_Eq_0_And_All_Gt_0_And_Eq_Mul.of.IsCholeskyRec.PosDef hA h₂
   have hst : ∀ j, star (L j j) = L j j := fun j => by
     rw [RCLike.star_def, RCLike.conj_eq_iff_im]
     exact (RCLike.pos_iff.mp (hpos j)).2
   have e : ∀ i j, A i j = ∑ k ∈ Finset.Iio j, L i k * star (L j k) + L i j * star (L j j) := fun i j => by
-    rw [hL, Matrix.mul_conjTranspose_apply_of_lower hlow]
+    rw [hL, GetMul_L.eq.AddSum_Mul_Star.of.All_All_Eq_0 hlow]
   have i0 : Finset.Iio (0 : Fin (n + 3)) = ∅ := by
     ext k
     simp only [Finset.mem_Iio, Finset.notMem_empty, iff_false, not_lt]
@@ -78,12 +80,12 @@ private lemma l22
   A 2 0 = L 0 0 * L 2 0 ∧ A 2 1 = star (L 1 0) * L 2 0 + L 1 1 * L 2 1 ∧ 0 < L 2 2 ∧ A 2 2 = ((‖L 2 0‖ ^ 2 + ‖L 2 1‖ ^ 2 + ‖L 2 2‖ ^ 2 : ℝ) : ℂ) := by
 -- proof
   have hA : A.PosDef := Matrix.PosDef.of_dotProduct_mulVec_pos h₀ (fun x hx => h₁ x hx)
-  obtain ⟨hlow, hpos, hL⟩ := hA.cholesky_of_rec h₂
+  obtain ⟨hlow, hpos, hL⟩ := All_Eq_0_And_All_Gt_0_And_Eq_Mul.of.IsCholeskyRec.PosDef hA h₂
   have hst : ∀ j, star (L j j) = L j j := fun j => by
     rw [RCLike.star_def, RCLike.conj_eq_iff_im]
     exact (RCLike.pos_iff.mp (hpos j)).2
   have e : ∀ i j, A i j = ∑ k ∈ Finset.Iio j, L i k * star (L j k) + L i j * star (L j j) := fun i j => by
-    rw [hL, Matrix.mul_conjTranspose_apply_of_lower hlow]
+    rw [hL, GetMul_L.eq.AddSum_Mul_Star.of.All_All_Eq_0 hlow]
   have i0 : Finset.Iio (0 : Fin (n + 3)) = ∅ := by
     ext k
     simp only [Finset.mem_Iio, Finset.notMem_empty, iff_false, not_lt]

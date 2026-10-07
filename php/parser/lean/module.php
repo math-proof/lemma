@@ -389,8 +389,16 @@ class LeanModule extends LeanStatements
                             $name = $declspec;
                             $declspec = [];
                         } else {
-                            [$name, $declspec] = $declspec->args;
-                            $declspec = $declspec->args;
+                            // one-line signature `name [A] {x : T} (h : P) :` puts the binders themselves in args
+                            // (a multi-line one wraps them in one container, LeanArgsNewLineSeparated, ...);
+                            // a one-line `name (x : T) [A] :` keeps the old lenient reading (as module.js)
+                            $dargs = $declspec->args;
+                            $name = $dargs[0];
+                            $d1 = $dargs[1] ?? null;
+                            if ($d1 instanceof LeanBracket || $d1 instanceof LeanBrace)
+                                $declspec = array_slice($dargs, 1);
+                            else
+                                $declspec = $d1->args;
                         }
 
                         $instImplicit = [];

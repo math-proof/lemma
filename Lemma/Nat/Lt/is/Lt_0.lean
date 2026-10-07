@@ -2,7 +2,13 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+/--
+| attributes | lemma |
+| :---: | :---: |
+| main | Nat.Lt.is.Lt_0 |
+| mpr | Nat.Lt.of.Lt_0 |
+-/
+@[main, mpr]
 private lemma main
   {x y : ℝ} :
 -- imply
@@ -12,3 +18,4 @@ private lemma main
 
 
 -- created on 2023-04-18
+-- updated on 2026-10-07

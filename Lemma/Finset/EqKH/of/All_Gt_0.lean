@@ -1,7 +1,10 @@
-import sympy.concrete.continuant_shift
+import sympy.concrete.continuant
 import sympy.sets.sets
 import sympy.Basic
-open Continuant
+import Lemma.Finset.K_Add_1.eq.HFun
+import Lemma.Finset.H_Add_1.eq.AddMul_K_Add_1KFun
+import Lemma.Finset.H.gt.Zero.of.All_Imp_Gt_0
+open Finset Continuant
 
 
 @[main]
@@ -14,8 +17,8 @@ private lemma main
 -- imply
   K (fun i => x (i + 1)) n / H (fun i => x (i + 1)) n = H x (n + 1) / K x (n + 1) - x 0 := by
 -- proof
-  rw [K_succ_eq_H_shift, H_succ_eq, K_succ_eq_H_shift]
-  have hH := H_pos_of_lt (fun i => x (i + 1)) n (fun i hi => h (i + 1) (by omega))
+  rw [K_Add_1.eq.HFun, H_Add_1.eq.AddMul_K_Add_1KFun, K_Add_1.eq.HFun]
+  have hH := H.gt.Zero.of.All_Imp_Gt_0 (fun i => x (i + 1)) n (fun i hi => h (i + 1) (by omega))
   field_simp
   ring
 

@@ -1,6 +1,9 @@
-import sympy.matrices.confluent_vandermonde
+import Mathlib.Algebra.Group.ForwardDiff
+import Mathlib.Data.Matrix.ColumnRowPartitioned
+import Mathlib.LinearAlgebra.Vandermonde
 import sympy.Basic
-open Finset Nat
+import Lemma.Matrix.DetOfPowAdd.eq.MulPowSub1Prod
+open Matrix Finset Nat
 
 
 @[main]
@@ -10,7 +13,7 @@ private lemma vandermonde
   (Matrix.of fun (a j : Fin n) => if (a : ℕ) = 0 then 1 - r ^ ((j : ℕ) + 1) else ((j : ℝ) + 1) ^ (a : ℕ)).det =
     (1 - r) ^ n * ∏ i ∈ Finset.range n, (i ! : ℝ) := by
 -- proof
-  exact Vandermonde.det_powAdd
+  exact DetOfPowAdd.eq.MulPowSub1Prod
 
 
 -- created on 2020-10-14

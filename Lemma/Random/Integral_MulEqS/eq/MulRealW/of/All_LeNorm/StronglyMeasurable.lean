@@ -1,6 +1,11 @@
 import sympy.stats.policy_trajectory.gradient
 import sympy.Basic
-open MeasureTheory ProbabilityTheory Finset Filter Topology PolicyGradient PolicyGradient.Model
+import Lemma.Random.Integral_Mul.eq.Integral_Mul_Kf.of.All_LeNorm.StronglyMeasurable.All_LeNorm.StronglyMeasurable
+import Lemma.Random.Integral_MulEqS.eq.MulRealPreimageSIntegral.of.All_LeNorm.StronglyMeasurable
+import Lemma.Random.StronglyMeasurable_KfAndAll_LeNormKf.of.All_LeNorm.StronglyMeasurable
+import Lemma.Real.Norm_1.le.One
+import Lemma.Real.StronglyMeasurable_Eq12
+open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random Real
 
 
 /--
@@ -23,8 +28,8 @@ private lemma main
   ∫ ω, (if s t ω = x then (1:ℝ) else 0) * f (ω (t + j)) ∂(M θ) =
     (M θ).real (s t ⁻¹' {x}) * M.W θ f j x := by
 -- proof
-  have hK := Kf_bdd M θ h₀ h₁ j
-  exact (stage_iter M θ h₀ h₁ t j (ind_fst_sm x) (ind_bdd _)).trans (stage_split M θ t hK.1 hK.2 x)
+  have hK := StronglyMeasurable_KfAndAll_LeNormKf.of.All_LeNorm.StronglyMeasurable (M := M) h₀ h₁ θ j
+  exact (Integral_Mul.eq.Integral_Mul_Kf.of.All_LeNorm.StronglyMeasurable.All_LeNorm.StronglyMeasurable (M := M) h₀ h₁ (Real.StronglyMeasurable_Eq12 x) (Norm_1.le.One) θ t j).trans (Integral_MulEqS.eq.MulRealPreimageSIntegral.of.All_LeNorm.StronglyMeasurable (M := M) hK.1 hK.2 θ t x)
 
 
 -- created on 2026-10-06

@@ -1,6 +1,5 @@
 import Mathlib.Analysis.RCLike.Sqrt
 import sympy.Basic
-open Complex
 
 
 @[main]

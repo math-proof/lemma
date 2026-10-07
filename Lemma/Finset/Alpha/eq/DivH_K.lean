@@ -1,7 +1,8 @@
 import sympy.concrete.continued_fraction
 import sympy.sets.sets
 import sympy.Basic
-open Continuant
+import Lemma.Finset.Alpha_MapRange.eq.DivHK.of.All_Gt_0
+open Finset Continuant
 
 
 @[main]
@@ -15,7 +16,7 @@ private lemma positive
   alpha ((List.range n).map x) = H x n / K x n := by
 -- proof
   obtain ⟨m, rfl⟩ : ∃ m, n = m + 1 := ⟨n - 1, by omega⟩
-  exact alpha_eq x h m
+  exact Alpha_MapRange.eq.DivHK.of.All_Gt_0 x h m
 
 
 -- created on 2020-09-20

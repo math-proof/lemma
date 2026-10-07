@@ -1,7 +1,8 @@
 import sympy.stats.policy_trajectory.advantage
 import sympy.Basic
 import Lemma.Random.AeNormR.le.Abs_R
-open MeasureTheory ProbabilityTheory Finset Filter Topology PolicyGradient PolicyGradient.Model
+import Lemma.Random.NormW.le.Abs_R
+open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
 
 
 private lemma Vc_bdd [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [Fintype A] (M : Model Θ S A) (θ : Θ) {γ : ℝ} (hγ : γ ∈ Set.Ico 0 1) (x : S) :
@@ -9,7 +10,7 @@ private lemma Vc_bdd [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S
   unfold Model.Vc
   refine tsum_of_norm_bounded ((hasSum_geometric_of_lt_one hγ.1 hγ.2).mul_right _) fun k => ?_
   rw [norm_mul, norm_pow, Real.norm_of_nonneg hγ.1]
-  exact mul_le_mul_of_nonneg_left (W_bdd M θ k x) (pow_nonneg hγ.1 k)
+  exact mul_le_mul_of_nonneg_left (NormW.le.Abs_R (M := M) θ k x) (pow_nonneg hγ.1 k)
 
 /--
 Almost surely every temporal-difference residual `δ[j] = r[j] + γ * Vc(s[j+1]) - Vc(s[j])` is bounded by `deltaBound γ`.
@@ -26,7 +27,7 @@ private lemma main
   ∀ᵐ ω ∂(M θ), ∀ j, ‖r j ω + γ * M.Vc θ γ (s (j + 1) ω) - M.Vc θ γ (s j ω)‖ ≤
     M.deltaBound γ := by
 -- proof
-  filter_upwards [Random.AeNormR.le.Abs_R (M := M) θ] with ω hr j
+  filter_upwards [AeNormR.le.Abs_R (M := M) θ] with ω hr j
   calc _ ≤ ‖r j ω‖ + ‖γ * M.Vc θ γ (s (j + 1) ω)‖ + ‖M.Vc θ γ (s j ω)‖ :=
         (norm_sub_le _ _).trans (by gcongr; exact norm_add_le _ _)
     _ ≤ M.deltaBound γ := by

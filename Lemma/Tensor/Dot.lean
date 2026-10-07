@@ -1,8 +1,12 @@
-import sympy.matrices.confluent_vandermonde
+import Mathlib.Algebra.Group.ForwardDiff
+import Mathlib.Data.Matrix.ColumnRowPartitioned
+import Mathlib.LinearAlgebra.Vandermonde
 import Lemma.Tensor.Dot.eq.SumMul__0
 import torch.Tensor.sum
 import Lemma.Tensor.Sum.of.Eq
-open Tensor
+import Lemma.Matrix.MulOfMulPowOfPowNegChoose.eq.MulOfChooseSumOf
+import Lemma.Matrix.MulOfPowNegChooseOfMulPow.eq.MulOfOfChooseSum
+open Matrix Tensor
 
 
 @[main]
@@ -30,7 +34,7 @@ private lemma vandermonde.col_transform
       ∑ h ∈ Finset.range (d + 1), (d.choose h : ℝ) * (-l) ^ (d - h) * x ^ h * (h : ℝ) ^ ((i : ℤ) - (j : ℕ))) *
     (Matrix.of fun (i : Fin n) (j : Fin (m - d)) => ((j : ℝ) + δ) ^ (i : ℕ) * x ^ (j : ℕ)) := by
 -- proof
-  exact Vandermonde.col_transform
+  exact MulOfMulPowOfPowNegChoose.eq.MulOfChooseSumOf
 
 
 @[main]
@@ -44,7 +48,7 @@ private lemma vandermonde.row_transform
     (Matrix.of fun (i j : Fin n) => ((j : ℕ).choose i : ℝ) *
       ∑ h ∈ Finset.range (d + 1), (d.choose h : ℝ) * (-l) ^ (d - h) * x ^ h * (h : ℝ) ^ ((j : ℤ) - (i : ℕ))) := by
 -- proof
-  exact Vandermonde.row_transform
+  exact MulOfPowNegChooseOfMulPow.eq.MulOfOfChooseSum
 
 
 -- created on 2020-08-16
