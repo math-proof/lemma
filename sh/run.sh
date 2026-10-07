@@ -481,10 +481,13 @@ while read -r file; do
   else
     continue
   fi
-  # Convert file path to module name
+  # Convert file path to module name. run.ps1 replaces the Windows `\`
+  # separator; on Linux the separator is `/`, so that translation alone left
+  # the whole path as a single token (no `.of.` / `.is.` ever matched and
+  # almost no synthetic rows were emitted).
   module="${rel_file#Lemma/}"
-  module="${module//\\/.}"
   module="${module%.lean}"
+  module="${module//\//.}"
   if ! module_included "$module"; then continue; fi
   constructor_order=false
   if [[ $constructor_comment == *"constructor order"* ]]; then
@@ -723,6 +726,10 @@ while read -r file; do
   re_mt='(^|[^[:alnum:].])mt([[:space:]]+([0-9]+))?([^[:alnum:]]|$)'
   while [[ $attr_mt =~ $re_mt ]]; do
     mt_val="${BASH_REMATCH[3]}"
+    # Snapshot the whole match: the `[[ $module =~ ... ]]` below overwrites
+    # BASH_REMATCH, which otherwise makes the removal at the bottom a no-op
+    # and turns this loop into an infinite emitter.
+    mt_match="${BASH_REMATCH[0]}"
     if [[ $module =~ ^([a-zA-Z0-9_]+)\.(.+)\.of\.(.+)$ ]]; then
       section="${BASH_REMATCH[1]}"
       imply=$(Not "${BASH_REMATCH[2]}")
@@ -746,19 +753,20 @@ while read -r file; do
       new_given=$(IFS=. ; echo "${arguments[*]}")
       emit_synthetic "$section.$new_imply.of.$new_given"
     fi
-    attr_mt="${attr_mt/${BASH_REMATCH[0]}/}"
+    attr_mt="${attr_mt/${mt_match}/}"
   done
   # Handle subst N
   attr_subst="$attributes"
   re_subst='subst[[:space:]]+([0-9]+)'
   while [[ $attr_subst =~ $re_subst ]]; do
     b="${BASH_REMATCH[1]}"
+    subst_match="${BASH_REMATCH[0]}"
     if [[ "$module" == *".of."* ]]; then
       emit_synthetic "${module}.Eq_${b}"
     else
       emit_synthetic "${module}.of.Eq_${b}"
     fi
-    attr_subst="${attr_subst/${BASH_REMATCH[0]}/}"
+    attr_subst="${attr_subst/${subst_match}/}"
   done
   # Handle And.left / And.right projections
   if [[ $attributes == *And.left* ]]; then
