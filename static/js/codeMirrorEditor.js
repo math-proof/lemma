@@ -17,6 +17,228 @@ function ensureCodeMirror() {
 	}
 	return window.__cmReady;
 }
+
+/** Dotted lemma path with a capitalised segment (not a local like `h₀` or `μ.bind`). */
+export function isOpenStrippedLemmaName(name) {
+	return /(^|\.)[A-Z]/.test(name);
+}
+
+/**
+ * `open` in the page payload is `[["Random"]]`, sometimes a flat list, sometimes
+ * a JSON string. `open_sections` only spreads values whose `.isArray` flag is set,
+ * so a plain array yields no namespaces and F3 falls through to the DB.
+ */
+export function flattenOpens(open) {
+	var out = [];
+	function pushToken(token) {
+		if (token == null)
+			return;
+		if (Array.isArray(token)) {
+			for (var item of token)
+				pushToken(item);
+			return;
+		}
+		if (typeof token != 'string')
+			return;
+		var text = token.trim();
+		if (!text)
+			return;
+		if (text[0] == '[' || text[0] == '{') {
+			try {
+				pushToken(JSON.parse(text));
+				return;
+			}
+			catch (e) {
+				/* not JSON; treat as a namespace token */
+			}
+		}
+		if (/\s/.test(text)) {
+			for (var part of text.split(/\s+/))
+				pushToken(part);
+			return;
+		}
+		if (text == 'scoped' || text == 'hiding' || text == 'renaming')
+			return;
+		out.push(text);
+	}
+	pushToken(open);
+	var seen = new Set();
+	return out.filter(ns => {
+		if (!ns || seen.has(ns))
+			return false;
+		seen.add(ns);
+		return true;
+	});
+}
+
+/** null unless `result` is a `[table, module]` pair. Destructuring anything else throws. */
+export function moduleLinkTarget(result) {
+	if (!Array.isArray(result) || result.length < 2)
+		return null;
+	if (result[0] == null || result[1] == null || result[1] === '')
+		return null;
+	return [result[0], result[1]];
+}
+
+/**
+ * Dotted lemma under the cursor, including segments to the right of the caret.
+ * F3 used to stop at the current segment, so `GradV.eq.AddSum…` never matched
+ * the imported `…In_Ico` module.
+ */
+export function dottedIdentifierAt(text, ch) {
+	if (text == null)
+		return null;
+	ch = Math.max(0, Math.min(ch == null ? 0 : ch, text.length));
+	var right = text.slice(ch);
+	var wordRest = (right.match(/^[\w'!₀-₉]*/) || [''])[0];
+	var prefix = text.slice(0, ch) + wordRest;
+	var head = prefix.match(/([\w'!₀-₉]+)(?:\.[\w'!₀-₉]+)*$/);
+	if (!head)
+		return null;
+	var afterWord = text.slice(prefix.length);
+	var tail = (afterWord.match(/^(?:\.[\w'!₀-₉]+)*/) || [''])[0];
+	var module = head[0] + tail;
+	if (module.startsWith('.'))
+		return null;
+	return {
+		module,
+		postfix: afterWord.slice(tail.length),
+	};
+}
+
+/** Prefix of `full` when `short` is `full` with that prefix and a dot removed. */
+export function lemmaSuffixPrefix(full, short) {
+	if (!full || !short || full == short)
+		return null;
+	var tail = '.' + short;
+	if (full.endsWith(tail))
+		return full.slice(0, -tail.length);
+	return null;
+}
+
+function lemmaModuleOfImport(imp) {
+	var s = String(imp).trim().split(/\s+/)[0];
+	if (s.startsWith('Lemma.'))
+		return s.slice('Lemma.'.length);
+	return null;
+}
+
+/**
+ * `open Foo` makes `Foo.A.B` legal as `A.B`. If an import is exactly that
+ * full module and `Foo` is opened, return the full module.
+ */
+export function resolveOpenedImport(short, opens, imports) {
+	if (!short || !opens || !opens.length || !imports)
+		return null;
+	var best = null;
+	var bestIdx = -1;
+	for (var imp of imports) {
+		var full = lemmaModuleOfImport(imp);
+		if (!full)
+			continue;
+		var prefix = lemmaSuffixPrefix(full, short);
+		if (!prefix)
+			continue;
+		var idx = opens.lastIndexOf(prefix);
+		if (idx > bestIdx) {
+			bestIdx = idx;
+			best = full;
+		}
+	}
+	return best;
+}
+
+/** `{section, rest, full, ns}` for each opened namespace whose head is a lemma section. */
+export function openNamespaceCandidates(short, opens, isSection) {
+	var out = [];
+	if (!short || !opens)
+		return out;
+	for (var ns of opens) {
+		if (!ns || /[\s()]/.test(ns))
+			continue;
+		var qualified = ns + '.' + short;
+		var m = qualified.match(/^([\w'!₀-₉]+)\.(.+)/);
+		if (isSection && !isSection(m[1]))
+			continue;
+		out.push({
+			ns,
+			section: m[1],
+			rest: m[2],
+			full: qualified,
+		});
+	}
+	return out;
+}
+
+/** Escape every dot so the section-lookup regexp matches a literal module path. */
+export function moduleRegexpBody(variant) {
+	return variant.replace(/\.[a-z][^.]+$/, '').replace(/\./g, '\\.');
+}
+
+/** Latest `open` wins when several opened namespaces contain the same suffix. */
+export function pickLatestOpen(found, opens) {
+	var best = null;
+	var bestIdx = -1;
+	for (var item of found) {
+		var idx = opens.lastIndexOf(item.ns);
+		if (idx > bestIdx) {
+			bestIdx = idx;
+			best = item.full;
+		}
+	}
+	return best;
+}
+
+/**
+ * Qualify `short` from `open` before any axiom.lemma regexp.
+ * `disambiguate(rest, section)` is the filesystem lookup (disambiguate.php).
+ * A miss is null, never undefined.
+ */
+export async function qualifyOpenedModule(short, opens, imports, disambiguate, isSection) {
+	if (!isOpenStrippedLemmaName(short))
+		return null;
+	opens = flattenOpens(opens);
+	if (!opens.length)
+		return null;
+	var imported = resolveOpenedImport(short, opens, imports || []);
+	if (imported)
+		return imported;
+	var candidates = openNamespaceCandidates(short, opens, isSection || null);
+	if (!candidates.length && isSection)
+		candidates = openNamespaceCandidates(short, opens, null);
+	if (!candidates.length)
+		return null;
+	var found = [];
+	await Promise.all(candidates.map(async c => {
+		try {
+			var section = await disambiguate(c.rest, c.section);
+			section = section == null ? '' : String(section).trim();
+			if (section == c.section)
+				found.push(c);
+		}
+		catch (e) {
+			console.log(e);
+		}
+	}));
+	return pickLatestOpen(found, opens);
+}
+
+/**
+ * Section names from the axiom.lemma regexp query.
+ * A failed execute is `0` or missing; an empty hit is `[]`. Always an array.
+ */
+export function regexpSectionNames(rows) {
+	if (!Array.isArray(rows))
+		return [];
+	var section = [];
+	for (var row of rows) {
+		var name = Array.isArray(row) ? row[0] : row;
+		if (name != null && name !== '')
+			section.push(String(name));
+	}
+	return [...new Set(section)];
+}
+
 export function cmComputedUser() {
 	return axiom_user();
 }
@@ -60,25 +282,43 @@ from
 where 
   name ${op} "${module}"`;
 			var list = await form_post(`php/request/execute.php`, {sql});
-			return list.length;
+			return Array.isArray(list) && list.length > 0;
+		}
+
+		function knownSection(name) {
+			try {
+				var re = self.regexp_section;
+				if (!re || name == null)
+					return false;
+				return !!String(name).fullmatch(re);
+			}
+			catch (e) {
+				return false;
+			}
 		}
 
 		async function F3(cm, refresh) {
-		    var cursor = cm.getCursor();
-		    var text = cm.getLine(cursor.line);
-			var prefix = text.slice(0, cursor.ch) + text.slice(cursor.ch).match(/^[\w'!₀-₉]*/)[0];
-			var postfix = text.slice(prefix.length);
-		    var m = prefix.match(/([\w'!₀-₉]+)(?:\.[\w'!₀-₉]+)*$/);
-		    var module = m[0];
-			m = module.match(/^Lemma\.(.+)/);
-			if (m)
-				module = m[1];
-			var [table, module] = await get_table_of_module(module, postfix);
-			var url = `?${table}=${module}`;
-			if (refresh)
-				location.href = url;
-			else
-				window.open(url);
+			try {
+				var cursor = cm.getCursor();
+				var hit = dottedIdentifierAt(cm.getLine(cursor.line), cursor.ch);
+				if (!hit)
+					return;
+				var module = hit.module;
+				var lemma = module.match(/^Lemma\.(.+)/);
+				if (lemma)
+					module = lemma[1];
+				var target = moduleLinkTarget(await get_table_of_module(module, hit.postfix));
+				if (!target)
+					return;
+				var url = `?${target[0]}=${target[1]}`;
+				if (refresh)
+					location.href = url;
+				else
+					window.open(url);
+			}
+			catch (e) {
+				console.log(e);
+			}
 		}
 
 		function *yield_modules(module) {
@@ -88,80 +328,200 @@ where
 				yield m[1] + '.as.' + m[2] + m[3];
 		}
 
-		async function get_table_of_module(module, postfix) {
-			var symbol = null;
-			var table = 'module';
-			if (module.indexOf('.') < 0) {
-				if (!module.fullmatch(self.regexp_section)) {
-					var symbol = module;
-					module = await disambiguate_module(symbol);
-					if (module == null){
-						if (await select_mathlib(symbol.replace('.', '\\.'), 'regexp'))
-							return ['mathlib', symbol];
-						module = self.module.split(/[./]/)[0] + '.' + symbol;
-					}
-					m = postfix.match(/\.([\w'!₀-₉]+)/);
-					symbol = m? m[1]: null;
+		function safeGet(node, key) {
+			try {
+				return node == null ? undefined : node[key];
+			}
+			catch (e) {
+				return undefined;
+			}
+		}
+
+		function pushList(into, value) {
+			if (value == null)
+				return;
+			if (typeof value == 'string') {
+				try {
+					value = JSON.parse(value);
+				}
+				catch (e) {
+					into.push(value);
+					return;
 				}
 			}
-			else {
-				m = module.match(/^([\w'!₀-₉]+)\.(.+)/);
-				if (m[1].fullmatch(self.regexp_section)) {
-					if (!await form_post('php/request/disambiguate.php', {module: m[2]}))
-						table = (await select_mathlib(module))? 'mathlib': 'module';
-				}
-				else{
-					if (await select_mathlib(module))
-						table = 'mathlib';
-					else {
-						for (var module of yield_modules(module)) {
-							var char = postfix.match(/^\.[A-Z]/)? '\\.': '$|\\.';
-							var regexp = `^([\\w''!₀-₉]+)\\.${module.replace(/\.[a-z][^.]+$/, '').replace('.', '\\.')}(?=${char})`;
-							var regexp_mysql = regexp.replace(/\\/g, "\\\\");
-							var sql = `
+			if (Array.isArray(value))
+				into.push(...value);
+		}
+
+		/** Opens and imports from the Vue parent chain and the hidden form fields. */
+		function collectOpenContext() {
+			var opens = [];
+			var imports = [];
+			var node = self;
+			var guard = 0;
+			while (node && guard++ < 12) {
+				opens.push(...flattenOpens(safeGet(node, 'open')));
+				opens.push(...flattenOpens(safeGet(node, 'open_sections')));
+				opens.push(...flattenOpens(safeGet(node, 'open_lemma_sections')));
+				pushList(imports, safeGet(node, 'imports'));
+				node = safeGet(node, '$parent');
+			}
+			if (typeof document != 'undefined') {
+				var openInput = document.querySelector('input[name=open]');
+				var importInput = document.querySelector('input[name=imports]');
+				if (openInput)
+					opens.push(...flattenOpens(openInput.value));
+				if (importInput)
+					pushList(imports, importInput.value);
+			}
+			return {
+				opens: flattenOpens(opens),
+				imports,
+			};
+		}
+
+		// `open Foo` drops the `Foo.` prefix, so the name does not start with a
+		// lemma section and the fully-qualified filesystem lookup never runs.
+		async function qualifyByOpen(short) {
+			var ctx = collectOpenContext();
+			return qualifyOpenedModule(
+				short,
+				ctx.opens,
+				ctx.imports,
+				(rest, section) => form_post('php/request/disambiguate.php', {
+					module: rest,
+					section,
+				}),
+				name => knownSection(name),
+			);
+		}
+
+		async function sectionByRegexp(variant, postfix) {
+			postfix = postfix || '';
+			var char = postfix.match(/^\.[A-Z]/)? '\\.': '$|\\.';
+			var body = moduleRegexpBody(variant);
+			var regexp = `^([\\w''!₀-₉]+)\\.${body}(?=${char})`;
+			var regexp_mysql = regexp.replace(/\\/g, "\\\\");
+			var sql = `
 select 
 	regexp_replace(module, "${regexp_mysql}.*", '$1')
 from 
 	axiom.lemma
 where 
 	module regexp "${regexp_mysql}"`;
-							console.log('sql =', sql);
-							var section = await form_post(`php/request/execute.php`, {sql});
-							section = section.map(s => s[0]);
-							section = [...new Set(section)];
-							if (section.length > 1) {
-								var root = self.$parent.$parent;
-								var sectionIntersect = section.array_intersect(root.open_sections);
-								if (sectionIntersect.length) {
-									section = sectionIntersect;
-									if (section.length > 1) {
-										regexp = new RegExp(regexp);
-										for (var $import of root.imports) {
-											var m = $import.match(/^Lemma\.(.+)/);
-											if (m) {
-												m = m[1].match(regexp);
-												if (m) {
-													if (section.includes(m[1])) {
-														section = [m[1]];
-														break;
-													}
-												}
-											}
-										}
+			console.log('sql =', sql);
+			var section = regexpSectionNames(await form_post(`php/request/execute.php`, {sql}));
+			if (!section.length)
+				return null;
+			if (section.length > 1) {
+				var opened = collectOpenContext().opens;
+				var sectionIntersect = section.array_intersect(opened);
+				if (sectionIntersect.length) {
+					section = sectionIntersect;
+					if (section.length > 1) {
+						regexp = new RegExp(regexp);
+						for (var $import of collectOpenContext().imports) {
+							var m = String($import).match(/^Lemma\.(.+)/);
+							if (m) {
+								m = m[1].match(regexp);
+								if (m) {
+									if (section.includes(m[1])) {
+										section = [m[1]];
+										break;
 									}
 								}
 							}
-							[section] = section;
-							if (section) break;
 						}
-						if (!section) return;
-						module = section + '.' + module;
 					}
+				}
+			}
+			return section[0] || null;
+		}
+
+		async function get_table_of_module(module, postfix) {
+			if (module == null || module === '')
+				return null;
+			var symbol = null;
+			var table = 'module';
+			var m;
+			if (module.indexOf('.') < 0) {
+				if (!knownSection(module)) {
+					var symbol = module;
+					var qualified = await qualifyByOpen(symbol);
+					if (qualified)
+						module = qualified;
+					else {
+						module = await disambiguate_module(symbol);
+						if (module == null){
+							var inMathlib = false;
+							try {
+								inMathlib = await select_mathlib(symbol.replace('.', '\\.'), 'regexp');
+							}
+							catch (e) {
+								console.log(e);
+							}
+							if (inMathlib)
+								return moduleLinkTarget(['mathlib', symbol]);
+							module = self.module.split(/[./]/)[0] + '.' + symbol;
+						}
+					}
+					m = postfix && postfix.match(/\.([\w'!₀-₉]+)/);
+					symbol = m? m[1]: null;
+				}
+			}
+			else {
+				m = module.match(/^([\w'!₀-₉]+)\.(.+)/);
+				if (!m)
+					return null;
+				if (knownSection(m[1])) {
+					if (!await form_post('php/request/disambiguate.php', {module: m[2]})) {
+						var inMathlib = false;
+						try {
+							inMathlib = await select_mathlib(module);
+						}
+						catch (e) {
+							console.log(e);
+						}
+						table = inMathlib ? 'mathlib' : 'module';
+					}
+				}
+				else{
+					var resolved = null;
+					for (var variant of yield_modules(module)) {
+						try {
+							resolved = await qualifyByOpen(variant);
+							if (resolved)
+								break;
+							var inMathlib = false;
+							try {
+								inMathlib = await select_mathlib(variant);
+							}
+							catch (e) {
+								console.log(e);
+							}
+							if (inMathlib) {
+								table = 'mathlib';
+								resolved = variant;
+								break;
+							}
+							var section = await sectionByRegexp(variant, postfix);
+							if (section) {
+								resolved = section + '.' + variant;
+								break;
+							}
+						}
+						catch (e) {
+							console.log(e);
+						}
+					}
+					if (!resolved)
+						return null;
+					module = resolved;
 				}
 			}
 			if (symbol)
 				module += `#${symbol}`;
-			return [table, module];
+			return moduleLinkTarget([table, module]);
 		}
 
 		function open(cm, pair) {
@@ -778,6 +1138,15 @@ where name REGEXP '^[\\\\p{Script=Greek}a-zA-Z][0-9]$'`;
 			let target = e.target;
 			if (!target.classList.contains('cm-variable') && !target.classList.contains('cm-property') || target.title)
 				return;
+			try {
+			await hoverLink(target);
+			}
+			catch (err) {
+				console.log(err);
+			}
+		});
+
+		async function hoverLink(target) {
 			var parentElement = target.parentElement;
 			// Build the URL based on the text content
 			let tokens = [];
@@ -809,16 +1178,15 @@ where name REGEXP '^[\\\\p{Script=Greek}a-zA-Z][0-9]$'`;
 				} else
 					return;
 			}
-			var args = await get_table_of_module(tokens.join('.'), '');
-			if (!args)
+			var link = moduleLinkTarget(await get_table_of_module(tokens.join('.'), ''));
+			if (!link)
 				return;
-			var [table, module] = args;
-			var url = "Ctrl+Click or F3👉\n" + location.origin + location.pathname + `?${table}=${module}`;
+			var url = "Ctrl+Click or F3👉\n" + location.origin + location.pathname + `?${link[0]}=${link[1]}`;
 			for (let sibling of siblings)
 				sibling.title = url;
 			// the title is not shown up immediately, so we replace the target element to force the browser to refresh the tooltip
 			target.replaceWith(target);
-		});
+		}
 
         if (this.hash){
         	var line = null, col = 4;

@@ -9,15 +9,21 @@ import { REPO_ROOT } from './modulePath.mjs';
 import { listLemmaTopLevelDirs } from './lemmaSections.mjs';
 
 function existsAsFileOrLean(base) {
-  if (fs.existsSync(base)) {
+  // A namespace directory (`Set/In_Ico/`) must not hide the sibling module file `Set/In_Ico.lean`.
+  const lean = `${base}.lean`;
+  if (fs.existsSync(lean)) {
     try {
-      return fs.statSync(base).isFile();
+      if (fs.statSync(lean).isFile()) return true;
     } catch {
-      return false;
+      /* keep checking the unsuffixed path */
     }
   }
-  const lean = `${base}.lean`;
-  return fs.existsSync(lean) && fs.statSync(lean).isFile();
+  if (!fs.existsSync(base)) return false;
+  try {
+    return fs.statSync(base).isFile();
+  } catch {
+    return false;
+  }
 }
 
 function findSectionForSlashPath(sectionDirs, slashPath) {
@@ -31,33 +37,38 @@ function findSectionForSlashPath(sectionDirs, slashPath) {
   return null;
 }
 
-export function handleDisambiguate(req, res) {
-  const moduleInput = (req.body?.module ?? '').toString().trim();
-  if (!moduleInput) {
-    res.type('text/plain').send('');
-    return;
+/**
+ * @param {string} moduleInput dotted path under a section (`GradV.eq.….In_Ico`)
+ * @param {string} [onlySection] when set, succeed only if the file is in that section
+ * @returns {string} section name, or `''`
+ */
+export function disambiguateModule(moduleInput, onlySection = '') {
+  const moduleName = (moduleInput ?? '').toString().trim();
+  if (!moduleName) return '';
+
+  let sectionDirs = listLemmaTopLevelDirs();
+  const only = (onlySection ?? '').toString().trim();
+  if (only) {
+    if (!sectionDirs.includes(only)) return '';
+    sectionDirs = [only];
   }
 
-  const sectionDirs = listLemmaTopLevelDirs();
   // PHP: "/" . str_replace('.', '/', $module)
-  let slashPath = `/${moduleInput.replace(/\./g, '/')}`;
+  let slashPath = `/${moduleName.replace(/\./g, '/')}`;
 
   let found = findSectionForSlashPath(sectionDirs, slashPath);
-  if (found) {
-    res.type('text/plain').send(found);
-    return;
-  }
+  if (found) return found;
 
   // PHP: if (preg_match("#(.+)/[a-z]+$#", $module, $m)) { $module = $m[1]; try_to_die($module); }
   const m = slashPath.match(/^(.+)\/([a-z]+)$/);
   if (m) {
-    slashPath = m[1];
-    found = findSectionForSlashPath(sectionDirs, slashPath);
-    if (found) {
-      res.type('text/plain').send(found);
-      return;
-    }
+    found = findSectionForSlashPath(sectionDirs, m[1]);
+    if (found) return found;
   }
+  return '';
+}
 
-  res.type('text/plain').send('');
+export function handleDisambiguate(req, res) {
+  const found = disambiguateModule(req.body?.module, req.body?.section);
+  res.type('text/plain').send(found);
 }

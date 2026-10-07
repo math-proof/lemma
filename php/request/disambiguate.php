@@ -4,6 +4,13 @@ require_once '../parser/lean.php';
 $module = $_POST['module'];
 $root = dirname(dirname(dirname(__FILE__))) . "/Lemma/";
 $sections = std\listdir($root);
+// Optional: only accept a hit under this opened top-level section.
+$only = $_POST['section'] ?? '';
+if ($only !== '') {
+    if (!in_array($only, $sections, true))
+        exit;
+    $sections = [$only];
+}
 $module = "/" . str_replace('.', '/', $module);
 
 function try_to_die($module) {

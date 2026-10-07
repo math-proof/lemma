@@ -41,6 +41,7 @@ import lemma from "./lemma.vue"
 import preamble from "./preamble.vue"
 import Vue from "../js/vue.js";
 import { mounted, click_left as clickLeftDocument, fetch_lemma } from "../js/lemma.js";
+import { flattenOpens } from "../js/codeMirrorEditor.js";
 import { tactics } from "../codemirror/mode/lean/tactics.js";
 
 console.log("import render.vue");
@@ -345,12 +346,7 @@ const self = new Vue({
         },
 
         open_sections() {
-            var sections = [];
-            for (var open of this.open) {
-                if (open.isArray)
-                    sections.push(...open);
-            }
-            return sections;
+            return flattenOpens(this.open);
         },
 
         theorem() {
