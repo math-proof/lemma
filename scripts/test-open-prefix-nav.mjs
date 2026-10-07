@@ -8,11 +8,16 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { disambiguateModule } from '../server/lean/disambiguate.mjs';
 import {
+	dottedIdentifierAt,
+	flattenOpens,
 	isOpenStrippedLemmaName,
 	lemmaSuffixPrefix,
+	moduleLinkTarget,
 	moduleRegexpBody,
 	openNamespaceCandidates,
 	pickLatestOpen,
+	qualifyOpenedModule,
+	regexpSectionNames,
 	resolveOpenedImport,
 } from '../static/js/codeMirrorEditor.js';
 
@@ -58,6 +63,88 @@ function headIsSection(name) {
 const gradShort = 'GradV.eq.AddSum_SMulSMul.of.Ne0Real_Preimage.GtInftySup.All_Differentiable_Prob.In_Ico';
 const gradFull = `Random.${gradShort}`;
 
+function f3Url(lookupResult) {
+	const target = moduleLinkTarget(lookupResult);
+	if (!target)
+		return null;
+	return `?${target[0]}=${target[1]}`;
+}
+
+for (const miss of [undefined, null, 0, '', [], {}, 'Random.GradV'])
+	assert.equal(f3Url(miss), null);
+assert.equal(f3Url(['module', gradFull]), `?module=${gradFull}`);
+
+// axiom.lemma regexp miss used to `return;` (undefined). Destructuring that throws.
+for (const rows of [undefined, null, 0, '', [], {}])
+	assert.deepEqual(regexpSectionNames(rows), []);
+assert.deepEqual(regexpSectionNames([['Random'], ['Random'], ['']]), ['Random']);
+assert.throws(() => {
+	var [table, module] = undefined;
+	return table + module;
+}, TypeError);
+for (const rows of [undefined, null, 0, []]) {
+	const names = regexpSectionNames(rows);
+	const lookup = names.length ? ['module', `${names[0]}.${gradShort}`] : null;
+	assert.equal(f3Url(lookup), null);
+}
+
+assert.deepEqual(flattenOpens([['Random']]), ['Random']);
+assert.deepEqual(flattenOpens(['Random']), ['Random']);
+assert.deepEqual(flattenOpens('[["Filter","Random"]]'), ['Filter', 'Random']);
+assert.deepEqual(flattenOpens([['scoped', 'RealInnerProductSpace'], ['Random']]), ['RealInnerProductSpace', 'Random']);
+
+const line = `rw [${gradShort} h₀ h₃ h₄ h₅]`;
+const mid = line.indexOf('AddSum') + 2;
+const atMiddle = dottedIdentifierAt(line, mid);
+assert.equal(atMiddle.module, gradShort);
+assert.ok(atMiddle.postfix.startsWith(' '));
+const atEnd = dottedIdentifierAt(line, line.indexOf('In_Ico') + 3);
+assert.equal(atEnd.module, gradShort);
+
+assert.equal(
+	resolveOpenedImport(gradShort, flattenOpens([['Random']]), [`Lemma.${gradFull}`]),
+	gradFull,
+);
+
+let disambiguateCalls = 0;
+assert.equal(
+	await qualifyOpenedModule(
+		gradShort,
+		'[["Random"]]',
+		[`Lemma.${gradFull}`],
+		() => {
+			disambiguateCalls++;
+			return '';
+		},
+		() => false,
+	),
+	gradFull,
+);
+assert.equal(disambiguateCalls, 0);
+
+let sqlHits = 0;
+assert.equal(
+	await qualifyOpenedModule(
+		gradShort,
+		[['Random']],
+		[],
+		(rest, section) => {
+			assert.equal(section, 'Random');
+			assert.equal(rest, gradShort);
+			return 'Random';
+		},
+		() => false,
+	),
+	gradFull,
+);
+assert.equal(sqlHits, 0);
+assert.equal(f3Url(['module', gradFull]), `?module=${gradFull}`);
+
+assert.equal(
+	await qualifyOpenedModule(gradShort, ['Random'], [], () => '', (name) => name === 'Random'),
+	null,
+);
+
 assert.equal(isOpenStrippedLemmaName('h₀'), false);
 assert.equal(isOpenStrippedLemmaName('μ.bind'), false);
 assert.equal(isOpenStrippedLemmaName(gradShort), true);
@@ -92,6 +179,16 @@ assert.equal(headIsSection(`Random.${summableShort}`), true);
 assert.equal(headIsSection(summableShort), false);
 assert.equal(resolveShort(summableShort, tendsto.opens, tendsto.imports), `Random.${summableShort}`);
 assert.equal(resolveShort(summableShort, tendsto.opens, []), `Random.${summableShort}`);
+assert.equal(
+	await qualifyOpenedModule(
+		summableShort,
+		tendsto.opens,
+		[],
+		(rest, section) => disambiguateModule(rest, section),
+		() => false,
+	),
+	`Random.${summableShort}`,
+);
 
 const eq0 = 'Eq_0.of.Tendsto.Summable_Mul.All_Ge_0.TendstoSum.All_Gt_0';
 assert.equal(resolveShort(eq0, tendsto.opens, tendsto.imports), `Real.${eq0}`);
