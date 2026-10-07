@@ -1,0 +1,110 @@
+from util import *
+
+
+@apply
+def apply(eq, V_def, lt_dV, lt_V):
+    from Lemma.Random.Eq_Expect.Eq_Expect.Eq_Expect.of.All_Eq_Expect.All_Eq_Expect.In_Ico import extract_QVA
+    s, a, r, [π], γ, t, V_st_var = extract_QVA(eq, None, V_def, None, lt_dV)
+
+    S[V_st_var], [S[s[t].bvar]], [S[t]] = lt_V.of(Sup[Abs] < Infinity)
+
+    At = γ ** Stack[t](t) @ (r[t:] + γ * V_st_var._subs(s[t].bvar, s[t + 1:]) - V_st_var._subs(s[t].bvar, s[t:]))
+    return Equal(γ ** Stack[t](t) @ Derivative[π](Expectation[r, a:π](r)),
+                 γ ** Stack[t](t) @ Stack[t](Expectation[r, a:π, s](Derivative[π](log(Pr[a:π](a[t].random_argument | s[t].random_argument))) * At)))
+
+
+@prove
+def prove(Eq):
+    from Lemma import Real, Random, Tensor, Bool, Finset, Nat
+
+    b, D = Symbol(integer=True, positive=True)
+    s = Symbol(shape=(oo, b), real=True, random=True) # states / observation
+    a = Symbol(shape=(oo,), integer=True, random=True) # actions
+    r = Symbol(shape=(oo,), real=True, random=True) # rewards
+    π = Symbol(shape=(D,), real=True) # trainable weights for the agent
+    t = Symbol(integer=True) # time step counter
+    V = Function(real=True, shape=property(lambda self: self.arg.shape[:-1])) # State-Value Function
+    γ = Symbol(domain=Interval(0, 1, right_open=True)) # Discount factor: penalty to uncertainty of future rewards; myopic for γ = 0; and far-sighted for γ = 1
+    *Eq[-4:], Eq.hypothesis = apply(Equal(r[t] | s[:t] & a[:t], r[t]), # history-irrelevant conditional independence assumption for rewards based on states and actions
+                Equal((V[π] ^ γ)(s[t].bvar), γ ** Stack[t](t) @ Expectation[r[t:], a:π](r[t:] | s[t])),
+                Less(Sup[s[t].bvar, t](Abs(Derivative[π]((V[π] ^ γ)(s[t].bvar)))), oo),
+                Less(Sup[s[t].bvar, t](Abs((V[π] ^ γ)(s[t].bvar))), oo))
+
+    Eq.eq_matmul = Eq.hypothesis.find(Expectation, MatMul)._subs(s, s.bvar)._subs(r, r.bvar).this.apply(Tensor.Dot.eq.Sum_MulGetS)
+
+    k = Symbol(integer=True) # time step counter
+    Eq << Eq.eq_matmul.rhs._subs(oo, k).this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
+
+    Eq << Eq[-1].this.rhs.find(Symbol * Pow).args[:2].apply(Real.MulPowS.eq.Pow_Add.of.Gt_0)
+
+    Eq << Eq[-1].this.rhs.apply(Finset.Sum_Add.eq.AddSumS)
+
+    Eq << Eq[-1].this.rhs(t).find(Max).simplify()
+
+    Eq << Real.EqLim.of.Eq.apply(Eq[-1], (k, oo))
+
+    Eq << Eq[-1].this.rhs.find(Limit).apply(Real.Lim.eq.Add)
+
+    Eq.limit = Eq[-1].this.find(Limit[Sum]).simplify()
+
+    Eq << Real.All_Le_Sup.apply(Eq[3].lhs)
+
+    Eq << Eq[-1].subs(t, t + k)
+
+    Eq << Bool.All.of.Cond.apply(Eq[-1], k, simplify=None)
+
+    Eq << Real.LeSup.of.All_Le.apply(Eq[-1])
+
+    Eq << Nat.Lt.of.Le.Lt.apply(Eq[-1], Eq[3])
+
+    Eq << Less(Abs(γ, evaluate=False), 1, plausible=True)
+
+    Eq << Eq[-1].this.lhs.doit()
+
+    Eq << Real.Eq_0.Lim.of.LtAbs.GtInftySup.apply(Eq[-2], Eq[-1])
+
+    Eq << Eq.limit.subs(Eq[-1])
+
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq.eq_matmul, Eq[-1])
+
+    Eq << Eq[-1].this.find(Sum).apply(Tensor.Sum.eq.Dot)
+
+    Eq << Eq[-1].this.rhs.find(Stack).apply(Tensor.Stack_PowGetS.eq.Pow)
+
+    Eq << Eq[-1].this.rhs.find(Stack).limits_subs(Eq[-1].rhs.find(Stack).variable, t)
+
+    Eq << Eq[-1].subs(s.bvar, s).subs(r.bvar, r)
+
+    Eq << Eq.hypothesis.subs(Eq[-1])
+
+    Eq << Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
+
+    Eq << Eq[-1].this.find(Expectation[Add]).apply(Random.Expect_Add.eq.AddExpectS)
+
+    Eq << Eq[-1].this.rhs.find(Expectation).apply(Random.Expect_Mul.eq.Mul_Expect)
+
+    Eq << Eq[-1].find(-~Expectation).this.apply(Random.Expect.law_of_iterated_expectation, s[t])
+
+    Eq << Eq[-1].this.find(Expectation[~Expectation]).apply(Random.Expect_Mul.eq.Mul_Expect)
+
+    Eq << Eq[-1].this.find(Mul[~Expectation]).apply(Random.Expect_ConditionedGrad_LogProb.eq.Zero)
+
+    Eq << Eq[-4].subs(Eq[-1])
+
+    Eq << Eq[2].subs(Eq[1])
+
+    Eq << Eq[-1].this.find(Derivative).apply(Real.Grad.Dot.eq.Dot.Grad)
+
+    Eq << Tensor.Eq.Dot.Grad.Expect.of.Eq_Conditioned.GtInftySup.policy_gradient_theorem.apply(Eq[0], Eq[-1])
+
+    Eq << Eq[-1].this.rhs.find(Expectation).simplify()
+
+    # https://arxiv.org/pdf/1506.02438.pdf#page=4
+
+
+
+
+if __name__ == '__main__':
+    run()
+# created on 2023-04-13
+# updated on 2026-09-06

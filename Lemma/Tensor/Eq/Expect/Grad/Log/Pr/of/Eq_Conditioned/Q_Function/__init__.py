@@ -38,7 +38,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Expectation[Conditioned[ReducedSum]]).apply(Random.Expect.ReducedSum.eq.ReducedSum.Expect)
 
-    Eq << Random.EqConditioned.of.Eq_Conditioned.independence_assumption.bidirectional.forget_histories.apply(Eq[0])
+    Eq << Random.CondIndep.of.All_CondIndep.All_Measurable.forget_history.apply(Eq[0])
 
     Eq << Eq[-2].subs(Eq[-1])
 

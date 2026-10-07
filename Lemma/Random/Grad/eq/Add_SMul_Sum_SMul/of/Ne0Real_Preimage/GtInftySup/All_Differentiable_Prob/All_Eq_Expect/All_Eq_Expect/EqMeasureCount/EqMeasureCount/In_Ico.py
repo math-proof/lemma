@@ -68,7 +68,7 @@ def prove(Eq):
     Eq.eq_grad = Eq[-1].this.find(Mul[~Sum]).apply(Finset.Sum.limits.separate)
     Eq << Rat.Ne_0.of.Div1.gt.Zero.apply(Eq[0]).subs(t, t + 1)
     Eq << Random.Ne_0.of.Ne_0.joint_slice.apply(Eq[-1], [-1, -1])
-    Eq << Random.Cond.Prob.of.Cond.weighted.apply(Eq[-1], (a, π))
+    Eq << Random.All_NeProb_0.of.All_Ne0ProbJoint.weighted.apply(Eq[-1], (a, π))
     Eq << Random.All_EqProbCondJoint.apply(Eq[-1], s[t + 1], a[t])
     Eq << Eq.eq_grad.subs(Eq[-1].reversed)
     Eq << Eq[-1].this.find(Sum[Pr]).apply(Random.Sum.eq.Prob)

@@ -1,2 +1,2 @@
 from . import Eq_Expect
-from . import IsFinite
+from . import GtInftySup

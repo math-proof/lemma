@@ -1,3 +1,3 @@
-from . import Dot
-from . import Transpose
 from . import Tensor
+from . import Transpose
+from . import Dot

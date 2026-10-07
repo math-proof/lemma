@@ -1,1 +1,1 @@
-from . import IsFinite
+from . import GtInftySup

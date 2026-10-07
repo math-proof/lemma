@@ -1,0 +1,60 @@
+from util import *
+
+
+@apply
+def apply(lt, is_finite):
+    γ = lt.of(Abs < 1)
+    fk, (k, *cond) = is_finite.of(Sup[Abs] < Infinity)
+    if cond:
+        S[0], S[oo] = cond
+    assert k.is_integer
+    return Element(Sum[k:oo](γ ** k * fk), Interval(-oo, oo))
+
+
+
+@prove
+def prove(Eq):
+    from Lemma import Set, Bool, Finset, Int
+
+    r = Symbol(shape=(oo,), real=True)
+    γ = Symbol(real=True)
+    k = Symbol(integer=True)
+    Eq << apply(Abs(γ) < 1, Less(Sup[k:oo](Abs(r[k])), oo))
+
+    Eq.gt_zero, Eq.le_zero = Bool.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=γ > 0)
+
+    Eq.lt_zero, Eq.is_zero = Bool.Imp.given.ImpAnd.ImpAnd_Not.apply(Eq.le_zero, cond=γ < 0)
+
+    Eq << Bool.Imp.given.ImpEq.apply(Eq.is_zero)
+
+    Eq << Eq[-1].this.find(Sum).apply(Finset.SumIco.eq.Add_SumIco.of.Lt)
+
+    Eq << Eq[-1].this.find(Sum)().expr.simplify()
+
+    Eq << Bool.And_Imp.given.And_ImpAnd.apply(Eq[0], Eq.gt_zero)
+
+    Eq << Eq[-1].this.find(And[~Less]).apply(Int.Lt.of.LtAbs)
+
+    Eq << Eq[-1].this.lhs.apply(Set.In.Icc.of.Lt.Gt)
+
+    Eq << Bool.And_Imp.given.And_ImpAnd.apply(Eq[1], Eq[-1])
+
+    Eq << Eq[-1].this.lhs.apply(Set.IsReal.Sum.of.In_Icc.GtInftySup, simplify=None)
+
+    Eq << Bool.And_Imp.given.And_ImpAnd.apply(Eq[0], Eq.lt_zero)
+
+    Eq << Eq[-1].this.find(Abs < 1).apply(Int.Gt.of.LtAbs)
+
+    Eq << Eq[-1].this.lhs.apply(Set.In.Icc.of.Lt.Gt)
+
+    Eq << Bool.And_Imp.given.And_ImpAnd.apply(Eq[1], Eq[-1])
+
+    Eq << Eq[-1].this.lhs.apply(Set.IsReal.Sum.of.In_Icc.GtInftySup.negative, simplify=None)
+
+
+
+
+if __name__ == '__main__':
+    run()
+# created on 2023-04-16
+# updated on 2023-05-15

@@ -28,7 +28,6 @@ from . import GeKL
 from . import Inf
 from . import Le
 from . import All
-from . import Cond
 from . import EqMul
 from . import Ge
 from . import Lim
@@ -75,3 +74,5 @@ from . import ProbJoint
 from . import All_Eq_AddLogSumExpAdd
 from . import All_Eq_Add_MaxAdd
 from . import Eq_Expect
+from . import GradVk
+from . import CondIndep
