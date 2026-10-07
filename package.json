@@ -8,6 +8,7 @@
     "start": "node server/app.mjs",
     "node": "node server/app.mjs",
     "test:lean": "node scripts/test-lean-parser.mjs",
+    "test:nav": "node scripts/test-open-prefix-nav.mjs",
     "test:lean:scan": "node scripts/test-lean-parser.mjs --scan-lemma"
   },
   "dependencies": {

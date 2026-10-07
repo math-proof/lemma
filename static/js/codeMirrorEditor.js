@@ -17,6 +17,95 @@ function ensureCodeMirror() {
 	}
 	return window.__cmReady;
 }
+
+/** Dotted lemma path with a capitalised segment (not a local like `h₀` or `μ.bind`). */
+export function isOpenStrippedLemmaName(name) {
+	return /(^|\.)[A-Z]/.test(name);
+}
+
+/** Prefix of `full` when `short` is `full` with that prefix and a dot removed. */
+export function lemmaSuffixPrefix(full, short) {
+	if (!full || !short || full == short)
+		return null;
+	var tail = '.' + short;
+	if (full.endsWith(tail))
+		return full.slice(0, -tail.length);
+	return null;
+}
+
+function lemmaModuleOfImport(imp) {
+	var s = String(imp).trim().split(/\s+/)[0];
+	if (s.startsWith('Lemma.'))
+		return s.slice('Lemma.'.length);
+	return null;
+}
+
+/**
+ * `open Foo` makes `Foo.A.B` legal as `A.B`. If an import is exactly that
+ * full module and `Foo` is opened, return the full module.
+ */
+export function resolveOpenedImport(short, opens, imports) {
+	if (!short || !opens || !opens.length || !imports)
+		return null;
+	var best = null;
+	var bestIdx = -1;
+	for (var imp of imports) {
+		var full = lemmaModuleOfImport(imp);
+		if (!full)
+			continue;
+		var prefix = lemmaSuffixPrefix(full, short);
+		if (!prefix)
+			continue;
+		var idx = opens.lastIndexOf(prefix);
+		if (idx > bestIdx) {
+			bestIdx = idx;
+			best = full;
+		}
+	}
+	return best;
+}
+
+/** `{section, rest, full, ns}` for each opened namespace whose head is a lemma section. */
+export function openNamespaceCandidates(short, opens, isSection) {
+	var out = [];
+	if (!short || !opens)
+		return out;
+	for (var ns of opens) {
+		if (!ns || /[\s()]/.test(ns))
+			continue;
+		var qualified = ns + '.' + short;
+		var m = qualified.match(/^([\w'!₀-₉]+)\.(.+)/);
+		if (!m || !isSection(m[1]))
+			continue;
+		out.push({
+			ns,
+			section: m[1],
+			rest: m[2],
+			full: qualified,
+		});
+	}
+	return out;
+}
+
+/** Escape every dot so the section-lookup regexp matches a literal module path. */
+export function moduleRegexpBody(variant) {
+	return variant.replace(/\.[a-z][^.]+$/, '').replace(/\./g, '\\.');
+}
+
+/** Latest `open` wins when several opened namespaces contain the same suffix. */
+export function pickLatestOpen(found, opens) {
+	var best = null;
+	var bestIdx = -1;
+	for (var item of found) {
+		var idx = opens.lastIndexOf(item.ns);
+		if (idx > bestIdx) {
+			bestIdx = idx;
+			best = item.full;
+		}
+	}
+	return best;
+}
+
 export function cmComputedUser() {
 	return axiom_user();
 }
@@ -73,7 +162,10 @@ where
 			m = module.match(/^Lemma\.(.+)/);
 			if (m)
 				module = m[1];
-			var [table, module] = await get_table_of_module(module, postfix);
+			var args = await get_table_of_module(module, postfix);
+			if (!args)
+				return;
+			var [table, module] = args;
 			var url = `?${table}=${module}`;
 			if (refresh)
 				location.href = url;
@@ -88,17 +180,113 @@ where
 				yield m[1] + '.as.' + m[2] + m[3];
 		}
 
+		function editorRoot() {
+			var node = self;
+			while (node) {
+				if (node.open_sections)
+					return node;
+				node = node.$parent;
+			}
+			return null;
+		}
+
+		// `open Foo` drops the `Foo.` prefix, so the name does not start with a
+		// lemma section and the fully-qualified filesystem lookup never runs.
+		async function qualifyByOpen(short) {
+			if (!isOpenStrippedLemmaName(short))
+				return null;
+			var root = editorRoot();
+			if (!root)
+				return null;
+			var opens = root.open_sections || [];
+			if (!opens.length)
+				return null;
+			var imported = resolveOpenedImport(short, opens, root.imports || []);
+			if (imported)
+				return imported;
+			if (!self.regexp_section)
+				return null;
+			var candidates = openNamespaceCandidates(short, opens, name => !!name.fullmatch(self.regexp_section));
+			if (!candidates.length)
+				return null;
+			var found = [];
+			await Promise.all(candidates.map(async c => {
+				try {
+					var section = await form_post('php/request/disambiguate.php', {
+						module: c.rest,
+						section: c.section,
+					});
+					if (section == c.section)
+						found.push(c);
+				}
+				catch (e) {
+					console.log(e);
+				}
+			}));
+			return pickLatestOpen(found, opens);
+		}
+
+		async function sectionByRegexp(variant, postfix) {
+			var char = postfix.match(/^\.[A-Z]/)? '\\.': '$|\\.';
+			var body = moduleRegexpBody(variant);
+			var regexp = `^([\\w''!₀-₉]+)\\.${body}(?=${char})`;
+			var regexp_mysql = regexp.replace(/\\/g, "\\\\");
+			var sql = `
+select 
+	regexp_replace(module, "${regexp_mysql}.*", '$1')
+from 
+	axiom.lemma
+where 
+	module regexp "${regexp_mysql}"`;
+			console.log('sql =', sql);
+			var section = await form_post(`php/request/execute.php`, {sql});
+			if (!Array.isArray(section))
+				return null;
+			section = section.map(s => s[0]);
+			section = [...new Set(section)];
+			if (section.length > 1) {
+				var root = editorRoot();
+				var opened = root && root.open_sections || [];
+				var sectionIntersect = section.array_intersect(opened);
+				if (sectionIntersect.length) {
+					section = sectionIntersect;
+					if (section.length > 1 && root) {
+						regexp = new RegExp(regexp);
+						for (var $import of root.imports || []) {
+							var m = String($import).match(/^Lemma\.(.+)/);
+							if (m) {
+								m = m[1].match(regexp);
+								if (m) {
+									if (section.includes(m[1])) {
+										section = [m[1]];
+										break;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+			return section[0] || null;
+		}
+
 		async function get_table_of_module(module, postfix) {
 			var symbol = null;
 			var table = 'module';
+			var m;
 			if (module.indexOf('.') < 0) {
 				if (!module.fullmatch(self.regexp_section)) {
 					var symbol = module;
-					module = await disambiguate_module(symbol);
-					if (module == null){
-						if (await select_mathlib(symbol.replace('.', '\\.'), 'regexp'))
-							return ['mathlib', symbol];
-						module = self.module.split(/[./]/)[0] + '.' + symbol;
+					var qualified = await qualifyByOpen(symbol);
+					if (qualified)
+						module = qualified;
+					else {
+						module = await disambiguate_module(symbol);
+						if (module == null){
+							if (await select_mathlib(symbol.replace('.', '\\.'), 'regexp'))
+								return ['mathlib', symbol];
+							module = self.module.split(/[./]/)[0] + '.' + symbol;
+						}
 					}
 					m = postfix.match(/\.([\w'!₀-₉]+)/);
 					symbol = m? m[1]: null;
@@ -111,52 +299,25 @@ where
 						table = (await select_mathlib(module))? 'mathlib': 'module';
 				}
 				else{
-					if (await select_mathlib(module))
-						table = 'mathlib';
-					else {
-						for (var module of yield_modules(module)) {
-							var char = postfix.match(/^\.[A-Z]/)? '\\.': '$|\\.';
-							var regexp = `^([\\w''!₀-₉]+)\\.${module.replace(/\.[a-z][^.]+$/, '').replace('.', '\\.')}(?=${char})`;
-							var regexp_mysql = regexp.replace(/\\/g, "\\\\");
-							var sql = `
-select 
-	regexp_replace(module, "${regexp_mysql}.*", '$1')
-from 
-	axiom.lemma
-where 
-	module regexp "${regexp_mysql}"`;
-							console.log('sql =', sql);
-							var section = await form_post(`php/request/execute.php`, {sql});
-							section = section.map(s => s[0]);
-							section = [...new Set(section)];
-							if (section.length > 1) {
-								var root = self.$parent.$parent;
-								var sectionIntersect = section.array_intersect(root.open_sections);
-								if (sectionIntersect.length) {
-									section = sectionIntersect;
-									if (section.length > 1) {
-										regexp = new RegExp(regexp);
-										for (var $import of root.imports) {
-											var m = $import.match(/^Lemma\.(.+)/);
-											if (m) {
-												m = m[1].match(regexp);
-												if (m) {
-													if (section.includes(m[1])) {
-														section = [m[1]];
-														break;
-													}
-												}
-											}
-										}
-									}
-								}
-							}
-							[section] = section;
-							if (section) break;
+					var resolved = null;
+					for (var variant of yield_modules(module)) {
+						resolved = await qualifyByOpen(variant);
+						if (resolved)
+							break;
+						if (await select_mathlib(variant)) {
+							table = 'mathlib';
+							resolved = variant;
+							break;
 						}
-						if (!section) return;
-						module = section + '.' + module;
+						var section = await sectionByRegexp(variant, postfix);
+						if (section) {
+							resolved = section + '.' + variant;
+							break;
+						}
 					}
+					if (!resolved)
+						return;
+					module = resolved;
 				}
 			}
 			if (symbol)
