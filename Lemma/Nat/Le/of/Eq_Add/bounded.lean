@@ -6,7 +6,7 @@ import sympy.Basic
 private lemma main
   {a b d : ℝ}
   -- given
-  (ha : 0 ≤ a)
+  (_ha : 0 ≤ a)
   (hb : 0 ≤ b)
   (h : a + b = d)
   -- imply

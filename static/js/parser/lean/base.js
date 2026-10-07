@@ -372,8 +372,16 @@ export class Lean extends IndentedNode {
                 return this.append(`Lean_${token}`, 'expr');
             }
             case 'haveI':
-            case 'letI':
-                token = token.slice(0, -1);
+            case 'letI': {
+                // same tree as `have` / `let`; the node remembers the instance variant so it echoes `haveI` / `letI`
+                const asPropertyField = self.parseKeywordAsPropertyField(this, token);
+                if (asPropertyField) return asPropertyField;
+                const caret = this.append(`Lean_${token.slice(0, -1)}`, 'tactic');
+                let p = caret;
+                while (p && !(p instanceof L.Lean_let)) p = p.parent;
+                if (p instanceof L.Lean_let) p.inst = true;
+                return caret;
+            }
             case 'set':
                 // `lemma set` — keyword is the declaration name, not a tactic.
                 if (this instanceof L.LeanCaret && this.parent instanceof L.Lean_def)

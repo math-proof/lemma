@@ -19,7 +19,7 @@ private lemma main
   IsClosed ({f.base x} : Set Y) := by
 -- proof
   set s := (f ≫ g).base x with hsdef
-  haveI : IsClosedImmersion (X.fromSpecResidueField x) := isClosed_singleton_iff_isClosedImmersion.mp hx
+  have : IsClosedImmersion (X.fromSpecResidueField x) := isClosed_singleton_iff_isClosedImmersion.mp hx
 
   have hcompat : (X.fromSpecResidueField x ≫ f) ≫ g =
       Spec.map ((f ≫ g).residueFieldMap x) ≫ S.fromSpecResidueField s := by
@@ -28,9 +28,9 @@ private lemma main
     pullback.lift (X.fromSpecResidueField x ≫ f) (Spec.map ((f ≫ g).residueFieldMap x)) hcompat
   have hφ : φ ≫ g.fiberι s = X.fromSpecResidueField x ≫ f := pullback.lift_fst _ _ _
 
-  haveI : LocallyOfFiniteType (φ ≫ g.fiberι s) := by rw [hφ]; infer_instance
-  haveI : LocallyOfFiniteType φ := locallyOfFiniteType_of_comp φ (g.fiberι s)
-  haveI : IsFinite φ := (isFinite_iff_locallyOfFiniteType_of_jacobsonSpace (f := φ)).mpr inferInstance
+  have : LocallyOfFiniteType (φ ≫ g.fiberι s) := by rw [hφ]; infer_instance
+  have : LocallyOfFiniteType φ := locallyOfFiniteType_of_comp φ (g.fiberι s)
+  have : IsFinite φ := (isFinite_iff_locallyOfFiniteType_of_jacobsonSpace (f := φ)).mpr inferInstance
 
   have hcl : IsClosed (Set.range φ.base) := φ.isClosedMap.isClosed_range
   have hemb : Topology.IsClosedEmbedding (g.fiberι s).base := by

@@ -25,7 +25,7 @@ private lemma main
     (AlgEquiv.ofInjective (Polynomial.aeval (R := L) x) hinj).trans
       (Subalgebra.equivOfEq _ _ hrange)
 
-  haveI : IsPrincipalIdealRing (Algebra.adjoin L ({x} : Set F)) := by
+  have : IsPrincipalIdealRing (Algebra.adjoin L ({x} : Set F)) := by
     constructor
     intro I
 

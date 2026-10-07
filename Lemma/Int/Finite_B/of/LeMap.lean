@@ -16,16 +16,16 @@ private lemma main
   Finite (B ⧸ 𝔭) := by
 -- proof
   classical
-  letI : Field (A ⧸ 𝔪) := Ideal.Quotient.field 𝔪
-  letI : Field (B ⧸ 𝔭) := Ideal.Quotient.field 𝔭
+  let : Field (A ⧸ 𝔪) := Ideal.Quotient.field 𝔪
+  let : Field (B ⧸ 𝔭) := Ideal.Quotient.field 𝔭
   have hle : 𝔪 ≤ 𝔭.comap (algebraMap A B) := Ideal.map_le_iff_le_comap.mp h𝔪
   let f : A ⧸ 𝔪 →+* B ⧸ 𝔭 := Ideal.quotientMap 𝔭 (algebraMap A B) hle
-  letI : Algebra (A ⧸ 𝔪) (B ⧸ 𝔭) := f.toAlgebra
-  haveI : IsScalarTower A (A ⧸ 𝔪) (B ⧸ 𝔭) :=
+  let : Algebra (A ⧸ 𝔪) (B ⧸ 𝔭) := f.toAlgebra
+  have : IsScalarTower A (A ⧸ 𝔪) (B ⧸ 𝔭) :=
     IsScalarTower.of_algebraMap_eq (fun a => rfl)
-  haveI : Algebra.FiniteType A (B ⧸ 𝔭) := inferInstance
-  haveI : Algebra.FiniteType (A ⧸ 𝔪) (B ⧸ 𝔭) := Algebra.FiniteType.of_restrictScalars_finiteType A _ _
-  haveI : Module.Finite (A ⧸ 𝔪) (B ⧸ 𝔭) := finite_of_finite_type_of_isJacobsonRing _ _
+  have : Algebra.FiniteType A (B ⧸ 𝔭) := inferInstance
+  have : Algebra.FiniteType (A ⧸ 𝔪) (B ⧸ 𝔭) := Algebra.FiniteType.of_restrictScalars_finiteType A _ _
+  have : Module.Finite (A ⧸ 𝔪) (B ⧸ 𝔭) := finite_of_finite_type_of_isJacobsonRing _ _
   exact Module.finite_of_finite (A ⧸ 𝔪)
 
 

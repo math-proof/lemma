@@ -79,6 +79,56 @@ class LeanStatements extends LeanArgs
         throw new Exception(__METHOD__ . " is unexpected for " . get_class($this));
     }
 
+    /** Body of a multi-line structure-instance literal (see LeanBrace::openStructInstBody): one field per line. */
+    public $structInst = null;
+
+    /** The first field sits on the `{` / `with` line (no line prefix of its own). */
+    public function isInlineFirst()
+    {
+        $p = $this->parent;
+        return $this->structInst === true && ($p instanceof LeanBrace || $p instanceof LeanWith) && $p->inline === true;
+    }
+
+    public function push_binary($func)
+    {
+        // In a brace body (`{⏎ a := 1⏎ b := 2⏎ }`, or the `structInst` body of `{ a := 1⏎ b := 2 }` /
+        // `{ s with⏎ … }`) `x := v` starts the next structure-instance field (mirrors statements.js).
+        $parent = $this->parent;
+        if ($parent && $func === 'LeanAssign' && ($this->structInst === true || $parent instanceof LeanBrace)) {
+            $idx = count($this->args) - 1;
+            while ($idx >= 0 && ($this->args[$idx] instanceof LeanCaret || $this->args[$idx] instanceof LeanLineComment || $this->args[$idx] instanceof LeanBlockComment))
+                --$idx;
+            if ($idx >= 0) {
+                $this->structInst = true;
+                $origin = $this->args[$idx];
+                $caret = new LeanCaret($origin->indent, $origin->level);
+                $this->replace($origin, new LeanAssign($origin, $caret, $origin->indent, $origin->level));
+                return $caret;
+            }
+        }
+        return parent::push_binary($func);
+    }
+
+    public function insert_comma($caret)
+    {
+        // `a := 1,⏎ b := 2`: a comma after a field of a structure-instance body
+        if ($this->structInst === true && in_array($caret, $this->args, true)) {
+            $c2 = new LeanCaret($caret->indent, $caret->level);
+            $this->replace($caret, new LeanArgsCommaSeparated([$caret, $c2], $caret->indent, $caret->level));
+            return $c2;
+        }
+        return parent::insert_comma($caret);
+    }
+
+    public function strArgs()
+    {
+        $args = parent::strArgs();
+        if (!$this->isInlineFirst() || !count($args))
+            return $args;
+        $args[0] = ltrim(strval($args[0]), ' ');
+        return $args;
+    }
+
     public function insert_newline($caret, $newline_count, $indent, $next)
     {
         if ($this->indent > $indent)
@@ -198,7 +248,7 @@ class LeanStatements extends LeanArgs
     public function strFormat()
     {
         $format = implode("\n", array_fill(0, count($this->args), '%s'));
-        if ($this->parent instanceof LeanBrace)
+        if ($this->parent instanceof LeanBrace && !$this->parent->inline)
             $format = "\n$format\n" . str_repeat(' ', $this->parent->indent);
         return $format;
     }

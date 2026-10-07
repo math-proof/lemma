@@ -16,11 +16,11 @@ private lemma main
 -- imply
   P.height = 1 := by
 -- proof
-  haveI := Ideal.finiteHeight_of_isNoetherianRing P
+  have := Ideal.finiteHeight_of_isNoetherianRing P
   have hPtop : P ≠ ⊤ := Ideal.IsPrime.ne_top ‹_›
   obtain ⟨M, hM, hPM⟩ := Ideal.exists_le_maximal P hPtop
   have hPM' : P < M := lt_of_le_of_ne hPM (fun h => hPm (h ▸ hM))
-  haveI := hM.isPrime
+  have := hM.isPrime
   have hM2 : M.height ≤ ((2 : ℕ) : ℕ∞) := by
     have h := Ideal.height_le_ringKrullDim_of_ne_top hM.ne_top
     have h2 : ((M.height : ℕ∞) : WithBot ℕ∞) ≤ (((2 : ℕ) : ℕ∞) : WithBot ℕ∞) := h.trans (by exact_mod_cast hdim)

@@ -20,7 +20,7 @@ private lemma main
         _ = (1 : ℤ) ^ k := by norm_num
         _ = (1 : ℤ) := by simp
     have hif : (if (2 * k) % 2 = 0 then (1 : ℤ) else (-1 : ℤ)) = 1 := by
-      simp [Nat.mul_mod]
+      simp
     rw [hk, hpow, hif]
   · have ho : ∃ k : ℕ, n = 2 * k + 1 := by
       refine ⟨n / 2, ?_⟩
@@ -33,7 +33,7 @@ private lemma main
         _ = (1 : ℤ) * (-1 : ℤ) := by norm_num
         _ = (-1 : ℤ) := by ring
     have hif : (if (2 * k + 1) % 2 = 0 then (1 : ℤ) else (-1 : ℤ)) = -1 := by
-      simp [Nat.add_mod, Nat.mul_mod]
+      simp [Nat.add_mod]
     rw [hk, hpow, hif]
 
 -- created on 2020-03-01

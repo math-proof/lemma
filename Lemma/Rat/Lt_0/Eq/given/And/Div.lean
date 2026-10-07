@@ -7,7 +7,7 @@ private lemma main
   {a b c : ℝ}
   -- given
   (h : a = b)
-  (hneg : c < 0)
+  (_hneg : c < 0)
   -- imply
   : a / c = b / c := by
   -- proof

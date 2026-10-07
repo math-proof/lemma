@@ -28,18 +28,18 @@ private lemma main
     (Localization.AtPrime p.asIdeal)
   refine ⟨r, hr, fun S' _ _ _ => ?_⟩
   let A := Localization (Submonoid.powers r)
-  haveI : Module.Free A (A ⊗[S] P) :=
+  have : Module.Free A (A ⊗[S] P) :=
     Module.Free.of_equiv (IsLocalizedModule.isBaseChange (Submonoid.powers r) A
       (LocalizedModule.mkLinearMap (Submonoid.powers r) P)).equiv.symm
   let e : A ≃ₐ[S] S' := Localization.algEquiv (Submonoid.powers r) S'
-  letI : Algebra A S' := (e : A →+* S').toAlgebra
-  haveI : IsScalarTower S A S' :=
+  let : Algebra A S' := (e : A →+* S').toAlgebra
+  have : IsScalarTower S A S' :=
     IsScalarTower.of_algebraMap_eq fun s => (e.commutes s).symm
-  haveI : Module.Free S' (S' ⊗[A] (A ⊗[S] P)) := inferInstance
-  haveI : Module.Free S' (S' ⊗[S] P) :=
+  have : Module.Free S' (S' ⊗[A] (A ⊗[S] P)) := inferInstance
+  have : Module.Free S' (S' ⊗[S] P) :=
     Module.Free.of_equiv (TensorProduct.AlgebraTensorModule.cancelBaseChange S A S' S' P)
   rcases subsingleton_or_nontrivial S' with h | h
-  · haveI : Subsingleton (S' ⊗[S] P) := Module.subsingleton S' _
+  · have : Subsingleton (S' ⊗[S] P) := Module.subsingleton S' _
     exact ⟨0, ⟨Module.Basis.empty _⟩⟩
   · exact ⟨_, ⟨Module.finBasis S' (S' ⊗[S] P)⟩⟩
 

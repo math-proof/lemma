@@ -31,8 +31,8 @@ private lemma main
   let e : R ≃+* Γ(Spec (.of R), ⊤) := (Scheme.ΓSpecIso (.of R)).commRingCatIsoToRingEquiv.symm
   let φ : R →+* Γ(Y, U) := (f.appLE ⊤ U le_top).hom.comp e.toRingHom
   have hφflat : φ.Flat := (RingHom.Flat.of_bijective e.bijective).comp hflat
-  letI := φ.toAlgebra
-  haveI : Module.Flat R Γ(Y, U) := hφflat
+  let := φ.toAlgebra
+  have : Module.Flat R Γ(Y, U) := hφflat
   have hreg : IsSMulRegular Γ(Y, U) r := Module.Flat.isSMulRegular_of_nonZeroDivisors hr
   have hφr : φ r = (f.appLE ⊤ U le_top).hom ((Scheme.ΓSpecIso (.of R)).inv.hom r) := rfl
   rw [← hφr]

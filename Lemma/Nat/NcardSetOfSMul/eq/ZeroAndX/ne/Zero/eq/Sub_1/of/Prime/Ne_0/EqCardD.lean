@@ -19,12 +19,12 @@ private lemma main
   {x : D | ℓ • x = 0 ∧ x ≠ 0}.ncard = ℓ - 1 := by
 -- proof
   classical
-  haveI : Finite D := Nat.finite_of_card_ne_zero (by rw [hm]; exact hm0)
-  letI : Fintype D := Fintype.ofFinite D
+  have : Finite D := Nat.finite_of_card_ne_zero (by rw [hm]; exact hm0)
+  let : Fintype D := Fintype.ofFinite D
   have hcard : Fintype.card D = m := by rw [← Nat.card_eq_fintype_card]; exact hm
   have hset : {x : D | ℓ • x = 0 ∧ x ≠ 0} = {x : D | addOrderOf x = ℓ} := by
     ext x
-    simp only [Set.mem_setOf_eq]
+    simp only [Set.mem_ofPred_eq]
     constructor
     · rintro ⟨h1, h2⟩
       have hd : addOrderOf x ∣ ℓ := addOrderOf_dvd_of_nsmul_eq_zero h1

@@ -14,12 +14,12 @@ private lemma main
 -- imply
   ∃ 𝔭 ∈ minimalPrimes T, 𝔭 ≤ 𝔪 ∧ ∀ (n : ℤ), (algebraMap ℤ T) n ∈ 𝔭 → n = 0 := by
 -- proof
-  haveI := h𝔪
-  haveI : 𝔪.LiesOver (𝔪.under ℤ) := ⟨rfl⟩
-  haveI : (𝔪.under ℤ).IsPrime := Ideal.IsPrime.under ℤ 𝔪
+  have := h𝔪
+  have : 𝔪.LiesOver (𝔪.under ℤ) := ⟨rfl⟩
+  have : (𝔪.under ℤ).IsPrime := Ideal.IsPrime.under ℤ 𝔪
   obtain ⟨P, hP𝔪, hPprime, hPover⟩ :=
     Ideal.exists_ideal_le_liesOver_of_le (p := (⊥ : Ideal ℤ)) (q := 𝔪.under ℤ) 𝔪 bot_le
-  haveI := hPprime
+  have := hPprime
   obtain ⟨𝔭, h𝔭min, h𝔭P⟩ := Ideal.exists_minimalPrimes_le (I := (⊥ : Ideal T)) (J := P) bot_le
   refine ⟨𝔭, h𝔭min, h𝔭P.trans hP𝔪, fun n hn => ?_⟩
   have hnP : algebraMap ℤ T n ∈ P := h𝔭P hn

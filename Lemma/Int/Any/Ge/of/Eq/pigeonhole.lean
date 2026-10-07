@@ -15,13 +15,14 @@ private lemma main
   ∃ i : Fin k, x i ≥ (n + k - 1) / k := by
 -- proof
   by_contra h'
-  push_neg at h'
+  push Not at h'
   have hn : 0 < n := by
     by_contra hn0
     have hn0' : n = 0 := by omega
     have hq0 : (n + k - 1) / k = 0 := by
       rw [hn0']
-      rw [Nat.div_eq_zero_iff] <;> omega
+      rw [Nat.div_eq_zero_iff]
+      omega
     have hcont := h' ⟨0, hk⟩
     rw [hq0] at hcont
     exact Nat.not_lt_zero (x ⟨0, hk⟩) hcont
@@ -44,7 +45,7 @@ private lemma main
     have hnm1 : 0 ≤ n - 1 := by omega
     have hrn : r ≤ n - 1 := by
       have hr2 : r = (n - 1) % k := by
-        simp only [q, r]
+        simp only [r]
         have h2 : n + k - 1 = n - 1 + k := by omega
         rw [h2, Nat.add_mod_right]
       rw [hr2]
@@ -53,7 +54,8 @@ private lemma main
       have : k * q ≥ k * 1 := Nat.mul_le_mul_left k hq1
       simpa using this
     have hsub1 : k * (q - 1) = k * q - k := by
-      rw [Nat.mul_sub_left_distrib] <;> simp <;> omega
+      rw [Nat.mul_sub_left_distrib]
+      simp
     have h1 : k * q = n + k - 1 - r := by omega
     have h2 : n + k - 1 - r ≥ k := by omega
     rw [hsub1, h1]

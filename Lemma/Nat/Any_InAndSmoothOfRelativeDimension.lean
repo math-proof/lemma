@@ -10,7 +10,7 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 private lemma  RingHom.IsStandardSmooth.exists_isStandardSmoothOfRelativeDimension_gc3
     {R S : Type u} [CommRing R] [CommRing S] {φ : R →+* S} (h : φ.IsStandardSmooth) :
     ∃ n : ℕ, φ.IsStandardSmoothOfRelativeDimension n := by
-  letI := φ.toAlgebra
+  let := φ.toAlgebra
   obtain ⟨ι, σ, _, _, ⟨P⟩⟩ := h.out
   exact ⟨P.dimension, P.isStandardSmoothOfRelativeDimension rfl⟩
 @[main]
@@ -26,8 +26,8 @@ private lemma main
   refine ⟨V, d, hx, ?_⟩
 
   have hres : SmoothOfRelativeDimension d (f.resLE U V e) := by
-    haveI : IsAffine V := hV
-    haveI : IsAffine U := hU
+    have : IsAffine V := hV
+    have : IsAffine U := hU
     rw [HasRingHomProperty.iff_of_isAffine (P := @SmoothOfRelativeDimension d)]
     have := (RingHom.toMorphismProperty_respectsIso_iff.mp
       (RingHom.locally_respectsIso (RingHom.isStandardSmoothOfRelativeDimension_respectsIso (n := d))))

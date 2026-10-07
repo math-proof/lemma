@@ -21,13 +21,13 @@ private lemma main
       (Surjective (𝒢.ι ≫ p) → Surjective (Spec.map (CommRingCat.ofHom φ))) := by
 -- proof
   classical
-  haveI : IsAffineHom p := inferInstance
-  haveI : IsAffine K := isAffine_of_isAffineHom p
+  have : IsAffineHom p := inferInstance
+  have : IsAffine K := isAffine_of_isAffineHom p
 
-  haveI : IsClosedImmersion 𝒢.ι := by
+  have : IsClosedImmersion 𝒢.ι := by
     refine IsClosedImmersion.of_isPreimmersion _ ?_
     rw [Scheme.Opens.range_ι]; exact h𝒢
-  haveI : IsAffine (𝒢 : Scheme.{u}) := isAffine_of_isAffineHom 𝒢.ι
+  have : IsAffine (𝒢 : Scheme.{u}) := isAffine_of_isAffineHom 𝒢.ι
   let G : Scheme.{u} := 𝒢
   let e : Spec Γ(G, ⊤) ≅ G := G.isoSpec.symm
   let f : Spec Γ(G, ⊤) ⟶ Spec (CommRingCat.of S) := e.hom ≫ 𝒢.ι ≫ p
@@ -36,7 +36,7 @@ private lemma main
     simp only [φ, CommRingCat.ofHom_hom, Spec.map_preimage]
   refine ⟨Γ(G, ⊤), inferInstance, φ, e, hφ.symm, ?_, ?_⟩
   · rw [hφ]; infer_instance
-  · intro hs; rw [hφ]; haveI := hs; infer_instance
+  · intro hs; rw [hφ]; have := hs; infer_instance
 
 
 -- created on 2026-10-05

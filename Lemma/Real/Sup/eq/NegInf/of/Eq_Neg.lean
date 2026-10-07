@@ -24,7 +24,7 @@ private lemma main
       refine ⟨-y, ⟨by linarith, by linarith⟩, ?_⟩
       rw [hf (-y)]
       congr 1
-      ring
+      ring_nf
   rw [hs]
   have h6 := Real.Sup.eq.Neg.Inf (S := Set.Ioo m M) (f := fun x => -f x)
   simp only [neg_neg] at h6

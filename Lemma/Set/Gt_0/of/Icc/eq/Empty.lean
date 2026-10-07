@@ -12,7 +12,7 @@ private lemma main
 -- proof
   have hlt : b < a := by
     by_contra hle
-    push_neg at hle
+    push Not at hle
     exact (Set.nonempty_Icc.mpr hle).ne_empty h
   linarith
 

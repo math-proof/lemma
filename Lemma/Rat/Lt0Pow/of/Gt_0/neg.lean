@@ -7,7 +7,7 @@ private lemma main
   {x : ℝ}
   {n : ℤ}
   -- given
-  (hn : n < 0)
+  (_hn : n < 0)
   (hx : 0 < x)
   -- imply
   : 0 < x ^ n := by

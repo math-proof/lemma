@@ -34,7 +34,7 @@ private lemma main
             (Ideal.mul_mem_left _ v' hv')))))
       convert this using 1; ring
     have : (1 : S) ∈ IsLocalRing.maximalIdeal S := by
-      have := Ideal.sub_mem _ hBm h1; simpa using this
+      have := Ideal.sub_mem _ hBm h1; simp at this
     exact (IsLocalRing.maximalIdeal.isMaximal S).ne_top (Ideal.eq_top_of_isUnit_mem _ this isUnit_one)
   exact sub_eq_zero.mp (hBunit.mul_left_eq_zero.mp hprod)
 

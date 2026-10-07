@@ -14,22 +14,22 @@ private lemma main
 -- imply
   ∃ ψ : B →+* K, ψ.comp (algebraMap A B) = χ := by
 -- proof
-  haveI : (RingHom.ker χ).IsPrime := RingHom.ker_isPrime χ
+  have : (RingHom.ker χ).IsPrime := RingHom.ker_isPrime χ
   obtain ⟨Q, -, hQ, hQP⟩ :=
     Ideal.exists_ideal_over_prime_of_isIntegral (RingHom.ker χ) (⊥ : Ideal B) hker
-  haveI := hQ
+  have := hQ
   have hPker : ∀ a : A, a ∈ Q.comap (algebraMap A B) → χ a = 0 := fun a ha => by
     rw [hQP] at ha
     exact RingHom.mem_ker.mp ha
   let χbar : A ⧸ Q.comap (algebraMap A B) →+* K := Ideal.Quotient.lift _ χ hPker
   have hχbar_inj : Function.Injective χbar :=
     RingHom.lift_injective_of_ker_le_ideal _ hPker (le_of_eq hQP.symm)
-  letI : Algebra (A ⧸ Q.comap (algebraMap A B)) K := χbar.toAlgebra
-  haveI : IsDomain (B ⧸ Q) := Ideal.Quotient.isDomain Q
-  haveI : IsDomain (A ⧸ Q.comap (algebraMap A B)) := Ideal.Quotient.isDomain _
-  haveI : Module.IsTorsionFree (A ⧸ Q.comap (algebraMap A B)) (B ⧸ Q) :=
+  let : Algebra (A ⧸ Q.comap (algebraMap A B)) K := χbar.toAlgebra
+  have : IsDomain (B ⧸ Q) := Ideal.Quotient.isDomain Q
+  have : IsDomain (A ⧸ Q.comap (algebraMap A B)) := Ideal.Quotient.isDomain _
+  have : Module.IsTorsionFree (A ⧸ Q.comap (algebraMap A B)) (B ⧸ Q) :=
     Module.isTorsionFree_iff_algebraMap_injective.mpr Ideal.algebraMap_quotient_injective
-  haveI : Module.IsTorsionFree (A ⧸ Q.comap (algebraMap A B)) K :=
+  have : Module.IsTorsionFree (A ⧸ Q.comap (algebraMap A B)) K :=
     Module.isTorsionFree_iff_algebraMap_injective.mpr hχbar_inj
   let ψbar : (B ⧸ Q) →ₐ[A ⧸ Q.comap (algebraMap A B)] K := IsAlgClosed.lift
   refine ⟨ψbar.toRingHom.comp (Ideal.Quotient.mk Q), RingHom.ext fun a => ?_⟩

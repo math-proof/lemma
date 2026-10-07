@@ -2,7 +2,7 @@ import Mathlib.Dynamics.OmegaLimit
 import Mathlib.Dynamics.Flow
 import sympy.dynamics.actor_critic
 import sympy.Basic
-import Lemma.OmegaLimit.In_OmegaLimit.is.All_In_Closure_Image2_Ici
+import Lemma.Set.In_OmegaLimit.is.All_In_Closure_Image2_Ici
 open Filter
 
 
@@ -19,7 +19,7 @@ private lemma main
   B ⊆ omegaLimit atTop Φ.toFun K := by
 -- proof
   intro y hy
-  refine (OmegaLimit.In_OmegaLimit.is.All_In_Closure_Image2_Ici Φ.toFun K y).2 fun T => ?_
+  refine (Set.In_OmegaLimit.is.All_In_Closure_Image2_Ici Φ.toFun K y).2 fun T => ?_
   have h : y ∈ Φ.toFun (max T 0) '' B := by
     rw [h₀ _ (le_max_right _ _)]
     exact hy

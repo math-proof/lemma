@@ -17,7 +17,7 @@ private lemma main
   LinearIndependent ℝ v := by
 -- proof
   classical
-  haveI : FiniteDimensional ℝ V := Module.Finite.of_basis b₀
+  have : FiniteDimensional ℝ V := Module.Finite.of_basis b₀
 
   have hspan : ⊤ ≤ Submodule.span ℝ (Set.range v) := by
     rw [← b₀.span_eq]

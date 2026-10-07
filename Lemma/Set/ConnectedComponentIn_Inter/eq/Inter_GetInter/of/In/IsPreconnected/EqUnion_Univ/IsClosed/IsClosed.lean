@@ -24,7 +24,7 @@ private lemma main
     exact hx
   have hdiff : A \ B = A ∩ (A ∩ B)ᶜ := by
     ext x
-    simp only [Set.mem_diff, Set.mem_inter_iff, Set.mem_compl_iff, not_and]
+    simp only [Set.mem_sdiff, Set.mem_inter_iff, Set.mem_compl_iff, not_and]
     tauto
   have heU : e ∈ (A ∩ B)ᶜ := fun h => he.2 h.2
   apply Set.Subset.antisymm

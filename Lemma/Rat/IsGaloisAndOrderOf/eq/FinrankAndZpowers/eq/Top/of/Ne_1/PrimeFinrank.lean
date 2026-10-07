@@ -16,7 +16,7 @@ private lemma main
 -- imply
   IsGalois K L ∧ orderOf σ = Module.finrank K L ∧ Subgroup.zpowers σ = ⊤ := by
 -- proof
-  haveI : FiniteDimensional K L := Module.finite_of_finrank_pos hdeg.pos
+  have : FiniteDimensional K L := Module.finite_of_finrank_pos hdeg.pos
   set H : Subgroup (L ≃ₐ[K] L) := Subgroup.zpowers σ with hH
 
   have h1 : Module.finrank (fixedField H) L = orderOf σ := by
@@ -42,7 +42,7 @@ private lemma main
     apply IsGalois.of_fixedField_eq_bot
     exact le_bot_iff.1 (hbot ▸ fixedField_le le_top)
   refine ⟨hgal, hord, ?_⟩
-  haveI := hgal
+  have := hgal
   apply Subgroup.eq_top_of_card_eq
   rw [hH, Nat.card_zpowers, hord, IsGalois.card_aut_eq_finrank]
 

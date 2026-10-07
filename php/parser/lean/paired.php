@@ -240,7 +240,10 @@ class LeanParenthesis extends LeanPairedGroup
     {
         return $this->arg->isProp($vars);
     }
-    /** `ℙ[…](…)` / `𝔼[…](…)` (mirrors JS `isProbEventParen` / `isExpectBodyParen`), also `ℙ[π](…).toReal`. */
+    /**
+     * `ℙ[…](…)` / `𝔼[…](…)` (mirrors JS `isProbExpectEventParen`): also `ℙ[π](…).toReal`
+     * and mid-juxtaposition `∇[θ] ℙ[π](…).toReal`.
+     */
     public function isProbExpectParen()
     {
         $isHead = function ($n) {
@@ -249,10 +252,15 @@ class LeanParenthesis extends LeanPairedGroup
         $self = $this;
         $p = $this->parent;
         if ($p instanceof LeanProperty && $p->args[0] === $this) {
-            $self = $p;
+            $self = $p; // `….toReal`
             $p = $p->parent;
         }
-        return $p instanceof LeanArgsSpaceSeparated && count($p->args) >= 2 && $p->args[1] === $self && $isHead($p->args[0]);
+        if (!($p instanceof LeanArgsSpaceSeparated))
+            return false;
+        $i = array_search($self, $p->args, true);
+        if ($i === false || $i < 1)
+            return false;
+        return $isHead($p->args[$i - 1]);
     }
 
     /** Rendered as `\left(…\right)` (not elided / not a multi-row block), so a `\middle` may sit inside. */
@@ -381,12 +389,17 @@ class LeanParenthesis extends LeanPairedGroup
         if ($arg->rhs instanceof LeanToken && $arg->rhs->text == 'Bool')
             return false;
         $p = $this->parent;
-        return $p instanceof LeanArgsSpaceSeparated ||
+        if ($p instanceof LeanArgsSpaceSeparated ||
             $p instanceof LeanArgsCommaSeparated ||
             $p instanceof LeanGetElem ||
             $p instanceof LeanGetElemQue ||
             $p instanceof LeanGetElemQuote ||
-            $p instanceof LeanRelational;
+            $p instanceof LeanRelational)
+            return true;
+        // ENNReal→ℝ (`open scoped ENNReal.ToRealCoe`): `(ℙ[…](…) : ℝ)` under `•` / `+` / …
+        if ($arg->rhs instanceof LeanToken && $arg->rhs->text === 'ℝ' && $p instanceof LeanArithmetic)
+            return true;
+        return false;
     }
 
     public function peelLatexCoe()
@@ -528,6 +541,71 @@ class LeanBracket extends LeanPairedGroup
 
 class LeanBrace extends LeanPairedGroup
 {
+    /**
+     * Structure-instance literal with its first field on the `{` line (mirrors paired.js LeanBrace.inline):
+     *     { toFun := f
+     *       invFun := g }
+     * Set once the body became a `structInst` LeanStatements; printed `{ … }` so the continuation lines keep
+     * the first field's column (Lean `sepByIndent`).
+     */
+    public $inline = null;
+
+    /** Column of a `}` written on its own line after an `inline` body. */
+    public $closeIndent = null;
+
+    /** A field (`x := v`), or a comma list of fields ending in a comma (`a := 1, b := 2,`). */
+    public static function isStructInstField($node)
+    {
+        if ($node instanceof LeanAssign)
+            return true;
+        if (!($node instanceof LeanArgsCommaSeparated))
+            return false;
+        $any = false;
+        foreach ($node->args as $a) {
+            if ($a instanceof LeanAssign)
+                $any = true;
+            elseif (!($a instanceof LeanCaret))
+                return false;
+        }
+        return $any;
+    }
+
+    /** Parent that holds structure-instance fields: a brace, a `{ s with … }` update, or a `structInst` body. */
+    public static function isStructInstOwner($node)
+    {
+        return $node instanceof LeanBrace ||
+            ($node instanceof LeanWith && $node->isStructUpdate()) ||
+            ($node instanceof LeanStatements && $node->structInst === true);
+    }
+
+    /** Turn the single field `$current` of `$owner` into a `structInst` body at column `$indent`; returns [body, caret]. */
+    public static function openStructInstBody($owner, $current, $newline_count, $indent)
+    {
+        $current->indent = $indent;
+        $stmts = new LeanStatements([$current], $indent, $current->level);
+        $stmts->structInst = true;
+        $out = null;
+        for ($i = 0; $i < max($newline_count, 1); ++$i) {
+            $out = new LeanCaret($indent, $stmts->level);
+            $stmts->push($out);
+        }
+        return [$stmts, $out];
+    }
+
+    /** `{ s with⏎ … }` / `{ s with a := 1⏎ … }` whose `with` got a multi-line body. */
+    public function structUpdateWith()
+    {
+        $a = $this->arg;
+        $w = $a instanceof LeanArgsSpaceSeparated ? end($a->args) : null;
+        return $w instanceof LeanWith && $w->args[0] instanceof LeanStatements && $w->args[0]->structInst === true ? $w : null;
+    }
+
+    /** Multi-line structure literal: printed with Lean's `{ … }` spacing. */
+    public function isSpacedStructInst()
+    {
+        return $this->inline === true || $this->structUpdateWith() !== null;
+    }
+
     public function __get($vname)
     {
         switch ($vname) {
@@ -541,6 +619,19 @@ class LeanBrace extends LeanPairedGroup
     }
     public function insert_newline($caret, $newline_count, $indent, $next)
     {
+        if ($indent > $this->indent && $caret === $this->arg && !($caret instanceof LeanCaret) &&
+            !($caret instanceof LeanStatements) && self::isStructInstField($caret)) {
+            // first field on the `{` line, next field on the next line: keep its column (`$indent`), not `indent + 2`
+            [$stmts, $out] = self::openStructInstBody($this, $caret, $newline_count, $indent);
+            $this->arg = $stmts;
+            $this->inline = true;
+            return $out;
+        }
+        if ($this->inline && $indent == $this->indent && $next == '}' && $this->closeIndent === null) {
+            // `{ a := 1⏎ … b := 2⏎ }`: the closing brace on a line of its own
+            $this->closeIndent = $indent;
+            return $caret;
+        }
         if ($this->indent <= $indent) {
             if ($caret instanceof LeanCaret) {
                 if ($indent == $this->indent)
@@ -563,7 +654,32 @@ class LeanBrace extends LeanPairedGroup
     public function is_indented()
     {
         $parent = $this->parent;
-        return !($parent instanceof LeanQuantifier || $parent instanceof LeanBinaryBoolean || $parent instanceof LeanColon || $parent instanceof LeanSetOperator || $parent instanceof LeanTactic || $parent instanceof LeanAssign);
+        return !($parent instanceof LeanQuantifier || $parent instanceof LeanBinaryBoolean || $parent instanceof LeanColon || $parent instanceof LeanSetOperator || $parent instanceof LeanTactic || $parent instanceof LeanAssign ||
+            // `⟨{ toFun := … }, e⟩` / `({ … }, n)`: an inline brace, not a line of its own (was `⟨    {`)
+            $parent instanceof LeanArgsCommaSeparated || $parent instanceof LeanPairedGroup);
+    }
+
+    public function set_line($line)
+    {
+        if (!$this->inline)
+            return parent::set_line($line);
+        // `{ first⏎ … }`: the body starts on the `{` line and the `}` closes the last field's line
+        $this->line = $line;
+        $line = $this->arg->set_line($line);
+        return $this->closeIndent !== null && $this->is_closed ? $line + 1 : $line;
+    }
+
+    public function strFormat()
+    {
+        if (!$this->isSpacedStructInst())
+            return parent::strFormat();
+        $format = $this->argFormat();
+        $close = $this->closeIndent !== null ? "\n" . str_repeat(' ', $this->closeIndent) . '}' : ' }';
+        if ($this->is_closed)
+            return '{ ' . $format . $close;
+        if ($this->is_closed === null)
+            return '{ ' . $format;
+        return $format . $close;
     }
 
     public function latexFormat()

@@ -53,6 +53,13 @@ class LeanAssign extends LeanBinary
                 } else {
                     if ($this->parent instanceof LeanCalc)
                         return $this->parent->insert_newline($this, $newline_count, $indent, $next);
+                    // first field of `{ a := 1⏎ b := 2 }` / `{ s with a := 1⏎ b := 2 }`: the brace / `with` opens the
+                    // structure-instance body (mirrors assign.js). A deeper line after a field continues its value.
+                    $p = $this->parent;
+                    $owner = $p instanceof LeanBrace ? $p : ($p instanceof LeanWith && $p->isStructUpdate() ? $p : null);
+                    $brace = $owner instanceof LeanWith ? $owner->parent->parent : $owner;
+                    if ($brace && $brace->indent < $indent)
+                        return $owner->insert_newline($this, $newline_count, $indent, $next);
                     $caret = $this->push_args_indented($indent, $newline_count, false);
                 }
                 return $caret;
@@ -69,7 +76,9 @@ class LeanAssign extends LeanBinary
     public function is_indented()
     {
         $parent = $this->parent;
-        return !$parent || $parent instanceof LeanArgsNewLineSeparated || ($parent instanceof LeanArgsIndented && $parent->rhs === $this);
+        return !$parent || $parent instanceof LeanArgsNewLineSeparated || ($parent instanceof LeanArgsIndented && $parent->rhs === $this) ||
+            // a field of a structure-instance body
+            ($parent instanceof LeanStatements && $parent->structInst === true);
     }
 
     public function relocate_last_comment()

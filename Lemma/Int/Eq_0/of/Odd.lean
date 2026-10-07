@@ -25,7 +25,7 @@ private lemma main
   rw [UpperHalfPlane.neg_smul, one_smul, UpperHalfPlane.denom_neg, UpperHalfPlane.denom_one,
     Odd.neg_one_zpow hk] at hf
   have h2 : (2 : ℂ) * f z = 0 := by linear_combination hf
-  rw [CuspForm.zero_apply]
+  rw [zero_apply]
   exact (mul_eq_zero.mp h2).resolve_left two_ne_zero
 
 

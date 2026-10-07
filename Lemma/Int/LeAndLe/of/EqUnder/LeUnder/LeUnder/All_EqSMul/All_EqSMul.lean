@@ -22,12 +22,12 @@ private lemma main
 -- imply
   𝔭₀ ≤ Q ∧ 𝔭₁ ≤ Q := by
 -- proof
-  haveI : Algebra.IsIntegral A B := Algebra.IsInvariant.isIntegral A B G
+  have : Algebra.IsIntegral A B := Algebra.IsInvariant.isIntegral A B G
 
   have key : ∀ (𝔭 : Ideal B) [𝔭.IsPrime], (∀ g : G, g • 𝔭 = 𝔭) → 𝔭.under A ≤ y → 𝔭 ≤ Q := by
     intro 𝔭 _ hstab hle
     obtain ⟨Q', hQ'𝔭, hQ'prime, hQ'y⟩ := Ideal.exists_ideal_over_prime_of_isIntegral y 𝔭 hle
-    haveI := hQ'prime
+    have := hQ'prime
 
     obtain ⟨g, hg⟩ := Algebra.IsInvariant.exists_smul_of_under_eq A B G Q' Q (by rw [Ideal.under_def, Ideal.under_def, hQ'y, ← hQ, Ideal.under_def])
     rw [hg, ← hstab g]

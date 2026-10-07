@@ -14,13 +14,13 @@ private lemma main
   Nonempty (L₁ ≃ₐ[K] L₂) := by
 -- proof
   classical
-  haveI := Fintype.ofFinite L₁
-  haveI := Fintype.ofFinite L₂
+  have := Fintype.ofFinite L₁
+  have := Fintype.ofFinite L₂
   have h' : Fintype.card L₁ = Fintype.card L₂ := by
     rwa [Nat.card_eq_fintype_card, Nat.card_eq_fintype_card] at h
-  haveI i₁ : Polynomial.IsSplittingField K L₁ (Polynomial.X ^ Fintype.card L₁ - Polynomial.X) :=
+  have i₁ : Polynomial.IsSplittingField K L₁ (Polynomial.X ^ Fintype.card L₁ - Polynomial.X) :=
     FiniteField.isSplittingField_sub L₁ K
-  haveI i₂ : Polynomial.IsSplittingField K L₂ (Polynomial.X ^ Fintype.card L₁ - Polynomial.X) := by
+  have i₂ : Polynomial.IsSplittingField K L₂ (Polynomial.X ^ Fintype.card L₁ - Polynomial.X) := by
     rw [h']; exact FiniteField.isSplittingField_sub L₂ K
   exact ⟨(Polynomial.IsSplittingField.algEquiv L₁ (Polynomial.X ^ Fintype.card L₁ - Polynomial.X)).trans
     (Polynomial.IsSplittingField.algEquiv L₂ (Polynomial.X ^ Fintype.card L₁ - Polynomial.X)).symm⟩

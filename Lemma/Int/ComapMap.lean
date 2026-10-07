@@ -36,7 +36,7 @@ private lemma main
   (𝔞.map (algebraMap S (AdicCompletion (IsLocalRing.maximalIdeal S) S))).comap
         (algebraMap S (AdicCompletion (IsLocalRing.maximalIdeal S) S)) = 𝔞 := by
 -- proof
-  haveI := Ws34.faithfullyFlat_adicCompletion_maximalIdeal S
+  have := Ws34.faithfullyFlat_adicCompletion_maximalIdeal S
   exact Ideal.comap_map_eq_self_of_faithfullyFlat 𝔞
 
 

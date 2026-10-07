@@ -15,14 +15,14 @@ private lemma main
   {x : X}
 -- given
   (hZ : IsClosed Z)
-  (hZ' : IsIrreducible Z)
+  (_hZ' : IsIrreducible Z)
   (hxZ : x ∈ Z)
   (hx : IsClosed ({x} : Set X))
   (hne : Z ≠ {x}) :
 -- imply
   ∃ x' ∈ Z, IsClosed ({x'} : Set X) ∧ x' ≠ x := by
 -- proof
-  haveI : JacobsonSpace X := LocallyOfFiniteType.jacobsonSpace t
+  have : JacobsonSpace X := LocallyOfFiniteType.jacobsonSpace t
   by_contra h
   push Not at h
   apply hne

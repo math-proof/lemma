@@ -25,7 +25,7 @@ private lemma main
   have hcov : ∀ U : P.affineOpens, IsReduced (f.ker.subschemeCover.openCover.X U) := by
     intro U
     have hq : _root_.IsReduced (Γ(P, (U : P.Opens)) ⧸ f.ker.ideal U) := by
-      haveI : _root_.IsReduced (Γ(P, (U : P.Opens)) ⧸ RingHom.ker (f.app U).hom) :=
+      have : _root_.IsReduced (Γ(P, (U : P.Opens)) ⧸ RingHom.ker (f.app U).hom) :=
         isReduced_of_injective (RingHom.kerLift (f.app U).hom) (RingHom.kerLift_injective _)
       exact isReduced_of_injective (Ideal.quotEquivOfEq (f.ker_apply U))
         (Ideal.quotEquivOfEq (f.ker_apply U)).injective
@@ -33,7 +33,7 @@ private lemma main
     infer_instance
   have hred : IsReduced f.image :=
     @IsReduced.of_openCover f.image f.ker.subschemeCover.openCover hcov
-  haveI : IsIntegral f.image := isIntegral_of_irreducibleSpace_of_isReduced f.image
+  have : IsIntegral f.image := isIntegral_of_irreducibleSpace_of_isReduced f.image
   exact ⟨this, genericPoint_eq_of_isOpenImmersion f.toImage, inferInstance⟩
 
 

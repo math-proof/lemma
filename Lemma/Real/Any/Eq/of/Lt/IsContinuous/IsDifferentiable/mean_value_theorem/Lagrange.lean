@@ -18,6 +18,5 @@ private lemma main
   have hne : b - a ≠ 0 := by linarith
   rw [hslope]
   field_simp [hne]
-  <;> ring
 
 -- created on 2020-06-17

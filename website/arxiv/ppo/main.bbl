@@ -130,9 +130,9 @@ math proof.
 \bibitem{lemma_lim}
 math proof.
 \newblock
-  {Real.\allowbreak{}Eq\_0.\allowbreak{}Lim.\allowbreak{}of.\allowbreak{}LtAbs.\allowbreak{}IsFinite}.
+  {Real.\allowbreak{}Eq\_0.\allowbreak{}Lim.\allowbreak{}of.\allowbreak{}LtAbs.\allowbreak{}GtInftySup}.
 \newblock
-  \url{http://www.lemma.cn/lean/?module=Real.Eq_0.Lim.of.LtAbs.IsFinite}, 2026.
+  \url{http://www.lemma.cn/lean/?module=Real.Eq_0.Lim.of.LtAbs.GtInftySup}, 2026.
 
 \bibitem{lemma_bellman}
 math proof.
@@ -145,17 +145,17 @@ math proof.
 \bibitem{lemma_pgq}
 math proof.
 \newblock
-  {Tensor.\allowbreak{}Eq.\allowbreak{}Dot.\allowbreak{}Grad.\allowbreak{}Expect.\allowbreak{}of.\allowbreak{}Eq\_Conditioned.\allowbreak{}Eq\_Expect.\allowbreak{}Eq\_Expect.\allowbreak{}IsFinite.\allowbreak{}Q\_Function}.
+  {Tensor.\allowbreak{}Eq.\allowbreak{}Dot.\allowbreak{}Grad.\allowbreak{}Expect.\allowbreak{}of.\allowbreak{}Eq\_Conditioned.\allowbreak{}Eq\_Expect.\allowbreak{}Eq\_Expect.\allowbreak{}GtInftySup.\allowbreak{}Q\_Function}.
 \newblock
-  \url{http://www.lemma.cn/lean/?module=Tensor.Eq.Dot.Grad.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.IsFinite.Q_Function},
+  \url{http://www.lemma.cn/lean/?module=Tensor.Eq.Dot.Grad.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.GtInftySup.Q_Function},
   2026.
 
 \bibitem{lemma_pgt}
 math proof.
 \newblock
-  {Tensor.\allowbreak{}Eq.\allowbreak{}Dot.\allowbreak{}Grad.\allowbreak{}Expect.\allowbreak{}of.\allowbreak{}Eq\_Conditioned.\allowbreak{}IsFinite.\allowbreak{}policy\_gradient\_theorem}.
+  {Tensor.\allowbreak{}Eq.\allowbreak{}Dot.\allowbreak{}Grad.\allowbreak{}Expect.\allowbreak{}of.\allowbreak{}Eq\_Conditioned.\allowbreak{}GtInftySup.\allowbreak{}policy\_gradient\_theorem}.
 \newblock
-  \url{http://www.lemma.cn/lean/?module=Tensor.Eq.Dot.Grad.Expect.of.Eq_Conditioned.IsFinite.policy_gradient_theorem},
+  \url{http://www.lemma.cn/lean/?module=Tensor.Eq.Dot.Grad.Expect.of.Eq_Conditioned.GtInftySup.policy_gradient_theorem},
   2026.
 
 \bibitem{lemma_tower}
@@ -185,33 +185,33 @@ math proof.
 \bibitem{lemma_gae_series}
 math proof.
 \newblock
-  {Tensor.\allowbreak{}EqDot.\allowbreak{}of.\allowbreak{}IsFinite.\allowbreak{}generalized\_advantage\_estimate}.
+  {Tensor.\allowbreak{}EqDot.\allowbreak{}of.\allowbreak{}GtInftySup.\allowbreak{}generalized\_advantage\_estimate}.
 \newblock
-  \url{http://www.lemma.cn/lean/?module=Tensor.EqDot.of.IsFinite.generalized_advantage_estimate},
+  \url{http://www.lemma.cn/lean/?module=Tensor.EqDot.of.GtInftySup.generalized_advantage_estimate},
   2026.
 
 \bibitem{lemma_gae}
 math proof.
 \newblock
-  {Tensor.\allowbreak{}EqDot\_GradExpect.\allowbreak{}of.\allowbreak{}Eq\_Conditioned.\allowbreak{}Eq\_Expect.\allowbreak{}IsFinite.\allowbreak{}IsFinite.\allowbreak{}generalized\_advantage\_estimate}.
+  {Tensor.\allowbreak{}EqDot\_GradExpect.\allowbreak{}of.\allowbreak{}Eq\_Conditioned.\allowbreak{}Eq\_Expect.\allowbreak{}All\_Differentiable\_Prob.\allowbreak{}GtInftySup.\allowbreak{}generalized\_advantage\_estimate}.
 \newblock
-  \url{http://www.lemma.cn/lean/?module=Tensor.EqDot_GradExpect.of.Eq_Conditioned.Eq_Expect.IsFinite.IsFinite.generalized_advantage_estimate},
+  \url{http://www.lemma.cn/lean/?module=Tensor.EqDot_GradExpect.of.Eq_Conditioned.Eq_Expect.All_Differentiable_Prob.GtInftySup.generalized_advantage_estimate},
   2026.
 
 \bibitem{lemma_gae_avg}
 math proof.
 \newblock
-  {Tensor.\allowbreak{}EqDot\_GradExpect.\allowbreak{}of.\allowbreak{}Eq\_Conditioned.\allowbreak{}Eq\_Expect.\allowbreak{}IsFinite.\allowbreak{}IsFinite.\allowbreak{}In\_Ico.\allowbreak{}generalized\_advantage\_estimate}.
+  {Tensor.\allowbreak{}EqDot\_GradExpect.\allowbreak{}of.\allowbreak{}Eq\_Conditioned.\allowbreak{}Eq\_Expect.\allowbreak{}All\_Differentiable\_Prob.\allowbreak{}GtInftySup.\allowbreak{}In\_Ico.\allowbreak{}generalized\_advantage\_estimate}.
 \newblock
-  \url{http://www.lemma.cn/lean/?module=Tensor.EqDot_GradExpect.of.Eq_Conditioned.Eq_Expect.IsFinite.IsFinite.In_Ico.generalized_advantage_estimate},
+  \url{http://www.lemma.cn/lean/?module=Tensor.EqDot_GradExpect.of.Eq_Conditioned.Eq_Expect.All_Differentiable_Prob.GtInftySup.In_Ico.generalized_advantage_estimate},
   2026.
 
 \bibitem{lemma_uae}
 math proof.
 \newblock
-  {Tensor.\allowbreak{}EqDot\_GradExpect.\allowbreak{}of.\allowbreak{}Eq\_Conditioned.\allowbreak{}Eq\_Expect.\allowbreak{}IsFinite.\allowbreak{}IsFinite.\allowbreak{}unbiased\_advantage\_estimate}.
+  {Tensor.\allowbreak{}EqDot\_GradExpect.\allowbreak{}of.\allowbreak{}Eq\_Conditioned.\allowbreak{}Eq\_Expect.\allowbreak{}All\_Differentiable\_Prob.\allowbreak{}GtInftySup.\allowbreak{}unbiased\_advantage\_estimate}.
 \newblock
-  \url{http://www.lemma.cn/lean/?module=Tensor.EqDot_GradExpect.of.Eq_Conditioned.Eq_Expect.IsFinite.IsFinite.unbiased_advantage_estimate},
+  \url{http://www.lemma.cn/lean/?module=Tensor.EqDot_GradExpect.of.Eq_Conditioned.Eq_Expect.All_Differentiable_Prob.GtInftySup.unbiased_advantage_estimate},
   2026.
 
 \bibitem{lemma_induct}
@@ -225,9 +225,9 @@ math proof.
 \bibitem{lemma_recursion}
 math proof.
 \newblock
-  {Tensor.\allowbreak{}EqGrad.\allowbreak{}of.\allowbreak{}Eq\_Conditioned.\allowbreak{}Eq\_Expect.\allowbreak{}Eq\_Expect.\allowbreak{}policy\_gradient.\allowbreak{}recursion.\allowbreak{}discrete}.
+  {Random.\allowbreak{}Grad.\allowbreak{}eq.\allowbreak{}Add\_SMul\_Sum\_SMul.\allowbreak{}of.\allowbreak{}Ne0Real\_Preimage.\allowbreak{}GtInftySup.\allowbreak{}All\_Differentiable\_Prob.\allowbreak{}All\_Eq\_Expect.\allowbreak{}All\_Eq\_Expect.\allowbreak{}EqMeasureCount.\allowbreak{}EqMeasureCount.\allowbreak{}In\_Ico}.
 \newblock
-  \url{http://www.lemma.cn/lean/?module=Tensor.EqGrad.of.Eq_Conditioned.Eq_Expect.Eq_Expect.policy_gradient.recursion.discrete},
+  \url{http://www.lemma.cn/lean/?module=Random.Grad.eq.Add_SMul_Sum_SMul.of.Ne0Real_Preimage.GtInftySup.All_Differentiable_Prob.All_Eq_Expect.All_Eq_Expect.EqMeasureCount.EqMeasureCount.In_Ico},
   2026.
 
 \bibitem{lemma_crf_logits}

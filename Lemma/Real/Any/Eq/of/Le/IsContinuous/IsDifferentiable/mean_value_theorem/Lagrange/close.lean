@@ -20,7 +20,6 @@ private lemma main
     have : f b - f a = (b - a) * deriv f z := by
       rw [hslope]
       field_simp [hne]
-      <;> ring
     exact this
   · have heq : a = b := by linarith
     subst heq

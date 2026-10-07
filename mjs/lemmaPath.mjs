@@ -17,8 +17,6 @@ const TYPE_TO_SECTION = {
   MeasureSpace: "Random",
   AEMeasurable: "Random",
   PSpace: "Random",
-  // PolicyGradient trajectory MDP (`{M : Model Θ S A}`, 𝔼[· : M θ](· | ·)).
-  Model: "Random",
   Measurable: "Measure",
   Measure: "Measure",
   Kernel: "Kernel",
@@ -50,6 +48,7 @@ const TYPE_TO_SECTION = {
   lpSpace: "Matrix",
   WithLp: "Matrix",
   PiLp: "Matrix",
+  EuclideanSpace: "Matrix", // EuclideanSpace ℝ ι = PiLp 2 (ι → ℝ)
   Bool: "Bool",
   Hyperreal: "Hyperreal",
   "ℝ*": "Hyperreal",
@@ -69,9 +68,13 @@ const TYPE_TO_SECTION = {
 const SECTION_WEIGHT = {
   StochasticVec: 2, RowStochastic: 2, StochasticIrreducible: 2, Stationary: 2,
   Aperiodic: 2, DoeblinMinorization: 2, Simplex: 2, broadcast: 2,
-  // Model / conditional-expectation lemmas: beat incidental `γ ∈ Set.Ico 0 1` (Set score 3).
-  Model: 4,
 };
+
+/** sympy/<dir>/… modules whose data structures belong to a data-type section. */
+const SYMPY_DIR_SECTION = { stats: "Random", matrices: "Matrix", tensor: "Tensor", sets: "Set" };
+/** Weight of a binder typed by a repo data structure (`{M : Model Θ S A}` from sympy.stats.policy_trajectory):
+ *  beats incidental `γ ∈ Set.Ico 0 1` (Set 3) and typeclass / scalar evidence. */
+const STRUCT_BINDER_WEIGHT = 4;
 
 const DATA_TYPE_SECTIONS = new Set(Object.values(TYPE_TO_SECTION));
 
@@ -100,27 +103,83 @@ const CLASS_TOKEN = {
   LeanIn: "In",
   LeanInf: "Inf",
   Lean_cdotp: "Dot", // x ⬝ᵥ y → Dot (FiniteMRP/DotVecMul_D)
-  Lean_subseteq: "Subset", // A ⊆ B → A/sub/B, Subset_B (AbsorbingSet/Subset_PhaseSpace, Random/Quantile/sub/QuantileLower)
+  Lean_subseteq: "Subset", // A ⊆ B → A/sub/B, Subset_B (Real/AbsorbingSet/sub/PhaseSpace, Random/Quantile/sub/QuantileLower)
 };
 
 function cls(n) { return n?.constructor?.name || ""; }
+
+/** Head of the (co)domain of a type text: `Matrix S S ℝ` → Matrix, `S × A → ProbabilityMeasure S` → ProbabilityMeasure. */
+function codomainHead(text) {
+  let t = String(text || "").replace(/--.*$/, "").replace(/\s*(:=|\bwhere\b)[\s\S]*$/, "").trim();
+  let depth = 0, cut = 0;
+  for (let i = 0; i < t.length; i++) {
+    const c = t[i];
+    if ("([{⟨".includes(c)) depth++;
+    else if (")]}⟩".includes(c)) depth--;
+    else if (c === "→" && depth === 0) cut = i + 1;
+  }
+  t = t.slice(cut).trim();
+  const m = /^\(*\s*([A-Za-zℝℕℤℚℂ][\w.']*)/u.exec(t);
+  return m ? m[1] : null;
+}
+/** Type head of a declaration header `def P (x : T) : Matrix S S ℝ` (after its last top-level `:`). */
+function declTypeHead(hd) {
+  let depth = 0, cut = -1;
+  for (let i = 0; i < hd.length; i++) {
+    const c = hd[i];
+    if ("([{⟨".includes(c)) depth++;
+    else if (")]}⟩".includes(c)) depth--;
+    else if (c === ":" && depth === 0 && hd[i + 1] !== "=") cut = i + 1;
+  }
+  return cut < 0 ? null : codomainHead(hd.slice(cut));
+}
 
 /** Declarations of the repo's sympy/**.lean modules: structure fields and type abbreviations. */
 let SYMPY_DECLS = null;
 function sympyDecls() {
   if (SYMPY_DECLS) return SYMPY_DECLS;
   const structs = new Map(); // structure → Map(field → type head)
+  const structInfo = new Map(); // structure → { module: ["stats", "policy_trajectory"], ns: ["PolicyGradient"], prop }
   const typeAbbrevs = new Set(); // `abbrev EuclideanVec (d : ℕ) := EuclideanSpace ℝ (Fin d)` (not set-builder / Prop)
-  const scan = (text) => {
+  const abbrevHeads = new Map(); // EuclideanVec → EuclideanSpace, LpSpace → PiLp (head of a non-product right-hand side)
+  const propDecls = new Set(); // `class Iterates … : Prop where`, `structure SolvesStateEquation … : Prop where`, `def … : Prop :=`
+  const dataDecls = new Set(); // `structure Skeleton … where`, `inductive Hist …`, type abbreviations: values of these are data
+  const valueDefs = new Set(); // `def actor_box … : Set …` → ActorBox: a value / function, not a type
+  const members = new Map(); // structure → Map(field / namespace def → head of its (co)domain type): FiniteMRP.D → Matrix
+  const parents = new Map(); // structure → parent structure (`extends MDPSpec S A`)
+  const nsDefsRaw = []; // [namespace, def, type head] resolved against the structures after the scan
+  const scan = (text, module = []) => {
     const lines = text.replace(/\r\n/g, "\n").split("\n");
+    const ns = [];
     for (let i = 0; i < lines.length; i++) {
+      // declaration kinds: Prop predicates / value definitions / data types (header up to `where` / `:=`)
+      const dm = /^(?:@\[[^\]]*\]\s*)?(?:noncomputable\s+|private\s+|protected\s+)*(class|structure|def|abbrev|inductive)\s+([^\s({\[:]+)/.exec(lines[i]);
+      if (dm) {
+        let hd = lines[i];
+        for (let j = i + 1; j < Math.min(lines.length, i + 8) && !/(:=|\bwhere\b|\|)/.test(hd); j++) hd += " " + lines[j].trim();
+        hd = hd.replace(/(:=|\bwhere\b)[\s\S]*$/, " $1");
+        const nm = dm[2].includes(".") ? "" : dm[2];
+        if (nm && dm[1] !== "inductive" && /:\s*Prop\s*(?:extends\b[^:]*)?(?::=|where)\s*$/.test(hd)) propDecls.add(nm);
+        else if (nm && (dm[1] === "structure" || dm[1] === "inductive" || (dm[1] === "class" && /^[A-Z]/.test(nm)))) dataDecls.add(nm);
+        else if (nm && dm[1] === "def" && /^[a-z]/.test(nm)) valueDefs.add(nm.split("_").map((x) => x.charAt(0).toUpperCase() + x.slice(1)).join(""));
+        if (nm && dm[1] === "def" && ns.length) { const th = declTypeHead(hd.replace(/\s*(:=|\bwhere\b)\s*$/, "")); if (th) nsDefsRaw.push([ns[ns.length - 1], nm, th]); }
+      }
+      const nsm = /^namespace\s+(\S+)/.exec(lines[i]);
+      if (nsm) { ns.push(nsm[1]); continue; }
+      const endm = /^end\s+(\S+)/.exec(lines[i]);
+      if (endm && ns.length && ns[ns.length - 1] === endm[1]) { ns.pop(); continue; }
       const ab = /^(?:@\[[^\]]*\]\s*)?(?:noncomputable\s+)?abbrev\s+([^\s({\[:]+)(.*)$/.exec(lines[i]);
       if (ab) {
         const k = ab[2].indexOf(":=");
         let rhs = k >= 0 ? ab[2].slice(k + 2).trim() : "";
         if (k >= 0 && !rhs) rhs = (lines[i + 1] || "").trim();
         const head = k >= 0 ? ab[2].slice(0, k) : ab[2];
-        if (rhs && !/^[{]|^Set\b/.test(rhs) && !/:\s*Prop\s*$/.test(head.trim())) typeAbbrevs.add(ab[1]);
+        if (rhs && !/^[{]|^Set\b/.test(rhs) && !/:\s*Prop\s*$/.test(head.trim())) {
+          typeAbbrevs.add(ab[1]);
+          dataDecls.add(ab[1]);
+          const hm = /^([A-Z][\w.]*)/.exec(rhs);
+          if (hm && !/[×⊕→]/.test(rhs)) abbrevHeads.set(ab[1], hm[1]);
+        }
         continue;
       }
       const st = /^structure\s+([^\s({\[]+)/.exec(lines[i]);
@@ -136,9 +195,14 @@ function sympyDecls() {
         if (!l.trim() || /^\s*--/.test(l)) continue;
         if (!/^\s/.test(l)) break;
         const f = /^\s{2}([^\s:()]+(?:\s+[^\s:()]+)*)\s*:\s*(\S*)/.exec(l);
+        const ft = /^\s{2}([^\s:()]+(?:\s+[^\s:()]+)*)\s*:\s*(.+)$/.exec(l);
+        if (ft) { const h = codomainHead(ft[2]); if (h) { if (!members.has(st[1])) members.set(st[1], new Map()); for (const nm of ft[1].split(/\s+/)) if (nm) members.get(st[1]).set(nm, h); } }
         if (f) for (const nm of f[1].split(/\s+/)) fields.set(nm, f[2].replace(/[()]/g, ""));
       }
       structs.set(st[1], fields);
+      const ext = /\bextends\s+([A-Z][\w.]*)/.exec(header);
+      if (ext) parents.set(st[1], ext[1]);
+      structInfo.set(st[1], { module, ns: ns.flatMap((x) => x.split(".")), prop: /:\s*Prop\s*(?:extends|where)\b/.test(header) });
     }
   };
   const walk = (d) => {
@@ -147,12 +211,91 @@ function sympyDecls() {
     for (const e of es) {
       const q = path.join(d, e.name);
       if (e.isDirectory()) walk(q);
-      else if (q.endsWith(".lean")) { try { scan(fs.readFileSync(q, "utf8")); } catch {} }
+      else if (q.endsWith(".lean")) { try { scan(fs.readFileSync(q, "utf8"), path.relative(path.join(REPO, "sympy"), q).replace(/\.lean$/, "").split(path.sep)); } catch {} }
     }
   };
   walk(path.join(REPO, "sympy"));
-  SYMPY_DECLS = { structs, typeAbbrevs };
+  for (const [nsName, nm, th] of nsDefsRaw) {
+    if (!structs.has(nsName)) continue;
+    if (!members.has(nsName)) members.set(nsName, new Map());
+    if (!members.get(nsName).has(nm)) members.get(nsName).set(nm, th);
+  }
+  SYMPY_DECLS = { structs, structInfo, typeAbbrevs, abbrevHeads, propDecls, dataDecls, valueDefs, members, parents };
   return SYMPY_DECLS;
+}
+
+/**
+ * Section of a repo data structure (not a Prop structure, not a Lemma folder of its own — those are
+ * custom sections): its namespace names a section (`namespace Kernel`), else the sympy module directory
+ * does (`sympy/stats/policy_trajectory.lean` ∋ `structure Model` → Random). null otherwise.
+ */
+let LEMMA_FOLDERS = null;
+function lemmaFolders() {
+  if (!LEMMA_FOLDERS) { try { LEMMA_FOLDERS = fs.readdirSync(LEMMA_ROOT, { withFileTypes: true }).filter((e) => e.isDirectory()).map((e) => e.name); } catch { LEMMA_FOLDERS = []; } }
+  return LEMMA_FOLDERS;
+}
+function structSection(name, sections = lemmaFolders()) {
+  const info = sympyDecls().structInfo.get(name);
+  if (!info || info.prop) return null;
+  if (sections.includes(name) || sections.some((s) => !DATA_TYPE_SECTIONS.has(s) && name.startsWith(s) && /[A-Z]/.test(name.charAt(s.length)))) return null;
+  // a bundle of section data (`kernel : Kernel S S`, `init : ProbabilityMeasure S`: HomMarkovChainSpec) is read
+  // through its projections (M.kernel → Kernel); only a notion built from repo structures / functions
+  // (`env : Env S A`, `pol : Policy Θ S A`: Model) is placed by its namespace / module
+  const SCALAR = new Set(["Real", "Nat", "Int", "Rat", "Complex"]);
+  for (const ty of sympyDecls().structs.get(name)?.values() || []) { const sec = TYPE_TO_SECTION[ty]; if (sec && !SCALAR.has(sec)) return null; }
+  for (const n of [...info.ns].reverse()) if (DATA_TYPE_SECTIONS.has(n) && sections.includes(n)) return n;
+  for (const d of info.module.slice(0, -1)) if (SYMPY_DIR_SECTION[d]) return SYMPY_DIR_SECTION[d];
+  return null;
+}
+
+/**
+ * Sections are data types. A Lemma folder named after a repo Prop predicate (`structure SolvesStateEquation … : Prop`,
+ * `class GeneratorMatrix … : Prop`, `class Iterates … : Prop`) or after a value definition (`def actor_box … : Set …`,
+ * `def absorbing_set`) is no data type: it never becomes a custom section, its name is only a hypothesis /
+ * conclusion token. Files still filed under such a folder stay accepted there (see `legacySection` in suggest).
+ */
+function nonDataFolder(name) {
+  const { propDecls, dataDecls, valueDefs } = sympyDecls();
+  if (DATA_TYPE_SECTIONS.has(name) || TYPE_TO_SECTION[name] || dataDecls.has(name)) return false;
+  return propDecls.has(name) || valueDefs.has(name);
+}
+
+/** Declared (co)domain head of a structure member (field or namespace def), through `extends`. */
+function memberType(T, f, k = 0) {
+  const { members, parents } = sympyDecls();
+  const t = members.get(T)?.get(f);
+  if (t) return t;
+  const p = parents.get(T);
+  return p && k < 4 ? memberType(p, f, k + 1) : null;
+}
+
+/** Section of a repo type abbreviation through its head: EuclideanVec → EuclideanSpace → Matrix. */
+function abbrevSection(name) {
+  const { abbrevHeads } = sympyDecls();
+  for (let t = name, k = 0; t && k < 5; k++) {
+    if (TYPE_TO_SECTION[t]) return TYPE_TO_SECTION[t];
+    t = abbrevHeads.get(t);
+  }
+  return null;
+}
+
+/** Binder types that are repo data structures with a section: `{M : Model Θ S A}` → Map(Model → Random). */
+const STRUCT_BINDER_CACHE = new WeakMap();
+function structBinderTypes(node) {
+  if (node && typeof node === "object" && STRUCT_BINDER_CACHE.has(node)) return STRUCT_BINDER_CACHE.get(node);
+  const out = new Map();
+  (function walk(n) {
+    if (!n || typeof n !== "object") return;
+    const c = cls(n);
+    if ((c === "LeanBrace" || c === "LeanParenthesis") && cls(n.args?.[0]) === "LeanColon") {
+      let h = n.args[0].args?.[1];
+      if (cls(h) === "LeanArgsSpaceSeparated") h = h.args?.[0];
+      if (cls(h) === "LeanToken") { const sec = structSection(h.text); if (sec) out.set(h.text, sec); }
+    }
+    for (const a of n.args || []) walk(a);
+  })(node);
+  if (node && typeof node === "object") STRUCT_BINDER_CACHE.set(node, out);
+  return out;
 }
 
 /** `{sk : Skeleton S d}` → Map(sk → Skeleton) for binders typed by a repo structure. */
@@ -356,11 +499,12 @@ function hasRandomAstCues(node) {
     }
     if (cls(n) === "LeanToken") {
       const t = n.text;
+      // a binder typed by a data structure of the Random section (PolicyGradient.Model, the trajectory law)
+      if (structBinderTypes(node).get(t) === "Random") { found = true; return; }
       if (
         t === "PSpace" ||
         t === "ProbabilityMeasure" ||
         t === "IsProbabilityMeasure" ||
-        t === "Model" ||
         t === "𝔼"
       ) {
         found = true;
@@ -388,8 +532,8 @@ function hasRandomVariableCues(node) {
     }
     if (cls(n) === "LeanToken" && typeof n.text === "string") {
       const t = n.text;
-      // PolicyGradient.Model is the trajectory law (stand-in for Ω → · binders).
-      if (t === "Model") rv = true;
+      // a Random data structure binder (PolicyGradient.Model, the trajectory law) stands in for Ω → · binders
+      if (structBinderTypes(node).get(t) === "Random") rv = true;
       if (t === "ℙ" || t === "𝔼" || /PSpace$/.test(t) || /\.bvar$/.test(t)) prob = true;
     }
     if (Array.isArray(n.args)) for (const c of n.args) walk(c);
@@ -432,8 +576,12 @@ function collectTokenWeights(node, w = 1, out = new Map()) {
     if (t.includes(".")) {
       const ns = t.slice(0, t.indexOf("."));
       if (TYPE_TO_SECTION[ns] === ns) put("ns:" + ns, w);
+      // a constant of a repo data structure's namespace (`QLearningSpec.maxₐ`, sympy/stats) → its section
+      else if (structSection(ns)) put("st:" + ns, w);
     }
   }
+  // `QLearningSpec.maxₐ` parses as a projection of the structure name: a namespace constant of a repo data structure
+  if (c === "LeanProperty" && cls(node.args?.[0]) === "LeanToken" && /^[A-Z]/.test(node.args[0].text || "") && structSection(node.args[0].text)) put("st:" + node.args[0].text, w);
   if (c === "LeanProperty" && cls(node.args?.[1]) === "LeanToken") {
     const p = nameToken(node.args[1].text || "");
     if (TYPE_TO_SECTION[p] === p) put("." + p, w);
@@ -605,11 +753,15 @@ function pickSection(sigNode, sections, extra = {}) {
   const candidates = [...new Set([...sections, ...DATA_TYPE_SECTIONS])];
   const scores = new Map(candidates.map((s) => [s, 0]));
   const add = (sec, x) => { if (sec && scores.has(sec)) scores.set(sec, scores.get(sec) + x); };
+  const structTypes = structBinderTypes(sigNode);
   for (const [t, w] of weights) {
     let sec;
     let raw;
     if (t.startsWith(".")) { sec = TYPE_TO_SECTION[t.slice(1)]; raw = 2; }
     else if (t.startsWith("ns:")) { sec = TYPE_TO_SECTION[t.slice(3)]; raw = 1; }
+    else if (t.startsWith("st:")) { sec = structSection(t.slice(3)); raw = STRUCT_BINDER_WEIGHT; }
+    else if (!TYPE_TO_SECTION[t] && structTypes.has(t)) { sec = structTypes.get(t); raw = STRUCT_BINDER_WEIGHT; } // {M : Model Θ S A} → Random
+    else if (!TYPE_TO_SECTION[t] && sympyDecls().abbrevHeads.has(t)) { sec = abbrevSection(t); raw = 1; } // {w : ℝ → EuclideanVec m} → Matrix
     else { sec = TYPE_TO_SECTION[t]; raw = t === sec ? 3 : SECTION_WEIGHT[t] ?? 1; }
     if (!sec) continue;
     const index = sec === "Nat" || sec === "Int";
@@ -619,6 +771,28 @@ function pickSection(sigNode, sections, extra = {}) {
     add(sec, x);
   }
   if (hasNode(sigNode, (n) => cls(n) === "LeanNorm" || cls(n) === "Lean_sqrt" || (cls(n) === "LeanToken" && n.text === "π"))) add("Real", 1);
+  // projections of a repo-structure binder are read through their declared types (non-scalar only):
+  // `MRP.D : Matrix S S ℝ` → Matrix, `MDP.pi : S → ProbabilityMeasure A` → Random, `MDP.MRP.P` through FiniteMDP.MRP : FiniteMRP
+  {
+    const bundles = bundleVars(sigNode);
+    const projSecs = new Set();
+    const SCALAR = new Set(["Real", "Nat", "Int", "Rat", "Complex"]);
+    if (bundles.size) (function walk(n) {
+      if (!n || typeof n !== "object") return;
+      if (cls(n) === "LeanProperty") {
+        const parts = propertyParts(n);
+        if (parts && parts.length >= 2 && bundles.has(parts[0])) {
+          let ty = bundles.get(parts[0]), last = null;
+          for (const p of parts.slice(1)) { const nt = memberType(ty, p); if (!nt) break; ty = last = nt; }
+          const sec = last && (TYPE_TO_SECTION[last] || abbrevSection(last));
+          if (sec && !SCALAR.has(sec)) projSecs.add(sec);
+          return;
+        }
+      }
+      for (const a of n.args || []) walk(a);
+    })(sigNode);
+    for (const sec of projSecs) add(sec, 2);
+  }
   for (const s of extra.imports || []) { if (!scores.has(s)) scores.set(s, 0); add(s, 1.5); }
   const concl = conclusionNode(sigNode);
   if (concl && (cls(concl) === "LeanEq" || cls(concl) === "Lean_le") && concl.superscript === "ᶠ") add("Filter", 3);
@@ -657,7 +831,14 @@ function pickSection(sigNode, sections, extra = {}) {
     if (concl && (cls(concl) === "Lean_in" || cls(concl) === "LeanIn") && isSetCons(concl.args?.[1])) add("Set", 1);
   }
   // matrix exponential (`exp (t • Q)` with Q : Matrix …) lives in NormedSpace/
-  if (scores.has("NormedSpace") && hasNode(sigNode, (n) => cls(n) === "LeanToken" && (n.text === "exp" || n.text === "NormedSpace.exp")) &&
+  // (`Real.exp` / `Complex.exp` are scalar exponentials, not the matrix one)
+  const matrixExp = (n) => {
+    if (!n || typeof n !== "object") return false;
+    if (cls(n) === "LeanProperty" && cls(n.args?.[0]) === "LeanToken" && /^(Real|Complex)$/.test(n.args[0].text || "")) return false;
+    if (cls(n) === "LeanToken" && (n.text === "exp" || n.text === "NormedSpace.exp")) return true;
+    return (n.args || []).some(matrixExp);
+  };
+  if (scores.has("NormedSpace") && matrixExp(sigNode) &&
       hasNode(sigNode, (n) => cls(n) === "LeanToken" && n.text === "Matrix")) add("NormedSpace", 8);
   // limits of real sequences/functions (`lim [n → ∞] γ ^ n * x n = 0` next to `Set.range`) are Real lemmas
   if (concl && tokens.has("ℝ") && hasNode(concl, (n) => cls(n) === "Lean_lim")) add("Real", 3);
@@ -1044,10 +1225,60 @@ function leafHeadConstArgs(args, opts) {
   return out;
 }
 
-/** Relation alternatives: `ae` soft relations for ᵐ, literal-left mirroring, identity. */
+/** Binary AST ops whose second argument is named with Snake_Case (`F_Y` = `F _ Y`, README).
+ *  A trailing `_0` after such a rendering is ambiguous with that second argument. */
+function leftEndsInBinSnake(node) {
+  const u = unwrapParen(node);
+  const c = cls(u);
+  if (c === "LeanPreimage" || c === "LeanInner") return true;
+  if (c === "LeanParenthesis") return leftEndsInBinSnake(u.args?.[0]);
+  if (c === "LeanArgsSpaceSeparated") {
+    const head = u.args?.[0];
+    // μ.real (f ⁻¹' s) / (f ⁻¹' s) applied: the preimage is the binary spine
+    if (cls(head) === "LeanProperty" && cls(head.args?.[1]) === "LeanToken" && /^(real|toReal)$/.test(head.args[1].text || ""))
+      return (u.args || []).slice(1).some(leftEndsInBinSnake);
+    if (fnLikeHead(head)) return true;
+    return leftEndsInBinSnake(head);
+  }
+  return false;
+}
+
+/** Preferred left atom when a binary-snake spine would make `_0` ambiguous: `(M θ).real (s t ⁻¹' {x})` → Real_Preimage
+ *  (hole for the measure / M θ; one Preimage; no trailing S from the process variable `s`). */
+function binSnakeLeftName(node, left) {
+  const u = unwrapParen(node);
+  if (cls(u) === "LeanArgsSpaceSeparated") {
+    const head = u.args?.[0];
+    if (cls(head) === "LeanProperty" && cls(head.args?.[1]) === "LeanToken" && /^(real|toReal)$/.test(head.args[1].text || "")
+        && (u.args || []).slice(1).some(leftEndsInBinSnake))
+      return "Real_Preimage";
+  }
+  if (/^RealPreimageS?$/.test(left || "")) return "Real_Preimage";
+  return left;
+}
+
+/** `Measure.count`, `Set.univ`: a namespaced constant (capital-token receiver). */
+function isNamespacedConst(node) {
+  const u = unwrapParen(node);
+  return cls(u) === "LeanProperty" && cls(u.args?.[0]) === "LeanToken" && /^[A-Z]/.test(u.args[0].text || "")
+    && cls(u.args?.[1]) === "LeanToken";
+}
+
+/** `(x : Measure S)` / a colon ascription in an argument list. */
+function isTypeAscriptionExpr(node) {
+  let u = unwrapParen(node);
+  if (cls(u) === "LeanColon") return true;
+  if (cls(u) === "LeanArgsSpaceSeparated") return (u.args || []).some((a) => cls(unwrapParen(a)) === "LeanColon");
+  return false;
+}
+
+/** Relation alternatives: `ae` soft relations for ᵐ (`=ᵐ` reads MEq, composed like Eq), literal-left mirroring, identity. */
 function relationAlts(node, tag0, opts) {
   const args = node.args || [];
   const ae = node.superscript === "ᵐ";
+  // `f =ᵐ[μ] g` is its own relation `MEq` (Lemma/Random/MEqCondExp_Integral, Random/Eq/of/Ne_0/MEq):
+  // inline only (MEq_CondExp, MEqCondExp_Integral, bare MEq), never the `X.ae.Y` soft form
+  if (ae && tag0 === "Eq") return meqAlts(node, opts);
   const T = (t) => (ae ? "Ae" + t : t);
   const T0 = T;
   const S = (t) => (t === "Iff" ? "is" : t === "Subset" ? "sub" : ae ? (t === "Eq" ? "ae" : "ae" + t) : t.toLowerCase());
@@ -1075,10 +1306,22 @@ function relationAlts(node, tag0, opts) {
           if (l === "0" && (soft === "gt" || soft === "lt")) out.push(r + "/" + (soft === "lt" ? "Gt_0" : "Lt_0"));
           out.push(l + "/" + soft + "/" + r);
         }
-        out.push(T(tag) + l + r);
-        out.push(l + T(tag) + r);
-        if (l !== r && l.startsWith(r)) out.push(T(tag) + l);
-        out.push(T(tag) + l + "_" + r);
+        // asGiven: binary-snake left + numeric right → Rel0Left (Ne0Real_Preimage), not RelLeft_0
+        if (opts.asGiven && /^\d+$/.test(r) && leftEndsInBinSnake(args[0])) {
+          out.push(T(tag) + r + binSnakeLeftName(args[0], l));
+        } else if (opts.asGiven && isNamespacedConst(args[1])) {
+          // Measure.count: no underscore (EqMeasureCount); EqMeasure_Count kept as alt
+          out.push(T(tag) + l + r);
+          out.push(T(tag) + l + "_" + r);
+        } else if (opts.asGiven && (isTypeAscriptionExpr(args[0]) || isTypeAscriptionExpr(args[1]))) {
+          out.push(T(tag) + l + r);
+          out.push(T(tag) + l + "_" + r);
+        } else {
+          out.push(T(tag) + l + r);
+          out.push(l + T(tag) + r);
+          if (l !== r && l.startsWith(r)) out.push(T(tag) + l);
+          out.push(T(tag) + l + "_" + r);
+        }
       }
     }
     if (!L.length && R.length) for (const r of R) { out.push(T(tag) + "_" + r); out.push(T(tag) + r); }
@@ -1097,7 +1340,7 @@ function relationAlts(node, tag0, opts) {
       if (!L.length) for (const r of R) out.push(r);
       for (const l of L) if (R.includes(l)) out.push(T(tag));
     }
-    // the section itself is the subject: AbsorbingSet/Subset_PhaseSpace (absorbing_set … ⊆ phase_space …)
+    // the section itself is the subject: <Section>/Subset_X (the section's own notion ⊆ X) also reads Subset_X
     if (opts.section && L.includes(opts.section) && !gen.__inner) {
       gen.__inner = true;
       try { out.push(...gen(tag, [], R)); } finally { gen.__inner = false; }
@@ -1122,12 +1365,66 @@ function relationAlts(node, tag0, opts) {
   // a lambda side may be abbreviated away: `μ[f | m] ≤ᵐ fun ω => …` → AeLeCondExp
   const isFun = (n) => cls(unwrapParen(n)) === "Lean_fun";
   const dropped = isFun(args[1]) && !isFun(args[0]) ? gen(tag0, leftAlts, []) : isFun(args[0]) && !isFun(args[1]) ? gen(tag0, [], rightAlts) : [];
-  return uniq([...(mirror ? gen(MIRROR_REL[tag0], rightAlts, leftAlts) : []), ...dropped, ...gen(tag0, leftAlts, rightAlts)]);
+  let outR = uniq([...(mirror ? gen(MIRROR_REL[tag0], rightAlts, leftAlts) : []), ...dropped, ...gen(tag0, leftAlts, rightAlts)]);
+  // `(M θ).real (s t ⁻¹' {x}) ≠ 0` → Ne0Real_Preimage only (drop NeRealPreimageS_0 / Ne0RealPreimageS)
+  if (opts.asGiven && leftEndsInBinSnake(args[0]) && isConstNode(args[1])) {
+    const dig = nameExpr(args[1], opts);
+    const tUse = (MIRROR_REL[tag0] && isConstNode(args[0]) && !isConstNode(args[1])) ? MIRROR_REL[tag0] : tag0;
+    const pref = (ae ? "Ae" : "") + tUse + dig + "Real_Preimage";
+    outR = outR.filter((a) => !/PreimageS/.test(a) && !(/Preimage/.test(a) && /_\d+$/.test(a)));
+    if (dig && !outR.includes(pref)) outR.unshift(pref);
+  }
+  return outR;
+}
+
+/** `=ᵐ` names: both sides named → MEqL_R (also MEqLR, MEqL when the sides agree; `L/ae/R` accepted), a hole or
+ *  abbreviated lambda side → MEq_R / MEqL, both holes or both lambdas → MEq. */
+const isFunNode = (n) => cls(unwrapParen(n)) === "Lean_fun";
+function meqAlts(node, opts) {
+  const args = node.args || [];
+  const L = nameExprAlts(args[0], opts);
+  const R = nameExprAlts(args[1], opts);
+  const gen = (L, R) => {
+    const out = [];
+    const pairs = [];
+    for (let i = 0; i < L.length; i++) for (let j = 0; j < R.length; j++) pairs.push([i + j, i, j]);
+    pairs.sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+    for (const [, i, j] of pairs) {
+      const l = L[i], r = R[j];
+      if (!l || !r) continue;
+      // identity, as for Eq: CondExpPow_Id (both sides CondExpPow_Id); MEqExpect
+      if (l === r) { out.push("MEq" + l, l); if (!l.includes("/")) out.push("MEq" + (pluralSnakeS(l) || pluralLetterS(l) || pluralMidS(l))); }
+      out.push("MEq" + l + "_" + r);
+      out.push("MEq" + l + r);
+      if (l !== r && l.startsWith(r)) out.push("MEq" + l);
+      // the relation path form `X/ae/Y` stays legal (Random/CondExpInner/ae/Inner_CondExp); only fused AeEq is gone
+      out.push(l + "/ae/" + r);
+    }
+    if (!L.length) for (const r of R) { out.push("MEq_" + r); out.push("MEq" + r); }
+    if (!R.length) for (const l of L) { out.push("MEq" + l); out.push("MEq_" + l); }
+    if (!L.length && !R.length) out.push("MEq");
+    return out;
+  };
+  const f0 = isFunNode(args[0]), f1 = isFunNode(args[1]);
+  const dropped = f0 && f1 ? gen([], []) : f1 ? gen(L, []) : f0 ? gen([], R) : [];
+  return uniq([...gen(L, R), ...dropped, "MEq"].filter(Boolean));
+}
+function meqCanon(node, opts) {
+  const args = node.args || [];
+  const f0 = isFunNode(args[0]), f1 = isFunNode(args[1]);
+  if (f0 && f1) return "MEq";
+  const left = f0 ? "" : nameExpr(args[0], opts);
+  const right = nameExpr(args[1], opts);
+  if (left && right) return left === right ? "MEq" + left : "MEq" + left + "_" + right;
+  if (right) return "MEq_" + right;
+  if (left) return "MEq" + left;
+  return "MEq";
 }
 
 function relationCanon(node, tag0, opts) {
   const args = node.args || [];
   const ae = node.superscript === "ᵐ";
+  if (ae && tag0 === "Eq") return meqCanon(node, opts);
   let tag = tag0;
   let left = nameExpr(args[0], opts);
   let right = nameExpr(args[1], opts);
@@ -1139,7 +1436,13 @@ function relationCanon(node, tag0, opts) {
   const soft = tag === "Iff" ? "is" : tag === "Subset" ? "sub" : ae ? (tag === "Eq" ? "ae" : "ae" + tag) : tag.toLowerCase();
   if (left && right) {
     if (left === right && (tag === "Eq" || tag === "Iff")) return left;
-    if (opts.asGiven) return T + left + "_" + right;
+    if (opts.asGiven) {
+      // binary-snake left + numeric right: Ne0Real_Preimage (not NeRealPreimageS_0; `_0` would be Preimage's 2nd arg)
+      if (/^\d+$/.test(right) && leftEndsInBinSnake(args[0])) return T + right + binSnakeLeftName(args[0], left);
+      // namespaced const / type ascription: EqMeasureCount (no underscore)
+      if (isNamespacedConst(args[1]) || isTypeAscriptionExpr(args[0]) || isTypeAscriptionExpr(args[1])) return T + left + right;
+      return T + left + "_" + right;
+    }
     if (right === "0" && (soft === "gt" || soft === "lt")) return left + "/" + (soft === "gt" ? "Gt_0" : "Lt_0");
     if (left === "0" && (soft === "gt" || soft === "lt")) return right + "/" + (soft === "lt" ? "Gt_0" : "Lt_0");
     return left + "/" + soft + "/" + right;
@@ -1227,12 +1530,55 @@ function isSupLtInfty(node) {
   const head = cls(lhs) === "LeanArgsSpaceSeparated" ? lhs.args?.[0] : lhs;
   return cls(head) === "LeanGetElem" && cls(head.args?.[0]) === "LeanToken" && head.args[0].text === "sup";
 }
+/**
+ * The elaborated forms of the `sup[…] e < ∞` sugar (sympy/concrete/sup.lean), written out:
+ * `BddAbove (Set.range fun x ↦ e)` and `BddAbove ((fun (x, y) ↦ e) '' {p | c})`. Named like the sugar,
+ * GtInftySup (the only accepted spelling). A plain `BddAbove (f '' S)` / `BddAbove (Set.range f)` is not the sugar.
+ */
+function isBddAboveSup(node) {
+  const u = unwrapParen(node);
+  if (cls(u) !== "LeanArgsSpaceSeparated" || (u.args || []).length !== 2) return false;
+  if (cls(u.args[0]) !== "LeanToken" || u.args[0].text !== "BddAbove") return false;
+  let a = unwrapParen(u.args[1]);
+  // `Set.range fun x ↦ e` parses as Set.(range fun x ↦ e)
+  if (cls(a) === "LeanProperty" && cls(a.args?.[0]) === "LeanToken" && a.args[0].text === "Set") a = a.args[1];
+  // a multi-line image `(fun p ↦ e) ''\n {p | c}` is indented: its first line carries the lambda and ''
+  if (cls(a) === "LeanArgsIndented") a = a.args?.[0];
+  if (cls(a) !== "LeanArgsSpaceSeparated") return false;
+  const xs = a.args || [];
+  if (xs.length === 2 && cls(xs[0]) === "LeanToken" && /^(Set\.)?range$/.test(xs[0].text || "") && cls(unwrapParen(xs[1])) === "Lean_fun") return true;
+  return xs.length >= 2 && cls(unwrapParen(xs[0])) === "Lean_fun" && cls(xs[1]) === "LeanToken" && xs[1].text === "''";
+}
+/** Kind of the bounded quantity of a sup-bound (sugar or elaborated): `‖…‖` → Norm, `|…|` → Abs, else "". */
+function supBoundKind(node) {
+  const u = unwrapParen(node);
+  let body = null;
+  if (isSupLtInfty(u)) {
+    const lhs = unwrapParen(u.args[0]);
+    body = cls(lhs) === "LeanArgsSpaceSeparated" ? lhs.args?.[lhs.args.length - 1] : null;
+  } else {
+    let a = unwrapParen(u.args?.[1]);
+    if (cls(a) === "LeanProperty") a = a.args?.[1];
+    if (cls(a) === "LeanArgsIndented") a = a.args?.[0];
+    const f = (a?.args || []).map(unwrapParen).find((x) => cls(x) === "Lean_fun");
+    const r = f?.args?.[0];
+    body = cls(r) === "LeanRightarrow" ? r.args?.[r.args.length - 1] : null;
+  }
+  const k = cls(unwrapParen(body));
+  return k === "LeanNorm" ? "Norm" : k === "LeanAbs" ? "Abs" : "";
+}
+/** `sup[…] e < ∞` names: shortest first (GtInftySup), then the typed form (GtInftySup_Norm / GtInftySup_Abs). */
+function supBoundAlts(node) {
+  const k = supBoundKind(node);
+  return k ? ["GtInftySup", "GtInftySup_" + k, "LtSup__Infty"] : ["GtInftySup", "LtSup__Infty"];
+}
 function preAlts(node, opts, canon) {
   const c = cls(node);
   const args = node.args || [];
   const A = (n) => (canon ? [nameExpr(n, opts)].filter(Boolean) : nameExprAlts(n, opts));
   // `sup[t, ω] |r t ω| < ∞` → GtInftySup (short for LtSup__Infty)
-  if (isSupLtInfty(node)) return canon ? ["GtInftySup"] : ["GtInftySup", "LtSup__Infty"];
+  if (isSupLtInfty(node)) return canon ? ["GtInftySup"] : supBoundAlts(node);
+  if (isBddAboveSup(node)) return canon ? ["GtInftySup"] : uniq([...supBoundAlts(node), ...nameExprAltsBase(node, opts)]);
   // `{ω | P ω}` → SetOfP (Set/Union_SetOfEq_Add_1/eq/SetOfLe_Add_1)
   if (isSetBuilder(node)) {
     const p = setCondNames(node, opts, canon);
@@ -2008,7 +2354,7 @@ function isCoeAscription(node) {
 function nameExprBase(node, opts = {}) {
   if (!node) return "";
   const name = cls(node);
-  if (isSupLtInfty(node)) return "GtInftySup";
+  if (isSupLtInfty(node) || isBddAboveSup(node)) return "GtInftySup";
   if (isCoeAscription(node)) return "Coe" + nameExpr(node.args[0], opts);
 
   // Local `have` in imply is proof scaffolding — never a path atom.
@@ -2050,7 +2396,7 @@ function nameExprBase(node, opts = {}) {
         if (restName) return tag + "_And_" + restName;
       }
       if (!body.includes("/") && /^Eq/.test(body)) return multi + tag + "_" + body; // ∀ i, f i = g i → All_Eq
-      // `∀ t, τ ≤ t → P t` with a named bound τ keeps the implication (ForwardSolvesCriticEquation/All_Imp_LeNorm);
+      // `∀ t, τ ≤ t → P t` with a named bound τ keeps the implication (Matrix/All_Imp_LeNorm/…/ForwardSolvesCriticEquation);
       // a constant guard (`∀ t, 0 ≤ t → P t`) stays implicit (…/All_LeNorm)
       if (name === "Lean_forall" && !body.includes("/")) {
         const imp = unwrapParen(args[args.length - 1]);
@@ -2918,8 +3264,19 @@ export function suggest(filePath, lemmaName, options = {}) {
   if (!sig) throw new Error("Could not find lemma signature");
   for (const r of new Set([sig.indented, sig.nls, sig.implyStmts])) reassociateDotProduct(r);
   const sections = existingSections();
-  const picked = pickSection(sig.colon, sections, {
-    custom: customSection(sections, sig.implyStmts, extractGivens(sig.nls).filter((h) => h.prop).map((h) => h.typeNode), importSections(source, sections), sig.indented),
+  // sections are data types: folders named after Prop predicates / value definitions never decide the section
+  const curTop = path.relative(LEMMA_ROOT, abs).replace(/\\/g, "/").split("/")[0];
+  // typeclass folders (NormedSpace, …) are no data types either: they only keep the files already filed there
+  // (`exp (t • Q)` with Q : Matrix … is a Matrix lemma elsewhere)
+  const dataSections = sections.filter((s) => !nonDataFolder(s) && (!TYPECLASS_FOLDERS.has(s) || s === curTop));
+  const givenTypeNodes = extractGivens(sig.nls).filter((h) => h.prop).map((h) => h.typeNode);
+  // …except for a file still filed under the predicate folder that names it: it is named as before (transitional,
+  // until that folder is moved to its data-type section)
+  const legacyCustom = nonDataFolder(curTop) ? customSection(sections, sig.implyStmts, givenTypeNodes, importSections(source, sections), sig.indented) : null;
+  const legacy = !!legacyCustom && nonDataFolder(legacyCustom) && curTop === legacyCustom;
+  const custom = legacy ? legacyCustom : customSection(dataSections, sig.implyStmts, givenTypeNodes, importSections(source, dataSections), sig.indented);
+  const picked = pickSection(sig.colon, legacy ? sections : dataSections, {
+    custom,
     // `import sympy.….vector` → +1.5 for Vector; custom folders (Iterates, …) are decided by customSection only
     imports: [...importSections(source, sections).keys()].filter((s) => DATA_TYPE_SECTIONS.has(s) || TYPE_TO_SECTION[s]),
   });

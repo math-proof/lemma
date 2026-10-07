@@ -14,13 +14,13 @@ private lemma main
 -- imply
   CharZero X.functionField := by
 -- proof
-  haveI : CharZero ↑Γ(Spec (CommRingCat.of C), ⊤) :=
+  have : CharZero ↑Γ(Spec (CommRingCat.of C), ⊤) :=
     (RingHom.charZero_iff (ϕ := (Scheme.ΓSpecIso (CommRingCat.of C)).inv.hom)
       (Scheme.ΓSpecIso (CommRingCat.of C)).symm.commRingCatIsoToRingEquiv.injective).1 inferInstance
 
-  haveI : CharZero ↑Γ(X, ⊤) := (f.appTop).hom.charZero
+  have : CharZero ↑Γ(X, ⊤) := (f.appTop).hom.charZero
 
-  haveI := (Scheme.Opens.nonempty_iff (⊤ : X.Opens)).2 ⟨(inferInstance : Nonempty X).some, trivial⟩
+  have := (Scheme.Opens.nonempty_iff (⊤ : X.Opens)).2 ⟨(inferInstance : Nonempty X).some, trivial⟩
   exact (RingHom.charZero_iff (X.germToFunctionField_injective ⊤)).1 inferInstance
 
 

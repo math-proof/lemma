@@ -197,6 +197,9 @@ export class LeanProperty extends LeanBinary {
                     if (arg instanceof L.LeanColon) arg = arg.lhs;
                     return [arg.toLatex(syntax)];
                 }
+                case 'toReal':
+                    // ENNReal→ℝ: `ℙ[…](…).toReal` — keep the paren so Prob short-form / `\middle|` still run
+                    return [this.lhs.toLatex(syntax)];
             }
         }
         return super.latexArgs(syntax);
@@ -265,6 +268,8 @@ export class LeanProperty extends LeanBinary {
                     return '\\left|{%s}\\right|';
                 case 'natAbs':
                     return '\\left|{%s}\\right|';
+                case 'toReal':
+                    return '%s';
             }
         }
         return `{%s}${this.command}{%s}`;

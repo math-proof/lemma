@@ -35,7 +35,7 @@ private lemma main
   rw [PadicInt.isUnit_iff]
   refine le_antisymm (PadicInt.norm_le_one _) ?_
   by_contra hlt
-  push_neg at hlt
+  push Not at hlt
   exact zero_ne_one (α := ZMod p) ((htz P.det hlt) ▸ hdet1)
 
 

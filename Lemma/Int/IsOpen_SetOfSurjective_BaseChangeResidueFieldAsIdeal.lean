@@ -27,7 +27,7 @@ private lemma main
   have h : {𝔭 : PrimeSpectrum A | Function.Surjective (d.baseChange 𝔭.asIdeal.ResidueField)} =
       (Module.support A (Q ⧸ LinearMap.range d))ᶜ := by
     ext 𝔭
-    rw [Set.mem_setOf_eq, key, Set.mem_compl_iff, Module.mem_support_iff_nontrivial_residueField_tensorProduct,
+    rw [Set.mem_ofPred_eq, key, Set.mem_compl_iff, Module.mem_support_iff_nontrivial_residueField_tensorProduct,
       not_nontrivial_iff_subsingleton]
   rw [h]
   exact Module.isClosed_support.isOpen_compl

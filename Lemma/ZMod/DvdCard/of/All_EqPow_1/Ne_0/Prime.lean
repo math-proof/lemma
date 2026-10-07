@@ -12,13 +12,13 @@ private lemma main
   {H : Subgroup (ZMod (p ^ (padicValNat p q + 1)))ˣ}
 -- given
   (hp : p.Prime)
-  (hq : q ≠ 0)
+  (_hq : q ≠ 0)
   (hH : ∀ x ∈ H, x ^ q = 1) :
 -- imply
   Nat.card H ∣ q := by
 -- proof
-  haveI : Fact p.Prime := ⟨hp⟩
-  haveI : NeZero (p ^ (padicValNat p q + 1)) := ⟨pow_ne_zero _ hp.ne_zero⟩
+  have : Fact p.Prime := ⟨hp⟩
+  have : NeZero (p ^ (padicValNat p q + 1)) := ⟨pow_ne_zero _ hp.ne_zero⟩
   have hexp : Monoid.exponent H ∣ q :=
     Monoid.exponent_dvd_of_forall_pow_eq_one (fun g => Subtype.ext (by
       have := hH g.1 g.2; simpa using this))
@@ -31,9 +31,9 @@ private lemma main
     refine (Subgroup.card_subgroup_dvd_card H).trans ?_
     rw [hcardU]
     exact pow_padicValNat_dvd
-  · haveI : IsCyclic (ZMod (p ^ (padicValNat p q + 1)))ˣ :=
+  · have : IsCyclic (ZMod (p ^ (padicValNat p q + 1)))ˣ :=
       ZMod.isCyclic_units_of_prime_pow p hp hp2 _
-    haveI : IsCyclic H := Subgroup.isCyclic H
+    have : IsCyclic H := Subgroup.isCyclic H
     rw [← IsCyclic.exponent_eq_card]
     exact hexp
 

@@ -44,8 +44,8 @@ private lemma main
     (IntermediateField.isSeparable_adjoin_simple_iff_isSeparable F E).mpr hsepa
   rw [hgen] at hfdA hrkA hsepA
   have e : (⊤ : IntermediateField F E) ≃ₐ[F] E := IntermediateField.topEquiv
-  haveI := hfdA
-  haveI := hsepA
+  have := hfdA
+  have := hsepA
   refine ⟨e.toLinearEquiv.finiteDimensional, ?_, AlgEquiv.Algebra.isSeparable e⟩
   rw [← e.toLinearEquiv.finrank_eq, hrkA]
   exact hdeg

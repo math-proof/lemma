@@ -1,6 +1,6 @@
 import Lemma.Random.Prob.eq.Mul_ProbS.Prob.eq.Mul_MulProbS.of.CondIndep.CondIndep
 import sympy.stats.hidden_markov_sequence
-import sympy.stats.ennreal_coe
+import sympy.core.numbers
 import sympy.stats.discrete_hmm
 import sympy.Basic
 open MeasureTheory

@@ -20,9 +20,9 @@ private lemma main
   have hff : (CommRingCat.ofHom (algebraMap B B')).hom.FaithfullyFlat := by
     rw [CommRingCat.hom_ofHom, RingHom.faithfullyFlat_algebraMap_iff]; infer_instance
   obtain ⟨hflat, hsurj⟩ := (flat_and_surjective_SpecMap_iff (CommRingCat.ofHom (algebraMap B B'))).mpr hff
-  haveI := hflat
-  haveI := hsurj
-  haveI : EffectiveEpi (Spec.map (CommRingCat.ofHom (algebraMap B B'))) := inferInstance
+  have := hflat
+  have := hsurj
+  have : EffectiveEpi (Spec.map (CommRingCat.ofHom (algebraMap B B'))) := inferInstance
 
   have hco : ∀ {Z : Scheme.{u}} (g₁ g₂ : Z ⟶ Spec (CommRingCat.of B')),
       g₁ ≫ Spec.map (CommRingCat.ofHom (algebraMap B B')) = g₂ ≫ Spec.map (CommRingCat.ofHom (algebraMap B B')) →

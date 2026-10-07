@@ -460,18 +460,16 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
     }
 
     static markProbBinderArgs(node) {
-        const peel = (n) => (n instanceof L.LeanParenthesis ? n.arg : n);
+        const peel = (n) => {
+            while (n instanceof L.LeanProperty) n = n.args[0]; // `ℙ[…](…).toReal`
+            return n instanceof L.LeanParenthesis ? n.arg : n;
+        };
         const markRA = (n) => {
             if (n instanceof L.LeanToken) n.kwargs.isRandomArgument = true;
         };
         const markRV = (n) => {
-            if (n instanceof L.LeanToken) n.kwargs.isRandomVariable = true;
-            // a slice of a sequence of random variables, e.g. `x[:t + 1]`
-            else if (n instanceof L.LeanGetElem && n.args[0] instanceof L.LeanToken)
-                n.args[0].kwargs.isRandomVariable = true;
-            // a random variable sequence applied to an index, e.g. `x 0`
-            else if (n instanceof LeanArgsSpaceSeparated && n.args[0] instanceof L.LeanToken)
-                n.args[0].kwargs.isRandomVariable = true;
+            // head only (`Lean.headTokens`): `a t` / `s (t + 1)` → `a`/`s` red, index black
+            for (const h of Lean.headTokens(n)) h.kwargs.isRandomVariable = true;
         };
         const markFactor = (n) => {
             if (!n) return;
@@ -511,7 +509,10 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
     }
 
     static rvEqToken(n) {
-        const peel = (x) => (x instanceof L.LeanParenthesis ? x.arg : x);
+        const peel = (x) => {
+            while (x instanceof L.LeanParenthesis) x = x.arg; // `(a t)` / `(«a.bvar» t)`
+            return x;
+        };
         n = peel(n);
         if (!(n instanceof L.LeanEq)) return null;
         const lhs = peel(n.lhs);
@@ -526,7 +527,7 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
             return null;
         // rhs spells the same expression with its base wrapped as a bound value:
         // `«x.bvar»`, `«x.bvar»[:t + 1]` or `«x[:t + 1].bvar»`
-        const rhsText = strStmt(n.rhs).trim();
+        const rhsText = strStmt(peel(n.rhs)).trim(); // peel so `(«a.bvar» t)` matches `a t`
         if (!/«[^»]*\.bvar»/.test(rhsText)) return null;
         const plain = rhsText.replace(/«([^»]*?)\.bvar»/g, '$1');
         if (plain !== strStmt(lhs).trim()) return null;
@@ -552,8 +553,11 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
 
     markProbBinderColors() {
         const {args} = this;
-        if (args.length < 2 || !LeanArgsSpaceSeparated.isProbBinderHead(args[0])) return;
-        LeanArgsSpaceSeparated.markProbBinderArgs(args[1]);
+        // `ℙ[π](event)`, `ℙ[π](event).toReal`, and mid-juxtaposition `∇[θ] ℙ[π](event).toReal`
+        for (let i = 0; i + 1 < args.length; i++) {
+            if (!LeanArgsSpaceSeparated.isProbBinderHead(args[i])) continue;
+            LeanArgsSpaceSeparated.markProbBinderArgs(args[i + 1]);
+        }
     }
 
     static isExpectBinderHead(node) {
@@ -685,12 +689,18 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
 
     markExpectBinderColors() {
         const {args} = this;
-        if (args.length < 2 || !LeanArgsSpaceSeparated.isExpectBinderHead(args[0])) return;
-        const head = args[0];
+        for (let i = 0; i + 1 < args.length; i++) {
+            if (!LeanArgsSpaceSeparated.isExpectBinderHead(args[i])) continue;
+            this.markOneExpectBinder(args[i], args[i + 1]);
+        }
+    }
+
+    /** Colour one `𝔼[head](body)` (body may be `….toReal`). */
+    markOneExpectBinder(head, body) {
         const {bound, free} = LeanArgsSpaceSeparated.expectBinderNames(head.rhs);
         // Free RA names from the body's `| y`.
         const peel = (n) => (n instanceof L.LeanParenthesis ? n.arg : n);
-        const body = args[1];
+        while (body instanceof L.LeanProperty) body = body.args[0]; // `𝔼[…](…).toReal`
         const b = peel(body);
         if (b instanceof L.LeanBitOr) {
             const addTok = (n) => {
@@ -1325,6 +1335,12 @@ export class LeanArgsCommaSeparated extends LeanArgs {
             if (this.indent > indent) {
                 return super.insert_newline(caret, newline_count, indent, next);
             }
+            // `{ a := 1,⏎ b := 2 }`: fields of a structure-instance literal, not a multi-line comma list
+            if (L.LeanBrace.isStructInstOwner(this.parent) && L.LeanBrace.isStructInstField(this)) {
+                this.args.pop();
+                this.trailingComma = true;
+                return this.parent.insert_newline(this, newline_count, indent, next);
+            }
             this.args.pop();
             const lineCaret = new L.LeanCaret(indent, caret.level);
             const line = new LeanArgsCommaSeparated([lineCaret], indent, caret.level);
@@ -1347,6 +1363,8 @@ export class LeanArgsCommaSeparated extends LeanArgs {
     is_indented() {
         if (this.parent instanceof LeanArgsCommaNewLineSeparated)
             return this.parent.args.indexOf(this) > 0;
+        // a field line `x := v,` of a structure-instance body
+        if (this.parent instanceof L.LeanStatements && this.parent.structInst === true) return true;
         return false;
     }
 
@@ -1357,8 +1375,11 @@ export class LeanArgsCommaSeparated extends LeanArgs {
             .join(', ');
     }
 
+    /** `a := 1,` before a line break in a structure-instance literal (the dangling caret was dropped). */
+    trailingComma = undefined;
+
     strFormat() {
-        return Array(this.args.length).fill('%s').join(', ');
+        return Array(this.args.length).fill('%s').join(', ') + (this.trailingComma ? ',' : '');
     }
 
     tokens_comma_separated() {

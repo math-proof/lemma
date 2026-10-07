@@ -16,16 +16,16 @@ private lemma main
   Nonempty (D →ₐ[R] R) := by
 -- proof
   classical
-  haveI := hC
-  haveI := hD
+  have := hC
+  have := hD
   set K := FractionRing R
 
-  haveI : Module.Finite K (K ⊗[R] D) := inferInstance
+  have : Module.Finite K (K ⊗[R] D) := inferInstance
   obtain ⟨𝔪, h𝔪⟩ := Ideal.exists_maximal (K ⊗[R] D)
-  letI : Field ((K ⊗[R] D) ⧸ 𝔪) := Ideal.Quotient.field 𝔪
-  haveI : Module.Finite K ((K ⊗[R] D) ⧸ 𝔪) := inferInstance
-  haveI : Algebra.IsAlgebraic K ((K ⊗[R] D) ⧸ 𝔪) := Algebra.IsAlgebraic.of_finite K _
-  haveI : Module.IsTorsionFree K ((K ⊗[R] D) ⧸ 𝔪) :=
+  let : Field ((K ⊗[R] D) ⧸ 𝔪) := Ideal.Quotient.field 𝔪
+  have : Module.Finite K ((K ⊗[R] D) ⧸ 𝔪) := inferInstance
+  have : Algebra.IsAlgebraic K ((K ⊗[R] D) ⧸ 𝔪) := Algebra.IsAlgebraic.of_finite K _
+  have : Module.IsTorsionFree K ((K ⊗[R] D) ⧸ 𝔪) :=
     Module.IsTorsionFree.of_smul_eq_zero (fun r m h => by
       by_cases hr : r = 0
       · exact Or.inl hr
@@ -34,8 +34,8 @@ private lemma main
 
   let θ : D →ₐ[R] K := (χ.restrictScalars R).comp Algebra.TensorProduct.includeRight
 
-  haveI : Algebra.IsIntegral R D := Algebra.IsIntegral.of_finite R D
-  haveI : IsIntegrallyClosed R := inferInstance
+  have : Algebra.IsIntegral R D := Algebra.IsIntegral.of_finite R D
+  have : IsIntegrallyClosed R := inferInstance
   have hθ : ∀ x : D, θ x ∈ (⊥ : Subalgebra R K) := by
     intro x
     have hint : IsIntegral R (θ x) := (Algebra.IsIntegral.isIntegral x).map θ

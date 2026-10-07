@@ -21,7 +21,7 @@ private lemma main
     apply h
     change I.subschemeι z ∈ (I.support : Set X)
     rw [← Scheme.IdealSheafData.range_subschemeι]; exact ⟨z, rfl⟩
-  haveI : IsIso (pullback.snd ψ I.subschemeι) := by
+  have : IsIso (pullback.snd ψ I.subschemeι) := by
     refine isIso_of_isOpenImmersion_of_opensRange_eq_top _ ?_
     ext z
     simp only [Scheme.Hom.coe_opensRange, TopologicalSpace.Opens.coe_top, Set.mem_univ, iff_true]

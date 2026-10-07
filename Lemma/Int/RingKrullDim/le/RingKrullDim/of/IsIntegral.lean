@@ -15,7 +15,7 @@ private lemma main
 -- imply
   ringKrullDim S ≤ ringKrullDim R := by
 -- proof
-  letI : Algebra R S := φ.toAlgebra
+  let : Algebra R S := φ.toAlgebra
   refine Order.krullDim_le_of_strictMono (fun P : PrimeSpectrum S => PrimeSpectrum.comap φ P) ?_
   intro P Q hPQ
   have hle : P.asIdeal ≤ Q.asIdeal := le_of_lt hPQ

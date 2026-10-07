@@ -1,5 +1,5 @@
 import sympy.Basic
-import Lemma.Nat.Eq.given.And.squeeze
+import Lemma.Nat.Eq.of.And.squeeze
 
 
 @[main]
@@ -10,7 +10,7 @@ private lemma main
 -- imply
   x ≤ y ∧ x ≥ y := by
 -- proof
-  exact Nat.Eq.given.And.squeeze h
+  exact Nat.Eq.of.And.squeeze h
 
 
 -- created on 2026-10-03

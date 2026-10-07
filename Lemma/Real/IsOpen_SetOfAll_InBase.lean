@@ -17,7 +17,7 @@ private lemma main
 -- proof
   have hset : {t : T | ∀ z : Z, π.base z = t → φ.base z ∈ V} = (π.base '' ((φ.base ⁻¹' (V : Set Y))ᶜ))ᶜ := by
     ext t
-    simp only [Set.mem_setOf_eq, Set.mem_compl_iff, Set.mem_image, Set.mem_preimage, not_exists, not_and, SetLike.mem_coe]
+    simp only [Set.mem_ofPred_eq, Set.mem_compl_iff, Set.mem_image, Set.mem_preimage, not_exists, not_and, SetLike.mem_coe]
     constructor
     · intro h z hz hzt; exact hz (h z hzt)
     · intro h z hzt; by_contra hz; exact h z hz hzt

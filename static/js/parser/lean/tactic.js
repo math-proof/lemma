@@ -877,7 +877,10 @@ export class LeanCalc extends LeanUnary {
                 const $new = this.push_args_indented(indent, newline_count, false);
                 if ($new) return $new;
             }
-            if (caret instanceof L.LeanArgsNewLineSeparated) {
+            // a new step must be deeper than the calc's indent, unless the calc starts its own line (`:=⏎    calc`):
+            // in `have h : T := calc⏎    _ = … := …` or a tactic `calc⏎    …` the calc carries the statement's indent,
+            // so the next statement at that indent closes the calc instead of becoming a step
+            if (caret instanceof L.LeanArgsNewLineSeparated && (indent > this.indent || this.parent instanceof L.LeanArgsNewLineSeparated)) {
                 const c = new L.LeanCaret(indent, caret.level);
                 caret.push(c);
                 for (let i = 1; i < newline_count; ++i) {
@@ -1724,6 +1727,18 @@ export class LeanWith extends LeanArgs {
         return false;
     }
 
+    /** `{ s with … }`: a structure update (the `with` closes a brace's space-separated head). */
+    isStructUpdate() {
+        const p = this.parent;
+        return p instanceof L.LeanArgsSpaceSeparated && p.args[p.args.length - 1] === this && p.parent instanceof L.LeanBrace;
+    }
+
+    /**
+     * `{ s with⏎ a := 1⏎ b := 2 }` (`inline` false) / `{ s with a := 1⏎ b := 2 }` (`inline` true).
+     * @type {boolean | undefined}
+     */
+    inline = undefined;
+
     get stack_priority() {
         return this.parent instanceof L.Lean_match ? 23 : 17;
     }
@@ -1739,6 +1754,7 @@ export class LeanWith extends LeanArgs {
         if (this.args.length > 1) return '\n';
         if (!this.args.length) return '';
         const [caret] = this.args;
+        if (caret instanceof L.LeanStatements && caret.structInst === true) return this.inline ? ' ' : '\n';
         // `match … with` then `| pat =>`: first case is `LeanBar`; `tokens_space_separated()` is `[]` but
         // `[]` is truthy in JS, so we wrongly used ` ` and re-parse merged `with` and `|` (round-trip loss).
         if (caret instanceof L.LeanBar) return '\n';
@@ -1758,6 +1774,28 @@ export class LeanWith extends LeanArgs {
     }
 
     insert_newline(caret, newline_count, indent, next) {
+        if (this.args.length === 1 && caret === this.args[0] && this.isStructUpdate()) {
+            const brace = this.parent.parent;
+            if (indent > brace.indent || (indent > this.indent && !(caret instanceof L.LeanCaret))) {
+                if (caret instanceof L.LeanCaret) {
+                    // `{ s with⏎`: the fields follow, one per line, in column `indent`
+                    caret.indent = indent;
+                    const stmts = new L.LeanStatements([caret], indent, caret.level);
+                    stmts.structInst = true;
+                    this.args[0] = stmts;
+                    stmts.parent = this;
+                    this.inline = false;
+                    return caret;
+                }
+                if (!(caret instanceof L.LeanStatements) && L.LeanBrace.isStructInstField(caret)) {
+                    const [stmts, out] = L.LeanBrace.openStructInstBody(this, caret, newline_count, indent);
+                    this.args[0] = stmts;
+                    stmts.parent = this;
+                    this.inline = true;
+                    return out;
+                }
+            }
+        }
         if (this.indent > indent) {
             return super.insert_newline(caret, newline_count, indent, next);
         }

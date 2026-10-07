@@ -323,6 +323,21 @@ abstract class Lean extends IndentedNode
             case 'fun':
             case 'match':
                 return $this->append("Lean_$token", "expr");
+            case 'haveI':
+            case 'letI':
+                // same tree as `have` / `let`; the node remembers the instance variant so it echoes `haveI` / `letI`
+                if ($this instanceof LeanCaret && $this->parent instanceof LeanProperty) {
+                    while (preg_match("/['!?\w]/", $tokens[$i + 1])) {
+                        ++$i;
+                        $token .= $tokens[$i];
+                    }
+                    return $this->parent->insert_word($this, $token);
+                }
+                $caret = $this->append('Lean_' . substr($token, 0, -1), "tactic");
+                for ($p = $caret; $p && !($p instanceof Lean_let); $p = $p->parent);
+                if ($p instanceof Lean_let)
+                    $p->inst = true;
+                return $caret;
             case 'set':
                 // `lemma set` — keyword is the declaration name, not a tactic.
                 if ($this instanceof LeanCaret && $this->parent instanceof Lean_def)

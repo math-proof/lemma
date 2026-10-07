@@ -19,7 +19,7 @@ private lemma main
 -- imply
   f = g := by
 -- proof
-  haveI : IsDominant (U.fromSpecStalk (genericPoint U)) := by
+  have : IsDominant (U.fromSpecStalk (genericPoint U)) := by
     constructor
     have hmem : genericPoint U ∈ Set.range (U.fromSpecStalk (genericPoint U)).base :=
       ⟨IsLocalRing.closedPoint _, Scheme.fromSpecStalk_closedPoint⟩

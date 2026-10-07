@@ -34,14 +34,15 @@ private lemma main
     mul_lt_mul_of_pos_left hsq ha
   have hmax : a * max ((m - v) ^ 2) ((M - v) ^ 2)
       = max (a * (m - v) ^ 2) (a * (M - v) ^ 2) := by
-    rw [mul_max_of_nonneg] <;> linarith
+    rw [mul_max_of_nonneg]
+    linarith
   rw [hmax] at hmul
   set k := c - b ^ 2 / (4 * a) with hk
   have hcex : ∀ t : ℝ, a * t ^ 2 + b * t + c = a * (t - v) ^ 2 + k := by
     intro t
     simp only [hv, hk]
     field_simp
-    <;> ring
+    ring
   have hmax2 : max (a * (m - v) ^ 2) (a * (M - v) ^ 2) + k
       = max (a * (m - v) ^ 2 + k) (a * (M - v) ^ 2 + k) := by
     rw [max_add]

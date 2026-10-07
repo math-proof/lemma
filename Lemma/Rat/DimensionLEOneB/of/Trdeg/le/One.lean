@@ -30,19 +30,19 @@ private lemma main
     rw [Cardinal.lift_one] at h2
     have h3 := h1.trans h2
     norm_cast at h3
-  letI : Algebra (MvPolynomial (Fin s) k) B := g.toRingHom.toAlgebra
-  haveI : Algebra.IsIntegral (MvPolynomial (Fin s) k) B := ⟨hint⟩
-  haveI : Ring.DimensionLEOne (MvPolynomial (Fin s) k) := by
+  let : Algebra (MvPolynomial (Fin s) k) B := g.toRingHom.toAlgebra
+  have : Algebra.IsIntegral (MvPolynomial (Fin s) k) B := ⟨hint⟩
+  have : Ring.DimensionLEOne (MvPolynomial (Fin s) k) := by
     interval_cases s
     ·
-      haveI : IsPrincipalIdealRing (MvPolynomial (Fin 0) k) :=
+      have : IsPrincipalIdealRing (MvPolynomial (Fin 0) k) :=
         IsPrincipalIdealRing.of_surjective (MvPolynomial.isEmptyRingEquiv k (Fin 0)).symm.toRingHom
           (MvPolynomial.isEmptyRingEquiv k (Fin 0)).symm.surjective
       infer_instance
     ·
       let e : MvPolynomial (Fin 1) k ≃ₐ[k] Polynomial k :=
         (MvPolynomial.finSuccEquiv k 0).trans (Polynomial.mapAlgEquiv (MvPolynomial.isEmptyAlgEquiv k (Fin 0)))
-      haveI : IsPrincipalIdealRing (MvPolynomial (Fin 1) k) :=
+      have : IsPrincipalIdealRing (MvPolynomial (Fin 1) k) :=
         IsPrincipalIdealRing.of_surjective e.symm.toRingEquiv.toRingHom e.symm.surjective
       infer_instance
   exact Ring.DimensionLEOne.of_isIntegral (MvPolynomial (Fin s) k) B

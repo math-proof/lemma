@@ -8,7 +8,7 @@ open IsLocalRing Polynomial
 -/
 @[main]
 private lemma main
-  [CommRing A] [IsLocalRing A] [HenselianLocalRing A]
+  [CommRing A] [HenselianLocalRing A]
   {n : ℕ}
 -- given
   (hn : 0 < n)

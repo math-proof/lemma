@@ -16,9 +16,9 @@ private lemma main
 -- proof
   rw [← Field.finSepDegree_eq_finrank_iff]
 
-  haveI : ExpChar (separableClosure F E) q :=
+  have : ExpChar (separableClosure F E) q :=
     expChar_of_injective_algebraMap (algebraMap F (separableClosure F E)).injective q
-  haveI : IsPurelyInseparable (separableClosure F E) E := separableClosure.isPurelyInseparable F E
+  have : IsPurelyInseparable (separableClosure F E) E := separableClosure.isPurelyInseparable F E
   obtain ⟨n, hn⟩ := IsPurelyInseparable.finrank_eq_pow (separableClosure F E) E q
   have hins : Field.finInsepDegree F E = q ^ n := hn
   have hmul := Field.finSepDegree_mul_finInsepDegree F E

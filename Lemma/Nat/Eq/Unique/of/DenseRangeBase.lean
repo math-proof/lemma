@@ -22,7 +22,7 @@ private lemma main
   classical
 
   let j : pullback ι φ ⟶ X := pullback.snd ι φ
-  haveI : IsClosedImmersion j := inferInstance
+  have : IsClosedImmersion j := inferInstance
   have hrange : Set.range g.base ⊆ Set.range j.base := by
     rintro _ ⟨w, rfl⟩
 
@@ -32,11 +32,11 @@ private lemma main
         rw [hψ])
     exact ⟨t, ht2⟩
 
-  haveI : Surjective j := ⟨by
+  have : Surjective j := ⟨by
     rw [← Set.range_eq_univ]
     have hcl : IsClosed (Set.range j.base) := j.isClosedEmbedding.isClosed_range
     exact Set.eq_univ_of_univ_subset ((hg.closure_eq ▸ closure_minimal hrange hcl).ge)⟩
-  haveI : IsIso j := isIso_of_isClosedImmersion_of_surjective j
+  have : IsIso j := isIso_of_isClosedImmersion_of_surjective j
   refine ⟨inv j ≫ pullback.fst ι φ, ?_, ?_⟩
   · show (inv j ≫ pullback.fst ι φ) ≫ ι = φ
     rw [Category.assoc, pullback.condition, IsIso.inv_hom_id_assoc]

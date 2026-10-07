@@ -24,10 +24,10 @@ private lemma main
   subst hnu hnl hnq hn1 hΔ
   have hab : πT a * πT (t - a) = p := by
     have h := congrArg πT hαq
-    simp only [map_add, map_sub, map_mul, map_natCast, map_zero, Algebra.algebraMap_self, AlgHom.commutes] at h
+    simp only [map_add, map_sub, map_mul, map_natCast, map_zero] at h
     rw [map_sub]
     linear_combination -h
-  simp only [map_sub, map_mul, map_add, map_pow, AlgHom.commutes, map_natCast, Nat.cast_one, Nat.cast_add, map_one] at hab ⊢
+  simp only [map_sub, map_mul, map_add, map_pow, map_natCast, Nat.cast_one, Nat.cast_add, map_one] at hab ⊢
   linear_combination (2 * πT a) * hab
 
 

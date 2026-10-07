@@ -14,10 +14,10 @@ private lemma main
   {S : E →L[𝕜] E}
   {μ : 𝕜}
 -- given
-  (hT : IsCompactOperator T)
+  (_hT : IsCompactOperator T)
   (hT' : (T : E →ₗ[𝕜] E).IsSymmetric)
   (hST : S.comp T = T.comp S)
-  (hμ : μ ≠ 0) :
+  (_hμ : μ ≠ 0) :
 -- imply
   (eigenspace (T : Module.End 𝕜 E) μ).map (S : Module.End 𝕜 E) ≤ eigenspace (T : Module.End 𝕜 E) μ ∧
     ((eigenspace (T : Module.End 𝕜 E) μ)ᗮ).map (S : Module.End 𝕜 E) ≤ (eigenspace (T : Module.End 𝕜 E) μ)ᗮ := by

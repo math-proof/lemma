@@ -32,7 +32,7 @@ private lemma main
     exact Opens.mem_iSup.2 ⟨⟨y, hy⟩, hxy⟩
 
   have hn : ∀ y : s, ∃ n : ℕ, 𝓙₁.ideal (V y) ^ n ≤ 𝓙₂.ideal (V y) := fun y => by
-    haveI : IsNoetherianRing Γ(X, (V y).1) := IsLocallyNoetherian.component_noetherian (V y)
+    have : IsNoetherianRing Γ(X, (V y).1) := IsLocallyNoetherian.component_noetherian (V y)
     exact Ideal.exists_pow_le_of_le_radical_of_fg (h (V y)) (IsNoetherian.noetherian _)
   choose n hn using hn
   refine ⟨Finset.univ.sup n, fun W => ?_⟩

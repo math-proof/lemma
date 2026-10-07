@@ -16,8 +16,8 @@ private lemma main
   ∃ p : ℕ, p.Prime ∧ (p : T) ∈ 𝔪 := by
 -- proof
   classical
-  haveI := h𝔪
-  haveI : Algebra.IsIntegral ℤ T := inferInstance
+  have := h𝔪
+  have : Algebra.IsIntegral ℤ T := inferInstance
   have hmax : (𝔪.comap (algebraMap ℤ T)).IsMaximal :=
     Ideal.isMaximal_comap_of_isIntegral_of_isMaximal 𝔪
   set P := 𝔪.comap (algebraMap ℤ T) with hP

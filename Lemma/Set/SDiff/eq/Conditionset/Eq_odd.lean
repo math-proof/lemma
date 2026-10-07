@@ -9,7 +9,7 @@ private lemma main
   U \ {n : ℤ | n % 2 = 0} = {n ∈ U | n % 2 = 1} := by
 -- proof
   ext n
-  simp only [Set.mem_sdiff, Set.mem_setOf_eq]
+  simp only [Set.mem_sdiff, Set.mem_ofPred_eq]
   if hu : n ∈ U then
     simp only [hu, true_and]
     omega

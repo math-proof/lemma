@@ -17,8 +17,8 @@ private lemma main
   ∃ C : WeierstrassCurve.VariableChange L,
       C • W = (⟨0, 0, 0, 0, 0⟩ : WeierstrassCurve L) := by
 -- proof
-  haveI : Invertible (2:L) := invertibleOfNonzero two_ne_zero
-  haveI : Invertible (3:L) := invertibleOfNonzero three_ne_zero
+  have : Invertible (2:L) := invertibleOfNonzero two_ne_zero
+  have : Invertible (3:L) := invertibleOfNonzero three_ne_zero
   refine ⟨W.toShortNF, ?_⟩
   have hSNF : (W.toShortNF • W).IsShortNF := W.toShortNF_spec
 

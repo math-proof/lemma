@@ -20,8 +20,8 @@ private lemma main
   N = Submodule.span (ZMod p) {v} := by
 -- proof
   have hp : p.Prime := Fact.out
-  haveI : Finite V := Nat.finite_of_card_ne_zero (by rw [hV]; exact pow_ne_zero _ hp.ne_zero)
-  haveI : Module.Finite (ZMod p) V := Module.Finite.of_finite
+  have : Finite V := Nat.finite_of_card_ne_zero (by rw [hV]; exact pow_ne_zero _ hp.ne_zero)
+  have : Module.Finite (ZMod p) V := Module.Finite.of_finite
 
   have h2 : Module.finrank (ZMod p) V = 2 := by
     have h := Module.natCard_eq_pow_finrank (K := ZMod p) (V := V)

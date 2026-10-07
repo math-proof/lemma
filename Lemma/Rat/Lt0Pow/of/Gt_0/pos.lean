@@ -8,7 +8,7 @@ private lemma main
   {n : ℕ}
   -- given
   (hx : 0 < x)
-  (hn : 0 < n)
+  (_hn : 0 < n)
   -- imply
   : 0 < x ^ n := by
   -- proof

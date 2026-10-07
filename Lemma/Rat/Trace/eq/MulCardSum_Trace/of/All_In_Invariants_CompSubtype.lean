@@ -18,7 +18,7 @@ private lemma main
       (Fintype.card ↥I : K)⁻¹ * ∑ τ : ↥I, LinearMap.trace K V (ρ (g * τ)) := by
 -- proof
   classical
-  haveI : Invertible (Fintype.card ↥I : K) :=
+  have : Invertible (Fintype.card ↥I : K) :=
     invertibleOfNonzero (Nat.cast_ne_zero.2 Fintype.card_ne_zero)
 
   set W := Representation.invariants (ρ.comp I.subtype) with hW

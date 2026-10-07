@@ -18,10 +18,10 @@ private lemma main
   · intro hφ U
 
     let ev : TopCat.Presheaf Ab.{u} X ⥤ Ab.{u} := (CategoryTheory.evaluation _ Ab.{u}).obj (op U)
-    haveI : Mono ((Scheme.Modules.toPresheaf X).map φ) :=
+    have : Mono ((Scheme.Modules.toPresheaf X).map φ) :=
       preserves_mono_of_preservesLimit (Scheme.Modules.toPresheaf X) φ
-    haveI : PreservesLimitsOfShape WalkingCospan ev := evaluation_preservesLimitsOfShape _
-    haveI : Mono (ev.map ((Scheme.Modules.toPresheaf X).map φ)) := preserves_mono_of_preservesLimit _ _
+    have : PreservesLimitsOfShape WalkingCospan ev := evaluation_preservesLimitsOfShape _
+    have : Mono (ev.map ((Scheme.Modules.toPresheaf X).map φ)) := preserves_mono_of_preservesLimit _ _
     have h : Mono (φ.app U) := this
     exact (AddCommGrpCat.mono_iff_injective (φ.app U)).1 h
   · intro h

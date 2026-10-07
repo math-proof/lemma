@@ -28,16 +28,16 @@ private lemma main
     · ext
     · refine AddMonoidAlgebra.algHom_ext (fun g => ?_) (Subsingleton.elim _ _)
       simp only [AlgHom.coe_comp, AlgHom.coe_restrictScalars', Function.comp_apply,
-        Algebra.TensorProduct.includeRight_apply, AlgEquiv.coe_algHom, Bialgebra.counitAlgHom_apply]
+        Algebra.TensorProduct.includeRight_apply, AlgEquiv.coe_toAlgHom, Bialgebra.counitAlgHom_apply]
       rw [he₁]
-      simp [AddMonoidAlgebra.counit_single]
+      simp
   · apply Algebra.TensorProduct.ext
     · ext
     · refine AddMonoidAlgebra.algHom_ext (fun g => ?_) (Subsingleton.elim _ _)
       simp only [AlgHom.coe_comp, AlgHom.coe_restrictScalars', Function.comp_apply,
-        Algebra.TensorProduct.includeRight_apply, AlgEquiv.coe_algHom, Bialgebra.comulAlgHom_apply]
+        Algebra.TensorProduct.includeRight_apply, AlgEquiv.coe_toAlgHom, Bialgebra.comulAlgHom_apply]
       rw [he₁]
-      simp [AddMonoidAlgebra.comul_single, CommSemiring.comul_apply, he₁]
+      simp [CommSemiring.comul_apply, he₁]
 
 
 -- created on 2026-10-05

@@ -17,9 +17,9 @@ private lemma main
 -- imply
   LocallyOfFinitePresentation h := by
 -- proof
-  haveI : IsLocallyNoetherian Y := LocallyOfFiniteType.isLocallyNoetherian g
-  haveI : LocallyOfFiniteType (h ≫ g) := by rw [w]; infer_instance
-  haveI : LocallyOfFiniteType h := locallyOfFiniteType_of_comp h g
+  have : IsLocallyNoetherian Y := LocallyOfFiniteType.isLocallyNoetherian g
+  have : LocallyOfFiniteType (h ≫ g) := by rw [w]; infer_instance
+  have : LocallyOfFiniteType h := locallyOfFiniteType_of_comp h g
   infer_instance
 
 

@@ -16,8 +16,8 @@ private lemma main
 -- imply
   f h ∈ A := by
 -- proof
-  letI : Algebra R A := ((algebraMap R L).codRestrict A.toSubring hR).toAlgebra
-  haveI : IsScalarTower R A L := IsScalarTower.of_algebraMap_eq (fun _ => rfl)
+  let : Algebra R A := ((algebraMap R L).codRestrict A.toSubring hR).toAlgebra
+  have : IsScalarTower R A L := IsScalarTower.of_algebraMap_eq (fun _ => rfl)
 
   have hint : IsIntegral R (f h) := (Algebra.IsIntegral.isIntegral (R := R) h).map f
   have hintA : IsIntegral A (f h) := hint.tower_top

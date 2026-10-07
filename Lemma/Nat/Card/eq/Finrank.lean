@@ -13,11 +13,11 @@ private lemma main
 -- proof
   classical
   obtain ⟨ι, _, L, _, _, e, hL⟩ := (Algebra.Etale.iff_exists_algEquiv_prod k R).mp ‹_›
-  haveI : Fintype ι := Fintype.ofFinite ι
+  have : Fintype ι := Fintype.ofFinite ι
 
   have hLk : ∀ i, Nonempty (L i ≃ₐ[k] k) := fun i => by
-    haveI := (hL i).1
-    haveI : Algebra.IsIntegral k (L i) := Algebra.IsIntegral.of_finite k (L i)
+    have := (hL i).1
+    have : Algebra.IsIntegral k (L i) := Algebra.IsIntegral.of_finite k (L i)
     exact ⟨(AlgEquiv.ofBijective (Algebra.ofId k (L i))
       IsAlgClosed.algebraMap_bijective_of_isIntegral).symm⟩
 

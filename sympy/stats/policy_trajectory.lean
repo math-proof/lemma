@@ -7,7 +7,7 @@ import Mathlib.Analysis.Calculus.FDeriv.Basic
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
 import Mathlib.Topology.Algebra.InfiniteSum.Basic
 import sympy.stats.variance
-import sympy.stats.ennreal_coe
+import sympy.core.numbers
 
 /-!
 # Shared trajectory model for the policy-gradient lemmas (standard MDP)

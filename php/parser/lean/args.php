@@ -850,6 +850,12 @@ class LeanArgsCommaSeparated extends LeanArgs
         if ($caret instanceof LeanCaret && end($this->args) === $caret) {
             if ($this->indent > $indent)
                 return parent::insert_newline($caret, $newline_count, $indent, $next);
+            // `{ a := 1,⏎ b := 2 }`: fields of a structure-instance literal, not a multi-line comma list
+            if (LeanBrace::isStructInstOwner($this->parent) && LeanBrace::isStructInstField($this)) {
+                array_pop($this->args);
+                $this->trailingComma = true;
+                return $this->parent->insert_newline($this, $newline_count, $indent, $next);
+            }
             array_pop($this->args);
             $lineCaret = new LeanCaret($indent, $caret->level);
             $line = new LeanArgsCommaSeparated([$lineCaret], $indent, $caret->level);
@@ -873,6 +879,9 @@ class LeanArgsCommaSeparated extends LeanArgs
 
     public function is_indented()
     {
+        // a field line `x := v,` of a structure-instance body
+        if ($this->parent instanceof LeanStatements && $this->parent->structInst === true)
+            return true;
         return $this->parent instanceof LeanArgsCommaNewLineSeparated;
     }
 
@@ -881,9 +890,12 @@ class LeanArgsCommaSeparated extends LeanArgs
         return implode(", ", array_fill(0, count($this->args), '{%s}'));
     }
 
+    /** `a := 1,` before a line break in a structure-instance literal (the dangling caret was dropped). */
+    public $trailingComma = null;
+
     public function strFormat()
     {
-        return implode(", ", array_fill(0, count($this->args), '%s'));
+        return implode(", ", array_fill(0, count($this->args), '%s')) . ($this->trailingComma ? ',' : '');
     }
 
     public function tokens_comma_separated()

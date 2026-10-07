@@ -1671,6 +1671,17 @@ class LeanWith extends LeanArgs
     {
         parent::__construct([$arg], $indent, $level, $parent);
     }
+
+    /** `{ s with⏎ a := 1⏎ b := 2 }` (`inline` false) / `{ s with a := 1⏎ b := 2 }` (`inline` true). */
+    public $inline = null;
+
+    /** `{ s with … }`: a structure update (the `with` closes a brace's space-separated head). */
+    public function isStructUpdate()
+    {
+        $p = $this->parent;
+        return $p instanceof LeanArgsSpaceSeparated && end($p->args) === $this && $p->parent instanceof LeanBrace;
+    }
+
     public function __get($vname)
     {
         switch ($vname) {
@@ -1714,6 +1725,28 @@ class LeanWith extends LeanArgs
 
     public function insert_newline($caret, $newline_count, $indent, $next)
     {
+        if (count($this->args) == 1 && $caret === $this->args[0] && $this->isStructUpdate()) {
+            $brace = $this->parent->parent;
+            if ($indent > $brace->indent || ($indent > $this->indent && !($caret instanceof LeanCaret))) {
+                if ($caret instanceof LeanCaret) {
+                    // `{ s with⏎`: the fields follow, one per line, in column `$indent`
+                    $caret->indent = $indent;
+                    $stmts = new LeanStatements([$caret], $indent, $caret->level);
+                    $stmts->structInst = true;
+                    $this->args[0] = $stmts;
+                    $stmts->parent = $this;
+                    $this->inline = false;
+                    return $caret;
+                }
+                if (!($caret instanceof LeanStatements) && LeanBrace::isStructInstField($caret)) {
+                    [$stmts, $out] = LeanBrace::openStructInstBody($this, $caret, $newline_count, $indent);
+                    $this->args[0] = $stmts;
+                    $stmts->parent = $this;
+                    $this->inline = true;
+                    return $out;
+                }
+            }
+        }
         if ($this->indent > $indent)
             return parent::insert_newline($caret, $newline_count, $indent, $next);
 
@@ -1762,6 +1795,8 @@ class LeanWith extends LeanArgs
         if (!count($this->args))
             return "";
         [$caret] = $this->args;
+        if ($caret instanceof LeanStatements && $caret->structInst === true)
+            return $this->inline ? ' ' : "\n";
         return $caret instanceof LeanCaret || $caret->tokens_space_separated() || $caret instanceof LeanBitOr ? ' ' : "\n";
     }
 

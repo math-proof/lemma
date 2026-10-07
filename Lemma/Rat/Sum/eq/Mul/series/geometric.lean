@@ -13,20 +13,19 @@ private lemma main
   · rw [if_pos hr]
     rw [hr]
     simp [Finset.sum_const]
-    <;> ring
   · rw [if_neg hr]
     have hsub : r - 1 ≠ 0 := by
       intro h
       apply hr
       linarith
     have h1 : ∑ k ∈ Finset.range n, r ^ k = (r ^ n - 1) / (r - 1) := by
-      exact?
+      exact geom_sum_eq hr n
     rw [h1]
     have h2 : (1 - r) ≠ 0 := by
       intro h
       apply hr
       linarith
     field_simp [hsub, h2]
-    <;> ring
+    ring
 
 -- created on 2023-06-17

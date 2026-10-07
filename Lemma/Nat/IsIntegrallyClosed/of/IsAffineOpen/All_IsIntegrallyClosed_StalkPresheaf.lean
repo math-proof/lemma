@@ -21,7 +21,7 @@ private lemma main
 -- proof
   by_cases hne : Nonempty U
   ·
-    haveI := hne
+    have := hne
     refine IsIntegrallyClosed.of_localization_maximal fun p _ hp => ?_
     let y : PrimeSpectrum Γ(X, U) := ⟨p, hp.isPrime⟩
     have hy : hU.fromSpec.base y ∈ U := by
@@ -29,11 +29,11 @@ private lemma main
       exact ⟨y, rfl⟩
     obtain ⟨x, hx⟩ : ∃ x : U, hU.primeIdealOf x = y :=
       ⟨⟨hU.fromSpec.base y, hy⟩, hU.fromSpec.injective (by rw [hU.fromSpec_primeIdealOf])⟩
-    haveI : IsLocalization.AtPrime (X.presheaf.stalk x.1) p := by
+    have : IsLocalization.AtPrime (X.presheaf.stalk x.1) p := by
       have := hU.isLocalization_stalk x
       rw [hx] at this
       exact this
-    haveI := h x.1
+    have := h x.1
     exact IsIntegrallyClosed.of_equiv
       (IsLocalization.algEquiv p.primeCompl (X.presheaf.stalk x.1) (Localization.AtPrime p)).toRingEquiv
   ·

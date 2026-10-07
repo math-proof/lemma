@@ -5,7 +5,7 @@
 # Scoped upsert of lemma rows from the local MySQL (axiom.lemma) to the remote server.
 #
 # usage:
-#   bash sh/synchronize.sh Real.Eq_0.Lim.of.LtAbs.IsFinite Lemma/Tensor/Eq/Foo/of/Bar.lean ...
+#   bash sh/synchronize.sh Real.Eq_0.Lim.of.LtAbs.GtInftySup Lemma/Tensor/Eq/Foo/of/Bar.lean ...
 #   bash sh/synchronize.sh -n <modules...>     # dry run: only report what would change
 #
 # - modules: dotted names or Lemma/....lean paths (*.echo.lean is rejected)

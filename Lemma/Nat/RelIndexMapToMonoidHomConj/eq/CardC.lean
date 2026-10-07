@@ -19,7 +19,7 @@ private lemma main
   have horb : (MulAction.orbit K (QuotientGroup.mk g : G ⧸ K) : Set (G ⧸ K)) =
       {c : G ⧸ K | ∃ k ∈ K, (QuotientGroup.mk (k * g) : G ⧸ K) = c} := by
     ext c
-    simp only [MulAction.mem_orbit_iff, Set.mem_setOf_eq]
+    simp only [MulAction.mem_orbit_iff, Set.mem_ofPred_eq]
     constructor
     · rintro ⟨k, rfl⟩
       exact ⟨k, k.2, rfl⟩

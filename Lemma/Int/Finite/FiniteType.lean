@@ -14,11 +14,11 @@ private lemma  moduleFinite_and_finiteType
     [Algebra.FiniteType R B] :
     Module.Finite A B ∧ Algebra.FiniteType R A := by
 
-  haveI hint : Algebra.IsIntegral A B := Algebra.IsInvariant.isIntegral A B G
+  have hint : Algebra.IsIntegral A B := Algebra.IsInvariant.isIntegral A B G
 
-  haveI hftAB : Algebra.FiniteType A B := Algebra.FiniteType.of_restrictScalars_finiteType R A B
+  have hftAB : Algebra.FiniteType A B := Algebra.FiniteType.of_restrictScalars_finiteType R A B
 
-  haveI hfin : Module.Finite A B := Algebra.IsIntegral.finite
+  have hfin : Module.Finite A B := Algebra.IsIntegral.finite
   refine ⟨hfin, ?_⟩
 
   have hAC : (⊤ : Subalgebra R B).FG := Algebra.FiniteType.out

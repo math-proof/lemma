@@ -20,7 +20,7 @@ private lemma main
         1 - 1 / x + 1 / (x * (x + 1)) = 1 - 1 / (x + 1) := by
       intro x hx hxp
       field_simp [hx, hxp, mul_ne_zero hx hxp]
-      <;> ring
+      ring
     simpa using h_ident ((n : ℝ) + 1) h1 h2
 
 -- created on 2023-08-17

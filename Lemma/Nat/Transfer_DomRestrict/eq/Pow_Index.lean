@@ -16,7 +16,7 @@ private lemma main
 -- proof
   classical
   ext g
-  letI := K.fintypeQuotientOfFiniteIndex
+  let := K.fintypeQuotientOfFiniteIndex
   rw [MonoidHom.transfer_def (φ.domRestrict K) default]
   show diff (φ.domRestrict K) default (g • default) = (φ g) ^ K.index
   unfold Subgroup.leftTransversals.diff

@@ -14,24 +14,24 @@ private lemma main
       IsScalarTower R W k' ∧ IsScalarTower R k k' := by
 -- proof
   classical
-  haveI : Nontrivial (k ⊗[R] W) := inferInstance
+  have : Nontrivial (k ⊗[R] W) := inferInstance
   obtain ⟨𝔪, h𝔪⟩ := Ideal.exists_maximal (k ⊗[R] W)
-  haveI := h𝔪
-  letI : Field ((k ⊗[R] W) ⧸ 𝔪) := Ideal.Quotient.field 𝔪
+  have := h𝔪
+  let : Field ((k ⊗[R] W) ⧸ 𝔪) := Ideal.Quotient.field 𝔪
   obtain ⟨π⟩ : Nonempty (k ⊗[R] W →+* AlgebraicClosure ((k ⊗[R] W) ⧸ 𝔪)) :=
     ⟨(algebraMap ((k ⊗[R] W) ⧸ 𝔪) (AlgebraicClosure ((k ⊗[R] W) ⧸ 𝔪))).comp (Ideal.Quotient.mk 𝔪)⟩
   refine ⟨AlgebraicClosure ((k ⊗[R] W) ⧸ 𝔪), inferInstance, inferInstance,
     (π.comp (algebraMap R (k ⊗[R] W))).toAlgebra,
     (π.comp (Algebra.TensorProduct.includeRight (R := R) (A := k) (B := W)).toRingHom).toAlgebra,
     (π.comp (Algebra.TensorProduct.includeLeftRingHom (R := R) (A := k) (B := W))).toAlgebra, ?_, ?_⟩
-  · letI : Algebra R (AlgebraicClosure ((k ⊗[R] W) ⧸ 𝔪)) := (π.comp (algebraMap R (k ⊗[R] W))).toAlgebra
-    letI : Algebra W (AlgebraicClosure ((k ⊗[R] W) ⧸ 𝔪)) :=
+  · let : Algebra R (AlgebraicClosure ((k ⊗[R] W) ⧸ 𝔪)) := (π.comp (algebraMap R (k ⊗[R] W))).toAlgebra
+    let : Algebra W (AlgebraicClosure ((k ⊗[R] W) ⧸ 𝔪)) :=
       (π.comp (Algebra.TensorProduct.includeRight (R := R) (A := k) (B := W)).toRingHom).toAlgebra
     exact IsScalarTower.of_algebraMap_eq (fun r => by
       show π (algebraMap R (k ⊗[R] W) r) = π (Algebra.TensorProduct.includeRight (algebraMap R W r))
       rw [AlgHom.commutes])
-  · letI : Algebra R (AlgebraicClosure ((k ⊗[R] W) ⧸ 𝔪)) := (π.comp (algebraMap R (k ⊗[R] W))).toAlgebra
-    letI : Algebra k (AlgebraicClosure ((k ⊗[R] W) ⧸ 𝔪)) :=
+  · let : Algebra R (AlgebraicClosure ((k ⊗[R] W) ⧸ 𝔪)) := (π.comp (algebraMap R (k ⊗[R] W))).toAlgebra
+    let : Algebra k (AlgebraicClosure ((k ⊗[R] W) ⧸ 𝔪)) :=
       (π.comp (Algebra.TensorProduct.includeLeftRingHom (R := R) (A := k) (B := W))).toAlgebra
     exact IsScalarTower.of_algebraMap_eq (fun r => by
       show π (algebraMap R (k ⊗[R] W) r) = π (Algebra.TensorProduct.includeLeftRingHom (algebraMap R k r))

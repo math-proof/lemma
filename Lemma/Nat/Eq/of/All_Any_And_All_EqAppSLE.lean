@@ -14,7 +14,7 @@ private lemma main
   {W : Scheme.{u}}
   {a b : W ⟶ Proj 𝒜}
 -- given
-  (h : ∀ w : W, ∃ (n : ℕ) (r : A) (hn : 0 < n) (hr : r ∈ 𝒜 n) (e : a ⁻¹ᵁ Proj.basicOpen 𝒜 r = b ⁻¹ᵁ Proj.basicOpen 𝒜 r), w ∈ a ⁻¹ᵁ Proj.basicOpen 𝒜 r ∧ ∀ x : Away 𝒜 r, a.appLE (Proj.basicOpen 𝒜 r) (a ⁻¹ᵁ Proj.basicOpen 𝒜 r) le_rfl (Proj.awayToSection 𝒜 r x) = b.appLE (Proj.basicOpen 𝒜 r) (a ⁻¹ᵁ Proj.basicOpen 𝒜 r) e.le (Proj.awayToSection 𝒜 r x)) :
+  (h : ∀ w : W, ∃ (n : ℕ) (r : A) (_hn : 0 < n) (_hr : r ∈ 𝒜 n) (e : a ⁻¹ᵁ Proj.basicOpen 𝒜 r = b ⁻¹ᵁ Proj.basicOpen 𝒜 r), w ∈ a ⁻¹ᵁ Proj.basicOpen 𝒜 r ∧ ∀ x : Away 𝒜 r, a.appLE (Proj.basicOpen 𝒜 r) (a ⁻¹ᵁ Proj.basicOpen 𝒜 r) le_rfl (Proj.awayToSection 𝒜 r x) = b.appLE (Proj.basicOpen 𝒜 r) (a ⁻¹ᵁ Proj.basicOpen 𝒜 r) e.le (Proj.awayToSection 𝒜 r x)) :
 -- imply
   a = b := by
 -- proof
@@ -31,7 +31,7 @@ private lemma main
     exact happ y
   have key : a.resLE (Proj.basicOpen 𝒜 r) (a ⁻¹ᵁ Proj.basicOpen 𝒜 r) le_rfl =
       b.resLE (Proj.basicOpen 𝒜 r) (a ⁻¹ᵁ Proj.basicOpen 𝒜 r) e.le := by
-    haveI : IsAffine (Proj.basicOpen 𝒜 r).toScheme := Proj.isAffineOpen_basicOpen 𝒜 r hr hn
+    have : IsAffine (Proj.basicOpen 𝒜 r).toScheme := Proj.isAffineOpen_basicOpen 𝒜 r hr hn
     apply ext_of_isAffine
     simp only [Scheme.Hom.appTop, Scheme.Hom.resLE_app_top, happLE]
   have e₁ := Scheme.Hom.resLE_comp_ι a (U := Proj.basicOpen 𝒜 r) (V := a ⁻¹ᵁ Proj.basicOpen 𝒜 r) le_rfl

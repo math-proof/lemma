@@ -23,7 +23,7 @@ private lemma main
   set ϖB : B := algebraMap O B ϖ
   have hmax : (Ideal.span {ϖ}).IsMaximal := by
     rw [← (IsDiscreteValuationRing.irreducible_iff_uniformizer ϖ).mp hϖ]; infer_instance
-  letI : Field (O ⧸ Ideal.span {ϖ}) := Ideal.Quotient.field (Ideal.span {ϖ})
+  let : Field (O ⧸ Ideal.span {ϖ}) := Ideal.Quotient.field (Ideal.span {ϖ})
   have e : AdjoinRoot (minpoly O α) ≃ₐ[O] B := minpoly.equivAdjoin hα
   have hJ : Ideal.span {ϖB} =
       Ideal.map (e : AdjoinRoot (minpoly O α) →+* B)
@@ -35,7 +35,7 @@ private lemma main
   let e1 := Ideal.quotientEquivAlg
     (Ideal.map (AdjoinRoot.of (minpoly O α)) (Ideal.span {ϖ})) (Ideal.span {ϖB}) e hJ
   let e2 := AdjoinRoot.quotEquivQuotMap (minpoly O α) (Ideal.span {ϖ})
-  haveI : IsReduced ((O ⧸ Ideal.span {ϖ})[X] ⧸
+  have : IsReduced ((O ⧸ Ideal.span {ϖ})[X] ⧸
       Ideal.span {(minpoly O α).map (Ideal.Quotient.mk (Ideal.span {ϖ}))}) := by
     rw [← Ideal.isRadical_iff_quotient_reduced, ← isRadical_iff_span_singleton]
     exact hsq.isRadical

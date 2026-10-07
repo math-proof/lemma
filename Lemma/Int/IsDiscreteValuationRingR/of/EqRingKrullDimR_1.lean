@@ -24,7 +24,7 @@ private lemma  IsDiscreteValuationRing.of_isIntegrallyClosed_of_ringKrullDim_eq_
     have hmh' : m.height ≤ (1 : ℕ) := by exact_mod_cast hmh
     rw [Ideal.height_le_iff] at hmh'
     have hp0 : p.height = 0 := by
-      exact ENat.lt_one_iff_eq_zero.mp (hmh' p hpp hlt)
+      exact Order.lt_one_iff.mp (hmh' p hpp hlt)
     rw [Ideal.height_eq_zero_iff] at hp0
     exact hp (le_bot_iff.mp (hp0.2 ⟨Ideal.isPrime_bot, le_rfl⟩ bot_le))
   have hded : IsDedekindRing R := IsDedekindRing.mk

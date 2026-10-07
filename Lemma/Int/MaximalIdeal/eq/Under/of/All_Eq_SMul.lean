@@ -18,11 +18,11 @@ private lemma main
 -- proof
   classical
   have h𝔓 : 𝔓.IsMaximal := ‹_›
-  haveI : Nontrivial B := by
+  have : Nontrivial B := by
     by_contra h
     rw [not_nontrivial_iff_subsingleton] at h
     exact h𝔓.ne_top (Subsingleton.elim _ _)
-  haveI : Nontrivial A := (algebraMap A B).domain_nontrivial
+  have : Nontrivial A := (algebraMap A B).domain_nontrivial
 
   have hp : (Ideal.under A 𝔓).IsMaximal := Ideal.IsMaximal.under A 𝔓
 
@@ -41,7 +41,7 @@ private lemma main
     obtain ⟨g, rfl⟩ := htrans Q hQmax
     rw [← hQ]
     exact hunder g
-  haveI hloc : IsLocalRing A := IsLocalRing.of_unique_max_ideal ⟨Ideal.under A 𝔓, hp, huniq⟩
+  have hloc : IsLocalRing A := IsLocalRing.of_unique_max_ideal ⟨Ideal.under A 𝔓, hp, huniq⟩
   exact ⟨hloc, (IsLocalRing.eq_maximalIdeal hp).symm⟩
 
 

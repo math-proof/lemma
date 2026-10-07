@@ -2,9 +2,9 @@
 
 CRF 损失函数：[CRF loss function](http://www.lemma.cn/lean/?module=Random.All_Eq_AddLogSumExpAdd.All_EqNegLogProb.of.All_Eq_Log.All_Eq_Sum_Exp.All_Eq_LogProbCond.All_Eq_LogProbCond.All_Eq_LogProbJoint.All_Lt0Prob.IsDiscreteHMM)，Viterbi：[crf.viterbi](http://www.lemma.cn/lean/?module=Random.All_Eq_Add_MaxAdd.EqMax_ProbJoint.of.All_Eq_Max.Eq_LogProbCond.Eq_LogProbCond.Eq_LogProbJoint.All_Lt0ProbJoint.IsDiscreteHMM)，HMM 恒等式：[hmm_identity](http://www.lemma.cn/lean/?module=Random.Sum_Mul_ProbCond.eq.Prob.of.IsDiscreteHMM)
 
-Bellman：[Bellman](http://www.lemma.cn/lean/?module=Random.Eq_Expect.Eq_Expect.Eq_Expect.of.All_Eq_Expect.All_Eq_Expect.In_Ico)，REINFORCE：[Lean 4](http://www.lemma.cn/lean/?module=Tensor.Eq.Dot.Grad.Expect.of.Eq_Conditioned.IsFinite.policy_gradient_theorem)
+Bellman：[Bellman](http://www.lemma.cn/lean/?module=Random.Eq_Expect.Eq_Expect.Eq_Expect.of.All_Eq_Expect.All_Eq_Expect.In_Ico)，REINFORCE：[Lean 4](http://www.lemma.cn/lean/?module=Tensor.Eq.Dot.Grad.Expect.of.Eq_Conditioned.GtInftySup.policy_gradient_theorem)
 
-无偏优势估计：[Lean 4](http://www.lemma.cn/lean/?module=Tensor.EqDot_GradExpect.of.Eq_Conditioned.Eq_Expect.IsFinite.IsFinite.unbiased_advantage_estimate)，广义优势估计：[Lean 4](http://www.lemma.cn/lean/?module=Tensor.EqDot_GradExpect.of.Eq_Conditioned.Eq_Expect.IsFinite.IsFinite.generalized_advantage_estimate)
+无偏优势估计：[Lean 4](http://www.lemma.cn/lean/?module=Tensor.EqDot_GradExpect.of.Eq_Conditioned.Eq_Expect.All_Differentiable_Prob.GtInftySup.unbiased_advantage_estimate)，广义优势估计：[Lean 4](http://www.lemma.cn/lean/?module=Tensor.EqDot_GradExpect.of.Eq_Conditioned.Eq_Expect.All_Differentiable_Prob.GtInftySup.generalized_advantage_estimate)
 
 # 摘要
 
@@ -30,7 +30,7 @@ CRF 一侧，我们形式化了：对数得分分解为转移项与发射项、l
 
 1. CRF 传播（第 4、5 节）：对数得分 [crf.markov.logits](http://www.lemma.cn/lean/?module=Tensor.Eq.of.Ne_0.Eq.Eq.Eq.Eq_log.Eq_log.Eq_log) 与 [crf.logits](http://www.lemma.cn/lean/?module=Tensor.Imp.of.Eq)，满足 \(-\log p(y\mid x)=\log Z-\text{score}\) 的前向递推 [CRF loss function](http://www.lemma.cn/lean/?module=Random.All_Eq_AddLogSumExpAdd.All_EqNegLogProb.of.All_Eq_Log.All_Eq_Sum_Exp.All_Eq_LogProbCond.All_Eq_LogProbCond.All_Eq_LogProbJoint.All_Lt0Prob.IsDiscreteHMM)，Viterbi 数值递推 [crf.viterbi](http://www.lemma.cn/lean/?module=Random.All_Eq_Add_MaxAdd.EqMax_ProbJoint.of.All_Eq_Max.Eq_LogProbCond.Eq_LogProbCond.Eq_LogProbJoint.All_Lt0ProbJoint.IsDiscreteHMM)，以及HMM 恒等式 [hmm_identity](http://www.lemma.cn/lean/?module=Random.Sum_Mul_ProbCond.eq.Prob.of.IsDiscreteHMM)，针对离散隐马尔可夫模型。
 2. Bellman 方程 [Bellman](http://www.lemma.cn/lean/?module=Random.Eq_Expect.Eq_Expect.Eq_Expect.of.All_Eq_Expect.All_Eq_Expect.In_Ico)，建立在轨迹层面的 MDP 上，其轨迹律的马尔可夫性是已证明的（`joint_succ`、`hist_step`）（第 6 节）。
-3. 对时间跨度归纳证明的策略梯度定理，截断、动作价值与 REINFORCE 三种形式（[policy_gradient_theorem](http://www.lemma.cn/lean/?module=Tensor.Eq.Dot.Grad.Expect.of.Eq_Conditioned.IsFinite.policy_gradient_theorem)）；无偏优势估计 [unbiased_advantage_estimate](http://www.lemma.cn/lean/?module=Tensor.EqDot_GradExpect.of.Eq_Conditioned.Eq_Expect.IsFinite.IsFinite.unbiased_advantage_estimate)；以及对精确价值函数、所有 \(\lambda\in[0,1]\) 的 GAE [generalized_advantage_estimate](http://www.lemma.cn/lean/?module=Tensor.EqDot_GradExpect.of.Eq_Conditioned.Eq_Expect.IsFinite.IsFinite.generalized_advantage_estimate) 及其加权平均形式（第 7 节）。
+3. 对时间跨度归纳证明的策略梯度定理，截断、动作价值与 REINFORCE 三种形式（[policy_gradient_theorem](http://www.lemma.cn/lean/?module=Tensor.Eq.Dot.Grad.Expect.of.Eq_Conditioned.GtInftySup.policy_gradient_theorem)）；无偏优势估计 [unbiased_advantage_estimate](http://www.lemma.cn/lean/?module=Tensor.EqDot_GradExpect.of.Eq_Conditioned.Eq_Expect.All_Differentiable_Prob.GtInftySup.unbiased_advantage_estimate)；以及对精确价值函数、所有 \(\lambda\in[0,1]\) 的 GAE [generalized_advantage_estimate](http://www.lemma.cn/lean/?module=Tensor.EqDot_GradExpect.of.Eq_Conditioned.Eq_Expect.All_Differentiable_Prob.GtInftySup.generalized_advantage_estimate) 及其加权平均形式（第 7 节）。
 4. 两张对比表（第 9 节）。
 
 库里为极限、期望与概率设计的教科书语法糖，让 Lean 陈述读起来像论文里的公式，在第 3 节概述。
@@ -69,7 +69,7 @@ CRF 一侧，我们形式化了：对数得分分解为转移项与发射项、l
 
 **零概率事件与极限** 由于 \(\mu[\,\cdot\mid B]=\mu(B)^{-1}\mu|_B\) 在 \(\mu(B)=0\) 时是零测度，在不可达状态上的条件期望是 \(0\)；因此关于价值函数的假设限制在**可达**取值 \(s_t\)，即 \(\mathbb P_\theta({\color{red}s}_t=s_t)\ne0\) 的那些。无穷和是 Lean 的 `tsum`（可和族的和，否则为 \(0\)），每个极限都是显式的 `Filter.Tendsto` 陈述。我们陈述的唯一极限引理如下，用于截断策略梯度的余项（第 7 节）。
 
-**引理 3.1（[Lim.of.LtAbs.IsFinite](http://www.lemma.cn/lean/?module=Real.Eq_0.Lim.of.LtAbs.IsFinite)）** 设 \(\gamma\in\mathbb R\)，\(x:\mathbb N\to\mathbb R\)，\(|\gamma|<1\) 且 \(\{|x_n|:n\in\mathbb N\}\) 有上界。则
+**引理 3.1（[Lim.of.LtAbs.GtInftySup](http://www.lemma.cn/lean/?module=Real.Eq_0.Lim.of.LtAbs.GtInftySup)）** 设 \(\gamma\in\mathbb R\)，\(x:\mathbb N\to\mathbb R\)，\(|\gamma|<1\) 且 \(\{|x_n|:n\in\mathbb N\}\) 有上界。则
 
 \[
 \lim_{n\to\infty}\gamma^n x_n=0.
@@ -222,7 +222,7 @@ Q_t(s_t,a_t)&=\mathbb E_\theta\bigl[{\color{red}r}_t+\gamma\,V_{t+1}({\color{mag
 
 ## 7.1 归纳法证明策略梯度定理
 
-**定理 7.1（递推 [policy_gradient.recursion.discrete](http://www.lemma.cn/lean/?module=Tensor.EqGrad.of.Eq_Conditioned.Eq_Expect.Eq_Expect.policy_gradient.recursion.discrete)，展开 [policy_gradient.induct](http://www.lemma.cn/lean/?module=Tensor.EqGrad.of.Eq_Conditioned.Eq_Expect.Eq_Expect.policy_gradient.induct)）** 设 (D)、(P1)、(P2) 成立，\(s_0\) 可达。则在可达的 \(s_t\) 上 \(\nabla V_t(s_t)=\sum_uQ_t(s_t,u)\nabla\pi_\theta(u\mid s_t)+\gamma\sum_y\mathbb P_\theta({\color{red}s}_{t+1}=y\mid{\color{red}s}_t)\nabla V_{t+1}(y)\)，并且对每个 \(n\)，
+**定理 7.1（递推 [policy_gradient.recursion.discrete](http://www.lemma.cn/lean/?module=Random.Grad.eq.Add_SMul_Sum_SMul.of.Ne0Real_Preimage.GtInftySup.All_Differentiable_Prob.All_Eq_Expect.All_Eq_Expect.EqMeasureCount.EqMeasureCount.In_Ico)，展开 [policy_gradient.induct](http://www.lemma.cn/lean/?module=Tensor.EqGrad.of.Eq_Conditioned.Eq_Expect.Eq_Expect.policy_gradient.induct)）** 设 (D)、(P1)、(P2) 成立，\(s_0\) 可达。则在可达的 \(s_t\) 上 \(\nabla V_t(s_t)=\sum_uQ_t(s_t,u)\nabla\pi_\theta(u\mid s_t)+\gamma\sum_y\mathbb P_\theta({\color{red}s}_{t+1}=y\mid{\color{red}s}_t)\nabla V_{t+1}(y)\)，并且对每个 \(n\)，
 
 \[
 \nabla_\theta V_0(s_0)=\sum_{t<n}\gamma^t\sum_y\mathbb P_\theta({\color{red}s}_t=y\mid{\color{red}s}_0)\sum_uQ_t(y,u)\nabla_\theta\pi_\theta(u\mid y)+\gamma^n\sum_y\mathbb P_\theta({\color{red}s}_n=y\mid{\color{red}s}_0)\nabla_\theta V_n(y).
@@ -234,9 +234,9 @@ Q_t(s_t,a_t)&=\mathbb E_\theta\bigl[{\color{red}r}_t+\gamma\,V_{t+1}({\color{mag
 \sum_t{}'\,\gamma^t\nabla_\theta\mathbb E_\theta[{\color{red}r}_t]=\mathbb E_\theta\Bigl[\sum_{t<n}\gamma^tQ_t({\color{magenta}s}_t,{\color{magenta}a}_t)\,\nabla_\theta\log\pi_\theta({\color{red}a}_t\mid{\color{red}s}_t)\Bigr]+\gamma^n\,\mathbb E_\theta\bigl[\nabla_\theta V_n({\color{magenta}s}_n)\bigr].
 \]
 
-虽然是有限和，该定理讨论的仍是折扣无穷视野目标：它对每个截断层级都精确成立，带显式余项。令 \(n\to\infty\)，余项由引理 3.1 和对 \(\nabla V_n\) 在可达状态上的界趋于 \(0\)，得到动作价值形式 [IsFinite.Q_Function](http://www.lemma.cn/lean/?module=Tensor.Eq.Dot.Grad.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.IsFinite.Q_Function)：\(\sum_t{}'\,\gamma^t\nabla_\theta\mathbb E_\theta[{\color{red}r}_t]=\sum_t{}'\,\gamma^t\mathbb E_\theta[Q_t({\color{magenta}s}_t,{\color{magenta}a}_t)\nabla_\theta\log\pi_\theta({\color{red}a}_t\mid{\color{red}s}_t)]\)；再用塔性质 [Q_Function.discounted](http://www.lemma.cn/lean/?module=Tensor.Eq.Expect.Grad.Log.Pr.of.Eq_Conditioned.Q_Function.discounted)，\(\mathbb E_\theta[G_t\nabla_\theta\log\pi_\theta]=\mathbb E_\theta[Q_t\nabla_\theta\log\pi_\theta]\)，得到 REINFORCE 形式。
+虽然是有限和，该定理讨论的仍是折扣无穷视野目标：它对每个截断层级都精确成立，带显式余项。令 \(n\to\infty\)，余项由引理 3.1 和对 \(\nabla V_n\) 在可达状态上的界趋于 \(0\)，得到动作价值形式 [GtInftySup.Q_Function](http://www.lemma.cn/lean/?module=Tensor.Eq.Dot.Grad.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.GtInftySup.Q_Function)：\(\sum_t{}'\,\gamma^t\nabla_\theta\mathbb E_\theta[{\color{red}r}_t]=\sum_t{}'\,\gamma^t\mathbb E_\theta[Q_t({\color{magenta}s}_t,{\color{magenta}a}_t)\nabla_\theta\log\pi_\theta({\color{red}a}_t\mid{\color{red}s}_t)]\)；再用塔性质 [Q_Function.discounted](http://www.lemma.cn/lean/?module=Tensor.Eq.Expect.Grad.Log.Pr.of.Eq_Conditioned.Q_Function.discounted)，\(\mathbb E_\theta[G_t\nabla_\theta\log\pi_\theta]=\mathbb E_\theta[Q_t\nabla_\theta\log\pi_\theta]\)，得到 REINFORCE 形式。
 
-**定理 7.3（策略梯度，REINFORCE 形式 [policy_gradient_theorem](http://www.lemma.cn/lean/?module=Tensor.Eq.Dot.Grad.Expect.of.Eq_Conditioned.IsFinite.policy_gradient_theorem)）** 设 \(\Theta\) 是实 Hilbert 空间，\(S\)、\(A\) 以计数测度为参考测度，(D)、(P1)、(P2) 成立。则
+**定理 7.3（策略梯度，REINFORCE 形式 [policy_gradient_theorem](http://www.lemma.cn/lean/?module=Tensor.Eq.Dot.Grad.Expect.of.Eq_Conditioned.GtInftySup.policy_gradient_theorem)）** 设 \(\Theta\) 是实 Hilbert 空间，\(S\)、\(A\) 以计数测度为参考测度，(D)、(P1)、(P2) 成立。则
 
 \[
 \nabla_\theta\mathbb E_\theta\Bigl[\sum_t{}'\,\gamma^t{\color{red}r}_t\Bigr]=\mathbb E_\theta\Bigl[\sum_t{}'\,\gamma^t\,G_t\,\nabla_\theta\log\pi_\theta({\color{red}a}_t\mid{\color{red}s}_t)\Bigr].
@@ -256,7 +256,7 @@ Q_t(s_t,a_t)&=\mathbb E_\theta\bigl[{\color{red}r}_t+\gamma\,V_{t+1}({\color{mag
 
 记 \(\delta_j={\color{red}r}_j+\gamma V_{j+1}({\color{red}s}_{j+1})-V_j({\color{red}s}_j)\) 为价值函数 \(V\) 的时序差分残差。
 
-**定理 7.5（无偏优势估计 [unbiased_advantage_estimate](http://www.lemma.cn/lean/?module=Tensor.EqDot_GradExpect.of.Eq_Conditioned.Eq_Expect.IsFinite.IsFinite.unbiased_advantage_estimate)）** 设 \(\Theta\) 是实 Hilbert 空间，\(S\)、\(A\) 以计数测度为参考测度，(D)、(P1)、(P2) 成立，且对所有 \(\theta,t\) 和所有可达 \(s_t\) 有 \(V^\theta_t(s_t)=\mathbb E_\theta[G_t\mid{\color{red}s}_t]\)。令 \(\hat A_t=\sum_k{}'\,\gamma^k\delta_{t+k}\)，则
+**定理 7.5（无偏优势估计 [unbiased_advantage_estimate](http://www.lemma.cn/lean/?module=Tensor.EqDot_GradExpect.of.Eq_Conditioned.Eq_Expect.All_Differentiable_Prob.GtInftySup.unbiased_advantage_estimate)）** 设 \(\Theta\) 是实 Hilbert 空间，\(S\)、\(A\) 以计数测度为参考测度，(D)、(P1)、(P2) 成立，且对所有 \(\theta,t\) 和所有可达 \(s_t\) 有 \(V^\theta_t(s_t)=\mathbb E_\theta[G_t\mid{\color{red}s}_t]\)。令 \(\hat A_t=\sum_k{}'\,\gamma^k\delta_{t+k}\)，则
 
 \[
 \nabla_\theta\mathbb E_\theta\Bigl[\sum_t{}'\,\gamma^t{\color{red}r}_t\Bigr]=\mathbb E_\theta\Bigl[\sum_t{}'\,\gamma^t\,\hat A_t\,\nabla_\theta\log\pi_\theta({\color{red}a}_t\mid{\color{red}s}_t)\Bigr].
@@ -264,13 +264,13 @@ Q_t(s_t,a_t)&=\mathbb E_\theta\bigl[{\color{red}r}_t+\gamma\,V_{t+1}({\color{mag
 
 对有界的 \(V\)，级数裂项相消为 \(\hat A_t=G_t-V_t({\color{red}s}_t)\)，所以定理 7.5 化归为定理 7.3，加上基线项消失 \(\mathbb E_\theta[V_t({\color{red}s}_t)\nabla_\theta\log\pi_\theta]=0\)（第 7.2 节）。
 
-**定理 7.6（广义优势估计 [generalized_advantage_estimate](http://www.lemma.cn/lean/?module=Tensor.EqDot_GradExpect.of.Eq_Conditioned.Eq_Expect.IsFinite.IsFinite.generalized_advantage_estimate)）** 在定理 7.5 的假设下，设 \(\lambda\in[0,1]\)，\(\hat A^{\lambda}_t=\sum_k{}'\,(\gamma\lambda)^k\delta_{t+k}\)。则
+**定理 7.6（广义优势估计 [generalized_advantage_estimate](http://www.lemma.cn/lean/?module=Tensor.EqDot_GradExpect.of.Eq_Conditioned.Eq_Expect.All_Differentiable_Prob.GtInftySup.generalized_advantage_estimate)）** 在定理 7.5 的假设下，设 \(\lambda\in[0,1]\)，\(\hat A^{\lambda}_t=\sum_k{}'\,(\gamma\lambda)^k\delta_{t+k}\)。则
 
 \[
 \nabla_\theta\mathbb E_\theta\Bigl[\sum_t{}'\,\gamma^t{\color{red}r}_t\Bigr]=\mathbb E_\theta\Bigl[\sum_t{}'\,\gamma^t\,\hat A^{\lambda}_t\,\nabla_\theta\log\pi_\theta({\color{red}a}_t\mid{\color{red}s}_t)\Bigr].
 \]
 
-对 \(\lambda\in[0,1)\)，[Schulman 等人](https://arxiv.org/abs/1506.02438) [23] 的加权平均形式 \(\hat A^{\lambda}_t=(1-\lambda)\sum_{k\ge0}\lambda^k\sum_{i\le k}\gamma^i\delta_{t+i}\) 给出同一个恒等式 [In_Ico.generalized_advantage_estimate](http://www.lemma.cn/lean/?module=Tensor.EqDot_GradExpect.of.Eq_Conditioned.Eq_Expect.IsFinite.IsFinite.In_Ico.generalized_advantage_estimate)，经由级数恒等式 [IsFinite.generalized_advantage_estimate](http://www.lemma.cn/lean/?module=Tensor.EqDot.of.IsFinite.generalized_advantage_estimate)。这些陈述针对精确价值函数：用近似的 critic 时，\(k\ge1\) 的项不一定零均值，\(\lambda<1\) 是有偏的 [23]；这一点没有形式化。GAE 是 PPO [25] 所用的优势估计器，PPO 用的是它的截断（有限视野）形式（其公式 (10)–(11)）；PPO 的其余部分（裁剪替代目标、重要性比、KL 惩罚、学习得到的 critic）没有形式化。
+对 \(\lambda\in[0,1)\)，[Schulman 等人](https://arxiv.org/abs/1506.02438) [23] 的加权平均形式 \(\hat A^{\lambda}_t=(1-\lambda)\sum_{k\ge0}\lambda^k\sum_{i\le k}\gamma^i\delta_{t+i}\) 给出同一个恒等式 [In_Ico.generalized_advantage_estimate](http://www.lemma.cn/lean/?module=Tensor.EqDot_GradExpect.of.Eq_Conditioned.Eq_Expect.All_Differentiable_Prob.GtInftySup.In_Ico.generalized_advantage_estimate)，经由级数恒等式 [GtInftySup.generalized_advantage_estimate](http://www.lemma.cn/lean/?module=Tensor.EqDot.of.GtInftySup.generalized_advantage_estimate)。这些陈述针对精确价值函数：用近似的 critic 时，\(k\ge1\) 的项不一定零均值，\(\lambda<1\) 是有偏的 [23]；这一点没有形式化。GAE 是 PPO [25] 所用的优势估计器，PPO 用的是它的截断（有限视野）形式（其公式 (10)–(11)）；PPO 的其余部分（裁剪替代目标、重要性比、KL 惩罚、学习得到的 critic）没有形式化。
 
 # 8 超越核心：从标注到生成（概念性）
 

@@ -12,8 +12,8 @@ private lemma main
   (descPochhammer ℝ k).eval x = x * (descPochhammer ℝ (k - 1)).eval (x - 1) := by
 -- proof
   obtain ⟨n, rfl⟩ : ∃ n, k = n + 1 := Nat.exists_eq_succ_of_ne_zero (ne_of_gt hk)
-  simpa [Nat.add_sub_cancel, descPochhammer_succ_left, Polynomial.eval_mul, Polynomial.eval_X,
-    Polynomial.eval_comp, Polynomial.eval_sub, Polynomial.eval_one] using rfl
+  simp [descPochhammer_succ_left, Polynomial.eval_mul, Polynomial.eval_X,
+    Polynomial.eval_comp, Polynomial.eval_sub, Polynomial.eval_one]
 
 
 -- created on 2023-08-17

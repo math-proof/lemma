@@ -37,12 +37,12 @@ private lemma main
     show (r : R) = 0
     rw [← hf, hf00, map_zero]
 
-  haveI hprime : (RingHom.ker ι.toRingHom).IsPrime := RingHom.ker_isPrime _
+  have hprime : (RingHom.ker ι.toRingHom).IsPrime := RingHom.ker_isPrime _
   refine ⟨⟨hprime, bot_le⟩, ?_⟩
   rintro 𝔮 ⟨h𝔮, -⟩ hle
   by_contra hnot
   obtain ⟨x, hxp, hxq⟩ := Set.not_subset.mp hnot
-  haveI := h𝔮
+  have := h𝔮
   have hlt := Ideal.comap_lt_comap_of_integral_mem_sdiff (R := ↥R0) hle ⟨hxp, hxq⟩ (hint.isIntegral x)
   rw [hcomap] at hlt
   exact not_lt_bot hlt

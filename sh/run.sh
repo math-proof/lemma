@@ -249,6 +249,18 @@ transformPrefix() {
     echo "${newS0}${s1}"
     return
   fi
+  # `NotLt` → `NotGt`, `NotLe` → `NotGe`, `NotGt` → `NotLt`, `NotGe` → `NotLe`.
+  if [[ "$s" =~ ^Not(.+)$ ]]; then
+    echo "Not$(transformPrefix "${BASH_REMATCH[1]}")"
+    return
+  fi
+
+  # `All_Gt` → `All_Lt`, `All_Le` → `All_Ge`, `All_Lt` → `All_Gt`, `All_Ge` → `All_Le`.
+  if [[ "$s" =~ ^All_(.+)$ ]]; then
+    echo "All_$(transformPrefix "${BASH_REMATCH[1]}")"
+    return
+  fi
+
   # If no patterns matched, return original string
   echo "$s"
 }
@@ -440,17 +452,31 @@ comm_swap_is() {
 }
 
 # Find all .lean files except *.echo.lean under Lemma/
+#
+# The gate regex MUST live in a variable: when the pattern on the right of
+# `=~` is a quoted word, bash forces the whole quoted portion to match as a
+# literal string (regex metacharacters lose their meaning). Passing the
+# `$'...'` pattern inline therefore never matched anything, silently
+# suppressing every attribute-generated (synthetic) row. `[^]]` is the POSIX
+# way to negate `]` (it is a literal member right after `[^`); the backslash
+# variant is mis-parsed by bash 5.1 inside `[[ =~ ]]`.
+re_main_attr=$'\n''@\[[[:space:]]*main,[[:space:]]*([^]]+)\]'
 while read -r file; do
   # Get relative path
   rel_file="${file#./}"
   content=$(<"$file")
-  # Match main attribute and optional constructor order comment
-  if [[ $content =~ $'\n/--\n(.*)\n-/' ]]; then
-    constructor_comment="${BASH_REMATCH[1]}"
+  # Extract the docstring directly preceding `@[main, ...]` and detect the
+  # `constructor order` note. This uses parameter expansion rather than a
+  # regex because bash `.` never matches a newline (run.ps1 matches this group
+  # with `[\s\S]*`), so the multi-line table docstrings were being skipped
+  # and the `mt N` indices got reversed on constructor-order files.
+  _prefix="${content%%$'\n@\['*main*}"
+  if [[ "$_prefix" == *$'\n-/' ]]; then
+    constructor_comment="${_prefix##*$'\n/--'$'\n'}"
   else
     constructor_comment=""
   fi
-  if [[ $content =~ $'\n@\[[[:space:]]*main,[[:space:]]*([^\]]+)\]' ]]; then
+  if [[ $content =~ $re_main_attr ]]; then
     attributes="${BASH_REMATCH[1]}"
   else
     continue
@@ -464,8 +490,9 @@ while read -r file; do
   if [[ $constructor_comment == *"constructor order"* ]]; then
     constructor_order=true
   fi
-  # Handle comm attribute (`comm` / `comm N`, not `comm.is` / `mp.comm`)
-  re_comm='(^|,[[:space:]]*)comm([[:space:]]+([0-9]+))?(,|$)'
+  # Handle comm attribute (`comm` / `comm N` / `comm and`, not `comm.is` / `mp.comm`).
+  # Word-boundary matching mirrors run.ps1: `\b(?<!\.)comm(?!\.)(?: ([0-9]+))?\b`.
+  re_comm='(^|[^[:alnum:].])comm([[:space:]]+([0-9]+))?([^[:alnum:].]|$)'
   if [[ $attributes =~ $re_comm ]]; then
     deBruijn="${BASH_REMATCH[3]}"
     IFS='.' read -ra tokens <<< "$module"
@@ -551,8 +578,10 @@ while read -r file; do
       emit_synthetic "$new_module"
     fi
   fi
-  # Handle mp attribute
-  re_mp='(^|,[[:space:]]+)mp(,|$)'
+  # Handle mp attribute. Word-boundary matching mirrors run.ps1 `\b(?<!\.)mp(?!\.)\b`,
+  # so `mp 8` / `mp and` (parity/binder variants, same generated name) are included
+  # but `mp.comm` / `mp.left` / `mp.mt` / `mpr` / `fin.mp` are not.
+  re_mp='(^|[^[:alnum:].])mp([[:space:]]|,|$)'
   if [[ $attributes =~ $re_mp ]]; then
     if parse_is_module "$module"; then
       emit_synthetic "${_section}.${_rhs}.of.${_lhs}${_of_suffix}"
@@ -560,8 +589,8 @@ while read -r file; do
       emit_synthetic "$new_module"
     fi
   fi
-  # Handle mpr attribute
-  re_mpr='(^|,[[:space:]]+)mpr(,|$)'
+  # Handle mpr attribute (same word-boundary rule as `mp`: `mpr 4` / `mpr and` included).
+  re_mpr='(^|[^[:alnum:].])mpr([[:space:]]|,|$)'
   if [[ $attributes =~ $re_mpr ]]; then
     if parse_is_module "$module"; then
       emit_synthetic "${_section}.${_lhs}.of.${_rhs}${_of_suffix}"

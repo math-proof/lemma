@@ -13,15 +13,15 @@ private lemma main
 -- imply
   IsReduced Y := by
 -- proof
-  haveI : ∀ y : Y, _root_.IsReduced (Y.presheaf.stalk y) := by
+  have : ∀ y : Y, _root_.IsReduced (Y.presheaf.stalk y) := by
     intro y
     obtain ⟨x, rfl⟩ := f.surjective y
     let φ := (f.stalkMap x).hom
-    letI := φ.toAlgebra
-    haveI : Module.Flat (Y.presheaf.stalk (f.base x)) (X.presheaf.stalk x) := Flat.stalkMap f x
-    haveI : IsLocalHom (algebraMap (Y.presheaf.stalk (f.base x)) (X.presheaf.stalk x)) :=
+    let := φ.toAlgebra
+    have : Module.Flat (Y.presheaf.stalk (f.base x)) (X.presheaf.stalk x) := Flat.stalkMap f x
+    have : IsLocalHom (algebraMap (Y.presheaf.stalk (f.base x)) (X.presheaf.stalk x)) :=
       inferInstanceAs (IsLocalHom φ)
-    haveI : Module.FaithfullyFlat (Y.presheaf.stalk (f.base x)) (X.presheaf.stalk x) :=
+    have : Module.FaithfullyFlat (Y.presheaf.stalk (f.base x)) (X.presheaf.stalk x) :=
       Module.FaithfullyFlat.of_flat_of_isLocalHom
     exact isReduced_of_injective (algebraMap (Y.presheaf.stalk (f.base x)) (X.presheaf.stalk x))
       (FaithfulSMul.algebraMap_injective _ _)

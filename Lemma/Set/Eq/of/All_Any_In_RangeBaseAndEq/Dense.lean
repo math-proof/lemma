@@ -9,12 +9,12 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 
 private lemma  epi_specMap_of_field {κ k : Type u} [Field κ] [Field k] (φ : CommRingCat.of κ ⟶ CommRingCat.of k) :
     Epi (Spec.map φ) := by
-  haveI : Flat (Spec.map φ) := by
+  have : Flat (Spec.map φ) := by
     rw [HasRingHomProperty.Spec_iff (P := @Flat)]
-    letI : Algebra κ k := φ.hom.toAlgebra
+    let : Algebra κ k := φ.hom.toAlgebra
     show Module.Flat κ k
     infer_instance
-  haveI : Surjective (Spec.map φ) := ⟨fun p => ⟨IsLocalRing.closedPoint k, Subsingleton.elim _ _⟩⟩
+  have : Surjective (Spec.map φ) := ⟨fun p => ⟨IsLocalRing.closedPoint k, Subsingleton.elim _ _⟩⟩
   exact Flat.epi_of_flat_of_surjective _
 @[main]
 private lemma main
@@ -32,7 +32,7 @@ private lemma main
   refine AlgebraicGeometry.ext_of_fromSpecResidueField_eq F G i D hD (fun x hx => ?_) hFG
   obtain ⟨k, _, y, ⟨p, rfl⟩, hy⟩ := h x hx
   obtain rfl : p = IsLocalRing.closedPoint k := Subsingleton.elim _ _
-  haveI := epi_specMap_of_field (X.descResidueField (Scheme.stalkClosedPointTo y))
+  have := epi_specMap_of_field (X.descResidueField (Scheme.stalkClosedPointTo y))
   rw [← cancel_epi (Spec.map (X.descResidueField (Scheme.stalkClosedPointTo y))), ← Category.assoc, ← Category.assoc,
     X.descResidueField_stalkClosedPointTo_fromSpecResidueField k y]
   exact hy

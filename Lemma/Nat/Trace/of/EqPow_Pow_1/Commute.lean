@@ -24,7 +24,7 @@ private lemma main
   ·
     have h : ρ (g * u) = ρ g := LinearMap.ext fun v => Subsingleton.elim _ _
     rw [h]
-  · haveI : CharP (Module.End k V) p :=
+  · have : CharP (Module.End k V) p :=
       charP_of_injective_algebraMap (algebraMap k (Module.End k V)).injective p
 
     set N : Module.End k V := ρ u - 1 with hN

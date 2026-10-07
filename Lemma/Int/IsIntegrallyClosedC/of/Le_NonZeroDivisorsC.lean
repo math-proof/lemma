@@ -14,10 +14,10 @@ private lemma  IsIntegrallyClosed.of_isIntegrallyClosedIn_of_isLocalization
   have hg : ∀ y : M, IsUnit (algebraMap C K y) := fun y =>
     isUnit_iff_ne_zero.mpr
       ((map_ne_zero_iff _ (IsFractionRing.injective C K)).mpr (nonZeroDivisors.ne_zero (hM y.2)))
-  letI algLK : Algebra L K := (IsLocalization.lift (M := M) (S := L) hg).toAlgebra
-  haveI : IsScalarTower C L K :=
+  let algLK : Algebra L K := (IsLocalization.lift (M := M) (S := L) hg).toAlgebra
+  have : IsScalarTower C L K :=
     IsScalarTower.of_algebraMap_eq' (R := C) (S := L) (A := K) (IsLocalization.lift_comp (M := M) hg).symm
-  haveI : IsFractionRing L K := IsFractionRing.isFractionRing_of_isLocalization M L K hM
+  have : IsFractionRing L K := IsFractionRing.isFractionRing_of_isLocalization M L K hM
   refine (isIntegrallyClosed_iff K).mpr fun {x} hx => ?_
   have hxL : IsIntegral L x := hx.tower_top
   obtain ⟨l, rfl⟩ := (isIntegrallyClosed_iff K).mp inferInstance hxL

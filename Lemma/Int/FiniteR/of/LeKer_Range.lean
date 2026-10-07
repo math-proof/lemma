@@ -18,9 +18,9 @@ private lemma main
 -- proof
   have hN₁ : Module.Finite R N₁ := inferInstance
   have hN₂ : Module.Finite R N₂ := inferInstance
-  haveI : IsNoetherian R (LinearMap.range α) :=
+  have : IsNoetherian R (LinearMap.range α) :=
     isNoetherian_of_fg_of_noetherian _ (LinearMap.range_eq_map α ▸ (Module.finite_def.mp hN₁).map _)
-  haveI : IsNoetherian R N₂ := isNoetherian_of_isNoetherianRing_of_finite R N₂
+  have : IsNoetherian R N₂ := isNoetherian_of_isNoetherianRing_of_finite R N₂
   refine ⟨Submodule.fg_of_fg_map_of_fg_inf_ker β ?_ ?_⟩
   · rw [Submodule.map_top]; exact IsNoetherian.noetherian _
   · rw [top_inf_eq]

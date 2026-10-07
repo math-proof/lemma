@@ -22,10 +22,10 @@ private lemma main
   have e₁ : (W ⊗[R] M) ⊗[W] (W ⊗[R] N) ≃ₗ[W] (W ⊗[R] M) ⊗[R] N :=
     TensorProduct.AlgebraTensorModule.cancelBaseChange R W W (W ⊗[R] M) N
   have e₂ : (W ⊗[R] M) ⊗[R] N ≃ₗ[R] W ⊗[R] (M ⊗[R] N) := TensorProduct.assoc R W M N
-  haveI : Subsingleton (W ⊗[R] (M ⊗[R] N)) := inferInstance
-  haveI h1 : Subsingleton ((W ⊗[R] M) ⊗[W] (W ⊗[R] N)) :=
+  have : Subsingleton (W ⊗[R] (M ⊗[R] N)) := inferInstance
+  have h1 : Subsingleton ((W ⊗[R] M) ⊗[W] (W ⊗[R] N)) :=
     (e₁.toEquiv.trans e₂.toEquiv).subsingleton
-  haveI h2 : Subsingleton (W ⊗[R] N) :=
+  have h2 : Subsingleton (W ⊗[R] N) :=
     (Module.FaithfullyFlat.subsingleton_tensorProduct_iff_right W (W ⊗[R] M)).mp h1
   exact (Module.FaithfullyFlat.subsingleton_tensorProduct_iff_right R W).mp h2
 

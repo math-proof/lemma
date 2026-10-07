@@ -12,7 +12,7 @@ private lemma main
 -- imply
   Module.FaithfullyFlat R (AdicCompletion (IsLocalRing.maximalIdeal R) R) := by
 -- proof
-  haveI : Module.Flat R (AdicCompletion (maximalIdeal R) R) := AdicCompletion.flat_of_isNoetherian _
+  have : Module.Flat R (AdicCompletion (maximalIdeal R) R) := AdicCompletion.flat_of_isNoetherian _
   rw [Module.FaithfullyFlat.iff_flat_and_proper_ideal]
   refine ⟨inferInstance, fun I hI htop => ?_⟩
   have hle : (I • ⊤ : Submodule R (AdicCompletion (maximalIdeal R) R)) ≤ (maximalIdeal R) ^ 1 • ⊤ := by
@@ -21,7 +21,7 @@ private lemma main
   have hsurj := AdicCompletion.eval_surjective (maximalIdeal R) R 1
   have hne : ((maximalIdeal R) ^ 1 • ⊤ : Submodule R R) ≠ ⊤ := by
     rw [pow_one, smul_eq_mul, Ideal.mul_top]; exact (maximalIdeal.isMaximal R).ne_top
-  haveI : Nontrivial (R ⧸ ((maximalIdeal R) ^ 1 • ⊤ : Submodule R R)) :=
+  have : Nontrivial (R ⧸ ((maximalIdeal R) ^ 1 • ⊤ : Submodule R R)) :=
     Submodule.Quotient.nontrivial_iff.mpr hne
   obtain ⟨q, hq⟩ := exists_ne (0 : R ⧸ ((maximalIdeal R) ^ 1 • ⊤ : Submodule R R))
   obtain ⟨x, rfl⟩ := hsurj q

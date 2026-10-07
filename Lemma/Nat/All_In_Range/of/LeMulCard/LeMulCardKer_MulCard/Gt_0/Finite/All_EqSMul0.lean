@@ -21,7 +21,7 @@ private lemma main
   ∀ x : J, q • x = 0 → x ∈ f.range := by
 -- proof
   classical
-  haveI := hfinJ
+  have := hfinJ
 
   let ι : f.range → {x : J // q • x = 0} := fun y => ⟨y.1, by
     obtain ⟨t, ht⟩ := y.2

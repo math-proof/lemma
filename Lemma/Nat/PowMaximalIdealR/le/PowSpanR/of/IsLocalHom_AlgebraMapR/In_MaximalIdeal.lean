@@ -12,14 +12,14 @@ private lemma main
   {p : ℕ} [Fact p.Prime]
   {n : ℕ}
 -- given
-  (hp𝒪 : (p : 𝒪) ∈ maximalIdeal 𝒪)
-  (hl : IsLocalHom (algebraMap 𝒪 R)) :
+  (_hp𝒪 : (p : 𝒪) ∈ maximalIdeal 𝒪)
+  (_hl : IsLocalHom (algebraMap 𝒪 R)) :
 -- imply
   ∃ m : ℕ, maximalIdeal R ^ m ≤ Ideal.span {(p : R)} ^ n := by
 -- proof
   classical
   set J : Ideal R := Ideal.map (algebraMap 𝒪 R) (maximalIdeal 𝒪) with hJ
-  haveI : IsNoetherianRing R := Algebra.FiniteType.isNoetherianRing 𝒪 R
+  have : IsNoetherianRing R := Algebra.FiniteType.isNoetherianRing 𝒪 R
 
   have h1 : maximalIdeal R ≤ J.radical := by
     rw [Ideal.radical_eq_sInf]
@@ -29,7 +29,7 @@ private lemma main
       ((IsLocalRing.maximalIdeal.isMaximal 𝒪).eq_of_le (Ideal.comap_ne_top _ hP.ne_top)
         (Ideal.map_le_iff_le_comap.1 hJP)).symm
     have hmax : (P.comap (algebraMap 𝒪 R)).IsMaximal := hcomap ▸ IsLocalRing.maximalIdeal.isMaximal 𝒪
-    haveI : P.IsMaximal := Ideal.isMaximal_of_isIntegral_of_isMaximal_comap P hmax
+    have : P.IsMaximal := Ideal.isMaximal_of_isIntegral_of_isMaximal_comap P hmax
     exact (IsLocalRing.eq_maximalIdeal this).ge
   obtain ⟨a, ha⟩ := Ideal.exists_pow_le_of_le_radical_of_fg h1 (IsNoetherian.noetherian _)
 

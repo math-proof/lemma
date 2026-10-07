@@ -14,11 +14,11 @@ private lemma main
 -- imply
   Function.Injective φ := by
 -- proof
-  haveI : Nontrivial A := (algebraMap A C).domain_nontrivial
+  have : Nontrivial A := (algebraMap A C).domain_nontrivial
   rw [injective_iff_map_eq_zero]
   intro b hb
   have hker : RingHom.ker φ.toRingHom = ⊥ := by
-    haveI : (RingHom.ker φ.toRingHom).IsPrime := RingHom.ker_isPrime _
+    have : (RingHom.ker φ.toRingHom).IsPrime := RingHom.ker_isPrime _
     refine Ideal.eq_bot_of_comap_eq_bot (R := A) ?_
     refine (Submodule.eq_bot_iff _).mpr fun a ha => ?_
     rw [Ideal.mem_comap, RingHom.mem_ker] at ha

@@ -2,7 +2,7 @@ import Mathlib.Dynamics.OmegaLimit
 import Mathlib.Dynamics.Flow
 import sympy.dynamics.actor_critic
 import sympy.Basic
-import Lemma.OmegaLimit.In_OmegaLimit.is.All_In_Closure_Image2_Ici
+import Lemma.Set.In_OmegaLimit.is.All_In_Closure_Image2_Ici
 import Lemma.ContinuousSemiflow.IsForwardInvariant
 open Filter
 
@@ -41,7 +41,7 @@ private lemma main
       simp only [Set.mem_Ici] at hs
       refine ⟨Φ.toFun (s - t) x, subset_closure ⟨s - t, by simp only [Set.mem_Ici]; linarith, x, hx, rfl⟩, ?_⟩
       rw [← Φ.map_add' t (s - t) ht (by linarith) x, add_sub_cancel]
-    obtain ⟨z, hz, hzy⟩ := hsub ((OmegaLimit.In_OmegaLimit.is.All_In_Closure_Image2_Ici Φ.toFun K y).1 hy (T + t))
+    obtain ⟨z, hz, hzy⟩ := hsub ((Set.In_OmegaLimit.is.All_In_Closure_Image2_Ici Φ.toFun K y).1 hy (T + t))
     exact ⟨z, hz, hzy⟩
   have hdir : Directed (· ⊇ ·) F := by
     intro T₁ T₂
@@ -52,7 +52,7 @@ private lemma main
   obtain ⟨z, hz⟩ := IsCompact.nonempty_iInter_of_directed_nonempty_isCompact_isClosed F hdir hne
     (fun T => (hcpt T T.2).inter_right (isClosed_singleton.preimage (Φ.continuous_apply t ht))) hclosed
   rw [Set.mem_iInter] at hz
-  refine ⟨z, (OmegaLimit.In_OmegaLimit.is.All_In_Closure_Image2_Ici Φ.toFun K z).2 fun T => hmono T (max T 0) (le_max_left _ _) (hz ⟨max T 0, Set.mem_Ici.2 (le_max_right _ _)⟩).1, (hz ⟨0, Set.mem_Ici.2 le_rfl⟩).2⟩
+  refine ⟨z, (Set.In_OmegaLimit.is.All_In_Closure_Image2_Ici Φ.toFun K z).2 fun T => hmono T (max T 0) (le_max_left _ _) (hz ⟨max T 0, Set.mem_Ici.2 (le_max_right _ _)⟩).1, (hz ⟨0, Set.mem_Ici.2 le_rfl⟩).2⟩
 
 
 -- created on 2026-09-26

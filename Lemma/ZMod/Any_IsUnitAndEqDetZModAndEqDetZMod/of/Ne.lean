@@ -17,8 +17,8 @@ private lemma main
       IsUnit (g.map (Int.castRingHom (ZMod (q * ℓ)))).det ∧
       ((g.det : ℤ) : ZMod ℓ) = (u : ZMod ℓ) ∧ ((g.det : ℤ) : ZMod q) = (v : ZMod q) := by
 -- proof
-  haveI : NeZero ℓ := ⟨(Fact.out : ℓ.Prime).ne_zero⟩
-  haveI : NeZero q := ⟨(Fact.out : q.Prime).ne_zero⟩
+  have : NeZero ℓ := ⟨(Fact.out : ℓ.Prime).ne_zero⟩
+  have : NeZero q := ⟨(Fact.out : q.Prime).ne_zero⟩
   have hco : Nat.Coprime ℓ q := (Nat.coprime_primes Fact.out Fact.out).mpr hℓq
   obtain ⟨d, hdℓ, hdq⟩ := Nat.chineseRemainder hco (u : ZMod ℓ).val (v : ZMod q).val
   have hdℓ' : (d : ZMod ℓ) = (u : ZMod ℓ) := by

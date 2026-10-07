@@ -345,39 +345,39 @@ export class LeanParenthesis extends LeanPairedGroup {
         return this.arg.isProp(vars);
     }
 
+    /**
+     * Whether this paren is the event/body of a `ℙ[…]` / `𝔼[…]` application: `ℙ[π](this)`,
+     * `ℙ[π](this).toReal`, or mid-juxtaposition `∇[θ] ℙ[π](this).toReal`.
+     * @param {'prob'|'expect'|null} kind  restrict to ℙ / 𝔼, or either when null
+     */
+    isProbExpectEventParen(kind = null) {
+        const {LeanProperty, LeanArgsSpaceSeparated} = L;
+        let self = this;
+        let p = this.parent;
+        if (p instanceof LeanProperty && p.args[0] === this) {
+            self = p; // `….toReal`
+            p = p.parent;
+        }
+        if (!(p instanceof LeanArgsSpaceSeparated)) return false;
+        const i = p.args.indexOf(self);
+        if (i <= 0) return false;
+        const head = p.args[i - 1];
+        if (kind !== 'expect' && LeanArgsSpaceSeparated.isProbBinderHead(head)) return true;
+        if (kind !== 'prob' && LeanArgsSpaceSeparated.isExpectBinderHead(head)) return true;
+        return false;
+    }
+
     isProbEventParen() {
-        const p = this.parent;
-        return (
-            p instanceof L.LeanArgsSpaceSeparated &&
-            p.args.length >= 2 &&
-            p.args[1] === this &&
-            L.LeanArgsSpaceSeparated.isProbBinderHead(p.args[0])
-        );
+        return this.isProbExpectEventParen('prob');
     }
 
     isExpectBodyParen() {
-        const p = this.parent;
-        return (
-            p instanceof L.LeanArgsSpaceSeparated &&
-            p.args.length >= 2 &&
-            p.args[1] === this &&
-            L.LeanArgsSpaceSeparated.isExpectBinderHead(p.args[0])
-        );
+        return this.isProbExpectEventParen('expect');
     }
 
     /** `ℙ[…](…)` / `𝔼[…](…)`, also under a trailing projection: `ℙ[π](…).toReal`. */
     isProbExpectParen() {
-        if (this.isProbEventParen() || this.isExpectBodyParen()) return true;
-        const {LeanProperty, LeanArgsSpaceSeparated} = L;
-        const p = this.parent;
-        if (!(p instanceof LeanProperty) || p.args[0] !== this) return false;
-        const pp = p.parent;
-        return (
-            pp instanceof LeanArgsSpaceSeparated &&
-            pp.args.length >= 2 &&
-            pp.args[1] === p &&
-            (LeanArgsSpaceSeparated.isProbBinderHead(pp.args[0]) || LeanArgsSpaceSeparated.isExpectBinderHead(pp.args[0]))
-        );
+        return this.isProbExpectEventParen();
     }
 
     /** Rendered as `\left(…\right)` (not elided / not a multi-row block), so a `\middle` may sit inside. */
@@ -538,14 +538,17 @@ export class LeanParenthesis extends LeanPairedGroup {
         // Only elide simple casts like `(n : ℝ)`; a structured type such as
         // `(μ : Measure (ℕ → S))` carries information the reader needs.
         if (!(arg.rhs instanceof L.LeanToken)) return false;
-        return (
+        if (
             p instanceof L.LeanArgsSpaceSeparated ||
             p instanceof L.LeanArgsCommaSeparated ||
             p instanceof L.LeanGetElem ||
             p instanceof L.LeanGetElemQue ||
             p instanceof L.LeanGetElemQuote ||
             p instanceof L.LeanRelational
-        );
+        ) return true;
+        // ENNReal→ℝ (`open scoped ENNReal.ToRealCoe`): `(ℙ[…](…) : ℝ)` under `•` / `+` / …
+        if (arg.rhs.text === 'ℝ' && p instanceof L.LeanArithmetic) return true;
+        return false;
     }
 
     peelLatexCoe() {
@@ -751,7 +754,82 @@ export class LeanBracket extends LeanPairedGroup {
 export class LeanBrace extends LeanPairedGroup {
     static { this.register(); }
 
+    /**
+     * Structure-instance literal written with its first field on the `{` line and the other fields on
+     * the following lines (Lean `sepByIndent`: every field starts in the first field's column):
+     *     { toFun := f
+     *       invFun := g }
+     * `inline` is set once the body became a `LeanStatements` (`structInst`); it is printed `{ … }` with the
+     * first field right after `{ `, so the continuation lines keep the first field's column.
+     * @type {boolean | undefined}
+     */
+    inline = undefined;
+
+    /** Column of a `}` written on its own line after an `inline` body. @type {number | undefined} */
+    closeIndent = undefined;
+
+    /** A field (`x := v`), or a comma list of fields ending in a comma (`a := 1, b := 2,`). */
+    static isStructInstField(node) {
+        const {LeanAssign, LeanArgsCommaSeparated, LeanCaret} = L;
+        if (node instanceof LeanAssign) return true;
+        return (
+            node instanceof LeanArgsCommaSeparated &&
+            node.args.some((a) => a instanceof LeanAssign) &&
+            node.args.every((a) => a instanceof LeanAssign || a instanceof LeanCaret)
+        );
+    }
+
+    /** Parent that holds structure-instance fields: a brace, a `{ s with … }` update, or a `structInst` body. */
+    static isStructInstOwner(node) {
+        const {LeanStatements, LeanWith} = L;
+        return (
+            node instanceof LeanBrace ||
+            (node instanceof LeanWith && node.isStructUpdate()) ||
+            (node instanceof LeanStatements && node.structInst === true)
+        );
+    }
+
+    /**
+     * Turn the single field `current` of `owner` (a brace or a `with` update) into a `structInst` body at the
+     * continuation column `indent`; returns the caret of the new line.
+     */
+    static openStructInstBody(owner, current, newline_count, indent) {
+        const {LeanStatements, LeanCaret} = L;
+        current.indent = indent;
+        const stmts = new LeanStatements([current], indent, current.level ?? owner.level);
+        stmts.structInst = true;
+        let out;
+        for (let i = 0; i < Math.max(newline_count, 1); i++) stmts.push(out = new LeanCaret(indent, stmts.level));
+        return [stmts, out];
+    }
+
+    /** `{ s with⏎ … }` / `{ s with a := 1⏎ … }` whose `with` got a multi-line body. */
+    structUpdateWith() {
+        const {LeanArgsSpaceSeparated, LeanWith, LeanStatements} = L;
+        const a = this.arg;
+        const w = a instanceof LeanArgsSpaceSeparated ? a.args[a.args.length - 1] : null;
+        return w instanceof LeanWith && w.args[0] instanceof LeanStatements && w.args[0].structInst ? w : null;
+    }
+
+    /** Multi-line structure literal: printed with Lean's `{ … }` spacing. */
+    isSpacedStructInst() {
+        return this.inline === true || this.structUpdateWith() != null;
+    }
+
     insert_newline(caret, newline_count, indent, next) {
+        if (this.indent <= indent && indent > this.indent && caret === this.arg && !(caret instanceof L.LeanCaret) &&
+            !(caret instanceof L.LeanStatements) && LeanBrace.isStructInstField(caret)) {
+            // first field on the `{` line, next field on the next line: keep its column (`indent`), not `this.indent + 2`
+            const [stmts, out] = LeanBrace.openStructInstBody(this, caret, newline_count, indent);
+            this.arg = stmts;
+            this.inline = true;
+            return out;
+        }
+        if (this.inline && indent === this.indent && next === '}' && this.closeIndent === undefined) {
+            // `{ a := 1⏎ … b := 2⏎ }`: the closing brace on a line of its own
+            this.closeIndent = indent;
+            return caret;
+        }
         if (this.indent <= indent) {
             if (caret instanceof L.LeanCaret) {
                 if (indent === this.indent) {
@@ -796,8 +874,29 @@ export class LeanBrace extends LeanPairedGroup {
             p instanceof L.LeanTactic || 
             p instanceof L.LeanAssign || 
             p instanceof L.Lean_rightarrow || 
-            p instanceof L.LeanArgsSpaceSeparated
+            p instanceof L.LeanArgsSpaceSeparated ||
+            // `⟨{ toFun := … }, e⟩` / `({ … }, n)`: an inline brace, not a line of its own (was `⟨    {`)
+            p instanceof L.LeanArgsCommaSeparated ||
+            p instanceof LeanPairedGroup
         );
+    }
+
+    set_line(line) {
+        if (!this.inline) return super.set_line(line);
+        // `{ first⏎ … }`: the body starts on the `{` line and the `}` closes the last field's line
+        this.line = line;
+        line = this.arg.set_line(line);
+        return this.closeIndent !== undefined && this.is_closed ? line + 1 : line;
+    }
+
+    strFormat(format) {
+        if (!this.isSpacedStructInst()) return super.strFormat(format);
+        format = format || this.argFormat();
+        const c = this.is_closed;
+        const close = this.closeIndent !== undefined ? `\n${' '.repeat(this.closeIndent)}}` : ' }';
+        if (c) return `{ ${format}${close}`;
+        if (c == null) return `{ ${format}`;
+        return `${format}${close}`;
     }
 
     latexFormat() {

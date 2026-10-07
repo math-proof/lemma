@@ -34,7 +34,7 @@ private lemma main
       ∑ i ∈ Finset.range (k + 1), AddMonoidAlgebra.single (2 * (i : ℤ) - k) ((k.choose i : ℕ) : R) := by
     rw [hcomm.add_pow]
     exact Finset.sum_congr rfl hterm
-  rw [hsum, AddMonoidAlgebra.coeff_sum, Finsupp.finset_sum_apply]
+  rw [hsum, AddMonoidAlgebra.coeff_sum, Finsupp.finsetSum_apply]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [AddMonoidAlgebra.coeff_single, Finsupp.single_apply]
 

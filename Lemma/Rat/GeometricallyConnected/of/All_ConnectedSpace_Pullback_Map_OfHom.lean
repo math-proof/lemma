@@ -24,7 +24,7 @@ private lemma main
   let b : Spec (CommRingCat.of K) ⟶ Spec (CommRingCat.of R) := Spec.map (CommRingCat.ofHom (algebraMap R K))
   have hx : Spec.map (CommRingCat.ofHom x) = a ≫ b := by
     simp only [x, a, b, CommRingCat.ofHom_comp, Spec.map_comp]
-  haveI hk : ConnectedSpace ↥(pullback f (Spec.map (CommRingCat.ofHom x))) := h k x
+  have hk : ConnectedSpace ↥(pullback f (Spec.map (CommRingCat.ofHom x))) := h k x
 
   let p : pullback f (Spec.map (CommRingCat.ofHom x)) ⟶ pullback f b :=
     pullback.lift (pullback.fst _ _) (pullback.snd _ _ ≫ a) (by rw [pullback.condition, hx, Category.assoc])
@@ -32,10 +32,10 @@ private lemma main
     refine IsPullback.of_right ?_ (pullback.lift_snd _ _ _) (IsPullback.of_hasPullback f b)
     rw [pullback.lift_fst, ← hx]
     exact IsPullback.of_hasPullback f _
-  haveI : Surjective a := by
-    haveI : Subsingleton ↥(Spec (CommRingCat.of K)) := inferInstanceAs (Subsingleton (PrimeSpectrum K))
+  have : Surjective a := by
+    have : Subsingleton ↥(Spec (CommRingCat.of K)) := inferInstanceAs (Subsingleton (PrimeSpectrum K))
     infer_instance
-  haveI : Surjective p := MorphismProperty.of_isPullback hp.flip inferInstance
+  have : Surjective p := MorphismProperty.of_isPullback hp.flip inferInstance
 
   rw [connectedSpace_iff_univ, ← Set.range_eq_univ.mpr p.surjective]
   exact isConnected_range p.continuous

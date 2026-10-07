@@ -48,6 +48,18 @@ function leanStatementsPreferWordOverTactic(stmts) {
 export class LeanStatements extends LeanMultipleLine(LeanArgs) {
     static { this.register(); }
 
+    /**
+     * Body of a multi-line structure-instance literal (see `LeanBrace.openStructInstBody`): one field per line.
+     * @type {boolean | undefined}
+     */
+    structInst = undefined;
+
+    /** The first field sits on the `{` / `with` line (no line prefix of its own). */
+    isInlineFirst() {
+        const p = this.parent;
+        return this.structInst === true && p != null && p.inline === true;
+    }
+
     get stack_priority() {
         return L.LeanColon.input_priority;
     }
@@ -81,9 +93,14 @@ export class LeanStatements extends LeanMultipleLine(LeanArgs) {
             return super.push_binary(Ctor, skipBraceShortcut);
         }
 
-        if (skipBraceShortcut || (Ctor !== L.LeanAssign && Ctor !== L.LeanColon) || !(parent instanceof L.LeanBrace))
+        // `skipBraceShortcut` (from `insert_assign` / `insert_colon`) keeps the old parse for every `:` and for `:=`
+        // outside braces. In a brace body (`{⏎ a := 1⏎ b := 2⏎ }`, or the `structInst` body of `{ a := 1⏎ b := 2 }`
+        // / `{ s with⏎ … }`) `x := v` starts the next structure-instance field.
+        const structField = Ctor === L.LeanAssign && (this.structInst === true || parent instanceof L.LeanBrace);
+        if ((skipBraceShortcut && !structField) || (Ctor !== L.LeanAssign && Ctor !== L.LeanColon) || !(parent instanceof L.LeanBrace || structField))
             return super.push_binary(Ctor, skipBraceShortcut);
         if (idx < 0) return super.push_binary(Ctor, skipBraceShortcut);
+        if (structField) this.structInst = true;
         const origin = this.args[idx];
         const caret = new L.LeanCaret(origin.indent, origin.level);
         this.replace(origin, new Ctor(origin, caret, origin.indent, origin.level));
@@ -100,6 +117,22 @@ export class LeanStatements extends LeanMultipleLine(LeanArgs) {
     insert_semicolon(caret) {
         if (caret instanceof L.LeanTactic) return caret.insert_semicolon(caret.arg);
         return super.insert_semicolon(caret);
+    }
+
+    insert_comma(caret) {
+        // `a := 1,⏎ b := 2`: a comma after a field of a structure-instance body
+        if (this.structInst === true && this.args.includes(caret)) {
+            const c2 = new L.LeanCaret(caret.indent, caret.level);
+            this.replace(caret, new L.LeanArgsCommaSeparated([caret, c2], caret.indent, caret.level));
+            return c2;
+        }
+        return super.insert_comma(caret);
+    }
+
+    strArgs() {
+        const args = super.strArgs();
+        if (!this.isInlineFirst() || !args.length) return args;
+        return [String(args[0]).replace(/^ +/, ''), ...args.slice(1)];
     }
 
     echo() {
@@ -309,7 +342,7 @@ export class LeanStatements extends LeanMultipleLine(LeanArgs) {
         const n = this.args.length;
         if (n === 0) return '';
         let format = Array(n).fill('%s').join('\n');
-        if (this.parent instanceof L.LeanBrace) {
+        if (this.parent instanceof L.LeanBrace && !this.parent.inline) {
             format = `\n${format}\n${' '.repeat(this.parent.indent)}`;
         }
         return format;

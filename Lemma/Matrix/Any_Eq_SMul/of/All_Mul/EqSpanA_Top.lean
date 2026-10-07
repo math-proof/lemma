@@ -20,11 +20,11 @@ private lemma main
     have hle : Submodule.span A S ≤
         { carrier := {X | X * M = M * X}
           add_mem' := fun {X} {Y} hX hY => by
-            simp only [Set.mem_setOf_eq] at hX hY ⊢
+            simp only [Set.mem_ofPred_eq] at hX hY ⊢
             rw [add_mul, mul_add, hX, hY]
           zero_mem' := by simp
           smul_mem' := fun a X hX => by
-            simp only [Set.mem_setOf_eq] at hX ⊢
+            simp only [Set.mem_ofPred_eq] at hX ⊢
             rw [smul_mul_assoc, mul_smul_comm, hX] } :=
       Submodule.span_le.mpr hM
     intro X
@@ -35,7 +35,7 @@ private lemma main
   refine ⟨a, ?_⟩
   rw [← ha, Matrix.scalar_apply]
   ext i j
-  simp [Matrix.one_apply, Matrix.diagonal_apply, Matrix.smul_apply, mul_comm]
+  simp [Matrix.one_apply, Matrix.diagonal_apply, Matrix.smul_apply]
 
 
 -- created on 2026-10-05

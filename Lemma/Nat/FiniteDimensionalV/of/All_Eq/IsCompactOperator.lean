@@ -28,7 +28,7 @@ private lemma main
     rw [this]
     exact isClosed_eq T.continuous continuous_id
 
-  haveI : FiniteDimensional 𝕜 ↥W := by
+  have : FiniteDimensional 𝕜 ↥W := by
     refine FiniteDimensional.of_isCompact_closedBall₀ 𝕜 zero_lt_one ?_
     have hK : IsCompact (closure ((T : E → E) '' Metric.closedBall 0 1)) := by
       have h := hT.isCompact_closure_image_ball (f := (T : E →ₗ[𝕜] E)) 2

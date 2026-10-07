@@ -21,7 +21,7 @@ private lemma main
     rw [h]; exact PrimeSpectrum.isClosed_zeroLocus s
   obtain ⟨sec, hsec⟩ := h.out
   ext x
-  simp only [Set.mem_setOf_eq, PrimeSpectrum.mem_zeroLocus]
+  simp only [Set.mem_ofPred_eq, PrimeSpectrum.mem_zeroLocus]
   constructor
   · intro hx
     rintro r ⟨φ, p, rfl⟩

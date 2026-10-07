@@ -16,7 +16,7 @@ private lemma main
     simp only [Set.mem_image, Set.mem_Ioo]
     constructor
     · rintro ⟨x, ⟨hx1, hx2⟩, rfl⟩
-      exact ⟨x + t, ⟨by linarith, by linarith⟩, by ring⟩
+      exact ⟨x + t, ⟨by linarith, by linarith⟩, by ring_nf⟩
     · rintro ⟨y, ⟨hy1, hy2⟩, rfl⟩
       exact ⟨y - t, ⟨by linarith, by linarith⟩, rfl⟩
   rw [hs]

@@ -13,7 +13,7 @@ private lemma main
   {x : K}
 -- given
   (ha : a ∈ J)
-  (ha0 : algebraMap C K a ≠ 0)
+  (_ha0 : algebraMap C K a ≠ 0)
   (hx : x ∈ Algebra.adjoin C {x : K | ∃ i ∈ J, x * algebraMap C K a = algebraMap C K i}) :
 -- imply
   ∃ (N : ℕ) (g : C), g ∈ J ^ N ∧ x * algebraMap C K a ^ N = algebraMap C K g := by

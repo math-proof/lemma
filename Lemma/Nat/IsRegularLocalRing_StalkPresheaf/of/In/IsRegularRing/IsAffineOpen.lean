@@ -18,9 +18,9 @@ private lemma main
 -- imply
   IsRegularLocalRing (X.presheaf.stalk x) := by
 -- proof
-  letI : Algebra Γ(X, U) (X.presheaf.stalk x) := (X.presheaf.germ U x hx).hom.toAlgebra
-  haveI := hU.isLocalization_stalk ⟨x, hx⟩
-  haveI := hreg
+  let : Algebra Γ(X, U) (X.presheaf.stalk x) := (X.presheaf.germ U x hx).hom.toAlgebra
+  have := hU.isLocalization_stalk ⟨x, hx⟩
+  have := hreg
   exact IsRegularLocalRing.of_ringEquiv
     (IsLocalization.algEquiv (hU.primeIdealOf ⟨x, hx⟩).asIdeal.primeCompl
       (Localization.AtPrime (hU.primeIdealOf ⟨x, hx⟩).asIdeal) (X.presheaf.stalk x)).toRingEquiv

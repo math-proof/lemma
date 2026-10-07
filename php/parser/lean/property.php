@@ -187,6 +187,9 @@ class LeanProperty extends LeanBinary
                     if ($arg instanceof LeanParenthesis && !($arg->arg instanceof LeanColon))
                         $arg = $arg->arg;
                     return [$arg->toLatex($syntax)];
+                case 'toReal':
+                    // ENNReal→ℝ: `ℙ[…](…).toReal` — keep the paren so Prob short-form / `\middle|` still run
+                    return [$this->lhs->toLatex($syntax)];
             }
         }
         return parent::latexArgs($syntax);
@@ -246,6 +249,8 @@ class LeanProperty extends LeanBinary
                     return '{%s}!';
                 case 'det':
                     return '\left|{%s}\right|';
+                case 'toReal':
+                    return '%s';
             }
         }
         return "{%s}$this->command{%s}";

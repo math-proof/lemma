@@ -1,4 +1,4 @@
-import Lemma.Tensor.Eq.Dot.Grad.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.IsFinite.Q_Function
+import Lemma.Tensor.Eq.Dot.Grad.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.GtInftySup.Q_Function
 import Lemma.Random.ProbCond.eq.OfRealPol.of.Ne_0
 import Lemma.Random.SinglePSpace.of.EqMeasureCount.Measurable
 import Lemma.Measure.Count.eq.ProdCountS
@@ -9,8 +9,9 @@ import sympy.stats.variance
 import sympy.vector.Basic
 import sympy.vector.operators
 import sympy.concrete.sup
-import Lemma.Tensor.Differentiable_RealPreimageS.of.IsFinite.All_Differentiable_Prob
+import Lemma.Random.Differentiable_RealPreimageS.of.GtInftySup.All_Differentiable_Prob
 import Lemma.Random.AeRealPreimageSS.ne.Zero
+import Lemma.Random.Measurable_R
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Filter Topology
 
 
@@ -52,7 +53,7 @@ private lemma main
   have ha : ∀ t, PSpace (M θ) (a (S := S) (A := A) t) := fun t =>
     ⟨(a_meas t).aemeasurable⟩
   have hr : ∀ t, PSpace (M θ) (r (S := S) (A := A) t) := fun t =>
-    ⟨(r_meas t).aemeasurable⟩
+    ⟨(Random.Measurable_R t).aemeasurable⟩
   have : PSpace (M θ) (AsPathRV.path (s (S := S) (A := A))) :=
     PSpace.of_process_path hs
   have : PSpace (M θ) (AsPathRV.path (a (S := S) (A := A))) :=
@@ -73,29 +74,18 @@ private lemma main
   classical
   let _ : MeasurableSpace Θ := borel Θ
   have _ : BorelSpace Θ := ⟨rfl⟩
-  simp only [gradient, LinearIsometryEquiv.norm_map] at h₄
-  obtain ⟨C, hC⟩ := id h₄
-  have h₅ : ∀ θ x u, ‖fderiv ℝ (fun θ => M.pol.prob θ x u) θ‖ ≤ C := fun θ x u => hC ⟨(θ, x, u), rfl⟩
   have hscore : ∀ t, ∀ᵐ ω ∂(M θ),
       fderiv ℝ (fun θ' => Real.log (ℙ[M θ']((a t) = (a t ω) | (s t) = (s t ω))).toReal) θ =
         fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' (s t ω) (a t ω))) θ := by
     intro t
     filter_upwards [Random.AeRealPreimageSS.ne.Zero (M := M) θ] with ω hω
     have hc : ContinuousAt (fun θ' => (M θ').real (s t ⁻¹' {s t ω})) θ :=
-      (Tensor.Differentiable_RealPreimageS.of.IsFinite.All_Differentiable_Prob (M := M) h₃ h₅ t (s t ω) θ).continuousAt
+      (Random.Differentiable_RealPreimageS.of.GtInftySup.All_Differentiable_Prob (M := M) h₃ h₄ t (s t ω) θ).continuousAt
     refine Filter.EventuallyEq.fderiv_eq ((hc.eventually_ne (hω t)).mono fun θ' h => ?_)
     beta_reduce
     rw [Random.ProbCond.eq.OfRealPol.of.Ne_0 hS hA (hP θ' t) h,
       ENNReal.toReal_ofReal (M.pol.nonneg θ' _ _)]
-  let L : StrongDual ℝ Θ ≃L[ℝ] Θ :=
-    { toFun := (InnerProductSpace.toDual ℝ Θ).symm
-      invFun := InnerProductSpace.toDual ℝ Θ
-      map_add' := map_add _
-      map_smul' := fun c φ => by simp
-      left_inv := (InnerProductSpace.toDual ℝ Θ).apply_symm_apply
-      right_inv := (InnerProductSpace.toDual ℝ Θ).symm_apply_apply
-      continuous_toFun := (InnerProductSpace.toDual ℝ Θ).symm.continuous
-      continuous_invFun := (InnerProductSpace.toDual ℝ Θ).continuous }
+  let L : StrongDual ℝ Θ ≃L[ℝ] Θ := (InnerProductSpace.toDual ℝ Θ).symm.toContinuousLinearEquiv
   have hL : ∀ φ, (InnerProductSpace.toDual ℝ Θ).symm φ = L φ := fun _ => rfl
   let G : (ℕ → ℝ × S × A) → Θ := fun ω => ∑' t, γ ^ t • ((∑' k, γ ^ k * X (fun j => s j ω) (fun j => a j ω) (fun j => r j ω) (t + k)) •
     ∇[θ] Real.log (ℙ[M θ]((a t) = (a t ω) | (s t) = (s t ω))).toReal)

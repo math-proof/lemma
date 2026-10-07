@@ -14,7 +14,7 @@ private lemma main
 -- imply
   μ.IsInvInvariant := by
 -- proof
-  haveI : IsFiniteMeasureOnCompacts μ.inv :=
+  have : IsFiniteMeasureOnCompacts μ.inv :=
     ⟨fun K hK => by rw [Measure.inv_apply]; exact hK.inv.measure_lt_top⟩
   constructor
   set c : ℝ≥0 := Measure.haarScalarFactor μ.inv μ with hc_def

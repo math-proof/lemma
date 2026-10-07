@@ -18,7 +18,7 @@ private lemma main
   set ξ := genericPoint C with hξ
   let φ : Y.presheaf.stalk (i.base ξ) →+* C.functionField := (i.stalkMap ξ).hom
   have hsurj : Function.Surjective φ := i.stalkMap_surjective ξ
-  haveI : IsLocalHom φ := i.toLRSHom.prop ξ
+  have : IsLocalHom φ := i.toLRSHom.prop ξ
 
   have hker : RingHom.ker φ = IsLocalRing.maximalIdeal _ := by
     ext s

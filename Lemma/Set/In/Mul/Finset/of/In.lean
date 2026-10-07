@@ -5,7 +5,7 @@ import sympy.Basic
 private lemma main
   {x a b d : ℝ}
 -- given
-  (hd : d ≠ 0)
+  (_hd : d ≠ 0)
   (h : x ∈ ({a, b} : Set ℝ)) :
 -- imply
   x * d ∈ ({a * d, b * d} : Set ℝ) := by

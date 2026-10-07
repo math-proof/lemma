@@ -18,10 +18,10 @@ private lemma main
   ∀ b : B, ∃ a : A, b - algebraMap A B a ∈ Q := by
 -- proof
   classical
-  letI : Field (A ⧸ P) := Ideal.Quotient.field P
-  letI : Field (B ⧸ Q) := Ideal.Quotient.field Q
-  haveI : Module.Finite (A ⧸ P) (B ⧸ Q) := Module.Finite.of_finite
-  haveI : IsGalois (A ⧸ P) (B ⧸ Q) := GaloisField.instIsGaloisOfFinite
+  let : Field (A ⧸ P) := Ideal.Quotient.field P
+  let : Field (B ⧸ Q) := Ideal.Quotient.field Q
+  have : Module.Finite (A ⧸ P) (B ⧸ Q) := Module.Finite.of_finite
+  have : IsGalois (A ⧸ P) (B ⧸ Q) := GaloisField.instIsGaloisOfFinite
 
   have haut : ∀ σ : (B ⧸ Q) ≃ₐ[A ⧸ P] (B ⧸ Q), σ = AlgEquiv.refl := by
     intro σ

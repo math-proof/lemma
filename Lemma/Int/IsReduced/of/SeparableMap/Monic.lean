@@ -28,7 +28,7 @@ private lemma  Polynomial.isReduced_quotient_span_singleton_of_separable_map
       Polynomial.map_dvd_map (algebraMap D K) (IsFractionRing.injective D K) hg] at hx
     rw [Ideal.Quotient.eq_zero_iff_mem, Ideal.mem_span_singleton]
     exact hx
-  haveI : IsReduced (K[X] ⧸ Ideal.span {g.map (algebraMap D K)}) :=
+  have : IsReduced (K[X] ⧸ Ideal.span {g.map (algebraMap D K)}) :=
     (Ideal.isRadical_iff_quotient_reduced _).mp
       (isRadical_iff_span_singleton.mp hsep.squarefree.isRadical)
   exact isReduced_of_injective φ hφ

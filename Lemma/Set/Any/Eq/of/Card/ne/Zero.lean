@@ -8,7 +8,7 @@ private lemma main
   {k : ℕ}
   {S : Finset (Fin k → ℤ)}
 -- given
-  (h : S.card ≠ 0) :
+  (_h : S.card ≠ 0) :
 -- imply
   ∃ x : ℕ → Fin k → ℤ, S = (Finset.range S.card).image x := by
 -- proof

@@ -17,7 +17,7 @@ private lemma main
 -- imply
   ℓ = 3 ∨ ℓ % 3 = 1 := by
 -- proof
-  haveI : Fact ℓ.Prime := ⟨hℓ⟩
+  have : Fact ℓ.Prime := ⟨hℓ⟩
   set y : ZMod ℓ := ZMod.castHom hℓM (ZMod ℓ) x with hy
   have hy0 : y ^ 2 + y + 1 = 0 := by
     have := congrArg (ZMod.castHom hℓM (ZMod ℓ)) hx

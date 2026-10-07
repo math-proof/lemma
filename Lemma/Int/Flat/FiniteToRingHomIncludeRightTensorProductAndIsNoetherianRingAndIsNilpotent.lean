@@ -17,11 +17,11 @@ private lemma main
   obtain ⟨n, hn⟩ := IsArtinianRing.isNilpotent_jacobson_bot (R := C)
   rw [IsLocalRing.jacobson_eq_maximalIdeal ⊥ bot_ne_top] at hn
 
-  haveI : Finite C := by
+  have : Finite C := by
     have hfin : Finite (C ⧸ (⊥ : Ideal C)) :=
       IsLocalRing.finite_quotient_iff.2 ⟨n, by rw [hn, Ideal.zero_eq_bot]⟩
     exact Finite.of_equiv _ (RingEquiv.quotientBot C).toEquiv
-  haveI : Module.Finite ℤ C := Module.Finite.of_finite
+  have : Module.Finite ℤ C := Module.Finite.of_finite
   have hfinO : Module.Finite O (O ⊗[ℤ] C) := inferInstance
 
   have hb : (Algebra.TensorProduct.includeRight : O →ₐ[ℤ] C ⊗[ℤ] O).toRingHom.Finite := by
@@ -35,8 +35,8 @@ private lemma main
       (RingHom.finite_algebraMap.2 hfinO)
   refine ⟨inferInstance, hb, ?_, ⟨n, ?_⟩⟩
   ·
-    letI : Algebra O (C ⊗[ℤ] O) := (Algebra.TensorProduct.includeRight : O →ₐ[ℤ] C ⊗[ℤ] O).toRingHom.toAlgebra
-    haveI : Module.Finite O (C ⊗[ℤ] O) := hb
+    let : Algebra O (C ⊗[ℤ] O) := (Algebra.TensorProduct.includeRight : O →ₐ[ℤ] C ⊗[ℤ] O).toRingHom.toAlgebra
+    have : Module.Finite O (C ⊗[ℤ] O) := hb
     exact IsNoetherianRing.of_finite O (C ⊗[ℤ] O)
   ·
     rw [← Ideal.map_pow, hn, Ideal.zero_eq_bot, Ideal.map_bot, Ideal.zero_eq_bot]

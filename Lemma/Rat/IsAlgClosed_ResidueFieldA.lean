@@ -12,7 +12,7 @@ private lemma main
 -- imply
   IsAlgClosed (IsLocalRing.ResidueField ↥A) := by
 -- proof
-  haveI : IsIntegrallyClosed ↥A := inferInstance
+  have : IsIntegrallyClosed ↥A := inferInstance
   refine IsAlgClosed.of_exists_root _ fun p hp hirr => ?_
   have hsurj : Function.Surjective (IsLocalRing.residue ↥A) := IsLocalRing.residue_surjective
   obtain ⟨q, hq, hdeg, hmon⟩ := Polynomial.lifts_and_degree_eq_and_monic

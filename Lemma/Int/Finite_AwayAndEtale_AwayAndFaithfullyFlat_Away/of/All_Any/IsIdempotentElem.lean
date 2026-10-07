@@ -36,7 +36,7 @@ private lemma main
       rcases n with _ | n
       · exact h𝔭.ne_top ((Ideal.eq_top_iff_one _).mpr (by simpa using hx))
       · exact he𝔭 (h𝔭.mem_of_pow_mem (n + 1) hx)
-    haveI h𝔓 : (Ideal.map (algebraMap C (Localization.Away e)) 𝔭).IsPrime :=
+    have h𝔓 : (Ideal.map (algebraMap C (Localization.Away e)) 𝔭).IsPrime :=
       IsLocalization.isPrime_of_isPrime_disjoint (Submonoid.powers e) (Localization.Away e) 𝔭 h𝔭 hd
     refine ⟨⟨Ideal.map (algebraMap C (Localization.Away e)) 𝔭, h𝔓⟩, ?_⟩
     apply PrimeSpectrum.ext

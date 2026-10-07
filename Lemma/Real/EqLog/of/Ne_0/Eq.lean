@@ -6,7 +6,7 @@ import sympy.Basic
 private lemma main
   {x y : ℝ}
 -- given
-  (h_ne : x ≠ 0)
+  (_h_ne : x ≠ 0)
   (h : x = y) :
 -- imply
   Real.log x = Real.log y :=

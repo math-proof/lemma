@@ -15,19 +15,19 @@ private lemma main
 -- imply
   Module.Flat B₁ M := by
 -- proof
-  letI : Module (K ⊗[R] B₁) M := TensorProduct.Algebra.module
-  letI : Algebra B₁ (K ⊗[R] B₁) := Algebra.TensorProduct.rightAlgebra
-  haveI : IsScalarTower B₁ (K ⊗[R] B₁) M :=
+  let : Module (K ⊗[R] B₁) M := TensorProduct.Algebra.module
+  let : Algebra B₁ (K ⊗[R] B₁) := Algebra.TensorProduct.rightAlgebra
+  have : IsScalarTower B₁ (K ⊗[R] B₁) M :=
     IsScalarTower.of_algebraMap_smul fun b m => by
       change ((1 : K) ⊗ₜ[R] b) • m = b • m
       rw [TensorProduct.Algebra.smul_def, one_smul]
-  haveI : IsLocalization (Algebra.algebraMapSubmonoid B₁ (nonZeroDivisors R)) (K ⊗[R] B₁) :=
+  have : IsLocalization (Algebra.algebraMapSubmonoid B₁ (nonZeroDivisors R)) (K ⊗[R] B₁) :=
     IsLocalization.tensorRight K (nonZeroDivisors R)
-  haveI : Module.Flat B₁ (K ⊗[R] B₁) :=
+  have : Module.Flat B₁ (K ⊗[R] B₁) :=
     IsLocalization.flat _ (Algebra.algebraMapSubmonoid B₁ (nonZeroDivisors R))
-  haveI : IsArtinianRing (K ⊗[R] B₁) := IsArtinianRing.of_finite K _
-  haveI : IsSemisimpleRing (K ⊗[R] B₁) := IsArtinianRing.isSemisimpleRing_of_isReduced _
-  haveI : Module.Projective (K ⊗[R] B₁) M := Module.projective_of_isSemisimpleRing _ _
+  have : IsArtinianRing (K ⊗[R] B₁) := IsArtinianRing.of_finite K _
+  have : IsSemisimpleRing (K ⊗[R] B₁) := IsArtinianRing.isSemisimpleRing_of_isReduced _
+  have : Module.Projective (K ⊗[R] B₁) M := Module.projective_of_isSemisimpleRing _ _
   exact Module.Flat.trans B₁ (K ⊗[R] B₁) M
 
 

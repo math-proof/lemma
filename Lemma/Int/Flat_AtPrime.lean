@@ -14,20 +14,20 @@ private lemma main
   Module.Flat R (Localization.AtPrime p) := by
 -- proof
   obtain ⟨f, hf, hsm⟩ := Algebra.IsSmoothAt.exists_notMem_smooth R p
-  haveI := hsm
-  haveI : Module.Flat R (Localization.Away f) := Algebra.Smooth.flat R _
+  have := hsm
+  have : Module.Flat R (Localization.Away f) := Algebra.Smooth.flat R _
   have hle : Submonoid.powers f ≤ p.primeCompl := by
     rintro x ⟨n, rfl⟩
     exact fun h => hf (‹p.IsPrime›.mem_of_pow_mem n h)
-  letI : Algebra (Localization.Away f) (Localization.AtPrime p) :=
+  let : Algebra (Localization.Away f) (Localization.AtPrime p) :=
     IsLocalization.localizationAlgebraOfSubmonoidLe _ _ (Submonoid.powers f) p.primeCompl hle
-  haveI : IsScalarTower A (Localization.Away f) (Localization.AtPrime p) :=
+  have : IsScalarTower A (Localization.Away f) (Localization.AtPrime p) :=
     IsLocalization.localization_isScalarTower_of_submonoid_le _ _ (Submonoid.powers f) p.primeCompl hle
-  haveI : IsLocalization ((p.primeCompl).map (algebraMap A (Localization.Away f))) (Localization.AtPrime p) :=
+  have : IsLocalization ((p.primeCompl).map (algebraMap A (Localization.Away f))) (Localization.AtPrime p) :=
     IsLocalization.isLocalization_of_submonoid_le _ _ (Submonoid.powers f) p.primeCompl hle
-  haveI : Module.Flat (Localization.Away f) (Localization.AtPrime p) :=
+  have : Module.Flat (Localization.Away f) (Localization.AtPrime p) :=
     IsLocalization.flat (Localization.AtPrime p) ((p.primeCompl).map (algebraMap A (Localization.Away f)))
-  haveI : IsScalarTower R (Localization.Away f) (Localization.AtPrime p) :=
+  have : IsScalarTower R (Localization.Away f) (Localization.AtPrime p) :=
     IsScalarTower.of_algebraMap_eq (fun r => by
       rw [IsScalarTower.algebraMap_apply R A (Localization.AtPrime p) r,
         IsScalarTower.algebraMap_apply R A (Localization.Away f) r,

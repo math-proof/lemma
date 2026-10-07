@@ -1,7 +1,7 @@
 import Mathlib.Analysis.SpecialFunctions.Log.Deriv
 import Lemma.Random.ProbJoint.eq.Mul_Prod_MulProbSCond.of.IsDiscreteHMM
 import sympy.stats.hidden_markov_sequence
-import sympy.stats.ennreal_coe
+import sympy.core.numbers
 import sympy.Basic
 open MeasureTheory
 open scoped ENNReal.ToRealCoe

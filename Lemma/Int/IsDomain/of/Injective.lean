@@ -20,10 +20,10 @@ private lemma main
     have h := Module.Flat.lTensor_preserves_injective_linearMap (M := k) f.toLinearMap hf
     intro x y hxy
     apply h
-    simp [g, LinearMap.lTensor] at hxy
+    simp [g] at hxy
     exact hxy
 
-  haveI : Nontrivial (k ⊗[R] A) := g.toRingHom.domain_nontrivial
+  have : Nontrivial (k ⊗[R] A) := g.toRingHom.domain_nontrivial
   exact hg.isDomain g.toRingHom
 
 

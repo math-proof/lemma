@@ -20,7 +20,7 @@ private lemma main
 -- imply
   IsUnit ((H₀.index : ℕ) : 𝒪) := by
 -- proof
-  haveI : Fact r.Prime := ⟨hr⟩
+  have : Fact r.Prime := ⟨hr⟩
 
   set f : (ZMod (N * r))ˣ →* (ZMod r)ˣ := ZMod.unitsMap (dvd_mul_left r N) with hf
   have hker : H₀ = f.ker := by

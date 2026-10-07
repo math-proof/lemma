@@ -19,6 +19,6 @@ private lemma main
     apply ha
     simpa [mul_eq_zero] using h
   field_simp [ha, h2, h4]
-  <;> ring
+  ring
 
 -- created on 2023-04-10

@@ -20,7 +20,7 @@ private lemma main
       = Fintype.card ((minpoly F ζ₀).rootSet E) := by
 -- proof
   classical
-  haveI : NeZero m := ⟨hm.ne'⟩
+  have : NeZero m := ⟨hm.ne'⟩
   have hint : IsIntegral F ζ₀ := IsIntegral.of_pow hm (by rw [hζ₀.pow_eq_one]; exact isIntegral_one)
   have h1 : IntermediateField.adjoin F {ζ : E | ζ ^ m = 1} = F⟮ζ₀⟯ := by
     apply le_antisymm

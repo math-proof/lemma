@@ -24,9 +24,9 @@ private lemma main
   have hN₀K : N₀.relIndex K ≠ 0 := by
     rw [← Subgroup.relIndex_mul_relIndex N₀ H K hN₀ hHK]
     exact mul_ne_zero hN₀idx hHidx
-  haveI : N₀'.FiniteIndex := ⟨hN₀K⟩
+  have : N₀'.FiniteIndex := ⟨hN₀K⟩
   let C : Subgroup K := N₀'.normalCore
-  haveI hCfin : C.FiniteIndex := inferInstance
+  have hCfin : C.FiniteIndex := inferInstance
   let N : Subgroup G := C.map K.subtype
   have hNK : N.subgroupOf K = C := Subgroup.comap_map_eq_self_of_injective K.subtype_injective C
   have hNle : N ≤ N₀ := by

@@ -19,7 +19,7 @@ private lemma main
     refine IsCompact.prod ?_ isCompact_singleton
     have : {x : Fin r → ℝ | ∀ i, |x i| ≤ R} = Set.pi Set.univ fun _ => Set.Icc (-R) R := by
       ext x
-      simp only [Set.mem_setOf_eq, Set.mem_pi, Set.mem_univ, Set.mem_Icc, forall_const, abs_le]
+      simp only [Set.mem_ofPred_eq, Set.mem_pi, Set.mem_univ, Set.mem_Icc, forall_const, abs_le]
     rw [this]
     exact isCompact_univ_pi fun _ => isCompact_Icc
   have hK : IsCompact ((Λ : Set ((Fin r → ℝ) × (Fin c → ℤ))) ∩

@@ -26,7 +26,7 @@ private lemma main
   · right
     rw [← hB', ← hPB']
     have : A.ofPrime P = ⊤ := by
-      haveI : (⊥ : Ideal ↥A).IsPrime := Ideal.bot_prime
+      have : (⊥ : Ideal ↥A).IsPrime := Ideal.isPrime_bot
       have e : A.ofPrime P = A.ofPrime ⊥ := by congr 1
       rw [e]; exact ValuationSubring.ofPrime_bot A
     rw [this]; rfl

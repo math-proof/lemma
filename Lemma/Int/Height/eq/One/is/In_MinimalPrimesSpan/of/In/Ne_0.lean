@@ -22,7 +22,7 @@ private lemma main
   have hspan : (Ideal.span {x}).height = 1 := Ideal.height_span_singleton_eq_one_of_mem_nonZeroDivisors hx' hxu
   constructor
   · intro hP
-    exact Ideal.mem_minimalPrimes_of_height_eq hle (by rw [hP, hspan])
+    exact Ideal.mem_minimalPrimes_of_height_le hle (by rw [hP, hspan])
   · intro hP
     apply le_antisymm
     · exact Ideal.height_le_one_of_isPrincipal_of_mem_minimalPrimes (Ideal.span {x}) P hP

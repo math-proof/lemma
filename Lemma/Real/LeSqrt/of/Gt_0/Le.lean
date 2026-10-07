@@ -6,7 +6,7 @@ import sympy.Basic
 private lemma main
   {x M : ℝ}
 -- given
-  (hx : 0 < x)
+  (_hx : 0 < x)
   (h : x ≤ M) :
 -- imply
   Real.sqrt x ≤ Real.sqrt M :=

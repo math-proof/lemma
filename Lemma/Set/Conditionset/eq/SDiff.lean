@@ -9,7 +9,7 @@ private lemma main
   {y : α | y ≠ a} = (Set.univ : Set α) \ {a} := by
 -- proof
   ext y
-  simp [Set.mem_diff]
+  simp
 
 
 -- created on 2021-02-04

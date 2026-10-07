@@ -28,9 +28,9 @@ private lemma main
     exact I.mul_mem_left _ hNI
 
   let P : Ideal R[X] := Ideal.span {N'}
-  haveI : Module.Finite R (R[X] ⧸ P) := hN'.finite_quotient
-  haveI : Module.Finite (R[X] ⧸ P) (TensorProduct R[X] (R[X] ⧸ P) A) := inferInstance
-  haveI : Module.Finite R (TensorProduct R[X] (R[X] ⧸ P) A) := Module.Finite.trans (R[X] ⧸ P) _
+  have : Module.Finite R (R[X] ⧸ P) := hN'.finite_quotient
+  have : Module.Finite (R[X] ⧸ P) (TensorProduct R[X] (R[X] ⧸ P) A) := inferInstance
+  have : Module.Finite R (TensorProduct R[X] (R[X] ⧸ P) A) := Module.Finite.trans (R[X] ⧸ P) _
   let J : Ideal A := P.map (algebraMap R[X] A)
 
   let e₁ : TensorProduct R[X] (R[X] ⧸ P) A ≃ₗ[R[X]] A ⧸ (P • (⊤ : Submodule R[X] A)) :=

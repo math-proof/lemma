@@ -21,12 +21,12 @@ private lemma main
   (g.app U).hom.toAlgebra;
          Module.FaithfullyFlat Γ(Y, U) Γ(X, g ⁻¹ᵁ U)) := by
    have hV : IsAffineOpen (g ⁻¹ᵁ U) := hU.preimage g
-   letI _i : Algebra Γ(Y, U) Γ(X, g ⁻¹ᵁ U) := (g.app U).hom.toAlgebra
+   let _i : Algebra Γ(Y, U) Γ(X, g ⁻¹ᵁ U) := (g.app U).hom.toAlgebra
 
    have hflat : (g.app U).hom.Flat := by
      rw [Scheme.Hom.app_eq_appLE]
      exact HasRingHomProperty.appLE @Flat g inferInstance ⟨U, hU⟩ ⟨g ⁻¹ᵁ U, hV⟩ le_rfl
-   haveI : Module.Flat Γ(Y, U) Γ(X, g ⁻¹ᵁ U) := hflat
+   have : Module.Flat Γ(Y, U) Γ(X, g ⁻¹ᵁ U) := hflat
 
    have hcomap : Function.Surjective (PrimeSpectrum.comap (algebraMap Γ(Y, U) Γ(X, g ⁻¹ᵁ U))) := by
      intro q
@@ -45,7 +45,7 @@ private lemma main
      simp only [Scheme.Hom.comp_apply] at h'
      rw [hp, hx] at h'
      exact h'
-   haveI hff : Module.FaithfullyFlat Γ(Y, U) Γ(X, g ⁻¹ᵁ U) := Module.FaithfullyFlat.of_comap_surjective hcomap
+   have hff : Module.FaithfullyFlat Γ(Y, U) Γ(X, g ⁻¹ᵁ U) := Module.FaithfullyFlat.of_comap_surjective hcomap
    exact ⟨hV, FaithfulSMul.algebraMap_injective Γ(Y, U) Γ(X, g ⁻¹ᵁ U), hff⟩
 
 

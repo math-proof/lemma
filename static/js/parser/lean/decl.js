@@ -262,6 +262,14 @@ export class Lean_let extends LeanSyntax {
         return 'let';
     }
 
+    /**
+     * Source keyword: `operator`, or its instance variant (`letI` / `haveI`) when the node was parsed from one.
+     * `inst` is set by the parser (`base.js`, case 'haveI' / 'letI'); the tree shape is the same as `let` / `have`.
+     */
+    get keyword() {
+        return this.inst ? `${this.operator}I` : this.operator;
+    }
+
     echo() {
         const token = this.get_echo_token();
         const proof = this.args[0]?.rhs;
@@ -339,7 +347,7 @@ export class Lean_let extends LeanSyntax {
     }
 
     latexFormat() {
-        return `{\\color{#00f}${this.command}}\\ ` + Array(this.args.length).fill('%s').join('\\ ');
+        return `{\\color{#00f}${this.command}${this.inst ? 'I' : ''}}\\ ` + Array(this.args.length).fill('%s').join('\\ ');
     }
 
     get operator() {
@@ -357,6 +365,7 @@ export class Lean_let extends LeanSyntax {
                 const statements = assign.split(syntax);
                 const Ctor = this.constructor;
                 statements[0] = new Ctor(statements[0], this.indent, assign.level);
+                if (this.inst) statements[0].inst = true;
                 return statements;
             }
         }
@@ -367,11 +376,20 @@ export class Lean_let extends LeanSyntax {
         return 7;
     }
 
+    /** `let := v` / `have : T := v`: no name before `:=` / `:` */
+    anonymous() {
+        const assign = this.args[0];
+        if (!(assign instanceof L.LeanAssign)) return false;
+        const lhs = assign.lhs;
+        return lhs instanceof L.LeanCaret || (lhs instanceof L.LeanColon && lhs.lhs instanceof L.LeanCaret);
+    }
+
     strFormat() {
-        const func = this.operator;
+        const func = this.keyword;
         const parts = [];
         for (const arg of this.args) {
             if (arg instanceof L.LeanCaret);
+            else if (arg === this.args[0] && this.inst && this.anonymous()) parts.push(''); // `letI := inst`
             else if (
                 arg instanceof L.LeanSequentialTacticCombinator &&
                 (arg.newlineBehind || arg.newlineBefore)
@@ -439,7 +457,7 @@ export class Lean_have extends Lean_let {
             } else parts.push(' ');
             parts.push('%s');
         }
-        return this.operator + parts.join('');
+        return this.keyword + parts.join('');
     }
 }
 

@@ -18,7 +18,7 @@ private lemma main
   rw [geometrically_eq_universally] at h ⊢
   refine MorphismProperty.universally_mono ?_ _ h
   intro X' Y' g hg hI hS
-  haveI : IrreducibleSpace X' := hg hI hS
+  have : IrreducibleSpace X' := hg hI hS
   infer_instance
 
 

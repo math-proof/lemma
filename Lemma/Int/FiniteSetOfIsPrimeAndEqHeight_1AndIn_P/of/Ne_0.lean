@@ -16,7 +16,7 @@ private lemma main
 -- proof
   refine (Ideal.finite_minimalPrimes_of_isNoetherianRing R (Ideal.span {b})).subset ?_
   rintro p ⟨hp, hh, hbp⟩
-  haveI := hp
+  have := hp
   have hle : Ideal.span {b} ≤ p := (Ideal.span_singleton_le_iff_mem _).mpr hbp
   refine ⟨⟨hp, hle⟩, fun q ⟨hq, hbq⟩ hqp => ?_⟩
 
@@ -41,8 +41,8 @@ private lemma main
   have hqmax : Ideal.map (algebraMap R S) q = IsLocalRing.maximalIdeal S :=
     IsLocalRing.eq_maximalIdeal (hmax _ hqS0 hqS)
   have hq' : q = p := by
-    rw [← IsLocalization.comap_map_of_isPrime_disjoint p.primeCompl S hq hdisj, hqmax,
-      Localization.AtPrime.comap_maximalIdeal]
+    rw [← IsLocalization.under_map_of_isPrime_disjoint p.primeCompl S hq hdisj, hqmax,
+      Localization.AtPrime.under_maximalIdeal]
   exact hq'.ge
 
 

@@ -26,12 +26,12 @@ private lemma main
     rw [hsmall, Ideal.mem_bot] at hmem
     rw [smul_eq_mul, mul_comm]
     exact hmem
-  letI modk : Module (ResidueField B) J := htors.module
-  haveI hst : IsScalarTower B (ResidueField B) J := htors.isScalarTower
-  haveI hfin : Module.Finite (ResidueField B) J := Module.Finite.of_restrictScalars_finite B (ResidueField B) J
-  letI modop : Module (ResidueField B)ᵐᵒᵖ J :=
+  let modk : Module (ResidueField B) J := htors.module
+  have hst : IsScalarTower B (ResidueField B) J := htors.isScalarTower
+  have hfin : Module.Finite (ResidueField B) J := Module.Finite.of_restrictScalars_finite B (ResidueField B) J
+  let modop : Module (ResidueField B)ᵐᵒᵖ J :=
     Module.compHom J (RingEquiv.toOpposite (ResidueField B)).symm.toRingHom
-  haveI hcs : IsCentralScalar (ResidueField B) J := ⟨fun _ _ => rfl⟩
+  have hcs : IsCentralScalar (ResidueField B) J := ⟨fun _ _ => rfl⟩
   refine ⟨J, inferInstance, modk, hfin, inferInstance, hst, modop, hcs, J.subtype, Submodule.injective_subtype J, ?_⟩
   rw [Submodule.range_subtype, Submodule.restrictScalars_self]
 

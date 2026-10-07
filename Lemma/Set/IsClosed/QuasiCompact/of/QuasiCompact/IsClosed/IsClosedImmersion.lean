@@ -22,7 +22,7 @@ private lemma main
       QuasiCompact ((⨅ j, m ⁻¹ᵁ (W j)).ι ≫ m ≫ πP) := by
 -- proof
   classical
-  haveI : Fintype ι := Fintype.ofFinite ι
+  have : Fintype ι := Fintype.ofFinite ι
   have coe_iInf : ∀ {Z : Scheme.{u}} (V : ι → Z.Opens),
       ((⨅ j, V j : Z.Opens) : Set Z) = ⋂ j, (V j : Set Z) := by
     intro Z V
@@ -40,8 +40,8 @@ private lemma main
   · have h : (m ⁻¹ᵁ (⨅ j, W j)).ι ≫ m ≫ πP = (m ∣_ (⨅ j, W j)) ≫ (⨅ j, W j).ι ≫ πP := by
       rw [← Category.assoc (m ∣_ _), morphismRestrict_ι, Category.assoc]
     rw [h]
-    haveI := hm
-    haveI := hW'
+    have := hm
+    have := hW'
     infer_instance
 
 

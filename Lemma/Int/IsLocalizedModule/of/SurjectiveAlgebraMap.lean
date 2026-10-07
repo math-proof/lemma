@@ -20,7 +20,7 @@ private lemma main
     ext b; constructor
     · rintro ⟨t, ht, rfl⟩; exact ht
     · intro hb; obtain ⟨t, rfl⟩ := hπ b; exact ⟨t, hb, rfl⟩
-  haveI : IsLocalizedModule (Algebra.algebraMapSubmonoid B (𝔭.comap (algebraMap Λ B)).primeCompl) f := by
+  have : IsLocalizedModule (Algebra.algebraMapSubmonoid B (𝔭.comap (algebraMap Λ B)).primeCompl) f := by
     rw [key]; infer_instance
 
   constructor

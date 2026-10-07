@@ -15,7 +15,7 @@ private lemma main
   K) (K₁ := L) E).ker : Set (L ≃ₐ[K] L)) := by
    let ι : E →ₐ[K] L := IsScalarTower.toAlgHom K E L
    let L' : IntermediateField K L := ι.fieldRange
-   haveI : FiniteDimensional K L' := Module.Finite.equiv
+   have : FiniteDimensional K L' := Module.Finite.equiv
      (((IntermediateField.topEquiv (F := K) (E := E)).symm.trans (IntermediateField.equivMap ⊤ ι)).trans
        (IntermediateField.equivOfEq (AlgHom.fieldRange_eq_map ι).symm)).toLinearEquiv
    apply Subgroup.isOpen_mono (H₁ := L'.fixingSubgroup) ?_ (IntermediateField.fixingSubgroup_isOpen L')

@@ -450,6 +450,33 @@ partial def Expr.isBoundObservation : Expr → Bool
     | _ => false
   | _ => false
 
+/-- `ENNReal.toReal` / `.toReal` (scoped `CoeTC ENNReal ℝ`); lean.js property `toReal` → `%s`. -/
+partial def Expr.peelToReal : Expr → Expr
+  | e =>
+    match e.asNamedApp? with
+    | some ("toReal", [x]) => x.peelToReal
+    | _ => e
+
+/-- Drop the evaluation point of `condProb` for the short form `ℙ(x | y)`, as lean.js drops
+`= «x.bvar»`. Accepts a full bound observation or the residual after `∑ «a.bvar» t` elaborates to
+`∑ c ∈ Finset.univ` (point `(c, «s.bvar» t)` / `(«a.bvar» t, c)` — only one side stays a `.bvar`). -/
+def Expr.isCondProbPoint : Expr → Bool
+  | e =>
+    e.isBoundObservation ||
+    match e with
+    | Basic (.Special ⟨.str _ "mk"⟩) [a, b] _ =>
+      a.isBoundObservation || b.isBoundObservation
+    | _ => false
+
+/-- Replace every `Symbol name` with `replacement` (display-only substitution for sum binders). -/
+partial def Expr.replaceSymbol (e : Expr) (name : Name) (replacement : Expr) : Expr :=
+  match e with
+  | Symbol n _ => if n == name then replacement else e
+  | Basic f args level => Basic f (args.map (·.replaceSymbol name replacement)) level
+  | Binder b n t v =>
+    Binder b n (t.replaceSymbol name replacement) (v.replaceSymbol name replacement)
+  | other => other
+
 /-- Wrap a `Symbol`'s type in `RandomVariable` so `isRandomVariable` returns true
 and it renders red. Mirrors the JS `Measure.map` special case in
 `markRandomVarNames` which marks the map argument as a random variable
@@ -461,11 +488,28 @@ tuple `(a, b)` of those. -/
 partial def Expr.markAsRandomVariable : Expr → Expr
   | Symbol name type =>
     if type.isRandomVariable then Symbol name type
-    else Symbol name (.Basic (.ExprWithAttr (.Lean_operatorname `RandomVariable)) [type] type.level)
-  | Basic f@(.Special ⟨.anonymous⟩) (x@(Symbol ..) :: rest) level =>
+    else match type with
+      -- keep magenta random-argument markers (condSigma conditioners)
+      | Basic (.ExprWithAttr (.Lean_operatorname `RandomArgument)) [_] _ => Symbol name type
+      | _ => Symbol name (.Basic (.ExprWithAttr (.Lean_operatorname `RandomVariable)) [type] type.level)
+  -- Already wrapped (value-level RandomVariable around a function head)
+  | e@(Basic (.ExprWithAttr (.Lean_operatorname `RandomVariable)) [_] _) => e
+  | e@(Basic (.ExprWithAttr (.Lean_operatorname `RandomArgument)) [_] _) => e
+  -- lean.js `headTokens`: mark the head of `a t` / `s (t+1)` (Symbol or Lean_function / operatorname)
+  | Basic f@(.Special ⟨.anonymous⟩) (x :: rest) level =>
     Basic f (x.markAsRandomVariable :: rest) level
   | Basic f@(.Special ⟨.str _ "mk"⟩) [a, b] level =>
     Basic f [a.markAsRandomVariable, b.markAsRandomVariable] level
+  | e@(Basic (.ExprWithAttr attr) args level) =>
+    match attr with
+    | .Lean_function _ | .Lean_operatorname _ | .LeanProperty _ | .LeanMethod _ _ =>
+      if args.isEmpty then
+        -- bare projection / const head `a` → wrap so latex prints `{\color{red} {a}}`
+        -- Nonempty apps (`asRV x`, `JointRandomSymbol`, `a t`) stay intact here;
+        -- `markNamesAsRVHeads` splits known RV heads (`a t`) without breaking asRV/joint.
+        Basic (.ExprWithAttr (.Lean_operatorname `RandomVariable)) [e] level
+      else e
+    | _ => e
   | e@(Basic f (x :: rest) level) =>
     match e.asNamedApp? with
     | some ("getSlice", _)
@@ -503,6 +547,115 @@ partial def Expr.markAsRandomArgument : Expr → Expr
     | some ("JointRandomSymbol", _) => Basic f ((x :: rest).map markAsRandomArgument) level
     | _ => e
   | e => e
+
+/-- lean.js token text for RV-head matching: last segment, `«x.bvar»` → `x`. -/
+def rvToken (n : Name) : String :=
+  let n := n.eraseMacroScopes
+  -- Prefer full-name bvar strip (`«s.bvar»` is often a single Name segment including guillemets),
+  -- then fall back to the last segment (for `Foo.a` / hygienic names).
+  let full := n.toString.bvarLatex
+  if full != n.toString then full
+  else n.getLast.toString.bvarLatex
+
+/-- Name key used in RV-head lists (always `mkSimple` of `rvToken`). -/
+def rvKey (n : Name) : Name :=
+  Name.mkSimple (rvToken n)
+
+/-- Membership by lean.js token text (avoids `Name` equality pitfalls across attr vs Symbol). -/
+def rvNamesContain (names : List Name) (n : Name) : Bool :=
+  let t := rvToken n
+  names.any (fun m => rvToken m == t)
+
+/-- Head of `a`, `a t`, `a (t+1)`, `a[t:]` (lean.js `headTokens`). -/
+partial def Expr.headName? : Expr → Option Name
+  | Symbol name _ => some (rvKey name)
+  | Basic (.ExprWithAttr (.Lean_operatorname `RandomVariable)) [inner] _
+  | Basic (.ExprWithAttr (.Lean_operatorname `RandomArgument)) [inner] _ => inner.headName?
+  | Basic (.Special ⟨.anonymous⟩) (f :: _) _ => f.headName?
+  | e@(Basic (.ExprWithAttr attr) _ _) =>
+    match e.asNamedApp? with
+    | some ("asRV", [x]) => x.headName?
+    | some ("getSlice", b :: _) | some ("getSliceFrom", b :: _) => b.headName?
+    | _ =>
+      match attr with
+      | .Lean_function n | .Lean_operatorname n | .LeanProperty n
+      | .LeanMethod n _ | .LeanLemma n | .Lean_typeclass n => some (rvKey n)
+  | _ => none
+
+/-- Display text for a red RV head: plain `a`, not `\\operatorname{a}` (lean.js token latex). -/
+def Expr.rvDisplayName : Expr → String
+  | Symbol name _ => name.bvarLatex "."
+  | Basic (.ExprWithAttr (.Lean_operatorname `RandomVariable)) [inner] _
+  | Basic (.ExprWithAttr (.Lean_operatorname `RandomArgument)) [inner] _ => inner.rvDisplayName
+  | Basic (.ExprWithAttr attr) _ _ =>
+    attr.name.getLast.toString.escape_specials
+  | e =>
+    match e.headName? with
+    | some n => n.toString.escape_specials
+    | none => ""
+
+/-- Collect RV head keys for a lean.js-style whole-tree recolor pass: Symbols already marked
+random variables, and heads of `JointRandomSymbol` components (as in `condProb` / `prob`).
+Does **not** collect `RandomArgument` names (magenta conditioners stay magenta). -/
+partial def Expr.foldRVHeadNames (e : Expr) (acc : List Name) : List Name :=
+  let add (n? : Option Name) (acc : List Name) : List Name :=
+    match n? with
+    | some n => if acc.contains n then acc else n :: acc
+    | none => acc
+  let acc :=
+    match e with
+    | Symbol _ type =>
+      if type.isRandomVariable then add e.headName? acc else acc
+    | Basic (.ExprWithAttr (.Lean_operatorname `RandomVariable)) [inner] _ =>
+      add inner.headName? acc
+    | _ =>
+      match e.asJointRandomSymbol? with
+      | some (x, y) => add y.headName? (add x.headName? acc)
+      | none => acc
+  match e with
+  | Basic _ args _ => args.foldl (fun a x => x.foldRVHeadNames a) acc
+  | Binder _ _ t v => v.foldRVHeadNames (t.foldRVHeadNames acc)
+  | _ => acc
+
+/-- Mark every head whose `rvKey` is in `names` (lean.js `markRandomVarNames`). Skips magenta
+`RandomArgument` Symbols. -/
+partial def Expr.markNamesAsRVHeads (e : Expr) (names : List Name) : Expr :=
+  if names.isEmpty then e
+  else match e with
+  | Symbol name type =>
+    if rvNamesContain names name then markAsRandomVariable (Symbol name type)
+    else Symbol name type
+  | Basic (.ExprWithAttr (.Lean_operatorname `RandomVariable)) [_] _ => e
+  | Basic (.ExprWithAttr (.Lean_operatorname `RandomArgument)) [_] _ => e
+  | Basic f@(.Special ⟨.anonymous⟩) (x :: rest) level =>
+    Basic f (x.markNamesAsRVHeads names :: rest.map (·.markNamesAsRVHeads names)) level
+  | Basic f@(.Special ⟨.str _ "mk"⟩) [a, b] level =>
+    Basic f [a.markNamesAsRVHeads names, b.markNamesAsRVHeads names] level
+  | e@(Basic (.ExprWithAttr attr) args level) =>
+    match attr with
+    | .Lean_function n | .Lean_operatorname n | .LeanProperty n | .LeanMethod n _ =>
+      if rvNamesContain names n then
+        -- `a` or `a t`: mark the bare head (lean.js colors the token, index stays black)
+        let head := Basic (.ExprWithAttr attr) [] level
+        let head := markAsRandomVariable head
+        if args.isEmpty then head
+        else Basic (.Special ⟨.anonymous⟩) (head :: args.map (·.markNamesAsRVHeads names)) level
+      else
+        Basic (.ExprWithAttr attr) (args.map (·.markNamesAsRVHeads names)) level
+    | _ => Basic (.ExprWithAttr attr) (args.map (·.markNamesAsRVHeads names)) level
+  | Basic func args level =>
+    match e.asNamedApp? with
+    | some ("getSlice", _)
+    | some ("getSliceFrom", _) =>
+      match args with
+      | x :: rest => Basic func (x.markNamesAsRVHeads names :: rest.map (·.markNamesAsRVHeads names)) level
+      | [] => e
+    | some ("JointRandomSymbol", _) =>
+      Basic func (args.map (·.markNamesAsRVHeads names)) level
+    | _ => Basic func (args.map (·.markNamesAsRVHeads names)) level
+  | Binder b n t v =>
+    Binder b n (t.markNamesAsRVHeads names) (v.markNamesAsRVHeads names)
+  | other => other
 
 /-- `Expectation.asRV x` (the transparent `𝔼` binder coercion `AsPathRV.path`) → `x`, also inside a
 `JointRandomSymbol` chain, so `𝔼[r: π](…)` over a process `r : ℕ → Ω → ℝ` shows the binder `r`. -/
@@ -565,6 +718,7 @@ def Expr.asProbApp? : Expr → Option (String × List Expr)
 
 def Expr.asProb? : Expr → Option (Expr × List Expr)
   | e =>
+    let e := e.peelToReal
     if let some ("probRA", base :: x :: _) := e.asNamedApp? then
       some (base, [x.markAsRandomVariable])
     else if let some ("prob", base :: rest) := e.asNamedApp? then
@@ -858,6 +1012,7 @@ def Expr.asCondProbApp? : Expr → Option (String × List Expr)
 
 def Expr.asCondProb? : Expr → Option (Expr × Expr × Expr)
   | e =>
+    let e := e.peelToReal
     let fromJoint (base pair : Expr) : Option (Expr × Expr × Expr) :=
       match pair.asJointRandomSymbol? with
       | some (x, y) => some (base, markAsRandomVariable x, markAsRandomVariable y)
@@ -866,7 +1021,7 @@ def Expr.asCondProb? : Expr → Option (Expr × Expr × Expr)
       match rest with
       | [pair] => fromJoint base pair
       | [pair, point] =>
-        if point.isBoundObservation then fromJoint base pair else none
+        if point.isCondProbPoint then fromJoint base pair else none
       | _ => none
     else if let some ("probCond", base :: xy :: _) := e.asNamedApp? then
       fromJoint base xy
@@ -877,9 +1032,54 @@ def Expr.asCondProb? : Expr → Option (Expr × Expr × Expr)
     else if let some ("condProb", base :: rest) := e.asCondProbApp? then
       match rest with
       | [pair, point] =>
-        if point.isBoundObservation then fromJoint base pair else none
+        if point.isCondProbPoint then fromJoint base pair else none
       | _ => none
     else none
+
+/-- In `body`, find `condProb μ (x, y) (binder, _)` or `(_, binder)` (after `toReal`) and return the
+RV whose value is the `∑ «·.bvar» t` sum binder — lean.js index `a t` / `s (t + 1)`.
+Handles both the flat method app and the curried `(μ.condProb pair) point` form. -/
+partial def Expr.condProbSumRV? (e : Expr) (binder : Name) : Option Expr :=
+  let e := e.peelToReal
+  let fromPoint (pair point : Expr) : Option Expr :=
+    match pair.asJointRandomSymbol?, point with
+    | some (x, y), Basic (.Special ⟨.str _ "mk"⟩) [a, b] _ =>
+      -- sumAt residual: `(c, «s.bvar» t)` or `(«a.bvar» t, c)` — Symbol ↔ bound observation
+      if a.symbolName?.isSome && b.isBoundObservation then some x
+      else if b.symbolName?.isSome && a.isBoundObservation then some y
+      else
+        let eqBinder (e : Expr) : Bool :=
+          match e.symbolName? with
+          | some n => n.eraseMacroScopes == binder.eraseMacroScopes
+          | none => false
+        if eqBinder a then some x else if eqBinder b then some y else none
+    | _, _ => none
+  let fromArgs : List Expr → Option Expr
+    | _base :: pair :: point :: _ => fromPoint pair point
+    | _ => none
+  match e.asCondProbApp? with
+  | some ("condProb", args) => fromArgs args
+  | _ =>
+    match e.asNamedApp? with
+    | some ("condProb", args) => fromArgs args
+    | _ =>
+      match e with
+      | Basic _ args _ => args.findSome? (·.condProbSumRV? binder)
+      | Binder _ _ t v => (t.condProbSumRV? binder).orElse fun _ => v.condProbSumRV? binder
+      | _ => none
+
+/-- `∑ c ∈ Finset.univ, body` arising from `∑ «a.bvar» t, …` (see `sumAt` in
+`sympy/concrete/summations.lean`) → `(a t, body[c ↦ a t])`, so the index prints as the RV
+(lean.js) rather than `c ∈ Finset.univ`. Triggered by finding `condProb … (c, …)` in the body
+(the sumAt residual), not by matching `Finset.univ` alone — that node's attr shape varies. -/
+def Expr.asUnivCondProbSum? : Expr → Option (Expr × Expr)
+  | Basic (.ExprWithLimits .Lean_sum) [body, Binder .contains name _set nil] _ =>
+    match body.condProbSumRV? name with
+    | some rv =>
+      let rv := rv.markAsRandomVariable
+      some (rv, body.replaceSymbol name rv)
+    | none => none
+  | _ => none
 
 /-- Check if an Expr is of form `ae μ`. -/
 def Expr.isAeMeasure (e : Expr) : Bool :=
@@ -1168,7 +1368,13 @@ def Expr.latexFormat : Expr → String
             "\\mathop{\\sum\\nolimits'}\\limits_{\\substack{%s : %s}} {%s}"
           else
             opStr ++ "\\ %s".repeat (args.length - 1) ++ ",\\ %s"
-        | .Lean_sum
+        | .Lean_sum =>
+          if e.asIcoClosed?.isSome then
+            opStr ++ "\\limits_{%s=%s}^{%s} {%s}"
+          else if e.asUnivCondProbSum?.isSome then
+            opStr ++ "\\limits_{\\substack{%s}} {%s}"
+          else
+            opStr ++ "\\limits_{\\substack{%s}} {%s}"
         | .Lean_prod
         | .Lean_bigcup
         | .Lean_bigcap =>
@@ -1249,6 +1455,12 @@ def Expr.latexFormat : Expr → String
       -- Pre-check foldings first (work for both Lean_function and Lean_operatorname)
       if e.unwrapAsRV?.isSome then
         "%s"
+      else if let some ("toReal", _) := e.asNamedApp? then
+        -- lean.js `toReal` → `%s` (ENNReal→ℝ); also lets inner `condProb` hit `asCondProb?`
+        "%s"
+      else if let some ("RandomVariable", [_]) := e.asNamedApp? then
+        -- value-level wrap of a Lean_function head (`a` in `a t`) → red plain name
+        "{\\color{red} {%s}}"
       else if let some (_, subs) := e.asSubst? then
         Expr.substLatexFormat subs.length
       else if let some (_, _, point) := e.asGradient? then
@@ -1548,6 +1760,9 @@ def Expr.latexFormat : Expr → String
 
 
 partial def Expr.toLatex (e : Expr) : String :=
+  -- lean.js `markRandomVarNames`: once Prob/joint RVs reveal head names (`a`, `s`), recolor every
+  -- matching head in the goal (including `V θ t (s t)` / `«s.bvar» t`), skipping magenta RAs.
+  let e := e.markNamesAsRVHeads (e.foldRVHeadNames [])
   e.latexFormat.printf (latexArgs e)
 where
   latexArgs : Expr → List String
@@ -1606,7 +1821,19 @@ where
           | none =>
             args.reverse.map (·.toLatex)
         | .Lean_exists
-        | .Lean_sum
+        | .Lean_sum =>
+          match e.asIcoClosed?, e.asUnivCondProbSum?, args with
+          | some (i, a, b, body), _, _ =>
+            [i, a.toLatex, b.toLatex, body.toLatex]
+          | none, some (rv, body), _ =>
+            -- lean.js: index is the RV `a t` / `s (t+1)` (not red — it is the bound value)
+            [rv.toLatex, body.toLatex]
+          | none, none, [expr, Binder .default name (Basic (.ExprWithAttr (.Lean_typeclass `Fin)) [n] _) nil] =>
+            [("{%s < %s}".format name.toString.bvarLatex.escape_specials, n.toLatex), expr.toLatex]
+          | none, none, [expr, Binder .default name type nil] =>
+            [("{%s : %s}".format name.toString.bvarLatex.escape_specials, type.toLatex), expr.toLatex]
+          | _, _, _ =>
+            []
         | .Lean_prod
         | .Lean_bigcup
         | .Lean_bigcap =>
@@ -1746,6 +1973,10 @@ where
       -- Pre-check foldings first (work for both Lean_function and Lean_operatorname)
       if let some x := e.unwrapAsRV? then
         [x.toLatex]
+      else if let some ("toReal", [x]) := e.asNamedApp? then
+        [x.toLatex]
+      else if let some ("RandomVariable", [inner]) := e.asNamedApp? then
+        [inner.rvDisplayName]
       else if let some (body, subs) := e.asSubst? then
         Expr.substLatexArgs body subs (·.toLatex)
       else if let some (x, body, point) := e.asGradient? then

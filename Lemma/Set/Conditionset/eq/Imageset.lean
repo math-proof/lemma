@@ -11,7 +11,7 @@ private lemma main
   {y ∈ f '' A | p y} = f '' {x ∈ A | p (f x)} := by
 -- proof
   ext z
-  simp only [Set.mem_setOf_eq, Set.mem_inter_iff, Set.mem_image]
+  simp only [Set.mem_ofPred_eq, Set.mem_image]
   constructor
   · rintro ⟨⟨x, hxA, rfl⟩, hp⟩
     exact ⟨x, ⟨hxA, hp⟩, rfl⟩

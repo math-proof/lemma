@@ -13,7 +13,7 @@ private lemma main
 -- imply
   Subsingleton (H1 (Rep.trivial ℤ G ℤ)) := by
 -- proof
-  haveI : Subsingleton (Additive G →+ ℤ) := by
+  have : Subsingleton (Additive G →+ ℤ) := by
     refine ⟨fun f₁ f₂ => AddMonoidHom.ext fun x => ?_⟩
     have h : ∀ f : Additive G →+ ℤ, f x = 0 := fun f => by
       have h1 : (Nat.card (Additive G)) • f x = 0 := by

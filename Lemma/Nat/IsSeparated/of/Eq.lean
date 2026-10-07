@@ -18,7 +18,7 @@ private lemma main
   IsSeparated g := by
 -- proof
   let q : pullback f f ⟶ pullback g g := pullback.map f f g g p p (𝟙 S) (by simp [h]) (by simp [h])
-  haveI : UniversallyClosed q :=
+  have : UniversallyClosed q :=
     MorphismProperty.pullbackMap (P := @UniversallyClosed) (inferInstance : UniversallyClosed p) (inferInstance : UniversallyClosed p)
       (by simp [h]) (by simp [h])
 

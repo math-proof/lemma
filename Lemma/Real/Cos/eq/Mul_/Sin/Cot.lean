@@ -12,6 +12,5 @@ private lemma main
   -- proof
   rw [Real.cot_eq_cos_div_sin]
   field_simp [h]
-  <;> ring
 
 -- created on 2023-11-26

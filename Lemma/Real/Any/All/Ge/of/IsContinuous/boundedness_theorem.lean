@@ -8,7 +8,7 @@ private lemma main
   {a b : ℝ}
   -- given
   (hcont : ContinuousOn f (Set.Icc a b))
-  (hle : a ≤ b)
+  (_hle : a ≤ b)
   -- imply
   : ∃ m : ℝ, ∀ x ∈ Set.Icc a b, m ≤ f x := by
   -- proof

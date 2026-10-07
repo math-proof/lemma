@@ -1,4 +1,4 @@
-import Lemma.Measure.Measure.eq.Count.of.EqMeasure_Count.EqMeasure_Count
+import Lemma.Measure.Measure.eq.Count.of.EqMeasureCount.EqMeasureCount
 import Lemma.Measure.EqRnDeriv_Count
 import Lemma.Random.PSpace_Joint
 import Lemma.Random.IsHiddenMarkovPr.of.CondIndep.CondIndep
@@ -60,7 +60,7 @@ private lemma main
     simpa using h₄ i (fun k => if k = i + 1 then a else b)
   obtain ⟨P, hPdef⟩ : ∃ P : ℕ → (ℕ → Y) → ℝ, ∀ t «y.bvar», P t «y.bvar» = (ℙ[π](x[:t + 1] = «x.bvar»[:t + 1] ∧ y[:t + 1] = «y.bvar»[:t + 1]) : ℝ) := ⟨fun t «y.bvar» => (ℙ[π](x[:t + 1] = «x.bvar»[:t + 1] ∧ y[:t + 1] = «y.bvar»[:t + 1]) : ℝ), fun _ _ => rfl⟩
   have hpair : ∀ k : ℕ, ReferenceMeasure.measure (α := (Fin k → X) × (Fin k → Y)) = Measure.count := fun k =>
-    Measure.Measure.eq.Count.of.EqMeasure_Count.EqMeasure_Count rfl rfl
+    Measure.Measure.eq.Count.of.EqMeasureCount.EqMeasureCount rfl rfl
   have hQ : ∀ (ys : ℕ → Y) (k : ℕ), (ℙ[π](x[:(k : ℤ)] = «x.bvar»[:(k : ℤ)] ∧ y[:(k : ℤ)] = ys[:(k : ℤ)]) : ENNReal) =
       π {ω | (∀ i < k, x i ω = «x.bvar» i) ∧ ∀ i < k, y i ω = ys i} := by
     intro ys k
@@ -158,9 +158,9 @@ private lemma main
     have hDpos : 0 < (x' m).exp.sum := Finset.sum_pos (fun b _ => Real.exp_pos _) Finset.univ_nonempty
     -- Bayes: Pr(y | x) = Pr(x ∧ y) / Pr(x), with Pr(x) = ∑ over the finite label space (total probability)
     have hrefXY : ReferenceMeasure.measure (α := (Fin (m + 1) → X) × (Fin (m + 1) → Y)) = Measure.count :=
-      Measure.Measure.eq.Count.of.EqMeasure_Count.EqMeasure_Count rfl rfl
+      Measure.Measure.eq.Count.of.EqMeasureCount.EqMeasureCount rfl rfl
     have hrefYX : ReferenceMeasure.measure (α := (Fin (m + 1) → Y) × (Fin (m + 1) → X)) = Measure.count :=
-      Measure.Measure.eq.Count.of.EqMeasure_Count.EqMeasure_Count rfl rfl
+      Measure.Measure.eq.Count.of.EqMeasureCount.EqMeasureCount rfl rfl
     have hmXY : ∀ a b, (ℙ[π](x[:m + 1] = a ∧ y[:m + 1] = b) : ENNReal) = π ((x[:m + 1], y[:m + 1]) ⁻¹' {(a, b)}) := by
       intro a b
       unfold Measure.prob

@@ -15,12 +15,12 @@ private lemma main
 -- imply
   Module.Invertible R M := by
 -- proof
-  letI : Algebra R' R := σ.symm.toRingHom.toAlgebra
-  haveI : IsScalarTower R' R M := ⟨fun r' r m => by
+  let : Algebra R' R := σ.symm.toRingHom.toAlgebra
+  have : IsScalarTower R' R M := ⟨fun r' r m => by
     rw [Algebra.smul_def, hσ, hσ r m, ← mul_smul]
     congr 1
     simp [RingHom.algebraMap_toAlgebra]⟩
-  haveI : IsLocalization (⊥ : Submonoid R') R :=
+  have : IsLocalization (⊥ : Submonoid R') R :=
     IsLocalization.of_le_isUnit_of_bijective
       (by
         rintro _ ⟨x, hx, rfl⟩
@@ -28,7 +28,7 @@ private lemma main
         subst hx1
         simp)
       σ.symm.bijective
-  haveI : IsLocalizedModule (⊥ : Submonoid R') (LinearMap.id : M →ₗ[R'] M) :=
+  have : IsLocalizedModule (⊥ : Submonoid R') (LinearMap.id : M →ₗ[R'] M) :=
     isLocalizedModule_id (S := (⊥ : Submonoid R')) (M := M) (R' := R)
   exact Module.Invertible.of_isLocalization (⊥ : Submonoid R') (LinearMap.id : M →ₗ[R'] M)
 

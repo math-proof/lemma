@@ -16,7 +16,7 @@ private lemma main
   have hdiv : 0 ≤ (a - b) / (-c) := div_nonneg hnum (le_of_lt hnc)
   have heq : (a - b) / (-c) = (b - a) / c := by
     field_simp
-    <;> ring
+    ring
   have hdiff : 0 ≤ (b - a) / c := by
     rw [← heq]
     exact hdiv

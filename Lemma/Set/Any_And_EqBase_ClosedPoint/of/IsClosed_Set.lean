@@ -28,8 +28,8 @@ private lemma main
   have hint : φ.hom.IsIntegral := by
     rw [← IsIntegralHom.SpecMap_iff, hφ]
     infer_instance
-  letI : Algebra k₀ (F.residueField y) := φ.hom.toAlgebra
-  haveI : Algebra.IsIntegral k₀ (F.residueField y) := ⟨hint⟩
+  let : Algebra k₀ (F.residueField y) := φ.hom.toAlgebra
+  have : Algebra.IsIntegral k₀ (F.residueField y) := ⟨hint⟩
 
   let ψ : F.residueField y →ₐ[k₀] k := IsAlgClosed.lift
   refine ⟨Spec.map (CommRingCat.ofHom ψ.toRingHom) ≫ F.fromSpecResidueField y, ?_, ?_⟩

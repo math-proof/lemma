@@ -4,7 +4,7 @@ import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Data.Fintype.Pi
 import sympy.stats.joint_rv
 import stdlib.List
-import sympy.stats.ennreal_coe
+import sympy.core.numbers
 
 /-- Sequential (first-order, hidden) Markov structure of the prefix joint probabilities used by the
 py CRF lemmas.  `P t ys` is `Pr(x[:t+1] = x_obs[:t+1], y[:t+1] = ys[:t+1])` for the fixed observed

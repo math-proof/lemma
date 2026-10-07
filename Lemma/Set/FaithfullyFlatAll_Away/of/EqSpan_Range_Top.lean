@@ -17,7 +17,7 @@ private lemma main
 -- proof
   classical
 
-  haveI : Module.Flat S (∀ i : Fin k, Localization.Away (r i)) :=
+  have : Module.Flat S (∀ i : Fin k, Localization.Away (r i)) :=
     Module.Flat.of_linearEquiv (DirectSum.linearEquivFunOnFintype S (Fin k) (fun i => Localization.Away (r i))).symm
   refine Module.FaithfullyFlat.of_comap_surjective fun p => ?_
 

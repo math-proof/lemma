@@ -25,8 +25,8 @@ private lemma main
     exact ⟨pointOfClosedPoint f q hq, pointOfClosedPoint_comp f q hq,
       pointOfClosedPoint_apply f q hq _⟩
   · intro hY q
-    haveI : JacobsonSpace Y := LocallyOfFiniteType.jacobsonSpace f
-    haveI : Finite Y := hY
+    have : JacobsonSpace Y := LocallyOfFiniteType.jacobsonSpace f
+    have : Finite Y := hY
     exact isClosed_discrete _
 
 

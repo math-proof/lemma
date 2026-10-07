@@ -18,7 +18,7 @@ private lemma main
   (hequiv : ∀ (g : G) (v : V), ι (g • v) = g • ι v)
   (hsub : ∀ v : V, ι v ∈ W)
   (hrank : Module.finrank k V = 2)
-  (hdet : ∀ σ ∈ I, LinearMap.det (DistribMulAction.toLinearMap k V σ) = (n σ : k))
+  (hdet : ∀ σ ∈ I, LinearMap.det (DistribSMul.toLinearMap k V σ) = (n σ : k))
   (hunit : ∀ σ ∈ I, (n σ : k) ≠ 0)
   (hram : ∃ σ ∈ I, (n σ : k) ≠ 1) :
 -- imply
@@ -29,7 +29,7 @@ private lemma main
 
   have hscalar : ∀ v : V, σ • v = n σ • v := fun v => by
     apply hinj; rw [hequiv, map_nsmul]; exact hmult σ hσ (ι v) (hsub v)
-  set A := DistribMulAction.toLinearMap k V σ
+  set A := DistribSMul.toLinearMap k V σ
   have hAap : ∀ v : V, A v = σ • v := fun v => rfl
   have hsc : ∀ v : V, A v = (n σ : k) • v := fun v => by
     rw [hAap v, hscalar v, Nat.cast_smul_eq_nsmul]

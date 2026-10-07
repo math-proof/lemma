@@ -24,7 +24,7 @@ private lemma main
   classical
 
   let c : (∐ T) ⟶ X := Sigma.desc z
-  haveI : IsDominant c := by
+  have : IsDominant c := by
     refine ⟨?_⟩
     apply Dense.mono ?_ hdense
     intro x hx

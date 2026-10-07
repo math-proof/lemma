@@ -18,9 +18,9 @@ private lemma main
   Module.FaithfullyFlat 𝒪 Onr := by
 -- proof
   classical
-  haveI := hdvr
+  have := hdvr
 
-  haveI : Module.IsTorsionFree 𝒪 Onr :=
+  have : Module.IsTorsionFree 𝒪 Onr :=
     Module.IsTorsionFree.comap (algebraMap 𝒪 Onr)
       (fun r hr => by
         have hr0 : r ≠ 0 := by
@@ -28,7 +28,7 @@ private lemma main
           exact not_isRegular_zero hr
         exact IsRegular.of_ne_zero ((map_ne_zero_iff _ hinj).mpr hr0))
       (fun r m => (Algebra.smul_def r m).symm)
-  haveI : Module.Flat 𝒪 Onr := inferInstance
+  have : Module.Flat 𝒪 Onr := inferInstance
 
   refine (Module.FaithfullyFlat.iff_flat_and_proper_ideal 𝒪 Onr).mpr ⟨inferInstance, ?_⟩
   intro I hI htop

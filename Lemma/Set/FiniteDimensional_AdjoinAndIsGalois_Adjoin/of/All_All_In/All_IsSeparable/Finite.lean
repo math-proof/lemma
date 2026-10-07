@@ -17,13 +17,13 @@ private lemma main
 -- imply
   FiniteDimensional K ↥(IntermediateField.adjoin K S) ∧ IsGalois K ↥(IntermediateField.adjoin K S) := by
 -- proof
-  haveI : Finite ↑S := hS.to_subtype
-  haveI : Normal K Ω := IsAlgClosure.normal K Ω
+  have : Finite ↑S := hS.to_subtype
+  have : Normal K Ω := IsAlgClosure.normal K Ω
   have hfd : FiniteDimensional K ↥(IntermediateField.adjoin K S) :=
     IntermediateField.finiteDimensional_adjoin fun x hx => (hsep x hx).isIntegral
-  haveI : Algebra.IsSeparable K ↥(IntermediateField.adjoin K S) :=
+  have : Algebra.IsSeparable K ↥(IntermediateField.adjoin K S) :=
     (IntermediateField.isSeparable_adjoin_iff_isSeparable K Ω).mpr hsep
-  haveI : Normal K ↥(IntermediateField.adjoin K S) := by
+  have : Normal K ↥(IntermediateField.adjoin K S) := by
     rw [IntermediateField.normal_iff_forall_map_le']
     intro σ
     rw [IntermediateField.adjoin_map]

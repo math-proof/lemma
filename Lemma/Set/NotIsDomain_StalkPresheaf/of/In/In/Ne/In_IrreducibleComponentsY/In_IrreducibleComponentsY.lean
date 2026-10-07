@@ -22,7 +22,7 @@ private lemma main
 -- proof
   intro hdom
 
-  haveI : IrreducibleSpace ↥(Spec (Y.presheaf.stalk y)) :=
+  have : IrreducibleSpace ↥(Spec (Y.presheaf.stalk y)) :=
     inferInstanceAs (IrreducibleSpace (PrimeSpectrum (Y.presheaf.stalk y)))
   have hS : IsIrreducible {x : ↥Y | x ⤳ y} := by
     rw [← Scheme.range_fromSpecStalk, ← Set.image_univ]

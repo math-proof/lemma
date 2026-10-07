@@ -18,7 +18,7 @@ private lemma main
   Associated a b := by
 -- proof
   classical
-  letI : StrongNormalizationMonoid R := UniqueFactorizationMonoid.normalizationMonoid
+  let : StrongNormalizationMonoid R := UniqueFactorizationMonoid.strongNormalizationMonoid
 
   have hassoc : Associated (a ^ n) (b ^ n) := ⟨u⁻¹, by
     rw [h, mul_comm ((u : R)) (b ^ n), mul_assoc, Units.mul_inv, mul_one]⟩

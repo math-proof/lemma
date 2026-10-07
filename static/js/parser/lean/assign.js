@@ -52,11 +52,16 @@ export class LeanAssign extends LeanBinary {
                     if (this.parent instanceof L.LeanCalc)
                         return this.parent.insert_newline(this, newline_count, indent, next);
                     const p = this.parent;
-                    const brace = p instanceof L.LeanBrace ? p
-                        : (p instanceof L.LeanStatements && p.parent instanceof L.LeanBrace) ? p.parent
+                    const {LeanBrace, LeanStatements, LeanWith} = L;
+                    // first field of `{ a := 1⏎ b := 2 }` / `{ s with a := 1⏎ b := 2 }`: the brace / `with` opens the
+                    // structure-instance body. A deeper line after a field of that body continues the field's value.
+                    const owner = p instanceof LeanBrace ? p
+                        : p instanceof LeanWith && p.isStructUpdate() ? p
+                        : (p instanceof LeanStatements && p.parent instanceof LeanBrace && p.structInst !== true) ? p.parent
                         : null;
+                    const brace = owner instanceof LeanWith ? owner.parent.parent : owner;
                     if (brace && brace.indent < indent)
-                        return brace.insert_newline(this, newline_count, indent, next);
+                        return owner.insert_newline(this, newline_count, indent, next);
                     out = this.push_args_indented(indent, newline_count, false);
                 }
                 return out;
@@ -75,7 +80,7 @@ export class LeanAssign extends LeanBinary {
         if (!p || p instanceof L.LeanArgsNewLineSeparated) return true;
         if (p instanceof L.LeanArgsIndented && p.rhs === this) return true;
         // Structure-instance fields inside a brace: `{ toFun := …, map_add' := … }`
-        if (p instanceof L.LeanStatements && p.parent instanceof L.LeanBrace) return true;
+        if (p instanceof L.LeanStatements && (p.parent instanceof L.LeanBrace || p.structInst === true)) return true;
         return false;
     }
 

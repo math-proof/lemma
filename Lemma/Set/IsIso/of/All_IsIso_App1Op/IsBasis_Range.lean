@@ -20,8 +20,8 @@ private lemma main
 -- imply
   IsIso φ := by
 -- proof
-  haveI := TopCat.Opens.coverDense_inducedFunctor hB
-  haveI : IsIso (Functor.whiskerLeft (inducedFunctor B).op φ.1) := by
+  have := TopCat.Opens.coverDense_inducedFunctor hB
+  have : IsIso (Functor.whiskerLeft (inducedFunctor B).op φ.1) := by
     refine @NatIso.isIso_of_isIso_app _ _ _ _ _ _ _ ?_
     intro i
     exact h i.unop

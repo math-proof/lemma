@@ -48,6 +48,5 @@ private lemma main
       linarith
     · have hz : x = 0 := by linarith
       rw [hz]
-      <;> rfl
 
 -- created on 2020-06-12

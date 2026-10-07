@@ -17,11 +17,10 @@ private lemma main
     linarith
   induction n with
   | zero =>
-    simp [hsub]
-    <;> field_simp
+    simp
   | succ n ih =>
     rw [Finset.sum_range_succ, ih]
     field_simp [hsub]
-    <;> ring
+    ring
 
 -- created on 2019-11-26

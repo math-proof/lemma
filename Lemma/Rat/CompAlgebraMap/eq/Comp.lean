@@ -17,12 +17,12 @@ private lemma main
       sK.comp (algebraMap S S') = j.comp sk := by
 -- proof
   classical
-  letI : Algebra S k := sk.toAlgebra
+  let : Algebra S k := sk.toAlgebra
 
   let R : Type u := k ⊗[S] S'
-  haveI : Nontrivial R := Module.FaithfullyFlat.rTensor_nontrivial S S' k
+  have : Nontrivial R := Module.FaithfullyFlat.rTensor_nontrivial S S' k
   obtain ⟨m, hm⟩ := Ideal.exists_maximal R
-  letI : Field (R ⧸ m) := Ideal.Quotient.field m
+  let : Field (R ⧸ m) := Ideal.Quotient.field m
   let K : Type u := AlgebraicClosure (R ⧸ m)
   let π : R →+* K := (algebraMap (R ⧸ m) K).comp (Ideal.Quotient.mk m)
   refine ⟨K, inferInstance, inferInstance, π.comp (algebraMap k R),

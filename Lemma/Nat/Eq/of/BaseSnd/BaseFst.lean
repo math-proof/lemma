@@ -22,10 +22,10 @@ private lemma main
   refine Scheme.Pullback.carrierEquiv_eq_iff.mpr ⟨Scheme.Pullback.Triplet.ext h₁ h₂, ?_⟩
 
   set T := Scheme.Pullback.Triplet.ofPoint t₂ with hT
-  haveI : IsIso ((S.residueFieldCongr T.hx).inv ≫ f.residueFieldMap T.x) := by
-    haveI : IsIso (f.residueFieldMap T.x) := inferInstanceAs (IsIso (f.residueFieldMap ((pullback.fst f g).base t₂)))
+  have : IsIso ((S.residueFieldCongr T.hx).inv ≫ f.residueFieldMap T.x) := by
+    have : IsIso (f.residueFieldMap T.x) := inferInstanceAs (IsIso (f.residueFieldMap ((pullback.fst f g).base t₂)))
     infer_instance
-  haveI hinr : IsIso (pushout.inr ((S.residueFieldCongr T.hx).inv ≫ f.residueFieldMap T.x)
+  have hinr : IsIso (pushout.inr ((S.residueFieldCongr T.hx).inv ≫ f.residueFieldMap T.x)
       ((S.residueFieldCongr T.hy).inv ≫ g.residueFieldMap T.y)) :=
     pushout_inr_iso_of_left_iso _ _
   have hsub : Subsingleton ↥(Spec T.tensor) := by

@@ -23,7 +23,7 @@ private lemma main
   obtain ⟨M, hM⟩ : ∃ M : ℝ, ∀ i, σ i ≤ M := by
     obtain ⟨M, hM⟩ := (Set.range σ).toFinite.bddAbove
     exact ⟨M, fun i => hM (Set.mem_range_self i)⟩
-  haveI : Countable ι := Finite.to_countable
+  have : Countable ι := Finite.to_countable
   apply h M
   have hsub : {s : ℂ | M < s.re ∧ ∃ i, s ∈ S i} ⊆ ⋃ i, {s : ℂ | σ i < s.re ∧ s ∈ S i} := by
     rintro s ⟨hs, i, hi⟩

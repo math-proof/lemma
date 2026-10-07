@@ -8,7 +8,7 @@ private lemma main
   {a b x : ℝ}
 -- given
   (h_left : b ≤ x)
-  (h_right : x ≤ a)
+  (_h_right : x ≤ a)
   (hle : x ≤ b) :
 -- imply
   x = b := by

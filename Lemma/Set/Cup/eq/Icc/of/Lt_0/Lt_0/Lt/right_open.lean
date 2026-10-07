@@ -5,9 +5,9 @@ import sympy.Basic
 private lemma main
   (a b : ℤ)
 -- given
-  (ha : a < 0)
-  (hb : b < 0)
-  (h : a < b) :
+  (_ha : a < 0)
+  (_hb : b < 0)
+  (_h : a < b) :
 -- imply
   ⋃ k ∈ Finset.Ico a b, Set.Ico k (k + 1) = Set.Ico a b := by
 -- proof

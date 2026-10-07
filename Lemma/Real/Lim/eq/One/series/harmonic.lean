@@ -37,7 +37,7 @@ private lemma main
       linarith
     have hlp : 0 < Real.log ((n : ℝ) + 1) := Real.log_pos h1
     field_simp [hlp.ne']
-    <;> ring
+    ring
   have hc : Tendsto (fun _ : ℕ => (1 : ℝ)) atTop (𝓝 1) := tendsto_const_nhds
   have hsum :
       Tendsto (fun n : ℕ => (1 : ℝ) + ((harmonic n : ℝ) - Real.log ((n : ℝ) + 1)) /

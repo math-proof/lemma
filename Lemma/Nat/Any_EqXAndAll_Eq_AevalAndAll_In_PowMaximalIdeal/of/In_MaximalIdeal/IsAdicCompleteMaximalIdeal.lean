@@ -20,10 +20,10 @@ private lemma main
       (∀ (n : ℕ) (F : PowerSeries 𝒪), PowerSeries.X ^ n ∣ F → ev F ∈ maximalIdeal R ^ n) := by
 -- proof
   classical
-  letI wI : WithIdeal R := ⟨maximalIdeal R⟩
-  letI uO : UniformSpace 𝒪 := ⊥
-  haveI : DiscreteUniformity 𝒪 := ⟨rfl⟩
-  haveI : ContinuousSMul 𝒪 R := DiscreteTopology.instContinuousSMul 𝒪 R
+  let wI : WithIdeal R := ⟨maximalIdeal R⟩
+  let uO : UniformSpace 𝒪 := ⊥
+  have : DiscreteUniformity 𝒪 := ⟨rfl⟩
+  have : ContinuousSMul 𝒪 R := DiscreteTopology.instContinuousSMul 𝒪 R
   have hI : IsAdic (maximalIdeal R) := rfl
   obtain ⟨hcs, ht2⟩ := hI.isAdicComplete_iff.mp h
   have ha : PowerSeries.HasEval t := (PowerSeries.hasEval_def t).mpr (WithIdeal.isTopologicallyNilpotent_of_mem ht)

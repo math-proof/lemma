@@ -13,7 +13,7 @@ private lemma main
   {r : ℕ}
   {V : Fin r → Z.Opens}
 -- given
-  (w : ∀ i j : Fin r, Γ(Z, V i))
+  (w : ∀ i _j : Fin r, Γ(Z, V i))
   (hW1 : ∀ i, w i i = 1)
   (hW2 : ∀ i j k : Fin r, Z.presheaf.map (homOfLE (inf_le_left : V i ⊓ V j ≤ V i)).op (w i k) = Z.presheaf.map (homOfLE (inf_le_left : V i ⊓ V j ≤ V i)).op (w i j) * Z.presheaf.map (homOfLE (inf_le_right : V i ⊓ V j ≤ V j)).op (w j k))
   (hW3 : ∀ i j : Fin r, Z.basicOpen (w i j) = V i ⊓ V j) :

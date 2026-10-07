@@ -30,10 +30,10 @@ private lemma main
   have hset : {ζ : PadicAlgCl q | ζ ^ (q ^ N - 1) = 1} = P.rootSet (PadicAlgCl q) := by
     ext ζ
     rw [Polynomial.mem_rootSet, hP]
-    simp only [Set.mem_setOf_eq, map_sub, map_pow, aeval_X, map_one, sub_eq_zero]
+    simp only [Set.mem_ofPred_eq, map_sub, map_pow, aeval_X, map_one, sub_eq_zero]
     exact ⟨fun h => ⟨hP0, h⟩, fun h => h.2⟩
   rw [hset]
-  haveI : IsSplittingField K (IntermediateField.adjoin K (P.rootSet (PadicAlgCl q))) P :=
+  have : IsSplittingField K (IntermediateField.adjoin K (P.rootSet (PadicAlgCl q))) P :=
     IntermediateField.adjoin_rootSet_isSplittingField (IsAlgClosed.splits _)
   exact ⟨IsSplittingField.finiteDimensional _ P, Normal.of_isSplittingField P⟩
 

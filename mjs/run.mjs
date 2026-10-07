@@ -137,6 +137,19 @@ async function main() {
   const { module, abs, code } = await runLeanFile(leanInput);
   console.log(abs);
 
+  // lint warnings (`code.warning`: AGENTS.md style rules, server/lean/lint/): printed only — not Lean errors, not saved,
+  // no effect on the exit status
+  const warnings = Array.isArray(code?.warning) ? code.warning : [];
+  for (const w of warnings) {
+    const loc = w.line != null ? `:${w.line}${w.col != null ? `:${w.col}` : ''}` : '';
+    console.warn(`warning${loc}: ${w.info}`);
+    // AST rules quote the offending statement (the parse tree has no positions; search for it by text)
+    if (w.stmt) console.warn(w.stmt.split('\n').map((l) => `    > ${l}`).join('\n'));
+  }
+  if (warnings.length) {
+    console.warn(`${warnings.length} style warning(s): fix them and re-run \`node mjs/run.mjs ${leanInput}\` until none remain`);
+  }
+
   // MySQL REPLACE is persistence, not success — Lean errors decide the exit status.
   const errors = Array.isArray(code?.error) ? code.error : [];
   const isCrlf = (e) => /Carriage return/i.test(String(e?.info ?? ''));

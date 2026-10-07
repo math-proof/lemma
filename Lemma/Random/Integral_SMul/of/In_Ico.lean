@@ -4,6 +4,7 @@ import Lemma.Random.Integral.eq.Sum_Sum_SMul
 import Lemma.Random.AeHasSumAndNormG.le.MulSub1Abs_R.of.In_Ico
 import Lemma.Random.Integrable_G.of.In_Ico
 import Lemma.Random.Integral_MulEqSAndEqAG.eq.MulMulRealPreimageSProbQ.of.In_Ico
+import Lemma.Real.SMul.eq.Sum_Sum_SMul
 open MeasureTheory ProbabilityTheory Finset Filter Topology PolicyGradient PolicyGradient.Model
 
 
@@ -39,7 +40,7 @@ private lemma main
       rw [norm_mul]
       exact mul_le_of_le_one_left (norm_nonneg _) (by split_ifs <;> simp) |>.trans h.2
   rw [Random.Integral.eq.Sum_Sum_SMul (M := M) θ t (fun y u => M.Q θ γ t y u • ψ y u)]
-  simp_rw [ind_smul_sum t _ (G γ t _) ψ]
+  simp_rw [Real.SMul.eq.Sum_Sum_SMul t _ (G γ t _) ψ]
   rw [integral_finsetSum _ fun x _ => integrable_finsetSum _ fun u _ => (hI x u).smul_const _]
   refine Finset.sum_congr rfl fun x _ => ?_
   rw [integral_finsetSum _ fun u _ => (hI x u).smul_const _]

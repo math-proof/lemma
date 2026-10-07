@@ -18,9 +18,9 @@ private lemma main
         e (c ⊗ₜ[O'] (a ⊗ₜ[ℤ_[lam]] x)) = (algebraMap O' K a * c) ⊗ₜ[ℚ_[lam]] ((1 : ℚ_[lam]) ⊗ₜ[ℤ_[lam]] x) := by
 -- proof
   classical
-  letI : Algebra ℤ_[lam] K := ((algebraMap O' K).comp (algebraMap ℤ_[lam] O')).toAlgebra
-  haveI hT1 : IsScalarTower ℤ_[lam] O' K := IsScalarTower.of_algebraMap_eq (fun _ => rfl)
-  haveI hT2 : IsScalarTower ℤ_[lam] ℚ_[lam] K := by
+  let : Algebra ℤ_[lam] K := ((algebraMap O' K).comp (algebraMap ℤ_[lam] O')).toAlgebra
+  have hT1 : IsScalarTower ℤ_[lam] O' K := IsScalarTower.of_algebraMap_eq (fun _ => rfl)
+  have hT2 : IsScalarTower ℤ_[lam] ℚ_[lam] K := by
     refine IsScalarTower.of_algebraMap_eq (fun z => ?_)
     show algebraMap O' K (algebraMap ℤ_[lam] O' z) = _
     rw [hOK z]

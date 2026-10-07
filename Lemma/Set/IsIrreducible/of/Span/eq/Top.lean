@@ -32,7 +32,7 @@ private lemma main
     | smul a x _ hx =>
       intro v hv
       simpa using W.toSubmodule.smul_mem a (hx hv)
-  haveI : Nontrivial (Subrepresentation ρ) :=
+  have : Nontrivial (Subrepresentation ρ) :=
     ⟨⊥, ⊤, fun h => bot_ne_top (α := Submodule k V) (congrArg Subrepresentation.toSubmodule h)⟩
   refine IsSimpleOrder.of_forall_eq_top fun W hW => ?_
   apply Subrepresentation.toSubmodule_injective

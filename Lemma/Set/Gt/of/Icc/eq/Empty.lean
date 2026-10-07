@@ -11,7 +11,7 @@ private lemma main
   b < a := by
 -- proof
   by_contra hle
-  push_neg at hle
+  push Not at hle
   exact (Set.nonempty_Icc.mpr hle).ne_empty h
 
 

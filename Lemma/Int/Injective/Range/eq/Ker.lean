@@ -29,9 +29,7 @@ private lemma main
     ext x; rfl
   have h3 : AdicCompletion.map I ρ =
       AdicCompletion.map I (LinearMap.range ρ).subtype ∘ₗ AdicCompletion.map I ρ.rangeRestrict := by
-    first
-      | (rw [AdicCompletion.map_comp, hfac])
-      | (rw [← AdicCompletion.map_comp, hfac])
+    rw [AdicCompletion.map_comp, hfac]
   rw [h3, LinearMap.ker_comp_of_ker_eq_bot _ (LinearMap.ker_eq_bot.mpr h2)]
   exact (h1.linearMap_ker_eq).symm
 

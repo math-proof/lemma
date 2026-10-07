@@ -17,7 +17,7 @@ private lemma main
 -- proof
   rcases eq_or_ne ℓ 0 with rfl | hℓ
   · rw [Nat.mul_zero]
-  haveI : NeZero ℓ := ⟨hℓ⟩
+  have : NeZero ℓ := ⟨hℓ⟩
   ext A
   simp only [Subgroup.mem_inf, CongruenceSubgroup.Gamma1_mem, CongruenceSubgroup.Gamma0_mem]
   constructor

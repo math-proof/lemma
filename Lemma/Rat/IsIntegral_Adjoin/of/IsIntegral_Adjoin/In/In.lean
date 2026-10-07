@@ -43,7 +43,7 @@ private lemma main
     calc (((e.symm a : ↥(Algebra.adjoin L {(⟨j, hj⟩ : E)})) : E) : F)
         = ((ψfwd (e.symm a) : ↥(Algebra.adjoin L {j})) : F) := (hcoeF _).symm
       _ = (a : F) := by rw [h2]
-  letI : Algebra ↥(Algebra.adjoin L {(⟨j, hj⟩ : E)}) F :=
+  let : Algebra ↥(Algebra.adjoin L {(⟨j, hj⟩ : E)}) F :=
     ((algebraMap E F).comp (algebraMap ↥(Algebra.adjoin L {(⟨j, hj⟩ : E)}) E)).toAlgebra
   have hxT : IsIntegral ↥(Algebra.adjoin L {(⟨j, hj⟩ : E)}) x :=
     IsIntegral.map_of_comp_eq e.symm.toRingHom (RingHom.id F)

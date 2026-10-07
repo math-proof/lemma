@@ -9,19 +9,19 @@ import sympy.Basic
 private lemma  formallyUnramified_of_isReduced (K B : Type*) [Field K]
     [PerfectField K] [CommRing B] [Algebra K B] [Module.Finite K B] [IsReduced B] :
     Algebra.FormallyUnramified K B := by
-  haveI : IsArtinianRing B := IsArtinianRing.of_finite K B
-  haveI : Fintype (MaximalSpectrum B) := Fintype.ofFinite _
+  have : IsArtinianRing B := IsArtinianRing.of_finite K B
+  have : Fintype (MaximalSpectrum B) := Fintype.ofFinite _
 
-  haveI : ∀ I : MaximalSpectrum B, Algebra.FormallyUnramified K (B ⧸ I.asIdeal) := by
+  have : ∀ I : MaximalSpectrum B, Algebra.FormallyUnramified K (B ⧸ I.asIdeal) := by
     intro I
-    letI : Field (B ⧸ I.asIdeal) := Ideal.Quotient.field I.asIdeal
-    haveI : Module.Finite K (B ⧸ I.asIdeal) :=
+    let : Field (B ⧸ I.asIdeal) := Ideal.Quotient.field I.asIdeal
+    have : Module.Finite K (B ⧸ I.asIdeal) :=
       Module.Finite.of_surjective (Ideal.Quotient.mkₐ K I.asIdeal).toLinearMap
         (Ideal.Quotient.mkₐ_surjective K I.asIdeal)
-    haveI : Algebra.IsAlgebraic K (B ⧸ I.asIdeal) := Algebra.IsAlgebraic.of_finite K _
-    haveI : Algebra.IsSeparable K (B ⧸ I.asIdeal) := Algebra.IsAlgebraic.isSeparable_of_perfectField
+    have : Algebra.IsAlgebraic K (B ⧸ I.asIdeal) := Algebra.IsAlgebraic.of_finite K _
+    have : Algebra.IsSeparable K (B ⧸ I.asIdeal) := Algebra.IsAlgebraic.isSeparable_of_perfectField
     exact Algebra.FormallyUnramified.of_isSeparable K (B ⧸ I.asIdeal)
-  haveI : Algebra.FormallyUnramified K ((I : MaximalSpectrum B) → B ⧸ I.asIdeal) :=
+  have : Algebra.FormallyUnramified K ((I : MaximalSpectrum B) → B ⧸ I.asIdeal) :=
     (Algebra.FormallyUnramified.pi_iff (fun I : MaximalSpectrum B => B ⧸ I.asIdeal)).mpr
       (fun I => inferInstance)
 

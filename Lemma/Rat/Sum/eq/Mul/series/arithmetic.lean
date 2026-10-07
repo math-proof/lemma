@@ -12,7 +12,7 @@ private lemma main
   | zero => norm_num
   | succ n ih =>
     rw [Finset.sum_range_succ, ih]
-    simp [Nat.cast_add, Nat.cast_one, Nat.cast_zero]
-    <;> ring
+    simp [Nat.cast_add, Nat.cast_one]
+    ring
 
 -- created on 2019-11-26

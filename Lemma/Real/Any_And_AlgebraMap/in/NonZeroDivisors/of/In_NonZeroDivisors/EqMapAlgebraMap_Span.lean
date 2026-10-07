@@ -22,7 +22,7 @@ private lemma main
 
   obtain ⟨g, hgI, hgm⟩ : ∃ g ∈ I, algebraMap R S g ∉ IsLocalRing.maximalIdeal S • I.map (algebraMap R S) := by
     by_contra h
-    push_neg at h
+    push Not at h
     have hle : I.map (algebraMap R S) ≤ ⊥ ⊔ IsLocalRing.maximalIdeal S • I.map (algebraMap R S) := by
       rw [bot_sup_eq, Ideal.map, Ideal.span_le]
       rintro _ ⟨x, hx, rfl⟩

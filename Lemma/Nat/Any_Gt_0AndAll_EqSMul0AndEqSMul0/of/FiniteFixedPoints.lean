@@ -26,7 +26,7 @@ private lemma main
       neg_mem' := fun {a} ha => by
         simp only [Function.mem_fixedPoints_iff, Function.comp_apply, map_neg] at ha ⊢
         rw [ha] }
-  haveI : Finite H := hfin.to_subtype
+  have : Finite H := hfin.to_subtype
   refine ⟨Nat.card H, Nat.card_pos, fun a₀ a₁ h₀ h₁ => ?_⟩
   have ha₀ : a₀ = -F a₁ := eq_neg_of_add_eq_zero_left h₀
   have ha₁ : a₁ ∈ H := by

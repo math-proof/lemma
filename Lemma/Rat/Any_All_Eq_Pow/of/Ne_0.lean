@@ -14,7 +14,7 @@ private lemma main
 -- imply
   ∃ a : ℕ, ∀ μ : AlgebraicClosure ℚ, μ ^ n = 1 → σ μ = μ ^ a := by
 -- proof
-  haveI : NeZero n := ⟨hn⟩
+  have : NeZero n := ⟨hn⟩
   refine ⟨(modularCyclotomicCharacter.toFun n
     (σ : AlgebraicClosure ℚ ≃+* AlgebraicClosure ℚ)).val, fun μ hμ => ?_⟩
   have hμ0 : μ ≠ 0 := by

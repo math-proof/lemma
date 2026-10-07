@@ -1,4 +1,4 @@
-import Lemma.Tensor.EqGrad.of.Eq_Conditioned.Eq_Expect.Eq_Expect.policy_gradient.recursion.discrete
+import Lemma.Random.Grad.eq.Add_SMul_Sum_SMul.of.Ne0Real_Preimage.GtInftySup.All_Differentiable_Prob.All_Eq_Expect.All_Eq_Expect.EqMeasureCount.EqMeasureCount.In_Ico
 import Lemma.Random.ProbCond.eq.OfRealPol.of.Ne_0
 import Lemma.Random.ProbCond.eq.Div.of.Eq_Count.Eq_Count
 import Lemma.Random.SinglePSpace.of.EqMeasureCount.Measurable
@@ -11,11 +11,13 @@ import sympy.vector.operators
 import sympy.concrete.sup
 import Lemma.Random.Pn0.eq.Eq
 import Lemma.Random.PnAdd_1.eq.Sum_MulPnP1
-import Lemma.Random.RealPreimageSPreimageS_Add.eq.Pn.of.NeRealPreimageS_0
-import Lemma.Random.RealPreimageSPreimageS_Add_1.eq.P1.of.NeRealPreimageS_0
-import Lemma.Tensor.Differentiable_RealPreimageS.of.IsFinite.All_Differentiable_Prob
-import Lemma.Random.RealPreimageS.ne.Zero.of.NePn_0.NeRealPreimageS0_0
-open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Filter Topology
+import Lemma.Random.RealPreimageSPreimageS_Add.eq.Pn.of.Ne0Real_Preimage
+import Lemma.Random.RealPreimageSPreimageS_Add_1.eq.P1.of.Ne0Real_Preimage
+import Lemma.Random.Differentiable_RealPreimageS.of.GtInftySup.All_Differentiable_Prob
+import Lemma.Random.RealPreimageS.ne.Zero.of.NePn_0.Ne0Real_Preimage
+import sympy.core.numbers
+open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Filter Topology Random Measure
+open scoped ENNReal.ToRealCoe
 
 
 /--
@@ -72,12 +74,10 @@ private lemma main
     rw [Expectation.condEvent_eq_integral hpR.aemeasurable (hfG t)]
     rfl
   subst hQ hV
-  obtain ⟨C, hC⟩ := id h₄
-  have h₇ : ∀ θ x u, ‖∇[θ] M.pol.prob θ x u‖ ≤ C := fun θ x u => hC ⟨(θ, x, u), rfl⟩
   classical
   beta_reduce
   have h₈ : ∀ t y, ((M θ)[|s 0 ⁻¹' {x}]).real (s t ⁻¹' {y}) = M.Pn θ t x y := fun t y => by
-    have h := Random.RealPreimageSPreimageS_Add.eq.Pn.of.NeRealPreimageS_0 (M := M) θ 0 t x y h₅
+    have h := Random.RealPreimageSPreimageS_Add.eq.Pn.of.Ne0Real_Preimage (M := M) θ 0 t x y h₅
     rwa [zero_add] at h
   simp_rw [h₈]
   have hQ_expect : ∀ θ t («s.bvar» : ℕ → S) («a.bvar» : ℕ → A),
@@ -108,44 +108,45 @@ private lemma main
         M.Pn θ n x y • (∑ u, M.Q θ γ n y u • ∇[θ] M.pol.prob θ y u +
           γ • ∑ z, M.P1 θ y z • ∇[θ] M.V θ γ (n + 1) z) := by
       intro y
-      by_cases hy : M.Pn θ n x y = 0
-      · rw [hy, zero_smul, zero_smul]
-      have hP := Random.RealPreimageS.ne.Zero.of.NePn_0.NeRealPreimageS0_0 (M := M) θ n x y h₅ hy
-      have h := Tensor.EqGrad.of.Eq_Conditioned.Eq_Expect.Eq_Expect.policy_gradient.recursion.discrete
-        («s.bvar» := fun _ ↦ y)
-        h₀ hS hA (Q := fun θ => M.Q θ γ) (V := fun θ => M.V θ γ) hQ_expect hV_expect h₃ h₄ hP
-      have hSingle : ∀ θ t, SinglePSpace (M θ) (a (S := S) (A := A) t, s (S := S) (A := A) t) := fun _ t =>
-        Random.SinglePSpace.of.EqMeasureCount.Measurable ((a_meas t).prodMk (s_meas t)) (by
+      if hy : M.Pn θ n x y = 0 then
+        rw [hy, zero_smul, zero_smul]
+      else
+        have hP := Random.RealPreimageS.ne.Zero.of.NePn_0.Ne0Real_Preimage (M := M) θ n x y h₅ hy
+        have h := Random.Grad.eq.Add_SMul_Sum_SMul.of.Ne0Real_Preimage.GtInftySup.All_Differentiable_Prob.All_Eq_Expect.All_Eq_Expect.EqMeasureCount.EqMeasureCount.In_Ico
+          («s.bvar» := fun _ ↦ y)
+          h₀ hS hA (Q := fun θ => M.Q θ γ) (V := fun θ => M.V θ γ) hQ_expect hV_expect h₃ h₄ hP
+        have hμAS : ReferenceMeasure.measure (α := A × S) = Measure.count := by
           show (ReferenceMeasure.measure : Measure A).prod (ReferenceMeasure.measure : Measure S) = _
-          rw [hA, hS, Measure.Count.eq.ProdCountS])
-      have h₇f : ∀ θ x u, ‖fderiv ℝ (fun θ => M.pol.prob θ x u) θ‖ ≤ C := fun θ x u => by
-        simpa [gradient, LinearIsometryEquiv.norm_map] using h₇ θ x u
-      have hπ : ∀ u, ∇[θ] ℙ[M θ]((a n) = u | (s n) = y).toReal = ∇[θ] M.pol.prob θ y u := by
-        intro u
-        have hc : ContinuousAt (fun θ' => (M θ').real (s n ⁻¹' {y})) θ :=
-          (Tensor.Differentiable_RealPreimageS.of.IsFinite.All_Differentiable_Prob (M := M) h₃ h₇f n y θ).continuousAt
-        refine Filter.EventuallyEq.gradient_eq ?_
-        filter_upwards [hc.eventually_ne hP] with θ' h
-        beta_reduce
-        rw [Random.ProbCond.eq.OfRealPol.of.Ne_0 hS hA (hSingle θ' n) h,
-          ENNReal.toReal_ofReal (M.pol.nonneg θ' _ _)]
-      simp_rw [hπ] at h
-      rw [h]
-      have hSs : ∀ θ t, SinglePSpace (M θ) (s (S := S) (A := A) (t + 1), s (S := S) (A := A) t) :=
-        fun _ t => Random.SinglePSpace.of.EqMeasureCount.EqMeasureCount.Measurable.Measurable
-          (s_meas (t + 1)) (s_meas t) hS hS
-      have hP1 : ∀ z, ℙ[M θ]((s (n + 1)) = z | (s n) = y).toReal = M.P1 θ y z := by
-        intro z
-        have hDiv := Random.ProbCond.eq.Div.of.Eq_Count.Eq_Count (π := M θ)
-          (x := s (S := S) (A := A) (n + 1)) (y := s (S := S) (A := A) n) hS hS z y
-        rw [hDiv, ENNReal.toReal_div, ← Random.RealPreimageSPreimageS_Add_1.eq.P1.of.NeRealPreimageS_0 (M := M) θ n y z hP]
-        rw [measureReal_def, cond_apply (s_meas n (measurableSet_singleton y)),
-          ENNReal.toReal_mul, ENNReal.toReal_inv, mul_comm, div_eq_mul_inv]
-        congr 1
-        · congr 1
+          rw [hA, hS, Measure.Count.eq.ProdCountS]
+        have hSingle : ∀ θ t, SinglePSpace (M θ) (a (S := S) (A := A) t, s (S := S) (A := A) t) := fun _ t =>
+          Random.SinglePSpace.of.EqMeasureCount.Measurable ((a_meas t).prodMk (s_meas t)) hμAS
+        have hπ : ∀ u, ∇[θ] (ℙ[M θ]((a n) = u | (s n) = y) : ℝ) = ∇[θ] M.pol.prob θ y u := by
+          intro u
+          have hc : ContinuousAt (fun θ' => (M θ').real (s n ⁻¹' {y})) θ :=
+            (Random.Differentiable_RealPreimageS.of.GtInftySup.All_Differentiable_Prob (M := M) h₃ h₄ n y θ).continuousAt
+          refine Filter.EventuallyEq.gradient_eq ?_
+          filter_upwards [hc.eventually_ne hP] with θ' h
+          beta_reduce
+          rw [Random.ProbCond.eq.OfRealPol.of.Ne_0 hS hA (hSingle θ' n) h,
+            ENNReal.toReal_ofReal (M.pol.nonneg θ' _ _)]
+        simp_rw [hπ] at h
+        rw [h]
+        have hSs : ∀ θ t, SinglePSpace (M θ) (s (S := S) (A := A) (t + 1), s (S := S) (A := A) t) :=
+          fun _ t => Random.SinglePSpace.of.EqMeasureCount.EqMeasureCount.Measurable.Measurable
+            (s_meas (t + 1)) (s_meas t) hS hS
+        have hP1 : ∀ z, (ℙ[M θ]((s (n + 1)) = z | (s n) = y) : ℝ) = M.P1 θ y z := by
+          intro z
+          have hDiv := Random.ProbCond.eq.Div.of.Eq_Count.Eq_Count (π := M θ)
+            (x := s (S := S) (A := A) (n + 1)) (y := s (S := S) (A := A) n) hS hS z y
+          rw [hDiv, ENNReal.toReal_div, ← Random.RealPreimageSPreimageS_Add_1.eq.P1.of.Ne0Real_Preimage (M := M) θ n y z hP]
+          rw [measureReal_def, cond_apply (s_meas n (measurableSet_singleton y)),
+            ENNReal.toReal_mul, ENNReal.toReal_inv, mul_comm, div_eq_mul_inv]
           congr 1
-          exact Set.inter_comm _ _
-      simp_rw [hP1]
+          ·
+            congr 1
+            congr 1
+            exact Set.inter_comm _ _
+        simp_rw [hP1]
     rw [ih, Finset.sum_range_succ, add_assoc]
     congr 1
     rw [Finset.sum_congr rfl fun y _ => h₉ y]
@@ -159,4 +160,4 @@ private lemma main
 
 
 -- created on 2023-03-30
--- updated on 2026-10-06
+-- updated on 2026-10-07

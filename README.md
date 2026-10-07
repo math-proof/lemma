@@ -167,6 +167,8 @@ https://github.com/or4nge19/NeuralNetworks
 https://github.com/mkaratarakis/HopfieldNet  
 https://github.com/pitmonticone/LeanProject  
 https://github.com/stanford-centaur/pypantograph  
+https://github.com/facebookresearch/atlas-lean (ATLAS: LLM-autoformalized undergraduate/graduate textbook library, https://arxiv.org/abs/2605.29955, visualizer https://rammalahmad.github.io/atlas/)  
+https://github.com/facebookresearch/algebraic-combinatorics (full formalization of Grinberg's Algebraic Combinatorics textbook, https://arxiv.org/abs/2604.03071)  
 
 ## lean-web
 https://live.lean-lang.org/

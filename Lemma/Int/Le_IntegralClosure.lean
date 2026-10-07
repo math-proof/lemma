@@ -16,7 +16,7 @@ private lemma main
 -- proof
   intro x hx
   rw [mem_integralClosure_iff]
-  haveI : Algebra.IsIntegral R S := Algebra.IsIntegral.of_finite R S
+  have : Algebra.IsIntegral R S := Algebra.IsIntegral.of_finite R S
   have h : IsIntegral R (⟨x, hx⟩ : S) := Algebra.IsIntegral.isIntegral _
   exact h.map S.val
 

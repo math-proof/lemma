@@ -1,6 +1,6 @@
 import sympy.stats.discrete_hmm
-import Lemma.Measure.Measure.eq.Count.of.EqMeasure_Count.EqMeasure_Count
-import Lemma.Random.EqProbJoint.All_Eq_Mul_MulProbSCond.of.All_CondIndep.All_CondIndep.EqMeasure_Count.EqMeasure_Count.All_Measurable.All_Measurable
+import Lemma.Measure.Measure.eq.Count.of.EqMeasureCount.EqMeasureCount
+import Lemma.Random.EqProbJoint.All_Eq_Mul_MulProbSCond.of.All_CondIndep.All_CondIndep.EqMeasureCount.EqMeasureCount.All_Measurable.All_Measurable
 import Lemma.Random.Prob.eq.Mul_ProbS.Prob.eq.Mul_MulProbS.of.CondIndep.CondIndep
 open MeasureTheory Random
 
@@ -60,8 +60,8 @@ private lemma mdp
     Random.SinglePSpace.of.EqMeasureCount.EqMeasureCount.Measurable.Measurable (ha i) (hs j) hA hS
   have : ∀ i, SinglePSpace π (s (i + 1), s i, a i) := fun i =>
     Random.SinglePSpace.of.EqMeasureCount.EqMeasureCount.Measurable.Measurable (hs (i + 1)) ((hs i).prodMk (ha i)) hS
-      (Measure.Measure.eq.Count.of.EqMeasure_Count.EqMeasure_Count hS hA)
-  have : ∀ n, SinglePSpace π (s[:n + 1], a[:n]) := fun n =>
+      (Measure.Measure.eq.Count.of.EqMeasureCount.EqMeasureCount hS hA)
+  have : ∀ n, SinglePSpace π (s[:n + 1], a[:n]) := fun _n =>
     Random.SinglePSpace.of.All_Measurable.All_Measurable hs ha
   ℙ[π](s[:t + 1] = «s.bvar»[:t + 1] ∧ a[:t] = «a.bvar»[:t]) =
     ℙ[π]((s 0) = «s.bvar» 0) *
@@ -69,7 +69,7 @@ private lemma mdp
         ℙ[π]((a i) = «a.bvar» i | (s i) = «s.bvar» i) * ℙ[π]((s (i + 1)) = «s.bvar» (i + 1) | (s i) = «s.bvar» i ∧ (a i) = «a.bvar» i) := by
 -- proof
   intro _ _ _ _
-  obtain ⟨h₀, h₁⟩ := Random.EqProbJoint.All_Eq_Mul_MulProbSCond.of.All_CondIndep.All_CondIndep.EqMeasure_Count.EqMeasure_Count.All_Measurable.All_Measurable
+  obtain ⟨h₀, h₁⟩ := Random.EqProbJoint.All_Eq_Mul_MulProbSCond.of.All_CondIndep.All_CondIndep.EqMeasureCount.EqMeasureCount.All_Measurable.All_Measurable
     («s.bvar» := «s.bvar») («a.bvar» := «a.bvar») hs ha hS hA hpol htrans
   induction t with
   | zero =>

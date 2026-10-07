@@ -38,7 +38,7 @@ private lemma main
     refine ⟨e₀.base y, ?_⟩
     have := congrArg (fun φ => φ.base y) he₀
     simpa using this
-  haveI : Surjective ι := ⟨Set.range_eq_univ.1 hrange⟩
+  have : Surjective ι := ⟨Set.range_eq_univ.1 hrange⟩
   exact (isIso_iff_isOpenImmersion_and_surjective ι).mpr ⟨inferInstance, inferInstance⟩
 
 

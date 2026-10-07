@@ -1,5 +1,6 @@
 import sympy.stats.policy_trajectory.gradient
 import sympy.Basic
+import Lemma.Random.AeNormR.le.Abs_R
 open MeasureTheory ProbabilityTheory Finset Filter Topology PolicyGradient PolicyGradient.Model
 
 
@@ -43,7 +44,7 @@ private lemma main
     intro k
     have hb : ∀ᵐ ω ∂(M θ), ‖‖(if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) *
         (γ ^ k * r (t + k) ω)‖‖ ≤ γ ^ k * |M.env.R| := by
-      filter_upwards [r_bdd_ae M θ] with ω h
+      filter_upwards [Random.AeNormR.le.Abs_R (M := M) θ] with ω h
       rw [norm_norm, norm_mul, norm_mul, norm_pow, Real.norm_of_nonneg h₀.1]
       exact (mul_le_of_le_one_left (mul_nonneg (pow_nonneg h₀.1 k) (norm_nonneg _))
         (by split_ifs <;> simp)).trans (mul_le_mul_of_nonneg_left (h (t + k)) (pow_nonneg h₀.1 k))

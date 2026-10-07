@@ -19,11 +19,11 @@ private lemma main
 -- proof
   classical
 
-  haveI : ∀ i, Module.Flat S (S' i) := fun i => by
-    haveI : Module.Flat (Localization.Away (r i)) (S' i) := (hff i).toFlat
-    haveI : Module.Flat S (Localization.Away (r i)) := IsLocalization.flat _ (Submonoid.powers (r i))
+  have : ∀ i, Module.Flat S (S' i) := fun i => by
+    have : Module.Flat (Localization.Away (r i)) (S' i) := (hff i).toFlat
+    have : Module.Flat S (Localization.Away (r i)) := IsLocalization.flat _ (Submonoid.powers (r i))
     exact Module.Flat.trans S (Localization.Away (r i)) (S' i)
-  haveI : Module.Flat S (∀ i : Fin k, S' i) :=
+  have : Module.Flat S (∀ i : Fin k, S' i) :=
     Module.Flat.of_linearEquiv (DirectSum.linearEquivFunOnFintype S (Fin k) (fun i => S' i)).symm
   refine Module.FaithfullyFlat.of_comap_surjective fun p => ?_
 
@@ -39,7 +39,7 @@ private lemma main
     rw [PrimeSpectrum.localization_away_comap_range (Localization.Away (r i)) (r i)]
     exact hi
   obtain ⟨q, hq⟩ := hp
-  haveI := hff i
+  have := hff i
   obtain ⟨q', hq'⟩ := PrimeSpectrum.comap_surjective_of_faithfullyFlat (A := Localization.Away (r i)) (B := S' i) q
   refine ⟨PrimeSpectrum.comap (Pi.evalRingHom (fun j : Fin k => S' j) i) q', ?_⟩
   rw [← PrimeSpectrum.comap_comp_apply]

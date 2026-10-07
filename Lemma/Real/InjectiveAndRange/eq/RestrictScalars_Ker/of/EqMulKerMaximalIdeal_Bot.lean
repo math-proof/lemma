@@ -29,14 +29,14 @@ private lemma main
     rw [hsmall, Ideal.mem_bot] at this
     rw [smul_eq_mul, mul_comm]; exact this
   have hV' : Module.IsTorsionBySet B (↥K) (↑(maximalIdeal B)) := hV
-  letI instK : Module (ResidueField B) ↥K := hV'.module
-  haveI instT : IsScalarTower B (ResidueField B) ↥K := hV'.isScalarTower
-  haveI : Module.Finite B ↥K := Module.Finite.of_fg (IsNoetherian.noetherian K)
-  haveI instF : Module.Finite (ResidueField B) ↥K :=
+  let instK : Module (ResidueField B) ↥K := hV'.module
+  have instT : IsScalarTower B (ResidueField B) ↥K := hV'.isScalarTower
+  have : Module.Finite B ↥K := Module.Finite.of_fg (IsNoetherian.noetherian K)
+  have instF : Module.Finite (ResidueField B) ↥K :=
     Module.Finite.of_restrictScalars_finite B (ResidueField B) ↥K
-  letI instM : Module (ResidueField B)ᵐᵒᵖ ↥K :=
+  let instM : Module (ResidueField B)ᵐᵒᵖ ↥K :=
     Module.compHom ↥K ((RingEquiv.toOpposite (ResidueField B)).symm : (ResidueField B)ᵐᵒᵖ →+* ResidueField B)
-  haveI instC : IsCentralScalar (ResidueField B) ↥K := ⟨fun r x => rfl⟩
+  have instC : IsCentralScalar (ResidueField B) ↥K := ⟨fun r x => rfl⟩
   refine ⟨↥K, inferInstance, instK, instF, inferInstance, instT, instM, instC, K.subtype,
     Subtype.val_injective, ?_⟩
   rw [Submodule.range_subtype, Submodule.restrictScalars_self]

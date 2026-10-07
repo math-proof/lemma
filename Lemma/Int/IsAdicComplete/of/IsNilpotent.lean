@@ -16,11 +16,11 @@ private lemma main
   IsAdicComplete I R := by
 -- proof
   obtain ⟨N, hN⟩ := hI
-  haveI : IsHausdorff I R := ⟨fun x hx => by
+  have : IsHausdorff I R := ⟨fun x hx => by
     have h := hx N
     rw [SModEq.zero, smul_eq_mul, Ideal.mul_top, hN] at h
     exact h⟩
-  haveI : IsPrecomplete I R := ⟨fun {f} hf => ⟨f N, fun n => by
+  have : IsPrecomplete I R := ⟨fun {f} hf => ⟨f N, fun n => by
     rcases le_or_gt n N with hn | hn
     · exact hf hn
     · have hzero : (I ^ n • ⊤ : Ideal R) = ⊥ := by

@@ -5,7 +5,7 @@ import sympy.Basic
 private lemma main
   (n : ℤ)
 -- given
-  (hn : n < 0) :
+  (_hn : n < 0) :
 -- imply
   ⋃ k ∈ Finset.Ico n 0, Set.Ico k (k + 1) = Set.Ico n 0 := by
 -- proof

@@ -27,7 +27,7 @@ private lemma main
       (IsNoetherian.noetherian _) (IsLocalRing.maximalIdeal_le_jacobson _)
     rw [Ideal.smul_eq_mul, ← pow_two]
     exact hcot
-  haveI : IsHausdorff ((IsLocalRing.maximalIdeal R).map f) S := by rw [← heq]; infer_instance
+  have : IsHausdorff ((IsLocalRing.maximalIdeal R).map f) S := by rw [← heq]; infer_instance
   apply surjective_of_mk_map_comp_surjective (I := IsLocalRing.maximalIdeal R) f
   intro y
   obtain ⟨s, rfl⟩ := Ideal.Quotient.mk_surjective y

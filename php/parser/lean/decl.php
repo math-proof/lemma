@@ -191,6 +191,9 @@ class Lean_lemma extends Lean_def
 
 class Lean_let extends LeanSyntax
 {
+    /** parsed from `letI` / `haveI` (instance variant): same tree as `let` / `have`, only the keyword differs */
+    public $inst = false;
+
     public function __construct($arg, $indent, $level, $parent = null)
     {
         parent::__construct([$arg], $indent, $level, $parent);
@@ -204,6 +207,9 @@ class Lean_let extends LeanSyntax
             case 'operator':
             case 'command':
                 return 'let';
+            case 'keyword':
+                // source keyword: `operator`, or its instance variant `letI` / `haveI`
+                return $this->inst ? $this->operator . 'I' : $this->operator;
             case 'sequential_tactic_combinator':
                 $args = &$this->args;
                 for ($index = count($args) - 1; $index >= 0; --$index) {
@@ -291,7 +297,8 @@ class Lean_let extends LeanSyntax
     {
         //cm-def {color: #00f;} 
         //defined in static/codemirror/lib/codemirror.css
-        return "{\\color{#00f}$this->command}\\ " . implode('\ ', array_fill(0, count($this->args), "%s"));
+        $command = $this->command . ($this->inst ? 'I' : '');
+        return "{\\color{#00f}$command}\\ " . implode('\ ', array_fill(0, count($this->args), "%s"));
     }
     public function split(&$syntax = null)
     {
@@ -304,18 +311,31 @@ class Lean_let extends LeanSyntax
             ) {
                 $statements = $assign->split($syntax);
                 $statements[0] = new static($statements[0], $this->indent, $assign->level);
+                $statements[0]->inst = $this->inst;
                 return $statements;
             }
         }
         return [$this];
     }
 
+    /** `let := v` / `have : T := v`: no name before `:=` / `:` */
+    public function anonymous()
+    {
+        $assign = $this->args[0];
+        if (!($assign instanceof LeanAssign))
+            return false;
+        $lhs = $assign->lhs;
+        return $lhs instanceof LeanCaret || $lhs instanceof LeanColon && $lhs->lhs instanceof LeanCaret;
+    }
+
     public function strFormat()
     {
-        $func = $this->operator;
+        $func = $this->keyword;
         $args = [];
         foreach ($this->args as $arg) {
             if ($arg instanceof LeanCaret);
+            elseif ($arg === $this->args[0] && $this->inst && $this->anonymous())
+                $args[] = ''; // `letI := inst`
             elseif ($arg instanceof LeanSequentialTacticCombinator && $arg->newline)
                 $args[] = "\n";
             else
@@ -376,7 +396,7 @@ class Lean_have extends Lean_let
     public function strFormat()
     {
         $sep = $this->sep();
-        return "$this->operator$sep%s";
+        return "$this->keyword$sep%s";
     }
 
 }
