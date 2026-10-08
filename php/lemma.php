@@ -563,7 +563,7 @@ const VUE_STYLES = [
 	'static/codemirror/lib/codemirror.css',
 	'static/codemirror/theme/eclipse.css',
 	'static/codemirror/addon/hint/show-hint.css',
-	'static/unpkg.com/katex@0.16.21/dist/katex.min.css',
+	'node_modules/katex/dist/katex.min.css',
 ];
 
 const VUE_SCRIPTS = [
@@ -578,8 +578,8 @@ const VUE_SCRIPTS = [
 
 const VUE_DEFER_SCRIPTS = [
 	'static/unpkg.com/lz-string@1.5.0/libs/lz-string.js',
-	'static/unpkg.com/katex@0.16.21/dist/katex.min.js',
-	'static/unpkg.com/katex@0.16.21/dist/contrib/auto-render.min.js',
+	'node_modules/katex/dist/katex.min.js',
+	'node_modules/katex/dist/contrib/auto-render.min.js',
 ];
 
 async function upgradeLemmaVue(code) {

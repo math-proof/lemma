@@ -45,13 +45,13 @@ if (!$lemma) {
 <link rel=stylesheet href="static/codemirror/lib/codemirror.css">
 <link rel=stylesheet href="static/codemirror/theme/eclipse.css">
 <link rel=stylesheet href="static/codemirror/addon/hint/show-hint.css">
-<link rel=stylesheet href="static/unpkg.com/katex@0.16.21/dist/katex.min.css">
+<link rel=stylesheet href="node_modules/katex/dist/katex.min.css">
 <body></body>
 <?php
 include_once 'script.php';
 ?>
-<script src="static/unpkg.com/katex@0.16.21/dist/katex.min.js" defer></script>
-<script src="static/unpkg.com/katex@0.16.21/dist/contrib/auto-render.min.js" defer></script>
+<script src="node_modules/katex/dist/katex.min.js" defer></script>
+<script src="node_modules/katex/dist/contrib/auto-render.min.js" defer></script>
 <script type=module>
 createApp('mathlib', {lemma: <?php echo std\encode($lemma);?>});
 </script>
