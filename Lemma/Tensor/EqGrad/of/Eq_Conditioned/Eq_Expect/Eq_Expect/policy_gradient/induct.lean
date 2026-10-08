@@ -116,8 +116,8 @@ private lemma main
       else
         have hP := RealPreimageS.ne.Zero.of.NePn_0.Ne0Real_Preimage (M := M) θ n x y h₅ hy
         have h := Grad.eq.Add_SMul_Sum_SMul.of.Ne0Real_Preimage.GtInftySup.All_Differentiable_Prob.All_Eq_Expect.All_Eq_Expect.EqMeasureCount.EqMeasureCount.In_Ico
-          («s.bvar» := fun _ ↦ y)
-          h₀ hS hA (Q := fun θ => M.Q θ γ) (V := fun θ => M.V θ γ) hQ_expect hV_expect h₃ h₄ hP
+          («s.bvar» := fun _ ↦ y) (r := reward) (s := state) (a := action)
+          h₀ (fun _ ↦ rfl) hS hA (Q := fun θ => M.Q θ γ) (V := fun θ => M.V θ γ) hQ_expect hV_expect h₃ h₄ hP
         have hμAS : ReferenceMeasure.measure (α := A × S) = Measure.count := by
           show (ReferenceMeasure.measure : Measure A).prod (ReferenceMeasure.measure : Measure S) = _
           rw [hA, hS, Count.eq.ProdCountS]
