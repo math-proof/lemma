@@ -219,16 +219,16 @@ function lemma_shell_simplify_latex_for_codecogs(string $latex): string
         '∃', '∀',
         '⟨', '⟩',
     ], [
-        '\\ensuremath{\\mathbb{R}}', '\\ensuremath{\\mathbb{C}}', '\\ensuremath{\\mathbb{N}}', '\\ensuremath{\\mathbb{Z}}',
-        '\\ensuremath{\\alpha}', '\\ensuremath{\\beta}', '\\ensuremath{\\gamma}', '\\ensuremath{\\delta}',
-        '\\ensuremath{\\Delta}', '\\ensuremath{\\omega}', '\\ensuremath{\\pi}',
-        '\\ensuremath{\\exists}', '\\ensuremath{\\forall}',
-        '\\ensuremath{\\langle}', '\\ensuremath{\\rangle}',
-        '\\ensuremath{\\mathbb{R}}', '\\ensuremath{\\mathbb{C}}', '\\ensuremath{\\mathbb{N}}', '\\ensuremath{\\mathbb{Z}}',
-        '\\ensuremath{\\alpha}', '\\ensuremath{\\beta}', '\\ensuremath{\\gamma}', '\\ensuremath{\\delta}',
-        '\\ensuremath{\\Delta}', '\\ensuremath{\\omega}', '\\ensuremath{\\pi}',
-        '\\ensuremath{\\exists}', '\\ensuremath{\\forall}',
-        '\\ensuremath{\\langle}', '\\ensuremath{\\rangle}',
+        '\\mathbb{R}', '\\mathbb{C}', '\\mathbb{N}', '\\mathbb{Z}',
+        '\\alpha', '\\beta', '\\gamma', '\\delta',
+        '\\Delta', '\\omega', '\\pi',
+        '\\exists', '\\forall',
+        '\\langle', '\\rangle',
+        '\\mathbb{R}', '\\mathbb{C}', '\\mathbb{N}', '\\mathbb{Z}',
+        '\\alpha', '\\beta', '\\gamma', '\\delta',
+        '\\Delta', '\\omega', '\\pi',
+        '\\exists', '\\forall',
+        '\\langle', '\\rangle',
     ], $latex);
     $latex = str_replace(['\\lt', '\\gt'], ['<', '>'], $latex);
     // {\left(-2\right)} → {-2} can turn \frac {{-2} β}{d} into \frac {-2} β}{d}.
@@ -280,6 +280,13 @@ function lemma_shell_render_codecogs(string $latex, ?string $lean): bool
     $wrapped = lemma_shell_codecogs_wrapped($latex);
     if ($wrapped === '')
         return false;
+    $prev = null;
+    while ($prev !== $wrapped) {
+        $prev = $wrapped;
+        $wrapped = preg_replace('/\\\\ensuremath\{([^{}]*)\}/', '$1', $wrapped);
+    }
+    $wrapped = str_replace(['\\left.', '\\right.', '\\left', '\\right', '\\displaystyle ', '\\middle|', '\\middle'], ['', '', '', '', '', '|', ''], $wrapped);
+    $wrapped = trim($wrapped, " $\t\n");
     $url = 'https://latex.codecogs.com/png.latex?' . rawurlencode($wrapped);
     if (strlen($url) > 7000)
         return false;
