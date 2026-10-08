@@ -22,7 +22,6 @@ function page_header($title, $error = "", $breadcrumb = array(), $title2 = "") {
 <meta name="robots" content="noindex">
 <title><?php echo $title_page; ?></title>
 <link rel="stylesheet" type="text/css" href="./static/default.css">
-<?php echo script_src("./static/functions.js"); ?>
 <?php echo script_src("static/editing.js"); ?>
 <?php if ($adminer->head()) { ?>
 <link rel="shortcut icon" type="image/x-icon" href="static/favicon.ico">
