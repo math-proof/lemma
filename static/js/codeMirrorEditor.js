@@ -5,7 +5,7 @@ function ensureCodeMirror() {
 		const base = document.baseURI;
 		const paths = [
 			'static/codemirror/lib/codemirror.js',
-			'static/codemirror/mode/lean/lean.js',
+			'static/js/codemirror-lean.js',
 			'static/codemirror/addon/selection/active-line.js',
 			'static/codemirror/addon/hint/show-hint.js',
 			'static/codemirror/addon/edit/matchbrackets.js',

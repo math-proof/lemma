@@ -13,7 +13,7 @@ import {
     token2classname,
 } from './utility.js';
 import { IndentedNode } from '../node.js';
-import { tactics } from '../../../codemirror/mode/lean/tactics.js';
+import { tactics } from '../../codemirror-lean-tactics.js';
 
 /** Abstract Lean AST node; method order follows `scripts/reorder_lean_class.py` preset `lean`. */
 export class Lean extends IndentedNode {
