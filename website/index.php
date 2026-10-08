@@ -168,10 +168,10 @@ switch ($lang) {
 </body>
 </html>
 
-<script	src="../static/unpkg.com/highlight.js/8.8.0/highlight.min.js"></script>
-<script src="../static/unpkg.com/marked@2.1.3/marked.min.js"></script>
+<script	src="../node_modules/highlight.js/lib/highlight.js"></script>
+<script src="../node_modules/marked/marked.min.js"></script>
 <script src="../node_modules/axios/dist/axios.min.js"></script>
-<script src="../static/unpkg.com/qs@6.10.2/dist/qs.js"></script>
+<script src="../node_modules/qs/dist/qs.js"></script>
 <script src="../static/js/std.js"></script>
 <script type=module>
 

@@ -581,16 +581,16 @@ const VUE_STYLES = [
 
 const VUE_SCRIPTS = [
 	'node_modules/axios/dist/axios.min.js',
-	'static/unpkg.com/qs@6.10.2/dist/qs.js',
+	'node_modules/qs/dist/qs.js',
 	'node_modules/clipboard/dist/clipboard.min.js',
 	'node_modules/file-saver/dist/FileSaver.min.js',
-	'static/unpkg.com/vue@3.5.13/dist/vue.global.prod.js',
-	'static/unpkg.com/vue3-sfc-loader@0.9.5/dist/vue3-sfc-loader.js',
+	'node_modules/vue/dist/vue.global.prod.js',
+	'node_modules/vue3-sfc-loader/dist/vue3-sfc-loader.js',
 	'static/js/std.js',
 ];
 
 const VUE_DEFER_SCRIPTS = [
-	'static/unpkg.com/lz-string@1.5.0/libs/lz-string.js',
+	'node_modules/lz-string/libs/lz-string.js',
 	'node_modules/katex/dist/katex.min.js',
 	'node_modules/katex/dist/contrib/auto-render.min.js',
 ];

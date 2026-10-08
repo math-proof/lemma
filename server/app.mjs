@@ -155,6 +155,35 @@ app.use((req, res, next) => {
   return fileSaverFiles(req, res, next);
 });
 
+// qs, vue, vue3-sfc-loader, lz-string, prismjs, highlight.js, marked: npm packages only.
+// Relative page URLs are requested under /lean/node_modules/… as well as /node_modules/….
+function mountNpmPkg(name, unpkgMarker) {
+  const pkgDir = path.join(REPO_ROOT, 'node_modules', name);
+  const files = express.static(pkgDir, {
+    index: false,
+    fallthrough: false,
+    maxAge: process.env.NODE_ENV === 'production' ? '1h' : 0,
+  });
+  app.use('/node_modules/' + name, files);
+  app.use('/lean/node_modules/' + name, files);
+  app.use((req, res, next) => {
+    const at = req.path.indexOf(unpkgMarker);
+    if (at < 0) return next();
+    const rel = req.path.slice(at + unpkgMarker.length);
+    if (!rel || rel.includes('..')) return res.status(400).end();
+    const q = req.url.includes('?') ? req.url.slice(req.url.indexOf('?')) : '';
+    req.url = '/' + rel + q;
+    return files(req, res, next);
+  });
+}
+mountNpmPkg('qs', '/unpkg.com/qs@6.10.2/');
+mountNpmPkg('vue', '/unpkg.com/vue@3.5.13/');
+mountNpmPkg('vue3-sfc-loader', '/unpkg.com/vue3-sfc-loader@0.9.5/');
+mountNpmPkg('lz-string', '/unpkg.com/lz-string@1.5.0/');
+mountNpmPkg('prismjs', '/unpkg.com/prismjs@1.30.0/');
+mountNpmPkg('highlight.js', '/unpkg.com/highlight.js/8.8.0/');
+mountNpmPkg('marked', '/unpkg.com/marked@2.1.3/');
+
 app.get(['/py', '/py/'], (req, res) => res.redirect(302, `http://localhost:8080${req.originalUrl}`));
 
 /** Lemma tree size for `website` home.md `<label id=count>` / `<label id=lines>`. */
