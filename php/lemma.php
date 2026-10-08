@@ -240,7 +240,61 @@ function lemma_shell_simplify_latex_for_codecogs(string $latex): string
     return trim($latex);
 }
 
-/** Render given/imply: insert → lean; else latex → CodeCogs PNG (temporary KaTeX substitute). */
+/** Render given/imply. preview=1 uses a CodeCogs PNG; otherwise KaTeX in the shell. */
+function lemma_shell_is_preview(): bool
+{
+    return (($_GET['preview'] ?? '') === '1');
+}
+
+function lemma_shell_codecogs_wrapped(string $latex): string
+{
+    $wrapped = lemma_shell_simplify_latex_for_codecogs($latex);
+    if ($wrapped === '')
+        return '';
+    if (!str_contains($wrapped, '$')) {
+        if (strlen($wrapped) > 60 || str_contains($wrapped, '=') || str_contains($wrapped, '\left') || str_contains($wrapped, '\lt') || str_contains($wrapped, '\gt'))
+            $wrapped = '\displaystyle ' . $wrapped;
+        else
+            $wrapped = '$' . $wrapped . '$';
+    }
+    return $wrapped;
+}
+
+function lemma_shell_latex_tag(?string $latex, ?string $lean): ?string
+{
+    $tag = null;
+    if ($latex && preg_match(lemma_shell_latex_tag_re(), $latex, $m)) {
+        $tag = $m[1];
+        if (preg_match('/^\$([^$]+)\$$/', $tag, $inner))
+            $tag = $inner[1];
+        else
+            $tag = ltrim($tag);
+    } elseif ($lean && preg_match('/^\(([^:]+)\s*:/', trim($lean), $m)) {
+        $tag = trim($m[1]);
+    }
+    return ($tag !== null && $tag !== '') ? $tag : null;
+}
+
+function lemma_shell_render_codecogs(string $latex, ?string $lean): bool
+{
+    $wrapped = lemma_shell_codecogs_wrapped($latex);
+    if ($wrapped === '')
+        return false;
+    $url = 'https://latex.codecogs.com/png.latex?' . rawurlencode($wrapped);
+    if (strlen($url) > 7000)
+        return false;
+    $tag = lemma_shell_latex_tag($latex, $lean);
+    echo '<div class="latex-display"><span class="latex-body"><img class="latex-formula" src="', lemma_shell_h($url),
+        '" alt="', lemma_shell_h($lean ?? ''), '" loading="lazy" decoding="async"',
+        ' onerror="this.closest(\'.latex-display\').classList.add(\'latex-formula-failed\')">',
+        '<pre class="lean-line lean-fallback Consolas">',
+        lemma_shell_h($lean ?? ''), '</pre></span>';
+    if ($tag !== null)
+        echo '<span class="latex-tag">', lemma_shell_h($tag), '</span>';
+    echo "</div>\n";
+    return true;
+}
+
 function lemma_shell_render_given_or_imply(?array $pair): void
 {
     if (!is_array($pair))
@@ -252,33 +306,20 @@ function lemma_shell_render_given_or_imply(?array $pair): void
         return;
     }
     if ($latex !== null && $latex !== '') {
-        $wrapped = lemma_shell_simplify_latex_for_codecogs($latex);
+        if (lemma_shell_is_preview() && lemma_shell_render_codecogs($latex, $lean))
+            return;
+        $wrapped = lemma_shell_codecogs_wrapped($latex);
         if ($wrapped !== '') {
-            if (!str_contains($wrapped, '$')) {
-                if (strlen($wrapped) > 60 || str_contains($wrapped, '=') || str_contains($wrapped, '\\left') || str_contains($wrapped, '\\lt') || str_contains($wrapped, '\\gt'))
-                    $wrapped = '\\displaystyle ' . $wrapped;
-                else
-                    $wrapped = '$' . $wrapped . '$';
-            }
             $math = $wrapped;
             if (preg_match('/^\$(.*)\$$/s', $math, $mm) && !str_contains($mm[1], '$'))
                 $math = $mm[1];
-            if (str_starts_with($math, '\\displaystyle '))
-                $math = substr($math, strlen('\\displaystyle '));
-            $tag = null;
-            if (preg_match(lemma_shell_latex_tag_re(), $latex, $m)) {
-                $tag = $m[1];
-                if (preg_match('/^\$([^$]+)\$$/', $tag, $inner))
-                    $tag = $inner[1];
-                else
-                    $tag = ltrim($tag);
-            } elseif ($lean && preg_match('/^\(([^:]+)\s*:/', trim($lean), $m)) {
-                $tag = trim($m[1]);
-            }
+            if (str_starts_with($math, '\displaystyle '))
+                $math = substr($math, strlen('\displaystyle '));
+            $tag = lemma_shell_latex_tag($latex, $lean);
             echo '<div class="latex-display"><span class="latex-body"><span class="latex-math">', lemma_shell_h($math),
                 '</span><pre class="lean-line lean-fallback Consolas">',
                 lemma_shell_h($lean ?? ''), '</pre></span>';
-            if ($tag !== null && $tag !== '')
+            if ($tag !== null)
                 echo '<span class="latex-tag">', lemma_shell_h($tag), '</span>';
             echo "</div>\n";
             return;
@@ -374,8 +415,10 @@ function lemma_shell_render_lemma(array $lemma, string $module): void
                     continue;
                 lemma_shell_render_lean_line(lemma_shell_unindent_decl($line['lean'] ?? null), true);
                 $proof_latex = $line['latex'] ?? null;
-                if ($proof_latex !== null && $proof_latex !== '')
-                    echo '<p class="latex-block">', lemma_shell_h($proof_latex), "</p>\n";
+                if ($proof_latex !== null && $proof_latex !== '') {
+                    if (!(lemma_shell_is_preview() && lemma_shell_render_codecogs($proof_latex, $line['lean'] ?? null)))
+                        echo '<p class="latex-block">', lemma_shell_h($proof_latex), "</p>\n";
+                }
             }
         }
     }
