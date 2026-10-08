@@ -583,7 +583,7 @@ const VUE_SCRIPTS = [
 	'node_modules/axios/dist/axios.min.js',
 	'static/unpkg.com/qs@6.10.2/dist/qs.js',
 	'node_modules/clipboard/dist/clipboard.min.js',
-	'static/unpkg.com/file-saver@2.0.5/dist/FileSaver.min.js',
+	'node_modules/file-saver/dist/FileSaver.min.js',
 	'static/unpkg.com/vue@3.5.13/dist/vue.global.prod.js',
 	'static/unpkg.com/vue3-sfc-loader@0.9.5/dist/vue3-sfc-loader.js',
 	'static/js/std.js',

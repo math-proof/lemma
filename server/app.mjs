@@ -135,6 +135,26 @@ app.use((req, res, next) => {
   return clipboardFiles(req, res, next);
 });
 
+// file-saver is installed from npm (node_modules/file-saver). This package only;
+// leftover `/unpkg.com/file-saver@2.0.5/` requests still resolve.
+const FILE_SAVER_PKG = path.join(REPO_ROOT, 'node_modules', 'file-saver');
+const fileSaverFiles = express.static(FILE_SAVER_PKG, {
+  index: false,
+  fallthrough: false,
+  maxAge: process.env.NODE_ENV === 'production' ? '1h' : 0,
+});
+app.use('/node_modules/file-saver', fileSaverFiles);
+app.use((req, res, next) => {
+  const marker = '/unpkg.com/file-saver@2.0.5/';
+  const at = req.path.indexOf(marker);
+  if (at < 0) return next();
+  const rel = req.path.slice(at + marker.length);
+  if (!rel || rel.includes('..')) return res.status(400).end();
+  const q = req.url.includes('?') ? req.url.slice(req.url.indexOf('?')) : '';
+  req.url = '/' + rel + q;
+  return fileSaverFiles(req, res, next);
+});
+
 app.get(['/py', '/py/'], (req, res) => res.redirect(302, `http://localhost:8080${req.originalUrl}`));
 
 /** Lemma tree size for `website` home.md `<label id=count>` / `<label id=lines>`. */

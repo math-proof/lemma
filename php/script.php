@@ -4,7 +4,7 @@
 <script src="node_modules/axios/dist/axios.min.js" defer></script>
 <script src="static/unpkg.com/qs@6.10.2/dist/qs.js" defer></script>
 <script src="node_modules/clipboard/dist/clipboard.min.js" defer></script>
-<script src="static/unpkg.com/file-saver@2.0.5/dist/FileSaver.min.js" defer></script>
+<script src="node_modules/file-saver/dist/FileSaver.min.js" defer></script>
 <script src="static/unpkg.com/vue@3.5.13/dist/vue.global.prod.js" defer></script>
 <script src="static/unpkg.com/vue3-sfc-loader@0.9.5/dist/vue3-sfc-loader.js" defer></script>
 
