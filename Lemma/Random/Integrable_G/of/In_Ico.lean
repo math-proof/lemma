@@ -22,7 +22,7 @@ private lemma main
 -- proof
   have hm : AEStronglyMeasurable (G γ t) (M θ) := by
     refine aestronglyMeasurable_of_tendsto_ae atTop
-      (f := fun n ω => ∑ k ∈ Finset.range n, γ ^ k * r (t + k) ω) (fun n => ?_) ?_
+      (f := fun n ω => ∑ k ∈ Finset.range n, γ ^ k * reward (t + k) ω) (fun n => ?_) ?_
     · exact (Finset.measurable_fun_sum _ fun k _ =>
         (Random.Measurable_R (t + k)).const_mul (γ ^ k)).aestronglyMeasurable
     · exact (Random.AeHasSumAndNormG.le.MulSub1Abs_R.of.In_Ico (M := M) θ h₀ t).mono fun ω h => h.1.tendsto_sum_nat

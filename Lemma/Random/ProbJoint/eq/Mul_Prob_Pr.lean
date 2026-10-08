@@ -19,7 +19,7 @@ private lemma main
   (x : S)
   (u : A) :
 -- imply
-  (M θ).real (s t ⁻¹' {x} ∩ a t ⁻¹' {u}) = (M θ).real (s t ⁻¹' {x}) * M.Pr θ x u := by
+  (M θ).real (state t ⁻¹' {x} ∩ action t ⁻¹' {u}) = (M θ).real (state t ⁻¹' {x}) * M.Pr θ x u := by
 -- proof
   classical
   exact RealInterPreimageS_PreimageA.eq.MulRealPreimageSProb (M := M) θ t x u

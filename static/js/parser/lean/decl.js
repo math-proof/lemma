@@ -310,6 +310,45 @@ export class Lean_let extends LeanSyntax {
         return super.insert_newline(caret, newline_count, indent, next);
     }
 
+    /**
+     * Term-mode `let x := v; body` (e.g. a binder type `(h : let r := f; P r)`, or the rhs of `:=`):
+     * the `;` ends the value and starts the body, which becomes `args[1]` (`this.semicolon` is set).
+     * Without this, the `;` bubbles up to the enclosing `( … )` and splits the binder into
+     * `LeanArgsSemicolonSeparated`, losing the hypothesis.
+     * In tactic position (`LeanStatements`, `by`, `·` blocks…) the `;` still separates tactics.
+     */
+    insert_semicolon(caret) {
+        if (caret === this.args[0] && this.args.length === 1 && this.is_term()) {
+            const c = new L.LeanCaret(this.indent, caret.level);
+            this.semicolon = true;
+            this.push(c);
+            return c;
+        }
+        return super.insert_semicolon(caret);
+    }
+
+    /** `(h : let r := f; P r)` is a hypothesis iff its body `P r` is a proposition. */
+    isProp(vars) {
+        if (this.semicolon && this.args.length === 2) return this.args[1].isProp(vars);
+        return super.isProp(vars);
+    }
+
+    /** Whether this `let` sits in term position, where `;` introduces the body rather than a new tactic. */
+    is_term() {
+        const parent = this.parent;
+        if (parent instanceof L.LeanColon || parent instanceof L.LeanAssign) return parent.rhs === this;
+        if (parent instanceof L.LeanParenthesis) return true;
+        if (parent instanceof Lean_let) return parent.semicolon === true && parent.args[1] === this;
+        // `(h :⏎    let r := f; P r)`: the newline after `:` wraps the type in `LeanStatements`
+        // (the lemma's own `:⏎ let …` conclusion is not affected: its colon is not inside `( … )` / `have`)
+        if (parent instanceof L.LeanStatements) {
+            const colon = parent.parent;
+            return colon instanceof L.LeanColon && colon.rhs === parent &&
+                (colon.parent instanceof L.LeanParenthesis || colon.parent instanceof Lean_let);
+        }
+        return false;
+    }
+
     insert_sequential_tactic_combinator(caret, prevToken, nextToken) {
         const last = this.args[this.args.length - 1];
         if (caret === last) {
@@ -335,6 +374,9 @@ export class Lean_let extends LeanSyntax {
 
     is_indented() {
         const parent = this.parent;
+        // term-mode `(h : let r := f; P r)`: inline, no leading indentation
+        if (parent instanceof L.LeanColon || parent instanceof L.LeanParenthesis || parent instanceof Lean_let)
+            if (this.is_term()) return false;
         if (parent instanceof L.LeanSequentialTacticCombinator) return this.indent > 0;
         if (parent instanceof L.LeanTacticBlock) return this.indent > parent.indent;
         return !(parent instanceof L.LeanArgsSemicolonSeparated);
@@ -347,7 +389,10 @@ export class Lean_let extends LeanSyntax {
     }
 
     latexFormat() {
-        return `{\\color{#00f}${this.command}${this.inst ? 'I' : ''}}\\ ` + Array(this.args.length).fill('%s').join('\\ ');
+        const head = `{\\color{#00f}${this.command}${this.inst ? 'I' : ''}}\\ `;
+        // term-mode `let x := v; body`
+        if (this.semicolon && this.args.length === 2) return head + '%s;\\ %s';
+        return head + Array(this.args.length).fill('%s').join('\\ ');
     }
 
     get operator() {
@@ -373,7 +418,9 @@ export class Lean_let extends LeanSyntax {
     }
 
     get stack_priority() {
-        return 7;
+        // term-mode `let x := v; body`: the body extends as far as possible, but a trailing `:=` / `where`
+        // (`have h : let x := v; P x := proof`) belongs to the enclosing declaration
+        return this.semicolon ? 18 : 7;
     }
 
     /** `let := v` / `have : T := v`: no name before `:=` / `:` */
@@ -389,6 +436,7 @@ export class Lean_let extends LeanSyntax {
         const parts = [];
         for (const arg of this.args) {
             if (arg instanceof L.LeanCaret);
+            else if (this.semicolon && arg === this.args[1]) parts.push('; '); // term-mode `let x := v; body`
             else if (arg === this.args[0] && this.inst && this.anonymous()) parts.push(''); // `letI := inst`
             else if (
                 arg instanceof L.LeanSequentialTacticCombinator &&
@@ -449,6 +497,7 @@ export class Lean_have extends Lean_let {
             const arg = this.args[i];
             if (i === 0) parts.push(this.sep());
             else if (arg instanceof L.LeanCaret);
+            else if (this.semicolon && i === 1) parts.push('; '); // term-mode `have x := v; body`
             else if (
                 arg instanceof L.LeanSequentialTacticCombinator &&
                 (arg.newlineBehind || arg.newlineBefore)

@@ -23,14 +23,14 @@ private lemma main
   (t : ℕ)
   (x : S)
   (θ : Θ)
-  (h₃ : (M θ).real (s t ⁻¹' {x}) ≠ 0) :
+  (h₃ : (M θ).real (state t ⁻¹' {x}) ≠ 0) :
 -- imply
   (fun θ' => M.V θ' γ t x) =ᶠ[𝓝 θ] fun θ' => M.Vc θ' γ x := by
 -- proof
   obtain ⟨Cp, hCp⟩ := id h₁
   have hC : ∀ θ x u, ‖fderiv ℝ (fun θ => M.pol.prob θ x u) θ‖ ≤ Cp := fun θ x u => by
     simpa [gradient, LinearIsometryEquiv.norm_map] using hCp ⟨(θ, x, u), rfl⟩
-  have hc : ContinuousAt (fun θ' => (M θ').real (s t ⁻¹' {x})) θ :=
+  have hc : ContinuousAt (fun θ' => (M θ').real (state t ⁻¹' {x})) θ :=
     (Random.Differentiable_RealPreimageS.of.GtInftySup.All_Differentiable_Prob (M := M) h₀ h₁ t x θ).continuousAt
   filter_upwards [hc.eventually_ne h₃] with θ' h
   exact Random.V.eq.Vc.of.Ne0Real_Preimage.In_Ico (M := M) θ' h₂ t x h

@@ -20,7 +20,7 @@ private lemma main
   (u : A)
   (c : ℝ) :
 -- imply
-  Integrable (fun ω => (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) * c) (M θ) := by
+  Integrable (fun ω => (if state t ω = x ∧ action t ω = u then (1:ℝ) else 0) * c) (M θ) := by
 -- proof
   refine Integrable.of_bound (C := ‖c‖) ?_ (Filter.Eventually.of_forall fun ω => ?_)
   · exact (((StronglyMeasurable.discrete (fun p : S × A => if p.1 = x ∧ p.2 = u then (1:ℝ) else 0)).comp_measurable

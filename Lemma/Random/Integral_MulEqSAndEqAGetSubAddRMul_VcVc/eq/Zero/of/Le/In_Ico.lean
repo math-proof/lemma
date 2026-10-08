@@ -36,8 +36,8 @@ private lemma main
   (x : S)
   (u : A) :
 -- imply
-  ∫ ω, (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) *
-    (r (n + 1) ω + γ * M.Vc θ γ (s (n + 1 + 1) ω) - M.Vc θ γ (s (n + 1) ω)) ∂(M θ) = 0 := by
+  ∫ ω, (if state t ω = x ∧ action t ω = u then (1:ℝ) else 0) *
+    (reward (n + 1) ω + γ * M.Vc θ γ (state (n + 1 + 1) ω) - M.Vc θ γ (state (n + 1) ω)) ∂(M θ) = 0 := by
 -- proof
   let Gh : (Π _ : Iic n, ℝ × S × A) → ℝ := fun h =>
     if (h ⟨t, mem_Iic.2 h₁⟩).2.1 = x ∧ (h ⟨t, mem_Iic.2 h₁⟩).2.2 = u then (1:ℝ) else 0
@@ -47,7 +47,7 @@ private lemma main
         (measurable_snd.snd.comp (measurable_pi_apply _)))
   have hCG : ∀ h, ‖Gh h‖ ≤ 1 := fun h => by dsimp only [Gh]; split_ifs <;> simp
   have hGω : ∀ ω : ℕ → ℝ × S × A, Gh (Preorder.frestrictLe n ω) =
-      (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) := fun ω => rfl
+      (if state t ω = x ∧ action t ω = u then (1:ℝ) else 0) := fun ω => rfl
   let f : ℝ × S × A → ℝ := fun w => M.Vc θ γ w.2.1
   have hf : StronglyMeasurable f := (StronglyMeasurable.discrete (M.Vc θ γ)).comp_measurable measurable_snd.fst
   have hC : ∀ w, ‖f w‖ ≤ ∑ y', ‖M.Vc θ γ y'‖ := fun w => Norm.le.Sum_Norm (M.Vc θ γ) w.2.1
@@ -64,8 +64,8 @@ private lemma main
   have j2 := int_hist_mul M θ n n hG hCG k2.1 k2.2
   have j3 := int_hist_mul M θ n n hG hCG k3.1 k3.2
   have hae : ∀ᵐ ω ∂(M θ),
-      (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) *
-        (r (n + 1) ω + γ * M.Vc θ γ (s (n + 1 + 1) ω) - M.Vc θ γ (s (n + 1) ω)) =
+      (if state t ω = x ∧ action t ω = u then (1:ℝ) else 0) *
+        (reward (n + 1) ω + γ * M.Vc θ γ (state (n + 1 + 1) ω) - M.Vc θ γ (state (n + 1) ω)) =
       Gh (Preorder.frestrictLe n ω) * M.rc (ω (n + 1)) +
         γ * (Gh (Preorder.frestrictLe n ω) * f (ω (n + 2))) -
         Gh (Preorder.frestrictLe n ω) * f (ω (n + 1)) := by

@@ -23,7 +23,7 @@ private lemma main
   (θ : Θ) :
 -- imply
   BddAbove ((fun p : ℕ × S => ‖fderiv ℝ (fun θ => M.V θ γ p.1 p.2) θ‖) ''
-    {p | (M θ).real (s p.1 ⁻¹' {p.2}) ≠ 0}) := by
+    {p | (M θ).real (state p.1 ⁻¹' {p.2}) ≠ 0}) := by
 -- proof
   obtain ⟨Cp, hCp⟩ := id h₁
   have hC : ∀ θ x u, ‖fderiv ℝ (fun θ => M.pol.prob θ x u) θ‖ ≤ Cp := fun θ x u => by

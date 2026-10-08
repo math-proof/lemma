@@ -19,7 +19,7 @@ private lemma main
   (t : ℕ)
   (x : S)
   (hγ : γ ∈ Set.Ico 0 1)
-  (hP : (M θ).real (s t ⁻¹' {x}) ≠ 0) :
+  (hP : (M θ).real (state t ⁻¹' {x}) ≠ 0) :
 -- imply
   M.V θ γ t x = ∑' k, γ ^ k * M.W θ M.rc k x := by
 -- proof

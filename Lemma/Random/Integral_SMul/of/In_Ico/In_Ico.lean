@@ -26,17 +26,17 @@ private lemma main
   (t : ℕ)
   (ψ : S → A → E) :
 -- imply
-  ∫ ω, (∑' k, c ^ k * (r (t + k) ω + γ * M.Vc θ γ (s (t + k + 1) ω) -
-    M.Vc θ γ (s (t + k) ω))) • ψ (s t ω) (a t ω) ∂(M θ) =
-    ∫ ω, (r t ω + γ * M.Vc θ γ (s (t + 1) ω) - M.Vc θ γ (s t ω)) • ψ (s t ω) (a t ω)
+  ∫ ω, (∑' k, c ^ k * (reward (t + k) ω + γ * M.Vc θ γ (state (t + k + 1) ω) -
+    M.Vc θ γ (state (t + k) ω))) • ψ (state t ω) (action t ω) ∂(M θ) =
+    ∫ ω, (reward t ω + γ * M.Vc θ γ (state (t + 1) ω) - M.Vc θ γ (state t ω)) • ψ (state t ω) (action t ω)
     ∂(M θ) := by
 -- proof
   classical
   let F : ℕ → (ℕ → ℝ × S × A) → E := fun k ω =>
-    (c ^ k * (r (t + k) ω + γ * M.Vc θ γ (s (t + k + 1) ω) - M.Vc θ γ (s (t + k) ω))) •
-      ψ (s t ω) (a t ω)
-  have hF : ∀ k ω, F k ω = c ^ k • ((r (t + k) ω + γ * M.Vc θ γ (s (t + k + 1) ω) -
-      M.Vc θ γ (s (t + k) ω)) • ψ (s t ω) (a t ω)) := fun k ω => by
+    (c ^ k * (reward (t + k) ω + γ * M.Vc θ γ (state (t + k + 1) ω) - M.Vc θ γ (state (t + k) ω))) •
+      ψ (state t ω) (action t ω)
+  have hF : ∀ k ω, F k ω = c ^ k • ((reward (t + k) ω + γ * M.Vc θ γ (state (t + k + 1) ω) -
+      M.Vc θ γ (state (t + k) ω)) • ψ (state t ω) (action t ω)) := fun k ω => by
     simp only [F, mul_smul]
   have hFi : ∀ k, Integrable (F k) (M θ) := fun k => by
     have := (Random.Integrable_SMulSubAddRMul_VcVc.of.In_Ico (M := M) θ h₀ t (t + k) ψ).smul (c ^ k)
@@ -47,7 +47,7 @@ private lemma main
     rw [hF, norm_smul, norm_smul, norm_pow, Real.norm_of_nonneg h₁.1, hΨ]
     refine mul_le_mul_of_nonneg_left ?_ (pow_nonneg h₁.1 k)
     exact mul_le_mul (h _) (Finset.single_le_sum (f := fun p : S × A => ‖ψ p.1 p.2‖)
-      (fun _ _ => norm_nonneg _) (Finset.mem_univ (s t ω, a t ω))) (norm_nonneg _)
+      (fun _ _ => norm_nonneg _) (Finset.mem_univ (state t ω, action t ω))) (norm_nonneg _)
       ((norm_nonneg _).trans (h 0))
   have hsum : Summable (fun k => ∫ ω, ‖F k ω‖ ∂(M θ)) := by
     refine Summable.of_nonneg_of_le (fun k => integral_nonneg fun _ => norm_nonneg _) (fun k => ?_)
@@ -62,16 +62,16 @@ private lemma main
     simp_rw [hF]
     rw [integral_smul]
     have := Random.Integral_SMul.eq.Zero.of.Le.In_Ico (M := M) θ h₀ t (t + k') (Nat.le_add_right t k') ψ
-    rw [show (fun ω => (r (t + k'.succ) ω + γ * M.Vc θ γ (s (t + k'.succ + 1) ω) -
-        M.Vc θ γ (s (t + k'.succ) ω)) • ψ (s t ω) (a t ω)) = fun ω => (r (t + k' + 1) ω +
-        γ * M.Vc θ γ (s (t + k' + 1 + 1) ω) - M.Vc θ γ (s (t + k' + 1) ω)) • ψ (s t ω) (a t ω)
+    rw [show (fun ω => (reward (t + k'.succ) ω + γ * M.Vc θ γ (state (t + k'.succ + 1) ω) -
+        M.Vc θ γ (state (t + k'.succ) ω)) • ψ (state t ω) (action t ω)) = fun ω => (reward (t + k' + 1) ω +
+        γ * M.Vc θ γ (state (t + k' + 1 + 1) ω) - M.Vc θ γ (state (t + k' + 1) ω)) • ψ (state t ω) (action t ω)
         from rfl, this, smul_zero]
   have h0 : ∑' k, ∫ ω, F k ω ∂(M θ) = ∫ ω, F 0 ω ∂(M θ) := tsum_eq_single 0 hzero
-  have hae : ∀ᵐ ω ∂(M θ), (∑' k, c ^ k * (r (t + k) ω + γ * M.Vc θ γ (s (t + k + 1) ω) -
-        M.Vc θ γ (s (t + k) ω))) • ψ (s t ω) (a t ω) = ∑' k, F k ω := by
+  have hae : ∀ᵐ ω ∂(M θ), (∑' k, c ^ k * (reward (t + k) ω + γ * M.Vc θ γ (state (t + k + 1) ω) -
+        M.Vc θ γ (state (t + k) ω))) • ψ (state t ω) (action t ω) = ∑' k, F k ω := by
     filter_upwards [Random.AeNormSub.le.DeltaBound.of.In_Ico (M := M) θ h₀] with ω h
-    have hs : Summable (fun k => c ^ k * (r (t + k) ω + γ * M.Vc θ γ (s (t + k + 1) ω) -
-        M.Vc θ γ (s (t + k) ω))) := by
+    have hs : Summable (fun k => c ^ k * (reward (t + k) ω + γ * M.Vc θ γ (state (t + k + 1) ω) -
+        M.Vc θ γ (state (t + k) ω))) := by
       refine Summable.of_norm_bounded ((summable_geometric_of_lt_one h₁.1 h₁.2).mul_right
         (M.deltaBound γ)) fun k => ?_
       rw [norm_mul, norm_pow, Real.norm_of_nonneg h₁.1]

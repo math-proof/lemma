@@ -26,20 +26,20 @@ private lemma main
   (h₁ : t ≤ n)
   (ψ : S → A → E) :
 -- imply
-  ∫ ω, (r (n + 1) ω + γ * M.Vc θ γ (s (n + 1 + 1) ω) - M.Vc θ γ (s (n + 1) ω)) •
-    ψ (s t ω) (a t ω) ∂(M θ) = 0 := by
+  ∫ ω, (reward (n + 1) ω + γ * M.Vc θ γ (state (n + 1 + 1) ω) - M.Vc θ γ (state (n + 1) ω)) •
+    ψ (state t ω) (action t ω) ∂(M θ) = 0 := by
 -- proof
-  have hI : ∀ x u, Integrable (fun ω => (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) *
-      (r (n + 1) ω + γ * M.Vc θ γ (s (n + 1 + 1) ω) - M.Vc θ γ (s (n + 1) ω))) (M θ) := by
+  have hI : ∀ x u, Integrable (fun ω => (if state t ω = x ∧ action t ω = u then (1:ℝ) else 0) *
+      (reward (n + 1) ω + γ * M.Vc θ γ (state (n + 1 + 1) ω) - M.Vc θ γ (state (n + 1) ω))) (M θ) := by
     intro x u
     refine (Random.Integrable_SMulSubAddRMul_VcVc.of.In_Ico (M := M) θ h₀ t (n + 1)
       (fun x' u' => if x' = x ∧ u' = u then (1:ℝ) else 0)).congr
       (Filter.Eventually.of_forall fun ω => ?_)
     simp only [smul_eq_mul]
     ring
-  have e : (fun ω => (r (n + 1) ω + γ * M.Vc θ γ (s (n + 1 + 1) ω) - M.Vc θ γ (s (n + 1) ω)) •
-      ψ (s t ω) (a t ω)) = fun ω => ∑ x, ∑ u, ((if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) *
-        (r (n + 1) ω + γ * M.Vc θ γ (s (n + 1 + 1) ω) - M.Vc θ γ (s (n + 1) ω))) • ψ x u :=
+  have e : (fun ω => (reward (n + 1) ω + γ * M.Vc θ γ (state (n + 1 + 1) ω) - M.Vc θ γ (state (n + 1) ω)) •
+      ψ (state t ω) (action t ω)) = fun ω => ∑ x, ∑ u, ((if state t ω = x ∧ action t ω = u then (1:ℝ) else 0) *
+        (reward (n + 1) ω + γ * M.Vc θ γ (state (n + 1 + 1) ω) - M.Vc θ γ (state (n + 1) ω))) • ψ x u :=
     funext fun ω => Real.SMul.eq.Sum_Sum_SMul t ω _ ψ
   rw [e, integral_finsetSum _ fun x _ => integrable_finsetSum _ fun u _ => (hI x u).smul_const _]
   refine Finset.sum_eq_zero fun x _ => ?_

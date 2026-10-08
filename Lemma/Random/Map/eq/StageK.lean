@@ -17,9 +17,9 @@ private lemma main
   (θ : Θ)
   (t : ℕ) :
 -- imply
-  (M θ).map (fun ω => ω t) = M.stageK θ ∘ₘ (M θ).map (s t) := by
+  (M θ).map (fun ω => ω t) = M.stageK θ ∘ₘ (M θ).map (state t) := by
 -- proof
-  have h₀ : (M θ).map (s t) = ((M θ).map (fun ω => ω t)).map (fun z => z.2.1) := by
+  have h₀ : (M θ).map (state t) = ((M θ).map (fun ω => ω t)).map (fun z => z.2.1) := by
     rw [Measure.map_map measurable_snd.fst (measurable_pi_apply t)]; rfl
   rw [h₀]
   cases t with

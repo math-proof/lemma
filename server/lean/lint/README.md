@@ -37,9 +37,9 @@ Two passes:
 
 | file | rules |
 |---|---|
-| `headerRules.mjs` | `open-section`, `open-duplicate`, `open-unused` (off by default), `open-prefix`, `decl-keyword-dir` (text fallback), `attr-docstring`, `date-*` |
+| `headerRules.mjs` | `open-section`, `open-duplicate`, `open-prefix`, `decl-keyword-dir` (text fallback), `attr-docstring`, `date-*` |
 | `signatureRules.mjs` | `section-imply`, `section-proof`, `binder-order`, `binder-dep-inst`, `binder-auto-bound`, `default-arg-given`, `given-prop-first`, `given-prop-consecutive`, `binder-combine` |
-| `proofRules.mjs` | `indent-odd`, `indent-deep`, `proof-binop-newline`, `bullet-newline`, `tactic-rcases`, `tactic-by-cases`, `tactic-haveI`, `tactic-letI`, `have-inline-once`, `by-calc`, `calc-start-underscore`, `calc-in-brackets`, `paren-by-multiline`, `paren-by-semicolon`, `from-by`, `by-exact`, `hole-question`, `binder-underscore-name` |
+| `proofRules.mjs` | `indent-odd`, `indent-deep`, `proof-binop-newline`, `bullet-newline`, `tactic-rcases`, `tactic-by-cases`, `tactic-haveI`, `tactic-letI`, `have-inline-once`, `by-calc`, `calc-start-underscore`, `calc-in-brackets`, `paren-by-multiline`, `paren-by-semicolon`, `from-by`, `by-exact`, `term-mode-exact`, `hole-question`, `binder-underscore-name` |
 | `attrRules.mjs` | `attr-mp`, `attr-comm` (read the cited lemma's `@[…]` from `Lemma/…`) |
 | `astRules.mjs` | `have-inline-once`, `given-prop-first`, `given-prop-consecutive`, `tactic-haveI`, `tactic-letI`, `decl-keyword-dir` (text versions above are their fallbacks), `calc-after-assign` |
 
@@ -62,8 +62,15 @@ from AGENTS.md since the warning quotes it). `sympy/` files are never rendered o
 outside `Lemma/`, the web `echo.php` route maps a module to `Lemma/<module>.lean`), so "never put a `lemma` in
 `sympy/`" stays in AGENTS.md.
 
+`term-mode-exact` (text scan, lemmas only): the whole proof is a single `exact e` — `… := by exact e`, or `… := by` /
+`-- proof` / `  exact e` (blank / comment lines in between; `e` may continue on deeper lines). Not when another tactic
+follows at the `exact` column, with a top-level `;` / `<;>`, a `·` / `<;>` continuation line, or `exact?` / `exacts`.
+The warning asks for term mode, `… :=` / `-- proof` / `  e` (as in `Lemma/Random/Measurable_R.lean`). Not an AGENTS.md
+rule (no quote). It takes precedence over AGENTS.md's "prefer `apply` instead of `exact`": inside such a proof
+`lintLean` drops the `apply` hints (`have-inline-once`, `hole-question` in an `exact`) and a `by-exact` at the same `by`.
+
 `RULES` in `index.mjs` maps every id to the quoted AGENTS.md rule; `DISABLED` lists rules that are off by default
-(`lintLean(src, { rules: ['open-unused'] })` still runs them).
+(currently none; `lintLean(src, { rules: [id] })` still runs a disabled rule).
 
 Offline: `lintLean(source, { file, root, sections, today, isNew, ast })` (`ast: false` forces the text fallbacks); `lintLeanFile(source, abs)` derives `root` / `file`
 from the path and `isNew` from a read-only `git status` (for `date-created-today`).

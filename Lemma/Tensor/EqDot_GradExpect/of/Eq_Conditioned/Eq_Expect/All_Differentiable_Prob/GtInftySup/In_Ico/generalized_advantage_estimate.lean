@@ -45,39 +45,39 @@ private lemma main
   (h₀ : γ ∈ Set.Ico 0 1)
   (hS : (ReferenceMeasure.measure : Measure S) = Measure.count)
   (hA : (ReferenceMeasure.measure : Measure A) = Measure.count)
-  (h₁ : ∀ θ t x, ((M θ) (s t ⁻¹' {x}) ≠ 0) →
-    V θ t x = 𝔼[r : M θ](∑' k, γ ^ k * r (t + k) | s t = x))
+  (h₁ : ∀ θ t x, ((M θ) (state t ⁻¹' {x}) ≠ 0) →
+    V θ t x = 𝔼[reward : M θ](∑' k, γ ^ k * reward (t + k) | state t = x))
   (h₂ : ∀ x u, Differentiable ℝ (fun θ => M.pol.prob θ x u))
   (h₃ : sup[θ, x, u] ‖∇[θ] M.pol.prob θ x u‖ < ∞)
   (h₄ : ℓ ∈ Set.Ico 0 1) :
 -- imply
-  have : ∀ θ t, SinglePSpace (M θ) (JointRandomSymbol (a t) (s t)) := fun _ t =>
+  have : ∀ θ t, SinglePSpace (M θ) (JointRandomSymbol (action t) (state t)) := fun _ t =>
     SinglePSpace.of.EqMeasureCount.Measurable ((Random.Measurable_A t).prodMk (Random.Measurable_S t)) (by
       show (ReferenceMeasure.measure : Measure A).prod (ReferenceMeasure.measure : Measure S) = _
       rw [hA, hS, Measure.Count.eq.ProdCountS])
-  have hs : ∀ t, PSpace (M θ) (s (S := S) (A := A) t) := fun t =>
+  have hs : ∀ t, PSpace (M θ) (state (S := S) (A := A) t) := fun t =>
     ⟨(Random.Measurable_S t).aemeasurable⟩
-  have ha : ∀ t, PSpace (M θ) (a (S := S) (A := A) t) := fun t =>
+  have ha : ∀ t, PSpace (M θ) (action (S := S) (A := A) t) := fun t =>
     ⟨(Random.Measurable_A t).aemeasurable⟩
-  have hr : ∀ t, PSpace (M θ) (r (S := S) (A := A) t) := fun t =>
+  have hr : ∀ t, PSpace (M θ) (reward (S := S) (A := A) t) := fun t =>
     ⟨(Random.Measurable_R t).aemeasurable⟩
-  have : PSpace (M θ) (AsPathRV.path (s (S := S) (A := A))) :=
+  have : PSpace (M θ) (AsPathRV.path (state (S := S) (A := A))) :=
     PSpace.of_process_path hs
-  have : PSpace (M θ) (AsPathRV.path (a (S := S) (A := A))) :=
+  have : PSpace (M θ) (AsPathRV.path (action (S := S) (A := A))) :=
     PSpace.of_process_path ha
-  have : PSpace (M θ) (AsPathRV.path (r (S := S) (A := A))) :=
+  have : PSpace (M θ) (AsPathRV.path (reward (S := S) (A := A))) :=
     PSpace.of_process_path hr
   let : MeasurableSpace Θ := borel Θ
   have : BorelSpace Θ := ⟨rfl⟩
   ∇[θ] (
-    have : PSpace (M θ) (AsPathRV.path (r (S := S) (A := A))) :=
+    have : PSpace (M θ) (AsPathRV.path (reward (S := S) (A := A))) :=
       PSpace.of_process_path (fun t => ⟨(Random.Measurable_R t).aemeasurable⟩)
-    𝔼[r: M θ](((fun t : ℕ => γ ^ t) @ r))) =
-    𝔼[s, a, r : M θ](
+    𝔼[reward: M θ](((fun t : ℕ => γ ^ t) @ reward))) =
+    𝔼[state, action, reward : M θ](
       ∑' t, γ ^ t •
         (((1 - ℓ) * ∑' k, ℓ ^ k * ∑ i ∈ Finset.range (k + 1), γ ^ i *
-            (r (t + i) + γ * V θ (t + i + 1) (s (t + i + 1)) - V θ (t + i) (s (t + i)))) •
-          ∇[θ] (ℙ[M θ]((PolicyGradient.a t) = a t | (PolicyGradient.s t) = s t) : ℝ).log)) := by
+            (reward (t + i) + γ * V θ (t + i + 1) (state (t + i + 1)) - V θ (t + i) (state (t + i)))) •
+          ∇[θ] (ℙ[M θ]((PolicyGradient.action t) = action t | (PolicyGradient.state t) = state t) : ℝ).log)) := by
 -- proof
   intro hP _hs _ha _hr _hps _hpa _hpr
   classical
@@ -88,25 +88,25 @@ private lemma main
   obtain ⟨C, hC⟩ := id h₃
   have h₇ : ∀ θ x u, ‖fderiv ℝ (fun θ => M.pol.prob θ x u) θ‖ ≤ C := fun θ x u => hC ⟨(θ, x, u), rfl⟩
   have hℓ : ℓ ∈ Set.Icc 0 1 := ⟨h₄.1, h₄.2.le⟩
-  have hpR : Measurable (fun ω t ↦ r (S := S) (A := A) t ω) := measurable_pi_lambda _ fun t => Random.Measurable_R t
+  have hpR : Measurable (fun ω t ↦ reward (S := S) (A := A) t ω) := measurable_pi_lambda _ fun t => Random.Measurable_R t
   have hfG : ∀ t, Measurable (fun integ : ℕ → ℝ ↦ ∑' k, γ ^ k * integ (t + k)) := fun t =>
     Measurable.tsum fun k => (measurable_pi_apply (t + k)).const_mul _
-  have hVr : ∀ θ' t x, ((M θ').real (s t ⁻¹' {x}) ≠ 0) → (V θ' t x = M.V θ' γ t x) := fun θ' t x hp => by
-    have hp' : (M θ') (s t ⁻¹' {x}) ≠ 0 := fun h0 =>
+  have hVr : ∀ θ' t x, ((M θ').real (state t ⁻¹' {x}) ≠ 0) → (V θ' t x = M.V θ' γ t x) := fun θ' t x hp => by
+    have hp' : (M θ') (state t ⁻¹' {x}) ≠ 0 := fun h0 =>
       hp ((measureReal_eq_zero_iff (measure_ne_top _ _)).2 h0)
     rw [h₁ θ' t x hp']
     simp only [Expectation.asRV_process]
     rw [Expectation.condEvent_eq_integral hpR.aemeasurable (hfG t), M.V_eq_integral θ' γ t x]
     rfl
   -- almost surely the learned value is the time-free value function
-  have hVc : ∀ᵐ ω ∂(M θ), ∀ k, V θ k (s k ω) = M.Vc θ γ (s k ω) :=
+  have hVc : ∀ᵐ ω ∂(M θ), ∀ k, V θ k (state k ω) = M.Vc θ γ (state k ω) :=
     (AeRealPreimageSS.ne.Zero (M := M) θ).mono fun ω h k => (hVr θ k _ (h k)).trans (Random.V.eq.Vc.of.Ne0Real_Preimage.In_Ico (M := M) θ h₀ k _ (h k))
-  have hδ : ∀ᵐ ω ∂(M θ), ∀ j, r j ω + γ * V θ (j + 1) (s (j + 1) ω) - V θ j (s j ω) =
-      r j ω + γ * M.Vc θ γ (s (j + 1) ω) - M.Vc θ γ (s j ω) :=
+  have hδ : ∀ᵐ ω ∂(M θ), ∀ j, reward j ω + γ * V θ (j + 1) (state (j + 1) ω) - V θ j (state j ω) =
+      reward j ω + γ * M.Vc θ γ (state (j + 1) ω) - M.Vc θ γ (state j ω) :=
     hVc.mono fun ω h j => by rw [h j, h (j + 1)]
   -- almost surely the residuals are bounded
   have hbdd : ∀ᵐ ω ∂(M θ),
-      BddAbove (Set.range fun j => |r j ω + γ * V θ (j + 1) (s (j + 1) ω) - V θ j (s j ω)|) := by
+      BddAbove (Set.range fun j => |reward j ω + γ * V θ (j + 1) (state (j + 1) ω) - V θ j (state j ω)|) := by
     filter_upwards [AeNormSub.le.DeltaBound.of.In_Ico (M := M) θ h₀, hδ] with ω h1 h2
     refine ⟨M.deltaBound γ, ?_⟩
     rintro _ ⟨j, rfl⟩
@@ -118,33 +118,33 @@ private lemma main
   -- almost surely the paper's estimator is the closed form
   have hpt : ∀ᵐ ω ∂(M θ), ∀ t,
       (1 - ℓ) * ∑' k, ℓ ^ k * ∑ i ∈ Finset.range (k + 1), γ ^ i *
-        (r (t + i) ω + γ * V θ (t + i + 1) (s (t + i + 1) ω) - V θ (t + i) (s (t + i) ω)) =
+        (reward (t + i) ω + γ * V θ (t + i + 1) (state (t + i + 1) ω) - V θ (t + i) (state (t + i) ω)) =
       (fun k : ℕ => (γ * ℓ) ^ k) @
-        (fun k : ℕ => r (t + k) ω + γ * V θ (t + k + 1) (s (t + k + 1) ω) - V θ (t + k) (s (t + k) ω)) := by
+        (fun k : ℕ => reward (t + k) ω + γ * V θ (t + k + 1) (state (t + k + 1) ω) - V θ (t + k) (state (t + k) ω)) := by
     filter_upwards [hbdd] with ω hb t
     exact Tensor.EqDot.of.GtInftySup.generalized_advantage_estimate
-      (δ := fun j => r j ω + γ * V θ (j + 1) (s (j + 1) ω) - V θ j (s j ω)) (t := t) hb h₀ h₄
+      (δ := fun j => reward j ω + γ * V θ (j + 1) (state (j + 1) ω) - V θ j (state j ω)) (t := t) hb h₀ h₄
   have hmeas : ∀ k, Measurable fun ω : ℕ → ℝ × S × A =>
-      r k ω + γ * V θ (k + 1) (s (k + 1) ω) - V θ k (s k ω) := fun k =>
+      reward k ω + γ * V θ (k + 1) (state (k + 1) ω) - V θ k (state k ω) := fun k =>
     ((Random.Measurable_R k).add (((measurable_of_countable (V θ (k + 1))).comp (Random.Measurable_S (k + 1))).const_mul γ)).sub
       ((measurable_of_countable (V θ k)).comp (Random.Measurable_S k))
   -- the expectation of a pathwise functional is a Bochner integral
   have hexp : ∀ F : ℕ → (ℕ → S) → (ℕ → A) → (ℕ → ℝ) → ℝ,
-      (∀ t, Measurable fun ω : ℕ → ℝ × S × A => F t (fun j => s j ω) (fun j => a j ω) (fun j => r j ω)) →
-      𝔼[s, a, r : M θ](
-        ∑' t, γ ^ t • (F t s a r •
-          ∇[θ] (ℙ[M θ]((PolicyGradient.a t) = a t | (PolicyGradient.s t) = s t) : ℝ).log)) =
-      ∫ ω, ∑' t, γ ^ t • (F t (fun j => s j ω) (fun j => a j ω) (fun j => r j ω) •
-        ∇[θ] (ℙ[M θ]((a t) = (a t ω) | (s t) = (s t ω)) : ℝ).log) ∂(M θ) := by
+      (∀ t, Measurable fun ω : ℕ → ℝ × S × A => F t (fun j => state j ω) (fun j => action j ω) (fun j => reward j ω)) →
+      𝔼[state, action, reward : M θ](
+        ∑' t, γ ^ t • (F t state action reward •
+          ∇[θ] (ℙ[M θ]((PolicyGradient.action t) = action t | (PolicyGradient.state t) = state t) : ℝ).log)) =
+      ∫ ω, ∑' t, γ ^ t • (F t (fun j => state j ω) (fun j => action j ω) (fun j => reward j ω) •
+        ∇[θ] (ℙ[M θ]((action t) = (action t ω) | (state t) = (state t ω)) : ℝ).log) ∂(M θ) := by
     intro F hF
     have hg := fun t : ℕ =>
       StronglyMeasurable.smul (hF t).stronglyMeasurable
         ((StronglyMeasurable.of_discrete (f := fun p : S × A =>
-          gradient (fun θ' => (ℙ[M θ']((a t) = p.2 | (s t) = p.1) : ℝ).log) θ)).comp_measurable
+          gradient (fun θ' => (ℙ[M θ']((action t) = p.2 | (state t) = p.1) : ℝ).log) θ)).comp_measurable
             ((Random.Measurable_S t).prodMk (Random.Measurable_A t)))
     have hGsm : StronglyMeasurable fun ω : ℕ → ℝ × S × A =>
-        ∑' t, γ ^ t • (F t (fun j => s j ω) (fun j => a j ω) (fun j => r j ω) •
-          ∇[θ] (ℙ[M θ]((a t) = (a t ω) | (s t) = (s t ω)) : ℝ).log) :=
+        ∑' t, γ ^ t • (F t (fun j => state j ω) (fun j => action j ω) (fun j => reward j ω) •
+          ∇[θ] (ℙ[M θ]((action t) = (action t ω) | (state t) = (state t ω)) : ℝ).log) :=
       StronglyMeasurable.tsum (L := SummationFilter.unconditional ℕ) fun t =>
         (hg t).const_smul (γ ^ t)
     let fromPath := fun (p : (ℕ → S) × (ℕ → A) × (ℕ → ℝ)) =>
@@ -155,8 +155,8 @@ private lemma main
           (((measurable_pi_apply t).comp measurable_fst).prodMk
             ((measurable_pi_apply t).comp (measurable_fst.comp measurable_snd)))
     have hx : AEMeasurable
-        (JointRandomSymbol (AsPathRV.path s)
-          (JointRandomSymbol (AsPathRV.path a) (AsPathRV.path r))) (M θ) :=
+        (JointRandomSymbol (AsPathRV.path state)
+          (JointRandomSymbol (AsPathRV.path action) (AsPathRV.path reward))) (M θ) :=
       PSpace.aemeasurable
     simp only [AsPathRV.path_process]
     rw [Expectation.ofRV, expectation_bochner]
@@ -168,14 +168,14 @@ private lemma main
     simp only [AsPathRV.path_process, JointRandomSymbol]
   have hF₁ : ∀ t, Measurable fun ω : ℕ → ℝ × S × A =>
       (1 - ℓ) * ∑' k, ℓ ^ k * ∑ i ∈ Finset.range (k + 1), γ ^ i *
-        (r (t + i) ω + γ * V θ (t + i + 1) (s (t + i + 1) ω) - V θ (t + i) (s (t + i) ω)) := fun t =>
+        (reward (t + i) ω + γ * V θ (t + i + 1) (state (t + i + 1) ω) - V θ (t + i) (state (t + i) ω)) := fun t =>
     (Measurable.tsum (L := SummationFilter.unconditional ℕ) fun k =>
       (Finset.measurable_sum _ fun i _ => (hmeas (t + i)).const_mul _).const_mul _).const_mul _
   have hF₂ : ∀ t, Measurable fun ω : ℕ → ℝ × S × A =>
       ((fun k : ℕ => (γ * ℓ) ^ k) @
-        (fun k : ℕ => r (t + k) ω + γ * V θ (t + k + 1) (s (t + k + 1) ω) - V θ (t + k) (s (t + k) ω))) := fun t => by
+        (fun k : ℕ => reward (t + k) ω + γ * V θ (t + k + 1) (state (t + k + 1) ω) - V θ (t + k) (state (t + k) ω))) := fun t => by
     show Measurable fun ω : ℕ → ℝ × S × A => ∑' k, (γ * ℓ) ^ k *
-      (r (t + k) ω + γ * V θ (t + k + 1) (s (t + k + 1) ω) - V θ (t + k) (s (t + k) ω))
+      (reward (t + k) ω + γ * V θ (t + k + 1) (state (t + k + 1) ω) - V θ (t + k) (state (t + k) ω))
     exact Measurable.tsum (L := SummationFilter.unconditional ℕ) fun k => (hmeas (t + k)).const_mul _
   have e := (hexp (fun t s a r => (1 - ℓ) * ∑' k, ℓ ^ k * ∑ i ∈ Finset.range (k + 1), γ ^ i *
         (r (t + i) + γ * V θ (t + i + 1) (s (t + i + 1)) - V θ (t + i) (s (t + i)))) hF₁).trans

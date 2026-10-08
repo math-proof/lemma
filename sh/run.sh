@@ -38,7 +38,7 @@ while [ $# -gt 0 ]; do
 done
 
 if [ -z "$LEAN_NUM_THREADS" ]; then
-  export LEAN_NUM_THREADS=4
+  export LEAN_NUM_THREADS=8
 fi
 
 user=$(basename $(dirname $(cd $(dirname $0) && pwd)))

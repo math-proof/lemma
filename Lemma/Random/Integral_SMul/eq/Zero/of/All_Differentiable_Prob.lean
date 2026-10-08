@@ -18,14 +18,14 @@ private lemma main
   (t : ℕ)
   (h : S → ℝ) :
 -- imply
-  ∫ ω, h (s t ω) • fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' (s t ω) (a t ω))) θ
+  ∫ ω, h (state t ω) • fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' (state t ω) (action t ω))) θ
     ∂(M θ) = 0 := by
 -- proof
   rw [Random.Integral.eq.Sum_Sum_SMul (M := M) θ t (fun y u => h y • fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' y u)) θ)]
   refine Finset.sum_eq_zero fun y _ => ?_
-  have h₁ : ∀ u, ((M θ).real (s t ⁻¹' {y}) * M.pol.prob θ y u) •
+  have h₁ : ∀ u, ((M θ).real (state t ⁻¹' {y}) * M.pol.prob θ y u) •
       (h y • fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' y u)) θ) =
-      ((M θ).real (s t ⁻¹' {y}) * h y) •
+      ((M θ).real (state t ⁻¹' {y}) * h y) •
         (M.pol.prob θ y u • fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' y u)) θ) := fun u => by
     rw [smul_smul, smul_smul]; congr 1; ring
   simp_rw [h₁]

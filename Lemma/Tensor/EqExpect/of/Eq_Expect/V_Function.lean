@@ -30,33 +30,33 @@ private lemma main
   {Q : S → A → ℝ}
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
-  (h₁ : ∀ x u, Q x u = ∑' k, γ ^ k * ∫ ω, r (t + k) ω ∂(M θ)[|s t ⁻¹' {x} ∩ a t ⁻¹' {u}])
+  (h₁ : ∀ x u, Q x u = ∑' k, γ ^ k * ∫ ω, reward (t + k) ω ∂(M θ)[|state t ⁻¹' {x} ∩ action t ⁻¹' {u}])
   (x : S) :
 -- imply
-  ∫ ω, ∑' k, γ ^ k * r (t + k) ω ∂(M θ)[|s t ⁻¹' {x}] =
-    ∫ ω, Q x (a t ω) ∂(M θ)[|s t ⁻¹' {x}] := by
+  ∫ ω, ∑' k, γ ^ k * reward (t + k) ω ∂(M θ)[|state t ⁻¹' {x}] =
+    ∫ ω, Q x (action t ω) ∂(M θ)[|state t ⁻¹' {x}] := by
 -- proof
   classical
   have h₂ : Q = M.Q θ γ t := funext fun x => funext fun u => h₁ x u
   subst h₂
-  have hVi : ∀ t x, ∫ ω, ∑' k, γ ^ k * r (t + k) ω ∂(M θ)[|s t ⁻¹' {x}] = M.V θ γ t x :=
+  have hVi : ∀ t x, ∫ ω, ∑' k, γ ^ k * reward (t + k) ω ∂(M θ)[|state t ⁻¹' {x}] = M.V θ γ t x :=
     fun t x => (M.V_eq_integral θ γ t x).symm
   simp only [hVi]
-  by_cases hP : (M θ).real (s t ⁻¹' {x}) = 0
+  by_cases hP : (M θ).real (state t ⁻¹' {x}) = 0
   · have h₃ := cond_eq_zero_of_meas_eq_zero (Eq_0.of.EqReal_0 (M := M) θ hP)
     simp [M.V_eq_integral, h₃]
   · rw [V.eq.TSum_MulPowWRc.of.Ne0Real_Preimage.In_Ico (M := M) θ t x h₀ hP, Integral.eq.MulRealPreimageSIntegral_MulEqS]
-    have h₃ : ∀ ω, (if s t ω = x then (1:ℝ) else 0) * M.Q θ γ t x (a t ω) =
-        ∑ u, (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) * M.Q θ γ t x u := by
+    have h₃ : ∀ ω, (if state t ω = x then (1:ℝ) else 0) * M.Q θ γ t x (action t ω) =
+        ∑ u, (if state t ω = x ∧ action t ω = u then (1:ℝ) else 0) * M.Q θ γ t x u := by
       intro ω
-      rw [Finset.sum_eq_single (a t ω) (fun b _ hb => by simp [Ne.symm hb]) (by simp)]
-      by_cases h : s t ω = x <;> simp [h]
+      rw [Finset.sum_eq_single (action t ω) (fun b _ hb => by simp [Ne.symm hb]) (by simp)]
+      by_cases h : state t ω = x <;> simp [h]
     simp_rw [h₃]
     rw [integral_finsetSum _ (fun u _ => Random.Integrable_MulEqSAndEqA (M := M) θ t x u _)]
     simp_rw [integral_mul_const, Integral_EqSAndEqA.eq.MulRealPreimageSProb]
     rw [Finset.mul_sum]
-    have h₄ : ∀ u, ((M θ).real (s t ⁻¹' {x}))⁻¹ *
-        ((M θ).real (s t ⁻¹' {x}) * M.pol.prob θ x u * M.Q θ γ t x u) =
+    have h₄ : ∀ u, ((M θ).real (state t ⁻¹' {x}))⁻¹ *
+        ((M θ).real (state t ⁻¹' {x}) * M.pol.prob θ x u * M.Q θ γ t x u) =
         M.pol.prob θ x u * ((∫ ρ, M.rc (ρ, x, u) ∂(M.env.reward (x, u))) +
           γ * ∑ y, M.T x u y * ∑' k, γ ^ k * M.W θ M.rc k y) := by
       intro u

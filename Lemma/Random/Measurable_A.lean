@@ -12,7 +12,7 @@ private lemma main
 -- given
   (t : ℕ) :
 -- imply
-  Measurable (a (S := S) (A := A) t) := by
+  Measurable (action (S := S) (A := A) t) := by
 -- proof
   exact measurable_snd.snd.comp (measurable_pi_apply t)
 

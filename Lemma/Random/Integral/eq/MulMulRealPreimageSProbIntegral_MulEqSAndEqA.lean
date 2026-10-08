@@ -21,15 +21,15 @@ private lemma main
   (u : A)
   (f : (ℕ → ℝ × S × A) → ℝ) :
 -- imply
-  ∫ ω, f ω ∂(M θ)[|s t ⁻¹' {x} ∩ a t ⁻¹' {u}] =
-    ((M θ).real (s t ⁻¹' {x}) * M.pol.prob θ x u)⁻¹ *
-      ∫ ω, (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) * f ω ∂(M θ) := by
+  ∫ ω, f ω ∂(M θ)[|state t ⁻¹' {x} ∩ action t ⁻¹' {u}] =
+    ((M θ).real (state t ⁻¹' {x}) * M.pol.prob θ x u)⁻¹ *
+      ∫ ω, (if state t ω = x ∧ action t ω = u then (1:ℝ) else 0) * f ω ∂(M θ) := by
 -- proof
   rw [Integral.eq.MulRealIntegral_MulIndicator1.of.MeasurableSet (M := M) ((Random.Measurable_S t (measurableSet_singleton x)).inter (Random.Measurable_A t (measurableSet_singleton u))) θ,
     RealInterPreimageS_PreimageA.eq.MulRealPreimageSProb]
   congr 2
   funext ω
-  by_cases h1 : s t ω = x <;> by_cases h2 : a t ω = u <;> simp [h1, h2]
+  by_cases h1 : state t ω = x <;> by_cases h2 : action t ω = u <;> simp [h1, h2]
 
 
 -- created on 2026-10-07

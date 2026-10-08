@@ -18,7 +18,7 @@ private lemma main
   (B : Set (ℕ → ℝ × S × A))
   (t : ℕ) :
 -- imply
-  Summable (fun k => γ ^ k * ∫ ω, r (t + k) ω ∂(M θ)[|B]) := by
+  Summable (fun k => γ ^ k * ∫ ω, reward (t + k) ω ∂(M θ)[|B]) := by
 -- proof
   refine Summable.of_norm_bounded ((summable_geometric_of_lt_one hγ.1 hγ.2).mul_right |M.env.R|) ?_
   intro k

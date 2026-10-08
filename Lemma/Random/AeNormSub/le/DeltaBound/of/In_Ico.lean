@@ -24,11 +24,11 @@ private lemma main
   (θ : Θ)
   (h₀ : γ ∈ Set.Ico 0 1) :
 -- imply
-  ∀ᵐ ω ∂(M θ), ∀ j, ‖r j ω + γ * M.Vc θ γ (s (j + 1) ω) - M.Vc θ γ (s j ω)‖ ≤
+  ∀ᵐ ω ∂(M θ), ∀ j, ‖reward j ω + γ * M.Vc θ γ (state (j + 1) ω) - M.Vc θ γ (state j ω)‖ ≤
     M.deltaBound γ := by
 -- proof
   filter_upwards [AeNormR.le.Abs_R (M := M) θ] with ω hr j
-  calc _ ≤ ‖r j ω‖ + ‖γ * M.Vc θ γ (s (j + 1) ω)‖ + ‖M.Vc θ γ (s j ω)‖ :=
+  calc _ ≤ ‖reward j ω‖ + ‖γ * M.Vc θ γ (state (j + 1) ω)‖ + ‖M.Vc θ γ (state j ω)‖ :=
         (norm_sub_le _ _).trans (by gcongr; exact norm_add_le _ _)
     _ ≤ M.deltaBound γ := by
         rw [norm_mul, Real.norm_of_nonneg h₀.1]

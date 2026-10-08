@@ -12,7 +12,7 @@ private lemma main
 -- given
   (t : ℕ) :
 -- imply
-  Measurable (s (S := S) (A := A) t) := by
+  Measurable (state (S := S) (A := A) t) := by
 -- proof
   exact measurable_snd.fst.comp (measurable_pi_apply t)
 

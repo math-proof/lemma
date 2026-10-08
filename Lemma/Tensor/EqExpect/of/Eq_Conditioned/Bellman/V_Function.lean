@@ -33,27 +33,27 @@ private lemma main
   (h₀ : γ ∈ Set.Ico 0 1)
   (x : S) :
 -- imply
-  ∫ ω, ∑' k, γ ^ k * r (t + k) ω ∂(M θ)[|s t ⁻¹' {x}] =
-    ∫ ω, γ * (∫ ω', ∑' k, γ ^ k * r (t + 1 + k) ω' ∂(M θ)[|s (t + 1) ⁻¹' {s (t + 1) ω}]) + r t ω
-      ∂(M θ)[|s t ⁻¹' {x}] := by
+  ∫ ω, ∑' k, γ ^ k * reward (t + k) ω ∂(M θ)[|state t ⁻¹' {x}] =
+    ∫ ω, γ * (∫ ω', ∑' k, γ ^ k * reward (t + 1 + k) ω' ∂(M θ)[|state (t + 1) ⁻¹' {state (t + 1) ω}]) + reward t ω
+      ∂(M θ)[|state t ⁻¹' {x}] := by
 -- proof
   classical
-  have hVi : ∀ t x, ∫ ω, ∑' k, γ ^ k * r (t + k) ω ∂(M θ)[|s t ⁻¹' {x}] = M.V θ γ t x :=
+  have hVi : ∀ t x, ∫ ω, ∑' k, γ ^ k * reward (t + k) ω ∂(M θ)[|state t ⁻¹' {x}] = M.V θ γ t x :=
     fun t x => (M.V_eq_integral θ γ t x).symm
   simp only [hVi]
-  by_cases hP : (M θ).real (s t ⁻¹' {x}) = 0
+  by_cases hP : (M θ).real (state t ⁻¹' {x}) = 0
   · have h₂ := cond_eq_zero_of_meas_eq_zero (Eq_0.of.EqReal_0 (M := M) θ hP)
     simp [M.V_eq_integral, h₂]
   · rw [Integral.eq.MulRealPreimageSIntegral_MulEqS]
-    have h₂ : ∀ ω : ℕ → ℝ × S × A, (if s t ω = x then (1:ℝ) else 0) *
-        (γ * M.V θ γ (t + 1) (s (t + 1) ω) + r t ω) =
-        γ * ((if s t ω = x then (1:ℝ) else 0) * M.V θ γ (t + 1) (s (t + 1) ω)) +
-          (if s t ω = x then (1:ℝ) else 0) * r t ω := fun ω => by ring
+    have h₂ : ∀ ω : ℕ → ℝ × S × A, (if state t ω = x then (1:ℝ) else 0) *
+        (γ * M.V θ γ (t + 1) (state (t + 1) ω) + reward t ω) =
+        γ * ((if state t ω = x then (1:ℝ) else 0) * M.V θ γ (t + 1) (state (t + 1) ω)) +
+          (if state t ω = x then (1:ℝ) else 0) * reward t ω := fun ω => by ring
     simp_rw [h₂]
-    rw [integral_add ((Integrable.of.Measurable (M := M) (fun ω => (s t ω, s (t + 1) ω)) ((Random.Measurable_S t).prodMk (Random.Measurable_S (t + 1)))
+    rw [integral_add ((Integrable.of.Measurable (M := M) (fun ω => (state t ω, state (t + 1) ω)) ((Random.Measurable_S t).prodMk (Random.Measurable_S (t + 1)))
         θ
         (fun p => (if p.1 = x then (1:ℝ) else 0) * M.V θ γ (t + 1) p.2)).const_mul γ)
-      (Integrable_Mul_R.of.Measurable (M := M) (s t) (Random.Measurable_S t) θ (fun y => if y = x then (1:ℝ) else 0) t),
+      (Integrable_Mul_R.of.Measurable (M := M) (state t) (Random.Measurable_S t) θ (fun y => if y = x then (1:ℝ) else 0) t),
       integral_const_mul]
     have h₃ := Integral_MulEqSR_Add.eq.MulRealPreimageSWRc (M := M) θ t 0 x
     simp only [add_zero] at h₃

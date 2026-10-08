@@ -24,11 +24,11 @@ private lemma main
   (x : S)
   (u : A) :
 -- imply
-  ∫ ω, (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) * r (t + (j + 1)) ω ∂(M θ) =
-    (M θ).real (s t ⁻¹' {x}) * M.pol.prob θ x u * ∑ y, M.T x u y * M.W θ M.rc j y := by
+  ∫ ω, (if state t ω = x ∧ action t ω = u then (1:ℝ) else 0) * reward (t + (j + 1)) ω ∂(M θ) =
+    (M θ).real (state t ⁻¹' {x}) * M.pol.prob θ x u * ∑ y, M.T x u y * M.W θ M.rc j y := by
 -- proof
-  have h₀ : ∫ ω, (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) * r (t + (j + 1)) ω ∂(M θ) =
-      ∫ ω, (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) * M.rc (ω (t + (j + 1))) ∂(M θ) :=
+  have h₀ : ∫ ω, (if state t ω = x ∧ action t ω = u then (1:ℝ) else 0) * reward (t + (j + 1)) ω ∂(M θ) =
+      ∫ ω, (if state t ω = x ∧ action t ω = u then (1:ℝ) else 0) * M.rc (ω (t + (j + 1))) ∂(M θ) :=
     integral_congr_ae ((MEqR_Rc (M := M) θ (t + (j + 1))).mono fun ω h => by dsimp only; rw [h])
   rw [h₀]
   refine (Integral_Mul.eq.Integral_Mul_Kf.of.All_LeNorm.StronglyMeasurable.All_LeNorm.StronglyMeasurable (M := M) (Random.StronglyMeasurableRc (M := M)) (NormRc.le.Abs_R (M := M)) (Real.StronglyMeasurable_Eq12AndEq22 x u) (Norm_1.le.One) θ t (j + 1)).trans ?_

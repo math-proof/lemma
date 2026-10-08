@@ -42,11 +42,11 @@ private lemma main
 -- given
   (h₀ : γ ∈ Set.Ico 0 1) :
 -- imply
-  (M θ)[(fun ω ↦ (γ ^ (id : ℕ → ℕ)) @ (r · ω)[t + 1:]) | MeasurableSpace.comap (fun ω ↦ ((s t ω, a t ω), s (t + 1) ω)) inferInstance] =ᵐ[M θ]
-    (M θ)[(fun ω ↦ (γ ^ (id : ℕ → ℕ)) @ (r · ω)[t + 1:]) | MeasurableSpace.comap (s (t + 1)) inferInstance] := by
+  (M θ)[(fun ω ↦ (γ ^ (id : ℕ → ℕ)) @ (reward · ω)[t + 1:]) | MeasurableSpace.comap (fun ω ↦ ((state t ω, action t ω), state (t + 1) ω)) inferInstance] =ᵐ[M θ]
+    (M θ)[(fun ω ↦ (γ ^ (id : ℕ → ℕ)) @ (reward · ω)[t + 1:]) | MeasurableSpace.comap (state (t + 1)) inferInstance] := by
 -- proof
   classical
-  have hX : Measurable (fun ω ↦ ((s (S := S) (A := A) t ω, a (S := S) (A := A) t ω), s (S := S) (A := A) (t + 1) ω)) :=
+  have hX : Measurable (fun ω ↦ ((state (S := S) (A := A) t ω, action (S := S) (A := A) t ω), state (S := S) (A := A) (t + 1) ω)) :=
     ((Random.Measurable_S t).prodMk (Random.Measurable_A t)).prodMk (Random.Measurable_S (t + 1))
   have hF : Integrable (G (S := S) (A := A) γ (t + 1)) (M θ) := Integrable_G.of.In_Ico (M := M) θ h₀ (t + 1)
   have hKf := StronglyMeasurable_KfAndAll_LeNormKf.of.All_LeNorm.StronglyMeasurable (M := M) (Random.StronglyMeasurableRc (M := M)) (NormRc.le.Abs_R (M := M)) θ
@@ -68,8 +68,8 @@ private lemma main
   -- joint expectation of the reward on the atom `(s[t], a[t], s[t+1]) = (x, u, y)`
   have hE : ∀ (k : ℕ) (x : S) (u : A) (y : S),
       ∫ ω, (if (ω t).2.1 = x ∧ (ω t).2.2 = u then (1 : ℝ) else 0) * (if (ω (t + 1)).2.1 = y then (1 : ℝ) else 0) *
-        r (t + 1 + k) ω ∂(M θ) =
-      (M θ).real (s t ⁻¹' {x}) * M.pol.prob θ x u * (M.T x u y * M.W θ M.rc k y) := by
+        reward (t + 1 + k) ω ∂(M θ) =
+      (M θ).real (state t ⁻¹' {x}) * M.pol.prob θ x u * (M.T x u y * M.W θ M.rc k y) := by
     intro k x u y
     have hGt : StronglyMeasurable (fun h : (Π _ : Finset.Iic t, ℝ × S × A) ↦
         if (h ⟨t, Finset.mem_Iic.2 le_rfl⟩).2.1 = x ∧ (h ⟨t, Finset.mem_Iic.2 le_rfl⟩).2.2 = u then (1 : ℝ) else 0) :=
@@ -100,18 +100,18 @@ private lemma main
       _ = _ := Integral_MulEq12AndEq22.eq.MulMulRealProb (M := M) θ t x u (fun x' u' ↦ M.T x' u' y * M.W θ M.rc k y)
   -- the conditional expected return on a reachable atom is `V(s[t+1] = y)`
   have hatom : ∀ (x : S) (u : A) (y : S),
-      M θ ((fun ω ↦ ((s t ω, a t ω), s (t + 1) ω)) ⁻¹' {((x, u), y)}) ≠ 0 →
-      ∫ ω, G γ (t + 1) ω ∂(M θ)[|(fun ω ↦ ((s t ω, a t ω), s (t + 1) ω)) ⁻¹' {((x, u), y)}] =
-        ∫ ω, G γ (t + 1) ω ∂(M θ)[|s (t + 1) ⁻¹' {y}] := by
+      M θ ((fun ω ↦ ((state t ω, action t ω), state (t + 1) ω)) ⁻¹' {((x, u), y)}) ≠ 0 →
+      ∫ ω, G γ (t + 1) ω ∂(M θ)[|(fun ω ↦ ((state t ω, action t ω), state (t + 1) ω)) ⁻¹' {((x, u), y)}] =
+        ∫ ω, G γ (t + 1) ω ∂(M θ)[|state (t + 1) ⁻¹' {y}] := by
     intro x u y hB
-    set B := (fun ω ↦ ((s (S := S) (A := A) t ω, a (S := S) (A := A) t ω), s (S := S) (A := A) (t + 1) ω)) ⁻¹' {((x, u), y)}
+    set B := (fun ω ↦ ((state (S := S) (A := A) t ω, action (S := S) (A := A) t ω), state (S := S) (A := A) (t + 1) ω)) ⁻¹' {((x, u), y)}
     have hBm : MeasurableSet B := hX (measurableSet_singleton _)
     have hind : ∀ ω, B.indicator 1 ω =
         (if (ω t).2.1 = x ∧ (ω t).2.2 = u then (1 : ℝ) else 0) * (if (ω (t + 1)).2.1 = y then (1 : ℝ) else 0) := by
       intro ω
       by_cases h₁ : (ω t).2.1 = x <;> by_cases h₂ : (ω t).2.2 = u <;> by_cases h₃ : (ω (t + 1)).2.1 = y <;>
-        simp [B, s, a, h₁, h₂, h₃, Prod.ext_iff]
-    have hPB : (M θ).real B = (M θ).real (s t ⁻¹' {x}) * M.pol.prob θ x u * M.T x u y := by
+        simp [B, state, action, h₁, h₂, h₃, Prod.ext_iff]
+    have hPB : (M θ).real B = (M θ).real (state t ⁻¹' {x}) * M.pol.prob θ x u * M.T x u y := by
       rw [← integral_indicator_one hBm]
       have h := Integral_MulEqSAndEqA.eq.MulMulRealProbSum_MulT (M := M) θ t x u (fun y' ↦ if y' = y then (1 : ℝ) else 0)
       simp only [mul_ite, mul_one, mul_zero, Finset.sum_ite_eq', Finset.mem_univ, if_true] at h
@@ -120,20 +120,20 @@ private lemma main
       funext ω
       rw [hind]
       by_cases h₁ : (ω t).2.1 = x <;> by_cases h₂ : (ω t).2.2 = u <;> by_cases h₃ : (ω (t + 1)).2.1 = y <;>
-        simp [s, a, h₁, h₂, h₃]
+        simp [state, action, h₁, h₂, h₃]
     have hc : (M θ).real B ≠ 0 := (measureReal_eq_zero_iff (measure_ne_top _ _)).not.2 hB
-    have hy : (M θ).real (s (t + 1) ⁻¹' {y}) ≠ 0 := fun h ↦ hc (le_antisymm
+    have hy : (M θ).real (state (t + 1) ⁻¹' {y}) ≠ 0 := fun h ↦ hc (le_antisymm
       (h ▸ measureReal_mono (fun ω hω ↦ by simp_all [B]) (measure_ne_top _ _)) measureReal_nonneg)
     rw [Integral_G.eq.TSum_MulPowIntegral_R_Add.of.In_Ico (M := M) h₀ θ B (t + 1), ← Model.V_eq_integral, V.eq.TSum_MulPowWRc.of.Ne0Real_Preimage.In_Ico (M := M) θ (t + 1) y h₀ hy]
     congr 1
     funext k
     rw [Integral.eq.MulRealIntegral_MulIndicator1.of.MeasurableSet (M := M) hBm θ]
     simp_rw [hind]
-    rw [hE k x u y, show (M θ).real (s t ⁻¹' {x}) * M.pol.prob θ x u * (M.T x u y * M.W θ M.rc k y) =
+    rw [hE k x u y, show (M θ).real (state t ⁻¹' {x}) * M.pol.prob θ x u * (M.T x u y * M.W θ M.rc k y) =
       (M θ).real B * M.W θ M.rc k y by rw [hPB]; ring, inv_mul_cancel_left₀ hc]
   refine (MEqCondExp_Integral.of.Integrable.Measurable hX hF).trans
     (Filter.EventuallyEq.trans ?_ (MEqCondExp_Integral.of.Integrable.Measurable (Random.Measurable_S (t + 1)) hF).symm)
-  filter_upwards [(Random.AeNe_0 (X := fun ω ↦ ((s (S := S) (A := A) t ω, a (S := S) (A := A) t ω), s (S := S) (A := A) (t + 1) ω)) : ∀ᵐ ω ∂(M θ), _)] with ω hω
+  filter_upwards [(Random.AeNe_0 (X := fun ω ↦ ((state (S := S) (A := A) t ω, action (S := S) (A := A) t ω), state (S := S) (A := A) (t + 1) ω)) : ∀ᵐ ω ∂(M θ), _)] with ω hω
   exact hatom _ _ _ hω
 
 

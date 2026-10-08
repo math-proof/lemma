@@ -1,6 +1,6 @@
-import sympy.stats.policy_trajectory.gradient
+import sympy.stats.policy_trajectory
 import sympy.Basic
-open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model
+open MeasureTheory ProbabilityTheory Topology PolicyGradient
 
 
 /--
@@ -12,9 +12,9 @@ private lemma main
 -- given
   (k : ℕ) :
 -- imply
-  Measurable (r (S := S) (A := A) k) := by
+  Measurable (reward (S := S) (A := A) k) :=
 -- proof
-  exact measurable_fst.comp (measurable_pi_apply k)
+  measurable_fst.comp (measurable_pi_apply k)
 
 
 -- created on 2026-10-06

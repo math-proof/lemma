@@ -23,16 +23,16 @@ private lemma main
   (x : S)
   (u : A) :
 -- imply
-  ∫ ω, (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) * r t ω ∂(M θ) =
-    (M θ).real (s t ⁻¹' {x}) * M.pol.prob θ x u * ∫ ρ, M.rc (ρ, x, u) ∂(M.env.reward (x, u)) := by
+  ∫ ω, (if state t ω = x ∧ action t ω = u then (1:ℝ) else 0) * reward t ω ∂(M θ) =
+    (M θ).real (state t ⁻¹' {x}) * M.pol.prob θ x u * ∫ ρ, M.rc (ρ, x, u) ∂(M.env.reward (x, u)) := by
 -- proof
-  have h₀ : ∫ ω, (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) * r t ω ∂(M θ) =
-      ∫ ω, (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) * M.rc (ω t) ∂(M θ) :=
+  have h₀ : ∫ ω, (if state t ω = x ∧ action t ω = u then (1:ℝ) else 0) * reward t ω ∂(M θ) =
+      ∫ ω, (if state t ω = x ∧ action t ω = u then (1:ℝ) else 0) * M.rc (ω t) ∂(M θ) :=
     integral_congr_ae ((MEqR_Rc (M := M) θ t).mono fun ω h => by dsimp only; rw [h])
-  have h₁ : ∀ ω, (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) * M.rc (ω t) =
-      (if s t ω = x then (1:ℝ) else 0) *
+  have h₁ : ∀ ω, (if state t ω = x ∧ action t ω = u then (1:ℝ) else 0) * M.rc (ω t) =
+      (if state t ω = x then (1:ℝ) else 0) *
         (fun z : ℝ × S × A => (if z.2.2 = u then (1:ℝ) else 0) * M.rc z) (ω t) := by
-    intro ω; simp only [s, a]
+    intro ω; simp only [state, action]
     by_cases h1 : (ω t).2.1 = x <;> by_cases h2 : (ω t).2.2 = u <;> simp [h1, h2]
   rw [h₀]
   simp_rw [h₁]

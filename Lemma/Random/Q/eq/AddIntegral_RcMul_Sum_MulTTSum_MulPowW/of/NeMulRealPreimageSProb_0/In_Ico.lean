@@ -23,17 +23,17 @@ private lemma main
   (x : S)
   (u : A)
   (hγ : γ ∈ Set.Ico 0 1)
-  (hP : (M θ).real (s t ⁻¹' {x}) * M.pol.prob θ x u ≠ 0) :
+  (hP : (M θ).real (state t ⁻¹' {x}) * M.pol.prob θ x u ≠ 0) :
 -- imply
   M.Q θ γ t x u = (∫ ρ, M.rc (ρ, x, u) ∂(M.env.reward (x, u))) +
     γ * ∑ y, M.T x u y * ∑' k, γ ^ k * M.W θ M.rc k y := by
 -- proof
   unfold Model.Q
   rw [(Summable_MulPowIntegral_R_Add.of.In_Ico (M := M) hγ θ _ t).tsum_eq_zero_add]
-  have h0 : ∫ ω, r (t + 0) ω ∂(M θ)[|s t ⁻¹' {x} ∩ a t ⁻¹' {u}] =
+  have h0 : ∫ ω, reward (t + 0) ω ∂(M θ)[|state t ⁻¹' {x} ∩ action t ⁻¹' {u}] =
       ∫ ρ, M.rc (ρ, x, u) ∂(M.env.reward (x, u)) := by
     rw [Integral.eq.MulMulRealPreimageSProbIntegral_MulEqSAndEqA, add_zero, Integral_MulEqSAndEqAR.eq.MulMulRealPreimageSProbIntegral_Rc, inv_mul_cancel_left₀ hP]
-  have hk : ∀ k, ∫ ω, r (t + (k + 1)) ω ∂(M θ)[|s t ⁻¹' {x} ∩ a t ⁻¹' {u}] =
+  have hk : ∀ k, ∫ ω, reward (t + (k + 1)) ω ∂(M θ)[|state t ⁻¹' {x} ∩ action t ⁻¹' {u}] =
       ∑ y, M.T x u y * M.W θ M.rc k y := by
     intro k; rw [Integral.eq.MulMulRealPreimageSProbIntegral_MulEqSAndEqA, Integral_MulEqSAndEqAR.eq.MulMulRealProbSum_MulTW, inv_mul_cancel_left₀ hP]
   rw [h0, pow_zero, one_mul]

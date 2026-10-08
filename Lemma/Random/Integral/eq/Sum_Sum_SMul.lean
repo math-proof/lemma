@@ -22,10 +22,10 @@ private lemma main
   (t : ℕ)
   (φ : S → A → E) :
 -- imply
-  ∫ ω, φ (s t ω) (a t ω) ∂(M θ) =
-    ∑ y, ∑ u, ((M θ).real (s t ⁻¹' {y}) * M.pol.prob θ y u) • φ y u := by
+  ∫ ω, φ (state t ω) (action t ω) ∂(M θ) =
+    ∑ y, ∑ u, ((M θ).real (state t ⁻¹' {y}) * M.pol.prob θ y u) • φ y u := by
 -- proof
-  have hX : Measurable (fun ω : ℕ → ℝ × S × A => (s t ω, a t ω)) := (Random.Measurable_S t).prodMk (Random.Measurable_A t)
+  have hX : Measurable (fun ω : ℕ → ℝ × S × A => (state t ω, action t ω)) := (Random.Measurable_S t).prodMk (Random.Measurable_A t)
   have e := integral_map (μ := M θ) hX.aemeasurable
     (f := fun p : S × A => φ p.1 p.2) StronglyMeasurable.of_discrete.aestronglyMeasurable
   refine e.symm.trans ?_

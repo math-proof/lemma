@@ -7,7 +7,7 @@ import path from 'node:path';
 /**
  * Top-level `import` / `open` / `namespace` commands of a Lean file.
  * `opened`: names opened by a plain / selective / `in` open or a `namespace` (for `open-section`);
- * `plainOpens`: every plain `open … X …` entry ({ name, line, selective, scoped, local }) for `open-unused` / `open-duplicate`.
+ * `plainOpens`: every plain `open … X …` entry ({ name, line, selective, scoped, local }) for `open-duplicate`.
  */
 export function scanImportsAndOpens(P) {
     const { raw, code: lines } = P;
@@ -78,18 +78,10 @@ export function openSection(ctx) {
 }
 
 /**
- * `open-unused`: the static logic of `ps1/delete_open.ps1` / `sh/delete_open.sh` — a plain (not `scoped`, not selective)
- * `open … X …` of a section `X` while no `import Lemma.X.…` exists; additionally skipped when the file has
- * `namespace X` or the open is `open … in`.
  * `open-duplicate`: the same name listed twice in plain top-level opens.
  */
-export function openUnusedAndDuplicate(ctx) {
-    const { imports, namespaces, openEntries } = ctx.scan;
-    const importedSections = new Set();
-    for (const { module } of imports) {
-        const parts = module.split('.');
-        if (parts.length >= 3 && parts[0] === 'Lemma') importedSections.add(parts[1]);
-    }
+export function openDuplicate(ctx) {
+    const { openEntries } = ctx.scan;
     const seen = new Map();
     for (const e of openEntries) {
         if (e.scoped || e.selective || e.local) continue;
@@ -98,10 +90,6 @@ export function openUnusedAndDuplicate(ctx) {
             continue;
         }
         seen.set(e.name, e.line);
-        if (ctx.sections.has(e.name) && !importedSections.has(e.name) && !namespaces.has(e.name)) {
-            ctx.warn('open-unused', e.line, null,
-                `\`open ${e.name}\` but nothing from Lemma.${e.name} is imported; run \`pwsh ps1/delete_open.ps1 ${ctx.file ?? '<file>'}\` (or \`bash sh/delete_open.sh\`) or drop it`);
-        }
     }
 }
 

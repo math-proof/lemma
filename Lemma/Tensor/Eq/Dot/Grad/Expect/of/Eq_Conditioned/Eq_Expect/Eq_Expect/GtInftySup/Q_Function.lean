@@ -36,27 +36,27 @@ private lemma main
   (h₀ : γ ∈ Set.Ico 0 1)
   (hS : (ReferenceMeasure.measure : Measure S) = Measure.count)
   (hA : (ReferenceMeasure.measure : Measure A) = Measure.count)
-  (h₁ : ∀ θ t («s.bvar» : ℕ → S) («a.bvar» : ℕ → A), Q θ t («s.bvar» t) («a.bvar» t) = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «s.bvar» t ∧ a t = «a.bvar» t))
-  (h₂ : ∀ θ t («s.bvar» : ℕ → S), V θ t («s.bvar» t) = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «s.bvar» t))
+  (h₁ : ∀ θ t («s.bvar» : ℕ → S) («a.bvar» : ℕ → A), Q θ t («s.bvar» t) («a.bvar» t) = 𝔼[reward : M θ]((γ ^ (id : ℕ → ℕ)) @ reward[t:] | state t = «s.bvar» t ∧ action t = «a.bvar» t))
+  (h₂ : ∀ θ t («s.bvar» : ℕ → S), V θ t («s.bvar» t) = 𝔼[reward : M θ]((γ ^ (id : ℕ → ℕ)) @ reward[t:] | state t = «s.bvar» t))
   (h₃ : ∀ x u, Differentiable ℝ (fun θ => M.pol.prob θ x u))
   (h₄ : sup[θ, x, u] ‖∇[θ] M.pol.prob θ x u‖ < ∞) :
 -- imply
-  ∑' t, γ ^ t • fderiv ℝ (fun θ => ∫ ω, r t ω ∂(M θ)) θ =
-    ∑' t, γ ^ t • ∫ ω, Q θ t (s t ω) (a t ω) • fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' (s t ω) (a t ω))) θ ∂(M θ) := by
+  ∑' t, γ ^ t • fderiv ℝ (fun θ => ∫ ω, reward t ω ∂(M θ)) θ =
+    ∑' t, γ ^ t • ∫ ω, Q θ t (state t ω) (action t ω) • fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' (state t ω) (action t ω))) θ ∂(M θ) := by
 -- proof
   have h₄n := h₄
   simp only [gradient, LinearIsometryEquiv.norm_map] at h₄
   have h₇ := Eq.Grad.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.policy_gradient (θ := θ) h₀ hS hA h₁ h₂ h₃ h₄n
-  have hr : ∀ t, Measurable (r (S := S) (A := A) t) := Model.r_meas' (S := S) (A := A)
-  have hpR : Measurable (fun ω t ↦ r (S := S) (A := A) t ω) := measurable_pi_lambda _ hr
+  have hr : ∀ t, Measurable (reward (S := S) (A := A) t) := Model.r_meas' (S := S) (A := A)
+  have hpR : Measurable (fun ω t ↦ reward (S := S) (A := A) t ω) := measurable_pi_lambda _ hr
   have hfG : ∀ t, Measurable (fun integ : ℕ → ℝ ↦ (γ ^ (id : ℕ → ℕ)) @ integ[t:]) := fun t =>
     Measurable.tsum fun k => (measurable_pi_apply (t + k)).const_mul _
   have hQ : Q = fun θ => M.Q θ γ := funext fun θ => funext fun t => funext fun x => funext fun u => by
     rw [h₁ θ t (fun _ ↦ x) (fun _ ↦ u)]
     simp only [Expectation.asRV_process]
     rw [Expectation.condEvent_eq_integral hpR.aemeasurable (hfG t)]
-    have hpre : JointRandomSymbol (s (S := S) (A := A) t) (a (S := S) (A := A) t) ⁻¹' {(x, u)} =
-        s t ⁻¹' {x} ∩ a t ⁻¹' {u} := by
+    have hpre : JointRandomSymbol (state (S := S) (A := A) t) (action (S := S) (A := A) t) ⁻¹' {(x, u)} =
+        state t ⁻¹' {x} ∩ action t ⁻¹' {u} := by
       ext ω; simp [JointRandomSymbol, Prod.ext_iff]
     rw [hpre]
     exact Integral_G.eq.TSum_MulPowIntegral_R_Add.of.In_Ico (M := M) h₀ θ _ t
@@ -71,35 +71,35 @@ private lemma main
   classical
   beta_reduce at h₇ ⊢
   obtain ⟨B, hB⟩ := BddAbove_ImageNormFderiv.of.In_Ico.GtInftySup.All_Differentiable_Prob (M := M) h₃ h₄n h₀ θ
-  have h₉ : ∀ n, ‖∫ ω, fderiv ℝ (fun θ' => M.V θ' γ n (s n ω)) θ ∂(M θ)‖ ≤ max B 0 := by
+  have h₉ : ∀ n, ‖∫ ω, fderiv ℝ (fun θ' => M.V θ' γ n (state n ω)) θ ∂(M θ)‖ ≤ max B 0 := by
     intro n
     rw [Integral.eq.Sum_SMul (M := M) θ n (fun y => fderiv ℝ (fun θ' => M.V θ' γ n y) θ)]
-    calc _ ≤ ∑ y, ‖(M θ).real (s n ⁻¹' {y}) • fderiv ℝ (fun θ' => M.V θ' γ n y) θ‖ :=
+    calc _ ≤ ∑ y, ‖(M θ).real (state n ⁻¹' {y}) • fderiv ℝ (fun θ' => M.V θ' γ n y) θ‖ :=
           norm_sum_le _ _
-      _ ≤ ∑ y, (M θ).real (s n ⁻¹' {y}) * max B 0 := by
+      _ ≤ ∑ y, (M θ).real (state n ⁻¹' {y}) * max B 0 := by
           refine Finset.sum_le_sum fun y _ => ?_
           rw [norm_smul, Real.norm_of_nonneg measureReal_nonneg]
-          if hy : (M θ).real (s n ⁻¹' {y}) = 0 then
+          if hy : (M θ).real (state n ⁻¹' {y}) = 0 then
             rw [hy, zero_mul, zero_mul]
           else
             exact mul_le_mul_of_nonneg_left ((hB ⟨(n, y), hy, rfl⟩).trans (le_max_left _ _)) measureReal_nonneg
       _ = max B 0 := by rw [← Finset.sum_mul, Sum_RealPreimageS.eq.One, one_mul]
-  have h₁₀ : Tendsto (fun n => γ ^ n * ‖∫ ω, fderiv ℝ (fun θ' => M.V θ' γ n (s n ω)) θ ∂(M θ)‖) atTop (𝓝 0) :=
+  have h₁₀ : Tendsto (fun n => γ ^ n * ‖∫ ω, fderiv ℝ (fun θ' => M.V θ' γ n (state n ω)) θ ∂(M θ)‖) atTop (𝓝 0) :=
     Eq_0.Lim.of.LtAbs.GtInftySup (by rw [abs_of_nonneg h₀.1]; exact h₀.2)
       ⟨max B 0, by rintro _ ⟨n, rfl⟩; exact (abs_norm _).trans_le (h₉ n)⟩
-  have h₁₁ : Tendsto (fun n => γ ^ n • ∫ ω, fderiv ℝ (fun θ' => M.V θ' γ n (s n ω)) θ ∂(M θ)) atTop (𝓝 0) := by
+  have h₁₁ : Tendsto (fun n => γ ^ n • ∫ ω, fderiv ℝ (fun θ' => M.V θ' γ n (state n ω)) θ ∂(M θ)) atTop (𝓝 0) := by
     rw [tendsto_zero_iff_norm_tendsto_zero]
     refine h₁₀.congr fun n => ?_
     rw [norm_smul, norm_pow, Real.norm_of_nonneg h₀.1]
   have hq : 0 ≤ (1 - γ)⁻¹ * |M.env.R| := mul_nonneg (inv_nonneg.2 (by linarith [h₀.2])) (abs_nonneg _)
-  have h₁₂ : ∀ t, ‖∫ ω, M.Q θ γ t (s t ω) (a t ω) •
-      fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' (s t ω) (a t ω))) θ ∂(M θ)‖ ≤
+  have h₁₂ : ∀ t, ‖∫ ω, M.Q θ γ t (state t ω) (action t ω) •
+      fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' (state t ω) (action t ω))) θ ∂(M θ)‖ ≤
       Fintype.card A * ((1 - γ)⁻¹ * |M.env.R| * max C 0) := by
     intro t
     rw [Integral_SMul.eq.Sum_SMul.of.All_Differentiable_Prob (M := M) h₃ θ t (fun y u => M.Q θ γ t y u)]
-    calc _ ≤ ∑ y, ‖(M θ).real (s t ⁻¹' {y}) •
+    calc _ ≤ ∑ y, ‖(M θ).real (state t ⁻¹' {y}) •
           ∑ u, M.Q θ γ t y u • fderiv ℝ (fun θ' => M.pol.prob θ' y u) θ‖ := norm_sum_le _ _
-      _ ≤ ∑ y, (M θ).real (s t ⁻¹' {y}) * (Fintype.card A * ((1 - γ)⁻¹ * |M.env.R| * max C 0)) := by
+      _ ≤ ∑ y, (M θ).real (state t ⁻¹' {y}) * (Fintype.card A * ((1 - γ)⁻¹ * |M.env.R| * max C 0)) := by
           refine Finset.sum_le_sum fun y _ => ?_
           rw [norm_smul, Real.norm_of_nonneg measureReal_nonneg]
           refine mul_le_mul_of_nonneg_left ?_ measureReal_nonneg
@@ -111,16 +111,16 @@ private lemma main
                   (norm_nonneg _) hq
             _ = _ := by rw [Finset.sum_const, Finset.card_univ, nsmul_eq_mul]
       _ = _ := by rw [← Finset.sum_mul, Sum_RealPreimageS.eq.One, one_mul]
-  have h₁₃ : Summable (fun t => γ ^ t • ∫ ω, M.Q θ γ t (s t ω) (a t ω) •
-      fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' (s t ω) (a t ω))) θ ∂(M θ)) := by
+  have h₁₃ : Summable (fun t => γ ^ t • ∫ ω, M.Q θ γ t (state t ω) (action t ω) •
+      fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' (state t ω) (action t ω))) θ ∂(M θ)) := by
     have hs := (summable_geometric_of_lt_one h₀.1 h₀.2).mul_right (Fintype.card A * ((1 - γ)⁻¹ * |M.env.R| * max C 0))
     refine Summable.of_norm_bounded hs fun t => ?_
     rw [norm_smul, norm_pow, Real.norm_of_nonneg h₀.1]
     exact mul_le_mul_of_nonneg_left (h₁₂ t) (pow_nonneg h₀.1 t)
-  have h₁₄ : ∀ n, ∫ ω, ∑ t ∈ Finset.range n, (γ ^ t * M.Q θ γ t (s t ω) (a t ω)) •
-      fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' (s t ω) (a t ω))) θ ∂(M θ) =
-      ∑ t ∈ Finset.range n, γ ^ t • ∫ ω, M.Q θ γ t (s t ω) (a t ω) •
-        fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' (s t ω) (a t ω))) θ ∂(M θ) := by
+  have h₁₄ : ∀ n, ∫ ω, ∑ t ∈ Finset.range n, (γ ^ t * M.Q θ γ t (state t ω) (action t ω)) •
+      fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' (state t ω) (action t ω))) θ ∂(M θ) =
+      ∑ t ∈ Finset.range n, γ ^ t • ∫ ω, M.Q θ γ t (state t ω) (action t ω) •
+        fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' (state t ω) (action t ω))) θ ∂(M θ) := by
     intro n
     rw [integral_finsetSum _ fun t _ => Random.Integrable_Fun (M := M) θ t
       (fun y u => (γ ^ t * M.Q θ γ t y u) • fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' y u)) θ)]

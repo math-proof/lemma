@@ -23,11 +23,11 @@ private lemma main
   (t j : ℕ)
   (x : S) :
 -- imply
-  ∫ ω, (if s t ω = x then (1:ℝ) else 0) * r (t + j) ω ∂(M θ) =
-    (M θ).real (s t ⁻¹' {x}) * M.W θ M.rc j x := by
+  ∫ ω, (if state t ω = x then (1:ℝ) else 0) * reward (t + j) ω ∂(M θ) =
+    (M θ).real (state t ⁻¹' {x}) * M.W θ M.rc j x := by
 -- proof
-  have h₁ : ∫ ω, (if s t ω = x then (1:ℝ) else 0) * r (t + j) ω ∂(M θ) =
-      ∫ ω, (if s t ω = x then (1:ℝ) else 0) * M.rc (ω (t + j)) ∂(M θ) :=
+  have h₁ : ∫ ω, (if state t ω = x then (1:ℝ) else 0) * reward (t + j) ω ∂(M θ) =
+      ∫ ω, (if state t ω = x then (1:ℝ) else 0) * M.rc (ω (t + j)) ∂(M θ) :=
     integral_congr_ae ((MEqR_Rc (M := M) θ (t + j)).mono fun ω h => by dsimp only; rw [h])
   have hK := StronglyMeasurable_KfAndAll_LeNormKf.of.All_LeNorm.StronglyMeasurable (M := M) (Random.StronglyMeasurableRc (M := M)) (NormRc.le.Abs_R (M := M)) θ j
   rw [h₁]

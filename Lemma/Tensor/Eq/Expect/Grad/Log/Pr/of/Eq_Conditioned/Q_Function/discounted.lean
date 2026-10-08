@@ -21,9 +21,9 @@ private lemma main
 -- given
   (h₀ : γ ∈ Set.Ico 0 1) :
 -- imply
-  ∫ ω, (∑' k, γ ^ k * r (t + k) ω) • fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' (s t ω) (a t ω))) θ ∂(M θ) =
-    ∫ ω, (∑' k, γ ^ k * ∫ ω', r (t + k) ω' ∂(M θ)[|s t ⁻¹' {s t ω} ∩ a t ⁻¹' {a t ω}]) •
-      fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' (s t ω) (a t ω))) θ ∂(M θ) := by
+  ∫ ω, (∑' k, γ ^ k * reward (t + k) ω) • fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' (state t ω) (action t ω))) θ ∂(M θ) =
+    ∫ ω, (∑' k, γ ^ k * ∫ ω', reward (t + k) ω' ∂(M θ)[|state t ⁻¹' {state t ω} ∩ action t ⁻¹' {action t ω}]) •
+      fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' (state t ω) (action t ω))) θ ∂(M θ) := by
 -- proof
   classical
   exact Random.Integral_SMul.of.In_Ico (M := M) θ h₀ t (fun x u => fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' x u)) θ)

@@ -24,44 +24,44 @@ private lemma main
 -- given
   (hS : (ReferenceMeasure.measure : Measure S) = Measure.count)
   (hA : (ReferenceMeasure.measure : Measure A) = Measure.count)
-  (hP : SinglePSpace (M θ) (a (S := S) (A := A) t, s (S := S) (A := A) t))
-  (h : (M θ).real (s t ⁻¹' {x}) ≠ 0) :
+  (hP : SinglePSpace (M θ) (action (S := S) (A := A) t, state (S := S) (A := A) t))
+  (h : (M θ).real (state t ⁻¹' {x}) ≠ 0) :
 -- imply
-  ℙ[(M θ)]((a t) = u | (s t) = x) = ENNReal.ofReal (M.pol.prob θ x u) := by
+  ℙ[(M θ)]((action t) = u | (state t) = x) = ENNReal.ofReal (M.pol.prob θ x u) := by
 -- proof
   classical
   set π := M θ
   have hAS : (ReferenceMeasure.measure : Measure (A × S)) = Measure.count := by
     show (ReferenceMeasure.measure : Measure A).prod (ReferenceMeasure.measure : Measure S) = _
     rw [hA, hS, Measure.Count.eq.ProdCountS]
-  have hxy : Measurable (a (S := S) (A := A) t, s (S := S) (A := A) t) :=
+  have hxy : Measurable (action (S := S) (A := A) t, state (S := S) (A := A) t) :=
     (Random.Measurable_A t).prodMk (Random.Measurable_S t)
-  have hnum : π.prob (a (S := S) (A := A) t, s (S := S) (A := A) t) (u, x) =
-      π (s t ⁻¹' {x} ∩ a t ⁻¹' {u}) := by
+  have hnum : π.prob (action (S := S) (A := A) t, state (S := S) (A := A) t) (u, x) =
+      π (state t ⁻¹' {x} ∩ action t ⁻¹' {u}) := by
     unfold Measure.prob
     rw [hAS, Measure.EqRnDeriv_Count, Measure.map_apply hxy (measurableSet_singleton _)]
     congr 1
     ext ω
     simp [JointRandomSymbol, and_comm]
-  have hden : (π.map (fun ω ↦ ((a (S := S) (A := A) t, s (S := S) (A := A) t) ω).2)).rnDeriv
-      ReferenceMeasure.measure x = π (s t ⁻¹' {x}) := by
+  have hden : (π.map (fun ω ↦ ((action (S := S) (A := A) t, state (S := S) (A := A) t) ω).2)).rnDeriv
+      ReferenceMeasure.measure x = π (state t ⁻¹' {x}) := by
     rw [hS, Measure.EqRnDeriv_Count]
     exact Measure.map_apply (Random.Measurable_S t) (measurableSet_singleton _)
-  have hxu : π.real (s t ⁻¹' {x} ∩ a t ⁻¹' {u}) =
-      π.real (s t ⁻¹' {x}) * M.pol.prob θ x u := by
+  have hxu : π.real (state t ⁻¹' {x} ∩ action t ⁻¹' {u}) =
+      π.real (state t ⁻¹' {x}) * M.pol.prob θ x u := by
     rw [← Integral_EqSAndEqA.eq.MulRealPreimageSProb (M := M) θ t x u]
-    have hset : MeasurableSet (s t ⁻¹' {x} ∩ a t ⁻¹' {u}) :=
+    have hset : MeasurableSet (state t ⁻¹' {x} ∩ action t ⁻¹' {u}) :=
       (Random.Measurable_S t (measurableSet_singleton _)).inter (Random.Measurable_A t (measurableSet_singleton _))
     rw [← integral_indicator_one hset]
     congr 1
     ext ω
-    by_cases h1 : s t ω = x <;> by_cases h2 : a t ω = u <;>
+    by_cases h1 : state t ω = x <;> by_cases h2 : action t ω = u <;>
       simp [Set.indicator, h1, h2]
-  show π.prob (a (S := S) (A := A) t, s (S := S) (A := A) t) (u, x) /
-      (π.map (fun ω ↦ ((a (S := S) (A := A) t, s (S := S) (A := A) t) ω).2)).rnDeriv ReferenceMeasure.measure x = _
+  show π.prob (action (S := S) (A := A) t, state (S := S) (A := A) t) (u, x) /
+      (π.map (fun ω ↦ ((action (S := S) (A := A) t, state (S := S) (A := A) t) ω).2)).rnDeriv ReferenceMeasure.measure x = _
   rw [hnum, hden, ← ofReal_measureReal (measure_ne_top _ _), ← ofReal_measureReal (measure_ne_top _ _),
     hxu, ENNReal.ofReal_mul measureReal_nonneg]
-  have h0 : ENNReal.ofReal (π.real (s t ⁻¹' {x})) ≠ 0 := by
+  have h0 : ENNReal.ofReal (π.real (state t ⁻¹' {x})) ≠ 0 := by
     rw [ENNReal.ofReal_ne_zero_iff]
     exact lt_of_le_of_ne measureReal_nonneg (Ne.symm h)
   rw [mul_comm]

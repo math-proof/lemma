@@ -20,13 +20,13 @@ private lemma main
   (x : S)
   (u : A) :
 -- imply
-  ∫ ω, (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) ∂(M θ) =
-    (M θ).real (s t ⁻¹' {x}) * M.pol.prob θ x u := by
+  ∫ ω, (if state t ω = x ∧ action t ω = u then (1:ℝ) else 0) ∂(M θ) =
+    (M θ).real (state t ⁻¹' {x}) * M.pol.prob θ x u := by
 -- proof
   have := M.env.reward_markov
-  have h₁ : ∀ ω, (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) =
-      (if s t ω = x then (1:ℝ) else 0) * (fun z : ℝ × S × A => if z.2.2 = u then (1:ℝ) else 0) (ω t) := by
-    intro ω; simp only [s, a]
+  have h₁ : ∀ ω, (if state t ω = x ∧ action t ω = u then (1:ℝ) else 0) =
+      (if state t ω = x then (1:ℝ) else 0) * (fun z : ℝ × S × A => if z.2.2 = u then (1:ℝ) else 0) (ω t) := by
+    intro ω; simp only [state, action]
     by_cases h1 : (ω t).2.1 = x <;> by_cases h2 : (ω t).2.2 = u <;> simp [h1, h2]
   simp_rw [h₁]
   rw [Integral_MulEqS.eq.MulRealPreimageSIntegral.of.All_LeNorm.StronglyMeasurable (M := M) (Real.StronglyMeasurable_Eq22 u) (Norm_1.le.One) θ t x]

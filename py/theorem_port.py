@@ -1216,8 +1216,7 @@ def extract_opens(text: str) -> str:
     Identifiers that resolved via an ``open`` in the source (e.g.
     ``open groupCohomology`` making ``inhomogeneousCochains`` visible)
     fail as unknown identifiers in the skeleton unless the open is
-    preserved.  Emitted after the imports; prune later with
-    ``delete_open.*`` per AGENTS.md.
+    preserved.  Emitted after the imports.
 
     Lines ending in ``in`` are command modifiers (``open Foo in <cmd>``)
     scoping a single source declaration that is not ported — skipped.

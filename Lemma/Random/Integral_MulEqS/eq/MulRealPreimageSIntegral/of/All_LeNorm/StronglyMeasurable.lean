@@ -25,14 +25,14 @@ private lemma main
   (t : ℕ)
   (x : S) :
 -- imply
-  ∫ ω, (if s t ω = x then (1:ℝ) else 0) * g (ω t) ∂(M θ) =
-    (M θ).real (s t ⁻¹' {x}) * ∫ z, g z ∂(M.stageK θ x) := by
+  ∫ ω, (if state t ω = x then (1:ℝ) else 0) * g (ω t) ∂(M θ) =
+    (M θ).real (state t ⁻¹' {x}) * ∫ z, g z ∂(M.stageK θ x) := by
 -- proof
   have hm : StronglyMeasurable (fun z : ℝ × S × A => (if z.2.1 = x then (1:ℝ) else 0) * g z) :=
     ((StronglyMeasurable.discrete (fun y : S => if y = x then (1:ℝ) else 0)).comp_measurable measurable_snd.fst).mul hg
-  have : IsProbabilityMeasure ((M θ).map (s t)) :=
+  have : IsProbabilityMeasure ((M θ).map (state t)) :=
     Measure.isProbabilityMeasure_map (Random.Measurable_S t).aemeasurable
-  have e1 : ∫ ω, (if s t ω = x then (1:ℝ) else 0) * g (ω t) ∂(M θ) =
+  have e1 : ∫ ω, (if state t ω = x then (1:ℝ) else 0) * g (ω t) ∂(M θ) =
       ∫ z, (if z.2.1 = x then (1:ℝ) else 0) * g z ∂((M θ).map (fun ω => ω t)) := by
     rw [integral_map (measurable_pi_apply t).aemeasurable hm.aestronglyMeasurable]; rfl
   rw [e1, Map.eq.StageK, Integral.eq.Integral_Integral.of.All_LeNorm.StronglyMeasurable hm (LeNorm_Mul1.of.All_LeNorm (p := (fun z : ℝ × S × A => z.2.1 = x)) hC)]

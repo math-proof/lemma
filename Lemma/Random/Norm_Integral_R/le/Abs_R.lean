@@ -17,9 +17,9 @@ private lemma main
   (B : Set (ℕ → ℝ × S × A))
   (t : ℕ) :
 -- imply
-  ‖∫ ω, r t ω ∂(M θ)[|B]‖ ≤ |M.env.R| := by
+  ‖∫ ω, reward t ω ∂(M θ)[|B]‖ ≤ |M.env.R| := by
 -- proof
-  have hae : ∀ᵐ ω ∂(M θ)[|B], ‖r t ω‖ ≤ |M.env.R| :=
+  have hae : ∀ᵐ ω ∂(M θ)[|B], ‖reward t ω‖ ≤ |M.env.R| :=
     cond_absolutelyContinuous.ae_le ((MEqR_Rc (M := M) θ t).mono fun ω h => by rw [h]; exact NormRc.le.Abs_R (M := M) _)
   if hB : M θ B = 0 then
     rw [cond_eq_zero_of_meas_eq_zero hB]

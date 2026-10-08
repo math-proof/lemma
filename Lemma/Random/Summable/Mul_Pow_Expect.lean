@@ -20,7 +20,7 @@ private lemma main
   (B : Set (ℕ → ℝ × S × A))
   (t : ℕ) :
 -- imply
-  Summable (fun k => γ ^ k * ∫ ω, r (t + k) ω ∂(M θ)[|B]) := by
+  Summable (fun k => γ ^ k * ∫ ω, reward (t + k) ω ∂(M θ)[|B]) := by
 -- proof
   classical
   exact Summable_MulPowIntegral_R_Add.of.In_Ico (M := M) h₀ θ B t

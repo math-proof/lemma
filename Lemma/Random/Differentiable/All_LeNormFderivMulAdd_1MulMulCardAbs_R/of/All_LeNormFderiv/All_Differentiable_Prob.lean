@@ -22,11 +22,11 @@ private lemma main
   (h₁ : ∀ θ x u, ‖fderiv ℝ (fun θ => M.pol.prob θ x u) θ‖ ≤ Cp)
   (t : ℕ) :
 -- imply
-  Differentiable ℝ (fun θ => ∫ ω, r t ω ∂(M θ)) ∧
-    ∀ θ, ‖fderiv ℝ (fun θ => ∫ ω, r t ω ∂(M θ)) θ‖ ≤
+  Differentiable ℝ (fun θ => ∫ ω, reward t ω ∂(M θ)) ∧
+    ∀ θ, ‖fderiv ℝ (fun θ => ∫ ω, reward t ω ∂(M θ)) θ‖ ≤
     (t + 1) * (Fintype.card A * Cp * |M.env.R|) := by
 -- proof
-  have e : (fun θ => ∫ ω, r t ω ∂(M θ)) = fun θ => ∑ x, M.env.init.real {x} * M.W θ M.rc t x :=
+  have e : (fun θ => ∫ ω, reward t ω ∂(M θ)) = fun θ => ∑ x, M.env.init.real {x} * M.W θ M.rc t x :=
     funext fun θ => Integral_R.eq.Sum_MulRealWRc (M := M) θ t
   rw [e]
   have hW := fun x => Tensor.Differentiable.All_LeNormFderivMulAdd_1MulMulCard.of.All_LeNorm.StronglyMeasurable.All_LeNormFderiv.All_Differentiable_Prob (M := M) h₀ h₁ (Random.StronglyMeasurableRc (M := M)) (NormRc.le.Abs_R (M := M)) t x

@@ -29,11 +29,11 @@ private lemma main
   (t : ℕ)
   (ψ : S → A → E) :
 -- imply
-  ∫ ω, G γ t ω • ψ (s t ω) (a t ω) ∂(M θ) =
-    ∫ ω, M.Q θ γ t (s t ω) (a t ω) • ψ (s t ω) (a t ω) ∂(M θ) := by
+  ∫ ω, G γ t ω • ψ (state t ω) (action t ω) ∂(M θ) =
+    ∫ ω, M.Q θ γ t (state t ω) (action t ω) • ψ (state t ω) (action t ω) ∂(M θ) := by
 -- proof
-  have hX : Measurable (fun ω : ℕ → ℝ × S × A => (s t ω, a t ω)) := (Random.Measurable_S t).prodMk (Random.Measurable_A t)
-  have hI : ∀ x u, Integrable (fun ω => (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) * G γ t ω)
+  have hX : Measurable (fun ω : ℕ → ℝ × S × A => (state t ω, action t ω)) := (Random.Measurable_S t).prodMk (Random.Measurable_A t)
+  have hI : ∀ x u, Integrable (fun ω => (if state t ω = x ∧ action t ω = u then (1:ℝ) else 0) * G γ t ω)
       (M θ) := by
     intro x u
     refine Integrable.of_bound (C := (1 - γ)⁻¹ * |M.env.R|) ?_ ?_

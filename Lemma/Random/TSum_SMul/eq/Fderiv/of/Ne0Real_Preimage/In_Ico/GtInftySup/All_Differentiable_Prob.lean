@@ -10,8 +10,8 @@ import Lemma.Random.Integral_MulEqSR_Add.eq.MulRealPreimageSWRc
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
 
 
-private lemma cond_r_W [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A] [DecidableEq S] (M : Model Θ S A) (θ : Θ) (t k : ℕ) (x : S) (hP : (M θ).real (s t ⁻¹' {x}) ≠ 0) :
-    ∫ ω, r (t + k) ω ∂(M θ)[|s t ⁻¹' {x}] = M.W θ M.rc k x := by
+private lemma cond_r_W [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A] [DecidableEq S] (M : Model Θ S A) (θ : Θ) (t k : ℕ) (x : S) (hP : (M θ).real (state t ⁻¹' {x}) ≠ 0) :
+    ∫ ω, reward (t + k) ω ∂(M θ)[|state t ⁻¹' {x}] = M.W θ M.rc k x := by
   rw [Integral.eq.MulRealPreimageSIntegral_MulEqS, Integral_MulEqSR_Add.eq.MulRealPreimageSWRc, inv_mul_cancel_left₀ hP]
 
 /--
@@ -29,17 +29,17 @@ private lemma main
   (t : ℕ)
   (x : S)
   (θ : Θ)
-  (h₃ : (M θ).real (s t ⁻¹' {x}) ≠ 0) :
+  (h₃ : (M θ).real (state t ⁻¹' {x}) ≠ 0) :
 -- imply
-  ∑' k, γ ^ k • fderiv ℝ (fun θ => ∫ ω, r (t + k) ω ∂(M θ)[|s t ⁻¹' {x}]) θ =
+  ∑' k, γ ^ k • fderiv ℝ (fun θ => ∫ ω, reward (t + k) ω ∂(M θ)[|state t ⁻¹' {x}]) θ =
     fderiv ℝ (fun θ => M.V θ γ t x) θ := by
 -- proof
   obtain ⟨Cp, hCp⟩ := id h₁
   have hC : ∀ θ x u, ‖fderiv ℝ (fun θ => M.pol.prob θ x u) θ‖ ≤ Cp := fun θ x u => by
     simpa [gradient, LinearIsometryEquiv.norm_map] using hCp ⟨(θ, x, u), rfl⟩
-  have hc : ContinuousAt (fun θ' => (M θ').real (s t ⁻¹' {x})) θ :=
+  have hc : ContinuousAt (fun θ' => (M θ').real (state t ⁻¹' {x})) θ :=
     (Differentiable_RealPreimageS.of.GtInftySup.All_Differentiable_Prob (M := M) h₀ h₁ t x θ).continuousAt
-  have hk : ∀ k, fderiv ℝ (fun θ => ∫ ω, r (t + k) ω ∂(M θ)[|s t ⁻¹' {x}]) θ =
+  have hk : ∀ k, fderiv ℝ (fun θ => ∫ ω, reward (t + k) ω ∂(M θ)[|state t ⁻¹' {x}]) θ =
       fderiv ℝ (fun θ => M.W θ M.rc k x) θ := by
     intro k
     refine Filter.EventuallyEq.fderiv_eq ?_

@@ -79,6 +79,7 @@ export function proofRules(ctx) {
             tokenRules(ctx, d, i, from);
         }
         bulletRule(ctx, d, b.lines);
+        if (b.isLemma) termModeExactRule(ctx, d);
         if (!ctx.astCovered.has('have-inline-once')) haveOnceRule(ctx, d, b.lines);
         holeRule(ctx, d, b.lines);
     }
@@ -190,6 +191,58 @@ function tokenRules(ctx, d, i, from) {
     });
 
     // `?_` / `?x` holes: see `holeRule`
+}
+
+/**
+ * `term-mode-exact`: the whole proof is a single `exact e` — `… := by exact e`, or `… := by` / `-- proof` / `  exact e`
+ * (blank / comment lines in between; `e` may continue on deeper lines) — so it should be the term itself:
+ * `… :=` / `-- proof` / `  e` (Lemma/Random/Measurable_R.lean). Not when the block has another tactic (a further line
+ * at the tactic's indentation), `;` / `<;>` at the top level, or a `·` / `<;>` continuation line; not `exact?` / `exacts`.
+ * Records the proof's line range in `ctx.termModeExact`: `lintLean` drops the `apply`-instead-of-`exact` hints there.
+ */
+function termModeExactRule(ctx, d) {
+    const { P } = ctx;
+    const a = d.sig?.assign;
+    if (!a) return;
+    const tail = P.code[a.line].slice(a.col + 2);
+    const m = /^(\s*)by(?![\p{L}\p{N}_'!?.])(\s*)(.*)$/u.exec(tail);
+    if (!m) return;
+    const byCol = a.col + 2 + m[1].length;
+    let exLine = a.line;
+    let exCol = byCol + 2 + m[2].length;
+    let tacCol = P.indent[a.line]; // one-line `:= by exact e`: every later line of the declaration continues `e`
+    if (!m[3].trim()) {
+        exLine = -1;
+        for (let k = a.line + 1; k < d.end; k++) if (P.indent[k] >= 0) { exLine = k; break; }
+        if (exLine < 0) return;
+        exCol = P.indent[exLine];
+        tacCol = exCol; // a later line at (or left of) the `exact` column would be a second tactic
+    }
+    const first = P.code[exLine].slice(exCol);
+    const em = /^exact(?![\p{L}\p{N}_'!?.])\s*/u.exec(first);
+    if (!em || !first.slice(em[0].length).trim()) return;
+    let last = exLine;
+    const parts = [first];
+    for (let k = exLine + 1; k < d.end; k++) {
+        if (P.indent[k] < 0) continue;
+        if (P.indent[k] <= tacCol) return;
+        if (/^\s*(<;>|·)/.test(P.code[k])) return;
+        parts.push(P.code[k]);
+        last = k;
+    }
+    let combined = false;
+    walk(parts.join('\n'), (ch, j, depth) => {
+        if (depth === 0 && ch === ';') combined = true; // `tac; tac` and `tac <;> tac`
+    }, []);
+    if (combined) return;
+    // the term as written (raw source), for the message
+    const at = exCol + em[0].length;
+    const rawFirst = P.raw[exLine].slice(at, at + P.code[exLine].slice(at).trimEnd().length); // no trailing comment
+    let term = rawFirst.length > 60 ? rawFirst.slice(0, 59) + '…' : rawFirst;
+    if (last > exLine && !term.endsWith('…')) term += ' …';
+    (ctx.termModeExact ??= []).push({ from: a.line, to: last, byLine: a.line, byCol });
+    ctx.warn('term-mode-exact', a.line + 1, byCol + 1,
+        `the proof is a single \`exact\`: use term mode — \`… :=\` (no \`by\`) / \`-- proof\` / \`  ${term}\` (the term without \`exact\`, 2-indented, as in Lemma/Random/Measurable_R.lean); this takes precedence over "prefer \`apply\` instead of \`exact\`"`);
 }
 
 const escapeRe = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');

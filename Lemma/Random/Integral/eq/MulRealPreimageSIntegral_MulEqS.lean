@@ -18,13 +18,13 @@ private lemma main
   (x : S)
   (f : (ℕ → ℝ × S × A) → ℝ) :
 -- imply
-  ∫ ω, f ω ∂(M θ)[|s t ⁻¹' {x}] =
-    ((M θ).real (s t ⁻¹' {x}))⁻¹ * ∫ ω, (if s t ω = x then (1:ℝ) else 0) * f ω ∂(M θ) := by
+  ∫ ω, f ω ∂(M θ)[|state t ⁻¹' {x}] =
+    ((M θ).real (state t ⁻¹' {x}))⁻¹ * ∫ ω, (if state t ω = x then (1:ℝ) else 0) * f ω ∂(M θ) := by
 -- proof
   rw [Integral.eq.MulRealIntegral_MulIndicator1.of.MeasurableSet (M := M) (Random.Measurable_S t (measurableSet_singleton x)) θ]
   congr 2
   funext ω
-  by_cases h : s t ω = x <;> simp [h]
+  by_cases h : state t ω = x <;> simp [h]
 
 
 -- created on 2026-10-07

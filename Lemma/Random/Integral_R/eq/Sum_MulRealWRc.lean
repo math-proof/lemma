@@ -19,13 +19,13 @@ private lemma main
   (θ : Θ)
   (t : ℕ) :
 -- imply
-  ∫ ω, r t ω ∂(M θ) = ∑ x, M.env.init.real {x} * M.W θ M.rc t x := by
+  ∫ ω, reward t ω ∂(M θ) = ∑ x, M.env.init.real {x} * M.W θ M.rc t x := by
 -- proof
-  have h₁ : ∀ ω : ℕ → ℝ × S × A, r t ω = ∑ x, (if s 0 ω = x then (1:ℝ) else 0) * r (0 + t) ω := by
+  have h₁ : ∀ ω : ℕ → ℝ × S × A, reward t ω = ∑ x, (if state 0 ω = x then (1:ℝ) else 0) * reward (0 + t) ω := by
     intro ω
     rw [← Finset.sum_mul, Real.Sum_Eq.eq.One, one_mul, zero_add]
   simp_rw [h₁]
-  rw [integral_finsetSum _ (fun x _ => Integrable_Mul_R.of.Measurable (M := M) (s 0) (Random.Measurable_S 0) θ
+  rw [integral_finsetSum _ (fun x _ => Integrable_Mul_R.of.Measurable (M := M) (state 0) (Random.Measurable_S 0) θ
     (fun y => if y = x then (1:ℝ) else 0) (0 + t))]
   refine Finset.sum_congr rfl fun x _ => ?_
   rw [Integral_MulEqSR_Add.eq.MulRealPreimageSWRc (M := M) θ 0 t x, RealPreimageS0.eq.Real]

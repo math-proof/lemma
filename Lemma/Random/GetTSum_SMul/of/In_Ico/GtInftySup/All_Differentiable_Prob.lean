@@ -11,7 +11,7 @@ open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Mode
 
 
 private lemma Er_bdd [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A] [DecidableEq S] (M : Model Θ S A) (θ : Θ) (t : ℕ) :
-    ‖∫ ω, r t ω ∂(M θ)‖ ≤ |M.env.R| := by
+    ‖∫ ω, reward t ω ∂(M θ)‖ ≤ |M.env.R| := by
   rw [Integral_R.eq.Sum_MulRealWRc]
   calc _ ≤ ∑ x, ‖M.env.init.real {x} * M.W θ M.rc t x‖ := norm_sum_le _ _
     _ ≤ ∑ x, M.env.init.real {x} * |M.env.R| := by
@@ -34,8 +34,8 @@ private lemma main
   (h₂ : γ ∈ Set.Ico 0 1)
   (θ : Θ) :
 -- imply
-  HasFDerivAt (fun θ => ∑' t, γ ^ t * ∫ ω, r t ω ∂(M θ))
-    (∑' t, γ ^ t • fderiv ℝ (fun θ => ∫ ω, r t ω ∂(M θ)) θ) θ := by
+  HasFDerivAt (fun θ => ∑' t, γ ^ t * ∫ ω, reward t ω ∂(M θ))
+    (∑' t, γ ^ t • fderiv ℝ (fun θ => ∫ ω, reward t ω ∂(M θ)) θ) θ := by
 -- proof
   obtain ⟨Cp, hCp⟩ := id h₁
   have hC : ∀ θ x u, ‖fderiv ℝ (fun θ => M.pol.prob θ x u) θ‖ ≤ Cp := fun θ x u => by

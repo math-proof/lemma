@@ -18,7 +18,7 @@ private lemma main
   (B : Set (ℕ → ℝ × S × A))
   (t : ℕ) :
 -- imply
-  ‖∫ ω, r t ω ∂(M θ)[|B]‖ ≤ ‖M.env.R‖ := by
+  ‖∫ ω, reward t ω ∂(M θ)[|B]‖ ≤ ‖M.env.R‖ := by
 -- proof
   classical
   simpa [Real.norm_eq_abs] using Norm_Integral_R.le.Abs_R (M := M) θ B t

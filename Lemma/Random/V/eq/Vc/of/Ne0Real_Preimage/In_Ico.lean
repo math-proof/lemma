@@ -17,7 +17,7 @@ private lemma main
   (h₀ : γ ∈ Set.Ico 0 1)
   (t : ℕ)
   (x : S)
-  (h₁ : (M θ).real (s t ⁻¹' {x}) ≠ 0) :
+  (h₁ : (M θ).real (state t ⁻¹' {x}) ≠ 0) :
 -- imply
   M.V θ γ t x = M.Vc θ γ x := by
 -- proof

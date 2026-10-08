@@ -19,7 +19,7 @@ private lemma Q_eq_Qc
   (t : ℕ)
   (x : S)
   (u : A)
-  (hP : (M θ).real (s t ⁻¹' {x}) * M.pol.prob θ x u ≠ 0) :
+  (hP : (M θ).real (state t ⁻¹' {x}) * M.pol.prob θ x u ≠ 0) :
   M.Q θ γ t x u = M.Qc θ γ x u := by
   apply Q.eq.AddIntegral_RcMul_Sum_MulTTSum_MulPowW.of.NeMulRealPreimageSProb_0.In_Ico (M := M) θ t x u hγ hP
 
@@ -38,7 +38,7 @@ private lemma main
   (h₀ : ∀ x u, Differentiable ℝ (fun θ => M.pol.prob θ x u))
   (h₁ : sup[θ, x, u] ‖∇[θ] M.pol.prob θ x u‖ < ∞)
   (h₂ : γ ∈ Set.Ico 0 1)
-  (h₃ : (M θ).real (s t ⁻¹' {x}) ≠ 0) :
+  (h₃ : (M θ).real (state t ⁻¹' {x}) ≠ 0) :
 -- imply
   fderiv ℝ (fun θ' => M.V θ' γ t x) θ =
     ∑ u, M.Q θ γ t x u • fderiv ℝ (fun θ' => M.pol.prob θ' x u) θ +

@@ -8,8 +8,6 @@ Guidelines and prompts for using LLMs to write and refactor Lean 4 proofs in thi
     Besides Lean errors it prints style warnings `warning:LINE:COL: [rule-id] … (AGENTS.md: "…")` for the style rules the compiler checks (layout, binder order, sections, tactics, dates, `open`, attribute docstrings). Fix every warning and re-run until none remain; only leave one if it is a false positive, and name its rule id in your summary. Warnings never fail the run or change the saved lemma.
   - py/delete_import.py
     simplify `import` statements
-  - sh/delete_open.sh
-    simplify `open` statements
   - mjs/lemmaPath.mjs
     suggest a better lemma path if it isn't consistent
 - Attribute-generated lemmas

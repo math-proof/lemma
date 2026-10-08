@@ -15,7 +15,7 @@ private lemma main
 -- given
   (θ : Θ) :
 -- imply
-  ∀ᵐ ω ∂(M θ), ∀ k, ‖r k ω‖ ≤ |M.env.R| := by
+  ∀ᵐ ω ∂(M θ), ∀ k, ‖reward k ω‖ ≤ |M.env.R| := by
 -- proof
   rw [ae_all_iff]
   exact fun k => (MEqR_Rc (M := M) θ k).mono fun ω h => by rw [h]; exact NormRc.le.Abs_R (M := M) _

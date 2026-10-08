@@ -16,7 +16,7 @@ private lemma main
   (θ : Θ)
   (t : ℕ) :
 -- imply
-  r t =ᵐ[M θ] fun ω ↦ M.rc (ω t) := by
+  reward t =ᵐ[M θ] fun ω ↦ M.rc (ω t) := by
 -- proof
   have hs : MeasurableSet {z : ℝ × S × A | z.1 ∉ Set.Icc (-M.env.R) M.env.R} :=
     (measurableSet_Icc.compl).preimage measurable_fst
@@ -29,7 +29,7 @@ private lemma main
   simp only [Set.mem_ofPred_eq] at hω ⊢
   intro hI
   apply hω
-  simp only [Model.rc, r]
+  simp only [Model.rc, reward]
   rw [min_eq_right hI.2, max_eq_right hI.1]
 
 

@@ -27,7 +27,7 @@ private lemma main
   (h₀ : γ ∈ Set.Ico 0 1)
   (h₁ : ∀ x u, Differentiable ℝ (fun θ => M.pol.prob θ x u))
   (h₂ : sup[θ, x, u] ‖∇[θ] M.pol.prob θ x u‖ < ∞)
-  (h₃ : (M θ).real (s t ⁻¹' {x}) ≠ 0) :
+  (h₃ : (M θ).real (state t ⁻¹' {x}) ≠ 0) :
 -- imply
   ∇[θ] M.V θ γ t x =
     ∑ u, M.Q θ γ t x u • ∇[θ] M.pol.prob θ x u +

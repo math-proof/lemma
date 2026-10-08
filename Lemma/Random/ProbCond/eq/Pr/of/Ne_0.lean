@@ -18,10 +18,10 @@ private lemma main
   {t : ℕ}
   {x : S}
 -- given
-  (h₀ : (M θ).real (s t ⁻¹' {x}) ≠ 0)
+  (h₀ : (M θ).real (state t ⁻¹' {x}) ≠ 0)
   (u : A) :
 -- imply
-  ((M θ)[|s t ⁻¹' {x}]).real (a t ⁻¹' {u}) = M.Pr θ x u := by
+  ((M θ)[|state t ⁻¹' {x}]).real (action t ⁻¹' {u}) = M.Pr θ x u := by
 -- proof
   classical
   rw [measureReal_def, cond_apply (Random.Measurable_S t (measurableSet_singleton x)), ENNReal.toReal_mul,

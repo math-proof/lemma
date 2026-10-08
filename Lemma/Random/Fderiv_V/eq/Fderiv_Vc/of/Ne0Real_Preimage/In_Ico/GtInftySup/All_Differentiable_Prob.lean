@@ -22,7 +22,7 @@ private lemma main
   (t : ℕ)
   (x : S)
   (θ : Θ)
-  (h₃ : (M θ).real (s t ⁻¹' {x}) ≠ 0) :
+  (h₃ : (M θ).real (state t ⁻¹' {x}) ≠ 0) :
 -- imply
   fderiv ℝ (fun θ' => M.V θ' γ t x) θ = fderiv ℝ (fun θ' => M.Vc θ' γ x) θ := by
 -- proof

@@ -46,28 +46,28 @@ private lemma main
   (h₀ : γ ∈ Set.Ico 0 1)
   (hS : (ReferenceMeasure.measure : Measure S) = Measure.count)
   (hA : (ReferenceMeasure.measure : Measure A) = Measure.count)
-  (h₁ : ∀ θ t («s.bvar» : ℕ → S) («a.bvar» : ℕ → A), Q θ t («s.bvar» t) («a.bvar» t) = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «s.bvar» t ∧ a t = «a.bvar» t))
-  (h₂ : ∀ θ t («s.bvar» : ℕ → S), V θ t («s.bvar» t) = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «s.bvar» t))
+  (h₁ : ∀ θ t («s.bvar» : ℕ → S) («a.bvar» : ℕ → A), Q θ t («s.bvar» t) («a.bvar» t) = 𝔼[reward : M θ]((γ ^ (id : ℕ → ℕ)) @ reward[t:] | state t = «s.bvar» t ∧ action t = «a.bvar» t))
+  (h₂ : ∀ θ t («s.bvar» : ℕ → S), V θ t («s.bvar» t) = 𝔼[reward : M θ]((γ ^ (id : ℕ → ℕ)) @ reward[t:] | state t = «s.bvar» t))
   (h₃ : ∀ x u, Differentiable ℝ (fun θ => M.pol.prob θ x u))
   (h₄ : sup[θ, x, u] ‖∇[θ] M.pol.prob θ x u‖ < ∞)
-  (h₅ : (M θ).real (s 0 ⁻¹' {x}) ≠ 0)
+  (h₅ : (M θ).real (state 0 ⁻¹' {x}) ≠ 0)
   (n : ℕ) :
 -- imply
   ∇[θ] V θ 0 x =
-    ∑ t ∈ Finset.range n, γ ^ t • ∑ y, ((M θ)[|s 0 ⁻¹' {x}]).real (s t ⁻¹' {y}) •
+    ∑ t ∈ Finset.range n, γ ^ t • ∑ y, ((M θ)[|state 0 ⁻¹' {x}]).real (state t ⁻¹' {y}) •
         ∑ u, Q θ t y u • ∇[θ] M.pol.prob θ y u +
-      γ ^ n • ∑ y, ((M θ)[|s 0 ⁻¹' {x}]).real (s n ⁻¹' {y}) • ∇[θ] V θ n y := by
+      γ ^ n • ∑ y, ((M θ)[|state 0 ⁻¹' {x}]).real (state n ⁻¹' {y}) • ∇[θ] V θ n y := by
 -- proof
-  have hr : ∀ t, Measurable (r (S := S) (A := A) t) := Model.r_meas' (S := S) (A := A)
-  have hpR : Measurable (fun ω t ↦ r (S := S) (A := A) t ω) := measurable_pi_lambda _ hr
+  have hr : ∀ t, Measurable (reward (S := S) (A := A) t) := Model.r_meas' (S := S) (A := A)
+  have hpR : Measurable (fun ω t ↦ reward (S := S) (A := A) t ω) := measurable_pi_lambda _ hr
   have hfG : ∀ t, Measurable (fun integ : ℕ → ℝ ↦ (γ ^ (id : ℕ → ℕ)) @ integ[t:]) := fun t =>
     Measurable.tsum fun k => (measurable_pi_apply (t + k)).const_mul _
   have hQ : Q = fun θ => M.Q θ γ := funext fun θ => funext fun t => funext fun x => funext fun u => by
     rw [h₁ θ t (fun _ ↦ x) (fun _ ↦ u)]
     simp only [Expectation.asRV_process]
     rw [Expectation.condEvent_eq_integral hpR.aemeasurable (hfG t)]
-    have hpre : JointRandomSymbol (s (S := S) (A := A) t) (a (S := S) (A := A) t) ⁻¹' {(x, u)} =
-        s t ⁻¹' {x} ∩ a t ⁻¹' {u} := by
+    have hpre : JointRandomSymbol (state (S := S) (A := A) t) (action (S := S) (A := A) t) ⁻¹' {(x, u)} =
+        state t ⁻¹' {x} ∩ action t ⁻¹' {u} := by
       ext ω; simp [JointRandomSymbol, Prod.ext_iff]
     rw [hpre]
     exact Integral_G.eq.TSum_MulPowIntegral_R_Add.of.In_Ico (M := M) h₀ θ _ t
@@ -79,25 +79,25 @@ private lemma main
   subst hQ hV
   classical
   beta_reduce
-  have h₈ : ∀ t y, ((M θ)[|s 0 ⁻¹' {x}]).real (s t ⁻¹' {y}) = M.Pn θ t x y := fun t y => by
+  have h₈ : ∀ t y, ((M θ)[|state 0 ⁻¹' {x}]).real (state t ⁻¹' {y}) = M.Pn θ t x y := fun t y => by
     have h := RealPreimageSPreimageS_Add.eq.Pn.of.Ne0Real_Preimage (M := M) θ 0 t x y h₅
     rwa [zero_add] at h
   simp_rw [h₈]
   have hQ_expect : ∀ θ t («s.bvar» : ℕ → S) («a.bvar» : ℕ → A),
       M.Q θ γ t («s.bvar» t) («a.bvar» t) =
-        𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «s.bvar» t ∧ a t = «a.bvar» t) := by
+        𝔼[reward : M θ]((γ ^ (id : ℕ → ℕ)) @ reward[t:] | state t = «s.bvar» t ∧ action t = «a.bvar» t) := by
     intro θ t sb ab
     symm
     simp only [Expectation.asRV_process]
     rw [Expectation.condEvent_eq_integral hpR.aemeasurable (hfG t)]
-    have hpre : JointRandomSymbol (s (S := S) (A := A) t) (a (S := S) (A := A) t) ⁻¹' {(sb t, ab t)} =
-        s t ⁻¹' {sb t} ∩ a t ⁻¹' {ab t} := by
+    have hpre : JointRandomSymbol (state (S := S) (A := A) t) (action (S := S) (A := A) t) ⁻¹' {(sb t, ab t)} =
+        state t ⁻¹' {sb t} ∩ action t ⁻¹' {ab t} := by
       ext ω; simp [JointRandomSymbol, Prod.ext_iff]
     rw [hpre]
     exact Integral_G.eq.TSum_MulPowIntegral_R_Add.of.In_Ico (M := M) h₀ θ _ t
   have hV_expect : ∀ θ t («s.bvar» : ℕ → S),
       M.V θ γ t («s.bvar» t) =
-        𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «s.bvar» t) := by
+        𝔼[reward : M θ]((γ ^ (id : ℕ → ℕ)) @ reward[t:] | state t = «s.bvar» t) := by
     intro θ t sb
     symm
     rw [M.V_eq_integral θ γ t (sb t)]
@@ -121,11 +121,11 @@ private lemma main
         have hμAS : ReferenceMeasure.measure (α := A × S) = Measure.count := by
           show (ReferenceMeasure.measure : Measure A).prod (ReferenceMeasure.measure : Measure S) = _
           rw [hA, hS, Count.eq.ProdCountS]
-        have hSingle : ∀ θ t, SinglePSpace (M θ) (a (S := S) (A := A) t, s (S := S) (A := A) t) := fun _ t =>
+        have hSingle : ∀ θ t, SinglePSpace (M θ) (action (S := S) (A := A) t, state (S := S) (A := A) t) := fun _ t =>
           SinglePSpace.of.EqMeasureCount.Measurable ((Random.Measurable_A t).prodMk (Random.Measurable_S t)) hμAS
-        have hπ : ∀ u, ∇[θ] (ℙ[M θ]((a n) = u | (s n) = y) : ℝ) = ∇[θ] M.pol.prob θ y u := by
+        have hπ : ∀ u, ∇[θ] (ℙ[M θ]((action n) = u | (state n) = y) : ℝ) = ∇[θ] M.pol.prob θ y u := by
           intro u
-          have hc : ContinuousAt (fun θ' => (M θ').real (s n ⁻¹' {y})) θ :=
+          have hc : ContinuousAt (fun θ' => (M θ').real (state n ⁻¹' {y})) θ :=
             (Differentiable_RealPreimageS.of.GtInftySup.All_Differentiable_Prob (M := M) h₃ h₄ n y θ).continuousAt
           refine Filter.EventuallyEq.gradient_eq ?_
           filter_upwards [hc.eventually_ne hP] with θ' h
@@ -134,13 +134,13 @@ private lemma main
             ENNReal.toReal_ofReal (M.pol.nonneg θ' _ _)]
         simp_rw [hπ] at h
         rw [h]
-        have hSs : ∀ θ t, SinglePSpace (M θ) (s (S := S) (A := A) (t + 1), s (S := S) (A := A) t) :=
+        have hSs : ∀ θ t, SinglePSpace (M θ) (state (S := S) (A := A) (t + 1), state (S := S) (A := A) t) :=
           fun _ t => SinglePSpace.of.EqMeasureCount.EqMeasureCount.Measurable.Measurable
             (Random.Measurable_S (t + 1)) (Random.Measurable_S t) hS hS
-        have hP1 : ∀ z, (ℙ[M θ]((s (n + 1)) = z | (s n) = y) : ℝ) = M.P1 θ y z := by
+        have hP1 : ∀ z, (ℙ[M θ]((state (n + 1)) = z | (state n) = y) : ℝ) = M.P1 θ y z := by
           intro z
           have hDiv := ProbCond.eq.Div.of.Eq_Count.Eq_Count (π := M θ)
-            (x := s (S := S) (A := A) (n + 1)) (y := s (S := S) (A := A) n) hS hS z y
+            (x := state (S := S) (A := A) (n + 1)) (y := state (S := S) (A := A) n) hS hS z y
           rw [hDiv, ENNReal.toReal_div, ← RealPreimageSPreimageS_Add_1.eq.P1.of.Ne0Real_Preimage (M := M) θ n y z hP]
           rw [measureReal_def, cond_apply (Random.Measurable_S n (measurableSet_singleton y)),
             ENNReal.toReal_mul, ENNReal.toReal_inv, mul_comm, div_eq_mul_inv]

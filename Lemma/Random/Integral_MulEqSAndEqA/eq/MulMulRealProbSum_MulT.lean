@@ -25,8 +25,8 @@ private lemma main
   (u : A)
   (f : S → ℝ) :
 -- imply
-  ∫ ω, (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) * f (s (t + 1) ω) ∂(M θ) =
-    (M θ).real (s t ⁻¹' {x}) * M.pol.prob θ x u * ∑ y, M.T x u y * f y := by
+  ∫ ω, (if state t ω = x ∧ action t ω = u then (1:ℝ) else 0) * f (state (t + 1) ω) ∂(M θ) =
+    (M θ).real (state t ⁻¹' {x}) * M.pol.prob θ x u * ∑ y, M.T x u y * f y := by
 -- proof
   have hf : StronglyMeasurable (fun z : ℝ × S × A => f z.2.1) := (StronglyMeasurable.discrete f).comp_measurable measurable_snd.fst
   refine (Integral_Mul.eq.Integral_Mul_Kf.of.All_LeNorm.StronglyMeasurable.All_LeNorm.StronglyMeasurable (M := M) hf (fun z => Norm.le.Sum_Norm f z.2.1) (Real.StronglyMeasurable_Eq12AndEq22 x u) (Norm_1.le.One) θ t 1).trans ?_

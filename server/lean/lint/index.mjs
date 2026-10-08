@@ -12,7 +12,7 @@ import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { listLemmaTopLevelDirs } from '../lemmaSections.mjs';
 import { prepare, findDecls } from './scan.mjs';
-import { scanImportsAndOpens, openSection, openUnusedAndDuplicate, openPrefix, attrDocstring, dates, declKeywordDirText } from './headerRules.mjs';
+import { scanImportsAndOpens, openSection, openDuplicate, openPrefix, attrDocstring, dates, declKeywordDirText } from './headerRules.mjs';
 import { signatureRules } from './signatureRules.mjs';
 import { indentRules, proofRules, underscoreNameRule } from './proofRules.mjs';
 import { attrRules } from './attrRules.mjs';
@@ -39,7 +39,7 @@ const Q = {
     hole: 'use `_` as unused binders or unnamed holes, prefer `_` instead of `?_`/`?identifier`/`_identifier`',
     date: 'date created must be today, if date updated is the same as date created, it should be omitted.',
     openSec: 'use `open Section` if lemmas from that Section are imported',
-    openDel: 'check delete_open.* to simplify `open` statements',
+    openDup: 'simplify `open` statements',
     openPrefix: 'after `open Section`, prefer the short lemma name when unambiguous',
     mp: 'For `LHS.is.RHS` tagged with `@[mp]` / `@[mpr]`, prefer the generated one-direction lemmas `RHS.of.LHS` / `LHS.of.RHS` over calling `.mp` / `.mpr` on the iff.',
     comm: 'For `LHS.eq.RHS` tagged with `@[comm]`, prefer the generated commutative lemma `RHS.eq.LHS` over `simp [← LHS.eq.RHS]` or `rw [LHS.eq.RHS.symm]`.',
@@ -77,6 +77,8 @@ export const RULES = {
     'paren-by-semicolon': Q.parenBy,
     'from-by': Q.fromBy,
     'by-exact': Q.byExact,
+    // not an AGENTS.md rule (user request): a single-`exact` proof → term mode; the warning text carries the layout
+    'term-mode-exact': null,
     'hole-question': Q.hole,
     'binder-underscore-name': Q.hole,
     'date-created-missing': Q.date,
@@ -84,8 +86,7 @@ export const RULES = {
     'date-updated-same': Q.date,
     'date-order': Q.date,
     'open-section': Q.openSec,
-    'open-unused': Q.openDel,
-    'open-duplicate': Q.openDel,
+    'open-duplicate': Q.openDup,
     'open-prefix': Q.openPrefix,
     'attr-mp': Q.mp,
     'attr-comm': Q.comm,
@@ -95,7 +96,6 @@ export const RULES = {
 
 /** rules switched off by default (too noisy on the corpus; see the calibration notes in the README) */
 export const DISABLED = new Set([
-    'open-unused', // every corpus hit opens a section that is also a Mathlib / sympy namespace (e.g. `open MeasureTheory` for ∫, volume)
 ]);
 
 const ymd = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
@@ -160,7 +160,7 @@ export function lintLean(source, opts = {}) {
     // `decl-keyword-dir`: trust the tree only when it sees the same lemma/theorem declarations as the text scan
     if (tree && countLemmaTheoremNodes(tree) !== ctx.decls.filter((d) => d.kind === 'lemma' || d.kind === 'theorem').length)
         ctx.astCovered.delete('decl-keyword-dir');
-    const steps = [openSection, openUnusedAndDuplicate, openPrefix, declKeywordDirText, attrDocstring, dates, signatureRules, indentRules, proofRules, underscoreNameRule, attrRules];
+    const steps = [openSection, openDuplicate, openPrefix, declKeywordDirText, attrDocstring, dates, signatureRules, indentRules, proofRules, underscoreNameRule, attrRules];
     for (const step of steps) {
         try {
             step(ctx);
@@ -175,6 +175,14 @@ export function lintLean(source, opts = {}) {
             console.warn(`[lemmaLint] astRules: ${e?.message || e}`);
         }
     }
+    // `term-mode-exact` takes precedence inside a single-`exact` proof: the hints to write `apply` (with holes) instead of
+    // `exact` (`have-inline-once`, `hole-question` in an `exact`) and a `by-exact` at the same `by` are dropped there
+    const tm = ctx.termModeExact ?? [];
+    const superseded = (w) => w.line != null && tm.some((r) => w.line - 1 >= r.from && w.line - 1 <= r.to && (
+        w.rule === 'have-inline-once' ||
+        (w.rule === 'hole-question' && /^exact/.test(w.hole ?? '')) ||
+        (w.rule === 'by-exact' && w.line - 1 === r.byLine && w.col === r.byCol + 1)));
+    if (tm.length) warnings.splice(0, warnings.length, ...warnings.filter((w) => !superseded(w)));
     warnings.sort((a, b) => (a.line ?? Infinity) - (b.line ?? Infinity) || (a.col ?? 0) - (b.col ?? 0));
     return warnings;
 }

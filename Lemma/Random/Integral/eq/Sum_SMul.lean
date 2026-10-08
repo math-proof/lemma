@@ -20,7 +20,7 @@ private lemma main
   (t : ℕ)
   (φ : S → E) :
 -- imply
-  ∫ ω, φ (s t ω) ∂(M θ) = ∑ y, (M θ).real (s t ⁻¹' {y}) • φ y := by
+  ∫ ω, φ (state t ω) ∂(M θ) = ∑ y, (M θ).real (state t ⁻¹' {y}) • φ y := by
 -- proof
   have e := integral_map (μ := M θ) (Random.Measurable_S t).aemeasurable
     (f := φ) StronglyMeasurable.of_discrete.aestronglyMeasurable

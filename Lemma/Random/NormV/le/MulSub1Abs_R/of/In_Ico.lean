@@ -22,9 +22,9 @@ private lemma main
 -- proof
   have hq : 0 ≤ (1 - γ)⁻¹ * |M.env.R| := mul_nonneg (inv_nonneg.2 (by linarith [h₀.2])) (abs_nonneg _)
   rw [V_eq_integral]
-  have hae : ∀ᵐ ω ∂(M θ)[|s t ⁻¹' {x}], ‖G γ t ω‖ ≤ (1 - γ)⁻¹ * |M.env.R| :=
+  have hae : ∀ᵐ ω ∂(M θ)[|state t ⁻¹' {x}], ‖G γ t ω‖ ≤ (1 - γ)⁻¹ * |M.env.R| :=
     cond_absolutelyContinuous.ae_le ((Random.AeHasSumAndNormG.le.MulSub1Abs_R.of.In_Ico (M := M) θ h₀ t).mono fun ω h => h.2)
-  if hB : M θ (s t ⁻¹' {x}) = 0 then
+  if hB : M θ (state t ⁻¹' {x}) = 0 then
     rw [cond_eq_zero_of_meas_eq_zero hB]
     simpa using hq
   else

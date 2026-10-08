@@ -17,14 +17,14 @@ private lemma main
   (h₀ : γ ∈ Set.Ico 0 1)
   (t : ℕ) :
 -- imply
-  ∀ᵐ ω ∂(M θ), HasSum (fun k => γ ^ k * r (t + k) ω) (G γ t ω) ∧
+  ∀ᵐ ω ∂(M θ), HasSum (fun k => γ ^ k * reward (t + k) ω) (G γ t ω) ∧
     ‖G γ t ω‖ ≤ (1 - γ)⁻¹ * |M.env.R| := by
 -- proof
   filter_upwards [Random.AeNormR.le.Abs_R (M := M) θ] with ω h
-  have hb : ∀ k, ‖γ ^ k * r (t + k) ω‖ ≤ γ ^ k * |M.env.R| := fun k => by
+  have hb : ∀ k, ‖γ ^ k * reward (t + k) ω‖ ≤ γ ^ k * |M.env.R| := fun k => by
     rw [norm_mul, norm_pow, Real.norm_of_nonneg h₀.1]
     exact mul_le_mul_of_nonneg_left (h (t + k)) (pow_nonneg h₀.1 k)
-  have hs : Summable (fun k => γ ^ k * r (t + k) ω) :=
+  have hs : Summable (fun k => γ ^ k * reward (t + k) ω) :=
     Summable.of_norm_bounded ((summable_geometric_of_lt_one h₀.1 h₀.2).mul_right _) hb
   exact ⟨hs.hasSum, tsum_of_norm_bounded ((hasSum_geometric_of_lt_one h₀.1 h₀.2).mul_right _) hb⟩
 

@@ -18,8 +18,8 @@ private lemma main
   (h₀ : γ ∈ Set.Ico 0 1)
   (h₁ : c ∈ Set.Ico 0 1) :
 -- imply
-  ∀ᵐ ω ∂(M θ), ∀ t, ‖∑' k, c ^ k * (r (t + k) ω + γ * M.Vc θ γ (s (t + k + 1) ω) -
-    M.Vc θ γ (s (t + k) ω))‖ ≤ (1 - c)⁻¹ * M.deltaBound γ := by
+  ∀ᵐ ω ∂(M θ), ∀ t, ‖∑' k, c ^ k * (reward (t + k) ω + γ * M.Vc θ γ (state (t + k + 1) ω) -
+    M.Vc θ γ (state (t + k) ω))‖ ≤ (1 - c)⁻¹ * M.deltaBound γ := by
 -- proof
   filter_upwards [Random.AeNormSub.le.DeltaBound.of.In_Ico (M := M) θ h₀] with ω h t
   refine tsum_of_norm_bounded ((hasSum_geometric_of_lt_one h₁.1 h₁.2).mul_right _) fun k => ?_

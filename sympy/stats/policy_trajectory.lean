@@ -18,19 +18,19 @@ Lean model behind the sympy symbols used in `Tensor.*.policy_gradient_theorem`,
 * `s : ℕ → Ω → S` (states), `a : ℕ → Ω → A` (actions), `r : ℕ → Ω → ℝ` (rewards),
   with `S` and `A` finite;
 * `π` (the trainable weights) is a point `θ` of a real normed space `Θ`;
-* `Pr[a:π](a[t] | s[t])` is the policy `M.pol.prob θ (s t) (a t)`;
+* `Pr[a:π](a[t] | s[t])` is the policy `M.pol.prob θ (state t) (action t)`;
 * `Expectation[r, a:π](f)` is the Bochner integral `∫ ω, f ω ∂(M θ)`;
 * `Expectation[...](f | s[t] = x)` is the integral against Mathlib's conditional measure
-  `(M θ)[| s t ⁻¹' {x}]`;
-* `γ ** Stack[k](k) @ r[t:]` is `∑' k, γ ^ k * r (t + k)`;
+  `(M θ)[| state t ⁻¹' {x}]`;
+* `γ ** Stack[k](k) @ r[t:]` is `∑' k, γ ^ k * reward (t + k)`;
 * `Derivative[π]` is `fderiv ℝ · θ`.
 
-The environment is a standard (time-homogeneous) MDP: `s 0 ∼ init`, `a t ∼ π_θ(· | s t)`,
-`r t ∼ reward (s t, a t)`, `s (t + 1) ∼ trans (s t, a t)`, rewards bounded by `R`.
-The stage process `ω t = (r t, s t, a t)` (reward first, then the state-action pair, the order of the
-joint random variable `(r t, s t, a t)`) is a time-homogeneous Markov chain on `ℝ × S × A` with kernel
+The environment is a standard (time-homogeneous) MDP: `state 0 ∼ init`, `action t ∼ π_θ(· | state t)`,
+`reward t ∼ M.env.reward (state t, action t)`, `state (t + 1) ∼ trans (state t, action t)`, rewards bounded by `R`.
+The stage process `ω t = (reward t, state t, action t)` (reward first, then the state-action pair, the order of the
+joint random variable `(reward t, state t, action t)`) is a time-homogeneous Markov chain on `ℝ × S × A` with kernel
 `M.K θ`; its law `M.traj θ` is Mathlib's Ionescu-Tulcea measure `Kernel.trajMeasure` on `ℕ → ℝ × S × A`.
-The reward `r t` belongs to stage `t`: `r t ∼ reward (s t, a t)`.  The sympy reward hypothesis `Equal(r[t] | s[:t] & a[:t], r[t])` is not
+The reward `reward t` belongs to stage `t`: `reward t ∼ M.env.reward (state t, action t)`.  The sympy reward hypothesis `Equal(r[t] | s[:t] & a[:t], r[t])` is not
 built in; lemmas that carry it in sympy keep it as an explicit named hypothesis.
 -/
 open MeasureTheory ProbabilityTheory Finset
@@ -60,15 +60,15 @@ structure Model (Θ S A : Type*) [MeasurableSpace S] [MeasurableSpace A] [Fintyp
   pol : Policy Θ S A
 
 /-- reward at time `t` -/
-def r {S A : Type*} (t : ℕ) (ω : ℕ → ℝ × S × A) : ℝ := (ω t).1
+def reward {S A : Type*} (t : ℕ) (ω : ℕ → ℝ × S × A) : ℝ := (ω t).1
 /-- state at time `t` -/
-def s {S A : Type*} (t : ℕ) (ω : ℕ → ℝ × S × A) : S := (ω t).2.1
+def state {S A : Type*} (t : ℕ) (ω : ℕ → ℝ × S × A) : S := (ω t).2.1
 /-- action at time `t` -/
-def a {S A : Type*} (t : ℕ) (ω : ℕ → ℝ × S × A) : A := (ω t).2.2
+def action {S A : Type*} (t : ℕ) (ω : ℕ → ℝ × S × A) : A := (ω t).2.2
 
 /-- discounted return from time `t`: `γ ** Stack[k](k) @ r[t:]` -/
 noncomputable def G {S A : Type*} (γ : ℝ) (t : ℕ) (ω : ℕ → ℝ × S × A) : ℝ :=
-  ∑' k, γ ^ k * r (t + k) ω
+  ∑' k, γ ^ k * reward (t + k) ω
 
 variable {Θ S A : Type*}
   [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S]
@@ -131,7 +131,7 @@ noncomputable def Kf (θ : Θ) (f : ℝ × S × A → ℝ) : ℕ → ℝ × S ×
   | 0 => f
   | j + 1 => fun z ↦ ∫ w, Kf θ f j w ∂(M.K θ z)
 
-/-- `y ↦ 𝔼[f (ω (t + j)) | s t = y]`, the same for every time `t` (time-homogeneous chain) -/
+/-- `y ↦ 𝔼[f (ω (t + j)) | state t = y]`, the same for every time `t` (time-homogeneous chain) -/
 noncomputable def W (θ : Θ) (f : ℝ × S × A → ℝ) (j : ℕ) (y : S) : ℝ :=
   ∫ z, M.Kf θ f j z ∂(M.stageK θ y)
 
@@ -177,7 +177,7 @@ noncomputable def T (x : S) (u : A) (y : S) : ℝ := (M.env.trans (x, u)).real {
 def Pr (θ : Θ) (x : S) (u : A) : ℝ := M.pol.prob θ x u
 
 omit [MeasurableSingletonClass S] [Fintype S] [MeasurableSingletonClass A] [Fintype A] in
-theorem r_meas' (t : ℕ) : Measurable (r (S := S) (A := A) t) :=
+theorem r_meas' (t : ℕ) : Measurable (reward (S := S) (A := A) t) :=
   measurable_fst.comp (measurable_pi_apply t)
 
 omit [MeasurableSingletonClass S] [Fintype S] [MeasurableSingletonClass A] [Fintype A] in
@@ -185,27 +185,27 @@ theorem G_meas (γ : ℝ) (t : ℕ) : Measurable (G (S := S) (A := A) γ t) :=
   Measurable.tsum fun k => (r_meas' (t + k)).const_mul (γ ^ k)
 
 /-- state-value function `V(s[t] = x) = 𝔼[G[t] | s[t] = x] = 𝔼[γ ** Stack[k](k) @ r[t:] | s[t] = x]`,
-the expectation of the return `G[t]` under the conditional law `(M θ)[| s t ⁻¹' {x}]`
+the expectation of the return `G[t]` under the conditional law `(M θ)[| state t ⁻¹' {x}]`
 (`0` at unreachable `x`, where that measure is not a probability measure) -/
 noncomputable def V (θ : Θ) (γ : ℝ) (t : ℕ) (x : S) : ℝ :=
-  if h : (M θ) (s t ⁻¹' {x}) ≠ 0 then
-    haveI : IsProbabilityMeasure ((M θ)[|s t ⁻¹' {x}]) := cond_isProbabilityMeasure h
-    haveI : PSpace ((M θ)[|s t ⁻¹' {x}]) (G (S := S) (A := A) γ t) :=
+  if h : (M θ) (state t ⁻¹' {x}) ≠ 0 then
+    haveI : IsProbabilityMeasure ((M θ)[|state t ⁻¹' {x}]) := cond_isProbabilityMeasure h
+    haveI : PSpace ((M θ)[|state t ⁻¹' {x}]) (G (S := S) (A := A) γ t) :=
       ⟨(G_meas γ t).aemeasurable⟩
     let R := G (S := S) (A := A) γ t
-    𝔼[R : (M θ)[|s t ⁻¹' {x}]](R)
+    𝔼[R : (M θ)[|state t ⁻¹' {x}]](R)
   else 0
 
 omit [MeasurableSingletonClass A] in
 /-- `V` is the Bochner integral of `G` against the conditional measure (also at unreachable `x`,
 where the conditional measure is `0`) -/
 theorem V_eq_integral (θ : Θ) (γ : ℝ) (t : ℕ) (x : S) :
-    M.V θ γ t x = ∫ ω, G γ t ω ∂(M θ)[|s t ⁻¹' {x}] := by
+    M.V θ γ t x = ∫ ω, G γ t ω ∂(M θ)[|state t ⁻¹' {x}] := by
   unfold V
-  by_cases h : (M θ) (s t ⁻¹' {x}) ≠ 0
+  by_cases h : (M θ) (state t ⁻¹' {x}) ≠ 0
   · rw [dif_pos h]
-    have : IsProbabilityMeasure ((M θ)[|s t ⁻¹' {x}]) := cond_isProbabilityMeasure h
-    have : PSpace ((M θ)[|s t ⁻¹' {x}]) (G (S := S) (A := A) γ t) :=
+    have : IsProbabilityMeasure ((M θ)[|state t ⁻¹' {x}]) := cond_isProbabilityMeasure h
+    have : PSpace ((M θ)[|state t ⁻¹' {x}]) (G (S := S) (A := A) γ t) :=
       ⟨(G_meas γ t).aemeasurable⟩
     exact Expectation.ofRV_self _ _
   · rw [dif_neg h, not_not.1 h |> cond_eq_zero_of_meas_eq_zero]
@@ -213,7 +213,7 @@ theorem V_eq_integral (θ : Θ) (γ : ℝ) (t : ℕ) (x : S) :
 
 /-- action-value function `Q(s[t] = x, a[t] = u) = γ ** Stack[k](k) @ 𝔼[r[t:] | s[t] = x ∧ a[t] = u]` -/
 noncomputable def Q (θ : Θ) (γ : ℝ) (t : ℕ) (x : S) (u : A) : ℝ :=
-  ∑' k, γ ^ k * ∫ ω, r (t + k) ω ∂(M θ)[| s t ⁻¹' {x} ∩ a t ⁻¹' {u}]
+  ∑' k, γ ^ k * ∫ ω, reward (t + k) ω ∂(M θ)[| state t ⁻¹' {x} ∩ action t ⁻¹' {u}]
 
 end Model
 

@@ -20,7 +20,7 @@ private lemma main
   (φ : B → ℝ)
   (t : ℕ) :
 -- imply
-  Integrable (fun ω => φ (X ω) * r t ω) (M θ) := by
+  Integrable (fun ω => φ (X ω) * reward t ω) (M θ) := by
 -- proof
   refine Integrable.of_bound (C := (∑ b, ‖φ b‖) * |M.env.R|) ?_ ((MEqR_Rc (M := M) θ t).mono fun ω h => ?_)
   · exact (((StronglyMeasurable.discrete φ).comp_measurable hX).mul

@@ -19,14 +19,14 @@ private lemma main
   (t : ℕ)
   (φ : S → A → E) :
 -- imply
-  Integrable (fun ω => φ (s t ω) (a t ω)) (M θ) := by
+  Integrable (fun ω => φ (state t ω) (action t ω)) (M θ) := by
 -- proof
-  have hX : Measurable (fun ω : ℕ → ℝ × S × A => (s t ω, a t ω)) := (Random.Measurable_S t).prodMk (Random.Measurable_A t)
+  have hX : Measurable (fun ω : ℕ → ℝ × S × A => (state t ω, action t ω)) := (Random.Measurable_S t).prodMk (Random.Measurable_A t)
   refine Integrable.of_bound (C := ∑ p : S × A, ‖φ p.1 p.2‖)
     ((StronglyMeasurable.of_discrete (f := fun p : S × A => φ p.1 p.2)).comp_measurable
       hX).aestronglyMeasurable (Filter.Eventually.of_forall fun ω => ?_)
   exact Finset.single_le_sum (f := fun p : S × A => ‖φ p.1 p.2‖) (fun _ _ => norm_nonneg _)
-    (Finset.mem_univ (s t ω, a t ω))
+    (Finset.mem_univ (state t ω, action t ω))
 
 
 -- created on 2026-10-06

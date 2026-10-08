@@ -32,10 +32,10 @@ private lemma main
   (θ : Θ)
   (n : ℕ)
   (x y : S)
-  (h₀ : (M θ).real (s 0 ⁻¹' {x}) ≠ 0)
+  (h₀ : (M θ).real (state 0 ⁻¹' {x}) ≠ 0)
   (h₁ : M.Pn θ n x y ≠ 0) :
 -- imply
-  (M θ).real (s n ⁻¹' {y}) ≠ 0 := by
+  (M θ).real (state n ⁻¹' {y}) ≠ 0 := by
 -- proof
   rw [RealPreimageS.eq.Sum_MulRealPn]
   rw [RealPreimageS0.eq.Real] at h₀

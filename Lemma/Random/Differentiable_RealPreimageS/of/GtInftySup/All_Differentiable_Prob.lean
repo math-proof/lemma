@@ -22,12 +22,12 @@ private lemma main
   (t : ℕ)
   (y : S) :
 -- imply
-  Differentiable ℝ (fun θ => (M θ).real (s t ⁻¹' {y})) := by
+  Differentiable ℝ (fun θ => (M θ).real (state t ⁻¹' {y})) := by
 -- proof
   obtain ⟨Cp, hCp⟩ := id h₁
   have hC : ∀ θ x u, ‖fderiv ℝ (fun θ => M.pol.prob θ x u) θ‖ ≤ Cp := fun θ x u => by
     simpa [gradient, LinearIsometryEquiv.norm_map] using hCp ⟨(θ, x, u), rfl⟩
-  have e : (fun θ => (M θ).real (s t ⁻¹' {y})) = fun θ => ∑ x, M.env.init.real {x} * M.Pn θ t x y :=
+  have e : (fun θ => (M θ).real (state t ⁻¹' {y})) = fun θ => ∑ x, M.env.init.real {x} * M.Pn θ t x y :=
     funext fun θ => Random.RealPreimageS.eq.Sum_MulRealPn (M := M) θ t y
   rw [e]
   exact fun θ => DifferentiableAt.fun_sum fun x _ =>

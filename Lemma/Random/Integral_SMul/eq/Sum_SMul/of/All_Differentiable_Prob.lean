@@ -18,9 +18,9 @@ private lemma main
   (t : ℕ)
   (g : S → A → ℝ) :
 -- imply
-  ∫ ω, g (s t ω) (a t ω) • fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' (s t ω) (a t ω))) θ
+  ∫ ω, g (state t ω) (action t ω) • fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' (state t ω) (action t ω))) θ
     ∂(M θ) =
-    ∑ y, (M θ).real (s t ⁻¹' {y}) •
+    ∑ y, (M θ).real (state t ⁻¹' {y}) •
     ∑ u, g y u • fderiv ℝ (fun θ' => M.pol.prob θ' y u) θ := by
 -- proof
   rw [Random.Integral.eq.Sum_Sum_SMul (M := M) θ t (fun y u => g y u • fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' y u)) θ)]

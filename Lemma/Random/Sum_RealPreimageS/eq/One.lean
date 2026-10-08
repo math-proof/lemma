@@ -15,7 +15,7 @@ private lemma main
   (θ : Θ)
   (t : ℕ) :
 -- imply
-  ∑ y, (M θ).real (s t ⁻¹' {y}) = 1 := by
+  ∑ y, (M θ).real (state t ⁻¹' {y}) = 1 := by
 -- proof
   have h := Random.Integral.eq.Sum_SMul (M := M) θ t (fun _ => (1:ℝ))
   simp only [integral_const, probReal_univ, smul_eq_mul, mul_one] at h
