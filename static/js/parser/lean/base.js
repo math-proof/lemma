@@ -15,7 +15,6 @@ import {
 import { IndentedNode } from '../node.js';
 import { tactics } from '../../codemirror-lean-tactics.js';
 
-/** Abstract Lean AST node; method order follows `scripts/reorder_lean_class.py` preset `lean`. */
 export class Lean extends IndentedNode {
     /**
      * Every registered Lean AST class, keyed by `cls.name`. Classes that are not base classes

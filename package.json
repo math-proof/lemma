@@ -6,10 +6,7 @@
   "description": "Lean4 lemma library — Node lemma browser (EJS + stub Lean parser)",
   "scripts": {
     "start": "node server/app.mjs",
-    "node": "node server/app.mjs",
-    "test:lean": "node scripts/test-lean-parser.mjs",
-    "test:nav": "node scripts/test-open-prefix-nav.mjs",
-    "test:lean:scan": "node scripts/test-lean-parser.mjs --scan-lemma"
+    "node": "node server/app.mjs"
   },
   "dependencies": {
     "axios": "0.24.0",
