@@ -296,7 +296,7 @@ class Lean_let extends LeanSyntax
     public function latexFormat()
     {
         //cm-def {color: #00f;} 
-        //defined in static/codemirror/lib/codemirror.css
+        //defined in node_modules/codemirror/lib/codemirror.css
         $command = $this->command . ($this->inst ? 'I' : '');
         return "{\\color{#00f}$command}\\ " . implode('\ ', array_fill(0, count($this->args), "%s"));
     }
@@ -463,7 +463,7 @@ class Lean_show extends LeanSyntax
     public function latexFormat()
     {
         //cm-def {color: #00f;} 
-        //defined in static/codemirror/lib/codemirror.css
+        //defined in node_modules/codemirror/lib/codemirror.css
         $func = "{\\color{#00f}$this->func}";
         return "$func\\ " . implode('\ ', array_fill(0, count($this->args), "%s"));
     }

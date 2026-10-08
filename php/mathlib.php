@@ -42,9 +42,10 @@ if (!$lemma) {
 ?>
 
 <title><?php echo htmlspecialchars($name, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');?></title>
-<link rel=stylesheet href="static/codemirror/lib/codemirror.css">
-<link rel=stylesheet href="static/codemirror/theme/eclipse.css">
-<link rel=stylesheet href="static/codemirror/addon/hint/show-hint.css">
+<link rel=stylesheet href="node_modules/codemirror/lib/codemirror.css">
+<link rel=stylesheet href="node_modules/codemirror/theme/eclipse.css">
+<link rel=stylesheet href="node_modules/codemirror/addon/hint/show-hint.css">
+<link rel=stylesheet href="static/css/codemirror-overrides.css">
 <link rel=stylesheet href="node_modules/katex/dist/katex.min.css">
 <body></body>
 <?php

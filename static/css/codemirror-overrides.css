@@ -1,0 +1,24 @@
+/* Deltas from the vendored CodeMirror sheets. Stock npm CSS is not edited. */
+
+/* static/codemirror/lib/codemirror.css — stock border-left is 1px solid black */
+.CodeMirror-cursor {
+  border-left: 2px solid red;
+}
+
+/* static/codemirror/theme/eclipse.css — stock active-line background is #e8f2ff */
+.cm-s-eclipse .CodeMirror-activeline-background { background: #fff; }
+
+.cm-s-eclipse.CodeMirror {
+	background-color: rgb(199, 237, 204);
+	font-style: normal;
+	font-size: 1em;
+	font-weight: normal;
+	font-family: Consolas;
+	height: auto;
+	width: auto;
+}
+
+/* static/codemirror/addon/hint/show-hint.css */
+.CodeMirror-hints {
+  box-sizing: border-box;
+}

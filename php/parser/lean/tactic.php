@@ -481,7 +481,7 @@ class LeanTactic extends LeanSyntax
             $func .= '\ only';
         //cm-def {color: #00f;} 
         //cm-keyword {color: #708;} 
-        //defined in static/codemirror/lib/codemirror.css
+        //defined in node_modules/codemirror/lib/codemirror.css
         $color = $func == 'sorry'? '708' : '00f';
         $func = "{\\color{#$color}$func}";
         if (!($this->arg instanceof LeanCaret))
@@ -677,7 +677,7 @@ class LeanBy extends LeanUnary
     public function latexFormat()
     {
         //cm-def {color: #00f;} 
-        //defined in static/codemirror/lib/codemirror.css
+        //defined in node_modules/codemirror/lib/codemirror.css
         $arg = $this->arg;
         $command = "{\\color{#00f}$this->command}";
         if ($arg instanceof LeanStatements)

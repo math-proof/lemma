@@ -573,9 +573,10 @@ function loadCss(href) {
 }
 
 const VUE_STYLES = [
-	'static/codemirror/lib/codemirror.css',
-	'static/codemirror/theme/eclipse.css',
-	'static/codemirror/addon/hint/show-hint.css',
+	'node_modules/codemirror/lib/codemirror.css',
+	'node_modules/codemirror/theme/eclipse.css',
+	'node_modules/codemirror/addon/hint/show-hint.css',
+	'static/css/codemirror-overrides.css',
 	'node_modules/katex/dist/katex.min.css',
 ];
 

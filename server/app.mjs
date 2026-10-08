@@ -209,6 +209,18 @@ mountNpmPkg('prismjs', '/unpkg.com/prismjs@1.30.0/');
 mountNpmPkg('highlight.js', '/unpkg.com/highlight.js/8.8.0/');
 mountNpmPkg('marked', '/unpkg.com/marked@2.1.3/');
 
+// codemirror is installed from npm (node_modules/codemirror). This package only,
+// same static options as axios. No /unpkg.com/codemirror URL exists in the pages,
+// so there is no unpkg rewrite.
+const CODEMIRROR_PKG = path.join(REPO_ROOT, 'node_modules', 'codemirror');
+const codemirrorFiles = express.static(CODEMIRROR_PKG, {
+  index: false,
+  fallthrough: false,
+  maxAge: process.env.NODE_ENV === 'production' ? '1h' : 0,
+});
+app.use('/node_modules/codemirror', codemirrorFiles);
+app.use('/lean/node_modules/codemirror', codemirrorFiles);
+
 app.get(['/py', '/py/'], (req, res) => res.redirect(302, `http://localhost:8080${req.originalUrl}`));
 
 /** Lemma tree size for `website` home.md `<label id=count>` / `<label id=lines>`. */

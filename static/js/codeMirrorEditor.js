@@ -1,19 +1,21 @@
+import { installCodeMirrorExtras } from './codemirror.js';
 /** Lean CodeMirror mount hook and trivial computeds shared by renderLean. */
 
 function ensureCodeMirror() {
 	if (!window.__cmReady) {
 		const base = document.baseURI;
 		const paths = [
-			'static/codemirror/lib/codemirror.js',
+			'node_modules/codemirror/lib/codemirror.js',
 			'static/js/codemirror-lean.js',
-			'static/codemirror/addon/selection/active-line.js',
-			'static/codemirror/addon/hint/show-hint.js',
-			'static/codemirror/addon/edit/matchbrackets.js',
-			'static/codemirror/addon/comment/comment.js',
+			'node_modules/codemirror/addon/selection/active-line.js',
+			'node_modules/codemirror/addon/hint/show-hint.js',
+			'node_modules/codemirror/addon/edit/matchbrackets.js',
+			'node_modules/codemirror/addon/comment/comment.js',
 		];
-		window.__cmReady = import(new URL(paths[0], base).href).then(() =>
-			Promise.all(paths.slice(1).map((p) => import(new URL(p, base).href)))
-		);
+		window.__cmReady = import(new URL(paths[0], base).href).then(() => {
+			installCodeMirrorExtras();
+			return Promise.all(paths.slice(1).map((p) => import(new URL(p, base).href)));
+		});
 	}
 	return window.__cmReady;
 }
