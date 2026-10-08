@@ -260,28 +260,28 @@ function lemma_shell_render_given_or_imply(?array $pair): void
                 else
                     $wrapped = '$' . $wrapped . '$';
             }
-            $url = 'https://latex.codecogs.com/png.latex?' . rawurlencode($wrapped);
-            if (strlen($url) <= 7000) {
-                $tag = null;
-                if (preg_match(lemma_shell_latex_tag_re(), $latex, $m)) {
-                    $tag = $m[1];
-                    if (preg_match('/^\$([^$]+)\$$/', $tag, $inner))
-                        $tag = $inner[1];
-                    else
-                        $tag = ltrim($tag);
-                } elseif ($lean && preg_match('/^\(([^:]+)\s*:/', trim($lean), $m)) {
-                    $tag = trim($m[1]);
-                }
-                echo '<div class="latex-display"><span class="latex-body"><img class="latex-formula" src="', lemma_shell_h($url),
-                    '" alt="', lemma_shell_h($lean ?? ''), '" loading="lazy" decoding="async"',
-                    ' onerror="this.closest(\'.latex-display\').classList.add(\'latex-formula-failed\')">',
-                    '<pre class="lean-line lean-fallback Consolas">',
-                    lemma_shell_h($lean ?? ''), '</pre></span>';
-                if ($tag !== null && $tag !== '')
-                    echo '<span class="latex-tag">', lemma_shell_h($tag), '</span>';
-                echo "</div>\n";
-                return;
+            $math = $wrapped;
+            if (preg_match('/^\$(.*)\$$/s', $math, $mm) && !str_contains($mm[1], '$'))
+                $math = $mm[1];
+            if (str_starts_with($math, '\\displaystyle '))
+                $math = substr($math, strlen('\\displaystyle '));
+            $tag = null;
+            if (preg_match(lemma_shell_latex_tag_re(), $latex, $m)) {
+                $tag = $m[1];
+                if (preg_match('/^\$([^$]+)\$$/', $tag, $inner))
+                    $tag = $inner[1];
+                else
+                    $tag = ltrim($tag);
+            } elseif ($lean && preg_match('/^\(([^:]+)\s*:/', trim($lean), $m)) {
+                $tag = trim($m[1]);
             }
+            echo '<div class="latex-display"><span class="latex-body"><span class="latex-math">', lemma_shell_h($math),
+                '</span><pre class="lean-line lean-fallback Consolas">',
+                lemma_shell_h($lean ?? ''), '</pre></span>';
+            if ($tag !== null && $tag !== '')
+                echo '<span class="latex-tag">', lemma_shell_h($tag), '</span>';
+            echo "</div>\n";
+            return;
         }
     }
     lemma_shell_render_decl_line($lean);
@@ -527,6 +527,19 @@ if ($code && !empty($code['lemma'])) {
 </div>
 </div>
 </body>
+<link rel="stylesheet" href="node_modules/katex/dist/katex.min.css">
+<script src="node_modules/katex/dist/katex.min.js"></script>
+<script>
+document.querySelectorAll('#lemma-shell .latex-math').forEach(function (el) {
+	try {
+		katex.render(el.textContent, el, { throwOnError: true, displayMode: true });
+	} catch (e) {
+		var box = el.closest('.latex-display');
+		if (box)
+			box.classList.add('latex-formula-failed');
+	}
+});
+</script>
 <script type="module">
 function asset(path) {
 	return new URL(path, document.baseURI).href;
@@ -567,7 +580,7 @@ const VUE_STYLES = [
 ];
 
 const VUE_SCRIPTS = [
-	'static/unpkg.com/axios@0.24.0/dist/axios.min.js',
+	'node_modules/axios/dist/axios.min.js',
 	'static/unpkg.com/qs@6.10.2/dist/qs.js',
 	'static/unpkg.com/clipboard@2.0.11/dist/clipboard.min.js',
 	'static/unpkg.com/file-saver@2.0.5/dist/FileSaver.min.js',
@@ -638,8 +651,9 @@ async function upgradeLemmaVue(code) {
 }
 
 const lemmaCode = <?php echo $code ? std\encode($code) : 'null'; ?>;
+const previewOnly = <?php echo (($_GET['preview'] ?? '') === '1') ? 'true' : 'false'; ?>;
 const run = () => {
-	if (!lemmaCode?.lemma)
+	if (previewOnly || !lemmaCode?.lemma)
 		return;
 	upgradeLemmaVue(lemmaCode).catch((err) => console.error('[upgradeLemmaVue]', err));
 };

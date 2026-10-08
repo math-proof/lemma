@@ -1,7 +1,7 @@
 <?php
 ?>
 
-<script src="static/unpkg.com/axios@0.24.0/dist/axios.min.js" defer></script>
+<script src="node_modules/axios/dist/axios.min.js" defer></script>
 <script src="static/unpkg.com/qs@6.10.2/dist/qs.js" defer></script>
 <script src="static/unpkg.com/clipboard@2.0.11/dist/clipboard.min.js" defer></script>
 <script src="static/unpkg.com/file-saver@2.0.5/dist/FileSaver.min.js" defer></script>

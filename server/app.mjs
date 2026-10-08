@@ -94,6 +94,27 @@ app.set('view engine', 'ejs');
 app.set('views', VIEWS);
 
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
+
+// axios is installed from npm (node_modules/axios). Same as katex: this package only,
+// and leftover `/unpkg.com/axios@0.24.0/` requests (including under /static/) still resolve.
+const AXIOS_PKG = path.join(REPO_ROOT, 'node_modules', 'axios');
+const axiosFiles = express.static(AXIOS_PKG, {
+  index: false,
+  fallthrough: false,
+  maxAge: process.env.NODE_ENV === 'production' ? '1h' : 0,
+});
+app.use('/node_modules/axios', axiosFiles);
+app.use((req, res, next) => {
+  const marker = '/unpkg.com/axios@0.24.0/';
+  const at = req.path.indexOf(marker);
+  if (at < 0) return next();
+  const rel = req.path.slice(at + marker.length);
+  if (!rel || rel.includes('..')) return res.status(400).end();
+  const q = req.url.includes('?') ? req.url.slice(req.url.indexOf('?')) : '';
+  req.url = '/' + rel + q;
+  return axiosFiles(req, res, next);
+});
+
 app.get(['/py', '/py/'], (req, res) => res.redirect(302, `http://localhost:8080${req.originalUrl}`));
 
 /** Lemma tree size for `website` home.md `<label id=count>` / `<label id=lines>`. */
