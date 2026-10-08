@@ -15,20 +15,24 @@ Expected reward of the trajectory model: `𝔼[r[t]] = ∑ x, init {x} * W θ rc
 private lemma main
   [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A] [DecidableEq S]
   {M : Model Θ S A}
+  {r : ℕ → (ℕ → ℝ × S × A) → ℝ}
+  {s : ℕ → (ℕ → ℝ × S × A) → S}
+  {a : ℕ → (ℕ → ℝ × S × A) → A}
 -- given
+  (h₁ : ∀ t, (· t) = (r t, s t, a t))
   (θ : Θ)
   (t : ℕ) :
 -- imply
-  ∫ ω, reward t ω ∂(M θ) = ∑ x, M.env.init.real {x} * M.W θ M.rc t x := by
+  ∫ ω, r t ω ∂(M θ) = ∑ x, M.env.init.real {x} * M.W θ M.rc t x := by
 -- proof
-  have h₁ : ∀ ω : ℕ → ℝ × S × A, reward t ω = ∑ x, (if state 0 ω = x then (1:ℝ) else 0) * reward (0 + t) ω := by
+  have h₂ : ∀ ω : ℕ → ℝ × S × A, r t ω = ∑ x, (if s 0 ω = x then (1:ℝ) else 0) * r (0 + t) ω := by
     intro ω
     rw [← Finset.sum_mul, Real.Sum_Eq.eq.One, one_mul, zero_add]
-  simp_rw [h₁]
-  rw [integral_finsetSum _ (fun x _ => Integrable_Mul_R.of.Measurable (M := M) (state 0) (Random.Measurable_S 0) θ
+  simp_rw [h₂]
+  rw [integral_finsetSum _ (fun x _ => Integrable_Mul_R.of.Measurable h₁ (M := M) (s 0) (Random.Measurable_S h₁ 0) θ
     (fun y => if y = x then (1:ℝ) else 0) (0 + t))]
   refine Finset.sum_congr rfl fun x _ => ?_
-  rw [Integral_MulEqSR_Add.eq.MulRealPreimageSWRc (M := M) θ 0 t x, RealPreimageS0.eq.Real]
+  rw [Integral_MulEqSR_Add.eq.MulRealPreimageSWRc (M := M) h₁ θ 0 t x, RealPreimageS0.eq.Real h₁]
 
 
 -- created on 2026-10-06

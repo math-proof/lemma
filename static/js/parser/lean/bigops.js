@@ -139,7 +139,7 @@ export class LeanBigOperator extends LeanArgs {
             const fin = this.finRangeBound();
             if (fin) {
                 const [i, n] = fin;
-                const peel = (arg) => (arg instanceof L.LeanParenthesis ? arg.arg : arg);
+                const peel = (arg) => L.LeanParenthesis.peelLatex(arg);
                 return [i.toLatex(syntax), peel(n).toLatex(syntax), this.scope.toLatex(syntax)];
             }
             const ico = !this.superscript && this.icoClosedBound();

@@ -137,6 +137,8 @@ export class LeanArgs extends Lean {
     strip_parenthesis() {
         return this.args.map((arg) => {
             if (!(arg instanceof L.LeanParenthesis)) return arg;
+            // a tuple `(a, b)` / a `·` section `(· t)`: the parentheses are part of the term
+            if (arg.latexParenRequired()) return arg;
             const inner = arg.arg;
             if (
                 inner instanceof L.LeanMethodChaining ||

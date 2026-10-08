@@ -15,15 +15,19 @@ private lemma main
   {M : Model Θ S A}
   {θ : Θ}
   {γ : ℝ}
+  {r : ℕ → (ℕ → ℝ × S × A) → ℝ}
+  {s : ℕ → (ℕ → ℝ × S × A) → S}
+  {a : ℕ → (ℕ → ℝ × S × A) → A}
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
+  (h₁ : ∀ t, (· t) = (r t, s t, a t))
   (B : Set (ℕ → ℝ × S × A))
   (t : ℕ) :
 -- imply
-  Summable (fun k => γ ^ k * ∫ ω, reward (t + k) ω ∂(M θ)[|B]) := by
+  Summable (fun k => γ ^ k * ∫ ω, r (t + k) ω ∂(M θ)[|B]) := by
 -- proof
   classical
-  exact Summable_MulPowIntegral_R_Add.of.In_Ico (M := M) h₀ θ B t
+  exact Summable_MulPowIntegral_R_Add.of.In_Ico (M := M) h₀ h₁ θ B t
 
 
 -- created on 2026-09-26

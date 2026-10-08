@@ -17,15 +17,19 @@ private lemma main
   {θ : Θ}
   {t : ℕ}
   {x : S}
+  {r : ℕ → (ℕ → ℝ × S × A) → ℝ}
+  {s : ℕ → (ℕ → ℝ × S × A) → S}
+  {a : ℕ → (ℕ → ℝ × S × A) → A}
 -- given
-  (h₀ : (M θ).real (state t ⁻¹' {x}) ≠ 0)
+  (h₁ : ∀ t, (· t) = (r t, s t, a t))
+  (h₂ : (M θ).real (s t ⁻¹' {x}) ≠ 0)
   (u : A) :
 -- imply
-  ((M θ)[|state t ⁻¹' {x}]).real (action t ⁻¹' {u}) = M.Pr θ x u := by
+  ((M θ)[|s t ⁻¹' {x}]).real (a t ⁻¹' {u}) = M.Pr θ x u := by
 -- proof
   classical
-  rw [measureReal_def, cond_apply (Random.Measurable_S t (measurableSet_singleton x)), ENNReal.toReal_mul,
-    ENNReal.toReal_inv, ← measureReal_def, ← measureReal_def, RealInterPreimageS_PreimageA.eq.MulRealPreimageSProb, inv_mul_cancel_left₀ h₀]
+  rw [measureReal_def, cond_apply (Random.Measurable_S h₁ t (measurableSet_singleton x)), ENNReal.toReal_mul,
+    ENNReal.toReal_inv, ← measureReal_def, ← measureReal_def, RealInterPreimageS_PreimageA.eq.MulRealPreimageSProb h₁, inv_mul_cancel_left₀ h₂]
   rfl
 
 

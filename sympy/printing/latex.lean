@@ -403,13 +403,16 @@ def Expr.asIntegral? : Expr → Option (String × Expr × Expr)
       | _ => none
     else none
 
-/-- See through `Prod.fst ⟨a, b⟩` / `Prod.snd ⟨a, b⟩` to the component `a` / `b`. -/
-def Expr.asPairProj? : Expr → Option Expr
+/-- See through `Prod.fst ⟨a, b⟩` / `Prod.snd ⟨a, b⟩` to the component `a` / `b`, also through nested
+projections (`Prod.fst (Prod.snd (a, b, c))` ↦ `b`: the coercion `↑(a, b, c)` of `Function.coeProdPi3R`
+unfolds to these). -/
+partial def Expr.asPairProj? : Expr → Option Expr
   | e =>
     let isFst := e.isNamedApp "fst"
     if isFst || e.isNamedApp "snd" then
       match e with
       | Basic _ [inner] _ =>
+        let inner := inner.asPairProj?.getD inner
         if inner.isNamedApp "mk" then
           match inner, isFst with
           | Basic _ [a, _] .., true => some a
@@ -427,6 +430,17 @@ def Expr.asJointRandomSymbol? : Expr → Option (Expr × Expr)
       | [x, y] => some (x.asPairProj?.getD x, y.asPairProj?.getD y)
       | _ => none
     else none
+
+/-- `JointRandomSymbol x y` renders bare as `x, y` (so `𝔼`/`ℙ` binders and conditioners read `x, y`); as an
+operand (`=` side, function argument) it is the tuple `(x, y)` and must keep its parentheses. -/
+def Expr.is_JointRandomSymbol (e : Expr) : Bool :=
+  e.asJointRandomSymbol?.isSome
+
+/-- `fun x ↦ body` (also an elaborated `·` section `(· t)`): as a left operand it needs parentheses,
+since the lambda body would otherwise extend over the operator (`(fun x ↦ x t) = …`). -/
+def Expr.is_Lambda : Expr → Bool
+  | Basic (.ExprWithLimits .Lean_lambda) .. => true
+  | _ => false
 
 /-- An observed value: `«x.bvar»`, an indexed `«x.bvar» i`, a slice `«x.bvar»[a:b]`, or a
 tuple / singleton / insert of those. Mirrors lean.js, which drops all of these from `ℙ[π](x = «x.bvar»)`. -/
@@ -610,7 +624,12 @@ partial def Expr.foldRVHeadNames (e : Expr) (acc : List Name) : List Name :=
       add inner.headName? acc
     | _ =>
       match e.asJointRandomSymbol? with
-      | some (x, y) => add y.headName? (add x.headName? acc)
+      | some (x, y) =>
+        -- a nested chain component `JointRandomSymbol y z` is no head: its own components are collected
+        -- when the fold reaches it (otherwise `JointRandomSymbol` itself would be recolored and split into
+        -- a plain application `JointRandomSymbol (s t) (…)` by `markNamesAsRVHeads`)
+        let head (c : Expr) : Option Name := if c.is_JointRandomSymbol then none else c.headName?
+        add (head y) (add (head x) acc)
       | none => acc
   match e with
   | Basic _ args _ => args.foldl (fun a x => x.foldRVHeadNames a) acc
@@ -1195,7 +1214,7 @@ def Expr.tendsToLatexArg? : Expr → Option Expr
 def Expr.methodFormat (obj : Expr) (args : List Expr) (func : Operator) (attr: String) (level : ℕ) : String :=
   let obj := level.toColor (obj.priority > func.priority || obj.toList != none || obj.is_Eye)
   let args := args.map fun arg =>
-    level.toColor (arg.priority > func.priority || arg.is_Div || arg.is_BlockMatrix)
+    level.toColor ((arg.priority > func.priority || arg.is_Div || arg.is_BlockMatrix) && !arg.is_JointRandomSymbol)
   let args := "\\ ".intercalate args
   if args.isEmpty then
     s!"{obj}.{attr}"
@@ -1206,8 +1225,10 @@ def BinaryInfix.latexFormat (op : BinaryInfix) (left right : Expr) (level : ℕ)
     (command : Option String := none) : String :=
   let func := op.func
   let opStr := command.getD func.command
-  let left := level.toColor (left.priority ≥ func.priority || left.is_EnclosedGroup)
-  let right := level.toColor (right.priority > func.priority || right.is_Div || right.is_BlockMatrix)
+  -- (`toColor ignore`: `true` drops the parentheses) a tuple keeps its parentheses; so does a lambda on the
+  -- left, whose body would otherwise swallow the operator (`(fun x ↦ x t) = …`)
+  let left := level.toColor ((left.priority ≥ func.priority || left.is_EnclosedGroup) && !left.is_JointRandomSymbol && !left.is_Lambda)
+  let right := level.toColor ((right.priority > func.priority || right.is_Div || right.is_BlockMatrix) && !right.is_JointRandomSymbol)
   s!"{left} {opStr} {right}"
 
 
@@ -1403,11 +1424,11 @@ def Expr.latexFormat : Expr → String
         else if let some (obj, fns) := e.asMap? then
           let obj := level.toColor (obj.priority > func.priority || obj.toList != none || obj.is_Eye)
           let fns := fns.map fun arg =>
-            (0 : Nat).toColor (arg.priority > func.priority || arg.is_Div || arg.is_BlockMatrix)
+            (0 : Nat).toColor ((arg.priority > func.priority || arg.is_Div || arg.is_BlockMatrix) && !arg.is_JointRandomSymbol)
           "\\ ".intercalate (obj :: fns)
         else
           let args := args.zipIdx.map fun ⟨arg, i⟩ =>
-            level.toColor ((i == 0 || arg.priority > func.priority) && (i > 0 || arg.priority ≥ func.priority) || arg.is_Div || arg.is_BlockMatrix)
+            level.toColor (((i == 0 || arg.priority > func.priority) && (i > 0 || arg.priority ≥ func.priority) || arg.is_Div || arg.is_BlockMatrix) && !arg.is_JointRandomSymbol)
           "\\ ".intercalate args
       | `ite =>
         let ⟨n, last⟩ := e.traceCases
@@ -1503,7 +1524,7 @@ def Expr.latexFormat : Expr → String
       else if let some (obj, fns) := e.asMap? then
         let obj := level.toColor (obj.priority > func.priority || obj.toList != none || obj.is_Eye)
         let fns := fns.map fun arg =>
-          (0 : Nat).toColor (arg.priority > func.priority || arg.is_Div || arg.is_BlockMatrix)
+          (0 : Nat).toColor ((arg.priority > func.priority || arg.is_Div || arg.is_BlockMatrix) && !arg.is_JointRandomSymbol)
         "\\ ".intercalate (obj :: fns)
       else if let some (_obj, _, _) := e.asCondProb? then
         "{\\mathbb{P}}_{%s}\\left(%s\\,\\middle|\\,%s\\right)"
@@ -1514,7 +1535,7 @@ def Expr.latexFormat : Expr → String
       else match op with
       | .Lean_function _ =>
         let args := args.map fun arg =>
-          level.toColor (arg.priority > func.priority || arg.is_Div || arg.is_BlockMatrix)
+          level.toColor ((arg.priority > func.priority || arg.is_Div || arg.is_BlockMatrix) && !arg.is_JointRandomSymbol)
         opStr ++ "\\ " ++ "\\ ".intercalate args
       | .Lean_operatorname name =>
         match name with
@@ -1529,7 +1550,7 @@ def Expr.latexFormat : Expr → String
             f
           | _ =>
             let args := args.map fun arg =>
-              level.toColor (arg.priority > func.priority || arg.is_Div || arg.is_BlockMatrix)
+              level.toColor ((arg.priority > func.priority || arg.is_Div || arg.is_BlockMatrix) && !arg.is_JointRandomSymbol)
             opStr ++ "\\ " ++ "\\ ".intercalate args
         | `id =>
           if let some rows@(row0 :: _) := e.blockMatrixRows then
@@ -1560,7 +1581,7 @@ def Expr.latexFormat : Expr → String
             "\\prod\\limits_{%s < %s} {%s}"
           | none =>
             let args := args.map fun arg =>
-              level.toColor (arg.priority > func.priority || arg.is_Div || arg.is_BlockMatrix)
+              level.toColor ((arg.priority > func.priority || arg.is_Div || arg.is_BlockMatrix) && !arg.is_JointRandomSymbol)
             opStr ++ "\\ " ++ "\\ ".intercalate args
         | `intervalIntegral =>
           match Expr.asIntervalIntegral? e with
@@ -1571,7 +1592,7 @@ def Expr.latexFormat : Expr → String
               "\\int\\limits_{%s}^{%s} {%s}\\,\\partial\\!\\left(%s\\right)\\,{\\color{blue}\\mathrm{d}}%s"
           | none =>
             let args := args.map fun arg =>
-              level.toColor (arg.priority > func.priority || arg.is_Div || arg.is_BlockMatrix)
+              level.toColor ((arg.priority > func.priority || arg.is_Div || arg.is_BlockMatrix) && !arg.is_JointRandomSymbol)
             opStr ++ "\\ " ++ "\\ ".intercalate args
         | `Stack =>
           let arg := level.toColor (
@@ -1594,7 +1615,7 @@ def Expr.latexFormat : Expr → String
               if let const (.natVal 0) := start then "{%s}_{:%s}" else "{%s}_{%s:%s}"
             else
               if let const (.natVal 0) := start then "{%s}_{:%s:%s}" else "{%s}_{%s:%s:%s}"
-          | _ => opStr ++ "\\ " ++ "\\ ".intercalate (args.map fun arg => level.toColor (arg.priority > func.priority || arg.is_Div || arg.is_BlockMatrix))
+          | _ => opStr ++ "\\ " ++ "\\ ".intercalate (args.map fun arg => level.toColor ((arg.priority > func.priority || arg.is_Div || arg.is_BlockMatrix) && !arg.is_JointRandomSymbol))
         | `descFactorial
         | `Nat.descFactorial => "{%s}^{\\underline{%s}}"
         | `ascFactorial
@@ -1624,13 +1645,13 @@ def Expr.latexFormat : Expr → String
               ""
           if postOp.isEmpty then
             let args := args.map fun arg =>
-              level.toColor (arg.priority > func.priority || arg.is_Div || arg.is_BlockMatrix)
+              level.toColor ((arg.priority > func.priority || arg.is_Div || arg.is_BlockMatrix) && !arg.is_JointRandomSymbol)
             opStr ++ "\\ " ++ "\\ ".intercalate args
           else
             postOp
         | _  =>
           let args := args.map fun arg =>
-            level.toColor (arg.priority > func.priority || arg.is_Div || arg.is_BlockMatrix)
+            level.toColor ((arg.priority > func.priority || arg.is_Div || arg.is_BlockMatrix) && !arg.is_JointRandomSymbol)
           opStr ++ "\\ " ++ "\\ ".intercalate args
       | .LeanMethod name idx =>
         let attr := name.getLast.toString.escape_specials

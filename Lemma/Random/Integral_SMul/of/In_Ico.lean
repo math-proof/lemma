@@ -23,32 +23,36 @@ private lemma main
   [NormedAddCommGroup E]
   [NormedSpace ℝ E]
   [CompleteSpace E]
+  {r : ℕ → (ℕ → ℝ × S × A) → ℝ}
+  {s : ℕ → (ℕ → ℝ × S × A) → S}
+  {a : ℕ → (ℕ → ℝ × S × A) → A}
 -- given
-  (θ : Θ)
   (h₀ : γ ∈ Set.Ico 0 1)
+  (h₁ : ∀ t, (· t) = (r t, s t, a t))
+  (θ : Θ)
   (t : ℕ)
   (ψ : S → A → E) :
 -- imply
-  ∫ ω, G γ t ω • ψ (state t ω) (action t ω) ∂(M θ) =
-    ∫ ω, M.Q θ γ t (state t ω) (action t ω) • ψ (state t ω) (action t ω) ∂(M θ) := by
+  ∫ ω, G r γ t ω • ψ (s t ω) (a t ω) ∂(M θ) =
+    ∫ ω, M.Q r s a θ γ t (s t ω) (a t ω) • ψ (s t ω) (a t ω) ∂(M θ) := by
 -- proof
-  have hX : Measurable (fun ω : ℕ → ℝ × S × A => (state t ω, action t ω)) := (Random.Measurable_S t).prodMk (Random.Measurable_A t)
-  have hI : ∀ x u, Integrable (fun ω => (if state t ω = x ∧ action t ω = u then (1:ℝ) else 0) * G γ t ω)
+  have hX : Measurable (fun ω : ℕ → ℝ × S × A => (s t ω, a t ω)) := (Random.Measurable_S h₁ t).prodMk (Random.Measurable_A h₁ t)
+  have hI : ∀ x u, Integrable (fun ω => (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) * G r γ t ω)
       (M θ) := by
     intro x u
     refine Integrable.of_bound (C := (1 - γ)⁻¹ * |M.env.R|) ?_ ?_
     · exact (((StronglyMeasurable.discrete (fun p : S × A => if p.1 = x ∧ p.2 = u then (1:ℝ) else 0)).comp_measurable
-        hX).aestronglyMeasurable).mul (Integrable_G.of.In_Ico (M := M) θ h₀ t).1
-    · filter_upwards [AeHasSumAndNormG.le.MulSub1Abs_R.of.In_Ico (M := M) θ h₀ t] with ω h
+        hX).aestronglyMeasurable).mul (Integrable_G.of.In_Ico (M := M) θ h₀ t h₁).1
+    · filter_upwards [AeHasSumAndNormG.le.MulSub1Abs_R.of.In_Ico (M := M) h₀ h₁ θ t] with ω h
       rw [norm_mul]
       exact mul_le_of_le_one_left (norm_nonneg _) (by split_ifs <;> simp) |>.trans h.2
-  rw [Integral.eq.Sum_Sum_SMul (M := M) θ t (fun y u => M.Q θ γ t y u • ψ y u)]
-  simp_rw [SMul.eq.Sum_Sum_SMul t _ (G γ t _) ψ]
+  rw [Integral.eq.Sum_Sum_SMul (M := M) h₁ θ t (fun y u => M.Q r s a θ γ t y u • ψ y u)]
+  simp_rw [SMul.eq.Sum_Sum_SMul (s := s) (a := a) t _ (G r γ t _) ψ]
   rw [integral_finsetSum _ fun x _ => integrable_finsetSum _ fun u _ => (hI x u).smul_const _]
   refine Finset.sum_congr rfl fun x _ => ?_
   rw [integral_finsetSum _ fun u _ => (hI x u).smul_const _]
   refine Finset.sum_congr rfl fun u _ => ?_
-  rw [integral_smul_const, Integral_MulEqSAndEqAG.eq.MulMulRealPreimageSProbQ.of.In_Ico (M := M) θ h₀ t, smul_smul]
+  rw [integral_smul_const, Integral_MulEqSAndEqAG.eq.MulMulRealPreimageSProbQ.of.In_Ico (M := M) h₀ h₁ θ t, smul_smul]
 
 
 -- created on 2026-10-06

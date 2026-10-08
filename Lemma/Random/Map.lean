@@ -19,7 +19,7 @@ private lemma main
 -- proof
   have h := Kernel.map_frestrictLe_trajMeasure_compProd_eq_map_trajMeasure
     (X := fun _ ↦ ℝ × S × A) (μ₀ := M.μ₀ θ) (κ := M.step θ) (a := t)
-  let e : (Π _ : Iic t, ℝ × S × A) → ℝ × S × A := fun h ↦ h ⟨t, mem_Iic.2 le_rfl⟩
+  let e : (Π _ : Finset.Iic t, ℝ × S × A) → ℝ × S × A := fun h ↦ h ⟨t, mem_Iic.2 le_rfl⟩
   have he : Measurable e := measurable_pi_apply _
   have h₂ := congrArg (Measure.map (Prod.map e id)) h
   rw [Measure.map_map (he.prodMap measurable_id) (by fun_prop)] at h₂

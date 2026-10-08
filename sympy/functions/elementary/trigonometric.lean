@@ -75,3 +75,20 @@ noncomputable instance : Cot ℝ* where
 
 noncomputable instance : Tan ℝ* where
   tan := Hyperreal.tan
+
+
+namespace Real
+
+/--
+Cosecant: `csc x = 1 / sin x`.
+-/
+noncomputable def csc (x : ℝ) : ℝ :=
+  1 / sin x
+
+/--
+Secant: `sec x = 1 / cos x`.
+-/
+noncomputable def sec (x : ℝ) : ℝ :=
+  1 / cos x
+
+end Real

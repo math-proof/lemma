@@ -12,7 +12,7 @@ private lemma main
   [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [Fintype A]
   {M : Model Θ S A}
   {n : ℕ}
-  {G : (Π _ : Iic n, ℝ × S × A) → ℝ}
+  {G : (Π _ : Finset.Iic n, ℝ × S × A) → ℝ}
   {CG : ℝ}
   {g : ℝ × S × A → ℝ}
   {C : ℝ}
@@ -32,7 +32,7 @@ private lemma main
       exact mul_le_mul (hCG _) (hC _) (norm_nonneg _) ((norm_nonneg _).trans (hCG p.1))) (C := CG * C)
     θ]
   simp_rw [integral_const_mul]
-  have hm : StronglyMeasurable (fun h : (Π _ : Iic n, ℝ × S × A) =>
+  have hm : StronglyMeasurable (fun h : (Π _ : Finset.Iic n, ℝ × S × A) =>
       G h * ∫ z, g z ∂(M.K θ (h ⟨n, mem_Iic.2 le_rfl⟩))) := by
     refine hG.mul ?_
     exact (hg.comp_measurable measurable_snd).integral_kernel_prod_right' (κ := M.step θ n)

@@ -20,15 +20,19 @@ private lemma main
   [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [Fintype A]
   {M : Model Θ S A}
   {γ : ℝ}
+  {r : ℕ → (ℕ → ℝ × S × A) → ℝ}
+  {s : ℕ → (ℕ → ℝ × S × A) → S}
+  {a : ℕ → (ℕ → ℝ × S × A) → A}
 -- given
-  (θ : Θ)
-  (h₀ : γ ∈ Set.Ico 0 1) :
+  (h₀ : γ ∈ Set.Ico 0 1)
+  (h₁ : ∀ t, (· t) = (r t, s t, a t))
+  (θ : Θ) :
 -- imply
-  ∀ᵐ ω ∂(M θ), ∀ j, ‖reward j ω + γ * M.Vc θ γ (state (j + 1) ω) - M.Vc θ γ (state j ω)‖ ≤
+  ∀ᵐ ω ∂(M θ), ∀ j, ‖r j ω + γ * M.Vc θ γ (s (j + 1) ω) - M.Vc θ γ (s j ω)‖ ≤
     M.deltaBound γ := by
 -- proof
-  filter_upwards [AeNormR.le.Abs_R (M := M) θ] with ω hr j
-  calc _ ≤ ‖reward j ω‖ + ‖γ * M.Vc θ γ (state (j + 1) ω)‖ + ‖M.Vc θ γ (state j ω)‖ :=
+  filter_upwards [AeNormR.le.Abs_R h₁ (M := M) θ] with ω hr j
+  calc _ ≤ ‖r j ω‖ + ‖γ * M.Vc θ γ (s (j + 1) ω)‖ + ‖M.Vc θ γ (s j ω)‖ :=
         (norm_sub_le _ _).trans (by gcongr; exact norm_add_le _ _)
     _ ≤ M.deltaBound γ := by
         rw [norm_mul, Real.norm_of_nonneg h₀.1]

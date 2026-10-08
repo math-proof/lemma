@@ -32,4 +32,21 @@ private lemma main
   exact h₁ e
 
 
+@[main]
+private lemma given
+  {f g : α → Prop}
+-- given
+  (h : ∀ e, f e ∧ g e) :
+-- imply
+  (∀ e, f e) ∧ ∀ e, g e := by
+-- proof
+  apply And.intro
+  ·
+    intro e
+    apply (h e).1
+  ·
+    intro e
+    apply (h e).2
+
+
 -- created on 2018-09-29

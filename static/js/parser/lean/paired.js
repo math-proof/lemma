@@ -459,7 +459,7 @@ export class LeanParenthesis extends LeanPairedGroup {
         }
         if (this.isLatexGetElemOperand())
             return [arg.toLatex(syntax)];
-        if (this.isLatexRedundantPrecedence())
+        if (this.isLatexRedundantPrecedence() || this.isLatexJointTuple())
             return [arg.toLatex(syntax)];
         return super.latexArgs(syntax);
     }
@@ -476,13 +476,44 @@ export class LeanParenthesis extends LeanPairedGroup {
         }
         if (this.isLatexGetElemOperand())
             return '%s';
-        if (this.isLatexRedundantPrecedence())
+        if (this.isLatexRedundantPrecedence() || this.isLatexJointTuple())
             return '%s';
         if (String(arg).includes('\n') && !(arg instanceof L.LeanArgsIndented && arg.isMultilineApplication()))
             // Multi-row content (e.g. `(by …)` tactic block rendering as `align*`):
             // `\mathord{\left(...\right)}` would stretch to the full block height.
             return '%s';
         return this.toColor();
+    }
+
+    /**
+     * Parentheses LaTeX must never drop, whatever the context (`=` operands, `|…|`, subscripts, own-line
+     * conjuncts, …):
+     * - a tuple `(a, b, c)` (anonymous constructor / `Prod.mk`, incl. the right-nested triple
+     *   `(r t, s t, a t)` coerced via `Function.coeProdPi3R` / `JointRandomSymbol`): a bare `a, b, c` is not a term;
+     * - a `·` section `(· t)` / `(· + 1)`: the parentheses delimit the scope of the anonymous function.
+     */
+    latexParenRequired() {
+        const arg = this.arg;
+        if (arg instanceof L.LeanArgsCommaSeparated) return true;
+        return LeanParenthesis.hasOwnCdot(arg);
+    }
+
+    /** A `·` placeholder bound by the enclosing `( … )`: not inside a nested `( … )` (which binds its own). */
+    static hasOwnCdot(node) {
+        if (node instanceof L.LeanToken) return node.text === '·';
+        if (!node || node instanceof LeanParenthesis || !Array.isArray(node.args)) return false;
+        return node.args.some((a) => LeanParenthesis.hasOwnCdot(a));
+    }
+
+    /** `(JointRandomSymbol x y)`: the application already renders as the tuple `(x, y)` (no doubled parentheses). */
+    isLatexJointTuple() {
+        const arg = this.arg;
+        return arg instanceof L.LeanArgsSpaceSeparated && arg.jointRandomSymbolOperands() != null;
+    }
+
+    /** `(e)` → `e` for LaTeX, unless the parentheses are required (`latexParenRequired`). */
+    static peelLatex(node) {
+        return node instanceof LeanParenthesis && !node.latexParenRequired() ? node.arg : node;
     }
 
     /**
@@ -494,6 +525,7 @@ export class LeanParenthesis extends LeanPairedGroup {
         if (!(p instanceof L.LeanArithmetic)) return false;
         const arg = this.arg;
         if (!(arg instanceof L.LeanArithmetic)) return false;
+        if (this.latexParenRequired()) return false; // `(· + 1) * 2`
         const childPri = arg.constructor.input_priority ?? 0;
         const parentPri = p.constructor.input_priority ?? 0;
         return childPri > parentPri;

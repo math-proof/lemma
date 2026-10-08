@@ -28,22 +28,26 @@ If `s[0] = x` is reachable and `Pn θ n x y ≠ 0`, then `s[n] = y` is reachable
 private lemma main
   [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A] [DecidableEq S]
   {M : Model Θ S A}
+  {r : ℕ → (ℕ → ℝ × S × A) → ℝ}
+  {s : ℕ → (ℕ → ℝ × S × A) → S}
+  {a : ℕ → (ℕ → ℝ × S × A) → A}
 -- given
+  (h₁ : ∀ t, (· t) = (r t, s t, a t))
   (θ : Θ)
   (n : ℕ)
   (x y : S)
-  (h₀ : (M θ).real (state 0 ⁻¹' {x}) ≠ 0)
-  (h₁ : M.Pn θ n x y ≠ 0) :
+  (h₂ : (M θ).real (s 0 ⁻¹' {x}) ≠ 0)
+  (h₃ : M.Pn θ n x y ≠ 0) :
 -- imply
-  (M θ).real (state n ⁻¹' {y}) ≠ 0 := by
+  (M θ).real (s n ⁻¹' {y}) ≠ 0 := by
 -- proof
-  rw [RealPreimageS.eq.Sum_MulRealPn]
-  rw [RealPreimageS0.eq.Real] at h₀
+  rw [RealPreimageS.eq.Sum_MulRealPn h₁]
+  rw [RealPreimageS0.eq.Real h₁] at h₂
   refine ne_of_gt (lt_of_lt_of_le ?_ (Finset.single_le_sum
     (f := fun x' => M.env.init.real {x'} * M.Pn θ n x' y)
     (fun x' _ => mul_nonneg measureReal_nonneg (Pn_nonneg M θ n x' y)) (Finset.mem_univ x)))
-  exact mul_pos (lt_of_le_of_ne measureReal_nonneg (Ne.symm h₀))
-    (lt_of_le_of_ne (Pn_nonneg M θ n x y) (Ne.symm h₁))
+  exact mul_pos (lt_of_le_of_ne measureReal_nonneg (Ne.symm h₂))
+    (lt_of_le_of_ne (Pn_nonneg M θ n x y) (Ne.symm h₃))
 
 
 -- created on 2026-10-06

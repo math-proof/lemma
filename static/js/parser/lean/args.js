@@ -155,6 +155,27 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         return null;
     }
 
+    /**
+     * `JointRandomSymbol x y` is the body of the coercion `↑(x, y)` (`Function.coeProdPi*`,
+     * sympy/stats/joint_rv.lean), i.e. the tuple `(x, y)` of random variables: its components,
+     * right-nested chains flattened (`JointRandomSymbol x (JointRandomSymbol y z)` ↦ `[x, y, z]`, rendered `(x, y, z)`).
+     * @returns {Lean[] | null}
+     */
+    jointRandomSymbolOperands() {
+        const isJoint = (n) =>
+            n instanceof LeanArgsSpaceSeparated && n.args.length === 3 &&
+            n.args[0] instanceof L.LeanToken && n.args[0].text === 'JointRandomSymbol';
+        if (!isJoint(this)) return null;
+        const ops = [this.args[1]];
+        let rest = this.args[2];
+        while (rest instanceof L.LeanParenthesis && isJoint(rest.arg)) {
+            ops.push(rest.arg.args[1]);
+            rest = rest.arg.args[2];
+        }
+        ops.push(rest);
+        return ops;
+    }
+
     substOperands() {
         const {args} = this;
         if (args.length !== 2) return null;
@@ -740,9 +761,11 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
             });
             const name = grad.name.toLatex(syntax);
             if (!grad.point) return [name, ...body];
-            const point = grad.point instanceof L.LeanParenthesis ? grad.point.arg : grad.point;
+            const point = L.LeanParenthesis.peelLatex(grad.point);
             return [name, ...body, name, point.toLatex(syntax)];
         }
+        const joint = this.jointRandomSymbolOperands();
+        if (joint) return joint.map((a) => L.LeanParenthesis.peelLatex(a).toLatex(syntax));
         const subst = this.substOperands();
         if (subst)
             return [
@@ -750,7 +773,7 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
                 // a compound value is parenthesized in Lean (`term:max`); the subscript needs no parentheses
                 ...subst.bindings.flatMap(({name, value}) => [
                     name.toLatex(syntax),
-                    (value instanceof L.LeanParenthesis ? value.arg : value).toLatex(syntax),
+                    L.LeanParenthesis.peelLatex(value).toLatex(syntax),
                 ]),
             ];
         const {args} = this;
@@ -769,7 +792,7 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         }
         const innerArgs = this.innerOperands();
         if (innerArgs) {
-            const peel = (arg) => (arg instanceof L.LeanParenthesis ? arg.arg : arg);
+            const peel = (arg) => L.LeanParenthesis.peelLatex(arg);
             return innerArgs.map((a) => peel(a).toLatex(syntax));
         }
 
@@ -781,7 +804,7 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         }
         if (this.factorialPowerLatexFormat()) {
             const [n, k] = this.factorialPowerOperands();
-            const peel = (arg) => (arg instanceof L.LeanParenthesis ? arg.arg : arg);
+            const peel = (arg) => L.LeanParenthesis.peelLatex(arg);
             return [n.toLatex(syntax), peel(k).toLatex(syntax)];
         }
         if (func instanceof L.LeanToken) {
@@ -843,7 +866,7 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         ) {
             const n = args.length === 2 ? func.lhs : args[1];
             const k = args.length === 2 ? args[1] : args[2];
-            const peel = (arg) => (arg instanceof L.LeanParenthesis ? arg.arg : arg);
+            const peel = (arg) => L.LeanParenthesis.peelLatex(arg);
             return [peel(n).toLatex(syntax), peel(k).toLatex(syntax)];
         }
         return args.map((arg) => {
@@ -865,6 +888,8 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
             if (!grad.point) return nabla;
             return `\\left. ${nabla} \\right|_{{%s} = {%s}}`;
         }
+        const joint = this.jointRandomSymbolOperands();
+        if (joint) return `\\left(${joint.map(() => '{%s}').join(', ')}\\right)`; // a tuple keeps its parentheses
         const subst = this.substOperands();
         if (subst) {
             // sympy `_print_Subs`: `\left. expr \right|_{\substack{x=x_0 \\ y=y_0}}`

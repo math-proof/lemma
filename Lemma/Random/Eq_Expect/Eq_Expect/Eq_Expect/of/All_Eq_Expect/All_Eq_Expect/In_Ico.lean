@@ -53,9 +53,9 @@ private lemma main
   set a : ℕ → (ℕ → ℝ × S × A) → A := fun t ω ↦ (ω t).2.2
   set x := «s.bvar» t
   set u := «a.bvar» t
-  have hs : ∀ t, Measurable (s t) := Random.Measurable_S
-  have ha : ∀ t, Measurable (a t) := Random.Measurable_A
-  have hr : ∀ t, Measurable (r t) := Model.r_meas'
+  have hs : ∀ t, Measurable (s t) := Random.Measurable_S h₁
+  have ha : ∀ t, Measurable (a t) := Random.Measurable_A h₁
+  have hr : ∀ t, Measurable (r t) := Model.r_meas' h₁
   have hsa : ∀ t, Measurable (fun ω ↦ (s t ω, a t ω)) := fun t ↦
     (hs t).prodMk (ha t)
   have hpa : Measurable (fun ω t ↦ a t ω) := measurable_pi_lambda _ ha
@@ -68,13 +68,13 @@ private lemma main
     ((measurable_pi_apply t).comp measurable_fst).add
       (((measurable_of_countable (V (t + 1))).comp ((measurable_pi_apply (t + 1)).comp measurable_snd)).const_mul γ)
   -- `Q`, `V` are the conditional expected returns on the atoms
-  have hQ : ∀ t x u, Q t x u = ∫ ω, G γ t ω ∂(M θ)[|(fun ω ↦ (s t ω, a t ω)) ⁻¹' {(x, u)}] := by
+  have hQ : ∀ t x u, Q t x u = ∫ ω, G r γ t ω ∂(M θ)[|(fun ω ↦ (s t ω, a t ω)) ⁻¹' {(x, u)}] := by
     intro t x u
     rw [h₂ t (fun _ ↦ x) (fun _ ↦ u)]
     simp only [Expectation.asRV_process]
     rw [Expectation.condEvent_eq_integral hpR.aemeasurable (hfG t)]
     rfl
-  have hV : ∀ t x, V t x = ∫ ω, G γ t ω ∂(M θ)[|s t ⁻¹' {x}] := by
+  have hV : ∀ t x, V t x = ∫ ω, G r γ t ω ∂(M θ)[|s t ⁻¹' {x}] := by
     intro t x
     rw [h₃ t (fun _ ↦ x)]
     simp only [Expectation.asRV_process]
@@ -85,10 +85,10 @@ private lemma main
     (Random.StronglyMeasurableRc (M := M)).measurable.comp (measurable_pi_apply t)
   have hR : ∀ t (ω : ℕ → ℝ × S × A), |M.rc (ω t)| ≤ |M.env.R| := fun t ω ↦
     (Real.norm_eq_abs _).symm.trans_le (NormRc.le.Abs_R (M := M) (ω t))
-  have hG : ∀ n, (fun ω : ℕ → ℝ × S × A ↦ (γ ^ (id : ℕ → ℕ)) @ (fun k : ℕ ↦ M.rc (ω k))[n:]) =ᵐ[M θ] G γ n :=
-    fun n ↦ (ae_all_iff.2 fun k ↦ MEqR_Rc (M := M) θ k).mono fun ω h ↦ by
+  have hG : ∀ n, (fun ω : ℕ → ℝ × S × A ↦ (γ ^ (id : ℕ → ℕ)) @ (fun k : ℕ ↦ M.rc (ω k))[n:]) =ᵐ[M θ] G r γ n :=
+    fun n ↦ (ae_all_iff.2 fun k ↦ MEqR_Rc h₁ (M := M) θ k).mono fun ω h ↦ by
       exact tsum_congr fun k ↦ congrArg (γ ^ k * ·) (h (n + k)).symm
-  have hGi : ∀ n, Integrable (G (S := S) (A := A) γ n) (M θ) := Integrable_G.of.In_Ico (M := M) θ h₀
+  have hGi : ∀ n, Integrable (G r γ n) (M θ) := fun n => Integrable_G.of.In_Ico (M := M) θ h₀ n h₁
   have h₅ : ∀ t, (fun ω ↦ Q t (s t ω) (a t ω)) =ᵐ[M θ]
       (M θ)[(fun ω : ℕ → ℝ × S × A ↦ (γ ^ (id : ℕ → ℕ)) @ (fun k : ℕ ↦ M.rc (ω k))[t:]) | MeasurableSpace.comap (fun ω ↦ (s t ω, a t ω)) inferInstance] :=
     fun t ↦ Filter.EventuallyEq.trans (Filter.Eventually.of_forall fun ω ↦ hQ t (s t ω) (a t ω))
@@ -97,7 +97,7 @@ private lemma main
       (M θ)[(fun ω : ℕ → ℝ × S × A ↦ (γ ^ (id : ℕ → ℕ)) @ (fun k : ℕ ↦ M.rc (ω k))[t:]) | MeasurableSpace.comap (s t) inferInstance] :=
     fun t ↦ Filter.EventuallyEq.trans (Filter.Eventually.of_forall fun ω ↦ hV t (s t ω))
       ((MEqCondExp_Integral.of.Integrable.Measurable (hs t) (hGi t)).symm.trans (condExp_congr_ae (hG t)).symm)
-  have h₇ := ((condExp_congr_ae (hG (t + 1))).trans (CondExpPow_Id.of.In_Ico (M := M) (θ := θ) (t := t) h₀)).trans
+  have h₇ := ((condExp_congr_ae (hG (t + 1))).trans (CondExpPow_Id.of.In_Ico (M := M) (θ := θ) (r := r) (s := s) (a := a) (t := t) h₀ h₁)).trans
     (condExp_congr_ae (hG (t + 1))).symm
   have hσ : MeasurableSpace.comap (fun ω : ℕ → ℝ × S × A ↦ ((s t ω, a t ω), s (t + 1) ω)) inferInstance =
       MeasurableSpace.comap (JointRandomSymbol (s t) (JointRandomSymbol (a t) (s (t + 1)))) inferInstance := by
@@ -118,12 +118,12 @@ private lemma main
   -- back to the raw rewards
   have hri : Integrable (r t) (M θ) :=
     Integrable.of_bound (hr t).aestronglyMeasurable |M.env.R|
-      ((MEqR_Rc (M := M) θ t).mono fun ω (h : r t ω = M.rc (ω t)) ↦ by rw [h]; exact NormRc.le.Abs_R (M := M) _)
+      ((MEqR_Rc h₁ (M := M) θ t).mono fun ω (h : r t ω = M.rc (ω t)) ↦ by rw [h]; exact NormRc.le.Abs_R (M := M) _)
   have hF : Integrable (fun ω ↦ r t ω + γ * V (t + 1) (s (t + 1) ω)) (M θ) :=
     hri.add ((Integrable.of.Measurable (M := M) (s (t + 1)) (hs (t + 1)) θ (V (t + 1))).const_mul γ)
   have hFae : (fun ω : ℕ → ℝ × S × A ↦ M.rc (ω t) + γ * V (t + 1) (s (t + 1) ω)) =ᵐ[M θ]
       fun ω ↦ r t ω + γ * V (t + 1) (s (t + 1) ω) :=
-    (MEqR_Rc (M := M) θ t).mono fun ω (h : r t ω = M.rc (ω t)) ↦ by dsimp only; rw [h]
+    (MEqR_Rc h₁ (M := M) θ t).mono fun ω (h : r t ω = M.rc (ω t)) ↦ by dsimp only; rw [h]
   have hQi : Integrable (fun ω ↦ Q t (s t ω) (a t ω)) (M θ) :=
     Integrable.of.Measurable (M := M) (fun ω ↦ (s t ω, a t ω)) (hsa t) θ (fun p ↦ Q t p.1 p.2)
   have hx : ∀ {B : Set (ℕ → ℝ × S × A)} (f : (ℕ → ℝ × S × A) → ℝ), M θ B = 0 → ∫ ω, f ω ∂(M θ)[|B] = 0 :=

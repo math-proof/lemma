@@ -17,25 +17,36 @@ private lemma main
   [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A] [DecidableEq S] [DecidableEq A]
   {M : Model Θ S A}
   {γ : ℝ}
+  {r : ℕ → (ℕ → ℝ × S × A) → ℝ}
+  {s : ℕ → (ℕ → ℝ × S × A) → S}
+  {a : ℕ → (ℕ → ℝ × S × A) → A}
 -- given
+  (hγ : γ ∈ Set.Ico 0 1)
+  (h₁ : ∀ t, (· t) = (r t, s t, a t))
   (θ : Θ)
   (t : ℕ)
   (x : S)
   (u : A)
-  (hγ : γ ∈ Set.Ico 0 1)
-  (hP : (M θ).real (state t ⁻¹' {x}) * M.pol.prob θ x u ≠ 0) :
+  (hP : (M θ).real (s t ⁻¹' {x}) * M.pol.prob θ x u ≠ 0) :
 -- imply
-  M.Q θ γ t x u = (∫ ρ, M.rc (ρ, x, u) ∂(M.env.reward (x, u))) +
+  M.Q r s a θ γ t x u = (∫ ρ, M.rc (ρ, x, u) ∂(M.env.reward (x, u))) +
     γ * ∑ y, M.T x u y * ∑' k, γ ^ k * M.W θ M.rc k y := by
 -- proof
+  obtain rfl : r = fun t ω ↦ (ω t).1 := funext₂ fun t ω ↦ (congrArg (·.1) (congrFun (h₁ t) ω)).symm
+  obtain rfl : s = fun t ω ↦ (ω t).2.1 := funext₂ fun t ω ↦ (congrArg (·.2.1) (congrFun (h₁ t) ω)).symm
+  obtain rfl : a = fun t ω ↦ (ω t).2.2 := funext₂ fun t ω ↦ (congrArg (·.2.2) (congrFun (h₁ t) ω)).symm
+  set r : ℕ → (ℕ → ℝ × S × A) → ℝ := fun t ω ↦ (ω t).1
+  set s : ℕ → (ℕ → ℝ × S × A) → S := fun t ω ↦ (ω t).2.1
+  set a : ℕ → (ℕ → ℝ × S × A) → A := fun t ω ↦ (ω t).2.2
   unfold Model.Q
-  rw [(Summable_MulPowIntegral_R_Add.of.In_Ico (M := M) hγ θ _ t).tsum_eq_zero_add]
-  have h0 : ∫ ω, reward (t + 0) ω ∂(M θ)[|state t ⁻¹' {x} ∩ action t ⁻¹' {u}] =
+  show ∑' k, γ ^ k * ∫ ω, r (t + k) ω ∂(M θ)[|s t ⁻¹' {x} ∩ a t ⁻¹' {u}] = _
+  rw [(Summable_MulPowIntegral_R_Add.of.In_Ico (M := M) hγ h₁ θ _ t).tsum_eq_zero_add]
+  have h0 : ∫ ω, r (t + 0) ω ∂(M θ)[|s t ⁻¹' {x} ∩ a t ⁻¹' {u}] =
       ∫ ρ, M.rc (ρ, x, u) ∂(M.env.reward (x, u)) := by
-    rw [Integral.eq.MulMulRealPreimageSProbIntegral_MulEqSAndEqA, add_zero, Integral_MulEqSAndEqAR.eq.MulMulRealPreimageSProbIntegral_Rc, inv_mul_cancel_left₀ hP]
-  have hk : ∀ k, ∫ ω, reward (t + (k + 1)) ω ∂(M θ)[|state t ⁻¹' {x} ∩ action t ⁻¹' {u}] =
+    rw [Integral.eq.MulMulRealPreimageSProbIntegral_MulEqSAndEqA h₁, add_zero, Integral_MulEqSAndEqAR.eq.MulMulRealPreimageSProbIntegral_Rc h₁, inv_mul_cancel_left₀ hP]
+  have hk : ∀ k, ∫ ω, r (t + (k + 1)) ω ∂(M θ)[|s t ⁻¹' {x} ∩ a t ⁻¹' {u}] =
       ∑ y, M.T x u y * M.W θ M.rc k y := by
-    intro k; rw [Integral.eq.MulMulRealPreimageSProbIntegral_MulEqSAndEqA, Integral_MulEqSAndEqAR.eq.MulMulRealProbSum_MulTW, inv_mul_cancel_left₀ hP]
+    intro k; rw [Integral.eq.MulMulRealPreimageSProbIntegral_MulEqSAndEqA h₁, Integral_MulEqSAndEqAR.eq.MulMulRealProbSum_MulTW h₁, inv_mul_cancel_left₀ hP]
   rw [h0, pow_zero, one_mul]
   simp_rw [hk, pow_succ, mul_comm _ γ, mul_assoc γ]
   rw [tsum_mul_left, TSum_MulPowSum_Mul.eq.Sum_Mul_TSum_MulPow.of.All_Summable_MulPow _ (fun y => Summable_MulPowWRc.of.In_Ico (M := M) hγ θ y) _]

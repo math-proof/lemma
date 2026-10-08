@@ -20,23 +20,27 @@ private lemma main
   {M : Model Θ S A}
   {θ : Θ}
   {γ : ℝ}
+  {r : ℕ → (ℕ → ℝ × S × A) → ℝ}
+  {s : ℕ → (ℕ → ℝ × S × A) → S}
+  {a : ℕ → (ℕ → ℝ × S × A) → A}
 -- given
-  (_hγ : γ ∈ Set.Ico 0 1) :
+  (_hγ : γ ∈ Set.Ico 0 1)
+  (h₁ : ∀ t, (· t) = (r t, s t, a t)) :
 -- imply
-  have hs : ∀ t, PSpace (M θ) (state (S := S) (A := A) t) := fun t =>
-    ⟨(Random.Measurable_S t).aemeasurable⟩
-  have ha : ∀ t, PSpace (M θ) (action (S := S) (A := A) t) := fun t =>
-    ⟨(Random.Measurable_A t).aemeasurable⟩
-  have hr : ∀ t, PSpace (M θ) (reward (S := S) (A := A) t) := fun t =>
-    ⟨(Random.Measurable_R t).aemeasurable⟩
-  have : PSpace (M θ) (AsPathRV.path (state (S := S) (A := A))) :=
+  have hs : ∀ t, PSpace (M θ) (s t) := fun t =>
+    ⟨(Random.Measurable_S h₁ t).aemeasurable⟩
+  have ha : ∀ t, PSpace (M θ) (a t) := fun t =>
+    ⟨(Random.Measurable_A h₁ t).aemeasurable⟩
+  have hr : ∀ t, PSpace (M θ) (r t) := fun t =>
+    ⟨(Random.Measurable_R h₁ t).aemeasurable⟩
+  have : PSpace (M θ) (AsPathRV.path s) :=
     PSpace.of_process_path hs
-  have : PSpace (M θ) (AsPathRV.path (action (S := S) (A := A))) :=
+  have : PSpace (M θ) (AsPathRV.path a) :=
     PSpace.of_process_path ha
-  have : PSpace (M θ) (AsPathRV.path (reward (S := S) (A := A))) :=
+  have : PSpace (M θ) (AsPathRV.path r) :=
     PSpace.of_process_path hr
-  𝔼[state, action, reward : M θ](∑' t, γ ^ t * reward t) =
-    ∫ ω, ∑' t, γ ^ t * reward t ω ∂(M θ) := by
+  𝔼[s, a, r : M θ](∑' t, γ ^ t * r t) =
+    ∫ ω, ∑' t, γ ^ t * r t ω ∂(M θ) := by
 -- proof
   intro _ _ _ _ _ _
   exact Expectation.ofRV_eq_integral

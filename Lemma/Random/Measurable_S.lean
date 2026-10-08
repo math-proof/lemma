@@ -9,11 +9,16 @@ The state process `s t` of the trajectory space is measurable.
 @[main]
 private lemma main
   [MeasurableSpace S] [MeasurableSpace A]
+  {r : ℕ → (ℕ → ℝ × S × A) → ℝ}
+  {s : ℕ → (ℕ → ℝ × S × A) → S}
+  {a : ℕ → (ℕ → ℝ × S × A) → A}
 -- given
+  (h₁ : ∀ t, (· t) = (r t, s t, a t))
   (t : ℕ) :
 -- imply
-  Measurable (state (S := S) (A := A) t) := by
+  Measurable (s t) := by
 -- proof
+  obtain rfl : s = fun t ω ↦ (ω t).2.1 := funext₂ fun t ω ↦ (congrArg (·.2.1) (congrFun (h₁ t) ω)).symm
   exact measurable_snd.fst.comp (measurable_pi_apply t)
 
 

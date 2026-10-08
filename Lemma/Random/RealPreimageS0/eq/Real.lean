@@ -13,15 +13,20 @@ The law of `s[0]` under the trajectory model is the initial distribution: `Pr(s[
 private lemma main
   [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [Fintype A]
   {M : Model Θ S A}
+  {r : ℕ → (ℕ → ℝ × S × A) → ℝ}
+  {s : ℕ → (ℕ → ℝ × S × A) → S}
+  {a : ℕ → (ℕ → ℝ × S × A) → A}
 -- given
+  (h₁ : ∀ t, (· t) = (r t, s t, a t))
   (θ : Θ)
   (x : S) :
 -- imply
-  (M θ).real (state 0 ⁻¹' {x}) = M.env.init.real {x} := by
+  (M θ).real (s 0 ⁻¹' {x}) = M.env.init.real {x} := by
 -- proof
-  have h : (M θ).map (state 0) = ((M θ).map (fun ω => ω 0)).map (fun z => z.2.1) := by
-    rw [Measure.map_map measurable_snd.fst (measurable_pi_apply 0)]; rfl
-  rw [measureReal_def, ← Measure.map_apply (Random.Measurable_S 0) (measurableSet_singleton x), h, Random.EqMap_Apply,
+  have hs : s 0 = fun ω ↦ (ω 0).2.1 := funext fun ω ↦ (congrArg (·.2.1) (congrFun (h₁ 0) ω)).symm
+  have h : (M θ).map (s 0) = ((M θ).map (fun ω => ω 0)).map (fun z => z.2.1) := by
+    rw [hs, Measure.map_map measurable_snd.fst (measurable_pi_apply 0)]; rfl
+  rw [measureReal_def, ← Measure.map_apply (Random.Measurable_S h₁ 0) (measurableSet_singleton x), h, Random.EqMap_Apply,
     Model.μ₀, Random.EqMapStageK_12, measureReal_def]
 
 

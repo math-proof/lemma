@@ -153,7 +153,7 @@ while [ "$j" -lt "$batch_count" ]; do
   if [ "$limit" -eq 1 ]; then
     echo "executing: $(tr '\n' ' ' < "test.$j.lean")"
   fi
-  lake setup-file "test.$j.lean" 2>&1 | sed '$d' | tee -a test.log
+  lake setup-file "test.$j.lean" 2>&1 | sed -E 's/\x1b\[[0-9;]*[A-Za-z]//g' | sed '$d' | tee -a test.log
   j=$((j + 1))
 done
 
@@ -163,6 +163,13 @@ imports=$(cat test.lean)
 
 imports=($imports)
 echo "modules:"
+# Two overlapping run.sh processes share test.sql. If one closes the INSERT
+# with ON DUPLICATE KEY UPDATE while the other is still appending rows,
+# mysql reports ERROR 1064 at the next row. That is a torn statement, not a
+# quoting bug in the theorem name. Hold this lock until exit, except just
+# before a re-exec, which needs to take the lock itself.
+exec 9>/tmp/lean-axiom-sql.lock
+flock 9
 touch test.sql
 
 output_file=test.sql
@@ -847,6 +854,7 @@ if [ $? -eq 0 ]; then
   # Check if the mysql command was successful
   if [ $? -eq 0 ]; then
     echo "Database 'axiom' created successfully."
+    flock -u 9
     bash $0 $*
     exit 0
   else
@@ -861,6 +869,7 @@ if [ $? -eq 0 ]; then
   # Check if the mysql command was successful
   if [ $? -eq 0 ]; then
     echo "Table 'lemma' created successfully."
+    flock -u 9
     bash sh/run.sh
     exit 0
   else

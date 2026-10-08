@@ -32,101 +32,109 @@ private lemma main
   {γ : ℝ}
   {Q : Θ → ℕ → S → A → ℝ}
   {V : Θ → ℕ → S → ℝ}
+  {r : ℕ → (ℕ → ℝ × S × A) → ℝ}
+  {s : ℕ → (ℕ → ℝ × S × A) → S}
+  {a : ℕ → (ℕ → ℝ × S × A) → A}
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
+  (h₁ : ∀ t, (· t) = (r t, s t, a t))
   (hS : (ReferenceMeasure.measure : Measure S) = Measure.count)
   (hA : (ReferenceMeasure.measure : Measure A) = Measure.count)
-  (h₁ : ∀ θ t («s.bvar» : ℕ → S) («a.bvar» : ℕ → A), Q θ t («s.bvar» t) («a.bvar» t) = 𝔼[reward : M θ]((γ ^ (id : ℕ → ℕ)) @ reward[t:] | state t = «s.bvar» t ∧ action t = «a.bvar» t))
-  (h₂ : ∀ θ t («s.bvar» : ℕ → S), V θ t («s.bvar» t) = 𝔼[reward : M θ]((γ ^ (id : ℕ → ℕ)) @ reward[t:] | state t = «s.bvar» t))
-  (h₃ : ∀ x u, Differentiable ℝ (fun θ => M.pol.prob θ x u))
-  (h₄ : sup[θ, x, u] ‖∇[θ] M.pol.prob θ x u‖ < ∞)
+  (h₂ : ∀ θ t («s.bvar» : ℕ → S) («a.bvar» : ℕ → A), Q θ t («s.bvar» t) («a.bvar» t) = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «s.bvar» t ∧ a t = «a.bvar» t))
+  (h₃ : ∀ θ t («s.bvar» : ℕ → S), V θ t («s.bvar» t) = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «s.bvar» t))
+  (h₄ : ∀ x u, Differentiable ℝ (fun θ => M.pol.prob θ x u))
+  (h₅ : sup[θ, x, u] ‖∇[θ] M.pol.prob θ x u‖ < ∞)
   (n : ℕ) :
 -- imply
-  ∑' t, γ ^ t • fderiv ℝ (fun θ => ∫ ω, reward t ω ∂(M θ)) θ =
-    ∫ ω, ∑ t ∈ Finset.range n, (γ ^ t * Q θ t (state t ω) (action t ω)) • fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' (state t ω) (action t ω))) θ ∂(M θ) +
-      γ ^ n • ∫ ω, fderiv ℝ (fun θ' => V θ' n (state n ω)) θ ∂(M θ) := by
+  ∑' t, γ ^ t • fderiv ℝ (fun θ => ∫ ω, r t ω ∂(M θ)) θ =
+    ∫ ω, ∑ t ∈ Finset.range n, (γ ^ t * Q θ t (s t ω) (a t ω)) • fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' (s t ω) (a t ω))) θ ∂(M θ) +
+      γ ^ n • ∫ ω, fderiv ℝ (fun θ' => V θ' n (s n ω)) θ ∂(M θ) := by
 -- proof
-  have h₄n := h₄
-  simp only [gradient, LinearIsometryEquiv.norm_map] at h₄
-  have hr : ∀ t, Measurable (reward (S := S) (A := A) t) := Model.r_meas' (S := S) (A := A)
-  have hpR : Measurable (fun ω t ↦ reward (S := S) (A := A) t ω) := measurable_pi_lambda _ hr
+  obtain rfl : r = fun t ω ↦ (ω t).1 := funext₂ fun t ω ↦ (congrArg (·.1) (congrFun (h₁ t) ω)).symm
+  obtain rfl : s = fun t ω ↦ (ω t).2.1 := funext₂ fun t ω ↦ (congrArg (·.2.1) (congrFun (h₁ t) ω)).symm
+  obtain rfl : a = fun t ω ↦ (ω t).2.2 := funext₂ fun t ω ↦ (congrArg (·.2.2) (congrFun (h₁ t) ω)).symm
+  set r : ℕ → (ℕ → ℝ × S × A) → ℝ := fun t ω ↦ (ω t).1
+  set s : ℕ → (ℕ → ℝ × S × A) → S := fun t ω ↦ (ω t).2.1
+  set a : ℕ → (ℕ → ℝ × S × A) → A := fun t ω ↦ (ω t).2.2
+  have h₄n := h₅
+  simp only [gradient, LinearIsometryEquiv.norm_map] at h₅
+  have hr : ∀ t, Measurable (r t) := Model.r_meas' h₁
+  have hpR : Measurable (fun ω t ↦ r t ω) := measurable_pi_lambda _ hr
   have hfG : ∀ t, Measurable (fun integ : ℕ → ℝ ↦ (γ ^ (id : ℕ → ℕ)) @ integ[t:]) := fun t =>
     Measurable.tsum fun k => (measurable_pi_apply (t + k)).const_mul _
-  have hQ : Q = fun θ => M.Q θ γ := funext fun θ => funext fun t => funext fun x => funext fun u => by
-    rw [h₁ θ t (fun _ ↦ x) (fun _ ↦ u)]
+  have hQ : Q = fun θ => M.Q r s a θ γ := funext fun θ => funext fun t => funext fun x => funext fun u => by
+    rw [h₂ θ t (fun _ ↦ x) (fun _ ↦ u)]
     simp only [Expectation.asRV_process]
     rw [Expectation.condEvent_eq_integral hpR.aemeasurable (hfG t)]
-    have hpre : JointRandomSymbol (state (S := S) (A := A) t) (action (S := S) (A := A) t) ⁻¹' {(x, u)} =
-        state t ⁻¹' {x} ∩ action t ⁻¹' {u} := by
+    have hpre : JointRandomSymbol (s t) (a t) ⁻¹' {(x, u)} =
+        s t ⁻¹' {x} ∩ a t ⁻¹' {u} := by
       ext ω; simp [JointRandomSymbol, Prod.ext_iff]
     rw [hpre]
-    exact Integral_G.eq.TSum_MulPowIntegral_R_Add.of.In_Ico (M := M) h₀ θ _ t
-  have hV : V = fun θ => M.V θ γ := funext fun θ => funext fun t => funext fun x => by
-    rw [h₂ θ t (fun _ ↦ x), M.V_eq_integral θ γ t x]
+    exact Integral_G.eq.TSum_MulPowIntegral_R_Add.of.In_Ico (M := M) h₀ h₁ θ _ t
+  have hV : V = fun θ => M.V r s θ γ := funext fun θ => funext fun t => funext fun x => by
+    rw [h₃ θ t (fun _ ↦ x), M.V_eq_integral r s θ γ t x]
     simp only [Expectation.asRV_process]
     rw [Expectation.condEvent_eq_integral hpR.aemeasurable (hfG t)]
     rfl
   subst hQ hV
-  obtain ⟨C, hC⟩ := id h₄
+  obtain ⟨C, hC⟩ := id h₅
   have h₇ : ∀ θ x u, ‖fderiv ℝ (fun θ => M.pol.prob θ x u) θ‖ ≤ C := fun θ x u => hC ⟨(θ, x, u), rfl⟩
   classical
   beta_reduce
   have hQ_expect : ∀ θ t («s.bvar» : ℕ → S) («a.bvar» : ℕ → A),
-      M.Q θ γ t («s.bvar» t) («a.bvar» t) =
-        𝔼[reward : M θ]((γ ^ (id : ℕ → ℕ)) @ reward[t:] | state t = «s.bvar» t ∧ action t = «a.bvar» t) := by
+      M.Q r s a θ γ t («s.bvar» t) («a.bvar» t) =
+        𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «s.bvar» t ∧ a t = «a.bvar» t) := by
     intro θ t sb ab
     symm
     simp only [Expectation.asRV_process]
     rw [Expectation.condEvent_eq_integral hpR.aemeasurable (hfG t)]
-    have hpre : JointRandomSymbol (state (S := S) (A := A) t) (action (S := S) (A := A) t) ⁻¹' {(sb t, ab t)} =
-        state t ⁻¹' {sb t} ∩ action t ⁻¹' {ab t} := by
+    have hpre : JointRandomSymbol (s t) (a t) ⁻¹' {(sb t, ab t)} =
+        s t ⁻¹' {sb t} ∩ a t ⁻¹' {ab t} := by
       ext ω; simp [JointRandomSymbol, Prod.ext_iff]
     rw [hpre]
-    exact Integral_G.eq.TSum_MulPowIntegral_R_Add.of.In_Ico (M := M) h₀ θ _ t
+    exact Integral_G.eq.TSum_MulPowIntegral_R_Add.of.In_Ico (M := M) h₀ h₁ θ _ t
   have hV_expect : ∀ θ t («s.bvar» : ℕ → S),
-      M.V θ γ t («s.bvar» t) =
-        𝔼[reward : M θ]((γ ^ (id : ℕ → ℕ)) @ reward[t:] | state t = «s.bvar» t) := by
+      M.V r s θ γ t («s.bvar» t) =
+        𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «s.bvar» t) := by
     intro θ t sb
     symm
-    rw [M.V_eq_integral θ γ t (sb t)]
+    rw [M.V_eq_integral r s θ γ t (sb t)]
     simp only [Expectation.asRV_process]
     rw [Expectation.condEvent_eq_integral hpR.aemeasurable (hfG t)]
     rfl
   have h₈ : ∀ x, M.env.init.real {x} • fderiv ℝ (fun θ => M.Vc θ γ x) θ =
       M.env.init.real {x} • (∑ t ∈ Finset.range n, γ ^ t • ∑ y, M.Pn θ t x y •
-          ∑ u, M.Q θ γ t y u • fderiv ℝ (fun θ => M.pol.prob θ y u) θ +
-        γ ^ n • ∑ y, M.Pn θ n x y • fderiv ℝ (fun θ => M.V θ γ n y) θ) := by
+          ∑ u, M.Q r s a θ γ t y u • fderiv ℝ (fun θ => M.pol.prob θ y u) θ +
+        γ ^ n • ∑ y, M.Pn θ n x y • fderiv ℝ (fun θ => M.V r s θ γ n y) θ) := by
     intro x
     if hx : M.env.init.real {x} = 0 then
       rw [hx, zero_smul, zero_smul]
     else
-      have hP : (M θ).real (state 0 ⁻¹' {x}) ≠ 0 := by rwa [RealPreimageS0.eq.Real]
-      have hg := EqGrad.of.Eq_Conditioned.Eq_Expect.Eq_Expect.policy_gradient.induct
-        h₀ hS hA (Q := fun θ => M.Q θ γ) (V := fun θ => M.V θ γ) hQ_expect hV_expect
-        h₃ h₄n hP n
-      have h' : ∀ t y, ((M θ)[|state 0 ⁻¹' {x}]).real (state t ⁻¹' {y}) = M.Pn θ t x y := fun t y => by
-        have h'' := RealPreimageSPreimageS_Add.eq.Pn.of.Ne0Real_Preimage (M := M) θ 0 t x y hP
+      have hP : (M θ).real (s 0 ⁻¹' {x}) ≠ 0 := by rwa [RealPreimageS0.eq.Real h₁]
+      have hg := EqGrad.of.Eq_Conditioned.Eq_Expect.Eq_Expect.policy_gradient.induct (Q := fun θ => M.Q r s a θ γ) (V := fun θ => M.V r s θ γ) h₀ h₁ hS hA hQ_expect hV_expect h₄ h₄n hP n
+      have h' : ∀ t y, ((M θ)[|s 0 ⁻¹' {x}]).real (s t ⁻¹' {y}) = M.Pn θ t x y := fun t y => by
+        have h'' := RealPreimageSPreimageS_Add.eq.Pn.of.Ne0Real_Preimage (M := M) h₁ θ 0 t x y hP
         rwa [zero_add] at h''
       simp_rw [h'] at hg
-      have h : fderiv ℝ (fun θ => M.V θ γ 0 x) θ =
+      have h : fderiv ℝ (fun θ => M.V r s θ γ 0 x) θ =
           ∑ t ∈ Finset.range n, γ ^ t • ∑ y, M.Pn θ t x y •
-              ∑ u, M.Q θ γ t y u • fderiv ℝ (fun θ => M.pol.prob θ y u) θ +
-            γ ^ n • ∑ y, M.Pn θ n x y • fderiv ℝ (fun θ => M.V θ γ n y) θ := by
+              ∑ u, M.Q r s a θ γ t y u • fderiv ℝ (fun θ => M.pol.prob θ y u) θ +
+            γ ^ n • ∑ y, M.Pn θ n x y • fderiv ℝ (fun θ => M.V r s θ γ n y) θ := by
         apply (InnerProductSpace.toDual ℝ Θ).symm.injective
         simpa [gradient, map_add, map_smul, map_sum] using hg
-      rw [← Fderiv_V.eq.Fderiv_Vc.of.Ne0Real_Preimage.In_Ico.GtInftySup.All_Differentiable_Prob (M := M) h₃ h₄n h₀ 0 x θ hP, h]
-  have h₉ : ∀ t, ∫ ω, (γ ^ t * M.Q θ γ t (state t ω) (action t ω)) •
-      fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' (state t ω) (action t ω))) θ ∂(M θ) =
-      ∑ y, (M θ).real (state t ⁻¹' {y}) •
-        ∑ u, (γ ^ t * M.Q θ γ t y u) • fderiv ℝ (fun θ' => M.pol.prob θ' y u) θ :=
-    fun t => Integral_SMul.eq.Sum_SMul.of.All_Differentiable_Prob (M := M) h₃ θ t (fun y u => γ ^ t * M.Q θ γ t y u)
-  have h₁₀ : ∫ ω, fderiv ℝ (fun θ' => M.V θ' γ n (state n ω)) θ ∂(M θ) =
-      ∑ y, (M θ).real (state n ⁻¹' {y}) • fderiv ℝ (fun θ' => M.V θ' γ n y) θ :=
-    Integral.eq.Sum_SMul (M := M) θ n (fun y => fderiv ℝ (fun θ' => M.V θ' γ n y) θ)
-  rw [TSum_SMul.eq.Sum_SMul.of.In_Ico.GtInftySup.All_Differentiable_Prob (M := M) h₃ h₄n h₀ θ, Finset.sum_congr rfl fun x _ => h₈ x,
-    integral_finsetSum _ fun t _ => Random.Integrable_Fun (M := M) θ t
-      (fun y u => (γ ^ t * M.Q θ γ t y u) • fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' y u)) θ)]
-  simp_rw [h₉, h₁₀, RealPreimageS.eq.Sum_MulRealPn (M := M) θ]
+      rw [← Fderiv_V.eq.Fderiv_Vc.of.Ne0Real_Preimage.In_Ico.GtInftySup.All_Differentiable_Prob (M := M) h₀ h₁ h₄ h₄n 0 x θ hP, h]
+  have h₉ : ∀ t, ∫ ω, (γ ^ t * M.Q r s a θ γ t (s t ω) (a t ω)) •
+      fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' (s t ω) (a t ω))) θ ∂(M θ) =
+      ∑ y, (M θ).real (s t ⁻¹' {y}) •
+        ∑ u, (γ ^ t * M.Q r s a θ γ t y u) • fderiv ℝ (fun θ' => M.pol.prob θ' y u) θ :=
+    fun t => Integral_SMul.eq.Sum_SMul.of.All_Differentiable_Prob (M := M) h₁ h₄ θ t (fun y u => γ ^ t * M.Q r s a θ γ t y u)
+  have h₁₀ : ∫ ω, fderiv ℝ (fun θ' => M.V r s θ' γ n (s n ω)) θ ∂(M θ) =
+      ∑ y, (M θ).real (s n ⁻¹' {y}) • fderiv ℝ (fun θ' => M.V r s θ' γ n y) θ :=
+    Integral.eq.Sum_SMul h₁ (M := M) θ n (fun y => fderiv ℝ (fun θ' => M.V r s θ' γ n y) θ)
+  rw [TSum_SMul.eq.Sum_SMul.of.In_Ico.GtInftySup.All_Differentiable_Prob (M := M) h₀ h₁ h₄ h₄n θ, Finset.sum_congr rfl fun x _ => h₈ x,
+    integral_finsetSum _ fun t _ => Random.Integrable_Fun h₁ (M := M) θ t
+      (fun y u => (γ ^ t * M.Q r s a θ γ t y u) • fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' y u)) θ)]
+  simp_rw [h₉, h₁₀, RealPreimageS.eq.Sum_MulRealPn (M := M) h₁ θ]
   simp only [smul_add, Finset.sum_add_distrib, Finset.smul_sum, Finset.sum_smul, smul_smul,
     Finset.sum_mul]
   congr 1

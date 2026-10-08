@@ -12,15 +12,19 @@ Conditional expected rewards are bounded: `‖𝔼[r[t] | B]‖ ≤ |R|`.
 private lemma main
   [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [Fintype A]
   {M : Model Θ S A}
+  {r : ℕ → (ℕ → ℝ × S × A) → ℝ}
+  {s : ℕ → (ℕ → ℝ × S × A) → S}
+  {a : ℕ → (ℕ → ℝ × S × A) → A}
 -- given
+  (h₁ : ∀ t, (· t) = (r t, s t, a t))
   (θ : Θ)
   (B : Set (ℕ → ℝ × S × A))
   (t : ℕ) :
 -- imply
-  ‖∫ ω, reward t ω ∂(M θ)[|B]‖ ≤ |M.env.R| := by
+  ‖∫ ω, r t ω ∂(M θ)[|B]‖ ≤ |M.env.R| := by
 -- proof
-  have hae : ∀ᵐ ω ∂(M θ)[|B], ‖reward t ω‖ ≤ |M.env.R| :=
-    cond_absolutelyContinuous.ae_le ((MEqR_Rc (M := M) θ t).mono fun ω h => by rw [h]; exact NormRc.le.Abs_R (M := M) _)
+  have hae : ∀ᵐ ω ∂(M θ)[|B], ‖r t ω‖ ≤ |M.env.R| :=
+    cond_absolutelyContinuous.ae_le ((MEqR_Rc h₁ (M := M) θ t).mono fun ω h => by rw [h]; exact NormRc.le.Abs_R (M := M) _)
   if hB : M θ B = 0 then
     rw [cond_eq_zero_of_meas_eq_zero hB]
     simp

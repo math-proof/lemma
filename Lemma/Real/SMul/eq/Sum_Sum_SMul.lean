@@ -13,18 +13,20 @@ private lemma main
   {E : Type*}
   [NormedAddCommGroup E]
   [NormedSpace ℝ E]
+  {s : ℕ → (ℕ → ℝ × S × A) → S}
+  {a : ℕ → (ℕ → ℝ × S × A) → A}
 -- given
   (t : ℕ)
   (ω : ℕ → ℝ × S × A)
   (c : ℝ)
   (ψ : S → A → E) :
 -- imply
-  c • ψ (state t ω) (action t ω) =
-    ∑ x, ∑ u, ((if state t ω = x ∧ action t ω = u then (1:ℝ) else 0) * c) • ψ x u := by
+  c • ψ (s t ω) (a t ω) =
+    ∑ x, ∑ u, ((if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) * c) • ψ x u := by
 -- proof
-  rw [Finset.sum_eq_single (state t ω) (fun b _ hb => Finset.sum_eq_zero fun u _ => by simp [Ne.symm hb])
+  rw [Finset.sum_eq_single (s t ω) (fun b _ hb => Finset.sum_eq_zero fun u _ => by simp [Ne.symm hb])
     (by simp)]
-  rw [Finset.sum_eq_single (action t ω) (fun b _ hb => by simp [Ne.symm hb]) (by simp)]
+  rw [Finset.sum_eq_single (a t ω) (fun b _ hb => by simp [Ne.symm hb]) (by simp)]
   simp
 
 

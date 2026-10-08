@@ -95,6 +95,28 @@ app.set('views', VIEWS);
 
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
+// katex is installed from npm (node_modules/katex). Serve that package only —
+// not the rest of node_modules — and keep pages that still request the vendored
+// unpkg path (`/unpkg.com/katex@0.16.21/…` and `…/static/unpkg.com/katex@0.16.21/…`).
+const KATEX_PKG = path.join(REPO_ROOT, 'node_modules', 'katex');
+const katexFiles = express.static(KATEX_PKG, {
+  index: false,
+  fallthrough: false,
+  maxAge: process.env.NODE_ENV === 'production' ? '1h' : 0,
+});
+app.use('/node_modules/katex', katexFiles);
+app.use('/lean/node_modules/katex', katexFiles);
+app.use((req, res, next) => {
+  const marker = '/unpkg.com/katex@0.16.21/';
+  const at = req.path.indexOf(marker);
+  if (at < 0) return next();
+  const rel = req.path.slice(at + marker.length);
+  if (!rel || rel.includes('..')) return res.status(400).end();
+  const q = req.url.includes('?') ? req.url.slice(req.url.indexOf('?')) : '';
+  req.url = '/' + rel + q;
+  return katexFiles(req, res, next);
+});
+
 // axios is installed from npm (node_modules/axios). Same as katex: this package only,
 // and leftover `/unpkg.com/axios@0.24.0/` requests (including under /static/) still resolve.
 const AXIOS_PKG = path.join(REPO_ROOT, 'node_modules', 'axios');
@@ -104,6 +126,7 @@ const axiosFiles = express.static(AXIOS_PKG, {
   maxAge: process.env.NODE_ENV === 'production' ? '1h' : 0,
 });
 app.use('/node_modules/axios', axiosFiles);
+app.use('/lean/node_modules/axios', axiosFiles);
 app.use((req, res, next) => {
   const marker = '/unpkg.com/axios@0.24.0/';
   const at = req.path.indexOf(marker);
@@ -124,6 +147,7 @@ const clipboardFiles = express.static(CLIPBOARD_PKG, {
   maxAge: process.env.NODE_ENV === 'production' ? '1h' : 0,
 });
 app.use('/node_modules/clipboard', clipboardFiles);
+app.use('/lean/node_modules/clipboard', clipboardFiles);
 app.use((req, res, next) => {
   const marker = '/unpkg.com/clipboard@2.0.11/';
   const at = req.path.indexOf(marker);
@@ -144,6 +168,7 @@ const fileSaverFiles = express.static(FILE_SAVER_PKG, {
   maxAge: process.env.NODE_ENV === 'production' ? '1h' : 0,
 });
 app.use('/node_modules/file-saver', fileSaverFiles);
+app.use('/lean/node_modules/file-saver', fileSaverFiles);
 app.use((req, res, next) => {
   const marker = '/unpkg.com/file-saver@2.0.5/';
   const at = req.path.indexOf(marker);

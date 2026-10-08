@@ -16,22 +16,26 @@ private lemma main
   [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [CompleteSpace Θ] [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A] [DecidableEq S]
   {M : Model Θ S A}
   {γ : ℝ}
+  {r : ℕ → (ℕ → ℝ × S × A) → ℝ}
+  {s : ℕ → (ℕ → ℝ × S × A) → S}
+  {a : ℕ → (ℕ → ℝ × S × A) → A}
 -- given
-  (h₀ : ∀ x u, Differentiable ℝ (fun θ => M.pol.prob θ x u))
-  (h₁ : sup[θ, x, u] ‖∇[θ] M.pol.prob θ x u‖ < ∞)
-  (h₂ : γ ∈ Set.Ico 0 1)
+  (h₀ : γ ∈ Set.Ico 0 1)
+  (h₁ : ∀ t, (· t) = (r t, s t, a t))
+  (h₂ : ∀ x u, Differentiable ℝ (fun θ => M.pol.prob θ x u))
+  (h₃ : sup[θ, x, u] ‖∇[θ] M.pol.prob θ x u‖ < ∞)
   (θ : Θ) :
 -- imply
-  BddAbove ((fun p : ℕ × S => ‖fderiv ℝ (fun θ => M.V θ γ p.1 p.2) θ‖) ''
-    {p | (M θ).real (state p.1 ⁻¹' {p.2}) ≠ 0}) := by
+  BddAbove ((fun p : ℕ × S => ‖fderiv ℝ (fun θ => M.V r s θ γ p.1 p.2) θ‖) ''
+    {p | (M θ).real (s p.1 ⁻¹' {p.2}) ≠ 0}) := by
 -- proof
-  obtain ⟨Cp, hCp⟩ := id h₁
+  obtain ⟨Cp, hCp⟩ := id h₃
   have hC : ∀ θ x u, ‖fderiv ℝ (fun θ => M.pol.prob θ x u) θ‖ ≤ Cp := fun θ x u => by
     simpa [gradient, LinearIsometryEquiv.norm_map] using hCp ⟨(θ, x, u), rfl⟩
   refine ⟨∑ x, ‖fderiv ℝ (fun θ => M.Vc θ γ x) θ‖, ?_⟩
   rintro _ ⟨p, hp, rfl⟩
   beta_reduce
-  rw [Random.Fderiv_V.eq.Fderiv_Vc.of.Ne0Real_Preimage.In_Ico.GtInftySup.All_Differentiable_Prob (M := M) h₀ h₁ h₂ p.1 p.2 θ hp]
+  rw [Random.Fderiv_V.eq.Fderiv_Vc.of.Ne0Real_Preimage.In_Ico.GtInftySup.All_Differentiable_Prob (M := M) h₀ h₁ h₂ h₃ p.1 p.2 θ hp]
   apply Finset.single_le_sum (f := fun x => ‖fderiv ℝ (fun θ => M.Vc θ γ x) θ‖) (fun _ _ => norm_nonneg _) (Finset.mem_univ p.2)
 
 

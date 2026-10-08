@@ -12,7 +12,7 @@ private lemma main
   [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [Fintype A]
   {M : Model Θ S A}
   {n : ℕ}
-  {φ : (Π _ : Iic n, ℝ × S × A) × (ℝ × S × A) → ℝ}
+  {φ : (Π _ : Finset.Iic n, ℝ × S × A) × (ℝ × S × A) → ℝ}
   {C : ℝ}
 -- given
   (hφ : StronglyMeasurable φ)

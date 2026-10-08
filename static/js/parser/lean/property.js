@@ -145,7 +145,7 @@ export class LeanProperty extends LeanBinary {
                         }
                     }
                     if (arg) {
-                        const exponent = this.lhs instanceof L.LeanParenthesis ? this.lhs.arg : this.lhs;
+                        const exponent = L.LeanParenthesis.peelLatex(this.lhs);
                         return [exponent.toLatex(syntax)];
                     }
                     break;

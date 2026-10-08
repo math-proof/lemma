@@ -58,12 +58,8 @@ private lemma main
   (h₇ : sup[θ, x, u] ‖∇[θ] M.pol.prob θ x u‖ < ∞)
   (h₈ : (M θ).real (s t ⁻¹' {«s.bvar» t}) ≠ 0) :
 -- imply
-  have hs : ∀ t, Measurable (s t) := fun t ↦ by
-    rw [show s t = fun ω ↦ (ω t).2.1 from funext fun ω ↦ (congrArg (·.2.1) (congrFun (h₁ t) ω)).symm]
-    exact (measurable_pi_apply t).snd.fst
-  have ha : ∀ t, Measurable (a t) := fun t ↦ by
-    rw [show a t = fun ω ↦ (ω t).2.2 from funext fun ω ↦ (congrArg (·.2.2) (congrFun (h₁ t) ω)).symm]
-    exact (measurable_pi_apply t).snd.snd
+  have hs : ∀ t, Measurable (s t) := Random.Measurable_S h₁
+  have ha : ∀ t, Measurable (a t) := Random.Measurable_A h₁
   have : ∀ θ t, SinglePSpace (M θ) (a t, s t) := fun _ t =>
     SinglePSpace.of.EqMeasureCount.Measurable ((ha t).prodMk (hs t)) (by
       show (ReferenceMeasure.measure : Measure A).prod (ReferenceMeasure.measure : Measure S) = _
@@ -83,10 +79,10 @@ private lemma main
   set s : ℕ → (ℕ → ℝ × S × A) → S := fun t ω ↦ (ω t).2.1
   set a : ℕ → (ℕ → ℝ × S × A) → A := fun t ω ↦ (ω t).2.2
   intro hs ha hP hPs
-  have hpR : Measurable (fun ω t ↦ r t ω) := measurable_pi_lambda _ (Model.r_meas' (S := S) (A := A))
+  have hpR : Measurable (fun ω t ↦ r t ω) := measurable_pi_lambda _ (Model.r_meas' h₁)
   have hfG : ∀ t, Measurable (fun integ : ℕ → ℝ ↦ (γ ^ (id : ℕ → ℕ)) @ integ[t:]) := fun t =>
     Measurable.tsum fun k => (measurable_pi_apply (t + k)).const_mul _
-  have hQ : Q = fun θ => M.Q θ γ := funext fun θ => funext fun t => funext fun x => funext fun u => by
+  have hQ : Q = fun θ => M.Q r s a θ γ := funext fun θ => funext fun t => funext fun x => funext fun u => by
     rw [h₄ θ t (fun _ ↦ x) (fun _ ↦ u)]
     simp only [Expectation.asRV_process]
     rw [Expectation.condEvent_eq_integral hpR.aemeasurable (hfG t)]
@@ -95,9 +91,9 @@ private lemma main
       ext ω
       simp [JointRandomSymbol, Prod.ext_iff]
     rw [hpre]
-    apply Integral_G.eq.TSum_MulPowIntegral_R_Add.of.In_Ico (M := M) h₀ θ _ t
-  have hV : V = fun θ => M.V θ γ := funext fun θ => funext fun t => funext fun x => by
-    rw [h₅ θ t (fun _ ↦ x), M.V_eq_integral θ γ t x]
+    apply Integral_G.eq.TSum_MulPowIntegral_R_Add.of.In_Ico (M := M) h₀ h₁ θ _ t
+  have hV : V = fun θ => M.V r s θ γ := funext fun θ => funext fun t => funext fun x => by
+    rw [h₅ θ t (fun _ ↦ x), M.V_eq_integral r s θ γ t x]
     simp only [Expectation.asRV_process]
     rw [Expectation.condEvent_eq_integral hpR.aemeasurable (hfG t)]
     rfl
@@ -108,15 +104,15 @@ private lemma main
   have hπ : ∀ u, ∇[θ] (ℙ[M θ]((a t) = u | (s t) = x) : ℝ) = ∇[θ] M.pol.prob θ x u := by
     intro u
     refine Filter.EventuallyEq.gradient_eq ?_
-    filter_upwards [(Differentiable_RealPreimageS.of.GtInftySup.All_Differentiable_Prob (M := M) h₆ h₇ t x θ).continuousAt.eventually_ne h₈] with θ' h
-    erw [ProbCond.eq.OfRealPol.of.Ne_0 h₂ h₃ (hP θ' t) h, ENNReal.toReal_ofReal (M.pol.nonneg θ' _ _)]
+    filter_upwards [(Differentiable_RealPreimageS.of.GtInftySup.All_Differentiable_Prob (M := M) h₁ h₆ h₇ t x θ).continuousAt.eventually_ne h₈] with θ' h
+    erw [ProbCond.eq.OfRealPol.of.Ne_0 h₁ h₂ h₃ (hP θ' t) h, ENNReal.toReal_ofReal (M.pol.nonneg θ' _ _)]
   simp only [s, a] at hπ
   simp_rw [hπ]
-  rw [GradV.eq.AddSum_SMulSMul.of.Ne0Real_Preimage.GtInftySup.All_Differentiable_Prob.In_Ico h₀ h₆ h₇ h₈]
+  rw [GradV.eq.AddSum_SMulSMul.of.Ne0Real_Preimage.GtInftySup.All_Differentiable_Prob.In_Ico h₀ h₁ h₆ h₇ h₈]
   have hP1 : ∀ y, (ℙ[M θ]((s (t + 1)) = y | (s t) = x) : ℝ) = M.P1 θ x y := by
     intro y
     rw [ProbCond.eq.Div.of.Eq_Count.Eq_Count (π := M θ) (x := s (t + 1)) (y := s t) h₂ h₂ y x,
-      ENNReal.toReal_div, ← RealPreimageSPreimageS_Add_1.eq.P1.of.Ne0Real_Preimage (M := M) θ t x y h₈,
+      ENNReal.toReal_div, ← RealPreimageSPreimageS_Add_1.eq.P1.of.Ne0Real_Preimage (M := M) h₁ θ t x y h₈,
       measureReal_def]
     erw [cond_apply (hs t (measurableSet_singleton x))]
     rw [ENNReal.toReal_mul, ENNReal.toReal_inv, mul_comm, div_eq_mul_inv]

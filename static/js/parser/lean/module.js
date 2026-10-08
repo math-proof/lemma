@@ -28,7 +28,7 @@ function landMultilineConjuncts(node) {
             if (n.hanging_indentation) multiline = true;
             walk(n.lhs);
             walk(n.rhs);
-        } else out.push(n instanceof L.LeanParenthesis ? n.arg : n); // own line: parentheses are redundant
+        } else out.push(L.LeanParenthesis.peelLatex(n)); // own line: parentheses are redundant (unless a tuple / `·` section)
     };
     walk(node);
     return multiline && out.length > 1 ? out : null;
@@ -393,6 +393,24 @@ function collectRandomVarNames(binderRoots) {
             addProbMeasure(probMeasureApp(n.arg));
         } else if (n instanceof L.LeanParenthesis && n.arg instanceof L.LeanColon) {
             addProbMeasure(probMeasureApp(n.arg.rhs));
+        }
+    }
+    // `{M : Model Θ S A}`: `M θ` coerces to a probability measure on the trajectory
+    // space `ℕ → ℝ × S × A` (PolicyGradient.Model.instCoeFun), so an indexed family
+    // `{r : ℕ → (ℕ → ℝ × S × A) → α}` is a random variable without a `PSpace` binder.
+    for (const n of nodes) {
+        if (!(n instanceof L.LeanParenthesis) && !(n instanceof L.LeanBrace)) continue;
+        const cols = [];
+        const a = n.arg;
+        if (a instanceof L.LeanColon) cols.push(a);
+        else if (a instanceof L.LeanArgsSpaceSeparated)
+            for (const c of a.args) if (c instanceof L.LeanColon) cols.push(c);
+        for (const col of cols) {
+            const ty = col.rhs.peelGroup();
+            if (!(ty instanceof L.LeanArgsSpaceSeparated) || ty.args.length < 4 || !ty.headIs('Model')) continue;
+            const S = strStmt(ty.args[ty.args.length - 2].peelGroup()).trim();
+            const A = strStmt(ty.args[ty.args.length - 1].peelGroup()).trim();
+            if (S && A) probDomains.add(`ℕ → ℝ × ${S} × ${A}`);
         }
     }
 

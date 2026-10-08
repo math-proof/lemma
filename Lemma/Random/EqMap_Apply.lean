@@ -24,8 +24,8 @@ private lemma main
     rfl
   rw [h₁, Kernel.traj_map_frestrictLe, Kernel.partialTraj_self, Kernel.id_map (by fun_prop),
     Measure.deterministic_comp_eq_map, Measure.map_map (by fun_prop) (by fun_prop)]
-  have h₂ : ((fun h : (Π _ : Iic 0, ℝ × S × A) => h ⟨0, mem_Iic.2 le_rfl⟩) ∘
-      ⇑(MeasurableEquiv.piUnique (fun i : Iic 0 => (fun _ => (ℝ × S × A)) i)).symm) = id := by
+  have h₂ : ((fun h : (Π _ : Finset.Iic 0, ℝ × S × A) => h ⟨0, mem_Iic.2 le_rfl⟩) ∘
+      ⇑(MeasurableEquiv.piUnique (fun i : Finset.Iic 0 => (fun _ => (ℝ × S × A)) i)).symm) = id := by
     funext x; rfl
   rw [h₂, Measure.map_id]
 

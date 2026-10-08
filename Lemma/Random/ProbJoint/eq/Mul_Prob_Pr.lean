@@ -15,14 +15,18 @@ private lemma main
   {M : Model Θ S A}
   {θ : Θ}
   {t : ℕ}
+  {r : ℕ → (ℕ → ℝ × S × A) → ℝ}
+  {s : ℕ → (ℕ → ℝ × S × A) → S}
+  {a : ℕ → (ℕ → ℝ × S × A) → A}
 -- given
+  (h₁ : ∀ t, (· t) = (r t, s t, a t))
   (x : S)
   (u : A) :
 -- imply
-  (M θ).real (state t ⁻¹' {x} ∩ action t ⁻¹' {u}) = (M θ).real (state t ⁻¹' {x}) * M.Pr θ x u := by
+  (M θ).real (s t ⁻¹' {x} ∩ a t ⁻¹' {u}) = (M θ).real (s t ⁻¹' {x}) * M.Pr θ x u := by
 -- proof
   classical
-  exact RealInterPreimageS_PreimageA.eq.MulRealPreimageSProb (M := M) θ t x u
+  exact RealInterPreimageS_PreimageA.eq.MulRealPreimageSProb (M := M) h₁ θ t x u
 
 
 -- created on 2026-09-26

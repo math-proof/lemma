@@ -12,15 +12,19 @@ On a reachable state (`Pr(s[t] = x) ≠ 0`), `Pr(s[t+1] = y | s[t] = x) = P1 θ 
 private lemma main
   [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A] [DecidableEq S]
   {M : Model Θ S A}
+  {r : ℕ → (ℕ → ℝ × S × A) → ℝ}
+  {s : ℕ → (ℕ → ℝ × S × A) → S}
+  {a : ℕ → (ℕ → ℝ × S × A) → A}
 -- given
+  (h₁ : ∀ t, (· t) = (r t, s t, a t))
   (θ : Θ)
   (t : ℕ)
   (x y : S)
-  (h₀ : (M θ).real (state t ⁻¹' {x}) ≠ 0) :
+  (h₂ : (M θ).real (s t ⁻¹' {x}) ≠ 0) :
 -- imply
-  ((M θ)[|state t ⁻¹' {x}]).real (state (t + 1) ⁻¹' {y}) = M.P1 θ x y := by
+  ((M θ)[|s t ⁻¹' {x}]).real (s (t + 1) ⁻¹' {y}) = M.P1 θ x y := by
 -- proof
-  rw [Random.RealPreimageSPreimageS_Add.eq.Pn.of.Ne0Real_Preimage (M := M) θ t 1 x y h₀, Random.Pn1.eq.P1]
+  rw [Random.RealPreimageSPreimageS_Add.eq.Pn.of.Ne0Real_Preimage (M := M) h₁ θ t 1 x y h₂, Random.Pn1.eq.P1]
 
 
 -- created on 2026-10-06

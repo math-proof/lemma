@@ -11,7 +11,11 @@ open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 private lemma main
   [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A] [DecidableEq S] [DecidableEq A]
   {M : Model Θ S A}
+  {r : ℕ → (ℕ → ℝ × S × A) → ℝ}
+  {s : ℕ → (ℕ → ℝ × S × A) → S}
+  {a : ℕ → (ℕ → ℝ × S × A) → A}
 -- given
+  (h₁ : ∀ t, (· t) = (r t, s t, a t))
   (θ : Θ)
   (t : ℕ)
   (x : S)
@@ -19,14 +23,17 @@ private lemma main
   (φ : S → A → ℝ) :
 -- imply
   ∫ ω, (if (ω t).2.1 = x ∧ (ω t).2.2 = u then (1:ℝ) else 0) * φ (ω t).2.1 (ω t).2.2 ∂(M θ) =
-    (M θ).real (state t ⁻¹' {x}) * M.pol.prob θ x u * φ x u := by
+    (M θ).real (s t ⁻¹' {x}) * M.pol.prob θ x u * φ x u := by
 -- proof
-  have h₁ : ∀ ω : ℕ → ℝ × S × A, (if (ω t).2.1 = x ∧ (ω t).2.2 = u then (1:ℝ) else 0) * φ (ω t).2.1 (ω t).2.2 =
-      (if state t ω = x ∧ action t ω = u then (1:ℝ) else 0) * φ x u := by
-    intro ω; simp only [state, action]
+  have h₂ : ∀ ω : ℕ → ℝ × S × A, (if (ω t).2.1 = x ∧ (ω t).2.2 = u then (1:ℝ) else 0) * φ (ω t).2.1 (ω t).2.2 =
+      (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) * φ x u := by
+    intro ω
+    have hs : s t ω = (ω t).2.1 := (congrArg (·.2.1) (congrFun (h₁ t) ω)).symm
+    have ha : a t ω = (ω t).2.2 := (congrArg (·.2.2) (congrFun (h₁ t) ω)).symm
+    simp only [hs, ha]
     by_cases h1 : (ω t).2.1 = x <;> by_cases h2 : (ω t).2.2 = u <;> simp [h1, h2]
-  simp_rw [h₁]
-  rw [integral_mul_const, Integral_EqSAndEqA.eq.MulRealPreimageSProb]
+  simp_rw [h₂]
+  rw [integral_mul_const, Integral_EqSAndEqA.eq.MulRealPreimageSProb h₁]
 
 
 -- created on 2026-10-07

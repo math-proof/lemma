@@ -3,6 +3,7 @@ import fs from "fs";
 import path from "path";
 import { fileURLToPath, pathToFileURL } from "url";
 import { compile } from "../static/js/parser/lean.js";
+import { strStmt } from "../static/js/parser/lean/utility.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPO = path.resolve(__dirname, "..");
@@ -1377,6 +1378,13 @@ function relationAlts(node, tag0, opts) {
     outR = outR.filter((a) => !/PreimageS/.test(a) && !(/Preimage/.test(a) && /_\d+$/.test(a)));
     if (dig && !outR.includes(pref)) outR.unshift(pref);
   }
+  // joint of RVs equal to a cdot section or one variable: EqJoint beside Eq (All_EqJoint under ∀)
+  if (tag0 === "Eq" && eqJointSides(node)) {
+    const i = outR.indexOf("Eq");
+    if (i >= 0) outR.splice(i + 1, 0, "EqJoint");
+    else outR.push("EqJoint");
+    outR = uniq(outR);
+  }
   return outR;
 }
 
@@ -1854,6 +1862,227 @@ function eventHasAnd(node) {
 }
 
 /**
+ * Random-variable names of this lemma: functions out of a probability space
+ * (`{x : Ω → α}` / `{s : ℕ → Ω → S}` once `Ω` is the domain of an
+ * `IsProbabilityMeasure` / `PSpace` measure) and trajectory coordinates of
+ * `{M : Model Θ S A}` (`ℕ → ℝ × S × A`). A comma tuple or `JointRandomSymbol`
+ * of those names is a joint, the same way `∧` is; a pair of other terms is not.
+ */
+let RV_NAMES = new Set();
+
+function collectRvNames(root) {
+  const nodes = [];
+  (function gather(n) {
+    if (!n || typeof n !== "object") return;
+    nodes.push(n);
+    for (const k of n.args || []) gather(k);
+  })(root);
+  const peel = (n) => {
+    let x = n;
+    while (cls(x) === "LeanParenthesis") x = x.args?.[0];
+    return x;
+  };
+  const text = (n) => strStmt(n).trim();
+  const headIs = (n, name) => {
+    const u = peel(n);
+    const h = cls(u) === "LeanArgsSpaceSeparated" ? u.args?.[0] : u;
+    const t = cls(h) === "LeanToken" ? h.text : cls(h) === "LeanProperty" && cls(h.args?.[1]) === "LeanToken" ? h.args[1].text : "";
+    return t === name || (t && t.endsWith("." + name));
+  };
+  const colonsOf = (n) => {
+    if (cls(n) !== "LeanParenthesis" && cls(n) !== "LeanBrace") return [];
+    const a = n.args?.[0];
+    if (cls(a) === "LeanColon") return [a];
+    if (cls(a) === "LeanArgsSpaceSeparated") return (a.args || []).filter((c) => cls(c) === "LeanColon");
+    return [];
+  };
+  const measures = new Map();
+  for (const n of nodes) {
+    for (const col of colonsOf(n)) {
+      const rhs = peel(col.args?.[1]);
+      if (headIs(rhs, "Measure") && cls(rhs) === "LeanArgsSpaceSeparated" && (rhs.args || []).length >= 2) {
+        const dom = text(peel(rhs.args[1]));
+        const lhs = text(col.args?.[0]);
+        if (dom && lhs) measures.set(lhs, dom);
+      }
+    }
+  }
+  const probDomains = new Set();
+  const addProbMeasure = (measureName) => {
+    if (!measureName) return;
+    const m = text(peel(measureName));
+    if (measures.has(m)) probDomains.add(measures.get(m));
+  };
+  const probMeasureApp = (n0) => {
+    const a = peel(n0);
+    if (cls(a) !== "LeanArgsSpaceSeparated" || (a.args || []).length < 2) return null;
+    if (!headIs(a, "IsProbabilityMeasure") && !headIs(a, "PSpace")) return null;
+    return a.args[1];
+  };
+  for (const n of nodes) {
+    if (cls(n) === "LeanBracket") addProbMeasure(probMeasureApp(n.args?.[0]));
+    else if (cls(n) === "LeanParenthesis" && cls(n.args?.[0]) === "LeanColon") addProbMeasure(probMeasureApp(n.args[0].args?.[1]));
+  }
+  for (const n of nodes) {
+    for (const col of colonsOf(n)) {
+      const ty = peel(col.args?.[1]);
+      if (cls(ty) !== "LeanArgsSpaceSeparated" || (ty.args || []).length < 4 || !headIs(ty, "Model")) continue;
+      const S = text(peel(ty.args[ty.args.length - 2]));
+      const A = text(peel(ty.args[ty.args.length - 1]));
+      if (S && A) probDomains.add(`ℕ → ℝ × ${S} × ${A}`);
+    }
+  }
+  const rvs = new Set();
+  for (const n of nodes) {
+    for (const col of colonsOf(n)) {
+      const ty = peel(col.args?.[1]);
+      if (cls(ty) !== "Lean_rightarrow") continue;
+      let last = ty;
+      while (cls(peel(last.args?.[1])) === "Lean_rightarrow") last = peel(last.args[1]);
+      const dom = text(peel(ty.args?.[0]));
+      const lastDom = text(peel(last.args?.[0]));
+      if (!probDomains.has(dom) && !probDomains.has(lastDom)) continue;
+      (function addNames(x) {
+        const y = peel(x);
+        if (cls(y) === "LeanToken") rvs.add(y.text);
+        else if (cls(y) === "LeanArgsSpaceSeparated") for (const a of y.args || []) addNames(a);
+      })(col.args?.[0]);
+    }
+  }
+  return rvs;
+}
+
+function setRvNames(root) {
+  RV_NAMES = root ? collectRvNames(root) : new Set();
+}
+
+/** `(a, b)` / `(a, b, c)` comma tuple, or null. */
+function commaParts(node) {
+  const u = unwrapParen(node);
+  if (cls(u) === "LeanArgsCommaSeparated" && (u.args || []).length >= 2) return u.args;
+  return null;
+}
+
+/** `JointRandomSymbol a b` including a right-nested chain, flattened, or null. */
+function jrsParts(node) {
+  const u = unwrapParen(node);
+  if (cls(u) !== "LeanArgsSpaceSeparated" || (u.args || []).length < 3) return null;
+  const h = u.args[0];
+  const t = cls(h) === "LeanToken" ? h.text : cls(h) === "LeanProperty" && cls(h.args?.[1]) === "LeanToken" ? h.args[1].text : "";
+  if (t !== "JointRandomSymbol" && !(t && t.endsWith(".JointRandomSymbol"))) return null;
+  const out = [];
+  for (const a of u.args.slice(1)) {
+    const inner = jrsParts(a);
+    if (inner) out.push(...inner);
+    else out.push(a);
+  }
+  return out.length >= 2 ? out : null;
+}
+
+/** A term that is one of this lemma's random variables (not an arbitrary expression). */
+function isRvTerm(node) {
+  const u = unwrapParen(node);
+  if (!u) return false;
+  if (commaParts(u) || jrsParts(u)) return isJointRvTuple(u);
+  const c = cls(u);
+  if (c === "LeanToken") return RV_NAMES.has(u.text);
+  if (c === "LeanGetElem") return isRvTerm(u.args?.[0]); // `r[t + 1:]`
+  if (c === "LeanArgsSpaceSeparated") {
+    const h = u.args?.[0];
+    if (cls(h) === "LeanToken") return RV_NAMES.has(h.text);
+    if (cls(h) === "LeanGetElem") return isRvTerm(h);
+    return false;
+  }
+  return false;
+}
+
+/** Pair / triple (or nested `JointRandomSymbol`) of random variables. */
+function isJointRvTuple(node) {
+  const parts = commaParts(node) || jrsParts(node);
+  return !!parts && parts.every((p) => isRvTerm(p));
+}
+
+/** `(· t)` / `·`: an anonymous cdot section, not a named variable. */
+function isCdotSection(node) {
+  const u = unwrapParen(node);
+  if (cls(u) === "LeanToken") return u.text === "·";
+  if (cls(u) === "LeanArgsSpaceSeparated" && cls(u.args?.[0]) === "LeanToken") return u.args[0].text === "·";
+  return false;
+}
+
+/** One variable: `x`, `x t`, `x (t + 1)`, `x[n]`. Not a tuple, not a cdot section, not a numeral. */
+function isSingleVarSide(node) {
+  const u = unwrapParen(node);
+  if (!u || isCdotSection(u) || commaParts(u) || jrsParts(u)) return false;
+  const ident = (t) => typeof t === "string" && t !== "·" && !/^-?\d+$/.test(t) && (/^[A-Za-z_]/.test(t) || /^[^\x00-\x7F]/.test(t));
+  if (cls(u) === "LeanToken") return ident(u.text);
+  if (cls(u) === "LeanGetElem") return isSingleVarSide(u.args?.[0]);
+  if (cls(u) === "LeanArgsSpaceSeparated" && cls(u.args?.[0]) === "LeanToken") return ident(u.args[0].text);
+  return false;
+}
+
+/**
+ * `A = B` where one side is a joint of random variables (tuple or JointRandomSymbol)
+ * and the other is a `·` section or a single variable. Orientation does not matter.
+ * Spelled `EqJoint` next to `Eq` (so `∀ t, …` also yields `All_EqJoint` / `AllEqJoint`).
+ */
+function eqJointSides(node) {
+  const u = unwrapParen(node);
+  if (cls(u) !== "LeanEq" || (u.args || []).length !== 2) return false;
+  const [a, b] = u.args;
+  const other = (n) => isCdotSection(n) || isSingleVarSide(n);
+  return (isJointRvTuple(a) && other(b)) || (isJointRvTuple(b) && other(a));
+}
+
+/**
+ * `_Joint` spelling of an independence atom when an argument is a joint of random variables.
+ * Right-hand RV or the conditioner → `CondIndep_Joint` / `Indep_Joint`;
+ * left-hand RV → `CondIndepJoint` / `IndepJoint`; both → `…Joint_Joint`.
+ * Empty when there is no such joint (the plain name stays canonical).
+ */
+function indepJointAlt(node) {
+  const strip = (n) => {
+    let u = unwrapParen(n);
+    while ((cls(u) === "LeanArgsNewLineSeparated" || cls(u) === "LeanStatements") && (u.args || []).filter((a) => cls(a) !== "LeanLineComment").length === 1) {
+      u = unwrapParen((u.args || []).find((a) => cls(a) !== "LeanLineComment"));
+    }
+    return u;
+  };
+  const u = strip(node);
+  let perp = null, cond = null, base = "";
+  if (cls(u) === "Lean_perp") { perp = u; base = "Indep"; }
+  else if (cls(u) === "LeanBitOr" && cls(strip(u.args?.[0])) === "Lean_perp") {
+    perp = strip(u.args[0]); cond = u.args?.[1]; base = "CondIndep";
+  } else return "";
+  const left = isJointRvTuple(perp.args?.[0]);
+  const right = isJointRvTuple(perp.args?.[1]);
+  const cj = !!(cond && isJointRvTuple(cond));
+  if (!left && !right && !cj) return "";
+  let name = base;
+  if (left) name += "Joint";
+  if (right || cj) name += "_Joint";
+  return name;
+}
+
+/** Probability-event name, counting a top-level RV tuple as a joint when `tuples` is set. */
+function probEventName(event, tuples) {
+  const joint = (n) => eventHasAnd(n) || (tuples && isJointRvTuple(n));
+  const e = unwrapParen(event);
+  if (cls(e) === "LeanBitOr") {
+    const left = unwrapParen(e.args?.[0]);
+    const right = unwrapParen(e.args?.[1]);
+    const leftAnd = joint(left);
+    const rightAnd = joint(right);
+    if (leftAnd && !rightAnd) return "ProbCondJoint";
+    if (rightAnd && !leftAnd) return "ProbCond_Joint";
+    if (leftAnd && rightAnd) return "ProbCondJoint_Joint";
+    return "ProbCond";
+  }
+  if (joint(e)) return "ProbS";
+  return "Prob";
+}
+
+/**
  * Match `ℙ[μ](E)` written as LeanArgsSpaceSeparated(GetElem(ℙ, μ), (E)).
  * Returns the event node, or null.
  */
@@ -1880,19 +2109,7 @@ function matchProbApp(node) {
  *   otherwise          → Prob
  */
 function nameProbEvent(event) {
-  const e = unwrapParen(event);
-  if (cls(e) === "LeanBitOr") {
-    const left = unwrapParen(e.args?.[0]);
-    const right = unwrapParen(e.args?.[1]);
-    const leftAnd = eventHasAnd(left);
-    const rightAnd = eventHasAnd(right);
-    if (leftAnd && !rightAnd) return "ProbCondJoint";
-    if (rightAnd && !leftAnd) return "ProbCond_Joint";
-    if (leftAnd && rightAnd) return "ProbCondJoint_Joint";
-    return "ProbCond";
-  }
-  if (eventHasAnd(e)) return "ProbS";
-  return "Prob";
+  return probEventName(event, false);
 }
 
 function nameProbApp(node) {
@@ -2695,11 +2912,21 @@ function nameExprAltsBase(node, opts = {}) {
   }
 
   if (name === "Lean_have" || isBvarQuotation(node)) return [];
-  if (indepAtom(node)) return [indepAtom(node)];
+  if (indepAtom(node)) {
+    const base = indepAtom(node);
+    const joint = indepJointAlt(node);
+    return joint && joint !== base ? [base, joint] : [base];
+  }
 
-  // ℙ[π](E) probability idioms
+  // ℙ[π](E) probability idioms. A top-level RV tuple is a joint the same way `∧` is,
+  // but only as an extra spelling: the `∧`-only name stays canonical.
   const probName = nameProbApp(node);
-  if (probName) return probName === "ProbS" && isBvarSliceJointEvent(matchProbApp(node)) ? ["ProbJoint", "ProbJointGetSliceS", probName] : [probName];
+  if (probName) {
+    const base = probName === "ProbS" && isBvarSliceJointEvent(matchProbApp(node)) ? ["ProbJoint", "ProbJointGetSliceS", probName] : [probName];
+    const ev = matchProbApp(node);
+    const withTuples = ev ? probEventName(ev, true) : "";
+    return withTuples && withTuples !== probName ? uniq([...base, withTuples]) : base;
+  }
 
   if (name === "LeanStatements" || name === "LeanArgsNewLineSeparated") {
     return nameExprAlts(firstConclusion(node), opts);
@@ -3374,6 +3601,7 @@ export function suggest(filePath, lemmaName, options = {}) {
     }
     return res;
   };
+  setRvNames(sig.indented);
   const implyAltsA = implyAltsOf(sig, nameOpts);
   // Canonical rendering (nameExpr) first when it is among the alternatives.
   // (an alternative differing only by the ' between adjacent numbers — Neg1'0 vs Neg10 — is the canonical one)
@@ -3394,6 +3622,7 @@ export function suggest(filePath, lemmaName, options = {}) {
       const bundlesB = bundleVars(sigB.indented);
       for (const r of new Set([sigB.nls, sigB.implyStmts])) holeBundleProjections(r, bundlesB, leavesB);
       const optsB = { leaves: leavesB, typeLeaves: collectTypeBinders(sigB.indented), section };
+      setRvNames(sigB.indented);
       const implyAlts = implyAltsOf(sigB, optsB);
       const implyName = pickCanon(implyAlts, implyAlts.preferred || nameExpr(sigB.implyStmts, optsB)) || "Imply";
       const givens = extractGivens(sigB.nls).map((h) => ({

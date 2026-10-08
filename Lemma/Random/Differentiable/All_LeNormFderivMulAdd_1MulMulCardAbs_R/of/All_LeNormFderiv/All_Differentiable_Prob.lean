@@ -17,19 +17,23 @@ private lemma main
   [NormedAddCommGroup Θ] [NormedSpace ℝ Θ] [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A] [DecidableEq S]
   {M : Model Θ S A}
   {Cp : ℝ}
+  {r : ℕ → (ℕ → ℝ × S × A) → ℝ}
+  {s : ℕ → (ℕ → ℝ × S × A) → S}
+  {a : ℕ → (ℕ → ℝ × S × A) → A}
 -- given
-  (h₀ : ∀ x u, Differentiable ℝ (fun θ => M.pol.prob θ x u))
-  (h₁ : ∀ θ x u, ‖fderiv ℝ (fun θ => M.pol.prob θ x u) θ‖ ≤ Cp)
+  (h₁ : ∀ t, (· t) = (r t, s t, a t))
+  (h₂ : ∀ x u, Differentiable ℝ (fun θ => M.pol.prob θ x u))
+  (h₃ : ∀ θ x u, ‖fderiv ℝ (fun θ => M.pol.prob θ x u) θ‖ ≤ Cp)
   (t : ℕ) :
 -- imply
-  Differentiable ℝ (fun θ => ∫ ω, reward t ω ∂(M θ)) ∧
-    ∀ θ, ‖fderiv ℝ (fun θ => ∫ ω, reward t ω ∂(M θ)) θ‖ ≤
+  Differentiable ℝ (fun θ => ∫ ω, r t ω ∂(M θ)) ∧
+    ∀ θ, ‖fderiv ℝ (fun θ => ∫ ω, r t ω ∂(M θ)) θ‖ ≤
     (t + 1) * (Fintype.card A * Cp * |M.env.R|) := by
 -- proof
-  have e : (fun θ => ∫ ω, reward t ω ∂(M θ)) = fun θ => ∑ x, M.env.init.real {x} * M.W θ M.rc t x :=
-    funext fun θ => Integral_R.eq.Sum_MulRealWRc (M := M) θ t
+  have e : (fun θ => ∫ ω, r t ω ∂(M θ)) = fun θ => ∑ x, M.env.init.real {x} * M.W θ M.rc t x :=
+    funext fun θ => Integral_R.eq.Sum_MulRealWRc (M := M) h₁ θ t
   rw [e]
-  have hW := fun x => Tensor.Differentiable.All_LeNormFderivMulAdd_1MulMulCard.of.All_LeNorm.StronglyMeasurable.All_LeNormFderiv.All_Differentiable_Prob (M := M) h₀ h₁ (Random.StronglyMeasurableRc (M := M)) (NormRc.le.Abs_R (M := M)) t x
+  have hW := fun x => Tensor.Differentiable.All_LeNormFderivMulAdd_1MulMulCard.of.All_LeNorm.StronglyMeasurable.All_LeNormFderiv.All_Differentiable_Prob (M := M) h₂ h₃ (Random.StronglyMeasurableRc (M := M)) (NormRc.le.Abs_R (M := M)) t x
   refine ⟨fun θ => DifferentiableAt.fun_sum fun x _ => ((hW x).1 θ).const_mul _, fun θ => ?_⟩
   rw [fderiv_fun_sum fun x _ => ((hW x).1 θ).const_mul _]
   calc _ ≤ ∑ x, ‖fderiv ℝ (fun θ => M.env.init.real {x} * M.W θ M.rc t x) θ‖ := norm_sum_le _ _

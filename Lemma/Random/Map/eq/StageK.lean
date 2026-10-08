@@ -13,13 +13,19 @@ The stage `ω[t]` is distributed as `stageK θ ∘ₘ law(s[t])`.
 private lemma main
   [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [Fintype A]
   {M : Model Θ S A}
+  {r : ℕ → (ℕ → ℝ × S × A) → ℝ}
+  {s : ℕ → (ℕ → ℝ × S × A) → S}
+  {a : ℕ → (ℕ → ℝ × S × A) → A}
 -- given
+  (h₁ : ∀ t, (· t) = (r t, s t, a t))
   (θ : Θ)
   (t : ℕ) :
 -- imply
-  (M θ).map (fun ω => ω t) = M.stageK θ ∘ₘ (M θ).map (state t) := by
+  (M θ).map (fun ω => ω t) = M.stageK θ ∘ₘ (M θ).map (s t) := by
 -- proof
-  have h₀ : (M θ).map (state t) = ((M θ).map (fun ω => ω t)).map (fun z => z.2.1) := by
+  obtain rfl : s = fun t ω ↦ (ω t).2.1 := funext₂ fun t ω ↦ (congrArg (·.2.1) (congrFun (h₁ t) ω)).symm
+  set s : ℕ → (ℕ → ℝ × S × A) → S := fun t ω ↦ (ω t).2.1
+  have h₀ : (M θ).map (s t) = ((M θ).map (fun ω => ω t)).map (fun z => z.2.1) := by
     rw [Measure.map_map measurable_snd.fst (measurable_pi_apply t)]; rfl
   rw [h₀]
   cases t with

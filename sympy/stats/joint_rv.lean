@@ -297,7 +297,7 @@ open Lean Elab Term Meta in
 @[term_elab condIndepLeft] def elabCondIndepLeft : TermElab := fun stx _ => do
   match stx with
   | `(condIndepLeft% $x) =>
-    let e ← elabTerm x none
+    let e ← Lean.Elab.Term.elabTerm x none
     synthesizeSyntheticMVarsNoPostponing
     let e ← instantiateMVars e
     let ty ← whnfR (← instantiateMVars (← inferType e))
@@ -398,7 +398,7 @@ random variable `x`) for the local random variables / processes on `Ω` (from `�
 `x`, then inline exactly these `let`s (beta-reducing `(fun k ↦ s k ω) t` to `s t ω`), so the result is
 syntactically the hand-written `fun ω ↦ …`. -/
 def LiftRV.lift (μ x : Term) (expectedType? : Option Expr) : TermElabM Expr := withFreshMacroScope do
-  let μe ← elabTerm μ none
+  let μe ← Lean.Elab.Term.elabTerm μ none
   let μty ← whnf (← instantiateMVars (← inferType μe))
   unless μty.isAppOfArity ``MeasureTheory.Measure 2 do throwError "rv%: {μe} is not a measure"
   let Ω := μty.appFn!.appArg!
@@ -411,7 +411,7 @@ def LiftRV.lift (μ x : Term) (expectedType? : Option Expr) : TermElabM Expr := 
   let mut body : Term := x
   for (id, proc) in binds.reverse do
     body ← if proc then `(let $id := fun k ↦ $id k ω; $body) else `(let $id := $id ω; $body)
-  let e ← elabTerm (← `(fun (ω : $(← exprToSyntax Ω)) ↦ $body)) expectedType?
+  let e ← Lean.Elab.Term.elabTerm (← `(fun (ω : $(← exprToSyntax Ω)) ↦ $body)) expectedType?
   synthesizeSyntheticMVarsNoPostponing
   let e ← instantiateMVars e
   let e ← lambdaBoundedTelescope e 1 fun xs b => do
@@ -448,7 +448,7 @@ open Lean Elab Term Meta in
   | `(rv%[$μ] $x) =>
     let saved ← saveState
     try
-      withoutErrToSorry (elabTerm x expectedType?)
+      withoutErrToSorry (Lean.Elab.Term.elabTerm x expectedType?)
     catch ex =>
       if let .internal id _ := ex then
         if id == postponeExceptionId then throw ex
@@ -506,6 +506,12 @@ Python-aligned surface form (cf. `Expectation[x ~ D](f, given=…)` in `../py/sy
   observation): one is used bare, two or more are packed right-nested by `JointRandomSymbol`
   (`y, z, w` ↦ `(y, (z, w))`; write `(y, z), w` for `((y, z), w)`). The conditioners are outside the
   binder scope: in `𝔼[s: π](f (s t) | s t)` the `s t` after `|` is the random variable.
+  A binder is turned into `let x := «integ».…` inside the body, so `𝔼[x: π](f x)` reads `f` at the
+  *value* of `x`. That rebinding is kept when `x` is not a local (a constant such as `reward`, or a
+  name introduced by the notation) and when the body uses a local `x` as that value
+  (`𝔼[a: π](f a)`, `∑' t, γ ^ t * r t`). It is skipped when `x` is already a local and the body
+  mentions it only as a random variable inside `ℙ` (`ℙ[π](a t = u | s t = x)`): those occurrences
+  keep the outer local, so `SinglePSpace` sees `a t : Ω → _` rather than the integrated path value.
 * **Random-valued (integrate out, leave other RVs free):**
   `𝔼[x: π | y]((x + y)^2)` / `𝔼[x, z: π | y](…)` → `Expectation.partialRV …`
   Any number of free RVs after `|` in the brackets.
@@ -562,19 +568,27 @@ partial def Expectation.Macro.mkJointTerms (ys : Array Syntax) : MacroM Term := 
     let tail ← Expectation.Macro.mkJointTerms rest.toArray
     `(JointRandomSymbol $y $tail)
 
-/-- Unpack a right-nested product into `let y := nest.1; …; body`. -/
+/-- Unpack a right-nested product into `let y := nest.1; …; body`.
+`rebind[i] = false` skips the `let` for that binder (the body keeps the outer local). -/
 partial def Expectation.Macro.unpackRest
-    (ys : Array Syntax) (nest : Term) (body : Term) : MacroM Term := do
-  match ys.toList with
-  | [] => pure body
-  | [y] =>
-    let y : Ident := ⟨y⟩
-    `(let $y := $nest; $body)
-  | y :: rest =>
-    let y : Ident := ⟨y⟩
+    (ys : Array Syntax) (nest : Term) (body : Term) (rebind : Array Bool) : MacroM Term := do
+  match ys.toList, rebind.toList with
+  | [], _ => pure body
+  | [y], r :: _ =>
+    if r then
+      let y : Ident := ⟨y⟩
+      `(let $y := $nest; $body)
+    else
+      pure body
+  | y :: rest, r :: rs =>
     let nest2 ← `(Prod.snd $nest)
-    let body' ← Expectation.Macro.unpackRest rest.toArray nest2 body
-    `(let $y := Prod.fst $nest; $body')
+    let body' ← Expectation.Macro.unpackRest rest.toArray nest2 body rs.toArray
+    if r then
+      let y : Ident := ⟨y⟩
+      `(let $y := Prod.fst $nest; $body')
+    else
+      pure body'
+  | _, [] => Macro.throwError "𝔼 binder unpack: rebind mask shorter than the binder list"
 
 /-- The measure term of an `expectMeasure` slot: `f a b` ↦ the application `f a b`. -/
 def Expectation.Macro.measure (π : TSyntax `expectMeasure) : MacroM Term :=
@@ -582,64 +596,6 @@ def Expectation.Macro.measure (π : TSyntax `expectMeasure) : MacroM Term :=
   | `(expectMeasure| $f:term $[$args:term]*) =>
     if args.isEmpty then pure f else `($f $args*)
   | _ => Macro.throwUnsupported
-
-macro_rules
-  | `(𝔼[$xs:ident,* : $π]($body)) => do
-      let xs := xs.getElems
-      let joint ← Expectation.Macro.mkRestJoint xs
-      let nest := mkIdent `«integ»
-      let unpacked ← Expectation.Macro.unpackRest xs nest body
-      `(Expectation.ofRV $π $joint (fun $nest ↦ $unpacked))
-  | `(𝔼[$xs:ident,* : $π]($body | $y:term = $y0)) => do
-      let xs := xs.getElems
-      let joint ← Expectation.Macro.mkRestJoint xs
-      let nest := mkIdent `«integ»
-      let unpacked ← Expectation.Macro.unpackRest xs nest body
-      `(Expectation.condEvent $π $joint $y (fun $nest ↦ $unpacked) $y0)
-  | `(𝔼[$xs:ident,* : $π]($body | $y:term = $y0:term ∧ $[$ys:term = $ys0:term]∧*)) => do
-      let xs := xs.getElems
-      let joint ← Expectation.Macro.mkRestJoint xs
-      let nest := mkIdent `«integ»
-      let unpacked ← Expectation.Macro.unpackRest xs nest body
-      -- `y = y0 ∧ z = z0 ∧ …` ↦ `JointRandomSymbol y (JointRandomSymbol z …)` at `(y0, z0, …)`
-      let conds := #[y] ++ ys
-      let vals := #[y0] ++ ys0
-      let mut cond : Term := conds.back!
-      let mut val : Term := vals.back!
-      for i in (List.range (conds.size - 1)).reverse do
-        cond ← `(JointRandomSymbol $(conds[i]!) $cond)
-        val ← `(($(vals[i]!), $val))
-      `(Expectation.condEvent $π $joint $cond (fun $nest ↦ $unpacked) $val)
-  | `(𝔼[$xs:ident,* : $π]($body | $ys,*)) => do
-      let xs := xs.getElems
-      let joint ← Expectation.Macro.mkRestJoint xs
-      let cond ← Expectation.Macro.mkJointTerms ys.getElems
-      let nest := mkIdent `«integ»
-      let unpacked ← Expectation.Macro.unpackRest xs nest body
-      `(Expectation.condSigma $π $joint $cond (fun $nest ↦ $unpacked))
-  | `(𝔼[$xs:ident,* : $π:expectMeasure | $ys,*]($body | $r:term = $r0)) => do
-      let π ← Expectation.Macro.measure π
-      let xs := xs.getElems
-      let ys := ys.getElems
-      let integ ← Expectation.Macro.mkRestJoint xs
-      let free ← Expectation.Macro.mkRestJoint ys
-      let nestX := mkIdent `«integ»
-      let nestY := mkIdent `«rest»
-      let bodyY ← Expectation.Macro.unpackRest ys nestY body
-      let bodyXY ← Expectation.Macro.unpackRest xs nestX bodyY
-      `(Expectation.partialRV_cond $π $integ $free $r (fun $nestX $nestY ↦ $bodyXY) $r0)
-  | `(𝔼[$xs:ident,* : $π:expectMeasure | $ys,*]($body)) => do
-      let π ← Expectation.Macro.measure π
-      let xs := xs.getElems
-      let ys := ys.getElems
-      let integ ← Expectation.Macro.mkRestJoint xs
-      let free ← Expectation.Macro.mkRestJoint ys
-      let nestX := mkIdent `«integ»
-      let nestY := mkIdent `«rest»
-      let bodyY ← Expectation.Macro.unpackRest ys nestY body
-      let bodyXY ← Expectation.Macro.unpackRest xs nestX bodyY
-      `(Expectation.partialRV $π $integ $free (fun $nestX $nestY ↦ $bodyXY))
-
 
 /-! ### Binder notation `ℙ`
 
@@ -722,3 +678,116 @@ macro_rules
       let x0 ← Probability.Macro.mkProd x0
       let y ← Probability.Macro.mkJointRV ys
       `(Measure.condProbRA $π (JointRandomSymbol $x $y) $x0)
+
+/-- `true` when `name` occurs in `stx` as an integrated *value* (anything that is not a
+random-variable slot of a `ℙ`). Random-variable slots are the bare idents of `ℙ[π](x, y)` and the
+left-hand side of each `=` (`ℙ[π](a t = u | s t = x)`). -/
+private partial def Expectation.Macro.bodyValueUse
+    (stx : Syntax) (name : Name) (inRV : Bool := false) : MacroM Bool := do
+  let rec over (stxs : Array Syntax) (rv : Bool) : MacroM Bool :=
+    stxs.foldlM (init := false) fun acc s => return acc || (← bodyValueUse s name rv)
+  match stx with
+  | `(ℙ[$_]($xs:ident,*)) => over xs (rv := true)
+  | `(ℙ[$_]($xs:ident,* | $ys:ident,*)) =>
+      return (← over xs true) || (← over ys true)
+  | `(ℙ[$_]($xs:ident,* | $[$y:term = $y0:term]∧*)) =>
+      return (← over xs true) || (← over y true) || (← over y0 false)
+  | `(ℙ[$_]($[$x:term = $x0:term]∧* | $[$y:term = $y0:term]∧*)) =>
+      return (← over x true) || (← over x0 false) || (← over y true) || (← over y0 false)
+  | `(ℙ[$_]($[$x:term = $x0:term]∧* | $ys:ident,*)) =>
+      return (← over x true) || (← over x0 false) || (← over ys true)
+  | `(ℙ[$_]($[$x:term = $x0:term]∧*)) =>
+      return (← over x true) || (← over x0 false)
+  | _ =>
+      if stx.isIdent then
+        return !inRV && stx.getId == name
+      else
+        over stx.getArgs inRV
+
+open Lean.Elab.Term in
+/-- Rebind a binder unless it is already a local whose body occurrences are all `ℙ` random-variable
+slots (those must keep seeing the outer local). -/
+private def Expectation.Macro.rebindMask (xs : Array Syntax) (body : Syntax) : TermElabM (Array Bool) :=
+  xs.mapM fun x => do
+    let inScope := (← getLCtx).findFromUserName? x.getId |>.isSome
+    if !inScope then
+      return true
+    else
+      Lean.Elab.liftMacroM <| Expectation.Macro.bodyValueUse body x.getId
+
+
+open Lean.Elab.Term in
+/-- Elaborate one `𝔼` form. `build` receives the unpacked body. -/
+private def Expectation.Macro.elabExpect (xs : Array Syntax) (body : Syntax)
+    (build : Term → MacroM Term) : TermElabM Lean.Expr := do
+  let mask ← Expectation.Macro.rebindMask xs body
+  let nest := mkIdent `«integ»
+  let unpacked ← Lean.Elab.liftMacroM <| Expectation.Macro.unpackRest xs nest ⟨body⟩ mask
+  let lam ← if mask.any id then
+      `(fun $nest ↦ $unpacked)
+    else
+      `(fun _ ↦ $unpacked)
+  Lean.Elab.Term.elabTerm (← Lean.Elab.liftMacroM <| build lam) none
+
+elab_rules : term
+  | `(𝔼[$xs:ident,* : $π]($body)) => do
+      let xs := xs.getElems
+      let joint ← Lean.Elab.liftMacroM <| Expectation.Macro.mkRestJoint xs
+      Expectation.Macro.elabExpect xs body fun lam => `(Expectation.ofRV $π $joint $lam)
+  | `(𝔼[$xs:ident,* : $π]($body | $y:term = $y0)) => do
+      let xs := xs.getElems
+      let joint ← Lean.Elab.liftMacroM <| Expectation.Macro.mkRestJoint xs
+      Expectation.Macro.elabExpect xs body fun lam => `(Expectation.condEvent $π $joint $y $lam $y0)
+  | `(𝔼[$xs:ident,* : $π]($body | $y:term = $y0:term ∧ $[$ys:term = $ys0:term]∧*)) => do
+      let xs := xs.getElems
+      -- `y = y0 ∧ z = z0 ∧ …` ↦ `JointRandomSymbol y (JointRandomSymbol z …)` at `(y0, z0, …)`
+      let conds := #[y] ++ ys
+      let vals := #[y0] ++ ys0
+      let mut cond : Term := conds.back!
+      let mut val : Term := vals.back!
+      for i in (List.range (conds.size - 1)).reverse do
+        cond ← `(JointRandomSymbol $(conds[i]!) $cond)
+        val ← `(($(vals[i]!), $val))
+      let joint ← Lean.Elab.liftMacroM <| Expectation.Macro.mkRestJoint xs
+      Expectation.Macro.elabExpect xs body fun lam => `(Expectation.condEvent $π $joint $cond $lam $val)
+  | `(𝔼[$xs:ident,* : $π]($body | $ys,*)) => do
+      let xs := xs.getElems
+      let joint ← Lean.Elab.liftMacroM <| Expectation.Macro.mkRestJoint xs
+      let cond ← Lean.Elab.liftMacroM <| Expectation.Macro.mkJointTerms ys.getElems
+      Expectation.Macro.elabExpect xs body fun lam => `(Expectation.condSigma $π $joint $cond $lam)
+  | `(𝔼[$xs:ident,* : $π:expectMeasure | $ys,*]($body | $r:term = $r0)) => do
+      let π ← Lean.Elab.liftMacroM <| Expectation.Macro.measure π
+      let xs := xs.getElems
+      let ys := ys.getElems
+      let maskX ← Expectation.Macro.rebindMask xs body
+      let maskY ← Expectation.Macro.rebindMask ys body
+      let integ ← Lean.Elab.liftMacroM <| Expectation.Macro.mkRestJoint xs
+      let free ← Lean.Elab.liftMacroM <| Expectation.Macro.mkRestJoint ys
+      let nestX := mkIdent `«integ»
+      let nestY := mkIdent `«rest»
+      let bodyY ← Lean.Elab.liftMacroM <| Expectation.Macro.unpackRest ys nestY body maskY
+      let bodyXY ← Lean.Elab.liftMacroM <| Expectation.Macro.unpackRest xs nestX bodyY maskX
+      let lam ← if maskX.any id then
+          if maskY.any id then `(fun $nestX $nestY ↦ $bodyXY) else `(fun $nestX _ ↦ $bodyXY)
+        else
+          if maskY.any id then `(fun _ $nestY ↦ $bodyXY) else `(fun _ _ ↦ $bodyXY)
+      Lean.Elab.Term.elabTerm (← `(Expectation.partialRV_cond $π $integ $free $r $lam $r0)) none
+  | `(𝔼[$xs:ident,* : $π:expectMeasure | $ys,*]($body)) => do
+      let π ← Lean.Elab.liftMacroM <| Expectation.Macro.measure π
+      let xs := xs.getElems
+      let ys := ys.getElems
+      let maskX ← Expectation.Macro.rebindMask xs body
+      let maskY ← Expectation.Macro.rebindMask ys body
+      let integ ← Lean.Elab.liftMacroM <| Expectation.Macro.mkRestJoint xs
+      let free ← Lean.Elab.liftMacroM <| Expectation.Macro.mkRestJoint ys
+      let nestX := mkIdent `«integ»
+      let nestY := mkIdent `«rest»
+      let bodyY ← Lean.Elab.liftMacroM <| Expectation.Macro.unpackRest ys nestY body maskY
+      let bodyXY ← Lean.Elab.liftMacroM <| Expectation.Macro.unpackRest xs nestX bodyY maskX
+      let lam ← if maskX.any id then
+          if maskY.any id then `(fun $nestX $nestY ↦ $bodyXY) else `(fun $nestX _ ↦ $bodyXY)
+        else
+          if maskY.any id then `(fun _ $nestY ↦ $bodyXY) else `(fun _ _ ↦ $bodyXY)
+      Lean.Elab.Term.elabTerm (← `(Expectation.partialRV $π $integ $free $lam)) none
+
+

@@ -18,18 +18,23 @@ private lemma main
   {M : Model Θ S A}
   {f : ℝ × S × A → ℝ}
   {C : ℝ}
+  {r : ℕ → (ℕ → ℝ × S × A) → ℝ}
+  {s : ℕ → (ℕ → ℝ × S × A) → S}
+  {a : ℕ → (ℕ → ℝ × S × A) → A}
 -- given
+  (h₁ : ∀ t, (· t) = (r t, s t, a t))
   (θ : Θ)
-  (h₀ : StronglyMeasurable f)
-  (h₁ : ∀ z, ‖f z‖ ≤ C)
+  (h₂ : StronglyMeasurable f)
+  (h₃ : ∀ z, ‖f z‖ ≤ C)
   (t j : ℕ)
   (x : S) :
 -- imply
-  ∫ ω, (if state t ω = x then (1:ℝ) else 0) * f (ω (t + j)) ∂(M θ) =
-    (M θ).real (state t ⁻¹' {x}) * M.W θ f j x := by
+  ∫ ω, (if s t ω = x then (1:ℝ) else 0) * f (ω (t + j)) ∂(M θ) =
+    (M θ).real (s t ⁻¹' {x}) * M.W θ f j x := by
 -- proof
-  have hK := StronglyMeasurable_KfAndAll_LeNormKf.of.All_LeNorm.StronglyMeasurable (M := M) h₀ h₁ θ j
-  exact (Integral_Mul.eq.Integral_Mul_Kf.of.All_LeNorm.StronglyMeasurable.All_LeNorm.StronglyMeasurable (M := M) h₀ h₁ (Real.StronglyMeasurable_Eq12 x) (Norm_1.le.One) θ t j).trans (Integral_MulEqS.eq.MulRealPreimageSIntegral.of.All_LeNorm.StronglyMeasurable (M := M) hK.1 hK.2 θ t x)
+  obtain rfl : s = fun t ω ↦ (ω t).2.1 := funext₂ fun t ω ↦ (congrArg (·.2.1) (congrFun (h₁ t) ω)).symm
+  have hK := StronglyMeasurable_KfAndAll_LeNormKf.of.All_LeNorm.StronglyMeasurable (M := M) h₂ h₃ θ j
+  exact (Integral_Mul.eq.Integral_Mul_Kf.of.All_LeNorm.StronglyMeasurable.All_LeNorm.StronglyMeasurable (M := M) h₂ h₃ (Real.StronglyMeasurable_Eq12 x) (Norm_1.le.One) θ t j).trans (Integral_MulEqS.eq.MulRealPreimageSIntegral.of.All_LeNorm.StronglyMeasurable h₁ (M := M) hK.1 hK.2 θ t x)
 
 
 -- created on 2026-10-06
