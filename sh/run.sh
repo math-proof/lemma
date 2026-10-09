@@ -100,7 +100,7 @@ get_lemma_date_json() {
   echo "'$json'"
 }
 
-> test.lean
+> Lemma/test.lean
 
 declare -A imports_dict
 declare -A syntheticModules
@@ -109,7 +109,7 @@ function echo_import {
   lemma=${file%.lean}
   module=${lemma////.}
   if ! module_included "${module#Lemma.}"; then return; fi
-  echo "import $module" >> test.lean
+  echo "import $module" >> Lemma/test.lean
   # extract import statements from the lean file
   module=${module#Lemma.}
   mapfile -t lines < <(grep -E '^import[[:space:]]+' $file | sed -E 's/^import[[:space:]]+//; s/\r$//')
@@ -128,52 +128,52 @@ function echo_import {
 
 while read -r file; do
   echo_import "$file"
-done < <(find Lemma -type f -name "*.lean" -not -name "*.echo.lean")
+done < <(find Lemma -type f -name "*.lean" -not -name "*.echo.lean" -not -name "test*.lean")
 
-> test.log
+> Lemma/test.log
 
-# Split test.lean into batches of $limit imports and elaborate each with lake
+# Split Lemma/test.lean into batches of $limit imports and elaborate each with lake
 i=0
 n=0
-: > "test.$i.lean"
+: > "Lemma/test.$i.lean"
 while IFS= read -r line; do
   if [ "$n" -ge "$limit" ]; then
     i=$((i + 1))
     n=0
-    : > "test.$i.lean"
+    : > "Lemma/test.$i.lean"
   fi
-  printf '%s\n' "$line" >> "test.$i.lean"
+  printf '%s\n' "$line" >> "Lemma/test.$i.lean"
   n=$((n + 1))
-done < test.lean
+done < Lemma/test.lean
 batch_count=$((i + 1))
 
 # Elaborate each batch; drop the last (summary) line of each lake run
 j=0
 while [ "$j" -lt "$batch_count" ]; do
   if [ "$limit" -eq 1 ]; then
-    echo "executing: $(tr '\n' ' ' < "test.$j.lean")"
+    echo "executing: $(tr '\n' ' ' < "Lemma/test.$j.lean")"
   fi
-  lake setup-file "test.$j.lean" 2>&1 | sed -E 's/\x1b\[[0-9;]*[A-Za-z]//g' | sed '$d' | tee -a test.log
+  lake setup-file "Lemma/test.$j.lean" 2>&1 | sed -E 's/\x1b\[[0-9;]*[A-Za-z]//g' | sed '$d' | tee -a Lemma/test.log
   j=$((j + 1))
 done
 
-sed -i -E "s/^import //" test.lean
-imports=$(cat test.lean)
-> test.lean
+sed -i -E "s/^import //" Lemma/test.lean
+imports=$(cat Lemma/test.lean)
+> Lemma/test.lean
 
 imports=($imports)
 echo "modules:"
-# Two overlapping run.sh processes share test.sql. If one closes the INSERT
+# Two overlapping run.sh processes share sql/test.sql. If one closes the INSERT
 # with ON DUPLICATE KEY UPDATE while the other is still appending rows,
 # mysql reports ERROR 1064 at the next row. That is a torn statement, not a
 # quoting bug in the theorem name. Hold this lock until exit, except just
 # before a re-exec, which needs to take the lock itself.
 exec 9>/tmp/lean-axiom-sql.lock
 flock 9
-touch test.sql
+touch sql/test.sql
 
-output_file=test.sql
-echo "INSERT INTO lemma (user, module, imports, open, set_option, preamble, lemma, meta, date) VALUES " > test.sql
+output_file=sql/test.sql
+echo "INSERT INTO lemma (user, module, imports, open, set_option, preamble, lemma, meta, date) VALUES " > sql/test.sql
 for module in ${imports[*]}; do
   # echo "${module//.//}.lean"
   module=${module#Lemma.}
@@ -184,7 +184,7 @@ for module in ${imports[*]}; do
   submodules=${imports_dict[$module]}
   submodules=${submodules//\'/\'\'}
   date_json=$(get_lemma_date_json "Lemma/${module//./\/}.lean")
-  echo "  ('$user', \"$module\", '$submodules', '[]', '[]', '[]', '[]', '{\"error\":[]}', $date_json)," >> test.sql
+  echo "  ('$user', \"$module\", '$submodules', '[]', '[]', '[]', '[]', '{\"error\":[]}', $date_json)," >> sql/test.sql
 done
 
 transformExpr() {
@@ -326,7 +326,7 @@ emit_synthetic() {
   # Record synthetic dual rows so the orphan DELETE and the
   # deleted-module detection below do not treat them as gone.
   syntheticModules[$1]=1
-  echo "  ('$user', \"$1\", '[]', '[]', '[]', '[]', '[]', '{\"error\":[]}', '[]')," >> test.sql
+  echo "  ('$user', \"$1\", '[]', '[]', '[]', '[]', '[]', '{\"error\":[]}', '[]')," >> sql/test.sql
 }
 
 # Mirror List.andLeftTokens / List.andRightTokens / Name.andProjName from sympy/Basic.lean:
@@ -790,39 +790,39 @@ while read -r file; do
       echo "Ignoring @[main, And.right] at $file"
     fi
   fi
-done < <(find Lemma -type f -name "*.lean" ! -name "*.echo.lean")
-sed -i '$ s/,$/\nON DUPLICATE KEY UPDATE imports = VALUES(imports), date = VALUES(date);/' test.sql
+done < <(find Lemma -type f -name "*.lean" ! -name "*.echo.lean" ! -name "test*.lean")
+sed -i '$ s/,$/\nON DUPLICATE KEY UPDATE imports = VALUES(imports), date = VALUES(date);/' sql/test.sql
 
 # Clear error for all disk modules (preserves meta.callee via JSON_SET)
 diskModuleList=$(sql_in_list "${!imports_dict[@]}")
 if [ -n "$diskModuleList" ]; then
-  echo "UPDATE lemma SET meta = JSON_SET(IFNULL(meta, '{}'), '\$.error', CAST('[]' AS JSON)) WHERE user = '$user' AND module IN ($diskModuleList);" >> test.sql
+  echo "UPDATE lemma SET meta = JSON_SET(IFNULL(meta, '{}'), '\$.error', CAST('[]' AS JSON)) WHERE user = '$user' AND module IN ($diskModuleList);" >> sql/test.sql
 fi
 
 echo "plausible:"
 
-sorryModules=($(grep -P "^warning: (\./)*[\w'!₀-₉/]+\.lean:\d+:\d+: declaration uses \`sorry\`" test.log | sed -E 's#^warning: ([.]/)*##' | sed -E "s/\.lean:[0-9]+:[0-9]+: declaration uses \`sorry\`//" | sed 's#/#.#g' | sort -u))
+sorryModules=($(grep -P "^warning: (\./)*[\w'!₀-₉/]+\.lean:\d+:\d+: declaration uses \`sorry\`" Lemma/test.log | sed -E 's#^warning: ([.]/)*##' | sed -E "s/\.lean:[0-9]+:[0-9]+: declaration uses \`sorry\`//" | sed 's#/#.#g' | sort -u))
 for module in ${sorryModules[*]}; do
   echo "${module//.//}.lean"
   module=${module#Lemma.}
   if [[ $module =~ ^sympy ]]; then
     continue
   fi
-  cat >> test.sql << EOF
+  cat >> sql/test.sql << EOF
 UPDATE lemma set meta = JSON_SET(IFNULL(meta, '{}'), '\$.error', CAST('[{"code": "", "file": "", "info": "declaration uses ''sorry''", "line": 0, "type": "warning"}]' AS JSON)) where user = '$user' and module = "$module";
 EOF
 done
 
 echo "failed:"
 
-failingModules=($(awk '/Some required (targets|builds) logged failures:/{flag=1;next}/^[^-]/{flag=0}flag' test.log | sed 's/^- //'))
+failingModules=($(awk '/Some required (targets|builds) logged failures:/{flag=1;next}/^[^-]/{flag=0}flag' Lemma/test.log | sed 's/^- //'))
 for module in ${failingModules[*]}; do
   echo "${module//.//}.lean"
   module=${module#Lemma.}
   if [[ $module =~ ^sympy ]]; then
     continue
   fi
-  cat >> test.sql << EOF
+  cat >> sql/test.sql << EOF
 UPDATE lemma set meta = JSON_SET(IFNULL(meta, '{}'), '\$.error', CAST('[{"code": "", "file": "", "info": "", "line": 0, "type": "error"}]' AS JSON)) where user = '$user' and module = "$module";
 EOF
 done
@@ -845,9 +845,9 @@ while IFS=$'\t' read -r mod imps; do
   case "$mod" in ""|ERROR*) continue ;; esac
   [ -n "$imps" ] || continue  # skip mysql warnings and other non-tab lines
   dbImports[$mod]="$imps"
-done < <(mysql --defaults-extra-file="$tempConfigPath" --batch --skip-column-names -D axiom -e "SELECT module, imports FROM lemma WHERE user = '$user'" 2>&1 | tee test.log)
+done < <(mysql --defaults-extra-file="$tempConfigPath" --batch --skip-column-names -D axiom -e "SELECT module, imports FROM lemma WHERE user = '$user'" 2>&1 | tee Lemma/test.log)
 
-grep -P "ERROR \d+ \(\d+\): Unknown database 'axiom'" test.log
+grep -P "ERROR \d+ \(\d+\): Unknown database 'axiom'" Lemma/test.log
 if [ $? -eq 0 ]; then
   echo "CREATE DATABASE axiom;"
   mysql --defaults-extra-file="$tempConfigPath" -e "CREATE DATABASE axiom;"
@@ -862,8 +862,8 @@ if [ $? -eq 0 ]; then
     exit 1
   fi
 fi
-mysql --defaults-extra-file="$tempConfigPath" -D axiom < test.sql 2>&1 | tee test.log
-grep -P "ERROR \d+ \(\w+\) at line \d+: Table 'axiom.lemma' doesn't exist" test.log
+mysql --defaults-extra-file="$tempConfigPath" -D axiom < sql/test.sql 2>&1 | tee Lemma/test.log
+grep -P "ERROR \d+ \(\w+\) at line \d+: Table 'axiom.lemma' doesn't exist" Lemma/test.log
 if [ $? -eq 0 ]; then
   mysql --defaults-extra-file="$tempConfigPath" -D axiom < sql/create/lemma.sql
   # Check if the mysql command was successful
@@ -887,7 +887,7 @@ if [ ${#MODULES[@]} -eq 0 ]; then
   if [ -n "$keepList" ]; then
     # piped via stdin: with thousands of modules the IN list overflows the
     # per-argument execve limit (~128KB) when passed with -e
-    echo "DELETE FROM lemma WHERE user = '$user' AND module NOT IN ($keepList)" | mysql --defaults-extra-file="$tempConfigPath" -D axiom 2>&1 | tee test.log
+    echo "DELETE FROM lemma WHERE user = '$user' AND module NOT IN ($keepList)" | mysql --defaults-extra-file="$tempConfigPath" -D axiom 2>&1 | tee Lemma/test.log
   fi
 else
   echo "-Modules set: skipping orphan delete"
@@ -943,7 +943,7 @@ done
 if [ ${#invalidate[@]} -gt 0 ]; then
   invalidateList=$(sql_in_list "${!invalidate[@]}")
   # piped via stdin: the IN list can exceed the per-argument execve limit
-  echo "UPDATE lemma SET meta = JSON_SET(IFNULL(meta, '{}'), '\$.callee', CAST('null' AS JSON)) WHERE user = '$user' AND module IN ($invalidateList)" | mysql --defaults-extra-file="$tempConfigPath" -D axiom 2>&1 | tee test.log
+  echo "UPDATE lemma SET meta = JSON_SET(IFNULL(meta, '{}'), '\$.callee', CAST('null' AS JSON)) WHERE user = '$user' AND module IN ($invalidateList)" | mysql --defaults-extra-file="$tempConfigPath" -D axiom 2>&1 | tee Lemma/test.log
   echo "invalidated meta.callee for ${#invalidate[@]} module(s)"
 fi
 end_time=$(date +%s)

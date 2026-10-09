@@ -4,7 +4,7 @@
  *
  * Loaded by lean.php after the `LeanGetElemBase` traits. JS also has
  * `LeanGetWhiteSquareBracket`; this file does not.
- * Mirrors static/js/parser/lean/indexing.js. Not a standalone entry point.
+ * Mirrors js/parser/lean/indexing.js. Not a standalone entry point.
  */
 
 class LeanGetElem extends LeanBinary

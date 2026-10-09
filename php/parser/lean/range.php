@@ -3,7 +3,7 @@
  * Interval notation `a..b` (`LeanUpto`).
  *
  * Loaded by lean.php after `paired.php` (`LeanBinary` already exists).
- * Mirrors static/js/parser/lean/range.js. PHP `sep` stays empty and the
+ * Mirrors js/parser/lean/range.js. PHP `sep` stays empty and the
  * formats stay `%s..%s`. Not a standalone entry point.
  */
 

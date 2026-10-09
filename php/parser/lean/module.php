@@ -3,7 +3,7 @@
  * Source file (`LeanModule`).
  *
  * Loaded by lean.php after `statements.php`. Mirrors
- * static/js/parser/lean/module.js. `echo2vue` chdirs four directories up,
+ * js/parser/lean/module.js. `echo2vue` chdirs four directories up,
  * because this file lives in `lean/`. Later classes (`Lean_import`,
  * `LeanTactic`, …) are resolved when methods run.
  * Not a standalone entry point.

@@ -5,8 +5,7 @@ import sympy.Basic
 
 @[main]
 private lemma main
-  {n : ℕ}
-  [NeZero n]
+  {n : ℕ} [NeZero n]
   {f : ℕ → ℝ} :
 -- imply
   ArgMax (Set.univ : Set (Fin n)) (fun i => f i) = ArgMax Set.univ fun i : Fin n => f ↑i := by

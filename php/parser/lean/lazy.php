@@ -3,7 +3,7 @@
  * Lazy application `<|` (`Lean_lazy`).
  *
  * Loaded by lean.php after `arithmetic.php` (`LeanBinary` already exists).
- * Mirrors static/js/parser/lean/lazy.js. PHP keeps `operator`, `sep`, and
+ * Mirrors js/parser/lean/lazy.js. PHP keeps `operator`, `sep`, and
  * `strFormat`; JS does not. Not a standalone entry point.
  */
 

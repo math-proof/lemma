@@ -3,7 +3,7 @@
  * Type tests `is` / `is not` (`Lean_is`, `Lean_is_not`).
  *
  * Loaded by lean.php after `indexing.php` (`LeanBinary` already exists).
- * Mirrors static/js/parser/lean/isinstance.js. PHP `operator` and `command`
+ * Mirrors js/parser/lean/isinstance.js. PHP `operator` and `command`
  * stay on `__get`. `LeanStatements` is defined later in lean.php and is
  * resolved when `is_indented` runs. Not a standalone entry point.
  */

@@ -1,0 +1,299 @@
+# Root-Analog Dental Implant Embodiments Breakdown
+
+## Overview of Embodiments
+
+The patent describes several key embodiments of root-analog dental implants and the systems, devices, and methods for designing and manufacturing them. The core innovation involves implants that mimic the shape of natural tooth roots, using additive manufacturing techniques, and can often be placed directly into an unmodified alveolar socket.
+
+## Primary Embodiment Categories
+
+### 1. Core Structural Configurations
+- **Central Core Structure**: 
+  - A solid or mostly solid central core provides mechanical strength and support for the implant
+  - The core can have varying levels of solidity, with more voids in the outer sections and denser material towards the center
+  - The core can have a curvature that differs from the outer surface, allowing for a thicker porous shell in some areas
+  - The core can be designed with struts (protruding features) to improve mechanical strength
+  - Example: A core with a solid circumferential shell and varying solidity in the central section
+
+- **Strut Configurations**:
+  - Struts can be vertically oriented, horizontally oriented, spirally oriented, zig-zag, or wavy
+  - Struts can have various cross-sectional shapes, including I-beams, triangles, or other protruding features
+  - Struts can protrude into the porous surface and can vary in height along the implant's length
+  - Example: Vertically oriented struts with triangular cross-sections
+
+### 2. Porous Surface Configurations
+- **Porous Surface Purpose**: To facilitate osseointegration, reduce stress on surrounding bone, and provide better engagement between the implant and bone
+- **Porous Surface Design**:
+  - Can be a lattice-like structure with overlapping elements
+  - Elements can be interconnected and textured with dimples or holes
+  - The porous surface can cover the struts
+  - Thickness can vary along the length of the core
+  - Example: A porous surface with a thickness ranging from 0.25 to 2.0 mm
+
+### 3. Multi-Section Implant Designs
+- **Coronal Section**: 
+  - Can have a size and shape adjusted relative to the 3D scan
+  - Can have a reduction in cross-sectional diameter in the buccal-lingual direction
+  - Can have surface texturing (e.g., grooves) to engage with the crest of the alveolar socket
+  - Example: A coronal section with a buccal-lingual reduction of 0.01 to 1.5 mm
+
+- **Diaphyseal Section**:
+  - Can have a reduction in cross-sectional area along the buccal and/or lingual surfaces
+  - Can have a core with struts providing mechanical strength
+  - Example: A diaphyseal section with a core and vertically oriented struts
+
+- **Apex Section**:
+  - Can have a cross-sectional diameter reduced by roughly 1.0-3.0 mm from the apex
+  - Can have a core with struts providing mechanical strength
+  - Example: An apex section with a reduced diameter and a core with struts
+
+### 4. Two-Piece Implant Designs
+- **Two-Piece Design**:
+  - The root portion can be designed in two pieces
+  - When connected, a portion of the implant expands outward to engage with the alveolar socket
+  - This design assists with fixation of the implant in the root socket
+  - Example: A root portion with two pieces that expand to engage the alveolar socket
+
+### 5. Three-Section Implant Designs
+- **Three-Section Design**:
+  - The root portion can have three sections: coronal, diaphyseal, and apex
+  - Each section can be designed with specific characteristics to mimic the natural tooth root
+  - Example: A coronal section with grooves, a diaphyseal section with a core and struts, and an apex section with a reduced diameter
+
+### 6. Additive Manufacturing Embodiments
+- **Additive Manufacturing Process**:
+  - The implant can be manufactured using additive manufacturing techniques such as 3D printing
+  - The process can build the implant as a single unit
+  - The porous surface and core can be manufactured simultaneously
+  - Example: A root-analog dental implant manufactured using laser sintering of a metallic powder
+
+### 7. System and Method Embodiments
+- **Design Process**:
+  - The implant can be designed using a three-dimensional scan of the extracted tooth/tooth root
+  - The design process can involve modifying the preliminary model of the tooth root
+  - The design process can involve adding a porous surface to the exterior of the core
+  - The design process can involve adding circumferential grooves to the coronal section
+  - The design process can involve adding a transgingival portion to the implant
+  - The design process can involve adding an abutment to the implant
+  - Example: A complete dental root-analog dental implant model including an abutment
+
+- **Manufacturing Process**:
+  - The implant can be manufactured using a 3D printer
+  - The manufacturing process can involve receiving instructions for the fabrication of the implant
+  - The manufacturing process can involve formatting the final model for manufacturing
+  - The manufacturing process can involve communicating the formatted model to an implant fabrication tool
+  - Example: A root-analog dental implant fabricated using one or more design processes and/or models described herein
+
+### 8. Unmodified Alveolar Socket Embodiments
+- **Unmodified Alveolar Socket**:
+  - The root portion of the root-analog dental implant can be configured to fit within an alveolar socket that is unmodified
+  - The implant can be seated directly into the original alveolar socket
+  - Example: A root portion of a root-analog dental implant configured to fit within an unmodified alveolar socket
+
+### 9. Curved Tooth Root Embodiments
+- **Curved Tooth Root**:
+  - The implant can be designed to fit curved tooth roots
+  - The curvature of the core can follow the curvature of the extracted tooth root
+  - The core can be designed using a template core
+  - Example: A core template model with a curved buccal/lingual axis
+
+### 10. Porous Surface Variations
+- **Porous Surface Features**:
+  - The porous surface can include a plurality of interconnected and overlapping elements
+  - The porous surface can include a plurality of interconnected and overlapping elements with surface roughness
+  - The porous surface can include a plurality of protrusions
+  - The porous surface can include a plurality of cavities
+  - The thickness of the porous surface can vary along the length of the core
+  - Example: A porous surface with varying thickness along the length of the core
+
+### 11. Strut Variations
+- **Strut Variations**:
+  - The root section can include a plurality of struts
+  - The struts can have various shapes, including triangular, square, curved, hexagonal, and pentagonal
+  - The struts can be arranged around the exterior circumference of the core
+  - The thickness and/or width of the strut can be variable along the length of the core
+  - The shape of the strut can be responsive to the shape of the curvature of the core
+  - Example: Struts with a triangular cross-section arranged around the circumference of the core
+
+### 12. Crown and Abutment Integration
+- **Crown and Abutment Integration**:
+  - The implant can include an abutment configured for cooperation with a crown
+  - The abutment can be added to the top or bottom of the transgingival portion
+  - The size and shape of the abutment can be configured for cooperation with a crown
+  - Example: A complete dental root-analog dental implant model including an abutment
+
+### 13. Transgingival Portion Variations
+- **Transgingival Portion Variations**:
+  - The transgingival portion can be configured to sit in the gingiva of a patient but below the crest gingiva
+  - The height of the transgingival portion can be configured so that it does not extend above the gingival height
+  - The transgingival portion can enable a "platform switching" effect
+  - Example: A transgingival portion positioned above a grooved coronal section
+
+### 14. Circumferential Groove Variations
+- **Circumferential Groove Variations**:
+  - The coronal section can have one or more circumferential grooves
+  - The grooves can be configured to engage with cortical bone
+  - The grooves can facilitate retention of the implant within the alveolar socket
+  - Example: A coronal section with a plurality of circumferential grooves
+
+### 15. Multi-Implant Design Embodiments
+- **Multi-Implant Design**:
+  - The processes described can be used to design a plurality of dental implants to replace an extracted tooth
+  - Each dental implant of the plurality can have different features
+  - The dentist can select the appropriate dental implant from the plurality
+  - Example: A plurality of dental implants with different features designed to replace an extracted tooth
+
+### 16. Hollow Interior Section Embodiments
+- **Hollow Interior Section**:
+  - The dental implant can include hollow interior sections positioned in the interior of the dental implant
+  - The hollow section can relieve stress concentrations
+  - The hollow section can provide a mechanism for injection of drugs, bone growth factors, antibiotics, etc.
+  - Example: A hollow section entirely sealed within the dental implant
+
+### 17. Two-Piece Root Portion Embodiments
+- **Two-Piece Root Portion**:
+  - The root portion of a root-analog dental implant can be designed and fabricated in two pieces
+  - When the two pieces are connected, a portion of the dental implant in the root socket can expand outward
+  - This can assist with provision of fixation of the dental implant in the root socket
+  - Example: A root portion with two pieces that expand to engage the alveolar socket
+
+### 18. Three-Section Root Portion Embodiments
+- **Three-Section Root Portion**:
+  - The root portion of an implant can have three sections: coronal, diaphyseal, and apex
+  - Each section can be designed with specific characteristics to mimic the natural tooth root
+  - Example: A coronal section with grooves, a diaphyseal section with a core and struts, and an apex section with a reduced diameter
+
+### 19. Additive Manufacturing Embodiments
+- **Additive Manufacturing Process**:
+  - The implant can be manufactured using additive manufacturing techniques such as 3D printing
+  - The process can build the implant as a single unit
+  - The porous surface and core can be manufactured simultaneously
+  - Example: A root-analog dental implant manufactured using laser sintering of a metallic powder
+
+### 20. System and Method Embodiments
+- **Design Process**:
+  - The implant can be designed using a three-dimensional scan of the extracted tooth/tooth root
+  - The design process can involve modifying the preliminary model of the tooth root
+  - The design process can involve adding a porous surface to the exterior of the core
+  - The design process can involve adding circumferential grooves to the coronal section
+  - The design process can involve adding a transgingival portion to the implant
+  - The design process can involve adding an abutment to the implant
+  - Example: A complete dental root-analog dental implant model including an abutment
+
+- **Manufacturing Process**:
+  - The implant can be manufactured using a 3D printer
+  - The manufacturing process can involve receiving instructions for the fabrication of the implant
+  - The manufacturing process can involve formatting the final model for manufacturing
+  - The manufacturing process can involve communicating the formatted model to an implant fabrication tool
+  - Example: A root-analog dental implant fabricated using one or more design processes and/or models described herein
+
+### 21. Unmodified Alveolar Socket Embodiments
+- **Unmodified Alveolar Socket**:
+  - The root portion of the root-analog dental implant can be configured to fit within an alveolar socket that is unmodified
+  - The implant can be seated directly into the original alveolar socket
+  - Example: A root portion of a root-analog dental implant configured to fit within an unmodified alveolar socket
+
+### 22. Curved Tooth Root Embodiments
+- **Curved Tooth Root**:
+  - The implant can be designed to fit curved tooth roots
+  - The curvature of the core can follow the curvature of the extracted tooth root
+  - The core can be designed using a template core
+  - Example: A core template model with a curved buccal/lingual axis
+
+### 23. Porous Surface Variations
+- **Porous Surface Features**:
+  - The porous surface can include a plurality of interconnected and overlapping elements
+  - The porous surface can include a plurality of interconnected and overlapping elements with surface roughness
+  - The porous surface can include a plurality of protrusions
+  - The porous surface can include a plurality of cavities
+  - The thickness of the porous surface can vary along the length of the core
+  - Example: A porous surface with varying thickness along the length of the core
+
+### 24. Strut Variations
+- **Strut Variations**:
+  - The root section can include a plurality of struts
+  - The struts can have various shapes, including triangular, square, curved, hexagonal, and pentagonal
+  - The struts can be arranged around the exterior circumference of the core
+  - The thickness and/or width of the strut can be variable along the length of the core
+  - The shape of the strut can be responsive to the shape of the curvature of the core
+  - Example: Struts with a triangular cross-section arranged around the circumference of the core
+
+### 25. Crown and Abutment Integration
+- **Crown and Abutment Integration**:
+  - The implant can include an abutment configured for cooperation with a crown
+  - The abutment can be added to the top or bottom of the transgingival portion
+  - The size and shape of the abutment can be configured for cooperation with a crown
+  - Example: A complete dental root-analog dental implant model including an abutment
+
+### 26. Transgingival Portion Variations
+- **Transgingival Portion Variations**:
+  - The transgingival portion can be configured to sit in the gingiva of a patient but below the crest gingiva
+  - The height of the transgingival portion can be configured so that it does not extend above the gingival height
+  - The transgingival portion can enable a "platform switching" effect
+  - Example: A transgingival portion positioned above a grooved coronal section
+
+### 27. Circumferential Groove Variations
+- **Circumferential Groove Variations**:
+  - The coronal section can have one or more circumferential grooves
+  - The grooves can be configured to engage with cortical bone
+  - The grooves can facilitate retention of the implant within the alveolar socket
+  - Example: A coronal section with a plurality of circumferential grooves
+
+### 28. Multi-Implant Design Embodiments
+- **Multi-Implant Design**:
+  - The processes described can be used to design a plurality of dental implants to replace an extracted tooth
+  - Each dental implant of the plurality can have different features
+  - The dentist can select the appropriate dental implant from the plurality
+  - Example: A plurality of dental implants with different features designed to replace an extracted tooth
+
+### 29. Hollow Interior Section Embodiments
+- **Hollow Interior Section**:
+  - The dental implant can include hollow interior sections positioned in the interior of the dental implant
+  - The hollow section can relieve stress concentrations
+  - The hollow section can provide a mechanism for injection of drugs, bone growth factors, antibiotics, etc.
+  - Example: A hollow section entirely sealed within the dental implant
+
+### 30. Two-Piece Root Portion Embodiments
+- **Two-Piece Root Portion**:
+  - The root portion of a root-analog dental implant can be designed and fabricated in two pieces
+  - When the two pieces are connected, a portion of the dental implant in the root socket can expand outward
+  - This can assist with provision of fixation of the dental implant in the root socket
+  - Example: A root portion with two pieces that expand to engage the alveolar socket
+
+### 31. Three-Section Root Portion Embodiments
+- **Three-Section Root Portion**:
+  - The root portion of an implant can have three sections: coronal, diaphyseal, and apex
+  - Each section can be designed with specific characteristics to mimic the natural tooth root
+  - Example: A coronal section with grooves, a diaphyseal section with a core and struts, and an apex section with a reduced diameter
+
+### 32. Additive Manufacturing Embodiments
+- **Additive Manufacturing Process**:
+  - The implant can be manufactured using additive manufacturing techniques such as 3D printing
+  - The process can build the implant as a single unit
+  - The porous surface and core can be manufactured simultaneously
+  - Example: A root-analog dental implant manufactured using laser sintering of a metallic powder
+
+### 33. System and Method Embodiments
+- **Design Process**:
+  - The implant can be designed using a three-dimensional scan of the extracted tooth/tooth root
+  - The design process can involve modifying the preliminary model of the tooth root
+  - The design process can involve adding a porous surface to the exterior of the core
+  - The design process can involve adding circumferential grooves to the coronal section
+  - The design process can involve adding a transgingival portion to the implant
+  - The design process can involve adding an abutment to the implant
+  - Example: A complete dental root-analog dental implant model including an abutment
+
+- **Manufacturing Process**:
+  - The implant can be manufactured using a 3D printer
+  - The manufacturing process can involve receiving instructions for the fabrication of the implant
+  - The manufacturing process can involve formatting the final model for manufacturing
+  - The manufacturing process can involve communicating the formatted model to an implant fabrication tool
+  - Example: A root-analog dental implant fabricated using one or more design processes and/or models described herein
+
+### 34. Unmodified Alveolar Socket Embodiments
+- **Unmodified Alveolar Socket**:
+  - The root portion of the root-analog dental implant can be configured to fit within an alveolar socket that is unmodified
+  - The implant can be seated directly into the original alveolar socket
+  - Example: A root portion of a root-analog dental implant configured to fit within an unmodified alveolar socket
+
+### 35. Curved Tooth Root Embodiments
+- **Curved Tooth Root

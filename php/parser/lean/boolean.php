@@ -4,7 +4,7 @@
  *
  * Loaded by lean.php after the `LeanProp` trait and before `relational.php`.
  * Relational comparisons, membership, and logic connectives extend this.
- * Mirrors static/js/parser/lean/boolean.js. PHP stays `abstract` and
+ * Mirrors js/parser/lean/boolean.js. PHP stays `abstract` and
  * `insert_newline` / `is_indented` stay shorter than the JS methods.
  * Not a standalone entry point.
  */

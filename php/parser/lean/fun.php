@@ -3,7 +3,7 @@
  * Lambda binder head (`Lean_fun`, `fun` / `λ`).
  *
  * Loaded by lean.php after `decl.php`. Extends `LeanUnary`, which already
- * exists. Mirrors static/js/parser/lean/fun.js. Not a standalone entry point.
+ * exists. Mirrors js/parser/lean/fun.js. Not a standalone entry point.
  */
 
 class Lean_fun extends LeanUnary

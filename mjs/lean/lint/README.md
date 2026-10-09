@@ -1,0 +1,94 @@
+# Lemma linter (`mjs/lean/lint/`)
+
+The mechanically checkable style rules of `AGENTS.md`, reported as **warnings** (never errors) by the compiler:
+
+- `render2vue.mjs` `echo2vueFromSource` → `code.warning` (only when non-empty), so they show up in the
+  `php/request/echo.php` JSON and in `node mjs/run.mjs <file>` (stderr, `warning:LINE:COL: [rule-id] … (AGENTS.md: "…")`).
+- They never change the lemma status, `run.mjs`'s exit code, or the `axiom.lemma` row (`warning` is not a saved column).
+
+Two passes:
+
+- **Text scan** (most rules): the source with comments / strings blanked (`scan.mjs`), a bracket matcher, and a small
+  binder-signature parser. Reports `line` / `col`.
+- **AST pass** (`astRules.mjs`): the file is parsed with lean.js (`compile`, the same parser as the renderer; a separate
+  tree, since `echo` mutates it). The tree has no source positions, so these warnings **quote the offending statement**
+  instead: `w.stmt` is the node's own reprint (`String(node)`), trimmed to its first line(s) / ~120 chars with `…`.
+  `w.line` is filled in by searching the source for that text (forward cursor in source order, re-anchored at each
+  declaration; a repeated statement text resolves to its next occurrence). `run.mjs` prints
+
+  ```
+  warning:23: [have-inline-once] `h₁` is used only once, by the next `exact`: … (AGENTS.md: "…")
+      > have h₁ : n = n := by
+      >   simp
+  ```
+
+  If the parse throws, the AST rules are skipped silently and their text-scan versions run instead (`AST_RULES` /
+  `ctx.astCovered`), so a rule never reports twice. Layout rules (bullets, indentation, line breaks around operators)
+  stay text-based: the reprint normalizes layout.
+
+| AST rule | how the tree is used | text fallback |
+|---|---|---|
+| `have-inline-once` | `Lean_have` in a statement list (`LeanStatements`, or the list after a bare `·` line); the next statement is a `LeanTactic` `exact` / `apply` without `LeanAt`; the name occurs as a `LeanToken` exactly once there and nowhere else in the rest of the block (until rebound) | `proofRules.mjs` |
+| `given-prop-first` | binders after `-- given`; proposition = type node is a relation / connective / quantifier / negation (`LeanBinaryBoolean`, `LeanQuantifier`, `LeanNot`, …) or an `h…` name; expression = a type token / arrow / applied type not headed by a predicate (`Is…`, `Continuous`, `Measurable`, …); never a proposition when headed by `Decidable`/`Fintype`/`Set`/…; warns when a proposition mentions none of the names bound from the expression up to itself (so it can really move up). Expressions some proposition needs (free occurrences, closed over expression types) are skipped: moving a proposition above them would split the proposition run (`given-prop-consecutive`) | `signatureRules.mjs` |
+| `given-prop-consecutive` | same binder classification; the propositions of `-- given` must be one consecutive run (prop … expr … prop is reported at the first proposition after the gap). Suggests the canonical order: the expressions the propositions need, then all propositions, then the other expressions ("it mentions `t`, … so it cannot move above them; move `(t : ℕ)` … before `(h₀ …)`"). Runs only when `given-prop-first` did not fire for the lemma (one finding per lemma, never contradicting it). Free occurrences via `mentions` (a name re-bound by `∀`/`∃`/`∑`/`fun` inside a proposition does not count). Not an AGENTS.md rule (no quote) | `signatureRules.mjs` (token-based) |
+| `tactic-haveI`, `tactic-letI` | `Lean_have` / `Lean_let` with the parser flag `inst` (parsed from `haveI` / `letI`), outside declaration signatures | `proofRules.mjs` |
+| `calc-after-assign` | `have` / `let` (incl. `haveI` / `letI`) whose `:=` value is a `LeanArgsNewLineSeparated` holding only a `LeanCalc`, i.e. `:=⏎ calc`; the same-line form `:= calc` has the `LeanCalc` itself as the value. Not an AGENTS.md rule (no quote) | — (AST only) |
+| `decl-keyword-dir` | `Lean_theorem` node in a `Lemma/…` file (the keyword is the node class, so modifiers / `@[…]` / comments / strings / `theorem_foo` never match); quotes the declaration head line, located on its own (repeated heads take the next unused line). The tree is trusted only when it has as many `lemma`/`theorem` nodes as the text scan finds declarations; otherwise (and on a parse failure) the text fallback runs | `headerRules.mjs` `declKeywordDirText` (`ctx.decls`, keyword at the start of a declaration line) |
+
+| file | rules |
+|---|---|
+| `headerRules.mjs` | `open-section`, `open-duplicate`, `open-prefix`, `decl-keyword-dir` (text fallback), `attr-docstring`, `date-*` |
+| `signatureRules.mjs` | `section-imply`, `section-proof`, `binder-order`, `binder-dep-inst`, `binder-auto-bound`, `default-arg-given`, `given-prop-first`, `given-prop-consecutive`, `binder-combine` |
+| `proofRules.mjs` | `indent-odd`, `indent-deep`, `proof-binop-newline`, `bullet-newline`, `tactic-rcases`, `tactic-by-cases`, `tactic-haveI`, `tactic-letI`, `have-inline-once`, `by-calc`, `calc-start-underscore`, `calc-in-brackets`, `paren-by-multiline`, `paren-by-semicolon`, `from-by`, `by-exact`, `term-mode-exact`, `rw-exact`, `show-multiline`, `joint-random-symbol`, `hole-question`, `binder-underscore-name` |
+| `attrRules.mjs` | `attr-mp`, `attr-comm` (read the cited lemma's `@[…]` from `Lemma/…`) |
+| `astRules.mjs` | `have-inline-once`, `given-prop-first`, `given-prop-consecutive`, `tactic-haveI`, `tactic-letI`, `decl-keyword-dir` (text versions above are their fallbacks), `calc-after-assign` |
+
+`open-prefix` (text scan): when `open Random` (plain, not selective/`scoped`) and the source
+writes `Random.Foo.Bar`, warn to drop the leading `Random.` **only if** (1) `Lemma/Random/Foo/Bar.lean`
+exists (filesystem resolve; attribute-generated names with no `.lean` are skipped) and (2) no other
+currently open section (plus the file's own `Lemma/<Section>/`) also has a lemma at that short path.
+Quoted as `stmt: Random.Foo.Bar`. AGENTS.md has no exact bullet yet — the warning paraphrases the
+open-simplification idea (`after \`open Section\`, prefer the short lemma name when unambiguous`).
+
+Why `given-prop-consecutive`: the page (`render2vue` in `js/parser/lean/module.js` → `vue/lemma.vue`)
+splits the `given` binders into `explicit` (before the first proposition, raw Lean), `given` (the first run of
+propositions, one LaTeX block each) and `default` (from the first expression after that run, raw Lean), shown in that
+order under `-- given`. A proposition after the gap lands in `default` and is never typeset. A proposition cannot move
+above an expression it mentions (Lean would auto-bind the name as a fresh implicit: `autoImplicit` is on), so the
+dependent expressions move up instead.
+
+`decl-keyword-dir` checks only the `Lemma/` half of the AGENTS.md rule ("never put a `theorem` in `Lemma/`", removed
+from AGENTS.md since the warning quotes it). `sympy/` files are never rendered or linted (`mjs/run.mjs` rejects paths
+outside `Lemma/`, the web `echo.php` route maps a module to `Lemma/<module>.lean`), so "never put a `lemma` in
+`sympy/`" stays in AGENTS.md.
+
+`term-mode-exact` (text scan, lemmas only): the whole proof is a single `exact e` — `… := by exact e`, or `… := by` /
+`-- proof` / `  exact e` (blank / comment lines in between; `e` may continue on deeper lines). Not when another tactic
+follows at the `exact` column, with a top-level `;` / `<;>`, a `·` / `<;>` continuation line, or `exact?` / `exacts`.
+The warning asks for term mode, `… :=` / `-- proof` / `  e` (as in `Lemma/Random/Measurable_R.lean`). Not an AGENTS.md
+rule (no quote). It takes precedence over AGENTS.md's "prefer `apply` instead of `exact`": inside such a proof
+`lintLean` drops the `apply` hints (`have-inline-once`, `hole-question` in an `exact`) and a `by-exact` at the same `by`.
+
+
+`rw-exact` (text scan): `rw […]` (optional `at`) whose next tactic, after blank lines and comments, is `exact` of one atomic term (`h₅`, `this`, `h.symm`, or parentheses around just that — not `by` / `show` / `fun` / `calc` and not a second argument). Suggest `rwa` and dropping the `exact`. `exact` inside the rewrite brackets is not the next tactic. `<;>` is not this pattern.
+
+`show-multiline` (text scan): a multi-line `show T by …` / `show T from …` inside `rw` / `rwa` / `erw` / `rewrite` `[…]`, or as an argument of `apply` / `refine` / `exact`. Pull it out as `have h : T := by` … then use `h` (any name, not only `this`). A one-line proof (`rw [show T by exact h]`, `exact (show T by fun_prop)`, or a line break only in the type) stays quiet. Other tactics are out of scope. `paren-by-multiline` does not see the rewrite shape: it matches a same-line `(` `by` and that parenthesis's closer.
+
+`joint-random-symbol` (text scan, whole file): every `JointRandomSymbol`, not only under `MeasurableSpace.comap` / `comap_measurable`. Two arguments flatten a nested spine on either side into one tuple: `JointRandomSymbol (s t) (JointRandomSymbol (a t) (s (t + 1)))` becomes `(s t, a t, s (t + 1))`. A bare name (`simp [JointRandomSymbol]`, imports, mentions with no arguments) does not warn.
+
+`RULES` in `index.mjs` maps every id to the quoted AGENTS.md rule; `DISABLED` lists rules that are off by default
+(currently none; `lintLean(src, { rules: [id] })` still runs a disabled rule).
+
+Offline: `lintLean(source, { file, root, sections, today, isNew, ast })` (`ast: false` forces the text fallbacks); `lintLeanFile(source, abs)` derives `root` / `file`
+from the path and `isNew` from a read-only `git status` (for `date-created-today`).
+
+Known limits of the AST pass (false negatives only): a few constructs make the parser nest statements wrongly — a
+multi-line `exact` can split into siblings, `{ … with … }` structure instances — so `have-inline-once` can miss a hit
+there. (`have h : T := calc⏎ …` on one line used to swallow the rest of the block into the calc steps; fixed in
+`LeanCalc.insert_newline`, `js/parser/lean/tactic.js`.)
+2 of 8224 corpus files do not parse at all (text fallbacks run).
+
+AGENTS.md rules now fully checked here (candidates to drop from AGENTS.md, since the warning quotes the rule):
+"within the `given` section: propositions come first, expressions come next" (`given-prop-first`).
+Still only partially checked: "inline `have` … if it is referenced only once" (`have-inline-once` covers the
+"used once, by the very next `exact` / `apply`" case).

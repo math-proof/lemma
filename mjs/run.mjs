@@ -12,14 +12,14 @@ import readline from 'node:readline/promises';
 import { stdin as input, stdout as output } from 'node:process';
 import { fileURLToPath } from 'url';
 import mysql from 'mysql2/promise';
-import '../static/js/std.js';
-import { echo2vueFromSource } from '../server/lean/compiler/index.mjs';
+import '../js/py.js';
+import { echo2vueFromSource } from './lean/compiler/index.mjs';
 import {
   REPO_ROOT,
   leanPathToModule,
   moduleToLeanPath,
   fileExists,
-} from '../server/lean/modulePath.mjs';
+} from './lean/modulePath.mjs';
 
 const USER = process.env.LEAN_PROJECT_USER || path.basename(REPO_ROOT);
 
@@ -137,7 +137,7 @@ async function main() {
   const { module, abs, code } = await runLeanFile(leanInput);
   console.log(abs);
 
-  // lint warnings (`code.warning`: AGENTS.md style rules, server/lean/lint/): printed only — not Lean errors, not saved,
+  // lint warnings (`code.warning`: AGENTS.md style rules, mjs/lean/lint/): printed only — not Lean errors, not saved,
   // no effect on the exit status
   const warnings = Array.isArray(code?.warning) ? code.warning : [];
   for (const w of warnings) {

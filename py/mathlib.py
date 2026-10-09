@@ -1,7 +1,7 @@
 import os, unicodedata, json, std
 os.environ['MYSQL_DATABASE'] = 'axiom'
-from std import MySQL
-from std.file import Text
+from py import MySQL
+from py.file import Text
 from collections import defaultdict
 
 sum = 0

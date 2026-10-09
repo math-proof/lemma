@@ -3,7 +3,7 @@
  * Match and tactic bar (`LeanBar`, `|`).
  *
  * Loaded by lean.php after `command.php` and before `arrows.php`. Mirrors
- * static/js/parser/lean/bar.js. `is_indented` always returns true. There is
+ * js/parser/lean/bar.js. `is_indented` always returns true. There is
  * no `insert_bar`. `insert_comma` tests `end($this->args)`. `split` uses the
  * arrow's level. Later classes (`LeanRightarrow`, `LeanArgsCommaSeparated`,
  * …) are resolved when methods run.

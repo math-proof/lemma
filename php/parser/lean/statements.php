@@ -3,7 +3,7 @@
  * Statement lists (`LeanStatements`).
  *
  * Loaded by lean.php after `set.php` (`LeanArgs` and `LeanMultipleLine`
- * already exist). Mirrors static/js/parser/lean/statements.js. PHP `echo`,
+ * already exist). Mirrors js/parser/lean/statements.js. PHP `echo`,
  * `insert_newline`, and `latexFormat` stay shorter than JS. Later classes
  * (`LeanTactic`, `LeanBy`, `LeanModule`, …) are resolved when methods run.
  * Not a standalone entry point.

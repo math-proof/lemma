@@ -1,17 +1,17 @@
 #!/usr/bin/env bash
 # usage:
 #   bash sh/setup.sh [--clean|-clean] [vX.Y.Z]
-# default version: v4.33.1
+# default version: v4.34.1
 #
-# Full port of ps1/setup.ps1 for Linux/WSL: Lean toolchain (manual tarball),
+# Full port of sh/setup.ps1 for Linux/WSL: Lean toolchain (manual tarball),
 # lean-toolchain, mathlib tag, lake-manifest sync, packages, clean, cache, build.
-# Note: ps1/setup.ps1 calls .\ps1\run.ps1 at the end; this script intentionally
+# Note: sh/setup.ps1 calls .\sh\run.ps1 at the end; this script intentionally
 # does NOT call sh/run.sh (setup sets up/builds; leave run to the user).
 
 set -euo pipefail
 
 CLEAN=false
-VERSION="v4.33.1"
+VERSION="v4.34.1"
 for arg in "$@"; do
   case "$arg" in
     --clean|-clean) CLEAN=true ;;
@@ -38,7 +38,7 @@ if ! command -v elan >/dev/null 2>&1; then
   exit 1
 fi
 
-# Manual Lean install (mirror ps1/setup.ps1). Do NOT use `elan toolchain install`
+# Manual Lean install (mirror sh/setup.ps1). Do NOT use `elan toolchain install`
 # — it downloads via elan and fails on this network; we fetch the Linux tarball ourselves.
 TOOLCHAIN_ROOT="$HOME/.elan/toolchains"
 TARGET_NAME="leanprover--lean4---${VERSION}"
@@ -65,8 +65,12 @@ else
     :
   elif command -v unzstd >/dev/null 2>&1; then
     tar --use-compress-program=unzstd --strip-components=1 -xf "$TAR_PATH" -C "$TARGET_DIR"
+  elif command -v zstd >/dev/null 2>&1; then
+    zstd -d -c "$TAR_PATH" | tar --strip-components=1 -xf - -C "$TARGET_DIR"
+  elif python3 -c "import zstandard" >/dev/null 2>&1; then
+    python3 -c "import sys,zstandard; sys.stdout.buffer.write(zstandard.ZstdDecompressor().stream_reader(open(sys.argv[1],chr(114)+chr(98))).read())" "$TAR_PATH" | tar --strip-components=1 -xf - -C "$TARGET_DIR"
   else
-    echo "error: need tar with zstd support (or unzstd) to extract ${TAR_FILE}" >&2
+    echo "error: need tar with zstd support (or unzstd, zstd, or python zstandard) to extract ${TAR_FILE}" >&2
     exit 1
   fi
   rm -f "$TAR_PATH"

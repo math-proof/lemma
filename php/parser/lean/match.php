@@ -3,7 +3,7 @@
  * Match (`Lean_match`).
  *
  * Loaded by lean.php after `negation.php`. Extends `LeanArgs`, which already
- * exists. Mirrors static/js/parser/lean/match.js. Not a standalone entry point.
+ * exists. Mirrors js/parser/lean/match.js. Not a standalone entry point.
  */
 
 class Lean_match extends LeanArgs

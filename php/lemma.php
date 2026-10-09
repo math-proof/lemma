@@ -626,7 +626,7 @@ const VUE_STYLES = [
 	'node_modules/codemirror/lib/codemirror.css',
 	'node_modules/codemirror/theme/eclipse.css',
 	'node_modules/codemirror/addon/hint/show-hint.css',
-	'static/css/codemirror-overrides.css',
+	'css/codemirror-overrides.css',
 	'node_modules/katex/dist/katex.min.css',
 ];
 
@@ -637,7 +637,7 @@ const VUE_SCRIPTS = [
 	'node_modules/file-saver/dist/FileSaver.min.js',
 	'node_modules/vue/dist/vue.global.prod.js',
 	'node_modules/vue3-sfc-loader/dist/vue3-sfc-loader.js',
-	'static/js/std.js',
+	'js/std.js',
 ];
 
 const VUE_DEFER_SCRIPTS = [
@@ -654,8 +654,8 @@ async function upgradeLemmaVue(code) {
 		await loadScript(asset(path));
 
 	await Promise.all([
-		import(asset('static/js/utility.js')),
-		import(asset('static/js/codemirrorBoot.js')),
+		import(asset('js/utility.js')),
+		import(asset('js/codemirrorBoot.js')),
 	]);
 
 	await Promise.all(VUE_DEFER_SCRIPTS.map((path) => loadScript(asset(path))));

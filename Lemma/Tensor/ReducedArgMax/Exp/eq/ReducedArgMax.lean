@@ -1,19 +1,23 @@
 import sympy.Basic
-import sympy.concrete.expr_with_limits
-import Mathlib.Analysis.SpecialFunctions.Exp
+import sympy.concrete.reduced
 
 
 @[main]
 private lemma main
-  [NeZero n]
+  {n : ℕ} [NeZero n]
   {x : Fin n → ℝ} :
 -- imply
-  ArgMax Set.univ (fun j => Real.exp (x j)) = ArgMax Set.univ x := by
+  ReducedArgMax (Function.exp x) = ReducedArgMax x := by
 -- proof
-  unfold ArgMax
-  congr 1
-  funext k
-  simp only [Real.exp_le_exp]
+  refine le_antisymm ?_ ?_
+  ·
+    apply ReducedArgMax.le_of_forall_le
+    intro j
+    exact Real.exp_monotone (ReducedArgMax.le x j)
+  ·
+    apply ReducedArgMax.le_of_forall_le
+    intro j
+    exact Real.exp_le_exp.mp (ReducedArgMax.le (Function.exp x) j)
 
 
--- created on 2021-12-20
+-- created on 2026-10-09

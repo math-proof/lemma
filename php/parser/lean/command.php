@@ -2,7 +2,7 @@
 /**
  * Top-level commands (`LeanCommand`, `import` / `open` / `set_option` / `namespace`).
  *
- * Loaded by lean.php after `module.php`. Mirrors static/js/parser/lean/command.js.
+ * Loaded by lean.php after `module.php`. Mirrors js/parser/lean/command.js.
  * `append` still writes `$this->sql`. `open` stays `'open'` (JS may render
  * `open scoped`). Later classes (`LeanArgsSpaceSeparated`, …) are resolved
  * when methods run.

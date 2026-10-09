@@ -172,7 +172,7 @@ switch ($lang) {
 <script src="../node_modules/marked/marked.min.js"></script>
 <script src="../node_modules/axios/dist/axios.min.js"></script>
 <script src="../node_modules/qs/dist/qs.js"></script>
-<script src="../static/js/std.js"></script>
+<script src="../js/std.js"></script>
 <script type=module>
 
 hljs.initHighlightingOnLoad();

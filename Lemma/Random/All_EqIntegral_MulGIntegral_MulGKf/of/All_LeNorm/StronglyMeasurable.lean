@@ -20,7 +20,7 @@ private lemma main
   (θ : Θ)
   (j : ℕ) :
 -- imply
-  ∀ n {G : (Π _ : Iic n, ℝ × S × A) → ℝ}, StronglyMeasurable G → ∀ {CG : ℝ}, (∀ h, ‖G h‖ ≤ CG) →
+  ∀ n {G : (Π _ : Finset.Iic n, ℝ × S × A) → ℝ}, StronglyMeasurable G → ∀ {CG : ℝ}, (∀ h, ‖G h‖ ≤ CG) →
     ∫ ω, G (Preorder.frestrictLe n ω) * f (ω (n + j)) ∂(M θ) =
       ∫ ω, G (Preorder.frestrictLe n ω) * M.Kf θ f j (ω n) ∂(M θ) := by
 -- proof

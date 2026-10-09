@@ -19,7 +19,7 @@
  */
 import fs from 'fs';
 import path from 'path';
-import { REPO_ROOT } from '../server/lean/modulePath.mjs';
+import { REPO_ROOT } from './lean/modulePath.mjs';
 import { suggest } from './lemmaPath.mjs';
 
 const LEMMA_ROOT = path.join(REPO_ROOT, 'Lemma');

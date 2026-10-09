@@ -3,7 +3,7 @@
  * Pipeline dot `|>.` (`LeanMethodChaining`).
  *
  * Loaded by lean.php after `lazy.php` (`LeanBinary` already exists).
- * Mirrors static/js/parser/lean/pipeline.js. PHP `stack_priority` stays on
+ * Mirrors js/parser/lean/pipeline.js. PHP `stack_priority` stays on
  * `__get`. Not a standalone entry point.
  */
 

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<base href="/<%= userSegment %>/">
+<link rel="stylesheet" href="css/style.css">
+<title>summary</title>
+<body></body>
+
+<script src="node_modules/axios/dist/axios.min.js"></script>
+<script src="node_modules/qs/dist/qs.js"></script>
+<script src="node_modules/clipboard/dist/clipboard.min.js" defer></script>
+<script src="node_modules/file-saver/dist/FileSaver.min.js" defer></script>
+<script src="node_modules/vue/dist/vue.global.prod.js"></script>
+<script src="node_modules/vue3-sfc-loader/dist/vue3-sfc-loader.js"></script>
+
+<script src="js/py.js"></script>
+<script type="module" src="js/utility.js"></script>
+
+<script type="module">
+createApp('axiomSummary', <%- summaryJson %>);
+</script>

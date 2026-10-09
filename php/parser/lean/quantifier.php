@@ -3,7 +3,7 @@
  * Quantifiers (`LeanQuantifier`, ∀, ∃).
  *
  * Loaded by lean.php after `bigops.php` (`LeanQuantifier` extends `LeanBigOperator`).
- * Mirrors static/js/parser/lean/quantifier.js. Not a standalone entry point.
+ * Mirrors js/parser/lean/quantifier.js. Not a standalone entry point.
  */
 
 class LeanQuantifier extends LeanBigOperator

@@ -5,8 +5,8 @@
   "type": "module",
   "description": "Lean4 lemma library — Node lemma browser (EJS + stub Lean parser)",
   "scripts": {
-    "start": "node server/app.mjs",
-    "node": "node server/app.mjs"
+    "start": "node mjs/app.mjs",
+    "node": "node mjs/app.mjs"
   },
   "dependencies": {
     "axios": "0.24.0",

@@ -56,7 +56,7 @@ private lemma main
   simp [this]
   conv_lhs =>
     arg 2
-    erw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.right.fin (by grind) (by grind)]
+    erw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.right.fin (by simp) (by simp)]
   have h_s₁ : (b :: bz ++ [m, k]).insertIdx ((b :: bz).length + 1) 1 = b :: bz ++ [m, 1, k] := by
     simp [InsertIdxAppend.eq.Append_InsertIdx]
   have := GetRepeat.eq.Cast_RepeatGet.of.GtGet_0.GtLength_0.fin
@@ -84,7 +84,7 @@ private lemma main
   simp at this
   simp [this]
   apply Mul.of.Eq.left
-  apply Cast.of.SEq.Eq.left (by grind)
+  apply Cast.of.SEq.Eq.left (by simp)
   apply SEq.of.Eq
   erw [GetRepeat.eq.Cast_RepeatGet.of.GtGet_0.GtLength_0.fin (d := ⟨bz.length, by grind⟩) (by grind) (by grind)]
   apply Repeat.of.Eq
@@ -94,7 +94,8 @@ private lemma main
   rw [GetUnsqueeze.eq.Cast_UnsqueezeGet.of.GtGet_0.GtLength_0.fin (by grind) (by grind)]
   simp [GetCast.eq.Cast_Get.of.Eq.GtLength_0.right.fin (by grind) h_s_t₂]
   apply Unsqueeze.of.Eq
-  apply Cast.of.SEq.Eq.left (by grind)
+  apply Cast.of.SEq.Eq.left
+  exact congrArg List.tail h_s_t₂
   apply GetT.as.TGet
 
 

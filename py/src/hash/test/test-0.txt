@@ -1,0 +1,6 @@
+这是一篇陈词滥调的文章[1]。This is a clichéd article [2]. C’est un article plein de clichés [3].
+这是一篇陈词滥调的文章[4]。C’est un article plein de clichés [6]. This is a clichéd article [5].
+C’est un article plein de clichés [9]. 这是一篇陈词滥调的文章[6]。This is a clichéd article [7].
+C’est un article plein de clichés [8]. This is a clichéd article [0]. 这是一篇陈词滥调的文章[7]。
+This is a clichéd article [1]. C’est un article plein de clichés [7]. 这是一篇陈词滥调的文章[8]。
+This is a clichéd article [8]. 这是一篇陈词滥调的文章[9]。C’est un article plein de clichés [1].

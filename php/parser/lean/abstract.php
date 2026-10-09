@@ -4,7 +4,7 @@
  *
  * Loaded by lean.php after `LeanMultipleLine` and before `paired.php`
  * (`LeanPairedGroup` extends `LeanUnary`). Mirrors
- * static/js/parser/lean/abstract.js. PHP keeps these classes `abstract`
+ * js/parser/lean/abstract.js. PHP keeps these classes `abstract`
  * (`LeanBinary::sep` stays abstract). Not a standalone entry point.
  */
 

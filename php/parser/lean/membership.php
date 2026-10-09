@@ -3,7 +3,7 @@
  * Membership and iff (`Lean_in`, `Lean_notin`, `Lean_leftrightarrow`).
  *
  * Loaded by lean.php after LeanBinaryBoolean (and after relational.php).
- * Mirrors static/js/parser/lean/membership.js. Not a standalone entry point.
+ * Mirrors js/parser/lean/membership.js. Not a standalone entry point.
  */
 
 class Lean_in extends LeanBinaryBoolean

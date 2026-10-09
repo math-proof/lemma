@@ -5,8 +5,7 @@ import sympy.Basic
 
 @[main]
 private lemma main
-  {n : ℕ}
-  [NeZero n]
+  {n : ℕ} [NeZero n]
   {x : Fin n → ℝ}
   {M : Fin n}
 -- given

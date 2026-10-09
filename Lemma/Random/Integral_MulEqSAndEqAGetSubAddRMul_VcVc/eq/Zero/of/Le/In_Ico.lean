@@ -11,7 +11,7 @@ import Lemma.Real.StronglyMeasurable.discrete
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random Real Finset Filter
 
 
-private lemma int_hist_mul [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [Fintype A] (M : Model Θ S A) (θ : Θ) (n k : ℕ) {G : (Π _ : Iic n, ℝ × S × A) → ℝ} (hG : StronglyMeasurable G) {CG : ℝ} (hCG : ∀ h, ‖G h‖ ≤ CG) {g : ℝ × S × A → ℝ} (hg : StronglyMeasurable g) {C : ℝ} (hC : ∀ z, ‖g z‖ ≤ C) :
+private lemma int_hist_mul [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [Fintype A] (M : Model Θ S A) (θ : Θ) (n k : ℕ) {G : (Π _ : Finset.Iic n, ℝ × S × A) → ℝ} (hG : StronglyMeasurable G) {CG : ℝ} (hCG : ∀ h, ‖G h‖ ≤ CG) {g : ℝ × S × A → ℝ} (hg : StronglyMeasurable g) {C : ℝ} (hC : ∀ z, ‖g z‖ ≤ C) :
   Integrable (fun ω => G (Preorder.frestrictLe n ω) * g (ω k)) (M θ) := by
   refine Integrable.of_bound (C := CG * C) ?_ (Filter.Eventually.of_forall fun ω => ?_)
   · exact ((hG.comp_measurable (Preorder.measurable_frestrictLe n)).mul
@@ -47,7 +47,7 @@ private lemma main
   obtain rfl : a = fun t ω ↦ (ω t).2.2 := funext₂ fun t ω ↦ (congrArg (·.2.2) (congrFun (h₁ t) ω)).symm
   set s : ℕ → (ℕ → ℝ × S × A) → S := fun t ω ↦ (ω t).2.1
   set a : ℕ → (ℕ → ℝ × S × A) → A := fun t ω ↦ (ω t).2.2
-  let Gh : (Π _ : Iic n, ℝ × S × A) → ℝ := fun h =>
+  let Gh : (Π _ : Finset.Iic n, ℝ × S × A) → ℝ := fun h =>
     if (h ⟨t, mem_Iic.2 h₂⟩).2.1 = x ∧ (h ⟨t, mem_Iic.2 h₂⟩).2.2 = u then (1:ℝ) else 0
   have hG : StronglyMeasurable Gh :=
     (StronglyMeasurable.discrete (fun p : S × A => if p.1 = x ∧ p.2 = u then (1:ℝ) else 0)).comp_measurable

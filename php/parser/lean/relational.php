@@ -5,7 +5,7 @@
  * Also the PHP-only `=ᵐ` / independence nodes (`LeanMEq`, `LeanIndep`) and
  * `try_marginal_density_latex`, which only serves `LeanMEq`.
  * PHP `Lean_ll` / `Lean_gg` stay in arithmetic.php (they extend LeanArithmetic).
- * Loaded by lean.php after LeanBinaryBoolean. Mirrors static/js/parser/lean/relational.js.
+ * Loaded by lean.php after LeanBinaryBoolean. Mirrors js/parser/lean/relational.js.
  * Not a standalone entry point.
  */
 

@@ -4,7 +4,7 @@
  * norm, ceil, floor, and angle quotations).
  *
  * Loaded by lean.php after LeanUnary and the Closable trait exist.
- * Mirrors static/js/parser/lean/paired.js. Not a standalone entry point.
+ * Mirrors js/parser/lean/paired.js. Not a standalone entry point.
  */
 
 abstract class LeanPairedGroup extends LeanUnary

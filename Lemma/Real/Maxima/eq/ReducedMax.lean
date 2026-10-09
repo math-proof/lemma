@@ -13,10 +13,12 @@ private lemma main
   Maxima Set.univ (fun p : ι × κ => a p.1 p.2) = Maxima Set.univ (fun i => Maxima Set.univ (a i)) := by
 -- proof
   obtain ⟨⟨i₀, j₀⟩, hp⟩ := Finite.exists_max (fun p : ι × κ => a p.1 p.2)
+  have hset : ∀ i z, z ∈ (a i '' Set.univ) → z ≤ a i₀ j₀ := by
+    intro i z hz
+    obtain ⟨j, -, rfl⟩ := hz
+    exact hp (i, j)
   have hin : ∀ i, Maxima Set.univ (a i) ≤ a i₀ j₀ := fun i =>
-    csSup_le (Set.image_nonempty.mpr Set.univ_nonempty) (by
-      rintro _ ⟨j, -, rfl⟩
-      exact hp (i, j))
+    csSup_le (Set.image_nonempty.mpr Set.univ_nonempty) (hset i)
   have hi₀ : Maxima Set.univ (a i₀) = a i₀ j₀ :=
     le_antisymm (hin i₀) (le_csSup (Set.toFinite _).bddAbove ⟨j₀, trivial, rfl⟩)
   have h₁ : IsGreatest ((fun p : ι × κ => a p.1 p.2) '' Set.univ) (a i₀ j₀) := by

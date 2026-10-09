@@ -3,7 +3,7 @@
  * Set operators and inclusion (`LeanSetOperator`, \\, ∪, ∩, ⊆, ⊂, ⊇, ⊃).
  *
  * Loaded by lean.php after LeanLogic is declared (⊇ / ⊃ extend LeanLogic).
- * Mirrors static/js/parser/lean/set.js. Not a standalone entry point.
+ * Mirrors js/parser/lean/set.js. Not a standalone entry point.
  */
 
 abstract class LeanSetOperator extends LeanBinary {

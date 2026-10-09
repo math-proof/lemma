@@ -2,8 +2,8 @@
 import fs from "fs";
 import path from "path";
 import { fileURLToPath, pathToFileURL } from "url";
-import { compile } from "../static/js/parser/lean.js";
-import { strStmt } from "../static/js/parser/lean/utility.js";
+import { compile } from "../js/parser/lean.js";
+import { strStmt } from "../js/parser/lean/utility.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPO = path.resolve(__dirname, "..");

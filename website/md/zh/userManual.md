@@ -84,14 +84,14 @@ cd /usr/local
 git clone https://github.com/cosmosZhou/shell.git
 cd shell/php
 make
-sh start.sh port=80 DocumentRoot=/home/github/lean
+sh sh/start.sh port=80 DocumentRoot=/home/github/lean
 ```
 
 Windows 示例：
 
 1. 指定网页根目录，例如 `E:\github\lean`，按 php installation.docx 配置 `DOCUMENT_ROOT`。
 2. 克隆工程：`git clone --depth=1 https://github.com/math-proof/lemma.git`
-3. 安装 Lean 4（见仓库 `lean-toolchain`），执行 `lake build`，并按项目脚本更新 MySQL 定理索引（如 `ps1/update.ps1`）。
+3. 安装 Lean 4（见仓库 `lean-toolchain`），执行 `lake build`，并按项目脚本更新 MySQL 定理索引（如 `sh/run.ps1`）。
 4. 浏览器访问（端口按本地配置调整）：
    - [http://localhost/lean/index.php](http://localhost/lean/index.php)
    - 或 [http://localhost:8080/lean/index.php?q=Icc&limit=100](http://localhost:8080/lean/index.php?q=Icc&limit=100)

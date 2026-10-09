@@ -68,8 +68,9 @@ PORTED_RE = re.compile(r"P2M/Sol/S_([A-Za-z0-9_]+)\.lean")
 
 def ext_path(path: str) -> str:
     """Return the ``\\\\?\\``-prefixed path so long names open on Windows."""
-    # Avoid double-prefixing.
-    return path if path.startswith("\\\\?\\") else "\\\\?\\" + path
+    if os.name == "nt":
+        return path if path.startswith("\\\\?\\") else "\\\\?\\" + path
+    return path
 
 
 def list_keys(directory: str, prefix: str) -> list[str]:

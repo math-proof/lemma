@@ -11,7 +11,7 @@
 # - modules: dotted names or Lemma/....lean paths (*.echo.lean is rejected)
 # - only rows with user = $LEAN_PROJECT_USER (default: name of the repo directory, as in sh/run.sh)
 #   and the given modules are sent, as INSERT ... ON DUPLICATE KEY UPDATE inside one transaction.
-#   Nothing is deleted, dropped, truncated or copied as a file (unlike ps1/synchronize.ps1).
+#   Nothing is deleted, dropped, truncated or copied as a file (unlike sh/synchronize.ps1).
 # - after the push the row checksums (MD5 over all non-key columns, and over `lemma`) of the
 #   remote rows are compared with the local ones; the exit status is 1 on any mismatch.
 #

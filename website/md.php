@@ -89,7 +89,7 @@ body {
 <script src="/axiom/node_modules/marked/marked.min.js"></script>
 <script src="/axiom/node_modules/axios/dist/axios.min.js"></script>
 <script src="/axiom/node_modules/qs/dist/qs.js"></script>
-<script src="/axiom/static/js/std.js"></script>
+<script src="/axiom/js/std.js"></script>
 <script> 
 	hljs.initHighlightingOnLoad();
 	var url = `/axiom/website/md<?php echo $PATH_INFO ?>`;

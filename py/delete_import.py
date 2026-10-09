@@ -19,9 +19,9 @@ Usage:
 from __future__ import annotations
 
 import os
-import std
+import py
 os.environ['MYSQL_DATABASE'] = 'axiom'
-from std import MySQL
+from py import MySQL
 
 import argparse
 import json

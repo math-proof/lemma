@@ -5,7 +5,7 @@
  *
  * Loaded by lean.php after `tactic.php` and before `Lean_fun`. Extends
  * `LeanArgs` / `LeanSyntax`, which already exist. Mirrors
- * static/js/parser/lean/decl.js. Not a standalone entry point.
+ * js/parser/lean/decl.js. Not a standalone entry point.
  */
 
 class Lean_def extends LeanArgs
@@ -222,6 +222,29 @@ class Lean_let extends LeanSyntax
         }
     }
 
+    /**
+     * Walk a term proof (e.g. funext fun om |-> by ... / fun _ |-> by ...) and echo nested by / calc bodies.
+     */
+    public static function echoNestedByBodies($node)
+    {
+        $nested = self::findNestedByStatements($node);
+        if ($nested) {
+            $nested['stmts']->echo();
+            return;
+        }
+        if ($node === null || !is_object($node)) return;
+        if ($node instanceof LeanCalc) {
+            $node->echo();
+            return;
+        }
+        if (isset($node->args) && is_array($node->args)) {
+            foreach ($node->args as $a) {
+                if ($a instanceof LeanCalc)
+                    $a->echo();
+            }
+        }
+    }
+
     public function echo()
     {
         $token = $this->get_echo_token();
@@ -232,6 +255,9 @@ class Lean_let extends LeanSyntax
                 $stmt->echo();
         } elseif ($proof instanceof LeanCalc) {
             $proof->echo();
+        } elseif ($proof) {
+            // have h : T := funext fun om |-> by ... -- RHS is a term, not by; still split the nested tactic block.
+            self::echoNestedByBodies($proof);
         }
         if ($token) {
             return [
@@ -300,6 +326,28 @@ class Lean_let extends LeanSyntax
         $command = $this->command . ($this->inst ? 'I' : '');
         return "{\\color{#00f}$command}\\ " . implode('\ ', array_fill(0, count($this->args), "%s"));
     }
+    /**
+     * Find the first nested by tactic block under a term proof RHS.
+     */
+    public static function findNestedByStatements($node, &$seen = null)
+    {
+        if ($seen === null) $seen = [];
+        if ($node === null || !is_object($node)) return null;
+        $id = spl_object_id($node);
+        if (isset($seen[$id])) return null;
+        $seen[$id] = true;
+        if ($node instanceof LeanBy && $node->arg instanceof LeanStatements) {
+            return ['by' => $node, 'stmts' => $node->arg];
+        }
+        if (isset($node->args) && is_array($node->args)) {
+            foreach ($node->args as $a) {
+                $found = self::findNestedByStatements($a, $seen);
+                if ($found) return $found;
+            }
+        }
+        return null;
+    }
+
     public function split(&$syntax = null)
     {
         $assign = $this->args[0];
@@ -313,6 +361,17 @@ class Lean_let extends LeanSyntax
                 $statements[0] = new static($statements[0], $this->indent, $assign->level);
                 $statements[0]->inst = $this->inst;
                 return $statements;
+            }
+            if ($proof) {
+                $self = clone $this;
+                $nested = self::findNestedByStatements($self->args[0]->rhs);
+                if ($nested) {
+                    $stmts = $nested['stmts'];
+                    $nested['by']->arg = new LeanCaret($nested['by']->indent, $nested['by']->level);
+                    $statements = [$self];
+                    $stmts->swap_echo_star($syntax, $statements);
+                    return $statements;
+                }
             }
         }
         return [$this];
@@ -452,6 +511,34 @@ class Lean_show extends LeanSyntax
         $parent = $this->parent;
         return $parent instanceof LeanStatements || $parent instanceof LeanArgsNewLineSeparated;
     }
+
+
+    /**
+     * Bare tactic `show T` restates the goal as T (defeq). Insert intermediate `echo ⊢`
+     * so the next fragment shows that goal before later tactics. When `by` / `from` is
+     * attached (`show T by …` / `show T from …`), echo into that proof body instead —
+     * the by/from closes the shown goal, so no trailing turnstile after the whole show.
+     */
+    public function echo()
+    {
+        foreach ($this->args as $a) {
+            if ($a instanceof LeanBy) {
+                $a->echo();
+                return;
+            }
+            if ($a instanceof LeanFrom) {
+                $a->echo();
+                return;
+            }
+        }
+        $token = new LeanToken('⊢', $this->indent, $this->level);
+        return [
+            1,
+            $this,
+            new LeanTactic('echo', $token, $this->indent, $this->level)
+        ];
+    }
+
 
     public function jsonSerialize(): mixed
     {

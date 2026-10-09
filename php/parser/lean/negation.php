@@ -3,7 +3,7 @@
  * Negation (`Lean_lnot`, `LeanNot`).
  *
  * Loaded by lean.php after `arrows.php`. Extends `LeanUnary` and uses `LeanProp`,
- * which already exist. Mirrors static/js/parser/lean/negation.js. Not a standalone entry point.
+ * which already exist. Mirrors js/parser/lean/negation.js. Not a standalone entry point.
  */
 
 class Lean_lnot extends LeanUnary

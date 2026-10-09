@@ -5,7 +5,7 @@
  * attributes).
  *
  * Loaded by lean.php after `args.php` and before `Lean_def`. Extends `LeanArgs`
- * / `LeanUnary`, which already exist. Mirrors static/js/parser/lean/tactic.js.
+ * / `LeanUnary`, which already exist. Mirrors js/parser/lean/tactic.js.
  * Not a standalone entry point.
  */
 
@@ -1645,7 +1645,7 @@ class LeanWith extends LeanArgs
 {
     /**
      * Walk ancestors for a LeanWith at $indent and return/create a caret for the next
-     * alternative bar (|). Mirrors LeanWith.findAlternativeCaret in static/js/parser/lean.js.
+     * alternative bar (|). Mirrors LeanWith.findAlternativeCaret in js/parser/lean.js.
      */
     public static function findAlternativeCaret($node, $indent)
     {

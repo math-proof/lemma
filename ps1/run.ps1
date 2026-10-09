@@ -37,7 +37,7 @@ function Format-SqlList {
 # once the module lists hold thousands of names. Returns $true on success.
 function Invoke-Sql {
     param([string]$Sql)
-    $Sql | mysql @mysql -D axiom 2>&1 | Tee-Object -FilePath test.log -Append | Out-Host
+    $Sql | mysql @mysql -D axiom 2>&1 | Tee-Object -FilePath Lemma/test.log -Append | Out-Host
     return ($LASTEXITCODE -eq 0)
 }
 # When `-Modules` is supplied, keep only files whose dotted module name matches.
@@ -107,7 +107,7 @@ function Format-LemmaInsertRow {
     return "  ('$user', `"$Module`", '$submodules', '[]', '[]', '[]', '[]', '{`"error`":[]}', $dateJson),"
 }
 
-Set-Content -Path test.lean -Value $null
+Set-Content -Path Lemma/test.lean -Value $null
 
 $imports_dict = @{}
 $syntheticModules = @{}
@@ -119,7 +119,7 @@ function echo_import {
     $file = $file.Substring($root.Length + 1)
     $lemma = Join-Path (Split-Path $file -Parent) ([IO.Path]::GetFileNameWithoutExtension($file))
     $module = $lemma -replace '\\', '.'
-    Add-Content -Path test.lean -Value "import $module"
+    Add-Content -Path Lemma/test.lean -Value "import $module"
     
     $module = $module -creplace '^Lemma\.', ''
     $lines = @(Get-Content -Path $file | Where-Object { $_ -cmatch '^import\s+' } | ForEach-Object { $_ -replace '^import\s+', '' })
@@ -133,7 +133,7 @@ function echo_import {
 }
 
 Get-ChildItem -Path "Lemma" -Recurse -File -Filter "*.lean" |
-Where-Object { $_.Name -notlike "*.echo.lean" } |
+Where-Object { $_.Name -notlike "*.echo.lean" -and $_.Name -notlike "test*.lean" } |
 Where-Object { Test-ModuleIncluded (Get-ModuleFromLeanFile $_.FullName) } |
 ForEach-Object {
     echo_import $_.FullName
@@ -149,40 +149,40 @@ foreach ($m in $imports_dict.Keys) {
     $importsSet[$m] = $set
 }
 
-# Read the contents of test.lean into $imports
-$imports = Get-Content test.lean
+# Read the contents of Lemma/test.lean into $imports
+$imports = Get-Content Lemma/test.lean
 
-# Create or clear test.log
-New-Item -Path test.log -ItemType File -Force
+# Create or clear Lemma/test.log
+New-Item -Path Lemma/test.log -ItemType File -Force
 
 # Split into batches
 $batches = batches -Data $imports -BatchSize $limit
 
 # Write each batch to a separate file
 for ($i = 0; $i -lt $batches.Count; $i++) {
-    $batches[$i] | Set-Content "test.$i.lean"
+    $batches[$i] | Set-Content "Lemma/test.$i.lean"
     if ($limit -eq 1) {
         $batchContent = $batches[$i] -join " "
         Write-Host "executing: $batchContent" -ForegroundColor Green
     }
-    cmd /c "lake setup-file test.$i.lean" 2>&1 | Select-Object -SkipLast 1 | Tee-Object -FilePath test.log -Append
+    cmd /c "lake setup-file Lemma/test.$i.lean" 2>&1 | Select-Object -SkipLast 1 | Tee-Object -FilePath Lemma/test.log -Append
     # Start-Sleep -Seconds 1
 }
 
-# Remove lines starting with 'import ' from test.lean
-(Get-Content test.lean) | ForEach-Object { $_ -creplace '^import ', '' } | Set-Content test.lean
+# Remove lines starting with 'import ' from Lemma/test.lean
+(Get-Content Lemma/test.lean) | ForEach-Object { $_ -creplace '^import ', '' } | Set-Content Lemma/test.lean
 
 # Read the modified content into $imports again
-$imports = Get-Content test.lean
+$imports = Get-Content Lemma/test.lean
 
-# Clear the contents of test.lean
-Set-Content test.lean -Value $null
+# Clear the contents of Lemma/test.lean
+Set-Content Lemma/test.lean -Value $null
 
 # Output "modules:"
 Write-Output "modules:"
 
-# Create or clear the test.sql file with the initial INSERT statement
-"INSERT INTO lemma (user, module, imports, open, set_option, preamble, lemma, meta, date) VALUES " | Out-File -FilePath test.sql -Encoding utf8
+# Create or clear the sql/test.sql file with the initial INSERT statement
+"INSERT INTO lemma (user, module, imports, open, set_option, preamble, lemma, meta, date) VALUES " | Out-File -FilePath sql/test.sql -Encoding utf8
 
 # Process each module in the imports array
 foreach ($module in $imports) {
@@ -195,7 +195,7 @@ foreach ($module in $imports) {
         continue
     }
     $submodules = $imports_dict[$module]
-    Format-LemmaInsertRow -Module $module -Submodules $submodules | Add-Content -Path test.sql
+    Format-LemmaInsertRow -Module $module -Submodules $submodules | Add-Content -Path sql/test.sql
 }
 
 function transformExpr {
@@ -359,7 +359,7 @@ function Replace-IffToken {
     return $null
 }
 
-Get-ChildItem -Recurse -Path "Lemma" -Include *.lean -Exclude *.echo.lean |
+Get-ChildItem -Recurse -Path "Lemma" -Include *.lean -Exclude *.echo.lean,test*.lean |
 Where-Object { Test-ModuleIncluded (Get-ModuleFromLeanFile $_.FullName) } |
 ForEach-Object {
     $file = $_.FullName
@@ -490,30 +490,30 @@ ForEach-Object {
         }
         if ($found) {
             $new_module = $tokens -join "."
-            Add-Content -Path "test.sql" -Value (Format-LemmaInsertRow -Module $new_module -Synthetic)
+            Add-Content -Path "sql/test.sql" -Value (Format-LemmaInsertRow -Module $new_module -Synthetic)
         }
     }
     if ($attributes -cmatch '\b(?<!\.)mp(?!\.)\b') {
         if ($module -cmatch '^([a-zA-Z0-9_]+)\.(.+)\.is\.(.+?)(?:\.of(\..+))?$') {
             $new_module = "$($matches[1]).$($matches[3]).of.$($matches[2])$($matches[4])"
-            Add-Content -Path "test.sql" -Value (Format-LemmaInsertRow -Module $new_module -Synthetic)
+            Add-Content -Path "sql/test.sql" -Value (Format-LemmaInsertRow -Module $new_module -Synthetic)
         }
         else {
             $iffModule = Replace-IffToken -Module $module -Replacement 'Imp_'
             if ($iffModule) {
-                Add-Content -Path "test.sql" -Value (Format-LemmaInsertRow -Module $iffModule -Synthetic)
+                Add-Content -Path "sql/test.sql" -Value (Format-LemmaInsertRow -Module $iffModule -Synthetic)
             }
         }
     }
     if ($attributes -cmatch '\b(?<!\.)mpr(?!\.)\b') {
         if ($module -cmatch '^([a-zA-Z0-9_]+)\.(.+)\.is\.(.+?)(?:\.of(\..+))?$') {
             $new_module = "$($matches[1]).$($matches[2]).of.$($matches[3])$($matches[4])"
-            Add-Content -Path "test.sql" -Value (Format-LemmaInsertRow -Module $new_module -Synthetic)
+            Add-Content -Path "sql/test.sql" -Value (Format-LemmaInsertRow -Module $new_module -Synthetic)
         }
         else {
             $iffModule = Replace-IffToken -Module $module -Replacement 'Imp'
             if ($iffModule) {
-                Add-Content -Path "test.sql" -Value (Format-LemmaInsertRow -Module $iffModule -Synthetic)
+                Add-Content -Path "sql/test.sql" -Value (Format-LemmaInsertRow -Module $iffModule -Synthetic)
             }
         }
     }
@@ -533,7 +533,7 @@ ForEach-Object {
             $mpModule = $mpTokens -join '.'
             $new_module = Get-AndProjModule -Module $mpModule -Left $true
             if ($new_module) {
-                Add-Content -Path "test.sql" -Value (Format-LemmaInsertRow -Module $new_module -Synthetic)
+                Add-Content -Path "sql/test.sql" -Value (Format-LemmaInsertRow -Module $new_module -Synthetic)
             }
             else {
                 Write-Host "Ignoring @[main, mp.left] at $file"
@@ -559,7 +559,7 @@ ForEach-Object {
             $mpModule = $mpTokens -join '.'
             $new_module = Get-AndProjModule -Module $mpModule -Left $false
             if ($new_module) {
-                Add-Content -Path "test.sql" -Value (Format-LemmaInsertRow -Module $new_module -Synthetic)
+                Add-Content -Path "sql/test.sql" -Value (Format-LemmaInsertRow -Module $new_module -Synthetic)
             }
             else {
                 Write-Host "Ignoring @[main, mp.right] at $file"
@@ -578,7 +578,7 @@ ForEach-Object {
             $tokens[2] = "of"
             $tokens[3] = $tmp
             $new_module = $tokens -join "."
-            Add-Content -Path "test.sql" -Value (Format-LemmaInsertRow -Module $new_module -Synthetic)
+            Add-Content -Path "sql/test.sql" -Value (Format-LemmaInsertRow -Module $new_module -Synthetic)
         }
         else {
             Write-Host "Ignoring @\[main, mp.comm] at $file"
@@ -592,7 +592,7 @@ ForEach-Object {
             $tokens[2] = "of"
             $tokens[3] = transformPrefix $tokens[3]
             $new_module = $tokens -join "."
-            Add-Content -Path "test.sql" -Value (Format-LemmaInsertRow -Module $new_module -Synthetic)
+            Add-Content -Path "sql/test.sql" -Value (Format-LemmaInsertRow -Module $new_module -Synthetic)
         }
         else {
             Write-Host "Ignoring @\[main, mp.comm] at $file"
@@ -601,19 +601,19 @@ ForEach-Object {
     if ($attributes -cmatch '\bmp\.mt\b') {
         if ($module -cmatch '^([a-zA-Z0-9_]+)\.(.+)\.is\.(.+?)(?:\.of(\..+))?$') {
             $new_module = "$($matches[1]).$(Not $matches[2]).of.$(Not $matches[3])$($matches[4])"
-            Add-Content -Path "test.sql" -Value (Format-LemmaInsertRow -Module $new_module -Synthetic)
+            Add-Content -Path "sql/test.sql" -Value (Format-LemmaInsertRow -Module $new_module -Synthetic)
         }
     }
     if ($attributes -cmatch '\bmpr\.mt\b') {
         if ($module -cmatch '^([a-zA-Z0-9_]+)\.(.+)\.is\.(.+?)(?:\.of(\..+))?$') {
             $new_module = "$($matches[1]).$(Not $matches[3]).of.$(Not $matches[2])$($matches[4])"
-            Add-Content -Path "test.sql" -Value (Format-LemmaInsertRow -Module $new_module -Synthetic)
+            Add-Content -Path "sql/test.sql" -Value (Format-LemmaInsertRow -Module $new_module -Synthetic)
         }
     }
     if ($attributes -cmatch '\bis\.mt\b') {
         if ($module -cmatch '^([a-zA-Z0-9_]+)\.(.+?)\.is\.(.+?)(\.of\..+)?$') {
             $new_module = "$($matches[1]).$(Not $matches[2]).is.$(Not $matches[3])$($matches[4])"
-            Add-Content -Path "test.sql" -Value (Format-LemmaInsertRow -Module $new_module -Synthetic)
+            Add-Content -Path "sql/test.sql" -Value (Format-LemmaInsertRow -Module $new_module -Synthetic)
         }
     }
     if ($attributes -cmatch '\bcomm\.is\b') {
@@ -625,7 +625,7 @@ ForEach-Object {
             $given = transformPrefix $given
             $imply = transformPrefix $imply
             $new_module = "$section.$given.is.$imply$arguments"
-            Add-Content -Path "test.sql" -Value (Format-LemmaInsertRow -Module $new_module -Synthetic)
+            Add-Content -Path "sql/test.sql" -Value (Format-LemmaInsertRow -Module $new_module -Synthetic)
         }
     }
     if ($attributes -cmatch '\bis\.comm\b') {
@@ -637,7 +637,7 @@ ForEach-Object {
             $given = transformPrefix $given
             $imply = transformPrefix $imply
             $new_module = "$section.$imply.is.$given$arguments"
-            Add-Content -Path "test.sql" -Value (Format-LemmaInsertRow -Module $new_module -Synthetic)
+            Add-Content -Path "sql/test.sql" -Value (Format-LemmaInsertRow -Module $new_module -Synthetic)
         }
     }
     $mt_group = [regex]::Matches($attributes, '\b(?<!\.)mt(?:\s+(\d+))?\b')
@@ -654,7 +654,7 @@ ForEach-Object {
             $arguments[$i] = $imply
             $new_given = $arguments -join '.'
             $new_module = "$section.$new_imply.of.$new_given"
-            Add-Content -Path "test.sql" -Value (Format-LemmaInsertRow -Module $new_module -Synthetic)
+            Add-Content -Path "sql/test.sql" -Value (Format-LemmaInsertRow -Module $new_module -Synthetic)
         }
     }
     $subst_group = [regex]::Matches($attributes, '\bsubst\s+(\d+)\b')
@@ -666,13 +666,13 @@ ForEach-Object {
             } else {
                 $new_module = "$module.of.Eq_$b"
             }
-            Add-Content -Path "test.sql" -Value (Format-LemmaInsertRow -Module $new_module -Synthetic)
+            Add-Content -Path "sql/test.sql" -Value (Format-LemmaInsertRow -Module $new_module -Synthetic)
         }
     }
     if ($attributes -cmatch '\bAnd\.left\b') {
         $new_module = Get-AndProjModule -Module $module -Left $true
         if ($new_module) {
-            Add-Content -Path "test.sql" -Value (Format-LemmaInsertRow -Module $new_module -Synthetic)
+            Add-Content -Path "sql/test.sql" -Value (Format-LemmaInsertRow -Module $new_module -Synthetic)
         }
         else {
             Write-Host "Ignoring @[main, And.left] at $file"
@@ -681,7 +681,7 @@ ForEach-Object {
     if ($attributes -cmatch '\bAnd\.right\b') {
         $new_module = Get-AndProjModule -Module $module -Left $false
         if ($new_module) {
-            Add-Content -Path "test.sql" -Value (Format-LemmaInsertRow -Module $new_module -Synthetic)
+            Add-Content -Path "sql/test.sql" -Value (Format-LemmaInsertRow -Module $new_module -Synthetic)
         }
         else {
             Write-Host "Ignoring @[main, And.right] at $file"
@@ -689,16 +689,16 @@ ForEach-Object {
     }
 }
 # Modify the last line to complete the SQL statement
-$content = Get-Content -Path test.sql
+$content = Get-Content -Path sql/test.sql
 if ($content.Count -gt 0) {
     $content[-1] = $content[-1] -replace ',$', ''
     $content += "ON DUPLICATE KEY UPDATE imports = VALUES(imports), date = VALUES(date);"
-    $content | Set-Content -Path test.sql
+    $content | Set-Content -Path sql/test.sql
 }
 
 # Clear error for all disk modules (preserves meta.callee via JSON_SET)
 $diskModuleList = Format-SqlList @($imports_dict.Keys)
-Add-Content -Path test.sql -Value "UPDATE lemma SET meta = JSON_SET(IFNULL(meta, '{}'), '$.error', CAST('[]' AS JSON)) WHERE user = '$user' AND module IN ($diskModuleList);"
+Add-Content -Path sql/test.sql -Value "UPDATE lemma SET meta = JSON_SET(IFNULL(meta, '{}'), '$.error', CAST('[]' AS JSON)) WHERE user = '$user' AND module IN ($diskModuleList);"
 
 Write-Output "plausible:"
 
@@ -706,7 +706,7 @@ Write-Output "plausible:"
 $cwd = [regex]::Escape((Get-Location).Path)
 $cwd = "(?:$cwd[\\/])?"
 $sorryPattern = "^warning: $cwd(.+\.lean):\d+:\d+: declaration uses ``sorry``"
-$sorryModules = Get-Content test.log |
+$sorryModules = Get-Content Lemma/test.log |
     Select-String -Pattern $sorryPattern |
     ForEach-Object {
         $_.Matches[0].Groups[1].Value -replace '\.lean$', '' -replace '[\\/]', '.'
@@ -725,17 +725,17 @@ foreach ($module in $sorryModules) {
         continue
     }
     
-    # Generate SQL statement and append to test.sql
+    # Generate SQL statement and append to sql/test.sql
     $sqlLine = @"
 UPDATE lemma set meta = JSON_SET(IFNULL(meta, '{}'), '$.error', CAST('[{"code": "", "file": "", "info": "declaration uses ''sorry''", "line": 0, "type": "warning"}]' AS JSON)) where user = '$user' and module = "$module";
 "@
-    Add-Content -Path test.sql -Value $sqlLine
+    Add-Content -Path sql/test.sql -Value $sqlLine
 }
 
 Write-Output "failed:"
 
-# Read test.log and extract failing modules
-$content = Get-Content test.log
+# Read Lemma/test.log and extract failing modules
+$content = Get-Content Lemma/test.log
 $flag = $false
 $failingModules = @()
 foreach ($line in $content) {
@@ -775,7 +775,7 @@ UPDATE lemma set meta = JSON_SET(IFNULL(meta, '{}'), '$.error', CAST('[{"code": 
 "@
     
     # Append to SQL file
-    $sql | Add-Content -Path test.sql -Encoding UTF8
+    $sql | Add-Content -Path sql/test.sql -Encoding UTF8
 }
 
 $mysql = @(
@@ -785,10 +785,10 @@ $mysql = @(
 
 # Query existing modules and imports for change detection
 $dbImports = @{}
-$dbQueryResult = mysql @mysql -D axiom -e "SELECT module, imports FROM lemma WHERE user = '$user'" --batch --skip-column-names 2>&1 | Tee-Object -FilePath test.log
+$dbQueryResult = mysql @mysql -D axiom -e "SELECT module, imports FROM lemma WHERE user = '$user'" --batch --skip-column-names 2>&1 | Tee-Object -FilePath Lemma/test.log
 
 # Check for database existence error
-if (Select-String -Path test.log -Pattern "ERROR \d+ \(\d+\): Unknown database 'axiom'") {
+if (Select-String -Path Lemma/test.log -Pattern "ERROR \d+ \(\d+\): Unknown database 'axiom'") {
     Write-Output "CREATE DATABASE axiom;"
 
     # Create the database
@@ -819,10 +819,10 @@ foreach ($line in $dbQueryResult) {
 
 # Run the MySQL command and log output
 
-Get-Content test.sql -Encoding UTF8 | mysql @mysql -D axiom 2>&1 | Tee-Object -FilePath test.log
+Get-Content sql/test.sql -Encoding UTF8 | mysql @mysql -D axiom 2>&1 | Tee-Object -FilePath Lemma/test.log
 
 # Check for specific error pattern
-if (Select-String -Path test.log -Pattern "ERROR \d+ \(\w+\) at line \d+: Table 'axiom.lemma' doesn't exist" -Quiet) {
+if (Select-String -Path Lemma/test.log -Pattern "ERROR \d+ \(\w+\) at line \d+: Table 'axiom.lemma' doesn't exist" -Quiet) {
     # Create the table
     Get-Content sql/create/lemma.sql | mysql @mysql -D axiom
     if ($?) {

@@ -256,7 +256,7 @@ $code['name'] = $module;
 <link rel=stylesheet href="node_modules/codemirror/lib/codemirror.css">
 <link rel=stylesheet href="node_modules/codemirror/theme/eclipse.css">
 <link rel=stylesheet href="node_modules/codemirror/addon/hint/show-hint.css">
-<link rel=stylesheet href="static/css/codemirror-overrides.css">
+<link rel=stylesheet href="css/codemirror-overrides.css">
 <link rel=stylesheet href="node_modules/katex/dist/katex.min.css">
 <?php
 include_once 'script.php';

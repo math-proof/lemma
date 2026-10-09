@@ -4,7 +4,7 @@
  * append, and the unary helpers that only serve them).
  *
  * Loaded by lean.php after LeanBinary and LeanUnary are declared.
- * Mirrors static/js/parser/lean/arithmetic.js. Not a standalone entry point.
+ * Mirrors js/parser/lean/arithmetic.js. Not a standalone entry point.
  */
 
 abstract class LeanArithmetic extends LeanBinary

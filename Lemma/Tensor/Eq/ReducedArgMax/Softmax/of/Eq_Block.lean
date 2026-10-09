@@ -7,8 +7,7 @@ set_option maxHeartbeats 1000000
 
 @[main]
 private lemma lower_triangle.tf
-  {n l : ℕ}
-  [NeZero n]
+  {n l : ℕ} [NeZero n]
   {A : Fin n → Fin n → ℝ}
   {z : Fin n → ℤ → ℝ}
 -- given
@@ -31,8 +30,7 @@ private lemma lower_triangle.tf
 
 @[main]
 private lemma lower_triangle
-  {n l : ℕ}
-  [NeZero n]
+  {n l : ℕ} [NeZero n]
   {A : Fin n → Fin n → ℝ}
   {z : Fin n → ℤ → ℝ}
 -- given
@@ -55,8 +53,7 @@ private lemma lower_triangle
 
 @[main]
 private lemma tf
-  {n l u : ℕ}
-  [NeZero n]
+  {n l u : ℕ} [NeZero n]
   {A : Fin n → Fin n → ℝ}
   {z : Fin n → ℤ → ℝ}
 -- given
@@ -80,8 +77,7 @@ private lemma tf
 
 @[main]
 private lemma main
-  {n l u : ℕ}
-  [NeZero n]
+  {n l u : ℕ} [NeZero n]
   {A : Fin n → Fin n → ℝ}
   {z : Fin n → ℤ → ℝ}
 -- given
@@ -105,8 +101,7 @@ private lemma main
 
 @[main]
 private lemma upper_triangle.tf
-  {n u : ℕ}
-  [NeZero n]
+  {n u : ℕ} [NeZero n]
   {A : Fin n → Fin n → ℝ}
   {z : Fin n → ℤ → ℝ}
 -- given
@@ -128,8 +123,7 @@ private lemma upper_triangle.tf
 
 @[main]
 private lemma upper_triangle
-  {n u : ℕ}
-  [NeZero n]
+  {n u : ℕ} [NeZero n]
   {A : Fin n → Fin n → ℝ}
   {z : Fin n → ℤ → ℝ}
 -- given

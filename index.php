@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <meta charset="UTF-8">
-<link rel="stylesheet" href="static/css/style.css">
+<link rel="stylesheet" href="css/style.css">
 <?php
 // ^ *error_log
 require_once 'php/utility.php';

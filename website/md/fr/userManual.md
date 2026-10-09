@@ -84,14 +84,14 @@ cd /usr/local
 git clone https://github.com/cosmosZhou/shell.git
 cd shell/php
 make
-sh start.sh port=80 DocumentRoot=/home/github/lean
+sh sh/start.sh port=80 DocumentRoot=/home/github/lean
 ```
 
 Exemple Windows :
 
 1. Racine web, p. ex. `E:\github\lean`, et `DOCUMENT_ROOT` selon php installation.docx.
 2. Cloner : `git clone --depth=1 https://github.com/math-proof/lemma.git`
-3. Installer Lean 4 (`lean-toolchain`), exécuter `lake build`, mettre à jour l’index MySQL (p. ex. `ps1/update.ps1`).
+3. Installer Lean 4 (`lean-toolchain`), exécuter `lake build`, mettre à jour l’index MySQL (p. ex. `sh/run.ps1`).
 4. Dans le navigateur (adapter le port) :
    - [http://localhost/lean/index.php](http://localhost/lean/index.php)
    - ou [http://localhost:8080/lean/index.php?q=Icc&limit=100](http://localhost:8080/lean/index.php?q=Icc&limit=100)

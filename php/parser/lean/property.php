@@ -3,7 +3,7 @@
  * Field access `a.b` (`LeanProperty`).
  *
  * Loaded by lean.php after `range.php` (`LeanBinary` already exists).
- * Mirrors static/js/parser/lean/property.js. Not a standalone entry point.
+ * Mirrors js/parser/lean/property.js. Not a standalone entry point.
  */
 
 class LeanProperty extends LeanBinary

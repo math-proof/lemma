@@ -3,7 +3,7 @@
  * Arrows (`LeanRightarrow`, `Lean_rightarrow`, `Lean_mapsto`, `Lean_leftarrow`).
  *
  * Loaded by lean.php after `LeanBar`. Extends `LeanBinary` / `LeanUnary`, which
- * already exist. Mirrors static/js/parser/lean/arrows.js. Not a standalone entry point.
+ * already exist. Mirrors js/parser/lean/arrows.js. Not a standalone entry point.
  */
 
 class LeanRightarrow extends LeanBinary

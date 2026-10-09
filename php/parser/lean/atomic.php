@@ -3,7 +3,7 @@
  * Leaf Lean nodes (`LeanCaret`, `LeanToken`, line/block comments, doc strings).
  *
  * Loaded by lean.php after `base.php` and before `LeanArgs`. Mirrors
- * static/js/parser/lean/atomic.js. The empty binary token classes are JS-only.
+ * js/parser/lean/atomic.js. The empty binary token classes are JS-only.
  * Not a standalone entry point.
  */
 

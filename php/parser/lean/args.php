@@ -3,7 +3,7 @@
  * Argument lists (space, newline, indented, comma, semicolon, comma-newline).
  *
  * Loaded by lean.php after `ite.php`. Extends `LeanArgs` / `LeanBinary`, which
- * already exist. Mirrors static/js/parser/lean/args.js. Not a standalone entry point.
+ * already exist. Mirrors js/parser/lean/args.js. Not a standalone entry point.
  */
 
 class LeanArgsSpaceSeparated extends LeanArgs

@@ -3,7 +3,7 @@
  * Logic / boolean connectives (`LeanLogic` and &&, ||, ^^, ∨, ∧).
  *
  * Loaded by lean.php after LeanBinaryBoolean is declared.
- * Mirrors static/js/parser/lean/logic.js. Not a standalone entry point.
+ * Mirrors js/parser/lean/logic.js. Not a standalone entry point.
  */
 
 abstract class LeanLogic extends LeanBinaryBoolean

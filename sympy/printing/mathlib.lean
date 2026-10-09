@@ -20,17 +20,25 @@ def hasStrValLiteral: Expr → Bool
     false
 
 -- #eval show MetaM Unit from do
-#eval do
+#eval Meta.MetaM.run' do
   let env ← getEnv
-  -- for ⟨name, info⟩ in env.constants.toList |>.take 1 do
-  for ⟨name, info⟩ in env.constants.toList do
+  -- optional strided chunking for parallel runs:
+  -- CHUNK_IDX=i NUM_CHUNKS=n lake env lean sympy/printing/mathlib.lean
+  let chunkIdx := (← IO.getEnv "CHUNK_IDX").map String.toNat! |>.getD 0
+  let numChunks := (← IO.getEnv "NUM_CHUNKS").map String.toNat! |>.getD 1
+  let mut list := env.constants.toList
+  if numChunks > 1 then
+    list := list.zipIdx.filterMap fun (p, i) =>
+      if i % numChunks == chunkIdx then some p else none
+  -- for ⟨name, info⟩ in list.take 1 do
+  for (name, info) in list do
     if ← isInstance name then
       continue
     let name := name.toString
-    if name.containsSubstr "._" ||
+    if name.contains "._" ||
       name.startsWith "_private." ||
       (
-        let name' := name.dropRightWhile Char.isDigit
+        let name' := (name.dropEndWhile Char.isDigit).copy
         if name' == name then
           false
         else

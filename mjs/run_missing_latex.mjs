@@ -16,7 +16,7 @@ import fs from 'fs';
 import path from 'path';
 import mysql from 'mysql2/promise';
 import { runLeanFile } from './run.mjs';
-import { moduleToLeanPath, fileExists } from '../server/lean/modulePath.mjs';
+import { moduleToLeanPath, fileExists } from './lean/modulePath.mjs';
 
 const USER = process.env.LEAN_PROJECT_USER || path.basename(process.cwd());
 

@@ -3,7 +3,7 @@
  * Abstract Lean AST node (`Lean`).
  *
  * Loaded by lean.php before `LeanCaret`. Extends `IndentedNode`, which already
- * exists. Mirrors static/js/parser/lean/base.js. Not a standalone entry point.
+ * exists. Mirrors js/parser/lean/base.js. Not a standalone entry point.
  */
 
 abstract class Lean extends IndentedNode

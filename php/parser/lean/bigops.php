@@ -5,7 +5,7 @@
  * Loaded by lean.php after `fun.php` and before `quantifier.php`, because
  * `LeanQuantifier` extends `LeanBigOperator`.
  * JS also has `LeanInf` / `LeanSup` (`⨅` / `⨆`); this file does not.
- * Mirrors static/js/parser/lean/bigops.js. Not a standalone entry point.
+ * Mirrors js/parser/lean/bigops.js. Not a standalone entry point.
  */
 
 class LeanBigOperator extends LeanArgs

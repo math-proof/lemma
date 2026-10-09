@@ -3,7 +3,7 @@
  * If-then-else (`LeanIte`).
  *
  * Loaded by lean.php after `match.php`. Extends `LeanArgs`, which already
- * exists. Mirrors static/js/parser/lean/ite.js. Not a standalone entry point.
+ * exists. Mirrors js/parser/lean/ite.js. Not a standalone entry point.
  */
 
 class LeanIte extends LeanArgs

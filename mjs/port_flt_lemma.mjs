@@ -9,7 +9,7 @@
  */
 import fs from 'fs';
 import path from 'path';
-import { parseTheoremFile } from '../static/js/parser/lean.js';
+import { parseTheoremFile } from '../js/parser/lean.js';
 
 const filePath = process.argv[2];
 if (!filePath) {

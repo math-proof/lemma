@@ -1,5 +1,5 @@
 # Purpose of this project
-This is Lean4 machine learning project (related to Torch, SymPy, [KaTeX](https://github.com/KaTeX/KaTeX), and [arXiv](https://arxiv.org)).
+This is Lean4 machine learning project (related to Torch, SymPy and [KaTeX](https://github.com/KaTeX/KaTeX)).
 
 The main objectives of this project are formalizing in Lean4:
 
@@ -16,7 +16,7 @@ The main objectives of this project are formalizing in Lean4:
   The commonly used SymPy operators:  
   - `Range`, `Complex.Sign`
   - `descFactorial`(FallingFactorial), `ascFactorial`(RisingFactorial)
-  - `Expectation`, `Probability`
+  - `Expectation`, `Probability`, `JointRandomSymbol`
 
 * **mathematical foundations of reinforcement learning**
   This part is based on the reference book [*Mathematical Foundation of Reinforcement Learning*](https://github.com/MathFoundationRL/Book-Mathematical-Foundation-of-Reinforcement-Learning):
@@ -24,15 +24,9 @@ The main objectives of this project are formalizing in Lean4:
   - [Bellman Equation](http://www.lemma.cn/lean/?module=Random.Eq_Expect.Eq_Expect.Eq_Expect.of.All_Eq_Expect.All_Eq_Expect.In_Ico)
   - [Policy Gradient Theorem](http://www.lemma.cn/lean/?module=Tensor.Eq.Grad.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.policy_gradient)
 
-* **mathematical arguments from arXiv machine learning papers.**
-  For example:
-  [Tensor.DivSumSSum.eq.MeanDivSum_MeanSum](http://www.lemma.cn/lean/?module=Tensor.DivSumSSum.eq.MeanDivSum_MeanSum)
-  This theorem formalizes and proves a claim from a reinforcement learning paper on arXiv.
-  More examples can be found in the theorem library at [www.lemma.cn](http://www.lemma.cn).
-
 
 It also facilitates reading by visualizing Lean4 code with KaTeX. 
-This feature converts one-dimensional Lean code into rainbow-colored KaTeX-rendered mathematical formulas. Over **240,000 theorems from Mathlib** have already been visualized in KaTeX format, for example:
+This feature converts one-dimensional Lean code into rainbow-colored KaTeX-rendered mathematical formulas. Over **240,000 theorems from Mathlib** have been visualized in KaTeX format, for example:
   [http://www.lemma.cn/lean/?mathlib=Finset.*sum](http://www.lemma.cn/lean/?mathlib=Finset.*sum)
   (You can use any regular expression to search.)
 
@@ -44,7 +38,7 @@ cd lemma
 lake clean
 lake build
 # for Windows
-. ps1/run.ps1
+. sh/run.ps1
 # for Linux
 bash sh/run.sh
 ```

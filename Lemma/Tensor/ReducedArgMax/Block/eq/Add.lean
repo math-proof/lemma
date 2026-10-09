@@ -17,10 +17,9 @@ private lemma main
   have hA : ArgMax Set.univ y = j₀ := by
     have hs : ArgMax Set.univ y ∈ Set.univ ∧ ∀ z ∈ Set.univ, y z ≤ y (ArgMax Set.univ y) := by
       refine Classical.epsilon_spec (p := fun k => k ∈ Set.univ ∧ ∀ z ∈ Set.univ, y z ≤ y k) ⟨j₀, trivial, fun z _ => ?_⟩
-      by_cases hz : z = j₀
-      ·
+      if hz : z = j₀ then
         rw [hz]
-      ·
+      else
         exact (h₀ z hz).le
     by_contra hne
     exact absurd (hs.2 j₀ trivial) (not_le.mpr (h₀ _ hne))
@@ -35,10 +34,9 @@ private lemma main
         exact (h₁ i).le
       | right j =>
         simp only [Fin.append_right]
-        by_cases hj : j = j₀
-        ·
+        if hj : j = j₀ then
           rw [hj]
-        ·
+        else
           exact (h₀ j hj).le
     have h₂ := hs.2 (Fin.natAdd n j₀) trivial
     generalize ArgMax Set.univ (Fin.append x y) = k at h₂ ⊢
@@ -48,10 +46,9 @@ private lemma main
       exact absurd h₂ (not_le.mpr (h₁ i))
     | right j =>
       simp only [Fin.append_right] at h₂
-      by_cases hj : j = j₀
-      ·
+      if hj : j = j₀ then
         rw [hj]
-      ·
+      else
         exact absurd h₂ (not_le.mpr (h₀ j hj))
   rw [hB, hA]
   rfl

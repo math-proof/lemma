@@ -3,7 +3,7 @@
  * Assignment `:=` (`LeanAssign`).
  *
  * Loaded by lean.php after `colon.php` (`LeanBinary` already exists).
- * Mirrors static/js/parser/lean/assign.js. PHP `echo`, `insert`,
+ * Mirrors js/parser/lean/assign.js. PHP `echo`, `insert`,
  * `insert_newline`, `is_indented`, and `sep` stay shorter than the JS
  * methods. Not a standalone entry point.
  */

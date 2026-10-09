@@ -16,10 +16,9 @@ private lemma main
   have hA : ArgMax Set.univ x = i₀ := by
     have hs : ArgMax Set.univ x ∈ Set.univ ∧ ∀ y ∈ Set.univ, x y ≤ x (ArgMax Set.univ x) := by
       refine Classical.epsilon_spec (p := fun k => k ∈ Set.univ ∧ ∀ y ∈ Set.univ, x y ≤ x k) ⟨i₀, trivial, fun y _ => ?_⟩
-      by_cases hy : y = i₀
-      ·
+      if hy : y = i₀ then
         rw [hy]
-      ·
+      else
         exact (h₀ y hy).le
     by_contra hne
     exact absurd (hs.2 i₀ trivial) (not_le.mpr (h₀ _ hne))
@@ -31,10 +30,9 @@ private lemma main
       induction y using Fin.addCases with
       | left j =>
         simp only [Fin.append_left]
-        by_cases hj : j = i₀
-        ·
+        if hj : j = i₀ then
           rw [hj]
-        ·
+        else
           exact (h₀ j hj).le
       | right j =>
         simp only [Fin.append_left, Fin.append_right, Pi.zero_apply]
@@ -44,10 +42,9 @@ private lemma main
     induction k using Fin.addCases with
     | left j =>
       simp only [Fin.append_left] at h₂
-      by_cases hj : j = i₀
-      ·
+      if hj : j = i₀ then
         rw [hj]
-      ·
+      else
         exact absurd h₂ (not_le.mpr (h₀ j hj))
     | right j =>
       simp only [Fin.append_left, Fin.append_right, Pi.zero_apply] at h₂

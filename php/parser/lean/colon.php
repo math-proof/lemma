@@ -3,7 +3,7 @@
  * Type ascription and declaration colon (`LeanColon`, `a : T`).
  *
  * Loaded by lean.php after `property.php` (`LeanBinary` already exists).
- * Mirrors static/js/parser/lean/colon.js. PHP `insert_newline` and
+ * Mirrors js/parser/lean/colon.js. PHP `insert_newline` and
  * `strFormat` stay shorter than the JS methods. Not a standalone entry point.
  */
 

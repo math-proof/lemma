@@ -1,0 +1,46 @@
+**1. Temperature:** The temperature is the most critical factor in pyrolysis, directly influencing the reaction pathways, the distribution of products, and the properties of the resulting biochar[35][36]. Pyrolysis typically occurs in the range of **300-900 °C**, with different temperature ranges favoring different products and biochar characteristics[35][36]:
+
+*   **Low Temperature (300-500 °C):** Favors the production of bio-oil and biochar[35]. At lower temperatures, the pyrolysis reaction becomes easier, as the required energy is smaller[29]. The lowest E (activation energy) and A (pre-exponential factor) values were observed at higher pyrolysis temperatures and lower heating rates[29].
+*   **High Temperature (500-900 °C):** Favors the production of syngas (CO and H₂)[35]. Higher pyrolysis temperatures decrease the biochar yield due to larger primary decomposition or secondary decomposition of carbon residual[36]. The ash content, specific surface area, and pH value increased with the increase of pyrolysis temperature, while H/C (higher aromaticity) and (O + N)/C (lower polarity) decreased[36].
+
+**2. Heating Rate:** The heating rate is the rate at which the temperature of the biomass is increased. It significantly affects the pyrolysis process and the distribution of products[35][36]:
+
+*   **Slow Heating Rate (0.1-1 °C/min):** Favors the production of biochar[35]. Slow pyrolysis tends to favor biochar formation[35].
+*   **Fast Heating Rate (10-200 °C/min):** Favors the production of bio-oil[35]. Higher heating rates lead to increased pyrolysis gas production[35]. The specific surface area decreased with the increase of the heating rate[36]. However, some studies suggest that the specific surface area increased significantly with the increase of the heating rate[36].
+
+**3. Pressure:** The pressure also plays a role in pyrolysis, although it is less critical than temperature and heating rate[35][36]:
+
+*   **Atmospheric Pressure:** Most pyrolysis processes are carried out at atmospheric pressure[2][5].
+*   **Vacuum:** Vacuum pyrolysis can be used to reduce the boiling points of the pyrolysis products, which can be beneficial for the recovery of bio-oil[10][15]. Vacuum pyrolysis of scrap PCB was carried out using a home-designed batch pilot-scale fixed bed reactor[10][15].
+
+**4. Residence Time:** The residence time is the time that the biomass spends at the pyrolysis temperature. It affects the extent of the pyrolysis reactions and the distribution of products[35][36]:
+
+*   **Short Residence Time (seconds to minutes):** Favors the production of bio-oil[35]. Rapid decomposition of the biomass requires less than approximately two seconds residence time to produce maximum liquid yields[12].
+*   **Long Residence Time (minutes to hours):** Favors the production of biochar[35]. Lower yield of pyrolysis residue, higher yield of pyrolysis liquid and lower treatment costs can be obtained under the conditions of particle size 50 mm × 50 mm, pyrolysis temperature 550°, heating rate 10°/min-1, pyrolysis pressure 20 kPa and constant temperature time 60 min[10][15].
+
+**5. Atmosphere:** The atmosphere during pyrolysis can be inert (e.g., nitrogen, argon) or oxidative (e.g., air, oxygen)[35][36]:
+
+*   **Inert Atmosphere:** Prevents oxidation of the biomass and the pyrolysis products[35]. The pyrolysis may be carried out under an inert atmosphere, such as nitrogen or argon, preferably nitrogen[31].
+*   **Oxidative Atmosphere:** Can lead to combustion of the biomass and the pyrolysis products, reducing the yield of bio-oil and biochar[35].
+
+**6. Catalysts:** Catalysts can be used to influence the pyrolysis process and the distribution of products[13][24]:
+
+*   **Acid Catalysts:** Can increase the yield of bio-oil[13].
+*   **Base Catalysts:** Can increase the yield of syngas[24]. The best catalyst was KCl, followed by CaO and MgO[24].
+
+**7. Feedstock Preparation:** The preparation of the biomass feedstock can also affect the pyrolysis process and the distribution of products[35][36]:
+
+*   **Particle Size:** Smaller particle sizes can increase the heating rate and the surface area, which can affect the pyrolysis reactions[35]. Particle size had a significant impact on water hyacinth pyrolysis and among four particle sizes, dp < 200 μm was the optimal particle size for syngas production[24].
+*   **Moisture Content:** Higher moisture content can lead to lower temperatures and slower heating rates, which can affect the pyrolysis reactions[35]. The biomass has to be dried to moisture content 10 weight-% at most, preferably about 4 to 10 weight-% and more preferably 5 to 8 weight-%[19][25][30].
+
+**8. Product Distribution:** The distribution of pyrolysis products (bio-oil, biochar, syngas) depends on the pyrolysis conditions[35][36]:
+
+*   **Bio-oil:** A liquid product that can be used as a fuel or a chemical feedstock[12]. The liquid pyrolysis products may consist of a water phase comprising mainly hydrophilic components, and an oil phase comprising mainly hydrophobic components[1].
+*   **Biochar:** A solid product that can be used as a fuel, a soil amendment, or an adsorbent[35]. The solid fuel in the form of particles is supplied to a pyrolyzer, and pyrolysis conditions are maintained in the pyrolyzer for separating condensable gaseous substances from the fuel[11][26][27].
+*   **Syngas:** A gaseous product that can be used as a fuel[35]. The non-condensable gases, and char[1]. The 15% char and 10% syngas generated during pyrolysis are typically combusted to provide the heat energy required for pyrolysis and to dry biomass to below approximately 10% moisture content level needed for pyrolysis[12].
+
+**Optimization of Operating Conditions:** The optimal operating conditions for pyrolysis depend on the desired products and the properties of the biomass feedstock[35][36]:
+
+*   **For Bio-oil Production:** High temperature, fast heating rate, short residence time, and an inert atmosphere are favorable[35].
+*   **For Biochar Production:** Low temperature, slow heating rate, long residence time, and an inert atmosphere are favorable[35].
+*   **For Syngas Production:** High temperature, fast heating rate, long residence time, and an oxidative atmosphere are favorable[35].
