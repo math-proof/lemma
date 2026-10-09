@@ -3,23 +3,49 @@ topo_sort.py
 ============
 
 Project-agnostic topological sort of every lemma/theorem in a Lean
-formalisation.  Generalises ``flt_topo_sort.py`` to handle arbitrary
-project layouts.
+formalisation.  Handles arbitrary project layouts via flags (replaces the
+old FLT-only ``flt_topo_sort.py``).
 
-Two built-in profiles via flags:
+Typical inputs
+--------------
+1. A **local git checkout** (``--base``).  The GitHub URL used for
+   docstring links is inferred from that checkout's ``.git/config``
+   (``remote "origin"`` url) and the current branch.  A bare
+   ``https://github.com/org/repo`` remote becomes
+   ``https://github.com/org/repo/blob/<branch>``.
+2. A ``--file-regex`` that selects which ``.lean`` files are theorems to
+   port and extracts their **theorem title** (node ID) from ``group(1)``.
+   The title is *not* the lemma path — it is the display name used in the
+   emitted ``[title](url)`` line (ready to drop into a Lean docstring).
+3. Optionally ``--base-url`` to override the inferred GitHub URL.
 
-  FLT  : --source-subpath P2M/Sol --file-prefix S_ \\
-         --dep-filter '^Theorems\\.Thm_(\\w+)$' --root fermat_last_theorem
+Profiles via flags
+------------------
+  FLT (preferred, --file-regex; URL inferred from --base's .git/config):
+         --base /home/cosmos/github/fermats-last-theorem \
+         --source-subpath P2M/Sol --file-regex '^S_(.+)\.lean$' --recursive \
+         --dep-filter '^Theorems\.Thm_(\w+)$' --root fermat_last_theorem
 
-  ATLAS: --source-subpath MathlibExt --recursive \\
-         (no file prefix, no dep filter, no root)
+  FLT (legacy --file-prefix, still supported):
+         --base /home/cosmos/github/fermats-last-theorem \
+         --source-subpath P2M/Sol --file-prefix S_ \
+         --dep-filter '^Theorems\.Thm_(\w+)$' --root fermat_last_theorem
 
-Node identity
--------------
-  - With ``--file-prefix PREFIX``: node = filename minus PREFIX and ``.lean``
-    (preserves the FLT ``<key>`` convention so ``flt_topo_sort.log`` format
-    is reproducible).
-  - Without ``--file-prefix``:     node = Lean module name
+  ATLAS: --base /home/cosmos/github/atlas-lean \
+         --source-subpath MathlibExt --recursive \
+         (no file prefix / regex, no dep filter, no root)
+
+Node identity / theorem title
+-----------------------------
+  - With ``--file-regex REGEX``: for each ``.lean`` file, try REGEX against
+    (1) the relative POSIX path, (2) the basename, then (3) the file
+    contents.  The first match wins; ``group(1)`` is the theorem title
+    (node ID).  ``--file-prefix`` is ignored.
+    Example: ``'^S_(.+)\.lean$'`` reproduces the FLT ``<key>`` convention
+    via the basename match.
+  - With ``--file-prefix PREFIX`` (and no ``--file-regex``):
+    title = filename minus PREFIX and ``.lean``.
+  - Without either: title = Lean module name
     (e.g. ``MathlibExt.Probability.BerryEsseen``).
 
 Dependency parsing
@@ -40,7 +66,8 @@ Output
 ------
 The first ``--limit`` ready-to-port nodes (deps all ported, mutually
 independent) are written to the ``.log`` file and echoed to stdout.
-Each entry is a Markdown link ``[node](<base_url>/<relative_path>.lean)``.
+Each entry is a Markdown link ``[title](<base_url>/<relative_path>.lean)``
+suitable as a Lean docstring source attribution.
 """
 
 from __future__ import annotations
@@ -49,18 +76,166 @@ import argparse
 import heapq
 import os
 import re
+import subprocess
 import sys
 import time
 
+DEFAULT_BASE = "/home/cosmos/github/fermats-last-theorem"
+DEFAULT_PORTED_ROOT = "/home/cosmos/github/lean/Lemma"
 DEFAULT_LIMIT = 20
 
 
+def normalize_base_url(url: str, default_ref: str = "main") -> str:
+    """Turn a GitHub repo URL into a ``.../blob/<ref>`` base for file links.
+
+    Already-qualified blob/tree URLs are returned unchanged (trailing slash
+    stripped).  Bare ``https://github.com/org/repo`` URLs gain
+    ``/blob/<default_ref>``.
+    """
+    u = url.rstrip("/")
+    if re.search(r"/blob/[^/]+(/|$)", u) or re.search(r"/tree/[^/]+(/|$)", u):
+        return u
+    # Strip a trailing .git if present.
+    if u.endswith(".git"):
+        u = u[:-4]
+    return f"{u}/blob/{default_ref}"
+
+
+def remote_url_to_https(remote: str) -> str:
+    """Convert a git remote URL to an ``https://host/org/repo`` web URL.
+
+    Handles ``git@host:org/repo.git``, ``ssh://git@host/org/repo.git``,
+    and ``https://host/org/repo.git``.  Strips a trailing ``.git``.
+    """
+    u = remote.strip().rstrip("/")
+    if u.endswith(".git"):
+        u = u[:-4]
+    # git@host:org/repo
+    m = re.match(r"^git@([^:]+):(.+)$", u)
+    if m:
+        return f"https://{m.group(1)}/{m.group(2).lstrip('/')}"
+    # ssh://git@host/org/repo  or  ssh://host/org/repo
+    m = re.match(r"^ssh://(?:git@)?([^/]+)/(.+)$", u)
+    if m:
+        return f"https://{m.group(1)}/{m.group(2).lstrip('/')}"
+    # https://... already
+    if u.startswith("http://") or u.startswith("https://"):
+        return u
+    raise ValueError(f"unrecognised git remote URL: {remote!r}")
+
+
+def _git(base: str, *args: str) -> str | None:
+    """Run ``git -C <base> …``; return stripped stdout or ``None`` on failure."""
+    try:
+        proc = subprocess.run(
+            ["git", "-C", base, *args],
+            capture_output=True, text=True, encoding="utf-8", errors="replace",
+            check=False,
+        )
+    except OSError:
+        return None
+    if proc.returncode != 0:
+        return None
+    out = (proc.stdout or "").strip()
+    return out or None
+
+
+def infer_github_from_checkout(base: str) -> tuple[str, str]:
+    """Return ``(https_web_url, ref)`` inferred from a local git checkout.
+
+    Reads ``remote.origin.url`` and the current branch.  If HEAD is
+    detached, tries ``refs/remotes/origin/HEAD``, else falls back to
+    ``main``.  Raises ``RuntimeError`` when origin cannot be resolved.
+    """
+    remote = _git(base, "remote", "get-url", "origin")
+    if not remote:
+        # Fallback: parse .git/config directly (works even without git on PATH
+        # in odd environments, and when origin is unset in the worktree).
+        cfg = os.path.join(base, ".git", "config")
+        if os.path.isfile(cfg):
+            section = None
+            with open(cfg, "r", encoding="utf-8", errors="replace") as f:
+                for line in f:
+                    s = line.strip()
+                    if s.startswith("[") and s.endswith("]"):
+                        section = s[1:-1].strip()
+                        continue
+                    if section == 'remote "origin"' and s.startswith("url"):
+                        _, _, val = s.partition("=")
+                        remote = val.strip()
+                        break
+    if not remote:
+        raise RuntimeError(
+            f"cannot infer GitHub URL: no origin remote in {base!r} "
+            f"(.git/config). Pass --base-url explicitly."
+        )
+
+    web = remote_url_to_https(remote)
+
+    ref = _git(base, "rev-parse", "--abbrev-ref", "HEAD")
+    if not ref or ref == "HEAD":
+        # Detached HEAD — try origin/HEAD default branch.
+        sym = _git(base, "symbolic-ref", "refs/remotes/origin/HEAD")
+        if sym and sym.startswith("refs/remotes/origin/"):
+            ref = sym[len("refs/remotes/origin/"):]
+        else:
+            # Read .git/HEAD as a last resort before falling back.
+            head_path = os.path.join(base, ".git", "HEAD")
+            if os.path.isfile(head_path):
+                with open(head_path, "r", encoding="utf-8", errors="replace") as f:
+                    head = f.read().strip()
+                if head.startswith("ref: refs/heads/"):
+                    ref = head[len("ref: refs/heads/"):]
+                else:
+                    ref = "main"
+            else:
+                ref = "main"
+    return web, ref
+
+
+def match_file_regex(file_re, abs_path: str, rel: str, name: str):
+    """Return ``group(1)`` from the first successful ``file_re`` match.
+
+    Tries, in order: relative POSIX path, basename (``match`` then
+    ``search``), then file contents.  Returns ``None`` when nothing
+    matches (caller should skip the file).
+    """
+    # Path with search so an unanchored pattern can hit a path suffix,
+    # while ^...$ against a full path still works when intended.
+    m = file_re.search(rel)
+    if m:
+        return m.group(1)
+    # Basename with match so ^S_(.+)\.lean$ works as documented for FLT.
+    m = file_re.match(name)
+    if m:
+        return m.group(1)
+    m = file_re.search(name)
+    if m:
+        return m.group(1)
+    try:
+        with open(abs_path, "r", encoding="utf-8", errors="replace") as f:
+            body = f.read()
+    except OSError:
+        return None
+    m = file_re.search(body)
+    if m:
+        return m.group(1)
+    return None
+
+
 def list_files(base: str, source_subpath: str, file_prefix: str,
-               recursive: bool) -> tuple[list[tuple[str, str, str]], str]:
-    """Return ``[(node_id, abs_path, rel_path_posix), ...]`` and the walked root.
+               recursive: bool, file_re=None
+               ) -> tuple[list[tuple[str, str, str]], str]:
+    """Return ``[(title, abs_path, rel_path_posix), ...]`` and the walked root.
 
     ``rel_path`` is always POSIX (forward slashes) so it can be appended
-    to a GitHub base URL verbatim.
+    to a GitHub base URL verbatim.  ``title`` is the theorem title / node
+    ID used in emitted ``[title](url)`` lines.
+
+    When ``file_re`` is a compiled regex, it is tried against the relative
+    path, the basename, then the file contents (see
+    :func:`match_file_regex`); ``group(1)`` becomes the title.  Otherwise
+    ``file_prefix`` / module-name logic applies.
     """
     root = os.path.join(base, source_subpath) if source_subpath else base
     out: list[tuple[str, str, str]] = []
@@ -68,14 +243,18 @@ def list_files(base: str, source_subpath: str, file_prefix: str,
     def emit(abs_path: str) -> None:
         rel = os.path.relpath(abs_path, base).replace(os.sep, "/")
         name = os.path.basename(abs_path)
-        if file_prefix:
+        if file_re is not None:
+            title = match_file_regex(file_re, abs_path, rel, name)
+            if title is None:
+                return
+        elif file_prefix:
             if not name.startswith(file_prefix):
                 return
-            node_id = name[len(file_prefix):-len(".lean")]
+            title = name[len(file_prefix):-len(".lean")]
         else:
             # Module name: rel path without extension, / -> .
-            node_id = rel[:-len(".lean")].replace("/", ".")
-        out.append((node_id, abs_path, rel))
+            title = rel[:-len(".lean")].replace("/", ".")
+        out.append((title, abs_path, rel))
 
     if recursive:
         for dp, dn, fn in os.walk(root):
@@ -263,17 +442,28 @@ def build_summary(base: str, root: str, n_nodes: int, n_edges: int,
 def main() -> int:
     ap = argparse.ArgumentParser(
         description="Project-agnostic topological sort of Lean proofs.")
-    ap.add_argument("--base", required=True,
-                    help="Project root (e.g. /mnt/e/github/atlas-lean).")
+    ap.add_argument("--base", default=DEFAULT_BASE,
+                    help="Local git checkout of the source Lean repo "
+                         f"(default: {DEFAULT_BASE}). The GitHub URL for "
+                         "[title](url) links is inferred from .git/config "
+                         "(origin) unless --base-url is set.")
     ap.add_argument("--source-subpath", default="",
                     help="Subdir within --base containing source files "
                          "(e.g. 'P2M/Sol' for FLT, 'MathlibExt' for ATLAS).")
     ap.add_argument("--file-prefix", default="",
-                    help="Filename prefix to strip when forming node IDs "
-                         "(e.g. 'S_' for FLT). Empty => use full module name.")
+                    help="Filename prefix to strip when forming theorem "
+                         "titles (e.g. 'S_' for FLT). Empty => use full "
+                         "module name. Ignored when --file-regex is set.")
+    ap.add_argument("--file-regex", default="",
+                    help="Regex selecting theorems to port. Tried against "
+                         "each file's relative POSIX path, basename, then "
+                         "contents; group(1) is the theorem title used in "
+                         "[title](url) output. Replaces --file-prefix. "
+                         "Example (FLT): '^S_(.+)\\.lean$'.")
     ap.add_argument("--recursive", action="store_true",
-                    help="Walk source subdir recursively (ATLAS). "
-                         "Off => only top-level files (FLT's P2M/Sol).")
+                    help="Walk source subdir recursively (ATLAS / "
+                         "--file-regex). Off => only top-level files "
+                         "(legacy FLT --file-prefix on P2M/Sol).")
     ap.add_argument("--dep-filter", default="",
                     help="Regex applied to each import token; group(1) is "
                          "the dep ID. FLT uses '^Theorems\\.Thm_(\\w+)$'. "
@@ -281,12 +471,16 @@ def main() -> int:
     ap.add_argument("--root", default="",
                     help="Node to pin last (FLT: 'fermat_last_theorem'). "
                          "Empty => no pinning (ATLAS).")
-    ap.add_argument("--base-url", required=True,
-                    help="GitHub base URL for source links, e.g. "
-                         "https://github.com/facebookresearch/atlas-lean/blob/main")
-    ap.add_argument("--ported-root", default="",
+    ap.add_argument("--base-url", default="",
+                    help="Override the GitHub URL used for [title](url) "
+                         "docstring links. When omitted, inferred from "
+                         "--base's .git/config (origin) + current branch. "
+                         "Accepts a bare repo URL (expanded to "
+                         ".../blob/<ref>) or an explicit .../blob/<ref> base.")
+    ap.add_argument("--ported-root", default=DEFAULT_PORTED_ROOT,
                     help="Directory scanned for already-ported lemmas "
-                         "(e.g. your Lemma/ tree).")
+                         f"(default: {DEFAULT_PORTED_ROOT}). Pass empty "
+                         "string to disable.")
     ap.add_argument("--ported-regex", default="",
                     help="Regex to extract ported node ID from .lean content. "
                          "group(1) must equal the in-tree node ID.")
@@ -303,8 +497,42 @@ def main() -> int:
 
     t0 = time.time()
 
+    file_re = None
+    if args.file_regex:
+        try:
+            file_re = re.compile(args.file_regex)
+        except re.error as e:
+            print(f"ERROR: invalid --file-regex: {e}", file=sys.stderr)
+            return 1
+        if file_re.groups < 1:
+            print("ERROR: --file-regex must contain a capturing group; "
+                  "group(1) becomes the theorem title "
+                  "(e.g. '^S_(.+)\\.lean$').", file=sys.stderr)
+            return 1
+
+    inferred_ref = "main"
+    if args.base_url:
+        # Explicit override wins; still normalise a bare repo URL.
+        # Prefer the checkout's branch as the blob ref when the user
+        # passed a bare URL without /blob/<ref>.
+        try:
+            _, inferred_ref = infer_github_from_checkout(args.base)
+        except RuntimeError:
+            inferred_ref = "main"
+        base_url = normalize_base_url(args.base_url, default_ref=inferred_ref)
+    else:
+        try:
+            web, inferred_ref = infer_github_from_checkout(args.base)
+        except RuntimeError as e:
+            print(f"ERROR: {e}", file=sys.stderr)
+            return 1
+        base_url = normalize_base_url(web, default_ref=inferred_ref)
+    print(f"base-url: {base_url}  (ref={inferred_ref}"
+          f"{', inferred' if not args.base_url else ', --base-url override'})",
+          file=sys.stderr)
+
     files, _ = list_files(args.base, args.source_subpath,
-                          args.file_prefix, args.recursive)
+                          args.file_prefix, args.recursive, file_re=file_re)
     in_tree_ids = {nid for nid, _, _ in files}
     path_of = {nid: rel for nid, _, rel in files}
 
@@ -369,7 +597,7 @@ def main() -> int:
                            len(ported), len(batch),
                            n_sorry=len(sorry_files))
 
-    body_lines = [f"[{k}]({args.base_url}/{path_of[k]})" for k in batch]
+    body_lines = [f"[{k}]({base_url}/{path_of[k]})" for k in batch]
     out_text = header + "\n\n" + "\n".join(body_lines) + "\n"
 
     out = args.out

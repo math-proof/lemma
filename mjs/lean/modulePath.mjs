@@ -5,12 +5,6 @@ import fs from 'fs';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 export const REPO_ROOT = path.join(__dirname, '..', '..');
 
-/**
- * Map a `.lean` filesystem path to dotted module under `Lemma/`, matching PHP `lean_to_module`
- * (`php/utility.php`) and `index.php` (redirect when `module` ends with `.lean`).
- * Accepts absolute paths (this repo or another checkout that still contains a `Lemma/` segment,
- * e.g. `/home/cosmos/src/lean/Lemma/Random/Foo.lean` → `Random.Foo`) or paths relative to `Lemma/`.
- */
 export function leanPathToModule(input, repoRoot = REPO_ROOT) {
   const trimmed = String(input).trim();
   if (!trimmed.endsWith(".lean")) {

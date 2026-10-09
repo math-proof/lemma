@@ -249,6 +249,33 @@ def flt_key_from_source(source: Path) -> str | None:
     return None
 
 
+_FLT_LOWERCASE_SEGMENTS = frozenset({
+    "of", "eq", "sub", "lt", "le", "gt", "ge", "ne", "not", "is", "and", "or",
+    "in", "ae", "mp", "mpr", "mt", "comm", "exists", "forall", "pairwise",
+    "imp", "iff", "ne0", "pos", "neg", "fin", "val", "cast",
+})
+
+
+def flt_key_to_path(key: str) -> list[str]:
+    """Convert an FLT key like ``AbsoluteValue_exists_forall_sub_lt_of_…``
+    into path segments for the ``Lemma/`` tree.
+
+    Rules (ported from the former ``flt_topo_sort.key_to_path``):
+    - Split on ``_``.
+    - First segment stays as-is (already PascalCase).
+    - Known connective / quantifier words stay lowercase.
+    - Everything else: capitalise the first letter.
+    """
+    parts = key.split("_")
+    result = [parts[0]]
+    for seg in parts[1:]:
+        if seg in _FLT_LOWERCASE_SEGMENTS:
+            result.append(seg)
+        else:
+            result.append(seg[0].upper() + seg[1:] if seg else seg)
+    return result
+
+
 def fallback_path_for(
     source: Path, main_name: str, ported_root: Path,
 ) -> Path:
@@ -257,15 +284,12 @@ def fallback_path_for(
     For FLT sources the main theorem is almost always named ``solution``,
     so deriving a path from the theorem name collapses every file onto
     ``Lemma/solution.lean``; derive the path from the ``S_<key>`` file
-    name instead, reusing ``flt_topo_sort.key_to_path``.  Other sources
-    fall back to the theorem-name key path.
+    name instead via :func:`flt_key_to_path`.  Other sources fall back to
+    the theorem-name key path.
     """
     flt_key = flt_key_from_source(source)
     if flt_key is not None:
         try:
-            sys.path.insert(0, str(Path(__file__).resolve().parent))
-            from flt_topo_sort import key_to_path as flt_key_to_path
-
             segments = flt_key_to_path(flt_key)
             return ported_root.joinpath(*segments).with_suffix(".lean")
         except Exception:  # noqa: BLE001 — generic fallback must still work

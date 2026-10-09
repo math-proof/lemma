@@ -485,7 +485,7 @@ if ($code)
     width: 100%;
 }
 .latex-display .latex-body { flex: 0 1 auto; text-align: center; }
-.latex-display img.latex-formula { max-width: 100%; height: auto; vertical-align: middle; zoom: 0.75; }
+.latex-display img.latex-formula { max-width: 100%; height: auto; vertical-align: middle; zoom: 1.2; }
 .latex-display .latex-tag {
     position: absolute;
     right: 0;
