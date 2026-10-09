@@ -2,7 +2,7 @@ import Lemma.Vector.GetUnflatten.as.ArraySlice
 open Vector
 
 
-@[main, cast]
+@[path, cast]
 private lemma main
 -- given
   (h : i < m)

@@ -7,7 +7,7 @@ open scoped PowerSeries.WithPiTopology
 /--
 [IsLocalRing_exists_algHom_powerSeries_map_X_eq_of_mem_maximalIdeal](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_IsLocalRing_exists_algHom_powerSeries_map_X_eq_of_mem_maximalIdeal.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {𝒪 R : Type u} [CommRing 𝒪] [CommRing R] [IsLocalRing R] [Algebra 𝒪 R]
   {t : R}

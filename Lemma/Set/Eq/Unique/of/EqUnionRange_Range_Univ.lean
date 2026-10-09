@@ -7,7 +7,7 @@ open AlgebraicGeometry
 /--
 [AlgebraicGeometry_existsUnique_comp_eq_of_universallyClosed_of_closedPoint_notMem_range](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_existsUnique_comp_eq_of_universallyClosed_of_closedPoint_notMem_range.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {R : Type u} [CommRing R] [IsLocalRing R]
   {X Xf X' T : Scheme.{u}}

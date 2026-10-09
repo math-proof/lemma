@@ -27,7 +27,7 @@ import torch.functions
 open Tensor Bool List Nat
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   {s : List ℕ}
   {d : Fin s.length}

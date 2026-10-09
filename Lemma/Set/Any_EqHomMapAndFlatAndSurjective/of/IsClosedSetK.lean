@@ -6,7 +6,7 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 /--
 [AlgebraicGeometry_exists_iso_Spec_of_isClopen_of_isFinite_of_flat](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_exists_iso_Spec_of_isClopen_of_isFinite_of_flat.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {S : Type u} [CommRing S]
   {K : Scheme.{u}}

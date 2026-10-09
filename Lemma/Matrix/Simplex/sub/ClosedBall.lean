@@ -2,7 +2,7 @@ import sympy.stats.stochastic_process
 open WithLp PiLp Metric
 
 
-@[main]
+@[path]
 private lemma main
   {S : Type*} [Fintype S] :
 -- imply

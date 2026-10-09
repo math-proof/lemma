@@ -3,7 +3,7 @@ import Lemma.Nat.Ne_0
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   {i j : Fin n}
 -- given

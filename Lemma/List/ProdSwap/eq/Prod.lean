@@ -6,7 +6,7 @@ import Lemma.List.ProdAppend_Cons_Drop.eq.Prod.of.Lt.GtLength
 open List Bool Nat
 
 
-@[main]
+@[path]
 private lemma main
   [CommMonoid α]
 -- given

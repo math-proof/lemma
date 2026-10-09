@@ -4,7 +4,7 @@ import Lemma.Matrix.Lt_Sum_SquareNorm.et.All_Eq_Sum_Mul_Star.of.All_And.All_Eq_D
 open Matrix
 
 
-@[main]
+@[path]
 private lemma main
   {n : ℕ}
   {A : Matrix (Fin n) (Fin n) ℝ}

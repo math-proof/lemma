@@ -5,7 +5,7 @@ import torch.stack
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (c s x0 x1 : Tensor ℝ []) :

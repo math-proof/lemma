@@ -79,7 +79,7 @@ Written row by row with the mask `Ξ i j = [¬(i < h ↔ j < h)]`:
 \]
 Since `Ξ_i` is the indicator of the keys `h:n` (for `i < h`) resp. `:h`, this is the block form of the py statement.
 -/
-@[main]
+@[path]
 private lemma cross_attention
   {n h d_z : ℕ}
 -- given

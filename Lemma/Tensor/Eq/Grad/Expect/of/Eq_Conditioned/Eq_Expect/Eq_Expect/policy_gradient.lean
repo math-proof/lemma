@@ -14,6 +14,7 @@ import Lemma.Random.Integral_SMul.eq.Sum_SMul.of.All_Differentiable_Prob
 import Lemma.Random.TSum_SMul.eq.Sum_SMul.of.In_Ico.GtInftySup.All_Differentiable_Prob
 import Lemma.Random.Integrable_Fun
 import Lemma.Random.Integral_G.eq.TSum_MulPowIntegral_R_Add.of.In_Ico
+import Lemma.Random.Measurable_R
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random Tensor
 
 
@@ -22,7 +23,7 @@ Finite-horizon policy gradient: for every `n`,
 `γ ** Stack[t](t) @ ∇𝔼[r] = 𝔼[∑ t < n, γ ^ t * Q(s[t], a[t]) • ∇ log π(a[t] | s[t])] + γ ^ n • 𝔼[∇V(s[n])]`,
 where `γ ** Stack[t](t) @ ∇𝔼[r]` is `∑' t, γ ^ t • ∇_θ 𝔼[r[t]]`.
 -/
-@[main]
+@[path]
 private lemma main
   [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [CompleteSpace Θ]
   [ReferenceMeasure S] [MeasurableSingletonClass S] [Fintype S]
@@ -58,7 +59,7 @@ private lemma main
   set a : ℕ → (ℕ → ℝ × S × A) → A := fun t ω ↦ (ω t).2.2
   have h₄n := h₅
   simp only [gradient, LinearIsometryEquiv.norm_map] at h₅
-  have hr : ∀ t, Measurable (r t) := Model.r_meas' h₁
+  have hr : ∀ t, Measurable (r t) := Random.Measurable_R h₁
   have hpR : Measurable (fun ω t ↦ r t ω) := measurable_pi_lambda _ hr
   have hfG : ∀ t, Measurable (fun integ : ℕ → ℝ ↦ (γ ^ (id : ℕ → ℕ)) @ integ[t:]) := fun t =>
     Measurable.tsum fun k => (measurable_pi_apply (t + k)).const_mul _

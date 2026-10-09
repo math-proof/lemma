@@ -3,7 +3,7 @@ import Lemma.List.ProdInsertIdx.eq.Prod
 open List
 
 
-@[main]
+@[path]
 private lemma main
   [CommMonoid α]
   {d : ℕ}

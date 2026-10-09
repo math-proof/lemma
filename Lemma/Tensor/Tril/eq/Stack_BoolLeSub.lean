@@ -5,7 +5,7 @@ import sympy.matrices.expressions.special
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [AddMonoidWithOne α]
 -- given

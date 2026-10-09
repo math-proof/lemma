@@ -3,7 +3,7 @@ import Lemma.List.IsConstantMap.of.IsConstant
 open List
 
 
-@[main]
+@[path]
 private lemma main
   {s : List.Vector α n}
 -- given

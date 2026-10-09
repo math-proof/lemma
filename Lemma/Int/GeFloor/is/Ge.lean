@@ -4,12 +4,12 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Int.GeFloor.is.Ge |
+| path | Int.GeFloor.is.Ge |
 | comm | Int.Ge.is.GeFloor |
 | mp | Int.Ge.of.GeFloor |
 | mpr | Int.GeFloor.of.Ge |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
   [FloorRing α]

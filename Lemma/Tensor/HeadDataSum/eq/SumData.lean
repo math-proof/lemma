@@ -10,7 +10,7 @@ import Lemma.Vector.SEq.of.All_EqGetS.Eq
 open Tensor Vector
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [Add α] [Zero α]
 -- given

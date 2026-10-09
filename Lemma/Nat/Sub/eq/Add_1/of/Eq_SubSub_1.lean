@@ -5,7 +5,7 @@ import Lemma.Nat.LeAdd_1
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   {i : Fin n}
 -- given

@@ -3,7 +3,7 @@ import sympy.sets.sets
 open Rat
 
 
-@[main]
+@[path]
 private lemma main
   [NeZero n]
   {l u d : ℕ}

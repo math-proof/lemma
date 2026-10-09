@@ -6,7 +6,7 @@ import Lemma.Matrix.DetSq_FromBlocks_0.eq.MulMulPowNeg1_DetDet
 open Matrix
 
 
-@[main]
+@[path]
 private lemma main
   [CommRing R] [Fintype m] [DecidableEq m] [Fintype n] [DecidableEq n]
   {A : Matrix m m R}
@@ -18,7 +18,7 @@ private lemma main
   Matrix.det_fromBlocks_zero₂₁ A B D
 
 
-@[main]
+@[path]
 private lemma lower
   [CommRing R] [Fintype m] [DecidableEq m] [Fintype n] [DecidableEq n]
   {A : Matrix m m R}
@@ -30,7 +30,7 @@ private lemma lower
   Matrix.det_fromBlocks_zero₁₂ A C D
 
 
-@[main]
+@[path]
 private lemma anti_diagonal
   [CommRing R]
   {a b : ℕ}
@@ -43,7 +43,7 @@ private lemma anti_diagonal
   DetSq_FromBlocks0.eq.MulMulPowNeg1_DetDet A C D
 
 
-@[main]
+@[path]
 private lemma anti_diagonal.lower
   [CommRing R]
   {a b : ℕ}

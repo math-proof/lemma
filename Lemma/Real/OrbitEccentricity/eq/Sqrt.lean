@@ -6,7 +6,7 @@ import sympy.Basic
 Eccentricity definition:
 \(e=\sqrt{1+\dfrac{2EJ^2}{mC^2}}\).
 -/
-@[main]
+@[path]
 private lemma main
   (E m C J : ℝ) :
 -- imply

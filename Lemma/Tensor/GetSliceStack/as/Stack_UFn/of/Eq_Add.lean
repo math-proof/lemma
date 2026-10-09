@@ -2,7 +2,7 @@ import Lemma.Tensor.GetSliceStack.as.Stack_UFn
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   {n k j : ℕ}
 -- given

@@ -26,7 +26,7 @@ open Bool List Tensor
 set_option maxHeartbeats 1000000
 
 
-@[main, fin]
+@[path, fin]
 private lemma main
   [Mul α] [Add α] [Zero α]
 -- given
@@ -78,7 +78,7 @@ private lemma main
         apply SEqReshapeS.of.Eq.Eq.Dvd (by simp) (by simp) (by rfl)
 
 
-@[main, fin]
+@[path, fin]
 private lemma une
   [Mul α] [Add α] [Zero α]
 -- given

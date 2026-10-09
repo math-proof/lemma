@@ -2,7 +2,7 @@ import sympy.Basic
 import torch.functions
 
 
-@[main]
+@[path]
 private lemma main
   [Log α]
 -- given

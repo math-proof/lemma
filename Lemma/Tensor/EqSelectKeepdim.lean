@@ -10,7 +10,7 @@ import torch.functions
 open Bool List Tensor
 
 
-@[main]
+@[path]
 private lemma main
   {s : List ℕ}
   {d : Fin s.length}

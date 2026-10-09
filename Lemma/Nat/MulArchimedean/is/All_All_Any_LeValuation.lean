@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [ValuationSubring_mulArchimedean_valueGroup_iff_forall_exists_pow_le](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_ValuationSubring_mulArchimedean_valueGroup_iff_forall_exists_pow_le.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [Field L]
   {A : ValuationSubring L} :

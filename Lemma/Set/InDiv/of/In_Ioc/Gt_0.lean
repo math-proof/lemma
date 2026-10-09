@@ -6,7 +6,7 @@ import Lemma.Set.In_Ioc.is.Lt.Le
 open Set Rat
 
 
-@[main]
+@[path]
 private lemma main
   [Field α] [LinearOrder α] [IsStrictOrderedRing α]
   {a b : α}

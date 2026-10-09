@@ -5,7 +5,7 @@ import Lemma.List.LengthInsertIdx.eq.Length.of.LtLength
 open Tensor List
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (X : Tensor α s) :

@@ -3,7 +3,7 @@ import Lemma.Rat.Add_Inv.eq.DivAddMul.of.Ne_0
 open Nat Rat
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [DivisionRing α]
   {a : α}

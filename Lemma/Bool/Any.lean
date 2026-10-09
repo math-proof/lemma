@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma limits.swap.intlimit
   {a d n : ℤ}
   {f : ℤ → ℤ → Prop} :
@@ -17,7 +17,7 @@ private lemma limits.swap.intlimit
     exact ⟨j, by omega, hj₁, i, hi₀, by omega, h⟩
 
 
-@[main]
+@[path]
 private lemma limits.swap.subst
   {A : Set ι}
   {s : ι → Set κ}
@@ -28,7 +28,7 @@ private lemma limits.swap.subst
   Iff.rfl
 
 
-@[main]
+@[path]
 private lemma doit.inner.setlimit
   {a b : ι}
   {m : ℕ}
@@ -39,7 +39,7 @@ private lemma doit.inner.setlimit
   simp
 
 
-@[main]
+@[path]
 private lemma doit.inner
   {a m : ℕ}
   {p : ℕ → ℕ → Prop} :
@@ -63,7 +63,7 @@ private lemma doit.inner
       exact ⟨i, hi, a + 1, by simp, h⟩
 
 
-@[main]
+@[path]
 private lemma limits.domain_defined
   {m n : ℕ}
   {p : ℕ → Prop}
@@ -75,7 +75,7 @@ private lemma limits.domain_defined
   rw [min_eq_left h]
 
 
-@[main]
+@[path]
 private lemma limits.separate
   {n : ℕ}
   {f : ℕ → Prop}
@@ -92,7 +92,7 @@ private lemma limits.separate
     exact ⟨j, hj, i, hi, hf, hg⟩
 
 
-@[main]
+@[path]
 private lemma limits.swap
   {A : Set α}
   {B : Set β}

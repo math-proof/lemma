@@ -14,10 +14,10 @@ Renamed out of `Expect_CondDot` (which is reserved for Tensor `@` / `Dot.dot`).
 
 | attributes | lemma |
 | :---: | :---: |
-| main | Random.Expect_CondMulVec.eq.MulVec_Expect_Cond |
+| path | Random.Expect_CondMulVec.eq.MulVec_Expect_Cond |
 | comm | Random.MulVec_Expect_Cond.eq.Expect_CondMulVec |
 -/
-@[main, comm]
+@[path, comm]
 private lemma main
   [MeasurableSpace Ω]
   [MeasurableSpace α]

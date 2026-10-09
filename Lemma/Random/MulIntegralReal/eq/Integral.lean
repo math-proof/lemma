@@ -4,7 +4,7 @@ import sympy.Basic
 open MeasureTheory ProbabilityTheory
 
 
-@[main]
+@[path]
 private lemma main
   {Ω : Type*} [MeasurableSpace Ω]
   {μ : Measure Ω} [IsFiniteMeasure μ]

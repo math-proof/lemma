@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [Ideal_height_eq_one_of_isDiscreteValuationRing_localization_atPrime](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Ideal_height_eq_one_of_isDiscreteValuationRing_localization_atPrime.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing R] [IsDomain R]
   {p : Ideal R} [p.IsPrime]

@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [Valuation_map_eval_eq_pow_of_one_lt](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Valuation_map_eval_eq_pow_of_one_lt.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing R] [LinearOrderedCommGroupWithZero Γ₀]
   {v : Valuation R Γ₀}

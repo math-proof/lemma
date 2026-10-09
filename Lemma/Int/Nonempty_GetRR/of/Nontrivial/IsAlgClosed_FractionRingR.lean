@@ -6,7 +6,7 @@ open TensorProduct
 /--
 [AlgebraicGeometry_exists_algHom_of_finite_of_valuationRing_of_isAlgClosed](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_exists_algHom_of_finite_of_valuationRing_of_isAlgClosed.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing R] [IsDomain R] [ValuationRing R] [CommRing D] [Algebra R D] [Module.Finite R D]
 -- given

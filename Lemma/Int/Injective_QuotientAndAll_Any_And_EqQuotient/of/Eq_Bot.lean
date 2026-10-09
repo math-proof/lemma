@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [Ideal_injective_quotient_mk_prod_and_exists_of_factor_eq_of_inf_eq_bot](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Ideal_injective_quotient_mk_prod_and_exists_of_factor_eq_of_inf_eq_bot.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing A]
   {I₁ I₂ : Ideal A}

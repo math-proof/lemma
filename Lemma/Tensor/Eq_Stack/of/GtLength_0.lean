@@ -2,7 +2,7 @@ import Lemma.Tensor.Eq_Stack
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h : s.length > 0)

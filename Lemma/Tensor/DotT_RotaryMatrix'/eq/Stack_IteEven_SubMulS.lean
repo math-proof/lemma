@@ -28,7 +28,7 @@ open Bool Tensor List
 set_option maxHeartbeats 8000000
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (θ : Tensor ℝ [d])

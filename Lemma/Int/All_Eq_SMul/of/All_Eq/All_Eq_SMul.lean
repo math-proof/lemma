@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [IharaLemma_resKer_localized](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_IharaLemma_resKer_localized.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing R]
   {S : Submonoid R}

@@ -2,7 +2,7 @@ import torch.nn.functional.relu
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {n l u i : ℤ}
   {β ζ : ℤ → ℤ}

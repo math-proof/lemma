@@ -3,7 +3,7 @@ import Lemma.Int.CeilAdd.eq.AddCeil
 open Nat Int
 
 
-@[main]
+@[path]
 private lemma main
   [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
   [FloorRing α]

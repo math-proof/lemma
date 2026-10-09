@@ -4,7 +4,7 @@ import Lemma.List.DropPermute.eq.ListGet
 open Nat List
 
 
-@[main]
+@[path]
 private lemma main
   {s : List α}
   {i : Fin s.length}

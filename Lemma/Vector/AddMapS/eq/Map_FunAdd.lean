@@ -3,7 +3,7 @@ import Lemma.Nat.Add
 open Vector Nat
 
 
-@[main]
+@[path]
 private lemma main
   [Add α]
 -- given

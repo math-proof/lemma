@@ -8,10 +8,10 @@ open Tensor Vector
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Tensor.MapMaskedFill.eq.MaskedFillMap.of.GtLength_2 |
+| path | Tensor.MapMaskedFill.eq.MaskedFillMap.of.GtLength_2 |
 | comm | Tensor.MaskedFillMap.eq.MapMaskedFill.of.GtLength_2 |
 -/
-@[main, fin, comm, fin.comm]
+@[path, fin, comm, fin.comm]
 private lemma main
   [Zero α]
 -- given

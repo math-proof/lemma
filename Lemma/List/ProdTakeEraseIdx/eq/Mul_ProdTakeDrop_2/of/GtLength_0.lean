@@ -6,7 +6,7 @@ import Lemma.Nat.Mul.of.Eq
 open List Nat
 
 
-@[main]
+@[path]
 private lemma main
   [Monoid α]
   {s : List α}

@@ -3,7 +3,7 @@ import Lemma.Tensor.UFnSumStack.eq.SumStack_UFn.All_EqUFnAdd.EqUFn_0
 open Nat Tensor
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [NonUnitalNonAssocSemiring α]
 -- given

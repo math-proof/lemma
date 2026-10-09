@@ -4,7 +4,7 @@ import Lemma.Matrix.Sum_AbsResolvent.le.MulDivCMixSum_Abs.of.EqSum_0.In_ActorBox
 import Lemma.Matrix.EqResolventVecMul.of.EqSum_0.In_ActorBox
 
 
-@[main]
+@[path]
 private lemma main
   {S : Type*} [Fintype S] [DecidableEq S]
   {d : ℕ}

@@ -56,7 +56,7 @@ private lemma  noeth_and_dim (κ : Type*) [Field κ] :
       refine ⟨isNoetherianRing_of_ringEquiv _ E.symm, ?_⟩
       rw [ringKrullDim_eq_of_ringEquiv E, ringKrullDim_laurentPolynomial, hd]
       rfl
-@[main]
+@[path]
 private lemma main
   [Field κ]
   {t : ℕ} :

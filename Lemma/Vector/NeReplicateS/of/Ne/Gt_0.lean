@@ -2,7 +2,7 @@ import Lemma.Vector.Get.of.Eq
 open Vector
 
 
-@[main]
+@[path]
 private lemma main
   {x y : α}
 -- given

@@ -2,7 +2,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma monotone
   {a : ℤ → ℝ}
 -- given

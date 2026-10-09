@@ -7,7 +7,7 @@ import Lemma.Int.LeDivS.of.Lt_0
 open Int Nat
 
 
-@[main]
+@[path]
 private lemma main
   [Field α] [LinearOrder α] [IsStrictOrderedRing α] [FloorRing α]
   {n d : ℤ}

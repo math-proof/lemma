@@ -12,7 +12,7 @@ import Lemma.Tensor.UnsqueezeExp.eq.ExpUnsqueeze
 open Bool List Nat Tensor
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [Exp α]
   {s : List ℕ}

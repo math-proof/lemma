@@ -3,7 +3,7 @@ import Lemma.List.DropAppend.eq.AppendDropS
 open List
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h : a.length ≤ i)

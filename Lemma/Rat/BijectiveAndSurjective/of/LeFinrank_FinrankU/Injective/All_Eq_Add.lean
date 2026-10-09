@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [AddTorsor_bijective_and_surjective_of_vadd_eq_of_injective_of_finrank_le_univ](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AddTorsor_bijective_and_surjective_of_vadd_eq_of_injective_of_finrank_le_univ.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {k : Type u} [Field k]
   {V : Type v} [AddCommGroup V] [Module k V]

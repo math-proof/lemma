@@ -8,7 +8,7 @@ import sympy.Basic
 Kepler's second law integrated over one period \(T\):
 \(S=\displaystyle\int_0^T \dfrac{J}{2m}\,dt=\dfrac{JT}{2m}\).
 -/
-@[main]
+@[path]
 private lemma main
   {m J T : ℝ}
   {ρ θ : ℝ → ℝ}

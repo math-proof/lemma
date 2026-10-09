@@ -15,7 +15,7 @@ open Real
 /--
 [AddChar_exists_continuousLinearMap_fourierChar_eq](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AddChar_exists_continuousLinearMap_fourierChar_eq.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [NormedAddCommGroup E] [NormedSpace ℝ E]
 -- given

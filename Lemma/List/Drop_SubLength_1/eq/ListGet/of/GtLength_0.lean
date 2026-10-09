@@ -4,7 +4,7 @@ import Lemma.List.Drop.eq.Nil
 open List Nat
 
 
-@[main]
+@[path]
 private lemma main
   {s : List α}
 -- given

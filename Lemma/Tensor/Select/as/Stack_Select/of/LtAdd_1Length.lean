@@ -4,7 +4,7 @@ import Lemma.Tensor.Select.as.Stack_Select.of.Eq.GtLength
 open Tensor Nat
 
 
-@[main]
+@[path]
 private lemma main
   {d : ℕ}
 -- given

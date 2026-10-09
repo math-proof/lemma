@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [SubtractionMonoid_exists_zsmul_eq_of_forall_prime](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_SubtractionMonoid_exists_zsmul_eq_of_forall_prime.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [SubtractionMonoid A]
 -- given

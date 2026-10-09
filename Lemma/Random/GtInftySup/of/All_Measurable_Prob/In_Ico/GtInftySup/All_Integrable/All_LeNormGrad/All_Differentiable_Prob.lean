@@ -15,7 +15,7 @@ states and actions has a bounded gradient: `sup[θ, y] ‖∇[θ] Vkd θ γ y‖
 over the actions, uniformly in the state (this replaces `|A| * sup ‖∇π‖ < ∞` of the finite-action version);
 `h₅`: `(x, u) ↦ π_θ(u | x)` is jointly measurable.
 -/
-@[main]
+@[path]
 private lemma main
   [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [FiniteDimensional ℝ Θ] [MeasurableSpace S] [ReferenceMeasure A]
   {M : DensityModel Θ S A}

@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   [DecidableEq α] [AddCommMonoid β]
   {A B : Finset α}

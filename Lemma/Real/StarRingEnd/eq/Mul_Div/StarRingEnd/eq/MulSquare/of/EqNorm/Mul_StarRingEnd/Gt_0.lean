@@ -28,7 +28,7 @@ private theorem conj_eq_div_of_mul_conj_eq_of_mul_conj_eq {a b c : ℂ}
       _ = c * (c * a) := by ring
   · rw [← div_eq_mul_inv, eq_div_iff hb, mul_comm (starRingEnd ℂ b) b]
     exact h2
-@[main]
+@[path]
 private lemma main
   {a b : ℂ}
   {c : ℝ}

@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [IsLocalRing_isUnit_natCast_or_isUnit_natCast_of_coprime](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_IsLocalRing_isUnit_natCast_or_isUnit_natCast_of_coprime.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing R] [IsLocalRing R]
   {m n : ℕ}

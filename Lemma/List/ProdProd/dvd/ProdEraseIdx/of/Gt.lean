@@ -7,7 +7,7 @@ import stdlib.List
 open List Nat
 
 
-@[main]
+@[path]
 private lemma main
   [CommMonoid Z]
 -- given

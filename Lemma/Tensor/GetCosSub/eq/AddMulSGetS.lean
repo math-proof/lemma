@@ -8,12 +8,12 @@ open Tensor
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Tensor.GetCosSub.eq.AddMulSGetS |
+| path | Tensor.GetCosSub.eq.AddMulSGetS |
 | fin | Tensor.GetCosSub.eq.AddMulSGetS.fin |
 | comm | Tensor.AddMulSGetS.eq.GetCosSub |
 | fin.comm | Tensor.AddMulSGetS.eq.GetCosSub.fin |
 -/
-@[main, fin, comm, fin.comm]
+@[path, fin, comm, fin.comm]
 private lemma main
 -- given
   (X Y : Tensor ℝ (n :: s))

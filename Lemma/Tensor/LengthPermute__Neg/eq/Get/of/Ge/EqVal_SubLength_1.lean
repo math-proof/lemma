@@ -6,7 +6,7 @@ import Lemma.Tensor.SEqPermuteTailS.of.LeLength
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   {s : List ℕ}
   {i : Fin s.length}

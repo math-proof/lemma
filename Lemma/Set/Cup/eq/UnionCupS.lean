@@ -8,7 +8,7 @@ import Lemma.Set.SubsetSDiff
 open Set
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (f : α → Set β)

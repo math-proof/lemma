@@ -2,7 +2,7 @@ import Lemma.List.ProdSet__MulGet.eq.Mul_Prod
 open List
 
 
-@[main]
+@[path]
 private lemma main
   [CommMonoid α]
   {s : List α}

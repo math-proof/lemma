@@ -6,7 +6,7 @@ open CategoryTheory AlgebraicGeometry
 /--
 [AlgebraicGeometry_IsOpenImmersion_isRegularLocalRing_stalk_iff](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_IsOpenImmersion_isRegularLocalRing_stalk_iff.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {U X : Scheme.{u}}
   {i : U ⟶ X} [IsOpenImmersion i]

@@ -11,7 +11,7 @@ import Lemma.Int.LtFMod.of.Gt_0
 open Set Rat Nat Int
 
 
-@[main]
+@[path]
 private lemma main
   [Field α] [LinearOrder α] [IsStrictOrderedRing α] [FloorRing α]
   {d : α}

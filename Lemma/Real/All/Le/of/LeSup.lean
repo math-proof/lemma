@@ -2,7 +2,7 @@ import sympy.Basic
 import sympy.sets.sets
 
 
-@[main]
+@[path]
 private lemma main
   {α : Type*} [ConditionallyCompleteLinearOrder α] [DenselyOrdered α]
   {f : α → α}

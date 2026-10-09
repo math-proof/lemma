@@ -6,7 +6,7 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 /--
 [AlgebraicGeometry_exists_fin_eq_of_isClosedImmersion_of_finite_pullback](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_exists_fin_eq_of_isClosedImmersion_of_finite_pullback.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {X Y Z : Scheme.{u}}
   {i₁ : Y ⟶ X}

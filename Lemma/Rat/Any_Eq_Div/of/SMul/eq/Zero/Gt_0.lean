@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [AddCircle_exists_eq_coe_div_of_nsmul_eq_zero_of_dvd](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AddCircle_exists_eq_coe_div_of_nsmul_eq_zero_of_dvd.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {t : AddCircle (1 : ℚ)}
   {n N : ℕ}

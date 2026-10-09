@@ -7,7 +7,7 @@ open Tensor
 /--
 similar to `Tensor.Sum_0.as.SumStack_Get.of.GtLength_0`
 -/
-@[main, fin, cast, cast.fin]
+@[path, fin, cast, cast.fin]
 private lemma main
   [AddCommMonoid α]
 -- given

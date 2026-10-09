@@ -3,7 +3,7 @@ import torch.functions
 open Vector
 
 
-@[main]
+@[path]
 private lemma main
   [ExpPos α]
 -- given

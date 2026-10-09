@@ -4,7 +4,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {n m : ℕ}
   {x : Fin n → ℂ} :

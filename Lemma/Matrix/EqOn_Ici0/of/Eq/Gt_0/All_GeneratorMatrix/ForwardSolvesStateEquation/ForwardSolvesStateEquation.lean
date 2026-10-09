@@ -11,7 +11,7 @@ import Lemma.Matrix.ForwardSolvesStateEquation_Sub.of.ForwardSolvesStateEquation
 open Matrix
 
 
-@[main]
+@[path]
 private lemma main
   {S : Type*} [Fintype S]
   {d : ℕ}

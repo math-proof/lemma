@@ -2,7 +2,7 @@ import sympy.core.logic
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma subst
   [Decidable p]
   {x : α}

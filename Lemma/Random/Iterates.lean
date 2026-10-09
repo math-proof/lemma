@@ -4,7 +4,7 @@ import Lemma.Real.Anchors.Time.lt.TimeAdd1
 open Finset
 
 
-@[main]
+@[path]
 private lemma main
   {S : Type*} [Fintype S] [DecidableEq S] [Nonempty S] [MeasurableSpace S] [MeasurableSingletonClass S]
   {d : ℕ}

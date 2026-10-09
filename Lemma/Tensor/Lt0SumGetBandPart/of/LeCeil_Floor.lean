@@ -18,7 +18,7 @@ import torch.Tensor.sum
 open Finset Rat Tensor Vector
 
 
-@[main]
+@[path]
 private lemma main
   [AddCommMonoidWithOne α]
   [PartialOrder α]

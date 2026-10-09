@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma left
   {a b : ℕ}
 -- given
@@ -12,7 +12,7 @@ private lemma left
   simp_all
 
 
-@[main]
+@[path]
 private lemma main
   {a b : ℕ}
 -- given

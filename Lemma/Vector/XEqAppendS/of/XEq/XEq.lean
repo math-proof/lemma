@@ -4,7 +4,7 @@ import Lemma.Vector.XEq.is.All_XEqGetS
 open Vector
 
 
-@[main]
+@[path]
 private lemma main
   [XEq α]
   {a a' : List.Vector α n}

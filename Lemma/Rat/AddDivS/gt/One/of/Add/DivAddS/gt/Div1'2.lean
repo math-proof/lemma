@@ -10,7 +10,7 @@ import Lemma.Rat.DivAdd.eq.AddDivS
 open Rat Nat
 
 
-@[main]
+@[path]
 private lemma main
 -- α is a linear ordered field, e.g. ℝ or ℚ
   [Field α] [LinearOrder α] [IsStrictOrderedRing α]

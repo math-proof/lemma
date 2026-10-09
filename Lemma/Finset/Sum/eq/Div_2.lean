@@ -2,7 +2,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma gauss_summation
 -- given
   (n : ℕ) :

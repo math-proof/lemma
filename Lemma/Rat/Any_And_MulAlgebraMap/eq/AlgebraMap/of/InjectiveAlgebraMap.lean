@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [Algebra_QuasiFiniteAt_exists_algebraMap_mul_eq_of_isIntegrallyClosed_of_injective](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Algebra_QuasiFiniteAt_exists_algebraMap_mul_eq_of_isIntegrallyClosed_of_injective.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {R S K : Type} [CommRing R] [IsDomain R] [IsIntegrallyClosed R] [CommRing S] [Field K] [Algebra R S] [Algebra R K] [IsFractionRing R K] [Algebra S K] [IsScalarTower R S K] [Algebra.FiniteType R S]
   {𝔔 : Ideal S} [𝔔.IsPrime] [Algebra.QuasiFiniteAt R 𝔔]

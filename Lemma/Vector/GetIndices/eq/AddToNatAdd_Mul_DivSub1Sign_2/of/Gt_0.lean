@@ -7,7 +7,7 @@ import sympy.vector.vector
 open Int Nat Slice List
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   {a b : ℤ}
   {N d : ℕ}

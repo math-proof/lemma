@@ -4,7 +4,7 @@ import sympy.matrices.dense
 open scoped Matrix
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
 -- given
   (X : Tensor α [m, n]) :

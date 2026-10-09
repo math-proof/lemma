@@ -23,7 +23,7 @@ private lemma Er_bdd [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S
 /--
 `∇ ∑' t, γ ^ t * 𝔼[r[t]] = ∑' t, γ ^ t • ∇ 𝔼[r[t]]`
 -/
-@[main]
+@[path]
 private lemma main
   [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [CompleteSpace Θ] [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A] [DecidableEq S]
   {M : Model Θ S A}

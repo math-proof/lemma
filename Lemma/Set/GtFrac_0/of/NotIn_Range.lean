@@ -6,7 +6,7 @@ import Lemma.Set.SDiff_Finset.eq.Ioo
 open Set
 
 
-@[main]
+@[path]
 private lemma main
   [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
   [FloorRing α]

@@ -2,7 +2,7 @@ import sympy.concrete.quantifier
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {p f : α → Prop}
 -- given

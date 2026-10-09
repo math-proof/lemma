@@ -6,7 +6,7 @@ import Lemma.List.TakeCons.eq.Cons_Take.of.Gt_0
 open List
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
 -- given
   (s : List α)

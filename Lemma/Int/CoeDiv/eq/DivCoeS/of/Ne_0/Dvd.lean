@@ -2,7 +2,7 @@ import Lemma.Int.NeCoe_0.is.Ne_0
 open Int
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [DivisionRing α]
   [CharZero α]

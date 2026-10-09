@@ -3,7 +3,7 @@ import Lemma.List.ProdTake.eq.MulProdTake.of.GtLength
 open List
 
 
-@[main]
+@[path]
 private lemma simp
   {s : List ℕ}
 -- given
@@ -19,7 +19,7 @@ private lemma simp
     exact h_d
 
 
-@[main]
+@[path]
 private lemma main
   {s : List ℕ}
 -- given

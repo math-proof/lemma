@@ -14,7 +14,7 @@ open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random 
 /--
 `𝔼[1{s[t] = x ∧ a[t] = u} * f(s[t+1])] = Pr(s[t] = x) * π_θ(u | x) * ∑ y, T(x, u, y) * f y`.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A] [DecidableEq S] [DecidableEq A]
   {M : Model Θ S A}

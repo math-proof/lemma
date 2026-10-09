@@ -3,7 +3,7 @@ import Lemma.Vector.EqCons_Tail
 open Vector
 
 
-@[main]
+@[path]
 private lemma main
   [Add α] [Zero α] [Mul α]
 -- given

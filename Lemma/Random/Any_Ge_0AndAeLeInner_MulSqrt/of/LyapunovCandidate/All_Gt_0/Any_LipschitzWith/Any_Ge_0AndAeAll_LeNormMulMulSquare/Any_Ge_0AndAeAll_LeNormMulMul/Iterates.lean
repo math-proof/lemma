@@ -4,7 +4,7 @@ import Lemma.Real.Any_And_Ge_0_All_LeInner.of.LyapunovCandidate
 open MeasureTheory
 
 
-@[main]
+@[path]
 private lemma main
   {d : ℕ}
   {Ω : Type*} [MeasurableSpace Ω]

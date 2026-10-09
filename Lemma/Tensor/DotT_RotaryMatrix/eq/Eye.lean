@@ -5,7 +5,7 @@ import Lemma.Tensor.RotaryMatrix0.eq.Eye
 open Nat Tensor
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (α : Tensor ℝ [d]) :

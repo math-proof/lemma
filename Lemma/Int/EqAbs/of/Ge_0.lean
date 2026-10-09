@@ -1,7 +1,7 @@
 import Lemma.Int.Abs.eq.IteGe_0
 
 
-@[main]
+@[path]
 private lemma main
   [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
   {x : α}

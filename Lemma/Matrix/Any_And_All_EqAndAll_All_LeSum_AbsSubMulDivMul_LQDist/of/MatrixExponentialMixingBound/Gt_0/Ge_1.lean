@@ -4,7 +4,7 @@ import Lemma.Matrix.Nonempty_FrozenInvariantLawWitness.of.UniformExponentialMixi
 import Lemma.Matrix.Any_EqHQAndEqCMixAndEqAndAll_EqToFunSemigroupVecMul_Exp.of.ShortNoteGeneratorAssumptions.MatrixExponentialMixingBound.Gt_0.Ge_1
 
 
-@[main]
+@[path]
 private lemma main
   {S : Type*} [Fintype S] [DecidableEq S]
   {d : ℕ}

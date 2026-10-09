@@ -4,7 +4,7 @@ import Lemma.Measure.Measurable_IteratesUpdate.of.Measurable.Measurable.Le
 open MeasureTheory Finset Preorder Measure
 
 
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace S] [MeasurableSpace Z]
   {n m : ℕ}

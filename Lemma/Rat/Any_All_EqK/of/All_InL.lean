@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [MonoidHom_exists_subfield_units_coe_eq](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_MonoidHom_exists_subfield_units_coe_eq.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [Group G] [Field L]
   {K : Subfield L}

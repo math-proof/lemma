@@ -2,7 +2,7 @@ import stdlib.SEq
 import sympy.vector.vector
 
 
-@[main]
+@[path]
 private lemma main
   [Zero α]
 -- given

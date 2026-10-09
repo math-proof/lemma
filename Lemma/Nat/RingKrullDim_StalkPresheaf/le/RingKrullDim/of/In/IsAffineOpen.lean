@@ -6,7 +6,7 @@ open CategoryTheory AlgebraicGeometry
 /--
 [AlgebraicGeometry_IsAffineOpen_ringKrullDim_stalk_le](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_IsAffineOpen_ringKrullDim_stalk_le.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {X : Scheme.{u}}
   {U : X.Opens}

@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {g f h : α → Prop}
 -- given

@@ -4,7 +4,7 @@ import Lemma.Tensor.Le.is.LeDataS
 open Tensor
 
 
-@[main, fin]
+@[path, fin]
 private lemma main
   [LE α]
   {A B : Tensor α s}

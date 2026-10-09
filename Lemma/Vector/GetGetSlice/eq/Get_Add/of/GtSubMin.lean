@@ -6,7 +6,7 @@ import Lemma.Vector.GetIndices.eq.AddToNatAdd_Mul_DivSub1Sign_2.of.Gt_0
 open List Nat Vector
 
 
-@[main, fin]
+@[path, fin]
 private lemma main
   {m n j i : ℕ}
 -- given

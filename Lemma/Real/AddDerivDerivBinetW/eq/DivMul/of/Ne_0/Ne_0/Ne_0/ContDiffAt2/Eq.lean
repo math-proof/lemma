@@ -7,7 +7,7 @@ import sympy.Basic
 Binet orbital ODE: from (*) in the angle domain,
 \(w''+w=Cm/J^2\).
 -/
-@[main]
+@[path]
 private lemma main
   {r : ℝ → ℝ}
   {J m C φ : ℝ}

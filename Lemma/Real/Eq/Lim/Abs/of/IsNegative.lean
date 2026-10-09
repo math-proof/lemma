@@ -5,7 +5,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {g : ℝ → ℝ}
   {x₀ y : ℝ}

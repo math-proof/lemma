@@ -6,7 +6,7 @@ open CategoryTheory CategoryTheory.Limits
 /--
 [CategoryTheory_IsPullback_fst_pullbackMap_of_comp_eq](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_CategoryTheory_IsPullback_fst_pullbackMap_of_comp_eq.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {C : Type w} [Category.{v} C]
   {X X' S T : C}

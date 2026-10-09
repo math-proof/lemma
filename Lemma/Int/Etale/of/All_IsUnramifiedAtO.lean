@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [Algebra_etale_of_moduleFinite_of_flat_of_forall_isUnramifiedAt](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Algebra_etale_of_moduleFinite_of_flat_of_forall_isUnramifiedAt.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing O] [IsNoetherianRing O] [CommRing C] [Algebra O C] [Module.Finite O C] [Module.Flat O C]
 -- given

@@ -6,7 +6,7 @@ open MeasureTheory PolicyGradient
 /--
 The expected clamped reward is bounded: `‖rkd x u‖ = ‖𝔼[r[t] | s[t] = x, a[t] = u]‖ ≤ |R|`.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace S] [ReferenceMeasure A]
   {M : DensityModel Θ S A}

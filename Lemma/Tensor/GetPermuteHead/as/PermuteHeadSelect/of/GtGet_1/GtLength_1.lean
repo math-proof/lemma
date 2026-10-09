@@ -71,7 +71,7 @@ open Bool List Nat Tensor Vector Fin
 set_option maxHeartbeats 500000
 
 
-@[main]
+@[path]
 private lemma main
   [NeZero d]
   {s : List ℕ}

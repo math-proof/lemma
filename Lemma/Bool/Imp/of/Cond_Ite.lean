@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   [Decidable a] [Decidable b]
   {p f g k : α}

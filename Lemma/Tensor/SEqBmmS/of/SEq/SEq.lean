@@ -7,7 +7,7 @@ import torch.Tensor.bmm
 open Bool List
 
 
-@[main]
+@[path]
 private lemma main
   [Mul α] [Add α] [Zero α]
   {X : Tensor α (bz ++ [m, k])}

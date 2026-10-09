@@ -6,7 +6,7 @@ import Lemma.Real.Anchors.Time0.eq.Zero
 open Finset
 
 
-@[main]
+@[path]
 private lemma main
   {α : ℕ → ℝ}
   {anc : Anchors α} :

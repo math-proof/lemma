@@ -21,7 +21,7 @@ import Lemma.Int.LeSub.is.Le_Add
 open Complex Int Nat Rat Real Set
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (z : ℂ)

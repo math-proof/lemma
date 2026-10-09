@@ -22,7 +22,7 @@ import Lemma.Set.FMod.in.Icc_Sign.of.FMod.ne.Zero.Lt_0
 open Set Bool Int Nat
 
 
-@[main]
+@[path]
 private lemma main
   {n d : ℤ} :
 -- imply

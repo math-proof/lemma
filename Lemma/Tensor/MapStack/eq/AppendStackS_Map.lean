@@ -3,7 +3,7 @@ import Lemma.Tensor.Stack.eq.AppendStackS
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   {n : ℕ}
   {f : α → β}

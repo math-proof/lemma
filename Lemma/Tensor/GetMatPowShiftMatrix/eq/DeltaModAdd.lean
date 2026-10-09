@@ -9,7 +9,7 @@ import sympy.matrices.expressions.matpow
 open Nat Tensor
 
 
-@[main, fin]
+@[path, fin]
 private lemma main
   [CommRing α] [CharZero α]
   (n : ℕ)

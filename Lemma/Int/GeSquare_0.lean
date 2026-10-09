@@ -2,7 +2,7 @@ import sympy.core.power
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   [Semiring α] [LinearOrder α] [ExistsAddOfLE α] [PosMulMono α] [AddLeftMono α]
 -- given

@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [Mul α] [Add α] [RightDistribClass α]
 -- given

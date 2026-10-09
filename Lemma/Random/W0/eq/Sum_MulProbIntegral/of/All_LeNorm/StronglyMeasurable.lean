@@ -7,7 +7,7 @@ open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 /--
 `W θ f 0 x = ∑ u, π_θ(u | x) * ∫ ρ, f (ρ, x, u) ∂(reward (x, u))`.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A]
   {M : Model Θ S A}

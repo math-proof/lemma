@@ -7,7 +7,7 @@ import Lemma.Random.Any_Ge_0AndAll_All_LeNormSub_MulSumIco_Exp.of.Any_Ge_0AndAll
 open Real Iterates Random Finset
 
 
-@[main]
+@[path]
 private lemma main
   {S : Type*} [Fintype S] [DecidableEq S] [Nonempty S] [MeasurableSpace S] [MeasurableSingletonClass S]
   {d : ℕ}

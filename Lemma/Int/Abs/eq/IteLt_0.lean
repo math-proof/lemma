@@ -3,7 +3,7 @@ import Lemma.Bool.Ite.eq.IteNot
 open Bool Int
 
 
-@[main]
+@[path]
 private lemma main
   [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
 -- given

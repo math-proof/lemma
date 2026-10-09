@@ -5,7 +5,7 @@ import Lemma.Nat.Even.is.Dvd2
 open Nat
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [IntegerRing α]
   {n : α}

@@ -22,7 +22,7 @@ import torch.Tensor.sum
 open Bool Nat Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [Mul α] [Add α] [Zero α]
 -- given
@@ -64,7 +64,7 @@ private lemma main
     simp
 
 
-@[main]
+@[path]
 private lemma resize
   [Mul α] [Add α] [Zero α]
 -- given

@@ -2,7 +2,7 @@ import Lemma.List.GetElemRange.eq.Some.is.Lt.Eq
 open List
 
 
-@[main]
+@[path]
 private lemma main
   {n i : ℕ}
 -- given

@@ -9,7 +9,7 @@ import Lemma.Tensor.GetT.eq.Select
 open Bool Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [Mul α] [Add α] [Zero α]
 -- given

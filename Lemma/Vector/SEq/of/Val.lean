@@ -4,7 +4,7 @@ import Lemma.Bool.UFn.of.Eq
 open Vector Bool
 
 
-@[main]
+@[path]
 private lemma main
   {a : List.Vector α n}
   {b : List.Vector α m}

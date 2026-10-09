@@ -2,7 +2,7 @@ import sympy.functions.elementary.exponential
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   [LogPos α]
 -- given

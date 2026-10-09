@@ -7,7 +7,7 @@ import Lemma.List.EraseIdxAppend.eq.Append_EraseIdx.of.LeLength
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [NonUnitalNonAssocSemiring α]
   {batch_size : List ℕ} {m k n : ℕ}

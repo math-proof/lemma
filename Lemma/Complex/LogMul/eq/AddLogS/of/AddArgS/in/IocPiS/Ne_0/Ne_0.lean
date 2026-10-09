@@ -3,7 +3,7 @@ import sympy.core.numbers
 import sympy.sets.sets
 
 
-@[main]
+@[path]
 private lemma main
   {x y : ℂ}
 -- given

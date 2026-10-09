@@ -4,7 +4,7 @@ import Lemma.List.ProdTake_1.eq.HeadD_1
 open List
 
 
-@[main]
+@[path]
 private lemma main
   [Monoid α]
   {s : List α} :

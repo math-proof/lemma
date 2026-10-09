@@ -3,7 +3,7 @@ import Lemma.Nat.Delta.eq.Ite
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (i j : Fin n) :

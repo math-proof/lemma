@@ -10,7 +10,7 @@ import torch.Tensor
 open List Tensor Vector
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (X : Tensor α s)

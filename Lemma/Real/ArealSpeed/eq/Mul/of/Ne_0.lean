@@ -6,7 +6,7 @@ import sympy.Basic
 Polar expression of areal speed:
 \(\dfrac{ds}{dt}=\dfrac12\rho^2\dot\theta=\dfrac{J}{2m}\).
 -/
-@[main]
+@[path]
 private lemma main
   {m : ℝ}
   {ρ θ : ℝ → ℝ}

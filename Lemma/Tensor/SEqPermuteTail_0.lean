@@ -12,7 +12,7 @@ import Lemma.Vector.Head.eq.Get_0
 open Tensor Vector Bool
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (X : Tensor α s) :

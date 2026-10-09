@@ -3,7 +3,7 @@ import Lemma.Nat.Mul
 open List Nat
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [One α] [CommMagma α]
   {s : List α}

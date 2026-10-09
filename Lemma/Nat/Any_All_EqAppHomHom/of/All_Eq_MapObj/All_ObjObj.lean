@@ -6,7 +6,7 @@ open CategoryTheory CategoryTheory.Limits Opposite
 /--
 [CategoryTheory_Sheaf_exists_iso_of_addEquiv_obj_natural](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_CategoryTheory_Sheaf_exists_iso_of_addEquiv_obj_natural.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {C : Type u} [Category.{v} C]
   {J : GrothendieckTopology C}

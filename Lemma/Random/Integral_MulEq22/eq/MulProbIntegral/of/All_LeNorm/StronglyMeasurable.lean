@@ -9,7 +9,7 @@ open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random 
 /--
 `∫ z, 1{z.a = u} * g z ∂(stageK θ x) = π_θ(u | x) * ∫ ρ, g (ρ, x, u) ∂(reward (x, u))`.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A] [DecidableEq A]
   {M : Model Θ S A}

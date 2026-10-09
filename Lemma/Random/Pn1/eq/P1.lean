@@ -8,7 +8,7 @@ open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Mode
 /--
 The `1`-step state transition: `Pn θ 1 x y = P1 θ x y = ∑ u, π_θ(u | x) * T(x, u, y)`.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A] [DecidableEq S]
   {M : Model Θ S A}

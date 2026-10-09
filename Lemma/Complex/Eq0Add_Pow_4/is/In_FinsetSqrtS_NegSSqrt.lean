@@ -10,12 +10,12 @@ open Complex Set
 
 | attributes | lemma |
 | :---: | :---: |
-| main | Complex.Eq0Add_Pow_4.is.In_FinsetSqrtS_NegSSqrt |
+| path | Complex.Eq0Add_Pow_4.is.In_FinsetSqrtS_NegSSqrt |
 | comm | Complex.In_FinsetSqrtS_NegSSqrt.is.Eq0Add_Pow_4 |
 | mp | Complex.In_FinsetSqrtS_NegSSqrt.of.Eq0Add_Pow_4 |
 | mpr | Complex.Eq0Add_Pow_4.of.In_FinsetSqrtS_NegSSqrt |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   {x α γ : ℂ} :
 -- imply

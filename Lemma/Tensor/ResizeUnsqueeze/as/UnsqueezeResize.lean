@@ -9,7 +9,7 @@ import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.GtLength_0
 open Bool List Tensor
 
 
-@[main, comm, cast]
+@[path, comm, cast]
 private lemma main
   [Zero α]
 -- given

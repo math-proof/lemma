@@ -5,7 +5,7 @@ import Lemma.Vector.MulSub.eq.SubMulS
 open Tensor Vector
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [NonUnitalNonAssocRing α]
 -- given

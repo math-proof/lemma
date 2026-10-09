@@ -2,7 +2,7 @@ import Lemma.Int.Sub.eq.Zero.is.Eq
 open Int
 
 
-@[main]
+@[path]
 private lemma main
   [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
   [FloorRing α]

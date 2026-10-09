@@ -8,7 +8,7 @@ import torch.Tensor
 open Tensor Vector
 
 
-@[main]
+@[path]
 private lemma nat
   [Semiring α]
   [CharZero α]
@@ -21,7 +21,7 @@ private lemma nat
   apply MulZeroClass.mul_zero
 
 
-@[main]
+@[path]
 private lemma main
   [MulZeroClass α]
 -- given
@@ -38,7 +38,7 @@ private lemma main
   apply MulZeroClass.mul_zero
 
 
-@[main]
+@[path]
 private lemma left
   [MulZeroClass α]
   {s : List ℕ}
@@ -54,7 +54,7 @@ private lemma left
   exact MulZeroClass.mul_zero a
 
 
-@[main]
+@[path]
 private lemma right
   [MulZeroClass α]
   {s : List ℕ}

@@ -5,7 +5,7 @@ import Lemma.List.EqCons_Tail.of.NeLength_0
 open List
 
 
-@[main]
+@[path]
 private lemma main
   {s : List α}
   {p: α → Prop}

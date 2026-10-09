@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {s : Finset ι}
   {h : ι → ℝ}

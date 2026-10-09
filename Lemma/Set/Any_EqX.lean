@@ -6,7 +6,7 @@ open Polynomial
 /--
 [AlgebraicCurve_FunctionField_exists_ratFuncAlgHom_apply_X_eq](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicCurve_FunctionField_exists_ratFuncAlgHom_apply_X_eq.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {K F : Type*} [Field K] [IsAlgClosed K] [Field F] [Algebra K F]
   {g : F}

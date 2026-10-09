@@ -11,10 +11,10 @@ open Real Vector
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Vector.CosSub.eq.AddMulS |
+| path | Vector.CosSub.eq.AddMulS |
 | comm | Vector.AddCosCos_SinSin.eq.CosSub |
 -/
-@[main, comm]
+@[path, comm]
 private lemma main
 -- given
   (x y : List.Vector ℝ n) :

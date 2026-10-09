@@ -3,7 +3,7 @@ import sympy.concrete.expr_with_limits
 import Mathlib.Analysis.SpecialFunctions.Exp
 
 
-@[main]
+@[path]
 private lemma main
   [NeZero n]
   {x : Fin n → ℝ} :

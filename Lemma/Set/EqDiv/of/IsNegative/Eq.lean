@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {x : ℝ}
   {g h : ℝ → ℝ}

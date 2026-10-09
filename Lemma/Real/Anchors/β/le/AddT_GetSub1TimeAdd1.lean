@@ -3,7 +3,7 @@ import Lemma.Real.Anchors.TimeAdd1.eq.FindExistsLe
 open Finset
 
 
-@[main]
+@[path]
 private lemma main
   {α : ℕ → ℝ}
   {anc : Anchors α}

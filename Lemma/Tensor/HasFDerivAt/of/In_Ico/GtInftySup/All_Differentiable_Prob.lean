@@ -14,7 +14,7 @@ open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Mode
 Derivative of the time-free closed-form state value: `θ ↦ Vc θ γ x` has derivative
 `∑' k, γ ^ k • fderiv ℝ (fun θ ↦ W θ rc k x) θ`.
 -/
-@[main]
+@[path]
 private lemma main
   [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [CompleteSpace Θ] [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A]
   {M : Model Θ S A}

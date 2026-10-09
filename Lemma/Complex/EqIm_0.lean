@@ -2,7 +2,7 @@ import sympy.Basic
 import sympy.functions.elementary.complexes
 
 
-@[main, subst 0]
+@[path, subst 0]
 private lemma main :
 -- imply
   im 0 = 0 := by

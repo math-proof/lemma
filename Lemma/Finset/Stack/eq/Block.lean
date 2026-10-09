@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma split
   {p q n : ℕ}
   {f : ℕ → ℕ → α} :

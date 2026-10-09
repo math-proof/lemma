@@ -3,7 +3,7 @@ import Mathlib.LinearAlgebra.Vandermonde
 open Matrix Nat
 
 
-@[main]
+@[path]
 private lemma vandermonde
   {n : ℕ}
   {δ : ℝ} :

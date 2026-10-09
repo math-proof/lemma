@@ -2,7 +2,7 @@ import sympy.functions.elementary.trigonometric
 import Lemma.Complex.Norm.eq.Sqrt
 
 
-@[main]
+@[path]
 private lemma main
   {z : ℂ} :
 -- imply

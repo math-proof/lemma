@@ -2,7 +2,7 @@ import Lemma.Bool.Cond.of.Gt_0
 open Bool
 
 
-@[main]
+@[path]
 private lemma main
   [Decidable p]
 -- given

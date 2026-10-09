@@ -3,7 +3,7 @@ import sympy.Basic
 import Lemma.Matrix.Sum_AbsSub.le.Two.of.StochasticVec.StochasticVec
 
 
-@[main]
+@[path]
 private lemma main
   {S : Type*} [Fintype S] [DecidableEq S]
   {d : ℕ}

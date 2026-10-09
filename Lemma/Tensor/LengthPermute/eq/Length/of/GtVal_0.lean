@@ -4,7 +4,7 @@ import Lemma.Tensor.LengthPermute.eq.Get_0.of.GtVal_0
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   {i : Fin s.length}
 -- given

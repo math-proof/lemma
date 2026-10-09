@@ -5,7 +5,7 @@ import Lemma.List.SliceDrop.eq.Slice_AddS
 open List Nat
 
 
-@[main]
+@[path]
 private lemma main
   {s : List α}
 -- given

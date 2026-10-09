@@ -4,7 +4,7 @@ import Mathlib
 /--
 [AbsoluteValue_exists_forall_sub_lt_of_pairwise_not_isEquiv](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AbsoluteValue_exists_forall_sub_lt_of_pairwise_not_isEquiv.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [Field K] [Finite ι]
   {v : ι → AbsoluteValue K ℝ}

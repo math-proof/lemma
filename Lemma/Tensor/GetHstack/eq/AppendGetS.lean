@@ -2,7 +2,7 @@ import Lemma.Tensor.GetAppend.eq.AppendGetS
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (A : Tensor α [d, n])

@@ -4,7 +4,7 @@ import sympy.Basic
 /--
 the triangular inequality for `max` and `*`
 -/
-@[main]
+@[path]
 private lemma main
   [Mul α]
   [LinearOrder α]

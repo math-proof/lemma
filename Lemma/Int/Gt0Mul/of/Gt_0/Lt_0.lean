@@ -3,7 +3,7 @@ import Lemma.Nat.Mul
 open Nat Int
 
 
-@[main]
+@[path]
 private lemma main
   [CommRing α] [LinearOrder α] [IsStrictOrderedRing α]
   {x y : α}

@@ -8,7 +8,7 @@ import Lemma.Vector.GetRepeat.eq.Get_Mod
 open Nat Vector
 
 
-@[main, fin]
+@[path, fin]
 private lemma main
   [Zero α]
 -- given

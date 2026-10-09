@@ -6,7 +6,7 @@ open CategoryTheory AlgebraicGeometry
 /--
 [AlgebraicGeometry_Scheme_Hom_finrank_eq_of_isPullback_of_irreducibleSpace](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_Scheme_Hom_finrank_eq_of_isPullback_of_irreducibleSpace.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {X Y X' Y' : Scheme.{u}} [IrreducibleSpace Y]
   {π : X ⟶ Y} [IsFinite π] [Flat π] [LocallyOfFinitePresentation π]

@@ -5,14 +5,14 @@ open Nat
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Nat.Pow.eq.Zero.is.Eq_0.of.Gt_0 |
+| path | Nat.Pow.eq.Zero.is.Eq_0.of.Gt_0 |
 | comm | Nat.Eq_0.is.Pow.eq.Zero.of.Gt_0 |
 | mp | Nat.Eq_0.of.Pow.eq.Zero.Gt_0 |
 | mpr 6 | Nat.Pow.eq.Zero.of.Eq_0.Gt_0 |
 | mp.mt | Nat.Pow.ne.Zero.of.Ne_0.Gt_0 |
 | mpr.mt 6 | Nat.Ne_0.of.Pow.ne.Zero.Gt_0 |
 -/
-@[main, comm, mp, mpr 6, mp.mt, mpr.mt 6]
+@[path, comm, mp, mpr 6, mp.mt, mpr.mt 6]
 private lemma main
   [MonoidWithZero α]
   [NoZeroDivisors α]

@@ -16,7 +16,7 @@ private lemma  trace_pi_self (k : Type*) [Field k] (ι : Type*) [Fintype ι] [De
 
 
 open scoped Classical in
-@[main]
+@[path]
 private lemma main
   [Field K] [NumberField K]
   {z : mixedSpace K} :

@@ -9,7 +9,7 @@ import Lemma.Vector.Eq.is.ToList
 open List Vector Nat
 
 
-@[main]
+@[path]
 private lemma main
   {a b : List (List.Vector α n)}
 -- given

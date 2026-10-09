@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma Comm
   [Lattice α]
   [AddGroup α]

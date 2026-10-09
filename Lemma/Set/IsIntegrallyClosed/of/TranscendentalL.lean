@@ -6,7 +6,7 @@ open Polynomial
 /--
 [Subalgebra_isIntegrallyClosed_adjoin_singleton_of_transcendental](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Subalgebra_isIntegrallyClosed_adjoin_singleton_of_transcendental.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [Field L] [CommRing F] [IsDomain F] [Algebra L F]
   {x : F}

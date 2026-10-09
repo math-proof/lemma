@@ -23,7 +23,7 @@ private lemma  ringHom_padicInt_wittVector_eq (p : ℕ) [hp : Fact p.Prime] {R :
     ring
 
   rw [this, WittVector.mul_pow_charP_coeff_zero _ (Nat.lt_succ_self m), WittVector.zero_coeff]
-@[main]
+@[path]
 private lemma main
   {p : ℕ} [Fact p.Prime]
   {R : Type u} [CommRing R] [CharP R p]

@@ -6,7 +6,7 @@ import sympy.Basic
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   [DecidableEq α]
   {x : ℂ}

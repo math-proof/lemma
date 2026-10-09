@@ -4,7 +4,7 @@ import Lemma.Rat.Div.gt.Zero.of.Lt_0.Lt_0
 open Rat
 
 
-@[main]
+@[path]
 private lemma main
   [Field α] [LinearOrder α] [IsStrictOrderedRing α]
   {x y : α}

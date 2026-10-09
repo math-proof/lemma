@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma upper.offset
   {n u i j : ℤ}
 -- given
@@ -24,7 +24,7 @@ private lemma upper.offset
     omega
 
 
-@[main]
+@[path]
 private lemma lower.offset
   {n l i j : ℤ}
 -- given
@@ -47,7 +47,7 @@ private lemma lower.offset
     omega
 
 
-@[main]
+@[path]
 private lemma upper
   {n u i j : ℤ}
 -- given

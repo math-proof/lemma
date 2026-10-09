@@ -3,7 +3,7 @@ import sympy.Basic
 
 
 /-- `Prod.map` of measurable maps is measurable. -/
-@[main]
+@[path]
 private lemma main
   {α β γ δ : Type*}
   [MeasurableSpace α] [MeasurableSpace β] [MeasurableSpace γ] [MeasurableSpace δ]

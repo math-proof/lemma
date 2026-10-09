@@ -12,7 +12,7 @@ open Tensor
 set_option maxHeartbeats 400000
 
 
-@[main]
+@[path]
 private lemma main
   [CommRing α]
 -- given
@@ -29,12 +29,8 @@ private lemma main
     simp [Tensor.toMatrix]
     have hrow := EqGetStack.fin (fun i : Fin n => a * id (α := Tensor α [n]) X[i]) i
     have hcell := GetMul.eq.MulGetS a (id (α := Tensor α [n]) X[i]) j
-    have h1 : (Y[i][j] : Tensor α []) = ((a * id (α := Tensor α [n]) X[i])[j] : Tensor α []) :=
-      congrArg (fun t : Tensor α [n] => (t[j] : Tensor α [])) hrow
-    apply Eq.trans h1
-    apply Eq.trans (by
-      convert hcell
-      rfl)
+    apply Eq.trans (congrArg (fun t : Tensor α [n] => (t[j] : Tensor α [])) hrow)
+    apply Eq.trans (by convert hcell)
     apply Eq.of.EqDataS
     simp [HMul.hMul, Mul.mul]
     congr 1

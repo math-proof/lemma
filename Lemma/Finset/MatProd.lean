@@ -3,7 +3,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma limits.subst.offset
   {m k : ℕ}
   {d : ℤ}

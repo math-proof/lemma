@@ -32,7 +32,7 @@ The proof rewrites `A[t]` pointwise into the closed form `(γ * λ) ** Stack[k](
 `V` is the value function, `AeNormSub.le.DeltaBound.of.In_Ico` in `sympy.stats.policy_trajectory.advantage`) and applies
 `Tensor.EqDot_GradExpect.of.Eq_Conditioned.Eq_Expect.All_Differentiable_Prob.GtInftySup.generalized_advantage_estimate`.
 -/
-@[main]
+@[path]
 private lemma main
   [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [CompleteSpace Θ]
   [ReferenceMeasure S] [MeasurableSingletonClass S] [Fintype S]

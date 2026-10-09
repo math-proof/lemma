@@ -9,7 +9,7 @@ set_option maxHeartbeats 2000000
 private lemma sc_ext {x y : ℝ} (h : x = y) : (x : Tensor ℝ []) = (y : Tensor ℝ []) := by rw [h]
 
 
-@[main]
+@[path]
 private lemma main
   {n d_z : ℕ}
   {l u d : ℕ}
@@ -51,7 +51,7 @@ private lemma main
   simp only [h₀, h₁, h₂, h₃, e]
 
 
-@[main]
+@[path]
 private lemma compact
   {n d_z : ℕ}
   {l u d : ℕ}

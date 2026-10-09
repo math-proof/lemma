@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   [LE α]
   {x y : α}
@@ -13,7 +13,7 @@ private lemma main
   exact h
 
 
-@[main]
+@[path]
 private lemma reverse.given
   {a x : ℝ}
 -- given
@@ -24,7 +24,7 @@ private lemma reverse.given
   exact h
 
 
-@[main]
+@[path]
 private lemma reverse
   {a x : ℝ}
 -- given

@@ -3,7 +3,7 @@ import sympy.Basic
 open Function
 
 
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace α] [MeasurableSpace β] [MeasurableSpace γ]
   {f : α → β → γ}

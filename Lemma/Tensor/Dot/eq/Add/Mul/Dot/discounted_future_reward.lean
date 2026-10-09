@@ -2,7 +2,7 @@ import sympy.Basic
 import Mathlib.Topology.Algebra.InfiniteSum.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {γ : ℝ}
   {r : ℕ → ℝ}

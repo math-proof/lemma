@@ -3,7 +3,7 @@ import Lemma.List.TailTake.eq.TakeTail
 open List
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (s : List α)

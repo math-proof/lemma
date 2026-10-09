@@ -2,7 +2,7 @@ import Mathlib.Analysis.Normed.Lp.PiLp
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   [Fintype α]
   {f : α → ℝ} :

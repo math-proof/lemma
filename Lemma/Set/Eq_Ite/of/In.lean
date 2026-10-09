@@ -3,7 +3,7 @@ import sympy.Basic
 open Classical
 
 
-@[main]
+@[path]
 private lemma expr_swap
   {x : ℤ}
   {S A : Set ℤ}

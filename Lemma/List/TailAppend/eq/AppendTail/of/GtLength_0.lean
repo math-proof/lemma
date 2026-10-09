@@ -2,7 +2,7 @@ import Lemma.List.TailAppend.eq.AppendTail.of.Ne_Nil
 open List
 
 
-@[main]
+@[path]
 private lemma main
   {a : List α}
 -- given

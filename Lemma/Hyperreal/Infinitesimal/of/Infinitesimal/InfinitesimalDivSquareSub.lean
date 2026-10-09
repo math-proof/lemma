@@ -5,7 +5,7 @@ import Lemma.Hyperreal.NotInfiniteAdd_Square.of.InfinitesimalDivSquare.Infinites
 open Hyperreal
 
 
-@[main]
+@[path]
 private lemma main
   {a b : ℝ*}
 -- given

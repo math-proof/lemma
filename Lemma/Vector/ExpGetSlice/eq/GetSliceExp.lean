@@ -3,7 +3,7 @@ import sympy.vector.functions
 open Vector
 
 
-@[main]
+@[path]
 private lemma main
   [Exp α]
 -- given

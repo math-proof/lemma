@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma fn
   [DecidableEq α]
 -- given
@@ -13,7 +13,7 @@ private lemma fn
   simp
 
 
-@[main]
+@[path]
 private lemma main
   [DecidableEq α]
 -- given

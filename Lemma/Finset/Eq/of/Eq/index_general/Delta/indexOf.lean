@@ -4,7 +4,7 @@ import sympy.Basic
 import Lemma.Nat.EqGetIndex.of.Any_Eq
 
 
-@[main]
+@[path]
 private lemma main
   {n i j : ℕ}
   {x : ℕ → ℤ}

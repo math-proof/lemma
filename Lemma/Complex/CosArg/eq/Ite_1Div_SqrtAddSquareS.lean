@@ -3,7 +3,7 @@ import Lemma.Complex.Norm.eq.Sqrt
 open Complex
 
 
-@[main]
+@[path]
 private lemma main
   {z : ℂ} :
 -- imply

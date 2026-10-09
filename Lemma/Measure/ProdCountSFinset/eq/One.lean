@@ -4,7 +4,7 @@ import sympy.Basic
 open MeasureTheory
 
 
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace α] [MeasurableSpace β]
   [Countable α] [Countable β]

@@ -3,7 +3,7 @@ import Lemma.Tensor.GetHstack.eq.AppendGetS
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h : j < n)

@@ -2,7 +2,7 @@ import Lemma.Set.In_Cap.is.All_In
 open Set
 
 
-@[main]
+@[path]
 private lemma main
   {f : α → Set α}
   {A B : Set α}

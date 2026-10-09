@@ -6,7 +6,7 @@ Scaffold skeleton ``.lean`` files for porting theorems from **any source**
 this repo's ``Lemma/`` tree.
 
 The script reads a source ``.lean`` file, applies the **PORTING RULES**
-(below) to transform it into the repo's flat ``@[main] private lemma main``
+(below) to transform it into the repo's flat ``@[path] private lemma main``
 format, derives a ``Lemma/…`` path via the two-phase suggester, and writes
 the skeleton with ``sorry`` (or the source proof, if extractable).
 
@@ -18,9 +18,9 @@ rules in order:
 1. **Remove ``namespace`` statements.**
    Delete every ``namespace X`` and its matching ``end X`` (or bare
    ``end``).  Dedent the enclosed declarations by one level (2 spaces).
-   Rationale: the repo uses top-level ``@[main] private lemma main`` so
+   Rationale: the repo uses top-level ``@[path] private lemma main`` so
    that ``Name.lemmaName`` produces the correct chapter-level name
-   (e.g. ``Real.Maclaurin``).  A ``@[main] private lemma main`` inside
+   (e.g. ``Real.Maclaurin``).  A ``@[path] private lemma main`` inside
    ``namespace Multiset`` has ``declName = Multiset.main`` whose
    ``suffix`` decapitalizes *all* components, yielding garbage names.
 
@@ -38,14 +38,14 @@ rules in order:
    Replace every ``theorem X`` with ``private lemma X``.  Only the main
    result should be public; all helpers are ``private``.  (The main
    result itself is also ``private lemma main`` — see rule 4 — but it is
-   exported via ``@[main]`` to a public chapter-level name.)
+   exported via ``@[path]`` to a public chapter-level name.)
 
-4. **Exactly one ``@[main] private lemma main``.**
+4. **Exactly one ``@[path] private lemma main``.**
    Among all declarations in the file, exactly one — the ported theorem —
    must be named ``main``, declared ``private lemma main``, and
-   attributed ``@[main]``.  All other declarations are ``private lemma``
-   (helpers) without ``@[main]``.
-   ``@[main]`` must be at **top level** (outside any namespace) so that
+   attributed ``@[path]``.  All other declarations are ``private lemma``
+   (helpers) without ``@[path]``.
+   ``@[path]`` must be at **top level** (outside any namespace) so that
    ``Name.lemmaName`` generates ``<Chapter>.<TheoremName>`` rather than
    names with namespace suffixes (see rule 1).
 
@@ -123,7 +123,7 @@ fallback when the parser rejects the file.
 
 Rules 1–3 and 5 are applied mechanically by :func:`transform_source`.
 Rules 4, 6, 7 and 8 are applied by :func:`make_skeleton` which wraps the main theorem
-in ``@[main] private lemma main``.  Edge cases (multi-line attributes,
+in ``@[path] private lemma main``.  Edge cases (multi-line attributes,
 hypothesis-carrying ``variable``, nested namespaces) may require manual
 cleanup after scaffolding.
 
@@ -609,7 +609,7 @@ def transform_source(text: str) -> str:
     Rule 3: Convert ``theorem`` → ``private lemma``.
     Rule 5: Reorder so all ``def`` declarations precede ``lemma`` declarations.
 
-    Rule 4 (``@[main] private lemma main``) is handled by
+    Rule 4 (``@[path] private lemma main``) is handled by
     :func:`make_skeleton`, not here.
 
     Returns the transformed text.  Edge cases (hypothesis-carrying
@@ -775,7 +775,7 @@ def find_declarations(text: str) -> list[tuple[int, str, str]]:
 
     Returns a list of ``(line_index, kind, name)`` where ``kind`` is
     ``def``/``theorem``/``lemma`` and ``name`` is the declaration name.
-    Handles optional attributes (``@[main]``) and modifiers
+    Handles optional attributes (``@[path]``) and modifiers
     (``private``/``protected``/``noncomputable``).
     """
     decls: list[tuple[int, str, str]] = []
@@ -1296,7 +1296,7 @@ def make_skeleton(
     """Build the contents of the skeleton ``.lean`` file.
 
     Applies PORTING RULE 4: the main theorem is wrapped as
-    ``@[main] private lemma main`` with ``-- given`` / ``-- imply`` /
+    ``@[path] private lemma main`` with ``-- given`` / ``-- imply`` /
     ``-- proof`` section comments.  Helper ``def`` and ``lemma``
     declarations (already transformed by :func:`transform_source`) are
     placed before the main lemma (rule 5).
@@ -1355,7 +1355,7 @@ def make_skeleton(
 import sympy.Basic
 {open_block}
 {preamble}
-@[main]
+@[path]
 private lemma main
 {signature}  {conclusion} :={proof_head}
 -- proof
@@ -1516,7 +1516,7 @@ def _cmd_scaffold(args: argparse.Namespace, ported_root: Path) -> int:
                 f"/blob/main/{rel}"
             )
 
-    # Build the skeleton (rule 4: @[main] private lemma main).
+    # Build the skeleton (rule 4: @[path] private lemma main).
     skeleton = make_skeleton(
         source_url, statement, proof, defs, helpers, args.date,
         source_label=args.source_label, proof_tactic=proof_tactic,

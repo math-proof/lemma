@@ -2,7 +2,7 @@ import Lemma.Vector.EqFlattenSplitAt
 open Vector
 
 
-@[main]
+@[path]
 private lemma main
   {s s': List ℕ}
   {v : List.Vector α s.prod}

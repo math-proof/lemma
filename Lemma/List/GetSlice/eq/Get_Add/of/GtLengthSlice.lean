@@ -5,7 +5,7 @@ import Lemma.Nat.Lt.of.Lt_Min
 open List Nat
 
 
-@[main]
+@[path]
 private lemma main
   {s : List α}
 -- given

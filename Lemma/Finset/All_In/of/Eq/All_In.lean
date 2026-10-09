@@ -4,7 +4,7 @@ import sympy.Basic
 open Matrix
 
 
-@[main]
+@[path]
 private lemma swap2
   {n : ℕ}
   {S : Set (Fin (n + 1) → ℂ)}

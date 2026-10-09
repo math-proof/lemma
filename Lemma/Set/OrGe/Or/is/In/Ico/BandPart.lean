@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma lower
   {n l i j : ℤ}
 -- given

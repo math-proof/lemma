@@ -2,7 +2,7 @@ import Lemma.Bool.Bool.eq.Ite
 open Bool
 
 
-@[main]
+@[path]
 private lemma main
   [DecidableEq α]
 -- given

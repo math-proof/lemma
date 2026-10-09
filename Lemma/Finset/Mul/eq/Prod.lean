@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma distribute
   {i n : ℕ}
   {a : ℝ}
@@ -12,7 +12,7 @@ private lemma distribute
   rw [Finset.prod_mul_distrib, Finset.prod_const, Nat.card_Ico, show n + i - i = n by omega, mul_comm]
 
 
-@[main]
+@[path]
 private lemma division
   {n : ℕ}
   {f g : ℕ → ℝ} :
@@ -22,7 +22,7 @@ private lemma division
   (Finset.prod_div_distrib f g).symm
 
 
-@[main]
+@[path]
 private lemma limits.push
   [CommMonoid α]
   {i n : ℕ}

@@ -13,7 +13,7 @@ import Lemma.Nat.EqVal_0
 open Tensor List Bool Vector Nat Fin
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (X : Tensor α s) :

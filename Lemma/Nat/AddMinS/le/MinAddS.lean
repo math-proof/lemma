@@ -4,7 +4,7 @@ import sympy.Basic
 /--
 the triangular inequality for `min` and `+`
 -/
-@[main]
+@[path]
 private lemma main
   [Add α]
   [LinearOrder α]

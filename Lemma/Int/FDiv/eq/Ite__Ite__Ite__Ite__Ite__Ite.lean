@@ -4,7 +4,7 @@ import Lemma.Int.FDiv.eq.Ite__Ite__Ite__Ite__Ite
 open Bool Int
 
 
-@[main]
+@[path]
 private lemma main
   {n d : ℤ} :
 -- imply

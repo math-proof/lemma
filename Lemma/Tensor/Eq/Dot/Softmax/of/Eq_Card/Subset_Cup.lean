@@ -11,7 +11,7 @@ in the hyperreal masked softmax, for logits \( A_{ij} \): the mask keeps exactly
 \Bigl[ \sum_{j < m} \frac{e^{A_{i, d_j}}}{\sum_{k < m} e^{A_{i, d_k}}}\, V_{d_j \ell} \Bigr]_{i\ell} .
 \]
 -/
-@[main]
+@[path]
 private lemma gather
   {n m d_z : ℕ}
   {d : Fin m → Fin n}
@@ -38,7 +38,7 @@ py (`position_representation.relative`): the same gather for \( \operatorname{so
 \qquad A_{ij} = \frac{\sum_t Q_{it}(K_{jt} + K'_{jt})}{\sqrt{d_z}} .
 \]
 -/
-@[main]
+@[path]
 private lemma position_representation.relative.gather
   {n m d_z : ℕ}
   {d : Fin m → Fin n}

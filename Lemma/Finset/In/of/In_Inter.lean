@@ -3,7 +3,7 @@ import Lemma.Set.In.of.In.Subset
 open Finset Set
 
 
-@[main]
+@[path]
 private lemma main
   [DecidableEq α]
   {x : α}
@@ -17,7 +17,7 @@ private lemma main
   apply SubsetInter
 
 
-@[main]
+@[path]
 private lemma left
   [DecidableEq α]
   {x : α}

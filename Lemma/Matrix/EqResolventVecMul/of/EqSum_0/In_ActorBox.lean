@@ -13,7 +13,7 @@ import Lemma.Matrix.IntegrableOn.of.EqSum_0.In_ActorBox
 open Matrix Filter MeasureTheory Topology
 
 
-@[main]
+@[path]
 private lemma main
   {S : Type*} [Fintype S] [DecidableEq S]
   {d : ℕ}

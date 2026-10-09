@@ -5,7 +5,7 @@ import Lemma.Rat.Div.eq.Mul_Inv
 open Vector Rat
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [DivInvMonoid α]
 -- given

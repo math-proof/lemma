@@ -25,11 +25,11 @@ private lemma mp
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Hyperreal.Infinite.is.Infinite.of.XEq |
+| path | Hyperreal.Infinite.is.Infinite.of.XEq |
 | mp   | Hyperreal.Infinite.of.Infinite.XEq |
 | mp.mt | Hyperreal.NotInfinite.of.NotInfinite.XEq |
 -/
-@[main, mp, mp.mt]
+@[path, mp, mp.mt]
 private lemma main
   {a b : ℝ*}
 -- given

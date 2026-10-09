@@ -3,7 +3,7 @@ import Lemma.Bool.HEq.of.SEq
 open Tensor Bool
 
 
-@[main]
+@[path]
 private lemma main
   {A : Tensor α s}
   {B : Tensor α s'}

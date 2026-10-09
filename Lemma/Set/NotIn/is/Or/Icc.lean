@@ -5,11 +5,11 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Set.NotIn.is.Or.Icc |
+| path | Set.NotIn.is.Or.Icc |
 | mp | Set.Or.Icc.of.NotIn |
 | mpr | Set.NotIn.of.Or.Icc |
 -/
-@[main, mp, mpr]
+@[path, mp, mpr]
 private lemma main
   {x a b : ℝ} :
 -- imply

@@ -6,7 +6,7 @@ import Lemma.Int.Lt_Sub.is.LtAdd
 open Bool Int Rat
 
 
-@[main]
+@[path]
 private lemma main
   [Field α] [LinearOrder α] [IsStrictOrderedRing α] [FloorRing α]
   {start stop step i : ℕ}

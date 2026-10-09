@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main, comm 2]
+@[path, comm 2]
 private lemma main
   [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
   {a b b' c : α}
@@ -14,7 +14,7 @@ private lemma main
   grind
 
 
-@[main, comm 2]
+@[path, comm 2]
 private lemma left
   [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
   {a a' b c : α}

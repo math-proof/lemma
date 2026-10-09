@@ -467,17 +467,17 @@ comm_swap_is() {
 # suppressing every attribute-generated (synthetic) row. `[^]]` is the POSIX
 # way to negate `]` (it is a literal member right after `[^`); the backslash
 # variant is mis-parsed by bash 5.1 inside `[[ =~ ]]`.
-re_main_attr=$'\n''@\[[[:space:]]*main,[[:space:]]*([^]]+)\]'
+re_main_attr=$'\n''@\[[[:space:]]*path,[[:space:]]*([^]]+)\]'
 while read -r file; do
   # Get relative path
   rel_file="${file#./}"
   content=$(<"$file")
-  # Extract the docstring directly preceding `@[main, ...]` and detect the
+  # Extract the docstring directly preceding `@[path, ...]` and detect the
   # `constructor order` note. This uses parameter expansion rather than a
   # regex because bash `.` never matches a newline (run.ps1 matches this group
   # with `[\s\S]*`), so the multi-line table docstrings were being skipped
   # and the `mt N` indices got reversed on constructor-order files.
-  _prefix="${content%%$'\n@\['*main*}"
+  _prefix="${content%%$'\n@\['*path*}"
   if [[ "$_prefix" == *$'\n-/' ]]; then
     constructor_comment="${_prefix##*$'\n/--'$'\n'}"
   else
@@ -627,10 +627,10 @@ while read -r file; do
       if new_module=$(and_proj_module "$mpModule" true); then
         emit_synthetic "$new_module"
       else
-        echo "Ignoring @[main, mp.left] at $file"
+        echo "Ignoring @[path, mp.left] at $file"
       fi
     else
-      printf 'Ignoring @[main, mp.left] at %s (no `is` segment)\n' "$file"
+      printf 'Ignoring @[path, mp.left] at %s (no `is` segment)\n' "$file"
     fi
   fi
   # Handle mp.right: apply `mp` (commutateIs "of") then And.right projection.
@@ -652,10 +652,10 @@ while read -r file; do
       if new_module=$(and_proj_module "$mpModule" false); then
         emit_synthetic "$new_module"
       else
-        echo "Ignoring @[main, mp.right] at $file"
+        echo "Ignoring @[path, mp.right] at $file"
       fi
     else
-      printf 'Ignoring @[main, mp.right] at %s (no `is` segment)\n' "$file"
+      printf 'Ignoring @[path, mp.right] at %s (no `is` segment)\n' "$file"
     fi
   fi
   # Handle mp.comm
@@ -673,7 +673,7 @@ while read -r file; do
       new_module=$(IFS=. ; echo "${new_tokens[*]}")
       emit_synthetic "$new_module"
     else
-      echo "Ignoring @\[main, mp.comm] at $file"
+      echo "Ignoring @\[path, mp.comm] at $file"
     fi
   fi
   # Handle mpr.comm
@@ -690,7 +690,7 @@ while read -r file; do
       new_module=$(IFS=. ; echo "${new_tokens[*]}")
       emit_synthetic "$new_module"
     else
-      echo "Ignoring @\[main, mpr.comm] at $file"
+      echo "Ignoring @\[path, mpr.comm] at $file"
     fi
   fi
   # Handle mp.mt
@@ -780,14 +780,14 @@ while read -r file; do
     if new_module=$(and_proj_module "$module" true); then
       emit_synthetic "$new_module"
     else
-      echo "Ignoring @[main, And.left] at $file"
+      echo "Ignoring @[path, And.left] at $file"
     fi
   fi
   if [[ $attributes == *And.right* ]]; then
     if new_module=$(and_proj_module "$module" false); then
       emit_synthetic "$new_module"
     else
-      echo "Ignoring @[main, And.right] at $file"
+      echo "Ignoring @[path, And.right] at $file"
     fi
   fi
 done < <(find Lemma -type f -name "*.lean" ! -name "*.echo.lean" ! -name "test*.lean")

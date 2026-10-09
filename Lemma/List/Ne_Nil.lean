@@ -2,7 +2,7 @@ import Lemma.List.Ne_Nil.is.GtLength_0
 open List
 
 
-@[main]
+@[path]
 private lemma main
   {s : List α}
 -- given

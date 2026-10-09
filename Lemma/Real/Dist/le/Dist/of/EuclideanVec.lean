@@ -3,7 +3,7 @@ import sympy.dynamics.actor_critic
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {d : ℕ}
 -- given

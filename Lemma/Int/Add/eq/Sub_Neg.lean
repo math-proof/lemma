@@ -3,7 +3,7 @@ import Lemma.Int.EqNegNeg
 open Int
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [AddGroup α]
 -- given

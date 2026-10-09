@@ -3,7 +3,7 @@ import Lemma.Vector.AppendValS.eq.Val
 open Vector
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h : m + n = N)

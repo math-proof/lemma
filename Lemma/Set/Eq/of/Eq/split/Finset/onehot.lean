@@ -3,7 +3,7 @@ import Lemma.Nat.Delta.eq.Ite
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {x y : ℤ}
 -- given

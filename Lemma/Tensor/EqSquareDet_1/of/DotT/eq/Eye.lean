@@ -7,7 +7,7 @@ import Lemma.Tensor.ToMatrixT.eq.TToMatrix
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [CommRing α] [CharZero α]
   {X : Tensor α [n, n]}

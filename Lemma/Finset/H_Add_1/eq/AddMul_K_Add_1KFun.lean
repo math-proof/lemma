@@ -4,7 +4,7 @@ import Lemma.Finset.EqKHShift.et.EqHAddMulKKShift
 open Finset Continuant
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (x : ℕ → ℝ)

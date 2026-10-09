@@ -6,10 +6,10 @@ open Hyperreal
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Hyperreal.NotInfinite.of.Infinitesimal |
+| path | Hyperreal.NotInfinite.of.Infinitesimal |
 | mt | Hyperreal.NotInfinitesimal.of.Infinite |
 -/
-@[main, mt]
+@[path, mt]
 private lemma main
   {x : ℝ*}
 -- given

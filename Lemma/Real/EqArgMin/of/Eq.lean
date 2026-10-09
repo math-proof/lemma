@@ -3,7 +3,7 @@ import sympy.concrete.expr_with_limits
 import Mathlib.Algebra.Order.Archimedean.Real.Basic
 
 
-@[main]
+@[path]
 private lemma main
   [Nonempty α] [Preorder β]
   {S : Set α}
@@ -30,7 +30,7 @@ private lemma main
     exact H y hy
 
 
-@[main]
+@[path]
 private lemma definition
   [Nonempty α]
   {S : Set α}

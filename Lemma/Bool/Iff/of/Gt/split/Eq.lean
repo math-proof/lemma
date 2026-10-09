@@ -2,7 +2,7 @@ import Lemma.Set.Iff.of.In_Ico.split.Eq
 open Set
 
 
-@[main]
+@[path]
 private lemma main
   {x y : ℕ → α}
   {n m : ℕ}

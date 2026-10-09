@@ -5,12 +5,12 @@ open MeasureTheory Random
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Random.All_IffNe0ProbCond |
+| path | Random.All_IffNe0ProbCond |
 | comm | Random.All_Iff_Ne0ProbCond |
 | mp | Random.All_Imp_Ne0ProbCond |
 | mpr | Random.All_ImpNe0ProbCond |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   [MeasurableSpace Ω]
   [ReferenceMeasure α] [ReferenceMeasure β]

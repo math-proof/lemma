@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma Comm
   [LinearOrder α]
   {a b : α} :

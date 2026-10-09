@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [Algebra_exists_monoidHom_algebraMap_eq_norm_of_isIntegrallyClosed](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Algebra_exists_monoidHom_algebraMap_eq_norm_of_isIntegrallyClosed.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {A : Type u} [CommRing A] [IsDomain A] [IsIntegrallyClosed A]
   {B : Type v} [CommRing B] [Algebra A B] [Algebra.IsIntegral A B]

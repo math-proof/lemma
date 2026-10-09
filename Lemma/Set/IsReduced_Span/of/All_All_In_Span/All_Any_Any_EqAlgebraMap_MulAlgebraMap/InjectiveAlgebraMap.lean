@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [IsReduced_quotient_span_singleton_of_injective_of_forall_exists_mul_mem](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_IsReduced_quotient_span_singleton_of_injective_of_forall_exists_mul_mem.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {A B : Type*} [CommRing A] [CommRing B] [Algebra A B]
   {p : A} [IsReduced (B ⧸ Ideal.span {algebraMap A B p})]

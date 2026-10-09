@@ -10,7 +10,7 @@ import torch.Tensor
 open Tensor List Bool Nat
 
 
-@[main, cast]
+@[path, cast]
 private lemma main
   {m n j : ℕ}
 -- given

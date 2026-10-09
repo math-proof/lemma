@@ -4,12 +4,12 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Bool.HEq.is.EqCast.of.Eq |
+| path | Bool.HEq.is.EqCast.of.Eq |
 | comm | Bool.EqCast.is.HEq.of.Eq |
 | mp | Bool.EqCast.of.HEq.Eq |
 | mpr | Bool.HEq.of.EqCast.Eq |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   {a : α}
   {b : β}
@@ -21,7 +21,7 @@ private lemma main
   aesop
 
 
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma Congr
   {Vector : α → Sort v}
   {a : Vector n}

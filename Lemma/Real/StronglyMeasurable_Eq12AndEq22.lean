@@ -7,7 +7,7 @@ open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Real
 /--
 The state-action indicator `z ↦ 1{z.s = x ∧ z.a = u}` is strongly measurable.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A] [DecidableEq S] [DecidableEq A]
 -- given

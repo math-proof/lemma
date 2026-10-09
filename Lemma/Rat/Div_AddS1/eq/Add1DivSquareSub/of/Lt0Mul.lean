@@ -4,7 +4,7 @@ import Lemma.Rat.DivAdd.eq.Add1Div.of.Ne_0
 open Nat Rat
 
 
-@[main]
+@[path]
 private lemma main
   [Field α] [LinearOrder α] [IsStrictOrderedRing α]
   {a b : α}

@@ -3,7 +3,7 @@ import torch.Tensor.bmm
 open Tensor
 
 
-@[main, cast]
+@[path, cast]
 private lemma main
   [Mul α] [Add α] [Zero α]
 -- given

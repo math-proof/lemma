@@ -3,7 +3,7 @@ import Lemma.Tensor.GetToVector.eq.Get
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   {X : Tensor α (n :: s)}
 -- given

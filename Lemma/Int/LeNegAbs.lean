@@ -2,7 +2,7 @@ import Lemma.Int.Ge.of.LeNegS
 import Lemma.Int.GeAbs
 
 
-@[main]
+@[path]
 private lemma main
   [AddGroup α]
   [LinearOrder α]

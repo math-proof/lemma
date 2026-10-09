@@ -3,7 +3,7 @@ import Lemma.Nat.Add
 open Nat
 
 
-@[main]
+@[path]
 private lemma left
   [IntegerRing Z]
   {a b : Z} :
@@ -14,7 +14,7 @@ private lemma left
   rwa [Add.comm] at this
 
 
-@[main]
+@[path]
 private lemma main
   [IntegerRing Z]
   {a b : Z} :

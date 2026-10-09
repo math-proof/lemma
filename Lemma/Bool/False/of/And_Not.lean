@@ -2,7 +2,7 @@ import Lemma.Bool.False.of.AndNot
 open Bool
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h : p ∧ ¬p) :

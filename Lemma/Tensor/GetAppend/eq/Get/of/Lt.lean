@@ -5,7 +5,7 @@ import Lemma.Tensor.SEqGetS.of.SEq.GtLength
 open Bool Tensor
 
 
-@[main, fin]
+@[path, fin]
 private lemma main
 -- given
   (h : i < n)
@@ -21,7 +21,7 @@ private lemma main
   assumption
 
 
-@[main]
+@[path]
 private lemma batch
 -- given
   (h : j < n)

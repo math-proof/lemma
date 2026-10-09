@@ -5,7 +5,7 @@ import Lemma.Vector.Div.eq.Div_Replicate
 open Tensor Vector
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [Div α]
 -- given

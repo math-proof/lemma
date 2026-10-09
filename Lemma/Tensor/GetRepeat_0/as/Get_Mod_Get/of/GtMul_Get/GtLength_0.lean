@@ -19,12 +19,12 @@ open Tensor Vector List Bool Nat
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Tensor.GetRepeat_0.as.Get_Mod_Get.of.GtMul_Get.GtLength_0 |
+| path | Tensor.GetRepeat_0.as.Get_Mod_Get.of.GtMul_Get.GtLength_0 |
 | fin | Tensor.GetRepeat_0.as.Get_Mod_Get.of.GtMul_Get.GtLength_0.fin |
 | cast | Tensor.GetRepeat_0.eq.Cast_Get_Mod_Get.of.GtMul_Get.GtLength_0 |
 | cast.fin | Tensor.GetRepeat_0.eq.Cast_Get_Mod_Get.of.GtMul_Get.GtLength_0.fin |
 -/
-@[main, fin, cast, cast.fin]
+@[path, fin, cast, cast.fin]
 private lemma main
 -- given
   (h_s : s.length > 0)

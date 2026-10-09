@@ -4,7 +4,7 @@ import Lemma.Int.Le.of.EqAdd.Ge_0
 open Int
 
 
-@[main]
+@[path]
 private lemma main
   [Field α] [LinearOrder α] [IsStrictOrderedRing α]
   {n d : ℤ} :

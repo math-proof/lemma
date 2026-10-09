@@ -6,7 +6,7 @@ import Lemma.Nat.Mul
 open Nat
 
 
-@[main]
+@[path]
 private lemma left
   {k n m : ℕ}
 -- given
@@ -20,7 +20,7 @@ private lemma left
   apply EqAddMulDiv
 
 
-@[main]
+@[path]
 private lemma main
   {k n m : ℕ}
 -- given

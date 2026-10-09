@@ -5,7 +5,7 @@ import Lemma.Set.Subset_Inter.of.Subset.Subset
 open Set
 
 
-@[main]
+@[path]
 private lemma main
   {A B : Set α}
 -- given

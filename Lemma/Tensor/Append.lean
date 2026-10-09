@@ -11,7 +11,7 @@ import Lemma.Vector.SEq.of.All_EqGetS.Eq
 open Bool Fin Tensor Vector
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (A : Tensor α ([] ++ m :: s))

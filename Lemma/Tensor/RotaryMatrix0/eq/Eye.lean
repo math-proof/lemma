@@ -7,7 +7,7 @@ import Lemma.Tensor.Sin0.eq.Zero
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main :
 -- imply
   (0 : Tensor ℝ [d]).rotaryMatrix = Tensor.eye (d + d) := by

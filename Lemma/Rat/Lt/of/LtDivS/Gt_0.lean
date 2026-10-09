@@ -4,7 +4,7 @@ import Lemma.Nat.LtMulS.of.Lt.Gt_0
 open Nat Rat
 
 
-@[main]
+@[path]
 private lemma main
   [Field α] [LinearOrder α] [IsStrictOrderedRing α]
   {x a b : α}

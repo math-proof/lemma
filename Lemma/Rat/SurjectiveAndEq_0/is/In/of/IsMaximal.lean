@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [exists_residueField_of_isMaximal_of_finiteDimensional](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_exists_residueField_of_isMaximal_of_finiteDimensional.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {F : Type u} [Field F] [CharZero F]
   {A : Type v} [CommRing A] [Algebra F A] [FiniteDimensional F A]

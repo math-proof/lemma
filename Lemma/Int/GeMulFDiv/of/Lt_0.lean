@@ -12,7 +12,7 @@ import Lemma.Int.GeNeg.of.Le_Neg
 open Bool Int Nat
 
 
-@[main]
+@[path]
 private lemma main
   {d : ℤ}
 -- given

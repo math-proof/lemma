@@ -2,7 +2,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {x y b : ℝ} :
 -- imply
@@ -11,7 +11,7 @@ private lemma main
   exact ⟨fun h => ⟨h.2, h.1⟩, fun h => ⟨h.2, h.1⟩⟩
 
 
-@[main]
+@[path]
 private lemma left_close
   {x y b : ℝ} :
 -- imply

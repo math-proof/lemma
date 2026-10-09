@@ -5,7 +5,7 @@ import sympy.series.limits
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {f g : ℝ → ℝ}
   {x₀ A B : ℝ}
@@ -19,7 +19,7 @@ private lemma main
   exact (h₀.add h₁).limUnder_eq
 
 
-@[main]
+@[path]
 private lemma inf
   {f g : ℕ → ℝ}
   {A B : ℝ}

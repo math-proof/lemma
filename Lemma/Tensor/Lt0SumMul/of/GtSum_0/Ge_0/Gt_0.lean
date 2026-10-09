@@ -5,7 +5,7 @@ import torch.Tensor.sum
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [Semiring α] [PartialOrder α] [IsOrderedCancelAddMonoid α] [PosMulStrictMono α]
   {X Y : Tensor α [n]}

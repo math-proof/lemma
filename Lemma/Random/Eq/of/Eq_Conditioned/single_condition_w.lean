@@ -5,7 +5,7 @@ import sympy.Basic
 open ProbabilityTheory MeasureTheory
 
 
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace Ω] [StandardBorelSpace Ω]
   {π : Measure Ω} [IsProbabilityMeasure π]

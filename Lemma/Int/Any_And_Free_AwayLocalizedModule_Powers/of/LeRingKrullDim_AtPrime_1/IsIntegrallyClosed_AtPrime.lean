@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [Module_exists_notMem_and_free_localizedModule_of_isIntegrallyClosed_of_ringKrullDim_le_one](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Module_exists_notMem_and_free_localizedModule_of_isIntegrallyClosed_of_ringKrullDim_le_one.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {A : Type u} [CommRing A] [IsDomain A] [IsNoetherianRing A]
   {𝔭 : Ideal A} [𝔭.IsPrime]

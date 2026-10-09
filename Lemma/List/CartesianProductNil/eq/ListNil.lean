@@ -3,7 +3,7 @@ import Lemma.List.ProductNil.eq.ListNil
 open List
 
 
-@[main]
+@[path]
 private lemma main :
 -- imply
   [].cartesianProduct = [[]] := by

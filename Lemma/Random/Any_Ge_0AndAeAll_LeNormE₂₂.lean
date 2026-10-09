@@ -13,7 +13,7 @@ import Lemma.Measure.MEqCondExpIteratesUpdate.of.Measurable.Any_All_LeNorm.Measu
 open Finset MeasureTheory Filter Real Measure Preorder
 
 
-@[main]
+@[path]
 private lemma main
   {S : Type*} [Fintype S] [DecidableEq S] [Nonempty S] [MeasurableSpace S] [MeasurableSingletonClass S]
   {d : ℕ}

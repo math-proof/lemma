@@ -7,7 +7,7 @@ import Lemma.Tensor.Eq.is.EqDataS
 open Vector Tensor
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [SubNegMonoid α]
 -- given
@@ -22,7 +22,7 @@ private lemma main
   rw [Sub.eq.Add_Neg]
 
 
-@[main, comm]
+@[path, comm]
 private lemma nil
     (X Y : Tensor ℝ []) : X - Y = Add.add X (-Y) := by
   apply Eq.of.EqDataS

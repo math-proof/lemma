@@ -7,7 +7,7 @@ import Lemma.ContinuousSemiflow.IsForwardInvariant
 open Filter
 
 
-@[main]
+@[path]
 private lemma main
   {α : Type*} [TopologicalSpace α] [T2Space α]
   {Φ : ContinuousSemiflow α}

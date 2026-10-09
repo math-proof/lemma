@@ -2,7 +2,7 @@ import Lemma.Int.SubNeg
 open Int
 
 
-@[main]
+@[path]
 private lemma main
   [AddCommGroup α]
   {a b : α} :

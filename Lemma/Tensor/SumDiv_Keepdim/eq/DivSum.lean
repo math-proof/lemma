@@ -18,7 +18,7 @@ import torch.functions
 open Bool Fin List Nat Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [DivisionSemiring α]
 -- given

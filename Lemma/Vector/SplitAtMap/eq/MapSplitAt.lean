@@ -2,7 +2,7 @@ import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 open Vector
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   {s : List ℕ}
 -- given

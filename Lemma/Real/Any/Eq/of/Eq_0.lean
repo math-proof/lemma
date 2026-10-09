@@ -4,7 +4,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma constant_fn
   {f : ℝ → ℝ}
 -- given

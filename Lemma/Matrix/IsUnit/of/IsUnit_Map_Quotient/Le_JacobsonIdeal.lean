@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [Matrix_isUnit_of_isUnit_map_of_le_jacobson_bot](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Matrix_isUnit_of_isUnit_map_of_le_jacobson_bot.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {S : Type u} [CommRing S]
   {n : Type v} [Fintype n] [DecidableEq n]

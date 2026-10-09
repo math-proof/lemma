@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [AlgebraicClosure_exists_apply_eq_pow_of_pow_eq_one](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicClosure_exists_apply_eq_pow_of_pow_eq_one.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {n : ℕ}
 -- given

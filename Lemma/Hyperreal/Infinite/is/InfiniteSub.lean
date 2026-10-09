@@ -7,14 +7,14 @@ open Hyperreal Int
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Hyperreal.Infinite.is.InfiniteSub |
+| path | Hyperreal.Infinite.is.InfiniteSub |
 | comm | Hyperreal.InfiniteSub.is.Infinite |
 | mp   | Hyperreal.InfiniteSub.of.Infinite |
 | mpr  | Hyperreal.Infinite.of.InfiniteSub |
 | mp.mt | Hyperreal.NotInfinite.of.NotInfiniteSub |
 | mpr.mt | Hyperreal.NotInfiniteSub.of.NotInfinite |
 -/
-@[main, comm, mp, mpr, mp.mt, mpr.mt]
+@[path, comm, mp, mpr, mp.mt, mpr.mt]
 private lemma main
 -- given
   (x : ℝ*)
@@ -26,7 +26,7 @@ private lemma main
   rfl
 
 
-@[main, comm, mp, mpr, mp.mt, mpr.mt]
+@[path, comm, mp, mpr, mp.mt, mpr.mt]
 private lemma left
 -- given
   (r : ℝ)

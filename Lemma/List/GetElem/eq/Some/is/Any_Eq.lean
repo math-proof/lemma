@@ -3,7 +3,7 @@ import Lemma.List.GetElem.eq.None.of.LeLength
 open List Nat
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (s : List α)

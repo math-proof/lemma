@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {f : α → β → γ → δ}
   {g : α' → β' → γ' → δ}

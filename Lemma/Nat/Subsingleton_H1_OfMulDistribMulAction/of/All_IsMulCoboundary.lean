@@ -6,7 +6,7 @@ open groupCohomology
 /--
 [groupCohomology_subsingleton_H1_ofMulDistribMulAction](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_groupCohomology_subsingleton_H1_ofMulDistribMulAction.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {G V : Type} [Group G] [CommGroup V] [MulDistribMulAction G V]
 -- given

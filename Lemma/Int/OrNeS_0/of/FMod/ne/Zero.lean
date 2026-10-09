@@ -3,7 +3,7 @@ import Lemma.Bool.NotNe.is.Eq
 open Bool
 
 
-@[main]
+@[path]
 private lemma main
   {n d : ℤ}
 -- given

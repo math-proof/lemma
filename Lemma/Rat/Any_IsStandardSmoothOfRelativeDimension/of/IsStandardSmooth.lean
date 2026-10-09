@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [Algebra_IsStandardSmooth_exists_isStandardSmoothOfRelativeDimension_of_field](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Algebra_IsStandardSmooth_exists_isStandardSmoothOfRelativeDimension_of_field.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [Field k] [CommRing B] [Algebra k B]
 -- given

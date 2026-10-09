@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {α : Type*}
   [LinearOrder α] [One α] [LocallyFiniteOrder α] [Add α] [SuccAddOrder α] [NoMaxOrder α]

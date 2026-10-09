@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma collect
 -- given
   (h : p ∨ q ∧ c ∨ r ∧ c) :
@@ -11,7 +11,7 @@ private lemma collect
   tauto
 
 
-@[main]
+@[path]
 private lemma invert
 -- given
   (h : p ∨ q) :

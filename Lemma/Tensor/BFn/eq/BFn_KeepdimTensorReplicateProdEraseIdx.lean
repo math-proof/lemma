@@ -16,7 +16,7 @@ import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 open Fin List Nat Tensor Vector
 
 
-@[main]
+@[path]
 private lemma main
   {f : α → α → α}
 -- given

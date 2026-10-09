@@ -2,7 +2,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {n : ℕ}
   {f g : ℕ → ℝ}
@@ -12,7 +12,7 @@ private lemma main
 -- imply
   ∏ i ∈ Finset.range n, f i ≥ ∏ i ∈ Finset.range n, g i := by
 -- proof
-  exact Finset.prod_le_prod (fun i _ => hg i) (fun i hi => h i (Finset.mem_range.mp hi))
+  exact Finset.prod_le_prod₀ (fun i _ => hg i) (fun i hi => h i (Finset.mem_range.mp hi))
 
 
 -- created on 2019-05-29

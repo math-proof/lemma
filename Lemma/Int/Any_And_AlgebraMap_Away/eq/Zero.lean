@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [IsLocalization_exists_not_mem_forall_algebraMap_away_eq_zero_of_algebraMap_atPrime_eq_zero](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_IsLocalization_exists_not_mem_forall_algebraMap_away_eq_zero_of_algebraMap_atPrime_eq_zero.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {S : Type u} [CommRing S] [IsNoetherianRing S]
   {𝔭 : PrimeSpectrum S} :

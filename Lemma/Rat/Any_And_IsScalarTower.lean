@@ -6,7 +6,7 @@ open scoped TensorProduct
 /--
 [Module_FaithfullyFlat_exists_isAlgClosed_algebra_isScalarTower_of_isAlgClosed](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Module_FaithfullyFlat_exists_isAlgClosed_algebra_isScalarTower_of_isAlgClosed.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {R W k : Type} [CommRing R] [CommRing W] [Algebra R W] [Module.FaithfullyFlat R W] [Field k] [IsAlgClosed k] [Algebra R k] :
 -- imply

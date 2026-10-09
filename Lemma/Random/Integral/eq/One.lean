@@ -3,10 +3,10 @@ import sympy.stats.joint_rv
 import sympy.stats.variance
 import sympy.Basic
 import Lemma.Random.Map.eq.WithDensityProb
-open MeasureTheory
+open MeasureTheory Random
 
 
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace Ω]
   [ReferenceMeasure α]
@@ -17,12 +17,12 @@ private lemma main
 -- imply
   ∫⁻ a, π.prob x a ∂ReferenceMeasure.measure = 1 := by
 -- proof
-  have h := congrArg (fun μ : Measure α => μ Set.univ) (Random.Map.eq.WithDensityProb (π := π) (x := x))
+  have h := congrArg (fun μ : Measure α => μ Set.univ) (Map.eq.WithDensityProb (π := π) (x := x))
   simp only [withDensity_apply _ MeasurableSet.univ, Measure.restrict_univ] at h
   rw [← h]
   have hP : PSpace π x := ‹SinglePSpace π x›.toPSpace
   have : IsProbabilityMeasure π := hP.toIsProbabilityMeasure
-  have := Measure.isProbabilityMeasure_map hP.aemeasurable
+  have : IsProbabilityMeasure (π.map x) := inferInstance
   exact measure_univ
 
 

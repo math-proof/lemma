@@ -5,7 +5,7 @@ import Lemma.Vector.Sum.as.Sum_Cast.of.Eq
 open Finset Vector
 
 
-@[main]
+@[path]
 private lemma main
   [AddCommMonoid α]
   [DecidableEq ι]

@@ -4,12 +4,12 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Nat.NotLt.is.Ge |
+| path | Nat.NotLt.is.Ge |
 | comm | Nat.Ge.is.NotLt |
 | mp | Nat.Ge.of.NotLt |
 | mp.comm | Nat.Le.of.NotGt |
 -/
-@[main, comm, mp, mp.comm]
+@[path, comm, mp, mp.comm]
 private lemma main
   [LinearOrder α]
   {a b : α} :

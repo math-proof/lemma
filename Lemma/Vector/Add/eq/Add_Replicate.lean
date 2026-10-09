@@ -3,7 +3,7 @@ import Lemma.Vector.GetAdd.eq.AddGet
 open Vector
 
 
-@[main]
+@[path]
 private lemma main
   [Add α]
 -- given

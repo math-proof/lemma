@@ -2,7 +2,7 @@ import sympy.functions.combinatorial.factorials
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {n k : ℕ}
 -- given

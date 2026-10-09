@@ -2,7 +2,7 @@ import Batteries.Data.List.Lemmas
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (s : List α)
@@ -13,7 +13,7 @@ private lemma main
   List.swap_swap_flip
 
 
-@[main]
+@[path]
 private lemma swap
 -- given
   (s : List α)

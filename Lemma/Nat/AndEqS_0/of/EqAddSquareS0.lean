@@ -2,7 +2,7 @@ import Lemma.Nat.Eq_0.of.EqAddSquareS0
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   [Semiring α] [LinearOrder α] [IsStrictOrderedRing α]
   [ExistsAddOfLE α] [PosMulMono α] [AddLeftMono α]

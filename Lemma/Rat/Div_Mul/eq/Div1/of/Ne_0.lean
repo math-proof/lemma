@@ -2,7 +2,7 @@ import Lemma.Rat.Div.eq.One.of.Ne_0
 open Rat
 
 
-@[main]
+@[path]
 private lemma main
   [CommGroupWithZero α]
   {a : α}

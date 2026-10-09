@@ -9,7 +9,7 @@ open Hyperreal
 /--
 `log` is continuous at a nonzero real `r`: if `x ≈ r` (hyperreal closeness to a real) then `log x ≈ log r`.
 -/
-@[main]
+@[path]
 private lemma main
   {x : ℝ*}
   {r : ℝ}

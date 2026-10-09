@@ -2,7 +2,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma parallel_variance
   {nA nB : ℕ}
   {xA xB : ℕ → ℝ}

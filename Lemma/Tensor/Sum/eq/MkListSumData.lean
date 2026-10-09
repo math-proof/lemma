@@ -7,7 +7,7 @@ import Lemma.Vector.Head.eq.Get_0
 open Tensor Vector
 
 
-@[main]
+@[path]
 private lemma main
   [Add α] [Zero α]
 -- given

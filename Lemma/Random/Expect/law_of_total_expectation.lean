@@ -9,7 +9,7 @@ Law of total expectation for a random variable `X` with finitely many values:
 `𝔼[𝔼[Y | X]] = 𝔼[Y]`, where the outer expectation is the finite sum over the values of `X`
 weighted by `ℙ(X = x)` and `𝔼[Y | X = x]` is the integral against `μ[| X ⁻¹' {x}]`.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace Ω] [MeasurableSpace α] [MeasurableSingletonClass α] [Fintype α]
   {μ : Measure Ω} [IsFiniteMeasure μ]

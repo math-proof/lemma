@@ -77,12 +77,12 @@ the operator `≈` (approximately equal) mimics the behavior of [torch.isclose](
 
 | attributes | lemma |
 | :---: | :---: |
-| main | Hyperreal.XEq.is.InfinitesimalDivAbsSub |
+| path | Hyperreal.XEq.is.InfinitesimalDivAbsSub |
 | comm | Hyperreal.InfinitesimalDivAbs.is.XEq |
 | mp | Hyperreal.InfinitesimalDivAbs.of.XEq |
 | mpr | Hyperreal.XEq.of.InfinitesimalDivAbs |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
 -- given
   (a b : ℝ*) :

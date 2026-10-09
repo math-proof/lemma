@@ -8,7 +8,7 @@ import sympy.vector.vector
 open Fin List Vector
 
 
-@[main, cast]
+@[path, cast]
 private lemma main
   {s : List ℕ}
 -- given

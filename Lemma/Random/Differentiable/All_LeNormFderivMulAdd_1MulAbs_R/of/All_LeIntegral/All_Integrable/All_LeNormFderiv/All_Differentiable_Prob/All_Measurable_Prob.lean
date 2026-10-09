@@ -20,7 +20,7 @@ Continuous-action counterpart of
 the finite action sum becomes an integral against the reference measure of `A`, and `|A| * Cp` becomes `Cg`; both the
 action and the next-state integrals are differentiated under the integral sign.
 -/
-@[main]
+@[path]
 private lemma main
   [NormedAddCommGroup Θ] [NormedSpace ℝ Θ] [FiniteDimensional ℝ Θ] [MeasurableSpace S] [ReferenceMeasure A]
   {M : DensityModel Θ S A}

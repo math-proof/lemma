@@ -3,7 +3,7 @@ import Lemma.Nat.Ne.of.Gt
 open Int Nat
 
 
-@[main]
+@[path]
 private lemma main
   [AddGroup α] [LinearOrder α] [AddLeftMono α] [AddRightMono α]
   {a : α}

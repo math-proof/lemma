@@ -2,7 +2,7 @@ import Lemma.Nat.GtCoe_0.is.Gt_0
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   [Semiring α] [PartialOrder α] [IsOrderedRing α]
   [Nontrivial α]

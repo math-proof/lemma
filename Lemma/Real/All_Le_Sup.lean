@@ -1,7 +1,7 @@
 import Lemma.Real.All_GeSup
 
 
-@[main]
+@[path]
 private lemma main
   {S : Set α}
   {f : α → ℝ}

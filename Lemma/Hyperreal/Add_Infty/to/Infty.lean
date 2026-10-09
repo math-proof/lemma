@@ -8,7 +8,7 @@ import Lemma.Rat.DivAdd.eq.AddDiv.of.Ne_0
 open Hyperreal Rat Int
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (x : ℝ) :

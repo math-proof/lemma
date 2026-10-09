@@ -3,7 +3,7 @@ import torch.Tensor
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   [MulZeroClass α]
   {a b : α}
@@ -19,7 +19,7 @@ private lemma main
     apply Ne_0.of.Mul.ne.Zero h
 
 
-@[main]
+@[path]
 private lemma tensor
   [MulZeroClass α]
   {a b : Tensor α [n]}

@@ -14,7 +14,7 @@ import Lemma.Bool.EqCast.of.SEq
 open Vector Bool Nat
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (X : Tensor α (s₀ :: s)) :

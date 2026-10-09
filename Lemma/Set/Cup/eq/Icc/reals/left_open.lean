@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main :
 -- imply
   ⋃ k : ℤ, Set.Ioc k (k + 1) = (Set.univ : Set ℤ) := by

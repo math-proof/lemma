@@ -2,7 +2,7 @@ import Lemma.Int.EqNeg0'0
 open Int
 
 
-@[main]
+@[path]
 private lemma main
   [AddGroup α]
   {a : α}

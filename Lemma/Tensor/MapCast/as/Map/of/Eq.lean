@@ -5,12 +5,12 @@ import torch.Tensor.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Tensor.MapCast.as.Map.of.Eq |
+| path | Tensor.MapCast.as.Map.of.Eq |
 | comm 1 | Tensor.Map.as.MapCast.of.Eq |
 | cast | Tensor.MapCast.eq.Cast_Map.of.Eq |
 | cast.comm | Tensor.Cast_Map.eq.MapCast.of.Eq |
 -/
-@[main, comm 1, cast, cast.comm]
+@[path, comm 1, cast, cast.comm]
 private lemma main
 -- given
   (h_s : s = s')

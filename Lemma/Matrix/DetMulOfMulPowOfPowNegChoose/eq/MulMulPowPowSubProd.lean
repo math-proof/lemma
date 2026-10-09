@@ -8,7 +8,7 @@ import Lemma.Matrix.Det.eq.Prod.of.All_All_Eq_0
 open Matrix Nat
 
 
-@[main]
+@[path]
 private lemma main
   {m d : ℕ}
   {x δ l : ℝ} :

@@ -4,7 +4,7 @@ import Lemma.Tensor.Repeat.as.Resize.of.GtLength
 open Bool Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [Zero α]
   {s : List ℕ}

@@ -70,7 +70,7 @@ Determinant of the elementary row-shift matrix:
 `det(ShiftMatrix(n, i₀, j₀)) = (-1)^(i₀ - j₀)` when `j₀ < i₀`
 (moving row `i₀` to position `j₀` takes `i₀ - j₀` adjacent swaps).
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing α] [CharZero α]
   {n : ℕ}

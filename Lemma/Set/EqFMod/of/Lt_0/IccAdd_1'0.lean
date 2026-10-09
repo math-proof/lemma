@@ -6,7 +6,7 @@ import Lemma.Int.FDiv.eq.Zero.of.Lt_0.IccAdd_1'0
 open Nat Int
 
 
-@[main]
+@[path]
 private lemma main
   {n d : ℤ}
 -- given

@@ -2,7 +2,7 @@ import Lemma.Bool.Or_Not
 open Bool
 
 
-@[main]
+@[path]
 private lemma main
   {p q : Prop} :
 -- imply

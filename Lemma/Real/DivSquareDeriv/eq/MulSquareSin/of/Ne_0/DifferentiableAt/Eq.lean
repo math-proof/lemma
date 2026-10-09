@@ -8,7 +8,7 @@ import sympy.Basic
 From \(1/r=-Cm/J^2+A\cos\theta\):
 \(\dfrac{1}{r^4}\left(\dfrac{dr}{d\theta}\right)^2=A^2\sin^2\theta\).
 -/
-@[main]
+@[path]
 private lemma main
   {r : ℝ → ℝ}
   {A C m J φ : ℝ}

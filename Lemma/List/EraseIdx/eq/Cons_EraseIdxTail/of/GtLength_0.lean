@@ -5,7 +5,7 @@ import Lemma.List.HeadD.eq.Get_0.of.GtLength_0
 open List
 
 
-@[main]
+@[path]
 private lemma main
   {s : List α}
 -- given

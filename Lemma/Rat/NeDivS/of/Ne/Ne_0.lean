@@ -3,7 +3,7 @@ import Lemma.Rat.EqMulDiv.of.Ne_0
 open Nat Rat
 
 
-@[main]
+@[path]
 private lemma main
   [GroupWithZero α]
   {x y d : α}

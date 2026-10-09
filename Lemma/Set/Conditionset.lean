@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma rewrite.domain_defined
   {n : ℕ}
   {x : Fin n → ℝ}

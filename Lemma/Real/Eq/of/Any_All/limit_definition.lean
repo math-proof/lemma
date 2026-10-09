@@ -2,7 +2,7 @@ import sympy.series.limits
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   [LinearOrder α]
   [Zero α]

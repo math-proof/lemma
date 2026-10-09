@@ -6,7 +6,7 @@ import sympy.Basic
 open Finset
 
 
-@[main]
+@[path]
 private lemma main
   {ι : Type*}
   {s : Finset ι}

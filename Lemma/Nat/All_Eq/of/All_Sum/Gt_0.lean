@@ -7,7 +7,7 @@ open scoped DirectSum
 /--
 [Nat_eq_of_forall_dvd_sum_divisors_eq](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Nat_eq_of_forall_dvd_sum_divisors_eq.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {n : ℕ}
   {m m' : ℕ → ℕ}

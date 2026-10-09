@@ -6,7 +6,7 @@ import torch.Tensor.sum
 open Tensor Vector
 
 
-@[main]
+@[path]
 private lemma main
   [ExpPos α]
   [IsOrderedCancelAddMonoid α]

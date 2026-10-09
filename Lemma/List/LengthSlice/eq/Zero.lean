@@ -1,7 +1,7 @@
 import stdlib.Slice
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (a b : ℤ)

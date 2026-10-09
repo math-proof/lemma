@@ -4,7 +4,7 @@ import Lemma.Tensor.EqTFnS.of.Eq.GtLength
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   {A : Tensor α s}
   {B : Tensor α s'}

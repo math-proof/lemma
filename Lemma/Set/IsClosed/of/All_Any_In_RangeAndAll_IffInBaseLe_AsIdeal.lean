@@ -6,7 +6,7 @@ open CategoryTheory AlgebraicGeometry
 /--
 [AlgebraicGeometry_isClosed_of_forall_exists_isOpenImmersion_forall_mem_iff_le](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_isClosed_of_forall_exists_isOpenImmersion_forall_mem_iff_le.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {E : Scheme.{u}}
   {T : Set E}

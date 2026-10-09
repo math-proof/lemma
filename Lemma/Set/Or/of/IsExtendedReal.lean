@@ -2,7 +2,7 @@ import sympy.Basic
 import Mathlib.Data.EReal.Inv
 
 
-@[main]
+@[path]
 private lemma main
   {x : EReal} :
 -- imply

@@ -4,7 +4,7 @@ import sympy.Basic
 
 
 
-@[main]
+@[path]
 private lemma main
   {f : ℝ → ℝ}
   {x₀ : ℝ} :

@@ -6,7 +6,7 @@ open scoped BigOperators
 /--
 [IsBaseChange_exists_dual_comp_eq_algebraMap_and_sum_smul_eq](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_IsBaseChange_exists_dual_comp_eq_algebraMap_and_sum_smul_eq.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {A : Type u} [CommRing A]
   {A' : Type v} [CommRing A'] [Algebra A A']
@@ -29,12 +29,13 @@ private lemma main
     hf.lift_eq _ _
   refine ⟨φ', hφ', fun m' => ?_⟩
   induction m' using hf.inductionOn with
-  | zero => simp
   | tmul m =>
-      calc ∑ i, φ' i (f m) • f (x i) = ∑ i, f (φ i m • x i) := by
-            refine Finset.sum_congr rfl fun i _ => ?_
-            rw [hφ', algebraMap_smul, map_smul]
-        _ = f m := by rw [← map_sum, hxφ]
+      calc
+        _ = ∑ i, f (φ i m • x i) := by
+          refine Finset.sum_congr rfl fun i _ => ?_
+          rw [hφ', algebraMap_smul, map_smul]
+        _ = f m := by
+          rw [← map_sum, hxφ]
   | smul s m' ih =>
       conv_rhs => rw [← ih]
       simp only [map_smul, smul_eq_mul, Finset.smul_sum, smul_smul]

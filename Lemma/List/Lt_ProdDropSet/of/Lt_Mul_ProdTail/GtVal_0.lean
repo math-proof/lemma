@@ -2,7 +2,7 @@ import Lemma.List.ProdTailSet.eq.Mul_ProdTail.LtLength_0.Gt_0
 open List
 
 
-@[main]
+@[path]
 private lemma main
   [CommMonoid α]
   [LT α]

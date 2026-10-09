@@ -3,7 +3,7 @@ import Lemma.Bool.Delta.eq.Bool
 open Bool
 
 
-@[main]
+@[path]
 private lemma main
   [DecidableEq α]
 -- given

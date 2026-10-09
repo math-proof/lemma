@@ -19,7 +19,7 @@ import torch.Tensor.sum
 open Bool Tensor Nat
 
 
-@[main]
+@[path]
 private lemma main
   [Mul α] [Add α] [Zero α]
 -- given

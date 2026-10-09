@@ -8,7 +8,7 @@ import Lemma.Real.GtExp_0
 open Hyperreal Int Real Nat
 
 
-@[main, comm, mp, mpr, mp.mt, mpr.mt]
+@[path, comm, mp, mpr, mp.mt, mpr.mt]
 private lemma main
 -- given
   (x : ℝ*) :

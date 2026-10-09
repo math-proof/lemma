@@ -4,7 +4,7 @@ import Lemma.List.EraseIdxCons.eq.EraseIdx_Sub_1.of.Gt_0
 open Tensor List
 
 
-@[main]
+@[path]
 private lemma main
   {d : ℕ}
   {s : List ℕ}

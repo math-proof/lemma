@@ -7,7 +7,7 @@ open scoped MatrixGroups
 /--
 [ModularForm_exists_coe_eq_of_levelOne](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_ModularForm_exists_coe_eq_of_levelOne.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {Γ : Subgroup (Matrix.SpecialLinearGroup (Fin 2) ℤ)}
   {k : ℤ}

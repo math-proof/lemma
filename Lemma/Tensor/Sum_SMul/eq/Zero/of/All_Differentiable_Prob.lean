@@ -7,7 +7,7 @@ open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Mode
 /--
 zero expected score: `∑ u, π_θ(u | x) • ∇ log π_θ(u | x) = 0` (no positivity needed)
 -/
-@[main]
+@[path]
 private lemma main
   [NormedAddCommGroup Θ] [NormedSpace ℝ Θ] [MeasurableSpace S] [MeasurableSpace A] [Fintype A]
   {M : Model Θ S A}

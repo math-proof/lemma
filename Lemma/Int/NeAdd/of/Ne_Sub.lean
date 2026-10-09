@@ -2,7 +2,7 @@ import Lemma.Int.EqSub.is.Eq_Add
 open Int
 
 
-@[main]
+@[path]
 private lemma main
   [AddGroup α]
   {x a b : α}

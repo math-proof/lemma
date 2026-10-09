@@ -12,7 +12,7 @@ import Lemma.Vector.Get_Add.eq.Get.of.SEq_Append.Lt.LtAdd
 open Vector Nat
 
 
-@[main]
+@[path]
 private lemma main
   {v : List.Vector α ((m + 1) * n)}
   {head : List.Vector α n}

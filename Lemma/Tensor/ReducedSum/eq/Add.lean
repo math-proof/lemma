@@ -2,7 +2,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {n : ℕ}
   {x y : Fin n → ℝ} :
@@ -12,7 +12,7 @@ private lemma main
   exact Finset.sum_add_distrib
 
 
-@[main]
+@[path]
 private lemma doit
   {x : ℕ → ℝ} :
 -- imply
@@ -21,7 +21,7 @@ private lemma doit
   exact Fin.sum_univ_three _
 
 
-@[main]
+@[path]
 private lemma pop
   {n : ℕ}
   {x : ℕ → ℝ} :
@@ -31,7 +31,7 @@ private lemma pop
   exact Finset.sum_range_succ _ _
 
 
-@[main]
+@[path]
 private lemma shift
   {n : ℕ}
   {x : ℕ → ℝ} :

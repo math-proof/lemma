@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   [AddCommMonoid N] [PartialOrder N] [IsOrderedAddMonoid N]
   {s : Finset ι}

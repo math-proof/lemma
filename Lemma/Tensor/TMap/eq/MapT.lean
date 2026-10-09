@@ -10,7 +10,7 @@ import Lemma.Tensor.T.as.Permute__Neg1.of.GtLength_0
 open Bool List Nat Tensor
 
 
-@[main]
+@[path]
 private lemma main
   {f : α → β}
 -- given

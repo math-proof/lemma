@@ -5,7 +5,7 @@ import Mathlib.Analysis.SpecialFunctions.Exp
 import Mathlib.Data.Fintype.Lattice
 
 
-@[main]
+@[path]
 private lemma main
   [Finite ι] [Nonempty ι]
   {a : ι → ℝ} :

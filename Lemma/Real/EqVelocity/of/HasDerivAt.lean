@@ -7,7 +7,7 @@ import sympy.Basic
 If \(\vec{r}\) is differentiable at \(t\) with derivative \(\vec{v}\), then
 the kinematic velocity equals \(\vec{v}\).
 -/
-@[main]
+@[path]
 private lemma main
   {d : ℕ}
   {r : Position d}

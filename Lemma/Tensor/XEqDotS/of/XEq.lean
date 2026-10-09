@@ -51,7 +51,7 @@ private lemma get_row
   rfl
 
 
-@[main]
+@[path]
 private lemma main
   {A : Tensor ℝ* [n]}
   {B : Tensor ℝ [n]}
@@ -72,7 +72,7 @@ private lemma main
     apply NotInfiniteGetDataMul B Xᵀ[j] ⟨i, by grind⟩
 
 
-@[main]
+@[path]
 private lemma left
   {A : Tensor ℝ* [n]}
   {B : Tensor ℝ [n]}

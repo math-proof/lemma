@@ -2,7 +2,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma simp.terms.negative
   {x y a b : ℝ}
 -- given
@@ -13,7 +13,7 @@ private lemma simp.terms.negative
   linarith
 
 
-@[main]
+@[path]
 private lemma transport
   {x y a : ℝ}
 -- given

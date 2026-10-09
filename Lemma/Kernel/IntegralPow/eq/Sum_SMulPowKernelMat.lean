@@ -3,7 +3,7 @@ import Lemma.Kernel.ToRealPow.eq.PowKernelMat
 open MeasureTheory ProbabilityTheory Kernel
 
 
-@[main]
+@[path]
 private lemma main
   [Fintype S] [DecidableEq S] [MeasurableSpace S] [MeasurableSingletonClass S]
   [NormedAddCommGroup α] [NormedSpace ℝ α] [CompleteSpace α]

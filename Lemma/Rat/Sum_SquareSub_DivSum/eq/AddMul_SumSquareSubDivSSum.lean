@@ -2,7 +2,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {m n : ℕ}
   {x : ℕ → ℕ → ℝ}

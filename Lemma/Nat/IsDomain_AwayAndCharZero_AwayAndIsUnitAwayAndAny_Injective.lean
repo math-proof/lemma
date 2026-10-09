@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [Localization_Away_isDomain_and_charZero_and_isUnit_and_exists_injective_of_charZero](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Localization_Away_isDomain_and_charZero_and_isUnit_and_exists_injective_of_charZero.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [Field k] [CharZero k]
   {M : ℕ} [NeZero M] :

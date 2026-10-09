@@ -4,7 +4,7 @@ import torch.Tensor.Basic
 open Bool
 
 
-@[main, cast]
+@[path, cast]
 private lemma main
   {b_z : List ℕ}
 -- given

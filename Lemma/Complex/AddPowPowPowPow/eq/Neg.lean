@@ -5,7 +5,7 @@ open Complex
 
 
 /-- `A ^ 3 + B ^ 3 = -q`. -/
-@[main]
+@[path]
 private lemma main
   {q δ : ℂ} :
 -- imply

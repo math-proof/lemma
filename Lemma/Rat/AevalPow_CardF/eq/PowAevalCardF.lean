@@ -6,7 +6,7 @@ open Polynomial
 /--
 [Polynomial_aeval_pow_card_eq_pow_card](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Polynomial_aeval_pow_card_eq_pow_card.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [Field F] [Fintype F] [CommRing E] [Algebra F E]
   {p : F[X]}

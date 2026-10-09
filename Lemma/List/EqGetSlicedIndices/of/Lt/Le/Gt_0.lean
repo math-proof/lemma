@@ -4,7 +4,7 @@ import Lemma.List.GetSlicedIndices.eq.Add.of.Lt.LeAddS.Lt_Add
 open List
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h_start : 0 < stop)

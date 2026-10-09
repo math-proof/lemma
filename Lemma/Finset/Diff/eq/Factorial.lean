@@ -3,7 +3,7 @@ import sympy.Basic
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   {n : ℕ} :
 -- imply

@@ -7,7 +7,7 @@ import Lemma.Vector.GetSplitAt_1.eq.GetUnflatten
 open Tensor List Vector
 
 
-@[main, fin, cast, cast.fin]
+@[path, fin, cast, cast.fin]
 private lemma main
   {s : List ℕ}
 -- given

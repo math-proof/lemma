@@ -4,12 +4,12 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Bool.NotNe.is.Eq |
+| path | Bool.NotNe.is.Eq |
 | comm | Bool.Eq.is.NotNe |
 | mp | Bool.Eq.of.NotNe |
 | mpr | Bool.NotNe.of.Eq |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
 -- given
   (a b : α) :

@@ -8,7 +8,7 @@ open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 /--
 Almost surely the reward equals the clamped reward: `r[t] =ᵐ rc(ω[t])`, i.e. `r t ω = M.rc (ω t)` for a.e. trajectory `ω`.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [Fintype A]
   {M : Model Θ S A}

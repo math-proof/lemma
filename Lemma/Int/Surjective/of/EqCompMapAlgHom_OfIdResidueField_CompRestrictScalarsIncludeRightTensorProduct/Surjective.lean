@@ -7,7 +7,7 @@ open scoped TensorProduct
 /--
 [AddMonoidAlgebra_surjective_of_surjective_residueField_comp](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AddMonoidAlgebra_surjective_of_surjective_residueField_comp.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {R : Type u} [CommRing R] [IsLocalRing R]
   {H : Type u} [CommRing H] [Algebra R H]
@@ -58,7 +58,7 @@ private lemma main
     exact Submodule.smul_mem_smul (hcoef m) Submodule.mem_top
   have hx : x = ψ h + z := by rw [hzdef]; abel
   rw [hx]
-  apply Submodule.add_mem_sup ⟨h, rfl⟩ hzmem
+  exact Submodule.add_mem_sup (LinearMap.mem_range_self ψ.toLinearMap h) hzmem
 
 
 -- created on 2026-10-09

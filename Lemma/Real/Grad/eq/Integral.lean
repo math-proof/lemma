@@ -6,10 +6,10 @@ open MeasureTheory Topology
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Real.Grad.eq.Integral |
+| path | Real.Grad.eq.Integral |
 | comm | Real.Integral.eq.Grad |
 -/
-@[main, comm]
+@[path, comm]
 private lemma main
   {f : ℝ → ℝ → ℝ}
   {bound : ℝ → ℝ}

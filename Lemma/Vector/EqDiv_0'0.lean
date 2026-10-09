@@ -4,7 +4,7 @@ import Lemma.Vector.EqGet0_0
 open Vector Rat
 
 
-@[main]
+@[path]
 private lemma main
   [GroupWithZero α]
 -- given

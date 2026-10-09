@@ -6,7 +6,7 @@ open groupCohomology
 /--
 [groupCohomology_isCoboundary1_of_addEquiv_pi](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_groupCohomology_isCoboundary1_of_addEquiv_pi.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {G P P₀ : Type*} [Group G] [AddCommGroup P] [AddCommGroup P₀] [SMul G P]
   {f : G → P}

@@ -7,7 +7,7 @@ import Lemma.Nat.EqCast_1'1
 open List Nat Fin
 
 
-@[main]
+@[path]
 private lemma main
   {tail : List α}
   {f : Fin (tail.length + 1) × α → β}

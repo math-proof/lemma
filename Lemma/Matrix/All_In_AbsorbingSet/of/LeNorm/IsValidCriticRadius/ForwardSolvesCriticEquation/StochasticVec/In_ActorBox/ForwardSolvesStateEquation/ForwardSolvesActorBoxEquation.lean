@@ -4,7 +4,7 @@ import Lemma.Matrix.All_LeNorm.of.LeNorm.IsValidCriticRadius.ForwardUniformCriti
 import Lemma.Matrix.All_In_PhaseSpace.of.StochasticVec.In_ActorBox.ForwardSolvesStateEquation.ForwardSolvesActorBoxEquation
 
 
-@[main]
+@[path]
 private lemma main
   {S : Type*} [Fintype S] [DecidableEq S]
   {A : Type*} [Fintype A]

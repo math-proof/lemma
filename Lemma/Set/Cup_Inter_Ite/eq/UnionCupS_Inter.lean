@@ -3,7 +3,7 @@ import Lemma.Set.Cup_Ite.eq.UnionCupS
 open Set
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (A C : Set α)

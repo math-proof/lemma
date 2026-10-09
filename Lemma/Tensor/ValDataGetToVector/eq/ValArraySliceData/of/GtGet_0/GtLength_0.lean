@@ -4,7 +4,7 @@ import Lemma.Tensor.ValDataGetToVector.eq.ValArraySliceData.of.Lt
 open Tensor List
 
 
-@[main]
+@[path]
 private lemma main
   {s : List ℕ}
 -- given

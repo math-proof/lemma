@@ -4,7 +4,7 @@ import sympy.Basic
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   {n : ℕ} :
 -- imply
@@ -13,7 +13,7 @@ private lemma main
   rw [eq_div_iff (by positivity), ← Nat.cast_mul, mul_comm, ← Nat.factorial_eq_mul_doubleFactorial]
 
 
-@[main]
+@[path]
 private lemma back
   {n : ℕ}
 -- given

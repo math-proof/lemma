@@ -2,7 +2,7 @@ import Lemma.Complex.Eq.of.Re.Im
 open Complex
 
 
-@[main]
+@[path]
 private lemma main
   {z : ℂ} :
 -- imply

@@ -10,7 +10,7 @@ import sympy.Basic
 Polar product rule for velocity:
 \(\vec{v}=\dfrac{d}{dt}(\rho\,\hat{r})=\dot\rho\,\hat{r}+\rho\,\dot\theta\,\hat{\theta}\).
 -/
-@[main]
+@[path]
 private lemma main
   {ρ θ : ℝ → ℝ}
   {t : ℝ}

@@ -9,7 +9,7 @@ Build a joint `SinglePSpace π (x, y)` from an explicit density `p` of the joint
 `π.map (x, y)` equals the product reference measure with density `p`, then `(x, y)` admits
 `p` as its distribution. The a.e. measurability of the pair is supplied directly.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace Ω]
   [ReferenceMeasure α]

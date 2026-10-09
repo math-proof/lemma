@@ -6,7 +6,7 @@ import Lemma.Nat.Ceil.eq.DivAddSub_1
 open Int Nat
 
 
-@[main]
+@[path]
 private lemma main
   {start stop step : ℕ}
 -- given

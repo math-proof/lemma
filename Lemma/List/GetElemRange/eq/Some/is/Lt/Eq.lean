@@ -3,7 +3,7 @@ import Lemma.List.GetElemRange.eq.None.of.Ge
 open List Nat
 
 
-@[main, mp, mpr]
+@[path, mp, mpr]
 private lemma main
 -- given
   (n i j : ℕ) :

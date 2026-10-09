@@ -5,7 +5,7 @@ import Lemma.Finset.Any_In.is.Ne_Empty
 open Vector Finset
 
 
-@[main]
+@[path]
 private lemma main
   [ExpPos α] [IsOrderedCancelAddMonoid α]
   [NeZero n]

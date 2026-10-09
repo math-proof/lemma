@@ -6,12 +6,12 @@ open Tensor
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Tensor.Eq.is.ToMatrix |
+| path | Tensor.Eq.is.ToMatrix |
 | comm | Tensor.ToMatrix.is.Eq |
 | mp | Tensor.ToMatrix.of.Eq |
 | mpr | Tensor.Eq.of.ToMatrix |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
 -- given
   (A B : Tensor α [m, n]) :

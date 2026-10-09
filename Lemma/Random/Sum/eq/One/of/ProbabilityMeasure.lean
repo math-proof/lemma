@@ -3,7 +3,7 @@ import sympy.Basic
 open MeasureTheory
 
 
-@[main]
+@[path]
 private lemma main
   {ι : Type*} [Fintype ι] [MeasurableSpace ι] [MeasurableSingletonClass ι]
 -- given

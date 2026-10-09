@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [Algebra_exists_pow_mul_eq_of_mem_adjoin_div](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Algebra_exists_pow_mul_eq_of_mem_adjoin_div.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing R] [CommRing S] [Algebra R S]
   {I : Ideal R}

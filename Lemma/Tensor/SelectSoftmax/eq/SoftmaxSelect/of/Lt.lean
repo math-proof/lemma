@@ -9,7 +9,7 @@ import Lemma.Tensor.Softmax.eq.DivExp_KeepdimSumExp
 open Bool List Nat Tensor
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [Exp α]
   {d : Fin s.length}

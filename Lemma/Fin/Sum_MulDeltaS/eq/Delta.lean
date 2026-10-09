@@ -6,10 +6,10 @@ open Nat
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Fin.Sum_MulDeltaS.eq.Delta |
+| path | Fin.Sum_MulDeltaS.eq.Delta |
 | comm | Fin.Delta.eq.Sum_MulDeltaS |
 -/
-@[main, comm]
+@[path, comm]
 private lemma main
   [Semiring α]
 -- given

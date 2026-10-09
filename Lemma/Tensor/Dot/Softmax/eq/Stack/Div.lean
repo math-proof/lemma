@@ -34,7 +34,7 @@ private lemma stack_softmax_dot
   exact softmax_dot _ _
 
 
-@[main]
+@[path]
 private lemma gpt
   [NeZero n]
   {d_z : ℕ}

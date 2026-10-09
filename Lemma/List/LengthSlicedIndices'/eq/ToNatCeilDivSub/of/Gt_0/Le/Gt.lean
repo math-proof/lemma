@@ -12,7 +12,7 @@ import Lemma.List.LengthSlicedIndices'.eq.CeilDivSub.of.Gt_0.Le.Gt.Sub.le.Mul
 open List Int Nat Rat
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h_stop : start > stop)

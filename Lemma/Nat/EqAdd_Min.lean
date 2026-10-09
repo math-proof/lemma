@@ -4,7 +4,7 @@ import Lemma.Nat.Min
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (a b : ℕ) :
@@ -15,7 +15,7 @@ private lemma main
   apply EqAddMin
 
 
-@[main]
+@[path]
 private lemma Comm
 -- given
   (a b : ℕ) :

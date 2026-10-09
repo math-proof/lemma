@@ -9,7 +9,7 @@ open Tensor
 set_option maxHeartbeats 400000
 
 
-@[main]
+@[path]
 private lemma stack
   [Mul α] [AddCommMonoid α]
 -- given
@@ -99,7 +99,7 @@ private lemma stack
   rw [hAB, hsplit, hA, hB]
 
 
-@[main]
+@[path]
 private lemma main
   [Mul α] [AddCommMonoid α]
 -- given
@@ -118,7 +118,7 @@ private lemma main
   exact hstack
 
 
-@[main]
+@[path]
 private lemma stack_mv
   [Mul α] [AddCommMonoid α]
 -- given
@@ -192,7 +192,7 @@ private lemma stack_mv
 /--
 Matrix–vector product distributes over row-block append.
 -/
-@[main]
+@[path]
 private lemma mv
   [Mul α] [AddCommMonoid α]
 -- given

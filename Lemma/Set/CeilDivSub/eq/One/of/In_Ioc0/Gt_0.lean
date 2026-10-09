@@ -5,7 +5,7 @@ import Lemma.Rat.EqCeil_1.of.In_Ioc0'1
 open Set Rat
 
 
-@[main]
+@[path]
 private lemma main
   [Field α] [LinearOrder α] [IsStrictOrderedRing α]
   [FloorRing α]

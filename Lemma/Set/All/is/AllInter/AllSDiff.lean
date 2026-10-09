@@ -7,12 +7,12 @@ open Set
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Set.All.is.AllInter.AllSDiff |
+| path | Set.All.is.AllInter.AllSDiff |
 | comm | Set.AllInter.AllSDiff.is.All |
 | mp | Set.AllInter.AllSDiff.of.All |
 | mpr | Set.All.of.AllInter.AllSDiff |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   {A B : Set α}
   {f : α → Prop} :

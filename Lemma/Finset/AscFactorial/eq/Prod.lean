@@ -7,7 +7,7 @@ Rising factorial \(x^{\overline{k}} = x(x+1)\cdots(x+k-1)\).
 [Mathematica](https://mathworld.wolfram.com/RisingFactorial.html)
 [SymPy](https://docs.sympy.org/latest/modules/functions/combinatorial.html#sympy.functions.combinatorial.factorials.RisingFactorial)
 -/
-@[main]
+@[path]
 private lemma main
   [CommSemiring α]
 -- given

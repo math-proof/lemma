@@ -4,7 +4,7 @@ import Lemma.List.LengthSlice.eq.Min
 open Tensor List
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (X : Tensor α (s₀ :: s))

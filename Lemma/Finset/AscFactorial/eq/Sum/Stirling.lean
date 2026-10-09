@@ -5,7 +5,7 @@ import sympy.Basic
 import Lemma.Finset.EvalAscPochhammer.eq.Sum_MulPowStirlingFirst
 
 
-@[main]
+@[path]
 private lemma main
   {n : ℕ}
   {x : ℝ} :

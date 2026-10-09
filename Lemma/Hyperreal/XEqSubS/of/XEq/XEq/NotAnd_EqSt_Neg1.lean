@@ -5,7 +5,7 @@ import Lemma.Rat.Div_Neg.eq.NegDiv
 open Hyperreal Rat
 
 
-@[main]
+@[path]
 private lemma main
   {a b x y : ℝ*}
 -- given

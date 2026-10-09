@@ -9,7 +9,7 @@ import sympy.functions.special.tensor_functions
 open Nat Tensor Fin
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (k j : Fin (d + d)) :

@@ -3,7 +3,7 @@ import sympy.Basic
 import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
 
 
-@[main]
+@[path]
 private lemma main
   {n : ℕ}
   {x : Fin n → ℂ} :

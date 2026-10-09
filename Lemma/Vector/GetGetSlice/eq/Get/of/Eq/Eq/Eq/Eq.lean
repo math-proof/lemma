@@ -4,7 +4,7 @@ import Lemma.Vector.GetGetSlice.eq.Get
 open List Nat Vector
 
 
-@[main, fin]
+@[path, fin]
 private lemma main
   {m' n' n'' j' : ℤ}
   {m n : ℕ}

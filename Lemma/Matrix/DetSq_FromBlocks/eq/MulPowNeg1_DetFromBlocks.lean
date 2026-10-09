@@ -4,7 +4,7 @@ import Lemma.Matrix.SignTau.eq.PowNeg1Mul
 open Matrix Equiv Matrix.BlockSwap
 
 
-@[main]
+@[path]
 private lemma main
   [CommRing R]
   {a b : ℕ}

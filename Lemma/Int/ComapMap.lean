@@ -28,7 +28,7 @@ private lemma  Ws34.faithfullyFlat_adicCompletion_maximalIdeal (S : Type*) [Comm
   have hne1 : (IsLocalRing.maximalIdeal S ^ 1 : Ideal S) ≠ ⊤ := by
     rw [pow_one]; exact (IsLocalRing.maximalIdeal.isMaximal S).ne_top
   exact (Ideal.Quotient.zero_ne_one_iff.mpr hne1) h0.symm
-@[main]
+@[path]
 private lemma main
   [CommRing S] [IsNoetherianRing S] [IsLocalRing S]
   {𝔞 : Ideal S} :

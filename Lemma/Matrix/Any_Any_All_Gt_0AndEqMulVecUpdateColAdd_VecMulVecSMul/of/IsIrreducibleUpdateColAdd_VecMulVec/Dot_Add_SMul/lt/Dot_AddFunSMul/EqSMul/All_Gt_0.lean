@@ -80,7 +80,7 @@ open scoped Matrix
 证明思路：`b @ᵒ l` 的第 `i` 列是 `l i • b`，故新旧矩阵仅第 `i` 列不同，
 直接归结为 `M` 版本的置盐定理。
 -/
-@[main]
+@[path]
 private lemma main
   {S : Type*} [Fintype S] [DecidableEq S]
   {A : Matrix S S ℝ}

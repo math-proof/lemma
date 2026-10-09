@@ -1,7 +1,7 @@
 import sympy.vector.Basic
 
 
-@[main, fin, subst 1]
+@[path, fin, subst 1]
 private lemma main
   [One α]
 -- given

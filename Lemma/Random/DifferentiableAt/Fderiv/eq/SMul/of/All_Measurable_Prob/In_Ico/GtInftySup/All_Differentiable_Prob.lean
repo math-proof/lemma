@@ -16,7 +16,7 @@ On a general state space `θ ↦ Qk θ γ x u` is differentiable with derivative
 `γ • ∫ y, fderiv ℝ (fun θ ↦ Vk θ γ y) θ ∂T(· | x, u)` (differentiation under the integral sign).
 Continuous-state counterpart of `Tensor.DifferentiableAt.Fderiv.eq.SMul.of.In_Ico.GtInftySup.All_Differentiable_Prob`.
 -/
-@[main]
+@[path]
 private lemma main
   [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [FiniteDimensional ℝ Θ] [MeasurableSpace S] [MeasurableSpace A] [Fintype A]
   {M : Model Θ S A}

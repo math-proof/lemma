@@ -3,7 +3,7 @@ import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
 import Mathlib.LinearAlgebra.Matrix.Determinant.Misc
 
 
-@[main]
+@[path]
 private lemma main
   {n : ℕ}
   {A : Matrix (Fin n) (Fin n) ℝ} :
@@ -14,7 +14,7 @@ private lemma main
   rfl
 
 
-@[main]
+@[path]
 private lemma expansion_by_minors
   {n : ℕ}
   {A : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ}

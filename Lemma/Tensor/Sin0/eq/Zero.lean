@@ -5,7 +5,7 @@ import Lemma.Vector.Sin0.eq.Zero
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   {s : List ℕ} :
 -- imply

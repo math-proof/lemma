@@ -11,7 +11,7 @@ import sympy.stats.joint_rv
 open MeasureTheory Measure Function Random
 
 
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace Ω]
   [ReferenceMeasure α] [ReferenceMeasure γ]
@@ -47,11 +47,11 @@ private lemma main
       (count : Measure ((α × γ) × γ))
     rw [hα, hγ, ← Count.eq.ProdCountS (α := α) (β := γ), ← Count.eq.ProdCountS]
   have : IsProbabilityMeasure (π.map (x, y)) :=
-    Measure.isProbabilityMeasure_map hxym
+    inferInstance
   have : IsProbabilityMeasure (π.map y) :=
-    Measure.isProbabilityMeasure_map hym
+    inferInstance
   have : IsProbabilityMeasure (π.map ((x, y), y)) :=
-    Measure.isProbabilityMeasure_map hxyym
+    inferInstance
   have hmass_xy :
       (π.map (x, y)).rnDeriv (count : Measure (α × γ)) («x.bvar», «y.bvar») =
         π.map (x, y) {(«x.bvar», «y.bvar»)} :=

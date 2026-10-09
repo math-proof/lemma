@@ -2,7 +2,7 @@ import Lemma.List.EraseIdxPermute.eq.EraseIdx.of.GtLength_Add
 open List
 
 
-@[main]
+@[path]
 private lemma main
   {s : List ℕ}
   {d : ℕ}

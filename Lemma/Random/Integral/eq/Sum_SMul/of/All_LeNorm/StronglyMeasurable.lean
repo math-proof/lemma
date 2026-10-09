@@ -7,7 +7,7 @@ open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model
 Integral against the stage kernel of the trajectory model `M`, for a bounded strongly measurable `f`:
 `∫ z, f z ∂(stageK θ y) = ∑ u, π_θ(u | y) • ∫ ρ, f (ρ, y, u) ∂(reward (y, u))`.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A] [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E]
   {M : Model Θ S A}
@@ -24,7 +24,6 @@ private lemma main
   have := M.env.reward_markov
   unfold Model.stageK
   rw [Kernel.map_apply _ (by fun_prop), integral_map (by fun_prop) hf.aestronglyMeasurable]
-  unfold Model.stageK₀
   rw [Kernel.prod_apply, Kernel.deterministic_apply]
   rw [id, Measure.dirac_prod, integral_map (f := fun x : S × A × ℝ => f (x.2.2, x.1, x.2.1)) (by fun_prop)
     (hf.comp_measurable (by fun_prop)).aestronglyMeasurable]

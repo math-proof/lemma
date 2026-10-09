@@ -2,7 +2,7 @@ import sympy.series.limits
 import sympy.Basic
 
 
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
 -- given
   (x : ℝ*) :

@@ -4,7 +4,7 @@ import Lemma.Hyperreal.IsSt.is.Le0Mk.EqStdPart
 open Hyperreal
 
 
-@[main]
+@[path]
 private lemma main
   {x : ℝ*}
   {r : ℝ}

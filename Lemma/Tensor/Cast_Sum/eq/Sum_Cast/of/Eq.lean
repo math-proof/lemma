@@ -4,7 +4,7 @@ import torch.Tensor.sum
 open Bool Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [AddCommMonoid α]
   [DecidableEq ι]
@@ -20,7 +20,7 @@ private lemma main
   apply Sum.as.Sum_Cast.of.Eq h
 
 
-@[main]
+@[path]
 private lemma fin
   [AddCommMonoid α]
 -- given

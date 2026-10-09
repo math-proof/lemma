@@ -6,7 +6,7 @@ import Lemma.Vector.Lt.is.All_Lt
 open Tensor Vector
 
 
-@[main]
+@[path]
 private lemma main
   [Preorder α] [Preorder β] [Zero α] [Zero β]
   {f : α → β}

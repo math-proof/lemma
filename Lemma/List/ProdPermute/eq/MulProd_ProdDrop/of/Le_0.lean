@@ -5,7 +5,7 @@ import Lemma.Int.GeNeg_0.of.Le_0
 open List Int Nat
 
 
-@[main]
+@[path]
 private lemma main
   [Monoid α]
   {s : List α}

@@ -10,7 +10,7 @@ import sympy.stats.hidden_markov_sequence
 open MeasureTheory
 
 
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace Ω] [StandardBorelSpace Ω]
   [ReferenceMeasure S] [ReferenceMeasure A]

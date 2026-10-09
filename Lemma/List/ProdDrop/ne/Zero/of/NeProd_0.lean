@@ -3,7 +3,7 @@ import Lemma.Nat.Ne_0.of.Mul.ne.Zero
 open List Nat
 
 
-@[main]
+@[path]
 private lemma main
   [MonoidWithZero α]
   {s : List α}

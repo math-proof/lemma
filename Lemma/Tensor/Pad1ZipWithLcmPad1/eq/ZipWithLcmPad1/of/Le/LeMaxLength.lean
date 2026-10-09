@@ -6,7 +6,7 @@ import Lemma.List.ZipWithLcmReplicate1.eq.Replicate1
 open Tensor List
 
 
-@[main]
+@[path]
 private lemma main
   {n m : ℕ}
 -- given

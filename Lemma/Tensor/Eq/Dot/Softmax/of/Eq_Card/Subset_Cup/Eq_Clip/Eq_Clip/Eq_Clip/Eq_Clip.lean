@@ -12,7 +12,7 @@ and the hyperreal masked softmax keeping exactly the \( m \) distinct columns \(
 \qquad a'_{ij} = \frac{\sum_t Q_{it}(K_{d_j t} + w^K_{\delta_{ij} t})}{\sqrt{d_z}} .
 \]
 -/
-@[main]
+@[path]
 private lemma position_representation.relative.gather
   {n d_z : ℕ}
   {m : ℕ}
@@ -44,7 +44,7 @@ private lemma position_representation.relative.gather
 py (`position_representation.relative.gather.indexed`): as `position_representation.relative.gather`, but the relative offsets are taken between arbitrary integer positions \( r_j \):
 \( K'_{ij} = w^K_{c + \operatorname{clip}(r_j - r_i, -c, c)} \), \( V'_{ij} = w^V_{c + \operatorname{clip}(r_j - r_i, -c, c)} \).
 -/
-@[main]
+@[path]
 private lemma position_representation.relative.gather.indexed
   {n d_z : ℕ}
   {m : ℕ}

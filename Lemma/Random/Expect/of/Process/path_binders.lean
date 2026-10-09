@@ -13,7 +13,7 @@ set_option linter.unusedVariables false
 Sanity check: `𝔼[state, action, reward : M θ](…)` elaborates by flipping each process to its path RV
 (`AsPathRV.process`) and taking their finite joint law.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S]
   [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A]

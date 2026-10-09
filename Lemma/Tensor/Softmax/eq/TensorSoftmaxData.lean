@@ -21,7 +21,7 @@ import torch.Tensor.sum
 open Bool List Nat Tensor Vector
 
 
-@[main]
+@[path]
 private lemma main
   [Exp α]
 -- given

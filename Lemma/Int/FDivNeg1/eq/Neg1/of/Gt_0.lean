@@ -7,7 +7,7 @@ import Lemma.Rat.Gt0Div.of.Lt_0.Gt_0
 open Int Rat
 
 
-@[main]
+@[path]
 private lemma main
   {d : ℤ}
 -- given

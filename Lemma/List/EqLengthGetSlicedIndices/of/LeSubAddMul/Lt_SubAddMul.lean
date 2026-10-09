@@ -6,7 +6,7 @@ import Lemma.Rat.EqToNatCeilDivSubMul.of.Lt
 open Int List Nat Rat
 
 
-@[main]
+@[path]
 private lemma main
   {j' : Fin d}
 -- given

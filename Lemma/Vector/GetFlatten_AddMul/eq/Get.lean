@@ -6,7 +6,7 @@ import Lemma.Nat.AddMul.lt.Mul
 open Vector Nat
 
 
-@[main, fin]
+@[path, fin]
 private lemma main
 -- given
   (v : List.Vector (List.Vector α n) m)

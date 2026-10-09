@@ -2,7 +2,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma limits.merge
   {n : ℕ}
   {a b : ℝ}
@@ -17,7 +17,7 @@ private lemma limits.merge
   rwa [Fin.snoc_init_self] at hm
 
 
-@[main]
+@[path]
 private lemma limits.split
   {n : ℕ}
   {a b : ℝ}
@@ -35,7 +35,7 @@ private lemma limits.split
   · simpa using hx j (Set.mem_univ _)
 
 
-@[main]
+@[path]
 private lemma limits.merge.given
   {n : ℕ}
   {a b : ℝ}
@@ -53,7 +53,7 @@ private lemma limits.merge.given
   · simpa using hx j (Set.mem_univ _)
 
 
-@[main]
+@[path]
 private lemma limits.split.given
   {n : ℕ}
   {a b : ℝ}

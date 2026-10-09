@@ -5,11 +5,11 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Bool.All.is.All.AllNot |
+| path | Bool.All.is.All.AllNot |
 | mp | Bool.All.AllNot.of.All |
 | mpr | Bool.All.of.All.AllNot |
 -/
-@[main, mp, mpr]
+@[path, mp, mpr]
 private lemma main
 -- given
   (f p : α → Prop) :

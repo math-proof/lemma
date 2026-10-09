@@ -4,7 +4,7 @@ import sympy.stats.joint_rv
 open Random
 
 
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace Ω]
   [ReferenceMeasure α] [ReferenceMeasure β]

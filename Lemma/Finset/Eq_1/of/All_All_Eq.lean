@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [KummerTheory_algEquiv_eq_one_of_forall_apply_eq_of_isSplittingField](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_KummerTheory_algEquiv_eq_one_of_forall_apply_eq_of_isSplittingField.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {K L : Type*} [Field K] [Field L] [Algebra K L]
   {n : ℕ}

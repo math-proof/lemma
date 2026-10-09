@@ -4,7 +4,7 @@ import sympy.Basic
 import Lemma.Real.SubSquareDivSquareS.Gt_0.of.IsValidCriticRadius
 
 
-@[main]
+@[path]
 private lemma main
   {lambdaC : ℝ}
   {Bb : ℝ}

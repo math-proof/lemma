@@ -6,10 +6,10 @@ open Complex
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Complex.Add_Conj.eq.Neg1 |
+| path | Complex.Add_Conj.eq.Neg1 |
 | comm | Complex.Neg1.eq.Add_Conj |
 -/
-@[main, comm]
+@[path, comm]
 private lemma main :
 -- imply
   let ω := (I * (2 * π / 3)).exp

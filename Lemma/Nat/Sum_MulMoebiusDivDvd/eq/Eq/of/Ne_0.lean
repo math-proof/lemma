@@ -7,7 +7,7 @@ open ArithmeticFunction
 /--
 [ArithmeticFunction_sum_moebius_filter_dvd](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_ArithmeticFunction_sum_moebius_filter_dvd.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {n m : ℕ}
 -- given

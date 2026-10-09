@@ -4,7 +4,7 @@ import Lemma.Tensor.ProdTake_1.eq.Length.of.GtLength_0
 open Tensor
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   {X : Tensor α s}
 -- given

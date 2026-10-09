@@ -4,7 +4,7 @@ import Lemma.Tensor.SubGetS.eq.Get_Sub.of.Eq_Stack_Mul.Ge
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   {n d : ℕ}
   {θ : Tensor ℝ [n, d]}

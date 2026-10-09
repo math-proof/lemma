@@ -2,7 +2,7 @@ import stdlib.Slice
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   -- given
   (a b : α) :

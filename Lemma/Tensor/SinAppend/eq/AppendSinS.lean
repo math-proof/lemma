@@ -6,7 +6,7 @@ open Tensor
 /--
 Sine distributes over vertical block concatenation.
 -/
-@[main, comm]
+@[path, comm]
 private lemma main
   [Sin α]
 -- given

@@ -3,7 +3,7 @@ import Lemma.Set.Icc.eq.SDiffIoc.Lt
 open Set
 
 
-@[main]
+@[path]
 private lemma main
   [LinearOrder α]
   {f : α → Prop}

@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [AddCommGroup_natCard_torsionBy_prod_eq_mul](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AddCommGroup_natCard_torsionBy_prod_eq_mul.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {A : Type u} [AddCommGroup A]
   {B : Type v} [AddCommGroup B]

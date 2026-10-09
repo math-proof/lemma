@@ -5,12 +5,12 @@ open Complex
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Complex.Eq0Add_Mul_Pow_3.is.In_Finset_SubSAddMulS.of.Ne_0 |
+| path | Complex.Eq0Add_Mul_Pow_3.is.In_Finset_SubSAddMulS.of.Ne_0 |
 | comm | Complex.In_Finset_SubSAddMulS.is.Eq0Add_Mul_Pow_3.of.Ne_0 |
 | mp | Complex.In_Finset_SubSAddMulS.of.Eq0Add_Mul_Pow_3.Ne_0 |
 | mpr | Complex.Eq0Add_Mul_Pow_3.of.In_Finset_SubSAddMulS.Ne_0 |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   {x a b c d : ℂ}
 -- given

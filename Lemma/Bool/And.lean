@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma collect :
 -- imply
   (a ∨ c) ∧ f ∧ (x ∨ c) ↔ f ∧ (c ∨ a ∧ x) := by
@@ -9,7 +9,7 @@ private lemma collect :
   tauto
 
 
-@[main]
+@[path]
 private lemma distribute :
 -- imply
   (p ∨ q) ∧ r ∧ s ↔ (p ∧ r ∨ q ∧ r) ∧ s := by
@@ -17,7 +17,7 @@ private lemma distribute :
   tauto
 
 
-@[main]
+@[path]
 private lemma invert
 -- given
   (h : p ∧ q) :

@@ -17,7 +17,7 @@ import torch.Tensor.sum
 open Bool List Tensor Vector
 
 
-@[main, comm, cast]
+@[path, comm, cast]
 private lemma main
   [AddZeroClass α]
   {d : ℕ}

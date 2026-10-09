@@ -12,7 +12,7 @@ Write \(e=\dfrac{2q}{1+q^2}\) (with \(|q|<1\)); then
 =\frac12\left(\frac{p}{1-e\cos x}\right)^2.
 \]
 -/
-@[main]
+@[path]
 private lemma main
   {e q p : ℝ}
 -- given

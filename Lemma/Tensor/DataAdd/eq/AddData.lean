@@ -2,7 +2,7 @@ import sympy.Basic
 import torch.Tensor.Basic
 
 
-@[main]
+@[path]
 private lemma main
   [Add α]
 -- given

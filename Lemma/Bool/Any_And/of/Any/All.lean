@@ -2,7 +2,7 @@ import sympy.concrete.quantifier
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {p q r : α → Prop}
 -- given
@@ -17,7 +17,7 @@ private lemma main
   simp_all
 
 
-@[main]
+@[path]
 private lemma set
   {A : Set α}
   {f : α → Prop}

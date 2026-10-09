@@ -4,7 +4,7 @@ import sympy.Basic
 open Real
 
 
-@[main]
+@[path]
 private lemma main
   {x : ℝ}
 -- given

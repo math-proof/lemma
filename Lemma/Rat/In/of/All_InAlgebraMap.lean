@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [ValuationSubring_algHom_apply_mem_of_moduleFinite](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_ValuationSubring_algHom_apply_mem_of_moduleFinite.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing R] [Field L] [Algebra R L] [CommRing H] [Algebra R H] [Module.Finite R H]
   {A : ValuationSubring L}

@@ -6,7 +6,7 @@ import sympy.concrete.sup
 open Topology
 
 
-@[main]
+@[path]
 private lemma main
   {γ : ℝ}
   {x : ℕ → ℝ}

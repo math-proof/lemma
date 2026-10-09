@@ -7,7 +7,7 @@ import Lemma.ContinuousSemiflow.IsGlobalAttractor_OmegaLimitToFun.of.Absorbs.IsF
 open Filter
 
 
-@[main]
+@[path]
 private lemma main
   {S : Type*} [Fintype S]
   {A : Type*} [Fintype A]

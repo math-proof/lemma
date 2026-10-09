@@ -7,7 +7,7 @@ import Lemma.List.GetEraseIdx.eq.Get.of.Gt.GtLength
 open Tensor List
 
 
-@[main]
+@[path]
 private lemma main
   [Add α] [Zero α]
   {d : ℕ}

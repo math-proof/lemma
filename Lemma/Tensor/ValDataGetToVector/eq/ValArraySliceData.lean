@@ -6,7 +6,7 @@ import Lemma.Vector.GetSplitAt_1.as.ArraySlice.of.GtGet_0.GtLength_0
 open Vector Bool Nat
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (a : Tensor α (s₀ :: s))

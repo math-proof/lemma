@@ -14,7 +14,7 @@ private lemma  finite_irreducibleComponents_of_irreducibleSpace (S : Type*) [Top
   intro Z hZ
   rw [Set.mem_singleton_iff]
   exact hZ.eq_of_le (IrreducibleSpace.isIrreducible_univ S) (Set.subset_univ Z)
-@[main]
+@[path]
 private lemma main
   {X S : Scheme.{u}} [IsIntegral S]
   {f : X ⟶ S} [GeometricallyIntegral f] [Flat f] [UniversallyOpen f] :

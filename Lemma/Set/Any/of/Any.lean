@@ -2,7 +2,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma limits.swap
   {f g : ℝ → ℤ}
 -- given

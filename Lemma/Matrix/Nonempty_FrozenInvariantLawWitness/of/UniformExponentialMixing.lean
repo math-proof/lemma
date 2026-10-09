@@ -5,7 +5,7 @@ import Lemma.Matrix.Nonempty_FrozenResolventWitness.of.UniformExponentialMixing
 import Lemma.Matrix.Sum_AbsSub.le.MulDivMulCMixLQHQDist.of.FrozenResolventWitness.InvariantLaw.InvariantLaw.In_ActorBox.In_ActorBox
 
 
-@[main]
+@[path]
 private lemma main
   {S : Type*} [Fintype S] [DecidableEq S]
   {d : ℕ}

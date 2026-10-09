@@ -6,7 +6,7 @@ open NumberField IsDedekindDomain
 /--
 [NumberField_exists_finset_forall_prod_infinitePlace_pow_mul_prod_norm_algebraMap_adicCompletion_eq_one](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_NumberField_exists_finset_forall_prod_infinitePlace_pow_mul_prod_norm_algebraMap_adicCompletion_eq_one.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [Field K] [NumberField K]
   {x : K}

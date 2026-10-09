@@ -27,7 +27,7 @@ private lemma  PortCard.evalEval_φ {R : Type*} [CommRing R] (W : WeierstrassCur
   have h1 := congrArg (evalEval x y) hp
   rw [evalEval_sub, evalEval_mul, h0, zero_mul, sub_eq_zero, evalEval_C] at h1
   exact h1
-@[main]
+@[path]
 private lemma main
   [CommRing R]
   {W : WeierstrassCurve R}

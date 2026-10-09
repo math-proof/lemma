@@ -4,7 +4,7 @@ import Lemma.Tensor.Eq_Stack
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (X : Tensor α [4, 3]) :

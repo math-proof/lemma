@@ -4,7 +4,7 @@ import Lemma.Nat.EqMod
 open Vector Nat
 
 
-@[main, fin]
+@[path, fin]
 private lemma main
   {i : Fin m}
   {j : Fin n}

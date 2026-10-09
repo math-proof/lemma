@@ -14,10 +14,10 @@ Python: Random.Dot.eq.Expect.
 
 | attributes | lemma |
 | :---: | :---: |
-| main | Random.Dot.eq.Expect |
+| path | Random.Dot.eq.Expect |
 | comm | Random.Expect.eq.Dot |
 -/
-@[main, comm]
+@[path, comm]
 private lemma main
   [MeasurableSpace Ω]
   [MeasurableSpace α]

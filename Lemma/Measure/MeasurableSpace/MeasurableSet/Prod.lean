@@ -3,7 +3,7 @@ import sympy.Basic
 
 
 /-- Product of measurable sets is measurable. -/
-@[main]
+@[path]
 private lemma main
   {α β : Type*}
   [MeasurableSpace α] [MeasurableSpace β]

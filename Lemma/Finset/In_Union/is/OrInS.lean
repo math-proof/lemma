@@ -4,7 +4,7 @@ import Lemma.Set.AndNotSIn.of.NotIn_Union
 open Set Bool Finset
 
 
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   [DecidableEq ι]
   {A B : Finset ι}

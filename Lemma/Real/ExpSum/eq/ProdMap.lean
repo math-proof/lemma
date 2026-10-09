@@ -3,7 +3,7 @@ import Lemma.Real.ExpAdd.eq.MulExpS
 open Real
 
 
-@[main]
+@[path]
 private lemma main
   [Exp α]
 -- given

@@ -6,7 +6,7 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 /--
 [AlgebraicGeometry_jacobsonSpace_of_locallyOfFiniteType](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_jacobsonSpace_of_locallyOfFiniteType.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {k : Type u} [Field k]
   {X : Scheme.{u}}

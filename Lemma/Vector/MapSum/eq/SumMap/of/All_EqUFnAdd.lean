@@ -6,10 +6,10 @@ open Vector
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Vector.MapSum.eq.SumMap.of.All_EqUFnAdd |
+| path | Vector.MapSum.eq.SumMap.of.All_EqUFnAdd |
 | comm | Vector.SumMap.eq.MapSum.of.All_EqUFnAdd |
 -/
-@[main, comm]
+@[path, comm]
 private lemma main
   [AddCommMonoid α]
   [AddCancelCommMonoid β]

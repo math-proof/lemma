@@ -3,7 +3,7 @@ import Lemma.Nat.Mul
 open Nat
 
 
-@[main]
+@[path]
 private lemma Comm
 -- given
   (a b c : ℕ) :

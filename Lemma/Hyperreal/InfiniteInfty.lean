@@ -4,7 +4,7 @@ import Lemma.Int.EqAbs.of.Gt_0
 open Hyperreal Int
 
 
-@[main]
+@[path]
 private lemma main :
 -- imply
   Hyperreal.omega → ∞ := by

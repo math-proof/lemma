@@ -15,7 +15,7 @@ import Lemma.Tensor.SEqPermute
 open Bool List Nat Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [Mul α]
 -- given

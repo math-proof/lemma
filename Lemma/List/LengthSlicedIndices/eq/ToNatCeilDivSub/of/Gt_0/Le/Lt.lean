@@ -13,7 +13,7 @@ import Lemma.Nat.Coe.is.Eq
 open List Int Nat Rat
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h_start : start < stop)

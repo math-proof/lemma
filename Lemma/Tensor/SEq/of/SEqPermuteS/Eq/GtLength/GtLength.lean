@@ -10,7 +10,7 @@ import Lemma.Tensor.SEqPermuteS__Neg.of.Le
 open Tensor Int
 
 
-@[main]
+@[path]
 private lemma main
   {A : Tensor α s}
   {B : Tensor α s'}

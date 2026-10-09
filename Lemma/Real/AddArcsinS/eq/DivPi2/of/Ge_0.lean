@@ -3,7 +3,7 @@ import sympy.polys.polyroots
 import sympy.functions.elementary.trigonometric
 
 
-@[main]
+@[path]
 private lemma main
   {x : ℝ}
 -- given

@@ -6,11 +6,11 @@ the hypotheses are arranged in the constructor order of division a / b
 
 | attributes | lemma |
 | :---: | :---: |
-| main | Rat.Div.ne.Zero.of.Ne_0.Ne_0 |
+| path | Rat.Div.ne.Zero.of.Ne_0.Ne_0 |
 | mt | Rat.Eq_0.of.Ne_0.Div.eq.Zero |
 | mt 1 | Rat.Eq_0.of.Div.eq.Zero.Ne_0 |
 -/
-@[main, mt, mt 1]
+@[path, mt, mt 1]
 private lemma main
   [GroupWithZero α]
   {a b : α}

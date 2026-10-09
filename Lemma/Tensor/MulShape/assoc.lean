@@ -5,7 +5,7 @@ import Lemma.Tensor.Pad1ZipWithLcmPad1.eq.ZipWithLcmPad1.of.Le.LeMaxLength
 open List Tensor
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (s s' s'' : List ℕ) :

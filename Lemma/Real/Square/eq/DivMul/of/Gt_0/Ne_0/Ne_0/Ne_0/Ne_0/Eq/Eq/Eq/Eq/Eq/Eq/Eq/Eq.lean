@@ -21,7 +21,7 @@ with \(r\) the radius as a function of the angle, `ρ ∘ θ`-motion has conserv
 \(J=m\rho^2\dot\theta\), the major axis is \(2a=r(0)+r(\pi)\), the semi-minor axis is
 \(b=a\sqrt{1-e^2}\), and the area swept in one period is the ellipse area \(\pi ab\).
 -/
-@[main]
+@[path]
 private lemma main
   {r ρ θ : ℝ → ℝ}
   {A C G M m J E φ a b T : ℝ}

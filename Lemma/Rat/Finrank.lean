@@ -6,7 +6,7 @@ open Module
 /--
 [LinearMap_finrank_ker_dualMap_eq_finrank_ker](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_LinearMap_finrank_ker_dualMap_eq_finrank_ker.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [Field K] [AddCommGroup V] [Module K V] [FiniteDimensional K V]
   {f : V →ₗ[K] V} :

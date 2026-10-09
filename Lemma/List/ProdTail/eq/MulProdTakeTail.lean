@@ -4,7 +4,7 @@ import Lemma.Nat.Add
 open List Nat
 
 
-@[main]
+@[path]
 private lemma main
   [Monoid α]
 -- given

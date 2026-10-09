@@ -3,7 +3,7 @@ import Lemma.Tensor.GetData.eq.GetDataGet.of.GtProd.GtLength_0
 open Tensor
 
 
-@[main, fin]
+@[path, fin]
 private lemma main
 -- given
   (h_i : i < n)

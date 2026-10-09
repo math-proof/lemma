@@ -3,7 +3,7 @@ import Lemma.Real.GtSqrt_0.of.Gt_0
 open Real Nat
 
 
-@[main]
+@[path]
 private lemma main
   {x y : ℝ}
 -- given

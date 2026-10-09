@@ -5,12 +5,12 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Int.In_Range.is.Any_Eq_AddMul |
+| path | Int.In_Range.is.Any_Eq_AddMul |
 | comm | Int.Any_Eq_AddMul.is.In_Range |
 | mp | Int.Any_Eq_AddMul.of.In_Range |
 | mpr | Int.In_Range.of.Any_Eq_AddMul |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   {x a b d : ℤ} :
 -- imply

@@ -4,7 +4,7 @@ import sympy.Basic
 open Finset Nat
 
 
-@[main]
+@[path]
 private lemma vandermonde
   {d m : ℕ}
   {x : ℝ}

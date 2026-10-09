@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma collect :
 -- imply
   (q ∨ p) ∧ (r ∨ p) ∧ (s ∨ p) ↔ p ∨ q ∧ r ∧ s := by

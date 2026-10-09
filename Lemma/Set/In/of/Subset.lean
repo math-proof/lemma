@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {A : Set α}
   {x y : α}
@@ -13,7 +13,7 @@ private lemma main
   h (Set.mem_insert x {y})
 
 
-@[main]
+@[path]
 private lemma given
   {s : Set α}
   {e : α}

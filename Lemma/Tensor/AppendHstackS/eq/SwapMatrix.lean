@@ -126,7 +126,7 @@ private lemma swap_br
   grind
 
 
-@[main]
+@[path]
 private lemma main
   [AddMonoidWithOne α] [CharZero α]
 -- given

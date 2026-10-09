@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [IsArtinianRing_isLocalization_nonZeroDivisors_of_isLocalization_of_le_nonZeroDivisors](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_IsArtinianRing_isLocalization_nonZeroDivisors_of_isLocalization_of_le_nonZeroDivisors.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {B F : Type*} [CommRing B] [CommRing F] [Algebra B F] [IsArtinianRing F]
   {M : Submonoid B} [IsLocalization M F]

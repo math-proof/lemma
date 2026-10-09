@@ -2,7 +2,7 @@ import Lemma.Bool.OrOr.is.Or_Or
 open Bool
 
 
-@[main]
+@[path]
 private lemma Comm :
 -- imply
   a ∨ b ∨ c ↔ b ∨ a ∨ c := by

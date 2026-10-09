@@ -3,7 +3,7 @@ import Lemma.Rat.Div.gt.Zero.is.AndGtS_0.ou.AndLtS_0
 open Rat Int
 
 
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   [Field α] [LinearOrder α] [IsStrictOrderedRing α]
 -- given

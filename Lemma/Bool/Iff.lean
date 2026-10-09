@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma contraposition :
 -- imply
   (p ↔ q) ↔ (¬q ↔ ¬p) := by

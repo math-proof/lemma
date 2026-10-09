@@ -6,7 +6,7 @@ import Lemma.Nat.Add
 open Hyperreal Nat
 
 
-@[main]
+@[path]
 private lemma main
   {a b : ℝ*}
 -- given

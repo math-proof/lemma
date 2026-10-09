@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   [MulZeroClass α] [NoZeroDivisors α]
   {a b : α} :

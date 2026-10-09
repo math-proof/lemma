@@ -4,7 +4,7 @@ import Lemma.Nat.EqDivMul.of.Ne_0
 open Nat Rat
 
 
-@[main]
+@[path]
 private lemma main
   {x y : ℝ}
 -- given

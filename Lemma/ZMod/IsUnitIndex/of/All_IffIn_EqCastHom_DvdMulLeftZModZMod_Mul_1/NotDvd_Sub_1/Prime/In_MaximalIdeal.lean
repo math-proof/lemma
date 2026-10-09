@@ -6,7 +6,7 @@ open IsLocalRing
 /--
 [CohCarrier_isUnit_index_of_forall_mem_iff_castHom_eq_one](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_CohCarrier_isUnit_index_of_forall_mem_iff_castHom_eq_one.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing 𝒪] [IsLocalRing 𝒪]
   {p : ℕ} [Fact p.Prime]

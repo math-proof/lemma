@@ -6,7 +6,7 @@ import Lemma.Measure.MEqCondExpIteratesUpdate.of.Integrable.Measurable.Measurabl
 open MeasureTheory ProbabilityTheory Finset Kernel Preorder Filtration Measure
 
 
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace S] [MeasurableSingletonClass S] [MeasurableSpace Z]
   {n m : ℕ}

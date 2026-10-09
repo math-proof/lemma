@@ -8,7 +8,7 @@ import sympy.Basic
 /--
 The Kepler / Binet ansatz satisfies \(w''+w=Cm/J^2\).
 -/
-@[main]
+@[path]
 private lemma main
   (A C m J ψ : ℝ)
 -- given

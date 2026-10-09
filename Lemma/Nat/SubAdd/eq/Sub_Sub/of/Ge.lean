@@ -4,7 +4,7 @@ import Lemma.Nat.Sub_Add.eq.SubSub
 open Nat
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   {b c : ℕ}
 -- given

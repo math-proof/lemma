@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   [Coe α β]
   {x y : α}
@@ -13,7 +13,7 @@ private lemma main
   rw [h]
 
 
-@[main]
+@[path]
 private lemma reverse.given
   {a b : α}
 -- given
@@ -24,7 +24,7 @@ private lemma reverse.given
   h.symm
 
 
-@[main]
+@[path]
 private lemma swap
   {F G : α → α → β}
 -- given

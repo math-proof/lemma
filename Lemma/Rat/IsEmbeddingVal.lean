@@ -6,7 +6,7 @@ open NumberField
 /--
 [NumberField_InfiniteAdeleRing_isEmbedding_units_val](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_NumberField_InfiniteAdeleRing_isEmbedding_units_val.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [Field K] [NumberField K] :
 -- imply

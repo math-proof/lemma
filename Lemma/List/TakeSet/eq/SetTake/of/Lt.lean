@@ -11,7 +11,7 @@ import Lemma.Nat.Sub_Add.eq.SubSub
 open List Nat
 
 
-@[main]
+@[path]
 private lemma main
   {s : List α}
 -- given

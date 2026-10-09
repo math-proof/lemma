@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [Matrix_isUnit_and_padicValRat_inv_nonneg_of_not_dvd_det](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Matrix_isUnit_and_padicValRat_inv_nonneg_of_not_dvd_det.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [Fintype m] [DecidableEq m]
   {p : ℕ} [Fact p.Prime]

@@ -3,7 +3,7 @@ import Lemma.Int.Le_0.of.Ge_0.Le_0
 open Int
 
 
-@[main]
+@[path]
 private lemma main
   [MulZeroClass α]
   [PartialOrder α]

@@ -8,7 +8,7 @@ import Lemma.Finset.Filter.eq.Finset.of.In
 open Set Nat Finset Int
 
 
-@[main]
+@[path]
 private lemma main
   [DecidableEq ι]
   [AddCommGroup α]

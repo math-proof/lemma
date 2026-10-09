@@ -2,7 +2,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma push
   {a b : ℕ}
   {g f : ℕ → ℤ}
@@ -18,7 +18,7 @@ private lemma push
   exact mul_lt_mul'' h₁ h₀ (Finset.prod_nonneg (fun k _ => (hg k).le)) (hg b).le
 
 
-@[main]
+@[path]
 private lemma unshift
   {a b : ℕ}
   {g f : ℕ → ℤ}

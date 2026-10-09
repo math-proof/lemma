@@ -13,7 +13,7 @@ where V = M.V, Q = M.Q are the state / action values of the trajectory model, P1
 and θ ↦ π_θ(u | x) is differentiable (h₂) with a bounded gradient (h₃).
 Gradient (Riesz representative) form of `Random.Fderiv.eq.AddSum_SMulSMul.of.Ne0Real_Preimage.In_Ico.GtInftySup.All_Differentiable_Prob`.
 -/
-@[main]
+@[path]
 private lemma main
   [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [CompleteSpace Θ]
   [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S]

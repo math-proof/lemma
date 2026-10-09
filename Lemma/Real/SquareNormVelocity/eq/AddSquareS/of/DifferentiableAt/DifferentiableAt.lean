@@ -10,7 +10,7 @@ import sympy.Basic
 /--
 Polar speed squared: \(v^2=\dot\rho^2+\rho^2\dot\theta^2\).
 -/
-@[main]
+@[path]
 private lemma main
   {ρ θ : ℝ → ℝ}
   {t : ℝ}

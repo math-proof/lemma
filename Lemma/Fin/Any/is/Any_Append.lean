@@ -2,7 +2,7 @@ import Mathlib.Data.Fin.Tuple.Basic
 import sympy.Basic
 
 
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma append
   {m k : ℕ}
   {α : Type*}

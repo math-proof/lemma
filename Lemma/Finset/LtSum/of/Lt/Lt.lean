@@ -2,7 +2,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma push
   {a b : ℕ}
   {g f : ℕ → ℤ}
@@ -17,7 +17,7 @@ private lemma push
   exact add_lt_add h₁ h₀
 
 
-@[main]
+@[path]
 private lemma unshift
   {a b : ℕ}
   {g f : ℕ → ℤ}

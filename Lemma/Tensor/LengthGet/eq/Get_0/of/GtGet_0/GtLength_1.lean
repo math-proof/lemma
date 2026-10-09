@@ -6,7 +6,7 @@ import torch.Tensor
 open List Tensor
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h_s : s.length > 1)

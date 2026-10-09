@@ -2,7 +2,7 @@ import Lemma.List.Drop.eq.Nil.of.LeLength
 open List
 
 
-@[main]
+@[path]
 private lemma main
   [Mul α] [One α]
   {s : List α}

@@ -2,7 +2,7 @@ import Mathlib.Analysis.Real.Sqrt
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {x y : ℝ}
 -- given

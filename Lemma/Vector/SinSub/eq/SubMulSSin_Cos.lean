@@ -10,10 +10,10 @@ open Real Vector
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Vector.SinSub.eq.SubMulSSin_Cos |
+| path | Vector.SinSub.eq.SubMulSSin_Cos |
 | comm | Vector.SubMulSSin_Cos.eq.SinSub |
 -/
-@[main, comm]
+@[path, comm]
 private lemma main
 -- given
   (x y : List.Vector ℝ n) :

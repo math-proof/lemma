@@ -3,7 +3,7 @@ import sympy.Basic
 open scoped ComplexOrder
 
 
-@[main]
+@[path]
 private lemma square_completing
   {z a b c : ℂ}
 -- given

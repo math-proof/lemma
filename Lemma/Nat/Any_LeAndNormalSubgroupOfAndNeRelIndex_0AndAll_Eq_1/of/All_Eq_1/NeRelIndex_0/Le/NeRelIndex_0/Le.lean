@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [Subgroup_exists_le_normal_subgroupOf_relIndex_ne_zero_torsionFree_of_relIndex_ne_zero](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Subgroup_exists_le_normal_subgroupOf_relIndex_ne_zero_torsionFree_of_relIndex_ne_zero.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [Group G]
   {H K N₀ : Subgroup G}

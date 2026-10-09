@@ -5,7 +5,7 @@ import Lemma.Nat.CoeSub.eq.SubCoeS.of.Ge
 open List Int Nat
 
 
-@[main]
+@[path]
 private lemma main
   {s : List α}
   {i : Fin s.length}
@@ -22,7 +22,7 @@ private lemma main
   omega
 
 
-@[main]
+@[path]
 private lemma int
   {s : List α}
   {i : Fin s.length}

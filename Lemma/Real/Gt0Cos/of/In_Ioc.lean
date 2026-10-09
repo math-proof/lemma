@@ -6,7 +6,7 @@ import sympy.sets.sets
 open Set Real
 
 
-@[main]
+@[path]
 private lemma main
   {x : ℝ}
 -- given

@@ -3,7 +3,7 @@ import sympy.Basic
 open MeasureTheory
 
 
-@[main]
+@[path]
 private lemma main
   [NormedAddCommGroup E] [NormedSpace ℝ E]
   {m : ℕ}

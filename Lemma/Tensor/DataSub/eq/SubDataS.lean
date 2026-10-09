@@ -1,7 +1,7 @@
 import torch.Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [SubNegMonoid α]
 -- given

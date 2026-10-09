@@ -3,7 +3,7 @@ import Lemma.Int.LeSubS.is.Ge
 open Set Int
 
 
-@[main]
+@[path]
 private lemma main
   [AddGroup α] [Preorder α]
   [AddLeftMono α]

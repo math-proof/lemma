@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [FrobeniusDensity_ncard_conj_gen_ne_zero_iff](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_FrobeniusDensity_ncard_conj_gen_ne_zero_iff.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [Group G] [Finite G]
   {σ τ : G} :

@@ -9,7 +9,7 @@ open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random 
 /--
 `ω ↦ 1{s[t] = x ∧ a[t] = u} * c` is integrable.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A] [DecidableEq S] [DecidableEq A]
   {M : Model Θ S A}

@@ -2,7 +2,7 @@ import Lemma.Complex.Eq_0.of.EqNorm_0
 open Complex
 
 
-@[main]
+@[path]
 private lemma main
   {a : ℂ}
 -- given

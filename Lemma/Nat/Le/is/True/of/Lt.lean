@@ -3,7 +3,7 @@ import Lemma.Bool.Iff_True.of.Cond
 open Bool Nat
 
 
-@[main]
+@[path]
 private lemma main
   [Preorder α]
   {a b : α}

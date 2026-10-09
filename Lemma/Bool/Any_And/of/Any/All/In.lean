@@ -3,7 +3,7 @@ import Lemma.Bool.Any_And.of.Any.All.All_Imp
 open Bool
 
 
-@[main]
+@[path]
 private lemma main
   {p q : α → Prop}
   {A S : Set α}

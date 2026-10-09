@@ -9,7 +9,7 @@ open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Mode
 /--
 `θ ↦ Qc θ γ x u` is differentiable with derivative `γ • ∑ y, T(x, u, y) • fderiv ℝ (fun θ ↦ Vc θ γ y) θ`.
 -/
-@[main]
+@[path]
 private lemma main
   [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [CompleteSpace Θ] [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A]
   {M : Model Θ S A}

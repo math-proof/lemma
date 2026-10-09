@@ -3,7 +3,7 @@ import Lemma.Nat.Ge.of.Gt
 open Nat Int
 
 
-@[main]
+@[path]
 private lemma main
   [Semiring α]
   [PartialOrder α]

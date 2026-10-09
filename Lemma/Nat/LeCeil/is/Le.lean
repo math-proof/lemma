@@ -2,7 +2,7 @@ import Lemma.Int.LeCeil.is.Le
 open Int
 
 
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
   [FloorRing α]

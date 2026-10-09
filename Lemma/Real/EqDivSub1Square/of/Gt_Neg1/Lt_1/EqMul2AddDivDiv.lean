@@ -6,7 +6,7 @@ Ellipse geometry: if the apogee and perigee distances are \(p/(1-e)\) and \(p/(1
 (\(p\) being the semi-latus rectum, \(-1<e<1\)), then
 \(2a=\dfrac{p}{1-e}+\dfrac{p}{1+e}\) gives \(a=\dfrac{p}{1-e^2}\).
 -/
-@[main]
+@[path]
 private lemma main
   {a e p : ℝ}
 -- given

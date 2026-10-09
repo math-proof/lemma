@@ -3,7 +3,7 @@ import Lemma.Nat.MulDivMulS.eq.Mul_MulDiv
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (n k d D : ℕ) :

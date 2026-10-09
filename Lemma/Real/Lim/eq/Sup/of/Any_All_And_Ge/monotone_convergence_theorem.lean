@@ -7,7 +7,7 @@ import Lemma.Real.Lim.eq.Sup.of.Ge.Any_All_Le.monotone_convergence_theorem
 
 
 
-@[main]
+@[path]
 private lemma main
   {a : ℕ → ℝ}
 -- given

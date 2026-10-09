@@ -6,7 +6,7 @@ open CategoryTheory AlgebraicGeometry
 /--
 [AlgebraicGeometry_Scheme_Hom_ker_eq_vanishingIdeal_closure_singleton_genericPoint](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_Scheme_Hom_ker_eq_vanishingIdeal_closure_singleton_genericPoint.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {C Y : Scheme.{u}} [IsIntegral C]
   {f : C ⟶ Y} [QuasiCompact f] :

@@ -3,7 +3,7 @@ import Lemma.List.ZipWith_AppendS.eq.AppendZipWithS.of.Length
 open List
 
 
-@[main]
+@[path]
 private lemma main
   {s s' : List α}
 -- given

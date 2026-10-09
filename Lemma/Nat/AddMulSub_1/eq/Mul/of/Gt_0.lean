@@ -2,7 +2,7 @@ import Mathlib.Algebra.Order.Group.Nat
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {m : ℕ}
 -- given

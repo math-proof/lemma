@@ -3,7 +3,7 @@ import Lemma.Nat.Ge.of.Gt
 open Nat
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [AddGroupWithOne Z]
   {a b : ℕ}

@@ -4,7 +4,7 @@ import Lemma.Nat.Le.of.Le.Le
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
   {a b a' b' : α}

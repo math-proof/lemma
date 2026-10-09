@@ -2,7 +2,7 @@ import sympy.Basic
 import sympy.vector.functions
 
 
-@[main, fin]
+@[path, fin]
 private lemma main
   [Log α]
 -- given

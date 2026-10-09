@@ -4,12 +4,12 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Nat.ModEq.is.Mod |
+| path | Nat.ModEq.is.Mod |
 | comm | Nat.Mod.is.ModEq |
 | mp | Nat.Mod.of.ModEq |
 | mpr | Nat.ModEq.of.Mod |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
 -- given
   (m n d : ℕ) :

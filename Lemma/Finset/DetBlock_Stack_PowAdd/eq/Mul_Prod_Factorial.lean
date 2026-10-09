@@ -6,7 +6,7 @@ import Lemma.Matrix.DetOfPowAdd.eq.MulPowSub1Prod
 open Matrix Finset Nat
 
 
-@[main]
+@[path]
 private lemma vandermonde
   {n : ℕ} {r : ℝ} :
 -- imply

@@ -1,4 +1,4 @@
-import Mathlib.MeasureTheory.Measure.MeasureSpace
+import Mathlib.MeasureTheory.Measure.MeasureSpaceDef
 import sympy.Basic
 open MeasureTheory
 
@@ -6,7 +6,7 @@ open MeasureTheory
 /--
 Two functions of `X` that agree almost surely agree on every atom `X = x` of positive measure.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace Ω]
   {π : Measure Ω}

@@ -6,7 +6,7 @@ import Lemma.Real.Eq_0.Lim.of.In_Icc.GtInftySup.negative
 open Filter Topology
 
 
-@[main]
+@[path]
 private lemma main
   {ℓ : ℝ}
   {x : ℕ → ℝ}

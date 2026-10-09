@@ -9,7 +9,7 @@ import Lemma.Finset.CupFinset.eq.UFn
 open Set Nat Int Finset
 
 
-@[main]
+@[path]
 private lemma main
   [Ring R] [LinearOrder R] [IsStrictOrderedRing R]
 -- given

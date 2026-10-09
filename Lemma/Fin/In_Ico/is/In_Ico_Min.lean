@@ -5,12 +5,12 @@ import sympy.sets.sets
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Fin.In_Ico.is.In_Ico_Min |
+| path | Fin.In_Ico.is.In_Ico_Min |
 | comm | Fin.In_Ico_Min.is.In_Ico |
 | mp | Fin.In_Ico_Min.of.In_Ico |
 | mpr | Fin.In_Ico.of.In_Ico_Min |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
 -- given
   (k : Fin n)

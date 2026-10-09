@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [WeierstrassCurve_variableChange_mk_smul_eq_self_of_sq_eq_neg_one](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_WeierstrassCurve_variableChange_mk_smul_eq_self_of_sq_eq_neg_one.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing R]
   {u : Rˣ}

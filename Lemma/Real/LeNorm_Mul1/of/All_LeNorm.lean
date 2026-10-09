@@ -6,7 +6,7 @@ open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model
 /--
 `‖1{p z} * g z‖ ≤ C` whenever `‖g‖ ≤ C`.
 -/
-@[main]
+@[path]
 private lemma main
   {p : α → Prop} [DecidablePred p]
   {g : α → ℝ}

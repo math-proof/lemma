@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [exists_integralClosure_coe_eq_of_isIntegral](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_exists_integralClosure_coe_eq_of_isIntegral.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {z : ℂ}
 -- given

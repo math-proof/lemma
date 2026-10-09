@@ -6,7 +6,7 @@ open MeasureTheory ProbabilityTheory
 Law of iterated expectations over two finite-valued random variables `Y`, `Z`:
 `𝔼[f] = 𝔼_{Y, Z}[𝔼[f | Y, Z]]`.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace Ω]
   [MeasurableSpace α] [MeasurableSingletonClass α] [Fintype α]

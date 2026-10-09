@@ -9,12 +9,12 @@ open Complex Finset Int Nat Set
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Complex.Eq0Add_Pow_3.is.In_Finset_SubSAddMulS |
+| path | Complex.Eq0Add_Pow_3.is.In_Finset_SubSAddMulS |
 | comm | Complex.In_Finset_SubSAddMulS.is.Eq0Add_Pow_3 |
 | mp | Complex.In_Finset_SubSAddMulS.of.Eq0Add_Pow_3 |
 | mpr | Complex.Eq0Add_Pow_3.of.In_Finset_SubSAddMulS |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   {x a b c : ℂ} :
 -- imply

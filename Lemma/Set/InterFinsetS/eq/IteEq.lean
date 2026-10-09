@@ -3,7 +3,7 @@ import Lemma.Bool.Or_Not
 open Bool
 
 
-@[main]
+@[path]
 private lemma main
   [DecidableEq α]
 -- given

@@ -2,7 +2,7 @@ import Lemma.Vector.GetMap.eq.UFnGet
 open Vector
 
 
-@[main]
+@[path]
 private lemma main
   {s : List.Vector α n}
   {default : α} :

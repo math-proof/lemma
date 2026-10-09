@@ -8,7 +8,7 @@ open WithLp Matrix Metric NNReal Real
 open scoped Matrix BigOperators Topology NNReal
 
 
-@[main]
+@[path]
 private lemma main
   {S : Type u} [Fintype S]
   {P : Matrix S S ℝ} [RowStochastic P]

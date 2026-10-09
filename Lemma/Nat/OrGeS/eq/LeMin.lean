@@ -3,7 +3,7 @@ import Lemma.Nat.Min.eq.IteGe
 open Bool Nat
 
 
-@[main]
+@[path]
 private lemma main
   [LinearOrder α]
   {x a b : α}

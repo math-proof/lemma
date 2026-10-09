@@ -3,7 +3,7 @@ import Lemma.Nat.Ge.of.Gt
 open Int Nat
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   {n : ℤ}
 -- given

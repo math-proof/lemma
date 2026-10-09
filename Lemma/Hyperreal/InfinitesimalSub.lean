@@ -2,7 +2,7 @@ import Lemma.Hyperreal.Infinitesimal.is.InfinitesimalNeg
 open Hyperreal
 
 
-@[main]
+@[path]
 private lemma Comm
   {a b : ℝ*} :
 -- imply

@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [Real_abs_one_sub_exp_inv_eq_exp_neg_mul_abs_one_sub_exp_and_contDiff](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Real_abs_one_sub_exp_inv_eq_exp_neg_mul_abs_one_sub_exp_and_contDiff.lean)
 -/
-@[main]
+@[path]
 private lemma main
   :
 -- imply

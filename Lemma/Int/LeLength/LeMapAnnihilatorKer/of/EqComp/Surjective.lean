@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [AlgHom_length_cotangent_le_and_congruenceIdeal_le_of_surjective](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgHom_length_cotangent_le_and_congruenceIdeal_le_of_surjective.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing 𝒪] [CommRing R] [Algebra 𝒪 R] [CommRing T] [Algebra 𝒪 T]
   {φ : R →ₐ[𝒪] T}

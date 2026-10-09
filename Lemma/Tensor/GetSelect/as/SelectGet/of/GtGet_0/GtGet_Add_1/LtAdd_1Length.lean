@@ -6,7 +6,7 @@ import Lemma.Tensor.Select.as.Stack_Select.of.LtAdd_1Length
 open Tensor
 
 
-@[main, comm, cast]
+@[path, comm, cast]
 private lemma main
 -- given
   (h_d : d + 1 < s.length)

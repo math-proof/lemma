@@ -2,7 +2,7 @@ import sympy.functions.special.tensor_functions
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   [DecidableEq α]
   {g : ℕ → Prop}

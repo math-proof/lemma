@@ -18,7 +18,7 @@ set_option maxHeartbeats 4000000
 the standard frequency hypothesis is
 (hθ : θ = [i < n] [j < d] ↑(«λ» * i / b ^ (j / (d : ℝ)))), here we generalize it a simple linear function.
 -/
-@[main]
+@[path]
 private lemma main
   {n d : ℕ}
   {θ : Tensor ℝ [n, d]}
@@ -66,7 +66,7 @@ private lemma main
     apply EqGetStack.fin
 
 
-@[main]
+@[path]
 private lemma interleave
   {n d : ℕ}
   {θ : Tensor ℝ [n, d]}

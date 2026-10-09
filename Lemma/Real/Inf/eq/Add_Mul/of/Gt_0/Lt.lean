@@ -6,7 +6,7 @@ import Lemma.Real.Inf.eq.Mul.of.Gt_0
 import Lemma.Real.EqInf.of.Lt
 
 
-@[main]
+@[path]
 private lemma main
   {a b m M : ℝ}
 -- given

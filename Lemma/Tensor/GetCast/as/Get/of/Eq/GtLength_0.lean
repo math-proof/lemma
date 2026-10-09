@@ -7,12 +7,12 @@ open Tensor
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Tensor.GetCast.as.Get.of.Eq.GtLength_0 |
+| path | Tensor.GetCast.as.Get.of.Eq.GtLength_0 |
 | fin | Tensor.GetCast.as.Get.of.Eq.GtLength_0.fin |
 | cast | Tensor.GetCast.eq.Cast_Get.of.Eq.GtLength_0 |
 | cast.fin | Tensor.GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin |
 -/
-@[main, fin, cast, cast.fin]
+@[path, fin, cast, cast.fin]
 private lemma main
   {s s' : List ℕ}
 -- given
@@ -29,7 +29,7 @@ private lemma main
   aesop
 
 
-@[main, fin, cast, cast.fin]
+@[path, fin, cast, cast.fin]
 private lemma right
   {s : List ℕ}
 -- given

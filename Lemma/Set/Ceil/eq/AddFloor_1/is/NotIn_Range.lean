@@ -4,12 +4,12 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Set.Ceil.eq.AddFloor_1.is.NotIn_Range |
+| path | Set.Ceil.eq.AddFloor_1.is.NotIn_Range |
 | comm | Set.NotIn_Range.is.Ceil.eq.AddFloor_1 |
 | mp | Set.NotIn_Range.of.Ceil.eq.AddFloor_1 |
 | mpr | Set.Ceil.eq.AddFloor_1.of.NotIn_Range |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   [Ring α] [LinearOrder α] [IsStrictOrderedRing α] [FloorRing α]
 -- given

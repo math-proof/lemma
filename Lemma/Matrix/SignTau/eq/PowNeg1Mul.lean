@@ -4,7 +4,7 @@ import Lemma.Matrix.Tau.eq.TransFinCongrPowFinRotate.of.Gt_0
 open Matrix Equiv Matrix.BlockSwap
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (a b : ℕ) :

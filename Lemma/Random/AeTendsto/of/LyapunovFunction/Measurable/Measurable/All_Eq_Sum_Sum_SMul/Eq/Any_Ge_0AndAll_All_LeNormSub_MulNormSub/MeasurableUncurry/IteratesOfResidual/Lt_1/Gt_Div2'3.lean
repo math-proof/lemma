@@ -6,7 +6,7 @@ import Lemma.Real.Any_SufficientlySparse.of.Lt_1.Gt_Div2'3
 open Filter MeasureTheory Topology Real Iterates Random
 
 
-@[main]
+@[path]
 private lemma main
   {d : ℕ}
   {S : Type*} [Fintype S] [DecidableEq S] [Nonempty S] [MeasurableSpace S] [MeasurableSingletonClass S]

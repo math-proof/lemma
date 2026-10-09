@@ -1,7 +1,7 @@
 import torch.Tensor.Basic
 
 
-@[main]
+@[path]
 private lemma main
   [Mul α]
 -- given

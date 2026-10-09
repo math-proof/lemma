@@ -3,7 +3,7 @@ import Lemma.Bool.Ne.is.NotEq
 open Bool
 
 
-@[main]
+@[path]
 private lemma main
   [PartialOrder α]
   {a b : α}

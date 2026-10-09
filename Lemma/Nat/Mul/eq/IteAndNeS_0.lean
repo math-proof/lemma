@@ -3,7 +3,7 @@ import Lemma.Bool.NotNe.is.Eq
 open Bool
 
 
-@[main]
+@[path]
 private lemma main
   [MonoidWithZero α] [LinearOrder α]
   {x y : α} :

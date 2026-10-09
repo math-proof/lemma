@@ -3,7 +3,7 @@ import Lemma.Nat.OfNat.eq.Cast
 open Nat
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [AddMonoidWithOne α]
 -- given
@@ -14,7 +14,7 @@ private lemma main
   Nat.cast_succ n
 
 
-@[main, comm]
+@[path, comm]
 private lemma ring
   [Semiring α]
 -- given

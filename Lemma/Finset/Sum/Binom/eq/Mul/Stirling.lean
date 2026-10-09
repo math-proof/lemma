@@ -2,7 +2,7 @@ import Lemma.Finset.Stirling.eq.Mul.Sum
 open Finset Nat
 
 
-@[main]
+@[path]
 private lemma main
   {n k : ℕ} :
 -- imply

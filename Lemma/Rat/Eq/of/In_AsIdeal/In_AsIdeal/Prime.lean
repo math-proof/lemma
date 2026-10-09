@@ -16,7 +16,7 @@ private lemma  natGenerator_eq_of_prime_mem' {p : ℕ} (hp : p.Prime) (v : Heigh
     (hv : (p : 𝓞 ℚ) ∈ v.asIdeal) : Rat.HeightOneSpectrum.natGenerator v = p :=
   (Nat.prime_dvd_prime_iff_eq (Rat.HeightOneSpectrum.prime_natGenerator v) hp).1
     ((natCast_mem_asIdeal_iff' v p).1 hv)
-@[main]
+@[path]
 private lemma main
   {r : ℕ}
   {v w : HeightOneSpectrum (𝓞 ℚ)}

@@ -3,7 +3,7 @@ import Lemma.Set.Union.of.Eq.Eq
 open Set
 
 
-@[main]
+@[path]
 private lemma main
   {A B C : Set α}
 -- given

@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main :
 -- imply
   (Nat.castEmbedding.trans (addLeftEmbedding a)) i = a + i := by

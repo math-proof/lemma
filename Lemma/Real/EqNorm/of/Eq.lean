@@ -2,7 +2,7 @@ import Mathlib.Analysis.Normed.Group.Basic
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {α : Type*}
   [NormedAddCommGroup α]

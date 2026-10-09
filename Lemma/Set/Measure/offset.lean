@@ -4,7 +4,7 @@ import Mathlib.MeasureTheory.Group.Measure
 open MeasureTheory
 
 
-@[main]
+@[path]
 private lemma main
   {μ : Measure ℝ} [Measure.IsAddLeftInvariant μ]
   {h : ℝ}

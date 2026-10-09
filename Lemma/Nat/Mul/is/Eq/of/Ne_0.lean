@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   [MonoidWithZero α]
   [IsCancelMulZero α]
@@ -15,7 +15,7 @@ private lemma main
   mul_right_inj' h
 
 
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma left
   [MonoidWithZero α]
   [IsCancelMulZero α]

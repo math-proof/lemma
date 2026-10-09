@@ -6,7 +6,7 @@ open scoped nonZeroDivisors
 /--
 [ClassGroup_exists_finset_forall_exists_mk0_eq_of_dvd](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_ClassGroup_exists_finset_forall_exists_mk0_eq_of_dvd.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing R] [IsDedekindDomain R] [Finite (ClassGroup R)] :
 -- imply

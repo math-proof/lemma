@@ -3,7 +3,7 @@ import Lemma.Set.Lt_Div7'20.of.In_Ico0.Sub.eq.DivSqrt3'2
 open Set
 
 
-@[main]
+@[path]
 private lemma main
   {x : ℝ}
 -- given

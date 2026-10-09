@@ -2,7 +2,7 @@ import sympy.Basic
 import sympy.concrete.expr_with_limits
 
 
-@[main]
+@[path]
 private lemma main
   [Nonempty (Fin n)] [Nonempty (Fin (n + b))]
   {x : Fin n → ℝ}

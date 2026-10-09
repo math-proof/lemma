@@ -3,7 +3,7 @@ import Lemma.Nat.Ge.of.Gt
 open Nat Real
 
 
-@[main]
+@[path]
 private lemma main
   {x : ℝ}
 -- given

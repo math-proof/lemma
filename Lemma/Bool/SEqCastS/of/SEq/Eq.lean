@@ -3,7 +3,7 @@ import Lemma.Bool.Cast.of.SEq.Eq
 open Bool
 
 
-@[main]
+@[path]
 private lemma left
   {Vector : α → Sort v}
   {a : Vector n_a}
@@ -18,7 +18,7 @@ private lemma left
   aesop
 
 
-@[main]
+@[path]
 private lemma main
   {Vector : α → Sort v}
   {a : Vector n_a}

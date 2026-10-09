@@ -2,7 +2,7 @@ import Lemma.List.EqLengthSlice_Mul.of.Lt
 open List
 
 
-@[main]
+@[path]
 private lemma main
   {i : ℕ}
 -- given
@@ -14,7 +14,7 @@ private lemma main
   apply EqLengthSlice_Mul.of.Lt h m
 
 
-@[main]
+@[path]
 private lemma Comm
   {i : ℕ}
 -- given

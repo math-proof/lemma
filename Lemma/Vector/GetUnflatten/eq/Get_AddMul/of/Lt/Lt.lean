@@ -3,7 +3,7 @@ import Lemma.Vector.GetUnflatten.eq.Get_AddMul
 open Vector Nat
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
 -- given
   (h_i : i < m)

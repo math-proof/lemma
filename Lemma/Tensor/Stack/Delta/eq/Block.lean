@@ -4,7 +4,7 @@ import Mathlib.Data.Real.Basic
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   {m : ℕ} :
 -- imply

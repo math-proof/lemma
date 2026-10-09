@@ -1,5 +1,10 @@
 <template>
-    <textarea :name=name>{{text}}</textarea>
+    <!-- Wrapper so CM6 can insert .cm-textarea-host next to the textarea WITHOUT
+         becoming the Vue nextSibling of the following interstitial <p v-latex>
+         in lemma.vue (CM5 inserted *before* the textarea; CM6 inserts *after*). -->
+    <div class="render-lean">
+        <textarea :name=name>{{text}}</textarea>
+    </div>
 </template>
 
 <script setup>
@@ -293,7 +298,20 @@ const self = new Vue({
         }
     },
 
-    mounted: codeMirrorMounted,
+    mounted() {
+        // codeMirrorMounted/createEditor expect a <textarea> as this.$el (for
+        // .value and CM6 textarea-host insertion). Vue's real root must stay the
+        // wrapper div so parent patches see wrapper.nextSibling === latex <p>.
+        var root = this.$$instance && this.$$instance.proxy && this.$$instance.proxy.$el;
+        var ta = root && root.nodeName === 'TEXTAREA' ? root : (root && root.querySelector && root.querySelector('textarea'));
+        if (ta && ta !== root) {
+            Object.defineProperty(this, '$el', {
+                configurable: true,
+                get() { return ta; },
+            });
+        }
+        return codeMirrorMounted.call(this);
+    },
 });
 
 const { name } = self.globals;
@@ -302,5 +320,16 @@ const { name } = self.globals;
 <style>
 .cm-s-indent {
 	margin-left: 0.9em;
+}
+
+/* Match Lean CM6 to page/LaTeX mint (css/style.css body: rgb(199, 237, 204)).
+   CM6 eclipseTheme already sets .cm-editor to mint, but .cm-activeLine is #fff;
+   single-line proof steps therefore look fully white. Override here (vue-only). */
+.render-lean .cm-editor,
+.render-lean .cm-editor .cm-scroller,
+.render-lean .cm-editor .cm-gutters,
+.render-lean .cm-editor .cm-activeLine,
+.render-lean .cm-editor .cm-activeLineGutter {
+	background-color: rgb(199, 237, 204) !important;
 }
 </style>

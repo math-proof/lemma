@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [DeligneSerre_charZero_quotient](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_DeligneSerre_charZero_quotient.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing T]
   {𝔭 : Ideal T}

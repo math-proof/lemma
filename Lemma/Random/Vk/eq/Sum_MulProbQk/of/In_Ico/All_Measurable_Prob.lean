@@ -12,7 +12,7 @@ Bellman equation of the closed-form values on a general (e.g. continuous) state 
 Continuous-state counterpart of `Random.Vc.eq.Sum_MulProbQc.of.In_Ico`; `h₀` (measurability of the policy in the state)
 makes the next-state integrals `∫ y, Wk θ k y ∂T(· | x, u)` meaningful, so that `∑'` and `∫` can be swapped.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace S] [MeasurableSpace A] [Fintype A]
   {M : Model Θ S A}

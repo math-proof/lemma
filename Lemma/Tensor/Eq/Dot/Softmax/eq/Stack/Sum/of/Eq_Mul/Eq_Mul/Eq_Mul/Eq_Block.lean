@@ -11,7 +11,7 @@ The softmax attention of the rotated queries and keys equals the attention whose
 \operatorname{softmax}\left(\frac{(R_i Q_i) \cdot (R_t K_t)}{\sqrt{d}}\right) V = \frac{\sum_t V_{t,j} \exp\left(\frac{[A, B] \cdot [\cos \theta, \sin \theta]}{\sqrt{d}}\right)}{\sum_s \exp\left(\frac{(R_i Q_i) \cdot (R_s K_s)}{\sqrt{d}}\right)}
 \]
 -/
-@[main]
+@[path]
 private lemma space
   {n mr mc mz : ℕ}
   {br bc bz lr lc lz : ℝ}

@@ -3,7 +3,7 @@ import torch.Tensor.Basic
 import torch.Tensor.unsqueeze
 
 
-@[main]
+@[path]
 private lemma main
   {A B : Tensor α s}
 

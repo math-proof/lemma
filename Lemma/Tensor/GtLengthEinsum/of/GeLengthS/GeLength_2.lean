@@ -2,7 +2,7 @@ import Lemma.Tensor.GtLengthDot.of.GeLengthS.GeLength_2
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [Mul α] [Add α] [Zero α]
 -- given

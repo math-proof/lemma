@@ -2,7 +2,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma given
   {S : Set ℝ}
   {f : ℝ → ℝ}

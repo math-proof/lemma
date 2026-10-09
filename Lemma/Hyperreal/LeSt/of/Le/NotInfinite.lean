@@ -3,7 +3,7 @@ import Lemma.Hyperreal.StSub.eq.SubSt.of.NotInfinite
 open Hyperreal
 
 
-@[main]
+@[path]
 private lemma main
   {x : ℝ*}
   {r : ℝ}

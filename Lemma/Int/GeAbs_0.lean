@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   [Lattice α] [AddGroup α] [AddLeftMono α] [AddRightMono α]
 -- given

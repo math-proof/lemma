@@ -2,7 +2,7 @@ import Lemma.Bool.BFnIteS.eq.IteAnd
 open Bool
 
 
-@[main]
+@[path]
 private lemma main
   [Decidable p]
   [Decidable q]

@@ -5,7 +5,7 @@ import Lemma.Vector.GetResize.eq.Ite_Get_Mod
 open Nat Vector
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [Zero α] [Zero β]
   {f : α → β}

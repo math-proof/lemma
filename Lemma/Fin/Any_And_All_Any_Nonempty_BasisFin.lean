@@ -6,7 +6,7 @@ open scoped TensorProduct
 /--
 [Module_exists_away_forall_nonempty_basis_tensorProduct_of_projective_of_finite](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Module_exists_away_forall_nonempty_basis_tensorProduct_of_projective_of_finite.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {S : Type u} [CommRing S]
   {P : Type u} [AddCommGroup P] [Module S P] [Module.Finite S P] [Module.Projective S P]

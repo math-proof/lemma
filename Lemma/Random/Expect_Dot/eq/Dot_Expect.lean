@@ -106,10 +106,10 @@ when A is non-random.
 
 | attributes | lemma |
 | :---: | :---: |
-| main | Random.Expect_Dot.eq.Dot_Expect |
+| path | Random.Expect_Dot.eq.Dot_Expect |
 | comm | Random.Dot_Expect.eq.Expect_Dot |
 -/
-@[main, comm]
+@[path, comm]
 private lemma main
   [MeasurableSpace Ω]
   [ReferenceMeasure α]

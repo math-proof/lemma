@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [Ideal_exists_span_range_eq_top_of_forall_isMaximal_exists_notMem](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Ideal_exists_span_range_eq_top_of_forall_isMaximal_exists_notMem.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing B]
 -- given

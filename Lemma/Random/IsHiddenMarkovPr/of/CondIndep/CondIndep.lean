@@ -12,7 +12,7 @@ The emission independence `x (t + 1) ⟂ (x[:t + 1], y[:t + 1]) | y (t + 1)` and
 property `y (t + 1) ⟂ (x[:t + 1], y[:t]) | y t` give the one-step factorization of the prefix probabilities
 (`IsHiddenMarkovPr`) used by the CRF lemmas.
 -/
-@[main]
+@[path]
 private lemma main
   {Ω Y X : Type*} [MeasurableSpace Ω] [StandardBorelSpace Ω]
   [ReferenceMeasure Y] [ReferenceMeasure X]

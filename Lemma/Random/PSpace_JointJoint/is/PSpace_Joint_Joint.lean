@@ -9,12 +9,12 @@ open MeasureTheory
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Random.PSpace_JointJoint.is.PSpace_Joint_Joint |
+| path | Random.PSpace_JointJoint.is.PSpace_Joint_Joint |
 | comm | Random.PSpace_Joint_Joint.is.PSpace_JointJoint |
 | mp | Random.PSpace_Joint_Joint.of.PSpace_JointJoint |
 | mpr | Random.PSpace_JointJoint.of.PSpace_Joint_Joint |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   [MeasurableSpace Ω]
   [ReferenceMeasure α] [ReferenceMeasure β] [ReferenceMeasure γ]

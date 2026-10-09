@@ -3,7 +3,7 @@ import Lemma.List.ProdEraseIdx.eq.MulProdS
 open List
 
 
-@[main]
+@[path]
 private lemma main
   {s : List ℕ}
 -- given

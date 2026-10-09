@@ -6,7 +6,7 @@ open scoped TensorProduct
 /--
 [Module_Basis_tensorProduct_tensorProduct_linearIndependent_restrictScalars](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Module_Basis_tensorProduct_tensorProduct_linearIndependent_restrictScalars.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing R] [CommRing K] [Algebra R K] [CommRing A] [Algebra K A] [Algebra R A] [IsScalarTower R K A]
   {n : ℕ}

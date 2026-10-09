@@ -5,7 +5,7 @@ import sympy.Basic
 open scoped Topology
 
 
-@[main]
+@[path]
 private lemma main
   {f : ℝ → ℝ}
   {x : ℝ}

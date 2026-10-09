@@ -4,7 +4,7 @@ import Lemma.Tensor.LengthSoftmax.eq.Length
 open Tensor
 
 
-@[main, fin]
+@[path, fin]
 private lemma main
   [Exp α]
   {d i : ℕ}

@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma subst
   {p : α → Prop}
   {y : α}

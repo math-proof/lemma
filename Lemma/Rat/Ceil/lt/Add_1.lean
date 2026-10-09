@@ -3,7 +3,7 @@ import Lemma.Int.LtSub.is.Lt_Add
 open Set Int
 
 
-@[main]
+@[path]
 private lemma main
   [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
   [FloorRing α]

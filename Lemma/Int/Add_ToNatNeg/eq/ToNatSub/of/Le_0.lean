@@ -7,7 +7,7 @@ import Lemma.Int.Le0Sub.is.Ge
 open Int Nat
 
 
-@[main]
+@[path]
 private lemma main
   {n : ℤ}
 -- given

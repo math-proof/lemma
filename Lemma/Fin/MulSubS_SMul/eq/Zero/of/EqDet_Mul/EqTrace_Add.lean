@@ -14,7 +14,7 @@ private lemma  w2aux_mul_self_eq {A : Type*} [CommRing A] (M : Matrix (Fin 2) (F
     Matrix.one_apply_ne, ne_eq, Fin.zero_eq_one_iff, OfNat.ofNat_ne_one, not_false_eq_true,
     Fin.one_eq_zero_iff, mul_zero, mul_one]
   refine ⟨⟨?_, ?_⟩, ?_, ?_⟩ <;> ring
-@[main]
+@[path]
 private lemma main
   [CommRing A]
   {M : Matrix (Fin 2) (Fin 2) A}

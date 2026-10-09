@@ -2,7 +2,7 @@ import Lemma.Real.OrEqS.of.Square
 open Real
 
 
-@[main]
+@[path]
 private lemma main
   [Field α]
   {a b : α}

@@ -7,7 +7,7 @@ import Lemma.Vector.Div.eq.Div_Replicate
 open Vector
 
 
-@[main]
+@[path]
 private lemma main
   [Div α]
   {m n : ℕ}

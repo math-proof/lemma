@@ -5,12 +5,12 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Vector.GetCos.eq.CosGet |
+| path | Vector.GetCos.eq.CosGet |
 | fin | Vector.GetCos.eq.CosGet.fin |
 | comm | Vector.CosGet.eq.GetCos |
 | fin.comm | Vector.CosGet.eq.GetCos.fin |
 -/
-@[main, fin, comm, fin.comm]
+@[path, fin, comm, fin.comm]
 private lemma main
   [Cos α]
 -- given

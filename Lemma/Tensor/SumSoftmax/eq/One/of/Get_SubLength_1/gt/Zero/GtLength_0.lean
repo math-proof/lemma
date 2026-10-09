@@ -14,7 +14,7 @@ import torch.Tensor.sum
 open Tensor Vector Bool
 
 
-@[main]
+@[path]
 private lemma main
   [ExpPos α] [IsOrderedCancelAddMonoid α]
 -- given

@@ -4,7 +4,7 @@ import Lemma.Finset.Alpha_Cons.eq.Add_DivAlpha
 open Finset Continuant
 
 
-@[main]
+@[path]
 private lemma main
   [Field R]
 -- given

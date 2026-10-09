@@ -30,7 +30,7 @@ private lemma  formallyUnramified_of_isReduced (K B : Type*) [Field K]
       ext I
       rfl)
   exact Algebra.FormallyUnramified.of_equiv e.symm
-@[main]
+@[path]
 private lemma main
   {K B : Type*} [Field K] [PerfectField K] [CommRing B] [Algebra K B] [Module.Finite K B] [IsReduced B] :
 -- imply

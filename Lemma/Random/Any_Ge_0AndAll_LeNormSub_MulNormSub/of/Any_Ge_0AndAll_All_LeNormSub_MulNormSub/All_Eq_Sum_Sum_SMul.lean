@@ -5,7 +5,7 @@ import Lemma.Matrix.Sum_Mul.eq.One.of.StochasticVec.RowStochastic
 open Finset
 
 
-@[main]
+@[path]
 private lemma main
   {d : ℕ}
   {S : Type*} [Fintype S]

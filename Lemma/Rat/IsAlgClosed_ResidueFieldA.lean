@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [ValuationSubring_isAlgClosed_residueField_of_isAlgClosed](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_ValuationSubring_isAlgClosed_residueField_of_isAlgClosed.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [Field L] [IsAlgClosed L]
   {A : ValuationSubring L} :

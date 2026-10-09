@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [Tuple_succAbove_sort_comp_succAbove_eq](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Tuple_succAbove_sort_comp_succAbove_eq.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [LinearOrder ι]
   {n : ℕ}

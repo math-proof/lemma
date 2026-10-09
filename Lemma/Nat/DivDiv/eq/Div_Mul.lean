@@ -2,7 +2,7 @@ import Lemma.Nat.Mul
 open Nat
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
 -- given
   (a b c : ℕ) :
@@ -12,7 +12,7 @@ private lemma main
   Nat.div_div_eq_div_mul a b c
 
 
-@[main, comm]
+@[path, comm]
 private lemma Comm
 -- given
   (a b c : ℕ) :

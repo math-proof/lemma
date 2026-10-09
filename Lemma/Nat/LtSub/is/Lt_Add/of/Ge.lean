@@ -2,7 +2,7 @@ import Lemma.Nat.Add
 open Nat
 
 
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma right
   {a b : ℕ}
 -- given
@@ -14,7 +14,7 @@ private lemma right
   Nat.sub_lt_iff_lt_add h
 
 
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   {a b : ℕ}
 -- given

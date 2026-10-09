@@ -5,14 +5,14 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Real.Coe.is.Eq |
+| path | Real.Coe.is.Eq |
 | comm | Real.Eq.is.EqCoeS |
 | mp | Real.Eq.of.EqCoeS |
 | mpr | Real.EqCoeS.of.Eq |
 | mp.mt | Real.NeCoeS.of.Ne |
 | mpr.mt | Real.Ne.of.NeCoeS |
 -/
-@[main, comm, mp, mpr, mp.mt, mpr.mt]
+@[path, comm, mp, mpr, mp.mt, mpr.mt]
 private lemma main
   {a b : ℝ} :
 -- imply

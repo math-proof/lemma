@@ -6,7 +6,7 @@ import Lemma.Int.Le0Sub.is.Ge
 open Int
 
 
-@[main]
+@[path]
 private lemma main
   {i : ℤ}
   {n : ℕ}

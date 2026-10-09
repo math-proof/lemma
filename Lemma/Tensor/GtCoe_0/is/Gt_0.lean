@@ -13,12 +13,12 @@ open Hyperreal Tensor Vector
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Tensor.GtCoe_0.is.Gt_0 |
+| path | Tensor.GtCoe_0.is.Gt_0 |
 | comm | Tensor.Gt_0.is.GtCoe_0 |
 | mp | Tensor.Gt_0.of.GtCoe_0 |
 | mpr | Tensor.GtCoe_0.of.Gt_0 |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   {X : Tensor ℝ s} :
 -- imply

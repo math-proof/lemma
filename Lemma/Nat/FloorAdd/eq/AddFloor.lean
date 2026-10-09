@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [Ring R] [LinearOrder R] [IsStrictOrderedRing R]
   [FloorRing R]

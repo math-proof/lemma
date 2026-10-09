@@ -3,7 +3,7 @@ import Lemma.Tensor.Length.of.Eq
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   {X : Tensor α s}
   {Y : Tensor α s'}
@@ -15,7 +15,7 @@ private lemma main
   apply Length.of.Eq h.left
 
 
-@[main]
+@[path]
 private lemma shape
   {X : Tensor α s}
   {Y : Tensor α s'}

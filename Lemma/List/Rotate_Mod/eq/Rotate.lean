@@ -2,7 +2,7 @@ import Lemma.Nat.ModMod.eq.Mod
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (s : List α)

@@ -6,7 +6,7 @@ import Lemma.Nat.Eq.of.Le.Le
 open Bool Nat Finset
 
 
-@[main]
+@[path]
 private lemma main
   [AddCommMonoid N] [LinearOrder N] [IsOrderedAddMonoid N]
   {a : N}

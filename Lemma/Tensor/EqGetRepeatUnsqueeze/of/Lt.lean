@@ -7,7 +7,7 @@ import Lemma.Tensor.EqGetUnsqueeze_0
 open Tensor Nat
 
 
-@[main, fin]
+@[path, fin]
 private lemma main
 -- given
   (h_i : i < n)

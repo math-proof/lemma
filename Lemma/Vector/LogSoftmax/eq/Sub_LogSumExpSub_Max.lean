@@ -8,7 +8,7 @@ import Lemma.Vector.SoftmaxSub.eq.Softmax
 open Vector Real
 
 
-@[main]
+@[path]
 private lemma main
   [NeZero n]
   [LogPos α] [DecidableLT α] [IsOrderedCancelAddMonoid α]

@@ -3,7 +3,7 @@ import Lemma.Nat.MulAdd.eq.AddMulS
 open Nat Rat
 
 
-@[main]
+@[path]
 private lemma main
   [DivisionSemiring α]
 -- given

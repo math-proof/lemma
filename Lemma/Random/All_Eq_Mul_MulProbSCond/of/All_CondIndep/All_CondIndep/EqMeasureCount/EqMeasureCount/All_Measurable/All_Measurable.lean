@@ -13,7 +13,7 @@ One-step factorization of the prefix probabilities of a Markov decision process:
 extended by one step is the probability of the prefix times `Pr(a[t] | s[t]) * Pr(s[t+1] | s[t] ∧ a[t])`.
 This is the right component of `Random.EqProbJoint.All_Eq_Mul_MulProbSCond…`.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace Ω] [StandardBorelSpace Ω]
   [ReferenceMeasure S] [ReferenceMeasure A]

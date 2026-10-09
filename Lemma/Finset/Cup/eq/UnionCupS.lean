@@ -8,7 +8,7 @@ import Lemma.Finset.In_CupUnion.is.OrInS_Cup
 open Set Finset
 
 
-@[main]
+@[path]
 private lemma fn
   [DecidableEq α]
 -- given
@@ -34,7 +34,7 @@ private lemma fn
       apply SubsetSDiff
 
 
-@[main]
+@[path]
 private lemma main
   [DecidableEq α]
 -- given

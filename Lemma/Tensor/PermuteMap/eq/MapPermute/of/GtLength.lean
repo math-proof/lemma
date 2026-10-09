@@ -14,7 +14,7 @@ import Lemma.Tensor.SEqPermute
 open Bool List Nat Tensor
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
 -- given
   (h_i : s.length > i)

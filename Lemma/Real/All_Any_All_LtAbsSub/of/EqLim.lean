@@ -1,7 +1,7 @@
 import Lemma.Real.EqLim.is.All_Any_All_LtAbsSub
 
 
-@[main]
+@[path]
 private lemma main
   [LinearOrder α]
   [Zero α]

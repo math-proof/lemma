@@ -3,7 +3,7 @@ import Lemma.Set.Le.of.In_Icc
 open Set
 
 
-@[main]
+@[path]
 private lemma main
   [Preorder α]
   {a b : α}

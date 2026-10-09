@@ -19,7 +19,7 @@ the discounted state value is the policy average of the action values `Q` given 
 The discount factor is taken in `[0, 1)` (for `γ = 1` the Lean `tsum` of a divergent series is `0`
 and the identity fails).
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S]
   [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A]
@@ -55,7 +55,7 @@ private lemma main
   by_cases hP : (M θ).real (s t ⁻¹' {x}) = 0
   · have h₃ := cond_eq_zero_of_meas_eq_zero (Eq_0.of.EqReal_0 (M := M) θ hP)
     simp only [← hVi t x, h₃, integral_zero_measure]
-  · rw [V.eq.TSum_MulPowWRc.of.Ne0Real_Preimage.In_Ico (M := M) h₀ h₁ θ t x hP, Integral.eq.MulRealPreimageSIntegral_MulEqS h₁]
+  · rw [V.eq.TSum_MulPowWRc.of.Ne0Real_Preimage.In_Ico (M := M) θ t x h₀ h₁ hP, Integral.eq.MulRealPreimageSIntegral_MulEqS h₁]
     have h₃ : ∀ ω, (if s t ω = x then (1:ℝ) else 0) * M.Q r s a θ γ t x (a t ω) =
         ∑ u, (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) * M.Q r s a θ γ t x u := by
       intro ω

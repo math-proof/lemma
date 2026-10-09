@@ -8,7 +8,7 @@ import sympy.Basic
 Velocity as the limit of average displacement:
 \(\vec{v}(t)=\lim_{\Delta t\to 0}\Delta\vec{r}/\Delta t\).
 -/
-@[main]
+@[path]
 private lemma main
   {d : ℕ}
   {r : Position d}

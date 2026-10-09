@@ -3,7 +3,7 @@ import Lemma.List.ProdTake_1.eq.Get_0.of.GtLength_0
 open List
 
 
-@[main]
+@[path]
 private lemma main
   [Monoid α]
   {s : List α}

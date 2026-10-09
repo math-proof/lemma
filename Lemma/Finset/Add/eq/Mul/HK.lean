@@ -4,7 +4,7 @@ import sympy.Basic
 open Continuant
 
 
-@[main]
+@[path]
 private lemma step2
   {x : ℕ → ℤ}
   {n : ℕ}

@@ -2,7 +2,7 @@ import Lemma.Complex.ArgPow.eq.SubMul_Arg
 open Complex
 
 
-@[main]
+@[path]
 private lemma main
   {y z : ℂ}
   {n : ℕ} :

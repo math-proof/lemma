@@ -4,7 +4,7 @@ import Lemma.Tensor.Unsqueeze.as.Stack_Unsqueeze.of.GtLength.Eq
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h_s : s.length > 0)

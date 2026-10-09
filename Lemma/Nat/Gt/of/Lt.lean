@@ -5,7 +5,7 @@ import sympy.Basic
 This lemma establishes that if an element `x` is less than `y` in a type with a less-than relation, then `y` is greater than `x`.
 It provides a direct conversion between the two inequality forms, utilizing their inherent symmetry and definitional equivalence in the given algebraic structure.
 -/
-@[main]
+@[path]
 private lemma main
   [LT α]
   {x y : α}
@@ -17,7 +17,7 @@ private lemma main
   exact h
 
 
-@[main]
+@[path]
 private lemma reverse.given
   {a x : ℝ}
 -- given
@@ -28,7 +28,7 @@ private lemma reverse.given
   exact h
 
 
-@[main]
+@[path]
 private lemma reverse
   {a x : ℝ}
 -- given

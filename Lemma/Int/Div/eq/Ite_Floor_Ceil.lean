@@ -3,7 +3,7 @@ import Lemma.Int.Div.eq.FloorDiv.of.Ge_0
 open Int
 
 
-@[main]
+@[path]
 private lemma main
   [Field α] [LinearOrder α] [IsStrictOrderedRing α] [FloorRing α]
   {n d : ℤ} :

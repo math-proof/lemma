@@ -5,10 +5,10 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Hyperreal.EqSt_0.of.Infinite |
+| path | Hyperreal.EqSt_0.of.Infinite |
 | mt | Hyperreal.NotInfinite.of.NeSt_0 |
 -/
-@[main, mt]
+@[path, mt]
 private lemma main
   {x : ℝ*}
 -- given

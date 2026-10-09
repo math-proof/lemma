@@ -14,7 +14,7 @@ import Lemma.List.EqSwap.of.LeLength
 open List Bool Nat
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (a b : List α)

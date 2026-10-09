@@ -2,7 +2,7 @@ import Lemma.Int.AbsSubAbsS.le.AbsSub
 open Int
 
 
-@[main]
+@[path]
 private lemma main
   [AddCommGroup G]
   [LinearOrder G]

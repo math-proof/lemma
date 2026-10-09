@@ -1,7 +1,7 @@
 import Lemma.Bool.Imp.is.OrNot
 
 
-@[main]
+@[path]
 private lemma main
   {p q : Prop}
 -- given
@@ -12,7 +12,7 @@ private lemma main
   simp [h]
 
 
-@[main]
+@[path]
 private lemma invert.given
   {p q : Prop}
 -- given
@@ -24,7 +24,7 @@ private lemma invert.given
   exact absurd hp h
 
 
-@[main]
+@[path]
 private lemma unbounded
   {p c : α → Prop}
   {x : α}

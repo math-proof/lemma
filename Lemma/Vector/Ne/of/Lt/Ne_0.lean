@@ -5,10 +5,10 @@ open Vector
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Vector.Ne.of.Lt.Ne_0 |
+| path | Vector.Ne.of.Lt.Ne_0 |
 | comm 2 | Vector.Ne.of.Gt.Ne_0 |
 -/
-@[main, comm 2]
+@[path, comm 2]
 private lemma main
   [Preorder α]
   {x y : List.Vector α n}

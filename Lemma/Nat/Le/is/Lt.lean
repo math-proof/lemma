@@ -2,7 +2,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma relax
   {x y : ℤ} :
 -- imply
@@ -11,7 +11,7 @@ private lemma relax
   omega
 
 
-@[main]
+@[path]
 private lemma strengthen
   {x a : ℤ} :
 -- imply

@@ -56,7 +56,7 @@ for logits \( a_{ij} \) and values \( v_{ij\ell} \), with \( a'_{ij} = a_{i, d_j
 \Bigl[ \sum_{j < m} \frac{e^{a'_{ij}}}{\sum_{k < m} e^{a'_{ik}}}\, v'_{ij\ell} \Bigr]_\ell .
 \]
 -/
-@[main]
+@[path]
 private lemma row
   {n m d : ℕ}
   {dm : Fin m → Fin n}
@@ -94,7 +94,7 @@ Matrix form of `row` when the values do not depend on the row:
 \Bigl[ \sum_{j < m} \frac{e^{a_{i, d_j}}}{\sum_{k < m} e^{a_{i, d_k}}}\, V_{d_j \ell} \Bigr]_{i\ell} .
 \]
 -/
-@[main]
+@[path]
 private lemma main
   {n m d : ℕ}
   {dm : Fin m → Fin n}

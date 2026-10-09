@@ -3,7 +3,7 @@ import sympy.Basic
 open MeasureTheory
 
 
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace α] [MeasurableSpace β]
   {μ : Measure α}

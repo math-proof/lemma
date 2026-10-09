@@ -4,7 +4,7 @@ import Lemma.Matrix.Stationary_Pow.of.Stationary
 open Matrix
 
 
-@[main]
+@[path]
 private lemma main
   {S : Type*} [Fintype S] [DecidableEq S]
   {μ : S → ℝ} [StochasticVec μ]

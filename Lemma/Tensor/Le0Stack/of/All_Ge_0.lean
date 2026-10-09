@@ -4,7 +4,7 @@ import torch.stack
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [LE α]
   [Zero α]

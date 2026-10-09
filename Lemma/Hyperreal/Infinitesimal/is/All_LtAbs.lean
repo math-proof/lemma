@@ -4,7 +4,7 @@ import Lemma.Int.LtAbs.is.LtNeg.Lt
 open Int
 
 
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
 -- given
   (x : ℝ*) :

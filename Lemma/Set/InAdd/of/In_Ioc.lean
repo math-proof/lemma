@@ -4,7 +4,7 @@ import Lemma.Nat.LeAddS.is.Le
 open Set Nat
 
 
-@[main]
+@[path]
 private lemma main
   [Preorder α] [Add α]
   [AddLeftMono α] [AddRightMono α]

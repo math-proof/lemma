@@ -2,7 +2,7 @@ import Lemma.Bool.Or_Not
 open Bool
 
 
-@[main]
+@[path]
 private lemma main
   {p q : Prop}
 -- given
@@ -14,7 +14,7 @@ private lemma main
   grind
 
 
-@[main]
+@[path]
 private lemma domain_defined.given
   {f : α → ℝ}
   {x : α}

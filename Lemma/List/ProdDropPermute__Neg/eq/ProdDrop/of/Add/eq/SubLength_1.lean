@@ -4,7 +4,7 @@ import Lemma.Nat.Mul
 open List Nat
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [CommMonoid α]
   {s : List α}

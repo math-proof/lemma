@@ -4,7 +4,7 @@ import sympy.Basic
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   {n : ℕ}
   {S : Finset (Fin n → ℤ)}
@@ -20,9 +20,8 @@ private lemma main
   obtain ⟨x0, hx0⟩ := h₃
   have inj : ∀ x ∈ S, Function.Injective x := by
     intro x hx
-    have hc : (Finset.univ.image x).card = (Finset.univ : Finset (Fin n)).card := by
-      rw [h₀ x hx, h₂, Finset.card_univ, Fintype.card_fin]
-    exact fun a b hab => Finset.card_image_iff.mp hc (Finset.mem_coe.mpr (Finset.mem_univ a)) (Finset.mem_coe.mpr (Finset.mem_univ b)) hab
+    intro a b hab
+    exact Finset.card_image_iff.mp (show (Finset.univ.image x).card = (Finset.univ : Finset (Fin n)).card by rw [h₀ x hx, h₂, Finset.card_univ, Fintype.card_fin]) (Finset.mem_coe.mpr (Finset.mem_univ a)) (Finset.mem_coe.mpr (Finset.mem_univ b)) hab
   have rng : ∀ x ∈ S, Set.range x = Set.range x0 := by
     intro x hx
     rw [← Set.image_univ, ← Set.image_univ, ← Finset.coe_univ, ← Finset.coe_image, ← Finset.coe_image, h₀ x hx, h₀ x0 hx0]
@@ -34,14 +33,16 @@ private lemma main
     ext x
     rw [Finset.mem_image]
     constructor
-    · intro hx
-      refine ⟨(Equiv.ofInjective x (inj x hx)).trans ((Equiv.setCongr (rng x hx)).trans (Equiv.ofInjective x0 (inj x0 hx0)).symm),
+    ·
+      intro hx
+      refine ⟨(Equiv.ofInjective x (inj x hx)).trans ((Set.equivOfEq (rng x hx)).trans (Equiv.ofInjective x0 (inj x0 hx0)).symm),
         Finset.mem_univ _, ?_⟩
       funext i
       simp only [F, Function.comp_apply, Equiv.trans_apply]
       rw [Equiv.apply_ofInjective_symm (inj x0 hx0)]
       simp
-    · rintro ⟨σ, -, rfl⟩
+    ·
+      rintro ⟨σ, -, rfl⟩
       exact h₁ x0 hx0 σ (Finset.image_univ_of_surjective σ.surjective)
   rw [hS, Finset.card_image_of_injective _ hF, Finset.card_univ, Fintype.card_perm, Fintype.card_fin]
 

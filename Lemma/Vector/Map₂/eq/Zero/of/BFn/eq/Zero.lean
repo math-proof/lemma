@@ -2,7 +2,7 @@ import sympy.vector.Basic
 import Lemma.Vector.EqGet0_0
 
 
-@[main]
+@[path]
 private lemma main
   [Zero γ] [Zero δ]
 -- given

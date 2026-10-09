@@ -2,7 +2,7 @@ import Lemma.Nat.AddAdd
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (a b : List α)

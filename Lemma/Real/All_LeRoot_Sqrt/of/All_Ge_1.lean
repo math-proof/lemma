@@ -3,7 +3,7 @@ import Lemma.Finset.All.of.All.All_Imp
 open Finset Real
 
 
-@[main]
+@[path]
 private lemma main
   {n : ℕ}
   {x : ℕ → ℝ}

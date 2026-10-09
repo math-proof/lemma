@@ -5,7 +5,7 @@ import Lemma.Real.LtCoeS.is.Lt
 open Hyperreal Int Nat Real
 
 
-@[main]
+@[path]
 private lemma main
   {x : ℝ*}
   {r : ℝ}

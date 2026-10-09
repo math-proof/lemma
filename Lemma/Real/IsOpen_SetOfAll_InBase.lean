@@ -6,7 +6,7 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 /--
 [AlgebraicGeometry_isOpen_setOf_forall_preimage_mem_of_universallyClosed](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_isOpen_setOf_forall_preimage_mem_of_universallyClosed.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {Z T Y : Scheme.{u}}
   {π : Z ⟶ T} [UniversallyClosed π]

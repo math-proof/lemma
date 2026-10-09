@@ -4,7 +4,7 @@ import Lemma.Vector.SumCons.eq.Add_Sum
 open Vector
 
 
-@[main, fin, val]
+@[path, fin, val]
 private lemma main
   [Add α] [Zero α]
 -- given

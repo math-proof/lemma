@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [ringKrullDim_le_of_ringHom_isIntegral](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_ringKrullDim_le_of_ringHom_isIntegral.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {R : Type u} [CommRing R]
   {S : Type v} [CommRing S]

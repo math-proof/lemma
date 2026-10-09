@@ -3,7 +3,7 @@ import Lemma.Nat.LtAddS.is.Lt
 open Int Nat
 
 
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   [AddCommGroup α] [PartialOrder α] [IsOrderedAddMonoid α]
 -- given

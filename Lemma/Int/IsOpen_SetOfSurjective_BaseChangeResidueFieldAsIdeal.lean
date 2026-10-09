@@ -6,7 +6,7 @@ open TensorProduct
 /--
 [LinearMap_isOpen_setOf_surjective_baseChange_residueField](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_LinearMap_isOpen_setOf_surjective_baseChange_residueField.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {A : Type u} [CommRing A]
   {P : Type v} [AddCommGroup P] [Module A P]

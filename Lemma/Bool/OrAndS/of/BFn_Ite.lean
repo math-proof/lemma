@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma binary
   [Decidable c]
   {p f g : α}

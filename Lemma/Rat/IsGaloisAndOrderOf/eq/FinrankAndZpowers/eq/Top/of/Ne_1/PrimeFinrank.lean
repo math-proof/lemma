@@ -6,7 +6,7 @@ open IntermediateField
 /--
 [AlgEquiv_isGalois_and_orderOf_eq_finrank_of_finrank_prime_of_ne_one](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgEquiv_isGalois_and_orderOf_eq_finrank_of_finrank_prime_of_ne_one.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {K L : Type*} [Field K] [Field L] [Algebra K L]
 -- given

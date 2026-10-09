@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   [Ring α] [LinearOrder α] [FloorRing α]
   {x y : α}

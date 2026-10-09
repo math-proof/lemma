@@ -2,7 +2,7 @@ import torch.nn.functional.relu
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {x : ℝ} :
 -- imply

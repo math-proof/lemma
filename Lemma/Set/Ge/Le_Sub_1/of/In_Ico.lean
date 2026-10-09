@@ -3,7 +3,7 @@ import Lemma.Set.Ge.of.In_Ico
 open Set
 
 
-@[main]
+@[path]
 private lemma main
   [IntegerRing α]
   {x a b : α}

@@ -7,7 +7,7 @@ import Lemma.Matrix.GetMulOfOfPowNegChoose.eq.MulPowFwdDiff.of.Le
 open Matrix Nat
 
 
-@[main]
+@[path]
 private lemma main
   {d m : ℕ}
   {x δ : ℝ}

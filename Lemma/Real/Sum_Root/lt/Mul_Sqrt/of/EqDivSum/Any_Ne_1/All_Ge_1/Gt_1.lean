@@ -15,7 +15,7 @@ open Set Finset Real Nat
 Given a sequence \( \{x_i\}_{i=0}^{n-1} \) with \( n > 1 \), where each \( x_i \geq 1 \) and at least one \( x_i \neq 1 \), and the average \( \frac{1}{n}\sum_{i=0}^{n-1} x_i = x_n \), this lemma establishes that the sum of the terms raised to the power \( \frac{1}{i+2} \) is strictly less than \( n \times \sqrt{x_n} \).
 The proof leverages inequalities between roots and the Cauchy-Schwarz inequality, ensuring the strictness due to the presence of elements greater than 1.
 -/
-@[main]
+@[path]
 private lemma main
   {n : ℕ}
   {x : ℕ → ℝ}

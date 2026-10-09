@@ -7,7 +7,7 @@ import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 open Tensor List
 
 
-@[main, fin]
+@[path, fin]
 private lemma main
   {R : ∀ {m : List ℕ}, Tensor α m → Tensor α m → Prop}
   {R₀ : α → α → Prop}

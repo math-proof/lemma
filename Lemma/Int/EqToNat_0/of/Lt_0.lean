@@ -3,7 +3,7 @@ import Lemma.Int.EqToNat_0.of.Le_0
 open Int Nat
 
 
-@[main]
+@[path]
 private lemma main
   {n : ℤ}
 -- given

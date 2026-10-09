@@ -2,7 +2,7 @@ import Lemma.Vector.EqGetRange.of.Lt
 open Vector
 
 
-@[main, fin, val]
+@[path, fin, val]
 private lemma main
 -- given
   (v : List.Vector (List.Vector α n) m)

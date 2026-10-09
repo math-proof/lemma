@@ -2,7 +2,7 @@ import sympy.Basic
 import torch.Tensor.Basic
 
 
-@[main]
+@[path]
 private lemma main
   [Mul α]
 -- given
@@ -14,7 +14,7 @@ private lemma main
   rfl
 
 
-@[main]
+@[path]
 private lemma head
   [Mul α]
 -- given

@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   [AddGroup α] [LE α] [AddRightMono α]
   {x y : α}
@@ -13,7 +13,7 @@ private lemma main
   sub_nonneg.mpr h
 
 
-@[main]
+@[path]
 private lemma given
   [AddGroup α] [LE α] [AddRightMono α]
   {a b : α}

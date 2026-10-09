@@ -7,7 +7,7 @@ open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model
 Pull a finite weighted sum out of a discounted series:
 `∑' k, γ ^ k * ∑ i, c i * w i k = ∑ i, c i * ∑' k, γ ^ k * w i k`.
 -/
-@[main]
+@[path]
 private lemma main
   [Fintype ι]
   {γ : ℝ}

@@ -2,7 +2,7 @@ import Lemma.Bool.AndAnd.is.And_And
 open Bool
 
 
-@[main]
+@[path]
 private lemma Comm :
 -- imply
   (p ∧ q) ∧ r ↔ (p ∧ r) ∧ q := by

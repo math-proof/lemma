@@ -5,11 +5,11 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Int.Eq_0.is.Eq |
+| path | Int.Eq_0.is.Eq |
 | mp | Int.Eq.of.Eq_0 |
 | mpr | Int.Eq_0.of.Eq |
 -/
-@[main, mp, mpr]
+@[path, mp, mpr]
 private lemma main
   {a b : ℝ} :
 -- imply

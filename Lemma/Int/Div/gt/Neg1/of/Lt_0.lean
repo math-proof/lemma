@@ -4,7 +4,7 @@ import Lemma.Rat.DivNeg.eq.Neg1.of.Lt_0
 open Int Rat
 
 
-@[main]
+@[path]
 private lemma main
   [Field α] [LinearOrder α] [IsStrictOrderedRing α]
   {n d : ℤ}

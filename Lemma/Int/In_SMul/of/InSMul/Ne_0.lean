@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [Submodule_mem_ideal_smul_top_of_smul_mem_of_free_of_noZeroSMulDivisors_quotient](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Submodule_mem_ideal_smul_top_of_smul_mem_of_free_of_noZeroSMulDivisors_quotient.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing 𝒪] [CommRing R] [Algebra 𝒪 R] [AddCommGroup M] [Module R M] [Module 𝒪 M] [IsScalarTower 𝒪 R M] [Module.Free R M]
   {I : Ideal R} [NoZeroSMulDivisors 𝒪 (R ⧸ I)]

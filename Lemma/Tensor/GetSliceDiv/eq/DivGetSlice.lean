@@ -6,10 +6,10 @@ open Tensor
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Tensor.GetSliceDiv.eq.DivGetSlice |
+| path | Tensor.GetSliceDiv.eq.DivGetSlice |
 | fin | Tensor.GetSliceDiv.eq.DivGetSlice.fin |
 -/
-@[main, fin]
+@[path, fin]
 private lemma main
   [Div α]
 -- given

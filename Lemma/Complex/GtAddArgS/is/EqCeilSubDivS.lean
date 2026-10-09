@@ -10,12 +10,12 @@ open Set Complex Int
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Complex.GtAddArgS.is.EqCeilSubDivS |
+| path | Complex.GtAddArgS.is.EqCeilSubDivS |
 | comm | Complex.EqCeilSubDivS.is.GtAddArgS |
 | mp | Complex.EqCeilSubDivS.of.GtAddArgS |
 | mpr | Complex.GtAddArgS.of.EqCeilSubDivS |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   {A B : ℂ} :
 -- imply

@@ -14,7 +14,7 @@ import Lemma.Fin.Eq.of.Val
 open Tensor List Bool Nat Fin
 
 
-@[main]
+@[path]
 private lemma main
   {n : ℕ}
 -- given

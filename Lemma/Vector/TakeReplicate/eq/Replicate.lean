@@ -3,7 +3,7 @@ import Lemma.Vector.GetTake.eq.Get.of.Lt_Min
 open Vector
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (x : α)

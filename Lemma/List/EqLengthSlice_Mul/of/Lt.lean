@@ -7,7 +7,7 @@ import Lemma.Rat.EqToNatCeilDivSubMul.of.Lt
 open Int Nat Rat List
 
 
-@[main]
+@[path]
 private lemma main
   {i : ℕ}
 -- given
@@ -20,7 +20,7 @@ private lemma main
   simp_all
 
 
-@[main]
+@[path]
 private lemma Comm
   {i : ℕ}
 -- given

@@ -19,7 +19,7 @@ set_option maxHeartbeats 1000000
 
 
 /-- Equal-length-batch `matmul` commutes with a pointwise map `f`. -/
-@[main, comm]
+@[path, comm]
 private lemma main
   [Mul α] [AddCommMonoid α]
   [Mul β] [AddCancelCommMonoid β]

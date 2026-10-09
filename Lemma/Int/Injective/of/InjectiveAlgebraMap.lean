@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [Algebra_IsIntegral_injective_of_injective_algebraMap](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Algebra_IsIntegral_injective_of_injective_algebraMap.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {A B C : Type*} [CommRing A] [CommRing B] [CommRing C] [IsDomain B] [IsDomain C] [Algebra A B] [Algebra A C] [Algebra.IsIntegral A B]
   {φ : B →ₐ[A] C}

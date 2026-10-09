@@ -1,5 +1,4 @@
 import sympy.stats.policy_trajectory.gradient
-import sympy.Basic
 import Lemma.Random.AeNormR.le.Abs_R
 import Lemma.Random.Integrable_Mul_R.of.Measurable
 import Lemma.Random.Integral.eq.MulMulRealPreimageSProbIntegral_MulEqSAndEqA
@@ -24,7 +23,7 @@ private lemma E_ind_r [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype 
 /--
 `𝔼[1{s[t] = x ∧ a[t] = u} * G[t]] = Pr(s[t] = x) * π_θ(u | x) * Q θ γ t x u`.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A] [DecidableEq S] [DecidableEq A]
   {M : Model Θ S A}
@@ -40,9 +39,10 @@ private lemma main
   (x : S)
   (u : A) :
 -- imply
-  ∫ ω, (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) * G r γ t ω ∂(M θ) =
+  ∫ ω, (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) * ((γ ^ (id : ℕ → ℕ)) @ r[t:]) ω ∂(M θ) =
     ((M θ).real (s t ⁻¹' {x}) * M.pol.prob θ x u) * M.Q r s a θ γ t x u := by
 -- proof
+  set G := (γ ^ (id : ℕ → ℕ)) @ r[t:]
   obtain rfl : r = fun t ω ↦ (ω t).1 := funext₂ fun t ω ↦ (congrArg (·.1) (congrFun (h₁ t) ω)).symm
   obtain rfl : s = fun t ω ↦ (ω t).2.1 := funext₂ fun t ω ↦ (congrArg (·.2.1) (congrFun (h₁ t) ω)).symm
   obtain rfl : a = fun t ω ↦ (ω t).2.2 := funext₂ fun t ω ↦ (congrArg (·.2.2) (congrFun (h₁ t) ω)).symm
@@ -71,7 +71,7 @@ private lemma main
       (γ ^ k * r (t + k) ω)‖ ∂(M θ)) :=
     Summable.of_nonneg_of_le (fun k => integral_nonneg fun ω => norm_nonneg _) hN
       ((summable_geometric_of_lt_one h₀.1 h₀.2).mul_right _)
-  have e : ∀ ω, (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) * G r γ t ω =
+  have e : ∀ ω, (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) * ((γ ^ (id : ℕ → ℕ)) @ r[t:]) ω =
       ∑' k, (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) * (γ ^ k * r (t + k) ω) := fun ω => by
     rw [tsum_mul_left]; rfl
   simp_rw [e]

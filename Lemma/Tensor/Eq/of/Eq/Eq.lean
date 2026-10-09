@@ -7,7 +7,7 @@ import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Mathlib.Algebra.BigOperators.Intervals
 
 
-@[main]
+@[path]
 private lemma adam
   {β : ℝ}
   {m g : ℕ → ℝ}
@@ -28,7 +28,7 @@ private lemma adam
     ring
 
 
-@[main]
+@[path]
 private lemma exponential_moving_average
   {β : ℝ}
   {v θ : ℕ → ℝ}
@@ -61,7 +61,7 @@ private lemma exponential_moving_average
   ring
 
 
-@[main]
+@[path]
 private lemma fastformer
   {n d : ℕ}
   {w : Fin d → ℝ}
@@ -79,7 +79,7 @@ private lemma fastformer
   ring
 
 
-@[main]
+@[path]
 private lemma long_short_term_memory
   {dx dh : ℕ}
   {W : Matrix (Fin dx) (Fin 4 × Fin dh) ℝ}
@@ -102,7 +102,7 @@ private lemma long_short_term_memory
   rfl
 
 
-@[main]
+@[path]
 private lemma kmeans.nonoverlapping
   {M k d : ℕ} [NeZero k]
   {w w' : Fin k → Finset ℕ}

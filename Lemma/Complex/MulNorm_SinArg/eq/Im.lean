@@ -6,10 +6,10 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Complex.MulNorm_SinArg.eq.Im |
+| path | Complex.MulNorm_SinArg.eq.Im |
 | comm | Complex.Im.eq.MulNorm_SinArg |
 -/
-@[main, comm]
+@[path, comm]
 private lemma main
   {z : ℂ} :
 -- imply

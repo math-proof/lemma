@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma limits.swap
   {Sx : Set α}
   {Sy : Set β}

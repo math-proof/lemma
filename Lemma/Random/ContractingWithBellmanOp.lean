@@ -3,7 +3,7 @@ import sympy.Basic
 import Lemma.Random.NormSubBellmanOp.le.MulNormSub
 
 
-@[main]
+@[path]
 private lemma main
   {S A : Type*} [Fintype S] [DecidableEq S] [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype A] [DecidableEq A] [MeasurableSpace A] [MeasurableSingletonClass A] [Nonempty A]
   {spec : QLearningSpec S A} :

@@ -5,7 +5,7 @@ import Lemma.Nat.Eq_0.of.Div.eq.Zero.Dvd
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   [IntegerRing Z]
   {a b : Z}

@@ -3,7 +3,7 @@ import sympy.Basic
 open Stirling.conditionset
 
 
-@[main]
+@[path]
 private lemma main
   {n k : ℕ}
   {x : Fin k → Finset ℕ}

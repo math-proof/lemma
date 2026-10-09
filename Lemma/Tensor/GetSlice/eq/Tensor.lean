@@ -2,7 +2,7 @@ import sympy.Basic
 import Mathlib.Data.Fin.VecNotation
 
 
-@[main]
+@[path]
 private lemma main
   {i : ℕ}
   {a : ℕ → α} :

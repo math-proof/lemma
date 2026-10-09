@@ -5,7 +5,7 @@ import Lemma.Real.Le_Sqrt.is.LeSquare.of.Ge_0.Ge_0
 open Real
 
 
-@[main]
+@[path]
 private lemma main
   {x y : ℝ}
 -- given

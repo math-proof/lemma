@@ -4,7 +4,7 @@ import Lemma.Finset.Sum.eq.Sum_MulBool
 open Bool Finset
 
 
-@[main]
+@[path]
 private lemma main
   [DecidableEq ι]
   [Fintype ι]

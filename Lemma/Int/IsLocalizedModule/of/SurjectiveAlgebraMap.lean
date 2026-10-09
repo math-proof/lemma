@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [IharaLemma_isLocalizedModule_comap_primeCompl](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_IharaLemma_isLocalizedModule_comap_primeCompl.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {Λ B : Type*} [CommRing Λ] [CommRing B] [Algebra Λ B]
   {𝔭 : Ideal B} [𝔭.IsPrime]

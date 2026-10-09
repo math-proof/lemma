@@ -19,7 +19,7 @@ private lemma  geomSum_sub_natCast_mem_maximalIdeal {A : Type u} [CommRing A] [I
     rw [Finset.sum_sub_distrib, Finset.sum_const, Finset.card_range, nsmul_eq_mul, mul_one]
   rw [heq]
   exact Ideal.sum_mem _ fun i _ => hpow i
-@[main]
+@[path]
 private lemma main
   {A : Type u} [CommRing A] [IsLocalRing A]
   {u : A}

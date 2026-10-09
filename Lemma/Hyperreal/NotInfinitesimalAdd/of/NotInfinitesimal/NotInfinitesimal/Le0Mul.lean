@@ -3,7 +3,7 @@ import Lemma.Int.AbsAdd.eq.AddAbsS.of.Le0Mul
 open Hyperreal Int
 
 
-@[main]
+@[path]
 private lemma main
   {a b : ℝ*}
 -- given

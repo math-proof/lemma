@@ -6,7 +6,7 @@ import torch.Tensor.permute
 open List Tensor
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h_d : d > 1)

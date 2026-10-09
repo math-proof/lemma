@@ -3,7 +3,7 @@ import sympy.stats.stochastic_process_types
 open scoped Matrix BigOperators
 
 
-@[main]
+@[path]
 private lemma main
   {S : Type*} [Fintype S] [DecidableEq S]
   {x0 : S → ℝ} [StochasticVec x0]

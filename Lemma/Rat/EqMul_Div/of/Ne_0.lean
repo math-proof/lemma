@@ -3,7 +3,7 @@ import Lemma.Nat.Mul
 open Nat Rat
 
 
-@[main]
+@[path]
 private lemma main
   [CommGroupWithZero α]
 -- given

@@ -3,7 +3,7 @@ import sympy.Basic
 
 
 /-- `P t` only depends on the prefix `ys 0, …, ys t`. -/
-@[main]
+@[path]
 private lemma main
   {P : ℕ → (ℕ → Y) → ℝ}
   {π : Y → ℝ}

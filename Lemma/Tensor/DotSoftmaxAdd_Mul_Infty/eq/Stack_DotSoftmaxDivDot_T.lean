@@ -11,7 +11,7 @@ open Tensor
 set_option maxHeartbeats 2000000
 
 
-@[main]
+@[path]
 private lemma gpt
   [NeZero (l : ℕ)]
   {n : ℕ}

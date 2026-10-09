@@ -8,7 +8,7 @@ import Lemma.Vector.XEqDotS.of.XEq.OrAll_NotInfinite.All_Imp_XEqInvS
 open Nat Tensor Vector
 
 
-@[main]
+@[path]
 private lemma main
   {A B C : Tensor ℝ* [n]}
 -- given
@@ -34,7 +34,7 @@ private lemma main
     exact Or.inr (Or.inr (Ge0MulDataS.of.Ge0Mul h_le))
 
 
-@[main]
+@[path]
 private lemma left
   {A B C : Tensor ℝ* [n]}
 -- given

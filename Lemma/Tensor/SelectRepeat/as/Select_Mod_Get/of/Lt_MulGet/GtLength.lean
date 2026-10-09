@@ -30,7 +30,7 @@ import Lemma.Bool.SEqCast.of.Eq
 open Tensor List Vector Bool Nat
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h_d : s.length > d)

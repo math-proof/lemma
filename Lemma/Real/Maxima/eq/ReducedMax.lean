@@ -5,7 +5,7 @@ import Mathlib.Data.Finite.Prod
 import Mathlib.Data.Fintype.Lattice
 
 
-@[main]
+@[path]
 private lemma main
   [Finite ι] [Nonempty ι] [Finite κ] [Nonempty κ]
   {a : ι → κ → ℝ} :

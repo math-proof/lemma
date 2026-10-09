@@ -6,7 +6,7 @@ open scoped MatrixGroups
 /--
 [Matrix_exists_generalLinearGroup_forall_algHom_apply_eq_conj](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Matrix_exists_generalLinearGroup_forall_algHom_apply_eq_conj.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [Field K] [Fintype n] [DecidableEq n] [Nonempty n]
   {f : Matrix n n K →ₐ[K] Matrix n n K} :

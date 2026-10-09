@@ -2,7 +2,7 @@ import sympy.Basic
 import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
 
 
-@[main]
+@[path]
 private lemma main
   [CommSemiring α]
   {n : ℕ}
@@ -13,7 +13,7 @@ private lemma main
   rfl
 
 
-@[main]
+@[path]
 private lemma arithmetic_progression
   {n k : ℕ}
   {a : Fin k → ℝ} :

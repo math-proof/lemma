@@ -2,7 +2,7 @@ import Lemma.List.Swap
 open List
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (a b : α)

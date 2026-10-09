@@ -3,7 +3,7 @@ import Lemma.Vector.Head.eq.Get_0
 open Vector
 
 
-@[main]
+@[path]
 private lemma main
   {n : ℕ} :
 -- imply

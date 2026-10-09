@@ -14,7 +14,7 @@ import Lemma.Vector.SEq.of.Eq_0.Eq_0
 open Int List Nat Rat Vector Slice
 
 
-@[main]
+@[path]
 private lemma main
   {a b d n : ℕ}
 -- given

@@ -1,6 +1,6 @@
 import sympy.Basic
 
-@[main]
+@[path]
 private lemma Comm
   [CommMonoid β]
   {s : Finset γ}

@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma doit
   {x : ℤ → ℝ}
   {a : ℤ} :
@@ -25,7 +25,7 @@ private lemma doit
       exact ⟨a + 1, by simp only [Set.mem_Ico]; omega, h⟩
 
 
-@[main]
+@[path]
 private lemma doit.outer
   {x : ℕ → ℕ → ℝ}
   {f : ℕ → ℕ} :
@@ -35,7 +35,7 @@ private lemma doit.outer
   simp [Finset.sum_range_succ]
 
 
-@[main]
+@[path]
 private lemma doit.outer.setlimit
   [DecidableEq ι]
   {x : ι → ℕ → ℝ}
@@ -49,7 +49,7 @@ private lemma doit.outer.setlimit
   rw [Finset.sum_pair h]
 
 
-@[main]
+@[path]
 private lemma doit.setlimit
   {x : ℤ → ℝ}
   {a b : ℤ} :

@@ -9,7 +9,7 @@ import sympy.Basic
 Polar orthonormal expansion uniqueness:
 \(a\,\hat{r}+b\,\hat{\theta}=c\,\hat{r}\) implies \(a=c\) and \(b=0\).
 -/
-@[main]
+@[path]
 private lemma main
   {θ a b c : ℝ}
 -- given

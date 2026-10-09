@@ -3,7 +3,7 @@ import Lemma.Nat.EqAdd_Mul_DivSub1Sign_2
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (n m : ℕ) :

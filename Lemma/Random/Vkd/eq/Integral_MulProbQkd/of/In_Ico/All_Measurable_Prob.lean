@@ -20,7 +20,7 @@ Continuous-action counterpart of `Random.Vk.eq.Sum_MulProbQk.of.In_Ico.All_Measu
 integral against the reference measure of `A`); `h₀` (joint measurability of the policy) makes the integrals over the
 actions and the next states meaningful, so that `∑'` and both integrals can be swapped.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace S] [ReferenceMeasure A]
   {M : DensityModel Θ S A}

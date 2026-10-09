@@ -26,7 +26,7 @@ private lemma densityAe
   apply Measure.rnDeriv_withDensity _ hp
 
 
-@[main, comm]
+@[path, comm]
 private lemma left
   [MeasurableSpace Ω]
   [ReferenceMeasure α] [ReferenceMeasure β]
@@ -73,10 +73,10 @@ private lemma left
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Random.All_EqIntegral_ProbJoint.of.PSpace_Joint |
+| path | Random.All_EqIntegral_ProbJoint.of.PSpace_Joint |
 | comm | Random.All_Eq_Integral_ProbJoint.of.PSpace_Joint |
 -/
-@[main, comm]
+@[path, comm]
 private lemma main
   [MeasurableSpace Ω]
   [ReferenceMeasure α] [ReferenceMeasure β]

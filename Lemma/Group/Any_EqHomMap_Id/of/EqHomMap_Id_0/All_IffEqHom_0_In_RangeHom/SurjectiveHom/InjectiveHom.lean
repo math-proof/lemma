@@ -16,7 +16,7 @@ private lemma  shortExact_of_maps {k G : Type} [CommRing k] [Group G] {X : Short
   rw [ShortComplex.ShortExact.moduleCat_exact_iff_function_exact]
   intro y
   exact hfg y
-@[main]
+@[path]
 private lemma main
   {k G : Type} [CommRing k] [Group G]
   {X₁ X₂ X₃ : Rep.{0} k G}

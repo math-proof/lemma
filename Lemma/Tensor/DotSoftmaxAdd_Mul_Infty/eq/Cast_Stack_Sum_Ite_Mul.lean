@@ -51,7 +51,7 @@ For logits \( a_{ij} \), a mask \( P \) leaving every row at least one unmasked 
 \operatorname{softmax}(a + ([P] - 1)\infty)_i \, V_i \approx \Bigl[ \sum_j [P_{ij}]\, w_{ij}\, v_{ij\ell} \Bigr]_\ell .
 \]
 -/
-@[main]
+@[path]
 private lemma row
   {n m d : ℕ}
 -- given
@@ -95,7 +95,7 @@ Matrix form of  when the values \( v_{j\ell} \) do not depend on the row:
 \operatorname{softmax}(a + ([P] - 1)\infty)\, V \approx \Bigl[ \sum_j [P_{ij}]\, w_{ij}\, v_{j\ell} \Bigr]_{i\ell} .
 \]
 -/
-@[main]
+@[path]
 private lemma main
   {n m d : ℕ}
 -- given

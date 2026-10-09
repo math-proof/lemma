@@ -2,7 +2,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma limits.swap
   {A B : Set ℝ}
 -- given
@@ -14,7 +14,7 @@ private lemma limits.swap
   exact ⟨e, hB, hA⟩
 
 
-@[main]
+@[path]
 private lemma limits_restricted
   {S : Set ℝ}
 -- given

@@ -5,7 +5,7 @@ import Lemma.Nat.Le_Sub.of.LeAdd
 open Nat
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   {a b c : ℕ}
 -- given

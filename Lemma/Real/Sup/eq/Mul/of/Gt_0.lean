@@ -3,7 +3,7 @@ import sympy.Basic
 import Mathlib.Data.Real.Pointwise
 
 
-@[main]
+@[path]
 private lemma main
   {f : ℝ → ℝ}
   {a m M : ℝ}

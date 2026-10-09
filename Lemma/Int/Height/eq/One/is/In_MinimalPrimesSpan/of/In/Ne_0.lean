@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [Ideal_height_eq_one_iff_mem_minimalPrimes_span_singleton_of_mem](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Ideal_height_eq_one_iff_mem_minimalPrimes_span_singleton_of_mem.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing R] [IsDomain R] [IsNoetherianRing R]
   {x : R}

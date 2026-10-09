@@ -17,7 +17,7 @@ import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
 open Bool List Tensor
 
 
-@[main, fin]
+@[path, fin]
 private lemma main
 -- given
   (X : Tensor α ((b :: bz) ++ [m, n]))

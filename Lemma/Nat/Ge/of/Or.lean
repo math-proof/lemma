@@ -2,7 +2,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {x : α}
   {A B : Set α}
@@ -26,7 +26,7 @@ private lemma main
       exact h₁
 
 
-@[main]
+@[path]
 private lemma two
   {x : α}
   {A : Set α}

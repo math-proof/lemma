@@ -9,7 +9,7 @@ import Lemma.Real.SinDivPi9.lt.Div1'2
 open Set Real Nat
 
 
-@[main]
+@[path]
 private lemma main:
 -- imply
   (π / 9).sin ∈ Ioo (20 / 60) (21 / 60) := by

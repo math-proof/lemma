@@ -3,7 +3,7 @@ import sympy.Basic
 open Matrix Finset MeasureTheory ProbabilityTheory
 
 
-@[main]
+@[path]
 private lemma main
   {S : Type*} [Fintype S] [DecidableEq S] [MeasurableSpace S] [MeasurableSingletonClass S]
   {MRP : FiniteMRP S}

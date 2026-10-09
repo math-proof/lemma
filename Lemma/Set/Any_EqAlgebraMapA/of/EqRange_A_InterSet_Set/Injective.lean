@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [ValuationSubring_exists_ringEquiv_comap_of_range_eq_inter](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_ValuationSubring_exists_ringEquiv_comap_of_range_eq_inter.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing A₀]
   {F L : Type*} [Field F] [Field L] [Algebra F L]

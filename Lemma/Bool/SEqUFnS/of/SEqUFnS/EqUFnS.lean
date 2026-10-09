@@ -2,7 +2,7 @@ import stdlib.SEq
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma mpr
   {Vector : α → Sort v}
   {f f' : ι → β}
@@ -18,7 +18,7 @@ private lemma mpr
   simp_all
 
 
-@[main]
+@[path]
 private lemma main
   {Vector : α → Sort v}
   {f f' : ι → β}

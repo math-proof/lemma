@@ -3,6 +3,43 @@ import sympy.Basic
 
 open WeierstrassCurve WeierstrassCurve.Affine WeierstrassCurve.Affine.Point ValuationSubring
 
+-- Mathlib Point AddCommGroup needs DecidableEq on the base field.
+noncomputable instance : DecidableEq (AlgebraicClosure ℚ) := Classical.decEq _
+
+namespace ValuationSubring
+
+/-- Valuation ring lies over the prime ideal (q). -/
+def LiesOverPrime {L : Type*} [Field L] (A : ValuationSubring L) (q : ℕ) : Prop :=
+  (q : L) ∈ A.nonunits
+
+/-- Inertia subgroup of A inside L ≃ₐ[K] L. -/
+noncomputable def inertiaSubgroupIn (K : Type*) {L : Type*} [Field K] [Field L] [Algebra K L]
+    (A : ValuationSubring L) : Subgroup (L ≃ₐ[K] L) :=
+  (A.inertiaSubgroup K).map (A.decompositionSubgroup K).subtype
+
+end ValuationSubring
+
+namespace WeierstrassCurve.Affine.Point
+
+variable {R S K : Type*} [CommRing R] [CommRing S] [Field K] [DecidableEq K]
+  {W' : Affine R} [Algebra R S] [Algebra R K] [Algebra S K] [IsScalarTower R S K]
+
+noncomputable instance : SMul (K ≃ₐ[S] K) (W'⁄K).Point :=
+  ⟨fun σ P => Point.map σ.toAlgHom P⟩
+
+noncomputable instance : DistribMulAction (K ≃ₐ[S] K) (W'⁄K).Point where
+  one_smul P := by cases P <;> rfl
+  mul_smul σ τ P := by cases P <;> rfl
+  smul_zero _ := rfl
+  smul_add σ P Q := (Point.map σ.toAlgHom).map_add P Q
+
+private lemma algEquiv_smul_zsmul (σ : K ≃ₐ[S] K) (m : ℤ) (P : (W'⁄K).Point) :
+    σ • (m • P) = m • (σ • P) :=
+  (Point.map σ.toAlgHom).map_zsmul m P
+
+end WeierstrassCurve.Affine.Point
+
+
 /--
 [AddSubgroup_eq_atP_filtration_of_cyclic_stable_inertia_nontrivial](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AddSubgroup_eq_atP_filtration_of_cyclic_stable_inertia_nontrivial.lean)
 -/
@@ -11,7 +48,7 @@ private lemma zsmul_pow_nat_eq_zero {P : Type*} [AddCommGroup P] {p m : ℕ}
   {x : P} (hx : p ^ m • x = 0) : ((p : ℤ) ^ m) • x = 0 := by
   have : ((p : ℤ) ^ m) = ((p ^ m : ℕ) : ℤ) := by push_cast; ring
   rw [this, natCast_zsmul, hx]
-@[main]
+@[path]
 private lemma main
   {p : ℕ} [Fact p.Prime]
   {W : WeierstrassCurve ℤ}

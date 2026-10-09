@@ -2,7 +2,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {a i j n d : ℤ} :
 -- imply
@@ -12,7 +12,7 @@ private lemma main
   omega
 
 
-@[main]
+@[path]
 private lemma left_close
   {a i j n d : ℤ} :
 -- imply

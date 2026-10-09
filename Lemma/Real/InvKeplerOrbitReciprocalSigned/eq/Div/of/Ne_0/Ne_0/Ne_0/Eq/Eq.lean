@@ -8,7 +8,7 @@ Notes orbit form with \(A=(Cm/J^2)e\) and \(p=-J^2/(Cm)\):
 r=\frac{p}{1-e\cos\theta}.
 \]
 -/
-@[main]
+@[path]
 private lemma main
   {A C m J e p φ : ℝ}
 -- given

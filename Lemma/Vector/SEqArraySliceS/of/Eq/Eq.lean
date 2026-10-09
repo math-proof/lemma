@@ -3,7 +3,7 @@ import Lemma.Vector.SEqArraySliceS.of.SEq.Eq.Eq
 open Vector
 
 
-@[main]
+@[path]
 private lemma main
   {i s i' s' : ℕ}
 -- given

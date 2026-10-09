@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [Ideal_map_algebraMap_localizationAtPrime_eq_span_of_le_span_sup_mul](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Ideal_map_algebraMap_localizationAtPrime_eq_span_of_le_span_sup_mul.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {P : Type u} [CommRing P] [IsNoetherianRing P]
   {J : Ideal P}

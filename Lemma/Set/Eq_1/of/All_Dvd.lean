@@ -3,7 +3,7 @@ import sympy.core.intfunc
 import Mathlib.Algebra.GCDMonoid.Finset
 
 
-@[main]
+@[path]
 private lemma main
   {A : Set ℕ} [FiniteGCDOne A]
   {n : ℕ}

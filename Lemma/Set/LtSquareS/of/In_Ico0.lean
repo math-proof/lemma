@@ -7,7 +7,7 @@ open Nat
 If a real number `x` satisfies `0 ≤ x < b`, then its square is strictly less than `b²`.
 This follows from the fact that squaring preserves the strict inequality for non-negative numbers.
 -/
-@[main]
+@[path]
 private lemma main
   {x b : ℝ}
 -- given

@@ -2,7 +2,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma doit
   [CommMonoid α]
   {x : ℕ → α} :
@@ -12,7 +12,7 @@ private lemma doit
   simp only [Finset.prod_range_succ, Finset.prod_range_zero, one_mul]
 
 
-@[main]
+@[path]
 private lemma doit.outer
   [CommMonoid α]
   {f : ℕ → ℕ}
@@ -23,7 +23,7 @@ private lemma doit.outer
   rw [Finset.prod_range_succ, Finset.prod_range_succ, Finset.prod_range_succ, Finset.prod_range_succ, Finset.prod_range_one]
 
 
-@[main]
+@[path]
 private lemma doit.outer.setlimit
   [CommMonoid α]
   {f : ℕ → ℕ}
@@ -35,7 +35,7 @@ private lemma doit.outer.setlimit
   simp only [mul_assoc]
 
 
-@[main]
+@[path]
 private lemma doit.setlimit
   [CommMonoid α]
   {x : ℕ → α} :
@@ -46,7 +46,7 @@ private lemma doit.setlimit
   simp only [mul_assoc]
 
 
-@[main]
+@[path]
 private lemma pop
   [CommMonoid α]
   {n : ℕ}
@@ -57,7 +57,7 @@ private lemma pop
   exact Finset.prod_range_succ _ _
 
 
-@[main]
+@[path]
 private lemma push
   {n : ℕ}
   {f : ℕ → ℝ}
@@ -69,7 +69,7 @@ private lemma push
   rw [Finset.prod_range_succ, mul_div_assoc, div_self h, mul_one]
 
 
-@[main]
+@[path]
 private lemma scale
   {n : ℕ}
   {f : ℕ → ℝ}
@@ -82,7 +82,7 @@ private lemma scale
   rw [Finset.prod_mul_distrib, Finset.prod_const, Finset.card_range, mul_div_assoc, div_self (pow_ne_zero n h), mul_one]
 
 
-@[main]
+@[path]
 private lemma shift
   [CommMonoid α]
   {n : ℕ}
@@ -93,7 +93,7 @@ private lemma shift
   rw [Finset.range_eq_Ico, Finset.prod_eq_prod_Ico_succ_bot (by omega), mul_comm]
 
 
-@[main]
+@[path]
 private lemma unshift
   {n : ℕ}
   {f : ℕ → ℝ}

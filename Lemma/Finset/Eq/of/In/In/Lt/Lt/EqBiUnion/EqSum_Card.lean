@@ -3,7 +3,7 @@ import sympy.Basic
 
 
 /-- If finsets `w i` (`i < k`) have total size `|⋃ w i|`, they are pairwise disjoint. -/
-@[main]
+@[path]
 private lemma main
   {w : ℕ → Finset ℕ}
   {k M : ℕ}

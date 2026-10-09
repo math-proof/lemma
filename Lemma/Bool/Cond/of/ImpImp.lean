@@ -4,7 +4,7 @@ import Lemma.Bool.False.of.AndNot
 open Bool
 
 
-@[main]
+@[path]
 private lemma main
   {p q : Prop}
 -- given

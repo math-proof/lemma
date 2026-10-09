@@ -8,12 +8,12 @@ open Tensor Bool
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Bool.SEq.is.SEqDataS.of.Eq |
+| path | Bool.SEq.is.SEqDataS.of.Eq |
 | comm | Bool.SEqDataS.is.SEq.of.Eq |
 | mp   | Bool.SEqDataS.of.SEq.Eq |
 | mpr  | Bool.SEq.of.SEqDataS.Eq |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   {A : Tensor α s}
   {B : Tensor α s'}

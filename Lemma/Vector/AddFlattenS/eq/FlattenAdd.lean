@@ -6,7 +6,7 @@ import Lemma.Vector.GetAdd.eq.AddGetS.of.GtLength
 open Vector Nat
 
 
-@[main]
+@[path]
 private lemma main
   [Add α]
 -- given

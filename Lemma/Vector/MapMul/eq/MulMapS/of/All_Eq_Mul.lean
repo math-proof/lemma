@@ -4,7 +4,7 @@ import sympy.vector.vector
 open Nat Vector
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [Mul α]
   [Mul β]

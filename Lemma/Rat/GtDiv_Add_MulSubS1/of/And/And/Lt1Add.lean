@@ -15,7 +15,7 @@ open Nat Int Rat
 
 
 -- prerequisite of data sifting using a reward model
-@[main]
+@[path]
 private lemma main
 -- R is a linear ordered field, e.g. ℝ or ℚ
   [Field R] [LinearOrder R] [IsStrictOrderedRing R]

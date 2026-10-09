@@ -7,7 +7,7 @@ import Lemma.Random.PSpace.PSpace.of.PSpace_Joint
 open Random MeasureTheory
 
 
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace Ω]
   [ReferenceMeasure α] [ReferenceMeasure β]
@@ -58,7 +58,7 @@ private lemma main
     rw [hlaw]
     exact Measure.rnDeriv_withDensity ν hq
   have : IsProbabilityMeasure (π.map y) :=
-    Measure.isProbabilityMeasure_map PSpace.aemeasurable
+    inferInstance
   have h1 : lintegral ν q = 1 := by
     have h : (ν.withDensity q) Set.univ = lintegral ν q := by
       rw [withDensity_apply q MeasurableSet.univ, setLIntegral_univ]

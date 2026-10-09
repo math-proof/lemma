@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [AlgebraicCurve_isIntegral_adjoin_of_isScalarTower](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicCurve_isIntegral_adjoin_of_isScalarTower.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {K L F : Type*} [CommRing K] [CommRing L] [CommRing F] [Algebra K L] [Algebra K F] [Algebra L F] [IsScalarTower K L F]
   {j x : F}

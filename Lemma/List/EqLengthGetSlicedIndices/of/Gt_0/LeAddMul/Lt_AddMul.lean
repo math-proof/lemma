@@ -3,7 +3,7 @@ import Lemma.Nat.Ne_0.of.Gt
 open List Nat
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h_start : j < n * d + j)

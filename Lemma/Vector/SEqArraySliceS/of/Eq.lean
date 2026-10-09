@@ -2,7 +2,7 @@ import Lemma.Vector.SEqArraySliceS.of.SEq.Eq.Eq
 open Vector
 
 
-@[main]
+@[path]
 private lemma main
   {v : List.Vector α n}
   {v' : List.Vector α n'}

@@ -5,7 +5,7 @@ import Lemma.Set.Any_In.is.Ne_Empty
 open Set Int Nat
 
 
-@[main]
+@[path]
 private lemma main
   [AddGroup α] [Preorder α] [AddRightStrictMono α]
   {a b : α}

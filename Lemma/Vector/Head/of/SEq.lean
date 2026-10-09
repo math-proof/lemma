@@ -4,7 +4,7 @@ import Lemma.Vector.Head.eq.Get_0
 open Vector
 
 
-@[main]
+@[path]
 private lemma main
   {a : List.Vector α (.succ n)}
   {b : List.Vector α (.succ n')}

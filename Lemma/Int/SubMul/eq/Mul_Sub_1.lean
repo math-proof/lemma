@@ -2,7 +2,7 @@ import Lemma.Int.Mul_Sub.eq.SubMulS
 open Int
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [Ring α]
   {x a : α} :

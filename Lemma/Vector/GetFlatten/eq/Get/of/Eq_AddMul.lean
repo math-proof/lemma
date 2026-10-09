@@ -3,7 +3,7 @@ import Lemma.Nat.AddMul.lt.Mul
 open Vector Nat
 
 
-@[main, fin, val]
+@[path, fin, val]
 private lemma main
   {i : Fin m}
   {j : Fin n}

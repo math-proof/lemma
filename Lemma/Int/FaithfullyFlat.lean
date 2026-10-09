@@ -6,7 +6,7 @@ open IsLocalRing
 /--
 [IsLocalRing_faithfullyFlat_adicCompletion_maximalIdeal](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_IsLocalRing_faithfullyFlat_adicCompletion_maximalIdeal.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing R] [IsNoetherianRing R] [IsLocalRing R] :
 -- imply

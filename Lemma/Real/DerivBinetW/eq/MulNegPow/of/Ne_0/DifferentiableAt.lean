@@ -7,7 +7,7 @@ import sympy.Basic
 /--
 Binet first derivative: \(w'=-r^{-2}r'\) for \(w=1/r\).
 -/
-@[main]
+@[path]
 private lemma main
   {r : ℝ → ℝ}
   {φ : ℝ}

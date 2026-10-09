@@ -7,7 +7,7 @@ open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model
 Pushing a composition-product along `Prod.map f id` turns a comapped kernel into the original one:
 `(ν ⊗ₘ κ.comap f).map (Prod.map f id) = (ν.map f) ⊗ₘ κ`.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace α] [MeasurableSpace β] [MeasurableSpace γ]
   {ν : Measure α} [SFinite ν]

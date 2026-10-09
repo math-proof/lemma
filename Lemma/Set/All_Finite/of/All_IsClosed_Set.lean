@@ -6,7 +6,7 @@ open CategoryTheory AlgebraicGeometry TopologicalSpace
 /--
 [AlgebraicGeometry_Scheme_finite_of_isClosed_of_ne_univ_of_forall_isClosed_singleton](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_Scheme_finite_of_isClosed_of_ne_univ_of_forall_isClosed_singleton.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {X : Scheme.{u}} [IsIntegral X] [NoetherianSpace X]
 -- given

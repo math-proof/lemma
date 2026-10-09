@@ -4,12 +4,12 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Set.In_Finset.is.OrEqS |
+| path | Set.In_Finset.is.OrEqS |
 | comm | Set.OrEqS.is.In_Finset |
 | mp | Set.OrEqS.of.In_Finset |
 | mpr | Set.In_Finset.of.OrEqS |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
 -- given
   (a b e : α) :

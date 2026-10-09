@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma left
 -- given
   (h₀ : p → q)
@@ -21,7 +21,7 @@ private lemma left
     exact h₀ hp
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h₀ : p → q)

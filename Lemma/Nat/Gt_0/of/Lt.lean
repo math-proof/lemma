@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h : i < n) :
@@ -11,7 +11,7 @@ private lemma main
   linarith
 
 
-@[main]
+@[path]
 private lemma transit
   {x y : ℝ}
 -- given

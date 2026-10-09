@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [ModularCurve_atP_toric_exclusion](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_ModularCurve_atP_toric_exclusion.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [Group G] [AddCommGroup J] [DistribMulAction G J] [Field k] [AddCommGroup V] [Module k V] [DistribMulAction G V] [SMulCommClass G k V]
   {I : Subgroup G}

@@ -22,7 +22,7 @@ import Lemma.Nat.Gt_0.of.Gt
 open Vector Tensor List Bool Nat Fin
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h : s.length > 1)

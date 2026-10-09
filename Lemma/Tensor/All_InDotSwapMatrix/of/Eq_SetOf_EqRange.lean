@@ -3,7 +3,7 @@ import Lemma.Tensor.GetDot.eq.DotGet
 open Set Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [Semiring α] [CharZero α]
   {s : Set (Tensor α [])}

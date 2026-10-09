@@ -16,7 +16,7 @@ Proof: for rectangles `{X ∈ B} ∩ {Z ∈ C}` the product formula
 `∫_{X ∈ B, Z ∈ C} g(F) = ∫_{Z ∈ C} π[1_{X ∈ B} | σ(Z)] · g(F) = ∫_{X ∈ B, Z ∈ C} π[g(F) | σ(Z)]`;
 Dynkin's π-λ theorem extends this to `σ(X, Z)` and `ae_eq_condExp_of_forall_setIntegral_eq` concludes.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace Ω] [StandardBorelSpace Ω]
   [MeasurableSpace β] [MeasurableSpace γ] [MeasurableSpace δ]

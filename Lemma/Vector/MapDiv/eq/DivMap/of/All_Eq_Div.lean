@@ -3,7 +3,7 @@ import sympy.vector.vector
 open Vector
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [Div α]
   [Div β]

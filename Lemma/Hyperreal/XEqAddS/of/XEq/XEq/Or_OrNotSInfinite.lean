@@ -5,7 +5,7 @@ import Lemma.Hyperreal.XEqAddS.of.XEq.XEq.NotAnd_EqSt_Neg1
 open Hyperreal
 
 
-@[main]
+@[path]
 private lemma main
   {a b x y : ℝ*}
 -- given

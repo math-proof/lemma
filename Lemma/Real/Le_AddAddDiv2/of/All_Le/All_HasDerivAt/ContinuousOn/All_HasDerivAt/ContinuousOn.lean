@@ -4,7 +4,7 @@ import sympy.Basic
 open Set
 
 
-@[main]
+@[path]
 private lemma main
   {φ φ' φ'' : ℝ → ℝ}
   {M : ℝ}

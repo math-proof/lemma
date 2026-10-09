@@ -6,7 +6,7 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Opposite Topological
 /--
 [AlgebraicGeometry_Scheme_Modules_Hom_mono_iff_injective](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_Scheme_Modules_Hom_mono_iff_injective.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {X : Scheme.{u}}
   {M N : X.Modules}

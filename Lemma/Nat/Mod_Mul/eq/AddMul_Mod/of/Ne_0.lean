@@ -4,7 +4,7 @@ import Lemma.Nat.Mul
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h : d ≠ 0)

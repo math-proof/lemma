@@ -3,7 +3,7 @@ import sympy.Basic
 
 
 
-@[main]
+@[path]
 private lemma main
   {d : ℝ}
   {P : ℝ → Prop}

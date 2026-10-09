@@ -5,7 +5,7 @@ import Lemma.Vector.GetDiv.eq.DivGetS
 open Vector Rat Nat
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [CommGroupWithZero α]
   {a : α}

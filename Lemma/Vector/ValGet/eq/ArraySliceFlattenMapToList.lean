@@ -3,7 +3,7 @@ import Lemma.Vector.ValArraySlice.eq.ArraySliceVal
 open Vector
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (v : List.Vector (List.Vector α n) m)

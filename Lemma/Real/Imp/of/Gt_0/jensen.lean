@@ -6,7 +6,7 @@ Jensen's inequality: if `f'' > 0` on `(a, b)`, `w ≥ 0` and `x i ∈ (a, b)`,
 then `∑ i < n, w i = 1` implies
 `∑ i < n, w i * f (x i) ≥ f (∑ i < n, w i * x i)`.
 -/
-@[main]
+@[path]
 private lemma main
   {a b : ℝ}
   {f : ℝ → ℝ}

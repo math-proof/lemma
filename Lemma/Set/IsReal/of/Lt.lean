@@ -3,7 +3,7 @@ import sympy.Basic
 open scoped ComplexOrder
 
 
-@[main]
+@[path]
 private lemma main
   {x : ℂ}
   {b : ℝ}

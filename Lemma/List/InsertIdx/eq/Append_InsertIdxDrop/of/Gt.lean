@@ -12,7 +12,7 @@ import Lemma.Nat.Sub.gt.Zero.is.Gt
 open List Nat
 
 
-@[main]
+@[path]
 private lemma main
   {s : List α}
 -- given

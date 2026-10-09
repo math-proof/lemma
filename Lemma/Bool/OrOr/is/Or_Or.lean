@@ -4,10 +4,10 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Bool.OrOr.is.Or_Or |
+| path | Bool.OrOr.is.Or_Or |
 | comm | Bool.Or_Or.is.OrOr |
 -/
-@[main, comm]
+@[path, comm]
 private lemma main :
 -- imply
   (p ∨ q) ∨ r ↔ p ∨ q ∨ r :=

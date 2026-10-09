@@ -2,7 +2,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma as_multiple_limits
   {n m : ℕ}
   {f g : ℕ → ℤ} :

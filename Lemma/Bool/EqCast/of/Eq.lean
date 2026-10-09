@@ -4,10 +4,10 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Bool.EqCast.of.Eq |
+| path | Bool.EqCast.of.Eq |
 | comm | Bool.Eq_Cast.of.Eq |
 -/
-@[main, comm]
+@[path, comm]
 private lemma main
 -- given
   (h_n : m = n)

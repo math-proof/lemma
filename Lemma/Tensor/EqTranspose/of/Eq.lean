@@ -3,7 +3,7 @@ import Mathlib.Data.Matrix.Basic
 open Matrix
 
 
-@[main]
+@[path]
 private lemma main
   {n : ℕ}
   {x : ℂ}

@@ -30,7 +30,7 @@ private lemma  integrableOn_Ioi_piece (p q c : ℝ) (hcq : c < q) :
   show r ^ (c - q - 1) = (min 1 r) ^ p * (max 1 r) ^ (-q) * r ^ (c - 1)
   rw [min_eq_left hr1.le, max_eq_right hr1.le, Real.one_rpow, one_mul, ← Real.rpow_add hr0,
     show -q + (c - 1) = c - q - 1 by ring]
-@[main]
+@[path]
 private lemma main
   {p q c : ℝ}
 -- given

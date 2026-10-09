@@ -3,7 +3,7 @@ import Lemma.Vector.GtSumExp_0
 open Vector Nat
 
 
-@[main]
+@[path]
 private lemma main
   [ExpPos α] [IsOrderedCancelAddMonoid α]
   [NeZero n]

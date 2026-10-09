@@ -3,7 +3,7 @@ import Lemma.Vector.XEq.of.Eq
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [XEq α]
   {A B : Tensor α s}

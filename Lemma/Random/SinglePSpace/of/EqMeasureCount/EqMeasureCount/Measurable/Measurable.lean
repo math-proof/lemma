@@ -11,7 +11,7 @@ If `x : Ω → α` and `y : Ω → β` are measurable, `α` and `β` are countab
 and both reference measures are the counting measure, then the pair `(x, y)` spans a
 `SinglePSpace π` with respect to the product reference measure.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace Ω]
   [ReferenceMeasure α] [ReferenceMeasure β]

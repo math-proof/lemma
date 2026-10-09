@@ -11,7 +11,7 @@ On a finite-dimensional parameter space, the parametric derivative `y ↦ fderiv
 measurable functions `F θ` that are differentiable in `θ` at `θ₀` is strongly measurable
 (each coordinate is a pointwise limit of measurable difference quotients).
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace S] [NormedAddCommGroup Θ] [NormedSpace ℝ Θ] [FiniteDimensional ℝ Θ]
   {F : Θ → S → ℝ}

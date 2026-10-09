@@ -3,7 +3,7 @@ import Lemma.Nat.EqMax.of.Le
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   [LinearOrder α]
   {a b : α}

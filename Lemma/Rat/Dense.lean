@@ -6,7 +6,7 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 /--
 [AlgebraicGeometry_dense_setOf_exists_section_of_isAlgClosed](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_dense_setOf_exists_section_of_isAlgClosed.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {k : Type u} [Field k] [IsAlgClosed k]
   {X : Scheme.{u}}

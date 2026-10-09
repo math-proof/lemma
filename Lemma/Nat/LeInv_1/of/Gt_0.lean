@@ -3,7 +3,7 @@ import Lemma.Nat.LeAdd_1.of.Lt
 open Nat Rat
 
 
-@[main]
+@[path]
 private lemma main
   {n : ℕ}
 -- given

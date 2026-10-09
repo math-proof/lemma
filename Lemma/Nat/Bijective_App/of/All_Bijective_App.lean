@@ -16,7 +16,7 @@ private lemma  stalkFunctor_map_surjective_of_isBasis {X : TopCat.{u}} {B : Set 
   obtain ⟨U, hxU, hU, t, rfl⟩ := exists_mem_germ_eq_of_isBasis hB G x t
   obtain ⟨s, rfl⟩ := hα U hU t
   exact ⟨F.germ U x hxU s, by rw [stalkFunctor_map_germ_apply]⟩
-@[main]
+@[path]
 private lemma main
   {X B : Scheme.{u}}
   {p : X ⟶ B}

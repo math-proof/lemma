@@ -3,7 +3,7 @@ import Lemma.Tensor.SEqAppend.of.Eq_0
 open Tensor Bool
 
 
-@[main]
+@[path]
 private lemma cons
   {X : Tensor α (n :: s)}
   {O : Tensor α (m :: s)}
@@ -16,7 +16,7 @@ private lemma cons
   apply SEqAppend.of.Eq_0.cons h
 
 
-@[main]
+@[path]
 private lemma main
   {X : Tensor α (bz ++ n :: s)}
   {O : Tensor α (bz ++ m :: s)}

@@ -8,10 +8,10 @@ constructor order of addition of (a - b) + b = a
 
 | attributes | lemma |
 | :---: | :---: |
-| main | Hyperreal.Infinitesimal.of.InfinitesimalSub.Infinitesimal |
+| path | Hyperreal.Infinitesimal.of.InfinitesimalSub.Infinitesimal |
 | mt 1 | Hyperreal.NotInfinitesimalSub.of.NotInfinitesimal.Infinitesimal |
 -/
-@[main, mt 1]
+@[path, mt 1]
 private lemma main
   {a b : ℝ*}
 -- given

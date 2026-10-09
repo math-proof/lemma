@@ -5,7 +5,7 @@ import Lemma.Rat.Div.le.Zero.of.Le_0
 open Int Nat Rat Slice
 
 
-@[main]
+@[path]
 private lemma main
   {a b d n : ℕ}
 -- given

@@ -1,4 +1,4 @@
-import Mathlib.MeasureTheory.Measure.MeasureSpace
+import Mathlib.MeasureTheory.Measure.MeasureSpaceDef
 import sympy.Basic
 open MeasureTheory
 
@@ -6,7 +6,7 @@ open MeasureTheory
 /--
 A countably-valued `X` almost surely takes a value of positive probability.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace Ω] [Countable S]
   {π : Measure Ω}

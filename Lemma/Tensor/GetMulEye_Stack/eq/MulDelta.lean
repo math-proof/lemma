@@ -10,10 +10,10 @@ open Tensor
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Tensor.GetMulEye_Stack.eq.MulDelta |
+| path | Tensor.GetMulEye_Stack.eq.MulDelta |
 | comm | Tensor.MulDelta.eq.GetMulEye_Stack |
 -/
-@[main, comm]
+@[path, comm]
 private lemma main
   [Semiring α] [CharZero α]
 -- given

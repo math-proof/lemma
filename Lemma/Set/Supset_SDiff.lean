@@ -2,7 +2,7 @@ import Lemma.Set.SubsetSDiff
 open Set
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (A B : Set α) :

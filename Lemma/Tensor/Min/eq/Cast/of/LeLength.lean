@@ -4,7 +4,7 @@ import torch.functions
 open List
 
 
-@[main]
+@[path]
 private lemma main
   [NeZero s.prod]
   [LT α] [DecidableLT α]

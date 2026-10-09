@@ -7,7 +7,7 @@ import Lemma.Int.Eq_0.and.Eq_0.of.AddSquareS.eq.Zero
 open Nat Complex Int Real
 
 
-@[main]
+@[path]
 private lemma main
   {z : ℂ}
 -- given

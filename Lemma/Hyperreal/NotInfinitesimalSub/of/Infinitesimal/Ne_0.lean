@@ -3,7 +3,7 @@ import Lemma.Hyperreal.EqSt_0.of.Infinitesimal
 open Hyperreal
 
 
-@[main]
+@[path]
 private lemma main
   {x : ℝ*}
   {r : ℝ}

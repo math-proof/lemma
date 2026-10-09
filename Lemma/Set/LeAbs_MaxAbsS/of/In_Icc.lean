@@ -8,7 +8,7 @@ import Lemma.Set.In_Icc.is.Le.Le
 open Set Int Nat
 
 
-@[main]
+@[path]
 private lemma main
   [AddCommGroup α]
   [LinearOrder α]

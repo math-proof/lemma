@@ -10,11 +10,11 @@ open MeasureTheory
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Random.PSpace.PSpace.of.PSpace_Joint |
+| path | Random.PSpace.PSpace.of.PSpace_Joint |
 | And.left | Random.PSpace.of.PSpace_Joint.fst |
 | And.right | Random.PSpace.of.PSpace_Joint.snd |
 -/
-@[main, And.left, And.right]
+@[path, And.left, And.right]
 private lemma main
   [MeasurableSpace Ω]
   [ReferenceMeasure α]

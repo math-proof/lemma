@@ -3,7 +3,7 @@ import Lemma.Nat.EqAdd_Sub.of.Ge
 open List Nat
 
 
-@[main]
+@[path]
 private lemma main
   {s : List ℕ}
   {i j : Fin s.length}

@@ -2,7 +2,7 @@ import Lemma.Finset.Sum_Add.eq.AddSumS
 open Finset
 
 
-@[main]
+@[path]
 private lemma main
   [AddCommMonoid α]
 -- given

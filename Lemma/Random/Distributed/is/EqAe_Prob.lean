@@ -8,7 +8,7 @@ open Random MeasureTheory
 `x ~ D` is equivalent to the canonical density of `x` being a.e. equal to `D`'s density
 (`π.prob x =ᵐ[ReferenceMeasure.measure] ρ`).
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace Ω]
   [ReferenceMeasure α]

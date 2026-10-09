@@ -10,7 +10,7 @@ import sympy.functions.special.tensor_functions
 open Bool Tensor Fin
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (i k : Fin (d + d)) :

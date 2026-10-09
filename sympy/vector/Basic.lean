@@ -184,6 +184,13 @@ noncomputable instance (priority := low) instDotNatArrow
     [TopologicalSpace α] [AddCommMonoid α] [Mul α] : Dot (ℕ → α) (ℕ → α) α where
   dot f g := ∑' t, f t * g t
 
+/-- Pointwise path-dot against a process: `(f @ x) ω = f @ (fun k ↦ x k ω)`.
+Lets `(γ ^ (id : ℕ → ℕ)) @ r[t:]` be an `Ω → α` (discounted return as a random variable). -/
+noncomputable instance (priority := low) instDotNatArrowProcess
+    {Ω : Type*} [TopologicalSpace α] [AddCommMonoid α] [Mul α] :
+    Dot (ℕ → α) (ℕ → Ω → α) (Ω → α) where
+  dot f x := fun ω ↦ f @ (fun k ↦ x k ω)
+
 /-- Outer product of two vectors: `(a @ᵒ b) i j = a i * b j`, i.e. `a @ᵒ b = Matrix.vecMulVec a b`. -/
 instance [Mul α] : OuterProd (m → α) (n → α) (Matrix m n α) where
   outer := Matrix.vecMulVec

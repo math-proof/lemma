@@ -7,7 +7,7 @@ import Lemma.List.TakeSet.eq.Take.of.Ge
 open List
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [Monoid α]
   {s : List α}

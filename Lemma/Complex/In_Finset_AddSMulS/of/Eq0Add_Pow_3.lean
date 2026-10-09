@@ -9,7 +9,7 @@ import Lemma.Complex.AddPowPowPowPow.eq.Neg
 import Lemma.Complex.MulMulPowPowPow.eq.DivNeg3.of.EqSubCeil.Eq_AddDivMul4Pow3'27Square
 
 
-@[main]
+@[path]
 private lemma mod
   {x p q δ A B ω : ℂ}
   {D : ℤ}

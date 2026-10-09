@@ -2,7 +2,7 @@ import Lemma.Real.Sqrt.eq.Root_2
 open Real
 
 
-@[main]
+@[path]
 private lemma main
   {x : ℝ}
   {i : ℕ}

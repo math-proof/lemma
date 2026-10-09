@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [Module_Finite_of_ker_le_range_of_isNoetherianRing](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Module_Finite_of_ker_le_range_of_isNoetherianRing.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing R] [IsNoetherianRing R]
   {M N₁ N₂ : Type*} [AddCommGroup M] [Module R M] [AddCommGroup N₁] [Module R N₁] [AddCommGroup N₂] [Module R N₂] [Module.Finite R N₁] [Module.Finite R N₂]

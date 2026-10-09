@@ -3,7 +3,7 @@ import Lemma.Nat.Square.eq.Mul
 open Int Nat
 
 
-@[main]
+@[path]
 private lemma main
   [Ring α]
   {a : α} :

@@ -6,7 +6,7 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry TensorProduct
 /--
 [AlgebraicGeometry_exists_baseChange_chart_isPullback_of_isPullback](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_exists_baseChange_chart_isPullback_of_isPullback.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {O K Q : Type u} [CommRing O] [CommRing K] [CommRing Q] [Algebra O Q] [Algebra O K]
   {X XK : Scheme.{u}}

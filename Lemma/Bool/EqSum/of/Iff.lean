@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   [AddCommMonoid γ]
   {A : Finset α}
@@ -17,7 +17,7 @@ private lemma main
   Finset.sum_comm' (fun i j => (h i j).trans and_comm)
 
 
-@[main]
+@[path]
 private lemma collapse
   [AddCommMonoid γ]
   {A B : Finset α}

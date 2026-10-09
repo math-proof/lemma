@@ -8,7 +8,7 @@ import Lemma.Vector.EqCast_0'0.of.Eq
 open List Tensor Vector
 
 
-@[main]
+@[path]
 private lemma main
   [Zero α]
 -- given

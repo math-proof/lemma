@@ -6,7 +6,7 @@ import sympy.Basic
 Notes (**): reciprocal radius equals the phase-zero Kepler ansatz
 \(1/r=A\cos\theta+Cm/J^2\).
 -/
-@[main]
+@[path]
 private lemma main
   {r : ℝ → ℝ}
   {A C m J : ℝ} :

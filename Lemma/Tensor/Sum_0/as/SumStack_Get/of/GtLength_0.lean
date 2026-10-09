@@ -4,7 +4,7 @@ import Lemma.Tensor.Sum_0.eq.Sum_Stack_Get
 open Tensor
 
 
-@[main, fin, cast, cast.fin]
+@[path, fin, cast, cast.fin]
 private lemma main
   [Add α] [Zero α]
 -- given

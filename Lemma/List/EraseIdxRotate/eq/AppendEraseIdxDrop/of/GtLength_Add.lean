@@ -3,7 +3,7 @@ import Lemma.List.Rotate.eq.AppendDrop__Take.of.GeLength
 open List
 
 
-@[main]
+@[path]
 private lemma main
   {s : List α}
 -- given

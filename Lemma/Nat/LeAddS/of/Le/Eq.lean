@@ -5,10 +5,10 @@ open Nat
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Nat.LeAddS.of.Le.Eq |
+| path | Nat.LeAddS.of.Le.Eq |
 | comm 3 | Nat.GeAddS.of.Ge.Eq |
 -/
-@[main, comm 3]
+@[path, comm 3]
 private lemma main
   [Add α]
   [Preorder α]

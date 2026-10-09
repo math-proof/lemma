@@ -6,11 +6,11 @@ open scoped Matrix
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Matrix.NegDefAsymm.is.PosDefAsymmNeg |
+| path | Matrix.NegDefAsymm.is.PosDefAsymmNeg |
 | mp | Matrix.PosDefAsymmNeg.of.NegDefAsymm |
 | mpr | Matrix.NegDefAsymm.of.PosDefAsymmNeg |
 -/
-@[main, mp, mpr]
+@[path, mp, mpr]
 private lemma main
   {α : Type*} [Fintype α]
 -- given

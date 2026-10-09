@@ -6,7 +6,7 @@ import Lemma.Nat.Dvd_Mul
 open List Nat
 
 
-@[main]
+@[path]
 private lemma main
   [CommMonoid α]
   {d : ℕ}

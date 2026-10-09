@@ -4,7 +4,7 @@ import Lemma.Nat.Le_SubMulS.of.Lt
 open List Nat
 
 
-@[main]
+@[path]
 private lemma main
   {s : List ℕ}
 -- given

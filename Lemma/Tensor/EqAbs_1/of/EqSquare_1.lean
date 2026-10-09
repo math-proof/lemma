@@ -5,7 +5,7 @@ import Lemma.Tensor.ItemSquare.eq.SquareItem
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [CommRing α] [LinearOrder α] [IsStrictOrderedRing α]
   {a : Tensor α []}

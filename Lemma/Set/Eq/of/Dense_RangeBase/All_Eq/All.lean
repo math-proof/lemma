@@ -6,7 +6,7 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 /--
 [AlgebraicGeometry_ext_of_isSeparated_of_dense_iUnion_range_of_comp_eq](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_ext_of_isSeparated_of_dense_iUnion_range_of_comp_eq.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {X Y Z : Scheme.{u}} [IsReduced X]
   {f g : X ⟶ Y}

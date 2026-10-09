@@ -12,7 +12,7 @@ Here `F i t` stands for the `i`-th logit `f(x)ᵢ` as a function of one coordina
 \frac{\partial}{\partial x_k}s_j=s_j\Big(\partial_k f_j-\sum_i s_i\,\partial_k f_i\Big).
 \]
 -/
-@[main]
+@[path]
 private lemma vector.using.Stack
   {n : ℕ}
   {F : Fin n → ℝ → ℝ}
@@ -43,7 +43,7 @@ private lemma vector.using.Stack
 Same statement as `vector.using.Stack` (py `Real.Grad.Softmax.eq.Mul.Softmax.vector` proves the same
 equation by a different route, via the vector-valued gradient; here both are the component-wise form).
 -/
-@[main]
+@[path]
 private lemma vector
   {n : ℕ}
   {F : Fin n → ℝ → ℝ}

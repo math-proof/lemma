@@ -12,7 +12,7 @@ import Lemma.Tensor.SEqPermuteS__Neg.of.Le
 open Tensor Bool Int List
 
 
-@[main]
+@[path]
 private lemma main
   {f : α → β}
 -- given

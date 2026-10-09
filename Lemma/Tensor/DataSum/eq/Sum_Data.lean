@@ -4,7 +4,7 @@ import Lemma.Finset.UFnSum.eq.Sum_UFn.All_EqUFnAdd.EqUFn_0
 open Tensor Finset
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [DecidableEq ι]
   [AddCommMonoid α]

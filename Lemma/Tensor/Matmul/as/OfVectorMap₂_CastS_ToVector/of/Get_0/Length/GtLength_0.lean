@@ -15,7 +15,7 @@ import sympy.matrices.expressions.matmul
 open Bool List Nat Tensor Vector
 
 
-@[main]
+@[path]
 private lemma main
   [Mul α] [Add α] [Zero α]
   {s s' : List ℕ}

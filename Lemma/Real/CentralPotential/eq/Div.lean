@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 Central potential: \(E_p=C/r\).
 -/
-@[main]
+@[path]
 private lemma main
   (C r : ℝ) :
 -- imply

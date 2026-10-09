@@ -10,7 +10,7 @@ import Lemma.Rat.Div.eq.One.of.Lt_0
 open Nat Int Rat
 
 
-@[main]
+@[path]
 private lemma main
   [Field α] [LinearOrder α] [IsStrictOrderedRing α]
 -- given

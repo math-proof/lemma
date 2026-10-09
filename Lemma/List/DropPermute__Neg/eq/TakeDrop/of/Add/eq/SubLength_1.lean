@@ -3,7 +3,7 @@ import Lemma.List.TakeDropPermute__Neg.eq.TakeDrop.of.GtLength_Add
 open List
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   {s : List α}
   {i : Fin s.length}

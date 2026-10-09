@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [LinearMap_exact_dualMap_of_exact](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_LinearMap_exact_dualMap_of_exact.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {K V₁ V₂ V₃ : Type*} [Field K] [AddCommGroup V₁] [Module K V₁] [AddCommGroup V₂] [Module K V₂] [AddCommGroup V₃] [Module K V₃]
   {f : V₁ →ₗ[K] V₂}

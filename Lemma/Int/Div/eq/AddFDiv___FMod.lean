@@ -5,7 +5,7 @@ import Lemma.Int.FMod.eq.Sub_MulFDiv
 open Int Nat Rat
 
 
-@[main]
+@[path]
 private lemma main
   [Field α] [LinearOrder α] [IsStrictOrderedRing α]
 -- given

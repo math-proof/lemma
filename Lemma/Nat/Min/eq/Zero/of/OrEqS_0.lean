@@ -4,10 +4,10 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Nat.Min.eq.Zero.of.OrEqS_0 |
+| path | Nat.Min.eq.Zero.of.OrEqS_0 |
 | Or.inl | Nat.Min.eq.Zero.of.Eq_0 |
 -/
-@[main, Or.inl]
+@[path, Or.inl]
 private lemma main
   {n m : ℕ}
 -- given

@@ -3,7 +3,7 @@ import Lemma.Set.Inter_Finset.eq.Empty.of.NotIn
 open Set
 
 
-@[main]
+@[path]
 private lemma main
   {e : α}
   {S : Set α}

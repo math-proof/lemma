@@ -5,7 +5,7 @@ import Lemma.Tensor.SEqPermuteHeadPermuteTail.of.Ne_Nil
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (X : Tensor α s) :

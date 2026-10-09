@@ -4,12 +4,12 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Bool.Iff.is.IffNotS |
+| path | Bool.Iff.is.IffNotS |
 | comm | Bool.IffNotS.is.Iff |
 | mp | Bool.IffNotS.of.Iff |
 | mpr | Bool.Iff.of.IffNotS |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main :
 -- imply
   (p ↔ q) ↔ (¬p ↔ ¬q) := by

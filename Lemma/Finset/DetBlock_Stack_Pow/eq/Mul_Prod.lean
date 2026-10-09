@@ -6,7 +6,7 @@ import Lemma.Matrix.DetOf.eq.MulPowSProdProd.of.Gt
 open Matrix Finset Nat
 
 
-@[main]
+@[path]
 private lemma vandermonde.ratio
   {m d : ℕ} {r : ℝ}
 -- given

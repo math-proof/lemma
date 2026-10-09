@@ -4,7 +4,7 @@ import sympy.Basic
 /--
 双否定律: double-negation elimination
 -/
-@[main]
+@[path]
 private lemma main
   {p : Prop} :
 -- imply

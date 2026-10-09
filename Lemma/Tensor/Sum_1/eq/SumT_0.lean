@@ -8,7 +8,7 @@ import torch.Tensor.sum
 open Bool List Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [AddCommMonoid α]
   -- [Add α] [Zero α]

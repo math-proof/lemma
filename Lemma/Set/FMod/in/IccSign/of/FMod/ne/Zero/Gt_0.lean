@@ -21,7 +21,7 @@ import Lemma.Set.Lt.of.In_Ico
 open Set Int Nat Rat
 
 
-@[main]
+@[path]
 private lemma main
   {n d : ℤ}
 -- given

@@ -10,12 +10,13 @@ private lemma  single_zero_add_single_one
   {D : Type*}
   [Ring D]
   (a b : D) :
-  (Pi.single (0 : Fin 2) a + Pi.single (1 : Fin 2) b : Fin 2 → D) = ![a, b] := by
+  (Pi.single (0 : Fin 2) a + Pi.single (1 : Fin 2) b : Fin 2 → D)
+    = Matrix.vecCons a (Matrix.vecCons b Matrix.vecEmpty) := by
   funext i
   fin_cases i <;> simp
 
 
-@[main]
+@[path]
 private lemma main
   [Ring D]
   {O : Set D}
@@ -41,14 +42,14 @@ private lemma main
   let u : D := ∑ k ∈ t, m k 0 * y k
 
   have hsec : ∀ v : Fin 2 → D, (∃ m' ∈ M, m' 1 = v 1) →
-      (![u * v 1, v 1] : Fin 2 → D) ∈ M := by
+      (Matrix.vecCons (u * v 1) (Matrix.vecCons (v 1) Matrix.vecEmpty) : Fin 2 → D) ∈ M := by
     rintro v ⟨m', hm', hv⟩
     have hmem : (∑ k ∈ t, fun i => m k i * (y k * v 1)) ∈ M := by
       refine AddSubgroup.sum_mem _ fun k hk => ?_
       refine hM _ (hm k hk).1 _ ?_
       rw [← hv]
       exact hy k hk m' hm'
-    have heq : (∑ k ∈ t, fun i => m k i * (y k * v 1)) = ![u * v 1, v 1] := by
+    have heq : (∑ k ∈ t, fun i => m k i * (y k * v 1)) = Matrix.vecCons (u * v 1) (Matrix.vecCons (v 1) Matrix.vecEmpty) := by
       funext i
       rw [Finset.sum_apply]
       fin_cases i
@@ -65,13 +66,13 @@ private lemma main
   ·
     have hs := hsec v ⟨v, hv, rfl⟩
     refine ⟨?_, v, hv, rfl⟩
-    have : (Pi.single (0 : Fin 2) (v 0 - u * v 1) : Fin 2 → D) = v - ![u * v 1, v 1] := by
+    have : (Pi.single (0 : Fin 2) (v 0 - u * v 1) : Fin 2 → D) = v - Matrix.vecCons (u * v 1) (Matrix.vecCons (v 1) Matrix.vecEmpty) := by
       funext i; fin_cases i <;> simp
     rw [this]
     exact M.sub_mem hv hs
   ·
     have hs := hsec v h1
-    have : v = Pi.single (0 : Fin 2) (v 0 - u * v 1) + ![u * v 1, v 1] := by
+    have : v = Pi.single (0 : Fin 2) (v 0 - u * v 1) + Matrix.vecCons (u * v 1) (Matrix.vecCons (v 1) Matrix.vecEmpty) := by
       funext i; fin_cases i <;> simp
     rw [this]
     exact M.add_mem h0 hs

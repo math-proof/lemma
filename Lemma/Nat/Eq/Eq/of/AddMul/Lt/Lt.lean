@@ -4,7 +4,7 @@ import Lemma.Nat.Add.is.Eq
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   {n i j i' j' : ℕ}
 -- given

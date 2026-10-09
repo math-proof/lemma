@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Real.LtCoeS.is.Lt |
+| path | Real.LtCoeS.is.Lt |
 | comm | Real.Lt.is.LtCoeS |
 | mp   | Real.Lt.of.LtCoeS |
 | mpr  | Real.LtCoeS.of.Lt |
@@ -13,7 +13,7 @@ import sympy.Basic
 | mpr.comm | Real.GtCoeS.of.Gt |
 | comm.is | Real.GtCoeS.is.Gt |
 -/
-@[main, comm, mp, mpr, mp.comm, mpr.comm, comm.is]
+@[path, comm, mp, mpr, mp.comm, mpr.comm, comm.is]
 private lemma main
 -- given
   (a b : ℝ) :

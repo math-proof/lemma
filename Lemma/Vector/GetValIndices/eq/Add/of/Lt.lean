@@ -3,7 +3,7 @@ import Lemma.Vector.GetIndices.eq.Add
 open Vector
 
 
-@[main]
+@[path]
 private lemma nat
   {j n i : ℕ}
 -- given
@@ -20,7 +20,7 @@ private lemma nat
   assumption
 
 
-@[main]
+@[path]
 private lemma main
   {j n i : ℕ}
 -- given

@@ -2,7 +2,7 @@ import Lemma.Nat.MulToNatCeilDivSub.in.Ico
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   {start stop step i : ℕ}
 -- given

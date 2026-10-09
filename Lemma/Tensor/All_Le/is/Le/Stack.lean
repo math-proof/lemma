@@ -3,7 +3,7 @@ import Lemma.Tensor.LeStack.of.All_Le
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [LE α]
   {f g : Fin n → Tensor α s} :

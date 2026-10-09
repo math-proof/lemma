@@ -2,7 +2,7 @@ import sympy.core.mul
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {s s' : List ℕ}
 -- given

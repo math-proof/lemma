@@ -3,7 +3,7 @@ import Lemma.Complex.CeilSubDivArg.eq.Zero
 open Complex
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (z : ℂ)

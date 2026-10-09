@@ -7,7 +7,7 @@ import Lemma.Finset.Ico.eq.SDiffIco
 open Set Finset Nat
 
 
-@[main]
+@[path]
 private lemma main
   [Fintype ℕ]
   [CommMonoid α]

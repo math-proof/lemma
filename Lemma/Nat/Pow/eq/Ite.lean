@@ -3,7 +3,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma negativeOne
   {n : ℤ} :
 -- imply
@@ -14,7 +14,7 @@ private lemma negativeOne
   · exact Odd.neg_one_zpow (Int.odd_iff.mpr (by omega))
 
 
-@[main]
+@[path]
 private lemma base
   {x t : ℝ}
   {A : Set ℝ}

@@ -2,7 +2,7 @@ import Lemma.Real.Eq_AddMulPiFloorDiv_Pi.of.EqCos_0
 open Real
 
 
-@[main]
+@[path]
 private lemma main
   {x : ℝ}
 -- given

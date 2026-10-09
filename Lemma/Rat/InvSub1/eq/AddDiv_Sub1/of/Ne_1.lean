@@ -5,7 +5,7 @@ import Lemma.Rat.Div1.eq.Inv
 open Int Rat
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [DivisionRing α]
   {a : α}

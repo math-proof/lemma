@@ -2,7 +2,7 @@ import Lemma.Finset.Insert_Range.eq.Range
 open Finset
 
 
-@[main]
+@[path]
 private lemma main
   {n : ℕ}
   {p : ℕ → ℕ}

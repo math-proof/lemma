@@ -6,7 +6,7 @@ open Polynomial IsLocalRing
 /--
 [IsDiscreteValuationRing_isReduced_adjoin_singleton_quotient_of_squarefree](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_IsDiscreteValuationRing_isReduced_adjoin_singleton_quotient_of_squarefree.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [Field F] [Algebra O F] [FaithfulSMul O F]
   {ϖ : O}

@@ -43,7 +43,7 @@ private lemma lt_length
     grind
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h_start : j < n + j)

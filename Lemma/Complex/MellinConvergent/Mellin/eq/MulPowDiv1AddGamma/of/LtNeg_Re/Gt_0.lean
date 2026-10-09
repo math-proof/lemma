@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [Complex_mellinConvergent_cpow_mul_exp_neg_mul_and_mellin_eq](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Complex_mellinConvergent_cpow_mul_exp_neg_mul_and_mellin_eq.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {k r : ℝ}
   {s : ℂ}

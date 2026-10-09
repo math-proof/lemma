@@ -2,7 +2,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {a M : ℝ}
 -- given
@@ -13,7 +13,7 @@ private lemma main
   exact (abs_le.mp h).2
 
 
-@[main]
+@[path]
 private lemma negate
   {a M : ℝ}
 -- given

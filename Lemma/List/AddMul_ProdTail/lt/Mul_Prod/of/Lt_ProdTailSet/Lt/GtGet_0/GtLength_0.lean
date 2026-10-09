@@ -5,7 +5,7 @@ import Lemma.Nat.MulMul.eq.Mul_Mul
 open List Nat
 
 
-@[main]
+@[path]
 private lemma main
   {s : List ℕ}
 -- given

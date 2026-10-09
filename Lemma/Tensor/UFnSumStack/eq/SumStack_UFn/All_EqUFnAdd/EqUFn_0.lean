@@ -6,7 +6,7 @@ import torch.Tensor.sum
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [AddMonoid α]
   {f : Tensor α s → Tensor α s'}
@@ -32,7 +32,7 @@ private lemma main
     simp [EqSumStack]
 
 
-@[main]
+@[path]
 private lemma fin
   [AddMonoid α]
   {f : Tensor α s → Tensor α s'}

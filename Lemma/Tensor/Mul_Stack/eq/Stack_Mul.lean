@@ -4,7 +4,7 @@ import Lemma.Tensor.GetMul.eq.MulGetS
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [Mul α]
 -- given
@@ -21,7 +21,7 @@ private lemma main
   rfl
 
 
-@[main]
+@[path]
 private lemma fin
   [Mul α]
 -- given

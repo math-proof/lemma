@@ -2,7 +2,7 @@ import sympy.Basic
 import sympy.vector.vector
 
 
-@[main]
+@[path]
 private lemma main
   [Mul α]
   {x y : List.Vector α n}

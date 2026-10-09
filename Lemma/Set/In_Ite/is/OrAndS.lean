@@ -2,7 +2,7 @@ import Lemma.Bool.BFnIte.is.OrAndS
 open Bool
 
 
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   [Decidable p]
 -- given

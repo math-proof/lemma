@@ -3,7 +3,7 @@ import Lemma.List.SplitAt.eq.ProdTake__Drop
 open List Nat
 
 
-@[main]
+@[path]
 private lemma main
   {s : List α}
   {n : ℕ}

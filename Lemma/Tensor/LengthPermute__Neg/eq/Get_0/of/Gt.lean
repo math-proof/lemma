@@ -5,7 +5,7 @@ import torch.Tensor.permute
 open Tensor List
 
 
-@[main]
+@[path]
 private lemma main
   {i : Fin s.length}
   {d : ℕ}

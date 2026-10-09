@@ -2,7 +2,7 @@ import sympy.Basic
 import Mathlib.Analysis.SpecialFunctions.Exp
 
 
-@[main]
+@[path]
 private lemma attention_free
   {T d : ℕ}
   {Q K V : Fin T → Fin d → ℝ} :

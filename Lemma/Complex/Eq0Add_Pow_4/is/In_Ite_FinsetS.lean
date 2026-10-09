@@ -6,12 +6,12 @@ open Complex
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Complex.Eq0Add_Pow_4.is.In_Ite_FinsetS |
+| path | Complex.Eq0Add_Pow_4.is.In_Ite_FinsetS |
 | comm | Complex.In_Ite_FinsetS.is.Eq0Add_Pow_4 |
 | mp | Complex.In_Ite_FinsetS.of.Eq0Add_Pow_4 |
 | mpr | Complex.Eq0Add_Pow_4.of.In_Ite_FinsetS |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   {x α β γ : ℂ} :
 -- imply

@@ -7,7 +7,7 @@ import Lemma.Rat.Div.eq.Mul_Inv
 open Hyperreal Rat
 
 
-@[main]
+@[path]
 private lemma main
   {x y : ℝ*}
 -- given

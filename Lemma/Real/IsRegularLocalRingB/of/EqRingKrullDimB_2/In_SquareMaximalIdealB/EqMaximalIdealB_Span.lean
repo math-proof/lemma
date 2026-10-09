@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [IsRegularLocalRing_of_maximalIdeal_eq_span_of_mem_sq_of_ringKrullDim_eq_two](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_IsRegularLocalRing_of_maximalIdeal_eq_span_of_mem_sq_of_ringKrullDim_eq_two.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing B] [IsNoetherianRing B] [IsLocalRing B]
   {π u v : B}

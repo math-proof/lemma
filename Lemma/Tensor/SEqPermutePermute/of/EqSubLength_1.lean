@@ -13,7 +13,7 @@ import Lemma.Tensor.SEqPermuteTailPermuteHead
 open Bool Tensor Nat List
 
 
-@[main]
+@[path]
 private lemma main
   [NeZero d]
   {s : List ℕ}

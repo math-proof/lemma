@@ -6,7 +6,7 @@ open NumberField
 /--
 [NumberField_InfinitePlace_exists_pow_eq_of_isTotallyComplex](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_NumberField_InfinitePlace_exists_pow_eq_of_isTotallyComplex.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [Field K] [NumberField K] [IsTotallyComplex K]
   {w : InfinitePlace K}

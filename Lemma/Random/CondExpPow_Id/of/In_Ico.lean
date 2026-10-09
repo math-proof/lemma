@@ -11,7 +11,7 @@ Corollary of the Markov property `Random.CondIndep_Joint.of.All_EqJoint`: given 
 conditional expectation of the future discounted return `γ ** Stack[k](k) @ r[t+1:]` only depends on `s[t+1]`
 (by `Random.MEqExpect.of.CondIndep.Integrable.Measurable.Measurable.Measurable.Measurable`).
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S]
   [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A]
@@ -33,11 +33,11 @@ private lemma main
   obtain rfl : s = fun t ω ↦ (ω t).2.1 := funext₂ fun t ω ↦ (congrArg (·.2.1) (congrFun (h₁ t) ω)).symm
   obtain rfl : a = fun t ω ↦ (ω t).2.2 := funext₂ fun t ω ↦ (congrArg (·.2.2) (congrFun (h₁ t) ω)).symm
   apply MEqExpect.of.CondIndep.Integrable.Measurable.Measurable.Measurable.Measurable
-    (measurable_pi_lambda _ fun k ↦ (measurable_pi_apply (t + 1 + k)).fst)
+    (Measurable.of_eval fun k ↦ (measurable_pi_apply (t + 1 + k)).fst)
     ((measurable_pi_apply t).snd.fst.prodMk (measurable_pi_apply t).snd.snd)
     (measurable_pi_apply (t + 1)).snd.fst
     (Measurable.tsum fun k ↦ (measurable_pi_apply k).const_mul _)
-    (Integrable_G.of.In_Ico (M := M) θ h₀ (t + 1) h₁) (CondIndep_Joint.of.All_EqJoint (fun t ↦ (h₁ t).symm))
+    (Integrable_G.of.In_Ico (M := M) h₀ h₁ θ (t + 1)) (CondIndep_Joint.of.All_EqJoint (fun t ↦ (h₁ t).symm))
 
 
 -- created on 2026-10-06

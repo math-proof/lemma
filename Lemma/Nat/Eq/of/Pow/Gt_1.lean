@@ -3,7 +3,7 @@ import Lemma.Nat.LtPowS.of.Lt.Gt_1
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   [MonoidWithZero α]
   [PartialOrder α]

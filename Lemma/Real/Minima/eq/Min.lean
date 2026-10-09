@@ -2,7 +2,7 @@ import sympy.concrete.expr_with_limits
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {f g : ℕ → ℝ}
   {n : ℕ}

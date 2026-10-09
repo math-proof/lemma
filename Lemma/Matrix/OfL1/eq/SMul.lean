@@ -2,7 +2,7 @@ import sympy.Basic
 import sympy.stats.stochastic_process_types
 
 
-@[main]
+@[path]
 private lemma main
   {S : Type*} [Fintype S]
 -- given

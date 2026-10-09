@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [IsLocalRing_charP_residueField_of_natCast_mem_maximalIdeal](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_IsLocalRing_charP_residueField_of_natCast_mem_maximalIdeal.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing A] [IsLocalRing A]
   {p : ℕ} [Fact p.Prime]

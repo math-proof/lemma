@@ -2,7 +2,7 @@ import Lemma.Hyperreal.Infinitesimal.is.All_LtAbs
 open Hyperreal
 
 
-@[main]
+@[path]
 private lemma main :
 -- imply
   (0 : ℝ*) → 0 := by

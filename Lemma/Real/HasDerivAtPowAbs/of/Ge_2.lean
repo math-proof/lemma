@@ -2,7 +2,7 @@ import Lemma.Real.HasDerivAtMulPowAbs
 open Real
 
 
-@[main]
+@[path]
 private lemma main
   {n : ℕ}
   {x : ℝ}

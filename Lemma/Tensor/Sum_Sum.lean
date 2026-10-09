@@ -12,7 +12,7 @@ open Bool Tensor
 set_option maxHeartbeats 1000000
 
 
-@[main]
+@[path]
 private lemma Comm
   [AddCommMonoid α]
 -- given

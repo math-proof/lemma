@@ -5,7 +5,7 @@ import Lemma.Finset.Sum.of.All_Eq
 open Finset Real
 
 
-@[main]
+@[path]
 private lemma cauchy_schwarz
   {s : Finset ℕ}
   {x : ℕ → ℝ}

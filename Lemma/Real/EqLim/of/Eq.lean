@@ -2,7 +2,7 @@ import sympy.series.limits
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {f g : ℝ → ℝ}
   {x₀ : ℝ}
@@ -14,7 +14,7 @@ private lemma main
   rw [h]
 
 
-@[main]
+@[path]
 private lemma inf
   [Preorder α]
   {f g : α → ℝ}

@@ -2,7 +2,7 @@ import sympy.stats.joint_rv
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma Comm
   [MeasurableSpace Ω]
   [ReferenceMeasure α] [ReferenceMeasure β]

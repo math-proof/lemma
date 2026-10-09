@@ -4,7 +4,7 @@ import Lemma.Bool.Imp.of.Cond
 open Bool
 
 
-@[main]
+@[path]
 private lemma main :
 -- imply
   (¬p ∧ q) ∧ p ↔ False := by

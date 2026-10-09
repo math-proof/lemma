@@ -27,7 +27,7 @@ import Lemma.Vector.SplitAtMap.eq.MapSplitAt
 open Bool List Nat Tensor Vector
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   {i d : ℕ}
 -- given

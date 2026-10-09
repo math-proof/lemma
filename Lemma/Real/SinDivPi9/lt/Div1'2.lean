@@ -3,7 +3,7 @@ import Lemma.Nat.Lt.of.Lt.Lt
 open Nat Real
 
 
-@[main]
+@[path]
 private lemma main:
 -- imply
   sin (π / 9) < 1 / 2 := by

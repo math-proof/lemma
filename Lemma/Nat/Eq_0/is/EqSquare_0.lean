@@ -6,13 +6,13 @@ open Nat
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Nat.Eq_0.is.EqSquare_0 |
+| path | Nat.Eq_0.is.EqSquare_0 |
 | mp 6  | Nat.NeSquare_0.of.Eq_0 |
 | mpr | Nat.Eq_0.of.EqSquare_0 |
 | mp.mt 6  | Nat.Ne_0.of.NeSquare_0 |
 | mpr.mt | Nat.NeSquare_0.of.Ne_0 |
 -/
-@[main, mp 6, mpr, mp.mt 6, mpr.mt]
+@[path, mp 6, mpr, mp.mt 6, mpr.mt]
 private lemma main
   [MonoidWithZero α]
   [NoZeroDivisors α]

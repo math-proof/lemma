@@ -3,7 +3,7 @@ import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 open Vector Fin
 
 
-@[main, fin, val]
+@[path, fin, val]
 private lemma main
 -- given
   (h : t < m * n)

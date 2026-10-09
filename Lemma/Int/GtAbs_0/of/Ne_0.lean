@@ -4,7 +4,7 @@ import Lemma.Nat.Gt.is.Ge.Ne
 open Int Nat
 
 
-@[main]
+@[path]
 private lemma main
   [AddGroup α] [LinearOrder α] [AddLeftMono α] [AddRightMono α]
   {a : α}

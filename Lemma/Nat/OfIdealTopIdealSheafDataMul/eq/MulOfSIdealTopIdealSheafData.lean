@@ -7,7 +7,7 @@ open TopologicalSpace Opposite
 /--
 [AlgebraicGeometry_Scheme_IdealSheafData_ofIdealTop_mul](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_Scheme_IdealSheafData_ofIdealTop_mul.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {X : Scheme.{u}}
   {I J : Ideal Γ(X, ⊤)} :

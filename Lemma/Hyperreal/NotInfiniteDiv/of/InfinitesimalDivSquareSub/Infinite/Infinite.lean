@@ -27,7 +27,7 @@ import Lemma.Rat.SquareDiv.eq.DivSquareS
 open Hyperreal Int Nat Rat
 
 
-@[main]
+@[path]
 private lemma main
   {a b : ℝ*}
 -- given

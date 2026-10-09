@@ -323,7 +323,7 @@ private lemma shift_mul_block
       exact entry_ge_ge d hd i j (Nat.le_of_not_lt hi) (Nat.le_of_not_lt hj)
 
 
-@[main]
+@[path]
 private lemma main
   {d : ℕ}
 -- given

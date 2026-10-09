@@ -5,7 +5,7 @@ import Lemma.Tensor.GtLength.of.GtLength_0
 open Finset Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [AddCommMonoid α]
   [DecidableEq ι]
@@ -30,7 +30,7 @@ private lemma main
   assumption
 
 
-@[main]
+@[path]
 private lemma fin
   [AddCommMonoid α]
   {s : List ℕ}

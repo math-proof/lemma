@@ -3,7 +3,7 @@ import sympy.Basic
 open Matrix
 
 
-@[main]
+@[path]
 private lemma main
   {S : Type*} [Fintype S]
   {Q : Matrix S S ℝ}

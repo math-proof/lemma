@@ -12,7 +12,7 @@ open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Mode
 For a differentiable policy with derivative bounded by `Cp`, `θ ↦ 𝔼[r[t]]` is differentiable with derivative
 bounded by `(t + 1) * (|A| * Cp * |R|)`.
 -/
-@[main]
+@[path]
 private lemma main
   [NormedAddCommGroup Θ] [NormedSpace ℝ Θ] [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A] [DecidableEq S]
   {M : Model Θ S A}

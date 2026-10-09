@@ -3,7 +3,7 @@ import Lemma.Bool.Ite.of.Imp_Eq
 open Bool
 
 
-@[main]
+@[path]
 private lemma main
   [Decidable p]
   [Decidable q]

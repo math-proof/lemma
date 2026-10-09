@@ -15,7 +15,7 @@ import Lemma.Vector.SEq.of.All_EqGetS.Eq
 open Bool List Nat Tensor Vector
 
 
-@[main, fin, cast, cast.fin]
+@[path, fin, cast, cast.fin]
 private lemma main
   {s s' bz : List ℕ}
 -- given

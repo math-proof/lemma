@@ -8,7 +8,7 @@ import Lemma.Vector.ExpAdd.eq.MulExpS
 open Tensor Vector
 
 
-@[main]
+@[path]
 private lemma main
   [Exp α]
 -- given
@@ -24,7 +24,7 @@ private lemma main
   simp [DataExp.eq.ExpData]
 
 
-@[main]
+@[path]
 private lemma scalar
   [Exp α]
 -- given

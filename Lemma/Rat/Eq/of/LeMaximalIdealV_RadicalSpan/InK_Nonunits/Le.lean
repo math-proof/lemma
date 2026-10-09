@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [ValuationSubring_eq_of_le_of_mem_nonunits_of_maximalIdeal_le_radical](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_ValuationSubring_eq_of_le_of_mem_nonunits_of_maximalIdeal_le_radical.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [Field K]
   {V W : ValuationSubring K}

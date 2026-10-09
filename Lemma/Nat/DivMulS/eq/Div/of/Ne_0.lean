@@ -4,7 +4,7 @@ import Lemma.Nat.Mul
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   {n d a : ℕ}
 -- given
@@ -17,7 +17,7 @@ private lemma main
   rw [EqDivMul.of.Ne_0 h]
 
 
-@[main]
+@[path]
 private lemma left
   {a n d : ℕ}
 -- given

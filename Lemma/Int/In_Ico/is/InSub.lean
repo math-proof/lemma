@@ -9,14 +9,14 @@ open Int Set
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Int.In_Ico.is.InSub |
+| path | Int.In_Ico.is.InSub |
 | comm | Int.InSub.is.In_Ico |
 | mp | Int.InSub.of.In_Ico |
 | mpr | Int.In_Ico.of.InSub |
 | mp.mt | Int.NotIn_Ico.of.NotInSub |
 | mpr.mt | Int.NotInSub.of.NotIn_Ico |
 -/
-@[main, comm, mp, mpr, mp.mt, mpr.mt]
+@[path, comm, mp, mpr, mp.mt, mpr.mt]
 private lemma main
   [AddGroup α]
   [Preorder α]

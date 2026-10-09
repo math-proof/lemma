@@ -2,7 +2,7 @@ import Lemma.Vector.Dot.eq.Add_Dot
 open Vector
 
 
-@[main]
+@[path]
 private lemma main
   [Add α] [Zero α] [Mul α]
 -- given

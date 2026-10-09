@@ -6,7 +6,7 @@ import Lemma.Tensor.SEqPermuteS.of.SEq.Eq.Eq.GtLength
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   {A : Tensor α s}
   {B : Tensor α s'}

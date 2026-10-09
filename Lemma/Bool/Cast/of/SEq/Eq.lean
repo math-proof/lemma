@@ -2,7 +2,7 @@ import stdlib.SEq
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma left
   {Vector : α → Sort v}
   {a : Vector n_a}
@@ -21,7 +21,7 @@ private lemma left
   simp_all
 
 
-@[main]
+@[path]
 private lemma main
   {Vector : α → Sort v}
   {a : Vector n_a}

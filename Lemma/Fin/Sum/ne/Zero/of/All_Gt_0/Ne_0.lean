@@ -3,7 +3,7 @@ import Lemma.Nat.Ne.of.Gt
 open Fin Nat
 
 
-@[main]
+@[path]
 private lemma main
   [AddCommMonoid N] [PartialOrder N] [IsOrderedCancelAddMonoid N]
   {x : Fin n → N}

@@ -6,7 +6,7 @@ import Lemma.Nat.Le_SubMulS.of.Lt
 open Vector Bool Nat
 
 
-@[main]
+@[path]
 private lemma main
   {v : List.Vector α (m * n)}
   {v' : List.Vector α (m' * n')}

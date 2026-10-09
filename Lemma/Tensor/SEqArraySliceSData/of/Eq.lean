@@ -5,7 +5,7 @@ import Lemma.Bool.IffEqS.of.Eq
 open Vector Bool
 
 
-@[main]
+@[path]
 private lemma main
   {A : Tensor α s}
   {B : Tensor α s'}

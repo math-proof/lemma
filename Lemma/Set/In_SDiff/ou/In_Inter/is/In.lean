@@ -2,7 +2,7 @@ import Lemma.Set.In.is.In_Inter.ou.In_SDiff
 open Set
 
 
-@[main]
+@[path]
 private lemma main
   {A B : Set α}
   {x : α} :

@@ -3,7 +3,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma factorization_general
   {n : ℕ}
   {a : ℕ → ℤ}

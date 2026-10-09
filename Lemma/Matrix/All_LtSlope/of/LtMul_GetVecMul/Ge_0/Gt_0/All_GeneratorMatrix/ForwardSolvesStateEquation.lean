@@ -10,7 +10,7 @@ import Lemma.Matrix.GetVecMul.ge.Zero.of.Ge_0.GeneratorMatrix
 open Matrix Topology
 
 
-@[main]
+@[path]
 private lemma main
   {S : Type*} [Fintype S]
   {d : ℕ}

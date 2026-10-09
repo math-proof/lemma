@@ -3,7 +3,7 @@ import sympy.functions.elementary.integers
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   [IntegerRing Z]
 -- given
@@ -14,7 +14,7 @@ private lemma main
   IntegerRing.mod_mul
 
 
-@[main]
+@[path]
 private lemma left
   [IntegerRing Z]
 -- given

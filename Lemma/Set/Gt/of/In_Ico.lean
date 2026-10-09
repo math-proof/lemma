@@ -2,7 +2,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {x a b : ℤ}
 -- given
@@ -13,7 +13,7 @@ private lemma main
   exact h.2
 
 
-@[main]
+@[path]
 private lemma domain
   {x a b : ℤ}
 -- given

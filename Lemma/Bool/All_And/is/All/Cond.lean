@@ -4,12 +4,12 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Bool.All_And.is.All.Cond |
+| path | Bool.All_And.is.All.Cond |
 | comm | Bool.All.Cond.is.All_And |
 | mp | Bool.All.Cond.of.All_And |
 | mpr | Bool.All_And.of.All.Cond |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   [Nonempty α]
   {p : α → Prop}
@@ -20,7 +20,7 @@ private lemma main
   forall_and_right p q
 
 
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma set
   {p : α → Prop}
   {q : Prop}
@@ -40,7 +40,7 @@ private lemma set
     exact ⟨hp x hx, hq⟩
 
 
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma finset
   {p : α → Prop}
   {q : Prop}

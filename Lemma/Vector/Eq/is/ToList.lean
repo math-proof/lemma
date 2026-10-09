@@ -6,12 +6,12 @@ open Vector
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Vector.Eq.is.ToList |
+| path | Vector.Eq.is.ToList |
 | comm | Vector.ToList.is.Eq |
 | mp | Vector.ToList.of.Eq |
 | mpr | Vector.Eq.of.ToList |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   {a b : List.Vector α n} :
 -- imply

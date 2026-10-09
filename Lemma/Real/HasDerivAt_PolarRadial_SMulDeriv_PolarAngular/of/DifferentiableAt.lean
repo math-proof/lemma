@@ -9,7 +9,7 @@ import sympy.Basic
 Chain rule along a path (notes §9):
 \(\dfrac{d}{dt}\hat{r}(\theta(t))=\dot\theta\,\hat{\theta}(\theta(t))\).
 -/
-@[main]
+@[path]
 private lemma main
   {θ : ℝ → ℝ}
   {t : ℝ}

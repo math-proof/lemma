@@ -5,7 +5,7 @@ import Lemma.Tensor.MulStack.eq.Stack_Mul
 open Tensor
 
 
-@[main, fin]
+@[path, fin]
 private lemma scalar
   [Mul α]
 -- given
@@ -23,7 +23,7 @@ private lemma scalar
   erw [this]
 
 
-@[main, fin]
+@[path, fin]
 private lemma main
   [Mul α]
 -- given

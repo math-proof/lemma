@@ -8,10 +8,10 @@ open Tensor Vector
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Tensor.ItemNeg.eq.NegItem |
+| path | Tensor.ItemNeg.eq.NegItem |
 | comm | Tensor.NegItem.eq.ItemNeg |
 -/
-@[main, comm]
+@[path, comm]
 private lemma main
   [Neg α]
 -- given

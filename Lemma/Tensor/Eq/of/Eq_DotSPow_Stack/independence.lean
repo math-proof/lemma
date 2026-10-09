@@ -2,7 +2,7 @@ import Lemma.Tensor.Eq.of.DotStack_Pow
 open Matrix
 
 
-@[main]
+@[path]
 private lemma main
   {n m : ℕ}
   {x y : Fin n → Fin m → ℂ}

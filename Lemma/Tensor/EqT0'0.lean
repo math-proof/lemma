@@ -3,7 +3,7 @@ import Lemma.Tensor.Transpose0.eq.Zero
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [Zero α]
   {s : List ℕ} :

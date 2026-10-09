@@ -5,12 +5,12 @@ import torch.functions
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Tensor.XEq.is.XEqDataS |
+| path | Tensor.XEq.is.XEqDataS |
 | comm | Tensor.XEqDataS.is.XEq |
 | mp | Tensor.XEqDataS.of.XEq |
 | mpr | Tensor.XEq.of.XEqDataS |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   [XEq α]
 -- given

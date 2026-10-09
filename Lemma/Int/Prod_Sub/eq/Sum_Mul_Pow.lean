@@ -4,7 +4,7 @@ import sympy.sets.sets
 open Polynomial
 
 
-@[main]
+@[path]
 private lemma main
   [CommRing α]
 -- given

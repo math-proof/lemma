@@ -9,14 +9,14 @@ open Hyperreal Nat Rat
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Hyperreal.Infinitesimal.is.InfiniteInv |
+| path | Hyperreal.Infinitesimal.is.InfiniteInv |
 | comm | Hyperreal.InfiniteInv.is.Infinitesimal |
 | mp   | Hyperreal.InfiniteInv.of.Infinitesimal |
 | mpr 1| Hyperreal.Infinitesimal.of.InfiniteInv |
 | mp.mt | Hyperreal.NotInfinitesimal.of.NotInfiniteInv |
 | mpr.mt 1| Hyperreal.NotInfiniteInv.of.NotInfinitesimal |
 -/
-@[main, comm, mp, mpr 1, mp.mt, mpr.mt 1]
+@[path, comm, mp, mpr 1, mp.mt, mpr.mt 1]
 private lemma main
   [NeZero (x : ℝ*)] :
 -- imply

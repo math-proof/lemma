@@ -11,10 +11,10 @@ open Tensor Vector
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Tensor.SinSub.eq.SubMulSSin_Cos |
+| path | Tensor.SinSub.eq.SubMulSSin_Cos |
 | comm | Tensor.SubMulSSin_Cos.eq.SinSub |
 -/
-@[main, comm]
+@[path, comm]
 private lemma main
 -- given
   (X Y : Tensor ℝ s) :

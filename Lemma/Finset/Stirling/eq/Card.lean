@@ -4,7 +4,7 @@ import Lemma.Finset.StirlingSecond.eq.NcardParts
 open Finset
 
 
-@[main]
+@[path]
 private lemma main
   {n k : ℕ} :
 -- imply

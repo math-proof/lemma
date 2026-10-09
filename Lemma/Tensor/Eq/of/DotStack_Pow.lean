@@ -4,7 +4,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma independence.vector
   {n : ℕ}
   {x y : Fin n → ℂ}
@@ -33,7 +33,7 @@ private lemma independence.vector
   exact sub_eq_zero.mp hc
 
 
-@[main]
+@[path]
 private lemma independence.matrix
   {n m : ℕ}
   {x y : Fin n → Fin m → ℂ}

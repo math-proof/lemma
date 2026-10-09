@@ -6,7 +6,7 @@ import Lemma.Real.All_LeSquareNormAddMulExpSquareNormMulDivSquareSSub1Exp.of.Gt_
 import Lemma.Real.DivSquareS.le.Square.of.IsValidCriticRadius
 
 
-@[main]
+@[path]
 private lemma main
   {m : ℕ}
   {lambdaC : ℝ}

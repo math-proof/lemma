@@ -2,7 +2,7 @@ import Lemma.Int.Le0Mul.is.AndGeS_0.ou.AndLeS_0
 open Int
 
 
-@[main]
+@[path]
 private lemma main
   [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
   {a b : α}

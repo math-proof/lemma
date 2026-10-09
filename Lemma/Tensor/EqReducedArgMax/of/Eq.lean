@@ -2,7 +2,7 @@ import sympy.Basic
 import sympy.concrete.expr_with_limits
 
 
-@[main]
+@[path]
 private lemma main
   [Nonempty α] [Preorder β]
   {f g : α → β}

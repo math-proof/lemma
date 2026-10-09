@@ -4,7 +4,7 @@ import Lemma.Random.IsQuantileLower.of.IsQuantileLower.Monotone
 open MeasureTheory
 
 
-@[main]
+@[path]
 private lemma main
   {Ω : Type*} [MeasurableSpace Ω]
   {μ : Measure Ω} [IsFiniteMeasure μ]

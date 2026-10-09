@@ -11,7 +11,7 @@ import Lemma.Real.Anchors.Time0.eq.Zero
 open MeasureTheory Topology Real Filter Finset
 
 
-@[main]
+@[path]
 private lemma main
   {d : ℕ}
   {S : Type*} [Fintype S] [DecidableEq S] [Nonempty S] [MeasurableSpace S] [MeasurableSingletonClass S]

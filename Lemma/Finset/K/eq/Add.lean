@@ -4,7 +4,7 @@ import sympy.Basic
 open Continuant
 
 
-@[main]
+@[path]
 private lemma definition
   {x : ℕ → ℤ}
   {n : ℕ} :

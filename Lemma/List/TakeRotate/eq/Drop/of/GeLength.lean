@@ -4,7 +4,7 @@ import Lemma.List.LengthDrop.eq.SubLength
 open List
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   {s : List α}
 -- given

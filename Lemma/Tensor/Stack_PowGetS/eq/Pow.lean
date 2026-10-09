@@ -8,7 +8,7 @@ import Lemma.Vector.MapMap.eq.Map_Comp
 open Vector Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [HPow α β α]
 -- given

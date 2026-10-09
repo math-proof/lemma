@@ -2,7 +2,7 @@ import Lemma.Bool.ImpEq.of.ImpEq
 open Bool
 
 
-@[main]
+@[path]
 private lemma subst
   {a b : α}
   {p : α → Prop} :

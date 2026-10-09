@@ -4,7 +4,7 @@ import Lemma.Nat.Mod.eq.Sub_MulDiv
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   {d : ℕ} :
 -- imply

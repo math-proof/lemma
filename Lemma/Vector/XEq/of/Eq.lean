@@ -3,7 +3,7 @@ import Lemma.Vector.XEq.is.All_XEqGetS
 import sympy.vector.vector
 
 
-@[main]
+@[path]
 private lemma main
   [XEq α]
   {a b : List.Vector α n}

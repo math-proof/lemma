@@ -4,7 +4,7 @@ import sympy.series.limits
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {g : ℝ → ℝ}
   {x₀ : ℝ}

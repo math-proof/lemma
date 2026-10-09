@@ -23,7 +23,7 @@ derived (`Random.ProbJoint.eq.Mul_Prod_MulProbSCond.of.IsDiscreteHMM.mdp`), not 
 
 Python: Tensor.Eq.of.Ne_0.Eq.Eq.Eq.policy_gradient_theorem.
 -/
-@[main]
+@[path]
 private lemma policy_gradient_theorem
   {E Ω S A : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
   [MeasurableSpace Ω] [StandardBorelSpace Ω]

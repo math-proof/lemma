@@ -3,7 +3,7 @@ import Lemma.List.GetAppend.eq.Get_Sub_Length.of.GtLengthAppend.GeLength
 open List Vector
 
 
-@[main, fin]
+@[path, fin]
 private lemma main
 -- given
   (h₀ : i ≥ m)

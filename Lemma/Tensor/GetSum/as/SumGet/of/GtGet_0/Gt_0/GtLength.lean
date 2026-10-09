@@ -5,7 +5,7 @@ import torch.Tensor.sum
 open Tensor
 
 
-@[main, fin, cast, cast.fin]
+@[path, fin, cast, cast.fin]
 private lemma main
   [Add α] [Zero α]
   {d i : ℕ}

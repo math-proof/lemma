@@ -8,7 +8,7 @@ import Lemma.Nat.EqMod_1'0
 open List Tensor Nat
 
 
-@[main]
+@[path]
 private lemma main
   {s : List ℕ}
 -- given

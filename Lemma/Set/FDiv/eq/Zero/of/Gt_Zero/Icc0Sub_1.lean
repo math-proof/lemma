@@ -10,7 +10,7 @@ import Lemma.Rat.LtDiv.of.Lt.Gt_0
 open Set Int Nat Rat
 
 
-@[main]
+@[path]
 private lemma main
   {n d : ℤ}
 -- given

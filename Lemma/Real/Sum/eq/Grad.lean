@@ -3,7 +3,7 @@ import sympy.Basic
 open Real
 
 
-@[main]
+@[path]
 private lemma main
   {n : ℕ}
   {f : ℕ → ℝ → ℝ}

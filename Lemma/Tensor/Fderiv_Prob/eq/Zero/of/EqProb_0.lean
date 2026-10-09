@@ -6,7 +6,7 @@ open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Mode
 /--
 Where `π_θ(u | x) = 0` (a global minimum of `θ ↦ π_θ(u | x)`), its derivative vanishes.
 -/
-@[main]
+@[path]
 private lemma main
   [NormedAddCommGroup Θ] [NormedSpace ℝ Θ] [MeasurableSpace S] [MeasurableSpace A] [Fintype A]
   {M : Model Θ S A}

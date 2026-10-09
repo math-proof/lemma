@@ -4,7 +4,7 @@ import Lemma.Tensor.SEqPermuteS.of.SEq.Eq.Eq.GtLength
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   {s : List ℕ}
 -- given

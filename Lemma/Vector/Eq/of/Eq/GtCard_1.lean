@@ -3,7 +3,7 @@ import Lemma.Nat.Eq.of.Pow.Gt_1
 open Vector Nat
 
 
-@[main]
+@[path]
 private lemma main
   [Fintype ι]
 -- given

@@ -8,7 +8,7 @@ open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random 
 /--
 Iterated Markov property along histories: `𝔼[G(ω[..n]) * f(ω[n+j])] = 𝔼[G(ω[..n]) * Kf θ f j (ω[n])]`.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [Fintype A]
   {M : Model Θ S A}

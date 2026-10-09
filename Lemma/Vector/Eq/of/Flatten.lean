@@ -3,7 +3,7 @@ import Lemma.Vector.Eq.of.FlattenMap.Length
 open Vector Bool
 
 
-@[main]
+@[path]
 private lemma main
   {a b : List.Vector (List.Vector α n) m}
 -- given

@@ -2,7 +2,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma i_in_j
   {a i j n d : ℤ}
 -- given
@@ -15,7 +15,7 @@ private lemma i_in_j
   omega
 
 
-@[main]
+@[path]
 private lemma j_in_i
   {a i j n d : ℤ}
 -- given

@@ -4,7 +4,7 @@ import torch.Tensor
 open Bool List
 
 
-@[main]
+@[path]
 private lemma simp
   {s : List ℕ}
 -- given
@@ -20,7 +20,7 @@ private lemma simp
   rfl
 
 
-@[main]
+@[path]
 private lemma main
   {s : List ℕ}
 -- given

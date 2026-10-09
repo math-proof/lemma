@@ -4,7 +4,7 @@ import Lemma.Nat.LeAddS.is.Le
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   {i j m n : ℕ}
 -- given

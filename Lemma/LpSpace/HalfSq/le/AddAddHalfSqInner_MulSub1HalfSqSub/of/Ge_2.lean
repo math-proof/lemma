@@ -3,7 +3,7 @@ import Lemma.LpSpace.PowNorm.eq.Sum_PowAbs.of.Ge_1
 open Finset LpSpace Real Set Filter Topology
 
 
-@[main]
+@[path]
 private lemma main
   {p d : ℕ}
   {x y : LpSpace p d}

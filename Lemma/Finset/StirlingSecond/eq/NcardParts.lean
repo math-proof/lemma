@@ -7,7 +7,7 @@ import Lemma.Finset.NcardParts_Add_1_Add_1.eq.AddNcardPartsMulAdd_1NcardParts
 open Finset Stirling.conditionset
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (n k : ℕ) :

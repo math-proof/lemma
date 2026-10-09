@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [IsDiscreteValuationRing_mem_maximalIdeal_pow_sub_of_mul_mem_of_not_mem](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_IsDiscreteValuationRing_mem_maximalIdeal_pow_sub_of_mul_mem_of_not_mem.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing 𝒪] [IsDomain 𝒪] [IsDiscreteValuationRing 𝒪]
   {a v : 𝒪}

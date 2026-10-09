@@ -5,7 +5,7 @@ import Lemma.Set.Icc.eq.UnionIco.of.Le
 open Set
 
 
-@[main]
+@[path]
 private lemma main
   [PartialOrder α]
   {g f : α → Set α}

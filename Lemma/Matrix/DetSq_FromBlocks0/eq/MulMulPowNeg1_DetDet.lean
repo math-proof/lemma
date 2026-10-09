@@ -4,7 +4,7 @@ import Lemma.Matrix.DetSq_FromBlocks.eq.MulPowNeg1_DetFromBlocks
 open Matrix Equiv Matrix.BlockSwap
 
 
-@[main]
+@[path]
 private lemma main
   [CommRing R]
   {a b : ℕ}

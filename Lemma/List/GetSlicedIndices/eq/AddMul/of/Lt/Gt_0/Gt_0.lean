@@ -3,7 +3,7 @@ import Lemma.List.GetSlicedIndices.eq.AddMul.of.Lt.Gt_0.LeAddSMul.Lt_AddMul
 open List
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h_n : n > 0)

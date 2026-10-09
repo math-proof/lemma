@@ -3,7 +3,7 @@ import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
 import Mathlib.Data.Fintype.Fin
 
 
-@[main]
+@[path]
 private lemma main
   [CommRing R]
   {n a b : ℕ}

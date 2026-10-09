@@ -3,7 +3,7 @@ import Lemma.Nat.ModAdd_Mul.eq.Mod
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   [IntegerRing Z]
   {y d : Z}
@@ -18,7 +18,7 @@ private lemma main
   rw [ModAdd_Mul.eq.Mod.left]
 
 
-@[main]
+@[path]
 private lemma left
   [IntegerRing Z]
   {x d : Z}

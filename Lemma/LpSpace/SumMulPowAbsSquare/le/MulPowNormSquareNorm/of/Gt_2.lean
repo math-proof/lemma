@@ -3,7 +3,7 @@ import sympy.Basic
 open Finset LpSpace
 
 
-@[main]
+@[path]
 private lemma main
   {p d : ℕ}
   {z v : LpSpace p d}

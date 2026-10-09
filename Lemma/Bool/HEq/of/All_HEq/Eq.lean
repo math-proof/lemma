@@ -3,7 +3,7 @@ import Lemma.Bool.HEq.of.All_Eq_Cast.Eq.Eq
 open Bool
 
 
-@[main]
+@[path]
 private lemma main
   {f : α → β}
   {g : α' → β'}

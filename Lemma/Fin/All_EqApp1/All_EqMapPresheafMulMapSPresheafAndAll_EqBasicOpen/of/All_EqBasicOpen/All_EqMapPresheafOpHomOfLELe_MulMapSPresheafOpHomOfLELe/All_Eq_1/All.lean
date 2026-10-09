@@ -6,7 +6,7 @@ open CategoryTheory AlgebraicGeometry TopologicalSpace Opposite
 /--
 [AlgebraicGeometry_Scheme_Hom_app_cocycle_and_basicOpen_app_eq_inf_of_basicOpen_eq_inf](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_Scheme_Hom_app_cocycle_and_basicOpen_app_eq_inf_of_basicOpen_eq_inf.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {X Z : Scheme.{0}}
   {f : X ⟶ Z}

@@ -4,7 +4,7 @@ import Lemma.Vector.HEq.of.Val
 open Vector
 
 
-@[main]
+@[path]
 private lemma main
   {a : List.Vector α n}
   {b : List.Vector α m}

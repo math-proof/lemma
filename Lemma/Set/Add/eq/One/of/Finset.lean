@@ -3,7 +3,7 @@ import Lemma.Set.In_Finset.is.OrEqS
 open Set
 
 
-@[main]
+@[path]
 private lemma main
   [AddZeroClass α] [One α] [NeZero (1 : α)]
   {x y : α}

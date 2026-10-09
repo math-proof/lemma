@@ -3,7 +3,7 @@ import Lemma.Rat.EqMulDiv.of.Gt_0
 open Rat
 
 
-@[main]
+@[path]
 private lemma main
   [Field α] [LinearOrder α] [IsStrictOrderedRing α] [FloorRing α]
   {d : α}

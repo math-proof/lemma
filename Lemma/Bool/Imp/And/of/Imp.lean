@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {p q : Prop}
 -- given
@@ -12,7 +12,7 @@ private lemma main
   fun hp => ⟨hp, h hp⟩
 
 
-@[main]
+@[path]
 private lemma domain_defined
   {p q c : Prop}
 -- given

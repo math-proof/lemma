@@ -3,7 +3,7 @@ import Lemma.Set.In_Range.of.EqFrac_0
 open Set
 
 
-@[main]
+@[path]
 private lemma main
   [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
   [FloorRing α]

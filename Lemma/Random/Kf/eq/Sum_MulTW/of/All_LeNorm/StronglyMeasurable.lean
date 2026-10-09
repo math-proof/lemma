@@ -8,7 +8,7 @@ open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 /--
 One more step of the iterated kernel expectation: `Kf θ f (j+1) z = ∑ y, T(z.s, z.a, y) * W θ f j y`.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [Fintype A]
   {M : Model Θ S A}

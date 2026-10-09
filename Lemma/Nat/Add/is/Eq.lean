@@ -4,7 +4,7 @@ import sympy.Basic
 /--
 applicable to Nat
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma left
   [Add α]
   [IsLeftCancelAdd α]
@@ -19,7 +19,7 @@ private lemma left
 /--
 applicable to Nat
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   [Add α]
   [IsRightCancelAdd α]

@@ -14,7 +14,7 @@ open Filter MeasureTheory Finset Topology Iterates Random
 open scoped RealInnerProductSpace
 
 
-@[main]
+@[path]
 private lemma main
   {d : ℕ}
   {Ω : Type*} [m₀ : MeasurableSpace Ω]

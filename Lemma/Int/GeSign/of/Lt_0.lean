@@ -3,7 +3,7 @@ import Lemma.Nat.Le_Sub_1.of.Lt
 open Nat Int
 
 
-@[main]
+@[path]
 private lemma main
   {d : ℤ}
 -- given

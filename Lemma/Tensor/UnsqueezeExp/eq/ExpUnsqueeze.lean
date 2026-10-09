@@ -10,7 +10,7 @@ import Lemma.Vector.SEqExpS.of.SEq
 open Bool List Tensor Vector
 
 
-@[main]
+@[path]
 private lemma main
   [Exp α]
 -- given

@@ -12,7 +12,7 @@ open Nat Finset Real Rat
 
 
 /-- cauchy_schwarz -/
-@[main]
+@[path]
 private lemma main
   [DecidableEq ι]
   {a b : ι → ℝ} :

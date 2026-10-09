@@ -6,7 +6,7 @@ open Matrix
 open scoped ComplexOrder
 
 
-@[main]
+@[path]
 private lemma main
   {n : ℕ}
   {A : Matrix (Fin n) (Fin n) ℂ}

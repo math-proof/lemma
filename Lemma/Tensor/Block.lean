@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma split
   {k l n₀ n₁ : ℕ}
   {A : Fin (k + l) → Fin n₀ → ℝ}

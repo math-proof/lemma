@@ -9,7 +9,7 @@ import Lemma.Rat.Sub_Mul_FloorDiv.in.Ico.of.Gt_0
 open Real Set Rat
 
 
-@[main]
+@[path]
 private lemma main
   {x : ℝ}
 -- given

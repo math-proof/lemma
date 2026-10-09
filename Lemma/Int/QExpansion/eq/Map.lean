@@ -17,7 +17,7 @@ private lemma bernoulli'_six_s18 : bernoulli' 6 = 1 / 42 := by
 
 private lemma bernoulli_six_s18 : bernoulli 6 = 1 / 42 := by
   rw [bernoulli_eq_bernoulli'_of_ne_one (by norm_num), bernoulli'_six_s18]
-@[main]
+@[path]
 private lemma main
   :
 -- imply

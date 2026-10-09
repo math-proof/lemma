@@ -4,7 +4,7 @@ import sympy.functions.elementary.exponential
 open Int Real
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [ExpPos α]
   [IsOrderedAddMonoid α]

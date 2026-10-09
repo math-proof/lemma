@@ -6,7 +6,7 @@ open AlgebraicGeometry CategoryTheory TopologicalSpace Opposite
 /--
 [AlgebraicGeometry_Scheme_isRegularRing_stalk_of_forall_isRegularLocalRing_stalk](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_Scheme_isRegularRing_stalk_of_forall_isRegularLocalRing_stalk.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {X : Scheme.{u}}
   {x : X}

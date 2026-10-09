@@ -3,7 +3,7 @@ import Lemma.List.Swap
 open List
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (s : List α)
@@ -18,7 +18,7 @@ private lemma main
   simp
 
 
-@[main]
+@[path]
 private lemma left
 -- given
   (s : List α)

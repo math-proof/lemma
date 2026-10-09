@@ -3,7 +3,7 @@ import Lemma.Tensor.SelectResize.as.Select_Mod_Get.of.Lt.GtLength
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [Zero α]
   {d : Fin s.length}

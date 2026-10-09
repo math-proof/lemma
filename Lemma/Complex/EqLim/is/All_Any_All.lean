@@ -4,7 +4,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma εδ
 -- given
   (f : ℂ → ℂ)
@@ -31,7 +31,7 @@ private lemma εδ
         by simpa [dist_eq_norm] using hxδ⟩
 
 
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma εN.pos
   [LinearOrder α]
   [Zero α]
@@ -60,7 +60,7 @@ private lemma εN.pos
     simpa [dist_eq_norm] using H x hx
 
 
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma εN.neg
   [AddCommGroup α]
   [LinearOrder α]

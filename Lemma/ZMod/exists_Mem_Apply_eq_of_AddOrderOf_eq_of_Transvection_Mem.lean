@@ -340,7 +340,7 @@ end P2MKcIgusaGroup
 /--
 [AddAut_exists_mem_apply_eq_of_addOrderOf_eq_of_transvection_mem](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AddAut_exists_mem_apply_eq_of_addOrderOf_eq_of_transvection_mem.lean)
 -/
-@[main]
+@[path]
 private lemma main
 -- given
   (M : ℕ) [NeZero M] (H : AddSubgroup (AddAut (ZMod M × ZMod M))) (htrans : ∀ v w : ZMod M × ZMod M, addOrderOf v = M → addOrderOf w = M →

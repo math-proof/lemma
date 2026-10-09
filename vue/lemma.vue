@@ -58,10 +58,10 @@
                 <span class=green><b>-- proof</b></span>
             </a>
 
-            <template v-for="(code, i) in get_proof_list(proof)" :key="`${refresh}-${index}-proof-${i}`">
+            <div v-for="(code, i) in get_proof_list(proof)" :key="`${refresh}-${index}-proof-${i}`" class="proof-step">
                 <renderLean :text=code.lean :index="get_index(index, i)"></renderLean>
-                <p v-latex.block=gather(code.latex)></p>
-            </template>
+                <p v-if="proofLatex(code)" v-latex.block="proofLatex(code)"></p>
+            </div>
         </template>
     </div>
 </template>
@@ -180,7 +180,7 @@ const self = new Vue({
             if (event.key !== 'Delete' && event.key !== 'Backspace')
                 return false;
             var target = event.target;
-            if (target.closest && target.closest('.CodeMirror'))
+            if (target.closest && target.closest('.cm-editor'))
                 return false;
             var tag = target.tagName;
             if (tag === 'TEXTAREA' || tag === 'INPUT' || tag === 'SELECT')
@@ -299,6 +299,13 @@ ${latex}
 \\end{gather}`;
             }
             return latex;
+        },
+
+        /** Non-empty LaTeX for a proof step (array → gather). Falsy when missing. */
+        proofLatex(code) {
+            if (!code)
+                return;
+            return this.gather(code.latex) || undefined;
         },
 
         async Escape(code, indices) {
@@ -667,6 +674,7 @@ const {
   lemmaName,
   maybeDeleteAttributeToken,
   gather,
+  proofLatex,
   click_select,
   keydown_div,
   keydown_input,

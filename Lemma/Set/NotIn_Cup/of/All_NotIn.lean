@@ -2,7 +2,7 @@ import Lemma.Set.In_Cup.is.Any_In
 open Set
 
 
-@[main]
+@[path]
 private lemma main
   {ι : Sort v}
   {A : ι → Set α}

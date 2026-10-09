@@ -3,7 +3,7 @@ import Mathlib.Analysis.SpecialFunctions.Exp
 import Mathlib.Data.Matrix.Block
 
 
-@[main]
+@[path]
 private lemma main
   {A B C D : Matrix (Fin n) (Fin n) ℝ} :
 -- imply

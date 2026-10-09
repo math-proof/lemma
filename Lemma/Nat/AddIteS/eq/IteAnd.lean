@@ -4,7 +4,7 @@ import Lemma.Nat.Add
 open Nat Bool
 
 
-@[main]
+@[path]
 private lemma main
   [Decidable p]
   [Decidable q]
@@ -29,7 +29,7 @@ private lemma main
   apply BFnIteS.eq.IteAnd Add.add
 
 
-@[main]
+@[path]
 private lemma swap
   [Decidable p]
   [Decidable q]

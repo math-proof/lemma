@@ -4,12 +4,12 @@ import sympy.vector.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Vector.Lt.is.All_Lt |
+| path | Vector.Lt.is.All_Lt |
 | comm | Vector.All_Lt.is.Lt |
 | mp | Vector.All_Lt.of.Lt |
 | mpr | Vector.Lt.of.All_Lt |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   [LT α]
 -- given

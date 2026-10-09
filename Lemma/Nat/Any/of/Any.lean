@@ -2,7 +2,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma limits.subst.offset.given
   {f : ℤ → Prop}
   {a b d : ℤ}

@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [ValuationSubring_eq_or_eq_top_of_toSubring_le_of_isDiscreteValuationRing](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_ValuationSubring_eq_or_eq_top_of_toSubring_le_of_isDiscreteValuationRing.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [Field K]
   {A : ValuationSubring K} [IsDiscreteValuationRing ↥A]

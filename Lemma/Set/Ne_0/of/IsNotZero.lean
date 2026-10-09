@@ -3,7 +3,7 @@ import sympy.Basic
 import sympy.sets.sets
 
 
-@[main]
+@[path]
 private lemma main
   {x : ℂ}
 -- given

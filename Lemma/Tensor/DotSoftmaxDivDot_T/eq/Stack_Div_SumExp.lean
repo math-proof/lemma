@@ -21,7 +21,7 @@ open Fin List Tensor
 set_option maxHeartbeats 4000000
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (Q K V : Tensor ℝ [n, d_z]) :

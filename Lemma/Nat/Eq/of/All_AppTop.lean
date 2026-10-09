@@ -6,7 +6,7 @@ open CategoryTheory AlgebraicGeometry Opposite
 /--
 [AlgebraicGeometry_Scheme_Modules_hom_ext_of_isIso_fromTildeGamma](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_Scheme_Modules_hom_ext_of_isIso_fromTildeGamma.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {R : CommRingCat.{u}}
   {M N : (Spec (.of R)).Modules} [IsIso (Scheme.Modules.fromTildeΓ M)]

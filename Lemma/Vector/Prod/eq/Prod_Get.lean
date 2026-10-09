@@ -3,7 +3,7 @@ import Lemma.List.Prod.eq.ProdFinLength_Get
 open List
 
 
-@[main, fin]
+@[path, fin]
 private lemma main
   [CommMonoid α]
 -- given

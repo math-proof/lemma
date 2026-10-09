@@ -4,7 +4,7 @@ import Lemma.Nat.Succ.eq.Add_1
 open List Nat
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h : i > 0)

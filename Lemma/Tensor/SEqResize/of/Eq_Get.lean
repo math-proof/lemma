@@ -2,7 +2,7 @@ import Lemma.Tensor.SEqResize.of.GtLength_0
 open Tensor
 
 
-@[main, comm, cast]
+@[path, comm, cast]
 private lemma main
   [Zero α]
   {s : List ℕ}

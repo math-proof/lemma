@@ -4,7 +4,7 @@ import Lemma.Nat.DivAddMul.eq.Add_Div.of.Ne_0
 open Nat
 
 
-@[main]
+@[path]
 private lemma left
 -- given
   (h : b < c)
@@ -15,7 +15,7 @@ private lemma left
   simp_all [DivAddMul.eq.Add_Div.of.Ne_0.left (show c ≠ 0 by omega)]
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h : b < c)

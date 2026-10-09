@@ -4,7 +4,7 @@ import Lemma.Tensor.MapStack.eq.Stack_Map
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [Cos α]
 -- given

@@ -7,7 +7,7 @@ open CategoryTheory CategoryTheory.MonoidalCategory Module
 /--
 [Rep_invariants_res_eq_invariants_res_range](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Rep_invariants_res_eq_invariants_res_range.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing k]
   {G D' : Type} [Group G] [Group D']

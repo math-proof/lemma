@@ -2,7 +2,7 @@ import Lemma.Tensor.Get.of.Eq.Lt
 open Tensor
 
 
-@[main, fin]
+@[path, fin]
 private lemma main
   {X Y : Tensor α (n :: s)}
 -- given

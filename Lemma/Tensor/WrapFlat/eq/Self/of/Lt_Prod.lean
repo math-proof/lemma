@@ -4,7 +4,7 @@ import Lemma.Tensor.WrapFlat.eq.WrapFlatMod.of.EqLengthS
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   {i : ℕ}
 -- given

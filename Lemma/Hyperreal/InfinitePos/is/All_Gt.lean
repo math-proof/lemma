@@ -7,7 +7,7 @@ import Lemma.Int.EqAbs.of.Gt_0
 open Nat Int
 
 
-@[main, comm, mp and, mpr]
+@[path, comm, mp and, mpr]
 private lemma main
 -- given
   (x : ℝ*) :
@@ -25,7 +25,7 @@ private lemma main
     simpa [EqAbs.of.Gt_0 hx] using! h n
 
 
-@[main, comm, mp and, mpr]
+@[path, comm, mp and, mpr]
 private lemma pos
 -- given
   (x : ℝ*) :

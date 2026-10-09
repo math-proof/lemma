@@ -23,7 +23,7 @@ private lemma  trace_baseChange_one_tmul
   change (1 ⊗ₜ[A] x) * (s ⊗ₜ[A] y) = LinearMap.baseChange S (Algebra.lmul A B x) (s ⊗ₜ[A] y)
   rw [LinearMap.baseChange_tmul, Algebra.TensorProduct.tmul_mul_tmul, one_mul]
   rfl
-@[main]
+@[path]
 private lemma main
   [CommRing S]
   {A B : Type*} [CommRing A] [CommRing B] [Algebra A B] [Algebra A S] [Module.Free A B] [Module.Finite A B]

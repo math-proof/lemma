@@ -3,7 +3,7 @@ import Lemma.Nat.Gt_0.of.GtMul
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   {n k d : ℕ}
 -- given

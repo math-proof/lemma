@@ -17,7 +17,7 @@ open Tensor
 set_option maxHeartbeats 2500000
 
 
-@[main, fin]
+@[path, fin]
 private lemma main
   [Mul α] [Add α] [Zero α]
 -- given
@@ -53,7 +53,7 @@ private lemma main
   congr
 
 
-@[main, fin]
+@[path, fin]
 private lemma une
   [Mul α] [Add α] [Zero α]
 -- given

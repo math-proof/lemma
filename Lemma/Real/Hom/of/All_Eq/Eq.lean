@@ -6,7 +6,7 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 /--
 [AlgebraicGeometry_comp_hom_eq_hom_comp_of_unique_isClosedImmersion_section](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_comp_hom_eq_hom_comp_of_unique_isClosedImmersion_section.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {X Y : Scheme.{u}}
   {π : X ⟶ Y}

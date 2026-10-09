@@ -6,7 +6,7 @@ import sympy.Basic
 open Asymptotics Topology
 
 
-@[main]
+@[path]
 private lemma main
   {m : ℕ}
   {x : ℝ} :

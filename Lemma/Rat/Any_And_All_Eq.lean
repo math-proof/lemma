@@ -6,7 +6,7 @@ open IntermediateField
 /--
 [IntermediateField_exists_finiteDimensional_forall_mem_fixingSubgroup_apply_eq](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_IntermediateField_exists_finiteDimensional_forall_mem_fixingSubgroup_apply_eq.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {K : Type u} [Field K]
   {Ω : Type v} [Field Ω] [Algebra K Ω] [Algebra.IsAlgebraic K Ω]

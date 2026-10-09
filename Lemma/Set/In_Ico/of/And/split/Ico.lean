@@ -2,7 +2,7 @@ import sympy.sets.fancysets
 import Lemma.Int.In_Range.is.Mod.In_Range
 
 
-@[main]
+@[path]
 private lemma main
   {x a b d : ℤ}
 -- given

@@ -3,7 +3,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {n : ℕ} [NeZero n]
   {x : Fin n → ℝ}

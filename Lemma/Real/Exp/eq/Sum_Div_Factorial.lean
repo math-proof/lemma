@@ -5,7 +5,7 @@ import sympy.series.limits
 import sympy.sets.sets
 
 
-@[main]
+@[path]
 private lemma maclaurin
 -- given
   (x : ℝ) :

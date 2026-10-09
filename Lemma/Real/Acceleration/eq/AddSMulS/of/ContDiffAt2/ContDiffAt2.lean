@@ -15,7 +15,7 @@ import sympy.Basic
 Polar acceleration (notes §10):
 \(\vec{a}=(\ddot\rho-\rho\dot\theta^2)\hat{r}+(\rho\ddot\theta+2\dot\rho\dot\theta)\hat{\theta}\).
 -/
-@[main]
+@[path]
 private lemma main
   {ρ θ : ℝ → ℝ}
   {t : ℝ}

@@ -4,7 +4,7 @@ import Lemma.Matrix.All_In_ActorBox.of.In_ActorBox.ForwardSolvesActorBoxEquation
 import Lemma.Matrix.All_StochasticVec.of.StochasticVec.Gt_0.All_GeneratorMatrix.ForwardSolvesStateEquation
 
 
-@[main]
+@[path]
 private lemma main
   {S : Type*} [Fintype S] [DecidableEq S]
   {A : Type*} [Fintype A]

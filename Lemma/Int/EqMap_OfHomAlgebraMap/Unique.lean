@@ -7,7 +7,7 @@ open scoped TensorProduct
 /--
 [AlgebraicGeometry_existsUnique_specMap_comp_eq_of_faithfullyFlat](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_existsUnique_specMap_comp_eq_of_faithfullyFlat.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {B B' : Type u} [CommRing B] [CommRing B'] [Algebra B B'] [Module.FaithfullyFlat B B']
   {T : Scheme.{u}}

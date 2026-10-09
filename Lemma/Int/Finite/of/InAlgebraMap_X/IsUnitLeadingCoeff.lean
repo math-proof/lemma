@@ -6,7 +6,7 @@ open Polynomial
 /--
 [Module_Finite_quotient_of_isUnit_leadingCoeff_of_mem](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Module_Finite_quotient_of_isUnit_leadingCoeff_of_mem.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {R : Type u} [CommRing R]
   {A : Type v} [CommRing A] [Algebra R A] [Algebra R[X] A] [IsScalarTower R R[X] A] [Module.Finite R[X] A]

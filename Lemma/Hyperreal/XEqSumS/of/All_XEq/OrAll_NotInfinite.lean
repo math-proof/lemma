@@ -6,7 +6,7 @@ import Lemma.Int.Le0Mul.of.Le_0.Le_0
 open Hyperreal Finset Int
 
 
-@[main]
+@[path]
 private lemma main
   {n : ℕ}
   {A B : Fin n → ℝ*}

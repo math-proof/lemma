@@ -7,7 +7,7 @@ import Lemma.Nat.EqSubAdd
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   {n : ℕ}
   {x : ℕ → ℝ}

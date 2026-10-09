@@ -3,7 +3,7 @@ import Lemma.Nat.Eq_0.is.EqMul.of.Ne_0
 open Complex Nat
 
 
-@[main]
+@[path]
 private lemma main
   {p q : ℂ} :
 -- imply

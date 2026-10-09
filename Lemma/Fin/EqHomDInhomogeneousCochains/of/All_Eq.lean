@@ -10,7 +10,7 @@ open CategoryTheory groupCohomology
 private lemma  PlumbD.neg_one_pow_smul_eq_zsmul {k M : Type} [Ring k] [AddCommGroup M] [Module k M] (m : ℕ) (a : M) :
     (-1 : k) ^ m • a = ((-1 : ℤ) ^ m) • a := by
   rw [← Int.cast_smul_eq_zsmul k, Int.cast_pow, Int.cast_neg, Int.cast_one]
-@[main]
+@[path]
 private lemma main
   {k G H : Type} [CommRing k] [Group G] [Group H]
   {A : Rep.{0} k G}

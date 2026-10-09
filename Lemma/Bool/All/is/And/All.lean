@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma split
   {A : Set α}
   {p c : α → Prop} :

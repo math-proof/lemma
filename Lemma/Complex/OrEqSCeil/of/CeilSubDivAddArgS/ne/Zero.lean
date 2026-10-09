@@ -6,7 +6,7 @@ import Lemma.Set.In_Ico.Ceil.of.In_Icc
 open Set Complex
 
 
-@[main]
+@[path]
 private lemma main
   {A B : ℂ}
 -- given

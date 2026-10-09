@@ -3,7 +3,7 @@ import Lemma.Int.Gt.of.LtNegS
 open Int
 
 
-@[main]
+@[path]
 private lemma main
   [AddGroup α]
   [LT α]

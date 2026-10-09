@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [LinearMap_BilinForm_orthogonal_le_of_similitude_of_forall_map_sub_mem](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_LinearMap_BilinForm_orthogonal_le_of_similitude_of_forall_map_sub_mem.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {K V : Type*} [Field K] [AddCommGroup V] [Module K V]
   {B : LinearMap.BilinForm K V}

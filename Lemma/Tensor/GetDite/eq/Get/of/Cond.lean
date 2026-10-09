@@ -2,7 +2,7 @@ import sympy.Basic
 import torch.Tensor
 
 
-@[main, fin]
+@[path, fin]
 private lemma main
   [Decidable c]
   {i : ℕ}

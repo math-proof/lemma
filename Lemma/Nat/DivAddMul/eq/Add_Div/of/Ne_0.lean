@@ -3,7 +3,7 @@ import Lemma.Nat.Gt_0.of.Ne_0
 open Nat
 
 
-@[main]
+@[path]
 private lemma left
 -- given
   (h : c ≠ 0)
@@ -14,7 +14,7 @@ private lemma left
   DivAddMul.eq.Add_Div.of.Gt_0.left (Gt_0.of.Ne_0 h) a b
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h : c ≠ 0)

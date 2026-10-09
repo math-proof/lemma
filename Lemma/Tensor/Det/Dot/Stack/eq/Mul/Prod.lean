@@ -6,7 +6,7 @@ import Lemma.Matrix.DetMulOfOfPowNegChoose.eq.MulPowProd.of.Le
 open Matrix Nat
 
 
-@[main]
+@[path]
 private lemma vandermonde
   {d m : ℕ}
   {x : ℝ}

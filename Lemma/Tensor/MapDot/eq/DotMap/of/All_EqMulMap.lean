@@ -4,7 +4,7 @@ open Tensor
 
 
 /-- `dot` with a 0-d right factor commutes with a pointwise scalar binary operator `f`. -/
-@[main, comm]
+@[path, comm]
 private lemma main
   [Mul α] [Add α] [Zero α]
   {f : α → α → α}

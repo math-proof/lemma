@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma collect
 -- given
   (h : p ∨ q ∧ r ∧ s) :

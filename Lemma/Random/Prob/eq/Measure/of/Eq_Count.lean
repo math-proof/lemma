@@ -8,7 +8,7 @@ Over a countable discrete state space with counting reference measure, the canon
 random variable at a point is the measure of the corresponding event:
 `ℙ(x = v) = π {ω | x ω = v}`.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace Ω]
   [ReferenceMeasure α] [Countable α] [MeasurableSingletonClass α]

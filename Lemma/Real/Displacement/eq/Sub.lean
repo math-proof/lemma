@@ -6,7 +6,7 @@ import sympy.Basic
 Displacement is the difference of positions:
 \(\Delta\vec{r}=\vec{r}(t+\Delta t)-\vec{r}(t)\).
 -/
-@[main]
+@[path]
 private lemma main
   {d : ℕ}
   (r : Position d)

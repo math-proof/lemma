@@ -9,7 +9,7 @@ import Lemma.Nat.EqMin.of.Le
 open List Nat
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h : i ≤ j)

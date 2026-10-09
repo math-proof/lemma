@@ -2,7 +2,7 @@ import sympy.Basic
 import torch.Tensor
 
 
-@[main]
+@[path]
 private lemma main
   {A B : Tensor α (n :: s)}
 -- given

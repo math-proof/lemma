@@ -8,7 +8,7 @@ import Lemma.Tensor.EqCast_0'0.of.Eq
 open Tensor Vector
 
 
-@[main]
+@[path]
 private lemma main
   [NonUnitalNonAssocSemiring α]
   {s s' : List ℕ} {m t k : ℕ}

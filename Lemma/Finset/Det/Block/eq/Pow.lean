@@ -5,7 +5,7 @@ import Lemma.Matrix.DetSq_FromBlocks0.eq.MulMulPowNeg1_DetDet
 open Matrix
 
 
-@[main]
+@[path]
 private lemma main
   {n m : ℕ} :
 -- imply

@@ -4,7 +4,7 @@ import Lemma.Int.Eq_AddMulFDiv___FMod
 open Nat Int
 
 
-@[main]
+@[path]
 private lemma main
   {n d : ℤ} :
 -- imply

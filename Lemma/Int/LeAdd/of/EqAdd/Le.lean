@@ -4,10 +4,10 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Int.LeAdd.of.EqAdd.Le |
+| path | Int.LeAdd.of.EqAdd.Le |
 | comm 3 | Int.Ge_Add.of.Eq_Add.Ge |
 -/
-@[main, comm 3]
+@[path, comm 3]
 private lemma main
   [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
   {a a' b c : α}

@@ -9,12 +9,12 @@ open Int Nat Rat Complex Set
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Complex.Eq0Add_Mul_Square.is.In_FinsetDivS_Mul2.of.Ne_0 |
+| path | Complex.Eq0Add_Mul_Square.is.In_FinsetDivS_Mul2.of.Ne_0 |
 | comm | Complex.In_FinsetDivS_Mul2.is.Eq0Add_Mul_Square.of.Ne_0 |
 | mp | Complex.In_FinsetDivS_Mul2.of.Eq0Add_Mul_Square.Ne_0 |
 | mpr | Complex.Eq0Add_Mul_Square.of.In_FinsetDivS_Mul2.Ne_0 |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   {x a b c : ℂ}
 -- given

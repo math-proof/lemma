@@ -8,7 +8,7 @@ import Lemma.Nat.Le_SubMulS.of.Lt
 open Tensor List Nat
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h : s.length > 0)

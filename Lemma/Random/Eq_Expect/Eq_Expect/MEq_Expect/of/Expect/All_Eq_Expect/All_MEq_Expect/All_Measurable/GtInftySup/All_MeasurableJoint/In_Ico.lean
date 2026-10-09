@@ -19,7 +19,7 @@ The `V`-identities are read off on atoms of `s t` (`Random.MEqCondExp_Integral.o
 `Random.Eq.of.Ne_0.MEq`); the `Q`-identity stays almost sure. Both sides of an event identity are `0` on
 atoms of probability `0`.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace Ω] [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S]
   [MeasurableSpace A]
@@ -51,10 +51,10 @@ private lemma main
     (Random.Measurable.Measurable.of.MeasurableJoint (Random.Measurable.Measurable.of.MeasurableJoint (h₁ n)).2).1
   have ham : ∀ n, Measurable (a n) := fun n ↦
     (Random.Measurable.Measurable.of.MeasurableJoint (Random.Measurable.Measurable.of.MeasurableJoint (h₁ n)).2).2
-  have hpR : Measurable (fun ω t ↦ r t ω) := measurable_pi_lambda _ hrm
-  have hpa : Measurable (fun ω t ↦ a t ω) := measurable_pi_lambda _ ham
+  have hpR : Measurable (fun ω t ↦ r t ω) := Measurable.of_eval hrm
+  have hpa : Measurable (fun ω t ↦ a t ω) := Measurable.of_eval ham
   have hpr : Measurable (fun ω t ↦ r t ω, fun ω t ↦ s t ω) :=
-    (measurable_pi_lambda _ hrm).prodMk (measurable_pi_lambda _ hsm)
+    (Measurable.of_eval hrm).prodMk (Measurable.of_eval hsm)
   have hfG : ∀ t, Measurable (fun integ : ℕ → ℝ ↦ (γ ^ (id : ℕ → ℕ)) @ integ[t:]) := fun t ↦
     Measurable.tsum fun k ↦ (measurable_pi_apply (t + k)).const_mul _
   have hf : Measurable (fun integ : (ℕ → ℝ) × (ℕ → S) ↦ integ.1 t + γ * V (t + 1) (integ.2 (t + 1))) :=

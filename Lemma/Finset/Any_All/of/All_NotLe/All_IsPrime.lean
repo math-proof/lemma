@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [Ideal_exists_mem_forall_not_mem_of_forall_not_le](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Ideal_exists_mem_forall_not_mem_of_forall_not_le.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing R]
   {J : Ideal R}

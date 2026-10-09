@@ -2,7 +2,7 @@ import Lemma.LpSpace.PowNorm.eq.Sum_PowAbs.of.Ge_1
 open Finset LpSpace
 
 
-@[main]
+@[path]
 private lemma main
   {p d : ℕ}
   {x : LpSpace p d}

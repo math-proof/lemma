@@ -2,7 +2,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma fermat.last_theorem
   {n : ℤ}
   {x y z : ℕ}

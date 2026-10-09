@@ -11,7 +11,7 @@ import Mathlib.Topology.Algebra.Module.FiniteDimension
 open Tensor MeasureTheory
 
 
-@[main]
+@[path]
 private lemma main
   {s : List ℕ} {n : ℕ} {f : Fin n → ℝ → Tensor ℝ s}
 -- given

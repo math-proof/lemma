@@ -3,7 +3,7 @@ import Lemma.List.DropInsertIdx.eq.InsertIdxDrop.of.Ge.GeLength
 open List
 
 
-@[main]
+@[path]
 private lemma main
   [Monoid α]
   {s : List α}

@@ -6,7 +6,7 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 /--
 [AlgebraicGeometry_exists_isClosedImmersion_iff_comp_eq_of_isSeparated](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_exists_isClosedImmersion_iff_comp_eq_of_isSeparated.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {H S T : Scheme.{u}}
   {q : H ⟶ S} [IsSeparated q]

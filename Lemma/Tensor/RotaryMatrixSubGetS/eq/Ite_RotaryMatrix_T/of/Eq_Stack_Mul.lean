@@ -15,7 +15,7 @@ import sympy.matrices.expressions.matpow
 open Fin Int Tensor
 
 
-@[main]
+@[path]
 private lemma main
   {n d : ℕ}
   {θ : Tensor ℝ [n, d]}

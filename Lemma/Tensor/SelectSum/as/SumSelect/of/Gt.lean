@@ -51,7 +51,7 @@ open Nat List Bool Finset Tensor Vector Fin
 set_option maxHeartbeats 1000000
 
 
-@[main, comm, cast]
+@[path, comm, cast]
 private lemma main
   [AddCommMonoid α]
   {d : Fin s.length}

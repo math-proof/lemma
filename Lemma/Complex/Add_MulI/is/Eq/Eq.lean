@@ -5,12 +5,12 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Complex.Add_MulI.is.Eq.Eq |
+| path | Complex.Add_MulI.is.Eq.Eq |
 | comm | Complex.Eq.Eq.is.Add_MulI |
 | mp | Complex.Eq.Eq.of.Add_MulI |
 | mpr | Complex.Add_MulI.of.Eq.Eq |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
 -- given
   (x y a b : ℝ) :

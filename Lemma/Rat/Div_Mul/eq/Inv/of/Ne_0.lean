@@ -15,7 +15,7 @@ private lemma inv'
   simp [h]
 
 
-@[main]
+@[path]
 private lemma main
   [CommGroupWithZero α]
   {a b : α}

@@ -2,7 +2,7 @@ import Lemma.Complex.Arg.eq.Ite_Arcsin_Ite_AddIte_Arcsin
 open Complex
 
 
-@[main]
+@[path]
 private lemma main
   {z : ℂ}
 -- given

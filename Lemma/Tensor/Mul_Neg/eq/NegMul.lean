@@ -9,12 +9,12 @@ open Tensor Vector
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Tensor.Mul_Neg.eq.NegMul |
+| path | Tensor.Mul_Neg.eq.NegMul |
 | comm | Tensor.NegMul.eq.Mul_Neg |
 | scalar | Tensor.Mul_Neg.eq.NegMul.scalar |
 | comm.scalar | Tensor.NegMul.eq.Mul_Neg.scalar |
 -/
-@[main, comm]
+@[path, comm]
 private lemma main
   [Mul α] [HasDistribNeg α]
 -- given
@@ -30,7 +30,7 @@ private lemma main
   rw [DataMul.eq.MulDataS]
 
 
-@[main, comm]
+@[path, comm]
 private lemma scalar
   [Mul α] [HasDistribNeg α]
 -- given

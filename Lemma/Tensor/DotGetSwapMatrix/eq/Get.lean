@@ -9,10 +9,10 @@ open Nat Tensor
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Tensor.DotGetSwapMatrix.eq.Get |
+| path | Tensor.DotGetSwapMatrix.eq.Get |
 | fin | Tensor.DotGetSwapMatrix.eq.Get.fin |
 -/
-@[main, fin]
+@[path, fin]
 private lemma main
   [Semiring α] [CharZero α]
 -- given

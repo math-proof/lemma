@@ -17,7 +17,7 @@ import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop.of.Lt_ProdTake.Lt_ProdDrop
 open Tensor Bool List Vector Nat Fin
 
 
-@[main]
+@[path]
 private lemma main
   {s : List ℕ}
 -- given

@@ -3,7 +3,7 @@ import Lemma.Random.Any_Ge_0AndAeLeNorm.of.All_Gt_0.Any_LipschitzWith.Any_Ge_0An
 open MeasureTheory
 
 
-@[main]
+@[path]
 private lemma main
   {d : ℕ}
   {Ω : Type*} [MeasurableSpace Ω]

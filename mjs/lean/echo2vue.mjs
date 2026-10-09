@@ -48,32 +48,154 @@ export function get_lean_env(repoRoot) {
   return env;
 }
 
+/** Local lake packages whose `.lean` sources live in this repo (not Mathlib). */
+const LOCAL_IMPORT_PREFIXES = ['Lemma.', 'sympy.', 'stdlib.', 'torch.'];
+
+/**
+ * @param {string} pkg dotted module name
+ */
+function isLocalRepoImport(pkg) {
+  return LOCAL_IMPORT_PREFIXES.some((p) => pkg === p.slice(0, -1) || pkg.startsWith(p));
+}
+
+/**
+ * @param {string} pkg
+ * @param {string} repoRoot
+ * @returns {{ missing: boolean, mtimeStale: boolean, leanFs: string, olean: string }}
+ */
+function oleanStatus(pkg, repoRoot) {
+  const moduleSlash = pkg.replace(/\./g, '/');
+  const olean = path.join(repoRoot, '.lake', 'build', 'lib', 'lean', `${moduleSlash}.olean`);
+  const leanFs = path.join(repoRoot, `${moduleSlash}.lean`);
+  const out = { missing: false, mtimeStale: false, leanFs, olean };
+  try {
+    if (!fs.existsSync(leanFs)) return out; // not a repo-local source we can build
+    if (!fs.existsSync(olean)) {
+      out.missing = true;
+      return out;
+    }
+    if (fs.statSync(olean).mtimeMs < fs.statSync(leanFs).mtimeMs) out.mtimeStale = true;
+  } catch {
+    out.missing = true;
+  }
+  return out;
+}
+
+/**
+ * Whether echo2vue should `lake build` this import.
+ * Lemma: missing or mtime-stale (proofs change often).
+ * sympy/stdlib/torch: missing only — lake uses content hashes; bulk file touches
+ * otherwise force-rebuild the whole graph and drown the UI in false failures.
+ * @param {string} pkg
+ * @param {string} repoRoot
+ */
+function isOleanStale(pkg, repoRoot) {
+  const st = oleanStatus(pkg, repoRoot);
+  if (st.missing) return true;
+  if (pkg.startsWith('Lemma.') && st.mtimeStale) return true;
+  return false;
+}
+
+/** True only when the `.olean` file is absent (not merely mtime-stale). */
+function isOleanMissing(pkg, repoRoot) {
+  return oleanStatus(pkg, repoRoot).missing;
+}
+
 /**
  * @param {InstanceType<typeof LeanModule>} tree
  * @param {string} repoRoot
+ * @returns {string[]} stale dotted module names (unique, import order)
  */
-function collectStaleLemmaImports(tree, repoRoot) {
-  /** @type {unknown[]} */
+function collectStaleLocalImports(tree, repoRoot) {
+  /** @type {string[]} */
   const out = [];
+  const seen = new Set();
   for (const stmt of tree.args) {
     if (!isLeanImport(stmt)) continue;
     const pkg = importPackageString(stmt);
-    if (!pkg.startsWith('Lemma.')) continue;
-    const moduleSlash = pkg.replace(/\./g, '/');
-    const olean = path.join(repoRoot, '.lake', 'build', 'lib', 'lean', `${moduleSlash}.olean`);
-    const leanFs = path.join(repoRoot, `${moduleSlash}.lean`);
-    let stale = false;
-    try {
-      if (!fs.existsSync(olean)) stale = true;
-      else if (fs.existsSync(leanFs) && fs.statSync(olean).mtimeMs < fs.statSync(leanFs).mtimeMs) {
-        stale = true;
-      }
-    } catch {
-      stale = true;
-    }
-    if (stale) out.push(stmt);
+    if (!isLocalRepoImport(pkg)) continue;
+    if (seen.has(pkg)) continue;
+    if (!isOleanStale(pkg, repoRoot)) continue;
+    seen.add(pkg);
+    out.push(pkg);
+  }
+  // echo2vue always injects this; ensure it is built even if parse order differs
+  if (!seen.has('sympy.printing.echo') && isOleanStale('sympy.printing.echo', repoRoot)) {
+    out.unshift('sympy.printing.echo');
   }
   return out;
+}
+
+/**
+ * Pull Lean diagnostic lines out of `lake build` stdout/stderr for the UI.
+ * @param {string} text
+ * @returns {{ code: string, line: number, col: number, type: string, info: string }[]}
+ */
+function parseLakeBuildDiagnostics(text) {
+  /** @type {{ code: string, line: number, col: number, type: string, info: string }[]} */
+  const error = [];
+  const lines = String(text || '').split('\n');
+  for (let i = 0; i < lines.length; i++) {
+    const jsonline = lines[i];
+    // `lake env lean`:  path.lean:LINE:COL: error: msg
+    let m = jsonline.match(/^(.+\.lean):(\d+):(\d+): (\w+)(\([^()]+\))?: (.+)$/);
+    // `lake build`:     error: path.lean:LINE:COL: msg  (msg may continue on following lines)
+    if (!m) {
+      m = jsonline.match(/^(error|warning|info): (.+\.lean):(\d+):(\d+): (.+)$/);
+      if (m) {
+        const type = m[1];
+        const file = m[2];
+        const line = parseInt(m[3], 10);
+        const col = parseInt(m[4], 10);
+        let info = m[5];
+        while (
+          i + 1 < lines.length &&
+          lines[i + 1] &&
+          !/^(\u2716|✔|ℹ|⚠|error:|warning:|info:|Some required|Build |note:)/.test(lines[i + 1]) &&
+          !/^(.+\.lean):\d+:\d+:/.test(lines[i + 1])
+        ) {
+          i += 1;
+          info += `\n${lines[i]}`;
+        }
+        error.push({
+          code: file,
+          line,
+          col: Math.max(0, col - 2),
+          type,
+          info,
+        });
+        continue;
+      }
+    }
+    if (!m) continue;
+    error.push({
+      code: '',
+      line: parseInt(m[2], 10),
+      col: Math.max(0, parseInt(m[3], 10) - 2),
+      type: m[4] + (m[5] ?? ''),
+      info: m[6],
+    });
+  }
+  // lake summary line: "Some required targets logged failures:\n- Foo\n- Bar"
+  const failIdx = lines.findIndex((l) => /Some required targets logged failures/.test(l));
+  if (failIdx >= 0) {
+    const targets = [];
+    for (let j = failIdx + 1; j < lines.length; j++) {
+      const tm = lines[j].match(/^- (.+)$/);
+      if (!tm) break;
+      targets.push(tm[1].trim());
+    }
+    if (targets.length) {
+      error.unshift({
+        code: '',
+        line: 1,
+        col: 0,
+        type: 'error',
+        info: `lake build failed for required target(s): ${targets.join(', ')}`,
+      });
+    }
+  }
+  return error;
 }
 
 const SPAWN_MAX_BUFFER = 64 * 1024 * 1024;
@@ -155,10 +277,11 @@ export async function runEcho2Vue(tree, leanFileAbs, opts = {}) {
 
   const lakePath = get_lake_path();
   const env = get_lean_env(repoRoot);
-  const staleImports = collectStaleLemmaImports(tree, repoRoot);
+  /** @type {{ code: string, line: number, col: number, type: string, info: string }[]} */
+  const lakeBuildErrors = [];
+  const staleImports = collectStaleLocalImports(tree, repoRoot);
   if (staleImports.length) {
-    const names = staleImports.map((s) => importPackageString(s));
-    const quoted = names.map((n) => `"${n.replace(/"/g, '\\"')}"`).join(' ');
+    const quoted = staleImports.map((n) => `"${n.replace(/"/g, '\\"')}"`).join(' ');
     const cmd = `"${lakePath}" build ${quoted}`;
     try {
       await execAsync(cmd, {
@@ -169,7 +292,39 @@ export async function runEcho2Vue(tree, leanFileAbs, opts = {}) {
         maxBuffer: SPAWN_MAX_BUFFER,
       });
     } catch (e) {
-      console.warn('[echo2vue] lake build:', e.message || e);
+      const stdout = e?.stdout != null ? String(e.stdout) : '';
+      const stderr = e?.stderr != null ? String(e.stderr) : '';
+      const combined = `${stdout}\n${stderr}\n${e?.message || e}`;
+      console.warn('[echo2vue] lake build failed for:', staleImports.join(', '));
+      console.warn('[echo2vue] lake build:', (e?.message || e || '').toString().slice(0, 500));
+      const diags = parseLakeBuildDiagnostics(combined);
+      if (diags.length) {
+        lakeBuildErrors.push(...diags);
+      } else {
+        lakeBuildErrors.push({
+          code: '',
+          line: 1,
+          col: 0,
+          type: 'error',
+          info:
+            `lake build failed for stale imports [${staleImports.join(', ')}]: ` +
+            (stderr || stdout || e?.message || 'unknown error').toString().slice(0, 2000),
+        });
+      }
+      // Truly missing oleans after a failed build (ignore mtime-only staleness)
+      for (const pkg of staleImports) {
+        if (!isOleanMissing(pkg, repoRoot)) continue;
+        const olean = oleanStatus(pkg, repoRoot).olean;
+        lakeBuildErrors.push({
+          code: `import ${pkg}`,
+          line: 1,
+          col: 0,
+          type: 'error',
+          info:
+            `dependency ${pkg} has no .olean after lake build (expected ${olean}). ` +
+            `Fix Lean errors in that module or its deps (see lake build diagnostics above) and rebuild.`,
+        });
+      }
     }
   }
 
@@ -294,7 +449,23 @@ export async function runEcho2Vue(tree, leanFileAbs, opts = {}) {
   const modify = { value: false };
   const syntax = {};
   const codes = tree.render2vue(true, modify, syntax);
-  codes.error.push(...error);
+  // Prefer concrete lake-build diagnostics over Lean's misleading line-1
+  // "olean does not exist" attributed to `import sympy.printing.echo`.
+  const coveredMissing = new Set(
+    lakeBuildErrors
+      .map((e) => {
+        const m = String(e.info || '').match(/dependency (\S+) has no \.olean/);
+        return m ? m[1] : null;
+      })
+      .filter(Boolean)
+  );
+  const leanErrors = error.filter((e) => {
+    const info = String(e.info || '');
+    const m = info.match(/object file '.*?\.olean' of module (\S+) does not exist/);
+    if (m && coveredMissing.has(m[1])) return false;
+    return true;
+  });
+  codes.error.push(...lakeBuildErrors, ...leanErrors);
   if (opts.module != null) codes.module = opts.module;
   return codes;
 }

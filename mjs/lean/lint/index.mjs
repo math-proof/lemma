@@ -44,7 +44,7 @@ const Q = {
     mp: 'For `LHS.is.RHS` tagged with `@[mp]` / `@[mpr]`, prefer the generated one-direction lemmas `RHS.of.LHS` / `LHS.of.RHS` over calling `.mp` / `.mpr` on the iff.',
     comm: 'For `LHS.eq.RHS` tagged with `@[comm]`, prefer the generated commutative lemma `RHS.eq.LHS` over `simp [← LHS.eq.RHS]` or `rw [LHS.eq.RHS.symm]`.',
     declDir: 'Never put a `theorem` in `Lemma/`.', // removed from AGENTS.md: this warning checks it
-    docstring: 'Run `python py/docstring.py <leanFile>` if necessary. It\'ll generate the attribute docstring table if the lemma uses attributes other than `@[main]`.',
+    docstring: 'Run `python py/docstring.py <leanFile>` if necessary. It\'ll generate the attribute docstring table if the lemma uses attributes other than `@[path]`.',
 };
 
 /** rule id → AGENTS.md quote */

@@ -3,7 +3,7 @@ import Lemma.Nat.Ne.of.Gt
 open Nat Rat
 
 
-@[main]
+@[path]
 private lemma main
   [Preorder α]
   [DivisionRing α]

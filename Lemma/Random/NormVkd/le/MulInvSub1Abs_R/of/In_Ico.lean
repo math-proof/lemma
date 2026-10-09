@@ -7,7 +7,7 @@ open MeasureTheory PolicyGradient Random
 /--
 For `γ ∈ [0, 1)` the state value with a density policy is bounded: `‖Vkd θ γ x‖ ≤ (1 - γ)⁻¹ * |R|`.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace S] [ReferenceMeasure A]
   {M : DensityModel Θ S A}

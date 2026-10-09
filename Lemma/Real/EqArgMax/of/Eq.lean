@@ -3,7 +3,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {S : Set ℕ}
   {f g : ℕ → ℝ}
@@ -23,7 +23,7 @@ private lemma main
     exact ⟨hx, fun y hy' => by rw [h y hy', h x hx]; exact hy y hy'⟩
 
 
-@[main]
+@[path]
 private lemma definition
   {x₀ : ℝ}
   {S : Set ℝ}

@@ -9,7 +9,7 @@ import sympy.Basic
 Inverse-square force in polar components (notes §12):
 \(m\vec{a}=-(C/\rho^2)\hat{r}\) implies the radial ODE and vanishing transverse coefficient.
 -/
-@[main]
+@[path]
 private lemma main
   {ρ θ : ℝ → ℝ}
   {m C t : ℝ}

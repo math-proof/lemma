@@ -3,7 +3,7 @@ import sympy.Basic
 import Mathlib.Analysis.InnerProductSpace.PiL2
 
 
-@[main]
+@[path]
 private lemma main
   {n : ℕ}
   {x : EuclideanSpace ℂ (Fin n)}

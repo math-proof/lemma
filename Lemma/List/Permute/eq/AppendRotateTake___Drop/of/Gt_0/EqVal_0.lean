@@ -5,7 +5,7 @@ import Lemma.List.Permute.eq.AppendRotateTake___Drop.of.EqVal_0
 open List Int Nat
 
 
-@[main]
+@[path]
 private lemma main
   {s : List α}
   {i : Fin s.length}

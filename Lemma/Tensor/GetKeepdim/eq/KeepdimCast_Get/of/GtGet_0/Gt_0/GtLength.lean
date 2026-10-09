@@ -28,7 +28,7 @@ import Lemma.Tensor.SEqRepeatS.of.SEq.Val.Eq
 open Tensor List Nat Bool
 
 
-@[main]
+@[path]
 private lemma main
   {d i : ℕ}
   {s : List ℕ}

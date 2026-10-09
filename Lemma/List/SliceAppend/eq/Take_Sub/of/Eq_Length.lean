@@ -3,7 +3,7 @@ import Lemma.List.SliceAppend.eq.Take_Sub_Length
 open List
 
 
-@[main]
+@[path]
 private lemma main
   {a : List α}
 -- given

@@ -4,7 +4,7 @@ import Lemma.Int.Neg.is.Eq
 open Rat Int
 
 
-@[main]
+@[path]
 private lemma main
   [DivisionRing α]
   {a : α}

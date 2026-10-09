@@ -6,7 +6,7 @@ import Lemma.ContinuousSemiflow.OmegaLimitToFun.of.Attracts.IsClosed
 import Lemma.ContinuousSemiflow.OmegaLimitToFun.of.Subset.Invariant
 
 
-@[main]
+@[path]
 private lemma main
   {α : Type*} [TopologicalSpace α] [RegularSpace α]
   {Φ : ContinuousSemiflow α}

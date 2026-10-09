@@ -2,7 +2,7 @@ import sympy.functions.elementary.complexes
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma simp.exp
   {z : ℂ} :
 -- imply

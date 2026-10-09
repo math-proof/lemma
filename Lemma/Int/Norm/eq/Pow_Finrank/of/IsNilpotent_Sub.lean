@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [Algebra_norm_eq_pow_finrank_of_isNilpotent_sub_algebraMap](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Algebra_norm_eq_pow_finrank_of_isNilpotent_sub_algebraMap.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {R A : Type*} [CommRing R] [IsDomain R] [Ring A] [Algebra R A] [Module.Free R A] [Module.Finite R A]
   {a : A}

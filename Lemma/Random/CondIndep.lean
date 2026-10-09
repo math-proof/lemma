@@ -24,7 +24,7 @@ Proof: the state `s n` is discrete, so it suffices that, for measurable `E` and 
 summing over the next state `s (n + 1) = y'` this follows from the one-step kernel identities
 `Random.Integral_Mul.eq.Integral_Mul_Integral.of.All_LeNorm.StronglyMeasurable.All_LeNorm.StronglyMeasurable`.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S]
   [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A]
@@ -98,7 +98,7 @@ private lemma main
     | succ m =>
       let G : (Π _ : Finset.Iic m, ℝ × S × A) → ℝ := fun h ↦
         if (fun i : Fin (m + 1) ↦ h ⟨i, Finset.mem_Iic.2 (Nat.lt_succ_iff.1 i.2)⟩) ∈ H then 1 else 0
-      have hGm : StronglyMeasurable G := hι ((measurable_pi_lambda _ fun i ↦ measurable_pi_apply _) hH)
+      have hGm : StronglyMeasurable G := hι ((Measurable.of_eval fun i ↦ measurable_pi_apply _) hH)
       have hCG : ∀ h, ‖G h‖ ≤ 1 := fun h ↦ Norm_1.le.One _
       have h1 := Integral_Mul.eq.Integral_Mul_Integral.of.All_LeNorm.StronglyMeasurable.All_LeNorm.StronglyMeasurable (M := M) hGm hCG
         (g := fun z ↦ (if z.2.1 = y then (1 : ℝ) else 0) * f z) ((StronglyMeasurable_Eq12 y).mul hf) (LeNorm_Mul1.of.All_LeNorm hCf) θ
@@ -113,7 +113,7 @@ private lemma main
         _ = _ := by
           rw [← h2]
           rfl
-  have hHm : Measurable (fun ω : ℕ → ℝ × S × A ↦ fun i : Fin n ↦ ω i) := measurable_pi_lambda _ fun i ↦ measurable_pi_apply _
+  have hHm : Measurable (fun ω : ℕ → ℝ × S × A ↦ fun i : Fin n ↦ ω i) := Measurable.of_eval fun i ↦ measurable_pi_apply _
   have hsm : Measurable (fun ω : ℕ → ℝ × S × A ↦ (ω n).2.1) := (measurable_pi_apply n).snd.fst
   have hXm : Measurable (fun ω : ℕ → ℝ × S × A ↦ ((ω n).2.2, (ω n).1, (ω (n + 1)).2.1)) :=
     (measurable_pi_apply n).snd.snd.prodMk ((measurable_pi_apply n).fst.prodMk (measurable_pi_apply (n + 1)).snd.fst)
@@ -137,7 +137,7 @@ private lemma main
         ((if (h ⟨n, Finset.mem_Iic.2 le_rfl⟩).2.1 = y then (1 : ℝ) else 0) *
           (if ((h ⟨n, Finset.mem_Iic.2 le_rfl⟩).2.2, (h ⟨n, Finset.mem_Iic.2 le_rfl⟩).1, y') ∈ E then (1 : ℝ) else 0))
     have hGm : ∀ y', StronglyMeasurable (G y') := fun y' ↦
-      (hι ((measurable_pi_lambda _ fun i ↦ measurable_pi_apply _) hH)).mul
+      (hι ((Measurable.of_eval fun i ↦ measurable_pi_apply _) hH)).mul
         ((hι ((measurable_pi_apply _).snd.fst (measurableSet_singleton y))).mul
           (hι ((measurable_pi_apply _).snd.snd.prodMk ((measurable_pi_apply _).fst.prodMk measurable_const) hE)))
     have hGC : ∀ y' h, ‖G y' h‖ ≤ 1 := fun y' h ↦ by

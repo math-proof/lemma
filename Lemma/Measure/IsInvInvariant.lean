@@ -7,7 +7,7 @@ open scoped ENNReal NNReal
 /--
 [MeasureTheory_Measure_isInvInvariant_of_isMulRightInvariant](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_MeasureTheory_Measure_isInvInvariant_of_isMulRightInvariant.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [LocallyCompactSpace G] [MeasurableSpace G] [BorelSpace G] [SecondCountableTopology G]
   {μ : Measure G} [μ.IsHaarMeasure] [μ.IsMulRightInvariant] :
@@ -21,7 +21,7 @@ private lemma main
   have hc : μ.inv = c • μ := Measure.isMulLeftInvariant_eq_smul μ.inv μ
   have hc' : μ.inv = (c : ℝ≥0∞) • μ := by rw [hc]; rfl
   have h2 : Measure.map Inv.inv (Measure.map Inv.inv μ) = ((c : ℝ≥0∞) ^ 2) • μ := by
-    rw [← Measure.inv_def μ, hc', Measure.map_smul, ← Measure.inv_def μ, hc', smul_smul, pow_two]
+    rw [← Measure.inv_def μ, hc', Measure.map_smul _ (by fun_prop), ← Measure.inv_def μ, hc', smul_smul, pow_two]
   have μeq : μ = ((c : ℝ≥0∞) ^ 2) • μ := by
     rw [Measure.map_map continuous_inv.measurable continuous_inv.measurable] at h2
     simpa only [inv_involutive, Function.Involutive.comp_self, Measure.map_id] using h2

@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [IsLocalRing_isUnit_natCast_guardPrime_sub_one_div_two_of_charP_two](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_IsLocalRing_isUnit_natCast_guardPrime_sub_one_div_two_of_charP_two.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing R] [IsLocalRing R] [CharP (IsLocalRing.ResidueField R) 2]
   {ℓg : ℕ}

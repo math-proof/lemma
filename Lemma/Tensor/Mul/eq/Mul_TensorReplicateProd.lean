@@ -5,7 +5,7 @@ import Lemma.Vector.GetMul.eq.MulGetS
 open Tensor Vector
 
 
-@[main]
+@[path]
 private lemma main
   [Mul α]
 -- given

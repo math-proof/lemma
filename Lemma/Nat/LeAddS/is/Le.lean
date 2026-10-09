@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main, comm, mp 8, mpr 4, mp.comm 8, mpr.comm 4, comm.is]
+@[path, comm, mp 8, mpr 4, mp.comm 8, mpr.comm 4, comm.is]
 private lemma left
   [Add α]
   [LE α]
@@ -18,7 +18,7 @@ private lemma left
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Nat.LeAddS.is.Le |
+| path | Nat.LeAddS.is.Le |
 | comm | Nat.Le.is.LeAddS |
 | mp 8 | Nat.Le.of.LeAddS |
 | mpr 4| Nat.LeAddS.of.Le |
@@ -26,7 +26,7 @@ private lemma left
 | mpr.comm 4| Nat.GeAddS.of.Ge |
 | comm.is | Nat.GeAddS.is.Ge |
 -/
-@[main, comm, mp 8, mpr 4, mp.comm 8, mpr.comm 4, comm.is]
+@[path, comm, mp 8, mpr 4, mp.comm 8, mpr.comm 4, comm.is]
 private lemma main
   [Add α]
   [LE α]

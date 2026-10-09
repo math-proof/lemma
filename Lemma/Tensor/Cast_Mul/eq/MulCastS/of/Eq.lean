@@ -5,7 +5,7 @@ import Lemma.Vector.Cast_Mul.eq.MulCastS.of.Eq
 open Vector Tensor
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [Mul α]
 -- given

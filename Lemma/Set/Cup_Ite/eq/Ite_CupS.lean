@@ -6,7 +6,7 @@ import Lemma.Bool.Or_Not
 open Bool
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
 -- given
   (A : Set α)

@@ -4,7 +4,7 @@ import Lemma.Tensor.SEqPermuteHead_1
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h : n ≤ 1)

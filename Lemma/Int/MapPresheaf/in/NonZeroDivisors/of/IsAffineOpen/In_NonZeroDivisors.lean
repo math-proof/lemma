@@ -6,7 +6,7 @@ open AlgebraicGeometry CategoryTheory TopologicalSpace Topology Opposite
 /--
 [AlgebraicGeometry_map_appTop_mem_nonZeroDivisors_of_flat](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_map_appTop_mem_nonZeroDivisors_of_flat.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {R : Type u} [CommRing R]
   {Y : Scheme.{u}}

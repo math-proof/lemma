@@ -3,7 +3,7 @@ import sympy.integrals.integrals
 open MeasureTheory
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   {n : ℕ}
   {f : Fin n → ℝ → ℝ}

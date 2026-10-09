@@ -5,7 +5,7 @@ import Lemma.Nat.EqMax.of.Gt
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   [LinearOrder α]
   [Add α]

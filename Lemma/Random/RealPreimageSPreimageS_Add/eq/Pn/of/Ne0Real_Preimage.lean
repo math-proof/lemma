@@ -19,7 +19,7 @@ private lemma real_inter [MeasurableSpace S] [MeasurableSingletonClass S] [Finty
 /--
 On a reachable state (`Pr(s[t] = x) ≠ 0`), `Pr(s[t+n] = y | s[t] = x) = Pn θ n x y` (time-homogeneous `n`-step transition).
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A] [DecidableEq S]
   {M : Model Θ S A}

@@ -7,7 +7,7 @@ open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Finset
 One-step Markov property along histories of the trajectory model `M`:
 `𝔼[φ(ω[..n], ω[n+1])] = ∫ h, ∫ z, φ (h, z) ∂(K θ h[n]) ∂law(ω[..n])`.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [Fintype A]
   {M : Model Θ S A}

@@ -7,7 +7,7 @@ import Lemma.Nat.LtMod.of.Gt_0
 open Nat Int
 
 
-@[main]
+@[path]
 private lemma main
   {n d : ℤ}
 -- given

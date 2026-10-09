@@ -6,7 +6,7 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 /--
 [AlgebraicGeometry_eq_univ_of_isClopen_of_range_specMap_subset_of_injective](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_eq_univ_of_isClopen_of_range_specMap_subset_of_injective.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {R₀ L : Type} [CommRing R₀] [CommRing L]
   {φ : R₀ →+* L}

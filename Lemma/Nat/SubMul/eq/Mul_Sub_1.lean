@@ -2,7 +2,7 @@ import Lemma.Nat.Mul_Sub.eq.SubMulS
 open Nat
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   {x a : ℕ} :
 -- imply

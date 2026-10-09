@@ -2,7 +2,7 @@ import Lemma.Int.NeCoeS.of.Ne
 open Int
 
 
-@[main]
+@[path]
 private lemma main
   [AddGroupWithOne Z]
   [CharZero Z]

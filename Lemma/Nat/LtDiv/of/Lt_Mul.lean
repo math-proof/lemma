@@ -2,7 +2,7 @@ import Lemma.Nat.Mul
 open Nat
 
 
-@[main]
+@[path]
 private lemma left
   {k n m : ℕ}
 -- given
@@ -13,7 +13,7 @@ private lemma left
   Nat.div_lt_of_lt_mul h
 
 
-@[main]
+@[path]
 private lemma main
   {k n m : ℕ}
 -- given

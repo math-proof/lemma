@@ -21,7 +21,7 @@ import torch.Tensor.sum
 open Bool Nat Tensor Vector
 
 
-@[main]
+@[path]
 private lemma main
   [DivisionSemiring α]
 -- given

@@ -31,7 +31,7 @@ set_option maxHeartbeats 2000000
 
 
 /-- `dot` of 1-d tensors commutes with a pointwise map `f`. -/
-@[main, comm]
+@[path, comm]
 private lemma une
   [Mul α] [AddCommMonoid α]
   [Mul β] [AddCancelCommMonoid β]
@@ -82,7 +82,7 @@ private lemma une
 
 
 /-- `dot` commutes with a pointwise map `f`. -/
-@[main, comm]
+@[path, comm]
 private lemma main
   [Mul α] [AddCommMonoid α]
   [Mul β] [AddCancelCommMonoid β]

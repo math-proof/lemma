@@ -3,7 +3,7 @@ import Mathlib.Algebra.Order.BigOperators.Group.Finset
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {S : Type*} [Fintype S]
 -- given

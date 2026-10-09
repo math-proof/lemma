@@ -2,7 +2,7 @@ import Lemma.Hyperreal.StDiv.eq.InvStInv
 open Hyperreal
 
 
-@[main]
+@[path]
 private lemma main
   {a b : ℝ*}
 -- given

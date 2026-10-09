@@ -7,7 +7,7 @@ import Lemma.Vector.SEq0S.of.Eq
 open Bool Tensor Vector
 
 
-@[main]
+@[path]
 private lemma main
   [Zero α]
 -- given

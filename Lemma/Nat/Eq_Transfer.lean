@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [MonoidHom_map_transfer_eq_transfer_comp](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_MonoidHom_map_transfer_eq_transfer_comp.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [Group G]
   {H : Subgroup G} [H.FiniteIndex]

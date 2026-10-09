@@ -2,7 +2,7 @@ import Lemma.Nat.Add.is.Eq
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   [AddGroup α]
   {x y : α}

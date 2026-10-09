@@ -6,7 +6,7 @@ open IntermediateField
 /--
 [IntermediateField_norm_algebraNorm_eq_pow_finrank_padic](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_IntermediateField_norm_algebraNorm_eq_pow_finrank_padic.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {q : ℕ} [Fact q.Prime]
   {K : IntermediateField ℚ_[q] (PadicAlgCl q)} [FiniteDimensional ℚ_[q] K]

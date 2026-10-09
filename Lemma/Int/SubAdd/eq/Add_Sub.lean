@@ -2,7 +2,7 @@ import Lemma.Nat.Add
 open Nat
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [SubNegMonoid α]
 -- given
@@ -13,7 +13,7 @@ private lemma main
   add_sub_assoc a b c
 
 
-@[main, comm]
+@[path, comm]
 private lemma Comm
   [AddCommGroup α]
 -- given

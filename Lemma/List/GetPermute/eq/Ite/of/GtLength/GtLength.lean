@@ -26,7 +26,7 @@ import Lemma.Nat.Le_Sub.of.LeAdd
 open List Nat
 
 
-@[main]
+@[path]
 private lemma main
   {s : List α}
   {i : Fin s.length}

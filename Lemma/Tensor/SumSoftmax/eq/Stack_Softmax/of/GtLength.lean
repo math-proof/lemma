@@ -6,7 +6,7 @@ import torch.stack
 open Bool Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [Exp α]
 -- given

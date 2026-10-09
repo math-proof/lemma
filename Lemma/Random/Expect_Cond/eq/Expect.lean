@@ -3,7 +3,7 @@ open MeasureTheory Function Random
 open scoped Classical
 
 
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace Ω]
   [ReferenceMeasure α] [ReferenceMeasure γ]

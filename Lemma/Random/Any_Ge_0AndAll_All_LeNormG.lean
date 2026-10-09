@@ -6,7 +6,7 @@ import Lemma.Random.Any_Ge_0AndAll_LeNorm.of.Any_Ge_0AndAll_All_LeNormSub_MulNor
 open Iterates Real Random
 
 
-@[main]
+@[path]
 private lemma main
   {S : Type*} [Fintype S] [DecidableEq S] [Nonempty S] [MeasurableSpace S] [MeasurableSingletonClass S]
   {d : ℕ}

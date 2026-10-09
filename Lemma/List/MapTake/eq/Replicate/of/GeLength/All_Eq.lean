@@ -2,7 +2,7 @@ import Lemma.List.Eq_Replicate.is.EqLength.All_Eq
 open List
 
 
-@[main]
+@[path]
 private lemma main
   {n : ℕ}
   {s : List (List α)}

@@ -2,7 +2,7 @@ import Mathlib.Analysis.Calculus.Deriv.Add
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {f g : ℝ → ℝ}
   {x : ℝ}

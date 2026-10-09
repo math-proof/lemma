@@ -5,7 +5,7 @@ import Lemma.Vector.SEqArraySliceS.of.Eq.Eq
 open Vector List Bool
 
 
-@[main, comm, cast]
+@[path, comm, cast]
 private lemma main
   {s : List ℕ}
 -- given

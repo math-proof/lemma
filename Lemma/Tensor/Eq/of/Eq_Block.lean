@@ -3,7 +3,7 @@ import sympy.Basic
 open Tensor
 
 
-@[main]
+@[path]
 private lemma double_integer_embedding
   {h m i : ℕ}
   {AX : ℕ → Fin (m + m) → ℝ}
@@ -22,7 +22,7 @@ py: `Ξ = [[0, 1], [1, 0]]` (block matrix, zeros on the `h × h` and `(n-h) × (
 ones elsewhere) gives `exp(a + (Ξ - 1) * ∞) ≈ Ξ * exp(a)` (hyperreal masked exponential).
 Here `Ξ i j = 0` if `i < h ↔ j < h`, else `1`.
 -/
-@[main]
+@[path]
 private lemma mask.cross_attention
   {n h : ℕ}
 -- given

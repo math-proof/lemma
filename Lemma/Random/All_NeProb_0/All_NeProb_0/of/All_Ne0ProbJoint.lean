@@ -12,11 +12,11 @@ open Random MeasureTheory
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Random.All_NeProb_0.All_NeProb_0.of.All_Ne0ProbJoint |
+| path | Random.All_NeProb_0.All_NeProb_0.of.All_Ne0ProbJoint |
 | And.left | Random.All_NeProb_0.of.All_Ne0ProbJoint.fst |
 | And.right | Random.All_NeProb_0.of.All_Ne0ProbJoint.snd |
 -/
-@[main, And.left, And.right]
+@[path, And.left, And.right]
 private lemma main
   [MeasurableSpace Ω]
   [ReferenceMeasure α] [ReferenceMeasure β]
@@ -51,9 +51,9 @@ private lemma main
   have hlawx : π.map x = μ.withDensity (π.prob x) := Map.eq.WithDensityProb
   have hlawy : π.map y = ν.withDensity (π.prob y) := Map.eq.WithDensityProb
   have hix : IsProbabilityMeasure (π.map x) :=
-    Measure.isProbabilityMeasure_map PSpace.aemeasurable
+    inferInstance
   have hiy : IsProbabilityMeasure (π.map y) :=
-    Measure.isProbabilityMeasure_map PSpace.aemeasurable
+    inferInstance
   have h1x : ∫⁻ a, π.prob x a ∂μ = 1 := by
     have h : (μ.withDensity (π.prob x)) Set.univ = ∫⁻ a, π.prob x a ∂μ := by
       rw [withDensity_apply (π.prob x) MeasurableSet.univ, setLIntegral_univ]

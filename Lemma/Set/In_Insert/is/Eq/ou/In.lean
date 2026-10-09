@@ -4,12 +4,12 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Set.In_Insert.is.Eq.ou.In |
+| path | Set.In_Insert.is.Eq.ou.In |
 | comm | Set.Eq.ou.In.is.In_Insert |
 | mp   | Set.Eq.ou.In.of.In_Insert |
 | mpr  | Set.In_Insert.of.Eq.ou.In |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   {a e : α}
   {s : Set α} :

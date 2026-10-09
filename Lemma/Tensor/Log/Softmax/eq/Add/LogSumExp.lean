@@ -2,7 +2,7 @@ import sympy.Basic
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
 
 
-@[main]
+@[path]
 private lemma main
   [NeZero n]
   {x : Fin n → ℝ} :

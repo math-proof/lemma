@@ -2,7 +2,7 @@ import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [Mul α]
 -- given

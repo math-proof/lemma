@@ -7,7 +7,7 @@ import Lemma.Vector.SumMul.eq.MulSum
 open Rat Vector
 
 
-@[main]
+@[path]
 private lemma main
   [ExpRing α]
 -- given

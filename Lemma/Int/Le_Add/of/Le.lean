@@ -2,7 +2,7 @@ import Lemma.Nat.Le.of.Le.Le
 open Nat
 
 
-@[main]
+@[path]
 private lemma left
   [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
   {x y : α}
@@ -15,7 +15,7 @@ private lemma left
   apply Le.of.Le.Le h (by simp)
 
 
-@[main]
+@[path]
 private lemma main
   [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
   {x y : α}

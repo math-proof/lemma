@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [IsAddCyclic_ncard_setOf_nsmul_eq_zero_and_ne_zero_of_prime_dvd_card](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_IsAddCyclic_ncard_setOf_nsmul_eq_zero_and_ne_zero_of_prime_dvd_card.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [AddCommGroup D] [IsAddCyclic D]
   {m : ℕ}

@@ -2,7 +2,7 @@ import Lemma.Tensor.Length.eq.Get_0.of.GtLength
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   {s : List ℕ}
 -- given

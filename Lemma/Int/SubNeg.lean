@@ -3,7 +3,7 @@ import Lemma.Nat.Add
 open Nat Int
 
 
-@[main]
+@[path]
 private lemma Comm
   [AddCommGroup α]
   {a b : α} :

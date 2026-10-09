@@ -15,7 +15,7 @@ import torch.functions
 open Bool Fin List Tensor Vector
 
 
-@[main]
+@[path]
 private lemma main
   [Neg α]
 -- given

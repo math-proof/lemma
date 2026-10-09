@@ -2,7 +2,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma given
   {x y : ℝ}
 -- given
@@ -15,7 +15,7 @@ private lemma given
   · exact ne_of_lt h
 
 
-@[main]
+@[path]
 private lemma main
   {x : α}
   {A B : Set α}
@@ -39,7 +39,7 @@ private lemma main
       exact h₁.symm
 
 
-@[main]
+@[path]
 private lemma two
   {x : α}
   {A : Set α}

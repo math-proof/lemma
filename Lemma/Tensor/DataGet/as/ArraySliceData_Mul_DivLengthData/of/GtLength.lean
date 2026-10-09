@@ -7,7 +7,7 @@ import Lemma.Tensor.DataGet.as.ArraySliceData_Mul_ProdTail.of.GtLength_0
 open Tensor Nat
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h : s.length > 0)

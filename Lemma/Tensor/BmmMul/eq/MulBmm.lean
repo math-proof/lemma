@@ -5,7 +5,7 @@ import torch.Tensor.bmm
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [CommSemiring α]
 -- given

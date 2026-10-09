@@ -9,7 +9,7 @@ import Lemma.Tensor.SEqSoftmaxS.of.SEq
 open List Tensor
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (Q K V : Tensor ℝ [n, d_z]) :

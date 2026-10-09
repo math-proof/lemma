@@ -10,7 +10,7 @@ open Tensor
 set_option maxHeartbeats 4000000
 
 
-@[main]
+@[path]
 private lemma main
   [Semiring α] [CharZero α]
   {n m : ℕ}

@@ -2,7 +2,7 @@ import Lemma.Set.In_Inter.is.In.In
 open Set
 
 
-@[main]
+@[path]
 private lemma main
   {A B : Set α}
 -- given

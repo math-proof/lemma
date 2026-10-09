@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma baseset
   {B : Set α}
   {p : α → Prop} :

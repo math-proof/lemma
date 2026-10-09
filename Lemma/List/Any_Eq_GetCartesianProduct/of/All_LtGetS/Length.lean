@@ -6,7 +6,7 @@ import Lemma.List.GetFlatten_AddMul.eq.Get.of.Lt.GtLength.All_EqLength
 open List Nat
 
 
-@[main]
+@[path]
 private lemma main
   {x s : List ℕ}
 -- given

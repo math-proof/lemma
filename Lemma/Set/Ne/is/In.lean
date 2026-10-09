@@ -4,7 +4,7 @@ import sympy.functions.elementary.complexes
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {n : ℕ}
   {x y : Fin n → ℂ} :

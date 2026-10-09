@@ -3,7 +3,7 @@ import sympy.Basic
 
 
 /-- The diagonal map is measurable. -/
-@[main]
+@[path]
 private lemma main
   {α : Type*}
   [MeasurableSpace α] :

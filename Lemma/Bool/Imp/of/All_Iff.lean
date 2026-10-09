@@ -2,7 +2,7 @@ import Lemma.Bool.Eq.is.All_Iff
 open Bool
 
 
-@[main]
+@[path]
 private lemma main
   {f g : α → Prop}
   {p : Prop → Type}

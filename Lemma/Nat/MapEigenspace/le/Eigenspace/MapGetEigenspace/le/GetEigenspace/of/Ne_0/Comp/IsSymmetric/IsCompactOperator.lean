@@ -7,7 +7,7 @@ open scoped InnerProductSpace
 /--
 [ContinuousLinearMap_map_eigenspace_orthogonal_le_of_commute](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_ContinuousLinearMap_map_eigenspace_orthogonal_le_of_commute.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {𝕜 E : Type*} [RCLike 𝕜] [NormedAddCommGroup E] [InnerProductSpace 𝕜 E] [CompleteSpace E]
   {T : E →L[𝕜] E}

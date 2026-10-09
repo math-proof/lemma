@@ -6,7 +6,7 @@ import Lemma.Random.Var.eq.Integral
 open MeasureTheory
 
 
-@[main]
+@[path]
 private lemma offset
   [MeasurableSpace Ω]
   {π : Measure Ω}

@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [Pencil_norm_dotProduct_mul_sup_le](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Pencil_norm_dotProduct_mul_sup_le.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {r : ℕ}
   {a v w : Fin r → ℂ}

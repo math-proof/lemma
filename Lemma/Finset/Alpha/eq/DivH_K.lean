@@ -5,7 +5,7 @@ import Lemma.Finset.Alpha_MapRange.eq.DivHK.of.All_Gt_0
 open Finset Continuant
 
 
-@[main]
+@[path]
 private lemma positive
   {n : ℕ}
   {x : ℕ → ℝ}

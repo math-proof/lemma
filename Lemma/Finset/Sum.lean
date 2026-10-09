@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma limits.delete.baseset
   [Fintype ι] [DecidableEq ι] [AddCommMonoid α]
   {A : Finset ι}
@@ -15,7 +15,7 @@ private lemma limits.delete.baseset
   simp [and_comm]
 
 
-@[main]
+@[path]
 private lemma doit.inner
   [AddCommMonoid α]
   {a m : ℕ}
@@ -28,7 +28,7 @@ private lemma doit.inner
   rw [Finset.sum_Ico_succ_top (show a ≤ a + 1 by omega), Finset.sum_Ico_succ_top (le_refl a), Finset.Ico_self, Finset.sum_empty, zero_add]
 
 
-@[main]
+@[path]
 private lemma limits.swap.intlimit.parallel
   [AddCommMonoid α]
   {a m d n : ℤ}
@@ -42,7 +42,7 @@ private lemma limits.swap.intlimit.parallel
   omega
 
 
-@[main]
+@[path]
 private lemma doit.inner.setlimit
   [AddCommMonoid α] [DecidableEq ι]
   {a b : ι}
@@ -58,7 +58,7 @@ private lemma doit.inner.setlimit
   rw [Finset.sum_pair h]
 
 
-@[main]
+@[path]
 private lemma limits.swap.intlimit
   [AddCommMonoid α]
   {a d n : ℤ}
@@ -72,7 +72,7 @@ private lemma limits.swap.intlimit
   omega
 
 
-@[main]
+@[path]
 private lemma limits.swap.subst
   [AddCommMonoid α]
   {A : Finset ι}
@@ -84,7 +84,7 @@ private lemma limits.swap.subst
   rfl
 
 
-@[main]
+@[path]
 private lemma doit.outer.setlimit
   [AddCommMonoid α]
   {a : ι}
@@ -96,7 +96,7 @@ private lemma doit.outer.setlimit
   Finset.sum_singleton _ _
 
 
-@[main]
+@[path]
 private lemma limits.separate
   [CommSemiring α]
   {s t : Finset ι}

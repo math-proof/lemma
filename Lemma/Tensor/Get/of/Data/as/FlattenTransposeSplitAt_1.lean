@@ -16,7 +16,7 @@ open Vector Tensor Bool
 set_option maxHeartbeats 400000
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (X : Tensor α [m, n])

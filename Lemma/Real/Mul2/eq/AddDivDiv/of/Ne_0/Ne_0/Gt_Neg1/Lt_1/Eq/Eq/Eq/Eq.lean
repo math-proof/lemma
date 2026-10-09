@@ -10,7 +10,7 @@ Perigee/apogee distances of the signed Kepler orbit \(1/r=-\dfrac{Cm}{J^2}(1-e\c
 \(r(0)=\dfrac{p}{1-e}\) and \(r(\pi)=\dfrac{p}{1+e}\), so the major axis is
 \(2a=r(0)+r(\pi)=\dfrac{p}{1-e}+\dfrac{p}{1+e}\).
 -/
-@[main]
+@[path]
 private lemma main
   {r : ℝ → ℝ}
   {A C m J e p a : ℝ}

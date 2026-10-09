@@ -2,7 +2,7 @@ import Lemma.Nat.Mul
 open Nat
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [Semigroup α]
   {a b : α} :
@@ -12,7 +12,7 @@ private lemma main
   mul_assoc a b c
 
 
-@[main, comm]
+@[path, comm]
 private lemma Comm
   [CommSemigroup α]
   {a b : α} :
@@ -22,7 +22,7 @@ private lemma Comm
   grind
 
 
-@[main, comm]
+@[path, comm]
 private lemma swap
   [CommSemigroup α]
   {a b : α} :
@@ -32,7 +32,7 @@ private lemma swap
   grind
 
 
-@[main, comm]
+@[path, comm]
 private lemma rotate
   [CommSemigroup α]
   {a b : α} :
@@ -42,7 +42,7 @@ private lemma rotate
   grind
 
 
-@[main, comm]
+@[path, comm]
 private lemma permute
   [CommSemigroup α]
   {a b : α} :
@@ -52,7 +52,7 @@ private lemma permute
   grind
 
 
-@[main, comm]
+@[path, comm]
 private lemma reverse
   [CommSemigroup α]
   {a b : α} :

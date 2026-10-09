@@ -2,7 +2,7 @@ import sympy.matrices.determinant
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   [CommRing α]
   {A B : Tensor α s}

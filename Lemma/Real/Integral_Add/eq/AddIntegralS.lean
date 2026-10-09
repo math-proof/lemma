@@ -3,7 +3,7 @@ import Mathlib.MeasureTheory.Integral.Bochner.Basic
 open MeasureTheory
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [MeasurableSpace α] [NormedAddCommGroup E] [NormedSpace ℝ E]
   {μ : Measure α}

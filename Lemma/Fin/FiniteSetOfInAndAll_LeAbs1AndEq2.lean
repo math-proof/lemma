@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [AddSubgroup_finite_setOf_mem_forall_abs_le_snd_eq_of_discreteTopology](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AddSubgroup_finite_setOf_mem_forall_abs_le_snd_eq_of_discreteTopology.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {r c : ℕ}
   {Λ : AddSubgroup ((Fin r → ℝ) × (Fin c → ℤ))} [DiscreteTopology Λ]

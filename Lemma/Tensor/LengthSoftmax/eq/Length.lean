@@ -4,7 +4,7 @@ import torch.functions
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [Exp α]
 -- given

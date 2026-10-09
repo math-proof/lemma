@@ -4,7 +4,7 @@ import Lemma.Finset.NcardImageConditionset.eq.NcardImageImageConditionset
 open Finset
 
 
-@[main]
+@[path]
 private lemma mapping.s0_B
   {n k : ℕ} :
 -- imply

@@ -2,7 +2,7 @@ import Lemma.List.TakeDropPermute__Neg.eq.Cons_TakeDrop.of.GtLength_Add
 open List
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [Mul α] [One α]
   {s : List α}

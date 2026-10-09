@@ -3,7 +3,7 @@ import Lemma.Nat.DivMul.eq.Mul_Div.of.Dvd
 open Nat
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [IntegerRing Z]
   {a b : Z}

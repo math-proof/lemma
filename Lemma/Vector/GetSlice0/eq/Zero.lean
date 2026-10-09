@@ -5,7 +5,7 @@ import Lemma.List.LengthRange.eq.Length
 open Vector
 
 
-@[main]
+@[path]
 private lemma main
   [Zero α]
 -- given

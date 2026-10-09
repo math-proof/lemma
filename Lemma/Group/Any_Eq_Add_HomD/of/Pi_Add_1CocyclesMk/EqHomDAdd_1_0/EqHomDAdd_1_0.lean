@@ -6,7 +6,7 @@ open CategoryTheory groupCohomology
 /--
 [groupCohomology_exists_eq_add_d_of_pi_cocyclesMk_eq](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_groupCohomology_exists_eq_add_d_of_pi_cocyclesMk_eq.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {k G : Type} [CommRing k] [Group G]
   {A : Rep.{0} k G}

@@ -9,7 +9,7 @@ import Lemma.Random.LinearTD.ExpectedUpdate.eq.ToLpAddMulVecA
 open Matrix LpSpace
 
 
-@[main]
+@[path]
 private lemma main
   {S : Type*} [Fintype S] [DecidableEq S] [Nonempty S] [MeasurableSpace S] [MeasurableSingletonClass S]
   {d : ℕ}

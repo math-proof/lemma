@@ -31,7 +31,7 @@ private lemma of_Lt
   rw [← Slice.eq.DropTake]
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (s : List α)

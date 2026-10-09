@@ -3,7 +3,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma by_parts
   {u v : ℝ → ℝ}
   {a b : ℝ}
@@ -18,7 +18,7 @@ private lemma by_parts
   exact intervalIntegral.integral_mul_deriv_eq_deriv_mul (fun x hx => (hu x hx).hasDerivAt) (fun x hx => (hv x hx).hasDerivAt) hu' hv'
 
 
-@[main]
+@[path]
 private lemma split
   {f : ℝ → ℝ}
   {a b c : ℝ}

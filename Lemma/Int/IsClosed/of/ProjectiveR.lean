@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [Module_isClosed_setOf_range_le_smul_top](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Module_isClosed_setOf_range_le_smul_top.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing R]
   {P Q : Type*} [AddCommGroup P] [Module R P] [AddCommGroup Q] [Module R Q] [Module.Finite R Q]

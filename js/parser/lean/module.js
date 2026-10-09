@@ -196,7 +196,7 @@ function normalizeInstImplicit(s) {
 }
 
 /**
- * Extract attribute names from LeanAttribute (e.g. @[main] → ['main'], @[main, fin] → ['main','fin']).
+ * Extract attribute names from LeanAttribute (e.g. @[path] → ['main'], @[path, fin] → ['main','fin']).
  * Handles LeanBracket contents as LeanArgsCommaSeparated, LeanArgsSpaceSeparated, or LeanToken.
  */
 function extractAttribute(attr) {
@@ -952,6 +952,8 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                                 break;
                             } else if (st instanceof L.LeanCaret) {
                                 // skip
+                            } else if (st instanceof L.LeanBracket) {
+                                // skip instance arguments in the given section
                             } else if (st instanceof L.LeanArgsSpaceSeparated) {
                                 givenSlice.splice(i, 1, ...st.args);
                                 --i;

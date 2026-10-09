@@ -3,7 +3,7 @@ import Mathlib.Algebra.BigOperators.Intervals
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {n : ℕ}
   {x : ℝ} :
@@ -52,7 +52,7 @@ private lemma main
     _ = _ := by rw [h1]; push_cast; ring
 
 
-@[main]
+@[path]
 private lemma deux
   {n : ℕ}
   {x : ℝ}
@@ -108,7 +108,7 @@ private lemma deux
         ring
 
 
-@[main]
+@[path]
 private lemma trois
   {n : ℕ}
   {x : ℝ}
@@ -165,7 +165,7 @@ private lemma trois
         ring
 
 
-@[main]
+@[path]
 private lemma quatre
   {n : ℕ}
   {x : ℝ}

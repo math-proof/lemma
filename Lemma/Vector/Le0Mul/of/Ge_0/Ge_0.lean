@@ -4,7 +4,7 @@ import Lemma.Vector.GetMul.eq.MulGetS
 open Int Vector
 
 
-@[main]
+@[path]
 private lemma main
   [MulZeroClass α] [Preorder α] [PosMulMono α]
   {a b : List.Vector α n}

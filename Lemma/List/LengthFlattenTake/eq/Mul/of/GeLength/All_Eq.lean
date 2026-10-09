@@ -2,7 +2,7 @@ import Lemma.List.MapTake.eq.Replicate.of.GeLength.All_Eq
 open List
 
 
-@[main]
+@[path]
 private lemma main
   {i n : ℕ}
   {s : List (List α)}

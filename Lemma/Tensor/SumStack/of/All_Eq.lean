@@ -1,7 +1,7 @@
 import torch.stack
 
 
-@[main]
+@[path]
 private lemma main
   [Add α] [Zero α]
   {X Y : Fin n → Tensor α s}

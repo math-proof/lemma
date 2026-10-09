@@ -3,7 +3,7 @@ import Lemma.Tensor.DataSum.eq.Sum_DataSelect
 open Tensor
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [AddCommMonoid α]
 -- given

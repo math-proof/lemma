@@ -10,7 +10,7 @@ import Lemma.Random.AdaptedOnSamplePath.of.IteratesOfResidual
 open MeasureTheory Iterates Real Random
 
 
-@[main]
+@[path]
 private lemma main
   {S : Type*} [Fintype S] [DecidableEq S] [Nonempty S] [MeasurableSpace S] [MeasurableSingletonClass S]
   {d : ℕ}

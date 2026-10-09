@@ -3,7 +3,7 @@ import Lemma.Nat.Dvd_Mul.of.Dvd
 open List Nat
 
 
-@[main]
+@[path]
 private lemma main
   [CommMonoid α]
   {s : List α}

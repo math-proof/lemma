@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   [AddCommMonoid β]
   {A B C D : Finset ℤ}

@@ -4,7 +4,7 @@ open Filter
 
 
 
-@[main]
+@[path]
 private lemma main
   {f : ℝ → ℝ}
   {x : ℝ}

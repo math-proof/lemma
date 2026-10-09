@@ -2,7 +2,7 @@ import Lemma.Bool.AndOr.is.OrAndS
 open Bool
 
 
-@[main]
+@[path]
 private lemma main
   (right : Bool := true) :
 -- imply

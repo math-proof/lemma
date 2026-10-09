@@ -6,7 +6,7 @@ import Lemma.Vector.GetCons__Add_1.eq.Get.of.Lt_Mul
 open Vector List Bool Nat
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (v : List.Vector (List.Vector α n) m)

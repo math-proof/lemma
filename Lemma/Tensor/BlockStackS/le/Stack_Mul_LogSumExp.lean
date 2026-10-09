@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma upper_triangle
   {n u : ℕ}
   (A : Fin n → Fin n → ℝ) :
@@ -20,7 +20,7 @@ private lemma upper_triangle
     exact bot_le
 
 
-@[main]
+@[path]
 private lemma lower_triangle
   {n l : ℕ}
   (A : Fin n → Fin n → ℝ) :

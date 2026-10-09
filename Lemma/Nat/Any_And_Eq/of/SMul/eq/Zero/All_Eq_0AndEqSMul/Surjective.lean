@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [AddMonoidHom_exists_nsmul_eq_zero_and_apply_eq_of_surjective_of_forall_ker](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AddMonoidHom_exists_nsmul_eq_zero_and_apply_eq_of_surjective_of_forall_ker.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {A B : Type*} [AddCommGroup A] [AddCommGroup B]
   {f : A →+ B}

@@ -2,7 +2,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma doit.inner
   [CommMonoid α]
   {m : ℕ}
@@ -13,7 +13,7 @@ private lemma doit.inner
   simp only [Finset.prod_range_succ, Finset.prod_range_zero, one_mul]
 
 
-@[main]
+@[path]
 private lemma doit.inner.setlimit
   [CommMonoid α]
   {m : ℕ}
@@ -27,7 +27,7 @@ private lemma doit.inner.setlimit
   simp only [mul_assoc]
 
 
-@[main]
+@[path]
 private lemma doit.outer.setlimit
   [CommMonoid α]
   {a : ι}
@@ -39,7 +39,7 @@ private lemma doit.outer.setlimit
   exact Finset.prod_singleton _ _
 
 
-@[main]
+@[path]
 private lemma limits.concat
   [Fintype β] [CommMonoid γ]
   {m : ℕ}
@@ -51,7 +51,7 @@ private lemma limits.concat
   exact Fintype.prod_equiv (Fin.consEquiv (fun _ => β)) _ _ (fun _ => rfl)
 
 
-@[main]
+@[path]
 private lemma limits.domain_defined
   [CommMonoid α]
   {k : ℕ}
@@ -64,7 +64,7 @@ private lemma limits.domain_defined
   rw [Finset.filter_true_of_mem (fun i _ => i.isLt)]
 
 
-@[main]
+@[path]
 private lemma limits.domain_defined.delete
   [CommMonoid α]
   {k : ℕ}
@@ -77,7 +77,7 @@ private lemma limits.domain_defined.delete
   rw [Finset.filter_true_of_mem (fun i _ => i.isLt)]
 
 
-@[main]
+@[path]
 private lemma limits.swap
   [CommMonoid α]
   {m n : ℕ}
@@ -88,7 +88,7 @@ private lemma limits.swap
   exact Finset.prod_comm
 
 
-@[main]
+@[path]
 private lemma limits.swap.intlimit
   [CommMonoid α]
   {a d n : ℤ}
@@ -102,7 +102,7 @@ private lemma limits.swap.intlimit
   omega
 
 
-@[main]
+@[path]
 private lemma limits.swap.subst
   [CommMonoid α]
   {A : Finset ι}

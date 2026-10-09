@@ -31,7 +31,7 @@ private lemma NeGetData_0.of.Ne_0
   exact h0
 
 
-@[main]
+@[path]
 private lemma left
   [CommMonoidWithZero α]
   [Div α]
@@ -50,7 +50,7 @@ private lemma left
   rw [Vector.EqDivMul.of.Ne_0.left ha]
 
 
-@[main]
+@[path]
 private lemma main
   [MonoidWithZero α]
   [Div α]

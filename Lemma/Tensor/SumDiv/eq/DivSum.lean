@@ -6,7 +6,7 @@ import torch.Tensor.sum
 open Tensor
 
 
-@[main]
+@[path]
 private lemma scalar
   [DivisionSemiring α]
 -- given
@@ -21,7 +21,7 @@ private lemma scalar
   rw [Div.eq.Div_TensorReplicate]
 
 
-@[main]
+@[path]
 private lemma main
   [DivisionSemiring α]
 -- given

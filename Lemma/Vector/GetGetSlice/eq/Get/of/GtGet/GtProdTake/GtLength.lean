@@ -11,7 +11,7 @@ import sympy.vector.vector
 open List Nat Vector
 
 
-@[main]
+@[path]
 private lemma main
   {s : List ℕ}
 -- given

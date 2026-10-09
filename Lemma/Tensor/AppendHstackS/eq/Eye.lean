@@ -17,7 +17,7 @@ private lemma delta_fin_nat
   simp [KroneckerDelta, Fin.ext_iff]
 
 
-@[main]
+@[path]
 private lemma main
   [AddMonoidWithOne α] [CharZero α]
 -- given

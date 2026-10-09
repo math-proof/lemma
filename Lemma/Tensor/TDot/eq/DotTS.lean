@@ -7,7 +7,7 @@ import Lemma.Tensor.EqGetT
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [CommMagma α] [Add α] [Zero α]
 -- given

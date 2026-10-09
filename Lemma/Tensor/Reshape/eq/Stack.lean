@@ -11,10 +11,10 @@ open Bool Tensor
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Tensor.Reshape.eq.Stack |
+| path | Tensor.Reshape.eq.Stack |
 | comm | Tensor.Stack.eq.Reshape |
 -/
-@[main, comm]
+@[path, comm]
 private lemma main
 -- given
   (X : Tensor α s)

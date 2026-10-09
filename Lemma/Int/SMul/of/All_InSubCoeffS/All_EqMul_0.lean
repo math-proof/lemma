@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [MvPowerSeries_smul_eq_smul_of_forall_coeff_sub_mem_of_forall_mul_eq_zero](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_MvPowerSeries_smul_eq_smul_of_forall_coeff_sub_mem_of_forall_mul_eq_zero.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {R : Type u} [CommRing R]
   {τ : Type w}

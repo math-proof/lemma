@@ -4,7 +4,7 @@ import torch.Tensor.Basic
 open Tensor List
 
 
-@[main]
+@[path]
 private lemma main
   {X : Tensor α s}
 -- given

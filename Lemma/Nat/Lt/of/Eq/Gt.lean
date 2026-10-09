@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma subst
   {y x k b t : ℝ}
 -- given

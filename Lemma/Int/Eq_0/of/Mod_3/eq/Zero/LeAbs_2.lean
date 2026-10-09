@@ -2,7 +2,7 @@ import Lemma.Int.LeAbs.is.LeNeg.Le
 open Int
 
 
-@[main]
+@[path]
 private lemma main
   {d : ℤ}
 -- given

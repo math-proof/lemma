@@ -3,7 +3,7 @@ import Lemma.Nat.EqAddMulDiv
 open Nat Int
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h : n ≥ 0)

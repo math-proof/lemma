@@ -2,7 +2,7 @@ import Lemma.List.EqSwap.of.LeLength
 open List
 
 
-@[main]
+@[path]
 private lemma main
   {s : List α}
   {i : ℕ}

@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma invert.given
   {p q c : Prop}
 -- given

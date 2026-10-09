@@ -5,7 +5,7 @@ import Lemma.List.Permute.of.Add.ge.SubLength_1
 open List
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   {s : List α}
 -- given

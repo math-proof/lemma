@@ -8,7 +8,7 @@ import Lemma.Tensor.SEqPermuteS__Neg.of.Le
 open Bool List Tensor
 
 
-@[main, cast]
+@[path, cast]
 private lemma main
 -- given
   (h_s : s.length > 0)

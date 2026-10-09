@@ -12,7 +12,7 @@ open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Mode
 `𝔼[1{s[t] = x} * f(ω[t + j])] = Pr(s[t] = x) * W θ f j x` for a bounded strongly measurable stage function `f`
 (trajectory model `M`, time-homogeneous `j`-step kernel expectation `W`).
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A] [DecidableEq S]
   {M : Model Θ S A}

@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [RingHom_eq_of_forall_exists_sub_mem_pow_of_comp_eq](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_RingHom_eq_of_forall_exists_sub_mem_pow_of_comp_eq.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {R Rh S : Type} [CommRing R] [CommRing Rh] [CommRing S]
   {ι : R →+* Rh}

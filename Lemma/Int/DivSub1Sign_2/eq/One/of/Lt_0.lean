@@ -2,7 +2,7 @@ import Lemma.Int.Sign.eq.Neg1.of.Lt_0
 open Int
 
 
-@[main]
+@[path]
 private lemma main
   {n : ℤ}
 -- given

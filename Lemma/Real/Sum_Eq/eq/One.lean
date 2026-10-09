@@ -6,7 +6,7 @@ open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Mode
 /--
 `∑ x, 1{x₀ = x} = 1` over a finite type.
 -/
-@[main]
+@[path]
 private lemma main
   [Fintype S] [DecidableEq S]
 -- given

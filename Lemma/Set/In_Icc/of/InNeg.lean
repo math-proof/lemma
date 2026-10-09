@@ -2,7 +2,7 @@ import Lemma.Set.Neg.in.Icc.of.In_Icc
 open Set
 
 
-@[main]
+@[path]
 private lemma main
   [AddCommGroup α] [PartialOrder α] [IsOrderedAddMonoid α]
   {x a b : α}

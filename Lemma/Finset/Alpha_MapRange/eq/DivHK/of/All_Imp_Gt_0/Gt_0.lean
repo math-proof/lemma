@@ -6,7 +6,7 @@ import Lemma.Finset.All_Imp_EqK_EqH.of.All_Imp_Eq
 open Finset Continuant
 
 
-@[main]
+@[path]
 private lemma main
   {n : ℕ}
 -- given

@@ -6,7 +6,7 @@ import Lemma.Nat.Ge.of.Gt
 open Set Nat
 
 
-@[main]
+@[path]
 private lemma main
   [LinearOrder α]
   {a b : α} :

@@ -6,7 +6,7 @@ open CategoryTheory CategoryTheory.Limits TopologicalSpace AlgebraicGeometry Opp
 /--
 [AlgebraicGeometry_Scheme_exists_SpecMap_comp_eq_of_isAlgClosed_of_isClosed_singleton](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_Scheme_exists_SpecMap_comp_eq_of_isAlgClosed_of_isClosed_singleton.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {k₀ : Type u} [Field k₀]
   {F : Scheme.{u}}

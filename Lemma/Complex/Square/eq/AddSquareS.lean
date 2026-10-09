@@ -5,7 +5,7 @@ import Lemma.Bool.UFn.of.Eq
 open Bool Complex Int Real
 
 
-@[main]
+@[path]
 private lemma main
   {z : ℂ} :
 -- imply

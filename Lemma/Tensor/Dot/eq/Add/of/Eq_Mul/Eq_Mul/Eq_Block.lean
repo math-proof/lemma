@@ -5,7 +5,7 @@ import Mathlib.Analysis.SpecialFunctions.Pow.Real
 open Matrix
 
 
-@[main]
+@[path]
 private lemma position_representation.plane
   {mr mc : ℕ}
   {br bc lr lc : ℝ}

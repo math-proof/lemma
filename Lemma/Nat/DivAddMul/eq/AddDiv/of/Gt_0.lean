@@ -3,7 +3,7 @@ import Lemma.Nat.DivAddMul.eq.Add_Div.of.Gt_0
 open Nat
 
 
-@[main]
+@[path]
 private lemma left
 -- given
   (h : c > 0)
@@ -15,7 +15,7 @@ private lemma left
   apply Add.comm
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h : c > 0)

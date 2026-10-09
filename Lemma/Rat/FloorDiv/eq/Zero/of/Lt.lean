@@ -4,7 +4,7 @@ import Lemma.Rat.LtDiv.is.Lt_Mul.of.Gt_0
 open Rat Int
 
 
-@[main]
+@[path]
 private lemma main
   [Field α] [LinearOrder α] [IsStrictOrderedRing α]
   [FloorRing α]

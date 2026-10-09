@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 Kepler's second law: areal speed equals \(J/(2m)\) when \(J=m\rho^2\dot\theta\).
 -/
-@[main]
+@[path]
 private lemma main
   {m J : ℝ}
   {ρ θ : ℝ → ℝ}

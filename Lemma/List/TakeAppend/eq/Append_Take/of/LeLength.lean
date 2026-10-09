@@ -2,7 +2,7 @@ import Lemma.List.TakeAppend.eq.AppendTakeS
 open List
 
 
-@[main]
+@[path]
 private lemma main
   {l₁ : List α}
 -- given

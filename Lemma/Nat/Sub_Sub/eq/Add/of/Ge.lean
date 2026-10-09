@@ -4,7 +4,7 @@ import Lemma.Nat.SubAdd.eq.Sub_Sub.of.Ge
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   {a b c : ℕ}
 -- given
@@ -17,7 +17,7 @@ private lemma main
   rw [EqSubAdd.left]
 
 
-@[main]
+@[path]
 private lemma Comm
   {a b c : ℕ}
 -- given

@@ -16,12 +16,12 @@ open Tensor Bool Vector List
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Tensor.Append.is.Eq.Eq |
+| path | Tensor.Append.is.Eq.Eq |
 | comm | Tensor.Eq.Eq.is.Append |
 | mp | Tensor.Eq.Eq.of.Append |
 | mpr | Tensor.Append.of.Eq.Eq |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   {A C : Tensor α (n :: s)}
   {B D : Tensor α (m :: s)} :
@@ -53,7 +53,7 @@ private lemma main
     rw [h₀, h₁]
 
 
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma batch
   {A C : Tensor α (batch_size ++ n :: s)}
   {B D : Tensor α (batch_size ++ m :: s)} :

@@ -5,10 +5,10 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Complex.Pow_3.eq.One |
+| path | Complex.Pow_3.eq.One |
 | comm | Complex.One.eq.Pow_3 |
 -/
-@[main, comm]
+@[path, comm]
 private lemma main :
 -- imply
   let ω := (I * (2 * π / 3)).exp

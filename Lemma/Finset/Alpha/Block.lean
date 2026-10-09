@@ -5,7 +5,7 @@ import Lemma.List.OfFn_Fun.eq.MapRange
 open List Continuant
 
 
-@[main]
+@[path]
 private lemma main
   {n : ℕ}
   {x : ℕ → ℝ}

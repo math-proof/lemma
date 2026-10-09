@@ -9,7 +9,7 @@ past states" assumption, a.k.a. the premise `IndepGet`): if the reward `r t` is
 independent of the state history `s 0, …, s (t-1)` at **every** time `t`, then the
 reward at any later time `r (t + k)` is still independent of the same history `s 0, …, s (t-1)`.
 -/
-@[main]
+@[path]
 private lemma main
   {Ω α β : Type*}
   [MeasurableSpace Ω]

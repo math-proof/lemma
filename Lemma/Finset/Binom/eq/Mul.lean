@@ -5,7 +5,7 @@ import sympy.Basic
 open Nat
 
 
-@[main]
+@[path]
 private lemma half
   {n : ℕ} :
 -- imply

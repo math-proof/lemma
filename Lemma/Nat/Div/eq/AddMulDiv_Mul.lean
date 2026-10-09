@@ -4,7 +4,7 @@ import Lemma.Nat.EqAddMulDiv
 open Nat
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
 -- given
   (t m n : ℕ) :

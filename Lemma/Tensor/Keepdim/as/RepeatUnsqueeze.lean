@@ -6,7 +6,7 @@ import torch.functions
 open List Bool
 
 
-@[main, cast]
+@[path, cast]
 private lemma main
   {s : List ℕ}
   {d : Fin s.length}

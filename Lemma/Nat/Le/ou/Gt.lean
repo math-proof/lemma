@@ -4,7 +4,7 @@ import Lemma.Nat.Lt.ou.Eq.ou.Gt
 open Bool Nat
 
 
-@[main]
+@[path]
 private lemma main
   [LinearOrder α]
 -- given

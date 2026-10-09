@@ -4,7 +4,7 @@ import Lemma.Nat.NotOdd.is.Even
 open Bool Nat
 
 
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   [IntegerRing Z]
 -- given

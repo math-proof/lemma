@@ -2,7 +2,7 @@ import sympy.functions.combinatorial.numbers
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma recurrence
   {n k : ℕ} :
 -- imply

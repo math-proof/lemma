@@ -7,7 +7,7 @@ import Lemma.Hyperreal.StDiv.eq.InvStInv
 open Hyperreal Rat
 
 
-@[main, mt]
+@[path, mt]
 private lemma left
   {a b : ℝ*}
 -- given
@@ -28,10 +28,10 @@ private lemma left
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Hyperreal.Infinite.of.Infinite.StDiv.ne.Zero |
+| path | Hyperreal.Infinite.of.Infinite.StDiv.ne.Zero |
 | mt | Hyperreal.NotInfinite.of.NotInfinite.StDiv.ne.Zero |
 -/
-@[main, mt]
+@[path, mt]
 private lemma main
   {a b : ℝ*}
 -- given

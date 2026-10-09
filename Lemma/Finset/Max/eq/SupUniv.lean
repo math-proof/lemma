@@ -2,7 +2,7 @@ import sympy.concrete.reduced
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   [Fintype α]
   [Nonempty α]

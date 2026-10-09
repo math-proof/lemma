@@ -2,7 +2,7 @@ import sympy.functions.elementary.trigonometric
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main:
 -- imply
   sin (π / 3) = √3 / 2 := by

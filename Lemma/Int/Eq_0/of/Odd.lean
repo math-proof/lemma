@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [CuspForm_eq_zero_of_odd_gamma0](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_CuspForm_eq_zero_of_odd_gamma0.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {N : ℕ}
   {k : ℤ}

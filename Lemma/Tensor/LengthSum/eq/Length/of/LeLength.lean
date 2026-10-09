@@ -4,7 +4,7 @@ import Lemma.Tensor.Length.of.SEq
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [AddZeroClass α]
   {d : ℕ}

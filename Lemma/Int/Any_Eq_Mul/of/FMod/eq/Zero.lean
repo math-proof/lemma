@@ -3,7 +3,7 @@ import Lemma.Int.Sub.eq.Zero.is.Eq
 open Int
 
 
-@[main]
+@[path]
 private lemma main
   {n d : ℤ}
 -- given

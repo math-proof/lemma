@@ -6,7 +6,7 @@ open CategoryTheory AlgebraicGeometry Opposite AlgebraicGeometry.Scheme.Modules
 /--
 [AlgebraicGeometry_Scheme_Modules_bijective_unit_app_of_le_opensRange](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_Scheme_Modules_bijective_unit_app_of_le_opensRange.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {X Y : Scheme.{u}}
   {j : Y ⟶ X} [IsOpenImmersion j]

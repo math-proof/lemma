@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {f : ℕ → α}
   {g : ℕ → Set α}

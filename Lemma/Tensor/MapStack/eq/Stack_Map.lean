@@ -6,7 +6,7 @@ import sympy.matrices.expressions.special
 open Tensor
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   {f : α → β}
 -- given

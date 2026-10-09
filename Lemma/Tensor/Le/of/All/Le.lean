@@ -2,7 +2,7 @@ import Lemma.Tensor.Le.is.All.Le
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [LE α]
   {x y : Tensor α (n :: s)}

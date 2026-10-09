@@ -2,7 +2,7 @@ import Lemma.Set.In.of.In_SDiff
 open Set
 
 
-@[main]
+@[path]
 private lemma main
   {f : α → Prop}
   {S : Set α}

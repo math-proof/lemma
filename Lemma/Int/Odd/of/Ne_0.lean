@@ -4,7 +4,7 @@ import Lemma.Set.Or_Eq.of.In_Ico
 open Set
 
 
-@[main]
+@[path]
 private lemma main
   {n : ℤ}
 -- given

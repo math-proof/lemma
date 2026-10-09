@@ -2,7 +2,7 @@ import Lemma.Nat.Mul_Add.eq.AddMulS
 open Nat
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [Semiring α]
   {k d : α} :

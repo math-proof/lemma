@@ -18,10 +18,10 @@ set_option maxHeartbeats 2000000
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Tensor.GetAdd_MulSub_1.eq.Ite_Get |
+| path | Tensor.GetAdd_MulSub_1.eq.Ite_Get |
 | fin | Tensor.GetAdd_MulSub_1.eq.Ite_Get.fin |
 -/
-@[main, fin]
+@[path, fin]
 private lemma main
   {n : ℕ}
 -- given

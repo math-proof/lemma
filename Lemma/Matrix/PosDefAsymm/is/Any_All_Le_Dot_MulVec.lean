@@ -11,7 +11,7 @@ import sympy.core.singleton
 open Matrix
 
 
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   [Fintype α] [DecidableEq α]
 -- given

@@ -2,7 +2,7 @@ import Lemma.Hyperreal.XEq.is.OrInfinitesimalSSub
 open Hyperreal
 
 
-@[main]
+@[path]
 private lemma main
   {a b : ℝ*}
 -- given

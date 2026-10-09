@@ -3,7 +3,7 @@ import Lemma.Complex.ArgExpMulI.eq.Sub_Mul_Ceil
 open Complex
 
 
-@[main]
+@[path]
 private lemma main
   {x y : ℂ}
 -- given

@@ -6,7 +6,7 @@ import Lemma.Vector.Div.eq.One.of.All_Ne_0
 open Tensor Vector
 
 
-@[main, fin 1]
+@[path, fin 1]
 private lemma main
   [GroupWithZero α]
   {X : Tensor α s}

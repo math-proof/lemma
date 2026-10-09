@@ -2,7 +2,7 @@ import Lemma.Real.Le_MulAddSum_ExpSum.of.Le.All_Ge_0.All_Ge_0.All_Le_AddMulAdd1.
 open Finset Real
 
 
-@[main]
+@[path]
 private lemma main
   {u b c : ℕ → ℝ}
   {n₀ n₁ n : ℕ}

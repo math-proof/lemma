@@ -2,7 +2,7 @@ import sympy.Basic
 import Mathlib.Analysis.SpecialFunctions.Exp
 
 
-@[main]
+@[path]
 private lemma main
   {n d : ℕ}
   {A : Matrix (Fin n) (Fin n) ℝ}

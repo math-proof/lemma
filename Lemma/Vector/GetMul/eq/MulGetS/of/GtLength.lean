@@ -2,7 +2,7 @@ import Lemma.Vector.GetMul.eq.MulGetS
 open Vector
 
 
-@[main]
+@[path]
 private lemma main
   [Mul α]
 -- given

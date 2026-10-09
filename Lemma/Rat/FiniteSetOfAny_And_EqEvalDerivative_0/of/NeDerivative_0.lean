@@ -6,7 +6,7 @@ open Polynomial
 /--
 [Polynomial_finite_setOf_criticalValue](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Polynomial_finite_setOf_criticalValue.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {k : Type u} [Field k]
   {P : k[X]}

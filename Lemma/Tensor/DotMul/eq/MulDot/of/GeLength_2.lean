@@ -4,7 +4,7 @@ import Lemma.Tensor.SumMul.eq.MulSum
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [CommSemiring α]
 -- given
@@ -19,7 +19,7 @@ private lemma main
     MulMul.comm SumMul.eq.MulSum (zero_mul ·) hs' A C B
 
 
-@[main]
+@[path]
 private lemma left
   [CommSemiring α]
 -- given

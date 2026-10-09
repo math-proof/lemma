@@ -2,7 +2,7 @@ import Lemma.List.EraseIdx.eq.Cons_EraseIdxTail.of.GtLength_0
 open List
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [Mul α] [One α]
   {s : List α}

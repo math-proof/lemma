@@ -3,7 +3,7 @@ import Lemma.Nat.Gt_0.of.Ne_0
 open Nat
 
 
-@[main]
+@[path]
 private lemma left
   {a b : ℕ}
 -- given
@@ -15,7 +15,7 @@ private lemma left
   apply Gt_0.of.Ne_0 this
 
 
-@[main]
+@[path]
 private lemma main
   {a b : ℕ}
 -- given

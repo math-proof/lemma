@@ -5,7 +5,7 @@ import Lemma.Set.Lt.of.In_Range
 open Set Nat
 
 
-@[main]
+@[path]
 private lemma main
   {n i : ℕ}
 -- given

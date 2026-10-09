@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h : p ∧ q)
@@ -18,7 +18,7 @@ private lemma main
     exact h.right
 
 
-@[main]
+@[path]
 private lemma subst
   {a b : α}
   {p : α → Prop}

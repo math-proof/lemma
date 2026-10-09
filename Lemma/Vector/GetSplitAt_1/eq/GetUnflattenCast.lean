@@ -6,7 +6,7 @@ import Lemma.List.Prod.eq.Foldr
 open List Vector
 
 
-@[main, comm, fin, fin.comm]
+@[path, comm, fin, fin.comm]
 private lemma main
   {s : List ℕ}
 -- given

@@ -2,7 +2,7 @@ import sympy.polys.polyroots
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {x : ℂ} :
 -- imply

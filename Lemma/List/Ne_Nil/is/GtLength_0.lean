@@ -3,7 +3,7 @@ import Lemma.List.Ne_Nil.of.NeLength_0
 open List Nat
 
 
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
 -- given
   (s : List α) :

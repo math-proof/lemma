@@ -8,7 +8,7 @@ open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 /--
 `𝔼[f | s[t] = x] = Pr(s[t] = x)⁻¹ * 𝔼[1{s[t] = x} * f]`.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [Fintype A] [DecidableEq S]
   {M : Model Θ S A}

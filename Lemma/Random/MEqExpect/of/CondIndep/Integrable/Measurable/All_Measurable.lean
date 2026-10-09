@@ -14,7 +14,7 @@ Density-free: σ-algebra conditional expectations, via
 `Random.MEqExpect.of.CondIndep.Integrable.Measurable.Measurable.Measurable.Measurable`.
 The hypothesis `h₃` follows from the one-step Markov property by `Random.CondIndep.of.All_CondIndep.All_Measurable`.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace Ω] [StandardBorelSpace Ω] [MeasurableSpace S] [MeasurableSpace A]
   {π : Measure Ω} [IsProbabilityMeasure π]
@@ -33,7 +33,7 @@ private lemma main
 -- proof
   apply MEqExpect.of.CondIndep.Integrable.Measurable.Measurable.Measurable.Measurable
     (F := Expectation.asRV r[t:]) (X := (r, s, a)[:t]) (Z := (s t, a t))
-    (measurable_pi_lambda _ fun k ↦ (h₀ (t + k)).fst) (measurable_pi_lambda _ fun i ↦ h₀ i) (h₀ t).snd h₁ h₂ h₃
+    (Measurable.of_eval fun k ↦ (h₀ (t + k)).fst) (Measurable.of_eval fun i ↦ h₀ i) (h₀ t).snd h₁ h₂ h₃
 
 
 -- created on 2026-10-07

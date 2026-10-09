@@ -3,7 +3,7 @@ import Lemma.List.EqLengthArraySlice.of.LeLength_Add
 open List Nat
 
 
-@[main]
+@[path]
 private lemma main
   {s : List α}
   {i d : ℕ}

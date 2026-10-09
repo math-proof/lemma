@@ -5,7 +5,7 @@ import Lemma.List.GetFlatten_AddMul.eq.Get.of.Lt.GtLength.All_EqLength
 open List Fin
 
 
-@[main]
+@[path]
 private lemma main
   {s : List (List α)}
 -- given

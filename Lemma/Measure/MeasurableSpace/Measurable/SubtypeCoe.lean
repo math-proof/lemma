@@ -3,7 +3,7 @@ import sympy.Basic
 
 
 /-- Coercion out of a measurable subtype is measurable. -/
-@[main]
+@[path]
 private lemma main
   {α : Type*}
   [MeasurableSpace α]

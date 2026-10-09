@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [IsAdicComplete_exists_isPrimitiveRoot_of_residueField](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_IsAdicComplete_exists_isPrimitiveRoot_of_residueField.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing W] [IsLocalRing W] [IsAdicComplete (IsLocalRing.maximalIdeal W) W]
   {n : ℕ}

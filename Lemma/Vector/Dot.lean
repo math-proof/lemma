@@ -3,7 +3,7 @@ import Lemma.Vector.Dot.eq.SumMul
 open Nat Vector
 
 
-@[main]
+@[path]
 private lemma Comm
   [CommMagma α] [AddCommMonoid α]
 -- given

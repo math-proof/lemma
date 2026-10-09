@@ -4,7 +4,7 @@ import Lemma.Hyperreal.EqSt_0.is.Infinite.ou.Infinitesimal
 open Hyperreal Nat
 
 
-@[main]
+@[path]
 private lemma main
   {x : ℝ*}
 -- given

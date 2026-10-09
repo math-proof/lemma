@@ -6,7 +6,7 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry TopologicalSpace
 /--
 [AlgebraicGeometry_isIso_morphismRestrict_of_isOpenImmersion_of_range_eq](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_isIso_morphismRestrict_of_isOpenImmersion_of_range_eq.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {P P' : Scheme.{u}}
   {β : P' ⟶ P}

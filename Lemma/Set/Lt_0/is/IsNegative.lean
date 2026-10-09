@@ -5,10 +5,10 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Set.Lt_0.is.IsNegative |
+| path | Set.Lt_0.is.IsNegative |
 | mpr | Set.Lt_0.of.IsNegative |
 -/
-@[main, mpr]
+@[path, mpr]
 private lemma main
   {x : ℝ} :
 -- imply

@@ -4,7 +4,7 @@ import Lemma.Nat.NotLe.of.Gt
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   [Mul α] [Zero α] [LinearOrder α] [PosMulStrictMono α]
   {x a b : α}

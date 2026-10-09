@@ -2,7 +2,7 @@ import Lemma.Nat.NotLt.of.Ge
 open Nat
 
 
-@[main, mp, mpr]
+@[path, mp, mpr]
 private lemma main
   [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
 -- given

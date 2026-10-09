@@ -6,7 +6,7 @@ import sympy.Basic
 Position equals radial length times unit radial:
 \(\vec{r}=r\,\hat{r}\) whenever \(\vec{r}\neq 0\).
 -/
-@[main]
+@[path]
 private lemma main
   {d : ℕ}
   {r : Position d}

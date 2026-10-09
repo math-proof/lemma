@@ -5,7 +5,7 @@ import Lemma.Set.EqUnionInter__SDiff
 open Set Finset
 
 
-@[main]
+@[path]
 private lemma main
   [DecidableEq ι]
 -- given

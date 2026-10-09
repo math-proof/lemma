@@ -3,7 +3,7 @@ import Lemma.Tensor.GtLength.of.GtLength_0
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [Add α]
   {s : List ℕ}

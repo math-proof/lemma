@@ -3,7 +3,7 @@ import sympy.matrices.dense
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [Zero α]
   {m n : ℕ} :

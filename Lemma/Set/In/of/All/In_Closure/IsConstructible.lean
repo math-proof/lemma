@@ -6,7 +6,7 @@ open Topology
 /--
 [Topology_IsConstructible_mem_of_mem_closure_of_forall_specializes](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Topology_IsConstructible_mem_of_mem_closure_of_forall_specializes.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {X : Type u} [TopologicalSpace X]
   {s : Set X}

@@ -21,7 +21,7 @@ No history-independence hypothesis on the rewards is needed, since the environme
 `PolicyGradient.Model` is a (Markov) MDP.
 Both sides are `0` when `s[t] = x` has probability `0`.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S]
   [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A]
@@ -66,7 +66,7 @@ private lemma main
     have h₃ := Integral_MulEqSR_Add.eq.MulRealPreimageSWRc (M := M) h₁ θ t 0 x
     simp only [add_zero] at h₃
     have h₄ := Integral_MulEqS.eq.MulRealSum_MulProbSum_MulT h₁ (M := M) θ t x (M.V r s θ γ (t + 1))
-    rw [h₃, h₄, V.eq.TSum_MulPowWRc.of.Ne0Real_Preimage.In_Ico (M := M) h₀ h₁ θ t x hP, TSum_MulPowW.eq.AddWMul_Sum_MulProbSum_MulTTSum_MulPowW.of.In_Ico (M := M) h₀ θ x, Mul_AddMul_MulMul.eq.Add_Mul.of.Ne_0 hP]
+    rw [h₃, h₄, V.eq.TSum_MulPowWRc.of.Ne0Real_Preimage.In_Ico (M := M) θ t x h₀ h₁ hP, TSum_MulPowW.eq.AddWMul_Sum_MulProbSum_MulTTSum_MulPowW.of.In_Ico (M := M) h₀ θ x, Mul_AddMul_MulMul.eq.Add_Mul.of.Ne_0 hP]
     congr 2
     refine Finset.sum_congr rfl (fun u _ => ?_)
     rw [Finset.mul_sum, Finset.mul_sum]

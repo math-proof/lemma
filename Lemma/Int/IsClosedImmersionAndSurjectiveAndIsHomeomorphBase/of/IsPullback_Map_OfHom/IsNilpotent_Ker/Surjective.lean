@@ -6,7 +6,7 @@ open CategoryTheory AlgebraicGeometry
 /--
 [AlgebraicGeometry_isHomeomorph_of_isPullback_of_surjective_of_isNilpotent_ker](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_isHomeomorph_of_isPullback_of_surjective_of_isNilpotent_ker.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {B B₀ : Type u} [CommRing B] [CommRing B₀]
   {φ : B →+* B₀}

@@ -3,7 +3,7 @@ import Lemma.Set.Neg.in.Ioo.of.In_Ioo
 open Set
 
 
-@[main]
+@[path]
 private lemma main
   [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
   [FloorRing α]

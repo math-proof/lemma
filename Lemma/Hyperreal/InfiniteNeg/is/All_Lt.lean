@@ -8,7 +8,7 @@ import Lemma.Nat.Lt.of.Lt.Le
 open Nat Int
 
 
-@[main, comm, mp and, mpr]
+@[path, comm, mp and, mpr]
 private lemma main
 -- given
   (x : ℝ*) :
@@ -26,7 +26,7 @@ private lemma main
     simpa [Abs.eq.Neg.of.Lt_0 hx, GtNeg.is.Lt_Neg] using! h (-n)
 
 
-@[main, comm, mp and, mpr]
+@[path, comm, mp and, mpr]
 private lemma neg
 -- given
   (x : ℝ*) :

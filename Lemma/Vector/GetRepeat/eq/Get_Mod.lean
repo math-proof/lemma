@@ -7,7 +7,7 @@ import Lemma.Nat.EqMod
 open Vector Nat
 
 
-@[main, fin, val]
+@[path, fin, val]
 private lemma main
 -- given
   (x : List.Vector α n)

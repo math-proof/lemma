@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [IsAddCyclic_of_squarefree_natCard](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_IsAddCyclic_of_squarefree_natCard.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [AddCommGroup A]
 -- given

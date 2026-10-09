@@ -2,7 +2,7 @@ import Mathlib.Analysis.SpecialFunctions.Log.Basic
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {x b : ℝ}
 -- given

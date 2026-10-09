@@ -3,7 +3,7 @@ import Lemma.Nat.EqMin_SubMulS
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (v : List.Vector α (m * n))

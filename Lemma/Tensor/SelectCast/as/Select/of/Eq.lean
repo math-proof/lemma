@@ -5,10 +5,10 @@ import torch.Tensor
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Tensor.SelectCast.as.Select.of.Eq |
+| path | Tensor.SelectCast.as.Select.of.Eq |
 | cast | Tensor.SelectCast.eq.Cast_Select.of.Eq |
 -/
-@[main, cast]
+@[path, cast]
 private lemma main
 -- given
   (h_s : s = s')

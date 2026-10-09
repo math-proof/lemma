@@ -7,7 +7,7 @@ import Lemma.Nat.Ne.of.Gt
 open Bool Nat
 
 
-@[main]
+@[path]
 private lemma main
   [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
   {x y : α}

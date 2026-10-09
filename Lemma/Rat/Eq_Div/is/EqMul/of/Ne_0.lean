@@ -4,7 +4,7 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Rat.Eq_Div.is.EqMul.of.Ne_0 |
+| path | Rat.Eq_Div.is.EqMul.of.Ne_0 |
 | comm | Rat.EqMul.is.Eq_Div.of.Ne_0 |
 | mp   | Rat.EqMul.of.Eq_Div.Ne_0 |
 | mpr  | Rat.Eq_Div.of.EqMul.Ne_0 |
@@ -15,7 +15,7 @@ import sympy.Basic
 | mpr.mt | Rat.NeMul.of.Ne_Div.Ne_0 |
 | is.mt  | Rat.Ne_Div.is.NeMul.of.Ne_0 |
 -/
-@[main, comm, mp, mpr, mp.comm, mpr.comm, comm.is, mp.mt, mpr.mt, is.mt]
+@[path, comm, mp, mpr, mp.comm, mpr.comm, comm.is, mp.mt, mpr.mt, is.mt]
 private lemma main
   [GroupWithZero α]
   {b : α}
@@ -28,7 +28,7 @@ private lemma main
   eq_div_iff h₀
 
 
-@[main, comm, mp, mpr, mp.comm, mpr.comm, comm.is, mp.mt, mpr.mt, is.mt]
+@[path, comm, mp, mpr, mp.comm, mpr.comm, comm.is, mp.mt, mpr.mt, is.mt]
 private lemma left
   [CommGroupWithZero α]
   {a : α}

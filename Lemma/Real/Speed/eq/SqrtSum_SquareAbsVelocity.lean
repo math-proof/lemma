@@ -7,7 +7,7 @@ import sympy.Basic
 Speed is the Euclidean norm of velocity:
 \(v=|\vec{v}|=\sqrt{\sum_i v_i^2}\).
 -/
-@[main]
+@[path]
 private lemma main
   {d : ℕ}
   (r : Position d)

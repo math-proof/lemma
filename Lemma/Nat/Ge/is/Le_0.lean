@@ -5,11 +5,11 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Nat.Ge.is.Le_0 |
+| path | Nat.Ge.is.Le_0 |
 | mp | Nat.Le_0.of.Ge |
 | mpr | Nat.Ge.of.Le_0 |
 -/
-@[main, mp, mpr]
+@[path, mp, mpr]
 private lemma main
   {x y : ℝ} :
 -- imply

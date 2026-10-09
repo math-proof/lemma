@@ -4,7 +4,7 @@ import Lemma.Tensor.MaxLengthMulShape.eq.MaxMax
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (s s' s'' : List ℕ)

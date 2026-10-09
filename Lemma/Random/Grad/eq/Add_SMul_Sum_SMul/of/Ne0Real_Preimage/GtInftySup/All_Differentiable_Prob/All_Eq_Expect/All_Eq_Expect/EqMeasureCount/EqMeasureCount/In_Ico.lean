@@ -10,6 +10,7 @@ import Lemma.Random.Differentiable_RealPreimageS.of.GtInftySup.All_Differentiabl
 import Lemma.Random.Integral_G.eq.TSum_MulPowIntegral_R_Add.of.In_Ico
 import Lemma.Random.Measurable_A
 import Lemma.Random.Measurable_S
+import Lemma.Random.Measurable_R
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Topology Random
 open scoped ENNReal.ToRealCoe
 
@@ -32,7 +33,7 @@ h₆, h₇: θ ↦ π_θ(u | x) is differentiable with a bounded gradient.
 The proof identifies Q, V with `M.Q`, `M.V` and applies
 `Random.GradV.eq.AddSum_SMulSMul.of.Ne0Real_Preimage.GtInftySup.All_Differentiable_Prob.In_Ico`.
 -/
-@[main]
+@[path]
 private lemma main
   [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [CompleteSpace Θ]
   [ReferenceMeasure S] [MeasurableSingletonClass S] [Fintype S]
@@ -79,7 +80,7 @@ private lemma main
   set s : ℕ → (ℕ → ℝ × S × A) → S := fun t ω ↦ (ω t).2.1
   set a : ℕ → (ℕ → ℝ × S × A) → A := fun t ω ↦ (ω t).2.2
   intro hs ha hP hPs
-  have hpR : Measurable (fun ω t ↦ r t ω) := measurable_pi_lambda _ (Model.r_meas' h₁)
+  have hpR : Measurable (fun ω t ↦ r t ω) := measurable_pi_lambda _ (Random.Measurable_R h₁)
   have hfG : ∀ t, Measurable (fun integ : ℕ → ℝ ↦ (γ ^ (id : ℕ → ℕ)) @ integ[t:]) := fun t =>
     Measurable.tsum fun k => (measurable_pi_apply (t + k)).const_mul _
   have hQ : Q = fun θ => M.Q r s a θ γ := funext fun θ => funext fun t => funext fun x => funext fun u => by

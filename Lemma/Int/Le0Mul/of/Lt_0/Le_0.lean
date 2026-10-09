@@ -4,7 +4,7 @@ import Lemma.Nat.Le.is.Lt.ou.Eq
 open Nat Int
 
 
-@[main]
+@[path]
 private lemma main
   [Semiring α]
   [PartialOrder α]

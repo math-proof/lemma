@@ -4,7 +4,7 @@ import Lemma.Bool.Or_Not
 open Set Bool
 
 
-@[main]
+@[path]
 private lemma main
   [Decidable p] :
 -- imply

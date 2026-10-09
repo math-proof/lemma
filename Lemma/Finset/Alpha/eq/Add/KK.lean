@@ -7,7 +7,7 @@ import Lemma.Finset.SubMulSHK.eq.PowNeg1_Add_1
 open Finset Continuant
 
 
-@[main]
+@[path]
 private lemma main
   {n : ℕ}
   {x : ℕ → ℝ}
@@ -26,7 +26,7 @@ private lemma main
   linear_combination (K x (m + 1 + 1) * K x (m + 1)) * SubMulSHK.eq.PowNeg1_Add_1 x (m + 1)
 
 
-@[main]
+@[path]
 private lemma step2
   {n : ℕ}
   {x : ℕ → ℝ}

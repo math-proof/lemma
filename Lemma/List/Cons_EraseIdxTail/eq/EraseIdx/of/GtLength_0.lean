@@ -4,7 +4,7 @@ import Lemma.Nat.Succ.eq.Add_1
 open List Nat
 
 
-@[main]
+@[path]
 private lemma main
   {s : List α}
 -- given
@@ -18,7 +18,7 @@ private lemma main
   rw [EqAddSub.of.Ge (by omega)]
 
 
-@[main]
+@[path]
 private lemma headD
   {s : List α}
 -- given

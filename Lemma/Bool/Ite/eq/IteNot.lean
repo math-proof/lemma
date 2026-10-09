@@ -4,7 +4,7 @@ import Lemma.Bool.IffNotNot
 open Bool
 
 
-@[main]
+@[path]
 private lemma main
   [Decidable p]
   {a b : α} :

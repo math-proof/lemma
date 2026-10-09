@@ -5,7 +5,7 @@ import Lemma.Vector.XEqSumS.of.XEq.OrAll_NotInfinite
 open Hyperreal Vector Nat
 
 
-@[main]
+@[path]
 private lemma main
   {a b c : List.Vector ℝ* n}
 -- given
@@ -23,7 +23,7 @@ private lemma main
   exact XEqMulS.of.XEq.Imp_XEqInvS (All_XEqGetS.of.XEq.fin h i) (h_xinfty i)
 
 
-@[main]
+@[path]
 private lemma left
   {a b c : List.Vector ℝ* n}
 -- given

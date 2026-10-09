@@ -13,7 +13,7 @@ import Lemma.Nat.EqAdd_Sub.of.Gt
 open List Nat
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h : i < j)

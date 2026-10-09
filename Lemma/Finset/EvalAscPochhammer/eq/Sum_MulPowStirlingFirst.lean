@@ -3,7 +3,7 @@ import sympy.Basic
 
 
 /-- `RisingFactorial(x, n) = Σ_{k ≤ n} x^k · Stirling1(n, k)` (unsigned Stirling numbers of the first kind). -/
-@[main]
+@[path]
 private lemma main
 -- given
   (x : ℝ)

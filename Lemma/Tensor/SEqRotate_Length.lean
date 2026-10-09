@@ -11,7 +11,7 @@ import Lemma.List.EqRotate_Length
 open Tensor Bool Vector Nat List Fin
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (X : Tensor α s) :

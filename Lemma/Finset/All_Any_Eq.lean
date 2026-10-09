@@ -2,7 +2,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma permutation
   {n : ℕ}
   {a : Fin (n + 1) → ℤ} :

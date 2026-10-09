@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [IsArtinianRing_finite_of_finite_residueField](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_IsArtinianRing_finite_of_finite_residueField.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing R] [IsArtinianRing R] [IsLocalRing R] [Finite (IsLocalRing.ResidueField R)] :
 -- imply

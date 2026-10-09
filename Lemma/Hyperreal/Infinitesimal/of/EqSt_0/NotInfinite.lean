@@ -5,11 +5,11 @@ open Hyperreal
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Hyperreal.Infinitesimal.of.EqSt_0.NotInfinite |
+| path | Hyperreal.Infinitesimal.of.EqSt_0.NotInfinite |
 | mt | Hyperreal.NeSt_0.of.NotInfinitesimal.NotInfinite |
 | mt 1 | Hyperreal.Infinite.of.EqSt_0.NotInfinitesimal |
 -/
-@[main, mt, mt 1]
+@[path, mt, mt 1]
 private lemma main
   {x : ℝ*}
 -- given

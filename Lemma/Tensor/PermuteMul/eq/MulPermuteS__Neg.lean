@@ -6,7 +6,7 @@ import Lemma.Tensor.SEqPermuteS.of.SEq.Eq.Eq.GtLength
 open Tensor Bool
 
 
-@[main]
+@[path]
 private lemma main
   [Mul α]
 -- given

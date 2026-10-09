@@ -3,7 +3,7 @@ import Lemma.Nat.SquareAdd.eq.AddAddSquareS_MulMul2
 open Nat Int
 
 
-@[main]
+@[path]
 private lemma main
   [CommSemiring α] [LinearOrder α] [ExistsAddOfLE α] [PosMulMono α] [AddLeftMono α]
   {x y : α} :

@@ -8,7 +8,7 @@ import Lemma.Rat.Eq_0.is.EqInv_0
 open Hyperreal Nat Rat
 
 
-@[main, comm, mp 1, mpr, mp.mt 1, mpr.mt]
+@[path, comm, mp 1, mpr, mp.mt 1, mpr.mt]
 private lemma main
   [NeZero (x : ℝ*)] :
 -- imply

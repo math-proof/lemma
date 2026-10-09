@@ -4,7 +4,7 @@ import sympy.Basic
 open MeasureTheory
 
 
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   [MeasurableSpace Ω] [MeasurableSpace α] [MeasurableSpace β]
   {x : Ω → α} {y : Ω → β} :

@@ -3,7 +3,7 @@ import Lemma.Finset.Inter
 open Finset
 
 
-@[main]
+@[path]
 private lemma left
   [DecidableEq α]
 -- given
@@ -16,7 +16,7 @@ private lemma left
   assumption
 
 
-@[main]
+@[path]
 private lemma main
   [DecidableEq α]
 -- given

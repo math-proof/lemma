@@ -5,7 +5,7 @@ import Lemma.Vector.GetSplitAt_1.as.ArraySlice.of.GtGet_0.GtLength_0
 open Vector List Bool
 
 
-@[main]
+@[path]
 private lemma main
   {s : List ℕ}
 -- given

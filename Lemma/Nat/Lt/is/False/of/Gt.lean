@@ -2,7 +2,7 @@ import Lemma.Nat.Gt.is.False.of.Lt
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   [PartialOrder α]
   {a b : α}

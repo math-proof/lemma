@@ -2,7 +2,7 @@ import Lemma.Nat.LtValS.of.Lt
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   {i j : Fin n}
 -- given

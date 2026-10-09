@@ -7,7 +7,7 @@ open MeasureTheory PolicyGradient Random
 /--
 If every `(x, u) ↦ π_θ(u | x)` is jointly measurable, so is the state value `x ↦ Vkd θ γ x`.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace S] [ReferenceMeasure A]
   {M : DensityModel Θ S A}

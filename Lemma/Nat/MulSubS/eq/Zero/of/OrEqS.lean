@@ -3,7 +3,7 @@ import Lemma.Nat.Mul.eq.Zero.is.OrEqS_0
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   [MulZeroClass α] [NoZeroDivisors α]
   [SubSelf α]

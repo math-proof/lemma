@@ -7,7 +7,7 @@ import Lemma.Complex.EqArg_Ite_Arccos_NegArccos.of.Ne_0
 open Bool Complex
 
 
-@[main]
+@[path]
 private lemma main
   {z : ℂ} :
 -- imply

@@ -2,7 +2,7 @@ import sympy.Basic
 import sympy.vector.vector
 
 
-@[main]
+@[path]
 private lemma main
   [NatCast α]
 -- given

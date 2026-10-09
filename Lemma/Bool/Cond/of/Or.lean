@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma domain_defined
   {D : Set α}
   {i : α}

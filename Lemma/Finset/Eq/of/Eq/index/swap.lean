@@ -7,7 +7,7 @@ import Lemma.Nat.EqIndexGet.of.Lt.InjOnRange
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   {n : ℕ}
   {x : ℕ → ℤ}

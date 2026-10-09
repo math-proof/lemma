@@ -5,7 +5,7 @@ import sympy.Basic
 open Matrix
 
 
-@[main]
+@[path]
 private lemma position_representation.rotary
   {h : ℕ}
   {b t : ℝ}

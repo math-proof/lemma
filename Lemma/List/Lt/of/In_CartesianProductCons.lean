@@ -2,7 +2,7 @@ import Lemma.Set.All_LtGetS.of.In_CartesianProduct
 open Set
 
 
-@[main]
+@[path]
 private lemma main
   {x₀ s₀ : ℕ}
   {x s : List ℕ}

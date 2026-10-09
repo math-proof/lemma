@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {P Q : α → Prop}
   (n : α)
@@ -13,7 +13,7 @@ private lemma main
   h n
 
 
-@[main]
+@[path]
 private lemma single_variable
   {p q : α → Prop}
 -- given
@@ -24,7 +24,7 @@ private lemma single_variable
   h
 
 
-@[main]
+@[path]
 private lemma Comm
   {p q : α → Prop}
 -- given

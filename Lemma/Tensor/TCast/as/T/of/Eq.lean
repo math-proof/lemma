@@ -6,10 +6,10 @@ import torch.Tensor.permute
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Tensor.TCast.as.T.of.Eq |
+| path | Tensor.TCast.as.T.of.Eq |
 | cast | Tensor.TCast.eq.Cast_T.of.Eq |
 -/
-@[main, cast]
+@[path, cast]
 private lemma main
 -- given
   (h : s = s')

@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma induct.second
   {P : ℕ → Prop}
 -- given

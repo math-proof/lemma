@@ -4,7 +4,7 @@ import Lemma.Vector.Eq.of.FlattenMap.Length
 open Vector
 
 
-@[main]
+@[path]
 private lemma main
   {a b : List (List.Vector α n)}
 -- given

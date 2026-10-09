@@ -4,7 +4,7 @@ import torch.Tensor.repeat
 
 
 
-@[main]
+@[path]
 private lemma main
   {s : List ℕ}
 -- given

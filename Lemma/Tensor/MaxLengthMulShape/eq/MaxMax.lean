@@ -3,7 +3,7 @@ import sympy.Basic
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (s s' s'' : List ℕ) :

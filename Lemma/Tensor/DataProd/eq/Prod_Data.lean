@@ -5,7 +5,7 @@ import Lemma.Finset.UFnProd.eq.Prod_UFn.All_EqUFnMul.EqUFn_1
 open Tensor Finset
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [DecidableEq ι]
   [CommMonoid α]

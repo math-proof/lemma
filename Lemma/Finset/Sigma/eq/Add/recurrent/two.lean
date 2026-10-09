@@ -2,7 +2,7 @@ import Mathlib
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {n k : ℕ}
   {x : ℕ → ℂ}

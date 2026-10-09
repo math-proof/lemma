@@ -3,7 +3,7 @@ import sympy.polys.polyroots
 open Hyperreal
 
 
-@[main]
+@[path]
 private lemma main
   {x : ℝ*}
 -- given

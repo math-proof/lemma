@@ -3,7 +3,7 @@ import Lemma.Vector.GetFlatten_AddMul.eq.Get.of.Lt.Lt
 open Nat Vector
 
 
-@[main, fin]
+@[path, fin]
 private lemma main
 -- given
   (h_n : n' = n)

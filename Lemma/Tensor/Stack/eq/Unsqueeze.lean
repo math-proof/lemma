@@ -5,7 +5,7 @@ import Lemma.Tensor.EqGetUnsqueeze_0
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (X : Tensor α s) :

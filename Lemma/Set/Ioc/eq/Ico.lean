@@ -6,7 +6,7 @@ import Lemma.Nat.Le.of.Lt_Add_1
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   [IntegerRing ι]
 -- given

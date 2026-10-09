@@ -2,7 +2,7 @@ import Lemma.Set.InterSDiff.eq.Empty.of.SubsetInter
 open Set
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (A B : Set α) :

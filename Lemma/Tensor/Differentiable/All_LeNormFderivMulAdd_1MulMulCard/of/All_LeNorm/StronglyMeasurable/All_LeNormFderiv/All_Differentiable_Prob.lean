@@ -32,7 +32,7 @@ private lemma reward_int_bdd [MeasurableSpace S] [MeasurableSpace A] [Fintype A]
 If every `θ ↦ π_θ(u | x)` is differentiable with derivative bounded by `Cp` and `‖f‖ ≤ Cf`, then `θ ↦ W θ f j y`
 is differentiable with derivative bounded by `(j + 1) * (|A| * Cp * Cf)`.
 -/
-@[main]
+@[path]
 private lemma main
   [NormedAddCommGroup Θ] [NormedSpace ℝ Θ] [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A]
   {M : Model Θ S A}

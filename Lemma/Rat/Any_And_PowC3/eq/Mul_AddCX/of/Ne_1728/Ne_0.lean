@@ -6,7 +6,7 @@ open PowerSeries
 /--
 [WeierstrassCurve_exists_isUnit_discriminant_and_c4_cube_eq_mul_C_add_X_powerSeries](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_WeierstrassCurve_exists_isUnit_discriminant_and_c4_cube_eq_mul_C_add_X_powerSeries.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [Field K]
   {a : K}

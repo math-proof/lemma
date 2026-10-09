@@ -9,7 +9,7 @@ Conditional expectation given a finite-valued random variable `X` is, on every a
 the expectation under the conditional measure `π[|X ⁻¹' {x}]`
 (on atoms of probability `0` the conditional measure is `0`).
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace Ω] [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S]
   {π : Measure Ω} [IsFiniteMeasure π]

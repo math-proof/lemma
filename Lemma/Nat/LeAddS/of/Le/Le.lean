@@ -6,10 +6,10 @@ open Nat
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Nat.LeAddS.of.Le.Le |
+| path | Nat.LeAddS.of.Le.Le |
 | comm 3 | Nat.GeAddS.of.Ge.Ge |
 -/
-@[main, comm 3]
+@[path, comm 3]
 private lemma main
   [Add α]
   [Preorder α]

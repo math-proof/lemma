@@ -17,7 +17,7 @@ import Lemma.Vector.SEq.of.All_EqGetS.Eq
 open Bool List Nat Tensor Vector Fin
 
 
-@[main]
+@[path]
 private lemma main
   [Div α]
 -- given

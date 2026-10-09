@@ -3,7 +3,7 @@ import Lemma.Vector.FlattenReplicateReplicate.eq.Replicate
 open Vector
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (m n : ℕ)

@@ -2,7 +2,7 @@ import sympy.Basic
 import Lemma.Nat.Eq.of.And.squeeze
 
 
-@[main]
+@[path]
 private lemma main
   {x y : ℝ}
 -- given

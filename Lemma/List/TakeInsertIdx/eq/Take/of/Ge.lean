@@ -7,7 +7,7 @@ import Lemma.Nat.Le.of.Le.Le
 open List Nat
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h : i ≥ j)

@@ -11,7 +11,7 @@ import Lemma.Bool.SEq.is.SEqCast.of.Eq
 open Tensor Vector Bool
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (X : Tensor α s) :

@@ -2,7 +2,7 @@ import Lemma.Rat.LeInvS.of.Ge.Gt_0
 open Rat
 
 
-@[main]
+@[path]
 private lemma main
   [Field α] [LinearOrder α] [IsStrictOrderedRing α]
   {x a : α}

@@ -21,11 +21,11 @@ private lemma  iterate_pderiv_eq_zero_of_lt {σ R : Type*} [CommSemiring R] {φ 
   rw [show n + m + 1 = m + 1 + n by ring, Function.iterate_add_apply, Function.iterate_succ_apply]
   have h0 : ((pderiv k)^[n] φ).IsHomogeneous 0 := by
     simpa using isHomogeneous_iterate_pderiv k hφ n
-  have hC : (pderiv k)^[n] φ = C (coeff 0 ((pderiv k)^[n] φ)) :=
+  have hC : (pderiv k)^[n] φ = C (((pderiv k)^[n] φ).coeff 0) :=
     totalDegree_eq_zero_iff_eq_C.mp (Nat.eq_zero_of_le_zero h0.totalDegree_le)
   rw [hC, pderiv_C]
   exact Function.iterate_fixed (map_zero _) m
-@[main]
+@[path]
 private lemma main
   {σ R : Type*} [CommSemiring R]
   {φ : MvPolynomial σ R}

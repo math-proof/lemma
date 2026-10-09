@@ -8,7 +8,7 @@ import Lemma.List.GetElem.eq.None.of.LeLength
 open Bool List Nat
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   {s : List α}
 -- given

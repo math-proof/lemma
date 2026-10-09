@@ -3,7 +3,7 @@ import Lemma.Int.EqSubAdd
 open Int Nat
 
 
-@[main]
+@[path]
 private lemma main
   [Ring α]
   {x : α} :

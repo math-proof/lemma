@@ -2,7 +2,7 @@ import sympy.vector.Basic
 import sympy.Basic
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [Zero α] :
 -- imply

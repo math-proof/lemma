@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [RingHom_exists_comp_algebraMap_eq_of_isIntegral_of_isAlgClosed](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_RingHom_exists_comp_algebraMap_eq_of_isIntegral_of_isAlgClosed.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {A B K : Type*} [CommRing A] [CommRing B] [Algebra A B] [Algebra.IsIntegral A B] [Field K] [IsAlgClosed K]
   {χ : A →+* K}
@@ -19,6 +19,7 @@ private lemma main
     Ideal.exists_ideal_over_prime_of_isIntegral (RingHom.ker χ) (⊥ : Ideal B) hker
   have := hQ
   have hPker : ∀ a : A, a ∈ Q.comap (algebraMap A B) → χ a = 0 := fun a ha => by
+    change a ∈ Ideal.under A Q at ha
     rw [hQP] at ha
     exact RingHom.mem_ker.mp ha
   let χbar : A ⧸ Q.comap (algebraMap A B) →+* K := Ideal.Quotient.lift _ χ hPker

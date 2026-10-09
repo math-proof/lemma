@@ -2,7 +2,7 @@ import Lemma.Real.CosSub.eq.AddMulS
 open Real
 
 
-@[main]
+@[path]
 private lemma main
   {x : ℝ}
 -- given

@@ -4,7 +4,7 @@ import Lemma.Nat.Ge.of.Gt
 open List Nat
 
 
-@[main]
+@[path]
 private lemma main
   {s : List α}
 -- given

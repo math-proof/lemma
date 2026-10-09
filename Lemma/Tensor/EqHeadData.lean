@@ -2,7 +2,7 @@ import sympy.Basic
 import torch.Tensor
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (x : α) :
@@ -12,7 +12,7 @@ private lemma main
   rfl
 
 
-@[main]
+@[path]
 private lemma nat
   [NatCast α]
 -- given

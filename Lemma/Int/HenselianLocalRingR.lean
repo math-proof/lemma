@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [HenselianLocalRing_of_isAdicComplete_maximalIdeal](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_HenselianLocalRing_of_isAdicComplete_maximalIdeal.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing R] [IsLocalRing R] [IsAdicComplete (IsLocalRing.maximalIdeal R) R] :
 -- imply

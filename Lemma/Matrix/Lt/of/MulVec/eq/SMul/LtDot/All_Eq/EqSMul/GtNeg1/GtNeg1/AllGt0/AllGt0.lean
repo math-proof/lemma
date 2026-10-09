@@ -13,7 +13,7 @@ Okishio's theorem (PF-free layer).
 
 Then the profit rate strictly rises: `r < r'`.
 -/
-@[main]
+@[path]
 private lemma main
   {S : Type*} [Fintype S] [DecidableEq S]
   {M M' : Matrix S S ℝ}

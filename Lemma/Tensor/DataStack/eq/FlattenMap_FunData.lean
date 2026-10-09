@@ -6,7 +6,7 @@ import torch.stack
 open Tensor Vector
 
 
-@[main]
+@[path]
 private lemma fin
 -- given
   (f : Fin n → Tensor α s) :
@@ -23,7 +23,7 @@ private lemma fin
   simp [EqGetRange.fin i]
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (f : ℕ → Tensor α s) :

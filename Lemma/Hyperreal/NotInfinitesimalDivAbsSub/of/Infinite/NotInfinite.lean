@@ -20,7 +20,7 @@ import Lemma.Rat.DivSub.eq.SubDivS
 open Hyperreal Nat Rat Int
 
 
-@[main]
+@[path]
 private lemma main
   {a b : ℝ*}
 -- given

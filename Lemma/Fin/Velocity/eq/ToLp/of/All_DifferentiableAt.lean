@@ -13,7 +13,7 @@ Cartesian decomposition of velocity: if
 \(\vec{r}(t)=\sum_i x_i(t)\,\hat{e}_i\), then
 \(\vec{v}(t)=\sum_i \dot{x}_i(t)\,\hat{e}_i\).
 -/
-@[main]
+@[path]
 private lemma main
   {d : ℕ}
   {x : Fin d → ℝ → ℝ}

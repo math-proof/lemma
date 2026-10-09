@@ -28,7 +28,7 @@ open Hyperreal Nat Rat
 set_option maxHeartbeats 400000
 
 
-@[main]
+@[path]
 private lemma main
   {a b x y : ℝ*}
 -- given

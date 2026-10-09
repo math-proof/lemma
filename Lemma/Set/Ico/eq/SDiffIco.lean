@@ -10,7 +10,7 @@ import Lemma.Set.In.of.In_SDiff
 open Set Bool Nat
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (i n : ℕ) :

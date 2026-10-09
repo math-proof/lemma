@@ -5,7 +5,7 @@ import Lemma.Hyperreal.Ne_0.of.NotInfinitesimal
 open Hyperreal
 
 
-@[main]
+@[path]
 private lemma main
   {a b : ℝ*}
 -- given

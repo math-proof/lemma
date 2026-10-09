@@ -7,7 +7,7 @@ import Lemma.Vector.RepeatMap.eq.MapRepeat
 open Nat Tensor Vector
 
 
-@[main]
+@[path]
 private lemma main
   {s' : List ℕ}
 -- given

@@ -12,7 +12,7 @@ import Lemma.Vector.SEq.of.All_EqGetS.Eq
 open Tensor List Vector Nat
 
 
-@[main]
+@[path]
 private lemma main
   {s : List ℕ}
   {d : ℕ}

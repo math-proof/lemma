@@ -11,7 +11,7 @@ import Lemma.Vector.HEq.of.Val
 open Tensor List Vector Nat
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h : s.length > 0)

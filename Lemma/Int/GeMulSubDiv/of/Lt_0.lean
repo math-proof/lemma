@@ -10,7 +10,7 @@ import Lemma.Int.Mod.lt.Neg.of.Lt_0
 open Nat Int
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h : d < 0)

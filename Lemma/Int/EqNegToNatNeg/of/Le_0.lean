@@ -2,7 +2,7 @@ import Lemma.Int.ToNatNeg.eq.Neg.of.Le_0
 open Int
 
 
-@[main]
+@[path]
 private lemma main
   {z : ℤ}
 -- given

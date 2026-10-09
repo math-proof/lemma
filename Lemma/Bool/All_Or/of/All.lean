@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma given
   {A : Set α}
   {p q : α → Prop}

@@ -2,7 +2,7 @@ import Lemma.Vector.EqGet0_0
 open Vector
 
 
-@[main, subst 0]
+@[path, subst 0]
 private lemma main
   [Zero α]
 -- given

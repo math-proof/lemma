@@ -2,7 +2,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma reverse
   {a b : α}
 -- given
@@ -13,7 +13,7 @@ private lemma reverse
   exact h.symm
 
 
-@[main]
+@[path]
 private lemma simp.common_terms
   [AddGroup α]
   {x y a : α}
@@ -25,7 +25,7 @@ private lemma simp.common_terms
   exact fun e => h (by rw [e])
 
 
-@[main]
+@[path]
 private lemma transport
   [AddGroup α]
   {x y a : α}

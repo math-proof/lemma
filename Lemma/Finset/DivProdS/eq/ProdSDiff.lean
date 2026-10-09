@@ -3,7 +3,7 @@ import sympy.Basic
 open Finset
 
 
-@[main]
+@[path]
 private lemma main
   [Fintype ι] [DecidableEq ι]
   [CommGroup α]

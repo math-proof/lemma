@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [Ideal_finite_quotient_of_isMaximal_of_finiteType_of_finite_quotient](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Ideal_finite_quotient_of_isMaximal_of_finiteType_of_finite_quotient.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing A] [CommRing B] [Algebra A B] [Algebra.FiniteType A B]
   {𝔪 : Ideal A} [𝔪.IsMaximal] [Finite (A ⧸ 𝔪)]

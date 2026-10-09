@@ -5,7 +5,7 @@ import Lemma.Nat.LtSub.is.Lt_Add.of.Ge
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   {i j : Fin n}
 -- given

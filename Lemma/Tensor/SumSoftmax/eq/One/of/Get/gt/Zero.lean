@@ -16,7 +16,7 @@ import torch.Tensor.sum
 open Bool List Nat Tensor Fin
 
 
-@[main]
+@[path]
 private lemma main
   [ExpPos α] [IsOrderedCancelAddMonoid α]
   {i : Fin s.length}

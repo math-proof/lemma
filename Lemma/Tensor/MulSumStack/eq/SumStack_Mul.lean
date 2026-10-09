@@ -5,7 +5,7 @@ open Nat Tensor
 set_option maxHeartbeats 500000
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [NonUnitalNonAssocSemiring α]
 -- given

@@ -3,7 +3,7 @@ import Lemma.Tensor.LengthGetSlice.eq.Min
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (X : Tensor α s)

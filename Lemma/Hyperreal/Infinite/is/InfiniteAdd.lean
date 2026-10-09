@@ -20,14 +20,14 @@ private lemma mp
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Hyperreal.Infinite.is.InfiniteAdd |
+| path | Hyperreal.Infinite.is.InfiniteAdd |
 | comm | Hyperreal.InfiniteAdd.is.Infinite |
 | mp   | Hyperreal.InfiniteAdd.of.Infinite |
 | mpr  | Hyperreal.Infinite.of.InfiniteAdd |
 | mp.mt | Hyperreal.NotInfinite.of.NotInfiniteAdd |
 | mpr.mt | Hyperreal.NotInfiniteAdd.of.NotInfinite |
 -/
-@[main, comm, mp, mpr, mp.mt, mpr.mt]
+@[path, comm, mp, mpr, mp.mt, mpr.mt]
 private lemma main
 -- given
   (x : ℝ*)
@@ -45,7 +45,7 @@ private lemma main
     exact h
 
 
-@[main, comm, mp, mpr, mp.mt, mpr.mt]
+@[path, comm, mp, mpr, mp.mt, mpr.mt]
 private lemma left
 -- given
   (r : ℝ)

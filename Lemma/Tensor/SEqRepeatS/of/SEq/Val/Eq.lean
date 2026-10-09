@@ -3,7 +3,7 @@ import torch.Tensor.repeat
 import stdlib.SEq
 
 
-@[main]
+@[path]
 private lemma main
   {X : Tensor α s}
   {X' : Tensor α s'}

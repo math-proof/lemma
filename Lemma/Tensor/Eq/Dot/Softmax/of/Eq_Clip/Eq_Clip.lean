@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma position_representation.relative.indexed
   {n d_z : ℕ}
   {Q K V : Fin n → Fin d_z → ℝ}

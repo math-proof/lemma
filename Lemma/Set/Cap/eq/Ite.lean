@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {p : Prop} [Decidable p]
   {s A B : Set α} :

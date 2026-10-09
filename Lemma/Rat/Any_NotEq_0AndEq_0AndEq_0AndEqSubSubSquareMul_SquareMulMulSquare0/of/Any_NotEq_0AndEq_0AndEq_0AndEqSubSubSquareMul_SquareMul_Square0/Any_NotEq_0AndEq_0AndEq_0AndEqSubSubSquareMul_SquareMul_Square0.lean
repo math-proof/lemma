@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [QuadraticForm_exists_ternary_isotropic_mul_of_exists_of_exists](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_QuadraticForm_exists_ternary_isotropic_mul_of_exists_of_exists.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [Field K]
   {t u u' : K}

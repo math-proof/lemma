@@ -3,7 +3,7 @@ import Lemma.Tensor.Select_0.as.Get.of.GtGet_0.GtLength_0
 open Tensor
 
 
-@[main, cast]
+@[path, cast]
 private lemma main
 -- given
   (h_s : s.length > 0)

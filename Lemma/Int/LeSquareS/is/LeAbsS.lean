@@ -2,7 +2,7 @@ import sympy.core.power
 import sympy.Basic
 
 
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
 -- given

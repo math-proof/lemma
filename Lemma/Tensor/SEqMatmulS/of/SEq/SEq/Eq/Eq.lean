@@ -2,7 +2,7 @@ import Lemma.Tensor.SEqMatmulS.of.SEq.SEq
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [Mul α] [Zero α] [Add α]
   {A : Tensor α (s_A ++ [m, t])}

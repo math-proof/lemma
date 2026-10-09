@@ -2,7 +2,7 @@ import Lemma.List.EqTake.of.LeLength
 open List
 
 
-@[main]
+@[path]
 private lemma main
   -- given
   (s : List α) :

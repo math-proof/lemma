@@ -13,7 +13,7 @@ import Lemma.Int.GeMulAdd1Div.of.Gt_0
 open Bool Int Nat
 
 
-@[main]
+@[path]
 private lemma main
   {d : ℤ}
 -- given

@@ -3,7 +3,7 @@ import Lemma.Vector.GetIndices.eq.Add
 open Vector
 
 
-@[main, fin]
+@[path, fin]
 private lemma main
   {j n i : ℕ}
 -- given

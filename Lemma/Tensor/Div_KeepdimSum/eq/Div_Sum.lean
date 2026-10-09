@@ -17,7 +17,7 @@ import torch.functions
 open Bool Nat Tensor Vector
 
 
-@[main]
+@[path]
 private lemma main
   [Div α] [Add α] [Zero α]
 -- given

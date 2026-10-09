@@ -2,7 +2,7 @@ import Lemma.Vector.GetCast.eq.Get.of.Eq
 open Vector
 
 
-@[main, fin]
+@[path, fin]
 private lemma main
 -- given
   (h_i : i < n)

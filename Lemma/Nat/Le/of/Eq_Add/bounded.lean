@@ -2,7 +2,7 @@ import Mathlib.Data.Real.Basic
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {a b d : ℝ}
   -- given

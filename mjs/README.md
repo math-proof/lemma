@@ -106,3 +106,194 @@ The Identity is a simplified version of an Equality/Equivalence of the same type
 `List`, `Finset` are considered variadic functions, eg:
 - `In_ListNeg` denotes: `_ ∈ [Neg]`
 - `In_Finset_AddMulS` denotes: `_ ∈ {_, AddMul, AddMul}`
+
+## Typeclass hierarchy
+
+Nested Lean typeclass tree from `vue/render.vue` (`typeclass` + related consts). Empty leaf arrays are listed as bare bullets. Comments from the source note operator / number-system support.
+
+- Field
+  - CommRing — Complex, Real, Rational, Integer +-*
+    - Ring
+      - Semiring
+        - NonUnitalSemiring
+          - NonUnitalNonAssocSemiring
+            - AddCommMonoid
+              - AddMonoid
+                - AddSemigroup
+                  - Add
+                - AddZeroClass
+              - AddCommSemigroup
+                - AddSemigroup
+                  - Add
+                - AddCommMagma
+                  - Add
+            - Distrib
+              - Mul
+              - Add
+              - LeftDistribClass
+                - Mul
+                - Add
+              - RightDistribClass
+                - Mul
+                - Add
+            - MulZeroClass
+              - Mul
+              - Zero
+          - SemigroupWithZero
+            - Semigroup
+              - Mul
+            - MulZeroClass
+              - Mul
+              - Zero
+        - NonAssocSemiring
+          - NonUnitalNonAssocSemiring [see above]
+          - MulZeroOneClass
+            - MulOneClass
+              - One
+              - Mul
+            - MulZeroClass
+              - Mul
+              - Zero
+          - AddCommMonoidWithOne
+            - AddMonoidWithOne
+              - NatCast
+              - AddMonoid
+                - AddSemigroup
+                  - Add
+                - AddZeroClass
+              - One
+            - AddCommMonoid
+              - AddMonoid
+                - AddSemigroup
+                  - Add
+                - AddZeroClass
+              - AddCommSemigroup
+                - AddSemigroup
+                  - Add
+                - AddCommMagma
+                  - Add
+        - MonoidWithZero
+          - Monoid — Complex, Real, Rational, Integer with +-*
+            - Semigroup
+              - Mul
+            - MulOneClass
+              - One
+              - Mul
+          - MulZeroOneClass [see above]
+          - SemigroupWithZero [see above]
+      - AddCommGroup
+        - AddGroup
+          - SubNegMonoid
+            - AddMonoid
+              - AddSemigroup
+                - Add
+              - AddZeroClass
+            - Neg
+            - Sub
+        - AddCommMonoid
+          - AddMonoid
+            - AddSemigroup
+              - Add
+            - AddZeroClass
+          - AddCommSemigroup
+            - AddSemigroup
+              - Add
+            - AddCommMagma
+              - Add
+      - AddGroupWithOne
+        - IntCast
+        - AddMonoidWithOne [see above]
+        - AddGroup [see above]
+      - NonUnitalRing
+        - NonUnitalNonAssocRing
+          - AddCommGroup [see above]
+          - NonUnitalNonAssocSemiring [see above]
+        - NonUnitalSemiring [see above]
+      - NonAssocRing
+        - NonUnitalNonAssocRing [see above]
+        - NonAssocSemiring
+          - NonUnitalNonAssocSemiring [see above]
+          - MulZeroOneClass [see above]
+          - AddCommMonoidWithOne [see above]
+        - AddCommGroupWithOne
+          - AddCommGroup [see above]
+          - AddGroupWithOne [see above]
+          - AddCommMonoidWithOne [see above]
+    - CommMonoid
+      - Monoid [see above]
+      - CommSemigroup
+        - Semigroup
+          - Mul
+        - CommMagma
+          - Mul
+    - CommSemiring
+      - Semiring
+        - NonUnitalSemiring [see above]
+        - NonAssocSemiring [see above]
+        - MonoidWithZero [see above]
+      - CommMonoid [see above]
+    - AddCommGroupWithOne [see above]
+    - NonUnitalCommRing
+      - NonUnitalRing [see above]
+      - NonUnitalNonAssocCommRing
+        - NonUnitalNonAssocRing [see above]
+        - NonUnitalNonAssocCommSemiring
+          - NonUnitalNonAssocSemiring [see above]
+          - CommMagma
+            - Mul
+  - DivisionRing
+    - Ring
+      - Semiring [see above]
+      - AddCommGroup [see above]
+      - AddGroupWithOne [see above]
+      - NonUnitalRing [see above]
+      - NonAssocRing [see above]
+    - DivInvMonoid
+      - Monoid [see above]
+      - Inv
+      - Div
+    - DivisionSemiring
+      - Semiring [see above]
+      - GroupWithZero
+        - MonoidWithZero [see above]
+        - DivInvMonoid [see above]
+        - Nontrivial
+  - Semifield
+    - CommSemiring [see above]
+    - DivisionSemiring [see above]
+    - CommGroupWithZero
+      - CommMonoidWithZero — Nat/Int
+        - CommMonoid [see above]
+        - MonoidWithZero [see above]
+      - GroupWithZero [see above]
+      - DivisionCommMonoid
+        - DivisionMonoid
+          - DivInvMonoid [see above]
+          - InvolutiveInv
+            - Inv
+        - CommMonoid [see above]
+- LinearOrderedCommRing
+  - StrictOrderedRing — Real, Rational, Integer +-*<>≤≥
+    - Ring [see above]
+    - OrderedAddCommGroup
+      - AddCommGroup [see above]
+      - PartialOrder
+        - Preorder
+  - LinearOrder
+    - PartialOrder
+      - Preorder
+    - Min
+    - Max
+    - Ord
+  - CommMonoid [see above]
+- IntegerRing
+- FloorRing
+- Inhabited
+- GetElem
+- Decidable
+- DecidableEq
+- DecidablePred
+- DecidableRel
+- LE
+- LT
+- KroneckerDelta

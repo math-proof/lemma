@@ -9,7 +9,7 @@ open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Mode
 /--
 Chapman–Kolmogorov: `Pr(s[n+1] = z | s[0] = x) = ∑ y, Pr(s[n] = y | s[0] = x) * Pr(s[1] = z | s[0] = y)`
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A] [DecidableEq S]
   {M : Model Θ S A}

@@ -10,7 +10,7 @@ open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Mode
 For `t ≤ n`, the residual `δ[n+1] = r[n+1] + γ * Vc(s[n+2]) - Vc(s[n+1])` is orthogonal to every function of `(s[t], a[t])`:
 `𝔼[δ[n+1] • ψ(s[t], a[t])] = 0`.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A] [DecidableEq S] [DecidableEq A]
   {M : Model Θ S A}

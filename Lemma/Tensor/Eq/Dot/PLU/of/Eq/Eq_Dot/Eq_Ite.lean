@@ -5,7 +5,7 @@ open Matrix
 
 
 /-- py's literal conclusion: `X = MatProd[k:n](SwapMatrix(n, k, pivot k)ᵀ) @ MatProd[k:n](block k) @ B[n-1]`. -/
-@[main]
+@[path]
 private lemma main
   {n : ℕ}
   {X : Matrix (Fin n) (Fin n) ℂ}

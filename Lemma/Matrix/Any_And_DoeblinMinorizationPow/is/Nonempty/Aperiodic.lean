@@ -8,12 +8,12 @@ import Mathlib.Data.Finset.Lattice.Fold
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Matrix.Any_And_DoeblinMinorizationPow.is.Nonempty.Aperiodic |
+| path | Matrix.Any_And_DoeblinMinorizationPow.is.Nonempty.Aperiodic |
 | comm | Matrix.Nonempty.Aperiodic.is.Any_And_DoeblinMinorizationPow |
 | mp | Matrix.Nonempty.Aperiodic.of.Any_And_DoeblinMinorizationPow |
 | mpr | Matrix.Any_And_DoeblinMinorizationPow.of.Nonempty.Aperiodic |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   {S : Type*} [Fintype S] [DecidableEq S]
   {P : Matrix S S ℝ} [RowStochastic P] [StochasticIrreducible P] :

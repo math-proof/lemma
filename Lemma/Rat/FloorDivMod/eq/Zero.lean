@@ -4,7 +4,7 @@ import Lemma.Nat.LtMod.of.Ne_0
 open Nat Rat
 
 
-@[main]
+@[path]
 private lemma main
   [Field α] [LinearOrder α] [IsStrictOrderedRing α]
   [FloorRing α]

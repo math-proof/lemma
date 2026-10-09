@@ -3,7 +3,7 @@ import sympy.Basic
 import Lemma.Complex.Eq0Add_Pow_3.of.In_Finset_AddSMulS
 
 
-@[main]
+@[path]
 private lemma sub.given
   {x a b c p q δ : ℂ}
   {d : ℤ}

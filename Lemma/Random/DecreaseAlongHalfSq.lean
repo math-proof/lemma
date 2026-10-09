@@ -12,7 +12,7 @@ import Lemma.LpSpace.InnerToL2HalfSq'_ToL2.eq.SquareNorm.of.Ge_1
 open Finset LpSpace
 
 
-@[main]
+@[path]
 private lemma main
   {S A : Type*} [Fintype S] [DecidableEq S] [Nonempty S] [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype A] [DecidableEq A] [Nonempty A] [MeasurableSpace A] [MeasurableSingletonClass A]
   {spec : QLearningSpec S A} :

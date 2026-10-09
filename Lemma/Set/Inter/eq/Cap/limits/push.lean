@@ -2,7 +2,7 @@ import sympy.Basic
 import Mathlib
 
 
-@[main]
+@[path]
 private lemma main
   {f : ℕ → Set α}
   {i n : ℕ}

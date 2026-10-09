@@ -3,7 +3,7 @@ import Lemma.Vector.SEqSumS.of.All_SEq.Ne_Empty
 open Finset Vector
 
 
-@[main]
+@[path]
 private lemma main
   [AddCommMonoid α]
   {x : Fin m → List.Vector α n}

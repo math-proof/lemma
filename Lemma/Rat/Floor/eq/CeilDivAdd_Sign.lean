@@ -4,7 +4,7 @@ import Lemma.Int.CoeAdd.eq.AddCoeS
 open Int
 
 
-@[main]
+@[path]
 private lemma main
   [Field α] [LinearOrder α] [IsStrictOrderedRing α] [FloorRing α]
   {n d : ℤ} :

@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [AlgebraicCurve_isIntegral_adjoin_intermediateField_mk](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicCurve_isIntegral_adjoin_intermediateField_mk.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {L F : Type*} [Field L] [Field F] [Algebra L F]
   {E : IntermediateField L F}

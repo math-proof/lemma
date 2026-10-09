@@ -3,7 +3,7 @@ import Lemma.Vector.Zero.eq.Replicate
 open Vector
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [Zero α]
 -- given

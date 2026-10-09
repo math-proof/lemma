@@ -3,7 +3,7 @@ import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 open Tensor
 
 
-@[main, cast]
+@[path, cast]
 private lemma main
   {s : List ℕ}
   {d : Fin s.length}

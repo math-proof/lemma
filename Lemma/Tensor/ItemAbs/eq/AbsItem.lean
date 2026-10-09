@@ -7,10 +7,10 @@ open Tensor
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Tensor.ItemAbs.eq.AbsItem |
+| path | Tensor.ItemAbs.eq.AbsItem |
 | comm | Tensor.AbsItem.eq.ItemAbs |
 -/
-@[main, comm]
+@[path, comm]
 private lemma main
   [AddGroup α] [LinearOrder α]
 -- given

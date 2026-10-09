@@ -6,7 +6,7 @@ import Lemma.Rat.DivNeg.eq.NegDiv
 open Complex Rat Real
 
 
-@[main]
+@[path]
 private lemma main
   {x a c : ℂ}
 -- given

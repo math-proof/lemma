@@ -2,7 +2,7 @@ import Lemma.Finset.UFnSum.eq.Sum_UFn.All_EqUFnAdd.EqUFn_0
 open Finset
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [AddCommMonoid N]
   [Div N]

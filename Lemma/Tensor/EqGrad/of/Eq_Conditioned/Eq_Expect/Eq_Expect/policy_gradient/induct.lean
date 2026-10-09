@@ -19,6 +19,7 @@ import sympy.core.numbers
 import Lemma.Random.Integral_G.eq.TSum_MulPowIntegral_R_Add.of.In_Ico
 import Lemma.Random.Measurable_A
 import Lemma.Random.Measurable_S
+import Lemma.Random.Measurable_R
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Filter Topology Random Measure
 open scoped ENNReal.ToRealCoe
 
@@ -31,7 +32,7 @@ Unrolled policy-gradient recursion: for a reachable initial state x (h₆) and e
 The sympy path integral ∫ ∏ Pr(s[t+1] | s[t]) over s[1:t+1] is written as the 	-step
 conditional probability Pr(s[t] = y | s[0] = x) (Chapman–Kolmogorov).
 -/
-@[main]
+@[path]
 private lemma main
   [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [CompleteSpace Θ]
   [ReferenceMeasure S] [MeasurableSingletonClass S] [Fintype S]
@@ -68,7 +69,7 @@ private lemma main
   set r : ℕ → (ℕ → ℝ × S × A) → ℝ := fun t ω ↦ (ω t).1
   set s : ℕ → (ℕ → ℝ × S × A) → S := fun t ω ↦ (ω t).2.1
   set a : ℕ → (ℕ → ℝ × S × A) → A := fun t ω ↦ (ω t).2.2
-  have hr : ∀ t, Measurable (r t) := Model.r_meas' h₁
+  have hr : ∀ t, Measurable (r t) := Random.Measurable_R h₁
   have hpR : Measurable (fun ω t ↦ r t ω) := measurable_pi_lambda _ hr
   have hfG : ∀ t, Measurable (fun integ : ℕ → ℝ ↦ (γ ^ (id : ℕ → ℕ)) @ integ[t:]) := fun t =>
     Measurable.tsum fun k => (measurable_pi_apply (t + k)).const_mul _

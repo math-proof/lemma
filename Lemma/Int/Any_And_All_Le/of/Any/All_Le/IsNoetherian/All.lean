@@ -6,7 +6,7 @@ open scoped TensorProduct
 /--
 [HopfOrder_exists_greatest_of_sup_closed_of_le_noetherian](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_HopfOrder_exists_greatest_of_sup_closed_of_le_noetherian.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {R : Type u} [CommRing R]
   {A : Type w} [CommRing A] [Algebra R A]

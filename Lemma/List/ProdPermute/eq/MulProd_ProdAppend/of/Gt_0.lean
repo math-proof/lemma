@@ -4,7 +4,7 @@ import Lemma.Nat.EqMax.of.Gt
 open List Int Nat
 
 
-@[main]
+@[path]
 private lemma main
   [Monoid α]
   {s : List α}

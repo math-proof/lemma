@@ -9,7 +9,7 @@ open CategoryTheory AlgebraicGeometry TopologicalSpace
 
 private lemma  isIntegrallyClosed_of_subsingleton (R : Type u) [CommRing R] [Subsingleton R] : IsIntegrallyClosed R :=
   (isIntegrallyClosed_iff (FractionRing R)).mpr fun {_} _ => ⟨0, Subsingleton.elim _ _⟩
-@[main]
+@[path]
 private lemma main
   {X : Scheme.{u}} [IsIntegral X]
   {U : X.Opens}

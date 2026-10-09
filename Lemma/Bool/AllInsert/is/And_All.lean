@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (s : Set α)
@@ -13,7 +13,7 @@ private lemma main
   simp [Set.insert]
 
 
-@[main]
+@[path]
 private lemma doit
   {x : ℤ → ℤ → ℝ}
   {m a b : ℤ} :

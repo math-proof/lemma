@@ -3,7 +3,7 @@ import torch.Tensor.Basic
 open List
 
 
-@[main]
+@[path]
 private lemma main
   {s : List ℕ}
 -- given

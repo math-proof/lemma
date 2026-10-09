@@ -2,7 +2,7 @@ import Lemma.Tensor.GetSliceStack.as.Stack_UFnAdd.of.Eq
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   {n m start stop : ℕ}
 -- given

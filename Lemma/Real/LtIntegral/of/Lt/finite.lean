@@ -4,7 +4,7 @@ import sympy.Basic
 import Lemma.Real.LtIntegral.of.All_Lt
 
 
-@[main]
+@[path]
 private lemma main
   {a b : ℝ}
   {f g : ℝ → ℝ}

@@ -7,7 +7,7 @@ open Rep.FiniteCyclicGroup
 /--
 [groupCohomology_subsingleton_H1_trivial_int](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_groupCohomology_subsingleton_H1_trivial_int.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [Group G] [Finite G] :
 -- imply

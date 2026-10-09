@@ -8,7 +8,7 @@ import Lemma.Vector.Prod.eq.Prod_Get
 open Fin Tensor Vector
 
 
-@[main, fin, comm, fin.comm]
+@[path, fin, comm, fin.comm]
 private lemma main
   [CommMonoid α]
 -- given

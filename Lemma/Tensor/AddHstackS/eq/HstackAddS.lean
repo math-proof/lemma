@@ -7,7 +7,7 @@ open Tensor
 set_option maxHeartbeats 400000
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [Add α]
 -- given

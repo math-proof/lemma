@@ -6,7 +6,7 @@ import Lemma.Tensor.SEqMatmulS.of.SEq.SEq
 open Tensor
 
 
-@[main, cast]
+@[path, cast]
 private lemma main
   [Mul α] [Add α] [Zero α]
   {s s' : List ℕ}

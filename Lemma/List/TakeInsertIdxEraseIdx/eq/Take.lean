@@ -3,7 +3,7 @@ import Lemma.List.TakeInsertIdx.eq.Take
 open List
 
 
-@[main]
+@[path]
 private lemma main
   [Monoid α]
 -- given

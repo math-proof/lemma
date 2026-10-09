@@ -4,13 +4,13 @@ import sympy.Basic
 /--
 | attributes | lemma | comment|
 | :---: | :---: | :---: |
-| main | Nat.Eq_0.is.Pow.eq.Zero ||
+| path | Nat.Eq_0.is.Pow.eq.Zero ||
 | mp 12 | Nat.Pow.eq.Zero.of.Eq_0 |requires only [MonoidWithZero α] |
 | mpr  | Nat.Eq_0.of.Pow.eq.Zero | [NoZeroDivisors α] [NeZero (1 : α)] are needed|
 | mp.mt 12 | Nat.Ne_0.of.Pow.ne.Zero |requires only [MonoidWithZero α] |
 | mpr.mt  | Nat.Pow.ne.Zero.of.Ne_0 | [NoZeroDivisors α] [NeZero (1 : α)] are needed|
 -/
-@[main, mp 12, mpr, mp.mt 12, mpr.mt]
+@[path, mp 12, mpr, mp.mt 12, mpr.mt]
 private lemma main
   [NeZero (n : ℕ)]
   [MonoidWithZero α]

@@ -6,7 +6,7 @@ import Lemma.Vector.EqHeadDCons
 open Vector
 
 
-@[main]
+@[path]
 private lemma main
   [AddMonoid α]
   (v : List.Vector α n) :

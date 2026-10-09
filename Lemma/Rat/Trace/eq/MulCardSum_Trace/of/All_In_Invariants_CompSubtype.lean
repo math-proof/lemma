@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [ArtinL_trace_restrict_invariants_eq_inv_card_mul_sum_trace](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_ArtinL_trace_restrict_invariants_eq_inv_card_mul_sum_trace.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [Field K] [CharZero K] [Group G] [AddCommGroup V] [Module K V] [FiniteDimensional K V]
   {ρ : Representation K G V}

@@ -7,7 +7,7 @@ import Lemma.Tensor.GetDot.eq.DotGet
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [Semiring α] [CharZero α]
 -- given

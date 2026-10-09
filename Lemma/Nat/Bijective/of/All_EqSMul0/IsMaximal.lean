@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [Module_bijective_smul_of_notMem_of_isMaximal_of_pow_smul_eq_bot](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Module_bijective_smul_of_notMem_of_isMaximal_of_pow_smul_eq_bot.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing T] [AddCommGroup M] [Module T M]
   {𝔓 : Ideal T}

@@ -7,7 +7,7 @@ import Lemma.Tensor.Softmax.as.Stack_Softmax.of.LtAdd_1Length
 open Tensor Bool
 
 
-@[main]
+@[path]
 private lemma main
   [Exp α]
   {d i : ℕ}

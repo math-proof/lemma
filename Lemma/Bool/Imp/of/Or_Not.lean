@@ -3,7 +3,7 @@ import sympy.Basic
 open Bool
 
 
-@[main]
+@[path]
 private lemma main
   {p q : Prop}
 -- given

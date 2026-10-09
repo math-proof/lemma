@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [exists_mem_addSubgroup_one_add_mul_one_add_eq_one](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_exists_mem_addSubgroup_one_add_mul_one_add_eq_one.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [NormedField L] [CompleteSpace L]
   {M : AddSubgroup L}

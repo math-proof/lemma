@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [ValuationSubring_exists_root_mem_of_monic](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_ValuationSubring_exists_root_mem_of_monic.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [Field K] [IsAlgClosed K]
   {A : ValuationSubring K}

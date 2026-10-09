@@ -5,7 +5,7 @@ import Lemma.Tensor.GetEye.eq.Delta
 open Nat Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [Semiring α] [CharZero α]
 -- given

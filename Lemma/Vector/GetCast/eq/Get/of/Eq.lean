@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main, fin]
+@[path, fin]
 private lemma main
 -- given
   (h : n = n')

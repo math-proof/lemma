@@ -5,7 +5,7 @@ import Lemma.Vector.Sum.eq.Zero
 open Nat Vector
 
 
-@[main]
+@[path]
 private lemma main
   [AddZeroClass α]
 -- given

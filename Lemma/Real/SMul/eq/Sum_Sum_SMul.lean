@@ -7,7 +7,7 @@ open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Mode
 Indicator expansion over the finite state / action spaces:
 `c • ψ(s[t], a[t]) = ∑ x, ∑ u, (1{s[t] = x ∧ a[t] = u} * c) • ψ x u`.
 -/
-@[main]
+@[path]
 private lemma main
   [Fintype S] [Fintype A] [DecidableEq S] [DecidableEq A]
   {E : Type*}

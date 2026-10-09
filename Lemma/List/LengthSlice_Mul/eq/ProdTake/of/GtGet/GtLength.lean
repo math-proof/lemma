@@ -3,7 +3,7 @@ import Lemma.List.ProdTakeMapCast.eq.ProdTake
 open List
 
 
-@[main]
+@[path]
 private lemma main
   {s : List ℕ}
 -- given

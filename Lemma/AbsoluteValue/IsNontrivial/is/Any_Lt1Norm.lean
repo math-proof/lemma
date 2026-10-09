@@ -2,7 +2,7 @@ import Lemma.AbsoluteValue.Norm.eq.UFn
 open AbsoluteValue
 
 
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   [Field K]
 -- given

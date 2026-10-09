@@ -6,7 +6,7 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 /--
 [AlgebraicGeometry_Scheme_range_pullbackMap_id_id_eq_preimage_range](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_Scheme_range_pullbackMap_id_id_eq_preimage_range.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {X S T T' : Scheme.{u}}
   {f : X ⟶ S}

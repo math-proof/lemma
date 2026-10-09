@@ -8,7 +8,7 @@ import Lemma.Nat.AddMul.lt.Mul
 open Vector Nat
 
 
-@[main]
+@[path]
 private lemma main
   {v : List.Vector α [m, n].prod}
   {v' : List.Vector α [n, m].prod}

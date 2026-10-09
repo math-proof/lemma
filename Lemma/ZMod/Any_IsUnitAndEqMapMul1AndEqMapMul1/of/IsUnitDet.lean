@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [Matrix_exists_isUnit_det_and_mul_map_castRingHom_zmod_eq_one](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Matrix_exists_isUnit_det_and_mul_map_castRingHom_zmod_eq_one.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [Fintype m] [DecidableEq m]
   {n : ℕ}

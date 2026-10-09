@@ -4,11 +4,11 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Bool.All.is.All.And.Conditionset |
+| path | Bool.All.is.All.And.Conditionset |
 | mp | Bool.All.And.Conditionset.of.All |
 | mpr | Bool.All.of.All.And.Conditionset |
 -/
-@[main, mp, mpr]
+@[path, mp, mpr]
 private lemma main
   {A : Set α}
   {p c : α → Prop} :

@@ -5,7 +5,7 @@ import sympy.Basic
 This lemma establishes that in a preorder, a strict inequality `x < y` implies the corresponding non-strict inequality `x ≤ y`.
 It converts the strict order relation into a non-strict one, leveraging the properties of the preorder structure.
 -/
-@[main]
+@[path]
 private lemma main
   [Preorder α]
   {x y : α}
@@ -17,7 +17,7 @@ private lemma main
   le_of_lt h
 
 
-@[main]
+@[path]
 private lemma relax.given
   {x y : ℤ}
 -- given

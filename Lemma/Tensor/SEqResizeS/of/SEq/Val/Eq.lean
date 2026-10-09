@@ -3,7 +3,7 @@ import sympy.Basic
 import torch.Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [Zero α]
   {X : Tensor α s}

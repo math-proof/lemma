@@ -4,7 +4,7 @@ import sympy.Basic
 
 
 /-- Derivative form of \(d\hat{r}/d\theta=\hat{\theta}\). -/
-@[main]
+@[path]
 private lemma main
   (θ : ℝ) :
 -- imply

@@ -2,7 +2,7 @@ import Mathlib.Data.EReal.Basic
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {a : ℝ}
   {y z : EReal}

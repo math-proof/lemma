@@ -4,7 +4,7 @@ import Lemma.Tensor.SoftmaxAdd_Keepdim.eq.Softmax
 open Tensor Int
 
 
-@[main]
+@[path]
 private lemma main
   [ExpRing α]
   {d : ℕ}

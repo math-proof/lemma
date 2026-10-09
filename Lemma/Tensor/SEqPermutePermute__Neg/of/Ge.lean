@@ -4,7 +4,7 @@ import Lemma.Tensor.SEqPermutePermute__Neg.of.GtLength_Add
 open Tensor Nat
 
 
-@[main]
+@[path]
 private lemma main
   {s : List ℕ}
   {i : Fin s.length}

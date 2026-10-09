@@ -2,7 +2,7 @@ import Lemma.Bool.Any_UFn.of.All_UFn.Any_Eq
 open Bool
 
 
-@[main]
+@[path]
 private lemma main
   {a b : α → ι → β}
   {p : β → Prop}

@@ -2,7 +2,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma swap1
   {n : ℕ}
   {x : Fin (n + 1) → ℤ}
@@ -14,7 +14,7 @@ private lemma swap1
   split_ifs <;> simp_all
 
 
-@[main]
+@[path]
 private lemma swap1.helper
   {n : ℕ}
   {x : Fin (n + 1) → ℤ}

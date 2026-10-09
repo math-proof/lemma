@@ -5,7 +5,7 @@ import stdlib.Slice
 open Nat List
 
 
-@[main]
+@[path]
 private lemma main
   {d n : ℕ}
 -- given

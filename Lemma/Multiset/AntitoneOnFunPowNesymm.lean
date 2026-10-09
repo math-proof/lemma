@@ -229,7 +229,7 @@ private lemma pow_nesymm_le {s : Multiset ℝ} {k : ℕ} (hs : ∀ x ∈ s, 0 �
 
 /-- **Maclaurin's inequality**(对称平均不等式). For a nonnegative multiset `s`, the sequence
 `k ↦ (nesymm s k) ^ (k : ℝ)⁻¹` is antitone for `k ≥ 1`. -/
-@[main]
+@[path]
 private lemma main {s : Multiset ℝ}
 -- given
   (hs : ∀ x ∈ s, 0 ≤ x) :

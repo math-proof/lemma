@@ -3,7 +3,7 @@ import Lemma.Tensor.XEq.is.All_XEqGetS
 open Tensor
 
 
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   [XEq α]
 -- given

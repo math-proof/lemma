@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   [AddCommGroup α] [LinearOrder α] [IsOrderedAddMonoid α]
   {x a y : α}

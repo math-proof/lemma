@@ -5,7 +5,7 @@ import Lemma.Vector.Mul.eq.Mul_Replicate
 open Tensor Vector
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [Mul α]
 -- given

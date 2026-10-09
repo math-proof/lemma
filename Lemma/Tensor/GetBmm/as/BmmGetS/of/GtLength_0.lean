@@ -6,7 +6,7 @@ import torch.Tensor.bmm
 open List Tensor
 
 
-@[main, fin, cast, cast.fin]
+@[path, fin, cast, cast.fin]
 private lemma main
   [Mul α] [Add α] [Zero α]
 -- given

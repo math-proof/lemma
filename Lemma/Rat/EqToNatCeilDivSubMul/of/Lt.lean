@@ -2,7 +2,7 @@ import Lemma.Rat.EqCeilDivSubMul.of.Lt
 open Rat
 
 
-@[main]
+@[path]
 private lemma main
   [Field α] [LinearOrder α] [IsStrictOrderedRing α] [FloorRing α]
   {m n j : ℕ}

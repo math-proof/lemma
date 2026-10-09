@@ -6,7 +6,7 @@ open CategoryTheory AlgebraicGeometry
 /--
 [AlgebraicGeometry_surjective_specMap_of_surjective_of_ker_le_nilradical](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_surjective_specMap_of_surjective_of_ker_le_nilradical.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {R S : Type u} [CommRing R] [CommRing S]
   {f : R →+* S}

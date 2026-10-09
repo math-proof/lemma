@@ -9,7 +9,7 @@ import torch.Tensor
 open Bool Vector
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [Add α] [Zero α]
 -- given

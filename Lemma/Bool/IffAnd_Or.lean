@@ -2,7 +2,7 @@ import Lemma.Bool.IffAndOr
 open Bool
 
 
-@[main]
+@[path]
 private lemma main
   (left : Bool := false) :
 -- imply

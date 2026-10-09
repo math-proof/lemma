@@ -3,7 +3,7 @@ import Lemma.Bool.BFn_Ite.is.OrAndS
 open Bool
 
 
-@[main]
+@[path]
 private lemma main
   [Decidable p]
 -- given

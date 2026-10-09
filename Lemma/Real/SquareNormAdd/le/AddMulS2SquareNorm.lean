@@ -3,7 +3,7 @@ import Lemma.Nat.SquareAdd.le.AddMulS2Square
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   [SeminormedAddGroup E]
 -- given

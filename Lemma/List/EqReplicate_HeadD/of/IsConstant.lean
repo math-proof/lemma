@@ -3,7 +3,7 @@ import Lemma.List.UFnGet_0.of.NeLength_0.All_UFn
 open List
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   {s : List α}
 -- given

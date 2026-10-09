@@ -5,7 +5,7 @@ import sympy.Basic
 open Finset
 
 
-@[main]
+@[path]
 private lemma main
   {u b c : ℕ → ℝ}
   {n₀ n : ℕ}

@@ -4,7 +4,7 @@ import Lemma.Finset.Eq.of.All_SEq.Ne_Empty
 open Bool Finset
 
 
-@[main]
+@[path]
 private lemma main
   {Vector : α → Sort v}
   {s : Finset ι}

@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
 -- given
   (x : α)
@@ -12,7 +12,7 @@ private lemma main
   Set.mem_iInter
 
 
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma set
 -- given
   (x : α)
@@ -24,7 +24,7 @@ private lemma set
   simp
 
 
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma double
   {ι : Sort u}
   {κ : ι → Sort v}
@@ -37,7 +37,7 @@ private lemma double
   Set.mem_iInter₂
 
 
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma set₂
   {κ : ι → Type u}
 -- given

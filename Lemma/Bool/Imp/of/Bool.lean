@@ -5,7 +5,7 @@ import Lemma.Bool.Imp.is.Bool.eq.MulBoolS
 open Bool Nat
 
 
-@[main]
+@[path]
 private lemma main
   [Decidable p]
   [Decidable q]

@@ -3,7 +3,7 @@ import Lemma.Tensor.Stack.of.All_Eq
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   {n m : ℕ}
 -- given

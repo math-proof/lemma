@@ -8,11 +8,11 @@ the hypotheses are arranged in the constructor order of multiplication a / b * b
 
 | attributes | lemma |
 | :---: | :---: |
-| main | Hyperreal.Infinitesimal.of.InfinitesimalDiv.Infinitesimal |
+| path | Hyperreal.Infinitesimal.of.InfinitesimalDiv.Infinitesimal |
 | mt   | Hyperreal.NotInfinitesimal.of.InfinitesimalDiv.NotInfinitesimal |
 | mt 1 | Hyperreal.NotInfinitesimalDiv.of.NotInfinitesimal.Infinitesimal |
 -/
-@[main, mt, mt 1]
+@[path, mt, mt 1]
 private lemma main
   [NeZero (b : ℝ*)]
   {a : ℝ*}

@@ -4,7 +4,7 @@ import Lemma.Nat.Ge.of.Gt
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   [IntegerRing Z]
   {a b : Z}

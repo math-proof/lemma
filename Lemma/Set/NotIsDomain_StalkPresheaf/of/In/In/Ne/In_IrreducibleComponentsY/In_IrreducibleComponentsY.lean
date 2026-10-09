@@ -6,7 +6,7 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry TensorProduct
 /--
 [AlgebraicGeometry_not_isDomain_stalk_of_mem_irreducibleComponents_of_ne](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_not_isDomain_stalk_of_mem_irreducibleComponents_of_ne.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {Y : Scheme.{u}}
   {y : ↥Y}

@@ -4,7 +4,7 @@ import sympy.Basic
 open Matrix
 
 
-@[main]
+@[path]
 private lemma main
   {n : ℕ}
   {x y : Fin n → ℂ}
@@ -24,7 +24,7 @@ private lemma main
   exact (Equiv.sum_comp (Equiv.swap i j) (fun k => x k ^ 2)).symm
 
 
-@[main]
+@[path]
 private lemma double_limits
   {n : ℕ}
   {x y : Fin n → ℂ}
@@ -73,7 +73,7 @@ private lemma double_limits
   exact Fintype.sum_equiv (Equiv.swap i j) _ _ (fun b => rfl)
 
 
-@[main]
+@[path]
 private lemma offset
   {n : ℕ}
   {x y : Fin n → ℂ}

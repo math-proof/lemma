@@ -3,7 +3,7 @@ import sympy.Basic
 open Finset
 
 
-@[main]
+@[path]
 private lemma main
   [AddCommMonoid α]
   {n m : ℕ}

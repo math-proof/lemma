@@ -2,7 +2,7 @@ import sympy.stats.stochastic_process_types
 import Lemma.Set.Any_All_In.of.ClosedUnderAdd.FiniteGCDOne
 
 
-@[main]
+@[path]
 private lemma main
   {S : Type*} [Fintype S] [DecidableEq S] [Nonempty S]
   {P : Matrix S S ℝ} [RowStochastic P]

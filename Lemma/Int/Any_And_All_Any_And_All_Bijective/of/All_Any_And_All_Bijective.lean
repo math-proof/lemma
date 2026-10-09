@@ -6,7 +6,7 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry TopologicalSpace
 /--
 [AlgebraicGeometry_Scheme_Modules_exists_basicOpen_forall_exists_frame](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_Scheme_Modules_exists_basicOpen_forall_exists_frame.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [Finite ι]
   {R : Type u} [CommRing R]

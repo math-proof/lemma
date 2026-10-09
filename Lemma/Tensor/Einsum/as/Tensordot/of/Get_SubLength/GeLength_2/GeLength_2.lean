@@ -9,7 +9,7 @@ import Lemma.Tensor.SEqResize.of.Eq_Get
 open Bool List Nat Tensor
 
 
-@[main, cast]
+@[path, cast]
 private lemma main
   [Mul α] [Add α] [Zero α]
 -- given

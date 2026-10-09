@@ -6,7 +6,7 @@ open PowerSeries
 /--
 [PowerSeries_coeff_zero_taylorShift](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_PowerSeries_coeff_zero_taylorShift.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [NontriviallyNormedField L] [CompleteSpace L] [IsUltrametricDist L]
   {F : PowerSeries L}

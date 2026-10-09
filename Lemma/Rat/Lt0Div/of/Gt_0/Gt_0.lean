@@ -3,7 +3,7 @@ import Lemma.Rat.Lt0Div.is.Lt0Mul
 open Rat Nat
 
 
-@[main]
+@[path]
 private lemma main
   [Field α] [LinearOrder α] [IsStrictOrderedRing α]
   {a b : α}

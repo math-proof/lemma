@@ -5,7 +5,7 @@ import torch.Tensor.sum
 open Rat Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [AddCommMonoidWithOne α]
   [PartialOrder α]

@@ -10,7 +10,7 @@ import sympy.matrices.expressions.matmul
 open Bool Tensor
 
 
-@[main, cast]
+@[path, cast]
 private lemma main
   [Mul α] [Add α] [Zero α]
 -- given

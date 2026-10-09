@@ -4,7 +4,7 @@ import Lemma.Tensor.SumDiv.eq.DivSum
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [Semifield α]
 -- given

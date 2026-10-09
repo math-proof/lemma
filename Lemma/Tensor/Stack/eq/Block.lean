@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {n : ℕ}
   {a : ℕ → α} :
@@ -16,7 +16,7 @@ private lemma main
     simp
 
 
-@[main]
+@[path]
 private lemma shift
   {n a : ℕ}
   {f : ℕ → α} :
@@ -31,7 +31,7 @@ private lemma shift
     simp
 
 
-@[main]
+@[path]
 private lemma split
   {k l : ℕ}
   {f : ℕ → α} :

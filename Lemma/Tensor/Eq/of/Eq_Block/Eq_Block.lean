@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma relative_distance.upper_triangle
   {n u : ℕ}
   {k : ℤ}
@@ -19,7 +19,7 @@ private lemma relative_distance.upper_triangle
   rw [h₀, h₁, hmin]
 
 
-@[main]
+@[path]
 private lemma relative_distance.lower_triangle
   {n l : ℕ}
   {k : ℤ}

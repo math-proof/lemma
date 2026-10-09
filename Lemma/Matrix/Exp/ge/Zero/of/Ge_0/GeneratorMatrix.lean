@@ -9,7 +9,7 @@ import Lemma.NormedSpace.Exp.ge.Zero.of.All_Ge_0
 open NormedSpace
 
 
-@[main]
+@[path]
 private lemma main
   {S : Type*} [Fintype S] [DecidableEq S]
   {Q : Matrix S S ℝ}

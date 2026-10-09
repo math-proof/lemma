@@ -5,7 +5,7 @@ import Lemma.Int.EqToNat.of.Ge_0
 open Int
 
 
-@[main]
+@[path]
 private lemma main
   {i : ℤ}
   {n : ℕ}

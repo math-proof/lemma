@@ -2,7 +2,7 @@ import sympy.stats.step_size
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (anc : Anchors α)

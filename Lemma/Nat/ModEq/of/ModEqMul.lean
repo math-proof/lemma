@@ -3,7 +3,7 @@ import Lemma.Nat.ModEq.is.Mod
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   {x y d n : ℕ}
 -- given
@@ -15,7 +15,7 @@ private lemma main
   rw [← ModMod_Mul.eq.Mod x d n, ← ModMod_Mul.eq.Mod y d n, Mod.of.ModEq h]
 
 
-@[main]
+@[path]
 private lemma left
   {x y d n : ℕ}
 -- given

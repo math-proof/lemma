@@ -2,7 +2,7 @@ import Lemma.Int.Abs.eq.IteGe_0
 open Int
 
 
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   [AddCommGroup α] [LinearOrder α] [IsOrderedAddMonoid α]
 -- given

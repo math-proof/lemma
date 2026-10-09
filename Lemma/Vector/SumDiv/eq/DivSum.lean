@@ -4,7 +4,7 @@ import Lemma.Finset.DivSum.eq.Sum_Div
 open Vector Finset
 
 
-@[main]
+@[path]
 private lemma main
   [DivisionSemiring α]
 -- given

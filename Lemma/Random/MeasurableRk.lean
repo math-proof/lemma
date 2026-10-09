@@ -7,7 +7,7 @@ open MeasureTheory PolicyGradient
 /--
 `x ↦ rk x u = 𝔼[r[t] | s[t] = x, a[t] = u]` is measurable (the reward is a kernel on `S × A`).
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace S] [MeasurableSpace A] [Fintype A]
   {M : Model Θ S A}

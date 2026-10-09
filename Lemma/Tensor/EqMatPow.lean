@@ -4,7 +4,7 @@ import Lemma.Tensor.EqMatProd
 open Tensor
 
 
-@[main, subst 1]
+@[path, subst 1]
 private lemma main
   [CommRing α] [CharZero α]
   {n : ℕ}

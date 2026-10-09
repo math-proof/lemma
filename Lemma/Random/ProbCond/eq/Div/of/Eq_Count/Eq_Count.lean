@@ -10,7 +10,7 @@ Over countable discrete state spaces with counting reference measures, the condi
 is the ratio of the measures of the events:
 `ℙ(x = u | y = v) = π {ω | x ω = u ∧ y ω = v} / π {ω | y ω = v}`.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace Ω]
   [ReferenceMeasure α] [ReferenceMeasure β]

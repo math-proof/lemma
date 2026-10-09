@@ -4,7 +4,7 @@ import Lemma.Vector.GetAppend.eq.Get_Sub.of.Lt_Add.Ge
 open Vector
 
 
-@[main]
+@[path]
 private lemma main
   [Add α]
 -- given

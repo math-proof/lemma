@@ -3,7 +3,7 @@ import Lemma.Nat.Ge.of.Gt
 open Nat Rat
 
 
-@[main]
+@[path]
 private lemma main
   [GroupWithZero α]
   [PartialOrder α]

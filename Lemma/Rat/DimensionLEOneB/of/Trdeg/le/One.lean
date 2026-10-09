@@ -6,7 +6,7 @@ open MvPolynomial
 /--
 [Ring_DimensionLEOne_of_finiteType_of_trdeg_le_one](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Ring_DimensionLEOne_of_finiteType_of_trdeg_le_one.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [Field k] [CommRing B] [IsDomain B] [Algebra k B] [Algebra.FiniteType k B]
 -- given

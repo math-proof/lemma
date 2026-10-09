@@ -63,7 +63,7 @@ private lemma select_data_get
   simp
 
 
-@[main]
+@[path]
 private lemma main
   {A B : Tensor ℝ* s}
 -- given

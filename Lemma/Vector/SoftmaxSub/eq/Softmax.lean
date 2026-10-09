@@ -3,7 +3,7 @@ import Lemma.Vector.Sub.eq.Add_Neg
 open Vector
 
 
-@[main]
+@[path]
 private lemma main
   [ExpRing α]
 -- given

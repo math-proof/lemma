@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma doit.inner
   {n : ℕ}
   {x : Fin 2 → Fin n → α} :
@@ -12,7 +12,7 @@ private lemma doit.inner
   fin_cases i <;> rfl
 
 
-@[main]
+@[path]
 private lemma limits.swap.subst
   [Mul α]
   {n : ℕ}
@@ -24,7 +24,7 @@ private lemma limits.swap.subst
   rfl
 
 
-@[main]
+@[path]
 private lemma limits.subst.offset
   {a b d : ℤ}
   {f : ℤ → α} :

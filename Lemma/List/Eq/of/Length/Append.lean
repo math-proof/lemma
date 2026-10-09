@@ -3,7 +3,7 @@ import Lemma.List.EqTakeAppend
 open List
 
 
-@[main]
+@[path]
 private lemma drop
   {a b a' b' : List α}
 -- given
@@ -18,7 +18,7 @@ private lemma drop
   omega
 
 
-@[main]
+@[path]
 private lemma main
   {a b a' b' : List α}
 -- given

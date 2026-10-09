@@ -7,7 +7,7 @@ import Lemma.Measure.Measurable_Apply_PiLE
 open MeasureTheory Measure
 
 
-@[main]
+@[path]
 private lemma main
   {S : Type*} [Fintype S] [DecidableEq S] [Nonempty S] [MeasurableSpace S] [MeasurableSingletonClass S]
   {d : ℕ}

@@ -3,7 +3,7 @@ import Lemma.Tensor.Mul.of.Eq
 open Bool Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [Mul α]
   {A : Tensor α s}

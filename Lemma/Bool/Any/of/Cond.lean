@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h : r)
@@ -12,7 +12,7 @@ private lemma main
   exists a
 
 
-@[main]
+@[path]
 private lemma ufn
   {p : α → Prop}
 -- given

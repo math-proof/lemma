@@ -5,7 +5,7 @@ import Lemma.Complex.AddPowPowPowPow.eq.Neg
 import Lemma.Complex.MulMulPowPowPow.eq.DivNeg3.of.EqSubCeil.Eq_AddDivMul4Pow3'27Square
 
 
-@[main]
+@[path]
 private lemma sub.given
   {x p q δ : ℂ}
   {d : ℤ}

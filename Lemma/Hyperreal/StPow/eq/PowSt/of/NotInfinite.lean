@@ -5,7 +5,7 @@ import Lemma.Hyperreal.StMul.eq.MulStS.of.NotInfinite.NotInfinite
 open Hyperreal
 
 
-@[main]
+@[path]
 private lemma main
   {x : ℝ*}
 -- given

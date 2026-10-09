@@ -4,7 +4,7 @@ import Lemma.Nat.Lt0Mul.of.Gt_0.Gt_0
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   [MulZeroClass α]
   [PartialOrder α]

@@ -6,10 +6,10 @@ open Int Nat
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Int.Pow.eq.MulPowSNeg |
+| path | Int.Pow.eq.MulPowSNeg |
 | comm | Int.MulPowSNeg.eq.Pow |
 -/
-@[main, comm]
+@[path, comm]
 private lemma main
   [CommRing α]
   {x : α}

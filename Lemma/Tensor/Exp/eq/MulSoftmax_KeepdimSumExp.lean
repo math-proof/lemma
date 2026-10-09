@@ -32,7 +32,7 @@ import torch.Tensor.sum
 open Fin List Nat Real Tensor Vector
 
 
-@[main]
+@[path]
 private lemma main
   [ExpPos α]
   [IsOrderedCancelAddMonoid α]

@@ -8,7 +8,7 @@ The law of `x` equals the state measure with density `π.prob x`: the
 distribution in `SinglePSpace.exists_distribution` gives absolute continuity, and the
 Radon–Nikodym theorem reconstructs the measure from its canonical derivative.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace Ω]
   [ReferenceMeasure α]

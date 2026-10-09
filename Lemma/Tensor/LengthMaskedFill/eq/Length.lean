@@ -2,7 +2,7 @@ import sympy.matrices.expressions.special
 import torch.Tensor.Basic
 
 
-@[main]
+@[path]
 private lemma main
   [Zero α]
 -- given

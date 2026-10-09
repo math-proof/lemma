@@ -5,10 +5,10 @@ open Tensor
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Tensor.MapTril.eq.TrilMap.of.EqUFn0'0 |
+| path | Tensor.MapTril.eq.TrilMap.of.EqUFn0'0 |
 | comm | Tensor.TrilMap.eq.MapTril.of.EqUFn0'0 |
 -/
-@[main, comm]
+@[path, comm]
 private lemma main
   [Zero α]
   [Zero β]

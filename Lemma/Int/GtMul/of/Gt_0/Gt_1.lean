@@ -3,7 +3,7 @@ import Lemma.Nat.EqMul_1
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
   {a t : α}

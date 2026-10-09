@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma limits.swap
   {m n : ℕ}
   {h : ℕ → ℝ}

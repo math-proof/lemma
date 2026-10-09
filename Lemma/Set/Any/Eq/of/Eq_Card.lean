@@ -3,7 +3,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {n k : ℕ}
   {S : Finset (Fin k → ℤ)}
@@ -32,7 +32,7 @@ private lemma main
       exact (S.equivFin.symm ⟨m, hm⟩).property
 
 
-@[main]
+@[path]
 private lemma real
   {n : ℕ}
   {S : Finset ℝ}
@@ -61,7 +61,7 @@ private lemma real
       exact Finset.orderEmbOfFin_mem S h _
 
 
-@[main]
+@[path]
 private lemma two
   {k : ℕ}
   {S : Finset (Fin k → ℤ)}

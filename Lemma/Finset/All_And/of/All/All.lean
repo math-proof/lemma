@@ -2,7 +2,7 @@ import sympy.Basic
 import sympy.concrete.quantifier
 
 
-@[main]
+@[path]
 private lemma main
   {f g : ι → Prop}
   {s : Finset ι}

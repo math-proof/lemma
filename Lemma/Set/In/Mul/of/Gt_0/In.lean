@@ -2,7 +2,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {t x a b : ℝ}
 -- given
@@ -14,7 +14,7 @@ private lemma main
   exact ⟨mul_le_mul_of_nonneg_right h₁.1 h₀.le, mul_le_mul_of_nonneg_right h₁.2 h₀.le⟩
 
 
-@[main]
+@[path]
 private lemma left_open
   {t x a b : ℝ}
 -- given

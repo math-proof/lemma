@@ -3,7 +3,7 @@ import Lemma.Real.Le_Sqrt.of.LeSquare
 open Real
 
 
-@[main]
+@[path]
 private lemma cauchy_schwarz
   {s : Finset ℕ}
   {x : ℕ → ℝ}

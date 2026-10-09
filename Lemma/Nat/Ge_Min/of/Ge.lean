@@ -3,7 +3,7 @@ import Lemma.Nat.Ge.of.Ge.Ge
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   [LinearOrder α]
 -- given

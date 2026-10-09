@@ -2,7 +2,7 @@ import sympy.Basic
 import Mathlib.Analysis.SpecialFunctions.Exp
 
 
-@[main]
+@[path]
 private lemma main
   {A : Set ℝ} [DecidablePred (· ∈ A)]
   {x : ℝ}

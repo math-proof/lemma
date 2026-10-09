@@ -10,7 +10,7 @@ import Lemma.Matrix.All_EqSumSum.of.All_GeneratorMatrix.ForwardSolvesStateEquati
 open Matrix
 
 
-@[main]
+@[path]
 private lemma main
   {S : Type*} [Fintype S]
   {d : ℕ}

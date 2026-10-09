@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma bert.position_representation.relative
   {n d_z : ℕ}
   {Q K V : Fin n → Fin d_z → ℝ}

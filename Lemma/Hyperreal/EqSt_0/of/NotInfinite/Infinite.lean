@@ -7,12 +7,12 @@ open Hyperreal
 the hypotheses are arranged in the constructor order of division a / b
 | attributes | lemma |
 | :---: | :---: |
-| main | Hyperreal.EqSt_0.of.NotInfinite.Infinite |
+| path | Hyperreal.EqSt_0.of.NotInfinite.Infinite |
 | mt | Hyperreal.NotInfinite.of.NotInfinite.NeSt_0 |
 | mt 1 | Hyperreal.Infinite.of.NeSt_0.Infinite |
 -/
 
-@[main, mt, mt 1]
+@[path, mt, mt 1]
 private lemma main
   {a : ℝ*}
 -- given

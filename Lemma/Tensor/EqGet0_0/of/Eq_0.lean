@@ -3,7 +3,7 @@ import Lemma.Tensor.EqGet0_0
 open Tensor
 
 
-@[main, fin]
+@[path, fin]
 private lemma main
   [Zero α]
   {X : Tensor α s}

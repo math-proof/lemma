@@ -6,7 +6,7 @@ import Lemma.Bool.Imp_Decidable.of.Eq
 open List Bool
 
 
-@[main, comm, fin, fin.comm]
+@[path, comm, fin, fin.comm]
 private lemma main
 -- given
   (v : List.Vector α (n :: s).prod)

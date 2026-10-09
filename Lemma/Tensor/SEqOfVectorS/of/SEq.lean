@@ -3,7 +3,7 @@ import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 open Tensor Bool
 
 
-@[main]
+@[path]
 private lemma main
   {v : List.Vector (Tensor α s) n}
   {v' : List.Vector (Tensor α s) n'}

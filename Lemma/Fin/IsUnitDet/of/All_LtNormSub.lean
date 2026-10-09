@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [Matrix_isUnit_det_padicInt_of_norm_sub_one_lt_one](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Matrix_isUnit_det_padicInt_of_norm_sub_one_lt_one.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {p : ℕ} [Fact p.Prime]
   {n : ℕ}

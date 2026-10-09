@@ -15,7 +15,7 @@ import Lemma.Nat.EqMin.of.Le
 open List Nat
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   {s : List α}
 -- given

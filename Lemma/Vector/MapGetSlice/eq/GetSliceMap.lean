@@ -4,10 +4,10 @@ import sympy.vector.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Vector.MapGetSlice.eq.GetSliceMap |
+| path | Vector.MapGetSlice.eq.GetSliceMap |
 | comm | Vector.GetSliceMap.eq.MapGetSlice |
 -/
-@[main, comm]
+@[path, comm]
 private lemma main
   {β : Type*}
 -- given

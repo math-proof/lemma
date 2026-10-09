@@ -2,7 +2,7 @@ import Lemma.Bool.All.Any.of.All_Any_And
 open Bool
 
 
-@[main]
+@[path]
 private lemma main
   {A : Set α}
   {B : Set β}

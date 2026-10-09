@@ -3,7 +3,7 @@ import Lemma.Tensor.MatProd.eq.DotMatProd
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [Semiring α] [CharZero α]
   {m : ℕ}

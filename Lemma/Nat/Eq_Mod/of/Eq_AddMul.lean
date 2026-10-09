@@ -5,7 +5,7 @@ import Lemma.Nat.EqMod
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   {k n m : ℕ}
   {i : Fin m}

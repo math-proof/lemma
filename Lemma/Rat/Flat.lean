@@ -6,7 +6,7 @@ open scoped TensorProduct
 /--
 [Module_Flat_of_module_fractionRing_of_isReduced_baseChange](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Module_Flat_of_module_fractionRing_of_isReduced_baseChange.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {R : Type u} [CommRing R] [IsDomain R]
   {K : Type v} [Field K] [Algebra R K] [IsFractionRing R K]

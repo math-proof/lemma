@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [QuotientGroup_eq_one_of_pow_char_pow_eq_one_pi_units_quotient_constRange](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_QuotientGroup_eq_one_of_pow_char_pow_eq_one_pi_units_quotient_constRange.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {K : Type u} [Field K]
   {p : ℕ} [Fact p.Prime] [CharP K p]

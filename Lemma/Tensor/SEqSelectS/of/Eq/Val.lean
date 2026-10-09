@@ -2,7 +2,7 @@ import Lemma.Tensor.SEqSelectS.of.SEq.Val.Val
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   {X : Tensor α s}
   {d : Fin s.length}

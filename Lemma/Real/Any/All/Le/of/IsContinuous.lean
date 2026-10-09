@@ -3,7 +3,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma boundedness_theorem
   {f : ℝ → ℝ}
   {a b : ℝ}
@@ -16,7 +16,7 @@ private lemma boundedness_theorem
   exact ⟨M, fun z hz => hM (Set.mem_image_of_mem f hz)⟩
 
 
-@[main]
+@[path]
 private lemma extreme_value_theorem
   {f : ℝ → ℝ}
   {a b : ℝ}

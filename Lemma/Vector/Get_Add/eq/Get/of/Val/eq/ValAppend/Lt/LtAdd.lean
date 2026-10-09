@@ -5,7 +5,7 @@ import Lemma.List.Get.of.Eq.GtLength
 open List Vector Bool
 
 
-@[main]
+@[path]
 private lemma main
   {a : List.Vector α N}
   {b : List.Vector α m}

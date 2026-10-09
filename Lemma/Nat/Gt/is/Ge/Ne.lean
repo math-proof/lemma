@@ -5,12 +5,12 @@ open Nat
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Nat.Gt.is.Ge.Ne |
+| path | Nat.Gt.is.Ge.Ne |
 | comm | Nat.Ge.Ne.is.Gt |
 | mp | Nat.Ge.Ne.of.Gt |
 | mpr | Nat.Gt.of.Ge.Ne |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   [LinearOrder α]
   {a b : α} :

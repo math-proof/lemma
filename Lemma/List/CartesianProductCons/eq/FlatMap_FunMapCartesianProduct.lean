@@ -2,7 +2,7 @@ import Lemma.List.ProductCons.eq.FlatMap_FunMapProduct
 open List
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (head : ℕ)

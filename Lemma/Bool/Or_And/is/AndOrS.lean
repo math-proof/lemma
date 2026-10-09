@@ -4,12 +4,12 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Bool.Or_And.is.AndOrS |
+| path | Bool.Or_And.is.AndOrS |
 | comm | Bool.AndOrS.is.Or_And |
 | mp | Bool.AndOrS.of.Or_And |
 | mpr | Bool.Or_And.of.AndOrS |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main :
 -- imply
   r ∨ p ∧ q ↔ (r ∨ p) ∧ (r ∨ q) := by
@@ -17,7 +17,7 @@ private lemma main :
   aesop
 
 
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma Comm :
 -- imply
   r ∨ p ∧ q ↔ (p ∨ r) ∧ (q ∨ r) := by

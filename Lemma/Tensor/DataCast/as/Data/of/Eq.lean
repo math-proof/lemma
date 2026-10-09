@@ -2,7 +2,7 @@ import stdlib.SEq
 import torch.Tensor.Basic
 
 
-@[main, comm 1, cast]
+@[path, comm 1, cast]
 private lemma main
 -- given
   (h : s = s')

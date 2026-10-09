@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma unshift
   {a b : ℤ}
   {g : ℤ → Prop}
@@ -20,7 +20,7 @@ private lemma unshift
     exact h₁ k (by omega) hk₁
 
 
-@[main]
+@[path]
 private lemma push
   {a b : ℤ}
   {g : ℤ → Prop}

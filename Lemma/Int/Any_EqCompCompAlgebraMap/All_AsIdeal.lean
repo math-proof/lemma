@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [CerednikDrinfeld_exists_ringHom_away_comp_eq_and_not_mem_iff](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_CerednikDrinfeld_exists_ringHom_away_comp_eq_and_not_mem_iff.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {B B' : Type} [CommRing B] [CommRing B']
   {f : B →+* B'}

@@ -9,7 +9,7 @@ import Lemma.Tensor.PermuteTailCast.as.PermuteTail.of.Eq
 open List Tensor Bool
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h : s ≠ [])

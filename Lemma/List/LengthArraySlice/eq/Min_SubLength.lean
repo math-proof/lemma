@@ -3,7 +3,7 @@ import Lemma.List.EqLengthArraySlice.of.GeLength_Add
 open List
 
 
-@[main]
+@[path]
 private lemma main
   {s : List α}
   {i n : ℕ} :

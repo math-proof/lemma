@@ -8,12 +8,12 @@ open Real Complex Set Int
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Complex.EqSquare.is.In_FinsetSqrt_NegSqrt |
+| path | Complex.EqSquare.is.In_FinsetSqrt_NegSqrt |
 | comm | Complex.In_FinsetSqrt_NegSqrt.is.EqSquare |
 | mp | Complex.In_FinsetSqrt_NegSqrt.of.EqSquare |
 | mpr | Complex.EqSquare.of.In_FinsetSqrt_NegSqrt |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   {x c : ℂ} :
 -- imply

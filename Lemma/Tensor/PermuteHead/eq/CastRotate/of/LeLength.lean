@@ -6,7 +6,7 @@ import Lemma.List.Drop.eq.Nil.of.LeLength
 open Bool Tensor List
 
 
-@[main]
+@[path]
 private lemma main
   {s : List ℕ}
 -- given

@@ -14,7 +14,7 @@ Window form of the hyperreal masked softmax for the band \( i - l < j < i + u \)
 \Bigl[ \sum_{t < \zeta - \beta} \frac{e^{a_{i, \beta + t}}}{\sum_{s < \zeta - \beta} e^{a_{i, \beta + s}}}\, v_{i, \beta + t, \ell} \Bigr]_\ell .
 \]
 -/
-@[main]
+@[path]
 private lemma window
   {n d l u : ℕ}
 -- given
@@ -45,7 +45,7 @@ Dilated window form of the hyperreal masked softmax for the band \( i - l < j < 
 \Bigl[ \sum_{m} \frac{e^{a_{i, b + m d}}}{\sum_{m'} e^{a_{i, b + m' d}}}\, v_{i, b + m d, \ell} \Bigr]_\ell .
 \]
 -/
-@[main]
+@[path]
 private lemma dilated
   {n d_v l u d b : ℕ}
 -- given

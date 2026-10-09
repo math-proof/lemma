@@ -4,7 +4,7 @@ import Lemma.Nat.Mul
 open Nat
 
 
-@[main]
+@[path]
 private lemma left
   {k n m : ℕ}
 -- given
@@ -15,7 +15,7 @@ private lemma left
   (Gt_0.of.Lt0Mul.left ∘ Gt_0.of.Gt) h
 
 
-@[main]
+@[path]
 private lemma main
   {k n m : ℕ}
 -- given

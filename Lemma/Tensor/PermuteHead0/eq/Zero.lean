@@ -9,7 +9,7 @@ import Lemma.Vector.EqCast_0'0.of.Eq
 open Tensor Vector
 
 
-@[main]
+@[path]
 private lemma main
   [Zero α]
   {s : List ℕ}

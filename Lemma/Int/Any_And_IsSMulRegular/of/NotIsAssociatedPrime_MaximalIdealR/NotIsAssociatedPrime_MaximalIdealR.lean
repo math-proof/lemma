@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [Module_exists_mem_maximalIdeal_isSMulRegular_isSMulRegular](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Module_exists_mem_maximalIdeal_isSMulRegular_isSMulRegular.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing R] [IsLocalRing R] [IsNoetherianRing R]
   {N₁ N₂ : Type*} [AddCommGroup N₁] [Module R N₁] [Module.Finite R N₁] [AddCommGroup N₂] [Module R N₂] [Module.Finite R N₂]

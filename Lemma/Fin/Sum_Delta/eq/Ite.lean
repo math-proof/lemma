@@ -4,7 +4,7 @@ import Lemma.Fin.Sum_Delta.eq.One
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (i j : Fin n) :

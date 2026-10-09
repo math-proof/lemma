@@ -4,10 +4,10 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Real.CosSub.eq.AddMulS |
+| path | Real.CosSub.eq.AddMulS |
 | comm | Real.AddMulS.eq.CosSub |
 -/
-@[main, comm]
+@[path, comm]
 private lemma main
 -- given
   (x y : ℝ) :
@@ -17,7 +17,7 @@ private lemma main
   Real.cos_sub x y
 
 
-@[main, comm]
+@[path, comm]
 private lemma Comm
 -- given
   (x y : ℝ) :

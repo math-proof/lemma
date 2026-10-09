@@ -6,7 +6,7 @@ open CategoryTheory AlgebraicGeometry
 /--
 [AlgebraicGeometry_isOpenImmersion_of_etale_of_universallyInjective](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_isOpenImmersion_of_etale_of_universallyInjective.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {X Y : Scheme.{u}}
   {f : X ⟶ Y} [Etale f] [UniversallyInjective f] :

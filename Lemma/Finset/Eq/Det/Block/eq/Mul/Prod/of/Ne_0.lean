@@ -8,7 +8,7 @@ import Lemma.Matrix.DetOfVecCons_FunPow.eq.MulMulPowSProd
 open Matrix Finset Nat
 
 
-@[main]
+@[path]
 private lemma vandermonde.n2
   {n : ℕ} {x₁ x₂ : ℝ}
 -- given
@@ -22,7 +22,7 @@ private lemma vandermonde.n2
   exact DetOfVecCons2_FunPow.eq.MulMulMulPowSProd
 
 
-@[main]
+@[path]
 private lemma vandermonde.mn
   {x₁ x₂ : ℝ}
   {m d : ℕ}
@@ -38,7 +38,7 @@ private lemma vandermonde.mn
   exact DetOf.eq.MulPowSProdProd.of.Le (by omega)
 
 
-@[main]
+@[path]
 private lemma vandermonde.n1
   {n : ℕ} {x₁ x₂ : ℝ}
 -- given

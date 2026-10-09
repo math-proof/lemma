@@ -3,7 +3,7 @@ import Lemma.Tensor.EqGetStack
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [LE α]
   {f g : Fin n → Tensor α s}

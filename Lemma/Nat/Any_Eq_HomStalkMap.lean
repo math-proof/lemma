@@ -6,7 +6,7 @@ open CategoryTheory AlgebraicGeometry
 /--
 [AlgebraicGeometry_IsClosedImmersion_exists_ringEquiv_residueField_functionField_of_isIntegral](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_IsClosedImmersion_exists_ringEquiv_residueField_functionField_of_isIntegral.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {C Y : Scheme.{u}} [IsIntegral C]
   {i : C ⟶ Y} [IsClosedImmersion i] :

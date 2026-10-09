@@ -3,7 +3,7 @@ import Lemma.Set.UnionUnion.eq.Union_Union
 open Set
 
 
-@[main]
+@[path]
 private lemma Comm
   {a b c : Set α} :
 -- imply

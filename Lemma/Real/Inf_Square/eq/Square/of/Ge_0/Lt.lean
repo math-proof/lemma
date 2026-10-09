@@ -4,7 +4,7 @@ import Mathlib.Analysis.Real.Sqrt
 import Lemma.Real.EqInf.of.Lt
 
 
-@[main]
+@[path]
 private lemma main
   {m M : ℝ}
 -- given

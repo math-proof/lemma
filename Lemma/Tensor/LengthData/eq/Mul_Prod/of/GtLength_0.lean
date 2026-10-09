@@ -5,7 +5,7 @@ import Lemma.List.Prod.eq.Mul_ProdTail.of.GtLength_0
 open Tensor List
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h : s.length > 0)
@@ -17,7 +17,7 @@ private lemma main
   rw [Prod.eq.Mul_ProdTail.of.GtLength_0]
 
 
-@[main]
+@[path]
 private lemma tensor
   {X : Tensor α s}
 -- given

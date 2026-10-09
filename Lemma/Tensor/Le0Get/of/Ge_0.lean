@@ -6,7 +6,7 @@ import torch.Tensor
 open Tensor
 
 
-@[main, fin]
+@[path, fin]
 private lemma main
   [LE α]
   [Zero α]

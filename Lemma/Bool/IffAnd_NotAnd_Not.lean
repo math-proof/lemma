@@ -2,7 +2,7 @@ import Lemma.Bool.And_NotAnd_Not.is.OrAndS
 open Bool
 
 
-@[main]
+@[path]
 private lemma main
   {p q : Prop} :
 -- imply

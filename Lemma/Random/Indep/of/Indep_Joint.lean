@@ -16,7 +16,7 @@ is preserved under post-composing the second argument with the measurable projec
 `Prod.fst`, and `Prod.fst ∘ (y, z) = y`. No density / `SinglePSpace` assumptions are needed —
 independence is a σ-algebra property.
 -/
-@[main]
+@[path]
 private lemma fst
   {Ω α β γ : Type*}
   [MeasurableSpace Ω]
@@ -35,7 +35,7 @@ private lemma fst
 If a random variable `x` is independent of a joint random variable `(y, z)`, then it is
 independent of the second component `z` (the `wrt = 1` case of the sympy lemma).
 -/
-@[main]
+@[path]
 private lemma snd
   {Ω α β γ : Type*}
   [MeasurableSpace Ω]

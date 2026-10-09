@@ -6,7 +6,7 @@ open LaurentPolynomial
 /--
 [LaurentPolynomial_isUnit_iff_exists_C_mul_T](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_LaurentPolynomial_isUnit_iff_exists_C_mul_T.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {R : Type u} [CommRing R] [IsDomain R]
   {f : R[T;T⁻¹]} :

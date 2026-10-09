@@ -3,7 +3,7 @@ import sympy.Basic
 import Lemma.Set.PhaseBounded.of.Subset.IsCompact
 
 
-@[main]
+@[path]
 private lemma main
   {S : Type*} [Fintype S]
   {A : Type*} [Fintype A]

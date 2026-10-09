@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [Ideal_span_le_pow_of_forall_isIdempotentElem_of_subset](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Ideal_span_le_pow_of_forall_isIdempotentElem_of_subset.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {R : Type u} [CommRing R]
   {S : Set R}

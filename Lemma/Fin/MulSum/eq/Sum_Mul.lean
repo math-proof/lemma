@@ -2,7 +2,7 @@ import Lemma.Finset.MulSum.eq.Sum_Mul
 open Finset
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [NonUnitalNonAssocSemiring N]
 -- given

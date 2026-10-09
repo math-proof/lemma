@@ -1,23 +1,14 @@
-import { installCodeMirrorExtras } from './codemirror.js';
 /** Lean CodeMirror mount hook and trivial computeds shared by renderLean. */
+/* CM6 modules are loaded via <script type=module> (codemirrorBoot.js) and
+   exposed on window.cmBoot, since the SFC loader can't resolve bare ESM imports. */
 
 function ensureCodeMirror() {
-	if (!window.__cmReady) {
-		const base = document.baseURI;
-		const paths = [
-			'node_modules/codemirror/lib/codemirror.js',
-			'js/codemirror-lean.js',
-			'node_modules/codemirror/addon/selection/active-line.js',
-			'node_modules/codemirror/addon/hint/show-hint.js',
-			'node_modules/codemirror/addon/edit/matchbrackets.js',
-			'node_modules/codemirror/addon/comment/comment.js',
-		];
-		window.__cmReady = import(new URL(paths[0], base).href).then(() => {
-			installCodeMirrorExtras();
-			return Promise.all(paths.slice(1).map((p) => import(new URL(p, base).href)));
-		});
-	}
-	return window.__cmReady;
+	if (window.cmBoot) return Promise.resolve();
+	return new Promise(resolve => {
+		var check = setInterval(() => {
+			if (window.cmBoot) { clearInterval(check); resolve(); }
+		}, 20);
+	});
 }
 
 /** Dotted lemma path with a capitalised segment (not a local like `h₀` or `μ.bind`). */
@@ -750,11 +741,7 @@ where
             },
             
             'Alt-D': function(cm) {
-				const {Pos, deleteNearSelection, clipPos} = CodeMirror;
-				deleteNearSelection(cm, range => ({
-    				from: Pos(range.from().line, 0),
-    				to: clipPos(cm.doc, Pos(cm.lineCount() + 1, 0))
-  				}));
+				deleteToLineEnd(cm);
 				var parent = self.$parent.$parent;
 				var {index} = self;
 				var i = index.back();
@@ -918,31 +905,12 @@ where
         };
         
         ensureCodeMirror().then(() => {
-        if (typeof CodeMirror == 'undefined')
-        	return console.error('[codeMirrorEditor] CodeMirror global missing after preload');
-        
-        this.editor = CodeMirror.fromTextArea(this.$el, {
-            mode: {
-                name: "lean",
-                singleLineStringErrors: false
-            },
-            
-            theme: this.theme,
-
-            indentUnit: 2,
-
-            matchBrackets: true,
-
-            scrollbarStyle: null,
-
+        var { createEditor, CodeMirror, deleteToLineEnd } = window.cmBoot;
+        this.editor = createEditor(this.$el, {
+            doc: this.$el.value || '',
+            lineNumbers: false,
             extraKeys,
-            
-            lineNumbers: this.lineNumbers,
-            
-            styleActiveLine: this.styleActiveLine,
-
-            hintOptions: { 
-                hint(cm, options) {
+            hintFn(cm) {
                 	var Pos = CodeMirror.Pos;
                 	return new Promise(function(accept) {
                 		var cur = cm.getCursor();
@@ -1112,7 +1080,6 @@ where name REGEXP '^[\\\\p{Script=Greek}a-zA-Z][0-9]$'`;
                 			});
                 		});
                 	});
-                },  
             },
         });
 

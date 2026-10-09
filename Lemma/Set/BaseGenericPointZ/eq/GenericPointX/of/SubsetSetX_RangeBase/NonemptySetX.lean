@@ -6,7 +6,7 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 /--
 [AlgebraicGeometry_base_genericPoint_eq_genericPoint_of_subset_range](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_base_genericPoint_eq_genericPoint_of_subset_range.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {Z X : Scheme.{u}} [IrreducibleSpace ↥Z] [IsIntegral X]
   {q : Z ⟶ X}

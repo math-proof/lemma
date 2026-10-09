@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {c : Prop} [Decidable c]
   {a b : α}
@@ -13,7 +13,7 @@ private lemma main
   rw [if_pos h]
 
 
-@[main]
+@[path]
 private lemma invert
   {c : Prop} [Decidable c]
   {a b : α}

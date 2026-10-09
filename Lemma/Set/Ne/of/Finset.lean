@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   [Zero α] [One α] [NeZero (1 : α)]
   {x y : α}

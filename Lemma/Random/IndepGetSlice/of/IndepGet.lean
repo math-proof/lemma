@@ -6,7 +6,7 @@ import sympy.stats.joint_rv
 open ProbabilityTheory MeasureTheory
 
 
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace Ω]
   [ReferenceMeasure α] [ReferenceMeasure β]
@@ -40,11 +40,11 @@ private lemma main
                 fun j : Fin k => (f (Fin.natAdd t j)).2)
     have hproj : Measurable proj := by
       refine Measurable.prodMk ?_ ?_
-      · refine measurable_pi_lambda _ ?_
+      · refine Measurable.of_eval ?_
         intro i
         show Measurable (fun f : Fin (t+k) → β × α => (f (Fin.castLE (by linarith) i)).1)
         exact measurable_fst.comp (measurable_pi_apply _)
-      · refine measurable_pi_lambda _ ?_
+      · refine Measurable.of_eval ?_
         intro j
         show Measurable (fun f : Fin (t+k) → β × α => (f (Fin.natAdd t j)).2)
         exact measurable_snd.comp (measurable_pi_apply _)
@@ -64,16 +64,16 @@ private lemma main
       rw [heq_proj]
       exact (h (t+k)).comp measurable_id hproj
     have hr_tk : Measurable (r (t + k)) := hr (t + k)
-    have hs_past_m : Measurable (s_past t) := measurable_pi_lambda _ fun i => hs i.val
+    have hs_past_m : Measurable (s_past t) := Measurable.of_eval fun i => hs i.val
     have hr_slice_m : Measurable (r_slice t k) :=
-      measurable_pi_lambda _ fun j => hr (t + j.val)
+      Measurable.of_eval fun j => hr (t + j.val)
     have step_a' : r (t + k) ⟂ᵢ[π] (r_slice t k, s_past t) :=
       step_a.comp measurable_id measurable_swap
     have step_b : (r (t + k), r_slice t k) ⟂ᵢ[π] s_past t :=
       Random.CondIndepJoint.of.Indep_Joint.Indep hr_tk hr_slice_m hs_past_m step_a' ih
     let g : α × (Fin k → α) → Fin (k + 1) → α := fun p => @Fin.snoc k (fun _ => α) p.2 p.1
     have hg : Measurable g := by
-      refine measurable_pi_lambda _ fun i => ?_
+      refine Measurable.of_eval fun i => ?_
       change Measurable (fun p : α × (Fin k → α) => @Fin.snoc k (fun _ => α) p.2 p.1 i)
       refine Fin.lastCases ?_ (fun j => ?_) i
       · simp only [Fin.snoc_last]; exact measurable_fst

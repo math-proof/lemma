@@ -13,10 +13,10 @@ open Hyperreal Rat
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Hyperreal.St.of.XEq |
+| path | Hyperreal.St.of.XEq |
 | mt | Hyperreal.NotXEq.of.NotSt |
 -/
-@[main, mt]
+@[path, mt]
 private lemma main
   {a b : ℝ*}
 -- given

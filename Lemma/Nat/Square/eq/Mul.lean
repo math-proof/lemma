@@ -6,7 +6,7 @@ import sympy.Basic
 This lemma confirms that in a monoid, the square of an element `x` is defined as the product of `x` with itself.
 It ensures the consistency of exponentiation with the monoid's multiplicative structure, serving as a basic yet essential property in algebraic manipulations.
 -/
-@[main, comm]
+@[path, comm]
 private lemma main
   [Monoid α]
 -- given

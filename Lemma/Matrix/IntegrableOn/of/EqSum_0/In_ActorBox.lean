@@ -5,7 +5,7 @@ import Lemma.Real.Norm.le.Sum_Abs
 open Filter MeasureTheory
 
 
-@[main]
+@[path]
 private lemma main
   {S : Type*} [Fintype S] [DecidableEq S]
   {d : ℕ}

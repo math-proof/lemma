@@ -26,7 +26,7 @@ import Lemma.Vector.SEq.of.All_EqGetS.Eq
 open Nat List Bool Tensor Vector Fin
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h : s.length > 1)

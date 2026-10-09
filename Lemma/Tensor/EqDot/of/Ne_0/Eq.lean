@@ -3,7 +3,7 @@ import sympy.Basic
 open Matrix
 
 
-@[main]
+@[path]
 private lemma main
   {n : ℕ}
   {A : Matrix (Fin n) (Fin n) ℝ}

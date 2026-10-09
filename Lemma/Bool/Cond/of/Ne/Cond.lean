@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma subst
   [DecidableEq α]
   {x y : α}

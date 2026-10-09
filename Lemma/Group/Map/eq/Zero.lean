@@ -6,7 +6,7 @@ open CategoryTheory groupCohomology Rep
 /--
 [groupCohomology_H2res_comp_H2inf_eq_zero](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_groupCohomology_H2res_comp_H2inf_eq_zero.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {k G : Type u} [CommRing k] [Group G]
   {A : Rep k G}

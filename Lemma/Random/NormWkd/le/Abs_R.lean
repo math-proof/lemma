@@ -8,7 +8,7 @@ open MeasureTheory PolicyGradient Random Real
 /--
 The `k`-step expected reward with a density policy is bounded: `‖Wkd θ k x‖ = ‖𝔼[r[t+k] | s[t] = x]‖ ≤ |R|`.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace S] [ReferenceMeasure A]
   {M : DensityModel Θ S A}

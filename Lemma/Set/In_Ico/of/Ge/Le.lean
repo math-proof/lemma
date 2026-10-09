@@ -3,7 +3,7 @@ import Lemma.Set.In_Ico.is.Le.Lt
 open Set Nat
 
 
-@[main]
+@[path]
 private lemma main
   [IntegerRing Z]
   {x a b : Z}

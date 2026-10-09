@@ -2,7 +2,7 @@ import Lemma.List.ProdTake.eq.MulProdTake.of.GtLength
 open List
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [CommMonoid α]
   {s : List α}

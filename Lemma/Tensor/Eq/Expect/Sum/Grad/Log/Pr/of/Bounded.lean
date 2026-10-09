@@ -25,7 +25,7 @@ For a weight `X` (a function of the paths `s`, `a`, `r`) whose discounted tails
 `𝔼[s, a, r : M θ](∑' t, γ ^ t • ((γ ** Stack[k](k) @ X[t:]) • ∇ log π(a[t] | s[t])))`.
 Shared by `policy_gradient_theorem` (`X = r`) and `unbiased_advantage_estimate` (`X = ` advantage).
 -/
-@[main]
+@[path]
 private lemma main
   [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [CompleteSpace Θ]
   [ReferenceMeasure S] [MeasurableSingletonClass S] [Fintype S]

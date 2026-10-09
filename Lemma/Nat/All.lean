@@ -2,7 +2,7 @@ import Lemma.Nat.All.of.All
 open Nat
 
 
-@[main]
+@[path]
 private lemma limits.subst.offset
   {f : ℤ → Prop}
   {a b d : ℤ} :

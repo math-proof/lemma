@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma limits.concat
   [Fintype β] [AddCommMonoid γ]
   {m : ℕ}

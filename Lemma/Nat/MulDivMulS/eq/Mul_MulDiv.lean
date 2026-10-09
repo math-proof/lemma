@@ -2,7 +2,7 @@ import Lemma.Nat.Mul
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   {z x y : ℕ} :

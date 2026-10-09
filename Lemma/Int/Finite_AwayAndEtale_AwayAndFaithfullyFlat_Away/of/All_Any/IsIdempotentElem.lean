@@ -6,7 +6,7 @@ open scoped TensorProduct
 /--
 [Algebra_Etale_finite_etale_faithfullyFlat_away_of_isIdempotentElem](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Algebra_Etale_finite_etale_faithfullyFlat_away_of_isIdempotentElem.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {S C : Type} [CommRing S] [CommRing C] [Algebra S C] [Module.Finite S C] [Algebra.Etale S C]
   {e : C}

@@ -3,7 +3,7 @@ import Lemma.Nat.Ge.of.Gt
 open Int Nat
 
 
-@[main]
+@[path]
 private lemma main
   [MulZeroClass α]
   [PartialOrder α]

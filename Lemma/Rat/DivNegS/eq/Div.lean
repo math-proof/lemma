@@ -4,7 +4,7 @@ import Lemma.Rat.DivNeg.eq.NegDiv
 open Int Rat
 
 
-@[main]
+@[path]
 private lemma main
   [DivisionMonoid α] [HasDistribNeg α]
   {a b : α} :

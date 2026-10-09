@@ -2,7 +2,7 @@ import Lemma.Tensor.EqGetCast_MapRange.of.Eq
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h₀ : i < n)

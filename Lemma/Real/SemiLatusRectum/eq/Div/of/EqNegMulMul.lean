@@ -6,7 +6,7 @@ import sympy.Basic
 For the gravitational constant \(C=-GMm\), the semi-latus rectum is
 \(p=-J^2/(Cm)=\dfrac{J^2}{GMm^2}\).
 -/
-@[main]
+@[path]
 private lemma main
   {C G M m J : ℝ}
 -- given

@@ -3,7 +3,7 @@ import Lemma.Nat.Mul.ne.Zero.of.Ne_0.Ne_0
 open Bool Nat
 
 
-@[main]
+@[path]
 private lemma main
   [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
   {a b : α}

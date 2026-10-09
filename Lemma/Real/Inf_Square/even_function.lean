@@ -6,7 +6,7 @@ import Lemma.Real.Inf.of.Eq.even_function
 open scoped Pointwise
 
 
-@[main]
+@[path]
 private lemma main
   {S : Set ℝ} :
 -- imply

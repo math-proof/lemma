@@ -3,7 +3,7 @@ import Lemma.Tensor.Lt.is.LtDataS
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [Preorder α]
   {X Y : Fin n → Tensor α s}

@@ -6,7 +6,7 @@ import Lemma.Tensor.GetAppend.eq.Get_Sub.of.GtAdd.Ge
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   {n : ℕ}
 -- given

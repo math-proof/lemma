@@ -9,7 +9,7 @@ open Tensor Int Nat
 set_option maxHeartbeats 2000000
 
 
-@[main]
+@[path]
 private lemma main
   [AddGroupWithOne α]
   {n : ℕ}

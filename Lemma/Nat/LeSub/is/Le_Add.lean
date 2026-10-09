@@ -4,7 +4,7 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Nat.LeSub.is.Le_Add |
+| path | Nat.LeSub.is.Le_Add |
 | comm | Nat.Le_Add.is.LeSub |
 | mp   | Nat.Le_Add.of.LeSub |
 | mpr  | Nat.LeSub.of.Le_Add |
@@ -12,7 +12,7 @@ import sympy.Basic
 | mpr.comm | Nat.Ge_Sub.of.GeAdd |
 | comm.is | Nat.Ge_Sub.is.GeAdd |
 -/
-@[main, comm, mp, mpr, mp.comm, mpr.comm, comm.is]
+@[path, comm, mp, mpr, mp.comm, mpr.comm, comm.is]
 private lemma main
 -- given
   (a b c : ℕ) :
@@ -22,7 +22,7 @@ private lemma main
   Nat.sub_le_iff_le_add
 
 
-@[main, comm, mp, mpr, mp.comm, mpr.comm, comm.is]
+@[path, comm, mp, mpr, mp.comm, mpr.comm, comm.is]
 private lemma left
 -- given
   (a b c : ℕ) :

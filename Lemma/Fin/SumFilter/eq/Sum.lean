@@ -3,7 +3,7 @@ import sympy.Basic
 
 
 /-- The band `i − l < j < i + u` of row `i` is the contiguous window `[β, ζ)`, `β = relu(i − l + 1)`, `ζ = min(n, i + u)`. -/
-@[main]
+@[path]
 private lemma main
   [AddCommMonoid M]
   {n : ℕ}

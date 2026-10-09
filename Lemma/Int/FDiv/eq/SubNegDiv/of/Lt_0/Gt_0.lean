@@ -6,7 +6,7 @@ import Lemma.Int.NegAdd.eq.SubNeg
 open Int Nat
 
 
-@[main]
+@[path]
 private lemma main
   {n d : ℤ}
 -- given

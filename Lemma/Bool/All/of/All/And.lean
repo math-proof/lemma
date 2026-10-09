@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma limits_cond.given
   {A : Set α}
   {p : α → Prop}

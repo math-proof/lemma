@@ -5,7 +5,7 @@ open scoped ProbabilityTheory
 
 
 /-- Unfold `𝔼[x: π](f x | y)` to Mathlib's `π[fun ω ↦ f (x ω) | MeasurableSpace.comap y inferInstance]`. -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace Ω]
   [MeasurableSpace γ]

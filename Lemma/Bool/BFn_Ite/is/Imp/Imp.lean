@@ -4,12 +4,12 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Bool.BFn_Ite.is.Imp.Imp |
+| path | Bool.BFn_Ite.is.Imp.Imp |
 | comm | Bool.Imp.Imp.is.BFn_Ite |
 | mp | Bool.Imp.Imp.of.BFn_Ite |
 | mpr | Bool.BFn_Ite.of.Imp.Imp |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   [Decidable p]
   {R : α → β → Prop}

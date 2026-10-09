@@ -2,7 +2,7 @@ import Lemma.Real.Ge0SubSquare_MulMul4.of.All_Le0Add_Mul_Square.Ge_0
 open Real
 
 
-@[main]
+@[path]
 private lemma main
   {a b c : ℝ}
 -- given

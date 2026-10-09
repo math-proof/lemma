@@ -365,7 +365,7 @@ ForEach-Object {
     $file = $_.FullName
     $file = Resolve-Path -Relative $file
     $content = Get-Content $file -Raw
-    $match = $content -cmatch '(?:\n/--\n([\s\S]*)\n-/)?\n@\[main, ([^]]+)\]'
+    $match = $content -cmatch '(?:\n/--\n([\s\S]*)\n-/)?\n@\[path, ([^]]+)\]'
     if (!$match) {return}
 
     $module = $file -creplace '^\.\\Lemma\\', ''
@@ -536,11 +536,11 @@ ForEach-Object {
                 Add-Content -Path "sql/test.sql" -Value (Format-LemmaInsertRow -Module $new_module -Synthetic)
             }
             else {
-                Write-Host "Ignoring @[main, mp.left] at $file"
+                Write-Host "Ignoring @[path, mp.left] at $file"
             }
         }
         else {
-            Write-Host "Ignoring @[main, mp.left] at $file (no `is` segment)"
+            Write-Host "Ignoring @[path, mp.left] at $file (no `is` segment)"
         }
     }
     if ($attributes -cmatch '\bmp\.right\b') {
@@ -562,11 +562,11 @@ ForEach-Object {
                 Add-Content -Path "sql/test.sql" -Value (Format-LemmaInsertRow -Module $new_module -Synthetic)
             }
             else {
-                Write-Host "Ignoring @[main, mp.right] at $file"
+                Write-Host "Ignoring @[path, mp.right] at $file"
             }
         }
         else {
-            Write-Host "Ignoring @[main, mp.right] at $file (no `is` segment)"
+            Write-Host "Ignoring @[path, mp.right] at $file (no `is` segment)"
         }
     }
     if ($attributes -cmatch '\bmp\.comm\b') {
@@ -581,7 +581,7 @@ ForEach-Object {
             Add-Content -Path "sql/test.sql" -Value (Format-LemmaInsertRow -Module $new_module -Synthetic)
         }
         else {
-            Write-Host "Ignoring @\[main, mp.comm] at $file"
+            Write-Host "Ignoring @\[path, mp.comm] at $file"
         }
     }
     if ($attributes -cmatch '\bmpr\.comm\b') {
@@ -595,7 +595,7 @@ ForEach-Object {
             Add-Content -Path "sql/test.sql" -Value (Format-LemmaInsertRow -Module $new_module -Synthetic)
         }
         else {
-            Write-Host "Ignoring @\[main, mp.comm] at $file"
+            Write-Host "Ignoring @\[path, mp.comm] at $file"
         }
     }
     if ($attributes -cmatch '\bmp\.mt\b') {
@@ -675,7 +675,7 @@ ForEach-Object {
             Add-Content -Path "sql/test.sql" -Value (Format-LemmaInsertRow -Module $new_module -Synthetic)
         }
         else {
-            Write-Host "Ignoring @[main, And.left] at $file"
+            Write-Host "Ignoring @[path, And.left] at $file"
         }
     }
     if ($attributes -cmatch '\bAnd\.right\b') {
@@ -684,7 +684,7 @@ ForEach-Object {
             Add-Content -Path "sql/test.sql" -Value (Format-LemmaInsertRow -Module $new_module -Synthetic)
         }
         else {
-            Write-Host "Ignoring @[main, And.right] at $file"
+            Write-Host "Ignoring @[path, And.right] at $file"
         }
     }
 }

@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [PowerSeries_coeff_mem_subring_of_coeff_mul_mem](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_PowerSeries_coeff_mem_subring_of_coeff_mul_mem.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing K]
   {R : Subring K}

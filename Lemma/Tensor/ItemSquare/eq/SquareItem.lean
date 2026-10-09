@@ -4,7 +4,7 @@ import Lemma.Tensor.ItemMul.eq.MulItemS
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [Monoid α]
 -- given

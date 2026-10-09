@@ -4,7 +4,7 @@ import Lemma.Int.In_Range.is.Mod.In_Range
 open Int
 
 
-@[main]
+@[path]
 private lemma main
   {x a b d : ℤ}
 -- given

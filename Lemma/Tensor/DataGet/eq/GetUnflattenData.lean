@@ -3,7 +3,7 @@ import Lemma.Vector.EqFlattenUnflatten
 open Tensor Vector
 
 
-@[main, fin]
+@[path, fin]
 private lemma main
 -- given
   (X : Tensor α (n :: s))

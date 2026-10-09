@@ -2,7 +2,7 @@ import Lemma.Hyperreal.StInv.eq.InvSt
 open Hyperreal
 
 
-@[main]
+@[path]
 private lemma main
   [LinearOrder K] [Field K] [IsOrderedRing K]
   {x : K}

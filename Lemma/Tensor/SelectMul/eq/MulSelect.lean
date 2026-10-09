@@ -2,7 +2,7 @@ import Lemma.Tensor.SelectBFn.eq.BFnSelect
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [Mul α]
 -- given

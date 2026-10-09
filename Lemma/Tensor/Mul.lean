@@ -7,7 +7,7 @@ import torch.Tensor.Basic
 open Tensor Vector
 
 
-@[main]
+@[path]
 private lemma main
   [Mul α]
 -- given
@@ -21,7 +21,7 @@ private lemma main
   rfl
 
 
-@[main]
+@[path]
 private lemma Comm
   [CommMagma α]
 -- given
@@ -37,7 +37,7 @@ private lemma Comm
   rw [Nat.Mul.comm]
 
 
-@[main]
+@[path]
 private lemma hComm
 -- given
   (X Y : Tensor ℝ []) :
@@ -48,7 +48,7 @@ private lemma hComm
   apply Comm
 
 
-@[main, comm]
+@[path, comm]
 private lemma nat
   [Semiring α]
   [CharZero α]

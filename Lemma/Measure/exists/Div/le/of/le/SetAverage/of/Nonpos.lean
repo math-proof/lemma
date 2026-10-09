@@ -6,7 +6,7 @@ open MeasureTheory Metric
 /--
 [MeasureTheory_exists_div_le_of_le_setAverage_of_nonpos](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_MeasureTheory_exists_div_le_of_le_setAverage_of_nonpos.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace α]
   {μ : MeasureTheory.Measure α}

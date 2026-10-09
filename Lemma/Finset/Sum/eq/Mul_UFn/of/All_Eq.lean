@@ -3,7 +3,7 @@ import Lemma.Finset.All_EqUFnS.of.All_Eq
 open Finset
 
 
-@[main]
+@[path]
 private lemma main
   [NonAssocSemiring β]
   {x : ι → α}

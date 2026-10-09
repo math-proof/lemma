@@ -8,7 +8,7 @@ import Lemma.Vector.XEqSumS.of.XEq.OrAll_NotInfinite
 open Hyperreal Vector
 
 
-@[main]
+@[path]
 private lemma main
   {a b : List.Vector ℝ* n}
 -- given

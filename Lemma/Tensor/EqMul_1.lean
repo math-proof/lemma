@@ -5,7 +5,7 @@ import torch.Tensor
 open Tensor Vector
 
 
-@[main]
+@[path]
 private lemma nat
   [Semiring α]
   [CharZero α]
@@ -18,7 +18,7 @@ private lemma nat
   apply mul_one
 
 
-@[main]
+@[path]
 private lemma main
   [MulOneClass α]
 -- given

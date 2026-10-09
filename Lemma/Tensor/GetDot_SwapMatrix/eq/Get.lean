@@ -4,7 +4,7 @@ import Lemma.Tensor.EqTSwapMatrix
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [Semiring α] [CharZero α]
 -- given

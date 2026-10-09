@@ -2,7 +2,7 @@ import sympy.functions.elementary.complexes
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma both
   {n : ℕ}
   {f g : ℕ → Set ℝ}
@@ -14,7 +14,7 @@ private lemma both
   exact Set.iUnion₂_mono fun i _ => h i
 
 
-@[main]
+@[path]
 private lemma lhs
   {n m : ℕ}
   {x : ℕ → Set (Fin n → ℂ)}

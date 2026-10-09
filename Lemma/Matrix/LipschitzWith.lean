@@ -5,7 +5,7 @@ import Lemma.Real.Norm.le.Sum_Abs
 import Lemma.Matrix.Sum_AbsSub.le.MulDivMulCMixLQHQDist
 
 
-@[main]
+@[path]
 private lemma main
   {S : Type*} [Fintype S] [DecidableEq S]
   {d : ℕ}

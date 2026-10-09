@@ -2,7 +2,7 @@ import Lemma.Hyperreal.LeSt_0.of.Le_0
 open Hyperreal
 
 
-@[main]
+@[path]
 private lemma main
   {x : ℝ*}
 -- given

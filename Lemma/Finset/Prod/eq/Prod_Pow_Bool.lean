@@ -3,7 +3,7 @@ import Lemma.Nat.Pow_Ite.eq.Ite_PowS
 open Bool Nat
 
 
-@[main]
+@[path]
 private lemma main
   [Fintype ι] [DecidableEq ι]
   [CommMonoid α]

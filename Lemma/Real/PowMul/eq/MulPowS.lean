@@ -4,10 +4,10 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Real.PowMul.eq.MulPowS |
+| path | Real.PowMul.eq.MulPowS |
 | comm | Real.MulPowS.eq.PowMul |
 -/
-@[main, comm]
+@[path, comm]
 private lemma main
   [CommMonoid α]
   {a b : α}

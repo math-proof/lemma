@@ -2,7 +2,7 @@ import Lemma.Nat.Ge.of.Gt.Gt
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   [Preorder α]
   {x a b : α}

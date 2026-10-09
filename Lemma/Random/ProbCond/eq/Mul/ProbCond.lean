@@ -16,7 +16,7 @@ Discrete chain rule, pointwise at countable atoms:
 
 Python: Random.ProbCond.eq.Mul.ProbCond.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace Ω]
   [ReferenceMeasure α] [ReferenceMeasure β] [ReferenceMeasure γ]

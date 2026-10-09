@@ -4,7 +4,7 @@ import Lemma.Vector.GetDiv.eq.DivGetS
 open Vector
 
 
-@[main]
+@[path]
 private lemma main
   [Div α]
   {s : List ℕ}

@@ -12,7 +12,7 @@ import Lemma.NormedSpace.VecMul.eq.Zero.of.All_EqVecMul_Exp
 open Matrix NormedSpace
 
 
-@[main]
+@[path]
 private lemma main
   {S : Type*} [Fintype S] [DecidableEq S]
   {d : ℕ}

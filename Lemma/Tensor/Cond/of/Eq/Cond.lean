@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma subs_with_expand_dims
   {m n : ℕ}
   {a : Fin n → ℝ}

@@ -2,7 +2,7 @@ import Lemma.List.AddMul_ProdDrop.lt.Prod.of.Lt_ProdTake.Lt_ProdDrop
 open List
 
 
-@[main]
+@[path]
 private lemma main
   {s : List ℕ}
   {d : ℕ}

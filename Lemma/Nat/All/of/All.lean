@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma limits.subst.offset.given
   {f : ℤ → Prop}
   {a b d : ℤ}
@@ -15,7 +15,7 @@ private lemma limits.subst.offset.given
   rwa [sub_add_cancel] at h'
 
 
-@[main]
+@[path]
 private lemma limits.subst.reverse.given
   {f : ℤ → Prop}
   {a b c : ℤ}

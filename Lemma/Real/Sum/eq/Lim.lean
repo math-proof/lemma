@@ -3,7 +3,7 @@ import sympy.series.limits
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   [AddCommMonoid α]
   [TopologicalSpace α]

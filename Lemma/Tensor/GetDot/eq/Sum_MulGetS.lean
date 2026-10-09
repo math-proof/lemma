@@ -18,10 +18,10 @@ set_option maxHeartbeats 400000
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Tensor.GetDot.eq.Sum_MulGetS |
+| path | Tensor.GetDot.eq.Sum_MulGetS |
 | fin | Tensor.GetDot.eq.Sum_MulGetS.fin |
 -/
-@[main, fin]
+@[path, fin]
 private lemma main
   [Mul α] [AddCommMonoid α]
 -- given
@@ -57,7 +57,7 @@ private lemma main
   rfl
 
 
-@[main, fin]
+@[path, fin]
 private lemma une
   [Mul α] [AddCommMonoid α]
 -- given
@@ -78,7 +78,7 @@ private lemma une
   erw [EqGetUnsqueeze_0.fin]
 
 
-@[main, fin]
+@[path, fin]
 private lemma mv
   [Mul α] [AddCommMonoid α]
 -- given

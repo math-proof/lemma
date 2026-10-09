@@ -17,7 +17,7 @@ set_option maxHeartbeats 1000000
 /--
 `(I * a) @ b = a * b` for a broadcast row `a`.
 -/
-@[main]
+@[path]
 private lemma main
   [Semiring α] [CharZero α]
 -- given

@@ -4,7 +4,7 @@ import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Lemma.Random.Gtμmin_0AndGeη_0AndLtη_1
 
 
-@[main]
+@[path]
 private lemma main
   {S A : Type*} [Fintype S] [DecidableEq S] [Nonempty S] [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype A] [DecidableEq A] [Nonempty A] [MeasurableSpace A] [MeasurableSingletonClass A]
   {spec : QLearningSpec S A} :

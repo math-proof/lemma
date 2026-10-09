@@ -31,7 +31,7 @@ import Lemma.Vector.SplitAtMul.eq.MulSplitAtS
 open Fin List Nat Rat Tensor Vector
 
 
-@[main]
+@[path]
 private lemma main
   [ExpRing α]
   {d : ℕ}

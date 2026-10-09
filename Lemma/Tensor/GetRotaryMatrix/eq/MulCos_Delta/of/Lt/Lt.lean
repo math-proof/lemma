@@ -4,7 +4,7 @@ import Lemma.Tensor.RotaryMatrix.eq.AppendHstackSMulSEye
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (θ : Tensor ℝ [d])

@@ -8,7 +8,7 @@ import Lemma.Nat.EqMin.of.Le
 open Int List Nat
 
 
-@[main]
+@[path]
 private lemma main
   {s : List α}
   {i : Fin s.length}

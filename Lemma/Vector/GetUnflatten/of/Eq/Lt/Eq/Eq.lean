@@ -2,7 +2,7 @@ import Lemma.Vector.GetUnflatten.of.Eq.Eq.Lt.Eq.Eq
 open Vector
 
 
-@[main]
+@[path]
 private lemma main
   {v : List.Vector α (m * n)}
   {v' : List.Vector α (m' * n')}

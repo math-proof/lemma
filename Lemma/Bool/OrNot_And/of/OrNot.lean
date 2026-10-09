@@ -3,7 +3,7 @@ import Lemma.Bool.IffNotNot
 open Bool
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h : ¬p ∨ q) :

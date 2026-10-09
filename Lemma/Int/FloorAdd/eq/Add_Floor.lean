@@ -3,7 +3,7 @@ import Lemma.Int.FloorAdd.eq.AddFloor
 open Int Nat
 
 
-@[main]
+@[path]
 private lemma main
   [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
   [FloorRing α]

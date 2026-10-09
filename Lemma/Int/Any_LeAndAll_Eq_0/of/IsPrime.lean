@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [DeligneSerre_exists_minimalPrime_le](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_DeligneSerre_exists_minimalPrime_le.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing T] [Module.Finite ℤ T] [Module.IsTorsionFree ℤ T]
   {𝔪 : Ideal T}

@@ -2,7 +2,7 @@ import sympy.functions.elementary.conv
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma conv3d
   {m d d' : ℕ}
   {T : Type*} [Fintype T]
@@ -47,7 +47,7 @@ private lemma conv3d
     rw [mul_zero]
 
 
-@[main]
+@[path]
 private lemma conv2d
   {m d d' : ℕ}
   {T : Type*} [Fintype T]

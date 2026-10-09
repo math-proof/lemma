@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [CerednikDrinfeld_isAlgClosed_and_charP_quotient_of_isMaximal_of_forall_monic](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_CerednikDrinfeld_isAlgClosed_and_charP_quotient_of_isMaximal_of_forall_monic.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing 𝒪] [CommRing Onr] [Algebra 𝒪 Onr]
   {r : ℕ} [Fact r.Prime]

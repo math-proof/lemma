@@ -9,7 +9,7 @@ open scoped ComplexOrder
 
 /-- The Cholesky recursion determines the factor: for positive definite `A`, a matrix satisfying the
 recursion is lower triangular with positive diagonal and `A = L Lᴴ`. -/
-@[main]
+@[path]
 private lemma main
   [RCLike 𝕜]
   {n : ℕ}

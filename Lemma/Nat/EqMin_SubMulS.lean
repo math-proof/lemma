@@ -2,7 +2,7 @@ import Lemma.Nat.Le_SubMulS
 open Nat
 
 
-@[main]
+@[path]
 private lemma left
 -- given
   (m n : ℕ)
@@ -14,7 +14,7 @@ private lemma left
   simp [this]
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (n m : ℕ)

@@ -2,7 +2,7 @@ import Lemma.Tensor.SEqSumSStack.of.All_SEq.Gt_0
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [AddMonoid α]
   {X : Fin m → Tensor α s}

@@ -4,7 +4,7 @@ import Lemma.Vector.GetMap.eq.UFnGet
 open Vector
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (g : List ℕ → List ℕ)

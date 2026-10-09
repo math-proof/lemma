@@ -7,7 +7,7 @@ import Lemma.Tensor.EqTensor0'0
 open Tensor Vector
 
 
-@[main]
+@[path]
 private lemma main
   [Zero α]
 -- given

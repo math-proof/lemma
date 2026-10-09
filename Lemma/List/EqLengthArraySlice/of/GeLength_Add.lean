@@ -1,7 +1,7 @@
 import stdlib.List
 
 
-@[main]
+@[path]
 private lemma main
   {s : List α}
   {i d : ℕ}

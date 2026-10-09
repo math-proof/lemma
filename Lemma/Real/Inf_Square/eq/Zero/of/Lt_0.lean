@@ -8,7 +8,7 @@ import Lemma.Real.Inf_Square.eq.Square.of.Ge_0.Lt
 open scoped Pointwise
 
 
-@[main]
+@[path]
 private lemma main
   {m : ℝ}
 -- given

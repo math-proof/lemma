@@ -3,7 +3,7 @@ import sympy.Basic
 import Lemma.Random.LinearTD.Any_Ge_0AndAll_LeNormX
 
 
-@[main]
+@[path]
 private lemma main
   {S : Type*} [Fintype S] [DecidableEq S] [MeasurableSpace S] [MeasurableSingletonClass S]
   {d : ℕ}

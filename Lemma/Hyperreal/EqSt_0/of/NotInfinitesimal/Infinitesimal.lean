@@ -9,7 +9,7 @@ open Hyperreal Rat
 /--
 the hypotheses are arranged in the constructor order of division a / b
 -/
-@[main, mt 1]
+@[path, mt 1]
 private lemma main
   {a : ℝ*}
 -- given

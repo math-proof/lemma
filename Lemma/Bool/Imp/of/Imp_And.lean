@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma left
 -- given
   (h : p → f ∧ g) :
@@ -12,7 +12,7 @@ private lemma left
   exact (h hp).left
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h : p → f ∧ g) :

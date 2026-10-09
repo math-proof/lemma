@@ -8,7 +8,7 @@ import Lemma.List.TakeTake.eq.Take.of.Ge
 open List Nat
 
 
-@[main]
+@[path]
 private lemma main
   {s : List α}
 -- given

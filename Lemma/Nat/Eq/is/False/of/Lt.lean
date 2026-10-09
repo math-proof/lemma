@@ -3,7 +3,7 @@ import Lemma.Bool.Eq.is.False.of.Ne
 open Bool Nat
 
 
-@[main]
+@[path]
 private lemma main
   [LinearOrder α]
   {a b : α}

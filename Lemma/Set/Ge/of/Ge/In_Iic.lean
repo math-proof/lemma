@@ -3,7 +3,7 @@ import Lemma.Set.In_Iic.is.Le
 open Set Nat
 
 
-@[main]
+@[path]
 private lemma main
   [Preorder α]
   {x y z : α}

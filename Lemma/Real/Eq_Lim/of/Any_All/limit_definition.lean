@@ -4,7 +4,7 @@ import sympy.series.limits
 open Real
 
 
-@[main]
+@[path]
 private lemma main
   (f : ℤ → ℝ)
   (a : ℝ)

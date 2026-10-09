@@ -23,10 +23,10 @@ open Nat List Bool Tensor Vector
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Tensor.SelectResize.as.ResizeSelect.of.Lt |
+| path | Tensor.SelectResize.as.ResizeSelect.of.Lt |
 | cast | Tensor.SelectResize.eq.Cast_ResizeSelect.of.Lt |
 -/
-@[main, comm, cast]
+@[path, comm, cast]
 private lemma main
   [Zero α]
   {d : Fin s.length}

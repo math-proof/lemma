@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [AlgEquiv_isOpen_ker_restrictNormalHom](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgEquiv_isOpen_ker_restrictNormalHom.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [Field E]
   {K L : Type*} [Field K] [Field L] [Algebra K L] [Algebra K E] [Algebra E L] [IsScalarTower K E L] [Normal K E] [FiniteDimensional K E] :

@@ -3,7 +3,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma extreme_value_theorem
   {f : ℝ → ℝ}
   {a b : ℝ}

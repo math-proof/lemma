@@ -4,7 +4,7 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Bool.AndBFn.is.AndBFnIte |
+| path | Bool.AndBFn.is.AndBFnIte |
 | comm | Bool.AndBFnIte.is.AndBFn |
 | mp and | Bool.AndBFnIte.of.AndBFn |
 | mpr and | Bool.AndBFn.of.AndBFnIte |
@@ -12,7 +12,7 @@ import sympy.Basic
 | mpr.comm and | Bool.And_BFn.of.And_BFnIte |
 | comm.is | Bool.And_BFn.is.And_BFnIte |
 -/
-@[main, comm, mp and, mpr and, mp.comm and, mpr.comm and, comm.is]
+@[path, comm, mp and, mpr and, mp.comm and, mpr.comm and, comm.is]
 private lemma main
   [Decidable p]
 -- given

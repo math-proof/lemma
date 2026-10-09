@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 Semi-latus rectum: \(p=-J^2/(Cm)\).
 -/
-@[main]
+@[path]
 private lemma main
   (C m J : ℝ) :
 -- imply

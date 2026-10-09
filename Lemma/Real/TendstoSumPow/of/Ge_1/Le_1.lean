@@ -4,7 +4,7 @@ import sympy.Basic
 open Real Finset Filter
 
 
-@[main]
+@[path]
 private lemma main
   {ν : ℝ}
   {n₀ : ℕ}

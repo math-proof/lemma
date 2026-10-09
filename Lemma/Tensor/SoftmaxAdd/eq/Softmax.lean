@@ -3,7 +3,7 @@ import Lemma.Tensor.SoftmaxAdd_Keepdim.eq.Softmax
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [ExpRing α]
 -- given

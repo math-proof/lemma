@@ -5,7 +5,7 @@ import Lemma.Int.Le_0.of.Ge_0.Le_0
 open Int
 
 
-@[main]
+@[path]
 private lemma main
   [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
   {a b : α}

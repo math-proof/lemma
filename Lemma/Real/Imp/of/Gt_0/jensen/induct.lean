@@ -8,7 +8,7 @@ Jensen's inequality (induction core): if `f'' > 0` on `(a, b)` and `x i ∈ (a, 
 then `∑ i < n, w i = 1` together with `∀ i < n, w i ≥ 0` implies
 `∑ i < n, w i * f (x i) ≥ f (∑ i < n, w i * x i)`.
 -/
-@[main]
+@[path]
 private lemma main
   {a b : ℝ}
   {f : ℝ → ℝ}

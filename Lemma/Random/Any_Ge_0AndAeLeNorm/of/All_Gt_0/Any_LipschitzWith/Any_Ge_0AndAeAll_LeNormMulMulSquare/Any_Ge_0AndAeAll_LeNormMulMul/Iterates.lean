@@ -1,11 +1,11 @@
 import sympy.stats.iterates
 import sympy.Basic
-import Mathlib.MeasureTheory.Measure.MeasureSpace
+import Mathlib.MeasureTheory.Measure.MeasureSpaceDef
 import Mathlib.Topology.EMetricSpace.Lipschitz
 open Filter MeasureTheory
 
 
-@[main]
+@[path]
 private lemma main
   {d : ℕ}
   {Ω : Type*} [MeasurableSpace Ω]

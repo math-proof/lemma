@@ -8,12 +8,12 @@ open Vector
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Vector.GetCosSub.eq.AddMulSGetS |
+| path | Vector.GetCosSub.eq.AddMulSGetS |
 | fin | Vector.GetCosSub.eq.AddMulSGetS.fin |
 | comm | Vector.AddMulSGetS.eq.GetCosSub |
 | fin.comm | Vector.AddMulSGetS.eq.GetCosSub.fin |
 -/
-@[main, fin, comm, fin.comm]
+@[path, fin, comm, fin.comm]
 private lemma main
 -- given
   (x y : List.Vector ℝ n)

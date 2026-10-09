@@ -6,7 +6,7 @@ import Lemma.Nat.Gt_0
 open Nat Rat Int
 
 
-@[main]
+@[path]
 private lemma main
   [Field α] [LinearOrder α] [IsStrictOrderedRing α]
   [FloorRing α]

@@ -16,12 +16,12 @@ private lemma det_cast_add_comm
   (X : Tensor α [m + n, n + m]) :
   id (α := Tensor α []) X.det = id (α := Tensor α []) (cast (congrArg (fun t => Tensor α [t, n + m]) (Nat.add_comm m n)) X : Tensor α [n + m, n + m]).det := by
   unfold Tensor.det
-  rw [dif_neg (by simp : ¬[m + n, n + m].length > 2), dif_neg (by simp : ¬[m + n, n + m].length < 2)]
-  rw [dif_neg (by simp : ¬[n + m, n + m].length > 2), dif_neg (by simp : ¬[n + m, n + m].length < 2)]
+  rw [dite_eq_right (by simp : ¬[m + n, n + m].length > 2), dite_eq_right (by simp : ¬[m + n, n + m].length < 2)]
+  rw [dite_eq_right (by simp : ¬[n + m, n + m].length > 2), dite_eq_right (by simp : ¬[n + m, n + m].length < 2)]
   simp [Nat.add_comm m n]
 
 
-@[main]
+@[path]
 private lemma main
   [CommRing α] [CharZero α]
   {m n : ℕ}
@@ -79,35 +79,30 @@ private lemma main
     rw [hdot, Nat.mul_comm n m, hXdet]
     rfl
   have hsign : id (α := Tensor α []) X.det =
-      ((-1 : Tensor α []) ^ (m * n)) * id (α := Tensor α []) T.det := by
-    calc
-      id (α := Tensor α []) X.det
-          = (1 : Tensor α []) * id (α := Tensor α []) X.det :=
-            (Tensor.EqMul1 (id (α := Tensor α []) X.det)).symm
-      _ = ((-1 : Tensor α []) ^ (2 * (m * n))) * id (α := Tensor α []) X.det := by
-            rw [hneg]
-      _ = ((-1 : Tensor α []) ^ (m * n + m * n)) * id (α := Tensor α []) X.det := by
-            rw [two_mul]
-      _ = (((-1 : Tensor α []) ^ (m * n)) * ((-1 : Tensor α []) ^ (m * n))) *
-            id (α := Tensor α []) X.det := by
-            rw [pow_add,
-              show
-                HMul.hMul (γ := Tensor α []) (self := instHMul)
-                  ((-1 : Tensor α []) ^ (m * n))
-                  ((-1 : Tensor α []) ^ (m * n)) =
-                HMul.hMul (γ := Tensor α [])
-                  (self := instHMulTensorNilNatOfMul)
-                  ((-1 : Tensor α []) ^ (m * n))
-                  ((-1 : Tensor α []) ^ (m * n)) from
-                (Tensor.Mul ((-1 : Tensor α []) ^ (m * n))
-                  ((-1 : Tensor α []) ^ (m * n))).symm]
-      _ = ((-1 : Tensor α []) ^ (m * n)) *
-            (((-1 : Tensor α []) ^ (m * n)) * id (α := Tensor α []) X.det) :=
-            Tensor.MulMul.eq.Mul_Mul _ _ _
-      _ = ((-1 : Tensor α []) ^ (m * n)) * id (α := Tensor α []) (Xsq @ P).det := by
-            rw [← hdot']
-      _ = ((-1 : Tensor α []) ^ (m * n)) * id (α := Tensor α []) T.det := by
-            rw [hXPdet]
+      ((-1 : Tensor α []) ^ (m * n)) * id (α := Tensor α []) T.det := calc
+    _ = (1 : Tensor α []) * id (α := Tensor α []) X.det :=
+      (Tensor.EqMul1 (id (α := Tensor α []) X.det)).symm
+    _ = ((-1 : Tensor α []) ^ (2 * (m * n))) * id (α := Tensor α []) X.det := by
+      rw [hneg]
+    _ = ((-1 : Tensor α []) ^ (m * n + m * n)) * id (α := Tensor α []) X.det := by
+      rw [two_mul]
+    _ = (((-1 : Tensor α []) ^ (m * n)) * ((-1 : Tensor α []) ^ (m * n))) *
+        id (α := Tensor α []) X.det := by
+      have hmul_eq :
+        @HMul.hMul (Tensor α []) (Tensor α []) (Tensor α []) instHMul
+          ((-1 : Tensor α []) ^ (m * n)) ((-1 : Tensor α []) ^ (m * n)) =
+        @HMul.hMul (Tensor α []) (Tensor α []) (Tensor α []) instHMulTensorNilNatOfMul
+          ((-1 : Tensor α []) ^ (m * n)) ((-1 : Tensor α []) ^ (m * n)) :=
+        (Tensor.Mul ((-1 : Tensor α []) ^ (m * n))
+          ((-1 : Tensor α []) ^ (m * n))).symm
+      rw [pow_add, hmul_eq]
+    _ = ((-1 : Tensor α []) ^ (m * n)) *
+        (((-1 : Tensor α []) ^ (m * n)) * id (α := Tensor α []) X.det) :=
+      MulMul.eq.Mul_Mul _ _ _
+    _ = ((-1 : Tensor α []) ^ (m * n)) * id (α := Tensor α []) (Xsq @ P).det := by
+      rw [← hdot']
+    _ = ((-1 : Tensor α []) ^ (m * n)) * id (α := Tensor α []) T.det := by
+      rw [hXPdet]
   show id (α := Tensor α []) X.det = (-1) ^ (m * n) * id (α := Tensor α []) A.det * id (α := Tensor α []) B.det
   rw [hsign, hT]
   exact (MulMul.eq.Mul_Mul _ _ _).symm

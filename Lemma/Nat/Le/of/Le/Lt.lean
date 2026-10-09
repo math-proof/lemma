@@ -3,7 +3,7 @@ import Lemma.Nat.Le.of.Lt
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   [Preorder α]
   {a b c : α}
@@ -17,7 +17,7 @@ private lemma main
   apply Le.of.Lt this
 
 
-@[main]
+@[path]
 private lemma relax
   {a b x : ℝ}
 -- given
@@ -29,7 +29,7 @@ private lemma relax
   exact le_trans h₀ h₁.le
 
 
-@[main]
+@[path]
 private lemma subst
   {t x y b k : ℝ}
 -- given

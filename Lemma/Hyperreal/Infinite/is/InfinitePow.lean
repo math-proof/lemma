@@ -6,14 +6,14 @@ open Hyperreal
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Hyperreal.Infinite.is.InfinitePow |
+| path | Hyperreal.Infinite.is.InfinitePow |
 | comm | Hyperreal.InfinitePow.is.Infinite |
 | mp   | Hyperreal.InfinitePow.of.Infinite |
 | mpr  | Hyperreal.Infinite.of.InfinitePow |
 | mp.mt | Hyperreal.NotInfinite.of.NotInfinitePow |
 | mpr.mt | Hyperreal.NotInfinitePow.of.NotInfinite |
 -/
-@[main, comm, mp, mpr, mp.mt, mpr.mt]
+@[path, comm, mp, mpr, mp.mt, mpr.mt]
 private lemma main
   [NeZero (n : ℕ)]
 -- given

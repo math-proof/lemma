@@ -16,7 +16,7 @@ private lemma  FrobChareqDock.bijective_aux {S T N : Type*} [CommRing S] [Ring T
   have hann : s ∈ Module.annihilator S N := Module.mem_annihilator.mpr fun n => by
     rw [← hg s n, RingHom.mem_ker.mp hs, zero_smul]
   rwa [(Module.annihilator_eq_bot (R := S) (M := N)).mpr inferInstance] at hann
-@[main]
+@[path]
 private lemma main
   {S T N : Type*} [CommRing S] [Ring T] [AddCommGroup N] [Module S N] [Module T N] [Module.Free S N]
   {g : S →+* T}

@@ -3,7 +3,7 @@ import Lemma.Nat.Le.of.Le.Le
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   {a b c : ℕ}
 -- given

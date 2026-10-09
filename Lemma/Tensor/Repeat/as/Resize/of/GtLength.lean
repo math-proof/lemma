@@ -11,7 +11,7 @@ import Lemma.Tensor.GetResize.as.ResizeGet.of.GtGet_0.GtVal_0
 open Bool List Nat Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [Zero α]
   {s : List ℕ}

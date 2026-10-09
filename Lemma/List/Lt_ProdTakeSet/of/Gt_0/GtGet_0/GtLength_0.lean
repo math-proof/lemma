@@ -4,7 +4,7 @@ import Lemma.List.GetSet.eq.Get_0.of.Gt_0.GtLength_0
 open List
 
 
-@[main]
+@[path]
 private lemma main
   {s : List ℕ}
 -- given

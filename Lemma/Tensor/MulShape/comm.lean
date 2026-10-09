@@ -4,7 +4,7 @@ import Lemma.List.ZipWithLcm.comm.of.EqLengthS
 open List Tensor
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (s s' : List ℕ) :

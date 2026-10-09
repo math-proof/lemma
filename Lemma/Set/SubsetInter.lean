@@ -2,7 +2,7 @@ import Lemma.Set.Inter
 open Set
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (A B : Set α) :
@@ -14,7 +14,7 @@ private lemma main
   exact hxB
 
 
-@[main]
+@[path]
 private lemma left
 -- given
   (A B : Set α) :

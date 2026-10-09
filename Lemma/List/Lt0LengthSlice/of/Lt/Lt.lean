@@ -2,7 +2,7 @@ import Lemma.List.LengthSlice.eq.SubMin
 open List
 
 
-@[main]
+@[path]
 private lemma main
   {a b n : ℕ}
 -- given

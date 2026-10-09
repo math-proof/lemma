@@ -3,7 +3,7 @@ import Mathlib.Order.Interval.Finset.Nat
 open Finset
 
 
-@[main]
+@[path]
 private lemma main
   {t : ℕ → ℕ}
 -- given

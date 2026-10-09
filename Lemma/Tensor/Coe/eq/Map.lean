@@ -2,7 +2,7 @@ import torch.Tensor.Basic
 import sympy.Basic
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [Coe α β]
 -- given

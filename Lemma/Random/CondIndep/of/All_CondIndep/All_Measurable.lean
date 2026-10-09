@@ -15,7 +15,7 @@ Proof: the whole future `σ(X t, X (t + 1), …)`, `X m = (a m, r m, s (m + 1))`
 the history given `s t` (contraction, by induction, then `condIndep_iSup_of_directed_le`); weak union then moves
 `a t`, a component of `X t`, into the conditioning.
 -/
-@[main]
+@[path]
 private lemma main
   [mΩ : MeasurableSpace Ω] [StandardBorelSpace Ω] [MeasurableSpace S] [MeasurableSpace A]
   {π : Measure Ω} [IsProbabilityMeasure π]
@@ -37,7 +37,7 @@ private lemma main
   let H : (n : ℕ) → Ω → Fin n → ℝ × S × A := fun n ω i ↦ (r i ω, s i ω, a i ω)
   have hXm : ∀ m, Measurable (X m) := fun m ↦ (ham m).prodMk ((hrm m).prodMk (hsm (m + 1)))
   have hHm : ∀ n, Measurable (H n) := fun n ↦
-    measurable_pi_lambda _ fun i ↦ (hrm i).prodMk ((hsm i).prodMk (ham i))
+    Measurable.of_eval fun i ↦ (hrm i).prodMk ((hsm i).prodMk (ham i))
   have hM : ∀ n, ProbabilityTheory.CondIndep (MeasurableSpace.comap (s n) inferInstance)
     (MeasurableSpace.comap (X n) inferInstance) (MeasurableSpace.comap (H n) inferInstance) (hsm n).comap_le π :=
     fun n ↦ h₁ n
@@ -92,9 +92,11 @@ private lemma main
           refine iSup₂_le fun j hj ↦ measurable_iff_comap_le.1 ?_
           exact (haR _ _ (by omega)).prodMk ((hrR _ _ (by omega)).prodMk (hsR _ _ (by omega)))
         ·
-          refine measurable_iff_comap_le.1 (@measurable_pi_lambda Ω _ _
-            (MeasurableSpace.comap (s (t + k)) inferInstance ⊔ MeasurableSpace.comap (H (t + k)) inferInstance)
-            _ _ fun i ↦ ?_)
+          refine measurable_iff_comap_le.1
+            (@Measurable.of_eval Ω _ _
+              (MeasurableSpace.comap (s (t + k)) inferInstance ⊔
+                MeasurableSpace.comap (H (t + k)) inferInstance)
+              _ _ fun i ↦ ?_)
           have hi := i.isLt
           exact (hrR _ _ (by omega)).prodMk ((hsR _ _ (by omega)).prodMk (haR _ _ (by omega)))
   -- pass to the whole future
@@ -113,8 +115,9 @@ private lemma main
   have hW := CondIndep.of.Le.Le.CondIndep.Le_M.Le_M.Le_M.Le_M hHσ hYsup hJ.comap_le hYsup hsupY.symm ?_ ?_
   ·
     refine condIndep_of_condIndep_of_le_left hW.symm ?_
-    refine measurable_iff_comap_le.1 (@measurable_pi_lambda Ω _ _ (⨆ k, Y k) _ _ fun k ↦ ?_)
-    exact measurable_fst.comp (measurable_snd.comp (hX1 k))
+    exact measurable_iff_comap_le.1
+      (@Measurable.of_eval Ω _ _ (⨆ k, Y k) _ _
+        fun k ↦ measurable_fst.comp (measurable_snd.comp (hX1 k)))
   ·
     refine measurable_iff_comap_le.1 ?_
     exact measurable_fst.comp (comap_measurable (s t, a t))
@@ -136,7 +139,7 @@ property `h₁` of `main`.
 Proof: (1) `main` gives `r[t:] ⟂ᵢ[π] (r, s, a)[:t] | (s t, a t)`;
 (2) `(s, a)[:t + 1]` is a measurable function of `(r, s, a)[:t]` and `(s t, a t)`; (3) weak union.
 -/
-@[main]
+@[path]
 private lemma forget_history
   [mΩ : MeasurableSpace Ω] [StandardBorelSpace Ω] [MeasurableSpace S] [MeasurableSpace A]
   {π : Measure Ω} [IsProbabilityMeasure π]
@@ -154,8 +157,11 @@ private lemma forget_history
   have h₂ : r[t:] ⟂ᵢ[π] (r, s, a)[:t] | (s t, a t) := main h₀ h₁
   -- step 2: the state-action history `(s, a)[:t + 1]` is a function of the history `(r, s, a)[:t]` and the current step `(s t, a t)`
   have h₃ : MeasurableSpace.comap ((s, a)[:t + 1]) inferInstance ≤ MeasurableSpace.comap (s t, a t) inferInstance ⊔ MeasurableSpace.comap ((r, s, a)[:t]) inferInstance := by
-    apply measurable_iff_comap_le.1 (@measurable_pi_lambda Ω _ _ (MeasurableSpace.comap (s t, a t) inferInstance ⊔ MeasurableSpace.comap ((r, s, a)[:t]) inferInstance) _ _ _)
-    intro i
+    refine measurable_iff_comap_le.1
+      (@Measurable.of_eval Ω _ _
+        (MeasurableSpace.comap (s t, a t) inferInstance ⊔
+          MeasurableSpace.comap ((r, s, a)[:t]) inferInstance)
+        _ _ fun i ↦ ?_)
     obtain ⟨i, hi⟩ := i
     obtain hi | rfl := Nat.lt_succ_iff_lt_or_eq.mp hi
     ·
@@ -165,9 +171,9 @@ private lemma forget_history
   -- step 3: weak union, shrinking the history `(r, s, a)[:t]` to `(s, a)[:t + 1]`
   apply CondIndep.of.Le.Le.CondIndep.Le_M.Le_M.Le_M.Le_M _ _ _ _ h₂ le_rfl
   exact sup_le le_sup_left h₃
-  apply Measurable.comap_le (measurable_pi_lambda _ fun k ↦ (h₀ (t + k)).fst)
-  apply Measurable.comap_le (measurable_pi_lambda _ fun (i : Fin t) ↦ h₀ i)
-  apply Measurable.comap_le (measurable_pi_lambda _ fun (i : Fin (t + 1)) ↦ (h₀ i).snd)
+  apply Measurable.comap_le (Measurable.of_eval fun k ↦ (h₀ (t + k)).fst)
+  apply Measurable.comap_le (Measurable.of_eval fun (i : Fin t) ↦ h₀ i)
+  apply Measurable.comap_le (Measurable.of_eval fun (i : Fin (t + 1)) ↦ (h₀ i).snd)
 
 
 -- created on 2026-10-07

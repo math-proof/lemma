@@ -3,7 +3,7 @@ import Mathlib.Algebra.BigOperators.Pi
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   [AddCommGroup β]
   {l : Filter α}

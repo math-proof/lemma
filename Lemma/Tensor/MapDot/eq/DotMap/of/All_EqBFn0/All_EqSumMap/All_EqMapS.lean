@@ -12,7 +12,7 @@ open Tensor
 
 
 /-- `dot` of two vectors commutes with a pointwise scalar binary operator `f`. -/
-@[main, comm]
+@[path, comm]
 private lemma vector
   [Mul α] [Add α] [Zero α]
   {f : α → α → α}
@@ -45,7 +45,7 @@ private lemma vector
 
 
 /-- `dot` of two matrices commutes with a pointwise scalar binary operator `f`. -/
-@[main, comm]
+@[path, comm]
 private lemma matrix
   [Mul α] [Add α] [Zero α]
   {f : α → α → α}

@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma lhs
   {m : ℕ}
   {x : ℕ → Set α}

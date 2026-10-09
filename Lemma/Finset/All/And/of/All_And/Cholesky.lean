@@ -2,7 +2,7 @@ import sympy.functions.elementary.complexes
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {t : ℕ}
   {A L : ℕ → ℕ → ℂ}
@@ -21,7 +21,7 @@ private lemma main
   ring
 
 
-@[main]
+@[path]
 private lemma real
   {t : ℕ}
   {A L : ℕ → ℕ → ℝ}

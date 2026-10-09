@@ -3,7 +3,7 @@ import Mathlib.LinearAlgebra.Vandermonde
 open Matrix
 
 
-@[main]
+@[path]
 private lemma vandermonde
   [CommRing α]
   {n : ℕ}

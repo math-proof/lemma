@@ -73,7 +73,7 @@ open Int Nat Tensor List Bool Vector Fin
 set_option maxHeartbeats 500000
 
 
-@[main]
+@[path]
 private lemma main
   [AddCommMonoid α]
   [NeZero (d : ℕ)]

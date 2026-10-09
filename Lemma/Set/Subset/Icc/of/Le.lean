@@ -2,7 +2,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {x y : ℝ}
 -- given
@@ -13,7 +13,7 @@ private lemma main
   exact fun t ht => ⟨h.trans ht.1, ht.2.trans h⟩
 
 
-@[main]
+@[path]
 private lemma lower
   {x y z : ℝ}
 -- given
@@ -24,7 +24,7 @@ private lemma lower
   exact Set.Ioc_subset_Ioc_right h
 
 
-@[main]
+@[path]
 private lemma upper
   {x y z : ℝ}
 -- given

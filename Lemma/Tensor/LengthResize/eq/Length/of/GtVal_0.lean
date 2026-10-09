@@ -4,7 +4,7 @@ import torch.Tensor
 open List Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [Zero α]
   {i : Fin s.length}

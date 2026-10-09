@@ -2,7 +2,7 @@ import sympy.Basic
 import sympy.functions.elementary.complexes
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (z : ℂ)

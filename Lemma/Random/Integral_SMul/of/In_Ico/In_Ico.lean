@@ -10,7 +10,7 @@ open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Mode
 The `c`-discounted sum of residuals against a function of `(s[t], a[t])` reduces to its first term:
 `𝔼[(∑' k, c ^ k * δ[t + k]) • ψ(s[t], a[t])] = 𝔼[δ[t] • ψ(s[t], a[t])]` (generalized advantage estimation).
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A] [DecidableEq S] [DecidableEq A]
   {M : Model Θ S A}

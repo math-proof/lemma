@@ -3,7 +3,7 @@ import Lemma.List.ProdTakeDropPermute__Neg.eq.Mul_ProdTakeDrop.of.GtLength_Add
 open List
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [CommMonoid α]
   {s : List α}

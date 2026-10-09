@@ -4,7 +4,7 @@ import Lemma.Nat.Odd.is.Mod_2.eq.One
 open Finset Nat
 
 
-@[main]
+@[path]
 private lemma main
   [AddCommMonoid α]
 -- given

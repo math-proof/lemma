@@ -2,7 +2,7 @@ import sympy.functions.elementary.complexes
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {n i j : ℕ}
   {L : ℕ → ℕ → ℂ}

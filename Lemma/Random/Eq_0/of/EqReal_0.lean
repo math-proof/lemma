@@ -6,7 +6,7 @@ open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model
 /--
 An event of real probability `0` is null: `(M θ).real B = 0 → M θ B = 0`.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [Fintype A]
   {M : Model Θ S A}

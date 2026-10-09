@@ -4,14 +4,14 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Rat.Eq.is.EqInv |
+| path | Rat.Eq.is.EqInv |
 | comm | Rat.EqInv.is.Eq |
 | mp | Rat.EqInv.of.Eq |
 | mpr | Rat.Eq.of.EqInv |
 | mp.mt | Rat.Ne.of.NeInv |
 | mpr.mt | Rat.NeInv.of.Ne |
 -/
-@[main, comm, mp, mpr, mp.mt, mpr.mt]
+@[path, comm, mp, mpr, mp.mt, mpr.mt]
 private lemma main
   [GroupWithZero α]
 -- given

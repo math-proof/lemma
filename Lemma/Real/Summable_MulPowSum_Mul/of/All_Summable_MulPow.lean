@@ -6,7 +6,7 @@ open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model
 /--
 A finite weighted sum of summable discounted series is summable: `Summable (fun k => γ ^ k * ∑ i, c i * w i k)`.
 -/
-@[main]
+@[path]
 private lemma main
   [Fintype ι]
   {γ : ℝ}

@@ -5,12 +5,12 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Bool.Any_And.is.AnyAnd |
+| path | Bool.Any_And.is.AnyAnd |
 | comm | Bool.AnyAnd.is.Any_And |
 | mp | Bool.AnyAnd.of.Any_And |
 | mpr | Bool.Any_And.of.AnyAnd |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
 -- given
   (f g p : α → Prop) :
@@ -20,7 +20,7 @@ private lemma main
   aesop
 
 
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma Comm
 -- given
   (f g p : α → Prop) :

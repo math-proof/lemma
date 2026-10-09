@@ -2,7 +2,7 @@ import sympy.Basic
 open Matrix
 
 
-@[main]
+@[path]
 private lemma main
   {m k l : ℕ}
   {f : ℕ → ℕ → α} :

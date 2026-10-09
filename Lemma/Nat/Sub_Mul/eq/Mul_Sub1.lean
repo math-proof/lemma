@@ -3,7 +3,7 @@ import Lemma.Int.Mul_Sub.eq.SubMulS
 open Nat Int
 
 
-@[main]
+@[path]
 private lemma main
   {x b : ℕ} :
 -- imply

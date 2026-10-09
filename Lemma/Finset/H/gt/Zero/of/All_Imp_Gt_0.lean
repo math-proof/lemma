@@ -4,7 +4,7 @@ import Lemma.Finset.All_GtH_0.et.GtH_Add_1_0
 open Finset Continuant
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (x : ℕ → ℝ)

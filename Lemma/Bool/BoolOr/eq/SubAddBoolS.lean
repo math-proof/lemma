@@ -7,7 +7,7 @@ import Lemma.Bool.Or.is.OrAnd
 open Bool Nat
 
 
-@[main]
+@[path]
 private lemma main
   [Decidable p]
   [Decidable q] :

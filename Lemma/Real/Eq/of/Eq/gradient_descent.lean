@@ -5,7 +5,7 @@ import Mathlib.Analysis.Calculus.Gradient.Basic
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {n : ℕ}
   {f : EuclideanSpace ℝ (Fin n) → ℝ}

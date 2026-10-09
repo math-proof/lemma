@@ -8,12 +8,12 @@ open Tensor Vector
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Tensor.Ge0Mul.is.Ge0MulDataS |
+| path | Tensor.Ge0Mul.is.Ge0MulDataS |
 | comm | Tensor.Ge0MulDataS.is.Ge0Mul |
 | mp | Tensor.Ge0MulDataS.of.Ge0Mul |
 | mpr | Tensor.Ge0Mul.of.Ge0MulDataS |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   [LE α] [Zero α] [Mul α]
   {A B : Tensor α s} :

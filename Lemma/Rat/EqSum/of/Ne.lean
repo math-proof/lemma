@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma geometric_series
   {r : ℝ}
   {n : ℕ}

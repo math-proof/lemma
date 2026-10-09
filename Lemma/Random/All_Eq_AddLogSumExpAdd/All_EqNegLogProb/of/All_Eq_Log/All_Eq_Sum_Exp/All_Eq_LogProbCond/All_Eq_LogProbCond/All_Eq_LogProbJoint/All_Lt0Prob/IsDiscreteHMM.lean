@@ -20,7 +20,7 @@ open MeasureTheory Measure Random ENNReal.ToRealCoe
 open IsDiscreteHMM
 
 
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace Ω] [StandardBorelSpace Ω]
   [ReferenceMeasure Y] [ReferenceMeasure X]

@@ -6,7 +6,7 @@ import sympy.matrices.expressions.matmul
 open Bool List
 
 
-@[main, cast]
+@[path, cast]
 private lemma main
   [Mul α] [Add α] [Zero α]
   {s s' : List ℕ}

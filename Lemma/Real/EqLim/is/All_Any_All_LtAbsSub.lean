@@ -4,7 +4,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma εδ
 -- given
   (f : ℝ → ℝ)
@@ -27,7 +27,7 @@ private lemma εδ
     simpa [Real.dist_eq] using H x ⟨abs_pos.mpr (sub_ne_zero.mpr (Set.mem_compl_singleton_iff.mp hx)), by simpa [Real.dist_eq] using hxδ⟩
 
 
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma εδ.pos
 -- given
   (f : ℝ → ℝ)
@@ -51,7 +51,7 @@ private lemma εδ.pos
     simpa [Real.dist_eq] using H x ⟨hx', by simpa [Real.dist_eq, abs_of_pos hx'] using hxδ⟩
 
 
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma εδ.neg
 -- given
   (f : ℝ → ℝ)
@@ -77,7 +77,7 @@ private lemma εδ.neg
     simpa [Real.dist_eq] using H x ⟨hx', by simpa [Real.dist_eq, abs_of_neg (sub_neg.mpr hxlt)] using hxδ⟩
 
 
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma εN.pos
   [LinearOrder α]
   [Zero α]
@@ -106,7 +106,7 @@ private lemma εN.pos
     simpa [Real.dist_eq] using H x hx
 
 
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma εN.neg
   [AddCommGroup α]
   [LinearOrder α]

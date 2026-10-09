@@ -3,9 +3,6 @@
 <base href="/<%= userSegment %>/">
 <link rel="stylesheet" href="css/style.css">
 <title><%= title %></title>
-<link rel="stylesheet" href="node_modules/codemirror/lib/codemirror.css">
-<link rel="stylesheet" href="node_modules/codemirror/theme/eclipse.css">
-<link rel="stylesheet" href="node_modules/codemirror/addon/hint/show-hint.css">
 <link rel="stylesheet" href="css/codemirror-overrides.css">
 <link rel="stylesheet" href="node_modules/katex/dist/katex.min.css">
 <link rel="stylesheet" href="node_modules/prismjs/themes/prism.min.css" />
@@ -18,14 +15,16 @@
 <script src="node_modules/vue/dist/vue.global.prod.js"></script>
 <script src="node_modules/vue3-sfc-loader/dist/vue3-sfc-loader.js"></script>
 
-<script src="js/py.js"></script>
+<script src="js/py.js?v=9"></script>
+<script src="js/std.js?v=9"></script>
 <script src="node_modules/lz-string/libs/lz-string.js" defer></script>
 <script src="node_modules/katex/dist/katex.min.js" defer></script>
 <script src="node_modules/katex/dist/contrib/auto-render.min.js" defer></script>
 <script type=module src="js/utility.js"></script>
 <script src="node_modules/prismjs/prism.js" defer></script>
 <script src="js/prism-lean.js" defer></script>
-<script type=module src="js/codemirrorBoot.js"></script>
+<%- include('codemirror-importmap') %>
+<script type="module" src="js/codemirrorBoot.js"></script>
 <script type=module>
 createApp('render', <%- codeJson %>);
 </script>

@@ -6,7 +6,7 @@ import sympy.Basic
 Derivative of the softmax denominator:
 \(\dfrac{d}{dt}\sum_i e^{g_i(t)}=\sum_i e^{g_i(t)}\,g_i'(t)\).
 -/
-@[main]
+@[path]
 private lemma main
   {n : ℕ}
   {g : Fin n → ℝ → ℝ}

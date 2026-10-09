@@ -5,7 +5,7 @@ import Lemma.List.Forall₂DvdLeft_ZipWithLcm.of.EqLengthS
 open List
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (s s' : List ℕ)

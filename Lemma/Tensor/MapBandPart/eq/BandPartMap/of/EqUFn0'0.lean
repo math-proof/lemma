@@ -7,10 +7,10 @@ open Tensor
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Tensor.MapBandPart.eq.BandPartMap.of.EqUFn0'0 |
+| path | Tensor.MapBandPart.eq.BandPartMap.of.EqUFn0'0 |
 | comm | Tensor.BandPartMap.eq.MapBandPart.of.EqUFn0'0 |
 -/
-@[main, comm]
+@[path, comm]
 private lemma main
   [Zero α]
   [Zero β]

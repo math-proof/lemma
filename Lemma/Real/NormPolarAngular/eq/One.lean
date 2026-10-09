@@ -4,7 +4,7 @@ import sympy.Basic
 
 
 /-- Polar angular unit vector has length one: \(|\hat{\theta}|=1\). -/
-@[main]
+@[path]
 private lemma main
   (θ : ℝ) :
 -- imply

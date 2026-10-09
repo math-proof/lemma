@@ -14,7 +14,7 @@ import Lemma.Nat.MulSub.eq.SubMulS
 open Vector Nat
 
 
-@[main]
+@[path]
 private lemma main
   {v : List.Vector α ((m + n) * k)}
   {a : List.Vector α (m * k)}

@@ -2,7 +2,7 @@ import stdlib.List
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main:
 -- imply
   itertools.product ([] : List (List α)) = [[]] := by

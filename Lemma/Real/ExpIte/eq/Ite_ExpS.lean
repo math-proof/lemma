@@ -2,7 +2,7 @@ import sympy.Basic
 import sympy.functions.elementary.exponential
 
 
-@[main]
+@[path]
 private lemma main
   [Decidable p]
   [Exp α]

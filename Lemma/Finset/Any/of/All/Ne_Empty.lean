@@ -2,7 +2,7 @@ import Lemma.Finset.Any_In.is.Ne_Empty
 open Finset
 
 
-@[main]
+@[path]
 private lemma main
   {s : Finset ι}
   {p : ι → Prop}

@@ -2,7 +2,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma subst.given
   {x y : ℤ}
   {p : ℤ → Prop}

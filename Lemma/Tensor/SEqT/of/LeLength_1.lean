@@ -9,7 +9,7 @@ import Lemma.Tensor.T.as.Permute__Neg1.of.GtLength_0
 open Bool List Tensor
 
 
-@[main, cast]
+@[path, cast]
 private lemma main
 -- given
   (h : s.length ≤ 1)

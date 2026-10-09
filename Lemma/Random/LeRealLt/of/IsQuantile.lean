@@ -4,7 +4,7 @@ import Lemma.Random.AddRealLtRealGe.eq.One
 open MeasureTheory
 
 
-@[main]
+@[path]
 private lemma main
   {Ω : Type*} [Fintype Ω] [MeasurableSpace Ω] [MeasurableSingletonClass Ω]
   {μ : Measure Ω} [IsProbabilityMeasure μ]

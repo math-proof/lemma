@@ -7,7 +7,7 @@ import Lemma.List.GetPermute.eq.Ite.of.GtLength.GtLength
 open List Bool
 
 
-@[main]
+@[path]
 private lemma main
   {s : List α}
 -- given

@@ -73,7 +73,7 @@ private lemma jointDiag_preimage_singleton
     exact h (hw2.symm.trans hw3)
 
 
-@[main]
+@[path]
 private lemma main
   {Ω α γ : Type*}
   [MeasurableSpace Ω]

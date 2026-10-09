@@ -24,7 +24,7 @@ open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Filter 
 `𝔼[s, a, r : M θ](∑' t, γ ^ t • (((c ** Stack[k](k)) @ X[t:]) • ∇ log π(a[t] | s[t])))`.
 `c = γ` is `Bounded`; `c = γ * λ` gives the generalized advantage estimate.
 -/
-@[main]
+@[path]
 private lemma main
   [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [CompleteSpace Θ]
   [ReferenceMeasure S] [MeasurableSingletonClass S] [Fintype S]

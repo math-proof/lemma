@@ -7,7 +7,7 @@ import Lemma.Vector.EqUnflattenFlatten
 open Vector
 
 
-@[main]
+@[path]
 private lemma main
   {v : List.Vector (List.Vector α s.prod) n}
   {X : Tensor α (n :: s)}

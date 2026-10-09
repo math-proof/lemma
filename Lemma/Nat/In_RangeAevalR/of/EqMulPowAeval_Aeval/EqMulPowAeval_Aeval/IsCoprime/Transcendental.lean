@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [Polynomial_mem_range_aeval_of_isCoprime_of_pow_mul_eq](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Polynomial_mem_range_aeval_of_isCoprime_of_pow_mul_eq.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {F A : Type*} [Field F] [CommRing A] [IsDomain A] [Algebra F A]
   {x : A}

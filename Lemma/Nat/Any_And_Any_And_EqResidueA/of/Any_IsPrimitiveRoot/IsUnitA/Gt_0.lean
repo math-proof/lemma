@@ -6,7 +6,7 @@ open IsLocalRing Polynomial
 /--
 [HenselianLocalRing_exists_isPrimitiveRoot_of_isUnit_of_residueField](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_HenselianLocalRing_exists_isPrimitiveRoot_of_isUnit_of_residueField.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing A] [HenselianLocalRing A]
   {n : ℕ}

@@ -4,7 +4,7 @@ import sympy.vector.Basic
 open Vector List
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   {s : List.Vector α n}
 -- given

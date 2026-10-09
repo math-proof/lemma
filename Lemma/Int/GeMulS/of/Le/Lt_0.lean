@@ -8,10 +8,10 @@ open Nat Int
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Int.GeMulS.of.Le.Lt_0 |
+| path | Int.GeMulS.of.Le.Lt_0 |
 | comm 2 | Int.LeMulS.of.Ge.Lt_0 |
 -/
-@[main, comm 2]
+@[path, comm 2]
 private lemma main
   [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
   {x a b : α}

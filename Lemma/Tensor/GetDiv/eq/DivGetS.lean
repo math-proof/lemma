@@ -9,7 +9,7 @@ import Lemma.Vector.GetDiv.eq.DivGetS
 open Tensor Vector List
 
 
-@[main, fin]
+@[path, fin]
 private lemma main
   [Div α]
 -- given

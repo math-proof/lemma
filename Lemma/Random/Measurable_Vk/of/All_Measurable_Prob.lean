@@ -7,7 +7,7 @@ open MeasureTheory PolicyGradient Random
 /--
 If every `x ↦ π_θ(u | x)` is measurable, so is the state value `x ↦ Vk θ γ x` on a general state space.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace S] [MeasurableSpace A] [Fintype A]
   {M : Model Θ S A}

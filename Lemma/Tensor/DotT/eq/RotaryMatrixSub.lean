@@ -13,7 +13,7 @@ import Lemma.Tensor.TMulEye.eq.MulEye
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (α β : Tensor ℝ [d]) :

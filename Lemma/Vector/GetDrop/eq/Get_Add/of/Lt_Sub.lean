@@ -2,7 +2,7 @@ import sympy.vector.vector
 import sympy.Basic
 
 
-@[main, fin]
+@[path, fin]
 private lemma main
 -- given
   (h_j : j < m - n)

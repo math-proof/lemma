@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {P : ℕ → α → Prop}
   {t : α → α}

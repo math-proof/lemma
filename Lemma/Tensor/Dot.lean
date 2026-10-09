@@ -9,7 +9,7 @@ import Lemma.Matrix.MulOfPowNegChooseOfMulPow.eq.MulOfOfChooseSum
 open Matrix Tensor
 
 
-@[main]
+@[path]
 private lemma Comm
   [CommMagma α] [Add α] [Zero α]
 -- given
@@ -23,7 +23,7 @@ private lemma Comm
   apply Nat.Mul.comm
 
 
-@[main]
+@[path]
 private lemma vandermonde.col_transform
   {n m d : ℕ} {x δ l : ℝ} :
 -- imply
@@ -37,7 +37,7 @@ private lemma vandermonde.col_transform
   exact MulOfMulPowOfPowNegChoose.eq.MulOfChooseSumOf
 
 
-@[main]
+@[path]
 private lemma vandermonde.row_transform
   {n m d : ℕ} {x δ l : ℝ} :
 -- imply

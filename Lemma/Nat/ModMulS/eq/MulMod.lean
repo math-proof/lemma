@@ -5,7 +5,7 @@ import Lemma.Nat.MulSub.eq.SubMulS
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (a b n : ℕ) :

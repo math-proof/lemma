@@ -6,7 +6,7 @@ open Ideal
 /--
 [Ideal_exists_prime_natCast_mem_of_isMaximal](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Ideal_exists_prime_natCast_mem_of_isMaximal.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing T] [Module.Finite ℤ T]
   {𝔪 : Ideal T}
@@ -19,7 +19,7 @@ private lemma main
   have := h𝔪
   have : Algebra.IsIntegral ℤ T := inferInstance
   have hmax : (𝔪.comap (algebraMap ℤ T)).IsMaximal :=
-    Ideal.isMaximal_comap_of_isIntegral_of_isMaximal 𝔪
+    Ideal.isMaximal_under_of_isIntegral_of_isMaximal 𝔪
   set P := 𝔪.comap (algebraMap ℤ T) with hP
   obtain ⟨n, hn⟩ : ∃ n : ℤ, P = Ideal.span {n} :=
     ⟨Submodule.IsPrincipal.generator P, (Ideal.span_singleton_generator P).symm⟩

@@ -9,7 +9,7 @@ import torch.Tensor
 open Vector List Tensor Nat
 
 
-@[main, fin]
+@[path, fin]
 private lemma main
 -- given
   (h_s : s.length > 0)

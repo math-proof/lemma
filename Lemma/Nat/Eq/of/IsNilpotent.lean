@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [PadicInt_ringHom_eq_ringHom_of_isNilpotent](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_PadicInt_ringHom_eq_ringHom_of_isNilpotent.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {p : ℕ} [Fact p.Prime]
   {B : Type u} [CommRing B]

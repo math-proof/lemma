@@ -3,7 +3,7 @@ import Lemma.Vector.All_EqGetS.of.SEq
 open Vector
 
 
-@[main]
+@[path]
 private lemma main
   {a b : List.Vector α n}
   {i : ℕ}
@@ -16,7 +16,7 @@ private lemma main
   rw [h]
 
 
-@[main]
+@[path]
 private lemma nat
   {v : List.Vector α n}
   {i j : ℕ}

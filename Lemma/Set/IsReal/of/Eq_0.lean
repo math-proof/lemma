@@ -2,7 +2,7 @@ import Lemma.Set.IsReal.of.Eq
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {x : ℂ}
 -- given

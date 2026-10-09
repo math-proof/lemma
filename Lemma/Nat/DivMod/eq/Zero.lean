@@ -3,7 +3,7 @@ import Lemma.Nat.LtMod.of.Ne_0
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (n k : ℕ) :

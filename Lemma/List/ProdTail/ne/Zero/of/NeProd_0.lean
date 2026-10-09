@@ -3,7 +3,7 @@ import Lemma.List.Tail.eq.Drop_1
 open List
 
 
-@[main]
+@[path]
 private lemma main
   [MonoidWithZero α]
   {s : List α}

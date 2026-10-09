@@ -7,7 +7,7 @@ open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Real
 /--
 Every real function of a measurable finite-valued random variable is integrable: `Integrable (φ ∘ X)`.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [Fintype A] [MeasurableSpace B] [MeasurableSingletonClass B] [Fintype B]
   {M : Model Θ S A}

@@ -6,7 +6,7 @@ open IntermediateField Polynomial
 /--
 [AlgebraicCurve_essFiniteType_of_transcendental_of_finiteDimensional](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicCurve_essFiniteType_of_transcendental_of_finiteDimensional.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {K F : Type*} [Field K] [Field F] [Algebra K F]
   {x : F}

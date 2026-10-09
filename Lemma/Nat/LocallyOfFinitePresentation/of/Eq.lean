@@ -6,7 +6,7 @@ open AlgebraicGeometry CategoryTheory
 /--
 [AlgebraicGeometry_locallyOfFinitePresentation_of_comp_eq_of_isLocallyNoetherian](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_locallyOfFinitePresentation_of_comp_eq_of_isLocallyNoetherian.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {X Y S : Scheme.{u}} [IsLocallyNoetherian S]
   {f : X ⟶ S} [LocallyOfFiniteType f]

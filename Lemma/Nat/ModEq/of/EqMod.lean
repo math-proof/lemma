@@ -4,10 +4,10 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Nat.ModEq.of.EqMod |
+| path | Nat.ModEq.of.EqMod |
 | comm 1 | Nat.ModEq.of.Eq_Mod |
 -/
-@[main, comm 1]
+@[path, comm 1]
 private lemma main
   {d r r' : ℕ}
 -- given

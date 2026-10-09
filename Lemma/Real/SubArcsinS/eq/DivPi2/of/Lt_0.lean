@@ -3,7 +3,7 @@ import Lemma.Real.SubArcsinS.eq.DivPi2.of.Le_0
 open Nat Real
 
 
-@[main]
+@[path]
 private lemma main
   {x : ℝ}
 -- given

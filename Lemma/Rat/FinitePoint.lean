@@ -21,7 +21,7 @@ private theorem twfPointToPair_injective {F : Type*} [Field F] (W : Affine F) :
   · simp only [twfPointToPair, Option.some.injEq, Prod.mk.injEq] at h
     obtain ⟨rfl, rfl⟩ := h
     rfl
-@[main]
+@[path]
 private lemma main
   [Field F] [DecidableEq F] [Finite F]
   {W : Affine F} :

@@ -17,10 +17,10 @@ open Hyperreal Rat Int
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Hyperreal.InfinitesimalSub.of.StDiv.eq.One.NotInfinite |
+| path | Hyperreal.InfinitesimalSub.of.StDiv.eq.One.NotInfinite |
 | mt 1 | Hyperreal.Infinite.of.StDiv.eq.One.NotInfinitesimalSub |
 -/
-@[main, mt 1]
+@[path, mt 1]
 private lemma main
   {a b : ℝ*}
 -- given

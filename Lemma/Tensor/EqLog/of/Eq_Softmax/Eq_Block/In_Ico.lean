@@ -6,7 +6,7 @@ open Tensor
 /--
 Hyperreal masked softmax, log form (py: `log(softmax(A + (Ξ - 1) * oo)[i, j])` on the unmasked entries `Ξ i j = 1`).
 -/
-@[main]
+@[path]
 private lemma main
   {n l u : ℕ}
   {A : Fin n → Fin n → ℝ}
@@ -29,7 +29,7 @@ private lemma main
 /--
 Hyperreal masked softmax, log form (py: `log(softmax(A + (Ξ - 1) * oo)[i, j])` on the unmasked entries `Ξ i j = 1`).
 -/
-@[main]
+@[path]
 private lemma tf
   {n l u : ℕ}
   {A : Fin n → Fin n → ℝ}
@@ -52,7 +52,7 @@ private lemma tf
 /--
 Hyperreal masked softmax, log form (py: `log(softmax(A + (Ξ - 1) * oo)[i, j])` on the unmasked entries `Ξ i j = 1`).
 -/
-@[main]
+@[path]
 private lemma upper_triangle
   {n u : ℕ}
   {A : Fin n → Fin n → ℝ}
@@ -74,7 +74,7 @@ private lemma upper_triangle
 /--
 Hyperreal masked softmax, log form (py: `log(softmax(A + (Ξ - 1) * oo)[i, j])` on the unmasked entries `Ξ i j = 1`).
 -/
-@[main]
+@[path]
 private lemma upper_triangle.tf
   {n u : ℕ}
   {A : Fin n → Fin n → ℝ}
@@ -96,7 +96,7 @@ private lemma upper_triangle.tf
 /--
 Hyperreal masked softmax, log form (py: `log(softmax(A + (Ξ - 1) * oo)[i, j])` on the unmasked entries `Ξ i j = 1`).
 -/
-@[main]
+@[path]
 private lemma lower_triangle
   {n l : ℕ}
   {A : Fin n → Fin n → ℝ}
@@ -118,7 +118,7 @@ private lemma lower_triangle
 /--
 Hyperreal masked softmax, log form (py: `log(softmax(A + (Ξ - 1) * oo)[i, j])` on the unmasked entries `Ξ i j = 1`).
 -/
-@[main]
+@[path]
 private lemma lower_triangle.tf
   {n l : ℕ}
   {A : Fin n → Fin n → ℝ}

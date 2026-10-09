@@ -6,10 +6,10 @@ open Nat
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Nat.MulDelta.eq.Ite |
+| path | Nat.MulDelta.eq.Ite |
 | comm | Nat.Ite.eq.MulDelta |
 -/
-@[main, comm]
+@[path, comm]
 private lemma main
   [DecidableEq ι]
   [Semiring α]

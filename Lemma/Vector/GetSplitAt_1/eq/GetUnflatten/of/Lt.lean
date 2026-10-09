@@ -2,7 +2,7 @@ import Lemma.Vector.GetSplitAt_1.eq.GetUnflatten
 open Vector
 
 
-@[main, comm, fin, fin.comm]
+@[path, comm, fin, fin.comm]
 private lemma main
 -- given
   (h : i < n)

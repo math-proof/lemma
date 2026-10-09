@@ -7,7 +7,7 @@ open Nat Tensor
 set_option maxHeartbeats 4000000
 
 
-@[main]
+@[path]
 private lemma mv
   [Semiring α] [CharZero α]
 -- given
@@ -34,7 +34,7 @@ private lemma mv
     apply EqMul1.nat
 
 
-@[main]
+@[path]
 private lemma main
   [Semiring α] [CharZero α]
 -- given

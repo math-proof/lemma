@@ -3,7 +3,7 @@ import sympy.Basic
 open MeasureTheory
 
 
-@[main]
+@[path]
 private lemma main
   [m₀ : MeasurableSpace Ω]
   {μ : Measure Ω} [IsFiniteMeasure μ]
@@ -27,8 +27,8 @@ private lemma main
     have h₂ := posPart_add_negPart (f n ω)
     simp only [Real.norm_eq_abs]
     linarith
-  rw [eLpNorm_one_eq_lintegral_enorm, ← ofReal_integral_norm_eq_lintegral_enorm hint]
-  exact ENNReal.ofReal_le_ofReal (by linarith [hR n])
+  rw [eLpNorm_one_eq_lintegral_enorm hint.aestronglyMeasurable, ← ofReal_integral_norm_eq_lintegral_enorm hint]
+  exact ENNReal.ofReal_le_ofReal (by linarith [hR n, habs, hle])
 
 
 -- created on 2026-09-26

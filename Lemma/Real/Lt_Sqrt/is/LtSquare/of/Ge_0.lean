@@ -7,7 +7,7 @@ This lemma establishes an equivalence between two inequalities involving a non-n
 Specifically, it states that for `x ≥ 0`, the inequality `x < √y` holds if and only if `x² < y`.
 This equivalence is fundamental in algebraic manipulations where converting between square roots and squared terms is necessary, ensuring validity under the non-negativity condition of `x`.
 -/
-@[main]
+@[path]
 private lemma main
   {x y : ℝ}
 -- given

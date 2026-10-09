@@ -4,7 +4,7 @@ import Lemma.Int.Sub.eq.Add_Neg
 open Set Int
 
 
-@[main]
+@[path]
 private lemma main
   [AddCommGroup α] [PartialOrder α] [IsOrderedAddMonoid α]
   {a b c d x₀ x₁ : α}

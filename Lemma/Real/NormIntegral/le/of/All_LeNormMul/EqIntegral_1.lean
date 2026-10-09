@@ -6,7 +6,7 @@ open MeasureTheory
 /--
 If `∫ f = 1` (e.g. `f` is a probability density) and `‖F u‖ ≤ f u * C` for every `u`, then `‖∫ F‖ ≤ C`.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace A] [NormedAddCommGroup E] [NormedSpace ℝ E]
   {μ : Measure A}

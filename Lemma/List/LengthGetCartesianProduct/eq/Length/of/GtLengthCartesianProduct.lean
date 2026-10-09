@@ -3,7 +3,7 @@ import Lemma.List.LengthMap.eq.Length
 open List
 
 
-@[main]
+@[path]
 private lemma main
   {s : List ℕ}
 -- given

@@ -3,7 +3,7 @@ import sympy.matrices.expressions.matmul
 open Bool
 
 
-@[main]
+@[path]
 private lemma main
   [Mul α] [Add α] [Zero α]
   {A : Tensor α s_A}
@@ -21,7 +21,7 @@ private lemma main
   rfl
 
 
-@[main]
+@[path]
 private lemma left
   [Mul α] [Add α] [Zero α]
   {A : Tensor α s_A}

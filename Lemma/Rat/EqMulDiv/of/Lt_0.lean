@@ -3,7 +3,7 @@ import Lemma.Nat.Ne.of.Lt
 open Nat Rat
 
 
-@[main]
+@[path]
 private lemma main
   [Field α] [LinearOrder α] [IsStrictOrderedRing α]
   {b : α}

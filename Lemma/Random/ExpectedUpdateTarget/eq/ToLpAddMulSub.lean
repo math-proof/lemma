@@ -5,7 +5,7 @@ import Lemma.Random.Sum.eq.One.of.ProbabilityMeasure
 open Finset
 
 
-@[main]
+@[path]
 private lemma main
   {S A : Type*} [Fintype S] [DecidableEq S] [Nonempty S] [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype A] [DecidableEq A] [Nonempty A] [MeasurableSpace A] [MeasurableSingletonClass A]
   {spec : QLearningSpec S A}

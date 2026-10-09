@@ -12,12 +12,12 @@ Cardano's formula for solving cubic equations
 
 | attributes | lemma |
 | :---: | :---: |
-| main | Complex.Eq0Add_Pow_3.is.In_Finset_AddSMulS |
+| path | Complex.Eq0Add_Pow_3.is.In_Finset_AddSMulS |
 | comm | Complex.In_Finset_AddSMulS.is.Eq0Add_Pow_3 |
 | mp | Complex.In_Finset_AddSMulS.of.Eq0Add_Pow_3 |
 | mpr | Complex.Eq0Add_Pow_3.of.In_Finset_AddSMulS |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   {x p q : ℂ} :
 -- imply

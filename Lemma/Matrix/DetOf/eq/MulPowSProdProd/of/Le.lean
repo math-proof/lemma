@@ -8,7 +8,7 @@ import Lemma.Matrix.DetMulOfOfPowNegChoose.eq.MulPowProd.of.Le
 open Matrix Nat
 
 
-@[main]
+@[path]
 private lemma main
   {d m : ℕ}
   {x₁ x₂ : ℝ}

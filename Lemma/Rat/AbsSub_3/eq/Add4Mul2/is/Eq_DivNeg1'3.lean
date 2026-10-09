@@ -2,7 +2,7 @@ import Lemma.Nat.EqMax.is.OrAndS
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   [Field α] [LinearOrder α] [IsStrictOrderedRing α]
 -- given

@@ -7,7 +7,7 @@ open Tensor
 set_option maxHeartbeats 1000000
 
 
-@[main]
+@[path]
 private lemma scaled_dot_product_attention
   {n d : ℕ}
   {A : Matrix (Fin n) (Fin n) ℝ}
@@ -25,7 +25,7 @@ batched causal attention: for every batch index \(b\), the hyperreal masked soft
 \(\operatorname{softmax}(A_b + (\Xi - 1) \cdot \infty) V_b\) with the lower-triangular band \(\Xi\)
 is infinitely close to the softmax over the causal window \([0, i]\) of each row.
 -/
-@[main]
+@[path]
 private lemma gpt.batched
   [NeZero n]
   {m d : ℕ}

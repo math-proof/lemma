@@ -13,7 +13,7 @@ atom `x ⁻¹' {v}`.
 
 Python: Random.Ne_0.Slice.of.Ne_0.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace Ω]
   [ReferenceMeasure α] [ReferenceMeasure β]

@@ -2,7 +2,7 @@ import Lemma.Set.SubsetIocS.of.Le.Ge
 open Set
 
 
-@[main]
+@[path]
 private lemma main
   [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
   {a b a' b' : α}

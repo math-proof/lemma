@@ -3,7 +3,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma telescope
   {i n : ℤ}
   {x : ℤ → ℝ}

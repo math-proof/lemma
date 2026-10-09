@@ -6,7 +6,7 @@ import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.Ne_Nil
 open List Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [AddMonoid α]
 -- given

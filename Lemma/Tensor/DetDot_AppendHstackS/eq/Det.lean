@@ -5,7 +5,7 @@ import Lemma.Tensor.ToMatrixEye.eq.One
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [CommRing α] [CharZero α]
 -- given

@@ -3,7 +3,7 @@ import Lemma.Bool.NotOr.is.AndNotS
 open Set Bool
 
 
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   {A B : Set α}
   {e : α} :

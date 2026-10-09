@@ -5,7 +5,7 @@ import Mathlib.Analysis.Normed.Field.WithAbs
 import Mathlib.Analysis.Normed.Module.Completion
 
 
-@[main]
+@[path]
 private lemma main
   [Field K]
 -- given

@@ -3,7 +3,7 @@ open Set
 open scoped ComplexOrder
 
 
-@[main]
+@[path]
 private lemma main
   {x : ℂ}
 -- given

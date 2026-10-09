@@ -3,7 +3,7 @@ import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
 import Mathlib.Data.Matrix.Block
 
 
-@[main]
+@[path]
 private lemma main
   [Fintype m] [Fintype n] [DecidableEq m] [DecidableEq n] [CommRing α]
 -- given

@@ -17,7 +17,7 @@ return `γ ** Stack[k](k) @ r[t:]` given `(s[t], a[t])`, resp. `s[t]`;
 The finite trajectory model (event conditioning `𝔼[… | s t = x]`) is
 `Random.Eq_Expect.Eq_Expect.Eq_Expect.of.All_Eq_Expect.All_Eq_Expect.In_Ico`.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace Ω] [MeasurableSpace S] [MeasurableSpace A]
   {π : Measure Ω} [IsProbabilityMeasure π]

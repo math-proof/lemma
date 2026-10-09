@@ -6,7 +6,7 @@ open CategoryTheory CategoryTheory.Limits TopologicalSpace AlgebraicGeometry Opp
 /--
 [AlgebraicGeometry_Scheme_exists_opens_extension_of_fromSpecStalk](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_Scheme_exists_opens_extension_of_fromSpecStalk.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {S G H : Scheme.{u}}
   {sG : G ⟶ S}

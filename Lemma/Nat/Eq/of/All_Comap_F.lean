@@ -24,7 +24,7 @@ private lemma  eq_of_forall_comap_openCover_eq_aux
     simp only [ideal_comap_of_isOpenImmersion] at hW
     exact Ideal.comap_injective_of_surjective _
       (ConcreteCategory.bijective_of_isIso ((𝒰.f i).appIso (W : (𝒰.X i).Opens)).inv).2 hW
-@[main]
+@[path]
 private lemma main
   {X : Scheme.{u}}
   {𝒰 : X.OpenCover}

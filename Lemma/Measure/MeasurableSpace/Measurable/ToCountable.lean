@@ -3,7 +3,7 @@ import sympy.Basic
 
 
 /-- Maps into a countable space are measurable when singleton preimages are. -/
-@[main]
+@[path]
 private lemma main
   {α β : Type*}
   [MeasurableSpace α] [Countable α] [MeasurableSpace β]

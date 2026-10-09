@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main, comm, mp, mpr, mp.comm, mpr.comm, comm.is, is.comm]
+@[path, comm, mp, mpr, mp.comm, mpr.comm, comm.is, is.comm]
 private lemma left
   [AddCommGroup α]
   [LT α]
@@ -17,7 +17,7 @@ private lemma left
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Int.LtSub.is.Lt_Add |
+| path | Int.LtSub.is.Lt_Add |
 | comm | Int.Lt_Add.is.LtSub |
 | mp | Int.Lt_Add.of.LtSub |
 | mpr | Int.LtSub.of.Lt_Add |
@@ -26,7 +26,7 @@ private lemma left
 | comm.is | Int.Gt_Sub.is.GtAdd |
 | is.comm | Int.GtAdd.is.Gt_Sub |
 -/
-@[main, comm, mp, mpr, mp.comm, mpr.comm, comm.is, is.comm]
+@[path, comm, mp, mpr, mp.comm, mpr.comm, comm.is, is.comm]
 private lemma main
   [AddGroup α]
   [LT α]

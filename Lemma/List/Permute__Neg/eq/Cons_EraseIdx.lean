@@ -4,7 +4,7 @@ import Lemma.List.TailPermute__Neg.eq.EraseIdx
 open List
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   {s : List α}
 -- given

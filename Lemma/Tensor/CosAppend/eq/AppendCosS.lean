@@ -6,7 +6,7 @@ open Tensor
 /--
 Cosine distributes over vertical block concatenation.
 -/
-@[main, comm]
+@[path, comm]
 private lemma main
   [Cos α]
 -- given

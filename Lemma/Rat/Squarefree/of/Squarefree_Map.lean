@@ -6,7 +6,7 @@ open Polynomial
 /--
 [Polynomial_squarefree_of_squarefree_map](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Polynomial_squarefree_of_squarefree_map.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {κ L : Type*} [Field κ] [CommRing L] [IsDomain L]
   {φ : κ →+* L}

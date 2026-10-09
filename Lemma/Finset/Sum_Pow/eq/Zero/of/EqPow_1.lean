@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [Module_End_sum_range_pow_eq_zero_of_pow_eq_one_of_mul_dvd](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Module_End_sum_range_pow_eq_zero_of_pow_eq_one_of_mul_dvd.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {R V : Type*} [CommRing R] [AddCommGroup V] [Module R V]
   {p : ℕ} [CharP R p]

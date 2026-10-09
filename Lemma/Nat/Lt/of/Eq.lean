@@ -2,7 +2,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {a b c : ℝ}
 -- given
@@ -14,7 +14,7 @@ private lemma main
   rwa [h₀]
 
 
-@[main]
+@[path]
 private lemma relax
   {a b d : ℝ}
 -- given
@@ -26,7 +26,7 @@ private lemma relax
   rwa [h₀]
 
 
-@[main]
+@[path]
 private lemma relax.lower
   {a b c : ℝ}
 -- given

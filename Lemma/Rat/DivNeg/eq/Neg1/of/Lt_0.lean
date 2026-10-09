@@ -3,7 +3,7 @@ import Lemma.Rat.DivNeg.eq.Neg1.of.Ne_0
 open Nat Rat
 
 
-@[main]
+@[path]
 private lemma main
   [Preorder α]
   [DivisionRing α]

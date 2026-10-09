@@ -10,7 +10,7 @@ open Tensor
 set_option maxHeartbeats 1000000
 
 
-@[main]
+@[path]
 private lemma kv_cache
   [NeZero (l : ℕ)]
   {n : ℕ}

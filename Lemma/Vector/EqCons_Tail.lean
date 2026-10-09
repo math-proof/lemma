@@ -2,7 +2,7 @@ import Lemma.Vector.Head.eq.Get_0
 open Vector
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
 -- given
   (s : List.Vector α (.succ n)) :
@@ -17,7 +17,7 @@ private lemma main
     constructor
 
 
-@[main, comm]
+@[path, comm]
 private lemma head
 -- given
   (s : List.Vector α (.succ n)) :

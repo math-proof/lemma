@@ -2,7 +2,7 @@ import sympy.functions.elementary.integers
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   [IntegerRing Z]
 -- given
@@ -13,7 +13,7 @@ private lemma main
   IntegerRing.add_mul_mod_self_right a b c
 
 
-@[main]
+@[path]
 private lemma left
   [IntegerRing Z]
 -- given

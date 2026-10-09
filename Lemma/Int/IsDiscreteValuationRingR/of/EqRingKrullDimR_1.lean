@@ -29,8 +29,8 @@ private lemma  IsDiscreteValuationRing.of_isIntegrallyClosed_of_ringKrullDim_eq_
     exact hp (le_bot_iff.mp (hp0.2 ⟨Ideal.isPrime_bot, le_rfl⟩ bot_le))
   have hded : IsDedekindRing R := IsDedekindRing.mk
   have hdd : IsDedekindDomain R := IsDedekindDomain.mk
-  exact ((IsDiscreteValuationRing.TFAE R hnf).out 0 2).mpr hdd
-@[main]
+  exact ((IsDiscreteValuationRing.TFAE R hnf).out 1 3).mpr hdd
+@[path]
 private lemma main
   [CommRing R] [IsDomain R] [IsNoetherianRing R] [IsLocalRing R] [IsIntegrallyClosed R]
 -- given

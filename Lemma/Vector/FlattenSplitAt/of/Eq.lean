@@ -4,7 +4,7 @@ import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 open Vector Bool
 
 
-@[main]
+@[path]
 private lemma main
   {s s' : List ℕ}
   {a : List.Vector α s.prod}

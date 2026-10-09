@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [Module_faithfullyFlat_pi_localizationAway_of_span_eq_top](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Module_faithfullyFlat_pi_localizationAway_of_span_eq_top.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {S : Type u} [CommRing S]
   {k : ℕ}

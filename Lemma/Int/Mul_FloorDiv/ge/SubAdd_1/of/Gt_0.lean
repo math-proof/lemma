@@ -3,7 +3,7 @@ import Lemma.Nat.Mul_Div.ge.SubAdd_1.of.Gt_0
 open Nat Int
 
 
-@[main]
+@[path]
 private lemma main
   [Field α] [LinearOrder α] [IsStrictOrderedRing α] [FloorRing α]
   {n d : ℤ}

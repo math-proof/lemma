@@ -5,10 +5,10 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Bool.Delta.eq.Bool |
+| path | Bool.Delta.eq.Bool |
 | comm | Bool.Bool.eq.Delta |
 -/
-@[main, comm]
+@[path, comm]
 private lemma main
   [DecidableEq α]
 -- given

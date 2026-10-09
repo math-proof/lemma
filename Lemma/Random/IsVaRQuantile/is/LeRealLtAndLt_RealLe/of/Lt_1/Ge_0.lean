@@ -5,7 +5,7 @@ import Lemma.Random.IsVaRQuantile.is.IsVaR.of.Lt_1.Ge_0
 open MeasureTheory
 
 
-@[main]
+@[path]
 private lemma main
   {Ω : Type*} [Fintype Ω] [MeasurableSpace Ω] [MeasurableSingletonClass Ω]
   {μ : Measure Ω} [IsProbabilityMeasure μ]

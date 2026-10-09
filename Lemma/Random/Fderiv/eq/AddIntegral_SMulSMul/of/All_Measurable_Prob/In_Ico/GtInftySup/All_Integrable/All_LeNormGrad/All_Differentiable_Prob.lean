@@ -22,7 +22,7 @@ both action sums become integrals against the reference measure of `A` (differen
 over the actions, uniformly in the state (this replaces `|A| * sup ‖∇π‖ < ∞` of the finite-action version);
 `h₅`: `(x, u) ↦ π_θ(u | x)` is jointly measurable.
 -/
-@[main]
+@[path]
 private lemma main
   [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [FiniteDimensional ℝ Θ] [MeasurableSpace S] [ReferenceMeasure A]
   {M : DensityModel Θ S A}

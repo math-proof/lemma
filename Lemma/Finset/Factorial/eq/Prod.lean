@@ -4,7 +4,7 @@ import sympy.Basic
 open Finset
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (n : ℕ) :

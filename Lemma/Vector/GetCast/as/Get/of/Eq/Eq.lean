@@ -2,7 +2,7 @@ import stdlib.SEq
 import sympy.Basic
 
 
-@[main, fin, cast, cast.fin]
+@[path, fin, cast, cast.fin]
 private lemma left
 -- given
   (h_n : n = n')
@@ -15,7 +15,7 @@ private lemma left
   aesop
 
 
-@[main, fin, cast, cast.fin]
+@[path, fin, cast, cast.fin]
 private lemma main
 -- given
   (h_n : n = n')

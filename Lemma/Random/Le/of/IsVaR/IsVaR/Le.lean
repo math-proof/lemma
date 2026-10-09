@@ -4,7 +4,7 @@ import Lemma.Random.IsCofinalFor.of.Le
 open MeasureTheory
 
 
-@[main]
+@[path]
 private lemma main
   {Ω : Type*} [MeasurableSpace Ω]
   {μ : Measure Ω} [IsFiniteMeasure μ]

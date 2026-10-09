@@ -6,7 +6,7 @@ open IsLocalRing
 /--
 [IsLocalRing_maximalIdeal_eq_of_le_sup_sq](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_IsLocalRing_maximalIdeal_eq_of_le_sup_sq.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {R : Type u} [CommRing R] [IsLocalRing R] [IsNoetherianRing R]
   {N : Ideal R}

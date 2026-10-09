@@ -3,7 +3,7 @@ import Lemma.Int.LtSub_1.of.Le
 open Int
 
 
-@[main]
+@[path]
 private lemma main
   {n : ℕ} :
 -- imply

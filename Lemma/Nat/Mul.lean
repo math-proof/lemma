@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma Comm
   [CommMagma α]
 -- given
@@ -12,7 +12,7 @@ private lemma Comm
   mul_comm a b
 
 
-@[main]
+@[path]
 private lemma scale
   {a b c d : ℝ} :
 -- imply
@@ -21,7 +21,7 @@ private lemma scale
   ring
 
 
-@[main]
+@[path]
 private lemma distribute
   [Field α]
   {a b c d r : α} :

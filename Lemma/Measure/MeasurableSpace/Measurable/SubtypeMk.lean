@@ -3,7 +3,7 @@ import sympy.Basic
 
 
 /-- Restricting a measurable map to a subtype range is measurable. -/
-@[main]
+@[path]
 private lemma main
   {α β : Type*}
   [MeasurableSpace α] [MeasurableSpace β]

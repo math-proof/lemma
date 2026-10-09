@@ -3,7 +3,7 @@ import Lemma.Nat.Mul
 open Rat Nat
 
 
-@[main]
+@[path]
 private lemma main
   [DivisionCommMonoid α]
 -- given

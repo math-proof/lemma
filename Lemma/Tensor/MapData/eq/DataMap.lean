@@ -5,10 +5,10 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Tensor.MapData.eq.DataMap |
+| path | Tensor.MapData.eq.DataMap |
 | comm | Tensor.DataMap.eq.MapData |
 -/
-@[main, comm]
+@[path, comm]
 private lemma main
   {f : α → β}
 -- given

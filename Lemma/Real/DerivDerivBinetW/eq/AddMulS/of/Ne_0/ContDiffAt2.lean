@@ -13,7 +13,7 @@ open Filter Topology
 Binet second derivative (notes eq. 4):
 \(w''=-r^{-2}r''+2r^{-3}(r')^2\).
 -/
-@[main]
+@[path]
 private lemma main
   {r : ℝ → ℝ}
   {φ : ℝ}

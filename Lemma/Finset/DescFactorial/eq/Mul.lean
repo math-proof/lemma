@@ -3,7 +3,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma pop
   {x : ℂ}
   {k : ℕ}
@@ -18,7 +18,7 @@ private lemma pop
   ring
 
 
-@[main]
+@[path]
 private lemma shift
   {x : ℂ}
   {k : ℕ}

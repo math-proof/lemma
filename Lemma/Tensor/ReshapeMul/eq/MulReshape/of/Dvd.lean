@@ -4,7 +4,7 @@ import torch.Tensor.prod
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [Mul α]
   {s' : List ℕ}

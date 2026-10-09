@@ -5,12 +5,12 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Bool.AllOr.is.All.All |
+| path | Bool.AllOr.is.All.All |
 | comm | Bool.All.All.is.AllOr |
 | mp | Bool.All.All.of.AllOr |
 | mpr | Bool.AllOr.of.All.All |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
 -- given
   (f p q : α → Prop) :

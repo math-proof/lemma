@@ -7,7 +7,7 @@ open MeasureTheory PolicyGradient Random
 /--
 The `k`-step expected reward on a general state space is bounded: `‖Wk θ k x‖ = ‖𝔼[r[t+k] | s[t] = x]‖ ≤ |R|`.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace S] [MeasurableSpace A] [Fintype A]
   {M : Model Θ S A}

@@ -5,7 +5,7 @@ open Matrix
 open scoped ComplexOrder
 
 
-@[main]
+@[path]
 private lemma main
   [RCLike 𝕜]
   {n : ℕ}

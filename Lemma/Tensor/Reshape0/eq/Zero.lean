@@ -7,7 +7,7 @@ import Lemma.Nat.EqMulDiv.of.Dvd
 open Tensor Vector
 
 
-@[main]
+@[path]
 private lemma main
   [Zero α]
   {s s' : List ℕ}

@@ -7,7 +7,7 @@ open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Real
 /--
 The action indicator `z ↦ 1{z.a = u}` is strongly measurable.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace S] [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A] [DecidableEq A]
 -- given

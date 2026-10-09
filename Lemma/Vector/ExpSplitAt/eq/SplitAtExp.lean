@@ -4,7 +4,7 @@ import sympy.vector.functions
 open Vector
 
 
-@[main]
+@[path]
 private lemma main
   [Exp α]
   {s : List ℕ}

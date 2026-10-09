@@ -7,7 +7,7 @@ open scoped NNReal
 /--
 [IsLocalRing_map_ringEquiv_mem_maximalIdeal_pow_iff](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_IsLocalRing_map_ringEquiv_mem_maximalIdeal_pow_iff.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing R] [IsLocalRing R]
   {k : ℕ}

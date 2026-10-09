@@ -16,7 +16,7 @@ import torch.functions
 open Tensor Vector
 
 
-@[main]
+@[path]
 private lemma main
   [ExpRing α]
 -- given

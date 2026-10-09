@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [Valued_finite_image_v_of_isCompact_of_zero_notMem](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Valued_finite_image_v_of_isCompact_of_zero_notMem.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [DivisionRing R] [LinearOrderedCommGroupWithZero Γ₀] [Valued R Γ₀]
   {C : Set R}

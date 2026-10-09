@@ -4,7 +4,7 @@ import Lemma.Tensor.Stack.eq.Unsqueeze
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [AddZeroClass α]
 -- given
@@ -16,7 +16,7 @@ private lemma main
   apply EqSumUnsqueeze
 
 
-@[main]
+@[path]
 private lemma fn
   [AddZeroClass α]
 -- given

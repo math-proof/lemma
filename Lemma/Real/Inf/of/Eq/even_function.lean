@@ -5,7 +5,7 @@ import sympy.Basic
 open scoped Pointwise
 
 
-@[main]
+@[path]
 private lemma main
   {f : ℝ → ℝ}
   {S : Set ℝ}

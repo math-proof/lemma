@@ -4,7 +4,7 @@ import Lemma.Nat.Eq.of.NotLt.NotGt
 open Int Nat
 
 
-@[main]
+@[path]
 private lemma main
   {n d : ℤ} :
 -- imply

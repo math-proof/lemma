@@ -3,7 +3,7 @@ import Lemma.Int.Le.of.GeNegS
 open Int
 
 
-@[main]
+@[path]
 private lemma main
   [AddGroup α]
   [LE α]

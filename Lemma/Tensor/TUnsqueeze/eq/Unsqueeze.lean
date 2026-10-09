@@ -5,7 +5,7 @@ import Lemma.Tensor.TUnsqueeze_Length.as.Unsqueeze
 open Bool Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [Mul α] [Add α] [Zero α]
 -- given
@@ -18,7 +18,7 @@ private lemma main
   apply Eq.of.SEq this
 
 
-@[main]
+@[path]
 private lemma deux
   [Mul α] [Add α] [Zero α]
 -- given

@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [Subalgebra_fg_restrictScalars_and_le_of_fg](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Subalgebra_fg_restrictScalars_and_le_of_fg.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {A₀ A : Type u} [CommRing A₀] [CommRing A] [Algebra A₀ A]
   {T : Subalgebra A₀ A}

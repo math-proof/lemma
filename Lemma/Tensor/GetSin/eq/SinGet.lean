@@ -7,12 +7,12 @@ open Tensor
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Tensor.GetSin.eq.SinGet |
+| path | Tensor.GetSin.eq.SinGet |
 | fin | Tensor.GetSin.eq.SinGet.fin |
 | comm | Tensor.SinGet.eq.GetSin |
 | fin.comm | Tensor.SinGet.eq.GetSin.fin |
 -/
-@[main, fin, comm, fin.comm]
+@[path, fin, comm, fin.comm]
 private lemma main
   [Sin α]
 -- given

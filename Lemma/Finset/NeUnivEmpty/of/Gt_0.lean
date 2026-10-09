@@ -2,7 +2,7 @@ import Lemma.Finset.NeUnivEmpty
 open Finset
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h : n > 0) :

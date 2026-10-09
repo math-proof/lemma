@@ -3,7 +3,7 @@ import Lemma.Nat.AddAdd.eq.Add_Add
 open Nat
 
 
-@[main]
+@[path]
 private lemma Comm
   [AddCommSemigroup α]
 -- given
@@ -15,7 +15,7 @@ private lemma Comm
   rw [Add_Add.eq.AddAdd]
 
 
-@[main, comm]
+@[path, comm]
 private lemma rotate
   [AddCommSemigroup α]
 -- given
@@ -27,7 +27,7 @@ private lemma rotate
   rw [Add.comm]
 
 
-@[main, comm]
+@[path, comm]
 private lemma swap
   [AddCommSemigroup α]
 -- given

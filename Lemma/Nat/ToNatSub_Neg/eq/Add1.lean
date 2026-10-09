@@ -4,7 +4,7 @@ import Lemma.Nat.ToNatSub_Neg.eq.Add
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (d : ℕ) :

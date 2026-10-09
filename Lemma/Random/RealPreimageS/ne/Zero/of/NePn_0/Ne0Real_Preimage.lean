@@ -24,7 +24,7 @@ private lemma Pn_nonneg [MeasurableSpace S] [MeasurableSingletonClass S] [Fintyp
 /--
 If `s[0] = x` is reachable and `Pn θ n x y ≠ 0`, then `s[n] = y` is reachable.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A] [DecidableEq S]
   {M : Model Θ S A}

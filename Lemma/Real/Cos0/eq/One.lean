@@ -2,7 +2,7 @@ import sympy.functions.elementary.trigonometric
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main :
 -- imply
   Cos.cos (0 : ℝ) = 1 :=

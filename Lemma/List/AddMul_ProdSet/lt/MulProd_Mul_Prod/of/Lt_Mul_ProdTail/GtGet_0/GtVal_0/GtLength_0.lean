@@ -10,7 +10,7 @@ import Lemma.List.Prod.eq.Mul_ProdTail.of.GtLength_0
 open List Nat
 
 
-@[main]
+@[path]
 private lemma main
   {s : List ℕ}
   {d : Fin s.length}

@@ -8,7 +8,7 @@ import Lemma.Bool.SEq.is.Eq
 open Tensor Vector List Bool
 
 
-@[main]
+@[path]
 private lemma fin
 -- given
   (f : Fin n → Tensor α s)
@@ -23,7 +23,7 @@ private lemma fin
   apply GetUnflattenDataStack.eq.Data.fin
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (f : ℕ → Tensor α s)

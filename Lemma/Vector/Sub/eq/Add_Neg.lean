@@ -4,7 +4,7 @@ import Lemma.Vector.GetSub.eq.SubGet
 open Vector Int
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [SubNegMonoid α]
 -- given

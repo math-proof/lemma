@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   [LinearOrder α]
   {x y a b : α}
@@ -14,7 +14,7 @@ private lemma main
   lt_min (lt_of_le_of_lt (min_le_left x y) h₀) (lt_of_le_of_lt (min_le_right x y) h₁)
 
 
-@[main]
+@[path]
 private lemma both
   [LinearOrder α]
   {x y a b : α}

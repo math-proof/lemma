@@ -9,7 +9,6 @@ import Lemma.Hyperreal.Infinitesimal0
 import Lemma.Hyperreal.Infinitesimal.of.InfinitesimalSubDiv.Infinitesimal
 import Lemma.Nat.NotLt.is.Ge
 open Hyperreal Rat Nat Int
-export Hyperreal (Infinite Infinitesimal IsSt st)
 
 abbrev XEq (α : Sort u) := Setoid α
 

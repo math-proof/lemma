@@ -2,7 +2,7 @@ import sympy.Basic
 import sympy.functions.elementary.trigonometric
 
 
-@[main]
+@[path]
 private lemma main
   {x : ℝ} :
 -- imply

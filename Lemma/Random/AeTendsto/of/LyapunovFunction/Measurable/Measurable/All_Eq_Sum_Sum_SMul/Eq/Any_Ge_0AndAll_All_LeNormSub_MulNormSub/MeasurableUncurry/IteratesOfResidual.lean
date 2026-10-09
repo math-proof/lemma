@@ -16,7 +16,7 @@ import Lemma.Matrix.Sum_Mul.eq.One.of.StochasticVec.RowStochastic
 open Filter MeasureTheory ProbabilityTheory Finset Topology Preorder Iterates Real Measure Random
 
 
-@[main]
+@[path]
 private lemma main
   {d : ℕ}
   {S : Type*} [Fintype S] [DecidableEq S] [Nonempty S] [MeasurableSpace S] [MeasurableSingletonClass S]

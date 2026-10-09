@@ -2,7 +2,7 @@ import Lemma.Nat.EqAddMulDiv
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   [IntegerRing Z]
 -- given

@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma left
   {a b : List α}
 -- given
@@ -13,7 +13,7 @@ private lemma left
   rw [h]
 
 
-@[main]
+@[path]
 private lemma main
   {a b c : List α}
 -- given

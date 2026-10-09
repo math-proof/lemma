@@ -4,12 +4,12 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Int.LeCeil.is.Le |
+| path | Int.LeCeil.is.Le |
 | comm | Int.Le.is.LeCeil |
 | mp | Int.Le.of.LeCeil |
 | mpr | Int.LeCeil.of.Le |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
   [FloorRing α]

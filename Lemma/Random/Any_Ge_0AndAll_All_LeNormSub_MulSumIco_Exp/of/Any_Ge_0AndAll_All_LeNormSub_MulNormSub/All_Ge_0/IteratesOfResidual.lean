@@ -5,7 +5,7 @@ import Lemma.Real.Le_MulAddSum_ExpSum.of.In_Ico.All_Ge_0.All_Ge_0.All_Le_AddMulA
 open Finset Real
 
 
-@[main]
+@[path]
 private lemma main
   {d : ℕ}
   {S : Type*} [Fintype S] [Nonempty S]

@@ -127,7 +127,7 @@ private lemma get_blockUpper_natAdd_natAdd
 Determinant of a block-upper-triangular tensor:
 `det [A C; 0 B] = det A * det B`.
 -/
-@[main]
+@[path]
 private lemma triu
   [CommRing α]
   {m n : ℕ}
@@ -283,7 +283,7 @@ private lemma get_blockLower_natAdd_natAdd
 Determinant of a block-lower-triangular tensor:
 `det [A 0; C B] = det A * det B`.
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing α]
   {m n : ℕ}

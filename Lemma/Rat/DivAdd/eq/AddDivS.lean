@@ -3,7 +3,7 @@ import Lemma.Nat.MulAdd.eq.AddMulS
 open Nat Rat
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [DivInvMonoid α]
   [Add α]

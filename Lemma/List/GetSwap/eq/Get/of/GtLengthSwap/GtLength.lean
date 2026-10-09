@@ -4,7 +4,7 @@ import Lemma.List.GetElemSwap.eq.SomeGet
 open List
 
 
-@[main]
+@[path]
 private lemma main
   {s : List α}
   {i j : ℕ}
@@ -21,7 +21,7 @@ private lemma main
   aesop
 
 
-@[main]
+@[path]
 private lemma left
   {s : List α}
   {i j : ℕ}

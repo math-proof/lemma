@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main, subst 1]
+@[path, subst 1]
 private lemma main
   [MulOneClass M]
 -- given

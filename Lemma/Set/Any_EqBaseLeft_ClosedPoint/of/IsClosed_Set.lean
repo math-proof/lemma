@@ -6,7 +6,7 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 /--
 [AlgebraicGeometry_exists_over_hom_base_closedPoint_eq_of_isClosed_singleton](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_exists_over_hom_base_closedPoint_eq_of_isClosed_singleton.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {k : Type u} [Field k] [IsAlgClosed k]
   {X : Scheme.{u}}

@@ -10,7 +10,7 @@ With counting reference measures on the (countable, discrete) state and action s
 `((s, a)[:t], (s t, a t))`: the bijection `f ↦ (Fin.init f, f (Fin.last t))` carries the counting measure on
 `Fin (t + 1) → S × A` to the counting measure on `(Fin t → S × A) × (S × A)`.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace Ω]
   [ReferenceMeasure α]

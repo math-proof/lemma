@@ -1,7 +1,7 @@
 import sympy.core.logic
 import sympy.Basic
 
-@[main]
+@[path]
 private lemma left
 -- given
   (h₀ : p → q)
@@ -13,7 +13,7 @@ private lemma left
   assumption
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h₀ : p → q)

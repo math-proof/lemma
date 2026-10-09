@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [HopfAlgebra_bijective_of_faithfullyFlat_baseChange_bijective](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_HopfAlgebra_bijective_of_faithfullyFlat_baseChange_bijective.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {R : Type u} [CommRing R]
   {R' : Type u} [CommRing R'] [Algebra R R'] [Module.FaithfullyFlat R R']

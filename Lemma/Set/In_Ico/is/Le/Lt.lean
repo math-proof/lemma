@@ -5,12 +5,12 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Set.In_Ico.is.Le.Lt |
+| path | Set.In_Ico.is.Le.Lt |
 | comm | Set.Le.Lt.is.In_Ico |
 | mp | Set.Le.Lt.of.In_Ico |
 | mpr | Set.In_Ico.of.Le.Lt |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   [Preorder α]
 -- given

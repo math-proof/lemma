@@ -3,7 +3,7 @@ import torch.Tensor.Basic
 import torch.Tensor.repeat
 
 
-@[main, cast]
+@[path, cast]
 private lemma main
 -- given
   (h : s = s')

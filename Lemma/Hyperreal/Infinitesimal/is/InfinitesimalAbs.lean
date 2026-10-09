@@ -4,7 +4,7 @@ import Lemma.Int.EqAbs.is.Ge_0
 open Int Hyperreal
 
 
-@[main, comm, mp, mpr, mp.mt, mpr.mt]
+@[path, comm, mp, mpr, mp.mt, mpr.mt]
 private lemma main
 -- given
   (x : ℝ*) :

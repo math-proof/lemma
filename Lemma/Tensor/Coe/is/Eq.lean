@@ -2,7 +2,7 @@ import torch.Tensor.Basic
 import sympy.Basic
 
 
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   [Semiring α] [CharZero α]
   {m k : ℕ} :

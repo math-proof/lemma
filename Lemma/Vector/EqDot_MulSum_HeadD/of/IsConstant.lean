@@ -7,7 +7,7 @@ import Lemma.Vector.SumMap_FunMul.eq.MulSumMap
 open Vector List
 
 
-@[main]
+@[path]
 private lemma main
   [Add α] [MulZeroClass α] [RightDistribClass α]
   {s s' : List.Vector α n}

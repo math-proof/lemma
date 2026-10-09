@@ -7,7 +7,7 @@ import Lemma.Complex.AddPowPowPowPow.eq.Neg
 import Lemma.Complex.MulMulPowPowPow.eq.DivNeg3.of.EqSubCeil.Eq_AddDivMul4Pow3'27Square
 
 
-@[main]
+@[path]
 private lemma sub
   {x α β γ p q δ' δ y y₀ y₁ : ℂ}
   {d : ℤ}
@@ -114,7 +114,7 @@ private lemma sub
     · right; right; right; linear_combination h4
 
 
-@[main]
+@[path]
 private lemma mod_3
   {x α β γ p q δ' δ y y₀ y₁ : ℂ}
   {d : ℤ}

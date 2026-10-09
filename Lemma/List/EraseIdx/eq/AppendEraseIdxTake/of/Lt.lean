@@ -4,7 +4,7 @@ import Lemma.Nat.EqAddSub.of.Ge
 open List Nat
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h : i < d)

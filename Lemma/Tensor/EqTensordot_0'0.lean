@@ -9,7 +9,7 @@ import Lemma.List.ZipWith__Append.eq.AppendZipWithS
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [NonUnitalNonAssocSemiring α]
   {s s' : List ℕ} {m n k : ℕ}

@@ -2,7 +2,7 @@ import Lemma.Bool.AndAllSSetOf.of.All
 open Bool
 
 
-@[main]
+@[path]
 private lemma main
   {p : α → Prop}
   {S : Set α}

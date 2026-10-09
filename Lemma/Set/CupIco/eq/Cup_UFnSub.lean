@@ -9,7 +9,7 @@ import Lemma.Set.CupIco.eq.Cup_UFnAdd
 open Set Int
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (c a b : ℤ)

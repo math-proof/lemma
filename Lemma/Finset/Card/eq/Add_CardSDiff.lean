@@ -4,7 +4,7 @@ import Lemma.Finset.UnionDiff__Inter
 open Finset
 
 
-@[main]
+@[path]
 private lemma main
   [DecidableEq α]
   {A B : Finset α} :

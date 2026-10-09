@@ -10,7 +10,7 @@ import Lemma.Finset.Mul_Sum.eq.Sum_Mul
 open Nat Finset
 
 
-@[main]
+@[path]
 private lemma main
   [DecidableEq ι]
   [CommRing α] [LinearOrder α] [IsStrictOrderedRing α]

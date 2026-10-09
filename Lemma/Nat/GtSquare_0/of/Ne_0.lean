@@ -3,7 +3,7 @@ import Lemma.Nat.Gt.is.Ge.Ne
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   [Semiring α] [LinearOrder α] [ExistsAddOfLE α] [PosMulMono α] [AddLeftMono α]
   [NoZeroDivisors α] [NeZero (1 : α)]

@@ -18,7 +18,7 @@ import Lemma.Int.SubSub.eq.Neg
 open Bool Int Nat Rat
 
 
-@[main]
+@[path]
 private lemma main
   {n d : ℤ}
 -- given

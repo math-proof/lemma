@@ -4,7 +4,7 @@ import Lemma.Vector.SEqRepeat_1
 open Bool Nat Vector
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (v : List.Vector α n) :

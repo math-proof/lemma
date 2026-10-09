@@ -3,7 +3,7 @@ import Lemma.Rat.Div.le.Zero.of.Le_0.Ge_0
 open Rat
 
 
-@[main]
+@[path]
 private lemma main
   [Field α] [LinearOrder α] [IsStrictOrderedRing α]
   {x : α}
@@ -17,7 +17,7 @@ private lemma main
   simp
 
 
-@[main]
+@[path]
 private lemma left
   [Field α] [LinearOrder α] [IsStrictOrderedRing α]
   {x : α}

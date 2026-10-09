@@ -21,7 +21,7 @@ import Lemma.Vector.MapMap.eq.Map_Comp
 open List Tensor Vector Bool
 
 
-@[main, cast]
+@[path, cast]
 private lemma main
 -- given
   (h_s : s.length > 0)

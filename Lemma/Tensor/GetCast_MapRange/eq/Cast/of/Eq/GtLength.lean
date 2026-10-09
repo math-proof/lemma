@@ -3,7 +3,7 @@ import Lemma.Tensor.EqGetCast_MapRange.of.Eq.GtLength
 open Tensor Bool
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h₀ : i < n)

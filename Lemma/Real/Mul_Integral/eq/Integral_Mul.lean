@@ -2,7 +2,7 @@ import Mathlib.MeasureTheory.Integral.IntervalIntegral.IntegrationByParts
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {f : ℝ → ℝ}
   {a b y : ℝ} :

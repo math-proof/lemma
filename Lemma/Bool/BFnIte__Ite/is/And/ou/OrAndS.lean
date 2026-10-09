@@ -4,12 +4,12 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Bool.BFnIte__Ite.is.And.ou.OrAndS |
+| path | Bool.BFnIte__Ite.is.And.ou.OrAndS |
 | comm | Bool.And.ou.OrAndS.is.BFnIte__Ite |
 | mp | Bool.And.ou.OrAndS.of.BFnIte__Ite |
 | mpr | Bool.BFnIte__Ite.of.And.ou.OrAndS |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   [Decidable p]
   [Decidable q]

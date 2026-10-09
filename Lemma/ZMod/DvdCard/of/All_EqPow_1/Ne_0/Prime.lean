@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [ZMod_natCard_dvd_of_forall_pow_eq_one_units_prime_pow](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_ZMod_natCard_dvd_of_forall_pow_eq_one_units_prime_pow.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {p : ℕ}
   {q : ℕ}

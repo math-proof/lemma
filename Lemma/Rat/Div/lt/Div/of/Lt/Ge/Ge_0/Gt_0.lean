@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   [GroupWithZero α] [PartialOrder α] [PosMulReflectLT α] [MulPosReflectLT α]
   {a b c d : α}

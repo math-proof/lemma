@@ -4,7 +4,7 @@ import Lemma.List.Ne_Nil.is.GtLength_0
 open Tensor List
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
 -- given
   (h : s.length > 0)

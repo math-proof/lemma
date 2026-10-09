@@ -6,7 +6,7 @@ open IsLocalRing
 /--
 [WeierstrassCurve_DrinfeldGlobal_originChart_rel_unique_of_mem_maximalIdeal](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_WeierstrassCurve_DrinfeldGlobal_originChart_rel_unique_of_mem_maximalIdeal.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {S : Type u} [CommRing S] [IsLocalRing S]
   {a₁ a₂ a₃ a₄ a₆ x v v' : S}

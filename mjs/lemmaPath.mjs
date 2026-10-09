@@ -31,6 +31,12 @@ const TYPE_TO_SECTION = {
   "ℕ": "Nat",
   Int: "Int",
   "ℤ": "Int",
+  // Type classes are not sections (AGENTS.md): additive/ring algebra → Int (data type).
+  AddCommGroup: "Int",
+  AddGroup: "Int",
+  Ring: "Int",
+  CommRing: "Int",
+  LinearOrderedAddCommGroup: "Int",
   Rat: "Rat",
   "ℚ": "Rat",
   Fin: "Fin",
@@ -607,7 +613,7 @@ function collectTokenWeights(node, w = 1, out = new Map()) {
  * `IteratesOfResidual …`) decides the section; conclusion first, then givens in Lean order.
  */
 /** Lemma folders named after typeclasses: sections are data types, so these are never chosen from binders. */
-const TYPECLASS_FOLDERS = new Set(["NormedSpace", "NormedAddCommGroup", "NormedField", "InnerProductSpace"]);
+const TYPECLASS_FOLDERS = new Set(["NormedSpace", "NormedAddCommGroup", "NormedField", "InnerProductSpace", "AddCommGroup"]);
 
 function customSection(sections, conclNode, givenTypes, importDecls = new Map(), binders = null) {
   const custom = sections.filter((s) => !DATA_TYPE_SECTIONS.has(s) && !TYPE_TO_SECTION[s]);
@@ -3372,7 +3378,7 @@ function hasMainAttr(lemma) {
     if (cls(a) !== "LeanAttribute") return false;
     const walk = (n) => {
       if (!n || typeof n !== "object") return false;
-      if (cls(n) === "LeanToken" && n.text === "main") return true;
+      if (cls(n) === "LeanToken" && n.text === "path") return true;
       return Array.isArray(n.args) && n.args.some(walk);
     };
     return walk(a);
@@ -3490,7 +3496,7 @@ function extractInstanceHyps(indented) {
  * retry with the main lemma's proof replaced by `sorry`.
  */
 function truncateMainProof(source) {
-  const at = source.indexOf("@[main]");
+  const at = source.indexOf("@[path]");
   const imply = source.indexOf("-- imply", at < 0 ? 0 : at);
   if (imply < 0) return source;
   const m = /:=(\s|$)/.exec(source.slice(imply));

@@ -9,7 +9,7 @@ import Lemma.Bool.Or_Not.is.NotAndNot
 open Bool
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h₀ : p₀ → q₀)

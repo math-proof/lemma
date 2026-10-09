@@ -14,7 +14,7 @@ set_option maxHeartbeats 400000
 /--
 Matrix–vector product of a column-block hstack with a split vector.
 -/
-@[main]
+@[path]
 private lemma mv
   [Mul α] [AddCommMonoid α]
 -- given
@@ -100,7 +100,7 @@ private lemma mv
 /--
 Matrix–matrix product of a column-block hstack with a row-block append.
 -/
-@[main]
+@[path]
 private lemma main
   [Mul α] [AddCommMonoid α]
 -- given

@@ -7,7 +7,7 @@ import Lemma.Tensor.Div.eq.Div_Reshape
 open Tensor Vector
 
 
-@[main]
+@[path]
 private lemma main
   [Div α]
 -- given

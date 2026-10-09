@@ -3,7 +3,7 @@ import Lemma.Nat.LtAddS.of.Le.Lt
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   [AddZeroClass α]
   [Preorder α]

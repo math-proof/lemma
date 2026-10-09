@@ -7,7 +7,7 @@ open Tensor
 Hyperreal masked softmax (py: `softmax(A + (Ξ - 1) * oo)` with the block mask `Ξ`): the masked entries are exactly `0`,
 the unmasked ones carry the given weights, with every row having an unmasked entry.
 -/
-@[main]
+@[path]
 private lemma relative_distance.lower_triangle.tf
   {n l : ℕ}
   {c : ℤ}
@@ -31,7 +31,7 @@ private lemma relative_distance.lower_triangle.tf
 Hyperreal masked softmax (py: `softmax(A + (Ξ - 1) * oo)` with the block mask `Ξ`): the masked entries are exactly `0`,
 the unmasked ones carry the given weights, with every row having an unmasked entry.
 -/
-@[main]
+@[path]
 private lemma relative_distance.lower_triangle
   {n l : ℕ}
   {c : ℤ}
@@ -55,7 +55,7 @@ private lemma relative_distance.lower_triangle
 Hyperreal masked softmax (py: `softmax(A + (Ξ - 1) * oo)` with the block mask `Ξ`): the masked entries are exactly `0`,
 the unmasked ones carry the given weights, with every row having an unmasked entry.
 -/
-@[main]
+@[path]
 private lemma relative_distance.upper_triangle
   {n u : ℕ}
   {c : ℤ}

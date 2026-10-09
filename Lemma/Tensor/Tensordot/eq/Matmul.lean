@@ -2,7 +2,7 @@ import sympy.Basic
 import sympy.matrices.expressions.matmul
 
 
-@[main]
+@[path]
 private lemma main
   [Mul α] [Add α] [Zero α]
   {s : List ℕ}

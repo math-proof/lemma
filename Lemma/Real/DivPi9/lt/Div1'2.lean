@@ -3,7 +3,7 @@ import Mathlib.Analysis.Real.Pi.Bounds
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main:
 -- imply
   π / 9 < 1 / 2 := by

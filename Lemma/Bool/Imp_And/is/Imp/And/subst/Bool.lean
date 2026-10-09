@@ -2,7 +2,7 @@ import Lemma.Bool.Imp_And.of.Imp.And.subst.Bool
 open Bool
 
 
-@[main]
+@[path]
 private lemma main
   {p c : Prop} [Decidable c]
   {x z : α}

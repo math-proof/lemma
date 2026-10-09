@@ -2,7 +2,7 @@ import Lemma.Set.Any_In.is.Ne_Empty
 open Set
 
 
-@[main]
+@[path]
 private lemma main
   {S : Set α}
   {p : α → Prop}

@@ -2,7 +2,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma given
   {x y : ℝ}
 -- given
@@ -14,7 +14,7 @@ private lemma given
   exact lt_of_le_of_ne h₀ h₁.symm
 
 
-@[main]
+@[path]
 private lemma given.strengthen
   {x y z : ℝ}
 -- given

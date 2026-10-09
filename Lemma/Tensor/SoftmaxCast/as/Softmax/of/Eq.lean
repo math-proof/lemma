@@ -3,7 +3,7 @@ import stdlib.SEq
 import torch.Tensor.Basic
 
 
-@[main, comm, cast]
+@[path, comm, cast]
 private lemma main
   [Exp α]
   {s : List ℕ}

@@ -3,7 +3,7 @@ import Lemma.Int.EqToNat.of.Ge_0
 open Int Slice
 
 
-@[main]
+@[path]
 private lemma main
   {i : ℤ}
 -- given

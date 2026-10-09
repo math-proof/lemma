@@ -4,7 +4,7 @@ import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 open Vector
 
 
-@[main]
+@[path]
 private lemma main
   [Mul α]
   {s : List ℕ}

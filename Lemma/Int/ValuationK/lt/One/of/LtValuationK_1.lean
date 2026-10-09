@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [ValuationSubring_valuation_intCast_lt_one_of_dvd](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_ValuationSubring_valuation_intCast_lt_one_of_dvd.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [Field K]
   {A : ValuationSubring K}

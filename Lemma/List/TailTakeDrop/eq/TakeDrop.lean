@@ -2,7 +2,7 @@ import Lemma.List.DropTakeDrop.eq.TakeDrop
 open List
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
 -- given
   (s : List α)

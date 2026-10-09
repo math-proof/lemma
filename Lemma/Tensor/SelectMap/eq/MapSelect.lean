@@ -8,7 +8,7 @@ import torch.Tensor
 open List Tensor Vector
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   {f : α → β}
 -- given

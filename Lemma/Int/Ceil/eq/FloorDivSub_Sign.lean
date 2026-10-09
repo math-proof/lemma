@@ -31,7 +31,7 @@ import Lemma.Rat.DivNeg.eq.NegDiv
 open Bool Int Nat Rat
 
 
-@[main]
+@[path]
 private lemma main
   [Field α] [LinearOrder α] [IsStrictOrderedRing α] [FloorRing α]
 -- given

@@ -8,7 +8,7 @@ import Lemma.List.ProdTake.eq.MulProdS.of.Ge
 open List Nat
 
 
-@[main]
+@[path]
 private lemma main
   [CommMonoid α]
   {s : List α}

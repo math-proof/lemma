@@ -7,7 +7,7 @@ Falling factorial \(x^{\underline{k}} = x(x-1)\cdots(x-k+1)\).
 [Mathematica](https://mathworld.wolfram.com/FallingFactorial.html)
 [SymPy](https://docs.sympy.org/latest/modules/functions/combinatorial.html#sympy.functions.combinatorial.factorials.FallingFactorial)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing α]
 -- given

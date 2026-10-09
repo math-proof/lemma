@@ -25,7 +25,7 @@ private lemma  P2mS26ArchPowC.range_powMonoidHom_units_eq_top_of_isAlgClosed (F 
   refine ⟨Units.mk0 z hz0, ?_⟩
   ext
   simp [hz]
-@[main]
+@[path]
 private lemma main
   [Field K]
   {w : NumberField.InfinitePlace K}

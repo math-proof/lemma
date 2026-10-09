@@ -2,7 +2,7 @@ import Lemma.Nat.Lt.is.Le.NotLe
 open Nat
 
 
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   [Preorder α]
   {a b : α} :

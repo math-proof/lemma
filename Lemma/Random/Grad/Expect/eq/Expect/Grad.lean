@@ -4,7 +4,7 @@ import sympy.Basic
 open MeasureTheory Topology Random
 
 
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace Ω] [MeasurableSpace α]
   {π : Measure Ω} {x : Ω → α} [PSpace π x]

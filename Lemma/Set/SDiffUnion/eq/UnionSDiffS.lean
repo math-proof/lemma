@@ -2,7 +2,7 @@ import Lemma.Set.In_Union.of.In
 open Set
 
 
-@[main]
+@[path]
 private lemma main
   {A B C : Set α} :
 -- imply

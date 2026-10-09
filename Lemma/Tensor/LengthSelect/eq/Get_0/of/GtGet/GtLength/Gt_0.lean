@@ -3,7 +3,7 @@ import torch.Tensor
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h_pos : d > 0)

@@ -8,7 +8,7 @@ import Lemma.Nat.MinSubS.eq.SubMin.of.Ge.Ge
 open List Nat Int
 
 
-@[main]
+@[path]
 private lemma main
   {s : List α}
   {i : Fin s.length}

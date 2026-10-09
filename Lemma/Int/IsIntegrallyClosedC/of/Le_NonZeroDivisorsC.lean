@@ -25,7 +25,7 @@ private lemma  IsIntegrallyClosed.of_isIntegrallyClosedIn_of_isLocalization
     (isIntegral_algHom_iff (IsScalarTower.toAlgHom C L K) (IsFractionRing.injective L K)).mp hx
   obtain ⟨c, rfl⟩ := IsIntegrallyClosedIn.algebraMap_eq_of_integral hl
   exact ⟨c, IsScalarTower.algebraMap_apply C L K c⟩
-@[main]
+@[path]
 private lemma main
   [CommRing C] [IsDomain C] [CommRing L] [IsDomain L] [Algebra C L] [IsIntegrallyClosedIn C L] [IsIntegrallyClosed L]
   {M : Submonoid C} [IsLocalization M L]

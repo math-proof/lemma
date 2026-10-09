@@ -3,7 +3,7 @@ import Lemma.Int.FDiv.eq.Div.of.Ge_0
 open Int Nat
 
 
-@[main]
+@[path]
 private lemma main
   {n d : ℤ}
 -- given

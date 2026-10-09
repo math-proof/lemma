@@ -4,7 +4,7 @@ import Lemma.Tensor.Permute0.eq.Zero
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [Zero α]
   {s : List ℕ}

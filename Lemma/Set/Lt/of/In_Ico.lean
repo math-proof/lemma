@@ -2,7 +2,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   [Preorder α]
   {a b : α}
@@ -14,7 +14,7 @@ private lemma main
   h₀.right
 
 
-@[main]
+@[path]
 private lemma domain
   [Preorder α]
   {a b : α}

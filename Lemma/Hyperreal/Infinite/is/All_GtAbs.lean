@@ -7,7 +7,7 @@ import Lemma.Int.EqAbs.of.Gt_0
 open Hyperreal Int
 
 
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
 -- given
   (x : ℝ*) :

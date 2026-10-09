@@ -2,7 +2,7 @@ import Lemma.Int.SubOfNat_NegSucc.eq.AddAdd1
 open Int
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (n a : ℕ) :

@@ -3,7 +3,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {f g : ℝ → ℝ}
 -- given
@@ -11,12 +11,12 @@ private lemma main
   (hg : MeasureTheory.Integrable g)
   (h : ∀ x, f x ≤ g x) :
 -- imply
-  ∫ x, f x ≤ ∫ x, g x := by
+  ∫ x, f x ≤ ∫ x, g x :=
 -- proof
-  exact MeasureTheory.integral_mono hf hg (fun x => h x)
+  MeasureTheory.integral_mono hf hg (fun x => h x)
 
 
-@[main]
+@[path]
 private lemma finite
   {f g : ℝ → ℝ}
   {a b : ℝ}
@@ -26,9 +26,9 @@ private lemma finite
   (hg : IntervalIntegrable g MeasureTheory.volume a b)
   (h : ∀ x, f x ≤ g x) :
 -- imply
-  ∫ x in a..b, f x ≤ ∫ x in a..b, g x := by
+  ∫ x in a..b, f x ≤ ∫ x in a..b, g x :=
 -- proof
-  exact intervalIntegral.integral_mono_on hab hf hg (fun x _ => h x)
+  intervalIntegral.integral_mono_on hab hf hg (fun x _ => h x)
 
 
 -- created on 2021-09-22

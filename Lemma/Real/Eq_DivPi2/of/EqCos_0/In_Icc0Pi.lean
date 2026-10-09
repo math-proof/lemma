@@ -8,7 +8,7 @@ import Lemma.Set.Le.of.In_Icc
 open Real Set
 
 
-@[main]
+@[path]
 private lemma main
   {x : ℝ}
 -- given

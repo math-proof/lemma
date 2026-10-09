@@ -3,7 +3,7 @@ import sympy.concrete.expr_with_limits
 import Mathlib.Topology.Order.IntermediateValue
 
 
-@[main]
+@[path]
 private lemma main
   {f : ℝ → ℝ}
   {a b y : ℝ}

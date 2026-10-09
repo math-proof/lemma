@@ -3,7 +3,7 @@ import Lemma.Int.Sub.eq.NegSub
 open Hyperreal Int
 
 
-@[main]
+@[path]
 private lemma Comm
   {a b : ℝ*} :
 -- imply

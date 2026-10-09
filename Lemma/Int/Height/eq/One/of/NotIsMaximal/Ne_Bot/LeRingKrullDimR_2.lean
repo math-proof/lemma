@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [Ideal_height_eq_one_of_ne_bot_of_not_isMaximal_of_ringKrullDim_le_two](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Ideal_height_eq_one_of_ne_bot_of_not_isMaximal_of_ringKrullDim_le_two.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing R] [IsDomain R] [IsNoetherianRing R]
   {P : Ideal R} [P.IsPrime]

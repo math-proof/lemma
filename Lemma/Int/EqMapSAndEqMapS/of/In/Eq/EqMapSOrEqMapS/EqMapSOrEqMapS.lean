@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [Ideal_map_eq_self_of_apply_eq_of_mem_of_not_mem](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Ideal_map_eq_self_of_apply_eq_of_mem_of_not_mem.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing S]
   {P₁ P₂ : Ideal S}

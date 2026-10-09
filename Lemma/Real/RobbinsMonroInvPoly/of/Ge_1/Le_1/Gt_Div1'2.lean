@@ -4,7 +4,7 @@ import Lemma.Real.SummableSquarePow.of.Gt_Div1'2
 open Real
 
 
-@[main]
+@[path]
 private lemma main
   {ν : ℝ}
   {n₀ : ℕ}

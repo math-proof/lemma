@@ -9,7 +9,7 @@ Chain rule for the measure of a nested event under the two one-step conditional 
 probability `0` need to be excluded:
 `π (C ∩ F ∩ E) = π C * (π (F ∩ G) / π G * (π (E ∩ F) / π F))`.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace Ω]
   {π : Measure Ω} [IsProbabilityMeasure π]

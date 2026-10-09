@@ -7,7 +7,7 @@ open Polynomial
 /--
 [IntermediateField_finrank_adjoin_rootsOfUnity_eq_card_rootSet](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_IntermediateField_finrank_adjoin_rootsOfUnity_eq_card_rootSet.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {F E : Type} [Field F] [Field E] [Algebra F E] [IsAlgClosed E] [CharZero F]
   {m : ℕ}

@@ -6,7 +6,7 @@ import sympy.Basic
 open Nat Set
 
 
-@[main]
+@[path]
 private lemma main
   {x : ℕ}
 -- given

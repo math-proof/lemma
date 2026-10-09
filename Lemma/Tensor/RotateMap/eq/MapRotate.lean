@@ -9,7 +9,7 @@ import torch.Tensor.permute
 open List Vector
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (X : Tensor α s)

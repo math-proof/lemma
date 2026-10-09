@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {ι : Sort u}
   {x y : ι → Set β}
@@ -13,7 +13,7 @@ private lemma main
   Set.iUnion_congr h
 
 
-@[main]
+@[path]
 private lemma set
   {S : Set ι}
   {x y : ι → Set β}

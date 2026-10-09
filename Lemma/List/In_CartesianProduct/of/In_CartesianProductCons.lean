@@ -3,7 +3,7 @@ import Lemma.List.GetCons.eq.Get_Sub_1.of.Lt_Add_1.Gt_0
 open Set List
 
 
-@[main]
+@[path]
 private lemma main
   {x₀ s₀ : ℕ}
   {x s : List ℕ}

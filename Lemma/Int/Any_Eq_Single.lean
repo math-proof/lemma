@@ -6,7 +6,7 @@ open scoped TensorProduct
 /--
 [AddMonoidAlgebra_exists_bialgEquiv_baseChange_tmul_single](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AddMonoidAlgebra_exists_bialgEquiv_baseChange_tmul_single.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [AddCommMonoid G]
   {R S : Type*} [CommRing R] [CommRing S] [Algebra R S] :

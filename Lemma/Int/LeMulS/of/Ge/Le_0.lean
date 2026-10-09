@@ -8,10 +8,10 @@ open Int Nat
 using comm 2 instead of comm 1 since conditions of the lemma is arranged according to the constructor order of multiplication
 | attributes | lemma |
 | :---: | :---: |
-| main | Int.LeMulS.of.Ge.Le_0 |
+| path | Int.LeMulS.of.Ge.Le_0 |
 | comm 2 | Int.GeMulS.of.Le.Le_0 |
 -/
-@[main, comm 2]
+@[path, comm 2]
 private lemma main
   [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
   {x a b : α}

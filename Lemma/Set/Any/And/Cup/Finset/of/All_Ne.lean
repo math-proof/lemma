@@ -4,7 +4,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {n : ℕ}
   {x : ℕ → ℝ}
@@ -19,14 +19,14 @@ private lemma main
     intro a ha b hb e
     rw [Finset.mem_coe, Finset.mem_range] at ha hb
     by_contra hne
-    rcases lt_or_gt_of_ne hne with hab | hab
+    obtain hab | hab := lt_or_gt_of_ne hne
     · exact h b hb a hab e.symm
     · exact h a ha b hab e
   have hc : ((Finset.range n).image x).card = n := by
     rw [Finset.card_image_of_injOn hinj, Finset.card_range]
   let S := (Finset.range n).image x
   let y : ℕ → ℝ := fun m => if hm : m < n then S.orderEmbOfFin hc ⟨m, hm⟩ else 0
-  have hy : ∀ m (hm : m < n), y m = S.orderEmbOfFin hc ⟨m, hm⟩ := fun m hm => dif_pos hm
+  have hy : ∀ m (hm : m < n), y m = S.orderEmbOfFin hc ⟨m, hm⟩ := fun m hm => dite_eq_left hm
   have mono : ∀ a b, a < b → b < n → y a < y b := by
     intro a b hab hb
     rw [hy a (by omega), hy b hb]
@@ -35,13 +35,14 @@ private lemma main
     ext v
     simp only [Finset.mem_image, Finset.mem_range]
     constructor
-    · rintro ⟨m, hm, rfl⟩
+    ·
+      rintro ⟨m, hm, rfl⟩
       rw [hy m hm]
       exact Finset.orderEmbOfFin_mem S hc _
-    · intro hv
+    ·
+      intro hv
       have hr : v ∈ Set.range (S.orderEmbOfFin hc) := by
-        rw [Finset.range_orderEmbOfFin]
-        exact hv
+        rwa [Finset.range_orderEmbOfFin]
       obtain ⟨m, rfl⟩ := hr
       exact ⟨m, m.isLt, by rw [hy m m.isLt]⟩
   refine ⟨y, himg, fun i hi j hj => (mono j i hj hi).ne', ?_⟩

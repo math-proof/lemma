@@ -2,7 +2,7 @@ import stdlib.List
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {head : α}
   {tail : List α} :

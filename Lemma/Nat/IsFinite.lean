@@ -6,7 +6,7 @@ open CategoryTheory AlgebraicGeometry
 /--
 [AlgebraicGeometry_IsFinite_of_isFinite_comp_of_surjective_of_isProper](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_IsFinite_of_isFinite_comp_of_surjective_of_isProper.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {X₀ X Y : Scheme.{u}}
   {i : X₀ ⟶ X} [Surjective i]

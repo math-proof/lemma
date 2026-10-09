@@ -31,7 +31,7 @@ private lemma  pow_five_aux
   have h := Matrix.aeval_self_charpoly g
   have : aeval g (X ^ 5 - 1 : R[X]) = 0 := by rw [key, map_mul, h, zero_mul]
   simpa [sub_eq_zero] using this
-@[main]
+@[path]
 private lemma main
   [CommRing R]
   {g : Matrix (Fin 2) (Fin 2) R}

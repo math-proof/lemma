@@ -4,7 +4,7 @@ import Lemma.Finset.Alpha_MapRange.eq.DivHK.of.All_Imp_Gt_0.Gt_0
 open Finset Continuant
 
 
-@[main]
+@[path]
 private lemma main
   {n : ℕ}
   {x : ℕ → ℝ}
@@ -17,7 +17,7 @@ private lemma main
   exact Alpha_MapRange.eq.DivHK.of.All_Imp_Gt_0.Gt_0 x h₀ h
 
 
-@[main]
+@[path]
 private lemma induct
   {n : ℕ}
   {x : ℕ → ℝ}
@@ -30,7 +30,7 @@ private lemma induct
   exact Alpha_MapRange.eq.DivHK.of.All_Imp_Gt_0.Gt_0 x (by omega) (fun j h1 h2 => h j h1 (by omega))
 
 
-@[main]
+@[path]
 private lemma offset0
   {n : ℕ}
   {x : ℕ → ℝ}

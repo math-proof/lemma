@@ -7,7 +7,7 @@ import Lemma.Nat.LtSub.of.Lt
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   {j n : ℕ}
 -- given

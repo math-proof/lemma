@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [Subgroup_relIndex_inf_map_conj_eq_natCard_setOf_exists_quotientMk_mul_eq](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Subgroup_relIndex_inf_map_conj_eq_natCard_setOf_exists_quotientMk_mul_eq.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [Group G]
   {K : Subgroup G}

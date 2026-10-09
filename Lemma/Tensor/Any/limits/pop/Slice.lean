@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {m : ℕ}
   {p : (Fin (m + 1) → β) → Prop} :

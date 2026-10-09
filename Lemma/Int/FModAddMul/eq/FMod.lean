@@ -3,7 +3,7 @@ import Lemma.Int.FModAdd.eq.FMod.of.FMod.eq.Zero
 open Int
 
 
-@[main]
+@[path]
 private lemma main
   {d q r : ℤ} :
 -- imply

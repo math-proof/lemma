@@ -8,10 +8,10 @@ open Tensor
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Tensor.DotAppendSHstackS.eq.AppendHstackSAddSDotS |
+| path | Tensor.DotAppendSHstackS.eq.AppendHstackSAddSDotS |
 | comm | Tensor.AppendHstackSAddSDotS.eq.DotAppendSHstackS |
 -/
-@[main, comm]
+@[path, comm]
 private lemma main
   [Mul α] [AddCommMonoid α]
 -- given

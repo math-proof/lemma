@@ -5,7 +5,7 @@ import Lemma.Int.FMod.eq.Zero.of.Any_Eq_Mul
 open Int
 
 
-@[main]
+@[path]
 private lemma main
   {n d : ℤ}
 -- given

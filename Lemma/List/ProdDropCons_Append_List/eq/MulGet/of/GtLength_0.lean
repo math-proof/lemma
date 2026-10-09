@@ -2,7 +2,7 @@ import Lemma.List.DropCons_Append_List.eq.ListGet.of.GtLength_0
 open List
 
 
-@[main]
+@[path]
 private lemma main
   [Monoid α]
   {s : List α}

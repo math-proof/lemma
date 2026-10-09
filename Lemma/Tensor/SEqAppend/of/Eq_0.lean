@@ -17,7 +17,7 @@ import Lemma.Vector.SEq.of.All_EqGetS.Eq
 open Bool Fin Tensor Vector
 
 
-@[main]
+@[path]
 private lemma cons
 -- given
   (h : m = 0)
@@ -43,7 +43,7 @@ private lemma cons
     aesop
 
 
-@[main]
+@[path]
 private lemma main
   {X : Tensor α (bz ++ n :: s)}
   {O : Tensor α (bz ++ m :: s)}

@@ -6,7 +6,7 @@ open Topology
 /--
 [Submodule_finiteDimensional_of_isCompactOperator_of_forall_apply_eq](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Submodule_finiteDimensional_of_isCompactOperator_of_forall_apply_eq.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [NontriviallyNormedField 𝕜] [CompleteSpace 𝕜] [NormedAddCommGroup E] [NormedSpace 𝕜 E]
   {T : E →L[𝕜] E}

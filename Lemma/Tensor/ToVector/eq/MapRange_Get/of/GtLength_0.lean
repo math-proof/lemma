@@ -5,7 +5,7 @@ import Lemma.Tensor.ToVector.eq.MapRange_Get
 open Vector List Tensor
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h : s.length > 0)

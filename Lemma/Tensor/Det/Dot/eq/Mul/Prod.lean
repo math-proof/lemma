@@ -6,7 +6,7 @@ import Lemma.Matrix.DetMulOfMulPowOfPowNegChoose.eq.MulMulPowPowSubProd
 open Matrix Finset Nat
 
 
-@[main]
+@[path]
 private lemma vandermonde.col_transform
   {m d : ℕ} {x δ l : ℝ} :
 -- imply

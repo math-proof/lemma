@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma limits.push
   [AddCommMonoid α]
   {i n : ℕ}
@@ -14,7 +14,7 @@ private lemma limits.push
   (Finset.sum_Ico_succ_top h f).symm
 
 
-@[main]
+@[path]
 private lemma limits.unshift
   [AddCommMonoid α]
   {i n : ℕ}

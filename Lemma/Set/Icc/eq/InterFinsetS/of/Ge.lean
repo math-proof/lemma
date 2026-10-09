@@ -6,7 +6,7 @@ import Lemma.Nat.Eq.of.Le.Le
 open Set Nat
 
 
-@[main]
+@[path]
 private lemma main
   [LinearOrder α]
   {x y : α}

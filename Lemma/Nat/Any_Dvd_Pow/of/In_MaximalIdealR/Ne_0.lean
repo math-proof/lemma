@@ -25,7 +25,7 @@ private lemma  exists_dvd_pow {R : Type*} [CommRing R] [IsDomain R] [IsLocalRing
     have hc' : c ∈ (Ideal.span {b}).radical := hrad ▸ hc
     obtain ⟨n, hn⟩ := hc'
     exact ⟨n, Ideal.mem_span_singleton.mp hn⟩
-@[main]
+@[path]
 private lemma main
   [CommRing R] [IsDomain R] [IsLocalRing R] [Ring.KrullDimLE 1 R]
   {b : R}

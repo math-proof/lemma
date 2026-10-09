@@ -4,7 +4,7 @@ import Lemma.Complex.SquareSqrt3.eq.Three
 open Complex
 
 
-@[main]
+@[path]
 private lemma main :
 -- imply
   ~(-1 / 2 + Complex.I * √3 / 2 : ℂ) = (-1 / 2 + Complex.I * √3 / 2) ^ 2 := by

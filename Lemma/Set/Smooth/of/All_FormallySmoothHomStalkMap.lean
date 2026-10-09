@@ -6,7 +6,7 @@ open CategoryTheory AlgebraicGeometry TopologicalSpace
 /--
 [AlgebraicGeometry_smooth_of_locallyOfFinitePresentation_of_forall_isClosed_formallySmooth_stalkMap](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_smooth_of_locallyOfFinitePresentation_of_forall_isClosed_formallySmooth_stalkMap.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {X S : Scheme.{u}} [JacobsonSpace ↑X]
   {f : X ⟶ S} [LocallyOfFinitePresentation f]

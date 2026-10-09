@@ -16,7 +16,7 @@ read off the `SinglePSpace` instances (which package `AEMeasurable`); plain `Mea
 hypotheses are not required. The converse is false without independence — two ac
 marginals can have a singular joint law (e.g. `y = x` over a Lebesgue state space).
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace Ω]
   [ReferenceMeasure α]

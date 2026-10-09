@@ -3,7 +3,7 @@ import sympy.vector.Basic
 open Vector
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (m n : ℕ)

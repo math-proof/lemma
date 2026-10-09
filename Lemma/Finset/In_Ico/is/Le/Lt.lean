@@ -2,7 +2,7 @@ import sympy.Basic
 import sympy.sets.sets
 
 
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   [Preorder α] [LocallyFiniteOrder α]
 -- given

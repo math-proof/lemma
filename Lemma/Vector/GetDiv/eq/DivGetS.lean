@@ -2,7 +2,7 @@ import Lemma.Vector.Div.eq.Map₂
 open Vector
 
 
-@[main, fin]
+@[path, fin]
 private lemma main
   [Div α]
 -- given

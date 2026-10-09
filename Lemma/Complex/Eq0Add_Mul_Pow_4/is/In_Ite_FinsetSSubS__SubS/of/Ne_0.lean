@@ -5,12 +5,12 @@ open Complex
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Complex.Eq0Add_Mul_Pow_4.is.In_Ite_FinsetSSubS__SubS.of.Ne_0 |
+| path | Complex.Eq0Add_Mul_Pow_4.is.In_Ite_FinsetSSubS__SubS.of.Ne_0 |
 | comm | Complex.In_Ite_FinsetSSubS__SubS.is.Eq0Add_Mul_Pow_4.of.Ne_0 |
 | mp | Complex.In_Ite_FinsetSSubS__SubS.of.Eq0Add_Mul_Pow_4.Ne_0 |
 | mpr | Complex.Eq0Add_Mul_Pow_4.of.In_Ite_FinsetSSubS__SubS.Ne_0 |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   {x a b c d e : ℂ}
 -- given

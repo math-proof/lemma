@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [WittVector_add_coeff_eq_of_forall_coeff_eq_zero](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_WittVector_add_coeff_eq_of_forall_coeff_eq_zero.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {S : Type u} [CommRing S]
   {p : ℕ} [Fact p.Prime]

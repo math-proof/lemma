@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [Bialgebra_fst_mul_withConv_algHom_dualNumber_eq_counit](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Bialgebra_fst_mul_withConv_algHom_dualNumber_eq_counit.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing k] [CommRing B] [Bialgebra k B]
   {D₁ D₂ : B →ₐ[k] DualNumber k}

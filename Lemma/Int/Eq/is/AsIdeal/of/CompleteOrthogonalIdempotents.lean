@@ -6,7 +6,7 @@ open PrimeSpectrum
 /--
 [PrimeSpectrum_exists_locallyConstant_forall_apply_eq_iff](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_PrimeSpectrum_exists_locallyConstant_forall_apply_eq_iff.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing R] [Fintype ι]
   {e : ι → R}

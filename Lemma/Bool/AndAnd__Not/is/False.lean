@@ -2,7 +2,7 @@ import Lemma.Bool.AndAnd.is.And_And
 open Bool
 
 
-@[main]
+@[path]
 private lemma main
   {p q : Prop}
   (left : Bool := true) :

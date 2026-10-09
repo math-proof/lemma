@@ -4,7 +4,7 @@ import Lemma.Set.Cup_Ioc.eq.Ioc_0.of.Lt_0
 open Set
 
 
-@[main]
+@[path]
 private lemma main
   [Ring R] [LinearOrder R] [IsStrictOrderedRing R]
   {a b : ℤ}

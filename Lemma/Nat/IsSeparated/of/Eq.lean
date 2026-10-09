@@ -6,7 +6,7 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 /--
 [AlgebraicGeometry_isSeparated_of_isFinite_of_surjective_of_comp_eq](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_isSeparated_of_isFinite_of_surjective_of_comp_eq.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {X Y S : Scheme.{0}}
   {p : X ⟶ Y} [IsFinite p] [Surjective p]

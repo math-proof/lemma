@@ -10,7 +10,7 @@ import Lemma.Bool.EqCast.of.SEq
 open Vector Bool Nat
 
 
-@[main, fin]
+@[path, fin]
 private lemma main
   {s : List ℕ}
 -- given

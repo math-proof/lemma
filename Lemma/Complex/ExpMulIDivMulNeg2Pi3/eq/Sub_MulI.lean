@@ -5,10 +5,10 @@ import Lemma.Complex.ExpMulI.eq.AddCos_MulISin
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Complex.ExpMulIDivMulNeg2Pi3.eq.Sub_MulI |
+| path | Complex.ExpMulIDivMulNeg2Pi3.eq.Sub_MulI |
 | comm | Complex.Sub_MulI.eq.ExpMulIDivMulNeg2Pi3 |
 -/
-@[main, comm]
+@[path, comm]
 private lemma main :
 -- imply
   (I * (-2 * π / 3)).exp = ↑(-(1 / 2 : ℝ)) - I * ↑(√3 / 2 : ℝ) := by

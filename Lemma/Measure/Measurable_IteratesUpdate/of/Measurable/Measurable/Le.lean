@@ -4,7 +4,7 @@ import sympy.Basic
 open Finset Preorder
 
 
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace S] [MeasurableSpace Z] [MeasurableSpace β]
   {n m : ℕ}

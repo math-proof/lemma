@@ -4,7 +4,7 @@ import torch.Tensor.Basic
 open Bool List
 
 
-@[main]
+@[path]
 private lemma main
   {A : Tensor α (bz ++ n :: s)}
   {B : Tensor α (bz' ++ n' :: s')}

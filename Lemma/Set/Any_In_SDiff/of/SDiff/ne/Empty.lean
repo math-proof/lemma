@@ -3,7 +3,7 @@ import Lemma.Set.In.of.In_SDiff
 open Set
 
 
-@[main]
+@[path]
 private lemma main
   {A B : Set α}
 -- given

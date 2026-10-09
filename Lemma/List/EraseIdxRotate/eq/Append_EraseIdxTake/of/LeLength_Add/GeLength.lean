@@ -4,7 +4,7 @@ import Lemma.Nat.SubAdd.eq.Sub_Sub.of.Ge
 open List Nat
 
 
-@[main]
+@[path]
 private lemma main
   {s : List α}
 -- given

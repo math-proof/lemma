@@ -2,7 +2,7 @@ import sympy.Basic
 import Mathlib.Analysis.Real.Hyperreal
 
 
-@[main]
+@[path]
 private lemma main
   {l : Filter α}
   {p : Filter.Germ l β → Prop}

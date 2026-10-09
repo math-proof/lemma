@@ -7,7 +7,7 @@ import sympy.Basic
 Jensen's inequality (concave form): if `f'' < 0` on `(a, b)`, `w ≥ 0` with `∑ i < n, w i = 1`
 and `x i ∈ (a, b)`, then `∑ i < n, w i * f (x i) ≤ f (∑ i < n, w i * x i)`.
 -/
-@[main]
+@[path]
 private lemma main
   {a b : ℝ}
   {f : ℝ → ℝ}

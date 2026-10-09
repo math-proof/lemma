@@ -1,6 +1,6 @@
 import Lemma.Finset.Factorial2.eq.Prod
 open Finset Nat
-@[main]
+@[path]
 private lemma main
   {n : ℕ}
   (h : n % 2 = 1) :

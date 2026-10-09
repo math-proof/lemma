@@ -6,7 +6,7 @@ open CategoryTheory AlgebraicGeometry
 /--
 [AlgebraicGeometry_existsUnique_section_comp_eq_of_universallyClosed_of_isSeparated](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_existsUnique_section_comp_eq_of_universallyClosed_of_isSeparated.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {R : Type u} [CommRing R] [IsDomain R] [ValuationRing R]
   {K : Type u} [Field K] [Algebra R K] [IsFractionRing R K]

@@ -34,7 +34,7 @@ open Bool Nat Tensor
 set_option maxHeartbeats 1000000
 
 
-@[main]
+@[path]
 private lemma main
   [CommMagma α] [AddCommMonoid α]
 -- given
@@ -87,7 +87,7 @@ private lemma main
     erw [EqGetUnsqueeze_0.fin]
 
 
-@[main]
+@[path]
 private lemma resize
   [CommMagma α] [AddCommMonoid α]
 -- given

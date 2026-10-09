@@ -10,7 +10,7 @@ are conditionally independent of the current state-action pair `(s[t], a[t])`.
 It is built into `M θ`: the one-step Markov property `Random.CondIndep` (history irrelevance of each step)
 extends to the whole future by `Random.CondIndep.of.All_CondIndep.All_MeasurableJoint`.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S]
   [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A]

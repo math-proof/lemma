@@ -3,7 +3,7 @@ import sympy.Basic
 open Continuant
 
 
-@[main]
+@[path]
 private lemma main :
 -- imply
   ∀ {l : List ℝ}, l ≠ [] → (∀ a ∈ l, 0 < a) → 0 < alpha l := by

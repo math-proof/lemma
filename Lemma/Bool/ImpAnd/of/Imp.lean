@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {p q : Prop}
 -- given
@@ -14,7 +14,7 @@ private lemma main
   exact h hp
 
 
-@[main]
+@[path]
 private lemma Cond
   {p q c : Prop}
 -- given

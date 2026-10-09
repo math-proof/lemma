@@ -6,7 +6,7 @@ open IsLocalRing TensorProduct
 /--
 [IsLocalRing_isReduced_residueField_tensorProduct_iff_of_maximalIdeal_eq_span](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_IsLocalRing_isReduced_residueField_tensorProduct_iff_of_maximalIdeal_eq_span.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing A] [IsLocalRing A] [CommRing R] [Algebra A R]
   {a : A}

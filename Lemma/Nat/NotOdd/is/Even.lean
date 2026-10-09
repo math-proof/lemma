@@ -3,7 +3,7 @@ import Lemma.Nat.NotOdd.is.Mod_2.eq.Zero
 open Nat
 
 
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   [IntegerRing Z]
 -- given

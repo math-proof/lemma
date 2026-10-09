@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma bin
   {s : Finset ι}
   {x : ι → α}
@@ -17,7 +17,7 @@ private lemma bin
   apply h₁ i hi
 
 
-@[main]
+@[path]
 private lemma main
   {s : Finset ι}
   {x : ι → α}

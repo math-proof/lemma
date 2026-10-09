@@ -4,7 +4,7 @@ import Lemma.Int.GeMulFDiv.of.Lt_0
 open Int
 
 
-@[main]
+@[path]
 private lemma main
   {d : ℤ}
 -- given

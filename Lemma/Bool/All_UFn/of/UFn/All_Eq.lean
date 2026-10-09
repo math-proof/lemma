@@ -3,7 +3,7 @@ import sympy.concrete.quantifier
 open Bool
 
 
-@[main]
+@[path]
 private lemma main
   {a b : α → β}
   {p : α → β → Prop}

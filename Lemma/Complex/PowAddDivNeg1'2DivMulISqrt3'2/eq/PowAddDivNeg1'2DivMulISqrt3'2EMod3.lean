@@ -5,7 +5,7 @@ import Lemma.Complex.PowAddDivNeg1'2DivMulISqrt3'2'3.eq.One
 open Complex
 
 
-@[main]
+@[path]
 private lemma main
   {d : ℤ} :
 -- imply

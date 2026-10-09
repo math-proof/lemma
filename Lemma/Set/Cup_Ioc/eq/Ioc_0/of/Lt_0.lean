@@ -5,7 +5,7 @@ import Lemma.Int.CoeCoe.eq.Coe
 open Set Int
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [Ring R] [LinearOrder R] [IsStrictOrderedRing R]
   {n : ℤ}

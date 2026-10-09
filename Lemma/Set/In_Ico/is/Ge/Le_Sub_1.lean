@@ -10,11 +10,11 @@ open Set
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Set.In_Ico.is.Ge.Le_Sub_1 |
+| path | Set.In_Ico.is.Ge.Le_Sub_1 |
 | comm | Set.Ge.Le_Sub_1.is.In_Ico |
 | mpr | Set.In_Ico.of.Ge.Le_Sub_1 |
 -/
-@[main, comm, mpr]
+@[path, comm, mpr]
 private lemma main
   {x a b : ℤ} :
 -- imply

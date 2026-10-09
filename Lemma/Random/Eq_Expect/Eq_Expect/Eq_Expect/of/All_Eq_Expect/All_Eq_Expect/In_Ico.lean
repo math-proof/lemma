@@ -12,6 +12,7 @@ import Lemma.Random.MEqR_Rc
 import Lemma.Random.Integrable.of.Measurable
 import Lemma.Random.Measurable_A
 import Lemma.Random.Measurable_S
+import Lemma.Random.Measurable_R
 import Lemma.Random.NormRc.le.Abs_R
 import Lemma.Random.StronglyMeasurableRc
 open MeasureTheory ProbabilityTheory PolicyGradient Random
@@ -20,7 +21,7 @@ open MeasureTheory ProbabilityTheory PolicyGradient Random
 /--
 Bellman equation of discrete actions under discrete states
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S]
   [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A]
@@ -45,6 +46,7 @@ private lemma main
     V t («s.bvar» t) = 𝔼[r, s : M θ](r t + γ * V (t + 1) (s (t + 1)) | s t = «s.bvar» t) ∧
     Q t («s.bvar» t) («a.bvar» t) = 𝔼[r, s : M θ](r t + γ * V (t + 1) (s (t + 1)) | s t = «s.bvar» t ∧ a t = «a.bvar» t) := by
 -- proof
+  set G := fun n : ℕ ↦ (γ ^ (id : ℕ → ℕ)) @ r[n:]
   obtain rfl : r = fun t ω ↦ (ω t).1 := funext₂ fun t ω ↦ (congrArg Prod.fst (congrFun (h₁ t) ω)).symm
   obtain rfl : s = fun t ω ↦ (ω t).2.1 := funext₂ fun t ω ↦ (congrArg (·.2.1) (congrFun (h₁ t) ω)).symm
   obtain rfl : a = fun t ω ↦ (ω t).2.2 := funext₂ fun t ω ↦ (congrArg (·.2.2) (congrFun (h₁ t) ω)).symm
@@ -55,7 +57,7 @@ private lemma main
   set u := «a.bvar» t
   have hs : ∀ t, Measurable (s t) := Random.Measurable_S h₁
   have ha : ∀ t, Measurable (a t) := Random.Measurable_A h₁
-  have hr : ∀ t, Measurable (r t) := Model.r_meas' h₁
+  have hr : ∀ t, Measurable (r t) := Random.Measurable_R h₁
   have hsa : ∀ t, Measurable (fun ω ↦ (s t ω, a t ω)) := fun t ↦
     (hs t).prodMk (ha t)
   have hpa : Measurable (fun ω t ↦ a t ω) := measurable_pi_lambda _ ha
@@ -68,13 +70,13 @@ private lemma main
     ((measurable_pi_apply t).comp measurable_fst).add
       (((measurable_of_countable (V (t + 1))).comp ((measurable_pi_apply (t + 1)).comp measurable_snd)).const_mul γ)
   -- `Q`, `V` are the conditional expected returns on the atoms
-  have hQ : ∀ t x u, Q t x u = ∫ ω, G r γ t ω ∂(M θ)[|(fun ω ↦ (s t ω, a t ω)) ⁻¹' {(x, u)}] := by
+  have hQ : ∀ t x u, Q t x u = ∫ ω, G t ω ∂(M θ)[|(fun ω ↦ (s t ω, a t ω)) ⁻¹' {(x, u)}] := by
     intro t x u
     rw [h₂ t (fun _ ↦ x) (fun _ ↦ u)]
     simp only [Expectation.asRV_process]
     rw [Expectation.condEvent_eq_integral hpR.aemeasurable (hfG t)]
     rfl
-  have hV : ∀ t x, V t x = ∫ ω, G r γ t ω ∂(M θ)[|s t ⁻¹' {x}] := by
+  have hV : ∀ t x, V t x = ∫ ω, G t ω ∂(M θ)[|s t ⁻¹' {x}] := by
     intro t x
     rw [h₃ t (fun _ ↦ x)]
     simp only [Expectation.asRV_process]
@@ -85,10 +87,10 @@ private lemma main
     (Random.StronglyMeasurableRc (M := M)).measurable.comp (measurable_pi_apply t)
   have hR : ∀ t (ω : ℕ → ℝ × S × A), |M.rc (ω t)| ≤ |M.env.R| := fun t ω ↦
     (Real.norm_eq_abs _).symm.trans_le (NormRc.le.Abs_R (M := M) (ω t))
-  have hG : ∀ n, (fun ω : ℕ → ℝ × S × A ↦ (γ ^ (id : ℕ → ℕ)) @ (fun k : ℕ ↦ M.rc (ω k))[n:]) =ᵐ[M θ] G r γ n :=
+  have hG : ∀ n, (fun ω : ℕ → ℝ × S × A ↦ (γ ^ (id : ℕ → ℕ)) @ (fun k : ℕ ↦ M.rc (ω k))[n:]) =ᵐ[M θ] G n :=
     fun n ↦ (ae_all_iff.2 fun k ↦ MEqR_Rc h₁ (M := M) θ k).mono fun ω h ↦ by
       exact tsum_congr fun k ↦ congrArg (γ ^ k * ·) (h (n + k)).symm
-  have hGi : ∀ n, Integrable (G r γ n) (M θ) := fun n => Integrable_G.of.In_Ico (M := M) θ h₀ n h₁
+  have hGi : ∀ n, Integrable (G n) (M θ) := fun n => Integrable_G.of.In_Ico (M := M) h₀ h₁ θ n
   have h₅ : ∀ t, (fun ω ↦ Q t (s t ω) (a t ω)) =ᵐ[M θ]
       (M θ)[(fun ω : ℕ → ℝ × S × A ↦ (γ ^ (id : ℕ → ℕ)) @ (fun k : ℕ ↦ M.rc (ω k))[t:]) | MeasurableSpace.comap (fun ω ↦ (s t ω, a t ω)) inferInstance] :=
     fun t ↦ Filter.EventuallyEq.trans (Filter.Eventually.of_forall fun ω ↦ hQ t (s t ω) (a t ω))

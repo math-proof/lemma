@@ -2,7 +2,7 @@ import sympy.functions.elementary.integers
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {n : ℕ}
   {j i : Fin n}

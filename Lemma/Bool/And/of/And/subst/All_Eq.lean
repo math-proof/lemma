@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma given
   {a b : ℕ → ℤ}
   {n : ℕ}

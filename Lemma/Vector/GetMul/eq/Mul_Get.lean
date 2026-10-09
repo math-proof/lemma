@@ -2,7 +2,7 @@ import sympy.Basic
 import sympy.vector.vector
 
 
-@[main, fin]
+@[path, fin]
 private lemma main
   [Mul α]
 -- given

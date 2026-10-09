@@ -2,7 +2,7 @@ import Lemma.Int.SubSub
 open Int
 
 
-@[main]
+@[path]
 private lemma main
   [AddCommGroup α]
   {a b : α} :
@@ -12,7 +12,7 @@ private lemma main
   simp
 
 
-@[main]
+@[path]
 private lemma Comm
   [AddCommGroup α]
   {a b : α} :

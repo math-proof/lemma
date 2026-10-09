@@ -18,7 +18,7 @@ the conditional expected rewards,
 (so the left side is `𝔼[G[t] | y = «y.bvar»]`, `G[t] = ∑' k, γ ^ k * r[t+k]`).
 (Dominated convergence: the rewards are a.s. bounded by `|R|`.)
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [Fintype A]
   {M : Model Θ S A}
@@ -36,7 +36,7 @@ private lemma main
 -- imply
   𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | y = «y.bvar») = (γ ^ (id : ℕ → ℕ)) @ fun k => 𝔼[r : M θ](r (t + k) | y = «y.bvar») := by
 -- proof
-  have hr : Measurable (fun ω k ↦ r k ω) := measurable_pi_lambda _ fun k => Random.Measurable_R h₁ k
+  have hr : Measurable (fun ω k ↦ r k ω) := Measurable.of_eval fun k => Random.Measurable_R h₁ k
   have h : ∀ k, 𝔼[r : M θ](r (t + k) | y = «y.bvar») = ∫ ω, r (t + k) ω ∂(M θ)[|y ⁻¹' {«y.bvar»}] := fun k =>
     Expectation.condEvent_eq_integral hr.aemeasurable (measurable_pi_apply (t + k))
   simp only [h]

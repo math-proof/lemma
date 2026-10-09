@@ -31,7 +31,7 @@ import Lemma.Real.Eq_1.of.Add_Inv.eq.Two
 open Hyperreal Nat Rat Real
 
 
-@[main]
+@[path]
 private lemma main
   {a b : ℝ*}
 -- given

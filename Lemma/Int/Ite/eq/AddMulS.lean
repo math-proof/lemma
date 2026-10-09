@@ -5,7 +5,7 @@ import Lemma.Bool.Bool.le.One
 open Bool Nat
 
 
-@[main]
+@[path]
 private lemma main
   [Decidable p]
   [Ring α]

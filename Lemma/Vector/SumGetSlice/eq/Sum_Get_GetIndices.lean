@@ -3,7 +3,7 @@ import Lemma.Vector.GetSlice.eq.MapRange
 open Vector
 
 
-@[main]
+@[path]
 private lemma main
   [AddCommMonoid α]
   {N : ℕ}

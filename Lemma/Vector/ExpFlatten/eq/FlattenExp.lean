@@ -5,7 +5,7 @@ import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 open Nat Vector Fin
 
 
-@[main]
+@[path]
 private lemma main
   [Exp α]
 -- given

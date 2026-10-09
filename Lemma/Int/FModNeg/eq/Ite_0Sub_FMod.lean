@@ -24,7 +24,7 @@ import Lemma.Nat.Sub.of.Eq
 open Bool Int Nat Rat
 
 
-@[main]
+@[path]
 private lemma main
   {n d : ℤ} :
 -- imply

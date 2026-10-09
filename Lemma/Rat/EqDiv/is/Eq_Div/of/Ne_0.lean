@@ -5,12 +5,12 @@ open Rat
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Rat.EqDiv.is.Eq_Div.of.Ne_0 |
+| path | Rat.EqDiv.is.Eq_Div.of.Ne_0 |
 | comm | Rat.Eq_Div.is.EqDiv.of.Ne_0 |
 | mp   | Rat.Eq_Div.of.EqDiv.Ne_0 |
 | mpr  | Rat.EqDiv.of.Eq_Div.Ne_0 |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   [CommGroupWithZero α]
   {x y k : α}

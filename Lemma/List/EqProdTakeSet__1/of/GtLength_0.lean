@@ -3,7 +3,7 @@ import Lemma.List.EqGetSet.of.GtLength
 open List
 
 
-@[main]
+@[path]
 private lemma main
   [Monoid α]
   {s : List α}

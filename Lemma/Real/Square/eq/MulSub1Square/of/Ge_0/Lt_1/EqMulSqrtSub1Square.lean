@@ -4,7 +4,7 @@ import sympy.Basic
 /--
 Semi-minor axis of an ellipse: \(b=a\sqrt{1-e^2}\) gives \(b^2=a^2(1-e^2)\).
 -/
-@[main]
+@[path]
 private lemma main
   {a b e : ℝ}
 -- given

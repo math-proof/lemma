@@ -1,4 +1,4 @@
-import Mathlib.Data.ENNReal.Real
+import Mathlib.Basic.ENNReal.Real
 import sympy.Basic
 
 
@@ -6,7 +6,7 @@ import sympy.Basic
 If an ENNReal is strictly below ⊤, it comes from a real
 (|x| < ∞ for nonnegative x is x < ⊤).
 -/
-@[main]
+@[path]
 private lemma main
   {x : ENNReal}
 -- given

@@ -2,7 +2,7 @@ import Mathlib.RingTheory.Polynomial.Pochhammer
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {x : ℝ}
   {k : ℕ}

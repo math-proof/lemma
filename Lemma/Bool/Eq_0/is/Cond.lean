@@ -3,7 +3,7 @@ import Lemma.Bool.Eq_0.of.Cond
 open Bool
 
 
-@[main]
+@[path]
 private lemma invert
   [Decidable p] :
 -- imply

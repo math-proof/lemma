@@ -3,7 +3,7 @@ import sympy.Basic
 open Stirling.conditionset
 
 
-@[main]
+@[path]
 private lemma main :
 -- imply
   (parts 0 0).ncard = 1 := by

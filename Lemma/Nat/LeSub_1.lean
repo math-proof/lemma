@@ -2,7 +2,7 @@ import sympy.functions.elementary.integers
 import sympy.Basic
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [IntegerRing Z]
 -- given

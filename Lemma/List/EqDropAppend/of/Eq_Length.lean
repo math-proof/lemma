@@ -3,7 +3,7 @@ import Lemma.List.EqDropAppend
 open List
 
 
-@[main]
+@[path]
 private lemma main
   {a : List α}
 -- given

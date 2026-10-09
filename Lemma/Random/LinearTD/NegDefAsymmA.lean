@@ -6,7 +6,7 @@ import Lemma.Random.LinearTD.NeMulVecX_0.of.Ne_0
 open Matrix
 
 
-@[main]
+@[path]
 private lemma main
   {S : Type*} [Fintype S] [DecidableEq S] [Nonempty S] [MeasurableSpace S] [MeasurableSingletonClass S]
   {d : ℕ}

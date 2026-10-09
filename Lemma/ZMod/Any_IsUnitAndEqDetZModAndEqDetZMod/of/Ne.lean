@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [Matrix_exists_det_map_eq_of_isUnit_of_ne](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Matrix_exists_det_map_eq_of_isUnit_of_ne.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {ℓ q : ℕ} [Fact ℓ.Prime] [Fact q.Prime]
   {u : (ZMod ℓ)ˣ}

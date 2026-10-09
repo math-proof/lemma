@@ -5,7 +5,7 @@ import sympy.vector.functions
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Vector.XEq.is.All_XEqGetS |
+| path | Vector.XEq.is.All_XEqGetS |
 | comm | Vector.All_XEqGetS.is.XEq |
 | mp | Vector.All_XEqGetS.of.XEq |
 | mpr | Vector.XEq.of.All_XEqGetS |
@@ -14,7 +14,7 @@ import sympy.vector.functions
 | fin.mp | Vector.All_XEqGetS.of.XEq.fin |
 | fin.mpr | Vector.XEq.of.All_XEqGetS.fin |
 -/
-@[main, comm, mp, mpr, fin, fin.comm, fin.mp, fin.mpr]
+@[path, comm, mp, mpr, fin, fin.comm, fin.mp, fin.mpr]
 private lemma main
   [XEq α]
 -- given

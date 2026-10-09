@@ -5,7 +5,7 @@ import Lemma.Int.DivFMod.lt.One
 open Nat Int
 
 
-@[main]
+@[path]
 private lemma main
   [Field α] [LinearOrder α] [IsStrictOrderedRing α]
   {n d : ℤ} :

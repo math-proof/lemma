@@ -4,7 +4,7 @@ import Lemma.Int.EqNeg.of.Eq_Neg
 open Bool Int
 
 
-@[main]
+@[path]
 private lemma main
   [Decidable p]
   [Neg α]

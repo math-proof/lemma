@@ -3,7 +3,7 @@ import Lemma.Real.GtExp_0
 open Hyperreal Real
 
 
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
 -- given
   (x : ℝ*) :

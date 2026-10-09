@@ -4,7 +4,7 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Int.LtSubS.is.Lt |
+| path | Int.LtSubS.is.Lt |
 | comm | Int.Lt.is.LtSubS |
 | mp   | Int.Lt.of.LtSubS |
 | mpr  | Int.LtSubS.of.Lt |
@@ -12,7 +12,7 @@ import sympy.Basic
 | mpr.comm | Int.GtSubS.of.Gt |
 | comm.is | Int.GtSubS.is.Gt |
 -/
-@[main, comm, mp, mpr, mp.comm, mpr.comm, comm.is]
+@[path, comm, mp, mpr, mp.comm, mpr.comm, comm.is]
 private lemma main
   [AddGroup α]
   [LT α]
@@ -25,7 +25,7 @@ private lemma main
   sub_lt_sub_iff_right c
 
 
-@[main, comm, mp, mpr, mp.comm, mpr.comm, comm.is]
+@[path, comm, mp, mpr, mp.comm, mpr.comm, comm.is]
 private lemma left
   [AddGroup α]
   [LT α]

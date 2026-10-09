@@ -4,7 +4,7 @@ import Lemma.Nat.Mul
 open Tensor Nat
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h : s.length > 0)

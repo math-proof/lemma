@@ -7,7 +7,7 @@ import sympy.Basic
 Substitute \(\dot\theta=J/(m\rho^2)\) into the radial force equation:
 \(\ddot\rho-J^2/(m^2\rho^3)=-C/(m\rho^2)\).
 -/
-@[main]
+@[path]
 private lemma main
   {m J C : ℝ}
   {ρ θ : ℝ → ℝ}

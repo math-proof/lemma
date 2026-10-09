@@ -3,7 +3,7 @@ import Lemma.List.GetSlicedIndices.eq.AddMul.of.Lt.LeSubAddMul.Lt_SubAddMul
 open List
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h_start : j < n * d + j)

@@ -2,7 +2,7 @@ import Lemma.Tensor.Log.Softmax.eq.Add.LogSumExp
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [NeZero n]
   {x : Fin n → ℝ} :

@@ -16,7 +16,7 @@ open Set Nat Int
 def f (x : ℝ) := 3 * x - 4 * x³
 
 
-@[main]
+@[path]
 private lemma main
   {x₀ x₁ : ℝ}
 -- given

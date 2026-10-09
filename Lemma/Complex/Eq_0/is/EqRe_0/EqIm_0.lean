@@ -5,12 +5,12 @@ open Complex
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Complex.Eq_0.is.EqRe_0.EqIm_0 |
+| path | Complex.Eq_0.is.EqRe_0.EqIm_0 |
 | comm | Complex.EqRe_0.EqIm_0.is.Eq_0 |
 | mp | Complex.EqRe_0.EqIm_0.of.Eq_0 |
 | mpr | Complex.Eq_0.of.EqRe_0.EqIm_0 |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
 -- given
   (z : ℂ) :

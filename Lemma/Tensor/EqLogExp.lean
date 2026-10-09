@@ -5,7 +5,7 @@ import Lemma.Vector.EqLogExp
 open Vector Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [LogPos α]
 -- given

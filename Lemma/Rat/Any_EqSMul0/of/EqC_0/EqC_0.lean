@@ -6,7 +6,7 @@ open WeierstrassCurve
 /--
 [WeierstrassCurve_exists_variableChange_smul_eq_zero_of_c4_eq_zero_of_c6_eq_zero](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_WeierstrassCurve_exists_variableChange_smul_eq_zero_of_c4_eq_zero_of_c6_eq_zero.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [Field L] [CharZero L]
   {W : WeierstrassCurve L}

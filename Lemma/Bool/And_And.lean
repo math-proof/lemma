@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma Comm :
 -- imply
   p ∧ q ∧ r ↔ p ∧ r ∧ q := by

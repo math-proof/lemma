@@ -10,7 +10,7 @@ import Lemma.Set.Inter
 open Set Bool
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
 -- given
   (A B : Set α)

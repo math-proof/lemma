@@ -6,10 +6,10 @@ open Tensor Vector
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Tensor.MapMul.eq.Mul_Map.of.All_Eq_Mul |
+| path | Tensor.MapMul.eq.Mul_Map.of.All_Eq_Mul |
 | comm | Tensor.Mul_Map.eq.MapMul.of.All_Eq_Mul |
 -/
-@[main, comm]
+@[path, comm]
 private lemma main
   [Mul α] [Mul β]
   {f : α → β}

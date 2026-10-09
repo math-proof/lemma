@@ -4,7 +4,7 @@ import Lemma.Tensor.Tensordot.of.SEq.SEq
 open Bool List Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [Mul α] [Zero α] [Add α]
   {A : Tensor α (s_A ++ [m, n])}

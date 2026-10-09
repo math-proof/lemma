@@ -3,7 +3,7 @@ import Lemma.Bool.Any.Cond.of.Cond
 open Bool
 
 
-@[main]
+@[path]
 private lemma main
   {A : Set α}
   {f g : α → Prop}

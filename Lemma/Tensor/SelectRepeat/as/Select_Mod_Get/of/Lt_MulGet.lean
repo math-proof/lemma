@@ -4,7 +4,7 @@ import Lemma.Tensor.SelectRepeat.as.Select_Mod_Get.of.Lt_MulGet.GtLength
 open Tensor Nat
 
 
-@[main]
+@[path]
 private lemma main
   {d : Fin s.length}
 -- given

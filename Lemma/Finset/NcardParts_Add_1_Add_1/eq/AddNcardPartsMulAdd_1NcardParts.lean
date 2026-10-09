@@ -10,7 +10,7 @@ import Lemma.Finset.EqCard.of.In_Parts
 open Finset Stirling.conditionset
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (n k : ℕ) :

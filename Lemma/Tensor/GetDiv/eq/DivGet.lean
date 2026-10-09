@@ -5,7 +5,7 @@ import Lemma.Tensor.Eq_Stack
 open Tensor
 
 
-@[main, fin, comm, fin.comm]
+@[path, fin, comm, fin.comm]
 private lemma scalar
   [Div α]
 -- given
@@ -23,7 +23,7 @@ private lemma scalar
   erw [this]
 
 
-@[main, fin, comm, fin.comm]
+@[path, fin, comm, fin.comm]
 private lemma main
   [Div α]
 -- given

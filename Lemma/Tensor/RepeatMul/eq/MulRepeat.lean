@@ -3,7 +3,7 @@ import torch.Tensor.repeat
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [Mul α]
 -- given

@@ -3,7 +3,7 @@ import torch.Tensor.Basic
 open Bool
 
 
-@[main]
+@[path]
 private lemma main
   [Neg α]
   {X : Tensor α s}

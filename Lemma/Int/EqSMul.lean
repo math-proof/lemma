@@ -6,7 +6,7 @@ open WeierstrassCurve
 /--
 [WeierstrassCurve_variableChange_mk_neg_one_smul_eq_self](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_WeierstrassCurve_variableChange_mk_neg_one_smul_eq_self.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing R]
   {W : WeierstrassCurve R} :

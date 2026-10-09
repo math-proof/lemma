@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma left
   [LinearOrder α]
 -- given
@@ -12,7 +12,7 @@ private lemma left
   simp
 
 
-@[main]
+@[path]
 private lemma main
   [LinearOrder α]
 -- given

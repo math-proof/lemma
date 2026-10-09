@@ -8,7 +8,7 @@ open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 Rewards of the trajectory model are bounded by `R`, hence so is every conditional expected reward:
 `‖𝔼[r[t] | B]‖ ≤ ‖R‖` (the conditional measure is `0` on null events).
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S]
   [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A]

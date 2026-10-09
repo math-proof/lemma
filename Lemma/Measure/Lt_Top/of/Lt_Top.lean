@@ -6,7 +6,7 @@ open MeasureTheory
 /--
 [MeasureTheory_measure_biUnion_finset_image_mul_right_lt_top](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_MeasureTheory_measure_biUnion_finset_image_mul_right_lt_top.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [Group G] [MeasurableSpace G] [MeasurableMul G]
   {μ : Measure G} [μ.IsMulRightInvariant]

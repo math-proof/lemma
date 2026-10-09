@@ -21,7 +21,7 @@ open Bool List Nat Tensor
 /--
 similar with Tensor.SumPermute.as.PermuteSum.of.GtLength_Add
 -/
-@[main]
+@[path]
 private lemma main
   [Exp α]
   {i d : ℕ}

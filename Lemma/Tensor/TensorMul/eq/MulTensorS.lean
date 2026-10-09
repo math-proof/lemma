@@ -4,7 +4,7 @@ import Lemma.Tensor.Eq.is.EqDataS
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [Mul α]
   {s : List ℕ}

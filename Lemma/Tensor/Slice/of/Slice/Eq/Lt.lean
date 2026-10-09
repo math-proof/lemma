@@ -12,7 +12,7 @@ set_option maxHeartbeats 500000
 slicing operator is defined as follows:
 lean/Init/Data/Array/Subarray.lean
 -/
-@[main]
+@[path]
 private lemma main
   {X Y : Tensor α (s₀ :: s)}
 -- given

@@ -6,7 +6,7 @@ open IsLocalRing Polynomial
 /--
 [ValuationSubring_isAlgClosed_residueField_algebraicClosure_rat](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_ValuationSubring_isAlgClosed_residueField_algebraicClosure_rat.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {A : ValuationSubring (AlgebraicClosure ℚ)} :
 -- imply

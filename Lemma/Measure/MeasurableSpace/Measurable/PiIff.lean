@@ -3,7 +3,7 @@ import sympy.Basic
 
 
 /-- A map into a pi-type is measurable iff every coordinate is. -/
-@[main, mp, mpr]
+@[path, mp, mpr]
 private lemma main
   {α δ : Type*} {X : δ → Type*}
   [MeasurableSpace α] [∀ a, MeasurableSpace (X a)]

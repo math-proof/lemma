@@ -6,7 +6,7 @@ open groupCohomology
 /--
 [groupCohomology_exists_div_mem_of_isMulCocycle1_of_presentation](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_groupCohomology_exists_div_mem_of_isMulCocycle1_of_presentation.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {G M P : Type*} [Group G] [CommGroup M] [MulDistribMulAction G M] [AddCommGroup P] [SMul G P]
   {Fn Fn1 : Subgroup M}

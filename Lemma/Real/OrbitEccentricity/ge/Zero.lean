@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 The eccentricity is nonnegative: \(e\ge 0\).
 -/
-@[main]
+@[path]
 private lemma main
   (E m C J : ℝ) :
 -- imply

@@ -3,7 +3,7 @@ import Lemma.List.Slice.eq.DropTake
 open List
 
 
-@[main]
+@[path]
 private lemma main
   [Monoid α]
 -- given

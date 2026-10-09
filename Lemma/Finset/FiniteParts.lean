@@ -4,7 +4,7 @@ import Lemma.Finset.Subset_Range.of.In_Conditionset
 open Finset Stirling.conditionset
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (n k : ℕ) :

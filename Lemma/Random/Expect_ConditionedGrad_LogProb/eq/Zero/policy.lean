@@ -9,7 +9,7 @@ open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 Expected grad-log-prob lemma for the policy of the trajectory model, conditioned on the state:
 `𝔼[∇_θ log π_θ(a[t] | s[t]) | s[t] = x] = 0` for a positive policy differentiable at `θ`.
 -/
-@[main]
+@[path]
 private lemma main
   [NormedAddCommGroup Θ] [NormedSpace ℝ Θ]
   [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S]

@@ -7,7 +7,7 @@ import Lemma.List.GetPermute.eq.Ite.of.GtLength.GtLength
 open List
 
 
-@[main]
+@[path]
 private lemma main
   {s : List α}
   {i : Fin s.length}

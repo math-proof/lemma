@@ -13,10 +13,10 @@ set_option maxHeartbeats 4000000
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Tensor.TAppendHstackS.eq.AppendHstackSTS |
+| path | Tensor.TAppendHstackS.eq.AppendHstackSTS |
 | comm | Tensor.AppendHstackSTS.eq.TAppendHstackS |
 -/
-@[main, comm]
+@[path, comm]
 private lemma main
 -- given
   (A : Tensor α [n, p])

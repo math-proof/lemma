@@ -4,7 +4,7 @@ import Lemma.List.Get_0.dvd.Prod.of.GtLength_0
 open List Nat
 
 
-@[main]
+@[path]
 private lemma main
   {s : List ℕ}
 -- given

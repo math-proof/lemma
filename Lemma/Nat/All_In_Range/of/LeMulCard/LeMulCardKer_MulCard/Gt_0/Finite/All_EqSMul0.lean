@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [AddMonoidHom_mem_range_of_smul_eq_zero_of_natCard_ker_mul_le_of_natCard_mul_le](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AddMonoidHom_mem_range_of_smul_eq_zero_of_natCard_ker_mul_le_of_natCard_mul_le.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {T J : Type*} [AddCommGroup T] [AddCommGroup J] [Finite T]
   {f : T →+ J}

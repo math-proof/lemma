@@ -10,7 +10,7 @@ import Lemma.Nat.Mul
 open Nat Int
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (i : Fin m)
@@ -34,7 +34,7 @@ private lemma main
   assumption
 
 
-@[main]
+@[path]
 private lemma Comm
 -- given
   (i : Fin m)

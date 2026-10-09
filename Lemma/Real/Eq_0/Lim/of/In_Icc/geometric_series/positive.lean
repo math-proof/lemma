@@ -8,7 +8,7 @@ open Topology
 /--
 For `0 < x < 1`, the geometric powers tend to zero: `lim [n → ∞] x ^ n = 0`.
 -/
-@[main]
+@[path]
 private lemma main
   {x : ℝ}
 -- given

@@ -2,7 +2,7 @@ import Lemma.Vector.GetExp.eq.ExpGet
 open Vector
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [Exp α]
   [Exp β]

@@ -8,7 +8,7 @@ import Lemma.Vector.GetMap₂.eq.BFnGetS
 open Tensor List Vector
 
 
-@[main, fin, cast, cast.fin]
+@[path, fin, cast, cast.fin]
 private lemma main
 -- given
   (h : b.length > 0)

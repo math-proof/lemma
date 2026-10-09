@@ -6,7 +6,7 @@ open IsLocalRing
 /--
 [IsLocalRing_residueMap_comp_algHom_eq_of_surjective](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_IsLocalRing_residueMap_comp_algHom_eq_of_surjective.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing Λ] [Field k] [CommRing A] [IsLocalRing A] [Algebra Λ A] [CommRing B] [Algebra Λ B]
   {res₀ : Λ →+* k}

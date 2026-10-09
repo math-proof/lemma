@@ -5,7 +5,7 @@ import Lemma.Vector.GetPow.eq.PowGetS
 open Vector Nat Fin
 
 
-@[main]
+@[path]
 private lemma main
   [HPow α β α]
 -- given

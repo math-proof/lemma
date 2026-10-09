@@ -2,7 +2,7 @@ import Mathlib.Data.Nat.Basic
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {α : Type*} [LinearOrder α]
   {f : ℕ → α}

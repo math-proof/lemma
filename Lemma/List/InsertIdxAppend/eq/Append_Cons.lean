@@ -2,7 +2,7 @@ import Lemma.List.InsertIdxAppend.eq.Append_InsertIdx
 open List
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (a b : List α)

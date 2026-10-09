@@ -2,7 +2,7 @@ import stdlib.List
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {f g : α → ℕ → β}
   {a b : List α}

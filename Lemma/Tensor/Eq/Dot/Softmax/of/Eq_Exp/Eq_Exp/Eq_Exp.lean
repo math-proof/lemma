@@ -78,7 +78,7 @@ Written row by row with the mask `Ξ i j = [i = j ∨ ¬(i < h ↔ j < h)]`:
 \]
 Splitting off the diagonal term \( e^{A_{ii}} V_i \) from the cross block gives the block form of the py statement.
 -/
-@[main]
+@[path]
 private lemma cross_attention
   {n h d_z : ℕ}
 -- given

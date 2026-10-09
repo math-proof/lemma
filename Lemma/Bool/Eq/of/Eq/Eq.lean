@@ -1,7 +1,7 @@
 import Lemma.Bool.Imp_And.of.Imp
 
 
-@[main]
+@[path]
 private lemma subst
   {a b : α}
   {p q : α → β}
@@ -14,7 +14,7 @@ private lemma subst
   exact h₀ ▸ h₁
 
 
-@[main]
+@[path]
 private lemma main
   {a b : α}
   {f : α → α → α}
@@ -27,7 +27,7 @@ private lemma main
   h_a.symm.trans h_b
 
 
-@[main]
+@[path]
 private lemma subst.rhs
   {a b : α}
   {l : β}
@@ -42,7 +42,7 @@ private lemma subst.rhs
   exact h₁
 
 
-@[main]
+@[path]
 private lemma subst.lhs
   {a b : α}
   {l : α → β}

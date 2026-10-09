@@ -16,7 +16,7 @@ open Hyperreal Int Rat Nat
 set_option maxHeartbeats 2000000
 
 
-@[main]
+@[path]
 private lemma main
   {b y : ℝ*}
 -- given

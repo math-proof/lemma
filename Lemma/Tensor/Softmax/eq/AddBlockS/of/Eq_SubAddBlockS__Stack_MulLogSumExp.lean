@@ -7,7 +7,7 @@ open Tensor
 Hyperreal masked softmax (py: `softmax(A + (Ξ - 1) * oo)` with the block mask `Ξ`): the masked entries are exactly `0`,
 the unmasked ones carry the given weights, with every row having an unmasked entry.
 -/
-@[main]
+@[path]
 private lemma bilinear_matrix_attention.biased.tf
   {n l u : ℕ}
   {d : ℕ}

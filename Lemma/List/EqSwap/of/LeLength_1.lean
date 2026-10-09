@@ -2,7 +2,7 @@ import Batteries.Data.List.Lemmas
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {s : List α}
 -- given

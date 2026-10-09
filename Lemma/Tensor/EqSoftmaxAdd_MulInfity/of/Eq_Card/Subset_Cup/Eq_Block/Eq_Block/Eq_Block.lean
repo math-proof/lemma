@@ -17,7 +17,7 @@ Besides the py hypotheses (`_h₀`, `_h₁`) we therefore assume exactly what ma
 `h_mask` (masked entries of `V` are `0`) and `h_fix` (on the visible entries
 \( V_{ij} \sum_{k : i < d_k} e^{a_{ik}} = e^{a_{ij}} \)).
 -/
-@[main]
+@[path]
 private lemma relative_distance.lower_triangle
   {n m d_z : ℕ}
   {dm : Fin m → Fin n}

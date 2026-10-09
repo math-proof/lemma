@@ -6,7 +6,7 @@ import Lemma.Set.LtSquareS.of.In_Ico0
 open Set Nat
 
 
-@[main]
+@[path]
 private lemma main
   {x₀ x₁ : ℝ}
 -- given

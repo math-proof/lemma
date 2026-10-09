@@ -6,7 +6,7 @@ open scoped TensorProduct
 /--
 [HopfAlgebra_finiteFlat_tensorProduct](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_HopfAlgebra_finiteFlat_tensorProduct.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing R] [CommRing A] [CommRing B] [HopfAlgebra R A] [HopfAlgebra R B] [Module.Finite R A] [Module.Flat R A] [Module.Finite R B] [Module.Flat R B] :
 -- imply

@@ -6,7 +6,7 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 /--
 [AlgebraicGeometry_IsClosedImmersion_exists_iso_hom_comp_eq_of_range_eq](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_IsClosedImmersion_exists_iso_hom_comp_eq_of_range_eq.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {A B X : Scheme.{u}} [IsReduced A] [IsReduced B]
   {f : A ⟶ X} [IsClosedImmersion f]

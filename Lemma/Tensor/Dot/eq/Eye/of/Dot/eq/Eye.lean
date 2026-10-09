@@ -8,7 +8,7 @@ import torch.functions
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [CommSemiring α] [CharZero α]
   {A B : Tensor α [n, n]}

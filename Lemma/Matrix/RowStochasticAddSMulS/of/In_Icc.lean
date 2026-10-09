@@ -3,7 +3,7 @@ import sympy.stats.stochastic_process_types
 open scoped BigOperators
 
 
-@[main]
+@[path]
 private lemma main
   {S : Type*} [Fintype S]
   {A B : Matrix S S ℝ} [RowStochastic A] [RowStochastic B]

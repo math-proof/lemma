@@ -3,7 +3,7 @@ import Lemma.List.LengthTail.gt.Sub_1.of.GtLength.Gt_0
 open List
 
 
-@[main]
+@[path]
 private lemma main
   {s : List α}
 -- given

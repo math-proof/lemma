@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma left
   {A B : Set α}
 -- given
@@ -12,7 +12,7 @@ private lemma left
   Set.inter_eq_self_of_subset_left h
 
 
-@[main]
+@[path]
 private lemma main
   {A B : Set α}
 -- given

@@ -2,7 +2,7 @@ import Lemma.Finset.Sum.eq.MulCard
 open Finset
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (b a : ℕ) :

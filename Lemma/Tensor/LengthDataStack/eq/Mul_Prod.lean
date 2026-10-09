@@ -3,7 +3,7 @@ import torch.Tensor.prod
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (f : ℕ → Tensor α s)
@@ -14,7 +14,7 @@ private lemma main
   simp
 
 
-@[main]
+@[path]
 private lemma fin
   {n : ℕ}
 -- given

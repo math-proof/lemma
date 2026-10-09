@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma telescope
   [AddCommGroup α]
   {a b : ℕ}
@@ -19,7 +19,7 @@ private lemma telescope
     abel
 
 
-@[main]
+@[path]
 private lemma unshift
   [AddCommGroup α]
   {a b : ℕ}
@@ -33,7 +33,7 @@ private lemma unshift
   abel
 
 
-@[main]
+@[path]
 private lemma push
   [AddCommGroup α]
   {a b : ℕ}

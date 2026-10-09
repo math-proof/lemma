@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [IsDiscreteValuationRing_exists_pow_mul_mem_range](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_IsDiscreteValuationRing_exists_pow_mul_mem_range.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing R] [IsDomain R] [IsDiscreteValuationRing R] [Field K] [Algebra R K] [IsFractionRing R K]
   {t : R}

@@ -6,7 +6,7 @@ open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model
 /--
 An indicator has norm at most `1`: `‖1{p z}‖ ≤ 1`.
 -/
-@[main]
+@[path]
 private lemma main
   {p : α → Prop} [DecidablePred p]
 -- given

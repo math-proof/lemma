@@ -9,7 +9,7 @@ import Lemma.Real.GtSqrt_0.of.Gt_0
 open Nat Real Hyperreal Int
 
 
-@[main]
+@[path]
 private lemma main
   {a b : ℝ*}
 -- given

@@ -9,7 +9,7 @@ open Nat
 the converse lemma is not true, i.e. if `n - 1` is even, it does not imply that `n` is odd.
 for example, `(n : ℕ) = 0`, and `n - 1 = 0` is even, but `n` isn't odd.
 -/
-@[main]
+@[path]
 private lemma main
   [IntegerRing Z]
   {n : Z}

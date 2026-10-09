@@ -6,7 +6,7 @@ import Lemma.Random.Cov.eq.Integral
 open MeasureTheory
 
 
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace Ω]
   {π : Measure Ω}

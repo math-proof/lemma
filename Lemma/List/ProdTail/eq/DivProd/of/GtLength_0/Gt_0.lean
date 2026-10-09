@@ -3,7 +3,7 @@ import Lemma.List.ProdTail.eq.DivProd.of.NeLength_0.Ne_0
 open List Nat
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   {s : List ℕ}
 -- given

@@ -5,7 +5,7 @@ import Mathlib.Order.ConditionallyCompleteLattice.Finset
 import Mathlib.Data.Fintype.Pi
 
 
-@[main]
+@[path]
 private lemma main
   [Fintype D] [Nonempty D] [DecidableEq D]
   {k : ℕ}

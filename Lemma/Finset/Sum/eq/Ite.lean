@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   [AddCommMonoid β]
   {p : Prop} [Decidable p]
@@ -13,7 +13,7 @@ private lemma main
   by_cases hp : p <;> simp [hp]
 
 
-@[main]
+@[path]
 private lemma pop
   {a b : ℤ}
   {f : ℤ → ℝ} :
@@ -31,7 +31,7 @@ private lemma pop
     rw [Finset.Ico_eq_empty (by omega), Finset.sum_empty]
 
 
-@[main]
+@[path]
 private lemma unshift
   {a b : ℤ}
   {f : ℤ → ℝ} :

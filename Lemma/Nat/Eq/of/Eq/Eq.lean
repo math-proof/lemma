@@ -6,7 +6,7 @@ open CategoryTheory CategoryTheory.Limits TopologicalSpace AlgebraicGeometry Opp
 /--
 [AlgebraicGeometry_Scheme_Hom_eq_of_fromSpecStalk_genericPoint_comp_eq](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_Scheme_Hom_eq_of_fromSpecStalk_genericPoint_comp_eq.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {U H S : Scheme.{u}} [IsIntegral U]
   {sU : U ⟶ S}

@@ -2,7 +2,7 @@ import Lemma.List.EqLengthSlice_CoeMul.of.Lt
 open List
 
 
-@[main]
+@[path]
 private lemma main
   {i : ℕ}
 -- given

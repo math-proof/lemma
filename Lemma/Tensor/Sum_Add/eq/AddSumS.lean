@@ -7,7 +7,7 @@ import torch.Tensor.sum
 open Nat Tensor
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [AddCommMonoid α]
 -- given

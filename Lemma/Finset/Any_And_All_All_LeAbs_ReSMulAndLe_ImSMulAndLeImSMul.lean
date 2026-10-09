@@ -6,7 +6,7 @@ open scoped UpperHalfPlane MatrixGroups
 /--
 [ModularGroup_exists_bounds_smul_of_mem_fd_of_im_le](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_ModularGroup_exists_bounds_smul_of_mem_fd_of_im_le.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {S : Finset SL(2, ℤ)}
   {Y : ℝ} :

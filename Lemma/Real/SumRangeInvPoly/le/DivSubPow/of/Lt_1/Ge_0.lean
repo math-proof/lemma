@@ -5,7 +5,7 @@ import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
 open Finset Real
 
 
-@[main]
+@[path]
 private lemma main
   {ν : ℝ}
   {a : ℕ}

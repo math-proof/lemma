@@ -2,7 +2,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {n i j : ℕ}
   {x a : ℕ → ℤ}
@@ -17,10 +17,11 @@ private lemma main
   have hc : ((Finset.range n).image x).card = (Finset.range n).card := by
     rw [h₁, h₀, Finset.card_range]
   have hinj := Finset.card_image_iff.mp hc
-  by_cases hij : i = j
-  · subst hij
+  if hij : i = j then
+    subst hij
     simp
-  · rw [if_neg hij, if_neg (fun e => hij (hinj (Finset.mem_coe.mpr (Finset.mem_range.mpr hi))
+  else
+    rw [ite_eq_right hij, ite_eq_right (fun e => hij (hinj (Finset.mem_coe.mpr (Finset.mem_range.mpr hi))
       (Finset.mem_coe.mpr (Finset.mem_range.mpr hj)) e))]
 
 

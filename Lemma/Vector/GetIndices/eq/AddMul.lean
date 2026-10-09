@@ -18,7 +18,7 @@ import sympy.vector.vector
 open Bool Int List Nat Rat Vector
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (i : Fin m)
@@ -73,7 +73,7 @@ private lemma main
       repeat linarith
 
 
-@[main]
+@[path]
 private lemma Comm
 -- given
   (i : Fin m)

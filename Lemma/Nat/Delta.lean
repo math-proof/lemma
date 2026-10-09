@@ -2,7 +2,7 @@ import Lemma.Nat.Delta.eq.Ite
 open Nat
 
 
-@[main]
+@[path]
 private lemma Comm
   [DecidableEq α]
 -- given

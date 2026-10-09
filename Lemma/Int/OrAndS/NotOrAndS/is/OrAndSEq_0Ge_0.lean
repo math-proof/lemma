@@ -3,7 +3,7 @@ import Lemma.Nat.Eq.of.Le.Le
 open Nat Int
 
 
-@[main]
+@[path]
 private lemma main
   [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
 -- given

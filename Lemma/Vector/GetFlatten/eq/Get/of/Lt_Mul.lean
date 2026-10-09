@@ -5,7 +5,7 @@ import Lemma.Vector.GetFlatten_AddMul.eq.Get
 open Nat Vector
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h_t : t < m * n)

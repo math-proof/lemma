@@ -11,7 +11,7 @@ import Lemma.Vector.SplitAtMul.eq.MulSplitAtS
 open List Tensor Vector
 
 
-@[main]
+@[path]
 private lemma main
   [Mul α]
 -- given

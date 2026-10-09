@@ -3,7 +3,7 @@ import stdlib.SEq
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [AddCommMonoid α]
   {X : Fin m → Tensor α s}

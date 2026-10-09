@@ -5,7 +5,7 @@ import Lemma.Tensor.SEqReshapeS.of.SEq.Eq.Dvd
 open Tensor Bool
 
 
-@[main]
+@[path]
 private lemma main
   [Mul α] [Zero α] [Add α]
   {A B : Tensor α s}

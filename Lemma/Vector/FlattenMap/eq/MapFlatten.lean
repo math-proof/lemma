@@ -4,7 +4,7 @@ import Lemma.Vector.GetVal.eq.Get.of.Lt
 open Nat Vector
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   {f : α → β}
 -- given

@@ -6,7 +6,7 @@ open PrimeSpectrum
 /--
 [PrimeSpectrum_range_comap_eq_zeroLocus_ker_of_isIntegral](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_PrimeSpectrum_range_comap_eq_zeroLocus_ker_of_isIntegral.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {R : Type u} [CommRing R]
   {S : Type v} [CommRing S]

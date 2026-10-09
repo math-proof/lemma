@@ -19,7 +19,7 @@ import Lemma.Vector.SEq.of.Val
 open Tensor Vector List Bool Nat Fin
 
 
-@[main]
+@[path]
 private lemma main
   {A : Tensor α (n :: s₀)}
   {B : Tensor α (m :: s₁)}

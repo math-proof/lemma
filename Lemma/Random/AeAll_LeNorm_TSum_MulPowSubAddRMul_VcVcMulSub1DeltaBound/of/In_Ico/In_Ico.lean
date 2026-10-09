@@ -8,7 +8,7 @@ open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Mode
 Almost surely the `c`-discounted sums of temporal-difference residuals are bounded, uniformly in `t`:
 `‖∑' k, c ^ k * δ[t + k]‖ ≤ (1 - c)⁻¹ * deltaBound γ`.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [Fintype A]
   {M : Model Θ S A}

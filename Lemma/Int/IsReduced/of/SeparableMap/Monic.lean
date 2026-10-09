@@ -32,7 +32,7 @@ private lemma  Polynomial.isReduced_quotient_span_singleton_of_separable_map
     (Ideal.isRadical_iff_quotient_reduced _).mp
       (isRadical_iff_span_singleton.mp hsep.squarefree.isRadical)
   exact isReduced_of_injective φ hφ
-@[main]
+@[path]
 private lemma main
   [CommRing D] [IsDomain D]
   {g : D[X]}

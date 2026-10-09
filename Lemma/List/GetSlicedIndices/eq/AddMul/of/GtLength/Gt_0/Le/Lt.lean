@@ -3,7 +3,7 @@ import Lemma.Nat.MulToNatCeilDivSub.in.Ico
 open List Nat Slice
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   {start stop step N i : ℕ}
 -- given

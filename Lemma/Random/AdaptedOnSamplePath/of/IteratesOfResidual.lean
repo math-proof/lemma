@@ -5,7 +5,7 @@ import Mathlib.Analysis.Normed.Lp.MeasurableSpace
 open Preorder
 
 
-@[main]
+@[path]
 private lemma main
   {d : ℕ}
   {S : Type*} [Fintype S] [MeasurableSpace S] [MeasurableSingletonClass S]

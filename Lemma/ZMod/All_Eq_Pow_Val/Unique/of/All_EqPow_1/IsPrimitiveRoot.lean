@@ -6,7 +6,7 @@ open scoped IntermediateField Pointwise
 /--
 [IsPrimitiveRoot_existsUnique_eq_pow_val](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_IsPrimitiveRoot_existsUnique_eq_pow_val.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {R ι : Type*} [CommRing R] [IsDomain R]
   {ζ : Rˣ}

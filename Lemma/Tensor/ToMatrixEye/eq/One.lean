@@ -7,7 +7,7 @@ import torch.eye
 open Nat Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [AddMonoidWithOne α] [CharZero α] :
 -- imply

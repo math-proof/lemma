@@ -4,7 +4,7 @@ import Lemma.Vector.ProdCons.eq.Mul_Prod
 open Vector
 
 
-@[main, fin, val]
+@[path, fin, val]
 private lemma main
   [Mul α] [One α]
 -- given

@@ -6,7 +6,7 @@ open AlgebraicGeometry CategoryTheory
 /--
 [AlgebraicGeometry_Scheme_IdealSheafData_eq_iff_comap_subschemeInclusion_eq_bot](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_Scheme_IdealSheafData_eq_iff_comap_subschemeInclusion_eq_bot.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {W : Scheme.{u}}
   {I₁ I₂ : W.IdealSheafData} :

@@ -8,7 +8,7 @@ import Lemma.Bool.UFn.of.Eq
 open Bool Nat Rat Int
 
 
-@[main]
+@[path]
 private lemma main
   [Field α] [LinearOrder α] [IsStrictOrderedRing α]
   [FloorRing α]

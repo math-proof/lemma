@@ -11,7 +11,7 @@ import Lemma.List.SetAppend.eq.Append_Set.of.LeLength
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [NonUnitalNonAssocSemiring α]
   {n kk0 : ℕ} {rest : List ℕ}

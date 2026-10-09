@@ -4,7 +4,7 @@ import sympy.polys.polyroots
 open Complex
 
 
-@[main]
+@[path]
 private lemma main
   {A B : ℂ}
   {d : ℤ}

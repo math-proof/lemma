@@ -20,7 +20,7 @@ import torch.functions
 open Bool List Nat Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [AddCommMonoid α]
   {i d : ℕ}

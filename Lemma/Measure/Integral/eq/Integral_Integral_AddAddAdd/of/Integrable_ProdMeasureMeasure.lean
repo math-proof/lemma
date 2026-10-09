@@ -11,7 +11,7 @@ private lemma  fold₁ (f : ℝ → ℂ) (hf : Integrable f (volume : Measure �
     ∫ t : ℝ, f t = ∫ t in Set.Ioi (0 : ℝ), (f t + f (-t)) := by
   rw [integral_add hf.integrableOn hf.comp_neg.integrableOn, integral_comp_neg_Ioi, neg_zero,
     ← integral_add_compl measurableSet_Ioi hf, compl_Ioi]
-@[main]
+@[path]
 private lemma main
   {F : ℝ × ℝ → ℂ}
 -- given

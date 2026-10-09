@@ -4,7 +4,7 @@ import Lemma.Vector.MapMul.eq.MulMapS.of.All_Eq_Mul
 open Tensor Vector
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [Mul α]
   [Mul β]

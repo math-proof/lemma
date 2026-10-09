@@ -3,7 +3,7 @@ import Lemma.Vector.ValAppend.eq.AppendValS
 open Vector
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [AddMonoid α]
 -- given

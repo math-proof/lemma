@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [MonoidHom_forall_eq_one_imp_eq_zero_and_exists_ne_zero_forall_mem_apply_eq_one](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_MonoidHom_forall_eq_one_imp_eq_zero_and_exists_ne_zero_forall_mem_apply_eq_one.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [AddCommGroup M] [Finite M] [Field L] [IsAlgClosed L] [CharZero L]
   {p : ℕ} [Fact p.Prime]

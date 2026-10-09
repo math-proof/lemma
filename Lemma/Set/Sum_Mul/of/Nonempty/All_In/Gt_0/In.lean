@@ -5,7 +5,7 @@ import Lemma.Finset.Cons.eq.Union
 open Finset
 
 
-@[main]
+@[path]
 private lemma main
   {A : Set ℕ}
   [ClosedUnderAdd A]

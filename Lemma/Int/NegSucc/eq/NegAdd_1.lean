@@ -2,7 +2,7 @@ import Lemma.Int.NegSucc.eq.NegCoeAdd_1
 open Int
 
 
-@[main]
+@[path]
 private lemma main
   {n : ℕ} :
 -- imply

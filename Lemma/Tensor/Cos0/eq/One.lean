@@ -6,7 +6,7 @@ import Lemma.Vector.Cos0.eq.One
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   {s : List ℕ} :
 -- imply

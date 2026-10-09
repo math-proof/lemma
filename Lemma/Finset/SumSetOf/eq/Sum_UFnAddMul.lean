@@ -2,7 +2,7 @@ import Lemma.Nat.Mul.is.Eq.of.Ne_0
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   [AddCommMonoid α]
   {a b : ℤ}

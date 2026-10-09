@@ -18,7 +18,7 @@ The unmasked entries \( \{ j : P_{ij} \} \) of row \( i \) are enumerated (injec
 \Bigl[ \sum_{t < k} \frac{e^{a_{i, \operatorname{dm}(t)}}}{\sum_{s < k} e^{a_{i, \operatorname{dm}(s)}}}\, v_{i, \operatorname{dm}(t), \ell} \Bigr]_\ell .
 \]
 -/
-@[main]
+@[path]
 private lemma main
   {n d k : ℕ}
 -- given

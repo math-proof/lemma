@@ -3,7 +3,7 @@ import Mathlib.MeasureTheory.Integral.Prod
 open MeasureTheory
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [MeasurableSpace α] [MeasurableSpace β]
   {μ : Measure α} {ν : Measure β}

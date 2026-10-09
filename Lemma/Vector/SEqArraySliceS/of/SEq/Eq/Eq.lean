@@ -3,7 +3,7 @@ import sympy.vector.vector
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {v : List.Vector α n}
   {v' : List.Vector α n'}

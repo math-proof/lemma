@@ -7,10 +7,10 @@ open Complex Nat
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Complex.PowMul.eq.MulPowS.of.Gt_0 |
+| path | Complex.PowMul.eq.MulPowS.of.Gt_0 |
 | comm | Complex.MulPowS.eq.PowMul.of.Gt_0 |
 -/
-@[main, comm]
+@[path, comm]
 private lemma main
   {r : ℝ}
 -- given

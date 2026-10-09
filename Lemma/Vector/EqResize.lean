@@ -2,7 +2,7 @@ import Lemma.Vector.GetResize.eq.Ite_Get_Mod
 open Vector
 
 
-@[main]
+@[path]
 private lemma main
   [Zero α]
 -- given

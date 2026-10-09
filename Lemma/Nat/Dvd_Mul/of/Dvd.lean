@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   [CommSemigroup α]
   {y a : α}
@@ -14,7 +14,7 @@ private lemma main
   apply dvd_mul_of_dvd_right h
 
 
-@[main]
+@[path]
 private lemma left
   [Semigroup α]
   {x a : α}

@@ -5,7 +5,7 @@ import Lemma.List.ZipWith.eq.ZipWith__Take.of.Le
 open List
 
 
-@[main]
+@[path]
 private lemma main
   [MulZeroClass α]
   {s : List α}

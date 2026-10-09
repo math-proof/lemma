@@ -9,7 +9,7 @@ import Lemma.Nat.Lt_Add_1.of.Le
 open Set Rat Int Nat
 
 
-@[main]
+@[path]
 private lemma main
   [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
   [FloorRing α]

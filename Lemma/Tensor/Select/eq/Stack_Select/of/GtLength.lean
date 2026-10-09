@@ -3,7 +3,7 @@ import Lemma.Tensor.Select.eq.OfVectorMapToVector.of.GtLength
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   {d : ℕ}
 -- given

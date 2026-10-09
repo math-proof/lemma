@@ -3,7 +3,7 @@ import Lemma.Vector.SumMapVal.eq.SumMap
 open List Vector
 
 
-@[main]
+@[path]
 private lemma main
   [Add β] [MulZeroClass β] [RightDistribClass β]
 -- given

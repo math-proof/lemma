@@ -2,7 +2,7 @@ import Lemma.Bool.Or_And.is.AndOrS
 open Bool
 
 
-@[main]
+@[path]
 private lemma main
   {p q r : Prop}
 -- given

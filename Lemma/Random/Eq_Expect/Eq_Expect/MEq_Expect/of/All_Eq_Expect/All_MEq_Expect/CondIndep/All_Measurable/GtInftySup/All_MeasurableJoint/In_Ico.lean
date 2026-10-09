@@ -15,7 +15,7 @@ whose `h₆` (`𝔼[… | s t, a t, s (t + 1)] =ᵐ 𝔼[… | s (t + 1)]`) foll
 `Random.MEqExpect.of.CondIndep.Integrable.Measurable.Measurable.Measurable.Measurable`
 (as in `Random.MEq_Expect.MEq_Expect.MEq_Expect.of.All_MEq_Expect.All_MEq_Expect.CondIndep.GtInftySup.All_MeasurableJoint.In_Ico`).
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace Ω] [StandardBorelSpace Ω] [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S]
   [MeasurableSpace A]

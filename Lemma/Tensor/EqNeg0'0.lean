@@ -6,7 +6,7 @@ import torch.Tensor
 open Vector Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [AddGroupWithOne α]
   {s : List ℕ} :

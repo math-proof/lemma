@@ -43,7 +43,7 @@ open Tensor Vector
 
 
 
-@[main]
+@[path]
 private lemma main
   [NonUnitalNonAssocSemiring α]
 -- given

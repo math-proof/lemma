@@ -8,7 +8,7 @@ open Bool Tensor
 set_option maxHeartbeats 400000
 
 
-@[main]
+@[path]
 private lemma main
   [Add α] [Zero α]
 -- given

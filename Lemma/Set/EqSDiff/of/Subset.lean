@@ -2,7 +2,7 @@ import sympy.Basic
 open Finset
 
 
-@[main]
+@[path]
 private lemma main
   [DecidableEq α]
   {A B : Finset α}

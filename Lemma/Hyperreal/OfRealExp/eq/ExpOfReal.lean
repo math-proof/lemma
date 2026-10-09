@@ -1,7 +1,7 @@
 import sympy.functions.elementary.exponential
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
 -- given
   (x : ℝ) :

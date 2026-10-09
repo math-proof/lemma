@@ -4,7 +4,7 @@ import sympy.Basic
 open Matrix
 
 
-@[main]
+@[path]
 private lemma main
   {k : ℕ}
   {A : Matrix (Fin k) (Fin k) ℝ} :

@@ -2,7 +2,7 @@ import sympy.Basic
 import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
 
 
-@[main]
+@[path]
 private lemma main
   {n : ℕ}
   {A B : Matrix (Fin n) (Fin n) ℂ}
@@ -14,7 +14,7 @@ private lemma main
   rw [eq_sub_iff_add_eq, ← Matrix.mul_add, add_comm B A, Matrix.nonsing_inv_mul _ h]
 
 
-@[main]
+@[path]
 private lemma push
   {i j k : ℕ}
   {L H : ℕ → ℕ → ℝ} :

@@ -2,7 +2,7 @@ import Lemma.Hyperreal.InfinitePos.is.Infinite.Gt_0
 open Hyperreal
 
 
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
 -- given
   (x : ℝ*) :

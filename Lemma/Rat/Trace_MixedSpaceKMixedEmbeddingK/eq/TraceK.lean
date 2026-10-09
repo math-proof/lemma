@@ -7,7 +7,7 @@ open scoped Classical
 /--
 [NumberField_mixedEmbedding_trace_mixedEmbedding](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_NumberField_mixedEmbedding_trace_mixedEmbedding.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [Field K] [NumberField K]
   {x : K} :

@@ -5,10 +5,10 @@ open Bool
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Bool.EqCast |
+| path | Bool.EqCast |
 | comm | Bool.Eq_Cast |
 -/
-@[main, comm]
+@[path, comm]
 private lemma main
   {Vector : α → Sort v}
 -- given
@@ -19,7 +19,7 @@ private lemma main
   rfl
 
 
-@[main, comm]
+@[path, comm]
 private lemma Rfl
   {Vector : α → Sort v}
 -- given

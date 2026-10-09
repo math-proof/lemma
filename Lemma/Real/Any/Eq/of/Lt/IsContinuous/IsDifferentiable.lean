@@ -3,7 +3,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma mean_value_theorem.Lagrange
   {f : ℝ → ℝ}
   {a b : ℝ}

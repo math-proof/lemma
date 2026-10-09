@@ -4,7 +4,7 @@ import Lemma.Tensor.GetAdd.eq.AddGetS
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [Add α]
 -- given

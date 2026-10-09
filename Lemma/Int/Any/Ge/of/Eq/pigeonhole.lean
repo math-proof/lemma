@@ -2,7 +2,7 @@ import Mathlib.Data.Finset.Basic
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {k : ℕ}
 -- given

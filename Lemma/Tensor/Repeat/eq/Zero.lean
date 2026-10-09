@@ -11,7 +11,7 @@ import Lemma.Vector.SEq.of.All_EqGetS.Eq
 open Bool Fin List Tensor Vector
 
 
-@[main, subst 0]
+@[path, subst 0]
 private lemma main
   [Zero α]
 -- given

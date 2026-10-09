@@ -3,7 +3,7 @@ import Lemma.Nat.Add
 open Hyperreal Nat
 
 
-@[main]
+@[path]
 private lemma main
   {r : ℝ}
   {x : ℝ*}

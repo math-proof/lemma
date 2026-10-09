@@ -5,7 +5,7 @@ open scoped ENNReal.ToRealCoe
 
 
 /-- `x[:n]` for a family of random variables: the random vector `ω ↦ (x 0 ω, …, x (n-1) ω)`. -/
-@[main]
+@[path]
 private lemma main
 -- given
   (x : ℕ → Ω → α)

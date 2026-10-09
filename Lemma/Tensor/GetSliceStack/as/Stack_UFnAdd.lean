@@ -13,7 +13,7 @@ import Lemma.Vector.Get
 open Tensor List Vector Nat
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (f : ℕ → Tensor α s) :

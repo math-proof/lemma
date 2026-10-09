@@ -3,7 +3,7 @@ import Lemma.Rat.Div.eq.One.of.Ne_0
 open Rat Nat
 
 
-@[main]
+@[path]
 private lemma main
   [Preorder α]
   [GroupWithZero α]

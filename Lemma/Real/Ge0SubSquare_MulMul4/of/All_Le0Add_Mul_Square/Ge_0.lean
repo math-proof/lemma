@@ -4,7 +4,7 @@ import Lemma.Rat.EqMul_Div.of.Ne_0
 open Rat Nat
 
 
-@[main]
+@[path]
 private lemma main
   {a b c : ℝ}
 -- given

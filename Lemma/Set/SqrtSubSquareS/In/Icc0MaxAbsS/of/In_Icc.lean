@@ -9,7 +9,7 @@ import Lemma.Set.LeAbs_MaxAbsS.of.In_Icc
 open Int Nat Real Set
 
 
-@[main]
+@[path]
 private lemma main
   {a b x : ℝ}
 -- given

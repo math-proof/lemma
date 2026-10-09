@@ -3,7 +3,7 @@ import Lemma.List.SumCons.eq.Add_Sum
 open List
 
 
-@[main]
+@[path]
 private lemma main
   [Add α] [Zero α]
 -- given

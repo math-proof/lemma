@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [LinearMap_exists_injective_range_eq_ker_of_isTorsion](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_LinearMap_exists_injective_range_eq_ker_of_isTorsion.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {A : Type u} [CommRing A] [IsDomain A] [IsPrincipalIdealRing A]
   {D : Type v} [AddCommGroup D] [Module A D]

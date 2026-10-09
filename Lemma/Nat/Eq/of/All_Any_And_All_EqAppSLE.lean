@@ -6,7 +6,7 @@ open CategoryTheory AlgebraicGeometry HomogeneousLocalization
 /--
 [AlgebraicGeometry_Proj_hom_ext_of_forall_exists_basicOpen](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_Proj_hom_ext_of_forall_exists_basicOpen.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {A : Type u} [CommRing A]
   {σ : Type v} [SetLike σ A] [AddSubgroupClass σ A]

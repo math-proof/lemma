@@ -2,7 +2,7 @@ import Lemma.Bool.All_Or.of.All
 open Bool
 
 
-@[main]
+@[path]
 private lemma given
   {A : Set α}
   {p q : α → Prop}

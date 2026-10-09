@@ -2,7 +2,7 @@ import Mathlib.Analysis.Complex.Trigonometric
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {x : ℝ} :
 -- imply

@@ -6,7 +6,7 @@ open NumberField
 /--
 [NumberField_InfiniteAdeleRing_norm_algebraMap_apply_eq_and_prod_pow_mult_eq_norm](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_NumberField_InfiniteAdeleRing_norm_algebraMap_apply_eq_and_prod_pow_mult_eq_norm.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [Field K] [NumberField K]
   {x : K} :

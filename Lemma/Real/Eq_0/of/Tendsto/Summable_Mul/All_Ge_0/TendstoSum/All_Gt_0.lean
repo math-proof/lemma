@@ -4,7 +4,7 @@ import sympy.Basic
 open Filter Finset Topology
 
 
-@[main]
+@[path]
 private lemma main
   {T x : ℕ → ℝ}
   {c : ℝ}

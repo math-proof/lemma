@@ -3,7 +3,7 @@ import Lemma.Nat.Div.eq.FloorDiv.of.Gt_0
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   [Field α] [LinearOrder α] [IsStrictOrderedRing α] [FloorRing α]
   {n d : ℕ} :

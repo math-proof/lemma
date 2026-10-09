@@ -2,7 +2,7 @@ import Lemma.List.EqRotate_Length
 open List
 
 
-@[main]
+@[path]
 private lemma main
   {s : List α}
 -- given

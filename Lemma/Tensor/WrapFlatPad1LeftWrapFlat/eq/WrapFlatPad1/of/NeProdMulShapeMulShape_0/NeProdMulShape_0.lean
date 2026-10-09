@@ -12,7 +12,7 @@ open List Tensor
 Wrapping `A` through `A.mul B`, then through `(A.mul B).mul C`,
 is wrapping `A` directly into the ternary output.
 -/
-@[main]
+@[path]
 private lemma main
 -- given
   (s s' s'' : List ℕ)

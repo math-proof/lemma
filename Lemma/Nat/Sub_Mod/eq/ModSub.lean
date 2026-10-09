@@ -2,7 +2,7 @@ import Lemma.Nat.EqMod.of.Lt
 open Nat
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [NeZero n]
   {m : ℕ}

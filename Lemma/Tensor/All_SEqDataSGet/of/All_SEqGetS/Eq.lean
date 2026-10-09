@@ -3,7 +3,7 @@ import Lemma.Tensor.SEqDataS.of.SEq
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   {a : Tensor α (n :: s₀)}
   {b : Tensor α (m :: s₁)}

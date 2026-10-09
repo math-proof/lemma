@@ -4,7 +4,7 @@ import Lemma.Nat.Min
 open Nat
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
 -- given

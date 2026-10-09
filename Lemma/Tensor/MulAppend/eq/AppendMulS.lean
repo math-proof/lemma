@@ -9,7 +9,7 @@ import Lemma.Vector.SEqMulS.of.SEq
 open Bool Tensor Vector
 
 
-@[main]
+@[path]
 private lemma scalar
   [Mul α]
 -- given
@@ -31,7 +31,7 @@ private lemma scalar
     exact DataAppend.as.AppendDataS (A * c) (B * c)
 
 
-@[main]
+@[path]
 private lemma main
   [Mul α]
 -- given

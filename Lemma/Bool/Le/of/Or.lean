@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   [Preorder β]
   {A B : Set α}
@@ -32,7 +32,7 @@ private lemma main
     exact h₁
 
 
-@[main]
+@[path]
 private lemma two
   [Preorder β]
   {A : Set α}

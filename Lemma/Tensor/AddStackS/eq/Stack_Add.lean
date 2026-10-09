@@ -7,7 +7,7 @@ import Lemma.Vector.MapMap.eq.Map_Comp
 open Vector Nat Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [Add α]
 -- given

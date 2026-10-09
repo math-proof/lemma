@@ -8,7 +8,7 @@ import torch.stack
 open Fin List Tensor Vector
 
 
-@[main]
+@[path]
 private lemma main
   {α : Type u}
   {R : ∀ {m : List ℕ}, Tensor α m → Tensor α m → Prop}

@@ -2,7 +2,7 @@ import Lemma.Vector.EqGet1_1
 open Vector
 
 
-@[main, subst 1]
+@[path, subst 1]
 private lemma main
   [One α]
 -- given

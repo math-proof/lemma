@@ -4,7 +4,7 @@ import Lemma.Nat.Lt.of.Lt.Le
 open Nat
 
 
-@[main, comm 3]
+@[path, comm 3]
 private lemma main
   [Add α]
   [Preorder α]

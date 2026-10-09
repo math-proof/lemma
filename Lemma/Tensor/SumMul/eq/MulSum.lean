@@ -6,7 +6,7 @@ import torch.Tensor.sum
 open Tensor
 
 
-@[main]
+@[path]
 private lemma scalar
   [NonUnitalNonAssocSemiring α]
 -- given
@@ -21,7 +21,7 @@ private lemma scalar
   rw [Mul.eq.Mul_TensorReplicate]
 
 
-@[main]
+@[path]
 private lemma main
   [NonUnitalNonAssocSemiring α]
 -- given

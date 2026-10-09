@@ -2,7 +2,7 @@ import Mathlib.Data.Int.Basic
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {a b : ℤ}
   -- imply

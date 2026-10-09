@@ -3,7 +3,7 @@ import Lemma.Real.AbsAdd_MulI.eq.SqrtAddSquareS
 open Complex Real
 
 
-@[main]
+@[path]
 private lemma main
   {z : ℂ} :
 -- imply

@@ -4,7 +4,7 @@ import torch.Tensor.Basic
 import torch.Tensor.permute
 
 
-@[main, cast]
+@[path, cast]
 private lemma main
 -- given
   (h : s = s')

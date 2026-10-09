@@ -14,7 +14,7 @@ import Lemma.Nat.EqSubAdd
 open List Bool Nat Int
 
 
-@[main]
+@[path]
 private lemma main
   [Monoid α]
   {s : List α}

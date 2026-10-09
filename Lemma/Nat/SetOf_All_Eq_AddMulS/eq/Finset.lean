@@ -109,7 +109,7 @@ private lemma mpr
     linarith
 
 
-@[main]
+@[path]
 private lemma main:
 -- imply
   {((a : ℤ), (b : ℤ)) | ∀ n ≥ 2, G n = a * G (n - 1) + b * G (n - 2)} = {(4, 1)} := by

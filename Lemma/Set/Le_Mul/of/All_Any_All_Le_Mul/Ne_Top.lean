@@ -7,7 +7,7 @@ open scoped ENNReal NNReal
 /--
 [MeasureTheory_measure_setOf_exists_mem_le_mul_of_forall_closedBall](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_MeasureTheory_measure_setOf_exists_mem_le_mul_of_forall_closedBall.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {α β : Type*} [MetricSpace α] [SecondCountableTopology α] [MeasurableSpace α] [OpensMeasurableSpace α] [HasBesicovitchCovering α]
   {_ : MeasurableSpace β}

@@ -3,7 +3,7 @@ import Lemma.Real.EqSqrt_0.is.Le_0
 open Nat Real
 
 
-@[main]
+@[path]
 private lemma main
   {x : ℝ}
 -- given

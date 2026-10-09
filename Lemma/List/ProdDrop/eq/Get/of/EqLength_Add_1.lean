@@ -3,7 +3,7 @@ import Lemma.List.ProdTakeDrop.eq.Get.of.GtLength
 open List
 
 
-@[main]
+@[path]
 private lemma main
   [MulOneClass α]
   {s : List α}

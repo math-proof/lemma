@@ -7,10 +7,10 @@ open Tensor Vector
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Tensor.Ne.of.Lt.NeProd_0 |
+| path | Tensor.Ne.of.Lt.NeProd_0 |
 | comm 2 | Tensor.Ne.of.Gt.NeProd_0 |
 -/
-@[main, comm 2]
+@[path, comm 2]
 private lemma main
   [Preorder α]
   {x y : Tensor α s}

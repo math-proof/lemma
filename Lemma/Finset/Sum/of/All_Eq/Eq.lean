@@ -2,7 +2,7 @@ import Lemma.Finset.Sum.of.All_Eq
 open Finset
 
 
-@[main]
+@[path]
 private lemma main
   [AddCommMonoid β]
   {x : Fin n → β}

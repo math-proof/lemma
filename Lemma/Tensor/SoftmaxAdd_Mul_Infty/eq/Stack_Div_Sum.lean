@@ -136,7 +136,7 @@ Generic hyperreal masked softmax (py: `softmax(A + (Ξ - 1) * oo)` for a 0/1 mas
 \]
 The only hypothesis is `h_ne` (every row has an unmasked entry), needed for the denominator to be non-infinitesimal.
 -/
-@[main]
+@[path]
 private lemma main
   {n m : ℕ}
 -- given

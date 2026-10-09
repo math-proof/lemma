@@ -21,7 +21,7 @@ private lemma  exists_shift (t n : ℤ) (htn : t ^ 2 < 4 * n) :
     · nlinarith [sq_abs s, abs_nonneg s]
     · nlinarith [sq_abs s, abs_nonneg s]
   · nlinarith [abs_nonneg t, sq_abs t]
-@[main]
+@[path]
 private lemma main
   {t n : ℤ}
 -- given

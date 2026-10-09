@@ -11,10 +11,10 @@ open Nat Rat Int Complex
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Complex.Eq_SquareAddMulSqrt.of.Eq0SubSquare_MulMul4.Ne_0 |
+| path | Complex.Eq_SquareAddMulSqrt.of.Eq0SubSquare_MulMul4.Ne_0 |
 | comm | Complex.EqSquareAddMulSqrt.of.Eq0SubSquare_MulMul4.Ne_0 |
 -/
-@[main, comm]
+@[path, comm]
 private lemma main
   {x a b c : ℂ}
 -- given

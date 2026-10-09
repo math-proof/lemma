@@ -4,7 +4,7 @@ import Lemma.Vector.GetMap.eq.UFnGet
 open Tensor Vector
 
 
-@[main, fin]
+@[path, fin]
 private lemma main
 -- given
   (X : Tensor α (n :: s)) :

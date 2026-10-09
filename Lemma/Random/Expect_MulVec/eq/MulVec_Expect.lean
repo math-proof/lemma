@@ -13,10 +13,10 @@ Renamed out of `Expect_Dot` (which is reserved for Tensor `@` / `Dot.dot`).
 
 | attributes | lemma |
 | :---: | :---: |
-| main | Random.Expect_MulVec.eq.MulVec_Expect |
+| path | Random.Expect_MulVec.eq.MulVec_Expect |
 | comm | Random.MulVec_Expect.eq.Expect_MulVec |
 -/
-@[main, comm]
+@[path, comm]
 private lemma main
   [MeasurableSpace Ω]
   [ReferenceMeasure α]

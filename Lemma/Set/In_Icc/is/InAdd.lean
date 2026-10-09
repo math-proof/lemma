@@ -6,12 +6,12 @@ open Nat
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Set.In_Icc.is.InAdd |
+| path | Set.In_Icc.is.InAdd |
 | comm | Set.InAdd.is.In_Icc |
 | mp 8 | Set.InAdd.of.In_Icc |
 | mpr 4 | Set.In_Icc.of.InAdd |
 -/
-@[main, comm, mp 8, mpr 4]
+@[path, comm, mp 8, mpr 4]
 private lemma main
   [Preorder α]
   [Add α]

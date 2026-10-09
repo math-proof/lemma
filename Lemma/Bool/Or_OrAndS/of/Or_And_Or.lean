@@ -2,7 +2,7 @@ import Lemma.Bool.And_Or.is.OrAndS
 open Bool
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h : t ∨ p ∧ (q ∨ r)) :

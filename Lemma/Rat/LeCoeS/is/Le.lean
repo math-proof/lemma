@@ -4,7 +4,7 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Rat.LeCoeS.is.Le |
+| path | Rat.LeCoeS.is.Le |
 | comm | Rat.Le.is.LeCoeS |
 | mp   | Rat.Le.of.LeCoeS |
 | mpr  | Rat.LeCoeS.of.Le |
@@ -12,7 +12,7 @@ import sympy.Basic
 | mpr.comm | Rat.GeCoeS.of.Ge |
 | comm.is | Rat.GeCoeS.is.Ge |
 -/
-@[main, comm, mp, mpr, mp.comm, mpr.comm, comm.is]
+@[path, comm, mp, mpr, mp.comm, mpr.comm, comm.is]
 private lemma main
   [Field R] [LinearOrder R] [IsStrictOrderedRing R]
 -- given

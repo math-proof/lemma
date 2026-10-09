@@ -5,7 +5,7 @@ import Lemma.Nat.EqSubAdd
 open List Nat
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
 -- given
   (s : List α)

@@ -4,7 +4,7 @@ import Lemma.Vector.SEq.of.All_EqGetS.Eq
 open Vector
 
 
-@[main]
+@[path]
 private lemma main
   [AddCommMonoid α]
   [DecidableEq ι]

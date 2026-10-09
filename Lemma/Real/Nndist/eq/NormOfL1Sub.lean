@@ -2,7 +2,7 @@ import Lemma.Matrix.OfL1.eq.Sub
 open WithLp Matrix Metric NNReal
 
 
-@[main]
+@[path]
 private lemma main
   {S : Type u} [Fintype S]
 -- given

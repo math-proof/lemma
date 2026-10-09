@@ -3,7 +3,7 @@ import Lemma.Nat.EqDivMul.of.Ne_0
 open List Nat
 
 
-@[main]
+@[path]
 private lemma main
   [CommMonoidWithZero α]
   [Div α]

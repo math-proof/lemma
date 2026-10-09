@@ -3,7 +3,7 @@ import Lemma.Tensor.RotaryMatrix'.eq.Stack_Ite_IteS
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (θ : Tensor ℝ [d])

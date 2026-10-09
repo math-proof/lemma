@@ -5,12 +5,12 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Tensor.Eq.is.EqDataS |
+| path | Tensor.Eq.is.EqDataS |
 | comm | Tensor.EqDataS.is.Eq |
 | mp | Tensor.EqDataS.of.Eq |
 | mpr | Tensor.Eq.of.EqDataS |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
 -- given
   (A B : Tensor α s) :

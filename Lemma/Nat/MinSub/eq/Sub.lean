@@ -2,7 +2,7 @@ import Lemma.Nat.EqMin.of.Le
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (a b : ℕ) :

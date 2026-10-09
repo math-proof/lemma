@@ -19,7 +19,7 @@ import Lemma.Vector.EqGetRange
 open Tensor List Vector Bool Nat
 
 
-@[main]
+@[path]
 private lemma main
   {d : Fin s.length}
 -- given

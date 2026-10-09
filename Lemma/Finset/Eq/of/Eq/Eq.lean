@@ -3,7 +3,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma catalan.recurrence
   {C : ℕ → ℤ}
   {n : ℕ}
@@ -35,7 +35,7 @@ private lemma catalan.recurrence
   linarith
 
 
-@[main]
+@[path]
 private lemma permutation.push
   {n : ℕ}
   {p : ℕ → ℕ}

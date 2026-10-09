@@ -10,7 +10,7 @@ import Lemma.Nat.Odd.is.NotEven
 open Bool Nat
 
 
-@[main]
+@[path]
 private lemma main
   -- suppose n is the group_size, m is the real num_return_sequences of answers
   {m n : ℕ}

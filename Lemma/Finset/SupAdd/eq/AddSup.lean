@@ -2,7 +2,7 @@ import sympy.stats.hidden_markov_sequence
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (s : Finset ι)

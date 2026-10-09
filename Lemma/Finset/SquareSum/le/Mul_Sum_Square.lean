@@ -3,7 +3,7 @@ import Lemma.Nat.Mul
 open Nat Finset
 
 
-@[main]
+@[path]
 private lemma cauchy_schwarz
   [DecidableEq ι]
   -- given

@@ -26,7 +26,7 @@ private lemma  LinearMap.det_eq_det_of_injective_of_comp_eq
   have h2 : u.baseChange K = (e.symm : K ⊗[A] N →ₗ[K] K ⊗[A] M) ∘ₗ v.baseChange K ∘ₗ (e.symm.symm : _ →ₗ[K] _) := by
     rw [LinearEquiv.symm_symm, ← h1, ← LinearMap.comp_assoc, LinearEquiv.symm_comp, LinearMap.id_comp]
   rw [h2, LinearMap.det_conj]
-@[main]
+@[path]
 private lemma main
   {A B B₀ B₁ : Type*} [CommRing A] [IsDomain A] [CommRing B] [CommRing B₀] [CommRing B₁] [Algebra A B] [Algebra A B₀] [Algebra A B₁] [Module.Free A B] [Module.Finite A B] [Module.Free A B₀] [Module.Finite A B₀] [Module.Free A B₁] [Module.Finite A B₁]
   {φ : B →ₐ[A] B₀ × B₁}

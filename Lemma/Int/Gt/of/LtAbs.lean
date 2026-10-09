@@ -2,7 +2,7 @@ import Lemma.Int.GeAbs
 import Lemma.Nat.Gt.of.Ge.Gt
 
 
-@[main]
+@[path]
 private lemma main
   [AddCommGroup α] [LinearOrder α] [IsOrderedAddMonoid α]
   {x a : α}

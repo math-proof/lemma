@@ -11,22 +11,21 @@ Python: Random.KL.ge.Zero (the py proof expands `KL` as `∑ₓ p(x) * log (p(x)
 `log t ≥ 1 - 1 / t` and sums; here the general measure-theoretic form, with `KL` written as the
 integral of the log-likelihood ratio `llr` against the law of `x`).
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace Ω] [MeasurableSpace α]
-  {π π' : Measure Ω}
+  {π : Measure Ω} [IsProbabilityMeasure π]
+  {π' : Measure Ω} [IsProbabilityMeasure π']
   {x : Ω → α}
-  [IsProbabilityMeasure π]
-  [IsProbabilityMeasure π']
 -- given
-  (hx : Measurable x)
+  (_ : Measurable x)
   (h_ac : π.map x ≪ π'.map x)
   (h_int : Integrable (llr (π.map x) (π'.map x)) (π.map x)) :
 -- imply
   ∫ a, llr (π.map x) (π'.map x) a ∂(π.map x) ≥ 0 := by
 -- proof
-  have : IsProbabilityMeasure (π.map x) := Measure.isProbabilityMeasure_map hx.aemeasurable
-  have : IsProbabilityMeasure (π'.map x) := Measure.isProbabilityMeasure_map hx.aemeasurable
+  have : IsProbabilityMeasure (π.map x) := inferInstance
+  have : IsProbabilityMeasure (π'.map x) := inferInstance
   have h := integral_llr_add_sub_measure_univ_nonneg h_ac h_int
   simpa [Measure.real] using h
 

@@ -3,7 +3,7 @@ import Lemma.Nat.Eq_Mod.of.Eq_AddMul
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   {k n m : ℕ}
   {i : Fin m}

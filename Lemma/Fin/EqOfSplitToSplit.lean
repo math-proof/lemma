@@ -3,7 +3,7 @@ import Lemma.Fin.ToSplit.eq.Ite_Div_2
 open Fin
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (j : Fin (d + d)) :

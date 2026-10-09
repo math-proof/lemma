@@ -10,7 +10,7 @@ import Lemma.Vector.SEq.of.All_EqGetS.Eq
 open Bool Fin Tensor Vector Nat
 
 
-@[main, cast, subst 1]
+@[path, cast, subst 1]
 private lemma main
 -- given
   (X : Tensor α s)

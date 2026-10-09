@@ -23,7 +23,7 @@ private abbrev blockSwap (α : Type*) [AddMonoidWithOne α] [CharZero α] (m n :
   (0 : Tensor α [m, n]).hstack (Tensor.eye m) ++ (Tensor.eye n).hstack (0 : Tensor α [n, m])
 
 
-@[main]
+@[path]
 private lemma main
   [CommRing α] [CharZero α]
   {m n : ℕ} :

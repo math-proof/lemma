@@ -6,7 +6,7 @@ open Matrix
 open scoped ComplexOrder
 
 
-@[main]
+@[path]
 private lemma l11
   {n : ℕ}
   {A L : Matrix (Fin (n + 3)) (Fin (n + 3)) ℂ}
@@ -42,7 +42,7 @@ private lemma l11
     rfl
 
 
-@[main]
+@[path]
 private lemma l00
   {n : ℕ}
   {A L : Matrix (Fin (n + 3)) (Fin (n + 3)) ℂ}
@@ -68,7 +68,7 @@ private lemma l00
   rw [e, i0, Finset.sum_empty, zero_add, hst, sq]
 
 
-@[main]
+@[path]
 private lemma l22
   {n : ℕ}
   {A L : Matrix (Fin (n + 3)) (Fin (n + 3)) ℂ}

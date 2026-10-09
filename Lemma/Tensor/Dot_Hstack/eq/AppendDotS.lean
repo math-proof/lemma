@@ -8,7 +8,7 @@ open Tensor
 /--
 Vector–matrix product distributes over column-block hstack.
 -/
-@[main]
+@[path]
 private lemma main
   [Mul α] [AddCommMonoid α]
 -- given

@@ -6,7 +6,7 @@ import torch.Tensor.sum
 open Tensor List
 
 
-@[main, fin]
+@[path, fin]
 private lemma main
   [AddCommMonoid α]
 -- given

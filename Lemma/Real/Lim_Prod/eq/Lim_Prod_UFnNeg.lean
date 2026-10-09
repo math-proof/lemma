@@ -4,7 +4,7 @@ import sympy.series.limits
 open Finset
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (f : ℤ → ℝ) :

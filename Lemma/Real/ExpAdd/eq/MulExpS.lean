@@ -5,10 +5,10 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Real.ExpAdd.eq.MulExpS |
+| path | Real.ExpAdd.eq.MulExpS |
 | comm | Real.MulExpS.eq.ExpAdd |
 -/
-@[main, comm]
+@[path, comm]
 private lemma main
   [Exp R]
   {a b : R} :

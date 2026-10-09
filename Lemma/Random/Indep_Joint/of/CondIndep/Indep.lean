@@ -6,7 +6,7 @@ open ProbabilityTheory MeasureTheory
 open scoped ProbabilityTheory
 
 
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace Ω] [StandardBorelSpace Ω]
   [MeasurableSpace α] [MeasurableSpace β] [MeasurableSpace γ]

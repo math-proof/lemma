@@ -4,7 +4,7 @@ import Lemma.Vector.EqUnflattenFlatten
 open Vector
 
 
-@[main]
+@[path]
 private lemma fin
 -- given
   (f : Fin n → Tensor α s)
@@ -21,7 +21,7 @@ private lemma fin
   simp [List.Vector.range]
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (f : ℕ → Tensor α s)

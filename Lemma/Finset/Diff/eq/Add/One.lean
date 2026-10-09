@@ -2,7 +2,7 @@ import sympy.core.function
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {f g : ℝ → ℝ} :
 -- imply

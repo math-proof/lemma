@@ -2,7 +2,7 @@ import sympy.dynamics.actor_critic
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {m : ℕ}
   {A : ℝ → Matrix (Fin m) (Fin m) ℝ}

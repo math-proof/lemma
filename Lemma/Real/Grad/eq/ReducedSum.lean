@@ -2,7 +2,7 @@ import Mathlib.Analysis.Calculus.FDeriv.Add
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {n d : ℕ}
   {f : (Fin n → ℝ) → Fin d → ℝ}

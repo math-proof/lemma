@@ -2,7 +2,7 @@ import Lemma.Set.In_Ici.is.Ge
 open Set
 
 
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   [Preorder α]
 -- given

@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma trans'
   {a b c : α}
 -- given
@@ -12,7 +12,7 @@ private lemma trans'
   ⟨h.1, h.1.symm.trans h.2⟩
 
 
-@[main]
+@[path]
 private lemma collect.given
 -- given
   (h : f ∧ (c ∨ a ∧ x)) :
@@ -22,7 +22,7 @@ private lemma collect.given
   tauto
 
 
-@[main]
+@[path]
 private lemma collect
 -- given
   (h : (a ∨ c) ∧ f ∧ (x ∨ c)) :
@@ -32,7 +32,7 @@ private lemma collect
   tauto
 
 
-@[main]
+@[path]
 private lemma delete
 -- given
   (h : p ∧ q ∧ r) :

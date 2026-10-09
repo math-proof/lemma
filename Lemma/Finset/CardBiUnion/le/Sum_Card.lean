@@ -2,7 +2,7 @@ import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   [DecidableEq β]
   {s : Finset α}

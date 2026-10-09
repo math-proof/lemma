@@ -6,7 +6,7 @@ open CategoryTheory Opposite TopologicalSpace
 /--
 [TopCat_Sheaf_isIso_of_isIso_app_of_isBasis](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_TopCat_Sheaf_isIso_of_isIso_app_of_isBasis.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {C : Type u} [Category.{v} C]
   {X : TopCat.{w}}

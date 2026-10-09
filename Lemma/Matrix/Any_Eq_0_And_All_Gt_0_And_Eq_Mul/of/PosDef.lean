@@ -4,7 +4,7 @@ open Matrix
 open scoped ComplexOrder
 
 
-@[main]
+@[path]
 private lemma main
   [RCLike 𝕜]
   {n : ℕ}
@@ -16,11 +16,8 @@ private lemma main
 -- proof
   set Li := LDL.lowerInv hA with hLi_def
   set Lo := LDL.lower hA with hLo_def
-  have hLi : ∀ i j, i < j → Li i j = 0 := fun i j h => LDL.lowerInv_triangular hA h
-  have hb : Matrix.BlockTriangular Li OrderDual.toDual := fun i j h => hLi i j (OrderDual.toDual_lt_toDual.mp h)
-  have hLo : ∀ i j, i < j → Lo i j = 0 := by
-    intro i j h
-    exact Matrix.blockTriangular_inv_of_blockTriangular hb (OrderDual.toDual_lt_toDual.mpr h)
+  have hLi : ∀ i j, i < j → Li i j = 0 := fun i j h => LDL.isLowerTriangular_lowerInv hA h
+  have hLo : ∀ i j, i < j → Lo i j = 0 := fun i j h => LDL.isLowerTriangular_lower hA h
   have hdiag : ∀ i, Lo i i * Li i i = 1 := by
     intro i
     have h1 : Lo * Li = 1 := Matrix.inv_mul_of_invertible Li

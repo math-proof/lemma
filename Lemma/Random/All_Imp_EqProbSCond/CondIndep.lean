@@ -61,7 +61,7 @@ private lemma of_xz
     exists_distribution := ⟨q, ⟨hq⟩, hlaw⟩
   }
 
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace Ω] [StandardBorelSpace Ω]
   [ReferenceMeasure α] [ReferenceMeasure β] [ReferenceMeasure γ]

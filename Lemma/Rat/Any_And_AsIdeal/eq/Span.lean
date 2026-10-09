@@ -6,7 +6,7 @@ open IsDedekindDomain NumberField
 /--
 [IsDedekindDomain_HeightOneSpectrum_exists_prime_and_asIdeal_eq_span_ringOfIntegers_rat](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_IsDedekindDomain_HeightOneSpectrum_exists_prime_and_asIdeal_eq_span_ringOfIntegers_rat.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {v : IsDedekindDomain.HeightOneSpectrum (𝓞 ℚ)} :
 -- imply

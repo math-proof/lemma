@@ -9,7 +9,7 @@ import Lemma.Nat.LtSubS.of.Lt.Le
 open List Nat
 
 
-@[main]
+@[path]
 private lemma main
   {s : List α}
 -- given

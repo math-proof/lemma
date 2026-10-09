@@ -10,7 +10,7 @@ open scoped ComplexOrder
 /-- One step of the Cholesky induction: if rows `< t` of `L` already satisfy the Cholesky relations
 and `L` satisfies the off-diagonal recursion, then row `t` satisfies the off-diagonal relations and
 the diagonal radicand `A t t - ‖L[t, :t]‖²` is positive. -/
-@[main]
+@[path]
 private lemma main
   [RCLike 𝕜]
   {n : ℕ}

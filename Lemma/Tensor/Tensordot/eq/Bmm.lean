@@ -6,7 +6,7 @@ import sympy.matrices.expressions.matmul
 open Bool Nat Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [Mul α] [Add α] [Zero α]
 -- given

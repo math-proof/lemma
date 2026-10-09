@@ -17,7 +17,7 @@ import Lemma.Vector.Sum.of.SEq
 open Tensor Vector
 
 
-@[main]
+@[path]
 private lemma main
   [Mul α] [AddCommMonoid α]
 -- given
@@ -46,7 +46,7 @@ private lemma main
 /--
 Vector–matrix product of two row-block appends.
 -/
-@[main]
+@[path]
 private lemma vm
   [Mul α] [AddCommMonoid α]
 -- given

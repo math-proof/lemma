@@ -3,7 +3,7 @@ import sympy.Basic
 import sympy.sets.sets
 
 
-@[main]
+@[path]
 private lemma square_completing
   {a b c z : ℂ}
 -- given

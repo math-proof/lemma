@@ -3,7 +3,7 @@ import torch.Tensor.prod
 open Tensor
 
 
-@[main, cast]
+@[path, cast]
 private lemma simp
   {s : List ℕ}
   {d : Fin s.length}
@@ -16,7 +16,7 @@ private lemma simp
   apply DataSelect.as.FlattenGetSliceSplitAtData.of.GtLength.simp
 
 
-@[main, cast]
+@[path, cast]
 private lemma main
   {s : List ℕ}
   {d : Fin s.length}

@@ -3,7 +3,7 @@ import Lemma.Real.EqSqrtSquare.of.Ge_0
 open Int Real
 
 
-@[main]
+@[path]
 private lemma main
   {x y : ℝ}
 -- given

@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [Module_length_quotient_le_of_ker_le](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Module_length_quotient_le_of_ker_le.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {R M N : Type} [CommRing R] [AddCommGroup M] [Module R M] [AddCommGroup N] [Module R N]
   {K : Submodule R M}

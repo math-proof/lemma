@@ -4,7 +4,7 @@ import Lemma.Nat.Ge.of.Ge.Gt
 open Set Nat
 
 
-@[main]
+@[path]
 private lemma main
   [Ring R] [LinearOrder R] [IsStrictOrderedRing R]
   {a b : ℤ}

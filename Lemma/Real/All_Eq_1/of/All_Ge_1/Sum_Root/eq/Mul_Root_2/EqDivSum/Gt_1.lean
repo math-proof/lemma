@@ -6,7 +6,7 @@ import Lemma.Finset.Any_Not.of.NotAll
 open Finset Real Nat
 
 
-@[main]
+@[path]
 private lemma main
   {n : ℕ}
   {x : ℕ → ℝ}

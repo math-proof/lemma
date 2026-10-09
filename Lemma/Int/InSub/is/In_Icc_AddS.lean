@@ -8,12 +8,12 @@ open Int
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Int.InSub.is.In_Icc_AddS |
+| path | Int.InSub.is.In_Icc_AddS |
 | comm | Int.In_Icc_AddS.is.InSub |
 | mp | Int.In_Icc_AddS.of.InSub |
 | mpr | Int.InSub.of.In_Icc_AddS |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   [AddGroup α]
   [Preorder α]
@@ -32,7 +32,7 @@ private lemma main
     simpa [EqSubAdd] using h
 
 
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma left
   [AddCommGroup α]
   [Preorder α]

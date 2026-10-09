@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [Pencil_norm_minor_le_two_mul_sup_minor_row](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Pencil_norm_minor_le_two_mul_sup_minor_row.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {r : ℕ}
   {v w : Fin r → ℂ}

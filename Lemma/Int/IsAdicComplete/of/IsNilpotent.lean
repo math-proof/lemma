@@ -6,7 +6,7 @@ open IsLocalRing
 /--
 [IsAdicComplete_of_isNilpotent](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_IsAdicComplete_of_isNilpotent.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {R : Type u} [CommRing R]
   {I : Ideal R}

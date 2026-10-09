@@ -8,7 +8,7 @@ import Lemma.Tensor.TCast.as.T.of.Eq
 open Bool Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [CommMagma α] [AddCommMonoid α]
 -- given

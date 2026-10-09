@@ -38,7 +38,7 @@ import torch.Tensor
 open Bool List Nat Tensor Vector
 
 
-@[main, fin, cast, cast.fin]
+@[path, fin, cast, cast.fin]
 private lemma main
   {d : Fin s.length}
 -- given

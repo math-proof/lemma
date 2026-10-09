@@ -5,7 +5,7 @@ import Lemma.Matrix.Any_And_Stationary.of.StochasticIrreducible.Aperiodic
 open Matrix
 
 
-@[main]
+@[path]
 private lemma main
   {S : Type*} [Fintype S] [DecidableEq S] [Nonempty S] [MeasurableSpace S] [MeasurableSingletonClass S]
   {MRP : FiniteMRP S} :

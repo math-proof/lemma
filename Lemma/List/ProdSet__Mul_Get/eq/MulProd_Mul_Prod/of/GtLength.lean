@@ -5,7 +5,7 @@ import Lemma.List.ProdDrop.eq.Mul_ProdDrop_Add_1.of.GtLength
 open List Nat
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [Monoid α]
   {s : List α}

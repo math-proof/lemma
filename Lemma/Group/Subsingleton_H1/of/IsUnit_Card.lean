@@ -11,7 +11,7 @@ private lemma sum_reindex_mulLeft {k G : Type u} [CommRing k] [Group G] [Fintype
     {A : Rep k G} (F : G → A) (g : G) :
     ∑ h : G, F (g * h) = ∑ h : G, F h :=
   Fintype.sum_equiv (Equiv.mulLeft g) _ _ fun _ => rfl
-@[main]
+@[path]
 private lemma main
   {k G : Type u} [CommRing k] [Group G] [Fintype G]
   {A : Rep k G}

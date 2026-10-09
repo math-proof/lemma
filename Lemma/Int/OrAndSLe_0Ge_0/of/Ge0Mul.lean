@@ -12,7 +12,7 @@ import Lemma.Nat.Le.of.Lt
 open Bool Nat Int
 
 
-@[main]
+@[path]
 private lemma main
   [Semiring α]
   [LinearOrder α]

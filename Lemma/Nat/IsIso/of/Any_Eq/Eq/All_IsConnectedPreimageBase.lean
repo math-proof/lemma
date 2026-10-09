@@ -17,7 +17,7 @@ private lemma  eq_univ_of_isClopen_of_section {X S : Scheme.{u}} (g : X ⟶ S) (
     have := congrArg (fun φ => φ.base (g.base x)) hσ
     simpa using this
   exact hfib (Set.mem_preimage.2 rfl)
-@[main]
+@[path]
 private lemma main
   {X Y Z : Scheme}
   {p : X ⟶ Y}

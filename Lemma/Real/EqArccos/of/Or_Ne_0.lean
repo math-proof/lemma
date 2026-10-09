@@ -6,7 +6,7 @@ import sympy.Basic
 open Real
 
 
-@[main]
+@[path]
 private lemma main
   {x y : ℝ}
 -- given

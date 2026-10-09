@@ -2,7 +2,7 @@ import sympy.Basic
 import Mathlib.Data.Matrix.Mul
 
 
-@[main]
+@[path]
 private lemma main
   [CommRing α]
   {X : Matrix (Fin 4) (Fin 3) α}

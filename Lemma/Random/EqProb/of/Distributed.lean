@@ -6,7 +6,7 @@ import Lemma.Random.Distributed.is.EqAe_Prob
 open MeasureTheory
 
 
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace Ω]
   [ReferenceMeasure α]

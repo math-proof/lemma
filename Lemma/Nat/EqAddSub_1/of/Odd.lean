@@ -8,7 +8,7 @@ import Lemma.Nat.EqAddSub_1.of.Lt_0
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   [IntegerRing Z]
   {n : Z}

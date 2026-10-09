@@ -2,7 +2,7 @@ import Lemma.Hyperreal.InfinitesimalDiv.of.Infinitesimal
 open Hyperreal
 
 
-@[main]
+@[path]
 private lemma main
   {x : ℝ*}
 -- given

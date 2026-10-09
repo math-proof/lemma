@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [Representation_pairing_eq_zero_of_invariant_of_isSimpleOrder_of_exists_ne_zero](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Representation_pairing_eq_zero_of_invariant_of_isSimpleOrder_of_exists_ne_zero.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommSemiring k] [Group K] [AddCommMonoid S] [Module k S] [AddCommMonoid S'] [Module k S'] [AddCommMonoid X] [Module k X]
   {ρ : Representation k K S}

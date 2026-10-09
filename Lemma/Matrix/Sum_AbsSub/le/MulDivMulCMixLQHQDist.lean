@@ -4,7 +4,7 @@ import Lemma.Real.ActorBoxProjection.in.ActorBox.of.Ge_0
 import Lemma.Real.Dist.le.Dist.of.EuclideanVec
 
 
-@[main]
+@[path]
 private lemma main
   {S : Type*} [Fintype S] [DecidableEq S]
   {d : ℕ}

@@ -2,7 +2,7 @@ import Lemma.Nat.EqAddSub.of.Ge
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h : z ≤ y)

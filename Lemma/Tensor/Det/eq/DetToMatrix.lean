@@ -1,7 +1,7 @@
 import sympy.matrices.determinant
 
 
-@[main]
+@[path]
 private lemma main
   [CommRing α]
 -- given

@@ -6,7 +6,7 @@ import Lemma.Set.InterInter.eq.Inter_Inter
 open Set Bool
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [DecidableRel (· ∈ · : α → Set α → Prop)]
   {A B : Set α}

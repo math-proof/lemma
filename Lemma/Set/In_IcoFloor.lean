@@ -4,7 +4,7 @@ import Lemma.Set.In_Ico.is.Le.Lt
 open Set Int
 
 
-@[main]
+@[path]
 private lemma main
   [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
   [FloorRing α]

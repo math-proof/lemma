@@ -6,7 +6,7 @@ import Lemma.Matrix.ForwardSolvesStateEquation.of.SolvesStateEquation
 open Matrix
 
 
-@[main]
+@[path]
 private lemma main
   {S : Type*} [Fintype S]
   {d : ℕ}

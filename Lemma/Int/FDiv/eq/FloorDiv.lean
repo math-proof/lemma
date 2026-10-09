@@ -5,7 +5,7 @@ import Lemma.Nat.Add
 open Nat Int
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [Field α] [LinearOrder α] [IsStrictOrderedRing α] [FloorRing α]
 -- given

@@ -6,7 +6,7 @@ open Polynomial
 /--
 [orderOf_unitOfCoprime_pow_sub_one](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_orderOf_unitOfCoprime_pow_sub_one.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {Q n : ℕ}
 -- given

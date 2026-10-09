@@ -21,7 +21,7 @@ import Lemma.Real.ExpSub.eq.DivExpS
 open Hyperreal Real Rat
 
 
-@[main]
+@[path]
 private lemma main
   {a b : ℝ*}
 -- given

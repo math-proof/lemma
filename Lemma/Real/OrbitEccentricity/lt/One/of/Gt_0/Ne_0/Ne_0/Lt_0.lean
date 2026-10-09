@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 A bound orbit (\(E<0\)) is elliptical: \(e=\sqrt{1+\dfrac{2EJ^2}{mC^2}}<1\).
 -/
-@[main]
+@[path]
 private lemma main
   {E m C J : ℝ}
 -- given

@@ -7,7 +7,7 @@ import Lemma.Random.PSpace.PSpace.of.PSpace_Joint
 open Random MeasureTheory
 
 
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace Ω]
   [ReferenceMeasure α] [ReferenceMeasure β]

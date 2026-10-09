@@ -6,7 +6,7 @@ import Lemma.Rat.EqMulDiv.of.Ne_0
 open Rat Hyperreal Nat
 
 
-@[main]
+@[path]
 private lemma main
   {a b : ℝ*}
 -- given

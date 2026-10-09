@@ -2,7 +2,7 @@ import sympy.core.function
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {d : ℕ}
   {f g : ℤ → ℂ}

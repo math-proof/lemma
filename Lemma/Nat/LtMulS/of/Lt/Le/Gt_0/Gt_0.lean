@@ -4,7 +4,7 @@ import Lemma.Nat.LtMulS.of.Lt.Gt_0
 open Nat
 
 
-@[main, comm 12]
+@[path, comm 12]
 private lemma main
   [Mul α] [Zero α] [Preorder α]
   [MulPosStrictMono α] [PosMulMono α]

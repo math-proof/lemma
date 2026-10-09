@@ -3,7 +3,7 @@ import Lemma.Nat.EqMod.of.Lt
 open List Nat
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [Monoid α]
   {s : List α}

@@ -10,7 +10,7 @@ If `α` and `β` are countable (with measurable singletons) and both reference m
 counting measure, then so is the product reference measure on `α × β`, i.e. the product of
 the two counting measures is the counting measure.
 -/
-@[main]
+@[path]
 private lemma main
   [ReferenceMeasure α] [ReferenceMeasure β]
   [Countable α] [MeasurableSingletonClass α] [Countable β] [MeasurableSingletonClass β]

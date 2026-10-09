@@ -5,7 +5,7 @@ import sympy.matrices.dense
 open scoped Matrix
 
 
-@[main, mp, mpr]
+@[path, mp, mpr]
 private lemma main
   [Fintype α]
 -- given

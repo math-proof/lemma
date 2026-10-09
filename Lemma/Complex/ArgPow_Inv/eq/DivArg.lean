@@ -4,7 +4,7 @@ import Lemma.Complex.Pow_Inv.eq.Mul_ExpMulIDivArg
 open Complex
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (z : ℂ)

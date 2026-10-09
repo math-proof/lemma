@@ -5,10 +5,10 @@ open Tensor
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Tensor.MapTriu.eq.TriuMap.of.EqUFn0'0 |
+| path | Tensor.MapTriu.eq.TriuMap.of.EqUFn0'0 |
 | comm | Tensor.TriuMap.eq.MapTriu.of.EqUFn0'0 |
 -/
-@[main, comm]
+@[path, comm]
 private lemma main
   [Zero α]
   [Zero β]

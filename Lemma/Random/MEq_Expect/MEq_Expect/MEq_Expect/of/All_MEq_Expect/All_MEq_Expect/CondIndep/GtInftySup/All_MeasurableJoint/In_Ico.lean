@@ -14,7 +14,7 @@ Corollary of
 whose `h₅` (`𝔼[… | s t, a t, s (t + 1)] =ᵐ 𝔼[… | s (t + 1)]`) follows from conditional independence by
 `Random.MEqExpect.of.CondIndep.Integrable.Measurable.Measurable.Measurable.Measurable`.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace Ω] [StandardBorelSpace Ω] [MeasurableSpace S] [MeasurableSpace A]
   {π : Measure Ω} [IsProbabilityMeasure π]
@@ -45,7 +45,7 @@ private lemma main
   have ham : ∀ n, Measurable (a n) := fun n ↦
     (Random.Measurable.Measurable.of.MeasurableJoint (Random.Measurable.Measurable.of.MeasurableJoint (h₁ n)).2).2
   -- the reward path `r[t + 1:]` and the discounted return functional `γ ** Stack[k](k) @ ·`
-  have hF : Measurable (Expectation.asRV r[t + 1:]) := measurable_pi_lambda _ fun k ↦ hrm (t + 1 + k)
+  have hF : Measurable (Expectation.asRV r[t + 1:]) := Measurable.of_eval fun k ↦ hrm (t + 1 + k)
   have hg : Measurable fun p : ℕ → ℝ ↦ (γ ^ (id : ℕ → ℕ)) @ p :=
     Measurable.tsum fun k ↦ (measurable_pi_apply k).const_mul _
   obtain ⟨R, hR⟩ := id h₂

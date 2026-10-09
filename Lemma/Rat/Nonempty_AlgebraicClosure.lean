@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [AlgebraicClosure_nonempty_algHom_rat_padicAlgClosure](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicClosure_nonempty_algHom_rat_padicAlgClosure.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {p : ℕ} [Fact p.Prime] :
 -- imply

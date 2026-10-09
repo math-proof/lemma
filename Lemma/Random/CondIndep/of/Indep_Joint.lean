@@ -8,7 +8,7 @@ open ProbabilityTheory MeasureTheory
 open scoped ProbabilityTheory
 
 
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace Ω] [StandardBorelSpace Ω]
   [MeasurableSpace α] [StandardBorelSpace α] [Nonempty α]
@@ -40,12 +40,12 @@ private lemma main
       condDistrib x (fun ω ↦ (z ω, y ω)) π
         =ᵐ[π.map (fun ω ↦ (z ω, y ω))] Kernel.const _ (π.map x) := by
     refine (condDistrib_ae_eq_iff_measure_eq_compProd
-      (X := fun ω ↦ (z ω, y ω)) hx.aemeasurable (κ := Kernel.const _ (π.map x))).2 ?_
+      (hz.prodMk hy).aemeasurable hx.aemeasurable (κ := Kernel.const _ (π.map x))).2 ?_
     rw [hmap_zyx, Measure.compProd_const]
   have hcd_z :
       condDistrib x z π =ᵐ[π.map z] Kernel.const _ (π.map x) := by
     refine (condDistrib_ae_eq_iff_measure_eq_compProd
-      (X := z) hx.aemeasurable (κ := Kernel.const _ (π.map x))).2 ?_
+      hz.aemeasurable hx.aemeasurable (κ := Kernel.const _ (π.map x))).2 ?_
     rw [hmap_zx, Measure.compProd_const]
   -- Lift `hcd_z` along `Prod.fst` so it lives on `π.map (z,y)`, then take `prodMkRight`.
   have h_right :

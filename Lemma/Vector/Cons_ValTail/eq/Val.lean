@@ -3,7 +3,7 @@ import Lemma.Vector.Head.eq.Get_0
 open Vector
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
 -- given
   (s : List.Vector α (.succ n)) :
@@ -13,7 +13,7 @@ private lemma main
   simpa using congrArg Subtype.val (EqCons_Tail s)
 
 
-@[main, comm]
+@[path, comm]
 private lemma head
 -- given
   (s : List.Vector α (.succ n)) :

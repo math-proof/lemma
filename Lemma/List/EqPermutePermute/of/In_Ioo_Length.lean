@@ -6,7 +6,7 @@ import Lemma.List.GetElem.eq.None.of.LeLength
 open Bool List
 
 
-@[main]
+@[path]
 private lemma main
   {s : List α}
 -- given

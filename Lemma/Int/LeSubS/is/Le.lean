@@ -4,7 +4,7 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Int.LeSubS.is.Le |
+| path | Int.LeSubS.is.Le |
 | comm | Int.Le.is.LeSubS |
 | mp   | Int.Le.of.LeSubS |
 | mpr  | Int.LeSubS.of.Le |
@@ -12,7 +12,7 @@ import sympy.Basic
 | mpr.comm | Int.GeSubS.of.Ge |
 | comm.is | Int.GeSubS.is.Ge |
 -/
-@[main, comm, mp, mpr, mp.comm, mpr.comm, comm.is]
+@[path, comm, mp, mpr, mp.comm, mpr.comm, comm.is]
 private lemma main
   [AddGroup α]
   [LE α]

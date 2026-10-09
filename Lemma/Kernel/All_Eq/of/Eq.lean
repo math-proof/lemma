@@ -3,7 +3,7 @@ import sympy.Basic
 open ProbabilityTheory
 
 
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace α] [MeasurableSpace β]
   {κ₁ κ₂ : Kernel α β}

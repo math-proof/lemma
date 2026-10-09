@@ -2,7 +2,7 @@ import Lemma.Real.GtPi0
 open Real
 
 
-@[main]
+@[path]
 private lemma main :
 -- imply
   π ≠ 0 := by

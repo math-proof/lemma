@@ -3,7 +3,7 @@ import Lemma.Vector.Sum.eq.Zero
 open Vector
 
 
-@[main]
+@[path]
 private lemma main
   [Add α] [Zero α] [Mul α]
 -- given

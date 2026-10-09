@@ -25,7 +25,7 @@ import Lemma.Rat.Gt0Div.of.Lt_0.Gt_0
 open Hyperreal Int Nat Rat
 
 
-@[main]
+@[path]
 private lemma main
   {a b : ℝ*}
 -- given

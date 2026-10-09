@@ -2,7 +2,7 @@ import Lemma.Nat.Any_Eq_Mul.of.Dvd
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   {n d : ℤ}
 -- given

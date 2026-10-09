@@ -3,7 +3,7 @@ import Mathlib.Data.Matrix.Mul
 open scoped Matrix
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   {m n β : Type*} [Fintype m]
   {s : Finset β}

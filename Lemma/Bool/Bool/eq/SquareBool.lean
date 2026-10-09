@@ -5,10 +5,10 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Bool.Bool.eq.SquareBool |
+| path | Bool.Bool.eq.SquareBool |
 | comm | Bool.SquareBool.eq.Bool |
 -/
-@[main, comm]
+@[path, comm]
 private lemma main
   [Decidable p] :
 -- imply

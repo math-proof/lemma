@@ -7,7 +7,7 @@ open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model
 Integral against a kernel composition, for a bounded strongly measurable integrand:
 `∫ b, f b ∂(κ ∘ₘ μ) = ∫ a, ∫ b, f b ∂(κ a) ∂μ`.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace α] [MeasurableSpace β] [NormedAddCommGroup E] [NormedSpace ℝ E]
   {μ : Measure α} [IsProbabilityMeasure μ]

@@ -4,7 +4,7 @@ import Lemma.List.Tail.eq.Drop_1
 open List
 
 
-@[main]
+@[path]
 private lemma main
   [Add α] [Zero α]
   {s : List α}

@@ -2,7 +2,7 @@ import Lemma.Int.FloorAdd.eq.AddFloor
 open Int
 
 
-@[main]
+@[path]
 private lemma main
   [Ring R] [LinearOrder R] [IsStrictOrderedRing R]
   [FloorRing R]

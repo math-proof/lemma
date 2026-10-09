@@ -4,7 +4,7 @@ import Mathlib.Data.Matrix.Mul
 open scoped ComplexOrder
 
 
-@[main]
+@[path]
 private lemma positive_definite
   {n : ℕ}
   {A : Matrix (Fin n) (Fin n) ℂ}

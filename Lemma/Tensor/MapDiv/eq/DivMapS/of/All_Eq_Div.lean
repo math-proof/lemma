@@ -7,7 +7,7 @@ import Lemma.Vector.GetMap.eq.UFnGet
 open Tensor Vector
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [Div α]
   [Div β]
@@ -24,7 +24,7 @@ private lemma main
   apply MapDiv.eq.DivMapS.of.All_Eq_Div hf
 
 
-@[main, comm]
+@[path, comm]
 private lemma scalar
   [Div α]
   [Div β]

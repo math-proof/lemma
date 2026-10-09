@@ -3,7 +3,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {n m : ℕ}
   {f g : ℕ → Matrix (Fin m) (Fin m) ℂ}

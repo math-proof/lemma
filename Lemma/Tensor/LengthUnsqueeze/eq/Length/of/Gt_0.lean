@@ -8,7 +8,7 @@ import Lemma.Nat.Ge_1.of.Gt_0
 open Tensor List Bool Nat
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h : d > 0)

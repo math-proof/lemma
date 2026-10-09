@@ -7,10 +7,10 @@ open Tensor Vector
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Tensor.MapExp.eq.ExpMap.of.All_EqUFnExp_ExpUFn |
+| path | Tensor.MapExp.eq.ExpMap.of.All_EqUFnExp_ExpUFn |
 | comm | Tensor.ExpMap.eq.MapExp.of.All_EqUFnExp_ExpUFn |
 -/
-@[main, comm]
+@[path, comm]
 private lemma main
   [Exp α]
   [Exp β]

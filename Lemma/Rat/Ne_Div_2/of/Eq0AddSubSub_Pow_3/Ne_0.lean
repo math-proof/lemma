@@ -9,7 +9,7 @@ Ferrari's resolvent cubic for the quartic formula
 
 [Quartic equation](https://en.wikipedia.org/wiki/Quartic_equation)
 -/
-@[main]
+@[path]
 private lemma main
   [Field K] [CharZero K]
   {y α β γ : K}

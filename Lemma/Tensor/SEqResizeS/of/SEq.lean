@@ -2,7 +2,7 @@ import Lemma.Tensor.SEqResizeS.of.SEq.Val.Eq
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [Zero α]
   {X : Tensor α s}

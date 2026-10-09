@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {p : (T : Sort u) → T → Prop}
   {a : α}

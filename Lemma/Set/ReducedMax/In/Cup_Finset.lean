@@ -3,10 +3,9 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
-  {n : ℕ}
-  [NeZero n]
+  {n : ℕ} [NeZero n]
   {x : ℕ → ℝ} :
 -- imply
   Maxima Set.univ (fun i : Fin n => x i) ∈ ⋃ i ∈ Finset.range n, ({x i} : Set ℝ) := by

@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main :
 -- imply
   ⋃ k : ℕ, Set.Ico (k : ℤ) ((k : ℤ) + 1) = Set.Ici 0 := by

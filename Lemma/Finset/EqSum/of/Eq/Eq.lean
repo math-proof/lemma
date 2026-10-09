@@ -2,7 +2,7 @@ import sympy.functions.elementary.complexes
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma push
   {a b : ℤ}
   {g f : ℤ → ℤ}
@@ -18,7 +18,7 @@ private lemma push
   rw [e, Finset.sum_insert (by simp), Finset.sum_insert (by simp), h₁, h₂]
 
 
-@[main]
+@[path]
 private lemma unshift
   {a b : ℤ}
   {g f : ℤ → ℤ}

@@ -6,7 +6,7 @@ import Lemma.Tensor.Eq.is.EqDataS
 open List Tensor
 
 
-@[main]
+@[path]
 private lemma main
   {s : List ℕ}
 -- given

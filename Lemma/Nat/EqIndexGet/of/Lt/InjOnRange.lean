@@ -3,7 +3,7 @@ import sympy.Basic
 open IndexOf
 
 
-@[main]
+@[path]
 private lemma main
   [DecidableEq α]
   {j : ℕ}

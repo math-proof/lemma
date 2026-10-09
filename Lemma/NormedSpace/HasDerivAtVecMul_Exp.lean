@@ -8,7 +8,7 @@ import sympy.Basic
 open Matrix NormedSpace
 
 
-@[main]
+@[path]
 private lemma main
   {S : Type*} [Fintype S] [DecidableEq S]
 -- given

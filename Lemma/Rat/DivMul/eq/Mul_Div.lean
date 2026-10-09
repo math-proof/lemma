@@ -2,7 +2,7 @@ import Lemma.Nat.Mul
 open Nat
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [DivInvMonoid α]
 -- given
@@ -13,7 +13,7 @@ private lemma main
   mul_div_assoc a b c
 
 
-@[main, comm]
+@[path, comm]
 private lemma Comm
   [Semifield α]
 -- given

@@ -2,7 +2,7 @@ import Lemma.List.Slice.eq.Nil.of.Gt
 open List
 
 
-@[main]
+@[path]
 private lemma main
   {s : List α}
 -- given

@@ -8,7 +8,7 @@ import Lemma.Tensor.SEqPermuteTail_1
 open List Tensor
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h : s ≠ [])

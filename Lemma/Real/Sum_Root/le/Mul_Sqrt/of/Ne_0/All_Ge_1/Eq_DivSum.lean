@@ -18,7 +18,7 @@ import Lemma.Real.GeSqrt_0
 open Finset Nat Real Rat
 
 
-@[main]
+@[path]
 private lemma main
   {n : ℕ}
   {x : ℕ → ℝ}

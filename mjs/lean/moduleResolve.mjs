@@ -537,7 +537,7 @@ export function resolveUnderscoreModuleAlias(moduleDot) {
 }
 
 /**
- * Swaps the first infix relation in the parsed module (same rewrite as commutative `@[main, comm]` paths).
+ * Swaps the first infix relation in the parsed module (same rewrite as commutative `@[path, comm]` paths).
  * `imports` in MySQL may use either spelling; reverse hierarchy must match both.
  * @param {string} moduleDot
  * @returns {string | null} alternate dotted module, or null if not applicable / unchanged

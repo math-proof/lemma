@@ -16,7 +16,7 @@ private lemma matProd_eye
     apply EqDotEye
 
 
-@[main]
+@[path]
 private lemma main
   [Semiring α] [CharZero α]
   (n : ℕ) :

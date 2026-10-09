@@ -3,7 +3,7 @@ import sympy.Basic
 
 
 /-- Pairing of measurable maps is measurable. -/
-@[main]
+@[path]
 private lemma main
   {α β γ : Type*}
   [MeasurableSpace α] [MeasurableSpace β] [MeasurableSpace γ]

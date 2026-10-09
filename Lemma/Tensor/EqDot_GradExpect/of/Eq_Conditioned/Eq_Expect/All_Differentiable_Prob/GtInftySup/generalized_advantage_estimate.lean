@@ -35,7 +35,7 @@ The proof compares with it: the terms `δ[t + k]`, `k ≥ 1`, have zero expectat
 function, `Random.Integral_SMul.eq.Zero.of.Le.In_Ico` in `sympy.stats.policy_trajectory.advantage`), so that for every discount `c ∈ [0, 1)`
 `𝔼[((c ** Stack[k](k)) @ δ[t:]) • ∇ log π(a[t] | s[t])] = 𝔼[δ[t] • ∇ log π(a[t] | s[t])]`.
 -/
-@[main]
+@[path]
 private lemma main
   [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [CompleteSpace Θ]
   [ReferenceMeasure S] [MeasurableSingletonClass S] [Fintype S]

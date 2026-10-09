@@ -2,7 +2,7 @@ import sympy.Basic
 import sympy.integrals.integrals
 
 
-@[main, comm 8]
+@[path, comm 8]
 private lemma ioo
   {a b : ℝ}
   {f g : ℝ → ℝ}
@@ -23,10 +23,10 @@ private lemma ioo
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Real.LtIntegralS.of.All_Lt |
+| path | Real.LtIntegralS.of.All_Lt |
 | comm 8 | Real.GtIntegralS.of.All_Gt |
 -/
-@[main, comm 8]
+@[path, comm 8]
 private lemma main
   {a b : ℝ}
   {f g : ℝ → ℝ}
@@ -41,7 +41,7 @@ private lemma main
   ioo hab hfi hgi fun x hx ↦ h x (Set.Ioo_subset_Ioc_self hx)
 
 
-@[main, comm 8]
+@[path, comm 8]
 private lemma ico
   {a b : ℝ}
   {f g : ℝ → ℝ}
@@ -56,7 +56,7 @@ private lemma ico
   ioo hab hfi hgi fun x hx ↦ h x (Set.Ioo_subset_Ico_self hx)
 
 
-@[main, comm 8]
+@[path, comm 8]
 private lemma icc
   {a b : ℝ}
   {f g : ℝ → ℝ}

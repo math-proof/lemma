@@ -6,10 +6,10 @@ open Complex
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Complex.PowMul.eq.MulPowS.of.AddArgS.in.IocNegPiPi.Ne_0.Ne_0 |
+| path | Complex.PowMul.eq.MulPowS.of.AddArgS.in.IocNegPiPi.Ne_0.Ne_0 |
 | comm | Complex.MulPowS.eq.PowMul.of.AddArgS.in.IocNegPiPi.Ne_0.Ne_0 |
 -/
-@[main, comm]
+@[path, comm]
 private lemma main
   {x y : ℂ}
 -- given

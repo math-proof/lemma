@@ -6,7 +6,7 @@ import Lemma.ContinuousSemiflow.OmegaLimitToFun.of.IsForwardInvariantToFun.IsClo
 open Filter
 
 
-@[main]
+@[path]
 private lemma main
   {α : Type*} [TopologicalSpace α] [T2Space α]
   {Φ : ContinuousSemiflow α}

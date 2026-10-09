@@ -8,7 +8,7 @@ import Lemma.Matrix.IntegrableOn.of.EqSum_0.In_ActorBox
 open MeasureTheory
 
 
-@[main]
+@[path]
 private lemma main
   {S : Type*} [Fintype S] [DecidableEq S]
   {d : ℕ}

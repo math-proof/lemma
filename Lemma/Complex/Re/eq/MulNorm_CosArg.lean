@@ -2,7 +2,7 @@ import Mathlib.Analysis.SpecialFunctions.Complex.Arg
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {z : ℂ} :
 -- imply

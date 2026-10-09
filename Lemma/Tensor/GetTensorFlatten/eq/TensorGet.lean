@@ -5,7 +5,7 @@ import Lemma.Bool.UFn.of.Eq
 open Tensor Bool
 
 
-@[main, fin]
+@[path, fin]
 private lemma main
 -- given
   (v : List.Vector (List.Vector α s.prod) n)

@@ -2,7 +2,7 @@ import Lemma.Finset.GtSumS.of.All_Gt.Ne_Empty
 open Finset
 
 
-@[main]
+@[path]
 private lemma main
   [AddCommMonoid N] [PartialOrder N] [IsOrderedCancelAddMonoid N]
   {s : Finset ι}

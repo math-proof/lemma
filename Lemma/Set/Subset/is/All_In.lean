@@ -4,12 +4,12 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Set.Subset.is.All_In |
+| path | Set.Subset.is.All_In |
 | comm | Set.All_In.is.Subset |
 | mp | Set.All_In.of.Subset |
 | mpr | Set.Subset.of.All_In |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   {A B : Set α} :
 -- imply

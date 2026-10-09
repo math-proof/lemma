@@ -6,7 +6,7 @@ open Module LinearMap
 /--
 [Representation_isIrreducible_of_span_range_eq_top](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Representation_isIrreducible_of_span_range_eq_top.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [Field k] [Monoid G] [AddCommGroup V] [Module k V] [Nontrivial V]
   {ρ : Representation k G V}

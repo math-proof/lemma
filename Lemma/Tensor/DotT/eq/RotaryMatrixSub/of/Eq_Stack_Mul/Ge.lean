@@ -5,7 +5,7 @@ import Mathlib.Analysis.SpecialFunctions.Pow.Real
 open Matrix
 
 
-@[main]
+@[path]
 private lemma main
   {m : ℕ}
   {b l : ℝ}
@@ -30,7 +30,7 @@ private lemma main
   congr 1 <;> ext a c <;> by_cases hac : a = c <;> simp [hac, hs, Real.cos_sub, Real.sin_sub] <;> ring
 
 
-@[main]
+@[path]
 private lemma transpose
   {m : ℕ}
   {b l : ℝ}

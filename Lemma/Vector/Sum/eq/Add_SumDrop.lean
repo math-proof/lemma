@@ -3,7 +3,7 @@ import sympy.vector.vector
 open List
 
 
-@[main]
+@[path]
 private lemma main
   [Add α] [Zero α]
   {s : List.Vector α n}

@@ -55,7 +55,7 @@ The hyperreal masked softmax of a real tensor is (infinitely close to) a *real* 
 the row-wise formula \( \frac{e^{A_i} \odot \Xi_i}{\sum_j e^{A_{ij}} \Xi_{ij}} \) computed over \(\mathbb{R}\) and then cast to \(\mathbb{R}^*\),
 where \( \Xi_{ij} = [p(i, j)] \) and every row has an unmasked entry.
 -/
-@[main]
+@[path]
 private lemma main
   {n m : ℕ}
 -- given

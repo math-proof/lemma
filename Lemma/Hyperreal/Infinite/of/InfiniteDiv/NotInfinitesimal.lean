@@ -7,10 +7,10 @@ open Hyperreal Rat
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Hyperreal.Infinite.of.InfiniteDiv.NotInfinitesimal |
+| path | Hyperreal.Infinite.of.InfiniteDiv.NotInfinitesimal |
 | mt | Hyperreal.NotInfiniteDiv.of.NotInfinite.NotInfinitesimal |
 -/
-@[main, mt]
+@[path, mt]
 private lemma main
   {a b : ℝ*}
 -- given

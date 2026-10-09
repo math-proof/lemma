@@ -4,7 +4,7 @@ import sympy.Basic
 open Real
 
 
-@[main]
+@[path]
 private lemma main
   [ExpPos α]
   {x y : α}

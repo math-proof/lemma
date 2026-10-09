@@ -6,10 +6,10 @@ import Mathlib.Order.Bounds.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Real.Sup.eq.Min |
+| path | Real.Sup.eq.Min |
 | comm | Real.Min.eq.Sup |
 -/
-@[main, comm]
+@[path, comm]
 private lemma main
   {α : Type*} [ConditionallyCompleteLinearOrder α] [DenselyOrdered α]
   {f : α → α}

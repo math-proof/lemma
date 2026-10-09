@@ -18,7 +18,7 @@ import torch.functions
 open Bool Nat Tensor Fin
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (θ : Tensor ℝ [d])

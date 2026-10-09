@@ -3,7 +3,7 @@ import Lemma.Int.Abs.eq.Neg.of.Lt_0
 open Int Nat
 
 
-@[main]
+@[path]
 private lemma main
   [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
   {x : α}

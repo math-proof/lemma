@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h₀ : ∀ a b : ℕ, a - 1 ≤ b ↔ a ≤ b + 1)

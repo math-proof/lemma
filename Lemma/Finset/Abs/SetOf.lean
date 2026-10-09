@@ -2,7 +2,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma inbetween
   {n t : ℕ}
 -- given
@@ -67,7 +67,7 @@ private lemma inbetween
     simp
 
 
-@[main]
+@[path]
 private lemma last
   {n : ℕ} :
 -- imply

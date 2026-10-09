@@ -4,7 +4,7 @@ import torch.eye
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   [AddMonoidWithOne α] [CharZero α] :
 -- imply

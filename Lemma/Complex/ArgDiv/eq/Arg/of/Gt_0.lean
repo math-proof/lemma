@@ -2,7 +2,7 @@ import Lemma.Complex.ArgMul.eq.Arg.of.Gt_0
 open Complex
 
 
-@[main]
+@[path]
 private lemma main
   {z : ℂ}
   {r : ℝ}

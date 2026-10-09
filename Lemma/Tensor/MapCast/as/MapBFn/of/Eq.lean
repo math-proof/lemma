@@ -5,11 +5,11 @@ import torch.Tensor.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Tensor.MapCast.as.MapBFn.of.Eq |
+| path | Tensor.MapCast.as.MapBFn.of.Eq |
 | comm | Tensor.MapBFn.as.MapCast.of.Eq |
 | cast.comm | Tensor.Cast_MapBFn.eq.MapCast.of.Eq |
 -/
-@[main, comm, cast.comm]
+@[path, comm, cast.comm]
 private lemma main
   {f : α → α → α}
 -- given

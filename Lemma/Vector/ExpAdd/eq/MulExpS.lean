@@ -7,7 +7,7 @@ import Lemma.Vector.GetMul.eq.MulGetS
 open Real Vector
 
 
-@[main]
+@[path]
 private lemma main
   [Exp α]
 -- given
@@ -23,7 +23,7 @@ private lemma main
   rw [ExpAdd.eq.MulExpS]
 
 
-@[main]
+@[path]
 private lemma scalar
   [Exp α]
 -- given

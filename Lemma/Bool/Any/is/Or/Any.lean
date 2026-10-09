@@ -2,7 +2,7 @@ import Lemma.Bool.Or.Any.of.Any
 open Bool
 
 
-@[main]
+@[path]
 private lemma split
   {A : Set α}
   {f c : α → Prop} :

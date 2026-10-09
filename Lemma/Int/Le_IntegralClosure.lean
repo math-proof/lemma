@@ -6,7 +6,7 @@ open scoped TensorProduct
 /--
 [HopfOrder_le_integralClosure_of_finite](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_HopfOrder_le_integralClosure_of_finite.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {R : Type u} [CommRing R]
   {A : Type w} [CommRing A] [Algebra R A]

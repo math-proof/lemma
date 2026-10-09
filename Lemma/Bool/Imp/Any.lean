@@ -3,7 +3,7 @@ import Lemma.Bool.Imp.of.Imp.Any
 open Bool
 
 
-@[main]
+@[path]
 private lemma main
   {p q : α → Prop}
 -- given

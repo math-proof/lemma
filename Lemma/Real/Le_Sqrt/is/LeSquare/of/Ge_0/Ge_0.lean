@@ -2,7 +2,7 @@ import sympy.core.power
 import sympy.Basic
 
 
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   {x y : ℝ}
 -- given

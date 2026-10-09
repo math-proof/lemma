@@ -2,7 +2,7 @@ import Lemma.Vector.GetMap.eq.UFnGet
 open Vector
 
 
-@[main, fin]
+@[path, fin]
 private lemma main
   {β : Type*}
 -- given

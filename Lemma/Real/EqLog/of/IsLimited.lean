@@ -4,7 +4,7 @@ import sympy.Basic
 open Set Real
 
 
-@[main]
+@[path]
 private lemma main
   {g : ℝ → ℝ}
   {x₀ y : ℝ}

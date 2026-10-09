@@ -9,10 +9,10 @@ open Tensor Vector
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Tensor.MapGetSlice.eq.GetSliceMap |
+| path | Tensor.MapGetSlice.eq.GetSliceMap |
 | comm | Tensor.GetSliceMap.eq.MapGetSlice |
 -/
-@[main, comm]
+@[path, comm]
 private lemma main
   {β : Type*}
 -- given

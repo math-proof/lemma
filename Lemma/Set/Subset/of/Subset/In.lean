@@ -3,7 +3,7 @@ import Lemma.Set.SubsetUnionS.of.Subset.Subset
 open Set
 
 
-@[main]
+@[path]
 private lemma main
   {α} {x : α} {A B : Set α}
 -- given

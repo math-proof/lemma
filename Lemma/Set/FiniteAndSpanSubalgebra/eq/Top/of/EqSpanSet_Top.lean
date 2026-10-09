@@ -6,7 +6,7 @@ open scoped TensorProduct
 /--
 [HopfOrder_finite_sup_and_span_sup_eq_top](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_HopfOrder_finite_sup_and_span_sup_eq_top.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {R : Type u} [CommRing R]
   {K : Type v} [Field K] [Algebra R K]

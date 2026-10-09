@@ -7,7 +7,7 @@ open MeasureTheory PolicyGradient Random
 /--
 For `γ ∈ [0, 1)` the discounted series `∑ k, γ ^ k * Wkd θ k x` is summable.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace S] [ReferenceMeasure A]
   {M : DensityModel Θ S A}

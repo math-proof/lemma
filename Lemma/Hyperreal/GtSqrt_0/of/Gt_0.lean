@@ -4,7 +4,7 @@ import Lemma.Hyperreal.NeSqrt_0.of.Gt_0
 open Hyperreal Nat
 
 
-@[main]
+@[path]
 private lemma main
   {x : ℝ*}
 -- given

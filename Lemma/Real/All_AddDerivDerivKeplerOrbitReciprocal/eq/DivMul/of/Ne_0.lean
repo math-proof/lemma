@@ -6,7 +6,7 @@ import sympy.Basic
 /--
 Phase-zero Kepler reciprocal \(A\cos\theta+Cm/J^2\) solves the Binet ODE.
 -/
-@[main]
+@[path]
 private lemma main
   (A C m J : ℝ)
 -- given

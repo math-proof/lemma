@@ -12,7 +12,7 @@ states yields the marginal density of the `n`-th state:
 
 Python: Random.Integral_Prod.eq.Prob.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace Ω]
   [ReferenceMeasure α]

@@ -2,7 +2,7 @@ import sympy.Basic
 import sympy.concrete.reduced
 
 
-@[main]
+@[path]
 private lemma main
   {n : ℕ} [NeZero n]
   {x : Fin n → ℝ} :

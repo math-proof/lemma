@@ -6,7 +6,7 @@ import Lemma.Tensor.GetMap.eq.MapGet
 open Tensor
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   {β : Type*}
 -- given

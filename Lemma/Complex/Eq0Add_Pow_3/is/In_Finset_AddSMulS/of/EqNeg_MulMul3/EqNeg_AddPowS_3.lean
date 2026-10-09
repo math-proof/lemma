@@ -12,12 +12,12 @@ open Complex Int Nat Set
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Complex.Eq0Add_Pow_3.is.In_Finset_AddSMulS.of.EqNeg_MulMul3.EqNeg_AddPowS_3 |
+| path | Complex.Eq0Add_Pow_3.is.In_Finset_AddSMulS.of.EqNeg_MulMul3.EqNeg_AddPowS_3 |
 | comm | Complex.In_Finset_AddSMulS.is.Eq0Add_Pow_3.of.EqNeg_MulMul3.EqNeg_AddPowS_3 |
 | mp | Complex.In_Finset_AddSMulS.of.Eq0Add_Pow_3.EqNeg_MulMul3.EqNeg_AddPowS_3 |
 | mpr | Complex.Eq0Add_Pow_3.of.In_Finset_AddSMulS.EqNeg_MulMul3.EqNeg_AddPowS_3 |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   {x p q A B : ℂ}
 -- given

@@ -6,7 +6,7 @@ open scoped MatrixGroups ModularForm
 /--
 [ModularForm_exists_gamma1_coe_eq_pow_of_forall_slash_eq](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_ModularForm_exists_gamma1_coe_eq_pow_of_forall_slash_eq.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {M : ℕ} [NeZero M]
   {k : ℤ}

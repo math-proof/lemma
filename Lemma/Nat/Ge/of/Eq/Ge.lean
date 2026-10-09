@@ -2,7 +2,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {a x b : ℝ}
 -- given
@@ -15,7 +15,7 @@ private lemma main
   exact h₁
 
 
-@[main]
+@[path]
 private lemma subst
   {y b x t k : ℝ}
 -- given

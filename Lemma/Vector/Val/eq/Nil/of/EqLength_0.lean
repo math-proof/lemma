@@ -2,7 +2,7 @@ import Lemma.List.Eq_Nil.is.EqLength_0
 open List
 
 
-@[main]
+@[path]
 private lemma main
   {a : List.Vector α n}
 -- given

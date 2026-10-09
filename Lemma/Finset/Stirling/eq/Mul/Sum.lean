@@ -5,7 +5,7 @@ import Mathlib.Tactic.Positivity
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   {n k : ℕ} :
 -- imply

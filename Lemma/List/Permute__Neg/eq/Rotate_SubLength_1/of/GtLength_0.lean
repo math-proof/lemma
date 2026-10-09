@@ -2,7 +2,7 @@ import Lemma.List.Permute_SubLength_0.eq.AppendRotateTake___Drop.of.GtLength_0
 open List
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   {s : List ℕ}
 -- given

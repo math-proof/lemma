@@ -2,7 +2,7 @@ import Lemma.List.CartesianProductNil.eq.ListNil
 open List
 
 
-@[main]
+@[path]
 private lemma main
   {x₀ : ℕ}
   {x s : List ℕ}

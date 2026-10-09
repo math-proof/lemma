@@ -14,7 +14,7 @@ whose norm is at most `B₁ + B₀ * ∫ g`.
 The dominating function near `θ` is `(f θ + g) * B₁ + B₀ * g` (mean value inequality for `f`), so no uniform bound on
 the densities `f θ` is needed.
 -/
-@[main]
+@[path]
 private lemma main
   [NormedAddCommGroup Θ] [NormedSpace ℝ Θ] [FiniteDimensional ℝ Θ] [MeasurableSpace A]
   {ν : Measure A}

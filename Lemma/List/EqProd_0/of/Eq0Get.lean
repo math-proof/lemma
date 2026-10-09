@@ -2,7 +2,7 @@ import Lemma.List.EqProd_0.is.In0
 open List
 
 
-@[main]
+@[path]
 private lemma main
   [MonoidWithZero α]
   [Nontrivial α]

@@ -51,7 +51,7 @@ open Tensor Hyperreal
 set_option maxHeartbeats 4000000
 
 
-@[main]
+@[path]
 private lemma main
   [NeZero (l : ℕ)]
   [NeZero (u : ℕ)]

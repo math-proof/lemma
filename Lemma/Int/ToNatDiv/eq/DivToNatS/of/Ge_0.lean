@@ -2,7 +2,7 @@ import Lemma.Int.ToNatDiv.eq.DivToNat
 open Int
 
 
-@[main]
+@[path]
 private lemma main
   {n d : ℤ}
 -- given

@@ -4,7 +4,7 @@ import Lemma.Real.EqAdd_MulI_0.is.AndEqS_0
 open Complex Real
 
 
-@[main]
+@[path]
 private lemma main
   {x y : ℝ} :
 -- imply

@@ -5,7 +5,7 @@ import Lemma.Nat.Lt_Min.is.Lt.Lt
 open Tensor List Nat
 
 
-@[main]
+@[path]
 private lemma main
   {m : ℕ}
   {X Y : Tensor α (m :: s)}

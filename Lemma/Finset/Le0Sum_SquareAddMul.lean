@@ -2,7 +2,7 @@ import Lemma.Finset.Sum_Square.ge.Zero
 open Finset
 
 
-@[main]
+@[path]
 private lemma main
   [DecidableEq ι]
   [Ring α] [LinearOrder α] [IsStrictOrderedRing α]

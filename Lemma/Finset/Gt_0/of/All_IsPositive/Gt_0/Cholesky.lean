@@ -2,7 +2,7 @@ import sympy.Basic
 open scoped ComplexOrder
 
 
-@[main]
+@[path]
 private lemma main
   {n : ℕ}
   {t : Fin n}
@@ -20,7 +20,7 @@ private lemma main
   sorry
 
 
-@[main]
+@[path]
 private lemma real
   {n : ℕ}
   {t : Fin n}

@@ -5,7 +5,7 @@ import sympy.Basic
 open Topology
 
 
-@[main]
+@[path]
 private lemma main
   {x : ℝ}
 -- given

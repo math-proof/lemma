@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {n k : ℕ}
 -- given
@@ -22,7 +22,7 @@ private lemma main
     linarith
 
 
-@[main]
+@[path]
 private lemma decrease
   {n k : ℕ}
 -- given
@@ -44,7 +44,7 @@ private lemma decrease
   linarith
 
 
-@[main]
+@[path]
 private lemma increase
   {n k : ℕ}
 -- given

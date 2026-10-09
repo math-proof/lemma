@@ -5,7 +5,7 @@ open Nat
 
 
 /-- dilated band `i − l < j < i + u`, `d ∣ j − i`: the window `b, b + d, b + 2d, …` below `min(n, i + u)`. -/
-@[main]
+@[path]
 private lemma main
   [AddCommMonoid M]
   {n : ℕ}

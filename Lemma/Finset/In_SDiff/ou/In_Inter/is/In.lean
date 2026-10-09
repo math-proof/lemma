@@ -2,7 +2,7 @@ import Lemma.Finset.In.is.In_Inter.ou.In_SDiff
 open Finset
 
 
-@[main]
+@[path]
 private lemma main
   [DecidableEq ι]
   {A B : Finset ι}

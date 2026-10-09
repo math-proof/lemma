@@ -9,7 +9,7 @@ import Lemma.Nat.LeAddS.is.Le
 open Nat Int
 
 
-@[main]
+@[path]
 private lemma main
   {n d : ℤ}
 -- given

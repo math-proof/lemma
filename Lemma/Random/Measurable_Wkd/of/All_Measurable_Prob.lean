@@ -10,7 +10,7 @@ open MeasureTheory PolicyGradient Random
 If every `(x, u) ↦ π_θ(u | x)` is jointly measurable, so is the `k`-step expected reward
 `x ↦ Wkd θ k x = 𝔼[r[t+k] | s[t] = x]`.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace S] [ReferenceMeasure A]
   {M : DensityModel Θ S A}

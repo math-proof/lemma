@@ -4,7 +4,7 @@ import Lemma.Int.EqNegNeg
 open Int
 
 
-@[main]
+@[path]
 private lemma main
   [Mul α] [HasDistribNeg α]
   {a b : α} :

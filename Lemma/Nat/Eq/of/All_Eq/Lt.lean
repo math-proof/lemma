@@ -2,7 +2,7 @@ import Lemma.Set.In_Range.of.Lt
 open Set
 
 
-@[main]
+@[path]
 private lemma main
   {x y : ℕ → α}
 -- given
@@ -17,7 +17,7 @@ private lemma main
   apply In_Range.of.Lt h₀
 
 
-@[main]
+@[path]
 private lemma is_constant
   {x : ℕ → α}
 -- given

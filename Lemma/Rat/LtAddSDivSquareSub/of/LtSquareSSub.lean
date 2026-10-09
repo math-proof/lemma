@@ -2,7 +2,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {x₀ x₁ y₀ y₁ y₂ : ℝ}
 -- given

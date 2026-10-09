@@ -6,10 +6,10 @@ open Set Nat
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Set.Lt.of.Ioc.ne.Empty |
+| path | Set.Lt.of.Ioc.ne.Empty |
 | comm | Set.Gt.of.Ioc.ne.Empty |
 -/
-@[main, comm]
+@[path, comm]
 private lemma main
   [Preorder α]
   {a b : α}

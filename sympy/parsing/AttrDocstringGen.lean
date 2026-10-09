@@ -72,7 +72,7 @@ def customAttrHead (attr : String) : String :=
   | _ => ""
 
 def customAttrHeads : List String :=
-  ["main", "comm", "mp", "mpr", "mp.comm", "mpr.comm", "comm.is", "is.comm", "mt", "mp.mt", "mpr.mt", "is.mt",
+  ["path", "comm", "mp", "mpr", "mp.comm", "mpr.comm", "comm.is", "is.comm", "mt", "mp.mt", "mpr.mt", "is.mt",
    "Or.inl", "Or.inr", "mpr.left", "mpr.right", "mp.left", "mp.right",
    "And.left", "And.right",
    "fin", "fin.comm", "fin.mp", "fin.mpr",
@@ -194,7 +194,7 @@ def mprLemmaName (tokens : List String) : String :=
 def attrLemmaName (tokens : List String) (attr : String) : String :=
   let parts := attr.trimAscii.toString.splitOn " " |>.filter (· != "")
   match parts with
-  | ["main"] => moduleName tokens
+  | ["path"] => moduleName tokens
   | ["comm"] => moduleName (List.comm tokens (ofParityFromTokens tokens))
   | ["comm", n] => moduleName (commRunSh tokens n.toNat!)
   | ["mp"] => mpLemmaName tokens
@@ -274,8 +274,8 @@ def formatAttrLabel (attr : String) : String :=
 
 def docstringFor (relPath : String) (attrs : List String) : IO String := do
   let tokens := tokensFromRelPath relPath
-  let customAttrs := attrs.filter (· != "main") |>.filter isCustomAttr
-  let rows ← ("main" :: customAttrs).mapM fun attr => do
+  let customAttrs := attrs.filter (· != "path") |>.filter isCustomAttr
+  let rows ← ("path" :: customAttrs).mapM fun attr => do
     let label := formatAttrLabel attr
     let name ← attrLemmaNameIO relPath tokens attr
     pure s!"| {label} | {escapeMd name} |"

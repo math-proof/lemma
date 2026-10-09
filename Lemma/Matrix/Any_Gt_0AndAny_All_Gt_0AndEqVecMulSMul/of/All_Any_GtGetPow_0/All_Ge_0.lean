@@ -5,7 +5,7 @@ import sympy.Basic
 open Matrix
 open scoped Matrix
 
-@[main]
+@[path]
 private lemma main
   {S : Type*} [Fintype S] [DecidableEq S] [Nonempty S]
   {A : Matrix S S ℝ}

@@ -4,12 +4,12 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Set.NotIn.is.In_SDiff |
+| path | Set.NotIn.is.In_SDiff |
 | comm | Set.In_SDiff.is.NotIn |
 | mp | Set.In_SDiff.of.NotIn |
 | mpr | Set.NotIn.of.In_SDiff |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   {x : α}
   {s : Set α} :

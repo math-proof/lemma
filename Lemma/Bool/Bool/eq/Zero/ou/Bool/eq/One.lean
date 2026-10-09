@@ -3,7 +3,7 @@ import Lemma.Set.In_Finset.is.OrEqS
 open Set
 
 
-@[main]
+@[path]
 private lemma main
   [Decidable p] :
 -- imply

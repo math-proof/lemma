@@ -53,7 +53,7 @@ private lemma inner_slice_length
     simp [Int.ceil_natCast]
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (f : List.Vector α n)

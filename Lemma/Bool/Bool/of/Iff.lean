@@ -4,7 +4,7 @@ import Lemma.Nat.Mul
 open Bool Nat
 
 
-@[main]
+@[path]
 private lemma main
   [Decidable p]
   [Decidable q]

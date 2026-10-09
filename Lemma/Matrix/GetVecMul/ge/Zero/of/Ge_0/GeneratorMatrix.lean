@@ -5,7 +5,7 @@ import Lemma.Matrix.GetVecMul.ge.Zero.of.Eq_0.All_Ge_0.GeneratorMatrix
 open Matrix
 
 
-@[main]
+@[path]
 private lemma main
   {S : Type*} [Fintype S]
   {P : Matrix S S ℝ}

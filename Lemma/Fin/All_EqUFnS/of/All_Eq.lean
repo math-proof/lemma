@@ -2,7 +2,7 @@ import Lemma.Finset.All_EqUFnS.of.All_Eq
 open Finset
 
 
-@[main]
+@[path]
 private lemma bin
   {a b : Fin n → α}
   {f : α → Fin n → β}
@@ -15,7 +15,7 @@ private lemma bin
   aesop
 
 
-@[main]
+@[path]
 private lemma main
   {a b : Fin n → β}
   {f : β → γ}
@@ -28,7 +28,7 @@ private lemma main
   aesop
 
 
-@[main]
+@[path]
 private lemma const
   {x : Fin n → α}
   {f : α → β}

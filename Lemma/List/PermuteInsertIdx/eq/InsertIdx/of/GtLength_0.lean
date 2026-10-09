@@ -11,7 +11,7 @@ import Lemma.List.Drop.eq.Nil.of.LeLength
 open List
 
 
-@[main]
+@[path]
 private lemma main
   {s : List α}
 -- given

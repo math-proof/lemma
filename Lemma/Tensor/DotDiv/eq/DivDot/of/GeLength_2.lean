@@ -4,7 +4,7 @@ import Lemma.Tensor.SumDiv.eq.DivSum
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [Semifield α]
 -- given
@@ -18,7 +18,7 @@ private lemma main
   DotBFn.eq.BFnDot.of.GeLength_2.All_EqBFn0.All_EqSumMap.All_EqMapS MulDiv.eq.DivMul SumDiv.eq.DivSum (zero_div ·) hs' A C B
 
 
-@[main]
+@[path]
 private lemma left
   [Semifield α]
 -- given

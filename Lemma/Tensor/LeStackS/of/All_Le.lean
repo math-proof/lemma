@@ -3,7 +3,7 @@ import Lemma.Tensor.Le.is.LeDataS
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [LE α]
   {X Y : Fin n → Tensor α s}

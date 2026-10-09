@@ -5,7 +5,7 @@ import sympy.vector.vector
 open Nat Vector Fin
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (m n : ℕ)

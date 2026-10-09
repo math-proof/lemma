@@ -6,7 +6,7 @@ import Lemma.Tensor.Eq.is.EqDataS
 open Bool Tensor Vector
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (X : Tensor α (1 :: s)) :

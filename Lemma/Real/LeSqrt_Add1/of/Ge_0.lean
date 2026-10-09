@@ -4,7 +4,7 @@ import Mathlib.Algebra.Order.Ring.Unbundled.Basic
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {x : ℝ}
 -- given

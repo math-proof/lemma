@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma left
   [Mul α]
   {x y : α}
@@ -14,7 +14,7 @@ private lemma left
   rw [h]
 
 
-@[main]
+@[path]
 private lemma main
   [Mul α]
   {x y : α}

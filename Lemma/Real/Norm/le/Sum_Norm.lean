@@ -6,7 +6,7 @@ open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model
 /--
 Each value of a function on a finite type is bounded by the sum of all norms: `‖h y‖ ≤ ∑ y', ‖h y'‖`.
 -/
-@[main]
+@[path]
 private lemma main
   [Fintype S]
 -- given

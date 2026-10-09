@@ -4,13 +4,13 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Nat.Le.is.Lt.ou.Eq |
+| path | Nat.Le.is.Lt.ou.Eq |
 | comm | Nat.Lt.ou.Eq.is.Le |
 | mp   | Nat.Lt.ou.Eq.of.Le |
 | mpr  | Nat.Le.of.Lt.ou.Eq |
 | mp.comm | Nat.Eq.ou.Lt.of.Ge |
 -/
-@[main, comm, mp, mpr, mp.comm]
+@[path, comm, mp, mpr, mp.comm]
 private lemma main
   [PartialOrder α]
 -- given

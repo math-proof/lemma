@@ -7,7 +7,7 @@ import Lemma.Real.Anchors.Time0.eq.Zero
 open Real Finset
 
 
-@[main]
+@[path]
 private lemma main
   {ν : ℝ}
 -- given

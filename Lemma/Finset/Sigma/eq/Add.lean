@@ -2,7 +2,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma recurrent
   {n k : ℕ}
   {x : ℕ → ℂ}
@@ -29,7 +29,7 @@ private lemma recurrent
     exact Finset.notMem_range_self ((Finset.mem_powersetCard.mp h1).1 (Finset.mem_insert_self n s))
 
 
-@[main]
+@[path]
 private lemma recurrent.two
   {n k : ℕ}
   {x : ℕ → ℂ}

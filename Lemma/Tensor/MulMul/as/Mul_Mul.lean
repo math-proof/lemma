@@ -22,7 +22,7 @@ Per-axis `lcm` is associative, and wrapping satisfies
 `(i % lcm(a,b)) % a = i % a`, so the data is
 `A[i%a] * B[i%b] * C[i%c]` in either association.
 -/
-@[main]
+@[path]
 private lemma main
   [Semigroup α]
 -- given

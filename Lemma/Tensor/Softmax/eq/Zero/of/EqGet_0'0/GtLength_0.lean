@@ -2,7 +2,7 @@ import Lemma.Tensor.Softmax.eq.Zero
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [ExpRing α]
 -- given

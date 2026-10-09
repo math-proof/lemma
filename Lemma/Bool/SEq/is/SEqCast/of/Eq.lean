@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | --- | --- |
-| main | Bool.SEq.is.SEqCast.of.Eq |
+| path | Bool.SEq.is.SEqCast.of.Eq |
 | comm | Bool.SEqCast.is.SEq.of.Eq |
 | mp  | Bool.SEqCast.of.SEq.Eq |
 | mpr   | Bool.SEq.of.SEqCast.Eq |
@@ -13,7 +13,7 @@ import sympy.Basic
 | mpr.comm | Bool.SEq.of.SEq_Cast |
 | comm.is 1 | Bool.SEq.is.SEq_Cast.of.Eq |
 -/
-@[main, comm, mp, mpr, mp.comm, mpr.comm, comm.is 1]
+@[path, comm, mp, mpr, mp.comm, mpr.comm, comm.is 1]
 private lemma main
   {Vector : α → Sort v}
   {a : Vector n_a}

@@ -4,7 +4,7 @@ open Set
 
 
 
-@[main]
+@[path]
 private lemma main
   {f : ℝ → ℝ}
   {a b x₀ x₁ : ℝ}

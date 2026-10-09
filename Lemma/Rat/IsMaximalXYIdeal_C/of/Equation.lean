@@ -7,7 +7,7 @@ open scoped Polynomial.Bivariate
 /--
 [WeierstrassCurve_Affine_CoordinateRing_XYIdeal_isMaximal](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_WeierstrassCurve_Affine_CoordinateRing_XYIdeal_isMaximal.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [Field K]
   {W : Affine K}

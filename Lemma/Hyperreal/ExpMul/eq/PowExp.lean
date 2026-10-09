@@ -2,7 +2,7 @@ import Lemma.Hyperreal.ExpSMul.eq.PowExp
 open Hyperreal
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (x : ℝ*)

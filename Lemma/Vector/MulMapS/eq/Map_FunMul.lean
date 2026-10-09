@@ -4,7 +4,7 @@ import Lemma.Vector.EqGetRange
 open Vector Nat
 
 
-@[main]
+@[path]
 private lemma main
   [Mul α]
 -- given

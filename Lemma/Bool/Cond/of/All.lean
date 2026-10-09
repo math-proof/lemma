@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   [Nonempty α]
   {r : Prop}
@@ -14,7 +14,7 @@ private lemma main
   exact h x
 
 
-@[main]
+@[path]
 private lemma domain_defined
   {D : Set α}
   {p : α → Prop}
@@ -28,7 +28,7 @@ private lemma domain_defined
   h₀ x h₁
 
 
-@[main]
+@[path]
 private lemma subst
   {n : ℕ}
   {p : ℕ → Prop}

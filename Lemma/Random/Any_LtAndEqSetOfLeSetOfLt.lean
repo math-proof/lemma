@@ -4,7 +4,7 @@ import Mathlib.Data.Real.Basic
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {Ω : Type*} [Fintype Ω]
 -- given

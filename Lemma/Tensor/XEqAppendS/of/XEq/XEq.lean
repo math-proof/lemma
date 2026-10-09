@@ -4,7 +4,7 @@ import Lemma.Tensor.XEq.is.All_XEqGetS
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [XEq α]
   {A A' : Tensor α (n :: s)}

@@ -4,7 +4,7 @@ import Lemma.Nat.LeMulS.of.Le.Ge_0
 open Rat Nat
 
 
-@[main, comm 2]
+@[path, comm 2]
 private lemma main
   [GroupWithZero α]
   [PartialOrder α]

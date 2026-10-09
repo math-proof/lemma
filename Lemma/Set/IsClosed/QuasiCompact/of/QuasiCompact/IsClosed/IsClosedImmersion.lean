@@ -6,7 +6,7 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 /--
 [AlgebraicGeometry_IsClosedImmersion_isClosed_iInf_preimage_and_quasiCompact](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_IsClosedImmersion_isClosed_iInf_preimage_and_quasiCompact.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {B E P : Scheme.{u}}
   {m : E ⟶ P}

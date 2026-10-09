@@ -6,7 +6,7 @@ import Mathlib.Topology.Algebra.Module.FiniteDimension
 open MeasureTheory Matrix
 
 
-@[main]
+@[path]
 private lemma main
   {n : ℕ}
   {A : Matrix (Fin n) (Fin n) ℝ}

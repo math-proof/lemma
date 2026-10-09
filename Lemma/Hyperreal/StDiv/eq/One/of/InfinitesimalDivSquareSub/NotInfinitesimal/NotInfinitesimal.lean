@@ -8,7 +8,7 @@ import Lemma.Nat.MulMul
 open Hyperreal Nat
 
 
-@[main]
+@[path]
 private lemma main
   {a b : ℝ*}
 -- given

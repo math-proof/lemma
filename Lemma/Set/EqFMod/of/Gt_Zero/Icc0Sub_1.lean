@@ -6,7 +6,7 @@ import Lemma.Set.FDiv.eq.Zero.of.Gt_Zero.Icc0Sub_1
 open Set Nat Int
 
 
-@[main]
+@[path]
 private lemma main
   {n d : ℤ}
 -- given

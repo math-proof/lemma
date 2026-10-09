@@ -4,7 +4,7 @@ import Lemma.Bool.Ite_Ite.eq.Ite__Ite
 open Bool Nat
 
 
-@[main]
+@[path]
 private lemma main
   [Decidable p]
   [Decidable q] :

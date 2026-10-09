@@ -4,7 +4,7 @@ import Lemma.Int.EqSign_1.of.Gt_0
 open Nat Int
 
 
-@[main]
+@[path]
 private lemma main
   {n : ℤ}
 -- given

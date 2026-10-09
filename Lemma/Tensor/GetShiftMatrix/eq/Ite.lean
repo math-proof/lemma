@@ -8,10 +8,10 @@ open Tensor
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Tensor.GetShiftMatrix.eq.Ite |
+| path | Tensor.GetShiftMatrix.eq.Ite |
 | fin | Tensor.GetShiftMatrix.eq.Ite.fin |
 -/
-@[main, fin]
+@[path, fin]
 private lemma main
   [AddMonoidWithOne α] [CharZero α]
   {n : ℕ}

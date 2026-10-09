@@ -7,7 +7,7 @@ open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random 
 /--
 `𝔼[G(ω[t]) * f(ω[t+j])] = 𝔼[G(ω[t]) * Kf θ f j (ω[t])]` for bounded strongly measurable `f`, `G`.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [Fintype A]
   {M : Model Θ S A}

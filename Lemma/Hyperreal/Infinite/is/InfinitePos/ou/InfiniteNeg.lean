@@ -8,7 +8,7 @@ open Bool Hyperreal
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Hyperreal.Infinite.is.InfinitePos.ou.InfiniteNeg |
+| path | Hyperreal.Infinite.is.InfinitePos.ou.InfiniteNeg |
 | comm | Hyperreal.InfinitePos.ou.InfiniteNeg.is.Infinite |
 | mp   | Hyperreal.InfinitePos.ou.InfiniteNeg.of.Infinite |
 | mpr  | Hyperreal.Infinite.of.InfinitePos.ou.InfiniteNeg |
@@ -16,7 +16,7 @@ open Bool Hyperreal
 | mpr.mt| Hyperreal.NotInfinitePos.NotInfiniteNeg.of.NotInfinite |
 | mpr.left  | Hyperreal.Infinite.of.InfinitePos |
 -/
-@[main, comm, mp, mpr, mp.mt, mpr.mt, mpr.left]
+@[path, comm, mp, mpr, mp.mt, mpr.mt, mpr.left]
 private lemma main
 -- given
   (x : ℝ*) :

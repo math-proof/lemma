@@ -6,7 +6,7 @@ open Tensor Vector
 
 
 /-- `(A / B) * C = (A * C) / B` for division by a 0-d tensor. -/
-@[main]
+@[path]
 private lemma main
   [Semifield α]
 -- given
@@ -27,7 +27,7 @@ private lemma main
 
 
 /-- `(a / B) * C = (a * C) / B` for scalar left factor. -/
-@[main]
+@[path]
 private lemma left
   [Semifield α]
 -- given
@@ -47,7 +47,7 @@ private lemma left
 
 
 /-- `(A / B) * b = (A * b) / B` for scalar right factor. -/
-@[main]
+@[path]
 private lemma right
   [Semifield α]
 -- given

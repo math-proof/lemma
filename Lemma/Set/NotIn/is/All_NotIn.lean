@@ -5,10 +5,10 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Set.NotIn.is.All_NotIn |
+| path | Set.NotIn.is.All_NotIn |
 | mpr | Set.NotIn.of.All_NotIn |
 -/
-@[main, mpr]
+@[path, mpr]
 private lemma main
   {n : ℕ}
   {x : α}

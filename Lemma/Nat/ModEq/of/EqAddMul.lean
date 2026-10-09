@@ -5,10 +5,10 @@ open Nat
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Nat.ModEq.of.EqAddMul |
+| path | Nat.ModEq.of.EqAddMul |
 | comm 1 | Nat.ModEq.of.Eq_AddMul |
 -/
-@[main, comm 1]
+@[path, comm 1]
 private lemma main
   {n d q r : ℕ}
 -- given

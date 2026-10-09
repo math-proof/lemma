@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """Format a Lemma .lean file: add attribute docstrings.
 
-For files with `@[main, ...]` private lemma main, generates attribute docstrings via
+For files with `@[path, ...]` private lemma main, generates attribute docstrings via
 `sympy/parsing/AttrDocstringGen.lean` and verifies each name with `#check`.
 
 Only the lemma main will be added with attribute docstring; other lemmas won't.
 
-If the lemma is only `@[main]` (no other attributes), do not add an attribute
+If the lemma is only `@[path]` (no other attributes), do not add an attribute
 docstring. The name is already implied by the file path.
 
 Redundant imports are handled separately by `py/delete_import.py`.
@@ -31,7 +31,7 @@ GEN = ROOT / "sympy" / "parsing" / "AttrDocstringGen.lean"
 SH_DIR = ROOT / "sh"
 
 CUSTOM_ATTR_HEADS = frozenset({
-    "main", "comm", "mp", "mpr", "mp.comm", "mpr.comm", "comm.is", "is.comm",
+    "path", "comm", "mp", "mpr", "mp.comm", "mpr.comm", "comm.is", "is.comm",
     "mt", "mp.mt", "mpr.mt", "Or.inl", "Or.inr", "mpr.left", "mpr.right",
     "mp.left", "mp.right",
     "And.left", "And.right",
@@ -39,14 +39,14 @@ CUSTOM_ATTR_HEADS = frozenset({
     "mp and", "mpr and", "mp.comm and", "mpr.comm and",
 })
 
-# Requires `@[main, ...]` with at least one extra attribute. Bare `@[main]`
+# Requires `@[path, ...]` with at least one extra attribute. Bare `@[path]`
 # needs no attribute docstring.
 MAIN_ATTR_RE = re.compile(
-    r"@\[main,\s*([^\]]+)\]\s*\nprivate lemma main\b",
+    r"@\[path,\s*([^\]]+)\]\s*\nprivate lemma main\b",
 )
 
 ATTR_DOCSTRING_RE = re.compile(
-    r"/--\s*\n\| attributes \| lemma \|.*?\n-/\s*\n+(?=@\[main,\s*)",
+    r"/--\s*\n\| attributes \| lemma \|.*?\n-/\s*\n+(?=@\[path,\s*)",
     flags=re.DOTALL,
 )
 
@@ -90,7 +90,7 @@ def parse_attr_tokens(attr_blob: str) -> list[str]:
 
 
 def custom_attrs(tokens: list[str]) -> list[str]:
-    return [t for t in tokens if t != "main" and is_custom_attr(t)]
+    return [t for t in tokens if t != "path" and is_custom_attr(t)]
 
 
 def find_main_attr_block(content: str) -> tuple[int, str] | None:
@@ -241,13 +241,13 @@ def process_docstrings(
 
     found = find_main_attr_block(content)
     if not found:
-        # `@[main]` only: skip the attributes table.
+        # `@[path]` only: skip the attributes table.
         return content, False
 
     insert_at, attr_blob = found
     attrs = custom_attrs(parse_attr_tokens(attr_blob))
-    if not attrs and "main" not in parse_attr_tokens(attr_blob):
-        raise ValueError(f"no custom attributes found in @[main, {attr_blob}]")
+    if not attrs and "path" not in parse_attr_tokens(attr_blob):
+        raise ValueError(f"no custom attributes found in @[path, {attr_blob}]")
 
     # Build first so the (possibly parity-aware, binder-driven) generated names
     # can be resolved by importing the compiled module inside AttrDocstringGen.
@@ -283,7 +283,7 @@ def process_docstrings(
         new_content = remove_attr_docstring(new_content)
         found = find_main_attr_block(new_content)
         if not found:
-            raise ValueError(f"lost @[main, ...] after removing docstring in {rel}")
+            raise ValueError(f"lost @[path, ...] after removing docstring in {rel}")
         insert_at, _ = found
 
     new_content = insert_docstring(new_content, insert_at, doc)

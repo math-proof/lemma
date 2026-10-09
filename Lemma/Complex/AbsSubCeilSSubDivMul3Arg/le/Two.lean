@@ -6,7 +6,7 @@ import Lemma.Nat.LeAddS.of.Le.Le
 open Complex Int Nat
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (z w : ℂ) :

@@ -3,7 +3,7 @@ import sympy.Basic
 import torch.Tensor.sum
 
 
-@[main]
+@[path]
 private lemma main
   [Add α] [Zero α]
   {A B : Tensor α s}

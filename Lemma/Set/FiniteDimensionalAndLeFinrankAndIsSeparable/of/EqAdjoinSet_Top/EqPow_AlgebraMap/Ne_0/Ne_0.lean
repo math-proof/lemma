@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [IntermediateField_finiteDimensional_and_finrank_le_and_isSeparable_of_pow_eq_of_adjoin_simple_eq_top](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_IntermediateField_finiteDimensional_and_finrank_le_and_isSeparable_of_pow_eq_of_adjoin_simple_eq_top.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {F E : Type*} [Field F] [Field E] [Algebra F E]
   {n : ℕ}

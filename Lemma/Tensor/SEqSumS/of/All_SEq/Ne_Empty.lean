@@ -6,7 +6,7 @@ import torch.Tensor.sum
 open Finset Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [AddCommMonoid α]
   [DecidableEq ι]

@@ -6,7 +6,7 @@ open scoped Pointwise
 /--
 [QuotSMulTop_span_eq_top_of_span_quotientMk_eq_top](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_QuotSMulTop_span_eq_top_of_span_quotientMk_eq_top.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing R] [AddCommGroup M] [Module R M] [IsLocalRing R] [Module.Finite R M]
   {x : R}

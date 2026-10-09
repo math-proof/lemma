@@ -4,7 +4,7 @@ import sympy.Basic
 /--
 [DecidableEq ι] is not required in Real.exp_sum
 -/
-@[main]
+@[path]
 private lemma main
 -- given
   (s : Finset ι)

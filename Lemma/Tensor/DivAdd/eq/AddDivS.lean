@@ -7,7 +7,7 @@ import Lemma.Vector.Eq.is.All_EqGetS
 open Tensor Vector
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [DivisionSemiring α]
 -- given

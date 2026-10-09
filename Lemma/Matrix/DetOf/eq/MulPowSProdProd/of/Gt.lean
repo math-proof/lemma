@@ -6,7 +6,7 @@ import Lemma.Matrix.DetOf.eq.MulPowSProdProd.of.Le
 open Matrix Nat
 
 
-@[main]
+@[path]
 private lemma main
   {m d : ℕ}
   {r : ℝ}

@@ -3,7 +3,7 @@ import Lemma.Vector.MapDiv.eq.DivMap.of.All_Eq_Div
 open Tensor Vector
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [Div α]
   [Div β]

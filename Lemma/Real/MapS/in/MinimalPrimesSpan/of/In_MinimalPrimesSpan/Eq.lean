@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [Ideal_map_mem_minimalPrimes_span_singleton_of_apply_eq](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Ideal_map_mem_minimalPrimes_span_singleton_of_apply_eq.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing S]
   {π : S}

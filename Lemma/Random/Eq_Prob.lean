@@ -3,7 +3,7 @@ import sympy.stats.joint_rv
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace Ω]
   [ReferenceMeasure α]

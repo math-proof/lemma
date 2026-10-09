@@ -4,7 +4,7 @@ import Lemma.Random.IndepJoint.of.Indep.Indep_Joint
 open ProbabilityTheory MeasureTheory Random
 
 
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace Ω]
   [ReferenceMeasure α] [ReferenceMeasure β] [ReferenceMeasure γ]

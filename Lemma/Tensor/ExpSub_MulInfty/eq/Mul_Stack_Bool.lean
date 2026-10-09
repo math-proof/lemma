@@ -5,7 +5,7 @@ import Lemma.Tensor.NegMul.eq.MulNeg
 open Tensor Int Hyperreal
 
 
-@[main]
+@[path]
 private lemma main
   {n : ℕ}
 -- given

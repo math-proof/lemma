@@ -9,7 +9,7 @@ import torch.Tensor
 open List Tensor Vector
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [Zero α] [Zero β]
   {f : α → β}

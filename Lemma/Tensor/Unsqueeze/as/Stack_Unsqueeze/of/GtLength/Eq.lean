@@ -4,7 +4,7 @@ import Lemma.Tensor.SEqStackS_UFnGet.of.Eq
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h : n = m)

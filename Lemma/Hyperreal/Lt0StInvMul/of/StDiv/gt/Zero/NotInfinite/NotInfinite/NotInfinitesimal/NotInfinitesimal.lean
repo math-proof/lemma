@@ -7,7 +7,7 @@ import Lemma.Rat.Lt0Div.is.Lt0Mul
 open Hyperreal Rat
 
 
-@[main]
+@[path]
 private lemma main
   {a b : ℝ*}
 -- given

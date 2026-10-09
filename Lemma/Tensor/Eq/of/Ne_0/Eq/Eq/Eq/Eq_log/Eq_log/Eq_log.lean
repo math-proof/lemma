@@ -2,7 +2,7 @@ import sympy.stats.hidden_markov_sequence
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma crf.markov.logits
   {Y : Type*}
   {P : ℕ → (ℕ → Y) → ℝ}

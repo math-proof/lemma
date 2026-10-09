@@ -4,7 +4,7 @@ import sympy.Basic
 /--
 law of excluded middle
 -/
-@[main]
+@[path]
 private lemma main
 -- given
   (p : Prop) :

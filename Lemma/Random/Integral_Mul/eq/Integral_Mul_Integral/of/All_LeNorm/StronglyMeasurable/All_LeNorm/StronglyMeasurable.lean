@@ -7,7 +7,7 @@ open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random 
 /--
 Markov property along histories: `𝔼[G(ω[..n]) * g(ω[n+1])] = 𝔼[G(ω[..n]) * ∫ z, g z ∂(K θ ω[n])]`.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [Fintype A]
   {M : Model Θ S A}

@@ -3,7 +3,7 @@ import Lemma.Vector.Eq_MapRange_FunGet
 open Vector
 
 
-@[main]
+@[path]
 private lemma main
   {v : List.Vector α (m * n)}
   {u : Fin m → List.Vector α n}

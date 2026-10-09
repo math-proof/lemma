@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [IsLocalRing_exists_ringHom_range_comp_rangeRestrict_eq_of_surjective](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_IsLocalRing_exists_ringHom_range_comp_rangeRestrict_eq_of_surjective.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing R] [IsLocalRing R] [Field k] [Field K]
   {π : R →+* k}

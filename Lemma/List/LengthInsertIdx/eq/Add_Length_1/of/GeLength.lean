@@ -3,7 +3,7 @@ import stdlib.List
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   {s : List α}
 -- given

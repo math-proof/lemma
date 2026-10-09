@@ -7,7 +7,7 @@ open Complex
 
 
 /-- The core identity: with the SymPy branch index `d`, `A * B * ω ^ d = -p / 3`. -/
-@[main]
+@[path]
 private lemma main
   {p q δ : ℂ}
   {d : ℤ}

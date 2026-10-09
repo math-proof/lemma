@@ -9,7 +9,7 @@ import Lemma.NormedSpace.HasDerivAtVecMul_Exp
 open Matrix NormedSpace
 
 
-@[main]
+@[path]
 private lemma main
   {S : Type*} [Fintype S] [DecidableEq S]
   {Q : Matrix S S ℝ}

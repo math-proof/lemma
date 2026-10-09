@@ -4,7 +4,7 @@ import Lemma.Int.Sub.eq.Add_Neg
 open Int
 
 
-@[main]
+@[path]
 private lemma main
   [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
   [FloorRing α]

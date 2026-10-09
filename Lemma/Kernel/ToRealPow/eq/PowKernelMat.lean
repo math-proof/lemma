@@ -3,7 +3,7 @@ import sympy.Basic
 open MeasureTheory ProbabilityTheory
 
 
-@[main]
+@[path]
 private lemma main
   [Fintype S] [DecidableEq S] [MeasurableSpace S] [MeasurableSingletonClass S]
 -- given

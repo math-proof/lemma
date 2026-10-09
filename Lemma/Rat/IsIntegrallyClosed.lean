@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [IsIntegrallyClosed_of_isIntegrallyClosedIn_of_faithfulSMul](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_IsIntegrallyClosed_of_isIntegrallyClosedIn_of_faithfulSMul.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {A F : Type*} [CommRing A] [IsDomain A] [Field F] [Algebra A F] [FaithfulSMul A F] [IsIntegrallyClosedIn A F] :
 -- imply

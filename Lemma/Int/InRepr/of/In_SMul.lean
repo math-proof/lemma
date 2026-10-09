@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [Module_Basis_repr_apply_mem_of_mem_ideal_smul_top](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Module_Basis_repr_apply_mem_of_mem_ideal_smul_top.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing R] [AddCommGroup N] [Module R N]
   {b : Module.Basis κ R N}

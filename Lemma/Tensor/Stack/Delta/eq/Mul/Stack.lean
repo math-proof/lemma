@@ -4,7 +4,7 @@ import Mathlib.Data.Real.Basic
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   {n i d : ℕ}
   {f : ℕ → ℝ} :

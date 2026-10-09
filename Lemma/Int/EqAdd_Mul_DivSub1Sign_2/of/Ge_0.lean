@@ -4,7 +4,7 @@ import Lemma.Nat.EqAdd_Mul_DivSub1Sign_2
 open Int Nat Slice
 
 
-@[main]
+@[path]
 private lemma main
   {i : ℤ}
 -- given

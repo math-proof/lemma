@@ -2,7 +2,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma reverse.given
   {a b : α}
 -- given
@@ -13,7 +13,7 @@ private lemma reverse.given
   exact h.symm
 
 
-@[main]
+@[path]
 private lemma reverse
   {a b : α}
 -- given

@@ -4,7 +4,7 @@ import sympy.vector.Basic
 open Vector
 
 
-@[main]
+@[path]
 private lemma main
   [Zero α]
 -- given

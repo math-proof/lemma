@@ -7,7 +7,7 @@ open scoped Pointwise
 /--
 [MeasureTheory_IsFundamentalDomain_image_mulEquiv_op_subgroupOf](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_MeasureTheory_IsFundamentalDomain_image_mulEquiv_op_subgroupOf.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {A B : Type*} [Group A] [Group B] [MeasurableSpace A] [MeasurableSpace B] [MeasurableMul A] [MeasurableMul B]
   {H : Subgroup A}

@@ -7,7 +7,7 @@ import Lemma.Hyperreal.Lt0StInvMul.of.StDiv.gt.Zero.NotInfinite.NotInfinite.NotI
 open Hyperreal
 
 
-@[main]
+@[path]
 private lemma main
   {a b : ℝ*}
 -- given

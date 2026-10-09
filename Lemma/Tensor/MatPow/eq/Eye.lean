@@ -2,7 +2,7 @@ import sympy.matrices.expressions.matpow
 import sympy.concrete.products
 
 
-@[main, subst 0]
+@[path, subst 0]
 private lemma main
   [CommRing α] [CharZero α]
   {n : ℕ}

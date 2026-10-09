@@ -6,7 +6,7 @@ open CategoryTheory AlgebraicGeometry
 /--
 [AlgebraicGeometry_isReduced_of_flat_of_surjective](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_isReduced_of_flat_of_surjective.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {X Y : Scheme.{u}} [IsReduced X]
   {f : X ⟶ Y} [Flat f] [Surjective f] :

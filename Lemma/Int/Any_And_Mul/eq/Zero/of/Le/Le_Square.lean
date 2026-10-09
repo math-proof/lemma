@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [Ideal_exists_not_mem_and_forall_mul_eq_zero_of_le_sq_of_le](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Ideal_exists_not_mem_and_forall_mul_eq_zero_of_le_sq_of_le.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing B] [IsNoetherianRing B]
   {I : Ideal B}

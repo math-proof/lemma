@@ -3,7 +3,7 @@ import Lemma.Rat.EqDiv0_0
 open Rat
 
 
-@[main]
+@[path]
 private lemma main
   [GroupWithZero α]
   [PartialOrder α]

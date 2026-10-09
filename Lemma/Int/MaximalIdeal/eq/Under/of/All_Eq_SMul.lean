@@ -6,7 +6,7 @@ open Pointwise
 /--
 [Algebra_IsInvariant_exists_isLocalRing_maximalIdeal_eq_under_of_forall_isMaximal_exists_smul_eq](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Algebra_IsInvariant_exists_isLocalRing_maximalIdeal_eq_under_of_forall_isMaximal_exists_smul_eq.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [Group G] [Finite G]
   {A B : Type*} [CommRing A] [CommRing B] [Algebra A B] [MulSemiringAction G B] [SMulCommClass G A B] [Algebra.IsInvariant A B G] [Algebra.IsIntegral A B] [FaithfulSMul A B]

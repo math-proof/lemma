@@ -2,7 +2,7 @@ import sympy.vector.vector
 import sympy.Basic
 
 
-@[main, fin, val]
+@[path, fin, val]
 private lemma main
   {n : ℕ}
 -- given

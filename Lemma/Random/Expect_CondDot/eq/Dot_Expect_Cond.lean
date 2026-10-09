@@ -105,10 +105,10 @@ Python: Random.Expect_CondDot.eq.Dot_Expect_Cond.
 
 | attributes | lemma |
 | :---: | :---: |
-| main | Random.Expect_CondDot.eq.Dot_Expect_Cond |
+| path | Random.Expect_CondDot.eq.Dot_Expect_Cond |
 | comm | Random.Dot_Expect_Cond.eq.Expect_CondDot |
 -/
-@[main, comm]
+@[path, comm]
 private lemma main
   [MeasurableSpace Ω]
   [MeasurableSpace α]

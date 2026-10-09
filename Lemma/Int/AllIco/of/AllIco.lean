@@ -3,7 +3,7 @@ import Lemma.Int.EqAddSub
 open Set Int
 
 
-@[main]
+@[path]
 private lemma offset
   [Preorder ι]
   [AddGroup ι]

@@ -5,7 +5,7 @@ import Lemma.Int.Le.of.EqAdd.Ge_0
 open Int Rat
 
 
-@[main]
+@[path]
 private lemma main
   [Field α] [LinearOrder α] [IsStrictOrderedRing α]
   {n d : ℤ}

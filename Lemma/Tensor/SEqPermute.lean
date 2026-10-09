@@ -4,7 +4,7 @@ import Lemma.List.EqPermute
 open List
 
 
-@[main, comm, cast, subst 0]
+@[path, comm, cast, subst 0]
 private lemma main
 -- given
   (X : Tensor α s)

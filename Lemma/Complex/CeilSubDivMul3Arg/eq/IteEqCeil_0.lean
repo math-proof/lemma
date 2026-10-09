@@ -9,7 +9,7 @@ import Lemma.Bool.NotOr.is.AndNotS
 open Bool Complex Nat
 
 
-@[main]
+@[path]
 private lemma main
   {p q : ℂ} :
 -- imply

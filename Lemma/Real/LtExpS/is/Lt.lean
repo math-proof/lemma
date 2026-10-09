@@ -2,7 +2,7 @@ import sympy.Basic
 import sympy.functions.elementary.exponential
 
 
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   [ExpPos α]
 -- given

@@ -8,7 +8,7 @@ import Lemma.Vector.MulAppendS.eq.AppendMulS
 open Bool Tensor Vector
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [Mul α]
 -- given

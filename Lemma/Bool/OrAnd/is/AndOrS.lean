@@ -4,12 +4,12 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Bool.OrAnd.is.AndOrS |
+| path | Bool.OrAnd.is.AndOrS |
 | comm | Bool.AndOrS.is.OrAnd |
 | mp | Bool.AndOrS.of.OrAnd |
 | mpr | Bool.OrAnd.of.AndOrS |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main:
 -- imply
   p ∧ q ∨ r ↔ (p ∨ r) ∧ (q ∨ r) := by

@@ -2,7 +2,7 @@ import Lemma.Set.In_Range.ou.Eq.of.In_Range
 open Set
 
 
-@[main]
+@[path]
 private lemma main
   {x y : ℕ → α}
 -- given
@@ -16,7 +16,7 @@ private lemma main
     simp_all
 
 
-@[main]
+@[path]
 private lemma is_constant
   {x : ℕ → α}
   {a : α}

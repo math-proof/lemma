@@ -4,7 +4,7 @@ import Lemma.Vector.EqGetSplitAt_0'0
 open Nat Vector Fin
 
 
-@[main]
+@[path]
 private lemma main
   {s : List ℕ}
 -- given

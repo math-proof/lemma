@@ -25,7 +25,7 @@ h₁: θ ↦ π_θ(u | x) is differentiable; h₂, h₃, h₄: its gradient is d
 the actions uniformly in the state. `V = Vkd`, `Q = Qkd` are the closed-form values of
 `sympy.stats.policy_trajectory.continuous_action`.
 -/
-@[main]
+@[path]
 private lemma main
   [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [FiniteDimensional ℝ Θ]
   [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S]

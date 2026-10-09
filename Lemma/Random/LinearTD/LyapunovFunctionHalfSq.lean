@@ -6,7 +6,7 @@ import Lemma.Random.LinearTD.DecreaseAlongHalfSq
 open LpSpace
 
 
-@[main]
+@[path]
 private lemma main
   {S : Type*} [Fintype S] [DecidableEq S] [Nonempty S] [MeasurableSpace S] [MeasurableSingletonClass S]
   {d : ℕ}

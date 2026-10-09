@@ -6,7 +6,7 @@ open Tensor Vector
 
 
 /-- `(A * B) * C = (A * C) * B` for multiplication by a 0-d tensor. -/
-@[main]
+@[path]
 private lemma Comm
   [CommSemigroup α]
 -- given
@@ -27,7 +27,7 @@ private lemma Comm
 
 
 /-- `(a * B) * C = (a * C) * B` for scalar left factor. -/
-@[main]
+@[path]
 private lemma comm.left
   [CommSemigroup α]
 -- given
@@ -47,7 +47,7 @@ private lemma comm.left
 
 
 /-- `(A * B) * b = (A * b) * B` for scalar right factor. -/
-@[main]
+@[path]
 private lemma comm.right
   [CommSemigroup α]
 -- given

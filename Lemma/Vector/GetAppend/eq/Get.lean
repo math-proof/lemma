@@ -2,7 +2,7 @@ import Lemma.Vector.ValAppend.eq.AppendValS
 open Vector
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (a : List.Vector α n)

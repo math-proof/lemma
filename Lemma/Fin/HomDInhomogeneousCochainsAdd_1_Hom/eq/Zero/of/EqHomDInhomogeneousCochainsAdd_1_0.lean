@@ -6,7 +6,7 @@ open CategoryTheory groupCohomology
 /--
 [groupCohomology_inhomogeneousCochains_d_comp_eq_zero_of_d_eq_zero](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_groupCohomology_inhomogeneousCochains_d_comp_eq_zero_of_d_eq_zero.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {k G : Type} [CommRing k] [Group G]
   {A B : Rep.{0} k G}

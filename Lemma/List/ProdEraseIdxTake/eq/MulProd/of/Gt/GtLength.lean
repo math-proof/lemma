@@ -3,7 +3,7 @@ import Lemma.List.TakeEraseIdx.eq.EraseIdxTake.of.Le
 open List
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [Monoid α]
   {s : List α}

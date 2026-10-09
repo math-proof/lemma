@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [IharaLemma_resInj_of_reduction](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_IharaLemma_resInj_of_reduction.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing R]
   {V L Vk Lk : Type*} [AddCommGroup V] [Module R V] [AddCommGroup L] [Module R L] [AddCommGroup Vk] [Module R Vk] [AddCommGroup Lk] [Module R Lk]

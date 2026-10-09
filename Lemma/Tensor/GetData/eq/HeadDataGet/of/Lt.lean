@@ -4,7 +4,7 @@ import Lemma.Vector.Head.eq.Get_0
 open Tensor Vector
 
 
-@[main, fin]
+@[path, fin]
 private lemma main
 -- given
   (h_i : i < n)

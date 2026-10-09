@@ -2,7 +2,7 @@ import Lemma.Set.NotIn.of.NotIn.Subset
 open Set
 
 
-@[main]
+@[path]
 private lemma main
   {B C : Set α}
 -- given

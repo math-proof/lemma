@@ -3,7 +3,7 @@ import Lemma.Vector.EqGetReplicate.of.Lt
 open Vector
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h_n : n > 0)

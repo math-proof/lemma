@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma transform.ij_parallel
   {i j a m d n : ℤ} :
 -- imply

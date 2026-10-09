@@ -5,7 +5,7 @@ import Lemma.Vector.Flatten0.eq.Zero
 open Tensor Vector
 
 
-@[main]
+@[path]
 private lemma main
   [Zero α]
 -- given

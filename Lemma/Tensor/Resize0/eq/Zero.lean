@@ -10,7 +10,7 @@ import Lemma.List.ProdSet.eq.MulProd_Mul_Prod.of.GtLength
 open Tensor Vector
 
 
-@[main]
+@[path]
 private lemma main
   [Zero α]
   {s : List ℕ}

@@ -1,6 +1,6 @@
 import sympy.matrices.expressions.matmul
 import torch.Tensor.sum
-@[main]
+@[path]
 private lemma main
   [Mul α] [Add α] [Zero α]
 -- given

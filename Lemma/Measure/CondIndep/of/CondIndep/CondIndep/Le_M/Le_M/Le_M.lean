@@ -8,7 +8,7 @@ Contraction of conditional independence: if `m₁` and `m₂` are conditionally 
 and `m₁` and `m₃` are conditionally independent given `m' ⊔ m₂`, then `m₁` is conditionally
 independent of `m₂ ⊔ m₃` given `m'` (`A ⟂ B | G → A ⟂ C | (G, B) → A ⟂ (B, C) | G`).
 -/
-@[main]
+@[path]
 private lemma main
   {m' m₁ m₂ m₃ : MeasurableSpace Ω} [mΩ : MeasurableSpace Ω] [StandardBorelSpace Ω]
   {μ : Measure Ω} [IsFiniteMeasure μ]

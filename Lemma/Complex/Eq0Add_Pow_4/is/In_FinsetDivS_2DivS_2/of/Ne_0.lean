@@ -13,12 +13,12 @@ open Complex Int Rat Set
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Complex.Eq0Add_Pow_4.is.In_FinsetDivS_2DivS_2.of.Ne_0 |
+| path | Complex.Eq0Add_Pow_4.is.In_FinsetDivS_2DivS_2.of.Ne_0 |
 | comm | Complex.In_FinsetDivS_2DivS_2.is.Eq0Add_Pow_4.of.Ne_0 |
 | mp | Complex.In_FinsetDivS_2DivS_2.of.Eq0Add_Pow_4.Ne_0 |
 | mpr | Complex.Eq0Add_Pow_4.of.In_FinsetDivS_2DivS_2.Ne_0 |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   {x α β γ : ℂ}
 -- given

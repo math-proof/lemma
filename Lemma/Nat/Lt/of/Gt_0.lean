@@ -2,7 +2,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma given
   {x y : ℝ}
 -- given
@@ -13,7 +13,7 @@ private lemma given
   exact sub_pos.mp h
 
 
-@[main]
+@[path]
 private lemma main
   {x y : ℝ}
 -- given
@@ -24,7 +24,7 @@ private lemma main
   exact sub_pos.mp h
 
 
-@[main]
+@[path]
 private lemma scale
   {x t : ℝ}
 -- given

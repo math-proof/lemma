@@ -6,7 +6,7 @@ import torch.Tensor.sum
 open Bool Tensor Vector
 
 
-@[main, comm, cast]
+@[path, comm, cast]
 private lemma main
   [Add α] [Zero α]
 -- given

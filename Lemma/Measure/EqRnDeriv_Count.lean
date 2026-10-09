@@ -5,7 +5,7 @@ import Lemma.Measure.Ll_Count
 open MeasureTheory Measure
 
 
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace α] [Countable α] [MeasurableSingletonClass α]
   {μ : Measure α}

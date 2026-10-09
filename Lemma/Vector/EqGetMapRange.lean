@@ -2,7 +2,7 @@ import Lemma.Vector.EqGetRange
 open Vector
 
 
-@[main, fin]
+@[path, fin]
 private lemma main
 -- given
   (i : Fin n) :

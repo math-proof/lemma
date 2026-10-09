@@ -2,7 +2,7 @@ import sympy.matrices.expressions.permutation
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (i i₀ j₀ : Fin n) :

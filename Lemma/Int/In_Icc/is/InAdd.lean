@@ -8,14 +8,14 @@ open Set Nat Int
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Int.In_Icc.is.InAdd |
+| path | Int.In_Icc.is.InAdd |
 | comm | Int.InAdd.is.In_Icc |
 | mp | Int.InAdd.of.In_Icc |
 | mpr | Int.In_Icc.of.InAdd |
 | mp.mt | Int.NotIn_Icc.of.NotInAdd |
 | mpr.mt | Int.NotInAdd.of.NotIn_Icc |
 -/
-@[main, comm, mp, mpr, mp.mt, mpr.mt]
+@[path, comm, mp, mpr, mp.mt, mpr.mt]
 private lemma main
   [AddGroup α] [Preorder α]
   [AddLeftMono α] [AddRightMono α]

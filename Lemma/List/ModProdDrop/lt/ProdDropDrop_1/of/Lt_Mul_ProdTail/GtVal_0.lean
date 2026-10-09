@@ -7,7 +7,7 @@ import Lemma.Nat.Gt_0.of.GtMul
 open List Nat
 
 
-@[main]
+@[path]
 private lemma main
   {s : List ℕ}
 -- given

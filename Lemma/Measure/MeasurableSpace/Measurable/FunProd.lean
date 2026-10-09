@@ -3,7 +3,7 @@ import sympy.Basic
 
 
 /-- A map into a product is measurable iff both components are. -/
-@[main, mp, mpr]
+@[path, mp, mpr]
 private lemma main
   {α β γ : Type*}
   [MeasurableSpace α] [MeasurableSpace β] [MeasurableSpace γ]

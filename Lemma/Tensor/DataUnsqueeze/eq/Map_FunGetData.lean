@@ -9,7 +9,7 @@ import Lemma.Vector.SEq.of.All_EqGetS.Eq
 open Bool List Nat Tensor Vector
 
 
-@[main, fin]
+@[path, fin]
 private lemma main
   {s : List ℕ}
 -- given

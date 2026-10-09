@@ -6,7 +6,7 @@ open CategoryTheory CategoryTheory.Abelian CategoryTheory.Limits
 /--
 [CategoryTheory_ShortComplex_ShortExact_extClass_eq_zero_iff_exists_section_g](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_CategoryTheory_ShortComplex_ShortExact_extClass_eq_zero_iff_exists_section_g.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {C : Type u} [CategoryTheory.Category.{v} C] [CategoryTheory.Abelian C] [CategoryTheory.HasExt.{w} C]
   {S : CategoryTheory.ShortComplex C}

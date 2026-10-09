@@ -5,7 +5,7 @@ import sympy.matrices.expressions.matmul
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [NonUnitalNonAssocSemiring α]
 -- given

@@ -3,7 +3,7 @@ import Lemma.Tensor.ToMatrixDot.eq.MulToMatrixS
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [CommRing α]
 -- given
@@ -18,7 +18,7 @@ private lemma main
   rfl
 
 
-@[main]
+@[path]
 private lemma trois
   [CommRing α]
 -- given

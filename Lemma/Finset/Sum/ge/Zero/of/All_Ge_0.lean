@@ -2,7 +2,7 @@ import Lemma.Finset.GeSumS.of.All_Ge
 open Finset
 
 
-@[main]
+@[path]
 private lemma main
   [AddCommMonoid N] [PartialOrder N] [IsOrderedAddMonoid N]
   {s : Finset ι}

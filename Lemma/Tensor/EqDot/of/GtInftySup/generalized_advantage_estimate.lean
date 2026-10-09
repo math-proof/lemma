@@ -14,7 +14,7 @@ for bounded temporal-difference residuals δ and γ, ℓ ∈ [0, 1), the exponen
 This connects the weighted average of k-step estimates with the closed form A[t] used in
 generalized_advantage_estimate of the policy gradient.
 -/
-@[main]
+@[path]
 private lemma main
   {γ ℓ : ℝ}
   {δ : ℕ → ℝ}

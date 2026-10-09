@@ -3,7 +3,7 @@ import Lemma.LpSpace.ContinuousHalfSq.of.Ge_1
 open LpSpace
 
 
-@[main]
+@[path]
 private lemma main
   {p d : ℕ}
 -- given

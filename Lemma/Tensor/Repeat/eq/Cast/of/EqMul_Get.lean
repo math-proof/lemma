@@ -4,7 +4,7 @@ import Lemma.Tensor.SEqRepeat.of.EqMul_Get
 open Tensor Bool
 
 
-@[main]
+@[path]
 private lemma main
   {s : List ℕ}
   {d : Fin s.length}

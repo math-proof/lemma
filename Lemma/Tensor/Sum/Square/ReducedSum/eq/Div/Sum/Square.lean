@@ -1,7 +1,7 @@
 import Lemma.Rat.Sum.Square.eq.Div.Sum.Square
 
 
-@[main]
+@[path]
 private lemma main
   {n : ℕ}
   {x : ℕ → ℝ}

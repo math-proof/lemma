@@ -5,7 +5,7 @@ import Lemma.Nat.Div.eq.HDiv
 open Vector Nat Rat
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [CommGroupWithZero α]
   {A : α}

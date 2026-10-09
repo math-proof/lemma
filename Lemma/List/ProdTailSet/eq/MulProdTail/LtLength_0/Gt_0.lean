@@ -9,7 +9,7 @@ import Lemma.List.Tail.eq.AppendTailTake__Drop.of.Gt_0
 open List Nat
 
 
-@[main]
+@[path]
 private lemma main
   [CommMonoid α]
   {s : List α}

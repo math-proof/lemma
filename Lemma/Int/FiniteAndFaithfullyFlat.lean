@@ -6,7 +6,7 @@ open TensorProduct
 /--
 [Module_finite_and_faithfullyFlat_of_faithfullyFlat_tensorProduct](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Module_finite_and_faithfullyFlat_of_faithfullyFlat_tensorProduct.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {R : Type u} [CommRing R]
   {W : Type v} [CommRing W] [Algebra R W] [Module.FaithfullyFlat R W]

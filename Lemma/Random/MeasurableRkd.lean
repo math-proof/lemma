@@ -7,7 +7,7 @@ open MeasureTheory PolicyGradient
 /--
 `(x, u) ↦ rkd x u = 𝔼[r[t] | s[t] = x, a[t] = u]` is jointly measurable (the reward is a kernel on `S × A`).
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace S] [ReferenceMeasure A]
   {M : DensityModel Θ S A} :

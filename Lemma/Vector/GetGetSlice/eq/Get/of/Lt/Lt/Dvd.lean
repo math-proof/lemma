@@ -7,7 +7,7 @@ import Lemma.Vector.GetGetSlice.eq.Get
 open List Nat Vector
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h_d : d ∣ n)

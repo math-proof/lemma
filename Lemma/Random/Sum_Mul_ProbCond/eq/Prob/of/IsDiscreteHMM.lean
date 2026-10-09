@@ -25,7 +25,7 @@ independences of the HMM (for sets of sample paths), runs the forward recursion 
 once from the observed future, and obtains the forward-backward identity
 `ℙ(x[:n] = «x.bvar»[:n] ∧ y t = «y.bvar» t) = α t «y.bvar» t * β t «y.bvar» t` along the way.
 -/
-@[main]
+@[path]
 private lemma main
   {Ω Y X : Type*} [MeasurableSpace Ω] [StandardBorelSpace Ω]
   [ReferenceMeasure Y] [ReferenceMeasure X]

@@ -4,10 +4,10 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Nat.Le_Min.is.And.Le |
+| path | Nat.Le_Min.is.And.Le |
 | mpr | Nat.Le_Min.of.And.Le |
 -/
-@[main, mpr]
+@[path, mpr]
 private lemma main
   [LinearOrder α]
   {x y z : α} :

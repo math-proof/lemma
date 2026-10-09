@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {n l u d i : ℤ}
   {β ζ : ℤ → ℤ}

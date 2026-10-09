@@ -8,7 +8,7 @@ import Lemma.Matrix.HasDerivWithinAt.of.Ge_0.In_ActorBox
 open Matrix
 
 
-@[main]
+@[path]
 private lemma main
   {S : Type*} [Fintype S] [DecidableEq S]
   {d : ℕ}

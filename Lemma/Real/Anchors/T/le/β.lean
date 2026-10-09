@@ -2,7 +2,7 @@ import Lemma.Real.Anchors.Time.lt.TimeAdd1
 import Lemma.Real.Anchors.TimeAdd1.eq.FindExistsLe
 
 
-@[main]
+@[path]
 private lemma main
   {α : ℕ → ℝ}
   {anc : Anchors α}

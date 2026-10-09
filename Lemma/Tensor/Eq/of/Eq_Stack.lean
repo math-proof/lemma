@@ -14,7 +14,7 @@ of `θ` (ordinary derivative in the coordinate `θₖ`, the others fixed):
 =\Phi_{ak}-\sum_b\mathrm{softmax}(\Phi\theta)_b\,\Phi_{bk}.
 \]
 -/
-@[main]
+@[path]
 private lemma softmax_policy
   {m n : ℕ}
   {Φ : Matrix (Fin m) (Fin n) ℝ}

@@ -3,7 +3,7 @@ import Lemma.Real.HasDerivAtPowAbs.of.Ge_2
 open LpSpace Real
 
 
-@[main]
+@[path]
 private lemma main
   {p d : ℕ}
   {x y : LpSpace p d}

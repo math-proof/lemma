@@ -9,7 +9,7 @@ open Rat Nat
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Rat.LtMul.is.Lt_Div.of.Gt_0 |
+| path | Rat.LtMul.is.Lt_Div.of.Gt_0 |
 | comm | Rat.Lt_Div.is.LtMul.of.Gt_0 |
 | mp   | Rat.Lt_Div.of.LtMul.Gt_0 |
 | mpr  | Rat.LtMul.of.Lt_Div.Gt_0 |
@@ -17,7 +17,7 @@ open Rat Nat
 | mpr.comm | Rat.Gt_Mul.of.GtDiv.Gt_0 |
 | comm.is | Rat.Gt_Mul.is.GtDiv.of.Gt_0 |
 -/
-@[main, comm, mp, mpr, mp.comm, mpr.comm, comm.is]
+@[path, comm, mp, mpr, mp.comm, mpr.comm, comm.is]
 private lemma main
   [Field α] [LinearOrder α] [IsStrictOrderedRing α]
   {x : α}

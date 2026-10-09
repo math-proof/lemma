@@ -5,7 +5,7 @@ import sympy.Basic
 mpr is not defined for Int, it is defined in Nat:
 Nat.Sub.of.Eq [Sub α]
 -/
-@[main, comm, mp]
+@[path, comm, mp]
 private lemma main
   [AddGroup α]
 -- given

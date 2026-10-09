@@ -6,7 +6,7 @@ import Lemma.Tensor.EqTShiftMatrix
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [Semiring α] [CharZero α]
 -- given

@@ -7,8 +7,9 @@ open Lean
 open Lean.Meta
 
 /--
-Registers a custom attribute `@[main]` that, when applied to a theorem or definition,
-creates a new declaration whose name reflects the source file path and the original name.
+Registers a custom attribute `@[path]` that, when applied to a theorem or definition,
+exports a private lemma under a public name derived from the source file path
+and the original declaration name.
 
 - The new name is constructed by:
   1. Removing the main module name from the path.
@@ -24,13 +25,13 @@ If it contains `def LeftId`, the resulting name will be `Group.Basic.leftid`.
 
 Usage:
 ```lean
-@[main]
+@[path]
 lemma MyLemma : ...
 ```
 -/
 initialize registerBuiltinAttribute {
-  name := `main
-  descr := "An attribute that creates a file-path-based alias for a lemma declaration"
+  name := `path
+  descr := "An attribute that exports a private lemma under a file-path-based public name"
   applicationTime := .afterCompilation
   add := fun declName stx kind => do
     let decl ← getConstInfo declName

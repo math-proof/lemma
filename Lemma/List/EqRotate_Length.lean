@@ -2,7 +2,7 @@ import Lemma.List.Rotate.eq.AppendDrop__Take
 open List
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (s : List α) :

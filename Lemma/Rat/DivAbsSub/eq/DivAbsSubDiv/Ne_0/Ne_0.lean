@@ -11,7 +11,7 @@ import Lemma.Rat.MulDivS.eq.One.of.Ne_0.Ne_0
 open Int Nat Rat
 
 
-@[main]
+@[path]
 private lemma main
   [Field α] [LinearOrder α] [IsStrictOrderedRing α]
   {a b : α}

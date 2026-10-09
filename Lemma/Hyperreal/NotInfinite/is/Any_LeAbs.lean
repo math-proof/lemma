@@ -3,7 +3,7 @@ import Lemma.Hyperreal.Infinite.is.All_GtAbs
 open Hyperreal Bool
 
 
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
 -- given
   (x : ℝ*) :

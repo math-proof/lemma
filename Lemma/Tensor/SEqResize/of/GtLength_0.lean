@@ -11,7 +11,7 @@ import Lemma.Tensor.SEqResize_0.of.GtLength_0
 open Bool List Tensor Vector
 
 
-@[main, cast]
+@[path, cast]
 private lemma main
   [Zero α]
   {s : List ℕ}

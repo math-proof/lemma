@@ -6,7 +6,7 @@ import sympy.Basic
 
 
 
-@[main]
+@[path]
 private lemma main
   {a : ℕ → ℝ}
 -- given

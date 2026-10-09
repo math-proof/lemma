@@ -4,7 +4,7 @@ import Mathlib.LinearAlgebra.Vandermonde
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {d m : ℕ}
   {x δ : ℝ} :

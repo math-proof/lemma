@@ -9,7 +9,7 @@ import Lemma.Tensor.SelectUnsqueeze.as.UnsqueezeSelect.of.Gt.GeLength
 open Bool List Tensor
 
 
-@[main]
+@[path]
 private lemma main
   {s : List ℕ}
 -- given

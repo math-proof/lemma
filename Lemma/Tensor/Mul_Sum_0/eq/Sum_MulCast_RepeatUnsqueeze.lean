@@ -14,7 +14,7 @@ import torch.Tensor.sum
 open Fin Nat Tensor Bool
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [NonUnitalNonAssocSemiring α]
 -- given

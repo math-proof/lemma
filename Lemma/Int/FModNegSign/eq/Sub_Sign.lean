@@ -11,7 +11,7 @@ import Lemma.Int.FDivNeg1.eq.Neg1.of.Gt_0
 open Int Nat
 
 
-@[main]
+@[path]
 private lemma main
   {d : ℤ} :
 -- imply

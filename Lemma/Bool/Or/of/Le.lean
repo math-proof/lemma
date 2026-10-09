@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   [LinearOrder α]
   {x y : α}
@@ -13,7 +13,7 @@ private lemma main
   lt_or_eq_of_le h
 
 
-@[main]
+@[path]
 private lemma split
   [LinearOrder α]
   {x a : α}

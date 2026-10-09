@@ -1,6 +1,6 @@
 import Lemma.Finset.AscFactorial.eq.Prod
 open Finset
-@[main]
+@[path]
 private lemma main
   [CommSemiring α]
   (x : α)

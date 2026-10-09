@@ -15,7 +15,7 @@ Derivative of the closed-form state value on a general state space: `θ ↦ Vk �
 Continuous-state counterpart of `Tensor.HasFDerivAt.of.In_Ico.GtInftySup.All_Differentiable_Prob`
 (`h₃`: the policy is measurable in the state; `Θ` is finite-dimensional, like the weights `π` of shape `(D,)`).
 -/
-@[main]
+@[path]
 private lemma main
   [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [FiniteDimensional ℝ Θ] [MeasurableSpace S] [MeasurableSpace A] [Fintype A]
   {M : Model Θ S A}

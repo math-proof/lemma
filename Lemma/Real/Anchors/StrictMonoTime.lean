@@ -1,7 +1,7 @@
 import Lemma.Real.Anchors.Time.lt.TimeAdd1
 
 
-@[main]
+@[path]
 private lemma main
   {α : ℕ → ℝ}
   {anc : Anchors α} :

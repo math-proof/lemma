@@ -42,7 +42,7 @@ private lemma triu_eq
   · erw [if_neg h₁, if_neg (fun h₂ => h₁ ((h i j).mpr h₂))]
 
 
-@[main]
+@[path]
 private lemma main
   [Zero α]
 -- given

@@ -25,7 +25,7 @@ private lemma  E4_cube_div_discriminant_smul' (γ : SL(2, ℤ)) (τ : ℍ) :
   first
   | rw [mul_div_mul_left _ _ (zpow_ne_zero 12 hd)]
   | rw [mul_div_mul_left _ _ (pow_ne_zero 12 hd)]
-@[main]
+@[path]
 private lemma main
   {γ : Matrix.SpecialLinearGroup (Fin 2) ℤ}
   {τ : UpperHalfPlane} :

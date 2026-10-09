@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {f g : α → β}
 -- given
@@ -12,7 +12,7 @@ private lemma main
   aesop
 
 
-@[main]
+@[path]
 private lemma bfn
   {f g : α → β → γ}
 -- given

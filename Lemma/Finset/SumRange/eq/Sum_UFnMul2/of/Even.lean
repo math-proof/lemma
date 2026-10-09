@@ -7,7 +7,7 @@ import Lemma.Nat.Even.is.Mod_2.eq.Zero
 open Finset Nat Int
 
 
-@[main]
+@[path]
 private lemma main
   [AddCommMonoid α]
   {a : ℤ}

@@ -4,11 +4,11 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Nat.Lt_Max.is.Or.Lt |
+| path | Nat.Lt_Max.is.Or.Lt |
 | mp | Nat.Or.Lt.of.Lt_Max |
 | mpr | Nat.Lt_Max.of.Or.Lt |
 -/
-@[main, mp, mpr]
+@[path, mp, mpr]
 private lemma main
   [LinearOrder α]
   {x y z : α} :

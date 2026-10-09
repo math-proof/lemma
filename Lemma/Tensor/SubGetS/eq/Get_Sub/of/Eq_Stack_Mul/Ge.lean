@@ -35,7 +35,7 @@ private lemma mul_sub_right
   exact SubMulS.eq.Mul_Sub (X.data.get i) a b
 
 
-@[main]
+@[path]
 private lemma main
   {n d : ℕ}
   {θ : Tensor ℝ [n, d]}

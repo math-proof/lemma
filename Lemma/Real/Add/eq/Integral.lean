@@ -3,7 +3,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {f g : ℝ → ℝ}
   {a b : ℝ}
@@ -16,7 +16,7 @@ private lemma main
   exact (intervalIntegral.integral_add hf hg).symm
 
 
-@[main]
+@[path]
 private lemma concat
   {f : ℝ → ℝ}
   {a b c : ℝ}

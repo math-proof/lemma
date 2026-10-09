@@ -6,7 +6,7 @@ open Bool List Tensor
 set_option maxHeartbeats 1000000
 
 
-@[main, cast]
+@[path, cast]
 private lemma main
   [Mul α] [Add α] [Zero α]
 -- given

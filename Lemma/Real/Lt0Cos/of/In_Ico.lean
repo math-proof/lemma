@@ -4,7 +4,7 @@ import Lemma.Real.GtPi0
 open Set Real
 
 
-@[main]
+@[path]
 private lemma main
   {x : ℝ}
 -- given

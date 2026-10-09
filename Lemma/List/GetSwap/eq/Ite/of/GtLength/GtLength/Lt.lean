@@ -3,7 +3,7 @@ import Lemma.Nat.Lt.of.Lt.Lt
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   {s : List α}
   {i j t : ℕ}

@@ -5,7 +5,7 @@ import Lemma.Random.Lt_Sup'.of.LtRealLe_1
 open MeasureTheory
 
 
-@[main]
+@[path]
 private lemma main
   {Ω : Type*} [Fintype Ω] [MeasurableSpace Ω] [MeasurableSingletonClass Ω]
   {μ : Measure Ω} [IsProbabilityMeasure μ]

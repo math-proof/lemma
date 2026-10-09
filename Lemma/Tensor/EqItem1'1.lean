@@ -4,7 +4,7 @@ import Lemma.Vector.EqGet1_1
 open Vector
 
 
-@[main]
+@[path]
 private lemma main
   [One α] :
 -- imply

@@ -3,7 +3,7 @@ import Lemma.Vector.SEq.of.All_EqGetS.Eq
 open Vector
 
 
-@[main, comm 1, cast]
+@[path, comm 1, cast]
 private lemma main
 -- given
   (h : n = n')

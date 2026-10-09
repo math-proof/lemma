@@ -5,7 +5,7 @@ import sympy.Basic
 open MeasureTheory
 
 
-@[main]
+@[path]
 private lemma given
   [MeasurableSpace Ω]
   [ReferenceMeasure α]

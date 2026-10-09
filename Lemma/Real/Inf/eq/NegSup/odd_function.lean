@@ -6,7 +6,7 @@ import Lemma.Real.Inf.eq.Neg.Sup
 open scoped Pointwise
 
 
-@[main]
+@[path]
 private lemma main
   {f : ℝ → ℝ}
   {S : Set ℝ}

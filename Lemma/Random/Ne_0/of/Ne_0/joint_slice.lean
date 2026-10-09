@@ -14,7 +14,7 @@ the original atom's preimage.
 
 Python: Random.Ne_0.of.Ne_0.joint_slice.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace Ω]
   [ReferenceMeasure α] [ReferenceMeasure β]

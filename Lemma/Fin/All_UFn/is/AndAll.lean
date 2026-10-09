@@ -5,12 +5,12 @@ import sympy.concrete.quantifier
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Fin.All_UFn.is.AndAll |
+| path | Fin.All_UFn.is.AndAll |
 | comm | Fin.AndAll.is.All_UFn |
 | mp | Fin.AndAll.of.All_UFn |
 | mpr | Fin.All_UFn.of.AndAll |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   {n : ℕ}
   {p : Fin (n + 1) → Prop} :

@@ -4,7 +4,7 @@ import Lemma.Vector.GetMul.eq.MulGet
 open Vector Nat
 
 
-@[main, subst 0]
+@[path, subst 0]
 private lemma main
   [MulZeroClass α]
   {n : ℕ}

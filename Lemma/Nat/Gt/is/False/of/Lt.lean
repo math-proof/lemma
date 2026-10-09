@@ -4,7 +4,7 @@ import Lemma.Bool.Iff_False.of.Not
 open Bool Nat
 
 
-@[main]
+@[path]
 private lemma main
   [PartialOrder α]
   {a b : α}

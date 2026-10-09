@@ -3,7 +3,7 @@ import Lemma.Set.Bool.in.Finset
 open Set Bool
 
 
-@[main]
+@[path]
 private lemma main
   [DecidableEq α]
 -- given

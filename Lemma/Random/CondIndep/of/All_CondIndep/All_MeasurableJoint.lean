@@ -10,7 +10,7 @@ open scoped ProbabilityTheory
 /--
 Future irrelevance from the one-step Markov property (history irrelevance) of a Markov decision process.
 -/
-@[main]
+@[path]
 private lemma main
   [mΩ : MeasurableSpace Ω] [StandardBorelSpace Ω] [MeasurableSpace S] [MeasurableSpace A]
   {π : Measure Ω} [IsProbabilityMeasure π]
@@ -32,7 +32,7 @@ private lemma main
   let H : (n : ℕ) → Ω → Fin n → ℝ × S × A := fun n ω i ↦ (r i ω, s i ω, a i ω)
   have hXm : ∀ m, Measurable (X m) := fun m ↦ (ham m).prodMk ((hrm m).prodMk (hsm (m + 1)))
   have hHm : ∀ n, Measurable (H n) := fun n ↦
-    measurable_pi_lambda _ fun i ↦ (hrm i).prodMk ((hsm i).prodMk (ham i))
+    Measurable.of_eval fun i ↦ (hrm i).prodMk ((hsm i).prodMk (ham i))
   have hM : ∀ n, ProbabilityTheory.CondIndep (MeasurableSpace.comap (s n) inferInstance) (MeasurableSpace.comap (X n) inferInstance)
       (MeasurableSpace.comap (H n) inferInstance) (hsm n).comap_le π := fun n ↦ h₁ n
   -- σ-algebras
@@ -81,9 +81,11 @@ private lemma main
         · exact measurable_iff_comap_le.1 (hsR _ _ (by omega))
         · refine iSup₂_le fun j hj ↦ measurable_iff_comap_le.1 ?_
           exact (haR _ _ (by omega)).prodMk ((hrR _ _ (by omega)).prodMk (hsR _ _ (by omega)))
-        · refine measurable_iff_comap_le.1 (@measurable_pi_lambda Ω _ _
-            (MeasurableSpace.comap (s (t + 1 + k)) inferInstance ⊔ MeasurableSpace.comap (H (t + 1 + k)) inferInstance)
-            _ _ fun i ↦ ?_)
+        · refine measurable_iff_comap_le.1
+            (@Measurable.of_eval Ω _ _
+              (MeasurableSpace.comap (s (t + 1 + k)) inferInstance ⊔
+                MeasurableSpace.comap (H (t + 1 + k)) inferInstance)
+              _ _ fun i ↦ ?_)
           have hi := i.isLt
           exact (hrR _ _ (by omega)).prodMk ((hsR _ _ (by omega)).prodMk (haR _ _ (by omega)))
   -- pass to the whole future
@@ -92,7 +94,8 @@ private lemma main
       j (lt_of_lt_of_le hj hk) le_rfl
   have hsupY := condIndep_iSup_of_directed_le (fun k ↦ (P k).symm) hY hHσ hmono.directed_le
   refine condIndep_of_condIndep_of_le_right (condIndep_of_condIndep_of_le_left hsupY ?_) ?_
-  · refine measurable_iff_comap_le.1 (@measurable_pi_lambda Ω _ _ (⨆ k, Y k) _ _ fun k ↦ ?_)
+  · refine measurable_iff_comap_le.1
+      (@Measurable.of_eval Ω _ _ (⨆ k, Y k) _ _ fun k ↦ ?_)
     have h1 : Measurable[Y (k + 1)] (r (t + 1 + k)) :=
       (measurable_fst.comp (measurable_snd.comp (comap_measurable (X (t + 1 + k))))).mono
         (le_iSup₂_of_le (f := fun j (_ : j < k + 1) ↦ MeasurableSpace.comap (X (t + 1 + j)) inferInstance)

@@ -3,7 +3,7 @@ import Lemma.Vector.Sum.eq.Sum_Get
 open Vector
 
 
-@[main, fin]
+@[path, fin]
 private lemma main
   [AddCommMonoid α]
 -- given

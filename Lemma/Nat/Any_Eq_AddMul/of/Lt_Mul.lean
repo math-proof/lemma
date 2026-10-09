@@ -2,7 +2,7 @@ import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
 open Fin
 
 
-@[main]
+@[path]
 private lemma main
   {m n : ℕ}
 -- given

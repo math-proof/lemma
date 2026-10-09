@@ -3,7 +3,7 @@ import Lemma.Tensor.SEqToVectorS.of.SEq
 open Tensor Bool
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h : n = n')

@@ -3,7 +3,7 @@ import Lemma.Tensor.GetGetSlice.eq.Get.of.Lt_Min
 open Tensor List
 
 
-@[main, fin, comm, fin.comm]
+@[path, fin, comm, fin.comm]
 private lemma main
   {X : Tensor α s}
   {n : ℕ}

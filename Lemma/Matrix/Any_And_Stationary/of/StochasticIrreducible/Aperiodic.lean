@@ -7,7 +7,7 @@ import Lemma.Matrix.Stationary_Pow.of.Stationary
 open Matrix
 
 
-@[main]
+@[path]
 private lemma main
   {S : Type*} [Fintype S] [DecidableEq S] [Nonempty S]
   {P : Matrix S S ℝ} [RowStochastic P]

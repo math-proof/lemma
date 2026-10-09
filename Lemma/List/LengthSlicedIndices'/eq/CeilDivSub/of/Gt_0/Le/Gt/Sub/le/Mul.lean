@@ -19,7 +19,7 @@ import Lemma.Nat.CoeAdd.eq.AddCoeS
 open Nat Int Rat
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h : start - stop ≤ k * step)

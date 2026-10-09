@@ -4,7 +4,7 @@ import Lemma.List.Prod.eq.MulProdS
 open List Vector Bool
 
 
-@[main]
+@[path]
 private lemma main
   {s : List ℕ}
 -- given

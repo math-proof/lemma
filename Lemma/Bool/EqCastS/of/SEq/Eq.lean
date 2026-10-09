@@ -3,7 +3,7 @@ import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 open Bool
 
 
-@[main]
+@[path]
 private lemma left
   {Vector : α → Sort v}
   {a : Vector n_a}
@@ -18,7 +18,7 @@ private lemma left
   apply SEqCastS.of.SEq.Eq.Eq h_a (h.left.symm.trans h_a) h
 
 
-@[main]
+@[path]
 private lemma main
   {Vector : α → Sort v}
   {a : Vector n_a}

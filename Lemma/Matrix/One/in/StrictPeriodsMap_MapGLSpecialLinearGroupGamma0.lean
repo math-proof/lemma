@@ -6,7 +6,7 @@ open scoped MatrixGroups
 /--
 [CongruenceSubgroup_one_mem_strictPeriods_Gamma0](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_CongruenceSubgroup_one_mem_strictPeriods_Gamma0.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {N : ℕ} :
 -- imply

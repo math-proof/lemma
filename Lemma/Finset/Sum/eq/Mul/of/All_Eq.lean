@@ -3,7 +3,7 @@ import Lemma.Finset.Sum.eq.SMulCard.of.All_Eq
 open Finset
 
 
-@[main]
+@[path]
 private lemma main
   [NonAssocSemiring α]
   {x : ι → α}
@@ -18,7 +18,7 @@ private lemma main
   simp_all
 
 
-@[main]
+@[path]
 private lemma range
   [NonAssocSemiring α]
   {x : ℕ → α}

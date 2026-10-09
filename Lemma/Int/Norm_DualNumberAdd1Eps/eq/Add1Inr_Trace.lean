@@ -6,7 +6,7 @@ open scoped TensorProduct
 /--
 [Algebra_norm_one_add_eps_tmul](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Algebra_norm_one_add_eps_tmul.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {A' B : Type u} [CommRing A'] [CommRing B] [Algebra A' B] [Module.Free A' B] [Module.Finite A' B]
   {f : B} :
@@ -39,8 +39,10 @@ private lemma main
     simp only [map_add, map_smul, hone, hM]
   rw [Algebra.norm_eq_matrix_det b', hadd, Matrix.det_one_add_smul,
     pow_two, DualNumber.eps_mul_eps, mul_zero, add_zero,
-    ← AddMonoidHom.map_trace (algebraMap A' (DualNumber A')), ← Algebra.trace_eq_matrix_trace b f,
-    DualNumber.inr_eq_smul_eps, Algebra.smul_def]
+    ← AddMonoidHom.map_trace (algebraMap A' (DualNumber A')), ← Algebra.trace_eq_matrix_trace b f]
+  congr 1
+  rw [TrivSqZeroExt.algebraMap_eq_inl, DualNumber.eps, TrivSqZeroExt.inl_mul_inr, smul_eq_mul,
+    mul_one]
 
 
 -- created on 2026-10-05

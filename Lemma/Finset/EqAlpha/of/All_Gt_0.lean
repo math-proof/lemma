@@ -5,7 +5,7 @@ import Lemma.Finset.AlphaAppend.eq.AlphaAppend_AddDiv
 open Finset Continuant
 
 
-@[main]
+@[path]
 private lemma recurrence
   {n : ℕ}
   {x : ℕ → ℝ}

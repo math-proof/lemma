@@ -3,7 +3,7 @@ import Lemma.Real.PowMul.eq.MulPowS
 open Topology
 
 
-@[main]
+@[path]
 private lemma main
   {γ : ℝ}
   {x : ℕ → ℝ}

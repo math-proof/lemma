@@ -2,7 +2,7 @@ import Lemma.List.TailSet_0.eq.Tail
 open List
 
 
-@[main]
+@[path]
 private lemma main
   {s : List ℕ}
   {a : ℕ}

@@ -3,7 +3,7 @@ import Lemma.Nat.Ne.of.Lt
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   [Mul α]
   [Zero α]

@@ -4,7 +4,7 @@ import Lemma.Nat.Mul
 open Hyperreal Nat
 
 
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   [NeZero (n : ℕ)]
 -- given

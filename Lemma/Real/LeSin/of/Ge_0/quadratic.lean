@@ -2,7 +2,7 @@ import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {x : ℝ}
 -- given

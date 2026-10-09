@@ -4,7 +4,7 @@ import Lemma.Matrix.Sum_Mul_SquareGetMulVecP.le.Sum_Mul_Square
 open Matrix Finset
 
 
-@[main]
+@[path]
 private lemma main
   {S : Type*} [Fintype S] [DecidableEq S] [Nonempty S] [MeasurableSpace S] [MeasurableSingletonClass S]
   {MRP : FiniteMRP S}

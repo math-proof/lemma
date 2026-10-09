@@ -6,7 +6,7 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 /--
 [AlgebraicGeometry_isIso_of_isIso_of_isPullback_of_flat_of_surjective](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_isIso_of_isIso_of_isPullback_of_flat_of_surjective.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {S S' A B A' B' : Scheme.{0}}
   {b : S' ⟶ S} [Flat b] [Surjective b] [QuasiCompact b]

@@ -8,7 +8,7 @@ import Lemma.Matrix.Sum_AbsSub.le.MulMulCMixExpMulNeg2.of.Ge_0.StochasticVec.Sto
 open Filter Topology
 
 
-@[main]
+@[path]
 private lemma main
   {S : Type*} [Fintype S] [DecidableEq S]
   {d : ℕ}

@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [Associated_of_pow_eq_units_mul_pow](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Associated_of_pow_eq_units_mul_pow.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing R] [IsDomain R] [UniqueFactorizationMonoid R]
   {a b : R}

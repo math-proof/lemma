@@ -5,7 +5,7 @@ import Lemma.Random.IndepJoint.of.All_Eq_UFn_MulPreimageS
 open ProbabilityTheory MeasureTheory
 
 
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace Ω] [MeasurableSpace α] [MeasurableSpace β] [MeasurableSpace γ]
   {π : Measure Ω} [IsProbabilityMeasure π]

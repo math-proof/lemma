@@ -3,7 +3,7 @@ import sympy.functions.combinatorial.factorials
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {n k : ℕ} :
 -- imply
@@ -12,7 +12,7 @@ private lemma main
   Nat.choose_eq_descFactorial_div_factorial n k
 
 
-@[main]
+@[path]
 private lemma doit
   {n : ℕ} :
 -- imply

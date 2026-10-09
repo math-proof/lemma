@@ -22,7 +22,7 @@ first-order Markov property `y (t + 1) ⟂ (x[:t + 1], y[:t]) | y t`.  Then for 
 
 No non-vanishing assumption is needed: when a conditioning event is null, both sides vanish.
 -/
-@[main]
+@[path]
 private lemma main
   {Ω Y X : Type*} [MeasurableSpace Ω] [StandardBorelSpace Ω]
   [ReferenceMeasure Y] [ReferenceMeasure X]

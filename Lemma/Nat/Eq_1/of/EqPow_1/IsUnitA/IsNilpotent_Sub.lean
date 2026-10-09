@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [eq_one_of_isNilpotent_sub_one_of_pow_eq_one](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_eq_one_of_isNilpotent_sub_one_of_pow_eq_one.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [Ring A]
   {u : A}

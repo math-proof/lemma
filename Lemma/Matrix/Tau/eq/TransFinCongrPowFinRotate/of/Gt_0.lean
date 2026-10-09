@@ -4,7 +4,7 @@ import Lemma.Fin.GetPowFinRotate_Add_1.eq.Add
 open Fin Equiv Matrix.BlockSwap
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (a b : ℕ)

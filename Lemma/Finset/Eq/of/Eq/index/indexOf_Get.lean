@@ -4,7 +4,7 @@ import sympy.Basic
 import Lemma.Nat.EqIndexGet.of.Lt.InjOnRange
 
 
-@[main]
+@[path]
 private lemma main
   {n j : ℕ}
   {x : ℕ → ℤ}

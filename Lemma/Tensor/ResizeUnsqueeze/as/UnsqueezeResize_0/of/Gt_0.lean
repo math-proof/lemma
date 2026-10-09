@@ -22,7 +22,7 @@ open Bool List Nat Tensor
 set_option maxHeartbeats 1000000
 
 
-@[main, comm, cast]
+@[path, comm, cast]
 private lemma main
   [Zero α]
 -- given

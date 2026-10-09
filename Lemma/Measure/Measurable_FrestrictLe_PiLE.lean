@@ -3,7 +3,7 @@ import sympy.Basic
 open MeasureTheory Preorder
 
 
-@[main]
+@[path]
 private lemma main
   {X : ℕ → Type*} [∀ n, MeasurableSpace (X n)]
 -- given

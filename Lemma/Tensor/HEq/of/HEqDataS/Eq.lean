@@ -6,7 +6,7 @@ import Lemma.Tensor.DataCast.as.Data.of.Eq
 open Tensor Bool
 
 
-@[main]
+@[path]
 private lemma main
   {s s' : List ℕ}
   {A : Tensor α s}

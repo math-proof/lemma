@@ -8,7 +8,7 @@ import Lemma.Finset.Sum_Add.eq.AddSumS
 open Bool Finset Nat
 
 
-@[main]
+@[path]
 private lemma main
   [Fintype ι] [DecidableEq ι]
   [NonAssocSemiring α]

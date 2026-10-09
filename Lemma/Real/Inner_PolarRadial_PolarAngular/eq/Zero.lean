@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 Polar unit vectors are orthogonal: \(\hat{r}\perp\hat{\theta}\).
 -/
-@[main]
+@[path]
 private lemma main
   (θ : ℝ) :
 -- imply

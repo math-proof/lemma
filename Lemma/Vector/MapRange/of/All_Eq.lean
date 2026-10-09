@@ -2,7 +2,7 @@ import Lemma.Vector.Map.of.All_Eq
 open Vector
 
 
-@[main]
+@[path]
 private lemma main
   {f g : α → β}
 -- given

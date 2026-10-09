@@ -10,7 +10,7 @@ open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Mode
 One-step recursion of the `n`-step state transition of the trajectory model `M`:
 `Pn θ (n+1) x y = ∑ u, π_θ(u | x) * ∑ y', T(x, u, y') * Pn θ n y' y`.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A] [DecidableEq S]
   {M : Model Θ S A}

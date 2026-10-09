@@ -17,7 +17,7 @@ import Lemma.Int.EqToNat_0.of.Le_0
 open Bool Int Nat Rat
 
 
-@[main]
+@[path]
 private lemma main
   [Field α] [LinearOrder α] [IsStrictOrderedRing α] [FloorRing α]
   {start stop step : ℕ}

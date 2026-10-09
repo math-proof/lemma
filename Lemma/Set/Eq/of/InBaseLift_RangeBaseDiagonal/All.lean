@@ -6,7 +6,7 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 /--
 [AlgebraicGeometry_eq_of_comp_eq_of_forall_specializes_of_lift_mem_range_diagonal](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_eq_of_comp_eq_of_forall_specializes_of_lift_mem_range_diagonal.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {X Y T : Scheme.{u}}
   {f : X ⟶ Y} [FormallyUnramified f] [LocallyOfFiniteType f]

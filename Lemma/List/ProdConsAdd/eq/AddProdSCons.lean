@@ -3,7 +3,7 @@ import Lemma.Nat.MulAdd.eq.AddMulS
 open List Nat
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [Mul α] [One α] [Add α] [RightDistribClass α]
 -- given

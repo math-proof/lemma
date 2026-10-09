@@ -15,7 +15,7 @@ import Lemma.Bool.Ne.is.NotEq
 open Bool Int Rat Nat
 
 
-@[main]
+@[path]
 private lemma main
   {n d : ℤ}
 -- given

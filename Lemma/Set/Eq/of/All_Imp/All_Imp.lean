@@ -2,7 +2,7 @@ import Lemma.Set.Eq.of.All_In.All_In
 open Set
 
 
-@[main]
+@[path]
 private lemma main
   {A B : Set α}
 -- given

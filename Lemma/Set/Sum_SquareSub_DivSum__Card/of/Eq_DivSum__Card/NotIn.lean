@@ -4,7 +4,7 @@ import Lemma.Set.EqCard.of.NotIn
 open Set
 
 
-@[main]
+@[path]
 private lemma main
   [DecidableEq α]
   {a : α → ℝ}

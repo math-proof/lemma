@@ -4,7 +4,7 @@ open Matrix
 
 
 /-- Telescoping form of a PLU sweep: `X = (S 0)ᵀ (L 0)⁻¹ ⋯ (S (m-1))ᵀ (L (m-1))⁻¹ A m`. -/
-@[main]
+@[path]
 private lemma main
   {n : ℕ}
   {X : Matrix (Fin n) (Fin n) ℂ}

@@ -3,7 +3,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma symmetric_mean_inequality
   {n : ℕ}
   {x : ℕ → ℝ}

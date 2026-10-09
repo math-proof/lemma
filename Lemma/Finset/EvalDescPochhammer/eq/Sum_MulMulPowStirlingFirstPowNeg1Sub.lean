@@ -5,7 +5,7 @@ open Finset
 
 
 /-- `FallingFactorial(x, n) = Σ_{k ≤ n} x^k · Stirling1(n, k) · (-1)^(n-k)`. -/
-@[main]
+@[path]
 private lemma main
 -- given
   (x : ℝ)

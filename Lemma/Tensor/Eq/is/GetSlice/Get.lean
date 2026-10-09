@@ -10,12 +10,12 @@ open Tensor List Nat
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Tensor.Eq.is.GetSlice.Get |
+| path | Tensor.Eq.is.GetSlice.Get |
 | comm | Tensor.GetSlice.Get.is.Eq |
 | mp | Tensor.GetSlice.Get.of.Eq |
 | mpr | Tensor.Eq.of.GetSlice.Get |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   {n : ℕ}
   {X Y : Tensor α ((n + 1) :: s)} :

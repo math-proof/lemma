@@ -2,7 +2,7 @@ import Mathlib.MeasureTheory.MeasurableSpace.Basic
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace α] [MeasurableSpace β]
   {f g : α → β}

@@ -5,7 +5,7 @@ import sympy.Basic
 This lemma establishes the transitivity of the less-than relation in a preorder.
 Given elements `a < b` and `b < c`, it concludes `a < c` by applying the transitivity property of the preorder's ordering relation.
 -/
-@[main]
+@[path]
 private lemma main
   [Preorder α]
   {a b c : α}
@@ -18,7 +18,7 @@ private lemma main
   lt_trans h₀ h₁
 
 
-@[main]
+@[path]
 private lemma subst
   {y b x t k : ℝ}
 -- given

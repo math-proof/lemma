@@ -3,7 +3,7 @@ import Lemma.Hyperreal.StDiv_AddAddSquareS.eq.One.of.StDiv.eq.One
 open Hyperreal
 
 
-@[main]
+@[path]
 private lemma main
   {a b : ℝ*}
 -- given

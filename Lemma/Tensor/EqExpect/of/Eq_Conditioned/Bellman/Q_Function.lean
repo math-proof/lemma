@@ -23,7 +23,7 @@ No history-independence hypothesis on the rewards is needed, since the environme
 `PolicyGradient.Model` is a (Markov) MDP.
 Both sides are `0` when `s[t] = x ∧ a[t] = u` has probability `0`.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S]
   [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A]

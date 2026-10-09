@@ -3,7 +3,7 @@ import Lemma.Tensor.EqStack_Get
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [Preorder α]
   {x y : Tensor α (n :: s)} :

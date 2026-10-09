@@ -4,7 +4,7 @@ import Lemma.Nat.Eq_0.is.EqSquare_0
 open Int Nat
 
 
-@[main]
+@[path]
 private lemma main
   [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
   {x y : α}

@@ -3,7 +3,7 @@ import Lemma.Set.In_Finset.is.OrEqS
 open Complex Set
 
 
-@[main]
+@[path]
 private lemma main
   {x a c : ℂ}
 -- given

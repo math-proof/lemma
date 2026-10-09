@@ -2,7 +2,7 @@ import Lemma.Vector.Sub.eq.Sub_Replicate
 open Vector
 
 
-@[main, fin]
+@[path, fin]
 private lemma main
   [SubNegMonoid α]
 -- given

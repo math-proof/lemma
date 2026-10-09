@@ -2,7 +2,7 @@ import sympy.stats.generator_matrix
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {S : Type*} [Fintype S]
   {μ ν : S → ℝ}

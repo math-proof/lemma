@@ -5,11 +5,11 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Nat.Ne_0.is.Eq_odd |
+| path | Nat.Ne_0.is.Eq_odd |
 | mp | Nat.Eq_odd.of.Ne_0 |
 | mpr | Nat.Ne_0.of.Eq_odd |
 -/
-@[main, mp, mpr]
+@[path, mp, mpr]
 private lemma main
   {n : ℤ} :
 -- imply

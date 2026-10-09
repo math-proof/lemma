@@ -3,7 +3,7 @@ import Lemma.Rat.DivAdd.eq.Add1Div.of.Ne_0
 open Rat Nat
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [DivisionSemiring α]
   {d : α}

@@ -2,7 +2,7 @@ import Lemma.List.LengthSlicedIndices.eq.ToNatCeilDivSub.of.Gt_0.Le.Lt
 open List
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h_start : stop > 0)

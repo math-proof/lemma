@@ -8,10 +8,10 @@ open Tensor
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Tensor.AddMulS_Stack.eq.Mul_Stack_Add |
+| path | Tensor.AddMulS_Stack.eq.Mul_Stack_Add |
 | comm | Tensor.Mul_Stack_Add.eq.AddMulS_Stack |
 -/
-@[main, comm]
+@[path, comm]
 private lemma main
   [Mul α] [Add α] [LeftDistribClass α]
 -- given
@@ -31,7 +31,7 @@ private lemma main
   exact hAdd.trans ((congrArg₂ HAdd.hAdd ha hb).trans hab.symm)
 
 
-@[main, comm]
+@[path, comm]
 private lemma Fun
   [Mul α] [Add α] [LeftDistribClass α]
 -- given

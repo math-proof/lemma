@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma left
   [PartialOrder α] [MulZeroClass α]
   {a b : α}
@@ -15,7 +15,7 @@ private lemma left
   simp at h
 
 
-@[main]
+@[path]
 private lemma main
   [PartialOrder α] [MulZeroClass α]
   {a b : α}

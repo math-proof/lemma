@@ -3,7 +3,7 @@ import Lemma.Nat.Min.eq.IteLe
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   [LinearOrder α]
 -- given

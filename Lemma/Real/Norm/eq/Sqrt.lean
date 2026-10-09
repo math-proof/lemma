@@ -2,7 +2,7 @@ import Mathlib.Analysis.InnerProductSpace.PiL2
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {x : EuclideanSpace ℝ (Fin n)} :
 -- imply

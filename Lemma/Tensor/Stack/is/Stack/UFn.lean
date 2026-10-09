@@ -7,7 +7,7 @@ import Lemma.Bool.SEq.is.Eq
 open Tensor Bool
 
 
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
 -- given
   (n : ℕ)

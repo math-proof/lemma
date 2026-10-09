@@ -95,6 +95,9 @@ app.set('views', VIEWS);
 
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
+// Prevent browser caching of EJS-rendered HTML pages (static files override this via express.static)
+app.use((req, res, next) => { res.set('Cache-Control', 'no-store'); next(); });
+
 // katex is installed from npm (node_modules/katex). Serve that package only —
 // not the rest of node_modules — and keep pages that still request the vendored
 // unpkg path (`/unpkg.com/katex@0.16.21/…` and `…/static/unpkg.com/katex@0.16.21/…`).
@@ -209,19 +212,88 @@ mountNpmPkg('prismjs', '/unpkg.com/prismjs@1.30.0/');
 mountNpmPkg('highlight.js', '/unpkg.com/highlight.js/8.8.0/');
 mountNpmPkg('marked', '/unpkg.com/marked@2.1.3/');
 
-// codemirror is installed from npm (node_modules/codemirror). This package only,
-// same static options as axios. No /unpkg.com/codemirror URL exists in the pages,
-// so there is no unpkg rewrite.
-const CODEMIRROR_PKG = path.join(REPO_ROOT, 'node_modules', 'codemirror');
-const codemirrorFiles = express.static(CODEMIRROR_PKG, {
-  index: false,
-  fallthrough: false,
-  maxAge: process.env.NODE_ENV === 'production' ? '1h' : 0,
-});
-app.use('/node_modules/codemirror', codemirrorFiles);
-app.use('/lean/node_modules/codemirror', codemirrorFiles);
+// CodeMirror 6 packages are served from node_modules/@codemirror/*, @lezer/*, and style-mod
+const CM6_SCOPES = ['@codemirror', '@lezer', '@marijn'];
+for (const scope of CM6_SCOPES) {
+  const pkgPath = path.join(REPO_ROOT, 'node_modules', scope);
+  const files = express.static(pkgPath, {
+    index: false,
+    fallthrough: false,
+    maxAge: process.env.NODE_ENV === 'production' ? '1h' : 0,
+  });
+  app.use(`/node_modules/${scope}`, files);
+  app.use(`/lean/node_modules/${scope}`, files);
+}
+// style-mod is a flat package (no scope)
+for (const pkg of ['style-mod', 'crelt', 'w3c-keyname']) {
+  const pkgPath = path.join(REPO_ROOT, 'node_modules', pkg);
+  const files = express.static(pkgPath, {
+    index: false,
+    fallthrough: false,
+    maxAge: process.env.NODE_ENV === 'production' ? '1h' : 0,
+  });
+  app.use(`/node_modules/${pkg}`, files);
+  app.use(`/lean/node_modules/${pkg}`, files);
+}
 
 app.get(['/py', '/py/'], (req, res) => res.redirect(302, `http://localhost:8080${req.originalUrl}`));
+
+/** Serve real CM6 / Lezer package ESM from node_modules (import map → /__cm__/*). */
+function resolveCmEsmEntrySync(pkg) {
+  if (!pkg || pkg.includes('..') || pkg.startsWith('/') || pkg.includes('\\')) return null;
+  // Scoped (@scope/name) or flat (name) only — matches ejs/codemirror-importmap.ejs
+  if (!/^(@[\w.-]+\/[\w.-]+|[\w.-]+)$/.test(pkg)) return null;
+  return path.join(REPO_ROOT, 'node_modules', pkg, 'package.json');
+}
+
+async function resolveCmEsmFile(pkg) {
+  const pkgJsonPath = resolveCmEsmEntrySync(pkg);
+  if (!pkgJsonPath) return null;
+  let pkgJson;
+  try {
+    pkgJson = JSON.parse(await fs.readFile(pkgJsonPath, 'utf8'));
+  } catch {
+    return null;
+  }
+  let entry = pkgJson.exports;
+  if (entry && typeof entry === 'object') {
+    if (entry['.']) entry = entry['.'];
+    if (typeof entry === 'object') entry = entry.import || entry.default || entry;
+    if (typeof entry === 'object') entry = entry.default || entry.import;
+  }
+  if (typeof entry !== 'string') entry = pkgJson.module || pkgJson.main;
+  if (typeof entry !== 'string') return null;
+  const pkgDir = path.dirname(pkgJsonPath);
+  const file = path.resolve(pkgDir, entry);
+  if (!file.startsWith(pkgDir + path.sep)) return null;
+  try {
+    await fs.access(file);
+  } catch {
+    return null;
+  }
+  return file;
+}
+
+app.get('/:userSegment/__cm__/*pkg', async (req, res) => {
+  try {
+    const pkg = Array.isArray(req.params.pkg) ? req.params.pkg.join('/') : req.params.pkg;
+    const file = await resolveCmEsmFile(pkg);
+    if (!file) {
+      res.status(404).type('text').send(`// unknown package: ${pkg}`);
+      return;
+    }
+    const src = await fs.readFile(file, 'utf8');
+    res.set('Content-Type', 'text/javascript; charset=utf-8');
+    res.set(
+      'Cache-Control',
+      process.env.NODE_ENV === 'production' ? 'public, max-age=3600' : 'no-store',
+    );
+    res.send(src);
+  } catch (e) {
+    console.error('[__cm__]', e);
+    res.status(500).type('text').send(`// error: ${e.message}`);
+  }
+});
 
 /** Lemma tree size for `website` home.md `<label id=count>` / `<label id=lines>`. */
 app.get('/:userSegment/api/repo-stats.json', ensureProjectUser, async (_req, res) => {

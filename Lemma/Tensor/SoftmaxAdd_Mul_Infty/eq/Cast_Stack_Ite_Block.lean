@@ -32,7 +32,7 @@ weights \( w_{ij} \) which on the unmasked entries are \( e^{a_{ij}} / \sum_{k :
 \operatorname{softmax}(a + ([P] - 1)\infty) \approx \bigl[ [P_{ij}]\, w_{ij} \bigr]_{ij}.
 \]
 -/
-@[main]
+@[path]
 private lemma main
   {n m : ℕ}
 -- given
@@ -71,7 +71,7 @@ Log form of `main`: the weights are given through \( z_{ij} = a_{ij} - \log \sum
 \operatorname{softmax}(a + ([P] - 1)\infty) \approx \bigl[ [P_{ij}]\, e^{z_{ij}} \bigr]_{ij}.
 \]
 -/
-@[main]
+@[path]
 private lemma log
   {n m : ℕ}
 -- given

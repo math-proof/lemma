@@ -6,7 +6,7 @@ open MeasureTheory
 /--
 [MeasureTheory_integral_integral_integral_comm_of_integrable_prod_prod](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_MeasureTheory_integral_integral_integral_comm_of_integrable_prod_prod.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {X Y Z E : Type*} [MeasurableSpace X] [MeasurableSpace Y] [MeasurableSpace Z] [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E]
   {μ : Measure X} [SFinite μ]

@@ -6,7 +6,7 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 /--
 [AlgebraicGeometry_Scheme_Hom_ker_pullback_fst_specMap_eq_bot_of_field](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_Scheme_Hom_ker_pullback_fst_specMap_eq_bot_of_field.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [Field k₀] [CommRing Bb] [Nontrivial Bb]
   {ψ : k₀ →+* Bb}

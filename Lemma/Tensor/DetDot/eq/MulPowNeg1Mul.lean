@@ -12,8 +12,8 @@ private lemma det_eq_toMatrix_add_comm
   (X : Tensor α [m + n, n + m]) :
   (X.det : Tensor α []) = (cast (by simp [Nat.add_comm]) X : Tensor α [n + m, n + m]).toMatrix.det := by
   unfold Tensor.det
-  rw [dif_neg (by simp : ¬[m + n, n + m].length > 2)]
-  rw [dif_neg (by simp : ¬[m + n, n + m].length < 2)]
+  rw [dite_eq_right (by simp : ¬[m + n, n + m].length > 2)]
+  rw [dite_eq_right (by simp : ¬[m + n, n + m].length < 2)]
   simp [Nat.add_comm m n]
 
 
@@ -41,7 +41,7 @@ private lemma toMatrix_det_eq_toMatrix_det_cast
   exact (cast_heq _ _).symm
 
 
-@[main]
+@[path]
 private lemma main
   [CommRing α] [CharZero α]
   {m n : ℕ}
@@ -61,8 +61,8 @@ private lemma main
     rw [hPcast]
     exact SEqDotS.of.SEq.left (Bool.SEq_Cast.of.Eq hs P) A
   have hAP :
-      cast (congrArg (fun t => Tensor α [m + n, t]) (Nat.add_comm n m)) (A @ P) =
-        A @ Pcast := by
+    cast (congrArg (fun t => Tensor α [m + n, t]) (Nat.add_comm n m)) (A @ P) =
+      A @ Pcast := by
     apply Eq.trans _ (SEq.cast hdot)
     apply eq_of_heq
     apply HEq.trans (cast_heq _ _)

@@ -2,7 +2,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma limits.negate
   {f : ℝ → ℝ}
   {a b : ℝ} :
@@ -19,7 +19,7 @@ private lemma limits.negate
     exact ⟨-x, ⟨by linarith, by linarith⟩, rfl⟩
 
 
-@[main]
+@[path]
 private lemma limits.subst.offset
   {f : ℝ → ℝ}
   {a b t : ℝ} :

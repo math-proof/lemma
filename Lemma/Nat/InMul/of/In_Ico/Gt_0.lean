@@ -2,7 +2,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   [CommMagma α] [Zero α] [Preorder α] [PosMulMono α] [PosMulStrictMono α]
   {x a b d : α}

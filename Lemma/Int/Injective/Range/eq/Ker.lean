@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [AdicCompletion_map_ker_subtype_injective_and_range_eq_ker_map](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AdicCompletion_map_ker_subtype_injective_and_range_eq_ker_map.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {R : Type u} [CommRing R] [IsNoetherianRing R]
   {I : Ideal R}

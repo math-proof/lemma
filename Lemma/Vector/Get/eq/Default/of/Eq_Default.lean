@@ -2,7 +2,7 @@ import sympy.vector.vector
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   [Inhabited α]
   {i : Fin n}

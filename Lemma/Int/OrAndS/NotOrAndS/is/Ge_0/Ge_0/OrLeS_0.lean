@@ -7,7 +7,7 @@ import Lemma.Bool.AndAnd.is.And_And
 open Bool Nat Int
 
 
-@[main, mp, mpr]
+@[path, mp, mpr]
 private lemma main
   [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
 -- given

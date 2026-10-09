@@ -7,7 +7,7 @@ open Tensor Vector
 
 
 /-- `dot` with a 0-d left factor commutes with a pointwise map `f`. -/
-@[main, comm]
+@[path, comm]
 private lemma left
   [Mul α] [AddCommMonoid α]
   [Mul β] [AddCancelCommMonoid β]
@@ -32,7 +32,7 @@ private lemma left
 
 
 /-- `dot` with a 0-d right factor commutes with a pointwise map `f`. -/
-@[main, comm]
+@[path, comm]
 private lemma main
   [Mul α] [AddCommMonoid α]
   [Mul β] [AddCancelCommMonoid β]

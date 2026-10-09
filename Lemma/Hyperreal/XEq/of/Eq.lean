@@ -2,7 +2,7 @@ import sympy.core.relational
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   [XEq α]
   {a b : α}

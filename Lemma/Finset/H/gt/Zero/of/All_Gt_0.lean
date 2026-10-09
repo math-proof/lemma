@@ -3,7 +3,7 @@ import sympy.Basic
 open Continuant
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (x : ℕ → ℝ)

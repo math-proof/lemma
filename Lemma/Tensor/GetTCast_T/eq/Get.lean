@@ -7,7 +7,7 @@ import Lemma.Tensor.TCast.as.T.of.Eq
 open Bool List Tensor
 
 
-@[main, fin]
+@[path, fin]
 private lemma main
 -- given
   (X : Tensor α [m, n])

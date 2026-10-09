@@ -4,7 +4,7 @@ import Lemma.List.GetAppend.eq.Get_Sub_Length.of.GtLengthAppend.GeLength
 open List
 
 
-@[main]
+@[path]
 private lemma main
   {s : List α}
   {d : ℕ}

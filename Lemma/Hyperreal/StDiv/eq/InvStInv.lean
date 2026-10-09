@@ -3,7 +3,7 @@ import Lemma.Rat.InvDiv.eq.Div
 open Hyperreal Rat
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
 -- given
   (a b : ℝ*) :

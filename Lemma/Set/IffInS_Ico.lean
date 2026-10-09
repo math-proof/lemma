@@ -3,7 +3,7 @@ import Lemma.Set.Ioc.eq.Ico
 open Set
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (c a b x : ℤ) :

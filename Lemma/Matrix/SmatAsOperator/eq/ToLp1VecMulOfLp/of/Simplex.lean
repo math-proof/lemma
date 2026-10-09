@@ -3,7 +3,7 @@ import sympy.stats.stochastic_process
 open scoped Matrix
 
 
-@[main]
+@[path]
 private lemma main
   [Fintype S]
   {P : Matrix S S ℝ} [RowStochastic P]

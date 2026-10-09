@@ -2,7 +2,7 @@ import Mathlib.Analysis.RCLike.Sqrt
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {x a d : ℂ}
 -- given

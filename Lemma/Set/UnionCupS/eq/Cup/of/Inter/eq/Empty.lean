@@ -4,7 +4,7 @@ import Lemma.Set.EqSDiffUnion.of.Inter.eq.Empty
 open Set
 
 
-@[main]
+@[path]
 private lemma main
   {A B : Set α}
 -- given

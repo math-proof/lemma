@@ -7,7 +7,7 @@ open Hyperreal
 /--
 Strict order is detected by the real parts: if \( x \approx r \) and \( y \approx s \) for reals \( r < s \), then \( x < y \).
 -/
-@[main]
+@[path]
 private lemma main
   {x y : ℝ*}
   {r s : ℝ}

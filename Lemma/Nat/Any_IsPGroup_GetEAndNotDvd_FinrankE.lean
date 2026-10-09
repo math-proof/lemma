@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [IsGalois_exists_intermediateField_isPGroup_and_not_dvd_finrank](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_IsGalois_exists_intermediateField_isPGroup_and_not_dvd_finrank.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {k K : Type*} [Field k] [Field K] [Algebra k K] [FiniteDimensional k K] [IsGalois k K]
   {p : ℕ} [Fact p.Prime] :

@@ -4,7 +4,7 @@ import Lemma.Tensor.SumStack.of.All_Eq
 open Bool Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [AddMonoid α]
   {X : Fin m → Tensor α s}

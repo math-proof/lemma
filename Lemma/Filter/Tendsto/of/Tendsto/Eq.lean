@@ -3,7 +3,7 @@ import sympy.Basic
 open Filter (Tendsto)
 
 
-@[main]
+@[path]
 private lemma main
   {f : α → β}
   {a : Filter α}

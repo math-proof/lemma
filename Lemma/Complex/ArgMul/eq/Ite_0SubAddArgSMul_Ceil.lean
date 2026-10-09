@@ -2,7 +2,7 @@ import Lemma.Complex.ArgMul.eq.SubAddArgSMul_Ceil.of.Ne_0.Ne_0
 open Complex
 
 
-@[main]
+@[path]
 private lemma main
   {x y : ℂ} :
 -- imply

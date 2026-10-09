@@ -4,7 +4,7 @@ import Mathlib.MeasureTheory.Integral.Prod
 open MeasureTheory
 
 
-@[main]
+@[path]
 private lemma main
   {a b c d : ℝ}
   {f : ℝ → ℝ}

@@ -3,7 +3,7 @@ import Lemma.List.EqEraseIdx.of.LeLength
 open List
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   {d : ℕ}
 -- given

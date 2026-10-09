@@ -2,7 +2,7 @@ import Lemma.Measure.Measurable_FrestrictLe_PiLE
 open MeasureTheory Finset Measure
 
 
-@[main]
+@[path]
 private lemma main
   {X : ℕ → Type*} [∀ n, MeasurableSpace (X n)]
 -- given

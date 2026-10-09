@@ -5,7 +5,7 @@ import sympy.Basic
 open LpSpace
 
 
-@[main]
+@[path]
 private lemma main
   {p d : ℕ}
 -- given

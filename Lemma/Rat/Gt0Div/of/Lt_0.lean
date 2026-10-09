@@ -4,7 +4,7 @@ import Lemma.Rat.Gt0Div.of.Lt_0.Gt_0
 open Rat Nat
 
 
-@[main]
+@[path]
 private lemma main
   [NeZero (d : ℕ)]
   [Field α] [LinearOrder α] [IsStrictOrderedRing α]
@@ -18,7 +18,7 @@ private lemma main
   apply GtCoe_0
 
 
-@[main]
+@[path]
 private lemma left
   [NeZero (d : ℕ)]
   [Field α] [LinearOrder α] [IsStrictOrderedRing α]

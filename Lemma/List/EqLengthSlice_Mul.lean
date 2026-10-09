@@ -6,7 +6,7 @@ import Lemma.Rat.EqToNatCeilDivSubMul.of.Lt
 open Int Nat Rat
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (i : Fin n)
@@ -24,7 +24,7 @@ private lemma main
   simp
 
 
-@[main]
+@[path]
 private lemma Comm
 -- given
   (i : Fin n)

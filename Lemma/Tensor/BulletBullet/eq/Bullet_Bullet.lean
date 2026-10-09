@@ -8,7 +8,7 @@ open Tensor
 /--
 http://shelf2.library.cmu.edu/Tech/23445461.pdf#page=15
 -/
-@[main]
+@[path]
 private lemma main
   [OPlus α]
   [OTimes α]

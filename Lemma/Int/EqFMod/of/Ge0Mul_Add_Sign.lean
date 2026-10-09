@@ -15,7 +15,7 @@ import Lemma.Set.EqFMod.of.Lt_0.IccAdd_1'0
 open Set Bool Nat Int
 
 
-@[main]
+@[path]
 private lemma main
   {n d : ℤ}
 -- given

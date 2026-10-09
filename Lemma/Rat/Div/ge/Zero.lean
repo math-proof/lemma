@@ -3,7 +3,7 @@ import Lemma.Int.Ge_0
 open Int Rat
 
 
-@[main]
+@[path]
 private lemma main
   [Field R] [LinearOrder R] [IsStrictOrderedRing R]
   {a b : ℕ} :

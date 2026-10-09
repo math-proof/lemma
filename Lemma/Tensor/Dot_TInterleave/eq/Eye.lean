@@ -8,7 +8,7 @@ import torch.functions
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main :
 -- imply
   (interleave d) @ (interleave d)ᵀ = Tensor.eye (d + d) := by

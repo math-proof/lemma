@@ -5,7 +5,7 @@ import Lemma.Hyperreal.Coe
 open Hyperreal
 
 
-@[main, mt]
+@[path, mt]
 private lemma main
   [NeZero (d : ℕ)]
   {a b : ℝ*}

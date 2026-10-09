@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   [Preorder α]
   {x y : α}
@@ -13,7 +13,7 @@ private lemma main
   rw [h]
 
 
-@[main]
+@[path]
 private lemma relax
   [Preorder α]
   {a b u : α}

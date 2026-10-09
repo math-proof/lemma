@@ -5,7 +5,7 @@ import Lemma.Bool.ImpOr.is.Imp.Imp
 open Bool
 
 
-@[main]
+@[path]
 private lemma main
   {p q : Prop} :
 -- imply

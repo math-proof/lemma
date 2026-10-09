@@ -4,7 +4,7 @@ import Lemma.List.GetPermute__Neg.eq.Get_Add.of.GtLength_Add
 open List
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   {s : List α}
 -- given

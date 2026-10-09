@@ -12,7 +12,7 @@ import Lemma.Tensor.UnsqueezeNeg.eq.NegUnsqueeze
 open Bool List Nat Tensor
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [Neg α]
   {s : List ℕ}

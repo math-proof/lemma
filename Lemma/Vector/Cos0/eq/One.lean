@@ -6,7 +6,7 @@ import sympy.vector.functions
 open Real Vector
 
 
-@[main]
+@[path]
 private lemma main :
 -- imply
   (0 : List.Vector ℝ n).cos = 1 := by

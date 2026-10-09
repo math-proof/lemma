@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [Algebra_exists_pow_mem_mul_pow_eq_of_mem_adjoin_blowupChart](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Algebra_exists_pow_mem_mul_pow_eq_of_mem_adjoin_blowupChart.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {C K : Type} [CommRing C] [Field K] [Algebra C K]
   {J : Ideal C}

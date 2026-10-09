@@ -6,10 +6,10 @@ open Tensor
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Tensor.GetSwapMatrix.eq.Ite |
+| path | Tensor.GetSwapMatrix.eq.Ite |
 | fin | Tensor.GetSwapMatrix.eq.Ite.fin |
 -/
-@[main, fin]
+@[path, fin]
 private lemma main
   [AddMonoidWithOne α] [CharZero α]
 -- given

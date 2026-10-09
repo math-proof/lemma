@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [Algebra_finitePresentation_of_finite_of_flat_of_isLocalRing](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Algebra_finitePresentation_of_finite_of_flat_of_isLocalRing.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing R] [IsLocalRing R] [CommRing C] [Algebra R C] [Module.Finite R C] [Module.Flat R C] :
 -- imply

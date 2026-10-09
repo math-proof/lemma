@@ -6,7 +6,7 @@ import Lemma.ContinuousSemiflow.Subset.of.Attracts.IsClosed.Invariant
 import Lemma.ContinuousSemiflow.PhaseBounded.of.IsGlobalAttractor
 
 
-@[main]
+@[path]
 private lemma main
   {S : Type*} [Fintype S]
   {A : Type*} [Fintype A]

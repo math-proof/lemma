@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   [Preorder α]
   {a b c : α}
@@ -14,7 +14,7 @@ private lemma main
   lt_of_le_of_lt h₀ h₁
 
 
-@[main]
+@[path]
 private lemma subst
   {y b x t k : ℝ}
 -- given

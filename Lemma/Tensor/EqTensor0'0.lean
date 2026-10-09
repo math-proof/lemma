@@ -2,7 +2,7 @@ import torch.Tensor.Basic
 import torch.Tensor.prod
 
 
-@[main]
+@[path]
 private lemma main
   [Zero α]
 -- given

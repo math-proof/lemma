@@ -3,7 +3,7 @@ import Lemma.Nat.Add
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   {x a b : ℕ}
 -- given
@@ -18,7 +18,7 @@ private lemma main
   assumption
 
 
-@[main]
+@[path]
 private lemma left
   {x a b : ℕ}
 -- given

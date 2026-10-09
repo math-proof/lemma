@@ -7,7 +7,7 @@ open CategoryTheory CategoryTheory.MonoidalCategory Module
 /--
 [Representation_trace_mul_eq_trace_of_commute_of_pow_prime_pow_eq_one](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Representation_trace_mul_eq_trace_of_commute_of_pow_prime_pow_eq_one.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [Field k] [Group G] [AddCommGroup V] [Module k V] [FiniteDimensional k V]
   {p : ℕ} [Fact p.Prime] [CharP k p]

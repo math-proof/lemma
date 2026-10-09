@@ -14,7 +14,7 @@ import Lemma.Vector.EqGet1_1
 open Tensor Vector Bool List
 
 
-@[main, fin, val]
+@[path, fin, val]
 private lemma main
   [One α]
 -- given

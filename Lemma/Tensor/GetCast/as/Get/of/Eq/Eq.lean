@@ -2,7 +2,7 @@ import stdlib.SEq
 import torch.Tensor.Basic
 
 
-@[main, fin, cast.fin]
+@[path, fin, cast.fin]
 private lemma left
 -- given
   (h_s : s = s')
@@ -16,7 +16,7 @@ private lemma left
   rfl
 
 
-@[main, fin, cast.fin]
+@[path, fin, cast.fin]
 private lemma main
 -- given
   (h_s : s = s')

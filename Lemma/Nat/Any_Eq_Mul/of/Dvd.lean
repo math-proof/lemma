@@ -3,7 +3,7 @@ import Lemma.Nat.Mul
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   [IntegerRing Z]
   {x d : Z}
@@ -15,7 +15,7 @@ private lemma main
   exact h
 
 
-@[main]
+@[path]
 private lemma left
   [IntegerRing Z]
   {x d : Z}

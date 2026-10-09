@@ -7,7 +7,7 @@ open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Measure
 /--
 Joint law of two consecutive stages of the trajectory model `M`: `law(ω[t], ω[t+1]) = law(ω[t]) ⊗ₘ K θ`.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [Fintype A]
   {M : Model Θ S A}

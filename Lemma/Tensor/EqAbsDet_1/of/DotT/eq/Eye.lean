@@ -4,7 +4,7 @@ import Lemma.Tensor.EqAbs_1.of.EqSquare_1
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [CommRing α] [CharZero α] [LinearOrder α] [IsStrictOrderedRing α]
   {X : Tensor α [n, n]}

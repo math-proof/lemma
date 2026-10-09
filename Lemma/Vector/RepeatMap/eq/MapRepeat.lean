@@ -4,7 +4,7 @@ import Lemma.Vector.GetRepeat.eq.Get_Mod.of.Lt_Mul
 open Vector
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   {β : Type*}
 -- given

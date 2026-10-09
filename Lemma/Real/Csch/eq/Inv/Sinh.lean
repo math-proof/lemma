@@ -3,7 +3,7 @@ import sympy.functions.elementary.hyperbolic
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {x : ℝ}
   -- imply

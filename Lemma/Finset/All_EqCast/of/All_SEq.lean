@@ -3,7 +3,7 @@ import Lemma.Finset.NeUnivEmpty
 open Finset
 
 
-@[main]
+@[path]
 private lemma main
   [AddCommMonoid α]
   {x : Fin m → List.Vector α n}

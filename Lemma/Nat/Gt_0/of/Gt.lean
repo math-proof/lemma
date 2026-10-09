@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {a b : ℕ}
 -- given
@@ -12,7 +12,7 @@ private lemma main
   Nat.zero_lt_of_lt h
 
 
-@[main]
+@[path]
 private lemma transit
   {x y : ℝ}
 -- given

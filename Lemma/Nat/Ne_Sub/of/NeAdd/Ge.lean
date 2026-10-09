@@ -3,7 +3,7 @@ import Lemma.Nat.EqAddSub.of.Ge
 open Nat
 
 
-@[main, comm 2]
+@[path, comm 2]
 private lemma left
   {x a b : ℕ}
 -- given
@@ -18,7 +18,7 @@ private lemma left
   contradiction
 
 
-@[main, comm 2]
+@[path, comm 2]
 private lemma main
   {x a b : ℕ}
 -- given

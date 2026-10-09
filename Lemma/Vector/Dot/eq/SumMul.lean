@@ -3,7 +3,7 @@ import Lemma.Vector.EqResize
 open Nat Vector
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [Mul α] [Add α] [Zero α]
 -- given

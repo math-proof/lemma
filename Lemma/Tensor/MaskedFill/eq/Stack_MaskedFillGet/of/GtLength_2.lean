@@ -6,7 +6,7 @@ import Lemma.Tensor.GtLength.of.GtLength_0
 open Tensor
 
 
-@[main, fin]
+@[path, fin]
 private lemma main
   [Zero α]
 -- given

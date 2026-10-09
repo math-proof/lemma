@@ -24,7 +24,7 @@ private lemma  Polynomial.log_norm_coeff_le_logMahlerMeasure_add' {p : Polynomia
         rw [← Real.log_pow]
         exact Real.log_le_log hchoose (by exact_mod_cast Nat.choose_le_two_pow _ _)
     _ = _ := add_comm _ _
-@[main]
+@[path]
 private lemma main
   {p : Polynomial ℂ}
   {k : ℕ}

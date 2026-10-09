@@ -6,7 +6,7 @@ open CategoryTheory AlgebraicGeometry
 /--
 [AlgebraicGeometry_IsOpenImmersion_of_isClosedImmersion_of_flat_comp_of_etale](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_IsOpenImmersion_of_isClosedImmersion_of_flat_comp_of_etale.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {Z X Y : Scheme.{u}}
   {i : Z ⟶ X} [IsClosedImmersion i]

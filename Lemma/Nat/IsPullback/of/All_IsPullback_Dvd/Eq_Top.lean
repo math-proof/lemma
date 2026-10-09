@@ -23,7 +23,7 @@ private lemma  isPullback_of_iSup_eq_top {P X Y Z : Scheme.{u}} (fst : P ⟶ X) 
   · simp only [Iso.refl_hom, Category.comp_id]
     rfl
   · simp only [Iso.refl_hom, Category.comp_id, Category.id_comp]
-@[main]
+@[path]
 private lemma main
   {P X Y Z : Scheme.{u}}
   {fst : P ⟶ X}

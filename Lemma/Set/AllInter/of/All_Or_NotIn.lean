@@ -6,7 +6,7 @@ import Lemma.Bool.Imp.is.Or_Not
 open Set Bool
 
 
-@[main]
+@[path]
 private lemma main
   {A B : Set α}
   {f : α → Prop}

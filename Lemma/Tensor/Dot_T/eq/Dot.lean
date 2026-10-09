@@ -4,7 +4,7 @@ import Lemma.Tensor.EqTT
 open Tensor
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [CommMagma α] [AddCommMonoid α]
 -- given
@@ -17,7 +17,7 @@ private lemma main
   exact congrArg (fun t => t @ A) (EqTT X)
 
 
-@[main, comm]
+@[path, comm]
 private lemma resize
   [CommMagma α] [AddCommMonoid α]
 -- given

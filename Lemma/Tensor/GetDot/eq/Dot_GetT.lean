@@ -8,7 +8,7 @@ import sympy.matrices.expressions.matmul
 open Bool Tensor
 
 
-@[main, fin]
+@[path, fin]
 private lemma main
   [CommMagma α] [AddCommMonoid α]
 -- given

@@ -8,7 +8,7 @@ import Lemma.Rat.Add_Inv.eq.DivAddMul.of.Ne_0
 open Rat Nat Int
 
 
-@[main]
+@[path]
 private lemma main
   {x : ℝ}
 -- given

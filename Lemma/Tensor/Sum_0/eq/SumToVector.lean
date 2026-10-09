@@ -6,7 +6,7 @@ import Lemma.Vector.Sum.eq.Sum_Get
 open Fin Tensor Vector
 
 
-@[main]
+@[path]
 private lemma main
   [AddCommMonoid α]
 -- given

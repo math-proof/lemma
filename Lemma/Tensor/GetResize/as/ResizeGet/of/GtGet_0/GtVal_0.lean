@@ -34,7 +34,7 @@ open Bool List Nat Tensor Vector
 set_option maxHeartbeats 1000000
 
 
-@[main, fin, cast, cast.fin]
+@[path, fin, cast, cast.fin]
 private lemma main
   [Zero α]
   {d : Fin s.length}

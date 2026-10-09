@@ -8,7 +8,7 @@ import Lemma.List.ProdRotate.eq.Prod
 open Int List
 
 
-@[main]
+@[path]
 private lemma main
   [CommMonoid α]
   {s : List α}

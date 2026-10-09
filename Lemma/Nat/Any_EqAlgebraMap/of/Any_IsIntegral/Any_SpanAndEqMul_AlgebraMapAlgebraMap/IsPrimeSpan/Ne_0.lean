@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [IsIntegrallyClosed_exists_algebraMap_eq_of_isIntegral_pow_mul](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_IsIntegrallyClosed_exists_algebraMap_eq_of_isIntegral_pow_mul.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing R] [IsDomain R] [IsIntegrallyClosed R] [Field K] [Algebra R K] [IsFractionRing R K]
   {t : R}

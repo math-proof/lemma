@@ -4,7 +4,7 @@ import Lemma.Bool.Any.is.Any_UFnNeg
 open Set Bool
 
 
-@[main]
+@[path]
 private lemma main
   [InvolutiveNeg α]
   {f : α → Set β} :

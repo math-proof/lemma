@@ -4,12 +4,12 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Set.In_Range.is.Any_Eq |
+| path | Set.In_Range.is.Any_Eq |
 | comm | Set.Any_Eq.is.In_Range |
 | mp | Set.Any_Eq.of.In_Range |
 | mpr | Set.In_Range.of.Any_Eq |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   {ι : Sort u} {α : Type v} {f : ι → α} {a : α} :
 -- imply

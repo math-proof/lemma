@@ -10,7 +10,7 @@ import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.GtLength_0
 open Bool List Nat Tensor
 
 
-@[main, cast]
+@[path, cast]
 private lemma main
   [Zero α]
   {s : List ℕ}

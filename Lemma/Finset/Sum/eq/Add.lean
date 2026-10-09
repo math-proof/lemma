@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma by_parts
   [CommRing α]
   {n : ℕ}
@@ -18,7 +18,7 @@ private lemma by_parts
     ring
 
 
-@[main]
+@[path]
 private lemma by_parts.offset
   [CommRing α]
   {i n : ℕ}
@@ -36,7 +36,7 @@ private lemma by_parts.offset
     ring
 
 
-@[main]
+@[path]
 private lemma doit.outer.setlimit
   [AddCommMonoid α] [DecidableEq ι]
   {a b : ι}
@@ -50,7 +50,7 @@ private lemma doit.outer.setlimit
   Finset.sum_pair h
 
 
-@[main]
+@[path]
 private lemma split.limits
   [CommRing α]
   {n : ℕ}
@@ -66,7 +66,7 @@ private lemma split.limits
     linear_combination ih
 
 
-@[main]
+@[path]
 private lemma split.limits.triple
   [CommRing α]
   {n : ℕ}
@@ -82,7 +82,7 @@ private lemma split.limits.triple
     linear_combination ih
 
 
-@[main]
+@[path]
 private lemma telescope.step
   [CommRing α]
   {n d : ℕ}
@@ -101,7 +101,7 @@ private lemma telescope.step
     linear_combination -h
 
 
-@[main]
+@[path]
 private lemma doit.outer
   [AddCommMonoid α]
   {a : ℕ}
@@ -113,7 +113,7 @@ private lemma doit.outer
   rw [Finset.sum_Ico_succ_top (show a ≤ a + 1 by omega), Finset.sum_Ico_succ_top (le_refl a), Finset.Ico_self, Finset.sum_empty, zero_add]
 
 
-@[main]
+@[path]
 private lemma doit.setlimit
   [AddCommMonoid α] [DecidableEq ι]
   {a b : ι}
@@ -126,7 +126,7 @@ private lemma doit.setlimit
   Finset.sum_pair h
 
 
-@[main]
+@[path]
 private lemma doit
   [AddCommMonoid α]
   {a : ℕ}

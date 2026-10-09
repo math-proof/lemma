@@ -3,7 +3,7 @@ import Lemma.Tensor.GetShiftMatrix.eq.Ite
 open Nat Tensor
 
 
-@[main, fin]
+@[path, fin]
 private lemma main
   [AddMonoidWithOne α] [CharZero α]
   (n : ℕ)

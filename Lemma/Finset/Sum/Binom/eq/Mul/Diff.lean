@@ -2,7 +2,7 @@ import Mathlib.Algebra.Group.ForwardDiff
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {n : ℕ}
   {i j : ℤ}

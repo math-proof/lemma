@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   [DecidableEq α] [AddCommGroup β]
   {A B : Finset α}

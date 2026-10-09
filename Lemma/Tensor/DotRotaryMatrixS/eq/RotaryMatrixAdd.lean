@@ -5,7 +5,7 @@ import Lemma.Tensor.RotaryMatrixNeg.eq.TRotaryMatrix
 open Int Tensor
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (α β : Tensor ℝ [d]) :

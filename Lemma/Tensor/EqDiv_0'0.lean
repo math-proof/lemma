@@ -6,7 +6,7 @@ import Lemma.Vector.EqDiv_0'0
 open Tensor Vector Rat
 
 
-@[main]
+@[path]
 private lemma main
   [GroupWithZero α]
 -- given

@@ -4,12 +4,12 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Vector.Head.eq.Get_0 |
+| path | Vector.Head.eq.Get_0 |
 | comm | Vector.Get_0.eq.Head |
 | fin | Vector.Head.eq.Get_0.fin |
 | fin.comm | Vector.Get_0.eq.Head.fin |
 -/
-@[main, comm, fin, fin.comm]
+@[path, comm, fin, fin.comm]
 private lemma main
   {n : ℕ}
 -- given

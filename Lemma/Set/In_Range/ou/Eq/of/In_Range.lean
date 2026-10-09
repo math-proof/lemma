@@ -3,7 +3,7 @@ import Lemma.Set.In_Range.of.Lt
 open Set
 
 
-@[main]
+@[path]
 private lemma main
   {n i : ℕ}
 -- given

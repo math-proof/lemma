@@ -3,7 +3,7 @@ import Lemma.Nat.Add
 open List Nat
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (a : α)

@@ -3,7 +3,7 @@ import sympy.vector.vector
 open Vector
 
 
-@[main]
+@[path]
 private lemma main
   [SubNegMonoid α]
 -- given

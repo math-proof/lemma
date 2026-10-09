@@ -3,7 +3,7 @@ import Lemma.Set.In_Finset.is.OrEqS
 open Nat Set
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h : x ∈ ({0, 1} : Set ℕ)) :

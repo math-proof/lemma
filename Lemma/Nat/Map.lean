@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [WeierstrassCurve_map_frobenius_dualNumber_eq_map_map_map](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_WeierstrassCurve_map_frobenius_dualNumber_eq_map_map_map.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [Field k]
   {q : ℕ} [Fact q.Prime] [CharP k q] [CharP (DualNumber k) q]

@@ -12,7 +12,7 @@ set_option maxHeartbeats 8000000
 
 
 /-- Interleaved analogue of `Tensor.RotaryMatrixNeg.eq.TRotaryMatrix`. -/
-@[main]
+@[path]
 private lemma main
 -- given
   (θ : Tensor ℝ [d]) :

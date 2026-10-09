@@ -3,7 +3,7 @@ import Lemma.Bool.Any.of.Cond
 open Bool
 
 
-@[main]
+@[path]
 private lemma main
   [Inhabited α]:
 -- imply

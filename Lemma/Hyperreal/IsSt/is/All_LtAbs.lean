@@ -2,7 +2,7 @@ import Lemma.Hyperreal.Infinitesimal.is.All_LtAbs
 open Hyperreal
 
 
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
 -- given
   (x : ℝ*)

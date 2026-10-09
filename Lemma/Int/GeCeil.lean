@@ -5,10 +5,10 @@ open Set
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Int.GeCeil |
+| path | Int.GeCeil |
 | comm | Int.Le_Ceil |
 -/
-@[main, comm]
+@[path, comm]
 private lemma main
   [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
   [FloorRing α]

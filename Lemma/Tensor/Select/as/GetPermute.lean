@@ -54,7 +54,7 @@ open Nat List Vector Bool Int Tensor Fin
 set_option maxHeartbeats 1000000
 
 
-@[main, cast]
+@[path, cast]
 private lemma main
 -- given
   (X : Tensor α s)

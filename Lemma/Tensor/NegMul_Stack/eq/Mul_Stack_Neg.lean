@@ -7,10 +7,10 @@ open Tensor
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Tensor.NegMul_Stack.eq.Mul_Stack_Neg |
+| path | Tensor.NegMul_Stack.eq.Mul_Stack_Neg |
 | comm | Tensor.Mul_Stack_Neg.eq.NegMul_Stack |
 -/
-@[main, comm]
+@[path, comm]
 private lemma main
   [Mul α] [HasDistribNeg α]
 -- given
@@ -22,7 +22,7 @@ private lemma main
   rw [NegMul.eq.Mul_Neg, NegStack.eq.Stack_Neg]
 
 
-@[main, comm]
+@[path, comm]
 private lemma Fun
   [Mul α] [HasDistribNeg α]
 -- given

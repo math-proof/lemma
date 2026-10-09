@@ -2,7 +2,7 @@ import sympy.tensor.stack_ite
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (m : ℕ)

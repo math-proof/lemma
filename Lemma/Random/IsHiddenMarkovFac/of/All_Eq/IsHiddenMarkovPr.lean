@@ -6,7 +6,7 @@ open scoped ENNReal.ToRealCoe
 
 /-- The probability-notation assumptions give the abstract factorization for the family of prefix joint probabilities
 `P t ys = Pr(x[:t+1] = xo[:t+1], y[:t+1] = ys[:t+1])`. -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace Ω]
   [ReferenceMeasure Y]

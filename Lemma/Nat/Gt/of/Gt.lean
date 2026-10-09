@@ -2,7 +2,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma relax.given
   {x y l : ℝ}
 -- given
@@ -14,7 +14,7 @@ private lemma relax.given
   exact lt_of_lt_of_le h hl
 
 
-@[main]
+@[path]
 private lemma transport.given
   {x y a : ℝ}
 -- given
@@ -25,7 +25,7 @@ private lemma transport.given
   linarith
 
 
-@[main]
+@[path]
 private lemma transport
   {x y a : ℝ}
 -- given

@@ -13,7 +13,7 @@ Kepler's area law closes up on the ellipse: if the radius follows
 over \([0,T]\), then the swept area is the ellipse area \(\pi ab\), where
 \(a=\dfrac{p}{1-e^2}\) and \(b=a\sqrt{1-e^2}\).
 -/
-@[main]
+@[path]
 private lemma main
   {m e p T : ℝ}
   {r ρ θ : ℝ → ℝ}

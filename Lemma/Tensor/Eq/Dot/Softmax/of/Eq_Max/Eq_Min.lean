@@ -9,7 +9,7 @@ set_option maxHeartbeats 2000000
 private lemma sc_ext {x y : ℝ} (h : x = y) : (x : Tensor ℝ []) = (y : Tensor ℝ []) := by rw [h]
 
 
-@[main]
+@[path]
 private lemma band_part_mask.dilated
   {n l u d d_z : ℕ}
   {β : Fin n → ℕ}
@@ -35,7 +35,7 @@ private lemma band_part_mask.dilated
   exact h_main
 
 
-@[main]
+@[path]
 private lemma band_part_mask.dilated.bert
   {n l u d d_z : ℕ}
   {β : Fin n → ℕ}

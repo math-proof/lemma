@@ -4,7 +4,7 @@ import Lemma.Tensor.Pad1Length.eq.Self
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (s : List ℕ) :

@@ -7,7 +7,7 @@ open MeasureTheory PolicyGradient Random
 /--
 For `γ ∈ [0, 1)` the state value on a general state space is bounded: `‖Vk θ γ x‖ ≤ (1 - γ)⁻¹ * |R|`.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace S] [MeasurableSpace A] [Fintype A]
   {M : Model Θ S A}

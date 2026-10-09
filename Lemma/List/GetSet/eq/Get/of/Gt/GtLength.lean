@@ -3,7 +3,7 @@ import Lemma.Nat.Ne.of.Gt
 open List Nat
 
 
-@[main]
+@[path]
 private lemma main
   {x : List α}
 -- given

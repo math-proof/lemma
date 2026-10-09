@@ -2,7 +2,7 @@ import Batteries.Data.List.Lemmas
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma left
   {s : List α}
   {i : ℕ}
@@ -15,7 +15,7 @@ private lemma left
   List.swap_eq_of_ge_left h
 
 
-@[main]
+@[path]
 private lemma main
   {s : List α}
 -- given

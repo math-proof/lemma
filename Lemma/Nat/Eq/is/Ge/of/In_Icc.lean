@@ -7,12 +7,12 @@ open Nat Set
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Nat.Eq.is.Ge.of.In_Icc |
+| path | Nat.Eq.is.Ge.of.In_Icc |
 | comm | Nat.Ge.is.Eq.of.In_Icc |
 | mp | Nat.Ge.of.Eq.In_Icc |
 | mpr | Nat.Eq.of.Ge.In_Icc |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   [PartialOrder α]
   {a b : α}

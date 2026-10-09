@@ -3,7 +3,7 @@ import Lemma.Nat.LeMulS.of.Ge_0.Le
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   {i n : ℕ}
 -- given

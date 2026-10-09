@@ -7,7 +7,7 @@ import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 open Fin Nat Tensor Vector
 
 
-@[main]
+@[path]
 private lemma scalar
   [Div α]
 -- given
@@ -26,7 +26,7 @@ private lemma scalar
   simp [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qr]
 
 
-@[main]
+@[path]
 private lemma main
   [Div α]
 -- given
@@ -44,7 +44,7 @@ private lemma main
   rfl
 
 
-@[main]
+@[path]
 private lemma fin
   [Div α]
 -- given

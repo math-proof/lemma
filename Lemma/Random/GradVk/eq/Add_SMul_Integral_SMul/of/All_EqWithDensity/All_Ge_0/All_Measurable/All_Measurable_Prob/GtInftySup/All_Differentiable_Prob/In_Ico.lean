@@ -28,7 +28,7 @@ h₃: x ↦ π_θ(u | x) is measurable; h₄, h₅, h₆: `p x u` is a (measurab
 Differentiation under the integral sign needs no extra hypothesis: ∇V is bounded (from h₂) and `T(· | x, u)` is a
 probability measure.
 -/
-@[main]
+@[path]
 private lemma main
   [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [FiniteDimensional ℝ Θ]
   [ReferenceMeasure S] [MeasurableSpace A] [Fintype A]

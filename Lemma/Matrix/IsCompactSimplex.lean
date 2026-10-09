@@ -3,7 +3,7 @@ import Lemma.Matrix.Simplex.sub.ClosedBall
 open Metric Matrix
 
 
-@[main]
+@[path]
 private lemma main
   {S : Type*} [Fintype S] :
 -- imply

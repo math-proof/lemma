@@ -2,7 +2,7 @@ import Lemma.Bool.Any.of.Any.limits.subst.Neg
 open Bool
 
 
-@[main]
+@[path]
 private lemma main
   {f : ℤ → Prop}
   {a b c : ℤ} :
@@ -16,7 +16,7 @@ private lemma main
   omega
 
 
-@[main]
+@[path]
 private lemma real
   {f : ℝ → Prop}
   {a b c : ℝ} :

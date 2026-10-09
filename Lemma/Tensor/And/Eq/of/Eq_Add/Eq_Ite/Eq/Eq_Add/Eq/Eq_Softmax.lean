@@ -10,7 +10,7 @@ MegaByte: the patch embedding fed to the global model, the input of the local mo
 Bytes are indexed by \( t = k P + p \), and a patch is flattened by `finProdFinEquiv` : \( (a, b) \mapsto b + D_G a \).
 Here \( K \) is the number of patches (\( K = \lceil T / P \rceil \) in the paper, but only the index bound \( t / P < K \) is used).
 -/
-@[main]
+@[path]
 private lemma mega_byte
   {K' P' V DG DL : ℕ}
   {x : ℕ → Fin V}

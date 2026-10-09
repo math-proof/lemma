@@ -134,7 +134,7 @@ private lemma  exists_forall_sum_le {r : ℕ} {Γ : AddSubgroup (Fin r → ℝ)}
   have h3 : (2 * ρ) ^ r * ∑ x ∈ F, ∏ k, (1 + |y k + x k|)⁻¹ ^ 2 ≤ (1 + ρ) ^ (2 * r) * I :=
     hsum.trans (mul_le_mul_of_nonneg_left hle hpow)
   rwa [le_inv_mul_iff₀ h2ρ]
-@[main]
+@[path]
 private lemma main
   {r : ℕ}
   {Γ : AddSubgroup (Fin r → ℝ)} [DiscreteTopology Γ] :

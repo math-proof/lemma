@@ -8,7 +8,7 @@ open Tensor
 /--
 Wrapping `C` through `B.mul C`, then through `A.mul (B.mul C)`.
 -/
-@[main]
+@[path]
 private lemma main
 -- given
   (s s' s'' : List ℕ)

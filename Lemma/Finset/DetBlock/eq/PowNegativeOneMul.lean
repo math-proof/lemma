@@ -6,7 +6,7 @@ import sympy.Basic
 /-- py: the determinant of a (block) permutation matrix obtained by `s` column swaps is `(-1)^s`.
 Blocks are flattened to entries (index type `ι`, e.g. a Σ-type of block indices); the swaps are the
 list `l` of transpositions whose product is the permutation. -/
-@[main]
+@[path]
 private lemma main
   {ι : Type*} [Fintype ι] [DecidableEq ι]
   {σ : Equiv.Perm ι}

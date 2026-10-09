@@ -5,7 +5,7 @@ open Filter MeasureTheory
 open scoped RealInnerProductSpace
 
 
-@[main]
+@[path]
 private lemma main
   {m m₀ : MeasurableSpace Ω}
   {μ : Measure[m₀] Ω}

@@ -4,10 +4,10 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Nat.EqPow0_0.of.Gt_0 |
+| path | Nat.EqPow0_0.of.Gt_0 |
 | subst 0 | Nat.EqPow0_0.of.Gt_0.Eq_0 |
 -/
-@[main, subst 0]
+@[path, subst 0]
 private lemma main
   [MonoidWithZero α]
   {n : ℕ}

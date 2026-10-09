@@ -6,7 +6,7 @@ import Lemma.Vector.GetMul.eq.Mul_Get
 open Vector
 
 
-@[main]
+@[path]
 private lemma left
   [CommMonoidWithZero α]
   [Div α]
@@ -25,7 +25,7 @@ private lemma left
   rw [Nat.EqDivMul.of.Ne_0.left h]
 
 
-@[main]
+@[path]
 private lemma main
   [MonoidWithZero α]
   [Div α]

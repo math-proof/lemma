@@ -19,10 +19,10 @@ open Tensor Vector Bool
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Tensor.SumMap.eq.MapSum.of.All_EqUFnAdd |
+| path | Tensor.SumMap.eq.MapSum.of.All_EqUFnAdd |
 | comm | Tensor.MapSum.eq.SumMap.of.All_EqUFnAdd |
 -/
-@[main, comm]
+@[path, comm]
 private lemma main
   [AddCommMonoid α]
   [AddCancelCommMonoid β]

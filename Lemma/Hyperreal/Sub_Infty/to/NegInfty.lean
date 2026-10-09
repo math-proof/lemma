@@ -4,7 +4,7 @@ import Lemma.Nat.Sub.eq.AddNeg
 open Hyperreal Nat
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (x : ℝ) :

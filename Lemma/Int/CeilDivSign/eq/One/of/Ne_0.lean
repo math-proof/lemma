@@ -17,7 +17,7 @@ import Lemma.Set.In_Ioc.is.Lt.Le
 open Set Int Nat Rat
 
 
-@[main]
+@[path]
 private lemma main
   [Field α] [LinearOrder α] [IsStrictOrderedRing α]
   [FloorRing α]

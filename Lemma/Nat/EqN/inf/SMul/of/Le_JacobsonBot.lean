@@ -6,7 +6,7 @@ open scoped Pointwise
 /--
 [Submodule_iInf_sup_pow_smul_top_eq_of_le_jacobson](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Submodule_iInf_sup_pow_smul_top_eq_of_le_jacobson.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing R] [IsNoetherianRing R] [AddCommGroup M] [Module R M] [Module.Finite R M]
   {I : Ideal R}

@@ -3,7 +3,7 @@ import Lemma.List.Prod.eq.MulProdS
 open List Nat
 
 
-@[main]
+@[path]
 private lemma main
   [MonoidWithZero α]
   {s : List α}

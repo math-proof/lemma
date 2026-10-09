@@ -3,7 +3,7 @@ import Lemma.Vector.XEqExpS.of.XEq_0
 open Tensor Vector
 
 
-@[main]
+@[path]
 private lemma main
   {X Y : Tensor ℝ* s}
 -- given

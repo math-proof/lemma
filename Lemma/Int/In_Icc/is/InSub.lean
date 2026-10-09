@@ -6,14 +6,14 @@ open Int
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Int.In_Icc.is.InSub |
+| path | Int.In_Icc.is.InSub |
 | comm | Int.InSub.is.In_Icc |
 | mp | Int.InSub.of.In_Icc |
 | mpr | Int.In_Icc.of.InSub |
 | mp.mt | Int.NotIn_Icc.of.NotInSub |
 | mpr.mt | Int.NotInSub.of.NotIn_Icc |
 -/
-@[main, comm, mp, mpr, mp.mt, mpr.mt]
+@[path, comm, mp, mpr, mp.mt, mpr.mt]
 private lemma main
   [AddGroup α]
   [Preorder α]

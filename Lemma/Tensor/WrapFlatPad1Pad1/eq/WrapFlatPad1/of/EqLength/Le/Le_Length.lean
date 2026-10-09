@@ -5,7 +5,7 @@ import Lemma.Tensor.WrapFlatAppendReplicate1.eq.WrapFlat
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   {n m : ℕ}
 -- given

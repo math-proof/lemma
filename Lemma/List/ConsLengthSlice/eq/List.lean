@@ -4,7 +4,7 @@ import stdlib.Slice
 open List
 
 
-@[main]
+@[path]
 private lemma head
 -- given
   (n : ℕ) :
@@ -14,7 +14,7 @@ private lemma head
   simp [LengthSlice.eq.Min]
 
 
-@[main]
+@[path]
 private lemma tail
 -- given
   (n : ℕ) :

@@ -2,7 +2,7 @@ import sympy.functions.elementary.complexes
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {k t : ℕ}
   {ξ : ℕ → ℂ}
@@ -20,7 +20,7 @@ private lemma main
   ring
 
 
-@[main]
+@[path]
 private lemma recursive
   {k t : ℕ}
   {ξ : ℕ → ℂ}
@@ -40,7 +40,7 @@ private lemma recursive
   ring
 
 
-@[main]
+@[path]
 private lemma recursive.real
   {k t : ℕ}
   {ξ : ℕ → ℝ}

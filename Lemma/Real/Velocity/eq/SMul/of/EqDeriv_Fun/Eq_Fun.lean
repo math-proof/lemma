@@ -8,7 +8,7 @@ import sympy.Basic
 Uniform circular motion (notes §11): if \(\rho\equiv\rho_0\) and \(\dot\theta\equiv\omega\), then
 \(\vec{v}=\rho_0\omega\,\hat{\theta}\).
 -/
-@[main]
+@[path]
 private lemma main
   {ρ θ : ℝ → ℝ}
   {ρ₀ ω t : ℝ}

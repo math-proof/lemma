@@ -5,7 +5,7 @@ import Lemma.Tensor.Dot_T.eq.Dot
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (α β : Tensor ℝ [d])

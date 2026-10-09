@@ -7,7 +7,7 @@ import Lemma.List.GetTake.eq.Get.of.GtLengthTake
 open List Nat
 
 
-@[main]
+@[path]
 private lemma main
   {s : List α}
 -- given

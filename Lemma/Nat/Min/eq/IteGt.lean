@@ -3,7 +3,7 @@ import Lemma.Bool.Ite.eq.IteNot
 open Bool Nat
 
 
-@[main]
+@[path]
 private lemma main
   [LinearOrder α]
 -- given

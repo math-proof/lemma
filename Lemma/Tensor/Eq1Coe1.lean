@@ -5,7 +5,7 @@ import sympy.core.relational
 open Tensor Vector
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
 -- given
   (s : List ℕ) :

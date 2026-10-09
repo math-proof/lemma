@@ -2,7 +2,7 @@ import sympy.Basic
 import sympy.vector.vector
 
 
-@[main]
+@[path]
 private lemma main
   {v : List.Vector α 1}
 -- given

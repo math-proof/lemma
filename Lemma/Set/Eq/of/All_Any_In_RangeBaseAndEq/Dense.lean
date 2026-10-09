@@ -16,7 +16,7 @@ private lemma  epi_specMap_of_field {κ k : Type u} [Field κ] [Field k] (φ : C
     infer_instance
   have : Surjective (Spec.map φ) := ⟨fun p => ⟨IsLocalRing.closedPoint k, Subsingleton.elim _ _⟩⟩
   exact Flat.epi_of_flat_of_surjective _
-@[main]
+@[path]
 private lemma main
   {X Y S : Scheme.{u}} [IsReduced X]
   {F G : X ⟶ Y}

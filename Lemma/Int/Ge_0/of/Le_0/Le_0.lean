@@ -3,7 +3,7 @@ import Lemma.Int.Le0Mul.of.Lt_0.Le_0
 open Int Nat
 
 
-@[main]
+@[path]
 private lemma main
   [Semiring α]
   [PartialOrder α]

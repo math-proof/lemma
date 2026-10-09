@@ -10,7 +10,7 @@ If every `x k : Ω → α` and `y k : Ω → β` is measurable and `α`, `β` ar
 singletons), then `(x[:n], y[:m])` spans a `SinglePSpace π`; the reference measure on the vector
 types `Fin _ → α` is the counting measure by instance.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace Ω]
   [MeasurableSpace α] [Countable α] [MeasurableSingletonClass α]
@@ -25,7 +25,7 @@ private lemma main
   SinglePSpace π (x[:n], y[:m]) := by
 -- proof
   apply Random.SinglePSpace.of.EqMeasureCount.EqMeasureCount.Measurable.Measurable
-    (measurable_pi_lambda _ fun _ => hx _) (measurable_pi_lambda _ fun _ => hy _) rfl rfl
+    (Measurable.of_eval fun _ => hx _) (Measurable.of_eval fun _ => hy _) rfl rfl
 
 
 -- created on 2026-10-03

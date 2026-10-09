@@ -5,7 +5,7 @@ import Lemma.Int.GeDivS.of.Gt_0
 open Int
 
 
-@[main]
+@[path]
 private lemma main
   [Field α] [LinearOrder α] [IsStrictOrderedRing α] [FloorRing α]
   {n d : ℤ}

@@ -96,7 +96,7 @@ private lemma lintegral_partialRV_mul
     (MeasureTheory.lintegral_map' hMeas.aemeasurable hym).symm
   rw [hmap, hlawy]
   have hfin : ∀ᵐ b ∂ν, m b < ⊤ := by
-    have : MeasureTheory.IsProbabilityMeasure (π.map y) := MeasureTheory.Measure.isProbabilityMeasure_map hym
+    have : MeasureTheory.IsProbabilityMeasure (π.map y) := inferInstance
     have htot : ∫⁻ b, m b ∂ν = 1 := by
       have h := congrArg (fun μ : MeasureTheory.Measure γ ↦ μ Set.univ) hlawy
       rw [MeasureTheory.measure_univ, MeasureTheory.withDensity_apply (μ := ν) m MeasurableSet.univ,
@@ -302,7 +302,7 @@ private lemma lintegral_partialRV_RA_mul
   rw [hmap, hlawyy]
   have hfin : ∀ᵐ z ∂νν, m' z < ⊤ := by
     have : MeasureTheory.IsProbabilityMeasure (π.map (y, y)) :=
-      MeasureTheory.Measure.isProbabilityMeasure_map hyym
+      inferInstance
     have htot : ∫⁻ z, m' z ∂νν = 1 := by
       have h := congrArg (fun μ : MeasureTheory.Measure (γ × γ) ↦ μ Set.univ) hlawyy
       rw [MeasureTheory.measure_univ, MeasureTheory.withDensity_apply (μ := νν) m' MeasurableSet.univ,
@@ -435,7 +435,7 @@ private lemma lintegral_partialRV_RA_mul
   refine MeasureTheory.lintegral_congr fun ω ↦ ?_
   simp [JointRandomSymbol]
 
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace Ω]
   [ReferenceMeasure α] [ReferenceMeasure γ]

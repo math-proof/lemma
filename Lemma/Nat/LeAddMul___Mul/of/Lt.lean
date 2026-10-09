@@ -4,7 +4,7 @@ import Lemma.Nat.MulAdd.eq.AddMulS
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   {m i : ℕ}
 -- given

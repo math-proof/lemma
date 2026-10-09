@@ -3,7 +3,7 @@ import Lemma.Tensor.ItemNeg.eq.NegItem
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [AddGroup α] [LinearOrder α]
 -- given

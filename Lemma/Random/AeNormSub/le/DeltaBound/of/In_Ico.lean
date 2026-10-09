@@ -15,7 +15,7 @@ private lemma Vc_bdd [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S
 /--
 Almost surely every temporal-difference residual `δ[j] = r[j] + γ * Vc(s[j+1]) - Vc(s[j])` is bounded by `deltaBound γ`.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [Fintype A]
   {M : Model Θ S A}

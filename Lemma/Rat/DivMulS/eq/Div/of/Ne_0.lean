@@ -4,7 +4,7 @@ import Lemma.Rat.Div.eq.Mul_Inv
 open Nat Rat
 
 
-@[main]
+@[path]
 private lemma main
   [DivisionSemiring α]
   {n d a : α}
@@ -21,7 +21,7 @@ private lemma main
   rw [Div.eq.Mul_Inv]
 
 
-@[main]
+@[path]
 private lemma left
   [Semifield α]
   {a n d : α}

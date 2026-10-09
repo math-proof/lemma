@@ -19,7 +19,7 @@ private lemma  PortCard.natDegree_Φ_sub_C_mul_ΨSq {R : Type*} [CommRing R] [No
       _ ≤ n.natAbs ^ 2 - 1 := WeierstrassCurve.natDegree_ΨSq_le W n
       _ < n.natAbs ^ 2 := Nat.sub_lt (by omega) one_pos
       _ = (W.Φ n).natDegree := (WeierstrassCurve.natDegree_Φ W n).symm
-@[main]
+@[path]
 private lemma main
   [CommRing R] [Nontrivial R]
   {W : WeierstrassCurve R}

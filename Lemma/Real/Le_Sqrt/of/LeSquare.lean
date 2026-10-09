@@ -7,7 +7,7 @@ import Lemma.Real.Le_Sqrt.is.LeSquare.of.Ge_0.Ge_0
 open Nat Int Real
 
 
-@[main]
+@[path]
 private lemma main
   {x : ℝ}
 -- given

@@ -2,7 +2,7 @@ import Lemma.Set.In_Finset
 open Set
 
 
-@[main]
+@[path]
 private lemma main
   {a b : α} :
 -- imply

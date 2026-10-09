@@ -9,7 +9,7 @@ import Lemma.Bool.NotOr.is.Imp.Not
 open Bool
 
 
-@[main]
+@[path]
 private lemma main
   [Decidable p]
   [Decidable q]

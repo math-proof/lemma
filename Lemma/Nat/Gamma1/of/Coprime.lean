@@ -6,7 +6,7 @@ open scoped MatrixGroups
 /--
 [CongruenceSubgroup_gamma1_inf_gamma0_eq_gamma1_inf_gamma0_mul_of_coprime](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_CongruenceSubgroup_gamma1_inf_gamma0_eq_gamma1_inf_gamma0_mul_of_coprime.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {N ℓ : ℕ} [NeZero N]
 -- given

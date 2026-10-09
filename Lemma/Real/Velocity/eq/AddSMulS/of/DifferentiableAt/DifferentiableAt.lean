@@ -8,7 +8,7 @@ import sympy.Basic
 Product rule for a scaled direction field (notes §5):
 \(\vec{v}=\dfrac{d}{dt}(\rho\,\hat{u})=\dot\rho\,\hat{u}+\rho\,\dfrac{d\hat{u}}{dt}\).
 -/
-@[main]
+@[path]
 private lemma main
   {d : ℕ}
   {ρ : ℝ → ℝ}
@@ -24,7 +24,6 @@ private lemma main
   have h := hρ.hasDerivAt.smul hû.hasDerivAt
   simp only [velocity]
   convert h.deriv using 1
-  · rfl
   · simp [add_comm]
 
 

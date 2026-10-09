@@ -20,7 +20,7 @@ import Lemma.Nat.Mul.eq.Zero.is.OrEqS_0
 open Hyperreal Nat Rat
 
 
-@[main]
+@[path]
 private lemma main
   {a b x y : ℝ*}
 -- given

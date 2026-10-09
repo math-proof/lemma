@@ -5,7 +5,7 @@ open MeasureTheory
 open scoped Topology
 
 
-@[main]
+@[path]
 private lemma main
   {f g h : ℝ → ℝ}
   {x g' h' : ℝ}

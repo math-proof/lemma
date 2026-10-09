@@ -6,7 +6,7 @@ open Module
 /--
 [Submodule_finrank_comap_eq_finrank_ker_add_finrank_range_inf](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Submodule_finrank_comap_eq_finrank_ker_add_finrank_range_inf.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [Field k]
   {V W : Type*} [AddCommGroup V] [Module k V] [AddCommGroup W] [Module k W]

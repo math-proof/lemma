@@ -6,12 +6,12 @@ open Int
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Int.In_Range.is.Le.Lt |
+| path | Int.In_Range.is.Le.Lt |
 | comm | Int.Le.Lt.is.In_Range |
 | mp | Int.Le.Lt.of.In_Range |
 | mpr | Int.In_Range.of.Le.Lt |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   {a b x : ℤ} :
 -- imply

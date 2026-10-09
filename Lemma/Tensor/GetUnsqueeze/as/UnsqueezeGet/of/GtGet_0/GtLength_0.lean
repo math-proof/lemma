@@ -7,7 +7,7 @@ import Lemma.Tensor.Unsqueeze.as.Stack_Unsqueeze.of.GtLength_0
 open Tensor
 
 
-@[main, fin, cast, cast.fin]
+@[path, fin, cast, cast.fin]
 private lemma main
   {i : ℕ}
 -- given

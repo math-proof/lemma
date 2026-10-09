@@ -9,7 +9,7 @@ import Lemma.Vector.XEq.is.All_XEqGetS
 open Fin Nat Tensor Vector
 
 
-@[main, comm, mp, mpr, fin, fin.comm, fin.mp, fin.mpr]
+@[path, comm, mp, mpr, fin, fin.comm, fin.mp, fin.mpr]
 private lemma main
   [XEq α]
 -- given

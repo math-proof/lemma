@@ -6,7 +6,7 @@ open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Mode
 /--
 The state indicator `1{z.2.1 = y}` of a stage `z = (r, s, a)` has norm at most `1`.
 -/
-@[main]
+@[path]
 private lemma main
   [DecidableEq S]
 -- given

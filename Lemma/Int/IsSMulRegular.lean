@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [isSMulRegular_iff_of_free](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_isSMulRegular_iff_of_free.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {R M : Type*} [CommRing R] [AddCommGroup M] [Module R M] [Module.Free R M] [Nontrivial M]
   {r : R} :

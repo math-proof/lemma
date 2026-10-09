@@ -6,7 +6,7 @@ open CategoryTheory groupCohomology
 /--
 [groupCohomology_cocycles1_conj_apply_sub_eq](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_groupCohomology_cocycles1_conj_apply_sub_eq.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {k G : Type u} [CommRing k] [Group G]
   {A : Rep.{u} k G}

@@ -6,7 +6,7 @@ open Filter Topology
 /--
 [Polynomial_aeval_eq_zero_of_forall_pos_aeval_sum_pow_smul_eq_zero](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Polynomial_aeval_eq_zero_of_forall_pos_aeval_sum_pow_smul_eq_zero.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {R D : ℕ}
   {N : Fin (D + 1) → Matrix (Fin R) (Fin R) ℂ}

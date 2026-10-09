@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma nonoverlapping.condlimit.utility
   [DecidableEq α]
   {n : ℕ}
@@ -16,7 +16,7 @@ private lemma nonoverlapping.condlimit.utility
   exact Finset.disjoint_iff_inter_eq_empty.mpr (h i j (Ne.symm hij))
 
 
-@[main]
+@[path]
 private lemma nonoverlapping.intlimit.utility
   [DecidableEq α]
   {n : ℕ}
@@ -37,7 +37,7 @@ private lemma nonoverlapping.intlimit.utility
     exact h i j hlt
 
 
-@[main]
+@[path]
 private lemma nonoverlapping.setlimit
   [DecidableEq α]
   {n : ℕ}
@@ -55,7 +55,7 @@ private lemma nonoverlapping.setlimit
   exact ⟨by simpa using hj, fun h' => hij h'.symm⟩
 
 
-@[main]
+@[path]
 private lemma nonoverlapping.intlimit
   [DecidableEq α]
   {n : ℕ}
@@ -73,7 +73,7 @@ private lemma nonoverlapping.intlimit
   exact ⟨by simpa using hj, fun h' => hij h'.symm⟩
 
 
-@[main]
+@[path]
 private lemma nonoverlapping.setlimit.utility
   [DecidableEq α]
   {n : ℕ}

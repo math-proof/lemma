@@ -7,7 +7,7 @@ import Lemma.Tensor.XEq.of.Eq
 open Nat Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [NeZero (n : ℕ)]
   {d_z : ℕ}

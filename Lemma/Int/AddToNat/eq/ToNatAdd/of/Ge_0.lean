@@ -5,7 +5,7 @@ import Lemma.Nat.CoeAdd.eq.AddCoeS
 open Int Nat
 
 
-@[main]
+@[path]
 private lemma main
   {n : ℤ}
 -- given

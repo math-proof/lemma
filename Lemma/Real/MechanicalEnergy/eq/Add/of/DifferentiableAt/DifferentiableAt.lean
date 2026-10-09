@@ -7,7 +7,7 @@ import sympy.Basic
 Mechanical energy in polar coordinates:
 \(E=\frac12 m(\dot\rho^2+\rho^2\dot\theta^2)+C/\rho\).
 -/
-@[main]
+@[path]
 private lemma main
   {m C : ℝ}
   {ρ θ : ℝ → ℝ}

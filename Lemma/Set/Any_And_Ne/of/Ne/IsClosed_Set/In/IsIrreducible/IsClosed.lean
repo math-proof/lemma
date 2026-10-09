@@ -6,7 +6,7 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 /--
 [AlgebraicGeometry_exists_mem_isClosed_singleton_ne_of_isIrreducible](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_exists_mem_isClosed_singleton_ne_of_isIrreducible.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {k : Type u} [Field k]
   {X : Scheme.{u}}

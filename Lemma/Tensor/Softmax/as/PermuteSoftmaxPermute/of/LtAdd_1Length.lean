@@ -6,7 +6,7 @@ import Lemma.Tensor.SoftmaxPermute.as.PermuteSoftmax.of.GtLength_Add
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [Exp α]
 -- given

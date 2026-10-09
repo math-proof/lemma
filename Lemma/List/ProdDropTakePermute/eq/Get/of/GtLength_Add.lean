@@ -2,7 +2,7 @@ import Lemma.List.DropTakePermute.eq.ListGet.of.GtLength_Add
 open List
 
 
-@[main]
+@[path]
 private lemma main
   [MulOneClass α]
   {s : List α}

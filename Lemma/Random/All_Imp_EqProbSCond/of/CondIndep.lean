@@ -6,7 +6,7 @@ open ProbabilityTheory MeasureTheory Random MeasurableSpace
 open scoped ENNReal
 
 
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace Ω] [StandardBorelSpace Ω]
   [ReferenceMeasure α] [StandardBorelSpace α] [Nonempty α]

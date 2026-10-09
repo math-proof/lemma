@@ -4,7 +4,7 @@ import sympy.Basic
 import Lemma.Random.Any_LtAndEqSetOfLeSetOfLt
 
 
-@[main]
+@[path]
 private lemma main
   {Ω : Type*} [Fintype Ω]
 -- given

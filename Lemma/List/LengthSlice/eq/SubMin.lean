@@ -6,7 +6,7 @@ import Lemma.Nat.EqCeilCoe
 open Int Nat
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (n m j : ℕ) :

@@ -2,7 +2,7 @@ import sympy.vector.functions
 import sympy.Basic
 
 
-@[main, fin, comm, fin.comm]
+@[path, fin, comm, fin.comm]
 private lemma main
   [Exp α]
 -- given

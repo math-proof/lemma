@@ -7,7 +7,7 @@ open scoped Polynomial.Bivariate
 /--
 [WeierstrassCurve_Affine_CoordinateRing_isUnit_iff_eq_algebraMap](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_WeierstrassCurve_Affine_CoordinateRing_isUnit_iff_eq_algebraMap.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [Field F]
   {W : WeierstrassCurve F}

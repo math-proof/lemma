@@ -2,7 +2,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma inner_subs
   {n m : ℕ}
   {f g : (Fin n → ℂ) → (Fin m → ℂ)}

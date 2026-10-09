@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [Algebra_Etale_natCard_algHom_eq_finrank_of_isAlgClosed](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Algebra_Etale_natCard_algHom_eq_finrank_of_isAlgClosed.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [Field k] [IsAlgClosed k] [CommRing R] [Algebra k R] [Algebra.Etale k R] :
 -- imply

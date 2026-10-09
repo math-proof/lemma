@@ -5,7 +5,7 @@ import sympy.matrices.dense
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [Mul α] [AddCommMonoid α]
 -- given

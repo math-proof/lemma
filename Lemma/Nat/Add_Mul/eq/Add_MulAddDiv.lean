@@ -5,7 +5,7 @@ import Lemma.Nat.MulAdd.eq.AddMulS
 open Nat
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [IntegerRing Z]
 -- given

@@ -7,7 +7,7 @@ import Lemma.LpSpace.SumMulAbsHalfSq'_Abs.le.MulNormS.of.Ge_2
 open LpSpace
 
 
-@[main]
+@[path]
 private lemma main
   {p d : ℕ}
 -- given

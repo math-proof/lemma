@@ -14,7 +14,7 @@ import Lemma.Rat.Div.eq.Mul_Inv
 open Vector List Bool Rat
 
 
-@[main]
+@[path]
 private lemma main
   [DivisionSemiring α]
   {s : List ℕ}

@@ -5,11 +5,11 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Nat.LeMax.is.And.Le |
+| path | Nat.LeMax.is.And.Le |
 | mp | Nat.And.Le.of.LeMax |
 | mpr | Nat.LeMax.of.And.Le |
 -/
-@[main, mp, mpr]
+@[path, mp, mpr]
 private lemma main
   {x a b : ℝ} :
 -- imply

@@ -4,7 +4,7 @@ import Lemma.Random.QuantileLower_Add.eq.ImageQuantileLower
 open MeasureTheory
 
 
-@[main]
+@[path]
 private lemma main
   {Ω : Type*} [MeasurableSpace Ω]
   {μ : Measure Ω}

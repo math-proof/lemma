@@ -25,7 +25,7 @@ import Lemma.Nat.EqCast_0'0
 open Bool Finset Real Nat Int
 
 
-@[main]
+@[path]
 private lemma main
   {n : ℕ}
   {x : ℕ → ℝ}

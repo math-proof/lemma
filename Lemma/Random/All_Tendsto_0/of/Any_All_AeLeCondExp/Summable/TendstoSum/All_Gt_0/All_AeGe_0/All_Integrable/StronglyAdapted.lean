@@ -6,7 +6,7 @@ import Lemma.Real.Eq_0.of.Tendsto.Summable_Mul.All_Ge_0.TendstoSum.All_Gt_0
 open MeasureTheory Filter Finset Topology Random Real
 
 
-@[main]
+@[path]
 private lemma main
   [m₀ : MeasurableSpace Ω]
   {μ : Measure Ω} [IsProbabilityMeasure μ]

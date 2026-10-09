@@ -20,7 +20,7 @@ set_option maxHeartbeats 1000000
 
 
 /-- Equal-length-batch `matmul` commutes with a pointwise scalar binary operator `f`. -/
-@[main]
+@[path]
 private lemma main
   [Mul α] [Add α] [Zero α]
   {f : α → α → α}

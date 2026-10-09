@@ -9,7 +9,7 @@ open Nat
 /--
 similar with Ordinal.mul_add_mod_mul
 -/
-@[main]
+@[path]
 private lemma ord
 -- given
   (h : r < d)
@@ -25,7 +25,7 @@ private lemma ord
   simp [Div.eq.Zero.of.Lt h]
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h : r < d)

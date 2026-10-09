@@ -20,7 +20,7 @@ open Tensor Vector
 
 
 /-- `dot` commutes with a pointwise scalar binary operator `f`. -/
-@[main, comm]
+@[path, comm]
 private lemma main
   [Mul α] [Add α] [Zero α]
   {f : α → α → α}

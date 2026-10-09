@@ -6,10 +6,10 @@ open Int Nat
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Int.Lt.of.Le_Sub_1 |
+| path | Int.Lt.of.Le_Sub_1 |
 | comm 1 | Int.Gt.of.GeSub_1 |
 -/
-@[main, comm 1]
+@[path, comm 1]
 private lemma main
   [Ring α]
   [LinearOrder α]

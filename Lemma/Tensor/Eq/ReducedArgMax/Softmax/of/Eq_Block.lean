@@ -5,7 +5,7 @@ open Tensor
 set_option maxHeartbeats 1000000
 
 
-@[main]
+@[path]
 private lemma lower_triangle.tf
   {n l : ℕ} [NeZero n]
   {A : Fin n → Fin n → ℝ}
@@ -28,7 +28,7 @@ private lemma lower_triangle.tf
   ring
 
 
-@[main]
+@[path]
 private lemma lower_triangle
   {n l : ℕ} [NeZero n]
   {A : Fin n → Fin n → ℝ}
@@ -51,7 +51,7 @@ private lemma lower_triangle
   ring
 
 
-@[main]
+@[path]
 private lemma tf
   {n l u : ℕ} [NeZero n]
   {A : Fin n → Fin n → ℝ}
@@ -75,7 +75,7 @@ private lemma tf
   ring
 
 
-@[main]
+@[path]
 private lemma main
   {n l u : ℕ} [NeZero n]
   {A : Fin n → Fin n → ℝ}
@@ -99,7 +99,7 @@ private lemma main
   ring
 
 
-@[main]
+@[path]
 private lemma upper_triangle.tf
   {n u : ℕ} [NeZero n]
   {A : Fin n → Fin n → ℝ}
@@ -121,7 +121,7 @@ private lemma upper_triangle.tf
   rw [e1, e2]
 
 
-@[main]
+@[path]
 private lemma upper_triangle
   {n u : ℕ} [NeZero n]
   {A : Fin n → Fin n → ℝ}

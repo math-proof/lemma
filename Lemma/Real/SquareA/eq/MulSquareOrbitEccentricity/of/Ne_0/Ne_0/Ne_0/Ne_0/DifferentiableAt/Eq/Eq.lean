@@ -9,7 +9,7 @@ From \(E=\dfrac{J^2}{2m}A^2-\dfrac{C^2 m}{2J^2}\):
 A^2=\left(\dfrac{Cm}{J^2}\right)^2 e^2,\quad e=\sqrt{1+\dfrac{2EJ^2}{mC^2}}.
 \]
 -/
-@[main]
+@[path]
 private lemma main
   {r : ℝ → ℝ}
   {A C m J E φ : ℝ}

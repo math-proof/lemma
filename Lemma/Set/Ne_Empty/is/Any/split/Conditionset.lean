@@ -5,11 +5,11 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Set.Ne_Empty.is.Any.split.Conditionset |
+| path | Set.Ne_Empty.is.Any.split.Conditionset |
 | mp | Set.Any.split.Conditionset.of.Ne_Empty |
 | mpr | Set.Ne_Empty.of.Any.split.Conditionset |
 -/
-@[main, mp, mpr]
+@[path, mp, mpr]
 private lemma main
   {S : Set ℂ}
   {p : ℂ → Prop} :

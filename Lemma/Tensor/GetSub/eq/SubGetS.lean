@@ -4,7 +4,7 @@ import Lemma.Tensor.GetNeg.eq.NegGet
 open Int Tensor
 
 
-@[main, fin]
+@[path, fin]
 private lemma main
   [SubNegMonoid α]
 -- given

@@ -4,7 +4,7 @@ import Lemma.Vector.GtSumExp_0
 open Vector Rat
 
 
-@[main]
+@[path]
 private lemma main
   [ExpPos α] [IsOrderedCancelAddMonoid α]
   [NeZero n]

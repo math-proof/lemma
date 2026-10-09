@@ -3,7 +3,7 @@ import torch.Tensor.Basic
 import torch.Tensor.unsqueeze
 
 
-@[main, comm, cast]
+@[path, comm, cast]
 private lemma main
   {s : List ℕ}
 -- given

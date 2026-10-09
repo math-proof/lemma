@@ -21,7 +21,7 @@ open Tensor
 set_option maxHeartbeats 4000000
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (θ : Tensor ℝ [d])

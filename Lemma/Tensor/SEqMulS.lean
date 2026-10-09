@@ -9,7 +9,7 @@ import Lemma.Tensor.ValDataMul.eq.Nil.of.EqProdMulShape_0
 open Tensor Vector
 
 
-@[main]
+@[path]
 private lemma main
   [CommMagma α]
 -- given

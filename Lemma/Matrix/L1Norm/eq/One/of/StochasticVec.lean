@@ -2,7 +2,7 @@ import sympy.Basic
 import sympy.stats.stochastic_process_types
 open NNReal WithLp
 
-@[main]
+@[path]
 private lemma main
   {S : Type*} [Fintype S]
   {x : S → ℝ}

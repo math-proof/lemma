@@ -3,7 +3,7 @@ import Lemma.Int.Lt_0.of.Gt_0.Lt_0
 open Nat Int
 
 
-@[main]
+@[path]
 private lemma main
   [MulZeroClass α]
   [Preorder α]

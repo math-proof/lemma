@@ -7,7 +7,7 @@ open Polynomial
 /--
 [IntermediateField_finiteDimensional_normal_adjoin_rootsOfUnity_padic](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_IntermediateField_finiteDimensional_normal_adjoin_rootsOfUnity_padic.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {q : ℕ} [Fact q.Prime]
   {K : IntermediateField ℚ_[q] (PadicAlgCl q)} [FiniteDimensional ℚ_[q] K]

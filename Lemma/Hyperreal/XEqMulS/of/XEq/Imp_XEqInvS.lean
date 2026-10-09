@@ -2,7 +2,7 @@ import Lemma.Hyperreal.XEqMulS.of.XEq.XEq.Imp_XEqInvS.Imp_XEqInvS
 open Hyperreal
 
 
-@[main]
+@[path]
 private lemma main
   {a b x : ℝ*}
 -- given

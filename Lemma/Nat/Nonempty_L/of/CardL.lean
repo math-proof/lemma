@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [FiniteField_nonempty_algEquiv_of_card_eq](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_FiniteField_nonempty_algEquiv_of_card_eq.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [Field K] [Field L₁] [Algebra K L₁] [Finite L₁] [Field L₂] [Algebra K L₂] [Finite L₂]
 -- given

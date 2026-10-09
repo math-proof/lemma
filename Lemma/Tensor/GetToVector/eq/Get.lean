@@ -4,7 +4,7 @@ import Lemma.Tensor.GtLength_0
 open Tensor
 
 
-@[main, fin]
+@[path, fin]
 private lemma cons
 -- given
   (X : Tensor α (n :: s))
@@ -17,7 +17,7 @@ private lemma cons
   simp [GetElem.getElem]
 
 
-@[main, fin]
+@[path, fin]
 private lemma main
 -- given
   (X : Tensor α s)

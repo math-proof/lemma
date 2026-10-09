@@ -3,7 +3,7 @@ import sympy.Basic
 open Filter Topology
 
 
-@[main]
+@[path]
 private lemma main
   {γ : ℝ}
 -- given

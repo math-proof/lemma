@@ -3,7 +3,7 @@ import sympy.Basic
 
 
 /-- `Prod.snd` is measurable on a product measurable space. -/
-@[main]
+@[path]
 private lemma main
   {α β : Type*}
   [MeasurableSpace α] [MeasurableSpace β] :

@@ -4,7 +4,7 @@ import Lemma.Nat.LeMulS.of.Le.Le.Ge_0.Ge_0
 open Int Nat Hyperreal
 
 
-@[main, mt]
+@[path, mt]
 private lemma main
   {a b : ℝ*}
 -- given

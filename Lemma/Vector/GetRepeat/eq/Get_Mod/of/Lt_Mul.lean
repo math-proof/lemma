@@ -4,7 +4,7 @@ import Lemma.Nat.Gt_0.of.GtMul
 open Vector Nat
 
 
-@[main, fin]
+@[path, fin]
 private lemma main
 -- given
   (h : k < t * n)

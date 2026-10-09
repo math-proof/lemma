@@ -21,7 +21,7 @@ private lemma  cuspForm_eq_zero_of_eq_SL {Γ : Subgroup (GL (Fin 2) ℝ)} (hΓ :
     (f : CuspForm Γ k) : f = 0 := by
   subst hΓ
   exact rank_zero_iff_forall_zero.mp (CuspForm.rank_eq_zero_of_weight_lt_twelve hk) f
-@[main]
+@[path]
 private lemma main
   {f : CuspForm (CongruenceSubgroup.Gamma0 1) 2} :
 -- imply

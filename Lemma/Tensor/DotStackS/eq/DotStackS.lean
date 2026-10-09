@@ -6,7 +6,7 @@ import Lemma.Matrix.MulOfPowAddOfPowNegChoose.eq.MulOfChooseSumOf
 open Matrix
 
 
-@[main]
+@[path]
 private lemma vandermonde.col_transform
   {n m d : ℕ} {δ l : ℝ} :
 -- imply

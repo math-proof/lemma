@@ -4,10 +4,10 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Bool.NotOr.is.Imp.Not |
+| path | Bool.NotOr.is.Imp.Not |
 | comm | Bool.Imp.Not.is.NotOr |
 -/
-@[main, comm]
+@[path, comm]
 private lemma main
 -- given
   (p q : Prop) :

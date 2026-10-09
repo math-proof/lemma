@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [WeierstrassCurve_VariableChange_eq_one_of_smul_eq_of_u_eq_one_of_isUnit_six](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_WeierstrassCurve_VariableChange_eq_one_of_smul_eq_of_u_eq_one_of_isUnit_six.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing R]
   {W : WeierstrassCurve R}

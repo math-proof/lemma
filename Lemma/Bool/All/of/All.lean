@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma limits.swap
   {A : Set α}
   {B : Set β}
@@ -14,7 +14,7 @@ private lemma limits.swap
   fun y hy x hx => h x hx y hy
 
 
-@[main]
+@[path]
 private lemma subst
   {A : Set ι}
   {n : ι → ℕ}
@@ -27,7 +27,7 @@ private lemma subst
   fun i hi => h i hi (n i) (Nat.lt_succ_self _)
 
 
-@[main]
+@[path]
 private lemma limits.delete
   {A : Set α}
   {B : Set β}
@@ -40,7 +40,7 @@ private lemma limits.delete
   fun y _ => h y
 
 
-@[main]
+@[path]
 private lemma limits.insert
   {A : Set α}
   {B : Set β}
@@ -53,7 +53,7 @@ private lemma limits.insert
   fun y _ => h y
 
 
-@[main]
+@[path]
 private lemma limits.invert
   {f g : α → Prop}
 -- given
@@ -64,7 +64,7 @@ private lemma limits.invert
   fun e hf hg => hf (h e hg)
 
 
-@[main]
+@[path]
 private lemma limits.domain_defined.given
   {m n : ℕ}
   {p : ℕ → Prop}
@@ -77,7 +77,7 @@ private lemma limits.domain_defined.given
   rwa [min_eq_left h₀] at h₁
 
 
-@[main]
+@[path]
 private lemma limits.domain_defined
   {m n : ℕ}
   {p : ℕ → Prop}

@@ -12,7 +12,7 @@ open MeasureTheory
 Base case of the Markov decision process factorization: `Pr(s[0] = s.bvar[0]) = Pr(s[:1] = s.bvar[:1], a[:0] = a.bvar[:0])`.
 This is the left component of `Random.EqProbJoint.All_Eq_Mul_MulProbSCond…`.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace Ω] [StandardBorelSpace Ω]
   [ReferenceMeasure S] [ReferenceMeasure A]

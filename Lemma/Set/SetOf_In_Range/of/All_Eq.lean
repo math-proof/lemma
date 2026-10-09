@@ -2,7 +2,7 @@ import sympy.Basic
 import sympy.sets.sets
 
 
-@[main]
+@[path]
 private lemma main
   {n : ℕ}
   {f g : ℕ → α}

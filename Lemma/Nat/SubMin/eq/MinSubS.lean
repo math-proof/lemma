@@ -8,7 +8,7 @@ import Lemma.Nat.Min
 open Nat
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
 -- given
   (a b d : ℕ) :

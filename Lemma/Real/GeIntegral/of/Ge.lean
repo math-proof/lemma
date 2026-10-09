@@ -2,7 +2,7 @@ import sympy.integrals.integrals
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {a b : ℝ}
   {f g : ℝ → ℝ}

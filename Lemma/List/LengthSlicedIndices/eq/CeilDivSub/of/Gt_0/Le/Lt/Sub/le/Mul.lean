@@ -16,7 +16,7 @@ import Lemma.Nat.EqSubAdd
 open Nat Int Rat
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h : stop - start ≤ k * step)

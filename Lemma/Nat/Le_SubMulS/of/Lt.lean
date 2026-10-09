@@ -6,7 +6,7 @@ import Lemma.Nat.AddMul.le.Mul.of.Lt
 open Nat
 
 
-@[main]
+@[path]
 private lemma left
   {n : ℕ}
 -- given
@@ -20,7 +20,7 @@ private lemma left
   rwa [Add.comm]
 
 
-@[main]
+@[path]
 private lemma main
   {n : ℕ}
 -- given

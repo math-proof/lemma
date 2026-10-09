@@ -4,7 +4,7 @@ import Lemma.Int.NeCoe_0.is.Ne_0
 open Int
 
 
-@[main]
+@[path]
 private lemma main
   [AddGroupWithOne R]
   [CharZero R]

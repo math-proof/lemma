@@ -2,7 +2,7 @@ import Lemma.Bool.Cond.of.All_Imp.Cond
 open Bool
 
 
-@[main]
+@[path]
 private lemma main
   [Zero α]
   {f : ℕ → α}

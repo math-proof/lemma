@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [Submodule_eq_span_singleton_of_card_eq_sq](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Submodule_eq_span_singleton_of_card_eq_sq.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [AddCommGroup V]
   {p : ℕ} [Fact p.Prime] [Module (ZMod p) V]

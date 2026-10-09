@@ -3,7 +3,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma monotony.right_close
   {f : ℝ → ℝ}
   {a b : ℝ}
@@ -19,7 +19,7 @@ private lemma monotony.right_close
   exact hm ⟨le_refl a, le_trans hx.1.le hx.2⟩ (Set.Ioc_subset_Icc_self hx) hx.1
 
 
-@[main]
+@[path]
 private lemma monotony.right_open
   {f : ℝ → ℝ}
   {a b : ℝ}

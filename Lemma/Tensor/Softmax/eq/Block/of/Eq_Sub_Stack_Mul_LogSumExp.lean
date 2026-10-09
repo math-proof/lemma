@@ -7,7 +7,7 @@ open Tensor
 Hyperreal masked softmax (py: `softmax(A + (Ξ - 1) * oo)` with the block mask `Ξ`): the masked entries are exactly `0`,
 the unmasked ones carry the given weights, with every row having an unmasked entry.
 -/
-@[main]
+@[path]
 private lemma biased.lower_triangle.tf
   {n l : ℕ}
   {A : Fin n → Fin n → ℝ}
@@ -29,7 +29,7 @@ private lemma biased.lower_triangle.tf
 Hyperreal masked softmax (py: `softmax(A + (Ξ - 1) * oo)` with the block mask `Ξ`): the masked entries are exactly `0`,
 the unmasked ones carry the given weights, with every row having an unmasked entry.
 -/
-@[main]
+@[path]
 private lemma biased.upper_triangle.tf
   {n u : ℕ}
   {A : Fin n → Fin n → ℝ}
@@ -51,7 +51,7 @@ private lemma biased.upper_triangle.tf
 Hyperreal masked softmax (py: `softmax(A + (Ξ - 1) * oo)` with the block mask `Ξ`): the masked entries are exactly `0`,
 the unmasked ones carry the given weights, with every row having an unmasked entry.
 -/
-@[main]
+@[path]
 private lemma bilinear_matrix_attention.biased.lower_triangle.tf
   {n l : ℕ}
   {d : ℕ}
@@ -75,7 +75,7 @@ private lemma bilinear_matrix_attention.biased.lower_triangle.tf
 Hyperreal masked softmax (py: `softmax(A + (Ξ - 1) * oo)` with the block mask `Ξ`): the masked entries are exactly `0`,
 the unmasked ones carry the given weights, with every row having an unmasked entry.
 -/
-@[main]
+@[path]
 private lemma lower_triangle.tf
   {n l : ℕ}
   {A : Fin n → Fin n → ℝ}
@@ -96,7 +96,7 @@ private lemma lower_triangle.tf
 Hyperreal masked softmax (py: `softmax(A + (Ξ - 1) * oo)` with the block mask `Ξ`): the masked entries are exactly `0`,
 the unmasked ones carry the given weights, with every row having an unmasked entry.
 -/
-@[main]
+@[path]
 private lemma upper_triangle.tf
   {n u : ℕ}
   {A : Fin n → Fin n → ℝ}
@@ -117,7 +117,7 @@ private lemma upper_triangle.tf
 Hyperreal masked softmax (py: `softmax(A + (Ξ - 1) * oo)` with the block mask `Ξ`): the masked entries are exactly `0`,
 the unmasked ones carry the given weights, with every row having an unmasked entry.
 -/
-@[main]
+@[path]
 private lemma lower_triangle
   {n l : ℕ}
   {A : Fin n → Fin n → ℝ}

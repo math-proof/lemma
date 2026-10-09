@@ -4,7 +4,7 @@ import Lemma.Finset.SetOfIn_ImageConditionsetAndInFinset.eq.ImageImageConditions
 open Finset
 
 
-@[main]
+@[path]
 private lemma mapping.s2_B
   {n k : ℕ} :
 -- imply

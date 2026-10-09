@@ -2,7 +2,7 @@ import Lemma.Nat.ModMod_Mul.eq.Mod
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   [IntegerRing Z]
 -- given

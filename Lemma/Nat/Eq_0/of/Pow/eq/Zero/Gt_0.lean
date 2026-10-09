@@ -3,7 +3,7 @@ import Mathlib.Data.Nat.Basic
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {x : ℂ}
   {n : ℕ}

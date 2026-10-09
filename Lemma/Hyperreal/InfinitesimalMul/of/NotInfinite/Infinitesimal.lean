@@ -7,10 +7,10 @@ open Hyperreal Nat
 the hypotheses are arranged in the constructor order of multiplication a * b
 | attributes | lemma |
 | :---: | :---: |
-| main | Hyperreal.InfinitesimalMul.of.NotInfinite.Infinitesimal |
+| path | Hyperreal.InfinitesimalMul.of.NotInfinite.Infinitesimal |
 | mt 1 | Hyperreal.Infinite.of.NotInfinitesimalMul.Infinitesimal |
 -/
-@[main, mt 1]
+@[path, mt 1]
 private lemma main
   {a b : ℝ*}
 -- given

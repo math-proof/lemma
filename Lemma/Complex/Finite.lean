@@ -14,7 +14,7 @@ private lemma  ModularCurve.Period.fg_gamma0 (N : ℕ) [NeZero N] : Group.FG (Ga
     rw [Finset.coe_insert, Finset.coe_singleton]
     exact SpecialLinearGroup.SL2Z_generators⟩⟩
   exact Subgroup.fg_of_index_ne_zero _
-@[main]
+@[path]
 private lemma main
   {N : ℕ} [NeZero N] :
 -- imply

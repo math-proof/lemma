@@ -2,7 +2,7 @@ import Lemma.Bool.All.of.All.limits.subst.Neg
 open Bool
 
 
-@[main]
+@[path]
 private lemma real
   {f : ℝ → Prop}
   {a b c : ℝ} :

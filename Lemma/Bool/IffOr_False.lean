@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main :
 -- imply
   p ∨ False ↔ p := by

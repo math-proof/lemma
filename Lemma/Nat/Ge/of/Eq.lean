@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   [Preorder α]
   {x y : α}
@@ -13,7 +13,7 @@ private lemma main
   rw [h]
 
 
-@[main]
+@[path]
 private lemma relax
   {x y l : ℝ}
 -- given
@@ -26,7 +26,7 @@ private lemma relax
   exact h₁
 
 
-@[main]
+@[path]
 private lemma relax.upper
   {x y u : ℝ}
 -- given

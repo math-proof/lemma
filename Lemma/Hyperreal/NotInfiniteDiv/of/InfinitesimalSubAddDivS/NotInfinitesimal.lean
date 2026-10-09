@@ -8,7 +8,7 @@ import Lemma.Nat.Ne_0.of.Eq
 open Hyperreal Int Nat
 
 
-@[main]
+@[path]
 private lemma main
   [NeZero (d : ℕ)]
   {a b : ℝ*}

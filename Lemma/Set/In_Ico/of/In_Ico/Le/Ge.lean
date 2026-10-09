@@ -4,7 +4,7 @@ import Lemma.Set.In_Icc.is.Le.Le
 open Nat Set
 
 
-@[main]
+@[path]
 private lemma main
   [Preorder α]
   {a b a' b' x : α}

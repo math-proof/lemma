@@ -5,7 +5,7 @@ import torch.Tensor.mean
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [Semifield α]
 -- given

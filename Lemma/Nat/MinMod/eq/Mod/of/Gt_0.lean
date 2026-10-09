@@ -3,7 +3,7 @@ import Lemma.Nat.LeMod.of.Gt_0
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h_n : n > 0)

@@ -6,7 +6,7 @@ open Vector
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Vector.EqUnflatten.is.Eq_Flatten |
+| path | Vector.EqUnflatten.is.Eq_Flatten |
 | comm | Vector.Eq_Flatten.is.EqUnflatten |
 | mp | Vector.Eq_Flatten.of.EqUnflatten |
 | mpr | Vector.EqUnflatten.of.Eq_Flatten |
@@ -14,7 +14,7 @@ open Vector
 | mpr.comm | Vector.Eq_Unflatten.of.EqFlatten |
 | comm.is | Vector.Eq_Unflatten.is.EqFlatten |
 -/
-@[main, comm, mp, mpr, mp.comm, mpr.comm, comm.is]
+@[path, comm, mp, mpr, mp.comm, mpr.comm, comm.is]
 private lemma main
 -- given
   (v : List.Vector α (m * n))

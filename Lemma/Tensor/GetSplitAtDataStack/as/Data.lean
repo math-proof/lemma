@@ -9,7 +9,7 @@ import Lemma.Vector.EqGetRange.of.Lt
 open Tensor Vector
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (f : ℕ → Tensor α s)

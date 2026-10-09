@@ -3,7 +3,7 @@ import Lemma.Nat.Sub.eq.Zero.of.Le
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h : a < b) :

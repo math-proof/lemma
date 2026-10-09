@@ -2,7 +2,7 @@ import Lemma.Nat.Mul
 open Nat
 
 
-@[main]
+@[path]
 private lemma left
 -- given
   (h : c > 0)
@@ -13,7 +13,7 @@ private lemma left
   Nat.mul_add_div h a b
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h : c > 0)

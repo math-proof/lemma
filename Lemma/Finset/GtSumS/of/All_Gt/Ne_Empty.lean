@@ -4,7 +4,7 @@ import Lemma.Finset.All_Ge.of.All_Gt
 open Finset
 
 
-@[main]
+@[path]
 private lemma main
   [AddCommMonoid N] [PartialOrder N] [IsOrderedCancelAddMonoid N]
   {s : Finset ι}

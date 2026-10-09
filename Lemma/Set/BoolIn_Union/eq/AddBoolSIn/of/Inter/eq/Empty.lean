@@ -3,7 +3,7 @@ import Lemma.Set.AddIteS.eq.Ite.of.Inter.eq.Empty
 open Bool Set
 
 
-@[main]
+@[path]
 private lemma main
   {A B : Set α}
   {x : α}

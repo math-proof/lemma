@@ -6,7 +6,7 @@ open scoped nonZeroDivisors
 /--
 [IsDedekindDomain_HeightOneSpectrum_valuation_eq_exp_neg_count](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_IsDedekindDomain_HeightOneSpectrum_valuation_eq_exp_neg_count.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing R] [IsDedekindDomain R] [Field K] [Algebra R K] [IsFractionRing R K]
   {v : IsDedekindDomain.HeightOneSpectrum R}

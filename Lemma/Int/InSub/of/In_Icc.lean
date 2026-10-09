@@ -2,7 +2,7 @@ import Mathlib.Order.Interval.Set.Basic
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {e a b t : ℝ}
 -- given

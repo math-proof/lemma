@@ -6,7 +6,7 @@ open TrivSqZeroExt DualNumber
 /--
 [TrivSqZeroExt_isLocalRing](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_TrivSqZeroExt_isLocalRing.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing R] [AddCommGroup M] [Module R M] [Module Rᵐᵒᵖ M] [IsCentralScalar R M] [IsLocalRing R] :
 -- imply

@@ -3,7 +3,7 @@ import sympy.vector.functions
 open Bool
 
 
-@[main, cast]
+@[path, cast]
 private lemma main
   [Exp α]
 -- given

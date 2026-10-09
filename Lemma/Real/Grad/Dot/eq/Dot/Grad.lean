@@ -5,7 +5,7 @@ import sympy.Basic
 open BigOperators
 
 
-@[main]
+@[path]
 private lemma main
   {n : ℕ}
   {f : ℝ → (Fin n → ℝ)}

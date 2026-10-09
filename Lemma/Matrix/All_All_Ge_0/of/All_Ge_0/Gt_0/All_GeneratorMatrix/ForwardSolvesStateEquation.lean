@@ -10,7 +10,7 @@ import Lemma.Matrix.All_LtSlope.of.LtMul_GetVecMul.Ge_0.Gt_0.All_GeneratorMatrix
 open Matrix Filter Topology
 
 
-@[main]
+@[path]
 private lemma main
   {S : Type*} [Fintype S]
   {d : ℕ}

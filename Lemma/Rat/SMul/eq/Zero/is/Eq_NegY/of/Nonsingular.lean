@@ -6,7 +6,7 @@ open WeierstrassCurve.Affine.Point
 /--
 [WeierstrassCurve_Affine_Point_two_nsmul_eq_zero_iff_Y_eq_negY](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_WeierstrassCurve_Affine_Point_two_nsmul_eq_zero_iff_Y_eq_negY.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [Field F] [DecidableEq F]
   {W : WeierstrassCurve.Affine F}

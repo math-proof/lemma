@@ -44,7 +44,7 @@ Entry of the hyperreal masked softmax (log form): for \( z_{ij} = a_{ij} - \log 
 \log \operatorname{softmax}(a + ([P] - 1)\infty)_{ij} \approx z_{ij}.
 \]
 -/
-@[main]
+@[path]
 private lemma main
   {n m : ℕ}
 -- given

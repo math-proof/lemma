@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [AddSubgroup_exists_units_zmod_val_smul_eq_of_addOrderOf_eq_of_mem_zmultiples](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AddSubgroup_exists_units_zmod_val_smul_eq_of_addOrderOf_eq_of_mem_zmultiples.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [AddCommGroup G]
   {ℓ : ℕ} [NeZero ℓ]

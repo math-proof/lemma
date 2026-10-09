@@ -2,7 +2,7 @@ import sympy.Basic
 import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
 
 
-@[main]
+@[path]
 private lemma main
   [NonUnitalNonAssocSemiring α]
   {n : ℕ}

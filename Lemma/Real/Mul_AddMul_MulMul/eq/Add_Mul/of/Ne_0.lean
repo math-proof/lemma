@@ -6,7 +6,7 @@ open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model
 /--
 `c⁻¹ * (γ * (c * Y) + c * Z) = Z + γ * Y` for `c ≠ 0`.
 -/
-@[main]
+@[path]
 private lemma main
   {c γ Y Z : ℝ}
 -- given

@@ -42,7 +42,7 @@ open Fin List Nat Real Tensor Vector
 /--
 自然语言论述：[flash_attn](http://myhz0606.com/article/flash_attn)
 -/
-@[main]
+@[path]
 private lemma main
   [NeZero s.prod]
   [LogPos α] [DecidableLT α] [IsOrderedCancelAddMonoid α]

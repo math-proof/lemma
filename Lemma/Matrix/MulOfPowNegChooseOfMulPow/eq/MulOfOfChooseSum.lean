@@ -6,7 +6,7 @@ import Lemma.Matrix.MulOfMulPowOfPowNegChoose.eq.MulOfChooseSumOf
 open Matrix
 
 
-@[main]
+@[path]
 private lemma main
   {n m d : ℕ}
   {x δ l : ℝ} :

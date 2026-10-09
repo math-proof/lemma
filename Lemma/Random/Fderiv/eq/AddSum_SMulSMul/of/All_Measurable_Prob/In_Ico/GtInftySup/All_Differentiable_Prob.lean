@@ -13,7 +13,7 @@ gradient of the Bellman equation for the closed-form value function on a general
 Continuous-state counterpart of `Tensor.Fderiv.eq.AddSum_SMulSMul.of.In_Ico.GtInftySup.All_Differentiable_Prob`:
 the next-state sum `∑ y, P1(x, y) • fderiv Vc(y)` becomes the policy mixture of the transition integrals.
 -/
-@[main]
+@[path]
 private lemma main
   [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [FiniteDimensional ℝ Θ] [MeasurableSpace S] [MeasurableSpace A] [Fintype A]
   {M : Model Θ S A}

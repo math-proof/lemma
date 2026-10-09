@@ -3,7 +3,7 @@ import Lemma.Bool.SEqUFnS.of.SEq
 open Bool
 
 
-@[main]
+@[path]
 private lemma main
   [Exp α]
   {A : Tensor α s}

@@ -2,7 +2,7 @@ import Mathlib.Data.Complex.Basic
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {a b x y z : ℂ}
   -- given

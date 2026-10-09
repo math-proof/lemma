@@ -6,7 +6,7 @@ open IsLocalRing TensorProduct
 /--
 [IsArtinianRing_flat_and_finite_and_isNoetherianRing_tensorProduct_int_of_finite_residueField](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_IsArtinianRing_flat_and_finite_and_isNoetherianRing_tensorProduct_int_of_finite_residueField.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing C] [IsLocalRing C] [IsArtinianRing C] [Finite (ResidueField C)] [CommRing O] [IsNoetherianRing O] [Module.Flat ℤ O] :
 -- imply

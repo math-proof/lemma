@@ -2,7 +2,7 @@ import Lemma.Bool.UFn.of.Eq
 open Bool
 
 
-@[main]
+@[path]
 private lemma main
   {a b : List.Vector α n}
 -- given
@@ -13,7 +13,7 @@ private lemma main
   List.Vector.eq a b h
 
 
-@[main]
+@[path]
 private lemma nat
   {a : List.Vector α n}
   {b : List.Vector α n'}

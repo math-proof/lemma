@@ -3,7 +3,7 @@ import Lemma.Nat.Max.eq.IteLe
 open Bool Nat
 
 
-@[main]
+@[path]
 private lemma main
   [LinearOrder α]
 -- given

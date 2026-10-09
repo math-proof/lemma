@@ -4,7 +4,7 @@ import Lemma.Rat.LeFloor
 open Rat Int
 
 
-@[main]
+@[path]
 private lemma main
   [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
   [FloorRing α]

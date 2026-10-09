@@ -9,14 +9,14 @@ open Hyperreal Real Nat
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Hyperreal.InfiniteNeg.is.InfinitesimalExp |
+| path | Hyperreal.InfiniteNeg.is.InfinitesimalExp |
 | comm | Hyperreal.InfinitesimalExp.is.InfiniteNeg |
 | mp and | Hyperreal.InfinitesimalExp.of.InfiniteNeg |
 | mpr | Hyperreal.InfiniteNeg.of.InfinitesimalExp |
 | mp.mt | Hyperreal.NotInfiniteNeg.of.NotInfinitesimalExp |
 | mpr.mt | Hyperreal.NotInfinitesimalExp.of.NotInfiniteNeg |
 -/
-@[main, comm, mp and, mpr, mp.mt, mpr.mt]
+@[path, comm, mp and, mpr, mp.mt, mpr.mt]
 private lemma main
 -- given
   (x : ℝ*) :

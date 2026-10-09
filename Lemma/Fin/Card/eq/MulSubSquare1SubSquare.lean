@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [Matrix_natCard_GL_fin_two_zmod_eq](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Matrix_natCard_GL_fin_two_zmod_eq.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {p : ℕ} [Fact p.Prime] :
 -- imply

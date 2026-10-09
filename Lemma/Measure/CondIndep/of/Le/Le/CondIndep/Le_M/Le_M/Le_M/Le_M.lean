@@ -10,7 +10,7 @@ independent given `m'`, then `m₁` and `m₃` are conditionally independent giv
 With `m'' = m' ⊔ m₃` and `m₂ = m₂' ⊔ m₃` this is the textbook rule
 `A ⟂ (B, C) | G → A ⟂ B | (G, C)`; with `m'' = m'` it is decomposition.
 -/
-@[main]
+@[path]
 private lemma main
   {m' m₁ m₂ m'' m₃ : MeasurableSpace Ω} [mΩ : MeasurableSpace Ω] [StandardBorelSpace Ω]
   {μ : Measure Ω} [IsFiniteMeasure μ]

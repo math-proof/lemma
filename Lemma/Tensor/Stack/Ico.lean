@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma simp
   {start step k : ℕ}
   {f : ℕ → α} :
@@ -16,7 +16,7 @@ private lemma simp
     simp [List.getElem_range', Nat.add_comm, Nat.mul_comm]
 
 
-@[main]
+@[path]
 private lemma retain.step
   {start step k : ℕ}
   {g : ℕ → α}

@@ -2,7 +2,7 @@ import sympy.Basic
 import Mathlib.Data.Matrix.Block
 
 
-@[main]
+@[path]
 private lemma main
   [Fintype l] [Fintype m] [Fintype n]
   [CommRing α]

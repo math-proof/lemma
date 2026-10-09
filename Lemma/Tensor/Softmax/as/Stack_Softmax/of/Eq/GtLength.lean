@@ -3,7 +3,7 @@ import Lemma.Tensor.Softmax.eq.Stack_Softmax.of.GtLength
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [Exp α]
   {d : ℕ}

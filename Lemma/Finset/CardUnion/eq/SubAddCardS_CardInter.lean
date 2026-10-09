@@ -3,7 +3,7 @@ import Lemma.Finset.CardUnion.eq.Add_CardSDiff
 open Finset
 
 
-@[main]
+@[path]
 private lemma main
   [DecidableEq α]
   {A B : Finset α} :

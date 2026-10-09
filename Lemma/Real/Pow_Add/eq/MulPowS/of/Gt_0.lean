@@ -4,10 +4,10 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Real.Pow_Add.eq.MulPowS.of.Gt_0 |
+| path | Real.Pow_Add.eq.MulPowS.of.Gt_0 |
 | comm | Real.MulPowS.eq.Pow_Add.of.Gt_0 |
 -/
-@[main, comm]
+@[path, comm]
 private lemma main
   {x : ℝ}
 -- given

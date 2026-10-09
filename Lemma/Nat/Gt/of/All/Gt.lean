@@ -2,7 +2,7 @@ import Lemma.Nat.Gt.is.All.Gt
 open Nat
 
 
-@[main]
+@[path]
 private lemma given
   [Preorder α]
   {x y : Tensor α (n :: s)}

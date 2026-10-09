@@ -3,7 +3,7 @@ import Lemma.Vector.Eq.of.Eq_Cast.Eq
 open Vector
 
 
-@[main, fin 2]
+@[path, fin 2]
 private lemma main
   {a : List.Vector α n}
   {b : List.Vector α m}

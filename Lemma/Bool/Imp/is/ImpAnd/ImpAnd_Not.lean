@@ -4,12 +4,12 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Bool.Imp.is.ImpAnd.ImpAnd_Not |
+| path | Bool.Imp.is.ImpAnd.ImpAnd_Not |
 | comm | Bool.ImpAnd.ImpAnd_Not.is.Imp |
 | mp | Bool.ImpAnd.ImpAnd_Not.of.Imp |
 | mpr | Bool.Imp.of.ImpAnd.ImpAnd_Not |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   {p q r : Prop} :
 -- imply

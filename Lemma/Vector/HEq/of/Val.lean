@@ -3,7 +3,7 @@ import Lemma.Vector.Eq.of.Val
 open Vector Bool
 
 
-@[main]
+@[path]
 private lemma main
   {a : List.Vector α n}
   {b : List.Vector α m}

@@ -4,7 +4,7 @@ import Lemma.Set.UnionFinsetS.eq.Finset
 open Set
 
 
-@[main]
+@[path]
 private lemma main
   {x a b : α}
 -- given

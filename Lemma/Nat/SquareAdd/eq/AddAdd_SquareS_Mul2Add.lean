@@ -2,7 +2,7 @@ import sympy.Basic
 import sympy.core.power
 
 
-@[main]
+@[path]
 private lemma main
   [CommSemiring α]
 -- given

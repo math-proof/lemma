@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma quotient
   [Field α] [LinearOrder α] [IsStrictOrderedRing α] [FloorRing α]
   {m d q : ℤ}

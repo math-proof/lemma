@@ -15,7 +15,7 @@ import Lemma.Finset.All.of.All.All_Imp
 open Real Finset Nat Rat
 
 
-@[main, mp]
+@[path, mp]
 private lemma main
   {n : ℕ}
 -- given

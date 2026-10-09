@@ -9,7 +9,7 @@ import Lemma.List.AddMul.lt.LengthFlatten.of.Lt.GtLength.All_EqLength
 open List Nat
 
 
-@[main]
+@[path]
 private lemma main
   {i j n : ℕ}
   {s : List (List α)}

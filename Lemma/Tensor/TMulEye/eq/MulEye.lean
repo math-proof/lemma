@@ -15,10 +15,10 @@ set_option maxHeartbeats 4000000
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Tensor.TMulEye.eq.MulEye |
+| path | Tensor.TMulEye.eq.MulEye |
 | comm | Tensor.MulEye.eq.TMulEye |
 -/
-@[main, comm]
+@[path, comm]
 private lemma main
   [Semiring α] [CharZero α]
 -- given

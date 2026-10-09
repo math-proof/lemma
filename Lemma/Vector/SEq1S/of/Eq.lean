@@ -3,7 +3,7 @@ import sympy.Basic
 import sympy.vector.vector
 
 
-@[main]
+@[path]
 private lemma main
   [One α]
 -- given

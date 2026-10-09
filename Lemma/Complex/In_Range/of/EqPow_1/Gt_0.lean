@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [RingHom_mem_range_of_pow_eq_one](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_RingHom_mem_range_of_pow_eq_one.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [Field F] [IsAlgClosed F] [CharZero F]
   {σ : F →+* ℂ}

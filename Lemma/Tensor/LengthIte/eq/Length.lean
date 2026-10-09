@@ -2,7 +2,7 @@ import Lemma.Tensor.Length
 open Tensor
 
 
-@[main]
+@[path]
 private lemma left
   [Decidable p]
 -- given
@@ -20,7 +20,7 @@ private lemma left
     apply Length B A
 
 
-@[main]
+@[path]
 private lemma main
   [Decidable p]
 -- given

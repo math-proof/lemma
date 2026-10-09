@@ -3,7 +3,7 @@ import Lemma.Real.Eq_1.of.Add_Inv.eq.Two
 open Real Nat
 
 
-@[main]
+@[path]
 private lemma main
   {x : ℝ}
 -- given

@@ -6,7 +6,7 @@ open Bool Tensor
 /--
 Commutativity of `Tensor.mul` when both arguments have the same shape.
 -/
-@[main]
+@[path]
 private lemma Comm
   [CommMagma α]
 -- given

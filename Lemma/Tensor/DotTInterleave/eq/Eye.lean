@@ -4,7 +4,7 @@ import Lemma.Tensor.RotaryMatrix'0.eq.Eye
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main :
 -- imply
   (interleave d)ᵀ @ interleave d = Tensor.eye (d + d) := by

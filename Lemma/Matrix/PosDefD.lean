@@ -4,7 +4,7 @@ import Lemma.Matrix.All_Gt_0.of.Stationary.StochasticIrreducible
 open Matrix
 
 
-@[main]
+@[path]
 private lemma main
   {S : Type*} [Fintype S] [DecidableEq S] [Nonempty S] [MeasurableSpace S] [MeasurableSingletonClass S]
   {MRP : FiniteMRP S} :

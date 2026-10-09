@@ -6,7 +6,7 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 /--
 [AlgebraicGeometry_pullback_snd_specMap_comp_of_isStableUnderBaseChange](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_pullback_snd_specMap_comp_of_isStableUnderBaseChange.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {P : MorphismProperty Scheme.{u}} [P.IsStableUnderBaseChange]
   {R S T : Type u} [CommRing R] [CommRing S] [CommRing T]

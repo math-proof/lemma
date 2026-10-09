@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {p q : Prop}
 -- given
@@ -12,7 +12,7 @@ private lemma main
   Or.inl h
 
 
-@[main]
+@[path]
 private lemma split
   {p c : Prop}
 -- given
@@ -27,7 +27,7 @@ private lemma split
     exact Or.inl ⟨h, hc⟩
 
 
-@[main]
+@[path]
 private lemma subst
   {D : Set α}
   {s : α}

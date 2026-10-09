@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [IntermediateField_finiteDimensional_and_isGalois_adjoin_of_forall_algEquiv_apply_mem](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_IntermediateField_finiteDimensional_and_isGalois_adjoin_of_forall_algEquiv_apply_mem.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {K : Type u} [Field K]
   {Ω : Type v} [Field Ω] [Algebra K Ω] [IsAlgClosure K Ω]

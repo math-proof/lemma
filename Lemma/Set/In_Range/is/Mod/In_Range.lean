@@ -249,12 +249,12 @@ private lemma mem_sliced_indices_neg_one
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Set.In_Range.is.Mod.In_Range |
+| path | Set.In_Range.is.Mod.In_Range |
 | comm | Set.Mod.In_Range.is.In_Range |
 | mp | Set.Mod.In_Range.of.In_Range |
 | mpr | Set.In_Range.of.Mod.In_Range |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   {n : ℕ}
   {a b d : ℤ}

@@ -4,12 +4,12 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Bool.Cond.is.Bool.eq.One |
+| path | Bool.Cond.is.Bool.eq.One |
 | comm | Bool.Bool.eq.One.is.Cond |
 | mp | Bool.Bool.eq.One.of.Cond |
 | mpr | Bool.Cond.of.Bool.eq.One |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   [Decidable p] :
 -- imply

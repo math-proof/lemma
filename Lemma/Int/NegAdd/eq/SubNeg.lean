@@ -2,7 +2,7 @@ import Lemma.Int.Sub.eq.Add_Neg
 open Int
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [SubtractionCommMonoid α]
   {a b : α} :

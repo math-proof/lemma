@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma symbol.domain_defined
   [Preorder α]
   {x a b : α}

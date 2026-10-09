@@ -2,7 +2,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma given
   {S : Set ℝ}
   {f : ℝ → ℝ}
@@ -19,7 +19,7 @@ private lemma given
   exact lt_of_lt_of_le hfx (le_csSup h₀ (Set.mem_image_of_mem f hx))
 
 
-@[main]
+@[path]
 private lemma main
   {S : Set ℝ}
   {f : ℝ → ℝ}

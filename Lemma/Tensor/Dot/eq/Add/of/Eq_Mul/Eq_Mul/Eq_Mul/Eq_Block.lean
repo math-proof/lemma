@@ -5,7 +5,7 @@ import Mathlib.Analysis.SpecialFunctions.Pow.Real
 open Matrix
 
 
-@[main]
+@[path]
 private lemma position_representation.space
   {mr mc mz : ℕ}
   {br bc bz lr lc lz : ℝ}

@@ -14,7 +14,7 @@ import Lemma.Vector.SplitAtExp.eq.ExpSplitAt
 open Bool Fin List Tensor Vector
 
 
-@[main]
+@[path]
 private lemma main
   [Exp α]
 -- given

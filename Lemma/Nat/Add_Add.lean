@@ -3,7 +3,7 @@ import Lemma.Nat.AddAdd.eq.Add_Add
 open Nat
 
 
-@[main]
+@[path]
 private lemma Comm
   [AddCommSemigroup α]
   {a b : α} :

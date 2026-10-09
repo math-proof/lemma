@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma limits.restrict
   [Preorder α]
   {a b c : α}

@@ -23,7 +23,7 @@ noncomputable def pullbackIsoPushforwardInv
     :
     Scheme.Modules.pullback φ.hom ≅ Scheme.Modules.pushforward φ.inv :=
   (Scheme.Modules.pullbackPushforwardAdjunction φ.hom).leftAdjointUniq (pushEquiv φ).symm.toAdjunction
-@[main]
+@[path]
 private lemma main
   {X Y Z : Scheme.{u}}
   {e : X ≅ Y}

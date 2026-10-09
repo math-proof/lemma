@@ -5,7 +5,7 @@ open scoped ENNReal.ToRealCoe
 
 
 /-- `P t` only depends on the prefix `ys 0, …, ys t`. -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace Ω]
   [ReferenceMeasure Y]

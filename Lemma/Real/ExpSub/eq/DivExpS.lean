@@ -4,7 +4,7 @@ import Lemma.Rat.Div.eq.Mul_Inv
 open Int Rat
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [Exp R]
 -- given

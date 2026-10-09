@@ -9,7 +9,7 @@ import Lemma.Matrix.Sum_GetVecMul.eq.Zero.of.GeneratorMatrix
 open Matrix
 
 
-@[main]
+@[path]
 private lemma main
   {S : Type*} [Fintype S]
   {d : ℕ}

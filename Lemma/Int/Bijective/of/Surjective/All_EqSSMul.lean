@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [RingHom_bijective_of_surjective_of_smul_eq](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_RingHom_bijective_of_surjective_of_smul_eq.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing S] [Ring T] [AddCommGroup N] [Module S N] [Module T N] [Module.Free S N] [Nontrivial N]
   {g : S →+* T}

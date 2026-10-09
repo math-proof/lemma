@@ -9,7 +9,7 @@ open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model
   𝔼[∇ log π(a[t] | s[t]) * (γ ** Stack[k](k) @ 𝔼[r[t:] | s[t], a[t]])]`
 (law of iterated expectation on `(s[t], a[t])`).
 -/
-@[main]
+@[path]
 private lemma main
   [NormedAddCommGroup Θ] [NormedSpace ℝ Θ]
   [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S]

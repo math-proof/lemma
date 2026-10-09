@@ -2,7 +2,7 @@ import Lemma.Set.InDiv.of.In_Icc.Ge_0
 open Set
 
 
-@[main]
+@[path]
 private lemma main
   [Field α] [LinearOrder α] [IsStrictOrderedRing α]
   {a b : α}

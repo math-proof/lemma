@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [LanglandsTunnell_RankinSelberg_exists_sum_cpow_mul_eval_eq_cpow_mul_eval](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_LanglandsTunnell_RankinSelberg_exists_sum_cpow_mul_eval_eq_cpow_mul_eval.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [Fintype ι]
   {N : ℕ}

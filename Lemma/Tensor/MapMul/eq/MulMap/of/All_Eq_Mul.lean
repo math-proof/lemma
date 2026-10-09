@@ -3,7 +3,7 @@ import Lemma.Vector.Eq.is.All_EqGetS
 open Tensor Vector
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [Mul α] [Mul β]
   {f : α → β}

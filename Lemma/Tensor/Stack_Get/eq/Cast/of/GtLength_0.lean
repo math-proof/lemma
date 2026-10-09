@@ -6,7 +6,7 @@ import torch.stack
 open Bool List Tensor
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h : s.length > 0)

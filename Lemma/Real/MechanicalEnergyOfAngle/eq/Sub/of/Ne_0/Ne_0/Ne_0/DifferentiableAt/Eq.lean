@@ -9,7 +9,7 @@ On the signed Kepler orbit, angle-domain energy is independent of \(\theta\):
 E=\dfrac{J^2}{2m}A^2-\dfrac{C^2 m}{2J^2}.
 \]
 -/
-@[main]
+@[path]
 private lemma main
   {r : ℝ → ℝ}
   {A C m J φ : ℝ}

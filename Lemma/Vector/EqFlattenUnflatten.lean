@@ -9,7 +9,7 @@ import Lemma.Vector.HEq.of.Val
 open Vector Bool Nat
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
 -- given
   (v : List.Vector α (m * n)) :

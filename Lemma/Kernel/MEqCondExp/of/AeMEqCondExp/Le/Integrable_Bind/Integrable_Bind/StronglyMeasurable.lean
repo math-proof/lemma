@@ -3,7 +3,7 @@ import Lemma.Kernel.Integral.eq.Integral_Integral.of.Integrable_Bind
 open MeasureTheory ProbabilityTheory Kernel
 
 
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace α] {m m₀ : MeasurableSpace β}
   [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E]

@@ -5,7 +5,7 @@ import torch.Tensor.sum
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [AddMonoid α]
 -- given
@@ -21,7 +21,7 @@ private lemma main
   rw [SumAppend.eq.AddSumS]
 
 
-@[main]
+@[path]
 private lemma fin
   [AddMonoid α]
 -- given

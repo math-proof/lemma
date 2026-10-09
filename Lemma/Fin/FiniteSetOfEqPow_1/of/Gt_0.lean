@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [AddMonoidAlgebra_finite_setOf_withConv_algHom_pow_eq_one](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AddMonoidAlgebra_finite_setOf_withConv_algHom_pow_eq_one.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {κ : Type u} [CommRing κ] [IsDomain κ]
   {t n : ℕ}
@@ -40,7 +40,7 @@ private lemma main
     have : {x : κ | x ^ n = 1} = ↑((Polynomial.nthRoots n (1 : κ)).toFinset) := by
       ext x; simp [Polynomial.mem_nthRoots hn]
     rw [this]; exact Finset.finite_toSet _
-  refine Set.Finite.of_finite_image ?_ ?_
+  refine Set.Finite.of_finite_image (f := ev) ?_ ?_
   ·
     apply (Set.Finite.pi (fun _ => hroots)).subset
     rintro _ ⟨χ, hχ, rfl⟩

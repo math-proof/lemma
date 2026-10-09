@@ -19,7 +19,7 @@ open Hyperreal Tensor
 set_option maxHeartbeats 1000000
 
 
-@[main]
+@[path]
 private lemma main
   {n m : ℕ}
 -- given

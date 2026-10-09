@@ -13,6 +13,7 @@ import Lemma.Random.Sum_RealPreimageS.eq.One
 import Lemma.Random.Integrable_Fun
 import Lemma.Random.BddAbove_ImageNormFderiv.of.In_Ico.GtInftySup.All_Differentiable_Prob
 import Lemma.Random.Integral_G.eq.TSum_MulPowIntegral_R_Add.of.In_Ico
+import Lemma.Random.Measurable_R
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Filter Topology Random Tensor Real
 
 
@@ -22,7 +23,7 @@ Policy-gradient theorem with action values:
 the limit `n → ∞` of `policy_gradient`: `γ ^ n • 𝔼[∇V(s[n])] → 0`, because `∇V(s[t])` is bounded over
 the reachable pairs `Pr(s[t] = x) ≠ 0` (`BddAbove_ImageNormFderiv.of.In_Ico.GtInftySup.All_Differentiable_Prob`: time-homogeneity and the finiteness of `S`).
 -/
-@[main]
+@[path]
 private lemma main
   [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [CompleteSpace Θ]
   [ReferenceMeasure S] [MeasurableSingletonClass S] [Fintype S]
@@ -57,7 +58,7 @@ private lemma main
   have h₄n := h₅
   simp only [gradient, LinearIsometryEquiv.norm_map] at h₅
   have h₇ := Eq.Grad.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.policy_gradient (θ := θ) h₀ h₁ hS hA h₂ h₃ h₄ h₄n
-  have hr : ∀ t, Measurable (r t) := Model.r_meas' h₁
+  have hr : ∀ t, Measurable (r t) := Random.Measurable_R h₁
   have hpR : Measurable (fun ω t ↦ r t ω) := measurable_pi_lambda _ hr
   have hfG : ∀ t, Measurable (fun integ : ℕ → ℝ ↦ (γ ^ (id : ℕ → ℕ)) @ integ[t:]) := fun t =>
     Measurable.tsum fun k => (measurable_pi_apply (t + k)).const_mul _

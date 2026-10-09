@@ -3,7 +3,7 @@ import Lemma.Int.FMod.le.Zero.of.Lt_0
 open Int
 
 
-@[main]
+@[path]
 private lemma main
   {n d : ℤ}
 -- given

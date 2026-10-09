@@ -5,7 +5,7 @@ import sympy.vector.vector
 open Vector
 
 
-@[main, fin 1]
+@[path, fin 1]
 private lemma main
   [GroupWithZero α]
   {x : List.Vector α n}

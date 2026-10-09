@@ -6,7 +6,7 @@ open AbsoluteValue
 /--
 [AbsoluteValue_Completion_norm_coe_and_exists_one_lt_norm](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AbsoluteValue_Completion_norm_coe_and_exists_one_lt_norm.lean)
 -/
-@[main]
+@[path]
 private lemma main
 -- given
   [Field K]

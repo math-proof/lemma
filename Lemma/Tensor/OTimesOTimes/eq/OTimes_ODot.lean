@@ -2,7 +2,7 @@ import sympy.concrete.prefix_sum.all_prefix_sums
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   [OPlus α]
   [OTimes α]

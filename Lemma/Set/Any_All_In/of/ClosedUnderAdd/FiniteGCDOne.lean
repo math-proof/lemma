@@ -8,7 +8,7 @@ import sympy.core.intfunc
 open Set Finset
 
 
-@[main]
+@[path]
 private lemma main
   {A : Set ℕ} [ClosedUnderAdd A] [FiniteGCDOne A] :
 -- imply

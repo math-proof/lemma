@@ -3,7 +3,7 @@ import sympy.series.limits
 open Real Set
 
 
-@[main]
+@[path]
 private lemma main
   {g : ℝ → ℝ}
   {x₀ y : ℝ}

@@ -5,7 +5,7 @@ import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 open Tensor
 
 
-@[main, fin, cast, cast.fin]
+@[path, fin, cast, cast.fin]
 private lemma main
   {s s' : List ℕ}
 -- given

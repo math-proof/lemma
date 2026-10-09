@@ -6,7 +6,7 @@ open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Mode
 /--
 `∑ k, γ ^ k * ((k + 1) * K)` is summable for `γ ∈ [0, 1)`.
 -/
-@[main]
+@[path]
 private lemma main
   {γ : ℝ}
 -- given

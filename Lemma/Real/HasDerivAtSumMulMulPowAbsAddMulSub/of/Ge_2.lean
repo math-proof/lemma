@@ -3,7 +3,7 @@ import Lemma.Real.HasDerivAtMulMulPowAbs.of.Ge_2
 open Real
 
 
-@[main]
+@[path]
 private lemma main
   {p d : ℕ}
   {x y : Fin d → ℝ}

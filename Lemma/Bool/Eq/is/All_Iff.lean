@@ -4,12 +4,12 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Bool.Eq.is.All_Iff |
+| path | Bool.Eq.is.All_Iff |
 | comm | Bool.All_Iff.is.Eq |
 | mp | Bool.All_Iff.of.Eq |
 | mpr | Bool.Eq.of.All_Iff |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
 -- given
   (f g : α → Prop) :

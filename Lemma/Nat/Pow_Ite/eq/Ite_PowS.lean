@@ -2,7 +2,7 @@ import Lemma.Bool.BFn_Ite.eq.Ite_BFnS
 open Bool
 
 
-@[main]
+@[path]
 private lemma main
   [Decidable p]
   [HPow α β γ]

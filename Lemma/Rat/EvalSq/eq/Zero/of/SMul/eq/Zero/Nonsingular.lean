@@ -18,7 +18,7 @@ private lemma evalEval_ψ₂_sq_of_equation' {R : Type*} [CommRing R] (W : Weier
   have key := congrArg (Polynomial.evalEvalRingHom x y) W.ψ₂_sq
   simp only [map_add, map_mul, map_pow, map_ofNat, coe_evalEvalRingHom] at key
   rwa [show W.toAffine.polynomial.evalEval x y = 0 from h, mul_zero, add_zero, evalEval_C] at key
-@[main]
+@[path]
 private lemma main
   [Field F] [DecidableEq F]
   {W : WeierstrassCurve.Affine F}

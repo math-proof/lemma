@@ -3,7 +3,7 @@ import torch.Tensor
 open Bool
 
 
-@[main]
+@[path]
 private lemma main
   [Add α]
   {A B : Tensor α s}

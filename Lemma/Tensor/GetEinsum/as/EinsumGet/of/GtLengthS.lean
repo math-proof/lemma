@@ -30,7 +30,7 @@ open Bool List Tensor
 set_option maxHeartbeats 1000000
 
 
-@[main, fin]
+@[path, fin]
 private lemma main
   [Mul α] [Add α] [Zero α]
 -- given
@@ -54,7 +54,7 @@ private lemma main
   conv_rhs => erw [Einsum.eq.Cast_Tensordot.of.GeLength_2.GeLength_2 (by simp) (by simp)]
   simp
   apply SEq_Cast.of.SEq.Eq (by simp [matmul_shape, broadcast_shape])
-  rw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (i := ⟨i, by simp [broadcast_shape]; split_ifs; repeat grind⟩) (by simp) (by simp [broadcast_shape, matmul_shape])]
+  rw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (i := ⟨i, by simp [broadcast_shape]; split_ifs <;> simp_all⟩) (by simp) (by simp [broadcast_shape, matmul_shape])]
   apply SEqCast.of.SEq.Eq (by simp [broadcast_shape, matmul_shape])
   simp
   if h_s : sₜ.length > s'ₜ.length + 1 then
@@ -79,7 +79,7 @@ private lemma main
         omega
       ·
         simp [h_min_length]
-        rw [TailAppend.eq.AppendTail.of.GtLength_0 (by grind)]
+        rw [TailAppend.eq.AppendTail.of.GtLength_0 (by simp; omega)]
         rw [Append_Append.eq.AppendAppend]
         congr 1
         repeat rw [TakeCons.eq.Cons_Take.of.Gt_0 (by grind)]
@@ -176,7 +176,7 @@ private lemma main
         omega
       ·
         simp [h_min_length]
-        rw [TailAppend.eq.AppendTail.of.GtLength_0 (by grind)]
+        rw [TailAppend.eq.AppendTail.of.GtLength_0 (by simp; omega)]
         rw [Append_Append.eq.AppendAppend]
         repeat rw [TakeCons.eq.Cons_Take.of.Gt_0 (by grind)]
         simp

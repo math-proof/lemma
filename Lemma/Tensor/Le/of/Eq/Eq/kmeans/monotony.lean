@@ -5,7 +5,7 @@ import Lemma.Finset.Eq.of.In.In.Lt.Lt.EqBiUnion.EqSum_Card
 open Finset
 
 
-@[main]
+@[path]
 private lemma main
   {M k d : ℕ} [NeZero k]
   {w w' : ℕ → Finset ℕ}

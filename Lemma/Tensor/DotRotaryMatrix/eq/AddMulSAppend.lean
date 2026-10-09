@@ -17,7 +17,7 @@ open Nat Tensor
 set_option maxHeartbeats 600000
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (θ : Tensor ℝ [d])

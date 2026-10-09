@@ -5,7 +5,7 @@ import Lemma.Rat.FloorAdd1.eq.Add1Floor
 open Int Rat
 
 
-@[main]
+@[path]
 private lemma main
   {n d : ℤ}
 -- given

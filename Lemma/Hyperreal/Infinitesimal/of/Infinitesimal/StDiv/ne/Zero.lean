@@ -5,7 +5,7 @@ import Lemma.Hyperreal.StDiv.eq.InvStInv
 open Hyperreal Rat
 
 
-@[main, mt]
+@[path, mt]
 private lemma left
   {a b : ℝ*}
 -- given
@@ -18,7 +18,7 @@ private lemma left
   apply NotInfinitesimal.of.NeSt_0 h_st
 
 
-@[main, mt]
+@[path, mt]
 private lemma main
   {a b : ℝ*}
 -- given

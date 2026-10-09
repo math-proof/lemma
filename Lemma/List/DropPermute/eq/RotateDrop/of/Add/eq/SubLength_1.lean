@@ -2,7 +2,7 @@ import Lemma.List.DropPermute.eq.RotateDrop.of.Add.ge.SubLength_1
 open List
 
 
-@[main]
+@[path]
 private lemma main
   {s : List α}
   {i : Fin s.length}

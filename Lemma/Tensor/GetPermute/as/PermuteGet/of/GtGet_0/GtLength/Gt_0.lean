@@ -5,7 +5,7 @@ import Lemma.Tensor.LengthPermute.eq.Get_0.of.GtVal_0
 open Tensor
 
 
-@[main, cast]
+@[path, cast]
 private lemma main
   {s : List ℕ}
   {i k : ℕ}

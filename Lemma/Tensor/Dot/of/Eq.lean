@@ -1,7 +1,7 @@
 import sympy.matrices.expressions.matmul
 
 
-@[main]
+@[path]
 private lemma left
   [Mul α] [Add α] [Zero α]
   {X Y : Tensor α s}
@@ -14,7 +14,7 @@ private lemma left
   rw [h]
 
 
-@[main]
+@[path]
 private lemma main
   [Mul α] [Add α] [Zero α]
   {X Y : Tensor α s}

@@ -2,7 +2,7 @@ import Lemma.List.GetPermute__Neg.eq.Get_Add.of.GtLength_Add
 open List
 
 
-@[main]
+@[path]
 private lemma main
   {s : List α}
 -- given

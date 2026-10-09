@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma Comm
   [CommSemigroup α]
 -- given
@@ -12,7 +12,7 @@ private lemma Comm
   grind
 
 
-@[main]
+@[path]
 private lemma swap
   [CommSemigroup α]
 -- given
@@ -23,7 +23,7 @@ private lemma swap
   grind
 
 
-@[main]
+@[path]
 private lemma reverse
   [CommSemigroup α]
 -- given
@@ -34,7 +34,7 @@ private lemma reverse
   grind
 
 
-@[main, comm]
+@[path, comm]
 private lemma rotate
   [CommSemigroup α]
 -- given

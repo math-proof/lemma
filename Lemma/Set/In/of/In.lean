@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma left_open
   [Preorder α]
   {x a b : α}
@@ -13,7 +13,7 @@ private lemma left_open
   Set.Ioo_subset_Ico_self h
 
 
-@[main]
+@[path]
 private lemma right_open
   [Preorder α]
   {x a b : α}
@@ -25,7 +25,7 @@ private lemma right_open
   Set.Ioo_subset_Ioc_self h
 
 
-@[main]
+@[path]
 private lemma left_close
   [Preorder α]
   {x a b : α}
@@ -37,7 +37,7 @@ private lemma left_close
   Set.Ioo_subset_Ico_self h
 
 
-@[main]
+@[path]
 private lemma right_close
   [Preorder α]
   {x a b : α}
@@ -49,7 +49,7 @@ private lemma right_close
   Set.Ioo_subset_Ioc_self h
 
 
-@[main]
+@[path]
 private lemma restrict.given
   {x : α}
   {A B : Set α}

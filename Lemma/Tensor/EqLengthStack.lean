@@ -3,7 +3,7 @@ import Lemma.Vector.MapMap.eq.Map_Comp
 open Vector
 
 
-@[main]
+@[path]
 private lemma fin
 -- given
   (f : Fin n → Tensor α s) :
@@ -16,7 +16,7 @@ private lemma fin
   aesop
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (f : ℕ → Tensor α s)

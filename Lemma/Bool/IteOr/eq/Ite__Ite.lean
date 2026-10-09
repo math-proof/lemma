@@ -11,10 +11,10 @@ open Bool
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Bool.IteOr.eq.Ite__Ite |
+| path | Bool.IteOr.eq.Ite__Ite |
 | comm | Bool.Ite__Ite.eq.IteOr |
 -/
-@[main, comm]
+@[path, comm]
 private lemma main
   [Decidable p]
   [Decidable q]

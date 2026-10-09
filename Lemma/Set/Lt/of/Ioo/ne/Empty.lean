@@ -3,7 +3,7 @@ import Lemma.Nat.Lt.of.Lt.Lt
 open Set Nat
 
 
-@[main]
+@[path]
 private lemma main
   [Preorder α]
   {a b : α}

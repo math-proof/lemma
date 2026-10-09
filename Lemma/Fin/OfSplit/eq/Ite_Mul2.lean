@@ -11,7 +11,7 @@ def Fin.ofSplit {d : ℕ} (k : Fin (d + d)) : Fin (d + d) :=
     omega⟩
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (k : Fin (d + d)) :

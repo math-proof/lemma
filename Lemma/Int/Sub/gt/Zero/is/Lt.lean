@@ -5,7 +5,7 @@ import sympy.Basic
 This lemma establishes that in an additive group with a strict order and right-strict monotonicity, the difference `b - a` being positive is equivalent to `a` being less than `b`.
 It leverages the properties of additive groups and the `AddRightStrictMono` typeclass to connect the algebraic operation of subtraction with the order relation.
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   [AddGroup α] [LT α] [AddRightStrictMono α]
   {a b : α} :

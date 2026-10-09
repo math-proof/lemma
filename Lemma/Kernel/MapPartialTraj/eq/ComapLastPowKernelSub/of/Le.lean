@@ -3,7 +3,7 @@ import sympy.Basic
 open MeasureTheory ProbabilityTheory Finset Kernel
 
 
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace S]
   {n m : ℕ}

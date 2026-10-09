@@ -14,7 +14,7 @@ reward stream starting at `t + 1` is independent of the current state-action pai
 
 Python: Random.EqConditioned.of.Eq_Conditioned.joint.independence_assumption.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace Ω]
   [MeasurableSpace α] [MeasurableSpace β] [MeasurableSpace γ]
@@ -55,17 +55,17 @@ private lemma main
            fun j : Fin k ↦ (f (Fin.natAdd (t + 1) j)).2)
       have hproj : Measurable proj := by
         refine Measurable.prodMk ?_ ?_
-        · refine measurable_pi_lambda _ fun i ↦
+        · refine Measurable.of_eval fun i ↦
             measurable_fst.comp (measurable_pi_apply (Fin.castLE (by linarith) i))
-        · refine measurable_pi_lambda _ fun j ↦
+        · refine Measurable.of_eval fun j ↦
             measurable_snd.comp (measurable_pi_apply (Fin.natAdd (t + 1) j))
       have hstep : r (t + 1 + k) ⟂ᵢ[π] (as_past (t + 1), r_slice (t + 1) k) :=
         (h (t + 1 + k)).comp measurable_id hproj
       have h_mr : Measurable (r (t + 1 + k)) := hr (t + 1 + k)
       have h_slice_m : Measurable (r_slice (t + 1) k) :=
-        measurable_pi_lambda _ fun j ↦ hr (t + 1 + j.val)
+        Measurable.of_eval fun j ↦ hr (t + 1 + j.val)
       have h_as_m : Measurable (as_past (t + 1)) :=
-        measurable_pi_lambda _ fun i ↦ (ha i.val).prodMk (hs i.val)
+        Measurable.of_eval fun i ↦ (ha i.val).prodMk (hs i.val)
       have hstep' : r (t + 1 + k) ⟂ᵢ[π] (r_slice (t + 1) k, as_past (t + 1)) :=
         hstep.comp measurable_id measurable_swap
       have hcombine :
@@ -74,7 +74,7 @@ private lemma main
       let g : α × (Fin k → α) → Fin (k + 1) → α :=
         fun p ↦ @Fin.snoc k (fun _ ↦ α) p.2 p.1
       have hg : Measurable g := by
-        refine measurable_pi_lambda _ fun i ↦ ?_
+        refine Measurable.of_eval fun i ↦ ?_
         change Measurable (fun p : α × (Fin k → α) ↦
           @Fin.snoc k (fun _ ↦ α) p.2 p.1 i)
         refine Fin.lastCases ?_ (fun j ↦ ?_) i

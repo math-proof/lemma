@@ -3,7 +3,7 @@ import torch.functions
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [Exp α]
   {A : Tensor α s}

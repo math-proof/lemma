@@ -3,7 +3,7 @@ import Lemma.Random.LeExpect.of.Le
 open MeasureTheory
 
 
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace Ω]
   {μ : Measure Ω}

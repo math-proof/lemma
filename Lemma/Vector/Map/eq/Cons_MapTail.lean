@@ -2,7 +2,7 @@ import Lemma.Vector.EqCons_Tail
 open Vector
 
 
-@[main]
+@[path]
 private lemma main
   {s : List.Vector α (.succ n)}
   {f : α → β} :

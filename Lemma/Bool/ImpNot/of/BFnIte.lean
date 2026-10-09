@@ -3,7 +3,7 @@ import Lemma.Bool.ImpNot.of.BFn_Ite
 open Bool
 
 
-@[main]
+@[path]
 private lemma main
   [Decidable p]
   {R : β → α → Prop}

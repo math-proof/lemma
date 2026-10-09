@@ -2,7 +2,7 @@ import Lemma.Vector.EqGetCast_MapRange.of.Eq
 open Vector
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h₀ : i < n)

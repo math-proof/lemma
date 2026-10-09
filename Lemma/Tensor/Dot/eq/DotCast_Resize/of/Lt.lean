@@ -25,7 +25,7 @@ open Bool Nat Tensor Vector
 set_option maxHeartbeats 500000
 
 
-@[main]
+@[path]
 private lemma main
   [Mul α] [Add α] [Zero α]
 -- given

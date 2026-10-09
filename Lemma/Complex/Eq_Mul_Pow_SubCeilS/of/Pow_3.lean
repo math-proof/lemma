@@ -3,7 +3,7 @@ import Lemma.Complex.Eq_MulNorm_ExpMulIArg
 open Complex
 
 
-@[main]
+@[path]
 private lemma main
   {A B : ℂ}
 -- given

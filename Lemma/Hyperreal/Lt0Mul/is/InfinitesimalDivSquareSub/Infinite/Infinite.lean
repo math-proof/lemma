@@ -10,7 +10,7 @@ import Lemma.Nat.Sub.eq.AddNeg
 open Hyperreal Int Nat
 
 
-@[main]
+@[path]
 private lemma main
   {a b : ℝ*}
 -- given

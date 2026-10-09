@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [Submodule_mem_of_forall_prime_exists_smul_mem](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Submodule_mem_of_forall_prime_exists_smul_mem.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [AddCommGroup V]
   {M : Submodule ℤ V}

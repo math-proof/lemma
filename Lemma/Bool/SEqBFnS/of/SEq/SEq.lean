@@ -2,7 +2,7 @@ import Lemma.Bool.SEq.is.Eq
 open Bool
 
 
-@[main]
+@[path]
 private lemma main
   {Vector : N → Sort v}
   {a b : Vector n}

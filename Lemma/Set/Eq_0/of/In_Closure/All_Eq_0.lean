@@ -6,7 +6,7 @@ open CategoryTheory Module groupCohomology
 /--
 [groupCohomology_cocycles1_apply_eq_zero_of_mem_closure](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_groupCohomology_cocycles1_apply_eq_zero_of_mem_closure.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {k G : Type u} [CommRing k] [Group G]
   {M : Rep k G}

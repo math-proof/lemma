@@ -5,10 +5,10 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Bool.SEqCast.of.Eq.Eq |
+| path | Bool.SEqCast.of.Eq.Eq |
 | comm 2 | Bool.SEq_Cast.of.Eq.Eq |
 -/
-@[main, comm 2]
+@[path, comm 2]
 private lemma main
   {Vector : α → Sort v}
   {a b : Vector n}

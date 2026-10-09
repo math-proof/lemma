@@ -91,7 +91,7 @@ private lemma mem_inf_of_components
   h ∈ levelOne (𝓞 F) F N ⊓ finiteAdelicGL2Subgroup F := by
   sorry
 
-@[main]
+@[path]
 private lemma main
   [Field F] [NumberField F]
   {v : HeightOneSpectrum (𝓞 F)}

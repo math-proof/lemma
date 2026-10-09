@@ -188,7 +188,7 @@ export function openPrefix(ctx) {
 
 
 /**
- * `attr-docstring`: `@[main, <other attrs>]` on `lemma main` without the `/-- | attributes | lemma | … -/` table
+ * `attr-docstring`: `@[path, <other attrs>]` on `lemma main` without the `/-- | attributes | lemma | … -/` table
  * (exactly the precondition of `py/docstring.py`).
  */
 const CUSTOM_ATTR_HEADS = new Set([
@@ -211,7 +211,7 @@ export function attrDocstring(ctx) {
         if (/\/--\s*\n\| attributes \| lemma \|[\s\S]*?\n-\/\s*\n+$/.test(before)) continue;
         const line = before.split('\n').length;
         ctx.warn('attr-docstring', line, 1,
-            `\`@[main, ${m[1].trim()}]\` has no attribute docstring table; run \`python py/docstring.py ${ctx.file ?? '<file>'}\``);
+            `\`@[path, ${m[1].trim()}]\` has no attribute docstring table; run \`python py/docstring.py ${ctx.file ?? '<file>'}\``);
     }
 }
 

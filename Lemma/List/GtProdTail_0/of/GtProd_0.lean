@@ -2,7 +2,7 @@ import Lemma.List.ProdDrop.gt.Zero.of.GtProd_0
 open List
 
 
-@[main]
+@[path]
 private lemma main
   {s : List ℕ}
 -- given

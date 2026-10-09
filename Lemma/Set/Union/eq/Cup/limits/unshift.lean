@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {i n : ℤ}
   {f : ℤ → Set α}

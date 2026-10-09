@@ -3,7 +3,7 @@ import sympy.Basic
 
 
 /-- `ω = -1/2 + i√3/2 = exp(2πi/3)`. -/
-@[main]
+@[path]
 private lemma main :
 -- imply
   (-1 / 2 + Complex.I * √3 / 2 : ℂ) = Complex.exp (↑(2 * π / 3) * Complex.I) := by

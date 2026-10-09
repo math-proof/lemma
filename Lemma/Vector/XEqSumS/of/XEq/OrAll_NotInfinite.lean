@@ -7,7 +7,7 @@ import Lemma.Vector.XEq.is.All_XEqGetS
 open Hyperreal Vector
 
 
-@[main]
+@[path]
 private lemma main
   {a b : List.Vector ℝ* n}
 -- given

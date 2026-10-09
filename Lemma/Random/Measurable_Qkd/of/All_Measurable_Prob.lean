@@ -9,7 +9,7 @@ open MeasureTheory PolicyGradient Random
 /--
 If every `(x, u) ↦ π_θ(u | x)` is jointly measurable, so is the action value `(x, u) ↦ Qkd θ γ x u`.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace S] [ReferenceMeasure A]
   {M : DensityModel Θ S A}

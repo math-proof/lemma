@@ -13,10 +13,10 @@ discrete countable setting where the reference measure on `α` is `count`).
 
 | attributes | lemma |
 | :---: | :---: |
-| main | Random.Sum.eq.Prob |
+| path | Random.Sum.eq.Prob |
 | comm | Random.Prob.eq.Sum |
 -/
-@[main, comm]
+@[path, comm]
 private lemma main
   [MeasurableSpace Ω]
   [ReferenceMeasure α] [ReferenceMeasure β]

@@ -3,7 +3,7 @@ import sympy.functions.elementary.integers
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
   [FloorRing α]

@@ -6,7 +6,7 @@ open IsLocalRing
 /--
 [IsLocalRing_exists_maximalIdeal_pow_le_span_natCast_pow_of_module_finite](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_IsLocalRing_exists_maximalIdeal_pow_le_span_natCast_pow_of_module_finite.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing 𝒪] [IsDomain 𝒪] [IsDiscreteValuationRing 𝒪] [CharZero 𝒪] [CommRing R] [IsLocalRing R] [Algebra 𝒪 R] [Module.Finite 𝒪 R]
   {p : ℕ} [Fact p.Prime]
@@ -29,7 +29,10 @@ private lemma main
       ((IsLocalRing.maximalIdeal.isMaximal 𝒪).eq_of_le (Ideal.comap_ne_top _ hP.ne_top)
         (Ideal.map_le_iff_le_comap.1 hJP)).symm
     have hmax : (P.comap (algebraMap 𝒪 R)).IsMaximal := hcomap ▸ IsLocalRing.maximalIdeal.isMaximal 𝒪
-    have : P.IsMaximal := Ideal.isMaximal_of_isIntegral_of_isMaximal_comap P hmax
+    have : P.IsPrime := hP
+    have : P.IsMaximal :=
+      Ideal.IsIntegral.isMaximal_of_isMaximal_under (R := 𝒪) P <| by
+        simpa [Ideal.under_def, hcomap] using IsLocalRing.maximalIdeal.isMaximal 𝒪
     exact (IsLocalRing.eq_maximalIdeal this).ge
   obtain ⟨a, ha⟩ := Ideal.exists_pow_le_of_le_radical_of_fg h1 (IsNoetherian.noetherian _)
 

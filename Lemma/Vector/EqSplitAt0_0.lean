@@ -3,7 +3,7 @@ import Lemma.Vector.Unflatten0.eq.Zero
 open Vector
 
 
-@[main]
+@[path]
 private lemma main
   [Zero α]
 -- given

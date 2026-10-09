@@ -5,7 +5,7 @@ import sympy.Basic
 open MeasureTheory
 
 
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace Ω]
   [MeasurableSpace α]
@@ -19,9 +19,9 @@ private lemma main
 -- imply
   ⨆ a, f a ≥ 𝔼[x: π](f x) := by
 -- proof
-  have := Measure.isProbabilityMeasure_map (PSpace.aemeasurable (π := π) (x := x))
+  have : IsProbabilityMeasure (π.map x) := inferInstance
   simp only [Expectation.asRV_function, Expectation.ofRV, expectation_real, ge_iff_le]
-  calc ∫ a, f a ∂(π.map x) ≤ ∫ _a, (⨆ a, f a) ∂(π.map x) := integral_mono hf (integrable_const _) (fun a => le_ciSup hb a)
+  calc _ ≤ ∫ _, (⨆ a, f a) ∂(π.map x) := integral_mono hf (integrable_const _) (fun a => le_ciSup hb a)
     _ = ⨆ a, f a := by simp
 
 

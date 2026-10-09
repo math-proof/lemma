@@ -9,12 +9,12 @@ open Tensor Vector
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Tensor.GtSumData_0.is.GtSum_0 |
+| path | Tensor.GtSumData_0.is.GtSum_0 |
 | comm | Tensor.GtSum_0.is.GtSumData_0 |
 | mp | Tensor.GtSum_0.of.GtSumData_0 |
 | mpr | Tensor.GtSumData_0.of.GtSum_0 |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   [Add α] [Zero α]
   [LT α]

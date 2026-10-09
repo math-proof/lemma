@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [DoubleCoset_natCard_quotient_eq_natCard_quotient_map_of_surjective](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_DoubleCoset_natCard_quotient_eq_natCard_quotient_map_of_surjective.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {G Q : Type*} [Group G] [Group Q]
   {f : G →* Q}

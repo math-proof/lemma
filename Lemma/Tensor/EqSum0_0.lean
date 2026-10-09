@@ -9,7 +9,7 @@ import torch.Tensor.sum
 open Bool List Tensor Vector
 
 
-@[main]
+@[path]
 private lemma main
   [AddZeroClass α]
 -- given

@@ -4,7 +4,7 @@ import Lemma.Tensor.GtLength_0.of.GtLength_0
 open Tensor Nat
 
 
-@[main]
+@[path]
 private lemma main
   {X : Tensor α s}
 -- given

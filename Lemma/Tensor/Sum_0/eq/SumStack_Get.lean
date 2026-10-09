@@ -3,7 +3,7 @@ import torch.Tensor.sum
 open Tensor
 
 
-@[main, fin]
+@[path, fin]
 private lemma main
   [Add α] [Zero α]
 -- given

@@ -8,12 +8,12 @@ open Nat Bool
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Nat.EvenAdd_1.is.Odd |
+| path | Nat.EvenAdd_1.is.Odd |
 | comm | Nat.Odd.is.EvenAdd_1 |
 | mp | Nat.Odd.of.EvenAdd_1 |
 | mpr | Nat.EvenAdd_1.of.Odd |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   [IntegerRing Z]
 -- given

@@ -7,7 +7,7 @@ import sympy.Basic
 Combining notes (3)+(4):
 \(\ddot r_{\mathrm{angle}}=-\dfrac{J^2}{m^2 r^2}w''\).
 -/
-@[main]
+@[path]
 private lemma main
   {r : ℝ → ℝ}
   {J m φ : ℝ}

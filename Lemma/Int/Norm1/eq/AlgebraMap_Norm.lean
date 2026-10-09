@@ -6,7 +6,7 @@ open scoped TensorProduct
 /--
 [Algebra_norm_one_tmul_eq_algebraMap_norm](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Algebra_norm_one_tmul_eq_algebraMap_norm.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {K : Type u} [CommRing K]
   {L : Type v} [Ring L] [Algebra K L] [Module.Free K L] [Module.Finite K L]

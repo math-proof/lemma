@@ -5,7 +5,7 @@ import Lemma.Nat.Lt.of.Lt_Min
 open Vector Nat
 
 
-@[main, fin]
+@[path, fin]
 private lemma main
 -- given
   (h : j < n ⊓ (N - i))

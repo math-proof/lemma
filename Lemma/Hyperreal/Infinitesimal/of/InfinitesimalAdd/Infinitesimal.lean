@@ -8,10 +8,10 @@ the hypotheses are arranged in the constructor order of substraction x + y - x
 
 | attributes | lemma |
 | :---: | :---: |
-| main | Hyperreal.Infinitesimal.of.InfinitesimalAdd.Infinitesimal |
+| path | Hyperreal.Infinitesimal.of.InfinitesimalAdd.Infinitesimal |
 | mt 1 | Hyperreal.NotInfinitesimalAdd.of.NotInfinitesimal.Infinitesimal |
 -/
-@[main, mt 1]
+@[path, mt 1]
 private lemma main
   {x y : ℝ*}
 -- given
@@ -28,7 +28,7 @@ private lemma main
 /--
 the hypotheses are arranged in the constructor order of substraction y + x - x
 -/
-@[main, mt 1]
+@[path, mt 1]
 private lemma Comm
   {x y : ℝ*}
 -- given

@@ -44,11 +44,11 @@ private lemma mp
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Hyperreal.InfiniteNeg.is.InfiniteNeg.of.XEq |
+| path | Hyperreal.InfiniteNeg.is.InfiniteNeg.of.XEq |
 | mp   | Hyperreal.InfiniteNeg.of.InfiniteNeg.XEq |
 | mp.mt | Hyperreal.NotInfiniteNeg.of.NotInfiniteNeg.XEq |
 -/
-@[main, mp and, mp.mt]
+@[path, mp and, mp.mt]
 private lemma main
   {a b : ℝ*}
 -- given

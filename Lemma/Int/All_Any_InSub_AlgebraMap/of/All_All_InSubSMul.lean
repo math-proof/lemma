@@ -6,7 +6,7 @@ open scoped Pointwise
 /--
 [Ideal_forall_exists_sub_algebraMap_mem_of_forall_smul_eq_imp_smul_sub_mem](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Ideal_forall_exists_sub_algebraMap_mem_of_forall_smul_eq_imp_smul_sub_mem.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [Group G] [Finite G]
   {A B : Type*} [CommRing A] [CommRing B] [Algebra A B] [MulSemiringAction G B] [SMulCommClass G A B] [Algebra.IsInvariant A B G]

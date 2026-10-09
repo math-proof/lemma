@@ -236,7 +236,7 @@ Z(n+1)\;\approx\; Z(n)\mathbin{+\mkern-4mu+}[\operatorname{row}]
 
 # 6 形式化工件
 
-已完成陈述的交互可视化：[kv_cache](http://www.lemma.cn/lean/?module=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T)。Lean 页展示 `@[main] private lemma kv_cache`，含 `[NeZero (l : ℕ)]`、对 \(Z(n)\) 的全称假设、`let` 链 `Kn, Vn, Kw, Vw, KT, kT, row`，以及结论 \(Z(n+1)\approx Z(n)\mathbin{+\mkern-4mu+}[\operatorname{row}]\)。
+已完成陈述的交互可视化：[kv_cache](http://www.lemma.cn/lean/?module=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T)。Lean 页展示 `@[path] private lemma kv_cache`，含 `[NeZero (l : ℕ)]`、对 \(Z(n)\) 的全称假设、`let` 链 `Kn, Vn, Kw, Vw, KT, kT, row`，以及结论 \(Z(n+1)\approx Z(n)\mathbin{+\mkern-4mu+}[\operatorname{row}]\)。
 
 源码：[GitHub](https://github.com/math-proof/lemma)（Lean 4 在 `main`）。
 

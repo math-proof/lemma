@@ -3,7 +3,7 @@ import Lemma.List.Swap.eq.PermutePermute.of.Lt.GtLength
 open List
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   {s : List α}
 -- given

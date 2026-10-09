@@ -6,7 +6,7 @@ import Lemma.Nat.SubAdd.eq.AddSub.of.Ge
 open List Nat
 
 
-@[main]
+@[path]
 private lemma main
   {s : List α}
   {i : Fin s.length}

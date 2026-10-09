@@ -6,7 +6,7 @@ import Lemma.Nat.Mul
 open List Nat
 
 
-@[main]
+@[path]
 private lemma main
   [CommMonoid α]
 -- given

@@ -8,7 +8,7 @@ py: `Ξ = I + [[0, 1], [1, 0]]` (identity plus the off-diagonal block mask) give
 `exp(a + (Ξ - 1) * ∞) ≈ Ξ * exp(a)` (hyperreal masked exponential).
 Here `Ξ i j = 1` if `i = j ∨ ¬(i < h ↔ j < h)`, else `0`.
 -/
-@[main]
+@[path]
 private lemma mask.cross_attention
   {n h : ℕ}
 -- given

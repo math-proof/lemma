@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma quadratic
   {x m M a b c : ℝ}
 -- given

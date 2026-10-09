@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma limits.push
   {f : ℤ → Prop}
   {a b : ℤ}
@@ -25,7 +25,7 @@ private lemma limits.push
     exact ⟨fun i hi => h' i (by simp only [Set.mem_Ico] at hi ⊢; omega), h' b (by simp only [Set.mem_Ico]; omega)⟩
 
 
-@[main]
+@[path]
 private lemma limits.unshift
   {f : ℤ → Prop}
   {a b : ℤ}

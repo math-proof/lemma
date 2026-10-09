@@ -4,7 +4,7 @@ import Lemma.Nat.Mul
 open Hyperreal Nat
 
 
-@[main]
+@[path]
 private lemma main
   {x : ℝ*}
 -- given
@@ -17,7 +17,7 @@ private lemma main
   apply NotInfinite
 
 
-@[main]
+@[path]
 private lemma left
   {x : ℝ*}
 -- given

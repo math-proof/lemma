@@ -14,10 +14,10 @@ open Tensor Vector Bool
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Tensor.SEqSelectUnsqueeze.of.GeLength |
+| path | Tensor.SEqSelectUnsqueeze.of.GeLength |
 | cast | Tensor.SelectUnsqueeze.eq.Cast.of.GeLength |
 -/
-@[main, cast]
+@[path, cast]
 private lemma main
 -- given
   (h_dim : s.length ≥ d)

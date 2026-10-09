@@ -12,7 +12,7 @@ import Lemma.Rat.FloorDivMod.eq.Zero
 open Nat Rat
 
 
-@[main]
+@[path]
 private lemma main
   {k n m : ℕ}
   {i : Fin m}

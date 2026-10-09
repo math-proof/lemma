@@ -3,7 +3,7 @@ import Lemma.Bool.BFn_Ite.is.OrAndS
 open Bool Nat
 
 
-@[main]
+@[path]
 private lemma main
   [LinearOrder α]
   {x a b : α}

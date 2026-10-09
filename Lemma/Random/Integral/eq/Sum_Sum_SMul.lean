@@ -9,7 +9,7 @@ open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Mode
 /--
 `𝔼[φ(s[t], a[t])] = ∑ y, ∑ u, (Pr(s[t] = y) * π_θ(u | y)) • φ y u` under the trajectory model.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A] [DecidableEq S] [DecidableEq A]
   {M : Model Θ S A}

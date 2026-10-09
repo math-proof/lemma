@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [Ideal_finite_setOf_height_eq_one_and_mem](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Ideal_finite_setOf_height_eq_one_and_mem.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing R] [IsDomain R] [IsNoetherianRing R]
   {b : R}

@@ -6,7 +6,7 @@ open scoped TensorProduct
 /--
 [FullLevelTate_exists_linearEquiv_cancelBaseChange_of_algebraMap_eq](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_FullLevelTate_exists_linearEquiv_cancelBaseChange_of_algebraMap_eq.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing O'] [CommRing K] [Algebra O' K] [AddCommMonoid T]
   {lam : ℕ} [Fact lam.Prime] [Algebra ℤ_[lam] O'] [Algebra ℚ_[lam] K] [Module ℤ_[lam] T]

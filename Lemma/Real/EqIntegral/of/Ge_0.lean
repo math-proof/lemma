@@ -3,7 +3,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma limits.offset
   {f : ℝ → ℝ}
   {a b d : ℝ}

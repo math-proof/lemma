@@ -2,7 +2,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma index_general
   {n j : ℕ}
   {x a : ℕ → ℤ}

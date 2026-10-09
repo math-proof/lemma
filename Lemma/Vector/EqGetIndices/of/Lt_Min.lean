@@ -5,7 +5,7 @@ import Lemma.List.EqGetSlicedIndices.of.Lt.Le.Gt_0
 open List Nat
 
 
-@[main, fin]
+@[path, fin]
 private lemma main
   {i n m : ℕ}
 -- given

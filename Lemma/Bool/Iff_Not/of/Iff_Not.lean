@@ -2,7 +2,7 @@ import Lemma.Bool.Iff.is.IffNotS
 open Bool
 
 
-@[main]
+@[path]
 private lemma main
   {p q : Prop}
 -- given

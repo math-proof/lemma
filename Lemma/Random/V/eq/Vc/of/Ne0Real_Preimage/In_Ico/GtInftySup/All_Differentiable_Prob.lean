@@ -11,7 +11,7 @@ open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Mode
 On a reachable state (`Pr(s[t] = x) ≠ 0` at `θ`), the state value agrees with its closed form near `θ`:
 `V θ' γ t x = Vc θ' γ x` for `θ'` in a neighbourhood of `θ`.
 -/
-@[main]
+@[path]
 private lemma main
   [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [CompleteSpace Θ] [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A] [DecidableEq S]
   {M : Model Θ S A}

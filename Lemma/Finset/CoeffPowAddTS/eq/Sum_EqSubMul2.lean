@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [LaurentPolynomial_T_one_add_T_neg_one_pow_apply_eq_sum_ite_choose](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_LaurentPolynomial_T_one_add_T_neg_one_pow_apply_eq_sum_ite_choose.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommSemiring R]
   {k : ℕ}

@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [Module_Invertible_of_ringEquiv](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Module_Invertible_of_ringEquiv.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {R R' : Type u} [CommRing R] [CommRing R']
   {M : Type v} [AddCommGroup M] [Module R' M] [Module.Invertible R' M] [Module R M]

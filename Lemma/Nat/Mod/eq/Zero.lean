@@ -4,7 +4,7 @@ import Lemma.Nat.EqMod0_0
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   [IntegerRing Z]
 -- given

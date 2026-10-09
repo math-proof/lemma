@@ -7,7 +7,7 @@ import Mathlib.Analysis.SpecialFunctions.Pow.Deriv
 open Finset LpSpace Real Set
 
 
-@[main]
+@[path]
 private lemma main
   {p d : ℕ}
   {x y : LpSpace p d}

@@ -4,7 +4,7 @@ import Lemma.List.LengthGetProduct.eq.Length.of.GtLengthProduct
 open Set List Bool
 
 
-@[main]
+@[path]
 private lemma main
   {x s : List ℕ}
 -- given

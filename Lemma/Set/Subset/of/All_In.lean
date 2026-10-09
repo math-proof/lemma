@@ -2,7 +2,7 @@ import sympy.Basic
 open Set
 
 
-@[main]
+@[path]
 private lemma main
   {α} {A B : Set α}
 -- given

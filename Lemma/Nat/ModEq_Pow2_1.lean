@@ -5,7 +5,7 @@ import Lemma.Nat.EqAddSub.of.Ge
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   {n : ℕ} :
 -- imply

@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [IsArtinianRing_exists_ne_zero_mem_maximalIdeal_forall_mul_eq_zero](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_IsArtinianRing_exists_ne_zero_mem_maximalIdeal_forall_mul_eq_zero.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing B] [IsLocalRing B] [IsArtinianRing B]
 -- given

@@ -3,7 +3,7 @@ import Lemma.Int.LeNegS.of.Ge
 open Int
 
 
-@[main]
+@[path]
 private lemma main
   [AddCommGroup α] [PartialOrder α] [IsOrderedAddMonoid α]
   {x a b : α}

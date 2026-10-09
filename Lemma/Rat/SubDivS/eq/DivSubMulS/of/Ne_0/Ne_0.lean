@@ -5,7 +5,7 @@ import Lemma.Rat.Div_Mul.eq.Inv.of.Ne_0
 open Rat
 
 
-@[main]
+@[path]
 private lemma main
   [Field α]
   {a b x y : α}

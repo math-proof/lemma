@@ -23,7 +23,7 @@ import Lemma.Nat.Dvd_Mul.of.Dvd
 open Vector List Nat
 
 
-@[main]
+@[path]
 private lemma main
   {s : List ℕ}
 -- given

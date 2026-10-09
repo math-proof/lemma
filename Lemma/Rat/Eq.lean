@@ -6,7 +6,7 @@ open CategoryTheory AlgebraicGeometry
 /--
 [AlgebraicGeometry_IsSeparated_eq_of_spec_map_subtype_comp_eq](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_IsSeparated_eq_of_spec_map_subtype_comp_eq.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [Field Ω]
   {X Y : Scheme.{0}}

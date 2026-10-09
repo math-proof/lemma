@@ -5,7 +5,7 @@ import torch.Tensor.sum
 open Bool Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [Mul α] [Add α] [Zero α]
 -- given
@@ -44,7 +44,7 @@ private lemma main
       grind
 
 
-@[main]
+@[path]
 private lemma resize
   [Mul α] [Add α] [Zero α]
 -- given

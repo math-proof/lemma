@@ -4,7 +4,7 @@ open Matrix
 open scoped Matrix
 
 
-@[main]
+@[path]
 private lemma main
   {S : Type*} [Fintype S] [DecidableEq S]
   {Q : Matrix S S ℝ}

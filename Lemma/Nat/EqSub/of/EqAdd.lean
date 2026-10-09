@@ -2,7 +2,7 @@ import Lemma.Nat.EqSubAdd
 open Nat
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   {x y d : ℕ}
 -- given
@@ -14,7 +14,7 @@ private lemma main
   rw [EqSubAdd]
 
 
-@[main, comm]
+@[path, comm]
 private lemma left
   {x y d : ℕ}
 -- given

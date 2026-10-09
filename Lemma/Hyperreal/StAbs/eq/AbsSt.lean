@@ -6,7 +6,7 @@ import Lemma.Int.EqAbs.is.Ge_0
 open Hyperreal Int
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (x : ℝ*) :

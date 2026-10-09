@@ -3,7 +3,7 @@ import Lemma.Int.Mul_Sub.eq.SubMulS
 open Int Rat
 
 
-@[main]
+@[path]
 private lemma main
   [Field α]
   {x a b : α}

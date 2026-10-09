@@ -5,7 +5,7 @@ import Lemma.Random.Prob.eq.Mul_ProbS.Prob.eq.Mul_MulProbS.of.CondIndep.CondInde
 open MeasureTheory Random
 
 
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace Ω] [StandardBorelSpace Ω]
   [ReferenceMeasure Y] [ReferenceMeasure X]
@@ -36,7 +36,7 @@ private lemma main
     ring
 
 
-@[main]
+@[path]
 private lemma mdp
   [MeasurableSpace Ω] [StandardBorelSpace Ω]
   [ReferenceMeasure S] [ReferenceMeasure A]

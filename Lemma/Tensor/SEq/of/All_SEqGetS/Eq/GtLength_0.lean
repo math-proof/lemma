@@ -5,7 +5,7 @@ import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.Ne_Nil
 open Tensor List
 
 
-@[main]
+@[path]
 private lemma main
   {A : Tensor α s}
   {B : Tensor α s'}

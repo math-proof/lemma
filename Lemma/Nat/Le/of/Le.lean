@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma relax
   {x y : ℝ}
 -- given
@@ -12,7 +12,7 @@ private lemma relax
   linarith
 
 
-@[main]
+@[path]
 private lemma relax.given
   {x y : ℝ}
 -- given
@@ -23,7 +23,7 @@ private lemma relax.given
   linarith
 
 
-@[main]
+@[path]
 private lemma transport
   {x y a : ℝ}
 -- given
@@ -34,7 +34,7 @@ private lemma transport
   linarith
 
 
-@[main]
+@[path]
 private lemma transport.given
   {x y a : ℝ}
 -- given

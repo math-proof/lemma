@@ -6,7 +6,7 @@ import sympy.Basic
 Jensen's inequality (two-point form): if `f'' > 0` on `(a, b)`, `x₀ ≤ x₁` are in `(a, b)`
 and `w ∈ [0, 1]`, then `w * f x₀ + (1 - w) * f x₁ ≥ f (w * x₀ + (1 - w) * x₁)`.
 -/
-@[main]
+@[path]
 private lemma main
   {a b : ℝ}
   {f : ℝ → ℝ}

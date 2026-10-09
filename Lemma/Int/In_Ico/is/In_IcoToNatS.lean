@@ -11,12 +11,12 @@ open Int Set Nat
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Int.In_Ico.is.In_IcoToNatS |
+| path | Int.In_Ico.is.In_IcoToNatS |
 | comm | Int.In_IcoToNatS.is.In_Ico |
 | mp | Int.In_IcoToNatS.of.In_Ico |
 | mpr | Int.In_Ico.of.In_IcoToNatS |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
 -- given
   (x : ℕ)

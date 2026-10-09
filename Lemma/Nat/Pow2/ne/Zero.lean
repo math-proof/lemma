@@ -3,7 +3,7 @@ import Lemma.Nat.Ne.of.Gt
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   {n : ℕ} :
 -- imply

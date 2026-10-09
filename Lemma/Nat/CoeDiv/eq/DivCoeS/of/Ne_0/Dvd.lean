@@ -2,7 +2,7 @@ import Lemma.Nat.NeCoe_0.is.Ne_0
 open Nat
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [DivisionSemiring K]
   [CharZero K]

@@ -5,7 +5,7 @@ import Lemma.Bool.SEq.is.Eq
 open Tensor Vector Bool
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h : s = s')

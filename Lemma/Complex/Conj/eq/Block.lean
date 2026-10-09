@@ -2,7 +2,7 @@ import sympy.functions.elementary.complexes
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {A B C D : Matrix (Fin n) (Fin n) ℂ} :
 -- imply

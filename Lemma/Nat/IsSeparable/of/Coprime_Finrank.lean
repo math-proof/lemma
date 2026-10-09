@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [Algebra_IsSeparable_of_coprime_finrank_expChar](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Algebra_IsSeparable_of_coprime_finrank_expChar.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {F E : Type*} [Field F] [Field E] [Algebra F E] [FiniteDimensional F E]
   {q : ℕ} [ExpChar F q]

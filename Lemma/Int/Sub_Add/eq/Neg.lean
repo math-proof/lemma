@@ -3,7 +3,7 @@ import Lemma.Int.Sub_Add.eq.SubSub
 open Int
 
 
-@[main]
+@[path]
 private lemma main
   [AddCommGroup α]
   {a b : α} :
@@ -14,7 +14,7 @@ private lemma main
   rw [SubSub.eq.Neg]
 
 
-@[main]
+@[path]
 private lemma Comm
   [AddCommGroup α]
   {a b : α} :

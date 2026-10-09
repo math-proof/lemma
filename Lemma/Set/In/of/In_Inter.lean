@@ -3,7 +3,7 @@ import Lemma.Set.SubsetInter
 open Set
 
 
-@[main]
+@[path]
 private lemma left
   {x : α}
   {A B : Set α}
@@ -16,7 +16,7 @@ private lemma left
   apply SubsetInter.left
 
 
-@[main]
+@[path]
 private lemma main
   {x : α}
   {A B : Set α}

@@ -12,7 +12,7 @@ open scoped ENNReal
 \(d\hat{\theta}/d\theta=-\hat{r}\): the polar angular unit vector is differentiable
 with derivative \(-\hat{r}\) (geometric limit \(\Delta\hat{\theta}\approx-\hat{r}\,\Delta\theta\)).
 -/
-@[main]
+@[path]
 private lemma main
   (θ : ℝ) :
 -- imply

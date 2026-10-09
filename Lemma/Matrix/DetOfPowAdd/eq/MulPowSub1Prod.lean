@@ -6,7 +6,7 @@ import Lemma.Matrix.DetOfVecCons_FunPow.eq.MulPowSub1Prod
 open Matrix Nat
 
 
-@[main]
+@[path]
 private lemma main
   {n : ℕ}
   {r : ℝ} :

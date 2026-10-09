@@ -12,7 +12,7 @@ open MeasureTheory PolicyGradient Random Set
 For a differentiable policy with bounded gradient (measurable in the state), the closed-form state value on a general
 state space has a bounded gradient: `sup[θ, y] ‖∇[θ] Vk θ γ y‖ < ∞`.
 -/
-@[main]
+@[path]
 private lemma main
   [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [FiniteDimensional ℝ Θ] [MeasurableSpace S] [MeasurableSpace A] [Fintype A]
   {M : Model Θ S A}

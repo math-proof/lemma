@@ -3,7 +3,7 @@ import torch.Tensor.prod
 import torch.Tensor.reshape
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   {s s' sᵣ : List ℕ}
 -- given

@@ -4,7 +4,7 @@ import Lemma.Nat.NotGt.of.Eq
 open Real Nat
 
 
-@[main]
+@[path]
 private lemma main
   {x : ℝ}
 -- given

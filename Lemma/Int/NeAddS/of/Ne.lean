@@ -3,7 +3,7 @@ import Lemma.Int.EqSubAdd
 open Int Nat
 
 
-@[main]
+@[path]
 private lemma main
   [AddGroup α]
   {x y : α}

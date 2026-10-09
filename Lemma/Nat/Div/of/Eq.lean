@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma left
   [Div α]
   {x y : α}
@@ -14,7 +14,7 @@ private lemma left
   rw [h]
 
 
-@[main]
+@[path]
 private lemma main
   [Div α]
   {x y : α}

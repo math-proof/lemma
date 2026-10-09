@@ -4,7 +4,7 @@ import Lemma.Tensor.SelectUnsqueeze.as.UnsqueezeSelect.of.Le
 open List Tensor
 
 
-@[main, cast]
+@[path, cast]
 private lemma main
   {k d : ℕ}
 -- given

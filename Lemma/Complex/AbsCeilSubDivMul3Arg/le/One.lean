@@ -10,7 +10,7 @@ import Lemma.Set.In_Ioc.is.Lt.Le
 open Complex Int Nat Real Set
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (z : ℂ) :

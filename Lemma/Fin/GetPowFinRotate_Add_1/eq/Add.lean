@@ -3,7 +3,7 @@ import sympy.Basic
 open Equiv Matrix.BlockSwap
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (N a : ℕ)

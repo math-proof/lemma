@@ -4,7 +4,7 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Nat.LtCoeS.is.Lt |
+| path | Nat.LtCoeS.is.Lt |
 | comm | Nat.Lt.is.LtCoeS |
 | mp   | Nat.Lt.of.LtCoeS |
 | mpr  | Nat.LtCoeS.of.Lt |
@@ -12,7 +12,7 @@ import sympy.Basic
 | mpr.comm | Nat.GtCoeS.of.Gt |
 | comm.is | Nat.GtCoeS.is.Gt |
 -/
-@[main, comm, mp, mpr, mp.comm, mpr.comm, comm.is]
+@[path, comm, mp, mpr, mp.comm, mpr.comm, comm.is]
 private lemma main
   [AddMonoidWithOne R] [PartialOrder R] [AddLeftMono R] [ZeroLEOneClass R]
   [CharZero R]

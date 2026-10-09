@@ -12,7 +12,7 @@ import Lemma.Nat.Mul_Mul
 open List Nat
 
 
-@[main]
+@[path]
 private lemma main
   {s : List ℕ}
   {d : Fin s.length}

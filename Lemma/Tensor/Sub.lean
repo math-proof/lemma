@@ -11,10 +11,10 @@ open Tensor Vector
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Tensor.Sub |
+| path | Tensor.Sub |
 | comm | Tensor.Sub.comm |
 -/
-@[main, comm]
+@[path, comm]
 private lemma main
   [SubNegMonoid α]
 -- given

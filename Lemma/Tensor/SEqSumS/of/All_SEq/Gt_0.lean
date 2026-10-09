@@ -3,7 +3,7 @@ import Lemma.Tensor.SEqSumS.of.All_SEq.Ne_Empty
 open Finset Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [AddCommMonoid α]
   {X : Fin m → Tensor α s}

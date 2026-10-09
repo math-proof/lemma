@@ -11,7 +11,7 @@ Change of variables from time to angle.  With \(\rho(t)=r(\theta(t))\) and
 \int_0^T\frac{ds}{dt}\,dt=\int_{\theta(0)}^{\theta(T)}\tfrac12 r(\varphi)^2\,d\varphi.
 \]
 -/
-@[main]
+@[path]
 private lemma main
   {m T : ℝ}
   {r ρ θ : ℝ → ℝ}

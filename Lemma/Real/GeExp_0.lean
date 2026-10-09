@@ -3,7 +3,7 @@ import Lemma.Nat.Ge.of.Gt
 open Real Nat
 
 
-@[main]
+@[path]
 private lemma main
   [ExpPos α]
 -- given

@@ -28,7 +28,7 @@ import Lemma.Nat.SubAdd.eq.Sub_Sub.of.Ge
 open List Nat Fin
 
 
-@[main]
+@[path]
 private lemma main
   {s : List α}
 -- given
@@ -101,7 +101,7 @@ private lemma main
           simp_all
 
 
-@[main]
+@[path]
 private lemma simp
   {s : List α}
 -- given

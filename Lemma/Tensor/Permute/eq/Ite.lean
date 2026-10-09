@@ -18,7 +18,7 @@ import Lemma.Nat.Min.eq.Add_1
 open List Bool Int Nat
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (X : Tensor α s)

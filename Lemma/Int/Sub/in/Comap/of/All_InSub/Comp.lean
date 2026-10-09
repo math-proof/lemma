@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [RingHom_map_sub_self_mem_comap_of_comp_eq](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_RingHom_map_sub_self_mem_comap_of_comp_eq.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing C] [CommRing C']
   {c : C →+* C'}

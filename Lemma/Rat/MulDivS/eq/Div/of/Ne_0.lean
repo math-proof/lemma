@@ -4,7 +4,7 @@ import Lemma.Rat.MulDivS.eq.DivMulS
 open Nat Rat
 
 
-@[main]
+@[path]
 private lemma main
   [Semifield α]
   {a : α}

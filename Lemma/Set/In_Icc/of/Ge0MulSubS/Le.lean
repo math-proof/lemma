@@ -8,7 +8,7 @@ import Lemma.Set.In_Icc.is.Le.Le
 open Set Nat Int
 
 
-@[main]
+@[path]
 private lemma main
   [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
   {a b : α}

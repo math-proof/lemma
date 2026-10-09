@@ -8,7 +8,7 @@ import Lemma.Rat.DivSub.eq.SubDivS
 open Int Nat Rat
 
 
-@[main]
+@[path]
 private lemma main
   [Field α]
   {a b : α}

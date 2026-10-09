@@ -6,7 +6,7 @@ open scoped TensorProduct
 /--
 [Module_FaithfullyFlat_exists_ringHom_isAlgClosed_comp_algebraMap_eq](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Module_FaithfullyFlat_exists_ringHom_isAlgClosed_comp_algebraMap_eq.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {S : Type u} [CommRing S]
   {S' : Type u} [CommRing S'] [Algebra S S'] [Module.FaithfullyFlat S S']

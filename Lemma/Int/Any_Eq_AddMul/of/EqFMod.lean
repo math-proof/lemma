@@ -4,7 +4,7 @@ import Lemma.Nat.Add
 open Nat Int
 
 
-@[main]
+@[path]
 private lemma main
   {n d r : ℤ}
 -- given

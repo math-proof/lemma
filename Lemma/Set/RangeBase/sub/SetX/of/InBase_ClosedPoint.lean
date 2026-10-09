@@ -6,7 +6,7 @@ open CategoryTheory AlgebraicGeometry IsLocalRing
 /--
 [AlgebraicGeometry_Scheme_range_subset_of_isLocalRing_of_closedPoint_mem](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_Scheme_range_subset_of_isLocalRing_of_closedPoint_mem.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {X : Scheme.{u}}
   {U : X.Opens}

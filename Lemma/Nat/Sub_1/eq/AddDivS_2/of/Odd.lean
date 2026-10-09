@@ -7,7 +7,7 @@ import Lemma.Nat.Div_2.of.Odd
 open Nat
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [IntegerRing Z]
   {n : Z}

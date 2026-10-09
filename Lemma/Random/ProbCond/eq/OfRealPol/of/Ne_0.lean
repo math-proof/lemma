@@ -15,7 +15,7 @@ with counting reference measures on the finite state / action spaces, the canoni
 conditional density `ℙ[M θ](a[t] = u | s[t] = x)` of the trajectory law equals the policy
 probability `π_θ(u | x)` at every reachable state `x` (`Pr(s[t] = x) ≠ 0`).
 -/
-@[main]
+@[path]
 private lemma main
   [ReferenceMeasure S] [MeasurableSingletonClass S] [Fintype S]
   [ReferenceMeasure A] [MeasurableSingletonClass A] [Fintype A]

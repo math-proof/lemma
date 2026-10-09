@@ -2,7 +2,7 @@ import Lemma.Nat.Ge1Mod1
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (m : ℕ)

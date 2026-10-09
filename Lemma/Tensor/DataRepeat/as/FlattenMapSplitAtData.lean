@@ -5,7 +5,7 @@ import torch.Tensor.repeat
 open Bool List
 
 
-@[main, cast]
+@[path, cast]
 private lemma main
   {s : List ℕ}
 -- given

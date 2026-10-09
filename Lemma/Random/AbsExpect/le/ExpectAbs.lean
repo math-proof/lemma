@@ -3,7 +3,7 @@ import Lemma.Int.LeAbs.of.LeNeg.Le
 open MeasureTheory
 
 
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace Ω]
   {μ : Measure Ω}

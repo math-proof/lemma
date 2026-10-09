@@ -5,7 +5,7 @@ import Lemma.Int.Sub.eq.Add_Neg
 open Hyperreal Int
 
 
-@[main]
+@[path]
 private lemma main
   {x y : ℝ*}
 -- given

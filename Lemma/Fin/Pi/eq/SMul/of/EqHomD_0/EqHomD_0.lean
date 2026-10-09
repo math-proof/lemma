@@ -6,7 +6,7 @@ open CategoryTheory groupCohomology
 /--
 [groupCohomology_pi_cocyclesMk_zsmul](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_groupCohomology_pi_cocyclesMk_zsmul.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [Group G]
   {A : Rep.{0} ℤ G}

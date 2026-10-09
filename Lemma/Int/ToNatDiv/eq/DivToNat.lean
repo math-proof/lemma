@@ -2,7 +2,7 @@ import Lemma.Int.EqToNat_0.of.Lt_0
 open Int
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (n : ℤ)

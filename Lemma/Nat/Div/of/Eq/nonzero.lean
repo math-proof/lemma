@@ -3,7 +3,7 @@ import sympy.Basic
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   [Div α]
   [Zero α]

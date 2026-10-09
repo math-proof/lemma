@@ -5,7 +5,7 @@ import Lemma.Int.EqToNat
 open Int Nat
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (n i : ℕ) :
@@ -23,7 +23,7 @@ private lemma main
   simp
 
 
-@[main]
+@[path]
 private lemma coe
 -- given
   (n i : ℕ) :

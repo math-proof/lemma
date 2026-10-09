@@ -4,7 +4,7 @@ import Lemma.Rat.InvDiv.eq.Div
 open Rat
 
 
-@[main]
+@[path]
 private lemma main
   [CommGroupWithZero α]
 -- given

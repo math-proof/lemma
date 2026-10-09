@@ -3,7 +3,7 @@ import sympy.Basic
 import Mathlib.Data.Set.Card
 
 
-@[main]
+@[path]
 private lemma main
   {n k : ℕ}
 -- given

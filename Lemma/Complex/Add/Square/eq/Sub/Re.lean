@@ -3,7 +3,7 @@ import sympy.Basic
 import Lemma.Complex.Square.Abs.eq.Add.Re
 
 
-@[main]
+@[path]
 private lemma main
   {n : ℕ}
   {a : ℕ → ℂ} :

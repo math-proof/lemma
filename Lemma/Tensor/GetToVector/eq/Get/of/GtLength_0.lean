@@ -5,7 +5,7 @@ import Lemma.Tensor.GetToVector.eq.Get
 open Tensor List
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h : s.length > 0)
@@ -18,7 +18,7 @@ private lemma main
   GetToVector.eq.Get.fin X ⟨i, by simp [Length.eq.Get_0.of.GtLength_0 h X]⟩
 
 
-@[main]
+@[path]
 private lemma headD
 -- given
   (h : s.length > 0)

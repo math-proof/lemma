@@ -6,7 +6,7 @@ open Polynomial
 /--
 [Polynomial_separable_sub_C_of_forall_eval_derivative](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Polynomial_separable_sub_C_of_forall_eval_derivative.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {k : Type u} [Field k] [IsAlgClosed k]
   {P : k[X]}

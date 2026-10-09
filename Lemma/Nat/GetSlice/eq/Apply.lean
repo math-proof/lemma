@@ -5,7 +5,7 @@ open scoped ENNReal.ToRealCoe
 
 
 /-- `f[:n]` for a plain sequence `f : ℕ → α`. -/
-@[main]
+@[path]
 private lemma main
 -- given
   (f : ℕ → α)

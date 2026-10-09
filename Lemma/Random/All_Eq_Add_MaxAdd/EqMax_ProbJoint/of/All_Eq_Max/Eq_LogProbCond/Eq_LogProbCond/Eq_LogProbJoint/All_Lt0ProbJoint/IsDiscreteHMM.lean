@@ -20,7 +20,7 @@ open IsDiscreteHMM
 open scoped ENNReal.ToRealCoe
 
 
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace Ω] [StandardBorelSpace Ω]
   [ReferenceMeasure Y] [ReferenceMeasure X]

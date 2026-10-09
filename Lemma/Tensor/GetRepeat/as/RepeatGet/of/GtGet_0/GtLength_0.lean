@@ -6,7 +6,7 @@ import Lemma.Tensor.LengthRepeat.eq.Get_0.of.GtVal_0
 open Nat Tensor
 
 
-@[main, fin, cast, cast.fin]
+@[path, fin, cast, cast.fin]
 private lemma main
   {s : List ℕ}
 -- given

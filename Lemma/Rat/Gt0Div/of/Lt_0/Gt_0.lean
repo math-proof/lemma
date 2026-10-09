@@ -4,7 +4,7 @@ import Lemma.Rat.Div.eq.Mul_Inv
 open Int Rat
 
 
-@[main]
+@[path]
 private lemma main
   [Field α] [LinearOrder α] [IsStrictOrderedRing α]
   {x y : α}

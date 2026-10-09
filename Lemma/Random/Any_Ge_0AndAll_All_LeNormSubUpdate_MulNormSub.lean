@@ -4,7 +4,7 @@ import Lemma.Random.AbsSubMaxₐ.le.NormSub
 import Lemma.LpSpace.NormOfLp.le.Norm.of.Ge_1
 
 
-@[main]
+@[path]
 private lemma main
   {S A : Type*} [Fintype S] [DecidableEq S] [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype A] [DecidableEq A] [MeasurableSpace A] [MeasurableSingletonClass A] [Nonempty A]
   {spec : QLearningSpec S A} :

@@ -2,7 +2,7 @@ import Lemma.Finset.Sum_BFn
 open Finset
 
 
-@[main]
+@[path]
 private lemma Comm
   [AddCommMonoid α]
 -- given

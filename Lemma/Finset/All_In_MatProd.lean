@@ -4,7 +4,7 @@ import sympy.Basic
 open Matrix
 
 
-@[main]
+@[path]
 private lemma permutation
   {n m : ℕ}
   {a d : ℕ → Fin n} :

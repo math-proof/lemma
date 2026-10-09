@@ -5,7 +5,7 @@ import sympy.vector.vector
 open Bool Vector
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   {v : List.Vector α (m * n)}
   {u : Fin m → List.Vector α n}

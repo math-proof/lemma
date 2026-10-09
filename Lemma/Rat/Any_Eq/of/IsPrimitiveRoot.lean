@@ -6,7 +6,7 @@ open IsLocalRing Polynomial
 /--
 [IsPrimitiveRoot_exists_ringHom_zeta_eq_of_isCyclotomicExtension](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_IsPrimitiveRoot_exists_ringHom_zeta_eq_of_isCyclotomicExtension.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [Field K] [Algebra ℚ K] [Field L] [CharZero L]
   {n : ℕ} [NeZero n] [IsCyclotomicExtension {n} ℚ K]

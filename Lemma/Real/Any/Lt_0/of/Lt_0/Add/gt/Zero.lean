@@ -1,7 +1,7 @@
 import Lemma.Real.Any.Lt_0.of.Lt_0.Add.ge.Zero
 
 
-@[main]
+@[path]
 private lemma main
   {a b c : ℝ}
 -- given

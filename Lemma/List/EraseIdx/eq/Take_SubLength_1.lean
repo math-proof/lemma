@@ -2,7 +2,7 @@ import Lemma.List.DropLast.eq.Take_SubLength_1
 open List
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (s : List ℕ) :

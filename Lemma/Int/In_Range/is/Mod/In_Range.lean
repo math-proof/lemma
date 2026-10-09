@@ -15,12 +15,12 @@ open Int
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Int.In_Range.is.Mod.In_Range |
+| path | Int.In_Range.is.Mod.In_Range |
 | comm | Int.Mod.In_Range.is.In_Range |
 | mp | Int.Mod.In_Range.of.In_Range |
 | mpr | Int.In_Range.of.Mod.In_Range |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   {x a b d : ℤ} :
 -- imply

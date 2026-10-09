@@ -2,7 +2,7 @@ import Lemma.Nat.Mul2.eq.Add
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   {x : ℕ} :
 -- imply

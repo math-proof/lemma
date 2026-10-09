@@ -48,7 +48,7 @@ private lemma get_sliced_indices_sub
       apply absurd (Nat.succ_le_of_lt h_i) (Nat.not_le_of_gt (by omega))
 
 
-@[main]
+@[path]
 private lemma main
   {a b : ℤ}
   {N d : ℕ}

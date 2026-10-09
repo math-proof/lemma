@@ -4,7 +4,7 @@ import Lemma.List.Cons.is.Eq.Eq
 open Tensor List
 
 
-@[main]
+@[path]
 private lemma main
   {A : Tensor α s_A}
   {B : Tensor α s_B}

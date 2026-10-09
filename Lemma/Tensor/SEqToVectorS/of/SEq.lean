@@ -4,7 +4,7 @@ import torch.Tensor
 open Bool
 
 
-@[main]
+@[path]
 private lemma main
   {A : Tensor α (n :: s)}
   {B : Tensor α (n' :: s)}

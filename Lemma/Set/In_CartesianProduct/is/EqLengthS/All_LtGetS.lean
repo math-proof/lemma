@@ -5,7 +5,7 @@ import Lemma.Set.All_LtGetS.of.In_CartesianProduct
 open Set List
 
 
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
 -- given
   (x s : List ℕ) :

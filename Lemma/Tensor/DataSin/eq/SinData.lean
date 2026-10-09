@@ -1,7 +1,7 @@
 import torch.functions
 
 
-@[main]
+@[path]
 private lemma main
   [Sin α]
 -- given

@@ -2,7 +2,7 @@ import sympy.stats.lyapunov
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {d : ℕ}
   {φ : EuclideanVec d → ℝ}

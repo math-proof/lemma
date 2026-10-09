@@ -3,7 +3,7 @@ import Lemma.Rat.LeToNatCeil_1.of.Le_Add
 open Rat Nat
 
 
-@[main]
+@[path]
 private lemma main
   [Field α] [LinearOrder α] [IsStrictOrderedRing α] [FloorRing α]
   {start stop step : ℕ}

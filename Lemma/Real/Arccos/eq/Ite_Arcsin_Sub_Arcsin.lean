@@ -4,7 +4,7 @@ import Lemma.Real.SubArcsinS.eq.DivPi2.of.Lt_0
 open Real
 
 
-@[main]
+@[path]
 private lemma main
   {x : ℝ} :
 -- imply

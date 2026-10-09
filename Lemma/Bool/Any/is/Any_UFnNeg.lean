@@ -5,12 +5,12 @@ open Int
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Bool.Any.is.Any_UFnNeg |
+| path | Bool.Any.is.Any_UFnNeg |
 | comm | Bool.Any_UFnNeg.is.Any |
 | mp | Bool.Any_UFnNeg.of.Any |
 | mpr | Bool.Any.of.Any_UFnNeg |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   [InvolutiveNeg α]
   {f : α → Prop} :

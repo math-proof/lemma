@@ -2,7 +2,7 @@ import sympy.functions.special.tensor_functions
 import Lemma.Nat.Delta.eq.Ite
 
 
-@[main]
+@[path]
 private lemma main
   {x y t : ℤ} :
 -- imply

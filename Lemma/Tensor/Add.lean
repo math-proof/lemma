@@ -8,10 +8,10 @@ open Tensor Vector
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Tensor.Add |
+| path | Tensor.Add |
 | comm | Tensor.Add.comm |
 -/
-@[main, comm]
+@[path, comm]
 private lemma main
   [Add α]
 -- given

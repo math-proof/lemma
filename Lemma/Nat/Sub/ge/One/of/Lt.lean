@@ -2,7 +2,7 @@ import Lemma.Nat.Sub.ge.One.of.Gt
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   [IntegerRing Z]
   {a b : Z}

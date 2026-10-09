@@ -4,7 +4,7 @@ import Lemma.Bool.UFn.of.Eq
 open Bool Nat
 
 
-@[main]
+@[path]
 private lemma main
   [LinearOrder α]
   {a b a' b' : α}

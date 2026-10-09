@@ -5,7 +5,7 @@ import sympy.vector.vector
 open Int Vector
 
 
-@[main, comm, fin, fin.comm]
+@[path, comm, fin, fin.comm]
 private lemma main
   [SubNegMonoid α]
 -- given

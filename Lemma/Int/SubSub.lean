@@ -3,7 +3,7 @@ import Lemma.Nat.Add
 open Int Nat
 
 
-@[main]
+@[path]
 private lemma Comm
   [SubtractionCommMonoid α]
   {a b c : α} :

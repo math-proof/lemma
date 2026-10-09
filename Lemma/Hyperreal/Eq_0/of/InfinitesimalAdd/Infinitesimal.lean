@@ -6,10 +6,10 @@ open Hyperreal Nat
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Hyperreal.Eq_0.of.InfinitesimalAdd.Infinitesimal |
+| path | Hyperreal.Eq_0.of.InfinitesimalAdd.Infinitesimal |
 | mt   | Hyperreal.NotInfinitesimalAdd.of.Ne_0.Infinitesimal |
 -/
-@[main, mt]
+@[path, mt]
 private lemma main
   {x : ℝ*}
   {r : ℝ}
@@ -25,7 +25,7 @@ private lemma main
   assumption
 
 
-@[main, mt]
+@[path, mt]
 private lemma left
   {x : ℝ*}
   {r : ℝ}

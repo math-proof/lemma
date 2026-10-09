@@ -12,7 +12,7 @@ import Lemma.Random.AeTendsto.of.LyapunovFunction.Measurable.Measurable.All_Eq_S
 open Filter Topology
 
 
-@[main]
+@[path]
 private lemma main
   {S : Type*} [Fintype S] [DecidableEq S] [Nonempty S] [MeasurableSpace S] [MeasurableSingletonClass S]
   {d : ℕ}

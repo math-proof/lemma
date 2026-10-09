@@ -9,7 +9,7 @@ import sympy.Basic
 Chain rule for the angular unit along a path:
 \(\dfrac{d}{dt}\hat{\theta}(\theta(t))=-\dot\theta\,\hat{r}(\theta(t))\).
 -/
-@[main]
+@[path]
 private lemma main
   {θ : ℝ → ℝ}
   {t : ℝ}

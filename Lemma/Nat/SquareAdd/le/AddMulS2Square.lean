@@ -3,7 +3,7 @@ import Mathlib.Algebra.Order.Ring.Unbundled.Basic
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   [CommSemiring α] [LinearOrder α] [ExistsAddOfLE α] [MulPosStrictMono α] [AddLeftReflectLE α] [AddLeftMono α]
 -- given

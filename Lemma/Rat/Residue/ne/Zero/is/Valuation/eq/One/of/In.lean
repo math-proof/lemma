@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [ValuationSubring_residue_ne_zero_iff_valuation_eq_one](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_ValuationSubring_residue_ne_zero_iff_valuation_eq_one.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [Field K]
   {A : ValuationSubring K}

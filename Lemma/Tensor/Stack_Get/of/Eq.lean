@@ -3,7 +3,7 @@ import torch.stack
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {x y : Tensor (Fin n) [n]}
   {a : Tensor α [n]}

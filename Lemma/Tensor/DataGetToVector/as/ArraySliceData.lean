@@ -5,7 +5,7 @@ import Lemma.Nat.Le_SubMulS
 open Tensor Vector Nat
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
 -- given
   (X : Tensor α (s₀ :: s))

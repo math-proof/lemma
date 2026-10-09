@@ -15,7 +15,7 @@ import torch.stack
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [CommRing α] [CharZero α]
   (n : ℕ)

@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [Complex_exists_forall_not_countable_setOf_re_gt_mem_of_finite](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Complex_exists_forall_not_countable_setOf_re_gt_mem_of_finite.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [Finite ι]
   {S : ι → Set ℂ}

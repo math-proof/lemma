@@ -6,7 +6,7 @@ open CategoryTheory CategoryTheory.Limits TopologicalSpace AlgebraicGeometry Opp
 /--
 [AlgebraicGeometry_Scheme_Hom_isIntegral_image_and_isIso_stalkMap_toImage_genericPoint](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_Scheme_Hom_isIntegral_image_and_isIso_stalkMap_toImage_genericPoint.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {X P : Scheme.{u}} [IsIntegral X]
   {f : X ⟶ P} [IsImmersion f] [QuasiCompact f] :

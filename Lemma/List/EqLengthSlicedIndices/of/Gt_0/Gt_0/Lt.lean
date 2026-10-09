@@ -5,7 +5,7 @@ import stdlib.Slice
 open List Rat Nat
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h_j : j < d)
@@ -18,7 +18,7 @@ private lemma main
   rwa [EqToNatCeilDivSubMul.of.Lt]
 
 
-@[main]
+@[path]
 private lemma Comm
 -- given
   (h_j : j < d)

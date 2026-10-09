@@ -291,7 +291,7 @@ private lemma eye_aux
               | exfalso; omega
 
 
-@[main]
+@[path]
 private lemma main
   [Semiring α] [CharZero α]
   {n : ℕ}

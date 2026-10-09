@@ -5,7 +5,7 @@ import Lemma.Nat.Lt_Add_1.of.Le
 open Set Nat
 
 
-@[main]
+@[path]
 private lemma main
   [IntegerRing α]
   {x a b d : α}

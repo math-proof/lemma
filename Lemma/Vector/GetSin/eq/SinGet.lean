@@ -5,12 +5,12 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Vector.GetSin.eq.SinGet |
+| path | Vector.GetSin.eq.SinGet |
 | fin | Vector.GetSin.eq.SinGet.fin |
 | comm | Vector.SinGet.eq.GetSin |
 | fin.comm | Vector.SinGet.eq.GetSin.fin |
 -/
-@[main, fin, comm, fin.comm]
+@[path, fin, comm, fin.comm]
 private lemma main
   [Sin α]
 -- given

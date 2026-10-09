@@ -6,7 +6,7 @@ open IsLocalRing
 /--
 [Matrix_span_image_map_eq_top_of_span_eq_top](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Matrix_span_image_map_eq_top_of_span_eq_top.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [Fintype n] [DecidableEq n] [Field k] [Field K]
   {f : k →+* K}

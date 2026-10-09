@@ -24,7 +24,7 @@ import Lemma.Nat.Sub.eq.Zero
 open Vector Tensor List Bool Nat Fin
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h : s.length ≥ i)

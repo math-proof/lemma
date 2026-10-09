@@ -4,7 +4,7 @@ import sympy.Basic
 
 
 /-- Polar radial unit vector has length one: \(|\hat{r}|=1\). -/
-@[main]
+@[path]
 private lemma main
   (θ : ℝ) :
 -- imply

@@ -10,7 +10,7 @@ import Lemma.Int.CoeCoe.eq.Coe
 open Set Int Finset
 
 
-@[main]
+@[path]
 private lemma main
   [Ring R] [LinearOrder R] [IsStrictOrderedRing R]
 -- given

@@ -5,10 +5,10 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Set.Ico.ne.Empty.is.Gt |
+| path | Set.Ico.ne.Empty.is.Gt |
 | mpr | Set.Ico.ne.Empty.of.Gt |
 -/
-@[main, mpr]
+@[path, mpr]
 private lemma main
   {a b : ℤ} :
 -- imply

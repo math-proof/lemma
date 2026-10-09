@@ -3,7 +3,7 @@ import Lemma.Int.MulFMod.ge.Zero
 open Int Rat
 
 
-@[main]
+@[path]
 private lemma main
   [Field α] [LinearOrder α] [IsStrictOrderedRing α]
 -- given

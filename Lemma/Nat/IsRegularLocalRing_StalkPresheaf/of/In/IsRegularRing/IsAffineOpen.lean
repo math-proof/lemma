@@ -6,7 +6,7 @@ open CategoryTheory AlgebraicGeometry
 /--
 [AlgebraicGeometry_IsAffineOpen_isRegularLocalRing_stalk_of_isRegularRing](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_IsAffineOpen_isRegularLocalRing_stalk_of_isRegularRing.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {X : Scheme.{u}}
   {U : X.Opens}

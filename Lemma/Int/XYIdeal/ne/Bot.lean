@@ -7,7 +7,7 @@ open scoped Polynomial.Bivariate
 /--
 [WeierstrassCurve_Affine_CoordinateRing_XYIdeal_ne_bot](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_WeierstrassCurve_Affine_CoordinateRing_XYIdeal_ne_bot.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing R] [Nontrivial R]
   {W : Affine R}

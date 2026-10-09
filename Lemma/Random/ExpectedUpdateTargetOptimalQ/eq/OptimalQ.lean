@@ -4,7 +4,7 @@ import Lemma.Random.ExpectedUpdateTarget.eq.ToLpAddMulSub
 import Lemma.Random.BellmanOpOfLpOptimalQ.eq.OfLpOptimalQ
 
 
-@[main]
+@[path]
 private lemma main
   {S A : Type*} [Fintype S] [DecidableEq S] [Nonempty S] [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype A] [DecidableEq A] [Nonempty A] [MeasurableSpace A] [MeasurableSingletonClass A]
   {spec : QLearningSpec S A} :

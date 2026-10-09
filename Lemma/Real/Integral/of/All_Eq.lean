@@ -4,7 +4,7 @@ import Mathlib.MeasureTheory.Integral.Bochner.Basic
 open MeasureTheory
 
 
-@[main]
+@[path]
 private lemma main
   {f g : ℝ → ℝ}
 -- given

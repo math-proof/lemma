@@ -20,7 +20,7 @@ open Tensor Fin
 set_option maxHeartbeats 1000000
 
 
-@[main]
+@[path]
 private lemma vmv
   [NonUnitalSemiring α]
 -- given
@@ -100,7 +100,7 @@ private lemma vmv
   apply Dot.eq.Sum_MulGetS
 
 
-@[main]
+@[path]
 private lemma vmm
   [NonUnitalSemiring α]
 -- given
@@ -126,7 +126,7 @@ private lemma vmm
   apply EqGetUnsqueeze_0
 
 
-@[main]
+@[path]
 private lemma mmv
   [NonUnitalSemiring α]
 -- given
@@ -147,7 +147,7 @@ private lemma mmv
 /--
 tensor version of Matrix.mul_assoc
 -/
-@[main]
+@[path]
 private lemma main
   [NonUnitalSemiring α]
 -- given

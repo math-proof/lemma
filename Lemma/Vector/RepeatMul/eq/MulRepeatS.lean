@@ -3,7 +3,7 @@ import Lemma.Vector.GetRepeat.eq.Get_Mod.of.Lt_Mul
 open Vector
 
 
-@[main]
+@[path]
 private lemma main
   [Mul α]
 -- given

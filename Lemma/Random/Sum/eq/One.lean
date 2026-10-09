@@ -13,7 +13,7 @@ one against the counting reference measure.
 Python: Random.Sum.eq.One (marked `provable=False` there; proved here in the discrete
 countable setting where the reference measure on `α` is `count`).
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace Ω]
   [ReferenceMeasure α] [Countable α] [MeasurableSingletonClass α]

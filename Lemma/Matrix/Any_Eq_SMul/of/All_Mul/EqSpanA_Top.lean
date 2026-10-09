@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [Matrix_exists_eq_smul_one_of_commute_of_span_eq_top](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Matrix_exists_eq_smul_one_of_commute_of_span_eq_top.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [Fintype n] [DecidableEq n] [CommRing A]
   {S : Set (Matrix n n A)}

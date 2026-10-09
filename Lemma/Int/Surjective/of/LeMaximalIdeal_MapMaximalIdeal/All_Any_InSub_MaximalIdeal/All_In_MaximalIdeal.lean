@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [IsLocalRing_surjective_of_isAdicComplete_of_maximalIdeal_le_map_sup_sq](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_IsLocalRing_surjective_of_isAdicComplete_of_maximalIdeal_le_map_sup_sq.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {R S : Type} [CommRing R] [CommRing S] [IsLocalRing R] [IsLocalRing S] [IsNoetherianRing S] [IsAdicComplete (IsLocalRing.maximalIdeal R) R] [IsAdicComplete (IsLocalRing.maximalIdeal S) S]
   {f : R →+* S}

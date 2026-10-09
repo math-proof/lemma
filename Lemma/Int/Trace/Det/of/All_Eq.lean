@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [LinearMap_trace_eq_and_det_eq_of_semiconj](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_LinearMap_trace_eq_and_det_eq_of_semiconj.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing R] [AddCommGroup M] [Module R M] [AddCommGroup N] [Module R N]
   {f : Module.End R M}

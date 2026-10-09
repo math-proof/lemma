@@ -3,7 +3,7 @@ import Lemma.Tensor.LengthResize.eq.Length
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [Zero α]
 -- given

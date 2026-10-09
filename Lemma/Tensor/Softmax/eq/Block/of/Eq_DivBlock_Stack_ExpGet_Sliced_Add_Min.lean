@@ -7,7 +7,7 @@ open Tensor
 Hyperreal masked softmax (py: `softmax(A + (Ξ - 1) * oo)` with the block mask `Ξ`): the masked entries are exactly `0`,
 the unmasked ones carry the given weights, with every row having an unmasked entry.
 -/
-@[main]
+@[path]
 private lemma lower_triangle
   {n l : ℕ}
   {A : Fin n → Fin n → ℝ}

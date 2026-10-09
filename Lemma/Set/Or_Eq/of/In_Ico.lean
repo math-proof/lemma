@@ -5,7 +5,7 @@ import Lemma.Set.In_Ico.is.Le.Lt
 open Finset Set
 
 
-@[main]
+@[path]
 private lemma main
   {e a b : ℤ}
 -- given

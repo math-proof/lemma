@@ -5,7 +5,7 @@ import sympy.Basic
 open Matrix
 
 
-@[main]
+@[path]
 private lemma index_general.swap
   {n : ℕ}
   {x : Fin n → ℕ}
@@ -49,7 +49,7 @@ private lemma index_general.swap
   exact hidx _ q i (by simp [hp0]) (hinj.comp (Equiv.injective _))
 
 
-@[main]
+@[path]
 private lemma index.swap
   {n : ℕ}
   {x : Fin n → ℕ}
@@ -93,7 +93,7 @@ private lemma index.swap
   exact hidx _ q i (by simp [hp0]) (hinj.comp (Equiv.injective _))
 
 
-@[main]
+@[path]
 private lemma rsolve
   {x f : ℕ → ℝ}
   {c : ℝ}
@@ -119,7 +119,7 @@ private lemma rsolve
     ring
 
 
-@[main]
+@[path]
 private lemma swap2.general
   {α : Type*}
   {n : ℕ}
@@ -154,7 +154,7 @@ private lemma swap2.general
   exact T i _ (T j _ (T i x hx))
 
 
-@[main]
+@[path]
 private lemma bilinear.symm
   {n : ℕ}
   {W : Matrix (Fin n) (Fin n) ℝ}

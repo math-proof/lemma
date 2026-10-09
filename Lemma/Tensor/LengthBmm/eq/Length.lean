@@ -8,7 +8,7 @@ import torch.Tensor.bmm
 open List Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [Mul α] [Add α] [Zero α]
 -- given

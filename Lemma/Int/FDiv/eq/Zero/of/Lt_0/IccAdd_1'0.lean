@@ -10,7 +10,7 @@ import Lemma.Nat.Lt.of.LeAdd_1
 open Set Int Rat Nat
 
 
-@[main]
+@[path]
 private lemma main
   {n d : ℤ}
 -- given

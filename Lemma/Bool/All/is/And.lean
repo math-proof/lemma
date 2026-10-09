@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma doit.outer
   {x : ℤ → ℤ → ℝ}
   {f : ℤ → ℤ}
@@ -23,7 +23,7 @@ private lemma doit.outer
       exact h₁
 
 
-@[main]
+@[path]
 private lemma doit.outer.setlimit
   {x : ℤ → ℤ → ℝ}
   {f : ℤ → ℤ}

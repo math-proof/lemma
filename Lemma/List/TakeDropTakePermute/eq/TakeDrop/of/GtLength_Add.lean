@@ -3,7 +3,7 @@ import Lemma.List.TakeDropTake.eq.TakeDrop
 open List
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   {s : List α}
   {i : Fin s.length}

@@ -11,7 +11,7 @@ import Lemma.Real.Eq_1.of.Add_Inv.eq.Two
 open Hyperreal Real
 
 
-@[main, mt 1]
+@[path, mt 1]
 private lemma main
   {a b : ℝ*}
 -- given

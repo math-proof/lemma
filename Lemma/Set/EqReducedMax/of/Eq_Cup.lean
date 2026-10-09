@@ -3,7 +3,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {n : ℕ}
   {a b : ℕ → ℝ}
@@ -17,9 +17,11 @@ private lemma main
     ext y
     simp only [Set.image_univ, Set.mem_range, Set.mem_iUnion, Set.mem_singleton_iff, Finset.mem_range, exists_prop]
     constructor
-    · rintro ⟨i, rfl⟩
+    ·
+      rintro ⟨i, rfl⟩
       exact ⟨i, i.isLt, rfl⟩
-    · rintro ⟨i, hi, rfl⟩
+    ·
+      rintro ⟨i, hi, rfl⟩
       exact ⟨⟨i, hi⟩, rfl⟩
   show sSup _ = sSup _
   rw [e a, e b, h]

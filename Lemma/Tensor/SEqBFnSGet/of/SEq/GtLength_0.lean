@@ -5,7 +5,7 @@ import Lemma.Bool.SEq.is.Eq
 open Tensor Bool
 
 
-@[main]
+@[path]
 private lemma main
   {X : Tensor α s}
   {X' : Tensor α s'}

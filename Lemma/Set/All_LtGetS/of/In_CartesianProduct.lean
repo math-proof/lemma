@@ -3,7 +3,7 @@ import Lemma.List.GetCartesianProduct.lt.Get.of.GtLength.GtLengthCartesianProduc
 open Set List
 
 
-@[main]
+@[path]
 private lemma main
   {x s : List ℕ}
 -- given

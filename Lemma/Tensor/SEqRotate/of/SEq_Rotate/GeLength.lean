@@ -6,7 +6,7 @@ import Lemma.Nat.EqSub_Sub.of.Ge
 open Tensor Nat
 
 
-@[main]
+@[path]
 private lemma main
   {X : Tensor α s}
   {Y : Tensor α s'}

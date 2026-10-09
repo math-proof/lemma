@@ -5,7 +5,7 @@ import Lemma.Tensor.HEq.of.SEqDataS.Eq
 open List Nat Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [One α]
 -- given

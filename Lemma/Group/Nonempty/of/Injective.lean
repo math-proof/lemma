@@ -6,7 +6,7 @@ open CategoryTheory Rep
 /--
 [Rep_nonempty_groupCohomology_res_iso_res_range](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Rep_nonempty_groupCohomology_res_iso_res_range.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {k G P : Type u} [CommRing k] [Group G] [Group P]
   {f : P →* G}

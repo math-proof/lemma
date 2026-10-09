@@ -4,7 +4,7 @@ import sympy.Basic
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   {n : ℕ} :
 -- imply
@@ -44,7 +44,7 @@ private lemma main
     rw [hc, od]
 
 
-@[main]
+@[path]
 private lemma double_odd
   {n : ℕ} :
 -- imply

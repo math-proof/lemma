@@ -7,12 +7,12 @@ open Tensor
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Tensor.NegStack.eq.Stack_Neg |
+| path | Tensor.NegStack.eq.Stack_Neg |
 | comm | Tensor.Stack_Neg.eq.NegStack |
 | fun | Tensor.NegStack.eq.Stack_Neg.fun |
 | comm.fun | Tensor.Stack_Neg.eq.NegStack.fun |
 -/
-@[main, comm]
+@[path, comm]
 private lemma main
   [Neg α]
 -- given
@@ -29,7 +29,7 @@ private lemma main
   exact (congrArg Neg.neg hf).trans hnf.symm
 
 
-@[main, comm]
+@[path, comm]
 private lemma Fun
   [Neg α]
 -- given

@@ -27,7 +27,7 @@ import torch.Tensor.sum
 open Bool List Nat Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [AddMonoid α]
 -- given

@@ -6,7 +6,7 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 /--
 [AlgebraicGeometry_isPullback_Spec_map_pushout_inl_right_inr_right](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_isPullback_Spec_map_pushout_inl_right_inr_right.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing R]
   {B B₁ B₂ : Under (CommRingCat.of R)}

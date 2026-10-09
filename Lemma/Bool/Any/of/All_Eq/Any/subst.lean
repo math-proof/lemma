@@ -2,7 +2,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {α : Type*} [Mul α] [Add α]
   {C S : Set α}

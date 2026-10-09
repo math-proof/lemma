@@ -5,7 +5,7 @@ import Lemma.Nat.EqAddMul_Div
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   [Field α] [LinearOrder α] [IsStrictOrderedRing α] [FloorRing α]
   {n d : ℕ} :

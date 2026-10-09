@@ -2,7 +2,7 @@ import sympy.Basic
 import sympy.sets.handlers.add
 
 
-@[main]
+@[path]
 private lemma main
   {A : Set ℕ}
   [ClosedUnderAdd A]

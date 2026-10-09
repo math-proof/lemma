@@ -3,7 +3,7 @@ import torch.Tensor.sum
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   [Exp α]
 -- given

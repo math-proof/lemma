@@ -25,7 +25,7 @@ Even/odd gather sending interleaved pairs \((2i,\,2i+1)\) to split-half pairs \(
 
 So \(({\boldsymbol{P}}x)_{i}=x_{2i}\) and \(({\boldsymbol{P}}x)_{i+d}=x_{2i+1}\). Lean's $d$ is the half-dimension, and the matrix has shape $[d+d,d+d]$.
 -/
-@[main]
+@[path]
 private lemma main
 -- given
   (d : ℕ) :

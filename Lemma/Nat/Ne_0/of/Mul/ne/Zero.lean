@@ -3,7 +3,7 @@ import Lemma.Nat.EqMul_0'0
 open Nat
 
 
-@[main]
+@[path]
 private lemma left
   [MulZeroClass α]
   {a b : α}
@@ -18,7 +18,7 @@ private lemma left
   simp at h
 
 
-@[main]
+@[path]
 private lemma main
   [MulZeroClass α]
   {a b : α}

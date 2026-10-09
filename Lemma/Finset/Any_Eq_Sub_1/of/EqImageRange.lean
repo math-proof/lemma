@@ -2,7 +2,7 @@ import Lemma.Set.In_Range.of.Lt
 open Set
 
 
-@[main]
+@[path]
 private lemma main
   [NeZero (n : ℕ)]
   {p : ℕ → ℕ}

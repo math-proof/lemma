@@ -6,7 +6,7 @@ import Lemma.Tensor.SEqReshapeS.of.Eq.Eq.Dvd
 open Tensor
 
 
-@[main, fin, cast, cast.fin]
+@[path, fin, cast, cast.fin]
 private lemma main
   [Mul α] [Add α] [Zero α]
   {s : List ℕ}

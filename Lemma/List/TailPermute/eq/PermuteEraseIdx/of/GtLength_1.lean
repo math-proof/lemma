@@ -13,7 +13,7 @@ import Lemma.Nat.EqMin.of.Lt
 open List Nat
 
 
-@[main]
+@[path]
 private lemma main
   {s : List α}
 -- given
@@ -54,7 +54,7 @@ private lemma main
     omega
 
 
-@[main]
+@[path]
 private lemma pos
   [NeZero (d : ℕ)]
   {s : List α}

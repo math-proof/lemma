@@ -4,7 +4,7 @@ import Lemma.Nat.EqSubAdd
 import Lemma.Int.Sub_Add.eq.SubSub
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [SubtractionCommMonoid α]
 -- given

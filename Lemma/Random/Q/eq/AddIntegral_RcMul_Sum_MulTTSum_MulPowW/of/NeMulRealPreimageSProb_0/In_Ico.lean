@@ -12,7 +12,7 @@ open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random 
 /--
 On a reachable state-action pair: `Q θ γ t x u = 𝔼[rc | x, u] + γ * ∑ y, T(x, u, y) * ∑' k, γ ^ k * W θ rc k y`.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A] [DecidableEq S] [DecidableEq A]
   {M : Model Θ S A}

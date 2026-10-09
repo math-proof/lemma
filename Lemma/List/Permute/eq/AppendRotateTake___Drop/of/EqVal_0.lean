@@ -4,7 +4,7 @@ import Lemma.Fin.Eq_Fin
 open List Nat Fin
 
 
-@[main]
+@[path]
 private lemma main
   {s : List α}
   {i : Fin s.length}

@@ -5,7 +5,7 @@ import Lemma.Vector.EqGetReplicate
 open Vector
 
 
-@[main]
+@[path]
 private lemma main
   [Div α]
   {n : ℕ}

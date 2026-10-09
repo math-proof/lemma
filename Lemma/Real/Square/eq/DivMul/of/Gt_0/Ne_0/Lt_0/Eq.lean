@@ -28,7 +28,7 @@ advances by \(2\pi\).
 Nonvanishing / differentiability of \(r\), \(G\ne0\), \(M\ne0\), and the regularity of
 \(\theta\) are all derived rather than assumed.
 -/
-@[main]
+@[path]
 private lemma main
   {r ρ θ : ℝ → ℝ}
   {A C G M m J E φ a T : ℝ}

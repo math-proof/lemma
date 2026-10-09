@@ -12,7 +12,7 @@ import Lemma.Nat.MulAdd.eq.AddMulS
 open Int Nat Rat
 
 
-@[main]
+@[path]
 private lemma main
   {n d : ℤ} :
 -- imply

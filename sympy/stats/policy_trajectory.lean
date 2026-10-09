@@ -25,7 +25,7 @@ Lean model behind the sympy symbols used in `Tensor.*.policy_gradient_theorem`,
 * `Expectation[r, a:π](f)` is the Bochner integral `∫ ω, f ω ∂(M θ)`;
 * `Expectation[...](f | s[t] = x)` is the integral against Mathlib's conditional measure
   `(M θ)[| s t ⁻¹' {x}]`;
-* `γ ** Stack[k](k) @ r[t:]` is `G r γ t = ∑' k, γ ^ k * r (t + k)`;
+* `γ ** Stack[k](k) @ r[t:]` / `(γ ^ (id : ℕ → ℕ)) @ r[t:]` is `∑' k, γ ^ k * r (t + k)`;
 * `Derivative[π]` is `fderiv ℝ · θ`.
 
 The environment is a standard (time-homogeneous) MDP: `s 0 ∼ init`, `a t ∼ π_θ(· | s t)`,
@@ -34,7 +34,7 @@ The stage process `ω t = (r t ω, s t ω, a t ω)` (reward first, then the stat
 joint random variable `(r t, s t, a t)`) is a time-homogeneous Markov chain on `ℝ × S × A` with kernel
 `M.K θ`; its law `M.traj θ` is Mathlib's Ionescu-Tulcea measure `Kernel.trajMeasure` on `ℕ → ℝ × S × A`.
 There are no global coordinate functions: lemmas bind `{r s a}` and assume `h₁ : ∀ t, (· t) = (r t, s t, a t)`
-(the joint random variable of `Function.coeProdPi3R`), and `G`, `V`, `Q` take `r`, `s`, `a` explicitly.
+(the joint random variable of `Function.coeProdPi3R`), and `V`, `Q` take `r`, `s`, `a` explicitly.
 The reward `r t` belongs to stage `t`: `r t ∼ M.env.reward (s t, a t)`.  The sympy reward hypothesis `Equal(r[t] | s[:t] & a[:t], r[t])` is not
 built in; lemmas that carry it in sympy keep it as an explicit named hypothesis.
 -/
@@ -63,11 +63,6 @@ structure Env (S A : Type*) [MeasurableSpace S] [MeasurableSpace A] where
 structure Model (Θ S A : Type*) [MeasurableSpace S] [MeasurableSpace A] [Fintype A] where
   env : Env S A
   pol : Policy Θ S A
-
-/-- discounted return of the reward process `r` from time `t` -/
-noncomputable def G {Ω : Type*} (r : ℕ → Ω → ℝ) (γ : ℝ) (t : ℕ) (ω : Ω) : ℝ :=
-  (γ ^ (id : ℕ → ℕ)) @ (fun k ↦ r[t:] k ω)
-
 
 variable {Θ S A : Type*}
   [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S]
@@ -101,25 +96,19 @@ namespace Model
 
 variable (M : Model Θ S A)
 
-/-- law of one stage given its state `s`, sampled in the order `(s, a, r)`: `a ∼ π_θ(· | s)`,
-`r ∼ M.env.reward (s, a)` -/
-noncomputable def stageK₀ (θ : Θ) : Kernel S (S × A × ℝ) :=
-  Kernel.deterministic id measurable_id ×ₖ (M.pol.kernel θ ⊗ₖ M.env.reward)
-
-instance (θ : Θ) : IsMarkovKernel (M.stageK₀ θ) := by
-  have := M.env.reward_markov
-  unfold stageK₀; infer_instance
-
-/-- law of one stage `(r, s, a)` given its state `s` (`stageK₀` reordered) -/
+/-- law of one stage `(r, s, a)` given its state `s`: sample `(s, a, r)` via
+`a ∼ π_θ(· | s)`, `r ∼ M.env.reward (s, a)`, then reorder to `(r, s, a)` -/
 noncomputable def stageK (θ : Θ) : Kernel S (ℝ × S × A) :=
-  (M.stageK₀ θ).map (fun z : S × A × ℝ ↦ (z.2.2, z.1, z.2.1))
+  (Kernel.deterministic id measurable_id ×ₖ (M.pol.kernel θ ⊗ₖ M.env.reward)).map
+    (fun z : S × A × ℝ ↦ (z.2.2, z.1, z.2.1))
 
 instance (θ : Θ) : IsMarkovKernel (M.stageK θ) := by
+  have := M.env.reward_markov
   unfold stageK; exact Kernel.IsMarkovKernel.map _ (by fun_prop)
 
 /-- transition kernel of the stage chain: `(r, s, a) ↦` law of the next stage -/
 noncomputable def K (θ : Θ) : Kernel (ℝ × S × A) (ℝ × S × A) :=
-  M.stageK θ ∘ₖ M.env.trans.comap (fun z ↦ (z.2.1, z.2.2)) (by fun_prop)
+  M.stageK θ ∘ₖ M.env.trans.comap (fun z ↦ z.2) (by fun_prop)
 
 instance (θ : Θ) : IsMarkovKernel (M.K θ) := by
   have := M.env.trans_markov
@@ -175,31 +164,18 @@ noncomputable def T (x : S) (u : A) (y : S) : ℝ := (M.env.trans (x, u)).real {
 /-- `Pr[a:π](a[t] = u | s[t] = x)`: the policy probability -/
 def Pr (θ : Θ) (x : S) (u : A) : ℝ := M.pol.prob θ x u
 
-omit [MeasurableSingletonClass S] [Fintype S] [MeasurableSingletonClass A] [Fintype A] in
-/-- the reward `r t` of the joint random variable `(· t) = (r t, s t, a t)` is measurable -/
-theorem r_meas'
-    {r : ℕ → (ℕ → ℝ × S × A) → ℝ} {s : ℕ → (ℕ → ℝ × S × A) → S} {a : ℕ → (ℕ → ℝ × S × A) → A}
-    (h₁ : ∀ t, (· t) = (r t, s t, a t)) (t : ℕ) : Measurable (r t) := by
-  rw [show r t = fun ω ↦ (ω t).1 from funext fun ω ↦ (congrArg Prod.fst (congrFun (h₁ t) ω)).symm]
-  exact measurable_fst.comp (measurable_pi_apply t)
-
-/-- the discounted return of a measurable reward process is measurable -/
-theorem G_meas {Ω : Type*} [MeasurableSpace Ω] {r : ℕ → Ω → ℝ} (hr : ∀ t, Measurable (r t)) (γ : ℝ) (t : ℕ) :
-    Measurable (G r γ t) :=
-  Measurable.tsum fun k => (hr (t + k)).const_mul (γ ^ k)
-
-/-- state-value function `V(s[t] = x) = 𝔼[G[t] | s[t] = x] = 𝔼[γ ** Stack[k](k) @ r[t:] | s[t] = x]`:
-the Bochner integral of the return `G r γ t` against the conditional law `(M θ)[| s t ⁻¹' {x}]`
+/-- state-value function `V(s[t] = x) = 𝔼[((γ ^ (id : ℕ → ℕ)) @ r[t:]) | s[t] = x]`:
+the Bochner integral of the discounted return against the conditional law `(M θ)[| s t ⁻¹' {x}]`
 (`0` at unreachable `x`, where that measure is `0`) -/
 noncomputable def V (r : ℕ → (ℕ → ℝ × S × A) → ℝ) (s : ℕ → (ℕ → ℝ × S × A) → S)
     (θ : Θ) (γ : ℝ) (t : ℕ) (x : S) : ℝ :=
-  ∫ ω, G r γ t ω ∂(M θ)[|s t ⁻¹' {x}]
+  ∫ ω, ((γ ^ (id : ℕ → ℕ)) @ r[t:]) ω ∂(M θ)[|s t ⁻¹' {x}]
 
 omit [MeasurableSingletonClass A] in
-/-- `V` is the Bochner integral of `G` against the conditional measure -/
+/-- `V` is the Bochner integral of the discounted return against the conditional measure -/
 theorem V_eq_integral (r : ℕ → (ℕ → ℝ × S × A) → ℝ) (s : ℕ → (ℕ → ℝ × S × A) → S)
     (θ : Θ) (γ : ℝ) (t : ℕ) (x : S) :
-    M.V r s θ γ t x = ∫ ω, G r γ t ω ∂(M θ)[|s t ⁻¹' {x}] := rfl
+    M.V r s θ γ t x = ∫ ω, ((γ ^ (id : ℕ → ℕ)) @ r[t:]) ω ∂(M θ)[|s t ⁻¹' {x}] := rfl
 
 /-- action-value function `Q(s[t] = x, a[t] = u) = γ ** Stack[k](k) @ 𝔼[r[t:] | s[t] = x ∧ a[t] = u]` -/
 noncomputable def Q (r : ℕ → (ℕ → ℝ × S × A) → ℝ) (s : ℕ → (ℕ → ℝ × S × A) → S)

@@ -2,7 +2,7 @@ import Lemma.Tensor.Eq.is.All_EqGetS
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   {A B : Tensor α (n :: s)}
 -- given

@@ -2,7 +2,7 @@ import Lemma.Nat.Even.is.Any_Eq_Mul2
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   [Field α] [LinearOrder α] [IsStrictOrderedRing α] [FloorRing α]
   {n : ℤ}

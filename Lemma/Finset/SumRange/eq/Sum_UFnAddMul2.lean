@@ -10,7 +10,7 @@ import Lemma.Nat.EvenAdd_1.is.Odd
 open Finset Nat Int Bool
 
 
-@[main]
+@[path]
 private lemma main
   [AddCommMonoid α]
 -- given

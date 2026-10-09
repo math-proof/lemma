@@ -5,7 +5,7 @@ import sympy.Basic
 import Lemma.Matrix.IsClosed
 
 
-@[main]
+@[path]
 private lemma main
   {S : Type*} [Fintype S] :
 -- imply

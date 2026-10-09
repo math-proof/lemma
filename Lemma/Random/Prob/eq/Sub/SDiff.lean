@@ -5,7 +5,7 @@ import sympy.Basic
 open MeasureTheory
 
 
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace Ω]
   [ReferenceMeasure α]
@@ -21,7 +21,7 @@ private lemma main
   unfold Probability
   have hP : PSpace π x := ‹SinglePSpace π x›.toPSpace
   have : IsProbabilityMeasure π := hP.toIsProbabilityMeasure
-  have := Measure.isProbabilityMeasure_map hP.aemeasurable
+  have : IsProbabilityMeasure (π.map x) := inferInstance
   rw [prob_compl_eq_one_sub hs, ENNReal.sub_sub_cancel ENNReal.one_ne_top prob_le_one]
 
 

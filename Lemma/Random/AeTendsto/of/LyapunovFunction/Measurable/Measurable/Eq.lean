@@ -20,7 +20,7 @@ import Lemma.Random.Any_Ge_0AndAeAll_LeNormE₂₂
 open MeasureTheory Topology Iterates Real Measure Random Filter Finset
 
 
-@[main]
+@[path]
 private lemma main
   {S : Type*} [Fintype S] [DecidableEq S] [Nonempty S] [MeasurableSpace S] [MeasurableSingletonClass S]
   {d : ℕ}

@@ -4,7 +4,7 @@ import Lemma.Nat.Le.of.Lt
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   [IntegerRing Z]
   {d : Z}

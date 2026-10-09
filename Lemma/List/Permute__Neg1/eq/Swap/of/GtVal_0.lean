@@ -2,7 +2,7 @@ import Lemma.List.Swap.eq.Permute__Neg1.of.GtLength
 open List
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   {s : List α}
   {i : Fin s.length}

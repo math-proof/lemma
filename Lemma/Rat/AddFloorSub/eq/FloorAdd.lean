@@ -4,7 +4,7 @@ import Lemma.Set.Frac.in.Ico
 open Int Set
 
 
-@[main]
+@[path]
 private lemma main
   [Field α] [LinearOrder α] [IsStrictOrderedRing α]
   [FloorRing α]

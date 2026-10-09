@@ -6,7 +6,7 @@ open Algebra
 /--
 [Algebra_IsSmoothAt_flat_localization_atPrime](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Algebra_IsSmoothAt_flat_localization_atPrime.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {R A : Type} [CommRing R] [CommRing A] [Algebra R A] [Algebra.FinitePresentation R A]
   {p : Ideal A} [p.IsPrime] [Algebra.IsSmoothAt R p] :

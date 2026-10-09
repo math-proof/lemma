@@ -5,7 +5,7 @@ import Lemma.Vector.GetMul.eq.MulGetS
 open Vector Rat
 
 
-@[main, fin 1]
+@[path, fin 1]
 private lemma main
   [GroupWithZero α]
   {b : List.Vector α n}

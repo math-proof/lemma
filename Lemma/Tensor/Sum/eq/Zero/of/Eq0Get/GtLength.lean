@@ -12,7 +12,7 @@ import torch.Tensor.sum
 open Bool List Nat Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [Add α] [Zero α]
 -- given

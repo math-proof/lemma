@@ -6,7 +6,7 @@ open AlgebraicGeometry CategoryTheory
 /--
 [AlgebraicGeometry_LocallyQuasiFinite_of_formallyUnramified_of_locallyOfFiniteType](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_LocallyQuasiFinite_of_formallyUnramified_of_locallyOfFiniteType.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {X Y : AlgebraicGeometry.Scheme}
   {f : X ⟶ Y} [AlgebraicGeometry.FormallyUnramified f] [AlgebraicGeometry.LocallyOfFiniteType f] :

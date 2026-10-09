@@ -10,7 +10,7 @@ import Lemma.Tensor.SEqGetS.of.SEq.GtLength
 open Bool List Tensor
 
 
-@[main, fin]
+@[path, fin]
 private lemma main
   [Mul α] [Add α] [Zero α]
 -- given

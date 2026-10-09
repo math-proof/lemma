@@ -4,7 +4,7 @@ import sympy.matrices.expressions.matmul
 open Tensor Nat
 
 
-@[main]
+@[path]
 private lemma main
   [Mul α] [Add α] [Zero α]
 -- given

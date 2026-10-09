@@ -17,7 +17,7 @@ import torch.Tensor
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [CommRing α]
 -- given

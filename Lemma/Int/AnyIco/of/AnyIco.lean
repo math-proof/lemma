@@ -3,7 +3,7 @@ import Lemma.Set.InSub.of.In_Ico
 open Set Int
 
 
-@[main]
+@[path]
 private lemma offset
   [AddCommGroup ι] [PartialOrder ι] [IsOrderedAddMonoid ι]
   {f : ι → Prop}

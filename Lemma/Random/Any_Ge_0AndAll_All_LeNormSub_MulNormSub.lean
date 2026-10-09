@@ -2,7 +2,7 @@ import sympy.stats.markov_samples
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {S : Type*} [Fintype S] [DecidableEq S] [Nonempty S] [MeasurableSpace S] [MeasurableSingletonClass S]
   {d : ℕ}

@@ -3,7 +3,7 @@ import Lemma.Nat.Sub.eq.AddNeg
 open Int Nat
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [AddCommGroup α]
 -- given

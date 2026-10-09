@@ -6,7 +6,7 @@ open Real
 Kepler's third law, ratio form: \(T^2=\dfrac{4\pi^2a^3}{GM}\) gives
 \(\dfrac{a^3}{T^2}=\dfrac{GM}{4\pi^2}\).
 -/
-@[main]
+@[path]
 private lemma main
   {T G M a : ℝ}
 -- given

@@ -2,7 +2,7 @@ import Lemma.Bool.HEq.of.Iff.Cond.Cond
 open Bool
 
 
-@[main]
+@[path]
 private lemma homogeneous
   {p : Prop}
 -- given
@@ -14,7 +14,7 @@ private lemma homogeneous
   simp
 
 
-@[main]
+@[path]
 private lemma main
   {p q : Prop}
 -- given

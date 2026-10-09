@@ -4,7 +4,7 @@ import Lemma.Matrix.All_Gt_0.of.Stationary.StochasticIrreducible
 open Finset
 
 
-@[main]
+@[path]
 private lemma main
   {S A : Type*} [Fintype S] [DecidableEq S] [Nonempty S] [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype A] [DecidableEq A] [Nonempty A] [MeasurableSpace A] [MeasurableSingletonClass A]
   {spec : QLearningSpec S A} :

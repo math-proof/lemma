@@ -4,7 +4,7 @@ import Lemma.Rat.In_Icc.of.Gt_0
 open Int Rat
 
 
-@[main, mp, mpr]
+@[path, mp, mpr]
 private lemma main
   [NeZero n]
   [NeZero (d : ℕ)]

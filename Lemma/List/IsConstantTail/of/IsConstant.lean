@@ -3,7 +3,7 @@ import Lemma.List.IsConstant.of.All_Eq
 open List
 
 
-@[main]
+@[path]
 private lemma main
   {s : List α}
 -- given

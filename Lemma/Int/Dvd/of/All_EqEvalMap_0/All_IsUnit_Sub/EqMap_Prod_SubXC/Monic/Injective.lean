@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [Polynomial_dvd_of_monic_of_map_eq_prod_X_sub_C_of_forall_eval_eq_zero](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Polynomial_dvd_of_monic_of_map_eq_prod_X_sub_C_of_forall_eval_eq_zero.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [Fintype ι] [DecidableEq ι]
   {T : Type u} [CommRing T]

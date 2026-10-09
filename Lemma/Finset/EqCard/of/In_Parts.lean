@@ -4,7 +4,7 @@ import Lemma.Finset.Injective.of.In_Conditionset
 open Finset Stirling.conditionset
 
 
-@[main]
+@[path]
 private lemma main
   {n k : ℕ}
   {e : Finset (Finset ℕ)}

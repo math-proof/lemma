@@ -3,7 +3,7 @@ import sympy.Basic
 import Lemma.Tensor.StackIte.eq.Fun
 
 
-@[main]
+@[path]
 private lemma main
   {α : Type*}
   {m : ℕ}
@@ -15,7 +15,7 @@ private lemma main
   exact Tensor.StackIte.eq.Fun m s f
 
 
-@[main]
+@[path]
 private lemma two
   {α : Type*}
   {a b : ℕ}

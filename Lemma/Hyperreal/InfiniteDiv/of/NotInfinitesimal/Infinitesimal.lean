@@ -9,10 +9,10 @@ open Hyperreal Rat
 the hypotheses are arranged in the constructor order of substraction a / b
 | attributes | lemma |
 | :---: | :---: |
-| main | Hyperreal.InfiniteDiv.of.NotInfinitesimal.Infinitesimal |
+| path | Hyperreal.InfiniteDiv.of.NotInfinitesimal.Infinitesimal |
 | mt 1 | Hyperreal.Infinitesimal.of.NotInfiniteDiv.Infinitesimal |
 -/
-@[main, mt 1]
+@[path, mt 1]
 private lemma main
   {a : ℝ*}
   [NeZero (b : ℝ*)]

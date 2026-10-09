@@ -2,7 +2,7 @@ import sympy.Basic
 import Mathlib.Analysis.Normed.Group.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {E F : Type*} [SeminormedAddCommGroup E] [SeminormedAddCommGroup F]
   {f : E → F}

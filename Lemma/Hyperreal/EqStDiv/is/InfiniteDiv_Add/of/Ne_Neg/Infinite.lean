@@ -12,7 +12,7 @@ import Lemma.Rat.Eq.is.EqInv
 open Hyperreal Nat Rat
 
 
-@[main, mp, mpr]
+@[path, mp, mpr]
 private lemma main
   {b y : ℝ*}
 -- given
@@ -46,7 +46,7 @@ private lemma main
     apply Infinitesimal.of.InfiniteInv h
 
 
-@[main, mp, mpr]
+@[path, mp, mpr]
 private lemma left
   {b y : ℝ*}
 -- given

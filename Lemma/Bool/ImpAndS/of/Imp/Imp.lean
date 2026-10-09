@@ -3,7 +3,7 @@ import Lemma.Bool.Imp.of.Imp.Imp
 open Bool
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h₀ : p₀ → q₀)

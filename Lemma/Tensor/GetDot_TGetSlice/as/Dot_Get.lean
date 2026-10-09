@@ -8,10 +8,10 @@ open Tensor
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Tensor.GetDot_TGetSlice.as.Dot_Get |
+| path | Tensor.GetDot_TGetSlice.as.Dot_Get |
 | fin | Tensor.GetDot_TGetSlice.as.Dot_Get.fin |
 -/
-@[main, fin]
+@[path, fin]
 private lemma main
   [CommMagma α] [AddCommMonoid α]
 -- given
@@ -35,7 +35,7 @@ private lemma main
   apply Dot.comm
 
 
-@[main, fin]
+@[path, fin]
 private lemma zero
   [CommMagma α] [AddCommMonoid α]
 -- given

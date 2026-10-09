@@ -13,7 +13,7 @@ private lemma  RingHom.IsStandardSmooth.exists_isStandardSmoothOfRelativeDimensi
   let := φ.toAlgebra
   obtain ⟨ι, σ, _, _, ⟨P⟩⟩ := h.out
   exact ⟨P.dimension, P.isStandardSmoothOfRelativeDimension rfl⟩
-@[main]
+@[path]
 private lemma main
   {X Y : Scheme.{u}}
   {f : X ⟶ Y} [Smooth f]

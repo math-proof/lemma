@@ -4,7 +4,7 @@ import sympy.functions.elementary.exponential
 open Real Nat
 
 
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   [ExpPos α]
 -- given

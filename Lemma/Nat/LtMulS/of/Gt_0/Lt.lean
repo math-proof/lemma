@@ -4,10 +4,10 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Nat.LtMulS.of.Gt_0.Lt |
+| path | Nat.LtMulS.of.Gt_0.Lt |
 | comm | Nat.GtMulS.of.Gt_0.Gt |
 -/
-@[main, comm 1]
+@[path, comm 1]
 private lemma main
   [Mul α] [Zero α] [Preorder α] [PosMulStrictMono α]
   {x a b : α}

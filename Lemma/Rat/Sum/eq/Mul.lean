@@ -2,7 +2,7 @@ import sympy.functions.elementary.complexes
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma series.arithmetic
   {k h : ℂ}
   {a b : ℤ}
@@ -26,7 +26,7 @@ private lemma series.arithmetic
     ring
 
 
-@[main]
+@[path]
 private lemma series.geometric
   {r : ℝ}
   {n : ℕ} :

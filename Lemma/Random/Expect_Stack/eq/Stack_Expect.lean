@@ -68,7 +68,7 @@ private lemma expect_get
   rfl
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [MeasurableSpace Ω]
   [MeasurableSpace α]

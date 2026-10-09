@@ -7,7 +7,7 @@ import sympy.Basic
 Vanishing transverse acceleration coefficient implies
 \(\dfrac{d}{dt}(\rho^2\dot\theta)=0\) at \(t\).
 -/
-@[main]
+@[path]
 private lemma main
   {ρ θ : ℝ → ℝ}
   {t : ℝ}

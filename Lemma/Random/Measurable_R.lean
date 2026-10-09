@@ -6,7 +6,7 @@ open MeasureTheory ProbabilityTheory Topology PolicyGradient
 /--
 The reward coordinate `r[k]` of the trajectory is measurable.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace S] [MeasurableSpace A]
   {r : ℕ → (ℕ → ℝ × S × A) → ℝ}

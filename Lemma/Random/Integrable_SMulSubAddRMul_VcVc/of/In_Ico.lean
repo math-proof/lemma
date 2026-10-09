@@ -15,7 +15,7 @@ private lemma delta_meas [MeasurableSpace S] [MeasurableSingletonClass S] [Finty
 /--
 `δ[j] • ψ(s[t], a[t])` is integrable under the trajectory model.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A]
   {M : Model Θ S A}

@@ -5,7 +5,7 @@ import sympy.vector.vector
 open Vector Int
 
 
-@[main]
+@[path]
 private lemma main
   [AddGroupWithOne α]
   {n : ℕ} :

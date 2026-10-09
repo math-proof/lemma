@@ -13,7 +13,7 @@ import Lemma.List.DropTake.eq.TakeDrop
 open List Bool Nat
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h : j' ≥ j)

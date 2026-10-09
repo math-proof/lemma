@@ -4,12 +4,12 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Set.In_Cup.is.Any_In |
+| path | Set.In_Cup.is.Any_In |
 | comm | Set.Any_In.is.In_Cup |
 | mp | Set.Any_In.of.In_Cup |
 | mpr | Set.In_Cup.of.Any_In |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   {ι : Sort v}
 -- given
@@ -21,7 +21,7 @@ private lemma main
   Set.mem_iUnion
 
 
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma double
   {ι : Sort v}
   {κ : ι → Sort u}
@@ -34,7 +34,7 @@ private lemma double
   Set.mem_iUnion₂
 
 
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma set
 -- given
   (x : α)
@@ -46,7 +46,7 @@ private lemma set
   simp
 
 
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma set₂
   {κ : ι → Type u}
 -- given

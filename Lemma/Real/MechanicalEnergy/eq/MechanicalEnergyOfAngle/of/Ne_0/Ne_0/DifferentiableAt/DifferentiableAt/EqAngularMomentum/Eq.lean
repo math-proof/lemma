@@ -11,7 +11,7 @@ E=\frac{J^2}{2m\rho^4}\left(\frac{d\rho}{d\theta}\right)^2+\frac{J^2}{2m\rho^2}+
 \]
 Here `r` is radius as a function of angle, and \(\rho=r\circ\theta\).
 -/
-@[main]
+@[path]
 private lemma main
   {m C J : ℝ}
   {r θ : ℝ → ℝ}

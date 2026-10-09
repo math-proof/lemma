@@ -26,7 +26,7 @@ import Lemma.Real.AddSub_Mul2Sqrt.gt.Zero.of.Gt_1
 open Nat Int Real Rat
 
 
-@[main]
+@[path]
 private lemma main
   {n : ℕ}
   {x : ℝ}

@@ -6,7 +6,7 @@ open scoped TensorProduct
 /--
 [Algebra_TensorProduct_isDomain_of_injective_of_flat](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Algebra_TensorProduct_isDomain_of_injective_of_flat.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {R k A K : Type*} [CommRing R] [CommRing k] [Algebra R k] [Module.Flat R k] [CommRing A] [Algebra R A] [CommRing K] [Algebra R K] [IsDomain (k ⊗[R] K)]
   {f : A →ₐ[R] K}

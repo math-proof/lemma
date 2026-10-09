@@ -5,7 +5,7 @@ import Lemma.List.MapMap.eq.Map_Comp
 open List Bool
 
 
-@[main]
+@[path]
 private lemma main
   {a b : List (List.Vector α n)}
 -- given

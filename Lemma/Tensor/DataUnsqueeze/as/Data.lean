@@ -6,7 +6,7 @@ import Lemma.Tensor.Unsqueeze.eq.TensorCast_Data
 open Bool List Tensor
 
 
-@[main, cast]
+@[path, cast]
 private lemma main
   {s : List ℕ}
 -- given

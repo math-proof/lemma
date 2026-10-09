@@ -9,7 +9,7 @@ Identity for the derivative of specific angular momentum
 \(h=\rho^2\dot\theta\):
 \(\dot h=\rho(\rho\ddot\theta+2\dot\rho\dot\theta)\).
 -/
-@[main]
+@[path]
 private lemma main
   {ρ θ : ℝ → ℝ}
   {t : ℝ}

@@ -2,7 +2,7 @@ import Lemma.Tensor.Data.eq.FlattenMapRange
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (X : Tensor α (s₀ :: s)) :

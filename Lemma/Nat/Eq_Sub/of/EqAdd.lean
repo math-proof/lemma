@@ -2,7 +2,7 @@ import Mathlib.Algebra.Group.Basic
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {α : Type*} [AddCommGroup α]
   {x a y : α}

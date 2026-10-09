@@ -5,12 +5,12 @@ open Set
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Bool.All_UFnSub.is.All |
+| path | Bool.All_UFnSub.is.All |
 | comm | Bool.All.is.All_UFnSub |
 | mp | Bool.All.of.All_UFnSub |
 | mpr | Bool.All_UFnSub.of.All |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   {c a b : ℤ}
   {f : ℤ → Prop} :

@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [AddMonoidHom_sub_mul_add_one_smul_eq_zero_of_comp_self_sub_smul_add_eq_zero_of_apply_eq_smul](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AddMonoidHom_sub_mul_add_one_smul_eq_zero_of_comp_self_sub_smul_add_eq_zero_of_apply_eq_smul.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [AddCommGroup V]
   {m : V →+ V}

@@ -2,7 +2,7 @@ import sympy.core.power
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   [HPow α Nat α]
 -- given

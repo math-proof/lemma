@@ -4,7 +4,7 @@ import sympy.Basic
 /--
 Period from swept area: \(S=\dfrac{JT}{2m}\) and \(S=\pi ab\) give \(T=\dfrac{2m\pi ab}{J}\).
 -/
-@[main]
+@[path]
 private lemma main
   {S T m J a b : ℝ}
 -- given

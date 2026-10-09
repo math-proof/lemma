@@ -3,7 +3,7 @@ import sympy.Basic
 import Mathlib.Algebra.Order.Archimedean.Real.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {m : ℕ}
   {f : ℕ → ℝ} :

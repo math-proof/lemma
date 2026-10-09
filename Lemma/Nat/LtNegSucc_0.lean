@@ -3,7 +3,7 @@ import Lemma.Nat.Gt_Neg1
 open Int Nat
 
 
-@[main]
+@[path]
 private lemma main
   {n : ℕ} :
 -- imply

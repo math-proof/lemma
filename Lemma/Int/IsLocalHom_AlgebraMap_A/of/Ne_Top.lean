@@ -6,7 +6,7 @@ open IsLocalRing
 /--
 [IsLocalHom_algebraMap_quotient_of_ne_top](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_IsLocalHom_algebraMap_quotient_of_ne_top.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing 𝒪] [CommRing A] [IsLocalRing A] [Algebra 𝒪 A] [IsLocalHom (algebraMap 𝒪 A)]
   {I : Ideal A}

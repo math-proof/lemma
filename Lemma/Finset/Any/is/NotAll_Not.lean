@@ -2,7 +2,7 @@ import Lemma.Bool.Any_Not.of.NotAll
 open Bool
 
 
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
 -- given
   (s : Finset ι)

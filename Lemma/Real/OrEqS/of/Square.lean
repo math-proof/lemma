@@ -5,7 +5,7 @@ import Lemma.Nat.Sub.of.Eq
 open Nat Int
 
 
-@[main]
+@[path]
 private lemma main
   [Field α]
   {x c : α}

@@ -4,7 +4,7 @@ import Lemma.Vector.GetMap.eq.UFnGet
 open Vector
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (f : ℕ → α)
@@ -17,7 +17,7 @@ private lemma main
   simp_all
 
 
-@[main]
+@[path]
 private lemma coe
 -- given
   (f : ℕ → α)

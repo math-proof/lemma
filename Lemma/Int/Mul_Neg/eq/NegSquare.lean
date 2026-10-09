@@ -3,7 +3,7 @@ import Lemma.Int.Mul_Neg.eq.NegMul
 open Nat Int
 
 
-@[main]
+@[path]
 private lemma main
   [Ring α]
   {a : α} :

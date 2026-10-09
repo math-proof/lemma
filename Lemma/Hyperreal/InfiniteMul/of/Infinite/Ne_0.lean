@@ -3,7 +3,7 @@ import Lemma.Rat.Eq_0.is.EqInv_0
 open Hyperreal Rat
 
 
-@[main]
+@[path]
 private lemma main
   {x : ℝ*}
   {r : ℝ}

@@ -10,7 +10,7 @@ import Lemma.Nat.EqSubAdd
 open List Nat
 
 
-@[main]
+@[path]
 private lemma main
   {s : List ℕ}
   {i d : ℕ}

@@ -9,7 +9,7 @@ import Lemma.Vector.EqGetRange.of.Lt
 open List Vector Bool Nat
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   {s : List ℕ}
 -- given

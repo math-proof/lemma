@@ -8,11 +8,11 @@ open Hyperreal Rat
 the hypotheses are arranged in the constructor order of division a / b
 | attributes | lemma |
 | :---: | :---: |
-| main | Hyperreal.InfinitesimalDiv.of.NotInfinite.Infinite |
+| path | Hyperreal.InfinitesimalDiv.of.NotInfinite.Infinite |
 | mt | Hyperreal.NotInfinite.of.NotInfinite.NotInfinitesimalDiv |
 | mt 1 | Hyperreal.Infinite.of.NotInfinitesimalDiv.Infinite |
 -/
-@[main, mt, mt 1]
+@[path, mt, mt 1]
 private lemma main
   {a b : ℝ*}
 -- given

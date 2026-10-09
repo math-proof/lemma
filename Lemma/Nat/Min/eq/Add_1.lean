@@ -3,7 +3,7 @@ import Lemma.Nat.LeAdd_1
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (i : Fin n) :

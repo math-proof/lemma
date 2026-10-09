@@ -8,7 +8,7 @@ import sympy.Basic
 If the transverse acceleration coefficient vanishes everywhere, then
 specific angular momentum \(\rho^2\dot\theta\) is constant.
 -/
-@[main]
+@[path]
 private lemma main
   {ρ θ : ℝ → ℝ}
 -- given

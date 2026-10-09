@@ -5,7 +5,7 @@ import Lemma.List.ZipWithHMul.eq.Replicate_0.of.EqLength
 open List
 
 
-@[main]
+@[path]
 private lemma main
   [MulZeroClass α]
   {s : List α}

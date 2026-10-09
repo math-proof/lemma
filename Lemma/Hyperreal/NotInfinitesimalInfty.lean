@@ -3,7 +3,7 @@ import Lemma.Hyperreal.InfiniteInfty
 open Hyperreal
 
 
-@[main]
+@[path]
 private lemma main :
 -- imply
   ¬Hyperreal.omega → 0 :=

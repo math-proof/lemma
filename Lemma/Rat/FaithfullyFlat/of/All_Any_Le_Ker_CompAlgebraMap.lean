@@ -27,7 +27,7 @@ private lemma  faithfullyFlat_of_exists_ringHom_field' {B : Type u} {S : Type v}
     rw [Ideal.map_eq_bot_iff_le_ker]; exact hker
   rw [h3] at h2
   exact one_ne_zero ((Submodule.mem_bot K).mp h2)
-@[main]
+@[path]
 private lemma main
   {B : Type u} [CommRing B]
   {S : Type v} [CommRing S] [Algebra B S] [Module.Flat B S]

@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma left
   {p q : α → Prop}
 -- given
@@ -13,7 +13,7 @@ private lemma left
   exact ⟨x, hLeft⟩
 
 
-@[main]
+@[path]
 private lemma main
   {p q : α → Prop}
 -- given

@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main :
 -- imply
   (p ↔ q) ↔ (p → q) ∧ (q → p) :=

@@ -5,7 +5,7 @@ import Lemma.Rat.Sub_Mul_FloorDiv.in.Ico.of.Gt_0
 open Finset Int Set Rat
 
 
-@[main]
+@[path]
 private lemma main
   {n d : ℤ}
 -- given

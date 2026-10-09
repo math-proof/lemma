@@ -3,7 +3,7 @@ import torch.Tensor.prod
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h₀ : s.length > 0)

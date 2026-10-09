@@ -7,7 +7,7 @@ import Lemma.Vector.GetMap.eq.UFnGet
 open Tensor Vector List
 
 
-@[main, fin, comm, fin.comm]
+@[path, fin, comm, fin.comm]
 private lemma main
   {β : Type*}
 -- given

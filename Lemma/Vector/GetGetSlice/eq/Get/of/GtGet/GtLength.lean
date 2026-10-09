@@ -6,7 +6,7 @@ import Lemma.Vector.GetGetSlice.eq.Get.of.GtGet.GtProdTake.GtLength
 open List Nat Vector
 
 
-@[main]
+@[path]
 private lemma main
   {s : List ℕ}
   {j : ℕ}

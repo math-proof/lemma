@@ -9,7 +9,7 @@ import Lemma.List.MulLengthSlice.eq.ProdEraseIdx.of.GtGet.GtLength
 open Tensor Vector
 
 
-@[main]
+@[path]
 private lemma main
   [Zero α]
   {s : List ℕ}

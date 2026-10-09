@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {m p q : ℕ}
   {a : Fin m → Fin p → ℝ}

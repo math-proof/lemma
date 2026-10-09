@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [CerednikDrinfeld_apply_apply_sub_apply_add_smul_eq_zero_of_reduction](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_CerednikDrinfeld_apply_apply_sub_apply_add_smul_eq_zero_of_reduction.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {J P : Type*} [AddCommGroup J] [AddCommGroup P]
   {D : AddSubgroup J}

@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [CerednikDrinfeld_Onr_faithfullyFlat](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_CerednikDrinfeld_Onr_faithfullyFlat.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing 𝒪] [IsDomain 𝒪] [CommRing Onr] [IsDomain Onr] [Algebra 𝒪 Onr]
   {π : 𝒪}

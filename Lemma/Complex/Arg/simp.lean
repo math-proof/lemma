@@ -1,7 +1,7 @@
 import Lemma.Complex.ArgExpMulI.eq.Sub_Mul_Ceil
 import Lemma.Complex.CeilSubDivArg.eq.Zero
 open Complex
-@[main]
+@[path]
 private lemma main
   (z : ℂ) :
   arg (exp (I * arg z)) = arg z := by

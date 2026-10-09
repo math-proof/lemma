@@ -2,7 +2,7 @@ import sympy.concrete.quantifier
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma setof
   {p f g : α → Prop}
 -- given
@@ -17,7 +17,7 @@ private lemma setof
   exact h₁ e h_e
 
 
-@[main]
+@[path]
 private lemma main
   {f g : α → Prop}
 -- given
@@ -32,7 +32,7 @@ private lemma main
   exact h₁ e
 
 
-@[main]
+@[path]
 private lemma given
   {f g : α → Prop}
 -- given

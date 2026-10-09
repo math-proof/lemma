@@ -5,7 +5,7 @@ import Lemma.Bool.HEq.of.Eq_Cast
 open Bool
 
 
-@[main]
+@[path]
 private lemma main
   {a : List.Vector α n}
   {b : List.Vector α n'}

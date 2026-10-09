@@ -12,7 +12,7 @@ import sympy.matrices.expressions.matmul
 open List Tensor Vector Bool
 
 
-@[main, cast]
+@[path, cast]
 private lemma main
   [Mul α] [Add α] [Zero α]
 -- given

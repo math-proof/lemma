@@ -10,10 +10,10 @@ open Tensor Vector
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Tensor.NegMul.eq.MulNeg |
+| path | Tensor.NegMul.eq.MulNeg |
 | comm | Tensor.MulNeg.eq.NegMul |
 -/
-@[main, comm]
+@[path, comm]
 private lemma main
   [Mul α] [HasDistribNeg α]
 -- given
@@ -29,7 +29,7 @@ private lemma main
   rw [DataNeg.eq.NegData]
 
 
-@[main, comm]
+@[path, comm]
 private lemma scalar
   [Mul α] [HasDistribNeg α]
 -- given
@@ -46,7 +46,7 @@ private lemma scalar
   rw [DataNeg.eq.NegData]
 
 
-@[main, comm]
+@[path, comm]
 private lemma nil
   [Mul α] [HasDistribNeg α]
 -- given

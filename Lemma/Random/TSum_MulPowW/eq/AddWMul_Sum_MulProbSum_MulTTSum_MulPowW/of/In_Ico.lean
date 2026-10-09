@@ -13,7 +13,7 @@ open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random 
 Bellman equation of the time-free value series:
 `∑' k, γ ^ k * W θ rc k x = W θ rc 0 x + γ * ∑ u, π_θ(u | x) * ∑ y, T(x, u, y) * ∑' k, γ ^ k * W θ rc k y`.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A]
   {M : Model Θ S A}

@@ -6,7 +6,7 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 /--
 [AlgebraicGeometry_forall_finite_exists_isAffineOpen_of_isClosedImmersion_of_surjective](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_forall_finite_exists_isAffineOpen_of_isClosedImmersion_of_surjective.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {Z X : Scheme.{u}}
   {f : Z ⟶ X} [IsClosedImmersion f] [Surjective f]

@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [LanglandsTunnell_Artin_eq_one_or_eq_commutator_of_det_eq_one](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_LanglandsTunnell_Artin_eq_one_or_eq_commutator_of_det_eq_one.lean)
 -/
-@[main]
+@[path]
 private lemma main
   :
 -- imply

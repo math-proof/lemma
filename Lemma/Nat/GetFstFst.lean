@@ -6,7 +6,7 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 /--
 [AlgebraicGeometry_isPullback_pullbackMap_fst_comp_of_isPullback_of_isPullback](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_isPullback_pullbackMap_fst_comp_of_isPullback_of_isPullback.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {S S' A₁ X₁ A U : Scheme.{u}}
   {f₁ : A₁ ⟶ S}

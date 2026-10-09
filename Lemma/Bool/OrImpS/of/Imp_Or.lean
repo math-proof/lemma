@@ -4,7 +4,7 @@ import Lemma.Bool.Or_Or
 open Bool
 
 
-@[main]
+@[path]
 private lemma main
   {p q : Prop}
 -- given

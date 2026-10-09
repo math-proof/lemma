@@ -5,12 +5,12 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Tensor.Le.is.LeDataS |
+| path | Tensor.Le.is.LeDataS |
 | comm | Tensor.LeDataS.is.Le |
 | mp | Tensor.LeDataS.of.Le |
 | mpr | Tensor.Le.of.LeDataS |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   [LE α]
 -- given

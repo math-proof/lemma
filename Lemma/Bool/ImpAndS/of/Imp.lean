@@ -2,7 +2,7 @@ import Lemma.Bool.ImpAndS.of.Imp.Imp
 open Bool
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h : p → q)
@@ -14,7 +14,7 @@ private lemma main
   simp
 
 
-@[main]
+@[path]
 private lemma left
 -- given
   (h : p → q)

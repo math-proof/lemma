@@ -12,7 +12,7 @@ Area of an ellipse from its focal polar equation \(r=\dfrac{p}{1-e\cos\varphi}\)
 \]
 with \(a=\dfrac{p}{1-e^2}\) and \(b=a\sqrt{1-e^2}\).
 -/
-@[main]
+@[path]
 private lemma main
   {e p : ℝ}
 -- given

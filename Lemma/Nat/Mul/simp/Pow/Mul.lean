@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma base
   {x y z : ℝ}
   {t : ℤ} :

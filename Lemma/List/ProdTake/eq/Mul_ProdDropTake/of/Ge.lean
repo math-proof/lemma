@@ -3,7 +3,7 @@ import Lemma.List.TakeTake.eq.Take.of.Ge
 open List
 
 
-@[main]
+@[path]
 private lemma main
   [Monoid α]
 -- given

@@ -4,7 +4,7 @@ import Lemma.Tensor.EqGetStack
 open Tensor
 
 
-@[main, fin]
+@[path, fin]
 private lemma main
   [Mul α]
 -- given

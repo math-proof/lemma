@@ -3,7 +3,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {n : ℕ}
   {x xb : ℕ → ℝ}
@@ -35,7 +35,7 @@ private lemma main
     ring
 
 
-@[main]
+@[path]
 private lemma biased
   {n : ℕ}
   {x xb : ℕ → ℝ}
@@ -67,7 +67,7 @@ private lemma biased
     ring
 
 
-@[main]
+@[path]
 private lemma unbiased
   {n : ℕ}
   {x xb : ℕ → ℝ}

@@ -5,7 +5,7 @@ import sympy.vector.functions
 open Real Vector
 
 
-@[main]
+@[path]
 private lemma main
   [LogPos α]
   {x y : List.Vector α n}

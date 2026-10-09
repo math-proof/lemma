@@ -3,7 +3,7 @@ import sympy.series.limits
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {f : ℝ → ℝ}
   {b δ : ℝ}
@@ -23,8 +23,7 @@ private lemma main
       hcont.continuousAt (IsOpen.mem_nhds isOpen_Iio (Set.mem_Iio.2 hlt))
     have hlim' : Filter.Tendsto (fun x ↦ f x) (nhdsWithin x {x}ᶜ) (nhds (f x)) :=
       hcx.tendsto.mono_left nhdsWithin_le_nhds
-    rw [← (tendsto_nhds_unique_inseparable hlim hlim').eq]
-    exact hL
+    rwa [← (tendsto_nhds_unique_inseparable hlim hlim').eq]
   intro L hL
   apply le_of_not_gt
   intro hL0

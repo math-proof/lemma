@@ -4,7 +4,7 @@ import sympy.functions.elementary.integers
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   [IntegerRing Z]
   {x y : Z}

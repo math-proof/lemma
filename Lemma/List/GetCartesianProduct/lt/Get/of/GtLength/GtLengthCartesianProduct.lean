@@ -7,7 +7,7 @@ import Lemma.List.LengthGetCartesianProduct.eq.Length.of.GtLengthCartesianProduc
 open List Nat Fin
 
 
-@[main]
+@[path]
 private lemma main
   {s : List ℕ}
 -- given

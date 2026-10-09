@@ -4,7 +4,7 @@ import sympy.Basic
 import Lemma.Real.LeMinimaS.of.All_Le
 
 
-@[main]
+@[path]
 private lemma main
   {n : ℤ}
   {f g : ℤ → ℝ}

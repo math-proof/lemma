@@ -8,7 +8,7 @@ import sympy.vector.vector
 open Finset Nat Vector
 
 
-@[main]
+@[path]
 private lemma main
   [Semiring α] [PartialOrder α] [IsOrderedCancelAddMonoid α] [PosMulStrictMono α]
   {X Y : List.Vector α n}

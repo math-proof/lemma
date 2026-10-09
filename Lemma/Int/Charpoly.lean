@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [MonoidHom_charpoly_apply_mul_mul_inv](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_MonoidHom_charpoly_apply_mul_mul_inv.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing R] [AddCommGroup M] [Module R M] [Module.Free R M] [Module.Finite R M] [Group G]
   {ρ : G →* Module.End R M}

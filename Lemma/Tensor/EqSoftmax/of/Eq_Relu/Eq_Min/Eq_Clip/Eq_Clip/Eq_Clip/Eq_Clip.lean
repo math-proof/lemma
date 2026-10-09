@@ -7,7 +7,7 @@ set_option maxHeartbeats 2000000
 private lemma sc_ext {x y : ℝ} (h : x = y) : (x : Tensor ℝ []) = (y : Tensor ℝ []) := by rw [h]
 
 
-@[main]
+@[path]
 private lemma bert.position_representation.relative.band_part_mask
   {n d_z : ℕ}
   {l u : ℕ}

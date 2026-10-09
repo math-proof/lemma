@@ -4,7 +4,7 @@ import Mathlib.Algebra.GCDMonoid.Finset
 import Mathlib.Algebra.Order.BigOperators.Ring.Finset
 
 
-@[main]
+@[path]
 private lemma main
   {s : Finset ℕ}
 -- given

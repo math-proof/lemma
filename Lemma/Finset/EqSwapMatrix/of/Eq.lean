@@ -3,7 +3,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma swap
   {n : ℕ}
   {w : Fin n → Fin n → Matrix (Fin n) (Fin n) ℂ}

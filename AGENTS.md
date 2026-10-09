@@ -2,7 +2,7 @@
 
 Guidelines and prompts for using LLMs to write and refactor Lean 4 proofs in this repository.
 
-## Proof style
+## Lemma Proof style
 - execute the scripts below
   - mjs/run.mjs
     Besides Lean errors it prints style warnings `warning:LINE:COL: [rule-id] … (AGENTS.md: "…")` for the style rules the compiler checks (layout, binder order, sections, tactics, dates, `open`, attribute docstrings). Fix every warning and re-run until none remain; only leave one if it is a false positive, and name its rule id in your summary. Warnings never fail the run or change the saved lemma.
@@ -20,12 +20,22 @@ Guidelines and prompts for using LLMs to write and refactor Lean 4 proofs in thi
   - within the `proof` section, tactics convention:
     - prefer `apply` instead of `exact`, perhaps by creating some holes
     - inline `have` without introducing `show` if it is referenced only once
-    - A sub lemma without @[main], referenced only once, can be inlined if no `have` is introduced
+    - A sub lemma without @[path], referenced only once, can be inlined if no `have` is introduced
     - use `grind`/`aesop` as much as possible
 
 ## Folder layout
-- `Lemma/` holds only lemmas (`lemma`); these are the public results that get rendered.
+- `Lemma/` 
+  - it holds only lemmas (`lemma`); these are the public results that get rendered.
+  - each sub-folder is a section; a section name must be a math data type, not a type class.
+  - check section kind with `node mjs/lemmaSectionKind.mjs` (optional folder names as args); classifies each `Lemma/` subfolder as data type / type class / topic via Mathlib (`Lean.isClass` / `isStructure`).
 - `sympy/` holds definitions plus only `theorem`s; these theorems are an internal API used by the definitions and are not rendered publicly. Never put a `lemma` in `sympy/`.
+
+
+## Sub-agents
+- Work on https://github.com/math-proof/lemma.
+- Modify only files in your assigned folder (agent name = folder name, e.g. Tensor → `Lemma/Tensor`).
+- To modify another folder, send the task to the agent named after that folder.
+- If that agent does not exist, ask `md` (primary) for help.
 
 ## Debugging
 - print logging info via `sympy.printing.echo` by creating *.echo.lean tracing files for debugging.

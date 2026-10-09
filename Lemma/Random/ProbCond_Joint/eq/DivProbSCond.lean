@@ -9,7 +9,7 @@ import Lemma.Random.Map.eq.WithDensityProb
 open Random
 
 
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace Ω]
   [ReferenceMeasure α] [ReferenceMeasure β] [ReferenceMeasure γ]

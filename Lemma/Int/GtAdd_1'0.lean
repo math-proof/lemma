@@ -6,7 +6,7 @@ import Lemma.Nat.GtAdd_1'0
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   [AddMonoidWithOne R] [PartialOrder R] [AddLeftMono R] [ZeroLEOneClass R]
   [CharZero R]

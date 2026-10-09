@@ -4,7 +4,7 @@ import Lemma.Vector.GetCast.eq.Get.of.Eq
 open Vector
 
 
-@[main, cast]
+@[path, cast]
 private lemma main
   [Div α]
 -- given

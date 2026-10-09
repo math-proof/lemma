@@ -6,7 +6,7 @@ import Lemma.Set.In_OmegaLimit.is.All_In_Closure_Image2_Ici
 open Filter Topology
 
 
-@[main]
+@[path]
 private lemma main
   {α : Type*} [TopologicalSpace α] [RegularSpace α]
   {Φ : ContinuousSemiflow α}

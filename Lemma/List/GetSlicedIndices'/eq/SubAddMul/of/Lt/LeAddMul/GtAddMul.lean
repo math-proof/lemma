@@ -2,7 +2,7 @@ import Lemma.List.EqLengthGetSlicedIndices'.of.LeSubAddMul.GtSubAddMul
 open List
 
 
-@[main]
+@[path]
 private lemma main
   {j' : Fin d}
 -- given

@@ -16,7 +16,7 @@ import Lemma.Int.FDiv.eq.Ite__Ite.of.Lt_0
 open Bool Int Nat
 
 
-@[main]
+@[path]
 private lemma main
   {n d : ℤ} :
 -- imply

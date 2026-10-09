@@ -5,7 +5,7 @@ import sympy.Basic
 open MeasureTheory
 
 
-@[main]
+@[path]
 private lemma main
   {f : ℝ → ℝ}
   {a b c : ℝ}

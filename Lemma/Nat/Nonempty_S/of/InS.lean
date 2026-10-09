@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [PadicInt_nonempty_ringHom_of_isAdicComplete_of_natCast_mem](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_PadicInt_nonempty_ringHom_of_isAdicComplete_of_natCast_mem.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing S]
   {I : Ideal S} [IsAdicComplete I S]

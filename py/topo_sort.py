@@ -22,16 +22,16 @@ Typical inputs
 Profiles via flags
 ------------------
   FLT (preferred, --file-regex; URL inferred from --base's .git/config):
-         --base /home/cosmos/github/fermats-last-theorem \
+         --base ~/github/fermats-last-theorem \
          --source-subpath P2M/Sol --file-regex '^S_(.+)\.lean$' --recursive \
          --dep-filter '^Theorems\.Thm_(\w+)$' --root fermat_last_theorem
 
   FLT (legacy --file-prefix, still supported):
-         --base /home/cosmos/github/fermats-last-theorem \
+         --base ~/github/fermats-last-theorem \
          --source-subpath P2M/Sol --file-prefix S_ \
          --dep-filter '^Theorems\.Thm_(\w+)$' --root fermat_last_theorem
 
-  ATLAS: --base /home/cosmos/github/atlas-lean \
+  ATLAS: --base ~/github/atlas-lean \
          --source-subpath MathlibExt --recursive \
          (no file prefix / regex, no dep filter, no root)
 
@@ -80,8 +80,8 @@ import subprocess
 import sys
 import time
 
-DEFAULT_BASE = "/home/cosmos/github/fermats-last-theorem"
-DEFAULT_PORTED_ROOT = "/home/cosmos/github/lean/Lemma"
+DEFAULT_BASE = "~/github/fermats-last-theorem"
+DEFAULT_PORTED_ROOT = "~/github/lean/Lemma"
 DEFAULT_LIMIT = 20
 
 
@@ -446,7 +446,8 @@ def main() -> int:
                     help="Local git checkout of the source Lean repo "
                          f"(default: {DEFAULT_BASE}). The GitHub URL for "
                          "[title](url) links is inferred from .git/config "
-                         "(origin) unless --base-url is set.")
+                         "(origin) unless --base-url is set. "
+                         "A leading ~ is expanded.")
     ap.add_argument("--source-subpath", default="",
                     help="Subdir within --base containing source files "
                          "(e.g. 'P2M/Sol' for FLT, 'MathlibExt' for ATLAS).")
@@ -480,7 +481,7 @@ def main() -> int:
     ap.add_argument("--ported-root", default=DEFAULT_PORTED_ROOT,
                     help="Directory scanned for already-ported lemmas "
                          f"(default: {DEFAULT_PORTED_ROOT}). Pass empty "
-                         "string to disable.")
+                         "string to disable. A leading ~ is expanded.")
     ap.add_argument("--ported-regex", default="",
                     help="Regex to extract ported node ID from .lean content. "
                          "group(1) must equal the in-tree node ID.")
@@ -494,6 +495,9 @@ def main() -> int:
     ap.add_argument("--out", default=None,
                     help="Path of the .log file (default: alongside this script).")
     args = ap.parse_args()
+    args.base = os.path.expanduser(args.base)
+    if args.ported_root:
+        args.ported_root = os.path.expanduser(args.ported_root)
 
     t0 = time.time()
 

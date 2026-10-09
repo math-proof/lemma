@@ -9,7 +9,7 @@ import Lemma.Tensor.LengthPermute.eq.Length.of.Lt0Add.GtVal_0
 open List Tensor
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h_i : i > 0)

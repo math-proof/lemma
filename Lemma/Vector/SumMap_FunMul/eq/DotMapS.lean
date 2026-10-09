@@ -7,7 +7,7 @@ import Lemma.Vector.SumMapVal.eq.SumMap
 open Vector
 
 
-@[main]
+@[path]
 private lemma main
   [Add β] [Zero β] [Mul β]
 -- given

@@ -8,7 +8,7 @@ import Lemma.Set.In_CapUnion.of.In_Cap.In_Cap
 open Set
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (f : α → Set α)

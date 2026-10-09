@@ -24,7 +24,7 @@ lemma eta_add_int (z : ℂ) (m : ℤ) : η (z + m) = cexp (π * I * m / 12) * η
       push_cast; ring, Complex.exp_add, exp_int_mul_two_pi_mul_I, mul_one]
   rw [hq, hp]
   ring
-@[main]
+@[path]
 private lemma main
   {z : ℂ}
   {m : ℤ} :

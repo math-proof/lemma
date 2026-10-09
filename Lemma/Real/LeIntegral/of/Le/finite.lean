@@ -7,7 +7,7 @@ import Lemma.Real.LeIntegral.of.All_Le
 open MeasureTheory
 
 
-@[main]
+@[path]
 private lemma main
   {f g : ℝ → ℝ}
   {a b : ℝ}

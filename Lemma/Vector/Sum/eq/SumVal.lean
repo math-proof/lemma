@@ -1,7 +1,7 @@
 import sympy.vector.vector
 
 
-@[main]
+@[path]
 private lemma main
   [Add α] [Zero α]
 -- given

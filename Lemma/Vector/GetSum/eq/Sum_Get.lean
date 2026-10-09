@@ -5,7 +5,7 @@ import sympy.vector.vector
 open Vector Finset
 
 
-@[main, fin]
+@[path, fin]
 private lemma main
   [AddCommMonoid α]
   [DecidableEq ι]

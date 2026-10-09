@@ -2,7 +2,7 @@ import Lemma.Nat.Le_SubMulS.of.Lt
 open Nat
 
 
-@[main]
+@[path]
 private lemma left
   {m n : ℕ}
   {i : Fin n} :
@@ -13,7 +13,7 @@ private lemma left
   apply Le_SubMulS.of.Lt.left hi
 
 
-@[main]
+@[path]
 private lemma main
   {m n : ℕ}
   {i : Fin n} :

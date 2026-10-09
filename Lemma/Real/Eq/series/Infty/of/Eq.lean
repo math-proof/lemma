@@ -4,7 +4,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma coefficient
   {A B : ℕ → ℝ}
   {r : ℝ}

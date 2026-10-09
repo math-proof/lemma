@@ -5,7 +5,7 @@ import Lemma.Tensor.GtLengthDot.of.GeLengthS
 open List Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [Mul α] [Add α] [Zero α]
 -- given

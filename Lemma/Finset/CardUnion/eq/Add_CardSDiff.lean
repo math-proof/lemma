@@ -2,7 +2,7 @@ import Lemma.Finset.CardUnion.eq.AddCardS.of.Inter.eq.Empty
 open Finset
 
 
-@[main]
+@[path]
 private lemma main
   [DecidableEq α]
   {A B : Finset α} :

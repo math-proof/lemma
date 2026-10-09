@@ -5,10 +5,10 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Real.Mul.eq.Grad |
+| path | Real.Mul.eq.Grad |
 | comm | Real.Grad.eq.Mul |
 -/
-@[main, comm]
+@[path, comm]
 private lemma main
   {f : ℝ → ℝ}
   {x y : ℝ} :

@@ -7,7 +7,7 @@ open Nat
 Casting a `KroneckerDelta` into a scalar tensor yields the indicator:
 `↑δ_{xy} = if x = y then 1 else 0`.
 -/
-@[main]
+@[path]
 private lemma main
   [AddMonoidWithOne α] [CharZero α]
   [DecidableEq β]

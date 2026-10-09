@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma induct.double
   {f g : ℕ → ℝ → ℝ}
 -- given

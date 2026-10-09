@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma swap :
 -- imply
   (a → p → q) ↔ (p → a → q) :=
@@ -9,7 +9,7 @@ private lemma swap :
   ⟨fun h hp ha => h ha hp, fun h ha hp => h hp ha⟩
 
 
-@[main]
+@[path]
 private lemma fold :
 -- imply
   (a ∧ b → c) ↔ (b → a → c) :=

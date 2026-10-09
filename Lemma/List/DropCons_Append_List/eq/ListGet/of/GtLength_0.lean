@@ -4,7 +4,7 @@ import Lemma.List.DropCons.eq.Drop_Sub_1.of.Gt_0
 open List
 
 
-@[main]
+@[path]
 private lemma main
   {s : List α}
 -- given

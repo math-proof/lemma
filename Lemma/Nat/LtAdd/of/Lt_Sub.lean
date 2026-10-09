@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {a b c : ℕ}
 -- given
@@ -12,7 +12,7 @@ private lemma main
   Nat.add_lt_of_lt_sub h
 
 
-@[main]
+@[path]
 private lemma left
   {a b c : ℕ}
 -- given

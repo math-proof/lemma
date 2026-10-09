@@ -3,7 +3,7 @@ import torch.Tensor.unsqueeze
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (f : α → α → α)

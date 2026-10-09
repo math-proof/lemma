@@ -2,7 +2,7 @@ import sympy.functions.elementary.integers
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma left
   [IntegerRing Z]
   {a b c : Z}
@@ -14,7 +14,7 @@ private lemma left
   IntegerRing.add_div_of_dvd_left h
 
 
-@[main]
+@[path]
 private lemma main
   [IntegerRing Z]
   {a b c : Z}

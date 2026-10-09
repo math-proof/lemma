@@ -6,12 +6,12 @@ open Set Nat
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Set.In_Icc.Odd.is.In_SetOf_In_IccDiv_2 |
+| path | Set.In_Icc.Odd.is.In_SetOf_In_IccDiv_2 |
 | comm | Set.In_SetOf_In_IccDiv_2.is.In_Icc.Odd |
 | mp | Set.In_SetOf_In_IccDiv_2.of.In_Icc.Odd |
 | mpr | Set.In_Icc.Odd.of.In_SetOf_In_IccDiv_2 |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   {a b n : ℤ} :
 -- imply

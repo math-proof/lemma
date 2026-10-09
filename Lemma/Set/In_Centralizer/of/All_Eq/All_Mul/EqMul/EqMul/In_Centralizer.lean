@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [Subring_mem_centralizer_of_mul_eq_of_mul_eq_of_forall_mul_eq_mul](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Subring_mem_centralizer_of_mul_eq_of_mul_eq_of_forall_mul_eq_mul.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [Ring R]
   {S : Set R}

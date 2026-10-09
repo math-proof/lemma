@@ -3,7 +3,7 @@ import Lemma.Nat.EqAddSub.of.Ge
 open List Nat
 
 
-@[main]
+@[path]
 private lemma main
   [Monoid α]
   {s : List α}

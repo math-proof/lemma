@@ -2,7 +2,7 @@ import Lemma.Tensor.Length
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   {X : Tensor α s}
 -- given

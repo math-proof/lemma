@@ -17,7 +17,7 @@ import Lemma.Nat.MulMul.eq.Mul_Mul
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   {t K M κ n δ D : ℕ}
 -- given

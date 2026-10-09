@@ -4,7 +4,7 @@ import Lemma.Finset.Eq.of.In.In.In_Conditionset
 open Finset Stirling.conditionset
 
 
-@[main]
+@[path]
 private lemma main
   {n k : ℕ}
   {x : Fin k → Finset ℕ}

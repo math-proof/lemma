@@ -5,7 +5,7 @@ import Lemma.Finset.In_Inter.is.In.In
 open Bool Finset
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [DecidableEq α]
   {A B : Finset α}

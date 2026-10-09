@@ -3,7 +3,7 @@ import Lemma.List.TakeSet.eq.SetTake.of.Lt
 open List
 
 
-@[main]
+@[path]
 private lemma main
   [CommMonoid α]
   {s : List α}

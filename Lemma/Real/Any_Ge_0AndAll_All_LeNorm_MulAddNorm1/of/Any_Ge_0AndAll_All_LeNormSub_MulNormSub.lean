@@ -4,7 +4,7 @@ import Mathlib.Data.Fintype.Lattice
 open Finset
 
 
-@[main]
+@[path]
 private lemma main
   {E F α : Type*} [SeminormedAddCommGroup E] [SeminormedAddCommGroup F] [Fintype α] [Nonempty α]
   {f : E → α → F}

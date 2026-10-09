@@ -2,7 +2,7 @@ import sympy.vector.Basic
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   [Add β] [Zero β]
   {s : List.Vector α n}

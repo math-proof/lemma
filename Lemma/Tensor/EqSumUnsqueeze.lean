@@ -7,7 +7,7 @@ import Lemma.Vector.Sum.eq.Head
 open Tensor Vector
 
 
-@[main]
+@[path]
 private lemma main
   [AddZeroClass α]
 -- given

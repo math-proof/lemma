@@ -3,7 +3,7 @@ import Lemma.List.EqProd_0.is.In0
 open Set List
 
 
-@[main]
+@[path]
 private lemma main
   {s : List ℕ}
 -- given

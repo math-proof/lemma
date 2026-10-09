@@ -2,7 +2,7 @@ import sympy.functions.elementary.conv
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma conv1d
   {m d d' : ℕ}
   {T : Type*} [Fintype T]

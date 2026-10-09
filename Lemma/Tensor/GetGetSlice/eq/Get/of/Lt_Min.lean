@@ -11,7 +11,7 @@ import Lemma.Fin.Eq.of.Val
 open Tensor Vector List Fin
 
 
-@[main, fin]
+@[path, fin]
 private lemma main
 -- given
   (X : Tensor α (s₀ :: s))

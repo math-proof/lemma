@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [LinearIndependent_of_forall_mem_span_exists_sum_zsmul_eq](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_LinearIndependent_of_forall_mem_span_exists_sum_zsmul_eq.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [AddCommGroup V] [Module ℝ V]
   {k : ℕ}

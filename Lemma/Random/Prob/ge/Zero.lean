@@ -3,7 +3,7 @@ import sympy.stats.symbolic_probability
 open MeasureTheory
 
 
-@[main]
+@[path]
 private lemma main
   {Ω α : Type*}
   [MeasurableSpace Ω]

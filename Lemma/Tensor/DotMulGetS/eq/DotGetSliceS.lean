@@ -31,7 +31,7 @@ open Int List Nat Tensor
 set_option maxHeartbeats 1000000
 
 
-@[main, fin]
+@[path, fin]
 private lemma main
   [Semiring α]
   [NeZero (l : ℕ)]

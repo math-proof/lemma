@@ -4,7 +4,7 @@ import Mathlib.Analysis.InnerProductSpace.PiL2
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma kmeans.w_quote
   {M k d : ℕ} [NeZero k]
   {w w' : ℕ → Finset ℕ}

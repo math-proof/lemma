@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [PowerSeries_exists_sum_smul_eq_of_forall_coeff_mem](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_PowerSeries_exists_sum_smul_eq_of_forall_coeff_mem.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [Field L]
   {K₀ : Subfield L}

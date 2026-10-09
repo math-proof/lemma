@@ -3,7 +3,7 @@ import sympy.Basic
 open Filter
 
 
-@[main]
+@[path]
 private lemma main
   {α : Type*} [TopologicalSpace α]
   {β : Type*} [TopologicalSpace β]

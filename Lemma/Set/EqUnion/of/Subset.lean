@@ -2,7 +2,7 @@ import Lemma.Set.Union
 open Set
 
 
-@[main]
+@[path]
 private lemma main
   {A B : Set α}
 -- given
@@ -26,7 +26,7 @@ private lemma main
     tauto
 
 
-@[main]
+@[path]
 private lemma left
   {A B : Set α}
 -- given

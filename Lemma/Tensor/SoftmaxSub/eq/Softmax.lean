@@ -3,7 +3,7 @@ import Lemma.Tensor.Sub.eq.Add_Neg
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [ExpRing α]
 -- given

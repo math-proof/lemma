@@ -2,7 +2,7 @@ import sympy.Basic
 import Mathlib.Data.Matrix.Mul
 
 
-@[main]
+@[path]
 private lemma main
   [NonUnitalNonAssocSemiring α]
   {n k : ℕ}

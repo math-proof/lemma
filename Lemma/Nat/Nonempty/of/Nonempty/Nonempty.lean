@@ -6,7 +6,7 @@ open CategoryTheory CategoryTheory.MonoidalCategory
 /--
 [CategoryTheory_MonoidalCategory_nonempty_iso_of_tensor_iso_tensorUnit](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_CategoryTheory_MonoidalCategory_nonempty_iso_of_tensor_iso_tensorUnit.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {C : Type u} [Category.{v} C] [MonoidalCategory C] [BraidedCategory C]
   {M N M' N' : C}

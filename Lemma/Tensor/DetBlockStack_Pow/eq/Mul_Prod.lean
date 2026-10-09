@@ -6,7 +6,7 @@ import Lemma.Matrix.DetOfVecCons4_FunPow.eq.MulMulMul12PowChoosePowSub1Prod
 open Matrix Finset Nat
 
 
-@[main]
+@[path]
 private lemma vandermonde.n4
   {n : ℕ} {r : ℝ}
 -- given

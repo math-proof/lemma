@@ -5,7 +5,7 @@ import Lemma.Random.Map.eq.WithDensityProb
 open Random MeasureTheory
 
 
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace Ω]
   [ReferenceMeasure α] [ReferenceMeasure β] [ReferenceMeasure γ]
@@ -109,7 +109,7 @@ private lemma main
     _ = p3' (a, (b, c)) / pz c := by rw [hcan]
 
 
-@[main]
+@[path]
 private lemma Cond
   [MeasurableSpace Ω]
   [ReferenceMeasure α] [ReferenceMeasure β] [ReferenceMeasure γ]

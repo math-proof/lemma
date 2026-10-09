@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {x y : ℝ}
 -- given
@@ -12,7 +12,7 @@ private lemma main
   linarith
 
 
-@[main]
+@[path]
 private lemma given
   {a b : ℝ}
 -- given

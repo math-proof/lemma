@@ -23,7 +23,7 @@ private lemma int_hist_mul [MeasurableSpace S] [MeasurableSingletonClass S] [Fin
 /--
 For `t ≤ n`, `𝔼[1{s[t] = x ∧ a[t] = u} * δ[n+1]] = 0` (Markov property along histories + Bellman equation).
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A] [DecidableEq S] [DecidableEq A]
   {M : Model Θ S A}

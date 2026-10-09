@@ -8,7 +8,7 @@ import Lemma.Int.EqToNat
 open List Bool Int Nat
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (j n : ℕ)
@@ -42,7 +42,7 @@ private lemma main
       simp
 
 
-@[main]
+@[path]
 private lemma coe
 -- given
   (j n : ℕ)

@@ -2,7 +2,7 @@ import Lemma.List.TakeCons.eq.Cons_Take.of.Gt_0
 open List
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (a : α)

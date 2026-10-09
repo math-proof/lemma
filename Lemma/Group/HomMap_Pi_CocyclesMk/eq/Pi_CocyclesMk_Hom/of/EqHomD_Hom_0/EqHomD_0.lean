@@ -6,7 +6,7 @@ open CategoryTheory groupCohomology
 /--
 [groupCohomology_map_pi_cocyclesMk_apply](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_groupCohomology_map_pi_cocyclesMk_apply.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {k G H : Type} [CommRing k] [Group G] [Group H]
   {A : Rep.{0} k H}

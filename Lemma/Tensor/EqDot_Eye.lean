@@ -6,7 +6,7 @@ import Lemma.Tensor.GetEye.eq.Delta
 open Nat Tensor
 
 
-@[main]
+@[path]
 private lemma vm
   [Semiring α] [CharZero α]
 -- given
@@ -33,7 +33,7 @@ private lemma vm
     apply Tensor.EqMul_1.nat
 
 
-@[main]
+@[path]
 private lemma main
   [Semiring α] [CharZero α]
 -- given

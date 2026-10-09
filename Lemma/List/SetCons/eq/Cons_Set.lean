@@ -3,7 +3,7 @@ import Lemma.List.Set.eq.AppendTake__Cons_Drop.of.GtLength
 open List
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
 -- given
   (head : α)

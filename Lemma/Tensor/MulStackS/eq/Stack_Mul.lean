@@ -10,10 +10,10 @@ open Vector Nat Tensor
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Tensor.MulStackS.eq.Stack_Mul |
+| path | Tensor.MulStackS.eq.Stack_Mul |
 | comm | Tensor.Stack_Mul.eq.MulStackS |
 -/
-@[main, comm]
+@[path, comm]
 private lemma main
   [Mul α]
 -- given

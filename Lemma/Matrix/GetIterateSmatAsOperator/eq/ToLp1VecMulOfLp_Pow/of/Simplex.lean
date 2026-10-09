@@ -3,7 +3,7 @@ import Lemma.Matrix.SmatAsOperator.eq.ToLp1VecMulOfLp.of.Simplex
 open WithLp Matrix Function
 
 
-@[main]
+@[path]
 private lemma main
   {S : Type u} [Fintype S] [DecidableEq S]
   {P : Matrix S S ℝ} [RowStochastic P]

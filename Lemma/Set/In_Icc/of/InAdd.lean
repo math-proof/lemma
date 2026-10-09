@@ -2,7 +2,7 @@ import Lemma.Set.InAdd.of.In_Icc
 open Set
 
 
-@[main]
+@[path]
 private lemma main
   [Preorder α]
   [Add α]

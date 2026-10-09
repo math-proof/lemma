@@ -2,7 +2,7 @@ import Lemma.Tensor.DotGetSwapMatrix.eq.Get
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [Semiring α] [CharZero α]
 -- given

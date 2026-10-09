@@ -3,7 +3,7 @@ import Lemma.Complex.ExpMulI.eq.AddCos_MulISin
 open Int Complex
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (x : ℝ) :

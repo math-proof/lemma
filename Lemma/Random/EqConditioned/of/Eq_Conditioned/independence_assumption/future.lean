@@ -10,7 +10,7 @@ starting at `t + 1` is independent of the current state `s t`.
 
 Python: Random.EqConditioned.of.Eq_Conditioned.independence_assumption.future.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace Ω]
   [ReferenceMeasure α] [ReferenceMeasure β]

@@ -5,7 +5,7 @@ import Lemma.Rat.EqDiv0_0
 open Tensor Vector Rat
 
 
-@[main]
+@[path]
 private lemma main
   [GroupWithZero α]
 -- given
@@ -21,7 +21,7 @@ private lemma main
   apply EqDiv0_0 X.data
 
 
-@[main]
+@[path]
 private lemma scalar
   [GroupWithZero α]
 -- given

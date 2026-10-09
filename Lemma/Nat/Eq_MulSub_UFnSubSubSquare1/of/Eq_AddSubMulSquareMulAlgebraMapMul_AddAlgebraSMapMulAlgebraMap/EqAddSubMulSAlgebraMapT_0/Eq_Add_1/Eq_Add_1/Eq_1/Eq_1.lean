@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [IharaTower_RungAssembly_map_delta_of_sq_sub](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_IharaTower_RungAssembly_map_delta_of_sq_sub.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing 𝒪] [CommRing T] [Algebra 𝒪 T]
   {πT : T →ₐ[𝒪] 𝒪}

@@ -2,7 +2,7 @@ import Lemma.Nat.Max
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   [LinearOrder α]
   {a b a' b' : α}

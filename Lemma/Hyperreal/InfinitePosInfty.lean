@@ -4,7 +4,7 @@ import Lemma.Hyperreal.GtInfty0
 open Hyperreal
 
 
-@[main]
+@[path]
 private lemma main :
 -- imply
   Hyperreal.omega → +∞ :=

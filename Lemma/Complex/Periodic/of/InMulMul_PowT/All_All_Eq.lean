@@ -6,7 +6,7 @@ open scoped UpperHalfPlane MatrixGroups
 /--
 [UpperHalfPlane_periodic_comp_smul_of_conj_T_pow_mem](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_UpperHalfPlane_periodic_comp_smul_of_conj_T_pow_mem.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {Γ : Subgroup SL(2, ℤ)}
   {F : ℍ → ℂ}

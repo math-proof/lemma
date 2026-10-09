@@ -8,7 +8,7 @@ import torch.Tensor.unsqueeze
 open Bool List Vector
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   {s : List ℕ}
 -- given

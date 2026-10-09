@@ -4,12 +4,12 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Bool.Any_Or.is.OrAnyS |
+| path | Bool.Any_Or.is.OrAnyS |
 | comm | Bool.OrAnyS.is.Any_Or |
 | mp | Bool.OrAnyS.of.Any_Or |
 | mpr | Bool.Any_Or.of.OrAnyS |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   {p q : α → Prop} :
 -- imply
@@ -18,7 +18,7 @@ private lemma main
   grind
 
 
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma set
   {p q : α → Prop}
   {s : Set α}:

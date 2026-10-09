@@ -3,7 +3,7 @@ import Lemma.Vector.ArraySlice.as.GetSplitAt_1.of.GtGet_0.GtLength_0.Eq_ProdTail
 open Vector List
 
 
-@[main]
+@[path]
 private lemma main
   {s : List ℕ}
 -- given

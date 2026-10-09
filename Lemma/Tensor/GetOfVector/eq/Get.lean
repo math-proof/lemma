@@ -8,7 +8,7 @@ import Lemma.Vector.EqUnflattenFlatten
 open Vector Tensor Bool
 
 
-@[main, fin]
+@[path, fin]
 private lemma main
 -- given
   (v : List.Vector (Tensor α s) n)

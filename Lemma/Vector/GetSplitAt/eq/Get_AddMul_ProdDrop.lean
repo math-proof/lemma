@@ -6,7 +6,7 @@ import Lemma.Vector.Eq.of.Eq_Cast.Eq
 open Vector List Bool
 
 
-@[main, fin, val]
+@[path, fin, val]
 private lemma main
   {s : List ℕ}
   {d : ℕ}

@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma fn
   [DecidableEq α]
 -- given
@@ -14,7 +14,7 @@ private lemma fn
   aesop
 
 
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   [DecidableEq α]
 -- given

@@ -3,7 +3,7 @@ import Lemma.Int.GeSquare_0
 open Int Nat
 
 
-@[main]
+@[path]
 private lemma main
   [Semiring α] [LinearOrder α] [ExistsAddOfLE α] [PosMulMono α] [AddLeftMono α]
   {a : α} :

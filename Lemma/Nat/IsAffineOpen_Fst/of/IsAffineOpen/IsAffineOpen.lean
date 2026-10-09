@@ -6,7 +6,7 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 /--
 [AlgebraicGeometry_isAffineOpen_pullback_fst_preimage_inf_snd_preimage](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_isAffineOpen_pullback_fst_preimage_inf_snd_preimage.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {X Y S : Scheme.{u}} [IsAffine S]
   {f : X ⟶ S}

@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [IharaLemma_isPrecomplete_of_finite](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_IharaLemma_isPrecomplete_of_finite.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing R] [AddCommGroup M] [Module R M] [Module.Finite R M]
   {I : Ideal R} [IsPrecomplete I R] :

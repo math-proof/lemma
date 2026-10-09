@@ -1,7 +1,8 @@
 import sympy.concrete.reduced
+import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {n : ℕ} [Nonempty (Fin n)]
   {x : Fin n → ℝ}

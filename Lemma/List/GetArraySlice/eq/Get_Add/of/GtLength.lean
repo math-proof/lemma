@@ -4,7 +4,7 @@ import Lemma.Nat.LtAdd.of.Lt_Sub
 open List Nat
 
 
-@[main]
+@[path]
 private lemma main
   {s : List α}
 -- given

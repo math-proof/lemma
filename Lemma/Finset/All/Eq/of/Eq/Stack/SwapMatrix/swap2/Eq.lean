@@ -3,7 +3,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {n : ℕ}
   {w : Fin (n + 1) → Fin (n + 1) → Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ}

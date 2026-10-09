@@ -3,7 +3,7 @@ import Lemma.Vector.Eq.of.Flatten
 open Vector
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
 -- given
   (v : List.Vector (List.Vector α n) m) :

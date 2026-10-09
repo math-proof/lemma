@@ -6,7 +6,7 @@ open CategoryTheory AlgebraicGeometry TopologicalSpace
 /--
 [AlgebraicGeometry_exists_closeds_lt_forall_notMem_imp_mem_of_isClosedImmersion_of_nonempty](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_exists_closeds_lt_forall_notMem_imp_mem_of_isClosedImmersion_of_nonempty.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {X Z : Scheme.{u}}
   {i : Z ⟶ X} [IsClosedImmersion i]

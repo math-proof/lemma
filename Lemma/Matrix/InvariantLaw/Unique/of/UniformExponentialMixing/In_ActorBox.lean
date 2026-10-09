@@ -6,7 +6,7 @@ import Lemma.Matrix.Any_And_All_EqToFunSemigroup.of.In_ActorBox
 open Filter
 
 
-@[main]
+@[path]
 private lemma main
   {S : Type*} [Fintype S] [DecidableEq S]
   {d : ℕ}

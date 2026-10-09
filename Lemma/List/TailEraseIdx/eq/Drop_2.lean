@@ -7,7 +7,7 @@ import Lemma.List.TailTail.eq.Drop_2
 open List
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (s : List α) :

@@ -6,7 +6,7 @@ open CategoryTheory AlgebraicGeometry Opposite AlgebraicGeometry.Scheme.Modules
 /--
 [AlgebraicGeometry_Scheme_Modules_unit_app_comp_pullbackComp_inv](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_Scheme_Modules_unit_app_comp_pullbackComp_inv.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {X Y Z : Scheme.{u}}
   {g : Z ⟶ Y}

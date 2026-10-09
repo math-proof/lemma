@@ -2,7 +2,7 @@ import Lemma.List.EraseIdxSet.eq.Ite_SetEraseIdx
 open List
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h : i < j)

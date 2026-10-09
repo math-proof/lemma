@@ -8,10 +8,10 @@ open Hyperreal Tensor
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Tensor.NotInfiniteGetDataMul |
+| path | Tensor.NotInfiniteGetDataMul |
 | fin | Tensor.NotInfiniteGetDataMul.fin |
 -/
-@[main, fin]
+@[path, fin]
 private lemma main
 -- given
   (A B : Tensor ℝ s)

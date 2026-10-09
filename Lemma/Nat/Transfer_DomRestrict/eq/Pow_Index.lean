@@ -6,7 +6,7 @@ open Subgroup Subgroup.leftTransversals
 /--
 [CohCarrier_transfer_restrict_eq_pow_index](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_CohCarrier_transfer_restrict_eq_pow_index.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [Group G] [CommGroup C]
   {K : Subgroup G} [K.FiniteIndex]

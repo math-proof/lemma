@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   [DecidableEq α] [AddCommGroup β]
   {n : ℕ}
@@ -20,7 +20,7 @@ private lemma main
   rw [Finset.sum_union (Finset.disjoint_singleton_right.mpr hy), Finset.sum_singleton, add_sub_cancel_right]
 
 
-@[main]
+@[path]
 private lemma double_limits
   [DecidableEq α] [AddCommMonoid β]
   {n : ℕ}

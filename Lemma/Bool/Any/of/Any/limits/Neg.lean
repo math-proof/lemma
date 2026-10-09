@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {f : ℤ → Prop}
   {a b : ℤ}
@@ -16,7 +16,7 @@ private lemma main
   omega
 
 
-@[main]
+@[path]
 private lemma given
   {f : ℤ → Prop}
   {a b : ℤ}

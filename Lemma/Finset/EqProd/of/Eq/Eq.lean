@@ -2,7 +2,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma push
   {a b : ℕ}
   {g f : ℕ → ℤ}
@@ -16,7 +16,7 @@ private lemma push
   rw [Finset.prod_Ico_succ_top h, Finset.prod_Ico_succ_top h, h₀, h₁]
 
 
-@[main]
+@[path]
 private lemma unshift
   {a b : ℕ}
   {g f : ℕ → ℤ}

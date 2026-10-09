@@ -13,7 +13,7 @@ import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.GtLength
 open Tensor List Bool Nat
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [Add α] [Zero α]
   {s : List ℕ}

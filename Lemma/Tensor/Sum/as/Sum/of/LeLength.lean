@@ -3,7 +3,7 @@ import torch.Tensor.sum
 open Tensor
 
 
-@[main, cast]
+@[path, cast]
 private lemma main
   [AddZeroClass α]
   {d : ℕ}

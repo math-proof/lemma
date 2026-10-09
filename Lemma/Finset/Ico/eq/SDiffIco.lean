@@ -11,7 +11,7 @@ import Lemma.Finset.In_Ico.is.Le.Lt
 open Nat Bool Finset
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (i n : ℕ) :

@@ -8,7 +8,7 @@ import Lemma.Nat.Min
 open Int Nat Rat
 
 
-@[main]
+@[path]
 private lemma main
   [Field α] [LinearOrder α] [IsStrictOrderedRing α] [FloorRing α]
   {start stop : ℕ}
@@ -29,7 +29,7 @@ private lemma main
     apply GtAdd_1'0 (R := α) step
 
 
-@[main]
+@[path]
 private lemma left
   [Field α] [LinearOrder α] [IsStrictOrderedRing α] [FloorRing α]
   {start stop : ℕ}

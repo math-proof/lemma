@@ -7,12 +7,12 @@ open Complex Set
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Complex.Eq0Add_Pow_4.is.In_Ite_FinsetSSubS__SubS |
+| path | Complex.Eq0Add_Pow_4.is.In_Ite_FinsetSSubS__SubS |
 | comm | Complex.In_Ite_FinsetSSubS__SubS.is.Eq0Add_Pow_4 |
 | mp | Complex.In_Ite_FinsetSSubS__SubS.of.Eq0Add_Pow_4 |
 | mpr | Complex.Eq0Add_Pow_4.of.In_Ite_FinsetSSubS__SubS |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   {x a b c d : ℂ} :
 -- imply

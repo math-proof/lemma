@@ -9,7 +9,7 @@ import Lemma.Tensor.Softmax.eq.Zero.of.EqGet_0'0.GtLength_0
 open Bool Nat Tensor List
 
 
-@[main]
+@[path]
 private lemma main
   [ExpRing α]
 -- given

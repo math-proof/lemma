@@ -4,7 +4,7 @@ import Lemma.Finset.MulSum.eq.Sum_Mul
 open Vector Finset
 
 
-@[main]
+@[path]
 private lemma main
   [NonUnitalNonAssocSemiring α]
 -- given

@@ -6,7 +6,7 @@ import Lemma.Complex.OrEqSCeil.of.CeilSubDivAddArgS.ne.Zero
 open Bool Complex
 
 
-@[main]
+@[path]
 private lemma main
   {A B : ℂ} :
 -- imply

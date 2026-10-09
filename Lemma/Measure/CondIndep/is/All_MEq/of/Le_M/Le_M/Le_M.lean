@@ -11,7 +11,7 @@ probability of any `t ∈ m₁`, i.e. `μ⟦t | m' ⊔ m₂⟧ =ᵐ[μ] μ⟦t |
 This turns the graphoid rules of conditional independence (weak union, contraction) into the tower
 property of the conditional expectation.
 -/
-@[main]
+@[path]
 private lemma main
   {m' m₁ m₂ : MeasurableSpace Ω} [mΩ : MeasurableSpace Ω] [StandardBorelSpace Ω]
   {μ : Measure Ω} [IsFiniteMeasure μ]

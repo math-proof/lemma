@@ -4,7 +4,7 @@ import Lemma.Measure.Measurable_FrestrictLe_PiLE
 open MeasureTheory Measure
 
 
-@[main]
+@[path]
 private lemma main
   {S Z : Type*} [MeasurableSpace S] [MeasurableSpace Z]
   {x : ℕ → (ℕ → S) → Z}

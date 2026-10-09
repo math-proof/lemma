@@ -3,7 +3,7 @@ import Lemma.List.LengthGetProduct.eq.Length.of.GtLengthProduct
 open Set List
 
 
-@[main]
+@[path]
 private lemma main
   {s : List (List α)}
 -- given

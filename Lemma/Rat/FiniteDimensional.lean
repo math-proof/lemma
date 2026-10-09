@@ -6,7 +6,7 @@ open CategoryTheory Module groupCohomology
 /--
 [groupCohomology_finiteDimensional_H1_of_finite](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_groupCohomology_finiteDimensional_H1_of_finite.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [Field k] [Group G] [Finite G]
   {A : Rep k G} [FiniteDimensional k A] :

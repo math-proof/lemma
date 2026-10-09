@@ -11,7 +11,7 @@ import torch.Tensor.sum
 open Bool Tensor
 
 
-@[main, cast, comm]
+@[path, cast, comm]
 private lemma main
   [AddCommMonoid α]
 -- given

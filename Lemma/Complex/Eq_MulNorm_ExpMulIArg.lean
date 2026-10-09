@@ -8,7 +8,7 @@ import Lemma.Complex.Eq.of.Re.Im
 open Bool Complex Nat
 
 
-@[main]
+@[path]
 private lemma main
   {z : ℂ} :
 -- imply

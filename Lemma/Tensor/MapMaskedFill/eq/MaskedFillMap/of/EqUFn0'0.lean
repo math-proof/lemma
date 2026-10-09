@@ -12,10 +12,10 @@ open Tensor
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Tensor.MapMaskedFill.eq.MaskedFillMap.of.EqUFn0'0 |
+| path | Tensor.MapMaskedFill.eq.MaskedFillMap.of.EqUFn0'0 |
 | comm | Tensor.MaskedFillMap.eq.MapMaskedFill.of.EqUFn0'0 |
 -/
-@[main, comm]
+@[path, comm]
 private lemma main
   [Zero α]
   [Zero β]

@@ -4,11 +4,11 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Set.In.is.Any.Eq.split.Imageset |
+| path | Set.In.is.Any.Eq.split.Imageset |
 | mp | Set.Any.Eq.split.Imageset.of.In |
 | mpr | Set.In.of.Any.Eq.split.Imageset |
 -/
-@[main, mp, mpr]
+@[path, mp, mpr]
 private lemma main
   {S : Set α}
   {y : β}

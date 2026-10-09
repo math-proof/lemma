@@ -27,7 +27,7 @@ Scalar entry of the hyperreal masked softmax: for logits \( a_{ij} \), a mask \(
 \operatorname{softmax}(a + ([P] - 1)\infty)_{ij} \approx [P_{ij}]\, w_{ij}.
 \]
 -/
-@[main]
+@[path]
 private lemma main
   {n m : ℕ}
 -- given

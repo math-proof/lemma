@@ -11,7 +11,7 @@ import Lemma.Vector.GetUnflatten.as.ArraySlice.of.Lt
 open Vector Bool Nat
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (a : List.Vector α (m * k))

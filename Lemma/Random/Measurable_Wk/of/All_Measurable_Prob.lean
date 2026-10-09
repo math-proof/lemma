@@ -8,7 +8,7 @@ open MeasureTheory PolicyGradient Random
 /--
 If every `x ↦ π_θ(u | x)` is measurable, so is the `k`-step expected reward `x ↦ Wk θ k x = 𝔼[r[t+k] | s[t] = x]`.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace S] [MeasurableSpace A] [Fintype A]
   {M : Model Θ S A}

@@ -6,7 +6,7 @@ import Lemma.Nat.EqAddSub.of.Ge
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   [IntegerRing Z]
   {a b : Z}

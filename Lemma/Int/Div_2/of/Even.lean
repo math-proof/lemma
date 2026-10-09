@@ -5,7 +5,7 @@ import Lemma.Int.FDiv.eq.FloorDiv
 open Nat Int
 
 
-@[main]
+@[path]
 private lemma main
   {n : ℤ}
 -- given

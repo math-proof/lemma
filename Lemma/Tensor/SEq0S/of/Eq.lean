@@ -3,7 +3,7 @@ import Lemma.Tensor.HEq.of.SEqDataS.Eq
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [Zero α]
 -- given

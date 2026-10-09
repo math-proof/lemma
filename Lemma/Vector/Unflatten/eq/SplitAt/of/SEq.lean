@@ -3,7 +3,7 @@ import Lemma.Bool.EqCast.of.SEq
 open Bool
 
 
-@[main]
+@[path]
 private lemma main
   {s : List ℕ}
   {d : Fin s.length}

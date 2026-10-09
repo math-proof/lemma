@@ -2,7 +2,7 @@ import Lemma.List.Append_DropTake.eq.Take.of.Ge
 open List
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
 -- given
   (s : List α)

@@ -3,7 +3,7 @@ import Lemma.Nat.Square.eq.Mul
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   [MonoidWithZero α] [LinearOrder α]
   [MulPosStrictMono α] [PosMulStrictMono α]

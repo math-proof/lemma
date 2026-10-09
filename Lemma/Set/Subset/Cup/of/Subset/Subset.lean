@@ -2,7 +2,7 @@ import sympy.functions.elementary.complexes
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma push
   {a b : ℤ}
   {g f : ℤ → Set ℤ}
@@ -19,7 +19,7 @@ private lemma push
   exact Set.union_subset_union h₁ h₂
 
 
-@[main]
+@[path]
 private lemma unshift
   {a b : ℤ}
   {g f : ℤ → Set ℤ}

@@ -4,7 +4,7 @@ import Lemma.Vector.SumAppend.eq.AddSumS
 open Vector
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [Mul α] [AddCommMonoid α]
 -- given

@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [RingHom_denseRange_of_isAlgClosed](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_RingHom_denseRange_of_isAlgClosed.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [Field F] [IsAlgClosed F] [CharZero F]
   {σ : F →+* ℂ} :

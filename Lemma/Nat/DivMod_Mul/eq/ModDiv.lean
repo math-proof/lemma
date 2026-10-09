@@ -7,7 +7,7 @@ import Lemma.Nat.Mul
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (m n d : ℕ) :
@@ -28,7 +28,7 @@ private lemma main
     apply LtMod.of.Ne_0 h
 
 
-@[main]
+@[path]
 private lemma Comm
 -- given
   (m n d : ℕ) :

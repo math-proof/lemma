@@ -6,7 +6,7 @@ open CategoryTheory AlgebraicGeometry TopologicalSpace
 /--
 [AlgebraicGeometry_Scheme_IdealSheafData_exists_forall_ideal_pow_le_of_forall_le_radical](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_Scheme_IdealSheafData_exists_forall_ideal_pow_le_of_forall_le_radical.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {X : Scheme.{u}} [IsNoetherian X]
   {𝓙₁ 𝓙₂ : X.IdealSheafData}

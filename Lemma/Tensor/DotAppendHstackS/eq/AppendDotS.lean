@@ -6,7 +6,7 @@ import Lemma.Tensor.EqDot_Eye
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [Semiring α] [CharZero α]
 -- given

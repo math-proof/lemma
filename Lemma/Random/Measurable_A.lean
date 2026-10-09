@@ -6,7 +6,7 @@ open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model
 /--
 The action process `a t` of the trajectory space is measurable.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace S] [MeasurableSpace A]
   {r : ℕ → (ℕ → ℝ × S × A) → ℝ}

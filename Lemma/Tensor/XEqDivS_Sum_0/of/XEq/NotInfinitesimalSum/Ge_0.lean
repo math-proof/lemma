@@ -6,7 +6,7 @@ import Lemma.Vector.XEqDivS_Sum.of.XEq.NotInfinitesimalSum.Ge_0
 open Tensor Vector
 
 
-@[main]
+@[path]
 private lemma main
   {x y : Tensor ℝ* [n]}
 -- given

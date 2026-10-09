@@ -201,7 +201,7 @@ class Vue extends Component {
 			// py.js: Array.prototype.isArray = true -- only array-of-names is supported here.
 			console.assert(components.isArray, 'components must be an array of .vue base names');
 			const resolved = components.reduce((acc, name) => {
-				acc[name] = defineAsyncComponent(() => import(`../vue/${name}.vue`));
+				acc[name] = defineAsyncComponent(() => window.__loadVueComponent(name));
 				return acc;
 			}, {});
 			this.components = resolved;

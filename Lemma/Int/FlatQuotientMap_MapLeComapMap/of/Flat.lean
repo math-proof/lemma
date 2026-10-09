@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [RingHom_Flat_quotientMap](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_RingHom_Flat_quotientMap.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing R] [CommRing S]
   {f : R →+* S}

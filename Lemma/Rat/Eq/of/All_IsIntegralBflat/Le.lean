@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [Subring_eq_of_le_of_forall_isIntegral_of_isIntegrallyClosed](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Subring_eq_of_le_of_forall_isIntegral_of_isIntegrallyClosed.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [Field F]
   {Bflat B : Subring F} [IsFractionRing ↥Bflat F] [IsIntegrallyClosed ↥Bflat]

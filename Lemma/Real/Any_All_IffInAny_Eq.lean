@@ -84,7 +84,7 @@ private lemma  exists_continuousLinearEquiv_prod_mem_iff_of_discreteTopology
     intro i _
     apply L.zsmul_mem
     exact (hmemL₂ _).mp (bZ i).2
-@[main]
+@[path]
 private lemma main
   [NormedAddCommGroup V] [NormedSpace ℝ V] [FiniteDimensional ℝ V]
   {L : AddSubgroup V} [DiscreteTopology L] :

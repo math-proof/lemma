@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [RingEquiv_false_of_apply_eq_X_pow_of_apply_eq_X](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_RingEquiv_false_of_apply_eq_X_pow_of_apply_eq_X.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {p : ℕ}
   {k : Type v} [CommRing k] [Nontrivial k]

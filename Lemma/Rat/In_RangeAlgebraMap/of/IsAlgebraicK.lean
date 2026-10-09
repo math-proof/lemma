@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [AlgebraicCurve_mem_range_algebraMap_of_isAlgebraic](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicCurve_mem_range_algebraMap_of_isAlgebraic.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [Field K] [Field L] [Algebra K L] [IsAlgClosed K]
   {x : L}

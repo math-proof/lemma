@@ -8,7 +8,7 @@ import Lemma.Vector.Head.eq.Get_0
 open Vector Nat
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [Div α]
 -- given

@@ -2,7 +2,7 @@ import Mathlib.Data.Int.Interval
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {α : Type*} [AddCommGroup α]
   {x : ℤ → α}

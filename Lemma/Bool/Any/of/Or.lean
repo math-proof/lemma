@@ -2,7 +2,7 @@ import Lemma.Bool.And.is.All.limits.Union
 open Bool
 
 
-@[main]
+@[path]
 private lemma main
   {A B : Set α}
   {f : α → Prop}

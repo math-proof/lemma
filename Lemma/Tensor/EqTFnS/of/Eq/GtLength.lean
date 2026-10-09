@@ -6,7 +6,7 @@ import Lemma.Bool.HEq.of.Cond.Cond
 open Tensor Vector Bool
 
 
-@[main]
+@[path]
 private lemma main
   {A : Tensor α s}
   {B : Tensor α s'}
@@ -32,7 +32,7 @@ private lemma main
     aesop
 
 
-@[main]
+@[path]
 private lemma tensor
   {A : Tensor α s}
   {B : Tensor α s'}

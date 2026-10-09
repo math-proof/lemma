@@ -18,7 +18,7 @@ import Lemma.Vector.SEq.of.Eq_0.Eq_0
 open Int Nat Rat Vector List Fin
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (s : List.Vector α (m * n))

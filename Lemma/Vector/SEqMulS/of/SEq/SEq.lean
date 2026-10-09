@@ -3,7 +3,7 @@ import sympy.vector.vector
 open Bool
 
 
-@[main]
+@[path]
 private lemma main
   [Mul α]
   {a b : List.Vector α n}

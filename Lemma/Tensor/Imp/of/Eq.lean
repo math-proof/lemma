@@ -6,7 +6,7 @@ open MeasureTheory
 open scoped ENNReal.ToRealCoe
 
 
-@[main]
+@[path]
 private lemma crf.logits
   {Ω Y X : Type*} [MeasurableSpace Ω]
   [ReferenceMeasure Y] [ReferenceMeasure X]

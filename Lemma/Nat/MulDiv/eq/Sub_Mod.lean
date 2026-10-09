@@ -5,7 +5,7 @@ import Lemma.Nat.EqSubAdd
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   [IntegerRing Z]
 -- given

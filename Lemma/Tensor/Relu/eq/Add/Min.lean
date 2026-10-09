@@ -2,7 +2,7 @@ import torch.nn.functional.relu
 import Mathlib.Data.Real.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {x y : ℝ} :
 -- imply

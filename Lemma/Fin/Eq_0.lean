@@ -4,7 +4,7 @@ import sympy.Basic
 /--
 Deprecated: use `fin_cases` instead of this lemma.
 -/
-@[main]
+@[path]
 private lemma main
 -- given
   (i : Fin 1) :

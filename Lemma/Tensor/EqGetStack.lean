@@ -5,7 +5,7 @@ import Lemma.Vector.GetCast.eq.Get.of.Eq
 open Tensor Vector
 
 
-@[main, fin]
+@[path, fin]
 private lemma main
 -- given
   (f : Fin n → Tensor α s)
@@ -28,7 +28,7 @@ private lemma main
   assumption
 
 
-@[main, fin]
+@[path, fin]
 private lemma Fun
 -- given
   (f : ℕ → Tensor α s)

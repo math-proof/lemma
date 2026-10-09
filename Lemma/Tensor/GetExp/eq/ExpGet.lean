@@ -4,7 +4,7 @@ import Lemma.Tensor.GetTensorMapData.eq.TensorMapDataGet
 open Tensor
 
 
-@[main, fin, comm, fin.comm]
+@[path, fin, comm, fin.comm]
 private lemma main
   [Exp α]
 -- given

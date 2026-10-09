@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [connectedComponentIn_compl_inter_eq_of_isClosed_of_union_eq_univ](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_connectedComponentIn_compl_inter_eq_of_isClosed_of_union_eq_univ.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [TopologicalSpace X]
   {A B : Set X}

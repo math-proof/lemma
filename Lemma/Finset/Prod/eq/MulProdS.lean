@@ -5,7 +5,7 @@ import Lemma.Finset.BoolIn.eq.AddBoolSIn
 open Finset Nat
 
 
-@[main]
+@[path]
 private lemma main
   [Fintype ι] [DecidableEq ι]
   [CommMonoid α]

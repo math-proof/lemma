@@ -3,7 +3,7 @@ import sympy.functions.elementary.complexes
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {z : ℂ} :
 -- imply

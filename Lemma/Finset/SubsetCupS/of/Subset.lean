@@ -2,7 +2,7 @@ import Lemma.Set.In_Cup.is.Any_In
 open Set
 
 
-@[main]
+@[path]
 private lemma fn
   [DecidableEq α]
   {A B : Finset α}
@@ -17,7 +17,7 @@ private lemma fn
   apply In_Cup.of.Any_In.double ⟨a, h haA, h_In_fa⟩
 
 
-@[main]
+@[path]
 private lemma main
   [DecidableEq α]
   {A B : Finset α}

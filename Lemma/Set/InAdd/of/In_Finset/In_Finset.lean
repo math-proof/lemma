@@ -2,7 +2,7 @@ import Lemma.Set.In_Finset.is.OrEqS
 open Set
 
 
-@[main]
+@[path]
 private lemma main
   [Add α]
   {x0 x1 a b c d : α}

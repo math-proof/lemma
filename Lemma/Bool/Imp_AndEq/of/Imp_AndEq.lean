@@ -2,7 +2,7 @@ import Lemma.Bool.Imp_And.of.Imp
 open Bool
 
 
-@[main]
+@[path]
 private lemma main
   {a b : α}
   {p : Prop}

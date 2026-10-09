@@ -15,7 +15,7 @@ import Lemma.List.Prod.eq.Foldr
 open Vector List Bool Nat
 
 
-@[main, fin]
+@[path, fin]
 private lemma main
 -- given
   (A : Tensor α (m :: s))

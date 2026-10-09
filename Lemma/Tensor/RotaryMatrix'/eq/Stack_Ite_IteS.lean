@@ -40,7 +40,7 @@ Su et al.'s original rotary matrix on interleaved pairs \((2i-1, 2i)\):
 
 Lean's $d$ is the half-dimension, so $\theta:\mathbb{R}^{d}$ plays the role of $(m\theta_{1},\ldots,m\theta_{d/2})$ and the matrix has shape $[d+d,d+d]$.
 -/
-@[main]
+@[path]
 private lemma main
 -- given
   (θ : Tensor ℝ [d]) :

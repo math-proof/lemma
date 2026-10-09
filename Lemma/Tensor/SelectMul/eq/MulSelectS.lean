@@ -9,7 +9,7 @@ open List Tensor
 set_option maxHeartbeats 1000000
 
 
-@[main]
+@[path]
 private lemma main
   [Mul α]
 -- given

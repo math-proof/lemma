@@ -31,7 +31,7 @@ integration against the counting measure); h₅: (x, u) ↦ π_θ(u | x) is join
 nonnegative density of the transition `T(· | x, u)` w.r.t. the reference measure of `S`, jointly measurable in the
 action and the next state (for Fubini). `Θ` is finite-dimensional (the weights `π` have shape `(D,)`).
 -/
-@[main]
+@[path]
 private lemma main
   [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [FiniteDimensional ℝ Θ]
   [ReferenceMeasure S] [ReferenceMeasure A]

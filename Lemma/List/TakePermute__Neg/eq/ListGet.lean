@@ -6,7 +6,7 @@ import Lemma.Nat.Ge_1
 open List Nat
 
 
-@[main]
+@[path]
 private lemma main
   {s : List α}
 -- given

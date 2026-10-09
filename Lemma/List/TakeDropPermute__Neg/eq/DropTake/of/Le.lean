@@ -5,7 +5,7 @@ import Lemma.Nat.SubAdd.eq.AddSub.of.Ge
 open List Nat
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   {s : List α}
   {i : Fin s.length}
@@ -20,7 +20,7 @@ private lemma main
   assumption
 
 
-@[main, comm]
+@[path, comm]
 private lemma sub
   {s : List α}
   {i : Fin s.length}

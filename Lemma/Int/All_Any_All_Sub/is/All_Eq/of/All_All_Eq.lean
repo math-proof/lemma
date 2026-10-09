@@ -6,7 +6,7 @@ open CategoryTheory groupCohomology
 /--
 [groupCohomology_forall_exists_conj_sub_eq_iff_of_forall_apply_eq](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_groupCohomology_forall_exists_conj_sub_eq_iff_of_forall_apply_eq.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {k G : Type u} [CommRing k] [Group G]
   {A : Rep.{u} k G}

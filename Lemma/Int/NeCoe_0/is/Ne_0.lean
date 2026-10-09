@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main, mp, mpr]
+@[path, mp, mpr]
 private lemma main
   [AddGroupWithOne α]
   [CharZero α]

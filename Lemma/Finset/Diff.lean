@@ -2,7 +2,7 @@ import sympy.core.function
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma merge
   {f : ℝ → ℝ}
   {d m : ℕ} :
@@ -12,7 +12,7 @@ private lemma merge
   (Function.iterate_add_apply _ m d f).symm
 
 
-@[main]
+@[path]
 private lemma split
   {f : ℝ → ℝ}
   {d m : ℕ}

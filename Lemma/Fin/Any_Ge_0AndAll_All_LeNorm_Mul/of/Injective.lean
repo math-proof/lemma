@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [Matrix_exists_const_forall_norm_le_mul_of_norm_sum_pow_smul_le](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Matrix_exists_const_forall_norm_le_mul_of_norm_sum_pow_smul_le.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {L : ℕ}
   {x : Fin L → ℂ}

@@ -5,7 +5,7 @@ import Lemma.Real.Lt_Sqrt.is.LtSquare.of.Ge_0
 open Set Rat Nat Real
 
 
-@[main]
+@[path]
 private lemma main
   {x : ℝ}
 -- given

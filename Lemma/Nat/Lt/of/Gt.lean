@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   [LT α]
   {x y : α}
@@ -13,7 +13,7 @@ private lemma main
   simp [h]
 
 
-@[main]
+@[path]
 private lemma reverse.given
   [LT α]
   {x a : α}

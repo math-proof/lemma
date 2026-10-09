@@ -4,7 +4,7 @@ import Lemma.Nat.EqAdd0
 open Int Nat
 
 
-@[main]
+@[path]
 private lemma main
   [AddCommGroup α]
   {a b : α} :

@@ -2,7 +2,7 @@ import sympy.functions.elementary.trigonometric
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main:
 -- imply
   sin (π / 9) > 0 := by

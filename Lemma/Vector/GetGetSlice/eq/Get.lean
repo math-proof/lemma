@@ -7,7 +7,7 @@ import sympy.vector.vector
 open List Nat Vector
 
 
-@[main, fin]
+@[path, fin]
 private lemma main
 -- given
   (v : List.Vector α (m * n))

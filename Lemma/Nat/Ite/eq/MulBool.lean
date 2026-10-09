@@ -2,7 +2,7 @@ import Lemma.Nat.Ite.eq.AddMulSBool
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   [Decidable p]
   [NonAssocSemiring α]

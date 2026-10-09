@@ -3,7 +3,7 @@ import torch.Tensor
 open Vector
 
 
-@[main]
+@[path]
 private lemma main
   [MulZeroClass α] [Preorder α] [PosMulMono α]
   {A B : Tensor α s}

@@ -2,7 +2,7 @@ import Lemma.Nat.Le.of.Lt
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   [Preorder α]
   {x y : α}
@@ -15,7 +15,7 @@ private lemma main
 
 
 
-@[main]
+@[path]
 private lemma relax
   {x y : ℤ}
 -- given

@@ -2,7 +2,7 @@ import sympy.Basic
 import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
 
 
-@[main]
+@[path]
 private lemma shift
   {i j k : ℕ}
   {L H : ℕ → ℕ → ℝ}
@@ -14,7 +14,7 @@ private lemma shift
   rw [Finset.range_eq_Ico, Finset.sum_eq_sum_Ico_succ_bot h, add_comm]
 
 
-@[main]
+@[path]
 private lemma main
   [NonUnitalNonAssocSemiring α]
   {n : ℕ}

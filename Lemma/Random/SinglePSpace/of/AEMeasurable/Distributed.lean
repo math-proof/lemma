@@ -5,7 +5,7 @@ open MeasureTheory
 
 /-- An `x ~ D` hypothesis, together with an a.e. measurability proof for `x`, supplies the
 `SinglePSpace D.measure x` instance. -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace Ω]
   [ReferenceMeasure α]

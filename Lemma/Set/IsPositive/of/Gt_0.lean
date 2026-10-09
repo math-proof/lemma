@@ -2,7 +2,7 @@ import Lemma.Set.In_Ioi.is.Gt
 open Set
 
 
-@[main]
+@[path]
 private lemma main
   [Preorder α] [Zero α]
   {x : α}

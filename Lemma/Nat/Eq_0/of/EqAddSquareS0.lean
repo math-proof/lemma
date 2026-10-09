@@ -5,7 +5,7 @@ import Lemma.Nat.Lt0Add.of.Ge_0.Gt_0
 open Nat Int Bool
 
 
-@[main]
+@[path]
 private lemma main
   [Semiring α] [LinearOrder α] [IsStrictOrderedRing α]
   [ExistsAddOfLE α] [PosMulMono α] [AddLeftMono α]

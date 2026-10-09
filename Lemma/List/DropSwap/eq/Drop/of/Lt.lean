@@ -5,7 +5,7 @@ import Lemma.Nat.NotLt.is.Ge
 open List Nat
 
 
-@[main]
+@[path]
 private lemma main
   {i j : ℕ}
 -- given

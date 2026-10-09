@@ -2,7 +2,7 @@ import stdlib.SEq
 import sympy.Basic
 import torch.Tensor.Basic
 import torch.Tensor.sum
-@[main, cast]
+@[path, cast]
 private lemma main
   [Add α] [Zero α]
 -- given

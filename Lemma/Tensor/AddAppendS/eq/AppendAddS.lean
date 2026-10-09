@@ -7,7 +7,7 @@ import Lemma.Vector.AddAppendS.eq.AppendAddS
 open Bool Tensor Vector
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [Add α]
 -- given

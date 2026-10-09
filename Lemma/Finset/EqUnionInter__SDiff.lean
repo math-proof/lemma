@@ -3,7 +3,7 @@ import Lemma.Finset.Union
 open Finset
 
 
-@[main]
+@[path]
 private lemma main
   [DecidableEq ι]
 -- given

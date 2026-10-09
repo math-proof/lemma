@@ -2,7 +2,7 @@ import sympy.stats.mdp_history
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {S : Type*} {A : Type*}
   {h : Hist S A}

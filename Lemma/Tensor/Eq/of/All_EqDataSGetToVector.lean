@@ -6,7 +6,7 @@ import Lemma.Vector.EqFlattenMapRange.of.All_SEqArraySlice
 open Tensor Vector
 
 
-@[main]
+@[path]
 private lemma main
   {a b : Tensor α (s₀ :: s)}
 -- given

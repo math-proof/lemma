@@ -7,10 +7,10 @@ set_option maxHeartbeats 1000000
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Tensor.GetSliceGetDiv.eq.DivGetSliceGet |
+| path | Tensor.GetSliceGetDiv.eq.DivGetSliceGet |
 | fin | Tensor.GetSliceGetDiv.eq.DivGetSliceGet.fin |
 -/
-@[main, fin]
+@[path, fin]
 private lemma main
   [Div α]
 -- given

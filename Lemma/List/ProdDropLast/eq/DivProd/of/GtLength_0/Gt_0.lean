@@ -3,7 +3,7 @@ import Lemma.Nat.Div.of.Eq
 open List Nat
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   {s : List ℕ}
 -- given

@@ -15,7 +15,7 @@ import Lemma.Vector.Sum.eq.Head.of.Eq_1
 open List Nat Tensor Vector
 
 
-@[main]
+@[path]
 private lemma main
   [AddZeroClass α]
 -- given

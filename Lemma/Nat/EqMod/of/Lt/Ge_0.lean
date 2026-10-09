@@ -5,7 +5,7 @@ import Lemma.Nat.Ge.of.Ge.Gt
 open Nat Int
 
 
-@[main]
+@[path]
 private lemma main
   [IntegerRing Z]
   {k n : Z}

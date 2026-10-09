@@ -2,7 +2,7 @@ import Mathlib
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {a b c t : ℝ}
   {f : ℝ → ℝ}

@@ -3,7 +3,7 @@ import Lemma.List.SetCons.eq.Cons_Set
 open List
 
 
-@[main]
+@[path]
 private lemma main
   {s : List α}
 -- given

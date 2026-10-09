@@ -5,7 +5,7 @@ import Lemma.Vector.GetMul.eq.MulGet
 open Vector Int
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [NonUnitalNonAssocRing α]
 -- given

@@ -2,7 +2,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma size_deduction
   {S : Finset ℤ}
   {n : ℕ}

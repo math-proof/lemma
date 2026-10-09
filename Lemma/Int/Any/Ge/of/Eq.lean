@@ -3,7 +3,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma pigeonhole
   {k n : ℕ}
   {x : ℕ → ℕ}

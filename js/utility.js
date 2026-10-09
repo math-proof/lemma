@@ -1,6 +1,6 @@
 /**
- * Page/Vue helpers. Shared polyfills (`format`, `isspace`, `ord`, `chr`, `zip`, …)
- * live in `py.js`, loaded as a classic script in the browser.
+ * Page/Vue helpers. Python-like polyfills (`format`, `isspace`, `ord`, `chr`, `zip`, …)
+ * live in `py.js`; DOM/HTTP/Vue helpers live in `std.js`. Load order: py.js then std.js.
  */
 
 /** First path segment (e.g. `lean` for `/lean` or `/lean/`). Used in `/${user}/?module=…` links. */

@@ -6,7 +6,7 @@ open CategoryTheory
 /--
 [Rep_exists_ind_map_comp_eq_iff_exists_comp_eq_homEquiv](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Rep_exists_ind_map_comp_eq_iff_exists_comp_eq_homEquiv.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [Group G]
   {H : Subgroup G}

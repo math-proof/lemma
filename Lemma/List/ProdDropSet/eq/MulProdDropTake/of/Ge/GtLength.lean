@@ -8,7 +8,7 @@ import Lemma.Nat.MulMul.eq.Mul_Mul
 open List Nat
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [Monoid α]
   {s : List α}

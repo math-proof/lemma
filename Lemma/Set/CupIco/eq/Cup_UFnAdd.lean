@@ -4,7 +4,7 @@ import Lemma.Int.AnyIco.of.AnyIco
 open Set Int
 
 
-@[main]
+@[path]
 private lemma main
   [AddCommGroup ι] [PartialOrder ι] [IsOrderedAddMonoid ι]
 -- given

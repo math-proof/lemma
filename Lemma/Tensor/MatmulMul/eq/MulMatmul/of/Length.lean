@@ -4,7 +4,7 @@ import Lemma.Tensor.SumMul.eq.MulSum
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [CommSemiring α]
   {s s' : List ℕ}

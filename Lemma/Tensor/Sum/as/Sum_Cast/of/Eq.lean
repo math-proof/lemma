@@ -5,7 +5,7 @@ import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.Ne_Nil
 open Tensor List
 
 
-@[main]
+@[path]
 private lemma main
   [AddCommMonoid α]
   [DecidableEq ι]
@@ -30,7 +30,7 @@ private lemma main
     aesop
 
 
-@[main]
+@[path]
 private lemma fin
   [AddCommMonoid α]
 -- given

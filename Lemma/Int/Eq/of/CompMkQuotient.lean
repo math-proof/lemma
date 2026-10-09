@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [Algebra_FormallyUnramified_ext_of_isHausdorff](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Algebra_FormallyUnramified_ext_of_isHausdorff.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {R A B : Type*} [CommRing R] [CommRing A] [Algebra R A] [CommRing B] [Algebra R B] [Algebra.FormallyUnramified R A]
   {I : Ideal B} [IsHausdorff I B]

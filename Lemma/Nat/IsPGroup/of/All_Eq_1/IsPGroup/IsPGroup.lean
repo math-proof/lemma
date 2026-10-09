@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [NumberField_isPGroup_algEquiv_compositum_of_isPGroup](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_NumberField_isPGroup_algEquiv_compositum_of_isPGroup.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {E F L N : Type} [Field E] [NumberField E] [Field F] [NumberField F] [Field L] [NumberField L] [Field N] [NumberField N] [Algebra E F] [Algebra E L] [Algebra E N] [Algebra F N] [Algebra L N] [IsScalarTower E F N] [IsScalarTower E L N] [IsGalois E F] [IsGalois E L] [IsGalois E N]
   {p : ℕ} [Fact p.Prime]

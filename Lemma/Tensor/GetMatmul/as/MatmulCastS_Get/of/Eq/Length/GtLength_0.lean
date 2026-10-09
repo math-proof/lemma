@@ -11,7 +11,7 @@ import Lemma.Vector.GetCast.eq.Get.of.Eq
 open Bool List Tensor Vector
 
 
-@[main, fin]
+@[path, fin]
 private lemma main
   [Mul α] [Add α] [Zero α]
   {s s' : List ℕ}

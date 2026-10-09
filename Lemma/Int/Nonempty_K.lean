@@ -23,7 +23,7 @@ private lemma  Algebra.TensorProduct.nonempty_algEquiv_tensor_quotient_of_isScal
       exact e2.commutes a)
   exact ⟨(Algebra.TensorProduct.cancelBaseChange Λ (Λ ⧸ I) k k A).symm.trans
     (Algebra.TensorProduct.congr AlgEquiv.refl e2')⟩
-@[main]
+@[path]
 private lemma main
   [CommRing Λ] [CommRing k] [Algebra Λ k] [CommRing A] [Algebra Λ A]
   {I : Ideal Λ} [Algebra (Λ ⧸ I) k] [IsScalarTower Λ (Λ ⧸ I) k] :

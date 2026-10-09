@@ -15,7 +15,7 @@ import torch.Tensor.sum
 open Int Nat Tensor
 
 
-@[main, fin]
+@[path, fin]
 private lemma main
   [Semiring α]
   [NeZero (l : ℕ)]

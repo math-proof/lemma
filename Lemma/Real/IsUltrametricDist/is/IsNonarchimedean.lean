@@ -8,7 +8,7 @@ import Mathlib.Analysis.Normed.Module.Completion
 /--
 [AbsoluteValue_Completion_isUltrametricDist_of_isNonarchimedean](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AbsoluteValue_Completion_isUltrametricDist_of_isNonarchimedean.lean)
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   [Field K]
   (v : AbsoluteValue K ℝ) :
@@ -34,7 +34,7 @@ private lemma main
       map_natCast UniformSpace.Completion.coeRingHom n
     have h2 : (n : WithAbs v).ofAbs = (n : K) := map_natCast (WithAbs.equiv v) n
     rw [← h1, UniformSpace.Completion.norm_coe, WithAbs.norm_eq_apply_ofAbs, h2]
-    exact IsNonarchimedean.apply_natCast_le_one hv
+    exact hv.apply_natCast_le_one (by simp [v.map_zero, v.map_one]) v.map_one
 
 
 -- created on 2026-09-18

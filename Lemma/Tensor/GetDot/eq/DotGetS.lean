@@ -23,7 +23,7 @@ set_option maxHeartbeats 2500000
 /--
 tensor version of Matrix.mul_apply
 -/
-@[main, fin]
+@[path, fin]
 private lemma main
   [Mul α] [Add α] [Zero α]
 -- given

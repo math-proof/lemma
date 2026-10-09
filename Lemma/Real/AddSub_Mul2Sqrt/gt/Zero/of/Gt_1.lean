@@ -7,7 +7,7 @@ import Lemma.Int.AddSub.eq.SubAdd
 open Int Real Nat
 
 
-@[main]
+@[path]
 private lemma main
   {x : ℝ}
 -- given

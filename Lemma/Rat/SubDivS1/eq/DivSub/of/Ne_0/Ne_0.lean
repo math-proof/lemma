@@ -2,7 +2,7 @@ import Lemma.Rat.SubDivS.eq.DivMul_Sub.of.Ne_0.Ne_0
 open Rat
 
 
-@[main]
+@[path]
 private lemma main
   [Field α]
   {a b : α}

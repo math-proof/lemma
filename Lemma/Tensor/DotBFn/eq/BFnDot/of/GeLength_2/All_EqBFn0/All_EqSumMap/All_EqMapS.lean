@@ -18,7 +18,7 @@ set_option maxHeartbeats 1000000
 
 
 /-- `dot` commutes with a pointwise scalar binary operator `f` when the right rank is ≥ 2 and the left is a vector. -/
-@[main]
+@[path]
 private lemma main
   [Mul α] [Add α] [Zero α]
   {f : α → α → α}
@@ -140,7 +140,7 @@ private lemma main
 
 
 /-- `dot` commutes with a pointwise scalar binary operator `f` when the left rank is ≥ 2 and the right is a vector. -/
-@[main]
+@[path]
 private lemma left
   [Mul α] [Add α] [Zero α]
   {f : α → α → α}

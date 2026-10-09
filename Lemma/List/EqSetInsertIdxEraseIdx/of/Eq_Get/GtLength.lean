@@ -2,7 +2,7 @@ import Lemma.List.EqSetInsertIdxEraseIdx.of.GtLength
 open List
 
 
-@[main]
+@[path]
 private lemma main
   {d : ℕ}
   {s : List α}

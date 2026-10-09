@@ -2,7 +2,7 @@ import Lemma.Nat.Gt.is.Ge.Ne
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   [LinearOrder α]
   {a b : α} :

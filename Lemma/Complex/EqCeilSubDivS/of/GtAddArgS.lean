@@ -1,7 +1,7 @@
 import Lemma.Complex.Arg.in.IocNegPiPi
 import Lemma.Set.Add.in.Ioc.of.In.In
 open Complex
-@[main]
+@[path]
 private lemma main
   {A B : ℂ}
 -- given

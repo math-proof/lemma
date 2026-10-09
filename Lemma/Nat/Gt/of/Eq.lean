@@ -2,7 +2,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {a b : ℝ}
 -- given
@@ -14,7 +14,7 @@ private lemma main
   linarith
 
 
-@[main]
+@[path]
 private lemma relax
   {a b upper : ℝ}
 -- given

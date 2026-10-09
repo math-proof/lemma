@@ -7,10 +7,10 @@ open Hyperreal Int
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Hyperreal.EqSt_0.of.Infinitesimal |
+| path | Hyperreal.EqSt_0.of.Infinitesimal |
 | mt | Hyperreal.NotInfinitesimal.of.NeSt_0 |
 -/
-@[main, mt]
+@[path, mt]
 private lemma main
   {x : ℝ*}
 -- given

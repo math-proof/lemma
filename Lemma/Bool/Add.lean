@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma principle.inclusive_exclusive
   [Decidable p] [Decidable q] :
 -- imply

@@ -10,7 +10,7 @@ import torch.eye
 open Fin Nat Tensor
 
 
-@[main]
+@[path]
 private lemma main :
 -- imply
   (0 : Tensor ℝ [d]).rotaryMatrix' = Tensor.eye (d + d) := by

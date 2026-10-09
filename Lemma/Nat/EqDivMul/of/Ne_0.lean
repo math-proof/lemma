@@ -4,7 +4,7 @@ import sympy.Basic
 /--
 This lemma applies to Nat, Int as well
 -/
-@[main]
+@[path]
 private lemma left
   [CommMonoidWithZero α]
   [Div α]
@@ -22,7 +22,7 @@ private lemma left
 /--
 This lemma applies to Nat, Int as well
 -/
-@[main]
+@[path]
 private lemma main
   [MonoidWithZero α]
   [Div α]

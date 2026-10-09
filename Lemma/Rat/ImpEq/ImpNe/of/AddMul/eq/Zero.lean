@@ -3,7 +3,7 @@ import Lemma.Rat.Eq_Div.is.EqMul.of.Ne_0
 open Int Rat
 
 
-@[main]
+@[path]
 private lemma main
   [Field α]
   {x a b : α}

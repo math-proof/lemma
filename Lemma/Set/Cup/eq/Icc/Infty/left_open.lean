@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main :
 -- imply
   ⋃ k : ℕ, Set.Ioc (k : ℤ) ((k : ℤ) + 1) = Set.Ioi 0 := by

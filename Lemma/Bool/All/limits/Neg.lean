@@ -2,7 +2,7 @@ import Lemma.Bool.All.of.All.limits.Neg
 open Bool
 
 
-@[main]
+@[path]
 private lemma main
   {f : ℤ → Prop}
   {a b : ℤ} :

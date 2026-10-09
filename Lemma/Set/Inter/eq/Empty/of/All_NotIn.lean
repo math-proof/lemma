@@ -3,7 +3,7 @@ import Lemma.Set.Any_In.is.Ne_Empty
 open Set Bool
 
 
-@[main]
+@[path]
 private lemma main
   {A B : Set α}
 -- given

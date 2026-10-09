@@ -4,7 +4,7 @@ import Lemma.List.EqRotateRotate.of.GeLength
 open List
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   {s : List ℕ}
 -- given

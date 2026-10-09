@@ -71,7 +71,7 @@ every row at least one unmasked entry,
 \]
 (the right side is a real tensor cast to \( \mathbb{R}^* \)).
 -/
-@[main]
+@[path]
 private lemma main
   {n m : ℕ}
 -- given

@@ -2,9 +2,9 @@ import sympy.Basic
 import Mathlib.Order.ConditionallyCompleteLattice.Finset
 
 
-@[main]
+@[path]
 private lemma main
-  {ι α : Type*} [ConditionallyCompleteLinearOrder α]
+  [ConditionallyCompleteLinearOrder α]
   {s : Set ι} {f : ι → α} {M : α}
 -- given
   (hne : s.Nonempty)
@@ -19,10 +19,9 @@ private lemma main
   have heq : (⨅ x : s, f x) = sInf (f '' s) :=
     IsGLB.ciInf_set_eq (isGLB_csInf hne' hb) hne
   rw [heq] at hM
-  rcases hne'.csInf_mem hfin' with ⟨x, hx, hx_eq⟩
+  obtain ⟨x, hx, hx_eq⟩ := hne'.csInf_mem hfin'
   refine ⟨x, hx, ?_⟩
-  rw [hx_eq]
-  exact hM
+  rwa [hx_eq]
 
 
 -- created on 2019-12-01

@@ -6,7 +6,7 @@ open Polynomial
 /--
 [IntermediateField_not_mem_adjoin_pow_of_transcendental](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_IntermediateField_not_mem_adjoin_pow_of_transcendental.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {K : Type u} [Field K]
   {L : Type v} [Field L] [Algebra K L]

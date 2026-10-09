@@ -2,7 +2,7 @@ import Lemma.Nat.Ge.is.All.Ge
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   [LE α]
   {x y : Tensor α (n :: s)}

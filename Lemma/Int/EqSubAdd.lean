@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma left
   [AddCommGroup α]
   {a b : α} :
@@ -11,7 +11,7 @@ private lemma left
   apply add_sub_cancel_left
 
 
-@[main]
+@[path]
 private lemma main
   [AddGroup α]
   {a b : α} :

@@ -2,7 +2,7 @@ import Lemma.Vector.EqGetMapRange
 open Vector
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h : i < n)

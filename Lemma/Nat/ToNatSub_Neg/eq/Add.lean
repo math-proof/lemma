@@ -5,7 +5,7 @@ import Lemma.Nat.ToNatAdd.eq.Add
 open Int Nat
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (i d : ℕ) :

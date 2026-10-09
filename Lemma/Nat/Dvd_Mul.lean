@@ -3,7 +3,7 @@ import Lemma.Nat.EqMul_1
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   [CommMonoid α]
 -- given
@@ -16,7 +16,7 @@ private lemma main
   rw [EqMul_1]
 
 
-@[main]
+@[path]
 private lemma left
   [Monoid α]
 -- given

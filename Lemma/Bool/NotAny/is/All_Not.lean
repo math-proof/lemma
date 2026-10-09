@@ -4,12 +4,12 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Bool.NotAny.is.All_Not |
+| path | Bool.NotAny.is.All_Not |
 | comm | Bool.All_Not.is.NotAny |
 | mp | Bool.All_Not.of.NotAny |
 | mpr | Bool.NotAny.of.All_Not |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
 -- given
   (p : α → Prop) :

@@ -5,7 +5,7 @@ import Lemma.Nat.CoeSub.eq.SubCoeS.of.Gt
 open Nat Int
 
 
-@[main]
+@[path]
 private lemma main
   [Field α] [LinearOrder α] [IsStrictOrderedRing α] [FloorRing α]
   {start stop step i : ℕ}

@@ -2,7 +2,7 @@ import Lemma.List.EraseIdx.eq.Append_Drop_Add_1
 open List
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [Monoid α]
 -- given

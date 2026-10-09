@@ -3,7 +3,7 @@ import Lemma.Rat.EqMul_Div.of.Ne_0
 open Rat
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [CommGroupWithZero α]
   {a : α}

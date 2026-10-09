@@ -4,7 +4,7 @@ open Set MeasureTheory
 
 
 
-@[main]
+@[path]
 private lemma main
   {a b : ℝ}
   {f : ℝ → ℝ}

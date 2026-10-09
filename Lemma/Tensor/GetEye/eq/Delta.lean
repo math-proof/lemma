@@ -4,7 +4,7 @@ import torch.eye
 open Tensor
 
 
-@[main, fin]
+@[path, fin]
 private lemma main
   [AddMonoidWithOne α] [CharZero α]
 -- given

@@ -4,7 +4,7 @@ import Lemma.List.DropTake.eq.TakeDrop
 open List
 
 
-@[main]
+@[path]
 private lemma main
   {s : List α}
 -- given

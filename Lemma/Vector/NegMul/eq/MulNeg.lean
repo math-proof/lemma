@@ -9,12 +9,12 @@ open Int Vector
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Vector.NegMul.eq.MulNeg |
+| path | Vector.NegMul.eq.MulNeg |
 | comm | Vector.MulNeg.eq.NegMul |
 | scalar | Vector.NegMul.eq.MulNeg.scalar |
 | comm.scalar | Vector.MulNeg.eq.NegMul.scalar |
 -/
-@[main, comm]
+@[path, comm]
 private lemma main
   [Mul α] [HasDistribNeg α]
 -- given
@@ -30,7 +30,7 @@ private lemma main
   rw [GetNeg.eq.NegGet.fin]
 
 
-@[main, comm]
+@[path, comm]
 private lemma scalar
   [Mul α] [HasDistribNeg α]
 -- given

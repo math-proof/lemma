@@ -6,7 +6,7 @@ open NumberField IsDedekindDomain
 /--
 [NumberField_natCast_mem_asIdeal_of_forall_map_mem_iff_valuation_le_one](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_NumberField_natCast_mem_asIdeal_of_forall_map_mem_iff_valuation_le_one.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [Field K] [NumberField K] [Field Ω]
   {σ : K →+* Ω}

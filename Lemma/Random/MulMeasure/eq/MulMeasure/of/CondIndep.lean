@@ -15,7 +15,7 @@ in terms of the measures of the events:
 i.e. `ℙ(x = u, y = v | z = w) = ℙ(x = u | z = w) * ℙ(y = v | z = w)` with the denominators cleared,
 so no non-vanishing assumption is needed.
 -/
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace Ω] [StandardBorelSpace Ω]
   [ReferenceMeasure α] [ReferenceMeasure β] [ReferenceMeasure γ]

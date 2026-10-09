@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma relative_distance.upper_triangle.upper_part
   {n u k : ℕ}
   {r : ℕ → ℤ}
@@ -17,7 +17,7 @@ private lemma relative_distance.upper_triangle.upper_part
   rw [h₀, h₁, show min (j + i) (n - 1) = i + j by omega]
 
 
-@[main]
+@[path]
 private lemma relative_distance.upper_triangle.lower_part
   {n u k : ℕ}
   {r : ℕ → ℤ}
@@ -34,7 +34,7 @@ private lemma relative_distance.upper_triangle.lower_part
   rw [h₀, h₁, show min (j + (i + n - u)) (n - 1) = i + n - u + j by omega]
 
 
-@[main]
+@[path]
 private lemma relative_distance.lower_triangle.lower_part
   {n u k : ℕ}
   {r : ℕ → ℤ}
@@ -50,7 +50,7 @@ private lemma relative_distance.lower_triangle.lower_part
   rw [h₀, h₁, show min (j + (i + u + 1 - u)) (n - 1) = i + 1 + j by omega]
 
 
-@[main]
+@[path]
 private lemma relative_distance.lower_triangle.upper_part
   {n u k : ℕ}
   {r : ℕ → ℤ}
@@ -67,7 +67,7 @@ private lemma relative_distance.lower_triangle.upper_part
   rw [h₀, h₁, show min (j + (i + 1 - u)) (n - 1) = j by omega]
 
 
-@[main]
+@[path]
 private lemma relative_distance.lower_triangle.lower_part.tf
   {n u k : ℕ}
   {r : ℕ → ℤ}
@@ -85,7 +85,7 @@ private lemma relative_distance.lower_triangle.lower_part.tf
   rw [h₀, h₁, show min (j + (i + u - 1 + 1 - u)) (n - 1) = i + j by omega]
 
 
-@[main]
+@[path]
 private lemma relative_distance.lower_triangle.upper_part.tf
   {n u k : ℕ}
   {r : ℕ → ℤ}

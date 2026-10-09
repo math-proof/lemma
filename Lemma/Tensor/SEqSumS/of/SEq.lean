@@ -4,7 +4,7 @@ import torch.Tensor.sum
 open Bool
 
 
-@[main]
+@[path]
 private lemma main
   [Add α] [Zero α]
   {A : Tensor α s}

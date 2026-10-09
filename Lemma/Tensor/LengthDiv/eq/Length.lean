@@ -2,7 +2,7 @@ import torch.Tensor
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   [Div α]
 -- given
@@ -15,7 +15,7 @@ private lemma main
     simp [Tensor.length]
 
 
-@[main]
+@[path]
 private lemma left
   [Div α]
 -- given

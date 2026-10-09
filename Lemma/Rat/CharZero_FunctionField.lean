@@ -6,7 +6,7 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry TensorProduct
 /--
 [AlgebraicGeometry_charZero_functionField_of_hom_spec_of_charZero](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_charZero_functionField_of_hom_spec_of_charZero.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [Field C] [CharZero C]
   {X : Scheme.{0}} [IsIntegral X]

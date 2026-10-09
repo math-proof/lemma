@@ -18,7 +18,7 @@ set_option maxHeartbeats 1000000
 
 
 /-- `dot` commutes with a pointwise scalar binary operator `f` when both ranks are ≥ 2. -/
-@[main]
+@[path]
 private lemma main
   [Mul α] [Add α] [Zero α]
   {f : α → α → α}

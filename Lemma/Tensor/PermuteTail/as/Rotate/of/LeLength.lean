@@ -17,7 +17,7 @@ import Lemma.List.ProdAppend.eq.MulProdS
 open Vector Nat Tensor Bool List Fin
 
 
-@[main]
+@[path]
 private lemma main
   {s : List ℕ}
 -- given

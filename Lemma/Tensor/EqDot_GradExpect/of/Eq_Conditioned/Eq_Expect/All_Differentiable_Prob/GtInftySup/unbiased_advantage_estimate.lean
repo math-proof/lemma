@@ -40,7 +40,7 @@ Densities are taken w.r.t. the counting measures (`hS`, `hA`), so
 `ℙ[M θ](s[t] = x)` is the point mass and `ℙ[M θ](a[t] = u | s[t] = x)` is the policy
 `π_θ(u | x)` at reachable states; the `SinglePSpace` facts the `ℙ` terms need are derived from `hS`, `hA`.
 -/
-@[main]
+@[path]
 private lemma main
   [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [CompleteSpace Θ]
   [ReferenceMeasure S] [MeasurableSingletonClass S] [Fintype S]

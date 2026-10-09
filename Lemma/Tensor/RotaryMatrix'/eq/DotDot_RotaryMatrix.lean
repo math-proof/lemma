@@ -20,7 +20,7 @@ import torch.functions
 open Nat Tensor Fin
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (θ : Tensor ℝ [d]) :

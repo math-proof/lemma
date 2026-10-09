@@ -6,7 +6,7 @@ open Tensor
 /--
 2×1 block matrix times a split vector.
 -/
-@[main]
+@[path]
 private lemma main
   [Mul α] [AddCommMonoid α]
 -- given

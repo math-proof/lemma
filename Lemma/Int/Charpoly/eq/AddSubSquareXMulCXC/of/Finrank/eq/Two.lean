@@ -6,7 +6,7 @@ open Polynomial
 /--
 [LinearMap_charpoly_of_finrank_eq_two](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_LinearMap_charpoly_of_finrank_eq_two.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing R] [Nontrivial R] [AddCommGroup M] [Module R M] [Module.Free R M] [Module.Finite R M]
   {f : M →ₗ[R] M}

@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [AlgHom_exists_cotangent_linearMap_of_fst_eq](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgHom_exists_cotangent_linearMap_of_fst_eq.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {𝒪 : Type u} [CommRing 𝒪]
   {R : Type v} [CommRing R] [Algebra 𝒪 R]

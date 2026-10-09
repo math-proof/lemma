@@ -5,7 +5,7 @@ import Lemma.Nat.Sub.eq.Zero.of.Le
 open Bool Tensor Nat
 
 
-@[main]
+@[path]
 private lemma main
   {s : List ℕ}
 -- given

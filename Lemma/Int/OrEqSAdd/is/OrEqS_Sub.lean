@@ -4,12 +4,12 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Int.OrEqSAdd.is.OrEqS_Sub |
+| path | Int.OrEqSAdd.is.OrEqS_Sub |
 | comm | Int.OrEqS_Sub.is.OrEqSAdd |
 | mp | Int.OrEqS_Sub.of.OrEqSAdd |
 | mpr | Int.OrEqSAdd.of.OrEqS_Sub |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   [AddGroup α]
   {x a b c : α} :

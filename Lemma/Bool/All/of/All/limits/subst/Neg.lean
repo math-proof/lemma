@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma real
   {f : ℝ → Prop}
   {a b c : ℝ}

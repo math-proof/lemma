@@ -3,7 +3,7 @@ import Lemma.Tensor.GtStack.of.All_Gt
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [Preorder α]
   {f g : Fin n → Tensor α s} :

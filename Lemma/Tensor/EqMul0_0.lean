@@ -7,7 +7,7 @@ import torch.Tensor
 open Vector Tensor
 
 
-@[main, subst 0]
+@[path, subst 0]
 private lemma main
   [MulZeroClass α]
   {s : List ℕ}
@@ -22,7 +22,7 @@ private lemma main
   apply EqMul0_0
 
 
-@[main]
+@[path]
 private lemma nat
   [Semiring α]
   [CharZero α]

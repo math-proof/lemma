@@ -4,7 +4,7 @@ import Lemma.Vector.SEqArraySliceS.of.SEq.Eq.Eq
 open Vector Bool
 
 
-@[main]
+@[path]
 private lemma main
   {v : List.Vector α N}
   {v' : List.Vector α (m * n)}

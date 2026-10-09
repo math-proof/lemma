@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [Ideal_exists_mem_and_map_eq_span_singleton_and_mem_nonZeroDivisors_of_map_eq_span_singleton](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Ideal_exists_mem_and_map_eq_span_singleton_and_mem_nonZeroDivisors_of_map_eq_span_singleton.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {R S : Type*} [CommRing R] [CommRing S] [Algebra R S] [IsLocalRing S]
   {I : Ideal R}

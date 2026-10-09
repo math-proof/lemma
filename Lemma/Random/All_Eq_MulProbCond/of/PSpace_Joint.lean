@@ -8,7 +8,7 @@ import Lemma.Random.All_Eq_DivProbS
 open Random MeasureTheory
 
 
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace Ω]
   [ReferenceMeasure α] [ReferenceMeasure β]
@@ -62,7 +62,7 @@ private lemma main
       rw [withDensity_apply _ MeasurableSet.univ, setLIntegral_univ]
     rw [← h, ← hlaw]
     have : IsProbabilityMeasure (π.map y) :=
-      Measure.isProbabilityMeasure_map (AEMeasurable.snd hP.aemeasurable)
+      inferInstance
     exact measure_univ
   have hfin : ∀ᵐ b ∂ν, q b < ⊤ :=
     ae_lt_top hq (by rw [htot]; norm_num)

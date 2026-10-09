@@ -3,7 +3,7 @@ import Lemma.Int.LtAbsSub.is.LtSub.Lt_Add
 open Hyperreal Int
 
 
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
 -- given
   (x : ℝ*)

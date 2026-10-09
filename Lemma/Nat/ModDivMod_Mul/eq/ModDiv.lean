@@ -7,7 +7,7 @@ import Lemma.Nat.MulMul.eq.Mul_Mul
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (n k d : ℕ) :
@@ -28,7 +28,7 @@ private lemma main
     assumption
 
 
-@[main]
+@[path]
 private lemma Comm
 -- given
   (n k d : ℕ) :

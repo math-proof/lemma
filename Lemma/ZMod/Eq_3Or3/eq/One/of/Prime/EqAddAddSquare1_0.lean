@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [ZMod_prime_dvd_eq_three_or_mod_three_eq_one_of_sq_add_self_add_one_eq_zero](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_ZMod_prime_dvd_eq_three_or_mod_three_eq_one_of_sq_add_self_add_one_eq_zero.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {M : ℕ}
   {x : ZMod M}

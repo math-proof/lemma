@@ -2,7 +2,7 @@ import sympy.vector.vector
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   [Div α]
 -- given
@@ -15,7 +15,7 @@ private lemma main
   aesop
 
 
-@[main]
+@[path]
 private lemma scalar
   [Div α]
 -- given

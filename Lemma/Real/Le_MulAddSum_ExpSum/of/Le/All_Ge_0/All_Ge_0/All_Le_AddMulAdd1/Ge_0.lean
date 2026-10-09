@@ -3,7 +3,7 @@ import Lemma.Real.Le_AddMulProd_SumMulProd.of.Le.All_Ge_0.All_Le_AddMulAdd1
 open Finset Real
 
 
-@[main]
+@[path]
 private lemma main
   {u b c : ℕ → ℝ}
   {n₀ n : ℕ}
@@ -19,15 +19,23 @@ private lemma main
   have hP : ∀ a, n₀ ≤ a → ∏ i ∈ Ico a n, (1 + c i) ≤ exp (∑ i ∈ Ico n₀ n, c i) := fun a ha =>
     calc
       _ ≤ ∏ i ∈ Ico a n, exp (c i) :=
-        prod_le_prod (fun i hi => by linarith [h₂ i (by grind)]) fun i _ => by linarith [add_one_le_exp (c i)]
+        prod_le_prod₀ (fun i hi => by
+            have := (mem_Ico.mp hi).1
+            linarith [h₂ i (le_trans ha this)])
+          (fun i _ => by linarith [add_one_le_exp (c i)])
       _ = exp (∑ i ∈ Ico a n, c i) := (exp_sum _ _).symm
-      _ ≤ _ := exp_le_exp.2 (sum_le_sum_of_subset_of_nonneg (Ico_subset_Ico_left ha) fun i hi _ => h₂ i (by grind))
+      _ ≤ _ :=
+        exp_le_exp.2
+          (sum_le_sum_of_subset_of_nonneg (Ico_subset_Ico_left ha) fun i hi _ =>
+            h₂ i (mem_Ico.mp hi).1)
   calc
     _ ≤ u n₀ * ∏ i ∈ Ico n₀ n, (1 + c i) + ∑ k ∈ Ico n₀ n, b k * ∏ i ∈ Ico (k + 1) n, (1 + c i) :=
       Le_AddMulProd_SumMulProd.of.Le.All_Ge_0.All_Le_AddMulAdd1 h₁ h₂ h₄
     _ ≤ u n₀ * exp (∑ i ∈ Ico n₀ n, c i) + ∑ k ∈ Ico n₀ n, b k * exp (∑ i ∈ Ico n₀ n, c i) :=
       add_le_add (mul_le_mul_of_nonneg_left (hP n₀ le_rfl) h₀)
-        (sum_le_sum fun k hk => mul_le_mul_of_nonneg_left (hP (k + 1) (by grind)) (h₃ k (by grind)))
+        (sum_le_sum fun k hk => by
+          have hk' : n₀ ≤ k := (mem_Ico.mp hk).1
+          exact mul_le_mul_of_nonneg_left (hP (k + 1) (Nat.le_succ_of_le hk')) (h₃ k hk'))
     _ = _ := by
       rw [← sum_mul]
       ring

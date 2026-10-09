@@ -5,7 +5,7 @@ import Lemma.Matrix.All_StochasticVec.of.StochasticVec.Gt_0.All_GeneratorMatrix.
 open Matrix
 
 
-@[main]
+@[path]
 private lemma main
   {S : Type*} [Fintype S]
   {d : ℕ}

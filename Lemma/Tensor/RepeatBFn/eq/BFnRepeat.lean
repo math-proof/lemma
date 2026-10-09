@@ -9,7 +9,7 @@ import Lemma.Vector.SplitAtMap.eq.MapSplitAt
 open List Tensor Vector
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (f : α → α → α)

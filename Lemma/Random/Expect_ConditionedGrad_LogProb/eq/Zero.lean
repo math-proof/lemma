@@ -8,7 +8,7 @@ Expected grad-log-prob lemma on a finite outcome space: for a differentiable, po
 probability vectors `p θ` (e.g. the policy `π_θ(· | s)`),
 `𝔼_{a ∼ p θ}[∇_θ log p θ a] = ∑ a, p θ a • ∇_θ log p θ a = 0`.
 -/
-@[main]
+@[path]
 private lemma main
   [NormedAddCommGroup Θ] [NormedSpace ℝ Θ] [Fintype A]
   {p : Θ → A → ℝ}

@@ -6,7 +6,7 @@ import Lemma.Tensor.Sum_0.as.Sum_Get.of.GtLength_0
 open Bool Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [AddCommMonoid α]
   {X : Tensor α s}

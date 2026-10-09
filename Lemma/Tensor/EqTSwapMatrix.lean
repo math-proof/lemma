@@ -5,7 +5,7 @@ import Lemma.Tensor.GetSwapMatrix.eq.Ite
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [AddMonoidWithOne α] [CharZero α]
 -- given

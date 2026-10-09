@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   [MulZeroClass α] [Preorder α] [PosMulMono α]
   {a b : α}

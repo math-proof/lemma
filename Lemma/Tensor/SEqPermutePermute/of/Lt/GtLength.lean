@@ -5,7 +5,7 @@ import Lemma.Tensor.SEqPermuteS.of.SEq.Eq.Eq.GtLength
 open Nat Tensor
 
 
-@[main]
+@[path]
 private lemma main
   {s : List ℕ}
 -- given

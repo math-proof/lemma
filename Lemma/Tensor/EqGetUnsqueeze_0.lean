@@ -17,7 +17,7 @@ import Lemma.Vector.GetCast.eq.Get.of.Eq
 open Bool Nat Vector Tensor
 
 
-@[main, fin]
+@[path, fin]
 private lemma main
 -- given
   (X : Tensor α s) :
@@ -54,7 +54,7 @@ private lemma main
   repeat simp
 
 
-@[main, fin]
+@[path, fin]
 private lemma nat
 -- given
   (X : Tensor α s)

@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma bin
   {s : Finset ι}
   {a b : ι → α}
@@ -15,7 +15,7 @@ private lemma bin
   rw [h i i_in_s]
 
 
-@[main]
+@[path]
 private lemma main
   {s : Finset α}
   {a b : α → β}
@@ -29,7 +29,7 @@ private lemma main
   rw [h i i_in_s]
 
 
-@[main]
+@[path]
 private lemma const
   {s : Finset ι}
   {x : ι → α}

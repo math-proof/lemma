@@ -3,7 +3,7 @@ import Mathlib.MeasureTheory.Integral.Lebesgue.Basic
 open MeasureTheory
 
 
-@[main]
+@[path]
 private lemma main
   {α : Type*}
   [MeasurableSpace α]

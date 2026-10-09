@@ -2,7 +2,7 @@ import Lemma.Bool.HEq.of.All_HEq.Eq
 open Bool
 
 
-@[main]
+@[path]
 private lemma main
   {f : α → β}
   {g : α' → β}

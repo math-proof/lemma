@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [mem_nonZeroDivisors_of_forall_isMaximal_algebraMap_adicCompletion_mem](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_mem_nonZeroDivisors_of_forall_isMaximal_algebraMap_adicCompletion_mem.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing B] [IsNoetherianRing B]
   {b : B}

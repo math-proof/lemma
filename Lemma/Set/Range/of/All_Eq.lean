@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {ι : Sort u}
   {x y : ι → α}
@@ -14,7 +14,7 @@ private lemma main
   apply funext h
 
 
-@[main]
+@[path]
 private lemma set
   {S : Set ι}
   {x y : ι → α}

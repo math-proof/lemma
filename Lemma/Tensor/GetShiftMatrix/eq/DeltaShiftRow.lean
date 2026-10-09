@@ -6,7 +6,7 @@ open Tensor
 /--
 Entry of `ShiftMatrix i₀ j₀`: row `i` is sent to `i.shiftRow i₀ j₀`.
 -/
-@[main]
+@[path]
 private lemma main
   [AddMonoidWithOne α] [CharZero α]
   {n : ℕ}

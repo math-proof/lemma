@@ -6,7 +6,7 @@ open CategoryTheory AlgebraicGeometry
 /--
 [AlgebraicGeometry_exists_ringHom_functionField_germ_eq_of_base_genericPoint_eq](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_exists_ringHom_functionField_germ_eq_of_base_genericPoint_eq.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {X Y : Scheme.{u}} [IsIntegral X] [IsIntegral Y]
   {f : Y ⟶ X}

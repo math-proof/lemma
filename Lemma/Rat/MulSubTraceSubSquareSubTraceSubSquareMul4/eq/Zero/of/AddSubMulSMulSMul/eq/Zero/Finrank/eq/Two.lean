@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [LinearMap_trace_sub_mul_sq_sub_eq_zero_of_finrank_eq_two](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_LinearMap_trace_sub_mul_sq_sub_eq_zero_of_finrank_eq_two.lean)
 -/
-@[main]
+@[path]
 private lemma main
   [Field k] [AddCommGroup V] [Module k V] [FiniteDimensional k V]
   {Φ : V →ₗ[k] V}

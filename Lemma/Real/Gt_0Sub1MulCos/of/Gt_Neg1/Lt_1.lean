@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 For \(|e|<1\), the polar denominator \(1-e\cos x\) is positive.
 -/
-@[main]
+@[path]
 private lemma main
   {e : ℝ}
 -- given

@@ -9,7 +9,7 @@ import Lemma.Set.Union
 open Set
 
 
-@[main]
+@[path]
 private lemma main
   {A B C : Set α} :
 -- imply

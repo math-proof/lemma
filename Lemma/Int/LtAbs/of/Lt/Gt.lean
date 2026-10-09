@@ -2,7 +2,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {x y : ℝ}
 -- given
@@ -14,7 +14,7 @@ private lemma main
   exact abs_lt.mpr ⟨h₁, h₀⟩
 
 
-@[main]
+@[path]
 private lemma both
   {x y : ℝ}
 -- given

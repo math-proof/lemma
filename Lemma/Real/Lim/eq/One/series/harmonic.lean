@@ -6,7 +6,7 @@ open scoped Topology
 open Filter
 
 
-@[main]
+@[path]
 private lemma main
   :
 -- imply

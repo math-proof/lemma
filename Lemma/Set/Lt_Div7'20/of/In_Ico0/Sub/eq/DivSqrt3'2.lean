@@ -4,7 +4,7 @@ import Lemma.Set.Lt.of.LtUFn.In_Ico.In_Ico
 open Set Rat Nat
 
 
-@[main]
+@[path]
 private lemma main
   {x : ℝ}
 -- given

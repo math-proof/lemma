@@ -3,7 +3,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma square_completing
   {a b c x : ℂ}
 -- given
@@ -15,7 +15,7 @@ private lemma square_completing
   ring
 
 
-@[main]
+@[path]
 private lemma square_completing.harmonic_mean
   {a b x y z : ℂ}
 -- given

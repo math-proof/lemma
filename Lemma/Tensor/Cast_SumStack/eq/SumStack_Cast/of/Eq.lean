@@ -3,7 +3,7 @@ import Lemma.Tensor.SumStack.as.SumStack_Cast.of.Eq
 open Bool Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [AddMonoid α]
 -- given

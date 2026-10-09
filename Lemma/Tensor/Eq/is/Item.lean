@@ -4,7 +4,7 @@ import Lemma.Tensor.Eq.is.EqDataS
 open Tensor
 
 
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
 -- given
   (A B : Tensor α []) :

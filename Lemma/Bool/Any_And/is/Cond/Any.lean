@@ -4,12 +4,12 @@ import sympy.Basic
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Bool.Any_And.is.Cond.Any |
+| path | Bool.Any_And.is.Cond.Any |
 | comm | Bool.Cond.Any.is.Any_And |
 | mp | Bool.Cond.Any.of.Any_And |
 | mpr | Bool.Any_And.of.Cond.Any |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   {p : α → Prop}
   {r : Prop} :

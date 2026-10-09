@@ -8,7 +8,7 @@ import Lemma.List.LengthSlicedIndices.eq.ToNatCeilDivSub.of.Gt_0.Le.Lt
 open Int Rat List
 
 
-@[main]
+@[path]
 private lemma main
   {s : Slice} :
 -- imply

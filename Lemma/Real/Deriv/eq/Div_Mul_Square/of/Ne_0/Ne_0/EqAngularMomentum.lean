@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 From \(J=m\rho^2\dot\theta\): \(\dot\theta=J/(m\rho^2)\).
 -/
-@[main]
+@[path]
 private lemma main
   {m J : ℝ}
   {ρ θ : ℝ → ℝ}

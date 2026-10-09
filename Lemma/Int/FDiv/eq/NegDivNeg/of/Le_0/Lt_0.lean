@@ -5,7 +5,7 @@ import Lemma.Int.Div_Neg.eq.NegDiv
 open Int
 
 
-@[main]
+@[path]
 private lemma main
   {n d : ℤ}
 -- given

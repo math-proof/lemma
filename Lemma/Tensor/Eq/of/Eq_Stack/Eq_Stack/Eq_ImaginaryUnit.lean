@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma position_representation.sinusoidal
   {d b : ℕ}
   {PE PE' : ℕ → ℕ → ℝ}

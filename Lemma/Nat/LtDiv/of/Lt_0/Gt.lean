@@ -3,7 +3,7 @@ import Lemma.Rat.Div.lt.Zero.of.Lt_0
 import Lemma.Int.LtMulS.of.Gt.Lt_0
 
 
-@[main]
+@[path]
 private lemma main
   [Field α] [LinearOrder α] [IsStrictOrderedRing α]
   {x a b : α}

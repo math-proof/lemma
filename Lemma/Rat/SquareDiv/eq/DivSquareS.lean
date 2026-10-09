@@ -5,7 +5,7 @@ import Lemma.Rat.DivDiv.eq.Div_Mul
 open Rat Nat
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [DivisionCommMonoid α]
   {a b : α} :

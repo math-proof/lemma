@@ -2,7 +2,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma symbol.domain_defined
   {a b x : ℝ}
 -- given

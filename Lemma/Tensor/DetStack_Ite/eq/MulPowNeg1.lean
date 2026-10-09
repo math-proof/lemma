@@ -55,7 +55,7 @@ private lemma det_ite (γ : Type*) [CommRing γ] (n : ℕ) (h : 0 < n) :
 `det ([i < n] [j < n] if i = j then 0 else 1) = (-1)^(n-1) * (n - 1)`:
 tensor form of the determinant of the all-ones matrix minus the identity.
 -/
-@[main]
+@[path]
 private lemma main
   [CommRing β] (n : ℕ) (h : 0 < n) :
 -- imply

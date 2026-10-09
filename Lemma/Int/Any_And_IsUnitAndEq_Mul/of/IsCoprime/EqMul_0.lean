@@ -5,7 +5,7 @@ import sympy.Basic
 /--
 [exists_isIdempotentElem_mul_eq_of_mul_eq_zero_of_isCoprime](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_exists_isIdempotentElem_mul_eq_of_mul_eq_zero_of_isCoprime.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {R : Type u} [CommRing R]
   {f g : R}

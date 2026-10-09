@@ -3,7 +3,7 @@ import Lemma.Nat.AddAdd.eq.Add_Add
 open List Nat
 
 
-@[main]
+@[path]
 private lemma main
   {j' : Fin d}
 -- given

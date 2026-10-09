@@ -2,7 +2,7 @@ import Lemma.Bool.AndAndNot.is.False
 open Bool
 
 
-@[main]
+@[path]
 private lemma main :
 -- imply
   (q ∧ ¬p) ∧ p ↔ False := by

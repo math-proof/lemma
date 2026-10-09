@@ -2,7 +2,7 @@ import Lemma.List.EqCons_Tail.of.GtLength_0
 open List
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   {s : List α}
 -- given

@@ -21,7 +21,7 @@ X.sum = X.sum (-1)
 
 X.mean = X.mean (-1)
 -/
-@[main]
+@[path]
 private lemma main
   [Semifield float]
   [CharZero float]

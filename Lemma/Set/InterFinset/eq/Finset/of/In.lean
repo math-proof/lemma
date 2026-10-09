@@ -3,7 +3,7 @@ import Lemma.Set.EqInter.of.Subset
 open Set
 
 
-@[main]
+@[path]
 private lemma main
   {a : α}
   {s : Set α}

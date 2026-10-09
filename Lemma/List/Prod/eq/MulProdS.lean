@@ -2,7 +2,7 @@ import Lemma.Nat.Mul
 open Nat
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [Monoid α]
 -- given
@@ -14,7 +14,7 @@ private lemma main
   simp
 
 
-@[main, comm]
+@[path, comm]
 private lemma Comm
   [CommMonoid α]
 -- given

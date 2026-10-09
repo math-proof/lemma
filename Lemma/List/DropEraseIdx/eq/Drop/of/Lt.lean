@@ -3,7 +3,7 @@ import Lemma.Nat.Le.of.Lt
 open List Nat
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (h : i < j)

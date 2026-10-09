@@ -5,7 +5,7 @@ open Tensor
 
 
 /-- n-block form: the piecewise stack equals the block concatenation (`finSigmaFinEquiv`). -/
-@[main]
+@[path]
 private lemma main
 -- given
   (m : ℕ)

@@ -4,7 +4,7 @@ import sympy.dynamics.actor_critic
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma main
   {m : ℕ}
   {lambdaC : ℝ}

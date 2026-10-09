@@ -6,7 +6,7 @@ import Lemma.List.Prod.eq.MulProdS
 open List Nat
 
 
-@[main]
+@[path]
 private lemma main
   [CommMonoid α]
   {s : List α}

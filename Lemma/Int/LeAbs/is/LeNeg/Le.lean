@@ -5,12 +5,12 @@ open Int
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Int.LeAbs.is.LeNeg.Le |
+| path | Int.LeAbs.is.LeNeg.Le |
 | comm | Int.LeNeg.Le.is.LeAbs |
 | mp | Int.LeNeg.Le.of.LeAbs |
 | mpr | Int.LeAbs.of.LeNeg.Le |
 -/
-@[main, comm, mp, mpr]
+@[path, comm, mp, mpr]
 private lemma main
   [AddCommGroup α]
   [LinearOrder α]

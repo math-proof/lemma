@@ -5,7 +5,7 @@ import Lemma.Finset.All_Imp_GtAlpha_0
 open Finset Continuant
 
 
-@[main]
+@[path]
 private lemma main
   {n : ℕ}
   {x : ℕ → ℝ}
@@ -24,7 +24,7 @@ private lemma main
     exact h i (List.mem_range.mp hi)
 
 
-@[main]
+@[path]
 private lemma offset
   {n a b : ℕ}
   {x : ℕ → ℝ}

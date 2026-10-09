@@ -140,7 +140,7 @@ so it is not ported here; the masked sum is kept instead.
 The only hypothesis is `h_ne` (every row has an unmasked entry), needed for the denominator to be non-infinitesimal.
 The py hypotheses `All_Lt` (strictly increasing `d`) and `Subset_Cup` are only used by that unproved step.
 -/
-@[main]
+@[path]
 private lemma main
   {n m : ℕ}
 -- given

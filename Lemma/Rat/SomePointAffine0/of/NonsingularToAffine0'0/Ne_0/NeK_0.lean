@@ -11,7 +11,7 @@ private lemma  ws13_some_congr' {k : Type*} [Field k] {V : Affine k} {x₁ x₂ 
     {h₁ : V.Nonsingular x₁ y₁} {h₂ : V.Nonsingular x₂ y₂} (hx : x₁ = x₂) (hy : y₁ = y₂) :
     (Point.some x₁ y₁ h₁ : V.Point) = Point.some x₂ y₂ h₂ := by
   subst hx; subst hy; rfl
-@[main]
+@[path]
 private lemma main
   [Field k] [DecidableEq k]
   {B : k}

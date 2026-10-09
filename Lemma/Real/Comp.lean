@@ -6,7 +6,7 @@ open CategoryTheory AlgebraicGeometry
 /--
 [AlgebraicGeometry_comp_eq_comp_of_specMap_comp_eq_comp_of_mono_of_comp_eq](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_comp_eq_comp_of_specMap_comp_eq_comp_of_mono_of_comp_eq.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {A Q : Type u} [CommRing A] [CommRing Q]
   {π : A →+* Q}

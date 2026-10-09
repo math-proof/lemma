@@ -4,7 +4,7 @@ import stdlib.Slice
 open List
 
 
-@[main]
+@[path]
 private lemma main
   {s : List α} :
 -- imply

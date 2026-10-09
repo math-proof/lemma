@@ -2,7 +2,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[path]
 private lemma rsolve.linear
   {x : ℕ → ℝ}
   {c : ℝ}

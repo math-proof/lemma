@@ -1,7 +1,7 @@
 import Lemma.Set.In_Ico.of.And.split.Ico
 
 
-@[main]
+@[path]
 private lemma main
   {x a b d : ℤ}
 -- given

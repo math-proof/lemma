@@ -6,7 +6,7 @@ import Lemma.Kernel.MapPartialTraj.eq.ComapLastPowKernelSub.of.Le
 open MeasureTheory ProbabilityTheory Finset Kernel Preorder Filtration
 
 
-@[main]
+@[path]
 private lemma main
   [MeasurableSpace S] [MeasurableSingletonClass S] [MeasurableSpace Z]
   {n m : ℕ}

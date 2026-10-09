@@ -2,7 +2,7 @@ import Lemma.Nat.AddMul.lt.Mul.of.Lt
 open Nat
 
 
-@[main]
+@[path]
 private lemma main
   {m n : ℕ}
 -- given

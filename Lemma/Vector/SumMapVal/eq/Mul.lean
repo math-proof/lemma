@@ -3,7 +3,7 @@ import Lemma.Vector.MapVal.eq.Replicate
 open Vector
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (v : List.Vector (List.Vector α n) m) :

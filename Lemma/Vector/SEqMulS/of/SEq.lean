@@ -3,7 +3,7 @@ import Lemma.Vector.Mul.of.Eq
 open Bool Vector
 
 
-@[main]
+@[path]
 private lemma main
   [Mul α]
   {x : List.Vector α n}

@@ -5,7 +5,7 @@ import Lemma.Tensor.GetGetSlice.eq.Get
 open Tensor List
 
 
-@[main]
+@[path]
 private lemma main
 -- given
   (f : ℕ → Tensor α s)

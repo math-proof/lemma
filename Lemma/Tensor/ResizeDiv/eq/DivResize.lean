@@ -2,7 +2,7 @@ import Lemma.Tensor.ResizeBFn.eq.BFnResize
 open Tensor
 
 
-@[main]
+@[path]
 private lemma main
   [GroupWithZero α]
 -- given

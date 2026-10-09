@@ -22,7 +22,7 @@ import Lemma.Nat.Square.eq.Mul
 open Rat Int Nat
 
 
-@[main]
+@[path]
 private lemma main
   -- R is a linear ordered field, e.g. ℝ or ℚ
   [Field R] [LinearOrder R] [IsStrictOrderedRing R]

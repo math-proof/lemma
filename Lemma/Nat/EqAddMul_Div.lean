@@ -5,7 +5,7 @@ import sympy.functions.elementary.integers
 /--
 the division algorithm for any integers n and d
 -/
-@[main]
+@[path]
 private lemma main
   [IntegerRing Z]
 -- given

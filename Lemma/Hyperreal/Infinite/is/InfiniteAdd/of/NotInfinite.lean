@@ -50,14 +50,14 @@ private lemma mp
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Hyperreal.Infinite.is.InfiniteAdd.of.NotInfinite |
+| path | Hyperreal.Infinite.is.InfiniteAdd.of.NotInfinite |
 | comm | Hyperreal.InfiniteAdd.is.Infinite.of.NotInfinite |
 | mp   | Hyperreal.InfiniteAdd.of.Infinite.NotInfinite |
 | mpr  | Hyperreal.Infinite.of.InfiniteAdd.NotInfinite |
 | mp.mt | Hyperreal.NotInfinite.of.NotInfiniteAdd.NotInfinite |
 | mpr.mt | Hyperreal.NotInfiniteAdd.of.NotInfinite.NotInfinite |
 -/
-@[main, comm, mp, mpr, mp.mt, mpr.mt]
+@[path, comm, mp, mpr, mp.mt, mpr.mt]
 private lemma main
   {x : ℝ*}
 -- given

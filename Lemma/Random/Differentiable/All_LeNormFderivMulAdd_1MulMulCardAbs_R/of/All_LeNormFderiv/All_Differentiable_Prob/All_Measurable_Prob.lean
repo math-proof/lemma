@@ -16,7 +16,7 @@ Continuous-state counterpart of
 (for `f = rc`): the finite next-state sum becomes an integral, differentiated under the integral sign
 (the derivatives are uniformly bounded and `T(· | x, u)` is a probability measure).
 -/
-@[main]
+@[path]
 private lemma main
   [NormedAddCommGroup Θ] [NormedSpace ℝ Θ] [FiniteDimensional ℝ Θ] [MeasurableSpace S] [MeasurableSpace A] [Fintype A]
   {M : Model Θ S A}

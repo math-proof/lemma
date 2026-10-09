@@ -28,7 +28,7 @@ import Lemma.Vector.EqGetRange
 open Bool List Nat Tensor Vector
 
 
-@[main]
+@[path]
 private lemma main
   [Zero α]
   {d i n : ℕ}

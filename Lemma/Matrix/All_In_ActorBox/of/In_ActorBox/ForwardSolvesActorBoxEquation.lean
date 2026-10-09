@@ -6,7 +6,7 @@ import sympy.Basic
 import Lemma.Real.All_EqMul_ScalarIntegratingFactor.of.Continuous.Continuous.All_HasDerivWithinAt
 
 
-@[main]
+@[path]
 private lemma main
   {d : ℕ}
   {r : ℝ}

@@ -9,7 +9,7 @@ import torch.Tensor.sum
 open Tensor Vector
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [ExpRing α]
   {d : ℕ}

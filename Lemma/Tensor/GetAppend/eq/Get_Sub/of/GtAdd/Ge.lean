@@ -20,7 +20,7 @@ import Lemma.Tensor.SEqGetS.of.SEq.GtLength
 open Vector List Bool Nat
 
 
-@[main, fin]
+@[path, fin]
 private lemma main
 -- given
   (h₀ : i ≥ m)
@@ -80,7 +80,7 @@ private lemma main
       rfl
 
 
-@[main]
+@[path]
 private lemma batch
 -- given
   (h₀ : j ≥ n)

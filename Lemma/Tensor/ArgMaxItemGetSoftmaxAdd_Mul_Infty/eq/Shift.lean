@@ -11,7 +11,7 @@ set_option maxHeartbeats 2000000
 Argmax of a row of the hyperreal masked softmax versus argmax of the log-softmax row \( z \) stored at offsets \( \operatorname{off}(j) \):
 if row \( i \) has a unique maximal logit \( a_{ij_0} \) among the unmasked entries, then the argmax of \( \operatorname{softmax}(a + ([P] - 1)\infty)_i \) is \( j_0 \), and the argmax of \( z \) over \( S \) is \( \operatorname{off}(j_0) \).
 -/
-@[main]
+@[path]
 private lemma main
   {n : ℕ}
   [NeZero n]

@@ -3,7 +3,7 @@ import Lemma.Set.NotIn_Union.of.NotIn.NotIn
 open Set
 
 
-@[main]
+@[path]
 private lemma main
   {x y : α}
   {s : Set α}

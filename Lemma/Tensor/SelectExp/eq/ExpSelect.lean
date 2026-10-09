@@ -12,7 +12,7 @@ import torch.functions
 open Bool List Tensor Vector
 
 
-@[main, comm]
+@[path, comm]
 private lemma main
   [Exp α]
 -- given

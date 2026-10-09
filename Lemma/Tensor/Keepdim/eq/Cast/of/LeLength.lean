@@ -2,7 +2,7 @@ import torch.Tensor.Basic
 import torch.functions
 
 
-@[main]
+@[path]
 private lemma main
   {s : List ℕ}
 -- given

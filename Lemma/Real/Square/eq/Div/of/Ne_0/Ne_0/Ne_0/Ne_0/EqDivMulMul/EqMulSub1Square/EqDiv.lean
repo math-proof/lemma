@@ -9,7 +9,7 @@ T^2=\frac{4\pi^2 m^2a^2b^2}{J^2}=\frac{4\pi^2m^2a^3}{J^2}\cdot\frac{J^2}{GMm^2}
 =\frac{4\pi^2a^3}{GM}.
 \]
 -/
-@[main]
+@[path]
 private lemma main
   {T m J G M a b e : ℝ}
 -- given

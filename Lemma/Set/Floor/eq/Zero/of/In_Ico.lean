@@ -2,7 +2,7 @@ import Lemma.Set.EqFloor.of.In_Ico
 open Set
 
 
-@[main]
+@[path]
 private lemma main
   [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
   [FloorRing α]

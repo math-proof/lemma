@@ -6,7 +6,7 @@ import Lemma.Real.IsCompact_ActorBox
 import Lemma.Matrix.IsCompact
 
 
-@[main]
+@[path]
 private lemma main
   {S : Type*} [Fintype S]
   {A : Type*} [Fintype A]

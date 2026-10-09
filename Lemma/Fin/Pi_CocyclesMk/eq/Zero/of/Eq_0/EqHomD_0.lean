@@ -6,7 +6,7 @@ open CategoryTheory groupCohomology
 /--
 [groupCohomology_pi_cocyclesMk_eq_zero_of_eq_zero](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_groupCohomology_pi_cocyclesMk_eq_zero_of_eq_zero.lean)
 -/
-@[main]
+@[path]
 private lemma main
   {k G : Type} [CommRing k] [Group G]
   {A : Rep.{0} k G}

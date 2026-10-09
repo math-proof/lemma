@@ -2,7 +2,7 @@ import sympy.functions.elementary.exponential
 import sympy.series.limits
 
 
-@[main]
+@[path]
 private lemma main
   {x : ℝ*}
 -- given

@@ -7,10 +7,10 @@ open Set
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Set.Cup_Ioc.eq.Ioc |
+| path | Set.Cup_Ioc.eq.Ioc |
 | comm | Set.Ioc.eq.Cup_Ioc |
 -/
-@[main, comm]
+@[path, comm]
 private lemma main
   [Ring R] [LinearOrder R] [IsStrictOrderedRing R]
   {a b : ℤ} :
