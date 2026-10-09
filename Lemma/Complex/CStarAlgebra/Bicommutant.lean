@@ -15,7 +15,7 @@ private lemma bicommutant_finiteDimensional_matrix_eq
     ((StarSubalgebra.centralizer ℂ (S : Set (Matrix (Fin n) (Fin n) ℂ)) :
       Set (Matrix (Fin n) (Fin n) ℂ))) = S) :=
 -- proof
-  Analysis.CStarAlgebra.Bicommutant.bicommutant_finiteDimensional_matrix n S
+  Complex.CStarAlgebra.Bicommutant.bicommutant_finiteDimensional_matrix n S
 
 
 -- created on 2026-10-09

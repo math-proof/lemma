@@ -2,14 +2,14 @@
 // Replaces the old CM5 dynamic-import chain with proper ESM imports.
 
 import { EditorState, EditorSelection, StateEffect, Transaction, Prec } from "@codemirror/state";
-import { EditorView, keymap, lineNumbers, highlightActiveLine, drawSelection, highlightSpecialChars, rectangularSelection, crosshairCursor } from "@codemirror/view";
+import { EditorView, keymap, lineNumbers, drawSelection, highlightSpecialChars, rectangularSelection, crosshairCursor } from "@codemirror/view";
 import { defaultKeymap, history, historyKeymap, indentMore } from "@codemirror/commands";
 import { bracketMatching, foldGutter, indentOnInput, StreamLanguage, HighlightStyle, syntaxHighlighting, defaultHighlightStyle } from "@codemirror/language";
 import { tags as t } from "@lezer/highlight";
 import { autocompletion, completionKeymap, startCompletion } from "@codemirror/autocomplete";
 import { searchKeymap, highlightSelectionMatches } from "@codemirror/search";
 import { leanMode, leanHintWords } from "./codemirror-lean.js";
-import { CMBridge, CodeMirror, deleteToLineEnd } from "./codemirror.js";
+import { CMBridge, CodeMirror, deleteToLineEnd, cmMarkField } from "./codemirror.js";
 
 // Eclipse-like theme for CM6
 const eclipseTheme = EditorView.theme({
@@ -20,16 +20,20 @@ const eclipseTheme = EditorView.theme({
     fontFamily: "Consolas, monospace",
     height: "auto",
   },
+  // Inset focus ring: the default outward outline collides with `.bottom-line`
+  // dates (`Created on …`) that sit immediately under the last editor.
+  "&.cm-focused": {
+    outline: "1px dotted #212121",
+    outlineOffset: "-1px",
+  },
   ".cm-scroller": {
     fontFamily: "Consolas, monospace",
   },
   ".cm-content": {
     fontFamily: "Consolas, monospace",
   },
-  // Semi-transparent: selection layer sits behind content, so an opaque
-  // active-line white hid the selection on the current line.
-  ".cm-activeLine": { backgroundColor: "rgba(255,255,255,0.45)" },
-  ".cm-activeLineGutter": { backgroundColor: "rgba(255,255,255,0.45)" },
+  // No highlightActiveLine(): CM always has a selection head (even unfocused),
+  // so every editor’s first line would get .cm-activeLine and look white on mint.
   ".cm-cursor": {
     borderLeft: "2px solid red",
   },
@@ -105,7 +109,6 @@ export function createEditor(parent, options = {}) {
     history(),
     drawSelection(),
     highlightSpecialChars(),
-    highlightActiveLine(),
     highlightSelectionMatches(),
     bracketMatching(),
     indentOnInput(),
@@ -115,6 +118,7 @@ export function createEditor(parent, options = {}) {
     eclipseTheme,
     EditorView.lineWrapping,
     EditorState.allowMultipleSelections.of(true),
+    cmMarkField, // CM5 markText / erroneous-text underlines (render.vue focus)
   ];
 
   if (options.lineNumbers === true)

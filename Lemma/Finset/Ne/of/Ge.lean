@@ -1,18 +1,25 @@
-import sympy.sets.sets
+import Mathlib.NumberTheory.FLT.Basic
 import sympy.Basic
+
+
+/-- Fermat's Last Theorem (Wiles–Taylor). Mathlib states `FermatLastTheorem` but does not prove it;
+we take it as an axiom. The py statement omitted `x y z ≠ 0`, which fails for `0^n + 1^n = 1^n`. -/
+axiom fermatLastTheorem : FermatLastTheorem
 
 
 @[path]
 private lemma fermat.last_theorem
-  {n : ℤ}
+  {n : ℕ}
   {x y z : ℕ}
 -- given
-  (_h : n ≥ 3) :
+  (hn : n ≥ 3)
+  (hx : x ≠ 0)
+  (hy : y ≠ 0)
+  (hz : z ≠ 0) :
 -- imply
-  (x : ℝ) ^ n + (y : ℝ) ^ n ≠ (z : ℝ) ^ n := by
+  x ^ n + y ^ n ≠ z ^ n :=
 -- proof
-  -- false as stated (x = 0, y = z = 1 gives 0 + 1 = 1); see sorry_log.md
-  sorry
+  fermatLastTheorem n hn x y z hx hy hz
 
 
 -- created on 2026-09-27

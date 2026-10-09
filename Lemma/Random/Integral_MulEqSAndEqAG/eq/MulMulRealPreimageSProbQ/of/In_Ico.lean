@@ -73,8 +73,10 @@ private lemma main
       ((summable_geometric_of_lt_one h₀.1 h₀.2).mul_right _)
   have e : ∀ ω, (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) * ((γ ^ (id : ℕ → ℕ)) @ r[t:]) ω =
       ∑' k, (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) * (γ ^ k * r (t + k) ω) := fun ω => by
-    rw [tsum_mul_left]; rfl
-  simp_rw [e]
+    dsimp only [Dot.dot, Function.getSliceFrom]
+    simp only [Function.hPow_apply, id_eq]
+    rw [← tsum_mul_left]
+  refine (integral_congr_ae (Filter.Eventually.of_forall e)).trans ?_
   rw [← (hasSum_integral_of_summable_integral_norm hF hS).tsum_eq]
   have e2 : ∀ k, ∫ ω, (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) * (γ ^ k * r (t + k) ω) ∂(M θ) =
       ((M θ).real (s t ⁻¹' {x}) * M.pol.prob θ x u) *

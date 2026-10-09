@@ -1,26 +1,52 @@
 import Mathlib
 import sympy.Basic
+import Lemma.Int.P2MUtil
+set_option autoImplicit false
+
+namespace FittingLS
 
 open Module
-open Module Polynomial
 
-/--
-[AddMonoidHom_coe_span_setOf_apply_eq_self_eq_setOf_forall_mem_range_iterate_of_map_smul_eq_frobeniusEquiv_symm_smul](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AddMonoidHom_coe_span_setOf_apply_eq_self_eq_setOf_forall_mem_range_iterate_of_map_smul_eq_frobeniusEquiv_symm_smul.lean)
--/
+variable {K : Type*} [Field K] {p : ℕ} [Fact p.Prime] [CharP K p] [PerfectRing K p]
+variable {V : Type*} [AddCommGroup V] [Module K V]
 
-def rangeIter
-  {K : Type*}
-  [Field K]
-  {p : ℕ}
-  [Fact p.Prime]
-  [CharP K p]
-  [PerfectRing K p]
-  {V : Type*}
-  [AddCommGroup V]
-  [Module K V]
-  (C : V →+ V)
-  (hC : ∀ (a : K) (v : V), C (a • v) = (frobeniusEquiv K p).symm a • C v)
-  (n : ℕ) : Submodule K V where
+section Basic
+
+variable (C : V →+ V) (hC : ∀ (a : K) (v : V), C (a • v) = (frobeniusEquiv K p).symm a • C v)
+include hC
+
+theorem iterate_smul (n : ℕ) (a : K) (v : V) :
+    (⇑C)^[n] (a • v) = ((⇑(frobeniusEquiv K p).symm)^[n] a) • (⇑C)^[n] v := by
+  induction n generalizing a v with
+  | zero => rfl
+  | succ n ih =>
+    rw [Function.iterate_succ_apply, Function.iterate_succ_apply, Function.iterate_succ_apply, hC, ih]
+
+omit hC in
+theorem iterate_add' (n : ℕ) (v w : V) : (⇑C)^[n] (v + w) = (⇑C)^[n] v + (⇑C)^[n] w := by
+  induction n generalizing v w with
+  | zero => rfl
+  | succ n ih => rw [Function.iterate_succ_apply, Function.iterate_succ_apply, Function.iterate_succ_apply, map_add, ih]
+
+omit hC in
+theorem iterate_zero' (n : ℕ) : (⇑C)^[n] (0 : V) = 0 := by
+  induction n with
+  | zero => rfl
+  | succ n ih => rw [Function.iterate_succ_apply, map_zero, ih]
+
+omit hC in
+theorem frob_iterate_symm_iterate (n : ℕ) (a : K) :
+    ((⇑(frobeniusEquiv K p).symm)^[n] (((⇑(frobeniusEquiv K p))^[n]) a)) = a := by
+  induction n generalizing a with
+  | zero => rfl
+  | succ n ih =>
+    rw [Function.iterate_succ_apply', Function.iterate_succ_apply, ih, (frobeniusEquiv K p).symm_apply_apply]
+
+theorem smul_iterate (n : ℕ) (a : K) (v : V) :
+    a • (⇑C)^[n] v = (⇑C)^[n] ((((⇑(frobeniusEquiv K p))^[n]) a) • v) := by
+  rw [iterate_smul C hC, frob_iterate_symm_iterate]
+
+def rangeIter (n : ℕ) : Submodule K V where
   carrier := Set.range ((⇑C)^[n])
   add_mem' := by
     rintro _ _ ⟨v, rfl⟩ ⟨w, rfl⟩
@@ -30,206 +56,16 @@ def rangeIter
     rintro a _ ⟨v, rfl⟩
     exact ⟨_, (smul_iterate C hC n a v).symm⟩
 
-def toSL
-  {K : Type*}
-  [Field K]
-  {p : ℕ}
-  [Fact p.Prime]
-  [CharP K p]
-  [PerfectRing K p]
-  {W : Type*}
-  [AddCommGroup W]
-  [Module K W]
-  (D : W →+ W) (hD : ∀ (a : K) (w : W), D (a • w) = (frobeniusEquiv K p).symm a • D w) : W →ₛₗ[rootHom K p] W where
-  toFun := D
-  map_add' := map_add D
-  map_smul' := hD
+theorem mem_rangeIter (n : ℕ) (v : V) : v ∈ rangeIter C hC n ↔ v ∈ Set.range ((⇑C)^[n]) := Iff.rfl
 
-noncomputable def stable
-  {K : Type*}
-  [Field K]
-  {p : ℕ}
-  [Fact p.Prime]
-  [CharP K p]
-  [PerfectRing K p]
-  {V : Type*}
-  [AddCommGroup V]
-  [Module K V]
-  (C : V →+ V)
-  (hC : ∀ (a : K) (v : V), C (a • v) = (frobeniusEquiv K p).symm a • C v)
-  [FiniteDimensional K V]
-  : Submodule K V := rangeIter C hC (finrank K V)
-
-noncomputable def restrict
-  {K : Type*}
-  [Field K]
-  {p : ℕ}
-  [Fact p.Prime]
-  [CharP K p]
-  [PerfectRing K p]
-  {V : Type*}
-  [AddCommGroup V]
-  [Module K V]
-  (C : V →+ V)
-  (hC : ∀ (a : K) (v : V), C (a • v) = (frobeniusEquiv K p).symm a • C v)
-  [FiniteDimensional K V]
-  : ↥(stable C hC) →+ ↥(stable C hC) where
-  toFun v := ⟨C (v : V), apply_mem_stable C hC v.2⟩
-  map_zero' := Subtype.ext (map_zero C)
-  map_add' v w := Subtype.ext (map_add C (v : V) (w : V))
-
-private lemma  iterate_smul
-    {K : Type*}
-    [Field K]
-    {p : ℕ}
-    [Fact p.Prime]
-    [CharP K p]
-    [PerfectRing K p]
-    {V : Type*}
-    [AddCommGroup V]
-    [Module K V]
-    (C : V →+ V)
-    (hC : ∀ (a : K) (v : V), C (a • v) = (frobeniusEquiv K p).symm a • C v)
-    (n : ℕ) (a : K) (v : V) :
-    (⇑C)^[n] (a • v) = ((⇑(frobeniusEquiv K p).symm)^[n] a) • (⇑C)^[n] v := by
-  induction n generalizing a v with
-  | zero => rfl
-  | succ n ih =>
-    rw [Function.iterate_succ_apply, Function.iterate_succ_apply, Function.iterate_succ_apply, hC, ih]
-
-omit hC in
-
-private lemma  iterate_add'
-  {K : Type*}
-  [Field K]
-  {p : ℕ}
-  [Fact p.Prime]
-  [CharP K p]
-  [PerfectRing K p]
-  {V : Type*}
-  [AddCommGroup V]
-  [Module K V]
-  (C : V →+ V)
-  (hC : ∀ (a : K) (v : V), C (a • v) = (frobeniusEquiv K p).symm a • C v)
-  (n : ℕ) (v w : V) : (⇑C)^[n] (v + w) = (⇑C)^[n] v + (⇑C)^[n] w := by
-  induction n generalizing v w with
-  | zero => rfl
-  | succ n ih => rw [Function.iterate_succ_apply, Function.iterate_succ_apply, Function.iterate_succ_apply, map_add, ih]
-
-omit hC in
-
-private lemma  iterate_zero'
-  {K : Type*}
-  [Field K]
-  {p : ℕ}
-  [Fact p.Prime]
-  [CharP K p]
-  [PerfectRing K p]
-  {V : Type*}
-  [AddCommGroup V]
-  [Module K V]
-  (C : V →+ V)
-  (hC : ∀ (a : K) (v : V), C (a • v) = (frobeniusEquiv K p).symm a • C v)
-  (n : ℕ) : (⇑C)^[n] (0 : V) = 0 := by
-  induction n with
-  | zero => rfl
-  | succ n ih => rw [Function.iterate_succ_apply, map_zero, ih]
-
-omit hC in
-
-private lemma  frob_iterate_symm_iterate
-    {K : Type*}
-    [Field K]
-    {p : ℕ}
-    [Fact p.Prime]
-    [CharP K p]
-    [PerfectRing K p]
-    {V : Type*}
-    [AddCommGroup V]
-    [Module K V]
-    (C : V →+ V)
-    (hC : ∀ (a : K) (v : V), C (a • v) = (frobeniusEquiv K p).symm a • C v)
-    (n : ℕ) (a : K) :
-    ((⇑(frobeniusEquiv K p).symm)^[n] (((⇑(frobeniusEquiv K p))^[n]) a)) = a := by
-  induction n generalizing a with
-  | zero => rfl
-  | succ n ih =>
-    rw [Function.iterate_succ_apply', Function.iterate_succ_apply, ih, (frobeniusEquiv K p).symm_apply_apply]
-
-private lemma  smul_iterate
-    {K : Type*}
-    [Field K]
-    {p : ℕ}
-    [Fact p.Prime]
-    [CharP K p]
-    [PerfectRing K p]
-    {V : Type*}
-    [AddCommGroup V]
-    [Module K V]
-    (C : V →+ V)
-    (hC : ∀ (a : K) (v : V), C (a • v) = (frobeniusEquiv K p).symm a • C v)
-    (n : ℕ) (a : K) (v : V) :
-    a • (⇑C)^[n] v = (⇑C)^[n] ((((⇑(frobeniusEquiv K p))^[n]) a) • v) := by
-  rw [iterate_smul C hC, frob_iterate_symm_iterate]
-
-private lemma  mem_rangeIter
-  {K : Type*}
-  [Field K]
-  {p : ℕ}
-  [Fact p.Prime]
-  [CharP K p]
-  [PerfectRing K p]
-  {V : Type*}
-  [AddCommGroup V]
-  [Module K V]
-  (C : V →+ V)
-  (hC : ∀ (a : K) (v : V), C (a • v) = (frobeniusEquiv K p).symm a • C v)
-  (n : ℕ) (v : V) : v ∈ rangeIter C hC n ↔ v ∈ Set.range ((⇑C)^[n]) := Iff.rfl
-
-private lemma  rangeIter_succ_le
-  {K : Type*}
-  [Field K]
-  {p : ℕ}
-  [Fact p.Prime]
-  [CharP K p]
-  [PerfectRing K p]
-  {V : Type*}
-  [AddCommGroup V]
-  [Module K V]
-  (C : V →+ V)
-  (hC : ∀ (a : K) (v : V), C (a • v) = (frobeniusEquiv K p).symm a • C v)
-  (n : ℕ) : rangeIter C hC (n + 1) ≤ rangeIter C hC n := by
+theorem rangeIter_succ_le (n : ℕ) : rangeIter C hC (n + 1) ≤ rangeIter C hC n := by
   rintro _ ⟨v, rfl⟩
   exact ⟨C v, (Function.iterate_succ_apply _ _ _).symm⟩
 
-private lemma  rangeIter_antitone
-  {K : Type*}
-  [Field K]
-  {p : ℕ}
-  [Fact p.Prime]
-  [CharP K p]
-  [PerfectRing K p]
-  {V : Type*}
-  [AddCommGroup V]
-  [Module K V]
-  (C : V →+ V)
-  (hC : ∀ (a : K) (v : V), C (a • v) = (frobeniusEquiv K p).symm a • C v)
-  : Antitone (rangeIter C hC) :=
+theorem rangeIter_antitone : Antitone (rangeIter C hC) :=
   antitone_nat_of_succ_le (rangeIter_succ_le C hC)
 
-private lemma  map_rangeIter
-  {K : Type*}
-  [Field K]
-  {p : ℕ}
-  [Fact p.Prime]
-  [CharP K p]
-  [PerfectRing K p]
-  {V : Type*}
-  [AddCommGroup V]
-  [Module K V]
-  (C : V →+ V)
-  (hC : ∀ (a : K) (v : V), C (a • v) = (frobeniusEquiv K p).symm a • C v)
-  (n : ℕ) : (⇑C) '' (rangeIter C hC n : Set V) = rangeIter C hC (n + 1) := by
+theorem map_rangeIter (n : ℕ) : (⇑C) '' (rangeIter C hC n : Set V) = rangeIter C hC (n + 1) := by
   ext w
   constructor
   · rintro ⟨_, ⟨v, rfl⟩, rfl⟩
@@ -237,19 +73,7 @@ private lemma  map_rangeIter
   · rintro ⟨v, rfl⟩
     exact ⟨_, ⟨v, rfl⟩, (Function.iterate_succ_apply' _ _ _).symm⟩
 
-private lemma  rangeIter_succ_eq_of_eq
-    {K : Type*}
-    [Field K]
-    {p : ℕ}
-    [Fact p.Prime]
-    [CharP K p]
-    [PerfectRing K p]
-    {V : Type*}
-    [AddCommGroup V]
-    [Module K V]
-    (C : V →+ V)
-    (hC : ∀ (a : K) (v : V), C (a • v) = (frobeniusEquiv K p).symm a • C v)
-    {n : ℕ} (h : rangeIter C hC (n + 1) = rangeIter C hC n) :
+theorem rangeIter_succ_eq_of_eq {n : ℕ} (h : rangeIter C hC (n + 1) = rangeIter C hC n) :
     rangeIter C hC (n + 2) = rangeIter C hC (n + 1) := by
   apply SetLike.coe_injective
   calc ((rangeIter C hC (n + 2) : Submodule K V) : Set V) = (⇑C) '' (rangeIter C hC (n + 1) : Set V) :=
@@ -257,19 +81,7 @@ private lemma  rangeIter_succ_eq_of_eq
     _ = (⇑C) '' (rangeIter C hC n : Set V) := by rw [h]
     _ = rangeIter C hC (n + 1) := map_rangeIter C hC n
 
-private lemma  rangeIter_eq_of_eq
-    {K : Type*}
-    [Field K]
-    {p : ℕ}
-    [Fact p.Prime]
-    [CharP K p]
-    [PerfectRing K p]
-    {V : Type*}
-    [AddCommGroup V]
-    [Module K V]
-    (C : V →+ V)
-    (hC : ∀ (a : K) (v : V), C (a • v) = (frobeniusEquiv K p).symm a • C v)
-    {n : ℕ} (h : rangeIter C hC (n + 1) = rangeIter C hC n) :
+theorem rangeIter_eq_of_eq {n : ℕ} (h : rangeIter C hC (n + 1) = rangeIter C hC n) :
     ∀ m, n ≤ m → rangeIter C hC m = rangeIter C hC n := by
   intro m hm
   obtain ⟨k, rfl⟩ := Nat.exists_eq_add_of_le hm
@@ -285,20 +97,9 @@ private lemma  rangeIter_eq_of_eq
       | succ j ihj => exact rangeIter_succ_eq_of_eq C hC ihj
     rw [show n + (k + 1) = n + k + 1 by omega, this k, h1]
 
-private lemma  rangeIter_eq_of_finrank_le
-    {K : Type*}
-    [Field K]
-    {p : ℕ}
-    [Fact p.Prime]
-    [CharP K p]
-    [PerfectRing K p]
-    {V : Type*}
-    [AddCommGroup V]
-    [Module K V]
-    (C : V →+ V)
-    (hC : ∀ (a : K) (v : V), C (a • v) = (frobeniusEquiv K p).symm a • C v)
-    [FiniteDimensional K V]
-    (n : ℕ) (hn : finrank K V ≤ n) :
+variable [FiniteDimensional K V]
+
+theorem rangeIter_eq_of_finrank_le (n : ℕ) (hn : finrank K V ≤ n) :
     rangeIter C hC n = rangeIter C hC (finrank K V) := by
 
   by_contra hne
@@ -325,20 +126,7 @@ private lemma  rangeIter_eq_of_finrank_le
     have := key (finrank K V + 1) (fun i hi => hex i (Nat.lt_succ_iff.mp hi))
     omega
 
-private lemma  rangeIter_finrank_eq_iInf
-  {K : Type*}
-  [Field K]
-  {p : ℕ}
-  [Fact p.Prime]
-  [CharP K p]
-  [PerfectRing K p]
-  {V : Type*}
-  [AddCommGroup V]
-  [Module K V]
-  (C : V →+ V)
-  (hC : ∀ (a : K) (v : V), C (a • v) = (frobeniusEquiv K p).symm a • C v)
-  [FiniteDimensional K V]
-  : (rangeIter C hC (finrank K V) : Set V) = {v : V | ∀ m : ℕ, v ∈ Set.range ((⇑C)^[m])} := by
+theorem rangeIter_finrank_eq_iInf : (rangeIter C hC (finrank K V) : Set V) = {v : V | ∀ m : ℕ, v ∈ Set.range ((⇑C)^[m])} := by
   ext v
   simp only [SetLike.mem_coe, Set.mem_setOf_eq]
   constructor
@@ -348,71 +136,50 @@ private lemma  rangeIter_finrank_eq_iInf
     · rw [← mem_rangeIter C hC, rangeIter_eq_of_finrank_le C hC m h]; exact hv
   · intro h; exact h _
 
+end Basic
 
+end FittingLS
 
+namespace FittingLS
 
 open Module Polynomial
 
+variable {K : Type*} [Field K] {p : ℕ} [Fact p.Prime] [CharP K p] [PerfectRing K p]
 
 noncomputable abbrev rootHom (K : Type*) [Field K] (p : ℕ) [Fact p.Prime] [CharP K p] [PerfectRing K p] : K →+* K :=
   ((frobeniusEquiv K p).symm : K ≃+* K).toRingHom
 
 scoped instance rootHom_surjective : RingHomSurjective (rootHom K p) := ⟨(frobeniusEquiv K p).symm.surjective⟩
 
-@[simp] theorem rootHom_apply
-  {K : Type*}
-  [Field K]
-  {p : ℕ}
-  [Fact p.Prime]
-  [CharP K p]
-  [PerfectRing K p]
-  (a : K) : rootHom K p a = (frobeniusEquiv K p).symm a := rfl
+@[scoped simp] theorem rootHom_apply (a : K) : rootHom K p a = (frobeniusEquiv K p).symm a := rfl
 
-@[simp] theorem toSL_apply
-    {K : Type*}
-    [Field K]
-    {p : ℕ}
-    [Fact p.Prime]
-    [CharP K p]
-    [PerfectRing K p]
-    {W : Type*}
-    [AddCommGroup W]
-    [Module K W]
-    (D : W →+ W) (hD : ∀ (a : K) (w : W), D (a • w) = (frobeniusEquiv K p).symm a • D w) (w : W) :
+section Semilinear
+
+variable {W : Type*} [AddCommGroup W] [Module K W]
+
+def toSL (D : W →+ W) (hD : ∀ (a : K) (w : W), D (a • w) = (frobeniusEquiv K p).symm a • D w) : W →ₛₗ[rootHom K p] W where
+  toFun := D
+  map_add' := map_add D
+  map_smul' := hD
+
+@[scoped simp] theorem toSL_apply (D : W →+ W) (hD : ∀ (a : K) (w : W), D (a • w) = (frobeniusEquiv K p).symm a • D w) (w : W) :
     toSL D hD w = D w := rfl
 
-private lemma  fin_succ_eq_snoc
-    {K : Type*}
-    [Field K]
-    {p : ℕ}
-    [Fact p.Prime]
-    [CharP K p]
-    [PerfectRing K p]
-    [IsAlgClosed K]
-    {W : Type*}
-    [AddCommGroup W]
-    [Module K W]
-    [FiniteDimensional K W]
-    {α : Type*} (s : ℕ → α) (n : ℕ) :
+end Semilinear
+
+section Step1
+
+variable [IsAlgClosed K]
+variable {W : Type*} [AddCommGroup W] [Module K W] [FiniteDimensional K W]
+
+theorem fin_succ_eq_snoc {α : Type*} (s : ℕ → α) (n : ℕ) :
     (fun i : Fin (n + 1) => s i) = Fin.snoc (fun i : Fin n => s i) (s n) := by
   funext i
   refine Fin.lastCases ?_ (fun j => ?_) i
   · simp [Fin.snoc_last]
   · simp [Fin.snoc_castSucc]
 
-private lemma  exists_ne_zero_apply_eq_self
-    {K : Type*}
-    [Field K]
-    {p : ℕ}
-    [Fact p.Prime]
-    [CharP K p]
-    [PerfectRing K p]
-    [IsAlgClosed K]
-    {W : Type*}
-    [AddCommGroup W]
-    [Module K W]
-    [FiniteDimensional K W]
-    [Nontrivial W] (D : W →+ W) (hD : ∀ (a : K) (w : W), D (a • w) = (frobeniusEquiv K p).symm a • D w)
+theorem exists_ne_zero_apply_eq_self [Nontrivial W] (D : W →+ W) (hD : ∀ (a : K) (w : W), D (a • w) = (frobeniusEquiv K p).symm a • D w)
     (hinj : Function.Injective D) : ∃ w : W, w ≠ 0 ∧ D w = w := by
   classical
   have hp : 1 < p := (Fact.out : p.Prime).one_lt
@@ -563,15 +330,13 @@ private lemma  exists_ne_zero_apply_eq_self
       rw [hx_succ, add_smul]
     rw [eL, eR, hxy]
 
-private lemma  exists_sub_root_eq
-  {K : Type*}
-  [Field K]
-  {p : ℕ}
-  [Fact p.Prime]
-  [CharP K p]
-  [PerfectRing K p]
-  [IsAlgClosed K]
-  (a : K) : ∃ x : K, x - (frobeniusEquiv K p).symm x = a := by
+end Step1
+
+section Step2
+
+variable [IsAlgClosed K]
+
+theorem exists_sub_root_eq (a : K) : ∃ x : K, x - (frobeniusEquiv K p).symm x = a := by
 
   have hp : 1 < p := (Fact.out : p.Prime).one_lt
   have hdeg : (X ^ p - X - Polynomial.C a : K[X]).degree ≠ 0 := by
@@ -591,15 +356,7 @@ private lemma  exists_sub_root_eq
 
 universe u in
 
-private lemma  span_fixed_eq_top_aux
-    {K : Type*}
-    [Field K]
-    {p : ℕ}
-    [Fact p.Prime]
-    [CharP K p]
-    [PerfectRing K p]
-    [IsAlgClosed K]
-    : ∀ (n : ℕ) (W : Type u) [AddCommGroup W] [Module K W] [FiniteDimensional K W],
+theorem span_fixed_eq_top_aux : ∀ (n : ℕ) (W : Type u) [AddCommGroup W] [Module K W] [FiniteDimensional K W],
     finrank K W = n → ∀ (D : W →+ W), (∀ (a : K) (w : W), D (a • w) = (frobeniusEquiv K p).symm a • D w) →
       Function.Injective D → Submodule.span K {w : W | D w = w} = ⊤ := by
   intro n
@@ -607,7 +364,7 @@ private lemma  span_fixed_eq_top_aux
   | _ n ih =>
   intro W _ _ _ hn D hD hinj
   rcases subsingleton_or_nontrivial W with hW | hW
-  · haveI := hW; exact Subsingleton.elim _ _
+  · have := hW; exact Subsingleton.elim _ _
 
   obtain ⟨w₁, hw₁0, hw₁⟩ := exists_ne_zero_apply_eq_self D hD hinj
   let S : Submodule K W := K ∙ w₁
@@ -667,30 +424,27 @@ private lemma  span_fixed_eq_top_aux
   rw [hmap, Submodule.comap_top, Submodule.ker_mkQ, sup_eq_left.mpr hF1] at this
   exact this.le
 
-private lemma  span_setOf_apply_eq_self_eq_top_of_bijective'
-    [PerfectRing K p]
-    (K : Type*) [Field K] [IsAlgClosed K] (p : ℕ) [Fact p.Prime] [CharP K p]
+theorem span_setOf_apply_eq_self_eq_top_of_bijective' (K : Type*) [Field K] [IsAlgClosed K] (p : ℕ) [Fact p.Prime] [CharP K p]
     (V : Type*) [AddCommGroup V] [Module K V] [FiniteDimensional K V]
     (C : V →+ V) (hC : ∀ (a : K) (v : V), C (a • v) = (frobeniusEquiv K p).symm a • C v)
     (hbij : Function.Bijective C) : Submodule.span K {v : V | C v = v} = ⊤ :=
   span_fixed_eq_top_aux _ V rfl C hC hbij.1
 
+end Step2
 
+end FittingLS
+p2m_reactivate "FittingLS"
 
+namespace FittingLS
 
 open Module
 
-private lemma  injective_of_surjective
-    {K : Type*}
-    [Field K]
-    {p : ℕ}
-    [Fact p.Prime]
-    [CharP K p]
-    [PerfectRing K p]
-    {V : Type*}
-    [AddCommGroup V]
-    [Module K V]
-    {W : Type*} [AddCommGroup W] [Module K W] [FiniteDimensional K W]
+variable {K : Type*} [Field K] {p : ℕ} [Fact p.Prime] [CharP K p] [PerfectRing K p]
+variable {V : Type*} [AddCommGroup V] [Module K V]
+
+section InjOfSurj
+
+theorem injective_of_surjective {W : Type*} [AddCommGroup W] [Module K W] [FiniteDimensional K W]
     (D : W →+ W) (hD : ∀ (a : K) (w : W), D (a • w) = (frobeniusEquiv K p).symm a • D w)
     (hsurj : Function.Surjective D) : Function.Injective D := by
   classical
@@ -721,232 +475,124 @@ private lemma  injective_of_surjective
     rwa [map_eq_zero_iff _ (frobeniusEquiv K p).symm.injective] at this
   rw [this, zero_smul]
 
+end InjOfSurj
+p2m_reactivate "FittingLS"
 
+section Stable
 
+variable (C : V →+ V) (hC : ∀ (a : K) (v : V), C (a • v) = (frobeniusEquiv K p).symm a • C v)
 include hC
 
 omit hC in
+theorem map_sum' {ι : Type*} (s : Finset ι) (f : ι → V) : C (∑ i ∈ s, f i) = ∑ i ∈ s, C (f i) := map_sum C f s
 
-private lemma  map_sum'
-  {K : Type*}
-  [Field K]
-  {p : ℕ}
-  [Fact p.Prime]
-  [CharP K p]
-  [PerfectRing K p]
-  {V : Type*}
-  [AddCommGroup V]
-  [Module K V]
-  (C : V →+ V)
-  (hC : ∀ (a : K) (v : V), C (a • v) = (frobeniusEquiv K p).symm a • C v)
-  {ι : Type*} (s : Finset ι) (f : ι → V) : C (∑ i ∈ s, f i) = ∑ i ∈ s, C (f i) := map_sum C f s
+variable [FiniteDimensional K V]
 
-private lemma  stable_def
-  {K : Type*}
-  [Field K]
-  {p : ℕ}
-  [Fact p.Prime]
-  [CharP K p]
-  [PerfectRing K p]
-  {V : Type*}
-  [AddCommGroup V]
-  [Module K V]
-  (C : V →+ V)
-  (hC : ∀ (a : K) (v : V), C (a • v) = (frobeniusEquiv K p).symm a • C v)
-  [FiniteDimensional K V]
-  : stable C hC = rangeIter C hC (finrank K V) := rfl
+noncomputable def stable : Submodule K V := rangeIter C hC (finrank K V)
 
-private lemma  apply_mem_stable
-  {K : Type*}
-  [Field K]
-  {p : ℕ}
-  [Fact p.Prime]
-  [CharP K p]
-  [PerfectRing K p]
-  {V : Type*}
-  [AddCommGroup V]
-  [Module K V]
-  (C : V →+ V)
-  (hC : ∀ (a : K) (v : V), C (a • v) = (frobeniusEquiv K p).symm a • C v)
-  [FiniteDimensional K V]
-  {v : V} (hv : v ∈ stable C hC) : C v ∈ stable C hC := by
+theorem stable_def : stable C hC = rangeIter C hC (finrank K V) := rfl
+
+theorem apply_mem_stable {v : V} (hv : v ∈ stable C hC) : C v ∈ stable C hC := by
   have h : C v ∈ rangeIter C hC (finrank K V + 1) := by
     rw [← SetLike.mem_coe, ← map_rangeIter C hC]
     exact ⟨v, hv, rfl⟩
   exact rangeIter_succ_le C hC _ h
 
-private lemma  exists_apply_eq_of_mem_stable
-  {K : Type*}
-  [Field K]
-  {p : ℕ}
-  [Fact p.Prime]
-  [CharP K p]
-  [PerfectRing K p]
-  {V : Type*}
-  [AddCommGroup V]
-  [Module K V]
-  (C : V →+ V)
-  (hC : ∀ (a : K) (v : V), C (a • v) = (frobeniusEquiv K p).symm a • C v)
-  [FiniteDimensional K V]
-  {w : V} (hw : w ∈ stable C hC) : ∃ v ∈ stable C hC, C v = w := by
+theorem exists_apply_eq_of_mem_stable {w : V} (hw : w ∈ stable C hC) : ∃ v ∈ stable C hC, C v = w := by
   have h : w ∈ rangeIter C hC (finrank K V + 1) := by
     rw [rangeIter_eq_of_finrank_le C hC _ (Nat.le_succ _)]; exact hw
   rw [← SetLike.mem_coe, ← map_rangeIter C hC] at h
   obtain ⟨v, hv, rfl⟩ := h
   exact ⟨v, hv, rfl⟩
 
-@[simp] theorem coe_restrict
-  {K : Type*}
-  [Field K]
-  {p : ℕ}
-  [Fact p.Prime]
-  [CharP K p]
-  [PerfectRing K p]
-  {V : Type*}
-  [AddCommGroup V]
-  [Module K V]
-  (C : V →+ V)
-  (hC : ∀ (a : K) (v : V), C (a • v) = (frobeniusEquiv K p).symm a • C v)
-  [FiniteDimensional K V]
-  (v : ↥(stable C hC)) : ((restrict C hC v : ↥(stable C hC)) : V) = C (v : V) := rfl
+noncomputable def restrict : ↥(stable C hC) →+ ↥(stable C hC) where
+  toFun v := ⟨C (v : V), apply_mem_stable C hC v.2⟩
+  map_zero' := Subtype.ext (map_zero C)
+  map_add' v w := Subtype.ext (map_add C (v : V) (w : V))
 
-private lemma  restrict_smul
-  {K : Type*}
-  [Field K]
-  {p : ℕ}
-  [Fact p.Prime]
-  [CharP K p]
-  [PerfectRing K p]
-  {V : Type*}
-  [AddCommGroup V]
-  [Module K V]
-  (C : V →+ V)
-  (hC : ∀ (a : K) (v : V), C (a • v) = (frobeniusEquiv K p).symm a • C v)
-  [FiniteDimensional K V]
-  (a : K) (v : ↥(stable C hC)) : restrict C hC (a • v) = (frobeniusEquiv K p).symm a • restrict C hC v :=
+@[scoped simp] theorem coe_restrict (v : ↥(stable C hC)) : ((restrict C hC v : ↥(stable C hC)) : V) = C (v : V) := rfl
+
+theorem restrict_smul (a : K) (v : ↥(stable C hC)) : restrict C hC (a • v) = (frobeniusEquiv K p).symm a • restrict C hC v :=
   Subtype.ext (hC a (v : V))
 
-private lemma  restrict_surjective
-  {K : Type*}
-  [Field K]
-  {p : ℕ}
-  [Fact p.Prime]
-  [CharP K p]
-  [PerfectRing K p]
-  {V : Type*}
-  [AddCommGroup V]
-  [Module K V]
-  (C : V →+ V)
-  (hC : ∀ (a : K) (v : V), C (a • v) = (frobeniusEquiv K p).symm a • C v)
-  [FiniteDimensional K V]
-  : Function.Surjective (restrict C hC) := by
+theorem restrict_surjective : Function.Surjective (restrict C hC) := by
   intro w
   obtain ⟨v, hv, hvw⟩ := exists_apply_eq_of_mem_stable C hC w.2
   exact ⟨⟨v, hv⟩, Subtype.ext hvw⟩
 
-private lemma  restrict_bijective
-  {K : Type*}
-  [Field K]
-  {p : ℕ}
-  [Fact p.Prime]
-  [CharP K p]
-  [PerfectRing K p]
-  {V : Type*}
-  [AddCommGroup V]
-  [Module K V]
-  (C : V →+ V)
-  (hC : ∀ (a : K) (v : V), C (a • v) = (frobeniusEquiv K p).symm a • C v)
-  [FiniteDimensional K V]
-  : Function.Bijective (restrict C hC) :=
+theorem restrict_bijective : Function.Bijective (restrict C hC) :=
   ⟨injective_of_surjective (restrict C hC) (restrict_smul C hC) (restrict_surjective C hC), restrict_surjective C hC⟩
 
+end Stable
+p2m_reactivate "FittingLS"
 
-private lemma  span_setOf_apply_eq_self_eq_top_of_bijective
-    [PerfectRing K p]
-    (K : Type*) [Field K] [IsAlgClosed K] (p : ℕ) [Fact p.Prime] [CharP K p]
+section LangSteinberg
+
+theorem span_setOf_apply_eq_self_eq_top_of_bijective (K : Type*) [Field K] [IsAlgClosed K] (p : ℕ) [Fact p.Prime] [CharP K p]
     (V : Type*) [AddCommGroup V] [Module K V] [FiniteDimensional K V]
     (C : V →+ V) (hC : ∀ (a : K) (v : V), C (a • v) = (frobeniusEquiv K p).symm a • C v)
     (hbij : Function.Bijective C) : Submodule.span K {v : V | C v = v} = ⊤ :=
   span_setOf_apply_eq_self_eq_top_of_bijective' K p V C hC hbij
 
+end LangSteinberg
+p2m_reactivate "FittingLS"
 
+section Main
 
-  (V : Type*) [AddCommGroup V] [Module K V] [FiniteDimensional K V]
-  (C : V →+ V) (hC : ∀ (a : K) (v : V), C (a • v) = (frobeniusEquiv K p).symm a • C v)
+variable (K : Type*) [Field K] [IsAlgClosed K] (p : ℕ) [Fact p.Prime] [CharP K p]
+    (V : Type*) [AddCommGroup V] [Module K V] [FiniteDimensional K V]
+    (C : V →+ V) (hC : ∀ (a : K) (v : V), C (a • v) = (frobeniusEquiv K p).symm a • C v)
 include hC
 
-private lemma  span_fixed_eq_stable
-{K : Type*}
-[Field K]
-{p : ℕ}
-[Fact p.Prime]
-[CharP K p]
-[PerfectRing K p]
-{V : Type*}
-[AddCommGroup V]
-[Module K V]
-(K : Type*)
-[IsAlgClosed K]
-(p : ℕ)
-: Submodule.span K {v : V | C v = v} = stable C hC := by
-apply le_antisymm
-· rw [Submodule.span_le]
-  intro v hv
+theorem span_fixed_eq_stable : Submodule.span K {v : V | C v = v} = stable C hC := by
+  apply le_antisymm
+  · rw [Submodule.span_le]
+    intro v hv
 
-  have hfix : ∀ n : ℕ, (⇑C)^[n] v = v := by
-    intro n
-    induction n with
-    | zero => rfl
-    | succ n ih => rw [Function.iterate_succ_apply', ih]; exact hv
-  exact ⟨v, hfix _⟩
-·
-  intro v hv
-  have htop := span_setOf_apply_eq_self_eq_top_of_bijective K p (↥(stable C hC)) (restrict C hC) (restrict_smul C hC)
-    (restrict_bijective C hC)
-  have hmem : (⟨v, hv⟩ : ↥(stable C hC)) ∈ Submodule.span K {w : ↥(stable C hC) | restrict C hC w = w} := by
-    rw [htop]; exact Submodule.mem_top
+    have hfix : ∀ n : ℕ, (⇑C)^[n] v = v := by
+      intro n
+      induction n with
+      | zero => rfl
+      | succ n ih => rw [Function.iterate_succ_apply', ih]; exact hv
+    exact ⟨v, hfix _⟩
+  ·
+    intro v hv
+    have htop := span_setOf_apply_eq_self_eq_top_of_bijective K p (↥(stable C hC)) (restrict C hC) (restrict_smul C hC)
+      (restrict_bijective C hC)
+    have hmem : (⟨v, hv⟩ : ↥(stable C hC)) ∈ Submodule.span K {w : ↥(stable C hC) | restrict C hC w = w} := by
+      rw [htop]; exact Submodule.mem_top
 
-  have hmap : Submodule.map (stable C hC).subtype (Submodule.span K {w : ↥(stable C hC) | restrict C hC w = w}) ≤
-      Submodule.span K {v : V | C v = v} := by
-    rw [Submodule.map_span_le]
-    rintro w (hw : restrict C hC w = w)
-    exact Submodule.subset_span (show C (w : V) = w from congrArg Subtype.val hw)
-  exact hmap ⟨⟨v, hv⟩, hmem, rfl⟩
+    have hmap : Submodule.map (stable C hC).subtype (Submodule.span K {w : ↥(stable C hC) | restrict C hC w = w}) ≤
+        Submodule.span K {v : V | C v = v} := by
+      rw [Submodule.map_span_le]
+      rintro w (hw : restrict C hC w = w)
+      exact Submodule.subset_span (show C (w : V) = w from congrArg Subtype.val hw)
+    exact hmap ⟨⟨v, hv⟩, hmem, rfl⟩
 
-private lemma  main
-  {K : Type*}
-  [Field K]
-  {p : ℕ}
-  [Fact p.Prime]
-  [CharP K p]
-  [PerfectRing K p]
-  {V : Type*}
-  [AddCommGroup V]
-  [Module K V]
-  (K : Type*)
-  [IsAlgClosed K]
-  (p : ℕ)
-  :
-  ((Submodule.span K {v : V | C v = v} : Submodule K V) : Set V) = {v : V | ∀ n : ℕ, v ∈ Set.range ((⇑C)^[n])} ∧
-  ∀ n : ℕ, Module.finrank K V ≤ n → Set.range ((⇑C)^[n]) = {v : V | ∀ m : ℕ, v ∈ Set.range ((⇑C)^[m])} := by
-refine ⟨?_, fun n hn => ?_⟩
-· rw [span_fixed_eq_stable K p V C hC, stable_def, rangeIter_finrank_eq_iInf]
-· rw [← rangeIter_finrank_eq_iInf C hC, ← rangeIter_eq_of_finrank_le C hC n hn]
-  rfl
+theorem mainAux :
+    ((Submodule.span K {v : V | C v = v} : Submodule K V) : Set V) = {v : V | ∀ n : ℕ, v ∈ Set.range ((⇑C)^[n])} ∧
+    ∀ n : ℕ, Module.finrank K V ≤ n → Set.range ((⇑C)^[n]) = {v : V | ∀ m : ℕ, v ∈ Set.range ((⇑C)^[m])} := by
+  refine ⟨?_, fun n hn => ?_⟩
+  · rw [span_fixed_eq_stable K p V C hC, stable_def, rangeIter_finrank_eq_iInf]
+  · rw [← rangeIter_finrank_eq_iInf C hC, ← rangeIter_eq_of_finrank_le C hC n hn]
+    rfl
 
+end Main
+p2m_reactivate "FittingLS"
 
+end FittingLS
+p2m_reactivate "FittingLS"
+
+/--
+[AddMonoidHom_coe_span_setOf_apply_eq_self_eq_setOf_forall_mem_range_iterate_of_map_smul_eq_frobeniusEquiv_symm_smul](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AddMonoidHom_coe_span_setOf_apply_eq_self_eq_setOf_forall_mem_range_iterate_of_map_smul_eq_frobeniusEquiv_symm_smul.lean)
+-/
 @[path]
 private lemma main
-  [Field K] [IsAlgClosed K] [AddCommGroup V] [Module K V] [FiniteDimensional K V]
-  {p : ℕ} [Fact p.Prime] [CharP K p]
-  {C : V →+ V}
--- given
-  (hC : ∀ (a : K) (v : V), C (a • v) = (frobeniusEquiv K p).symm a • C v) :
--- imply
-  ((Submodule.span K {v : V | C v = v} : Submodule K V) : Set V) = {v : V | ∀ n : ℕ, v ∈ Set.range ((⇑C)^[n])} ∧
+    (K : Type*) [Field K] [IsAlgClosed K] (p : ℕ) [Fact p.Prime] [CharP K p]
+    (V : Type*) [AddCommGroup V] [Module K V] [FiniteDimensional K V]
+    (C : V →+ V) (hC : ∀ (a : K) (v : V), C (a • v) = (frobeniusEquiv K p).symm a • C v) :
+    ((Submodule.span K {v : V | C v = v} : Submodule K V) : Set V) = {v : V | ∀ n : ℕ, v ∈ Set.range ((⇑C)^[n])} ∧
     ∀ n : ℕ, Module.finrank K V ≤ n → Set.range ((⇑C)^[n]) = {v : V | ∀ m : ℕ, v ∈ Set.range ((⇑C)^[m])} := by
--- proof
-  exact main K p V C hC
-
+  exact FittingLS.mainAux K p V C hC
 
 -- created on 2026-10-09

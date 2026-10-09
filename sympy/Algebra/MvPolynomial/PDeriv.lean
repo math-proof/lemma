@@ -1,4 +1,4 @@
-import Mathlib.Algebra.MvPolynomial.PDeriv
+import Mathlib.MvPolynomial.PDeriv
 
 /-!
 # Commutativity of partial derivatives and mixed differentials

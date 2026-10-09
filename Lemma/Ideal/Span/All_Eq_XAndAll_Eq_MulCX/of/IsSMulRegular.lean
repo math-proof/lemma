@@ -1,7 +1,6 @@
 import Mathlib
 import Lemma.Ideal.Basic
 import sympy.Basic
-namespace PolyDil29
 
 open scoped nonZeroDivisors
 open AffineDilatation Ideal MvPolynomial
@@ -154,17 +153,13 @@ private lemma g_surjective : Function.Surjective (g π σ τ) := by
   obtain ⟨p, hp⟩ := hle d.2
   exact ⟨p, Subtype.ext hp⟩
 
-noncomputable def e (hπ : IsSMulRegular R π) : AlgEquiv R (D π σ τ) (MvPolynomial (σ ⊕ τ) R) :=
+noncomputable def eMvPoly (hπ : IsSMulRegular R π) : AlgEquiv R (D π σ τ) (MvPolynomial (σ ⊕ τ) R) :=
   (AlgEquiv.ofBijective (g π σ τ) ⟨g_injective π σ τ hπ, g_surjective π σ τ⟩).symm
 
-private lemma e_symm_apply (hπ : IsSMulRegular R π) (p : MvPolynomial (σ ⊕ τ) R) : (e π σ τ hπ).symm p = g π σ τ p := rfl
+private lemma e_symm_apply (hπ : IsSMulRegular R π) (p : MvPolynomial (σ ⊕ τ) R) : (eMvPoly π σ τ hπ).symm p = g π σ τ p := rfl
 
-private lemma e_apply_of_eq (hπ : IsSMulRegular R π) (d : D π σ τ) (p : MvPolynomial (σ ⊕ τ) R) (h : g π σ τ p = d) : e π σ τ hπ d = p := by
+private lemma e_apply_of_eq (hπ : IsSMulRegular R π) (d : D π σ τ) (p : MvPolynomial (σ ⊕ τ) R) (h : g π σ τ p = d) : eMvPoly π σ τ hπ d = p := by
   rw [← h, ← e_symm_apply π σ τ hπ p, AlgEquiv.apply_symm_apply]
-
-end PolyDil29
-
-open PolyDil29
 
 /--
 [AffineDilatation_nonempty_algEquiv_mvPolynomial_sum](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AffineDilatation_nonempty_algEquiv_mvPolynomial_sum.lean)
@@ -185,7 +180,7 @@ private lemma main
     (∀ j : τ, e (AffineDilatation.divElem _ (MvPolynomial.C π) (MvPolynomial.X (Sum.inr j)) (Ideal.subset_span (Set.mem_insert_of_mem _ ⟨j, rfl⟩))) = MvPolynomial.X (Sum.inr j)) ∧
     (∀ j : τ, e (algebraMap (MvPolynomial (σ ⊕ τ) R) _ (MvPolynomial.X (Sum.inr j))) = MvPolynomial.C π * MvPolynomial.X (Sum.inr j)) := by
 -- proof
-  refine ⟨PolyDil29.e π σ τ hπ, fun i => ?_, fun j => ?_, fun j => ?_⟩
+  refine ⟨eMvPoly π σ τ hπ, fun i => ?_, fun j => ?_, fun j => ?_⟩
   ·
     apply e_apply_of_eq
     rw [g, MvPolynomial.aeval_X]; rfl

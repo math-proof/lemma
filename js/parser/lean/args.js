@@ -999,10 +999,18 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         if (start >= n) return '';
         if (this.parent instanceof L.LeanTactic) {
             let out = '%s';
+            const baseInd = this.indent ?? 0;
             for (let j = start + 1; j < n; j++) {
                 const a = args[j];
                 // `have` / `let` / `show` extend `LeanSyntax` but not `LeanTactic`; keep them on new lines like `by_contra`.
-                const sep = a instanceof L.LeanSyntax || a.is_comment() ? '\n' : ' ';
+                // Hanging args (deeper indent than the tactic app) keep source newlines + column.
+                let sep;
+                if (a instanceof L.LeanSyntax || a.is_comment())
+                    sep = '\n';
+                else if ((a.indent ?? 0) > baseInd)
+                    sep = '\n' + ' '.repeat(a.indent);
+                else
+                    sep = ' ';
                 out += sep;
                 out += '%s';
             }

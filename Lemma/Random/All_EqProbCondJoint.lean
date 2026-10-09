@@ -39,7 +39,7 @@ private lemma main
   have hlaw2m : π.map (y, z) = (ν.prod ξ).withDensity p2 :=
     Map.eq.WithDensityProb
   have hi2 : IsProbabilityMeasure (π.map (y, z)) :=
-    Measure.isProbabilityMeasure_map hPyz.aemeasurable
+    inferInstance
   have htot2 : ∫⁻ bc, p2 bc ∂(ν.prod ξ) = 1 := by
     have h : (ν.prod ξ).withDensity p2 Set.univ = ∫⁻ bc, p2 bc ∂(ν.prod ξ) := by
       rw [withDensity_apply _ MeasurableSet.univ, setLIntegral_univ]

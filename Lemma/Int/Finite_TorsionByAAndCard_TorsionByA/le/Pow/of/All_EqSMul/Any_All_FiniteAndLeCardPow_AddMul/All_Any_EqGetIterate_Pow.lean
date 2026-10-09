@@ -1,59 +1,13 @@
 import Mathlib
 import sympy.Basic
+set_option autoImplicit false
+set_option linter.unusedSectionVars false
+
+namespace P2mTorsionRank
 
 open Function
 
-/--
-[AddCommGroup_finite_and_natCard_torsionBy_le_of_natCard_fixed_primaryComponent_le_of_divisible](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AddCommGroup_finite_and_natCard_torsionBy_le_of_natCard_fixed_primaryComponent_le_of_divisible.lean)
--/
-
-def L
-  {A : Type*}
-  [AddCommGroup A]
-  (ℓ : ℕ)
-  [hℓ : Fact ℓ.Prime]
-  (τ : A →+ A)
-  (A)
-  (n : ℕ) : AddSubgroup A where
-  carrier := {x | ℓ ^ n • x = 0}
-  zero_mem' := smul_zero _
-  add_mem' := by
-    intro a b ha hb
-    simp only [Set.mem_setOf_eq] at ha hb ⊢
-    rw [smul_add, ha, hb, add_zero]
-  neg_mem' := by
-    intro a ha
-    simp only [Set.mem_setOf_eq] at ha ⊢
-    rw [smul_neg, ha, neg_zero]
-
-def iterHom
-  {A : Type*}
-  [AddCommGroup A]
-  (ℓ : ℕ)
-  [hℓ : Fact ℓ.Prime]
-  (τ : A →+ A)
-  (A)
-  {ℓ}
-  : ℕ → (A →+ A)
-  | 0 => AddMonoidHom.id A
-  | n + 1 => (iterHom n).comp τ
-
-def layerMap
-  {A : Type*}
-  [AddCommGroup A]
-  (ℓ : ℕ)
-  [hℓ : Fact ℓ.Prime]
-  (τ : A →+ A)
-  (A)
-  {ℓ}
-  {ℓ τ}
-  (n : ℕ) : L A ℓ (n + 1) →+ L A ℓ 1 where
-  toFun x := ⟨ℓ ^ n • (x : A), by
-    rw [mem_L, pow_one, ← mul_smul, ← pow_succ', mem_L.mp x.2]⟩
-  map_zero' := Subtype.ext (by simp)
-  map_add' a b := Subtype.ext (by simp [smul_add])
-
-private lemma  exists_linear_lt_pow (q : ℕ) (hq : 2 ≤ q) (r c : ℕ) : ∃ k : ℕ, r * k + c < q ^ k := by
+theorem exists_linear_lt_pow (q : ℕ) (hq : 2 ≤ q) (r c : ℕ) : ∃ k : ℕ, r * k + c < q ^ k := by
   set m := r + c + 1 with hm
   refine ⟨3 * m, ?_⟩
   have h1 : m + 1 ≤ 2 ^ m := Nat.succ_le_of_lt m.lt_two_pow_self
@@ -78,32 +32,21 @@ private lemma  exists_linear_lt_pow (q : ℕ) (hq : 2 ≤ q) (r c : ℕ) : ∃ k
     _ = 2 ^ (3 * m) := h3
     _ ≤ q ^ (3 * m) := h4
 
-private lemma  pow_add_apply
-  {K V : Type*}
-  [Field K]
-  [AddCommGroup V]
-  [Module K V]
-  (ν : V →ₗ[K] V) (n m : ℕ) (x : V) : (ν ^ (n + m)) x = (ν ^ m) ((ν ^ n) x) := by
+section VectorSpace
+
+variable {K V : Type*} [Field K] [AddCommGroup V] [Module K V]
+
+theorem pow_add_apply (ν : V →ₗ[K] V) (n m : ℕ) (x : V) : (ν ^ (n + m)) x = (ν ^ m) ((ν ^ n) x) := by
   rw [add_comm, pow_add, Module.End.mul_apply]
 
-private lemma  ker_pow_mono
-    {K V : Type*}
-    [Field K]
-    [AddCommGroup V]
-    [Module K V]
-    (ν : V →ₗ[K] V) {n m : ℕ} (h : n ≤ m) :
+theorem ker_pow_mono (ν : V →ₗ[K] V) {n m : ℕ} (h : n ≤ m) :
     LinearMap.ker (ν ^ n) ≤ LinearMap.ker (ν ^ m) := by
   intro x hx
   obtain ⟨j, rfl⟩ := Nat.exists_eq_add_of_le h
   rw [LinearMap.mem_ker] at hx ⊢
   rw [pow_add_apply, hx, map_zero]
 
-private lemma  ker_pow_eq_of_ker_pow_eq
-    {K V : Type*}
-    [Field K]
-    [AddCommGroup V]
-    [Module K V]
-    (ν : V →ₗ[K] V) {n : ℕ}
+theorem ker_pow_eq_of_ker_pow_eq (ν : V →ₗ[K] V) {n : ℕ}
     (h : LinearMap.ker (ν ^ n) = LinearMap.ker (ν ^ (n + 1))) (m : ℕ) :
     LinearMap.ker (ν ^ (n + m)) = LinearMap.ker (ν ^ n) := by
   induction m with
@@ -125,13 +68,9 @@ private lemma  ker_pow_eq_of_ker_pow_eq
       exact h2
     · exact ker_pow_mono ν (by omega)
 
-private lemma  finite_of_exhaust_ker_pow
-    {K V : Type*}
-    [Field K]
-    [AddCommGroup V]
-    [Module K V]
-    [Finite K]
-    (ν : V →ₗ[K] V) (r c : ℕ)
+variable [Finite K]
+
+theorem finite_of_exhaust_ker_pow (ν : V →ₗ[K] V) (r c : ℕ)
     (hexh : ∀ x : V, ∃ k : ℕ, (ν ^ Nat.card K ^ k) x = 0)
     (hfin : ∀ k : ℕ, Finite (LinearMap.ker (ν ^ Nat.card K ^ k)))
     (hle : ∀ k : ℕ, Nat.card (LinearMap.ker (ν ^ Nat.card K ^ k)) ≤ Nat.card K ^ (r * k + c)) :
@@ -143,7 +82,7 @@ private lemma  finite_of_exhaust_ker_pow
     intro n
     have hle' : LinearMap.ker (ν ^ n) ≤ LinearMap.ker (ν ^ q ^ n) :=
       ker_pow_mono ν (Nat.lt_pow_self hq).le
-    haveI := hfin n
+    have := hfin n
     exact Finite.of_injective (Submodule.inclusion hle') (Submodule.inclusion_injective hle')
   by_cases hstab : ∃ n : ℕ, LinearMap.ker (ν ^ n) = LinearMap.ker (ν ^ (n + 1))
   · obtain ⟨n, hn⟩ := hstab
@@ -153,7 +92,7 @@ private lemma  finite_of_exhaust_ker_pow
       have h1 : x ∈ LinearMap.ker (ν ^ (n + q ^ k)) :=
         ker_pow_mono ν (Nat.le_add_left _ _) (LinearMap.mem_ker.mpr hk)
       rwa [ker_pow_eq_of_ker_pow_eq ν hn] at h1
-    haveI := hfin' n
+    have := hfin' n
     exact Finite.of_surjective (fun x : LinearMap.ker (ν ^ n) => (x : V))
       (fun x => ⟨⟨x, hall x⟩, rfl⟩)
   · exfalso
@@ -165,14 +104,14 @@ private lemma  finite_of_exhaust_ker_pow
       induction n with
       | zero => exact Nat.zero_le _
       | succ n ih =>
-        haveI := hfin' (n + 1)
-        haveI : Module.Finite K (LinearMap.ker (ν ^ (n + 1))) := Module.Finite.of_finite
+        have := hfin' (n + 1)
+        have : Module.Finite K (LinearMap.ker (ν ^ (n + 1))) := Module.Finite.of_finite
         have := Submodule.finrank_lt_finrank_of_lt (hlt n)
         omega
     have hcard : ∀ k : ℕ, q ^ q ^ k ≤ q ^ (r * k + c) := by
       intro k
-      haveI := hfin (q ^ k)
-      haveI : Module.Finite K (LinearMap.ker (ν ^ q ^ k)) := Module.Finite.of_finite
+      have := hfin (q ^ k)
+      have : Module.Finite K (LinearMap.ker (ν ^ q ^ k)) := Module.Finite.of_finite
       calc q ^ q ^ k ≤ q ^ Module.finrank K (LinearMap.ker (ν ^ q ^ k)) :=
             Nat.pow_le_pow_right hq.le (hdim _)
         _ = Nat.card (LinearMap.ker (ν ^ q ^ k)) := by
@@ -184,50 +123,39 @@ private lemma  finite_of_exhaust_ker_pow
     have h3 : k < q ^ k := Nat.lt_pow_self hq
     omega
 
-private lemma  mem_L
-  {A : Type*}
-  [AddCommGroup A]
-  (ℓ : ℕ)
-  [hℓ : Fact ℓ.Prime]
-  (τ : A →+ A)
-  (A)
-  {ℓ}
-  {n : ℕ} {x : A} : x ∈ L A ℓ n ↔ ℓ ^ n • x = 0 := Iff.rfl
+end VectorSpace
 
-private lemma  L_mono
-  {A : Type*}
-  [AddCommGroup A]
-  (ℓ : ℕ)
-  [hℓ : Fact ℓ.Prime]
-  (τ : A →+ A)
-  (A)
-  {ℓ}
-  (n : ℕ) : L A ℓ n ≤ L A ℓ (n + 1) := by
+section Group
+
+variable {A : Type*} [AddCommGroup A] (ℓ : ℕ) [hℓ : Fact ℓ.Prime] (τ : A →+ A)
+
+variable (A) in
+
+def L (n : ℕ) : AddSubgroup A where
+  carrier := {x | ℓ ^ n • x = 0}
+  zero_mem' := smul_zero _
+  add_mem' := by
+    intro a b ha hb
+    simp only [Set.mem_setOf_eq] at ha hb ⊢
+    rw [smul_add, ha, hb, add_zero]
+  neg_mem' := by
+    intro a ha
+    simp only [Set.mem_setOf_eq] at ha ⊢
+    rw [smul_neg, ha, neg_zero]
+
+variable {ℓ} in
+theorem mem_L {n : ℕ} {x : A} : x ∈ L A ℓ n ↔ ℓ ^ n • x = 0 := Iff.rfl
+
+theorem L_mono (n : ℕ) : L A ℓ n ≤ L A ℓ (n + 1) := by
   intro x hx
   rw [mem_L] at hx ⊢
   rw [pow_succ', mul_smul, hx, smul_zero]
 
-private lemma  L_zero
-  {A : Type*}
-  [AddCommGroup A]
-  (ℓ : ℕ)
-  [hℓ : Fact ℓ.Prime]
-  (τ : A →+ A)
-  (A)
-  {ℓ}
-  : L A ℓ 0 = ⊥ := by
+theorem L_zero : L A ℓ 0 = ⊥ := by
   ext x
   rw [mem_L, pow_zero, one_smul, AddSubgroup.mem_bot]
 
-private lemma  mem_primaryComponent_of_mem_L
-    {A : Type*}
-    [AddCommGroup A]
-    (ℓ : ℕ)
-    [hℓ : Fact ℓ.Prime]
-    (τ : A →+ A)
-    (A)
-    {ℓ}
-    {n : ℕ} {x : A} (hx : x ∈ L A ℓ n) :
+theorem mem_primaryComponent_of_mem_L {n : ℕ} {x : A} (hx : x ∈ L A ℓ n) :
     x ∈ AddCommGroup.primaryComponent A ℓ :=
   (AddCommGroup.mem_primaryComponent).mpr ⟨n, hx⟩
 
@@ -236,15 +164,7 @@ def τL (n : ℕ) : L A ℓ n →+ L A ℓ n where
   map_zero' := Subtype.ext (map_zero τ)
   map_add' a b := Subtype.ext (map_add τ (a : A) (b : A))
 
-private lemma  coe_
-    {A : Type*}
-    [AddCommGroup A]
-    (ℓ : ℕ)
-    [hℓ : Fact ℓ.Prime]
-    (τ : A →+ A)
-    (A)
-    {ℓ}
-    τL_iterate (n m : ℕ) (x : L A ℓ n) :
+theorem coe_τL_iterate (n m : ℕ) (x : L A ℓ n) :
     (((⇑(τL ℓ τ n))^[m] x : L A ℓ n) : A) = (⇑τ)^[m] x := by
   induction m generalizing x with
   | zero => rfl
@@ -252,7 +172,11 @@ private lemma  coe_
     rw [Function.iterate_succ_apply, Function.iterate_succ_apply, ih]
     rfl
 
-private lemma  coe_iterHom (n : ℕ) : ⇑(iterHom τ n) = (⇑τ)^[n] := by
+def iterHom : ℕ → (A →+ A)
+  | 0 => AddMonoidHom.id A
+  | n + 1 => (iterHom n).comp τ
+
+theorem coe_iterHom (n : ℕ) : ⇑(iterHom τ n) = (⇑τ)^[n] := by
   induction n with
   | zero => rfl
   | succ n ih =>
@@ -260,31 +184,14 @@ private lemma  coe_iterHom (n : ℕ) : ⇑(iterHom τ n) = (⇑τ)^[n] := by
     show iterHom τ n (τ x) = τ^[n + 1] x
     rw [ih, Function.iterate_succ_apply]
 
-private lemma  iterate_fixed_mono
-    {A : Type*}
-    [AddCommGroup A]
-    (ℓ : ℕ)
-    [hℓ : Fact ℓ.Prime]
-    (τ : A →+ A)
-    (A)
-    {ℓ}
-    {ℓ τ}
-    {x : A} {k k' : ℕ} (hk : k ≤ k') (h : (⇑τ)^[ℓ ^ k] x = x) :
+variable {ℓ τ} in
+theorem iterate_fixed_mono {x : A} {k k' : ℕ} (hk : k ≤ k') (h : (⇑τ)^[ℓ ^ k] x = x) :
     (⇑τ)^[ℓ ^ k'] x = x := by
   obtain ⟨j, rfl⟩ := Nat.exists_eq_add_of_le hk
   rw [pow_add, Function.iterate_mul]
   exact Function.iterate_fixed h _
 
-private lemma  finite_L_one
-    {A : Type*}
-    [AddCommGroup A]
-    (ℓ : ℕ)
-    [hℓ : Fact ℓ.Prime]
-    (τ : A →+ A)
-    (A)
-    {ℓ}
-    {ℓ τ}
-    (r : ℕ)
+theorem finite_L_one (r : ℕ)
     (hexh : ∀ x ∈ AddCommGroup.primaryComponent A ℓ, ∃ k : ℕ, (⇑τ)^[ℓ ^ k] x = x)
     (hfix : ∃ c : ℕ, ∀ k : ℕ,
       Finite {x : A // x ∈ AddCommGroup.primaryComponent A ℓ ∧ (⇑τ)^[ℓ ^ k] x = x} ∧
@@ -296,9 +203,9 @@ private lemma  finite_L_one
   by_cases hV : Subsingleton (L A ℓ 1)
   · infer_instance
   rw [not_subsingleton_iff_nontrivial] at hV
-  haveI : NeZero ℓ := ⟨hℓ.out.ne_zero⟩
+  have : NeZero ℓ := ⟨hℓ.out.ne_zero⟩
 
-  haveI : Module (ZMod ℓ) (L A ℓ 1) := AddCommGroup.zmodModule (fun x => Subtype.ext (by
+  have : Module (ZMod ℓ) (L A ℓ 1) := AddCommGroup.zmodModule (fun x => Subtype.ext (by
     rw [AddSubgroupClass.coe_nsmul, ZeroMemClass.coe_zero]
     have := mem_L.mp x.2
     rwa [pow_one] at this))
@@ -314,7 +221,7 @@ private lemma  finite_L_one
     rw [this, coe_τL_iterate]
   set ν : (L A ℓ 1) →ₗ[ZMod ℓ] (L A ℓ 1) := T - 1 with hνdef
 
-  haveI : CharP (Module.End (ZMod ℓ) (L A ℓ 1)) ℓ :=
+  have : CharP (Module.End (ZMod ℓ) (L A ℓ 1)) ℓ :=
     charP_of_injective_algebraMap (algebraMap (ZMod ℓ) (Module.End (ZMod ℓ) (L A ℓ 1))).injective ℓ
   have hνpow : ∀ k : ℕ, ν ^ ℓ ^ k = T ^ ℓ ^ k - 1 := by
     intro k
@@ -330,7 +237,7 @@ private lemma  finite_L_one
     exact ⟨k, by rw [hcardK]; exact (hker k x).mpr hk⟩
   · intro k
     rw [hcardK]
-    haveI := (hc k).1
+    have := (hc k).1
     refine Finite.of_injective (fun x : LinearMap.ker (ν ^ ℓ ^ k) =>
       (⟨(x : (L A ℓ 1)), mem_primaryComponent_of_mem_L ℓ (x : (L A ℓ 1)).2,
         (hker k _).mp (LinearMap.mem_ker.mp x.2)⟩ :
@@ -340,7 +247,7 @@ private lemma  finite_L_one
     exact Subtype.ext (Subtype.ext this)
   · intro k
     rw [hcardK]
-    haveI := (hc k).1
+    have := (hc k).1
     refine le_trans (Nat.card_le_card_of_injective (fun x : LinearMap.ker (ν ^ ℓ ^ k) =>
       (⟨(x : (L A ℓ 1)), mem_primaryComponent_of_mem_L ℓ (x : (L A ℓ 1)).2,
         (hker k _).mp (LinearMap.mem_ker.mp x.2)⟩ :
@@ -349,16 +256,8 @@ private lemma  finite_L_one
     have := congrArg Subtype.val hxy
     exact Subtype.ext (Subtype.ext this)
 
-private lemma  iterate_fixed_of_fixed_L_one
-    {A : Type*}
-    [AddCommGroup A]
-    (ℓ : ℕ)
-    [hℓ : Fact ℓ.Prime]
-    (τ : A →+ A)
-    (A)
-    {ℓ}
-    {ℓ τ}
-    {k₁ : ℕ} (hθ : ∀ x ∈ L A ℓ 1, (⇑τ)^[ℓ ^ k₁] x = x)
+variable {ℓ τ} in
+theorem iterate_fixed_of_fixed_L_one {k₁ : ℕ} (hθ : ∀ x ∈ L A ℓ 1, (⇑τ)^[ℓ ^ k₁] x = x)
     (k : ℕ) : ∀ x ∈ L A ℓ (k + 1), (⇑τ)^[ℓ ^ (k₁ + k)] x = x := by
   induction k with
   | zero => intro x hx; rw [add_zero]; exact hθ x hx
@@ -387,29 +286,20 @@ private lemma  iterate_fixed_of_fixed_L_one
     rw [hℓe, add_zero, hσ, ← Function.iterate_mul, ← pow_succ] at h
     exact h
 
-private lemma  ker_layerMap
-  {A : Type*}
-  [AddCommGroup A]
-  (ℓ : ℕ)
-  [hℓ : Fact ℓ.Prime]
-  (τ : A →+ A)
-  (A)
-  {ℓ}
-  {ℓ τ}
-  (n : ℕ) : (layerMap A ℓ n).ker = (L A ℓ n).addSubgroupOf (L A ℓ (n + 1)) := by
+variable (A) in
+
+def layerMap (n : ℕ) : L A ℓ (n + 1) →+ L A ℓ 1 where
+  toFun x := ⟨ℓ ^ n • (x : A), by
+    rw [mem_L, pow_one, ← mul_smul, ← pow_succ', mem_L.mp x.2]⟩
+  map_zero' := Subtype.ext (by simp)
+  map_add' a b := Subtype.ext (by simp [smul_add])
+
+theorem ker_layerMap (n : ℕ) : (layerMap A ℓ n).ker = (L A ℓ n).addSubgroupOf (L A ℓ (n + 1)) := by
   ext x
   rw [AddMonoidHom.mem_ker, AddSubgroup.mem_addSubgroupOf, mem_L]
   exact ⟨fun h => congrArg Subtype.val h, fun h => Subtype.ext h⟩
 
-private lemma  layerMap_surjective
-    {A : Type*}
-    [AddCommGroup A]
-    (ℓ : ℕ)
-    [hℓ : Fact ℓ.Prime]
-    (τ : A →+ A)
-    (A)
-    {ℓ}
-    {ℓ τ}
+theorem layerMap_surjective
     (hdiv : ∀ x ∈ AddCommGroup.primaryComponent A ℓ, ∃ y : A, ℓ • y = x) (n : ℕ) :
     Function.Surjective (layerMap A ℓ n) := by
 
@@ -429,15 +319,7 @@ private lemma  layerMap_surjective
   obtain ⟨y, hy, hyv⟩ := key n v v.2
   exact ⟨⟨y, hy⟩, Subtype.ext hyv⟩
 
-private lemma  finite_and_card_L
-    {A : Type*}
-    [AddCommGroup A]
-    (ℓ : ℕ)
-    [hℓ : Fact ℓ.Prime]
-    (τ : A →+ A)
-    (A)
-    {ℓ}
-    {ℓ τ}
+theorem finite_and_card_L
     (hdiv : ∀ x ∈ AddCommGroup.primaryComponent A ℓ, ∃ y : A, ℓ • y = x)
     (h1 : Finite (L A ℓ 1)) (n : ℕ) :
     Finite (L A ℓ n) ∧ Nat.card (L A ℓ n) = Nat.card (L A ℓ 1) ^ n := by
@@ -454,24 +336,15 @@ private lemma  finite_and_card_L
     have eK : f.ker ≃ L A ℓ n := by
       rw [hfdef, ker_layerMap]
       exact (AddSubgroup.addSubgroupOfEquivOfLe (L_mono ℓ n)).toEquiv
-    haveI : Finite (L A ℓ (n + 1) ⧸ f.ker) := Finite.of_equiv _ eQ.symm
-    haveI : Finite f.ker := Finite.of_equiv _ eK.symm
+    have : Finite (L A ℓ (n + 1) ⧸ f.ker) := Finite.of_equiv _ eQ.symm
+    have : Finite f.ker := Finite.of_equiv _ eK.symm
     have hfin' : Finite (L A ℓ (n + 1)) :=
       Finite.of_equiv _ (AddSubgroup.addGroupEquivQuotientProdAddSubgroup (s := f.ker)).symm
     refine ⟨hfin', ?_⟩
     rw [AddSubgroup.card_eq_card_quotient_mul_card_addSubgroup f.ker, Nat.card_congr eQ,
       Nat.card_congr eK, hcard, pow_succ']
 
-private lemma  main
-    {A : Type*}
-    [AddCommGroup A]
-    (ℓ : ℕ)
-    [hℓ : Fact ℓ.Prime]
-    (τ : A →+ A)
-    (A)
-    {ℓ}
-    {ℓ τ}
-    (r : ℕ)
+theorem mainAux (r : ℕ)
     (hexh : ∀ x ∈ AddCommGroup.primaryComponent A ℓ, ∃ k : ℕ, (⇑τ)^[ℓ ^ k] x = x)
     (hfix : ∃ c : ℕ, ∀ k : ℕ,
       Finite {x : A // x ∈ AddCommGroup.primaryComponent A ℓ ∧ (⇑τ)^[ℓ ^ k] x = x} ∧
@@ -483,7 +356,7 @@ private lemma  main
   have hV : Finite (L A ℓ 1) := finite_L_one ℓ τ r hexh hfix
   obtain ⟨c, hc⟩ := hfix
   refine ⟨hV, ?_⟩
-  haveI := hV
+  have := hV
 
   choose kx hkx using fun x : L A ℓ 1 => hexh x (mem_primaryComponent_of_mem_L ℓ x.2)
   obtain ⟨k₁, hk₁⟩ := (Set.finite_range kx).bddAbove
@@ -494,7 +367,7 @@ private lemma  main
     intro k
     obtain ⟨_, hcard⟩ := finite_and_card_L ℓ hdiv hV (k + 1)
     rw [← hcard]
-    haveI := (hc (k₁ + k)).1
+    have := (hc (k₁ + k)).1
     refine le_trans (Nat.card_le_card_of_injective (fun x : L A ℓ (k + 1) =>
       (⟨(x : A), mem_primaryComponent_of_mem_L ℓ x.2, iterate_fixed_of_fixed_L_one hθ k x x.2⟩ :
         {x : A // x ∈ AddCommGroup.primaryComponent A ℓ ∧ (⇑τ)^[ℓ ^ (k₁ + k)] x = x})) ?_)
@@ -503,12 +376,12 @@ private lemma  main
     have := congrArg Subtype.val hxy
     exact Subtype.ext this
 
-  haveI : NeZero ℓ := ⟨hℓ.out.ne_zero⟩
-  haveI : Module (ZMod ℓ) (L A ℓ 1) := AddCommGroup.zmodModule (fun x => Subtype.ext (by
+  have : NeZero ℓ := ⟨hℓ.out.ne_zero⟩
+  have : Module (ZMod ℓ) (L A ℓ 1) := AddCommGroup.zmodModule (fun x => Subtype.ext (by
     rw [AddSubgroupClass.coe_nsmul, ZeroMemClass.coe_zero]
     have := mem_L.mp x.2
     rwa [pow_one] at this))
-  haveI : Module.Finite (ZMod ℓ) (L A ℓ 1) := Module.Finite.of_finite
+  have : Module.Finite (ZMod ℓ) (L A ℓ 1) := Module.Finite.of_finite
   set s := Module.finrank (ZMod ℓ) (L A ℓ 1) with hsdef
   have hcardV : Nat.card (L A ℓ 1) = ℓ ^ s := by
     have h := Module.natCard_eq_pow_finrank (K := ZMod ℓ) (V := L A ℓ 1)
@@ -527,27 +400,31 @@ private lemma  main
   have h' : (r + 1) * (r * k₁ + c + 1) ≤ s * (r * k₁ + c + 1) :=
     Nat.mul_le_mul_right _ hsr
   nlinarith
+
+end Group
+
+end P2mTorsionRank
+
+/--
+[AddCommGroup_finite_and_natCard_torsionBy_le_of_natCard_fixed_primaryComponent_le_of_divisible](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AddCommGroup_finite_and_natCard_torsionBy_le_of_natCard_fixed_primaryComponent_le_of_divisible.lean)
+-/
 @[path]
 private lemma main
-  [AddCommGroup A]
-  {ℓ : ℕ} [Fact ℓ.Prime]
-  {r : ℕ}
-  {τ : A →+ A}
--- given
-  (hexh : ∀ x ∈ AddCommGroup.primaryComponent A ℓ, ∃ k : ℕ, (⇑τ)^[ℓ ^ k] x = x)
-  (hfix : ∃ c : ℕ, ∀ k : ℕ, Finite {x : A // x ∈ AddCommGroup.primaryComponent A ℓ ∧ (⇑τ)^[ℓ ^ k] x = x} ∧ Nat.card {x : A // x ∈ AddCommGroup.primaryComponent A ℓ ∧ (⇑τ)^[ℓ ^ k] x = x} ≤ ℓ ^ (r * k + c))
-  (hdiv : ∀ x ∈ AddCommGroup.primaryComponent A ℓ, ∃ y : A, ℓ • y = x) :
--- imply
-  Finite (Submodule.torsionBy ℤ A (ℓ : ℤ)) ∧
+    {A : Type*} [AddCommGroup A] (ℓ : ℕ) [Fact ℓ.Prime] (r : ℕ) (τ : A →+ A)
+    (hexh : ∀ x ∈ AddCommGroup.primaryComponent A ℓ, ∃ k : ℕ, (⇑τ)^[ℓ ^ k] x = x)
+    (hfix : ∃ c : ℕ, ∀ k : ℕ,
+      Finite {x : A // x ∈ AddCommGroup.primaryComponent A ℓ ∧ (⇑τ)^[ℓ ^ k] x = x} ∧
+      Nat.card {x : A // x ∈ AddCommGroup.primaryComponent A ℓ ∧ (⇑τ)^[ℓ ^ k] x = x} ≤
+        ℓ ^ (r * k + c))
+    (hdiv : ∀ x ∈ AddCommGroup.primaryComponent A ℓ, ∃ y : A, ℓ • y = x) :
+    Finite (Submodule.torsionBy ℤ A (ℓ : ℤ)) ∧
       Nat.card (Submodule.torsionBy ℤ A (ℓ : ℤ)) ≤ ℓ ^ r := by
--- proof
-  obtain ⟨hfin, hle⟩ := main ℓ τ r hexh hfix hdiv
-  have e : L A ℓ 1 ≃ Submodule.torsionBy ℤ A (ℓ : ℤ) :=
+  obtain ⟨hfin, hle⟩ := P2mTorsionRank.mainAux ℓ τ r hexh hfix hdiv
+  have e : P2mTorsionRank.L A ℓ 1 ≃ Submodule.torsionBy ℤ A (ℓ : ℤ) :=
     Equiv.subtypeEquivRight (fun x => by
-      show x ∈ L A ℓ 1 ↔ x ∈ Submodule.torsionBy ℤ A (ℓ : ℤ)
-      rw [Submodule.mem_torsionBy_iff, mem_L, pow_one, ← natCast_zsmul])
-  haveI := hfin
+      show x ∈ P2mTorsionRank.L A ℓ 1 ↔ x ∈ Submodule.torsionBy ℤ A (ℓ : ℤ)
+      rw [Submodule.mem_torsionBy_iff, P2mTorsionRank.mem_L, pow_one, ← natCast_zsmul])
+  have := hfin
   exact ⟨Finite.of_equiv _ e, by rw [← Nat.card_congr e]; exact hle⟩
-
 
 -- created on 2026-10-09

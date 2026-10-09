@@ -43,14 +43,14 @@ theorem IsDiscreteHMM.singlePSpace_yy [h : IsDiscreteHMM π x y] (i j : ℕ) : S
 omit [Countable Y] [MeasurableSingletonClass Y] in
 theorem IsDiscreteHMM.singlePSpace_x [h : IsDiscreteHMM π x y] (a b : ℤ) : SinglePSpace π x[a:b] :=
   Random.SinglePSpace.of.EqMeasureCount.Measurable
-    (measurable_pi_lambda _ fun _ => h.measurable_x _) rfl
+    (Measurable.of_eval fun _ => h.measurable_x _) rfl
 
 instance [h : IsDiscreteHMM π x y] (n m : ℤ) : SinglePSpace π (x[:n], y[:m]) :=
   Random.SinglePSpace.of.All_Measurable.All_Measurable h.measurable_x h.measurable_y
 
 instance [h : IsDiscreteHMM π x y] (a b : ℤ) (j : ℕ) : SinglePSpace π (JointRandomSymbol x[a:b] (y j)) :=
   Random.SinglePSpace.of.EqMeasureCount.EqMeasureCount.Measurable.Measurable
-    (measurable_pi_lambda _ fun _ => h.measurable_x _) (h.measurable_y j) rfl h.count_y
+    (Measurable.of_eval fun _ => h.measurable_x _) (h.measurable_y j) rfl h.count_y
 end
 
 namespace IsDiscreteHMM

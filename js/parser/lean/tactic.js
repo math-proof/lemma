@@ -61,10 +61,15 @@ export class LeanSyntax extends LeanArgs {
     }
 
     insert_newline(caret, newline_count, indent, next) {
+        // Hanging args under a tactic app (`exact f a\n  b\n  c`): wrap the
+        // on-line `LeanArgsSpaceSeparated` in `LeanArgsIndented` so serialize
+        // keeps newlines. Pushing into the space-list used to flatten them.
         if (caret === this.arg && this.indent < indent && caret instanceof L.LeanArgsSpaceSeparated) {
-            const $new = new L.LeanCaret(indent, caret.level);
-            caret.push($new);
-            return $new;
+            const nlCaret = new L.LeanCaret(indent, caret.level);
+            const nl = new L.LeanArgsNewLineSeparated([nlCaret], indent, caret.level);
+            const c = nl.push_newlines(newline_count - 1);
+            this.replace(caret, new L.LeanArgsIndented(caret, nl, this.indent, c.level));
+            return c;
         }
         // Bare keyword whose operand starts on the following, deeper-indented line
         // (a `show` followed by a deeper-indented operand line): the operand belongs to this node, not to a new statement.
@@ -423,10 +428,15 @@ export class LeanTactic extends LeanSyntax {
 
     insert_newline(caret, newline_count, indent, next) {
         if (caret === this.arg) {
+            // Hanging args after a multi-arg first line (`exact f a\n  b`): wrap in
+            // LeanArgsIndented. Old code pushed into the space-list at `this.indent`,
+            // which flattened the hang on serialize.
             if (this.indent < indent && caret instanceof L.LeanArgsSpaceSeparated) {
-                const $new = new L.LeanCaret(this.indent, caret.level);
-                caret.push($new);
-                return $new;
+                const $new = new L.LeanCaret(indent, caret.level);
+                const nl = new L.LeanArgsNewLineSeparated([$new], indent, $new.level);
+                const c = nl.push_newlines(newline_count - 1);
+                this.replace(caret, new L.LeanArgsIndented(caret, nl, this.indent, c.level));
+                return c;
             }
             if (this.indent < indent && (caret instanceof L.LeanToken || caret instanceof L.LeanProperty || caret instanceof L.LeanParenthesis)) {
                 const $new = new L.LeanCaret(indent, caret.level);

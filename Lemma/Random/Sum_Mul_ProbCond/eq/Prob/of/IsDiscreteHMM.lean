@@ -51,7 +51,7 @@ private lemma main
     change (Measure.count : Measure (Fin m → X)).prod Measure.count = Measure.count
     rw [← Measure.Count.eq.ProdCountS]
   have hJ : ∀ a b : ℕ, Measurable (x[:(a : ℤ)], y[:(b : ℤ)]) := fun a b =>
-    (measurable_pi_lambda _ fun i => hx _).prodMk (measurable_pi_lambda _ fun i => hy _)
+    (Measurable.of_eval fun i => hx _).prodMk (Measurable.of_eval fun i => hy _)
   -- events defined by a predicate on the sample paths
   obtain ⟨Ev, hEv⟩ : ∃ Ev : ((ℕ → X) → (ℕ → Y) → Prop) → Set Ω,
       ∀ p, Ev p = {ω | p (fun i => x i ω) (fun i => y i ω)} := ⟨fun p => {ω | p (fun i => x i ω) (fun i => y i ω)}, fun _ => rfl⟩

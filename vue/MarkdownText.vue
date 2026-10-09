@@ -1,5 +1,5 @@
 <template>
-    {{self.text}}
+    {{ text }}
 </template>
 
 <script setup>
@@ -18,12 +18,20 @@ const self = new Vue({
 
     computed: {
         text() {
-            let {text} = props.kwargs;
-            return text.replace(/\\_/g, '_');
+            // Prefer this.kwargs (Vue wrapper props); setup `props` can be
+            // briefly incomplete for async markdown leaves, which left lemma
+            // docstrings blank between `/--` and `-/`.
+            const kwargs = this.kwargs || props.kwargs || {};
+            const raw = kwargs.text;
+            if (raw == null)
+                return '';
+            return String(raw).replace(/\\_/g, '_');
         },
     },
 
     mounted() {
     },
 });
+
+const { text } = self.globals;
 </script>

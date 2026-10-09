@@ -49,7 +49,7 @@ private lemma main
   -- the Markov property `h₆` of the general lemma, from conditional independence
   have hM : 𝔼[r: π]((γ ^ (id : ℕ → ℕ)) @ r[t + 1:] | s t, a t, s (t + 1)) =ᵐ[π]
       𝔼[r: π]((γ ^ (id : ℕ → ℕ)) @ r[t + 1:] | s (t + 1)) := by
-    have hF : Measurable (Expectation.asRV r[t + 1:]) := measurable_pi_lambda _ fun k ↦ hrm (t + 1 + k)
+    have hF : Measurable (Expectation.asRV r[t + 1:]) := Measurable.of_eval fun k ↦ hrm (t + 1 + k)
     have hg : Measurable fun p : ℕ → ℝ ↦ (γ ^ (id : ℕ → ℕ)) @ p :=
       Measurable.tsum fun k ↦ (measurable_pi_apply k).const_mul _
     obtain ⟨R, hR⟩ := id h₂

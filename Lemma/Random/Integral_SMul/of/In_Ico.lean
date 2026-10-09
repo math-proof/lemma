@@ -47,7 +47,11 @@ private lemma main
       rw [norm_mul]
       exact mul_le_of_le_one_left (norm_nonneg _) (by split_ifs <;> simp) |>.trans h.2
   rw [Integral.eq.Sum_Sum_SMul (M := M) h₁ θ t (fun y u => M.Q r s a θ γ t y u • ψ y u)]
-  simp_rw [SMul.eq.Sum_Sum_SMul (s := s) (a := a) t _ (((γ ^ (id : ℕ → ℕ)) @ r[t:]) _) ψ]
+  have hGω : ∀ ω, ((γ ^ (id : ℕ → ℕ)) @ r[t:]) ω • ψ (s t ω) (a t ω) =
+      ∑ x, ∑ u, ((if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) *
+        ((γ ^ (id : ℕ → ℕ)) @ r[t:]) ω) • ψ x u :=
+    fun ω => Real.SMul.eq.Sum_Sum_SMul (s := s) (a := a) t ω _ ψ
+  refine (integral_congr_ae (Filter.Eventually.of_forall hGω)).trans ?_
   rw [integral_finsetSum _ fun x _ => integrable_finsetSum _ fun u _ => (hI x u).smul_const _]
   refine Finset.sum_congr rfl fun x _ => ?_
   rw [integral_finsetSum _ fun u _ => (hI x u).smul_const _]

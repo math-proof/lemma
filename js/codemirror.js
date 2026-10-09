@@ -2,14 +2,16 @@
 // Provides getCursor/getLine/setCursor/replaceSelection/etc. so that
 // existing keybinding handlers and hint logic need minimal changes.
 
-import { EditorView } from "@codemirror/view";
-import { EditorSelection, Transaction } from "@codemirror/state";
+import { EditorView, Decoration } from "@codemirror/view";
+import { EditorSelection, StateEffect, StateField } from "@codemirror/state";
 import { startCompletion } from "@codemirror/autocomplete";
 import { toggleComment } from "@codemirror/commands";
 
 function posToOffset(doc, line, ch) {
   // CM5 lines are 0-based, CM6 are 1-based
   const l = doc.line(Math.max(1, Math.min(doc.lines, line + 1)));
+  if (ch == null || Number.isNaN(ch))
+    ch = 0;
   return Math.max(l.from, Math.min(l.to, l.from + ch));
 }
 
@@ -18,20 +20,56 @@ function offsetToPos(doc, offset) {
   return { line: l.number - 1, ch: offset - l.from };
 }
 
+/** Add a CM5-style TextMarker decoration (className / title / tilde attrs). */
+const addMarkEffect = StateEffect.define();
+/** Clear one mark produced by markText (value = Decoration range). */
+const clearMarkEffect = StateEffect.define();
+
+/**
+ * Holds markText decorations. Must be in the editor's extension list
+ * (see codemirrorBoot createEditor).
+ */
+export const cmMarkField = StateField.define({
+  create() {
+    return Decoration.none;
+  },
+  update(marks, tr) {
+    marks = marks.map(tr.changes);
+    for (const e of tr.effects) {
+      if (e.is(addMarkEffect))
+        marks = marks.update({ add: [e.value] });
+      else if (e.is(clearMarkEffect))
+        marks = marks.update({
+          filter: (_from, _to, value) => value !== e.value,
+        });
+    }
+    return marks;
+  },
+  provide: (f) => EditorView.decorations.from(f),
+});
+
 export class CMBridge {
   constructor(view) {
     this.view = view;
+    this._hitSide = false;
   }
 
   get state() { return this.view.state; }
   get doc() { return this.view.state.doc; }
 
   getCursor() {
-    return offsetToPos(this.doc, this.view.state.selection.main.head);
+    const pos = offsetToPos(this.doc, this.view.state.selection.main.head);
+    if (this._hitSide)
+      pos.hitSide = true;
+    return pos;
   }
 
   getLine(n) {
     return this.doc.line(n + 1).text;
+  }
+
+  getValue() {
+    return this.doc.toString();
   }
 
   lineCount() {
@@ -48,7 +86,16 @@ export class CMBridge {
 
   setCursor(line, ch) {
     const offset = posToOffset(this.doc, line, ch ?? 0);
+    this._hitSide = false;
     this.view.dispatch({ selection: { anchor: offset }, scrollIntoView: true });
+  }
+
+  setSize(width, height) {
+    const dom = this.view.dom;
+    if (width != null && width !== "auto")
+      dom.style.width = typeof width === "number" ? `${width}px` : width;
+    if (height != null && height !== "auto")
+      dom.style.height = typeof height === "number" ? `${height}px` : height;
   }
 
   replaceSelection(text) {
@@ -64,10 +111,56 @@ export class CMBridge {
     this.view.dispatch({ changes: { from: f, to: t, insert: text } });
   }
 
+  /**
+   * CM5 markText — used by render.vue focus() for error underlines
+   * (class erroneous-text + tilde/title attributes).
+   */
+  markText(from, to, options = {}) {
+    let f = posToOffset(this.doc, from.line, from.ch);
+    let t = posToOffset(this.doc, to.line, to.ch);
+    if (f > t) [f, t] = [t, f];
+    // CM6 mark decorations require a non-empty range.
+    if (f === t)
+      return { clear() {} };
+    const attrs = { ...(options.attributes || {}) };
+    if (options.title != null && attrs.title == null)
+      attrs.title = options.title;
+    if (options.tilde != null && attrs.tilde == null)
+      attrs.tilde = options.tilde;
+    const deco = Decoration.mark({
+      class: options.className || "",
+      attributes: attrs,
+    });
+    // Filter clear() by Mark identity — Range objects are remapped on edits.
+    const range = deco.range(f, t);
+    this.view.dispatch({ effects: addMarkEffect.of(range) });
+    return {
+      clear: () => {
+        this.view.dispatch({
+          effects: clearMarkEffect.of(deco),
+        });
+      },
+    };
+  }
+
+  /** CM5 addSelection — extend multi-selection (error highlight path). */
+  addSelection(anchor, head) {
+    const a = posToOffset(this.doc, anchor.line, anchor.ch);
+    const h = head != null ? posToOffset(this.doc, head.line, head.ch) : a;
+    const cur = this.view.state.selection;
+    const next = EditorSelection.create(
+      [...cur.ranges, EditorSelection.range(a, h)],
+      cur.ranges.length,
+    );
+    this.view.dispatch({ selection: next });
+  }
+
   moveH(dir, unit) {
     if (unit !== "char") return;
     const head = this.view.state.selection.main.head;
     const target = dir < 0 ? Math.max(0, head - 1) : Math.min(this.doc.length, head + 1);
+    this._hitSide = target === head;
+    if (this._hitSide) return;
     this.view.dispatch({ selection: { anchor: target } });
   }
 
@@ -76,7 +169,11 @@ export class CMBridge {
     const curLine = this.doc.lineAt(head);
     if (unit === "line") {
       const targetLineNum = dir > 0 ? curLine.number + 1 : curLine.number - 1;
-      if (targetLineNum < 1 || targetLineNum > this.doc.lines) return;
+      if (targetLineNum < 1 || targetLineNum > this.doc.lines) {
+        this._hitSide = true;
+        return;
+      }
+      this._hitSide = false;
       const targetLine = this.doc.line(targetLineNum);
       const ch = head - curLine.from;
       this.view.dispatch({ selection: { anchor: targetLine.from + Math.min(ch, targetLine.length) } });
@@ -84,6 +181,8 @@ export class CMBridge {
       // Page up/down: move ~18 lines
       const targetLineNum = dir > 0 ? curLine.number + 18 : curLine.number - 18;
       const clamped = Math.max(1, Math.min(this.doc.lines, targetLineNum));
+      this._hitSide = clamped === curLine.number;
+      if (this._hitSide) return;
       const targetLine = this.doc.line(clamped);
       const ch = head - curLine.from;
       this.view.dispatch({ selection: { anchor: targetLine.from + Math.min(ch, targetLine.length) } });

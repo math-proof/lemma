@@ -1,48 +1,15 @@
 import Mathlib
 import sympy.Basic
+import Lemma.Int.P2MUtil
+set_option autoImplicit false
+set_option linter.unusedSectionVars false
+set_option linter.unusedVariables false
 
+namespace P2MKcCB
 
-/--
-[AddCommGroup_exists_addEquiv_prod_torsionBy_apply_eq_of_forall_exists_ne_smul](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AddCommGroup_exists_addEquiv_prod_torsionBy_apply_eq_of_forall_exists_ne_smul.lean)
--/
+variable {A : Type*} [AddCommGroup A] {n : ℕ} [NeZero n]
 
-def Sg
-  {A : Type*}
-  [AddCommGroup A]
-  {n : ℕ}
-  [NeZero n]
-  (e : ZMod n × ZMod n ≃+ Submodule.torsionBy ℤ A n)
-  (σ : A →+ A)
-  : ZMod n × ZMod n →+ ZMod n × ZMod n :=
-  (e.symm.toAddMonoidHom.comp (σT σ)).comp e.toAddMonoidHom
-
-def d
-  {A : Type*}
-  [AddCommGroup A]
-  {n : ℕ}
-  [NeZero n]
-  (e : ZMod n × ZMod n ≃+ Submodule.torsionBy ℤ A n)
-  (σ : A →+ A)
-  (v : ZMod n × ZMod n) : ZMod n := v.1 * (Sg e σ v).2 - v.2 * (Sg e σ v).1
-
-def rV
-  {A : Type*}
-  [AddCommGroup A]
-  {n : ℕ}
-  [NeZero n]
-  (e : ZMod n × ZMod n ≃+ Submodule.torsionBy ℤ A n)
-  (σ : A →+ A)
-  {p : ℕ}
-  (hpn : p ∣ n)
-  : ZMod n × ZMod n →+ ZMod p × ZMod p :=
-  (ZMod.castHom hpn (ZMod p)).toAddMonoidHom.prodMap (ZMod.castHom hpn (ZMod p)).toAddMonoidHom
-
-private lemma  mem_T_iff
-  {A : Type*}
-  [AddCommGroup A]
-  {n : ℕ}
-  [NeZero n]
-  {a : A} : a ∈ Submodule.torsionBy ℤ A n ↔ n • a = 0 := by
+theorem mem_T_iff {a : A} : a ∈ Submodule.torsionBy ℤ A n ↔ n • a = 0 := by
   rw [Submodule.mem_torsionBy_iff, natCast_zsmul]
 
 def σT (σ : A →+ A) : Submodule.torsionBy ℤ A n →+ Submodule.torsionBy ℤ A n where
@@ -50,51 +17,25 @@ def σT (σ : A →+ A) : Submodule.torsionBy ℤ A n →+ Submodule.torsionBy �
   map_zero' := by ext; simp
   map_add' x y := by ext; simp
 
-@[simp] theorem coe_
-  {A : Type*}
-  [AddCommGroup A]
-  {n : ℕ}
-  [NeZero n]
-  σT (σ : A →+ A) (t : Submodule.torsionBy ℤ A n) : (σT σ t : A) = σ t := rfl
+@[scoped simp] theorem coe_σT (σ : A →+ A) (t : Submodule.torsionBy ℤ A n) : (σT σ t : A) = σ t := rfl
 
-private lemma  coe_e_Sg
-  {A : Type*}
-  [AddCommGroup A]
-  {n : ℕ}
-  [NeZero n]
-  (e : ZMod n × ZMod n ≃+ Submodule.torsionBy ℤ A n)
-  (σ : A →+ A)
-  (v : ZMod n × ZMod n) : ((e (Sg e σ v) : Submodule.torsionBy ℤ A n) : A) = σ (e v : A) := by
+variable (e : ZMod n × ZMod n ≃+ Submodule.torsionBy ℤ A n) (σ : A →+ A)
+
+def Sg : ZMod n × ZMod n →+ ZMod n × ZMod n :=
+  (e.symm.toAddMonoidHom.comp (σT σ)).comp e.toAddMonoidHom
+
+theorem coe_e_Sg (v : ZMod n × ZMod n) : ((e (Sg e σ v) : Submodule.torsionBy ℤ A n) : A) = σ (e v : A) := by
   simp [Sg]
 
-private lemma  zsmul_eq_nsmul
-  {A : Type*}
-  [AddCommGroup A]
-  {n : ℕ}
-  [NeZero n]
-  (e : ZMod n × ZMod n ≃+ Submodule.torsionBy ℤ A n)
-  (σ : A →+ A)
-  (c : ZMod n) (v : ZMod n × ZMod n) : c • v = c.val • v := by
+theorem zsmul_eq_nsmul (c : ZMod n) (v : ZMod n × ZMod n) : c • v = c.val • v := by
   ext <;> simp [nsmul_eq_mul]
 
-private lemma  Sg_smul
-  {A : Type*}
-  [AddCommGroup A]
-  {n : ℕ}
-  [NeZero n]
-  (e : ZMod n × ZMod n ≃+ Submodule.torsionBy ℤ A n)
-  (σ : A →+ A)
-  (c : ZMod n) (v : ZMod n × ZMod n) : Sg e σ (c • v) = c • Sg e σ v := by
+theorem Sg_smul (c : ZMod n) (v : ZMod n × ZMod n) : Sg e σ (c • v) = c • Sg e σ v := by
   rw [zsmul_eq_nsmul, map_nsmul, ← zsmul_eq_nsmul]
 
-private lemma  exists_addEquiv_of_isUnit
-    {A : Type*}
-    [AddCommGroup A]
-    {n : ℕ}
-    [NeZero n]
-    (e : ZMod n × ZMod n ≃+ Submodule.torsionBy ℤ A n)
-    (σ : A →+ A)
-    (v : ZMod n × ZMod n) (hv : IsUnit (d e σ v)) :
+def d (v : ZMod n × ZMod n) : ZMod n := v.1 * (Sg e σ v).2 - v.2 * (Sg e σ v).1
+
+theorem exists_addEquiv_of_isUnit (v : ZMod n × ZMod n) (hv : IsUnit (d e σ v)) :
     ∃ e' : ZMod n × ZMod n ≃+ Submodule.torsionBy ℤ A n,
       ((e' (0, 1) : Submodule.torsionBy ℤ A n) : A) = σ ((e' (1, 0) : Submodule.torsionBy ℤ A n) : A) := by
   obtain ⟨u, hu⟩ := hv
@@ -130,47 +71,22 @@ private lemma  exists_addEquiv_of_isUnit
     ext <;> simp
   rw [AddEquiv.trans_apply, AddEquiv.trans_apply, h10, h01, hs, coe_e_Sg]
 
+section Local
 
+variable {p : ℕ} (hpn : p ∣ n)
 include hpn
 
-private lemma  exists_eq_mul_of_cast_eq_zero
-    {A : Type*}
-    [AddCommGroup A]
-    {n : ℕ}
-    [NeZero n]
-    (e : ZMod n × ZMod n ≃+ Submodule.torsionBy ℤ A n)
-    (σ : A →+ A)
-    {p : ℕ}
-    (hpn : p ∣ n)
-    (x : ZMod n) (hx : ZMod.castHom hpn (ZMod p) x = 0) :
+theorem exists_eq_mul_of_cast_eq_zero (x : ZMod n) (hx : ZMod.castHom hpn (ZMod p) x = 0) :
     ∃ y : ZMod n, x = (p : ZMod n) * y := by
   rw [ZMod.castHom_apply, ZMod.cast_eq_val, ZMod.natCast_eq_zero_iff] at hx
   obtain ⟨m, hm⟩ := hx
   refine ⟨(m : ZMod n), ?_⟩
   rw [← ZMod.natCast_zmod_val x, hm, Nat.cast_mul]
 
-private lemma  cast_p_mul
-  {A : Type*}
-  [AddCommGroup A]
-  {n : ℕ}
-  [NeZero n]
-  (e : ZMod n × ZMod n ≃+ Submodule.torsionBy ℤ A n)
-  (σ : A →+ A)
-  {p : ℕ}
-  (hpn : p ∣ n)
-  (y : ZMod n) : ZMod.castHom hpn (ZMod p) ((p : ZMod n) * y) = 0 := by
+theorem cast_p_mul (y : ZMod n) : ZMod.castHom hpn (ZMod p) ((p : ZMod n) * y) = 0 := by
   rw [map_mul, map_natCast, ZMod.natCast_self, zero_mul]
 
-private lemma  exists_eq_mul_of_p_mul_eq_zero
-    {A : Type*}
-    [AddCommGroup A]
-    {n : ℕ}
-    [NeZero n]
-    (e : ZMod n × ZMod n ≃+ Submodule.torsionBy ℤ A n)
-    (σ : A →+ A)
-    {p : ℕ}
-    (hpn : p ∣ n)
-    (hp : p.Prime) (x : ZMod n) (hx : (p : ZMod n) * x = 0) :
+theorem exists_eq_mul_of_p_mul_eq_zero (hp : p.Prime) (x : ZMod n) (hx : (p : ZMod n) * x = 0) :
     ∃ y : ZMod n, x = ((n / p : ℕ) : ZMod n) * y := by
   have h1 : n ∣ p * x.val := by
     rw [← ZMod.natCast_eq_zero_iff, Nat.cast_mul, ZMod.natCast_zmod_val]; exact hx
@@ -182,40 +98,16 @@ private lemma  exists_eq_mul_of_p_mul_eq_zero
   refine ⟨(m : ZMod n), ?_⟩
   rw [← ZMod.natCast_zmod_val x, hm, Nat.cast_mul]
 
-private lemma  q_mul_p
-  {A : Type*}
-  [AddCommGroup A]
-  {n : ℕ}
-  [NeZero n]
-  (e : ZMod n × ZMod n ≃+ Submodule.torsionBy ℤ A n)
-  (σ : A →+ A)
-  {p : ℕ}
-  (hpn : p ∣ n)
-  : ((n / p : ℕ) : ZMod n) * (p : ZMod n) = 0 := by
+theorem q_mul_p : ((n / p : ℕ) : ZMod n) * (p : ZMod n) = 0 := by
   rw [← Nat.cast_mul, Nat.div_mul_cancel hpn, ZMod.natCast_self]
 
-private lemma  rV_apply
-    {A : Type*}
-    [AddCommGroup A]
-    {n : ℕ}
-    [NeZero n]
-    (e : ZMod n × ZMod n ≃+ Submodule.torsionBy ℤ A n)
-    (σ : A →+ A)
-    {p : ℕ}
-    (hpn : p ∣ n)
-    (v : ZMod n × ZMod n) :
+def rV : ZMod n × ZMod n →+ ZMod p × ZMod p :=
+  (ZMod.castHom hpn (ZMod p)).toAddMonoidHom.prodMap (ZMod.castHom hpn (ZMod p)).toAddMonoidHom
+
+theorem rV_apply (v : ZMod n × ZMod n) :
     rV hpn v = (ZMod.castHom hpn (ZMod p) v.1, ZMod.castHom hpn (ZMod p) v.2) := rfl
 
-private lemma  exists_eq_add_of_rV_eq
-    {A : Type*}
-    [AddCommGroup A]
-    {n : ℕ}
-    [NeZero n]
-    (e : ZMod n × ZMod n ≃+ Submodule.torsionBy ℤ A n)
-    (σ : A →+ A)
-    {p : ℕ}
-    (hpn : p ∣ n)
-    {v v' : ZMod n × ZMod n} (h : rV hpn v = rV hpn v') :
+theorem exists_eq_add_of_rV_eq {v v' : ZMod n × ZMod n} (h : rV hpn v = rV hpn v') :
     ∃ t : ZMod n × ZMod n, v = v' + (p : ZMod n) • t := by
   rw [rV_apply, rV_apply, Prod.mk.injEq] at h
   obtain ⟨t₁, ht₁⟩ := exists_eq_mul_of_cast_eq_zero hpn (v.1 - v'.1) (by rw [map_sub, h.1, sub_self])
@@ -225,31 +117,13 @@ private lemma  exists_eq_add_of_rV_eq
   · simp only [Prod.fst_add, Prod.smul_fst, smul_eq_mul]; linear_combination ht₁
   · simp only [Prod.snd_add, Prod.smul_snd, smul_eq_mul]; linear_combination ht₂
 
-private lemma  rV_p_smul
-  {A : Type*}
-  [AddCommGroup A]
-  {n : ℕ}
-  [NeZero n]
-  (e : ZMod n × ZMod n ≃+ Submodule.torsionBy ℤ A n)
-  (σ : A →+ A)
-  {p : ℕ}
-  (hpn : p ∣ n)
-  (t : ZMod n × ZMod n) : rV hpn ((p : ZMod n) • t) = 0 := by
+theorem rV_p_smul (t : ZMod n × ZMod n) : rV hpn ((p : ZMod n) • t) = 0 := by
   rw [rV_apply]
   ext
   · simp only [Prod.smul_fst, smul_eq_mul, Prod.fst_zero]; exact cast_p_mul hpn _
   · simp only [Prod.smul_snd, smul_eq_mul, Prod.snd_zero]; exact cast_p_mul hpn _
 
-private lemma  cast_d_eq_of_rV_eq
-    {A : Type*}
-    [AddCommGroup A]
-    {n : ℕ}
-    [NeZero n]
-    (e : ZMod n × ZMod n ≃+ Submodule.torsionBy ℤ A n)
-    (σ : A →+ A)
-    {p : ℕ}
-    (hpn : p ∣ n)
-    {v v' : ZMod n × ZMod n} (h : rV hpn v = rV hpn v') :
+theorem cast_d_eq_of_rV_eq {v v' : ZMod n × ZMod n} (h : rV hpn v = rV hpn v') :
     ZMod.castHom hpn (ZMod p) (d e σ v) = ZMod.castHom hpn (ZMod p) (d e σ v') := by
   obtain ⟨t, rfl⟩ := exists_eq_add_of_rV_eq hpn h
   have hS : rV hpn (Sg e σ (v' + (p : ZMod n) • t)) = rV hpn (Sg e σ v') := by
@@ -257,19 +131,10 @@ private lemma  cast_d_eq_of_rV_eq
   rw [rV_apply, rV_apply, Prod.mk.injEq] at h hS
   simp only [d, map_sub, map_mul, h.1, h.2, hS.1, hS.2]
 
-private lemma  exists_cast_d_ne_zero
-    {A : Type*}
-    [AddCommGroup A]
-    {n : ℕ}
-    [NeZero n]
-    (e : ZMod n × ZMod n ≃+ Submodule.torsionBy ℤ A n)
-    (σ : A →+ A)
-    {p : ℕ}
-    (hpn : p ∣ n)
-    (hp : p.Prime)
+theorem exists_cast_d_ne_zero (hp : p.Prime)
     (hns : ∃ a : A, addOrderOf a = p ∧ ∀ k : ℕ, σ a ≠ k • a) :
     ∃ u : ZMod n × ZMod n, ZMod.castHom hpn (ZMod p) (d e σ u) ≠ 0 := by
-  haveI : Fact p.Prime := ⟨hp⟩
+  have : Fact p.Prime := ⟨hp⟩
   obtain ⟨a, ha, hna⟩ := hns
   have hpa : p • a = 0 := by rw [← ha]; exact addOrderOf_nsmul_eq_zero a
   have haT : a ∈ Submodule.torsionBy ℤ A n := by
@@ -386,13 +251,9 @@ private lemma  exists_cast_d_ne_zero
     rw [neg_smul]
     exact eq_neg_of_add_eq_zero_right h1
 
-private lemma  exists_isUnit_d
-    {A : Type*}
-    [AddCommGroup A]
-    {n : ℕ}
-    [NeZero n]
-    (e : ZMod n × ZMod n ≃+ Submodule.torsionBy ℤ A n)
-    (σ : A →+ A)
+end Local
+
+theorem exists_isUnit_d
     (hns : ∀ p : ℕ, p.Prime → p ∣ n → ∃ a : A, addOrderOf a = p ∧ ∀ k : ℕ, σ a ≠ k • a) :
     ∃ v : ZMod n × ZMod n, IsUnit (d e σ v) := by
   classical
@@ -433,21 +294,21 @@ private lemma  exists_isUnit_d
     ZMod.natCast_eq_zero_iff]
   exact hpd
 
+end P2MKcCB
+p2m_reactivate "P2MKcCB"
+
+/--
+[AddCommGroup_exists_addEquiv_prod_torsionBy_apply_eq_of_forall_exists_ne_smul](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AddCommGroup_exists_addEquiv_prod_torsionBy_apply_eq_of_forall_exists_ne_smul.lean)
+-/
 @[path]
 private lemma main
-  [AddCommGroup A]
-  {n : ℕ} [NeZero n]
-  {σ : A →+ A}
--- given
-  (e : ZMod n × ZMod n ≃+ Submodule.torsionBy ℤ A n)
-  (hns : ∀ p : ℕ, p.Prime → p ∣ n → ∃ a : A, addOrderOf a = p ∧ ∀ k : ℕ, σ a ≠ k • a) :
--- imply
-  ∃ e' : ZMod n × ZMod n ≃+ Submodule.torsionBy ℤ A n,
+    {A : Type*} [AddCommGroup A] (n : ℕ) [NeZero n]
+    (e : ZMod n × ZMod n ≃+ Submodule.torsionBy ℤ A n) (σ : A →+ A)
+    (hns : ∀ p : ℕ, p.Prime → p ∣ n → ∃ a : A, addOrderOf a = p ∧ ∀ k : ℕ, σ a ≠ k • a) :
+    ∃ e' : ZMod n × ZMod n ≃+ Submodule.torsionBy ℤ A n,
       ((e' (0, 1) : Submodule.torsionBy ℤ A n) : A) =
         σ ((e' (1, 0) : Submodule.torsionBy ℤ A n) : A) := by
--- proof
-  obtain ⟨v, hv⟩ := exists_isUnit_d e σ hns
-    exact exists_addEquiv_of_isUnit e σ v hv
-
+  obtain ⟨v, hv⟩ := P2MKcCB.exists_isUnit_d e σ hns
+  exact P2MKcCB.exists_addEquiv_of_isUnit e σ v hv
 
 -- created on 2026-10-09

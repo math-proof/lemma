@@ -1,5 +1,5 @@
 import Mathlib.Algebra.MvPolynomial.Monad
-import Mathlib.Algebra.MvPolynomial.PDeriv
+import Mathlib.MvPolynomial.PDeriv
 import Mathlib.Data.Matrix.Basic
 
 /-!

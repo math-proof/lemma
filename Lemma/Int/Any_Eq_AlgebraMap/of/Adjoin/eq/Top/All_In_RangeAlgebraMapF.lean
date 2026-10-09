@@ -105,11 +105,14 @@ private lemma linearDisjoint
     have himg : y ∈ Submodule.span κ (Set.range (fun j => (s j : F'))) := by
       have h := Submodule.mem_map_of_mem (f := B'.val.toLinearMap) hy'
       rwa [Submodule.map_span, ← Set.range_comp] at h
-    exact (by
+    have hle : Submodule.span κ (Set.range (fun j => (s j : F'))) ≤
+        Subalgebra.toSubmodule (Algebra.adjoin κ ({b} : Set F')) := by
       rw [Submodule.span_le]
       rintro _ ⟨j, rfl⟩
       show (s j : F') ∈ Algebra.adjoin κ ({b} : Set F')
-      rwa [← hc j, show ({b} : Set F') = fb '' {β} by simp [b], ← AlgHom.map_adjoin]) himg
+      rw [← hc j, show ({b} : Set F') = fb '' {β} by simp [b], ← AlgHom.map_adjoin]
+      exact ⟨c j, hcj j, rfl⟩
+    refine hle himg
   refine Subalgebra.LinearDisjoint.of_le_right_of_flat (B := Algebra.adjoin κ ({b} : Set F')) ?_ hB'le
   let pb := Algebra.adjoin.powerBasis hb
   refine Subalgebra.LinearDisjoint.of_basis_right _ _ pb.basis ?_
@@ -141,7 +144,7 @@ private lemma main
   let fa := IsScalarTower.toAlgHom κ F F'
   let fb := IsScalarTower.toAlgHom κ κ' F'
   let i : AlgHom κ (TensorProduct κ F κ') F' := Algebra.TensorProduct.productMap fa fb
-  have hi_tmul : ∀ (f : F) (c : κ'), i (TensorProduct.tmul f c) = algebraMap F F' f * algebraMap κ' F' c := fun f c => by
+  have hi_tmul : ∀ (f : F) (c : κ'), i (TensorProduct.tmul κ f c) = algebraMap F F' f * algebraMap κ' F' c := fun f c => by
     simp [i, fa, fb, Algebra.TensorProduct.productMap_apply_tmul]
   have hinj : Function.Injective i := by
     have H := linearDisjoint (κ' := κ') (F' := F') halg
@@ -165,11 +168,11 @@ private lemma main
       { carrier := Set.range i
         mul_mem' := by rintro _ _ ⟨x, rfl⟩ ⟨y, rfl⟩; exact ⟨x * y, map_mul i x y⟩
         add_mem' := by rintro _ _ ⟨x, rfl⟩ ⟨y, rfl⟩; exact ⟨x + y, map_add i x y⟩
-        algebraMap_mem' := fun f => ⟨TensorProduct.tmul f (1 : κ'), by rw [hi_tmul, map_one, mul_one]⟩ }
+        algebraMap_mem' := fun f => ⟨TensorProduct.tmul κ f (1 : κ'), by rw [hi_tmul, map_one, mul_one]⟩ }
     have hR : (⊤ : Subalgebra F F') ≤ R := by
       rw [← hgen, Algebra.adjoin_le_iff]
       rintro _ ⟨c, rfl⟩
-      exact ⟨TensorProduct.tmul (1 : F) c, by rw [hi_tmul, map_one, one_mul]⟩
+      exact ⟨TensorProduct.tmul κ (1 : F) c, by rw [hi_tmul, map_one, one_mul]⟩
     intro y
     obtain ⟨x, hx⟩ := hR (Algebra.mem_top : y ∈ (⊤ : Subalgebra F F'))
     exact ⟨x, hx⟩
@@ -180,15 +183,15 @@ private lemma main
     show e (Algebra.TensorProduct.congr σ AlgEquiv.refl (e.symm (i x))) = _
     rw [← he x, e.symm_apply_apply, he]
   have hτb : ∀ c : κ', τ (algebraMap κ' F' c) = algebraMap κ' F' c := fun c => by
-    have h1 : algebraMap κ' F' c = i (TensorProduct.tmul (1 : F) c) := by rw [hi_tmul, map_one, one_mul]
+    have h1 : algebraMap κ' F' c = i (TensorProduct.tmul κ (1 : F) c) := by rw [hi_tmul, map_one, one_mul]
     rw [h1, hτ, Algebra.TensorProduct.congr_apply, Algebra.TensorProduct.map_tmul]
     simp
   let σ' : AlgEquiv κ' F' F' := AlgEquiv.ofRingEquiv (f := τ.toRingEquiv) hτb
   refine ⟨σ', fun f => ?_⟩
   show τ (algebraMap F F' f) = algebraMap F F' (σ f)
-  have h1 : algebraMap F F' f = i (TensorProduct.tmul f (1 : κ')) := by rw [hi_tmul, map_one, mul_one]
+  have h1 : algebraMap F F' f = i (TensorProduct.tmul κ f (1 : κ')) := by rw [hi_tmul, map_one, mul_one]
   rw [h1, hτ, Algebra.TensorProduct.congr_apply, Algebra.TensorProduct.map_tmul]
-  show i (TensorProduct.tmul (σ f) (1 : κ')) = algebraMap F F' (σ f)
+  show i (TensorProduct.tmul κ (σ f) (1 : κ')) = algebraMap F F' (σ f)
   rw [hi_tmul, map_one, mul_one]
 
 

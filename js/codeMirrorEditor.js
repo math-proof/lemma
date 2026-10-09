@@ -11,6 +11,11 @@ function ensureCodeMirror() {
 	});
 }
 
+/** CM5-compat API from `codemirrorBoot.js` (ready once any editor has mounted). */
+function cmBoot() {
+	return window.cmBoot;
+}
+
 /** Dotted lemma path with a capitalised segment (not a local like `h₀` or `μ.bind`). */
 export function isOpenStrippedLemmaName(name) {
 	return /(^|\.)[A-Z]/.test(name);
@@ -741,7 +746,7 @@ where
             },
             
             'Alt-D': function(cm) {
-				deleteToLineEnd(cm);
+				cmBoot().deleteToLineEnd(cm);
 				var parent = self.$parent.$parent;
 				var {index} = self;
 				var i = index.back();
@@ -759,7 +764,7 @@ where
                 cm.moveH(-1, "char");
                 if (cm.getCursor().hitSide) {
                     cm.focus();
-                    CodeMirror.commands.goDocEnd(cm);
+                    cmBoot().CodeMirror.commands.goDocEnd(cm);
                 }
             },
 
@@ -768,7 +773,7 @@ where
 				if (cm.getCursor().hitSide) {
 					cm = extraKeys.Down(cm);
 					cm.focus();
-					CodeMirror.commands.goDocStart(cm);
+					cmBoot().CodeMirror.commands.goDocStart(cm);
 				}
             },
 
@@ -822,7 +827,7 @@ where
             },
 
             "Ctrl-Enter": cm => {
-                CodeMirror.commands.newlineAndIndent(cm);
+                cmBoot().CodeMirror.commands.newlineAndIndent(cm);
             },
             
             PageUp(cm) {
@@ -868,7 +873,8 @@ where
             'Ctrl-End': cm => {
                 cm = self.lastSibling.editor;
                 cm.focus();
-                cm.extendSelection(CodeMirror.Pos(cm.lastLine()));
+                // Prefer goDocEnd: Pos(lastLine()) omitted `ch` and crashed posToOffset.
+                cmBoot().CodeMirror.commands.goDocEnd(cm);
                 // Editors grow to full height (`scrollbarStyle: null`), so the whole page
                 // scrolls via the window; jump it to the document bottom as well.
                 window.scrollTo(0, document.documentElement.scrollHeight);
@@ -877,7 +883,7 @@ where
             'Ctrl-Home': cm => {
                 cm = self.firstSibling.editor;
                 cm.focus();
-                cm.extendSelection(CodeMirror.Pos(cm.firstLine(), 0));
+                cmBoot().CodeMirror.commands.goDocStart(cm);
                 // Return to the home of the entire page, not merely scroll the first editor into view.
                 window.scrollTo(0, 0);
             },

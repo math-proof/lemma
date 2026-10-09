@@ -1,59 +1,18 @@
 import Mathlib
 import sympy.Basic
+set_option autoImplicit false
+set_option linter.unusedSectionVars false
+set_option linter.unusedVariables false
 
 open scoped BigOperators
 
-/--
-[AddCommGroup_nonempty_addEquiv_of_forall_natCard_torsionBy_eq](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AddCommGroup_nonempty_addEquiv_of_forall_natCard_torsionBy_eq.lean)
--/
+universe u v
+
+namespace AlgFAC
 
 noncomputable def tors (G : Type) [AddCommGroup G] (N : ℕ) : ℕ := Nat.card {x : G // N • x = 0}
 
-noncomputable def torsU (G : Type u) [AddCommGroup G] (N : ℕ) : ℕ := Nat.card {x : G // N • x = 0}
-
-def S
-  {ι : Type}
-  [Fintype ι]
-  [DecidableEq ι]
-  (p e : ι → ℕ)
-  (r k : ℕ) : ℕ := ∑ i, if p i = r then min k (e i) else 0
-
-def cge
-  {ι : Type}
-  [Fintype ι]
-  [DecidableEq ι]
-  (p e : ι → ℕ)
-  (r k : ℕ) : ℕ := (Finset.univ.filter fun i => p i = r ∧ k ≤ e i).card
-
-def ceq
-  {ι : Type}
-  [Fintype ι]
-  [DecidableEq ι]
-  (p e : ι → ℕ)
-  (r k : ℕ) : ℕ := (Finset.univ.filter fun i => p i = r ∧ e i = k).card
-
-def piSubtypeAddEquiv
-  {ι κ : Type}
-  [Fintype ι]
-  [DecidableEq ι]
-  [Fintype κ]
-  [DecidableEq κ]
-  {ι : Type} (A : ι → Type) [∀ i, AddCommGroup (A i)] (P : ι → Prop) [DecidablePred P]
-  (hP : ∀ i, ¬ P i → Subsingleton (A i)) : (∀ i, A i) ≃+ (∀ i : {i // P i}, A i.1) where
-toFun x i := x i.1
-invFun y i := if h : P i then y ⟨i, h⟩ else 0
-left_inv x := by
-  funext i
-  by_cases h : P i
-  · simp [h]
-  · haveI := hP i h
-    exact Subsingleton.elim _ _
-right_inv y := by
-  funext i
-  simp [i.2]
-map_add' x y := rfl
-
-private lemma  tors_congr {G G' : Type} [AddCommGroup G] [AddCommGroup G'] (e : G ≃+ G') (N : ℕ) :
+theorem tors_congr {G G' : Type} [AddCommGroup G] [AddCommGroup G'] (e : G ≃+ G') (N : ℕ) :
     tors G N = tors G' N := by
   unfold tors
   refine Nat.card_congr ⟨fun x => ⟨e x.1, by rw [← map_nsmul, x.2, map_zero]⟩,
@@ -61,21 +20,21 @@ private lemma  tors_congr {G G' : Type} [AddCommGroup G] [AddCommGroup G'] (e : 
   · apply Subtype.ext; simp
   · apply Subtype.ext; simp
 
-private lemma  tors_prod (G G' : Type) [AddCommGroup G] [AddCommGroup G'] (N : ℕ) :
+theorem tors_prod (G G' : Type) [AddCommGroup G] [AddCommGroup G'] (N : ℕ) :
     tors (G × G') N = tors G N * tors G' N := by
   unfold tors
   rw [← Nat.card_prod]
   refine Nat.card_congr ⟨fun x => (⟨x.1.1, (Prod.ext_iff.mp x.2).1⟩, ⟨x.1.2, (Prod.ext_iff.mp x.2).2⟩),
     fun y => ⟨(y.1.1, y.2.1), Prod.ext y.1.2 y.2.2⟩, fun x => rfl, fun y => rfl⟩
 
-private lemma  tors_pi {ι : Type} [Fintype ι] (G : ι → Type) [∀ i, AddCommGroup (G i)] (N : ℕ) :
+theorem tors_pi {ι : Type} [Fintype ι] (G : ι → Type) [∀ i, AddCommGroup (G i)] (N : ℕ) :
     tors (∀ i, G i) N = ∏ i, tors (G i) N := by
   unfold tors
   rw [← Nat.card_pi]
   refine Nat.card_congr ⟨fun x i => ⟨x.1 i, congrFun x.2 i⟩, fun y => ⟨fun i => (y i).1, funext fun i => (y i).2⟩,
     fun x => rfl, fun y => rfl⟩
 
-private lemma  tors_zmod (n : ℕ) [NeZero n] (N : ℕ) : tors (ZMod n) N = Nat.gcd N n := by
+theorem tors_zmod (n : ℕ) [NeZero n] (N : ℕ) : tors (ZMod n) N = Nat.gcd N n := by
   classical
   unfold tors
 
@@ -103,17 +62,23 @@ private lemma  tors_zmod (n : ℕ) [NeZero n] (N : ℕ) : tors (ZMod n) N = Nat.
 
   nlinarith [this, hdiv]
 
-private lemma  tors_pi_zmod {ι : Type} [Fintype ι] (n : ι → ℕ) [∀ i, NeZero (n i)] (N : ℕ) :
+theorem tors_pi_zmod {ι : Type} [Fintype ι] (n : ι → ℕ) [∀ i, NeZero (n i)] (N : ℕ) :
     tors (∀ i, ZMod (n i)) N = ∏ i, Nat.gcd N (n i) := by
   rw [tors_pi]
   simp_rw [tors_zmod]
 
-private lemma  card_torsionBy_eq_tors (A : Type u) [AddCommGroup A] (N : ℕ) :
+end AlgFAC
+
+namespace AlgFAC
+
+theorem card_torsionBy_eq_tors (A : Type u) [AddCommGroup A] (N : ℕ) :
     Nat.card (Submodule.torsionBy ℤ A N) = Nat.card {x : A // N • x = 0} := by
   refine Nat.card_congr (Equiv.subtypeEquivRight fun x => ?_)
   rw [Submodule.mem_torsionBy_iff, natCast_zsmul]
 
-private lemma  torsU_congr {G : Type u} {G' : Type} [AddCommGroup G] [AddCommGroup G'] (e : G ≃+ G') (N : ℕ) :
+noncomputable def torsU (G : Type u) [AddCommGroup G] (N : ℕ) : ℕ := Nat.card {x : G // N • x = 0}
+
+theorem torsU_congr {G : Type u} {G' : Type} [AddCommGroup G] [AddCommGroup G'] (e : G ≃+ G') (N : ℕ) :
     torsU G N = tors G' N := by
   unfold tors torsU
   refine Nat.card_congr ⟨fun x => ⟨e x.1, by rw [← map_nsmul, x.2, map_zero]⟩,
@@ -121,19 +86,24 @@ private lemma  torsU_congr {G : Type u} {G' : Type} [AddCommGroup G] [AddCommGro
   · apply Subtype.ext; simp
   · apply Subtype.ext; simp
 
-private lemma  exists_pi_zmod (G : Type u) [AddCommGroup G] [Finite G] :
+theorem exists_pi_zmod (G : Type u) [AddCommGroup G] [Finite G] :
     ∃ (ι : Type) (_ : Fintype ι) (p : ι → ℕ) (_ : ∀ i, (p i).Prime) (e : ι → ℕ),
       Nonempty (G ≃+ ∀ i, ZMod (p i ^ e i)) := by
   classical
   obtain ⟨ι, hι, p, hp, e, ⟨f⟩⟩ := AddCommGroup.equiv_directSum_zmod_of_finite G
   exact ⟨ι, hι, p, hp, e, ⟨f.trans (DirectSum.linearEquivFunOnFintype ℤ ι (fun i => ZMod (p i ^ e i))).toAddEquiv⟩⟩
 
-private lemma  prod_gcd_prime_pow
-    {ι : Type}
-    [Fintype ι]
-    [DecidableEq ι]
-    (p e : ι → ℕ)
-    (hp : ∀ i, (p i).Prime) (r : ℕ) (hr : r.Prime) (k : ℕ) :
+section Match
+
+variable {ι : Type} [Fintype ι] [DecidableEq ι] (p e : ι → ℕ)
+
+def S (r k : ℕ) : ℕ := ∑ i, if p i = r then min k (e i) else 0
+
+def cge (r k : ℕ) : ℕ := (Finset.univ.filter fun i => p i = r ∧ k ≤ e i).card
+
+def ceq (r k : ℕ) : ℕ := (Finset.univ.filter fun i => p i = r ∧ e i = k).card
+
+theorem prod_gcd_prime_pow (hp : ∀ i, (p i).Prime) (r : ℕ) (hr : r.Prime) (k : ℕ) :
     ∏ i, Nat.gcd (r ^ k) (p i ^ e i) = r ^ S p e r k := by
   unfold S
   rw [← Finset.prod_pow_eq_pow_sum]
@@ -146,12 +116,7 @@ private lemma  prod_gcd_prime_pow
   · rw [if_neg h, pow_zero]
     exact Nat.Coprime.pow _ _ ((Nat.coprime_primes hr (hp i)).mpr (Ne.symm h))
 
-private lemma  S_succ
-  {ι : Type}
-  [Fintype ι]
-  [DecidableEq ι]
-  (p e : ι → ℕ)
-  (r k : ℕ) : S p e r (k + 1) = S p e r k + cge p e r (k + 1) := by
+theorem S_succ (r k : ℕ) : S p e r (k + 1) = S p e r k + cge p e r (k + 1) := by
   unfold S cge
   rw [Finset.card_filter, ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun i _ => ?_
@@ -163,12 +128,7 @@ private lemma  S_succ
       rw [if_neg hk, add_zero, min_eq_right (Nat.le_succ_of_le hle), min_eq_right hle]
   · simp [h]
 
-private lemma  cge_eq
-  {ι : Type}
-  [Fintype ι]
-  [DecidableEq ι]
-  (p e : ι → ℕ)
-  (r k : ℕ) : cge p e r k = ceq p e r k + cge p e r (k + 1) := by
+theorem cge_eq (r k : ℕ) : cge p e r k = ceq p e r k + cge p e r (k + 1) := by
   unfold cge ceq
   rw [← Finset.card_union_of_disjoint]
   · congr 1
@@ -186,136 +146,142 @@ private lemma  cge_eq
     rintro i - ⟨-, h⟩ ⟨-, h'⟩
     omega
 
+end Match
 
+section Match2
 
-(p e : ι → ℕ) (q f : κ → ℕ)
+variable {ι κ : Type} [Fintype ι] [DecidableEq ι] [Fintype κ] [DecidableEq κ]
+  (p e : ι → ℕ) (q f : κ → ℕ)
 
-private lemma  ceq_eq_of_S_eq
-  {ι κ : Type}
-  [Fintype ι]
-  [DecidableEq ι]
-  [Fintype κ]
-  [DecidableEq κ]
-  (r : ℕ) (hS : ∀ k, S p e r k = S q f r k) (k : ℕ) (hk : 1 ≤ k) :
-  ceq p e r k = ceq q f r k := by
-have hcge : ∀ k, 1 ≤ k → cge p e r k = cge q f r k := by
-  intro k hk
-  obtain ⟨k, rfl⟩ : ∃ k', k = k' + 1 := ⟨k - 1, by omega⟩
-  have h1 := S_succ p e r k
-  have h2 := S_succ q f r k
-  rw [hS k, hS (k + 1)] at h1
+theorem ceq_eq_of_S_eq (r : ℕ) (hS : ∀ k, S p e r k = S q f r k) (k : ℕ) (hk : 1 ≤ k) :
+    ceq p e r k = ceq q f r k := by
+  have hcge : ∀ k, 1 ≤ k → cge p e r k = cge q f r k := by
+    intro k hk
+    obtain ⟨k, rfl⟩ : ∃ k', k = k' + 1 := ⟨k - 1, by omega⟩
+    have h1 := S_succ p e r k
+    have h2 := S_succ q f r k
+    rw [hS k, hS (k + 1)] at h1
+    omega
+  have h1 := cge_eq p e r k
+  have h2 := cge_eq q f r k
+  rw [hcge k hk, hcge (k + 1) (by omega)] at h1
   omega
-have h1 := cge_eq p e r k
-have h2 := cge_eq q f r k
-rw [hcge k hk, hcge (k + 1) (by omega)] at h1
-omega
 
-private lemma  nonempty_addEquiv_of_prod_gcd_eq
-  {ι κ : Type}
-  [Fintype ι]
-  [DecidableEq ι]
-  [Fintype κ]
-  [DecidableEq κ]
-  (hp : ∀ i, (p i).Prime) (hq : ∀ j, (q j).Prime)
-  (h : ∀ N : ℕ, ∏ i, Nat.gcd N (p i ^ e i) = ∏ j, Nat.gcd N (q j ^ f j)) :
-  Nonempty ((∀ i, ZMod (p i ^ e i)) ≃+ (∀ j, ZMod (q j ^ f j))) := by
-classical
+def piSubtypeAddEquiv {ι : Type} (A : ι → Type) [∀ i, AddCommGroup (A i)] (P : ι → Prop) [DecidablePred P]
+    (hP : ∀ i, ¬ P i → Subsingleton (A i)) : (∀ i, A i) ≃+ (∀ i : {i // P i}, A i.1) where
+  toFun x i := x i.1
+  invFun y i := if h : P i then y ⟨i, h⟩ else 0
+  left_inv x := by
+    funext i
+    by_cases h : P i
+    · simp [h]
+    · have := hP i h
+      exact Subsingleton.elim _ _
+  right_inv y := by
+    funext i
+    simp [i.2]
+  map_add' x y := rfl
 
-have hS : ∀ r, r.Prime → ∀ k, S p e r k = S q f r k := by
-  intro r hr k
-  have := h (r ^ k)
-  rw [prod_gcd_prime_pow p e hp r hr, prod_gcd_prime_pow q f hq r hr] at this
-  exact Nat.pow_right_injective hr.two_le this
-have hceq : ∀ r k, r.Prime → 1 ≤ k → ceq p e r k = ceq q f r k :=
-  fun r k hr hk => ceq_eq_of_S_eq p e q f r (hS r hr) k hk
+theorem nonempty_addEquiv_of_prod_gcd_eq (hp : ∀ i, (p i).Prime) (hq : ∀ j, (q j).Prime)
+    (h : ∀ N : ℕ, ∏ i, Nat.gcd N (p i ^ e i) = ∏ j, Nat.gcd N (q j ^ f j)) :
+    Nonempty ((∀ i, ZMod (p i ^ e i)) ≃+ (∀ j, ZMod (q j ^ f j))) := by
+  classical
 
-let I₁ := {i : ι // e i ≠ 0}
-let J₁ := {j : κ // f j ≠ 0}
-let key : I₁ → ℕ × ℕ := fun i => (p i.1, e i.1)
-let key' : J₁ → ℕ × ℕ := fun j => (q j.1, f j.1)
-have hfib : ∀ c : ℕ × ℕ, Fintype.card {i : I₁ // key i = c} = Fintype.card {j : J₁ // key' j = c} := by
-  rintro ⟨r, k⟩
+  have hS : ∀ r, r.Prime → ∀ k, S p e r k = S q f r k := by
+    intro r hr k
+    have := h (r ^ k)
+    rw [prod_gcd_prime_pow p e hp r hr, prod_gcd_prime_pow q f hq r hr] at this
+    exact Nat.pow_right_injective hr.two_le this
+  have hceq : ∀ r k, r.Prime → 1 ≤ k → ceq p e r k = ceq q f r k :=
+    fun r k hr hk => ceq_eq_of_S_eq p e q f r (hS r hr) k hk
 
-  have eI : {i : I₁ // key i = (r, k)} ≃ {i : ι // p i = r ∧ e i = k ∧ e i ≠ 0} :=
-    ⟨fun x => ⟨x.1.1, (Prod.ext_iff.mp x.2).1, (Prod.ext_iff.mp x.2).2, x.1.2⟩,
-     fun y => ⟨⟨y.1, y.2.2.2⟩, Prod.ext y.2.1 y.2.2.1⟩, fun x => rfl, fun y => rfl⟩
-  have eJ : {j : J₁ // key' j = (r, k)} ≃ {j : κ // q j = r ∧ f j = k ∧ f j ≠ 0} :=
-    ⟨fun x => ⟨x.1.1, (Prod.ext_iff.mp x.2).1, (Prod.ext_iff.mp x.2).2, x.1.2⟩,
-     fun y => ⟨⟨y.1, y.2.2.2⟩, Prod.ext y.2.1 y.2.2.1⟩, fun x => rfl, fun y => rfl⟩
-  rw [Fintype.card_congr eI, Fintype.card_congr eJ, Fintype.card_subtype, Fintype.card_subtype]
-  by_cases hk : k = 0
-  · subst hk
-    rw [Finset.card_eq_zero.mpr, Finset.card_eq_zero.mpr] <;>
-      simp [Finset.filter_eq_empty_iff]
-  by_cases hr : r.Prime
-  · have h1 : (Finset.univ.filter fun i => p i = r ∧ e i = k ∧ e i ≠ 0) =
-        Finset.univ.filter fun i => p i = r ∧ e i = k := by
-      ext i; simp only [Finset.mem_filter, Finset.mem_univ, true_and]
-      exact ⟨fun ⟨a, b, _⟩ => ⟨a, b⟩, fun ⟨a, b⟩ => ⟨a, b, b ▸ hk⟩⟩
-    have h2 : (Finset.univ.filter fun j => q j = r ∧ f j = k ∧ f j ≠ 0) =
-        Finset.univ.filter fun j => q j = r ∧ f j = k := by
-      ext j; simp only [Finset.mem_filter, Finset.mem_univ, true_and]
-      exact ⟨fun ⟨a, b, _⟩ => ⟨a, b⟩, fun ⟨a, b⟩ => ⟨a, b, b ▸ hk⟩⟩
-    rw [h1, h2]
-    exact hceq r k hr (Nat.one_le_iff_ne_zero.mpr hk)
-  · have h1 : (Finset.univ.filter fun i => p i = r ∧ e i = k ∧ e i ≠ 0) = ∅ :=
-      Finset.filter_eq_empty_iff.mpr fun i _ hh => hr (by rw [← hh.1]; exact hp i)
-    have h2 : (Finset.univ.filter fun j => q j = r ∧ f j = k ∧ f j ≠ 0) = ∅ :=
-      Finset.filter_eq_empty_iff.mpr fun j _ hh => hr (by rw [← hh.1]; exact hq j)
-    rw [h1, h2]
-    rfl
-let σ : I₁ ≃ J₁ := Equiv.ofFiberEquiv (f := key) (g := key') fun c => Fintype.equivOfCardEq (hfib c)
-have hσ : ∀ i : I₁, key' (σ i) = key i := fun i => Equiv.ofFiberEquiv_map _ i
-have hnm : ∀ i : I₁, p i.1 ^ e i.1 = q (σ i).1 ^ f (σ i).1 := by
-  intro i
-  have := hσ i
-  simp only [key, key', Prod.ext_iff] at this
-  rw [this.1, this.2]
+  let I₁ := {i : ι // e i ≠ 0}
+  let J₁ := {j : κ // f j ≠ 0}
+  let key : I₁ → ℕ × ℕ := fun i => (p i.1, e i.1)
+  let key' : J₁ → ℕ × ℕ := fun j => (q j.1, f j.1)
+  have hfib : ∀ c : ℕ × ℕ, Fintype.card {i : I₁ // key i = c} = Fintype.card {j : J₁ // key' j = c} := by
+    rintro ⟨r, k⟩
 
-have hsubI : ∀ i : ι, ¬ (e i ≠ 0) → Subsingleton (ZMod (p i ^ e i)) := by
-  intro i hi
-  rw [not_not] at hi
-  rw [hi, pow_zero]
-  infer_instance
-have hsubJ : ∀ j : κ, ¬ (f j ≠ 0) → Subsingleton (ZMod (q j ^ f j)) := by
-  intro j hj
-  rw [not_not] at hj
-  rw [hj, pow_zero]
-  infer_instance
-let E1 : (∀ i, ZMod (p i ^ e i)) ≃+ (∀ i : I₁, ZMod (p i.1 ^ e i.1)) :=
-  piSubtypeAddEquiv (fun i => ZMod (p i ^ e i)) (fun i => e i ≠ 0) hsubI
-let E2 : (∀ i : I₁, ZMod (p i.1 ^ e i.1)) ≃+ (∀ i : I₁, ZMod (q (σ i).1 ^ f (σ i).1)) :=
-  AddEquiv.piCongrRight fun i => (ZMod.ringEquivCongr (hnm i)).toAddEquiv
-let E3 : (∀ i : I₁, ZMod (q (σ i).1 ^ f (σ i).1)) ≃+ (∀ j : J₁, ZMod (q j.1 ^ f j.1)) :=
-  (LinearEquiv.piCongrLeft ℤ (fun j : J₁ => ZMod (q j.1 ^ f j.1)) σ).toAddEquiv
-let E4 : (∀ j, ZMod (q j ^ f j)) ≃+ (∀ j : J₁, ZMod (q j.1 ^ f j.1)) :=
-  piSubtypeAddEquiv (fun j => ZMod (q j ^ f j)) (fun j => f j ≠ 0) hsubJ
-exact ⟨E1.trans (E2.trans (E3.trans E4.symm))⟩
+    have eI : {i : I₁ // key i = (r, k)} ≃ {i : ι // p i = r ∧ e i = k ∧ e i ≠ 0} :=
+      ⟨fun x => ⟨x.1.1, (Prod.ext_iff.mp x.2).1, (Prod.ext_iff.mp x.2).2, x.1.2⟩,
+       fun y => ⟨⟨y.1, y.2.2.2⟩, Prod.ext y.2.1 y.2.2.1⟩, fun x => rfl, fun y => rfl⟩
+    have eJ : {j : J₁ // key' j = (r, k)} ≃ {j : κ // q j = r ∧ f j = k ∧ f j ≠ 0} :=
+      ⟨fun x => ⟨x.1.1, (Prod.ext_iff.mp x.2).1, (Prod.ext_iff.mp x.2).2, x.1.2⟩,
+       fun y => ⟨⟨y.1, y.2.2.2⟩, Prod.ext y.2.1 y.2.2.1⟩, fun x => rfl, fun y => rfl⟩
+    rw [Fintype.card_congr eI, Fintype.card_congr eJ, Fintype.card_subtype, Fintype.card_subtype]
+    by_cases hk : k = 0
+    · subst hk
+      rw [Finset.card_eq_zero.mpr, Finset.card_eq_zero.mpr] <;>
+        simp [Finset.filter_eq_empty_iff]
+    by_cases hr : r.Prime
+    · have h1 : (Finset.univ.filter fun i => p i = r ∧ e i = k ∧ e i ≠ 0) =
+          Finset.univ.filter fun i => p i = r ∧ e i = k := by
+        ext i; simp only [Finset.mem_filter, Finset.mem_univ, true_and]
+        exact ⟨fun ⟨a, b, _⟩ => ⟨a, b⟩, fun ⟨a, b⟩ => ⟨a, b, b ▸ hk⟩⟩
+      have h2 : (Finset.univ.filter fun j => q j = r ∧ f j = k ∧ f j ≠ 0) =
+          Finset.univ.filter fun j => q j = r ∧ f j = k := by
+        ext j; simp only [Finset.mem_filter, Finset.mem_univ, true_and]
+        exact ⟨fun ⟨a, b, _⟩ => ⟨a, b⟩, fun ⟨a, b⟩ => ⟨a, b, b ▸ hk⟩⟩
+      rw [h1, h2]
+      exact hceq r k hr (Nat.one_le_iff_ne_zero.mpr hk)
+    · have h1 : (Finset.univ.filter fun i => p i = r ∧ e i = k ∧ e i ≠ 0) = ∅ :=
+        Finset.filter_eq_empty_iff.mpr fun i _ hh => hr (by rw [← hh.1]; exact hp i)
+      have h2 : (Finset.univ.filter fun j => q j = r ∧ f j = k ∧ f j ≠ 0) = ∅ :=
+        Finset.filter_eq_empty_iff.mpr fun j _ hh => hr (by rw [← hh.1]; exact hq j)
+      rw [h1, h2]
+      rfl
+  let σ : I₁ ≃ J₁ := Equiv.ofFiberEquiv (f := key) (g := key') fun c => Fintype.equivOfCardEq (hfib c)
+  have hσ : ∀ i : I₁, key' (σ i) = key i := fun i => Equiv.ofFiberEquiv_map _ i
+  have hnm : ∀ i : I₁, p i.1 ^ e i.1 = q (σ i).1 ^ f (σ i).1 := by
+    intro i
+    have := hσ i
+    simp only [key, key', Prod.ext_iff] at this
+    rw [this.1, this.2]
 
+  have hsubI : ∀ i : ι, ¬ (e i ≠ 0) → Subsingleton (ZMod (p i ^ e i)) := by
+    intro i hi
+    rw [not_not] at hi
+    rw [hi, pow_zero]
+    infer_instance
+  have hsubJ : ∀ j : κ, ¬ (f j ≠ 0) → Subsingleton (ZMod (q j ^ f j)) := by
+    intro j hj
+    rw [not_not] at hj
+    rw [hj, pow_zero]
+    infer_instance
+  let E1 : (∀ i, ZMod (p i ^ e i)) ≃+ (∀ i : I₁, ZMod (p i.1 ^ e i.1)) :=
+    piSubtypeAddEquiv (fun i => ZMod (p i ^ e i)) (fun i => e i ≠ 0) hsubI
+  let E2 : (∀ i : I₁, ZMod (p i.1 ^ e i.1)) ≃+ (∀ i : I₁, ZMod (q (σ i).1 ^ f (σ i).1)) :=
+    AddEquiv.piCongrRight fun i => (ZMod.ringEquivCongr (hnm i)).toAddEquiv
+  let E3 : (∀ i : I₁, ZMod (q (σ i).1 ^ f (σ i).1)) ≃+ (∀ j : J₁, ZMod (q j.1 ^ f j.1)) :=
+    (LinearEquiv.piCongrLeft ℤ (fun j : J₁ => ZMod (q j.1 ^ f j.1)) σ).toAddEquiv
+  let E4 : (∀ j, ZMod (q j ^ f j)) ≃+ (∀ j : J₁, ZMod (q j.1 ^ f j.1)) :=
+    piSubtypeAddEquiv (fun j => ZMod (q j ^ f j)) (fun j => f j ≠ 0) hsubJ
+  exact ⟨E1.trans (E2.trans (E3.trans E4.symm))⟩
 
+end Match2
+
+end AlgFAC
 
 open AlgFAC in
+/--
+[AddCommGroup_nonempty_addEquiv_of_forall_natCard_torsionBy_eq](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AddCommGroup_nonempty_addEquiv_of_forall_natCard_torsionBy_eq.lean)
+-/
 @[path]
 private lemma main
-  {A : Type u} [AddCommGroup A] [Finite A]
-  {B : Type v} [AddCommGroup B] [Finite B]
--- given
-  (h : ∀ N : ℕ, Nat.card (Submodule.torsionBy ℤ A (N : ℤ)) = Nat.card (Submodule.torsionBy ℤ B (N : ℤ))) :
--- imply
-  Nonempty (A ≃+ B) := by
--- proof
+    (A : Type u) (B : Type v) [AddCommGroup A] [AddCommGroup B] [Finite A] [Finite B]
+    (h : ∀ N : ℕ, Nat.card (Submodule.torsionBy ℤ A (N : ℤ)) = Nat.card (Submodule.torsionBy ℤ B (N : ℤ))) :
+    Nonempty (A ≃+ B) := by
   classical
-    obtain ⟨ι, hι, p, hp, e, ⟨fA⟩⟩ := exists_pi_zmod A
-    obtain ⟨κ, hκ, q, hq, f, ⟨fB⟩⟩ := exists_pi_zmod B
-    have : ∀ i, NeZero (p i ^ e i) := fun i => ⟨pow_ne_zero _ (hp i).ne_zero⟩
-    have : ∀ j, NeZero (q j ^ f j) := fun j => ⟨pow_ne_zero _ (hq j).ne_zero⟩
-    have hprof : ∀ N : ℕ, ∏ i, Nat.gcd N (p i ^ e i) = ∏ j, Nat.gcd N (q j ^ f j) := by
-      intro N
-      rw [← tors_pi_zmod, ← tors_pi_zmod, ← torsU_congr fA, ← torsU_congr fB]
-      have := h N
-      rwa [card_torsionBy_eq_tors, card_torsionBy_eq_tors] at this
-    obtain ⟨E⟩ := nonempty_addEquiv_of_prod_gcd_eq p e q f hp hq hprof
-    exact ⟨fA.trans (E.trans fB.symm)⟩
-
+  obtain ⟨ι, hι, p, hp, e, ⟨fA⟩⟩ := exists_pi_zmod A
+  obtain ⟨κ, hκ, q, hq, f, ⟨fB⟩⟩ := exists_pi_zmod B
+  have : ∀ i, NeZero (p i ^ e i) := fun i => ⟨pow_ne_zero _ (hp i).ne_zero⟩
+  have : ∀ j, NeZero (q j ^ f j) := fun j => ⟨pow_ne_zero _ (hq j).ne_zero⟩
+  have hprof : ∀ N : ℕ, ∏ i, Nat.gcd N (p i ^ e i) = ∏ j, Nat.gcd N (q j ^ f j) := by
+    intro N
+    rw [← tors_pi_zmod, ← tors_pi_zmod, ← torsU_congr fA, ← torsU_congr fB]
+    have := h N
+    rwa [card_torsionBy_eq_tors, card_torsionBy_eq_tors] at this
+  obtain ⟨E⟩ := nonempty_addEquiv_of_prod_gcd_eq p e q f hp hq hprof
+  exact ⟨fA.trans (E.trans fB.symm)⟩
 
 -- created on 2026-10-09

@@ -33,7 +33,7 @@ private lemma main
   let unsnoc : (Fin (t + 1) → β) → (Fin t → β) × β := fun f ↦
     (fun i : Fin t ↦ f i.castSucc, f i_last)
   have hunsnoc : Measurable unsnoc :=
-    (measurable_pi_lambda _ fun i ↦ measurable_pi_apply i.castSucc).prodMk
+    (Measurable.of_eval fun i ↦ measurable_pi_apply i.castSucc).prodMk
       (measurable_pi_apply i_last)
   have h_eq :
       (s_past t, s t) = unsnoc ∘ s_past (t + 1) := by

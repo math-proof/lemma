@@ -70,16 +70,16 @@ private lemma main
   set s : ℕ → (ℕ → ℝ × S × A) → S := fun t ω ↦ (ω t).2.1
   set a : ℕ → (ℕ → ℝ × S × A) → A := fun t ω ↦ (ω t).2.2
   have hr : ∀ t, Measurable (r t) := Random.Measurable_R h₁
-  have hpR : Measurable (fun ω t ↦ r t ω) := measurable_pi_lambda _ hr
+  have hpR : Measurable (fun ω t ↦ r t ω) := Measurable.of_eval hr
   have hfG : ∀ t, Measurable (fun integ : ℕ → ℝ ↦ (γ ^ (id : ℕ → ℕ)) @ integ[t:]) := fun t =>
     Measurable.tsum fun k => (measurable_pi_apply (t + k)).const_mul _
   have hQ : Q = fun θ => M.Q r s a θ γ := funext fun θ => funext fun t => funext fun x => funext fun u => by
     rw [h₂ θ t (fun _ ↦ x) (fun _ ↦ u)]
     simp only [Expectation.asRV_process]
     rw [Expectation.condEvent_eq_integral hpR.aemeasurable (hfG t)]
-    have hpre : JointRandomSymbol (s t) (a t) ⁻¹' {(x, u)} =
+    have hpre : (s t, a t) ⁻¹' {(x, u)} =
         s t ⁻¹' {x} ∩ a t ⁻¹' {u} := by
-      ext ω; simp [JointRandomSymbol, Prod.ext_iff]
+      ext ω; simp [JointRandomSymbol]
     rw [hpre]
     exact Integral_G.eq.TSum_MulPowIntegral_R_Add.of.In_Ico (M := M) h₀ h₁ θ _ t
   have hV : V = fun θ => M.V r s θ γ := funext fun θ => funext fun t => funext fun x => by
@@ -89,7 +89,6 @@ private lemma main
     rfl
   subst hQ hV
   classical
-  beta_reduce
   have h₈ : ∀ t y, ((M θ)[|s 0 ⁻¹' {x}]).real (s t ⁻¹' {y}) = M.Pn θ t x y := fun t y => by
     have h := RealPreimageSPreimageS_Add.eq.Pn.of.Ne0Real_Preimage (M := M) h₁ θ 0 t x y h₆
     rwa [zero_add] at h
@@ -101,9 +100,9 @@ private lemma main
     symm
     simp only [Expectation.asRV_process]
     rw [Expectation.condEvent_eq_integral hpR.aemeasurable (hfG t)]
-    have hpre : JointRandomSymbol (s t) (a t) ⁻¹' {(sb t, ab t)} =
+    have hpre : (s t, a t) ⁻¹' {(sb t, ab t)} =
         s t ⁻¹' {sb t} ∩ a t ⁻¹' {ab t} := by
-      ext ω; simp [JointRandomSymbol, Prod.ext_iff]
+      ext ω; simp [JointRandomSymbol]
     rw [hpre]
     exact Integral_G.eq.TSum_MulPowIntegral_R_Add.of.In_Ico (M := M) h₀ h₁ θ _ t
   have hV_expect : ∀ θ t («s.bvar» : ℕ → S),
@@ -174,4 +173,4 @@ private lemma main
 
 
 -- created on 2023-03-30
--- updated on 2026-10-07
+-- updated on 2026-10-10

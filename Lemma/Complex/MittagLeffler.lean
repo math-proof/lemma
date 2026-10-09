@@ -10,7 +10,7 @@ open Complex.MittagLefflerWanted
 @[path]
 private lemma principal_part_analytic_at_eq
 -- given
-  (s : ℂ) (coeff : Finsupp ℕ ℂ) (z : ℂ) (hz : z ≠ s) :
+  (s : ℂ) (coeff : ℕ →₀ ℂ) (z : ℂ) (hz : z ≠ s) :
 -- imply
   AnalyticAt ℂ (principalPart s coeff) z := by
 -- proof
@@ -23,7 +23,7 @@ private lemma principal_part_analytic_at_eq
 @[path]
 private lemma principal_part_meromorphic_at_eq
 -- given
-  (s : ℂ) (coeff : Finsupp ℕ ℂ) (x : ℂ) :
+  (s : ℂ) (coeff : ℕ →₀ ℂ) (x : ℂ) :
 -- imply
   MeromorphicAt (principalPart s coeff) x := by
 -- proof
@@ -38,7 +38,7 @@ private lemma mittag_leffler_of_is_discrete_eq
 -- given
   (S : Set ℂ) (hS_closed : IsClosed S)
   (hSdisc : IsDiscrete S)
-  (coeff : ↥S → Finsupp ℕ ℂ) :
+  (coeff : ↥S → ℕ →₀ ℂ) :
 -- imply
   ∃ f : ℂ → ℂ, DifferentiableOn ℂ f Sᶜ ∧
     (∀ s : ↥S, AnalyticAt ℂ (fun z => f z - principalPart s.val (coeff s) z) s.val) ∧
@@ -55,7 +55,7 @@ private lemma mittag_leffler_eq
 -- given
   (S : Set ℂ) (hS_closed : IsClosed S)
   (hS_discrete : ∀ z ∈ S, ∃ ε > 0, (Metric.ball z ε \ {z}) ∩ S = ∅)
-  (coeff : ↥S → Finsupp ℕ ℂ) :
+  (coeff : ↥S → ℕ →₀ ℂ) :
 -- imply
   ∃ f : ℂ → ℂ, DifferentiableOn ℂ f Sᶜ ∧
     (∀ s : ↥S, AnalyticAt ℂ (fun z => f z - principalPart s.val (coeff s) z) s.val) ∧

@@ -59,7 +59,7 @@ private lemma main
     · intro h
       exact ⟨fun i => h.1 i i.2, fun i => h.2 i i.2⟩
   have hJ : ∀ a b : ℕ, Measurable (x[:(a : ℤ)], y[:(b : ℤ)]) := fun a b =>
-    (measurable_pi_lambda _ fun i => hx _).prodMk (measurable_pi_lambda _ fun i => hy _)
+    (Measurable.of_eval fun i => hx _).prodMk (Measurable.of_eval fun i => hy _)
   obtain ⟨P, hPdef⟩ : ∃ P : ℕ → Set Ω, ∀ n, P n = {ω | (∀ i < n, x i ω = xo i) ∧ ∀ i < n, y i ω = ys i} :=
     ⟨_, fun _ => rfl⟩
   have hQ : ∀ n : ℕ, ℙ[π](x[:(n : ℤ)] = xo[:(n : ℤ)] ∧ y[:(n : ℤ)] = ys[:(n : ℤ)]) = π (P n) := by

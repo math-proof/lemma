@@ -80,7 +80,7 @@ private lemma main
   set s : ℕ → (ℕ → ℝ × S × A) → S := fun t ω ↦ (ω t).2.1
   set a : ℕ → (ℕ → ℝ × S × A) → A := fun t ω ↦ (ω t).2.2
   intro hs ha hP hPs
-  have hpR : Measurable (fun ω t ↦ r t ω) := measurable_pi_lambda _ (Random.Measurable_R h₁)
+  have hpR : Measurable (fun ω t ↦ r t ω) := Measurable.of_eval (Random.Measurable_R h₁)
   have hfG : ∀ t, Measurable (fun integ : ℕ → ℝ ↦ (γ ^ (id : ℕ → ℕ)) @ integ[t:]) := fun t =>
     Measurable.tsum fun k => (measurable_pi_apply (t + k)).const_mul _
   have hQ : Q = fun θ => M.Q r s a θ γ := funext fun θ => funext fun t => funext fun x => funext fun u => by

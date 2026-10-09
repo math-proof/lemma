@@ -1,81 +1,43 @@
 import Mathlib
 import sympy.Basic
+import Lemma.Int.P2MUtil
+set_option autoImplicit false
+set_option linter.unusedSectionVars false
+
+namespace P2mTorsionGrowth
 
 open AddSubgroup Function
 
-/--
-[AddCommGroup_natCard_torsionBy_pow_eq_pow_of_natCard_fixed_primaryComponent](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AddCommGroup_natCard_torsionBy_pow_eq_pow_of_natCard_fixed_primaryComponent.lean)
--/
+section General
 
-def layMap
-  {A : Type*}
-  [AddCommGroup A]
-  (ℓ : ℕ)
-  (n : ℕ) : T (A := A) ℓ (n + 1) →+ A :=
-  (nsmulAddMonoidHom (ℓ ^ n)).comp (T ℓ (n + 1)).subtype
+variable {A : Type*} [AddCommGroup A]
 
-def I
-  {A : Type*}
-  [AddCommGroup A]
-  (ℓ : ℕ)
-  (n : ℕ) : AddSubgroup A := (layMap (A := A) ℓ n).range
+abbrev tor (A : Type*) [AddCommGroup A] (m : ℕ) : AddSubgroup A :=
+  (nsmulAddMonoidHom m : A →+ A).ker
 
-def Hs
-  {A : Type*}
-  [AddCommGroup A]
-  (ℓ : ℕ)
-  [hℓ : Fact ℓ.Prime]
-  (n₀ : ℕ) : AddSubgroup A := (Pr (A := A) ℓ).map (nsmulAddMonoidHom (ℓ ^ n₀))
-
-def res
-  {A : Type*}
-  [AddCommGroup A]
-  (ℓ : ℕ)
-  [hℓ : Fact ℓ.Prime]
-  (n₀ : ℕ) (σ : AddMonoid.End A) : AddMonoid.End (Hs (A := A) ℓ n₀) :=
-  ((σ : A →+ A).comp (Hs (A := A) ℓ n₀).subtype).codRestrict _ (fun x => map_mem_Hs ℓ σ x.2)
-
-private lemma  mem_tor
-  {A : Type*}
-  [AddCommGroup A]
-  {m : ℕ} {x : A} : x ∈ tor A m ↔ m • x = 0 := by
+theorem mem_tor {m : ℕ} {x : A} : x ∈ tor A m ↔ m • x = 0 := by
   rw [AddMonoidHom.mem_ker, nsmulAddMonoidHom_apply]
 
-private lemma  tor_le_tor_mul
-  {A : Type*}
-  [AddCommGroup A]
-  (m m' : ℕ) : tor A m ≤ tor A (m' * m) := by
+theorem tor_le_tor_mul (m m' : ℕ) : tor A m ≤ tor A (m' * m) := by
   intro x hx
   rw [mem_tor] at hx ⊢
   rw [mul_nsmul', hx, nsmul_zero]
 
-private lemma  card_eq_card_range_mul_card_ker
-    {A : Type*}
-    [AddCommGroup A]
-    {B C : Type*} [AddCommGroup B] [AddCommGroup C]
+theorem card_eq_card_range_mul_card_ker {B C : Type*} [AddCommGroup B] [AddCommGroup C]
     (f : B →+ C) : Nat.card B = Nat.card f.range * Nat.card f.ker := by
   rw [card_eq_card_quotient_mul_card_addSubgroup f.ker,
     Nat.card_congr (QuotientAddGroup.quotientKerEquivRange f).toEquiv]
 
-private lemma  finite_of_finite_range_ker
-    {A : Type*}
-    [AddCommGroup A]
-    {B C : Type*} [AddCommGroup B] [AddCommGroup C]
+theorem finite_of_finite_range_ker {B C : Type*} [AddCommGroup B] [AddCommGroup C]
     (f : B →+ C) [Finite f.range] [Finite f.ker] : Finite B := by
   apply Nat.finite_of_card_ne_zero
   rw [card_eq_card_range_mul_card_ker f]
   exact mul_ne_zero Nat.card_pos.ne' Nat.card_pos.ne'
 
-private lemma  finite_of_le
-  {A : Type*}
-  [AddCommGroup A]
-  {H K : AddSubgroup A} (h : H ≤ K) [Finite K] : Finite H :=
+theorem finite_of_le {H K : AddSubgroup A} (h : H ≤ K) [Finite K] : Finite H :=
   Finite.of_injective _ (AddSubgroup.inclusion_injective h)
 
-private lemma  card_ker_mul_le
-    {A : Type*}
-    [AddCommGroup A]
-    {B : Type*} [AddCommGroup B] (f g : AddMonoid.End B)
+theorem card_ker_mul_le {B : Type*} [AddCommGroup B] (f g : AddMonoid.End B)
     [Finite (f : B →+ B).ker] [Finite (g : B →+ B).ker] :
     Finite ((f * g : AddMonoid.End B) : B →+ B).ker ∧
       Nat.card ((f * g : AddMonoid.End B) : B →+ B).ker ≤
@@ -84,70 +46,60 @@ private lemma  card_ker_mul_le
 
   let ψ : K →+ (f : B →+ B).ker :=
     ((g : B →+ B).comp K.subtype).codRestrict _ (fun x => by
-      rw [AddMonoidHom.mem_ker]
-      exact x.2)
+      -- `x ∈ ker (f * g)` means `(f ∘ g) x = 0`
+      have hx : (f * g) (x : B) = 0 := x.2
+      change f (g (x : B)) = 0
+      exact hx)
   have hψ : ∀ x : K, ((ψ x : (f : B →+ B).ker) : B) = g x := fun x => rfl
 
   let ι : ψ.ker → (g : B →+ B).ker := fun x => ⟨(x.1 : B), by
     have hx := x.2
-    rw [AddMonoidHom.mem_ker] at hx
-    rw [AddMonoidHom.mem_ker]
-    have := congrArg (fun y : (f : B →+ B).ker => (y : B)) hx
-    (simp [hψ] at this; exact this)⟩
+    change (g : B →+ B) (x : B) = 0
+    have hx' : ψ (x : K) = 0 := hx
+    have := congrArg (fun y : (f : B →+ B).ker => (y : B)) hx'
+    simpa [hψ] using this⟩
   have hι : Function.Injective ι := by
     intro x y hxy
     apply Subtype.ext
     apply Subtype.ext
     exact congrArg (fun z : (g : B →+ B).ker => (z : B)) hxy
-  haveI : Finite ψ.ker := Finite.of_injective ι hι
-  haveI : Finite ψ.range := inferInstance
+  have : Finite ψ.ker := Finite.of_injective ι hι
+  have : Finite ψ.range := inferInstance
   refine ⟨finite_of_finite_range_ker ψ, ?_⟩
   rw [card_eq_card_range_mul_card_ker ψ]
   exact Nat.mul_le_mul (Nat.card_le_card_of_injective _ Subtype.val_injective)
     (Nat.card_le_card_of_injective ι hι)
 
+end General
 
+section Layers
 
+variable {A : Type*} [AddCommGroup A] (ℓ : ℕ)
 
 abbrev T (n : ℕ) : AddSubgroup A := tor A (ℓ ^ n)
 
-private lemma  T_le_succ
-  {A : Type*}
-  [AddCommGroup A]
-  (ℓ : ℕ)
-  (n : ℕ) : T (A := A) ℓ n ≤ T ℓ (n + 1) := by
+theorem T_le_succ (n : ℕ) : T (A := A) ℓ n ≤ T ℓ (n + 1) := by
   rw [T, T, pow_succ']
   exact tor_le_tor_mul _ _
 
-private lemma  T_mono
-  {A : Type*}
-  [AddCommGroup A]
-  (ℓ : ℕ)
-  {n m : ℕ} (h : n ≤ m) : T (A := A) ℓ n ≤ T ℓ m := by
+theorem T_mono {n m : ℕ} (h : n ≤ m) : T (A := A) ℓ n ≤ T ℓ m := by
   obtain ⟨d, rfl⟩ := Nat.exists_eq_add_of_le h
   rw [T, T, add_comm, pow_add]
   exact tor_le_tor_mul _ _
 
-private lemma  T_zero
-  {A : Type*}
-  [AddCommGroup A]
-  (ℓ : ℕ)
-  : T (A := A) ℓ 0 = ⊥ := by
+theorem T_zero : T (A := A) ℓ 0 = ⊥ := by
   ext x
   rw [mem_tor, pow_zero, one_nsmul, mem_bot]
 
-@[simp] theorem layMap_apply
-  {A : Type*}
-  [AddCommGroup A]
-  (ℓ : ℕ)
-  (n : ℕ) (x : T (A := A) ℓ (n + 1)) :
+def layMap (n : ℕ) : T (A := A) ℓ (n + 1) →+ A :=
+  (nsmulAddMonoidHom (ℓ ^ n)).comp (T ℓ (n + 1)).subtype
+
+@[scoped simp] theorem layMap_apply (n : ℕ) (x : T (A := A) ℓ (n + 1)) :
     layMap ℓ n x = ℓ ^ n • (x : A) := rfl
 
-private lemma  mem_I
-    {A : Type*}
-    [AddCommGroup A]
-    (ℓ : ℕ)
-    {n : ℕ} {x : A} :
+def I (n : ℕ) : AddSubgroup A := (layMap (A := A) ℓ n).range
+
+theorem mem_I {n : ℕ} {x : A} :
     x ∈ I ℓ n ↔ ∃ y : A, ℓ ^ (n + 1) • y = 0 ∧ ℓ ^ n • y = x := by
   constructor
   · rintro ⟨⟨y, hy⟩, rfl⟩
@@ -155,139 +107,89 @@ private lemma  mem_I
   · rintro ⟨y, hy, rfl⟩
     exact ⟨⟨y, mem_tor.mpr hy⟩, rfl⟩
 
-private lemma  I_le_T_one
-  {A : Type*}
-  [AddCommGroup A]
-  (ℓ : ℕ)
-  (n : ℕ) : I (A := A) ℓ n ≤ T ℓ 1 := by
+theorem I_le_T_one (n : ℕ) : I (A := A) ℓ n ≤ T ℓ 1 := by
   intro x hx
   obtain ⟨y, hy, rfl⟩ := (mem_I ℓ).mp hx
   rw [mem_tor, pow_one, ← mul_nsmul', ← pow_succ', hy]
 
-private lemma  I_succ_le
-  {A : Type*}
-  [AddCommGroup A]
-  (ℓ : ℕ)
-  (n : ℕ) : I (A := A) ℓ (n + 1) ≤ I ℓ n := by
+theorem I_succ_le (n : ℕ) : I (A := A) ℓ (n + 1) ≤ I ℓ n := by
   intro x hx
   obtain ⟨y, hy, rfl⟩ := (mem_I ℓ).mp hx
   refine (mem_I ℓ).mpr ⟨ℓ • y, ?_, ?_⟩
   · rw [← mul_nsmul', ← pow_succ, hy]
   · rw [← mul_nsmul', ← pow_succ]
 
-private lemma  I_antitone
-  {A : Type*}
-  [AddCommGroup A]
-  (ℓ : ℕ)
-  : Antitone (I (A := A) ℓ) := antitone_nat_of_succ_le (I_succ_le ℓ)
+theorem I_antitone : Antitone (I (A := A) ℓ) := antitone_nat_of_succ_le (I_succ_le ℓ)
 
-private lemma  ker_layMap
-    {A : Type*}
-    [AddCommGroup A]
-    (ℓ : ℕ)
-    (n : ℕ) :
+theorem ker_layMap (n : ℕ) :
     (layMap (A := A) ℓ n).ker = (T ℓ n).addSubgroupOf (T ℓ (n + 1)) := by
   ext x
   rw [AddMonoidHom.mem_ker, mem_addSubgroupOf, layMap_apply, mem_tor]
 
-private lemma  card_T_succ
-    {A : Type*}
-    [AddCommGroup A]
-    (ℓ : ℕ)
-    (n : ℕ) :
+theorem card_T_succ (n : ℕ) :
     Nat.card (T (A := A) ℓ (n + 1)) = Nat.card (I (A := A) ℓ n) * Nat.card (T (A := A) ℓ n) := by
   rw [card_eq_card_range_mul_card_ker (layMap ℓ n), ker_layMap,
     Nat.card_congr (addSubgroupOfEquivOfLe (T_le_succ ℓ n)).toEquiv]
   rfl
 
-private lemma  finite_T
-  {A : Type*}
-  [AddCommGroup A]
-  (ℓ : ℕ)
-  [hℓ : Fact ℓ.Prime]
-  [Finite (tor A ℓ)] (n : ℕ) : Finite (T (A := A) ℓ n) := by
+variable [hℓ : Fact ℓ.Prime]
+
+theorem finite_T [Finite (tor A ℓ)] (n : ℕ) : Finite (T (A := A) ℓ n) := by
   induction n with
   | zero =>
     rw [T_zero]
     infer_instance
   | succ n ih =>
-    haveI : Finite (T (A := A) ℓ 1) := by
+    have : Finite (T (A := A) ℓ 1) := by
       rw [T, pow_one]
       infer_instance
-    haveI : Finite (layMap (A := A) ℓ n).range := finite_of_le (I_le_T_one ℓ n)
-    haveI : Finite (layMap (A := A) ℓ n).ker := by
+    have : Finite (layMap (A := A) ℓ n).range := finite_of_le (I_le_T_one ℓ n)
+    have : Finite (layMap (A := A) ℓ n).ker := by
       rw [ker_layMap]
       exact Finite.of_equiv _ (addSubgroupOfEquivOfLe (T_le_succ ℓ n)).toEquiv.symm
     exact finite_of_finite_range_ker (layMap ℓ n)
 
-private lemma  finite_I
-  {A : Type*}
-  [AddCommGroup A]
-  (ℓ : ℕ)
-  [hℓ : Fact ℓ.Prime]
-  [Finite (tor A ℓ)] (n : ℕ) : Finite (I (A := A) ℓ n) := by
-  haveI : Finite (T (A := A) ℓ 1) := finite_T ℓ 1
+theorem finite_I [Finite (tor A ℓ)] (n : ℕ) : Finite (I (A := A) ℓ n) := by
+  have : Finite (T (A := A) ℓ 1) := finite_T ℓ 1
   exact finite_of_le (I_le_T_one ℓ n)
 
-private lemma  card_I_le
-  {A : Type*}
-  [AddCommGroup A]
-  (ℓ : ℕ)
-  [hℓ : Fact ℓ.Prime]
-  [Finite (tor A ℓ)] (n : ℕ) : Nat.card (I (A := A) ℓ n) ≤ Nat.card (tor A ℓ) := by
+theorem card_I_le [Finite (tor A ℓ)] (n : ℕ) : Nat.card (I (A := A) ℓ n) ≤ Nat.card (tor A ℓ) := by
   have h := I_le_T_one (A := A) ℓ n
   rw [T, pow_one] at h
   exact card_le_of_le h
 
-private lemma  exists_stable
-    {A : Type*}
-    [AddCommGroup A]
-    (ℓ : ℕ)
-    [hℓ : Fact ℓ.Prime]
-    [Finite (tor A ℓ)] :
+theorem exists_stable [Finite (tor A ℓ)] :
     ∃ n₀ : ℕ, ∀ n, n₀ ≤ n → I (A := A) ℓ n = I ℓ n₀ := by
   classical
   let e : ℕ → ℕ := fun n => Nat.card (I (A := A) ℓ n)
   have hanti : Antitone e := by
     apply antitone_nat_of_succ_le
     intro n
-    haveI := finite_I (A := A) ℓ n
+    have := finite_I (A := A) ℓ n
     exact card_le_of_le (I_succ_le ℓ n)
   let n₀ := Function.argmin e
   refine ⟨n₀, fun n hn => ?_⟩
-  haveI := finite_I (A := A) ℓ n₀
+  have := finite_I (A := A) ℓ n₀
   exact eq_of_le_of_card_ge (I_antitone ℓ hn) (by
     show e n₀ ≤ e n
     exact Function.argmin_le e n)
 
+end Layers
 
+section Divisible
 
+variable {H : Type*} [AddCommGroup H] (ℓ : ℕ) [hℓ : Fact ℓ.Prime]
 
 abbrev eker (f : AddMonoid.End H) : AddSubgroup H := (f : H →+ H).ker
 
-private lemma  mem_eker
-  {H : Type*}
-  [AddCommGroup H]
-  (ℓ : ℕ)
-  [hℓ : Fact ℓ.Prime]
-  {f : AddMonoid.End H} {x : H} : x ∈ eker f ↔ f x = 0 := AddMonoidHom.mem_ker
+theorem mem_eker {f : AddMonoid.End H} {x : H} : x ∈ eker f ↔ f x = 0 := AddMonoidHom.mem_ker
 
-private theorem _root_.P2mTorsionGrowth.natCast_apply
-  {H : Type*}
-  [AddCommGroup H]
-  (ℓ : ℕ)
-  [hℓ : Fact ℓ.Prime]
-  (n : ℕ) (x : H) : (n : AddMonoid.End H) x = n • x :=
+private theorem _root_.P2mTorsionGrowth.natCast_apply (n : ℕ) (x : H) : (n : AddMonoid.End H) x = n • x :=
   AddMonoid.End.natCast_apply n x
 
 p2m_export "P2mTorsionGrowth" "natCast_apply"
 
-private lemma  bijective_one_add
-    {H : Type*}
-    [AddCommGroup H]
-    (ℓ : ℕ)
-    [hℓ : Fact ℓ.Prime]
-    (hprim : ∀ x : H, ∃ m : ℕ, ℓ ^ m • x = 0) (N : AddMonoid.End H) :
+theorem bijective_one_add (hprim : ∀ x : H, ∃ m : ℕ, ℓ ^ m • x = 0) (N : AddMonoid.End H) :
     Function.Bijective (1 + (ℓ : AddMonoid.End H) * N : AddMonoid.End H) := by
   set N' : AddMonoid.End H := -((ℓ : AddMonoid.End H) * N) with hN'
   have hv : (1 + (ℓ : AddMonoid.End H) * N : AddMonoid.End H) = 1 - N' := by
@@ -336,32 +238,23 @@ private lemma  bijective_one_add
     show y - (N' ^ m) y = y
     rw [hm m le_rfl, sub_zero]
 
-private lemma  surjective_nsmul_sq
-    {H : Type*}
-    [AddCommGroup H]
-    (ℓ : ℕ)
-    [hℓ : Fact ℓ.Prime]
-    (hdiv : ∀ x : H, ∃ y : H, ℓ • y = x) :
+theorem surjective_nsmul_sq (hdiv : ∀ x : H, ∃ y : H, ℓ • y = x) :
     Function.Surjective (nsmulAddMonoidHom (ℓ ^ 2) : H →+ H) := by
   intro x
   obtain ⟨y, rfl⟩ := hdiv x
   obtain ⟨z, rfl⟩ := hdiv y
   exact ⟨z, by rw [nsmulAddMonoidHom_apply, pow_two, mul_nsmul']⟩
 
-private lemma  exists_sub_one_eq
-    {H : Type*}
-    [AddCommGroup H]
-    (ℓ : ℕ)
-    [hℓ : Fact ℓ.Prime]
-    (hdiv : ∀ x : H, ∃ y : H, ℓ • y = x)
+theorem exists_sub_one_eq (hdiv : ∀ x : H, ∃ y : H, ℓ • y = x)
     (θ : AddMonoid.End H) (hθ : ∀ x : H, ℓ ^ 2 • x = 0 → θ x = x) :
     ∃ M : AddMonoid.End H, θ - 1 = ((ℓ ^ 2 : ℕ) : AddMonoid.End H) * M := by
   set s : H →+ H := nsmulAddMonoidHom (ℓ ^ 2) with hs
   have hsurj : Function.Surjective s := surjective_nsmul_sq ℓ hdiv
   have hker : s.ker ≤ ((θ - 1 : AddMonoid.End H) : H →+ H).ker := by
     intro x hx
-    rw [AddMonoidHom.mem_ker, hs, nsmulAddMonoidHom_apply] at hx
-    rw [AddMonoidHom.mem_ker]
+    change (s : H →+ H) x = 0 at hx
+    rw [hs, nsmulAddMonoidHom_apply] at hx
+    change ((θ - 1 : AddMonoid.End H) : H →+ H) x = 0
     show θ x - x = 0
     rw [hθ x hx, sub_self]
   let M : AddMonoid.End H :=
@@ -378,12 +271,7 @@ private lemma  exists_sub_one_eq
     rw [natCast_apply, hs, nsmulAddMonoidHom_apply, map_nsmul]
   exact (hM y).symm.trans hcomm.symm
 
-private lemma  geom_sum_one_add
-    {H : Type*}
-    [AddCommGroup H]
-    (ℓ : ℕ)
-    [hℓ : Fact ℓ.Prime]
-    {R : Type*} [Ring R] (a : R) (n : ℕ) :
+theorem geom_sum_one_add {R : Type*} [Ring R] (a : R) (n : ℕ) :
     ∃ G : R, ∑ i ∈ Finset.range n, (1 + a) ^ i = n + G * a := by
   refine ⟨∑ i ∈ Finset.range n, ∑ j ∈ Finset.range i, (1 + a) ^ j, ?_⟩
   rw [Finset.sum_mul]
@@ -395,12 +283,7 @@ private lemma  geom_sum_one_add
   rw [Finset.sum_congr rfl this, Finset.sum_add_distrib, Finset.sum_const, Finset.card_range,
     nsmul_eq_mul, mul_one]
 
-private lemma  card_ker_geom_sum
-    {H : Type*}
-    [AddCommGroup H]
-    (ℓ : ℕ)
-    [hℓ : Fact ℓ.Prime]
-    (hprim : ∀ x : H, ∃ m : ℕ, ℓ ^ m • x = 0)
+theorem card_ker_geom_sum (hprim : ∀ x : H, ∃ m : ℕ, ℓ ^ m • x = 0)
     (hdiv : ∀ x : H, ∃ y : H, ℓ • y = x) [Finite (tor H ℓ)] (θ : AddMonoid.End H)
     (hθ : ∀ x : H, ℓ ^ 2 • x = 0 → θ x = x) :
     Finite (eker (∑ i ∈ Finset.range ℓ, θ ^ i)) ∧
@@ -425,12 +308,7 @@ private lemma  card_ker_geom_sum
       rw [natCast_apply])
   exact ⟨Finite.of_equiv _ E.symm, Nat.card_congr E⟩
 
-private lemma  card_fix_pow_le
-    {H : Type*}
-    [AddCommGroup H]
-    (ℓ : ℕ)
-    [hℓ : Fact ℓ.Prime]
-    (hprim : ∀ x : H, ∃ m : ℕ, ℓ ^ m • x = 0)
+theorem card_fix_pow_le (hprim : ∀ x : H, ∃ m : ℕ, ℓ ^ m • x = 0)
     (hdiv : ∀ x : H, ∃ y : H, ℓ • y = x) [Finite (tor H ℓ)] (θ : AddMonoid.End H)
     (hθ : ∀ x : H, ℓ ^ 2 • x = 0 → θ x = x) [Finite (eker (θ - 1))] (k : ℕ) :
     Finite (eker (θ ^ ℓ ^ k - 1)) ∧
@@ -450,8 +328,8 @@ private lemma  card_fix_pow_le
     have hfac : θ ^ ℓ ^ (k + 1) - 1 = (∑ i ∈ Finset.range ℓ, θ' ^ i) * (θ' - 1) := by
       rw [geom_sum_mul, hθ'def, ← pow_mul, ← pow_succ]
     obtain ⟨hf1, hc1⟩ := card_ker_geom_sum ℓ hprim hdiv θ' hθ'
-    haveI : Finite (eker (∑ i ∈ Finset.range ℓ, θ' ^ i)) := hf1
-    haveI : Finite (eker (θ' - 1)) := ihf
+    have : Finite (eker (∑ i ∈ Finset.range ℓ, θ' ^ i)) := hf1
+    have : Finite (eker (θ' - 1)) := ihf
     obtain ⟨hf2, hc2⟩ := card_ker_mul_le (∑ i ∈ Finset.range ℓ, θ' ^ i) (θ' - 1)
     rw [hfac]
     refine ⟨hf2, hc2.trans ?_⟩
@@ -461,7 +339,9 @@ private lemma  card_fix_pow_le
           Nat.mul_le_mul_left _ ihc
       _ = Nat.card (eker (θ - 1)) * (Nat.card (tor H ℓ) ^ k * Nat.card (tor H ℓ)) := by ring
 
-private lemma  le_of_forall_mul_pow_le {a b C D : ℕ} (hD : 0 < D) (h : ∀ k : ℕ, D * a ^ k ≤ C * b ^ k) :
+end Divisible
+
+theorem le_of_forall_mul_pow_le {a b C D : ℕ} (hD : 0 < D) (h : ∀ k : ℕ, D * a ^ k ≤ C * b ^ k) :
     a ≤ b := by
   by_contra hab
   rw [not_le] at hab
@@ -499,119 +379,75 @@ private lemma  le_of_forall_mul_pow_le {a b C D : ℕ} (hD : 0 < D) (h : ∀ k :
     have h6 : b + k ≤ k := Nat.le_of_mul_le_mul_left h4 (by positivity)
     omega
 
+end P2mTorsionGrowth
+p2m_reactivate "P2mTorsionGrowth"
 
+namespace P2mTorsionGrowth
 
 open AddSubgroup Function
 
+section Assembly
 
+variable {A : Type*} [AddCommGroup A] (ℓ : ℕ) [hℓ : Fact ℓ.Prime]
 
 abbrev Pr : AddSubgroup A := AddCommGroup.primaryComponent A ℓ
 
-private lemma  mem_Pr
-  {A : Type*}
-  [AddCommGroup A]
-  (ℓ : ℕ)
-  [hℓ : Fact ℓ.Prime]
-  {x : A} : x ∈ Pr (A := A) ℓ ↔ ∃ m : ℕ, ℓ ^ m • x = 0 :=
+def Hs (n₀ : ℕ) : AddSubgroup A := (Pr (A := A) ℓ).map (nsmulAddMonoidHom (ℓ ^ n₀))
+
+theorem mem_Pr {x : A} : x ∈ Pr (A := A) ℓ ↔ ∃ m : ℕ, ℓ ^ m • x = 0 :=
   AddCommGroup.mem_primaryComponent
 
-private lemma  mem_Hs
-    {A : Type*}
-    [AddCommGroup A]
-    (ℓ : ℕ)
-    [hℓ : Fact ℓ.Prime]
-    {n₀ : ℕ} {x : A} :
+theorem mem_Hs {n₀ : ℕ} {x : A} :
     x ∈ Hs (A := A) ℓ n₀ ↔ ∃ y : A, y ∈ Pr (A := A) ℓ ∧ ℓ ^ n₀ • y = x := by
   rw [Hs, mem_map]
   simp only [nsmulAddMonoidHom_apply]
 
-private lemma  Hs_le_Pr
-  {A : Type*}
-  [AddCommGroup A]
-  (ℓ : ℕ)
-  [hℓ : Fact ℓ.Prime]
-  (n₀ : ℕ) : Hs (A := A) ℓ n₀ ≤ Pr ℓ := by
+theorem Hs_le_Pr (n₀ : ℕ) : Hs (A := A) ℓ n₀ ≤ Pr ℓ := by
   intro x hx
   obtain ⟨y, hy, rfl⟩ := (mem_Hs ℓ).mp hx
   exact AddSubgroup.nsmul_mem _ hy _
 
-private lemma  map_mem_Pr
-  {A : Type*}
-  [AddCommGroup A]
-  (ℓ : ℕ)
-  [hℓ : Fact ℓ.Prime]
-  (σ : A →+ A) {x : A} (hx : x ∈ Pr (A := A) ℓ) : σ x ∈ Pr (A := A) ℓ := by
+theorem map_mem_Pr (σ : A →+ A) {x : A} (hx : x ∈ Pr (A := A) ℓ) : σ x ∈ Pr (A := A) ℓ := by
   obtain ⟨m, hm⟩ := (mem_Pr ℓ).mp hx
   exact (mem_Pr ℓ).mpr ⟨m, by rw [← map_nsmul, hm, map_zero]⟩
 
-private lemma  map_mem_Hs
-  {A : Type*}
-  [AddCommGroup A]
-  (ℓ : ℕ)
-  [hℓ : Fact ℓ.Prime]
-  (σ : A →+ A) {n₀ : ℕ} {x : A} (hx : x ∈ Hs (A := A) ℓ n₀) :
+theorem map_mem_Hs (σ : A →+ A) {n₀ : ℕ} {x : A} (hx : x ∈ Hs (A := A) ℓ n₀) :
     σ x ∈ Hs (A := A) ℓ n₀ := by
   obtain ⟨y, hy, rfl⟩ := (mem_Hs ℓ).mp hx
   exact (mem_Hs ℓ).mpr ⟨σ y, map_mem_Pr ℓ σ hy, by rw [map_nsmul]⟩
 
-@[simp] theorem coe_res
-  {A : Type*}
-  [AddCommGroup A]
-  (ℓ : ℕ)
-  [hℓ : Fact ℓ.Prime]
-  (n₀ : ℕ) (σ : AddMonoid.End A) (x : Hs (A := A) ℓ n₀) :
+def res (n₀ : ℕ) (σ : AddMonoid.End A) : AddMonoid.End (Hs (A := A) ℓ n₀) :=
+  ((σ : A →+ A).comp (Hs (A := A) ℓ n₀).subtype).codRestrict _ (fun x => map_mem_Hs ℓ σ x.2)
+
+@[scoped simp] theorem coe_res (n₀ : ℕ) (σ : AddMonoid.End A) (x : Hs (A := A) ℓ n₀) :
     ((res ℓ n₀ σ x : Hs (A := A) ℓ n₀) : A) = σ x := rfl
 
-private lemma  res_one
-  {A : Type*}
-  [AddCommGroup A]
-  (ℓ : ℕ)
-  [hℓ : Fact ℓ.Prime]
-  (n₀ : ℕ) : res (A := A) ℓ n₀ 1 = 1 := by
+theorem res_one (n₀ : ℕ) : res (A := A) ℓ n₀ 1 = 1 := by
   apply AddMonoidHom.ext
   intro x
   apply Subtype.ext
   rfl
 
-private lemma  res_mul
-    {A : Type*}
-    [AddCommGroup A]
-    (ℓ : ℕ)
-    [hℓ : Fact ℓ.Prime]
-    (n₀ : ℕ) (σ σ' : AddMonoid.End A) :
+theorem res_mul (n₀ : ℕ) (σ σ' : AddMonoid.End A) :
     res (A := A) ℓ n₀ (σ * σ') = res ℓ n₀ σ * res ℓ n₀ σ' := by
   apply AddMonoidHom.ext
   intro x
   apply Subtype.ext
   rfl
 
-private lemma  res_pow
-    {A : Type*}
-    [AddCommGroup A]
-    (ℓ : ℕ)
-    [hℓ : Fact ℓ.Prime]
-    (n₀ : ℕ) (σ : AddMonoid.End A) (j : ℕ) :
+theorem res_pow (n₀ : ℕ) (σ : AddMonoid.End A) (j : ℕ) :
     res (A := A) ℓ n₀ (σ ^ j) = res ℓ n₀ σ ^ j := by
   induction j with
   | zero => rw [pow_zero, pow_zero, res_one]
   | succ j ih => rw [pow_succ, pow_succ, res_mul, ih]
 
-private lemma  coe_res_pow
-  {A : Type*}
-  [AddCommGroup A]
-  (ℓ : ℕ)
-  [hℓ : Fact ℓ.Prime]
-  (n₀ : ℕ) (σ : AddMonoid.End A) (j : ℕ) (x : Hs (A := A) ℓ n₀) :
+theorem coe_res_pow (n₀ : ℕ) (σ : AddMonoid.End A) (j : ℕ) (x : Hs (A := A) ℓ n₀) :
     (((res ℓ n₀ σ ^ j) x : Hs (A := A) ℓ n₀) : A) = (σ ^ j) x := by
   rw [← res_pow, coe_res]
 
-private lemma  Hs_props
-  {A : Type*}
-  [AddCommGroup A]
-  (ℓ : ℕ)
-  [hℓ : Fact ℓ.Prime]
-  [Finite (tor A ℓ)]
-  {n₀ : ℕ} (hn₀ : ∀ n, n₀ ≤ n → I (A := A) ℓ n = I ℓ n₀) :
+variable [Finite (tor A ℓ)]
+
+theorem Hs_props {n₀ : ℕ} (hn₀ : ∀ n, n₀ ≤ n → I (A := A) ℓ n = I ℓ n₀) :
 
     (∀ x ∈ Hs (A := A) ℓ n₀, ∃ y ∈ Hs (A := A) ℓ n₀, ℓ • y = x) ∧
 
@@ -665,13 +501,7 @@ private lemma  Hs_props
   obtain ⟨m, hm⟩ := (mem_Pr ℓ).mp (Hs_le_Pr ℓ n₀ hx)
   exact key m x hx hm
 
-private lemma  finite_quotient
-  {A : Type*}
-  [AddCommGroup A]
-  (ℓ : ℕ)
-  [hℓ : Fact ℓ.Prime]
-  [Finite (tor A ℓ)]
-  {n₀ : ℕ} (hn₀ : ∀ n, n₀ ≤ n → I (A := A) ℓ n = I ℓ n₀) :
+theorem finite_quotient {n₀ : ℕ} (hn₀ : ∀ n, n₀ ≤ n → I (A := A) ℓ n = I ℓ n₀) :
     Finite (Pr (A := A) ℓ ⧸ (Hs (A := A) ℓ n₀).addSubgroupOf (Pr (A := A) ℓ)) := by
   set Q := Pr (A := A) ℓ ⧸ (Hs (A := A) ℓ n₀).addSubgroupOf (Pr (A := A) ℓ) with hQ
   obtain ⟨H2, -⟩ := Hs_props ℓ hn₀
@@ -684,13 +514,13 @@ private lemma  finite_quotient
       exact (mem_Hs ℓ).mpr ⟨p, p.2, rfl⟩
 
   set L : AddSubgroup (Pr (A := A) ℓ) := (tor A ℓ).addSubgroupOf (Pr (A := A) ℓ) with hL
-  haveI : Finite L := Finite.of_injective (fun x : L => (⟨x.1.1, x.2⟩ : tor A ℓ)) (by
+  have : Finite L := Finite.of_injective (fun x : L => (⟨x.1.1, x.2⟩ : tor A ℓ)) (by
     intro x y hxy
     apply Subtype.ext
     apply Subtype.ext
     exact congrArg (fun z : tor A ℓ => (z : A)) hxy)
   set L' : AddSubgroup Q := L.map (QuotientAddGroup.mk' _) with hL'
-  haveI : Finite L' := Finite.of_surjective (fun x : L => (⟨QuotientAddGroup.mk' _ x.1,
+  have : Finite L' := Finite.of_surjective (fun x : L => (⟨QuotientAddGroup.mk' _ x.1,
       mem_map_of_mem _ x.2⟩ : L')) (by
     rintro ⟨y, x, hx, rfl⟩
     exact ⟨⟨x, hx⟩, rfl⟩)
@@ -714,8 +544,8 @@ private lemma  finite_quotient
       refine ⟨p - ⟨h, hhP⟩, hmem, ?_⟩
       rw [map_sub, hcls, sub_zero]
       rfl
-  haveI : Finite (tor Q ℓ) := finite_of_le htor
-  haveI : Finite (T (A := Q) ℓ n₀) := finite_T ℓ n₀
+  have : Finite (tor Q ℓ) := finite_of_le htor
+  have : Finite (T (A := Q) ℓ n₀) := finite_T ℓ n₀
   have htop : T (A := Q) ℓ n₀ = ⊤ := by
     ext q
     simp only [mem_top, iff_true]
@@ -723,17 +553,21 @@ private lemma  finite_quotient
   rw [htop] at this
   exact Finite.of_equiv _ (AddSubgroup.topEquiv : (⊤ : AddSubgroup Q) ≃+ Q).toEquiv
 
+end Assembly
+p2m_reactivate "P2mTorsionGrowth"
 
+end P2mTorsionGrowth
+p2m_reactivate "P2mTorsionGrowth"
 
+namespace P2mTorsionGrowth
 
 open AddSubgroup Function
 
-private lemma  main
-    {A : Type*}
-    [AddCommGroup A]
-    (ℓ : ℕ)
-    [hℓ : Fact ℓ.Prime]
-    [Finite (tor A ℓ)] (r : ℕ) (τ : A →+ A)
+section Main
+
+variable {A : Type*} [AddCommGroup A] (ℓ : ℕ) [hℓ : Fact ℓ.Prime]
+
+theorem mainAux [Finite (tor A ℓ)] (r : ℕ) (τ : A →+ A)
     (hle : Nat.card (tor A ℓ) ≤ ℓ ^ r)
     (hτ : ∀ x : A, ℓ ^ 2 • x = 0 → τ x = x)
     (c k₀ : ℕ) (hfix : ∀ k : ℕ,
@@ -747,7 +581,7 @@ private lemma  main
       intro j
       apply le_antisymm ((card_I_le ℓ j).trans hle)
       rcases le_total j n₀ with h | h
-      · haveI := finite_I (A := A) ℓ j
+      · have := finite_I (A := A) ℓ j
         exact hsuff.trans (card_le_of_le (I_antitone ℓ h))
       · rw [hn₀ j h]; exact hsuff
     induction n with
@@ -755,8 +589,8 @@ private lemma  main
     | succ n ih => rw [card_T_succ, hI, ih, ← pow_add]; congr 1; ring
 
   obtain ⟨H2, H3⟩ := Hs_props ℓ hn₀
-  haveI hQfin := finite_quotient ℓ hn₀
-  haveI : Finite (I (A := A) ℓ n₀) := finite_I ℓ n₀
+  have hQfin := finite_quotient ℓ hn₀
+  have : Finite (I (A := A) ℓ n₀) := finite_I ℓ n₀
   have hprimH : ∀ x : Hs (A := A) ℓ n₀, ∃ m : ℕ, ℓ ^ m • x = 0 := by
     intro x
     obtain ⟨m, hm⟩ := (mem_Pr ℓ).mp (Hs_le_Pr ℓ n₀ x.2)
@@ -779,7 +613,7 @@ private lemma  main
           rw [AddSubgroup.coe_nsmul, AddSubgroup.coe_zero]; exact mem_tor.mp hy.2))⟩
       left_inv := fun x => by ext; rfl
       right_inv := fun y => by ext; rfl }
-  haveI : Finite (tor (Hs (A := A) ℓ n₀) ℓ) := Finite.of_equiv _ EH.symm
+  have : Finite (tor (Hs (A := A) ℓ n₀) ℓ) := Finite.of_equiv _ EH.symm
   have hcardH : Nat.card (tor (Hs (A := A) ℓ n₀) ℓ) = Nat.card (I (A := A) ℓ n₀) :=
     Nat.card_congr EH
 
@@ -797,10 +631,10 @@ private lemma  main
     have := congrArg Subtype.val hx
     rwa [AddSubgroup.coe_nsmul, AddSubgroup.coe_zero] at this
 
-  haveI hfin0 : Finite (eker (θ - 1)) := by
+  have hfin0 : Finite (eker (θ - 1)) := by
     have hcard := hfix 0
     rw [add_zero] at hcard
-    haveI : Finite {x : A // x ∈ AddCommGroup.primaryComponent A ℓ ∧ (⇑τ)^[ℓ ^ k₀] x = x} := by
+    have : Finite {x : A // x ∈ AddCommGroup.primaryComponent A ℓ ∧ (⇑τ)^[ℓ ^ k₀] x = x} := by
       apply Nat.finite_of_card_ne_zero
       rw [hcard]
       exact pow_ne_zero _ hℓ.out.ne_zero
@@ -857,7 +691,7 @@ private lemma  main
       (QuotientAddGroup.mk' _).comp (AddSubgroup.inclusion hFle)
 
     obtain ⟨hfk, hck⟩ := card_fix_pow_le ℓ hprimH hdivH θ hθ k
-    haveI := hfk
+    have := hfk
     have hkerψ : ∀ x : ψ.ker, ((x.1 : F) : A) ∈ Hs (A := A) ℓ n₀ := by
       intro x
       have hx := x.2
@@ -878,7 +712,7 @@ private lemma  main
       apply Subtype.ext
       apply Subtype.ext
       exact congrArg (fun z : eker (θ ^ ℓ ^ k - 1) => ((z : Hs (A := A) ℓ n₀) : A)) hxy
-    haveI : Finite ψ.ker := Finite.of_injective ι hι
+    have : Finite ψ.ker := Finite.of_injective ι hι
     rw [card_eq_card_range_mul_card_ker ψ]
     calc Nat.card ψ.range * Nat.card ψ.ker
         ≤ Nat.card (Pr (A := A) ℓ ⧸ (Hs (A := A) ℓ n₀).addSubgroupOf (Pr (A := A) ℓ)) *
@@ -892,32 +726,34 @@ private lemma  main
 
   exact le_of_forall_mul_pow_le (pow_pos hℓ.out.pos _) hineq
 
+end Main
+p2m_reactivate "P2mTorsionGrowth"
 
+end P2mTorsionGrowth
+p2m_reactivate "P2mTorsionGrowth"
 
 open P2mTorsionGrowth in
+/--
+[AddCommGroup_natCard_torsionBy_pow_eq_pow_of_natCard_fixed_primaryComponent](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AddCommGroup_natCard_torsionBy_pow_eq_pow_of_natCard_fixed_primaryComponent.lean)
+-/
 @[path]
 private lemma main
-  [AddCommGroup A]
-  {ℓ : ℕ} [Fact ℓ.Prime]
-  {r : ℕ}
-  {τ : A →+ A}
-  {n : ℕ}
--- given
-  (hfin : Finite (Submodule.torsionBy ℤ A (ℓ : ℤ)))
-  (hle : Nat.card (Submodule.torsionBy ℤ A (ℓ : ℤ)) ≤ ℓ ^ r)
-  (hτ : ∀ x : A, ℓ ^ 2 • x = 0 → τ x = x)
-  (hfix : ∃ c k₀ : ℕ, ∀ k : ℕ, Nat.card {x : A // x ∈ AddCommGroup.primaryComponent A ℓ ∧ (⇑τ)^[ℓ ^ (k₀ + k)] x = x} = ℓ ^ (r * k + c)) :
--- imply
-  Nat.card (Submodule.torsionBy ℤ A ((ℓ ^ n : ℕ) : ℤ)) = ℓ ^ (r * n) := by
--- proof
+    {A : Type*} [AddCommGroup A] (ℓ : ℕ) [Fact ℓ.Prime] (r : ℕ) (τ : A →+ A)
+    (hfin : Finite (Submodule.torsionBy ℤ A (ℓ : ℤ)))
+    (hle : Nat.card (Submodule.torsionBy ℤ A (ℓ : ℤ)) ≤ ℓ ^ r)
+    (hτ : ∀ x : A, ℓ ^ 2 • x = 0 → τ x = x)
+    (hfix : ∃ c k₀ : ℕ, ∀ k : ℕ,
+      Nat.card {x : A // x ∈ AddCommGroup.primaryComponent A ℓ ∧ (⇑τ)^[ℓ ^ (k₀ + k)] x = x} =
+        ℓ ^ (r * k + c))
+    (n : ℕ) :
+    Nat.card (Submodule.torsionBy ℤ A ((ℓ ^ n : ℕ) : ℤ)) = ℓ ^ (r * n) := by
   obtain ⟨c, k₀, hfix⟩ := hfix
-    have e1 : ∀ m : ℕ, Submodule.torsionBy ℤ A (m : ℤ) ≃ tor A m := fun m =>
-      Equiv.subtypeEquivRight (fun x => by
-        rw [Submodule.mem_torsionBy_iff, mem_tor, natCast_zsmul])
-    have : Finite (tor A ℓ) := Finite.of_equiv _ (e1 ℓ)
-    have hle' : Nat.card (tor A ℓ) ≤ ℓ ^ r := by rwa [← Nat.card_congr (e1 ℓ)]
-    rw [Nat.card_congr (e1 (ℓ ^ n))]
-    exact main ℓ r τ hle' hτ c k₀ hfix n
-
+  have e1 : ∀ m : ℕ, Submodule.torsionBy ℤ A (m : ℤ) ≃ tor A m := fun m =>
+    Equiv.subtypeEquivRight (fun x => by
+      rw [Submodule.mem_torsionBy_iff, mem_tor, natCast_zsmul])
+  have : Finite (tor A ℓ) := Finite.of_equiv _ (e1 ℓ)
+  have hle' : Nat.card (tor A ℓ) ≤ ℓ ^ r := by rwa [← Nat.card_congr (e1 ℓ)]
+  rw [Nat.card_congr (e1 (ℓ ^ n))]
+  exact P2mTorsionGrowth.mainAux ℓ r τ hle' hτ c k₀ hfix n
 
 -- created on 2026-10-09

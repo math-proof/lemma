@@ -1,16 +1,80 @@
 import Mathlib
 import sympy.Basic
+set_option autoImplicit false
+
+namespace P2mEndDisc
 
 open MvPolynomial Module
 
-/--
-[AddCommGroup_exists_fg_saturation_of_isHomogeneous_degree](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AddCommGroup_exists_fg_saturation_of_isHomogeneous_degree.lean)
--/
+theorem eval_smul_of_isHomogeneous {σ : Type*} [Fintype σ] {P : MvPolynomial σ ℚ} {D : ℕ}
+    (hP : P.IsHomogeneous D) (k : ℚ) (v : σ → ℚ) :
+    eval (k • v) P = k ^ D * eval v P := by
+  classical
+  rw [MvPolynomial.eval_eq', MvPolynomial.eval_eq', Finset.mul_sum]
+  refine Finset.sum_congr rfl fun d hd => ?_
+  have hdeg : ∑ i, d i = D := by
+    rw [← Finsupp.degree_eq_sum, Finsupp.degree_apply]
+    exact (hP.degree_eq_sum_deg_support hd).symm
+  simp only [Pi.smul_apply, smul_eq_mul, mul_pow, Finset.prod_mul_distrib,
+    Finset.prod_pow_eq_pow_sum, hdeg]
+  ring
 
-def sat
-  {R : Type*}
-  [AddCommGroup R]
-  (M : AddSubgroup R) : AddSubgroup R where
+theorem eval_zero_of_isHomogeneous {σ : Type*} [Fintype σ] {P : MvPolynomial σ ℚ} {D : ℕ}
+    (hP : P.IsHomogeneous D) (hD : D ≠ 0) : eval (0 : σ → ℚ) P = 0 := by
+  have h := eval_smul_of_isHomogeneous hP 0 0
+  rw [zero_smul, zero_pow hD, zero_mul] at h
+  exact h
+
+section Setting
+
+variable {R : Type*} [AddCommGroup R] (deg : R → ℤ) (D : ℕ)
+  (hpoly : ∀ (m : ℕ) (α : Fin m → R), ∃ P : MvPolynomial (Fin m) ℚ, P.IsHomogeneous D ∧
+    ∀ n : Fin m → ℤ, (deg (∑ i, n i • α i) : ℚ) = MvPolynomial.eval (fun i => (n i : ℚ)) P)
+
+include hpoly in
+
+theorem deg_smul (x : R) (k : ℤ) : (deg (k • x) : ℚ) = (k : ℚ) ^ D * deg x := by
+  obtain ⟨P, hP, hev⟩ := hpoly 1 (fun _ => x)
+  have h1 := hev (fun _ => k)
+  have h2 := hev (fun _ => 1)
+  simp only [Fin.sum_univ_one, one_smul] at h1 h2
+  rw [h1, h2]
+  have : (fun _ : Fin 1 => ((k : ℤ) : ℚ)) = (k : ℚ) • (fun _ : Fin 1 => ((1 : ℤ) : ℚ)) := by
+    funext i; simp
+  rw [this, eval_smul_of_isHomogeneous hP]
+
+include hpoly in
+theorem deg_zero (hD : D ≠ 0) : deg 0 = 0 := by
+  have h := deg_smul deg D hpoly (0 : R) 0
+  rw [zero_smul, Int.cast_zero, zero_pow hD, zero_mul] at h
+  exact_mod_cast h
+
+include hpoly in
+
+theorem isAddTorsionFree (hD : D ≠ 0) (hsep : ∀ x : R, x ≠ 0 → deg x ≠ 0) :
+    IsAddTorsionFree R := by
+  refine ⟨fun n hn x y hxy => ?_⟩
+  simp only at hxy
+  have h0 : (n : ℤ) • (x - y) = 0 := by
+    rw [natCast_zsmul, smul_sub, hxy, sub_self]
+  by_contra hne
+  have hne' : x - y ≠ 0 := sub_ne_zero.mpr hne
+  have h1 := deg_smul deg D hpoly (x - y) n
+  rw [h0, deg_zero deg D hpoly hD, Int.cast_zero] at h1
+  have h2 : ((n : ℤ) : ℚ) ^ D ≠ 0 := pow_ne_zero _ (by exact_mod_cast hn)
+  have h3 : (deg (x - y) : ℚ) = 0 := by
+    rcases mul_eq_zero.mp h1.symm with h | h
+    · exact absurd h h2
+    · exact h
+  exact hsep _ hne' (by exact_mod_cast h3)
+
+end Setting
+
+section Saturation
+
+variable {R : Type*} [AddCommGroup R]
+
+def sat (M : AddSubgroup R) : AddSubgroup R where
   carrier := {x | ∃ k : ℤ, k ≠ 0 ∧ k • x ∈ M}
   zero_mem' := ⟨1, one_ne_zero, by simp⟩
   add_mem' := by
@@ -22,30 +86,67 @@ def sat
     rintro x ⟨k, hk, hkx⟩
     exact ⟨k, hk, by rw [smul_neg]; exact M.neg_mem hkx⟩
 
-noncomputable def icoord
-  {R : Type*}
-  [AddCommGroup R]
-  {M : AddSubgroup R}
-  {r : ℕ}
-  (b : Basis (Fin r) ℤ M)
-  (y : M) : Fin r → ℚ := fun i => ((b.repr y) i : ℚ)
+theorem mem_sat {M : AddSubgroup R} {x : R} : x ∈ sat M ↔ ∃ k : ℤ, k ≠ 0 ∧ k • x ∈ M :=
+  Iff.rfl
 
-noncomputable def coord
-  {R : Type*}
-  [AddCommGroup R]
-  {M : AddSubgroup R}
-  {r : ℕ}
-  (b : Basis (Fin r) ℤ M)
-  (x : sat M) : Fin r → ℚ :=
+theorem le_sat (M : AddSubgroup R) : M ≤ sat M := fun x hx => ⟨1, one_ne_zero, by simpa using hx⟩
+
+end Saturation
+
+section Coordinates
+
+variable {R : Type*} [AddCommGroup R]
+variable {M : AddSubgroup R} {r : ℕ} (b : Basis (Fin r) ℤ M)
+
+noncomputable def icoord (y : M) : Fin r → ℚ := fun i => ((b.repr y) i : ℚ)
+
+theorem icoord_add (y z : M) : icoord b (y + z) = icoord b y + icoord b z := by
+  funext i; simp [icoord]
+
+theorem icoord_zsmul (k : ℤ) (y : M) : icoord b (k • y) = (k : ℚ) • icoord b y := by
+  funext i; simp [icoord]
+
+theorem icoord_eq_zero_iff (y : M) : icoord b y = 0 ↔ y = 0 := by
+  constructor
+  · intro h
+    have : b.repr y = 0 := by
+      ext i
+      have := congrFun h i
+      simp only [icoord, Pi.zero_apply, Int.cast_eq_zero] at this
+      simpa using this
+    simpa using this
+  · rintro rfl; funext i; simp [icoord]
+
+noncomputable def coord (x : sat M) : Fin r → ℚ :=
   ((x.2.choose : ℤ) : ℚ)⁻¹ • icoord b ⟨x.2.choose • (x : R), x.2.choose_spec.2⟩
 
-noncomputable def coordHom
-  {R : Type*}
-  [AddCommGroup R]
-  {M : AddSubgroup R}
-  {r : ℕ}
-  (b : Basis (Fin r) ℤ M)
-  : sat M →+ (Fin r → ℚ) where
+private theorem smul_mk_eq (k k' : ℤ) (x : R) (hk : k • x ∈ M) (hk' : k' • x ∈ M) :
+    k' • (⟨k • x, hk⟩ : M) = k • (⟨k' • x, hk'⟩ : M) := by
+  apply Subtype.ext
+  change k' • (k • x) = k • (k' • x)
+  rw [smul_comm]
+
+theorem coord_eq (x : sat M) (k : ℤ) (hk : k ≠ 0) (hkx : k • (x : R) ∈ M) :
+    coord b x = ((k : ℤ) : ℚ)⁻¹ • icoord b ⟨k • (x : R), hkx⟩ := by
+  set k₀ : ℤ := x.2.choose with hk₀def
+  have hk₀ : k₀ ≠ 0 := x.2.choose_spec.1
+  have hk₀x : k₀ • (x : R) ∈ M := x.2.choose_spec.2
+  change ((k₀ : ℤ) : ℚ)⁻¹ • icoord b ⟨k₀ • (x : R), hk₀x⟩ = _
+  have key : (k : ℚ) • icoord b ⟨k₀ • (x : R), hk₀x⟩ = (k₀ : ℚ) • icoord b ⟨k • (x : R), hkx⟩ := by
+    rw [← icoord_zsmul, ← icoord_zsmul, smul_mk_eq]
+  have hkq : (k : ℚ) ≠ 0 := by exact_mod_cast hk
+  have hk₀q : (k₀ : ℚ) ≠ 0 := by exact_mod_cast hk₀
+  rw [inv_smul_eq_iff₀ hk₀q, smul_comm, ← key, smul_smul, inv_mul_cancel₀ hkq, one_smul]
+
+theorem coord_of_mem (x : sat M) (hx : (x : R) ∈ M) : coord b x = icoord b ⟨x, hx⟩ := by
+  rw [coord_eq b x 1 one_ne_zero (by simpa using hx)]
+  simp
+
+theorem coord_smul_eq (x : sat M) (k : ℤ) (hk : k ≠ 0) (hkx : k • (x : R) ∈ M) :
+    (k : ℚ) • coord b x = icoord b ⟨k • (x : R), hkx⟩ := by
+  rw [coord_eq b x k hk hkx, smul_smul, mul_inv_cancel₀ (by exact_mod_cast hk), one_smul]
+
+noncomputable def coordHom : sat M →+ (Fin r → ℚ) where
   toFun := coord b
   map_zero' := by
     rw [coord_of_mem b 0 (by simp)]
@@ -67,200 +168,9 @@ noncomputable def coordHom
     apply Subtype.ext
     simp [smul_add]
 
-def castVec
-  {r : ℕ}
-  : (Fin r → ℚ) →+ (Fin r → ℝ) where
-  toFun v i := (v i : ℝ)
-  map_zero' := by funext i; simp
-  map_add' a c := by funext i; simp
+theorem coordHom_apply (x : sat M) : coordHom b x = coord b x := rfl
 
-private lemma  eval_smul_of_isHomogeneous {σ : Type*} [Fintype σ] {P : MvPolynomial σ ℚ} {D : ℕ}
-    (hP : P.IsHomogeneous D) (k : ℚ) (v : σ → ℚ) :
-    eval (k • v) P = k ^ D * eval v P := by
-  classical
-  rw [MvPolynomial.eval_eq', MvPolynomial.eval_eq', Finset.mul_sum]
-  refine Finset.sum_congr rfl fun d hd => ?_
-  have hdeg : ∑ i, d i = D := by
-    rw [← Finsupp.degree_eq_sum, Finsupp.degree_apply]
-    exact (hP.degree_eq_sum_deg_support hd).symm
-  simp only [Pi.smul_apply, smul_eq_mul, mul_pow, Finset.prod_mul_distrib,
-    Finset.prod_pow_eq_pow_sum, hdeg]
-  ring
-
-private lemma  eval_zero_of_isHomogeneous {σ : Type*} [Fintype σ] {P : MvPolynomial σ ℚ} {D : ℕ}
-    (hP : P.IsHomogeneous D) (hD : D ≠ 0) : eval (0 : σ → ℚ) P = 0 := by
-  have h := eval_smul_of_isHomogeneous hP 0 0
-  rw [zero_smul, zero_pow hD, zero_mul] at h
-  exact h
-
-
-(hpoly : ∀ (m : ℕ) (α : Fin m → R), ∃ P : MvPolynomial (Fin m) ℚ, P.IsHomogeneous D ∧
-  ∀ n : Fin m → ℤ, (deg (∑ i, n i • α i) : ℚ) = MvPolynomial.eval (fun i => (n i : ℚ)) P)
-
-include hpoly in
-
-private lemma  deg_smul
-{R : Type*}
-[AddCommGroup R]
-(deg : R → ℤ)
-(D : ℕ)
-(x : R) (k : ℤ) : (deg (k • x) : ℚ) = (k : ℚ) ^ D * deg x := by
-obtain ⟨P, hP, hev⟩ := hpoly 1 (fun _ => x)
-have h1 := hev (fun _ => k)
-have h2 := hev (fun _ => 1)
-simp only [Fin.sum_univ_one, one_smul] at h1 h2
-rw [h1, h2]
-have : (fun _ : Fin 1 => ((k : ℤ) : ℚ)) = (k : ℚ) • (fun _ : Fin 1 => ((1 : ℤ) : ℚ)) := by
-  funext i; simp
-rw [this, eval_smul_of_isHomogeneous hP]
-
-include hpoly in
-
-private lemma  deg_zero
-{R : Type*}
-[AddCommGroup R]
-(deg : R → ℤ)
-(D : ℕ)
-(hD : D ≠ 0) : deg 0 = 0 := by
-have h := deg_smul deg D hpoly (0 : R) 0
-rw [zero_smul, Int.cast_zero, zero_pow hD, zero_mul] at h
-exact_mod_cast h
-
-include hpoly in
-
-private lemma  isAddTorsionFree
-  {R : Type*}
-  [AddCommGroup R]
-  (deg : R → ℤ)
-  (D : ℕ)
-  (hD : D ≠ 0) (hsep : ∀ x : R, x ≠ 0 → deg x ≠ 0) :
-  IsAddTorsionFree R := by
-refine ⟨fun n hn x y hxy => ?_⟩
-simp only at hxy
-have h0 : (n : ℤ) • (x - y) = 0 := by
-  rw [natCast_zsmul, smul_sub, hxy, sub_self]
-by_contra hne
-have hne' : x - y ≠ 0 := sub_ne_zero.mpr hne
-have h1 := deg_smul deg D hpoly (x - y) n
-rw [h0, deg_zero deg D hpoly hD, Int.cast_zero] at h1
-have h2 : ((n : ℤ) : ℚ) ^ D ≠ 0 := pow_ne_zero _ (by exact_mod_cast hn)
-have h3 : (deg (x - y) : ℚ) = 0 := by
-  rcases mul_eq_zero.mp h1.symm with h | h
-  · exact absurd h h2
-  · exact h
-exact hsep _ hne' (by exact_mod_cast h3)
-
-private lemma  mem_sat
-  {R : Type*}
-  [AddCommGroup R]
-  {M : AddSubgroup R} {x : R} : x ∈ sat M ↔ ∃ k : ℤ, k ≠ 0 ∧ k • x ∈ M :=
-  Iff.rfl
-
-private lemma  le_sat
-  {R : Type*}
-  [AddCommGroup R]
-  (M : AddSubgroup R) : M ≤ sat M := fun x hx => ⟨1, one_ne_zero, by simpa using hx⟩
-
-private lemma  icoord_add
-  {R : Type*}
-  [AddCommGroup R]
-  {M : AddSubgroup R}
-  {r : ℕ}
-  (b : Basis (Fin r) ℤ M)
-  (y z : M) : icoord b (y + z) = icoord b y + icoord b z := by
-  funext i; simp [icoord]
-
-private lemma  icoord_zsmul
-  {R : Type*}
-  [AddCommGroup R]
-  {M : AddSubgroup R}
-  {r : ℕ}
-  (b : Basis (Fin r) ℤ M)
-  (k : ℤ) (y : M) : icoord b (k • y) = (k : ℚ) • icoord b y := by
-  funext i; simp [icoord]
-
-private lemma  icoord_eq_zero_iff
-  {R : Type*}
-  [AddCommGroup R]
-  {M : AddSubgroup R}
-  {r : ℕ}
-  (b : Basis (Fin r) ℤ M)
-  (y : M) : icoord b y = 0 ↔ y = 0 := by
-  constructor
-  · intro h
-    have : b.repr y = 0 := by
-      ext i
-      have := congrFun h i
-      simp only [icoord, Pi.zero_apply, Int.cast_eq_zero] at this
-      simpa using this
-    simpa using this
-  · rintro rfl; funext i; simp [icoord]
-
-private theorem smul_mk_eq
-    {R : Type*}
-    [AddCommGroup R]
-    {M : AddSubgroup R}
-    {r : ℕ}
-    (b : Basis (Fin r) ℤ M)
-    (k k' : ℤ) (x : R) (hk : k • x ∈ M) (hk' : k' • x ∈ M) :
-    k' • (⟨k • x, hk⟩ : M) = k • (⟨k' • x, hk'⟩ : M) := by
-  apply Subtype.ext
-  change k' • (k • x) = k • (k' • x)
-  rw [smul_comm]
-
-private lemma  coord_eq
-    {R : Type*}
-    [AddCommGroup R]
-    {M : AddSubgroup R}
-    {r : ℕ}
-    (b : Basis (Fin r) ℤ M)
-    (x : sat M) (k : ℤ) (hk : k ≠ 0) (hkx : k • (x : R) ∈ M) :
-    coord b x = ((k : ℤ) : ℚ)⁻¹ • icoord b ⟨k • (x : R), hkx⟩ := by
-  set k₀ : ℤ := x.2.choose with hk₀def
-  have hk₀ : k₀ ≠ 0 := x.2.choose_spec.1
-  have hk₀x : k₀ • (x : R) ∈ M := x.2.choose_spec.2
-  change ((k₀ : ℤ) : ℚ)⁻¹ • icoord b ⟨k₀ • (x : R), hk₀x⟩ = _
-  have key : (k : ℚ) • icoord b ⟨k₀ • (x : R), hk₀x⟩ = (k₀ : ℚ) • icoord b ⟨k • (x : R), hkx⟩ := by
-    rw [← icoord_zsmul, ← icoord_zsmul, smul_mk_eq]
-  have hkq : (k : ℚ) ≠ 0 := by exact_mod_cast hk
-  have hk₀q : (k₀ : ℚ) ≠ 0 := by exact_mod_cast hk₀
-  rw [inv_smul_eq_iff₀ hk₀q, smul_comm, ← key, smul_smul, inv_mul_cancel₀ hkq, one_smul]
-
-private lemma  coord_of_mem
-  {R : Type*}
-  [AddCommGroup R]
-  {M : AddSubgroup R}
-  {r : ℕ}
-  (b : Basis (Fin r) ℤ M)
-  (x : sat M) (hx : (x : R) ∈ M) : coord b x = icoord b ⟨x, hx⟩ := by
-  rw [coord_eq b x 1 one_ne_zero (by simpa using hx)]
-  simp
-
-private lemma  coord_smul_eq
-    {R : Type*}
-    [AddCommGroup R]
-    {M : AddSubgroup R}
-    {r : ℕ}
-    (b : Basis (Fin r) ℤ M)
-    (x : sat M) (k : ℤ) (hk : k ≠ 0) (hkx : k • (x : R) ∈ M) :
-    (k : ℚ) • coord b x = icoord b ⟨k • (x : R), hkx⟩ := by
-  rw [coord_eq b x k hk hkx, smul_smul, mul_inv_cancel₀ (by exact_mod_cast hk), one_smul]
-
-private lemma  coordHom_apply
-  {R : Type*}
-  [AddCommGroup R]
-  {M : AddSubgroup R}
-  {r : ℕ}
-  (b : Basis (Fin r) ℤ M)
-  (x : sat M) : coordHom b x = coord b x := rfl
-
-private lemma  coordHom_injective
-  {R : Type*}
-  [AddCommGroup R]
-  {M : AddSubgroup R}
-  {r : ℕ}
-  (b : Basis (Fin r) ℤ M)
-  [IsAddTorsionFree R] : Function.Injective (coordHom b) := by
+theorem coordHom_injective [IsAddTorsionFree R] : Function.Injective (coordHom b) := by
   intro x y hxy
   have h : coordHom b (x - y) = 0 := by rw [map_sub, hxy, sub_self]
   obtain ⟨k, hk, hkz⟩ := (x - y).2
@@ -273,51 +183,43 @@ private lemma  coordHom_injective
   have h6 : x - y = 0 := Subtype.ext h5
   exact sub_eq_zero.mp h6
 
+end Coordinates
 
+section DegreeFormula
 
-(hpoly : ∀ (m : ℕ) (α : Fin m → R), ∃ P : MvPolynomial (Fin m) ℚ, P.IsHomogeneous D ∧
-  ∀ n : Fin m → ℤ, (deg (∑ i, n i • α i) : ℚ) = MvPolynomial.eval (fun i => (n i : ℚ)) P)
+variable {R : Type*} [AddCommGroup R] (deg : R → ℤ) (D : ℕ)
+  (hpoly : ∀ (m : ℕ) (α : Fin m → R), ∃ P : MvPolynomial (Fin m) ℚ, P.IsHomogeneous D ∧
+    ∀ n : Fin m → ℤ, (deg (∑ i, n i • α i) : ℚ) = MvPolynomial.eval (fun i => (n i : ℚ)) P)
+variable {M : AddSubgroup R} {r : ℕ} (b : Basis (Fin r) ℤ M)
 
-private lemma  coe_eq_sum
-{R : Type*}
-[AddCommGroup R]
-(deg : R → ℤ)
-(D : ℕ)
-{M : AddSubgroup R}
-{r : ℕ}
-(b : Basis (Fin r) ℤ M)
-(y : M) : (y : R) = ∑ i, (b.repr y) i • ((b i : M) : R) := by
-conv_lhs => rw [← b.sum_repr y]
-rw [AddSubgroup.val_finsetSum]
-simp
+theorem coe_eq_sum (y : M) : (y : R) = ∑ i, (b.repr y) i • ((b i : M) : R) := by
+  conv_lhs => rw [← b.sum_repr y]
+  rw [AddSubgroup.val_finsetSum]
+  simp
 
 include hpoly in
 
-private lemma  deg_eq_eval
-  {R : Type*}
-  [AddCommGroup R]
-  (deg : R → ℤ)
-  (D : ℕ)
-  {M : AddSubgroup R}
-  {r : ℕ}
-  (b : Basis (Fin r) ℤ M)
-  (P : MvPolynomial (Fin r) ℚ) (hP : P.IsHomogeneous D)
-  (hev : ∀ n : Fin r → ℤ,
-    (deg (∑ i, n i • ((b i : M) : R)) : ℚ) = MvPolynomial.eval (fun i => (n i : ℚ)) P)
-  (x : sat M) : (deg (x : R) : ℚ) = MvPolynomial.eval (coord b x) P := by
-obtain ⟨k, hk, hkx⟩ := x.2
+theorem deg_eq_eval (P : MvPolynomial (Fin r) ℚ) (hP : P.IsHomogeneous D)
+    (hev : ∀ n : Fin r → ℤ,
+      (deg (∑ i, n i • ((b i : M) : R)) : ℚ) = MvPolynomial.eval (fun i => (n i : ℚ)) P)
+    (x : sat M) : (deg (x : R) : ℚ) = MvPolynomial.eval (coord b x) P := by
+  obtain ⟨k, hk, hkx⟩ := x.2
 
-have hsum : k • (x : R) = ∑ i, (b.repr ⟨k • (x : R), hkx⟩) i • ((b i : M) : R) :=
-  coe_eq_sum b ⟨k • (x : R), hkx⟩
-have h1 : (deg (k • (x : R)) : ℚ) = MvPolynomial.eval (icoord b ⟨k • (x : R), hkx⟩) P := by
-  have h := hev (fun i => (b.repr ⟨k • (x : R), hkx⟩) i)
-  rw [← hsum] at h
-  exact h
-rw [deg_smul deg D hpoly, ← coord_smul_eq b x k hk hkx, eval_smul_of_isHomogeneous hP] at h1
-have hkq : ((k : ℤ) : ℚ) ^ D ≠ 0 := pow_ne_zero _ (by exact_mod_cast hk)
-exact mul_left_cancel₀ hkq h1
+  have hsum : k • (x : R) = ∑ i, (b.repr ⟨k • (x : R), hkx⟩) i • ((b i : M) : R) :=
+    coe_eq_sum b ⟨k • (x : R), hkx⟩
+  have h1 : (deg (k • (x : R)) : ℚ) = MvPolynomial.eval (icoord b ⟨k • (x : R), hkx⟩) P := by
+    have h := hev (fun i => (b.repr ⟨k • (x : R), hkx⟩) i)
+    rw [← hsum] at h
+    exact h
+  rw [deg_smul deg D hpoly, ← coord_smul_eq b x k hk hkx, eval_smul_of_isHomogeneous hP] at h1
+  have hkq : ((k : ℤ) : ℚ) ^ D ≠ 0 := pow_ne_zero _ (by exact_mod_cast hk)
+  exact mul_left_cancel₀ hkq h1
 
-private lemma  discreteTopology_of_separator {E : Type*} [AddCommGroup E] [TopologicalSpace E]
+end DegreeFormula
+
+section Discrete
+
+theorem discreteTopology_of_separator {E : Type*} [AddCommGroup E] [TopologicalSpace E]
     [IsTopologicalAddGroup E] (L : AddSubgroup E) (P : E → ℝ)
     (hP : Continuous P) (hP0 : P 0 = 0) (hsep : ∀ s ∈ L, s ≠ 0 → 1 ≤ |P s|) :
     DiscreteTopology L := by
@@ -338,41 +240,45 @@ private lemma  discreteTopology_of_separator {E : Type*} [AddCommGroup E] [Topol
       exact one_pos
   exact hset ▸ hopenL
 
-private lemma  castVec_apply
-  {r : ℕ}
-  (v : Fin r → ℚ) (i : Fin r) : castVec v i = (v i : ℝ) := rfl
+variable {r : ℕ}
 
-private lemma  castVec_injective
-  {r : ℕ}
-  : Function.Injective (castVec (r := r)) := by
+def castVec : (Fin r → ℚ) →+ (Fin r → ℝ) where
+  toFun v i := (v i : ℝ)
+  map_zero' := by funext i; simp
+  map_add' a c := by funext i; simp
+
+theorem castVec_apply (v : Fin r → ℚ) (i : Fin r) : castVec v i = (v i : ℝ) := rfl
+
+theorem castVec_injective : Function.Injective (castVec (r := r)) := by
   intro a c h; funext i
   have := congrFun h i
   simp only [castVec_apply, Rat.cast_inj] at this
   exact this
 
-private lemma  eval_castVec
-    {r : ℕ}
-    (P : MvPolynomial (Fin r) ℚ) (v : Fin r → ℚ) :
+theorem eval_castVec (P : MvPolynomial (Fin r) ℚ) (v : Fin r → ℚ) :
     MvPolynomial.eval (castVec v) (MvPolynomial.map (Rat.castHom ℝ) P) =
       ((MvPolynomial.eval v P : ℚ) : ℝ) := by
   rw [MvPolynomial.eval_map, ← Rat.coe_castHom, MvPolynomial.eval₂_comp]
   rfl
 
-private lemma  main
-    {R : Type*}
-    [AddCommGroup R]
-    (deg : R → ℤ) (D : ℕ) (hD : D ≠ 0)
+end Discrete
+
+section Main
+
+variable {R : Type*} [AddCommGroup R]
+
+theorem mainAux (deg : R → ℤ) (D : ℕ) (hD : D ≠ 0)
     (hpoly : ∀ (m : ℕ) (α : Fin m → R), ∃ P : MvPolynomial (Fin m) ℚ, P.IsHomogeneous D ∧
       ∀ n : Fin m → ℤ, (deg (∑ i, n i • α i) : ℚ) = MvPolynomial.eval (fun i => (n i : ℚ)) P)
     (hsep : ∀ x : R, x ≠ 0 → deg x ≠ 0)
     (M : AddSubgroup R) (hM : M.FG) :
     ∃ M' : AddSubgroup R, M'.FG ∧ ∀ x : R, x ∈ M' ↔ ∃ k : ℤ, k ≠ 0 ∧ k • x ∈ M := by
-  haveI : IsAddTorsionFree R := isAddTorsionFree deg D hpoly hD hsep
+  have : IsAddTorsionFree R := isAddTorsionFree deg D hpoly hD hsep
   refine ⟨sat M, ?_, fun x => mem_sat⟩
 
-  haveI : Module.Finite ℤ M :=
+  have : Module.Finite ℤ M :=
     Module.Finite.iff_addGroup_fg.mpr ((AddGroup.fg_iff_addSubgroup_fg M).mpr hM)
-  haveI : Module.Free ℤ M := Module.free_of_finite_type_torsion_free'
+  have : Module.Free ℤ M := Module.free_of_finite_type_torsion_free'
   set r := finrank ℤ M
   let b : Basis (Fin r) ℤ M := Module.finBasis ℤ M
 
@@ -388,7 +294,7 @@ private lemma  main
     exact_mod_cast rfl
   let L : Submodule ℤ (Fin r → ℝ) := LinearMap.range cR.toIntLinearMap
 
-  haveI : DiscreteTopology L := by
+  have : DiscreteTopology L := by
     refine discreteTopology_of_separator L.toAddSubgroup
       (fun s => MvPolynomial.eval s (MvPolynomial.map (Rat.castHom ℝ) P))
       (MvPolynomial.continuous_eval _) ?_ ?_
@@ -411,27 +317,28 @@ private lemma  main
       have h2 : ((1 : ℤ) : ℝ) ≤ ((|deg (x : R)| : ℤ) : ℝ) := by exact_mod_cast h1
       simpa using h2
 
-  haveI : Module.Finite ℤ L := inferInstance
+  have : Module.Finite ℤ L := inferInstance
 
-  haveI : Module.Finite ℤ (sat M) :=
+  have : Module.Finite ℤ (sat M) :=
     Module.Finite.of_injective cR.toIntLinearMap.rangeRestrict
       (fun a c h => hcR_inj (congrArg Subtype.val h))
   exact (AddGroup.fg_iff_addSubgroup_fg _).mp (Module.Finite.iff_addGroup_fg.mp inferInstance)
+
+end Main
+
+end P2mEndDisc
+
+/--
+[AddCommGroup_exists_fg_saturation_of_isHomogeneous_degree](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AddCommGroup_exists_fg_saturation_of_isHomogeneous_degree.lean)
+-/
 @[path]
 private lemma main
-  [AddCommGroup R]
-  {deg : R → ℤ}
-  {D : ℕ}
-  {M : AddSubgroup R}
--- given
-  (hD : D ≠ 0)
-  (hpoly : ∀ (m : ℕ) (α : Fin m → R), ∃ P : MvPolynomial (Fin m) ℚ, P.IsHomogeneous D ∧ ∀ n : Fin m → ℤ, (deg (∑ i, n i • α i) : ℚ) = MvPolynomial.eval (fun i => (n i : ℚ)) P)
-  (hsep : ∀ x : R, x ≠ 0 → deg x ≠ 0)
-  (hM : M.FG) :
--- imply
-  ∃ M' : AddSubgroup R, M'.FG ∧ ∀ x : R, x ∈ M' ↔ ∃ k : ℤ, k ≠ 0 ∧ k • x ∈ M :=
--- proof
-  main deg D hD hpoly hsep M hM
-
+    {R : Type*} [AddCommGroup R] (deg : R → ℤ) (D : ℕ) (hD : D ≠ 0)
+    (hpoly : ∀ (m : ℕ) (α : Fin m → R), ∃ P : MvPolynomial (Fin m) ℚ, P.IsHomogeneous D ∧
+      ∀ n : Fin m → ℤ, (deg (∑ i, n i • α i) : ℚ) = MvPolynomial.eval (fun i => (n i : ℚ)) P)
+    (hsep : ∀ x : R, x ≠ 0 → deg x ≠ 0)
+    (M : AddSubgroup R) (hM : M.FG) :
+    ∃ M' : AddSubgroup R, M'.FG ∧ ∀ x : R, x ∈ M' ↔ ∃ k : ℤ, k ≠ 0 ∧ k • x ∈ M :=
+  P2mEndDisc.mainAux deg D hD hpoly hsep M hM
 
 -- created on 2026-10-09

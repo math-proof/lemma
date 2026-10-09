@@ -18,7 +18,7 @@ private lemma argumentPrinciple_closedBall_general_eq
     MeromorphicOn.divisor f (Metric.closedBall c R) z = 0) :
 -- imply
   circleIntegral (logDeriv f) c R =
-    2 * Real.pi * Complex.I * ↑(finsum fun z => MeromorphicOn.divisor f (Metric.ball c R) z) := by
+    2 * Real.pi * Complex.I * ↑(∑ᶠ z, MeromorphicOn.divisor f (Metric.ball c R) z) := by
 -- proof
   apply argumentPrinciple_closedBall_general hR hf hf_top hbd
 
@@ -38,7 +38,7 @@ private lemma argumentPrinciple_closedBall_eq
   (hint : CircleIntegrable (logDeriv f) c R) :
 -- imply
   circleIntegral (logDeriv f) c R =
-    2 * Real.pi * Complex.I * ↑(finsum fun z => MeromorphicOn.divisor f (Metric.ball c R) z) := by
+    2 * Real.pi * Complex.I * ↑(∑ᶠ z, MeromorphicOn.divisor f (Metric.ball c R) z) := by
 -- proof
   apply argumentPrinciple_closedBall hR hf hf_top hbd hint
 

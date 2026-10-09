@@ -1,4 +1,5 @@
 import Mathlib.Probability.Independence.Basic
+import Mathlib.Probability.Independence.Conditional
 import sympy.stats.joint_rv
 import sympy.Basic
 
@@ -11,12 +12,12 @@ private lemma main
   {π : Measure Ω} [IsProbabilityMeasure π]
   {x y z w : Ω → ℝ}
 -- given
-  (hx : Measurable x) (hy : Measurable y) (hz : Measurable z) (hw : Measurable w)
+  (_hx : Measurable x) (_hy : Measurable y) (_hz : Measurable z) (_hw : Measurable w)
   (h : x ⟂ᵢ[π] (y, z) | w) :
 -- imply
   x ⟂ᵢ[π] y | w := by
 -- proof
-  sorry
+  exact h.comp measurable_id measurable_fst
 
 
 -- created on 2026-10-07

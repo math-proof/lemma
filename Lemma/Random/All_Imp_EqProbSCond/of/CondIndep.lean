@@ -49,9 +49,9 @@ private lemma main
   have hlaw_xyz : π.map (x, (y, z)) = ρ.withDensity pxyz :=
     Map.eq.WithDensityProb
   have hκ_dis : π.map (fun ω ↦ (z ω, x ω)) = π.map z ⊗ₘ κ :=
-    (compProd_map_condDistrib (Y := x) (X := z) (μ := π) hx.aemeasurable).symm
+    (compProd_map_condDistrib (X := z) (Y := x) (μ := π) hz.aemeasurable hx.aemeasurable).symm
   have hη_dis : π.map (fun ω ↦ (z ω, y ω)) = π.map z ⊗ₘ η :=
-    (compProd_map_condDistrib (Y := y) (X := z) (μ := π) hy.aemeasurable).symm
+    (compProd_map_condDistrib (X := z) (Y := y) (μ := π) hz.aemeasurable hy.aemeasurable).symm
   have h_xz_ac : π.map (x, z) ≪ μ.prod ξ := by
     rw [hlaw_xz]; exact withDensity_absolutelyContinuous _ _
   have h_yz_ac : π.map (y, z) ≪ ν.prod ξ := by
@@ -362,7 +362,7 @@ private lemma main
         have h : (ξ.withDensity pz) Set.univ = ∫⁻ c, pz c ∂ξ := by
           rw [withDensity_apply _ MeasurableSet.univ, setLIntegral_univ]
         have : IsProbabilityMeasure (π.map z) :=
-          Measure.isProbabilityMeasure_map hPz.aemeasurable
+          inferInstance
         rw [← hlaw_z, measure_univ] at h
         exact h.symm
       rw [this]; norm_num)
@@ -453,7 +453,7 @@ private lemma main
     have h : (ρ.withDensity pxyz) Set.univ = ∫⁻ p, pxyz p ∂ρ := by
       rw [withDensity_apply _ MeasurableSet.univ, setLIntegral_univ]
     have : IsProbabilityMeasure (π.map (x, (y, z))) :=
-      Measure.isProbabilityMeasure_map hPxyz.aemeasurable
+      inferInstance
     rw [← hlaw_xyz, measure_univ] at h
     exact h.symm
   have hBn_fin (n : ℕ) : (ρ.withDensity fL) (Bn n) ≠ ∞ := by
@@ -533,7 +533,7 @@ private lemma main
         ∫⁻ bc, π.prob (y, z) bc ∂(ν.prod ξ) := by
       rw [withDensity_apply _ MeasurableSet.univ, setLIntegral_univ]
     have : IsProbabilityMeasure (π.map (y, z)) :=
-      Measure.isProbabilityMeasure_map hPyz.aemeasurable
+      inferInstance
     rw [← hlaw_yz, measure_univ] at h
     exact h.symm
   have hfin_yz : ∀ᵐ b ∂ν, ∀ᵐ c ∂ξ, π.prob (y, z) (b, c) < ⊤ :=

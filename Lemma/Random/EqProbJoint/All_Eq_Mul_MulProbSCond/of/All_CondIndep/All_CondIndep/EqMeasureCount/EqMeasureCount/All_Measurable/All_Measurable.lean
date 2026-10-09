@@ -63,7 +63,7 @@ private lemma main
     · intro h
       exact ⟨fun i => h.1 i i.2, fun i => h.2 i i.2⟩
   have hJ : ∀ p q : ℕ, Measurable (s[:(p : ℤ)], a[:(q : ℤ)]) := fun p q =>
-    (measurable_pi_lambda _ fun i => hs _).prodMk (measurable_pi_lambda _ fun i => ha _)
+    (Measurable.of_eval fun i => hs _).prodMk (Measurable.of_eval fun i => ha _)
   obtain ⟨Q, hQdef⟩ : ∃ Q : ℕ → Set Ω, ∀ n, Q n = {ω | (∀ i < n + 1, s i ω = «s.bvar» i) ∧ ∀ i < n, a i ω = «a.bvar» i} :=
     ⟨_, fun _ => rfl⟩
   obtain ⟨H, hHdef⟩ : ∃ H : ℕ → Set Ω, ∀ n, H n = {ω | (∀ i < n, s i ω = «s.bvar» i) ∧ ∀ i < n, a i ω = «a.bvar» i} :=

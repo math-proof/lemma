@@ -323,13 +323,15 @@ const { name } = self.globals;
 }
 
 /* Match Lean CM6 to page/LaTeX mint (css/style.css body: rgb(199, 237, 204)).
-   CM6 eclipseTheme already sets .cm-editor to mint, but .cm-activeLine is #fff;
-   single-line proof steps therefore look fully white. Override here (vue-only). */
+   Keep editor/scroller/gutters mint; active line must stay semi-transparent
+   (js/codemirrorBoot.js) so CM’s selection layer is not covered. */
 .render-lean .cm-editor,
 .render-lean .cm-editor .cm-scroller,
-.render-lean .cm-editor .cm-gutters,
+.render-lean .cm-editor .cm-gutters {
+	background-color: rgb(199, 237, 204) !important;
+}
 .render-lean .cm-editor .cm-activeLine,
 .render-lean .cm-editor .cm-activeLineGutter {
-	background-color: rgb(199, 237, 204) !important;
+	background-color: rgba(255, 255, 255, 0.45) !important;
 }
 </style>

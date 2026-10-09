@@ -1,189 +1,69 @@
 import Mathlib
 import sympy.Basic
+import Lemma.Int.P2MUtil
+set_option autoImplicit false
+
+noncomputable section
 
 open Polynomial Module
 
-/--
-[AddMonoidHom_exists_basis_apply_eq_self_of_map_smul_eq_pow_smul_of_isAlgClosed](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AddMonoidHom_exists_basis_apply_eq_self_of_map_smul_eq_pow_smul_of_isAlgClosed.lean)
--/
+universe u v
 
-def iter
-  {p : ℕ}
-  [hp : Fact p.Prime]
-  {k : Type u}
-  [Field k]
-  [IsAlgClosed k]
-  [CharP k p]
-  {V : Type v}
-  [AddCommGroup V]
-  [Module k V]
-  (φ : V →+ V) : ℕ → (V →+ V)
+namespace P2mKcLangSemilinear
+
+variable {p : ℕ} [hp : Fact p.Prime] {k : Type u} [Field k] [IsAlgClosed k] [CharP k p]
+
+omit [CharP k p] in
+theorem exists_pthRoot (c : k) : ∃ d : k, d ^ p = c :=
+  IsAlgClosed.exists_pow_nat_eq c hp.out.pos
+
+section General
+
+variable {V : Type v} [AddCommGroup V] [Module k V]
+
+def iter (φ : V →+ V) : ℕ → (V →+ V)
   | 0 => AddMonoidHom.id V
   | n + 1 => φ.comp (iter φ n)
 
-def pseq
-  [hp : Fact p.Prime]
-  {k : Type u}
-  [Field k]
-  [IsAlgClosed k]
-  [CharP k p]
-  {V : Type v}
-  [AddCommGroup V]
-  [Module k V]
-  (p : ℕ) (a : ℕ → k) : ℕ → k[X]
-  | 0 => C (a 0) * X ^ p
-  | i + 1 => pseq p a i ^ p + C (a (i + 1)) * X ^ p
+theorem iter_zero (φ : V →+ V) (x : V) : iter φ 0 x = x := rfl
+
+theorem iter_succ (φ : V →+ V) (n : ℕ) (x : V) : iter φ (n + 1) x = φ (iter φ n x) := rfl
 
 omit hp [IsAlgClosed k] [CharP k p] in
-
-def orb
-{p : ℕ}
-[hp : Fact p.Prime]
-{k : Type u}
-[Field k]
-[IsAlgClosed k]
-[CharP k p]
-{V : Type v}
-[AddCommGroup V]
-[Module k V]
-[FiniteDimensional k V]
-(φ : V →+ V) (w : V) (M : ℕ) : Fin M → V := fun i => iter φ i w
-
-def Dep
-{p : ℕ}
-[hp : Fact p.Prime]
-{k : Type u}
-[Field k]
-[IsAlgClosed k]
-[CharP k p]
-{V : Type v}
-[AddCommGroup V]
-[Module k V]
-[FiniteDimensional k V]
-(φ : V →+ V) (w : V) (m : ℕ) : Prop := iter φ m w ∈ Submodule.span k (Set.range (orb φ w m))
-
-omit [IsAlgClosed k] [CharP k p] [FiniteDimensional k V] in
-
-private lemma  exists_pthRoot
-  {p : ℕ}
-  [hp : Fact p.Prime]
-  {k : Type u}
-  [Field k]
-  [IsAlgClosed k]
-  [CharP k p]
-  (c : k) : ∃ d : k, d ^ p = c :=
-  IsAlgClosed.exists_pow_nat_eq c hp.out.pos
-
-private lemma  iter_zero (φ : V →+ V) (x : V) : iter φ 0 x = x := rfl
-
-private lemma  iter_succ
-  {p : ℕ}
-  [hp : Fact p.Prime]
-  {k : Type u}
-  [Field k]
-  [IsAlgClosed k]
-  [CharP k p]
-  {V : Type v}
-  [AddCommGroup V]
-  [Module k V]
-  (φ : V →+ V) (n : ℕ) (x : V) : iter φ (n + 1) x = φ (iter φ n x) := rfl
-
-omit hp [IsAlgClosed k] [CharP k p] in
-
-private lemma  iter_smul
-    {p : ℕ}
-    [hp : Fact p.Prime]
-    {k : Type u}
-    [Field k]
-    [IsAlgClosed k]
-    [CharP k p]
-    {V : Type v}
-    [AddCommGroup V]
-    [Module k V]
-    (φ : V →+ V) (hφ : ∀ (c : k) (x : V), φ (c • x) = c ^ p • φ x)
+theorem iter_smul (φ : V →+ V) (hφ : ∀ (c : k) (x : V), φ (c • x) = c ^ p • φ x)
     (n : ℕ) (c : k) (x : V) : iter φ n (c • x) = c ^ p ^ n • iter φ n x := by
   induction n generalizing c x with
   | zero => rw [iter_zero, iter_zero, pow_zero, pow_one]
   | succ n ih => rw [iter_succ, iter_succ, ih, hφ, ← pow_mul, pow_succ]
 
-@[simp] theorem pseq_zero (a : ℕ → k) : pseq p a 0 = C (a 0) * X ^ p := rfl
+def pseq (p : ℕ) (a : ℕ → k) : ℕ → k[X]
+  | 0 => C (a 0) * X ^ p
+  | i + 1 => pseq p a i ^ p + C (a (i + 1)) * X ^ p
 
 omit hp [IsAlgClosed k] [CharP k p] in
+@[scoped simp] theorem pseq_zero (a : ℕ → k) : pseq p a 0 = C (a 0) * X ^ p := rfl
 
-@[simp] theorem pseq_succ
-    {p : ℕ}
-    [hp : Fact p.Prime]
-    {k : Type u}
-    [Field k]
-    [IsAlgClosed k]
-    [CharP k p]
-    {V : Type v}
-    [AddCommGroup V]
-    [Module k V]
-    (a : ℕ → k) (i : ℕ) :
+omit hp [IsAlgClosed k] [CharP k p] in
+@[scoped simp] theorem pseq_succ (a : ℕ → k) (i : ℕ) :
     pseq p a (i + 1) = pseq p a i ^ p + C (a (i + 1)) * X ^ p := rfl
 
 omit [IsAlgClosed k] [CharP k p] in
-
-private lemma  X_pow_dvd_pseq
-  {p : ℕ}
-  [hp : Fact p.Prime]
-  {k : Type u}
-  [Field k]
-  [IsAlgClosed k]
-  [CharP k p]
-  {V : Type v}
-  [AddCommGroup V]
-  [Module k V]
-  (a : ℕ → k) (i : ℕ) : X ^ p ∣ pseq p a i := by
+theorem X_pow_dvd_pseq (a : ℕ → k) (i : ℕ) : X ^ p ∣ pseq p a i := by
   induction i with
   | zero => exact Dvd.intro_left _ rfl
   | succ i ih => exact dvd_add (dvd_pow ih hp.out.ne_zero) (Dvd.intro_left _ rfl)
 
 omit [IsAlgClosed k] [CharP k p] in
-
-private lemma  coeff_pseq_eq_zero
-  {p : ℕ}
-  [hp : Fact p.Prime]
-  {k : Type u}
-  [Field k]
-  [IsAlgClosed k]
-  [CharP k p]
-  {V : Type v}
-  [AddCommGroup V]
-  [Module k V]
-  (a : ℕ → k) (i : ℕ) {n : ℕ} (hn : n < p) : (pseq p a i).coeff n = 0 := by
+theorem coeff_pseq_eq_zero (a : ℕ → k) (i : ℕ) {n : ℕ} (hn : n < p) : (pseq p a i).coeff n = 0 := by
   obtain ⟨q, hq⟩ := X_pow_dvd_pseq (p := p) a i
   rw [hq, coeff_X_pow_mul', if_neg (not_le.mpr hn)]
 
 omit [IsAlgClosed k] [CharP k p] in
-
-private lemma  eval_zero_pseq
-  {p : ℕ}
-  [hp : Fact p.Prime]
-  {k : Type u}
-  [Field k]
-  [IsAlgClosed k]
-  [CharP k p]
-  {V : Type v}
-  [AddCommGroup V]
-  [Module k V]
-  (a : ℕ → k) (i : ℕ) : (pseq p a i).eval 0 = 0 := by
+theorem eval_zero_pseq (a : ℕ → k) (i : ℕ) : (pseq p a i).eval 0 = 0 := by
   rw [← coeff_zero_eq_eval_zero, coeff_pseq_eq_zero a i hp.out.pos]
 
 omit [IsAlgClosed k] [CharP k p] in
-
-private lemma  natDegree_pseq
-    {p : ℕ}
-    [hp : Fact p.Prime]
-    {k : Type u}
-    [Field k]
-    [IsAlgClosed k]
-    [CharP k p]
-    {V : Type v}
-    [AddCommGroup V]
-    [Module k V]
-    (a : ℕ → k) (ha : a 0 ≠ 0) (i : ℕ) :
+theorem natDegree_pseq (a : ℕ → k) (ha : a 0 ≠ 0) (i : ℕ) :
     (pseq p a i).natDegree = p ^ (i + 1) := by
   induction i with
   | zero =>
@@ -201,48 +81,17 @@ private lemma  natDegree_pseq
 
 omit hp [IsAlgClosed k] [CharP k p] in
 
-private lemma  eval_pseq_succ
-    {p : ℕ}
-    [hp : Fact p.Prime]
-    {k : Type u}
-    [Field k]
-    [IsAlgClosed k]
-    [CharP k p]
-    {V : Type v}
-    [AddCommGroup V]
-    [Module k V]
-    (a : ℕ → k) (i : ℕ) (s : k) :
+theorem eval_pseq_succ (a : ℕ → k) (i : ℕ) (s : k) :
     (pseq p a (i + 1)).eval s = ((pseq p a i).eval s) ^ p + a (i + 1) * s ^ p := by
   rw [pseq_succ, eval_add, eval_pow, eval_mul, eval_C, eval_pow, eval_X]
 
 omit hp [IsAlgClosed k] [CharP k p] in
-
-private lemma  eval_pseq_zero
-  {p : ℕ}
-  [hp : Fact p.Prime]
-  {k : Type u}
-  [Field k]
-  [IsAlgClosed k]
-  [CharP k p]
-  {V : Type v}
-  [AddCommGroup V]
-  [Module k V]
-  (a : ℕ → k) (s : k) : (pseq p a 0).eval s = a 0 * s ^ p := by
+theorem eval_pseq_zero (a : ℕ → k) (s : k) : (pseq p a 0).eval s = a 0 * s ^ p := by
   rw [pseq_zero, eval_mul, eval_C, eval_pow, eval_X]
 
 omit [CharP k p] in
 
-private lemma  exists_ne_zero_eval_pseq_eq
-    {p : ℕ}
-    [hp : Fact p.Prime]
-    {k : Type u}
-    [Field k]
-    [IsAlgClosed k]
-    [CharP k p]
-    {V : Type v}
-    [AddCommGroup V]
-    [Module k V]
-    (a : ℕ → k) (ha : a 0 ≠ 0) (m : ℕ) :
+theorem exists_ne_zero_eval_pseq_eq (a : ℕ → k) (ha : a 0 ≠ 0) (m : ℕ) :
     ∃ s : k, s ≠ 0 ∧ (pseq p a m).eval s = s := by
   set Q : k[X] := pseq p a m - X with hQ
   set R : k[X] := divX Q with hR
@@ -276,192 +125,147 @@ private lemma  exists_ne_zero_eval_pseq_eq
     rw [hQ, eval_sub, eval_X] at hQs
     exact sub_eq_zero.mp hQs
 
+section Step1
 
-(hφ : ∀ (c : k) (x : V), φ (c • x) = c ^ p • φ x) (hinj : Function.Injective φ)
+variable [FiniteDimensional k V] (φ : V →+ V)
+  (hφ : ∀ (c : k) (x : V), φ (c • x) = c ^ p • φ x) (hinj : Function.Injective φ)
 
-private lemma  orb_succ_eq_snoc
-  {p : ℕ}
-  [hp : Fact p.Prime]
-  {k : Type u}
-  [Field k]
-  [IsAlgClosed k]
-  [CharP k p]
-  {V : Type v}
-  [AddCommGroup V]
-  [Module k V]
-  [FiniteDimensional k V]
-  (φ : V →+ V)
-  (w : V) (M : ℕ) :
-  (orb φ w (M + 1) : Fin (M + 1) → V) = Fin.snoc (orb φ w M) (iter φ M w) := by
-funext i
-refine Fin.lastCases ?_ (fun j => ?_) i
-· rw [Fin.snoc_last]
-  rfl
-· rw [Fin.snoc_castSucc]
-  rfl
+def orb (φ : V →+ V) (w : V) (M : ℕ) : Fin M → V := fun i => iter φ i w
+
+def Dep (φ : V →+ V) (w : V) (m : ℕ) : Prop := iter φ m w ∈ Submodule.span k (Set.range (orb φ w m))
+
+omit [IsAlgClosed k] [CharP k p] [FiniteDimensional k V] in
+theorem orb_succ_eq_snoc (w : V) (M : ℕ) :
+    (orb φ w (M + 1) : Fin (M + 1) → V) = Fin.snoc (orb φ w M) (iter φ M w) := by
+  funext i
+  refine Fin.lastCases ?_ (fun j => ?_) i
+  · rw [Fin.snoc_last]
+    rfl
+  · rw [Fin.snoc_castSucc]
+    rfl
 
 omit [IsAlgClosed k] [CharP k p] [FiniteDimensional k V] in
 
-private lemma  linearIndependent_orb
-{p : ℕ}
-[hp : Fact p.Prime]
-{k : Type u}
-[Field k]
-[IsAlgClosed k]
-[CharP k p]
-{V : Type v}
-[AddCommGroup V]
-[Module k V]
-[FiniteDimensional k V]
-(φ : V →+ V)
-(w : V) (M : ℕ) (h : ∀ m, m < M → ¬ Dep (k := k) φ w m) :
-  LinearIndependent k (orb φ w M) := by
-induction M with
-| zero => exact linearIndependent_empty_type
-| succ M ih =>
-  rw [orb_succ_eq_snoc, linearIndependent_finSnoc]
-  exact ⟨ih fun m hm => h m (Nat.lt_succ_of_lt hm), h M (Nat.lt_succ_self M)⟩
+theorem linearIndependent_orb (w : V) (M : ℕ) (h : ∀ m, m < M → ¬ Dep (k := k) φ w m) :
+    LinearIndependent k (orb φ w M) := by
+  induction M with
+  | zero => exact linearIndependent_empty_type
+  | succ M ih =>
+    rw [orb_succ_eq_snoc, linearIndependent_finSnoc]
+    exact ⟨ih fun m hm => h m (Nat.lt_succ_of_lt hm), h M (Nat.lt_succ_self M)⟩
 
 omit [IsAlgClosed k] [CharP k p] in
-
-private lemma  exists_dep
-{p : ℕ}
-[hp : Fact p.Prime]
-{k : Type u}
-[Field k]
-[IsAlgClosed k]
-[CharP k p]
-{V : Type v}
-[AddCommGroup V]
-[Module k V]
-[FiniteDimensional k V]
-(φ : V →+ V)
-(w : V) : ∃ m, Dep (k := k) φ w m := by
-by_contra hno
-push Not at hno
-have hli := linearIndependent_orb (k := k) φ w (finrank k V + 1) fun m _ => hno m
-have := hli.fintype_card_le_finrank
-rw [Fintype.card_fin] at this
-omega
+theorem exists_dep (w : V) : ∃ m, Dep (k := k) φ w m := by
+  by_contra hno
+  push Not at hno
+  have hli := linearIndependent_orb (k := k) φ w (finrank k V + 1) fun m _ => hno m
+  have := hli.fintype_card_le_finrank
+  rw [Fintype.card_fin] at this
+  omega
 
 omit [CharP k p] in
 include hφ hinj in
 
-private lemma  exists_ne_zero_fixed
-{p : ℕ}
-[hp : Fact p.Prime]
-{k : Type u}
-[Field k]
-[IsAlgClosed k]
-[CharP k p]
-{V : Type v}
-[AddCommGroup V]
-[Module k V]
-[FiniteDimensional k V]
-(φ : V →+ V)
-(w : V) (hw : w ≠ 0) : ∃ x : V, x ≠ 0 ∧ φ x = x := by
-classical
+theorem exists_ne_zero_fixed (w : V) (hw : w ≠ 0) : ∃ x : V, x ≠ 0 ∧ φ x = x := by
+  classical
 
-obtain ⟨m', hm, hmin⟩ : ∃ m', Dep (k := k) φ w (m' + 1) ∧ ∀ j, j < m' + 1 → ¬ Dep (k := k) φ w j := by
-  let m := Nat.find (exists_dep (k := k) φ w)
-  have hm : Dep (k := k) φ w m := Nat.find_spec (exists_dep (k := k) φ w)
-  have hmin : ∀ j, j < m → ¬ Dep (k := k) φ w j := fun j hj => Nat.find_min (exists_dep φ w) hj
-  obtain ⟨m', hm'⟩ : ∃ m', m = m' + 1 := by
-    refine Nat.exists_eq_succ_of_ne_zero fun h0 => hw ?_
-    have hm0 : Dep (k := k) φ w 0 := h0 ▸ hm
-    rw [Dep, iter_zero] at hm0
-    have hempty : Set.range (orb φ w 0) = ∅ := Set.range_eq_empty _
-    rw [hempty, Submodule.span_empty] at hm0
-    exact (Submodule.mem_bot k).mp hm0
-  refine ⟨m', hm' ▸ hm, fun j hj => hmin j ?_⟩
-  rw [hm']
-  exact hj
-have hli : LinearIndependent k (orb φ w (m' + 1)) := linearIndependent_orb φ w (m' + 1) hmin
+  obtain ⟨m', hm, hmin⟩ : ∃ m', Dep (k := k) φ w (m' + 1) ∧ ∀ j, j < m' + 1 → ¬ Dep (k := k) φ w j := by
+    let m := Nat.find (exists_dep (k := k) φ w)
+    have hm : Dep (k := k) φ w m := Nat.find_spec (exists_dep (k := k) φ w)
+    have hmin : ∀ j, j < m → ¬ Dep (k := k) φ w j := fun j hj => Nat.find_min (exists_dep φ w) hj
+    obtain ⟨m', hm'⟩ : ∃ m', m = m' + 1 := by
+      refine Nat.exists_eq_succ_of_ne_zero fun h0 => hw ?_
+      have hm0 : Dep (k := k) φ w 0 := h0 ▸ hm
+      rw [Dep, iter_zero] at hm0
+      have hempty : Set.range (orb φ w 0) = ∅ := Set.range_eq_empty _
+      rw [hempty, Submodule.span_empty] at hm0
+      exact (Submodule.mem_bot k).mp hm0
+    refine ⟨m', hm' ▸ hm, fun j hj => hmin j ?_⟩
+    rw [hm']
+    exact hj
+  have hli : LinearIndependent k (orb φ w (m' + 1)) := linearIndependent_orb φ w (m' + 1) hmin
 
-obtain ⟨af, haf⟩ := (Submodule.mem_span_range_iff_exists_fun k).mp hm
-let a : ℕ → k := fun i => if h : i < m' + 1 then af ⟨i, h⟩ else 0
-have ha_apply : ∀ i : Fin (m' + 1), a i = af i := fun i => by
-  show (if h : (i : ℕ) < m' + 1 then af ⟨i, h⟩ else 0) = af i
-  rw [dif_pos i.isLt]
+  obtain ⟨af, haf⟩ := (Submodule.mem_span_range_iff_exists_fun k).mp hm
+  let a : ℕ → k := fun i => if h : i < m' + 1 then af ⟨i, h⟩ else 0
+  have ha_apply : ∀ i : Fin (m' + 1), a i = af i := fun i => by
+    show (if h : (i : ℕ) < m' + 1 then af ⟨i, h⟩ else 0) = af i
+    rw [dif_pos i.isLt]
 
-have ha0 : a 0 ≠ 0 := by
-  intro h0
-  apply hmin m' (Nat.lt_succ_self m')
+  have ha0 : a 0 ≠ 0 := by
+    intro h0
+    apply hmin m' (Nat.lt_succ_self m')
 
-  have hd : ∀ j : Fin m', ∃ d : k, d ^ p = af j.succ := fun j => exists_pthRoot _
-  choose d hdp using hd
-  have hsum : iter φ (m' + 1) w = φ (∑ j : Fin m', d j • orb φ w m' j) := by
-    rw [← haf, map_sum, Fin.sum_univ_succ]
-    have h00 : af 0 = 0 := by rw [← ha_apply 0]; exact h0
-    rw [h00, zero_smul, zero_add]
-    refine Finset.sum_congr rfl fun j _ => ?_
-    rw [hφ, hdp j]
-    rfl
-  have heq := hinj hsum
-  show iter φ m' w ∈ Submodule.span k (Set.range (orb φ w m'))
-  rw [heq]
-  exact Submodule.sum_mem _ fun j _ => Submodule.smul_mem _ _ (Submodule.subset_span ⟨j, rfl⟩)
+    have hd : ∀ j : Fin m', ∃ d : k, d ^ p = af j.succ := fun j => exists_pthRoot _
+    choose d hdp using hd
+    have hsum : iter φ (m' + 1) w = φ (∑ j : Fin m', d j • orb φ w m' j) := by
+      rw [← haf, map_sum, Fin.sum_univ_succ]
+      have h00 : af 0 = 0 := by rw [← ha_apply 0]; exact h0
+      rw [h00, zero_smul, zero_add]
+      refine Finset.sum_congr rfl fun j _ => ?_
+      rw [hφ, hdp j]
+      rfl
+    have heq := hinj hsum
+    show iter φ m' w ∈ Submodule.span k (Set.range (orb φ w m'))
+    rw [heq]
+    exact Submodule.sum_mem _ fun j _ => Submodule.smul_mem _ _ (Submodule.subset_span ⟨j, rfl⟩)
 
-obtain ⟨s, hs0, hs⟩ := exists_ne_zero_eval_pseq_eq (p := p) a ha0 m'
+  obtain ⟨s, hs0, hs⟩ := exists_ne_zero_eval_pseq_eq (p := p) a ha0 m'
 
-let c : Fin (m' + 1) → k := fun i => (pseq p a i).eval s
-refine ⟨∑ i : Fin (m' + 1), c i • orb φ w (m' + 1) i, ?_, ?_⟩
-·
-  intro hzero
-  have hall := (Fintype.linearIndependent_iff.mp hli) c hzero (Fin.last m')
-  apply hs0
-  rw [← hs]
-  exact hall
-·
-  rw [map_sum]
+  let c : Fin (m' + 1) → k := fun i => (pseq p a i).eval s
+  refine ⟨∑ i : Fin (m' + 1), c i • orb φ w (m' + 1) i, ?_, ?_⟩
+  ·
+    intro hzero
+    have hall := (Fintype.linearIndependent_iff.mp hli) c hzero (Fin.last m')
+    apply hs0
+    rw [← hs]
+    exact hall
+  ·
+    rw [map_sum]
 
-  have hstep : ∀ i : Fin (m' + 1), φ (c i • orb φ w (m' + 1) i) = (c i) ^ p • iter φ ((i : ℕ) + 1) w := by
-    intro i
-    rw [hφ]
-    rfl
-  simp only [hstep]
-  rw [Fin.sum_univ_castSucc]
+    have hstep : ∀ i : Fin (m' + 1), φ (c i • orb φ w (m' + 1) i) = (c i) ^ p • iter φ ((i : ℕ) + 1) w := by
+      intro i
+      rw [hφ]
+      rfl
+    simp only [hstep]
+    rw [Fin.sum_univ_castSucc]
 
-  have hlast : (c (Fin.last m')) ^ p • iter φ ((Fin.last m' : ℕ) + 1) w =
-      ∑ i : Fin (m' + 1), (s ^ p * a i) • orb φ w (m' + 1) i := by
-    have hc : c (Fin.last m') = s := hs
-    rw [hc, Fin.val_last, ← haf, Finset.smul_sum]
-    refine Finset.sum_congr rfl fun i _ => ?_
-    rw [smul_smul, ha_apply]
-  rw [hlast, Fin.sum_univ_succ (f := fun i => (s ^ p * a ↑i) • orb φ w (m' + 1) i),
-    Fin.sum_univ_succ (f := fun i => c i • orb φ w (m' + 1) i)]
+    have hlast : (c (Fin.last m')) ^ p • iter φ ((Fin.last m' : ℕ) + 1) w =
+        ∑ i : Fin (m' + 1), (s ^ p * a i) • orb φ w (m' + 1) i := by
+      have hc : c (Fin.last m') = s := hs
+      rw [hc, Fin.val_last, ← haf, Finset.smul_sum]
+      refine Finset.sum_congr rfl fun i _ => ?_
+      rw [smul_smul, ha_apply]
+    rw [hlast, Fin.sum_univ_succ (f := fun i => (s ^ p * a ↑i) • orb φ w (m' + 1) i),
+      Fin.sum_univ_succ (f := fun i => c i • orb φ w (m' + 1) i)]
 
-  have hc0 : c 0 = a 0 * s ^ p := eval_pseq_zero (p := p) a s
-  have hcsucc : ∀ j : Fin m', c j.succ = (c (Fin.castSucc j)) ^ p + a ((j : ℕ) + 1) * s ^ p :=
-    fun j => eval_pseq_succ (p := p) a j s
-  have hB : (s ^ p * a ((0 : Fin (m' + 1)) : ℕ)) • orb φ w (m' + 1) 0 = c 0 • orb φ w (m' + 1) 0 := by
-    rw [hc0, mul_comm]
-    rfl
-  have hD : ∑ j : Fin m', c j.succ • orb φ w (m' + 1) j.succ =
-      ∑ j : Fin m', c (Fin.castSucc j) ^ p • iter φ ((Fin.castSucc j : ℕ) + 1) w +
-        ∑ j : Fin m', (s ^ p * a ((j.succ : Fin (m' + 1)) : ℕ)) • orb φ w (m' + 1) j.succ := by
-    rw [← Finset.sum_add_distrib]
-    refine Finset.sum_congr rfl fun j _ => ?_
-    rw [hcsucc j, add_smul, mul_comm (a _) _]
-    rfl
-  rw [hB, hD]
-  abel
+    have hc0 : c 0 = a 0 * s ^ p := eval_pseq_zero (p := p) a s
+    have hcsucc : ∀ j : Fin m', c j.succ = (c (Fin.castSucc j)) ^ p + a ((j : ℕ) + 1) * s ^ p :=
+      fun j => eval_pseq_succ (p := p) a j s
+    have hB : (s ^ p * a ((0 : Fin (m' + 1)) : ℕ)) • orb φ w (m' + 1) 0 = c 0 • orb φ w (m' + 1) 0 := by
+      rw [hc0, mul_comm]
+      rfl
+    have hD : ∑ j : Fin m', c j.succ • orb φ w (m' + 1) j.succ =
+        ∑ j : Fin m', c (Fin.castSucc j) ^ p • iter φ ((Fin.castSucc j : ℕ) + 1) w +
+          ∑ j : Fin m', (s ^ p * a ((j.succ : Fin (m' + 1)) : ℕ)) • orb φ w (m' + 1) j.succ := by
+      rw [← Finset.sum_add_distrib]
+      refine Finset.sum_congr rfl fun j _ => ?_
+      rw [hcsucc j, add_smul, mul_comm (a _) _]
+      rfl
+    rw [hB, hD]
+    abel
 
-private lemma  exists_basis_aux
-    {p : ℕ}
-    [hp : Fact p.Prime]
-    {k : Type u}
-    [Field k]
-    [IsAlgClosed k]
-    [CharP k p]
-    (n : ℕ) :
+end Step1
+
+end General
+
+theorem exists_basis_aux (n : ℕ) :
     ∀ (V : Type v) [AddCommGroup V] [Module k V] [FiniteDimensional k V],
       finrank k V = n → ∀ (φ : V →+ V), (∀ (c : k) (x : V), φ (c • x) = c ^ p • φ x) →
         Function.Injective φ → ∃ b : Basis (Fin n) k V, ∀ i, φ (b i) = b i := by
   induction n with
   | zero =>
     intro V _ _ _ hV φ _ _
-    haveI : Subsingleton V := Module.finrank_zero_iff.mp hV
+    have : Subsingleton V := Module.finrank_zero_iff.mp hV
     exact ⟨Basis.empty V, fun i => i.elim0⟩
   | succ n ih =>
     intro V _ _ _ hV φ hφ hinj
@@ -470,13 +274,13 @@ private lemma  exists_basis_aux
     obtain ⟨w, hw⟩ : ∃ w : V, w ≠ 0 := by
       by_contra hno
       push Not at hno
-      haveI : Subsingleton V := ⟨fun a b => by rw [hno a, hno b]⟩
+      have : Subsingleton V := ⟨fun a b => by rw [hno a, hno b]⟩
       rw [Module.finrank_zero_of_subsingleton] at hV
       exact Nat.succ_ne_zero n hV.symm
     obtain ⟨v, hv0, hv⟩ := exists_ne_zero_fixed (k := k) φ hφ hinj w hw
 
     let S : Submodule k V := k ∙ v
-    haveI : RingHomSurjective (frobenius k p) := ⟨surjective_frobenius k p⟩
+    have : RingHomSurjective (frobenius k p) := ⟨surjective_frobenius k p⟩
     let φl : V →ₛₗ[frobenius k p] V :=
       { toFun := φ, map_add' := φ.map_add, map_smul' := fun c x => hφ c x }
     have hφl : ∀ x, φl x = φ x := fun _ => rfl
@@ -561,21 +365,22 @@ private lemma  exists_basis_aux
     · rw [Fin.cons_zero, hv]
     · rw [Fin.cons_succ, hu_fix]
 
+end P2mKcLangSemilinear
+p2m_reactivate "P2mKcLangSemilinear"
+
+/--
+[AddMonoidHom_exists_basis_apply_eq_self_of_map_smul_eq_pow_smul_of_isAlgClosed](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AddMonoidHom_exists_basis_apply_eq_self_of_map_smul_eq_pow_smul_of_isAlgClosed.lean)
+-/
 @[path]
 private lemma main
-  {p : ℕ} [Fact p.Prime]
-  {k : Type u} [Field k] [IsAlgClosed k] [CharP k p]
-  {V : Type v} [AddCommGroup V] [Module k V] [FiniteDimensional k V]
-  {φ : V →+ V}
--- given
-  (hφ : ∀ (c : k) (x : V), φ (c • x) = c ^ p • φ x)
-  (hinj : Function.Injective φ) :
--- imply
-  ∃ b : Module.Basis (Fin (Module.finrank k V)) k V, ∀ i, φ (b i) = b i :=
--- proof
-  exists_basis_aux (p := p) (Module.finrank k V) V rfl φ hφ hinj
+    (p : ℕ) [Fact p.Prime] (k : Type u) [Field k] [IsAlgClosed k] [CharP k p]
+    (V : Type v) [AddCommGroup V] [Module k V] [FiniteDimensional k V]
+    (φ : V →+ V) (hφ : ∀ (c : k) (x : V), φ (c • x) = c ^ p • φ x)
+    (hinj : Function.Injective φ) :
+    ∃ b : Module.Basis (Fin (Module.finrank k V)) k V, ∀ i, φ (b i) = b i :=
+  P2mKcLangSemilinear.exists_basis_aux (p := p) (Module.finrank k V) V rfl φ hφ hinj
 
-  p2m_reactivate "P2MW.S_AddMonoidHom_exists_basis_apply_eq_self_of_map_smul_eq_pow_smul_of_isAlgClosed.P2mKcLangSemilinear"
-
+end
+p2m_reactivate "P2mKcLangSemilinear"
 
 -- created on 2026-10-09

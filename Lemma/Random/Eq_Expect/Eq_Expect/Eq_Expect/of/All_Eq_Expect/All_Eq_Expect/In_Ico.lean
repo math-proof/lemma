@@ -60,10 +60,10 @@ private lemma main
   have hr : ∀ t, Measurable (r t) := Random.Measurable_R h₁
   have hsa : ∀ t, Measurable (fun ω ↦ (s t ω, a t ω)) := fun t ↦
     (hs t).prodMk (ha t)
-  have hpa : Measurable (fun ω t ↦ a t ω) := measurable_pi_lambda _ ha
+  have hpa : Measurable (fun ω t ↦ a t ω) := Measurable.of_eval ha
   have hpr : Measurable (fun ω t ↦ r t ω, fun ω t ↦ s t ω) :=
-    (measurable_pi_lambda _ hr).prodMk (measurable_pi_lambda _ hs)
-  have hpR : Measurable (fun ω t ↦ r t ω) := measurable_pi_lambda _ hr
+    (Measurable.of_eval hr).prodMk (Measurable.of_eval hs)
+  have hpR : Measurable (fun ω t ↦ r t ω) := Measurable.of_eval hr
   have hfG : ∀ t, Measurable (fun integ : ℕ → ℝ ↦ (γ ^ (id : ℕ → ℕ)) @ integ[t:]) := fun t =>
     Measurable.tsum fun k => (measurable_pi_apply (t + k)).const_mul _
   have hf : Measurable (fun integ : (ℕ → ℝ) × (ℕ → S) ↦ integ.1 t + γ * V (t + 1) (integ.2 (t + 1))) :=

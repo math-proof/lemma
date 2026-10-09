@@ -134,7 +134,7 @@ private lemma main
     have h : (μ.prod ξ).withDensity p2 Set.univ = ∫⁻ ac, p2 ac ∂(μ.prod ξ) := by
       rw [MeasureTheory.withDensity_apply _ MeasurableSet.univ, MeasureTheory.setLIntegral_univ]
     have : MeasureTheory.IsProbabilityMeasure (π.map (x, z)) :=
-      MeasureTheory.Measure.isProbabilityMeasure_map hPxz.aemeasurable
+      inferInstance
     rw [← hlaw2m, MeasureTheory.measure_univ] at h
     exact h.symm
   have hmp2 : Measurable p2 := by
@@ -148,7 +148,7 @@ private lemma main
     have h : ξ.withDensity pz Set.univ = ∫⁻ c, pz c ∂ξ := by
       rw [MeasureTheory.withDensity_apply _ MeasurableSet.univ, MeasureTheory.setLIntegral_univ]
     have : MeasureTheory.IsProbabilityMeasure (π.map z) :=
-      MeasureTheory.Measure.isProbabilityMeasure_map hPz.aemeasurable
+      inferInstance
     rw [← h, ← hlaw_z, MeasureTheory.measure_univ]
   have hfin_z : ∀ᵐ c ∂ReferenceMeasure.measure, pz c < ⊤ :=
     MeasureTheory.ae_lt_top hmp_z (by rw [htot_z]; norm_num)

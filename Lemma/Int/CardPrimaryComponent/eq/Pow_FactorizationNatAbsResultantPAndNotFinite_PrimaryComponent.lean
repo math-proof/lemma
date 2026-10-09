@@ -1,73 +1,27 @@
 import Mathlib
 import sympy.Basic
+import Lemma.Int.P2MUtil
+set_option autoImplicit false
+
+namespace P2mLGlue
 
 open Polynomial
 
-/--
-[AddCommGroup_natCard_primaryComponent_ker_aeval_of_forall_natCard_ker_aeval_eq_natAbs_resultant](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AddCommGroup_natCard_primaryComponent_ker_aeval_of_forall_natCard_ker_aeval_eq_natAbs_resultant.lean)
--/
+section Primary
 
-def torsN
-  [Finite H]
-  (ℓ : ℕ)
-  [hℓ : Fact ℓ.Prime]
-  (H : Type*) [AddCommGroup H] (N : ℕ) : AddSubgroup H where
-  carrier := {x | N • x = 0}
-  zero_mem' := smul_zero _
-  add_mem' := fun {a b} ha hb => by
-    simp only [Set.mem_setOf_eq] at ha hb ⊢
-    rw [smul_add, ha, hb, add_zero]
-  neg_mem' := fun {a} ha => by
-    simp only [Set.mem_setOf_eq] at ha ⊢
-    rw [smul_neg, ha, neg_zero]
+variable {H : Type*} [AddCommGroup H] [Finite H] (ℓ : ℕ) [hℓ : Fact ℓ.Prime]
 
 omit [Finite H] hℓ in
-
-noncomputable def levelEquiv
-    {M : Type*}
-    [AddCommGroup M]
-    (T : M →+ M)
-    (ℓ : ℕ)
-    [hℓ : Fact ℓ.Prime]
-    (S : AddSubgroup M) (m : ℕ) :
-    torsionPow S ℓ m ≃ (S ⊓ torsionPow M ℓ m : AddSubgroup M) where
-  toFun x := ⟨((x : S) : M), (x : S).2, by
-    have hx : ℓ ^ m • (x : S) = 0 := x.2
-    have h' : ℓ ^ m • ((x : S) : M) = 0 := by
-      rw [← AddSubmonoidClass.coe_nsmul, hx, ZeroMemClass.coe_zero]
-    exact h'⟩
-  invFun y := ⟨⟨(y : M), y.2.1⟩, by
-    show ℓ ^ m • (⟨(y : M), y.2.1⟩ : S) = 0
-    apply Subtype.ext
-    have hy : ℓ ^ m • (y : M) = 0 := y.2.2
-    simpa using hy⟩
-  left_inv x := rfl
-  right_inv y := rfl
-
-omit hℓ in
-
-private lemma  mem_primaryComponent_iff
-    {H : Type*}
-    [AddCommGroup H]
-    [Finite H]
-    (ℓ : ℕ)
-    [hℓ : Fact ℓ.Prime]
-    (x : H) :
+theorem mem_primaryComponent_iff (x : H) :
     x ∈ AddCommGroup.primaryComponent H ℓ ↔ ∃ m : ℕ, ℓ ^ m • x = 0 :=
   AddCommMonoid.mem_primaryComponent
 
-private lemma  natCard_primaryComponent_eq_pow
-    {H : Type*}
-    [AddCommGroup H]
-    [Finite H]
-    (ℓ : ℕ)
-    [hℓ : Fact ℓ.Prime]
-    :
+theorem natCard_primaryComponent_eq_pow :
     Nat.card (AddCommGroup.primaryComponent H ℓ) =
       ℓ ^ (Nat.card (AddCommGroup.primaryComponent H ℓ)).factorization ℓ := by
   classical
   set S := AddCommGroup.primaryComponent H ℓ with hS
-  haveI : Fintype S := Fintype.ofFinite S
+  have : Fintype S := Fintype.ofFinite S
   have hS0 : Nat.card S ≠ 0 := Nat.card_pos.ne'
   apply Nat.eq_pow_of_factorization_eq_single hS0
   ext r
@@ -78,7 +32,7 @@ private lemma  natCard_primaryComponent_eq_pow
     by_cases hrp : r.Prime
     · apply Nat.factorization_eq_zero_of_not_dvd
       intro hdvd
-      haveI := Fact.mk hrp
+      have := Fact.mk hrp
       have hdvd' : r ∣ Fintype.card S := by rwa [Fintype.card_eq_nat_card]
       obtain ⟨x, hx⟩ := exists_prime_addOrderOf_dvd_card r hdvd'
       obtain ⟨m, hm⟩ := (mem_primaryComponent_iff ℓ (x : H)).mp x.2
@@ -91,17 +45,11 @@ private lemma  natCard_primaryComponent_eq_pow
       exact hr this.symm
     · exact Nat.factorization_eq_zero_of_not_prime _ hrp
 
-private lemma  not_dvd_natCard_quotient
-    {H : Type*}
-    [AddCommGroup H]
-    [Finite H]
-    (ℓ : ℕ)
-    [hℓ : Fact ℓ.Prime]
-    :
+theorem not_dvd_natCard_quotient :
     ¬ ℓ ∣ Nat.card (H ⧸ AddCommGroup.primaryComponent H ℓ) := by
   classical
   set S := AddCommGroup.primaryComponent H ℓ with hS
-  haveI : Fintype (H ⧸ S) := Fintype.ofFinite _
+  have : Fintype (H ⧸ S) := Fintype.ofFinite _
   intro hdvd
   have hdvd' : ℓ ∣ Fintype.card (H ⧸ S) := by rwa [Fintype.card_eq_nat_card]
   obtain ⟨y, hy⟩ := exists_prime_addOrderOf_dvd_card ℓ hdvd'
@@ -118,13 +66,7 @@ private lemma  not_dvd_natCard_quotient
   rw [hy] at h5
   exact hℓ.out.one_lt.ne' h5
 
-private lemma  natCard_primaryComponent
-    {H : Type*}
-    [AddCommGroup H]
-    [Finite H]
-    (ℓ : ℕ)
-    [hℓ : Fact ℓ.Prime]
-    :
+theorem natCard_primaryComponent :
     Nat.card (AddCommGroup.primaryComponent H ℓ) = ℓ ^ (Nat.card H).factorization ℓ := by
   set S := AddCommGroup.primaryComponent H ℓ with hS
   have hcard := AddSubgroup.card_eq_card_quotient_mul_card_addSubgroup S
@@ -136,13 +78,7 @@ private lemma  natCard_primaryComponent
   rw [hfac]
   exact natCard_primaryComponent_eq_pow ℓ
 
-private lemma  pow_factorization_smul_eq_zero
-    {H : Type*}
-    [AddCommGroup H]
-    [Finite H]
-    (ℓ : ℕ)
-    [hℓ : Fact ℓ.Prime]
-    (x : H) (hx : x ∈ AddCommGroup.primaryComponent H ℓ) :
+theorem pow_factorization_smul_eq_zero (x : H) (hx : x ∈ AddCommGroup.primaryComponent H ℓ) :
     ℓ ^ (Nat.card H).factorization ℓ • x = 0 := by
   set S := AddCommGroup.primaryComponent H ℓ
   have h1 : addOrderOf (⟨x, hx⟩ : S) ∣ Nat.card S := addOrderOf_dvd_natCard _
@@ -151,45 +87,30 @@ private lemma  pow_factorization_smul_eq_zero
   have h3 := congr_arg Subtype.val h2
   simpa using h3
 
-private lemma  mem_torsN
-  {H : Type*}
-  [AddCommGroup H]
-  [Finite H]
-  (ℓ : ℕ)
-  [hℓ : Fact ℓ.Prime]
-  {N : ℕ} {x : H} : x ∈ torsN H N ↔ N • x = 0 := Iff.rfl
+def torsN (H : Type*) [AddCommGroup H] (N : ℕ) : AddSubgroup H where
+  carrier := {x | N • x = 0}
+  zero_mem' := smul_zero _
+  add_mem' := fun {a b} ha hb => by
+    simp only [Set.mem_setOf_eq] at ha hb ⊢
+    rw [smul_add, ha, hb, add_zero]
+  neg_mem' := fun {a} ha => by
+    simp only [Set.mem_setOf_eq] at ha ⊢
+    rw [smul_neg, ha, neg_zero]
+
+omit [Finite H] hℓ in
+theorem mem_torsN {N : ℕ} {x : H} : x ∈ torsN H N ↔ N • x = 0 := Iff.rfl
 
 abbrev torsionPow (H : Type*) [AddCommGroup H] (ℓ m : ℕ) : AddSubgroup H := torsN H (ℓ ^ m)
 
 omit [Finite H] hℓ in
-
-private lemma  mem_torsionPow
-  {H : Type*}
-  [AddCommGroup H]
-  [Finite H]
-  (ℓ : ℕ)
-  [hℓ : Fact ℓ.Prime]
-  {m : ℕ} {x : H} : x ∈ torsionPow H ℓ m ↔ ℓ ^ m • x = 0 := Iff.rfl
+theorem mem_torsionPow {m : ℕ} {x : H} : x ∈ torsionPow H ℓ m ↔ ℓ ^ m • x = 0 := Iff.rfl
 
 omit [Finite H] hℓ in
-
-private lemma  torsionPow_le_primaryComponent
-    {H : Type*}
-    [AddCommGroup H]
-    [Finite H]
-    (ℓ : ℕ)
-    [hℓ : Fact ℓ.Prime]
-    (m : ℕ) :
+theorem torsionPow_le_primaryComponent (m : ℕ) :
     torsionPow H ℓ m ≤ AddCommGroup.primaryComponent H ℓ := fun x hx =>
   (mem_primaryComponent_iff ℓ x).mpr ⟨m, hx⟩
 
-private lemma  natCard_torsionPow_of_le
-    {H : Type*}
-    [AddCommGroup H]
-    [Finite H]
-    (ℓ : ℕ)
-    [hℓ : Fact ℓ.Prime]
-    (m : ℕ) (hm : (Nat.card H).factorization ℓ ≤ m) :
+theorem natCard_torsionPow_of_le (m : ℕ) (hm : (Nat.card H).factorization ℓ ≤ m) :
     Nat.card (torsionPow H ℓ m) = ℓ ^ (Nat.card H).factorization ℓ := by
   have heq : torsionPow H ℓ m = AddCommGroup.primaryComponent H ℓ := by
     refine le_antisymm (torsionPow_le_primaryComponent ℓ m) fun x hx => ?_
@@ -200,13 +121,7 @@ private lemma  natCard_torsionPow_of_le
 
 omit [Finite H] in
 
-private lemma  exists_injective_of_not_smul_eq_zero
-    {H : Type*}
-    [AddCommGroup H]
-    [Finite H]
-    (ℓ : ℕ)
-    [hℓ : Fact ℓ.Prime]
-    (m : ℕ) (x : H)
+theorem exists_injective_of_not_smul_eq_zero (m : ℕ) (x : H)
     (hxS : x ∈ AddCommGroup.primaryComponent H ℓ) (hxm : ℓ ^ m • x ≠ 0) :
     ∃ f : Fin (ℓ ^ m) → torsionPow H ℓ m, Function.Injective f := by
   classical
@@ -233,13 +148,7 @@ private lemma  exists_injective_of_not_smul_eq_zero
   · rw [Set.mem_Iio, hy_ord]; exact i.2
   · rw [Set.mem_Iio, hy_ord]; exact j.2
 
-private lemma  pow_le_natCard_torsionPow
-    {H : Type*}
-    [AddCommGroup H]
-    [Finite H]
-    (ℓ : ℕ)
-    [hℓ : Fact ℓ.Prime]
-    (m : ℕ) (hm : m ≤ (Nat.card H).factorization ℓ) :
+theorem pow_le_natCard_torsionPow (m : ℕ) (hm : m ≤ (Nat.card H).factorization ℓ) :
     ℓ ^ m ≤ Nat.card (torsionPow H ℓ m) := by
   classical
   set S := AddCommGroup.primaryComponent H ℓ with hS
@@ -254,20 +163,20 @@ private lemma  pow_le_natCard_torsionPow
     have := Nat.card_le_card_of_injective f hf
     rwa [Nat.card_eq_fintype_card, Fintype.card_fin] at this
 
-private theorem _root_.P2mLGlue.pow_dvd_iff_le_factorization
-    (ℓ : ℕ)
-    [hℓ : Fact ℓ.Prime]
-    {z : ℤ} (hz : z ≠ 0) (n : ℕ) :
+end Primary
+
+section Padic
+
+variable (ℓ : ℕ) [hℓ : Fact ℓ.Prime]
+
+private theorem _root_.P2mLGlue.pow_dvd_iff_le_factorization {z : ℤ} (hz : z ≠ 0) (n : ℕ) :
     (ℓ : ℤ) ^ n ∣ z ↔ n ≤ z.natAbs.factorization ℓ := by
   rw [← Int.natCast_pow, Int.natCast_dvd,
     Nat.Prime.pow_dvd_iff_le_factorization hℓ.out (Int.natAbs_ne_zero.mpr hz)]
 
 p2m_export "P2mLGlue" "pow_dvd_iff_le_factorization"
 
-private lemma  factorization_eq_of_dvd_sub
-    (ℓ : ℕ)
-    [hℓ : Fact ℓ.Prime]
-    {a b : ℤ} (hb : b ≠ 0)
+theorem factorization_eq_of_dvd_sub {a b : ℤ} (hb : b ≠ 0)
     (h : (ℓ : ℤ) ^ (b.natAbs.factorization ℓ + 1) ∣ a - b) :
     a ≠ 0 ∧ a.natAbs.factorization ℓ = b.natAbs.factorization ℓ := by
   set v := b.natAbs.factorization ℓ with hv
@@ -290,14 +199,15 @@ private lemma  factorization_eq_of_dvd_sub
     have := dvd_add h' hbv
     rwa [sub_add_cancel] at this
 
-private lemma  le_factorization_of_dvd
-    (ℓ : ℕ)
-    [hℓ : Fact ℓ.Prime]
-    {a : ℤ} (ha : a ≠ 0) {m : ℕ} (h : (ℓ : ℤ) ^ m ∣ a) :
+theorem le_factorization_of_dvd {a : ℤ} (ha : a ≠ 0) {m : ℕ} (h : (ℓ : ℤ) ^ m ∣ a) :
     m ≤ a.natAbs.factorization ℓ :=
   (pow_dvd_iff_le_factorization ℓ ha m).mp h
 
-private lemma  dvd_resultant_add_C_sub (G P : ℤ[X]) (N : ℕ) (c : ℤ) :
+end Padic
+
+section Resultant
+
+theorem dvd_resultant_add_C_sub (G P : ℤ[X]) (N : ℕ) (c : ℤ) :
     (N : ℤ) ∣ (G + C ((N : ℤ) * c)).resultant P - G.resultant P := by
   rw [← ZMod.intCast_eq_intCast_iff_dvd_sub]
   set φ := Int.castRingHom (ZMod N) with hφ
@@ -309,7 +219,7 @@ private lemma  dvd_resultant_add_C_sub (G P : ℤ[X]) (N : ℕ) (c : ℤ) :
   rw [Polynomial.map_add, map_C, map_mul, map_natCast, ZMod.natCast_self, zero_mul, C_0,
     add_zero]
 
-private lemma  resultant_map_eq_prod (G P : ℤ[X]) (hP : P.Monic) :
+theorem resultant_map_eq_prod (G P : ℤ[X]) (hP : P.Monic) :
     ((G.resultant P : ℤ) : ℂ) =
       (-1) ^ (G.natDegree * P.natDegree) *
         ((P.map (Int.castRingHom ℂ)).roots.map (fun z => (G.map (Int.castRingHom ℂ)).eval z)).prod := by
@@ -329,7 +239,7 @@ private lemma  resultant_map_eq_prod (G P : ℤ[X]) (hP : P.Monic) :
       hPcm.leadingCoeff, one_pow, one_mul]
   rw [h1, h2, h3]
 
-private lemma  finite_setOf_resultant_add_C_eq_zero (G P : ℤ[X]) (hP : P.Monic) (N : ℤ) (hN : N ≠ 0) :
+theorem finite_setOf_resultant_add_C_eq_zero (G P : ℤ[X]) (hP : P.Monic) (N : ℤ) (hN : N ≠ 0) :
     {c : ℤ | (G + C (N * c)).resultant P = 0}.Finite := by
   classical
   set Gc := G.map (Int.castRingHom ℂ) with hGc
@@ -354,19 +264,19 @@ private lemma  finite_setOf_resultant_add_C_eq_zero (G P : ℤ[X]) (hP : P.Monic
   refine Set.Finite.subset (Set.Finite.preimage ?_ bad.finite_toSet) hsub
   exact Int.cast_injective.injOn
 
-private lemma  infinite_setOf_cast_ne_zero
-    (R : Type*)
-    [CommRing R]
-    [IsDomain R]
-    (ℓ : ℕ)
-    [hℓ : Fact ℓ.Prime]
-    (hℓR : (ℓ : R) ≠ 0) (a : ℤ) (m : ℕ) :
+end Resultant
+
+section Choice
+
+variable (R : Type*) [CommRing R] [IsDomain R] (ℓ : ℕ) [hℓ : Fact ℓ.Prime]
+
+theorem infinite_setOf_cast_ne_zero (hℓR : (ℓ : R) ≠ 0) (a : ℤ) (m : ℕ) :
     {c : ℤ | ((a + (ℓ : ℤ) ^ m * c : ℤ) : R) ≠ 0}.Infinite := by
   obtain ⟨p, hp⟩ := CharP.exists R
-  haveI := hp
+  have := hp
   rcases CharP.char_is_prime_or_zero R p with hpp | rfl
   ·
-    haveI := Fact.mk hpp
+    have := Fact.mk hpp
     have hunit : IsUnit ((ℓ ^ m : ℕ) : ZMod p) := by
       rw [ZMod.isUnit_iff_coprime]
       apply Nat.Coprime.pow_left
@@ -399,7 +309,7 @@ private lemma  infinite_setOf_cast_ne_zero
     rw [this] at h0'
     exact one_ne_zero h0'
   ·
-    haveI := CharP.charP_to_charZero R
+    have := CharP.charP_to_charZero R
     have hsub : {c : ℤ | ((a + (ℓ : ℤ) ^ m * c : ℤ) : R) ≠ 0}ᶜ ⊆ {c : ℤ | a + (ℓ : ℤ) ^ m * c = 0} := by
       intro c hc
       simp only [Set.mem_compl_iff, Set.mem_setOf_eq, not_not] at hc
@@ -414,13 +324,7 @@ private lemma  infinite_setOf_cast_ne_zero
     have hcofin : {c : ℤ | ((a + (ℓ : ℤ) ^ m * c : ℤ) : R) ≠ 0}ᶜ.Finite := hfin.subset hsub
     exact Set.Finite.infinite_compl hcofin |>.mono (by simp)
 
-private lemma  exists_good
-    (R : Type*)
-    [CommRing R]
-    [IsDomain R]
-    (ℓ : ℕ)
-    [hℓ : Fact ℓ.Prime]
-    (hℓR : (ℓ : R) ≠ 0) (G P : ℤ[X]) (hP : P.Monic) (m : ℕ) :
+theorem exists_good (hℓR : (ℓ : R) ≠ 0) (G P : ℤ[X]) (hP : P.Monic) (m : ℕ) :
     ∃ c : ℤ, (((G + C (((ℓ ^ m : ℕ) : ℤ) * c)).coeff 0 : ℤ) : R) ≠ 0 ∧
       (G + C (((ℓ ^ m : ℕ) : ℤ) * c)).resultant P ≠ 0 := by
   have hℓm : (((ℓ ^ m : ℕ) : ℤ)) ≠ 0 := by exact_mod_cast pow_ne_zero _ hℓ.out.ne_zero
@@ -433,37 +337,27 @@ private lemma  exists_good
   push_cast at hc1 ⊢
   exact hc1
 
+end Choice
 
+section Assembly
 
+variable {M : Type*} [AddCommGroup M] (T : M →+ M)
 
 noncomputable abbrev kerG (G : ℤ[X]) : AddSubgroup M := (aeval (R := ℤ) T.toIntLinearMap G).toAddMonoidHom.ker
 
-private lemma  mem_kerG
-  {M : Type*}
-  [AddCommGroup M]
-  (T : M →+ M)
-  {G : ℤ[X]} {x : M} : x ∈ kerG T G ↔ aeval (R := ℤ) T.toIntLinearMap G x = 0 :=
+theorem mem_kerG {G : ℤ[X]} {x : M} : x ∈ kerG T G ↔ aeval (R := ℤ) T.toIntLinearMap G x = 0 :=
   Iff.rfl
 
-private lemma  aeval_add_C_apply
-    {M : Type*}
-    [AddCommGroup M]
-    (T : M →+ M)
-    {G : ℤ[X]} {N : ℕ} {c : ℤ} {x : M} (hx : N • x = 0) :
+theorem aeval_add_C_apply {G : ℤ[X]} {N : ℕ} {c : ℤ} {x : M} (hx : N • x = 0) :
     aeval (R := ℤ) T.toIntLinearMap (G + C ((N : ℤ) * c)) x = aeval (R := ℤ) T.toIntLinearMap G x := by
   rw [map_add, aeval_C, LinearMap.add_apply, Algebra.algebraMap_eq_smul_one, LinearMap.smul_apply,
     Module.End.one_apply, mul_comm, mul_smul, natCast_zsmul, hx, smul_zero, add_zero]
 
+variable (ℓ : ℕ) [hℓ : Fact ℓ.Prime]
 
 omit hℓ in
 
-private lemma  level_eq
-    {M : Type*}
-    [AddCommGroup M]
-    (T : M →+ M)
-    (ℓ : ℕ)
-    [hℓ : Fact ℓ.Prime]
-    (G : ℤ[X]) (m : ℕ) (c : ℤ) :
+theorem level_eq (G : ℤ[X]) (m : ℕ) (c : ℤ) :
     kerG T G ⊓ torsionPow M ℓ m = kerG T (G + C (((ℓ ^ m : ℕ) : ℤ) * c)) ⊓ torsionPow M ℓ m := by
   ext x
   simp only [AddSubgroup.mem_inf, mem_kerG, mem_torsionPow]
@@ -475,13 +369,23 @@ private lemma  level_eq
 
 omit hℓ in
 
-private lemma  natCard_level
-    {M : Type*}
-    [AddCommGroup M]
-    (T : M →+ M)
-    (ℓ : ℕ)
-    [hℓ : Fact ℓ.Prime]
-    (G : ℤ[X]) (m : ℕ) (c : ℤ) :
+noncomputable def levelEquiv (S : AddSubgroup M) (m : ℕ) :
+    torsionPow S ℓ m ≃ (S ⊓ torsionPow M ℓ m : AddSubgroup M) where
+  toFun x := ⟨((x : S) : M), (x : S).2, by
+    have hx : ℓ ^ m • (x : S) = 0 := x.2
+    have h' : ℓ ^ m • ((x : S) : M) = 0 := by
+      rw [← AddSubmonoidClass.coe_nsmul, hx, ZeroMemClass.coe_zero]
+    exact h'⟩
+  invFun y := ⟨⟨(y : M), y.2.1⟩, by
+    show ℓ ^ m • (⟨(y : M), y.2.1⟩ : S) = 0
+    apply Subtype.ext
+    have hy : ℓ ^ m • (y : M) = 0 := y.2.2
+    simpa using hy⟩
+  left_inv x := rfl
+  right_inv y := rfl
+
+omit hℓ in
+theorem natCard_level (G : ℤ[X]) (m : ℕ) (c : ℤ) :
     Nat.card (torsionPow (kerG T G) ℓ m) =
       Nat.card (torsionPow (kerG T (G + C (((ℓ ^ m : ℕ) : ℤ) * c))) ℓ m) := by
   rw [Nat.card_congr (levelEquiv ℓ (kerG T G) m),
@@ -490,42 +394,20 @@ private lemma  natCard_level
 
 omit hℓ in
 
-private lemma  kerG_one
-  {M : Type*}
-  [AddCommGroup M]
-  (T : M →+ M)
-  (ℓ : ℕ)
-  [hℓ : Fact ℓ.Prime]
-  : kerG T (1 : ℤ[X]) = ⊥ := by
+theorem kerG_one : kerG T (1 : ℤ[X]) = ⊥ := by
   ext x
   rw [mem_kerG, map_one, Module.End.one_apply, AddSubgroup.mem_bot]
 
 omit hℓ in
-
-private lemma  resultant_one_left
-  {M : Type*}
-  [AddCommGroup M]
-  (T : M →+ M)
-  (ℓ : ℕ)
-  [hℓ : Fact ℓ.Prime]
-  (P : ℤ[X]) : (1 : ℤ[X]).resultant P = 1 := by
+theorem resultant_one_left (P : ℤ[X]) : (1 : ℤ[X]).resultant P = 1 := by
   rw [show (1 : ℤ[X]) = C 1 from C_1.symm]
   show resultant (C 1) P (C (1 : ℤ)).natDegree P.natDegree = 1
   rw [natDegree_C, resultant_C_left]
   simp
 
-private lemma  monic_add_C
-    {M : Type*}
-    [AddCommGroup M]
-    (T : M →+ M)
-    (ℓ : ℕ)
-    [hℓ : Fact ℓ.Prime]
-    (P : ℤ[X])
-    (hP : P.Monic)
-    (R : Type*)
-    [CommRing R]
-    [IsDomain R]
-    {G : ℤ[X]} (hG : G.Monic) (hG0 : G.natDegree ≠ 0) (a : ℤ) :
+variable (P : ℤ[X]) (hP : P.Monic) (R : Type*) [CommRing R] [IsDomain R]
+
+theorem monic_add_C {G : ℤ[X]} (hG : G.Monic) (hG0 : G.natDegree ≠ 0) (a : ℤ) :
     (G + C a).Monic :=
   hG.add_of_left (degree_C_le.trans_lt (by
     rw [degree_eq_natDegree hG.ne_zero]
@@ -533,18 +415,7 @@ private lemma  monic_add_C
 
 include hP in
 
-private lemma  clause_one
-    {M : Type*}
-    [AddCommGroup M]
-    (T : M →+ M)
-    (ℓ : ℕ)
-    [hℓ : Fact ℓ.Prime]
-    (P : ℤ[X])
-    (hP : P.Monic)
-    (R : Type*)
-    [CommRing R]
-    [IsDomain R]
-    (hℓR : (ℓ : R) ≠ 0)
+theorem clause_one (hℓR : (ℓ : R) ≠ 0)
     (h : ∀ G : ℤ[X], G.Monic → ((G.coeff 0 : ℤ) : R) ≠ 0 →
         (G.resultant P ≠ 0 → Nat.card (kerG T G) = (G.resultant P).natAbs) ∧
         (G.resultant P = 0 → ¬ Finite (kerG T G)))
@@ -558,7 +429,7 @@ private lemma  clause_one
     subst hG1
     rw [resultant_one_left]
     simp only [Int.natAbs_one, Nat.factorization_one, Finsupp.coe_zero, Pi.zero_apply, pow_zero]
-    haveI : Subsingleton (kerG T (1 : ℤ[X])) := by
+    have : Subsingleton (kerG T (1 : ℤ[X])) := by
       rw [kerG_one]; infer_instance
     exact Nat.card_unique
 
@@ -573,14 +444,14 @@ private lemma  clause_one
     exact this
   obtain ⟨hres', hv'⟩ := factorization_eq_of_dvd_sub ℓ hres hdvd
   have hcard' : Nat.card (kerG T G') = (G'.resultant P).natAbs := (h G' hG'm hc0).1 hres'
-  haveI : Finite (kerG T G') :=
+  have : Finite (kerG T G') :=
     Nat.finite_of_card_ne_zero (by rw [hcard']; exact Int.natAbs_ne_zero.mpr hres')
 
   have hlev' : Nat.card (torsionPow (kerG T G') ℓ m) = ℓ ^ v := by
     rw [natCard_torsionPow_of_le ℓ m (by rw [hcard', hv']; omega), hcard', hv']
   have hlev : Nat.card (torsionPow (kerG T G) ℓ m) = ℓ ^ v := by
     rw [natCard_level T ℓ G m c, hlev']
-  haveI hfinlev : Finite (torsionPow (kerG T G) ℓ m) :=
+  have hfinlev : Finite (torsionPow (kerG T G) ℓ m) :=
     Nat.finite_of_card_ne_zero (by rw [hlev]; exact pow_ne_zero _ hℓ.out.ne_zero)
 
   have hKeq : AddCommGroup.primaryComponent (kerG T G) ℓ = torsionPow (kerG T G) ℓ m := by
@@ -594,18 +465,7 @@ private lemma  clause_one
 
 include hP in
 
-private lemma  clause_two
-    {M : Type*}
-    [AddCommGroup M]
-    (T : M →+ M)
-    (ℓ : ℕ)
-    [hℓ : Fact ℓ.Prime]
-    (P : ℤ[X])
-    (hP : P.Monic)
-    (R : Type*)
-    [CommRing R]
-    [IsDomain R]
-    (hℓR : (ℓ : R) ≠ 0)
+theorem clause_two (hℓR : (ℓ : R) ≠ 0)
     (h : ∀ G : ℤ[X], G.Monic → ((G.coeff 0 : ℤ) : R) ≠ 0 →
         (G.resultant P ≠ 0 → Nat.card (kerG T G) = (G.resultant P).natAbs) ∧
         (G.resultant P = 0 → ¬ Finite (kerG T G)))
@@ -631,7 +491,7 @@ private lemma  clause_two
     exact this
   have hmle : m ≤ (G'.resultant P).natAbs.factorization ℓ := le_factorization_of_dvd ℓ hcres hdvd
   have hcard' : Nat.card (kerG T G') = (G'.resultant P).natAbs := (h G' hG'm hc0).1 hcres
-  haveI : Finite (kerG T G') :=
+  have : Finite (kerG T G') :=
     Nat.finite_of_card_ne_zero (by rw [hcard']; exact Int.natAbs_ne_zero.mpr hcres)
   have hlev' : ℓ ^ m ≤ Nat.card (torsionPow (kerG T G') ℓ m) :=
     pow_le_natCard_torsionPow ℓ m (by rwa [hcard'])
@@ -642,29 +502,32 @@ private lemma  clause_two
       (AddSubgroup.inclusion_injective (torsionPow_le_primaryComponent ℓ m))
   have hlt : n < ℓ ^ m := Nat.lt_pow_self hℓ.out.one_lt
   omega
+
+end Assembly
+
+end P2mLGlue
+
+/--
+[AddCommGroup_natCard_primaryComponent_ker_aeval_of_forall_natCard_ker_aeval_eq_natAbs_resultant](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AddCommGroup_natCard_primaryComponent_ker_aeval_of_forall_natCard_ker_aeval_eq_natAbs_resultant.lean)
+-/
 @[path]
 private lemma main
-  :
--- imply
-  {M : Type*} [AddCommGroup M] (T : M →+ M) (P : Polynomial ℤ) (hP : P.Monic)
+    {M : Type*} [AddCommGroup M] (T : M →+ M) (P : Polynomial ℤ) (hP : P.Monic)
     (R : Type*) [CommRing R] [IsDomain R]
     (h : ∀ G : Polynomial ℤ, G.Monic → ((G.coeff 0 : ℤ) : R) ≠ 0 →
         (G.resultant P ≠ 0 →
-          Nat.card (Polynomial.aeval (R :=
--- proof
-  ℤ) T.toIntLinearMap G).toAddMonoidHom.ker =
-              (G.resultant P).natAbs) ∧
-          (G.resultant P = 0 →
-            ¬ Finite (Polynomial.aeval (R := ℤ) T.toIntLinearMap G).toAddMonoidHom.ker))
-      (G : Polynomial ℤ) (hG : G.Monic) (ℓ : ℕ) [Fact ℓ.Prime] (hℓ : (ℓ : R) ≠ 0) :
-      (G.resultant P ≠ 0 →
-        Nat.card (AddCommGroup.primaryComponent
-          (Polynomial.aeval (R := ℤ) T.toIntLinearMap G).toAddMonoidHom.ker ℓ) =
-          ℓ ^ ((G.resultant P).natAbs.factorization ℓ)) ∧
-      (G.resultant P = 0 →
-        ¬ Finite (AddCommGroup.primaryComponent
-          (Polynomial.aeval (R := ℤ) T.toIntLinearMap G).toAddMonoidHom.ker ℓ)) :=
-    ⟨clause_one T ℓ P hP R hℓ h G hG, clause_two T ℓ P hP R hℓ h G hG⟩
-
+          Nat.card (Polynomial.aeval (R := ℤ) T.toIntLinearMap G).toAddMonoidHom.ker =
+            (G.resultant P).natAbs) ∧
+        (G.resultant P = 0 →
+          ¬ Finite (Polynomial.aeval (R := ℤ) T.toIntLinearMap G).toAddMonoidHom.ker))
+    (G : Polynomial ℤ) (hG : G.Monic) (ℓ : ℕ) [Fact ℓ.Prime] (hℓ : (ℓ : R) ≠ 0) :
+    (G.resultant P ≠ 0 →
+      Nat.card (AddCommGroup.primaryComponent
+        (Polynomial.aeval (R := ℤ) T.toIntLinearMap G).toAddMonoidHom.ker ℓ) =
+        ℓ ^ ((G.resultant P).natAbs.factorization ℓ)) ∧
+    (G.resultant P = 0 →
+      ¬ Finite (AddCommGroup.primaryComponent
+        (Polynomial.aeval (R := ℤ) T.toIntLinearMap G).toAddMonoidHom.ker ℓ)) :=
+  ⟨P2mLGlue.clause_one T ℓ P hP R hℓ h G hG, P2mLGlue.clause_two T ℓ P hP R hℓ h G hG⟩
 
 -- created on 2026-10-09
