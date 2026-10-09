@@ -1,7 +1,5 @@
-module
-
-public import Mathlib.Analysis.CStarAlgebra.Classes
-public import Mathlib.Analysis.Calculus.FDeriv.Defs
+import Mathlib.Analysis.CStarAlgebra.Classes
+import Mathlib.Analysis.Calculus.FDeriv.Defs
 import Mathlib.Analysis.Complex.Liouville
 import Mathlib.Analysis.Complex.LocallyUniformLimit
 import Mathlib.Topology.ContinuousMap.Bounded.ArzelaAscoli
@@ -12,11 +10,9 @@ import Mathlib.Topology.ContinuousMap.Bounded.ArzelaAscoli
 Proves `Wanted` entries `montel` and `vitali`.
 -/
 
-@[expose] public section
-
 open Set Filter Topology
 
-namespace MathlibExt.Analysis.Complex.NormalFamilies
+namespace Complex.NormalFamilies
 
 /-- Local uniform boundedness of `F` on `U`: every `x ∈ U` has neighbourhood `V ⊆ U`
 and `C ≥ 0` with `‖F n y‖ ≤ C` for all `n` and `y ∈ V`. -/
@@ -486,4 +482,4 @@ theorem vitali
     linarith
   exact ⟨f₀, hf₀diff, hf₀g, hfull⟩
 
-end MathlibExt.Analysis.Complex.NormalFamilies
+end Complex.NormalFamilies
