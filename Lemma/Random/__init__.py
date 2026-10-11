@@ -84,3 +84,4 @@ from . import TSum_MulPow_IntegralInterPreimage_Preimage
 from . import Integral_TSum_PowMul
 from . import Integral_TSum_MulPow
 from . import Zero
+from . import Eq_Sub_MulMul
