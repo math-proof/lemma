@@ -44,4 +44,4 @@ private lemma logarithmic_integral_of_one_lt_eq
   apply Real.logarithmicIntegral_of_one_lt (x := x) hx
 
 
--- created on 2026-10-11
+-- created on 2020-06-09

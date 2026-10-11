@@ -33,4 +33,4 @@ private lemma main
   rw [h₁.csInf_eq, h₂.csInf_eq]
 
 
--- created on 2026-10-08
+-- created on 2020-12-18

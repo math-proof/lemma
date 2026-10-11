@@ -26,4 +26,4 @@ private lemma main
   apply hmono (Ico_subset_Icc_self hx) (right_mem_Icc.mpr (le_trans hx.1 hx.2.le)) hx.2
 
 
--- created on 2026-10-07
+-- created on 2019-09-20

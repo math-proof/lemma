@@ -284,5 +284,5 @@ private lemma main
         integral_probJoint_fst (x := s (n + 1)) (y := s n) hP hα v
 
 
--- created on 2026-10-01
+-- created on 2023-04-04
 -- updated on 2026-10-10

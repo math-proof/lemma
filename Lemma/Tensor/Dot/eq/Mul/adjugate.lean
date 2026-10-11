@@ -12,4 +12,4 @@ private lemma main
   Matrix.mul_adjugate A
 
 
--- created on 2026-10-09
+-- created on 2020-02-10

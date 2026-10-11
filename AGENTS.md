@@ -57,3 +57,4 @@ When the user says to send this issue / problem / bug / job / task to **Mr. Agen
 
 ## Git
 - Stay on `main`. Do not switch to any other branch; merge changes into `main` instead.
+- Work only in `/home/cosmos/src/lean` (same tree as `/home/cosmos/github/lean`). Never edit or commit in `E:\github\lean` / `/mnt/e/github/lean`; the only git command allowed there is `git pull`.

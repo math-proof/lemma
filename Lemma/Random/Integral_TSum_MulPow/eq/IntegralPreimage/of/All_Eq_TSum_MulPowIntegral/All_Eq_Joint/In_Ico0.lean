@@ -1,4 +1,5 @@
 import sympy.stats.policy_trajectory
+import sympy.functions.elementary.miscellaneous
 import sympy.stats.cond_expectation
 import sympy.Basic
 import Lemma.Random.Eq_0.of.EqReal_0
@@ -76,7 +77,8 @@ private lemma main
     have h₃ := cond_eq_zero_of_meas_eq_zero (Eq_0.of.EqReal_0 (M := M) θ hP)
     simp only [← hVi t x, h₃, integral_zero_measure]
   else
-    have hVsum : Vloc θ t x = ∑' k, γ ^ k * M.W θ M.rc k x := by
+    let rc (z : ℝ × S × A) : ℝ := clip z.1 (-M.env.R) M.env.R
+    have hVsum : Vloc θ t x = ∑' k, γ ^ k * M.W θ rc k x := by
       simpa [Vloc] using V.eq.TSum_MulPowWRc.of.Ne0Real_Preimage.In_Ico (M := M) θ t x h₀ h₁ hP
     rw [hVsum, Integral.eq.MulRealPreimageSIntegral_MulEqS h₁]
     have h₃ : ∀ ω, (if s t ω = x then (1:ℝ) else 0) * Qloc x (a t ω) =
@@ -90,8 +92,8 @@ private lemma main
     rw [Finset.mul_sum]
     have h₄ : ∀ u, ((M θ).real (s t ⁻¹' {x}))⁻¹ *
         ((M θ).real (s t ⁻¹' {x}) * M.pol.prob θ x u * Qloc x u) =
-        M.pol.prob θ x u * ((∫ ρ, M.rc (ρ, x, u) ∂(M.env.reward (x, u))) +
-          γ * ∑ y, (M.env.trans (x, u)).real {y} * ∑' k, γ ^ k * M.W θ M.rc k y) := by
+        M.pol.prob θ x u * ((∫ ρ, rc (ρ, x, u) ∂(M.env.reward (x, u))) +
+          γ * ∑ y, (M.env.trans (x, u)).real {y} * ∑' k, γ ^ k * M.W θ rc k y) := by
       intro u
       rw [mul_assoc, inv_mul_cancel_left₀ hP]
       if hu : M.pol.prob θ x u = 0 then
@@ -102,7 +104,9 @@ private lemma main
     simp_rw [h₄]
     rw [TSum_MulPowW.eq.AddWMul_Sum_MulProbSum_MulTTSum_MulPowW.of.In_Ico (M := M) h₀ θ x, W0.eq.Sum_MulProbIntegral.of.All_LeNorm.StronglyMeasurable (M := M) (Random.StronglyMeasurableRc (M := M)) (NormRc.le.AbsR (M := M)) θ x, Finset.mul_sum,
       ← Finset.sum_add_distrib]
-    exact Finset.sum_congr rfl (fun u _ => by ring)
+    apply Finset.sum_congr rfl (fun u _ => by ring)
 
 
--- created on 2026-10-11
+-- created on 2023-03-29
+-- updated on 2026-10-11
+

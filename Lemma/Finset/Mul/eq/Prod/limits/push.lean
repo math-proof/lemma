@@ -14,4 +14,4 @@ private lemma main
   exact (Finset.prod_Ico_succ_top h f).symm
 
 
--- created on 2026-10-01
+-- created on 2020-02-01

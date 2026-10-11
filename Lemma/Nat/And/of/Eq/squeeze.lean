@@ -13,4 +13,4 @@ private lemma main
   exact Nat.Eq.of.And.squeeze h
 
 
--- created on 2026-10-03
+-- created on 2019-04-05

@@ -100,7 +100,7 @@ private lemma main
   have hP1 : ∀ y, (ℙ[M θ]((s (t + 1)) = y | (s t) = x) : ℝ) = M.P1 θ x y := by
     intro y
     rw [ProbCond.eq.Div.of.Eq_Count.Eq_Count (π := M θ) (x := s (t + 1)) (y := s t) h₂ h₂ y x,
-      ENNReal.toReal_div, ← RealPreimageSPreimageS_Add_1.eq.P1.of.Ne0Real_Preimage (M := M) h₁ θ t x y h₈,
+      ENNReal.toReal_div, ← RealPreimageSPreimageS_Add_1.eq.P1.of.Ne0Real_Preimage (M := M) θ t x y h₁ h₈,
       measureReal_def]
     erw [cond_apply (hs t (measurableSet_singleton x))]
     rw [ENNReal.toReal_mul, ENNReal.toReal_inv, mul_comm, div_eq_mul_inv]
@@ -111,5 +111,5 @@ private lemma main
   simp only [Qloc, Vloc]
 
 
--- created on 2026-10-07
+-- created on 2023-03-30
 -- updated on 2026-10-10

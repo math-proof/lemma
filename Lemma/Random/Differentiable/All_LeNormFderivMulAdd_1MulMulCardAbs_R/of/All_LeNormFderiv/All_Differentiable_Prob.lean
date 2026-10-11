@@ -21,27 +21,30 @@ private lemma main
   {s : ℕ → (ℕ → ℝ × S × A) → S}
   {a : ℕ → (ℕ → ℝ × S × A) → A}
 -- given
-  (h₁ : ∀ t, (· t) = (r t, s t, a t))
-  (h₂ : ∀ x u, Differentiable ℝ (fun θ => M.pol.prob θ x u))
-  (h₃ : ∀ θ x u, ‖fderiv ℝ (fun θ => M.pol.prob θ x u) θ‖ ≤ Cp)
+  (h₀ : ∀ t, (· t) = (r t, s t, a t))
+  (h₁ : ∀ x u, Differentiable ℝ (fun θ => M.pol.prob θ x u))
+  (h₂ : ∀ θ x u, ‖fderiv ℝ (fun θ => M.pol.prob θ x u) θ‖ ≤ Cp)
   (t : ℕ) :
 -- imply
   Differentiable ℝ (fun θ => ∫ ω, r t ω ∂(M θ)) ∧
     ∀ θ, ‖fderiv ℝ (fun θ => ∫ ω, r t ω ∂(M θ)) θ‖ ≤
     (t + 1) * (Fintype.card A * Cp * |M.env.R|) := by
 -- proof
-  have e : (fun θ => ∫ ω, r t ω ∂(M θ)) = fun θ => ∑ x, M.env.init.real {x} * M.W θ M.rc t x :=
-    funext fun θ => Integral_R.eq.Sum_MulRealWRc (M := M) h₁ θ t
+  let rc (z : ℝ × S × A) : ℝ := clip z.1 (-M.env.R) M.env.R
+  have e : (fun θ => ∫ ω, r t ω ∂(M θ)) = fun θ => ∑ x, M.env.init.real {x} * M.W θ rc t x :=
+    funext fun θ => Integral_R.eq.Sum_MulRealWRc (M := M) h₀ θ t
   rw [e]
-  have hW := fun x => Random.Differentiable.All_LeNormFderiv_MulAdd_1_MulMulCard.of.All_LeNorm.StronglyMeasurable.All_LeNormFderiv.All_All_Differentiable_FunPolProb (M := M) h₂ h₃ (Random.StronglyMeasurableRc (M := M)) (NormRc.le.AbsR (M := M)) t x
+  have hW := fun x => Differentiable.All_LeNormFderiv_MulAdd_1_MulMulCard.of.All_LeNorm.StronglyMeasurable.All_LeNormFderiv.All_All_Differentiable_FunPolProb (M := M) h₁ h₂ (StronglyMeasurableRc (M := M)) (NormRc.le.AbsR (M := M)) t x
   refine ⟨fun θ => DifferentiableAt.fun_sum fun x _ => ((hW x).1 θ).const_mul _, fun θ => ?_⟩
   rw [fderiv_fun_sum fun x _ => ((hW x).1 θ).const_mul _]
-  calc _ ≤ ∑ x, ‖fderiv ℝ (fun θ => M.env.init.real {x} * M.W θ M.rc t x) θ‖ := norm_sum_le _ _
+  calc
+    _ ≤ ∑ x, ‖fderiv ℝ (fun θ => M.env.init.real {x} * M.W θ rc t x) θ‖ := norm_sum_le _ _
     _ ≤ ∑ x, M.env.init.real {x} * ((t + 1) * (Fintype.card A * Cp * |M.env.R|)) := by
-        refine Finset.sum_le_sum fun x _ => ?_
-        rw [fderiv_const_mul ((hW x).1 θ), norm_smul, Real.norm_of_nonneg measureReal_nonneg]
-        exact mul_le_mul_of_nonneg_left ((hW x).2 θ) measureReal_nonneg
+      refine Finset.sum_le_sum fun x _ => ?_
+      rw [fderiv_const_mul ((hW x).1 θ), norm_smul, Real.norm_of_nonneg measureReal_nonneg]
+      exact mul_le_mul_of_nonneg_left ((hW x).2 θ) measureReal_nonneg
     _ = _ := by rw [← Finset.sum_mul, Sum_Real.eq.One, one_mul]
 
 
 -- created on 2026-10-06
+-- updated on 2026-10-11

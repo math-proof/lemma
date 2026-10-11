@@ -222,4 +222,4 @@ private lemma main
     linarith [hsym, hred_t, hcmp]
 
 
--- created on 2026-10-07
+-- created on 2023-10-03

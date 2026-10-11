@@ -23,8 +23,10 @@ private lemma main
     ∫ h, ∫ z, φ (h, z) ∂(M.K θ (h ⟨n, mem_Iic.2 le_rfl⟩))
       ∂((M θ).map (Preorder.frestrictLe n)) := by
 -- proof
+  have := M.env.init_prob
+  let μ₀ : Measure (ℝ × S × A) := M.stageK θ ∘ₘ M.env.init
   have h := Kernel.map_frestrictLe_trajMeasure_compProd_eq_map_trajMeasure
-    (X := fun _ ↦ ℝ × S × A) (μ₀ := M.μ₀ θ) (κ := M.step θ) (a := n)
+    (X := fun _ ↦ ℝ × S × A) (μ₀ := μ₀) (κ := M.step θ) (a := n)
   have e : ∫ ω, φ (Preorder.frestrictLe n ω, ω (n + 1)) ∂(M θ) =
       ∫ p, φ p ∂((M θ).map (fun x ↦ (Preorder.frestrictLe n x, x (n + 1)))) := by
     rw [integral_map (by fun_prop) hφ.aestronglyMeasurable]
@@ -32,7 +34,7 @@ private lemma main
   unfold Model.traj
   rw [← h, Measure.integral_compProd]
   · rfl
-  · exact Integrable.of_bound hφ.aestronglyMeasurable C (Filter.Eventually.of_forall hC)
+  · apply Integrable.of_bound hφ.aestronglyMeasurable C (Filter.Eventually.of_forall hC)
 
 
 -- created on 2026-10-07

@@ -12,4 +12,4 @@ private lemma main
   exact Nat.succ_le_of_lt h
 
 
--- created on 2026-10-03
+-- created on 2018-05-12

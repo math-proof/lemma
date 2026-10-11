@@ -3,6 +3,7 @@ import sympy.Basic
 import Lemma.Random.Integral_Mul.eq.Integral_Mul_Kf.of.All_LeNorm.StronglyMeasurable.All_LeNorm.StronglyMeasurable
 import Lemma.Random.Integral_MulEqS.eq.MulRealPreimageSIntegral.of.All_LeNorm.StronglyMeasurable
 import Lemma.Random.StronglyMeasurable_KfAndAll_LeNormKf.of.All_LeNorm.StronglyMeasurable
+import Lemma.Random.W.eq.Integral
 import Lemma.Real.Norm_1.le.One
 import Lemma.Real.StronglyMeasurable_Eq12
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random Real
@@ -22,19 +23,21 @@ private lemma main
   {s : ℕ → (ℕ → ℝ × S × A) → S}
   {a : ℕ → (ℕ → ℝ × S × A) → A}
 -- given
-  (h₁ : ∀ t, (· t) = (r t, s t, a t))
+  (h₀ : ∀ t, (· t) = (r t, s t, a t))
+  (h₁ : StronglyMeasurable f)
+  (h₂ : ∀ z, ‖f z‖ ≤ C)
   (θ : Θ)
-  (h₂ : StronglyMeasurable f)
-  (h₃ : ∀ z, ‖f z‖ ≤ C)
   (t j : ℕ)
   (x : S) :
 -- imply
   ∫ ω, (if s t ω = x then (1:ℝ) else 0) * f (ω (t + j)) ∂(M θ) =
     (M θ).real (s t ⁻¹' {x}) * M.W θ f j x := by
 -- proof
-  obtain rfl : s = fun t ω ↦ (ω t).2.1 := funext₂ fun t ω ↦ (congrArg (·.2.1) (congrFun (h₁ t) ω)).symm
-  have hK := StronglyMeasurable_KfAndAll_LeNormKf.of.All_LeNorm.StronglyMeasurable (M := M) h₂ h₃ θ j
-  exact (Integral_Mul.eq.Integral_Mul_Kf.of.All_LeNorm.StronglyMeasurable.All_LeNorm.StronglyMeasurable (M := M) h₂ h₃ (Real.StronglyMeasurable_Eq12 x) (Norm_1.le.One) θ t j).trans (Integral_MulEqS.eq.MulRealPreimageSIntegral.of.All_LeNorm.StronglyMeasurable h₁ (M := M) hK.1 hK.2 θ t x)
+  obtain rfl : s = fun t ω ↦ (ω t).2.1 := funext₂ fun t ω ↦ (congrArg (·.2.1) (congrFun (h₀ t) ω)).symm
+  have hK := StronglyMeasurable_KfAndAll_LeNormKf.of.All_LeNorm.StronglyMeasurable (M := M) h₁ h₂ θ j
+  refine (Integral_Mul.eq.Integral_Mul_Kf.of.All_LeNorm.StronglyMeasurable.All_LeNorm.StronglyMeasurable (M := M) h₁ h₂ (Real.StronglyMeasurable_Eq12 x) (Norm_1.le.One) θ t j).trans ?_
+  refine (Integral_MulEqS.eq.MulRealPreimageSIntegral.of.All_LeNorm.StronglyMeasurable h₀ (M := M) hK.1 hK.2 θ t x).trans ?_
+  rw [W.eq.Integral (M := M) θ j x]
 
 
 -- created on 2026-10-06

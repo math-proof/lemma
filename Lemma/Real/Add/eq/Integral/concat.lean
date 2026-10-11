@@ -16,4 +16,4 @@ private lemma main
   intervalIntegral.integral_add_adjacent_intervals hab hbc
 
 
--- created on 2026-10-08
+-- created on 2023-03-21

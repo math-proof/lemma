@@ -89,7 +89,7 @@ private lemma main
       have hP : (M θ).real (s 0 ⁻¹' {x}) ≠ 0 := by rwa [RealPreimageS0.eq.Real h₁]
       have hg := Zero.eq.AddSum_SMulPowSum_SMul_SMulPow_Sum_SMul.of.Real.ne.Zero.GtInftySup.All_Differentiable.All_Eq_Expect_CondDot.All_Eq_Expect_CondDot.Measure.eq.Count.Measure.eq.Count.All_Eq_Joint.In_Ico0 (Q := Qloc) (V := Vloc) h₀ h₁ hS hA hQ_expect hV_expect h₄ h₄n hP n
       have h' : ∀ t y, ((M θ)[|s 0 ⁻¹' {x}]).real (s t ⁻¹' {y}) = M.Pn θ t x y := fun t y => by
-        have h'' := RealPreimageSPreimageS_Add.eq.Pn.of.Ne0Real_Preimage (M := M) h₁ θ 0 t x y hP
+        have h'' := RealPreimageSPreimageS_Add.eq.Pn.of.Ne0Real_Preimage (M := M) θ 0 t x y h₁ hP
         rwa [zero_add] at h''
       simp_rw [h'] at hg
       have h : fderiv ℝ (fun θ => Vloc θ 0 x) θ =
@@ -130,4 +130,4 @@ private lemma main
     ring
 
 
--- created on 2026-10-11
+-- created on 2023-04-04

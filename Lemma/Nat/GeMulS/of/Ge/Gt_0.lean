@@ -13,4 +13,4 @@ private lemma main
   -- proof
   exact mul_le_mul_of_nonneg_right hge (le_of_lt hx)
 
--- created on 2020-02-03
+-- created on 2018-07-19

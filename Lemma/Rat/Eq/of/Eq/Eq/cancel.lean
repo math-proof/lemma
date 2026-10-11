@@ -13,4 +13,4 @@ private lemma main
   -- proof
   exact mul_right_cancel₀ hc h
 
--- created on 2019-05-22
+-- created on 2019-03-23

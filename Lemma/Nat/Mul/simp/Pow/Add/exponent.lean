@@ -11,4 +11,4 @@ private lemma main
   -- proof
   exact (pow_add x m n).symm
 
--- created on 2019-11-26
+-- created on 2022-07-07

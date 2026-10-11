@@ -27,4 +27,4 @@ private lemma main
   simp only [MeasureTheory.Measure.addHaar_smul, Module.finrank_self, pow_one]
 
 
--- created on 2026-10-07
+-- created on 2021-09-07

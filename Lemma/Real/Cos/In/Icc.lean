@@ -10,4 +10,4 @@ private lemma main
   -- proof
   exact ⟨Real.neg_one_le_cos x, Real.cos_le_one x⟩
 
--- created on 2023-11-26
+-- created on 2023-10-03

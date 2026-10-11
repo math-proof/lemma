@@ -102,4 +102,4 @@ private lemma main
     apply MulProbMulTV.eq.MulProbMulTTSum_MulPowW.of.Ne0Real_Preimage.In_Ico (M := M) θ t x h₀ h₁ hP₀ u y
 
 
--- created on 2026-10-11
+-- created on 2023-03-29

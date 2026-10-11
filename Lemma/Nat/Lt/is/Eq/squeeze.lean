@@ -14,4 +14,4 @@ private lemma main
   · intro h
     constructor <;> omega
 
--- created on 2021-01-15
+-- created on 2020-01-10

@@ -12,4 +12,4 @@ private lemma main
   (intervalIntegral.integral_mul_const y f).symm
 
 
--- created on 2026-10-03
+-- created on 2020-06-06

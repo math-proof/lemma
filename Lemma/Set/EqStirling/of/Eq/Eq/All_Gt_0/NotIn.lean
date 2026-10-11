@@ -90,4 +90,4 @@ private lemma main
     simpa [ha_def, Finset.erase_eq_of_notMem (hout i hij)] using hpos i
 
 
--- created on 2026-10-10
+-- created on 2021-07-27

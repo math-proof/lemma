@@ -16,4 +16,4 @@ private lemma main
   rw [hs, add_sub_cancel_right]
 
 
--- created on 2026-10-03
+-- created on 2019-11-07

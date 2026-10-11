@@ -26,4 +26,4 @@ private lemma main
     exact ⟨(n : ℕ) + 1, by omega, rfl⟩
 
 
--- created on 2026-10-08
+-- created on 2021-09-08

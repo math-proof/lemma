@@ -94,4 +94,4 @@ private lemma main
           (hmin j ⟨i, Finset.mem_range.mp hi⟩) 2
 
 
--- created on 2026-10-09
+-- created on 2020-12-26

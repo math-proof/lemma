@@ -1,4 +1,5 @@
 import sympy.stats.policy_trajectory
+import sympy.functions.elementary.miscellaneous
 import sympy.Basic
 import Lemma.Random.NormRc.le.AbsR
 import Lemma.Random.StronglyMeasurableRc
@@ -23,9 +24,11 @@ private lemma main
   (θ : Θ)
   (x : S) :
 -- imply
-  ∑' k, γ ^ k * M.W θ M.rc k x = M.W θ M.rc 0 x +
-    γ * ∑ u, M.pol.prob θ x u * ∑ y, (M.env.trans (x, u)).real {y} * ∑' k, γ ^ k * M.W θ M.rc k y := by
+  let rc (z : ℝ × S × A) : ℝ := clip z.1 (-M.env.R) M.env.R
+  ∑' k, γ ^ k * M.W θ rc k x = M.W θ rc 0 x +
+    γ * ∑ u, M.pol.prob θ x u * ∑ y, (M.env.trans (x, u)).real {y} * ∑' k, γ ^ k * M.W θ rc k y := by
 -- proof
+  intro rc
   rw [(Summable_MulPowWRc.of.In_Ico (M := M) hγ θ x).tsum_eq_zero_add, pow_zero, one_mul]
   congr 1
   simp_rw [WAdd_1.eq.Sum_MulProbSum_MulTW.of.All_LeNorm.StronglyMeasurable (M := M) (Random.StronglyMeasurableRc (M := M)) (NormRc.le.AbsR (M := M)) θ, pow_succ, mul_comm _ γ, mul_assoc γ]
@@ -36,3 +39,4 @@ private lemma main
 
 
 -- created on 2026-10-07
+-- updated on 2026-10-11

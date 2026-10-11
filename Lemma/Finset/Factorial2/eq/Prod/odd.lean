@@ -20,4 +20,4 @@ private lemma main
     simp [Finset.mem_Ico, Finset.mem_Icc]
     omega
   rw [hico]
--- created on 2023-08-17
+-- created on 2023-06-03

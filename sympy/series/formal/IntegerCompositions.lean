@@ -54,6 +54,8 @@ See the source LaTeX file `AlgebraicCombinatorics/tex/FPS/IntegerCompositions.te
 -/
 
 open Finset Nat BigOperators
+set_option allowUnsafeReducibility true
+attribute [local reducible] PNat
 
 namespace AlgebraicCombinatorics
 
@@ -102,7 +104,8 @@ theorem size_cons (a : ℕ+) (α : Composition) : size (a :: α) = a.val + size 
 
 /-- The length of a cons composition is the tail length plus 1. -/
 @[simp]
-theorem len_cons (a : ℕ+) (α : Composition) : len (a :: α) = len α + 1 := rfl
+theorem len_cons (a : ℕ+) (α : Composition) : len (a :: α) = len α + 1 := by
+  simp only [len, List.length_cons]
 
 /-- The size of a composition is at least its length, since each part is positive. -/
 theorem size_ge_len (α : Composition) : α.len ≤ α.size := by
@@ -136,17 +139,15 @@ instance : Append Composition := ⟨append⟩
 
 /-- The size of the concatenation of two compositions equals the sum of their sizes. -/
 @[simp]
-theorem size_append (α β : Composition) : (α ++ β).size = α.size + β.size := by
-  change size (append α β) = size α + size β
-  unfold append size
-  simp only [List.map_append, List.sum_append]
+theorem size_append (α β : Composition) : (α ++ β).size = α.size + β.size :=
+  (congrArg List.sum (List.map_append (f := fun x : ℕ+ => x.val) (l₁ := α) (l₂ := β))).trans
+    (List.sum_append (l₁ := List.map (fun x : ℕ+ => x.val) α)
+      (l₂ := List.map (fun x : ℕ+ => x.val) β))
 
 /-- The length of the concatenation of two compositions equals the sum of their lengths. -/
 @[simp]
-theorem len_append (α β : Composition) : (α ++ β).len = α.len + β.len := by
-  change len (append α β) = len α + len β
-  unfold append len
-  simp only [List.length_append]
+theorem len_append (α β : Composition) : (α ++ β).len = α.len + β.len :=
+  List.length_append (as := α) (bs := β)
 
 /--
 A composition of `n` is a composition whose size is `n`.
@@ -182,37 +183,33 @@ def toBlocks (α : Composition) : List ℕ := α.map (·.val)
 def ofBlocks (blocks : List ℕ) (hpos : ∀ {i}, i ∈ blocks → 0 < i) : Composition :=
   blocks.pmap (fun i (hi : 0 < i) => ⟨i, hi⟩) (fun _ ha => hpos ha)
 
-theorem toBlocks_cons (x : ℕ+) (α : Composition) : toBlocks (x :: α) = x.val :: toBlocks α := rfl
-
-theorem ofBlocks_cons (x : ℕ) (xs : List ℕ) (hpos : ∀ {i}, i ∈ x :: xs → 0 < i) :
-    ofBlocks (x :: xs) hpos =
-      (⟨x, hpos List.mem_cons_self⟩ : ℕ+) :: ofBlocks xs (fun hi => hpos (List.mem_cons_of_mem x hi)) :=
-  rfl
-
 theorem toBlocks_ofBlocks (blocks : List ℕ) (hpos : ∀ {i}, i ∈ blocks → 0 < i) :
     toBlocks (ofBlocks blocks hpos) = blocks := by
+  simp only [toBlocks, ofBlocks]
   induction blocks with
   | nil => rfl
   | cons x xs ih =>
-    have hxs : ∀ {i}, i ∈ xs → 0 < i := fun hi => hpos (List.mem_cons_of_mem x hi)
-    rw [ofBlocks_cons, toBlocks_cons, List.cons.injEq]
-    exact ⟨rfl, ih hxs⟩
+    simp only [List.pmap_cons, List.map_cons]
+    congr 1
+    exact ih (fun hi => hpos (List.mem_cons_of_mem x hi))
 
 theorem ofBlocks_toBlocks (α : Composition) :
     ofBlocks (toBlocks α) (fun hi => by
       simp only [toBlocks, List.mem_map] at hi
       obtain ⟨x, _, rfl⟩ := hi
       exact x.2) = α := by
+  simp only [toBlocks, ofBlocks]
   induction α with
   | nil => rfl
   | cons x xs ih =>
-    rw [toBlocks_cons, ofBlocks_cons, List.cons.injEq]
+    simp only [List.map_cons, List.pmap_cons]
+    rw [List.cons.injEq]
     exact ⟨rfl, ih⟩
 
 theorem size_eq_sum_toBlocks (α : Composition) : α.size = (toBlocks α).sum := rfl
 
-theorem len_eq_toBlocks_length (α : Composition) : α.len = (toBlocks α).length :=
-  (List.length_map (fun x : ℕ+ => x.val) α).symm
+theorem len_eq_toBlocks_length (α : Composition) : α.len = (toBlocks α).length := by
+  simp [len, toBlocks]
 
 /--
 Equivalence between our `Composition.ofSize n` and Mathlib's `Composition n`.
@@ -258,8 +255,8 @@ def equivMathlibFiltered (n k : ℕ) :
   invFun := fun ⟨c, hc⟩ => ⟨ofBlocks c.blocks c.blocks_pos, by
     simp only [size_eq_sum_toBlocks, toBlocks_ofBlocks]
     refine ⟨c.blocks_sum, ?_⟩
-    rw [len_eq_toBlocks_length, toBlocks_ofBlocks]
-    exact hc.symm⟩
+    simp only [len, ofBlocks, List.length_pmap]
+    exact hc⟩
   left_inv := fun ⟨α, hα⟩ => by
     simp only
     congr 1
@@ -775,8 +772,10 @@ def ofSizeIntoParts_equiv (n k : ℕ) : ofSizeIntoParts n k ≃ ofSizeIntoParts'
     simp only [toFun, size] at *
     have h1 : (∑ i : Fin k, α.get (Fin.cast hlen.symm i)) = ∑ i : Fin α.length, α.get i := by
       apply Finset.sum_equiv (Fin.castOrderIso hlen.symm).toEquiv
-      · intro i; simp
-      · intro i _; simp
+      · intro i
+        exact iff_of_true (Finset.mem_univ i) (Finset.mem_univ _)
+      · intro i _
+        rfl
     rw [h1, ← list_sum_eq_finset_sum, hsize]⟩
   invFun := fun ⟨f, hsum⟩ => ⟨ofFun f, by simp [size, ofFun_sum, hsum], by simp [len, ofFun_length]⟩
   left_inv := fun ⟨α, hsize, hlen⟩ => by

@@ -10,4 +10,4 @@ private lemma main
   -- proof
   exact Real.cot_eq_cos_div_sin x
 
--- created on 2023-11-26
+-- created on 2023-10-03

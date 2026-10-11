@@ -14,4 +14,4 @@ private lemma main
   rw [abs_lt]
   exact ⟨h2, h1⟩
 
--- created on 2019-05-30
+-- created on 2019-12-18

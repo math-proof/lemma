@@ -13,4 +13,4 @@ private lemma main
   exact abs_ne_zero.mp h
 
 
--- created on 2026-10-03
+-- created on 2018-08-01

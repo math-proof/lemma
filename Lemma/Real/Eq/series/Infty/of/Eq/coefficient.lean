@@ -163,4 +163,4 @@ private lemma main
   exact sub_eq_zero.mp (hcoef n (hall n))
 
 
--- created on 2026-10-10
+-- created on 2020-05-18

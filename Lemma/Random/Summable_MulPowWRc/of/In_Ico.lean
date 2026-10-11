@@ -1,4 +1,5 @@
 import sympy.stats.policy_trajectory
+import sympy.functions.elementary.miscellaneous
 import sympy.Basic
 import Lemma.Random.NormW.le.Abs_R
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
@@ -17,8 +18,10 @@ private lemma main
   (θ : Θ)
   (y : S) :
 -- imply
-  Summable (fun k => γ ^ k * M.W θ M.rc k y) := by
+  let rc (z : ℝ × S × A) : ℝ := clip z.1 (-M.env.R) M.env.R
+  Summable (fun k => γ ^ k * M.W θ rc k y) := by
 -- proof
+  intro rc
   refine Summable.of_norm_bounded ((summable_geometric_of_lt_one hγ.1 hγ.2).mul_right |M.env.R|) ?_
   intro k
   rw [norm_mul, norm_pow, Real.norm_of_nonneg hγ.1]
@@ -26,3 +29,4 @@ private lemma main
 
 
 -- created on 2026-10-07
+-- updated on 2026-10-11

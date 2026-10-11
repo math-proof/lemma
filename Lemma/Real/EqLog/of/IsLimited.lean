@@ -17,4 +17,4 @@ private lemma main
   apply (continuousAt_log (ne_of_gt (mem_Ioi.mp hy))).tendsto.comp h
 
 
--- created on 2026-10-07
+-- created on 2020-06-19

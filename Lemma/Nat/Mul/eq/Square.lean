@@ -10,4 +10,4 @@ private lemma main
   -- proof
   exact (pow_two a).symm
 
--- created on 2019-11-26
+-- created on 2020-01-02

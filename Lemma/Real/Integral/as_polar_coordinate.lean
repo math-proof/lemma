@@ -15,4 +15,4 @@ private lemma main
   rw [polarCoord_symm_apply, smul_eq_mul]
 
 
--- created on 2026-10-07
+-- created on 2020-06-09

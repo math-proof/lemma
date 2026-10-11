@@ -25,9 +25,11 @@ private lemma main
   (θ : Θ)
   (z : ℝ × S × A) :
 -- imply
-  M.Kf θ M.rc 1 z + γ * M.Kf θ (fun w => M.Vc θ γ w.2.1) 2 z -
+  let rc (z : ℝ × S × A) : ℝ := clip z.1 (-M.env.R) M.env.R
+  M.Kf θ rc 1 z + γ * M.Kf θ (fun w => M.Vc θ γ w.2.1) 2 z -
     M.Kf θ (fun w => M.Vc θ γ w.2.1) 1 z = 0 := by
 -- proof
+  intro rc
   have hf : StronglyMeasurable (fun w : ℝ × S × A => M.Vc θ γ w.2.1) :=
     (StronglyMeasurable.discrete (M.Vc θ γ)).comp_measurable measurable_snd.fst
   have hC : ∀ w : ℝ × S × A, ‖(fun w : ℝ × S × A => M.Vc θ γ w.2.1) w‖ ≤ ∑ y', ‖M.Vc θ γ y'‖ :=
@@ -42,13 +44,13 @@ private lemma main
   have e1 := Kf.eq.Sum_MulTW.of.All_LeNorm.StronglyMeasurable (M := M) (Random.StronglyMeasurableRc (M := M)) (NormRc.le.AbsR (M := M)) θ 0 z
   have e2 := Kf.eq.Sum_MulTW.of.All_LeNorm.StronglyMeasurable (M := M) hf hC θ 1 z
   have e3 := Kf.eq.Sum_MulTW.of.All_LeNorm.StronglyMeasurable (M := M) hf hC θ 0 z
-  show M.Kf θ M.rc (0 + 1) z + γ * M.Kf θ (fun w => M.Vc θ γ w.2.1) (1 + 1) z -
+  show M.Kf θ rc (0 + 1) z + γ * M.Kf θ (fun w => M.Vc θ γ w.2.1) (1 + 1) z -
       M.Kf θ (fun w => M.Vc θ γ w.2.1) (0 + 1) z = 0
   rw [e1, e2, e3]
   simp_rw [w0, w1]
   rw [Finset.mul_sum, ← Finset.sum_add_distrib, ← Finset.sum_sub_distrib]
   refine Finset.sum_eq_zero fun y _ => ?_
-  have hrec : M.Vc θ γ y = M.W θ M.rc 0 y +
+  have hrec : M.Vc θ γ y = M.W θ rc 0 y +
       γ * ∑ u, M.pol.prob θ y u * ∑ y', (M.env.trans (y, u)).real {y'} * M.Vc θ γ y' :=
     TSum_MulPowW.eq.AddWMul_Sum_MulProbSum_MulTTSum_MulPowW.of.In_Ico (M := M) h₀ θ y
   rw [hrec]
@@ -56,4 +58,4 @@ private lemma main
 
 
 -- created on 2026-10-06
--- updated on 2026-10-10
+-- updated on 2026-10-11

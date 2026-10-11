@@ -11,4 +11,4 @@ private lemma main
   rw [Real.exp_eq_exp_ℝ, NormedSpace.exp_eq_tsum_div]
 
 
--- created on 2026-10-09
+-- created on 2018-02-13

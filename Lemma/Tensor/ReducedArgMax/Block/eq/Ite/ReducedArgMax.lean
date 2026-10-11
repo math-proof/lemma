@@ -15,4 +15,4 @@ private lemma main
   apply ReducedArgMax.append_eq_ite
 
 
--- created on 2026-10-09
+-- created on 2022-01-03

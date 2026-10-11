@@ -20,4 +20,4 @@ private lemma main
     exact Real.exp_le_exp.mp (ReducedArgMax.le (Function.exp x) j)
 
 
--- created on 2026-10-09
+-- created on 2021-12-20

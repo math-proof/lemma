@@ -14,4 +14,4 @@ private lemma main
   have h1 : 0 ≤ t := by linarith
   exact mul_nonneg h1 hx
 
--- created on 2020-02-03
+-- created on 2019-06-14

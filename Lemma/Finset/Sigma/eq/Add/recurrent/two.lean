@@ -50,4 +50,4 @@ private lemma main
   ring
 
 
--- created on 2026-10-07
+-- created on 2020-11-18

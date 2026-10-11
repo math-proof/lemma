@@ -16,4 +16,4 @@ private lemma main
   Finset.inclusion_exclusion_card_biUnion (s := Finset.univ) (S := A)
 
 
--- created on 2026-10-07
+-- created on 2021-04-23

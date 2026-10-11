@@ -77,7 +77,7 @@ private lemma main
   subst hQ hV
   classical
   have h₈ : ∀ t y, ((M θ)[|s 0 ⁻¹' {x}]).real (s t ⁻¹' {y}) = M.Pn θ t x y := fun t y => by
-    have h := RealPreimageSPreimageS_Add.eq.Pn.of.Ne0Real_Preimage (M := M) h₁ θ 0 t x y h₆
+    have h := RealPreimageSPreimageS_Add.eq.Pn.of.Ne0Real_Preimage (M := M) θ 0 t x y h₁ h₆
     rwa [zero_add] at h
   simp_rw [h₈]
   have hQ_expect : ∀ θ t («s.bvar» : ℕ → S) («a.bvar» : ℕ → A),
@@ -124,7 +124,7 @@ private lemma main
           intro z
           have hDiv := ProbCond.eq.Div.of.Eq_Count.Eq_Count (π := M θ)
             (x := s (n + 1)) (y := s n) hS hS z y
-          rw [hDiv, ENNReal.toReal_div, ← RealPreimageSPreimageS_Add_1.eq.P1.of.Ne0Real_Preimage (M := M) h₁ θ n y z hP]
+          rw [hDiv, ENNReal.toReal_div, ← RealPreimageSPreimageS_Add_1.eq.P1.of.Ne0Real_Preimage (M := M) θ n y z h₁ hP]
           rw [measureReal_def, cond_apply (Random.Measurable.of.All_Eq.snd.fst h₁ n (measurableSet_singleton y)),
             ENNReal.toReal_mul, ENNReal.toReal_inv, mul_comm, div_eq_mul_inv]
           congr 1

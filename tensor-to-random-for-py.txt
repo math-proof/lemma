@@ -1,0 +1,26 @@
+# For py rename.sh: OLD_DOTTED NEW_DOTTED (Tensor.* -> Random.*)
+# Run from py project with corresponding module renames
+Tensor.Differentiable.All_LeNormFderivMulAdd_1MulMulCard.of.All_LeNorm.StronglyMeasurable.All_LeNormFderiv.All_Differentiable_Prob Random.Differentiable.All_LeNormFderiv_MulAdd_1_MulMulCard.of.All_LeNorm.StronglyMeasurable.All_LeNormFderiv.All_All_Differentiable_FunPolProb
+Tensor.DifferentiableAt.Fderiv.eq.SMul.of.In_Ico.GtInftySup.All_Differentiable_Prob Random.DifferentiableAt.EqFderiv_FunQc_SMulSum_SMulTFderivVc.of.In_Ico.GtInftySup_Norm.All_All_Differentiable_FunProbPol
+Tensor.Differentiable_Vc.of.In_Ico.GtInftySup.All_Differentiable_Prob Random.Differentiable_FunVc.of.InIco0.GtInftySup_Norm.All_All_Differentiable_FunPolProb
+Tensor.Eq.Dot.Grad.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.GtInftySup.Q_Function Random.TSum_SMulPowFderiv.eq.TSum_SMulPow_Integral_SMul.of.GtInftySup.All_Differentiable.All_Eq_Expect_CondDot.All_Eq_Expect_CondDot.Measure.eq.Count.Measure.eq.Count.All_Eq_Joint.In_Ico0
+Tensor.Eq.Dot.Grad.Expect.of.Eq_Conditioned.GtInftySup.policy_gradient_theorem Random.Eq_Expect_DotFunPow.of.GtInftySup.All_DifferentiableProb.Measure.eq.Count.Measure.eq.Count.All_Eq_Joint.In_Ico0
+Tensor.Eq.Expect.Grad.Log.Pr.of.Eq_Conditioned.Q_Function.discounted Random.Integral_SMulGetDotFderivLog.eq.Integral_SMulQFderiv.of.All_Eq_Joint.InIco0
+Tensor.Eq.Expect.Sum.Grad.Log.Pr.of.Bounded Random.Eq_SymmToDualTSum_SMulPow_Integral_SMulTSum_MulPow_FderivLogToRealProbCond.of.GtInftySup.All_Differentiable.AeAll_LeNormTSum_MulPow.All_Measurable.Measure.eq.Count.Measure.eq.Count.All_Eq_Joint.In_Ico0
+Tensor.Eq.Expect.Sum.Grad.Log.Pr.of.Bounded.Discount Random.Eq_SymmToDualTSum_SMulPow_Integral_SMulTSum_MulPow_FderivLogToRealProbCond.of.GtInftySup.All_Differentiable.AeAll_LeNormTSum_MulPow.All_Measurable.Measure.eq.Count.Measure.eq.Count.All_Eq_Joint.In_Ico1
+Tensor.Eq.Grad.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.policy_gradient Random.TSum_SMulPowFderiv.eq.Integral_AddSum_SMul_SMulPowIntegral_Fderiv.of.GtInftySup.All_Differentiable.All_Eq_Expect_CondDot.All_Eq_Expect_CondDot.Measure.eq.Count.Measure.eq.Count.All_Eq_Joint.In_Ico0
+Tensor.Eq.of.Ne_0.Eq.Eq.Eq Random.All_EqFderiv_FunProbSLog_SumFderivLogProbCond.of.All_DifferentiableAt.All_GtProbS0.All_EqProbCondS_Joint.All_EqProbS.All_CondIndep.All_All_CondIndep.Measure.eq.Count.Measure.eq.Count.All_Measurable.All_Measurable
+Tensor.Eq.of.Ne_0.Eq.Eq.Eq.Eq_log.Eq_log.Eq_log Random.Eq.of.Ne_0.Eq.Eq.Eq.Eq_log.Eq_log.Eq_log
+Tensor.EqDot_GradExpect.of.Eq_Conditioned.Eq_Expect.All_Differentiable_Prob.GtInftySup.In_Ico.generalized_advantage_estimate Random.Eq_Expect_FunPowDot.of.In_Ico.GtInftySup.All_Differentiable.All_Eq_Expect_CondTSum_MulPow.Measure.eq.Count.Measure.eq.Count.All_Eq_Joint.In_Ico0
+Tensor.EqDot_GradExpect.of.Eq_Conditioned.Eq_Expect.All_Differentiable_Prob.GtInftySup.generalized_advantage_estimate Random.Eq_Expect_FunPowDot.of.In_Icc.GtInftySup.All_Differentiable.All_Eq_Expect_CondTSum_MulPow.Measure.eq.Count.Measure.eq.Count.All_Eq_Joint.In_Ico0
+Tensor.EqDot_GradExpect.of.Eq_Conditioned.Eq_Expect.All_Differentiable_Prob.GtInftySup.unbiased_advantage_estimate Random.Eq_Expect_FunPowDot.of.GtInftySup.All_Differentiable.All_Eq_Expect_CondTSum_MulPow.Measure.eq.Count.Measure.eq.Count.All_Eq_Joint.In_Ico0
+Tensor.EqExpect.of.Eq_Conditioned.Bellman.Q_Function Random.TSum_MulPow_IntegralInterPreimage_Preimage.eq.IntegralAddMul_Integral_TSum_MulPow.of.All_Eq_Joint.In_Ico1
+Tensor.EqExpect.of.Eq_Conditioned.Bellman.V_Function Random.Integral_TSum_PowMul.eq.Integral_AddMul_Integral_TSum_MulPow.of.All_Eq_Joint.In_Ico0
+Tensor.EqExpect.of.Eq_Expect.V_Function Random.Integral_TSum_MulPow.eq.IntegralPreimage.of.All_Eq_TSum_MulPowIntegral.All_Eq_Joint.In_Ico0
+Tensor.EqGrad.of.Eq_Conditioned.Eq_Expect.Eq_Expect.policy_gradient.induct Random.Zero.eq.AddSum_SMulPowSum_SMul_SMulPow_Sum_SMul.of.Real.ne.Zero.GtInftySup.All_Differentiable.All_Eq_Expect_CondDot.All_Eq_Expect_CondDot.Measure.eq.Count.Measure.eq.Count.All_Eq_Joint.In_Ico0
+Tensor.Fderiv.eq.AddSum_SMulSMul.of.In_Ico.GtInftySup.All_Differentiable_Prob Random.EqFderiv_FunVc_AddSum_SMulSMulSum_SMul.of.In_Ico.GtInftySup_Norm.All_AllDifferentiable_FunPolProb
+Tensor.Fderiv_Prob.eq.Zero.of.EqProb_0 Random.Fderiv_FunProbPol.eq.Zero.of.ProbPolEq0
+Tensor.HasFDerivAt.of.In_Ico.GtInftySup.All_Differentiable_Prob Random.HasFDerivAt_FunVc_TSum_SMulPowFderiv_FunW.of.In_Ico.GtInftySup_Norm.All_All_Differentiable_FunProbPol
+Tensor.Imp.of.Eq Random.All_All_Eq_AddAdd_And_All_Eq_AddLogProb_Add_Sum_Sum.of.All_Eq_LogProbCond.All_Eq_LogProbCond.All_Eq_LogProbS.All_GtProbCond0.All_GtProbCond0.All_Lt0_Prob.IsHiddenMarkovPr
+Tensor.SMul.eq.Fderiv.of.All_Differentiable_Prob Random.EqSMulProb_FderivLog_Prob_Fderiv_FunProb.of.All_All_Differentiable_FunPolProb
+Tensor.Sum_SMul.eq.Zero.of.All_Differentiable_Prob Random.SumSMulProbFderiv_FunLog_Prob.eq.Zero.of.All_AllDifferentiable_FunProbPol

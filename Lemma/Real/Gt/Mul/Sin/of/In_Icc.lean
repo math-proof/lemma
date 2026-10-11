@@ -49,4 +49,4 @@ private lemma main
     field_simp [hdenom2.ne']
   rwa [h6] at h5
 
--- created on 2026-10-07
+-- created on 2023-10-03

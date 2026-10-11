@@ -36,4 +36,4 @@ private lemma main
     rw [ite_eq_right hgt, ite_eq_right hgt, hz2]
 
 
--- created on 2026-10-09
+-- created on 2022-01-03

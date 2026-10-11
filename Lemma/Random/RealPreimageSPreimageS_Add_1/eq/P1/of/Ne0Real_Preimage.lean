@@ -2,7 +2,7 @@ import sympy.stats.policy_trajectory.gradient
 import sympy.Basic
 import Lemma.Random.Pn1.eq.P1
 import Lemma.Random.RealPreimageSPreimageS_Add.eq.Pn.of.Ne0Real_Preimage
-open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model
+open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
 
 
 /--
@@ -16,15 +16,15 @@ private lemma main
   {s : ℕ → (ℕ → ℝ × S × A) → S}
   {a : ℕ → (ℕ → ℝ × S × A) → A}
 -- given
-  (h₁ : ∀ t, (· t) = (r t, s t, a t))
   (θ : Θ)
   (t : ℕ)
   (x y : S)
-  (h₂ : (M θ).real (s t ⁻¹' {x}) ≠ 0) :
+  (h₀ : ∀ t, (· t) = (r t, s t, a t))
+  (h₁ : (M θ).real (s t ⁻¹' {x}) ≠ 0) :
 -- imply
   ((M θ)[|s t ⁻¹' {x}]).real (s (t + 1) ⁻¹' {y}) = M.P1 θ x y := by
 -- proof
-  rw [Random.RealPreimageSPreimageS_Add.eq.Pn.of.Ne0Real_Preimage (M := M) h₁ θ t 1 x y h₂, Random.Pn1.eq.P1]
+  rw [RealPreimageSPreimageS_Add.eq.Pn.of.Ne0Real_Preimage (M := M) θ t 1 x y h₀ h₁, Pn1.eq.P1]
 
 
 -- created on 2026-10-06

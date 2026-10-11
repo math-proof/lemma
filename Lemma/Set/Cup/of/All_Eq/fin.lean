@@ -14,4 +14,4 @@ private lemma main
   exact Set.iUnion₂_congr h
 
 
--- created on 2026-10-03
+-- created on 2018-09-28

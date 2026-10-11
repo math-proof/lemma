@@ -19,4 +19,4 @@ private lemma main
   rw [hslope]
   field_simp [hne]
 
--- created on 2020-06-17
+-- created on 2020-04-22

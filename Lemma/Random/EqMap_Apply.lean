@@ -4,7 +4,8 @@ open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Finset
 
 
 /--
-The initial stage of the trajectory model `M` is distributed as `μ₀ θ`: `ω[0] ∼ μ₀ θ`.
+The initial stage of the trajectory model `M` is distributed as
+`stageK θ ∘ₘ env.init`: `ω[0] ∼ stageK θ ∘ₘ env.init`.
 -/
 @[path]
 private lemma main
@@ -13,7 +14,7 @@ private lemma main
 -- given
   (θ : Θ) :
 -- imply
-  (M θ).map (fun ω => ω 0) = M.μ₀ θ := by
+  (M θ).map (fun ω => ω 0) = M.stageK θ ∘ₘ M.env.init := by
 -- proof
   unfold Model.traj Kernel.trajMeasure
   rw [Measure.map_comp _ _ (measurable_pi_apply 0)]

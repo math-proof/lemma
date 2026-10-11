@@ -17,20 +17,20 @@ private lemma main
   {s : ℕ → (ℕ → ℝ × S × A) → S}
   {a : ℕ → (ℕ → ℝ × S × A) → A}
 -- given
-  (h₁ : ∀ t, (· t) = (r t, s t, a t))
+  (h₀ : ∀ t, (· t) = (r t, s t, a t))
   (θ : Θ)
   (t : ℕ) :
 -- imply
   (M θ).map (fun ω => ω t) = M.stageK θ ∘ₘ (M θ).map (s t) := by
 -- proof
-  obtain rfl : s = fun t ω ↦ (ω t).2.1 := funext₂ fun t ω ↦ (congrArg (·.2.1) (congrFun (h₁ t) ω)).symm
+  obtain rfl : s = fun t ω ↦ (ω t).2.1 := funext₂ fun t ω ↦ (congrArg (·.2.1) (congrFun (h₀ t) ω)).symm
   set s : ℕ → (ℕ → ℝ × S × A) → S := fun t ω ↦ (ω t).2.1
-  have h₀ : (M θ).map (s t) = ((M θ).map (fun ω => ω t)).map (fun z => z.2.1) := by
+  have h : (M θ).map (s t) = ((M θ).map (fun ω => ω t)).map (fun z => z.2.1) := by
     rw [Measure.map_map measurable_snd.fst (measurable_pi_apply t)]; rfl
-  rw [h₀]
+  rw [h]
   cases t with
   | zero =>
-    rw [Random.EqMap_Apply, Model.μ₀, Random.EqMapStageK_12]
+    rw [Random.EqMap_Apply, Random.EqMapStageK_12]
   | succ t =>
     rw [Map.eq.K, Model.K, ← Measure.comp_assoc, Random.EqMapStageK_12]
 

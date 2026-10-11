@@ -10,4 +10,4 @@ private lemma main
   -- proof
   exact (Real.cos_sub x y).symm
 
--- created on 2019-11-26
+-- created on 2023-06-01

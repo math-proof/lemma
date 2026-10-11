@@ -81,4 +81,4 @@ private lemma main
       rw [hp, hfcA, hA, mul_div_cancel₀ _ hb0]
 
 
--- created on 2026-10-07
+-- created on 2020-05-02

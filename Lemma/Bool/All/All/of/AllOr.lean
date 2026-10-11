@@ -17,4 +17,4 @@ private lemma main
   · exact h₁ e hqe
 
 
--- created on 2026-10-03
+-- created on 2018-04-22

@@ -11,4 +11,4 @@ private lemma main
   exact Real.tan_eq_sin_div_cos x
 
 
--- created on 2026-10-07
+-- created on 2020-12-05

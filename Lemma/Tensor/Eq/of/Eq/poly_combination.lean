@@ -101,4 +101,4 @@ private lemma main
   rw [keyf k, mul_comm (∏ i, x i ^ ((k : ℕ) / 2 ^ (i : ℕ) % 2)) (c k)]
 
 
--- created on 2026-10-10
+-- created on 2021-12-23

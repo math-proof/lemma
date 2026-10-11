@@ -1,4 +1,6 @@
 import sympy.stats.policy_trajectory
+import sympy.functions.elementary.miscellaneous
+import sympy.stats.cond_expectation
 import sympy.Basic
 import Lemma.Random.RealPreimageS_Add_1.ne.Zero.of.NeMulProbT_0.Ne0Real_Preimage
 import Lemma.Random.V.eq.TSum_MulPowWRc.of.Ne0Real_Preimage.In_Ico
@@ -28,18 +30,19 @@ private lemma main
 -- imply
   let V (θ : Θ) (t : ℕ) (x : S) : ℝ :=
     𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = x);
+  let rc (z : ℝ × S × A) : ℝ := clip z.1 (-M.env.R) M.env.R
   M.pol.prob θ x u * ((M.env.trans (x, u)).real {y} * V θ (t + 1) y) =
-    M.pol.prob θ x u * ((M.env.trans (x, u)).real {y} * ∑' k, γ ^ k * M.W θ M.rc k y) := by
+    M.pol.prob θ x u * ((M.env.trans (x, u)).real {y} * ∑' k, γ ^ k * M.W θ rc k y) := by
 -- proof
-  intro Vθ
+  intro Vθ rc
   if hz : M.pol.prob θ x u * (M.env.trans (x, u)).real {y} = 0 then
     rw [← mul_assoc, ← mul_assoc, hz, zero_mul, zero_mul]
   else
-    have hV : Vθ θ (t + 1) y = ∑' k, γ ^ k * M.W θ M.rc k y :=
+    have hV : Vθ θ (t + 1) y = ∑' k, γ ^ k * M.W θ rc k y :=
       V.eq.TSum_MulPowWRc.of.Ne0Real_Preimage.In_Ico (M := M) θ (t + 1) y h₀ h₁
         (RealPreimageS_Add_1.ne.Zero.of.NeMulProbT_0.Ne0Real_Preimage (M := M) θ t x u y h₁ hP hz)
     rw [hV]
 
 
 -- created on 2026-10-07
--- updated on 2026-10-10
+-- updated on 2026-10-11

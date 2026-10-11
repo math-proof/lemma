@@ -18,4 +18,4 @@ private lemma main
   exact Div.of.Eq h₁ d
 
 
--- created on 2026-10-03
+-- created on 2018-01-24

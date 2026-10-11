@@ -17,4 +17,4 @@ private lemma main
   apply EqLog.of.IsLimited h hy
 
 
--- created on 2026-10-07
+-- created on 2020-06-20

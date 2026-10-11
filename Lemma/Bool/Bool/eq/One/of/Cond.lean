@@ -15,4 +15,4 @@ private lemma main
   simp [h]
 
 
--- created on 2026-10-03
+-- created on 2018-02-16

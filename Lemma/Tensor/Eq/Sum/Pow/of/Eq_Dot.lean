@@ -24,4 +24,4 @@ private lemma main
   rw [hsum, Equiv.sum_comp (Equiv.swap i j) (fun l : Fin n ↦ (x[l] : Tensor α []) ^ m)]
 
 
--- created on 2026-10-07
+-- created on 2020-10-31

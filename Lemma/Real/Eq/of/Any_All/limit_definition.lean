@@ -24,4 +24,4 @@ private lemma main
   simpa [Real.dist_eq] using H x hx
 
 
--- created on 2026-10-03
+-- created on 2020-04-04

@@ -15,10 +15,9 @@ private lemma main
   Measurable (fun z : S × A => M.rkd z.1 z.2) := by
 -- proof
   have := M.env.reward_markov
-  apply (StronglyMeasurable.integral_kernel_prod_right' (κ := M.env.reward)
-    (f := fun z : (S × A) × ℝ => clip z.2 (-M.env.R) M.env.R)
-    ((measurable_snd.max measurable_const).min measurable_const).stronglyMeasurable).measurable
+  exact (StronglyMeasurable.integral_kernel_prod_right' (κ := M.env.reward)
+    (f := fun z : (S × A) × ℝ => max (-M.env.R) (min M.env.R z.2))
+    (measurable_const.max (measurable_const.min measurable_snd)).stronglyMeasurable).measurable
 
 
 -- created on 2026-10-07
--- updated on 2026-10-11

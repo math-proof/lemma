@@ -12,4 +12,4 @@ private lemma main
   Real.tanh_eq_sinh_div_cosh x
 
 
--- created on 2026-10-08
+-- created on 2023-11-26

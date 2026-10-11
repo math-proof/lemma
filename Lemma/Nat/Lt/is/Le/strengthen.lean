@@ -10,4 +10,4 @@ private lemma main
   -- proof
   constructor <;> omega
 
--- created on 2022-01-28
+-- created on 2022-01-02

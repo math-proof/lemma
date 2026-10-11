@@ -10,4 +10,4 @@ private lemma main
   -- proof
   simp [Real.cot_eq_cos_div_sin, Real.tan_eq_sin_div_cos]
 
--- created on 2023-11-26
+-- created on 2023-10-03

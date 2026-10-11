@@ -22,4 +22,4 @@ private lemma main
     · have hmeq : m = n + 1 := by omega
       rw [hmeq]
 
--- created on 2019-05-25
+-- created on 2019-10-29

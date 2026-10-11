@@ -17,5 +17,5 @@ private lemma main
   rcases hcompact.exists_isMaxOn hne hcont with ⟨xi, hxi, hmax⟩
   refine ⟨xi, hxi, fun z hz => hmax hz⟩
 
--- created on 2020-06-13
+-- created on 2020-06-14
 -- updated on 2023-10-15

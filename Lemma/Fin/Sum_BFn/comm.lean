@@ -15,4 +15,4 @@ private lemma main
   rw [Finset.sum_comm]
 
 
--- created on 2026-10-03
+-- created on 2018-04-30

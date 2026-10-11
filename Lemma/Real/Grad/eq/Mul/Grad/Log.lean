@@ -17,4 +17,4 @@ private lemma main
   field_simp [h₁]
 
 
--- created on 2026-10-03
+-- created on 2023-03-23

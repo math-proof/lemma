@@ -1,4 +1,5 @@
 import sympy.stats.policy_trajectory
+import sympy.functions.elementary.miscellaneous
 import sympy.Basic
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model
 
@@ -11,9 +12,11 @@ private lemma main
   [MeasurableSpace S] [MeasurableSpace A] [Fintype A]
   {M : Model Θ S A} :
 -- imply
-  StronglyMeasurable M.rc := by
+  let rc (z : ℝ × S × A) : ℝ := clip z.1 (-M.env.R) M.env.R
+  StronglyMeasurable rc := by
 -- proof
-  change StronglyMeasurable fun z : ℝ × S × A => clip z.1 (-M.env.R) M.env.R
+  intro rc
+  dsimp only [rc]
   unfold clip
   apply ((measurable_fst.max measurable_const).min measurable_const).stronglyMeasurable
 

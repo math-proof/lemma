@@ -17,17 +17,17 @@ private lemma main
   {s : ℕ → (ℕ → ℝ × S × A) → S}
   {a : ℕ → (ℕ → ℝ × S × A) → A}
 -- given
-  (h₁ : ∀ t, (· t) = (r t, s t, a t))
+  (h₀ : ∀ t, (· t) = (r t, s t, a t))
   (θ : Θ)
   (x : S) :
 -- imply
   (M θ).real (s 0 ⁻¹' {x}) = M.env.init.real {x} := by
 -- proof
-  have hs : s 0 = fun ω ↦ (ω 0).2.1 := funext fun ω ↦ (congrArg (·.2.1) (congrFun (h₁ 0) ω)).symm
+  have hs : s 0 = fun ω ↦ (ω 0).2.1 := funext fun ω ↦ (congrArg (·.2.1) (congrFun (h₀ 0) ω)).symm
   have h : (M θ).map (s 0) = ((M θ).map (fun ω => ω 0)).map (fun z => z.2.1) := by
     rw [hs, Measure.map_map measurable_snd.fst (measurable_pi_apply 0)]; rfl
-  rw [measureReal_def, ← Measure.map_apply (Random.Measurable.of.All_Eq.snd.fst h₁ 0) (measurableSet_singleton x), h, Random.EqMap_Apply,
-    Model.μ₀, Random.EqMapStageK_12, measureReal_def]
+  rw [measureReal_def, ← Measure.map_apply (Random.Measurable.of.All_Eq.snd.fst h₀ 0) (measurableSet_singleton x), h, Random.EqMap_Apply,
+    Random.EqMapStageK_12, measureReal_def]
 
 
 -- created on 2026-10-06

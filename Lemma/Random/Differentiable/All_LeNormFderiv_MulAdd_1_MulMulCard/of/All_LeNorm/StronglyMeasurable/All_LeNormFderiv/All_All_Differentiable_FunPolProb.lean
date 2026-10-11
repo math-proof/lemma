@@ -2,6 +2,7 @@ import sympy.stats.policy_trajectory.gradient
 import sympy.Basic
 import Lemma.Random.StronglyMeasurable_KfAndAll_LeNormKf.of.All_LeNorm.StronglyMeasurable
 import Lemma.Random.T.ge.Zero
+import Lemma.Random.W.eq.Integral
 import Lemma.Random.W0.eq.Sum_MulProbIntegral.of.All_LeNorm.StronglyMeasurable
 import Lemma.Random.WAdd_1.eq.Sum_MulProbSum_MulTW.of.All_LeNorm.StronglyMeasurable
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
@@ -17,7 +18,7 @@ private lemma W_bnd [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S]
   ‖M.W θ f j y‖ ≤ C := by
   have h := norm_integral_le_of_norm_le_const (μ := M.stageK θ y)
     (Filter.Eventually.of_forall (StronglyMeasurable_KfAndAll_LeNormKf.of.All_LeNorm.StronglyMeasurable (M := M) hf hC θ j).2)
-  show ‖∫ z, M.Kf θ f j z ∂(M.stageK θ y)‖ ≤ _
+  rw [W.eq.Integral (M := M) θ j y]
   simpa using h
 
 private lemma reward_int_bdd [MeasurableSpace S] [MeasurableSpace A] [Fintype A] (M : Model Θ S A) {f : ℝ × S × A → ℝ} {C : ℝ} (hC : ∀ z, ‖f z‖ ≤ C) (y : S) (u : A) :

@@ -1,4 +1,5 @@
 import sympy.stats.policy_trajectory
+import sympy.functions.elementary.miscellaneous
 import sympy.Basic
 import Lemma.Random.MEqR_Rc
 import Lemma.Random.Integral_MulEq22.eq.MulProbIntegral.of.All_LeNorm.StronglyMeasurable
@@ -21,30 +22,33 @@ private lemma main
   {s : ℕ → (ℕ → ℝ × S × A) → S}
   {a : ℕ → (ℕ → ℝ × S × A) → A}
 -- given
-  (h₁ : ∀ t, (· t) = (r t, s t, a t))
+  (h₀ : ∀ t, (· t) = (r t, s t, a t))
   (θ : Θ)
   (t : ℕ)
   (x : S)
   (u : A) :
 -- imply
+  let rc (z : ℝ × S × A) : ℝ := clip z.1 (-M.env.R) M.env.R
   ∫ ω, (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) * r t ω ∂(M θ) =
-    (M θ).real (s t ⁻¹' {x}) * M.pol.prob θ x u * ∫ ρ, M.rc (ρ, x, u) ∂(M.env.reward (x, u)) := by
+    (M θ).real (s t ⁻¹' {x}) * M.pol.prob θ x u * ∫ ρ, rc (ρ, x, u) ∂(M.env.reward (x, u)) := by
 -- proof
-  have h₀ : ∫ ω, (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) * r t ω ∂(M θ) =
-      ∫ ω, (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) * M.rc (ω t) ∂(M θ) :=
-    integral_congr_ae ((MEqR_Rc h₁ (M := M) θ t).mono fun ω h => by dsimp only; rw [h])
-  have h₂ : ∀ ω, (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) * M.rc (ω t) =
+  intro rc
+  have h₁ : ∫ ω, (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) * r t ω ∂(M θ) =
+      ∫ ω, (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) * rc (ω t) ∂(M θ) :=
+    integral_congr_ae ((MEqR_Rc h₀ (M := M) θ t).mono fun ω h => by dsimp only; rw [h])
+  have h₂ : ∀ ω, (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) * rc (ω t) =
       (if s t ω = x then (1:ℝ) else 0) *
-        (fun z : ℝ × S × A => (if z.2.2 = u then (1:ℝ) else 0) * M.rc z) (ω t) := by
+        (fun z : ℝ × S × A => (if z.2.2 = u then (1:ℝ) else 0) * rc z) (ω t) := by
     intro ω
-    have hs : s t ω = (ω t).2.1 := (congrArg (·.2.1) (congrFun (h₁ t) ω)).symm
-    have ha : a t ω = (ω t).2.2 := (congrArg (·.2.2) (congrFun (h₁ t) ω)).symm
+    have hs : s t ω = (ω t).2.1 := (congrArg (·.2.1) (congrFun (h₀ t) ω)).symm
+    have ha : a t ω = (ω t).2.2 := (congrArg (·.2.2) (congrFun (h₀ t) ω)).symm
     simp only [hs, ha]
     by_cases h1 : (ω t).2.1 = x <;> by_cases h2 : (ω t).2.2 = u <;> simp [h1, h2]
-  rw [h₀]
+  rw [h₁]
   simp_rw [h₂]
-  rw [Integral_MulEqS.eq.MulRealPreimageSIntegral.of.All_LeNorm.StronglyMeasurable h₁ (M := M) (g := fun z => (if z.2.2 = u then (1:ℝ) else 0) * M.rc z) ((Real.StronglyMeasurable_Eq22 u).mul (Random.StronglyMeasurableRc (M := M))) (LeNorm_Mul1.of.All_LeNorm (p := (fun z : ℝ × S × A => z.2.2 = u)) (NormRc.le.AbsR (M := M))) θ t x,
+  rw [Integral_MulEqS.eq.MulRealPreimageSIntegral.of.All_LeNorm.StronglyMeasurable h₀ (M := M) (g := fun z => (if z.2.2 = u then (1:ℝ) else 0) * rc z) ((Real.StronglyMeasurable_Eq22 u).mul (Random.StronglyMeasurableRc (M := M))) (LeNorm_Mul1.of.All_LeNorm (p := (fun z : ℝ × S × A => z.2.2 = u)) (NormRc.le.AbsR (M := M))) θ t x,
     Integral_MulEq22.eq.MulProbIntegral.of.All_LeNorm.StronglyMeasurable (M := M) (Random.StronglyMeasurableRc (M := M)) (NormRc.le.AbsR (M := M)) θ x u, mul_assoc]
 
 
 -- created on 2026-10-07
+-- updated on 2026-10-11

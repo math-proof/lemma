@@ -7,7 +7,7 @@ import Lemma.Set.Summable_MulPowMulAdd_1.of.In_Ico
 import Lemma.Random.NormRc.le.AbsR
 import Lemma.Random.StronglyMeasurableRc
 import Lemma.Random.Summable_MulPowWRc.of.In_Ico
-open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
+open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random Set
 
 
 /--
@@ -26,13 +26,15 @@ private lemma main
   (x : S)
   (θ : Θ) :
 -- imply
-  HasFDerivAt (fun θ => M.Vc θ γ x) (∑' k, γ ^ k • fderiv ℝ (fun θ => M.W θ M.rc k x) θ) θ := by
+  let rc (z : ℝ × S × A) : ℝ := clip z.1 (-M.env.R) M.env.R
+  HasFDerivAt (fun θ => M.Vc θ γ x) (∑' k, γ ^ k • fderiv ℝ (fun θ => M.W θ rc k x) θ) θ := by
 -- proof
+  intro rc
   obtain ⟨Cp, hCp⟩ := id h₁
   have hC : ∀ θ x u, ‖fderiv ℝ (fun θ => M.pol.prob θ x u) θ‖ ≤ Cp := fun θ x u => by
     simpa [gradient, LinearIsometryEquiv.norm_map] using hCp ⟨(θ, x, u), rfl⟩
-  have hW := fun k => Random.Differentiable.All_LeNormFderiv_MulAdd_1_MulMulCard.of.All_LeNorm.StronglyMeasurable.All_LeNormFderiv.All_All_Differentiable_FunPolProb (M := M) h₀ hC (Random.StronglyMeasurableRc (M := M)) (NormRc.le.AbsR (M := M)) k x
-  exact hasFDerivAt_tsum (Set.Summable_MulPowMulAdd_1.of.In_Ico h₂ (Fintype.card A * Cp * |M.env.R|))
+  have hW := fun k => Differentiable.All_LeNormFderiv_MulAdd_1_MulMulCard.of.All_LeNorm.StronglyMeasurable.All_LeNormFderiv.All_All_Differentiable_FunPolProb (M := M) h₀ hC (StronglyMeasurableRc (M := M)) (NormRc.le.AbsR (M := M)) k x
+  apply hasFDerivAt_tsum (Summable_MulPowMulAdd_1.of.In_Ico h₂ (Fintype.card A * Cp * |M.env.R|))
     (fun k θ => ((hW k).1 θ).hasFDerivAt.const_mul (γ ^ k))
     (fun k θ => by
       rw [norm_smul, norm_pow, Real.norm_of_nonneg h₂.1]
@@ -41,3 +43,4 @@ private lemma main
 
 
 -- created on 2026-10-06
+-- updated on 2026-10-11

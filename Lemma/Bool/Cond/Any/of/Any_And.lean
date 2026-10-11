@@ -17,4 +17,4 @@ private lemma main
   exact ⟨x, hx, hp, hcond⟩
 
 
--- created on 2026-10-03
+-- created on 2018-08-24

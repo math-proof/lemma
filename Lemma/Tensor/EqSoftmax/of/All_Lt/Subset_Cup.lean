@@ -135,7 +135,7 @@ Lower-triangular style masking by \( \operatorname{Bool}(i > d_j) \) (hyperreal 
 \qquad \Xi_{ij} = [i > d_j].
 \]
 The py statement replaces the masked sum by the slice \( \sum e^{A[i, \operatorname{ReducedArgMax}(d - n \Xi - i):]} \).
-That step is `Tensor.Eq.Sum.ReducedArgMax.of.All_Lt.Subset_Cup`, which is `@prove(proved=False)` in py (no Lean version),
+That step is `Finset.Sum.of.All_In_Ico.All_Lt`, which is `@prove(proved=False)` in py (no Lean version),
 so it is not ported here; the masked sum is kept instead.
 The only hypothesis is `h_ne` (every row has an unmasked entry), needed for the denominator to be non-infinitesimal.
 The py hypotheses `All_Lt` (strictly increasing `d`) and `Subset_Cup` are only used by that unproved step.

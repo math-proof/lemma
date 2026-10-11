@@ -39,4 +39,4 @@ private lemma main
     · exact (MatProd.eq.DotMatProd (f := f)).symm
 
 
--- created on 2026-10-09
+-- created on 2021-12-13

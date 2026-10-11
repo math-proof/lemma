@@ -15,4 +15,4 @@ private lemma main
   le_antisymm h₁.right h₀
 
 
--- created on 2026-10-03
+-- created on 2020-05-07

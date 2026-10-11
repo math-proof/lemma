@@ -22,7 +22,9 @@ private lemma cond_r_W
   (t k : ℕ)
   (x : S)
   (hP : (M θ).real (s t ⁻¹' {x}) ≠ 0) :
-  ∫ ω, r (t + k) ω ∂(M θ)[|s t ⁻¹' {x}] = M.W θ M.rc k x := by
+  let rc (z : ℝ × S × A) : ℝ := clip z.1 (-M.env.R) M.env.R
+  ∫ ω, r (t + k) ω ∂(M θ)[|s t ⁻¹' {x}] = M.W θ rc k x := by
+  intro rc
   rw [Integral.eq.MulRealPreimageSIntegral_MulEqS h₁, Integral_MulEqSR_Add.eq.MulRealPreimageSWRc h₁, inv_mul_cancel_left₀ hP]
 
 /--
@@ -52,13 +54,14 @@ private lemma main
     fderiv ℝ (fun θ => V θ t x) θ := by
 -- proof
   intro Vθ
+  let rc (z : ℝ × S × A) : ℝ := clip z.1 (-M.env.R) M.env.R
   obtain ⟨Cp, hCp⟩ := id h₃
   have hC : ∀ θ x u, ‖fderiv ℝ (fun θ => M.pol.prob θ x u) θ‖ ≤ Cp := fun θ x u => by
     simpa [gradient, LinearIsometryEquiv.norm_map] using hCp ⟨(θ, x, u), rfl⟩
   have hc : ContinuousAt (fun θ' => (M θ').real (s t ⁻¹' {x})) θ :=
     (Differentiable_RealPreimageS.of.GtInftySup.All_Differentiable_Prob (M := M) h₁ h₂ h₃ t x θ).continuousAt
   have hk : ∀ k, fderiv ℝ (fun θ => ∫ ω, r (t + k) ω ∂(M θ)[|s t ⁻¹' {x}]) θ =
-      fderiv ℝ (fun θ => M.W θ M.rc k x) θ := by
+      fderiv ℝ (fun θ => M.W θ rc k x) θ := by
     intro k
     refine Filter.EventuallyEq.fderiv_eq ?_
     filter_upwards [hc.eventually_ne h₄] with θ' h
@@ -69,4 +72,4 @@ private lemma main
 
 
 -- created on 2026-10-06
--- updated on 2026-10-10
+-- updated on 2026-10-11

@@ -22,7 +22,8 @@ regular (kernel) sense: they are the integrals against the transition kernel `M.
 * `P1k θ p x y = Pr(s[t+1] = y | s[t] = x)`, the density (w.r.t. a reference measure) of the next state
   when `p x u` is the density of `M.env.trans (x, u)`.
 
-These are the continuous-state counterparts of `Model.W … M.rc`, `Model.Vc`, `Model.Qc`, `Model.P1`
+These are the continuous-state counterparts of `Model.W` (with clamped reward
+`clip z.1 (-M.env.R) M.env.R`), `Model.Vc`, `Model.Qc`, `Model.P1`
 (`sympy.stats.policy_trajectory.gradient`), which need `Fintype S`; the model is time-homogeneous, so
 none of them depends on `t`.
 -/

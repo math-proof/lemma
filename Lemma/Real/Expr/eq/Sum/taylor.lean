@@ -32,4 +32,4 @@ private lemma main
   simpa using hs.tsum_eq.symm
 
 
--- created on 2026-10-10
+-- created on 2021-08-15

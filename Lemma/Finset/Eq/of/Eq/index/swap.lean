@@ -57,4 +57,4 @@ private lemma main
   exact EqIndexGet.of.Lt.InjOnRange (fun k ↦ x (Equiv.swap a b k)) n hinj_y hb
 
 
--- created on 2026-10-07
+-- created on 2020-10-26

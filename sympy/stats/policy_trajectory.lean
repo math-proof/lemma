@@ -11,7 +11,6 @@ import sympy.core.numbers
 import sympy.core.power
 import sympy.vector.Basic
 import stdlib.List
-import sympy.functions.elementary.miscellaneous
 
 /-!
 # Shared trajectory model for the policy-gradient lemmas (standard MDP)
@@ -38,6 +37,7 @@ There are no global coordinate functions: lemmas bind `{r s a}` and assume `h₁
 (the joint random variable of `Function.coeProdPi3R`). State / action values are introduced locally in lemmas as
 `V`: `𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = x)` and
 `Q`: `𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = x ∧ a t = u)`.
+Clamped rewards are local `rc z := clip z.1 (-M.env.R) M.env.R` (a.s. equal to the raw reward).
 The reward `r t` belongs to stage `t`: `r t ∼ M.env.reward (s t, a t)`.  The sympy reward hypothesis `Equal(r[t] | s[:t] & a[:t], r[t])` is not
 built in; lemmas that carry it in sympy keep it as an explicit named hypothesis.
 -/
@@ -122,16 +122,12 @@ noncomputable def Kf (θ : Θ) (f : ℝ × S × A → ℝ) : ℕ → ℝ × S ×
   | 0 => f
   | j + 1 => fun z ↦ ∫ w, Kf θ f j w ∂(M.K θ z)
 
-/-- `y ↦ 𝔼[f (ω (t + j)) | s t = y]`, the same for every time `t` (time-homogeneous chain) -/
+/-- `y ↦ 𝔼[f (ω (t + j)) | s t = y]`, the same for every time `t` (time-homogeneous chain):
+expectation of the `j`-step kernel map `Kf θ f j` under the stage law `M.stageK θ y` -/
 noncomputable def W (θ : Θ) (f : ℝ × S × A → ℝ) (j : ℕ) (y : S) : ℝ :=
-  ∫ z, M.Kf θ f j z ∂(M.stageK θ y)
-
-/-- law of the first stage -/
-noncomputable def μ₀ (θ : Θ) : Measure (ℝ × S × A) := M.stageK θ ∘ₘ M.env.init
-
-instance (θ : Θ) : IsProbabilityMeasure (M.μ₀ θ) := by
-  have := M.env.init_prob
-  unfold μ₀; infer_instance
+  let z : ℝ × S × A → ℝ × S × A := id
+  have : PSpace (M.stageK θ y) z := { aemeasurable := measurable_id.aemeasurable }
+  𝔼[z : M.stageK θ y](M.Kf θ f j z)
 
 /-- the stage chain seen as history-dependent kernels (only the last stage matters) -/
 noncomputable def step (θ : Θ) (n : ℕ) : Kernel (Π _ : Finset.Iic n, ℝ × S × A) (ℝ × S × A) :=
@@ -140,11 +136,13 @@ noncomputable def step (θ : Θ) (n : ℕ) : Kernel (Π _ : Finset.Iic n, ℝ ×
 instance (θ : Θ) (n : ℕ) : IsMarkovKernel (M.step θ n) := by
   unfold step; infer_instance
 
-/-- law of the whole trajectory under the weights `θ` (Ionescu-Tulcea) -/
+/-- law of the whole trajectory under the weights `θ` (Ionescu-Tulcea);
+initial stage law is `M.stageK θ ∘ₘ M.env.init` -/
 noncomputable def traj (θ : Θ) : Measure (ℕ → ℝ × S × A) :=
-  Kernel.trajMeasure (X := fun _ ↦ ℝ × S × A) (M.μ₀ θ) (M.step θ)
+  Kernel.trajMeasure (X := fun _ ↦ ℝ × S × A) (M.stageK θ ∘ₘ M.env.init) (M.step θ)
 
 instance (θ : Θ) : IsProbabilityMeasure (M.traj θ) := by
+  have := M.env.init_prob
   unfold traj; infer_instance
 
 omit [MeasurableSingletonClass A] in
@@ -157,9 +155,6 @@ noncomputable instance instCoeFun : CoeFun (Model Θ S A) (fun _ ↦ Θ → Meas
 def traj.unexpand : Lean.PrettyPrinter.Unexpander
   | `($_ $M $θ) => `($M $θ)
   | _ => throw ()
-
-/-- the reward coordinate of a stage clamped to `[-R, R]` (almost surely equal to it) -/
-noncomputable def rc (z : ℝ × S × A) : ℝ := clip z.1 (-M.env.R) M.env.R
 
 end Model
 

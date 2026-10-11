@@ -11,4 +11,4 @@ private lemma main
   have : Real.cos x ^ 2 + Real.sin x ^ 2 = 1 := Real.cos_sq_add_sin_sq x
   linarith
 
--- created on 2023-11-26
+-- created on 2023-10-03

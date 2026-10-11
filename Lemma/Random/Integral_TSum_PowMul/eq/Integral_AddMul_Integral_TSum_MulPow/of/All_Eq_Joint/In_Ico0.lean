@@ -1,4 +1,5 @@
 import sympy.stats.policy_trajectory
+import sympy.functions.elementary.miscellaneous
 import sympy.stats.cond_expectation
 import sympy.Basic
 import Lemma.Random.Eq_0.of.EqReal_0
@@ -72,7 +73,8 @@ private lemma main
     have h₃ := Integral_MulEqSR_Add.eq.MulRealPreimageSWRc (M := M) h₁ θ t 0 x
     simp only [add_zero] at h₃
     have h₄ := Integral_MulEqS.eq.MulRealSum_MulProbSum_MulT h₁ (M := M) θ t x (Vloc θ (t + 1))
-    have hVsum : Vloc θ t x = ∑' k, γ ^ k * M.W θ M.rc k x := by
+    let rc (z : ℝ × S × A) : ℝ := clip z.1 (-M.env.R) M.env.R
+    have hVsum : Vloc θ t x = ∑' k, γ ^ k * M.W θ rc k x := by
       simpa [Vloc] using V.eq.TSum_MulPowWRc.of.Ne0Real_Preimage.In_Ico (M := M) θ t x h₀ h₁ hP
     rw [h₃, h₄, hVsum, TSum_MulPowW.eq.AddWMul_Sum_MulProbSum_MulTTSum_MulPowW.of.In_Ico (M := M) h₀ θ x, Mul_AddMul_MulMul.eq.Add_Mul.of.Ne_0 hP]
     congr 2
@@ -84,3 +86,4 @@ private lemma main
 
 -- created on 2023-03-27
 -- updated on 2026-10-11
+

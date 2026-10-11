@@ -14,4 +14,4 @@ private lemma main
   exact Finset.prod_Ico_succ_top h f
 
 
--- created on 2026-10-02
+-- created on 2023-03-22

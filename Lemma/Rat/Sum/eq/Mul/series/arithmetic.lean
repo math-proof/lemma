@@ -15,4 +15,4 @@ private lemma main
     simp [Nat.cast_add, Nat.cast_one]
     ring
 
--- created on 2019-11-26
+-- created on 2022-01-15

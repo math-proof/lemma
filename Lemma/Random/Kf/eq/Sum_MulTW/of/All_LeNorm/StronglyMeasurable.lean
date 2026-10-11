@@ -2,6 +2,7 @@ import sympy.stats.policy_trajectory
 import sympy.Basic
 import Lemma.Random.Integral.eq.Integral_Integral.of.All_LeNorm.StronglyMeasurable
 import Lemma.Random.StronglyMeasurable_KfAndAll_LeNormKf.of.All_LeNorm.StronglyMeasurable
+import Lemma.Random.W.eq.Integral
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 
 
@@ -27,9 +28,10 @@ private lemma main
   show ∫ w, M.Kf θ f j w ∂(M.K θ z) = _
   have hK : M.K θ z = M.stageK θ ∘ₘ M.env.trans (z.2.1, z.2.2) := by
     rw [Model.K, Kernel.comp_apply, Kernel.comap_apply]
-  rw [hK, Integral.eq.Integral_Integral.of.All_LeNorm.StronglyMeasurable (StronglyMeasurable_KfAndAll_LeNormKf.of.All_LeNorm.StronglyMeasurable (M := M) hf hC θ j).1 (StronglyMeasurable_KfAndAll_LeNormKf.of.All_LeNorm.StronglyMeasurable (M := M) hf hC θ j).2,
+  have hKf := StronglyMeasurable_KfAndAll_LeNormKf.of.All_LeNorm.StronglyMeasurable (M := M) hf hC θ j
+  rw [hK, Integral.eq.Integral_Integral.of.All_LeNorm.StronglyMeasurable hKf.1 hKf.2,
     integral_fintype Integrable.of_finite]
-  rfl
+  simp_rw [← W.eq.Integral (M := M) θ j, smul_eq_mul]
 
 
 -- created on 2026-10-07

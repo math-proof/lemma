@@ -1,4 +1,5 @@
 import sympy.stats.policy_trajectory
+import sympy.functions.elementary.miscellaneous
 import Mathlib.Analysis.Calculus.SmoothSeries
 import Mathlib.Analysis.Calculus.LocalExtr.Basic
 import Mathlib.Analysis.SpecialFunctions.Log.Deriv
@@ -36,12 +37,12 @@ noncomputable def P1 (M : Model Θ S A) (θ : Θ) (x y : S) : ℝ :=
 
 /-- time-free closed form of the state-value function: `Vc θ γ x = ∑' k, γ ^ k * 𝔼[r[t+k] | s[t] = x]` -/
 noncomputable def Vc (M : Model Θ S A) (θ : Θ) (γ : ℝ) (x : S) : ℝ :=
-  ∑' k, γ ^ k * M.W θ M.rc k x
+  ∑' k, γ ^ k * M.W θ (fun z => clip z.1 (-M.env.R) M.env.R) k x
 
 /-- time-free closed form of the action-value function:
 `Qc θ γ x u = 𝔼[r | x, u] + γ * ∑ y, Pr(s' = y | x, u) * Vc θ γ y` -/
 noncomputable def Qc (M : Model Θ S A) (θ : Θ) (γ : ℝ) (x : S) (u : A) : ℝ :=
-  (∫ ρ, M.rc (ρ, x, u) ∂(M.env.reward (x, u))) +
+  (∫ ρ, clip ρ (-M.env.R) M.env.R ∂(M.env.reward (x, u))) +
     γ * ∑ y, (M.env.trans (x, u)).real {y} * M.Vc θ γ y
 
 end Model

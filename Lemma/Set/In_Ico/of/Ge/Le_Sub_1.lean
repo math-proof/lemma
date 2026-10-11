@@ -14,4 +14,4 @@ private lemma main
   exact ⟨ha, by omega⟩
 
 
--- created on 2026-10-03
+-- created on 2018-03-01

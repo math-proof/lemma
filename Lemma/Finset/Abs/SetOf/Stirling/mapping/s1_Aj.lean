@@ -121,5 +121,5 @@ private lemma main
   rw [hAj, hS2card]
 
 
--- created on 2026-10-07
+-- created on 2020-10-05
 -- updated on 2026-10-10

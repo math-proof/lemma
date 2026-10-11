@@ -11,4 +11,4 @@ private lemma main
   -- proof
   exact mul_pow x y n
 
--- created on 2019-11-26
+-- created on 2022-07-07

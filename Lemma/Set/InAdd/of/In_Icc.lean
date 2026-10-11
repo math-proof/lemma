@@ -22,4 +22,4 @@ private lemma main
   exact ⟨h₀, h₁⟩
 
 
--- created on 2026-10-02
+-- created on 2018-04-08

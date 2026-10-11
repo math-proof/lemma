@@ -1,8 +1,10 @@
 import sympy.stats.policy_trajectory
+import sympy.functions.elementary.miscellaneous
 import sympy.Basic
 import Lemma.Random.NormRc.le.AbsR
 import Lemma.Random.StronglyMeasurableRc
 import Lemma.Random.StronglyMeasurable_KfAndAll_LeNormKf.of.All_LeNorm.StronglyMeasurable
+import Lemma.Random.W.eq.Integral
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 
 
@@ -18,12 +20,15 @@ private lemma main
   (j : ℕ)
   (y : S) :
 -- imply
-  ‖M.W θ M.rc j y‖ ≤ |M.env.R| := by
+  let rc (z : ℝ × S × A) : ℝ := clip z.1 (-M.env.R) M.env.R
+  ‖M.W θ rc j y‖ ≤ |M.env.R| := by
 -- proof
+  intro rc
   have h := norm_integral_le_of_norm_le_const (μ := M.stageK θ y)
     (Filter.Eventually.of_forall (StronglyMeasurable_KfAndAll_LeNormKf.of.All_LeNorm.StronglyMeasurable (M := M) (Random.StronglyMeasurableRc (M := M)) (NormRc.le.AbsR (M := M)) θ j).2)
-  show ‖∫ z, M.Kf θ M.rc j z ∂(M.stageK θ y)‖ ≤ _
+  rw [W.eq.Integral (M := M) θ j y]
   simpa using h
 
 
 -- created on 2026-10-07
+-- updated on 2026-10-11

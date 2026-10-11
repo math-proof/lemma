@@ -21,4 +21,4 @@ private lemma main
   · apply fun x hx ↦ hf x (interior_subset hx)
 
 
--- created on 2026-10-07
+-- created on 2020-04-01

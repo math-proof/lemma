@@ -3,6 +3,7 @@ import sympy.Basic
 import Lemma.Random.Integral.eq.Sum_SMul.of.All_LeNorm.StronglyMeasurable
 import Lemma.Random.Kf.eq.Sum_MulTW.of.All_LeNorm.StronglyMeasurable
 import Lemma.Random.StronglyMeasurable_KfAndAll_LeNormKf.of.All_LeNorm.StronglyMeasurable
+import Lemma.Random.W.eq.Integral
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 
 
@@ -26,11 +27,10 @@ private lemma main
 -- proof
   have := M.env.reward_markov
   have h := StronglyMeasurable_KfAndAll_LeNormKf.of.All_LeNorm.StronglyMeasurable (M := M) hf hC θ (j + 1)
-  unfold Model.W
+  rw [W.eq.Integral (M := M) θ (j + 1) x]
   rw [Integral.eq.Sum_SMul.of.All_LeNorm.StronglyMeasurable (M := M) h.1 h.2 θ]
   simp_rw [Kf.eq.Sum_MulTW.of.All_LeNorm.StronglyMeasurable (M := M) hf hC θ j]
   simp [smul_eq_mul]
-  rfl
 
 
 -- created on 2026-10-07

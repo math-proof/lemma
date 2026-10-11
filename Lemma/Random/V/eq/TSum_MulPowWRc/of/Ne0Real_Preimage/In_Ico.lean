@@ -1,4 +1,5 @@
 import sympy.stats.policy_trajectory
+import sympy.functions.elementary.miscellaneous
 import sympy.stats.cond_expectation
 import Lemma.Random.Integral.eq.MulRealPreimageSIntegral_MulEqS
 import Lemma.Random.Integral_G.eq.TSum_MulPowIntegral_R_Add.of.In_Ico
@@ -28,8 +29,11 @@ private lemma main
 -- imply
   let V (θ : Θ) (t : ℕ) (x : S) : ℝ :=
     𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = x);
-  V θ t x = ∑' k, γ ^ k * M.W θ M.rc k x := by
+  let rc (z : ℝ × S × A) : ℝ := clip z.1 (-M.env.R) M.env.R
+  V θ t x = ∑' k, γ ^ k * M.W θ rc k x := by
 -- proof
+  intro Vθ rc
+  dsimp only [Vθ]
   set G := (γ ^ (id : ℕ → ℕ)) @ r[t:]
   obtain rfl : s = fun t ω ↦ (ω t).2.1 := funext₂ fun t ω ↦ (congrArg (·.2.1) (congrFun (h₁ t) ω)).symm
   set s : ℕ → (ℕ → ℝ × S × A) → S := fun t ω ↦ (ω t).2.1
@@ -45,4 +49,4 @@ private lemma main
 
 
 -- created on 2026-10-07
--- updated on 2026-10-10
+-- updated on 2026-10-11
