@@ -122,7 +122,6 @@ from . import IsContinuous
 from . import Subs
 from . import Eq_Lim
 from . import GeLim
-from . import Lim_Mul
 from . import Lim
 from . import All_EqLim
 from . import EqLim
@@ -217,3 +216,4 @@ from . import Mul_Integral
 from . import All_Any_All_LtAbsSub
 from . import Integral_Add
 from . import Any_Le
+from . import LimMul
