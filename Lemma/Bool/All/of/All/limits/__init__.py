@@ -4,3 +4,4 @@ from . import insert
 from . import invert
 from . import Neg
 from . import swap
+from . import delete
