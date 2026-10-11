@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.rhs.apply(Bool.Cond.Any.given.Any_And, simplify=None), Eq[-1].this.rhs.apply(Bool.Cond.Any.given.Any_And, simplify=None)
 
-    Eq <<= Eq[-2].this.find(And).apply(Nat.Eq.UFn.of.Eq.UFn), Eq[-1].this.find(And).apply(Nat.Eq.UFn.of.Eq.UFn)
+    Eq <<= Eq[-2].this.find(And).apply(Nat.Eq.UFn.given.Eq.UFn), Eq[-1].this.find(And).apply(Nat.Eq.UFn.given.Eq.UFn)
 
     Eq << Eq[-2].this.lhs.apply(Nat.Any_Eq_Mul2.of.Even)
 

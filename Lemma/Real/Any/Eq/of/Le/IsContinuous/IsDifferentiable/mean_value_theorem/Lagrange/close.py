@@ -32,7 +32,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2] & Eq[-1]
 
-    Eq << Eq[-1].this.rhs.apply(Nat.Eq.UFn.of.Eq.UFn)
+    Eq << Eq[-1].this.rhs.apply(Nat.Eq.UFn.given.Eq.UFn)
 
     Eq << Set.AllSDiff.of.All.apply(Eq[2], Interval(a, b, left_open=True, right_open=True))
 
