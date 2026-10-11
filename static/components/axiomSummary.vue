@@ -137,27 +137,51 @@ export default {
 			}
 		},
 		
-		async updateUnformalizedLemma() {
-			// 1. fetch the entire dependency graph + unproved states + formalized lean modules
-			var user = this.user;
-			var hierarchy = await form_post('php/request/execute.php', {sql: `select caller, callee from axiom.hierarchy where user = '${user}'`, resultType: 1});
-			// fetch unproved axioms that are NOT already formalized in lean (checked server-side)
-			var unproved_rows = await form_post('php/request/execute.php', {sql: `
-select _a.axiom
-from axiom.axiom as _a
-where _a.user = '${user}' and _a.state = 'unproved'
-and not exists (
-	select 1 from axiom.lemma as _l
-	where _l.user = 'lean' and (
-		replace(_l.module, char(39), '') = _a.axiom or
-		replace(_l.module, char(39), '') = replace(_a.axiom, '.Is.', '.is.') or
-		replace(_l.module, char(39), '') = regexp_replace(_a.axiom, '\\\\.[a-z_0-9]+$', '', 1, 0, 'c') or
-		replace(_l.module, char(39), '') = regexp_replace(replace(_a.axiom, '.Is.', '.is.'), '\\\\.[a-z_0-9]+$', '', 1, 0, 'c')
-	)
-)`, resultType: 1});
-			var unproved = new Set(unproved_rows.map(row => row.axiom));
+		// path normalization: given→of, Is→is, In→in (py↔lean case of section tokens)
+		normPath(name) {
+			return name
+				.replace(/\.given\./g, '.of.')
+				.replace(/\.Is\./g, '.is.')
+				.replace(/\.In\./g, '.in.');
+		},
 
-			// 2. build dependency graph: caller depends on callee
+		// axiom is formalized iff some lean module equals the normalized axiom,
+		// or equals it minus its last lowercase component (lean @[path] / tag suffix)
+		formalizedSet(module_rows) {
+			var strip = (name) => name.replace(/\.[a-z_0-9]+$/, '');
+			var formalized = new Set();
+			for (var {module} of module_rows) {
+				module = this.normPath(module.replace(/'/g, ''));
+				formalized.add(module);
+				formalized.add(strip(module));
+			}
+			return formalized;
+		},
+
+		isFormalized(axiom, formalized) {
+			var strip = (name) => name.replace(/\.[a-z_0-9]+$/, '');
+			var norm = this.normPath(axiom);
+			return formalized.has(norm) || formalized.has(strip(norm));
+		},
+
+		async updateUnformalizedLemma() {
+			// unformalized = no matching lean lemma (independent of py proved/unproved)
+			var user = this.user;
+			var [hierarchy, axiom_rows, module_rows] = await Promise.all([
+				form_post('php/request/execute.php', {sql: `select caller, callee from axiom.hierarchy where user = '${user}'`, resultType: 1}),
+				form_post('php/request/execute.php', {sql: `select axiom from axiom.axiom where user = '${user}'`, resultType: 1}),
+				form_post('php/request/execute.php', {sql: `select module from axiom.lemma where user = 'lean'`, resultType: 1}),
+			]);
+			var formalized = this.formalizedSet(module_rows);
+			var unformalized = new Set();
+			this.count = [0, 0];
+			for (var {axiom} of axiom_rows) {
+				var ok = this.isFormalized(axiom, formalized);
+				++this.count[ok ? 1 : 0];
+				if (!ok) unformalized.add(axiom);
+			}
+
+			// build dependency graph: caller depends on callee
 			var deps = {}, dependents = {}, nodes = new Set();
 			for (var {caller, callee} of hierarchy){
 				(deps[caller] ??= new Set()).add(callee);
@@ -166,11 +190,11 @@ and not exists (
 				nodes.add(callee);
 			}
 
-			// 3. include isolated unproved axioms (no recorded dependency edges) as indegree-0 nodes
-			for (var a of unproved)
+			// include isolated unformalized axioms (no recorded dependency edges)
+			for (var a of unformalized)
 				nodes.add(a);
 
-			// 4. transitive dependent count (wantedness), cycle-safe
+			// transitive dependent count (wantedness), cycle-safe
 			var tdep = {};
 			function countDependents(n, stack){
 				if (n in tdep) return tdep[n];
@@ -186,7 +210,7 @@ and not exists (
 				return s;
 			}
 
-			// 5. Kahn topological order; tie-break: most dependents first
+			// Kahn topological order; tie-break: most dependents first
 			var indeg = {};
 			for (var n of nodes) indeg[n] = (deps[n] ?? new Set()).size;
 			var heap = [];
@@ -204,37 +228,14 @@ and not exists (
 				}
 			}
 
-			// 6. first `topk` unproved & unformalized lemmas in topological order (most basic -> most complex)
-			var wanted = order.filter(a => unproved.has(a)).slice(0, this.topk);
-			this.wantedLemma = wanted.map(a => ({module: a.replace(/\.given\./g, '.of.').replace(/\.Is\./g, '.is.'), depth: countDependents(a, new Set()).size}));
+			// first `topk` unformalized lemmas in topological order (basic → complex)
+			var wanted = order.filter(a => unformalized.has(a)).slice(0, this.topk);
+			this.wantedLemma = wanted.map(a => ({module: this.normPath(a), depth: countDependents(a, new Set()).size}));
 			console.log(this.wantedLemma);
 		},
 
 		change_input(event){
 			this.updateUnformalizedLemma();
-		},
-
-		async fetchFormalizationStatus() {
-			// equivalent to the former correlated-EXISTS SQL (excruciatingly slow server-side, >100s):
-			// axiom is formalized iff some lean module equals the axiom (with .given. -> .of.),
-			// equals it minus its last component, or equals it plus an arbitrary last component
-			var {user} = this;
-			var [axiom_rows, module_rows] = await Promise.all([
-				form_post('php/request/execute.php', {sql: `select axiom from axiom.axiom where user = '${user}'`, resultType: 1}),
-				form_post('php/request/execute.php', {sql: `select module from axiom.lemma where user = 'lean'`, resultType: 1}),
-			]);
-			var strip = (name) => name.replace(/\.[a-z_0-9]+$/, '');
-			var formalized = new Set();
-			for (var {module} of module_rows) {
-				module = module.replace(/'/g, '');
-				formalized.add(module);
-				formalized.add(strip(module));
-			}
-			this.count = [0, 0];
-			for (var {axiom} of axiom_rows) {
-				var norm = axiom.replace(/\.given\./g, '.of.').replace(/\.Is\./g, '.is.');
-				++this.count[formalized.has(norm) || formalized.has(strip(norm)) ? 1 : 0];
-			}
 		},
 	},
 	
@@ -247,7 +248,6 @@ and not exists (
 		if (failed)
 			failed.focus();
 		this.updateUnformalizedLemma();
-		this.fetchFormalizationStatus();
 	},
 }
 </script>

@@ -81,7 +81,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq.Y_def.reversed)
 
-    Eq << Nat.Eq.UFn.given.Eq.UFn.apply(Eq[-1], Eq[-3])
+    Eq << Nat.Eq.UFn.of.Eq.UFn.apply(Eq[-1], Eq[-3])
 
     Eq << Eq[-1].this.lhs.apply(Real.Grad.eq.Integral)
 
