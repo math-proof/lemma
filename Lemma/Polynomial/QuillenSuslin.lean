@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.Algebra.Module.QuillenSuslin
+import sympy.algebra.module.quillen_suslin
 
 open QuillenSuslin
 

@@ -28,12 +28,13 @@ const TEXT_COLS = ['type', 'instImplicit', 'strictImplicit', 'implicit', 'defaul
 const JSON_COLS = ['given', 'imply'];
 
 function parseArgs(argv) {
-  const opts = { limit: Infinity, batch: 200, concurrency: 1, dryRun: false };
+  const opts = { limit: Infinity, batch: 200, concurrency: 1, timeout: 600, dryRun: false };
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
     if (a === '--dry-run') opts.dryRun = true;
     else if (a === '--limit') opts.limit = Number(argv[++i]);
     else if (a === '--batch') opts.batch = Number(argv[++i]);
+    else if (a === '--timeout') opts.timeout = Number(argv[++i]);
     else if (a === '--concurrency') opts.concurrency = Math.max(1, Number(argv[++i]) || 1);
     else if (a === '-h' || a === '--help') opts.help = true;
   }
@@ -67,10 +68,11 @@ async function connectMysql() {
 
 async function listUnbuilt(conn, limit) {
   const sql = `SELECT name FROM mathlib
-     WHERE imply IS NULL OR imply = '{}' OR JSON_LENGTH(imply) = 0
+     WHERE (imply IS NULL OR imply = '{}' OR JSON_LENGTH(imply) = 0
         OR JSON_EXTRACT(imply, '$.latex') IS NULL
         OR JSON_EXTRACT(imply, '$.latex') = ''
-        OR JSON_EXTRACT(imply, '$.latex') = 'null'
+        OR JSON_EXTRACT(imply, '$.latex') = 'null')
+       AND COALESCE(JSON_EXTRACT(imply, '$.error') = true, false) = false
      ORDER BY RAND()`;
   const query = Number.isFinite(limit) ? `${sql} LIMIT ?` : sql;
   const params = Number.isFinite(limit) ? [limit] : [];
@@ -94,7 +96,7 @@ open Lean Meta
 `;
 }
 
-function runBatch(names) {
+function runBatch(names, timeoutMs) {
   const code = generateBatchLean(names);
   fs.writeFileSync(BATCH_LEAN, code);
 
@@ -103,7 +105,7 @@ function runBatch(names) {
     output = execFileSync(LAKE, ['env', 'lean', BATCH_LEAN], {
       cwd: REPO_ROOT,
       encoding: 'utf8',
-      timeout: 600000,
+      timeout: timeoutMs,
       maxBuffer: 100 * 1024 * 1024,
       stdio: ['pipe', 'pipe', 'pipe'],
     });
@@ -149,6 +151,44 @@ async function updateMathlibRow(conn, json) {
     vals,
   );
   return true;
+}
+
+/**
+ * Persist a theorem whose own lean process panicked or timed out. Keep the
+ * stored binder columns and set imply to an error object whose `lean` falls
+ * back to the already pretty-printed `type` (renders as raw Lean, no KaTeX).
+ * The `error:true` flag excludes it from future unbuilt queries so the loop
+ * terminates instead of retrying forever.
+ */
+async function markErrorRow(conn, name, reason) {
+  const [rows] = await conn.query(
+    `SELECT type, instImplicit, strictImplicit, implicit, \`default\`, given
+     FROM mathlib WHERE name = ?`,
+    [name],
+  );
+  const r = rows[0] ?? {};
+  const imply = {
+    lean: typeof r.type === 'string' ? r.type : name,
+    latex: null,
+    error: true,
+    reason: String(reason).slice(0, 200),
+  };
+  const vals = [
+    name,
+    r.type ?? null,
+    r.instImplicit ?? null,
+    r.strictImplicit ?? null,
+    r.implicit ?? null,
+    r.default ?? null,
+    r.given != null ? JSON.stringify(r.given) : null,
+    JSON.stringify(imply),
+  ];
+  await conn.query(
+    `REPLACE INTO mathlib
+      (name, type, instImplicit, strictImplicit, implicit, \`default\`, given, imply)
+     VALUES (?, ?, ?, ?, ?, ?, CAST(? AS JSON), CAST(? AS JSON))`,
+    vals,
+  );
 }
 
 async function mapPool(items, concurrency, fn) {
@@ -210,12 +250,14 @@ async function main() {
       const n = ++batchIdx;
       const t0 = Date.now();
       try {
-        const results = runBatch(batch);
+        const results = runBatch(batch, opts.timeout * 1000);
         let batchOk = 0;
         let batchFail = 0;
         for (const json of results) {
           if (json.error) {
             batchFail++;
+            // batch 1 → the failing theorem is identifiable; persist it
+            if (batch.length === 1 && json.name) await markErrorRow(conn, json.name, 'Name.toJson failed');
             continue;
           }
           await updateMathlibRow(conn, json);
@@ -223,15 +265,25 @@ async function main() {
         }
         // theorems that didn't produce output (parse failure) count as failed
         const missing = batch.length - results.length;
-        if (missing > 0) batchFail += missing;
+        if (missing > 0) {
+          batchFail += missing;
+          // batch 1 crashed without an error object: persist the single theorem
+          if (batch.length === 1) await markErrorRow(conn, batch[0], 'no output (panic/parse)');
+        }
         ok += batchOk;
         fail += batchFail;
         const dt = ((Date.now() - t0) / 1000).toFixed(1);
         log(`(${n}/${batches.length}) ${dt}s ok=${batchOk} fail=${batchFail} (${batch[0]}…)`);
       } catch (e) {
         fail += batch.length;
+        // batch 1: process-level crash or timeout — persist with reason
+        let reason = 'process crash';
+        if (batch.length === 1) {
+          if (/ETIMEDOUT/.test(String(e?.message))) reason = `timeout ${opts.timeout}s`;
+          try { await markErrorRow(conn, batch[0], reason); } catch { /* ignore */ }
+        }
         const dt = ((Date.now() - t0) / 1000).toFixed(1);
-        log(`(${n}/${batches.length}) ${dt}s ERROR: ${e?.message || e} (${batch[0]}…)`);
+        log(`(${n}/${batches.length}) ${dt}s ERROR: ${reason} (${batch[0]}…)`);
       }
     });
 

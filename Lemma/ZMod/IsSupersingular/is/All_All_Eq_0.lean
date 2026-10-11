@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.AlgebraicGeometry.EllipticCurve.Supersingular
+import sympy.polys.agca.elliptic_curve.supersingular
 
 open WeierstrassCurve.Affine
 

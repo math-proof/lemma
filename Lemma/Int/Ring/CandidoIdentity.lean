@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.Algebra.Ring.CandidoIdentity
+import sympy.algebra.ring.candido_identity
 
 open MetaMathlibExt
 

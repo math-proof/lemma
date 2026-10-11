@@ -14,8 +14,8 @@ private lemma expr_swap
   (if x ∈ A ∩ S then f x else g x) = if x ∈ S \ (A ∩ S) then g x else f x := by
 -- proof
   by_cases hA : x ∈ A
-  · rw [if_pos ⟨hA, h⟩, if_neg (fun hx => hx.2 ⟨hA, h⟩)]
-  · rw [if_neg (fun hx => hA hx.1), if_pos ⟨h, fun hx => hA hx.1⟩]
+  · rw [ite_eq_left ⟨hA, h⟩, ite_eq_right (fun hx => hx.2 ⟨hA, h⟩)]
+  · rw [ite_eq_right (fun hx => hA hx.1), ite_eq_left ⟨h, fun hx => hA hx.1⟩]
 
 
 -- created on 2026-09-27

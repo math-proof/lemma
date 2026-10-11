@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.Analysis.Calculus.Hessian
+import sympy.calculus.Hessian
 
 open Real.Calculus.Hessian
 open scoped BigOperators

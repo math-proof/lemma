@@ -22,7 +22,7 @@ private lemma main
   (j : ℕ)
   (x : S) :
 -- imply
-  M.W θ f (j + 1) x = ∑ u, M.pol.prob θ x u * ∑ y, M.T x u y * M.W θ f j y := by
+  M.W θ f (j + 1) x = ∑ u, M.pol.prob θ x u * ∑ y, (M.env.trans (x, u)).real {y} * M.W θ f j y := by
 -- proof
   have := M.env.reward_markov
   have h := StronglyMeasurable_KfAndAll_LeNormKf.of.All_LeNorm.StronglyMeasurable (M := M) hf hC θ (j + 1)

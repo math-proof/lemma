@@ -1,5 +1,5 @@
-import Lemma.Random.MEq_Expect.MEq_Expect.MEq_Expect.of.Expect.All_MEq_Expect.All_MEq_Expect.GtInftySup.All_MeasurableJoint.In_Ico
-import Lemma.Random.CondExpPow_Id.of.In_Ico
+import Lemma.Random.MEq_Expect_Cond.MEqExpect.MEq.of.MEqExpectS.All_MEq_Expect_CondDot.All_MEq_Expect_CondDot.GtInftySup.In_Ico
+import Lemma.Random.MEqExpectS.of.All_Eq.In_Ico
 import Lemma.Random.MeasurableJoint.is.Measurable.Measurable
 import Lemma.Random.MEqCondExp_Integral.of.Integrable.Measurable
 import Lemma.Random.Eq.of.Ne_0.MEq
@@ -10,10 +10,8 @@ import sympy.vector.Basic
 import Lemma.Random.Integrable_G.of.In_Ico
 import Lemma.Random.MEqR_Rc
 import Lemma.Random.Integrable.of.Measurable
-import Lemma.Random.Measurable_A
-import Lemma.Random.Measurable_S
-import Lemma.Random.Measurable_R
-import Lemma.Random.NormRc.le.Abs_R
+import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
+import Lemma.Random.NormRc.le.AbsR
 import Lemma.Random.StronglyMeasurableRc
 open MeasureTheory ProbabilityTheory PolicyGradient Random
 
@@ -55,9 +53,9 @@ private lemma main
   set a : ℕ → (ℕ → ℝ × S × A) → A := fun t ω ↦ (ω t).2.2
   set x := «s.bvar» t
   set u := «a.bvar» t
-  have hs : ∀ t, Measurable (s t) := Random.Measurable_S h₁
-  have ha : ∀ t, Measurable (a t) := Random.Measurable_A h₁
-  have hr : ∀ t, Measurable (r t) := Random.Measurable_R h₁
+  have hs : ∀ t, Measurable (s t) := Random.Measurable.of.All_Eq.snd.fst h₁
+  have ha : ∀ t, Measurable (a t) := Random.Measurable.of.All_Eq.snd.snd h₁
+  have hr : ∀ t, Measurable (r t) := Random.Measurable.of.All_Eq.fst h₁
   have hsa : ∀ t, Measurable (fun ω ↦ (s t ω, a t ω)) := fun t ↦
     (hs t).prodMk (ha t)
   have hpa : Measurable (fun ω t ↦ a t ω) := Measurable.of_eval ha
@@ -86,7 +84,7 @@ private lemma main
   have hrc : ∀ t, Measurable (fun ω : ℕ → ℝ × S × A ↦ M.rc (ω t)) := fun t ↦
     (Random.StronglyMeasurableRc (M := M)).measurable.comp (measurable_pi_apply t)
   have hR : ∀ t (ω : ℕ → ℝ × S × A), |M.rc (ω t)| ≤ |M.env.R| := fun t ω ↦
-    (Real.norm_eq_abs _).symm.trans_le (NormRc.le.Abs_R (M := M) (ω t))
+    (Real.norm_eq_abs _).symm.trans_le (NormRc.le.AbsR (M := M) (ω t))
   have hG : ∀ n, (fun ω : ℕ → ℝ × S × A ↦ (γ ^ (id : ℕ → ℕ)) @ (fun k : ℕ ↦ M.rc (ω k))[n:]) =ᵐ[M θ] G n :=
     fun n ↦ (ae_all_iff.2 fun k ↦ MEqR_Rc h₁ (M := M) θ k).mono fun ω h ↦ by
       exact tsum_congr fun k ↦ congrArg (γ ^ k * ·) (h (n + k)).symm
@@ -99,7 +97,7 @@ private lemma main
       (M θ)[(fun ω : ℕ → ℝ × S × A ↦ (γ ^ (id : ℕ → ℕ)) @ (fun k : ℕ ↦ M.rc (ω k))[t:]) | MeasurableSpace.comap (s t) inferInstance] :=
     fun t ↦ Filter.EventuallyEq.trans (Filter.Eventually.of_forall fun ω ↦ hV t (s t ω))
       ((MEqCondExp_Integral.of.Integrable.Measurable (hs t) (hGi t)).symm.trans (condExp_congr_ae (hG t)).symm)
-  have h₇ := ((condExp_congr_ae (hG (t + 1))).trans (CondExpPow_Id.of.In_Ico (M := M) (θ := θ) (r := r) (s := s) (a := a) (t := t) h₀ h₁)).trans
+  have h₇ := ((condExp_congr_ae (hG (t + 1))).trans (MEqExpectS.of.All_Eq.In_Ico (M := M) (θ := θ) (r := r) (s := s) (a := a) (t := t) h₀ h₁)).trans
     (condExp_congr_ae (hG (t + 1))).symm
   have hσ : MeasurableSpace.comap (fun ω : ℕ → ℝ × S × A ↦ ((s t ω, a t ω), s (t + 1) ω)) inferInstance =
       MeasurableSpace.comap (JointRandomSymbol (s t) (JointRandomSymbol (a t) (s (t + 1)))) inferInstance := by
@@ -113,14 +111,14 @@ private lemma main
       exact (show Measurable fun p : (S × A) × S ↦ (p.1.1, p.1.2, p.2) by fun_prop).comp
         (comap_measurable fun ω : ℕ → ℝ × S × A ↦ ((s t ω, a t ω), s (t + 1) ω))
   erw [hσ] at h₇
-  obtain ⟨h₈, h₉, h₁₀⟩ := MEq_Expect.MEq_Expect.MEq_Expect.of.Expect.All_MEq_Expect.All_MEq_Expect.GtInftySup.All_MeasurableJoint.In_Ico
+  obtain ⟨h₈, h₉, h₁₀⟩ := MEq_Expect_Cond.MEqExpect.MEq.of.MEqExpectS.All_MEq_Expect_CondDot.All_MEq_Expect_CondDot.GtInftySup.In_Ico
     (π := M θ) (s := s) (a := a) (r := fun t ω ↦ M.rc (ω t)) (t := t) h₀
     (fun t ↦ Random.MeasurableJoint.of.Measurable.Measurable (hrc t) (Random.MeasurableJoint.of.Measurable.Measurable (hs t) (ha t)))
     ⟨|M.env.R|, Set.forall_mem_range.2 fun ⟨t, ω⟩ ↦ hR t ω⟩ h₅ h₆ h₇
   -- back to the raw rewards
   have hri : Integrable (r t) (M θ) :=
     Integrable.of_bound (hr t).aestronglyMeasurable |M.env.R|
-      ((MEqR_Rc h₁ (M := M) θ t).mono fun ω (h : r t ω = M.rc (ω t)) ↦ by rw [h]; exact NormRc.le.Abs_R (M := M) _)
+      ((MEqR_Rc h₁ (M := M) θ t).mono fun ω (h : r t ω = M.rc (ω t)) ↦ by rw [h]; exact NormRc.le.AbsR (M := M) _)
   have hF : Integrable (fun ω ↦ r t ω + γ * V (t + 1) (s (t + 1) ω)) (M θ) :=
     hri.add ((Integrable.of.Measurable (M := M) (s (t + 1)) (hs (t + 1)) θ (V (t + 1))).const_mul γ)
   have hFae : (fun ω : ℕ → ℝ × S × A ↦ M.rc (ω t) + γ * V (t + 1) (s (t + 1) ω)) =ᵐ[M θ]

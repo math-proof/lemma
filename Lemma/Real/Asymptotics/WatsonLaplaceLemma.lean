@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.Analysis.Asymptotics.WatsonLaplaceLemma
+import sympy.series.asymptotics.WatsonLaplaceLemma
 
 open MetaMathlibExt
 

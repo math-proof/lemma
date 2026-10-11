@@ -1,8 +1,7 @@
 import sympy.stats.policy_trajectory.gradient
 import sympy.Basic
-import Lemma.Random.Measurable_A
-import Lemma.Random.Measurable_S
-import Lemma.Random.RealInterPreimageS_PreimageA.eq.MulRealPreimageSProb
+import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
+import Lemma.Random.RealInterPreimage_Preimage.eq.MulRealPreimageProb.of.All_Eq
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
 
 
@@ -29,13 +28,13 @@ private lemma main
   ∫ ω, φ (s t ω) (a t ω) ∂(M θ) =
     ∑ y, ∑ u, ((M θ).real (s t ⁻¹' {y}) * M.pol.prob θ y u) • φ y u := by
 -- proof
-  have hX : Measurable (fun ω : ℕ → ℝ × S × A => (s t ω, a t ω)) := (Random.Measurable_S h₁ t).prodMk (Random.Measurable_A h₁ t)
+  have hX : Measurable (fun ω : ℕ → ℝ × S × A => (s t ω, a t ω)) := (Random.Measurable.of.All_Eq.snd.fst h₁ t).prodMk (Random.Measurable.of.All_Eq.snd.snd h₁ t)
   have e := integral_map (μ := M θ) hX.aemeasurable
     (f := fun p : S × A => φ p.1 p.2) StronglyMeasurable.of_discrete.aestronglyMeasurable
   refine e.symm.trans ?_
   rw [integral_fintype Integrable.of_finite, Fintype.sum_prod_type]
   refine Finset.sum_congr rfl fun y _ => Finset.sum_congr rfl fun u _ => ?_
-  rw [map_measureReal_apply hX (measurableSet_singleton _), ← RealInterPreimageS_PreimageA.eq.MulRealPreimageSProb h₁]
+  rw [map_measureReal_apply hX (measurableSet_singleton _), ← RealInterPreimage_Preimage.eq.MulRealPreimageProb.of.All_Eq h₁]
   congr 2
   ext ω
   simp [Prod.ext_iff]

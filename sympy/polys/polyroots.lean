@@ -1,6 +1,6 @@
 import sympy.core.power
 import Mathlib.Analysis.Real.Sqrt
-import Mathlib.Data.Complex.Basic
+import Mathlib.Basic.Complex.Basic
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Mathlib.Analysis.Real.Hyperreal
 

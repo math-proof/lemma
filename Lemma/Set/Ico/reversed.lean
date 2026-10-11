@@ -19,7 +19,7 @@ private lemma main
   set n : ℤ := ((b - a) * s + abs_k - 1) / abs_k with hn
   have hsk : s * k = abs_k := by
     rw [hs, habs]
-    exact?
+    exact Int.sign_mul_self_eq_abs k
   have hs2 : s ^ 2 = 1 := by
     rw [hs]
     if h : 0 < k then

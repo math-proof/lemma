@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.Analysis.Calculus.ArcsinDivSinIntegral
+import sympy.calculus.ArcsinDivSinIntegral
 
 /--
 [arcsin_div_sin_integral](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Calculus/ArcsinDivSinIntegral.lean)

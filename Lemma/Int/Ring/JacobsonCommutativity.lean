@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.Algebra.Ring.JacobsonCommutativity
+import sympy.algebra.ring.jacobson_commutativity
 
 /--
 [jacobson_commutativity](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Ring/JacobsonCommutativity.lean)

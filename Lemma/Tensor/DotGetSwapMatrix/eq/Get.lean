@@ -69,7 +69,7 @@ private lemma main
       intro m _ hm
       apply (congrArg (fun t : Tensor α [] => t * id (α := Tensor α []) x[m]) (hW m)).trans
       have hm' : (m : ℕ) ≠ ↑j := Fin.val_ne_iff.mpr hm
-      rw [if_neg hkj, if_pos hki]
+      rw [ite_eq_right hkj, ite_eq_left hki]
       simp [Delta.eq.Ite, hm']
       apply Tensor.EqMul0_0.nat
     ·
@@ -77,7 +77,7 @@ private lemma main
       apply (hj (Finset.mem_univ _)).elim
     ·
       apply (congrArg (fun t : Tensor α [] => t * id (α := Tensor α []) x[j]) (hW j)).trans
-      rw [if_neg hkj, if_pos hki, hki', Equiv.swap_apply_left]
+      rw [ite_eq_right hkj, ite_eq_left hki, hki', Equiv.swap_apply_left]
       simp [Delta.eq.Ite]
       apply Tensor.EqMul1.nat
   else

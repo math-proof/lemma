@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.Algebra.MvPolynomial.PDeriv
+import sympy.algebra.mv_polynomial.p_deriv
 
 open MvPolynomial
 

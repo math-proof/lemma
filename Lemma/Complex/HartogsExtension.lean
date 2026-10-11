@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.Analysis.Complex.HartogsExtension
+import sympy.calculus.complex.HartogsExtension
 
 open Complex.HartogsWanted
 

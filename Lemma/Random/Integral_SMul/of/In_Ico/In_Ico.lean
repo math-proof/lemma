@@ -1,4 +1,4 @@
-import sympy.stats.policy_trajectory.advantage
+import sympy.stats.policy_trajectory.gradient
 import sympy.Basic
 import Lemma.Random.AeNormSub.le.DeltaBound.of.In_Ico
 import Lemma.Random.Integrable_SMulSubAddRMul_VcVc.of.In_Ico
@@ -46,7 +46,7 @@ private lemma main
     have := (Random.Integrable_SMulSubAddRMul_VcVc.of.In_Ico (M := M) h₀ h₁ θ t (t + k) ψ).smul (c ^ k)
     exact this.congr (Filter.Eventually.of_forall fun ω => (hF k ω).symm)
   obtain ⟨Ψ, hΨ⟩ : ∃ Ψ : ℝ, Ψ = ∑ p : S × A, ‖ψ p.1 p.2‖ := ⟨_, rfl⟩
-  have hFb : ∀ k, ∀ᵐ ω ∂(M θ), ‖F k ω‖ ≤ c ^ k * (M.deltaBound γ * Ψ) := fun k => by
+  have hFb : ∀ k, ∀ᵐ ω ∂(M θ), ‖F k ω‖ ≤ c ^ k * ((3 / (1 - γ) - 1) * |M.env.R| * Ψ) := fun k => by
     filter_upwards [Random.AeNormSub.le.DeltaBound.of.In_Ico (M := M) h₀ h₁ θ] with ω h
     rw [hF, norm_smul, norm_smul, norm_pow, Real.norm_of_nonneg h₂.1, hΨ]
     refine mul_le_mul_of_nonneg_left ?_ (pow_nonneg h₂.1 k)
@@ -55,17 +55,17 @@ private lemma main
       ((norm_nonneg _).trans (h 0))
   have hsum : Summable (fun k => ∫ ω, ‖F k ω‖ ∂(M θ)) := by
     refine Summable.of_nonneg_of_le (fun k => integral_nonneg fun _ => norm_nonneg _) (fun k => ?_)
-      ((summable_geometric_of_lt_one h₂.1 h₂.2).mul_right (M.deltaBound γ * Ψ))
-    calc _ ≤ ∫ _, c ^ k * (M.deltaBound γ * Ψ) ∂(M θ) :=
+      ((summable_geometric_of_lt_one h₂.1 h₂.2).mul_right ((3 / (1 - γ) - 1) * |M.env.R| * Ψ))
+    calc _ ≤ ∫ _, c ^ k * ((3 / (1 - γ) - 1) * |M.env.R| * Ψ) ∂(M θ) :=
           integral_mono_ae (hFi k).norm (integrable_const _) (hFb k)
-      _ = c ^ k * (M.deltaBound γ * Ψ) := by simp
+      _ = c ^ k * ((3 / (1 - γ) - 1) * |M.env.R| * Ψ) := by simp
   have hHas := hasSum_integral_of_summable_integral_norm hFi hsum
   have hzero : ∀ k, k ≠ 0 → ∫ ω, F k ω ∂(M θ) = 0 := by
     intro k hk
     obtain ⟨k', rfl⟩ := Nat.exists_eq_succ_of_ne_zero hk
     simp_rw [hF]
     rw [integral_smul]
-    have := Random.Integral_SMul.eq.Zero.of.Le.In_Ico (M := M) h₀ h₁ θ t (t + k') (Nat.le_add_right t k') ψ
+    have := Random.Integral_SMul.eq.Zero.of.Le.In_Ico (M := M) t (t + k') h₀ h₁ (Nat.le_add_right t k') θ ψ
     rw [show (fun ω => (r (t + k'.succ) ω + γ * M.Vc θ γ (s (t + k'.succ + 1) ω) -
         M.Vc θ γ (s (t + k'.succ) ω)) • ψ (s t ω) (a t ω)) = fun ω => (r (t + k' + 1) ω +
         γ * M.Vc θ γ (s (t + k' + 1 + 1) ω) - M.Vc θ γ (s (t + k' + 1) ω)) • ψ (s t ω) (a t ω)
@@ -77,7 +77,7 @@ private lemma main
     have hs : Summable (fun k => c ^ k * (r (t + k) ω + γ * M.Vc θ γ (s (t + k + 1) ω) -
         M.Vc θ γ (s (t + k) ω))) := by
       refine Summable.of_norm_bounded ((summable_geometric_of_lt_one h₂.1 h₂.2).mul_right
-        (M.deltaBound γ)) fun k => ?_
+        ((3 / (1 - γ) - 1) * |M.env.R|)) fun k => ?_
       rw [norm_mul, norm_pow, Real.norm_of_nonneg h₂.1]
       exact mul_le_mul_of_nonneg_left (h _) (pow_nonneg h₂.1 k)
     exact (hs.tsum_smul_const _).symm
@@ -86,3 +86,4 @@ private lemma main
 
 
 -- created on 2026-10-06
+-- updated on 2026-10-10

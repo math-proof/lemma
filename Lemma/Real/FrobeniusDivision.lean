@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.Algebra.Algebra.FrobeniusDivision
+import sympy.algebra.algebra.frobenius_division
 
 open FrobeniusDivision
 

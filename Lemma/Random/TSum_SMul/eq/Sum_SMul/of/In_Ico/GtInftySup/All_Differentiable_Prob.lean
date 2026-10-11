@@ -3,7 +3,7 @@ import sympy.Basic
 import sympy.vector.operators
 import sympy.concrete.sup
 import Lemma.Random.Integral_R.eq.Sum_MulRealWRc
-import Lemma.Tensor.Differentiable_Vc.of.In_Ico.GtInftySup.All_Differentiable_Prob
+import Lemma.Random.Differentiable_FunVc.of.InIco0.GtInftySup_Norm.All_All_Differentiable_FunPolProb
 import Lemma.Random.GetTSum_SMul.of.In_Ico.GtInftySup.All_Differentiable_Prob
 import Lemma.Random.Summable_MulPowWRc.of.In_Ico
 import Lemma.Real.TSum_MulPowSum_Mul.eq.Sum_Mul_TSum_MulPow.of.All_Summable_MulPow
@@ -42,8 +42,8 @@ private lemma main
   rw [← (GetTSum_SMul.of.In_Ico.GtInftySup.All_Differentiable_Prob (M := M) h₀ h₁ h₂ h₃ θ).fderiv]
   have e : (fun θ => ∑' t, γ ^ t * ∫ ω, r t ω ∂(M θ)) =
       fun θ => ∑ x, M.env.init.real {x} * M.Vc θ γ x := funext fun θ => obj_eq h₁ M θ h₀
-  rw [e, fderiv_fun_sum fun x _ => ((Tensor.Differentiable_Vc.of.In_Ico.GtInftySup.All_Differentiable_Prob (M := M) h₂ h₃ h₀ x) θ).const_mul _]
-  exact Finset.sum_congr rfl fun x _ => fderiv_const_mul ((Tensor.Differentiable_Vc.of.In_Ico.GtInftySup.All_Differentiable_Prob (M := M) h₂ h₃ h₀ x) θ) _
+  rw [e, fderiv_fun_sum fun x _ => ((Random.Differentiable_FunVc.of.InIco0.GtInftySup_Norm.All_All_Differentiable_FunPolProb (M := M) h₂ h₃ h₀ x) θ).const_mul _]
+  exact Finset.sum_congr rfl fun x _ => fderiv_const_mul ((Random.Differentiable_FunVc.of.InIco0.GtInftySup_Norm.All_All_Differentiable_FunPolProb (M := M) h₂ h₃ h₀ x) θ) _
 
 
 -- created on 2026-10-06

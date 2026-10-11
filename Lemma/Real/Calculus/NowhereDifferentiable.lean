@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.Analysis.Calculus.NowhereDifferentiable
+import sympy.calculus.NowhereDifferentiable
 
 open Real.Calculus.NowhereDifferentiable
 

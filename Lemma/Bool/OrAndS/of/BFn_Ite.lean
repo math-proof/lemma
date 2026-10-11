@@ -13,10 +13,10 @@ private lemma binary
   by_cases hc : c
   ·
     left
-    exact ⟨hc, by rw [h, if_pos hc]⟩
+    exact ⟨hc, by rw [h, ite_eq_left hc]⟩
   ·
     right
-    exact ⟨hc, by rw [h, if_neg hc]⟩
+    exact ⟨hc, by rw [h, ite_eq_right hc]⟩
 
 
 -- created on 2018-01-07

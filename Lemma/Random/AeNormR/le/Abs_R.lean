@@ -1,7 +1,7 @@
 import sympy.stats.policy_trajectory.gradient
 import sympy.Basic
 import Lemma.Random.MEqR_Rc
-import Lemma.Random.NormRc.le.Abs_R
+import Lemma.Random.NormRc.le.AbsR
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
 
 
@@ -22,7 +22,7 @@ private lemma main
   ∀ᵐ ω ∂(M θ), ∀ k, ‖r k ω‖ ≤ |M.env.R| := by
 -- proof
   rw [ae_all_iff]
-  exact fun k => (MEqR_Rc h₁ (M := M) θ k).mono fun ω h => by rw [h]; exact NormRc.le.Abs_R (M := M) _
+  exact fun k => (MEqR_Rc h₁ (M := M) θ k).mono fun ω h => by rw [h]; exact NormRc.le.AbsR (M := M) _
 
 
 -- created on 2026-10-06

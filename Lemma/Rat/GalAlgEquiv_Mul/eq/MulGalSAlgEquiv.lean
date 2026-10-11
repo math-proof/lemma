@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.AlgebraicGeometry.EllipticCurve.GaloisRepresentation
+import sympy.polys.agca.elliptic_curve.galois_representation
 
 open MetaMathlibExt WeierstrassCurve
 

@@ -1,5 +1,5 @@
 import Lemma.Random.Eq_Expect.Eq_Expect.MEq_Expect.of.Expect.All_Eq_Expect.All_MEq_Expect.All_Measurable.GtInftySup.All_MeasurableJoint.In_Ico
-import Lemma.Random.MEqExpect.of.CondIndep.Integrable.Measurable.Measurable.Measurable.Measurable
+import Lemma.Random.MEqExpectS.of.CondIndep.Integrable.MeasurableJoint.Measurable
 import Lemma.Random.MeasurableJoint.is.Measurable.Measurable
 import sympy.concrete.sup
 open MeasureTheory ProbabilityTheory
@@ -12,7 +12,7 @@ stated as conditional independence: given `s[t+1]`, the future reward path `r[t+
 Corollary of
 `Random.Eq_Expect.Eq_Expect.MEq_Expect.of.Expect.All_Eq_Expect.All_MEq_Expect.All_Measurable.GtInftySup.All_MeasurableJoint.In_Ico`,
 whose `h₆` (`𝔼[… | s t, a t, s (t + 1)] =ᵐ 𝔼[… | s (t + 1)]`) follows from conditional independence by
-`Random.MEqExpect.of.CondIndep.Integrable.Measurable.Measurable.Measurable.Measurable`
+`Random.MEqExpectS.of.CondIndep.Integrable.MeasurableJoint.Measurable`
 (as in `Random.MEq_Expect.MEq_Expect.MEq_Expect.of.All_MEq_Expect.All_MEq_Expect.CondIndep.GtInftySup.All_MeasurableJoint.In_Ico`).
 -/
 @[path]
@@ -61,8 +61,11 @@ private lemma main
     have hint : Integrable (fun ω ↦ (γ ^ (id : ℕ → ℕ)) @ Expectation.asRV r[t + 1:] ω) π :=
       Integrable.of_bound (hg.comp hF).aestronglyMeasurable ((1 - γ)⁻¹ * |R|)
         (Filter.Eventually.of_forall fun ω ↦ tsum_of_norm_bounded hgeo (hb ω))
-    have h := Random.MEqExpect.of.CondIndep.Integrable.Measurable.Measurable.Measurable.Measurable
-      (X := JointRandomSymbol (s t) (a t)) hF (Random.MeasurableJoint.of.Measurable.Measurable (hsm t) (ham t)) (hsm (t + 1)) hg hint h₄
+    have h := Random.MEqExpectS.of.CondIndep.Integrable.MeasurableJoint.Measurable
+      (a := JointRandomSymbol (s t) (a t))
+      hg
+      (hF.prodMk ((Random.MeasurableJoint.of.Measurable.Measurable (hsm t) (ham t)).prodMk (hsm (t + 1))))
+      hint h₄
     -- repack the conditioning `((s t, a t), s (t + 1))` as `(s t, (a t, s (t + 1)))`
     have hσ : MeasurableSpace.comap (JointRandomSymbol (JointRandomSymbol (s t) (a t)) (s (t + 1))) inferInstance =
         MeasurableSpace.comap (JointRandomSymbol (s t) (JointRandomSymbol (a t) (s (t + 1)))) inferInstance := by

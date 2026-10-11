@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.Analysis.Complex.Wiman.CorrectedEstimateAbsorption
+import sympy.calculus.complex.Wiman.CorrectedEstimateAbsorption
 
 open Complex.Wiman.CorrectedEstimateAbsorption
 

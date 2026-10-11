@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.AlgebraicGeometry.CubicSurface
+import sympy.polys.agca.cubic_surface
 
 open AlgebraicGeometry
 open MvPolynomial

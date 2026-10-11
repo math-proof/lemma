@@ -1,0 +1,9 @@
+[
+  {
+    "resolved": "Random",
+    "reason": "Mathlib `Random` is a type class (`Lean.isClass`)",
+    "kind": "type class",
+    "folder": "Random",
+    "decl": "typeclass"
+  }
+]

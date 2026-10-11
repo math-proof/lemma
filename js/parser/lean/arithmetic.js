@@ -208,11 +208,15 @@ export class Lean_otimes extends LeanArithmetic {
 
     static input_priority = 32;
 
-    /** `⊗ₘ` — the subscript letter (e.g. the `ₘ` in the kernel tensor product). */
+    /** `⊗ₘ` / `⊗ₜ` — the subscript letter (kernel product / `TensorProduct.tmul`). */
     subscript = '';
+    /** `⊗[R]` / `⊗ₜ[R]` — bracketed ring parameter (echo intact; elided in LaTeX). */
+    modifier = '';
 
     get operator() {
-        return this.subscript ? `⊗${this.subscript}` : '⊗';
+        let op = this.subscript ? `⊗${this.subscript}` : '⊗';
+        if (this.modifier) op += `[${this.modifier}]`;
+        return op;
     }
 
     get command() {

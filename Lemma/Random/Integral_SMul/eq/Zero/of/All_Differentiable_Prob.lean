@@ -1,6 +1,6 @@
 import sympy.stats.policy_trajectory.gradient
 import sympy.Basic
-import Lemma.Tensor.Sum_SMul.eq.Zero.of.All_Differentiable_Prob
+import Lemma.Random.SumSMulProbFderiv_FunLog_Prob.eq.Zero.of.All_AllDifferentiable_FunProbPol
 import Lemma.Random.Integral.eq.Sum_Sum_SMul
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model
 
@@ -33,7 +33,7 @@ private lemma main
         (M.pol.prob θ y u • fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' y u)) θ) := fun u => by
     rw [smul_smul, smul_smul]; congr 1; ring
   simp_rw [h₃]
-  rw [← Finset.smul_sum, Tensor.Sum_SMul.eq.Zero.of.All_Differentiable_Prob (M := M) h₂ θ y, smul_zero]
+  rw [← Finset.smul_sum, Random.SumSMulProbFderiv_FunLog_Prob.eq.Zero.of.All_AllDifferentiable_FunProbPol (M := M) h₂ θ y, smul_zero]
 
 
 -- created on 2026-10-06

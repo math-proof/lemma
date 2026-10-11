@@ -7,6 +7,77 @@ function lemma_shell_h(?string $s): string
     return htmlspecialchars($s ?? '', ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 }
 
+/** URL segment for this project (`lean` when docroot is `…/github` and site is `/lean/`). */
+function lemma_user_segment(): string
+{
+    return get_project_name();
+}
+
+/**
+ * Resolve a package.json `exports` / `module` / `main` entry to a path relative to the package root.
+ * Mirrors `mjs/app.mjs` `resolveCmEsmFile` so Apache can serve CM6 via static `node_modules/`.
+ */
+function lemma_resolve_npm_entry(string $pkg): ?string
+{
+    $pkgJsonPath = dirname(__DIR__) . '/node_modules/' . $pkg . '/package.json';
+    if (!is_readable($pkgJsonPath))
+        return null;
+    $pkgJson = json_decode(file_get_contents($pkgJsonPath), true);
+    if (!is_array($pkgJson))
+        return null;
+    $entry = $pkgJson['exports'] ?? $pkgJson['module'] ?? $pkgJson['main'] ?? null;
+    while (is_array($entry)) {
+        if (isset($entry['.']))
+            $entry = $entry['.'];
+        elseif (isset($entry['import']))
+            $entry = $entry['import'];
+        elseif (isset($entry['default']))
+            $entry = $entry['default'];
+        else
+            $entry = reset($entry);
+    }
+    if (!is_string($entry) || $entry === '')
+        return null;
+    $entry = ltrim(str_replace('\\', '/', $entry), './');
+    $file = dirname(__DIR__) . '/node_modules/' . $pkg . '/' . $entry;
+    if (!is_readable($file))
+        return null;
+    return $entry;
+}
+
+/** Emit import map matching `ejs/codemirror-importmap.ejs`, pointing at static node_modules ESM files. */
+function lemma_emit_codemirror_importmap(string $userSegment): void
+{
+    $pkgs = [
+        '@codemirror/state',
+        '@codemirror/view',
+        '@codemirror/commands',
+        '@codemirror/language',
+        '@codemirror/autocomplete',
+        '@codemirror/search',
+        '@codemirror/streamparser',
+        '@lezer/common',
+        '@lezer/highlight',
+        '@lezer/lr',
+        'style-mod',
+        '@marijn/find-cluster-break',
+        'crelt',
+        'w3c-keyname',
+    ];
+    $imports = [];
+    foreach ($pkgs as $pkg) {
+        $entry = lemma_resolve_npm_entry($pkg);
+        if ($entry === null)
+            continue;
+        $imports[$pkg] = '/' . $userSegment . '/node_modules/' . $pkg . '/' . $entry;
+    }
+    if (!$imports)
+        return;
+    echo '<script type="importmap">', "\n";
+    echo json_encode(['imports' => $imports], JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT), "\n";
+    echo "</script>\n";
+}
+
 function lemma_shell_unindent_decl(?string $text): ?string
 {
     if ($text === null || $text === '')
@@ -467,7 +538,10 @@ if (!$code || !$code['lemma'] || !$code['date']) {
 
 if ($code)
     $code['module'] = $module;
+
+$userSegment = lemma_user_segment();
 ?>
+<base href="/<?php echo lemma_shell_h($userSegment); ?>/">
 <title><?php echo lemma_shell_h($title); ?></title>
 <style>
 #lemma-shell { margin-left: 1.5em; }
@@ -590,6 +664,7 @@ document.querySelectorAll('#lemma-shell .latex-math').forEach(function (el) {
 	}
 });
 </script>
+<?php lemma_emit_codemirror_importmap($userSegment); ?>
 <script type="module">
 function asset(path) {
 	return new URL(path, document.baseURI).href;
@@ -622,12 +697,11 @@ function loadCss(href) {
 	});
 }
 
+// Match ejs/lemma.ejs asset list (CM6; no legacy codemirror 5 CSS).
 const VUE_STYLES = [
-	'node_modules/codemirror/lib/codemirror.css',
-	'node_modules/codemirror/theme/eclipse.css',
-	'node_modules/codemirror/addon/hint/show-hint.css',
 	'css/codemirror-overrides.css',
 	'node_modules/katex/dist/katex.min.css',
+	'node_modules/prismjs/themes/prism.min.css',
 ];
 
 const VUE_SCRIPTS = [
@@ -637,13 +711,16 @@ const VUE_SCRIPTS = [
 	'node_modules/file-saver/dist/FileSaver.min.js',
 	'node_modules/vue/dist/vue.global.prod.js',
 	'node_modules/vue3-sfc-loader/dist/vue3-sfc-loader.js',
-	'js/std.js',
+	'js/py.js?v=9',
+	'js/std.js?v=9',
 ];
 
 const VUE_DEFER_SCRIPTS = [
 	'node_modules/lz-string/libs/lz-string.js',
 	'node_modules/katex/dist/katex.min.js',
 	'node_modules/katex/dist/contrib/auto-render.min.js',
+	'node_modules/prismjs/prism.js',
+	'js/prism-lean.js',
 ];
 
 async function upgradeLemmaVue(code) {
@@ -658,7 +735,9 @@ async function upgradeLemmaVue(code) {
 		import(asset('js/codemirrorBoot.js')),
 	]);
 
-	await Promise.all(VUE_DEFER_SCRIPTS.map((path) => loadScript(asset(path))));
+	// Sequential: prism-lean.js needs global Prism from prism.js.
+	for (const path of VUE_DEFER_SCRIPTS)
+		await loadScript(asset(path));
 
 	const shell = document.getElementById('lemma-shell');
 	const stage = document.getElementById('lemma-stage');

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.Analysis.Complex.Hurwitz
+import sympy.calculus.complex.Hurwitz
 
 /--
 [TendstoLocallyUniformlyOn.eqOn_zero_or_ne_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Hurwitz.lean)

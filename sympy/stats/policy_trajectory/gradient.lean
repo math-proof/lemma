@@ -30,18 +30,19 @@ variable {Θ S A : Type*} [MeasurableSpace S] [MeasurableSingletonClass S] [Fint
 noncomputable def Pn (M : Model Θ S A) (θ : Θ) (n : ℕ) (x y : S) : ℝ :=
   M.W θ (fun z => if z.2.1 = y then (1:ℝ) else 0) n x
 
-/-- `P1 θ x y = Pr(s[t+1] = y | s[t] = x) = ∑ u, π_θ(u | x) * T(x, u, y)` -/
+/-- `P1 θ x y = Pr(s[t+1] = y | s[t] = x) = ∑ u, π_θ(u | x) * Pr(s' = y | x, u)` -/
 noncomputable def P1 (M : Model Θ S A) (θ : Θ) (x y : S) : ℝ :=
-  ∑ u, M.pol.prob θ x u * M.T x u y
+  ∑ u, M.pol.prob θ x u * (M.env.trans (x, u)).real {y}
 
 /-- time-free closed form of the state-value function: `Vc θ γ x = ∑' k, γ ^ k * 𝔼[r[t+k] | s[t] = x]` -/
 noncomputable def Vc (M : Model Θ S A) (θ : Θ) (γ : ℝ) (x : S) : ℝ :=
   ∑' k, γ ^ k * M.W θ M.rc k x
 
 /-- time-free closed form of the action-value function:
-`Qc θ γ x u = 𝔼[r | x, u] + γ * ∑ y, T(x, u, y) * Vc θ γ y` -/
+`Qc θ γ x u = 𝔼[r | x, u] + γ * ∑ y, Pr(s' = y | x, u) * Vc θ γ y` -/
 noncomputable def Qc (M : Model Θ S A) (θ : Θ) (γ : ℝ) (x : S) (u : A) : ℝ :=
-  (∫ ρ, M.rc (ρ, x, u) ∂(M.env.reward (x, u))) + γ * ∑ y, M.T x u y * M.Vc θ γ y
+  (∫ ρ, M.rc (ρ, x, u) ∂(M.env.reward (x, u))) +
+    γ * ∑ y, (M.env.trans (x, u)).real {y} * M.Vc θ γ y
 
 end Model
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.Algebra.Polynomial.ChebyshevUCoefficients
+import sympy.algebra.polynomial.chebyshev_u_coefficients
 
 open scoped BigOperators
 open MetaMathlibExt

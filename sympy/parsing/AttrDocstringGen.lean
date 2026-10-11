@@ -74,18 +74,43 @@ def customAttrHead (attr : String) : String :=
 def customAttrHeads : List String :=
   ["path", "comm", "mp", "mpr", "mp.comm", "mpr.comm", "comm.is", "is.comm", "mt", "mp.mt", "mpr.mt", "is.mt",
    "Or.inl", "Or.inr", "mpr.left", "mpr.right", "mp.left", "mp.right",
-   "And.left", "And.right",
+   "And.left", "And.right", "And.right.left", "And.right.right",
    "fin", "fin.comm", "fin.mp", "fin.mpr",
    "val", "subst", "cast", "cast.fin", "cast.comm", "mp and", "mpr and", "mp.comm and", "mpr.comm and"]
 
 /-- Generated module name for an `And.left`/`And.right` projection
     (mirrors `Name.andProjName`): drop the other conjunct segment; append
-    `.fst` / `.snd` when both targets coincide. -/
+    `.fst` / `.snd` when Type1 = Type2. For a triple path, `And.left`
+    keeps Type1 only and appends `.fst` when Type1 = Type2 (not Type1 = Type3). -/
 def andProjModuleName (tokens : List String) (left : Bool) : String :=
   let leftTokens := tokens.andLeftTokens
   let rightTokens := tokens.andRightTokens
   let base := if left then leftTokens else rightTokens
-  let base := if leftTokens == rightTokens then base ++ [if left then "fst" else "snd"] else base
+  let (pre, _) := tokens.splitAtOf
+  let base :=
+    if left then
+      if pre.length ≥ 4 then
+        if leftTokens == tokens.andRightLeftTokens then base ++ ["fst"] else base
+      else if leftTokens == rightTokens then
+        base ++ ["fst"]
+      else
+        base
+    else
+      if leftTokens == rightTokens then base ++ ["snd"] else base
+  moduleName base
+
+/-- Generated module name for an `And.right.left`/`And.right.right` projection
+    (mirrors `Name.andRightProjName`). When Type2 = Type3, nest under `.snd.fst` /
+    `.snd.snd` rather than a flat `.fst` / `.snd`. -/
+def andRightProjModuleName (tokens : List String) (left : Bool) : String :=
+  let leftTokens := tokens.andRightLeftTokens
+  let rightTokens := tokens.andRightRightTokens
+  let base := if left then leftTokens else rightTokens
+  let base :=
+    if leftTokens == rightTokens then
+      base ++ ["snd", if left then "fst" else "snd"]
+    else
+      base
   moduleName base
 
 def isCustomAttr (attr : String) : Bool :=
@@ -232,6 +257,8 @@ def attrLemmaName (tokens : List String) (attr : String) : String :=
   | ["mp.right"] => moduleName (List.mpProjTokens tokens false)
   | ["And.left"] => andProjModuleName tokens true
   | ["And.right"] => andProjModuleName tokens false
+  | ["And.right.left"] => andRightProjModuleName tokens true
+  | ["And.right.right"] => andRightProjModuleName tokens false
   | ["val"] => moduleName (tokens ++ ["val"])
   | ["mt"] => nameToModule (List.mt tokens : Lean.Name)
   | ["mt", n] => nameToModule (List.mt tokens false n.toNat! : Lean.Name)

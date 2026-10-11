@@ -1012,6 +1012,46 @@ initialize registerBuiltinAttribute {
 }
 
 /--
+`@[And.right.left']` — debug variant of `@[And.right.left]`.
+-/
+initialize registerBuiltinAttribute {
+  name := `And.right.left'
+  descr := "Debug: extract And.right then And.left (Type1.Type2.Type3.of.G → Type2.of.G)"
+  applicationTime := .afterCompilation
+  add := fun declName stx kind => do
+    let decl ← getConstInfo declName
+    let value0 := .const declName (decl.levelParams.map .param)
+    let (type1, value1) := Expr.andProj decl.type value0 false
+    let (type, value) := Expr.andProj type1 value1 true
+    addAndCompile <| .thmDecl {
+      name := Name.andRightProjName (← getEnv).moduleTokens declName true
+      levelParams := decl.levelParams
+      type := type
+      value := value
+    }
+}
+
+/--
+`@[And.right.right']` — debug variant of `@[And.right.right]`.
+-/
+initialize registerBuiltinAttribute {
+  name := `And.right.right'
+  descr := "Debug: extract And.right then And.right (Type1.Type2.Type3.of.G → Type3.of.G)"
+  applicationTime := .afterCompilation
+  add := fun declName stx kind => do
+    let decl ← getConstInfo declName
+    let value0 := .const declName (decl.levelParams.map .param)
+    let (type1, value1) := Expr.andProj decl.type value0 false
+    let (type, value) := Expr.andProj type1 value1 false
+    addAndCompile <| .thmDecl {
+      name := Name.andRightProjName (← getEnv).moduleTokens declName false
+      levelParams := decl.levelParams
+      type := type
+      value := value
+    }
+}
+
+/--
 `@[mp.left']` — debug mirror of the production `@[mp.left]`. Identical body
 shape but uses `Expr.mp'` (which logs intermediate steps) and re-uses the
 production name helper `Name.mpProjName` from `sympy.Basic`.

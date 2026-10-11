@@ -13,7 +13,10 @@ private lemma main
 -- imply
   StronglyMeasurable M.rc := by
 -- proof
-  exact (Measurable.max measurable_const (Measurable.min measurable_const measurable_fst)).stronglyMeasurable
+  change StronglyMeasurable fun z : ℝ × S × A => clip z.1 (-M.env.R) M.env.R
+  unfold clip
+  apply ((measurable_fst.max measurable_const).min measurable_const).stronglyMeasurable
 
 
 -- created on 2026-10-07
+-- updated on 2026-10-11

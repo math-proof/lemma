@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.Analysis.Complex.WeierstrassPreparation
+import sympy.calculus.complex.WeierstrassPreparation
 
 open Complex.WeierstrassPreparationWanted
 

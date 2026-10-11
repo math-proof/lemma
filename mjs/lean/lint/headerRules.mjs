@@ -63,6 +63,77 @@ export function scanImportsAndOpens(P) {
     return { imports, opened, scoped, namespaces, openEntries };
 }
 
+/**
+ * `header-spacing`: top-level `import` / `open` / `set_option` form one contiguous preamble
+ * (no blank lines inside), then exactly two blank lines before the rest of the file
+ * (`/--`, `@[…]`, `namespace`, the lemma, …).
+ *
+ * ```
+ * import …          -- contiguous
+ * open …            -- no blank between import and open
+ *
+ *                   -- exactly two blanks
+ * /--
+ * ```
+ */
+export function headerSpacing(ctx) {
+    const { raw } = ctx.P;
+    const isCmd = (s) => /^(import|open|set_option)\b/.test(s);
+    const isCont = (s) => /^\s+\S/.test(s); // indented continuation of a multi-line `open`
+    // preamble = leading run of cmds / blanks / open-continuations, stopped by any other non-blank
+    let i = 0;
+    const cmds = []; // 0-based line indices of preamble commands (and their continuations)
+    while (i < raw.length) {
+        const s = raw[i];
+        if (isCmd(s)) {
+            cmds.push(i);
+            i++;
+            while (i < raw.length && isCont(raw[i])) {
+                cmds.push(i);
+                i++;
+            }
+            continue;
+        }
+        if (/^\s*$/.test(s)) {
+            i++;
+            continue;
+        }
+        break;
+    }
+    if (!cmds.length) return;
+    const first = cmds[0];
+    const last = cmds[cmds.length - 1];
+    // blank line(s) between preamble commands
+    for (let k = first; k < last; k++) {
+        if (/^\s*$/.test(raw[k]) && !cmds.includes(k)) {
+            ctx.warn(
+                'header-spacing',
+                k + 1,
+                1,
+                'no blank line between `import` / `open` / `set_option`; keep the preamble contiguous',
+            );
+            break; // one finding for the internal gap
+        }
+    }
+    // trailing blanks after the last preamble command, before the next non-blank
+    let j = last + 1;
+    let blanks = 0;
+    while (j < raw.length && /^\s*$/.test(raw[j])) {
+        blanks++;
+        j++;
+    }
+    // no body after the preamble (empty / preamble-only file): skip the trailer check
+    if (j >= raw.length) return;
+    if (blanks !== 2) {
+        ctx.warn(
+            'header-spacing',
+            last + 1,
+            1,
+            `exactly two blank lines after the preamble before the rest of the file (got ${blanks})`,
+        );
+    }
+}
+
 /** `open-section`: imported `Lemma.X.…` but `X` is not opened */
 export function openSection(ctx) {
     const { imports, opened } = ctx.scan;
@@ -220,7 +291,8 @@ const ymd = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0
 /**
  * Dates (`-- created on YYYY-MM-DD`, `-- updated on YYYY-MM-DD`, at the end of every lemma file):
  *   `date-created-missing`, `date-updated-same` (updated == created ⇒ omit it), `date-order` (updated before created,
- *   or a date in the future), `date-created-today` (only for a file new to git: untracked or added, `ctx.isNew`).
+ *   or a date in the future), `date-created-today` (only for a truly new git file: untracked/added with no matching lemma move, `ctx.isNew`),
+ *   `date-spacing` (exactly two blank lines before `-- created on`).
  */
 export function dates(ctx) {
     const { raw } = ctx.P;
@@ -236,6 +308,25 @@ export function dates(ctx) {
     if (!created) {
         if (ctx.isLemmaFile && ctx.decls.length) ctx.warn('date-created-missing', raw.length, null, `no \`-- created on ${today}\` line at the end of the file`);
         return;
+    }
+    // exactly two blank lines before `-- created on` (after the proof / last body line)
+    {
+        const idx = created.line - 1; // 0-based
+        let j = idx - 1;
+        let blanks = 0;
+        while (j >= 0 && /^\s*$/.test(raw[j])) {
+            blanks++;
+            j--;
+        }
+        // skip when `-- created on` is at the top of the file (no preceding body)
+        if (j >= 0 && blanks !== 2) {
+            ctx.warn(
+                'date-spacing',
+                created.line,
+                1,
+                `exactly two blank lines before \`-- created on\` (got ${blanks})`,
+            );
+        }
     }
     if (updated && updated.date === created.date) {
         ctx.warn('date-updated-same', updated.line, 1, `\`updated on ${updated.date}\` equals the created date; delete this line`);

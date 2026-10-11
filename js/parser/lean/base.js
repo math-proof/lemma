@@ -319,6 +319,47 @@ export class Lean extends IndentedNode {
         return null;
     }
 
+    /**
+     * After an operator token, consume an optional `[…]` modifier (e.g. `→ₐ[R]`, `⊗[R]`, `≃L[ℝ]`).
+     * Leaves `self.start_idx` on `]` so the parse loop's increment advances past it.
+     * @param {{ tokens: string[], start_idx: number }} self
+     * @returns {string} bracket contents (empty when there is no `[`)
+     */
+    static consumeBracketModifier(self) {
+        const tokens = self.tokens;
+        if (tokens[self.start_idx + 1] !== '[') return '';
+        self.start_idx += 2; // skip `[`, point inside
+        const startIdx = self.start_idx;
+        let depth = 0;
+        while (self.start_idx < tokens.length && (tokens[self.start_idx] !== ']' || depth > 0)) {
+            if (tokens[self.start_idx] === '[') depth++;
+            else if (tokens[self.start_idx] === ']') depth--;
+            self.start_idx++;
+        }
+        const modifier = tokens.slice(startIdx, self.start_idx).join('');
+        if (self.start_idx < tokens.length) self.start_idx++; // skip `]`
+        self.start_idx--; // loop will increment
+        return modifier;
+    }
+
+    /**
+     * Bundled-hom / ring-equiv suffix after `→` / `≃`: `+`, `*`, or `+*`.
+     * @param {{ tokens: string[], start_idx: number }} self
+     * @returns {string} `''` / `'+'` / `'*'` / `'+*'`
+     */
+    static consumePlusStarSuffix(self) {
+        const tokens = self.tokens;
+        const sub = tokens[self.start_idx + 1];
+        if (sub !== '+' && sub !== '*') return '';
+        let suffix = sub;
+        self.start_idx++;
+        if (sub === '+' && tokens[self.start_idx + 1] === '*') {
+            suffix = '+*';
+            self.start_idx++;
+        }
+        return suffix;
+    }
+
     parse(token, self) {
         const tokens = self.tokens;
         const count = tokens.length;
@@ -919,31 +960,18 @@ export class Lean extends IndentedNode {
                     return this.push_arithmetic('//');
                 }
             case '→': {
-                // `→ₗ[ℝ]` / `→L[ℝ]` — (continuous) linear-map arrow with a subscript
-                // letter and an optional bracketed scalar-ring modifier.
+                // `→ₗ[ℝ]` / `→L[ℝ]` / `→ₐ[R]` — (continuous) linear / algebra-hom arrow
+                // with a subscript letter and an optional bracketed scalar-ring modifier.
+                // Also bundled hom arrows `→+`, `→*`, `→+*` (no `[R]`).
                 const sub = tokens[self.start_idx + 1];
                 let subscript = '';
                 let modifier = '';
-                if (sub === 'ₗ' || sub === 'L') {
+                if (sub === 'ₗ' || sub === 'L' || sub === 'ₐ') {
                     subscript = sub;
                     self.start_idx++; // consume subscript
-                    if (tokens[self.start_idx + 1] === '[') {
-                        self.start_idx += 2; // skip `[`, point inside
-                        const startIdx = self.start_idx;
-                        while (self.start_idx < tokens.length && tokens[self.start_idx] !== ']')
-                            self.start_idx++;
-                        modifier = tokens.slice(startIdx, self.start_idx).join('');
-                        if (self.start_idx < tokens.length) self.start_idx++; // skip `]`
-                        self.start_idx--; // loop will increment
-                    }
-                } else if (sub === '+' || sub === '*') {
-                    // bundled hom arrows `→+`, `→*`, `→+*`
-                    subscript = sub;
-                    self.start_idx++;
-                    if (sub === '+' && tokens[self.start_idx + 1] === '*') {
-                        subscript = '+*';
-                        self.start_idx++;
-                    }
+                    modifier = Lean.consumeBracketModifier(self);
+                } else {
+                    subscript = Lean.consumePlusStarSuffix(self);
                 }
                 const caret = this.push_arithmetic(token);
                 if (subscript) {
@@ -996,15 +1024,21 @@ export class Lean extends IndentedNode {
                 return caret;
             }
             case '⊗': {
-                // `μ ⊗ₘ κ` / `κ ⊗ₖ η` — (measure / kernel) composition-product with a subscript letter.
+                // `μ ⊗ₘ κ` / `κ ⊗ₖ η` — measure / kernel product (subscript letter).
+                // `M ⊗[R] N` / `x ⊗ₜ[R] y` / `x ⊗ₜ y` — Algebra.TensorProduct (optional `ₜ`, optional `[R]`).
                 const sub = tokens[self.start_idx + 1];
-                const hasSub = sub === 'ₘ' || sub === 'ₖ';
+                const hasSub = sub === 'ₘ' || sub === 'ₖ' || sub === 'ₜ';
                 if (hasSub) self.start_idx++; // consume subscript
-                const caret = hasSub ? this.push_binary(L.Lean_otimesSub) : this.push_arithmetic(token);
-                if (hasSub) {
+                const modifier = Lean.consumeBracketModifier(self);
+                // tighter binding when subscripted or parameterized (`⊗[R]` / `⊗ₜ`), else bare `⊗`
+                const caret = (hasSub || modifier) ? this.push_binary(L.Lean_otimesSub) : this.push_arithmetic(token);
+                if (hasSub || modifier) {
                     let p = caret;
                     while (p && !(p instanceof L.Lean_otimes)) p = p.parent;
-                    if (p) p.subscript = sub;
+                    if (p) {
+                        if (hasSub) p.subscript = sub;
+                        p.modifier = modifier;
+                    }
                 }
                 return caret;
             }
@@ -1016,19 +1050,6 @@ export class Lean extends IndentedNode {
                 if (hasSub) {
                     let p = caret;
                     while (p && !(p instanceof L.Lean_circ)) p = p.parent;
-                    if (p) p.subscript = 'ₘ';
-                }
-                return caret;
-            }
-            // fallthrough: bare '/' uses same rule as '%'
-            case '⊗': {
-                // `⊗ₘ` — tensor product of kernels with a subscript letter.
-                const hasSub = tokens[self.start_idx + 1] === 'ₘ';
-                if (hasSub) self.start_idx++; // consume subscript
-                const caret = this.push_arithmetic(token);
-                if (hasSub) {
-                    let p = caret;
-                    while (p && !(p instanceof L.Lean_otimes)) p = p.parent;
                     if (p) p.subscript = 'ₘ';
                 }
                 return caret;
@@ -1071,20 +1092,20 @@ export class Lean extends IndentedNode {
             case '∣':
                 return this.push_arithmetic(token);
             case '≃': {
+                // `≃ᵐ`, `≃L[ℝ]` / `≃ₐ[R]` (AlgEquiv), `≃+` / `≃*` / `≃+*` (Add/Mul/RingEquiv).
                 const ae = tokens[self.start_idx + 1] === 'ᵐ';
                 if (ae) self.start_idx++;
                 let subscript = '';
                 let modifier = '';
-                if (!ae && tokens[self.start_idx + 1] === 'L' &&
-                        tokens[self.start_idx + 2] === '[') {
-                    subscript = 'L';
-                    self.start_idx += 3; // skip `L[`, point inside
-                    const startIdx = self.start_idx;
-                    while (self.start_idx < tokens.length && tokens[self.start_idx] !== ']')
+                if (!ae) {
+                    const sub = tokens[self.start_idx + 1];
+                    if (sub === 'L' || sub === 'ₗ' || sub === 'ₐ') {
+                        subscript = sub;
                         self.start_idx++;
-                    modifier = tokens.slice(startIdx, self.start_idx).join('');
-                    if (self.start_idx < tokens.length) self.start_idx++; // skip `]`
-                    self.start_idx--; // loop will increment
+                        modifier = Lean.consumeBracketModifier(self);
+                    } else {
+                        subscript = Lean.consumePlusStarSuffix(self);
+                    }
                 }
                 const caret = this.push_arithmetic('≃');
                 if (ae) {

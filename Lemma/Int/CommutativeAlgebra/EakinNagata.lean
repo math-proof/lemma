@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.Algebra.CommutativeAlgebra.EakinNagata
+import sympy.algebra.commutative_algebra.eakin_nagata
 
 open EakinNagata
 

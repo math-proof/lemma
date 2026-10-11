@@ -13,15 +13,15 @@ private lemma main
   by_cases ha : a
   ·
     obtain ⟨x, hx⟩ := h.1 ha
-    exact ⟨x, by rw [if_pos ha]; exact hx⟩
+    exact ⟨x, by rw [ite_eq_left ha]; exact hx⟩
   ·
     by_cases hb : b
     ·
       obtain ⟨x, hx⟩ := h.2.1 ⟨ha, hb⟩
-      exact ⟨x, by rw [if_neg ha, if_pos hb]; exact hx⟩
+      exact ⟨x, by rw [ite_eq_right ha, ite_eq_left hb]; exact hx⟩
     ·
       obtain ⟨x, hx⟩ := h.2.2 ⟨ha, hb⟩
-      exact ⟨x, by rw [if_neg ha, if_neg hb]; exact hx⟩
+      exact ⟨x, by rw [ite_eq_right ha, ite_eq_right hb]; exact hx⟩
 
 
 -- created on 2023-07-01

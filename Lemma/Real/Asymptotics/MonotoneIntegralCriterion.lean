@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.Analysis.Asymptotics.MonotoneIntegralCriterion
+import sympy.series.asymptotics.MonotoneIntegralCriterion
 
 open Asymptotics Filter MeasureTheory Set Topology
 

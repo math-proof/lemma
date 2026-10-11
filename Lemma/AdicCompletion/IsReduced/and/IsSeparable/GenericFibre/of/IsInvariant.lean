@@ -1,22 +1,31 @@
 import sympy.Basic
-import sympy.Flt
 import Mathlib
+import Lemma.AdicCompletion.exists.RingEquiv.of.IsLocalization.AtPrime.of.IsMaximal
+import Lemma.Polynomial.IsSeparable.Pi.of.All_IsSeparable
 
-open IsLocalRing
+open IsLocalRing AdicCompletion Polynomial
+open scoped TensorProduct
 
 /--
 [AdicCompletion_isReduced_and_isSeparable_genericFibre_of_isInvariant](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AdicCompletion_isReduced_and_isSeparable_genericFibre_of_isInvariant.lean)
 -/
 @[path]
 private lemma main
-  {O C G : Type} [CommRing O] [IsNoetherianRing O] [IsLocalRing O] [CommRing C] [IsDomain C] [Algebra O C] [Module.Finite O C] [FaithfulSMul O C] [Group G] [Finite G] [MulSemiringAction G C] [SMulCommClass G O C] [FaithfulSMul G C] [Algebra.IsInvariant O C G]
 -- given
-  (𝔫 : Ideal C) [𝔫.IsMaximal] [𝔫.LiesOver (maximalIdeal O)] (K₀ : Type) [Field K₀] [Algebra (AdicCompletion (maximalIdeal O) O) K₀] [IsFractionRing (AdicCompletion (maximalIdeal O) O) K₀] (F : Type) [CommRing F] [Algebra (AdicCompletion 𝔫 C) F] [Algebra (AdicCompletion (maximalIdeal O) O) F] [Algebra K₀ F] [IsScalarTower (AdicCompletion (maximalIdeal O) O) (AdicCompletion 𝔫 C) F] [IsScalarTower (AdicCompletion (maximalIdeal O) O) K₀ F] [IsLocalization (Algebra.algebraMapSubmonoid (AdicCompletion 𝔫 C) (nonZeroDivisors (AdicCompletion (maximalIdeal O) O))) F] :
+  {O C G : Type} [CommRing O] [IsNoetherianRing O] [IsLocalRing O] [CommRing C] [IsDomain C]
+  [Algebra O C] [Module.Finite O C] [FaithfulSMul O C] [Group G] [Finite G]
+  [MulSemiringAction G C] [SMulCommClass G O C] [FaithfulSMul G C] [Algebra.IsInvariant O C G]
+  (𝔫 : Ideal C) [𝔫.IsMaximal] [𝔫.LiesOver (maximalIdeal O)] (K₀ : Type) [Field K₀]
+  [Algebra (AdicCompletion (maximalIdeal O) O) K₀] [IsFractionRing (AdicCompletion (maximalIdeal O) O) K₀]
+  (F : Type) [CommRing F] [Algebra (AdicCompletion 𝔫 C) F]
+  [Algebra (AdicCompletion (maximalIdeal O) O) F] [Algebra K₀ F]
+  [IsScalarTower (AdicCompletion (maximalIdeal O) O) (AdicCompletion 𝔫 C) F]
+  [IsScalarTower (AdicCompletion (maximalIdeal O) O) K₀ F]
+  [IsLocalization (Algebra.algebraMapSubmonoid (AdicCompletion 𝔫 C) (nonZeroDivisors (AdicCompletion (maximalIdeal O) O))) F] :
 -- imply
   IsReduced F ∧ Algebra.IsSeparable K₀ F := by
 -- proof
   classical
-
   have : IsNoetherianRing C := IsNoetherianRing.of_finite O C
   have hOC : Function.Injective (algebraMap O C) :=
     (faithfulSMul_iff_algebraMap_injective O C).mp inferInstance
@@ -25,10 +34,11 @@ private lemma main
     rw [Algebra.smul_def, mul_eq_zero] at h
     obtain h | h := h
     ·
-      left; exact hOC (by rw [h, map_zero])
+      left
+      exact hOC (by rw [h, map_zero (algebraMap O C)])
     ·
-      right; exact h)
-
+      right
+      exact h)
   let : Algebra (FractionRing O) (FractionRing C) := FractionRing.liftAlgebra O (FractionRing C)
   have : IsScalarTower O (FractionRing O) (FractionRing C) := inferInstance
   let : MulSemiringAction G (FractionRing C) :=
@@ -41,7 +51,6 @@ private lemma main
     IsGaloisGroup.finiteDimensional G (FractionRing O) (FractionRing C)
   have : Algebra.FormallyUnramified (FractionRing O) (FractionRing C) :=
     Algebra.FormallyUnramified.of_isSeparable (FractionRing O) (FractionRing C)
-
   have hinjK₀ : Function.Injective (algebraMap (AdicCompletion (maximalIdeal O) O) K₀) :=
     IsFractionRing.injective (AdicCompletion (maximalIdeal O) O) K₀
   have : IsDomain (AdicCompletion (maximalIdeal O) O) := Function.Injective.isDomain _ hinjK₀
@@ -74,9 +83,9 @@ private lemma main
     ((algebraMap K₀ F).comp (algebraMap (FractionRing O) K₀)).toAlgebra
   have : IsScalarTower (FractionRing O) K₀ F := IsScalarTower.of_algebraMap_eq (fun _ => rfl)
   have : IsScalarTower O (FractionRing O) F := IsScalarTower.of_algebraMap_eq (fun o => by
-    show algebraMap O F o = algebraMap K₀ F (algebraMap (FractionRing O) K₀ (algebraMap O (FractionRing O) o))
+    show algebraMap O F o =
+      algebraMap K₀ F (algebraMap (FractionRing O) K₀ (algebraMap O (FractionRing O) o))
     rw [← IsScalarTower.algebraMap_apply O (FractionRing O) K₀, ← IsScalarTower.algebraMap_apply O K₀ F])
-
   let gCF : C →+* F := (algebraMap (AdicCompletion 𝔫 C) F).comp (algebraMap C (AdicCompletion 𝔫 C))
   have hCĈ : ∀ c : C, algebraMap C (AdicCompletion 𝔫 C) c = AdicCompletion.of 𝔫 C c := by
     intro c
@@ -94,7 +103,6 @@ private lemma main
     have hy0 : (y : C) ≠ 0 := nonZeroDivisors.ne_zero y.2
     have : Algebra.IsIntegral O C := Algebra.IsIntegral.of_finite O C
     obtain ⟨b, a, ha, hab⟩ := Algebra.IsAlgebraic.exists_smul_eq_mul O (1 : C) hy0
-
     have h1 : gCF (algebraMap O C a) = gCF y * gCF b := by
       rw [← map_mul, ← hab, Algebra.smul_def, mul_one]
     have hu : IsUnit (gCF (algebraMap O C a)) := by
@@ -124,7 +132,6 @@ private lemma main
   have hψ : ∀ (k : K₀) (l : FractionRing C),
       ψ (TensorProduct.tmul (FractionRing O) k l) = algebraMap K₀ F k * φ l :=
     fun k l => Algebra.TensorProduct.lift_tmul _ _ _ k l
-
   set I : Ideal C := (maximalIdeal O).map (algebraMap O C) with hI
   have hI𝔫 : I ≤ 𝔫 := by
     rw [hI, Ideal.map_le_iff_le_comap]
@@ -138,24 +145,20 @@ private lemma main
   let T := AdicCompletion.tensorRingEquiv C (maximalIdeal O)
   let 𝔫' : Subtype (fun P : Ideal C => P.IsMaximal ∧ I ≤ P) := ⟨𝔫, inferInstance, hI𝔫⟩
   have hΦ : ∀ y, Φ y 𝔫' = AdicCompletion.semilocalComponent I hI𝔫 y :=
-    fun y => AdicCompletion.semilocalComponent_eq I hI𝔫 y
+    fun y => AdicCompletion.semilocalPiEquiv_apply I hI𝔫 y
   have hcompat : ∀ x : AdicCompletion (maximalIdeal O) O,
       AdicCompletion.semilocalComponent I hI𝔫 (AdicCompletion.completionBaseChangeHom C (maximalIdeal O) x) =
-      algebraMap (AdicCompletion (maximalIdeal O) O) (AdicCompletion 𝔫 C) x := by
-    intro x
-    apply AdicCompletion.ext_evalₐ
-    intro n
-    obtain ⟨o, ho⟩ := Ideal.Quotient.mk_surjective (AdicCompletion.evalₐ (maximalIdeal O) n x)
-    rw [AdicCompletion.evalₐ_algebraMap_of_liesOver (maximalIdeal O) 𝔫
-        (algebraMap (AdicCompletion (maximalIdeal O) O) (AdicCompletion 𝔫 C)) n o x ho.symm]
-    sorry
+      algebraMap (AdicCompletion (maximalIdeal O) O) (AdicCompletion 𝔫 C) x :=
+    fun x => AdicCompletion.semilocalComponent_completionBaseChangeHom_eq_algebraMap
+      (maximalIdeal O) 𝔫 hI𝔫 x
   have hrange : ∀ c : AdicCompletion 𝔫 C, algebraMap (AdicCompletion 𝔫 C) F c ∈ ψ.range := by
     intro c
     obtain ⟨y, hy⟩ := Φ.surjective (Function.update 0 𝔫' c)
     obtain ⟨d, hd⟩ := T.surjective y
     have hc : Φ (T d) 𝔫' = c := by rw [hd, hy, Function.update_self]
     suffices h : ∀ d', algebraMap (AdicCompletion 𝔫 C) F (Φ (T d') 𝔫') ∈ ψ.range by
-      rw [← hc]; exact h d
+      rw [← hc]
+      exact h d
     intro d'
     induction d' using TensorProduct.inductionOn with
     | tmul x c₀ =>
@@ -166,7 +169,7 @@ private lemma main
           IsScalarTower.algebraMap_apply (AdicCompletion (maximalIdeal O) O) K₀ F]
         exact Subalgebra.algebraMap_mem _ _
       ·
-        rw [AdicCompletion.semilocalPiEquiv_of I hI𝔫 c₀]
+        rw [AdicCompletion.semilocalPiEquiv_of I c₀]
         have : algebraMap (AdicCompletion 𝔫 C) F (AdicCompletion.of 𝔫 C c₀) =
             ψ (TensorProduct.tmul (FractionRing O) (1 : K₀) (algebraMap C (FractionRing C) c₀)) := by
           rw [hψ, map_one, one_mul, hφC, ← hCĈ]
@@ -186,12 +189,12 @@ private lemma main
     have hsF : algebraMap (AdicCompletion 𝔫 C) F s =
         algebraMap K₀ F (algebraMap (AdicCompletion (maximalIdeal O) O) K₀ s₀) := by
       rw [← IsScalarTower.algebraMap_apply, ← hs₀eq, ← IsScalarTower.algebraMap_apply]
-    have hz' : z = algebraMap (AdicCompletion 𝔫 C) F c *
+    refine (AlgHom.mem_range ψ).mp ?_
+    have : z = algebraMap (AdicCompletion 𝔫 C) F c *
         algebraMap K₀ F (algebraMap (AdicCompletion (maximalIdeal O) O) K₀ s₀)⁻¹ := by
       rw [← hz, hsF, mul_assoc, ← map_mul, mul_inv_cancel₀ hs₀K, map_one, mul_one]
-    exact (AlgHom.mem_range ψ).mp
-      (by rw [hz']; exact mul_mem (hrange c) (Subalgebra.algebraMap_mem _ _))
-
+    rw [this]
+    exact mul_mem (hrange c) (Subalgebra.algebraMap_mem _ _)
   have : Algebra.FormallyUnramified K₀ (TensorProduct (FractionRing O) K₀ (FractionRing C)) := inferInstance
   have : Module.Finite K₀ (TensorProduct (FractionRing O) K₀ (FractionRing C)) := inferInstance
   have : Algebra.FormallyUnramified K₀ F := Algebra.FormallyUnramified.of_surjective ψ hsurj
@@ -202,7 +205,8 @@ private lemma main
   obtain ⟨ι, hfin, Ai, _, _, e, hAi⟩ :=
     (Algebra.FormallyEtale.iff_exists_algEquiv_prod K₀ F).mp inferInstance
   have := hfin
-  have : Algebra.IsSeparable K₀ (∀ i, Ai i) := BDescN3.isSeparable_pi Ai
+  have : Algebra.IsSeparable K₀ (∀ i, Ai i) := IsSeparable.Pi.of.All_IsSeparable Ai
   exact AlgEquiv.Algebra.isSeparable e.symm
+
 
 -- created on 2026-10-09

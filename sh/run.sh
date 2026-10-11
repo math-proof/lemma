@@ -2,6 +2,8 @@
 # bash sh/run.sh
 # process only the given module(s)
 # bash sh/run.sh -Modules Nat.Mul,Real.LtIntegralS.of.All_Lt
+# section shorthand (same as -Modules 'Real.*'):
+# bash sh/run.sh Real
 # batch size for `lake setup-file` runs
 # bash sh/run.sh -limit 4096
 start_time=$(date +%s)
@@ -31,7 +33,18 @@ while [ $# -gt 0 ]; do
       limit="$2"
       shift 2
       ;;
+    -*)
+      echo "ERROR: unknown option: $1" >&2
+      exit 1
+      ;;
     *)
+      # Bare `Real` → `Real.*` (same as -Modules 'Real.*').
+      # Dotted names / globs stay as given (exact or user-supplied pattern).
+      pat="$1"
+      if [[ "$pat" != *'*'* && "$pat" != *.* ]]; then
+        pat="${pat}.*"
+      fi
+      MODULES+=("$pat")
       shift
       ;;
   esac
@@ -955,7 +968,6 @@ function remove_invalid_ir_file {
   module=${module%%.*}
   module="$module.lean"
   if [ ! -f $module ]; then
-    echo "rm $1, since $module doesn't exist"
     rm $1
   fi
 }
@@ -969,7 +981,6 @@ function remove_invalid_lib_file {
   module=${module%%.*}
   module="$module.lean"
   if [ ! -f $module ]; then
-    echo "rm $1, since $module doesn't exist"
     rm $1
   fi
 }
@@ -982,7 +993,6 @@ function remove_invalid_echo_file {
   module=${1%%.*}
   module="$module.lean"
   if [ ! -f $module ]; then
-    echo "rm $1, since $module doesn't exist"
     rm $1
   fi
 }

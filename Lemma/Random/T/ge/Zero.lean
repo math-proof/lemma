@@ -15,9 +15,9 @@ private lemma main
   (u : A)
   (y : S) :
 -- imply
-  0 ≤ M.T x u y := by
+  0 ≤ (M.env.trans (x, u)).real {y} := by
 -- proof
-  unfold Model.T; exact measureReal_nonneg
+  apply measureReal_nonneg
 
 
 -- created on 2026-10-07

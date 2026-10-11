@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.Analysis.Complex.Bloch
+import sympy.calculus.complex.Bloch
 
 open Complex.BlochWanted
 

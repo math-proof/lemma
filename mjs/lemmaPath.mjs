@@ -4,6 +4,7 @@ import path from "path";
 import { fileURLToPath, pathToFileURL } from "url";
 import { compile } from "../js/parser/lean.js";
 import { strStmt } from "../js/parser/lean/utility.js";
+import { loadSectionKindMap } from "./lemmaSectionKind.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPO = path.resolve(__dirname, "..");
@@ -48,6 +49,9 @@ const TYPE_TO_SECTION = {
   Matrix: "Matrix",
   Tensor: "Tensor",
   Vector: "Vector",
+  Polynomial: "Polynomial",
+  MvPolynomial: "MvPolynomial",
+  LaurentPolynomial: "LaurentPolynomial",
   // PiLp-based sequence spaces live with Matrix in this repository.
   l1Space: "Matrix",
   L1Space: "Matrix",
@@ -493,14 +497,41 @@ function sectionDepths(node, depth = 0, out = new Map()) {
 }
 
 /** True when signature has RV/PSpace probability structure (not bare Measure). */
+/**
+ * Policy-gradient trajectory sample space `ℕ → ℝ × S × A` (expanded form of `Ω` for
+ * `PolicyGradient.Model`), possibly parenthesized. `ℝ` here is a coordinate of the path, not a Real-section cue.
+ */
+function isTrajectorySampleSpace(node) {
+  const u = unwrapParen(node);
+  if (cls(u) !== "Lean_rightarrow" || (u.args || []).length !== 2) return false;
+  const left = unwrapParen(u.args[0]);
+  if (!(cls(left) === "LeanToken" && (left.text === "ℕ" || left.text === "Nat"))) return false;
+  const right = unwrapParen(u.args[1]);
+  if (cls(right) !== "Lean_times") return false;
+  // product must involve ℝ (reward coordinate): ℝ × S × A
+  let hasReal = false;
+  (function walk(n) {
+    if (!n || typeof n !== "object" || hasReal) return;
+    if (cls(n) === "LeanToken" && (n.text === "ℝ" || n.text === "Real")) hasReal = true;
+    for (const a of n.args || []) walk(a);
+  })(right);
+  return hasReal;
+}
+
+/** Domain of an RV arrow: bare `Ω` / `Omega`, or the expanded trajectory `ℕ → ℝ × S × A`. */
+function isSampleSpaceDomain(node) {
+  const u = unwrapParen(node);
+  if (cls(u) === "LeanToken" && (u.text === "Ω" || u.text === "Omega")) return true;
+  return isTrajectorySampleSpace(u);
+}
+
 function hasRandomAstCues(node) {
   let found = false;
   const walk = (n) => {
     if (!n || typeof n !== "object" || found) return;
     if (cls(n) === "Lean_rightarrow") {
-      const left = n.args?.[0];
-      // Convention: sample-space RVs are binders {x : Ω → α}.
-      if (cls(left) === "LeanToken" && (left.text === "Ω" || left.text === "Omega")) {
+      // Convention: sample-space RVs are binders {x : Ω → α} or {a : ℕ → (ℕ → ℝ × S × A) → A}.
+      if (isSampleSpaceDomain(n.args?.[0])) {
         found = true;
         return;
       }
@@ -535,8 +566,7 @@ function hasRandomVariableCues(node) {
   const walk = (n) => {
     if (!n || typeof n !== "object" || (rv && prob)) return;
     if (cls(n) === "Lean_rightarrow") {
-      const left = n.args?.[0];
-      if (cls(left) === "LeanToken" && (left.text === "Ω" || left.text === "Omega")) rv = true;
+      if (isSampleSpaceDomain(n.args?.[0])) rv = true;
     }
     if (cls(n) === "LeanToken" && typeof n.text === "string") {
       const t = n.text;
@@ -615,8 +645,23 @@ function collectTokenWeights(node, w = 1, out = new Map()) {
 /** Lemma folders named after typeclasses: sections are data types, so these are never chosen from binders. */
 const TYPECLASS_FOLDERS = new Set(["NormedSpace", "NormedAddCommGroup", "NormedField", "InnerProductSpace", "AddCommGroup"]);
 
+/** Mathlib kinds from `mjs/lemmaSectionKinds.json` (refreshed by `node mjs/lemmaSectionKind.mjs`). */
+let SECTION_KIND_MAP = null;
+function sectionKindMap() {
+  if (!SECTION_KIND_MAP) SECTION_KIND_MAP = loadSectionKindMap();
+  return SECTION_KIND_MAP;
+}
+
+/** Topic/typeclass folders must not be chosen as sections (AGENTS.md). TYPE_TO_SECTION aliases stay allowed. */
+function refusedSectionFolder(name) {
+  if (DATA_TYPE_SECTIONS.has(name) || TYPE_TO_SECTION[name]) return false;
+  if (TYPECLASS_FOLDERS.has(name)) return true;
+  const kind = sectionKindMap().get(name);
+  return kind === "topic/unknown" || kind === "type class";
+}
+
 function customSection(sections, conclNode, givenTypes, importDecls = new Map(), binders = null) {
-  const custom = sections.filter((s) => !DATA_TYPE_SECTIONS.has(s) && !TYPE_TO_SECTION[s]);
+  const custom = sections.filter((s) => !DATA_TYPE_SECTIONS.has(s) && !TYPE_TO_SECTION[s] && !refusedSectionFolder(s));
   // a normalized weight function among the hypotheses (`∀ θ, ∑ a, p θ a = 1`) makes it a probability lemma
   if (sections.includes("Random") && givenTypes.some((g) => {
     let h = unwrapParen(g);
@@ -817,7 +862,7 @@ function pickSection(sigNode, sections, extra = {}) {
   if (tokens.has("AbsoluteValue") && scores.has("AbsoluteValue"))
     scores.set("AbsoluteValue", scores.get("AbsoluteValue") + 5);
   if (tokens.has("List") && scores.has("List")) scores.set("List", scores.get("List") + 2);
-  // RV binders (Ω → _) / PSpace overweight Measure from {π : Measure Ω}.
+  // RV binders (Ω → _ / ℕ → (ℕ → ℝ × S × A) → _) / PSpace overweight Measure / Real from {π : Measure Ω} / ℝ in the path.
   if (hasRandomAstCues(sigNode) && scores.has("Random"))
     scores.set("Random", scores.get("Random") + 5);
   // random variables with their observed values / probability-expectation sugar
@@ -837,6 +882,11 @@ function pickSection(sigNode, sections, extra = {}) {
     if (concl && (cls(concl) === "LeanEq" || cls(concl) === "Lean_subseteq") && (concl.args || []).length === 2 && concl.args.every(isSetCons)) add("Set", 8);
     // `x ∈ Ico a b` with no data type in sight → Set rather than the Nat fallback
     if (concl && (cls(concl) === "Lean_in" || cls(concl) === "LeanIn") && isSetCons(concl.args?.[1])) add("Set", 1);
+  }
+  // R[X] / K[X] (LeanGetElem ... X) are polynomials -> Polynomial section
+  if (scores.has("Polynomial") && hasNode(sigNode, (n) =>
+    cls(n) === "LeanGetElem" && cls(n.args?.[1]) === "LeanToken" && n.args[1].text === "X")) {
+    add("Polynomial", 4);
   }
   // matrix exponential (`exp (t • Q)` with Q : Matrix …) lives in NormedSpace/
   // (`Real.exp` / `Complex.exp` are scalar exponentials, not the matrix one)
@@ -1384,23 +1434,55 @@ function relationAlts(node, tag0, opts) {
     outR = outR.filter((a) => !/PreimageS/.test(a) && !(/Preimage/.test(a) && /_\d+$/.test(a)));
     if (dig && !outR.includes(pref)) outR.unshift(pref);
   }
-  // joint of RVs equal to a cdot section or one variable: EqJoint beside Eq (All_EqJoint under ∀)
+  // joint of RVs equal to a cdot section or one variable: Eq_Joint beside Eq (All_Eq_Joint under ∀)
   if (tag0 === "Eq" && eqJointSides(node)) {
     const i = outR.indexOf("Eq");
-    if (i >= 0) outR.splice(i + 1, 0, "EqJoint");
-    else outR.push("EqJoint");
+    if (i >= 0) outR.splice(i + 1, 0, "Eq_Joint");
+    else outR.push("Eq_Joint");
     outR = uniq(outR);
   }
   return outR;
 }
 
 /** `=ᵐ` names: both sides named → MEqL_R (also MEqLR, MEqL when the sides agree; `L/ae/R` accepted), a hole or
- *  abbreviated lambda side → MEq_R / MEqL, both holes or both lambdas → MEq. */
+ *  abbreviated lambda side → MEq_R / MEqL, both holes or both lambdas → MEq.
+ *  Expect_* infix tokens stay snake after MEq (`MEq_Expect_Cond`, never camel `MEqExpect` / `MEqExpectCond`).
+ *  Bare Expect (non-cond) stays `MEqExpect`; equal condSigma prefers `MEqExpectS`. */
 const isFunNode = (n) => cls(unwrapParen(n)) === "Lean_fun";
+/** Fuse `MEq` onto a side name. `condSigma`: abbreviated `Expect` from `𝔼[…|…]` → `MEq_Expect`, not `MEqExpect`. */
+function meqFuse(side, condSigma = false) {
+  if (!side) return "MEq";
+  // intentional plural for equal Expect / equal condSigma sides
+  if (side === "ExpectS" || side.startsWith("ExpectS_")) return "MEq" + side;
+  // underscored / ExpectCond* bodies: never camel-collapse past the infix
+  if (side.includes("_") || /^ExpectCond/.test(side)) return "MEq_" + side;
+  if (side === "Expect") return condSigma ? "MEq_Expect" : "MEqExpect";
+  if (/^Expect/.test(side)) return "MEq_" + side;
+  return "MEq" + side;
+}
+/** Camel-collapsed / misplaced `MEqExpect*` imply folders.
+ *  Legal sole: `MEqExpect`, `MEqExpectS`, `MEqExpectS_*`.
+ *  Illegal: `MEqExpect_Cond`, `MEqExpectCond`, …; also bare `MEqExpect` inside a multi-segment imply chain. */
+function isIllegalMeqImplySeg(seg, multi = false) {
+  if (!seg) return false;
+  if (seg === "MEqExpect") return !!multi; // legacy short for equal Expect; not a chain segment
+  if (!/^MEqExpect/.test(seg)) return false;
+  return !(seg === "MEqExpectS" || seg.startsWith("MEqExpectS_"));
+}
+function hasIllegalMeqImply(path) {
+  const segs = String(path || "").split("/").filter(Boolean);
+  const multi = segs.length > 1;
+  return segs.some((s) => isIllegalMeqImplySeg(s, multi));
+}
 function meqAlts(node, opts) {
   const args = node.args || [];
   const L = nameExprAlts(args[0], opts);
   const R = nameExprAlts(args[1], opts);
+  const leftCond = isExpectCondApp(args[0]);
+  const rightCond = isExpectCondApp(args[1]);
+  const bothCondSigma = leftCond && rightCond;
+  const condSigma = leftCond || rightCond;
+  const fuse = (side) => meqFuse(side, condSigma);
   const gen = (L, R) => {
     const out = [];
     const pairs = [];
@@ -1409,32 +1491,58 @@ function meqAlts(node, opts) {
     for (const [, i, j] of pairs) {
       const l = L[i], r = R[j];
       if (!l || !r) continue;
-      // identity, as for Eq: CondExpPow_Id (both sides CondExpPow_Id); MEqExpect
-      if (l === r) { out.push("MEq" + l, l); if (!l.includes("/")) out.push("MEq" + (pluralSnakeS(l) || pluralLetterS(l) || pluralMidS(l))); }
-      out.push("MEq" + l + "_" + r);
-      out.push("MEq" + l + r);
-      if (l !== r && l.startsWith(r)) out.push("MEq" + l);
+      // Expect vs Expect_Cond is the same condSigma sugar (C omitted): never MEqExpect_Expect_Cond
+      if (bothCondSigma && isBareExpectFamily(l) && isBareExpectFamily(r) && l !== r) continue;
+      // identity, as for Eq: CondExpPow_Id (both sides CondExpPow_Id); MEq_Expect_Cond / MEqExpectS
+      if (l === r) {
+        out.push(fuse(l), l);
+        if (!l.includes("/")) {
+          const pl = pluralSnakeS(l) || pluralLetterS(l) || pluralMidS(l);
+          if (pl) out.push(fuse(pl));
+        }
+      } else {
+        // unequal: snake join only — never camel `MEq`+l+r collapse
+        out.push("MEq_" + l + "_" + r);
+        if (l.startsWith(r)) out.push(fuse(l));
+      }
       // the relation path form `X/ae/Y` stays legal (Random/CondExpInner/ae/Inner_CondExp); only fused AeEq is gone
       out.push(l + "/ae/" + r);
     }
-    if (!L.length) for (const r of R) { out.push("MEq_" + r); out.push("MEq" + r); }
-    if (!R.length) for (const l of L) { out.push("MEq" + l); out.push("MEq_" + l); }
+    if (!L.length) for (const r of R) out.push(fuse(r));
+    if (!R.length) for (const l of L) out.push(fuse(l));
     if (!L.length && !R.length) out.push("MEq");
+    // both sides condSigma with omitted C: surface MEqExpectS; keep short MEqExpect for bare-Expect alts only
+    // never unshift camel `MEqExpect_Cond` (that collapses `Expect_Cond`)
+    if (bothCondSigma) out.unshift("MEqExpectS", "MEqExpect", "MEqExpectS_Cond", "MEq_Expect_Cond");
     return out;
   };
   const f0 = isFunNode(args[0]), f1 = isFunNode(args[1]);
   const dropped = f0 && f1 ? gen([], []) : f1 ? gen(L, []) : f0 ? gen([], R) : [];
-  return uniq([...gen(L, R), ...dropped, "MEq"].filter(Boolean));
+  // bare `MEq` only when both sides are holes/funs — never append it into And-product shortenings
+  const raw = uniq([...gen(L, R), ...dropped].filter(Boolean));
+  return raw.filter((s) => !hasIllegalMeqImply(s));
 }
 function meqCanon(node, opts) {
   const args = node.args || [];
   const f0 = isFunNode(args[0]), f1 = isFunNode(args[1]);
   if (f0 && f1) return "MEq";
+  // 𝔼[…|…] =ᵐ 𝔼[…|…] (condSigma both sides): Expect is binary; equal shapes → MEqExpectS, not Expect_Expect_…
+  if (!f0 && !f1 && isExpectCondApp(args[0]) && isExpectCondApp(args[1])) return "MEqExpectS";
   const left = f0 ? "" : nameExpr(args[0], opts);
   const right = nameExpr(args[1], opts);
-  if (left && right) return left === right ? "MEq" + left : "MEq" + left + "_" + right;
-  if (right) return "MEq_" + right;
-  if (left) return "MEq" + left;
+  const condSigma = isExpectCondApp(args[0]) || isExpectCondApp(args[1]);
+  if (left && right) {
+    if (left === right) {
+      if (isBareExpectFamily(left)) {
+        const plural = pluralSnakeS(left) || pluralLetterS(left) || pluralMidS(left);
+        if (plural) return meqFuse(plural, condSigma);
+      }
+      return meqFuse(left, condSigma);
+    }
+    return "MEq_" + left + "_" + right;
+  }
+  if (right) return meqFuse(right, condSigma);
+  if (left) return meqFuse(left, condSigma);
   return "MEq";
 }
 
@@ -1641,11 +1749,11 @@ function preAlts(node, opts, canon) {
     }
     // 𝔼[a : π](f a) → ExpectF (Random/GeExpect/of/Ge)
     if (cls(head) === "LeanGetElem" && cls(head.args?.[0]) === "LeanToken" && head.args[0].text === "𝔼" && args.length === 2) {
-      // conditional 𝔼[a : π](X | C) → Expect_Cond + X (Random/Expect_CondMul/eq/Mul_Expect_Cond, Random/Expect_CondDot/eq/Dot_Expect_Cond,
-      // Random/Expect_CondSum/eq/Sum_ExpectCond); the condition C itself is not spelled
-      const bar = unwrapParen(args[1]);
-      if (cls(bar) === "LeanBitOr" && bar.args?.length === 2 && cls(unwrapParen(bar.args[0])) !== "Lean_perp") {
-        const x = A(bar.args[0]);
+      // conditional 𝔼[a : π](X | C) / 𝔼[…](X | C0, C1) → Expect_Cond + X (Random/Expect_CondMul/eq/Mul_Expect_Cond,
+      // Random/Expect_CondDot/eq/Dot_Expect_Cond, Random/Expect_CondSum/eq/Sum_ExpectCond); C itself is not spelled
+      const body = expectCondBody(args[1]);
+      if (body) {
+        const x = A(body);
         const cond = x.length ? x.flatMap((y) => ["Expect_Cond" + y, "ExpectCond" + y]) : ["Expect_Cond", "ExpectCond"];
         // the body may be left out (Dot_Expect_Cond for `fun k => 𝔼[r : M θ](r (t + k) | …)`); keep it near the front (node caps)
         return canon ? cond.slice(0, 1) : uniq([...cond.slice(0, 2), "Expect_Cond", "ExpectCond", "Expect", ...cond]);
@@ -1938,6 +2046,18 @@ function collectRvNames(root) {
       if (S && A) probDomains.add(`ℕ → ℝ × ${S} × ${A}`);
     }
   }
+  // expanded trajectory Ω without a `Model` binder: `{r : ℕ → (ℕ → ℝ × S × A) → ℝ}`
+  for (const n of nodes) {
+    for (const col of colonsOf(n)) {
+      (function walk(t) {
+        const u = peel(t);
+        if (cls(u) !== "Lean_rightarrow") return;
+        const dom = peel(u.args?.[0]);
+        if (isTrajectorySampleSpace(dom)) probDomains.add(text(dom));
+        walk(u.args?.[1]);
+      })(col.args?.[1]);
+    }
+  }
   const rvs = new Set();
   for (const n of nodes) {
     for (const col of colonsOf(n)) {
@@ -1967,6 +2087,39 @@ function commaParts(node) {
   const u = unwrapParen(node);
   if (cls(u) === "LeanArgsCommaSeparated" && (u.args || []).length >= 2) return u.args;
   return null;
+}
+
+/**
+ * Body of a conditional expectation argument `X | C` / `X | C0, C1, …`.
+ * Lean parses `𝔼[…](g F | X, Z)` as comma outside `|`: `((g F | X), Z)`.
+ * Returns the left of `|` (the integrand); condition atoms are never path-spelled.
+ */
+function expectCondBody(arg) {
+  const u = unwrapParen(arg);
+  if (cls(u) === "LeanBitOr" && (u.args || []).length === 2 && cls(unwrapParen(u.args[0])) !== "Lean_perp") {
+    return u.args[0];
+  }
+  const parts = commaParts(u);
+  if (!parts) return null;
+  const head = unwrapParen(parts[0]);
+  if (cls(head) === "LeanBitOr" && (head.args || []).length === 2 && cls(unwrapParen(head.args[0])) !== "Lean_perp") {
+    return head.args[0];
+  }
+  return null;
+}
+
+/** `𝔼[… : π](… | …)` application (σ-algebra / condSigma sugar). */
+function isExpectCondApp(node) {
+  const u = unwrapParen(node);
+  if (cls(u) !== "LeanArgsSpaceSeparated" || (u.args || []).length !== 2) return false;
+  const head = u.args[0];
+  if (!(cls(head) === "LeanGetElem" && cls(head.args?.[0]) === "LeanToken" && head.args[0].text === "𝔼")) return false;
+  return !!expectCondBody(u.args[1]);
+}
+
+/** Bare Expect / Expect_Cond / ExpectCond heads (no integrand suffix). */
+function isBareExpectFamily(n) {
+  return n === "Expect" || n === "Expect_Cond" || n === "ExpectCond";
 }
 
 /** `JointRandomSymbol a b` including a right-nested chain, flattened, or null. */
@@ -2008,6 +2161,31 @@ function isJointRvTuple(node) {
   return !!parts && parts.every((p) => isRvTerm(p));
 }
 
+/**
+ * Argument of `Measurable (…)` that should read `MeasurableJoint` (joint_rv / product).
+ * RV tuples when `RV_NAMES` is set; otherwise any ≥2-tuple of single-variable sides
+ * (`Measurable (x, y)` with only `Ω → α` binders and no `Measure`).
+ */
+function isMeasurableJointArg(node) {
+  const parts = commaParts(node) || jrsParts(node);
+  if (!parts || parts.length < 2) return false;
+  if (parts.every((p) => isRvTerm(p))) return true;
+  return parts.every((p) => isRvTerm(p) || isSingleVarSide(p));
+}
+
+/** `Measurable (x, y)` / `Measurable (r, a, s)` / `Measurable (r t, s t, a t)` → MeasurableJoint. */
+function measurableJointName(node) {
+  const u = unwrapParen(node);
+  if (cls(u) !== "LeanArgsSpaceSeparated" || (u.args || []).length < 2) return "";
+  const head = u.args[0];
+  let text = "";
+  if (cls(head) === "LeanToken") text = head.text || "";
+  else if (cls(head) === "LeanGetElem" && cls(head.args?.[0]) === "LeanToken") text = head.args[0].text || "";
+  if (!/^(AE)?(Strongly)?Measurable$/.test(text)) return "";
+  if (!isMeasurableJointArg(u.args[u.args.length - 1])) return "";
+  return nameToken(text) + "Joint";
+}
+
 /** `(· t)` / `·`: an anonymous cdot section, not a named variable. */
 function isCdotSection(node) {
   const u = unwrapParen(node);
@@ -2030,7 +2208,7 @@ function isSingleVarSide(node) {
 /**
  * `A = B` where one side is a joint of random variables (tuple or JointRandomSymbol)
  * and the other is a `·` section or a single variable. Orientation does not matter.
- * Spelled `EqJoint` next to `Eq` (so `∀ t, …` also yields `All_EqJoint` / `AllEqJoint`).
+ * Spelled `Eq_Joint` next to `Eq` (so `∀ t, …` also yields `All_Eq_Joint`).
  */
 function eqJointSides(node) {
   const u = unwrapParen(node);
@@ -2690,8 +2868,11 @@ function nameExprBase(node, opts = {}) {
       return wrapPrefix + camelFn;
     }
     const inner = nameExpr(arg, opts);
-    // ‖x + y‖ → NormAdd (bare operator tag), ‖f x‖ → Norm_F
-    return inner ? wrapPrefix + (/^[A-Z][a-z]+$/.test(inner) && CLASS_TOKEN[cls(unwrapParen(arg))] ? "" : "_") + inner : wrapPrefix;
+    // ‖x + y‖ → NormAdd; |R| / |M.env.R| → AbsR (simple id glued); ‖f x‖ apps handled above as NormF
+    if (!inner) return wrapPrefix;
+    const u = unwrapParen(arg);
+    if (CLASS_TOKEN[cls(u)] || isSimpleArg(arg, opts)) return wrapPrefix + inner;
+    return wrapPrefix + "_" + inner;
   }
 
   if (name === "LeanToken") {
@@ -2738,6 +2919,8 @@ function nameExprBase(node, opts = {}) {
   }
   if (name === "LeanArgsSpaceSeparated") {
     const args = node.args || [];
+    const mj = measurableJointName(node);
+    if (mj) return mj; // Measurable (r, a, s) → MeasurableJoint (joint_rv)
     const head = normHead(args[0], opts);
     if (cls(head) === "LeanToken" && head.text === "Pairwise") {
       let restNode = args[1];
@@ -2909,6 +3092,27 @@ function piPointwise(node) {
   return (body.args || []).length === 2 && body.args.every(app);
 }
 
+/**
+ * Join an `All`/`Any` tag to a body spelling.
+ * Equality atoms keep the underscore (`All_Eq`, `All_Eq_Joint`); never camel `AllEq` / `AllEqJoint`.
+ * Other bodies still allow camel beside snake (`AllOr` / `All_Or`).
+ */
+function withQuantTag(tag, body) {
+  const snaked = tag + "_" + body;
+  if (/^Eq/.test(body)) return [snaked];
+  return [snaked, tag + body];
+}
+
+/** Legacy camel `EqJoint` / `All_EqJoint` (accepted by altMatch, not suggested). */
+function legacyEqJointAlts(alts) {
+  const out = [];
+  for (const a of alts) {
+    if (a === "Eq_Joint") out.push("EqJoint");
+    if (a === "All_Eq_Joint") out.push("All_EqJoint");
+  }
+  return uniq(out);
+}
+
 function nameExprAltsBase(node, opts = {}) {
   if (!node) return [];
   const name = cls(node);
@@ -2922,6 +3126,10 @@ function nameExprAltsBase(node, opts = {}) {
     const base = indepAtom(node);
     const joint = indepJointAlt(node);
     return joint && joint !== base ? [base, joint] : [base];
+  }
+  {
+    const mj = measurableJointName(node);
+    if (mj) return uniq([mj, mj.replace(/Joint$/, "")]); // MeasurableJoint + Measurable
   }
 
   // ℙ[π](E) probability idioms. A top-level RV tuple is a joint the same way `∧` is,
@@ -2961,24 +3169,21 @@ function nameExprAltsBase(node, opts = {}) {
           node.__singleQuant = true;
           let single;
           try { single = nameExprAlts(node, opts); } finally { delete node.__singleQuant; }
-          // `∀ x y, P` → All_All_P (distinct from `∀ x, P`)
+          // `∀ x y, P` → All_All_P (distinct from `∀ x, P`); Eq* → All_All_Eq (never All_AllEq)
           const inner = nameExprAlts(bodyNode, opts);
-          const tagged = inner.filter((b) => !b.includes("/")).flatMap((b) => [tag + "_" + tag + "_" + b, tag + "_" + tag + b]);
+          const tagged = inner.filter((b) => !b.includes("/")).flatMap((b) => withQuantTag(tag + "_" + tag, b));
           const rel = inner.filter((b) => b.includes("/") || /^(Prob|DivProb|MulProb)/.test(b));
           return uniq([...single.slice(0, 300), ...tagged.slice(0, 300), ...single.slice(300), ...rel, ...guardAlts, ...tagged.slice(300)]);
         }
         if (bodyAlts.some(b => b.includes("/") || /^(Prob|DivProb|MulProb|Eq)/.test(b))) {
-          // `∀ i ∈ s, f i = g i` → All_Eq (Finset/Sum/of/All_Eq, Kernel/All_Eq)
-          const eqT = bodyAlts.filter((b) => !b.includes("/") && /^Eq/.test(b)).map((b) => tag + "_" + b);
+          // `∀ i ∈ s, f i = g i` → All_Eq (Finset/Sum/of/All_Eq, Kernel/All_Eq); never AllEq
+          const eqT = bodyAlts.filter((b) => !b.includes("/") && /^Eq/.test(b)).flatMap((b) => withQuantTag(tag, b));
           // relational bodies usually read `A/eq/B`; a one-atom rendering may still take the tag (All_AeLeCondExp)
-          const tagged = bodyAlts.filter((b) => !b.includes("/")).flatMap((b) => [tag + "_" + b, tag + b]);
+          const tagged = bodyAlts.filter((b) => !b.includes("/")).flatMap((b) => withQuantTag(tag, b));
           return uniq([...eqT, ...tagged.slice(0, 200), ...bodyAlts, ...guardAlts, ...tagged.slice(200)]);
         }
         const out = [];
-        for (const b of bodyAlts) {
-          out.push(tag + "_" + b);
-          out.push(tag + b);
-        }
+        for (const b of bodyAlts) out.push(...withQuantTag(tag, b));
         // `∀ x, P x → Q x` may keep the implication: All_Imp_Q (Random/All_Imp_*, Bool/All_Imp)
         if (cls(unwrapParen(bodyNode)) === "Lean_rightarrow") for (const b of bodyAlts) out.push(tag + "_Imp_" + b);
         // `∀ ω, f ω ≤ g ω` is the pointwise order `f ≤ g`: the bare relation is an alternative
@@ -3034,10 +3239,12 @@ function nameExprAltsBase(node, opts = {}) {
     }
     const innerAlts = nameExprAlts(arg, opts);
     if (!innerAlts.length || leafHead) return uniq([wrapPrefix, ...innerAlts.slice(0, 50).map((i) => wrapPrefix + "_" + i), ...oldLeaf]);
+    // |R| / |M.env.R| (token / property): AbsR only — never Abs_R
+    if (isSimpleArg(arg, opts)) return uniq(innerAlts.map((i) => wrapPrefix + i));
     const out = [];
     for (const i of innerAlts) {
-      out.push(wrapPrefix + "_" + i);
       out.push(wrapPrefix + i);
+      out.push(wrapPrefix + "_" + i);
     }
     return uniq([...out, ...oldLeaf]);
   }
@@ -3100,6 +3307,8 @@ function nameExprAltsBase(node, opts = {}) {
 
   if (name === "LeanArgsSpaceSeparated") {
     const args = node.args || [];
+    const mj = measurableJointName(node);
+    if (mj) return uniq([mj, mj.replace(/Joint$/, "")]);
     const head = normHead(args[0], opts);
     // Pairwise special case
     if (cls(head) === "LeanToken" && head.text === "Pairwise") {
@@ -3527,7 +3736,12 @@ export function suggest(filePath, lemmaName, options = {}) {
   const curTop = path.relative(LEMMA_ROOT, abs).replace(/\\/g, "/").split("/")[0];
   // typeclass folders (NormedSpace, …) are no data types either: they only keep the files already filed there
   // (`exp (t • Q)` with Q : Matrix … is a Matrix lemma elsewhere)
-  const dataSections = sections.filter((s) => !nonDataFolder(s) && (!TYPECLASS_FOLDERS.has(s) || s === curTop));
+  // topic/unknown never become sections; typeclass folders only stay if this file is still filed there
+  const dataSections = sections.filter((s) => {
+    if (nonDataFolder(s)) return false;
+    if (refusedSectionFolder(s)) return sectionKindMap().get(s) === "type class" && s === curTop;
+    return !TYPECLASS_FOLDERS.has(s) || s === curTop;
+  });
   const givenTypeNodes = extractGivens(sig.nls).filter((h) => h.prop).map((h) => h.typeNode);
   // …except for a file still filed under the predicate folder that names it: it is named as before (transitional,
   // until that folder is moved to its data-type section)
@@ -3642,13 +3856,20 @@ export function suggest(filePath, lemmaName, options = {}) {
       KEEP_GREEK = false;
     }
   })();
-  const implyAlts = uniq([...implyAltsA, ...(passB?.implyAlts || [])]);
-  const implyExtraAlts = [...(implyAltsA.extra || []), ...(passB?.implyAlts?.extra || [])]; // accepted, not enumerated
+  // drop camel-collapsed MEqExpect* / bare MEq-in-a-chain imply folders (MEqExpectS kept; sole MEq ok)
+  const legalMeqImply = (p) => {
+    if (hasIllegalMeqImply(p)) return false;
+    const segs = String(p).split("/").filter(Boolean);
+    return !(segs.includes("MEq") && segs.length > 1);
+  };
+  const implyAlts = uniq([...implyAltsA, ...(passB?.implyAlts || [])]).filter(legalMeqImply);
+  const implyExtraAlts = [...(implyAltsA.extra || []), ...(passB?.implyAlts?.extra || [])].filter(legalMeqImply); // accepted, not enumerated
   // lowercase ASCII components (`min/…` from a stripped `μmin`) are not names; soft relations are
   const SOFT = /^(of|is|in|sub|eq|ne|lt|gt|le|ge|dvd|ae[A-Za-z]*)$/;
   const lowerComp = (p) => sanitizeRelPath(p || "").split("/").some((c) => /^[a-z]/.test(c) && !SOFT.test(c));
   let preferB = !!passB && passB.implyName !== implyNameA && lowerComp(implyNameA) && !lowerComp(passB.implyName);
   let implyName = preferB ? passB.implyName : implyNameA;
+  if (hasIllegalMeqImply(implyName)) implyName = implyAlts.find((a) => !hasIllegalMeqImply(a)) || implyName;
   const implyChain = classChain(sig.implyStmts);
   // Explicit structure values (`(M : HomMarkovChainSpec S)`, used through projections `M.kernel`
   // in the conclusion) are data arguments, not givens; `(μ : Simplex S)` used as a term stays a given.
@@ -3726,7 +3947,10 @@ export function suggest(filePath, lemmaName, options = {}) {
       optional: !!h.optional,
       canonSkip: !!h.canonSkip,
       alts: allAlts,
-      extraAlts: maxLog ? maxLog.extras : hmmShape && hasBvarBinder(h.typeNode) ? hmmBvarAllAlts(allAlts) : [], // accepted, not enumerated
+      extraAlts: uniq([
+        ...(maxLog ? maxLog.extras : hmmShape && hasBvarBinder(h.typeNode) ? hmmBvarAllAlts(allAlts) : []),
+        ...legacyEqJointAlts(allAlts),
+      ]), // accepted, not enumerated
       name: maxLog?.name || lt0Joint || nameA,
       nameB: maxLog?.name || lt0Joint || (b ? pickCanon(b.alts, b.name) : null),
       chain: classChain(h.typeNode),
@@ -3858,10 +4082,20 @@ export function suggest(filePath, lemmaName, options = {}) {
   }
   const implyPath = sanitizeRelPath(implyName);
   if (!allPaths.includes(relPath) && altMatch(relPath)) allPaths.push(relPath);
-  // Canonical first, then shortest — unless the canonical rendering is overlong (Windows MAX_PATH).
+  // Canonical first among free paths, then shortest — unless the canonical rendering is overlong (Windows MAX_PATH).
+  // Paths already occupied by another lemma under Lemma/ rank below free alternatives (sibling rename collisions).
   const tooLong = (p) => ("Lemma/" + p).length > PATH_WARN_LEN;
   const preferCanon = true;
-  const sorted = allPaths.sort((a, b) => (preferCanon ? (b === relPath) - (a === relPath) : 0) || byBestToWorst(a, b));
+  const currentNorm = relCurrent.startsWith("Lemma/") ? relCurrent.slice(6) : relCurrent;
+  const pathTakenByOther = (p) => {
+    const norm = String(p).replace(/\\/g, "/");
+    if (norm === currentNorm) return false;
+    try { return fs.existsSync(path.join(LEMMA_ROOT, norm)); } catch { return false; }
+  };
+  const sorted = allPaths.sort((a, b) =>
+    (pathTakenByOther(a) - pathTakenByOther(b)) ||
+    (preferCanon ? (b === relPath) - (a === relPath) : 0) ||
+    byBestToWorst(a, b));
   // every component must be a valid Lean module-name component (no leading digit, identifier characters)
   const validSorted = sorted.filter(validModulePath);
   const suggestions = validSorted.length ? validSorted : sorted;
@@ -3869,7 +4103,7 @@ export function suggest(filePath, lemmaName, options = {}) {
   const suggestedPath = suggestions[0] || relPath.replace(/\\/g, "/");
   const result = {
     file: abs,
-    currentPath: relCurrent.startsWith("Lemma/") ? relCurrent.slice(6) : relCurrent,
+    currentPath: currentNorm,
     suggestedPath,
     suggestions,
     moduleName,
@@ -3895,6 +4129,25 @@ export function suggest(filePath, lemmaName, options = {}) {
   result.consistent = matchedSuggestion
     ? { ok: true, reason: "exact match", existing: result.currentPath, suggested: matchedSuggestion }
     : pathsConsistent(result.currentPath, result.suggestedPath);
+  // camel `MEqExpect_*` / bare `MEq` / chain-local `MEqExpect` as imply folders are never consistent
+  {
+    const curRest = result.currentPath.replace(/^[^/]+\//, "").replace(/\.lean$/, "");
+    const ofAt = curRest.indexOf("/of/");
+    const curImply = ofAt >= 0 ? curRest.slice(0, ofAt) : curRest;
+    const segs = curImply.split("/").filter(Boolean);
+    const multi = segs.length > 1;
+    const badBareMeq = segs.includes("MEq") && multi;
+    if (hasIllegalMeqImply(curImply) || badBareMeq) {
+      result.consistent = {
+        ok: false,
+        reason: "illegal MEq imply token (use MEq_Expect_* / MEqExpectS, not MEqExpect / bare MEq)",
+        existing: result.currentPath,
+        suggested: result.suggestedPath,
+      };
+      result.warnings.push("current imply path uses illegal MEq token(s): " +
+        segs.filter((s) => isIllegalMeqImplySeg(s, multi) || s === "MEq").join(", "));
+    }
+  }
   // Py-name mode: ported lemmas keep their py module name (the /py summary pairs Lean and py module names).
   // `options.py` = "Section/Name/…" (explicit) or true (auto: pyLink/Lemma/<current>.py exists).
   const curMod = result.currentPath.replace(/\.lean$/, "");
@@ -3946,7 +4199,7 @@ export function pathsConsistent(existing, suggested) {
 /** Paths longer than this ("Lemma/…​.lean") are flagged; build prefixes push them past MAX_PATH. */
 const PATH_WARN_LEN = 150;
 
-/** Best = shortest ASCII bytes; worst = longest (redundant). Tie-break lexicographic. */
+/** Shortest ASCII bytes first; tie-break lexicographic. Occupied-path demotion is applied by the caller. */
 function byBestToWorst(a, b) {
   const ba = Buffer.byteLength(a, "utf8");
   const bb = Buffer.byteLength(b, "utf8");
@@ -3964,9 +4217,10 @@ function printHuman(r) {
   if (r.py) console.log("py name:    " + (r.py.name ? "Lemma/" + r.py.name + " (" + r.py.source + ")" : "— (no py counterpart)") + "; derived: Lemma/" + r.py.derived.suggestedPath + (r.py.derived.consistent.ok ? " (consistent)" : ""));
   else if (r.pyCounterpart) console.log("py:         pyLink/Lemma/" + r.pyCounterpart + ".py exists (use --py to keep the py name)");
   console.log("section:    " + r.section + " (score " + r.sectionScore + "; tokens: " + (r.sectionTokens.join(", ") || "—") + ")");
-  console.log("suggestions (" + r.suggestions.length + ", best→worst by ASCII bytes):");
+  console.log("suggestions (" + r.suggestions.length + ", best→worst: free paths first, then shortest ASCII bytes):");
   for (const s of r.suggestions) {
-    console.log("  - Lemma/" + s + "  [" + Buffer.byteLength(s, "utf8") + " B]" + (("Lemma/" + s).length > PATH_WARN_LEN ? "  ⚠ long" : ""));
+    const taken = s !== r.currentPath && fs.existsSync(path.join(LEMMA_ROOT, s));
+    console.log("  - Lemma/" + s + "  [" + Buffer.byteLength(s, "utf8") + " B" + (taken ? ", taken" : "") + "]" + (("Lemma/" + s).length > PATH_WARN_LEN ? "  ⚠ long" : ""));
   }
   console.log("imply:      " + r.imply.name);
   console.log("  chain:    " + r.imply.chain.join(" → "));

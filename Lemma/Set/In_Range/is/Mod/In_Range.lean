@@ -81,7 +81,7 @@ private lemma mem_sliced_indices_pos_go
     rw [List.mem_cons]
     refine Or.inr ?_
     if h_if : start + step < stop then
-      rw [dif_pos h_if]
+      rw [dite_eq_left h_if]
       apply mem_sliced_indices_pos_go _ h_stop h_step x k _ h_lt
       rw [hk]
       ring
@@ -121,7 +121,7 @@ private lemma mem_sliced_indices_neg_go
     rw [List.mem_cons]
     refine Or.inr ?_
     if h_if : start - step > stop then
-      rw [dif_pos h_if]
+      rw [dite_eq_left h_if]
       apply mem_sliced_indices_neg_go h_if (by omega) h_step x k _ h_ge
       grind
     else
@@ -290,7 +290,7 @@ private lemma main
               ·
                 grind
               ·
-                rw [dif_neg (not_le.mpr h_start_lt)]
+                rw [dite_eq_right (not_le.mpr h_start_lt)]
                 convert mem_sliced_indices_one h_start_lt h_stop_le x ?_ (mem_sliced_indices_pos_lt_stop h_start_lt h_stop_le (Nat.succ_pos step) x h) using 1
                 ·
                   grind
@@ -335,7 +335,7 @@ private lemma main
             ·
               grind
             ·
-              rw [dif_neg (not_le.mpr h_stop_lt)]
+              rw [dite_eq_right (not_le.mpr h_stop_lt)]
               convert mem_sliced_indices_neg_one h_stop_lt h_start_le x h_stop_le h_x_lt_start using 1
               grind
           ·
@@ -399,7 +399,7 @@ private lemma main
             exact_mod_cast hj
           obtain ⟨k, hk⟩ := exists_eq_mul_of_mod_eq_zero (Nat.succ_pos step) hj_mod
           have h_mem := mem_sliced_indices_pos_go h_start_lt h_stop_le (Nat.succ_pos step) x k (by rw [hj, hk, Nat.mul_comm, Nat.one_mul]) h_x_lt_stop
-          rw [dif_neg (not_le.mpr h_start_lt)]
+          rw [dite_eq_right (not_le.mpr h_start_lt)]
           exact h_mem
       | Int.negSucc _, hd =>
         simp at hd
@@ -451,7 +451,7 @@ private lemma main
             obtain ⟨k, hk⟩ := exists_eq_mul_of_mod_eq_zero (Nat.succ_pos step) hj_mod
             have h_mem := mem_sliced_indices_neg_go h_stop_lt h_start_le (Nat.succ_pos step) x k (by rw [← hk, ← hj]; omega) h_stop_le
             simp only [Slice.range]
-            rw [dif_neg (not_le.mpr h_stop_lt)]
+            rw [dite_eq_right (not_le.mpr h_stop_lt)]
             exact h_mem
       | Int.ofNat a, hd =>
         simp only [Slice.range] at h_sign ⊢

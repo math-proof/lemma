@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.Analysis.Complex.Rouche
+import sympy.calculus.complex.Rouche
 
 open Complex.Rouche
 

@@ -17,6 +17,20 @@ function propKind(g) {
     return null;
 }
 
+const SUB_DIGIT = { '₀': 0, '₁': 1, '₂': 2, '₃': 3, '₄': 4, '₅': 5, '₆': 6, '₇': 7, '₈': 8, '₉': 9 };
+const SUB_OF = Object.fromEntries(Object.entries(SUB_DIGIT).map(([s, i]) => [i, s]));
+
+/** `h₀`…`h₉` or ASCII `h0`…`h9` → index; other names (incl. `hG`, `h10`) → null. */
+function numberedHypIndex(name) {
+    const m = /^h([₀₁₂₃₄₅₆₇₈₉])$/.exec(name) || /^h([0-9])$/.exec(name);
+    if (!m) return null;
+    return m[1] in SUB_DIGIT ? SUB_DIGIT[m[1]] : Number(m[1]);
+}
+
+function hypLabel(i, preferSub) {
+    return preferSub ? `h${SUB_OF[i]}` : `h${i}`;
+}
+
 export function signatureRules(ctx) {
     const { P, decls } = ctx;
     for (const d of decls) {
@@ -140,8 +154,10 @@ export function signatureRules(ctx) {
         }
 
         // ---- given: propositions first, expressions next; propositions consecutive --------------------------------
+        const gg = given != null
+            ? groups.filter((g) => g.line > given && (imply == null || g.line < imply))
+            : [];
         if (given != null && !ctx.astCovered.has('given-prop-first')) {
-            const gg = groups.filter((g) => g.line > given && (imply == null || g.line < imply));
             // expressions the propositions need (closed over expression types): they must stay above the propositions
             const need = new Set();
             let grow = gg.filter((g) => propKind(g) === 'prop').map((g) => g.type);
@@ -188,6 +204,46 @@ export function signatureRules(ctx) {
                         : 'move it up to the propositions above';
                     ctx.warn('given-prop-consecutive', prop.line + 1, prop.col + 1,
                         `proposition \`(${prop.flat})\` is separated from the propositions above by ${gap.map((g) => `\`(${g.flat})\``).join(' ')}: in \`given\`, keep all propositions consecutive (only the first run is typeset); ${fix}`);
+                }
+            }
+        }
+
+        // ---- given: numbered hyps h₀… / h0… start at 0 with no gaps (descriptive hG/hr OK alongside) ----------
+        if (given != null && gg.length) {
+            const numbered = [];
+            let preferSub = false;
+            for (const g of gg) {
+                if (g.kind !== 'explicit') continue;
+                for (const n of g.names) {
+                    const idx = numberedHypIndex(n);
+                    if (idx == null) continue;
+                    if (/^h[₀₁₂₃₄₅₆₇₈₉]$/.test(n)) preferSub = true;
+                    numbered.push({ idx, name: n, line: g.line, col: g.col });
+                }
+            }
+            if (numbered.length) {
+                const byIdx = new Map();
+                for (const h of numbered) if (!byIdx.has(h.idx)) byIdx.set(h.idx, h);
+                const idxs = [...byIdx.keys()].sort((a, b) => a - b);
+                const min = idxs[0];
+                const max = idxs[idxs.length - 1];
+                if (min > 0) {
+                    const h = byIdx.get(min);
+                    const have = idxs.map((i) => hypLabel(i, preferSub)).join(', ');
+                    ctx.warn('given-hyp-index', h.line + 1, h.col + 1,
+                        `numbered given hyp \`${h.name}\` skips \`${hypLabel(0, preferSub)}\` (have ${have}; renumber from \`${hypLabel(0, preferSub)}\`)`);
+                } else {
+                    const missing = [];
+                    for (let i = 0; i <= max; i++) if (!byIdx.has(i)) missing.push(i);
+                    if (missing.length) {
+                        const firstMiss = missing[0];
+                        const after = idxs.find((i) => i > firstMiss);
+                        const h = byIdx.get(after);
+                        const have = idxs.map((i) => hypLabel(i, preferSub)).join(', ');
+                        const miss = missing.map((i) => hypLabel(i, preferSub)).join(', ');
+                        ctx.warn('given-hyp-index', h.line + 1, h.col + 1,
+                            `gap in numbered given hyps: have ${have} but missing ${miss}`);
+                    }
                 }
             }
         }

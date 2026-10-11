@@ -11,6 +11,7 @@ import sympy.core.numbers
 import sympy.core.power
 import sympy.vector.Basic
 import stdlib.List
+import sympy.functions.elementary.miscellaneous
 
 /-!
 # Shared trajectory model for the policy-gradient lemmas (standard MDP)
@@ -34,7 +35,9 @@ The stage process `ω t = (r t ω, s t ω, a t ω)` (reward first, then the stat
 joint random variable `(r t, s t, a t)`) is a time-homogeneous Markov chain on `ℝ × S × A` with kernel
 `M.K θ`; its law `M.traj θ` is Mathlib's Ionescu-Tulcea measure `Kernel.trajMeasure` on `ℕ → ℝ × S × A`.
 There are no global coordinate functions: lemmas bind `{r s a}` and assume `h₁ : ∀ t, (· t) = (r t, s t, a t)`
-(the joint random variable of `Function.coeProdPi3R`), and `V`, `Q` take `r`, `s`, `a` explicitly.
+(the joint random variable of `Function.coeProdPi3R`). State / action values are introduced locally in lemmas as
+`V`: `𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = x)` and
+`Q`: `𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = x ∧ a t = u)`.
 The reward `r t` belongs to stage `t`: `r t ∼ M.env.reward (s t, a t)`.  The sympy reward hypothesis `Equal(r[t] | s[:t] & a[:t], r[t])` is not
 built in; lemmas that carry it in sympy keep it as an explicit named hypothesis.
 -/
@@ -156,31 +159,7 @@ def traj.unexpand : Lean.PrettyPrinter.Unexpander
   | _ => throw ()
 
 /-- the reward coordinate of a stage clamped to `[-R, R]` (almost surely equal to it) -/
-noncomputable def rc (z : ℝ × S × A) : ℝ := max (-M.env.R) (min M.env.R z.1)
-
-/-- transition probability `Pr(s[t+1] = y | s[t] = x, a[t] = u)` -/
-noncomputable def T (x : S) (u : A) (y : S) : ℝ := (M.env.trans (x, u)).real {y}
-
-/-- `Pr[a:π](a[t] = u | s[t] = x)`: the policy probability -/
-def Pr (θ : Θ) (x : S) (u : A) : ℝ := M.pol.prob θ x u
-
-/-- state-value function `V(s[t] = x) = 𝔼[((γ ^ (id : ℕ → ℕ)) @ r[t:]) | s[t] = x]`:
-the Bochner integral of the discounted return against the conditional law `(M θ)[| s t ⁻¹' {x}]`
-(`0` at unreachable `x`, where that measure is `0`) -/
-noncomputable def V (r : ℕ → (ℕ → ℝ × S × A) → ℝ) (s : ℕ → (ℕ → ℝ × S × A) → S)
-    (θ : Θ) (γ : ℝ) (t : ℕ) (x : S) : ℝ :=
-  ∫ ω, ((γ ^ (id : ℕ → ℕ)) @ r[t:]) ω ∂(M θ)[|s t ⁻¹' {x}]
-
-omit [MeasurableSingletonClass A] in
-/-- `V` is the Bochner integral of the discounted return against the conditional measure -/
-theorem V_eq_integral (r : ℕ → (ℕ → ℝ × S × A) → ℝ) (s : ℕ → (ℕ → ℝ × S × A) → S)
-    (θ : Θ) (γ : ℝ) (t : ℕ) (x : S) :
-    M.V r s θ γ t x = ∫ ω, ((γ ^ (id : ℕ → ℕ)) @ r[t:]) ω ∂(M θ)[|s t ⁻¹' {x}] := rfl
-
-/-- action-value function `Q(s[t] = x, a[t] = u) = γ ** Stack[k](k) @ 𝔼[r[t:] | s[t] = x ∧ a[t] = u]` -/
-noncomputable def Q (r : ℕ → (ℕ → ℝ × S × A) → ℝ) (s : ℕ → (ℕ → ℝ × S × A) → S)
-    (a : ℕ → (ℕ → ℝ × S × A) → A) (θ : Θ) (γ : ℝ) (t : ℕ) (x : S) (u : A) : ℝ :=
-  ∑' k, γ ^ k * ∫ ω, r (t + k) ω ∂(M θ)[| s t ⁻¹' {x} ∩ a t ⁻¹' {u}]
+noncomputable def rc (z : ℝ × S × A) : ℝ := clip z.1 (-M.env.R) M.env.R
 
 end Model
 

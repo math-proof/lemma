@@ -1,6 +1,6 @@
 import sympy.stats.policy_trajectory.gradient
 import sympy.Basic
-import Lemma.Tensor.SMul.eq.Fderiv.of.All_Differentiable_Prob
+import Lemma.Random.EqSMulProb_FderivLog_Prob_Fderiv_FunProb.of.All_All_Differentiable_FunPolProb
 import Lemma.Random.Integral.eq.Sum_Sum_SMul
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model
 
@@ -31,7 +31,7 @@ private lemma main
   refine Finset.sum_congr rfl fun y _ => ?_
   rw [Finset.smul_sum]
   refine Finset.sum_congr rfl fun u _ => ?_
-  rw [← Tensor.SMul.eq.Fderiv.of.All_Differentiable_Prob (M := M) h₂ θ y u, smul_smul, smul_smul, smul_smul]
+  rw [← Random.EqSMulProb_FderivLog_Prob_Fderiv_FunProb.of.All_All_Differentiable_FunPolProb (M := M) h₂ θ y u, smul_smul, smul_smul, smul_smul]
   congr 1
   ring
 

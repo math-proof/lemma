@@ -1,6 +1,6 @@
 import sympy.stats.policy_trajectory.gradient
 import sympy.Basic
-import Lemma.Random.Measurable_S
+import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
 
 
@@ -26,12 +26,12 @@ private lemma main
 -- imply
   ∫ ω, φ (s t ω) ∂(M θ) = ∑ y, (M θ).real (s t ⁻¹' {y}) • φ y := by
 -- proof
-  have e := integral_map (μ := M θ) (Random.Measurable_S h₁ t).aemeasurable
+  have e := integral_map (μ := M θ) (Random.Measurable.of.All_Eq.snd.fst h₁ t).aemeasurable
     (f := φ) StronglyMeasurable.of_discrete.aestronglyMeasurable
   refine e.symm.trans ?_
   rw [integral_fintype Integrable.of_finite]
   refine Finset.sum_congr rfl fun y _ => ?_
-  rw [map_measureReal_apply (Random.Measurable_S h₁ t) (measurableSet_singleton _)]
+  rw [map_measureReal_apply (Random.Measurable.of.All_Eq.snd.fst h₁ t) (measurableSet_singleton _)]
 
 
 -- created on 2026-10-06

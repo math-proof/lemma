@@ -1,6 +1,7 @@
 import sympy.stats.policy_trajectory
 import sympy.stats.rv
 import Mathlib.Analysis.Calculus.Gradient.Basic
+import sympy.functions.elementary.miscellaneous
 
 /-!
 # Closed-form value functions of the policy-gradient model with continuous states and continuous actions
@@ -51,7 +52,7 @@ variable {Θ S A : Type*} [MeasurableSpace S] [ReferenceMeasure A]
 
 /-- `rkd x u = 𝔼[r[t] | s[t] = x, a[t] = u]`, the expected reward clamped to `[-R, R]` -/
 noncomputable def rkd (M : DensityModel Θ S A) (x : S) (u : A) : ℝ :=
-  ∫ ρ, max (-M.env.R) (min M.env.R ρ) ∂(M.env.reward (x, u))
+  ∫ ρ, clip ρ (-M.env.R) M.env.R ∂(M.env.reward (x, u))
 
 /-- `Wkd θ k x = 𝔼[r[t+k] | s[t] = x]` with a density policy: one policy step (an integral over the actions) and one
 transition per `k` -/

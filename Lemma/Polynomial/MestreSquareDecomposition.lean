@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.Algebra.Polynomial.MestreSquareDecomposition
+import sympy.algebra.polynomial.mestre_square_decomposition
 
 open MetaMathlibExt
 

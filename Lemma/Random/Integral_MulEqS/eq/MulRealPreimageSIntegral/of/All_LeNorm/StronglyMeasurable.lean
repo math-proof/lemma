@@ -3,7 +3,7 @@ import sympy.Basic
 import Lemma.Random.Integral.eq.Integral_Integral.of.All_LeNorm.StronglyMeasurable
 import Lemma.Random.Integral_MulEq12.eq.MulEqIntegral.of.All_LeNorm.StronglyMeasurable
 import Lemma.Random.Map.eq.StageK
-import Lemma.Random.Measurable_S
+import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
 import Lemma.Real.LeNorm_Mul1.of.All_LeNorm
 import Lemma.Real.StronglyMeasurable.discrete
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random Real
@@ -51,7 +51,7 @@ private lemma main
   have h₃ : (fun y' : S => if y' = x then (1:ℝ) else 0) = ({x} : Set S).indicator 1 := by
     funext y'; simp [Set.indicator_apply]
   rw [h₃, integral_indicator_one (measurableSet_singleton x), measureReal_def, measureReal_def,
-    Measure.map_apply (Random.Measurable_S h₁ t) (measurableSet_singleton x)]
+    Measure.map_apply (Random.Measurable.of.All_Eq.snd.fst h₁ t) (measurableSet_singleton x)]
 
 
 -- created on 2026-10-07

@@ -77,6 +77,7 @@ export const tactics = [
     'rename',
     'rename_i',
     'repeat',
+    'replace',
     'revert',
     'rfl',
     'right',

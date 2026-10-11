@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.AlgebraicGeometry.TangentSpace
+import sympy.polys.agca.tangent_space
 
 open MvPolynomial
 

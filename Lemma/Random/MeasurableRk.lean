@@ -18,8 +18,9 @@ private lemma main
 -- proof
   have := M.env.reward_markov
   apply (StronglyMeasurable.integral_kernel_prod_right (κ := M.env.reward.comap (fun x => (x, u)) (by fun_prop))
-    (f := fun (_ : S) (ρ : ℝ) => max (-M.env.R) (min M.env.R ρ)) _).measurable
-  apply (measurable_const.max (measurable_const.min measurable_snd)).stronglyMeasurable
+    (f := fun (_ : S) (ρ : ℝ) => clip ρ (-M.env.R) M.env.R) _).measurable
+  apply ((measurable_snd.max measurable_const).min measurable_const).stronglyMeasurable
 
 
 -- created on 2026-10-07
+-- updated on 2026-10-11

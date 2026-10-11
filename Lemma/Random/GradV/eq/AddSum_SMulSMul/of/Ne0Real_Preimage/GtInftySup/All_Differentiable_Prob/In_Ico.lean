@@ -9,7 +9,10 @@ open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 /--
 Policy-gradient recursion for the model value functions on a reachable state x (h₄ : Pr(s[t] = x) ≠ 0):
 ∇V(t, x) = ∑ u, Q(t, x, u) • ∇π(u | x) + γ • ∑ y, P1(x, y) • ∇V(t+1, y),
-where V = M.V, Q = M.Q are the state / action values of the trajectory model, P1 θ x y = Pr(s[t+1] = y | s[t] = x),
+where V and Q are the local state / action values
+`𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = x)` and
+`𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = x ∧ a t = u)`,
+P1 θ x y = Pr(s[t+1] = y | s[t] = x),
 and θ ↦ π_θ(u | x) is differentiable (h₂) with a bounded gradient (h₃).
 Gradient (Riesz representative) form of `Random.Fderiv.eq.AddSum_SMulSMul.of.Ne0Real_Preimage.In_Ico.GtInftySup.All_Differentiable_Prob`.
 -/
@@ -33,14 +36,19 @@ private lemma main
   (h₃ : sup[θ, x, u] ‖∇[θ] M.pol.prob θ x u‖ < ∞)
   (h₄ : (M θ).real (s t ⁻¹' {x}) ≠ 0) :
 -- imply
-  ∇[θ] M.V r s θ γ t x =
-    ∑ u, M.Q r s a θ γ t x u • ∇[θ] M.pol.prob θ x u +
-      γ • ∑ y, M.P1 θ x y • ∇[θ] M.V r s θ γ (t + 1) y := by
+  let Q (θ : Θ) (t : ℕ) (x : S) (u : A) : ℝ :=
+    𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = x ∧ a t = u);
+  let V (θ : Θ) (t : ℕ) (x : S) : ℝ :=
+    𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = x);
+  ∇[θ] V θ t x =
+    ∑ u, Q θ t x u • ∇[θ] M.pol.prob θ x u +
+      γ • ∑ y, M.P1 θ x y • ∇[θ] V θ (t + 1) y := by
 -- proof
   classical
   simpa [gradient, map_add, map_smul, map_sum] using
     congrArg (InnerProductSpace.toDual ℝ Θ).symm
-      (Fderiv.eq.AddSum_SMulSMul.of.Ne0Real_Preimage.In_Ico.GtInftySup.All_Differentiable_Prob h₀ h₁ t x θ h₂ h₃ h₄)
+      (Fderiv.eq.AddSum_SMulSMul.of.Ne0Real_Preimage.In_Ico.GtInftySup.All_Differentiable_Prob t x θ h₀ h₁ h₂ h₃ h₄)
 
 
 -- created on 2026-10-06
+-- updated on 2026-10-10

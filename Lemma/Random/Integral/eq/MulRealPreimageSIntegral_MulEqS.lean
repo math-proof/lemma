@@ -1,7 +1,7 @@
 import sympy.stats.policy_trajectory
 import sympy.Basic
 import Lemma.Random.Integral.eq.MulRealIntegral_MulIndicator1.of.MeasurableSet
-import Lemma.Random.Measurable_S
+import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 
 
@@ -25,7 +25,7 @@ private lemma main
   ∫ ω, f ω ∂(M θ)[|s t ⁻¹' {x}] =
     ((M θ).real (s t ⁻¹' {x}))⁻¹ * ∫ ω, (if s t ω = x then (1:ℝ) else 0) * f ω ∂(M θ) := by
 -- proof
-  rw [Integral.eq.MulRealIntegral_MulIndicator1.of.MeasurableSet (M := M) (Random.Measurable_S h₁ t (measurableSet_singleton x)) θ]
+  rw [Integral.eq.MulRealIntegral_MulIndicator1.of.MeasurableSet (M := M) (Random.Measurable.of.All_Eq.snd.fst h₁ t (measurableSet_singleton x)) θ]
   congr 2
   funext ω
   by_cases h : s t ω = x <;> simp [h]

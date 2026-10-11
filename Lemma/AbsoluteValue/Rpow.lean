@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.Analysis.AbsoluteValue.Rpow
+import sympy.functions.elementary.absolute_value.Rpow
 
 /--
 [rpow_apply](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/AbsoluteValue/Rpow.lean)

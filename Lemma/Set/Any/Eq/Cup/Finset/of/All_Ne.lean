@@ -23,7 +23,7 @@ private lemma main
     rw [Finset.card_image_of_injOn hinj, Finset.card_range]
   let S := (Finset.range n).image x
   let y : ℕ → ℝ := fun m => if hm : m < n then S.orderEmbOfFin hc ⟨m, hm⟩ else 0
-  have hy : ∀ m (hm : m < n), y m = S.orderEmbOfFin hc ⟨m, hm⟩ := fun m hm => dif_pos hm
+  have hy : ∀ m (hm : m < n), y m = S.orderEmbOfFin hc ⟨m, hm⟩ := fun m hm => dite_eq_left hm
   have mono : ∀ a b, a < b → b < n → y a < y b := by
     intro a b hab hb
     rw [hy a (by omega), hy b hb]

@@ -25,7 +25,7 @@ private lemma main
     grind
   rw [InsertIdx.eq.Append_Cons.of.GeLength (by omega)]
   rw [Permute.eq.Ite]
-  simp only [if_pos (show (-1 : ℤ) < 0 by decide)]
+  simp only [ite_eq_left (show (-1 : ℤ) < 0 by decide)]
   simp only [show (-(-1 : ℤ)).toNat = 1 by simp]
   rw [TakeAppend.eq.Take.of.GeLength (by omega)]
   have hi : s.length < (s ++ [a]).length := by simp

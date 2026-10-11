@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.Analysis.Complex.HartogsSeparateAnalyticity
+import sympy.calculus.complex.HartogsSeparateAnalyticity
 
 open Complex.HartogsWanted
 open MeasureTheory Set Metric Filter

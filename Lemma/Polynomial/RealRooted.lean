@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.Algebra.Polynomial.RealRooted
+import sympy.algebra.polynomial.real_rooted
 
 open Polynomial
 

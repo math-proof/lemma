@@ -16,17 +16,17 @@ private lemma main
   {s : ℕ → (ℕ → ℝ × S × A) → S}
   {a : ℕ → (ℕ → ℝ × S × A) → A}
 -- given
-  (h₁ : ∀ t, (· t) = (r t, s t, a t))
+  (h₀ : ∀ t, (· t) = (r t, s t, a t))
   (θ : Θ)
   (t : ℕ) :
 -- imply
   r t =ᵐ[M θ] fun ω ↦ M.rc (ω t) := by
 -- proof
-  obtain rfl : r = fun t ω ↦ (ω t).1 := funext₂ fun t ω ↦ (congrArg Prod.fst (congrFun (h₁ t) ω)).symm
+  obtain rfl : r = fun t ω ↦ (ω t).1 := funext₂ fun t ω ↦ (congrArg Prod.fst (congrFun (h₀ t) ω)).symm
   have hs : MeasurableSet {z : ℝ × S × A | z.1 ∉ Set.Icc (-M.env.R) M.env.R} :=
     (measurableSet_Icc.compl).preimage measurable_fst
   have h : (M θ).map (fun ω => ω t) {z | z.1 ∉ Set.Icc (-M.env.R) M.env.R} = 0 := by
-    rw [Map.eq.StageK h₁, Measure.bind_apply hs (Kernel.aemeasurable _)]
+    rw [Map.eq.StageK h₀, Measure.bind_apply hs (Kernel.aemeasurable _)]
     exact (lintegral_congr (fun y => StageKSetOf1.eq.Zero (M := M) θ y)).trans lintegral_zero
   rw [Measure.map_apply (measurable_pi_apply t) hs] at h
   rw [Filter.EventuallyEq, ae_iff]
@@ -34,8 +34,9 @@ private lemma main
   simp only [Set.mem_ofPred_eq] at hω ⊢
   intro hI
   apply hω
-  simp only [Model.rc]
-  rw [min_eq_right hI.2, max_eq_right hI.1]
+  simp only [Model.rc, clip]
+  rw [max_eq_left hI.1, min_eq_left hI.2]
 
 
 -- created on 2026-10-07
+-- updated on 2026-10-11

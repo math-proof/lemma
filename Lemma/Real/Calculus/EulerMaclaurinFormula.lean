@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.Analysis.Calculus.EulerMaclaurinFormula
+import sympy.calculus.EulerMaclaurinFormula
 
 /--
 [eulerMaclaurinFormula](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Calculus/EulerMaclaurinFormula.lean)

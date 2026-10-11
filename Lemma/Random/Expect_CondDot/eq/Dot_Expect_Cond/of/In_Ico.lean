@@ -5,8 +5,8 @@ import sympy.core.power
 import sympy.vector.Basic
 import sympy.Basic
 import Lemma.Random.MEqR_Rc
-import Lemma.Random.NormRc.le.Abs_R
-import Lemma.Random.Measurable_R
+import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
+import Lemma.Random.NormRc.le.AbsR
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 
 
@@ -27,7 +27,7 @@ private lemma main
   {s : ℕ → (ℕ → ℝ × S × A) → S}
   {a : ℕ → (ℕ → ℝ × S × A) → A}
 -- given
-  (hγ : γ ∈ Set.Ico 0 1)
+  (h₀ : γ ∈ Set.Ico 0 1)
   (h₁ : ∀ t, (· t) = (r t, s t, a t))
   (θ : Θ)
   (y : (ℕ → ℝ × S × A) → β)
@@ -36,7 +36,7 @@ private lemma main
 -- imply
   𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | y = «y.bvar») = (γ ^ (id : ℕ → ℕ)) @ fun k => 𝔼[r : M θ](r (t + k) | y = «y.bvar») := by
 -- proof
-  have hr : Measurable (fun ω k ↦ r k ω) := Measurable.of_eval fun k => Random.Measurable_R h₁ k
+  have hr : Measurable (fun ω k ↦ r k ω) := Measurable.of_eval (Random.Measurable.of.All_Eq.fst h₁)
   have h : ∀ k, 𝔼[r : M θ](r (t + k) | y = «y.bvar») = ∫ ω, r (t + k) ω ∂(M θ)[|y ⁻¹' {«y.bvar»}] := fun k =>
     Expectation.condEvent_eq_integral hr.aemeasurable (measurable_pi_apply (t + k))
   simp only [h]
@@ -51,21 +51,21 @@ private lemma main
     have := cond_isProbabilityMeasure (μ := M θ) hB
     have hae : ∀ᵐ ω ∂(M θ)[|B], ∀ k, ‖r k ω‖ ≤ |M.env.R| := by
       apply cond_absolutelyContinuous.ae_le
-      exact ae_all_iff.2 fun k => (MEqR_Rc h₁ (M := M) θ k).mono fun ω h => by rw [h]; exact NormRc.le.Abs_R (M := M) _
+      exact ae_all_iff.2 fun k => (MEqR_Rc h₁ (M := M) θ k).mono fun ω h => by rw [h]; exact NormRc.le.AbsR (M := M) _
     have hm : ∀ k, Measurable (r k) := fun k =>
-      Random.Measurable_R h₁ k
+      Random.Measurable.of.All_Eq.fst h₁ k
     have hF : ∀ k, Integrable (fun ω => γ ^ k * r (t + k) ω) (M θ)[|B] := fun k =>
       Integrable.of_bound ((hm (t + k)).const_mul (γ ^ k)).aestronglyMeasurable (γ ^ k * |M.env.R|)
         (hae.mono fun ω h => by
-          rw [norm_mul, norm_pow, Real.norm_of_nonneg hγ.1]
-          exact mul_le_mul_of_nonneg_left (h (t + k)) (pow_nonneg hγ.1 k))
+          rw [norm_mul, norm_pow, Real.norm_of_nonneg h₀.1]
+          exact mul_le_mul_of_nonneg_left (h (t + k)) (pow_nonneg h₀.1 k))
     have hS : Summable (fun k => ∫ ω, ‖γ ^ k * r (t + k) ω‖ ∂(M θ)[|B]) := by
       refine Summable.of_nonneg_of_le (fun k => integral_nonneg fun ω => norm_nonneg _) (fun k => ?_)
-        ((summable_geometric_of_lt_one hγ.1 hγ.2).mul_right |M.env.R|)
+        ((summable_geometric_of_lt_one h₀.1 h₀.2).mul_right |M.env.R|)
       have hb : ∀ᵐ ω ∂(M θ)[|B], ‖‖γ ^ k * r (t + k) ω‖‖ ≤ γ ^ k * |M.env.R| :=
         hae.mono fun ω h => by
-          rw [norm_norm, norm_mul, norm_pow, Real.norm_of_nonneg hγ.1]
-          exact mul_le_mul_of_nonneg_left (h (t + k)) (pow_nonneg hγ.1 k)
+          rw [norm_norm, norm_mul, norm_pow, Real.norm_of_nonneg h₀.1]
+          exact mul_le_mul_of_nonneg_left (h (t + k)) (pow_nonneg h₀.1 k)
       have := norm_integral_le_of_norm_le_const hb
       simp only [probReal_univ, mul_one] at this
       exact (Real.le_norm_self _).trans this
@@ -75,3 +75,4 @@ private lemma main
 
 
 -- created on 2026-10-07
+-- updated on 2026-10-10

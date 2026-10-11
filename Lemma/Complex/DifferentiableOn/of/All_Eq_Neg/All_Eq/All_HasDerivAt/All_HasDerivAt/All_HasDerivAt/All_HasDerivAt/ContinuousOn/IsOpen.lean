@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.Analysis.Complex.LoomanMenchoff
+import sympy.calculus.complex.LoomanMenchoff
 
 /--
 [looman_menchoff](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/LoomanMenchoff.lean)

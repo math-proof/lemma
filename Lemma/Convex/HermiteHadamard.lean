@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.Analysis.Convex.HermiteHadamard
+import sympy.calculus.HermiteHadamard
 
 open Convex.HermiteHadamard
 

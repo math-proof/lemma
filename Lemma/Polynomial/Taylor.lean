@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.Algebra.Polynomial.Taylor
+import sympy.algebra.polynomial.taylor
 
 open Polynomial
 

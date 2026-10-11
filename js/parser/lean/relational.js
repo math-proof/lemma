@@ -297,12 +297,12 @@ export class Lean_simeq extends LeanRelational {
 
     /** @type {string | null} unicode superscript glyph, e.g. `ᵐ` (measurable equivalence) */
     superscript = null;
-    /** @type {string} right-script suffix letter, e.g. `L` in `≃L[ℝ]` (continuous linear equivalence) */
+    /** @type {string} right-script suffix, e.g. `L` / `ₐ` / `+*` in `≃L[ℝ]` / `≃ₐ[R]` / `≃+*` */
     subscript = '';
     /** @type {string} bracketed scalar ring, e.g. `ℝ` — required by Lean notation, elided in LaTeX */
     modifier = '';
 
-    /** Plain `≃`, measurable `≃ᵐ`, or continuous linear `≃L[ℝ]`. */
+    /** Plain `≃`, measurable `≃ᵐ`, algebra `≃ₐ[R]`, continuous linear `≃L[ℝ]`, or `≃+*`. */
     opStr() {
         let op = '≃';
         if (this.subscript) {

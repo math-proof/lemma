@@ -14,7 +14,7 @@ private lemma main
 -- proof
   subst h
   let x : ℕ → Fin k → ℤ := fun m => if hm : m < S.card then (S.equivFin.symm ⟨m, hm⟩).val else 0
-  have hx : ∀ m (hm : m < S.card), x m = (S.equivFin.symm ⟨m, hm⟩).val := fun m hm => dif_pos hm
+  have hx : ∀ m (hm : m < S.card), x m = (S.equivFin.symm ⟨m, hm⟩).val := fun m hm => dite_eq_left hm
   refine ⟨x, fun i hi j hj e => ?_, ?_⟩
   · rw [hx i hi, hx j (by omega)] at e
     have := S.equivFin.symm.injective (Subtype.ext e)
@@ -42,7 +42,7 @@ private lemma real
   ∃ x : ℕ → ℝ, (∀ k ∈ Finset.Ico 1 n, x (k - 1) < x k) ∧ S = (Finset.range n).image x := by
 -- proof
   let x : ℕ → ℝ := fun m => if hm : m < n then S.orderEmbOfFin h ⟨m, hm⟩ else 0
-  have hx : ∀ m (hm : m < n), x m = S.orderEmbOfFin h ⟨m, hm⟩ := fun m hm => dif_pos hm
+  have hx : ∀ m (hm : m < n), x m = S.orderEmbOfFin h ⟨m, hm⟩ := fun m hm => dite_eq_left hm
   refine ⟨x, fun k hk => ?_, ?_⟩
   · rw [Finset.mem_Ico] at hk
     rw [hx k hk.2, hx (k - 1) (by omega)]

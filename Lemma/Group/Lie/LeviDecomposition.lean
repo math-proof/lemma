@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.Algebra.Lie.LeviDecomposition
+import sympy.algebra.lie.levi_decomposition
 
 open LeviDecomposition
 

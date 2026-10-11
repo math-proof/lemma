@@ -1,16 +1,14 @@
-import sympy.stats.policy_trajectory.advantage
+import sympy.stats.policy_trajectory.gradient
 import sympy.Basic
-import Lemma.Random.Measurable_R
 import Lemma.Random.AeNormSub.le.DeltaBound.of.In_Ico
-import Lemma.Random.Measurable_A
-import Lemma.Random.Measurable_S
+import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
 
 
 private lemma delta_meas [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] {r : ℕ → (ℕ → ℝ × S × A) → ℝ} {s : ℕ → (ℕ → ℝ × S × A) → S} {a : ℕ → (ℕ → ℝ × S × A) → A} (h₁ : ∀ t, (· t) = (r t, s t, a t)) (V : S → ℝ) (γ : ℝ) (j : ℕ) :
     Measurable (fun ω : ℕ → ℝ × S × A => r j ω + γ * V (s (j + 1) ω) - V (s j ω)) := by
-  exact ((Random.Measurable_R h₁ j).add (((measurable_of_countable V).comp (Random.Measurable_S h₁ (j + 1))).const_mul γ)).sub
-      ((measurable_of_countable V).comp (Random.Measurable_S h₁ j))
+  exact ((Random.Measurable.of.All_Eq.fst h₁ j).add (((measurable_of_countable V).comp (Random.Measurable.of.All_Eq.snd.fst h₁ (j + 1))).const_mul γ)).sub
+      ((measurable_of_countable V).comp (Random.Measurable.of.All_Eq.snd.fst h₁ j))
 
 /--
 `δ[j] • ψ(s[t], a[t])` is integrable under the trajectory model.
@@ -36,8 +34,8 @@ private lemma main
   Integrable (fun ω => (r j ω + γ * M.Vc θ γ (s (j + 1) ω) - M.Vc θ γ (s j ω)) •
     ψ (s t ω) (a t ω)) (M θ) := by
 -- proof
-  have hX : Measurable (fun ω : ℕ → ℝ × S × A => (s t ω, a t ω)) := (Random.Measurable_S h₁ t).prodMk (Random.Measurable_A h₁ t)
-  refine Integrable.of_bound (C := M.deltaBound γ * ∑ p : S × A, ‖ψ p.1 p.2‖)
+  have hX : Measurable (fun ω : ℕ → ℝ × S × A => (s t ω, a t ω)) := (Random.Measurable.of.All_Eq.snd.fst h₁ t).prodMk (Random.Measurable.of.All_Eq.snd.snd h₁ t)
+  refine Integrable.of_bound (C := (3 / (1 - γ) - 1) * |M.env.R| * ∑ p : S × A, ‖ψ p.1 p.2‖)
     ((delta_meas h₁ (M.Vc θ γ) γ j).stronglyMeasurable.smul
       ((StronglyMeasurable.of_discrete (f := fun p : S × A => ψ p.1 p.2)).comp_measurable
         hX)).aestronglyMeasurable ?_
@@ -49,3 +47,4 @@ private lemma main
 
 
 -- created on 2026-10-06
+-- updated on 2026-10-10

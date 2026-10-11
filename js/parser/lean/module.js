@@ -196,7 +196,6 @@ function normalizeInstImplicit(s) {
 }
 
 /**
- * Extract attribute names from LeanAttribute (e.g. @[path] → ['main'], @[path, fin] → ['main','fin']).
  * Handles LeanBracket contents as LeanArgsCommaSeparated, LeanArgsSpaceSeparated, or LeanToken.
  */
 function extractAttribute(attr) {
@@ -378,7 +377,13 @@ function collectRandomVarNames(binderRoots) {
     const probMeasureApp = (n0) => {
         const a = n0?.peelGroup?.() ?? n0;
         if (!(a instanceof L.LeanArgsSpaceSeparated) || a.args.length < 2) return null;
-        if (!a.headIs('IsProbabilityMeasure') && !a.headIs('PSpace')) return null;
+        // `IsFiniteMeasure π` (condExp / Integrable lemmas) establishes the same sample
+        // space as `IsProbabilityMeasure` / `PSpace` for RV binder detection.
+        if (
+            !a.headIs('IsProbabilityMeasure') &&
+            !a.headIs('IsFiniteMeasure') &&
+            !a.headIs('PSpace')
+        ) return null;
         return a.args[1];
     };
 
@@ -411,6 +416,29 @@ function collectRandomVarNames(binderRoots) {
             const S = strStmt(ty.args[ty.args.length - 2].peelGroup()).trim();
             const A = strStmt(ty.args[ty.args.length - 1].peelGroup()).trim();
             if (S && A) probDomains.add(`ℕ → ℝ × ${S} × ${A}`);
+        }
+    }
+    // Same trajectory space when there is no `Model` binder: it appears as the last
+    // domain of `{r : ℕ → (ℕ → ℝ × S × A) → α}` (Measurable.of.All_Eq, etc.).
+    const trajectoryDomainText = (typeNode) => {
+        if (typeNode == null) return null;
+        const t = strStmt(typeNode.peelGroup()).trim();
+        return /^ℕ → ℝ × \S+ × \S+$/u.test(t) ? t : null;
+    };
+    for (const n of nodes) {
+        if (!(n instanceof L.LeanParenthesis) && !(n instanceof L.LeanBrace)) continue;
+        const cols = [];
+        const a = n.arg;
+        if (a instanceof L.LeanColon) cols.push(a);
+        else if (a instanceof L.LeanArgsSpaceSeparated)
+            for (const c of a.args) if (c instanceof L.LeanColon) cols.push(c);
+        for (const col of cols) {
+            const ty = col.rhs.peelGroup();
+            if (!(ty instanceof L.Lean_rightarrow)) continue;
+            let last = ty;
+            while (last.rhs.peelGroup() instanceof L.Lean_rightarrow) last = last.rhs.peelGroup();
+            const traj = trajectoryDomainText(last.lhs);
+            if (traj) probDomains.add(traj);
         }
     }
 

@@ -12,7 +12,7 @@ open MeasureTheory PolicyGradient Random Set
 /--
 Derivative of the closed-form state value on a general state space: `θ ↦ Vk θ γ x` has derivative
 `∑' k, γ ^ k • fderiv ℝ (fun θ ↦ Wk θ k x) θ`.
-Continuous-state counterpart of `Tensor.HasFDerivAt.of.In_Ico.GtInftySup.All_Differentiable_Prob`
+Continuous-state counterpart of `Random.HasFDerivAt_FunVc_TSum_SMulPowFderiv_FunW.of.In_Ico.GtInftySup_Norm.All_All_Differentiable_FunProbPol`
 (`h₃`: the policy is measurable in the state; `Θ` is finite-dimensional, like the weights `π` of shape `(D,)`).
 -/
 @[path]

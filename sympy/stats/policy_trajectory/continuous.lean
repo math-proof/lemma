@@ -1,5 +1,6 @@
 import sympy.stats.policy_trajectory
 import Mathlib.Analysis.Calculus.Gradient.Basic
+import sympy.functions.elementary.miscellaneous
 
 /-!
 # Closed-form value functions of the policy-gradient model on a general (e.g. continuous) state space
@@ -35,7 +36,7 @@ variable {Θ S A : Type*} [MeasurableSpace S] [MeasurableSpace A] [Fintype A]
 
 /-- `rk x u = 𝔼[r[t] | s[t] = x, a[t] = u]`, the expected reward clamped to `[-R, R]` -/
 noncomputable def rk (M : Model Θ S A) (x : S) (u : A) : ℝ :=
-  ∫ ρ, max (-M.env.R) (min M.env.R ρ) ∂(M.env.reward (x, u))
+  ∫ ρ, clip ρ (-M.env.R) M.env.R ∂(M.env.reward (x, u))
 
 /-- `Wk θ k x = 𝔼[r[t+k] | s[t] = x]` on a general state space: one policy step and one transition per `k` -/
 noncomputable def Wk (M : Model Θ S A) (θ : Θ) : ℕ → S → ℝ

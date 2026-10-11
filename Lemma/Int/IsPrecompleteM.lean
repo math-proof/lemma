@@ -15,8 +15,7 @@ private lemma main
   rw [← AdicCompletion.of_surjective_iff]
   intro y
   obtain ⟨t, rfl⟩ := AdicCompletion.ofTensorProduct_surjective_of_finite (I := I) (M := M) y
-  induction t using TensorProduct.induction_on with
-  | zero => exact ⟨0, by rw [map_zero, map_zero]⟩
+  induction t using TensorProduct.inductionOn with
   | tmul r m =>
     obtain ⟨s, rfl⟩ := AdicCompletion.of_surjective I R r
     refine ⟨s • m, ?_⟩

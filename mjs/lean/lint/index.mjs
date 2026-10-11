@@ -8,11 +8,12 @@
  *
  * Every rule runs on the comment / string-blanked source (see `scan.mjs`: the lean.js tree has no source positions).
  */
+import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { listLemmaTopLevelDirs } from '../lemmaSections.mjs';
 import { prepare, findDecls } from './scan.mjs';
-import { scanImportsAndOpens, openSection, openDuplicate, openPrefix, attrDocstring, dates, declKeywordDirText } from './headerRules.mjs';
+import { scanImportsAndOpens, headerSpacing, openSection, openDuplicate, openPrefix, attrDocstring, dates, declKeywordDirText } from './headerRules.mjs';
 import { signatureRules } from './signatureRules.mjs';
 import { indentRules, proofRules, underscoreNameRule } from './proofRules.mjs';
 import { attrRules } from './attrRules.mjs';
@@ -38,9 +39,11 @@ const Q = {
     byExact: '`by exact expr` should be simplifed to `expr`',
     hole: 'use `_` as unused binders or unnamed holes, prefer `_` instead of `?_`/`?identifier`/`_identifier`',
     date: 'date created must be today, if date updated is the same as date created, it should be omitted.',
+    dateSp: 'exactly two blank lines before `-- created on`',
     openSec: 'use `open Section` if lemmas from that Section are imported',
     openDup: 'simplify `open` statements',
     openPrefix: 'after `open Section`, prefer the short lemma name when unambiguous',
+    headerSp: '`import` / `open` / `set_option` are contiguous (no blank lines between them), then exactly two blank lines before the rest of the file',
     mp: 'For `LHS.is.RHS` tagged with `@[mp]` / `@[mpr]`, prefer the generated one-direction lemmas `RHS.of.LHS` / `LHS.of.RHS` over calling `.mp` / `.mpr` on the iff.',
     comm: 'For `LHS.eq.RHS` tagged with `@[comm]`, prefer the generated commutative lemma `RHS.eq.LHS` over `simp [← LHS.eq.RHS]` or `rw [LHS.eq.RHS.symm]`.',
     declDir: 'Never put a `theorem` in `Lemma/`.', // removed from AGENTS.md: this warning checks it
@@ -58,9 +61,13 @@ export const RULES = {
     'given-prop-first': Q.propFirst,
     // not an AGENTS.md rule (user request): the page typesets only the first run of `given` propositions
     'given-prop-consecutive': null,
+    // not an AGENTS.md rule: numbered `h₀`/`h0`… in `-- given` must start at 0 with no gaps
+    'given-hyp-index': null,
     'binder-combine': Q.combine,
     'section-imply': Q.imply,
     'section-proof': Q.proof,
+    // not an AGENTS.md rule: no empty lines inside the proof body (enforced by the linter)
+    'proof-blank-line': null,
     'proof-binop-newline': Q.binop,
     'bullet-newline': Q.bullet,
     'tactic-rcases': Q.swap,
@@ -72,6 +79,10 @@ export const RULES = {
     'have-inline-once': Q.haveOnce,
     'by-calc': Q.calc,
     'calc-start-underscore': Q.calc,
+    // not an AGENTS.md rule: bare `calc`; every `_` step at calc+2 (enforced by the linter)
+    'calc-underscore-align': null,
+    // not an AGENTS.md rule: `_ =` not alone — RHS on same line (enforced by the linter)
+    'calc-underscore-rhs': null,
     'calc-in-brackets': Q.calcIn,
     'paren-by-multiline': Q.parenBy,
     'paren-by-semicolon': Q.parenBy,
@@ -89,9 +100,11 @@ export const RULES = {
     'date-created-today': Q.date,
     'date-updated-same': Q.date,
     'date-order': Q.date,
+    'date-spacing': Q.dateSp,
     'open-section': Q.openSec,
     'open-duplicate': Q.openDup,
     'open-prefix': Q.openPrefix,
+    'header-spacing': Q.headerSp,
     'attr-mp': Q.mp,
     'attr-comm': Q.comm,
     'attr-docstring': Q.docstring,
@@ -111,7 +124,7 @@ const ymd = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0
  *   root?: string,          // repo root: enables `attr-mp` / `attr-comm` (reads the cited lemma files)
  *   sections?: Iterable<string>,
  *   today?: string,         // YYYY-MM-DD (default: local date)
- *   isNew?: boolean,        // file untracked / added in git (enables `date-created-today`)
+ *   isNew?: boolean,        // truly new in git (`??`/`A` with no matching delete/rename; enables `date-created-today`)
  *   rules?: Iterable<string>, // only these rule ids
  *   ast?: boolean,          // false: skip the lean.js AST pass (text-scan fallbacks run instead)
  * }} [opts]
@@ -164,7 +177,7 @@ export function lintLean(source, opts = {}) {
     // `decl-keyword-dir`: trust the tree only when it sees the same lemma/theorem declarations as the text scan
     if (tree && countLemmaTheoremNodes(tree) !== ctx.decls.filter((d) => d.kind === 'lemma' || d.kind === 'theorem').length)
         ctx.astCovered.delete('decl-keyword-dir');
-    const steps = [openSection, openDuplicate, openPrefix, declKeywordDirText, attrDocstring, dates, signatureRules, indentRules, proofRules, underscoreNameRule, attrRules];
+    const steps = [headerSpacing, openSection, openDuplicate, openPrefix, declKeywordDirText, attrDocstring, dates, signatureRules, indentRules, proofRules, underscoreNameRule, attrRules];
     for (const step of steps) {
         try {
             step(ctx);
@@ -191,16 +204,92 @@ export function lintLean(source, opts = {}) {
     return warnings;
 }
 
+const GIT_OPTS = { encoding: 'utf8', timeout: 5000, stdio: ['ignore', 'pipe', 'ignore'] };
+
+function gitOut(cwd, args) {
+    return execFileSync('git', args, { cwd, ...GIT_OPTS });
+}
+
+function repoRel(gitRoot, abs) {
+    return path.relative(gitRoot, abs).split(path.sep).join('/');
+}
+
+function createdOnDate(src) {
+    const m = /(?:^|\n)\s*--\s*created on\s+(\d{4}-\d{2}-\d{2})\s*(?:\n|$)/.exec(src);
+    return m ? m[1] : null;
+}
+
+function lineOverlap(a, b) {
+    const lines = (s) => new Set(s.split('\n').map((l) => l.trim()).filter(Boolean));
+    const sa = lines(a);
+    const sb = lines(b);
+    if (!sa.size && !sb.size) return 1;
+    let n = 0;
+    for (const x of sa) if (sb.has(x)) n++;
+    return n / Math.max(sa.size, sb.size);
+}
+
+function porcelainPath(line) {
+    if (!line || line.length < 4) return '';
+    let rest = line.slice(3);
+    const xy = line.slice(0, 2);
+    if (xy[0] === 'R' || xy[0] === 'C') {
+        const i = rest.indexOf(' -> ');
+        if (i >= 0) rest = rest.slice(i + 4);
+    }
+    return rest.replace(/^"(.*)"$/, '$1').replace(/\\/g, '/');
+}
+
+function isAddedOrUntracked(line) {
+    return line.startsWith('??') || line[0] === 'A' || line[1] === 'A';
+}
+
+function isLemmaLean(p) {
+    return p.startsWith('Lemma/') && p.endsWith('.lean') && !p.endsWith('.echo.lean');
+}
+
+function deletedLemmaPaths(gitRoot) {
+    const parts = [
+        gitOut(gitRoot, ['ls-files', '-z', '--deleted', '--', 'Lemma']),
+        gitOut(gitRoot, ['diff', '-z', '--name-only', '--diff-filter=D', '--cached', '--', 'Lemma']),
+    ].join('\0');
+    return [...new Set(parts.split('\0').filter(isLemmaLean))];
+}
+
+/** `mv` / `rename.sh`: deleted old lemma + untracked/added dest with the same blob or the same created date + body. */
+function isMoveOfExistingLemma(gitRoot, abs) {
+    const now = fs.readFileSync(abs, 'utf8');
+    const nowCreated = createdOnDate(now);
+    let nowHash = null;
+    try {
+        nowHash = gitOut(gitRoot, ['hash-object', abs]).trim();
+    } catch { /* ignore */ }
+    for (const old of deletedLemmaPaths(gitRoot)) {
+        try {
+            if (nowHash && gitOut(gitRoot, ['rev-parse', `HEAD:${old}`]).trim() === nowHash) return true;
+            const oldSrc = gitOut(gitRoot, ['show', `HEAD:${old}`]);
+            if (nowCreated && nowCreated === createdOnDate(oldSrc) && lineOverlap(now, oldSrc) >= 0.7) return true;
+        } catch {
+            continue;
+        }
+    }
+    return false;
+}
+
 /**
- * Is `abs` new to git (untracked or staged as added)? Read-only `git status`; false when git is unavailable.
+ * Is `abs` a truly new git file (untracked or staged as added), not a path move of an existing lemma?
+ * Read-only `git status`; false when git is unavailable. Uses the repo-relative path (not the basename).
  * @param {string} abs absolute path of the file
  */
 export function isNewInGit(abs) {
     try {
-        const out = execFileSync('git', ['status', '--porcelain', '--untracked-files=all', '--', path.basename(abs)], {
-            cwd: path.dirname(abs), encoding: 'utf8', timeout: 5000, stdio: ['ignore', 'pipe', 'ignore'],
-        });
-        return /^(\?\?|A)/m.test(out);
+        const gitRoot = gitOut(path.dirname(abs), ['rev-parse', '--show-toplevel']).trim();
+        const rel = repoRel(gitRoot, abs);
+        const out = gitOut(gitRoot, ['status', '--porcelain', '--untracked-files=all', '--', rel]);
+        const hit = out.split('\n').filter(Boolean).find((l) => porcelainPath(l) === rel);
+        if (!hit || !isAddedOrUntracked(hit)) return false;
+        if (isMoveOfExistingLemma(gitRoot, abs)) return false;
+        return true;
     } catch {
         return false;
     }

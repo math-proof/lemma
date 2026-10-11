@@ -10,7 +10,7 @@ open MeasureTheory PolicyGradient Random
 /--
 gradient of the Bellman equation for the closed-form value function on a general (e.g. continuous) state space:
 `fderiv Vk(x) = ∑ u, Qk(x, u) • fderiv π(u | x) + γ • ∑ u, π(u | x) • ∫ y, fderiv Vk(y) ∂T(· | x, u)`.
-Continuous-state counterpart of `Tensor.Fderiv.eq.AddSum_SMulSMul.of.In_Ico.GtInftySup.All_Differentiable_Prob`:
+Continuous-state counterpart of `Random.EqFderiv_FunVc_AddSum_SMulSMulSum_SMul.of.In_Ico.GtInftySup_Norm.All_AllDifferentiable_FunPolProb`:
 the next-state sum `∑ y, P1(x, y) • fderiv Vc(y)` becomes the policy mixture of the transition integrals.
 -/
 @[path]

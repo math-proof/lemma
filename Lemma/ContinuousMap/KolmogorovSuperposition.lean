@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.Analysis.ContinuousMap.KolmogorovSuperposition
+import sympy.calculus.KolmogorovSuperposition
 
 open ContinuousMap.KolmogorovSuperpositionWanted
 

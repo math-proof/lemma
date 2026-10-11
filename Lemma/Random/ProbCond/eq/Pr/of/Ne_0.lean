@@ -1,7 +1,7 @@
 import sympy.stats.policy_trajectory
 import sympy.Basic
-import Lemma.Random.Measurable_S
-import Lemma.Random.RealInterPreimageS_PreimageA.eq.MulRealPreimageSProb
+import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
+import Lemma.Random.RealInterPreimage_Preimage.eq.MulRealPreimageProb.of.All_Eq
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 
 
@@ -21,16 +21,15 @@ private lemma main
   {s : ℕ → (ℕ → ℝ × S × A) → S}
   {a : ℕ → (ℕ → ℝ × S × A) → A}
 -- given
-  (h₁ : ∀ t, (· t) = (r t, s t, a t))
-  (h₂ : (M θ).real (s t ⁻¹' {x}) ≠ 0)
+  (h₀ : ∀ t, (· t) = (r t, s t, a t))
+  (h₁ : (M θ).real (s t ⁻¹' {x}) ≠ 0)
   (u : A) :
 -- imply
-  ((M θ)[|s t ⁻¹' {x}]).real (a t ⁻¹' {u}) = M.Pr θ x u := by
+  ((M θ)[|s t ⁻¹' {x}]).real (a t ⁻¹' {u}) = M.pol.prob θ x u := by
 -- proof
   classical
-  rw [measureReal_def, cond_apply (Random.Measurable_S h₁ t (measurableSet_singleton x)), ENNReal.toReal_mul,
-    ENNReal.toReal_inv, ← measureReal_def, ← measureReal_def, RealInterPreimageS_PreimageA.eq.MulRealPreimageSProb h₁, inv_mul_cancel_left₀ h₂]
-  rfl
+  rw [measureReal_def, cond_apply (Random.Measurable.of.All_Eq.snd.fst h₀ t (measurableSet_singleton x)), ENNReal.toReal_mul,
+    ENNReal.toReal_inv, ← measureReal_def, ← measureReal_def, RealInterPreimage_Preimage.eq.MulRealPreimageProb.of.All_Eq h₀, inv_mul_cancel_left₀ h₁]
 
 
 -- created on 2026-09-26

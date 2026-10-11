@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.Algebra.Polynomial.RisingFactorialBinomial
+import sympy.algebra.polynomial.rising_factorial_binomial
 
 open MetaMathlibExt
 open scoped BigOperators

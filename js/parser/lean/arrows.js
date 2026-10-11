@@ -152,9 +152,9 @@ export class Lean_rightarrow extends LeanBinary {
 
     static input_priority = 25;
 
-    /** `→ₗ` / `→L` — the subscript letter (e.g. the `ₗ` in `→ₗ[ℝ]`). */
+    /** `→ₗ` / `→L` / `→ₐ` / `→+*` — subscript letter or bundled-hom suffix. */
     subscript = '';
-    /** `→ₗ[ℝ]` — the bracketed scalar ring modifier (e.g. `ℝ`). */
+    /** `→ₗ[ℝ]` / `→ₐ[R]` — the bracketed scalar ring modifier (e.g. `ℝ`). */
     modifier = '';
 
     get stack_priority() {

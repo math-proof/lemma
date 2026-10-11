@@ -12,7 +12,7 @@ private lemma given
 -- imply
   P (if c then x else y) := by
 -- proof
-  rwa [if_pos h₁]
+  rwa [ite_eq_left h₁]
 
 
 -- created on 2018-11-04

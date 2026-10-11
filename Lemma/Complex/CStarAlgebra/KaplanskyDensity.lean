@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.Analysis.CStarAlgebra.KaplanskyDensity
+import sympy.calculus.cstar_algebra.KaplanskyDensity
 
 open Analysis.CStarAlgebra.KaplanskyDensityWanted
 

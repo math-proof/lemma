@@ -79,6 +79,9 @@ class Database:
 export MYSQL_USER=yourName
 export MYSQL_PWD=yourPassword
 export MYSQL_HOST=yourIPAddress
+
+Credential order matches mjs/run.mjs: optional env user+MYSQL_PWD when
+MYSQL_HOST is set, then prod/prod, then user/user.
     '''
 
     def create_database(self):
@@ -88,40 +91,101 @@ export MYSQL_HOST=yourIPAddress
         except Exception as err:
             print("Failed creating database: {}".format(err))
 
+    def _auth_candidates(self):
+        """(user, password) pairs; same order as ``mjs/run.mjs`` ``connectMysql``."""
+        candidates = []
+        host_set = bool((os.environ.get('MYSQL_HOST') or '').strip())
+        pwd = os.environ.get('MYSQL_PWD')
+        if host_set and pwd is not None:
+            user = (
+                os.environ.get('MYSQL_USER')
+                or os.environ.get('USER')
+                or os.environ.get('USERNAME')
+                or 'prod'
+            )
+            candidates.append((user, pwd))
+        candidates.append(('prod', 'prod'))
+        candidates.append(('user', 'user'))
+        seen = set()
+        out = []
+        for pair in candidates:
+            if pair in seen:
+                continue
+            seen.add(pair)
+            out.append(pair)
+        return out
+
+    def _connect_kwargs(self, user, password, database=None):
+        return {
+            'user': user,
+            'password': password,
+            'host': self.host,
+            'database': self.database if database is None else database,
+            'charset': self.charset,
+            'port': self.port,
+            'auth_plugin': 'mysql_native_password',
+            # Match mjs/lean/fetchLemmaMysql.mjs probe timeout (ms → s for connector).
+            'connection_timeout': 3,
+        }
+
+    def _try_create_database(self, user, password):
+        """Create ``self.database`` when the server is reachable but the schema is missing."""
+        kwargs = self._connect_kwargs(user, password, database='mysql')
+        self.conn = mysql.connector.connect(**kwargs)
+        self.user, self.password = user, password
+        self.execute("create database " + self.database)
+        self.conn = mysql.connector.connect(**self._connect_kwargs(user, password))
+
     def __init__(self):
-        self.user = os.environ.get('USERNAME') if os.name == 'nt' else os.environ.get('USER')
-        self.password = os.environ.get('MYSQL_PWD')
-        self.host = os.environ.get('MYSQL_HOST', '127.0.0.1')
+        self.host = (os.environ.get('MYSQL_HOST') or '127.0.0.1').strip() or '127.0.0.1'
         self.port = os.environ.get('MYSQL_PORT', '3306')
         self.database = os.environ.get('MYSQL_DATABASE', 'corpus')
         self.charset = os.environ.get('MYSQL_CHARSET', 'utf8mb4')
-        try:
-            self.conn = mysql.connector.connect(**self.kwargs)
-        except mysql.connector.errors.ProgrammingError as err:
-            print(err.msg)
-            m = re.compile(r"Unknown database '(\w+)'").search(err.msg)
-            assert m
-            assert m[1] == self.database
-            kwargs = self.kwargs
-            kwargs['database'] = 'mysql'
-            self.conn = mysql.connector.connect(**kwargs)
-            self.execute("create database " + self.database)
-            self.conn = mysql.connector.connect(**self.kwargs)
+        self.user = None
+        self.password = None
+        self.conn = None
+
+        errors = []
+        for user, password in self._auth_candidates():
+            try:
+                self.conn = mysql.connector.connect(
+                    **self._connect_kwargs(user, password))
+                self.user, self.password = user, password
+                break
+            except mysql.connector.errors.ProgrammingError as err:
+                msg = getattr(err, 'msg', None) or str(err)
+                errors.append(f"{user}@{self.host}: {msg}")
+                if re.search(r"Unknown database", msg):
+                    m = re.search(r"Unknown database '(\w+)'", msg)
+                    if m and m.group(1) == self.database:
+                        try:
+                            self._try_create_database(user, password)
+                            break
+                        except Exception as create_err:
+                            errors.append(
+                                f"{user}@{self.host}: create database failed: {create_err}")
+                            continue
+                # Access denied / other auth errors: try next candidate
+                continue
+            except mysql.connector.Error as err:
+                errors.append(f"{user}@{self.host}: {err}")
+                continue
+
+        if self.conn is None:
+            detail = "; ".join(errors) if errors else "no candidates"
+            raise RuntimeError(
+                f"MySQL connect failed for database {self.database!r} at "
+                f"{self.host}:{self.port} ({detail}). "
+                f"Set MYSQL_HOST/MYSQL_PWD, or ensure prod/prod or user/user works "
+                f"(same fallbacks as mjs/run.mjs)."
+            )
 
         self.execute('SET NAMES utf8mb4')
         self.execute('SET CHARACTER SET utf8mb4')
 
     @property
     def kwargs(self):
-        return {
-            'user': self.user,
-            'password': self.password,
-            'host': self.host,
-            'database': self.database,
-            'charset': self.charset,
-            'port': self.port,
-            'auth_plugin': 'mysql_native_password'
-        }
+        return self._connect_kwargs(self.user, self.password)
 
     def cursor(self, **kwargs):
         return self.conn.cursor(**kwargs)
@@ -734,7 +798,25 @@ class MySQLConnector(Database):
         return MySQLConnector()
 
 
-instance = MySQLConnector()
+class _LazyConnector:
+    """Defer connect until first use so import survives missing/wrong credentials."""
+
+    def __init__(self):
+        self._conn = None
+
+    def _get(self):
+        if self._conn is None:
+            self._conn = MySQLConnector()
+        return self._conn
+
+    def __getattr__(self, name):
+        return getattr(self._get(), name)
+
+    def __call__(self):
+        return self._get()()
+
+
+instance = _LazyConnector()
 
 
 def is_number(Type):

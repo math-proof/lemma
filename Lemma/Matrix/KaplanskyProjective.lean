@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.Algebra.Module.KaplanskyProjective
+import sympy.algebra.module.kaplansky_projective
 
 open Kaplansky
 

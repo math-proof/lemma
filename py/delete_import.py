@@ -18,19 +18,30 @@ Usage:
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+
+# `python3 py/delete_import.py` puts this script's directory on sys.path[0],
+# which shadows the stdlib ``http`` package with ``py/http.py`` (breaks
+# mysql.connector). Prefer the repo root as the import root.
+ROOT = Path(__file__).resolve().parents[1]
+_SCRIPT_DIR = Path(__file__).resolve().parent
+_script_dir = str(_SCRIPT_DIR)
+while _script_dir in sys.path:
+    sys.path.remove(_script_dir)
+_root = str(ROOT)
+if _root not in sys.path:
+    sys.path.insert(0, _root)
+
 import os
-import py
 os.environ['MYSQL_DATABASE'] = 'axiom'
+import py
 from py import MySQL
 
 import argparse
 import json
 import re
-import sys
 from collections.abc import Iterable
-from pathlib import Path
-
-ROOT = Path(__file__).resolve().parents[1]
 
 IMPORT_LINE_RE = re.compile(r"^import ([\w.']+)\s*$")
 
@@ -393,7 +404,7 @@ def process_file(lean_file: Path, *, dry_run: bool = False) -> None:
     imports, rest = parse_import_block(content)
 
     lemma_modules = [mod for mod, _ in imports if mod.startswith("Lemma")]
-    print(f"checking {len(lemma_modules)} Lemma imports for {rel} ...")
+    print(f"checking {len(lemma_modules)} Lemma imports for {rel} ...", flush=True)
 
     direct, indirect, unknown = load_deps_for(lemma_modules)
     if unknown:
@@ -436,6 +447,24 @@ def process_file(lean_file: Path, *, dry_run: bool = False) -> None:
     update_module_after_prune(db_module, [mod for mod, _ in kept], redundant)
 
 
+def _run_with_mysql(action, *, dry_run: bool = False) -> None:
+    """Run a DB-backed action; surface connect failures clearly (no assert dump)."""
+    try:
+        action()
+    except RuntimeError as err:
+        msg = str(err)
+        if "MySQL connect failed" not in msg:
+            raise
+        print(f"error: {msg}", file=sys.stderr)
+        if dry_run:
+            print(
+                "dry-run: cannot analyze Lemma imports without MySQL "
+                "(file left unchanged)",
+                file=sys.stderr,
+            )
+        sys.exit(1)
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(
         description="Delete unnecessary Lemma imports from a .lean file (meta.callee in lemma table).",
@@ -467,11 +496,11 @@ def main() -> None:
         sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
     if args.rebuild:
-        rebuild_all_deps()
+        _run_with_mysql(rebuild_all_deps)
         return
 
     if args.update:
-        update_lemma_dep(args.update)
+        _run_with_mysql(lambda: update_lemma_dep(args.update))
         return
 
     lean_file_arg = args.lean_file
@@ -488,7 +517,10 @@ def main() -> None:
     if not lean_file.exists():
         parser.error(f"file not found: {lean_file}")
 
-    process_file(lean_file, dry_run=args.dry_run)
+    _run_with_mysql(
+        lambda: process_file(lean_file, dry_run=args.dry_run),
+        dry_run=args.dry_run,
+    )
 
 
 if __name__ == "__main__":

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.Analysis.Complex.FatouRadial
+import sympy.calculus.complex.FatouRadial
 
 open Complex.FatouRadialWanted
 open MeasureTheory Set Filter

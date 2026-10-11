@@ -1,5 +1,18 @@
-import { ref, computed, watch, nextTick, getCurrentInstance, onMounted, onUnmounted, defineAsyncComponent, unref, isRef } from 'vue'
+import { ref, computed, watch, nextTick, getCurrentInstance, onMounted, onUnmounted, defineAsyncComponent, unref, isRef, markRaw } from 'vue'
 
+/**
+ * `ref(obj)` deep-proxies plain objects. Class instances (MarkdownParser AST,
+ * etc.) break under that proxy — lemma docstrings rendered blank between `/--`
+ * and `-/`. Keep custom-prototype objects raw.
+ */
+function maybeMarkRaw(value) {
+	if (value == null || typeof value !== 'object' || Array.isArray(value))
+		return value;
+	const proto = Object.getPrototypeOf(value);
+	if (proto !== Object.prototype && proto !== null)
+		return markRaw(value);
+	return value;
+}
 
 class Component {
 	defineProperty(data, key, $emit = null) {
@@ -19,7 +32,7 @@ class Component {
 				set(value) {
 					const slot = data[key];
 					if (isRef(slot))
-						slot.value = value;
+						slot.value = maybeMarkRaw(value);
 				},
 			};
 		attributes.enumerable = true;
@@ -135,7 +148,7 @@ class Vue extends Component {
 
 		if ($data) {
 			for (const key in $data) {
-				$data[key] = ref($data[key]);
+				$data[key] = ref(maybeMarkRaw($data[key]));
 				this.defineProperty($data, key);
 			}
 			this.$data = $data;

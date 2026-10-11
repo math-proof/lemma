@@ -7,10 +7,7 @@ import Lemma.Random.ProbCond.eq.Div.of.Eq_Count.Eq_Count
 import Lemma.Random.SinglePSpace.of.EqMeasureCount.EqMeasureCount.Measurable.Measurable
 import Lemma.Random.RealPreimageSPreimageS_Add_1.eq.P1.of.Ne0Real_Preimage
 import Lemma.Random.Differentiable_RealPreimageS.of.GtInftySup.All_Differentiable_Prob
-import Lemma.Random.Integral_G.eq.TSum_MulPowIntegral_R_Add.of.In_Ico
-import Lemma.Random.Measurable_A
-import Lemma.Random.Measurable_S
-import Lemma.Random.Measurable_R
+import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Topology Random
 open scoped ENNReal.ToRealCoe
 
@@ -30,7 +27,7 @@ elementary: Pr(a[t] = u | s[t] = x) = π_θ(u | x) on reachable states and Pr(s[
 h₄, h₅: Q, V are the action and state values, i.e. the conditional expectations of the discounted return
 `γ ** Stack[k](k) @ r[t:]` given `s[t] = x, a[t] = u` (resp. `s[t] = x`), as functions of the weights θ;
 h₆, h₇: θ ↦ π_θ(u | x) is differentiable with a bounded gradient.
-The proof identifies Q, V with `M.Q`, `M.V` and applies
+The proof identifies Q and V with the local action and state values, then applies
 `Random.GradV.eq.AddSum_SMulSMul.of.Ne0Real_Preimage.GtInftySup.All_Differentiable_Prob.In_Ico`.
 -/
 @[path]
@@ -59,8 +56,8 @@ private lemma main
   (h₇ : sup[θ, x, u] ‖∇[θ] M.pol.prob θ x u‖ < ∞)
   (h₈ : (M θ).real (s t ⁻¹' {«s.bvar» t}) ≠ 0) :
 -- imply
-  have hs : ∀ t, Measurable (s t) := Random.Measurable_S h₁
-  have ha : ∀ t, Measurable (a t) := Random.Measurable_A h₁
+  have hs : ∀ t, Measurable (s t) := Random.Measurable.of.All_Eq.snd.fst h₁
+  have ha : ∀ t, Measurable (a t) := Random.Measurable.of.All_Eq.snd.snd h₁
   have : ∀ θ t, SinglePSpace (M θ) (a t, s t) := fun _ t =>
     SinglePSpace.of.EqMeasureCount.Measurable ((ha t).prodMk (hs t)) (by
       show (ReferenceMeasure.measure : Measure A).prod (ReferenceMeasure.measure : Measure S) = _
@@ -80,24 +77,14 @@ private lemma main
   set s : ℕ → (ℕ → ℝ × S × A) → S := fun t ω ↦ (ω t).2.1
   set a : ℕ → (ℕ → ℝ × S × A) → A := fun t ω ↦ (ω t).2.2
   intro hs ha hP hPs
-  have hpR : Measurable (fun ω t ↦ r t ω) := Measurable.of_eval (Random.Measurable_R h₁)
-  have hfG : ∀ t, Measurable (fun integ : ℕ → ℝ ↦ (γ ^ (id : ℕ → ℕ)) @ integ[t:]) := fun t =>
-    Measurable.tsum fun k => (measurable_pi_apply (t + k)).const_mul _
-  have hQ : Q = fun θ => M.Q r s a θ γ := funext fun θ => funext fun t => funext fun x => funext fun u => by
-    rw [h₄ θ t (fun _ ↦ x) (fun _ ↦ u)]
-    simp only [Expectation.asRV_process]
-    rw [Expectation.condEvent_eq_integral hpR.aemeasurable (hfG t)]
-    have hpre : JointRandomSymbol (s t) (a t) ⁻¹' {(x, u)} =
-        s t ⁻¹' {x} ∩ a t ⁻¹' {u} := by
-      ext ω
-      simp [JointRandomSymbol, Prod.ext_iff]
-    rw [hpre]
-    apply Integral_G.eq.TSum_MulPowIntegral_R_Add.of.In_Ico (M := M) h₀ h₁ θ _ t
-  have hV : V = fun θ => M.V r s θ γ := funext fun θ => funext fun t => funext fun x => by
-    rw [h₅ θ t (fun _ ↦ x), M.V_eq_integral r s θ γ t x]
-    simp only [Expectation.asRV_process]
-    rw [Expectation.condEvent_eq_integral hpR.aemeasurable (hfG t)]
-    rfl
+  let Qloc (θ : Θ) (t : ℕ) (x : S) (u : A) : ℝ :=
+    𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = x ∧ a t = u)
+  let Vloc (θ : Θ) (t : ℕ) (x : S) : ℝ :=
+    𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = x)
+  have hQ : Q = Qloc := funext fun θ => funext fun t => funext fun x => funext fun u =>
+    h₄ θ t (fun _ ↦ x) (fun _ ↦ u)
+  have hV : V = Vloc := funext fun θ => funext fun t => funext fun x =>
+    h₅ θ t (fun _ ↦ x)
   subst hQ hV
   classical
   beta_reduce
@@ -121,6 +108,8 @@ private lemma main
     apply Set.inter_comm
   simp only [s] at hP1
   simp_rw [hP1]
+  simp only [Qloc, Vloc]
 
 
 -- created on 2026-10-07
+-- updated on 2026-10-10

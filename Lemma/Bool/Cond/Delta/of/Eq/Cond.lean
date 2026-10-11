@@ -14,7 +14,7 @@ private lemma main
 -- imply
   p (KroneckerDelta x y) := by
 -- proof
-  rw [Delta.eq.Ite, if_pos h₀]
+  rw [Delta.eq.Ite, ite_eq_left h₀]
   exact h₁
 
 

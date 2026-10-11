@@ -39,10 +39,15 @@ export function indentRules(ctx) {
     }
 }
 
-/** the previous line ends with an operator / `:=` / `=>` etc. so the next line is a term continuation */
+/**
+ * Previous line ends with an operator / `:=` / `=>` etc. so the next line may be a deeper term
+ * continuation. Tactic blocks after `by` / `do` / bare `calc` are NOT exempt: the next line must
+ * still be exactly +2 (`indent-deep`).
+ */
 function continuesTerm(P, i) {
     const t = P.code[i].trimEnd();
-    return /(:=|=>|↦|\bfun\b.*|[,+\-*/=<>≤≥≠∧∨↔→←$|^•∘]|\bthen|\belse|\bby|\bfrom|\bat|\bwith|\bcalc|\bdo)$/.test(t);
+    // no `\bby` / `\bdo` / `\bcalc`: those open a block whose body is +2, not an arbitrary term indent
+    return /(:=|=>|↦|\bfun\b.*|[,+\-*/=<>≤≥≠∧∨↔→←$|^•∘]|\bthen|\belse|\bfrom|\bat|\bwith)$/.test(t);
 }
 
 // ---------------------------------------------------------------------------------------------------------------
@@ -50,6 +55,10 @@ function continuesTerm(P, i) {
 
 const BINOPS = [':', '+', '-', '*', '/', '=', '≠', '>', '<', '≥', '≤'];
 const NOT_BINOP = /^(:=|<;>|<\||<->|<-|<;|=>|->|>>|\*>|\*\]|\*,|\*\)|-\/|-\]|-,|-⟩|\/\\|<>|<\$>|<\*>)/;
+/** a `calc` step head: `_ =`, `_ ≤`, `_ <`, … (not a lone binder `_`) */
+const CALC_STEP = /^_\s*[=≠<>≤≥↔∼≈≃≅]/;
+/** a line that is only the step head (`_ =` / `_ ≤` / …) with no RHS on that line */
+const CALC_STEP_ONLY = /^_\s*[=≠<>≤≥↔∼≈≃≅]+\s*$/;
 
 export function proofRules(ctx) {
     const { P } = ctx;
@@ -69,6 +78,20 @@ export function proofRules(ctx) {
                 if (op === '-' && pk < i && /([=≠<>≤≥+\-*/(\[,:]|:=|=>|↦)\s*$/.test(P.code[pk])) continue; // unary minus
                 if (op === '<' && /^<\s*;/.test(t)) continue;
                 ctx.warn('proof-binop-newline', i + 1, P.indent[i] + 1, `line starts with \`${op}\`: keep the binary operator on the previous line (no line break before \`${op}\`)`);
+            }
+            // no blank lines inside the proof (header / date-footer blanks are outside this range)
+            for (let i = proofStart; i < d.end; i++) {
+                if (!/^\s*$/.test(P.raw[i])) continue;
+                let hasAfter = false;
+                for (let j = i + 1; j < d.end; j++) {
+                    if (/^\s*$/.test(P.raw[j])) continue;
+                    if (/^\s*--\s*(created|updated) on\b/.test(P.raw[j])) break;
+                    hasAfter = true;
+                    break;
+                }
+                if (hasAfter) {
+                    ctx.warn('proof-blank-line', i + 1, 1, 'blank line inside the proof: remove it (keep proof steps contiguous)');
+                }
             }
         }
 
@@ -148,7 +171,43 @@ function tokenRules(ctx, d, i, from) {
             const k = nextCode();
             first = k >= 0 ? P.code[k].trim() : '_';
         }
-        if (!first.startsWith('_')) ctx.warn('calc-start-underscore', i + 1, m.index + 1, 'start the `calc` chain with `_` (e.g. `calc _ = b := …`), not with the left-hand side');
+        if (!first.startsWith('_')) ctx.warn('calc-start-underscore', i + 1, m.index + 1, 'start the `calc` chain with `_` (e.g. `calc` then `_ = b := …` on the next line), not with the left-hand side');
+        // Bare `calc` on its line; every `_ =` / `_ ≤` / … step head at calcCol+2 (same column under `calc`).
+        // Do not write `calc _ =` — that first `_` cannot share the step column with later `_`s.
+        const calcCol = m.index;
+        const stepCol = calcCol + 2;
+        if (CALC_STEP.test(first) && l.slice(m.index + 4).trimStart().startsWith('_')) {
+            ctx.warn('calc-underscore-align', i + 1, m.index + 1,
+                'put `calc` alone on its line, then every `_` step underneath at the same column (indent +2)');
+        }
+        for (let j = i + 1; j < d.end; j++) {
+            const ind = P.indent[j];
+            if (ind < 0) continue;
+            const t = P.code[j].trim();
+            if (!t || t.startsWith('--')) continue;
+            if (ind < calcCol) break;
+            if (CALC_STEP.test(t)) {
+                if (ind !== stepCol) {
+                    ctx.warn('calc-underscore-align', j + 1, ind + 1,
+                        `calc step \`_\` must be left-justified under \`calc\` (column ${stepCol}, got ${ind})`);
+                }
+                // `_ =` alone: put the RHS expression on this line; break after `:=` for the proof
+                if (CALC_STEP_ONLY.test(t)) {
+                    let k = j + 1;
+                    while (k < d.end && (P.indent[k] < 0 || !P.code[k].trim() || P.code[k].trim().startsWith('--'))) k++;
+                    if (k < d.end) {
+                        const nt = P.code[k].trim();
+                        const nInd = P.indent[k];
+                        if (!CALC_STEP.test(nt) && nInd > ind) {
+                            ctx.warn('calc-underscore-rhs', j + 1, ind + 1,
+                                'put the RHS expression on the same line as `_ =` (break after `:=` if the proof needs another line)');
+                        }
+                    }
+                }
+                continue;
+            }
+            if (ind === calcCol) break; // next tactic / binder at the calc column
+        }
     });
 
     // `(by …)`: one-liner, and with a type ascription no `;`

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.Algebra.Polynomial.L1Norm
+import sympy.algebra.polynomial.l1_norm
 
 open Polynomial
 

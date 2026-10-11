@@ -18,12 +18,22 @@ private lemma main
 -- proof
   have := M.env.reward_markov
   have h := norm_integral_le_of_norm_le_const (μ := M.env.reward (x, u))
-    (f := fun ρ => max (-M.env.R) (min M.env.R ρ)) (C := |M.env.R|)
+    (f := fun ρ => clip ρ (-M.env.R) M.env.R) (C := |M.env.R|)
     (Filter.Eventually.of_forall fun ρ => by
-      rw [Real.norm_eq_abs, abs_le]
-      exact ⟨(neg_le_neg (le_abs_self _)).trans (le_max_left _ _),
-        max_le (neg_le_abs _) ((min_le_left _ _).trans (le_abs_self _))⟩)
+      rw [Real.norm_eq_abs, abs_le, clip]
+      constructor
+      ·
+        apply le_min
+        ·
+          apply (neg_le_neg (le_abs_self _)).trans
+          apply le_max_right
+        ·
+          apply neg_abs_le
+      ·
+        apply (min_le_right _ _).trans
+        apply le_abs_self)
   simpa [DensityModel.rkd] using h
 
 
 -- created on 2026-10-07
+-- updated on 2026-10-11

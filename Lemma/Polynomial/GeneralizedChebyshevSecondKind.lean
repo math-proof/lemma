@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.Algebra.Polynomial.GeneralizedChebyshevSecondKind
+import sympy.algebra.polynomial.generalized_chebyshev_second_kind
 
 open Polynomial
 open MetaMathlibExt.GeneralizedChebyshevSecondKind

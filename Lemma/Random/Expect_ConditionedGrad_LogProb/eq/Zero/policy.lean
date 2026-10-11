@@ -1,7 +1,7 @@
 import Lemma.Random.ProbCond.eq.Pr.of.Ne_0
 import Lemma.Random.Expect_ConditionedGrad_LogProb.eq.Zero
 import Lemma.Random.Eq_0.of.EqReal_0
-import Lemma.Random.Measurable_A
+import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 
 
@@ -22,29 +22,30 @@ private lemma main
   {s : ℕ → (ℕ → ℝ × S × A) → S}
   {a : ℕ → (ℕ → ℝ × S × A) → A}
 -- given
-  (h₁ : ∀ t, (· t) = (r t, s t, a t))
-  (h₂ : ∀ u, M.pol.prob θ x u > 0)
-  (h₃ : ∀ u, DifferentiableAt ℝ (fun θ' => M.pol.prob θ' x u) θ) :
+  (h₀ : ∀ t, (· t) = (r t, s t, a t))
+  (h₁ : ∀ u, M.pol.prob θ x u > 0)
+  (h₂ : ∀ u, DifferentiableAt ℝ (fun θ' => M.pol.prob θ' x u) θ) :
 -- imply
   ∫ ω, fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' x (a t ω))) θ ∂(M θ)[|s t ⁻¹' {x}] = 0 := by
 -- proof
-  by_cases hP : M θ (s t ⁻¹' {x}) = 0
-  · simp [cond_eq_zero_of_meas_eq_zero hP]
-  · have := cond_isProbabilityMeasure (μ := M θ) hP
+  if hP : M θ (s t ⁻¹' {x}) = 0 then
+    simp [cond_eq_zero_of_meas_eq_zero hP]
+  else
+    have := cond_isProbabilityMeasure (μ := M θ) hP
     have hP' : (M θ).real (s t ⁻¹' {x}) ≠ 0 := fun h => hP (Eq_0.of.EqReal_0 (M := M) θ h)
     let φ : A → (Θ →L[ℝ] ℝ) := fun u => fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' x u)) θ
-    have h₄ : ∫ ω, φ (a t ω) ∂(M θ)[|s t ⁻¹' {x}] =
+    have h₃ : ∫ ω, φ (a t ω) ∂(M θ)[|s t ⁻¹' {x}] =
         ∫ u, φ u ∂(((M θ)[|s t ⁻¹' {x}]).map (a t)) :=
-      (integral_map (Random.Measurable_A h₁ t).aemeasurable StronglyMeasurable.of_discrete.aestronglyMeasurable).symm
-    have h₅ : ∀ u, (((M θ)[|s t ⁻¹' {x}]).map (a t)).real {u} = M.pol.prob θ x u := by
+      (integral_map (Random.Measurable.of.All_Eq.snd.snd h₀ t).aemeasurable StronglyMeasurable.of_discrete.aestronglyMeasurable).symm
+    have h₄ : ∀ u, (((M θ)[|s t ⁻¹' {x}]).map (a t)).real {u} = M.pol.prob θ x u := by
       intro u
-      rw [measureReal_def, Measure.map_apply (Random.Measurable_A h₁ t) (measurableSet_singleton u), ← measureReal_def]
-      exact ProbCond.eq.Pr.of.Ne_0 h₁ hP' u
+      rw [measureReal_def, Measure.map_apply (Random.Measurable.of.All_Eq.snd.snd h₀ t) (measurableSet_singleton u), ← measureReal_def]
+      apply ProbCond.eq.Pr.of.Ne_0 h₀ hP' u
     show ∫ ω, φ (a t ω) ∂(M θ)[|s t ⁻¹' {x}] = 0
-    rw [h₄, integral_fintype Integrable.of_finite]
-    simp_rw [h₅]
-    exact Expect_ConditionedGrad_LogProb.eq.Zero (p := fun θ' u => M.pol.prob θ' x u)
-      (fun θ' => M.pol.sum_eq_one θ' x) h₂ h₃
+    rw [h₃, integral_fintype Integrable.of_finite]
+    simp_rw [h₄]
+    apply Expect_ConditionedGrad_LogProb.eq.Zero (p := fun θ' u => M.pol.prob θ' x u)
+      (fun θ' => M.pol.sum_eq_one θ' x) h₁ h₂
 
 
 -- created on 2023-04-03

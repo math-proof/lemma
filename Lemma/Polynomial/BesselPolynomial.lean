@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.Algebra.Polynomial.BesselPolynomial
+import sympy.algebra.polynomial.bessel_polynomial
 
 open MetaMathlibExt
 open scoped BigOperators

@@ -15,16 +15,16 @@ private lemma given
 -- proof
   by_cases hA : x ∈ A
   ·
-    rw [if_pos hA] at h
+    rw [ite_eq_left hA] at h
     exact Or.inl ⟨h, hA⟩
   ·
-    rw [if_neg hA] at h
+    rw [ite_eq_right hA] at h
     by_cases hB : x ∈ B
     ·
-      rw [if_pos hB] at h
+      rw [ite_eq_left hB] at h
       exact Or.inr (Or.inl ⟨h.symm, hB, hA⟩)
     ·
-      rw [if_neg hB] at h
+      rw [ite_eq_right hB] at h
       exact Or.inr (Or.inr ⟨h.symm, fun hAB => hAB.elim hA hB⟩)
 
 

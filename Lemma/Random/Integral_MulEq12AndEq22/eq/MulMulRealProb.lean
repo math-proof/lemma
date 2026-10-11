@@ -1,6 +1,6 @@
 import sympy.stats.policy_trajectory
 import sympy.Basic
-import Lemma.Random.Integral_EqSAndEqA.eq.MulRealPreimageSProb
+import Lemma.Random.Integral_EqAndEq.eq.MulRealPreimageProb.of.All_Eq
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 
 
@@ -33,7 +33,7 @@ private lemma main
     simp only [hs, ha]
     by_cases h1 : (ω t).2.1 = x <;> by_cases h2 : (ω t).2.2 = u <;> simp [h1, h2]
   simp_rw [h₂]
-  rw [integral_mul_const, Integral_EqSAndEqA.eq.MulRealPreimageSProb h₁]
+  rw [integral_mul_const, Integral_EqAndEq.eq.MulRealPreimageProb.of.All_Eq h₁]
 
 
 -- created on 2026-10-07

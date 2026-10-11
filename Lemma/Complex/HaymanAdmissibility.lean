@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.Analysis.Complex.HaymanAdmissibility
+import sympy.calculus.complex.HaymanAdmissibility
 
 open Complex.HaymanAdmissibility
 

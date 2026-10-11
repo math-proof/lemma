@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.AlgebraicGeometry.EllipticCurve.PointCount
+import sympy.polys.agca.elliptic_curve.point_count
 
 open WeierstrassCurve.Affine Polynomial
 

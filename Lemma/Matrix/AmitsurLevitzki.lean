@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.Algebra.Algebra.AmitsurLevitzki
+import sympy.algebra.algebra.amitsur_levitzki
 
 open AmitsurLevitzki
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.Algebra.Central.SkolemNoether
+import sympy.algebra.central.skolem_noether
 
 open SkolemNoether
 

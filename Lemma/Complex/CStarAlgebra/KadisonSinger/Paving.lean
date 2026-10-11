@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.Analysis.CStarAlgebra.KadisonSinger.Paving
+import sympy.calculus.cstar_algebra.KadisonSinger.Paving
 
 open scoped BigOperators Matrix.Norms.L2Operator
 

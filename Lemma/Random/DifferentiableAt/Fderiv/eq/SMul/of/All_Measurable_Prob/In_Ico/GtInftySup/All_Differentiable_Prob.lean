@@ -14,7 +14,7 @@ open MeasureTheory PolicyGradient Random Real
 /--
 On a general state space `θ ↦ Qk θ γ x u` is differentiable with derivative
 `γ • ∫ y, fderiv ℝ (fun θ ↦ Vk θ γ y) θ ∂T(· | x, u)` (differentiation under the integral sign).
-Continuous-state counterpart of `Tensor.DifferentiableAt.Fderiv.eq.SMul.of.In_Ico.GtInftySup.All_Differentiable_Prob`.
+Continuous-state counterpart of `Random.DifferentiableAt.EqFderiv_FunQc_SMulSum_SMulTFderivVc.of.In_Ico.GtInftySup_Norm.All_All_Differentiable_FunProbPol`.
 -/
 @[path]
 private lemma main

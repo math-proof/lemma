@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.Algebra.Lie.PoissonBracket
+import sympy.algebra.lie.poisson_bracket
 
 open Poisson
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.Analysis.Calculus.TangentSpaceLevelSet
+import sympy.calculus.TangentSpaceLevelSet
 
 open Real.Calculus.TangentSpaceLevelSet
 open scoped Topology

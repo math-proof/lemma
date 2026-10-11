@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.Analysis.AbsoluteValue.InducedTopology
+import sympy.functions.elementary.absolute_value.InducedTopology
 
 open AbsoluteValue
 

@@ -13,7 +13,7 @@ private lemma subst
 -- imply
   g 0 ≠ f x y := by
 -- proof
-  rwa [if_neg h₀] at h₁
+  rwa [ite_eq_right h₀] at h₁
 
 
 -- created on 2020-07-18

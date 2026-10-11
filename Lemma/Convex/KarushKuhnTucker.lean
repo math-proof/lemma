@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.Analysis.Convex.KarushKuhnTucker
+import sympy.calculus.KarushKuhnTucker
 
 open Convex.KarushKuhnTucker
 
@@ -17,11 +17,11 @@ private lemma karush_kuhn_tucker_inequality_eq
   (hfeas : ∀ i, g i x ≤ 0)
   (hmin : IsLocalMinOn f {y | ∀ i, g i y ≤ 0} x)
   (hLICQ : LinearIndependent ℝ
-    (fun i : {i : Fin m // g i x = 0} => fderiv ℝ (g i.val) x)) :
+    (fun i : Subtype (fun i : Fin m => g i x = 0) => fderiv ℝ (g i.val) x)) :
 -- imply
   ∃ lam : Fin m → ℝ, (∀ i, 0 ≤ lam i) ∧ (∀ i, lam i * g i x = 0) ∧
     fderiv ℝ f x + ∑ i : Fin m, lam i • fderiv ℝ (g i) x = 0 := by
 -- proof
   apply karush_kuhn_tucker_inequality hf_diff hg_diff hfeas hmin hLICQ
 
--- created on 2026-10-09
+-- created on 2026-10-10

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.Analysis.Asymptotics.CatalanAsymptoticExpansion
+import sympy.series.asymptotics.CatalanAsymptoticExpansion
 
 /--
 [catalan_stirling_asymptotic_expansions](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Asymptotics/CatalanAsymptoticExpansion.lean)

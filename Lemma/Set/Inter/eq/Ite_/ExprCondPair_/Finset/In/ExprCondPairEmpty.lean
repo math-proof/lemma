@@ -12,10 +12,10 @@ private lemma main
 -- proof
   ext x
   by_cases h : e ∈ s
-  · rw [if_pos h]
+  · rw [ite_eq_left h]
     simp only [Set.mem_inter_iff, Set.mem_singleton_iff]
     exact ⟨fun hx => hx.2, fun hx => ⟨hx ▸ h, hx⟩⟩
-  · rw [if_neg h]
+  · rw [ite_eq_right h]
     simp only [Set.mem_inter_iff, Set.mem_singleton_iff, Set.mem_empty_iff_false, iff_false, not_and]
     rintro hx rfl
     exact h hx

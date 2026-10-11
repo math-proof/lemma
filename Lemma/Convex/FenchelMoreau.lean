@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.Analysis.Convex.FenchelMoreau
+import sympy.calculus.FenchelMoreau
 
 open Convex.FenchelMoreau
 

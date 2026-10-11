@@ -1021,7 +1021,11 @@ drop the second conjunct segment of a conjunctive conclusion.
 -/
 def List.andLeftTokens (list : List String) : List String :=
   let (pre, rest) := list.splitAtOf
-  pre.dropLast ++ rest
+  -- pre length >= 4: Section + Type1 + Type2 + Type3
+  if pre.length ≥ 4 then
+    pre.dropLast.dropLast ++ rest
+  else
+    pre.dropLast ++ rest
 
 /--
 `[Section, …, Type1, Type2, "of", Givens] → [Section, …, Type2, "of", Givens]`:
@@ -1030,6 +1034,22 @@ drop the first conjunct segment of a conjunctive conclusion.
 def List.andRightTokens (list : List String) : List String :=
   let (pre, rest) := list.splitAtOf
   pre.dropLast.dropLast ++ [pre.getLast!] ++ rest
+
+/--
+`[Section, …, Type1, Type2, Type3, "of", Givens] → [Section, …, Type2, "of", Givens]`:
+middle conjunct of a right-associative triple `A ∧ B ∧ C` (`And.right.left`).
+-/
+def List.andRightLeftTokens (list : List String) : List String :=
+  let (pre, rest) := list.splitAtOf
+  pre.dropLast.dropLast.dropLast ++ [pre.dropLast.getLast!] ++ rest
+
+/--
+`[Section, …, Type1, Type2, Type3, "of", Givens] → [Section, …, Type3, "of", Givens]`:
+rightmost conjunct of a right-associative triple `A ∧ B ∧ C` (`And.right.right`).
+-/
+def List.andRightRightTokens (list : List String) : List String :=
+  let (pre, rest) := list.splitAtOf
+  pre.dropLast.dropLast.dropLast ++ [pre.getLast!] ++ rest
 
 /-- Peel consecutive top-level `letE`s (term-level `have`/`let` in the statement). -/
 def Lean.Expr.decompose_letE (lets : List (Name × Lean.Expr × Lean.Expr) := []) :
@@ -1068,14 +1088,43 @@ Generated declaration name for an `And.left`/`And.right` projection.
 `Section.Type1.Type2.of.Givens` maps to `Section.Type1.of.Givens` (left) or
 `Section.Type2.of.Givens` (right). When `Type1 = Type2` both targets coincide, so a
 `.fst` / `.snd` suffix is appended.
+
+For a triple `Type1.Type2.Type3.of.Givens`, `And.left` keeps Type1 only and appends
+`.fst` when `Type1 = Type2` (not when Type1 merely equals Type3).
 -/
 def Name.andProjName (moduleTokens : List String) (declName : Name) (left : Bool) : Name :=
   let leftTokens := moduleTokens.andLeftTokens
   let rightTokens := moduleTokens.andRightTokens
   let base := (if left then leftTokens else rightTokens).foldl Name.str default
+  let (pre, _) := moduleTokens.splitAtOf
+  let base :=
+    if left then
+      -- And.left: `.fst` when Type1 = Type2
+      if pre.length ≥ 4 then
+        if leftTokens == moduleTokens.andRightLeftTokens then base.str "fst" else base
+      else if leftTokens == rightTokens then
+        base.str "fst"
+      else
+        base
+    else
+      -- And.right (binary): `.snd` when Type1 = Type2
+      if leftTokens == rightTokens then base.str "snd" else base
+  base.lemmaName declName
+
+/--
+Generated declaration name for an `And.right.left` / `And.right.right` projection.
+
+`Section.Type1.Type2.Type3.of.Givens` maps to `Section.Type2.of.Givens` (right.left) or
+`Section.Type3.of.Givens` (right.right). When `Type2 = Type3` both targets coincide, nest
+under the outer right conjunct: `.snd.fst` / `.snd.snd` (not a flat `.fst` / `.snd`).
+-/
+def Name.andRightProjName (moduleTokens : List String) (declName : Name) (left : Bool) : Name :=
+  let leftTokens := moduleTokens.andRightLeftTokens
+  let rightTokens := moduleTokens.andRightRightTokens
+  let base := (if left then leftTokens else rightTokens).foldl Name.str default
   let base :=
     if leftTokens == rightTokens then
-      base.str (if left then "fst" else "snd")
+      (base.str "snd").str (if left then "fst" else "snd")
     else
       base
   base.lemmaName declName
@@ -1104,10 +1153,14 @@ def Name.mpProjName (moduleTokens : List String) (declName : Name) (left : Bool)
 `theorem Section.Type1.Type2.of.Givens (…): A ∧ B` generates
 `theorem Section.Type1.of.Givens (…): A`, proved by `.1`.
 When `Type1 = Type2` the generated name is `Section.Type1.of.Givens.fst`.
+
+For a triple `Type1.Type2.Type3.of.Givens` (`A ∧ B ∧ C`), generates
+`Section.Type1.of.Givens`; when `Type1 = Type2` the name is
+`Section.Type1.of.Givens.fst`.
 -/
 initialize registerBuiltinAttribute {
   name := `And.left
-  descr := "Extract the left conjunct of the conclusion (Type1.Type2.of.G → Type1.of.G, .fst when Type1 = Type2)"
+  descr := "Extract the left conjunct (Type1.Type2.of.G → Type1.of.G; triple → Type1.of.G.fst when Type1 = Type2)"
   applicationTime := .afterCompilation
   add := fun declName stx kind => do
     let decl ← getConstInfo declName
@@ -1138,6 +1191,56 @@ initialize registerBuiltinAttribute {
       Expr.andProj decl.type (.const declName (decl.levelParams.map .param)) false
     addAndCompile <| .thmDecl {
       name := Name.andProjName (← getEnv).moduleTokens declName false
+      levelParams := decl.levelParams
+      type := type
+      value := value
+    }
+}
+
+/--
+`@[And.right.left]` extracts the left of the right conjunct of a right-associative
+triple conclusion (`A ∧ B ∧ C = A ∧ (B ∧ C)` → `B`).
+
+`theorem Section.Type1.Type2.Type3.of.Givens (…): A ∧ B ∧ C` generates
+`theorem Section.Type2.of.Givens (…): B`, proved by `.2.1`.
+When `Type2 = Type3` the generated name is `Section.Type2.of.Givens.snd.fst`.
+-/
+initialize registerBuiltinAttribute {
+  name := `And.right.left
+  descr := "Extract And.right then And.left (Type1.Type2.Type3.of.G → Type2.of.G, .snd.fst when Type2 = Type3)"
+  applicationTime := .afterCompilation
+  add := fun declName stx kind => do
+    let decl ← getConstInfo declName
+    let value0 := .const declName (decl.levelParams.map .param)
+    let (type1, value1) := Expr.andProj decl.type value0 false
+    let (type, value) := Expr.andProj type1 value1 true
+    addAndCompile <| .thmDecl {
+      name := Name.andRightProjName (← getEnv).moduleTokens declName true
+      levelParams := decl.levelParams
+      type := type
+      value := value
+    }
+}
+
+/--
+`@[And.right.right]` extracts the right of the right conjunct of a right-associative
+triple conclusion (`A ∧ B ∧ C = A ∧ (B ∧ C)` → `C`).
+
+`theorem Section.Type1.Type2.Type3.of.Givens (…): A ∧ B ∧ C` generates
+`theorem Section.Type3.of.Givens (…): C`, proved by `.2.2`.
+When `Type2 = Type3` the generated name is `Section.Type3.of.Givens.snd.snd`.
+-/
+initialize registerBuiltinAttribute {
+  name := `And.right.right
+  descr := "Extract And.right then And.right (Type1.Type2.Type3.of.G → Type3.of.G, .snd.snd when Type2 = Type3)"
+  applicationTime := .afterCompilation
+  add := fun declName stx kind => do
+    let decl ← getConstInfo declName
+    let value0 := .const declName (decl.levelParams.map .param)
+    let (type1, value1) := Expr.andProj decl.type value0 false
+    let (type, value) := Expr.andProj type1 value1 false
+    addAndCompile <| .thmDecl {
+      name := Name.andRightProjName (← getEnv).moduleTokens declName false
       levelParams := decl.levelParams
       type := type
       value := value

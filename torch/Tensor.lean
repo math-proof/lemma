@@ -361,12 +361,12 @@ instance [SubNegMonoid α] : SubNegMonoid (Tensor α s) where
     apply Eq.of.EqDataS
     rw [DataAdd.eq.AddDataS]
     simp only [HSMul.hSMul, SMul.smul]
-    convert SubNegMonoid.zsmul_succ' n x.data using 1 <;> simp only [zsmul_eq_smul]
+    convert SubNegMonoid.zsmul_succ' n x.data using 1
   zsmul_neg' n x := by
     apply Eq.of.EqDataS
     rw [DataNeg.eq.NegData]
     simp only [HSMul.hSMul, SMul.smul]
-    convert SubNegMonoid.zsmul_neg' n x.data using 1 <;> simp only [zsmul_eq_smul]
+    convert SubNegMonoid.zsmul_neg' n x.data using 1
 
 instance [AddGroup α] : AddGroup (Tensor α s) where
   neg_add_cancel x := by

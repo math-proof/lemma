@@ -38,7 +38,7 @@ private lemma main
       have h1 : n ∣ 1 := (Nat.dvd_add_right (dvd_mul_right n Q.natDegree)).mp hd
       have : n ≤ 1 := Nat.le_of_dvd one_pos h1
       omega
-    simp only [coeff_sub, coeff_zero, coeff_X_mul, coeff_expand hn0, dvd_mul_right, if_true, hndvd, if_false,
+    simp only [coeff_sub, coeff_zero, coeff_X_mul, coeff_expand hn0, dvd_mul_right, ite_true, hndvd, ite_false,
       sub_zero, Nat.mul_div_cancel_left _ hn0] at hc
     exact hQ0 (leadingCoeff_eq_zero.mp hc)
   exact hy ⟨_, hR0, hR⟩

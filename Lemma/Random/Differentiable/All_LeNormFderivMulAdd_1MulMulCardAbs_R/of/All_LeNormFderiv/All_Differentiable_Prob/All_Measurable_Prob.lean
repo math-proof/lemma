@@ -12,7 +12,7 @@ open MeasureTheory PolicyGradient Random Real
 If every `θ ↦ π_θ(u | x)` is differentiable with derivative bounded by `Cp` (and measurable in `x`), then on a general
 state space `θ ↦ Wk θ k x` is differentiable with derivative bounded by `(k + 1) * (|A| * Cp * |R|)`.
 Continuous-state counterpart of
-`Tensor.Differentiable.All_LeNormFderivMulAdd_1MulMulCard.of.All_LeNorm.StronglyMeasurable.All_LeNormFderiv.All_Differentiable_Prob`
+`Random.Differentiable.All_LeNormFderiv_MulAdd_1_MulMulCard.of.All_LeNorm.StronglyMeasurable.All_LeNormFderiv.All_All_Differentiable_FunPolProb`
 (for `f = rc`): the finite next-state sum becomes an integral, differentiated under the integral sign
 (the derivatives are uniformly bounded and `T(· | x, u)` is a probability measure).
 -/

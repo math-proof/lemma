@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.Algebra.MvPolynomial.RegularFunction
+import sympy.algebra.mv_polynomial.regular_function
 
 open MvPolynomial
 

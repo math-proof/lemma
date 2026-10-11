@@ -19,9 +19,9 @@ private lemma main
   (n : ℕ)
   (x y : S) :
 -- imply
-  M.Pn θ (n + 1) x y = ∑ u, M.pol.prob θ x u * ∑ y', M.T x u y' * M.Pn θ n y' y := by
+  M.Pn θ (n + 1) x y = ∑ u, M.pol.prob θ x u * ∑ y', (M.env.trans (x, u)).real {y'} * M.Pn θ n y' y :=
 -- proof
-  exact WAdd_1.eq.Sum_MulProbSum_MulTW.of.All_LeNorm.StronglyMeasurable (M := M) (Real.StronglyMeasurable_Eq12 y) (Norm_Eq12.le.One y) θ n x
+  WAdd_1.eq.Sum_MulProbSum_MulTW.of.All_LeNorm.StronglyMeasurable (M := M) (Real.StronglyMeasurable_Eq12 y) (Norm_Eq12.le.One y) θ n x
 
 
 -- created on 2026-10-06

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.Algebra.Polynomial.UnsignedCharlierPolynomialsOfOrder0
+import sympy.algebra.polynomial.unsigned_charlier_polynomials_of_order0
 
 open MetaMathlibExt
 

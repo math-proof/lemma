@@ -24,7 +24,7 @@ private lemma main
     by_contra h
     exact hne (le_antisymm hle fun y hy => by_contra fun hy' => h ⟨y, hy, hy'⟩)
   change P.asIdeal.comap φ < Q.asIdeal.comap φ
-  exact Ideal.comap_lt_comap_of_integral_mem_sdiff hle ⟨hxQ, hxP⟩ (hφ x)
+  exact Ideal.under_lt_under_of_integral_mem_sdiff hle ⟨hxQ, hxP⟩ (hφ x)
 
 
 -- created on 2026-10-05

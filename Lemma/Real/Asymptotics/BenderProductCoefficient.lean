@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.Analysis.Asymptotics.BenderProductCoefficient
+import sympy.series.asymptotics.BenderProductCoefficient
 
 open Filter
 

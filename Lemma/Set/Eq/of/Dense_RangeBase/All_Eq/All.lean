@@ -32,11 +32,11 @@ private lemma main
     obtain ⟨i, t, rfl⟩ := hx
     refine ⟨(Sigma.ι T i).base t, ?_⟩
     show (Sigma.ι T i ≫ c).base t = (z i).base t
-    rw [Sigma.ι_desc]
+    rw [Sigma.ι_comp_desc]
   refine ext_of_isDominant_of_isSeparated s hs c ?_
   apply Sigma.hom_ext
   intro i
-  rw [Sigma.ι_desc_assoc, Sigma.ι_desc_assoc, hz]
+  rw [Sigma.ι_comp_desc_assoc, Sigma.ι_comp_desc_assoc, hz]
 
 
 -- created on 2026-10-05

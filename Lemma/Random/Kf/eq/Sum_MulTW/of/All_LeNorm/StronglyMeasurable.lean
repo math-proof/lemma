@@ -21,7 +21,7 @@ private lemma main
   (j : ℕ)
   (z : ℝ × S × A) :
 -- imply
-  M.Kf θ f (j + 1) z = ∑ y, M.T z.2.1 z.2.2 y * M.W θ f j y := by
+  M.Kf θ f (j + 1) z = ∑ y, (M.env.trans (z.2.1, z.2.2)).real {y} * M.W θ f j y := by
 -- proof
   have := M.env.trans_markov
   show ∫ w, M.Kf θ f j w ∂(M.K θ z) = _

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.Analysis.Complex.MittagLeffler
+import sympy.calculus.complex.MittagLeffler
 
 open Complex.MittagLefflerWanted
 

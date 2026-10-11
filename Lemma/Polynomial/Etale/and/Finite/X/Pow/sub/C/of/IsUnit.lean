@@ -1,6 +1,6 @@
 import sympy.Basic
-import sympy.Flt
 import Mathlib
+import Lemma.Polynomial.IsStandardEtale.AdjoinRoot.X.Pow.sub.C.of.Ne_0.IsUnit.IsUnit
 
 open Polynomial
 
@@ -31,7 +31,7 @@ private lemma main
   ·
     have hn0 : n ≠ 0 := by rintro rfl; simp at hn
     have : Algebra.IsStandardEtale R (AdjoinRoot (X ^ n - C u : R[X])) :=
-      isStandardEtale n u hn0 hn hu
+      IsStandardEtale.AdjoinRoot.X.Pow.sub.C.of.Ne_0.IsUnit.IsUnit n u hn0 hn hu
     exact ⟨inferInstance, (monic_X_pow_sub_C u hn0).finite_adjoinRoot⟩
 
 -- created on 2026-10-09

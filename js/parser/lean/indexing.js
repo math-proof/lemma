@@ -118,10 +118,12 @@ export class LeanGetElem extends LeanGetElemBaseBinary(LeanBinary) {
         if (limitsOp) return `${limitsOp}\\limits_{%s}`;
         if (indices.length === 1 && indices[0] instanceof L.LeanCondBar)
             return '{%s}\\left[\\,\\cdot \\,\\middle|\\, {%s}\\right]';
+        // Mathlib `μ[f | m]` (`condExp`), base is the measure — not sympy `𝔼[…](…)` sugar.
+        // Keep the measure as the left operand; do not wrap in `\mathbb{E}`.
         if (indices.length === 1 && !(base instanceof L.LeanToken && base.text === '𝔼') &&
             (indices[0] instanceof L.LeanBitOr ||
                 (indices[0] instanceof L.Lean_fun && indices[0].arg instanceof L.LeanBinary && indices[0].arg.rhs instanceof L.LeanBitOr)))
-            return '\\mathbb{E}_{%s}\\left[{%s} \\,\\middle|\\, {%s}\\right]';
+            return '{%s}\\left[{%s} \\,\\middle|\\, {%s}\\right]';
         if (base instanceof L.LeanProperty && base.rhs instanceof L.LeanToken) {
             const fmt = base.latexFormat();
             if (fmt.includes('%s')) return fmt;

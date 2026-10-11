@@ -1,4 +1,4 @@
-import sympy.stats.policy_trajectory.advantage
+import sympy.stats.policy_trajectory.gradient
 import sympy.Basic
 import Lemma.Random.AeNormSub.le.DeltaBound.of.In_Ico
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model
@@ -6,7 +6,7 @@ open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Mode
 
 /--
 Almost surely the `c`-discounted sums of temporal-difference residuals are bounded, uniformly in `t`:
-`‖∑' k, c ^ k * δ[t + k]‖ ≤ (1 - c)⁻¹ * deltaBound γ`.
+`‖∑' k, c ^ k * δ[t + k]‖ ≤ (1 - c)⁻¹ * ((3 / (1 - γ) - 1) * |R|)`.
 -/
 @[path]
 private lemma main
@@ -23,7 +23,7 @@ private lemma main
   (h₂ : c ∈ Set.Ico 0 1) :
 -- imply
   ∀ᵐ ω ∂(M θ), ∀ t, ‖∑' k, c ^ k * (r (t + k) ω + γ * M.Vc θ γ (s (t + k + 1) ω) -
-    M.Vc θ γ (s (t + k) ω))‖ ≤ (1 - c)⁻¹ * M.deltaBound γ := by
+    M.Vc θ γ (s (t + k) ω))‖ ≤ (1 - c)⁻¹ * ((3 / (1 - γ) - 1) * |M.env.R|) := by
 -- proof
   filter_upwards [Random.AeNormSub.le.DeltaBound.of.In_Ico (M := M) h₀ h₁ θ] with ω h t
   refine tsum_of_norm_bounded ((hasSum_geometric_of_lt_one h₂.1 h₂.2).mul_right _) fun k => ?_
@@ -32,3 +32,4 @@ private lemma main
 
 
 -- created on 2026-10-06
+-- updated on 2026-10-10

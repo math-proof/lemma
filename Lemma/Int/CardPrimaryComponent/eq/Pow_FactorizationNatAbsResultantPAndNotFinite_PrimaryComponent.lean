@@ -28,7 +28,7 @@ theorem natCard_primaryComponent_eq_pow :
   rw [Finsupp.single_apply]
   by_cases hr : ℓ = r
   · subst hr; simp
-  · rw [if_neg hr]
+  · rw [ite_eq_right hr]
     by_cases hrp : r.Prime
     · apply Nat.factorization_eq_zero_of_not_dvd
       intro hdvd
@@ -91,10 +91,10 @@ def torsN (H : Type*) [AddCommGroup H] (N : ℕ) : AddSubgroup H where
   carrier := {x | N • x = 0}
   zero_mem' := smul_zero _
   add_mem' := fun {a b} ha hb => by
-    simp only [Set.mem_setOf_eq] at ha hb ⊢
+    simp only [Set.mem_ofPred_eq] at ha hb ⊢
     rw [smul_add, ha, hb, add_zero]
   neg_mem' := fun {a} ha => by
-    simp only [Set.mem_setOf_eq] at ha ⊢
+    simp only [Set.mem_ofPred_eq] at ha ⊢
     rw [smul_neg, ha, neg_zero]
 
 omit [Finite H] hℓ in
@@ -248,7 +248,7 @@ theorem finite_setOf_resultant_add_C_eq_zero (G P : ℤ[X]) (hP : P.Monic) (N : 
   set bad : Finset ℂ := (Pc.roots.map (fun z => -(Gc.eval z) / (N : ℂ))).toFinset with hbad
   have hsub : {c : ℤ | (G + C (N * c)).resultant P = 0} ⊆ (fun c : ℤ => (c : ℂ)) ⁻¹' (bad : Set ℂ) := by
     intro c hc
-    simp only [Set.mem_setOf_eq] at hc
+    simp only [Set.mem_ofPred_eq] at hc
     have h := resultant_map_eq_prod (G + C (N * c)) P hP
     rw [hc, Int.cast_zero, eq_comm, mul_eq_zero] at h
     rcases h with h | h
@@ -296,7 +296,7 @@ theorem infinite_setOf_cast_ne_zero (hℓR : (ℓ : R) ≠ 0) (a : ℤ) (m : ℕ
       simp only [add_right_inj] at hst
       exact mul_left_cancel₀ (by exact_mod_cast hpp.ne_zero) hst
     refine Set.infinite_of_injective_forall_mem hinj fun t => ?_
-    simp only [Set.mem_setOf_eq]
+    simp only [Set.mem_ofPred_eq]
     intro h0
     have h0' : ((a + (ℓ : ℤ) ^ m * (c₀ + p * t) : ℤ) : ZMod p) = 0 := by
       have := (CharP.intCast_eq_zero_iff R p _).mp h0
@@ -312,12 +312,12 @@ theorem infinite_setOf_cast_ne_zero (hℓR : (ℓ : R) ≠ 0) (a : ℤ) (m : ℕ
     have := CharP.charP_to_charZero R
     have hsub : {c : ℤ | ((a + (ℓ : ℤ) ^ m * c : ℤ) : R) ≠ 0}ᶜ ⊆ {c : ℤ | a + (ℓ : ℤ) ^ m * c = 0} := by
       intro c hc
-      simp only [Set.mem_compl_iff, Set.mem_setOf_eq, not_not] at hc
+      simp only [Set.mem_compl_iff, Set.mem_ofPred_eq, not_not] at hc
       exact_mod_cast hc
     have hfin : {c : ℤ | a + (ℓ : ℤ) ^ m * c = 0}.Finite := by
       apply Set.Subsingleton.finite
       intro c hc c' hc'
-      simp only [Set.mem_setOf_eq] at hc hc'
+      simp only [Set.mem_ofPred_eq] at hc hc'
       have hℓ0 : ((ℓ : ℤ)) ^ m ≠ 0 := pow_ne_zero _ (by exact_mod_cast hℓ.out.ne_zero)
       apply mul_left_cancel₀ hℓ0
       linarith
@@ -330,9 +330,9 @@ theorem exists_good (hℓR : (ℓ : R) ≠ 0) (G P : ℤ[X]) (hP : P.Monic) (m :
   have hℓm : (((ℓ ^ m : ℕ) : ℤ)) ≠ 0 := by exact_mod_cast pow_ne_zero _ hℓ.out.ne_zero
   have hinf := infinite_setOf_cast_ne_zero R ℓ hℓR (G.coeff 0) m
   have hfin := finite_setOf_resultant_add_C_eq_zero G P hP (((ℓ ^ m : ℕ) : ℤ)) hℓm
-  obtain ⟨c, hc1, hc2⟩ := (hinf.diff hfin).nonempty
+  obtain ⟨c, hc1, hc2⟩ := (hinf.sdiff hfin).nonempty
   refine ⟨c, ?_, hc2⟩
-  simp only [Set.mem_setOf_eq] at hc1
+  simp only [Set.mem_ofPred_eq] at hc1
   rw [coeff_add, coeff_C_zero]
   push_cast at hc1 ⊢
   exact hc1

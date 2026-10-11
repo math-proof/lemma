@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.Analysis.CStarAlgebra.RussoDye
+import sympy.calculus.cstar_algebra.RussoDye
 
 /--
 [cStarAlgebra_russoDye](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/CStarAlgebra/RussoDye.lean)

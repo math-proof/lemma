@@ -240,6 +240,31 @@ function printTable(rows) {
  * @param {string[]} folders
  * @returns {Promise<Array<Record<string, unknown>>>}
  */
+
+/** Disk cache written by a full classify; read sync by lemmaPath. */
+export const SECTION_KIND_CACHE = path.join(REPO_ROOT, 'mjs', 'lemmaSectionKinds.json');
+
+/**
+ * @returns {Map<string, string>} folder → kind ('data type' | 'type class' | 'topic/unknown')
+ */
+export function loadSectionKindMap() {
+  try {
+    const rows = JSON.parse(fs.readFileSync(SECTION_KIND_CACHE, 'utf8'));
+    if (!Array.isArray(rows)) return new Map();
+    return new Map(rows.map((r) => [String(r.folder), String(r.kind)]));
+  } catch {
+    return new Map();
+  }
+}
+
+/**
+ * Persist classification rows for lemmaPath (sync consumers).
+ * @param {Array<Record<string, unknown>>} rows
+ */
+export function writeSectionKindCache(rows) {
+  fs.writeFileSync(SECTION_KIND_CACHE, JSON.stringify(rows, null, 2) + '\n', 'utf8');
+}
+
 export async function classifyLemmaSections(folders) {
   if (!folders.length) {
     throw new Error('no folders to classify');
@@ -293,6 +318,8 @@ async function main() {
     process.exit(1);
   }
   const rows = await classifyLemmaSections(folders);
+  // Keep lemmaPath's sync filter in sync when we classify the Lemma/ tree.
+  writeSectionKindCache(rows);
   // Stable order: CLI order if given, else alphabetical (already sorted).
   if (opts.json === true) {
     console.log(JSON.stringify(rows, null, 2));

@@ -1,5 +1,5 @@
-import Lemma.Random.MEq_Expect.MEq_Expect.MEq_Expect.of.Expect.All_MEq_Expect.All_MEq_Expect.GtInftySup.All_MeasurableJoint.In_Ico
-import Lemma.Random.MEqExpect.of.CondIndep.Integrable.Measurable.Measurable.Measurable.Measurable
+import Lemma.Random.MEq_Expect_Cond.MEqExpect.MEq.of.MEqExpectS.All_MEq_Expect_CondDot.All_MEq_Expect_CondDot.GtInftySup.In_Ico
+import Lemma.Random.MEqExpectS.of.CondIndep.Integrable.MeasurableJoint.Measurable
 import Lemma.Random.MeasurableJoint.is.Measurable.Measurable
 import sympy.concrete.sup
 open MeasureTheory ProbabilityTheory
@@ -10,9 +10,9 @@ Bellman equations on general state / action spaces with the Markov property stat
 independence: given `s[t+1]`, the future reward path `r[t+1:]` is independent of `(s[t], a[t])`
 (`h₃ : r[t + 1:] ⟂ᵢ[π] (s t, a t) | s (t + 1)`, Mathlib's `CondIndepFun`, which needs `StandardBorelSpace Ω`).
 Corollary of
-`Random.MEq_Expect.MEq_Expect.MEq_Expect.of.Expect.All_MEq_Expect.All_MEq_Expect.GtInftySup.All_MeasurableJoint.In_Ico`,
+`Random.MEq_Expect_Cond.MEqExpect.MEq.of.MEqExpectS.All_MEq_Expect_CondDot.All_MEq_Expect_CondDot.GtInftySup.In_Ico`,
 whose `h₅` (`𝔼[… | s t, a t, s (t + 1)] =ᵐ 𝔼[… | s (t + 1)]`) follows from conditional independence by
-`Random.MEqExpect.of.CondIndep.Integrable.Measurable.Measurable.Measurable.Measurable`.
+`Random.MEqExpectS.of.CondIndep.Integrable.MeasurableJoint.Measurable`.
 -/
 @[path]
 private lemma main
@@ -37,7 +37,7 @@ private lemma main
     V t (s t) =ᵐ[π] 𝔼[r, s: π](r t + γ * V (t + 1) (s (t + 1)) | s t) ∧
     Q t (s t) (a t) =ᵐ[π] 𝔼[r, s: π](r t + γ * V (t + 1) (s (t + 1)) | s t, a t) := by
 -- proof
-  apply Random.MEq_Expect.MEq_Expect.MEq_Expect.of.Expect.All_MEq_Expect.All_MEq_Expect.GtInftySup.All_MeasurableJoint.In_Ico
+  apply Random.MEq_Expect_Cond.MEqExpect.MEq.of.MEqExpectS.All_MEq_Expect_CondDot.All_MEq_Expect_CondDot.GtInftySup.In_Ico
     h₀ h₁ h₂ h₄ h₅
   have hrm : ∀ n, Measurable (r n) := fun n ↦ (Random.Measurable.Measurable.of.MeasurableJoint (h₁ n)).1
   have hsm : ∀ n, Measurable (s n) := fun n ↦
@@ -57,8 +57,11 @@ private lemma main
   have hint : Integrable (fun ω ↦ (γ ^ (id : ℕ → ℕ)) @ Expectation.asRV r[t + 1:] ω) π :=
     Integrable.of_bound (hg.comp hF).aestronglyMeasurable ((1 - γ)⁻¹ * |R|)
       (Filter.Eventually.of_forall fun ω ↦ tsum_of_norm_bounded hgeo (hb ω))
-  have h := Random.MEqExpect.of.CondIndep.Integrable.Measurable.Measurable.Measurable.Measurable
-    (X := JointRandomSymbol (s t) (a t)) hF (Random.MeasurableJoint.of.Measurable.Measurable (hsm t) (ham t)) (hsm (t + 1)) hg hint h₃
+  have h := Random.MEqExpectS.of.CondIndep.Integrable.MeasurableJoint.Measurable
+    (a := JointRandomSymbol (s t) (a t))
+    hg
+    (hF.prodMk ((Random.MeasurableJoint.of.Measurable.Measurable (hsm t) (ham t)).prodMk (hsm (t + 1))))
+    hint h₃
   -- repack the conditioning `((s t, a t), s (t + 1))` as `(s t, (a t, s (t + 1)))`
   have hσ : MeasurableSpace.comap (JointRandomSymbol (JointRandomSymbol (s t) (a t)) (s (t + 1))) inferInstance =
       MeasurableSpace.comap (JointRandomSymbol (s t) (JointRandomSymbol (a t) (s (t + 1)))) inferInstance := by

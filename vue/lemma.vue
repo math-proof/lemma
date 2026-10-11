@@ -4,7 +4,8 @@
             <span class=green>/--</span><br>
             <div class=lemma-comment :class=class_comment tabindex=1000 @keydown=keydown_comment @click.left.stop=click_select_comment>
                 <template v-if="markdownComment && !commentEditMode">
-                    <markdown :root=markdownComment.root v-clipboard :data-clipboard-text=comment />
+                    <!-- Plain green text (PHP used <pre class=green>); markdown AST is also mounted for rich docstrings. -->
+                    <pre class="green Consolas lemma-comment-text" v-clipboard :data-clipboard-text=comment>{{ comment }}</pre>
                     <input type=hidden :name="`lemma[${index}][comment]`" :value=comment />
                 </template>
                 <textarea v-else :ref="$refs.commentTextarea" class=green :name="`lemma[${index}][comment]`" :value=comment :rows=comment_rows :cols=comment_cols @keydown=keydown_textarea @input=inputComment></textarea>
@@ -727,6 +728,18 @@ span.blue {
 
 .green {
     color: green;
+}
+
+pre.lemma-comment-text {
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: transparent;
+    font-style: normal;
+    font-size: 1em;
+    font-weight: normal;
+    font-family: Consolas, monospace;
+    white-space: pre-wrap;
 }
 
 .orange {

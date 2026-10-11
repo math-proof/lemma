@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.Algebra.Algebra.BurnsideMatrix
+import sympy.algebra.algebra.burnside_matrix
 
 open BurnsideMatrix
 

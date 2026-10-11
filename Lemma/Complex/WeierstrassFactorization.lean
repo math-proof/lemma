@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-import sympy.Analysis.Complex.WeierstrassFactorization
+import sympy.calculus.complex.WeierstrassFactorization
 
 open Complex.WeierstrassFactorizationWanted
 
