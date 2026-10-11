@@ -55,7 +55,7 @@ def apply(eq, Q_def, V_def):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Bool, Random
+    from Lemma import Bool, Random
 
     b, D = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), real=True, random=True) # states / observation
@@ -69,13 +69,13 @@ def prove(Eq):
                 Equal((Q[π] ^ γ)(s[t].bvar, a[t].bvar), γ ** Stack[t](t) @ Expectation[r[t:], a:π](r[t:] | s[t] & a[t])),
                 Equal((V[π] ^ γ)(s[t].bvar), γ ** Stack[t](t) @ Expectation[r[t:], a:π](r[t:] | s[t])))
 
-    Eq << Tensor.EqExpect.of.Eq_Expect.V_Function.apply(Eq[1])
+    Eq << Random.Integral_TSum_MulPow.eq.IntegralPreimage.of.All_Eq_TSum_MulPowIntegral.All_Eq_Joint.In_Ico0.apply(Eq[1])
 
     Eq << Bool.Eq.of.Eq.Eq.apply(Eq[2], Eq[-1])
 
     Eq << Random.Indep.of.Indep_Joint.apply(Eq[0], 1)
 
-    Eq << Tensor.EqExpect.of.Eq_Conditioned.Bellman.V_Function.apply(Eq[-1], γ, t, (a, π))
+    Eq << Random.Integral_TSum_PowMul.eq.Integral_AddMul_Integral_TSum_MulPow.of.All_Eq_Joint.In_Ico0.apply(Eq[-1], γ, t, (a, π))
 
     Eq << Bool.Eq.of.Eq.Eq.apply(Eq[2], Eq[-1])
 
@@ -85,7 +85,7 @@ def prove(Eq):
 
     Eq << Eq[-2].subs(Eq.v_next.reversed)
 
-    Eq << Tensor.EqExpect.of.Eq_Conditioned.Bellman.Q_Function.apply(Eq[0], γ, t, (a, π))
+    Eq << Random.TSum_MulPow_IntegralInterPreimage_Preimage.eq.IntegralAddMul_Integral_TSum_MulPow.of.All_Eq_Joint.In_Ico1.apply(Eq[0], γ, t, (a, π))
 
     Eq << Bool.Eq.of.Eq.Eq.apply(Eq[1], Eq[-1])
 

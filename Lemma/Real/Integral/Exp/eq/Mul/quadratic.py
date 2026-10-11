@@ -64,7 +64,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Real.Integral.limits.domain_defined)
 
-    Eq << Eq[-1].this.lhs.apply(Real.Integral.limits.subst, x, x / sqrt(2 * a))
+    Eq << Eq[-1].this.lhs.apply(Real.Integral.eq.Integral_Mul.of.Gt_0, x, x / sqrt(2 * a))
 
     Eq << Eq[-1].this.find(Integral).apply(Real.Integral.Exp.eq.Mul.Sqrt)
 

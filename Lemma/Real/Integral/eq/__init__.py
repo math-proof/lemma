@@ -6,3 +6,4 @@ from . import Ite
 from . import Grad
 from . import Lim
 from . import Integral_UFnProd
+from . import Integral_Mul

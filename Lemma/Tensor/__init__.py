@@ -55,9 +55,7 @@ from . import EqAdd
 from . import EqAdjoint
 from . import EqBlock
 from . import EqDot
-from . import EqDot_GradExpect
 from . import EqExpect
-from . import EqGrad
 from . import EqInv
 from . import EqLog
 from . import EqReducedArgMax

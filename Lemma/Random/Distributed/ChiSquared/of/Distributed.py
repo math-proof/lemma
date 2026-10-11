@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq[2])
 
-    Eq << Eq[-1].this.find(Integral[2]).apply(Real.Integral.limits.subst, x.bvar, -x.bvar)
+    Eq << Eq[-1].this.find(Integral[2]).apply(Real.Integral.eq.Integral_Mul.of.Gt_0, x.bvar, -x.bvar)
 
     Eq << Eq[-1].this.find(Mul[~Integral]).apply(Real.Integral.eq.Neg)
 

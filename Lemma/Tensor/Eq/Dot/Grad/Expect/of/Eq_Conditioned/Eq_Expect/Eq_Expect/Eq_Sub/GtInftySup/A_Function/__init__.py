@@ -11,7 +11,7 @@ def apply(eq, Q_def, V_def, A_def, lt):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Random, Nat
+    from Lemma import Random, Nat
 
     b, D = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), real=True, random=True) # states / observation
@@ -29,7 +29,7 @@ def prove(Eq):
                 Equal((A[π] ^ γ)(s[t].bvar, a[t].bvar), (Q[π] ^ γ)(s[t].bvar, a[t].bvar) - (V[π] ^ γ)(s[t].bvar)),
                 Less(Sup[s[t].bvar, t](Abs(Derivative[π]((V[π] ^ γ)(s[t].bvar)))), oo))
 
-    Eq << Tensor.Eq.Dot.Grad.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.GtInftySup.Q_Function.apply(*Eq[:3], Eq[4])
+    Eq << Random.TSum_SMulPowFderiv.eq.TSum_SMulPow_Integral_SMul.of.GtInftySup.All_Differentiable.All_Eq_Expect_CondDot.All_Eq_Expect_CondDot.Measure.eq.Count.Measure.eq.Count.All_Eq_Joint.In_Ico0.apply(*Eq[:3], Eq[4])
 
     Eq << Eq[-1].this.rhs.find(Expectation).simplify()
 

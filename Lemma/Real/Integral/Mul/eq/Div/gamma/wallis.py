@@ -37,7 +37,7 @@ def prove(Eq):
     Eq << Eq[-1].this.rhs.expand(func=True)
     Eq << Eq[-1].this.lhs.expand()
     Eq.two = Eq[0].subs(m, 2)
-    Eq << Eq.two.this.lhs.apply(Real.Integral.limits.subst, sin(x), x)
+    Eq << Eq.two.this.lhs.apply(Real.Integral.eq.Integral_Mul.of.Gt_0, sin(x), x)
     Eq << Eq[-1].this.lhs.apply(Real.Integral.Pow.eq.Mul)
     Eq << Eq[-1].this.rhs.expand(func=True)
     Eq << Imply(Eq[0], Eq.induct, plausible=True)

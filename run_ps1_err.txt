@@ -1,0 +1,167 @@
+  File "E:\github\py\Lemma\Set\NotIn_SDiff\given\Or.py", line 8, in apply
+    e, S = imply.of(NotElement)
+    ^^^^
+
+  File "E:\github\py\Lemma\Bool\All_UFn\of\UFn\All_Eq.py", line 70, in apply
+    (lhs, rhs), *limits = All_Eq.of(All[Equal])
+    ^^^^^^^^^^^^^^^^^^^
+
+  File "E:\github\py\sympy\core\basic.py", line 2271, in yield_one
+    raise
+
+  File "E:\github\py\sympy\logic\invoker.py", line 309, in find
+    return self.target.yield_one([(q, []) for q in query],
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  File "E:\github\py\Lemma\Finset\Sigma\eq\Add\recurrent\two.py", line 34, in prove
+    Eq << Eq[-1].this.find(Complement).apply(Set.SDiff.eq.Conditionset)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  File "E:\github\py\Lemma\Real\IsContinuous\of\IsDifferentiable.py", line 6, in apply
+    ((fx, (x, S[1])), R), (S[x], *domain) = all_contains.of(All[Element[Derivative]])
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  File "E:\github\py\Lemma\Real\All_IsPositive\of\All_Gt_0.py", line 6, in apply
+    (fx, (x, d)), (S[x], domain) = all_is_positive.of(All[Derivative > 0])
+                  ^^^^^^^^^^^^^^
+
+  File "E:\github\py\sympy\core\symbol.py", line 1263, in __hash__
+    return super(Symbol, self).__hash__()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  File "E:\github\py\sympy\core\cache.py", line 72, in wrapper
+    retval = cfunc(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^
+
+  File "E:\github\py\sympy\core\expr.py", line 231, in __mul__
+    return Mul(self, other)
+           ^^^^^^^^^^^^^^^^
+
+  File "E:\github\py\sympy\core\decorators.py", line 136, in binary_op_wrapper
+    return func(self, other)
+           ^^^^^^^^^^^^^^^^^
+
+  File "E:\github\py\sympy\core\decorators.py", line 95, in __sympifyit_wrapper
+    return func(a, b)
+           ^^^^^^^^^^
+
+  [Previous line repeated 966 more times]
+
+  File "E:\github\py\util\utility.py", line 225, in __getitem__
+    return self.list[index]
+           ~~~~~~~~~^^^^^^^
+
+  File "E:\github\py\Lemma\Set\IsReal\of\Gt_0.py", line 7, in apply
+    assert x.is_finite
+           ^^^^^^^^^^^
+
+  File "E:\github\py\util\utility.py", line 417, in add_to_list
+    assert lhs_plausible not in rhs_plausibles, 'cyclic proof detected'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  File "E:\github\py\Lemma\Finset\All_And\mapping\Qu2v.py", line 47, in prove
+    hv = Eq.x_h_equality.expr.lhs.indices[0]
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Traceback (most recent call last):
+  File "E:\github\py\util\utility.py", line 702, in _prove
+    func(eqs)
+  File "E:\github\py\Lemma\Finset\All_And\mapping\Qu2v.py", line 47, in prove
+    hv = Eq.x_h_equality.expr.lhs.indices[0]
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'index' object has no attribute 'indices'
+  File "E:\github\py\Lemma\Set\Ne\Ne\of\NotIn_Finset.py", line 6, in apply
+    e, args = given.of(NotElement[FiniteSet])
+    ^^^^^^^
+
+  File "E:\github\py\Lemma\Bool\EqSum\of\Iff\collapse.py", line 13, in apply
+    assert not Aj._has(i)
+           ^^^^^^^^^^^^^^
+
+  File "E:\github\py\sympy\core\sympify.py", line 354, in sympify
+    raise SympifyError(a)
+
+  File "E:\github\py\sympy\core\sympify.py", line 485, in _sympify
+    return sympify(a, strict=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+
+  File "E:\github\py\sympy\core\operations.py", line 50, in __new__
+    args = list(map(_sympify_, args))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  File "E:\github\py\sympy\core\cache.py", line 72, in wrapper
+    retval = cfunc(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^
+
+  File "E:\github\py\sympy\core\basic.py", line 1415, in fallback
+    rv = self.func(*args, **self.kwargs)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  File "E:\github\py\sympy\core\basic.py", line 1438, in _subs
+    rv = fallback(self, old, new)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+
+  File "E:\github\py\sympy\functions\elementary\piecewise.py", line 954, in _subs
+    _e = e._subs(old, new)
+         ^^^^^^^^^^^^^^^^^
+
+  File "E:\github\py\sympy\matrices\expressions\blockmatrix.py", line 810, in _subs
+    arg = arg._subs(old, new, **hints)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  File "E:\github\py\sympy\matrices\expressions\blockmatrix.py", line 822, in _subs
+    raise e
+
+  File "E:\github\py\sympy\matrices\expressions\blockmatrix.py", line 810, in _subs
+    arg = arg._subs(old, new, **hints)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  File "E:\github\py\sympy\matrices\expressions\blockmatrix.py", line 822, in _subs
+    raise e
+
+  File "E:\github\py\sympy\matrices\expressions\matmul.py", line 774, in _subs
+    arg = arg._subs(old, new)
+          ^^^^^^^^^^^^^^^^^^^
+
+  File "E:\github\py\sympy\matrices\expressions\matmul.py", line 783, in _subs
+    raise e
+
+  File "E:\github\py\sympy\core\basic.py", line 1410, in fallback
+    arg = arg._subs(old, new, **hints)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  File "E:\github\py\sympy\core\basic.py", line 1438, in _subs
+    rv = fallback(self, old, new)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+
+  File "E:\github\py\sympy\core\relational.py", line 1213, in _subs
+    return super(Equal, self)._subs(old, new, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  File "E:\github\py\sympy\core\relational.py", line 1219, in _subs
+    raise e
+
+  File "E:\github\py\sympy\core\inference.py", line 446, in subs
+    cond = self.cond._subs(old, new, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  File "E:\github\py\Lemma\Tensor\Eq\Dot\PLU\of\Eq\Eq_Dot\Eq_Ite.py", line 57, in prove
+    Eq << Eq[-1].subs(Eq[-2])
+          ^^^^^^^^^^^^^^^^^^^
+
+  File "E:\github\py\Lemma\Int\EqAdd\Is\Eq_Sub.py", line 32, in transport
+    assert x.is_finite
+           ^^^^^^^^^^^
+
+  File "E:\github\py\Lemma\Nat\Lt\transport.py", line 7, in apply
+    return transport(Less, given, lhs=lhs, rhs=rhs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  File "E:\github\py\Lemma\Bool\All_UFn\of\UFn\All_Eq.py", line 70, in apply
+    (lhs, rhs), *limits = All_Eq.of(All[Equal])
+    ^^^^^^^^^^^^^^^^^^^
+
+  File "E:\github\py\Lemma\Finset\SetOf\Stirling\mapping\s2_B.py", line 61, in prove
+    i = Eq.x_union_s0.lhs.limits[0][0]
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+

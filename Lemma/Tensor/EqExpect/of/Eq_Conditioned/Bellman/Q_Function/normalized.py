@@ -26,7 +26,7 @@ def apply(eq, γ=None, k=None, weights=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Random, Nat
+    from Lemma import Random, Nat
 
     b = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), real=True, random=True) # states / observation
@@ -38,7 +38,7 @@ def prove(Eq):
         Equal(r[t] | s[:t] & a[:t], r[t]), # history-irrelevant conditional independence assumption for rewards based on states and actions
         γ, k)
 
-    Eq << Tensor.EqExpect.of.Eq_Conditioned.Bellman.Q_Function.apply(Eq[0], γ)
+    Eq << Random.TSum_MulPow_IntegralInterPreimage_Preimage.eq.IntegralAddMul_Integral_TSum_MulPow.of.All_Eq_Joint.In_Ico1.apply(Eq[0], γ)
 
     Eq << Eq[-1] * (1 - γ)
 

@@ -67,7 +67,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Integral).apply(Real.Integral.eq.Add.split, 0)
 
-    Eq << Eq[-1].this.find(Integral[2]).apply(Real.Integral.limits.subst, x.bvar[k], -x.bvar[k])
+    Eq << Eq[-1].this.find(Integral[2]).apply(Real.Integral.eq.Integral_Mul.of.Gt_0, x.bvar[k], -x.bvar[k])
 
     Eq << Eq[-1].this.find(-~Integral).apply(Real.Integral.eq.Neg)
 
@@ -107,7 +107,7 @@ def prove(Eq):
 
     t = Symbol(domain=Interval(0, pi / 2))
     Y = Eq[-1].lhs.variable
-    Eq << Eq[-1].this.lhs.apply(Real.Integral.limits.subst, Y, y * sin(t) ** 2)
+    Eq << Eq[-1].this.lhs.apply(Real.Integral.eq.Integral_Mul.of.Gt_0, Y, y * sin(t) ** 2)
 
     Eq << Eq[-1].this.find(-sin ** 2).args[2].apply(Real.Square.Sin.eq.Sub.Square.Cos)
 

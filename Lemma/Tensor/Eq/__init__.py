@@ -3,7 +3,6 @@ from . import Cup
 from . import Dot
 from . import Eq
 from . import Expect
-from . import Grad
 from . import Is
 from . import Mul
 from . import ReducedArgMax
