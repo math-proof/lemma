@@ -76,7 +76,7 @@ private lemma main
       rw [hy, zero_smul, zero_smul]
     else
       obtain ⟨u, _, hu⟩ := Finset.exists_ne_zero_of_sum_ne_zero hy
-      rw [Fderiv_V.eq.Fderiv_Vc.of.Ne0Real_Preimage.In_Ico.GtInftySup.All_Differentiable_Prob (M := M) (t + 1) y θ h₀ h₁ h₂ h₃ (RealPreimageS_Add_1.ne.Zero.of.NeMulProbT_0.Ne0Real_Preimage (M := M) h₁ θ t x u y h₄ hu)]
+      rw [Fderiv_V.eq.Fderiv_Vc.of.Ne0Real_Preimage.In_Ico.GtInftySup.All_Differentiable_Prob (M := M) (t + 1) y θ h₀ h₁ h₂ h₃ (RealPreimageS_Add_1.ne.Zero.of.NeMulProbT_0.Ne0Real_Preimage (M := M) θ t x u y h₁ h₄ hu)]
 
 
 -- created on 2026-10-06
