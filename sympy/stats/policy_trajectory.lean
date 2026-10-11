@@ -38,6 +38,8 @@ There are no global coordinate functions: lemmas bind `{r s a}` and assume `h₁
 `V`: `𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = x)` and
 `Q`: `𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = x ∧ a t = u)`.
 Clamped rewards are local `rc z := clip z.1 (-M.env.R) M.env.R` (a.s. equal to the raw reward).
+The j-step stage map is local
+`W θ f j y := 𝔼[z : M.stageK θ y](M.Kf θ f j z)` (identity RV + `PSpace` on `M.stageK θ y`).
 The reward `r t` belongs to stage `t`: `r t ∼ M.env.reward (s t, a t)`.  The sympy reward hypothesis `Equal(r[t] | s[:t] & a[:t], r[t])` is not
 built in; lemmas that carry it in sympy keep it as an explicit named hypothesis.
 -/
@@ -120,14 +122,10 @@ instance (θ : Θ) : IsMarkovKernel (M.K θ) := by
 /-- `j`-step kernel expectation of `f` along the stage chain: `z ↦ 𝔼[f (ω (t + j)) | ω t = z]` -/
 noncomputable def Kf (θ : Θ) (f : ℝ × S × A → ℝ) : ℕ → ℝ × S × A → ℝ
   | 0 => f
-  | j + 1 => fun z ↦ ∫ w, Kf θ f j w ∂(M.K θ z)
-
-/-- `y ↦ 𝔼[f (ω (t + j)) | s t = y]`, the same for every time `t` (time-homogeneous chain):
-expectation of the `j`-step kernel map `Kf θ f j` under the stage law `M.stageK θ y` -/
-noncomputable def W (θ : Θ) (f : ℝ × S × A → ℝ) (j : ℕ) (y : S) : ℝ :=
-  let z : ℝ × S × A → ℝ × S × A := id
-  have : PSpace (M.stageK θ y) z := { aemeasurable := measurable_id.aemeasurable }
-  𝔼[z : M.stageK θ y](M.Kf θ f j z)
+  | j + 1 => fun z ↦
+    let w : ℝ × S × A → ℝ × S × A := id
+    have : PSpace (M.K θ z) w := { aemeasurable := measurable_id.aemeasurable }
+    𝔼[w : M.K θ z](Kf θ f j w)
 
 /-- the stage chain seen as history-dependent kernels (only the last stage matters) -/
 noncomputable def step (θ : Θ) (n : ℕ) : Kernel (Π _ : Finset.Iic n, ℝ × S × A) (ℝ × S × A) :=

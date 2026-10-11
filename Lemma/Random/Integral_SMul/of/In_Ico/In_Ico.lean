@@ -65,7 +65,7 @@ private lemma main
     obtain ⟨k', rfl⟩ := Nat.exists_eq_succ_of_ne_zero hk
     simp_rw [hF]
     rw [integral_smul]
-    have := Random.Integral_SMul.eq.Zero.of.Le.In_Ico (M := M) h₀ h₁ θ t (t + k') (Nat.le_add_right t k') ψ
+    have := Random.Integral_SMul.eq.Zero.of.Le.In_Ico (M := M) t (t + k') h₀ h₁ (Nat.le_add_right t k') θ ψ
     rw [show (fun ω => (r (t + k'.succ) ω + γ * M.Vc θ γ (s (t + k'.succ + 1) ω) -
         M.Vc θ γ (s (t + k'.succ) ω)) • ψ (s t ω) (a t ω)) = fun ω => (r (t + k' + 1) ω +
         γ * M.Vc θ γ (s (t + k' + 1 + 1) ω) - M.Vc θ γ (s (t + k' + 1) ω)) • ψ (s t ω) (a t ω)

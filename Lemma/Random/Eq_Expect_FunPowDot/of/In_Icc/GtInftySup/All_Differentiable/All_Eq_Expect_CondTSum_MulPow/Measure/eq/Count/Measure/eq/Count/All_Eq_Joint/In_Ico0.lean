@@ -126,7 +126,7 @@ private lemma main
       ‖∑' k, c ^ k * (r (t + k) ω + γ * V θ (t + k + 1) (s (t + k + 1) ω) - V θ (t + k) (s (t + k) ω))‖ ≤
         (1 - c)⁻¹ * ((3 / (1 - γ) - 1) * |M.env.R|) := by
     intro c hc'
-    filter_upwards [AeAll_LeNorm_TSum_MulPowSubAddRMul_VcVcMulSub1DeltaBound.of.In_Ico.In_Ico (M := M) h₀ h₁ θ hc', hδ] with ω h1 h2 t
+    filter_upwards [AeAll_LeNorm_TSum_MulPowSubAddRMul_VcVcMulSub1DeltaBound.of.In_Ico.In_Ico (M := M) h₀ h₁ hc' θ, hδ] with ω h1 h2 t
     have e : ∑' k, c ^ k * (r (t + k) ω + γ * V θ (t + k + 1) (s (t + k + 1) ω) - V θ (t + k) (s (t + k) ω)) =
         ∑' k, c ^ k * (r (t + k) ω + γ * M.Vc θ γ (s (t + k + 1) ω) - M.Vc θ γ (s (t + k) ω)) :=
       tsum_congr fun k => by rw [h2 (t + k)]

@@ -4,13 +4,18 @@ import Lemma.Random.EqW
 import Lemma.Random.Integral_Mul.eq.Integral_Mul_Kf.of.All_LeNorm.StronglyMeasurable.All_LeNorm.StronglyMeasurable
 import Lemma.Random.Integral_MulEqS.eq.MulRealPreimageSIntegral.of.All_LeNorm.StronglyMeasurable
 import Lemma.Random.StronglyMeasurable_KfAndAll_LeNormKf.of.All_LeNorm.StronglyMeasurable
-import Lemma.Random.W.eq.Integral
 import Lemma.Random.WAdd_1.eq.Sum_MulProbSum_MulTW.of.All_LeNorm.StronglyMeasurable
 import Lemma.Real.Norm.le.Sum_Norm
 import Lemma.Real.Norm_1.le.One
 import Lemma.Real.StronglyMeasurable.discrete
 import Lemma.Real.StronglyMeasurable_Eq12
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random Real
+
+
+private lemma w0 [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A] (M : Model Θ S A) (θ : Θ) (f : S → ℝ) (y' : S) :
+  ∫ z, M.Kf θ (fun z => f z.2.1) 0 z ∂(M.stageK θ y') = f y' := by
+  rw [show M.Kf θ (fun z => f z.2.1) 0 = fun z => f z.2.1 from funext fun z => rfl]
+  exact Random.EqW (M := M) θ f y'
 
 
 /--
@@ -39,10 +44,10 @@ private lemma main
   refine (Integral_Mul.eq.Integral_Mul_Kf.of.All_LeNorm.StronglyMeasurable.All_LeNorm.StronglyMeasurable (M := M) hf (fun z => Norm.le.Sum_Norm f z.2.1) (Real.StronglyMeasurable_Eq12 x) (Norm_1.le.One) θ t 1).trans ?_
   refine (Integral_MulEqS.eq.MulRealPreimageSIntegral.of.All_LeNorm.StronglyMeasurable h₀ (M := M) hK.1 hK.2 θ t x).trans ?_
   congr 1
-  rw [← W.eq.Integral (M := M) θ 1 x]
-  show M.W θ (fun z => f z.2.1) (0 + 1) x = _
+  show ∫ z, M.Kf θ (fun z => f z.2.1) (0 + 1) z ∂(M.stageK θ x) = _
   rw [WAdd_1.eq.Sum_MulProbSum_MulTW.of.All_LeNorm.StronglyMeasurable (M := M) hf (fun z => Norm.le.Sum_Norm f z.2.1) θ 0]
-  simp_rw [Random.EqW]
+  refine Finset.sum_congr rfl fun u _ => congrArg (fun inner => M.pol.prob θ x u * inner) ?_
+  refine Finset.sum_congr rfl fun y _ => by rw [w0 (M := M) θ f y]
 
 
 -- created on 2026-10-07

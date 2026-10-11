@@ -3,6 +3,7 @@ import sympy.Basic
 import Lemma.Real.Norm_Eq12.le.One
 import Lemma.Random.Integral_MulEqS.eq.MulRealW.of.All_LeNorm.StronglyMeasurable
 import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
+import Lemma.Random.Pn.eq.Integral
 import Lemma.Real.StronglyMeasurable_Eq12
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random Real
 
@@ -47,11 +48,13 @@ private lemma main
 -- proof
   obtain rfl : s = fun t ω ↦ (ω t).2.1 := funext₂ fun t ω ↦ (congrArg (·.2.1) (congrFun (h₀ t) ω)).symm
   set s : ℕ → (ℕ → ℝ × S × A) → S := fun t ω ↦ (ω t).2.1
+  have hInt :
+    ∫ ω, (if s t ω = x then (1:ℝ) else 0) * (if s (t + n) ω = y then (1:ℝ) else 0) ∂(M θ) =
+      (M θ).real (s t ⁻¹' {x}) * M.Pn θ n x y :=
+    (Integral_MulEqS.eq.MulRealW.of.All_LeNorm.StronglyMeasurable h₀ (M := M) (Real.StronglyMeasurable_Eq12 y)
+      (Norm_Eq12.le.One y) θ t n x).trans (by rw [← Pn.eq.Integral (M := M) θ n x y])
   rw [measureReal_def, cond_apply (Random.Measurable.of.All_Eq.snd.fst h₀ t (measurableSet_singleton x)), ENNReal.toReal_mul,
-    ENNReal.toReal_inv, ← measureReal_def, ← measureReal_def, real_inter h₀,
-    show (∫ ω, (if s t ω = x then (1:ℝ) else 0) * (if s (t + n) ω = y then (1:ℝ) else 0) ∂(M θ)) =
-      (M θ).real (s t ⁻¹' {x}) * M.Pn θ n x y from Integral_MulEqS.eq.MulRealW.of.All_LeNorm.StronglyMeasurable h₀ (M := M) (Real.StronglyMeasurable_Eq12 y) (Norm_Eq12.le.One y) θ t n x,
-    inv_mul_cancel_left₀ h₁]
+    ENNReal.toReal_inv, ← measureReal_def, ← measureReal_def, real_inter h₀, hInt, inv_mul_cancel_left₀ h₁]
 
 
 -- created on 2026-10-06

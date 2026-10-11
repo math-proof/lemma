@@ -2,12 +2,13 @@ import sympy.stats.policy_trajectory.gradient
 import sympy.Basic
 import Lemma.Random.AeNormR.le.Abs_R
 import Lemma.Random.NormW.le.Abs_R
+import Lemma.Random.Vc.eq.TSum_MulPowIntegral.of.In_Ico
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
 
 
-private lemma Vc_bdd [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [Fintype A] (M : Model Θ S A) (θ : Θ) {γ : ℝ} (hγ : γ ∈ Set.Ico 0 1) (x : S) :
+private lemma Vc_bdd [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A] (M : Model Θ S A) (θ : Θ) {γ : ℝ} (hγ : γ ∈ Set.Ico 0 1) (x : S) :
   ‖M.Vc θ γ x‖ ≤ (1 - γ)⁻¹ * |M.env.R| := by
-  unfold Model.Vc
+  rw [Vc.eq.TSum_MulPowIntegral.of.In_Ico (M := M) θ x]
   refine tsum_of_norm_bounded ((hasSum_geometric_of_lt_one hγ.1 hγ.2).mul_right _) fun k => ?_
   rw [norm_mul, norm_pow, Real.norm_of_nonneg hγ.1]
   apply mul_le_mul_of_nonneg_left (NormW.le.Abs_R (M := M) θ k x) (pow_nonneg hγ.1 k)
@@ -17,7 +18,7 @@ Almost surely every temporal-difference residual `δ[j] = r[j] + γ * Vc(s[j+1])
 -/
 @[path]
 private lemma main
-  [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [Fintype A]
+  [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A]
   {M : Model Θ S A}
   {γ : ℝ}
   {r : ℕ → (ℕ → ℝ × S × A) → ℝ}

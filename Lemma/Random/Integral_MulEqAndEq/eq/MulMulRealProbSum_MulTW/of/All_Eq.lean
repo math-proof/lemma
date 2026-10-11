@@ -31,7 +31,7 @@ private lemma main
 -- imply
   let rc (z : ℝ × S × A) : ℝ := clip z.1 (-M.env.R) M.env.R
   ∫ ω, (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) * r (t + (j + 1)) ω ∂(M θ) =
-    (M θ).real (s t ⁻¹' {x}) * M.pol.prob θ x u * ∑ y, (M.env.trans (x, u)).real {y} * M.W θ rc j y := by
+    (M θ).real (s t ⁻¹' {x}) * M.pol.prob θ x u * ∑ y, (M.env.trans (x, u)).real {y} * ∫ w, M.Kf θ rc j w ∂(M.stageK θ y) := by
 -- proof
   intro rc
   obtain rfl : s = fun t ω ↦ (ω t).2.1 := funext₂ fun t ω ↦ (congrArg (·.2.1) (congrFun (h₀ t) ω)).symm
@@ -44,7 +44,7 @@ private lemma main
   rw [hrc]
   refine (Integral_Mul.eq.Integral_Mul_Kf.of.All_LeNorm.StronglyMeasurable.All_LeNorm.StronglyMeasurable (M := M) (Random.StronglyMeasurableRc (M := M)) (NormRc.le.AbsR (M := M)) (Real.StronglyMeasurable_Eq12AndEq22 x u) (Norm_1.le.One) θ t (j + 1)).trans ?_
   simp_rw [Kf.eq.Sum_MulTW.of.All_LeNorm.StronglyMeasurable (M := M) (Random.StronglyMeasurableRc (M := M)) (NormRc.le.AbsR (M := M)) θ j]
-  apply Integral_MulEq12AndEq22.eq.MulMulRealProb (M := M) h₀ θ t x u (fun x' u' => ∑ y, (M.env.trans (x', u')).real {y} * M.W θ rc j y)
+  apply Integral_MulEq12AndEq22.eq.MulMulRealProb (M := M) h₀ θ t x u (fun x' u' => ∑ y, (M.env.trans (x', u')).real {y} * ∫ w, M.Kf θ rc j w ∂(M.stageK θ y))
 
 
 -- created on 2026-10-07

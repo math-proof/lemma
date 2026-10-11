@@ -30,7 +30,7 @@ private lemma main
   let V (θ : Θ) (t : ℕ) (x : S) : ℝ :=
     𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = x);
   let rc (z : ℝ × S × A) : ℝ := clip z.1 (-M.env.R) M.env.R
-  V θ t x = ∑' k, γ ^ k * M.W θ rc k x := by
+  V θ t x = ∑' k, γ ^ k * ∫ z, M.Kf θ rc k z ∂(M.stageK θ x) := by
 -- proof
   intro Vθ rc
   dsimp only [Vθ]

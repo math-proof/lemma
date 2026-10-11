@@ -2,7 +2,6 @@ import sympy.stats.policy_trajectory.gradient
 import sympy.Basic
 import Lemma.Random.StronglyMeasurable_KfAndAll_LeNormKf.of.All_LeNorm.StronglyMeasurable
 import Lemma.Random.T.ge.Zero
-import Lemma.Random.W.eq.Integral
 import Lemma.Random.W0.eq.Sum_MulProbIntegral.of.All_LeNorm.StronglyMeasurable
 import Lemma.Random.WAdd_1.eq.Sum_MulProbSum_MulTW.of.All_LeNorm.StronglyMeasurable
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
@@ -15,10 +14,9 @@ private lemma T_sum [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S]
   simp
 
 private lemma W_bnd [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [Fintype A] (M : Model Θ S A) (θ : Θ) {f : ℝ × S × A → ℝ} (hf : StronglyMeasurable f) {C : ℝ} (hC : ∀ z, ‖f z‖ ≤ C) (j : ℕ) (y : S) :
-  ‖M.W θ f j y‖ ≤ C := by
+  ‖∫ z, M.Kf θ f j z ∂(M.stageK θ y)‖ ≤ C := by
   have h := norm_integral_le_of_norm_le_const (μ := M.stageK θ y)
     (Filter.Eventually.of_forall (StronglyMeasurable_KfAndAll_LeNormKf.of.All_LeNorm.StronglyMeasurable (M := M) hf hC θ j).2)
-  rw [W.eq.Integral (M := M) θ j y]
   simpa using h
 
 private lemma reward_int_bdd [MeasurableSpace S] [MeasurableSpace A] [Fintype A] (M : Model Θ S A) {f : ℝ × S × A → ℝ} {C : ℝ} (hC : ∀ z, ‖f z‖ ≤ C) (y : S) (u : A) :
@@ -29,8 +27,8 @@ private lemma reward_int_bdd [MeasurableSpace S] [MeasurableSpace A] [Fintype A]
   simpa using h
 
 /--
-If every `θ ↦ π_θ(u | x)` is differentiable with derivative bounded by `Cp` and `‖f‖ ≤ Cf`, then `θ ↦ W θ f j y`
-is differentiable with derivative bounded by `(j + 1) * (|A| * Cp * Cf)`.
+If every `θ ↦ π_θ(u | x)` is differentiable with derivative bounded by `Cp` and `‖f‖ ≤ Cf`, then
+`θ ↦ ∫ z, Kf θ f j z ∂(stageK θ y)` is differentiable with derivative bounded by `(j + 1) * (|A| * Cp * Cf)`.
 -/
 @[path]
 private lemma main
@@ -47,12 +45,12 @@ private lemma main
   (j : ℕ)
   (y : S) :
 -- imply
-  Differentiable ℝ (fun θ => M.W θ f j y) ∧
-    ∀ θ, ‖fderiv ℝ (fun θ => M.W θ f j y) θ‖ ≤ (j + 1) * (Fintype.card A * Cp * Cf) := by
+  Differentiable ℝ (fun θ => ∫ z, M.Kf θ f j z ∂(M.stageK θ y)) ∧
+    ∀ θ, ‖fderiv ℝ (fun θ => ∫ z, M.Kf θ f j z ∂(M.stageK θ y)) θ‖ ≤ (j + 1) * (Fintype.card A * Cp * Cf) := by
 -- proof
   induction j generalizing y with
   | zero =>
-    have e : (fun θ => M.W θ f 0 y) =
+    have e : (fun θ => ∫ z, M.Kf θ f 0 z ∂(M.stageK θ y)) =
         fun θ => ∑ u, M.pol.prob θ y u * ∫ ρ, f (ρ, y, u) ∂(M.env.reward (y, u)) :=
       funext fun θ => W0.eq.Sum_MulProbIntegral.of.All_LeNorm.StronglyMeasurable (M := M) h₂ h₃ θ y
     rw [e]
@@ -69,17 +67,17 @@ private lemma main
       _ = _ := by
         rw [Finset.sum_const, Finset.card_univ, nsmul_eq_mul]; push_cast; ring
   | succ j ih =>
-    have e : (fun θ => M.W θ f (j + 1) y) =
-        fun θ => ∑ u, M.pol.prob θ y u * ∑ y', (M.env.trans (y, u)).real {y'} * M.W θ f j y' :=
+    have e : (fun θ => ∫ z, M.Kf θ f (j + 1) z ∂(M.stageK θ y)) =
+        fun θ => ∑ u, M.pol.prob θ y u * ∑ y', (M.env.trans (y, u)).real {y'} * ∫ z, M.Kf θ f j z ∂(M.stageK θ y') :=
       funext fun θ => WAdd_1.eq.Sum_MulProbSum_MulTW.of.All_LeNorm.StronglyMeasurable (M := M) h₂ h₃ θ j y
-    have hg : ∀ u, Differentiable ℝ (fun θ => ∑ y', (M.env.trans (y, u)).real {y'} * M.W θ f j y') :=
+    have hg : ∀ u, Differentiable ℝ (fun θ => ∑ y', (M.env.trans (y, u)).real {y'} * ∫ z, M.Kf θ f j z ∂(M.stageK θ y')) :=
       fun u θ => DifferentiableAt.fun_sum fun y' _ => ((ih y').1 θ).const_mul _
-    have hg' : ∀ u θ, ‖fderiv ℝ (fun θ => ∑ y', (M.env.trans (y, u)).real {y'} * M.W θ f j y') θ‖ ≤
+    have hg' : ∀ u θ, ‖fderiv ℝ (fun θ => ∑ y', (M.env.trans (y, u)).real {y'} * ∫ z, M.Kf θ f j z ∂(M.stageK θ y')) θ‖ ≤
         (j + 1) * (Fintype.card A * Cp * Cf) := by
       intro u θ
       rw [fderiv_fun_sum fun y' _ => ((ih y').1 θ).const_mul _]
       calc
-        _ ≤ ∑ y', ‖fderiv ℝ (fun θ => (M.env.trans (y, u)).real {y'} * M.W θ f j y') θ‖ :=
+        _ ≤ ∑ y', ‖fderiv ℝ (fun θ => (M.env.trans (y, u)).real {y'} * ∫ z, M.Kf θ f j z ∂(M.stageK θ y')) θ‖ :=
           norm_sum_le _ _
         _ ≤ ∑ y', (M.env.trans (y, u)).real {y'} * ((j + 1) * (Fintype.card A * Cp * Cf)) := by
           refine Finset.sum_le_sum fun y' _ => ?_
@@ -87,10 +85,10 @@ private lemma main
           apply mul_le_mul_of_nonneg_left ((ih y').2 θ) (T.ge.Zero (M := M) y u y')
         _ = _ := by
           rw [← Finset.sum_mul, T_sum, one_mul]
-    have hgb : ∀ u θ, ‖∑ y', (M.env.trans (y, u)).real {y'} * M.W θ f j y'‖ ≤ Cf := by
+    have hgb : ∀ u θ, ‖∑ y', (M.env.trans (y, u)).real {y'} * ∫ z, M.Kf θ f j z ∂(M.stageK θ y')‖ ≤ Cf := by
       intro u θ
       calc
-        _ ≤ ∑ y', ‖(M.env.trans (y, u)).real {y'} * M.W θ f j y'‖ :=
+        _ ≤ ∑ y', ‖(M.env.trans (y, u)).real {y'} * ∫ z, M.Kf θ f j z ∂(M.stageK θ y')‖ :=
           norm_sum_le _ _
         _ ≤ ∑ y', (M.env.trans (y, u)).real {y'} * Cf := by
           refine Finset.sum_le_sum fun y' _ => ?_
@@ -102,7 +100,7 @@ private lemma main
     refine ⟨fun θ => DifferentiableAt.fun_sum fun u _ => ((h₀ y u) θ).fun_mul ((hg u) θ), fun θ => ?_⟩
     rw [fderiv_fun_sum fun u _ => ((h₀ y u) θ).fun_mul ((hg u) θ)]
     calc
-      _ ≤ ∑ u, ‖fderiv ℝ (fun θ => M.pol.prob θ y u * ∑ y', (M.env.trans (y, u)).real {y'} * M.W θ f j y') θ‖ :=
+      _ ≤ ∑ u, ‖fderiv ℝ (fun θ => M.pol.prob θ y u * ∑ y', (M.env.trans (y, u)).real {y'} * ∫ z, M.Kf θ f j z ∂(M.stageK θ y')) θ‖ :=
         norm_sum_le _ _
       _ ≤ ∑ u, (M.pol.prob θ y u * ((j + 1) * (Fintype.card A * Cp * Cf)) + Cf * Cp) := by
         refine Finset.sum_le_sum fun u _ => ?_

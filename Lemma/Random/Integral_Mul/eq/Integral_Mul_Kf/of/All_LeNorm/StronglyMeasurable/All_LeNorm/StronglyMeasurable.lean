@@ -23,9 +23,10 @@ private lemma main
   (θ : Θ)
   (t j : ℕ) :
 -- imply
-  ∫ ω, G (ω t) * f (ω (t + j)) ∂(M θ) = ∫ ω, G (ω t) * M.Kf θ f j (ω t) ∂(M θ) := by
+  ∫ ω, G (ω t) * f (ω (t + j)) ∂(M θ) = ∫ ω, G (ω t) * M.Kf θ f j (ω t) ∂(M θ) :=
 -- proof
-  exact All_EqIntegral_MulGIntegral_MulGKf.of.All_LeNorm.StronglyMeasurable (M := M) hf hC θ j t (G := fun h => G (h ⟨t, mem_Iic.2 le_rfl⟩))
+  All_EqIntegral_MulGIntegral_MulGKf.of.All_LeNorm.StronglyMeasurable (M := M) hf hC θ j t
+    (G := fun h => G (h ⟨t, mem_Iic.2 le_rfl⟩))
     (hG.comp_measurable (measurable_pi_apply _)) (CG := CG) (fun _ => hCG _)
 
 

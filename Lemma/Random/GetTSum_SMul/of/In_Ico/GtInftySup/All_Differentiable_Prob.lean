@@ -15,7 +15,7 @@ private lemma Er_bdd [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S
   let rc (z : ℝ × S × A) : ℝ := clip z.1 (-M.env.R) M.env.R
   rw [Integral_R.eq.Sum_MulRealWRc h₁]
   calc
-    _ ≤ ∑ x, ‖M.env.init.real {x} * M.W θ rc t x‖ := norm_sum_le _ _
+    _ ≤ ∑ x, ‖M.env.init.real {x} * ∫ z, M.Kf θ rc t z ∂(M.stageK θ x)‖ := norm_sum_le _ _
     _ ≤ ∑ x, M.env.init.real {x} * |M.env.R| := by
       refine Finset.sum_le_sum fun x _ => ?_
       rw [norm_mul, Real.norm_of_nonneg measureReal_nonneg]

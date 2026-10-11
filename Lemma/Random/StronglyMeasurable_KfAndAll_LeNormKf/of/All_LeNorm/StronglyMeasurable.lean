@@ -1,6 +1,7 @@
 import sympy.stats.policy_trajectory
 import sympy.Basic
-open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model
+import Lemma.Random.Kf.eq.Integral
+open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 
 
 /--
@@ -25,12 +26,13 @@ private lemma main
   | succ j ih =>
     refine ⟨?_, fun z => ?_⟩
     ·
-      show StronglyMeasurable (fun z => ∫ w, M.Kf θ f j w ∂(M.K θ z))
-      exact (ih.1.comp_measurable measurable_snd).integral_kernel_prod_right' (κ := M.K θ)
+      exact
+        (funext fun z => (Kf.eq.Integral (M := M) (f := f) θ j z).symm) ▸
+          (ih.1.comp_measurable measurable_snd).integral_kernel_prod_right' (κ := M.K θ)
     ·
-      have h := norm_integral_le_of_norm_le_const (μ := M.K θ z) (Filter.Eventually.of_forall ih.2)
-      show ‖∫ w, M.Kf θ f j w ∂(M.K θ z)‖ ≤ C
-      simpa using h
+      rw [Kf.eq.Integral (M := M) (f := f) θ j z]
+      simpa using
+        norm_integral_le_of_norm_le_const (μ := M.K θ z) (Filter.Eventually.of_forall ih.2)
 
 
 -- created on 2026-10-07

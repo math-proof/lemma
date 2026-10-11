@@ -38,7 +38,9 @@ private lemma main
   set a : ℕ → (ℕ → ℝ × S × A) → A := fun t ω ↦ (ω t).2.2
   have hf : StronglyMeasurable (fun z : ℝ × S × A => f z.2.1) := (StronglyMeasurable.discrete f).comp_measurable measurable_snd.fst
   refine (Integral_Mul.eq.Integral_Mul_Kf.of.All_LeNorm.StronglyMeasurable.All_LeNorm.StronglyMeasurable (M := M) hf (fun z => Norm.le.Sum_Norm f z.2.1) (Real.StronglyMeasurable_Eq12AndEq22 x u) (Norm_1.le.One) θ t 1).trans ?_
-  simp_rw [Kf.eq.Sum_MulTW.of.All_LeNorm.StronglyMeasurable (M := M) hf (fun z => Norm.le.Sum_Norm f z.2.1) θ 0, Random.EqW]
+  simp_rw [Kf.eq.Sum_MulTW.of.All_LeNorm.StronglyMeasurable (M := M) hf (fun z => Norm.le.Sum_Norm f z.2.1) θ 0]
+  simp only [Model.Kf]
+  simp_rw [Random.EqW]
   exact Integral_MulEq12AndEq22.eq.MulMulRealProb (M := M) h₀ θ t x u (fun x' u' => ∑ y, (M.env.trans (x', u')).real {y} * f y)
 
 

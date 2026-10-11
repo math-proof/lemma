@@ -12,7 +12,8 @@ open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random 
 
 /--
 Bellman equation of the time-free value series:
-`∑' k, γ ^ k * W θ rc k x = W θ rc 0 x + γ * ∑ u, π_θ(u | x) * ∑ y, T(x, u, y) * ∑' k, γ ^ k * W θ rc k y`.
+`∑' k, γ ^ k * ∫ z, Kf θ rc k z ∂(stageK θ x) = ∫ z, Kf θ rc 0 z ∂(stageK θ x) +
+  γ * ∑ u, π_θ(u | x) * ∑ y, T(x, u, y) * ∑' k, γ ^ k * ∫ z, Kf θ rc k z ∂(stageK θ y)`.
 -/
 @[path]
 private lemma main
@@ -25,8 +26,8 @@ private lemma main
   (x : S) :
 -- imply
   let rc (z : ℝ × S × A) : ℝ := clip z.1 (-M.env.R) M.env.R
-  ∑' k, γ ^ k * M.W θ rc k x = M.W θ rc 0 x +
-    γ * ∑ u, M.pol.prob θ x u * ∑ y, (M.env.trans (x, u)).real {y} * ∑' k, γ ^ k * M.W θ rc k y := by
+  ∑' k, γ ^ k * ∫ z, M.Kf θ rc k z ∂(M.stageK θ x) = ∫ z, M.Kf θ rc 0 z ∂(M.stageK θ x) +
+    γ * ∑ u, M.pol.prob θ x u * ∑ y, (M.env.trans (x, u)).real {y} * ∑' k, γ ^ k * ∫ z, M.Kf θ rc k z ∂(M.stageK θ y) := by
 -- proof
   intro rc
   rw [(Summable_MulPowWRc.of.In_Ico (M := M) hγ θ x).tsum_eq_zero_add, pow_zero, one_mul]

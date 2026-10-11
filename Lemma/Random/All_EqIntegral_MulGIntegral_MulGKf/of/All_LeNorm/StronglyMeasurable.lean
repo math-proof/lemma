@@ -1,6 +1,7 @@
 import sympy.stats.policy_trajectory
 import sympy.Basic
 import Lemma.Random.Integral_Mul.eq.Integral_Mul_Integral.of.All_LeNorm.StronglyMeasurable.All_LeNorm.StronglyMeasurable
+import Lemma.Random.Kf.eq.Integral
 import Lemma.Random.StronglyMeasurable_KfAndAll_LeNormKf.of.All_LeNorm.StronglyMeasurable
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random Finset
 
@@ -34,7 +35,10 @@ private lemma main
       (hG.comp_measurable (Preorder.measurable_frestrictLe₂ _)) (CG := CG) (fun _ => hCG _)
     have e : n + (j + 1) = n + 1 + j := by omega
     rw [e]
-    exact h₁.trans (Integral_Mul.eq.Integral_Mul_Integral.of.All_LeNorm.StronglyMeasurable.All_LeNorm.StronglyMeasurable (M := M) (n := n) hG hCG (StronglyMeasurable_KfAndAll_LeNormKf.of.All_LeNorm.StronglyMeasurable (M := M) hf hC θ j).1 (StronglyMeasurable_KfAndAll_LeNormKf.of.All_LeNorm.StronglyMeasurable (M := M) hf hC θ j).2 θ)
+    refine h₁.trans ?_
+    have hKf := StronglyMeasurable_KfAndAll_LeNormKf.of.All_LeNorm.StronglyMeasurable (M := M) hf hC θ j
+    refine (Integral_Mul.eq.Integral_Mul_Integral.of.All_LeNorm.StronglyMeasurable.All_LeNorm.StronglyMeasurable (M := M) (n := n) hG hCG hKf.1 hKf.2 θ).trans ?_
+    simp_rw [← Kf.eq.Integral (M := M) θ j]
 
 
 -- created on 2026-10-07

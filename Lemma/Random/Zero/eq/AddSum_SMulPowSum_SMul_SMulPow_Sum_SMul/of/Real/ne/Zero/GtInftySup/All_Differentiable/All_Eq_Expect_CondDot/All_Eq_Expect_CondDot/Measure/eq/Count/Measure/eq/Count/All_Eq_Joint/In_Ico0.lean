@@ -98,7 +98,7 @@ private lemma main
       if hy : M.Pn θ n x y = 0 then
         rw [hy, zero_smul, zero_smul]
       else
-        have hP := RealPreimageS.ne.Zero.of.NePn_0.Ne0Real_Preimage (M := M) h₁ θ n x y h₆ hy
+        have hP := RealPreimageS.ne.Zero.of.NePn_0.Ne0Real_Preimage (M := M) θ n x y h₁ h₆ hy
         have h := Grad.eq.Add_SMul_Sum_SMul.of.Ne0Real_Preimage.GtInftySup.All_Differentiable_Prob.All_Eq_Expect.All_Eq_Expect.EqMeasureCount.EqMeasureCount.In_Ico
           («s.bvar» := fun _ ↦ y)
           h₀ h₁ hS hA (Q := Qloc) (V := Vloc) hQ_expect hV_expect h₄ h₅ hP

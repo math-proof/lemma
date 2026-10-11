@@ -7,6 +7,7 @@ import Lemma.Random.Fderiv_V.eq.Fderiv_Vc.of.Ne0Real_Preimage.In_Ico.GtInftySup.
 import Lemma.Random.Fderiv_FunProbPol.eq.Zero.of.ProbPolEq0
 import Lemma.Random.Q.eq.AddIntegral_RcMul_Sum_MulTTSum_MulPowW.of.NeMulRealPreimageSProb_0.In_Ico
 import Lemma.Random.RealPreimageS_Add_1.ne.Zero.of.NeMulProbT_0.Ne0Real_Preimage
+import Lemma.Random.Vc.eq.TSum_MulPowIntegral.of.In_Ico
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
 
 
@@ -27,7 +28,9 @@ private lemma Q_eq_Qc
   let Q (θ : Θ) (t : ℕ) (x : S) (u : A) : ℝ :=
     𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = x ∧ a t = u);
   Q θ t x u = M.Qc θ γ x u := by
-  apply Q.eq.AddIntegral_RcMul_Sum_MulTTSum_MulPowW.of.NeMulRealPreimageSProb_0.In_Ico (M := M) θ t x u hγ h₁ hP
+  intro Qθ
+  simpa [Model.Qc, Vc.eq.TSum_MulPowIntegral.of.In_Ico (M := M), Expectation.asRV_process, Qθ] using
+    Q.eq.AddIntegral_RcMul_Sum_MulTTSum_MulPowW.of.NeMulRealPreimageSProb_0.In_Ico (M := M) θ t x u hγ h₁ hP
 
 /--
 policy-gradient recursion for the model value functions on a reachable state

@@ -24,7 +24,7 @@ private lemma main
   (t : ℕ) :
 -- imply
   let rc (z : ℝ × S × A) : ℝ := clip z.1 (-M.env.R) M.env.R
-  ∫ ω, r t ω ∂(M θ) = ∑ x, M.env.init.real {x} * M.W θ rc t x := by
+  ∫ ω, r t ω ∂(M θ) = ∑ x, M.env.init.real {x} * ∫ z, M.Kf θ rc t z ∂(M.stageK θ x) := by
 -- proof
   intro rc
   have h₂ : ∀ ω : ℕ → ℝ × S × A, r t ω = ∑ x, (if s 0 ω = x then (1:ℝ) else 0) * r (0 + t) ω := by

@@ -6,14 +6,26 @@ import Lemma.Random.Integral_R.eq.Sum_MulRealWRc
 import Lemma.Random.Differentiable_FunVc.of.InIco0.GtInftySup_Norm.All_All_Differentiable_FunPolProb
 import Lemma.Random.GetTSum_SMul.of.In_Ico.GtInftySup.All_Differentiable_Prob
 import Lemma.Random.Summable_MulPowWRc.of.In_Ico
+import Lemma.Random.Vc.eq.TSum_MulPowIntegral.of.In_Ico
 import Lemma.Real.TSum_MulPowSum_Mul.eq.Sum_Mul_TSum_MulPow.of.All_Summable_MulPow
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random Real
 
 
-private lemma obj_eq [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A] [DecidableEq S] {r : ℕ → (ℕ → ℝ × S × A) → ℝ} {s : ℕ → (ℕ → ℝ × S × A) → S} {a : ℕ → (ℕ → ℝ × S × A) → A} (h₁ : ∀ t, (· t) = (r t, s t, a t)) (M : Model Θ S A) (θ : Θ) {γ : ℝ} (hγ : γ ∈ Set.Ico 0 1) :
-    ∑' t, γ ^ t * ∫ ω, r t ω ∂(M θ) = ∑ x, M.env.init.real {x} * M.Vc θ γ x := by
+private lemma obj_eq
+  [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A] [DecidableEq S]
+  {r : ℕ → (ℕ → ℝ × S × A) → ℝ}
+  {s : ℕ → (ℕ → ℝ × S × A) → S}
+  {a : ℕ → (ℕ → ℝ × S × A) → A}
+  (h₁ : ∀ t, (· t) = (r t, s t, a t))
+  (M : Model Θ S A)
+  (θ : Θ)
+  {γ : ℝ}
+  (hγ : γ ∈ Set.Ico 0 1) :
+  ∑' t, γ ^ t * ∫ ω, r t ω ∂(M θ) = ∑ x, M.env.init.real {x} * M.Vc θ γ x := by
   simp_rw [Integral_R.eq.Sum_MulRealWRc (M := M) h₁ θ]
-  exact TSum_MulPowSum_Mul.eq.Sum_Mul_TSum_MulPow.of.All_Summable_MulPow _ (fun x => Summable_MulPowWRc.of.In_Ico (M := M) hγ θ x) _
+  rw [TSum_MulPowSum_Mul.eq.Sum_Mul_TSum_MulPow.of.All_Summable_MulPow _
+    (fun x => Summable_MulPowWRc.of.In_Ico (M := M) hγ θ x)]
+  simp_rw [← Vc.eq.TSum_MulPowIntegral.of.In_Ico (M := M) θ]
 
 /--
 `∇ ∑' t, γ ^ t * 𝔼[r[t]] = ∑ x, Pr(s[0] = x) • ∇ Vc(x)`
@@ -42,8 +54,8 @@ private lemma main
   rw [← (GetTSum_SMul.of.In_Ico.GtInftySup.All_Differentiable_Prob (M := M) h₀ h₁ h₂ h₃ θ).fderiv]
   have e : (fun θ => ∑' t, γ ^ t * ∫ ω, r t ω ∂(M θ)) =
       fun θ => ∑ x, M.env.init.real {x} * M.Vc θ γ x := funext fun θ => obj_eq h₁ M θ h₀
-  rw [e, fderiv_fun_sum fun x _ => ((Random.Differentiable_FunVc.of.InIco0.GtInftySup_Norm.All_All_Differentiable_FunPolProb (M := M) h₂ h₃ h₀ x) θ).const_mul _]
-  exact Finset.sum_congr rfl fun x _ => fderiv_const_mul ((Random.Differentiable_FunVc.of.InIco0.GtInftySup_Norm.All_All_Differentiable_FunPolProb (M := M) h₂ h₃ h₀ x) θ) _
+  rw [e, fderiv_fun_sum fun x _ => ((Differentiable_FunVc.of.InIco0.GtInftySup_Norm.All_All_Differentiable_FunPolProb (M := M) h₂ h₃ h₀ x) θ).const_mul _]
+  exact Finset.sum_congr rfl fun x _ => fderiv_const_mul ((Differentiable_FunVc.of.InIco0.GtInftySup_Norm.All_All_Differentiable_FunPolProb (M := M) h₂ h₃ h₀ x) θ) _
 
 
 -- created on 2026-10-06

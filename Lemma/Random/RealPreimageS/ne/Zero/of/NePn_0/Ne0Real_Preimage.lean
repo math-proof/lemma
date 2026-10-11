@@ -8,8 +8,13 @@ import Lemma.Random.T.ge.Zero
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
 
 
-private lemma Pn_nonneg [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A] [DecidableEq S] (M : Model Θ S A) (θ : Θ) (n : ℕ) (x y : S) :
-    0 ≤ M.Pn θ n x y := by
+private lemma Pn_nonneg
+  [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A] [DecidableEq S]
+  (M : Model Θ S A)
+  (θ : Θ)
+  (n : ℕ)
+  (x y : S) :
+  0 ≤ M.Pn θ n x y := by
   induction n generalizing x with
   | zero =>
     rw [Pn0.eq.Eq]
@@ -32,22 +37,22 @@ private lemma main
   {s : ℕ → (ℕ → ℝ × S × A) → S}
   {a : ℕ → (ℕ → ℝ × S × A) → A}
 -- given
-  (h₁ : ∀ t, (· t) = (r t, s t, a t))
   (θ : Θ)
   (n : ℕ)
   (x y : S)
-  (h₂ : (M θ).real (s 0 ⁻¹' {x}) ≠ 0)
-  (h₃ : M.Pn θ n x y ≠ 0) :
+  (h₀ : ∀ t, (· t) = (r t, s t, a t))
+  (h₁ : (M θ).real (s 0 ⁻¹' {x}) ≠ 0)
+  (h₂ : M.Pn θ n x y ≠ 0) :
 -- imply
   (M θ).real (s n ⁻¹' {y}) ≠ 0 := by
 -- proof
-  rw [RealPreimageS.eq.Sum_MulRealPn h₁]
-  rw [RealPreimageS0.eq.Real h₁] at h₂
+  rw [RealPreimageS.eq.Sum_MulRealPn h₀]
+  rw [RealPreimageS0.eq.Real h₀] at h₁
   refine ne_of_gt (lt_of_lt_of_le ?_ (Finset.single_le_sum
     (f := fun x' => M.env.init.real {x'} * M.Pn θ n x' y)
     (fun x' _ => mul_nonneg measureReal_nonneg (Pn_nonneg M θ n x' y)) (Finset.mem_univ x)))
-  exact mul_pos (lt_of_le_of_ne measureReal_nonneg (Ne.symm h₂))
-    (lt_of_le_of_ne (Pn_nonneg M θ n x y) (Ne.symm h₃))
+  exact mul_pos (lt_of_le_of_ne measureReal_nonneg (Ne.symm h₁))
+    (lt_of_le_of_ne (Pn_nonneg M θ n x y) (Ne.symm h₂))
 
 
 -- created on 2026-10-06

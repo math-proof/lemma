@@ -23,7 +23,7 @@ private lemma cond_r_W
   (x : S)
   (hP : (M θ).real (s t ⁻¹' {x}) ≠ 0) :
   let rc (z : ℝ × S × A) : ℝ := clip z.1 (-M.env.R) M.env.R
-  ∫ ω, r (t + k) ω ∂(M θ)[|s t ⁻¹' {x}] = M.W θ rc k x := by
+  ∫ ω, r (t + k) ω ∂(M θ)[|s t ⁻¹' {x}] = ∫ z, M.Kf θ rc k z ∂(M.stageK θ x) := by
   intro rc
   rw [Integral.eq.MulRealPreimageSIntegral_MulEqS h₁, Integral_MulEqSR_Add.eq.MulRealPreimageSWRc h₁, inv_mul_cancel_left₀ hP]
 
@@ -61,7 +61,7 @@ private lemma main
   have hc : ContinuousAt (fun θ' => (M θ').real (s t ⁻¹' {x})) θ :=
     (Differentiable_RealPreimageS.of.GtInftySup.All_Differentiable_Prob (M := M) h₁ h₂ h₃ t x θ).continuousAt
   have hk : ∀ k, fderiv ℝ (fun θ => ∫ ω, r (t + k) ω ∂(M θ)[|s t ⁻¹' {x}]) θ =
-      fderiv ℝ (fun θ => M.W θ rc k x) θ := by
+      fderiv ℝ (fun θ => ∫ z, M.Kf θ rc k z ∂(M.stageK θ x)) θ := by
     intro k
     refine Filter.EventuallyEq.fderiv_eq ?_
     filter_upwards [hc.eventually_ne h₄] with θ' h

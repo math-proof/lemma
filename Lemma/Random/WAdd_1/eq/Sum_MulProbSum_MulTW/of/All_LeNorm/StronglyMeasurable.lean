@@ -3,12 +3,12 @@ import sympy.Basic
 import Lemma.Random.Integral.eq.Sum_SMul.of.All_LeNorm.StronglyMeasurable
 import Lemma.Random.Kf.eq.Sum_MulTW.of.All_LeNorm.StronglyMeasurable
 import Lemma.Random.StronglyMeasurable_KfAndAll_LeNormKf.of.All_LeNorm.StronglyMeasurable
-import Lemma.Random.W.eq.Integral
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 
 
 /--
-Recursion of the time-homogeneous kernel expectation: `W θ f (j+1) x = ∑ u, π_θ(u | x) * ∑ y, T(x, u, y) * W θ f j y`.
+Recursion of the time-homogeneous kernel expectation:
+`∫ z, Kf θ f (j+1) z ∂(stageK θ x) = ∑ u, π_θ(u | x) * ∑ y, T(x, u, y) * ∫ z, Kf θ f j z ∂(stageK θ y)`.
 -/
 @[path]
 private lemma main
@@ -23,11 +23,11 @@ private lemma main
   (j : ℕ)
   (x : S) :
 -- imply
-  M.W θ f (j + 1) x = ∑ u, M.pol.prob θ x u * ∑ y, (M.env.trans (x, u)).real {y} * M.W θ f j y := by
+  ∫ z, M.Kf θ f (j + 1) z ∂(M.stageK θ x) =
+    ∑ u, M.pol.prob θ x u * ∑ y, (M.env.trans (x, u)).real {y} * ∫ z, M.Kf θ f j z ∂(M.stageK θ y) := by
 -- proof
   have := M.env.reward_markov
   have h := StronglyMeasurable_KfAndAll_LeNormKf.of.All_LeNorm.StronglyMeasurable (M := M) hf hC θ (j + 1)
-  rw [W.eq.Integral (M := M) θ (j + 1) x]
   rw [Integral.eq.Sum_SMul.of.All_LeNorm.StronglyMeasurable (M := M) h.1 h.2 θ]
   simp_rw [Kf.eq.Sum_MulTW.of.All_LeNorm.StronglyMeasurable (M := M) hf hC θ j]
   simp [smul_eq_mul]

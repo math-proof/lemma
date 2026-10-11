@@ -7,7 +7,7 @@ open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random 
 
 
 /--
-`W θ (f ∘ s) 0 y = f y`: the `0`-step kernel expectation of a state function is the function itself.
+`∫ z, f (s z) ∂(stageK θ y) = f y`: the `0`-step kernel expectation of a state function is the function itself.
 -/
 @[path]
 private lemma main
@@ -18,10 +18,10 @@ private lemma main
   (f : S → ℝ)
   (y : S) :
 -- imply
-  M.W θ (fun z => f z.2.1) 0 y = f y := by
+  ∫ z, (f z.2.1) ∂(M.stageK θ y) = f y := by
 -- proof
   have := M.env.reward_markov
-  rw [W0.eq.Sum_MulProbIntegral.of.All_LeNorm.StronglyMeasurable (M := M) (f := fun z => f z.2.1) ((StronglyMeasurable.discrete f).comp_measurable measurable_snd.fst) (fun z => Norm.le.Sum_Norm f z.2.1) θ]
+  rw [W0.eq.Sum_MulProbIntegral.of.All_LeNorm.StronglyMeasurable (M := M) (f := fun z => f z.2.1) ((StronglyMeasurable.discrete f).comp_measurable measurable_snd.fst) (fun z => Norm.le.Sum_Norm f z.2.1) θ y]
   simp [← Finset.sum_mul, M.pol.sum_eq_one]
 
 

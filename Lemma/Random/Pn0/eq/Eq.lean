@@ -1,6 +1,7 @@
 import sympy.stats.policy_trajectory.gradient
 import sympy.Basic
 import Lemma.Random.EqW
+import Lemma.Random.Pn.eq.Integral
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
 
 
@@ -15,9 +16,9 @@ private lemma main
   (θ : Θ)
   (x y : S) :
 -- imply
-  M.Pn θ 0 x y = if x = y then 1 else 0 := by
--- proof
-  exact Random.EqW (M := M) θ (fun x' => if x' = y then (1:ℝ) else 0) x
+  M.Pn θ 0 x y = if x = y then 1 else 0 :=
+  Pn.eq.Integral (M := M) θ 0 x y ▸
+    Random.EqW (M := M) θ (fun x' => if x' = y then (1:ℝ) else 0) x
 
 
 -- created on 2026-10-06

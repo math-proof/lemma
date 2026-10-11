@@ -1,12 +1,11 @@
 import sympy.stats.policy_trajectory
 import sympy.Basic
 import Lemma.Random.Integral.eq.Sum_SMul.of.All_LeNorm.StronglyMeasurable
-import Lemma.Random.W.eq.Integral
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 
 
 /--
-`W θ f 0 x = ∑ u, π_θ(u | x) * ∫ ρ, f (ρ, x, u) ∂(reward (x, u))`.
+`∫ z, f z ∂(stageK θ x) = ∑ u, π_θ(u | x) * ∫ ρ, f (ρ, x, u) ∂(reward (x, u))`.
 -/
 @[path]
 private lemma main
@@ -20,12 +19,10 @@ private lemma main
   (θ : Θ)
   (x : S) :
 -- imply
-  M.W θ f 0 x = ∑ u, M.pol.prob θ x u * ∫ ρ, f (ρ, x, u) ∂(M.env.reward (x, u)) := by
+  ∫ z, f z ∂(M.stageK θ x) = ∑ u, M.pol.prob θ x u * ∫ ρ, f (ρ, x, u) ∂(M.env.reward (x, u)) := by
 -- proof
-  rw [W.eq.Integral (M := M) θ 0 x]
-  change ∫ z, f z ∂(M.stageK θ x) = _
-  rw [Integral.eq.Sum_SMul.of.All_LeNorm.StronglyMeasurable (M := M) hf hC θ]
-  rfl
+  rw [Integral.eq.Sum_SMul.of.All_LeNorm.StronglyMeasurable (M := M) hf hC θ x]
+  simp [smul_eq_mul]
 
 
 -- created on 2026-10-07

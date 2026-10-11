@@ -2,6 +2,7 @@ import sympy.stats.policy_trajectory.gradient
 import sympy.Basic
 import Lemma.Real.Norm_Eq12.le.One
 import Lemma.Random.Integral_MulEqS.eq.MulRealW.of.All_LeNorm.StronglyMeasurable
+import Lemma.Random.Pn.eq.Integral
 import Lemma.Random.RealPreimageS0.eq.Real
 import Lemma.Real.Sum_Eq.eq.One
 import Lemma.Random.Integrable.of.Measurable
@@ -41,8 +42,8 @@ private lemma main
     exact Integrable.of.Measurable (M := M) (fun ω => (s 0 ω, s (0 + t) ω)) ((Random.Measurable.of.All_Eq.snd.fst h₀ 0).prodMk (Random.Measurable.of.All_Eq.snd.fst h₀ (0 + t)))
       θ (fun p => (if p.1 = x then (1:ℝ) else 0) * (if p.2 = y then (1:ℝ) else 0)))]
   refine Finset.sum_congr rfl fun x _ => ?_
-  rw [Integral_MulEqS.eq.MulRealW.of.All_LeNorm.StronglyMeasurable h₀ (M := M) (Real.StronglyMeasurable_Eq12 y) (Norm_Eq12.le.One y) θ 0 t x, RealPreimageS0.eq.Real h₀]
-  rfl
+  rw [Integral_MulEqS.eq.MulRealW.of.All_LeNorm.StronglyMeasurable h₀ (M := M) (Real.StronglyMeasurable_Eq12 y)
+    (Norm_Eq12.le.One y) θ 0 t x, RealPreimageS0.eq.Real h₀, ← Pn.eq.Integral (M := M) θ t x y]
 
 
 -- created on 2026-10-06

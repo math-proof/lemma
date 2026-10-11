@@ -29,9 +29,9 @@ private lemma main
   (h₃ : sup[θ, x, u] ‖∇[θ] M.pol.prob θ x u‖ < ∞)
   (h₄ : (M θ).real (s t ⁻¹' {x}) ≠ 0) :
 -- imply
-  let V (θ : Θ) (t : ℕ) (x : S) : ℝ :=
+  let Vθ (θ : Θ) (t : ℕ) (x : S) : ℝ :=
     𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = x);
-  (fun θ' => V θ' t x) =ᶠ[𝓝 θ] fun θ' => M.Vc θ' γ x := by
+  (fun θ' => Vθ θ' t x) =ᶠ[𝓝 θ] fun θ' => M.Vc θ' γ x := by
 -- proof
   intro Vθ
   obtain ⟨Cp, hCp⟩ := id h₃

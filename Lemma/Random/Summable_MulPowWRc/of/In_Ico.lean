@@ -19,7 +19,7 @@ private lemma main
   (y : S) :
 -- imply
   let rc (z : ℝ × S × A) : ℝ := clip z.1 (-M.env.R) M.env.R
-  Summable (fun k => γ ^ k * M.W θ rc k y) := by
+  Summable (fun k => γ ^ k * ∫ z, M.Kf θ rc k z ∂(M.stageK θ y)) := by
 -- proof
   intro rc
   refine Summable.of_norm_bounded ((summable_geometric_of_lt_one hγ.1 hγ.2).mul_right |M.env.R|) ?_

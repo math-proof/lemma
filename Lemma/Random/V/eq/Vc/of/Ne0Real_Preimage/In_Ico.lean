@@ -1,6 +1,7 @@
 import sympy.stats.policy_trajectory.gradient
 import sympy.Basic
 import Lemma.Random.V.eq.TSum_MulPowWRc.of.Ne0Real_Preimage.In_Ico
+import Lemma.Random.Vc.eq.TSum_MulPowIntegral.of.In_Ico
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
 
 
@@ -23,11 +24,13 @@ private lemma main
   (h₁ : ∀ t, (· t) = (r t, s t, a t))
   (h₂ : (M θ).real (s t ⁻¹' {x}) ≠ 0) :
 -- imply
-  let V (θ : Θ) (t : ℕ) (x : S) : ℝ :=
+  let Vθ (θ : Θ) (t : ℕ) (x : S) : ℝ :=
     𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = x);
-  V θ t x = M.Vc θ γ x := by
+  Vθ θ t x = M.Vc θ γ x := by
 -- proof
-  apply V.eq.TSum_MulPowWRc.of.Ne0Real_Preimage.In_Ico (M := M) θ t x h₀ h₁ h₂
+  intro Vθ
+  refine Eq.trans ?_ (Vc.eq.TSum_MulPowIntegral.of.In_Ico (M := M) (γ := γ) θ x).symm
+  convert V.eq.TSum_MulPowWRc.of.Ne0Real_Preimage.In_Ico (M := M) θ t x h₀ h₁ h₂ using 1
 
 
 -- created on 2026-10-06

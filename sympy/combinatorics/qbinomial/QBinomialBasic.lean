@@ -883,7 +883,7 @@ This is used to prove the symmetry of q-binomial coefficients. -/
 /-- The transpose of a monotone function f : Fin k → Fin (m + 1).
 Given f, we define g : Fin m → Fin (k + 1) by g(j) = #{i : f(i) > m - 1 - j}.
 This corresponds to the conjugate/transpose of the partition encoded by f. -/
-private def transposeMonotone (k m : ℕ) (f : Fin k → Fin (m + 1)) : Fin m → Fin (k + 1) :=
+def transposeMonotone (k m : ℕ) (f : Fin k → Fin (m + 1)) : Fin m → Fin (k + 1) :=
   fun j => ⟨Finset.univ.filter (fun i => (f i).val > m - 1 - j.val) |>.card, by
     have : (Finset.univ.filter (fun i : Fin k => (f i).val > m - 1 - j.val)).card ≤ Finset.card Finset.univ :=
       Finset.card_filter_le _ _
