@@ -119,8 +119,6 @@ from . import EqInv
 from . import Grad_Add_Dot
 from . import EqDarboux
 from . import IsContinuous
-from . import Subs
-from . import Eq_Lim
 from . import GeLim
 from . import Lim
 from . import All_EqLim
@@ -217,3 +215,5 @@ from . import All_Any_All_LtAbsSub
 from . import Integral_Add
 from . import Any_Le
 from . import LimMul
+from . import Deriv
+from . import Eq_Lim
