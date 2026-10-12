@@ -163,7 +163,7 @@ private lemma main
         (π.map (fun ω ↦ (z ω, x ω, y ω))).map
           (fun p : γ × α × β ↦ (p.2.1, (p.2.2, p.1))) := by
     rw [Measure.map_map (by fun_prop) (by fun_prop)]; rfl
-  -- CondIndep rectangle mass
+  -- CondIndep.of.All_Eq_Joint rectangle mass
   have h_xyz_mass (A : Set α) (B : Set β) (C : Set γ)
       (hA : MeasurableSet A) (hB : MeasurableSet B) (hC : MeasurableSet C) :
       π.map (x, (y, z)) (A ×ˢ (B ×ˢ C)) =

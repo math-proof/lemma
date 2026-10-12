@@ -184,11 +184,14 @@ export function createEditor(parent, options = {}) {
     ...searchKeymap,
   ]));
 
-  // Autocomplete
+  // Autocomplete — `override` must be `CompletionSource` functions
+  // (`(context) => …`). An object here makes CM6 call `active.source(…)`
+  // on blur and throw `TypeError: active.source is not a function`
+  // (breaks Space after `\sqcup` / `\sqrt` Unicode hints).
   if (options.hintFn) {
     additionalExts.push(autocompletion({
-      override: [{
-        async provideCompletions(context) {
+      override: [
+        async (context) => {
           if (!context.explicit && !context.matchBefore(/[\w.\\]+/))
             return null;
           const result = await options.hintFn(bridge);
@@ -204,8 +207,8 @@ export function createEditor(parent, options = {}) {
               type: 'keyword',
             })),
           };
-        }
-      }],
+        },
+      ],
     }));
   }
 

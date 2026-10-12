@@ -2268,9 +2268,10 @@ function eqJointSides(node) {
 }
 
 /**
- * `_Joint` spelling of an independence atom when an argument is a joint of random variables.
- * Right-hand RV or the conditioner → `CondIndep_Joint` / `Indep_Joint`;
- * left-hand RV → `CondIndepJoint` / `IndepJoint`; both → `…Joint_Joint`.
+ * Joint spelling of an independence atom when an argument is a joint of random variables.
+ * `CondIndep` always camel-glues: `CondIndepJoint` (never `CondIndep_Joint`) — same family as
+ * `NormClip`; contrast `MEq_Clip`. Unconditional `Indep` keeps the historic split:
+ * left → `IndepJoint`, right/conditioner → `Indep_Joint`; both → `…Joint_Joint`.
  * Empty when there is no such joint (the plain name stays canonical).
  */
 function indepJointAlt(node) {
@@ -2293,7 +2294,11 @@ function indepJointAlt(node) {
   if (!left && !right && !cj) return "";
   let name = base;
   if (left) name += "Joint";
-  if (right || cj) name += "_Joint";
+  if (right || cj) {
+    // CondIndep: always camel `CondIndepJoint` (Markov `r[t+1:] ⟂ᵢ (s,a) | s'`)
+    // Indep: right/cond still snake `Indep_Joint` (corpus Indep/of/Indep_Joint)
+    name += base === "CondIndep" ? (left ? "_Joint" : "Joint") : "_Joint";
+  }
   return name;
 }
 
@@ -2822,7 +2827,8 @@ function nameExprBase(node, opts = {}) {
   // Local `have` in imply is proof scaffolding — never a path atom.
   if (name === "Lean_have") return "";
   if (isBvarQuotation(node)) return "";
-  if (indepAtom(node)) return indepAtom(node);
+  // prefer CondIndepJoint / IndepJoint / Indep_Joint over bare CondIndep / Indep
+  if (indepAtom(node)) return indepJointAlt(node) || indepAtom(node);
 
   // ℙ[π](E) / ℙ[π](E | C) → Prob / ProbS / ProbCond*
   {
@@ -3188,7 +3194,8 @@ function nameExprAltsBase(node, opts = {}) {
   if (indepAtom(node)) {
     const base = indepAtom(node);
     const joint = indepJointAlt(node);
-    return joint && joint !== base ? [base, joint] : [base];
+    // joint spelling first (CondIndepJoint); never emit illegal CondIndep_Joint
+    return joint && joint !== base ? [joint, base] : [base];
   }
   {
     const mj = measurableJointName(node);

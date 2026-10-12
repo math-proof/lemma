@@ -1,7 +1,7 @@
 import sympy.stats.joint_rv
 import sympy.vector.Basic
 import sympy.stats.hidden_markov_sequence
-import Lemma.Measure.CondIndep.of.CondIndep.CondIndep.Le_M.Le_M.Le_M
+import Lemma.Measure.CondIndep.of.CondIndep.CondIndep.Le_M
 import Lemma.Measure.CondIndep.of.Le.Le.CondIndep.Le_M.Le_M.Le_M.Le_M
 open MeasureTheory ProbabilityTheory
 open scoped ProbabilityTheory
@@ -70,7 +70,7 @@ private lemma main
       have hYs : Y (k + 1) = Y k ⊔ MeasurableSpace.comap (X (t + 1 + k)) inferInstance :=
         Nat.iSup_lt_succ (fun j ↦ MeasurableSpace.comap (X (t + 1 + j)) inferInstance) k
       rw [hYs]
-      refine Measure.CondIndep.of.CondIndep.CondIndep.Le_M.Le_M.Le_M hHσ (hY k) (hXm _).comap_le ih ?_
+      refine Measure.CondIndep.of.CondIndep.CondIndep.Le_M (sup_le (sup_le hHσ (hY k)) (hXm _).comap_le) ih ?_
       refine (Measure.CondIndep.of.Le.Le.CondIndep.Le_M.Le_M.Le_M.Le_M (hXm _).comap_le (hHm _).comap_le (sup_le hG (hY k)) hHσ (hM (t + 1 + k)) ?_ ?_).symm
       · -- `σ(s (t + 1 + k)) ≤ σ(s (t + 1)) ⊔ Y k`
         rcases k with _ | k
