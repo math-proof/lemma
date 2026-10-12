@@ -38,8 +38,8 @@ private lemma triu_eq
     rw [EqGetStack.fin]
     rw [EqGetStack.fin]
   split_ifs with h₁
-  · erw [if_pos h₁, if_pos ((h i j).mp h₁)]
-  · erw [if_neg h₁, if_neg (fun h₂ => h₁ ((h i j).mpr h₂))]
+  · erw [ite_eq_left h₁, ite_eq_left ((h i j).mp h₁)]
+  · erw [ite_eq_right h₁, ite_eq_right (fun h₂ => h₁ ((h i j).mpr h₂))]
 
 
 @[path]

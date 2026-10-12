@@ -13,9 +13,9 @@ private lemma main
 -- proof
   unfold RisingFactorial
   rcases lt_trichotomy i 0 with hi | rfl | hi
-  · rw [if_neg (show ¬(0 ≤ i) by omega), if_pos (show 0 ≤ -i by omega)]
+  · rw [ite_eq_right (show ¬(0 ≤ i) by omega), ite_eq_left (show 0 ≤ -i by omega)]
   · simp
-  · rw [if_pos hi.le, if_neg (show ¬(0 ≤ -i) by omega), neg_neg, Int.cast_neg, add_neg_cancel_right, one_div_one_div]
+  · rw [ite_eq_left hi.le, ite_eq_right (show ¬(0 ≤ -i) by omega), neg_neg, Int.cast_neg, add_neg_cancel_right, one_div_one_div]
 
 
 -- created on 2023-08-20

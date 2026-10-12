@@ -11,11 +11,12 @@ private lemma main
   (a → p = f) ∧ (¬a ∧ b → p = g) ∧ (¬a ∧ ¬b → p = k) := by
 -- proof
   subst h
-  refine ⟨fun ha => if_pos ha, fun hab => ?_, fun hab => ?_⟩
+  refine ⟨fun ha => ite_eq_left ha, fun hab => ?_, fun hab => ?_⟩
   ·
-    rw [if_neg hab.1, if_pos hab.2]
+    rw [ite_eq_right hab.1, ite_eq_left hab.2]
   ·
-    rw [if_neg hab.1, if_neg hab.2]
+    rw [ite_eq_right hab.1, ite_eq_right hab.2]
 
 
 -- created on 2023-04-25
+-- updated on 2026-10-12

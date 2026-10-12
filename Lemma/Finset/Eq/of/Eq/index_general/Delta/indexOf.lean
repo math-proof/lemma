@@ -25,7 +25,7 @@ private lemma main
   by_cases hij : i = j
   · subst hij
     simp
-  · rw [if_neg hij, if_neg]
+  · rw [ite_eq_right hij, ite_eq_right]
     intro e
     apply hij
     have := congrArg x e

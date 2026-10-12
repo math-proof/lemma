@@ -10,17 +10,15 @@ private lemma given
 -- imply
   x ≠ y := by
 -- proof
-  rcases h with h | h
+  obtain h | h := h
   · exact ne_of_gt h
   · exact ne_of_lt h
 
 
 @[path]
 private lemma main
+  {A B : Set α} [DecidablePred (· ∈ A)] [DecidablePred (· ∈ B)]
   {x : α}
-  {A B : Set α}
-  [DecidablePred (· ∈ A)]
-  [DecidablePred (· ∈ B)]
   {f g h : α → β}
   {p : β}
 -- given
@@ -28,22 +26,24 @@ private lemma main
 -- imply
   (if x ∈ A then f x else if x ∈ B \ A then g x else h x) ≠ p := by
 -- proof
-  rcases hc with ⟨h₁, ha⟩ | hc
-  · rw [if_pos ha]
-    exact h₁
-  · rcases hc with ⟨h₁, hb⟩ | ⟨h₁, hn⟩
-    · rw [if_neg hb.2, if_pos hb]
-      exact h₁.symm
-    · rw [Set.mem_union, not_or] at hn
-      rw [if_neg hn.1, if_neg (fun hh => hn.2 hh.1)]
-      exact h₁.symm
+  obtain ⟨h₁, ha⟩ | hc := hc
+  ·
+    rwa [ite_eq_left ha]
+  ·
+    obtain ⟨h₁, hb⟩ | ⟨h₁, hn⟩ := hc
+    ·
+      apply Ne.symm
+      rwa [ite_eq_right hb.2, ite_eq_left hb]
+    ·
+      rw [Set.mem_union, not_or] at hn
+      apply Ne.symm
+      rwa [ite_eq_right hn.1, ite_eq_right (fun hh => hn.2 hh.1)]
 
 
 @[path]
 private lemma two
+  {A : Set α} [DecidablePred (· ∈ A)]
   {x : α}
-  {A : Set α}
-  [DecidablePred (· ∈ A)]
   {f g : α → β}
   {p : β}
 -- given
@@ -51,11 +51,12 @@ private lemma two
 -- imply
   p ≠ (if x ∈ A then f x else g x) := by
 -- proof
-  rcases h with ⟨h₁, ha⟩ | ⟨h₁, hn⟩
-  · rw [if_pos ha]
-    exact h₁
-  · rw [if_neg hn]
-    exact h₁.symm
+  obtain ⟨h₁, ha⟩ | ⟨h₁, hn⟩ := h
+  ·
+    rwa [ite_eq_left ha]
+  ·
+    apply Ne.symm
+    rwa [ite_eq_right hn]
 
 
 -- created on 2023-04-19

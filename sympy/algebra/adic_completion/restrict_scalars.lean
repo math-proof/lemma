@@ -67,6 +67,3 @@ theorem restrictScalarsEquiv_symm_of (b : B) :
   rfl
 
 end AdicCompletion
-
-set_option pp.universes true in
-#check @AdicCompletion.restrictScalarsEquiv

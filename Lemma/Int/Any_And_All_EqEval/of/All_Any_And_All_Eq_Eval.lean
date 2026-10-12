@@ -159,7 +159,7 @@ private lemma  exists_mvPolynomial_totalDegree_le
     have hcq : q.coeff k = eval (fun i => (c i : R)) (homogeneousComponent k P) := by
       rw [hq, Polynomial.finsetSum_coeff]
       simp only [Polynomial.coeff_C_mul_X_pow]
-      rw [Finset.sum_ite_eq, if_pos (Finset.mem_range.mpr (Nat.lt_succ_of_le hkN))]
+      rw [Finset.sum_ite_eq, ite_eq_left (Finset.mem_range.mpr (Nat.lt_succ_of_le hkN))]
     have hcp : p.coeff k = 0 := Polynomial.coeff_eq_zero_of_natDegree_lt (lt_of_le_of_lt hp hdk)
     rw [← hcq, hqp, hcp]
   refine ⟨∑ k ∈ range (d + 1), homogeneousComponent k P, ?_, fun c => ?_⟩
@@ -185,7 +185,7 @@ private lemma  exists_mvPolynomial_totalDegree_le
       apply Finset.sum_subset (Finset.range_subset_range.mpr (by omega))
       intro k hk hk'
       rw [Finset.mem_range] at hk hk'
-      rw [key, if_neg]
+      rw [key, ite_eq_right]
       omega
     have hR : ∑ k ∈ range (N + 1), eval (fun i => (c i : R)) (homogeneousComponent k P) =
         ∑ k ∈ range (min d N + 1), eval (fun i => (c i : R)) (homogeneousComponent k P) := by
@@ -193,7 +193,7 @@ private lemma  exists_mvPolynomial_totalDegree_le
       apply Finset.sum_subset (Finset.range_subset_range.mpr (by omega))
       intro k hk hk'
       rw [Finset.mem_range] at hk hk'
-      rw [key, if_neg]
+      rw [key, ite_eq_right]
       omega
     rw [hL, hR]
 

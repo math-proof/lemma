@@ -11,7 +11,8 @@ private lemma main
   a → p = f := by
 -- proof
   intro ha
-  rw [h, if_pos ha]
+  rw [h, ite_eq_left ha]
 
 
 -- created on 2023-06-06
+-- updated on 2026-10-12

@@ -242,6 +242,19 @@ private lemma fps_inv_coeff_succ_eq
 [DividingFPS](https://github.com/facebookresearch/algebraic-combinatorics/blob/main/AlgebraicCombinatorics/DividingFPS.lean)
 -/
 @[path]
+private lemma fps_is_unit_inv_eq_inv_eq
+  [Field F]
+  (f : PowerSeries F)
+  (hf : IsUnit f) :
+-- imply
+  (↑hf.unit⁻¹ : PowerSeries F) = f⁻¹ := by
+-- proof
+  apply AlgebraicCombinatorics.fps_isUnit_inv_eq_inv f hf
+
+/--
+[DividingFPS](https://github.com/facebookresearch/algebraic-combinatorics/blob/main/AlgebraicCombinatorics/DividingFPS.lean)
+-/
+@[path]
 private lemma fps_inv_coeff_zero_is_unit_eq
   [Field F]
   (f : PowerSeries F)

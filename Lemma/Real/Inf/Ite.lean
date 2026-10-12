@@ -3,13 +3,13 @@ import sympy.Basic
 
 @[path]
 private lemma main
-  {p : Prop}
-  {a b : ℝ}
-  [Decidable p] :
+  {p : Prop} [Decidable p]
+  {a b : ℝ} :
 -- imply
   sInf {(if p then a else b)} = if p then a else b := by
 -- proof
-  sorry
+  simp [csInf_singleton]
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-12

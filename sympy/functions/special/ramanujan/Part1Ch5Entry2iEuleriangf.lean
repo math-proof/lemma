@@ -231,7 +231,7 @@ private theorem n7_expand {A : Type*} [CommRing A] [Algebra ℝ A] (a b : A) (ha
     ring
   rw [hcomm, Algebra.smul_def, Algebra.smul_def, ← mul_assoc, (map_mul (algebraMap ℝ A) _ _).symm]
   congr 1
-  ring
+  ring_nf
 
 private theorem aeval_derivative_apply_eq_zero {p phi : ℝ[X]} {m : ℕ}
     (hdvd : Polynomial.X ^ m ∣ p) (hlt : phi.natDegree < m) :
@@ -365,7 +365,7 @@ private theorem rescale_neg_pow (k : ℕ) :
       PowerSeries.rescale (-(k : ℝ)) (psE) := by
   rw [← map_pow, exp_pow_eq_rescale, PowerSeries.rescale_rescale]
   congr 1
-  ring
+  ring_nf
 
 private theorem rescale_one_exp :
     PowerSeries.rescale (1 : ℝ) (psE) = psE := by
@@ -541,7 +541,7 @@ private theorem taylor_eq_psAct_rescale_exp_aux (m : ℕ) (h : ℝ) (phi : ℝ[X
       rw [add_comm i n]
       exact Nat.choose_symm_add
     rw [echi]
-    ring
+    ring_nf
   rw [stepB, stepA]
 
 private theorem n7_full {A : Type*} [CommRing A] [Algebra ℝ A] (a b : A) (hab : a * b = 1) (n : ℕ) :

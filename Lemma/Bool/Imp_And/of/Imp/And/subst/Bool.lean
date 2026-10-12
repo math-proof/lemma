@@ -12,8 +12,9 @@ private lemma given
   p ∧ c → P (if c then x else z) := by
 -- proof
   intro hpc
-  rw [if_pos hpc.2]
+  rw [ite_eq_left hpc.2]
   exact h hpc
 
 
 -- created on 2023-04-25
+-- updated on 2026-10-12

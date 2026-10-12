@@ -29,8 +29,8 @@ private lemma main
       intro k _ hk'
       simp only [Finset.mem_Ico, not_and_or, not_le, not_lt] at hk'
       obtain h | h := hk'
-      · rw [if_neg (by omega), mul_zero, mul_zero]
-      · rw [if_pos (by omega), Nat.choose_eq_zero_of_lt (by omega), Nat.cast_zero, mul_zero, mul_zero])]
+      · rw [ite_eq_right (by omega), mul_zero, mul_zero]
+      · rw [ite_eq_left (by omega), Nat.choose_eq_zero_of_lt (by omega), Nat.cast_zero, mul_zero, mul_zero])]
   rw [← Finset.sum_subset (s₁ := Finset.range ((i : ℕ) + 1)) (s₂ := Finset.range n) (by intro k hk; simp at hk ⊢; omega) (by
       intro k _ hk'
       simp only [Finset.mem_range, not_lt] at hk'
@@ -51,7 +51,7 @@ private lemma main
   rw [Finset.sum_congr rfl R, Finset.sum_comm]
   refine Finset.sum_congr rfl fun t ht => ?_
   have ht := Finset.mem_range.mp ht
-  rw [← Finset.mul_sum, ← Finset.mul_sum, ← add_pow, if_pos (by omega), Nat.add_sub_cancel_left,
+  rw [← Finset.mul_sum, ← Finset.mul_sum, ← add_pow, ite_eq_left (by omega), Nat.add_sub_cancel_left,
     show ((d : ℤ) + ((j : ℕ) : ℤ) - (((j : ℕ) + t : ℕ) : ℤ)) = ((d - t : ℕ) : ℤ) by push_cast [Nat.cast_sub (by omega : t ≤ d)]; ring,
     zpow_natCast, pow_add]
   push_cast

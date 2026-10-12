@@ -35,7 +35,7 @@ private lemma softmax_policy
       by_cases hk : k' = k
       · subst hk
         simpa using (hasDerivAt_id (θ k')).const_mul (Φ b k')
-      · simp only [hk, if_false, Function.update_of_ne hk]
+      · simp only [hk, ite_false, Function.update_of_ne hk]
         exact hasDerivAt_const _ _
     simpa using this
   have hup : Function.update θ k (θ k) = θ := Function.update_eq_self k θ

@@ -3,7 +3,6 @@ import sympy.Basic
 
 @[path]
 private lemma main
-  {α : Type*}
   {p : Prop} [Decidable p]
   {a b c : α}
 -- given
@@ -12,8 +11,8 @@ private lemma main
 -- imply
   a = c := by
 -- proof
-  rw [if_pos hp] at h
-  exact h
+  rwa [ite_eq_left hp] at h
 
 
 -- created on 2018-01-19
+-- updated on 2026-10-12

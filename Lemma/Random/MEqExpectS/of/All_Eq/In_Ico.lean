@@ -1,6 +1,6 @@
 import Lemma.Random.CondIndep_Joint.of.All_EqJoint
 import Lemma.Random.MEqExpectS.of.CondIndep.Integrable.MeasurableJoint.Measurable
-import Lemma.Random.Integrable_G.of.In_Ico
+import Lemma.Random.IntegrableDotPow_Id.of.All_Eq.In_Ico
 open PolicyGradient Random
 
 
@@ -38,7 +38,7 @@ private lemma main
     ((Measurable.of_eval fun k ↦ (measurable_pi_apply (t + 1 + k)).fst).prodMk
       (((measurable_pi_apply t).snd.fst.prodMk (measurable_pi_apply t).snd.snd).prodMk
         (measurable_pi_apply (t + 1)).snd.fst))
-    (Integrable_G.of.In_Ico (M := M) h₀ h₁ θ (t + 1))
+    (IntegrableDotPow_Id.of.All_Eq.In_Ico (M := M) h₀ h₁ θ (t + 1))
     (CondIndep_Joint.of.All_EqJoint (fun t ↦ (h₁ t).symm))
 
 

@@ -1,4 +1,4 @@
-import Lemma.Random.MEq_Expect_Cond.MEqExpect.MEq.of.MEqExpectS.All_MEq_Expect_CondDot.All_MEq_Expect_CondDot.GtInftySup.In_Ico
+import Lemma.Random.MEq_Expect_Cond.MEq_Expect_Cond.MEq_Expect_Cond.of.MEqExpectS.All_MEq_Expect_CondDot.All_MEq_Expect_CondDot.GtInftySup.In_Ico
 import Lemma.Random.MEqExpectS.of.All_Eq.In_Ico
 import Lemma.Random.MeasurableJoint.is.Measurable.Measurable
 import Lemma.Random.MEqCondExp_Integral.of.Integrable.Measurable
@@ -7,12 +7,12 @@ import sympy.stats.policy_trajectory.gradient
 import sympy.stats.cond_expectation
 import sympy.core.power
 import sympy.vector.Basic
-import Lemma.Random.Integrable_G.of.In_Ico
-import Lemma.Random.MEqR_Rc
+import Lemma.Random.IntegrableDotPow_Id.of.All_Eq.In_Ico
+import Lemma.Random.MEq_Clip.of.All_Eq
 import Lemma.Random.Integrable.of.Measurable
 import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
-import Lemma.Random.NormRc.le.AbsR
-import Lemma.Random.StronglyMeasurableRc
+import Lemma.Random.NormClip.le.AbsR
+import Lemma.Random.StronglyMeasurableClip
 open MeasureTheory ProbabilityTheory PolicyGradient Random
 
 
@@ -44,7 +44,6 @@ private lemma main
     V t («s.bvar» t) = 𝔼[r, s : M θ](r t + γ * V (t + 1) (s (t + 1)) | s t = «s.bvar» t) ∧
     Q t («s.bvar» t) («a.bvar» t) = 𝔼[r, s : M θ](r t + γ * V (t + 1) (s (t + 1)) | s t = «s.bvar» t ∧ a t = «a.bvar» t) := by
 -- proof
-  let rc (z : ℝ × S × A) : ℝ := clip z.1 (-M.env.R) M.env.R
   set G := fun n : ℕ ↦ (γ ^ (id : ℕ → ℕ)) @ r[n:]
   obtain rfl : r = fun t ω ↦ (ω t).1 := funext₂ fun t ω ↦ (congrArg Prod.fst (congrFun (h₁ t) ω)).symm
   obtain rfl : s = fun t ω ↦ (ω t).2.1 := funext₂ fun t ω ↦ (congrArg (·.2.1) (congrFun (h₁ t) ω)).symm
@@ -81,21 +80,21 @@ private lemma main
     simp only [Expectation.asRV_process]
     rw [Expectation.condEvent_eq_integral hpR.aemeasurable (hfG t)]
     rfl
-  -- the general lemma, with the clamped (pointwise bounded, a.s. equal) rewards `rc (ω t)`
-  have hrc : ∀ t, Measurable (fun ω : ℕ → ℝ × S × A ↦ rc (ω t)) := fun t ↦
-    (Random.StronglyMeasurableRc (M := M)).measurable.comp (measurable_pi_apply t)
-  have hR : ∀ t (ω : ℕ → ℝ × S × A), |rc (ω t)| ≤ |M.env.R| := fun t ω ↦
-    (Real.norm_eq_abs _).symm.trans_le (NormRc.le.AbsR (M := M) (ω t))
-  have hG : ∀ n, (fun ω : ℕ → ℝ × S × A ↦ (γ ^ (id : ℕ → ℕ)) @ (fun k : ℕ ↦ rc (ω k))[n:]) =ᵐ[M θ] G n :=
-    fun n ↦ (ae_all_iff.2 fun k ↦ MEqR_Rc h₁ (M := M) θ k).mono fun ω h ↦ by
+  -- the general lemma, with the clamped (pointwise bounded, a.s. equal) rewards `clip (ω t).1 (-M.env.R) M.env.R`
+  have hrc : ∀ t, Measurable (fun ω : ℕ → ℝ × S × A ↦ clip (ω t).1 (-M.env.R) M.env.R) := fun t ↦
+    (Random.StronglyMeasurableClip (M := M)).measurable.comp (measurable_pi_apply t)
+  have hR : ∀ t (ω : ℕ → ℝ × S × A), |clip (ω t).1 (-M.env.R) M.env.R| ≤ |M.env.R| := fun t ω ↦
+    (Real.norm_eq_abs _).symm.trans_le (NormClip.le.AbsR (M := M) (ω t))
+  have hG : ∀ n, (fun ω : ℕ → ℝ × S × A ↦ (γ ^ (id : ℕ → ℕ)) @ (fun k : ℕ ↦ clip (ω k).1 (-M.env.R) M.env.R)[n:]) =ᵐ[M θ] G n :=
+    fun n ↦ (ae_all_iff.2 fun k ↦ MEq_Clip.of.All_Eq h₁ (M := M) θ k).mono fun ω h ↦ by
       exact tsum_congr fun k ↦ congrArg (γ ^ k * ·) (h (n + k)).symm
-  have hGi : ∀ n, Integrable (G n) (M θ) := fun n => Integrable_G.of.In_Ico (M := M) h₀ h₁ θ n
+  have hGi : ∀ n, Integrable (G n) (M θ) := fun n => IntegrableDotPow_Id.of.All_Eq.In_Ico (M := M) h₀ h₁ θ n
   have h₅ : ∀ t, (fun ω ↦ Q t (s t ω) (a t ω)) =ᵐ[M θ]
-      (M θ)[(fun ω : ℕ → ℝ × S × A ↦ (γ ^ (id : ℕ → ℕ)) @ (fun k : ℕ ↦ rc (ω k))[t:]) | MeasurableSpace.comap (fun ω ↦ (s t ω, a t ω)) inferInstance] :=
+      (M θ)[(fun ω : ℕ → ℝ × S × A ↦ (γ ^ (id : ℕ → ℕ)) @ (fun k : ℕ ↦ clip (ω k).1 (-M.env.R) M.env.R)[t:]) | MeasurableSpace.comap (fun ω ↦ (s t ω, a t ω)) inferInstance] :=
     fun t ↦ Filter.EventuallyEq.trans (Filter.Eventually.of_forall fun ω ↦ hQ t (s t ω) (a t ω))
       ((MEqCondExp_Integral.of.Integrable.Measurable (hsa t) (hGi t)).symm.trans (condExp_congr_ae (hG t)).symm)
   have h₆ : ∀ t, (fun ω ↦ V t (s t ω)) =ᵐ[M θ]
-      (M θ)[(fun ω : ℕ → ℝ × S × A ↦ (γ ^ (id : ℕ → ℕ)) @ (fun k : ℕ ↦ rc (ω k))[t:]) | MeasurableSpace.comap (s t) inferInstance] :=
+      (M θ)[(fun ω : ℕ → ℝ × S × A ↦ (γ ^ (id : ℕ → ℕ)) @ (fun k : ℕ ↦ clip (ω k).1 (-M.env.R) M.env.R)[t:]) | MeasurableSpace.comap (s t) inferInstance] :=
     fun t ↦ Filter.EventuallyEq.trans (Filter.Eventually.of_forall fun ω ↦ hV t (s t ω))
       ((MEqCondExp_Integral.of.Integrable.Measurable (hs t) (hGi t)).symm.trans (condExp_congr_ae (hG t)).symm)
   have h₇ := ((condExp_congr_ae (hG (t + 1))).trans (MEqExpectS.of.All_Eq.In_Ico (M := M) (θ := θ) (r := r) (s := s) (a := a) (t := t) h₀ h₁)).trans
@@ -112,19 +111,19 @@ private lemma main
       exact (show Measurable fun p : (S × A) × S ↦ (p.1.1, p.1.2, p.2) by fun_prop).comp
         (comap_measurable fun ω : ℕ → ℝ × S × A ↦ ((s t ω, a t ω), s (t + 1) ω))
   erw [hσ] at h₇
-  obtain ⟨h₈, h₉, h₁₀⟩ := MEq_Expect_Cond.MEqExpect.MEq.of.MEqExpectS.All_MEq_Expect_CondDot.All_MEq_Expect_CondDot.GtInftySup.In_Ico
-    (π := M θ) (s := s) (a := a) (r := fun t ω ↦ rc (ω t)) (t := t) h₀
+  obtain ⟨h₈, h₉, h₁₀⟩ := MEq_Expect_Cond.MEq_Expect_Cond.MEq_Expect_Cond.of.MEqExpectS.All_MEq_Expect_CondDot.All_MEq_Expect_CondDot.GtInftySup.In_Ico
+    (π := M θ) (s := s) (a := a) (r := fun t ω ↦ clip (ω t).1 (-M.env.R) M.env.R) (t := t) h₀
     (fun t ↦ Random.MeasurableJoint.of.Measurable.Measurable (hrc t) (Random.MeasurableJoint.of.Measurable.Measurable (hs t) (ha t)))
     ⟨|M.env.R|, Set.forall_mem_range.2 fun ⟨t, ω⟩ ↦ hR t ω⟩ h₅ h₆ h₇
   -- back to the raw rewards
   have hri : Integrable (r t) (M θ) :=
     Integrable.of_bound (hr t).aestronglyMeasurable |M.env.R|
-      ((MEqR_Rc h₁ (M := M) θ t).mono fun ω (h : r t ω = rc (ω t)) ↦ by rw [h]; exact NormRc.le.AbsR (M := M) _)
+      ((MEq_Clip.of.All_Eq h₁ (M := M) θ t).mono fun ω (h : r t ω = clip (ω t).1 (-M.env.R) M.env.R) ↦ by rw [h]; exact NormClip.le.AbsR (M := M) _)
   have hF : Integrable (fun ω ↦ r t ω + γ * V (t + 1) (s (t + 1) ω)) (M θ) :=
     hri.add ((Integrable.of.Measurable (M := M) (s (t + 1)) (hs (t + 1)) θ (V (t + 1))).const_mul γ)
-  have hFae : (fun ω : ℕ → ℝ × S × A ↦ rc (ω t) + γ * V (t + 1) (s (t + 1) ω)) =ᵐ[M θ]
+  have hFae : (fun ω : ℕ → ℝ × S × A ↦ clip (ω t).1 (-M.env.R) M.env.R + γ * V (t + 1) (s (t + 1) ω)) =ᵐ[M θ]
       fun ω ↦ r t ω + γ * V (t + 1) (s (t + 1) ω) :=
-    (MEqR_Rc h₁ (M := M) θ t).mono fun ω (h : r t ω = rc (ω t)) ↦ by dsimp only; rw [h]
+    (MEq_Clip.of.All_Eq h₁ (M := M) θ t).mono fun ω (h : r t ω = clip (ω t).1 (-M.env.R) M.env.R) ↦ by dsimp only; rw [h]
   have hQi : Integrable (fun ω ↦ Q t (s t ω) (a t ω)) (M θ) :=
     Integrable.of.Measurable (M := M) (fun ω ↦ (s t ω, a t ω)) (hsa t) θ (fun p ↦ Q t p.1 p.2)
   have hx : ∀ {B : Set (ℕ → ℝ × S × A)} (f : (ℕ → ℝ × S × A) → ℝ), M θ B = 0 → ∫ ω, f ω ∂(M θ)[|B] = 0 :=
@@ -163,4 +162,4 @@ private lemma main
 
 
 -- created on 2023-03-28
--- updated on 2026-10-11
+-- updated on 2026-10-12

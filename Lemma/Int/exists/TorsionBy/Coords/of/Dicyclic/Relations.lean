@@ -169,7 +169,7 @@ private lemma  exists_isUnit_Q
     {M : ℕ}
     [NeZero M]
     (b00 b01 b10 b11 : ZMod M)
-    (hns : ∀ (p : ℕ) (hp : p.Prime) (hpM : p ∣ M),
+    (hns : ∀ (p : ℕ) (_hp : p.Prime) (hpM : p ∣ M),
       ¬ ((ZMod.castHom hpM (ZMod p)) b01 = 0 ∧ (ZMod.castHom hpM (ZMod p)) b10 = 0 ∧
           (ZMod.castHom hpM (ZMod p)) b00 = (ZMod.castHom hpM (ZMod p)) b11)) :
     ∃ x y : ZMod M, IsUnit (Q b00 b01 b10 b11 x y) := by
@@ -182,7 +182,7 @@ private lemma  exists_isUnit_Q
     · obtain ⟨hp, hpM⟩ := hp
       set π := ZMod.castHom hpM (ZMod p) with hπ
       by_contra hcon
-      push_neg at hcon
+      push Not at hcon
       obtain ⟨_, _, h10⟩ := hcon (1, 0)
       obtain ⟨_, _, h01⟩ := hcon (0, 1)
       obtain ⟨_, _, h11⟩ := hcon (1, 1)
@@ -336,7 +336,7 @@ private lemma  main_aux
       ¬ ((ZMod.castHom hpM (ZMod p)) a01 = 0 ∧ (ZMod.castHom hpM (ZMod p)) a10 = 0 ∧
           (ZMod.castHom hpM (ZMod p)) a00 = (ZMod.castHom hpM (ZMod p)) a11) := by
     intro p hp hpM
-    haveI : Fact p.Prime := ⟨hp⟩
+    have : Fact p.Prime := ⟨hp⟩
     set π := ZMod.castHom hpM (ZMod p) with hπ
     have h3 : (3 : ZMod p) ≠ 0 := by
       intro h

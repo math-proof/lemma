@@ -47,9 +47,9 @@ private lemma main
       simpa [hP₀] using hitem j₀
     refine Hyperreal.Lt.of.XEqCoe.XEqCoe.Lt (hitem j) h₀ ?_
     by_cases hPj : P i j
-    · simp only [hPj, if_true]
+    · simp only [hPj, ite_true]
       exact div_lt_div_of_pos_right (Real.exp_lt_exp.mpr (hmax j hPj hj)) hD₀
-    · simp only [hPj, if_false]
+    · simp only [hPj, ite_false]
       exact hw₀
   · by_cases hex : ∃ j, P i j ∧ off j = o
     · obtain ⟨j, hPj, rfl⟩ := hex

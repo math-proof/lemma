@@ -99,7 +99,7 @@ theorem isPolynomial_of_polynomial (p : K[X]) : IsPolynomial (p : PowerSeries K)
   simp only [IsPolynomial]
   have h : {n : ℕ | PowerSeries.coeff n (p : PowerSeries K) ≠ 0} ⊆ ↑p.support := by
     intro n hn
-    simp only [Set.mem_setOf_eq] at hn
+    simp only [Set.mem_ofPred_eq] at hn
     simp only [Finset.mem_coe, Polynomial.mem_support_iff]
     rw [Polynomial.coeff_coe] at hn
     exact hn
@@ -123,10 +123,10 @@ theorem isPolynomial_iff_exists_degree_bound (f : PowerSeries K) :
     simp only [IsPolynomial]
     apply Set.Finite.subset (Finset.finite_toSet (Finset.range N))
     intro n hn
-    simp only [Set.mem_setOf_eq] at hn
+    simp only [Set.mem_ofPred_eq] at hn
     simp only [Finset.coe_range, Set.mem_Iio]
     by_contra h
-    push_neg at h
+    push Not at h
     exact hn (hN n h)
 
 /-- A power series is a polynomial iff it equals the coercion of some polynomial.
@@ -143,7 +143,7 @@ theorem isPolynomial_iff_exists_polynomial (f : PowerSeries K) :
     rw [Polynomial.coeff_coe, PowerSeries.coeff_trunc]
     split_ifs with hn
     · rfl
-    · push_neg at hn
+    · push Not at hn
       exact hN n hn
   · intro ⟨p, hp⟩
     rw [hp]
@@ -165,7 +165,7 @@ theorem coe_toPolynomial (f : PowerSeries K) (hf : IsPolynomial f) :
   rw [Polynomial.coeff_coe, PowerSeries.coeff_trunc]
   split_ifs with hn
   · rfl
-  · push_neg at hn
+  · push Not at hn
     exact (hN n hn).symm
 
 /-- Converting a polynomial to a power series and back gives the original polynomial. -/
@@ -185,7 +185,7 @@ theorem isPolynomial_zero : IsPolynomial (0 : PowerSeries K) := by
   simp only [IsPolynomial]
   have : {n : ℕ | PowerSeries.coeff n (0 : PowerSeries K) ≠ 0} = ∅ := by
     ext n
-    simp only [Set.mem_setOf_eq, map_zero, ne_eq, not_true_eq_false, Set.mem_empty_iff_false]
+    simp only [Set.mem_ofPred_eq, map_zero, ne_eq, not_true_eq_false, Set.mem_empty_iff_false]
   rw [this]
   exact Set.finite_empty
 
@@ -207,10 +207,10 @@ theorem isPolynomial_add {f g : PowerSeries K} (hf : IsPolynomial f) (hg : IsPol
   have h : {n : ℕ | PowerSeries.coeff n (f + g) ≠ 0} ⊆
       {n : ℕ | PowerSeries.coeff n f ≠ 0} ∪ {n : ℕ | PowerSeries.coeff n g ≠ 0} := by
     intro n hn
-    simp only [Set.mem_setOf_eq, map_add, ne_eq] at hn
-    simp only [Set.mem_union, Set.mem_setOf_eq, ne_eq]
+    simp only [Set.mem_ofPred_eq, map_add, ne_eq] at hn
+    simp only [Set.mem_union, Set.mem_ofPred_eq, ne_eq]
     by_contra hc
-    push_neg at hc
+    push Not at hc
     rw [hc.1, hc.2, add_zero] at hn
     exact hn rfl
   exact Set.Finite.subset (Set.Finite.union hf hg) h
@@ -221,7 +221,7 @@ theorem isPolynomial_neg {f : PowerSeries K} (hf : IsPolynomial f) : IsPolynomia
   simp only [IsPolynomial] at *
   convert hf using 1
   ext n
-  simp only [Set.mem_setOf_eq, map_neg, neg_ne_zero]
+  simp only [Set.mem_ofPred_eq, map_neg, neg_ne_zero]
 
 /-- The difference of two polynomial power series is a polynomial.
 This is part of Theorem 7.5.2 (thm.fps.pol.ring). -/
@@ -249,9 +249,9 @@ theorem isPolynomial_mul {f g : PowerSeries K} (hf : IsPolynomial f) (hg : IsPol
     exact Set.Finite.subset (Finset.finite_toSet _) hsub
   have h : {n : ℕ | PowerSeries.coeff n (f * g) ≠ 0} ⊆ S := by
     intro n hn
-    simp only [Set.mem_setOf_eq] at hn
+    simp only [Set.mem_ofPred_eq] at hn
     by_contra hns
-    simp only [S, Set.mem_setOf_eq, not_exists, not_and] at hns
+    simp only [S, Set.mem_ofPred_eq, not_exists, not_and] at hns
     have hzero : ∀ i, i ≤ n → (PowerSeries.coeff i) f * (PowerSeries.coeff (n - i)) g = 0 := by
       intro i hi
       by_cases hif : (PowerSeries.coeff i) f = 0
@@ -282,8 +282,8 @@ theorem isPolynomial_smul {f : PowerSeries K} (c : K) (hf : IsPolynomial f) :
   have h : {n : ℕ | PowerSeries.coeff n (c • f) ≠ 0} ⊆
       {n : ℕ | PowerSeries.coeff n f ≠ 0} := by
     intro n hn
-    simp only [Set.mem_setOf_eq, map_smul, smul_eq_mul, ne_eq] at hn
-    simp only [Set.mem_setOf_eq, ne_eq]
+    simp only [Set.mem_ofPred_eq, map_smul, smul_eq_mul, ne_eq] at hn
+    simp only [Set.mem_ofPred_eq, ne_eq]
     intro hf'
     rw [hf', mul_zero] at hn
     exact hn rfl
@@ -309,14 +309,14 @@ def polynomialSubalgebra : Subalgebra K (PowerSeries K) where
   add_mem' := isPolynomial_add
   zero_mem' := isPolynomial_zero
   algebraMap_mem' := fun c => by
-    simp only [Set.mem_setOf_eq, IsPolynomial]
+    simp only [Set.mem_ofPred_eq, IsPolynomial]
     have h : {n : ℕ | PowerSeries.coeff n (algebraMap K (PowerSeries K) c) ≠ 0} ⊆ {0} := by
       intro n hn
-      simp only [Set.mem_setOf_eq, ne_eq] at hn
+      simp only [Set.mem_ofPred_eq, ne_eq] at hn
       simp only [Set.mem_singleton_iff]
       by_contra hne
       simp only [Algebra.algebraMap_eq_smul_one, map_smul, smul_eq_mul, PowerSeries.coeff_one,
-        if_neg hne, mul_zero, not_true_eq_false] at hn
+        ite_eq_right hne, mul_zero, not_true_eq_false] at hn
     exact Set.Finite.subset (Set.finite_singleton 0) h
 
 /-- The underlying subring of the polynomial subalgebra.
@@ -771,10 +771,10 @@ theorem isPolynomial_X : IsPolynomial (PowerSeries.X : PowerSeries K) := by
   simp only [IsPolynomial]
   have h : {n : ℕ | PowerSeries.coeff n (PowerSeries.X : PowerSeries K) ≠ 0} ⊆ {1} := by
     intro n hn
-    simp only [Set.mem_setOf_eq, PowerSeries.coeff_X, ne_eq] at hn
+    simp only [Set.mem_ofPred_eq, PowerSeries.coeff_X, ne_eq] at hn
     simp only [Set.mem_singleton_iff]
     by_contra hne
-    rw [if_neg hne] at hn
+    rw [ite_eq_right hne] at hn
     exact hn rfl
   exact Set.Finite.subset (Set.finite_singleton 1) h
 
@@ -784,10 +784,10 @@ theorem isPolynomial_C (c : K) : IsPolynomial (PowerSeries.C c) := by
   simp only [IsPolynomial]
   have h : {n : ℕ | PowerSeries.coeff n (PowerSeries.C c) ≠ 0} ⊆ {0} := by
     intro n hn
-    simp only [Set.mem_setOf_eq, ne_eq] at hn
+    simp only [Set.mem_ofPred_eq, ne_eq] at hn
     simp only [Set.mem_singleton_iff]
     by_contra hne
-    rw [PowerSeries.coeff_C, if_neg hne] at hn
+    rw [PowerSeries.coeff_C, ite_eq_right hne] at hn
     exact hn rfl
   exact Set.Finite.subset (Set.finite_singleton 0) h
 

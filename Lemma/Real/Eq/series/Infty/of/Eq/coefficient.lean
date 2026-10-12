@@ -46,7 +46,7 @@ private lemma main
     intro k x hx0 hxρ
     apply (summable_mul_left_iff (pow_ne_zero (k + 1) hx0)).mp
     rw [show (fun j : ℕ => x ^ (k + 1) * (c (k + 1 + j) * x ^ j)) =
-        fun j => c (j + (k + 1)) * x ^ (j + (k + 1)) from funext fun j => by ring]
+        fun j => c (j + (k + 1)) * x ^ (j + (k + 1)) from funext fun j => by ring_nf]
     exact (summable_nat_add_iff (f := fun n => c n * x ^ n) (k + 1)).mpr
       (hmaj c x hxρ hcs)
   have hcoef : ∀ k, (∀ i < k, c i = 0) → c k = 0 := by
@@ -56,7 +56,7 @@ private lemma main
         (f := fun j => |c (k + 1 + j)| * ρ ^ j) (pow_ne_zero _ hρ.ne')).mp
       convert (summable_nat_add_iff (f := fun n => |c n| * ρ ^ n) (k + 1)).mpr hcs using 1
       funext j
-      ring
+      ring_nf
     set M : ℝ := ∑' j, |c (k + 1 + j)| * ρ ^ j with hM
     have hMnonneg : 0 ≤ M := tsum_nonneg fun _ => by positivity
     have h_eq : ∀ (x : ℝ), x ≠ 0 → |x| < ρ →
@@ -97,7 +97,7 @@ private lemma main
           have hconv : (fun b : ℕ => c (b + 1 + k) * x ^ (b + 1)) =
               fun b => x * (c (k + 1 + b) * x ^ b) := by
             funext b
-            ring
+            ring_nf
           rw [hconv, hT.tsum_mul_left x]
         rw [hz, hfirst, hrest]
       rw [hconv, hst.tsum_mul_left (x ^ k)] at htail0

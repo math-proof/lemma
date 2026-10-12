@@ -8,9 +8,9 @@ import Lemma.Random.Integral.eq.MulRealPreimageSIntegral_MulEqS
 import Lemma.Random.Integral_EqAndEq.eq.MulRealPreimageProb.of.All_Eq
 import Lemma.Random.Integral_G.eq.TSum_MulPowIntegral_R_Add.of.In_Ico
 import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
-import Lemma.Random.NormRc.le.AbsR
+import Lemma.Random.NormClip.le.AbsR
 import Lemma.Random.Q.eq.AddIntegral_RcMul_Sum_MulTTSum_MulPowW.of.NeMulRealPreimageSProb_0.In_Ico
-import Lemma.Random.StronglyMeasurableRc
+import Lemma.Random.StronglyMeasurableClip
 import Lemma.Random.TSum_MulPowW.eq.AddWMul_Sum_MulProbSum_MulTTSum_MulPowW.of.In_Ico
 import Lemma.Random.V.eq.Integral.of.Measurable
 import Lemma.Random.V.eq.TSum_MulPowWRc.of.Ne0Real_Preimage.In_Ico
@@ -77,8 +77,7 @@ private lemma main
     have h₃ := cond_eq_zero_of_meas_eq_zero (Eq_0.of.EqReal_0 (M := M) θ hP)
     simp only [← hVi t x, h₃, integral_zero_measure]
   else
-    let rc (z : ℝ × S × A) : ℝ := clip z.1 (-M.env.R) M.env.R
-    have hVsum : Vloc θ t x = ∑' k, γ ^ k * ∫ z, M.Kf θ rc k z ∂(M.stageK θ x) := by
+    have hVsum : Vloc θ t x = ∑' k, γ ^ k * ∫ z, M.Kf θ (fun z ↦ clip z.1 (-M.env.R) M.env.R) k z ∂(M.stageK θ x) := by
       simpa [Vloc] using V.eq.TSum_MulPowWRc.of.Ne0Real_Preimage.In_Ico (M := M) θ t x h₀ h₁ hP
     rw [hVsum, Integral.eq.MulRealPreimageSIntegral_MulEqS h₁]
     have h₃ : ∀ ω, (if s t ω = x then (1:ℝ) else 0) * Qloc x (a t ω) =
@@ -92,8 +91,8 @@ private lemma main
     rw [Finset.mul_sum]
     have h₄ : ∀ u, ((M θ).real (s t ⁻¹' {x}))⁻¹ *
         ((M θ).real (s t ⁻¹' {x}) * M.pol.prob θ x u * Qloc x u) =
-        M.pol.prob θ x u * ((∫ ρ, rc (ρ, x, u) ∂(M.env.reward (x, u))) +
-          γ * ∑ y, (M.env.trans (x, u)).real {y} * ∑' k, γ ^ k * ∫ z, M.Kf θ rc k z ∂(M.stageK θ y)) := by
+        M.pol.prob θ x u * ((∫ ρ, clip (ρ, x, u).1 (-M.env.R) M.env.R ∂(M.env.reward (x, u))) +
+          γ * ∑ y, (M.env.trans (x, u)).real {y} * ∑' k, γ ^ k * ∫ z, M.Kf θ (fun z ↦ clip z.1 (-M.env.R) M.env.R) k z ∂(M.stageK θ y)) := by
       intro u
       rw [mul_assoc, inv_mul_cancel_left₀ hP]
       if hu : M.pol.prob θ x u = 0 then
@@ -103,15 +102,13 @@ private lemma main
         apply Q.eq.AddIntegral_RcMul_Sum_MulTTSum_MulPowW.of.NeMulRealPreimageSProb_0.In_Ico (M := M) θ t x u h₀ h₁ (mul_ne_zero hP hu)
     simp_rw [h₄]
     rw [TSum_MulPowW.eq.AddWMul_Sum_MulProbSum_MulTTSum_MulPowW.of.In_Ico (M := M) h₀ θ x]
-    rw [show M.Kf θ rc 0 = rc from funext fun w => rfl]
-    rw [W0.eq.Sum_MulProbIntegral.of.All_LeNorm.StronglyMeasurable (M := M) (Random.StronglyMeasurableRc (M := M)) (NormRc.le.AbsR (M := M)) θ x, Finset.mul_sum, ← Finset.sum_add_distrib]
-    have hK : ∀ k z, M.Kf θ (fun z => clip z.1 (-M.env.R) M.env.R) k z = M.Kf θ rc k z := fun k z => by simp [rc]
-    simp_rw [hK]
+    rw [show M.Kf θ (fun z ↦ clip z.1 (-M.env.R) M.env.R) 0 = (fun z ↦ clip z.1 (-M.env.R) M.env.R) from funext fun w => rfl]
+    rw [W0.eq.Sum_MulProbIntegral.of.All_LeNorm.StronglyMeasurable (M := M) (Random.StronglyMeasurableClip (M := M)) (NormClip.le.AbsR (M := M)) θ x, Finset.mul_sum, ← Finset.sum_add_distrib]
     apply Finset.sum_congr rfl
     intro u _
     ring
 
 
 -- created on 2023-03-29
--- updated on 2026-10-11
+-- updated on 2026-10-12
 

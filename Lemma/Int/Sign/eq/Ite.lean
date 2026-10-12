@@ -1,4 +1,4 @@
-import Mathlib.Data.Real.Sign
+import Mathlib.Basic.Real.Sign
 import sympy.sets.sets
 import sympy.Basic
 
@@ -10,9 +10,9 @@ private lemma main
   Real.sign x = if x > 0 then 1 else if x < 0 then -1 else 0 := by
 -- proof
   rcases lt_trichotomy x 0 with h | h | h
-  · rw [Real.sign_of_neg h, if_neg (not_lt.mpr h.le), if_pos h]
-  · rw [h, Real.sign_zero, if_neg (lt_irrefl 0), if_neg (lt_irrefl 0)]
-  · rw [Real.sign_of_pos h, if_pos h]
+  · rw [Real.sign_of_neg h, ite_eq_right (not_lt.mpr h.le), ite_eq_left h]
+  · rw [h, Real.sign_zero, ite_eq_right (lt_irrefl 0), ite_eq_right (lt_irrefl 0)]
+  · rw [Real.sign_of_pos h, ite_eq_left h]
 
 
 -- created on 2023-10-22

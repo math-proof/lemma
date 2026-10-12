@@ -12,10 +12,9 @@ open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Mode
 
 private lemma Er_bdd [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A] [DecidableEq S] {r : ℕ → (ℕ → ℝ × S × A) → ℝ} {s : ℕ → (ℕ → ℝ × S × A) → S} {a : ℕ → (ℕ → ℝ × S × A) → A} (h₁ : ∀ t, (· t) = (r t, s t, a t)) (M : Model Θ S A) (θ : Θ) (t : ℕ) :
   ‖∫ ω, r t ω ∂(M θ)‖ ≤ |M.env.R| := by
-  let rc (z : ℝ × S × A) : ℝ := clip z.1 (-M.env.R) M.env.R
   rw [Integral_R.eq.Sum_MulRealWRc h₁]
   calc
-    _ ≤ ∑ x, ‖M.env.init.real {x} * ∫ z, M.Kf θ rc t z ∂(M.stageK θ x)‖ := norm_sum_le _ _
+    _ ≤ ∑ x, ‖M.env.init.real {x} * ∫ z, M.Kf θ (fun z ↦ clip z.1 (-M.env.R) M.env.R) t z ∂(M.stageK θ x)‖ := norm_sum_le _ _
     _ ≤ ∑ x, M.env.init.real {x} * |M.env.R| := by
       refine Finset.sum_le_sum fun x _ => ?_
       rw [norm_mul, Real.norm_of_nonneg measureReal_nonneg]
@@ -60,4 +59,4 @@ private lemma main
 
 
 -- created on 2026-10-06
--- updated on 2026-10-11
+-- updated on 2026-10-12

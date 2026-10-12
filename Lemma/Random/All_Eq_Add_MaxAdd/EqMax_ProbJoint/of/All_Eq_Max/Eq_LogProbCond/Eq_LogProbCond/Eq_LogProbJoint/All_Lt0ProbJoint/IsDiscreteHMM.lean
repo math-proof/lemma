@@ -104,7 +104,7 @@ private lemma main
         s t (fun i => if h : i < t then ys0 ⟨i, h⟩ else b) + G a b + e (t + 1) a := by
     intro t a b ys0
     rw [h₂, h₂, (h₀ _).2 t, hpre t _ _ fun i hi => Fin.IteSnoc.eq.Ite.of.Le hi ys0 b a]
-    rw [dif_neg (lt_irrefl (t + 1)), dif_pos (Nat.lt_succ_self t), Fin.Snoc_Last.eq.Last,
+    rw [dite_eq_right (lt_irrefl (t + 1)), dite_eq_left (Nat.lt_succ_self t), Fin.Snoc_Last.eq.Last,
       Real.log_mul (h₁ _ _).ne' (mul_pos (hTt t a b) (hE _ a)).ne', Real.log_mul (hTt t a b).ne' (hE _ a).ne', hGt t a b, h₃]
     ring
   refine ⟨fun t => ?_, ?_⟩

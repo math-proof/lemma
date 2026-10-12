@@ -73,8 +73,7 @@ private lemma main
     have h₃ := Integral_MulEqSR_Add.eq.MulRealPreimageSWRc (M := M) h₁ θ t 0 x
     simp only [add_zero] at h₃
     have h₄ := Integral_MulEqS.eq.MulRealSum_MulProbSum_MulT h₁ (M := M) θ t x (Vloc θ (t + 1))
-    let rc (z : ℝ × S × A) : ℝ := clip z.1 (-M.env.R) M.env.R
-    have hVsum : Vloc θ t x = ∑' k, γ ^ k * ∫ z, M.Kf θ rc k z ∂(M.stageK θ x) := by
+    have hVsum : Vloc θ t x = ∑' k, γ ^ k * ∫ z, M.Kf θ (fun z ↦ clip z.1 (-M.env.R) M.env.R) k z ∂(M.stageK θ x) := by
       simpa [Vloc] using V.eq.TSum_MulPowWRc.of.Ne0Real_Preimage.In_Ico (M := M) θ t x h₀ h₁ hP
     rw [h₃, h₄, hVsum, TSum_MulPowW.eq.AddWMul_Sum_MulProbSum_MulTTSum_MulPowW.of.In_Ico (M := M) h₀ θ x, Mul_AddMul_MulMul.eq.Add_Mul.of.Ne_0 hP]
     congr 2
@@ -85,5 +84,5 @@ private lemma main
 
 
 -- created on 2023-03-27
--- updated on 2026-10-11
+-- updated on 2026-10-12
 

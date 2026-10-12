@@ -14,7 +14,7 @@ open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random 
 
 
 /--
-On a reachable state-action pair: `Q θ γ t x u = 𝔼[rc | x, u] + γ * ∑ y, T(x, u, y) * ∑' k, γ ^ k * W θ rc k y`.
+On a reachable state-action pair: `Q θ γ t x u = 𝔼[(fun z ↦ clip z.1 (-M.env.R) M.env.R) | x, u] + γ * ∑ y, T(x, u, y) * ∑' k, γ ^ k * W θ (fun z ↦ clip z.1 (-M.env.R) M.env.R) k y`.
 -/
 @[path]
 private lemma main
@@ -35,11 +35,10 @@ private lemma main
 -- imply
   let Q (θ : Θ) (t : ℕ) (x : S) (u : A) : ℝ :=
     𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = x ∧ a t = u);
-  let rc (z : ℝ × S × A) : ℝ := clip z.1 (-M.env.R) M.env.R
-  Q θ t x u = (∫ ρ, rc (ρ, x, u) ∂(M.env.reward (x, u))) +
-    γ * ∑ y, (M.env.trans (x, u)).real {y} * ∑' k, γ ^ k * ∫ z, M.Kf θ rc k z ∂(M.stageK θ y) := by
+  Q θ t x u = (∫ ρ, clip (ρ, x, u).1 (-M.env.R) M.env.R ∂(M.env.reward (x, u))) +
+    γ * ∑ y, (M.env.trans (x, u)).real {y} * ∑' k, γ ^ k * ∫ z, M.Kf θ (fun z ↦ clip z.1 (-M.env.R) M.env.R) k z ∂(M.stageK θ y) := by
 -- proof
-  intro Qθ rc
+  intro Qθ
   dsimp only [Qθ]
   obtain rfl : r = fun t ω ↦ (ω t).1 := funext₂ fun t ω ↦ (congrArg (·.1) (congrFun (h₁ t) ω)).symm
   obtain rfl : s = fun t ω ↦ (ω t).2.1 := funext₂ fun t ω ↦ (congrArg (·.2.1) (congrFun (h₁ t) ω)).symm
@@ -60,10 +59,10 @@ private lemma main
   rw [Integral_G.eq.TSum_MulPowIntegral_R_Add.of.In_Ico (M := M) h₀ h₁ θ _ t]
   rw [(Summable_MulPowIntegral_R_Add.of.In_Ico (M := M) h₀ h₁ θ _ t).tsum_eq_zero_add]
   have h0 : ∫ ω, r (t + 0) ω ∂(M θ)[|s t ⁻¹' {x} ∩ a t ⁻¹' {u}] =
-      ∫ ρ, rc (ρ, x, u) ∂(M.env.reward (x, u)) := by
+      ∫ ρ, clip (ρ, x, u).1 (-M.env.R) M.env.R ∂(M.env.reward (x, u)) := by
     rw [Integral.eq.MulMulRealPreimageProbIntegral_MulEqAndEq.of.All_Eq h₁, add_zero, Integral_MulEqAndEq.eq.MulMulRealPreimageProbIntegral_Rc.of.All_Eq h₁, inv_mul_cancel_left₀ h₂]
   have hk : ∀ k, ∫ ω, r (t + (k + 1)) ω ∂(M θ)[|s t ⁻¹' {x} ∩ a t ⁻¹' {u}] =
-      ∑ y, (M.env.trans (x, u)).real {y} * ∫ w, M.Kf θ rc k w ∂(M.stageK θ y) := by
+      ∑ y, (M.env.trans (x, u)).real {y} * ∫ w, M.Kf θ (fun z ↦ clip z.1 (-M.env.R) M.env.R) k w ∂(M.stageK θ y) := by
     intro k; rw [Integral.eq.MulMulRealPreimageProbIntegral_MulEqAndEq.of.All_Eq h₁, Integral_MulEqAndEq.eq.MulMulRealProbSum_MulTW.of.All_Eq h₁, inv_mul_cancel_left₀ h₂]
   rw [h0, pow_zero, one_mul]
   simp_rw [hk, pow_succ, mul_comm _ γ, mul_assoc γ]
@@ -71,4 +70,4 @@ private lemma main
 
 
 -- created on 2026-10-07
--- updated on 2026-10-11
+-- updated on 2026-10-12

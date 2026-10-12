@@ -22,18 +22,18 @@ private lemma main
   intro i j
   obtain h | rfl | h := lt_trichotomy j i
   ·
-    rw [if_pos h, GetMul_L.eq.AddSum_Mul_Star.of.All_All_Eq_0 hlow, hst]
+    rw [ite_eq_left h, GetMul_L.eq.AddSum_Mul_Star.of.All_All_Eq_0 hlow, hst]
     have := (hpos j).ne'
     field_simp
     ring
   ·
-    rw [if_neg (lt_irrefl j), if_pos rfl, GetMul_L.eq.AddSum_Mul_Star.of.All_All_Eq_0 hlow]
+    rw [ite_eq_right (lt_irrefl j), ite_eq_left rfl, GetMul_L.eq.AddSum_Mul_Star.of.All_All_Eq_0 hlow]
     simp only [RCLike.star_def, RCLike.mul_conj, ← RCLike.ofReal_pow, ← RCLike.ofReal_sum, ← RCLike.ofReal_add,
       RCLike.ofReal_re, add_sub_cancel_left, Real.sqrt_sq (norm_nonneg _)]
     obtain ⟨x, hx, hxz⟩ := RCLike.pos_iff_exists_ofReal.mp (hpos j)
     rw [← hxz, RCLike.norm_ofReal, abs_of_pos hx]
   ·
-    rw [if_neg (not_lt.mpr h.le), if_neg h.ne']
+    rw [ite_eq_right (not_lt.mpr h.le), ite_eq_right h.ne']
     exact hlow i j h
 
 

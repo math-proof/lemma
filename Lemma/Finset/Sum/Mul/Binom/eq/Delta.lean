@@ -26,7 +26,7 @@ private lemma main
   by_cases hd : d = 0
   · subst hd
     simp
-  · rw [if_neg hd, if_neg (by omega), mul_zero]
+  · rw [ite_eq_right hd, ite_eq_right (by omega), mul_zero]
 
 
 -- created on 2023-06-17

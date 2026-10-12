@@ -1,7 +1,7 @@
 import sympy.Basic
 import sympy.concrete.expr_with_limits
 import Mathlib.Algebra.Order.Archimedean.Real.Basic
-import Mathlib.Data.Finite.Prod
+import Mathlib.Basic.Finite.Prod
 import Mathlib.Data.Fintype.Lattice
 
 

@@ -21,8 +21,7 @@ private lemma main
   rw [Drop_Add.eq.DropDrop] at h_drop
   have h := Append.of.Eq.Eq h_take h_drop
   simp at h
-  rw [AddAdd.comm] at h
-  assumption
+  rwa [AddAdd.comm] at h
 
 
 -- created on 2025-10-29

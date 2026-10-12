@@ -12,7 +12,7 @@ private lemma main
   x = y := by
 -- proof
   by_contra hc
-  rw [if_neg hc] at h
+  rw [ite_eq_right hc] at h
   exact zero_ne_one h
 
 

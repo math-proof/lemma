@@ -1,12 +1,12 @@
 import Mathlib.Data.Fintype.Basic
 import Mathlib.Data.Finset.Max
-import Mathlib.Data.Real.Basic
+import Mathlib.Basic.Real.Basic
 import sympy.Basic
 
 
 @[path]
 private lemma main
-  {Ω : Type*} [Fintype Ω]
+  [Fintype Ω]
 -- given
   (X : Ω → ℝ)
   (t : ℝ) :
@@ -30,3 +30,4 @@ private lemma main
 
 
 -- created on 2026-09-26
+-- updated on 2026-10-12

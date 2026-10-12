@@ -1,5 +1,5 @@
 import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
-import Mathlib.Data.Complex.Basic
+import Mathlib.Basic.Complex.Basic
 import Mathlib.Order.Interval.Finset.Fin
 
 open Matrix

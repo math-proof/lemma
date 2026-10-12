@@ -78,16 +78,16 @@ private lemma main
     by_cases h0 : ⌈(α + β) / (2 * π) - 1 / 2⌉ = 0
     · rw [h0]; simp
     have hne : p * (⌈(α + β) / (2 * π) - 1 / 2⌉ : ℂ) ≠ 0 := mul_ne_zero hp (by exact_mod_cast h0)
-    rw [if_neg hne]
+    rw [ite_eq_right hne]
     if hgt : α + β > π then
-      rw [if_pos hgt]
+      rw [ite_eq_left hgt]
       have h1 : 1 / 2 < (α + β) / (2 * π) := by rw [lt_div_iff₀ (by positivity)]; linarith
       have h2 : (α + β) / (2 * π) ≤ 1 := by rw [div_le_iff₀ (by positivity)]; linarith
       symm
       rw [Int.ceil_eq_iff]
       constructor <;> push_cast <;> linarith
     else
-      rw [if_neg hgt]
+      rw [ite_eq_right hgt]
       have h3 : (α + β) / (2 * π) ≤ 1 / 2 := by rw [div_le_iff₀ (by positivity)]; linarith
       have h4 : -1 < (α + β) / (2 * π) := by rw [lt_div_iff₀ (by positivity)]; linarith
       have hle : ⌈(α + β) / (2 * π) - 1 / 2⌉ ≤ 0 := by

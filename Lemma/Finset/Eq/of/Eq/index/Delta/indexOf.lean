@@ -20,8 +20,8 @@ private lemma main
     exact fun u v e => Finset.card_image_iff.mp hc (Finset.mem_coe.mpr (Finset.mem_univ u)) (Finset.mem_coe.mpr (Finset.mem_univ v)) e
   subst ha hb
   by_cases hab : a = b
-  · rw [if_pos hab, if_pos (congrArg x hab)]
-  · rw [if_neg hab, if_neg (fun e => hab (hinj e))]
+  · rw [ite_eq_left hab, ite_eq_left (congrArg x hab)]
+  · rw [ite_eq_right hab, ite_eq_right (fun e => hab (hinj e))]
 
 
 -- created on 2020-10-25

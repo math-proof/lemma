@@ -4,7 +4,7 @@ open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model
 
 
 /--
-`Vc θ γ y = ∑' k, γ ^ k * ∫ z, Kf θ rc k z ∂(stageK θ y)`.
+`Vc θ γ y = ∑' k, γ ^ k * ∫ z, Kf θ (fun z ↦ clip z.1 (-M.env.R) M.env.R) k z ∂(stageK θ y)`.
 -/
 @[path]
 private lemma main
@@ -15,15 +15,13 @@ private lemma main
   (θ : Θ)
   (y : S) :
 -- imply
-  let rc (z : ℝ × S × A) : ℝ := clip z.1 (-M.env.R) M.env.R
-  M.Vc θ γ y = ∑' k, γ ^ k * ∫ z, M.Kf θ rc k z ∂(M.stageK θ y) := by
+  M.Vc θ γ y = ∑' k, γ ^ k * ∫ z, M.Kf θ (fun z ↦ clip z.1 (-M.env.R) M.env.R) k z ∂(M.stageK θ y) := by
 -- proof
-  intro rc
   unfold Model.Vc
   refine tsum_congr fun k => ?_
   dsimp only
   congr 1
-  simp only [Expectation.ofRV, expectation_real, Expectation.asRV_function, Measure.map_id, rc]
+  simp only [Expectation.ofRV, expectation_real, Expectation.asRV_function, Measure.map_id]
 
 
 -- created on 2026-10-11

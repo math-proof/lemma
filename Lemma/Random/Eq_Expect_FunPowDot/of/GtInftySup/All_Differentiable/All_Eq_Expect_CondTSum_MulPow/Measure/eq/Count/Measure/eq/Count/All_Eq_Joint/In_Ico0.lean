@@ -12,14 +12,14 @@ import sympy.vector.operators
 import sympy.concrete.sup
 import sympy.stats.cond_expectation
 import Lemma.Random.Differentiable_RealPreimageS.of.GtInftySup.All_Differentiable_Prob
-import Lemma.Random.AeHasSumAndNormG.le.MulSub1Abs_R.of.In_Ico
+import Lemma.Random.All_And_LeNormExtDotPow_Id.of.All_Eq_Joint.In_Ico
 import Lemma.Random.NormV.le.MulSub1Abs_R.of.In_Ico
 import Lemma.Random.Integral_SMul.eq.Zero.of.All_Differentiable_Prob
 import Lemma.Random.Integrable_Fun
 import Lemma.Random.Integrable.of.In_Ico
 import Lemma.Random.AeRealPreimageSS.ne.Zero
 import Lemma.Random.BddAbove_ImageNormFderiv.of.In_Ico.GtInftySup.All_Differentiable_Prob
-import Lemma.Random.AeNormR.le.Abs_R
+import Lemma.Random.All_LeNorm_Abs.of.All_Eq_Joint
 import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
 import Lemma.Random.V.eq.Integral.of.Measurable
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Filter Topology Random Real Measure
@@ -152,7 +152,7 @@ private lemma main
     congr 1
     have h₉ : ∀ᵐ ω ∂(M θ), ∑' k, γ ^ k * (r (t + k) ω + γ * Vloc θ (t + k + 1) (s (t + k + 1) ω) -
         Vloc θ (t + k) (s (t + k) ω)) = (∑' k, γ ^ k * r (t + k) ω) - Vloc θ t (s t ω) := by
-      filter_upwards [AeHasSumAndNormG.le.MulSub1Abs_R.of.In_Ico (M := M) h₀ h₁ θ t] with ω hG
+      filter_upwards [All_And_LeNormExtDotPow_Id.of.All_Eq_Joint.In_Ico (M := M) h₀ h₁ θ t] with ω hG
       have hb : ∀ k, |Vloc θ k (s k ω)| ≤ B := fun k => hBd k _
       set b : ℕ → ℝ := fun k => γ ^ k * Vloc θ (t + k) (s (t + k) ω) with hbd
       have hlim : Tendsto b atTop (𝓝 0) :=
@@ -223,7 +223,7 @@ private lemma main
   have hAdv : ∀ᵐ ω ∂(M θ), ∀ t,
       ‖∑' k, γ ^ k * (r (t + k) ω + γ * V θ (t + k + 1) (s (t + k + 1) ω) - V θ (t + k) (s (t + k) ω))‖ ≤
         (1 - γ)⁻¹ * (|M.env.R| + γ * B + B) := by
-    filter_upwards [AeNormR.le.Abs_R h₁ (M := M) θ, AeRealPreimageSS.ne.Zero (s := s) (M := M) θ] with ω hr hR t
+    filter_upwards [All_LeNorm_Abs.of.All_Eq_Joint h₁ (M := M) θ, AeRealPreimageSS.ne.Zero (s := s) (M := M) θ] with ω hr hR t
     have hb : ∀ n, |V θ n (s n ω)| ≤ B := fun n => by
       rw [hVr θ n _ (hR n)]
       exact hBd n _
@@ -249,7 +249,7 @@ private lemma main
             ∇[θ] (ℙ[M θ]((a₀ t) = (a t) | (s₀ t) = (s t)) : ℝ).log)) :=
     Eq_Expect_DotFunPow.of.GtInftySup.All_DifferentiableProb.Measure.eq.Count.Measure.eq.Count.All_Eq_Joint.In_Ico0 h₀ h₁ hS hA h₃ h₄
   have hRae : ∀ᵐ ω ∂(M θ), ∀ t, ‖∑' k, γ ^ k * r (t + k) ω‖ ≤ (1 - γ)⁻¹ * |M.env.R| := by
-    filter_upwards [AeNormR.le.Abs_R h₁ (M := M) θ] with ω hr t
+    filter_upwards [All_LeNorm_Abs.of.All_Eq_Joint h₁ (M := M) θ] with ω hr t
     refine tsum_of_norm_bounded ((hasSum_geometric_of_lt_one h₀.1 h₀.2).mul_right _) fun k => ?_
     rw [norm_mul, norm_pow, Real.norm_of_nonneg h₀.1]
     exact mul_le_mul_of_nonneg_left (hr _) (pow_nonneg h₀.1 k)

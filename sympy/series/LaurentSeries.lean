@@ -73,10 +73,10 @@ private theorem bitsFromList_support_finite (L : List ℕ) (hL : ∀ x ∈ L, x 
     {i | bitsFromList L hL i ≠ 0}.Finite := by
   apply Set.Finite.subset (Set.finite_lt_nat L.length)
   intro i hi
-  simp only [Set.mem_setOf_eq, bitsFromList, ne_eq] at hi ⊢
+  simp only [Set.mem_ofPred_eq, bitsFromList, ne_eq] at hi ⊢
   by_contra h
-  push_neg at h
-  simp only [dif_neg (not_lt.mpr h), not_true_eq_false] at hi
+  push Not at h
+  simp only [dite_eq_right (not_lt.mpr h), not_true_eq_false] at hi
 
 @[simp]
 private theorem bitsFromList_of_lt {L : List ℕ} {hL : ∀ x ∈ L, x < 2} {i : ℕ} (hi : i < L.length) :
@@ -131,8 +131,8 @@ private theorem bitsFromList_sum_eq (L : List ℕ) (hL : ∀ x ∈ L, x < 2) :
     simp only [Function.mem_support, ne_eq, bitsFromList] at hi
     simp only [Finset.coe_range, Set.mem_Iio]
     by_contra h
-    push_neg at h
-    simp only [dif_neg (not_lt.mpr h), Fin.val_zero, zero_mul, not_true_eq_false] at hi
+    push Not at h
+    simp only [dite_eq_right (not_lt.mpr h), Fin.val_zero, zero_mul, not_true_eq_false] at hi
 
 end BinaryRepresentation
 
@@ -149,7 +149,7 @@ theorem binaryRepresentation_exists (n : ℕ) : Nonempty (BinaryRepresentation n
 private theorem support_mul_pow_subset (bits : ℕ → Fin 2) :
     {i : ℕ | (bits i : ℕ) * 2^i ≠ 0} ⊆ {i | bits i ≠ 0} := by
   intro i hi
-  simp only [Set.mem_setOf_eq, ne_eq] at hi ⊢
+  simp only [Set.mem_ofPred_eq, ne_eq] at hi ⊢
   intro h
   apply hi
   simp [h]
@@ -176,12 +176,12 @@ private theorem bits_zero_eq_mod (n : ℕ) (r : BinaryRepresentation n) : (r.bit
         have : (∑ i ∈ hfin.toFinset \ {0}, (r.bits i : ℕ) * 2 ^ i) % 2 = 0 :=
           Nat.mod_eq_zero_of_dvd hsum_div
         omega
-      · simp only [Set.Finite.mem_toFinset, Set.mem_setOf_eq, pow_zero, mul_one, ne_eq,
+      · simp only [Set.Finite.mem_toFinset, Set.mem_ofPred_eq, pow_zero, mul_one, ne_eq,
                    not_not] at h0
         have hsum_div : 2 ∣ ∑ i ∈ hfin.toFinset, (r.bits i : ℕ) * 2 ^ i := by
           apply Finset.dvd_sum
           intro i hi
-          simp only [Set.Finite.mem_toFinset, Set.mem_setOf_eq, ne_eq] at hi
+          simp only [Set.Finite.mem_toFinset, Set.mem_ofPred_eq, ne_eq] at hi
           have hne : i ≠ 0 := by
             intro heq
             subst heq
@@ -211,7 +211,7 @@ private theorem bits_eq_zero_of_sum_eq_zero {r : BinaryRepresentation 0} (i : �
       omega
     positivity
   have hmem : i ∈ hfin.toFinset := by
-    simp only [Set.Finite.mem_toFinset, Set.mem_setOf_eq, ne_eq]
+    simp only [Set.Finite.mem_toFinset, Set.mem_ofPred_eq, ne_eq]
     omega
   have hsum_pos : ∑ j ∈ hfin.toFinset, (r.bits j : ℕ) * 2^j > 0 := by
     apply Finset.sum_pos'
@@ -246,7 +246,7 @@ private theorem sum_decomposition (bits : ℕ → Fin 2) (hfin : {i | bits i ≠
   have hsup : (Function.support (fun i => (bits i : ℕ) * 2^i)).Finite := by
     apply hfin.subset
     intro i hi
-    simp only [Function.mem_support, ne_eq, Set.mem_setOf_eq] at hi ⊢
+    simp only [Function.mem_support, ne_eq, Set.mem_ofPred_eq] at hi ⊢
     intro hb
     apply hi
     simp [hb]
@@ -267,7 +267,7 @@ private theorem sum_decomposition (bits : ℕ → Fin 2) (hfin : {i | bits i ≠
                   Nat.pred '' {i | bits i ≠ 0} := by
         intro i hi
         simp only [Function.mem_support, ne_eq] at hi
-        simp only [Set.mem_image, Set.mem_setOf_eq]
+        simp only [Set.mem_image, Set.mem_ofPred_eq]
         use i + 1
         constructor
         · intro hb
@@ -332,8 +332,8 @@ private def BinaryRepresentation.shift {n : ℕ} (r : BinaryRepresentation n) :
     have h := r.finite_support
     have hsub : {i | r.bits (i + 1) ≠ 0} ⊆ Nat.pred '' {i | r.bits i ≠ 0} := by
       intro i hi
-      simp only [Set.mem_setOf_eq, ne_eq] at hi
-      simp only [Set.mem_image, Set.mem_setOf_eq, ne_eq]
+      simp only [Set.mem_ofPred_eq, ne_eq] at hi
+      simp only [Set.mem_image, Set.mem_ofPred_eq, ne_eq]
       use i + 1, hi
       rfl
     exact Set.Finite.subset (h.image _) hsub
@@ -484,7 +484,7 @@ private theorem abs_div_three_lt (n : ℤ) (hn : n ≠ 0) :
       have h2 : 3 * q + d.toInt ≥ 2 := by omega
       have h3' : 3 * q + d.toInt > 0 := by omega
       rw [abs_of_pos hqpos, hn_eq, abs_of_pos h3']; omega
-    · push_neg at hqpos
+    · push Not at hqpos
       have hqneg : q < 0 := by omega
       have h1 : 3 * q ≤ -3 := by omega
       have h2 : 3 * q + d.toInt ≤ -2 := by omega
@@ -494,7 +494,7 @@ private theorem abs_div_three_lt (n : ℤ) (hn : n ≠ 0) :
 /-- The zero representation for n = 0. -/
 private def zeroRep : BalancedTernaryRepresentation 0 where
   digits := fun _ => 0
-  finite_support := by simp only [ne_eq, not_true_eq_false, Set.setOf_false, Set.finite_empty]
+  finite_support := by simp only [ne_eq, not_true_eq_false, Set.ofPred_false, Set.finite_empty]
   sum_eq := by simp only [BalancedTernaryDigit.toInt_zero, zero_mul, finsum_zero]
 
 /-- Helper: the digits function for prepending a digit. -/
@@ -514,12 +514,12 @@ private theorem prependDigits_finite_support (d : BalancedTernaryDigit)
     {i | prependDigits d f i ≠ 0}.Finite := by
   have hsub : {i | prependDigits d f i ≠ 0} ⊆ {0} ∪ Nat.succ '' {i | f i ≠ 0} := by
     intro i hi
-    simp only [Set.mem_setOf_eq, ne_eq] at hi
+    simp only [Set.mem_ofPred_eq, ne_eq] at hi
     cases i with
     | zero => left; exact Set.mem_singleton 0
     | succ i =>
       right
-      simp only [Set.mem_image, Set.mem_setOf_eq, ne_eq]
+      simp only [Set.mem_image, Set.mem_ofPred_eq, ne_eq]
       use i
       simp [prependDigits] at hi
       exact ⟨hi, rfl⟩
@@ -542,7 +542,7 @@ private theorem prependDigits_sum (d : BalancedTernaryDigit) (f : ℕ → Balanc
     | succ i =>
       right; use i; simp [prependDigits] at hi
       refine ⟨?_, rfl⟩
-      simp only [Set.mem_setOf_eq]
+      simp only [Set.mem_ofPred_eq]
       exact (BalancedTernaryDigit.ne_zero_iff_toInt_ne_zero _).mpr hi
   rw [finsum_eq_sum_of_support_subset _ hsupp_sub]
   have hS_eq : hS_fin.toFinset = {0} ∪ (hf.toFinset.image Nat.succ) := by
@@ -567,7 +567,7 @@ private theorem prependDigits_sum (d : BalancedTernaryDigit) (f : ℕ → Balanc
     intro i hi
     simp only [Function.mem_support, ne_eq, mul_eq_zero, pow_eq_zero_iff', OfNat.ofNat_ne_zero,
       false_and, or_false] at hi
-    rw [Finset.mem_coe, Set.Finite.mem_toFinset, Set.mem_setOf_eq]
+    rw [Finset.mem_coe, Set.Finite.mem_toFinset, Set.mem_ofPred_eq]
     exact (BalancedTernaryDigit.ne_zero_iff_toInt_ne_zero _).mpr hi
   simp only [hfinsum_eq]
 
@@ -709,7 +709,7 @@ theorem balancedTernaryRepresentation_unique (n : ℤ)
     intro i hi
     simp only [Finset.coe_range, Set.mem_Iio]
     by_contra hc
-    push_neg at hc
+    push Not at hc
     have hd : r₁.digits i = 0 := h₁ i hc
     change (r₁.digits i).toInt * (3 : ℤ)^i ≠ 0 at hi
     rw [hd, BalancedTernaryDigit.toInt_zero, zero_mul] at hi
@@ -720,7 +720,7 @@ theorem balancedTernaryRepresentation_unique (n : ℤ)
     intro i hi
     simp only [Finset.coe_range, Set.mem_Iio]
     by_contra hc
-    push_neg at hc
+    push Not at hc
     have hd : r₂.digits i = 0 := h₂ i hc
     change (r₂.digits i).toInt * (3 : ℤ)^i ≠ 0 at hi
     rw [hd, BalancedTernaryDigit.toInt_zero, zero_mul] at hi
@@ -880,7 +880,7 @@ theorem IsLaurentSeries.support_bddBelow {f : DoublyInfinitePowerSeries K}
   use N
   intro n hn
   by_contra h
-  push_neg at h
+  push Not at h
   exact hn (hN n h)
 
 /-- Convert a Mathlib LaurentSeries to a DoublyInfinitePowerSeries -/
@@ -975,7 +975,7 @@ def toLaurentSeries (f : DoublyInfinitePowerSeries K) (hf : IsLaurentSeries f) :
   -- hn : n ∈ {n | coeff f n ≠ 0}
   change coeff f n ≠ 0 at hn
   by_contra h
-  push_neg at h
+  push Not at h
   exact hn (hN n h)
 
 /-- The round-trip from LaurentSeries to DoublyInfinitePowerSeries and back gives the same series -/
@@ -1307,7 +1307,7 @@ theorem torsion_example :
       have hx1 : x ≠ 1 := h.2
       have : (Finsupp.single 0 (1 : K) - Finsupp.single 1 1 : ℤ →₀ K) x = 0 := by
         rw [Finsupp.sub_apply, Finsupp.single_apply, Finsupp.single_apply]
-        rw [if_neg (hx0.symm), if_neg (hx1.symm)]
+        rw [ite_eq_right (hx0.symm), ite_eq_right (hx1.symm)]
         ring
       exact hx this
     rw [Finset.sum_subset hsup]
@@ -1348,7 +1348,7 @@ theorem bounded_sum_eq {n : ℤ} (r : BalancedTernaryRepresentation n) (k : ℕ)
   intro i hi
   simp only [Finset.coe_range, Set.mem_Iio]
   by_contra hc
-  push_neg at hc
+  push Not at hc
   have hd : r.digits i = 0 := hk i hc
   change (r.digits i).toInt * (3 : ℤ)^i ≠ 0 at hi
   rw [hd, BalancedTernaryDigit.toInt_zero, zero_mul] at hi

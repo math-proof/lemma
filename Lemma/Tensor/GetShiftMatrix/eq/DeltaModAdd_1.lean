@@ -26,15 +26,15 @@ private lemma main
     simp
   ·
     have h2 : 1 < n := by omega
-    rw [if_neg (by omega : ¬ ((0 : ℕ) = n - 1)), if_pos (by omega : (0 : ℕ) < n - 1)]
+    rw [ite_eq_right (by omega : ¬ ((0 : ℕ) = n - 1)), ite_eq_left (by omega : (0 : ℕ) < n - 1)]
     by_cases hi_last : (i : ℕ) = n - 1
     ·
-      rw [if_pos hi_last]
+      rw [ite_eq_left hi_last]
       congr 1
       have hie : (i : ℕ) + 1 = n := by omega
       rw [hie, Nat.mod_self]
     ·
-      rw [if_neg hi_last, if_pos (by simp; omega : (0 : ℕ) ≤ (i : ℕ) ∧ (i : ℕ) < n - 1)]
+      rw [ite_eq_right hi_last, ite_eq_left (by simp; omega : (0 : ℕ) ≤ (i : ℕ) ∧ (i : ℕ) < n - 1)]
       rw [Nat.mod_eq_of_lt (by omega : (i : ℕ) + 1 < n)]
 
 

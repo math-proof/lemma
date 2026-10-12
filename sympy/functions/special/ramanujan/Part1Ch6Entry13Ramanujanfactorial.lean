@@ -387,17 +387,17 @@ private theorem Rdiff_pair2 (a b : ℕ) : Rdiff2 (a, b) + Rdiff2 (b, a) = 0 := b
         linarith
       · have hpar2 : a % 2 ≠ b % 2 := by omega
         have hs := sign_add_ne a b hpar2
-        simp [hab, hpar, hab_le, hba_nle]
+        simp [hpar, hab_le, hba_nle]
         linarith
     · have hba_le : b ≤ a := le_of_lt h
       have hab_nle : ¬ (a ≤ b) := by omega
       by_cases hpar : a % 2 = b % 2
       · have hs := sign_add_same b a hpar.symm
-        simp [hab, hpar, hba_le, hab_nle, Ne.symm hab]
+        simp [hpar, hba_le, hab_nle, Ne.symm hab]
         linarith
       · have hpar2 : b % 2 ≠ a % 2 := by omega
         have hs := sign_add_ne b a hpar2
-        simp [hab, hpar, hba_le, hab_nle]
+        simp [hpar, hba_le, hab_nle]
         linarith
 
 private theorem R_eq_coeff2 (N : ℕ) (_hN : N ≠ 0) :

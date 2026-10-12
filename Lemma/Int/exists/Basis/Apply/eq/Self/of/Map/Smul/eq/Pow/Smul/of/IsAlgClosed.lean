@@ -56,7 +56,7 @@ theorem X_pow_dvd_pseq (a : ℕ → k) (i : ℕ) : X ^ p ∣ pseq p a i := by
 omit [IsAlgClosed k] [CharP k p] in
 theorem coeff_pseq_eq_zero (a : ℕ → k) (i : ℕ) {n : ℕ} (hn : n < p) : (pseq p a i).coeff n = 0 := by
   obtain ⟨q, hq⟩ := X_pow_dvd_pseq (p := p) a i
-  rw [hq, coeff_X_pow_mul', if_neg (not_le.mpr hn)]
+  rw [hq, coeff_X_pow_mul', ite_eq_right (not_le.mpr hn)]
 
 omit [IsAlgClosed k] [CharP k p] in
 theorem eval_zero_pseq (a : ℕ → k) (i : ℕ) : (pseq p a i).eval 0 = 0 := by
@@ -189,7 +189,7 @@ theorem exists_ne_zero_fixed (w : V) (hw : w ≠ 0) : ∃ x : V, x ≠ 0 ∧ φ 
   let a : ℕ → k := fun i => if h : i < m' + 1 then af ⟨i, h⟩ else 0
   have ha_apply : ∀ i : Fin (m' + 1), a i = af i := fun i => by
     show (if h : (i : ℕ) < m' + 1 then af ⟨i, h⟩ else 0) = af i
-    rw [dif_pos i.isLt]
+    rw [dite_eq_left i.isLt]
 
   have ha0 : a 0 ≠ 0 := by
     intro h0

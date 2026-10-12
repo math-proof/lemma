@@ -57,8 +57,7 @@ private lemma main
           simp [Function.comp_apply] at h2
           apply h2.symm.trans
           simp
-        rw [this]
-        assumption }
+        rwa [this] }
 -- swaps of position 0 with position j preserve s
   have hmem_swap : ∀ j : Fin n, j ≠ ⟨0, hn⟩ → Equiv.swap ⟨0, hn⟩ j ∈ T := by
     intro j hj x hx

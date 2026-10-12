@@ -1254,7 +1254,7 @@ theorem canonicalDcd_exists_unique (σ : Perm α) :
           -- l.length > 1 since x is not a fixed point
           have hlen : 1 < l.length := by
             by_contra hlen'
-            push_neg at hlen'
+            push Not at hlen'
             have hlen1 : l.length = 1 := by
               have hpos : 0 < l.length := List.length_pos_iff.mpr hne_l
               omega
@@ -1306,7 +1306,7 @@ theorem canonicalDcd_exists_unique (σ : Perm α) :
               exact hnodup'.1 l hl'
             have hσx : σ x = x := by
               rw [Perm.mem_support] at hfixed
-              push_neg at hfixed
+              push Not at hfixed
               exact hfixed
             have hprod_x := formPerm_prod_apply_eq hpwd' hl' hx
             have hfp_x : l.formPerm x = x := by
@@ -1316,7 +1316,7 @@ theorem canonicalDcd_exists_unique (σ : Perm α) :
                 _ = x := hσx
             have hlen : l.length ≤ 1 := by
               by_contra hlen'
-              push_neg at hlen'
+              push Not at hlen'
               rw [List.formPerm_apply_mem_eq_self_iff l hnodup_l x hx] at hfp_x
               omega
             have hlen1 : l.length = 1 := by
@@ -1358,7 +1358,7 @@ theorem canonicalDcd_exists_unique (σ : Perm α) :
           -- l'.length > 1 since x is not a fixed point
           have hlen' : 1 < l'.length := by
             by_contra hlen''
-            push_neg at hlen''
+            push Not at hlen''
             have hlen1 : l'.length = 1 := by
               have hpos : 0 < l'.length := List.length_pos_iff.mpr hne_l'
               omega
@@ -1415,7 +1415,7 @@ theorem canonicalDcd_exists_unique (σ : Perm α) :
             exact hnodup'.1 l' hl'_mem
           have hσx : σ x = x := by
             rw [Perm.mem_support] at hx_fixed
-            push_neg at hx_fixed
+            push Not at hx_fixed
             exact hx_fixed
           have hprod_x := formPerm_prod_apply_eq hpwd' hl'_mem hx_l'
           have hfp_x : l'.formPerm x = x := by
@@ -1425,7 +1425,7 @@ theorem canonicalDcd_exists_unique (σ : Perm α) :
               _ = x := hσx
           have hlen : l'.length ≤ 1 := by
             by_contra hlen'
-            push_neg at hlen'
+            push Not at hlen'
             rw [List.formPerm_apply_mem_eq_self_iff l' hnodup_l' x hx_l'] at hfp_x
             omega
           have hlen1 : l'.length = 1 := by

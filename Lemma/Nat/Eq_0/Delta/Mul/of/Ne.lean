@@ -11,9 +11,10 @@ private lemma main
 -- imply
   (if x = k then (1 : ℝ) else 0) * (if y = k then 1 else 0) = 0 := by
 -- proof
-  by_cases h₁ : x = k
-  · rw [if_pos h₁, if_neg (fun h₂ => h (h₁.trans h₂.symm)), mul_zero]
-  · rw [if_neg h₁, zero_mul]
+  if h₁ : x = k then
+    rw [ite_eq_left h₁, ite_eq_right (fun h₂ => h (h₁.trans h₂.symm)), mul_zero]
+  else
+    rw [ite_eq_right h₁, zero_mul]
 
 
 -- created on 2020-02-06

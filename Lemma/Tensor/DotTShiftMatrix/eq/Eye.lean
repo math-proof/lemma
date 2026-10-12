@@ -74,7 +74,7 @@ private lemma eye_aux
           simp only [hqk, hpk]
           simp only [id, Nat.Delta.eq.Ite, ← Fin.val_eq_val]
           have hkn : (k : ℕ) ≠ j₀ := fun h => hk (Fin.ext (by simp; exact h))
-          simp [if_neg (show ¬ j₀ = i₀ by grind), if_neg (show ¬j₀ < i₀ by grind), if_neg (show ¬↑k = j₀ by grind), if_pos h_lt, if_neg (show ¬ i₀ = j₀ by grind)]
+          simp [ite_eq_right (show ¬ j₀ = i₀ by grind), ite_eq_right (show ¬j₀ < i₀ by grind), ite_eq_right (show ¬↑k = j₀ by grind), ite_eq_left h_lt, ite_eq_right (show ¬ i₀ = j₀ by grind)]
           split_ifs
           omega
           apply Tensor.EqMul_0'0.nat

@@ -22,9 +22,9 @@ private lemma main
     (0 : Tensor α (Tensor.matmul_shape [n] (n' :: kk0 :: rest))) := by
 -- proof
   unfold Tensor.einsum
-  rw [dif_neg (by simp), dif_neg (by simp), dif_pos (by simp)]
+  rw [dite_eq_right (by simp), dite_eq_right (by simp), dite_eq_left (by simp)]
   simp (config := { zeta := true }) only []
-  rw [dif_neg (by simp)]
+  rw [dite_eq_right (by simp)]
   let bs' := (n' :: kk0 :: rest).take ((n' :: kk0 :: rest).length - 2)
   let nn1 := (n' :: kk0 :: rest)[rest.length]
   let nn := n ⊔ nn1
@@ -68,7 +68,7 @@ private lemma main
   have hp : (bs' ++ [1, kk]).eraseIdx ((n' :: kk0 :: rest).length - 2) =
       Tensor.matmul_shape [n] (n' :: kk0 :: rest) := by
     unfold Tensor.matmul_shape
-    rw [dif_neg (by simp), dif_neg (by simp), dif_pos (by simp)]
+    rw [dite_eq_right (by simp), dite_eq_right (by simp), dite_eq_left (by simp)]
     simp [bs', kk]
     rw [List.EraseIdxAppend.eq.Append_EraseIdx.of.LeLength (by grind)]
     simp only [List.EraseIdx.eq.Append_Drop_Add_1]

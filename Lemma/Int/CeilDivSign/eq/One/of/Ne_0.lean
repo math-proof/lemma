@@ -41,8 +41,7 @@ private lemma main
     ·
       have h_one_le_d : (1 : ℤ) ≤ d := by
         have := LeSign.of.Gt_0 h₀
-        rw [EqSign_1.of.Gt_0 h₀] at this
-        assumption
+        rwa [EqSign_1.of.Gt_0 h₀] at this
       have h_d_pos : (d : α) > 0 := by simpa using GtCoeS.of.Gt (R := α) h₀
       rw [← Div.eq.One.of.Gt_0 h_d_pos]
       exact LeDivS.of.Le.Gt_0 (LeCoeS.of.Le (R := α) h_one_le_d) h_d_pos

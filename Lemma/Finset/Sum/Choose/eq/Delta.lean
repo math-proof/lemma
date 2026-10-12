@@ -38,7 +38,7 @@ private lemma main
         by_cases hni : n = i
         · subst hni
           simp
-        · rw [if_neg (by omega), if_neg hni, mul_zero]
+        · rw [ite_eq_right (by omega), ite_eq_right hni, mul_zero]
 
 
 -- created on 2023-08-20

@@ -46,7 +46,7 @@ private lemma main
     have hpi : Real.arccos (x / √(x ^ 2 + y ^ 2)) ≤ π / 2 := Real.arccos_le_pi_div_two.mpr hps
     have hsink : |y| / √(x ^ 2 + y ^ 2) = Real.sin (Real.arccos (x / √(x ^ 2 + y ^ 2))) := by
       rw [Real.sin_arccos, hsqrt]
-    rw [if_pos hge, hsink]
+    rw [ite_eq_left hge, hsink]
     exact (Real.arcsin_sin
       (by linarith [Real.arccos_nonneg (x / √(x ^ 2 + y ^ 2)), Real.pi_pos]) hpi).symm
   ·
@@ -67,7 +67,7 @@ private lemma main
         π - Real.arcsin (|y| / √(x ^ 2 + y ^ 2)) :=
       Real.arccos_cos (by linarith [hv2, Real.pi_pos]) (by linarith [hv])
     rw [hcos] at hθ
-    rw [if_neg (by linarith : ¬ x ≥ 0), hθ]
+    rw [ite_eq_right (by linarith : ¬ x ≥ 0), hθ]
 
 
 -- created on 2020-12-03

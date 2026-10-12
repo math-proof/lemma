@@ -61,7 +61,7 @@ private lemma main
         rw [he2 c hc, hT, Matrix.fromCols_apply_inr, hB₂, Matrix.of_apply]
         have hcd : ((d : ℤ) + ((c - d : ℕ) : ℤ) - (c : ℤ)) = 0 := by push_cast [Nat.cast_sub (by omega : d ≤ (c : ℕ))]; ring
         simp only [hcd, zpow_zero, one_mul]
-        rw [if_pos (by omega), show (c : ℕ) - ((c : ℕ) - d) = d by omega, Nat.choose_self, Nat.cast_one]
+        rw [ite_eq_left (by omega), show (c : ℕ) - ((c : ℕ) - d) = d by omega, Nat.choose_self, Nat.cast_one]
     ·
       intro k c hkc
       have hkc : (c : ℕ) < k := hkc
@@ -73,7 +73,7 @@ private lemma main
       else
         rw [he2 c hc, hT, Matrix.fromCols_apply_inr, hB₂, Matrix.of_apply]
         simp only
-        rw [if_pos (by omega), Nat.choose_eq_zero_of_lt (by omega), Nat.cast_zero, mul_zero]
+        rw [ite_eq_left (by omega), Nat.choose_eq_zero_of_lt (by omega), Nat.cast_zero, mul_zero]
   have hmain := congrArg Matrix.det h5
   rw [Matrix.det_mul, Matrix.det_submatrix_equiv_self, hT1, mul_one, hrows, hT, Matrix.fromRows_mul_fromCols] at hmain
   have hz : A₁ * B₂ = 0 := by

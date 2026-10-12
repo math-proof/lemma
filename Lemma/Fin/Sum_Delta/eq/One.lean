@@ -18,7 +18,7 @@ private lemma main
   · simp [Nat.Delta.eq.Ite]
   · intro y _ hy
     simp only [Nat.Delta.eq.Ite]
-    exact if_neg (fun hcon => hy (Fin.ext hcon))
+    exact ite_eq_right (fun hcon => hy (Fin.ext hcon))
   · intro hx
     exact False.elim (hx (Finset.mem_univ j))
 

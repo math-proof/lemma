@@ -4,9 +4,9 @@ import sympy.stats.hidden_markov_sequence
 import sympy.core.power
 import sympy.vector.Basic
 import sympy.Basic
-import Lemma.Random.MEqR_Rc
+import Lemma.Random.MEq_Clip.of.All_Eq
 import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
-import Lemma.Random.NormRc.le.AbsR
+import Lemma.Random.NormClip.le.AbsR
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 
 
@@ -51,7 +51,7 @@ private lemma main
     have := cond_isProbabilityMeasure (μ := M θ) hB
     have hae : ∀ᵐ ω ∂(M θ)[|B], ∀ k, ‖r k ω‖ ≤ |M.env.R| := by
       apply cond_absolutelyContinuous.ae_le
-      exact ae_all_iff.2 fun k => (MEqR_Rc h₁ (M := M) θ k).mono fun ω h => by rw [h]; exact NormRc.le.AbsR (M := M) _
+      exact ae_all_iff.2 fun k => (MEq_Clip.of.All_Eq h₁ (M := M) θ k).mono fun ω h => by rw [h]; exact NormClip.le.AbsR (M := M) _
     have hm : ∀ k, Measurable (r k) := fun k =>
       Random.Measurable.of.All_Eq.fst h₁ k
     have hF : ∀ k, Integrable (fun ω => γ ^ k * r (t + k) ω) (M θ)[|B] := fun k =>

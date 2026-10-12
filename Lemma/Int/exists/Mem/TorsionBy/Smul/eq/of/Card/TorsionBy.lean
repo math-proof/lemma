@@ -152,9 +152,9 @@ private lemma  mulL_surjective
     Surjective (mulL (M := M) ℓ m) := by
   set f := mulL (M := M) ℓ m with hf
   have hℓ0 : ℓ ≠ 0 := hℓ.ne'
-  haveI hfin1 : Finite (torsionBy ℤ M ((ℓ ^ (m + 1) : ℕ) : ℤ)) :=
+  have hfin1 : Finite (torsionBy ℤ M ((ℓ ^ (m + 1) : ℕ) : ℤ)) :=
     Nat.finite_of_card_ne_zero (by rw [hm1]; positivity)
-  haveI hfin0 : Finite (torsionBy ℤ M ((ℓ ^ m : ℕ) : ℤ)) :=
+  have hfin0 : Finite (torsionBy ℤ M ((ℓ ^ m : ℕ) : ℤ)) :=
     Nat.finite_of_card_ne_zero (by rw [hm]; positivity)
 
   have hmul := Submodule.card_eq_card_quotient_mul_card (LinearMap.ker f)

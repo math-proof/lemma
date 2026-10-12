@@ -55,7 +55,7 @@ private lemma main
   | nil =>
     show Tensor.einsum X (0 : Tensor α s') = _
     unfold Tensor.einsum
-    rw [dif_pos (by simp)]
+    rw [dite_eq_left (by simp)]
     rw [Tensor.EqMul_0'0.left _]
     exact Tensor.EqCast_0'0.of.Eq (by simp [Tensor.matmul_shape])
   | cons n s₁ =>
@@ -65,7 +65,7 @@ private lemma main
       unfold Tensor.einsum
       cases s' with
       | nil =>
-        rw [dif_neg (by simp), dif_pos (by simp)]
+        rw [dite_eq_right (by simp), dite_eq_left (by simp)]
         exact (congrArg (fun t => cast _ t)
           (by
             let i : Fin [].prod := ⟨0, by simp⟩
@@ -74,11 +74,11 @@ private lemma main
             exact Tensor.EqMul_0'0.right X)).trans
           (Tensor.EqCast_0'0.of.Eq (by
             unfold Tensor.matmul_shape
-            rw [dif_neg (by simp), dif_pos (by simp)]))
+            rw [dite_eq_right (by simp), dite_eq_left (by simp)]))
       | cons n' s₂ =>
         cases s₂ with
         | nil =>
-          rw [dif_neg (by simp), dif_neg (by simp), dif_pos (by simp)]
+          rw [dite_eq_right (by simp), dite_eq_right (by simp), dite_eq_left (by simp)]
           let nn := n ⊔ n'
           let Xr0 : Tensor α [nn] := X.resize ⟨0, by simp⟩ nn
           let Yr0 : Tensor α [nn] := (0 : Tensor α [n']).resize ⟨0, by simp⟩ nn
@@ -96,10 +96,10 @@ private lemma main
         have h2 : 2 ≤ (n :: a :: b).length := by simp
         show Tensor.einsum X (0 : Tensor α []) = _
         unfold Tensor.einsum
-        rw [dif_neg (by omega), dif_pos (by simp)]
+        rw [dite_eq_right (by omega), dite_eq_left (by simp)]
         have hs : (n :: a :: b) = Tensor.matmul_shape (n :: a :: b) [] := by
           unfold Tensor.matmul_shape
-          rw [dif_neg (by omega), dif_pos (by simp)]
+          rw [dite_eq_right (by omega), dite_eq_left (by simp)]
         exact (congrArg (fun t => cast _ t)
           (by
             let i : Fin [].prod := ⟨0, by simp⟩
@@ -116,8 +116,8 @@ private lemma main
             simp
           show Tensor.einsum X (0 : Tensor α [n']) = _
           unfold Tensor.einsum
-          rw [dif_neg (by simp), dif_neg (by simp), dif_neg (by simp),
-            dif_pos (by simp)]
+          rw [dite_eq_right (by simp), dite_eq_right (by simp), dite_eq_right (by simp),
+            dite_eq_left (by simp)]
           simp (config := { zeta := true }) only []
           let bs := s.take (s.length - 2)
           let k := s[s.length - 2]
@@ -151,8 +151,8 @@ private lemma main
           have hp : (bs ++ [k, 1]).eraseIdx (s.length - 1) =
               Tensor.matmul_shape s [n'] := by
             unfold Tensor.matmul_shape
-            rw [dif_neg (by simp [s]), dif_neg (by simp), dif_neg (by simp [s]),
-              dif_pos (by simp)]
+            rw [dite_eq_right (by simp [s]), dite_eq_right (by simp), dite_eq_right (by simp [s]),
+              dite_eq_left (by simp)]
             simp [bs, k]
             rw [List.EraseIdxAppend.eq.Append_EraseIdx.of.LeLength (by simp [s])]
             simp [List.EraseIdx.eq.Append_Drop_Add_1]
@@ -178,8 +178,8 @@ private lemma main
             simp
           show Tensor.einsum X (0 : Tensor α s') = _
           unfold Tensor.einsum
-          rw [dif_neg (by simp), dif_neg (by simp [s']), dif_neg (by simp),
-            dif_neg (by simp [s'])]
+          rw [dite_eq_right (by simp), dite_eq_right (by simp [s']), dite_eq_right (by simp),
+            dite_eq_right (by simp [s'])]
           simp (config := { zeta := true }) only []
           let bs := s.take (s.length - 2)
           let bs' := s'.take (s'.length - 2)

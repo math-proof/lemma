@@ -1,9 +1,23 @@
 [
   {
-    "resolved": "Random",
-    "reason": "Mathlib `Random` is a type class (`Lean.isClass`)",
-    "kind": "type class",
-    "folder": "Random",
-    "decl": "typeclass"
+    "resolved": "PowerSeries",
+    "reason": "Mathlib `PowerSeries` is a def of a type former",
+    "kind": "data type",
+    "folder": "PowerSeries",
+    "decl": "def-type"
+  },
+  {
+    "resolved": "Fin",
+    "reason": "Mathlib `Fin` is a structure",
+    "kind": "data type",
+    "folder": "Fin",
+    "decl": "structure"
+  },
+  {
+    "resolved": "Matrix",
+    "reason": "Mathlib `Matrix` is a def of a type former",
+    "kind": "data type",
+    "folder": "Matrix",
+    "decl": "def-type"
   }
 ]

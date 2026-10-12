@@ -249,7 +249,7 @@ def equivMathlibFiltered (n k : ℕ) :
       exact x.2
     blocks_sum := hα.1
   }, by
-    simp only [Set.mem_setOf_eq, _root_.Composition.length]
+    simp only [Set.mem_ofPred_eq, _root_.Composition.length]
     rw [← len_eq_toBlocks_length]
     exact hα.2⟩
   invFun := fun ⟨c, hc⟩ => ⟨ofBlocks c.blocks c.blocks_pos, by
@@ -369,7 +369,7 @@ theorem compositionAsSetEquiv_card_eq_length_sub_one (n : ℕ) (hn : 0 < n)
         omega
       have hval : x.val - 1 < n - 1 := by omega
       refine ⟨⟨x.val - 1, hval⟩, ?_, ?_⟩
-      · simp only [Set.mem_toFinset, Set.mem_setOf_eq]
+      · simp only [Set.mem_toFinset, Set.mem_ofPred_eq]
         convert hx_mem using 2
         omega
       · simp only [Fin.ext_iff]
@@ -431,7 +431,7 @@ theorem card_compositions_of_length (n k : ℕ) (hn : 0 < n) (hk : 0 < k) :
       have heq : (compositionToFinset n) ((compositionToFinset n).symm s) = s :=
         Equiv.apply_symm_apply _ _
       rw [heq] at h
-      simp only [Set.mem_setOf_eq] at hs
+      simp only [Set.mem_ofPred_eq] at hs
       rw [hs] at h
       have hc : ((compositionToFinset n).symm s).length = k := by omega
       exact ⟨⟨(compositionToFinset n).symm s, hc⟩, by simp [f]⟩
@@ -1116,7 +1116,7 @@ theorem coeff_genFun (n k p : ℕ) :
     intro l
     split_ifs with h
     · exact prod_eq_one (fun i hi => by simp [h i hi])
-    · push_neg at h
+    · push Not at h
       obtain ⟨i, hi, hli⟩ := h
       exact prod_eq_zero hi (by simp [hli])
   simp_rw [h_prod]
@@ -1196,7 +1196,7 @@ theorem coeff_genFun_formula (n k p : ℕ) :
     simp only [Nat.add_zero]
     by_cases hn : n = 0
     · simp [hn]
-    · simp only [hn, if_false]
+    · simp only [hn, ite_false]
       have : n - 1 < n := Nat.sub_lt (Nat.pos_of_ne_zero hn) Nat.one_pos
       simp [Nat.choose_eq_zero_of_lt this]
   -- Now k > 0

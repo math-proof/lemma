@@ -53,8 +53,8 @@ private lemma relative_distance.lower_triangle
   congr 1
   funext j
   by_cases hp : i.val < (dm j).val
-  · simp only [hp, if_true]
-  · simp only [hp, if_false, h_mask i j t (not_lt.mp hp)]
+  · simp only [hp, ite_true]
+  · simp only [hp, ite_false, h_mask i j t (not_lt.mp hp)]
 
 
 -- created on 2022-04-26

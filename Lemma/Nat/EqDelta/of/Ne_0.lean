@@ -11,7 +11,7 @@ private lemma main
   a = b := by
 -- proof
   by_contra hc
-  rw [if_neg hc] at h
+  rw [ite_eq_right hc] at h
   exact h rfl
 
 

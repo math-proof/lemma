@@ -20,8 +20,7 @@ private lemma main
     congr 1
     apply LinearMap.ext
     intro y
-    induction y using TensorProduct.induction_on with
-    | zero => simp
+    induction y using TensorProduct.inductionOn with
     | tmul c l => simp [LinearMap.baseChange_tmul, Algebra.TensorProduct.tmul_mul_tmul]
     | add y z hy hz => simp only [map_add, hy, hz]
 

@@ -1,17 +1,18 @@
-import Mathlib.Data.Real.Basic
+import Mathlib.Basic.Real.Basic
 import sympy.Basic
 
 
 @[path]
 private lemma main
   {x t : ℝ}
-  -- given
+-- given
   (hx : 0 ≤ x)
-  (ht : 1 ≤ t)
-  -- imply
-  : 0 ≤ t * x := by
-  -- proof
-  have h1 : 0 ≤ t := by linarith
-  exact mul_nonneg h1 hx
+  (ht : 1 ≤ t) :
+-- imply
+  0 ≤ t * x := by
+-- proof
+  apply mul_nonneg _ hx
+  linarith
+
 
 -- created on 2019-06-14

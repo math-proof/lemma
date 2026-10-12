@@ -29,7 +29,7 @@ private lemma main
     split_ifs <;> simp
   | succ n hn ih =>
     rw [pow_succ, mul_apply, Fintype.sum_prod_type]
-    simp only [ih, h₁, mul_ite, mul_zero, sum_ite_eq', mem_univ, if_true]
+    simp only [ih, h₁, mul_ite, mul_zero, sum_ite_eq', mem_univ, ite_true]
     obtain ⟨m, rfl⟩ : ∃ m, n = m + 1 := ⟨n - 1, by omega⟩
     rw [Nat.add_sub_cancel, show m + 1 + 1 - 1 = m + 1 by omega, pow_succ, mul_apply, sum_mul]
 

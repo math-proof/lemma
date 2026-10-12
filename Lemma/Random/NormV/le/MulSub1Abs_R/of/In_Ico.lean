@@ -1,6 +1,6 @@
 import sympy.stats.policy_trajectory.gradient
 import sympy.stats.cond_expectation
-import Lemma.Random.AeHasSumAndNormG.le.MulSub1Abs_R.of.In_Ico
+import Lemma.Random.All_And_LeNormExtDotPow_Id.of.All_Eq_Joint.In_Ico
 import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
 
@@ -36,7 +36,7 @@ private lemma main
   rw [Expectation.condEvent_eq_integral hpR.aemeasurable hfG]
   show ‖∫ ω, ((γ ^ (id : ℕ → ℕ)) @ r[t:]) ω ∂(M θ)[|s t ⁻¹' {x}]‖ ≤ _
   have hae : ∀ᵐ ω ∂(M θ)[|s t ⁻¹' {x}], ‖((γ ^ (id : ℕ → ℕ)) @ r[t:]) ω‖ ≤ (1 - γ)⁻¹ * |M.env.R| :=
-    cond_absolutelyContinuous.ae_le ((AeHasSumAndNormG.le.MulSub1Abs_R.of.In_Ico (M := M) h₀ h₁ θ t).mono fun ω h => h.2)
+    cond_absolutelyContinuous.ae_le ((All_And_LeNormExtDotPow_Id.of.All_Eq_Joint.In_Ico (M := M) h₀ h₁ θ t).mono fun ω h => h.2)
   if hB : M θ (s t ⁻¹' {x}) = 0 then
     rw [cond_eq_zero_of_meas_eq_zero hB]
     simpa using hq

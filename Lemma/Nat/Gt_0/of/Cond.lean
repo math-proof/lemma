@@ -4,14 +4,13 @@ import sympy.Basic
 
 @[path]
 private lemma given
-  {p : Prop}
-  [Decidable p]
+  {p : Prop} [Decidable p]
 -- given
   (h : p) :
 -- imply
   (if p then (1 : ℝ) else 0) > 0 := by
 -- proof
-  rw [if_pos h]
+  rw [ite_eq_left h]
   norm_num
 
 

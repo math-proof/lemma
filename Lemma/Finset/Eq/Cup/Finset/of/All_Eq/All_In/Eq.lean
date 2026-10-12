@@ -19,8 +19,7 @@ private lemma main
 -- proof
   obtain ⟨x0, hx0⟩ := h₃
   have inj : ∀ x ∈ S, Function.Injective x := by
-    intro x hx
-    intro a b hab
+    intro x hx a b hab
     exact Finset.card_image_iff.mp (show (Finset.univ.image x).card = (Finset.univ : Finset (Fin n)).card by rw [h₀ x hx, h₂, Finset.card_univ, Fintype.card_fin]) (Finset.mem_coe.mpr (Finset.mem_univ a)) (Finset.mem_coe.mpr (Finset.mem_univ b)) hab
   have rng : ∀ x ∈ S, Set.range x = Set.range x0 := by
     intro x hx

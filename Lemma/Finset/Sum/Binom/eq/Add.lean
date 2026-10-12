@@ -26,7 +26,7 @@ private lemma main
       subst hi'
       have hb : Binomial n ((↑(m + 2) : ℤ) - 1) = (n.choose (m + 1) : ℤ) := by
         simp only [Binomial]
-        rw [if_pos (by omega)]
+        rw [ite_eq_left (by omega)]
         congr 2
         omega
       rw [hb, Finset.Ico_self, Finset.sum_empty]

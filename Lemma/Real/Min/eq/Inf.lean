@@ -7,7 +7,8 @@ private lemma main
 -- imply
   min a b = sInf {a, b} := by
 -- proof
-  sorry
+  simp [csInf_insert, csInf_singleton, min_def]
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-12

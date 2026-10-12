@@ -32,8 +32,7 @@ private lemma main
   rw [Sum_Mul.eq.Mul_Sum] at this
   simp only [Mul.comm (b := x²)] at this
   rw [AddAdd.rotate] at this
-  rw [AddAdd.swap] at this
-  assumption
+  rwa [AddAdd.swap] at this
 
 
 -- created on 2025-04-06

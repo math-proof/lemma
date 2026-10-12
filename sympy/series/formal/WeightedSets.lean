@@ -125,7 +125,7 @@ theorem weightGenFun_eq_of_isomorphic (W₁ : WeightedSet α) (W₂ : WeightedSe
   apply Nat.card_congr
   refine Equiv.subtypeEquiv iso.toEquiv ?_
   intro a
-  simp only [Set.mem_setOf_eq]
+  simp only [Set.mem_ofPred_eq]
   rw [iso.weight_eq]
 
 /-! ### Disjoint Union of Weighted Sets -/
@@ -152,7 +152,7 @@ theorem disjointUnion_isFiniteType (W₁ : WeightedSet α) (W₂ : WeightedSet �
   have h1 : {a : α ⊕ β | (W₁ +ᵥ W₂).weight a = n} =
       Sum.inl '' {a : α | W₁.weight a = n} ∪ Sum.inr '' {b : β | W₂.weight b = n} := by
     ext x
-    simp only [Set.mem_setOf_eq, Set.mem_union, Set.mem_image]
+    simp only [Set.mem_ofPred_eq, Set.mem_union, Set.mem_image]
     constructor
     · intro hx
       cases x with
@@ -194,7 +194,7 @@ theorem weightGenFun_disjointUnion (W₁ : WeightedSet α) (W₂ : WeightedSet �
   have hset : {x : α ⊕ β | (W₁ +ᵥ W₂).weight x = n} =
               (Sum.inl (β := β)) '' {a : α | W₁.weight a = n} ∪ (Sum.inr (α := α)) '' {b : β | W₂.weight b = n} := by
     ext x
-    simp only [disjointUnion, Set.mem_setOf_eq, Set.mem_union, Set.mem_image]
+    simp only [disjointUnion, Set.mem_ofPred_eq, Set.mem_union, Set.mem_image]
     constructor
     · intro hx
       cases x with
@@ -242,8 +242,8 @@ theorem prod_isFiniteType (W₁ : WeightedSet α) (W₂ : WeightedSet β)
   have h : {p : α × β | (W₁ ×ᵥ W₂).weight p = n} ⊆
       ⋃ i ∈ Finset.range (n + 1), {a | W₁.weight a = i} ×ˢ {b | W₂.weight b = n - i} := by
     intro ⟨a, b⟩ hab
-    simp only [prod, Set.mem_setOf_eq] at hab
-    simp only [Set.mem_iUnion, Set.mem_prod, Set.mem_setOf_eq, Finset.mem_range]
+    simp only [prod, Set.mem_ofPred_eq] at hab
+    simp only [Set.mem_iUnion, Set.mem_prod, Set.mem_ofPred_eq, Finset.mem_range]
     refine ⟨W₁.weight a, ?_, rfl, ?_⟩
     · omega
     · omega
@@ -274,14 +274,14 @@ theorem weightGenFun_prod [DecidableEq α] [DecidableEq β] (W₁ : WeightedSet 
   have key : (hft_prod n).toFinset =
       (antidiagonal n).biUnion (fun ij => (hft₁ ij.1).toFinset ×ˢ (hft₂ ij.2).toFinset) := by
     ext ⟨a, b⟩
-    simp only [Set.Finite.mem_toFinset, Set.mem_setOf_eq, mem_biUnion, mem_product,
-      mem_antidiagonal, prod]
+    simp only [Set.Finite.mem_toFinset, Set.mem_ofPred_eq, mem_biUnion, mem_product, prod]
     constructor
     · intro h
-      exact ⟨(W₁.weight a, W₂.weight b), h, rfl, rfl⟩
+      refine ⟨(W₁.weight a, W₂.weight b), ?_, rfl, rfl⟩
+      exact (HasAntidiagonal.mem_antidiagonal).mpr h
     · rintro ⟨⟨i, j⟩, hij, ha, hb⟩
       rw [ha, hb]
-      exact hij
+      exact (HasAntidiagonal.mem_antidiagonal).mp hij
   rw [key]
   -- The biUnion is disjoint, so card equals sum of cards
   have hdisj : (antidiagonal n : Set (ℕ × ℕ)).PairwiseDisjoint
@@ -289,7 +289,7 @@ theorem weightGenFun_prod [DecidableEq α] [DecidableEq β] (W₁ : WeightedSet 
     intro ⟨i₁, j₁⟩ _ ⟨i₂, j₂⟩ _ hne
     simp only [Function.onFun, Finset.disjoint_iff_ne]
     intro ⟨a, b⟩ hab ⟨a', b'⟩ hab' heq
-    simp only [mem_product, Set.Finite.mem_toFinset, Set.mem_setOf_eq] at hab hab'
+    simp only [mem_product, Set.Finite.mem_toFinset, Set.mem_ofPred_eq] at hab hab'
     apply hne
     simp only [Prod.mk.injEq] at heq
     obtain ⟨ha_eq, hb_eq⟩ := heq
@@ -314,14 +314,14 @@ theorem pow_isFiniteType (W : WeightedSet α) (hft : W.IsFiniteType) (k : ℕ) :
   -- Show {a | W.weight a ≤ n} is finite (finite union of finite sets)
   have h_le_finite : Set.Finite {a : α | W.weight a ≤ n} := by
     have : {a : α | W.weight a ≤ n} = ⋃ m ≤ n, {a | W.weight a = m} := by
-      ext a; simp only [Set.mem_setOf_eq, Set.mem_iUnion, exists_prop]
+      ext a; simp only [Set.mem_ofPred_eq, Set.mem_iUnion, exists_prop]
       exact ⟨fun h => ⟨W.weight a, h, rfl⟩, fun ⟨_, hm, ha⟩ => ha ▸ hm⟩
     rw [this]
     exact Set.Finite.biUnion (Set.finite_le_nat n) fun m _ => hft m
   -- The set of f with weight n is a subset of f where each component has weight ≤ n
   apply Set.Finite.subset (Set.Finite.pi' fun _ => h_le_finite)
   intro f hf i
-  simp only [Set.mem_setOf_eq, pow] at hf ⊢
+  simp only [Set.mem_ofPred_eq, pow] at hf ⊢
   exact (Finset.single_le_sum (by simp) (Finset.mem_univ i)).trans_eq hf
 
 /-- Helper: pow (n+1) is isomorphic to W × pow n -/
@@ -349,18 +349,18 @@ theorem weightGenFun_pow (W : WeightedSet α) (hft : W.IsFiniteType) (k : ℕ) :
       subst hn
       have heq : {f : Fin 0 → α | ∑ i : Fin 0, W.weight (f i) = 0} = Set.univ := by
         ext f
-        simp only [Set.mem_setOf_eq, Set.mem_univ, iff_true]
+        simp only [Set.mem_ofPred_eq, Set.mem_univ, iff_true]
         rfl
       have hFinset : (pow_isFiniteType W hft 0 0).toFinset = Finset.univ := by
         ext f
         simp only [Set.Finite.mem_toFinset, pow, heq, Set.mem_univ, Finset.mem_univ]
       rw [hFinset]
-      haveI : Unique (Fin 0 → α) := Pi.uniqueOfIsEmpty fun _ => α
+      have : Unique (Fin 0 → α) := Pi.uniqueOfIsEmpty fun _ => α
       simp
     · -- n ≠ 0: No function Fin 0 → α has weight n > 0
       have heq : {f : Fin 0 → α | ∑ i : Fin 0, W.weight (f i) = n} = ∅ := by
         ext f
-        simp only [Set.mem_setOf_eq, Set.mem_empty_iff_false, iff_false]
+        simp only [Set.mem_ofPred_eq, Set.mem_empty_iff_false, iff_false]
         intro h
         have : ∑ i : Fin 0, W.weight (f i) = 0 := rfl
         omega
@@ -416,8 +416,8 @@ theorem tuples_isFiniteType (W : WeightedSet α) (hft : W.IsFiniteType)
   have h : {p : Σ n : ℕ, Fin n → α | W.tuples.weight p = m} ⊆
       ⋃ n ∈ Finset.range (m + 1), Sigma.mk n '' {f : Fin n → α | (W.pow n).weight f = m} := by
     intro ⟨n, f⟩ hf
-    simp only [tuples, Set.mem_setOf_eq] at hf
-    simp only [Set.mem_iUnion, Set.mem_image, Finset.mem_range, pow, Set.mem_setOf_eq]
+    simp only [tuples, Set.mem_ofPred_eq] at hf
+    simp only [Set.mem_iUnion, Set.mem_image, Finset.mem_range, pow, Set.mem_ofPred_eq]
     refine ⟨n, ?_, f, hf, rfl⟩
     -- Need to show n < m + 1, i.e., n ≤ m
     -- Since each element has weight ≥ 1, sum of n weights ≥ n
@@ -456,7 +456,7 @@ private theorem binaryStrings_countOfWeight (n : ℕ) :
   have h_eq : {a : List (Fin 2) | BinaryStrings.weight a = n} =
               Set.range (List.Vector.toList : List.Vector (Fin 2) n → List (Fin 2)) := by
     ext l
-    simp only [Set.mem_setOf_eq, Set.mem_range, BinaryStrings]
+    simp only [Set.mem_ofPred_eq, Set.mem_range, BinaryStrings]
     constructor
     · intro hl; exact ⟨⟨l, hl⟩, rfl⟩
     · intro ⟨v, hv⟩; rw [← hv]; exact v.toList_length
@@ -466,7 +466,7 @@ private theorem binaryStrings_countOfWeight (n : ℕ) :
   have h_finite := binaryStrings_isFiniteType n
   have h_card : h_finite.toFinset.card = {a : List (Fin 2) | BinaryStrings.weight a = n}.ncard := by
     rw [Set.ncard]
-    simp only [h_finite.encard_eq_coe_toFinset_card, ENat.toNat_coe]
+    simp only [h_finite.encard_eq_coe_toFinset_card, ENat.toNat_natCast]
   rw [h_card, h_eq]
   rw [Set.ncard_range_of_injective h_inj]
   rw [Nat.card_eq_fintype_card]
@@ -496,7 +496,7 @@ theorem positiveIntegers_isFiniteType : PositiveIntegers.IsFiniteType := by
   -- The set {a : ℕ+ | a.val = n} has at most one element
   apply Set.Subsingleton.finite
   intro x hx y hy
-  simp only [Set.mem_setOf_eq, PositiveIntegers] at hx hy
+  simp only [Set.mem_ofPred_eq, PositiveIntegers] at hx hy
   exact PNat.eq (hx.trans hy.symm)
 
 private theorem countOfWeight_zero : PositiveIntegers.countOfWeight positiveIntegers_isFiniteType 0 = 0 := by
@@ -504,22 +504,18 @@ private theorem countOfWeight_zero : PositiveIntegers.countOfWeight positiveInte
   convert Finset.card_empty
   simp only [Set.Finite.toFinset_eq_empty]
   ext x
-  simp only [PositiveIntegers, Set.mem_setOf_eq, Set.mem_empty_iff_false, iff_false]
+  simp only [PositiveIntegers, Set.mem_ofPred_eq, Set.mem_empty_iff_false, iff_false]
   exact x.2.ne'
 
 private theorem countOfWeight_pos (n : ℕ) (hn : 0 < n) :
     PositiveIntegers.countOfWeight positiveIntegers_isFiniteType n = 1 := by
   simp only [WeightedSet.countOfWeight]
-  have h : (positiveIntegers_isFiniteType n).toFinset = {⟨n, hn⟩} := by
-    ext x
-    simp only [Set.Finite.mem_toFinset, Set.mem_setOf_eq, Finset.mem_singleton]
-    constructor
-    · intro h
-      exact PNat.eq h
-    · intro h
-      simp [h, PositiveIntegers]
-  rw [h]
-  simp
+  convert Finset.card_singleton (⟨n, hn⟩ : ℕ+)
+  ext x
+  simp only [Set.Finite.mem_toFinset, PositiveIntegers, Finset.mem_singleton]
+  refine ⟨fun hx => ?_, fun hx => ?_⟩
+  · exact Subtype.coe_injective hx
+  · exact congrArg Subtype.val hx
 
 /-- The generating function of positive integers is x + x² + x³ + ... = x/(1-x) -/
 theorem weightGenFun_positiveIntegers :
@@ -580,7 +576,7 @@ theorem mem_rectangle_iff {n m : ℕ} {p : ℤ × ℤ} :
 @[simp]
 theorem Rectangle_zero_left (m : ℕ) : Rectangle 0 m = ∅ := by
   ext p
-  simp only [Rectangle, Set.mem_setOf_eq, Set.mem_empty_iff_false, iff_false, not_and]
+  simp only [Rectangle, Set.mem_ofPred_eq, Set.mem_empty_iff_false, iff_false, not_and]
   intro h1 h2
   omega
 
@@ -588,7 +584,7 @@ theorem Rectangle_zero_left (m : ℕ) : Rectangle 0 m = ∅ := by
 @[simp]
 theorem Rectangle_zero_right (n : ℕ) : Rectangle n 0 = ∅ := by
   ext p
-  simp only [Rectangle, Set.mem_setOf_eq, Set.mem_empty_iff_false, iff_false, not_and]
+  simp only [Rectangle, Set.mem_ofPred_eq, Set.mem_empty_iff_false, iff_false, not_and]
   intro h1 _ h3
   omega
 
@@ -596,7 +592,7 @@ theorem Rectangle_zero_right (n : ℕ) : Rectangle n 0 = ∅ := by
 theorem Rectangle_ncard (n m : ℕ) : (Rectangle n m).ncard = n * m := by
   have h : Rectangle n m = Set.Icc (1 : ℤ) n ×ˢ Set.Icc (1 : ℤ) m := by
     ext ⟨x, y⟩
-    simp only [Rectangle, Set.mem_setOf_eq, Set.mem_prod, Set.mem_Icc]
+    simp only [Rectangle, Set.mem_ofPred_eq, Set.mem_prod, Set.mem_Icc]
     tauto
   rw [h, Set.ncard_prod]
   simp [Set.ncard_eq_toFinset_card', Set.toFinset_Icc]
@@ -744,7 +740,7 @@ theorem tilingsHeight2_isFiniteType : TilingsHeight2.IsFiniteType := by
   have h : {a : (Σ n : ℕ, Tiling (Rectangle n 2)) | TilingsHeight2.weight a = k} =
            Sigma.mk k '' Set.univ := by
     ext ⟨n, T⟩
-    simp only [TilingsHeight2, Set.mem_setOf_eq, Set.mem_image, Set.mem_univ, true_and]
+    simp only [TilingsHeight2, Set.mem_ofPred_eq, Set.mem_image, Set.mem_univ, true_and]
     constructor
     · intro hn
       subst hn
@@ -768,18 +764,18 @@ theorem tilingsHeight2_isFiniteType : TilingsHeight2.IsFiniteType := by
         left
         simp only [Set.mem_image, Set.mem_prod, Set.mem_Icc]
         use (i, j)
-        simp only [DominosIn, Domino.toShape, Set.subset_def, Set.mem_setOf_eq] at hd
+        simp only [DominosIn, Domino.toShape, Set.subset_def, Set.mem_ofPred_eq] at hd
         have h1 := hd (i, j) (by simp)
-        simp only [Rectangle, Set.mem_setOf_eq] at h1
+        simp only [Rectangle, Set.mem_ofPred_eq] at h1
         refine ⟨⟨⟨h1.1, ?_⟩, ⟨h1.2.2.1, h1.2.2.2⟩⟩, rfl⟩
         omega
       | vertical i j =>
         right
         simp only [Set.mem_image, Set.mem_prod, Set.mem_Icc]
         use (i, j)
-        simp only [DominosIn, Domino.toShape, Set.subset_def, Set.mem_setOf_eq] at hd
+        simp only [DominosIn, Domino.toShape, Set.subset_def, Set.mem_ofPred_eq] at hd
         have h1 := hd (i, j) (by simp)
-        simp only [Rectangle, Set.mem_setOf_eq] at h1
+        simp only [Rectangle, Set.mem_ofPred_eq] at h1
         refine ⟨⟨⟨h1.1, h1.2.1⟩, ⟨h1.2.2.1, ?_⟩⟩, rfl⟩
         omega
     apply Set.Finite.subset _ h
@@ -801,7 +797,7 @@ theorem tilingsHeight2_isFiniteType : TilingsHeight2.IsFiniteType := by
     congr
   have h_tiling_subset : ∀ T : Tiling (Rectangle k 2), T.dominos ⊆ DominosIn := by
     intro T d hd
-    simp only [DominosIn, Set.mem_setOf_eq]
+    simp only [DominosIn, Set.mem_ofPred_eq]
     have h : d.toShape ⊆ ⋃ d' ∈ T.dominos, d'.toShape := by
       intro p hp
       simp only [Set.mem_iUnion]
@@ -867,7 +863,7 @@ theorem faultfreeTilingsHeight2_isFiniteType : FaultfreeTilingsHeight2.IsFiniteT
   have himg : f '' {a | FaultfreeTilingsHeight2.weight a = m} ⊆
               {a | TilingsHeight2.weight a = m} := by
     intro ⟨n, T⟩ ⟨⟨n', T', hT'⟩, hmem, heq⟩
-    simp only [Set.mem_setOf_eq] at hmem ⊢
+    simp only [Set.mem_ofPred_eq] at hmem ⊢
     obtain ⟨hn, hTeq⟩ := Sigma.mk.inj_iff.mp heq
     subst hn
     simp only [heq_eq_eq] at hTeq
@@ -892,7 +888,7 @@ private theorem domino_subset_rect (n : ℕ) (T : Tiling (Rectangle n 2)) (d : D
   exact this
 
 private theorem cell_11_in_rect (n : ℕ) (hn : n ≥ 1) : (1, 1) ∈ Rectangle n 2 := by
-  simp only [Rectangle, Set.mem_setOf_eq]; omega
+  simp only [Rectangle, Set.mem_ofPred_eq]; omega
 
 theorem exists_domino_covering_11 (n : ℕ) (hn : n ≥ 1) (T : Tiling (Rectangle n 2)) :
     ∃ d ∈ T.dominos, (1, 1) ∈ d.toShape := by
@@ -915,7 +911,7 @@ theorem domino_covering_11_valid (n : ℕ) (T : Tiling (Rectangle n 2))
         simp only [Domino.toShape, Set.mem_insert_iff, Set.mem_singleton_iff, Prod.mk.injEq]
         left; omega
       have := domino_subset_rect n T (Domino.horizontal i j) hd hcover
-      simp only [Rectangle, Set.mem_setOf_eq] at this; omega
+      simp only [Rectangle, Set.mem_ofPred_eq] at this; omega
   | vertical i j =>
     simp only [Domino.toShape, Set.mem_insert_iff, Set.mem_singleton_iff, Prod.mk.injEq] at h
     rcases h with ⟨hi, hj⟩ | ⟨hi, hj⟩
@@ -925,18 +921,18 @@ theorem domino_covering_11_valid (n : ℕ) (T : Tiling (Rectangle n 2))
         simp only [Domino.toShape, Set.mem_insert_iff, Set.mem_singleton_iff, Prod.mk.injEq]
         left; omega
       have := domino_subset_rect n T (Domino.vertical i j) hd hcover
-      simp only [Rectangle, Set.mem_setOf_eq] at this; omega
+      simp only [Rectangle, Set.mem_ofPred_eq] at this; omega
 
 private theorem no_horizontal_at_1_if_vertical (n : ℕ) (T : Tiling (Rectangle n 2))
     (hv : Domino.vertical 1 1 ∈ T.dominos) (i j : ℤ)
     (hd : Domino.horizontal i j ∈ T.dominos) : i < 1 ∨ i ≥ 2 := by
   have hdisj := T.pairwise_disjoint hv hd
-  by_contra h; push_neg at h; obtain ⟨hi1, hi2⟩ := h
+  by_contra h; push Not at h; obtain ⟨hi1, hi2⟩ := h
   have hi : i = 1 := by omega
   have hd' : Domino.horizontal 1 j ∈ T.dominos := by rwa [hi] at hd
   have hsub := domino_subset_rect n T (Domino.horizontal 1 j) hd'
   have h1j : ((1 : ℤ), j) ∈ Rectangle n 2 := hsub (by simp [Domino.toShape])
-  simp only [Rectangle, Set.mem_setOf_eq] at h1j
+  simp only [Rectangle, Set.mem_ofPred_eq] at h1j
   have hj12 : j = 1 ∨ j = 2 := by omega
   have h_in_horiz : ((1 : ℤ), j) ∈ (Domino.horizontal 1 j).toShape := by simp [Domino.toShape]
   have h_in_vert : ((1 : ℤ), j) ∈ (Domino.vertical 1 1).toShape := by
@@ -960,7 +956,7 @@ theorem fault_at_1_if_vertical (n : ℕ) (hn : n ≥ 2) (T : Tiling (Rectangle n
   | vertical i j => trivial
 
 private theorem cell_12_in_rect (n : ℕ) (hn : n ≥ 1) : (1, 2) ∈ Rectangle n 2 := by
-  simp only [Rectangle, Set.mem_setOf_eq]; omega
+  simp only [Rectangle, Set.mem_ofPred_eq]; omega
 
 private theorem exists_domino_covering_12 (n : ℕ) (hn : n ≥ 1) (T : Tiling (Rectangle n 2)) :
     ∃ d ∈ T.dominos, (1, 2) ∈ d.toShape := by
@@ -983,7 +979,7 @@ private theorem domino_covering_12_valid (n : ℕ) (T : Tiling (Rectangle n 2))
         simp only [Domino.toShape, Set.mem_insert_iff, Set.mem_singleton_iff, Prod.mk.injEq]
         left; omega
       have := domino_subset_rect n T (Domino.horizontal i j) hd hcover
-      simp only [Rectangle, Set.mem_setOf_eq] at this; omega
+      simp only [Rectangle, Set.mem_ofPred_eq] at this; omega
   | vertical i j =>
     simp only [Domino.toShape, Set.mem_insert_iff, Set.mem_singleton_iff, Prod.mk.injEq] at h
     rcases h with ⟨hi, hj⟩ | ⟨hi, hj⟩
@@ -992,7 +988,7 @@ private theorem domino_covering_12_valid (n : ℕ) (T : Tiling (Rectangle n 2))
         simp only [Domino.toShape, Set.mem_insert_iff, Set.mem_singleton_iff, Prod.mk.injEq]
         right; omega
       have := domino_subset_rect n T (Domino.vertical i j) hd hcover
-      simp only [Rectangle, Set.mem_setOf_eq] at this; omega
+      simp only [Rectangle, Set.mem_ofPred_eq] at this; omega
     · left; simp only [Domino.vertical.injEq]; omega
 
 theorem horizontal_12_if_horizontal_11 (n : ℕ) (hn : n ≥ 1) (T : Tiling (Rectangle n 2))
@@ -1012,11 +1008,11 @@ theorem horizontal_12_if_horizontal_11 (n : ℕ) (hn : n ≥ 1) (T : Tiling (Rec
 private theorem no_horizontal_at_2_if_horizontal_pair (n : ℕ) (T : Tiling (Rectangle n 2))
     (hh1 : Domino.horizontal 1 1 ∈ T.dominos) (hh2 : Domino.horizontal 1 2 ∈ T.dominos)
     (i j : ℤ) (hd : Domino.horizontal i j ∈ T.dominos) : i < 2 ∨ i ≥ 3 := by
-  by_contra h; push_neg at h; obtain ⟨hi1, hi2⟩ := h
+  by_contra h; push Not at h; obtain ⟨hi1, hi2⟩ := h
   have hi : i = 2 := by omega
   have hsub := domino_subset_rect n T (Domino.horizontal i j) hd
   have hij : ((i : ℤ), j) ∈ Rectangle n 2 := hsub (by simp [Domino.toShape])
-  simp only [Rectangle, Set.mem_setOf_eq] at hij
+  simp only [Rectangle, Set.mem_ofPred_eq] at hij
   have hj12 : j = 1 ∨ j = 2 := by omega
   rcases hj12 with rfl | rfl
   · have hdisj := T.pairwise_disjoint hh1 hd
@@ -1051,7 +1047,7 @@ theorem faultfree_height2_classification (n : ℕ) (T : Tiling (Rectangle n 2))
     (hff : isFaultfree n T) : n = 1 ∨ n = 2 := by
   obtain ⟨hn_pos, hno_fault⟩ := hff
   by_contra h
-  push_neg at h
+  push Not at h
   obtain ⟨h1, h2⟩ := h
   -- So n ≥ 3 (since n > 0, n ≠ 1, n ≠ 2)
   have hn3 : n ≥ 3 := by omega
@@ -1078,7 +1074,7 @@ def tiling_1_2 : Tiling (Rectangle 1 2) where
   cover := by
     ext p
     simp only [Set.mem_iUnion, Set.mem_singleton_iff, exists_prop, exists_eq_left,
-               Domino.toShape, Rectangle, Set.mem_setOf_eq]
+               Domino.toShape, Rectangle, Set.mem_ofPred_eq]
     constructor
     · intro hp
       simp only [Set.mem_insert_iff, Set.mem_singleton_iff] at hp
@@ -1115,13 +1111,13 @@ theorem tiling_1_2_unique (T : Tiling (Rectangle 1 2)) : T = tiling_1_2 := by
         simp only [Domino.toShape] at hsub
         have h1 : (i, j) ∈ Rectangle 1 2 := hsub (Set.mem_insert _ _)
         have h2 : (i + 1, j) ∈ Rectangle 1 2 := hsub (Set.mem_insert_of_mem _ (Set.mem_singleton _))
-        simp only [Rectangle, Set.mem_setOf_eq] at h1 h2
+        simp only [Rectangle, Set.mem_ofPred_eq] at h1 h2
         omega
       | vertical i j =>
         simp only [Domino.toShape] at hsub
         have h1 : (i, j) ∈ Rectangle 1 2 := hsub (Set.mem_insert _ _)
         have h2 : (i, j + 1) ∈ Rectangle 1 2 := hsub (Set.mem_insert_of_mem _ (Set.mem_singleton _))
-        simp only [Rectangle, Set.mem_setOf_eq] at h1 h2
+        simp only [Rectangle, Set.mem_ofPred_eq] at h1 h2
         have hi : i = 1 := by omega
         have hj : j = 1 := by omega
         subst hi hj
@@ -1130,7 +1126,7 @@ theorem tiling_1_2_unique (T : Tiling (Rectangle 1 2)) : T = tiling_1_2 := by
       simp only [tiling_1_2, Set.mem_singleton_iff] at hd
       subst hd
       have h11 : (1, 1) ∈ Rectangle 1 2 := by
-        simp only [Rectangle, Set.mem_setOf_eq]
+        simp only [Rectangle, Set.mem_ofPred_eq]
         omega
       rw [← T.cover] at h11
       simp only [Set.mem_iUnion, exists_prop] at h11
@@ -1145,13 +1141,13 @@ theorem tiling_1_2_unique (T : Tiling (Rectangle 1 2)) : T = tiling_1_2 := by
         · subst hi hj
           have h21 : @Prod.mk ℤ ℤ 2 1 ∈ (Domino.horizontal 1 1).toShape := by simp [Domino.toShape]
           have h21' : @Prod.mk ℤ ℤ 2 1 ∈ Rectangle 1 2 := hsub h21
-          simp only [Rectangle, Set.mem_setOf_eq] at h21'
+          simp only [Rectangle, Set.mem_ofPred_eq] at h21'
           omega
         · have hi' : i = 0 := by omega
           subst hi' hj
           have h01 : @Prod.mk ℤ ℤ 0 1 ∈ (Domino.horizontal 0 1).toShape := by simp [Domino.toShape]
           have h01' : @Prod.mk ℤ ℤ 0 1 ∈ Rectangle 1 2 := hsub h01
-          simp only [Rectangle, Set.mem_setOf_eq] at h01'
+          simp only [Rectangle, Set.mem_ofPred_eq] at h01'
           omega
       | vertical i j =>
         simp only [Domino.toShape, Set.mem_insert_iff, Set.mem_singleton_iff, Prod.mk.injEq] at h11d
@@ -1162,13 +1158,9 @@ theorem tiling_1_2_unique (T : Tiling (Rectangle 1 2)) : T = tiling_1_2 := by
           subst hi hj'
           have h10 : @Prod.mk ℤ ℤ 1 0 ∈ (Domino.vertical 1 0).toShape := by simp [Domino.toShape]
           have h10' : @Prod.mk ℤ ℤ 1 0 ∈ Rectangle 1 2 := hsub h10
-          simp only [Rectangle, Set.mem_setOf_eq] at h10'
+          simp only [Rectangle, Set.mem_ofPred_eq] at h10'
           omega
-  -- Use the fact that tilings with equal dominos are equal
-  cases T with | mk dom pd cov =>
-  simp only [tiling_1_2, Tiling.mk.injEq]
-  simp only [tiling_1_2] at hdom
-  exact hdom
+  exact Tiling.ext T tiling_1_2 hdom
 
 /-- The faultfree tiling of the 1×2 rectangle as a Subtype element -/
 def faultfreeTiling_1_2 : {T : Tiling (Rectangle 1 2) // isFaultfree 1 T} :=
@@ -1193,7 +1185,7 @@ theorem countOfWeight_faultfreeHeight2_one :
   unfold WeightedSet.countOfWeight
   have hset : {a | FaultfreeTilingsHeight2.weight a = 1} = {⟨1, faultfreeTiling_1_2⟩} := by
     ext x
-    simp only [Set.mem_setOf_eq, Set.mem_singleton_iff]
+    simp only [Set.mem_ofPred_eq, Set.mem_singleton_iff]
     constructor
     · intro hx
       exact faultfreeTilingsHeight2_weight1_unique x hx
@@ -1228,7 +1220,7 @@ def twoHorizontalDominos : Tiling (Rectangle 2 2) where
   cover := by
     ext p
     simp only [Set.mem_iUnion, Set.mem_insert_iff, Set.mem_singleton_iff, exists_prop,
-               Domino.toShape, Rectangle, Set.mem_setOf_eq]
+               Domino.toShape, Rectangle, Set.mem_ofPred_eq]
     constructor
     · intro ⟨d, hd, hp⟩
       rcases hd with rfl | rfl <;>
@@ -1262,7 +1254,7 @@ private theorem faultfree_width2_has_horizontal_at_1 (T : Tiling (Rectangle 2 2)
     Domino.horizontal 1 1 ∈ T.dominos ∨ Domino.horizontal 1 2 ∈ T.dominos := by
   obtain ⟨_, hno_fault⟩ := hff
   by_contra h
-  push_neg at h
+  push Not at h
   obtain ⟨hnh1, hnh2⟩ := h
   have hfault : hasFault 2 T 1 := by
     refine ⟨by omega, by omega, ?_⟩
@@ -1272,7 +1264,7 @@ private theorem faultfree_width2_has_horizontal_at_1 (T : Tiling (Rectangle 2 2)
       have hsub := domino_subset_rect 2 T (Domino.horizontal i j) hd
       have hij : (i, j) ∈ Rectangle 2 2 := hsub (Set.mem_insert (i, j) _)
       have hij' : (i + 1, j) ∈ Rectangle 2 2 := hsub (Set.mem_insert_of_mem _ (Set.mem_singleton _))
-      simp only [Rectangle, Set.mem_setOf_eq] at hij hij'
+      simp only [Rectangle, Set.mem_ofPred_eq] at hij hij'
       have hi : i = 1 := by omega
       have hj : j = 1 ∨ j = 2 := by omega
       subst hi
@@ -1293,7 +1285,7 @@ private theorem exists_domino_covering' (n : ℕ) (T : Tiling (Rectangle n 2)) (
 /-- For a faultfree tiling of width 2, horizontal dominos at (1,1) and (1,2) must both be present -/
 private theorem horizontal_11_implies_12' (T : Tiling (Rectangle 2 2))
     (hh : Domino.horizontal 1 1 ∈ T.dominos) : Domino.horizontal 1 2 ∈ T.dominos := by
-  have h12 : (1, 2) ∈ Rectangle 2 2 := by simp only [Rectangle, Set.mem_setOf_eq]; omega
+  have h12 : (1, 2) ∈ Rectangle 2 2 := by simp only [Rectangle, Set.mem_ofPred_eq]; omega
   obtain ⟨d, hd, hmem⟩ := exists_domino_covering' 2 T 1 2 h12
   cases d with
   | horizontal i j =>
@@ -1303,14 +1295,14 @@ private theorem horizontal_11_implies_12' (T : Tiling (Rectangle 2 2))
     · have hi' : i = 0 := by omega
       have hsub := domino_subset_rect 2 T (Domino.horizontal i j) hd
       have h02 : (i, j) ∈ Rectangle 2 2 := hsub (Set.mem_insert (i, j) _)
-      simp only [Rectangle, Set.mem_setOf_eq, hi'] at h02
+      simp only [Rectangle, Set.mem_ofPred_eq, hi'] at h02
       omega
   | vertical i j =>
     simp only [Domino.toShape, Set.mem_insert_iff, Set.mem_singleton_iff, Prod.mk.injEq] at hmem
     rcases hmem with ⟨hi, hj⟩ | ⟨hi, hj⟩
     · have hsub := domino_subset_rect 2 T (Domino.vertical i j) hd
       have h13 : (i, j + 1) ∈ Rectangle 2 2 := hsub (Set.mem_insert_of_mem _ (Set.mem_singleton _))
-      simp only [Rectangle, Set.mem_setOf_eq, hi] at h13
+      simp only [Rectangle, Set.mem_ofPred_eq, hi] at h13
       omega
     · have hi' : i = 1 := by omega
       have hj' : j = 1 := by omega
@@ -1324,7 +1316,7 @@ private theorem horizontal_11_implies_12' (T : Tiling (Rectangle 2 2))
 
 private theorem horizontal_12_implies_11' (T : Tiling (Rectangle 2 2))
     (hh : Domino.horizontal 1 2 ∈ T.dominos) : Domino.horizontal 1 1 ∈ T.dominos := by
-  have h11 : (1, 1) ∈ Rectangle 2 2 := by simp only [Rectangle, Set.mem_setOf_eq]; omega
+  have h11 : (1, 1) ∈ Rectangle 2 2 := by simp only [Rectangle, Set.mem_ofPred_eq]; omega
   obtain ⟨d, hd, hmem⟩ := exists_domino_covering' 2 T 1 1 h11
   cases d with
   | horizontal i j =>
@@ -1334,7 +1326,7 @@ private theorem horizontal_12_implies_11' (T : Tiling (Rectangle 2 2))
     · have hi' : i = 0 := by omega
       have hsub := domino_subset_rect 2 T (Domino.horizontal i j) hd
       have h01 : (i, j) ∈ Rectangle 2 2 := hsub (Set.mem_insert (i, j) _)
-      simp only [Rectangle, Set.mem_setOf_eq, hi'] at h01
+      simp only [Rectangle, Set.mem_ofPred_eq, hi'] at h01
       omega
   | vertical i j =>
     simp only [Domino.toShape, Set.mem_insert_iff, Set.mem_singleton_iff, Prod.mk.injEq] at hmem
@@ -1352,7 +1344,7 @@ private theorem horizontal_12_implies_11' (T : Tiling (Rectangle 2 2))
     · have hj' : j = 0 := by omega
       have hsub := domino_subset_rect 2 T (Domino.vertical i j) hd
       have h10 : (i, j) ∈ Rectangle 2 2 := hsub (Set.mem_insert (i, j) _)
-      simp only [Rectangle, Set.mem_setOf_eq, hj'] at h10
+      simp only [Rectangle, Set.mem_ofPred_eq, hj'] at h10
       omega
 
 /-- A faultfree tiling of width 2 has exactly horizontal 1 1 and horizontal 1 2 -/
@@ -1375,7 +1367,7 @@ private theorem faultfree_width2_dominos_eq (T : Tiling (Rectangle 2 2)) (hff : 
     | horizontal i j =>
       have hij : (i, j) ∈ Rectangle 2 2 := hsub (Set.mem_insert (i, j) _)
       have hij' : (i + 1, j) ∈ Rectangle 2 2 := hsub (Set.mem_insert_of_mem _ (Set.mem_singleton _))
-      simp only [Rectangle, Set.mem_setOf_eq] at hij hij'
+      simp only [Rectangle, Set.mem_ofPred_eq] at hij hij'
       have hi : i = 1 := by omega
       have hj : j = 1 ∨ j = 2 := by omega
       subst hi
@@ -1385,7 +1377,7 @@ private theorem faultfree_width2_dominos_eq (T : Tiling (Rectangle 2 2)) (hff : 
     | vertical i j =>
       have hij : (i, j) ∈ Rectangle 2 2 := hsub (Set.mem_insert (i, j) _)
       have hij' : (i, j + 1) ∈ Rectangle 2 2 := hsub (Set.mem_insert_of_mem _ (Set.mem_singleton _))
-      simp only [Rectangle, Set.mem_setOf_eq] at hij hij'
+      simp only [Rectangle, Set.mem_ofPred_eq] at hij hij'
       have hi : i = 1 ∨ i = 2 := by omega
       have hj : j = 1 := by omega
       subst hj
@@ -1413,9 +1405,7 @@ private theorem faultfree_width2_dominos_eq (T : Tiling (Rectangle 2 2)) (hff : 
 theorem faultfree_tiling_width2_unique (T : Tiling (Rectangle 2 2)) (hff : isFaultfree 2 T) :
     T = twoHorizontalDominos := by
   have hdom := faultfree_width2_dominos_eq T hff
-  cases T with | mk dom pd cov =>
-  simp only [twoHorizontalDominos, Tiling.mk.injEq]
-  exact hdom
+  exact Tiling.ext T twoHorizontalDominos hdom
 
 /-- There is exactly one faultfree tiling of width 2 (two horizontal dominos) -/
 theorem countOfWeight_faultfreeHeight2_two :
@@ -1426,7 +1416,7 @@ theorem countOfWeight_faultfreeHeight2_two :
       FaultfreeTilingsHeight2.weight a = 2} =
       {⟨2, twoHorizontalDominos, twoHorizontalDominos_isFaultfree⟩} := by
     ext ⟨n, T, hT⟩
-    simp only [FaultfreeTilingsHeight2, Set.mem_setOf_eq, Set.mem_singleton_iff]
+    simp only [FaultfreeTilingsHeight2, Set.mem_ofPred_eq, Set.mem_singleton_iff]
     constructor
     · intro hn
       simp only at hn
@@ -1443,7 +1433,7 @@ theorem countOfWeight_faultfreeHeight2_two :
       Σ n : ℕ, {T : Tiling (Rectangle n 2) // isFaultfree n T})
   have heq_fin : hfin.toFinset = hfin'.toFinset := by
     ext x
-    simp only [Set.Finite.mem_toFinset, Set.mem_setOf_eq, Set.mem_singleton_iff]
+    simp only [Set.Finite.mem_toFinset, Set.mem_ofPred_eq, Set.mem_singleton_iff]
     constructor
     · intro hx
       have : x ∈ {a | FaultfreeTilingsHeight2.weight a = 2} := hx
@@ -1461,7 +1451,7 @@ theorem countOfWeight_faultfreeHeight2_eq_zero (n : ℕ) (hn1 : n ≠ 1) (hn2 : 
   unfold WeightedSet.countOfWeight
   rw [Finset.card_eq_zero]
   ext ⟨m, T, hT⟩
-  simp only [Set.Finite.mem_toFinset, Set.mem_setOf_eq]
+  simp only [Set.Finite.mem_toFinset, Set.mem_ofPred_eq]
   constructor
   · intro hm
     simp only [FaultfreeTilingsHeight2] at hm
@@ -1549,7 +1539,7 @@ theorem Rectangle_shift (n m : ℕ) (offset : ℤ) :
     (Rectangle n m).image (fun p => (p.1 + offset, p.2)) = 
     {p : ℤ × ℤ | 1 + offset ≤ p.1 ∧ p.1 ≤ n + offset ∧ 1 ≤ p.2 ∧ p.2 ≤ m} := by
   ext ⟨x, y⟩
-  simp only [Set.mem_image, Rectangle, Set.mem_setOf_eq, Prod.mk.injEq]
+  simp only [Set.mem_image, Rectangle, Set.mem_ofPred_eq, Prod.mk.injEq]
   constructor
   · rintro ⟨⟨x', y'⟩, ⟨h1, h2, h3, h4⟩, hx, hy⟩
     subst hx hy
@@ -1675,7 +1665,7 @@ private theorem shifted_domino_x_in_range' {n : ℕ} {T : Tiling (Rectangle n 2)
   rw [Domino.shiftNat_toShape] at hp
   obtain ⟨p', hp', rfl⟩ := hp
   have hsub := domino_subset_rect n T d hd hp'
-  simp only [Rectangle, Set.mem_setOf_eq] at hsub
+  simp only [Rectangle, Set.mem_ofPred_eq] at hsub
   simp only
   constructor <;> linarith
 
@@ -1693,7 +1683,7 @@ private theorem find_component_index (k : ℕ) (widths : Fin k → ℕ) (x : ℕ
     · have ih' := ih (fun i => widths ⟨i.val, Nat.lt_succ_of_lt i.isLt⟩) h
       obtain ⟨i, hi1, hi2⟩ := ih'
       exact ⟨⟨i.val, Nat.lt_succ_of_lt i.isLt⟩, hi1, hi2⟩
-    · push_neg at h
+    · push Not at h
       have hsum : ∑ i : Fin (k + 1), widths i = 
           (∑ i : Fin k, widths ⟨i.val, Nat.lt_succ_of_lt i.isLt⟩) + widths ⟨k, Nat.lt_succ_self k⟩ := by
         rw [Fin.sum_univ_castSucc]
@@ -1776,7 +1766,7 @@ private theorem point_in_some_component (k : ℕ) (_hk : k ≥ 1)
     (p : ℤ × ℤ) (hp : p ∈ Rectangle (∑ i : Fin k, (ts i).1) 2) :
     ∃ i : Fin k, (partialWidthSum k ts i : ℤ) < p.1 ∧ 
                   p.1 ≤ partialWidthSum k ts i + (ts i).1 := by
-  simp only [Rectangle, Set.mem_setOf_eq] at hp
+  simp only [Rectangle, Set.mem_ofPred_eq] at hp
   have hp1_pos : p.1 ≥ 1 := hp.1
   have hp1_le : p.1 ≤ ∑ i : Fin k, (ts i).1 := hp.2.1
   -- p.1 - 1 is in range [0, totalWidth - 1]
@@ -1841,7 +1831,7 @@ def composeTilings (k : ℕ)
         -- The union of shifted dominos covers the rectangle of total width
         -- This follows from each component covering its portion of the rectangle
         ext ⟨x, y⟩
-        simp only [Set.mem_iUnion, Rectangle, Set.mem_setOf_eq]
+        simp only [Set.mem_iUnion, Rectangle, Set.mem_ofPred_eq]
         constructor
         · -- ⊆ direction: any point in a shifted domino is in the total rectangle
           rintro ⟨d, hd, hp⟩
@@ -1856,7 +1846,7 @@ def composeTilings (k : ℕ)
           obtain ⟨⟨x', y'⟩, hp', heq⟩ := hp
           simp only [Prod.mk.injEq] at heq
           have hd'_rect := domino_subset_rect (ts i).1 (ts i).2.val d' hd' hp'
-          simp only [Rectangle, Set.mem_setOf_eq] at hd'_rect
+          simp only [Rectangle, Set.mem_ofPred_eq] at hd'_rect
           -- Bound for x: need partialWidthSum + (ts i).1 ≤ totalWidth
           have hbound : partialWidthSum k ts i + (ts i).1 ≤ ∑ j : Fin k, (ts j).1 := by
             simp only [partialWidthSum]
@@ -1904,12 +1894,12 @@ def composeTilings (k : ℕ)
           · -- k ≥ 1: use point_in_some_component
             have hk' : k ≥ 1 := Nat.one_le_iff_ne_zero.mpr hk
             have hp_rect : (x, y) ∈ Rectangle (∑ i : Fin k, (ts i).1) 2 := by
-              simp only [Rectangle, Set.mem_setOf_eq]
+              simp only [Rectangle, Set.mem_ofPred_eq]
               exact ⟨hx1, hx2, hy1, hy2⟩
             obtain ⟨i, hi_lo, hi_hi⟩ := point_in_some_component k hk' ts (x, y) hp_rect
             -- The unshifted point (x - partialWidthSum, y) is in component i's rectangle
             have hp'_rect : (x - partialWidthSum k ts i, y) ∈ Rectangle (ts i).1 2 := by
-              simp only [Rectangle, Set.mem_setOf_eq]
+              simp only [Rectangle, Set.mem_ofPred_eq]
               constructor
               · omega
               constructor
@@ -2078,7 +2068,7 @@ theorem domino_left_or_right_at_fault {n : ℕ} {T : Tiling (Rectangle n 2)} {k 
     -- Get x-coordinate bound from the domino being in the tiling
     have hsub := domino_subset_rect n T (Domino.vertical i j) hd
     have h1 : (i, j) ∈ Rectangle n 2 := hsub (by simp [Domino.toShape])
-    simp only [Rectangle, Set.mem_setOf_eq] at h1
+    simp only [Rectangle, Set.mem_ofPred_eq] at h1
     by_cases hi : i ≤ k
     · left
       intro p hp
@@ -2099,16 +2089,16 @@ def restrictTilingLeft (n : ℕ) (T : Tiling (Rectangle n 2)) (k : ℕ)
     exact T.pairwise_disjoint hd1.1 hd2.1 hne
   cover := by
     ext ⟨x, y⟩
-    simp only [Set.mem_iUnion, Rectangle, Set.mem_setOf_eq]
+    simp only [Set.mem_iUnion, Rectangle, Set.mem_ofPred_eq]
     constructor
     · intro ⟨d, ⟨hd, hleft⟩, hp⟩
       have hdomain := T.cover ▸ Set.mem_biUnion hd hp
-      simp only [Rectangle, Set.mem_setOf_eq] at hdomain
+      simp only [Rectangle, Set.mem_ofPred_eq] at hdomain
       exact ⟨hdomain.1, hleft (x, y) hp, hdomain.2.2.1, hdomain.2.2.2⟩
     · intro ⟨h1, h2, h3, h4⟩
       have hk_lt_n : (k : ℤ) < n := by exact_mod_cast hk.2.1
       have hxy : (x, y) ∈ Rectangle n 2 := by
-        simp only [Rectangle, Set.mem_setOf_eq]
+        simp only [Rectangle, Set.mem_ofPred_eq]
         exact ⟨h1, by omega, h3, h4⟩
       rw [← T.cover] at hxy
       simp only [Set.mem_iUnion] at hxy
@@ -2137,7 +2127,7 @@ def restrictTilingRight (n : ℕ) (T : Tiling (Rectangle n 2)) (k : ℕ)
       simp only [Prod.mk.injEq] at h; ext <;> omega) hdisj
   cover := by
       ext ⟨x, y⟩
-      simp only [Set.mem_iUnion, Set.mem_image, Rectangle, Set.mem_setOf_eq]
+      simp only [Set.mem_iUnion, Set.mem_image, Rectangle, Set.mem_ofPred_eq]
       constructor
       · intro ⟨d, hd_img, hp⟩
         obtain ⟨d', ⟨hd', hright⟩, hd_eq⟩ := hd_img
@@ -2145,7 +2135,7 @@ def restrictTilingRight (n : ℕ) (T : Tiling (Rectangle n 2)) (k : ℕ)
         obtain ⟨p', hp', hp_eq⟩ := hp
         simp only [Prod.mk.injEq] at hp_eq
         have hdomain := T.cover ▸ Set.mem_biUnion hd' hp'
-        simp only [Rectangle, Set.mem_setOf_eq] at hdomain
+        simp only [Rectangle, Set.mem_ofPred_eq] at hdomain
         have hx : p'.1 ≥ k + 1 := hright p' hp'
         have hy : y = p'.2 := hp_eq.2.symm
         constructor
@@ -2159,7 +2149,7 @@ def restrictTilingRight (n : ℕ) (T : Tiling (Rectangle n 2)) (k : ℕ)
       · intro ⟨h1, h2, h3, h4⟩
         have hk_lt_n : (k : ℤ) < n := by exact_mod_cast hk.2.1
         have hxy : ((x + k : ℤ), y) ∈ Rectangle n 2 := by
-          simp only [Rectangle, Set.mem_setOf_eq]
+          simp only [Rectangle, Set.mem_ofPred_eq]
           exact ⟨by omega, by omega, h3, h4⟩
         rw [← T.cover] at hxy
         simp only [Set.mem_iUnion] at hxy
@@ -2272,7 +2262,7 @@ theorem faultPositions_finite (n : ℕ) (T : Tiling (Rectangle n 2)) :
     (faultPositions n T).Finite := by
   apply Set.Finite.subset (Set.finite_Icc 0 n)
   intro k hk
-  simp only [faultPositions, Set.mem_setOf_eq] at hk
+  simp only [faultPositions, Set.mem_ofPred_eq] at hk
   simp only [Set.mem_Icc]
   exact ⟨Nat.zero_le k, Nat.le_of_lt hk.2.1⟩
 
@@ -2317,7 +2307,7 @@ noncomputable instance faultPositions_nonempty_decidable (n : ℕ) (T : Tiling (
 theorem faultPositions_empty_of_isFaultfree (n : ℕ) (T : Tiling (Rectangle n 2)) 
     (hff : isFaultfree n T) : faultPositions n T = ∅ := by
   ext k
-  simp only [faultPositions, Set.mem_setOf_eq, Set.mem_empty_iff_false, iff_false]
+  simp only [faultPositions, Set.mem_ofPred_eq, Set.mem_empty_iff_false, iff_false]
   exact hff.2 k
 
 /-- A faultfree tiling has non-nonempty faultPositions -/
@@ -2389,7 +2379,7 @@ theorem composeTilings_hasFault_at_boundary (k : ℕ) (hk : k ≥ 2)
         -- The domino's rightmost point (i+1, jj) is in Rectangle (ts j).1 2
         have hright : (i + 1, jj) ∈ (Domino.horizontal i jj).toShape := by simp [Domino.toShape]
         have hright_rect := hsub hright
-        simp only [Rectangle, Set.mem_setOf_eq] at hright_rect
+        simp only [Rectangle, Set.mem_ofPred_eq] at hright_rect
         -- hright_rect : 1 ≤ i + 1 ∧ i + 1 ≤ (ts j).1 ∧ 1 ≤ jj ∧ jj ≤ 2
         -- We need i < w0, i.e., i < (ts ⟨0, _⟩).1
         -- Since j = ⟨0, _⟩, we have (ts j).1 = w0
@@ -2410,7 +2400,7 @@ theorem composeTilings_hasFault_at_boundary (k : ℕ) (hk : k ≥ 2)
           have hsub := domino_subset_rect (ts j).1 (ts j).2.val (Domino.horizontal i jj) hd'_in
           have hleft : (i, jj) ∈ (Domino.horizontal i jj).toShape := by simp [Domino.toShape]
           have hleft_rect := hsub hleft
-          simp only [Rectangle, Set.mem_setOf_eq] at hleft_rect
+          simp only [Rectangle, Set.mem_ofPred_eq] at hleft_rect
           omega
         calc (i : ℤ) + (partialWidthSum k ts j : ℤ) 
             ≥ 1 + (w0 : ℤ) := by omega
@@ -2464,7 +2454,7 @@ theorem composeTilings_minFault_eq (k : ℕ) (hk : k ≥ 2)
   have hle := minFault_le (composeTilings k ts).1 (composeTilings k ts).2 hne (ts ⟨0, by omega⟩).1 hfault
   -- Show minFault >= (ts 0).1 by contradiction
   by_contra hne'
-  push_neg at hne'
+  push Not at hne'
   have hlt : minFault (composeTilings k ts).1 (composeTilings k ts).2 hne < (ts ⟨0, by omega⟩).1 := by
     omega
   have hno := composeTilings_no_fault_before_boundary k (by omega : k ≥ 1) ts 
@@ -2506,7 +2496,7 @@ theorem composeTilings_component0_inLeftPart (k : ℕ) (hk : k ≥ 1)
   intro p hp
   have hsub := domino_subset_rect (ts ⟨0, hk⟩).1 (ts ⟨0, hk⟩).2.val d hd
   have hp_rect := hsub hp
-  simp only [Rectangle, Set.mem_setOf_eq] at hp_rect
+  simp only [Rectangle, Set.mem_ofPred_eq] at hp_rect
   exact hp_rect.2.1
 
 /-- Dominos from component i >= 1 are in the right part at position (ts 0).1 -/
@@ -2528,7 +2518,7 @@ theorem composeTilings_componentPos_inRightPart (k : ℕ) (hk : k ≥ 2)
   obtain ⟨p', hp', hp_eq⟩ := hp
   rw [Prod.ext_iff] at hp_eq
   have hp'_rect := hd_x hp'
-  simp only [Rectangle, Set.mem_setOf_eq] at hp'_rect
+  simp only [Rectangle, Set.mem_ofPred_eq] at hp'_rect
   have hx' : p'.1 ≥ 1 := hp'_rect.1
   calc p.1 = p'.1 + partialWidthSum k ts i := by omega
     _ ≥ 1 + (ts ⟨0, by omega⟩).1 := by omega
@@ -2813,7 +2803,7 @@ theorem decomposeTiling_hasFault (n : ℕ) (T : Tiling (Rectangle (n + 1) 2))
     decomposeTiling (n + 1) T = 
       ⟨m + 1, fun i => if hi : i.val = 0 then ⟨k, ⟨left, left_ff⟩⟩ 
                        else ts ⟨i.val - 1, by omega⟩⟩ := by
-  simp only [decomposeTiling, dif_pos hne]
+  simp only [decomposeTiling, dite_eq_left hne]
 
 /-- The width of decomposeTiling when faults exist equals m+1 where m is the count from
     decomposing the right part. This is useful for proving composeTilings_decomposeTiling. -/
@@ -2823,7 +2813,7 @@ theorem decomposeTiling_hasFault_fst (n : ℕ) (T : Tiling (Rectangle (n + 1) 2)
     let hk := minFault_hasFault (n + 1) T hne
     let right := restrictTilingRight (n + 1) T k hk
     (decomposeTiling (n + 1) T).1 = (decomposeTiling (n + 1 - k) right).1 + 1 := by
-  simp only [decomposeTiling, dif_pos hne]
+  simp only [decomposeTiling, dite_eq_left hne]
 
 /-- Decomposition followed by composition gives back the original tiling -/
 theorem composeTilings_decomposeTiling (n : ℕ) (T : Tiling (Rectangle n 2)) :
@@ -3088,8 +3078,8 @@ theorem composeTilings_decomposeTiling (n : ℕ) (T : Tiling (Rectangle n 2)) :
         refine ⟨hwidth, ?_⟩
         -- Now need to show HEq (composeTilings (m + 1) ts').2 T
         -- We have: hwidth ▸ (composeTilings (m + 1) ts').2 = T
-        -- Use eqRec_heq_iff_heq: (h ▸ a ≍ b) ↔ (a ≍ b)
-        exact eqRec_heq_iff_heq.mp (heq_of_eq htiling_eq)
+        -- Use eqRec_heq_iff: (h ▸ a ≍ b) ↔ (a ≍ b)
+        exact eqRec_heq_iff.mp (heq_of_eq htiling_eq)
       · -- No faults: T is faultfree
         have hff : isFaultfree (n' + 1) T := by
           constructor
@@ -3100,7 +3090,7 @@ theorem composeTilings_decomposeTiling (n : ℕ) (T : Tiling (Rectangle n 2)) :
         have hne' : ¬(faultPositions (n' + 1) T).Nonempty := hne
         have hdecomp : decomposeTiling (n' + 1) T = 
           ⟨1, fun _ => ⟨n' + 1, ⟨T, hff⟩⟩⟩ := by
-          simp only [decomposeTiling, dif_neg hne']
+          simp only [decomposeTiling, dite_eq_right hne']
         rw [hdecomp]
         
         -- composeTilings 1 ts = ⟨(ts 0).1, (ts 0).2.val⟩ = ⟨n' + 1, T⟩
@@ -3126,7 +3116,7 @@ theorem decomposeTiling_faultfree (n : ℕ) (T : Tiling (Rectangle (n + 1) 2))
   -- Since T is faultfree, faultPositions is empty, so Nonempty is false
   have hne : ¬(faultPositions (n + 1) T).Nonempty := 
     faultPositions_not_nonempty_of_isFaultfree (n + 1) T hff
-  simp only [dif_neg hne]
+  simp only [dite_eq_right hne]
 
 /-- Decomposition is invariant under type cast (subst).
     This is key for handling dependent types in the inverse proofs. -/
@@ -3247,7 +3237,7 @@ theorem decomposeTiling_composeTilings (k : ℕ)
         have hne : ¬(faultPositions (n + 1) T).Nonempty := 
           faultPositions_not_nonempty_of_isFaultfree (n + 1) T hT_ff
         
-        simp only [decomposeTiling, dif_neg hne]
+        simp only [decomposeTiling, dite_eq_right hne]
         
         -- Goal: ⟨1, fun _ => ⟨n + 1, ⟨T, _⟩⟩⟩ = ⟨1, ts⟩
         simp only [Sigma.mk.injEq, heq_eq_eq, true_and]
@@ -3303,7 +3293,7 @@ theorem decomposeTiling_composeTilings (k : ℕ)
       have hne' : (faultPositions (((composeTilings (k' + 2) ts).1 - 1) + 1) 
           (hW_eq ▸ (composeTilings (k' + 2) ts).2)).Nonempty := by
         -- faultPositions only depends on dominos, which are preserved by subst
-        simp only [faultPositions, Set.Nonempty, Set.mem_setOf_eq]
+        simp only [faultPositions, Set.Nonempty, Set.mem_ofPred_eq]
         obtain ⟨k, hk⟩ := hne
         use k
         simp only [hasFault] at hk ⊢
@@ -3339,7 +3329,7 @@ theorem decomposeTiling_composeTilings (k : ℕ)
             faultPositions (composeTilings (k' + 2) ts).1 (composeTilings (k' + 2) ts).2 := by
           apply Set.ext
           intro j
-          simp only [faultPositions, Set.mem_setOf_eq, hasFault, Tiling.subst_dominos]
+          simp only [faultPositions, Set.mem_ofPred_eq, hasFault, Tiling.subst_dominos]
           constructor
           · intro ⟨h1, h2, h3⟩
             refine ⟨h1, ?_, h3⟩
@@ -3641,7 +3631,7 @@ def prependVertical (m : ℕ) (T : Tiling (Rectangle m 2)) : Tiling (Rectangle (
         have hsub := domino_subset_rect m T (Domino.horizontal i j) hd2'
         have hi_ge : i ≥ 1 := by
           have := hsub (Set.mem_insert (i, j) _)
-          simp only [Rectangle, Set.mem_setOf_eq] at this
+          simp only [Rectangle, Set.mem_ofPred_eq] at this
           exact this.1
         rcases hx1 with ⟨hx, _⟩ | ⟨hx, _⟩ <;> rcases hx2 with ⟨hx', _⟩ | ⟨hx', _⟩ <;> omega
       | vertical i j =>
@@ -3649,7 +3639,7 @@ def prependVertical (m : ℕ) (T : Tiling (Rectangle m 2)) : Tiling (Rectangle (
         have hsub := domino_subset_rect m T (Domino.vertical i j) hd2'
         have hi_ge : i ≥ 1 := by
           have := hsub (Set.mem_insert (i, j) _)
-          simp only [Rectangle, Set.mem_setOf_eq] at this
+          simp only [Rectangle, Set.mem_ofPred_eq] at this
           exact this.1
         rcases hx1 with ⟨hx, _⟩ | ⟨hx, _⟩ <;> rcases hx2 with ⟨hx', _⟩ | ⟨hx', _⟩ <;> omega
     · -- shifted d1' vs vertical 1 1
@@ -3663,7 +3653,7 @@ def prependVertical (m : ℕ) (T : Tiling (Rectangle m 2)) : Tiling (Rectangle (
         have hsub := domino_subset_rect m T (Domino.horizontal i j) hd1'
         have hi_ge : i ≥ 1 := by
           have := hsub (Set.mem_insert (i, j) _)
-          simp only [Rectangle, Set.mem_setOf_eq] at this
+          simp only [Rectangle, Set.mem_ofPred_eq] at this
           exact this.1
         rcases hx1 with ⟨hx, _⟩ | ⟨hx, _⟩ <;> rcases hx2 with ⟨hx', _⟩ | ⟨hx', _⟩ <;> omega
       | vertical i j =>
@@ -3671,7 +3661,7 @@ def prependVertical (m : ℕ) (T : Tiling (Rectangle m 2)) : Tiling (Rectangle (
         have hsub := domino_subset_rect m T (Domino.vertical i j) hd1'
         have hi_ge : i ≥ 1 := by
           have := hsub (Set.mem_insert (i, j) _)
-          simp only [Rectangle, Set.mem_setOf_eq] at this
+          simp only [Rectangle, Set.mem_ofPred_eq] at this
           exact this.1
         rcases hx1 with ⟨hx, _⟩ | ⟨hx, _⟩ <;> rcases hx2 with ⟨hx', _⟩ | ⟨hx', _⟩ <;> omega
     · -- shifted d1' vs shifted d2'
@@ -3684,7 +3674,7 @@ def prependVertical (m : ℕ) (T : Tiling (Rectangle m 2)) : Tiling (Rectangle (
   cover := by
     ext ⟨x, y⟩
     simp only [Set.mem_iUnion, Set.mem_union, Set.mem_singleton_iff, Set.mem_image,
-               Rectangle, Set.mem_setOf_eq]
+               Rectangle, Set.mem_ofPred_eq]
     constructor
     · intro ⟨d, hd, hp⟩
       rcases hd with rfl | ⟨d', hd', rfl⟩
@@ -3695,7 +3685,7 @@ def prependVertical (m : ℕ) (T : Tiling (Rectangle m 2)) : Tiling (Rectangle (
         obtain ⟨⟨x', y'⟩, hp', heq⟩ := hp
         simp only [Prod.mk.injEq] at heq
         have hxy' := hd'_rect hp'
-        simp only [Rectangle, Set.mem_setOf_eq] at hxy'
+        simp only [Rectangle, Set.mem_ofPred_eq] at hxy'
         omega
     · intro ⟨hx1, hx2, hy1, hy2⟩
       rcases (show x = 1 ∨ x ≥ 2 by omega) with rfl | hx_ge2
@@ -3706,7 +3696,7 @@ def prependVertical (m : ℕ) (T : Tiling (Rectangle m 2)) : Tiling (Rectangle (
         rcases hy12 with rfl | rfl <;> simp
       · -- x ≥ 2: covered by shifted domino
         have hxy_rect : (x - 1, y) ∈ Rectangle m 2 := by
-          simp only [Rectangle, Set.mem_setOf_eq]
+          simp only [Rectangle, Set.mem_ofPred_eq]
           omega
         rw [← T.cover] at hxy_rect
         simp only [Set.mem_iUnion] at hxy_rect
@@ -3731,7 +3721,7 @@ theorem vertical_11_not_in_shiftNat_image (m : ℕ) (T : Tiling (Rectangle m 2))
     have hsub := domino_subset_rect m T (Domino.vertical i j) hd
     have hi_ge : i ≥ 1 := by
       have := hsub (Set.mem_insert (i, j) _)
-      simp only [Rectangle, Set.mem_setOf_eq] at this
+      simp only [Rectangle, Set.mem_ofPred_eq] at this
       exact this.1
     omega
 
@@ -3761,7 +3751,7 @@ def prependHorizontalPair (m : ℕ) (T : Tiling (Rectangle m 2)) : Tiling (Recta
         have hsub := domino_subset_rect m T (Domino.horizontal i j) hd2'
         have hi_ge : i ≥ 1 := by
           have := hsub (Set.mem_insert (i, j) _)
-          simp only [Rectangle, Set.mem_setOf_eq] at this
+          simp only [Rectangle, Set.mem_ofPred_eq] at this
           exact this.1
         rcases hx1 with ⟨hx, _⟩ | ⟨hx, _⟩ <;> rcases hx2 with ⟨hx', _⟩ | ⟨hx', _⟩ <;> omega
       | vertical i j =>
@@ -3769,7 +3759,7 @@ def prependHorizontalPair (m : ℕ) (T : Tiling (Rectangle m 2)) : Tiling (Recta
         have hsub := domino_subset_rect m T (Domino.vertical i j) hd2'
         have hi_ge : i ≥ 1 := by
           have := hsub (Set.mem_insert (i, j) _)
-          simp only [Rectangle, Set.mem_setOf_eq] at this
+          simp only [Rectangle, Set.mem_ofPred_eq] at this
           exact this.1
         rcases hx1 with ⟨hx, _⟩ | ⟨hx, _⟩ <;> rcases hx2 with ⟨hx', _⟩ | ⟨hx', _⟩ <;> omega
     · -- horizontal 1 2 vs horizontal 1 1
@@ -3788,7 +3778,7 @@ def prependHorizontalPair (m : ℕ) (T : Tiling (Rectangle m 2)) : Tiling (Recta
         have hsub := domino_subset_rect m T (Domino.horizontal i j) hd2'
         have hi_ge : i ≥ 1 := by
           have := hsub (Set.mem_insert (i, j) _)
-          simp only [Rectangle, Set.mem_setOf_eq] at this
+          simp only [Rectangle, Set.mem_ofPred_eq] at this
           exact this.1
         rcases hx1 with ⟨hx, _⟩ | ⟨hx, _⟩ <;> rcases hx2 with ⟨hx', _⟩ | ⟨hx', _⟩ <;> omega
       | vertical i j =>
@@ -3796,7 +3786,7 @@ def prependHorizontalPair (m : ℕ) (T : Tiling (Rectangle m 2)) : Tiling (Recta
         have hsub := domino_subset_rect m T (Domino.vertical i j) hd2'
         have hi_ge : i ≥ 1 := by
           have := hsub (Set.mem_insert (i, j) _)
-          simp only [Rectangle, Set.mem_setOf_eq] at this
+          simp only [Rectangle, Set.mem_ofPred_eq] at this
           exact this.1
         rcases hx1 with ⟨hx, _⟩ | ⟨hx, _⟩ <;> rcases hx2 with ⟨hx', _⟩ | ⟨hx', _⟩ <;> omega
     · -- shifted d1' vs horizontal 1 1
@@ -3809,7 +3799,7 @@ def prependHorizontalPair (m : ℕ) (T : Tiling (Rectangle m 2)) : Tiling (Recta
         have hsub := domino_subset_rect m T (Domino.horizontal i j) hd1'
         have hi_ge : i ≥ 1 := by
           have := hsub (Set.mem_insert (i, j) _)
-          simp only [Rectangle, Set.mem_setOf_eq] at this
+          simp only [Rectangle, Set.mem_ofPred_eq] at this
           exact this.1
         rcases hx1 with ⟨hx, _⟩ | ⟨hx, _⟩ <;> rcases hx2 with ⟨hx', _⟩ | ⟨hx', _⟩ <;> omega
       | vertical i j =>
@@ -3817,7 +3807,7 @@ def prependHorizontalPair (m : ℕ) (T : Tiling (Rectangle m 2)) : Tiling (Recta
         have hsub := domino_subset_rect m T (Domino.vertical i j) hd1'
         have hi_ge : i ≥ 1 := by
           have := hsub (Set.mem_insert (i, j) _)
-          simp only [Rectangle, Set.mem_setOf_eq] at this
+          simp only [Rectangle, Set.mem_ofPred_eq] at this
           exact this.1
         rcases hx1 with ⟨hx, _⟩ | ⟨hx, _⟩ <;> rcases hx2 with ⟨hx', _⟩ | ⟨hx', _⟩ <;> omega
     · -- shifted d1' vs horizontal 1 2
@@ -3830,7 +3820,7 @@ def prependHorizontalPair (m : ℕ) (T : Tiling (Rectangle m 2)) : Tiling (Recta
         have hsub := domino_subset_rect m T (Domino.horizontal i j) hd1'
         have hi_ge : i ≥ 1 := by
           have := hsub (Set.mem_insert (i, j) _)
-          simp only [Rectangle, Set.mem_setOf_eq] at this
+          simp only [Rectangle, Set.mem_ofPred_eq] at this
           exact this.1
         rcases hx1 with ⟨hx, _⟩ | ⟨hx, _⟩ <;> rcases hx2 with ⟨hx', _⟩ | ⟨hx', _⟩ <;> omega
       | vertical i j =>
@@ -3838,7 +3828,7 @@ def prependHorizontalPair (m : ℕ) (T : Tiling (Rectangle m 2)) : Tiling (Recta
         have hsub := domino_subset_rect m T (Domino.vertical i j) hd1'
         have hi_ge : i ≥ 1 := by
           have := hsub (Set.mem_insert (i, j) _)
-          simp only [Rectangle, Set.mem_setOf_eq] at this
+          simp only [Rectangle, Set.mem_ofPred_eq] at this
           exact this.1
         rcases hx1 with ⟨hx, _⟩ | ⟨hx, _⟩ <;> rcases hx2 with ⟨hx', _⟩ | ⟨hx', _⟩ <;> omega
     · -- shifted d1' vs shifted d2'
@@ -3851,7 +3841,7 @@ def prependHorizontalPair (m : ℕ) (T : Tiling (Rectangle m 2)) : Tiling (Recta
   cover := by
     ext ⟨x, y⟩
     simp only [Set.mem_iUnion, Set.mem_union, Set.mem_insert_iff, Set.mem_singleton_iff, 
-               Set.mem_image, Rectangle, Set.mem_setOf_eq]
+               Set.mem_image, Rectangle, Set.mem_ofPred_eq]
     constructor
     · intro ⟨d, hd, hp⟩
       rcases hd with (rfl | rfl) | ⟨d', hd', rfl⟩
@@ -3864,7 +3854,7 @@ def prependHorizontalPair (m : ℕ) (T : Tiling (Rectangle m 2)) : Tiling (Recta
         obtain ⟨⟨x', y'⟩, hp', heq⟩ := hp
         simp only [Prod.mk.injEq] at heq
         have hxy' := hd'_rect hp'
-        simp only [Rectangle, Set.mem_setOf_eq] at hxy'
+        simp only [Rectangle, Set.mem_ofPred_eq] at hxy'
         omega
     · intro ⟨hx1, hx2, hy1, hy2⟩
       have hy12 : y = 1 ∨ y = 2 := by omega
@@ -3887,7 +3877,7 @@ def prependHorizontalPair (m : ℕ) (T : Tiling (Rectangle m 2)) : Tiling (Recta
           right; trivial
       · -- x ≥ 3: covered by shifted domino
         have hxy_rect : (x - 2, y) ∈ Rectangle m 2 := by
-          simp only [Rectangle, Set.mem_setOf_eq]
+          simp only [Rectangle, Set.mem_ofPred_eq]
           omega
         rw [← T.cover] at hxy_rect
         simp only [Set.mem_iUnion] at hxy_rect
@@ -3909,7 +3899,7 @@ theorem horizontal_11_not_in_shiftNat2_image (m : ℕ) (T : Tiling (Rectangle m 
     have hsub := domino_subset_rect m T (Domino.horizontal i j) hd
     have hi_ge : i ≥ 1 := by
       have := hsub (Set.mem_insert (i, j) _)
-      simp only [Rectangle, Set.mem_setOf_eq] at this
+      simp only [Rectangle, Set.mem_ofPred_eq] at this
       exact this.1
     omega
   | vertical i j =>
@@ -3926,7 +3916,7 @@ theorem horizontal_12_not_in_shiftNat2_image (m : ℕ) (T : Tiling (Rectangle m 
     have hsub := domino_subset_rect m T (Domino.horizontal i j) hd
     have hi_ge : i ≥ 1 := by
       have := hsub (Set.mem_insert (i, j) _)
-      simp only [Rectangle, Set.mem_setOf_eq] at this
+      simp only [Rectangle, Set.mem_ofPred_eq] at this
       exact this.1
     omega
   | vertical i j =>
@@ -3947,7 +3937,7 @@ theorem vertical_11_not_in_shiftNat2_image (m : ℕ) (T : Tiling (Rectangle m 2)
     have hsub := domino_subset_rect m T (Domino.vertical i j) hd
     have hi_ge : i ≥ 1 := by
       have := hsub (Set.mem_insert (i, j) _)
-      simp only [Rectangle, Set.mem_setOf_eq] at this
+      simp only [Rectangle, Set.mem_ofPred_eq] at this
       exact this.1
     omega
 
@@ -4075,9 +4065,9 @@ theorem numTilings_recurrence (n : ℕ) : d_[n + 2, 2] = d_[n, 2] + d_[n + 1, 2]
       · exact absurd hv hnv
       · exact hh
     -- Use classical logic for decidability
-    haveI : ∀ T : Tiling (Rectangle (n + 2) 2), Decidable (Domino.vertical 1 1 ∈ T.dominos) := 
+    have : ∀ T : Tiling (Rectangle (n + 2) 2), Decidable (Domino.vertical 1 1 ∈ T.dominos) := 
       fun T => Classical.dec _
-    haveI : DecidableEq ℕ := Classical.decEq ℕ
+    have : DecidableEq ℕ := Classical.decEq ℕ
     -- Define the forward map
     let toSum : Tiling (Rectangle (n + 2) 2) → Tiling (Rectangle n 2) ⊕ Tiling (Rectangle (n + 1) 2) := 
       fun T => if hv : Domino.vertical 1 1 ∈ T.dominos 
@@ -4133,7 +4123,7 @@ theorem numTilings_recurrence (n : ℕ) : d_[n + 2, 2] = d_[n, 2] + d_[n + 1, 2]
               have hsub := domino_subset_rect (n + 2) T (Domino.horizontal i j) hd
               have hi_ge : i ≥ 1 := by
                 have := hsub (Set.mem_insert (i, j) _)
-                simp only [Rectangle, Set.mem_setOf_eq] at this
+                simp only [Rectangle, Set.mem_ofPred_eq] at this
                 exact this.1
               have hi1_le : i + 1 ≤ 1 := hleft (i + 1, j) (by simp [Domino.toShape])
               omega
@@ -4141,10 +4131,10 @@ theorem numTilings_recurrence (n : ℕ) : d_[n + 2, 2] = d_[n, 2] + d_[n + 1, 2]
               have hsub := domino_subset_rect (n + 2) T (Domino.vertical i j) hd
               have h1 : (i, j) ∈ Rectangle (n + 2) 2 := hsub (by simp [Domino.toShape])
               have h2 : (i, j + 1) ∈ Rectangle (n + 2) 2 := hsub (by simp [Domino.toShape])
-              have hi_ge : i ≥ 1 := by simp only [Rectangle, Set.mem_setOf_eq] at h1; exact h1.1
+              have hi_ge : i ≥ 1 := by simp only [Rectangle, Set.mem_ofPred_eq] at h1; exact h1.1
               have hi_le : i ≤ 1 := hleft (i, j) (by simp [Domino.toShape])
-              have hj_ge : j ≥ 1 := by simp only [Rectangle, Set.mem_setOf_eq] at h1; exact h1.2.2.1
-              have hj1_le : j + 1 ≤ 2 := by simp only [Rectangle, Set.mem_setOf_eq] at h2; exact h2.2.2.2
+              have hj_ge : j ≥ 1 := by simp only [Rectangle, Set.mem_ofPred_eq] at h1; exact h1.2.2.1
+              have hj1_le : j + 1 ≤ 2 := by simp only [Rectangle, Set.mem_ofPred_eq] at h2; exact h2.2.2.2
               simp only [Domino.vertical.injEq]; omega
           · -- d is in right part
             right
@@ -4193,7 +4183,7 @@ theorem numTilings_recurrence (n : ℕ) : d_[n + 2, 2] = d_[n, 2] + d_[n + 1, 2]
               have hsub := domino_subset_rect 2 T (Domino.horizontal i j) hd
               have h1 : (i, j) ∈ Rectangle 2 2 := hsub (by simp [Domino.toShape])
               have h2 : (i + 1, j) ∈ Rectangle 2 2 := hsub (by simp [Domino.toShape])
-              simp only [Rectangle, Set.mem_setOf_eq] at h1 h2
+              simp only [Rectangle, Set.mem_ofPred_eq] at h1 h2
               have hi : i = 1 := by omega
               have hj : j = 1 ∨ j = 2 := by omega
               rcases hj with rfl | rfl
@@ -4205,7 +4195,7 @@ theorem numTilings_recurrence (n : ℕ) : d_[n + 2, 2] = d_[n, 2] + d_[n + 1, 2]
               have hsub := domino_subset_rect 2 T (Domino.vertical i j) hd
               have h1 : (i, j) ∈ Rectangle 2 2 := hsub (by simp [Domino.toShape])
               have h2 : (i, j + 1) ∈ Rectangle 2 2 := hsub (by simp [Domino.toShape])
-              simp only [Rectangle, Set.mem_setOf_eq] at h1 h2
+              simp only [Rectangle, Set.mem_ofPred_eq] at h1 h2
               have hi : i = 1 ∨ i = 2 := by omega
               have hj : j = 1 := by omega
               -- If i = 1, then vertical 1 1 ∈ T.dominos, contradicting hv
@@ -4247,7 +4237,7 @@ theorem numTilings_recurrence (n : ℕ) : d_[n + 2, 2] = d_[n, 2] + d_[n + 1, 2]
                 have hsub := domino_subset_rect (n + 2) T (Domino.horizontal i j) hd
                 have h1 : (i, j) ∈ Rectangle (n + 2) 2 := hsub (by simp [Domino.toShape])
                 have h2 : (i + 1, j) ∈ Rectangle (n + 2) 2 := hsub (by simp [Domino.toShape])
-                simp only [Rectangle, Set.mem_setOf_eq] at h1 h2
+                simp only [Rectangle, Set.mem_ofPred_eq] at h1 h2
                 have hi1_le : i + 1 ≤ 2 := hleft (i + 1, j) (by simp [Domino.toShape])
                 have hi_ge : i ≥ 1 := h1.1
                 have hj12 : j = 1 ∨ j = 2 := by omega
@@ -4259,7 +4249,7 @@ theorem numTilings_recurrence (n : ℕ) : d_[n + 2, 2] = d_[n, 2] + d_[n + 1, 2]
                 exfalso
                 have hsub := domino_subset_rect (n + 2) T (Domino.vertical i j) hd
                 have h1 : (i, j) ∈ Rectangle (n + 2) 2 := hsub (by simp [Domino.toShape])
-                simp only [Rectangle, Set.mem_setOf_eq] at h1
+                simp only [Rectangle, Set.mem_ofPred_eq] at h1
                 have hi_ge : i ≥ 1 := h1.1
                 have hi_le : i ≤ 2 := hleft (i, j) (by simp [Domino.toShape])
                 have hj_ge : j ≥ 1 := h1.2.2.1
@@ -4269,14 +4259,14 @@ theorem numTilings_recurrence (n : ℕ) : d_[n + 2, 2] = d_[n, 2] + d_[n + 1, 2]
                 rcases (show i = 1 ∨ i = 2 by omega) with hi_eq | hi_eq
                 · have hj1 : j = 1 := by
                     have h2' : (i, j + 1) ∈ Rectangle (n + 2) 2 := hsub (by simp [Domino.toShape])
-                    simp only [Rectangle, Set.mem_setOf_eq] at h2'
+                    simp only [Rectangle, Set.mem_ofPred_eq] at h2'
                     omega
                   have hv11 : Domino.vertical 1 1 ∈ T.dominos := by
                     simp only [hi_eq, hj1] at hd; exact hd
                   exact hv hv11
                 · have hj12 : j = 1 := by
                     have h2' : (i, j + 1) ∈ Rectangle (n + 2) 2 := hsub (by simp [Domino.toShape])
-                    simp only [Rectangle, Set.mem_setOf_eq] at h2'
+                    simp only [Rectangle, Set.mem_ofPred_eq] at h2'
                     omega
                   have hh2 := horizontal_12_if_horizontal_11 (n + 2) (by omega) T hh
                   have hdisj := T.pairwise_disjoint hh hd
@@ -4374,12 +4364,12 @@ theorem numTilings_recurrence (n : ℕ) : d_[n + 2, 2] = d_[n, 2] + d_[n + 1, 2]
                 cases d with
                 | horizontal i j =>
                   have h1 : (i, j) ∈ Rectangle n 2 := hsub (by simp [Domino.toShape])
-                  simp only [Rectangle, Set.mem_setOf_eq] at h1
+                  simp only [Rectangle, Set.mem_ofPred_eq] at h1
                   simp only [Domino.toShape, Set.mem_insert_iff, Set.mem_singleton_iff] at hxy
                   rcases hxy with ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩ <;> omega
                 | vertical i j =>
                   have h1 : (i, j) ∈ Rectangle n 2 := hsub (by simp [Domino.toShape])
-                  simp only [Rectangle, Set.mem_setOf_eq] at h1
+                  simp only [Rectangle, Set.mem_ofPred_eq] at h1
                   simp only [Domino.toShape, Set.mem_insert_iff, Set.mem_singleton_iff] at hxy
                   rcases hxy with ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩ <;> omega
             · exact Domino.shiftNeg_shiftNat d 2
@@ -4426,12 +4416,12 @@ theorem numTilings_recurrence (n : ℕ) : d_[n + 2, 2] = d_[n, 2] + d_[n + 1, 2]
               cases d with
               | horizontal i j =>
                 have h1 : (i, j) ∈ Rectangle (n + 1) 2 := hsub (by simp [Domino.toShape])
-                simp only [Rectangle, Set.mem_setOf_eq] at h1
+                simp only [Rectangle, Set.mem_ofPred_eq] at h1
                 simp only [Domino.toShape, Set.mem_insert_iff, Set.mem_singleton_iff] at hxy
                 rcases hxy with ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩ <;> omega
               | vertical i j =>
                 have h1 : (i, j) ∈ Rectangle (n + 1) 2 := hsub (by simp [Domino.toShape])
-                simp only [Rectangle, Set.mem_setOf_eq] at h1
+                simp only [Rectangle, Set.mem_ofPred_eq] at h1
                 simp only [Domino.toShape, Set.mem_insert_iff, Set.mem_singleton_iff] at hxy
                 rcases hxy with ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩ <;> omega
           · exact Domino.shiftNeg_shiftNat d 1
@@ -4449,7 +4439,7 @@ theorem numTilings_recurrence (n : ℕ) : d_[n + 2, 2] = d_[n, 2] + d_[n + 1, 2]
       intro x hx
       simp only [Set.mem_range, f] at hx
       obtain ⟨T, rfl⟩ := hx
-      simp only [TilingsHeight2, Set.mem_setOf_eq]
+      simp only [TilingsHeight2, Set.mem_ofPred_eq]
     have hrange_fin : Set.Finite (Set.range f) := h.subset hrange
     convert hrange_fin.preimage hf.injOn
     ext T
@@ -4466,14 +4456,14 @@ theorem numTilings_recurrence (n : ℕ) : d_[n + 2, 2] = d_[n, 2] + d_[n + 1, 2]
       intro x hx
       simp only [Set.mem_range, f] at hx
       obtain ⟨T, rfl⟩ := hx
-      simp only [TilingsHeight2, Set.mem_setOf_eq]
+      simp only [TilingsHeight2, Set.mem_ofPred_eq]
     have hrange_fin : Set.Finite (Set.range f) := h.subset hrange
     convert hrange_fin.preimage hf.injOn
     ext T
     simp only [Set.mem_univ, Set.mem_preimage, Set.mem_range, true_iff]
     exact ⟨T, rfl⟩
-  haveI : Finite (Tiling (Rectangle n 2)) := Set.finite_univ_iff.mp hfin_n
-  haveI : Finite (Tiling (Rectangle (n + 1) 2)) := Set.finite_univ_iff.mp hfin_n1
+  have : Finite (Tiling (Rectangle n 2)) := Set.finite_univ_iff.mp hfin_n
+  have : Finite (Tiling (Rectangle (n + 1) 2)) := Set.finite_univ_iff.mp hfin_n1
   rw [Nat.card_congr e, Nat.card_sum, add_comm]
 
 /-- The number of domino tilings of a 2×n rectangle equals the (n+1)-th Fibonacci number -/
@@ -4512,7 +4502,7 @@ theorem countOfWeight_tilingsHeight2_eq (n : ℕ) :
   have h_eq : {a : Σ m : ℕ, Tiling (Rectangle m 2) | TilingsHeight2.weight a = n} =
               Set.range (fun T : Tiling (Rectangle n 2) => (⟨n, T⟩ : Σ m : ℕ, Tiling (Rectangle m 2))) := by
     ext ⟨m, T⟩
-    simp only [TilingsHeight2, Set.mem_setOf_eq, Set.mem_range, Sigma.mk.injEq]
+    simp only [TilingsHeight2, Set.mem_ofPred_eq, Set.mem_range, Sigma.mk.injEq]
     constructor
     · intro hm
       use hm.symm ▸ T
@@ -4522,7 +4512,7 @@ theorem countOfWeight_tilingsHeight2_eq (n : ℕ) :
   have h_finite := tilingsHeight2_isFiniteType n
   have h_card : h_finite.toFinset.card = {a : Σ m : ℕ, Tiling (Rectangle m 2) | TilingsHeight2.weight a = n}.ncard := by
     rw [Set.ncard]
-    simp only [h_finite.encard_eq_coe_toFinset_card, ENat.toNat_coe]
+    simp only [h_finite.encard_eq_coe_toFinset_card, ENat.toNat_natCast]
   rw [h_card, h_eq]
   have h_inj : Function.Injective (fun T : Tiling (Rectangle n 2) => (⟨n, T⟩ : Σ m : ℕ, Tiling (Rectangle m 2))) := by
     intro T1 T2 heq
@@ -4558,18 +4548,18 @@ theorem dominosInRectangle_finite (n m : ℕ) : Set.Finite (DominosInRectangle n
       left
       simp only [Set.mem_image, Set.mem_prod, Set.mem_Icc]
       use (i, j)
-      simp only [DominosInRectangle, Domino.toShape, Set.subset_def, Set.mem_setOf_eq] at hd
+      simp only [DominosInRectangle, Domino.toShape, Set.subset_def, Set.mem_ofPred_eq] at hd
       have h1 := hd (i, j) (by simp)
-      simp only [Rectangle, Set.mem_setOf_eq] at h1
+      simp only [Rectangle, Set.mem_ofPred_eq] at h1
       refine ⟨⟨⟨h1.1, ?_⟩, ⟨h1.2.2.1, h1.2.2.2⟩⟩, rfl⟩
       omega
     | vertical i j =>
       right
       simp only [Set.mem_image, Set.mem_prod, Set.mem_Icc]
       use (i, j)
-      simp only [DominosInRectangle, Domino.toShape, Set.subset_def, Set.mem_setOf_eq] at hd
+      simp only [DominosInRectangle, Domino.toShape, Set.subset_def, Set.mem_ofPred_eq] at hd
       have h1 := hd (i, j) (by simp)
-      simp only [Rectangle, Set.mem_setOf_eq] at h1
+      simp only [Rectangle, Set.mem_ofPred_eq] at h1
       refine ⟨⟨⟨h1.1, h1.2.1⟩, ⟨h1.2.2.1, ?_⟩⟩, rfl⟩
       omega
   apply Set.Finite.subset _ h
@@ -4587,7 +4577,7 @@ theorem dominosInRectangle_finite (n m : ℕ) : Set.Finite (DominosInRectangle n
 theorem tiling_dominos_subset (n m : ℕ) (T : Tiling (Rectangle n m)) :
     T.dominos ⊆ DominosInRectangle n m := by
   intro d hd
-  simp only [DominosInRectangle, Set.mem_setOf_eq]
+  simp only [DominosInRectangle, Set.mem_ofPred_eq]
   have h : d.toShape ⊆ ⋃ d' ∈ T.dominos, d'.toShape := by
     intro p hp
     simp only [Set.mem_iUnion]

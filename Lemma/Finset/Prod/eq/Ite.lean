@@ -12,8 +12,8 @@ private lemma main
     if x ∈ A ∪ B then ∑ i ∈ C, ∑ j ∈ D, f i j else ∑ i ∈ C, ∑ j ∈ D, h i j := by
 -- proof
   by_cases hx : x ∈ A ∪ B
-  · simp only [if_pos hx]
-  · simp only [if_neg hx]
+  · simp only [ite_eq_left hx]
+  · simp only [ite_eq_right hx]
 
 
 -- created on 2020-03-10

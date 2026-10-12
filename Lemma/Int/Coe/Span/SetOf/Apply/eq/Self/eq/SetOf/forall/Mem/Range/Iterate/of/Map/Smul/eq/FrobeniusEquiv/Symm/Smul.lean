@@ -128,7 +128,7 @@ theorem rangeIter_eq_of_finrank_le (n : ℕ) (hn : finrank K V ≤ n) :
 
 theorem rangeIter_finrank_eq_iInf : (rangeIter C hC (finrank K V) : Set V) = {v : V | ∀ m : ℕ, v ∈ Set.range ((⇑C)^[m])} := by
   ext v
-  simp only [SetLike.mem_coe, Set.mem_setOf_eq]
+  simp only [SetLike.mem_coe, Set.mem_ofPred_eq]
   constructor
   · intro hv m
     rcases le_total m (finrank K V) with h | h
@@ -225,7 +225,7 @@ theorem exists_ne_zero_apply_eq_self [Nontrivial W] (D : W →+ W) (hD : ∀ (a 
   obtain ⟨k, rfl⟩ : ∃ k, m = k + 1 := ⟨m - 1, by omega⟩
 
   let a : ℕ → K := fun i => if h : i < k + 1 then c ⟨i, h⟩ else 0
-  have ha : ∀ i : Fin (k + 1), a i = c i := fun i => by simp only [a, dif_pos i.is_lt]
+  have ha : ∀ i : Fin (k + 1), a i = c i := fun i => by simp only [a, dite_eq_left i.is_lt]
   have hsum : ∑ i ∈ Finset.range (k + 1), a i • s i = s (k + 1) := by
     rw [← hc, ← Fin.sum_univ_eq_sum_range (fun i => a i • s i) (k + 1)]
     exact Finset.sum_congr rfl (fun i _ => by rw [ha])
@@ -490,8 +490,10 @@ variable [FiniteDimensional K V]
 
 noncomputable def stable : Submodule K V := rangeIter C hC (finrank K V)
 
+omit [FiniteDimensional K V] in
 theorem stable_def : stable C hC = rangeIter C hC (finrank K V) := rfl
 
+omit [FiniteDimensional K V] in
 theorem apply_mem_stable {v : V} (hv : v ∈ stable C hC) : C v ∈ stable C hC := by
   have h : C v ∈ rangeIter C hC (finrank K V + 1) := by
     rw [← SetLike.mem_coe, ← map_rangeIter C hC]
@@ -510,8 +512,10 @@ noncomputable def restrict : ↥(stable C hC) →+ ↥(stable C hC) where
   map_zero' := Subtype.ext (map_zero C)
   map_add' v w := Subtype.ext (map_add C (v : V) (w : V))
 
+omit [FiniteDimensional K V] in
 @[scoped simp] theorem coe_restrict (v : ↥(stable C hC)) : ((restrict C hC v : ↥(stable C hC)) : V) = C (v : V) := rfl
 
+omit [FiniteDimensional K V] in
 theorem restrict_smul (a : K) (v : ↥(stable C hC)) : restrict C hC (a • v) = (frobeniusEquiv K p).symm a • restrict C hC v :=
   Subtype.ext (hC a (v : V))
 

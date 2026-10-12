@@ -59,7 +59,7 @@ private lemma main
   funext j
   apply sc_ext
   by_cases hp : P i j
-  · simp only [hp, decide_true, if_true]
+  · simp only [hp, decide_true, ite_true]
     rw [h i j hp, Finset.sum_filter]
     simp
   · simp [hp]

@@ -12,8 +12,7 @@ private lemma subst.given
 -- imply
   p (if x = y then 1 else 0) := by
 -- proof
-  rw [if_neg h₀]
-  exact h₁
+  rwa [ite_eq_right h₀]
 
 
 -- created on 2019-05-03

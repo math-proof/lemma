@@ -136,11 +136,11 @@ def L (n : ℕ) : AddSubgroup A where
   zero_mem' := smul_zero _
   add_mem' := by
     intro a b ha hb
-    simp only [Set.mem_setOf_eq] at ha hb ⊢
+    simp only [Set.mem_ofPred_eq] at ha hb ⊢
     rw [smul_add, ha, hb, add_zero]
   neg_mem' := by
     intro a ha
-    simp only [Set.mem_setOf_eq] at ha ⊢
+    simp only [Set.mem_ofPred_eq] at ha ⊢
     rw [smul_neg, ha, neg_zero]
 
 variable {ℓ} in

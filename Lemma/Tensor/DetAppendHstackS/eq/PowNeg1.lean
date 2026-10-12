@@ -32,8 +32,8 @@ private lemma main
 -- proof
   _ = (cast (by grind) (blockSwap α m n) : Tensor α [n + m, n + m]).toMatrix.det := by
     unfold Tensor.det
-    rw [dif_neg (by grind : ¬[m + n, n + m].length > 2)]
-    rw [dif_neg (by grind : ¬[m + n, n + m].length < 2)]
+    rw [dite_eq_right (by grind : ¬[m + n, n + m].length > 2)]
+    rw [dite_eq_right (by grind : ¬[m + n, n + m].length < 2)]
     simp [Nat.add_comm m n]
   _ = (cast (congrArg (fun t => Tensor α [m + n, t]) (Nat.add_comm n m)) (blockSwap α m n)).toMatrix.det := by
     apply Eq.trans
@@ -193,9 +193,9 @@ private lemma main
             rfl
         rw [val_finRotate_pow_mod]
         if hj : (j : ℕ) < n then
-          rw [if_pos hj, Nat.mod_eq_of_lt (by grind), Nat.add_comm]
+          rw [ite_eq_left hj, Nat.mod_eq_of_lt (by grind), Nat.add_comm]
         else
-          rw [if_neg hj]
+          rw [ite_eq_right hj]
           have hdiv : ((j : ℕ) + m) / (m + n) = 1 := Nat.div_eq_of_lt_le (by grind) (by grind)
           rw [Nat.mod_def, hdiv]
           grind

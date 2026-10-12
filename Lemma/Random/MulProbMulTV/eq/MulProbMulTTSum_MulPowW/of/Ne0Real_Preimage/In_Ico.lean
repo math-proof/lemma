@@ -8,7 +8,7 @@ open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 
 
 /--
-On a reachable state `x`: `π_θ(u | x) * (T(x, u, y) * V θ γ (t+1) y) = π_θ(u | x) * (T(x, u, y) * ∑' k, γ ^ k * W θ rc k y)`.
+On a reachable state `x`: `π_θ(u | x) * (T(x, u, y) * V θ γ (t+1) y) = π_θ(u | x) * (T(x, u, y) * ∑' k, γ ^ k * W θ (fun z ↦ clip z.1 (-M.env.R) M.env.R) k y)`.
 -/
 @[path]
 private lemma main
@@ -30,19 +30,18 @@ private lemma main
 -- imply
   let V (θ : Θ) (t : ℕ) (x : S) : ℝ :=
     𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = x);
-  let rc (z : ℝ × S × A) : ℝ := clip z.1 (-M.env.R) M.env.R
   M.pol.prob θ x u * ((M.env.trans (x, u)).real {y} * V θ (t + 1) y) =
-    M.pol.prob θ x u * ((M.env.trans (x, u)).real {y} * ∑' k, γ ^ k * ∫ z, M.Kf θ rc k z ∂(M.stageK θ y)) := by
+    M.pol.prob θ x u * ((M.env.trans (x, u)).real {y} * ∑' k, γ ^ k * ∫ z, M.Kf θ (fun z ↦ clip z.1 (-M.env.R) M.env.R) k z ∂(M.stageK θ y)) := by
 -- proof
-  intro Vθ rc
+  intro Vθ
   if hz : M.pol.prob θ x u * (M.env.trans (x, u)).real {y} = 0 then
     rw [← mul_assoc, ← mul_assoc, hz, zero_mul, zero_mul]
   else
-    have hV : Vθ θ (t + 1) y = ∑' k, γ ^ k * ∫ z, M.Kf θ rc k z ∂(M.stageK θ y) :=
+    have hV : Vθ θ (t + 1) y = ∑' k, γ ^ k * ∫ z, M.Kf θ (fun z ↦ clip z.1 (-M.env.R) M.env.R) k z ∂(M.stageK θ y) :=
       V.eq.TSum_MulPowWRc.of.Ne0Real_Preimage.In_Ico (M := M) θ (t + 1) y h₀ h₁
         (RealPreimageS_Add_1.ne.Zero.of.NeMulProbT_0.Ne0Real_Preimage (M := M) θ t x u y h₁ hP hz)
     rw [hV]
 
 
 -- created on 2026-10-07
--- updated on 2026-10-11
+-- updated on 2026-10-12

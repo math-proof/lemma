@@ -14,7 +14,7 @@ private lemma main
 -- imply
   Polynomial.aeval (x ^ Fintype.card F) p = (Polynomial.aeval x p) ^ Fintype.card F := by
 -- proof
-  rw [← Polynomial.expand_aeval (Fintype.card F) p x, FiniteField.expand_card, map_pow]
+  rw [← Polynomial.expand_aeval (Fintype.card F) p x, FiniteField.Polynomial.expand_card, map_pow]
 
 
 -- created on 2026-10-03

@@ -1127,7 +1127,7 @@ The source works with sets of nonnegative integers; the hypothesis
 Proves `Wanted` entry `no_small_sum_dominant`.
 -/
 theorem no_small_sum_dominant :
-    ∀ (A : Finset ℤ) (h_nonneg : ∀ x ∈ A, 0 ≤ x) (h_card : A.card < 6),
+    ∀ (A : Finset ℤ) (_h_nonneg : ∀ x ∈ A, 0 ≤ x) (_h_card : A.card < 6),
       (A + A).card ≤ (A - A).card :=
   fun A _ h_card => card_add_le_card_sub_of_card_lt_six A h_card
 

@@ -1,6 +1,6 @@
 import sympy.sets.sets
 import sympy.Basic
-import Mathlib.Data.Real.Pointwise
+import Mathlib.Basic.Real.Pointwise
 
 
 @[path]

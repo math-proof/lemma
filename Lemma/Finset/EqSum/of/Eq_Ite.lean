@@ -16,9 +16,9 @@ private lemma main
   obtain ⟨m, rfl⟩ : ∃ m, n = t + 1 + m := ⟨n - t - 1, by omega⟩
   rw [show t + 1 + m - 1 = t + m by omega, Finset.sum_range_add, Finset.sum_range_add, Finset.sum_range_succ]
   have e1 : ∑ i ∈ Finset.range t, f (y i) = ∑ i ∈ Finset.range t, f (x i) :=
-    Finset.sum_congr rfl (fun i hi => by rw [h i, if_pos (Finset.mem_range.mp hi)])
+    Finset.sum_congr rfl (fun i hi => by rw [h i, ite_eq_left (Finset.mem_range.mp hi)])
   have e2 : ∑ k ∈ Finset.range m, f (y (t + k)) = ∑ k ∈ Finset.range m, f (x (t + 1 + k)) :=
-    Finset.sum_congr rfl (fun k _ => by rw [h (t + k), if_neg (by omega), show t + k + 1 = t + 1 + k by ring])
+    Finset.sum_congr rfl (fun k _ => by rw [h (t + k), ite_eq_right (by omega), show t + k + 1 = t + 1 + k by ring])
   rw [e1, e2]
   ring
 

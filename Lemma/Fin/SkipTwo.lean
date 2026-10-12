@@ -85,5 +85,19 @@ private lemma skip_two_ne_second_is
 -- proof
   apply Fin.skipTwo_ne_second i j hij k
 
+/--
+[SkipTwo](https://github.com/facebookresearch/algebraic-combinatorics/blob/main/AlgebraicCombinatorics/Fin/SkipTwo.lean)
+-/
+@[path]
+private lemma skip_two_mem_compl_is
+-- given
+  (i j : Fin (n + 2))
+  (hij : i < j)
+  (k : Fin n) :
+-- imply
+  Fin.skipTwo i j hij k ∈ ({i, j} : Finset (Fin (n + 2)))ᶜ := by
+-- proof
+  apply Fin.skipTwo_mem_compl i j hij k
+
 
 -- created on 2026-10-11

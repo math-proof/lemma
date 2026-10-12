@@ -22,14 +22,14 @@ private lemma main
     have h : (i : ℕ) < n + 1 := i.isLt
     have hg : g (i : ℕ) = f ⟨(i : ℕ), h⟩ := by
       dsimp only [g]
-      exact dif_pos h
+      exact dite_eq_left h
     rw [hg]
   have hg2 : ∀ (i : Fin n), g (i : ℕ) = f (i.castAdd 1) := by
     intro i
     have h : (i : ℕ) < n + 1 := by omega
     have hg : g (i : ℕ) = f ⟨(i : ℕ), h⟩ := by
       dsimp only [g]
-      exact dif_pos h
+      exact dite_eq_left h
     rw [hg]
     apply congrArg f
     apply Fin.ext
@@ -43,7 +43,7 @@ private lemma main
     have h : n < n + 1 := by omega
     have hg : g n = f ⟨n, h⟩ := by
       dsimp only [g]
-      exact dif_pos h
+      exact dite_eq_left h
     rw [hg]
     apply congrArg f
     apply Fin.ext

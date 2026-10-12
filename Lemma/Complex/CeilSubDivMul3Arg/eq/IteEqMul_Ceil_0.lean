@@ -52,7 +52,7 @@ private lemma main
     rw [hsimp, hceil0]
     have hcond : p * (⌈(arg U + arg V) / (2 * π) - 1 / 2⌉ : ℂ) = 0 := by
       simp [hp]
-    rw [if_pos hcond]
+    rw [ite_eq_left hcond]
   ·
     have h := CeilSubDivMul3Arg.eq.IteEqCeil_0 (p := p) (q := q)
     simp only [δ, U, V] at h ⊢

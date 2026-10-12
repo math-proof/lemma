@@ -14,7 +14,7 @@ private lemma main
 -- imply
   {γ : (Fin r → ℝ) × (Fin c → ℤ) | γ ∈ Λ ∧ (∀ i, |γ.1 i| ≤ R) ∧ γ.2 = k₀}.Finite := by
 -- proof
-  have hcl : IsClosed (Λ : Set ((Fin r → ℝ) × (Fin c → ℤ))) := AddSubgroup.isClosed_of_discrete
+  have hcl : IsClosed (Λ : Set ((Fin r → ℝ) × (Fin c → ℤ))) := AddSubgroup.isClosed_of_discreteTopology
   have hbox : IsCompact ({x : Fin r → ℝ | ∀ i, |x i| ≤ R} ×ˢ ({k₀} : Set (Fin c → ℤ))) := by
     refine IsCompact.prod ?_ isCompact_singleton
     have : {x : Fin r → ℝ | ∀ i, |x i| ≤ R} = Set.pi Set.univ fun _ => Set.Icc (-R) R := by

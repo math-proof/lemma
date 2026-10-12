@@ -1,5 +1,5 @@
 import Mathlib.Algebra.Polynomial.Roots
-import Mathlib.Data.Complex.Basic
+import Mathlib.Basic.Complex.Basic
 import sympy.sets.sets
 import sympy.Basic
 
@@ -29,7 +29,7 @@ private lemma independence.vector
   funext k
   have hc := congrArg (fun q => Polynomial.coeff q (k : ℕ)) hP0
   simp only [hP, Polynomial.finsetSum_coeff, Polynomial.coeff_C_mul_X_pow, Polynomial.coeff_zero] at hc
-  rw [Finset.sum_eq_single k (fun j _ hj => if_neg (fun e => hj (Fin.ext e.symm))) (fun hk => absurd (Finset.mem_univ k) hk), if_pos rfl] at hc
+  rw [Finset.sum_eq_single k (fun j _ hj => ite_eq_right (fun e => hj (Fin.ext e.symm))) (fun hk => absurd (Finset.mem_univ k) hk), ite_eq_left rfl] at hc
   exact sub_eq_zero.mp hc
 
 

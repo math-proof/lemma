@@ -18,8 +18,8 @@ private lemma main
     intro y i j
     funext c
     simp only [Matrix.vecMul, dotProduct, swapMatrix, Matrix.of_apply, mul_ite, mul_one, mul_zero, Function.comp_apply]
-    rw [Finset.sum_eq_single (Equiv.swap i j c) (fun e _ he => if_neg (fun h => he (by rw [h, Equiv.swap_apply_self])))
-      (fun h => absurd (Finset.mem_univ _) h), if_pos (Equiv.swap_apply_self i j c).symm]
+    rw [Finset.sum_eq_single (Equiv.swap i j c) (fun e _ he => ite_eq_right (fun h => he (by rw [h, Equiv.swap_apply_self])))
+      (fun h => absurd (Finset.mem_univ _) h), ite_eq_left (Equiv.swap_apply_self i j c).symm]
   rw [← h, vm]
   exact (Equiv.sum_comp (Equiv.swap i j) (fun k => x k ^ 2)).symm
 
@@ -38,8 +38,8 @@ private lemma double_limits
     intro y i j
     funext c
     simp only [Matrix.vecMul, dotProduct, swapMatrix, Matrix.of_apply, mul_ite, mul_one, mul_zero, Function.comp_apply]
-    rw [Finset.sum_eq_single (Equiv.swap i j c) (fun e _ he => if_neg (fun h => he (by rw [h, Equiv.swap_apply_self])))
-      (fun h => absurd (Finset.mem_univ _) h), if_pos (Equiv.swap_apply_self i j c).symm]
+    rw [Finset.sum_eq_single (Equiv.swap i j c) (fun e _ he => ite_eq_right (fun h => he (by rw [h, Equiv.swap_apply_self])))
+      (fun h => absurd (Finset.mem_univ _) h), ite_eq_left (Equiv.swap_apply_self i j c).symm]
   have key : ∀ z : Fin n → ℂ, ∑ a, ∑ b ∈ Finset.univ.filter (· < a), (z a - z b) ^ 2 = (∑ a, ∑ b, (z a - z b) ^ 2) / 2 := by
     intro z
     simp only [Finset.sum_filter]
@@ -59,10 +59,10 @@ private lemma double_limits
       apply Finset.sum_congr rfl
       intro b _
       rcases lt_trichotomy a b with hab | hab | hab
-      · rw [if_neg (not_lt.mpr hab.le), if_pos hab, zero_add]
+      · rw [ite_eq_right (not_lt.mpr hab.le), ite_eq_left hab, zero_add]
       · subst hab
         simp
-      · rw [if_pos hab, if_neg (not_lt.mpr hab.le), add_zero]
+      · rw [ite_eq_left hab, ite_eq_right (not_lt.mpr hab.le), add_zero]
     rw [e3, e2]
     ring
   rw [key x, key y, ← h, vm]
@@ -88,8 +88,8 @@ private lemma offset
     intro y i j
     funext c
     simp only [Matrix.vecMul, dotProduct, swapMatrix, Matrix.of_apply, mul_ite, mul_one, mul_zero, Function.comp_apply]
-    rw [Finset.sum_eq_single (Equiv.swap i j c) (fun e _ he => if_neg (fun h => he (by rw [h, Equiv.swap_apply_self])))
-      (fun h => absurd (Finset.mem_univ _) h), if_pos (Equiv.swap_apply_self i j c).symm]
+    rw [Finset.sum_eq_single (Equiv.swap i j c) (fun e _ he => ite_eq_right (fun h => he (by rw [h, Equiv.swap_apply_self])))
+      (fun h => absurd (Finset.mem_univ _) h), ite_eq_left (Equiv.swap_apply_self i j c).symm]
   rw [← h, vm]
   exact (Equiv.sum_comp (Equiv.swap i j) (fun k => (x k - a) ^ 2)).symm
 

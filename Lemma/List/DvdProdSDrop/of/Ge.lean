@@ -13,8 +13,7 @@ private lemma main
   (s.drop i).prod ∣ (s.drop j).prod := by
 -- proof
   have := DvdProdSDrop s j (i - j)
-  rw [EqAdd_Sub.of.Ge h] at this
-  assumption
+  rwa [EqAdd_Sub.of.Ge h] at this
 
 
 -- created on 2025-11-03

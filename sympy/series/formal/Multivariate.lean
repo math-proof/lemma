@@ -322,7 +322,7 @@ noncomputable def partialDeriv {σ : Type*} [DecidableEq σ] (i : σ) :
 /-- The coefficient of `partialDeriv i f` at `m` is `(m + single i 1) i * coeff (m + single i 1) f`. -/
 theorem coeff_partialDeriv {σ : Type*} [DecidableEq σ] (i : σ) (f : MvPowerSeries σ R) (m : σ →₀ ℕ) :
     coeff m (partialDeriv i f) = (DFunLike.coe (m + Finsupp.single i 1) i : R) * coeff (m + Finsupp.single i 1) f := by
-  simp only [partialDeriv, LinearMap.coe_mk, AddHom.coe_mk]
+  simp only [partialDeriv]
   rfl
 
 /-- The map `(a, b) ↦ (a + single i 1, b)` gives a bijection from `antidiagonal m` to
@@ -335,7 +335,7 @@ theorem antidiag_shift_fst {σ : Type*} [DecidableEq σ] (i : σ) (m : σ →₀
       ext <;> simp [h1, h2]⟩ =
     (antidiagonal (m + Finsupp.single i 1)).filter (fun p => Finsupp.single i 1 ≤ p.1) := by
   ext ⟨a, b⟩
-  simp only [mem_map, mem_filter, HasAntidiagonal.mem_antidiagonal, Function.Embedding.coeFn_mk, Prod.mk.injEq,
+  simp only [mem_map, mem_filter, HasAntidiagonal.mem_antidiagonal,
     Prod.exists]
   constructor
   · rintro ⟨a', b', hab, rfl, rfl⟩
@@ -360,7 +360,7 @@ theorem antidiag_shift_snd {σ : Type*} [DecidableEq σ] (i : σ) (m : σ →₀
       ext <;> simp [h1, h2]⟩ =
     (antidiagonal (m + Finsupp.single i 1)).filter (fun p => Finsupp.single i 1 ≤ p.2) := by
   ext ⟨a, b⟩
-  simp only [mem_map, mem_filter, HasAntidiagonal.mem_antidiagonal, Function.Embedding.coeFn_mk, Prod.mk.injEq,
+  simp only [mem_map, mem_filter, HasAntidiagonal.mem_antidiagonal,
     Prod.exists]
   constructor
   · rintro ⟨a', b', hab, rfl, rfl⟩

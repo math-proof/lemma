@@ -35,7 +35,7 @@ private lemma index_general.swap
     rw [Finset.sum_eq_single a]
     · simp [ha]
     · intro b _ hb
-      rw [if_neg (fun e => hb (hy (e.trans ha.symm))), zero_mul]
+      rw [ite_eq_right (fun e => hb (hy (e.trans ha.symm))), zero_mul]
     · simp
   obtain ⟨p0, hp0⟩ := hsurj i hi
   obtain ⟨q0, hq0⟩ := hsurj j hj
@@ -79,7 +79,7 @@ private lemma index.swap
     rw [Finset.sum_eq_single a]
     · simp [ha]
     · intro b _ hb
-      rw [if_neg (fun e => hb (hy (e.trans ha.symm))), zero_mul]
+      rw [ite_eq_right (fun e => hb (hy (e.trans ha.symm))), zero_mul]
     · simp
   obtain ⟨p0, hp0⟩ := hsurj i hi
   obtain ⟨q0, hq0⟩ := hsurj j hj

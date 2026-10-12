@@ -30,7 +30,7 @@ private lemma main
     rw [Finset.sum_comm]
     have : ∀ m' : Fin L, ∑ t : Fin L, (W m t * V t m') • v m' = ((W * V) m m') • v m' := fun m' => by
       rw [← Finset.sum_smul, Matrix.mul_apply]
-    simp_rw [this, hWV, Matrix.one_apply, ite_smul, one_smul, zero_smul, Finset.sum_ite_eq, Finset.mem_univ, if_true]
+    simp_rw [this, hWV, Matrix.one_apply, ite_smul, one_smul, zero_smul, Finset.sum_ite_eq, Finset.mem_univ, ite_true]
   have hB0 : 0 ≤ B := le_trans (norm_nonneg _) (hB m)
   calc ‖v m‖ = ‖∑ t : Fin L, W m t • (∑ m' : Fin L, (x t) ^ (m' : ℕ) • v m')‖ := by rw [hrec]
     _ ≤ ∑ t : Fin L, ‖W m t • (∑ m' : Fin L, (x t) ^ (m' : ℕ) • v m')‖ := norm_sum_le _ _

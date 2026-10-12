@@ -20,14 +20,14 @@ private lemma main
   have hy : ∀ j, 0 < y j := by
     intro j
     if hj : 1 ≤ j ∧ j < n then
-      simp only [y, if_pos hj]
+      simp only [y, ite_eq_left hj]
       exact h j hj.1 hj.2
     else
-      simp only [y, if_neg hj]
+      simp only [y, ite_eq_right hj]
       exact one_pos
   have hxy : ∀ j, 1 ≤ j → j < n → x j = y j := by
     intro j h1 h2
-    simp only [y, if_pos (And.intro h1 h2)]
+    simp only [y, ite_eq_left (And.intro h1 h2)]
   obtain ⟨m, rfl⟩ : ∃ m, n = m + 1 := ⟨n - 1, by omega⟩
   have key := (All_Imp_EqK_EqH.of.All_Imp_Eq x y (m + 1) hxy m le_rfl).2
   have hK := (All_GeK_0.et.GtK_Add_1_0.of.All_Gt_0 y hy m).2

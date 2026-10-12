@@ -8,10 +8,11 @@ private lemma main
 -- imply
   (if (0 : ℤ) = n % 2 then (1 : ℝ) else 0) = 1 - (if (1 : ℤ) = n % 2 then (1 : ℝ) else 0) := by
 -- proof
-  by_cases h : n % 2 = 0
-  · rw [if_pos h.symm, if_neg (by omega)]
+  if h : n % 2 = 0 then
+    rw [ite_eq_left h.symm, ite_eq_right (by omega)]
     norm_num
-  · rw [if_neg (Ne.symm h), if_pos (by omega)]
+  else
+    rw [ite_eq_right (Ne.symm h), ite_eq_left (by omega)]
     norm_num
 
 

@@ -840,6 +840,22 @@ UPDATE lemma set meta = JSON_SET(IFNULL(meta, '{}'), '\$.error', CAST('[{"code":
 EOF
 done
 
+# Non-sorry Lean diagnostics with a .lean path: `warning:` (deprecations,
+# linters, …) and `info:` (e.g. "Try this:" tactic suggestions). Excludes
+# sorry (counted under plausible) and non-file noise (`info: stderr:`,
+# crashpad, lake package notes). Must run before mysql | tee overwrites the log.
+echo "warning:"
+warningFiles=($(
+  {
+    grep -P "^(warning|info): (\./)*[\w'!₀-₉/]+\.lean:\d+:\d+:" Lemma/test.log || true
+  } | grep -vP "^warning: .*declaration uses \`sorry\`" \
+    | sed -E 's/^(warning|info): ([.]\/)?//; s/\.lean:[0-9]+:[0-9]+:.*/.lean/' \
+    | sort -u
+))
+for f in ${warningFiles[*]}; do
+  echo "$f"
+done
+
 MYSQL_PORT=${MYSQL_PORT:-3306}
 # Create a temporary config file with .cnf extension
 tempConfigPath=$(mktemp)
@@ -1008,6 +1024,7 @@ echo "seconds cost    = $time_cost"
 echo "total theorems  = ${#imports[@]}"
 echo "total plausible = ${#sorryModules[@]}"
 echo "total failed    = ${#failingModules[@]}"
+echo "total warning   = ${#warningFiles[@]}"
 rm -f "$tempConfigPath"
 
 echo "total lines     = $(find Lemma -type f -name '*.lean' -not -name '*.echo.lean' -exec awk 'END{print NR}' {} + 2>/dev/null | awk '{s+=$1} END{print s}')"

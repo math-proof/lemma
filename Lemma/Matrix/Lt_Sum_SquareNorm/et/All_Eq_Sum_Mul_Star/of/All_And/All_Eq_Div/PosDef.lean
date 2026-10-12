@@ -44,7 +44,7 @@ private lemma main
           have hs : ∑ k ∈ Finset.Iio j, ‖L₀ j k‖ ^ 2 = ∑ k ∈ Finset.Iio j, ‖L j k‖ ^ 2 :=
             Finset.sum_congr rfl fun k hk => by
               rw [ih k (Finset.mem_Iio.mp hk) (lt_trans (Finset.mem_Iio.mp hk) hjt) j (le_of_lt (Finset.mem_Iio.mp hk)) hjt.le]
-          rw [h₀rec j j, if_neg (lt_irrefl j), if_pos rfl, hs, e1, add_sub_cancel_left, Real.sqrt_sq (norm_nonneg _)]
+          rw [h₀rec j j, ite_eq_right (lt_irrefl j), ite_eq_left rfl, hs, e1, add_sub_cancel_left, Real.sqrt_sq (norm_nonneg _)]
           obtain ⟨x, hx, hxz⟩ := RCLike.pos_iff_exists_ofReal.mp (hind j hjt).2.1
           rw [← hxz, RCLike.norm_ofReal, abs_of_pos hx]
         intro i hji hit
@@ -55,7 +55,7 @@ private lemma main
               have hk' := Finset.mem_Iio.mp hk
               rw [ih k hk' (lt_trans hk' hjt) i (le_of_lt (lt_trans hk' hji)) hit,
                 ih k hk' (lt_trans hk' hjt) j hk'.le hjt.le]
-          rw [hpiece i j hji, h₀rec i j, if_pos hji, hS, hdiag]
+          rw [hpiece i j hji, h₀rec i j, ite_eq_left hji, hS, hdiag]
         · exact hdiag
     have hAt : A t t = ((∑ k ∈ Finset.Iio t, ‖L t k‖ ^ 2 + ‖L₀ t t‖ ^ 2 : ℝ) : 𝕜) := by
       have hs : ∑ k ∈ Finset.Iio t, L₀ t k * star (L₀ t k) = ((∑ k ∈ Finset.Iio t, ‖L t k‖ ^ 2 : ℝ) : 𝕜) := by

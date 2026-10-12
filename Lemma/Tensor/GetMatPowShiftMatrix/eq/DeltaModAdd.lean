@@ -39,7 +39,7 @@ private lemma main
       rw [show (ShiftMatrix (α := α) e0 e1 ^ ((k : ℕ) : ℤ)) =
         Tensor.MatPow (ShiftMatrix (α := α) e0 e1) ((k : ℕ) : ℤ) from rfl]
       simp only [Tensor.MatPow]
-      rw [if_pos (by omega : (((k : ℕ) + 1 : ℕ) : ℤ) ≥ 0), if_pos (by omega : ((k : ℕ) : ℤ) ≥ 0)]
+      rw [ite_eq_left (by omega : (((k : ℕ) + 1 : ℕ) : ℤ) ≥ 0), ite_eq_left (by omega : ((k : ℕ) : ℤ) ≥ 0)]
       rw [show ((((k : ℕ) + 1 : ℕ) : ℤ)).toNat = k + 1 from by rfl, show (((k : ℕ) : ℤ)).toNat = k from by rfl]
       exact MatProd.eq.DotMatProd (f := fun _ => ShiftMatrix (α := α) e0 e1)
     rw [hpow]
@@ -56,7 +56,7 @@ private lemma main
       have hiha := ih a
       have hsa := GetShiftMatrix.eq.DeltaModAdd_1.fin (α := α) n a j
       rw [hiha, ha]
-      simp only [id, Nat.Delta.eq.Ite, if_true]
+      simp only [id, Nat.Delta.eq.Ite, ite_true]
       have hmod : (((a : ℕ) + 1) % n) = (((i : ℕ) + (k + 1)) % n) := by
         rw [ha, Nat.mod_add_mod, Nat.add_assoc]
       exact (hmul_one _).trans (hsa.trans (by simp only [Nat.Delta.eq.Ite, hmod]; rfl))
@@ -65,7 +65,7 @@ private lemma main
       have hiha := ih c
       rw [hiha]
       simp only [id, Nat.Delta.eq.Ite]
-      rw [if_neg (fun hcon => hc (Fin.ext (hcon.symm.trans ha.symm)))]
+      rw [ite_eq_right (fun hcon => hc (Fin.ext (hcon.symm.trans ha.symm)))]
       apply Tensor.EqMul0_0.nat
     ·
       intro hc

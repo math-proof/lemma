@@ -24,14 +24,14 @@ private lemma main
       intro hk
       have h0 : ∑ i : Fin ((0 : Fin (m + 2)) : ℕ), s (Fin.castLE (0 : Fin (m + 2)).2.le i) = 0 :=
         Finset.sum_eq_zero (fun i _ => Fin.elim0 i)
-      rw [h0, zero_add, Tensor.stackIte, if_pos hk]
+      rw [h0, zero_add, Tensor.stackIte, ite_eq_left hk]
     ·
       have hsum : ∑ i : Fin (j'.succ : ℕ), s (Fin.castLE j'.succ.2.le i) =
           s 0 + ∑ i : Fin j', Fin.tail s (Fin.castLE j'.2.le i) := by
         change ∑ i : Fin ((j' : ℕ) + 1), s (Fin.castLE j'.succ.2.le i) = _
         rw [Fin.sum_univ_succ]
         rfl
-      rw [hsum, Tensor.stackIte, if_neg (by omega), show s 0 + ∑ i : Fin j', Fin.tail s (Fin.castLE j'.2.le i) + k - s 0 =
+      rw [hsum, Tensor.stackIte, ite_eq_right (by omega), show s 0 + ∑ i : Fin j', Fin.tail s (Fin.castLE j'.2.le i) + k - s 0 =
         ∑ i : Fin j', Fin.tail s (Fin.castLE j'.2.le i) + k by omega]
       exact ih (Fin.tail s) (Fin.tail f) j' hk
 

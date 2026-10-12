@@ -1,4 +1,3 @@
-import Mathlib.MeasureTheory.Measure.MeasureSpace
 import sympy.stats.joint_rv
 import sympy.Basic
 

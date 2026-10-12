@@ -10,7 +10,28 @@ private lemma main
   (∀ j ∈ Finset.Ico (a + 1) n, ∀ i ∈ Finset.Ico (a + d) (j + d), f i ∧ g i j) ↔
     ∀ i ∈ Finset.Ico (a + d) (n + d - 1), ∀ j ∈ Finset.Ico (max (a + 1) (i - d + 1)) n, f i ∧ g i j := by
 -- proof
-  sorry
+  constructor
+  ·
+    intro h i hi j hj
+    simp only [Finset.mem_Ico] at hi hj
+    apply h
+    ·
+      simp only [Finset.mem_Ico]
+      omega
+    ·
+      simp only [Finset.mem_Ico]
+      omega
+  ·
+    intro h j hj i hi
+    simp only [Finset.mem_Ico] at hi hj
+    apply h
+    ·
+      simp only [Finset.mem_Ico]
+      omega
+    ·
+      simp only [Finset.mem_Ico]
+      omega
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-12

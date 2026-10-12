@@ -68,7 +68,7 @@ private lemma main
       apply List.LengthSlice.eq.Zero
     ·
       simp [Nat.div_zero, List.LengthSlice.eq.Zero]
-      convert LengthSlice.eq.Min (n := 0) (m := 0) <;> simp
+      (convert LengthSlice.eq.Min (n := 0) (m := 0); simp)
   else
     have h_d := Nat.pos_of_ne_zero h_d
     set L := (⟨a, b, d⟩ : Slice).length n with hL
@@ -99,4 +99,4 @@ private lemma main
 
 
 -- created on 2026-08-07
--- updated on 2026-08-24
+-- updated on 2026-10-12

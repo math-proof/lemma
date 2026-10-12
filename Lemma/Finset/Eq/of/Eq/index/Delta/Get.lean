@@ -17,8 +17,8 @@ private lemma main
       rw [h, Finset.card_range, Finset.card_univ, Fintype.card_fin]
     exact fun u v e => Finset.card_image_iff.mp hc (Finset.mem_coe.mpr (Finset.mem_univ u)) (Finset.mem_coe.mpr (Finset.mem_univ v)) e
   by_cases hij : i = j
-  · rw [if_pos hij, if_pos (congrArg x hij)]
-  · rw [if_neg hij, if_neg (fun e => hij (hinj e))]
+  · rw [ite_eq_left hij, ite_eq_left (congrArg x hij)]
+  · rw [ite_eq_right hij, ite_eq_right (fun e => hij (hinj e))]
 
 
 -- created on 2020-10-24

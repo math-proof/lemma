@@ -12,7 +12,8 @@ private lemma main
 -- proof
   refine ⟨fun h hpc => ?_, Imp_And.of.Imp.And.subst.Bool.given⟩
   have h' := h hpc
-  rwa [if_pos hpc.2] at h'
+  rwa [ite_eq_left hpc.2] at h'
 
 
 -- created on 2023-04-25
+-- updated on 2026-10-12

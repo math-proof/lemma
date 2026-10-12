@@ -43,15 +43,15 @@ private instance bdVDecEq : ∀ k, DecidableEq (BdV (n := n) k)
   | 0 => by change DecidableEq (Fin (n + 1)); exact inferInstance
   | k + 1 => by
       change DecidableEq (Finset (BdV (n := n) k))
-      haveI : DecidableEq (BdV (n := n) k) := bdVDecEq k
+      have : DecidableEq (BdV (n := n) k) := bdVDecEq k
       exact inferInstance
 
 private instance bdVFin : ∀ k, Fintype (BdV (n := n) k)
   | 0 => by change Fintype (Fin (n + 1)); exact inferInstance
   | k + 1 => by
       change Fintype (Finset (BdV (n := n) k))
-      haveI : Fintype (BdV (n := n) k) := bdVFin k
-      haveI : DecidableEq (BdV (n := n) k) := bdVDecEq k
+      have : Fintype (BdV (n := n) k) := bdVFin k
+      have : DecidableEq (BdV (n := n) k) := bdVDecEq k
       exact inferInstance
 
 /-- Validity of a simplex over coordinate set `S`: level 0 means a nonempty
@@ -2886,9 +2886,9 @@ theorem kkm_lemma
     fun k i => valid_singleton_of_mem (hTk k).1 (hV k i).1
   set X : ℕ → (Fin (n + 1) → Convexity.StdSimplex ℝ (Fin (n + 1))) :=
     fun k i => BdSimp (hVvalid k i) with hX
-  haveI : T2Space (Convexity.StdSimplex ℝ (Fin (n + 1))) :=
+  have : T2Space (Convexity.StdSimplex ℝ (Fin (n + 1))) :=
     (Convexity.StdSimplex.isEmbedding_toFun_comp_weights ℝ (Fin (n + 1))).t2Space
-  haveI : FirstCountableTopology (Convexity.StdSimplex ℝ (Fin (n + 1))) :=
+  have : FirstCountableTopology (Convexity.StdSimplex ℝ (Fin (n + 1))) :=
     (Convexity.StdSimplex.isEmbedding_toFun_comp_weights ℝ
       (Fin (n + 1))).firstCountableTopology
   obtain ⟨A, φ, hφ, hlim⟩ := CompactSpace.tendsto_subseq X

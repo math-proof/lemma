@@ -52,7 +52,7 @@ private lemma main
       have h_s : s.length = 1 := by grind
       match s with
       | [m] =>
-        repeat rw [Tensor.masked_fill, dif_neg h_len_gt, dif_neg h_len_lt]
+        repeat rw [Tensor.masked_fill, dite_eq_right h_len_gt, dite_eq_right h_len_lt]
         rw [MapStack.eq.Stack_Map]
         apply Eq.of.All_EqGetS.fin
         intro i

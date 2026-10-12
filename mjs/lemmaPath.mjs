@@ -1250,6 +1250,35 @@ function normHead(head, opts) {
   return h;
 }
 
+/** Infix / wrap arithmetic whose path atom is already a compound head (DotPow_Id, …). */
+const ARITH_OP = new Set(["LeanSub", "LeanAdd", "LeanMul", "LeanDiv", "LeanPow", "LeanNeg", "LeanMatMul"]);
+
+/** Prefix for `f x`: arithmetic compounds (@ / ^ / …) ω-eval → Ext (ExtDotPow_Id); else Get. */
+function applyEvalPrefix(head) {
+  if (fnLikeHead(head)) return "";
+  if (ARITH_OP.has(cls(unwrapParen(head)))) return "Ext";
+  return "Get";
+}
+
+/**
+ * `∀ᵐ ω, HasSum … ∧ ‖((γ ^ id) @ r[t:]) ω‖ ≤ bound` → All_And_LeNormExtDotPow_Id.
+ * Drops the HasSum conjunct and the bound; keeps LeNorm of the ExtDotPow_Id eval.
+ */
+function aeAndLeNormExtName(body, opts) {
+  let n = body;
+  while (n && (cls(n) === "LeanParenthesis" || cls(n) === "LeanStatements" || cls(n) === "LeanArgsNewLineSeparated")) {
+    n = cls(n) === "LeanParenthesis" ? n.args?.[0] : firstConclusion(n);
+  }
+  if (cls(n) !== "Lean_land" || !n.args?.[1]) return "";
+  const le = unwrapParen(n.args[1]);
+  if (cls(le) !== "Lean_le") return "";
+  const norm = unwrapParen(le.args?.[0]);
+  if (cls(norm) !== "LeanNorm") return "";
+  const leName = nameExpr(le, opts);
+  if (!leName || !/^LeNormExt/.test(leName)) return "";
+  return "All_And_" + leName;
+}
+
 /** Join one application argument onto head alternatives (Camel / Snake / optional). */
 function argJoinAlts(acc, a, alts, opts) {
   const u = unwrapParen(a);
@@ -1257,10 +1286,12 @@ function argJoinAlts(acc, a, alts, opts) {
   const compound = ac !== "LeanToken" && ac !== "LeanProperty" && !(ac === "LeanParenthesis" && cls(u) === "LeanToken");
   const fun = cls(u) === "Lean_fun";
   const simple = isSimpleArg(a, opts) || isConstNode(a);
+  // Integrable ((γ ^ id) @ r[t:]) → IntegrableDotPow_Id (glue op compound; not Integrable_DotPow_Id)
+  const opArg = ARITH_OP.has(cls(u));
   const snake = (h, c) => h + "_" + c;
   let next = compound && (simple || fun)
     ? uniq([...cartJoin(acc, alts, joinHeadChild), ...cartJoin(acc, alts, snake)])
-    : cartJoin(acc, alts, compound ? snake : joinHeadChild);
+    : cartJoin(acc, alts, compound && !opArg ? snake : joinHeadChild);
   if (fun && alts.includes("Fun")) next = uniq([...cartJoin(acc, ["Fun"], (h, c) => h + c), ...next]);
   // bare `fun x => f x ω` and numeric literal args (`eLpNorm f 1 μ`) may be omitted
   // lambda arguments (`Summable fun n => T n ^ 2` → Summable) and numeric literals may be omitted
@@ -1439,15 +1470,26 @@ function relationAlts(node, tag0, opts) {
     const i = outR.indexOf("Eq");
     if (i >= 0) outR.splice(i + 1, 0, "Eq_Joint");
     else outR.push("Eq_Joint");
-    outR = uniq(outR);
+    // prefer Eq_Joint ahead of bare Eq for ranking / pickCanon
+    outR = uniq(["Eq_Joint", ...outR.filter((a) => a !== "Eq_Joint")]);
+  }
+  // ‖ExtDot…‖ ≤ bound: LeNormExt… preferred (no /le/MulSub1AbsR)
+  if (!opts.asGiven && tag0 === "Le") {
+    const leNorm = leftAlts.filter((l) => /^NormExt/.test(l)).map((l) => "Le" + l);
+    if (leNorm.length) outR = uniq([...leNorm, ...outR]);
+    // ‖r…‖ ≤ |R| → LeNorm_Abs preferred (not Norm/le/AbsR)
+    if (leftAlts.some((l) => /^NormR?$/.test(l)) && rightAlts.some((r) => /^Abs/.test(r))) {
+      outR = uniq(["LeNorm_Abs", ...outR]);
+    }
   }
   return outR;
 }
 
 /** `=ᵐ` names: both sides named → MEqL_R (also MEqLR, MEqL when the sides agree; `L/ae/R` accepted), a hole or
  *  abbreviated lambda side → MEq_R / MEqL, both holes or both lambdas → MEq.
- *  Expect_* infix tokens stay snake after MEq (`MEq_Expect_Cond`, never camel `MEqExpect` / `MEqExpectCond`).
- *  Bare Expect (non-cond) stays `MEqExpect`; equal condSigma prefers `MEqExpectS`. */
+ *  Named Lean identifier sides snake after MEq only (`MEq_Clip`, never camel `MEqClip`; same family as
+ *  `MEq_Expect` / `MEq_Expect_Cond`). Bare Expect (non-cond) stays `MEqExpect`; equal condSigma prefers
+ *  `MEqExpectS`. This does not change Norm/Abs gluing: ‖clip …‖ → `NormClip` (not `Norm_Clip`); |R| → `AbsR`. */
 const isFunNode = (n) => cls(unwrapParen(n)) === "Lean_fun";
 /** Fuse `MEq` onto a side name. `condSigma`: abbreviated `Expect` from `𝔼[…|…]` → `MEq_Expect`, not `MEqExpect`. */
 function meqFuse(side, condSigma = false) {
@@ -1458,7 +1500,8 @@ function meqFuse(side, condSigma = false) {
   if (side.includes("_") || /^ExpectCond/.test(side)) return "MEq_" + side;
   if (side === "Expect") return condSigma ? "MEq_Expect" : "MEqExpect";
   if (/^Expect/.test(side)) return "MEq_" + side;
-  return "MEq" + side;
+  // MEq + named id (Clip, …): snake — only here; Norm/Abs still camel-glue via joinHeadChild
+  return "MEq_" + side;
 }
 /** Camel-collapsed / misplaced `MEqExpect*` imply folders.
  *  Legal sole: `MEqExpect`, `MEqExpectS`, `MEqExpectS_*`.
@@ -1559,6 +1602,8 @@ function relationCanon(node, tag0, opts) {
   }
   const T = ae ? "Ae" + tag : tag;
   const soft = tag === "Iff" ? "is" : tag === "Subset" ? "sub" : ae ? (tag === "Eq" ? "ae" : "ae" + tag) : tag.toLowerCase();
+  // (· t) = (r t, s t, a t) → Eq_Joint even when the `·` side names empty (All_Eq_Joint under ∀)
+  if (tag === "Eq" && eqJointSides(node)) return "Eq_Joint";
   if (left && right) {
     if (left === right && (tag === "Eq" || tag === "Iff")) return left;
     if (opts.asGiven) {
@@ -1570,6 +1615,10 @@ function relationCanon(node, tag0, opts) {
     }
     if (right === "0" && (soft === "gt" || soft === "lt")) return left + "/" + (soft === "gt" ? "Gt_0" : "Lt_0");
     if (left === "0" && (soft === "gt" || soft === "lt")) return right + "/" + (soft === "lt" ? "Gt_0" : "Lt_0");
+    // ‖(ExtDotPow_Id)‖ ≤ bound → LeNormExtDotPow_Id (bound stays in the statement, not the path)
+    if (!opts.asGiven && tag === "Le" && /^NormExt/.test(left)) return "Le" + left;
+    // ‖r k ω‖ ≤ |R| → LeNorm_Abs (not Norm/le/AbsR; Abs not AbsR in this compound)
+    if (!opts.asGiven && tag === "Le" && /^NormR?$/.test(left) && /^Abs/.test(right)) return "LeNorm_Abs";
     return left + "/" + soft + "/" + right;
   }
   if (!left && right) return snakeFocus(T, right);
@@ -2796,10 +2845,19 @@ function nameExprBase(node, opts = {}) {
       return core ? core + "/Unique" : "Unique";
     }
     if (name === "Lean_exists" || name === "Lean_forall") {
-      const body = nameExpr(name === "Lean_forall" ? peelGuardForalls(args[args.length - 1]) : args[args.length - 1], opts);
+      const bodyNode = name === "Lean_forall" ? peelGuardForalls(args[args.length - 1]) : args[args.length - 1];
+      const body = nameExpr(bodyNode, opts);
       if (!body) return tag;
-      // `∀ᵐ x ∂μ, P` → AeP (AeTendsto, AeAll_Le…); ReferenceMeasure binders stay implicit
-      if (isAeQuantifier(node) && !isMixedBvarForall(node)) return node.superscript === "ᵐ" ? "Ae" + body : body;
+      // `∀ᵐ ω, HasSum ∧ ‖ExtDot…‖ ≤ bound` → All_And_LeNormExt… (drop HasSum; bound not spelled)
+      if (isAeQuantifier(node) && !isMixedBvarForall(node) && node.superscript === "ᵐ") {
+        const andLe = aeAndLeNormExtName(bodyNode, opts);
+        if (andLe) return andLe;
+        // ∀ᵐ ω, ∀ k, ‖r k ω‖ ≤ |R| → All_LeNorm_Abs (not AeNorm/le/AbsR)
+        if (body === "LeNorm_Abs") return "All_LeNorm_Abs";
+        if (/^All_LeNorm/.test(body)) return body;
+        return "Ae" + body;
+      }
+      if (isAeQuantifier(node) && !isMixedBvarForall(node)) return body;
       const rest = existsRestConjunct(node);
       const multi = ""; // `∀ x y` is usually spelled All (Iterates/Any_Ge_0AndAll_LeNormSub_MulNormSub); All_All kept as alternative
       // ∃ C, 0 ≤ C ∧ Q → Any_Ge_0AndQ, relations inline (Any_Ge_0AndAll_LeNormSub_MulNormSub)
@@ -2868,10 +2926,10 @@ function nameExprBase(node, opts = {}) {
       return wrapPrefix + camelFn;
     }
     const inner = nameExpr(arg, opts);
-    // ‖x + y‖ → NormAdd; |R| / |M.env.R| → AbsR (simple id glued); ‖f x‖ apps handled above as NormF
+    // ‖x + y‖ → NormAdd; |R| / |M.env.R| → AbsR (simple id glued); ‖ExtDot…‖ → NormExtDot…
     if (!inner) return wrapPrefix;
     const u = unwrapParen(arg);
-    if (CLASS_TOKEN[cls(u)] || isSimpleArg(arg, opts)) return wrapPrefix + inner;
+    if (CLASS_TOKEN[cls(u)] || isSimpleArg(arg, opts) || /^(Ext|Get)[A-Z]/.test(inner)) return wrapPrefix + inner;
     return wrapPrefix + "_" + inner;
   }
 
@@ -2942,7 +3000,8 @@ function nameExprBase(node, opts = {}) {
         (headCls !== "LeanToken" && headCls !== "LeanProperty" && headCls !== "LeanParenthesis")) {
       const headName = nameExpr(head, opts);
       if (headName) {
-        let acc = fnLikeHead(head) ? headName : joinHeadChild("Get", headName);
+        const pref = applyEvalPrefix(head);
+        let acc = pref ? joinHeadChild(pref, headName) : headName;
         for (const a of args.slice(1)) {
           const an = nameExpr(a, opts);
           if (an) acc = joinHeadChild(acc, an);
@@ -2989,7 +3048,11 @@ function nameExprBase(node, opts = {}) {
         if (arg === "Fun") return headName + arg;
         if (cls(unwrapParen(argNode)) === "Lean_fun") return funBodyUnary(argNode) ? headName + arg : headName + "_" + arg;
         if (arg.startsWith("Fun")) return headName + "_" + arg;
-        if (!isSimpleArg(argNode, opts)) return headName + "_" + arg;
+        // Integrable ((γ ^ id) @ r[t:]) → IntegrableDotPow_Id (op compound glued; not Integrable_DotPow_Id)
+        if (!isSimpleArg(argNode, opts)) {
+          if (ARITH_OP.has(cls(unwrapParen(argNode)))) return joinHeadChild(headName, arg);
+          return headName + "_" + arg;
+        }
         return headName + arg;
       }
       if (headName && argNames.length === 0) return headName;
@@ -3163,7 +3226,16 @@ function nameExprAltsBase(node, opts = {}) {
         if (!bodyAlts.length) return uniq([...guardAlts, tag]);
         if (isAeQuantifier(node) && !isMixedBvarForall(node)) {
           // `∀ᵐ x ∂μ, P` → AeP preferred (AeTendsto, AeAll_…); All_P / bare P kept (Random/All_Summable)
-          return uniq(node.superscript === "ᵐ" ? [...bodyAlts.map((b) => "Ae" + b), ...bodyAlts.map((b) => tag + "_" + b), ...bodyAlts, ...guardAlts] : [...bodyAlts, ...guardAlts]);
+          // HasSum ∧ ‖ExtDot…‖ ≤ bound → All_And_LeNormExt… ranked first
+          // ∀ᵐ ω, ∀ k, ‖r…‖ ≤ |R| → All_LeNorm_Abs ranked first (not AeNorm/le/AbsR)
+          const andLe = node.superscript === "ᵐ" ? aeAndLeNormExtName(bodyNode, opts) : "";
+          const leNormAbs = node.superscript === "ᵐ" && bodyAlts.some((b) => b === "LeNorm_Abs" || b === "All_LeNorm_Abs")
+            ? ["All_LeNorm_Abs"]
+            : [];
+          const aeAlts = node.superscript === "ᵐ"
+            ? [...(andLe ? [andLe] : []), ...leNormAbs, ...bodyAlts.map((b) => "Ae" + b), ...bodyAlts.map((b) => tag + "_" + b), ...bodyAlts, ...guardAlts]
+            : [...bodyAlts, ...guardAlts];
+          return uniq(aeAlts);
         }
         if (quantArity(node) >= 2 && !node.__singleQuant) {
           node.__singleQuant = true;
@@ -3334,8 +3406,9 @@ function nameExprAltsBase(node, opts = {}) {
       const headAlts = nameExprAlts(head, opts);
       if (headAlts.length) {
         const argAltLists = args.slice(1).map(a => nameExprAlts(a, opts)).filter(a => a.length);
-        let acc = cartJoin([fnLikeHead(head) ? "" : "Get"], headAlts, joinHeadChild);
-        // applied power `(κ ^ n) s` may read without Get: PowKernelMat
+        const pref = applyEvalPrefix(head);
+        let acc = pref ? cartJoin([pref], headAlts, joinHeadChild) : headAlts.slice();
+        // applied power `(κ ^ n) s` may read without Get/Ext: PowKernelMat
         if (cls(unwrapParen(head)) === "LeanPow") acc = uniq([...acc, ...headAlts]);
         const all = [...acc];
         for (const aa of argAltLists) {
@@ -3796,7 +3869,14 @@ export function suggest(filePath, lemmaName, options = {}) {
         const c = sanitizeRelPath(nameExpr(p, no) || "");
         return perConjunct[i].find((x) => sanitizeRelPath(x) === c) || perConjunct[i][0];
       });
-      res.preferred = fixJ(canonParts.join("/"));
+      // Parallel =ᵐ to 𝔼[…|…]: prefer repeated `MEq_Expect_Cond` (Bellman), not CondAdd_Mul /
+      // camel `MEqExpect` / bare `MEq` — same shape as finite `Eq_Expect/Eq_Expect/Eq_Expect`.
+      const meqCondParts = perConjunct.map((alts) => (alts.includes("MEq_Expect_Cond") ? "MEq_Expect_Cond" : ""));
+      res.preferred = fixJ(
+        meqCondParts.length >= 2 && meqCondParts.every(Boolean)
+          ? meqCondParts.join("/")
+          : canonParts.join("/"),
+      );
       // Keep left-only partial splits accepted (older paths like Eq_Dvd/EqMapAndIsPullback).
       if (partsLeft && partsLeft.length >= 2 && partsLeft.length < partsFull.length) {
         const perL = partsLeft.map((p) => nameExprAlts(p, no).filter(Boolean));
@@ -3925,10 +4005,21 @@ export function suggest(filePath, lemmaName, options = {}) {
       while (cls(b) === "Lean_forall") b = unwrapParen(b.args?.[b.args.length - 1]);
       if (typeHead(b) === "Integrable") return { ...h, optional: true };
       // so may measurability side conditions of an expectation (Random/Expect_CondDot/eq/Dot_Expect_Cond, Random/Expect_CondMul/eq/Mul_Expect_Cond)
-      if (conclTokenSet.has("𝔼") && /^(AE)?(Strongly)?Measurable$/.test(typeHead(b))) return { ...h, optional: true };
+      if (conclTokenSet.has("𝔼") && /^(AE)?(Strongly)?Measurable$/.test(typeHead(b))) {
+        // joint `Measurable (r, s, a)` may be omitted from Bellman / Expect paths (kept as optional alt)
+        const jn = nameExpr(h.typeNode, { ...nameOpts, asGiven: true }) || "";
+        if (/MeasurableJoint/.test(jn)) return { ...h, optional: true, canonSkip: true };
+        return { ...h, optional: true };
+      }
     }
     return h;
   });
+  /** `All_MEq_Expect_CondDotPow` → `All_MEq_Expect_CondDot` when that alt exists (Bellman siblings). */
+  const preferMeqExpectCondDot = (name, alts) => {
+    if (!name || !/MEq.*CondDotPow/.test(name)) return name;
+    const short = name.replace(/CondDotPow/g, "CondDot");
+    return alts.includes(short) ? short : name;
+  };
   // Generate ALL given name alternatives (reverse order for path); pass-B (Greek) renderings appended
   const hmmShape = isHmmNegLogCondShape(sig.implyStmts);
   const logJointFns = logProbJointFnNames(hyps.filter((h) => h.prop).map((h) => h.typeNode));
@@ -3942,6 +4033,8 @@ export function suggest(filePath, lemmaName, options = {}) {
     const allAlts = maxLog
       ? uniq([maxLog.name, ...[...altsA, ...(b?.alts || [])].filter((x) => !/GetMax/.test(x))])
       : uniq([...(lt0Joint ? [lt0Joint] : []), ...altsA, ...(b?.alts || [])]);
+    const rawName = maxLog?.name || lt0Joint || nameA;
+    const rawNameB = maxLog?.name || lt0Joint || (b ? pickCanon(b.alts, b.name) : null);
     return {
       binder: h.name,
       optional: !!h.optional,
@@ -3951,8 +4044,8 @@ export function suggest(filePath, lemmaName, options = {}) {
         ...(maxLog ? maxLog.extras : hmmShape && hasBvarBinder(h.typeNode) ? hmmBvarAllAlts(allAlts) : []),
         ...legacyEqJointAlts(allAlts),
       ]), // accepted, not enumerated
-      name: maxLog?.name || lt0Joint || nameA,
-      nameB: maxLog?.name || lt0Joint || (b ? pickCanon(b.alts, b.name) : null),
+      name: preferMeqExpectCondDot(rawName, allAlts),
+      nameB: rawNameB ? preferMeqExpectCondDot(rawNameB, allAlts) : null,
       chain: classChain(h.typeNode),
     };
   });

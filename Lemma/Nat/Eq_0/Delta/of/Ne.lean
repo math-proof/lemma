@@ -8,9 +8,9 @@ private lemma main
 -- given
   (h : x ≠ y) :
 -- imply
-  (if x = y then (1 : ℝ) else 0) = 0 := by
+  (if x = y then (1 : ℝ) else 0) = 0 :=
 -- proof
-  exact if_neg h
+  ite_eq_right h
 
 
 -- created on 2019-05-03

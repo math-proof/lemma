@@ -35,10 +35,10 @@ private lemma  pow_finrank_le_card
   (hρ : ∀ x : R, ρ x = 0 → ∃ y : R, x = n • y)
   (S : AddSubgroup R) (hS : Saturated S) (hfg : S.FG) (hn : n ≠ 0) :
   n ^ finrank ℤ S ≤ Nat.card G := by
-  haveI : Module.Finite ℤ S :=
+  have : Module.Finite ℤ S :=
     Module.Finite.iff_addGroup_fg.mpr ((AddGroup.fg_iff_addSubgroup_fg S).mpr hfg)
-  haveI : IsAddTorsionFree S := inferInstance
-  haveI : Module.Free ℤ S := Module.free_of_finite_type_torsion_free'
+  have : IsAddTorsionFree S := inferInstance
+  have : Module.Free ℤ S := Module.free_of_finite_type_torsion_free'
 
   set ρ' : S →+ G := ρ.comp S.subtype with hρ'
 
@@ -95,7 +95,7 @@ private lemma  main_aux
     obtain ⟨hle, hsatM'⟩ := saturated_of_iff hM'
     have hmem : ∀ i : s, (i : R) ∈ M' := fun i =>
       hle (Submodule.subset_span (by exact_mod_cast i.2))
-    haveI : Module.Finite ℤ M' :=
+    have : Module.Finite ℤ M' :=
       Module.Finite.iff_addGroup_fg.mpr ((AddGroup.fg_iff_addSubgroup_fg M').mpr hM'fg)
     have hli : LinearIndependent ℤ (fun i : s => (⟨(i : R), hmem i⟩ : M')) :=
       linearIndependent_cod M' _ hs hmem
@@ -130,7 +130,7 @@ private lemma  main_aux
       refine hsatM' a x ha (hle ?_)
       simpa [hMdef] using hax
   have hfgtop : (⊤ : AddSubgroup R).FG := htop ▸ hM'fg
-  haveI hfin : Module.Finite ℤ R :=
+  have hfin : Module.Finite ℤ R :=
     Module.Finite.iff_addGroup_fg.mpr ((AddGroup.fg_def).mpr hfgtop)
   exact ⟨hfin, Module.free_of_finite_type_torsion_free'⟩
 @[path]

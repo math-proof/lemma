@@ -1,4 +1,4 @@
-import Mathlib.Data.Real.Basic
+import Mathlib.Basic.Real.Basic
 import sympy.Basic
 
 
@@ -10,10 +10,10 @@ private lemma main
   : ∑ k ∈ Finset.range n, r ^ k = if r = 1 then (n : ℝ) else (1 - r ^ n) / (1 - r) := by
   -- proof
   by_cases hr : r = 1
-  · rw [if_pos hr]
+  · rw [ite_eq_left hr]
     rw [hr]
     simp [Finset.sum_const]
-  · rw [if_neg hr]
+  · rw [ite_eq_right hr]
     have hsub : r - 1 ≠ 0 := by
       intro h
       apply hr

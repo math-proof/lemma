@@ -68,7 +68,7 @@ private lemma main
       ·
         have : (arg U + arg V) / (2 * π) ≤ 1 / 2 := (div_le_iff₀ hden).mpr (by linarith [hθ₂])
         linarith
-    rw [if_pos hcond]
+    rw [ite_eq_left hcond]
   else
     have hUV0 : U * V ≠ 0 := by grind
     obtain ⟨hU, hV⟩ := Ne_0.Ne_0.of.Mul.ne.Zero hUV0
@@ -149,7 +149,7 @@ private lemma main
       rw [ArgMul.eq.SubAddArgSMul_Ceil.of.Ne_0.Ne_0 hUV_cbrt hfac]
       have : arg ∛(U * V) = arg (U * V) / 3 := by
         simp only [Root.cubic]
-        convert ArgPow_Inv.eq.DivArg (U * V) 3 <;> norm_cast
+        convert ArgPow_Inv.eq.DivArg (U * V) 3
       rw [this, harg_fac]
       have hargUV := ArgMul.eq.SubAddArgSMul_Ceil.of.Ne_0.Ne_0 hU hV
       have hsum : arg (U * V) / 3 + 2 * π * d / 3 = (arg U + arg V) / 3 := by grind

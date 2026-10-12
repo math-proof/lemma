@@ -2,12 +2,13 @@ import Mathlib.Analysis.Convex.StdSimplex
 import Mathlib.LinearAlgebra.Matrix.DotProduct
 import Mathlib.LinearAlgebra.Matrix.Irreducible.Defs
 import sympy.Basic
-
 open scoped Matrix
+open Convexity
+
 
 @[path]
 private lemma main
-  {S : Type*} [Fintype S] [DecidableEq S] [Nonempty S]
+  [Fintype S] [DecidableEq S] [Nonempty S]
   {A : Matrix S S ℝ}
 -- given
   (h₀ : ∀ i j, 0 ≤ A i j)
@@ -33,10 +34,33 @@ private lemma main
     intro w hw ⟨k, hk⟩ i
     simp only [Matrix.mulVec, dotProduct]
     apply Finset.sum_pos' (fun j _ => mul_nonneg (hB i j).le (hw j)) ⟨k, Finset.mem_univ k, mul_pos (hB i k) hk⟩
-  have hbound : ∀ y ∈ stdSimplex ℝ S, ∀ ρ : ℝ, (∀ i, ρ * y i ≤ (A *ᵥ y) i) → ρ ≤ ∑ i, ∑ j, A i j := by
+  -- Standard simplex as the image of `StdSimplex.weights`
+  let Δ : Set (S → ℝ) := Set.range fun t : StdSimplex ℝ S => (t.weights : S → ℝ)
+  have hΔ_closed : IsClosed Δ :=
+    (StdSimplex.isClosedEmbedding_toFun_comp_weights ℝ S).isClosed_range
+  have hΔ_compact : IsCompact Δ :=
+    isCompact_range (StdSimplex.isClosedEmbedding_toFun_comp_weights ℝ S).continuous
+  have hΔ_nonneg : ∀ {y}, y ∈ Δ → ∀ i, 0 ≤ y i := by
+    intro y hy i
+    obtain ⟨t, rfl⟩ := hy
+    exact t.weights_nonneg i
+  have hΔ_sum : ∀ {y}, y ∈ Δ → ∑ i, y i = 1 := by
+    intro y hy
+    obtain ⟨t, rfl⟩ := hy
+    exact t.total_of_fintype
+  have hΔ_le_one : ∀ {y}, y ∈ Δ → ∀ i, y i ≤ 1 := by
+    intro y hy i
+    obtain ⟨t, rfl⟩ := hy
+    exact t.weights_apply_le_one i
+  have hΔ_single : ∀ i : S, Pi.single i (1 : ℝ) ∈ Δ := by
+    intro i
+    refine ⟨StdSimplex.single i, ?_⟩
+    ext j
+    simp [Finsupp.single_apply, Pi.single_apply, eq_comm]
+  have hbound : ∀ y ∈ Δ, ∀ ρ : ℝ, (∀ i, ρ * y i ≤ (A *ᵥ y) i) → ρ ≤ ∑ i, ∑ j, A i j := by
     intro y hy ρ h
     calc
-      _ = ∑ i, ρ * y i := by rw [← Finset.mul_sum, hy.2, mul_one]
+      _ = ∑ i, ρ * y i := by rw [← Finset.mul_sum, hΔ_sum hy, mul_one]
       _ ≤ ∑ i, (A *ᵥ y) i := Finset.sum_le_sum fun i _ => h i
       _ ≤ _ := by
         apply Finset.sum_le_sum
@@ -44,37 +68,41 @@ private lemma main
         simp only [Matrix.mulVec, dotProduct]
         apply Finset.sum_le_sum
         intro j _
-        exact mul_le_of_le_one_right (h₀ i j) (mem_Icc_of_mem_stdSimplex hy j).2
-  let E : Set ((S → ℝ) × ℝ) := {p | p.1 ∈ stdSimplex ℝ S ∧ 0 ≤ p.2 ∧ ∀ i, p.2 * p.1 i ≤ (A *ᵥ p.1) i}
+        exact mul_le_of_le_one_right (h₀ i j) (hΔ_le_one hy j)
+  let E : Set ((S → ℝ) × ℝ) := {p | p.1 ∈ Δ ∧ 0 ≤ p.2 ∧ ∀ i, p.2 * p.1 i ≤ (A *ᵥ p.1) i}
   have hEc : IsClosed E := by
-    have : E = (Prod.fst ⁻¹' stdSimplex ℝ S) ∩ ((Prod.snd ⁻¹' Set.Ici 0) ∩ ⋂ i, {p : (S → ℝ) × ℝ | p.2 * p.1 i ≤ (A *ᵥ p.1) i}) := by
+    have : E = (Prod.fst ⁻¹' Δ) ∩ ((Prod.snd ⁻¹' Set.Ici 0) ∩ ⋂ i, {p : (S → ℝ) × ℝ | p.2 * p.1 i ≤ (A *ᵥ p.1) i}) := by
       ext p
       simp [E]
     rw [this]
-    refine (isClosed_stdSimplex ℝ S).preimage continuous_fst |>.inter (isClosed_Ici.preimage continuous_snd |>.inter (isClosed_iInter fun i => ?_))
+    refine hΔ_closed.preimage continuous_fst |>.inter (isClosed_Ici.preimage continuous_snd |>.inter (isClosed_iInter fun i => ?_))
     apply isClosed_le
-    · fun_prop
-    · simp only [Matrix.mulVec, dotProduct]
+    ·
+      fun_prop
+    ·
+      simp only [Matrix.mulVec, dotProduct]
       fun_prop
   have hE : IsCompact E := by
-    apply IsCompact.of_isClosed_subset ((isCompact_stdSimplex ℝ S).prod (isCompact_Icc (a := (0 : ℝ)) (b := ∑ i, ∑ j, A i j))) hEc
+    apply IsCompact.of_isClosed_subset (hΔ_compact.prod (isCompact_Icc (a := (0 : ℝ)) (b := ∑ i, ∑ j, A i j))) hEc
     intro p hp
     exact ⟨hp.1, hp.2.1, hbound p.1 hp.1 p.2 hp.2.2⟩
   have hne : E.Nonempty := by
-    refine ⟨(Pi.single (Classical.arbitrary S) 1, 0), single_mem_stdSimplex ℝ _, le_rfl, fun i => ?_⟩
-    simp only [zero_mul]
-    apply Finset.sum_nonneg fun j _ => mul_nonneg (h₀ i j) ?_
-    simp [Pi.single_apply]
-    split_ifs <;> norm_num
+    refine ⟨(Pi.single (Classical.arbitrary S) (1 : ℝ), (0 : ℝ)), hΔ_single _, le_rfl, ?_⟩
+    ·
+      intro i
+      simp only [zero_mul]
+      apply Finset.sum_nonneg
+      intro j _
+      exact mul_nonneg (h₀ i j) (by simp [Pi.single_apply]; split_ifs <;> norm_num)
   obtain ⟨⟨y, ρ⟩, hp₀, hmax⟩ := hE.exists_isMaxOn hne continuous_snd.continuousOn
   obtain ⟨hy, hρ, hyρ⟩ := hp₀
   simp only at hy hρ hyρ
-  have hy0 : ∀ i, 0 ≤ y i := hy.1
+  have hy0 : ∀ i, 0 ≤ y i := hΔ_nonneg hy
   have hyk : ∃ k, 0 < y k := by
     by_contra h
     push Not at h
     have : ∑ i, y i ≤ 0 := Finset.sum_nonpos fun i _ => h i
-    linarith [hy.2]
+    linarith [hΔ_sum hy]
   let w : S → ℝ := A *ᵥ y - ρ • y
   have hw0 : ∀ i, 0 ≤ w i := by
     intro i
@@ -101,11 +129,27 @@ private lemma main
       exact (le_div_iff₀ (hz i)).1 this
     have hs : 0 < ∑ i, z i := Finset.sum_pos (fun i _ => hz i) Finset.univ_nonempty
     have hmem : ((∑ i, z i)⁻¹ • z, ρ + (B *ᵥ w) i₀ / z i₀) ∈ E := by
-      refine ⟨⟨fun i => ?_, ?_⟩, by linarith, fun i => ?_⟩
-      · exact mul_nonneg (inv_nonneg.2 hs.le) (hz i).le
-      · simp only [Pi.smul_apply, smul_eq_mul]
-        rw [← Finset.mul_sum, inv_mul_cancel₀ hs.ne']
-      · simp only [Matrix.mulVec_smul, Pi.smul_apply, smul_eq_mul]
+      refine ⟨?_, by linarith, fun i => ?_⟩
+      ·
+        -- show normalized z is in Δ
+        refine ⟨{
+          weights := Finsupp.equivFunOnFinite.symm ((∑ i, z i)⁻¹ • z)
+          nonneg := ?_
+          total := ?_ }, ?_⟩
+        ·
+          intro i
+          change 0 ≤ ((∑ j, z j)⁻¹ • z) i
+          simp only [Pi.smul_apply, smul_eq_mul]
+          exact mul_nonneg (inv_nonneg.2 hs.le) (hz i).le
+        ·
+          change (Finsupp.equivFunOnFinite.symm ((∑ j, z j)⁻¹ • z)).sum (fun _ r => r) = 1
+          rw [Finsupp.sum_fintype _ _ (by simp), Finsupp.coe_equivFunOnFinite_symm]
+          simp only [Pi.smul_apply, smul_eq_mul]
+          rw [← Finset.mul_sum, inv_mul_cancel₀ hs.ne']
+        ·
+          rfl
+      ·
+        simp only [Matrix.mulVec_smul, Pi.smul_apply, smul_eq_mul]
         have h1 := congrFun hAz i
         simp only [Pi.sub_apply, Pi.smul_apply, smul_eq_mul] at h1
         have h2 := hεz i

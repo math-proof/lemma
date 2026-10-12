@@ -1,11 +1,14 @@
 /**
- * Bellman ∧-chain: imply folders stay `MEq_Expect_*`, never camel `MEqExpect` / bare `MEq`.
+ * Bellman ∧-chain: three parallel `MEq_Expect_Cond` imply folders (not CondAdd_Mul /
+ * camel `MEqExpect` / bare `MEq`).
  * Run: `node mjs/lemmaPath.meqExpectSnake.test.mjs`
  */
 import { suggest } from "./lemmaPath.mjs";
 
 const FILE =
-  "Lemma/Random/MEq_Expect_Cond/MEqExpect/MEq/of/MEqExpectS/All_MEq_Expect_CondDot/All_MEq_Expect_CondDot/GtInftySup/In_Ico.lean";
+  "Lemma/Random/MEq_Expect_Cond/MEq_Expect_Cond/MEq_Expect_Cond/of/MEqExpectS/All_MEq_Expect_CondDot/All_MEq_Expect_CondDot/GtInftySup/In_Ico.lean";
+const WANT =
+  "Random/MEq_Expect_Cond/MEq_Expect_Cond/MEq_Expect_Cond/of/MEqExpectS/All_MEq_Expect_CondDot/All_MEq_Expect_CondDot/GtInftySup/In_Ico.lean";
 
 let failed = 0;
 function check(name, cond, detail = "") {
@@ -21,15 +24,11 @@ const badSeg = (h) =>
   h.split("/").some((c) => c === "MEq" || c === "MEqExpect" || /^MEqExpect(?!S(?:_|$))/.test(c));
 
 check(
-  "canon imply uses MEq_Expect_CondAdd_Mul chain",
-  r.imply.name === "MEq_Expect_Cond/MEq_Expect_CondAdd_Mul/MEq_Expect_CondAdd_Mul",
+  "canon imply is MEq_Expect_Cond ×3",
+  r.imply.name === "MEq_Expect_Cond/MEq_Expect_Cond/MEq_Expect_Cond",
   `got ${r.imply.name}`,
 );
-check(
-  "top suggestion uses MEq_Expect_CondAdd_Mul",
-  r.suggestedPath.includes("MEq_Expect_CondAdd_Mul"),
-  `got ${r.suggestedPath}`,
-);
+check("top suggestion is exact intended path", r.suggestedPath === WANT, `got ${r.suggestedPath}`);
 check(
   "top suggestion has no MEqExpect / bare MEq imply folders",
   !badSeg(r.suggestedPath.split("/of/")[0].replace(/^Random\//, "")),
@@ -40,15 +39,11 @@ check(
   implyHeads.every((h) => !badSeg(h)),
   `bad: ${implyHeads.filter(badSeg).slice(0, 5).join(" | ")}`,
 );
+check("current path is consistent", r.consistent.ok, JSON.stringify(r.consistent));
 check(
-  "current camel/bare-MEq path is inconsistent",
-  !r.consistent.ok,
-  JSON.stringify(r.consistent),
-);
-check(
-  "givens path order keeps MEqExpectS + CondDotPow ×2 + GtInftySup + MeasurableJoint + In_Ico",
+  "givens path order keeps MEqExpectS + CondDot ×2 + GtInftySup + In_Ico",
   r.givensPathOrder.map((g) => g.name).join("/") ===
-    "MEqExpectS/All_MEq_Expect_CondDotPow/All_MEq_Expect_CondDotPow/GtInftySup/All_MeasurableJoint/In_Ico",
+    "MEqExpectS/All_MEq_Expect_CondDot/All_MEq_Expect_CondDot/GtInftySup/In_Ico",
   r.givensPathOrder.map((g) => g.name).join("/"),
 );
 

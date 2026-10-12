@@ -44,7 +44,7 @@ private lemma main
         rw [EqGetStack.fin (fun j : Fin p => f j) j]
         rw [EqGetStack.fin (fun j : Fin p => ∑ r : Fin k, (id (α := Tensor α []) x[r]) * (id (α := Tensor α []) X[r][j])) j]
         simp only [f]
-        rw [dif_pos (Nat.lt_add_right q j.isLt)]
+        rw [dite_eq_left (Nat.lt_add_right q j.isLt)]
         apply Finset.sum_congr rfl
         intro r _
         apply congrArg (HMul.hMul _)
@@ -55,7 +55,7 @@ private lemma main
         rw [EqGetStack.fin (fun j : Fin q => f (p + j)) j]
         rw [EqGetStack.fin (fun j : Fin q => ∑ r : Fin k, (id (α := Tensor α []) x[r]) * (id (α := Tensor α []) Y[r][j])) j]
         simp only [f]
-        rw [dif_pos (Nat.add_lt_add_left j.isLt p)]
+        rw [dite_eq_left (Nat.add_lt_add_left j.isLt p)]
         apply Finset.sum_congr rfl
         intro r _
         apply congrArg (HMul.hMul _)

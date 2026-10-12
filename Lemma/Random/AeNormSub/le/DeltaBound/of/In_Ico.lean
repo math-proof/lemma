@@ -1,6 +1,6 @@
 import sympy.stats.policy_trajectory.gradient
 import sympy.Basic
-import Lemma.Random.AeNormR.le.Abs_R
+import Lemma.Random.All_LeNorm_Abs.of.All_Eq_Joint
 import Lemma.Random.NormW.le.Abs_R
 import Lemma.Random.Vc.eq.TSum_MulPowIntegral.of.In_Ico
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
@@ -32,7 +32,7 @@ private lemma main
   ∀ᵐ ω ∂(M θ), ∀ j, ‖r j ω + γ * M.Vc θ γ (s (j + 1) ω) - M.Vc θ γ (s j ω)‖ ≤
     (3 / (1 - γ) - 1) * |M.env.R| := by
 -- proof
-  filter_upwards [AeNormR.le.Abs_R h₁ (M := M) θ] with ω hr j
+  filter_upwards [All_LeNorm_Abs.of.All_Eq_Joint h₁ (M := M) θ] with ω hr j
   calc
     _ ≤ ‖r j ω‖ + ‖γ * M.Vc θ γ (s (j + 1) ω)‖ + ‖M.Vc θ γ (s j ω)‖ :=
       (norm_sub_le _ _).trans (by gcongr; apply norm_add_le)

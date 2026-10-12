@@ -14,10 +14,10 @@ private lemma main
 -- proof
   obtain h | rfl := hi.lt_or_eq
   ·
-    rw [dif_pos (by omega), dif_pos h]
+    rw [dite_eq_left (by omega), dite_eq_left h]
     exact Fin.snoc_castSucc (α := fun _ => Y) (p := ys) (x := b) (i := ⟨i, h⟩)
   ·
-    rw [dif_pos (Nat.lt_succ_self _), dif_neg (lt_irrefl _)]
+    rw [dite_eq_left (Nat.lt_succ_self _), dite_eq_right (lt_irrefl _)]
     exact Fin.snoc_last (α := fun _ => Y) (p := ys) (x := b)
 
 

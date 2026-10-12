@@ -35,7 +35,7 @@ private lemma telescope
   have ff : ∀ (y : ℝ) (m : ℕ), m > 0 → FallingFactorial y (-(m : ℤ)) = 1 / (ascPochhammer ℝ m).eval (y + 1) := by
     intro y m hm
     simp only [FallingFactorial]
-    rw [if_neg (by omega), show (-(-(m : ℤ))).toNat = m by omega, descPochhammer_eval_eq_ascPochhammer]
+    rw [ite_eq_right (by omega), show (-(-(m : ℤ))).toNat = m by omega, descPochhammer_eval_eq_ascPochhammer]
     push_cast
     ring_nf
   rw [ff _ i h, ← key n]

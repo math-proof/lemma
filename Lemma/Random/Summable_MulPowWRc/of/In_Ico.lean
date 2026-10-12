@@ -6,7 +6,7 @@ open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 
 
 /--
-For `γ ∈ [0, 1)` the discounted series `∑ k, γ ^ k * W θ rc k y` is summable.
+For `γ ∈ [0, 1)` the discounted series `∑ k, γ ^ k * W θ (fun z ↦ clip z.1 (-M.env.R) M.env.R) k y` is summable.
 -/
 @[path]
 private lemma main
@@ -18,10 +18,8 @@ private lemma main
   (θ : Θ)
   (y : S) :
 -- imply
-  let rc (z : ℝ × S × A) : ℝ := clip z.1 (-M.env.R) M.env.R
-  Summable (fun k => γ ^ k * ∫ z, M.Kf θ rc k z ∂(M.stageK θ y)) := by
+  Summable (fun k => γ ^ k * ∫ z, M.Kf θ (fun z ↦ clip z.1 (-M.env.R) M.env.R) k z ∂(M.stageK θ y)) := by
 -- proof
-  intro rc
   refine Summable.of_norm_bounded ((summable_geometric_of_lt_one hγ.1 hγ.2).mul_right |M.env.R|) ?_
   intro k
   rw [norm_mul, norm_pow, Real.norm_of_nonneg hγ.1]
@@ -29,4 +27,4 @@ private lemma main
 
 
 -- created on 2026-10-07
--- updated on 2026-10-11
+-- updated on 2026-10-12

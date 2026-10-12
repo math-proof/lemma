@@ -75,8 +75,7 @@ theorem tensorRingHom_tmul_eq_symm_smul (x : AdicCompletion 𝔭 A) (b : B) :
 
 theorem restrictScalarsEquiv_tensorRingHom (z : AdicCompletion 𝔭 A ⊗[A] B) :
     restrictScalarsEquiv B 𝔭 (tensorRingHom B 𝔭 z) = ofTensorProduct 𝔭 B z := by
-  induction z using TensorProduct.induction_on with
-  | zero => simp
+  induction z using TensorProduct.inductionOn with
   | tmul x b =>
     rw [tensorRingHom_tmul_eq_symm_smul, LinearEquiv.apply_symm_apply,
       ofTensorProduct_tmul]

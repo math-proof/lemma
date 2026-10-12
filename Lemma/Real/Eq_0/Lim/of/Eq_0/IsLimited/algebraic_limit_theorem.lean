@@ -12,7 +12,8 @@ private lemma main
 -- imply
   lim [x → x₀] (f x * g x) = 0 := by
 -- proof
-  sorry
+  simpa using hf.mul hg
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-12

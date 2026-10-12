@@ -13,10 +13,11 @@ private lemma main
     · exact Even.neg_one_zpow (Int.even_iff.mpr h)
     · exact Odd.neg_one_zpow (Int.odd_iff.mpr (by omega))
   rw [key]
-  by_cases h : n % 2 = 0
-  · rw [if_pos h.symm, if_pos h]
+  if h : n % 2 = 0 then
+    rw [ite_eq_left h.symm, ite_eq_left h]
     norm_num
-  · rw [if_neg (Ne.symm h), if_neg h]
+  else
+    rw [ite_eq_right (Ne.symm h), ite_eq_right h]
     norm_num
 
 

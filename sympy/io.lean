@@ -6,7 +6,7 @@ def filename : IO String := do
     cmd := "sh",
     args := #["-c", "ps -o args= -p $PPID | awk '{print $3}'"],
   }
-  return filename.trimRight
+  return filename.trimAsciiEnd.copy
 
 
 def lean2ilean (filePath : System.FilePath ) : System.FilePath :=

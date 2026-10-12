@@ -177,7 +177,7 @@ theorem get_mul [Mul α] (A : Tensor α s) (B : Tensor α s')
       B.data.get ⟨wrapFlat (pad1 s' (s.length ⊔ s'.length)) (mul_shape s s') i.val,
         wrapFlat_lt_src' s s' i.val h⟩ := by
   unfold mul
-  rw [dif_neg h]
+  rw [dite_eq_right h]
   exact List.Vector.get_ofFn _ _
 
 end Tensor

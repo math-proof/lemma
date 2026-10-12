@@ -15,7 +15,7 @@ private lemma main
   (A.mul B).data.val = [] := by
 -- proof
   unfold mul
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact Vector.ValCast.eq.Val.of.Eq h.symm List.Vector.nil
 
 

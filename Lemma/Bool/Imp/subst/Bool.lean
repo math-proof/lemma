@@ -13,11 +13,12 @@ private lemma main
   ·
     intro h hcp
     have h' := h hcp
-    rwa [if_pos hcp.1] at h'
+    rwa [ite_eq_left hcp.1] at h'
   ·
     intro h hcp
-    rw [if_pos hcp.1]
+    rw [ite_eq_left hcp.1]
     exact h hcp
 
 
 -- created on 2019-10-06
+-- updated on 2026-10-12

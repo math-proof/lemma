@@ -1,6 +1,6 @@
 import Mathlib.Algebra.Order.AbsoluteValue.Basic
 import Mathlib.Algebra.Polynomial.Degree.Support
-import Mathlib.Data.Real.Basic
+import Mathlib.Basic.Real.Basic
 
 /-!
 # L1 norm of a polynomial

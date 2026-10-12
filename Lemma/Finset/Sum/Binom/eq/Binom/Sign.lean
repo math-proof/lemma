@@ -14,7 +14,7 @@ private lemma main
     | zero =>
       rcases Nat.eq_zero_or_pos t with rfl | ht
       · simp
-      · rw [if_neg (by omega), Nat.choose_eq_zero_of_lt (by omega)]
+      · rw [ite_eq_right (by omega), Nat.choose_eq_zero_of_lt (by omega)]
         simp
     | succ i ih =>
       rw [Finset.sum_range_succ']
@@ -42,7 +42,7 @@ private lemma main
       rw [Nat.choose_succ_succ (m + 1) 1, Nat.choose_one_right]
       push_cast
       ring
-  · rw [if_neg (by omega), mul_zero, sub_zero, Int.sign_natCast_of_ne_zero (by omega)]
+  · rw [ite_eq_right (by omega), mul_zero, sub_zero, Int.sign_natCast_of_ne_zero (by omega)]
     rfl
 
 

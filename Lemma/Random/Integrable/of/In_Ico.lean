@@ -1,6 +1,6 @@
 import sympy.stats.policy_trajectory.gradient
-import Lemma.Random.AeHasSumAndNormG.le.MulSub1Abs_R.of.In_Ico
-import Lemma.Random.Integrable_G.of.In_Ico
+import Lemma.Random.All_And_LeNormExtDotPow_Id.of.All_Eq_Joint.In_Ico
+import Lemma.Random.IntegrableDotPow_Id.of.All_Eq.In_Ico
 import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
 
@@ -30,9 +30,9 @@ private lemma main
   set G := (γ ^ (id : ℕ → ℕ)) @ r[t:]
   have hX : Measurable (fun ω : ℕ → ℝ × S × A => (s t ω, a t ω)) := (Random.Measurable.of.All_Eq.snd.fst h₁ t).prodMk (Random.Measurable.of.All_Eq.snd.snd h₁ t)
   refine Integrable.of_bound (C := (1 - γ)⁻¹ * |M.env.R| * ∑ p : S × A, ‖ψ p.1 p.2‖)
-    ((Integrable_G.of.In_Ico (M := M) h₀ h₁ θ t).1.smul ((StronglyMeasurable.of_discrete
+    ((IntegrableDotPow_Id.of.All_Eq.In_Ico (M := M) h₀ h₁ θ t).1.smul ((StronglyMeasurable.of_discrete
       (f := fun p : S × A => ψ p.1 p.2)).comp_measurable hX).aestronglyMeasurable) ?_
-  filter_upwards [AeHasSumAndNormG.le.MulSub1Abs_R.of.In_Ico (M := M) h₀ h₁ θ t] with ω h
+  filter_upwards [All_And_LeNormExtDotPow_Id.of.All_Eq_Joint.In_Ico (M := M) h₀ h₁ θ t] with ω h
   rw [norm_smul]
   exact mul_le_mul h.2 (Finset.single_le_sum (f := fun p : S × A => ‖ψ p.1 p.2‖)
     (fun _ _ => norm_nonneg _) (Finset.mem_univ (s t ω, a t ω))) (norm_nonneg _)

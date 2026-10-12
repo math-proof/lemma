@@ -17,7 +17,7 @@ import Lemma.Random.Differentiable_RealPreimageS.of.GtInftySup.All_Differentiabl
 import Lemma.Random.GetTSum_SMul.of.In_Ico.GtInftySup.All_Differentiable_Prob
 import Lemma.Random.AeRealPreimageSS.ne.Zero
 import Lemma.Random.BddAbove_ImageNormFderiv.of.In_Ico.GtInftySup.All_Differentiable_Prob
-import Lemma.Random.AeNormR.le.Abs_R
+import Lemma.Random.All_LeNorm_Abs.of.All_Eq_Joint
 import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Filter Topology Random Measure
 open scoped ENNReal.ToRealCoe
@@ -136,7 +136,7 @@ private lemma main
   have hL : ∀ φ, (InnerProductSpace.toDual ℝ Θ).symm φ = L φ := fun _ => rfl
   -- almost sure bound of the discounted return from `t`
   have hA' : ∀ᵐ ω ∂(M θ), ∀ t, ‖∑' k, γ ^ k * r (t + k) ω‖ ≤ (1 - γ)⁻¹ * |M.env.R| := by
-    filter_upwards [AeNormR.le.Abs_R h₁ (M := M) θ] with ω hr t
+    filter_upwards [All_LeNorm_Abs.of.All_Eq_Joint h₁ (M := M) θ] with ω hr t
     refine tsum_of_norm_bounded ((hasSum_geometric_of_lt_one h₀.1 h₀.2).mul_right _) fun k => ?_
     rw [norm_mul, norm_pow, Real.norm_of_nonneg h₀.1]
     exact mul_le_mul_of_nonneg_left (hr _) (pow_nonneg h₀.1 k)
@@ -144,7 +144,7 @@ private lemma main
   have hRint : ∀ θ' : Θ, ∫ ω, ∑' t, γ ^ t * r t ω ∂(M θ') = ∑' t, γ ^ t * ∫ ω, r t ω ∂(M θ') := by
     intro θ'
     have hrb : ∀ t, ∀ᵐ ω ∂(M θ'), ‖γ ^ t * r t ω‖ ≤ γ ^ t * |M.env.R| := fun t =>
-      (AeNormR.le.Abs_R h₁ (M := M) θ').mono fun ω h => by
+      (All_LeNorm_Abs.of.All_Eq_Joint h₁ (M := M) θ').mono fun ω h => by
         rw [norm_mul, norm_pow, Real.norm_of_nonneg h₀.1]
         exact mul_le_mul_of_nonneg_left (h t) (pow_nonneg h₀.1 t)
     have hri : ∀ t, Integrable (fun ω => γ ^ t * r t ω) (M θ') := fun t =>

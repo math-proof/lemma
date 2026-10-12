@@ -3,8 +3,8 @@ import sympy.Basic
 import Lemma.Random.Integral_R.eq.Sum_MulRealWRc
 import Lemma.Random.Sum_Real.eq.One
 import Lemma.Random.Differentiable.All_LeNormFderiv_MulAdd_1_MulMulCard.of.All_LeNorm.StronglyMeasurable.All_LeNormFderiv.All_All_Differentiable_FunPolProb
-import Lemma.Random.NormRc.le.AbsR
-import Lemma.Random.StronglyMeasurableRc
+import Lemma.Random.NormClip.le.AbsR
+import Lemma.Random.StronglyMeasurableClip
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
 
 
@@ -30,15 +30,14 @@ private lemma main
     ∀ θ, ‖fderiv ℝ (fun θ => ∫ ω, r t ω ∂(M θ)) θ‖ ≤
     (t + 1) * (Fintype.card A * Cp * |M.env.R|) := by
 -- proof
-  let rc (z : ℝ × S × A) : ℝ := clip z.1 (-M.env.R) M.env.R
-  have e : (fun θ => ∫ ω, r t ω ∂(M θ)) = fun θ => ∑ x, M.env.init.real {x} * ∫ z, M.Kf θ rc t z ∂(M.stageK θ x) :=
+  have e : (fun θ => ∫ ω, r t ω ∂(M θ)) = fun θ => ∑ x, M.env.init.real {x} * ∫ z, M.Kf θ (fun z ↦ clip z.1 (-M.env.R) M.env.R) t z ∂(M.stageK θ x) :=
     funext fun θ => Integral_R.eq.Sum_MulRealWRc (M := M) h₀ θ t
   rw [e]
-  have hW := fun x => Differentiable.All_LeNormFderiv_MulAdd_1_MulMulCard.of.All_LeNorm.StronglyMeasurable.All_LeNormFderiv.All_All_Differentiable_FunPolProb (M := M) h₁ h₂ (StronglyMeasurableRc (M := M)) (NormRc.le.AbsR (M := M)) t x
+  have hW := fun x => Differentiable.All_LeNormFderiv_MulAdd_1_MulMulCard.of.All_LeNorm.StronglyMeasurable.All_LeNormFderiv.All_All_Differentiable_FunPolProb (M := M) h₁ h₂ (StronglyMeasurableClip (M := M)) (NormClip.le.AbsR (M := M)) t x
   refine ⟨fun θ => DifferentiableAt.fun_sum fun x _ => ((hW x).1 θ).const_mul _, fun θ => ?_⟩
   rw [fderiv_fun_sum fun x _ => ((hW x).1 θ).const_mul _]
   calc
-    _ ≤ ∑ x, ‖fderiv ℝ (fun θ => M.env.init.real {x} * ∫ z, M.Kf θ rc t z ∂(M.stageK θ x)) θ‖ := norm_sum_le _ _
+    _ ≤ ∑ x, ‖fderiv ℝ (fun θ => M.env.init.real {x} * ∫ z, M.Kf θ (fun z ↦ clip z.1 (-M.env.R) M.env.R) t z ∂(M.stageK θ x)) θ‖ := norm_sum_le _ _
     _ ≤ ∑ x, M.env.init.real {x} * ((t + 1) * (Fintype.card A * Cp * |M.env.R|)) := by
       refine Finset.sum_le_sum fun x _ => ?_
       rw [fderiv_const_mul ((hW x).1 θ), norm_smul, Real.norm_of_nonneg measureReal_nonneg]
@@ -47,4 +46,4 @@ private lemma main
 
 
 -- created on 2026-10-06
--- updated on 2026-10-11
+-- updated on 2026-10-12

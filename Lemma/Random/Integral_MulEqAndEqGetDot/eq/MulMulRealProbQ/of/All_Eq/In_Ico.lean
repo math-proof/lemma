@@ -1,6 +1,6 @@
 import sympy.stats.policy_trajectory.gradient
 import sympy.stats.cond_expectation
-import Lemma.Random.AeNormR.le.Abs_R
+import Lemma.Random.All_LeNorm_Abs.of.All_Eq_Joint
 import Lemma.Random.Integrable_Mul_R.of.Measurable
 import Lemma.Random.Integral.eq.MulMulRealPreimageProbIntegral_MulEqAndEq.of.All_Eq
 import Lemma.Random.Integral_G.eq.TSum_MulPowIntegral_R_Add.of.In_Ico
@@ -76,7 +76,7 @@ private lemma main
     intro k
     have hb : ∀ᵐ ω ∂(M θ), ‖‖(if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) *
         (γ ^ k * r (t + k) ω)‖‖ ≤ γ ^ k * |M.env.R| := by
-      filter_upwards [AeNormR.le.Abs_R h₁ (M := M) θ] with ω h
+      filter_upwards [All_LeNorm_Abs.of.All_Eq_Joint h₁ (M := M) θ] with ω h
       rw [norm_norm, norm_mul, norm_mul, norm_pow, Real.norm_of_nonneg h₀.1]
       exact (mul_le_of_le_one_left (mul_nonneg (pow_nonneg h₀.1 k) (norm_nonneg _))
         (by split_ifs <;> simp)).trans (mul_le_mul_of_nonneg_left (h (t + k)) (pow_nonneg h₀.1 k))

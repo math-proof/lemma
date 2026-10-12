@@ -1,7 +1,7 @@
 import sympy.stats.policy_trajectory.gradient
 import Lemma.Random.Integral.eq.Sum_Sum_SMul
-import Lemma.Random.AeHasSumAndNormG.le.MulSub1Abs_R.of.In_Ico
-import Lemma.Random.Integrable_G.of.In_Ico
+import Lemma.Random.All_And_LeNormExtDotPow_Id.of.All_Eq_Joint.In_Ico
+import Lemma.Random.IntegrableDotPow_Id.of.All_Eq.In_Ico
 import Lemma.Random.Integral_MulEqAndEqGetDot.eq.MulMulRealProbQ.of.All_Eq.In_Ico
 import Lemma.Real.SMul.eq.Sum_Sum_SMul
 import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
@@ -45,9 +45,9 @@ private lemma main
     refine Integrable.of_bound (C := (1 - γ)⁻¹ * |M.env.R|) ?_ ?_
     ·
       exact (((StronglyMeasurable.discrete (fun p : S × A => if p.1 = x ∧ p.2 = u then (1:ℝ) else 0)).comp_measurable
-        hX).aestronglyMeasurable).mul (Integrable_G.of.In_Ico (M := M) h₀ h₁ θ t).1
+        hX).aestronglyMeasurable).mul (IntegrableDotPow_Id.of.All_Eq.In_Ico (M := M) h₀ h₁ θ t).1
     ·
-      filter_upwards [AeHasSumAndNormG.le.MulSub1Abs_R.of.In_Ico (M := M) h₀ h₁ θ t] with ω h
+      filter_upwards [All_And_LeNormExtDotPow_Id.of.All_Eq_Joint.In_Ico (M := M) h₀ h₁ θ t] with ω h
       rw [norm_mul]
       exact mul_le_of_le_one_left (norm_nonneg _) (by split_ifs <;> simp) |>.trans h.2
   rw [Integral.eq.Sum_Sum_SMul (M := M) h₁ θ t (fun y u => Q θ t y u • ψ y u)]

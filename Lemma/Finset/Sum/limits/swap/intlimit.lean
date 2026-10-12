@@ -10,7 +10,11 @@ private lemma main
   ∑ j ∈ Finset.Ico a (n - d), ∑ i ∈ Finset.Ico (j + d) n, f i * g i j =
     ∑ i ∈ Finset.Ico (a + d) n, ∑ j ∈ Finset.Ico a (i - d + 1), f i * g i j := by
 -- proof
-  sorry
+  apply Finset.sum_comm'
+  intro j i
+  simp only [Finset.mem_Ico]
+  omega
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-12

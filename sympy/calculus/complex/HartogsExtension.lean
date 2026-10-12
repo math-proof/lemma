@@ -1724,7 +1724,7 @@ cutoff and one-variable identity continuation.
 -/
 theorem hartogs_extension
     {n : ℕ} (hn : 2 ≤ n)
-    {U : Set (EuclideanSpace ℂ (Fin n))} (hU_open : IsOpen U) (hU_conn : IsConnected U)
+    {U : Set (EuclideanSpace ℂ (Fin n))} (hU_open : IsOpen U) (_hU_conn : IsConnected U)
     {K : Set (EuclideanSpace ℂ (Fin n))} (hK_compact : IsCompact K) (hKU : K ⊆ U)
     (hUK_conn : IsConnected (U \ K))
     {f : EuclideanSpace ℂ (Fin n) → ℂ} (hf : DifferentiableOn ℂ f (U \ K)) :

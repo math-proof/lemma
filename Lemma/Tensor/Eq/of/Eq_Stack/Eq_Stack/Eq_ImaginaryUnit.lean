@@ -25,7 +25,7 @@ private lemma position_representation.sinusoidal
       rw [hj, e]
       push_cast
       ring
-    rw [r, Real.cos_pi_sub, Real.sin_pi_sub, if_pos hj, if_pos hj]
+    rw [r, Real.cos_pi_sub, Real.sin_pi_sub, ite_eq_left hj, ite_eq_left hj]
     push_cast
     ring
   ·
@@ -35,7 +35,7 @@ private lemma position_representation.sinusoidal
       push_cast
       ring
     have hj' : ¬j % 2 = 0 := by omega
-    rw [r, Real.cos_pi_div_two_sub, Real.sin_pi_div_two_sub, if_neg hj', if_neg hj']
+    rw [r, Real.cos_pi_div_two_sub, Real.sin_pi_div_two_sub, ite_eq_right hj', ite_eq_right hj']
     push_cast
     ring
 

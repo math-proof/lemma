@@ -123,8 +123,7 @@ theorem Ecomp_tmul (b : B) (φ : P →+ ZMod p) (x : P) :
     liftEquiv_apply_mk, Algebra.smul_def, mul_comm]
 
 theorem E_eq_Ecomp (z : B ⊗[ZMod p] (P →+ ZMod p)) : E p P B z = Ecomp p P B z := by
-  induction z using TensorProduct.induction_on with
-  | zero => simp only [map_zero]
+  induction z using TensorProduct.inductionOn with
   | tmul b φ => exact AddMonoidHom.ext fun x => (E_tmul p P B b φ x).trans (Ecomp_tmul p P B b φ x).symm
   | add x y hx hy => simp only [map_add, hx, hy]
 

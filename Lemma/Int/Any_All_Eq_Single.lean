@@ -26,7 +26,7 @@ private lemma main
   have key : ∀ y : AddMonoidAlgebra S G, IsGroupLikeElem S y → ∃ h, y = AddMonoidAlgebra.single h 1 := by
     intro y hy
     by_contra hne
-    push_neg at hne
+    push Not at hne
     have hli := linearIndepOn_isGroupLikeElem (R := S) (A := AddMonoidAlgebra S G)
 
     have hB : Set.range (fun h : G => (AddMonoidAlgebra.single h (1 : S) : AddMonoidAlgebra S G)) ⊆
@@ -36,7 +36,7 @@ private lemma main
       rintro ⟨h, rfl⟩; exact hne h rfl
     have hspan : y ∈ Submodule.span S (Set.range (fun h : G =>
         (AddMonoidAlgebra.single h (1 : S) : AddMonoidAlgebra S G))) := by
-      refine Submodule.span_mono ?_ (AddMonoidAlgebra.mem_span_support y)
+      refine Submodule.span_mono ?_ (AddMonoidAlgebra.mem_span_support_coeff y)
       rintro _ ⟨h, -, rfl⟩
       exact ⟨h, rfl⟩
     apply hli.notMem_span hy

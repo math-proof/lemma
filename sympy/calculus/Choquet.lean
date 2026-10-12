@@ -777,8 +777,8 @@ Proves `Wanted` entry `choquet_representation`.
 theorem choquet_representation
     {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E]
     [MeasurableSpace E] [BorelSpace E] [SecondCountableTopology E]
-    {K : Set E} (hKCompact : IsCompact K) (hKConvex : Convex ℝ K)
-    (hKNonempty : K.Nonempty)
+    {K : Set E} (hKCompact : IsCompact K) (_hKConvex : Convex ℝ K)
+    (_hKNonempty : K.Nonempty)
     {x : E} (hx : x ∈ K) :
     ∃ (μ : ProbabilityMeasure E),
       (μ : Measure E) (Set.extremePoints ℝ K) = 1 ∧

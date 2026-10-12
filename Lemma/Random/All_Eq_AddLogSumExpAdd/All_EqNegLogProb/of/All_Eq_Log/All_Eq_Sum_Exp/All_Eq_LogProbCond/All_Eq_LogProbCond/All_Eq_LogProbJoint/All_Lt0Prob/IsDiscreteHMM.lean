@@ -131,7 +131,7 @@ private lemma main
     rw [hz t (by omega), Finset.sum_mul, Finset.sum_mul]
     refine Finset.sum_congr rfl fun ys1 _ => ?_
     rw [(h₀ _).2 t, hpre t _ _ fun i hi => Fin.IteSnoc.eq.Ite.of.Le hi ys1 b a]
-    rw [dif_neg (lt_irrefl (t + 1)), dif_pos (Nat.lt_succ_self t), Fin.Snoc_Last.eq.Last]
+    rw [dite_eq_right (lt_irrefl (t + 1)), dite_eq_left (Nat.lt_succ_self t), Fin.Snoc_Last.eq.Last]
     ring
   refine ⟨fun t ht => ?_, fun «y.bvar» => ?_⟩
   ·

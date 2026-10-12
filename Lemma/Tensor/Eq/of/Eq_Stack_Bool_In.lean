@@ -33,7 +33,7 @@ private lemma conv1d
         simp only [Pi.add_apply, Pi.sub_apply] at this ⊢
         omega
       have e : p - β k + off t + β k = p + off t := by abel
-      rw [if_pos hq, if_pos hq', mul_one, e]
+      rw [ite_eq_left hq, ite_eq_left hq', mul_one, e]
     ·
       have hq' : ¬∀ a, 0 ≤ (p - β k + off t) a ∧ (p - β k + off t) a < ζ k a - β k a := by
         intro H
@@ -42,7 +42,7 @@ private lemma conv1d
         have := H a
         simp only [Pi.add_apply, Pi.sub_apply] at this ⊢
         omega
-      rw [if_neg hq, if_neg hq', mul_zero]
+      rw [ite_eq_right hq, ite_eq_right hq', mul_zero]
   ·
     rw [mul_zero]
 

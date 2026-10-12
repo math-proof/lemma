@@ -9,7 +9,7 @@ open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 
 
 /--
-On a reachable state (`Pr(s[t] = x) ≠ 0`): `V θ γ t x = ∑' k, γ ^ k * W θ rc k x`.
+On a reachable state (`Pr(s[t] = x) ≠ 0`): `V θ γ t x = ∑' k, γ ^ k * W θ (fun z ↦ clip z.1 (-M.env.R) M.env.R) k x`.
 -/
 @[path]
 private lemma main
@@ -29,10 +29,9 @@ private lemma main
 -- imply
   let V (θ : Θ) (t : ℕ) (x : S) : ℝ :=
     𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = x);
-  let rc (z : ℝ × S × A) : ℝ := clip z.1 (-M.env.R) M.env.R
-  V θ t x = ∑' k, γ ^ k * ∫ z, M.Kf θ rc k z ∂(M.stageK θ x) := by
+  V θ t x = ∑' k, γ ^ k * ∫ z, M.Kf θ (fun z ↦ clip z.1 (-M.env.R) M.env.R) k z ∂(M.stageK θ x) := by
 -- proof
-  intro Vθ rc
+  intro Vθ
   dsimp only [Vθ]
   set G := (γ ^ (id : ℕ → ℕ)) @ r[t:]
   obtain rfl : s = fun t ω ↦ (ω t).2.1 := funext₂ fun t ω ↦ (congrArg (·.2.1) (congrFun (h₁ t) ω)).symm
@@ -49,4 +48,4 @@ private lemma main
 
 
 -- created on 2026-10-07
--- updated on 2026-10-11
+-- updated on 2026-10-12

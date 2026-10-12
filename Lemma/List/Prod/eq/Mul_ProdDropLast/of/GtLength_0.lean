@@ -13,8 +13,7 @@ private lemma main
   s.prod = s[s.length - 1] * s.dropLast.prod := by
 -- proof
   have := Prod.eq.MulProdDropLast.of.GtLength_0 h
-  rw [Mul.comm] at this
-  assumption
+  rwa [Mul.comm] at this
 
 
 -- created on 2025-11-24

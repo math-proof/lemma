@@ -21,11 +21,11 @@ private lemma main
         ψ.ofConv (AddMonoidAlgebra.single g 1) * ψ'.ofConv (AddMonoidAlgebra.single g 1) := by
     intro ψ ψ' g
     rw [AlgHom.convMul_def]
-    simp [AddMonoidAlgebra.comul_single, Algebra.TensorProduct.lmul'_apply_tmul]
+    simp [Algebra.TensorProduct.lmul'_apply_tmul]
   have hone : ∀ g : Fin t → ℤ, (1 : WithConv (AddMonoidAlgebra κ (Fin t → ℤ) →ₐ[κ] κ)).ofConv (AddMonoidAlgebra.single g 1) = 1 := by
     intro g
     rw [AlgHom.convOne_def]
-    simp [AddMonoidAlgebra.counit_single]
+    simp
   have hpow : ∀ (ψ : WithConv (AddMonoidAlgebra κ (Fin t → ℤ) →ₐ[κ] κ)) (k : ℕ) (g : Fin t → ℤ),
       (ψ ^ k).ofConv (AddMonoidAlgebra.single g 1) = (ψ.ofConv (AddMonoidAlgebra.single g 1)) ^ k := by
     intro ψ k g
@@ -44,10 +44,10 @@ private lemma main
   ·
     apply (Set.Finite.pi (fun _ => hroots)).subset
     rintro _ ⟨χ, hχ, rfl⟩
-    simp only [Set.mem_pi, Set.mem_univ, Set.mem_setOf_eq, forall_const]
+    simp only [Set.mem_pi, Set.mem_univ, Set.mem_ofPred_eq, forall_const]
     intro i
     have h := congrArg (fun ψ : WithConv (AddMonoidAlgebra κ (Fin t → ℤ) →ₐ[κ] κ) =>
-      ψ.ofConv (AddMonoidAlgebra.single (Pi.single i 1) 1)) (Set.mem_setOf_eq ▸ hχ)
+      ψ.ofConv (AddMonoidAlgebra.single (Pi.single i 1) 1)) (Set.mem_ofPred_eq ▸ hχ)
     rwa [hpow, hone] at h
   ·
     intro χ _ χ' _ h

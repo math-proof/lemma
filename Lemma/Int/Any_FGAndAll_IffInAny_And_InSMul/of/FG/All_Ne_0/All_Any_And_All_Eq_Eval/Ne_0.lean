@@ -229,7 +229,7 @@ theorem discreteTopology_of_separator {E : Type*} [AddCommGroup E] [TopologicalS
   have hopenL : IsOpen {x : L | |P (x : E)| < 1} := hopen.preimage continuous_subtype_val
   have hset : {x : L | |P (x : E)| < 1} = ({0} : Set L) := by
     ext x
-    simp only [Set.mem_setOf_eq, Set.mem_singleton_iff]
+    simp only [Set.mem_ofPred_eq, Set.mem_singleton_iff]
     constructor
     · intro hx
       by_contra hne

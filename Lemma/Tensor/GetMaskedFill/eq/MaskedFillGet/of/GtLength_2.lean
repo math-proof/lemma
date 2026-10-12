@@ -27,7 +27,7 @@ private lemma main
   | [] =>
     grind
   | n :: s =>
-    rw [Tensor.masked_fill, dif_pos h]
+    rw [Tensor.masked_fill, dite_eq_left h]
     simp [GetElem.getElem]
     erw [GetOfVector.eq.Get.fin]
     erw [GetMap.eq.UFnGet.fin]

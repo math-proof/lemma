@@ -296,7 +296,7 @@ variable {S : Type u₁} [CommRing S]
 theorem isArtinian_of_finite_of_smul_eq_zero (I : Ideal S) [IsArtinianRing (S ⧸ I)]
     {M : Type u₂} [AddCommGroup M] [Module S M] [Module.Finite S M]
     (hann : ∀ i ∈ I, ∀ m : M, i • m = (0 : M)) : IsArtinian S M := by
-  haveI hSI : IsArtinian S (S ⧸ I) :=
+  have hSI : IsArtinian S (S ⧸ I) :=
     isArtinian_of_surjective_algebraMap (R := S ⧸ I) (M := S ⧸ I)
       (by rw [Ideal.Quotient.algebraMap_eq]; exact Ideal.Quotient.mk_surjective)
   obtain ⟨k, s, hs⟩ := Module.Finite.exists_fin (R := S) (M := M)
@@ -335,17 +335,17 @@ theorem isArtinianRing_quotient_pow [IsNoetherianRing S] (I : Ideal S)
     exact isArtinian_of_tower S h
   induction n with
   | zero =>
-    haveI : Subsingleton (S ⧸ I ^ 0) :=
+    have : Subsingleton (S ⧸ I ^ 0) :=
       ⟨fun a b => Quotient.inductionOn₂' a b fun x y =>
         Ideal.Quotient.eq.mpr (by simp [pow_zero, Ideal.one_eq_top])⟩
     infer_instance
   | succ n ih =>
-    haveI := ih
+    have := ih
 
     let q : (S ⧸ I ^ (n + 1)) →ₗ[S] S ⧸ I ^ n :=
       Submodule.factor (by
         exact_mod_cast Ideal.pow_le_pow_right (Nat.le_succ n))
-    haveI : IsArtinian S (LinearMap.ker q) := by
+    have : IsArtinian S (LinearMap.ker q) := by
       refine isArtinian_of_finite_of_smul_eq_zero I (fun i hi => ?_)
       rintro ⟨x, hx⟩
       refine Subtype.ext ?_
@@ -363,10 +363,10 @@ variable (I : Ideal S)
 
 theorem isMaximal_of_isPrime_of_le [IsArtinianRing (S ⧸ I)] (Q : Ideal S) [hQ : Q.IsPrime]
     (hIQ : I ≤ Q) : Q.IsMaximal := by
-  haveI : (Q.map (Ideal.Quotient.mk I)).IsPrime :=
+  have : (Q.map (Ideal.Quotient.mk I)).IsPrime :=
     Ideal.map_isPrime_of_surjective Ideal.Quotient.mk_surjective
       (by rw [Ideal.mk_ker]; exact hIQ)
-  haveI : (Q.map (Ideal.Quotient.mk I)).IsMaximal :=
+  have : (Q.map (Ideal.Quotient.mk I)).IsMaximal :=
     IsArtinianRing.isMaximal_of_isPrime _
   have hQc : Q = (Q.map (Ideal.Quotient.mk I)).comap (Ideal.Quotient.mk I) := by
     rw [Ideal.comap_map_of_surjective _ Ideal.Quotient.mk_surjective,
@@ -386,7 +386,7 @@ theorem finite_setOf_isMaximal_and_le [IsArtinianRing (S ⧸ I)] :
         {P : Ideal S // P.IsMaximal ∧ I ≤ P})) ?_
   rintro ⟨P, hP, hIP⟩
   refine ⟨⟨P.map (Ideal.Quotient.mk I), ?_⟩, ?_⟩
-  · haveI : (P.map (Ideal.Quotient.mk I)).IsPrime :=
+  · have : (P.map (Ideal.Quotient.mk I)).IsPrime :=
       Ideal.map_isPrime_of_surjective Ideal.Quotient.mk_surjective
         (by rw [Ideal.mk_ker]; exact hIP)
     exact IsArtinianRing.isMaximal_of_isPrime _
@@ -404,7 +404,7 @@ theorem prod_pow_le_pow_of_radical_pow_le [IsArtinianRing (S ⧸ I)]
     rw [Ideal.radical_eq_sInf]
     refine le_sInf ?_
     rintro Q ⟨hIQ, hQprime⟩
-    haveI := hQprime
+    have := hQprime
     have hQmax : Q.IsMaximal := isMaximal_of_isPrime_of_le I Q hIQ
     exact le_trans Ideal.prod_le_inf (Finset.inf_le (hs ⟨Q, hQmax, hIQ⟩))
   calc (∏ P ∈ s, (P : Ideal S) ^ c)
@@ -442,8 +442,8 @@ theorem iInf_sup_pow_eq [IsArtinianRing (S ⧸ I)] {c n : ℕ} (hc : I.radical ^
   by_cases hI : I = ⊤
   · subst hI
     simp [Ideal.top_pow]
-  · haveI := finite_setOf_isMaximal_and_le I
-    haveI := Fintype.ofFinite {P : Ideal S // P.IsMaximal ∧ I ≤ P}
+  · have := finite_setOf_isMaximal_and_le I
+    have := Fintype.ofFinite {P : Ideal S // P.IsMaximal ∧ I ≤ P}
     classical
     have key : ∀ t : Finset {P : Ideal S // P.IsMaximal ∧ I ≤ P},
         (⨅ P : {P : Ideal S // P.IsMaximal ∧ I ≤ P}, (I ^ n ⊔ (P : Ideal S) ^ c)) ≤
@@ -584,7 +584,7 @@ theorem semilocalPiHom_injective : Function.Injective (semilocalPiHom I) := by
     rw [← factorPow_evalₐ I (hle n) x, ← hr, Ideal.Quotient.factorPow,
       Ideal.Quotient.factor_mk]
   have hP0 : evalₐ (P : Ideal S) (c₁ * n) (semilocalPiHom I x P) = 0 := by
-    simp [congrFun hx P, Pi.zero_apply]
+    simp [congrFun hx P]
   rw [semilocalPiHom_apply, semilocalComponent, evalₐ_mapₐ, ← hr, levelMapₐ_mk] at hP0
   have hrP : r ∈ (P : Ideal S) ^ (c₁ * n) := by
     rwa [AlgHom.coe_id, id_eq, Ideal.Quotient.eq_zero_iff_mem] at hP0
@@ -821,8 +821,7 @@ theorem tensorRingHom_tmul_eq_symm_smul (x : AdicCompletion 𝔭 A) (b : B) :
 
 theorem restrictScalarsEquiv_tensorRingHom (z : AdicCompletion 𝔭 A ⊗[A] B) :
     restrictScalarsEquiv B 𝔭 (tensorRingHom B 𝔭 z) = ofTensorProduct 𝔭 B z := by
-  induction z using TensorProduct.induction_on with
-  | zero => simp
+  induction z using TensorProduct.inductionOn with
   | tmul x b =>
     rw [tensorRingHom_tmul_eq_symm_smul, LinearEquiv.apply_symm_apply,
       ofTensorProduct_tmul]

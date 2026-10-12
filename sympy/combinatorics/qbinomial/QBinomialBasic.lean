@@ -257,7 +257,7 @@ This is the definition, restated for clarity.
 See Proposition 11.2.1(a) in the source. -/
 theorem qBinomial_eq_sum_increasing_tuples (n k : ℕ) (hk : k ≤ n) (q : R) :
     qBinomial n k q = ∑ f ∈ monotoneFunctions k (n - k), q ^ (∑ i, (f i).val) := by
-  simp only [qBinomial, if_pos hk]
+  simp only [qBinomial, ite_eq_left hk]
 
 /-- The set of partitions of n fitting in a k × m box.
 
@@ -491,7 +491,7 @@ See Definition 11.2.1(a) in the source. -/
 theorem qBinomial_eq_partition_gf (n k : ℕ) (hk : k ≤ n) (q : R) :
     qBinomial n k q = ∑ m ∈ range (k * (n - k) + 1),
       (partitionsInBox m k (n - k)).card • q ^ m := by
-  simp only [qBinomial, if_pos hk]
+  simp only [qBinomial, ite_eq_left hk]
   -- Rewrite LHS by grouping by sum
   have hbound : ∀ f ∈ monotoneFunctions k (n - k), ∑ i, (f i).val ∈ range (k * (n - k) + 1) := by
     intro f _
@@ -619,13 +619,13 @@ See Proposition 11.2.1(c) in the source. -/
 theorem qBinomial_one_eq_binomial (n k : ℕ) : qBinomial n k (1 : R) = Nat.choose n k := by
   by_cases hk : k ≤ n
   · unfold qBinomial
-    simp only [if_pos hk, one_pow, Finset.sum_const]
+    simp only [ite_eq_left hk, one_pow, Finset.sum_const]
     rw [card_monotoneFunctions_eq_choose']
     have h : k + (n - k) = n := Nat.add_sub_cancel' hk
     rw [h]
     simp
   · unfold qBinomial
-    simp only [if_neg hk]
+    simp only [ite_eq_right hk]
     rw [Nat.choose_eq_zero_of_lt (by omega : n < k)]
     simp
 
@@ -906,7 +906,7 @@ private theorem profile_le_iff (k m : ℕ) (f : Fin k → Fin (m + 1)) (hf : Mon
   constructor
   · intro h
     by_contra hne
-    push_neg at hne
+    push Not at hne
     have hfi : (f i).val ≤ m - 1 - j.val := by omega
     have hsub : Finset.Iic i ⊆ Finset.univ.filter (fun i' : Fin k => (f i').val ≤ m - 1 - j.val) := by
       intro i' hi'
@@ -922,7 +922,7 @@ private theorem profile_le_iff (k m : ℕ) (f : Fin k → Fin (m + 1)) (hf : Mon
       intro i' hi'
       simp only [Finset.mem_filter, Finset.mem_univ, true_and, Finset.mem_Iio] at hi' ⊢
       by_contra hne
-      push_neg at hne
+      push Not at hne
       have : (f i).val ≤ (f i').val := hf hne
       omega
     calc (Finset.univ.filter (fun i' : Fin k => (f i').val ≤ m - 1 - j.val)).card
@@ -1006,7 +1006,7 @@ private theorem qBinomial_symm_local (n k : ℕ) (hk : k ≤ n) (q : R) :
     qBinomial n k q = qBinomial n (n - k) q := by
   have hnk : n - k ≤ n := Nat.sub_le n k
   have h_eq : n - (n - k) = k := Nat.sub_sub_self hk
-  simp only [qBinomial, hk, hnk, if_true]
+  simp only [qBinomial, hk, hnk, ite_true]
   conv_rhs => rw [h_eq]
   apply Finset.sum_bij'
     (fun f _ => transposeMonotone k (n - k) f)
@@ -1074,7 +1074,7 @@ theorem qBinomial_rec_right (n : ℕ) (hn : 0 < n) (k : ℕ) (hk : 0 < k) (q : R
         have : n - k = 0 := by omega
         omega
     · -- Case n - k = 0, i.e., k = n
-      push_neg at h_nk_pos
+      push Not at h_nk_pos
       have hkn' : k = n := by omega
       rw [hkn']
       simp only [qBinomial_n_n]
@@ -1082,7 +1082,7 @@ theorem qBinomial_rec_right (n : ℕ) (hn : 0 < n) (k : ℕ) (hk : 0 < k) (q : R
       rw [h1]
       simp
   · -- Case k > n
-    push_neg at hkn
+    push Not at hkn
     simp only [qBinomial_zero_of_lt n k hkn]
     have h1 : qBinomial (n - 1) (k - 1) q = 0 := qBinomial_zero_of_lt (n - 1) (k - 1) (by omega) q
     have h2 : qBinomial (n - 1) k q = 0 := qBinomial_zero_of_lt (n - 1) k (by omega) q
@@ -1300,7 +1300,7 @@ theorem qBinomial_symm (n k : ℕ) (hk : k ≤ n) (q : R) :
     qBinomial n k q = qBinomial n (n - k) q := by
   have hnk : n - k ≤ n := Nat.sub_le n k
   have h_eq : n - (n - k) = k := Nat.sub_sub_self hk
-  simp only [qBinomial, hk, hnk, if_true]
+  simp only [qBinomial, hk, hnk, ite_true]
   conv_rhs => rw [h_eq]
   apply Finset.sum_bij'
     (fun f _ => transposeMonotone k (n - k) f)

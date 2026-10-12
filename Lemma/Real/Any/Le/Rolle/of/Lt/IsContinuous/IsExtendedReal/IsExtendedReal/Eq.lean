@@ -1,4 +1,4 @@
-import Mathlib.Analysis.Calculus.Deriv.Basic
+import Mathlib.Analysis.Calculus.LocalExtr.Rolle
 import sympy.Basic
 
 
@@ -9,12 +9,15 @@ private lemma main
 -- given
   (hlt : a < b)
   (hcont : ContinuousOn f (Set.Icc a b))
-  (hdiff : DifferentiableOn ℝ f (Set.Ioo a b))
+  (_ : DifferentiableOn ℝ f (Set.Ioo a b))
   (heq : f a = f b) :
 -- imply
   ∃ x ∈ Set.Ioo a b, deriv f x * deriv f x ≤ 0 := by
 -- proof
-  sorry
+  obtain ⟨x, hx, hx0⟩ := exists_deriv_eq_zero hlt hcont heq
+  refine ⟨x, hx, ?_⟩
+  simp [hx0]
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-12

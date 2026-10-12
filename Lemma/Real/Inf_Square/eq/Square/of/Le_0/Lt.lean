@@ -1,6 +1,6 @@
 import sympy.sets.sets
 import sympy.Basic
-import Mathlib.Data.Real.Pointwise
+import Mathlib.Basic.Real.Pointwise
 import Lemma.Real.Inf_Square.even_function
 import Lemma.Real.Inf_Square.eq.Square.of.Ge_0.Lt
 

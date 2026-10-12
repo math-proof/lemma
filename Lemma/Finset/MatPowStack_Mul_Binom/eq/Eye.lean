@@ -28,7 +28,7 @@ private lemma main
     by_cases hd : d = 0
     · subst hd
       simp
-    · rw [if_neg hd, if_neg (by omega), mul_zero]
+    · rw [ite_eq_right hd, ite_eq_right (by omega), mul_zero]
   ext i j
   rw [sq, Matrix.mul_apply, Matrix.one_apply]
   simp only [Matrix.of_apply]
@@ -60,7 +60,7 @@ private lemma main
         simp
       · rw [Nat.choose_eq_zero_of_lt (show (i : ℕ) < k by omega)]
         simp
-  · rw [if_neg (by omega)]
+  · rw [ite_eq_right (by omega)]
     apply Finset.sum_eq_zero
     intro k _
     rcases lt_or_ge k j with hkj | hkj

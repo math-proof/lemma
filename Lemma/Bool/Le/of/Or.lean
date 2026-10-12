@@ -4,9 +4,7 @@ import sympy.Basic
 @[path]
 private lemma main
   [Preorder β]
-  {A B : Set α}
-  {x : α}
-  [Decidable (x ∈ A)] [Decidable (x ∈ B)]
+  {A B : Set α} {x : α} [Decidable (x ∈ A)] [Decidable (x ∈ B)]
   {f g k : α → β}
   {p : β}
 -- given
@@ -19,25 +17,20 @@ private lemma main
   else
     k x) ≤ p := by
 -- proof
-  rcases h₀ with ⟨h₁, h₂⟩ | h₀
+  obtain ⟨h₁, h₂⟩ | h₀ := h₀
   ·
-    rw [if_pos h₂]
-    exact h₁
-  rcases h₀ with ⟨h₁, h₂⟩ | ⟨h₁, h₂⟩
+    rwa [ite_eq_left h₂]
+  obtain ⟨h₁, h₂⟩ | ⟨h₁, h₂⟩ := h₀
   ·
-    rw [if_neg h₂.2, if_pos h₂.1]
-    exact h₁
+    rwa [ite_eq_right h₂.2, ite_eq_left h₂.1]
   ·
-    rw [if_neg (fun hA => h₂ (Or.inl hA)), if_neg (fun hB => h₂ (Or.inr hB))]
-    exact h₁
+    rwa [ite_eq_right (fun hA => h₂ (Or.inl hA)), ite_eq_right (fun hB => h₂ (Or.inr hB))]
 
 
 @[path]
 private lemma two
   [Preorder β]
-  {A : Set α}
-  {x : α}
-  [Decidable (x ∈ A)]
+  {A : Set α} {x : α} [Decidable (x ∈ A)]
   {f g : α → β}
   {p : β}
 -- given
@@ -48,13 +41,12 @@ private lemma two
   else
     g x) ≤ p := by
 -- proof
-  rcases h₀ with ⟨h₁, h₂⟩ | ⟨h₁, h₂⟩
+  obtain ⟨h₁, h₂⟩ | ⟨h₁, h₂⟩ := h₀
   ·
-    rw [if_pos h₂]
-    exact h₁
+    rwa [ite_eq_left h₂]
   ·
-    rw [if_neg h₂]
-    exact h₁
+    rwa [ite_eq_right h₂]
 
 
 -- created on 2018-06-26
+-- updated on 2026-10-12

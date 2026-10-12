@@ -22,7 +22,7 @@ private lemma index_general
     rw [Finset.sum_eq_single k0]
     · simp [hxk]
     · intro b hb hne
-      rw [if_neg (fun e => hne (hinj hb hk0 (e.trans hxk.symm)))]
+      rw [ite_eq_right (fun e => hne (hinj hb hk0 (e.trans hxk.symm)))]
       simp
     · intro h'
       exact absurd hk0 h'
