@@ -138,12 +138,13 @@ export default {
 		},
 		
 		// path normalization: given→of, Is→is, In→in (py↔lean case of section tokens).
-		// Use lookahead so consecutive tokens (.In.In. / .Is.Is.) all convert (dot not consumed).
+		// Lookahead `(?=\.|$)` so consecutive tokens (.In.In. / .Is.Is.) all convert
+		// (dot not consumed) and a trailing .In / .Is / .given at EOS also converts.
 		normPath(name) {
 			return name
-				.replace(/\.given(?=\.)/g, '.of')
-				.replace(/\.Is(?=\.)/g, '.is')
-				.replace(/\.In(?=\.)/g, '.in');
+				.replace(/\.given(?=\.|$)/g, '.of')
+				.replace(/\.Is(?=\.|$)/g, '.is')
+				.replace(/\.In(?=\.|$)/g, '.in');
 		},
 
 		// axiom is formalized iff some lean module equals the normalized axiom,
