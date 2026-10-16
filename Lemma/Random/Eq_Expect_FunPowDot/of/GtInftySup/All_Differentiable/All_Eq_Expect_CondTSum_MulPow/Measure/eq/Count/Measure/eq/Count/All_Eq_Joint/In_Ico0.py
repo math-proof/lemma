@@ -95,7 +95,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Derivative).apply(Real.Grad.Dot.eq.Dot.Grad)
 
-    Eq << Random.Eq_Expect_DotFunPow.of.GtInftySup.All_DifferentiableProb.Measure.eq.Count.Measure.eq.Count.All_Eq_Joint.In_Ico0.apply(Eq[0], Eq[-1])
+    Eq << Random.GradExpect_DotPow_Id.eq.Expect_DotFunSMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.EqMeasureCount.EqMeasureCount.All_Eq_Joint.In_Ico.apply(Eq[0], Eq[-1])
 
     Eq << Eq[-1].this.rhs.find(Expectation).simplify()
 
