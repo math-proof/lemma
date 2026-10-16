@@ -236,6 +236,7 @@ export class LeanToken extends Lean {
     }
 
     latexFormat() {
+        if (this.text === '∇') return '\\nabla';
         if (this.text === '∞') return '\\infty';
         if (/^[ℝℚ]≥0∞?$/u.test(this.text))
             return `${this.text[0]}_{\\ge 0}${this.text.endsWith('∞') ? '^{\\infty}' : ''}`;

@@ -18,6 +18,7 @@ import Lemma.Random.AeAll_LeNorm_TSum_MulPowSubAddRMul_VcVcMulSub1DeltaBound.of.
 import Lemma.Random.Integral_SMul.eq.Zero.of.Le.In_Ico
 import Lemma.Random.Integral_SMul.of.In_Ico.In_Ico
 import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
+import Lemma.Random.PSpace_Path.of.All_PSpace
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Filter Topology Random Measure
 open scoped ENNReal.ToRealCoe
 
@@ -67,16 +68,16 @@ private lemma main
   have hr : ∀ t, PSpace (M θ) (r t) := fun t =>
     ⟨(Random.Measurable.of.All_Eq.fst h₁ t).aemeasurable⟩
   have : PSpace (M θ) (AsPathRV.path (s)) :=
-    PSpace.of_process_path hs
+    PSpace_Path.of.All_PSpace hs
   have : PSpace (M θ) (AsPathRV.path (a)) :=
-    PSpace.of_process_path ha
+    PSpace_Path.of.All_PSpace ha
   have : PSpace (M θ) (AsPathRV.path (r)) :=
-    PSpace.of_process_path hr
+    PSpace_Path.of.All_PSpace hr
   let : MeasurableSpace Θ := borel Θ
   have : BorelSpace Θ := ⟨rfl⟩
   ∇[θ] (
     have : PSpace (M θ) (AsPathRV.path (r)) :=
-      PSpace.of_process_path (fun t => ⟨(Random.Measurable.of.All_Eq.fst h₁ t).aemeasurable⟩)
+      PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.fst h₁ t).aemeasurable⟩)
     𝔼[r: M θ](((fun t : ℕ => γ ^ t) @ r))) =
     -- TODO(sympy 𝔼 patch): 𝔽((a₀ t) = … | (s₀ t) = …) with let a₀ := a; let s₀ := s
     let a₀ := a
@@ -153,7 +154,7 @@ private lemma main
       ((measurable_of_countable (V θ k)).comp (Random.Measurable.of.All_Eq.snd.fst h₁ k))
   have hbase : ∇[θ] (
       have : PSpace (M θ) (AsPathRV.path (r)) :=
-        PSpace.of_process_path (fun t => ⟨(Random.Measurable.of.All_Eq.fst h₁ t).aemeasurable⟩)
+        PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.fst h₁ t).aemeasurable⟩)
       𝔼[r: M θ](((fun t : ℕ => γ ^ t) @ r))) =
       -- TODO(sympy 𝔼 patch): 𝔽((a₀ t) = … | (s₀ t) = …) with let a₀ := a; let s₀ := s
       let a₀ := a

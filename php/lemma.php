@@ -358,7 +358,8 @@ function lemma_shell_render_codecogs(string $latex, ?string $lean): bool
     }
     $wrapped = str_replace(['\\left.', '\\right.', '\\left', '\\right', '\\displaystyle ', '\\middle|', '\\middle'], ['', '', '', '', '', '|', ''], $wrapped);
     $wrapped = trim($wrapped, " $\t\n");
-    $url = 'https://latex.codecogs.com/png.latex?' . rawurlencode($wrapped);
+    // Serve via local proxy so Chrome never hits latex.codecogs.com through Clash.
+    $url = 'php/request/codecogs.php?latex=' . rawurlencode($wrapped);
     if (strlen($url) > 7000)
         return false;
     $tag = lemma_shell_latex_tag($latex, $lean);
@@ -373,12 +374,198 @@ function lemma_shell_render_codecogs(string $latex, ?string $lean): bool
     return true;
 }
 
+
+/**
+ * When lean is a single stmt, MySQL-cached latex may still be multi-row
+ * ({have}/PSpace/`rw`/align*). Keep only the last latex row — the concluding
+ * equality. Also used as a finalizer after multi-stmt have-stripping.
+ */
+function lemma_shell_strip_have_rows_from_latex(?string $latex): ?string
+{
+    if ($latex === null || $latex === '')
+        return $latex;
+
+    $unwrap = static function (string $row): string {
+        $row = trim($row);
+        $row = preg_replace('/^&\s*/', '', $row);
+        $row = preg_replace('/\s*&&\s*$/', '', $row);
+        $row = preg_replace('/\\\\\\\\end\{align\*\}\s*$/', '', $row);
+        $row = preg_replace('/\\\\end\{align\*\}\s*$/', '', $row);
+        return trim($row);
+    };
+
+    $mode = 'none';
+    $rows = [];
+    if (preg_match('/\\\\begin\{align\*\}(.*?)\\\\end\{align\*\}/s', $latex, $am)) {
+        $mode = 'align';
+        $body = trim($am[1]);
+        $rows = preg_split('/\\\\\\\\\s*(?:\n|$)/', $body);
+        $rows = array_values(array_filter($rows, static fn($r) => trim($r) !== ''));
+    } elseif (str_contains($latex, '\\\\')) {
+        $mode = 'raw';
+        $rows = preg_split('/\\\\\\\\\s*(?:\n|$)/', $latex);
+        $rows = array_values(array_filter($rows, static fn($r) => trim($r) !== ''));
+    }
+    if ($mode === 'none' || count($rows) <= 1)
+        return $latex;
+
+    $picked = $unwrap(end($rows));
+    if ($picked === '')
+        return $latex;
+    if ($mode === 'align') {
+        $replaced = preg_replace('/\\\\begin\{align\*\}.*?\\\\end\{align\*\}/s', $picked, $latex, 1);
+        return is_string($replaced) ? $replaced : $picked;
+    }
+    return $picked;
+}
+
+function lemma_shell_strip_local_have_imply(?string $lean, ?string $latex): array
+{
+    if ($lean === null || $lean === '')
+        return [$lean, $latex];
+
+    $raw = $lean;
+    $tagSuffix = '';
+    if (preg_match('/\s*(:=\s*(?:by|calc)?)\s*$/u', $raw, $tm)) {
+        $tagSuffix = $tm[1];
+        $raw = substr($raw, 0, -strlen($tm[0]));
+    }
+
+    $lines = preg_split("/\r?\n/", $raw);
+    $stmts = [];
+    $cur = [];
+    $baseIndent = null;
+    $is_have_let = static function (string $first): bool {
+        return (bool) preg_match('/^\s*(haveI?|letI?|set|replace)\b/u', $first);
+    };
+    foreach ($lines as $line) {
+        if ($cur === [] && $line === '')
+            continue;
+        $indent = strlen($line) - strlen(ltrim($line));
+        $startsHave = (bool) preg_match('/^\s*(haveI?|letI?|set|replace)\b/u', $line);
+        // New stmt: another have/let, or a same-indent non-continuation after a have/let
+        // (concluding equality must not stay glued to the last have).
+        if ($startsHave) {
+            if ($cur)
+                $stmts[] = $cur;
+            $cur = [$line];
+            $baseIndent = $indent;
+        } elseif (
+            $cur
+            && $baseIndent !== null
+            && trim($line) !== ''
+            && $indent <= $baseIndent
+            && $is_have_let($cur[0] ?? '')
+        ) {
+            $stmts[] = $cur;
+            $cur = [$line];
+            $baseIndent = $indent;
+        } else {
+            $cur[] = $line;
+            if ($baseIndent === null && trim($line) !== '')
+                $baseIndent = $indent;
+        }
+    }
+    if ($cur)
+        $stmts[] = $cur;
+
+    if (count($stmts) <= 1) {
+        // Lean already clean (<=1 stmt), but MySQL-cached latex may still be
+        // multi-row with {have}/PSpace path rows. Strip latex-only.
+        return [$lean, lemma_shell_strip_have_rows_from_latex($latex)];
+    }
+
+    $keptIdx = [];
+    foreach ($stmts as $i => $st) {
+        $first = '';
+        foreach ($st as $ln) {
+            if (trim($ln) !== '') {
+                $first = $ln;
+                break;
+            }
+        }
+        if ($first !== '' && !$is_have_let($first))
+            $keptIdx[] = $i;
+    }
+    if (!$keptIdx)
+        $keptIdx = [count($stmts) - 1];
+    if (count($keptIdx) === count($stmts))
+        return [$lean, $latex];
+
+    $keptLines = [];
+    foreach ($keptIdx as $i) {
+        foreach ($stmts[$i] as $ln)
+            $keptLines[] = $ln;
+    }
+    $newLean = implode("\n", $keptLines);
+    if ($tagSuffix !== '')
+        $newLean .= $tagSuffix;
+
+    $newLatex = $latex;
+    if ($latex !== null && $latex !== '') {
+        $unwrap_align_row = static function (string $row): string {
+            $row = trim($row);
+            $row = preg_replace('/^&\s*/', '', $row);
+            $row = preg_replace('/\s*&&\s*$/', '', $row);
+            return $row;
+        };
+        $pick_rows = static function (array $rows) use ($stmts, $keptIdx, $unwrap_align_row): ?string {
+            if (!$rows)
+                return null;
+            if (count($rows) === count($stmts)) {
+                $keptRows = [];
+                foreach ($keptIdx as $i)
+                    $keptRows[] = $rows[$i];
+            } elseif (count($keptIdx) === 1 && count($rows) > 1) {
+                // Fallback: keep last row when stmt/row counts disagree
+                $keptRows = [end($rows)];
+            } else {
+                return null;
+            }
+            if (count($keptRows) === 1)
+                return $unwrap_align_row($keptRows[0]);
+            return implode("\\\\\n", $keptRows);
+        };
+
+        if (preg_match('/\\\\begin\{align\*\}(.*?)\\\\end\{align\*\}/s', $latex, $am)) {
+            $body = trim($am[1]);
+            $rows = preg_split('/\\\\\\\\\s*\n/', $body);
+            $rows = array_values(array_filter($rows, static fn($r) => trim($r) !== ''));
+            $picked = $pick_rows($rows);
+            if ($picked !== null) {
+                if (count($keptIdx) === 1 || (is_string($picked) && !str_contains($picked, "\\\\\n"))) {
+                    $newLatex = preg_replace('/\\\\begin\{align\*\}.*?\\\\end\{align\*\}/s', $picked, $latex, 1);
+                } else {
+                    $newLatex = preg_replace(
+                        '/\\\\begin\{align\*\}.*?\\\\end\{align\*\}/s',
+                        "\\begin{align*}\n{$picked}\n\\end{align*}",
+                        $latex,
+                        1
+                    );
+                }
+            }
+        } elseif (str_contains($latex, '\\\\')) {
+            // MySQL-cached imply latex is often \\-joined rows without align*
+            $rows = preg_split('/\\\\\\\\\s*(?:\n|$)/', $latex);
+            $rows = array_values(array_filter($rows, static fn($r) => trim($r) !== ''));
+            $picked = $pick_rows($rows);
+            if ($picked !== null)
+                $newLatex = $picked;
+        }
+    }
+
+    $newLatex = lemma_shell_strip_have_rows_from_latex($newLatex);
+    return [$newLean, $newLatex];
+}
+
+
 function lemma_shell_render_given_or_imply(?array $pair): void
 {
     if (!is_array($pair))
         return;
     $lean = $pair['lean'] ?? null;
     $latex = $pair['latex'] ?? null;
+    [$lean, $latex] = lemma_shell_strip_local_have_imply($lean, $latex);
     if (!empty($pair['insert'])) {
         lemma_shell_render_lean_line(lemma_shell_unindent_decl($lean), true);
         return;
@@ -541,6 +728,7 @@ if ($code)
 
 $userSegment = lemma_user_segment();
 ?>
+<?php if (lemma_shell_is_preview()): ?>
 <base href="/<?php echo lemma_shell_h($userSegment); ?>/">
 <title><?php echo lemma_shell_h($title); ?></title>
 <style>
@@ -577,20 +765,6 @@ $userSegment = lemma_user_segment();
 .latex-display.latex-formula-failed .latex-tag { position: static; transform: none; margin-left: auto; }
 .latex-display .lean-fallback { display: none; margin: 0; }
 .latex-display.latex-formula-failed .lean-fallback { display: block; }
-#lemma-shell.lemma-shell-fade-out {
-	opacity: 0;
-	transition: opacity 0.35s ease;
-	pointer-events: none;
-}
-#lemma-vue-root {
-	transition: opacity 0.35s ease;
-}
-#lemma-vue-root.lemma-vue-pending {
-	opacity: 0;
-}
-#lemma-vue-root.lemma-vue-visible {
-	opacity: 1;
-}
 .green { color: green; }
 .blue { color: blue; }
 .orange { color: orange; }
@@ -608,14 +782,6 @@ $userSegment = lemma_user_segment();
 }
 span.date {
     font-size: 12px;
-}
-#lemma-stage { position: relative; }
-#lemma-vue-root.lemma-vue-overlay {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    z-index: 1;
 }
 </style>
 <body>
@@ -651,144 +817,32 @@ if ($code && !empty($code['lemma'])) {
 </div>
 </div>
 </body>
+<?php else: ?>
+<base href="/<?php echo lemma_shell_h($userSegment); ?>/">
+<title><?php echo lemma_shell_h($title); ?></title>
+<link rel="stylesheet" href="css/codemirror-overrides.css">
 <link rel="stylesheet" href="node_modules/katex/dist/katex.min.css">
-<script src="node_modules/katex/dist/katex.min.js"></script>
-<script>
-document.querySelectorAll('#lemma-shell .latex-math').forEach(function (el) {
-	try {
-		katex.render(el.textContent, el, { throwOnError: true, displayMode: true });
-	} catch (e) {
-		var box = el.closest('.latex-display');
-		if (box)
-			box.classList.add('latex-formula-failed');
-	}
-});
-</script>
+<link rel="stylesheet" href="node_modules/prismjs/themes/prism.min.css" />
+<body></body>
+
+<script src="node_modules/axios/dist/axios.min.js"></script>
+<script src="node_modules/qs/dist/qs.js"></script>
+<script src="node_modules/clipboard/dist/clipboard.min.js" defer></script>
+<script src="node_modules/file-saver/dist/FileSaver.min.js" defer></script>
+<script src="node_modules/vue/dist/vue.global.prod.js"></script>
+<script src="node_modules/vue3-sfc-loader/dist/vue3-sfc-loader.js"></script>
+
+<script src="js/py.js?v=9"></script>
+<script src="js/std.js?v=9"></script>
+<script src="node_modules/lz-string/libs/lz-string.js" defer></script>
+<script src="node_modules/katex/dist/katex.min.js" defer></script>
+<script src="node_modules/katex/dist/contrib/auto-render.min.js" defer></script>
+<script type=module src="js/utility.js"></script>
+<script src="node_modules/prismjs/prism.js" defer></script>
+<script src="js/prism-lean.js" defer></script>
 <?php lemma_emit_codemirror_importmap($userSegment); ?>
-<script type="module">
-function asset(path) {
-	return new URL(path, document.baseURI).href;
-}
-
-function loadScript(src) {
-	return new Promise((resolve, reject) => {
-		if ([...document.scripts].some((s) => s.src === src))
-			return resolve();
-		const s = document.createElement('script');
-		s.src = src;
-		s.onload = () => resolve();
-		s.onerror = () => reject(new Error(`script failed: ${src}`));
-		document.head.appendChild(s);
-	});
-}
-
-function loadCss(href) {
-	return new Promise((resolve, reject) => {
-		if ([...document.styleSheets].some((sheet) => sheet.href === href))
-			return resolve();
-		if ([...document.querySelectorAll('link[rel="stylesheet"]')].some((l) => l.href === href))
-			return resolve();
-		const l = document.createElement('link');
-		l.rel = 'stylesheet';
-		l.href = href;
-		l.onload = () => resolve();
-		l.onerror = () => reject(new Error(`stylesheet failed: ${href}`));
-		document.head.appendChild(l);
-	});
-}
-
-// Match ejs/lemma.ejs asset list (CM6; no legacy codemirror 5 CSS).
-const VUE_STYLES = [
-	'css/codemirror-overrides.css',
-	'node_modules/katex/dist/katex.min.css',
-	'node_modules/prismjs/themes/prism.min.css',
-];
-
-const VUE_SCRIPTS = [
-	'node_modules/axios/dist/axios.min.js',
-	'node_modules/qs/dist/qs.js',
-	'node_modules/clipboard/dist/clipboard.min.js',
-	'node_modules/file-saver/dist/FileSaver.min.js',
-	'node_modules/vue/dist/vue.global.prod.js',
-	'node_modules/vue3-sfc-loader/dist/vue3-sfc-loader.js',
-	'js/py.js?v=9',
-	'js/std.js?v=9',
-];
-
-const VUE_DEFER_SCRIPTS = [
-	'node_modules/lz-string/libs/lz-string.js',
-	'node_modules/katex/dist/katex.min.js',
-	'node_modules/katex/dist/contrib/auto-render.min.js',
-	'node_modules/prismjs/prism.js',
-	'js/prism-lean.js',
-];
-
-async function upgradeLemmaVue(code) {
-	for (const path of VUE_STYLES)
-		await loadCss(asset(path));
-
-	for (const path of VUE_SCRIPTS)
-		await loadScript(asset(path));
-
-	await Promise.all([
-		import(asset('js/utility.js')),
-		import(asset('js/codemirrorBoot.js')),
-	]);
-
-	// Sequential: prism-lean.js needs global Prism from prism.js.
-	for (const path of VUE_DEFER_SCRIPTS)
-		await loadScript(asset(path));
-
-	const shell = document.getElementById('lemma-shell');
-	const stage = document.getElementById('lemma-stage');
-	const mountId = 'lemma-vue-root';
-	await createApp('render', code, mountId);
-
-	const mount = document.getElementById(mountId);
-	if (mount)
-		mount.classList.add('lemma-vue-pending');
-	if (stage && mount)
-		stage.appendChild(mount);
-
-	await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
-
-	if (shell && stage)
-		stage.style.minHeight = shell.offsetHeight + 'px';
-	if (mount) {
-		mount.classList.remove('lemma-vue-pending');
-		mount.classList.add('lemma-vue-overlay');
-		mount.classList.add('lemma-vue-visible');
-	}
-
-	const finish = () => {
-		if (finish.done)
-			return;
-		finish.done = true;
-		if (shell)
-			shell.remove();
-		if (stage)
-			stage.style.minHeight = '';
-		if (mount)
-			mount.classList.remove('lemma-vue-overlay', 'lemma-vue-pending', 'lemma-vue-visible');
-	};
-
-	if (shell) {
-		shell.classList.add('lemma-shell-fade-out');
-		shell.addEventListener('transitionend', finish, { once: true });
-		setTimeout(finish, 450);
-	} else
-		finish();
-}
-
-const lemmaCode = <?php echo $code ? std\encode($code) : 'null'; ?>;
-const previewOnly = <?php echo (($_GET['preview'] ?? '') === '1') ? 'true' : 'false'; ?>;
-const run = () => {
-	if (previewOnly || !lemmaCode?.lemma)
-		return;
-	upgradeLemmaVue(lemmaCode).catch((err) => console.error('[upgradeLemmaVue]', err));
-};
-if ('requestIdleCallback' in window)
-	requestIdleCallback(run, { timeout: 2000 });
-else
-	setTimeout(run, 0);
+<script type="module" src="js/codemirrorBoot.js"></script>
+<script type=module>
+createApp('render', <?php echo $code ? std\encode($code) : 'null'; ?>);
 </script>
+<?php endif; ?>

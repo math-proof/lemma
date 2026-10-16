@@ -436,7 +436,8 @@ SELECT
             'explicit', j.explicit,
             'given', j.given,
             'default', j.defval,
-            'imply', j.imply
+            'imply', j.imply,
+            'proof', j.proof
         )
     ) AS lemma
 FROM lemma AS l
@@ -453,7 +454,8 @@ CROSS JOIN JSON_TABLE(
         explicit JSON PATH '\$.explicit',
         given JSON PATH '\$.given',
         defval JSON PATH '\$.default',
-        imply JSON PATH '\$.imply'
+        imply JSON PATH '\$.imply',
+        proof JSON PATH '\$.proof'
     )
 ) AS j
 WHERE l.user = '$user' AND l.module = "$module"

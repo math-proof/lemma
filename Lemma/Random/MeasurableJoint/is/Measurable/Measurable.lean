@@ -4,6 +4,14 @@ import sympy.Basic
 open MeasureTheory
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| path | Random.MeasurableJoint.is.Measurable.Measurable |
+| comm | Random.Measurable.Measurable.is.MeasurableJoint |
+| mp | Random.Measurable.Measurable.of.MeasurableJoint |
+| mpr | Random.MeasurableJoint.of.Measurable.Measurable |
+-/
 @[path, comm, mp, mpr]
 private lemma main
   [MeasurableSpace Ω] [MeasurableSpace α] [MeasurableSpace β]

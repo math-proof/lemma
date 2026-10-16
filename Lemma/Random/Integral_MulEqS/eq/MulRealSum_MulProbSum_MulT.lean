@@ -7,7 +7,6 @@ import Lemma.Random.StronglyMeasurable_KfAndAll_LeNormKf.of.All_LeNorm.StronglyM
 import Lemma.Random.WAdd_1.eq.Sum_MulProbSum_MulTW.of.All_LeNorm.StronglyMeasurable
 import Lemma.Real.Norm.le.Sum_Norm
 import Lemma.Real.Norm_1.le.One
-import Lemma.Real.StronglyMeasurable.discrete
 import Lemma.Real.StronglyMeasurable_Eq12
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random Real
 
@@ -39,7 +38,7 @@ private lemma main
     (M θ).real (s t ⁻¹' {x}) * ∑ u, M.pol.prob θ x u * ∑ y, (M.env.trans (x, u)).real {y} * f y := by
 -- proof
   obtain rfl : s = fun t ω ↦ (ω t).2.1 := funext₂ fun t ω ↦ (congrArg (·.2.1) (congrFun (h₀ t) ω)).symm
-  have hf : StronglyMeasurable (fun z : ℝ × S × A => f z.2.1) := (StronglyMeasurable.discrete f).comp_measurable measurable_snd.fst
+  have hf : StronglyMeasurable (fun z : ℝ × S × A => f z.2.1) := (StronglyMeasurable.of_discrete (f := f)).comp_measurable measurable_snd.fst
   have hK := StronglyMeasurable_KfAndAll_LeNormKf.of.All_LeNorm.StronglyMeasurable (M := M) hf (fun z => Norm.le.Sum_Norm f z.2.1) θ 1
   refine (Integral_Mul.eq.Integral_Mul_Kf.of.All_LeNorm.StronglyMeasurable.All_LeNorm.StronglyMeasurable (M := M) hf (fun z => Norm.le.Sum_Norm f z.2.1) (Real.StronglyMeasurable_Eq12 x) (Norm_1.le.One) θ t 1).trans ?_
   refine (Integral_MulEqS.eq.MulRealPreimageSIntegral.of.All_LeNorm.StronglyMeasurable h₀ (M := M) hK.1 hK.2 θ t x).trans ?_

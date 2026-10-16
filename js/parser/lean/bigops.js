@@ -456,6 +456,10 @@ export class Lean_int extends LeanBigOperator {
         const dom = this.intDomain();
         if (dom instanceof L.LeanUpto) return `${op}\\limits_{%s}^{%s} %s\\, ${tail}`;
         if (dom != null) return `${op}\\limits_{%s} %s\\, ${tail}`;
+        // Lean integral with binder and partial measure: keep binder before integrand.
+        const v = this.binderVar();
+        if (this.measurePartial() && v && !(v instanceof L.LeanCaret))
+            return `${op} {%s},\\, %s\\, ${tail}`;
         return `${op} %s\\, ${tail}`;
     }
 
@@ -463,8 +467,8 @@ export class Lean_int extends LeanBigOperator {
         const partial = this.measurePartial();
         const body = this.integrandLatex(syntax, partial);
         const v = this.binderVar();
-        // `∂μ` names the measure: show it rather than the bound variable
-        // (which already appears in the integrand).
+        // With partial measure, the measure is the differential; with plain dx, the binder is.
+        // When both a binder and partial measure are present (and no in-domain), keep Lean order.
         const tail = partial
             ? partial.arg.toLatex(syntax)
             : v && !(v instanceof L.LeanCaret)
@@ -475,6 +479,8 @@ export class Lean_int extends LeanBigOperator {
             return [dom.lhs.toLatex(syntax), dom.rhs.toLatex(syntax), body, tail];
         }
         if (dom != null) return [dom.toLatex(syntax), body, tail];
+        if (partial && v && !(v instanceof L.LeanCaret))
+            return [v.toLatex(syntax), body, tail];
         return [body, tail];
     }
 }

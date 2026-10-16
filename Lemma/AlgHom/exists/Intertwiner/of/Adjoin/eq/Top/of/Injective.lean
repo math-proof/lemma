@@ -23,15 +23,13 @@ private lemma main
       (∀ res' : C₁ →ₐ[R] C₀, (∀ (t : C₁) (m : M₀), t • i m = i (res' t • m)) → res' = res) := by
 -- proof
   classical
-
     have huniq : ∀ (t : C₁) (y₁ y₂ : C₀), (∀ m, t • i m = i (y₁ • m)) → (∀ m, t • i m = i (y₂ • m)) → y₁ = y₂ := by
       intro t y₁ y₂ h₁ h₂
-      have hz : ∀ m : M₀, (y₁ - y₂) • m = (0 : M₀) := fun m => by
-        have him : i ((y₁ - y₂) • m) = i 0 := by
-          rw [map_zero, sub_smul, map_sub, ← h₁, ← h₂, sub_self]
-        exact hi him
-      exact sub_eq_zero.mp (hfaith _ hz)
-
+      apply sub_eq_zero.mp
+      apply hfaith _
+      intro m
+      apply hi
+      rw [map_zero, sub_smul, map_sub, ← h₁, ← h₂, sub_self]
     let A : Subalgebra R C₁ :=
       { carrier := {t | ∃ y : C₀, ∀ m, t • i m = i (y • m)}
         mul_mem' := by
@@ -45,9 +43,8 @@ private lemma main
         algebraMap_mem' := fun r => ⟨algebraMap R C₀ r, fun m => by
           rw [algebraMap_smul, algebraMap_smul, LinearMap.map_smul]⟩ }
     have hGA : G ⊆ A := fun g hg => ⟨y g, hy g hg⟩
-    have hA : ∀ t : C₁, t ∈ A := fun t => by
-      have ht : t ∈ Algebra.adjoin R G := hG ▸ Algebra.mem_top
-      exact Algebra.adjoin_le hGA ht
+    have hA : ∀ t : C₁, t ∈ A := fun t =>
+      Algebra.adjoin_le hGA (hG ▸ Algebra.mem_top)
     have hall : ∀ t : C₁, ∃ y : C₀, ∀ m, t • i m = i (y • m) := fun t => hA t
     choose f hf using hall
     let res : C₁ →ₐ[R] C₀ :=

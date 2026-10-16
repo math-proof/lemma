@@ -15,10 +15,8 @@ private lemma main
   ∃ y : S →ₐ[K] K, y.comp (IsScalarTower.toAlgHom K R S) = x := by
 -- proof
   classical
-
     have hxs : Function.Surjective x := fun c => ⟨algebraMap K R c, x.commutes c⟩
     have hmax : (RingHom.ker x).IsMaximal := RingHom.ker_isMaximal_of_surjective x hxs
-
     set I : Ideal S := Ideal.map (algebraMap R S) (RingHom.ker x) with hI
     have hI_ne : I ≠ ⊤ := by
       have h := Module.FaithfullyFlat.submodule_ne_top (R := R) (M := S) hmax
@@ -29,7 +27,6 @@ private lemma main
       rw [htop]
       rfl
     obtain ⟨𝔫, h𝔫max, hI𝔫⟩ := Ideal.exists_le_maximal I hI_ne
-
     have : 𝔫.IsMaximal := h𝔫max
     have : Module.Finite K (S ⧸ 𝔫) :=
       Module.Finite.of_surjective (Ideal.Quotient.mkₐ K 𝔫).toLinearMap (Ideal.Quotient.mkₐ_surjective K 𝔫)
@@ -38,7 +35,6 @@ private lemma main
     let e : K ≃ₐ[K] S ⧸ 𝔫 := AlgEquiv.ofBijective (Algebra.ofId K (S ⧸ 𝔫)) hbij
     refine ⟨(e.symm : S ⧸ 𝔫 →ₐ[K] K).comp (Ideal.Quotient.mkₐ K 𝔫), ?_⟩
     ext r
-
     have hr : algebraMap R S r - algebraMap K S (x r) ∈ 𝔫 := by
       apply hI𝔫
       have hmem : r - algebraMap K R (x r) ∈ RingHom.ker x := by
@@ -48,7 +44,6 @@ private lemma main
     have hq : Ideal.Quotient.mkₐ K 𝔫 (algebraMap R S r) = algebraMap K (S ⧸ 𝔫) (x r) := by
       rwa [← sub_eq_zero, IsScalarTower.algebraMap_apply K S (S ⧸ 𝔫), Ideal.Quotient.mkₐ_eq_mk,
         ← Ideal.Quotient.algebraMap_eq, ← map_sub, Ideal.Quotient.algebraMap_eq, Ideal.Quotient.eq_zero_iff_mem]
-
     rw [AlgHom.comp_apply, AlgHom.comp_apply, IsScalarTower.coe_toAlgHom', hq]
     show e.symm (algebraMap K (S ⧸ 𝔫) (x r)) = x r
     have : algebraMap K (S ⧸ 𝔫) (x r) = e (x r) := rfl

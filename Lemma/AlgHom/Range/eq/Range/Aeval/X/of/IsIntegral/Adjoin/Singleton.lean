@@ -18,22 +18,21 @@ private lemma main
   ψ.range = (Polynomial.aeval (RatFunc.X : RatFunc k)).range := by
 -- proof
   classical
-
     have haev : ∀ q : Polynomial k,
         Polynomial.aeval (RatFunc.X : RatFunc k) q = algebraMap (Polynomial k) (RatFunc k) q := by
       intro q
       rw [← RatFunc.algebraMap_X, Polynomial.aeval_algebraMap_apply, Polynomial.aeval_X_left_apply]
     apply le_antisymm
-    · rintro _ ⟨b, rfl⟩
-
+    ·
+      rintro _ ⟨b, rfl⟩
       obtain ⟨P, hPm, hPb⟩ := hint b
       have hlift : P.map (ψ.toRingHom.comp (algebraMap ↥(Algebra.adjoin k ({b₀} : Set B)) B)) ∈
-          Polynomial.lifts (algebraMap (Polynomial k) (RatFunc k)) := by
+        Polynomial.lifts (algebraMap (Polynomial k) (RatFunc k)) := by
         rw [Polynomial.lifts_iff_coeff_lifts]
         intro n
         rw [Polynomial.coeff_map]
         have hmem : ψ ((P.coeff n : ↥(Algebra.adjoin k ({b₀} : Set B))) : B) ∈
-            (Algebra.adjoin k ({b₀} : Set B)).map ψ :=
+          (Algebra.adjoin k ({b₀} : Set B)).map ψ :=
           Subalgebra.mem_map.mpr ⟨_, (P.coeff n).2, rfl⟩
         rw [AlgHom.map_adjoin, Set.image_singleton, hψ, Algebra.adjoin_singleton_eq_range_aeval] at hmem
         obtain ⟨q, hq⟩ := (AlgHom.mem_range _).mp hmem
@@ -46,7 +45,8 @@ private lemma main
           (by rw [hPb, map_zero])
       obtain ⟨q, hq⟩ := (IsIntegrallyClosed.isIntegral_iff (R := Polynomial k) (K := RatFunc k)).mp hI
       exact (AlgHom.mem_range _).mpr ⟨q, (haev q).trans hq⟩
-    · rw [← Algebra.adjoin_singleton_eq_range_aeval]
+    ·
+      rw [← Algebra.adjoin_singleton_eq_range_aeval]
       exact Algebra.adjoin_le (Set.singleton_subset_iff.mpr ⟨b₀, hψ⟩)
 
 

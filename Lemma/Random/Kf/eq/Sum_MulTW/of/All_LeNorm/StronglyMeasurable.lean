@@ -1,6 +1,6 @@
 import sympy.stats.policy_trajectory
 import sympy.Basic
-import Lemma.Random.Integral.eq.Integral_Integral.of.All_LeNorm.StronglyMeasurable
+import Lemma.Random.Integral.eq.Integral.of.All_LeNorm.StronglyMeasurable
 import Lemma.Random.Kf.eq.Integral
 import Lemma.Random.StronglyMeasurable_KfAndAll_LeNormKf.of.All_LeNorm.StronglyMeasurable
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
@@ -30,7 +30,7 @@ private lemma main
   have hK : M.K θ z = M.stageK θ ∘ₘ M.env.trans (z.2.1, z.2.2) := by
     rw [Model.K, Kernel.comp_apply, Kernel.comap_apply]
   have hKf := StronglyMeasurable_KfAndAll_LeNormKf.of.All_LeNorm.StronglyMeasurable (M := M) hf hC θ j
-  rw [hK, Integral.eq.Integral_Integral.of.All_LeNorm.StronglyMeasurable hKf.1 hKf.2,
+  rw [hK, Integral.eq.Integral.of.All_LeNorm.StronglyMeasurable hKf.1 hKf.2,
     integral_fintype Integrable.of_finite]
   simp [smul_eq_mul]
 

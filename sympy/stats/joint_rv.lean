@@ -465,18 +465,6 @@ open Lean Elab Term Meta in
 -- e.g. `V t (s t) =ᵐ[π] …` is `(fun ω ↦ V t (s t ω)) =ᵐ[π] …`.
 macro_rules
   | `($f =ᵐ[$μ] $g) => `(Filter.EventuallyEq (MeasureTheory.ae $μ) (rv%[$μ] $f) (rv%[$μ] $g))
-/--
-Path of a process with a.e. measurable coordinates is a.e. measurable (product σ-algebra).
-
-Not an `instance`: synthesizing `IsProbabilityMeasure π` via `PSpace` would otherwise loop
-through a metavariable process `X`.
--/
-theorem PSpace.of_process_path
-    {Ω α : Type*} [MeasurableSpace Ω] [MeasurableSpace α]
-    {π : Measure Ω} {X : ℕ → Ω → α} (h : ∀ t, PSpace π (X t)) :
-    PSpace π (AsPathRV.path X) where
-  toIsProbabilityMeasure := (h 0).toIsProbabilityMeasure
-  aemeasurable := (aemeasurable_pi_iff (μ := π)).2 fun t => (h t).aemeasurable
 
 /-! ### Binder notation `𝔼`
 
@@ -606,18 +594,25 @@ Syntax sugar for pointwise evaluation of the canonical densities `prob` / `condP
 * `ℙ[π](x, y | z = z0)` / `ℙ[π](x | y = y0 ∧ z = z0 ∧ …)` → `Measure.probCond …`
   (= `fun ω ↦ ℙ[π](x = (x ω) ∧ y = (y ω) | z = z0 ∧ …)`), magenta given black
   (commas left of `|`; `∧`-chains of `=` on the right)
-* `ℙ[π](x, y | z)` / `ℙ[π](x, y | z, w, …)` → `Measure.probCondRA …`
+* `ℙ[π](x, y | z)` / `ℙ[π](x, y | z, w, …)` / `ℙ[π](a t | s t)` → `Measure.probCondRA …`
   (= `fun ω ↦ ℙ[π](x = (x ω) ∧ y = (y ω) | z = (z ω) ∧ …)`), magenta on both sides
-  (commas on both sides of `|`)
+  (commas on both sides of `|`; RA slots are `term:51`, so applications like `a t` are allowed)
 * `ℙ[π](x = x0)` → `Measure.prob π x x0` (point / black value)
 * `ℙ[π](x = x0 ∧ y = y0 ∧ …)` → `Measure.prob π (JointRandomSymbol …) (x0, …)`
 * `ℙ[π](x = x0 | y = y0 ∧ …)` → `Measure.condProb π (JointRandomSymbol x …) (x0, …)`
 * `ℙ[π](x = x0 ∧ y = y0 | z = z0)` →
   `Measure.condProb π (JointRandomSymbol (JointRandomSymbol x y) z) ((x0, y0), z0)`
 * Both sides of `|` accept any nonempty `∧`-chain of fixed observations.
-* `ℙ[π](x = x0 | y)` → `Measure.condProbRA π (x, y) x0`
+* `ℙ[π](x = x0 | y)` / `ℙ[π](x = x0 | y t)` → `Measure.condProbRA π (x, y) x0`
   (= `fun ω ↦ Measure.condProb π (x, y) (x0, y ω)`), a random expression in `y`.
   Several RAs: `ℙ[π](x = x0 | y, z, …)`; joint left: `ℙ[π](x = x0 ∧ w = w0 | y)`.
+
+**Inside `𝔼`:** RA forms whose heads are integrated binders already in scope
+(`ℙ[π](a t | s t)`, `ℙ[π](a | s)`, …) are rewritten to the scalar observation form
+`ℙ[π]((a₀ t) = (a t) | (s₀ t) = (s t))` with fresh aliases `a₀ := a` of the outer
+processes taken before unpack. That is the same scalar as today's handwritten
+`let a₀ := a; let s₀ := s` pattern, so `(ℙ[M θ](a t | s t) : ℝ)` works under
+`𝔼[s, a, …]`. Outside `𝔼`, the same surface stays `probCondRA` (`Ω → ENNReal`).
 
 Read `=` as “evaluated at” (like `x ↦ x0`), not as an event `{ω | x ω = x0}`.
 `∧` packs a joint point; `|` is conditioning (fixed `=` or random arguments).
@@ -643,22 +638,24 @@ partial def Probability.Macro.mkProd (ts : Array Syntax) : MacroM Term := do
     let tail ← Probability.Macro.mkProd rest.toArray
     `(($t, $tail))
 
-syntax:max "ℙ[" term "]" "(" ident,+ ")" : term
-syntax:max "ℙ[" term "]" "(" ident,+ "|" ident,+ ")" : term
-syntax:max "ℙ[" term "]" "(" ident,+ "|" sepBy1(term:max "=" term:lead, "∧") ")" : term
+/-- RA slots are `term:51` (idents and applications like `a t`); observation forms keep
+`term:max "=" term:lead` so `x = x0` is never swallowed by the RA parsers. -/
+syntax:max "ℙ[" term "]" "(" term:51,+ ")" : term
+syntax:max "ℙ[" term "]" "(" term:51,+ "|" term:51,+ ")" : term
+syntax:max "ℙ[" term "]" "(" term:51,+ "|" sepBy1(term:max "=" term:lead, "∧") ")" : term
 syntax:max "ℙ[" term "]" "(" sepBy1(term:max "=" term:lead, "∧") ")" : term
 syntax:max "ℙ[" term "]" "(" sepBy1(term:max "=" term:lead, "∧") "|" sepBy1(term:max "=" term:lead, "∧") ")" : term
-syntax:max "ℙ[" term "]" "(" sepBy1(term:max "=" term:lead, "∧") "|" ident,+ ")" : term
+syntax:max "ℙ[" term "]" "(" sepBy1(term:max "=" term:lead, "∧") "|" term:51,+ ")" : term
 
 macro_rules
-  | `(ℙ[$π]($xs:ident,*)) => do
+  | `(ℙ[$π]($xs:term,*)) => do
       let x ← Probability.Macro.mkJointRV xs
       `(Measure.probRA $π $x)
-  | `(ℙ[$π]($xs:ident,* | $ys:ident,*)) => do
+  | `(ℙ[$π]($xs:term,* | $ys:term,*)) => do
       let x ← Probability.Macro.mkJointRV xs
       let y ← Probability.Macro.mkJointRV ys
       `(Measure.probCondRA $π (JointRandomSymbol $x $y))
-  | `(ℙ[$π]($xs:ident,* | $[$y:term = $y0:term]∧*)) => do
+  | `(ℙ[$π]($xs:term,* | $[$y:term = $y0:term]∧*)) => do
       let x ← Probability.Macro.mkJointRV xs
       let y ← Probability.Macro.mkJointRV y
       let y0 ← Probability.Macro.mkProd y0
@@ -673,28 +670,102 @@ macro_rules
       let y ← Probability.Macro.mkJointRV y
       let y0 ← Probability.Macro.mkProd y0
       `(Measure.condProb $π (JointRandomSymbol $x $y) ($x0, $y0))
-  | `(ℙ[$π]($[$x:term = $x0:term]∧* | $ys:ident,*)) => do
+  | `(ℙ[$π]($[$x:term = $x0:term]∧* | $ys:term,*)) => do
       let x ← Probability.Macro.mkJointRV x
       let x0 ← Probability.Macro.mkProd x0
       let y ← Probability.Macro.mkJointRV ys
       `(Measure.condProbRA $π (JointRandomSymbol $x $y) $x0)
 
+/-- Head binder of an RA term: `a` or `a t` ↦ `a`; otherwise none. -/
+private def Expectation.Macro.raHead (e : Syntax) : Option Name :=
+  if e.isIdent then
+    some e.getId
+  else if e.isOfKind ``Lean.Parser.Term.app then
+    let fn := e[0]
+    if fn.isIdent then some fn.getId else none
+  else
+    none
+
+/-- Replace the head binder of e by its alias when present. -/
+private def Expectation.Macro.applyAlias (aliases : List (Name × Ident)) (e : Syntax) : MacroM Term := do
+  if e.isIdent then
+    match aliases.find? (fun p => p.1 == e.getId) with
+    | some (_, a) => pure a
+    | none => pure ⟨e⟩
+  else if e.isOfKind ``Lean.Parser.Term.app then
+    let fn := e[0]
+    if fn.isIdent then
+      match aliases.find? (fun p => p.1 == fn.getId) with
+      | some (_, a) => pure ⟨e.setArg 0 a⟩
+      | none => pure ⟨e⟩
+    else
+      pure ⟨e⟩
+  else
+    pure ⟨e⟩
+
+private def Expectation.Macro.isAliasable (aliases : List (Name × Ident)) (e : Syntax) : Bool :=
+  match Expectation.Macro.raHead e with
+  | some n => aliases.any (fun p => p.1 == n)
+  | none => false
+
+private partial def Expectation.Macro.desugarProbRA (aliases : List (Name × Ident)) (stx : Syntax) :
+    MacroM Syntax := do
+  if aliases.isEmpty then
+    return stx
+  let rec go (s : Syntax) : MacroM Syntax := do
+    match s with
+    | `(ℙ[$π]($xs:term,* | $ys:term,*)) =>
+        let xsA := xs.getElems
+        let ysA := ys.getElems
+        if xsA.all (fun e => Expectation.Macro.isAliasable aliases e) &&
+            ysA.all (fun e => Expectation.Macro.isAliasable aliases e) then
+          let x ← xsA.mapM (Expectation.Macro.applyAlias aliases)
+          let x0 : Array Term := xsA.map fun e => ⟨e⟩
+          let y ← ysA.mapM (Expectation.Macro.applyAlias aliases)
+          let y0 : Array Term := ysA.map fun e => ⟨e⟩
+          `(ℙ[$π]($[$x:term = $x0:term]∧* | $[$y:term = $y0:term]∧*))
+        else
+          mapChildren s
+    | `(ℙ[$π]($xs:term,* | $[$y:term = $y0:term]∧*)) =>
+        let xsA := xs.getElems
+        if xsA.all (fun e => Expectation.Macro.isAliasable aliases e) then
+          let x ← xsA.mapM (Expectation.Macro.applyAlias aliases)
+          let x0 : Array Term := xsA.map fun e => ⟨e⟩
+          `(ℙ[$π]($[$x:term = $x0:term]∧* | $[$y:term = $y0:term]∧*))
+        else
+          mapChildren s
+    | `(ℙ[$π]($xs:term,*)) =>
+        let xsA := xs.getElems
+        if xsA.all (fun e => Expectation.Macro.isAliasable aliases e) then
+          let x ← xsA.mapM (Expectation.Macro.applyAlias aliases)
+          let x0 : Array Term := xsA.map fun e => ⟨e⟩
+          `(ℙ[$π]($[$x:term = $x0:term]∧*))
+        else
+          mapChildren s
+    | _ => mapChildren s
+  go stx
+where
+  mapChildren (s : Syntax) : MacroM Syntax := do
+    let args ← s.getArgs.mapM (desugarProbRA aliases)
+    return s.setArgs args
+
 /-- `true` when `name` occurs in `stx` as an integrated *value* (anything that is not a
-random-variable slot of a `ℙ`). Random-variable slots are the bare idents of `ℙ[π](x, y)` and the
-left-hand side of each `=` (`ℙ[π](a t = u | s t = x)`). -/
+random-variable slot of a `ℙ`). Random-variable slots are RA terms (`ℙ[π](a t | s t)` —
+the whole term is an RV slot) and the left-hand side of each `=`
+(`ℙ[π](a t = u | s t = x)`). -/
 private partial def Expectation.Macro.bodyValueUse
     (stx : Syntax) (name : Name) (inRV : Bool := false) : MacroM Bool := do
   let rec over (stxs : Array Syntax) (rv : Bool) : MacroM Bool :=
     stxs.foldlM (init := false) fun acc s => return acc || (← bodyValueUse s name rv)
   match stx with
-  | `(ℙ[$_]($xs:ident,*)) => over xs (rv := true)
-  | `(ℙ[$_]($xs:ident,* | $ys:ident,*)) =>
+  | `(ℙ[$_]($xs:term,*)) => over xs (rv := true)
+  | `(ℙ[$_]($xs:term,* | $ys:term,*)) =>
       return (← over xs true) || (← over ys true)
-  | `(ℙ[$_]($xs:ident,* | $[$y:term = $y0:term]∧*)) =>
+  | `(ℙ[$_]($xs:term,* | $[$y:term = $y0:term]∧*)) =>
       return (← over xs true) || (← over y true) || (← over y0 false)
   | `(ℙ[$_]($[$x:term = $x0:term]∧* | $[$y:term = $y0:term]∧*)) =>
       return (← over x true) || (← over x0 false) || (← over y true) || (← over y0 false)
-  | `(ℙ[$_]($[$x:term = $x0:term]∧* | $ys:ident,*)) =>
+  | `(ℙ[$_]($[$x:term = $x0:term]∧* | $ys:term,*)) =>
       return (← over x true) || (← over x0 false) || (← over ys true)
   | `(ℙ[$_]($[$x:term = $x0:term]∧*)) =>
       return (← over x true) || (← over x0 false)
@@ -715,19 +786,47 @@ private def Expectation.Macro.rebindMask (xs : Array Syntax) (body : Syntax) : T
     else
       Lean.Elab.liftMacroM <| Expectation.Macro.bodyValueUse body x.getId
 
+open Lean.Elab.Term in
+/-- Fresh `x₀`-style aliases for integrated binders that are already locals (outer processes). -/
+private def Expectation.Macro.mkOuterAliases (xs : Array Syntax) : TermElabM (List (Name × Ident)) := do
+  let mut acc : List (Name × Ident) := []
+  for x in xs do
+    let n := x.getId
+    if (← getLCtx).findFromUserName? n |>.isSome then
+      let cand := Name.appendAfter n "₀"
+      let aliasName ←
+        if (← getLCtx).findFromUserName? cand |>.isSome then
+          mkFreshUserName cand
+        else
+          pure cand
+      acc := acc ++ [(n, mkIdent aliasName)]
+  return acc
+
+/-- Wrap `core` with `let a₀ := a; …` for each outer alias. -/
+private def Expectation.Macro.wrapAliases (aliases : List (Name × Ident)) (core : Term) : MacroM Term := do
+  let mut result := core
+  for (n, a) in aliases.reverse do
+    let b := mkIdent n
+    result ← `(let $a := $b; $result)
+  pure result
 
 open Lean.Elab.Term in
-/-- Elaborate one `𝔼` form. `build` receives the unpacked body. -/
+/-- Elaborate one `𝔼` form. `build` receives the unpacked body.
+RA `ℙ` forms headed by in-scope binders are desugared to scalar observations first. -/
 private def Expectation.Macro.elabExpect (xs : Array Syntax) (body : Syntax)
     (build : Term → MacroM Term) : TermElabM Lean.Expr := do
-  let mask ← Expectation.Macro.rebindMask xs body
+  let aliases ← Expectation.Macro.mkOuterAliases xs
+  let body' ← Lean.Elab.liftMacroM <| Expectation.Macro.desugarProbRA aliases body
+  let mask ← Expectation.Macro.rebindMask xs body'
   let nest := mkIdent `«integ»
-  let unpacked ← Lean.Elab.liftMacroM <| Expectation.Macro.unpackRest xs nest ⟨body⟩ mask
+  let unpacked ← Lean.Elab.liftMacroM <| Expectation.Macro.unpackRest xs nest ⟨body'⟩ mask
   let lam ← if mask.any id then
       `(fun $nest ↦ $unpacked)
     else
       `(fun _ ↦ $unpacked)
-  Lean.Elab.Term.elabTerm (← Lean.Elab.liftMacroM <| build lam) none
+  let core ← Lean.Elab.liftMacroM <| build lam
+  let wrapped ← Lean.Elab.liftMacroM <| Expectation.Macro.wrapAliases aliases core
+  Lean.Elab.Term.elabTerm wrapped none
 
 elab_rules : term
   | `(𝔼[$xs:ident,* : $π]($body)) => do

@@ -211,12 +211,19 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         const {args} = this;
         if (args.length < 2) return null;
         const head = args[0];
-        if (!(head instanceof L.LeanGetElem)) return null;
-        const [base, index] = head.args;
-        if (!(base instanceof L.LeanToken) || base.text !== '∇') return null;
-        if (index instanceof L.LeanToken) return {name: index, point: null, body: args.slice(1)};
-        if (index instanceof L.LeanEq && index.lhs instanceof L.LeanToken)
-            return {name: index.lhs, point: index.rhs, body: args.slice(1)};
+        // binder sugar: `∇[θ] body` / `∇[θ = p] body`
+        if (head instanceof L.LeanGetElem) {
+            const [base, index] = head.args;
+            if (!(base instanceof L.LeanToken) || base.text !== '∇') return null;
+            if (index instanceof L.LeanToken)
+                return {kind: 'binder', name: index, point: null, body: args.slice(1)};
+            if (index instanceof L.LeanEq && index.lhs instanceof L.LeanToken)
+                return {kind: 'binder', name: index.lhs, point: index.rhs, body: args.slice(1)};
+            return null;
+        }
+        // binder-free: `∇ J` / `∇ J θ` (= Mathlib `gradient J θ`)
+        if (head instanceof L.LeanToken && head.text === '∇')
+            return {kind: 'function', operands: args.slice(1)};
         return null;
     }
 
@@ -517,6 +524,8 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
                 markFactor(n.rhs);
                 return;
             }
+            // RA apps: `a t`, `s (t + 1)` — magenta on head only (same as Expectation conditioner)
+            for (const h of Lean.headTokens(n)) h.kwargs.isRandomArgument = true;
         };
         markFactor(node);
     }
@@ -755,6 +764,12 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         if (idInner) return [idInner.toLatex(syntax)];
         const grad = this.gradientOperands();
         if (grad) {
+            if (grad.kind === 'function') {
+                return grad.operands.map((arg) => {
+                    if (arg instanceof L.LeanParenthesis && arg.arg instanceof L.LeanDiv) arg = arg.arg;
+                    return L.LeanParenthesis.peelLatex(arg).toLatex(syntax);
+                });
+            }
             const body = grad.body.map((arg) => {
                 if (arg instanceof L.LeanParenthesis && arg.arg instanceof L.LeanDiv) arg = arg.arg;
                 return arg.toLatex(syntax);
@@ -882,6 +897,13 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         if (this.idLatexInner()) return '%s';
         const grad = this.gradientOperands();
         if (grad) {
+            // binder-free `∇ J` / `∇ J θ` -> `\nabla J` / `\nabla J\left(θ\right)`
+            if (grad.kind === 'function') {
+                const ops = grad.operands;
+                if (ops.length === 1) return '\\nabla {%s}';
+                const rest = ops.slice(1).map(() => '{%s}').join('\\ ');
+                return `\\nabla {%s}\\left(${rest}\\right)`;
+            }
             // `\nabla_{θ} body`, or `\left. \nabla_{θ} body \right|_{θ = θ_0}` for `∇[θ = θ₀] body`
             const body = grad.body.map(() => '{%s}').join('\\ ');
             const nabla = `\\nabla_{%s} {${body}}`;
@@ -909,8 +931,6 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         if (interval) return interval;
         const factorialPower = this.factorialPowerLatexFormat();
         if (factorialPower) return factorialPower;
-        // `f ⁻¹' s` — preimage as `f^{-1}[s]` (not to be read as an inverse applied to `s`)
-        if (func instanceof L.LeanPreimage && args.length === 2) return '%s\\left[%s\\right]';
         if (func instanceof L.LeanToken) {
             switch (args.length) {
                 case 2:

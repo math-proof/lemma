@@ -7,7 +7,6 @@ import Lemma.Random.NormClip.le.AbsR
 import Lemma.Random.StronglyMeasurableClip
 import Lemma.Random.StronglyMeasurable_KfAndAll_LeNormKf.of.All_LeNorm.StronglyMeasurable
 import Lemma.Real.Norm.le.Sum_Norm
-import Lemma.Real.StronglyMeasurable.discrete
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random Real Finset Filter
 
 
@@ -49,13 +48,13 @@ private lemma main
   let Gh : (Π _ : Finset.Iic n, ℝ × S × A) → ℝ := fun h =>
     if (h ⟨t, mem_Iic.2 h₂⟩).2.1 = x ∧ (h ⟨t, mem_Iic.2 h₂⟩).2.2 = u then (1 : ℝ) else 0
   have hG : StronglyMeasurable Gh :=
-    (StronglyMeasurable.discrete (fun p : S × A => if p.1 = x ∧ p.2 = u then (1 : ℝ) else 0)).comp_measurable
+    (StronglyMeasurable.of_discrete (f := (fun p : S × A => if p.1 = x ∧ p.2 = u then (1 : ℝ) else 0))).comp_measurable
       ((measurable_snd.fst.comp (measurable_pi_apply _)).prodMk
         (measurable_snd.snd.comp (measurable_pi_apply _)))
   have hCG : ∀ h, ‖Gh h‖ ≤ 1 := fun h => by dsimp only [Gh]; split_ifs <;> simp
   have hGω : ∀ ω : ℕ → ℝ × S × A, Gh (Preorder.frestrictLe n ω) = (if s t ω = x ∧ a t ω = u then (1 : ℝ) else 0) := fun ω => rfl
   let f : ℝ × S × A → ℝ := fun w => M.Vc θ γ w.2.1
-  have hf : StronglyMeasurable f := (StronglyMeasurable.discrete (M.Vc θ γ)).comp_measurable measurable_snd.fst
+  have hf : StronglyMeasurable f := (StronglyMeasurable.of_discrete (f := (M.Vc θ γ))).comp_measurable measurable_snd.fst
   have hC : ∀ w, ‖f w‖ ≤ ∑ y', ‖M.Vc θ γ y'‖ := fun w => Norm.le.Sum_Norm (M.Vc θ γ) w.2.1
   have h1 := All_EqIntegral_MulGIntegral_MulGKf.of.All_LeNorm.StronglyMeasurable (M := M) (Random.StronglyMeasurableClip (M := M)) (NormClip.le.AbsR (M := M)) θ 1 n hG hCG
   have h2 := All_EqIntegral_MulGIntegral_MulGKf.of.All_LeNorm.StronglyMeasurable (M := M) hf hC θ 2 n hG hCG

@@ -5,7 +5,6 @@ import Lemma.Random.IntegrableDotPow_Id.of.All_Eq.In_Ico
 import Lemma.Random.Integral_MulEqAndEqGetDot.eq.MulMulRealProbQ.of.All_Eq.In_Ico
 import Lemma.Real.SMul.eq.Sum_Sum_SMul
 import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
-import Lemma.Real.StronglyMeasurable.discrete
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random Real
 
 
@@ -44,7 +43,7 @@ private lemma main
     intro x u
     refine Integrable.of_bound (C := (1 - γ)⁻¹ * |M.env.R|) ?_ ?_
     ·
-      exact (((StronglyMeasurable.discrete (fun p : S × A => if p.1 = x ∧ p.2 = u then (1:ℝ) else 0)).comp_measurable
+      exact (((StronglyMeasurable.of_discrete (f := (fun p : S × A => if p.1 = x ∧ p.2 = u then (1:ℝ) else 0))).comp_measurable
         hX).aestronglyMeasurable).mul (IntegrableDotPow_Id.of.All_Eq.In_Ico (M := M) h₀ h₁ θ t).1
     ·
       filter_upwards [All_And_LeNormExtDotPow_Id.of.All_Eq_Joint.In_Ico (M := M) h₀ h₁ θ t] with ω h

@@ -1,7 +1,7 @@
 import Mathlib
 import sympy.Basic
-
 open IsLocalRing
+
 
 /--
 [AlgHom_injective_of_surjective_of_ker_le_map_maximalIdeal](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgHom_injective_of_surjective_of_ker_le_map_maximalIdeal.lean)
@@ -19,19 +19,16 @@ private lemma main
   classical
     set K : Ideal A := RingHom.ker f with hK
     set I : Ideal A := (maximalIdeal 𝒪).map (algebraMap 𝒪 A) with hI
-
-    obtain ⟨s, hs⟩ : ∃ s : B →ₗ[𝒪] A, f.toLinearMap ∘ₗ s = LinearMap.id :=
+    obtain ⟨s, hs⟩ : ∃ s : B →ₗ[𝒪] A, LinearMap.comp f.toLinearMap s = LinearMap.id :=
       Module.projective_lifting_property f.toLinearMap LinearMap.id hf
     have hfs : ∀ b, f (s b) = b := fun b => by
       simpa using LinearMap.congr_fun hs b
-
-    let r : A →ₗ[𝒪] A := LinearMap.id - s ∘ₗ f.toLinearMap
+    let r : A →ₗ[𝒪] A := LinearMap.id - LinearMap.comp s f.toLinearMap
     have hr_mem : ∀ a, r a ∈ K := fun a => by
       simp [r, hK, RingHom.mem_ker, hfs]
     have hr_id : ∀ x ∈ K, r x = x := fun x hx => by
       have hx0 : f x = 0 := hx
       simp [r, hx0]
-
     have hKIK : K ≤ I * K := by
       intro x hx
       have hxI : x ∈ (I.restrictScalars 𝒪) := hker hx
@@ -46,7 +43,6 @@ private lemma main
         exact Ideal.mul_mem_mul (Ideal.mem_map_of_mem _ hm) (hr_mem a')
       have h3 : r x ∈ I * K := h2 h1
       rwa [hr_id x hx] at h3
-
     have hIjac : I ≤ Ideal.jacobson ⊥ :=
       (map_maximalIdeal_le (algebraMap 𝒪 A)).trans (maximalIdeal_le_jacobson _)
     have hKbot : K = ⊥ :=

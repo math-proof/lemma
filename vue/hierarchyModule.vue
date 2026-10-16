@@ -1,12 +1,13 @@
 <template>
 	<li :style=li_style>
    		<searchLink :data=data></searchLink>
-   		<template v-if=modules>
+   		<template v-if="!isRepeat && modules">
    			<button class=transparent @click=click :title=buttonTitle>{{buttonText}}</button>
    		 	<ul v-if=show>
    	 			<hierarchyModule v-for="module, i of modules" :module=module :ref="el => children[i] = el"></hierarchyModule>
    			</ul>
 		</template>
+		<template v-else-if="isRepeat && wouldHaveChildren"> »»»</template>
     </li>
 </template>
 
@@ -26,10 +27,30 @@ const self = new Vue({
 			backgroundColor: 'inherit',
 			show: false,
 			children: [],
+			isRepeat: false,
 		};
 	},
 
 	created() {
+		// $root is createApp Root (page JSON only). _hierarchySeen lives on
+		// hierarchy.vue — walk $parent to reach it (nested modules skip siblings).
+		var seen = null;
+		for (var p = this.$parent; p; p = p.$parent) {
+			if (p._hierarchySeen) {
+				seen = p._hierarchySeen;
+				break;
+			}
+		}
+		if (!seen) {
+			console.warn('hierarchyModule: _hierarchySeen missing; dedupe disabled');
+			seen = new Set();
+		}
+		if (seen.has(this.module)) {
+			this.isRepeat = true;
+			return;
+		}
+		seen.add(this.module);
+
 		var root = this.$root;
 		if (root.deep){
 			this.show = true;
@@ -67,7 +88,7 @@ const self = new Vue({
 				return this.show;
 			},
 			set(deep){
-				if (deep){
+				if (deep && !this.isRepeat){
 					this.show = true;
 					this.$nextTick(()=>{
 						for (var child of this.children){
@@ -97,6 +118,11 @@ const self = new Vue({
 			return depth;
 		},
 
+		wouldHaveChildren() {
+			var kids = this.$root.graph && this.$root.graph[this.module];
+			return !!(kids && kids.length);
+		},
+
 		buttonText() {
 			return this.show? '«««' : '»»»';
 		},
@@ -106,6 +132,8 @@ const self = new Vue({
 		},
 
 		modules() {
+			if (this.isRepeat)
+				return;
 			return this.$root.graph[this.module];
 		},
 	},
@@ -117,7 +145,7 @@ const self = new Vue({
 	},
 });
 
-const { li_style, data, modules, show, children, buttonTitle, buttonText, click } = self.globals;
+const { li_style, data, modules, show, children, buttonTitle, buttonText, click, isRepeat, wouldHaveChildren } = self.globals;
 </script>
 
 <style scoped>

@@ -1,4 +1,4 @@
-import Lemma.Random.Eq_Expect_DotFunPow.of.GtInftySup.All_DifferentiableProb.Measure.eq.Count.Measure.eq.Count.All_Eq_Joint.In_Ico0
+import Lemma.Random.GradExpect_DotPow_Id.eq.Expect_DotFunSMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.EqMeasureCount.EqMeasureCount.All_Eq_Joint.In_Ico
 import Lemma.Random.Eq_SymmToDualTSum_SMulPow_Integral_SMulTSum_MulPow_FderivLogToRealProbCond.of.GtInftySup.All_Differentiable.AeAll_LeNormTSum_MulPow.All_Measurable.Measure.eq.Count.Measure.eq.Count.All_Eq_Joint.In_Ico0
 import Lemma.Real.Eq_0.Lim.of.LtAbs.GtInftySup
 import Lemma.Random.ProbCond.eq.OfRealPol.of.Ne_0
@@ -22,6 +22,7 @@ import Lemma.Random.BddAbove_ImageNormFderiv.of.In_Ico.GtInftySup.All_Differenti
 import Lemma.Random.All_LeNorm_Abs.of.All_Eq_Joint
 import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
 import Lemma.Random.V.eq.Integral.of.Measurable
+import Lemma.Random.PSpace_Path.of.All_PSpace
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Filter Topology Random Real Measure
 open scoped ENNReal.ToRealCoe
 
@@ -72,16 +73,16 @@ private lemma main
   have hr : ∀ t, PSpace (M θ) (r t) := fun t =>
     ⟨(Random.Measurable.of.All_Eq.fst h₁ t).aemeasurable⟩
   have : PSpace (M θ) (AsPathRV.path (s)) :=
-    PSpace.of_process_path hs
+    PSpace_Path.of.All_PSpace hs
   have : PSpace (M θ) (AsPathRV.path (a)) :=
-    PSpace.of_process_path ha
+    PSpace_Path.of.All_PSpace ha
   have : PSpace (M θ) (AsPathRV.path (r)) :=
-    PSpace.of_process_path hr
+    PSpace_Path.of.All_PSpace hr
   let : MeasurableSpace Θ := borel Θ
   have : BorelSpace Θ := ⟨rfl⟩
   ∇[θ] (
     have : PSpace (M θ) (AsPathRV.path (r)) :=
-      PSpace.of_process_path (fun t => ⟨(Random.Measurable.of.All_Eq.fst h₁ t).aemeasurable⟩)
+      PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.fst h₁ t).aemeasurable⟩)
     𝔼[r: M θ](((fun t : ℕ => γ ^ t) @ r))) =
     -- TODO(sympy 𝔼 patch): 𝔽((a₀ t) = … | (s₀ t) = …) with let a₀ := a; let s₀ := s
     let a₀ := a
@@ -238,7 +239,7 @@ private lemma main
         exact add_le_add (add_le_add (hr _) (mul_le_mul_of_nonneg_left (hb _) h₀.1)) (hb _)
   have hT : ∇[θ] (
       have : PSpace (M θ) (AsPathRV.path (r)) :=
-        PSpace.of_process_path (fun t => ⟨(Random.Measurable.of.All_Eq.fst h₁ t).aemeasurable⟩)
+        PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.fst h₁ t).aemeasurable⟩)
       𝔼[r: M θ](((fun t : ℕ => γ ^ t) @ r))) =
       -- TODO(sympy 𝔼 patch): 𝔽((a₀ t) = … | (s₀ t) = …) with let a₀ := a; let s₀ := s
       let a₀ := a
@@ -247,7 +248,7 @@ private lemma main
         ∑' t, γ ^ t •
           (((fun k : ℕ => γ ^ k) @ (fun k : ℕ => r (t + k))) •
             ∇[θ] (ℙ[M θ]((a₀ t) = (a t) | (s₀ t) = (s t)) : ℝ).log)) :=
-    Eq_Expect_DotFunPow.of.GtInftySup.All_DifferentiableProb.Measure.eq.Count.Measure.eq.Count.All_Eq_Joint.In_Ico0 h₀ h₁ hS hA h₃ h₄
+    GradExpect_DotPow_Id.eq.Expect_DotFunSMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.EqMeasureCount.EqMeasureCount.All_Eq_Joint.In_Ico h₀ h₁ hS hA h₃ h₄
   have hRae : ∀ᵐ ω ∂(M θ), ∀ t, ‖∑' k, γ ^ k * r (t + k) ω‖ ≤ (1 - γ)⁻¹ * |M.env.R| := by
     filter_upwards [All_LeNorm_Abs.of.All_Eq_Joint h₁ (M := M) θ] with ω hr t
     refine tsum_of_norm_bounded ((hasSum_geometric_of_lt_one h₀.1 h₀.2).mul_right _) fun k => ?_

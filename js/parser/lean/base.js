@@ -390,6 +390,7 @@ export class Lean extends IndentedNode {
         switch (token) {
             case 'import':
             case 'namespace':
+            case 'end':
             case 'def':
             case 'abbrev':
             case 'theorem':
@@ -1212,14 +1213,15 @@ export class Lean extends IndentedNode {
                     if (tokens[self.start_idx + 1] === "'") {
                         self.start_idx++;
                         // Mathlib `infixl:80 " ⁻¹' "`: application binds tighter, so `s t ⁻¹' A` is `(s t) ⁻¹' A`.
-                        const spaced = tokens[self.start_idx - 3] === ' ';
-                        const app = this.parent;
-                        const node = app instanceof L.LeanArgsSpaceSeparated && app.args[app.args.length - 1] === this &&
-                            app.args.filter((a) => !(a instanceof L.LeanCaret)).length >= 2
-                            ? Lean.prototype.push_post_unary.call(app, 'LeanPreimage')
-                            : this.push_post_unary('LeanPreimage');
-                        if (node instanceof L.LeanPreimage) node.spaced = spaced;
-                        return node;
+                        // `Prod.snd ⁻¹' s` — lift off a trailing field token onto the whole property.
+                        let target = this;
+                        if (this.parent instanceof L.LeanProperty && this.parent.rhs === this && this instanceof L.LeanToken)
+                            target = this.parent;
+                        const app = target.parent;
+                        if (app instanceof L.LeanArgsSpaceSeparated && app.args[app.args.length - 1] === target &&
+                            app.args.filter((a) => !(a instanceof L.LeanCaret)).length >= 2)
+                            return Lean.prototype.push_binary.call(app, L.LeanPreimage);
+                        return target.push_binary(L.LeanPreimage);
                     }
                     return this.push_post_unary('LeanInv');
                 }
@@ -1234,6 +1236,13 @@ export class Lean extends IndentedNode {
             case 'from': {
                 const asPropertyField = self.parseKeywordAsPropertyField(this, token);
                 if (asPropertyField) return asPropertyField;
+                // `variable (R) in` / `open NS in`: the keyword is the last word of the command.
+                // The space-separated insert drops a modifier here, so the echo used to delete `in`.
+                if (token === 'in' && this.parent instanceof L.LeanArgsSpaceSeparated) {
+                    const head = this.parent.args[0];
+                    if (head instanceof L.LeanToken && (head.text === 'variable' || head.text === 'open'))
+                        return this.parent.insert_word(this, 'in');
+                }
                 return this.parent.insert(this, `Lean${token[0].toUpperCase() + token.slice(1)}`, 'modifier');
             }
             case 'where': {

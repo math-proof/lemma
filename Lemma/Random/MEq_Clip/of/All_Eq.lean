@@ -1,7 +1,7 @@
 import sympy.stats.policy_trajectory
 import sympy.functions.elementary.miscellaneous
 import sympy.Basic
-import Lemma.Random.Map.eq.StageK
+import Lemma.Random.Map.eq.BindStageK.of.All_Eq_Joint
 import Lemma.Random.StageKSetOf1.eq.Zero
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 
@@ -28,7 +28,7 @@ private lemma main
   have hs : MeasurableSet {z : ℝ × S × A | z.1 ∉ Set.Icc (-M.env.R) M.env.R} :=
     (measurableSet_Icc.compl).preimage measurable_fst
   have h : (M θ).map (fun ω => ω t) {z | z.1 ∉ Set.Icc (-M.env.R) M.env.R} = 0 := by
-    rw [Map.eq.StageK h₀, Measure.bind_apply hs (Kernel.aemeasurable _)]
+    rw [Map.eq.BindStageK.of.All_Eq_Joint h₀, Measure.bind_apply hs (Kernel.aemeasurable _)]
     apply (lintegral_congr (fun y => StageKSetOf1.eq.Zero (M := M) θ y)).trans lintegral_zero
   rw [Measure.map_apply (measurable_pi_apply t) hs] at h
   rw [Filter.EventuallyEq, ae_iff]

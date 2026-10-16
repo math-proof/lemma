@@ -2,7 +2,7 @@
 
 CRF 损失函数：[CRF loss function](http://www.lemma.cn/lean/?module=Random.All_Eq_AddLogSumExpAdd.All_EqNegLogProb.of.All_Eq_Log.All_Eq_Sum_Exp.All_Eq_LogProbCond.All_Eq_LogProbCond.All_Eq_LogProbJoint.All_Lt0Prob.IsDiscreteHMM)，Viterbi：[crf.viterbi](http://www.lemma.cn/lean/?module=Random.All_Eq_Add_MaxAdd.EqMax_ProbJoint.of.All_Eq_Max.Eq_LogProbCond.Eq_LogProbCond.Eq_LogProbJoint.All_Lt0ProbJoint.IsDiscreteHMM)，HMM 恒等式：[hmm_identity](http://www.lemma.cn/lean/?module=Random.Sum_Mul_ProbCond.eq.Prob.of.IsDiscreteHMM)
 
-Bellman：[Bellman](http://www.lemma.cn/lean/?module=Random.Eq_Expect.Eq_Expect.Eq_Expect.of.All_Eq_Expect.All_Eq_Expect.In_Ico)，REINFORCE：[Lean 4](http://www.lemma.cn/lean/?module=Random.Eq_Expect_DotFunPow.of.GtInftySup.All_DifferentiableProb.Measure.eq.Count.Measure.eq.Count.All_Eq_Joint.In_Ico0)
+Bellman：[一般形式](http://www.lemma.cn/lean/?module=Random.MEq_Expect.MEq_Expect.MEq_Expect.of.All_MEq_Expect.All_MEq_Expect.CondIndep.GtInftySup.All_MeasurableJoint.In_Ico)（无 Fintype；=ᵐ[π]；Markov 作 CondIndep），[连续动作](http://www.lemma.cn/lean/?module=Random.Eq_Expect.Eq_Expect.MEq_Expect.of.All_Eq_Expect.All_MEq_Expect.CondIndep.All_Measurable.GtInftySup.All_MeasurableJoint.In_Ico)（S 有限、A 一般；Markov 作 CondIndep），离散特例：[Bellman](http://www.lemma.cn/lean/?module=Random.Eq_Expect.Eq_Expect.Eq_Expect.of.All_Eq_Expect.All_Eq_Expect.In_Ico)，REINFORCE：[Lean 4](http://www.lemma.cn/lean/?module=Random.GradExpect_DotPow_Id.eq.Expect_DotFunSMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.EqMeasureCount.EqMeasureCount.All_Eq_Joint.In_Ico)
 
 无偏优势估计：[Lean 4](http://www.lemma.cn/lean/?module=Random.Eq_Expect_FunPowDot.of.GtInftySup.All_Differentiable.All_Eq_Expect_CondTSum_MulPow.Measure.eq.Count.Measure.eq.Count.All_Eq_Joint.In_Ico0)，广义优势估计：[Lean 4](http://www.lemma.cn/lean/?module=Random.Eq_Expect_FunPowDot.of.In_Icc.GtInftySup.All_Differentiable.All_Eq_Expect_CondTSum_MulPow.Measure.eq.Count.Measure.eq.Count.All_Eq_Joint.In_Ico0)
 
@@ -29,8 +29,8 @@ CRF 一侧，我们形式化了：对数得分分解为转移项与发射项、l
 **贡献**
 
 1. CRF 传播（第 4、5 节）：对数得分 [crf.markov.logits](http://www.lemma.cn/lean/?module=Tensor.Eq.of.Ne_0.Eq.Eq.Eq.Eq_log.Eq_log.Eq_log) 与 [crf.logits](http://www.lemma.cn/lean/?module=Tensor.Imp.of.Eq)，满足 \(-\log p(y\mid x)=\log Z-\text{score}\) 的前向递推 [CRF loss function](http://www.lemma.cn/lean/?module=Random.All_Eq_AddLogSumExpAdd.All_EqNegLogProb.of.All_Eq_Log.All_Eq_Sum_Exp.All_Eq_LogProbCond.All_Eq_LogProbCond.All_Eq_LogProbJoint.All_Lt0Prob.IsDiscreteHMM)，Viterbi 数值递推 [crf.viterbi](http://www.lemma.cn/lean/?module=Random.All_Eq_Add_MaxAdd.EqMax_ProbJoint.of.All_Eq_Max.Eq_LogProbCond.Eq_LogProbCond.Eq_LogProbJoint.All_Lt0ProbJoint.IsDiscreteHMM)，以及HMM 恒等式 [hmm_identity](http://www.lemma.cn/lean/?module=Random.Sum_Mul_ProbCond.eq.Prob.of.IsDiscreteHMM)，针对离散隐马尔可夫模型。
-2. Bellman 方程 [Bellman](http://www.lemma.cn/lean/?module=Random.Eq_Expect.Eq_Expect.Eq_Expect.of.All_Eq_Expect.All_Eq_Expect.In_Ico)，建立在轨迹层面的 MDP 上，其轨迹律的马尔可夫性是已证明的（[joint_succ](http://www.lemma.cn/lean/?module=Random.Map.eq.CompProd)、[hist_step](http://www.lemma.cn/lean/?module=Random.Integral.of.All_LeNorm.StronglyMeasurable.history)）（第 6 节）。
-3. 对时间跨度归纳证明的策略梯度定理，截断、动作价值与 REINFORCE 三种形式（[policy_gradient_theorem](http://www.lemma.cn/lean/?module=Random.Eq_Expect_DotFunPow.of.GtInftySup.All_DifferentiableProb.Measure.eq.Count.Measure.eq.Count.All_Eq_Joint.In_Ico0)）；无偏优势估计 [unbiased_advantage_estimate](http://www.lemma.cn/lean/?module=Random.Eq_Expect_FunPowDot.of.GtInftySup.All_Differentiable.All_Eq_Expect_CondTSum_MulPow.Measure.eq.Count.Measure.eq.Count.All_Eq_Joint.In_Ico0)；以及对精确价值函数、所有 \(\lambda\in[0,1]\) 的 GAE [generalized_advantage_estimate](http://www.lemma.cn/lean/?module=Random.Eq_Expect_FunPowDot.of.In_Icc.GtInftySup.All_Differentiable.All_Eq_Expect_CondTSum_MulPow.Measure.eq.Count.Measure.eq.Count.All_Eq_Joint.In_Ico0) 及其加权平均形式（第 7 节）。
+2. Bellman 方程：一般形式 [All_MeasurableJoint.In_Ico](http://www.lemma.cn/lean/?module=Random.MEq_Expect.MEq_Expect.MEq_Expect.of.All_MEq_Expect.All_MEq_Expect.CondIndep.GtInftySup.All_MeasurableJoint.In_Ico)（不对 S/A 要求 Fintype，结论为 =ᵐ[π]，Markov 打包为 CondIndep）；[连续动作](http://www.lemma.cn/lean/?module=Random.Eq_Expect.Eq_Expect.MEq_Expect.of.All_Eq_Expect.All_MEq_Expect.CondIndep.All_Measurable.GtInftySup.All_MeasurableJoint.In_Ico)（S 有限、A 一般，Markov 作 CondIndep）；离散状态与动作的特例 [Bellman](http://www.lemma.cn/lean/?module=Random.Eq_Expect.Eq_Expect.Eq_Expect.of.All_Eq_Expect.All_Eq_Expect.In_Ico) 导入一般形式并特化到原子上的事件条件。三者都建立在轨迹层面的 MDP 上，其轨迹律的马尔可夫性是已证明的（[joint_succ](http://www.lemma.cn/lean/?module=Random.Map)、[hist_step](http://www.lemma.cn/lean/?module=Random.Integral.of.All_LeNorm.StronglyMeasurable.history)）（第 6 节）。
+3. 对时间跨度归纳证明的策略梯度定理，截断、动作价值与 REINFORCE 三种形式（[policy_gradient_theorem](http://www.lemma.cn/lean/?module=Random.GradExpect_DotPow_Id.eq.Expect_DotFunSMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.EqMeasureCount.EqMeasureCount.All_Eq_Joint.In_Ico)）；无偏优势估计 [unbiased_advantage_estimate](http://www.lemma.cn/lean/?module=Random.Eq_Expect_FunPowDot.of.GtInftySup.All_Differentiable.All_Eq_Expect_CondTSum_MulPow.Measure.eq.Count.Measure.eq.Count.All_Eq_Joint.In_Ico0)；以及对精确价值函数、所有 \(\lambda\in[0,1]\) 的 GAE [generalized_advantage_estimate](http://www.lemma.cn/lean/?module=Random.Eq_Expect_FunPowDot.of.In_Icc.GtInftySup.All_Differentiable.All_Eq_Expect_CondTSum_MulPow.Measure.eq.Count.Measure.eq.Count.All_Eq_Joint.In_Ico0) 及其加权平均形式（第 7 节）。
 4. 两张对比表（第 9 节）。
 
 库里为极限、期望与概率设计的教科书语法糖，让 Lean 陈述读起来像论文里的公式，在第 3 节概述。
@@ -177,7 +177,7 @@ p(y\mid x)=\frac1{Z(x)}\prod_{t}\psi_t(y_{t-1},y_t,x),\qquad Z(x)=\sum_{y'\in\ma
 
 有限维边缘分布具有马尔可夫乘积的形状 \(\iota(s_0)\prod_t\pi_\theta(a_t\mid s_t)\,T(s_{t+1}\mid s_t,a_t)\,R(\cdot\mid s_t,a_t)\)。它的对数是逐步项之和，而转移与奖励因子不依赖于 \(\theta\)，所以**轨迹的得分是各个动作得分之和**，\(\sum_t\nabla_\theta\log\pi_\theta(a_t\mid s_t)\)。这是定理 5.2 中 CRF 得分在 MDP 里的对应物；Lean 只通过下面的期望引理 `E_score` 用到它。
 
-**这里马尔可夫性是定理** \(\mathbb P_\theta\) 的马尔可夫性不是假设，而是由构造证出来的。轨迹引理包括 [joint_succ](http://www.lemma.cn/lean/?module=Random.Map.eq.CompProd)：\((\omega_t,\omega_{t+1})\) 的分布是 \(\omega_t\) 的分布与核 \(K_\theta\) 的复合；以及 [hist_step](http://www.lemma.cn/lean/?module=Random.Integral.of.All_LeNorm.StronglyMeasurable.history)：对有界可测的 \(\varphi\)，
+**这里马尔可夫性是定理** \(\mathbb P_\theta\) 的马尔可夫性不是假设，而是由构造证出来的。轨迹引理包括 [joint_succ](http://www.lemma.cn/lean/?module=Random.Map)：\((\omega_t,\omega_{t+1})\) 的分布是 \(\omega_t\) 的分布与核 \(K_\theta\) 的复合；以及 [hist_step](http://www.lemma.cn/lean/?module=Random.Integral.of.All_LeNorm.StronglyMeasurable.history)：对有界可测的 \(\varphi\)，
 
 \[
 \mathbb E\bigl[\varphi(h_n,\omega_{n+1})\bigr]=\int\Bigl(\int\varphi(h,z)\,dK_\theta(\mathrm{last}\,h)(z)\Bigr)\,d\,\mathrm{law}(h_n)(h),
@@ -189,7 +189,7 @@ p(y\mid x)=\frac1{Z(x)}\prod_{t}\psi_t(y_{t-1},y_t,x),\qquad Z(x)=\sum_{y'\in\ma
 
 对 \(\gamma\in[0,1)\)，从 \(t\) 起的折扣回报是 \(G_t=\sum_k{}'\,\gamma^k{\color{red}r}_{t+k}\)，\(V_t^\theta(s_t)=\mathbb E_\theta[G_t\mid{\color{red}s}_t]\)，\(Q_t^\theta(s_t,a_t)=\mathbb E_\theta[G_t\mid{\color{red}s}_t,{\color{red}a}_t]\)。目标函数是 \(J(\theta)=\mathbb E_\theta[\sum_t{}'\,\gamma^t{\color{red}r}_t]=\sum_t{}'\,\gamma^t\mathbb E_\theta[{\color{red}r}_t]\)。轨迹引理证明了：在可达状态上 \(V_t^\theta\) 等于一个与时间无关的闭式（[V_eq](http://www.lemma.cn/lean/?module=Random.V.eq.TSum_MulPowWRc.of.Ne0Real_Preimage.In_Ico)），\(|V_t|,|Q_t|\le(1-\gamma)^{-1}R_{\max}\)，并且对可微且梯度一致有界的策略，\(J\) 是 Fréchet 可微的。我们始终假设：(D) \(\gamma\in[0,1)\)；(P1) \(\theta\mapsto\pi_\theta(u\mid x)\) 可微；(P2) \(\sup_{\theta,x,u}\|\nabla_\theta\pi_\theta(u\mid x)\|<\infty\)。对 \(V_t\) 与 \(\nabla V_t\) 的界是推出来的，不是假设。
 
-**定理 6.2（Bellman 方程 [Bellman](http://www.lemma.cn/lean/?module=Random.Eq_Expect.Eq_Expect.Eq_Expect.of.All_Eq_Expect.All_Eq_Expect.In_Ico)）** 设 (D) 成立，\(V\)、\(Q\) 满足 \(V_t(s_t)=\mathbb E_\theta[G_t\mid{\color{red}s}_t]\)、\(Q_t(s_t,a_t)=\mathbb E_\theta[G_t\mid{\color{red}s}_t,{\color{red}a}_t]\)。则
+**定理 6.2（Bellman 方程；一般形式 [All_MeasurableJoint.In_Ico](http://www.lemma.cn/lean/?module=Random.MEq_Expect.MEq_Expect.MEq_Expect.of.All_MEq_Expect.All_MEq_Expect.CondIndep.GtInftySup.All_MeasurableJoint.In_Ico)，[连续动作](http://www.lemma.cn/lean/?module=Random.Eq_Expect.Eq_Expect.MEq_Expect.of.All_Eq_Expect.All_MEq_Expect.CondIndep.All_Measurable.GtInftySup.All_MeasurableJoint.In_Ico)，离散特例 [Bellman](http://www.lemma.cn/lean/?module=Random.Eq_Expect.Eq_Expect.Eq_Expect.of.All_Eq_Expect.All_Eq_Expect.In_Ico)）** 设 (D) 成立，\(V\)、\(Q\) 满足 \(V_t(s_t)=\mathbb E_\theta[G_t\mid{\color{red}s}_t]\)、\(Q_t(s_t,a_t)=\mathbb E_\theta[G_t\mid{\color{red}s}_t,{\color{red}a}_t]\)。则
 
 \[
 \begin{aligned}
@@ -198,6 +198,8 @@ V_t(s_t)&=\mathbb E_\theta\bigl[{\color{red}r}_t+\gamma\,V_{t+1}({\color{magenta
 Q_t(s_t,a_t)&=\mathbb E_\theta\bigl[{\color{red}r}_t+\gamma\,V_{t+1}({\color{magenta}s}_{t+1})\bigm|{\color{red}s}_t,\ {\color{red}a}_t\bigr].
 \end{aligned}
 \]
+
+一般形式 [All_MeasurableJoint.In_Ico](http://www.lemma.cn/lean/?module=Random.MEq_Expect.MEq_Expect.MEq_Expect.of.All_MEq_Expect.All_MEq_Expect.CondIndep.GtInftySup.All_MeasurableJoint.In_Ico) 去掉对 S、A 的 Fintype 假设，结论改为轨迹测度下几乎处处相等（=ᵐ[π]），并把马尔可夫性写成 CondIndep；[连续动作](http://www.lemma.cn/lean/?module=Random.Eq_Expect.Eq_Expect.MEq_Expect.of.All_Eq_Expect.All_MEq_Expect.CondIndep.All_Measurable.GtInftySup.All_MeasurableJoint.In_Ico) 保留有限状态空间、允许一般（例如连续）动作空间，同样把马尔可夫性写成 CondIndep；本节陈述的有限离散情形是一般形式的导入特例。
 
 在 Lean 文件里，三个恒等式对每个 \(t\) 与每一对 \((x,u)\) 都成立，没有可达性假设：在零概率的条件事件上两边都是 \(0\)（第 3 节）。从 \(t+1\) 到 \(t\) 读，第二个恒等式是价值函数的**后向**递推，方向与 CRF 的后向递推相同；第 6.3 节比较两者，但不声称有定理。这个递推的梯度是策略梯度定理的第一步（定理 7.1）。
 
@@ -236,7 +238,7 @@ Q_t(s_t,a_t)&=\mathbb E_\theta\bigl[{\color{red}r}_t+\gamma\,V_{t+1}({\color{mag
 
 虽然是有限和，该定理讨论的仍是折扣无穷视野目标：它对每个截断层级都精确成立，带显式余项。令 \(n\to\infty\)，余项由引理 3.1 和对 \(\nabla V_n\) 在可达状态上的界趋于 \(0\)，得到动作价值形式 [GtInftySup.Q_Function](http://www.lemma.cn/lean/?module=Random.TSum_SMulPowFderiv.eq.TSum_SMulPow_Integral_SMul.of.GtInftySup.All_Differentiable.All_Eq_Expect_CondDot.All_Eq_Expect_CondDot.Measure.eq.Count.Measure.eq.Count.All_Eq_Joint.In_Ico0)：\(\sum_t{}'\,\gamma^t\nabla_\theta\mathbb E_\theta[{\color{red}r}_t]=\sum_t{}'\,\gamma^t\mathbb E_\theta[Q_t({\color{magenta}s}_t,{\color{magenta}a}_t)\nabla_\theta\log\pi_\theta({\color{red}a}_t\mid{\color{red}s}_t)]\)；再用塔性质 [Q_Function.discounted](http://www.lemma.cn/lean/?module=Tensor.Eq.Expect.Grad.Log.Pr.of.Eq_Conditioned.Q_Function.discounted)，\(\mathbb E_\theta[G_t\nabla_\theta\log\pi_\theta]=\mathbb E_\theta[Q_t\nabla_\theta\log\pi_\theta]\)，得到 REINFORCE 形式。
 
-**定理 7.3（策略梯度，REINFORCE 形式 [policy_gradient_theorem](http://www.lemma.cn/lean/?module=Random.Eq_Expect_DotFunPow.of.GtInftySup.All_DifferentiableProb.Measure.eq.Count.Measure.eq.Count.All_Eq_Joint.In_Ico0)）** 设 \(\Theta\) 是实 Hilbert 空间，\(S\)、\(A\) 以计数测度为参考测度，(D)、(P1)、(P2) 成立。则
+**定理 7.3（策略梯度，REINFORCE 形式 [policy_gradient_theorem](http://www.lemma.cn/lean/?module=Random.GradExpect_DotPow_Id.eq.Expect_DotFunSMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.EqMeasureCount.EqMeasureCount.All_Eq_Joint.In_Ico)）** 设 \(\Theta\) 是实 Hilbert 空间，\(S\)、\(A\) 以计数测度为参考测度，(D)、(P1)、(P2) 成立。则
 
 \[
 \nabla_\theta\mathbb E_\theta\Bigl[\sum_t{}'\,\gamma^t{\color{red}r}_t\Bigr]=\mathbb E_\theta\Bigl[\sum_t{}'\,\gamma^t\,G_t\,\nabla_\theta\log\pi_\theta({\color{red}a}_t\mid{\color{red}s}_t)\Bigr].
@@ -303,7 +305,7 @@ Q_t(s_t,a_t)&=\mathbb E_\theta\bigl[{\color{red}r}_t+\gamma\,V_{t+1}({\color{mag
 | HMM | \(p(x,y)=\prod_tp(y_t\mid y_{t-1})\,p(x_t\mid y_t)\)（生成式） | 前一个标签；发射只依赖当前标签 | 局部，\(Z=1\) | `IsHiddenMarkovPr`，`crf.markov`（由条件独立推出） |
 | 线性链 CRF | \(p(y\mid x)=\frac1{Z(x)}\prod_t\psi_t(y_{t-1},y_t,x)\)（判别式） | 相邻标签；\(x\) 任意、完全可见 | 全局 \(Z(x)\)，对 \(k^n\) 条路径 | HMM-条件特例：`crf.logits`、\(\log Z-\)score、`crf.viterbi`；离散 HMM 的HMM 恒等式（`hmm_identity`）；一般 \(\psi_t\) 作为模型、归一化边缘与 \(\nabla\log Z\) 未形式化 |
 | MEMM | \(\prod_tp(y_t\mid y_{t-1},x)\) | 前一个标签与 \(x\) | 局部，逐步 softmax | 未形式化 |
-| MDP / 策略梯度 | \(\iota(s_0)\prod_t\pi_\theta(a_t\mid s_t)T(s_{t+1}\mid s_t,a_t)\) | 下一状态与奖励只依赖 \((s_t,a_t)\)；策略只依赖 \(s_t\) | 局部，\(Z=1\) | 轨迹测度、[joint_succ](http://www.lemma.cn/lean/?module=Random.Map.eq.CompProd)、[hist_step](http://www.lemma.cn/lean/?module=Random.Integral.of.All_LeNorm.StronglyMeasurable.history)、Bellman、策略梯度、优势、GAE |
+| MDP / 策略梯度 | \(\iota(s_0)\prod_t\pi_\theta(a_t\mid s_t)T(s_{t+1}\mid s_t,a_t)\) | 下一状态与奖励只依赖 \((s_t,a_t)\)；策略只依赖 \(s_t\) | 局部，\(Z=1\) | 轨迹测度、[joint_succ](http://www.lemma.cn/lean/?module=Random.Map)、[hist_step](http://www.lemma.cn/lean/?module=Random.Integral.of.All_LeNorm.StronglyMeasurable.history)、Bellman、策略梯度、优势、GAE |
 | PPO（算法） | 同样的轨迹律；目标 \(L^{\rm CLIP}\)，带比值 \(\rho_t\) 与学习得到的 critic | 同 MDP | 局部，\(Z=1\) | **无**：裁剪替代目标、比值、KL、价值裁剪、学习得到的 critic 都未形式化；只有策略梯度之内的（截断）GAE 优势得到论证（精确 \(V\)） |
 | 自回归语言模型 | \(\prod_tp(y_t\mid x,y_{<t})\) | 整个前缀 | 局部，逐步 softmax | 未形式化（只有 log-softmax 与两变量链式法则）；作为状态为 \((x,y_{<t})\) 的 MDP，马尔可夫性是平凡的 |
 

@@ -1,6 +1,5 @@
 import sympy.stats.policy_trajectory
 import sympy.Basic
-import Lemma.Real.StronglyMeasurable.discrete
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Real
 
 
@@ -16,7 +15,7 @@ private lemma main
 -- imply
   StronglyMeasurable (fun z : ℝ × S × A => if z.2.1 = x ∧ z.2.2 = u then (1:ℝ) else 0) := by
 -- proof
-  exact (StronglyMeasurable.discrete (fun p : S × A => if p.1 = x ∧ p.2 = u then (1:ℝ) else 0)).comp_measurable
+  exact (StronglyMeasurable.of_discrete (f := (fun p : S × A => if p.1 = x ∧ p.2 = u then (1:ℝ) else 0))).comp_measurable
     (measurable_snd.fst.prodMk measurable_snd.snd)
 
 

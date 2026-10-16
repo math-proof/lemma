@@ -18,6 +18,14 @@ const props = defineProps(['module', 'graph', 'traceback', 'keyInput']);
 const self = new Vue({
 	props,
 
+	data() {
+		return {
+			// Shared across all hierarchyModule nodes (via $parent walk); first mention keeps
+			// link + subtree; later non-leaf mentions get link + »»» (no nested); leaf dups stay plain link.
+			_hierarchySeen: new Set(),
+		};
+	},
+
 	$refs: {
 		hierarchyModule: null,
 	},

@@ -93,11 +93,12 @@ private lemma exists_factor_algHom
     have horth : φ (Pi.single j (g j)) * φ (Pi.single j₀ 1) = 0 := by
       rw [← map_mul, single_mul_single_one (K := K) (Ω := Ω) (J := J) (A := A) hj (g j), map_zero]
     rwa [h1, mul_one] at horth
-  calc _ = ∑ j, φ (Pi.single j (g j)) := hg
-  _ = φ (Pi.single j₀ (g j₀)) :=
+  calc
+    _ = ∑ j, φ (Pi.single j (g j)) := hg
+    _ = φ (Pi.single j₀ (g j₀)) :=
       Finset.sum_eq_single j₀ hzero (fun h => absurd (Finset.mem_univ j₀) h)
-  _ = (factorComponent φ j₀ h1).comp (Pi.evalAlgHom K A j₀) g := by
-    simp [factorComponent, AlgHom.comp_apply, Pi.evalAlgHom_apply]
+    _ = (factorComponent φ j₀ h1).comp (Pi.evalAlgHom K A j₀) g := by
+      simp [factorComponent, AlgHom.comp_apply, Pi.evalAlgHom_apply]
 
 
 @[path]

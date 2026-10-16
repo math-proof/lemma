@@ -8,7 +8,6 @@ import Lemma.Random.TSum_MulPowW.eq.AddWMul_Sum_MulProbSum_MulTTSum_MulPowW.of.I
 import Lemma.Random.Vc.eq.TSum_MulPowIntegral.of.In_Ico
 import Lemma.Random.WAdd_1.eq.Sum_MulProbSum_MulTW.of.All_LeNorm.StronglyMeasurable
 import Lemma.Real.Norm.le.Sum_Norm
-import Lemma.Real.StronglyMeasurable.discrete
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random Real
 
 
@@ -31,7 +30,7 @@ private lemma main
 -- proof
   set f : ℝ × S × A → ℝ := fun w => M.Vc θ γ w.2.1
   have hf : StronglyMeasurable f :=
-    (StronglyMeasurable.discrete (M.Vc θ γ)).comp_measurable measurable_snd.fst
+    (StronglyMeasurable.of_discrete (f := (M.Vc θ γ))).comp_measurable measurable_snd.fst
   have hC : ∀ w : ℝ × S × A, ‖f w‖ ≤ ∑ y', ‖M.Vc θ γ y'‖ :=
     fun w => Norm.le.Sum_Norm (M.Vc θ γ) w.2.1
   have w0 : ∀ y, ∫ z, f z ∂(M.stageK θ y) = M.Vc θ γ y :=

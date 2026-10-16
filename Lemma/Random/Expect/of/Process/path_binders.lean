@@ -3,6 +3,7 @@ import sympy.stats.variance
 import sympy.stats.policy_trajectory.gradient
 import sympy.Basic
 import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
+import Lemma.Random.PSpace_Path.of.All_PSpace
 open MeasureTheory PolicyGradient PolicyGradient.Model Random
 
 set_option linter.unusedVariables false
@@ -32,11 +33,11 @@ private lemma main
   have hr : ∀ t, PSpace (M θ) (r t) := fun t =>
     ⟨(Random.Measurable.of.All_Eq.fst h₁ t).aemeasurable⟩
   have : PSpace (M θ) (AsPathRV.path s) :=
-    PSpace.of_process_path hs
+    PSpace_Path.of.All_PSpace hs
   have : PSpace (M θ) (AsPathRV.path a) :=
-    PSpace.of_process_path ha
+    PSpace_Path.of.All_PSpace ha
   have : PSpace (M θ) (AsPathRV.path r) :=
-    PSpace.of_process_path hr
+    PSpace_Path.of.All_PSpace hr
   𝔼[s, a, r : M θ](∑' t, γ ^ t * r t) =
     ∫ ω, ∑' t, γ ^ t * r t ω ∂(M θ) := by
 -- proof

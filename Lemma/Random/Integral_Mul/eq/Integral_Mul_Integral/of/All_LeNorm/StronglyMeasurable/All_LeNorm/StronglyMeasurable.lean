@@ -1,6 +1,6 @@
 import sympy.stats.policy_trajectory
 import sympy.Basic
-import Lemma.Random.Integral.eq.Integral_Integral.of.All_LeNorm.StronglyMeasurable.history
+import Lemma.Random.Integral.of.All_LeNorm.StronglyMeasurable.history
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random Finset
 
 
@@ -26,7 +26,7 @@ private lemma main
   ∫ ω, G (Preorder.frestrictLe n ω) * g (ω (n + 1)) ∂(M θ) =
     ∫ ω, G (Preorder.frestrictLe n ω) * ∫ z, g z ∂(M.K θ (ω n)) ∂(M θ) := by
 -- proof
-  rw [Integral.eq.Integral_Integral.of.All_LeNorm.StronglyMeasurable.history (M := M) ((hG.comp_measurable measurable_fst).mul (hg.comp_measurable measurable_snd)) (n := n) (φ := fun p => G p.1 * g p.2)
+  rw [Integral.of.All_LeNorm.StronglyMeasurable.history (M := M) ((hG.comp_measurable measurable_fst).mul (hg.comp_measurable measurable_snd)) (n := n) (φ := fun p => G p.1 * g p.2)
     (fun p => by
       rw [norm_mul]
       exact mul_le_mul (hCG _) (hC _) (norm_nonneg _) ((norm_nonneg _).trans (hCG p.1))) (C := CG * C)

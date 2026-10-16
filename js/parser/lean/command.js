@@ -151,3 +151,12 @@ export class Lean_namespace extends LeanCommand {
         return 'namespace';
     }
 }
+
+/** `end %s`. The old parse consumed `end` and left the name as a stray command. */
+export class Lean_end extends LeanCommand {
+    static { this.register(); }
+
+    get operator() {
+        return 'end';
+    }
+}

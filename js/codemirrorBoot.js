@@ -194,19 +194,30 @@ export function createEditor(parent, options = {}) {
         async (context) => {
           if (!context.explicit && !context.matchBefore(/[\w.\\]+/))
             return null;
+          // Do not name a local `options` — it shadows createEditor's `options`
+          // and TDZ-crashes on `options.hintFn` (`Cannot access 'options' before initialization`).
           const result = await options.hintFn(bridge);
-          if (!result || !result.list) return null;
+          if (!result || !result.list?.length) return null;
           const doc = context.state.doc;
           const from = result.from ? posToOffset(doc, result.from.line, result.from.ch) : context.pos;
           const to = result.to ? posToOffset(doc, result.to.line, result.to.ch) : context.pos;
-          return {
-            from,
-            to,
-            options: result.list.map(item => ({
-              label: typeof item === 'string' ? item : item.text,
-              type: 'keyword',
-            })),
-          };
+          const completions = result.list.map(item => ({
+            label: typeof item === 'string' ? item : item.text,
+            type: 'keyword',
+          }));
+          // CM5 `completeSingle`: one hit (e.g. `\sqcup` → `⊔`) inserts immediately.
+          if (completions.length === 1) {
+            const insert = completions[0].label;
+            context.view.dispatch({
+              changes: { from, to, insert },
+              selection: { anchor: from + insert.length },
+              userEvent: 'input.complete',
+            });
+            return null;
+          }
+          // Labels are replacements (unicode / other latex), not prefixes of the
+          // typed text — CM6's default filter would drop `⊔` for `\sqcup`.
+          return { from, to, filter: false, options: completions };
         },
       ],
     }));

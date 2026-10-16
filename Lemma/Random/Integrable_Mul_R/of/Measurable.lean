@@ -3,7 +3,6 @@ import sympy.Basic
 import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
 import Lemma.Random.MEq_Clip.of.All_Eq
 import Lemma.Random.NormClip.le.AbsR
-import Lemma.Real.StronglyMeasurable.discrete
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random Real
 
 
@@ -28,7 +27,7 @@ private lemma main
   Integrable (fun ω => φ (X ω) * r t ω) (M θ) := by
 -- proof
   refine Integrable.of_bound (C := (∑ b, ‖φ b‖) * |M.env.R|) ?_ ((MEq_Clip.of.All_Eq h₁ (M := M) θ t).mono fun ω h => ?_)
-  · exact (((StronglyMeasurable.discrete φ).comp_measurable hX).mul
+  · exact (((StronglyMeasurable.of_discrete (f := φ)).comp_measurable hX).mul
       (Random.Measurable.of.All_Eq.fst h₁ t).stronglyMeasurable).aestronglyMeasurable
   ·
     rw [norm_mul, h]

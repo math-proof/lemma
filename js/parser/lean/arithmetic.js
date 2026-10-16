@@ -817,25 +817,27 @@ export class LeanInv extends LeanUnaryArithmeticPost {
     }
 }
 
-/** Postfix preimage `⁻¹'`. Lean `postfix:max` (same tightness as `⁻¹`). */
-export class LeanPreimage extends LeanUnaryArithmeticPost {
+/** Mathlib `infixl:80 " ⁻¹' "` — preimage `f ⁻¹' s`. */
+export class LeanPreimage extends LeanArithmetic {
     static { this.register(); }
 
-    static input_priority = 1024;
+    static input_priority = 80;
     get operator() {
         return "⁻¹'";
     }
     get command() {
-        return '^{-1}';
+        return "^{-1'}";
+    }
+    latexFormat() {
+        return "{%s}^{-1'}\\,{%s}";
     }
     latexArgs(syntax) {
-        const {arg} = this;
-        // `(s t)⁻¹` — an applied function must be bracketed, or it reads as `s (t⁻¹)`
-        if (arg instanceof L.LeanArgsSpaceSeparated) return [`\\left(${arg.toLatex(syntax)}\\right)`];
-        return [arg.peelLatexCoe().toLatex(syntax)];
-    }
-    strFormat() {
-        return this.spaced ? "%s ⁻¹'" : "%s⁻¹'";
+        let lhs = this.lhs.peelLatexCoe();
+        let rhs = this.rhs.peelLatexCoe();
+        // juxtaposed lhs needs parens or it reads as `s (t ^{-1'} A)`
+        if (lhs instanceof L.LeanArgsSpaceSeparated)
+            return [`\\left(${lhs.toLatex(syntax)}\\right)`, rhs.toLatex(syntax)];
+        return [lhs.toLatex(syntax), rhs.toLatex(syntax)];
     }
 }
 

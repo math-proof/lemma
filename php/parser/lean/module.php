@@ -82,6 +82,20 @@ function collect_random_var_names(array $binderRoots)
     return array_keys($rvs);
 }
 
+
+/**
+ * Imply display: drop leading local `have`/`let`/`set`/`replace` (all `Lean_let`)
+ * so the page/preview shows only the concluding proposition. Mirrors
+ * js/parser/lean/module.js `implyDisplayStmts`.
+ * @param object[] $imply
+ * @return object[]
+ */
+function imply_display_stmts(array $imply)
+{
+    $rest = array_values(array_filter($imply, fn($st) => !($st instanceof Lean_let)));
+    return $rest ?: array_values(array_slice($imply, -1));
+}
+
 /** Mark a statement sequence; top-level `let q := …` hides `q` thereafter. */
 function mark_random_var_sequence(array $stmts, array $rvNames)
 {
@@ -355,16 +369,18 @@ class LeanModule extends LeanStatements
 
                         $proof = $stmt->assignment->rhs;
                         $by = $proof instanceof LeanBy ? 'by' : ($proof instanceof LeanCalc ? 'calc' : '');
-                        $implyLean = preg_replace("/^  /m", "", implode("\n", array_map(fn($stmt) => "$stmt", $imply)));
+                        // Display: strip local have/let (JS implyDisplayStmts); full $imply kept for marking above
+                        $implyShown = imply_display_stmts($imply);
+                        $implyLean = preg_replace("/^  /m", "", implode("\n", array_map(fn($stmt) => "$stmt", $implyShown)));
 
-                        if (count($imply) > 1 && ($imply[0] instanceof Lean_let)) {
+                        if (count($implyShown) > 1 && ($implyShown[0] instanceof Lean_let)) {
                             $implyLatex = implode(
                                 "\\\\\n",
                                 array_map(
                                     function ($stmt) use (&$syntax) {
                                         return "&" . $stmt->toLatex($syntax) . "&& ";
                                     },
-                                    $imply
+                                    $implyShown
                                 )
                             );
                             $implyLatex = "\\begin{align*}\n$implyLatex\n\\end{align*}";
@@ -375,7 +391,7 @@ class LeanModule extends LeanStatements
                                     function ($stmt) use (&$syntax) {
                                         return $stmt->toLatex($syntax);
                                     },
-                                    $imply
+                                    $implyShown
                                 )
                             );
                         $assignment = ' :=' . ($by ? " $by" : '');

@@ -117,7 +117,8 @@ export class LeanGetElem extends LeanGetElemBaseBinary(LeanBinary) {
         const limitsOp = LeanGetElem.limitsOperator(base, indices);
         if (limitsOp) return `${limitsOp}\\limits_{%s}`;
         if (indices.length === 1 && indices[0] instanceof L.LeanCondBar)
-            return '{%s}\\left[\\,\\cdot \\,\\middle|\\, {%s}\\right]';
+            // Lean `μ[|s]` has an empty slot before `|`; do not invent a · placeholder.
+            return '{%s}\\left[\\,\\middle|\\, {%s}\\right]';
         // Mathlib `μ[f | m]` (`condExp`), base is the measure — not sympy `𝔼[…](…)` sugar.
         // Keep the measure as the left operand; do not wrap in `\mathbb{E}`.
         if (indices.length === 1 && !(base instanceof L.LeanToken && base.text === '𝔼') &&

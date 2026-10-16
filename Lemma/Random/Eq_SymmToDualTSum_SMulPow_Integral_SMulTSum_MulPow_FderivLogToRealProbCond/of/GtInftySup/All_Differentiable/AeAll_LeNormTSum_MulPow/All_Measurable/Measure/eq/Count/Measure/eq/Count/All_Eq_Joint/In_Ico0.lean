@@ -12,6 +12,7 @@ import sympy.concrete.sup
 import Lemma.Random.Differentiable_RealPreimageS.of.GtInftySup.All_Differentiable_Prob
 import Lemma.Random.AeRealPreimageSS.ne.Zero
 import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
+import Lemma.Random.PSpace_Path.of.All_PSpace
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Filter Topology Random Measure
 
 
@@ -59,11 +60,11 @@ private lemma main
   have hr : ∀ t, PSpace (M θ) (r t) := fun t =>
     ⟨(Random.Measurable.of.All_Eq.fst h₁ t).aemeasurable⟩
   have : PSpace (M θ) (AsPathRV.path (s)) :=
-    PSpace.of_process_path hs
+    PSpace_Path.of.All_PSpace hs
   have : PSpace (M θ) (AsPathRV.path (a)) :=
-    PSpace.of_process_path ha
+    PSpace_Path.of.All_PSpace ha
   have : PSpace (M θ) (AsPathRV.path (r)) :=
-    PSpace.of_process_path hr
+    PSpace_Path.of.All_PSpace hr
   let : MeasurableSpace Θ := borel Θ
   have : BorelSpace Θ := ⟨rfl⟩
   (InnerProductSpace.toDual ℝ Θ).symm (∑' t, γ ^ t • ∫ ω,

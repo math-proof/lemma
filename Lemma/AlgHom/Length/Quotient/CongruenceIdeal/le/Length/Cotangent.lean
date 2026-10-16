@@ -40,7 +40,6 @@ private lemma length_quotient_span_mul
   (a b : 𝒪) (hb : b ≠ 0) :
   Module.length 𝒪 (𝒪 ⧸ Ideal.span {a * b}) =
     Module.length 𝒪 (𝒪 ⧸ Ideal.span {a}) + Module.length 𝒪 (𝒪 ⧸ Ideal.span {b}) := by
-
   have hf_sub : Ideal.span {a} ≤ Submodule.comap (LinearMap.lsmul 𝒪 𝒪 b) (Ideal.span {a * b}) := by
     intro x hx
     obtain ⟨c, rfl⟩ := Ideal.mem_span_singleton'.mp hx
@@ -272,7 +271,6 @@ private lemma length_quotient_eta_le_length_cotangent
       intro hx
       exact ⟨s.equivFin ⟨x, hx⟩, by simp [a]⟩
   have hI : Ideal.span (Set.range a) = RingHom.ker π := by rw [hrange, hs]
-
   set ψ := psi π a hI
   have hψ := psi_surjective π a hI
   set N := LinearMap.ker ψ
@@ -286,12 +284,10 @@ private lemma length_quotient_eta_le_length_cotangent
       rw [Module.finrank_eq_card_basis snf.bN, Module.finrank_fin_fun, Fintype.card_fin, hmn]
     set c := Submodule.smithNormalFormCoeffs e h
     have hc : ∀ i, c i ≠ 0 := Submodule.smithNormalFormCoeffs_ne_zero e h
-
     have hlen : Module.length 𝒪 ((Fin n → 𝒪) ⧸ N) =
         Module.length 𝒪 (𝒪 ⧸ Ideal.span {∏ i, c i}) := by
       rw [(Submodule.quotientEquivPiSpan N e h).length_eq, Module.length_pi_of_fintype,
         length_quotient_span_prod _ _ (fun i _ => hc i)]
-
     have hprod : (∏ i, c i) ∈ (RingHom.ker π).annihilator.map π := by
       let v : Fin n → (Fin n → 𝒪) := fun j => (Submodule.smithNormalFormBotBasis e h j : (Fin n → 𝒪))
       have hv : ∀ j, ψ (v j) = 0 := fun j =>
@@ -306,7 +302,6 @@ private lemma length_quotient_eta_le_length_cotangent
       have := Ideal.mul_mem_right (↑u⁻¹ : 𝒪) _ hdet
       rwa [mul_assoc, Units.mul_inv, mul_one] at this
     rw [hlen]
-
     refine Module.length_le_of_surjective
       (Submodule.mapQ (Ideal.span {∏ i, c i}) ((RingHom.ker π).annihilator.map π) LinearMap.id ?_) ?_
     ·
@@ -332,7 +327,8 @@ private lemma length_quotient_eta_le_length_cotangent
       intro o
       refine ⟨Submodule.Quotient.mk (o • snf.bM i), ?_⟩
       simp [lam]
-    calc _ ≤ Module.length 𝒪 𝒪 :=
+    calc
+      _ ≤ Module.length 𝒪 𝒪 :=
         Module.length_le_of_surjective
           (Submodule.mkQ ((RingHom.ker π).annihilator.map π)) (Submodule.mkQ_surjective _)
       _ ≤ Module.length 𝒪 ((Fin n → 𝒪) ⧸ N) := Module.length_le_of_surjective lam hlam
@@ -365,11 +361,12 @@ private lemma main
     intro y
     obtain ⟨y, rfl⟩ := Submodule.Quotient.mk_surjective _ y
     exact ⟨Submodule.Quotient.mk y, rfl⟩
-  calc _ ≤ Module.length 𝒪 (𝒪 ⧸ (RingHom.ker πR).annihilator.map πR) :=
+  calc
+    _ ≤ Module.length 𝒪 (𝒪 ⧸ (RingHom.ker πR).annihilator.map πR) :=
       Module.length_le_of_surjective
         (Submodule.mapQ _ _ LinearMap.id (by simpa using hη)) hsurj_map
     _ ≤ Module.length 𝒪 (RingHom.ker πR).Cotangent :=
-        length_quotient_eta_le_length_cotangent πR hfg
+      length_quotient_eta_le_length_cotangent πR hfg
 
 
 -- created on 2026-10-10

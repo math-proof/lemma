@@ -3,9 +3,6 @@ import sympy.Basic
 open MeasureTheory
 
 
-/--
-Two functions of `X` that agree almost surely agree on every atom `X = x` of positive measure.
--/
 @[path]
 private lemma main
   [MeasurableSpace Ω]

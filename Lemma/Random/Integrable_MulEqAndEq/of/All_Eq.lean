@@ -1,7 +1,6 @@
 import sympy.stats.policy_trajectory
 import sympy.Basic
 import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
-import Lemma.Real.StronglyMeasurable.discrete
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random Real
 
 
@@ -26,7 +25,7 @@ private lemma main
   Integrable (fun ω => (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) * c) (M θ) := by
 -- proof
   refine Integrable.of_bound (C := ‖c‖) ?_ (Filter.Eventually.of_forall fun ω => ?_)
-  · exact (((StronglyMeasurable.discrete (fun p : S × A => if p.1 = x ∧ p.2 = u then (1:ℝ) else 0)).comp_measurable
+  · exact (((StronglyMeasurable.of_discrete (f := (fun p : S × A => if p.1 = x ∧ p.2 = u then (1:ℝ) else 0))).comp_measurable
       ((Random.Measurable.of.All_Eq.snd.fst h₁ t).prodMk (Random.Measurable.of.All_Eq.snd.snd h₁ t))).mul stronglyMeasurable_const).aestronglyMeasurable
   ·
     rw [norm_mul]

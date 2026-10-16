@@ -1,15 +1,13 @@
 import Mathlib
 import sympy.Basic
-
 open scoped TensorProduct
+
 
 /--
 [AlgHom_exists_ringHom_comp_eq_of_closure_range_union_eq_top_of_forall_sum_mul_eq_zero](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgHom_exists_ringHom_comp_eq_of_closure_range_union_eq_top_of_forall_sum_mul_eq_zero.lean)
 -/
 
-private lemma  exists_fin_sum {R M N : Type*} [CommSemiring R] [AddCommMonoid M] [AddCommMonoid N]
-    [Module R M] [Module R N] (z : M ⊗[R] N) :
-    ∃ (n : ℕ) (x : Fin n → M) (y : Fin n → N), z = ∑ i, x i ⊗ₜ[R] y i := by
+private lemma exists_fin_sum {R M N : Type*} [CommSemiring R] [AddCommMonoid M] [AddCommMonoid N] [Module R M] [Module R N] (z : M ⊗[R] N) : ∃ (n : ℕ) (x : Fin n → M) (y : Fin n → N), z = ∑ i, x i ⊗ₜ[R] y i := by
   classical
   obtain ⟨S, hS⟩ := TensorProduct.exists_finset z
   refine ⟨S.card, fun i => (S.equivFin.symm i).1.1, fun i => (S.equivFin.symm i).1.2, ?_⟩
@@ -28,15 +26,14 @@ private lemma main
   ∃ ι : F →+* E, ι.comp (α₀ : L →+* F) = β₀ ∧ ι.comp (α₁ : L →+* F) = β₁ := by
 -- proof
   classical
-
     have hβk : ∀ c : k, β₁ (algebraMap k L c) = β₀ (algebraMap k L c) := by
       intro c
-      have h := hrel 2 ![algebraMap k L c, 1] ![1, -(algebraMap k L c)] (by
-        simp [Fin.sum_univ_two, AlgHom.commutes])
+      have hsum0 : (∑ i : Fin 2, α₀ (![algebraMap k L c, 1] i) * α₁ (![1, -(algebraMap k L c)] i)) = 0 := by
+        simp [Fin.sum_univ_two, AlgHom.commutes]
+      have h := hrel 2 ![algebraMap k L c, 1] ![1, -(algebraMap k L c)] hsum0
       simp only [Fin.sum_univ_two, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_fin_one,
         map_one, map_neg, mul_one, one_mul] at h
       linear_combination -h
-
     let : Algebra k E := (β₀.comp (algebraMap k L)).toAlgebra
     let β₀' : L →ₐ[k] E := AlgHom.mk β₀ (fun c => rfl)
     let β₁' : L →ₐ[k] E := AlgHom.mk β₁ (fun c => (hβk c).trans rfl)
@@ -44,7 +41,6 @@ private lemma main
     let Ψ : L ⊗[k] L →ₐ[k] E := Algebra.TensorProduct.productMap β₀' β₁'
     have hΦ : ∀ x y : L, Φ (x ⊗ₜ y) = α₀ x * α₁ y := fun x y => Algebra.TensorProduct.productMap_apply_tmul _ _ x y
     have hΨ : ∀ x y : L, Ψ (x ⊗ₜ y) = β₀ x * β₁ y := fun x y => Algebra.TensorProduct.productMap_apply_tmul _ _ x y
-
     have hker : ∀ z, Φ z = 0 → Ψ z = 0 := by
       intro z hz
       obtain ⟨n, x, y, rfl⟩ := exists_fin_sum z
@@ -52,7 +48,6 @@ private lemma main
       simp only [hΦ] at hz
       simp only [hΨ]
       exact hrel n x y hz
-
     have hsurj : Function.Surjective Φ := by
       let algLF : Algebra L F := (α₀ : L →+* F).toAlgebra
       have : Algebra.IsIntegral L F := ⟨fun x => h₀ x⟩
@@ -62,9 +57,11 @@ private lemma main
       let K' : IntermediateField L F := R'.toIntermediateField' hR'F
       have hsub : Set.range α₀ ∪ Set.range α₁ ⊆ (K'.toSubfield : Set F) := by
         rintro f (⟨x, rfl⟩ | ⟨y, rfl⟩)
-        · show α₀ x ∈ R'
+        ·
+          show α₀ x ∈ R'
           exact Subalgebra.algebraMap_mem R' x
-        · show α₁ y ∈ R'
+        ·
+          show α₁ y ∈ R'
           exact Algebra.subset_adjoin ⟨y, rfl⟩
       have htop : (⊤ : Subfield F) ≤ K'.toSubfield := by
         rw [← hgen]; exact Subfield.closure_le.mpr hsub
@@ -76,12 +73,13 @@ private lemma main
           add_mem' := by
             rintro _ _ ⟨u, rfl⟩ ⟨v, rfl⟩; exact ⟨u + v, map_add Φ u v⟩
           algebraMap_mem' := fun l => ⟨l ⊗ₜ 1, by rw [hΦ, map_one, mul_one]; rfl⟩ }
-      have hle : R' ≤ SΦ := Algebra.adjoin_le (by
-        rintro _ ⟨y, rfl⟩; exact ⟨1 ⊗ₜ y, by rw [hΦ, map_one, one_mul]⟩)
+      have hadj : Set.range α₁ ⊆ (SΦ : Set F) := by
+        rintro _ ⟨y, rfl⟩
+        exact ⟨1 ⊗ₜ y, by rw [hΦ, map_one, one_mul]⟩
+      have hle : R' ≤ SΦ := Algebra.adjoin_le hadj
       intro f
       obtain ⟨z, hz⟩ := hle (hmemR' f)
       exact ⟨z, hz⟩
-
     have hsurj' : Function.Surjective (Φ : L ⊗[k] L →+* F) := hsurj
     let ΨR : (L ⊗[k] L) ⧸ RingHom.ker (Φ : L ⊗[k] L →+* F) →+* E :=
       Ideal.Quotient.lift (RingHom.ker (Φ : L ⊗[k] L →+* F)) (Ψ : L ⊗[k] L →+* E)
@@ -97,14 +95,14 @@ private lemma main
       rw [h1]
       rfl
     refine ⟨ι, ?_, ?_⟩
-    · ext x
+    ·
+      ext x
       have := hι (x ⊗ₜ 1)
-      rw [hΦ, hΨ, map_one, map_one, mul_one, mul_one] at this
-      exact this
-    · ext y
+      rwa [hΦ, hΨ, map_one, map_one, mul_one, mul_one] at this
+    ·
+      ext y
       have := hι (1 ⊗ₜ y)
-      rw [hΦ, hΨ, map_one, map_one, one_mul, one_mul] at this
-      exact this
+      rwa [hΦ, hΨ, map_one, map_one, one_mul, one_mul] at this
 
 
 -- created on 2026-10-10

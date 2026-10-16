@@ -1,16 +1,16 @@
 import sympy.stats.policy_trajectory
 import sympy.stats.hidden_markov_sequence
+import sympy.functions.special.tensor_functions
 import Lemma.Random.Integral_Mul.eq.Integral_Mul_Integral.of.All_LeNorm.StronglyMeasurable.All_LeNorm.StronglyMeasurable
-import Lemma.Random.Integral_MulEq12.eq.MulEqIntegral.of.All_LeNorm.StronglyMeasurable
-import Lemma.Random.Integral.eq.Integral_Integral.of.All_LeNorm.StronglyMeasurable
+import Lemma.Random.Integral_MulIte.eq.MulKroneckerDeltaIntegral.of.All_LeNorm.StronglyMeasurable
+import Lemma.Random.Integral.eq.Integral.of.All_LeNorm.StronglyMeasurable
 import Lemma.Random.Integral_MulEqS.eq.MulRealPreimageSIntegral.of.All_LeNorm.StronglyMeasurable
 import Lemma.Random.MEqCondExp_Integral.of.Integrable.Measurable
 import Lemma.Random.AeNe_0
 import Lemma.Real.LeNorm_Mul1.of.All_LeNorm
 import Lemma.Real.Norm_1.le.One
-import Lemma.Real.StronglyMeasurable.discrete
 import Lemma.Real.StronglyMeasurable_Eq12
-open MeasureTheory ProbabilityTheory PolicyGradient Random Real
+open MeasureTheory ProbabilityTheory PolicyGradient Nat Random Real
 set_option linter.deprecated false
 
 
@@ -61,13 +61,13 @@ private lemma main
     intro y w f C hf hC
     have hK : M.K θ w = M.stageK θ ∘ₘ M.env.trans (w.2.1, w.2.2) := by
       rw [Model.K, Kernel.comp_apply, Kernel.comap_apply]
-    rw [hK, Integral.eq.Integral_Integral.of.All_LeNorm.StronglyMeasurable (f := fun z : ℝ × S × A ↦ (if z.2.1 = y then (1 : ℝ) else 0) * f z)
-      (((StronglyMeasurable.discrete (fun x : S ↦ if x = y then (1 : ℝ) else 0)).comp_measurable
+    rw [hK, Integral.eq.Integral.of.All_LeNorm.StronglyMeasurable (f := fun z : ℝ × S × A ↦ (if z.2.1 = y then (1 : ℝ) else 0) * f z)
+      (((StronglyMeasurable.of_discrete (f := (fun x : S ↦ if x = y then (1 : ℝ) else 0))).comp_measurable
         measurable_snd.fst).mul hf) (LeNorm_Mul1.of.All_LeNorm (p := (fun z : ℝ × S × A ↦ z.2.1 = y)) hC),
       integral_fintype Integrable.of_finite]
-    simp_rw [Integral_MulEq12.eq.MulEqIntegral.of.All_LeNorm.StronglyMeasurable (M := M) hf hC θ y]
-    rw [Finset.sum_eq_single y (fun b _ hb ↦ by simp [hb]) (by simp)]
-    simp only [ite_true, one_mul, smul_eq_mul]
+    simp_rw [Integral_MulIte.eq.MulKroneckerDeltaIntegral.of.All_LeNorm.StronglyMeasurable (M := M) hf hC θ y]
+    rw [Finset.sum_eq_single y (fun b _ hb ↦ by simp [hb, KroneckerDelta]) (by simp)]
+    simp only [KroneckerDelta, decide_true, Bool.toNat_true, Nat.cast_one, one_mul, smul_eq_mul]
   have hstep1 : ∀ (y : S) (w : ℝ × S × A), ∫ z, (if z.2.1 = y then (1 : ℝ) else 0) ∂(M.K θ w) = (M.env.trans (w.2.1, w.2.2)).real {y} := by
     intro y w
     have h := hstep y w (f := fun _ ↦ (1 : ℝ)) stronglyMeasurable_const (fun _ ↦ le_of_eq norm_one)

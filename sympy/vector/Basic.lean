@@ -191,6 +191,19 @@ noncomputable instance (priority := low) instDotNatArrowProcess
     Dot (ℕ → α) (ℕ → Ω → α) (Ω → α) where
   dot f x := fun ω ↦ f @ (fun k ↦ x k ω)
 
+/-- Path-smul sum: `f @ g = ∑' t, f t • g t` (scalar sequence against a vector sequence).
+Lower priority than the Mul-based `(ℕ → α) @ (ℕ → α)` so scalar `@` stays unambiguous. -/
+noncomputable instance (priority := 50) instDotNatArrowSMul
+    {E : Type*} [TopologicalSpace E] [AddCommMonoid E] [SMul ℝ E] :
+    Dot (ℕ → ℝ) (ℕ → E) E where
+  dot f g := ∑' t, f t • g t
+
+/-- Pointwise path-smul sum: `(f @ x) ω = f @ (fun t ↦ x t ω)`. -/
+noncomputable instance (priority := 50) instDotNatArrowSMulProcess
+    {E : Type*} {Ω : Type*} [TopologicalSpace E] [AddCommMonoid E] [SMul ℝ E] :
+    Dot (ℕ → ℝ) (ℕ → Ω → E) (Ω → E) where
+  dot f x := fun ω ↦ f @ (fun t ↦ x t ω)
+
 /-- Outer product of two vectors: `(a @ᵒ b) i j = a i * b j`, i.e. `a @ᵒ b = Matrix.vecMulVec a b`. -/
 instance [Mul α] : OuterProd (m → α) (n → α) (Matrix m n α) where
   outer := Matrix.vecMulVec
