@@ -1,12 +1,23 @@
 import sympy.Basic
 
 
-@[path]
-private lemma main :
+/--
+| attributes | lemma |
+| :---: | :---: |
+| path | Set.NotIn.is.Any.NotIn |
+| mp | Set.Any.NotIn.of.NotIn |
+| mpr | Set.NotIn.of.Any.NotIn |
+-/
+@[path, mp, mpr]
+private lemma main
+  {n : ℕ}
+  {x : Fin n → α}
+  {S : Set α} :
 -- imply
-  True := by
+  (¬ ∀ i, x i ∈ S) ↔ ∃ i, x i ∉ S :=
 -- proof
-  trivial
+  not_forall
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-17

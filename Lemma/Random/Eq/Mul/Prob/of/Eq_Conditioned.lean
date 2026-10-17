@@ -1,12 +1,23 @@
+import Mathlib.Probability.ConditionalProbability
 import sympy.Basic
+open MeasureTheory ProbabilityTheory
 
 
 @[path]
-private lemma main :
+private lemma main
+  [MeasurableSpace Ω] [MeasurableSpace α] [MeasurableSpace β]
+  {π : Measure Ω} [IsProbabilityMeasure π]
+  {x : Ω → α} {y : Ω → β}
+  {s : Set α} {t : Set β}
+-- given
+  (h₀ : Measurable y)
+  (h₁ : MeasurableSet t)
+  (h₂ : π[x ⁻¹' s | y ⁻¹' t] = π (x ⁻¹' s)) :
 -- imply
-  True := by
+  π (y ⁻¹' t ∩ x ⁻¹' s) = π (x ⁻¹' s) * π (y ⁻¹' t) := by
 -- proof
-  trivial
+  rw [← cond_mul_eq_inter (h₁.preimage h₀), h₂, mul_comm]
 
 
--- created on 2026-10-11
+-- created on 2021-08-02
+-- updated on 2026-10-17

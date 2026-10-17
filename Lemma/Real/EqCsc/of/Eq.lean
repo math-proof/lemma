@@ -1,12 +1,17 @@
+import sympy.functions.elementary.trigonometric
 import sympy.Basic
 
 
 @[path]
-private lemma main :
+private lemma main
+  {x y : ℝ}
+-- given
+  (h : x = y) :
 -- imply
-  True := by
+  Real.csc x = Real.csc y :=
 -- proof
-  trivial
+  congr_arg Real.csc h
 
 
--- created on 2026-10-11
+-- created on 2022-01-23
+-- updated on 2026-10-17

@@ -15,7 +15,7 @@ private lemma main
   [PSpace π x]
   [PSpace π y] :
 -- imply
-  Covariance π x y = ∫ ω, (x ω - ∫ ω', x ω' ∂π) * (y ω - ∫ ω', y ω' ∂π) ∂π := by
+  ℂ𝕠𝕧 π x y = ∫ ω, (x ω - ∫ ω', x ω' ∂π) * (y ω - ∫ ω', y ω' ∂π) ∂π := by
 -- proof
   exact Random.Cov.eq.Integral
 

@@ -1,12 +1,16 @@
+import Mathlib.LinearAlgebra.Matrix.Notation
 import sympy.Basic
 
 
 @[path]
-private lemma main :
+private lemma main
+  {n : ℕ}
+  {x y : Fin n → ℝ} :
 -- imply
-  True := by
+  (∑ i, x i * y i) = dotProduct x y := by
 -- proof
-  trivial
+  simp [dotProduct]
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-17

@@ -1,12 +1,23 @@
+import sympy.sets.sets
 import sympy.Basic
 
 
 @[path]
-private lemma main :
+private lemma main
+  {a b d x : ℤ}
+-- given
+  (h₀ : 0 < d)
+  (h₁ : a ≤ x)
+  (h₂ : x < b)
+  (h₃ : ∃ k : ℕ, x = a + (k : ℤ) * d) :
 -- imply
-  True := by
+  0 < d ∧ a ≤ x ∧ x < b ∧ x % d = a % d := by
 -- proof
-  trivial
+  refine ⟨h₀, h₁, h₂, ?_⟩
+  obtain ⟨k, hk⟩ := h₃
+  rw [hk]
+  exact Int.add_mul_emod_self_right a (k : ℤ) d
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-17

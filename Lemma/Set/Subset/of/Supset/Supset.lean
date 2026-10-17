@@ -2,11 +2,16 @@ import sympy.Basic
 
 
 @[path]
-private lemma main :
+private lemma main
+  {A B X : Set α}
+-- given
+  (h₀ : X ⊇ A)
+  (h₁ : B ⊇ X) :
 -- imply
-  True := by
+  B ⊇ A :=
 -- proof
-  trivial
+  subset_trans h₀ h₁
 
 
--- created on 2026-10-11
+-- created on 2021-04-25
+-- updated on 2026-10-17

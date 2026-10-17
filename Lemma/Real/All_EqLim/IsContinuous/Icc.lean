@@ -1,12 +1,20 @@
+import Mathlib.Topology.ContinuousOn
 import sympy.Basic
 
 
 @[path]
-private lemma main :
+private lemma main
+  {f : ℝ → ℝ}
+  {a b : ℝ}
+-- given
+  (h₀ : ContinuousOn f (Set.Icc a b))
+  {xi : ℝ}
+  (h₁ : xi ∈ Set.Icc a b) :
 -- imply
-  True := by
+  Filter.Tendsto f (nhdsWithin xi (Set.Icc a b)) (nhds (f xi)) :=
 -- proof
-  trivial
+  h₀ xi h₁
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-17

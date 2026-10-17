@@ -2,11 +2,16 @@ import sympy.Basic
 
 
 @[path]
-private lemma main :
+private lemma main
+  [Nonempty ι]
+  {A B : Set α}
+-- given
+  (h₀ : B ⊆ A) :
 -- imply
-  True := by
+  (⋃ (_ : ι), B) ⊆ A := by
 -- proof
-  trivial
+  simpa [Set.iUnion_const] using h₀
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-17

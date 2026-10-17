@@ -1,12 +1,17 @@
+import sympy.sets.sets
 import sympy.Basic
 
 
 @[path]
-private lemma main :
+private lemma main
+  {A : Finset α}
+-- given
+  (h₀ : A.card ≥ 1) :
 -- imply
-  True := by
+  A ≠ ∅ :=
 -- proof
-  trivial
+  (Finset.card_pos.mp h₀).ne_empty
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-17

@@ -1,12 +1,19 @@
+import Mathlib.Data.Nat.Choose.Sum
 import sympy.Basic
 
 
 @[path]
-private lemma main :
+private lemma main
+  (r : ℕ)
+  (x : ℝ) :
 -- imply
-  True := by
+  ∑ n ∈ Finset.range (r + 1), (r.choose n : ℝ) * x ^ n = (1 + x) ^ r := by
 -- proof
-  trivial
+  rw [show (1 + x) ^ r = (x + 1) ^ r by ring, add_pow]
+  apply Finset.sum_congr rfl
+  intro n hn
+  simp [mul_comm]
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-17

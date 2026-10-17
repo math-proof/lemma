@@ -1,12 +1,17 @@
+import sympy.sets.sets
 import sympy.Basic
 
 
 @[path]
-private lemma main :
+private lemma main
+  {a b : ℝ}
+-- given
+  (h₀ : Set.Icc a b ≠ ∅) :
 -- imply
-  True := by
+  a - b ≤ 0 := by
 -- proof
-  trivial
+  linarith [Set.nonempty_Icc.mp (Set.nonempty_iff_ne_empty.mpr h₀)]
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-17

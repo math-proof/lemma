@@ -1,12 +1,24 @@
+import Mathlib.Analysis.SpecialFunctions.Log.Basic
 import sympy.Basic
 
 
 @[path]
-private lemma main :
+private lemma main
+  {t : ℕ}
+  {s sprev G x : ℝ}
+-- given
+  (h₀ : 0 < t)
+  (h₁ : s = G + sprev + x) :
 -- imply
-  True := by
+  s - sprev = G + x ∧ 0 < t := by
 -- proof
-  trivial
+  constructor
+  ·
+    rw [h₁]
+    ring
+  ·
+    exact h₀
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-17

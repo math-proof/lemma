@@ -1,12 +1,23 @@
+import Mathlib.Algebra.BigOperators.Ring.Finset
 import sympy.Basic
+open Finset
 
 
+/--
+Finite importance sampling: reweighting by the likelihood ratio `μ / ν` preserves the expectation.
+-/
 @[path]
-private lemma main :
+private lemma main
+  [Fintype ι]
+  {f μ ν : ι → ℝ}
+-- given
+  (h₀ : ∀ i, ν i ≠ 0) :
 -- imply
-  True := by
+  ∑ i, f i * μ i = ∑ i, f i * (μ i / ν i) * ν i := by
 -- proof
-  trivial
+  refine sum_congr rfl fun i _ => ?_
+  field_simp [h₀ i]
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-17

@@ -17,13 +17,13 @@ noncomputable abbrev T (F : Type*) [Field F] [Algebra K F] (σ : L ≃ₐ[K] L) 
 private lemma T_tmul (σ : L ≃ₐ[K] L) (l : L) (f : F) : T F σ (l ⊗ₜ f) = σ l ⊗ₜ f := rfl
 
 private lemma T_iterate_tmul (σ : L ≃ₐ[K] L) (i : ℕ) (l : L) (f : F) :
-  (⇑(T F σ))^[i] (l ⊗ₜ f) = ((σ ^ i) l) ⊗ₜ f := by
+  Nat.iterate (⇑(T F σ)) i (l ⊗ₜ f) = ((σ ^ i) l) ⊗ₜ f := by
   induction i with
   | zero => simp
   | succ i ih => rw [Function.iterate_succ_apply', ih, T_tmul, pow_succ', AlgEquiv.mul_apply]
 
 private lemma T_pow_apply (σ : L ≃ₐ[K] L) (i : ℕ) (z : L ⊗[K] F) :
-  ((T F σ) ^ i) z = (⇑(T F σ))^[i] z := by
+  ((T F σ) ^ i) z = Nat.iterate (⇑(T F σ)) i z := by
   rw [AlgHom.coe_pow]
 
 private lemma includeRight_injective' :
@@ -57,7 +57,7 @@ private lemma orderOf_eq_finrank : orderOf σ = Module.finrank K L := by
 private lemma pow_finrank_eq_one : σ ^ Module.finrank K L = 1 := by
   rw [← orderOf_eq_finrank σ hgen]; exact pow_orderOf_eq_one σ
 
-private lemma T_iterate_finrank (z : L ⊗[K] F) : (⇑(T F σ))^[Module.finrank K L] z = z := by
+private lemma T_iterate_finrank (z : L ⊗[K] F) : Nat.iterate (⇑(T F σ)) (Module.finrank K L) z = z := by
   rw [← T_pow_apply]
   have h : (T F σ) ^ Module.finrank K L = AlgHom.id K (L ⊗[K] F) := by
     apply Algebra.TensorProduct.ext'
@@ -75,8 +75,7 @@ private lemma mem_range_algebraMap_of_fixed (l : L) (hl : σ l = l) : l ∈ Set.
     (Subgroup.zpowers_le).mpr hmem
   refine hle (Subgroup.mem_zpowers_iff.mpr ⟨k, rfl⟩)
 
-private lemma pow_inj_of_lt {i j : ℕ} (hi : i < Module.finrank K L) (hj : j < Module.finrank K L)
-  (h : σ ^ i = σ ^ j) : i = j := by
+private lemma pow_inj_of_lt {i j : ℕ} (hi : i < Module.finrank K L) (hj : j < Module.finrank K L) (h : σ ^ i = σ ^ j) : i = j := by
   rwa [pow_inj_mod, orderOf_eq_finrank σ hgen, Nat.mod_eq_of_lt hi, Nat.mod_eq_of_lt hj] at h
 
 private lemma exists_one_tmul_eq_of_fixed (z : L ⊗[K] F) (hz : T F σ z = z) :
@@ -123,21 +122,19 @@ private lemma exists_one_tmul_eq_of_fixed (z : L ⊗[K] F) (hz : T F σ z = z) :
   obtain ⟨f, hf⟩ := himg w
   exact ⟨f, hf.trans hw⟩
 
-private lemma exists_units_of_norm_eq_one (x : L ⊗[K] F)
-  (hx : ∏ i ∈ Finset.range (Module.finrank K L), (⇑(T F σ))^[i] x = 1) :
-  ∃ y : (L ⊗[K] F)ˣ, x = T F σ (y : L ⊗[K] F) * ↑y⁻¹ := by
+private lemma exists_units_of_norm_eq_one (x : L ⊗[K] F) (hx : ∏ i ∈ Finset.range (Module.finrank K L), Nat.iterate (⇑(T F σ)) i x = 1) : ∃ y : Units (L ⊗[K] F), x = T F σ (y : L ⊗[K] F) * ↑y⁻¹ := by
   classical
   set n := Module.finrank K L with hn_def
   have hn : 0 < n := Module.finrank_pos
   obtain ⟨m, hm⟩ : ∃ m, n = m + 1 := ⟨n - 1, by omega⟩
   set s : L ⊗[K] F →ₐ[K] L ⊗[K] F := T F σ with hs_def
-  have hsn : ∀ z, (⇑s)^[n] z = z := fun z => T_iterate_finrank σ hgen z
+  have hsn : ∀ z, Nat.iterate (⇑s) n z = z := fun z => T_iterate_finrank σ hgen z
   have hxu : IsUnit x := by
     have h := hx
     rw [hm, Finset.prod_range_succ'] at h
     simp only [Function.iterate_zero, id_eq] at h
     exact IsUnit.of_mul_eq_one_right _ h
-  set a : ℕ → L ⊗[K] F := fun i => ∏ j ∈ Finset.range i, (⇑s)^[j] x with ha_def
+  set a : ℕ → L ⊗[K] F := fun i => ∏ j ∈ Finset.range i, Nat.iterate (⇑s) j x with ha_def
   have ha0 : a 0 = 1 := by simp [ha_def]
   have han : a n = 1 := hx
   have hasucc : ∀ i, a (i + 1) = x * s (a i) := by
@@ -146,22 +143,22 @@ private lemma exists_units_of_norm_eq_one (x : L ⊗[K] F)
     rw [Finset.prod_range_succ', map_prod]
     simp only [Function.iterate_zero, id_eq, Function.iterate_succ_apply']
     rw [mul_comm]
-  set Y : L ⊗[K] F → L ⊗[K] F := fun c => ∑ i ∈ Finset.range n, a i * (⇑s)^[i] c with hY_def
+  set Y : L ⊗[K] F → L ⊗[K] F := fun c => ∑ i ∈ Finset.range n, a i * Nat.iterate (⇑s) i c with hY_def
   have hY : ∀ c, x * s (Y c) = Y c := by
     intro c
-    have h1 : x * s (Y c) = ∑ i ∈ Finset.range n, a (i + 1) * (⇑s)^[i + 1] c := by
+    have h1 : x * s (Y c) = ∑ i ∈ Finset.range n, a (i + 1) * Nat.iterate (⇑s) (i + 1) c := by
       simp only [hY_def, map_sum, map_mul, Finset.mul_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [hasucc, Function.iterate_succ_apply']
       ring
-    have h2 : ∑ i ∈ Finset.range (n + 1), a i * (⇑s)^[i] c =
-        (∑ i ∈ Finset.range n, a (i + 1) * (⇑s)^[i + 1] c) + a 0 * (⇑s)^[0] c :=
+    have h2 : ∑ i ∈ Finset.range (n + 1), a i * Nat.iterate (⇑s) i c =
+        (∑ i ∈ Finset.range n, a (i + 1) * Nat.iterate (⇑s) (i + 1) c) + a 0 * Nat.iterate (⇑s) 0 c :=
       Finset.sum_range_succ' _ _
-    have h3 : ∑ i ∈ Finset.range (n + 1), a i * (⇑s)^[i] c =
-        (∑ i ∈ Finset.range n, a i * (⇑s)^[i] c) + a n * (⇑s)^[n] c :=
+    have h3 : ∑ i ∈ Finset.range (n + 1), a i * Nat.iterate (⇑s) i c =
+        (∑ i ∈ Finset.range n, a i * Nat.iterate (⇑s) i c) + a n * Nat.iterate (⇑s) n c :=
       Finset.sum_range_succ _ _
     rw [h1]
-    have h4 : a 0 * (⇑s)^[0] c = a n * (⇑s)^[n] c := by
+    have h4 : a 0 * Nat.iterate (⇑s) 0 c = a n * Nat.iterate (⇑s) n c := by
       rw [ha0, han, hsn]; rfl
     have := h2.symm.trans h3
     rw [h4] at this
@@ -175,7 +172,7 @@ private lemma exists_units_of_norm_eq_one (x : L ⊗[K] F)
     push Not at hall
     let χ : Fin n → (L ⊗[K] F →* (L ⊗[K] F) ⧸ 𝔪) := fun i =>
       (π.comp ((s ^ (i : ℕ)).toRingHom)).toMonoidHom
-    have hχapply : ∀ (i : Fin n) (c : L ⊗[K] F), χ i c = π ((⇑s)^[(i : ℕ)] c) := by
+    have hχapply : ∀ (i : Fin n) (c : L ⊗[K] F), χ i c = π (Nat.iterate (⇑s) (i : ℕ) c) := by
       intro i c
       simp only [χ, RingHom.toMonoidHom_eq_coe, MonoidHom.coe_coe, RingHom.coe_comp,
         Function.comp_apply, AlgHom.toRingHom_eq_coe, RingHom.coe_coe, AlgHom.coe_pow]
@@ -201,17 +198,17 @@ private lemma exists_units_of_norm_eq_one (x : L ⊗[K] F)
         Pi.zero_apply]
       rw [← Ideal.Quotient.eq_zero_iff_mem.mpr (hall c)]
       simp only [hY_def, map_sum, map_mul]
-      exact (Fin.sum_univ_eq_sum_range (fun i => π (a i) * π ((⇑s)^[i] c)) n)
+      exact (Fin.sum_univ_eq_sum_range (fun i => π (a i) * π (Nat.iterate (⇑s) i c)) n)
     have h0 := hli (fun i => π (a i)) hcomb ⟨0, hn⟩
     simp only [ha0, map_one] at h0
     exact one_ne_zero h0
   obtain ⟨c₀, hc₀⟩ := hex
   set y := Y c₀ with hy_def
   have hyx : x * s y = y := hY c₀
-  set N : L ⊗[K] F → L ⊗[K] F := fun b => ∏ i ∈ Finset.range n, (⇑s)^[i] b with hN_def
+  set N : L ⊗[K] F → L ⊗[K] F := fun b => ∏ i ∈ Finset.range n, Nat.iterate (⇑s) i b with hN_def
   have hNfix : ∀ b, s (N b) = N b := by
     intro b
-    have hlast : s ((⇑s)^[m] b) = b := by
+    have hlast : s (Nat.iterate (⇑s) m b) = b := by
       have := hsn b
       rwa [hm, Function.iterate_succ_apply'] at this
     simp only [hN_def, map_prod]
@@ -240,7 +237,7 @@ private lemma exists_units_of_norm_eq_one (x : L ⊗[K] F)
     have hsy : s y = ↑(hxu.unit⁻¹) * y := calc
       _ = ↑(hxu.unit⁻¹) * (x * s y) := by rw [← mul_assoc, IsUnit.val_inv_mul, one_mul]
       _ = ↑(hxu.unit⁻¹) * y := by rw [hyx]
-    have hiter : ∀ i, ∃ u, IsUnit u ∧ (⇑s)^[i] y = u * y := by
+    have hiter : ∀ i, ∃ u, IsUnit u ∧ Nat.iterate (⇑s) i y = u * y := by
       intro i
       induction i with
       | zero => exact ⟨1, isUnit_one, by simp⟩
@@ -258,12 +255,12 @@ private lemma exists_units_of_norm_eq_one (x : L ⊗[K] F)
     · exact h𝔪.ne_top (Ideal.eq_top_of_isUnit_mem _ h hu)
     · exact hc₀ h
   refine ⟨hyu.unit⁻¹, ?_⟩
-  have hinv : s (hyu.unit : L ⊗[K] F) * s ((hyu.unit⁻¹ : (L ⊗[K] F)ˣ) : L ⊗[K] F) = 1 := by
+  have hinv : s (hyu.unit : L ⊗[K] F) * s ((hyu.unit⁻¹ : Units (L ⊗[K] F)) : L ⊗[K] F) = 1 := by
     rw [← map_mul, Units.mul_inv, map_one]
   have hyx' : x * s (hyu.unit : L ⊗[K] F) = (hyu.unit : L ⊗[K] F) := by
     rwa [IsUnit.unit_spec]
   rw [inv_inv]
-  linear_combination (s ((hyu.unit⁻¹ : (L ⊗[K] F)ˣ) : L ⊗[K] F)) * hyx' + (-x) * hinv
+  linear_combination (s ((hyu.unit⁻¹ : Units (L ⊗[K] F)) : L ⊗[K] F)) * hyx' + (-x) * hinv
 
 end Galois
 
@@ -283,8 +280,8 @@ private lemma main
     ∃ f : F, (1 : L) ⊗ₜ[K] f = z) ∧
   (∀ x : L ⊗[K] F,
     ((List.range (Module.finrank K L)).map fun i =>
-        (⇑(Algebra.TensorProduct.map σ.toAlgHom (AlgHom.id K F)))^[i] x).prod = 1 →
-    ∃ y : (L ⊗[K] F)ˣ,
+        Nat.iterate (⇑(Algebra.TensorProduct.map σ.toAlgHom (AlgHom.id K F))) i x).prod = 1 →
+    ∃ y : Units (L ⊗[K] F),
       x = Algebra.TensorProduct.map σ.toAlgHom (AlgHom.id K F) (y : L ⊗[K] F) * ↑y⁻¹) := by
   refine ⟨fun z hz => exists_one_tmul_eq_of_fixed σ hgen z hz, fun x hx => ?_⟩
   rw [list_prod_range_map] at hx

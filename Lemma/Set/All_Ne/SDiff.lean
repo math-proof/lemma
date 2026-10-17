@@ -2,11 +2,14 @@ import sympy.Basic
 
 
 @[path]
-private lemma main :
+private lemma main
+  {y : α} :
 -- imply
-  True := by
+  ∀ x ∈ (Set.univ : Set α) \ {y}, x ≠ y := by
 -- proof
-  trivial
+  intro x hx
+  simpa using hx.2
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-17

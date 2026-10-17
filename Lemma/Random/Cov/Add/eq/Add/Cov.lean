@@ -22,7 +22,7 @@ private lemma main
   (hxy : Integrable (fun ω => x ω * y ω) π)
   (hxz : Integrable (fun ω => x ω * z ω) π) :
 -- imply
-  Covariance π x (y + z) = Covariance π x y + Covariance π x z := by
+  ℂ𝕠𝕧 π x (y + z) = ℂ𝕠𝕧 π x y + ℂ𝕠𝕧 π x z := by
 -- proof
   have hE : ∫ ω, (y + z) ω ∂π = ∫ ω, y ω ∂π + ∫ ω, z ω ∂π := integral_add hy hz
   have hL : Integrable (fun ω => (x ω - ∫ ω', x ω' ∂π) * (y ω - ∫ ω', y ω' ∂π)) π := by

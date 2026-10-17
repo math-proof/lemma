@@ -2,11 +2,17 @@ import sympy.Basic
 
 
 @[path]
-private lemma main :
+private lemma main
+  {a b : ℝ}
+  {p : ℝ → Prop}
+-- given
+  (h₀ : ∃ x ∈ Set.Ico a b, p x) :
 -- imply
-  True := by
+  ∃ x ∈ Set.Icc a b, p x := by
 -- proof
-  trivial
+  obtain ⟨x, hx, hp⟩ := h₀
+  exact ⟨x, ⟨hx.1, le_of_lt hx.2⟩, hp⟩
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-17

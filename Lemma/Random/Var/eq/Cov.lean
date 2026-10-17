@@ -15,7 +15,7 @@ private lemma main
 -- given
   [PSpace π x] :
 -- imply
-  Variance π x = Covariance π x x := by
+  𝕍𝕒𝕣 π x = ℂ𝕠𝕧 π x x := by
 -- proof
   rw [Random.Var.eq.Integral, Random.Cov.eq.Integral]
   simp only [sq]

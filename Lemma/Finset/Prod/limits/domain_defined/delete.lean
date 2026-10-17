@@ -1,12 +1,22 @@
+import Mathlib.Algebra.BigOperators.Ring.Finset
 import sympy.Basic
 
 
 @[path]
-private lemma main :
+private lemma main
+  [CommMonoid α]
+  {k : ℕ}
+  {x : Fin k → ℤ}
+  {f : Fin k → ℕ}
+  {h : ℤ → ℕ → α} :
 -- imply
-  True := by
+  ∏ i ∈ Finset.univ.filter (fun i : Fin k => (i : ℕ) < k), ∏ j ∈ Finset.range (f i), h (x i) j
+    = ∏ i, ∏ j ∈ Finset.range (f i), h (x i) j := by
 -- proof
-  trivial
+  rw [Finset.filter_true_of_mem]
+  intro i _
+  exact i.isLt
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-17

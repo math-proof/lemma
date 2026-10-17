@@ -1,12 +1,30 @@
+import sympy.sets.sets
 import sympy.Basic
 
 
 @[path]
-private lemma main :
+private lemma main
+  {a : ℤ}
+  {f : ℤ → Set α} :
 -- imply
-  True := by
+  (⋂ i ∈ Finset.Ico (-a) (a + 1), f i) = ⋂ i ∈ Finset.Ico (-a) (a + 1), f (-i) := by
 -- proof
-  trivial
+  ext x
+  simp only [Set.mem_iInter]
+  refine ⟨?_, ?_⟩
+  ·
+    intro h i hi
+    have hneg : -i ∈ Finset.Ico (-a) (a + 1) := by
+      rw [Finset.mem_Ico] at hi ⊢
+      omega
+    simpa using h (-i) hneg
+  ·
+    intro h i hi
+    have hneg : -i ∈ Finset.Ico (-a) (a + 1) := by
+      rw [Finset.mem_Ico] at hi ⊢
+      omega
+    simpa using h (-i) hneg
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-17

@@ -1,12 +1,17 @@
+import Mathlib.LinearAlgebra.Matrix.Notation
 import sympy.Basic
 
 
 @[path]
-private lemma main :
+private lemma main
+  {n : ℕ}
+  {A : Matrix (Fin n) (Fin n) ℝ}
+  {x : Fin n → ℝ} :
 -- imply
-  True := by
+  dotProduct x (Matrix.mulVec A x) = ∑ i, ∑ j, x i * A i j * x j := by
 -- proof
-  trivial
+  simp [dotProduct, Matrix.mulVec, Finset.mul_sum, mul_assoc]
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-17

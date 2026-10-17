@@ -1,0 +1,207 @@
+import Lemma.Random.Eq_Expect_FunPowDot.of.In_Icc.GtInftySup.All_Differentiable.All_Eq_Expect_CondTSum_MulPow.EqMeasureCount.EqMeasureCount.All_Eq_Joint.In_Ico0
+import Lemma.Tensor.EqDot.of.GtInftySup.generalized_advantage_estimate
+import Lemma.Random.ProbCond.eq.OfRealPol.of.Ne_0
+import Lemma.Random.SinglePSpace.of.EqMeasureCount.Measurable
+import Lemma.Measure.Count.eq.ProdCountS
+import Mathlib.MeasureTheory.Constructions.Polish.Basic
+import Mathlib.Analysis.Calculus.Gradient.Basic
+import sympy.stats.variance
+import sympy.stats.cond_expectation
+import sympy.stats.policy_trajectory.gradient
+import sympy.vector.Basic
+import sympy.vector.operators
+import sympy.concrete.sup
+import Lemma.Random.AeRealPreimageSS.ne.Zero
+import Lemma.Random.V.eq.Vc.of.Ne0Real_Preimage.In_Ico
+import Lemma.Random.AeNormSub.le.DeltaBound.of.In_Ico
+import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
+import Lemma.Random.PSpace_Path.of.All_PSpace
+open scoped ENNReal.ToRealCoe
+open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Filter Topology Random Measure Tensor
+
+
+/--
+Generalized advantage estimation with the paper's weighted-average estimator (Schulman et al., arXiv 1506.02438, Eq. (16)):
+with the temporal-difference residuals `δ[j] = r[j] + γ * V(s[j+1]) - V(s[j])` and `λ ∈ [0, 1)`, the
+exponentially weighted average of the `(k + 1)`-step advantage estimates
+`A[t] = (1 - λ) * ∑' k, λ ^ k * ∑ i ∈ range (k + 1), γ ^ i * δ[t + i]` gives
+`∇𝔼[γ ** Stack[t](t) @ r] = 𝔼[∑' t, γ ^ t • A[t] • ∇ log π(a[t] | s[t])]`.
+The proof rewrites `A[t]` pointwise into the closed form `(γ * λ) ** Stack[k](k) @ δ[t:]`
+(`Tensor.EqDot.of.GtInftySup.generalized_advantage_estimate`, the residuals being almost surely bounded since
+`V` is the value function, `AeNormSub.le.DeltaBound.of.In_Ico`) and applies
+`Random.Eq_Expect_FunPowDot.of.In_Icc.GtInftySup.All_Differentiable.All_Eq_Expect_CondTSum_MulPow.EqMeasureCount.EqMeasureCount.All_Eq_Joint.In_Ico0`.
+-/
+@[path]
+private lemma main
+  [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [CompleteSpace Θ]
+  [ReferenceMeasure S] [MeasurableSingletonClass S] [Fintype S]
+  [ReferenceMeasure A] [MeasurableSingletonClass A] [Fintype A]
+  {M : Model Θ S A}
+  {θ : Θ}
+  {γ ℓ : ℝ}
+  {V : Θ → ℕ → S → ℝ}
+  {r : ℕ → (ℕ → ℝ × S × A) → ℝ}
+  {s : ℕ → (ℕ → ℝ × S × A) → S}
+  {a : ℕ → (ℕ → ℝ × S × A) → A}
+-- given
+  (h₀ : γ ∈ Set.Ico 0 1)
+  (h₁ : ∀ t, (· t) = (r t, s t, a t))
+  (hS : (ReferenceMeasure.measure : Measure S) = Measure.count)
+  (hA : (ReferenceMeasure.measure : Measure A) = Measure.count)
+  (h₂ : ∀ θ t x, ((M θ) (s t ⁻¹' {x}) ≠ 0) →
+    V θ t x = 𝔼[r : M θ](∑' k, γ ^ k * r (t + k) | s t = x))
+  (h₃ : ∀ x u, Differentiable ℝ (fun θ => M.pol.prob θ x u))
+  (h₄ : sup[θ, x, u] ‖∇[θ] M.pol.prob θ x u‖ < ∞)
+  (h₅ : ℓ ∈ Set.Ico 0 1) :
+-- imply
+  have : ∀ θ t, SinglePSpace (M θ) (a t, s t) := fun _ t =>
+    SinglePSpace.of.EqMeasureCount.Measurable ((Random.Measurable.of.All_Eq.snd.snd h₁ t).prodMk (Random.Measurable.of.All_Eq.snd.fst h₁ t)) (by
+      show (ReferenceMeasure.measure : Measure A).prod (ReferenceMeasure.measure : Measure S) = _
+      rw [hA, hS, Count.eq.ProdCountS])
+  have hs : ∀ t, PSpace (M θ) (s t) := fun t =>
+    ⟨(Random.Measurable.of.All_Eq.snd.fst h₁ t).aemeasurable⟩
+  have ha : ∀ t, PSpace (M θ) (a t) := fun t =>
+    ⟨(Random.Measurable.of.All_Eq.snd.snd h₁ t).aemeasurable⟩
+  have hr : ∀ t, PSpace (M θ) (r t) := fun t =>
+    ⟨(Random.Measurable.of.All_Eq.fst h₁ t).aemeasurable⟩
+  have : PSpace (M θ) (AsPathRV.path (s)) :=
+    PSpace_Path.of.All_PSpace hs
+  have : PSpace (M θ) (AsPathRV.path (a)) :=
+    PSpace_Path.of.All_PSpace ha
+  have : PSpace (M θ) (AsPathRV.path (r)) :=
+    PSpace_Path.of.All_PSpace hr
+  let : MeasurableSpace Θ := borel Θ
+  have : BorelSpace Θ := ⟨rfl⟩
+  ∇[θ] (
+    have : PSpace (M θ) (AsPathRV.path (r)) :=
+      PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.fst h₁ t).aemeasurable⟩)
+    𝔼[r: M θ](((fun t : ℕ => γ ^ t) @ r))) =
+    -- TODO(sympy 𝔼 patch): 𝔽((a₀ t) = … | (s₀ t) = …) with let a₀ := a; let s₀ := s
+    let a₀ := a
+    let s₀ := s
+    𝔼[s, a, r : M θ](
+      ∑' t, γ ^ t •
+        (((1 - ℓ) * ∑' k, ℓ ^ k * ∑ i ∈ Finset.range (k + 1), γ ^ i *
+            (r (t + i) + γ * V θ (t + i + 1) (s (t + i + 1)) - V θ (t + i) (s (t + i)))) •
+          ∇[θ] (ℙ[M θ]((a₀ t) = (a t) | (s₀ t) = (s t)) : ℝ).log)) := by
+-- proof
+  intro hP _ _ _ _ _ _
+  classical
+  obtain rfl : r = fun t ω ↦ (ω t).1 := funext₂ fun t ω ↦ (congrArg Prod.fst (congrFun (h₁ t) ω)).symm
+  obtain rfl : s = fun t ω ↦ (ω t).2.1 := funext₂ fun t ω ↦ (congrArg (·.2.1) (congrFun (h₁ t) ω)).symm
+  obtain rfl : a = fun t ω ↦ (ω t).2.2 := funext₂ fun t ω ↦ (congrArg (·.2.2) (congrFun (h₁ t) ω)).symm
+  set r : ℕ → (ℕ → ℝ × S × A) → ℝ := fun t ω ↦ (ω t).1
+  set s : ℕ → (ℕ → ℝ × S × A) → S := fun t ω ↦ (ω t).2.1
+  set a : ℕ → (ℕ → ℝ × S × A) → A := fun t ω ↦ (ω t).2.2
+  let _ : MeasurableSpace Θ := borel Θ
+  have _ : BorelSpace Θ := ⟨rfl⟩
+  have h₄o := h₄
+  simp only [gradient, LinearIsometryEquiv.norm_map] at h₄
+  obtain ⟨C, hC⟩ := id h₄
+  have h₇ : ∀ θ x u, ‖fderiv ℝ (fun θ => M.pol.prob θ x u) θ‖ ≤ C := fun θ x u => hC ⟨(θ, x, u), rfl⟩
+  have hℓ : ℓ ∈ Set.Icc 0 1 := ⟨h₅.1, h₅.2.le⟩
+  have hpR : Measurable (fun ω t ↦ r t ω) := Measurable.of_eval (Random.Measurable.of.All_Eq.fst h₁)
+  have hfG : ∀ t, Measurable (fun integ : ℕ → ℝ ↦ ∑' k, γ ^ k * integ (t + k)) := fun t =>
+    Measurable.tsum fun k => (measurable_pi_apply (t + k)).const_mul _
+  have hVr : ∀ θ' t x, ((M θ').real (s t ⁻¹' {x}) ≠ 0) →
+      V θ' t x = 𝔼[r : M θ']((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = x) := fun θ' t x hp =>
+    h₂ θ' t x fun h0 => hp ((measureReal_eq_zero_iff (measure_ne_top _ _)).2 h0)
+  -- almost surely the learned value is the time-free value function
+  have hVc : ∀ᵐ ω ∂(M θ), ∀ k, V θ k (s k ω) = M.Vc θ γ (s k ω) :=
+    (AeRealPreimageSS.ne.Zero (s := s) (M := M) θ).mono fun ω h k =>
+      (hVr θ k _ (h k)).trans (Random.V.eq.Vc.of.Ne0Real_Preimage.In_Ico (M := M) θ k _ h₀ h₁ (h k))
+  have hδ : ∀ᵐ ω ∂(M θ), ∀ j, r j ω + γ * V θ (j + 1) (s (j + 1) ω) - V θ j (s j ω) =
+      r j ω + γ * M.Vc θ γ (s (j + 1) ω) - M.Vc θ γ (s j ω) :=
+    hVc.mono fun ω h j => by rw [h j, h (j + 1)]
+  -- almost surely the residuals are bounded
+  have hbdd : ∀ᵐ ω ∂(M θ),
+      BddAbove (Set.range fun j => |r j ω + γ * V θ (j + 1) (s (j + 1) ω) - V θ j (s j ω)|) := by
+    filter_upwards [AeNormSub.le.DeltaBound.of.In_Ico (M := M) h₀ h₁ θ, hδ] with ω h1 h2
+    refine ⟨(3 / (1 - γ) - 1) * |M.env.R|, ?_⟩
+    rintro _ ⟨j, rfl⟩
+    have := h1 j
+    rw [Real.norm_eq_abs] at this
+    beta_reduce
+    rwa [h2 j]
+  -- almost surely the paper's estimator is the closed form
+  have hpt : ∀ᵐ ω ∂(M θ), ∀ t,
+      (1 - ℓ) * ∑' k, ℓ ^ k * ∑ i ∈ Finset.range (k + 1), γ ^ i *
+        (r (t + i) ω + γ * V θ (t + i + 1) (s (t + i + 1) ω) - V θ (t + i) (s (t + i) ω)) =
+      (fun k : ℕ => (γ * ℓ) ^ k) @
+        (fun k : ℕ => r (t + k) ω + γ * V θ (t + k + 1) (s (t + k + 1) ω) - V θ (t + k) (s (t + k) ω)) := by
+    filter_upwards [hbdd] with ω hb t
+    exact EqDot.of.GtInftySup.generalized_advantage_estimate
+      (δ := fun j => r j ω + γ * V θ (j + 1) (s (j + 1) ω) - V θ j (s j ω)) (t := t) hb h₀ h₅
+  have hmeas : ∀ k, Measurable fun ω : ℕ → ℝ × S × A =>
+      r k ω + γ * V θ (k + 1) (s (k + 1) ω) - V θ k (s k ω) := fun k =>
+    ((Random.Measurable.of.All_Eq.fst h₁ k).add (((measurable_of_countable (V θ (k + 1))).comp (Random.Measurable.of.All_Eq.snd.fst h₁ (k + 1))).const_mul γ)).sub
+      ((measurable_of_countable (V θ k)).comp (Random.Measurable.of.All_Eq.snd.fst h₁ k))
+  -- the expectation of a pathwise functional is a Bochner integral
+  -- TODO(sympy 𝔼 patch): 𝔽((a₀ t) = … | (s₀ t) = …) with let a₀ := a; let s₀ := s
+  let a₀ := a
+  let s₀ := s
+  have hexp : ∀ F : ℕ → (ℕ → S) → (ℕ → A) → (ℕ → ℝ) → ℝ,
+      (∀ t, Measurable fun ω : ℕ → ℝ × S × A => F t (fun j => s j ω) (fun j => a j ω) (fun j => r j ω)) →
+      𝔼[s, a, r : M θ](
+        ∑' t, γ ^ t • (F t s a r •
+          ∇[θ] (ℙ[M θ]((a₀ t) = (a t) | (s₀ t) = (s t)) : ℝ).log)) =
+      ∫ ω, ∑' t, γ ^ t • (F t (fun j => s j ω) (fun j => a j ω) (fun j => r j ω) •
+        ∇[θ] (ℙ[M θ]((a t) = (a t ω) | (s t) = (s t ω)) : ℝ).log) ∂(M θ) := by
+    intro F hF
+    have hg := fun t : ℕ =>
+      StronglyMeasurable.smul (hF t).stronglyMeasurable
+        ((StronglyMeasurable.of_discrete (f := fun p : S × A =>
+          gradient (fun θ' => (ℙ[M θ']((a t) = p.2 | (s t) = p.1) : ℝ).log) θ)).comp_measurable
+            ((Random.Measurable.of.All_Eq.snd.fst h₁ t).prodMk (Random.Measurable.of.All_Eq.snd.snd h₁ t)))
+    have hGsm : StronglyMeasurable fun ω : ℕ → ℝ × S × A =>
+        ∑' t, γ ^ t • (F t (fun j => s j ω) (fun j => a j ω) (fun j => r j ω) •
+          ∇[θ] (ℙ[M θ]((a t) = (a t ω) | (s t) = (s t ω)) : ℝ).log) :=
+      StronglyMeasurable.tsum (L := SummationFilter.unconditional ℕ) fun t =>
+        (hg t).const_smul (γ ^ t)
+    let fromPath := fun (p : (ℕ → S) × (ℕ → A) × (ℕ → ℝ)) =>
+      fun t => (p.2.2 t, p.1 t, p.2.1 t)
+    have fromPath_meas : Measurable fromPath :=
+      Measurable.of_eval fun t =>
+        ((measurable_pi_apply t).comp (measurable_snd.comp measurable_snd)).prodMk
+          (((measurable_pi_apply t).comp measurable_fst).prodMk
+            ((measurable_pi_apply t).comp (measurable_fst.comp measurable_snd)))
+    have hx : AEMeasurable
+      (AsPathRV.path s, AsPathRV.path a, AsPathRV.path r) (M θ) :=
+      PSpace.aemeasurable
+    simp only [AsPathRV.path_process]
+    rw [Expectation.ofRV, expectation_bochner]
+    refine (integral_map hx ?_).trans ?_
+    ·
+      exact (hGsm.comp_measurable fromPath_meas).aestronglyMeasurable.congr
+        (Filter.Eventually.of_forall fun p => by
+          simp only [Function.comp_apply, fromPath]
+          rfl)
+    simp only [AsPathRV.path_process, JointRandomSymbol]
+    rfl
+  have hF₁ : ∀ t, Measurable fun ω : ℕ → ℝ × S × A =>
+      (1 - ℓ) * ∑' k, ℓ ^ k * ∑ i ∈ Finset.range (k + 1), γ ^ i *
+        (r (t + i) ω + γ * V θ (t + i + 1) (s (t + i + 1) ω) - V θ (t + i) (s (t + i) ω)) := fun t =>
+    (Measurable.tsum (L := SummationFilter.unconditional ℕ) fun k =>
+      (Finset.measurable_sum _ fun i _ => (hmeas (t + i)).const_mul _).const_mul _).const_mul _
+  have hF₂ : ∀ t, Measurable fun ω : ℕ → ℝ × S × A =>
+      ((fun k : ℕ => (γ * ℓ) ^ k) @
+        (fun k : ℕ => r (t + k) ω + γ * V θ (t + k + 1) (s (t + k + 1) ω) - V θ (t + k) (s (t + k) ω))) := fun t => by
+    show Measurable fun ω : ℕ → ℝ × S × A => ∑' k, (γ * ℓ) ^ k *
+      (r (t + k) ω + γ * V θ (t + k + 1) (s (t + k + 1) ω) - V θ (t + k) (s (t + k) ω))
+    exact Measurable.tsum (L := SummationFilter.unconditional ℕ) fun k => (hmeas (t + k)).const_mul _
+  refine (Eq_Expect_FunPowDot.of.In_Icc.GtInftySup.All_Differentiable.All_Eq_Expect_CondTSum_MulPow.EqMeasureCount.EqMeasureCount.All_Eq_Joint.In_Ico0
+    (θ := θ) h₀ h₁ hS hA h₂ h₃ h₄o hℓ).trans ?_
+  symm
+  refine (hexp (fun t s a r => (1 - ℓ) * ∑' k, ℓ ^ k * ∑ i ∈ Finset.range (k + 1), γ ^ i *
+      (r (t + i) + γ * V θ (t + i + 1) (s (t + i + 1)) - V θ (t + i) (s (t + i)))) hF₁).trans
+    ((integral_congr_ae ?_).trans
+      (hexp (fun t s a r => (fun k : ℕ => (γ * ℓ) ^ k) @
+        (fun k : ℕ => r (t + k) + γ * V θ (t + k + 1) (s (t + k + 1)) - V θ (t + k) (s (t + k)))) hF₂).symm)
+  filter_upwards [hpt] with ω h
+  refine tsum_congr fun t => ?_
+  beta_reduce
+  rw [h t]
+
+
+-- created on 2026-10-01
+-- updated on 2026-10-10

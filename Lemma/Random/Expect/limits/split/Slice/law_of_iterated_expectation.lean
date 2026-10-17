@@ -1,12 +1,21 @@
+import Mathlib.MeasureTheory.Function.ConditionalExpectation.Basic
 import sympy.Basic
+open MeasureTheory
 
 
 @[path]
-private lemma main :
+private lemma main
+  [mΩ : MeasurableSpace Ω]
+  {π : Measure Ω} [IsProbabilityMeasure π]
+  {m : MeasurableSpace Ω}
+  {f : Ω → ℝ}
+-- given
+  (h₀ : m ≤ mΩ) :
 -- imply
-  True := by
+  ∫ ω, (π[f | m]) ω ∂π = ∫ ω, f ω ∂π :=
 -- proof
-  trivial
+  integral_condExp (μ := π) h₀
 
 
--- created on 2026-10-11
+-- created on 2023-04-22
+-- updated on 2026-10-17

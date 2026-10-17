@@ -1,12 +1,22 @@
+import Mathlib.Data.Nat.Factorial.Basic
+import Lemma.Matrix.DetOfVecCons_FunPow.eq.MulMulPowSProd
 import sympy.Basic
+open Matrix
 
 
 @[path]
-private lemma main :
+private lemma main
+  {n : ℕ}
+  {x₁ x₂ : ℝ}
+-- given
+  (_ : x₁ ≠ 0) :
 -- imply
-  True := by
+  (Matrix.of (Matrix.vecCons (fun j : Fin (n + 1) => x₂ ^ (j : ℕ))
+      (fun (i : Fin n) (j : Fin (n + 1)) => (j : ℝ) ^ (i : ℕ) * x₁ ^ (j : ℕ)))).det =
+    x₁ ^ (n.choose 2) * (x₁ - x₂) ^ n * ∏ i ∈ Finset.range n, (Nat.factorial i : ℝ) :=
 -- proof
-  trivial
+  DetOfVecCons_FunPow.eq.MulMulPowSProd
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-17

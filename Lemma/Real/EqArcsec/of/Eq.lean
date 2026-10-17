@@ -1,12 +1,17 @@
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 import sympy.Basic
 
 
 @[path]
-private lemma main :
+private lemma main
+  {x y : ℝ}
+-- given
+  (h₀ : x = y) :
 -- imply
-  True := by
+  Real.arccos x⁻¹ = Real.arccos y⁻¹ :=
 -- proof
-  trivial
+  congr_arg (fun t : ℝ => Real.arccos t⁻¹) h₀
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-17

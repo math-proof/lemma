@@ -16,7 +16,7 @@ private lemma main
   [PSpace π x]
   [PSpace π (fun ω => c * x ω)] :
 -- imply
-  Variance π (fun ω => c * x ω) = c ^ 2 * Variance π x := by
+  𝕍𝕒𝕣 π (fun ω => c * x ω) = c ^ 2 * 𝕍𝕒𝕣 π x := by
 -- proof
   have e : ∀ ω, (c * x ω - c * ∫ ω', x ω' ∂π) ^ 2 = c ^ 2 * (x ω - ∫ ω', x ω' ∂π) ^ 2 := fun ω => by ring
   simp only [Random.Var.eq.Integral, integral_const_mul, e]

@@ -1,12 +1,16 @@
+import Mathlib.LinearAlgebra.Matrix.Notation
 import sympy.Basic
 
 
 @[path]
-private lemma main :
+private lemma main
+  {m n : ℕ} :
 -- imply
-  True := by
+  ∀ (i : Fin m) (j : Fin n), (Matrix.of fun (_ : Fin m) (_ : Fin n) => (1 : ℝ)) i j = 1 := by
 -- proof
-  trivial
+  intro i j
+  rfl
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-17

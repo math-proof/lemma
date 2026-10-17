@@ -2,11 +2,19 @@ import sympy.Basic
 
 
 @[path]
-private lemma main :
+private lemma main
+  {n : ℕ}
+-- given
+  (h₀ : n ≠ 0) :
 -- imply
-  True := by
+  ∑ k ∈ Finset.range (n + 1), (-1) ^ (n - k) * (Nat.choose n k : ℤ) = 0 := by
 -- proof
-  trivial
+  have h := add_pow (1 : ℤ) (-1) n
+  have hzero : ((1 : ℤ) + -1) ^ n = 0 := by
+    simp [h₀]
+  rw [hzero] at h
+  simpa [one_pow, mul_one] using h.symm
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-17

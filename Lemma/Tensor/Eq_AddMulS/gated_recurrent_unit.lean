@@ -2,11 +2,13 @@ import sympy.Basic
 
 
 @[path]
-private lemma main :
+private lemma main
+  {z gh h : ℝ} :
 -- imply
-  True := by
+  (1 - z) * gh + z * h = gh + z * (h - gh) := by
 -- proof
-  trivial
+  ring
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-17

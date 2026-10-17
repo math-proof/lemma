@@ -1,12 +1,20 @@
 import sympy.Basic
 
 
+/--
+Equal scores have the same minimizers.
+-/
 @[path]
-private lemma main :
+private lemma main
+  {f g : ι → ℝ}
+  (i : ι)
+-- given
+  (h₀ : ∀ j, f j = g j) :
 -- imply
-  True := by
+  (∀ j, f i ≤ f j) ↔ (∀ j, g i ≤ g j) := by
 -- proof
-  trivial
+  simp [h₀]
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-17

@@ -4,25 +4,30 @@ import sympy.Basic
 @[path]
 private lemma main
   {n m : ℕ}
+  {x : ℝ}
   {a : Fin n → ℝ}
-  {b : Fin m → ℝ}
-  {x : ℝ} :
+  {b : Fin m → ℝ} :
 -- imply
-  (∀ i, Fin.append a b i ≤ x) ↔ (∀ i, a i ≤ x) ∧ (∀ i, b i ≤ x) := by
+  (∀ i, Sum.elim a b i ≤ x) ↔ (∀ i, a i ≤ x) ∧ (∀ j, b j ≤ x) := by
 -- proof
   constructor
-  · intro h
+  ·
+    intro h
     constructor
-    · intro i
-      simpa using h (Fin.castAdd m i)
-    · intro i
-      simpa using h (Fin.natAdd n i)
-  · rintro ⟨h₀, h₁⟩ i
-    induction i using Fin.addCases with
-    | left j =>
-      simpa using h₀ j
-    | right j =>
-      simpa using h₁ j
+    ·
+      intro i
+      simpa using h (Sum.inl i)
+    ·
+      intro j
+      simpa using h (Sum.inr j)
+  ·
+    intro h i
+    cases i with
+    | inl i =>
+      simpa using h.1 i
+    | inr j =>
+      simpa using h.2 j
 
 
--- created on 2022-04-01
+-- created on 2026-10-11
+-- updated on 2026-10-17

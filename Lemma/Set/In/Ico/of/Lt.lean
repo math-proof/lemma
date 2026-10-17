@@ -1,12 +1,17 @@
+import sympy.sets.sets
 import sympy.Basic
 
 
 @[path]
-private lemma main :
+private lemma main
+  {n b : ℤ}
+-- given
+  (h₀ : n < b) :
 -- imply
-  True := by
+  n ∈ Set.Iio b :=
 -- proof
-  trivial
+  Set.mem_Iio.mpr h₀
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-17

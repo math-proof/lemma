@@ -1,12 +1,19 @@
+import Mathlib.Analysis.Calculus.Deriv.Mul
 import sympy.Basic
 
 
 @[path]
-private lemma main :
+private lemma main
+  {f g : ℝ → ℝ}
+  {x : ℝ}
+-- given
+  (h₀ : DifferentiableAt ℝ f x)
+  (h₁ : DifferentiableAt ℝ g x) :
 -- imply
-  True := by
+  deriv (f * g) x = deriv f x * g x + f x * deriv g x :=
 -- proof
-  trivial
+  (h₀.hasDerivAt.mul h₁.hasDerivAt).deriv
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-17

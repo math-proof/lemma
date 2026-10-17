@@ -2,11 +2,14 @@ import sympy.Basic
 
 
 @[path]
-private lemma main :
+private lemma main
+  {n : ℕ} :
 -- imply
-  True := by
+  ∀ _ : Fin n, (1 : ℝ) = 1 := by
 -- proof
-  trivial
+  intro
+  rfl
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-17

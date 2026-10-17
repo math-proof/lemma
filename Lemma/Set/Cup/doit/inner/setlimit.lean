@@ -2,11 +2,17 @@ import sympy.Basic
 
 
 @[path]
-private lemma main :
+private lemma main
+  {s : Set ι}
+  {t : Set κ}
+  {f : ι → κ → Set α} :
 -- imply
-  True := by
+  (⋃ i ∈ s, ⋃ j ∈ t, f i j) = ⋃ j ∈ t, ⋃ i ∈ s, f i j := by
 -- proof
-  trivial
+  ext x
+  simp
+  grind
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-17

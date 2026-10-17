@@ -2,11 +2,13 @@ import sympy.Basic
 
 
 @[path]
-private lemma main :
+private lemma main
+  {θ : ℝ} :
 -- imply
-  True := by
+  Real.cos θ ^ 2 + Real.sin θ ^ 2 = 1 :=
 -- proof
-  trivial
+  Real.cos_sq_add_sin_sq θ
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-17

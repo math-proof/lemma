@@ -1,12 +1,15 @@
+import Mathlib.Algebra.BigOperators.Ring.Finset
 import sympy.Basic
 
 
 @[path]
-private lemma main :
+private lemma main
+  (x : ℕ → ℝ) :
 -- imply
-  True := by
+  ∏ i ∈ ({0, 1, 2, 3, 4} : Finset ℕ), x i = x 0 * x 1 * x 2 * x 3 * x 4 := by
 -- proof
-  trivial
+  simp [mul_assoc]
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-17

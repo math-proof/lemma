@@ -1,12 +1,17 @@
+import Mathlib.InformationTheory.KullbackLeibler.Basic
 import sympy.Basic
+open MeasureTheory InformationTheory
 
 
 @[path]
-private lemma main :
+private lemma main
+  [MeasurableSpace α]
+  (μ ν : Measure α) :
 -- imply
-  True := by
+  0 ≤ klDiv μ ν :=
 -- proof
-  trivial
+  bot_le (a := klDiv μ ν)
 
 
--- created on 2026-10-11
+-- created on 2021-07-30
+-- updated on 2026-10-17

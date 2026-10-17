@@ -1,12 +1,18 @@
+import sympy.sets.stirling_partition
 import sympy.Basic
+import Lemma.Finset.StirlingSecond.eq.NcardParts
+open Finset Stirling.conditionset
 
 
 @[path]
-private lemma main :
+private lemma main
+-- given
+  (n k : ℕ) :
 -- imply
-  True := by
+  Nat.stirlingSecond n k = (parts n k).ncard := by
 -- proof
-  trivial
+  apply StirlingSecond.eq.NcardParts
 
 
--- created on 2026-10-11
+-- created on 2021-09-06
+-- updated on 2026-10-17

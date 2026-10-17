@@ -1,12 +1,20 @@
+import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import sympy.Basic
 
 
 @[path]
-private lemma main :
+private lemma main
+  [Fintype β] [CommMonoid γ]
+  {m : ℕ}
+  {f : (Fin (m + 1) → β) → γ} :
 -- imply
-  True := by
+  ∏ a : β, ∏ v : Fin m → β, f (Fin.cons a v) = ∏ w : Fin (m + 1) → β, f w := by
 -- proof
-  trivial
+  rw [← Fintype.prod_prod_type']
+  apply Fintype.prod_equiv (Fin.consEquiv (fun _ => β))
+  intro w
+  rfl
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-17

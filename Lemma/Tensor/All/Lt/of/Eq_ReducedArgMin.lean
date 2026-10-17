@@ -2,11 +2,19 @@ import sympy.Basic
 
 
 @[path]
-private lemma main :
+private lemma main
+  {n : ℕ}
+  {x : Fin n → ℝ}
+  {m : Fin n}
+-- given
+  (h₀ : ∀ j, x m ≤ x j)
+  (h₁ : ∀ j, j < m → x j ≠ x m) :
 -- imply
-  True := by
+  ∀ k, k < m → x m < x k := by
 -- proof
-  trivial
+  intro k hk
+  exact lt_of_le_of_ne (h₀ k) (Ne.symm (h₁ k hk))
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-17

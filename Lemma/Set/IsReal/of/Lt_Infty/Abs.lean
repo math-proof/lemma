@@ -1,12 +1,19 @@
 import sympy.Basic
+import Mathlib.Data.EReal.Inv
 
 
 @[path]
-private lemma main :
+private lemma main
+  {x : EReal}
+-- given
+  (h₀ : x ∈ Set.Ioo (⊥ : EReal) (⊤ : EReal)) :
 -- imply
-  True := by
+  x.abs < (⊤ : ENNReal) := by
 -- proof
-  trivial
+  obtain ⟨h_bot, h_top⟩ := h₀
+  rw [← EReal.coe_toReal (ne_of_lt h_top) (ne_of_gt h_bot)]
+  exact EReal.abs_coe_lt_top x.toReal
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-17

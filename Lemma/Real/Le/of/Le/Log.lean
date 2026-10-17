@@ -1,12 +1,18 @@
+import Lemma.Real.LeLog.of.Le
 import sympy.Basic
+open Real
 
 
 @[path]
-private lemma main :
+private lemma main
+  {x y : ℝ}
+-- given
+  (h₀ : x > 0)
+  (h₁ : x ≤ y) :
 -- imply
-  True := by
+  Real.log x ≤ Real.log y := by
 -- proof
-  trivial
+  apply LeLog.of.Le h₀ h₁
 
 
--- created on 2026-10-11
+-- created on 2026-10-17

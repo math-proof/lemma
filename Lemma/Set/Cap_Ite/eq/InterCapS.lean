@@ -2,11 +2,17 @@ import sympy.Basic
 
 
 @[path]
-private lemma main :
+private lemma main
+  {p : ι → Prop} [DecidablePred p]
+  {f g : ι → Set α} :
 -- imply
-  True := by
+  (⋂ i, if p i then f i else g i) =
+    (⋂ i ∈ {i | p i}, f i) ∩ (⋂ i ∈ {i | ¬ p i}, g i) := by
 -- proof
-  trivial
+  ext x
+  simp
+  grind
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-17

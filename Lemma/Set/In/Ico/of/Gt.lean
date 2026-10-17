@@ -1,12 +1,18 @@
+import sympy.sets.sets
 import sympy.Basic
 
 
 @[path]
-private lemma main :
+private lemma main
+  {n b : ℤ}
+-- given
+  (h₀ : n > b) :
 -- imply
-  True := by
+  n ∈ Set.Ici (b + 1) := by
 -- proof
-  trivial
+  rw [Set.mem_Ici, Int.add_one_le_iff]
+  omega
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-17

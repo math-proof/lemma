@@ -2,11 +2,19 @@ import sympy.Basic
 
 
 @[path]
-private lemma main :
+private lemma main
+  {A B C : Set α}
+-- given
+  (h₀ : A ⊆ B ∪ C)
+  (h₁ : Disjoint A C) :
 -- imply
-  True := by
+  A ⊆ B := by
 -- proof
-  trivial
+  intro x hx
+  cases h₀ hx with
+  | inl hxB => exact hxB
+  | inr hxC => exact (h₁.le_bot ⟨hx, hxC⟩).elim
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-17

@@ -1,12 +1,18 @@
+import Lemma.Real.GeLog.of.Ge
 import sympy.Basic
+open Real
 
 
 @[path]
-private lemma main :
+private lemma main
+  {x y : ℝ}
+-- given
+  (h₀ : x ≥ y)
+  (h₁ : y > 0) :
 -- imply
-  True := by
+  Real.log x ≥ Real.log y := by
 -- proof
-  trivial
+  apply GeLog.of.Ge h₀ h₁
 
 
--- created on 2026-10-11
+-- created on 2026-10-17

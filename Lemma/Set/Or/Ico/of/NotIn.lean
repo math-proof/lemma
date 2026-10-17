@@ -1,12 +1,18 @@
+import sympy.sets.sets
 import sympy.Basic
 
 
 @[path]
-private lemma main :
+private lemma main
+  {x a b : ℤ}
+-- given
+  (h₀ : x ∉ Finset.Ico a b) :
 -- imply
-  True := by
+  x < a ∨ x ≥ b := by
 -- proof
-  trivial
+  have h₁ : ¬(a ≤ x ∧ x < b) := by simpa [Finset.mem_Ico] using h₀
+  omega
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-17

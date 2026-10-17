@@ -16,7 +16,7 @@ private lemma main
   (hx : Integrable x π)
   (hx2 : Integrable (fun ω => x ω ^ 2) π) :
 -- imply
-  Variance π x = ∫ ω, x ω ^ 2 ∂π - (∫ ω, x ω ∂π) ^ 2 := by
+  𝕍𝕒𝕣 π x = ∫ ω, x ω ^ 2 ∂π - (∫ ω, x ω ∂π) ^ 2 := by
 -- proof
   have : IsProbabilityMeasure π := PSpace.toIsProbabilityMeasure (x := x)
   have e : ∀ ω, (x ω - ∫ ω', x ω' ∂π) ^ 2 = x ω ^ 2 - (2 * (∫ ω', x ω' ∂π) * x ω - (∫ ω', x ω' ∂π) ^ 2) := fun ω => by ring

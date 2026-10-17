@@ -361,18 +361,17 @@ end IdemRep
 -/
 @[path]
 private lemma main
-    (R : Type u) [CommRing R] (Q : Type u) [CommRing Q] [Algebra R Q] [Module.Finite R Q] [Module.Projective R Q] :
-    ∃ (C : Type u) (_ : CommRing C) (_ : Algebra R C) (_ : Algebra.Etale R C)
-      (η : ∀ (S : Type u) [CommRing S] [Algebra R S], (C →ₐ[R] S) ≃ {e : S ⊗[R] Q // IsIdempotentElem e}),
-      ∀ (S T : Type u) [CommRing S] [CommRing T] [Algebra R S] [Algebra R T] (g : S →ₐ[R] T) (c : C →ₐ[R] S),
-        ((η T (g.comp c) : {e : T ⊗[R] Q // IsIdempotentElem e}) : T ⊗[R] Q) =
-          Algebra.TensorProduct.map g (AlgHom.id R Q) ((η S c : {e : S ⊗[R] Q // IsIdempotentElem e}) : S ⊗[R] Q) := by
+  (R : Type u) [CommRing R] (Q : Type u) [CommRing Q] [Algebra R Q] [Module.Finite R Q] [Module.Projective R Q] :
+  ∃ (C : Type u) (_ : CommRing C) (_ : Algebra R C) (_ : Algebra.Etale R C)
+    (η : ∀ (S : Type u) [CommRing S] [Algebra R S], (C →ₐ[R] S) ≃ {e : S ⊗[R] Q // IsIdempotentElem e}),
+    ∀ (S T : Type u) [CommRing S] [CommRing T] [Algebra R S] [Algebra R T] (g : S →ₐ[R] T) (c : C →ₐ[R] S),
+      ((η T (g.comp c) : {e : T ⊗[R] Q // IsIdempotentElem e}) : T ⊗[R] Q) =
+        Algebra.TensorProduct.map g (AlgHom.id R Q) ((η S c : {e : S ⊗[R] Q // IsIdempotentElem e}) : S ⊗[R] Q) := by
   classical
-
   obtain ⟨n, ρ, hρ⟩ := Module.Finite.exists_fin' R Q
   obtain ⟨ι, hρι⟩ := Module.projective_lifting_property ρ LinearMap.id hρ
   exact ⟨IdemRep.C ρ ι, inferInstance, inferInstance, IdemRep.etale ρ ι hρι, fun S _ _ => IdemRep.η ρ ι hρι S,
     fun S T _ _ _ _ g c => IdemRep.η_natural ρ ι hρι S T g c⟩
 
 
--- created on 2026-10-13
+-- created on 2026-10-16

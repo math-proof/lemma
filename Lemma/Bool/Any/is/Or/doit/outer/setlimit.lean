@@ -1,12 +1,21 @@
+import Mathlib.Algebra.BigOperators.Ring.Finset
 import sympy.Basic
 
 
 @[path]
-private lemma main :
+private lemma main
+  [DecidableEq ι]
+  {x : ι → ℕ → ℝ}
+  {f : ι → ℕ}
+  {a b : ι}
+-- given
+  (h₀ : a ≠ b) :
 -- imply
-  True := by
+  ∑ i ∈ ({a, b} : Finset ι), ∑ j ∈ Finset.range (f i), x i j =
+    ∑ j ∈ Finset.range (f a), x a j + ∑ j ∈ Finset.range (f b), x b j := by
 -- proof
-  trivial
+  rw [Finset.sum_pair h₀]
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-17

@@ -1,12 +1,24 @@
+import sympy.sets.sets
 import sympy.Basic
 
 
 @[path]
-private lemma main :
+private lemma main
+  {x k : ℤ}
+-- given
+  (h₀ : k ≥ 0) :
 -- imply
-  True := by
+  k + min k (max (-k) x) ∈ Finset.Ico 0 (2 * k + 1) := by
 -- proof
-  trivial
+  rw [Finset.mem_Ico]
+  refine ⟨?_, ?_⟩
+  ·
+    have hmin : -k ≤ min k (max (-k) x) := le_min (by omega) (le_max_left _ _)
+    omega
+  ·
+    have hmax : min k (max (-k) x) ≤ k := min_le_left _ _
+    omega
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-17

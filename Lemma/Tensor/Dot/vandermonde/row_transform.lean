@@ -2,11 +2,14 @@ import sympy.Basic
 
 
 @[path]
-private lemma main :
+private lemma main
+  {x y : ℝ}
+  {m : ℕ} :
 -- imply
-  True := by
+  (x + y) ^ m = ∑ k ∈ Finset.range (m + 1), x ^ k * y ^ (m - k) * (Nat.choose m k : ℝ) :=
 -- proof
-  trivial
+  add_pow x y m
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-17

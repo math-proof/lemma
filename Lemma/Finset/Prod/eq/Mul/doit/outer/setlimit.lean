@@ -1,12 +1,19 @@
+import Mathlib.Algebra.BigOperators.Ring.Finset
 import sympy.Basic
 
 
 @[path]
-private lemma main :
+private lemma main
+  {f : ℕ → ℕ}
+  (x : ℕ → ℕ → ℝ) :
 -- imply
-  True := by
+  ∏ i ∈ ({0, 1, 2, 3, 4} : Finset ℕ), ∏ j ∈ Finset.range (f i), x i j
+    = (∏ j ∈ Finset.range (f 0), x 0 j) * (∏ j ∈ Finset.range (f 1), x 1 j)
+      * (∏ j ∈ Finset.range (f 2), x 2 j) * (∏ j ∈ Finset.range (f 3), x 3 j)
+      * ∏ j ∈ Finset.range (f 4), x 4 j := by
 -- proof
-  trivial
+  simp [mul_assoc]
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-17

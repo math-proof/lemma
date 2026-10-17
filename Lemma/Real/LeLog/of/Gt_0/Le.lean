@@ -1,12 +1,18 @@
+import Mathlib.Analysis.SpecialFunctions.Log.Basic
 import sympy.Basic
 
 
 @[path]
-private lemma main :
+private lemma main
+  {x y : ℝ}
+-- given
+  (h₀ : 0 < x)
+  (h₁ : x ≤ y) :
 -- imply
-  True := by
+  Real.log x ≤ Real.log y := by
 -- proof
-  trivial
+  apply Real.log_le_log h₀ h₁
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-17

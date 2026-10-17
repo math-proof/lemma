@@ -1,12 +1,20 @@
+import sympy.sets.sets
 import sympy.Basic
 
 
 @[path]
-private lemma main :
+private lemma main
+  {a b c x : ℝ}
+-- given
+  (h₀ : x ∈ Set.Icc a b)
+  (h₁ : x ≤ c)
+  (h₂ : c ≤ b) :
 -- imply
-  True := by
+  x ∈ Set.Icc a c ∧ c ≤ b := by
 -- proof
-  trivial
+  rw [Set.mem_Icc] at h₀
+  exact ⟨⟨h₀.1, h₁⟩, h₂⟩
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-17

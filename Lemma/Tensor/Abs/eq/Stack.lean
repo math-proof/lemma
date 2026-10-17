@@ -2,11 +2,15 @@ import sympy.Basic
 
 
 @[path]
-private lemma main :
+private lemma main
+  {n : ℕ}
+  {x : Fin n → ℝ} :
 -- imply
-  True := by
+  ∀ i, |x i| = Real.sqrt (x i ^ 2) := by
 -- proof
-  trivial
+  intro i
+  exact (Real.sqrt_sq_eq_abs (x i)).symm
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-17

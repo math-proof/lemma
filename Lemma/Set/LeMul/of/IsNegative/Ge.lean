@@ -1,12 +1,18 @@
+import Mathlib.Algebra.Order.Field.Basic
 import sympy.Basic
 
 
 @[path]
-private lemma main :
+private lemma main
+  {a b x : ℝ}
+-- given
+  (hx : x < 0)
+  (h : a ≥ b) :
 -- imply
-  True := by
+  a * x ≤ b * x :=
 -- proof
-  trivial
+  mul_le_mul_of_nonpos_right h hx.le
 
 
--- created on 2026-10-11
+-- created on 2021-04-25
+-- updated on 2026-10-17

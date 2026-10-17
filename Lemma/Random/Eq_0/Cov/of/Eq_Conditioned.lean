@@ -18,7 +18,7 @@ private lemma main
   (hx : Integrable x π)
   (hy : Integrable y π) :
 -- imply
-  Covariance π x y = 0 := by
+  ℂ𝕠𝕧 π x y = 0 := by
 -- proof
   have : IsProbabilityMeasure π := PSpace.toIsProbabilityMeasure (x := x)
   have hi := h.comp (measurable_id.sub_const (∫ ω', x ω' ∂π)) (measurable_id.sub_const (∫ ω', y ω' ∂π))

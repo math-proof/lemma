@@ -1,12 +1,16 @@
+import Mathlib.Tactic.LinearCombination
 import sympy.Basic
 
 
 @[path]
-private lemma main :
+private lemma main
+  {x y θ : ℝ} :
 -- imply
-  True := by
+  (x * Real.cos θ - y * Real.sin θ) ^ 2 + (x * Real.sin θ + y * Real.cos θ) ^ 2 = x ^ 2 + y ^ 2 := by
 -- proof
-  trivial
+  have h : Real.cos θ ^ 2 + Real.sin θ ^ 2 = 1 := Real.cos_sq_add_sin_sq θ
+  linear_combination h * (x ^ 2 + y ^ 2)
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-17

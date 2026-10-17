@@ -1,12 +1,16 @@
+import Mathlib.Analysis.Complex.Trigonometric
 import sympy.Basic
 
 
 @[path]
-private lemma main :
+private lemma main
+  (x : ℝ) :
 -- imply
-  True := by
+  (Real.cos x : ℂ) = (Complex.exp (Complex.I * x) + Complex.exp (-Complex.I * x)) / 2 := by
 -- proof
-  trivial
+  rw [Complex.ofReal_cos, Complex.cos]
+  ring_nf
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-17

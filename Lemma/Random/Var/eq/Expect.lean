@@ -14,7 +14,7 @@ private lemma main
 -- given
   [PSpace π x] :
 -- imply
-  Variance π x = ∫ ω, (x ω - ∫ ω', x ω' ∂π) ^ 2 ∂π := by
+  𝕍𝕒𝕣 π x = ∫ ω, (x ω - ∫ ω', x ω' ∂π) ^ 2 ∂π := by
 -- proof
   exact Random.Var.eq.Integral
 

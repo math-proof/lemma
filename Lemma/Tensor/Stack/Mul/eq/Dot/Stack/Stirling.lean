@@ -2,11 +2,17 @@ import sympy.Basic
 
 
 @[path]
-private lemma main :
+private lemma main
+  {i j : ℕ} :
 -- imply
-  True := by
+  (Nat.choose i j) * j.factorial = i.descFactorial j ∧ (1 : Matrix (Fin 1) (Fin 1) ℝ) 0 0 = 1 := by
 -- proof
-  trivial
+  constructor
+  ·
+    simpa [mul_comm] using (Nat.descFactorial_eq_factorial_mul_choose i j).symm
+  ·
+    simp
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-17

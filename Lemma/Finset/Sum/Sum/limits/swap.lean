@@ -1,12 +1,19 @@
+import Mathlib.Algebra.BigOperators.Ring.Finset
 import sympy.Basic
 
 
 @[path]
-private lemma main :
+private lemma main
+  {m n : ℕ}
+  (h : ℕ → ℝ)
+  (g : ℕ → ℕ → ℝ) :
 -- imply
-  True := by
+  ∑ i ∈ Finset.range m, h i * ∑ j ∈ Finset.range n, g i j
+    = ∑ j ∈ Finset.range n, ∑ i ∈ Finset.range m, h i * g i j := by
 -- proof
-  trivial
+  simp_rw [Finset.mul_sum]
+  exact Finset.sum_comm
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-17

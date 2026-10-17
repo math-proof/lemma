@@ -1,12 +1,17 @@
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Arctan
 import sympy.Basic
 
 
 @[path]
-private lemma main :
+private lemma main
+  {x y : ℝ}
+-- given
+  (h₀ : Real.pi / 2 - Real.arctan x = Real.pi / 2 - Real.arctan y) :
 -- imply
-  True := by
+  Real.pi / 2 - Real.arctan x = Real.pi / 2 - Real.arctan y :=
 -- proof
-  trivial
+  h₀
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-17

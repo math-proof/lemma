@@ -1,12 +1,18 @@
+import Lemma.Real.Tan.eq.Div
 import sympy.Basic
+open Real
 
 
 @[path]
-private lemma main :
+private lemma main
+  {x : ℝ}
+-- given
+  (h : Real.cos x ≠ 0) :
 -- imply
-  True := by
+  Real.sin x = Real.tan x * Real.cos x := by
 -- proof
-  trivial
+  rw [Tan.eq.Div]
+  field_simp [h]
 
 
--- created on 2026-10-11
+-- created on 2026-10-17

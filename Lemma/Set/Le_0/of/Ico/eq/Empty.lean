@@ -1,12 +1,17 @@
+import sympy.sets.sets
 import sympy.Basic
 
 
 @[path]
-private lemma main :
+private lemma main
+  {a b : ℤ}
+-- given
+  (h₀ : Finset.Ico a b = ∅) :
 -- imply
-  True := by
+  b - a ≤ 0 := by
 -- proof
-  trivial
+  linarith [Finset.Ico_eq_empty_iff.mp h₀]
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-17

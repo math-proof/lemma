@@ -2,11 +2,20 @@ import sympy.Basic
 
 
 @[path]
-private lemma main :
+private lemma main
+  {n m : ℕ}
+  {a : Fin n → ℝ}
+  {b : Fin m → ℝ} :
 -- imply
-  True := by
+  ∀ k : Fin n ⊕ Fin m, -(Sum.elim a b k) = Sum.elim (fun i => -a i) (fun j => -b j) k := by
 -- proof
-  trivial
+  intro k
+  cases k with
+  | inl i =>
+    simp
+  | inr j =>
+    simp
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-17

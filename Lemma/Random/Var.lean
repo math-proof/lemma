@@ -16,7 +16,7 @@ private lemma offset
   [PSpace π (fun ω => x ω - ∫ ω', x ω' ∂π)]
   (hx : Integrable x π) :
 -- imply
-  Variance π (fun ω => x ω - ∫ ω', x ω' ∂π) = Variance π x := by
+  𝕍𝕒𝕣 π (fun ω => x ω - ∫ ω', x ω' ∂π) = 𝕍𝕒𝕣 π x := by
 -- proof
   have : IsProbabilityMeasure π := PSpace.toIsProbabilityMeasure (x := x)
   have h0 : ∫ ω, (x ω - ∫ ω', x ω' ∂π) ∂π = 0 := by

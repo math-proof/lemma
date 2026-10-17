@@ -17,28 +17,13 @@ instance PSpace.joint
   toIsProbabilityMeasure := hx.toIsProbabilityMeasure
   aemeasurable := hx.aemeasurable.prodMk hy.aemeasurable
 
-/-- Change of variables for the real expectation of an observable of `x`. -/
-theorem Expectation.ofRV_eq_integral
-    {Ω α : Type*} [MeasurableSpace Ω] [MeasurableSpace α]
-    {π : Measure Ω} {x : Ω → α} [PSpace π x] {f : α → ℝ}
-    (hf : AEStronglyMeasurable f (π.map x)) :
-    Expectation.ofRV π x f = ∫ ω, f (x ω) ∂π := by
-  simp only [Expectation.ofRV, expectation_real]
-  exact integral_map PSpace.aemeasurable hf
-
-/-- `𝔼[x: π](x) = ∫ x dπ`. -/
-theorem Expectation.ofRV_self
-    {Ω : Type*} [MeasurableSpace Ω] (π : Measure Ω) (x : Ω → ℝ) [PSpace π x] :
-    Expectation.ofRV π x (fun a : ℝ ↦ a) = ∫ ω, x ω ∂π :=
-  Expectation.ofRV_eq_integral measurable_id.aestronglyMeasurable
-
-/-- [sympy.Variance]: `Var[x] = 𝔼[(x - 𝔼[x])²]`. -/
-noncomputable def Variance
+/-- [sympy.Variance]: `𝕍𝕒𝕣 π x = 𝔼[(x - 𝔼[x])²]`. -/
+noncomputable def 𝕍𝕒𝕣
     {Ω : Type*} [MeasurableSpace Ω] (π : Measure Ω) (x : Ω → ℝ) [PSpace π x] : ℝ :=
   Expectation.ofRV π x (fun a : ℝ ↦ (a - Expectation.ofRV π x (fun a : ℝ ↦ a)) ^ 2)
 
-/-- [sympy.Covariance]: `Cov[x, y] = 𝔼[(x - 𝔼[x]) (y - 𝔼[y])]`, over the joint law of `(x, y)`. -/
-noncomputable def Covariance
+/-- [sympy.Covariance]: `ℂ𝕠𝕧 π x y = 𝔼[(x - 𝔼[x]) (y - 𝔼[y])]`, over the joint law of `(x, y)`. -/
+noncomputable def ℂ𝕠𝕧
     {Ω : Type*} [MeasurableSpace Ω] (π : Measure Ω) (x y : Ω → ℝ) [PSpace π x] [PSpace π y] : ℝ :=
   Expectation.ofRV π (x, y)
     (fun p : ℝ × ℝ ↦ (p.1 - Expectation.ofRV π x (fun a : ℝ ↦ a)) * (p.2 - Expectation.ofRV π y (fun a : ℝ ↦ a)))

@@ -2,11 +2,14 @@ import sympy.Basic
 
 
 @[path]
-private lemma main :
+private lemma main
+  {f : ι → κ → Set α} :
 -- imply
-  True := by
+  (⋂ i, ⋂ j, f i j) = ⋂ p : ι × κ, f p.1 p.2 := by
 -- proof
-  trivial
+  ext x
+  simp
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-17

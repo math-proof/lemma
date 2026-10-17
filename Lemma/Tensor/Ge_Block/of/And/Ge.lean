@@ -4,21 +4,19 @@ import sympy.Basic
 @[path]
 private lemma main
   {n m : ℕ}
-  {a : Fin n → ℝ}
-  {b : Fin m → ℝ}
   {x : ℝ}
--- given
-  (h₀ : ∀ i, x ≥ a i)
-  (h₁ : ∀ i, x ≥ b i) :
+  {a : Fin n → ℝ}
+  {b : Fin m → ℝ} :
 -- imply
-  ∀ i, x ≥ Fin.append a b i := by
+  (∀ i, x ≥ a i) ∧ (∀ j, x ≥ b j) → (∀ i, x ≥ Sum.elim a b i) := by
 -- proof
-  intro i
-  induction i using Fin.addCases with
-  | left j =>
-    simpa using h₀ j
-  | right j =>
-    simpa using h₁ j
+  intro h i
+  cases i with
+  | inl i =>
+    simpa using h.1 i
+  | inr j =>
+    simpa using h.2 j
 
 
--- created on 2022-04-01
+-- created on 2026-10-11
+-- updated on 2026-10-17

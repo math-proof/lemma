@@ -2,11 +2,18 @@ import sympy.Basic
 
 
 @[path]
-private lemma main :
+private lemma main
+  [DecidableEq ι]
+  {i j : ι}
+  {x y : ι → α}
+-- given
+  (h₀ : x = y) :
 -- imply
-  True := by
+  (fun k => if k = i then x j else if k = j then x i else x k) =
+    fun k => if k = i then y j else if k = j then y i else y k := by
 -- proof
-  trivial
+  rw [h₀]
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-17

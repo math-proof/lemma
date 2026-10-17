@@ -1,5 +1,7 @@
 import sympy.stats.variance
 import sympy.Basic
+import Lemma.Random.Expect.eq.Integral.Id
+import Lemma.Random.OfRV.eq.Integral.of.AEStronglyMeasurable_Map
 open MeasureTheory
 
 
@@ -8,11 +10,11 @@ private lemma main
   [MeasurableSpace Ω]
   {π : Measure Ω} {x y : Ω → ℝ} [PSpace π x] [PSpace π y] :
 -- imply
-  Covariance π x y = ∫ ω, (x ω - ∫ ω', x ω' ∂π) * (y ω - ∫ ω', y ω' ∂π) ∂π := by
+  ℂ𝕠𝕧 π x y = ∫ ω, (x ω - ∫ ω', x ω' ∂π) * (y ω - ∫ ω', y ω' ∂π) ∂π := by
 -- proof
-  unfold Covariance
-  rw [Expectation.ofRV_self, Expectation.ofRV_self]
-  exact Expectation.ofRV_eq_integral (Continuous.aestronglyMeasurable (by fun_prop))
+  unfold ℂ𝕠𝕧
+  rw [Random.Expect.eq.Integral.Id, Random.Expect.eq.Integral.Id]
+  exact Random.OfRV.eq.Integral.of.AEStronglyMeasurable_Map (Continuous.aestronglyMeasurable (by fun_prop))
 
 
 -- created on 2026-10-07

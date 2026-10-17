@@ -1,12 +1,23 @@
+import Mathlib.Order.ConditionallyCompleteLattice.Basic
+import sympy.concrete.expr_with_limits
 import sympy.Basic
 
 
 @[path]
-private lemma main :
+private lemma main
+  {f : α → ℝ}
+  {S : Set α}
+  {c : ℝ}
+-- given
+  (h₀ : S.Nonempty)
+  (h₁ : BddBelow (f '' S))
+  (h₂ : Minima S f ≤ c) :
 -- imply
-  True := by
+  sInf (insert c (f '' S)) = Minima S f := by
 -- proof
-  trivial
+  rw [csInf_insert h₁ (h₀.image f)]
+  apply min_eq_right h₂
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-17

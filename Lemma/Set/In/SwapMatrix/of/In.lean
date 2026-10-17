@@ -2,11 +2,19 @@ import sympy.Basic
 
 
 @[path]
-private lemma main :
+private lemma main
+  {n : ℕ}
+  {x : Fin n → α}
+  {S : Set α}
+  {σ : Equiv.Perm (Fin n)}
+-- given
+  (h₀ : ∀ k, x k ∈ S) :
 -- imply
-  True := by
+  ∀ k, x (σ k) ∈ S := by
 -- proof
-  trivial
+  intro k
+  exact h₀ (σ k)
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-17

@@ -1,12 +1,19 @@
+import sympy.sets.sets
 import sympy.Basic
 
 
 @[path]
-private lemma main :
+private lemma main
+  {a b x : ℝ}
+-- given
+  (h₀ : a < b)
+  (h₁ : x ∈ Set.Ioi 0) :
 -- imply
-  True := by
+  a / x < b / x := by
 -- proof
-  trivial
+  rw [Set.mem_Ioi] at h₁
+  exact div_lt_div_of_pos_right h₀ h₁
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-17

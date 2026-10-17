@@ -1,12 +1,21 @@
+import Lemma.Real.GeSin.of.Ge_0.quadratic
+import Lemma.Real.GeSin.of.Le_0.quadratic
 import sympy.Basic
+open Real
 
 
 @[path]
-private lemma main :
+private lemma main
+  {x : ℝ} :
 -- imply
-  True := by
+  Real.sin x ≥ x * (1 - x / Real.pi) := by
 -- proof
-  trivial
+  if h₀ : 0 ≤ x then
+    apply GeSin.of.Ge_0.quadratic h₀
+  else
+    apply GeSin.of.Le_0.quadratic
+    linarith
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-17

@@ -258,6 +258,8 @@ function looksLikeDataArrow(type, vars, typeVars) {
  * @param {string} token
  */
 function escapeSpecials(token) {
+    // Lone "_" (anonymous binder) must be "\\_" — raw "\\tag*{$_$}" makes KaTeX treat "_" as subscript.
+    if (token === "_") return "\\_";
     return token.replace(/^(_*)([^\W_]\w*?)_(.+)/, (_m, lead, head, tail) => {
         const escTail = tail.replace(/[{}_]/g, (c) => `\\${c}`);
         const escLead = lead.replace(/_/g, '\\_');

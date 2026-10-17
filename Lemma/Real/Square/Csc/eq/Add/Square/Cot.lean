@@ -1,12 +1,18 @@
+import Lemma.Real.Square.Cot.eq.Sub.Square.Csc
 import sympy.Basic
+open Real
 
 
 @[path]
-private lemma main :
+private lemma main
+  {x : ℝ}
+-- given
+  (h : Real.sin x ≠ 0) :
 -- imply
-  True := by
+  Real.csc x ^ 2 = 1 + Real.cot x ^ 2 := by
 -- proof
-  trivial
+  linarith [Square.Cot.eq.Sub.Square.Csc h]
 
 
--- created on 2026-10-11
+-- created on 2023-11-26
+-- updated on 2026-10-17

@@ -1,12 +1,16 @@
+import Mathlib.LinearAlgebra.Matrix.Notation
 import sympy.Basic
 
 
 @[path]
-private lemma main :
+private lemma main
+  {n : ℕ}
+  {A B : Matrix (Fin n) (Fin n) ℂ} :
 -- imply
-  True := by
+  (A * B).conjTranspose = B.conjTranspose * A.conjTranspose := by
 -- proof
-  trivial
+  simp
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-17

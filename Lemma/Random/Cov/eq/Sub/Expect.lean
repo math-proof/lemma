@@ -18,7 +18,7 @@ private lemma main
   (hy : Integrable y π)
   (hxy : Integrable (fun ω => x ω * y ω) π) :
 -- imply
-  Covariance π x y = ∫ ω, x ω * y ω ∂π - (∫ ω, x ω ∂π) * ∫ ω, y ω ∂π := by
+  ℂ𝕠𝕧 π x y = ∫ ω, x ω * y ω ∂π - (∫ ω, x ω ∂π) * ∫ ω, y ω ∂π := by
 -- proof
   have : IsProbabilityMeasure π := PSpace.toIsProbabilityMeasure (x := x)
   have e : ∀ ω, (x ω - ∫ ω', x ω' ∂π) * (y ω - ∫ ω', y ω' ∂π) = x ω * y ω - ((∫ ω', x ω' ∂π) * y ω + (∫ ω', y ω' ∂π) * x ω - (∫ ω', x ω' ∂π) * ∫ ω', y ω' ∂π) := fun ω => by ring

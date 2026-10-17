@@ -1,12 +1,18 @@
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
+import sympy.functions.elementary.complexes
 import sympy.Basic
 
 
 @[path]
-private lemma main :
+private lemma main
+  {x : ℝ}
+-- given
+  (h₀ : x > 0) :
 -- imply
-  True := by
+  (Real.sqrt x : ℂ) ∈ Set.range Complex.ofReal ∧ 0 < Real.sqrt x :=
 -- proof
-  trivial
+  ⟨⟨Real.sqrt x, rfl⟩, Real.sqrt_pos.mpr h₀⟩
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-17

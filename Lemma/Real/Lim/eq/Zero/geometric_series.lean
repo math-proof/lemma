@@ -1,12 +1,18 @@
+import Mathlib.Analysis.SpecificLimits.Normed
+import sympy.series.limits
 import sympy.Basic
 
 
 @[path]
-private lemma main :
+private lemma main
+  {x : ℝ}
+-- given
+  (h₀ : |x| < 1) :
 -- imply
-  True := by
+  lim [(n : ℕ) → ∞] x ^ n = 0 := by
 -- proof
-  trivial
+  apply tendsto_pow_atTop_nhds_zero_of_abs_lt_one h₀
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-17

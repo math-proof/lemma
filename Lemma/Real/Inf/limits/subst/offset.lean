@@ -1,12 +1,18 @@
+import Mathlib.Order.ConditionallyCompleteLattice.Basic
 import sympy.Basic
 
 
 @[path]
-private lemma main :
+private lemma main
+  {f : ℝ → ℝ}
+  {S : Set ℝ}
+  (c : ℝ) :
 -- imply
-  True := by
+  sInf ((fun x => f (x + c)) '' S) = sInf (f '' ((fun x => x + c) '' S)) := by
 -- proof
-  trivial
+  rw [← Set.image_comp]
+  rfl
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-17

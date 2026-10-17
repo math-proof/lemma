@@ -2,11 +2,21 @@ import sympy.Basic
 
 
 @[path]
-private lemma main :
+private lemma main
+  {p : Prop} [Decidable p]
+  {x : α}
+  {A B : Set α}
+-- given
+  (h₀ : p → x ∉ B)
+  (h₁ : ¬p → x ∉ A) :
 -- imply
-  True := by
+  x ∉ if p then B else A := by
 -- proof
-  trivial
+  if hp : p then
+    simpa [hp] using h₀ hp
+  else
+    simpa [hp] using h₁ hp
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-17

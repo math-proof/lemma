@@ -1,12 +1,26 @@
+import torch.nn.functional.relu
 import sympy.Basic
 
 
 @[path]
-private lemma main :
+private lemma main
+  {k n m : ℤ}
+-- given
+  (h₀ : k ≤ n) :
 -- imply
-  True := by
+  relu (k - min m n) = relu (k - m) := by
 -- proof
-  trivial
+  unfold relu
+  if hmn : m ≤ n then
+    simp [min_eq_left hmn]
+  else
+    have hnm : n ≤ m := le_of_not_ge hmn
+    have hk : k - n ≤ 0 := by
+      linarith
+    have hkm : k - m ≤ 0 := by
+      linarith
+    simp [min_eq_right hnm, max_eq_right hk, max_eq_right hkm]
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-17

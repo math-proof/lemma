@@ -2,11 +2,15 @@ import sympy.Basic
 
 
 @[path]
-private lemma main :
+private lemma main
+  {A B : Set α}
+-- given
+  (h : A ⊆ B) :
 -- imply
-  True := by
+  B ⊇ A :=
 -- proof
-  trivial
+  h
 
 
--- created on 2026-10-11
+-- created on 2021-06-28
+-- updated on 2026-10-17

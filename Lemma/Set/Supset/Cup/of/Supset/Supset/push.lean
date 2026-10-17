@@ -2,11 +2,23 @@ import sympy.Basic
 
 
 @[path]
-private lemma main :
+private lemma main
+  {a b : ℤ}
+  {g f : ℤ → Set α}
+-- given
+  (h₀ : b ≥ a + 1)
+  (h₁ : g b ⊇ f b)
+  (h₂ : (⋃ k ∈ Finset.Ico a b, g k) ⊇ ⋃ k ∈ Finset.Ico a b, f k) :
 -- imply
-  True := by
+  (⋃ k ∈ Finset.Ico a (b + 1), g k) ⊇ ⋃ k ∈ Finset.Ico a (b + 1), f k := by
 -- proof
-  trivial
+  have e : Finset.Ico a (b + 1) = insert b (Finset.Ico a b) := by
+    ext k
+    simp only [Finset.mem_Ico, Finset.mem_insert]
+    omega
+  rw [e, Finset.set_biUnion_insert, Finset.set_biUnion_insert]
+  apply Set.union_subset_union h₁ h₂
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-17

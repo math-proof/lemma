@@ -1,12 +1,19 @@
+import Mathlib.Analysis.Calculus.Deriv.Slope
+import sympy.series.limits
 import sympy.Basic
 
 
 @[path]
-private lemma main :
+private lemma main
+  {f : ℝ → ℝ}
+  {x : ℝ}
+-- given
+  (h₀ : DifferentiableAt ℝ f x) :
 -- imply
-  True := by
+  lim [y → x] slope f x y = deriv f x :=
 -- proof
-  trivial
+  h₀.hasDerivAt.tendsto_slope
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-17

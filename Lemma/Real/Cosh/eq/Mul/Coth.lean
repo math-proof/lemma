@@ -1,12 +1,20 @@
+import Lemma.Real.Coth.eq.Div
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 import sympy.Basic
+open Real
 
 
 @[path]
-private lemma main :
+private lemma main
+  {x : ℝ}
+-- given
+  (h : Real.sinh x ≠ 0) :
 -- imply
-  True := by
+  Real.cosh x = Real.coth x * Real.sinh x := by
 -- proof
-  trivial
+  rw [Coth.eq.Div]
+  field_simp [h]
 
 
--- created on 2026-10-11
+-- created on 2023-11-26
+-- updated on 2026-10-17

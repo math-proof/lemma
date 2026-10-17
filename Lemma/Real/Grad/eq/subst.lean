@@ -1,12 +1,19 @@
+import Mathlib.Analysis.Calculus.Deriv.Comp
 import sympy.Basic
 
 
 @[path]
-private lemma main :
+private lemma main
+  {f g : ℝ → ℝ}
+  {x : ℝ}
+-- given
+  (h₀ : DifferentiableAt ℝ g x)
+  (h₁ : DifferentiableAt ℝ f (g x)) :
 -- imply
-  True := by
+  deriv (f ∘ g) x = deriv f (g x) * deriv g x :=
 -- proof
-  trivial
+  deriv_comp x h₁ h₀
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-17

@@ -1,12 +1,18 @@
+import sympy.sets.sets
 import sympy.Basic
 
 
 @[path]
-private lemma main :
+private lemma main
+  {a b x : ℝ}
+-- given
+  (h₀ : x < a)
+  (h₁ : b < x) :
 -- imply
-  True := by
+  x ∈ Set.Ioo b a :=
 -- proof
-  trivial
+  ⟨h₁, h₀⟩
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-17

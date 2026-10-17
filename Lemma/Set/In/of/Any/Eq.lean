@@ -2,11 +2,16 @@ import sympy.Basic
 
 
 @[path]
-private lemma main :
+private lemma main
+  {lhs : α}
+  {rhs : Set α}
+-- given
+  (h₀ : lhs ∈ rhs) :
 -- imply
-  True := by
+  ∃ v ∈ rhs, lhs = v :=
 -- proof
-  trivial
+  ⟨lhs, h₀, rfl⟩
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-17

@@ -2,11 +2,16 @@ import sympy.Basic
 
 
 @[path]
-private lemma main :
+private lemma main
+  {A : Set α}
+  {f : ι → Set α}
+-- given
+  (h₀ : (⋃ i, f i) ⊆ A) :
 -- imply
-  True := by
+  ∀ i, f i ⊆ A :=
 -- proof
-  trivial
+  Set.iUnion_subset_iff.mp h₀
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-17

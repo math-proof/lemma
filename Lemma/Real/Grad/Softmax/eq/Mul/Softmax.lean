@@ -13,7 +13,7 @@ Here `F i t` stands for the `i`-th logit `f(x)ᵢ` as a function of one coordina
 \]
 -/
 @[path]
-private lemma vector.using.Stack
+private lemma stack
   {n : ℕ}
   {F : Fin n → ℝ → ℝ}
   {t : ℝ}
@@ -56,7 +56,7 @@ private lemma vector
     Real.exp (F j t) / (∑ i, Real.exp (F i t)) *
       (deriv (F j) t - ∑ i, Real.exp (F i t) / (∑ i, Real.exp (F i t)) * deriv (F i) t) :=
 -- proof
-  vector.using.Stack h j
+  stack h j
 
 
 -- created on 2023-03-18

@@ -1,12 +1,21 @@
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+import sympy.functions.elementary.trigonometric
 import sympy.Basic
 
 
 @[path]
-private lemma main :
+private lemma main
+  {x : ℝ}
+-- given
+  (h : Real.sin x ≠ 0) :
 -- imply
-  True := by
+  Real.cot x ^ 2 = Real.csc x ^ 2 - 1 := by
 -- proof
-  trivial
+  rw [Real.cot_eq_cos_div_sin]
+  simp only [Real.csc]
+  field_simp [h]
+  linarith [Real.sin_sq_add_cos_sq x]
 
 
--- created on 2026-10-11
+-- created on 2023-11-26
+-- updated on 2026-10-17

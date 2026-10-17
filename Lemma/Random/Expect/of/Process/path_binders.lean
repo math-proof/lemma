@@ -1,9 +1,9 @@
 import sympy.stats.joint_rv
-import sympy.stats.variance
 import sympy.stats.policy_trajectory.gradient
 import sympy.Basic
 import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
 import Lemma.Random.PSpace_Path.of.All_PSpace
+import Lemma.Random.OfRV.eq.Integral.of.AEStronglyMeasurable_Map
 open MeasureTheory PolicyGradient PolicyGradient.Model Random
 
 set_option linter.unusedVariables false
@@ -42,7 +42,7 @@ private lemma main
     ∫ ω, ∑' t, γ ^ t * r t ω ∂(M θ) := by
 -- proof
   intro _ _ _ _ _ _
-  exact Expectation.ofRV_eq_integral
+  exact Random.OfRV.eq.Integral.of.AEStronglyMeasurable_Map
     (f := fun p : (ℕ → S) × (ℕ → A) × (ℕ → ℝ) => ∑' t, γ ^ t * p.2.2 t)
     (by
       refine (Measurable.tsum fun t => ?_).aestronglyMeasurable

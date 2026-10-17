@@ -1,12 +1,14 @@
+import sympy.functions.elementary.trigonometric
 import sympy.Basic
 
 
 @[path]
-private lemma main :
+private lemma main
+  {x : ℝ} :
 -- imply
-  True := by
+  Real.cos x = 1 / Real.sec x := by
 -- proof
-  trivial
+  simp [Real.sec]
 
 
--- created on 2026-10-11
+-- created on 2026-10-17

@@ -2,11 +2,14 @@ import sympy.Basic
 
 
 @[path]
-private lemma main :
+private lemma main
+  {n : ℕ}
+  (σ : Equiv.Perm (Fin n)) :
 -- imply
-  True := by
+  Finset.image (σ : Fin n → Fin n) Finset.univ = Finset.univ := by
 -- proof
-  trivial
+  simp
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-17

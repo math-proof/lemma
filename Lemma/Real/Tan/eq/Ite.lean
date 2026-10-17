@@ -1,12 +1,16 @@
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 import sympy.Basic
 
 
 @[path]
-private lemma main :
+private lemma main
+  {p : Prop} [Decidable p]
+  {a b : ℝ} :
 -- imply
-  True := by
+  Real.tan (if p then a else b) = if p then Real.tan a else Real.tan b :=
 -- proof
-  trivial
+  apply_ite Real.tan p a b
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-17

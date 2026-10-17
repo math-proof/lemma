@@ -2,11 +2,15 @@ import sympy.Basic
 
 
 @[path]
-private lemma main :
+private lemma main
+  {A : Set ι} [DecidablePred (· ∈ A)]
+  {f : ι → Set α} :
 -- imply
-  True := by
+  (⋂ x ∈ A, f x) = ⋂ x, if x ∈ A then f x else Set.univ := by
 -- proof
-  trivial
+  ext y
+  aesop
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-17

@@ -1,12 +1,18 @@
+import Mathlib.LinearAlgebra.Matrix.Notation
 import sympy.Basic
 
 
 @[path]
-private lemma main :
+private lemma main
+  {n m : ℕ}
+  {A : Matrix (Fin n) (Fin m) ℝ}
+  {v : Fin m → ℝ} :
 -- imply
-  True := by
+  Matrix.of (fun i j => A i j + v j) = A + Matrix.of (fun _ j => v j) := by
 -- proof
-  trivial
+  ext i j
+  simp
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-17

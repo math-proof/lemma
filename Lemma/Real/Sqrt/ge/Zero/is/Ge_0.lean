@@ -2,11 +2,17 @@ import sympy.Basic
 
 
 @[path]
-private lemma main :
+private lemma main
+  {x y : ℝ}
+-- given
+  (_h₀ : 0 ≤ y)
+  (h₁ : y ^ 2 = x) :
 -- imply
-  True := by
+  0 ≤ x := by
 -- proof
-  trivial
+  rw [← h₁]
+  nlinarith
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-17

@@ -2,11 +2,18 @@ import sympy.Basic
 
 
 @[path]
-private lemma main :
+private lemma main
+  {s : Set ι} [DecidablePred (· ∈ s)]
+  {t : ι → Set κ} [∀ i, DecidablePred (· ∈ t i)]
+  {f : ι → κ → Set α} :
 -- imply
-  True := by
+  (⋂ i ∈ s, ⋂ j ∈ t i, f i j) =
+    ⋂ i, ⋂ j, if i ∈ s ∧ j ∈ t i then f i j else Set.univ := by
 -- proof
-  trivial
+  ext x
+  simp
+  grind
 
 
 -- created on 2026-10-11
+-- updated on 2026-10-17

@@ -1,12 +1,17 @@
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 import sympy.Basic
 
 
 @[path]
-private lemma main :
+private lemma main
+  {x y : ℝ}
+-- given
+  (h : Real.cos x = Real.cos y) :
 -- imply
-  True := by
+  Real.cos x = Real.cos y :=
 -- proof
-  trivial
+  h
 
 
--- created on 2026-10-11
+-- created on 2022-01-23
+-- updated on 2026-10-17
