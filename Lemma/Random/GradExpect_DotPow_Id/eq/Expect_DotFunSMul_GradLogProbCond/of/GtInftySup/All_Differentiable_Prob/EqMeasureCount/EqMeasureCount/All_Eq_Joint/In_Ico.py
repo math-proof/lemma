@@ -48,7 +48,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq.V_Function.reversed)
 
-    Eq << Random.TSum_SMulPowFderiv.eq.TSum_SMulPow_Integral_SMul.of.GtInftySup.All_Differentiable.All_Eq_Expect_CondDot.All_Eq_Expect_CondDot.Measure.eq.Count.Measure.eq.Count.All_Eq_Joint.In_Ico0.apply(Eq[0], Eq.Q_Function, Eq.V_Function, Eq[-1])
+    Eq << Random.GradExpect_DotPow_Id.eq.Expect_DotFunSMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_Eq_Expect_CondDot.All_Eq_Expect_CondDot.EqMeasureCount.EqMeasureCount.All_Eq_Joint.In_Ico.apply(Eq[0], Eq.Q_Function, Eq.V_Function, Eq[-1])
 
     Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Sum_MulGetS)
 
