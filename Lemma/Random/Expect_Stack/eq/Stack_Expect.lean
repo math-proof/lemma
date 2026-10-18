@@ -10,7 +10,7 @@ import Lemma.Tensor.DataGet.eq.GetUnflattenData
 import Lemma.Vector.Eq.is.All_EqGetS
 import Lemma.Vector.GetUnflatten.eq.Get_AddMul
 open MeasureTheory Tensor Vector
-set_option maxHeartbeats 2000000
+set_option maxHeartbeats 1000000
 
 
 /-- X[j] = X.get j for row-stacked tensors (Fin length proof alignment). -/
