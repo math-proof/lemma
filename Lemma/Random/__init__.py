@@ -76,7 +76,6 @@ from . import All_Eq_Add_MaxAdd
 from . import Eq_Expect
 from . import GradVk
 from . import CondIndep
-from . import TSum_SMulPowFderiv
 from . import Integral_SMulGetDotFderivLog
 from . import Eq_Expect_FunPowDot
 from . import TSum_MulPow_IntegralInterPreimage_Preimage

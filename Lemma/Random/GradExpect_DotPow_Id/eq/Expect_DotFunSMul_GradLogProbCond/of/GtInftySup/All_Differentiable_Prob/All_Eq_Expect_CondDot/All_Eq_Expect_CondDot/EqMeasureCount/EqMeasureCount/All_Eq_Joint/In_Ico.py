@@ -28,7 +28,7 @@ def prove(Eq):
                 Less(Sup[s[t].bvar, t](Abs(Derivative[π]((V[π] ^ γ)(s[t].bvar)))), oo))
 
     n = Symbol(integer=True, nonnegative=True)
-    Eq.expect = Random.TSum_SMulPowFderiv.eq.Integral_AddSum_SMul_SMulPowIntegral_Fderiv.of.GtInftySup.All_Differentiable.All_Eq_Expect_CondDot.All_Eq_Expect_CondDot.EqMeasureCount.EqMeasureCount.All_Eq_Joint.In_Ico0.apply(*Eq[:3], n)
+    Eq.expect = Random.GradExpect_DotPow_Id.eq.AddExpect_Sum_SMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_Eq_Expect_CondDot.All_Eq_Expect_CondDot.EqMeasureCount.EqMeasureCount.All_Eq_Joint.In_Ico.apply(*Eq[:3], n)
 
     Eq << Real.EqLim.of.Eq.apply(Eq.expect, (n, oo))
 
