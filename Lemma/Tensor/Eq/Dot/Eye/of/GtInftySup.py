@@ -12,14 +12,14 @@ def apply(lt_r, γ, λ, k=None, i=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor
+    from Lemma import Tensor, Real
 
     t, k, i = Symbol(integer=True) # time step counter
     δ = Symbol(shape=(oo,), real=True) # TD residual
     λ, γ = Symbol(domain=Interval(0, 1, right_open=True)) # Discount factor: penalty to uncertainty of future rewards; myopic for γ = 0; and far-sighted for γ = 1
     Eq << apply(Less(Sup[t](Abs(δ[t])), oo), γ, λ, k, i)
 
-    Eq << Tensor.EqDot.of.GtInftySup.generalized_advantage_estimate.apply(Eq[0], γ, λ, k, i)
+    Eq << Real.MulSub1_Dot_FunDotPow_Range.eq.DotPow_Id.of.GtInftySup.Subset_Ico.apply(Eq[0], γ, λ, k, i)
 
     Eq << Eq[-1].this.rhs.find(Pow).apply(Tensor.Pow.eq.Dot, reverse=True)
 

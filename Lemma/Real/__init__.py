@@ -217,3 +217,4 @@ from . import Any_Le
 from . import LimMul
 from . import Deriv
 from . import Eq_Lim
+from . import MulSub1_Dot_FunDotPow_Range
