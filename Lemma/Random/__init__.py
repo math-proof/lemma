@@ -77,7 +77,6 @@ from . import Eq_Expect
 from . import GradVk
 from . import CondIndep
 from . import Integral_SMulGetDotFderivLog
-from . import Eq_Expect_FunPowDot
 from . import TSum_MulPow_IntegralInterPreimage_Preimage
 from . import Integral_TSum_PowMul
 from . import Integral_TSum_MulPow
