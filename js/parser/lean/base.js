@@ -1081,6 +1081,7 @@ export class Lean extends IndentedNode {
             case '⊇':
             case '⊂':
             case '⊃':
+            case '⇀':
             case '↦':
             case '↔':
             case '∧':

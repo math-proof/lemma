@@ -1,23 +1,23 @@
 [
   {
-    "resolved": "PowerSeries",
-    "reason": "Mathlib `PowerSeries` is a def of a type former",
+    "resolved": "Real",
+    "reason": "Mathlib `Real` is a structure",
     "kind": "data type",
-    "folder": "PowerSeries",
-    "decl": "def-type"
-  },
-  {
-    "resolved": "Fin",
-    "reason": "Mathlib `Fin` is a structure",
-    "kind": "data type",
-    "folder": "Fin",
+    "folder": "Real",
     "decl": "structure"
   },
   {
-    "resolved": "Matrix",
-    "reason": "Mathlib `Matrix` is a def of a type former",
+    "resolved": "Set",
+    "reason": "Mathlib `Set` is a def of a type former",
     "kind": "data type",
-    "folder": "Matrix",
+    "folder": "Set",
     "decl": "def-type"
+  },
+  {
+    "resolved": null,
+    "reason": "no Mathlib constant whose last name component equals this folder",
+    "kind": "topic/unknown",
+    "folder": "Tensor",
+    "decl": "missing"
   }
 ]

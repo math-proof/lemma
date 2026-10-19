@@ -210,8 +210,24 @@ export class CMBridge {
   deleteH(dir, unit) {
     if (unit !== "char") return;
     const sel = this.view.state.selection.main;
-    const target = dir < 0 ? Math.max(0, sel.from - 1) : sel.to + 1;
-    this.view.dispatch({ changes: { from: dir < 0 ? target : sel.from, to: dir < 0 ? sel.from : target }, selection: { anchor: target }, userEvent: "delete" });
+    // Non-empty selection: delete exactly the range (CM5 deleteH / Delete).
+    // Empty: delete one char in `dir` (+1 forward / Delete, -1 back / Backspace).
+    if (!sel.empty) {
+      this.view.dispatch({
+        changes: { from: sel.from, to: sel.to },
+        selection: { anchor: sel.from },
+        userEvent: "delete",
+      });
+      return;
+    }
+    const head = sel.head;
+    const target = dir < 0 ? Math.max(0, head - 1) : Math.min(this.doc.length, head + 1);
+    if (target === head) return;
+    this.view.dispatch({
+      changes: { from: Math.min(head, target), to: Math.max(head, target) },
+      selection: { anchor: Math.min(head, target) },
+      userEvent: "delete",
+    });
   }
 
   showHint() {

@@ -26,6 +26,7 @@ Guidelines and prompts for using LLMs to write and refactor Lean 4 proofs in thi
     - inline `have` without introducing `show` if it is referenced only once
     - A sub lemma without @[path], referenced only once, can be inlined if no `have` is introduced
     - use `grind`/`aesop` as much as possible
+  - `set_option maxHeartbeats` (and other elaborator heartbeat budgets) may be set or raised to any value strictly below 1000000. 1000000 and above stay disallowed.
 
 ## Folder layout
 - `Lemma/` 

@@ -1,10 +1,11 @@
 import Lemma.Random.GradExpect_DotPow_Id.eq.Expect_Dot_SMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_Eq_Joint.In_Icc.In_Ico
 import sympy.core.function
-import Lemma.Tensor.EqDot.of.GtInftySup.generalized_advantage_estimate
+import Lemma.Real.MulSub1_Dot_FunDotPow_Range.eq.DotPow_Id.of.GtInftySup.Subset_Ico
 import Mathlib.MeasureTheory.Constructions.Polish.Basic
 import Mathlib.Analysis.Calculus.Gradient.Basic
 open scoped ENNReal.ToRealCoe
-open MeasureTheory PolicyGradient PolicyGradient.Model Filter Topology Random Measure Tensor
+open Finset (range)
+open MeasureTheory PolicyGradient PolicyGradient.Model Filter Topology Random Measure
 
 
 /--
@@ -14,7 +15,7 @@ exponentially weighted average of the `(k + 1)`-step advantage estimates
 `A[t] = (1 - λ) * ∑' k, λ ^ k * ∑ i ∈ range (k + 1), γ ^ i * δ[t + i]` gives
 `∇𝔼[γ ** Stack[t](t) @ r] = 𝔼[(γ ** Stack[t](t)) @ (A[t] • ∇ log π(a[t] | s[t]))]`.
 The proof rewrites `A[t]` pointwise into the closed form `(γ * λ) ** Stack[k](k) @ δ[t:]`
-(`Tensor.EqDot.of.GtInftySup.generalized_advantage_estimate`, the residuals being almost surely bounded since
+(`Real.MulSub1_Dot_FunDotPow_Range.eq.DotPow_Id.of.GtInftySup.Subset_Ico`, the residuals being almost surely bounded since
 `V` is the value function, `AeNormSub.le.DeltaBound.of.In_Ico`) and applies
 `Random.GradExpect_DotPow_Id.eq.Expect_Dot_SMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_Eq_Joint.In_Icc.In_Ico`.
 -/
@@ -26,9 +27,9 @@ private lemma main
   {M : Model Θ S A}
   {θ : Θ}
   {γ ℓ : ℝ}
-  {r : Fun ℕ ((ℕ → ℝ × S × A) → ℝ)}
-  {s : Fun ℕ ((ℕ → ℝ × S × A) → S)}
-  {a : Fun ℕ ((ℕ → ℝ × S × A) → A)}
+  {r : ℕ ⇀ (ℕ → ℝ × S × A) → ℝ}
+  {s : ℕ ⇀ (ℕ → ℝ × S × A) → S}
+  {a : ℕ ⇀ (ℕ → ℝ × S × A) → A}
 -- given
   (h₀ : ({γ, ℓ} : Set ℝ) ⊆ Set.Ico 0 1)
   (h₁ : ∀ t, (· t) = (r t, s t, a t))
@@ -39,26 +40,22 @@ private lemma main
     SinglePSpace.of.EqMeasureCount.Measurable ((Random.Measurable.of.All_Eq.snd.snd (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁ t).prodMk (Random.Measurable.of.All_Eq.snd.fst (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁ t)) (by
       show (ReferenceMeasure.measure : Measure A).prod (ReferenceMeasure.measure : Measure S) = _
       rw [CountableMeasure.measure_eq_count, CountableMeasure.measure_eq_count, Count.eq.ProdCountS])
-  have hs : ∀ t, PSpace (M θ) (s t) := fun t =>
-    ⟨(Random.Measurable.of.All_Eq.snd.fst (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁ t).aemeasurable⟩
-  have ha : ∀ t, PSpace (M θ) (a t) := fun t =>
-    ⟨(Random.Measurable.of.All_Eq.snd.snd (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁ t).aemeasurable⟩
-  have : ∀ θ, PSpace (M θ) (AsPathRV.path (r)) := fun θ =>
+  have : ∀ θ, PSpace (M θ) (AsPathRV.path r) := fun θ =>
     PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.fst (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁ t).aemeasurable⟩)
-  have : PSpace (M θ) (AsPathRV.path (s)) :=
-    PSpace_Path.of.All_PSpace hs
-  have : PSpace (M θ) (AsPathRV.path (a)) :=
-    PSpace_Path.of.All_PSpace ha
+  have : PSpace (M θ) (AsPathRV.path s) :=
+    PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.snd.fst (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁ t).aemeasurable⟩)
+  have : PSpace (M θ) (AsPathRV.path a) :=
+    PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.snd.snd (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁ t).aemeasurable⟩)
   let : MeasurableSpace Θ := borel Θ
-  let V : Fun Θ (Fun ℕ (Fun ℕ S → ℝ)) := ⟨fun θ => ⟨fun t («s.bvar» : Fun ℕ S) =>
+  let V : Θ ⇀ ℕ ⇀ (ℕ ⇀ S) → ℝ := ⟨fun θ => ⟨fun t («s.bvar» : ℕ ⇀ S) =>
     𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s[t] = «s.bvar»[t])⟩⟩
-  let V_θ : Fun ℕ ((ℕ → S) → ℕ → ℝ) := ⟨fun t δ k => V[θ, t + k] ⟨fun _ => δ k⟩⟩
+  let V_θ : ℕ ⇀ (ℕ → S) → ℕ → ℝ := ⟨fun t δ k => V[θ, t + k] ⟨fun _ => δ k⟩⟩
   ∇[θ] 𝔼[r: M θ]((γ ^ (id : ℕ → ℕ)) @ r) =
     𝔼[r, s, a : M θ]((γ ^ (id : ℕ → ℕ)) @ fun t ↦
-      (((1 - ℓ) * ((ℓ ^ (id : ℕ → ℕ)) @ fun k ↦ (γ ^ Finset.range (k + 1)) @ fun i =>
-        (r (t + i) + γ * V_θ[t + 1] s[t + 1:] i - V_θ[t] s[t:] i))) • ∇[θ] (ℙ[M θ](a[t] | s[t]) : ℝ).log)) := by
+      (((1 - ℓ) * ((ℓ ^ (id : ℕ → ℕ)) @ fun k ↦ (γ ^ range (k + 1)) @
+        (r[t:] + γ • V_θ[t + 1] s[t + 1:] - V_θ[t] s[t:]))) • ∇[θ] (ℙ[M θ](a[t] | s[t]) : ℝ).log)) := by
 -- proof
-  intro hP _ _ _ _ _ _ V V_θ
+  intro hP _ _ _ _ V V_θ
   simp only [FinsetPow.dot_eq]
   classical
   have hγ : γ ∈ Set.Ico 0 1 := h₀ (by simp)
@@ -105,13 +102,13 @@ private lemma main
     rwa [h2 j]
   -- almost surely the paper's estimator is the closed form
   have hpt : ∀ᵐ ω ∂(M θ), ∀ t,
-      (1 - ℓ) * ((ℓ ^ (id : ℕ → ℕ)) @ fun k ↦ ∑ i ∈ Finset.range (k + 1), γ ^ i *
+      (1 - ℓ) * ((ℓ ^ (id : ℕ → ℕ)) @ fun k ↦ ∑ i ∈ range (k + 1), γ ^ i *
         (r (t + i) ω + γ * V θ (t + i + 1) ⟨fun _ => s (t + i + 1) ω⟩ - V θ (t + i) ⟨fun _ => s (t + i) ω⟩)) =
       ((γ * ℓ) ^ (id : ℕ → ℕ)) @
         (fun k : ℕ => r (t + k) ω + γ * V θ (t + k + 1) ⟨fun _ => s (t + k + 1) ω⟩ - V θ (t + k) ⟨fun _ => s (t + k) ω⟩) := by
     filter_upwards [hbdd] with ω hb t
-    exact EqDot.of.GtInftySup.generalized_advantage_estimate
-      (δ := fun j => r j ω + γ * V θ (j + 1) ⟨fun _ => s (j + 1) ω⟩ - V θ j ⟨fun _ => s j ω⟩) (t := t) hb hγ hℓ₀
+    exact Real.MulSub1_Dot_FunDotPow_Range.eq.DotPow_Id.of.GtInftySup.Subset_Ico
+      (δ := ⟨fun j => r j ω + γ * V θ (j + 1) ⟨fun _ => s (j + 1) ω⟩ - V θ j ⟨fun _ => s j ω⟩⟩) (t := t) h₀ hb
   have hmeas : ∀ k, Measurable fun ω : ℕ → ℝ × S × A =>
       r k ω + γ * V θ (k + 1) ⟨fun _ => s (k + 1) ω⟩ - V θ k ⟨fun _ => s k ω⟩ := fun k =>
     ((Random.Measurable.of.All_Eq.fst h₁ k).add (((measurable_of_countable (fun x : S => V θ (k + 1) ⟨fun _ => x⟩)).comp (Random.Measurable.of.All_Eq.snd.fst h₁ (k + 1))).const_mul γ)).sub
@@ -156,10 +153,10 @@ private lemma main
     simp only [AsPathRV.path_process, JointRandomSymbol]
     rfl
   have hF₁ : ∀ t, Measurable fun ω : ℕ → ℝ × S × A =>
-      (1 - ℓ) * ((ℓ ^ (id : ℕ → ℕ)) @ fun k ↦ ∑ i ∈ Finset.range (k + 1), γ ^ i *
+      (1 - ℓ) * ((ℓ ^ (id : ℕ → ℕ)) @ fun k ↦ ∑ i ∈ range (k + 1), γ ^ i *
         (r (t + i) ω + γ * V θ (t + i + 1) ⟨fun _ => s (t + i + 1) ω⟩ - V θ (t + i) ⟨fun _ => s (t + i) ω⟩)) := fun t => by
     show Measurable fun ω : ℕ → ℝ × S × A =>
-      (1 - ℓ) * ∑' k, ℓ ^ k * ∑ i ∈ Finset.range (k + 1), γ ^ i *
+      (1 - ℓ) * ∑' k, ℓ ^ k * ∑ i ∈ range (k + 1), γ ^ i *
         (r (t + i) ω + γ * V θ (t + i + 1) ⟨fun _ => s (t + i + 1) ω⟩ - V θ (t + i) ⟨fun _ => s (t + i) ω⟩)
     exact (Measurable.tsum (L := SummationFilter.unconditional ℕ) fun k =>
       (Finset.measurable_sum _ fun i _ => (hmeas (t + i)).const_mul _).const_mul _).const_mul _
@@ -172,7 +169,7 @@ private lemma main
   -- relate statement V_θ to paper V
   have eqVθ : ∀ t (δ : ℕ → S) k, V_θ[t] δ k = V θ (t + k) ⟨fun _ => δ k⟩ := by
     intro t δ k
-    simp [V_θ, Fun.getElem_eq]
+    simp [V_θ]
   have hδθ : ∀ (s : ℕ → S) (r : ℕ → ℝ) (t : ℕ),
       (fun k => r (t + k) + γ * V θ (t + k + 1) ⟨fun _ => s (t + k + 1)⟩ - V θ (t + k) ⟨fun _ => s (t + k)⟩) =
         r[t:] + γ • V_θ[t + 1] s[t + 1:] - V_θ[t] s[t:] := by
@@ -206,16 +203,17 @@ private lemma main
   -- F_θ (imply) = F_raw pointwise, so their path expectations agree
   have hFeq :
     (fun t (s : ℕ → S) (a : ℕ → A) (r : ℕ → ℝ) =>
-        (1 - ℓ) * ((ℓ ^ (id : ℕ → ℕ)) @ fun k ↦ ∑ i ∈ Finset.range (k + 1), γ ^ i *
-          (r (t + i) + γ * V_θ[t + 1] s[t + 1:] i - V_θ[t] s[t:] i))) =
+        (1 - ℓ) * ((ℓ ^ (id : ℕ → ℕ)) @ fun k ↦ ∑ i ∈ range (k + 1), γ ^ i *
+          (r[t:] + γ • V_θ[t + 1] s[t + 1:] - V_θ[t] s[t:]) i)) =
       (fun t s a r =>
-        (1 - ℓ) * ((ℓ ^ (id : ℕ → ℕ)) @ fun k ↦ ∑ i ∈ Finset.range (k + 1), γ ^ i *
+        (1 - ℓ) * ((ℓ ^ (id : ℕ → ℕ)) @ fun k ↦ ∑ i ∈ range (k + 1), γ ^ i *
           (r (t + i) + γ * V θ (t + i + 1) ⟨fun _ => s (t + i + 1)⟩ - V θ (t + i) ⟨fun _ => s (t + i)⟩))) := by
     funext t s a r
     congr 1
     congr 1
     funext k
     refine Finset.sum_congr rfl fun i _ => ?_
+    simp only [Pi.add_apply, Pi.sub_apply, Pi.smul_apply, smul_eq_mul, Function.getSliceFrom_apply]
     rw [(hres s t i).1, (hres s t i).2]
   refine (congrArg
       (fun F : ℕ → (ℕ → S) → (ℕ → A) → (ℕ → ℝ) → ℝ =>
@@ -223,7 +221,7 @@ private lemma main
           (F t (fun j => s j) (fun j => a j) (fun j => r j) •
             ∇[θ] (ℙ[M θ](a[t] | s[t]) : ℝ).log)))
       hFeq).trans ?_
-  refine (hexp (fun t s a r => (1 - ℓ) * ((ℓ ^ (id : ℕ → ℕ)) @ fun k ↦ ∑ i ∈ Finset.range (k + 1), γ ^ i *
+  refine (hexp (fun t s a r => (1 - ℓ) * ((ℓ ^ (id : ℕ → ℕ)) @ fun k ↦ ∑ i ∈ range (k + 1), γ ^ i *
       (r (t + i) + γ * V θ (t + i + 1) ⟨fun _ => s (t + i + 1)⟩ - V θ (t + i) ⟨fun _ => s (t + i)⟩))) hF₁).trans
     ((integral_congr_ae ?_).trans
       (hexp (fun t s a r => ((γ * ℓ) ^ (id : ℕ → ℕ)) @
@@ -233,5 +231,4 @@ private lemma main
   rw [h t, hδθ (fun j => s j ω) (fun j => r j ω) t]
 
 
--- created on 2026-10-01
--- updated on 2026-10-19
+-- created on 2026-10-19

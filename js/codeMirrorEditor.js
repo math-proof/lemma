@@ -926,7 +926,12 @@ where
 
 						var line = cm.getLine(cur.line);
 						var text = line.slice(0, cur.ch);
-						var prefix = text.match(/\\[\w.|<>=^~{} \\+\p{Script=Greek}-]+$|[\w.\p{Script=Greek}]+$/u)[0];
+						// Bare `\\` / non-abbr text: match is null — do not index [0]
+						// (CM6 blur/startQuery and activateOnTyping hit this and crashed hintFn).
+						var prefixMatch = text.match(/\\[\w.|<>=^~{} \\+\p{Script=Greek}-]+$|[\w.\p{Script=Greek}]+$/u);
+						if (!prefixMatch)
+							return accept(null);
+						var prefix = prefixMatch[0];
 
 						var user = axiom_user();
 
@@ -1024,6 +1029,15 @@ with _t as (
   where 
     jt.latex like binary "${hint}%"
 )
+-- Lean-style: exact latex abbr returns only that unicode so CM auto-inserts
+-- even when longer aliases share the prefix (\\u amid \\union, ...).
+select 
+  unicode
+from 
+  _t
+where 
+  latex = binary "${hint}"
+union all
 select 
   CASE
     WHEN (SELECT COUNT(*) FROM _t) > 1 THEN 
@@ -1034,14 +1048,10 @@ select
 from 
   _t
 where
-  latex != "${hint}"
-union
-select 
-  unicode
-from 
-  _t
-where 
-  latex = "${hint}"
+  latex != binary "${hint}"
+  and not exists (
+    select 1 from _t e where e.latex = binary "${hint}"
+  )
 order by char_length(unicode)`;
 							} else if (m = prefix.match(/^[A-Za-z_]+$/)) {
 								var {sections, typeclasses, tactics} = self.$parent.$parent;
@@ -1077,14 +1087,21 @@ where name REGEXP '^[\\\\p{Script=Greek}a-zA-Z][0-9]$'`;
 						console.log(sql);
                 		form_post(`php/request/execute.php`, {sql}).then(list => {
                 			// Find the token at the cursor
-							list = list.map(item => item[0]);
+							if (!Array.isArray(list))
+								return accept(null);
+							list = list.map(item => item && item[0]).filter(v => v != null && v !== '');
                 			console.log('hint = ' + list);
+							if (!list.length)
+								return accept(null);
                 			return accept({
                 				list,
                 				from: Pos(cur.line, token.start),
                 				to: Pos(cur.line, token.end)
                 			});
-                		});
+                		}).catch(err => {
+							console.warn('hintFn ajax failed', err);
+							return accept(null);
+						});
                 	});
             },
         });

@@ -34,15 +34,16 @@ Two passes:
 | `given-hyp-index` | binders in `-- given` only; names `h₀`…`h₉` / `h0`…`h9`. If any appear, indices must be `{0,…,k}` (start at 0, no gaps). Descriptive names (`hG`, `hr`) are fine alongside. Proof-local `have h₀` is out of scope. Not an AGENTS.md rule (no quote) | `signatureRules.mjs` |
 | `tactic-haveI`, `tactic-letI` | `Lean_have` / `Lean_let` with the parser flag `inst` (parsed from `haveI` / `letI`), outside declaration signatures | `proofRules.mjs` |
 | `calc-after-assign` | `have` / `let` (incl. `haveI` / `letI`) whose `:=` value is a `LeanArgsNewLineSeparated` holding only a `LeanCalc`, i.e. `:=⏎ calc`; the same-line form `:= calc` has the `LeanCalc` itself as the value. Not an AGENTS.md rule (no quote) | — (AST only) |
+| `paren-getelem` | `LeanParenthesis` whose `arg` is a `LeanGetElem` (`(x[t])`, `(x[t:])`, `(«s.bvar»[t])`); suggests dropping the parens. Skips `(f x)[t]` (arg is application) and `(x[t] + 1)` (arg is not GetElem). Not an AGENTS.md rule | — (AST only) |
 | `decl-keyword-dir` | `Lean_theorem` node in a `Lemma/…` file (the keyword is the node class, so modifiers / `@[…]` / comments / strings / `theorem_foo` never match); quotes the declaration head line, located on its own (repeated heads take the next unused line). The tree is trusted only when it has as many `lemma`/`theorem` nodes as the text scan finds declarations; otherwise (and on a parse failure) the text fallback runs | `headerRules.mjs` `declKeywordDirText` (`ctx.decls`, keyword at the start of a declaration line) |
 
 | file | rules |
 |---|---|
-| `headerRules.mjs` | `header-spacing`, `open-section`, `open-duplicate`, `open-prefix`, `decl-keyword-dir` (text fallback), `attr-docstring`, `date-*` (`date-spacing`: exactly two blank lines before `-- created on`) |
+| `headerRules.mjs` | `header-spacing`, `max-heartbeats` (`set_option maxHeartbeats N` with `N >= 1000000`; the message asks to try `N/2`), `open-section`, `open-duplicate`, `open-prefix`, `decl-keyword-dir` (text fallback), `attr-docstring`, `date-*` (`date-spacing`: exactly two blank lines before `-- created on`) |
 | `signatureRules.mjs` | `section-imply`, `section-proof`, `binder-order`, `binder-dep-inst`, `binder-auto-bound`, `default-arg-given`, `given-prop-first`, `given-prop-consecutive`, `given-hyp-index`, `binder-combine` |
 | `proofRules.mjs` | `indent-odd`, `indent-deep` (after `:= by` / `by` / bare `calc` / `do`, body must be +2 — not exempt via `continuesTerm`), `proof-blank-line` (no empty lines inside the proof body; lint-only), `proof-binop-newline`, `bullet-newline`, `tactic-rcases`, `tactic-by-cases`, `tactic-haveI`, `tactic-letI`, `have-inline-once`, `by-calc`, `calc-start-underscore`, `calc-underscore-align` (bare `calc`; every `_` step at calc+2; lint-only), `calc-underscore-rhs` (`_ =` not alone — RHS on same line; lint-only), `calc-in-brackets`, `paren-by-multiline`, `paren-by-semicolon`, `from-by`, `by-exact`, `term-mode-exact`, `rw-exact`, `show-multiline`, `joint-random-symbol`, `hole-question`, `binder-underscore-name` |
 | `attrRules.mjs` | `attr-mp`, `attr-comm` (read the cited lemma's `@[…]` from `Lemma/…`) |
-| `astRules.mjs` | `have-inline-once`, `given-prop-first`, `given-prop-consecutive`, `tactic-haveI`, `tactic-letI`, `decl-keyword-dir` (text versions above are their fallbacks), `calc-after-assign` |
+| `astRules.mjs` | `have-inline-once`, `given-prop-first`, `given-prop-consecutive`, `tactic-haveI`, `tactic-letI`, `decl-keyword-dir` (text versions above are their fallbacks), `calc-after-assign`, `paren-getelem` |
 
 `open-prefix` (text scan): when `open Random` (plain, not selective/`scoped`) and the source
 writes `Random.Foo.Bar`, warn to drop the leading `Random.` **only if** (1) `Lemma/Random/Foo/Bar.lean`

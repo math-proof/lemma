@@ -134,6 +134,26 @@ export function headerSpacing(ctx) {
     }
 }
 
+/**
+ * `max-heartbeats`: `set_option maxHeartbeats N` with N >= 1_000_000.
+ * The warning asks to try half; it does not change the file.
+ */
+export function maxHeartbeats(ctx) {
+    const { raw } = ctx.P;
+    for (let i = 0; i < raw.length; i++) {
+        const m = /(?:^|\s)set_option maxHeartbeats (\d+)\b/.exec(raw[i]);
+        if (!m) continue;
+        const n = Number(m[1]);
+        if (!(n >= 1_000_000)) continue;
+        ctx.warn(
+            'max-heartbeats',
+            i + 1,
+            m.index + 1,
+            `maxHeartbeats ${n} is not strictly below 1000000; try ${Math.floor(n / 2)}`,
+        );
+    }
+}
+
 /** `open-section`: imported `Lemma.X.…` but `X` is not opened */
 export function openSection(ctx) {
     const { imports, opened } = ctx.scan;
@@ -352,5 +372,79 @@ export function declKeywordDirText(ctx) {
     for (const d of ctx.decls) {
         if (d.kind !== 'theorem') continue;
         ctx.warn('decl-keyword-dir', d.line + 1, 1, `\`theorem${d.name ? ` ${d.name}` : ''}\` in \`Lemma/\`: declare it with \`lemma\``);
+    }
+}
+
+/**
+ * `blank-sublemmas`: consecutive `private lemma` declarations must be separated by
+ * exactly one blank line (not two or more). Doc comments `/-- … -/` and `@[…]` on the
+ * next sublemma count as its lead; blanks inside a proof are out of scope.
+ */
+export function blankSublemmas(ctx) {
+    const { P, decls } = ctx;
+    const { raw } = P;
+
+    const isPrivateLemma = (d) =>
+        d.kind === 'lemma' && /\bprivate\b/.test(P.code[d.line] ?? '');
+
+    /** 0-based first line of decl lead: optional `/-- … -/` (or `/- … -/`), then `@[…]`, then keyword. */
+    const leadStart = (d) => {
+        let i = d.attrLine >= 0 ? d.attrLine : d.line;
+        let j = i - 1;
+        while (j >= 0 && /^\s*$/.test(raw[j])) j--;
+        if (j < 0 || !raw[j].includes('-/')) return i;
+        // Walk characters backward from this line to the matching `/-` opener.
+        const text = raw.slice(0, j + 1).join('\n');
+        let pos = text.length - 1;
+        while (pos > 0 && !(text[pos - 1] === '-' && text[pos] === '/')) pos--;
+        if (pos <= 0) return i;
+        let depth = 1;
+        pos -= 2;
+        while (pos >= 0 && depth > 0) {
+            if (pos > 0 && text[pos - 1] === '-' && text[pos] === '/') {
+                depth++;
+                pos -= 2;
+                continue;
+            }
+            if (pos > 0 && text[pos - 1] === '/' && text[pos] === '-') {
+                depth--;
+                pos -= 2;
+                continue;
+            }
+            pos--;
+        }
+        // `pos + 1` is the start of the opening `/-`; convert to line index.
+        const startLine = text.slice(0, Math.max(0, pos + 1)).split('\n').length - 1;
+        return Math.min(startLine, i);
+    };
+
+    for (let k = 0; k + 1 < decls.length; k++) {
+        const a = decls[k];
+        const b = decls[k + 1];
+        if (!isPrivateLemma(a) || !isPrivateLemma(b)) continue;
+        const head = leadStart(b);
+        if (head <= a.end) continue;
+        let blanks = 0;
+        let secondBlank = null;
+        let pure = true;
+        for (let i = a.end; i < head; i++) {
+            if (/^\s*$/.test(raw[i])) {
+                blanks++;
+                if (blanks === 2) secondBlank = i;
+            } else {
+                pure = false;
+                break;
+            }
+        }
+        if (!pure || blanks < 2) continue;
+        const n = blanks;
+        ctx.warn(
+            'blank-sublemmas',
+            (secondBlank ?? a.end) + 1,
+            1,
+            n === 2
+                ? 'two blank lines between sublemmas; use one'
+                : `${n} blank lines between sublemmas; use one`,
+        );
     }
 }

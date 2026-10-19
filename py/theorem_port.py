@@ -311,7 +311,12 @@ def _run_node_json(script: Path, *args: str) -> dict:
     if proc.returncode != 0:
         err = (proc.stderr or proc.stdout or "").strip()
         raise RuntimeError(err or f"node exited {proc.returncode}")
-    return json.loads(proc.stdout)
+    # lemmaPath.mjs prints ``import py.js`` before the JSON object.
+    out = proc.stdout
+    brace = out.find("{")
+    if brace > 0:
+        out = out[brace:]
+    return json.loads(out)
 
 
 # Canonical FLT solution-file parser (lean.js AST).  For ``S_<key>.lean``
@@ -519,10 +524,26 @@ def _inline_section_variables(text: str) -> str:
         vm = re.match(r"^\s*variable\b\s*(.*)$", line)
         if vm:
             target = frames[-1] if frames else root_vars
-            for g in split_binder_groups(vm.group(1)):
+            buf = vm.group(1)
+            i += 1
+            # Continuation lines of a multi-line ``variable`` are indented
+            # binder groups, not a new command.  Leaving them in the file
+            # both drops the binders and makes the dedenter treat the indent
+            # as a namespace frame.
+            while i < len(lines):
+                nxt = lines[i]
+                if not nxt.strip():
+                    break
+                if not nxt[:1].isspace():
+                    break
+                stripped = nxt.strip()
+                if not stripped[:1] in "([{⟨⟪":
+                    break
+                buf += " " + stripped
+                i += 1
+            for g in split_binder_groups(buf):
                 if g not in target:
                     target.append(g)
-            i += 1
             continue
         if DECL_START_RE.match(line):
             end = _signature_end_line(lines, i)
@@ -656,6 +677,13 @@ def transform_source(text: str) -> str:
 
     # --- Rule 2: Remove variable lines ---
     transformed = [l for l in transformed if not VARIABLE_RE.match(l)]
+
+    # ``omit [Inst] in`` only makes sense for section variables.  After those
+    # binders are inlined onto each declaration, the modifier is a syntax error.
+    transformed = [
+        l for l in transformed
+        if not re.match(r"^\s*omit\b.*\bin\s*$", l)
+    ]
 
     # Remove diagnostic commands (``#print axioms solution`` and friends):
     # they reference the source theorem name, which never survives porting.

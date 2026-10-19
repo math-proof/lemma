@@ -9,7 +9,7 @@ import '../../../js/py.js';
 import { compile, Lean, LeanModule } from '../../../js/parser/lean.js';
 
 /** rule ids implemented here; their text-scan versions only run when the AST is unavailable */
-export const AST_RULES = new Set(['have-inline-once', 'given-prop-first', 'given-prop-consecutive', 'tactic-haveI', 'tactic-letI', 'calc-after-assign', 'decl-keyword-dir']);
+export const AST_RULES = new Set(['have-inline-once', 'given-prop-first', 'given-prop-consecutive', 'tactic-haveI', 'tactic-letI', 'calc-after-assign', 'decl-keyword-dir', 'paren-getelem', 'paren-apparg']);
 
 /** parse `source`, or null when the parser throws / does not return a module */
 export function parseAst(source) {
@@ -326,6 +326,64 @@ function calcAfterAssign(ctx, node) {
     ctx.warnAst('calc-after-assign', node, `put \`calc\` on the same line right after \`:=\` (\`${node.keyword} … := calc\`), not on the next line`, 1);
 }
 
+
+/**
+ * `(x[t])` / `(x[t:])` / `(name[t])`: a single parenthesis pair whose only content is a
+ * GetElem / slice. GetElem binds tightly enough that the parens never change the parse
+ * (`f (x[t])` == `f x[t]`; contrast `(f x)[t]`, whose arg is an application, not GetElem).
+ * Not an AGENTS.md rule (user request).
+ */
+function parenGetElem(ctx, node) {
+    const { LeanParenthesis, LeanGetElem } = Lean.classes;
+    if (!(node instanceof LeanParenthesis)) return;
+    const arg = node.arg;
+    if (!(arg instanceof LeanGetElem)) return;
+    // tuples / cdot sections keep their parentheses even if nested oddly
+    if (typeof node.latexParenRequired === 'function' && node.latexParenRequired()) return;
+    const inner = String(arg).replace(/^\s+|\s+$/g, '').replace(/\s+/g, ' ');
+    const show = (s) => (s.length > 60 ? `${s.slice(0, 57)}…` : s);
+    ctx.warnAst('paren-getelem', node,
+        `\`(${show(inner)})\` → \`${show(inner)}\`: parentheses around a GetElem / slice are redundant`,
+        1);
+}
+
+function isBareName(node) {
+    const { LeanToken, LeanProperty } = Lean.classes;
+    if (node instanceof LeanToken) return true;
+    // dotted const only (`Nat.zero`, `AsPathRV.path`); not `Set.range fun …`
+    if (node instanceof LeanProperty) return isBareName(node.lhs) && isBareName(node.rhs);
+    return false;
+}
+
+/**
+ * `f (x)` / `AsPathRV.path (s)`: a juxtaposition argument that is only a parenthesized bare
+ * identifier / dotted const. Application binds tightly enough that the parens never change the
+ * parse (`f (x)` == `f x`; contrast `f (x + 1)` / `g (f x)` / `BddAbove (Set.range fun …)`,
+ * which need them). Skips `open Namespace (name)` lists. Not an AGENTS.md rule (user request).
+ * Emitter note: `*.echo.lean` still prints these from Lean codegen (out of JS scope); this lint
+ * catches handwritten sources.
+ */
+function parenAppArg(ctx, node) {
+    const { LeanParenthesis, LeanArgsSpaceSeparated, Lean_open } = Lean.classes;
+    if (!(node instanceof LeanParenthesis)) return;
+    const parent = node.parent;
+    // only a trailing arg of a space-separated application (not the head, not binders/tuples)
+    if (!(parent instanceof LeanArgsSpaceSeparated) || parent.args[0] === node) return;
+    // `open Finset (range)`: the only-import list parens are required
+    for (let p = parent; p; p = p.parent) {
+        if (Lean_open && p instanceof Lean_open) return;
+    }
+    if (typeof node.latexParenRequired === 'function' && node.latexParenRequired()) return;
+    const arg = node.arg;
+    if (!isBareName(arg)) return;
+    const inner = String(arg).replace(/^\s+|\s+$/g, '').replace(/\s+/g, ' ');
+    const show = (s) => (s.length > 60 ? `${s.slice(0, 57)}…` : s);
+    ctx.warnAst('paren-apparg', node,
+        `\`(${show(inner)})\` → \`${show(inner)}\`: parentheses around a bare identifier / const app argument are redundant`,
+        1);
+}
+
+
 /** is the repo-relative path a `Lemma/…` file? */
 export function isLemmaPath(file) {
     return /(^|\/)Lemma\//.test(String(file ?? '').replace(/\\/g, '/'));
@@ -393,6 +451,10 @@ export function astRules(ctx, tree) {
         else if (node instanceof Lean_let) {
             instanceVariant(sink, node);
             calcAfterAssign(sink, node);
+        }
+        else {
+            parenGetElem(sink, node);
+            parenAppArg(sink, node);
         }
     }
     found.sort((a, b) => order.get(a.node) - order.get(b.node));

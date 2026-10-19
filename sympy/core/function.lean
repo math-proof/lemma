@@ -95,6 +95,10 @@ For time-indexed trajectories `r : Fun ℕ (Ω → α)`, also `r[t:]` via
 structure Fun (ι : Type _) (α : Type _) where
   toFun : ι → α
 
+/-- Type sugar: `ℕ ⇀ ℝ` means `Fun ℕ ℝ` (same precedence as `→`).
+Semantic indexed-→ / function arrow (⇀, LaTeX \rightharpoonup). -/
+infixr:25 " ⇀ " => Fun
+
 namespace Fun
 
 instance : CoeFun (Fun ι α) (fun _ => ι → α) where
@@ -140,6 +144,31 @@ def Fun.elabGetSliceFrom : TermElab := fun stx expectedType? =>
     unless isFun do throwUnsupportedSyntax
     elabTerm (← `(Fun.getSliceFrom $x ($start))) expectedType?
   | _ => throwUnsupportedSyntax
+
+open Lean Elab Term Meta in
+/-- `f[i]` when `f : Fun ι α`: elaborate the index at type `ι`.
+`GetElem`'s `idx` is not an outParam, so under binders like `sup[t] |δ[t]| < ∞`
+(where `t` starts as a metavariable) the default `getElem` / `get_elem_tactic`
+path fails with "failed to prove index is valid". Non-`Fun` collections
+`throwUnsupportedSyntax` so Array/List GetElem stay unchanged. -/
+elab_rules : term
+  | `(getElem $x $i $_) => do
+    let saved ← saveState
+    let funData? ← try
+        let xE ← withoutErrToSorry <| elabTerm x none
+        let ty ← whnfR (← instantiateMVars (← inferType xE))
+        match ty with
+        | .app (.app (.const n _) ι) _ =>
+            if n == ``Fun then pure (some (xE, ι)) else pure none
+        | _ => pure none
+      catch _ =>
+        pure none
+    let some (xE, ι) := funData? | do
+      saved.restore
+      throwUnsupportedSyntax
+    let iE ← elabTermEnsuringType i ι
+    -- defeq to `getElem x i trivial` via `Fun.getElem_eq`
+    mkAppM ``Fun.toFun #[xE, iE]
 
 namespace Fun
 

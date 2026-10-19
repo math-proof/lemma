@@ -1,4 +1,4 @@
-import os, unicodedata, json, std
+import os, unicodedata, json, py
 os.environ['MYSQL_DATABASE'] = 'axiom'
 from py import MySQL
 from py.file import Text

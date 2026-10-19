@@ -695,9 +695,23 @@ macro_rules
       let y ← Probability.Macro.mkJointRV ys
       `(Measure.condProbRA $π (JointRandomSymbol $x $y) $x0)
 
-/-- Syntax kind of `a[t]` (GetElem). Not `Array.«term__[_:]»` (`a[t:]`). -/
-private def Expectation.Macro.isGetElemStx (e : Syntax) : Bool :=
-  e.getKind == `«term__[_]»
+/-- Syntax kind of `a[t]` (GetElem). Not `Array.«term__[_:]»` (`a[t:]`).
+Under `open ProbabilityTheory`, Lean wraps GetElem in a `choice` node whose
+alternatives include `ProbabilityTheory.«term__[_]»` as well as `«term__[_]»`. -/
+private def Expectation.Macro.isGetElemKind (k : SyntaxNodeKind) : Bool :=
+  k == `«term__[_]» || k == `ProbabilityTheory.«term__[_]»
+
+/-- Pick the GetElem alternative out of a `choice` (prefer std `«term__[_]»`). -/
+private def Expectation.Macro.asGetElem (e : Syntax) : Option Syntax :=
+  if Expectation.Macro.isGetElemKind e.getKind then
+    some e
+  else if e.getKind == `choice then
+    let args := e.getArgs
+    match args.find? (fun a => a.getKind == `«term__[_]») with
+    | some g => some g
+    | none => args.find? (fun a => Expectation.Macro.isGetElemKind a.getKind)
+  else
+    none
 
 /-- Head binder of an RA term: `a`, `a t`, or `a[t]` ↦ `a`; otherwise none. -/
 private def Expectation.Macro.raHead (e : Syntax) : Option Name :=
@@ -706,20 +720,20 @@ private def Expectation.Macro.raHead (e : Syntax) : Option Name :=
   else if e.isOfKind ``Lean.Parser.Term.app then
     let fn := e[0]
     if fn.isIdent then some fn.getId else none
-  else if Expectation.Macro.isGetElemStx e then
-    let coll := e[0]
+  else if let some ge := Expectation.Macro.asGetElem e then
+    let coll := ge[0]
     if coll.isIdent then some coll.getId else none
   else
     none
 
 /-- `a[t]` → `a t` so observation RHS works after path unpack (no GetElem on bare `ℕ → α`). -/
 private def Expectation.Macro.getElemAsApp (e : Syntax) : MacroM Term := do
-  if Expectation.Macro.isGetElemStx e then
-    let coll : Term := ⟨e[0]⟩
-    let idx : Term := ⟨e[2]⟩
-    `($coll $idx)
-  else
-    pure ⟨e⟩
+  match Expectation.Macro.asGetElem e with
+  | some ge =>
+      let coll : Term := ⟨ge[0]⟩
+      let idx : Term := ⟨ge[2]⟩
+      `($coll $idx)
+  | none => pure ⟨e⟩
 
 /-- Replace the head binder of e by its alias when present (`a` / `a t` / `a[t]`).
 GetElem `a[t]` becomes app `a₀ t` (via `getElemAsApp`) so RA observation LHS
@@ -737,14 +751,14 @@ private def Expectation.Macro.applyAlias (aliases : List (Name × Ident)) (e : S
       | none => pure ⟨e⟩
     else
       pure ⟨e⟩
-  else if Expectation.Macro.isGetElemStx e then
-    let coll := e[0]
+  else if let some ge := Expectation.Macro.asGetElem e then
+    let coll := ge[0]
     if coll.isIdent then
       match aliases.find? (fun p => p.1 == coll.getId) with
-      | some (_, a) => Expectation.Macro.getElemAsApp (e.setArg 0 a)
-      | none => Expectation.Macro.getElemAsApp e
+      | some (_, a) => Expectation.Macro.getElemAsApp (ge.setArg 0 a)
+      | none => Expectation.Macro.getElemAsApp ge
     else
-      Expectation.Macro.getElemAsApp e
+      Expectation.Macro.getElemAsApp ge
   else
     pure ⟨e⟩
 

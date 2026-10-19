@@ -392,7 +392,7 @@ export class LeanParenthesis extends LeanPairedGroup {
      */
     conditioningBar() {
         const {LeanBitOr, LeanArgsCommaSeparated, Lean_perp} = L;
-        const {arg} = this;
+        const arg = this.latexContentArg();
         const probExpect = this.isProbExpectParen();
         const bar =
             arg instanceof LeanBitOr ? arg
@@ -410,15 +410,29 @@ export class LeanParenthesis extends LeanPairedGroup {
     conditioningLatex(syntax) {
         const bar = this.conditioningBar();
         if (!bar) return null;
+        const content = this.latexContentArg();
         const [lhs, rhs] = bar.latexArgs(syntax);
-        const rest = bar === this.arg ? [] : this.arg.args.slice(1).map((a) => `{${a.toLatex(syntax)}}`);
+        const rest = bar === content ? [] : content.args.slice(1).map((a) => `{${a.toLatex(syntax)}}`);
         return [[`{${lhs}} ${LeanParenthesis.middleBar} {${rhs}}`, ...rest].join(', ')];
     }
 
     static middleBar = '\\,\\middle|\\,';
 
+
+    /**
+     * Nested grouping `((e))` / `(((e)))`: peel until the content is not itself a
+     * parenthesis. This node still supplies one `\left(\right)` wrap. A tuple or
+     * `·` section keeps its needed pair because the peel stops at the comma/`·`
+     * content and the remaining outer wrap is that pair.
+     */
+    latexContentArg() {
+        let arg = this.arg;
+        while (arg instanceof LeanParenthesis) arg = arg.arg;
+        return arg;
+    }
+
     latexArgs(syntax) {
-        const arg = this.arg;
+        const arg = this.latexContentArg();
         // the RV-only `ℙ`/`𝔼` forms below put `\mid` straight into the paren body: stretch it there too
         const mid = () => (this.isLatexStretchy() ? LeanParenthesis.middleBar : '\\mid');
         if (this.isProbEventParen()) {
@@ -461,11 +475,12 @@ export class LeanParenthesis extends LeanPairedGroup {
             return [arg.toLatex(syntax)];
         if (this.isLatexRedundantPrecedence() || this.isLatexJointTuple())
             return [arg.toLatex(syntax)];
-        return super.latexArgs(syntax);
+        // use peeled content (not this.args / super) so ((e)) does not nest another wrap
+        return [arg.toLatex(syntax)];
     }
 
     latexFormat() {
-        const arg = this.arg;
+        const arg = this.latexContentArg();
         if (arg.matrixLatexSpec())
             return '%s';
         if (arg instanceof L.LeanColon) {
@@ -511,8 +526,12 @@ export class LeanParenthesis extends LeanPairedGroup {
         return arg instanceof L.LeanArgsSpaceSeparated && arg.jointRandomSymbolOperands() != null;
     }
 
-    /** `(e)` → `e` for LaTeX, unless the parentheses are required (`latexParenRequired`). */
+    /** `(e)` → `e` for LaTeX, unless the parentheses are required (`latexParenRequired`).
+     * Also collapses nested grouping `((e))` → `(e)` before that decision.
+     */
     static peelLatex(node) {
+        while (node instanceof LeanParenthesis && node.arg instanceof LeanParenthesis)
+            node = node.arg;
         return node instanceof LeanParenthesis && !node.latexParenRequired() ? node.arg : node;
     }
 
@@ -554,6 +573,23 @@ export class LeanParenthesis extends LeanPairedGroup {
         return true;
     }
 
+    /**
+     * `ℙ[…](…)` / `𝔼[…](…)` (optionally under `.toReal`), used to drop a redundant `: ℝ` cast.
+     * @param {Lean} node  ascription LHS
+     */
+    static isProbExpectAscriptionSubject(node) {
+        const {LeanProperty, LeanArgsSpaceSeparated: Args} = L;
+        let n = node;
+        while (n instanceof LeanProperty) n = n.args[0];
+        if (n instanceof LeanParenthesis && !(n.arg instanceof L.LeanColon)) n = n.arg;
+        if (!(n instanceof Args)) return false;
+        const args = n.args;
+        for (let i = 0; i < args.length - 1; i++) {
+            if (Args.isProbBinderHead(args[i]) || Args.isExpectBinderHead(args[i])) return true;
+        }
+        return false;
+    }
+
     isLatexArgAscription() {
         const arg = this.arg;
         if (!(arg instanceof L.LeanColon)) return false;
@@ -580,6 +616,11 @@ export class LeanParenthesis extends LeanPairedGroup {
         ) return true;
         // ENNReal→ℝ (`open scoped ENNReal.ToRealCoe`): `(ℙ[…](…) : ℝ)` under `•` / `+` / …
         if (arg.rhs.text === 'ℝ' && p instanceof L.LeanArithmetic) return true;
+        // Standalone / `:=` imply: `(ℙ[M θ] (a t | s t) : ℝ)` → drop outer cast (same for `Real` / 𝔼).
+        if (
+            (arg.rhs.text === 'ℝ' || arg.rhs.text === 'Real') &&
+            LeanParenthesis.isProbExpectAscriptionSubject(arg.lhs)
+        ) return true;
         return false;
     }
 

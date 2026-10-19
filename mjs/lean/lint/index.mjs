@@ -13,7 +13,7 @@ import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { listLemmaTopLevelDirs } from '../lemmaSections.mjs';
 import { prepare, findDecls } from './scan.mjs';
-import { scanImportsAndOpens, headerSpacing, openSection, openDuplicate, openPrefix, attrDocstring, dates, declKeywordDirText } from './headerRules.mjs';
+import { scanImportsAndOpens, headerSpacing, maxHeartbeats, openSection, openDuplicate, openPrefix, attrDocstring, dates, declKeywordDirText, blankSublemmas } from './headerRules.mjs';
 import { signatureRules } from './signatureRules.mjs';
 import { indentRules, proofRules, underscoreNameRule } from './proofRules.mjs';
 import { attrRules } from './attrRules.mjs';
@@ -44,6 +44,7 @@ const Q = {
     openDup: 'simplify `open` statements',
     openPrefix: 'after `open Section`, prefer the short lemma name when unambiguous',
     headerSp: '`import` / `open` / `set_option` are contiguous (no blank lines between them), then exactly two blank lines before the rest of the file',
+    heartbeats: '`set_option maxHeartbeats` (and other elaborator heartbeat budgets) may be set or raised to any value strictly below 1000000. 1000000 and above stay disallowed.',
     mp: 'For `LHS.is.RHS` tagged with `@[mp]` / `@[mpr]`, prefer the generated one-direction lemmas `RHS.of.LHS` / `LHS.of.RHS` over calling `.mp` / `.mpr` on the iff.',
     comm: 'For `LHS.eq.RHS` tagged with `@[comm]`, prefer the generated commutative lemma `RHS.eq.LHS` over `simp [← LHS.eq.RHS]` or `rw [LHS.eq.RHS.symm]`.',
     declDir: 'Never put a `theorem` in `Lemma/`.', // removed from AGENTS.md: this warning checks it
@@ -68,6 +69,8 @@ export const RULES = {
     'section-proof': Q.proof,
     // not an AGENTS.md rule: no empty lines inside the proof body (enforced by the linter)
     'proof-blank-line': null,
+    // not an AGENTS.md rule: exactly one blank line between consecutive private lemmas
+    'blank-sublemmas': null,
     'proof-binop-newline': Q.binop,
     'bullet-newline': Q.bullet,
     'tactic-rcases': Q.swap,
@@ -76,6 +79,10 @@ export const RULES = {
     'tactic-letI': Q.swap,
     // not an AGENTS.md rule (user request): the warning text carries the reason
     'calc-after-assign': null,
+    // not an AGENTS.md rule (user request): `(x[t])` / `(x[t:])` -> drop the parens
+    'paren-getelem': null,
+    // not an AGENTS.md rule (user request): `f (x)` / `path (s)` -> drop the parens
+    'paren-apparg': null,
     'have-inline-once': Q.haveOnce,
     'by-calc': Q.calc,
     'calc-start-underscore': Q.calc,
@@ -105,6 +112,7 @@ export const RULES = {
     'open-duplicate': Q.openDup,
     'open-prefix': Q.openPrefix,
     'header-spacing': Q.headerSp,
+    'max-heartbeats': Q.heartbeats,
     'attr-mp': Q.mp,
     'attr-comm': Q.comm,
     'attr-docstring': Q.docstring,
@@ -177,7 +185,7 @@ export function lintLean(source, opts = {}) {
     // `decl-keyword-dir`: trust the tree only when it sees the same lemma/theorem declarations as the text scan
     if (tree && countLemmaTheoremNodes(tree) !== ctx.decls.filter((d) => d.kind === 'lemma' || d.kind === 'theorem').length)
         ctx.astCovered.delete('decl-keyword-dir');
-    const steps = [headerSpacing, openSection, openDuplicate, openPrefix, declKeywordDirText, attrDocstring, dates, signatureRules, indentRules, proofRules, underscoreNameRule, attrRules];
+    const steps = [headerSpacing, maxHeartbeats, openSection, openDuplicate, openPrefix, declKeywordDirText, attrDocstring, dates, blankSublemmas, signatureRules, indentRules, proofRules, underscoreNameRule, attrRules];
     for (const step of steps) {
         try {
             step(ctx);

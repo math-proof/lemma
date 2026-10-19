@@ -8,9 +8,7 @@ namespace TadicPS
 
 variable {R : Type u} {A : Type v} [CommRing R] [CommRing A] [Algebra R A]
 
-variable (R) in
-
-noncomputable abbrev JX : Ideal R⟦X⟧ := Ideal.span {X}
+noncomputable abbrev JX (R : Type u) [CommRing R] : Ideal R⟦X⟧ := Ideal.span {X}
 
 private lemma JX_pow (n : ℕ) : JX R ^ n = Ideal.span {(X : R⟦X⟧) ^ n} := by
   apply Ideal.span_singleton_pow X n
@@ -21,7 +19,8 @@ private lemma mem_JX_pow {n : ℕ} {p : R⟦X⟧} : p ∈ JX R ^ n ↔ ∀ k, k 
 private lemma mem_JX {p : R⟦X⟧} : p ∈ JX R ↔ constantCoeff p = 0 := by
   rw [Ideal.mem_span_singleton, X_dvd_iff]
 
-private lemma coeff_eq_of_mk_eq {n k : ℕ} (hk : k < n) {p q : R⟦X⟧}
+private lemma coeff_eq_of_mk_eq
+  {n k : ℕ} (hk : k < n) {p q : R⟦X⟧}
   (h : Ideal.Quotient.mk (JX R ^ n) p = Ideal.Quotient.mk (JX R ^ n) q) :
   coeff k p = coeff k q := by
   rw [Ideal.Quotient.eq, mem_JX_pow] at h
@@ -129,17 +128,17 @@ variable [Algebra.FormallySmooth R A]
 
 noncomputable def liftStep (n : ℕ) (σ : A →ₐ[R] (R⟦X⟧ ⧸ JX R ^ (n + 1))) :
   A →ₐ[R] (R⟦X⟧ ⧸ JX R ^ (n + 2)) :=
-  Algebra.FormallySmooth.liftOfSurjective σ (Ideal.Quotient.factorₐ R (JX_pow_le n))
-    (Ideal.Quotient.factor_surjective (JX_pow_le n)) (isNilpotent_ker_factor n)
+  Algebra.FormallySmooth.liftOfSurjective σ (Ideal.Quotient.factorₐ R (JX_pow_le (R := R) n))
+    (Ideal.Quotient.factor_surjective (JX_pow_le (R := R) n)) (isNilpotent_ker_factor n)
 
 private lemma factor_comp_liftStep (n : ℕ) (σ : A →ₐ[R] (R⟦X⟧ ⧸ JX R ^ (n + 1))) :
-  (Ideal.Quotient.factorₐ R (JX_pow_le n)).comp (liftStep n σ) = σ :=
+  (Ideal.Quotient.factorₐ R (JX_pow_le (R := R) n)).comp (liftStep n σ) = σ :=
   Algebra.FormallySmooth.comp_liftOfSurjective _ _ _ _
 
-noncomputable def tower {D : A →ₗ[R] R} (hD : IsPointDerivation e D) :
-  (k : ℕ) → (A →ₐ[R] (R⟦X⟧ ⧸ JX R ^ (k + 2)))
-  | 0 => sigma2 e hD
-  | k + 1 => liftStep (k + 1) (tower hD k)
+noncomputable def tower {D : A →ₗ[R] R} (hD : IsPointDerivation e D) (k : ℕ) :
+  A →ₐ[R] (R⟦X⟧ ⧸ JX R ^ (k + 2)) :=
+  Nat.rec (motive := fun k => A →ₐ[R] (R⟦X⟧ ⧸ JX R ^ (k + 2))) (sigma2 e hD)
+    (fun k ih => liftStep (k + 1) ih) k
 
 private lemma tower_zero {D : A →ₗ[R] R} (hD : IsPointDerivation e D) : tower e hD 0 = sigma2 e hD :=
   rfl
@@ -189,17 +188,19 @@ section Triangular
 
 variable {e}
 
-private lemma theta_mem_JX {θ : A →+* R⟦X⟧} (hθ0 : ∀ a, constantCoeff (θ a) = e a) {a : A}
+private lemma theta_mem_JX
+  {θ : A →+* R⟦X⟧} (hθ0 : ∀ a, constantCoeff (θ a) = e a) {a : A}
   (ha : a ∈ kerI e) : θ a ∈ JX R := by
   rw [mem_JX, hθ0]
   exact (mem_kerI e).mp ha
 
-private lemma theta_mem_JX_pow {θ : A →+* R⟦X⟧} (hθ0 : ∀ a, constantCoeff (θ a) = e a) {n : ℕ}
-  {a : A} (ha : a ∈ kerI e ^ n) : θ a ∈ JX R ^ n := by
-  have h1 : kerI e ≤ (JX R).comap θ := fun x hx => theta_mem_JX hθ0 hx
-  exact ((Ideal.pow_right_mono h1 n).trans (Ideal.le_comap_pow θ n)) ha
+private lemma theta_mem_JX_pow
+  {θ : A →+* R⟦X⟧} (hθ0 : ∀ a, constantCoeff (θ a) = e a) {n : ℕ}
+  {a : A} (ha : a ∈ kerI e ^ n) : θ a ∈ JX R ^ n :=
+  ((Ideal.pow_right_mono (fun _ hx => theta_mem_JX hθ0 hx) n).trans (Ideal.le_comap_pow θ n)) ha
 
-private lemma gen_pow {t₀ : A} (ht₀ : t₀ ∈ kerI e)
+private lemma gen_pow
+  {t₀ : A} (ht₀ : t₀ ∈ kerI e)
   (hgen : ∀ x ∈ kerI e, ∃ r : R, x - algebraMap R A r * t₀ ∈ kerI e ^ 2) (n : ℕ) :
   ∀ b ∈ kerI e ^ n, ∃ r : R, b - algebraMap R A r * t₀ ^ n ∈ kerI e ^ (n + 1) := by
   induction n with
@@ -241,7 +242,8 @@ private lemma gen_pow {t₀ : A} (ht₀ : t₀ ∈ kerI e)
       rw [hxy]
       exact add_mem hr hs
 
-private lemma exists_theta_t0_eq {θ : A →+* R⟦X⟧} (hθ0 : ∀ a, constantCoeff (θ a) = e a) {t₀ : A}
+private lemma exists_theta_t0_eq
+  {θ : A →+* R⟦X⟧} (hθ0 : ∀ a, constantCoeff (θ a) = e a) {t₀ : A}
   (ht₀ : t₀ ∈ kerI e) (hθ1 : coeff 1 (θ t₀) = 1) :
   ∃ v : R⟦X⟧, θ t₀ = X * v ∧ constantCoeff v = 1 := by
   obtain ⟨v, hv⟩ : (X : R⟦X⟧) ∣ θ t₀ := X_dvd_iff.mpr (by rw [hθ0]; exact (mem_kerI e).mp ht₀)
@@ -250,7 +252,8 @@ private lemma exists_theta_t0_eq {θ : A →+* R⟦X⟧} (hθ0 : ∀ a, constant
   rw [zero_add, ← hv, hθ1, coeff_zero_eq_constantCoeff_apply] at h
   apply h.symm
 
-private lemma mem_pow_of_theta_mem {θ : A →+* R⟦X⟧} (hθC : ∀ r, θ (algebraMap R A r) = C r)
+private lemma mem_pow_of_theta_mem
+  {θ : A →+* R⟦X⟧} (hθC : ∀ r, θ (algebraMap R A r) = C r)
   (hθ0 : ∀ a, constantCoeff (θ a) = e a) {t₀ : A} (ht₀ : t₀ ∈ kerI e)
   (hθ1 : coeff 1 (θ t₀) = 1)
   (hgen : ∀ x ∈ kerI e, ∃ r : R, x - algebraMap R A r * t₀ ∈ kerI e ^ 2) :
@@ -275,7 +278,8 @@ private lemma mem_pow_of_theta_mem {θ : A →+* R⟦X⟧} (hθC : ∀ r, θ (al
       constantCoeff_C] at h2
     rwa [h2, map_zero, zero_mul, sub_zero] at hr
 
-private lemma exists_sub_theta_mem {θ : A →+* R⟦X⟧} (hθC : ∀ r, θ (algebraMap R A r) = C r)
+private lemma exists_sub_theta_mem
+  {θ : A →+* R⟦X⟧} (hθC : ∀ r, θ (algebraMap R A r) = C r)
   (hθ0 : ∀ a, constantCoeff (θ a) = e a) {t₀ : A} (ht₀ : t₀ ∈ kerI e)
   (hθ1 : coeff 1 (θ t₀) = 1) :
   ∀ (n : ℕ) (p : R⟦X⟧), ∃ a : A, p - θ a ∈ JX R ^ n := by
@@ -302,7 +306,8 @@ private lemma exists_sub_theta_mem {θ : A →+* R⟦X⟧} (hθC : ∀ r, θ (al
 
 end Triangular
 
-private lemma main [Algebra.FormallySmooth R A] {D : A →ₗ[R] R} (hD : IsPointDerivation e D)
+private lemma main
+  [Algebra.FormallySmooth R A] {D : A →ₗ[R] R} (hD : IsPointDerivation e D)
   {t₀ : A} (ht₀ : t₀ ∈ kerI e) (hDt : D t₀ = 1)
   (hgen : ∀ x ∈ kerI e, ∃ r : R, x - algebraMap R A r * t₀ ∈ kerI e ^ 2) :
   ∃ θ : A →+* PowerSeries R,
@@ -327,7 +332,8 @@ private lemma main [Algebra.FormallySmooth R A] {D : A →ₗ[R] R} (hD : IsPoin
     rw [map_sub, sub_eq_zero] at this
     apply this.symm
 
-private lemma exists_data [Module.Free R (kerI e).Cotangent]
+private lemma exists_data
+  [Module.Free R (kerI e).Cotangent]
   (he : Module.finrank R (kerI e).Cotangent = 1) :
   ∃ (D : A →ₗ[R] R) (t₀ : A), IsPointDerivation e D ∧ t₀ ∈ kerI e ∧ D t₀ = 1 ∧
     ∀ x ∈ kerI e, ∃ r : R, x - algebraMap R A r * t₀ ∈ kerI e ^ 2 := by
@@ -340,7 +346,7 @@ private lemma exists_data [Module.Free R (kerI e).Cotangent]
   ·
     let b := Module.basisUnique Unit he
     obtain ⟨t, ht⟩ := (kerI e).toCotangent_surjective (b default)
-    refine ⟨(b.coord default) ∘ₗ ((kerI e).toCotangent.restrictScalars R) ∘ₗ projI e, t, ?_,
+    refine ⟨LinearMap.comp (LinearMap.comp (b.coord default) ((kerI e).toCotangent.restrictScalars R)) (projI e), t, ?_,
       t.2, ?_, ?_⟩
     ·
       intro a c

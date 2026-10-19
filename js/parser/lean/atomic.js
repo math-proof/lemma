@@ -395,11 +395,20 @@ export class LeanLineComment extends Lean {
         return `${this.operator}${this.sep()}${body}`;
     }
 
+    /**
+     * Imply/given latex is KaTeX math (`align*`). A bare `\%…` showed a literal `%` and then
+     * math-mode ate spaces (`local path` → `localpath`). Emit green `\text{-- …}` instead so
+     * line comments match `-- proof` / `-- given` (`.green`) and stay readable.
+     */
     latexFormat() {
         if (this.text === 'imply' || this.text === 'given' || this.text === 'proof') return '';
-        return `\\%${this.sep()}${this.text}`;
+        const body = String(this.text)
+            .replace(/\\/g, '\\textbackslash{}')
+            .replace(/([#$%&_{}])/g, '\\$1')
+            .replace(/~/g, '\\textasciitilde{}')
+            .replace(/\^/g, '\\textasciicircum{}');
+        return `{\\color{green}\\text{--${this.sep()}${body}}}`;
     }
-
     sep() {
         return ' ';
     }

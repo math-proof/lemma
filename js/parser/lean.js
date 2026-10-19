@@ -122,7 +122,7 @@ export {
 } from './lean/set.js';
 export { LeanStatements } from './lean/statements.js';
 export { LeanModule } from './lean/module.js';
-export { LeanRightarrow, Lean_rightarrow, Lean_mapsto } from './lean/arrows.js';
+export { LeanRightarrow, Lean_rightarrow, Lean_mapsto, Lean_rightharpoonup } from './lean/arrows.js';
 export { LeanIte } from './lean/ite.js';
 export {
     LeanArgsSpaceSeparated,

@@ -6,12 +6,7 @@ open Function
 
 section One
 
-variable {𝓞 : Type u} [CommRing 𝓞] (p : ℕ) [Algebra 𝓞 (ZMod p)]
-  (R : ℕ → Type v) [∀ v, CommRing (R v)] [∀ v, Algebra 𝓞 (R v)]
-  (t : ∀ v, R (v + 1) →ₐ[𝓞] R v)
-  {σ : Type w} (x : ∀ v, σ → R v)
-
-variable (𝓞) in
+variable (𝓞 : Type u) [CommRing 𝓞] (p : ℕ) [Algebra 𝓞 (ZMod p)] (R : ℕ → Type v) [∀ v, CommRing (R v)] [∀ v, Algebra 𝓞 (R v)] (t : ∀ v, R (v + 1) →ₐ[𝓞] R v) {σ : Type w} (x : ∀ v, σ → R v)
 
 private noncomputable abbrev φ (v : ℕ) : MvPolynomial σ (ZMod p) →ₐ[ZMod p] ZMod p ⊗[𝓞] R v :=
   MvPolynomial.aeval fun i => (1 : ZMod p) ⊗ₜ[𝓞] x v i
@@ -32,23 +27,22 @@ private lemma ker_φ_anti (hxt : ∀ v i, t v (x (v + 1) i) = x v i) {v w : ℕ}
     refine le_trans ?_ ih
     intro P hP
     rw [RingHom.mem_ker] at hP ⊢
-    rw [← map_comp_φ hxt w, AlgHom.comp_apply, hP, map_zero]
+    rw [← map_comp_φ 𝓞 hxt w, AlgHom.comp_apply, hP, map_zero]
 
-private lemma exists_forall_ker_le (hxt : ∀ v i, t v (x (v + 1) i) = x v i)
+private lemma exists_forall_ker_le
+  (hxt : ∀ v i, t v (x (v + 1) i) = x v i)
   (hxker : ∀ N : ℕ, ∃ v, RingHom.ker (φ 𝓞 p R x v) ≤
     (Ideal.span (Set.range (MvPolynomial.X : σ → MvPolynomial σ (ZMod p)))) ^ N) (N : ℕ) :
   ∃ v₀, ∀ v, v₀ ≤ v → RingHom.ker (φ 𝓞 p R x v) ≤
     (Ideal.span (Set.range (MvPolynomial.X : σ → MvPolynomial σ (ZMod p)))) ^ N := by
   obtain ⟨v₀, hv₀⟩ := hxker N
-  exact ⟨v₀, fun v hv => (ker_φ_anti hxt hv).trans hv₀⟩
+  exact ⟨v₀, fun v hv => (ker_φ_anti 𝓞 hxt hv).trans hv₀⟩
 
 end One
 
 section Two
 
-variable {𝓞 : Type u} [CommRing 𝓞] (p : ℕ)
-  (R : ℕ → Type v) [∀ v, CommRing (R v)] [∀ v, Algebra 𝓞 (R v)]
-  (R' : ℕ → Type v) [∀ v, CommRing (R' v)] [∀ v, Algebra 𝓞 (R' v)]
+variable (𝓞 : Type u) [CommRing 𝓞] (p : ℕ) (R : ℕ → Type v) [∀ v, CommRing (R v)] [∀ v, Algebra 𝓞 (R v)] (R' : ℕ → Type v) [∀ v, CommRing (R' v)] [∀ v, Algebra 𝓞 (R' v)]
 
 private lemma tmul_one_mem_radical (v : ℕ) {a : R v} (ha : a ∈ (Ideal.span {(p : R v)}).radical) :
   a ⊗ₜ[𝓞] (1 : R' v) ∈ (Ideal.span {(p : R v ⊗[𝓞] R' v)}).radical := by
@@ -76,25 +70,16 @@ end Two
 
 section Three
 
-variable {𝓞 : Type u} [CommRing 𝓞] (p : ℕ) [Fact p.Prime] [Algebra 𝓞 (ZMod p)]
-  (R : ℕ → Type v) [∀ v, CommRing (R v)] [∀ v, Algebra 𝓞 (R v)]
-  (R' : ℕ → Type v) [∀ v, CommRing (R' v)] [∀ v, Algebra 𝓞 (R' v)]
-  {σ : Type w} (x : ∀ v, σ → R v) {σ' : Type w'} (x' : ∀ v, σ' → R' v)
-
-variable (𝓞) in
+variable (𝓞 : Type u) [CommRing 𝓞] (p : ℕ) [Fact p.Prime] [Algebra 𝓞 (ZMod p)] (R : ℕ → Type v) [∀ v, CommRing (R v)] [∀ v, Algebra 𝓞 (R v)] (R' : ℕ → Type v) [∀ v, CommRing (R' v)] [∀ v, Algebra 𝓞 (R' v)] {σ : Type w} (x : ∀ v, σ → R v) {σ' : Type w'} (x' : ∀ v, σ' → R' v)
 
 private noncomputable abbrev Φ (v : ℕ) :
   MvPolynomial (σ ⊕ σ') (ZMod p) →ₐ[ZMod p] ZMod p ⊗[𝓞] (R v ⊗[𝓞] R' v) :=
   MvPolynomial.aeval fun s => (1 : ZMod p) ⊗ₜ[𝓞]
     Sum.elim (fun i => x v i ⊗ₜ[𝓞] (1 : R' v)) (fun i => (1 : R v) ⊗ₜ[𝓞] x' v i) s
 
-variable (𝓞) in
-
 private noncomputable abbrev ι₁ (v : ℕ) : ZMod p ⊗[𝓞] R v →ₐ[ZMod p] ZMod p ⊗[𝓞] (R v ⊗[𝓞] R' v) :=
   Algebra.TensorProduct.map (AlgHom.id (ZMod p) (ZMod p))
     (Algebra.TensorProduct.includeLeft : R v →ₐ[𝓞] R v ⊗[𝓞] R' v)
-
-variable (𝓞) in
 
 private noncomputable abbrev ι₂ (v : ℕ) : ZMod p ⊗[𝓞] R' v →ₐ[ZMod p] ZMod p ⊗[𝓞] (R v ⊗[𝓞] R' v) :=
   Algebra.TensorProduct.map (AlgHom.id (ZMod p) (ZMod p))
@@ -118,7 +103,8 @@ private lemma Φ_rename_inr (v : ℕ) (P : MvPolynomial σ' (ZMod p)) :
         Algebra.TensorProduct.map_tmul, AlgHom.id_apply, Algebra.TensorProduct.includeRight_apply]
   refine AlgHom.congr_fun h P
 
-private lemma Φ_surjective (hxsurj : ∀ v, Surjective (φ 𝓞 p R x v))
+private lemma Φ_surjective
+  (hxsurj : ∀ v, Surjective (φ 𝓞 p R x v))
   (hxsurj' : ∀ v, Surjective (φ 𝓞 p R' x' v)) (v : ℕ) : Surjective (Φ 𝓞 p R R' x x' v) := by
   have hmem : ∀ z, z ∈ (Φ 𝓞 p R R' x x' v).range := by
     intro z
@@ -142,13 +128,13 @@ private lemma Φ_surjective (hxsurj : ∀ v, Surjective (φ 𝓞 p R x v))
           obtain ⟨P, hP⟩ := hxsurj v ((1 : ZMod p) ⊗ₜ[𝓞] r)
           refine ⟨MvPolynomial.rename Sum.inl P, ?_⟩
           change Φ 𝓞 p R R' x x' v _ = _
-          rw [Φ_rename_inl, hP, Algebra.TensorProduct.map_tmul, AlgHom.id_apply,
+          rw [Φ_rename_inl 𝓞, hP, Algebra.TensorProduct.map_tmul, AlgHom.id_apply,
             Algebra.TensorProduct.includeLeft_apply]
         ·
           obtain ⟨P, hP⟩ := hxsurj' v ((1 : ZMod p) ⊗ₜ[𝓞] r')
           refine ⟨MvPolynomial.rename Sum.inr P, ?_⟩
           change Φ 𝓞 p R R' x x' v _ = _
-          rw [Φ_rename_inr, hP, Algebra.TensorProduct.map_tmul, AlgHom.id_apply,
+          rw [Φ_rename_inr 𝓞, hP, Algebra.TensorProduct.map_tmul, AlgHom.id_apply,
             Algebra.TensorProduct.includeRight_apply]
       ·
         intro a b ha hb
@@ -165,12 +151,10 @@ end Three
 
 section Four
 
-variable {𝓞 : Type u} [CommRing 𝓞] (p : ℕ) [Fact p.Prime] [Algebra 𝓞 (ZMod p)]
-  (R : ℕ → Type v) [∀ v, CommRing (R v)] [∀ v, Algebra 𝓞 (R v)]
-  (R' : ℕ → Type v) [∀ v, CommRing (R' v)] [∀ v, Algebra 𝓞 (R' v)]
-  {σ : Type w} (x : ∀ v, σ → R v) {σ' : Type w'} (x' : ∀ v, σ' → R' v)
+variable (𝓞 : Type u) [CommRing 𝓞] (p : ℕ) [Fact p.Prime] [Algebra 𝓞 (ZMod p)] (R : ℕ → Type v) [∀ v, CommRing (R v)] [∀ v, Algebra 𝓞 (R v)] (R' : ℕ → Type v) [∀ v, CommRing (R' v)] [∀ v, Algebra 𝓞 (R' v)] {σ : Type w} (x : ∀ v, σ → R v) {σ' : Type w'} (x' : ∀ v, σ' → R' v)
 
-private lemma ker_Φ_le {N v : ℕ}
+private lemma ker_Φ_le
+  {N v : ℕ}
   (hs : Surjective (φ 𝓞 p R x v)) (hs' : Surjective (φ 𝓞 p R' x' v))
   (hv : RingHom.ker (φ 𝓞 p R x v) ≤
     (Ideal.span (Set.range (MvPolynomial.X : σ → MvPolynomial σ (ZMod p)))) ^ N)
@@ -318,19 +302,19 @@ private lemma main
       MvPolynomial (σ ⊕ σ') (ZMod p) →ₐ[ZMod p] TensorProduct 𝓞 (ZMod p) (R v ⊗[𝓞] R' v)) ≤
     (Ideal.span (Set.range
       (MvPolynomial.X : σ ⊕ σ' → MvPolynomial (σ ⊕ σ') (ZMod p)))) ^ N) := by
-  refine ⟨?_, ?_, fun v => Φ_surjective hxsurj hxsurj' v, fun N => ?_⟩
+  refine ⟨?_, ?_, fun v => Φ_surjective 𝓞 hxsurj hxsurj' v, fun N => ?_⟩
   ·
     rintro v (i | i)
     · simp only [Sum.elim_inl, Algebra.TensorProduct.map_tmul, map_one, hxt]
     · simp only [Sum.elim_inr, Algebra.TensorProduct.map_tmul, map_one, hxt']
   ·
     rintro v (i | i)
-    · exact tmul_one_mem_radical p R R' v (hxrad v i)
-    · exact one_tmul_mem_radical p R R' v (hxrad' v i)
+    · exact tmul_one_mem_radical 𝓞 p R R' v (hxrad v i)
+    · exact one_tmul_mem_radical 𝓞 p R R' v (hxrad' v i)
   ·
-    obtain ⟨v₁, hv₁⟩ := exists_forall_ker_le hxt hxker N
-    obtain ⟨v₂, hv₂⟩ := exists_forall_ker_le hxt' hxker' N
-    exact ⟨max v₁ v₂, ker_Φ_le p R R' x x' (hxsurj _) (hxsurj' _) (hv₁ _ (le_max_left _ _))
+    obtain ⟨v₁, hv₁⟩ := exists_forall_ker_le 𝓞 hxt hxker N
+    obtain ⟨v₂, hv₂⟩ := exists_forall_ker_le 𝓞 hxt' hxker' N
+    exact ⟨max v₁ v₂, ker_Φ_le 𝓞 p R R' x x' (hxsurj _) (hxsurj' _) (hv₁ _ (le_max_left _ _))
       (hv₂ _ (le_max_right _ _))⟩
 
 

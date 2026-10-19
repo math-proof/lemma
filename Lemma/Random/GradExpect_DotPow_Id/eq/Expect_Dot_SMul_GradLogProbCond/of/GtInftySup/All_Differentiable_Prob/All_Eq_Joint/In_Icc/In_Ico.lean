@@ -1,4 +1,4 @@
-import Lemma.Random.Eq_Expect_FunPowDot.of.GtInftySup.All_Differentiable.All_Eq_Expect_CondTSum_MulPow.EqMeasureCount.EqMeasureCount.All_Eq_Joint.In_Ico0
+import Lemma.Random.GradExpect_DotPow_Id.eq.Expect_DotFunSMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_Eq.In_Ico
 import Lemma.Random.Eq_SymmToDualTSum_SMulPow_Integral_SMulTSum_MulPow_FderivLogToRealProbCond.of.GtInftySup.All_Differentiable.AeAll_LeNormTSum_MulPow.All_Measurable.EqMeasureCount.EqMeasureCount.All_Eq_Joint.In_Ico1
 import Mathlib.MeasureTheory.Constructions.Polish.Basic
 import Mathlib.Analysis.Calculus.Gradient.Basic
@@ -20,9 +20,9 @@ private lemma main
   {M : Model Θ S A}
   {θ : Θ}
   {γ ℓ : ℝ}
-  {r : Fun ℕ ((ℕ → ℝ × S × A) → ℝ)}
-  {s : Fun ℕ ((ℕ → ℝ × S × A) → S)}
-  {a : Fun ℕ ((ℕ → ℝ × S × A) → A)}
+  {r : ℕ ⇀ (ℕ → ℝ × S × A) → ℝ}
+  {s : ℕ ⇀ (ℕ → ℝ × S × A) → S}
+  {a : ℕ ⇀ (ℕ → ℝ × S × A) → A}
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
   (h₁ : ℓ ∈ Set.Icc 0 1)
@@ -34,24 +34,20 @@ private lemma main
     SinglePSpace.of.EqMeasureCount.Measurable ((Random.Measurable.of.All_Eq.snd.snd (r := ⇑r) (s := ⇑s) (a := ⇑a) h₂ t).prodMk (Random.Measurable.of.All_Eq.snd.fst (r := ⇑r) (s := ⇑s) (a := ⇑a) h₂ t)) (by
       show (ReferenceMeasure.measure : Measure A).prod (ReferenceMeasure.measure : Measure S) = _
       rw [CountableMeasure.measure_eq_count, CountableMeasure.measure_eq_count, Count.eq.ProdCountS])
-  have hs : ∀ t, PSpace (M θ) (s t) := fun t =>
-    ⟨(Random.Measurable.of.All_Eq.snd.fst (r := ⇑r) (s := ⇑s) (a := ⇑a) h₂ t).aemeasurable⟩
-  have ha : ∀ t, PSpace (M θ) (a t) := fun t =>
-    ⟨(Random.Measurable.of.All_Eq.snd.snd (r := ⇑r) (s := ⇑s) (a := ⇑a) h₂ t).aemeasurable⟩
-  have : PSpace (M θ) (AsPathRV.path (s)) :=
-    PSpace_Path.of.All_PSpace hs
-  have : PSpace (M θ) (AsPathRV.path (a)) :=
-    PSpace_Path.of.All_PSpace ha
-  have : ∀ θ, PSpace (M θ) (AsPathRV.path (r)) := fun θ =>
+  have : PSpace (M θ) (AsPathRV.path s) :=
+    PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.snd.fst (r := ⇑r) (s := ⇑s) (a := ⇑a) h₂ t).aemeasurable⟩)
+  have : PSpace (M θ) (AsPathRV.path a) :=
+    PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.snd.snd (r := ⇑r) (s := ⇑s) (a := ⇑a) h₂ t).aemeasurable⟩)
+  have : ∀ θ, PSpace (M θ) (AsPathRV.path r) := fun θ =>
     PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.fst (r := ⇑r) (s := ⇑s) (a := ⇑a) h₂ t).aemeasurable⟩)
   let : MeasurableSpace Θ := borel Θ
-  let V : Fun Θ (Fun ℕ (Fun ℕ S → ℝ)) := ⟨fun θ => ⟨fun t («s.bvar» : Fun ℕ S) =>
+  let V : Θ ⇀ ℕ ⇀ (ℕ ⇀ S) → ℝ := ⟨fun θ => ⟨fun t («s.bvar» : ℕ ⇀ S) =>
     𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s[t] = «s.bvar»[t])⟩⟩
-  let V_θ : Fun ℕ ((ℕ → S) → ℕ → ℝ) := ⟨fun t δ k => V[θ, t + k] ⟨fun _ => δ k⟩⟩
+  let V_θ : ℕ ⇀ (ℕ → S) → ℕ → ℝ := ⟨fun t δ k => V[θ, t + k] ⟨fun _ => δ k⟩⟩
   ∇[θ] 𝔼[r: M θ]((γ ^ (id : ℕ → ℕ)) @ r) =
     𝔼[r, s, a : M θ]((γ ^ (id : ℕ → ℕ)) @ fun t ↦ (((γ * ℓ) ^ (id : ℕ → ℕ)) @ (r[t:] + γ • V_θ[t + 1] s[t + 1:] - V_θ[t] s[t:])) • ∇[θ] (ℙ[M θ](a[t] | s[t]) : ℝ).log) := by
 -- proof
-  intro hP _ _ _ _ _ _ V V_θ
+  intro hP _ _ _ _ V V_θ
   classical
   -- unpack Fun; proof body keeps CoeFun/function style (same policy as V)
   rcases r with ⟨r⟩
@@ -122,12 +118,28 @@ private lemma main
       ((measurable_of_countable (fun x : S => V θ k ⟨fun _ => x⟩)).comp
         (Random.Measurable.of.All_Eq.snd.fst h₂ k))
   have hbase : ∇[θ] 𝔼[r: M θ]((γ ^ (id : ℕ → ℕ)) @ r) =
-      𝔼[r, s, a : M θ]((γ ^ (id : ℕ → ℕ)) @ fun t ↦ ((γ ^ (id : ℕ → ℕ)) @ (fun k => r (t + k) + γ * V θ (t + k + 1) ⟨fun _ => s (t + k + 1)⟩ - V θ (t + k) ⟨fun _ => s (t + k)⟩)) • ∇[θ] (ℙ[M θ](a[t] | s[t]) : ℝ).log) :=
-    have h₂old : ∀ θ t x, ((M θ) (s t ⁻¹' {x}) ≠ 0) →
-        V θ t ⟨fun _ => x⟩ = 𝔼[r : M θ](∑' k, γ ^ k * r (t + k) | s t = x) := fun θ t x _ =>
-      rfl
-    Eq_Expect_FunPowDot.of.GtInftySup.All_Differentiable.All_Eq_Expect_CondTSum_MulPow.EqMeasureCount.EqMeasureCount.All_Eq_Joint.In_Ico0
-      h₀ h₂ CountableMeasure.measure_eq_count CountableMeasure.measure_eq_count h₂old h₃ h₄
+      𝔼[r, s, a : M θ]((γ ^ (id : ℕ → ℕ)) @ fun t ↦
+        (((γ ^ (id : ℕ → ℕ)) @ (r[t:] + γ • V_θ[t + 1] s[t + 1:] - V_θ[t] s[t:])) •
+          ∇[θ] (ℙ[M θ](a[t] | s[t]) : ℝ).log)) :=
+    GradExpect_DotPow_Id.eq.Expect_DotFunSMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_Eq.In_Ico.advantage
+      h₀ h₂ h₃ h₄
+  have hbaseexp : ∇[θ] 𝔼[r: M θ]((γ ^ (id : ℕ → ℕ)) @ r) =
+      𝔼[r, s, a : M θ]((γ ^ (id : ℕ → ℕ)) @ fun t ↦ ((γ ^ (id : ℕ → ℕ)) @ (fun k => r (t + k) + γ * V θ (t + k + 1) ⟨fun _ => s (t + k + 1)⟩ - V θ (t + k) ⟨fun _ => s (t + k)⟩)) • ∇[θ] (ℙ[M θ](a[t] | s[t]) : ℝ).log) := by
+    refine hbase.trans ?_
+    refine congrArg
+      (Expectation.ofRV (M θ)
+        (JointRandomSymbol (Expectation.asRV r)
+          (JointRandomSymbol (Expectation.asRV s) (Expectation.asRV a)))) ?_
+    funext integ
+    dsimp
+    congr 1
+    funext t
+    congr 1
+    congr 1
+    dsimp only [V_θ]
+    funext k
+    have hk : t + 1 + k = t + k + 1 := by omega
+    simp only [Function.getSliceFrom_apply, Pi.add_apply, Pi.sub_apply, Pi.smul_apply, smul_eq_mul, hk]
   have hA₁ := Eq_SymmToDualTSum_SMulPow_Integral_SMulTSum_MulPow_FderivLogToRealProbCond.of.GtInftySup.All_Differentiable.AeAll_LeNormTSum_MulPow.All_Measurable.EqMeasureCount.EqMeasureCount.All_Eq_Joint.In_Ico1
     (X := fun s _ r k => r k + γ * V θ (k + 1) ⟨fun _ => s (k + 1)⟩ - V θ k ⟨fun _ => s k⟩) (c := γ)
     h₀ h₂ CountableMeasure.measure_eq_count CountableMeasure.measure_eq_count hmeas (hbd γ h₀) h₃ h₄
@@ -138,7 +150,7 @@ private lemma main
   have hsplit :
       ∇[θ] 𝔼[r: M θ]((γ ^ (id : ℕ → ℕ)) @ r) =
         𝔼[r, s, a : M θ]((γ ^ (id : ℕ → ℕ)) @ fun t ↦ (((γ * ℓ) ^ (id : ℕ → ℕ)) @ (r[t:] + (fun k => γ * V[θ][t:] (k + 1) ⟨fun _ => s[t:] (k + 1)⟩) - (fun k => V[θ][t:] k ⟨fun _ => s[t:] k⟩))) • ∇[θ] (ℙ[M θ](a[t] | s[t]) : ℝ).log) :=
-    hbase.trans (hA₁.symm.trans ((congrArg (InnerProductSpace.toDual ℝ Θ).symm (tsum_congr fun t => by rw [hinner γ h₀ t, hinner (γ * ℓ) hc t])).trans hA₂))
+    hbaseexp.trans (hA₁.symm.trans ((congrArg (InnerProductSpace.toDual ℝ Θ).symm (tsum_congr fun t => by rw [hinner γ h₀ t, hinner (γ * ℓ) hc t])).trans hA₂))
   refine hsplit.trans ?_
   change
     𝔼[r, s, a : M θ]((γ ^ (id : ℕ → ℕ)) @ fun t ↦ (((γ * ℓ) ^ (id : ℕ → ℕ)) @ (r[t:] + (fun k => γ * V[θ][t:] (k + 1) ⟨fun _ => s[t:] (k + 1)⟩) - (fun k => V[θ][t:] k ⟨fun _ => s[t:] k⟩))) • ∇[θ] (ℙ[M θ](a[t] | s[t]) : ℝ).log) =
@@ -160,7 +172,7 @@ private lemma main
     dsimp only [V_θ]
     funext k
     have hk : t + (k + 1) = (t + 1) + k := by omega
-    simp only [Function.getSliceFrom_apply, hk, Pi.smul_apply, smul_eq_mul, Fun.getElem_eq]
+    simp only [Function.getSliceFrom_apply, hk, Pi.smul_apply, smul_eq_mul]
 
 
 -- created on 2026-10-01

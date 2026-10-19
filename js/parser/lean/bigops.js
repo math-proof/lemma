@@ -103,6 +103,27 @@ export class LeanBigOperator extends LeanArgs {
     }
 
     /**
+     * `∑/∏ i ∈ Finset.range n, f` / `∑/∏ i ∈ range n, f` → `[i, n]`, rendered as `\\sum_{i < n}`.
+     * Parallel to `i : Fin n` → `i < n` (Finset.range n = {0, …, n − 1}).
+     */
+    rangeBound() {
+        if (!(this instanceof Lean_sum || this instanceof Lean_prod)) return null;
+        const peel = (n) => (n instanceof L.LeanParenthesis ? n.arg : n);
+        const bound = this.bound;
+        if (!(bound instanceof L.Lean_in)) return null;
+        const set = peel(bound.rhs);
+        if (!(set instanceof L.LeanArgsSpaceSeparated) || set.args.length !== 2) return null;
+        const fn = peel(set.args[0]);
+        const isRange =
+            (fn instanceof L.LeanToken && fn.text === 'range') ||
+            (fn instanceof L.LeanProperty &&
+                fn.rhs instanceof L.LeanToken && fn.rhs.text === 'range' &&
+                fn.lhs instanceof L.LeanToken && fn.lhs.text === 'Finset');
+        if (!isRange) return null;
+        return [bound.lhs, peel(set.args[1])];
+    }
+
+    /**
      * `∑/∏ i ∈ Finset.Ico a (b + 1), f` → `[i, a, b]`, rendered as `\\prod_{i=a}^{b}`.
      */
     icoClosedBound() {
@@ -128,6 +149,8 @@ export class LeanBigOperator extends LeanArgs {
     latexFormat() {
         if (!(this instanceof L.LeanQuantifier) && this.finRangeBound())
             return `${this.command}\\limits_{%s < %s} {%s}`;
+        if (!(this instanceof L.LeanQuantifier) && !this.superscript && this.rangeBound())
+            return `${this.command}\\limits_{%s < %s} {%s}`;
         if (!this.superscript && this.icoClosedBound())
             return `${this.command}\\limits_{%s=%s}^{%s} {%s}`;
         const cmd = this.command;
@@ -139,6 +162,12 @@ export class LeanBigOperator extends LeanArgs {
             const fin = this.finRangeBound();
             if (fin) {
                 const [i, n] = fin;
+                const peel = (arg) => L.LeanParenthesis.peelLatex(arg);
+                return [i.toLatex(syntax), peel(n).toLatex(syntax), this.scope.toLatex(syntax)];
+            }
+            const rng = !this.superscript && this.rangeBound();
+            if (rng) {
+                const [i, n] = rng;
                 const peel = (arg) => L.LeanParenthesis.peelLatex(arg);
                 return [i.toLatex(syntax), peel(n).toLatex(syntax), this.scope.toLatex(syntax)];
             }
@@ -259,7 +288,7 @@ export class Lean_sum extends LeanBigOperator {
     latexFormat() {
         if (!this.superscript) return super.latexFormat();
         const op = `\\mathop{${this.command}\\nolimits${this.superscript}}`;
-        if (this.finRangeBound())
+        if (this.finRangeBound() || this.rangeBound())
             return `${op}\\limits_{%s < %s} {%s}`;
         return `${op}\\limits_{\\substack{%s}} {%s}`;
     }

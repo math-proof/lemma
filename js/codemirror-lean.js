@@ -120,7 +120,7 @@ export const leanMode = {
 
 var ERRORCLASS = 'error';
 var delimiters = /^[\(\)\[\]\{\}@,:`=;\.\\⟨⟩·]/;
-var operators = /^([-+*/%\/&|^]=?|[<>≤≥=≠↔≡≃≍∣←→↦↑⇑∈∉∩∪⋂⋃⊓⊔∧∨∀∃×÷⊂⊃⊆⊇∘▸⊙⊕⊖⊗⊘⊚⊛⊜⊝∑∏]+|\/\/=?|\*\*=?|!=|[~!@]|\.\.\.)/;
+var operators = /^([-+*/%\/&|^]=?|[<>≤≥=≠↔≡≃≍∣←→↦⇀↑⇑∈∉∩∪⋂⋃⊓⊔∧∨∀∃×÷⊂⊃⊆⊇∘▸⊙⊕⊖⊗⊘⊚⊛⊜⊝∑∏]+|\/\/=?|\*\*=?|!=|[~!@]|\.\.\.)/;
 var hangingIndent = 2;
 
 var myKeywords = commonKeywords.concat(['nonrec', 'None', 'aiter', 'anext', 'async', 'await', 'match', 'case']);

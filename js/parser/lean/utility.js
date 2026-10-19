@@ -83,6 +83,7 @@ export const token2classname = Object.freeze({
     '::': 'LeanConstruct',
     '→': 'Lean_rightarrow',
     '↦': 'Lean_mapsto',
+    '⇀': 'Lean_rightharpoonup',
     ...leanRelationalTokens,
 });
 

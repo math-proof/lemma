@@ -192,11 +192,19 @@ export function createEditor(parent, options = {}) {
     additionalExts.push(autocompletion({
       override: [
         async (context) => {
-          if (!context.explicit && !context.matchBefore(/[\w.\\]+/))
+          // Require a real abbr/word — bare `\\` alone used to call hintFn and
+          // crash on match()[0] (blur/startQuery + activateOnTyping race).
+          if (!context.explicit && !context.matchBefore(/[\w.]+|\\[\w.|<>=^~{} \\+\p{Script=Greek}-]+/u))
             return null;
           // Do not name a local `options` — it shadows createEditor's `options`
           // and TDZ-crashes on `options.hintFn` (`Cannot access 'options' before initialization`).
-          const result = await options.hintFn(bridge);
+          let result;
+          try {
+            result = await options.hintFn(bridge);
+          } catch (err) {
+            console.warn('hintFn failed', err);
+            return null;
+          }
           if (!result || !result.list?.length) return null;
           const doc = context.state.doc;
           const from = result.from ? posToOffset(doc, result.from.line, result.from.ch) : context.pos;

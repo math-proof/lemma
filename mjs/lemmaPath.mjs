@@ -882,6 +882,17 @@ function pickSection(sigNode, sections, extra = {}) {
     if (concl && (cls(concl) === "LeanEq" || cls(concl) === "Lean_subseteq") && (concl.args || []).length === 2 && concl.args.every(isSetCons)) add("Set", 8);
     // `x ∈ Ico a b` with no data type in sight → Set rather than the Nat fallback
     if (concl && (cls(concl) === "Lean_in" || cls(concl) === "LeanIn") && isSetCons(concl.args?.[1])) add("Set", 1);
+    // incidental interval-range hyps ((`{γ, ℓ} : Set ℝ) ⊆ Set.Ico 0 1) score Set 3 from the
+    // bare `Set` token; when the conclusion is not a set identity / membership and ℝ is present,
+    // keep only a weak Set signal so Real (ℝ binders / Fun ℕ ℝ / GtInftySup) can win.
+    const conclIsSetFocus = !!(concl && (
+      ((cls(concl) === "LeanEq" || cls(concl) === "Lean_subseteq") && (concl.args || []).length === 2 && concl.args.every(isSetCons)) ||
+      ((cls(concl) === "Lean_in" || cls(concl) === "LeanIn") && isSetCons(concl.args?.[1]))
+    ));
+    if (!conclIsSetFocus && tokens.has("ℝ") && (scores.get("Set") ?? 0) > 1 &&
+        hasNode(sigNode, (n) => cls(n) === "LeanToken" && INTERVAL.test(n.text || ""))) {
+      scores.set("Set", 1);
+    }
   }
   // R[X] / K[X] (LeanGetElem ... X) are polynomials -> Polynomial section
   if (scores.has("Polynomial") && hasNode(sigNode, (n) =>
@@ -981,7 +992,7 @@ const TOKEN_ALIAS = {
 };
 
 /** Non-ASCII notation → ASCII atom ("" drops it); path atoms are ASCII only. */
-const SYMBOL_NAME = { "𝔼": "Expect", "∅": "Empty", "⊤": "Top", "⊥": "Bot", "∞": "Infty", "π": "Pi", "√": "Sqrt", "𝓝": "", atTop: "", atBot: "" };
+const SYMBOL_NAME = { "𝔼": "Expect", "∇": "Grad", "∅": "Empty", "⊤": "Top", "⊥": "Bot", "∞": "Infty", "π": "Pi", "√": "Sqrt", "𝓝": "", atTop: "", atBot: "" };
 
 /** Second naming pass: Greek / subscript letters are kept (`spec.η`, `maxₐ`, `μmin`), as the repo does. */
 let KEEP_GREEK = false;
@@ -1348,6 +1359,19 @@ function binSnakeLeftName(node, left) {
   return left;
 }
 
+/**
+ * Interval constructor head: Ico / Set.Ico / Finset.Ico (and Icc/Ioc/Ioo).
+ * Used for asGiven S subset Set.Ico a b -> Subset_Ico (not Set/sub/Ico from the Set type ascription).
+ */
+function intervalCtorName(node) {
+  let u = unwrapParen(node);
+  if (cls(u) === "LeanArgsSpaceSeparated") u = unwrapParen(u.args?.[0]);
+  if (cls(u) === "LeanProperty" && cls(u.args?.[1]) === "LeanToken" && /^I[co][co]$/.test(u.args[1].text || ""))
+    return u.args[1].text;
+  if (cls(u) === "LeanToken" && /^I[co][co]$/.test(u.text || "")) return u.text;
+  return "";
+}
+
 /** `Measure.count`, `Set.univ`: a namespaced constant (capital-token receiver). */
 function isNamespacedConst(node) {
   const u = unwrapParen(node);
@@ -1457,6 +1481,14 @@ function relationAlts(node, tag0, opts) {
   const isFun = (n) => cls(unwrapParen(n)) === "Lean_fun";
   const dropped = isFun(args[1]) && !isFun(args[0]) ? gen(tag0, leftAlts, []) : isFun(args[0]) && !isFun(args[1]) ? gen(tag0, [], rightAlts) : [];
   let outR = uniq([...(mirror ? gen(MIRROR_REL[tag0], rightAlts, leftAlts) : []), ...dropped, ...gen(tag0, leftAlts, rightAlts)]);
+  // asGiven S subset Set.Ico a b -> Subset_Ico preferred (EqSlice/of/Subset_Ico; GAE of/.../Subset_Ico)
+  if (opts.asGiven && tag0 === "Subset") {
+    const iv = intervalCtorName(args[1]);
+    if (iv) {
+      const pref = "Subset_" + iv;
+      outR = uniq([pref, ...outR.filter((a) => a !== pref)]);
+    }
+  }
   // `(M θ).real (s t ⁻¹' {x}) ≠ 0` → Ne0Real_Preimage only (drop NeRealPreimageS_0 / Ne0RealPreimageS)
   if (opts.asGiven && leftEndsInBinSnake(args[0]) && isConstNode(args[1])) {
     const dig = nameExpr(args[1], opts);
@@ -1607,6 +1639,9 @@ function relationCanon(node, tag0, opts) {
   if (left && right) {
     if (left === right && (tag === "Eq" || tag === "Iff")) return left;
     if (opts.asGiven) {
+      // ({gamma, ell} : Set R) subset Set.Ico 0 1 -> Subset_Ico (drop incidental Set left; not Set/sub/Ico)
+      const iv = tag === "Subset" ? intervalCtorName(args[1]) : "";
+      if (iv) return "Subset_" + iv;
       // binary-snake left + numeric right: Ne0Real_Preimage (not NeRealPreimageS_0; `_0` would be Preimage's 2nd arg)
       if (/^\d+$/.test(right) && leftEndsInBinSnake(args[0])) return T + right + binSnakeLeftName(args[0], left);
       // namespaced const / type ascription: EqMeasureCount (no underscore)
@@ -1746,10 +1781,187 @@ function supBoundAlts(node) {
   const k = supBoundKind(node);
   return k ? ["GtInftySup", "GtInftySup_" + k, "LtSup__Infty"] : ["GtInftySup", "LtSup__Infty"];
 }
+/**
+ * Body of a gradient application: binder sugar or binder-free Mathlib gradient.
+ * Returns the differentiated expression, or null when node is not a gradient app.
+ * The binder / evaluation point is never a path atom.
+ */
+/** True when node is (gamma ^ id) @ ... (DotPow_Id return path). */
+function isDotPowIdApp(node) {
+  const u = unwrapParen(node);
+  if (cls(u) !== "LeanMatMul" || (u.args || []).length !== 2) return false;
+  let pow = unwrapParen(u.args[0]);
+  if (cls(pow) !== "LeanPow" || (pow.args || []).length !== 2) return false;
+  let exp = unwrapParen(pow.args[1]);
+  if (cls(exp) === "LeanColon") exp = unwrapParen(exp.args?.[0]);
+  return cls(exp) === "LeanToken" && exp.text === "id";
+}
+
+/** (ell ^ id) @ fun k => ... -- FunPowDot (GAE / GradExpect DotFunMulFunPowDot vocabulary). */
+function isFunPowDotApp(node) {
+  if (!isDotPowIdApp(node)) return false;
+  const u = unwrapParen(node);
+  return cls(unwrapParen(u.args[1])) === "Lean_fun";
+}
+
+/** 1 - ell (literal 1 minus a binder/hole). */
+function isSub1(node) {
+  const u = unwrapParen(node);
+  if (cls(u) !== "LeanSub" || (u.args || []).length !== 2) return false;
+  const left = unwrapParen(u.args[0]);
+  return cls(left) === "LeanToken" && left.text === "1";
+}
+
+/**
+ * GAE identity left-hand side (Schulman Eq. (16) sugar):
+ * (1 - ell) * ((ell ^ id) @ fun k => (gamma ^ range (k + 1)) @ delta[t:])
+ * -> MulSub1_FunPowDot (not MulSub1DotPowS from accidental Pow/Pow plural S).
+ */
+function isMulSub1FunPowDot(node) {
+  const u = unwrapParen(node);
+  if (cls(u) !== "LeanMul" || (u.args || []).length !== 2) return false;
+  return isSub1(u.args[0]) && isFunPowDotApp(u.args[1]);
+}
+
+/**
+ * (gamma ^ range (k + 1)) @ ... -- DotPow_Range (FinsetPow.dot / GAE k-step slice).
+ * Exponent head is range (token or Set.range / Finset.range property).
+ */
+function isDotPowRangeApp(node) {
+  const u = unwrapParen(node);
+  if (cls(u) !== "LeanMatMul" || (u.args || []).length !== 2) return false;
+  let pow = unwrapParen(u.args[0]);
+  if (cls(pow) !== "LeanPow" || (pow.args || []).length !== 2) return false;
+  let exp = unwrapParen(pow.args[1]);
+  if (cls(exp) === "LeanColon") exp = unwrapParen(exp.args?.[0]);
+  if (cls(exp) === "LeanArgsSpaceSeparated") {
+    const h = unwrapParen(exp.args?.[0]);
+    if (cls(h) === "LeanToken" && h.text === "range") return true;
+    if (cls(h) === "LeanProperty" && cls(h.args?.[1]) === "LeanToken" && h.args[1].text === "range") return true;
+  }
+  if (cls(exp) === "LeanToken" && exp.text === "range") return true;
+  if (cls(exp) === "LeanProperty" && cls(exp.args?.[1]) === "LeanToken" && exp.args[1].text === "range") return true;
+  return false;
+}
+
+/** fun k => (gamma ^ range ...) @ ... */
+function funBodyOf(node) {
+  const u = unwrapParen(node);
+  if (cls(u) !== "Lean_fun") return null;
+  const arrow = u.args?.[u.args.length - 1];
+  if (cls(arrow) === "LeanRightarrow" || cls(arrow) === "Lean_mapsto") return unwrapParen(arrow.args?.[arrow.args.length - 1]);
+  return unwrapParen(u.args?.[u.args.length - 1]);
+}
+
+/**
+ * (ell ^ id) @ fun k => (gamma ^ range (k + 1)) @ delta[t:]
+ * -> Dot_FunDotPow_Range (outer Dot of Fun whose body is DotPow_Range).
+ */
+function isDotFunDotPowRangeApp(node) {
+  if (!isDotPowIdApp(node)) return false;
+  const body = funBodyOf(unwrapParen(node).args[1]);
+  return !!body && isDotPowRangeApp(body);
+}
+
+/**
+ * GAE identity LHS (Schulman Eq. (16) sugar):
+ * (1 - ell) * ((ell ^ id) @ fun k => (gamma ^ range (k + 1)) @ delta[t:])
+ * -> MulSub1_Dot_FunDotPow_Range (not MulSub1_FunPowDot).
+ */
+function isMulSub1DotFunDotPowRange(node) {
+  const u = unwrapParen(node);
+  if (cls(u) !== "LeanMul" || (u.args || []).length !== 2) return false;
+  return isSub1(u.args[0]) && isDotFunDotPowRangeApp(u.args[1]);
+}
+
+/** Expect of (gamma ^ id) @ ... */
+function isExpectDotPowId(node) {
+  const u = unwrapParen(node);
+  if (cls(u) !== "LeanArgsSpaceSeparated" || (u.args || []).length !== 2) return false;
+  const head = u.args[0];
+  if (!(cls(head) === "LeanGetElem" && cls(head.args?.[0]) === "LeanToken" && head.args[0].text === "𝔼")) return false;
+  return isDotPowIdApp(u.args[1]);
+}
+
+/** Grad of (.log of ProbCond) */
+function isGradLogProbCond(node) {
+  const gb = gradientBody(node);
+  if (!gb) return false;
+  const u = unwrapParen(gb);
+  if (cls(u) !== "LeanProperty" || cls(u.args?.[1]) !== "LeanToken" || u.args[1].text !== "log") return false;
+  let obj = unwrapParen(u.args[0]);
+  if (cls(obj) === "LeanColon") obj = unwrapParen(obj.args?.[0]);
+  return !!matchProbApp(obj);
+}
+
+/** Expect of DotPow_Id @ fun of (adv bullet GradLogProbCond). */
+function expectDotFunSMulGradLogName(node) {
+  const u = unwrapParen(node);
+  if (cls(u) !== "LeanArgsSpaceSeparated" || (u.args || []).length !== 2) return "";
+  const head = u.args[0];
+  if (!(cls(head) === "LeanGetElem" && cls(head.args?.[0]) === "LeanToken" && head.args[0].text === "𝔼")) return "";
+  if (!isDotPowIdApp(u.args[1])) return "";
+  const mat = unwrapParen(u.args[1]);
+  let right = unwrapParen(mat.args[1]);
+  if (cls(right) === "Lean_fun") {
+    const arrow = right.args?.[right.args.length - 1];
+    if (cls(arrow) === "LeanRightarrow" || cls(arrow) === "Lean_mapsto") right = unwrapParen(arrow.args?.[arrow.args.length - 1]);
+    else right = unwrapParen(right.args?.[right.args.length - 1]);
+  }
+  // Multi-line fun bodies may be LeanStatements / NewLineSeparated
+  while (right && (cls(right) === "LeanParenthesis" || cls(right) === "LeanStatements" || cls(right) === "LeanArgsNewLineSeparated")) {
+    right = cls(right) === "LeanParenthesis" ? unwrapParen(right) : firstConclusion(right);
+  }
+  if (cls(right) !== "Lean_bullet" || (right.args || []).length !== 2) return "";
+  if (!isGradLogProbCond(right.args[1])) return "";
+  const adv = unwrapParen(right.args[0]);
+  const hasDotPow = (n, d) => {
+    if (!n || d > 6) return false;
+    const x = unwrapParen(n);
+    if (isDotPowIdApp(x)) return true;
+    return (x.args || []).some((a) => hasDotPow(a, d + 1));
+  };
+  if (cls(adv) === "LeanMul" && hasDotPow(adv, 0)) return "Expect_DotFunMulFunPowDot_SMul_GradLogProbCond";
+  return "Expect_DotFunSMul_GradLogProbCond";
+}
+
+function gradientBody(node) {
+  const u = unwrapParen(node);
+  if (cls(u) !== "LeanArgsSpaceSeparated" || (u.args || []).length < 2) return null;
+  const head = u.args[0];
+  const nabla = "∇";
+  const isGradHead =
+    (cls(head) === "LeanGetElem" && cls(head.args?.[0]) === "LeanToken" && head.args[0].text === nabla) ||
+    (cls(head) === "LeanToken" && head.text === nabla);
+  if (!isGradHead) return null;
+  const rest = u.args.slice(1);
+  if (rest.length === 1) return rest[0];
+  // Flat juxtaposition: Grad GetElem Expect GetElem body is 3+ space-separated args.
+  return appSlice(u, rest);
+}
+
 function preAlts(node, opts, canon) {
   const c = cls(node);
   const args = node.args || [];
   const A = (n) => (canon ? [nameExpr(n, opts)].filter(Boolean) : nameExprAlts(n, opts));
+  // GradExpect of Expect…: prefer GradExpect_DotPow_Id over GradExpectDotPow_Id
+  {
+    const gb = gradientBody(node);
+    if (gb) {
+      if (isExpectDotPowId(gb)) return canon ? ["GradExpect_DotPow_Id"] : uniq(["GradExpect_DotPow_Id", "GradExpectDotPow_Id", "GradExpect"]);
+      const x = A(gb);
+      const ranked = [];
+      for (const y of x) {
+        if (y.startsWith("Expect") && !y.startsWith("Expect_") && /[A-Z]/.test(y.slice(6, 7) || "")) {
+          ranked.push("GradExpect_" + y.slice("Expect".length));
+        }
+        ranked.push("Grad" + y);
+        ranked.push("Grad_" + y);
+      }
+      return ranked.length ? uniq(ranked) : ["Grad"];
+    }
+  }
+
   // `sup[t, ω] |r t ω| < ∞` → GtInftySup (short for LtSup__Infty)
   if (isSupLtInfty(node)) return canon ? ["GtInftySup"] : supBoundAlts(node);
   if (isBddAboveSup(node)) return canon ? ["GtInftySup"] : uniq([...supBoundAlts(node), ...nameExprAltsBase(node, opts)]);
@@ -1798,6 +2010,12 @@ function preAlts(node, opts, canon) {
     }
     // 𝔼[a : π](f a) → ExpectF (Random/GeExpect/of/Ge)
     if (cls(head) === "LeanGetElem" && cls(head.args?.[0]) === "LeanToken" && head.args[0].text === "𝔼" && args.length === 2) {
+      // policy-gradient Expect of DotPow_Id / DotFunSMul_GradLogProbCond
+      {
+        const pg = expectDotFunSMulGradLogName(node);
+        if (pg) return canon ? [pg] : uniq([pg, "Expect_DotFunSMul_GradLogProbCond", "Expect_DotFunMulFunPowDot_SMul_GradLogProbCond"]);
+        if (isExpectDotPowId(node)) return canon ? ["Expect_DotPow_Id"] : uniq(["Expect_DotPow_Id", "ExpectDotPow_Id", "ExpectDot"]);
+      }
       // conditional 𝔼[a : π](X | C) / 𝔼[…](X | C0, C1) → Expect_Cond + X (Random/Expect_CondMul/eq/Mul_Expect_Cond,
       // Random/Expect_CondDot/eq/Dot_Expect_Cond, Random/Expect_CondSum/eq/Sum_ExpectCond); C itself is not spelled
       const body = expectCondBody(args[1]);
@@ -1895,6 +2113,37 @@ function preAlts(node, opts, canon) {
   if (c === "Lean_prod") {
     const b = A(args[args.length - 1]);
     return b.length ? uniq(b.flatMap((y) => ["Prod_" + y, "Prod" + y])) : ["Prod"];
+  }
+  // GAE: (1 - ell) * ((ell ^ id) @ fun k => (gamma ^ range ...) @ ...) -> MulSub1_Dot_FunDotPow_Range
+  if (c === "LeanMul" && isMulSub1DotFunDotPowRange(node)) {
+    return canon
+      ? ["MulSub1_Dot_FunDotPow_Range"]
+      : uniq(["MulSub1_Dot_FunDotPow_Range", "MulSub1_FunPowDot", "MulSub1FunPowDot", "MulSub1_DotFunPow", ...nameExprAltsBase(node, opts)]);
+  }
+  if (c === "LeanMul" && isMulSub1FunPowDot(node)) {
+    return canon
+      ? ["MulSub1_FunPowDot"]
+      : uniq(["MulSub1_FunPowDot", "MulSub1FunPowDot", "MulSub1_DotFunPow", ...nameExprAltsBase(node, opts)]);
+  }
+  if (c === "LeanMatMul" && isDotFunDotPowRangeApp(node)) {
+    return canon
+      ? ["Dot_FunDotPow_Range"]
+      : uniq(["Dot_FunDotPow_Range", "FunPowDot", "DotPow_Id", "Dot", ...nameExprAltsBase(node, opts)]);
+  }
+  if (c === "LeanMatMul" && isFunPowDotApp(node)) {
+    return canon
+      ? ["FunPowDot"]
+      : uniq(["FunPowDot", "DotPow_Id", "Dot", ...nameExprAltsBase(node, opts)]);
+  }
+  if (c === "LeanMatMul" && isDotPowRangeApp(node)) {
+    return canon
+      ? ["DotPow_Range"]
+      : uniq(["DotPow_Range", "Dot", ...nameExprAltsBase(node, opts)]);
+  }
+  if (c === "LeanMatMul" && isDotPowIdApp(node)) {
+    return canon
+      ? ["DotPow_Id"]
+      : uniq(["DotPow_Id", "Dot", ...nameExprAltsBase(node, opts)]);
   }
   return null;
 }
@@ -2827,6 +3076,20 @@ function nameExprBase(node, opts = {}) {
   // Local `have` in imply is proof scaffolding — never a path atom.
   if (name === "Lean_have") return "";
   if (isBvarQuotation(node)) return "";
+  // Grad of body: binder / point omitted
+  {
+    const gb = gradientBody(node);
+    if (gb) {
+      if (isExpectDotPowId(gb)) return "GradExpect_DotPow_Id";
+      const y = nameExpr(gb, opts);
+      if (!y) return "Grad";
+      if (y.startsWith("Expect") && !y.startsWith("Expect_") && /[A-Z]/.test(y.slice(6, 7) || "")) {
+        return "GradExpect_" + y.slice("Expect".length);
+      }
+      return joinHeadChild("Grad", y);
+    }
+  }
+
   // prefer CondIndepJoint / IndepJoint / Indep_Joint over bare CondIndep / Indep
   if (indepAtom(node)) return indepJointAlt(node) || indepAtom(node);
 
@@ -3070,6 +3333,12 @@ function nameExprBase(node, opts = {}) {
     return named.join("");
   }
   if (name === "LeanSub" || name === "LeanAdd" || name === "LeanMul" || name === "LeanDiv" || name === "LeanPow" || name === "LeanNeg" || (name === "Lean_cdotp" && node.subscript === "ᵥ") || name === "LeanMatMul") {
+    if (name === "LeanMul" && isMulSub1DotFunDotPowRange(node)) return "MulSub1_Dot_FunDotPow_Range";
+    if (name === "LeanMul" && isMulSub1FunPowDot(node)) return "MulSub1_FunPowDot";
+    if (name === "LeanMatMul" && isDotFunDotPowRangeApp(node)) return "Dot_FunDotPow_Range";
+    if (name === "LeanMatMul" && isFunPowDotApp(node)) return "FunPowDot";
+    if (name === "LeanMatMul" && isDotPowRangeApp(node)) return "DotPow_Range";
+    if (name === "LeanMatMul" && isDotPowIdApp(node)) return "DotPow_Id";
     let tag = CLASS_TOKEN[name] || name.replace(/^Lean/, "");
     const args = node.args || [];
     if (name === "LeanPow" && cls(args[1]) === "LeanBracket") tag = "Iterate";
@@ -3124,6 +3393,7 @@ function nameExprBase(node, opts = {}) {
   }
   if (name === "LeanGetElem") {
     if (cls(node.args?.[0]) === "LeanToken" && node.args[0].text === "ℙ") return "Prob";
+    if (cls(node.args?.[0]) === "LeanToken" && node.args[0].text === "∇") return "Grad";
   }
   if (name === "LeanBitOr") {
     return "";
@@ -3191,6 +3461,23 @@ function nameExprAltsBase(node, opts = {}) {
   }
 
   if (name === "Lean_have" || isBvarQuotation(node)) return [];
+  {
+    const gb = gradientBody(node);
+    if (gb) {
+      if (isExpectDotPowId(gb)) return uniq(["GradExpect_DotPow_Id", "GradExpectDotPow_Id", "GradExpect"]);
+      const x = nameExprAlts(gb, opts);
+      const ranked = [];
+      for (const y of x) {
+        if (y.startsWith("Expect") && !y.startsWith("Expect_") && /[A-Z]/.test(y.slice(6, 7) || "")) {
+          ranked.push("GradExpect_" + y.slice("Expect".length));
+        }
+        ranked.push("Grad" + y);
+        ranked.push("Grad_" + y);
+      }
+      return ranked.length ? uniq(ranked) : ["Grad"];
+    }
+  }
+
   if (indepAtom(node)) {
     const base = indepAtom(node);
     const joint = indepJointAlt(node);
@@ -3485,6 +3772,24 @@ function nameExprAltsBase(node, opts = {}) {
 
   // Arithmetic ops: Sub, Add, Mul, Div, Pow, Neg
   if (name === "LeanSub" || name === "LeanAdd" || name === "LeanMul" || name === "LeanDiv" || name === "LeanPow" || name === "LeanNeg" || (name === "Lean_cdotp" && node.subscript === "ᵥ") || name === "LeanMatMul") {
+    if (name === "LeanMul" && isMulSub1DotFunDotPowRange(node)) {
+      return uniq(["MulSub1_Dot_FunDotPow_Range", "MulSub1_FunPowDot", "MulSub1FunPowDot", "MulSub1_DotFunPow"]);
+    }
+    if (name === "LeanMul" && isMulSub1FunPowDot(node)) {
+      return uniq(["MulSub1_FunPowDot", "MulSub1FunPowDot", "MulSub1_DotFunPow"]);
+    }
+    if (name === "LeanMatMul" && isDotFunDotPowRangeApp(node)) {
+      return uniq(["Dot_FunDotPow_Range", "FunPowDot", "DotPow_Id", "Dot"]);
+    }
+    if (name === "LeanMatMul" && isFunPowDotApp(node)) {
+      return uniq(["FunPowDot", "DotPow_Id", "Dot"]);
+    }
+    if (name === "LeanMatMul" && isDotPowRangeApp(node)) {
+      return uniq(["DotPow_Range", "Dot"]);
+    }
+    if (name === "LeanMatMul" && isDotPowIdApp(node)) {
+      return uniq(["DotPow_Id", "Dot"]);
+    }
     let tag = CLASS_TOKEN[name] || name.replace(/^Lean/, "");
     const args = node.args || [];
     if (name === "LeanPow" && cls(args[1]) === "LeanBracket") tag = "Iterate";
@@ -3618,6 +3923,7 @@ function nameExprAltsBase(node, opts = {}) {
   if (name === "LeanDoubleAngleQuotation") return [];
   if (name === "LeanGetElem") {
     if (cls(node.args?.[0]) === "LeanToken" && node.args[0].text === "ℙ") return ["Prob"];
+    if (cls(node.args?.[0]) === "LeanToken" && node.args[0].text === "∇") return ["Grad"];
   }
   if (name === "LeanBitOr") return [];
 

@@ -1,6 +1,6 @@
 /**
  * Arrows: `LeanRightarrow` (`=>`), `Lean_rightarrow` (`→`), `Lean_mapsto` (`↦`),
- * and `Lean_leftarrow` (`←`).
+ * `Lean_rightharpoonup` (`⇀`), and `Lean_leftarrow` (`←`).
  *
  * Base classes (the ones in `extends`) are imported from the modules that
  * define them; every other class is read from `Lean.classes` (`L.X`) at
@@ -292,6 +292,55 @@ export class Lean_mapsto extends LeanBinary {
     strFormat() {
         const sep = this.sep();
         return `%s ${this.operator}${sep}%s`;
+    }
+}
+
+
+export class Lean_rightharpoonup extends LeanBinary {
+    static { this.register(); }
+
+    get stack_priority() {
+        return 24;
+    }
+
+    get operator() {
+        return '⇀';
+    }
+
+    insert_newline(caret, newline_count, indent, next) {
+        if (this.indent <= indent && caret instanceof L.LeanCaret && caret === this.rhs) {
+            if (indent === this.indent) indent = this.indent + 2;
+            caret.indent = indent;
+            const stmts = new L.LeanStatements([caret], indent, caret.level);
+            this.replace(caret, stmts);
+            for (let i = 1; i < newline_count; i++) {
+                const c = new L.LeanCaret(indent, caret.level);
+                stmts.push(c);
+            }
+            return stmts.args[stmts.args.length - 1];
+        }
+        return super.insert_newline(caret, newline_count, indent, next);
+    }
+
+    is_indented() {
+        return this.parent instanceof L.LeanStatements;
+    }
+
+    sep() {
+        const {rhs} = this;
+        if (rhs instanceof L.LeanStatements) return '\n';
+        if (rhs instanceof L.LeanCaret) return '';
+        return ' ';
+    }
+
+    strFormat() {
+        const sep = this.sep();
+        return `%s ${this.operator}${sep}%s`;
+    }
+
+    latexFormat() {
+        const sep = this.sep();
+        return `{%s} \\rightharpoonup${sep}{%s}`;
     }
 }
 
