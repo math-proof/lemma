@@ -1,5 +1,4 @@
 import Lemma.Random.ExpectCond.eq.Integral_Mul_ProbCond
-import sympy.Basic
 open MeasureTheory Random
 
 

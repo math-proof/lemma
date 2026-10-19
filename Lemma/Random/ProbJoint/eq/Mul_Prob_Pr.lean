@@ -1,5 +1,3 @@
-import sympy.stats.policy_trajectory
-import sympy.Basic
 import Lemma.Random.RealInterPreimage_Preimage.eq.MulRealPreimageProb.of.All_Eq
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 
@@ -23,7 +21,7 @@ private lemma main
   (x : S)
   (u : A) :
 -- imply
-  (M θ).real (s t ⁻¹' {x} ∩ a t ⁻¹' {u}) = (M θ).real (s t ⁻¹' {x}) * M.pol.prob θ x u := by
+  (M θ).real (s t ⁻¹' {x} ∩ a t ⁻¹' {u}) = (M θ).real (s t ⁻¹' {x}) * M.policy.prob θ x u := by
 -- proof
   classical
   apply RealInterPreimage_Preimage.eq.MulRealPreimageProb.of.All_Eq (M := M) h₀ θ t x u

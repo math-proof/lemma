@@ -1,27 +1,11 @@
-import sympy.core.relational
 import torch.Tensor.prod
-import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Hyperreal.XEqSumS.of.All_XEq.OrAll_NotInfinite
-import Lemma.List.EqEraseIdx.of.LeLength
-import Lemma.List.MulLengthSlice.eq.ProdEraseIdx.of.GtGet.GtLength
-import Lemma.List.AddMul_ProdDrop.lt.Prod
-import Lemma.List.Get.dvd.ProdTake.of.GtLength
-import Lemma.List.LengthSlice.eq.ProdTake.of.GtGet.GtLength
-import Lemma.List.ProdTake.eq.DivProdTake.of.Ne_0.GtLength
-import Lemma.Nat.LtAddMul.of.Lt.Lt_Div.Dvd
-import Lemma.Tensor.DataCast.as.Data.of.Eq
 import Lemma.Tensor.DataSum.eq.Sum_DataSelect
 import Lemma.Tensor.Ge_0.is.All_Le0GetData
 import Lemma.Tensor.Le_0.is.All_Ge0GetData
 import Lemma.Tensor.Sum.as.Sum.of.LeLength
 import Lemma.Tensor.XEq.is.All_XEqGetS
-import Lemma.Tensor.XEq.is.XEqDataS
-import Lemma.Vector.GetCast.eq.Get.of.Eq
-import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Vector.GetSum.eq.Sum_Get
-import Lemma.Vector.GetGetSlice.eq.Get.of.GtGet.GtLength
-import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
-import Lemma.Vector.XEq.is.All_XEqGetS
 import torch.Tensor.sum
 open Hyperreal Tensor Fin Vector List Nat
 

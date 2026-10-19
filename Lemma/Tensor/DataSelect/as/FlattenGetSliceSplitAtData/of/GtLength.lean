@@ -1,5 +1,4 @@
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
-import Lemma.List.MulLengthSlice.eq.ProdEraseIdx.of.GtGet.GtLength
 import torch.Tensor
 open Bool List
 

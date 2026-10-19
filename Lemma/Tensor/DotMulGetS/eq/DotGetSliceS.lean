@@ -1,34 +1,16 @@
 import Lemma.Bool.Bool.eq.Ite
 import torch.Tensor.sum
-import Lemma.Fin.Sum.of.All_Eq
-import Lemma.Int.EqToNat
 import Lemma.Int.Icc_Sub_1.eq.Ico
 import Lemma.Int.InSub.is.In_Ico_AddS
 import Lemma.Int.In_Ico.is.In_IcoToNatS
-import Lemma.Int.Sub.eq.NegSub
-import Lemma.Int.SubAdd.eq.Add_Sub
 import Lemma.Int.ToNatSubCoeS.eq.Sub
-import Lemma.List.LengthSlice.eq.SubMin
-import Lemma.Nat.CoeAdd.eq.AddCoeS
 import Lemma.Nat.CoeIte.eq.Ite_CoeS
-import Lemma.Nat.CoeSub.eq.SubCoeS.of.Ge
-import Lemma.Nat.EqMul0_0
-import Lemma.Nat.EqMul_0'0
-import Lemma.Nat.EqMul_1
 import Lemma.Nat.Mul_Ite.eq.Ite_MulS
 import Lemma.Tensor.BandPart.eq.Stack_BoolIn_Icc
 import Lemma.Tensor.Dot.eq.Stack_Sum_MulGetS
-import Lemma.Tensor.Eq.is.All_EqGetS
-import Lemma.Tensor.Eq.is.EqDataS
-import Lemma.Tensor.EqData0'0
-import Lemma.Tensor.EqGetStack
-import Lemma.Tensor.Get.of.Eq
-import Lemma.Tensor.GetGetSlice.eq.Get_Add.of.GtSubMin
-import Lemma.Tensor.GetMul.eq.MulGetS
-import Lemma.Tensor.Sum_0.eq.Sum_Get
 import Lemma.Tensor.Sum_IteIn_Ico.eq.SumGetSlice
 open Int List Nat Tensor
-set_option maxHeartbeats 1000000
+set_option maxHeartbeats 500000
 
 
 @[path, fin]

@@ -1,5 +1,4 @@
 import Lemma.Matrix.AnyAnyAll_Gt_0AndEqMulVecUpdateColSMul.of.IsIrreducibleUpdateCol.LtDot.EqSMul.AllGt0
-import sympy.Basic
 import sympy.vector.Basic
 
 open Matrix

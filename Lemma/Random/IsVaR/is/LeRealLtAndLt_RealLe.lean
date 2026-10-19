@@ -1,5 +1,4 @@
 import sympy.stats.value_at_risk
-import sympy.Basic
 import Lemma.Random.IsQuantileLower.is.LeRealLt
 import Lemma.Random.Any_LtAndEqSetOfLeSetOfLt
 open MeasureTheory

@@ -1,5 +1,3 @@
-import sympy.stats.markov_samples
-import sympy.Basic
 import Mathlib.MeasureTheory.Function.L1Space.Integrable
 import Lemma.Random.Any_Ge_0AndAll_All_LeNormG
 import Lemma.Random.MeasurableG.of.Measurable.Le

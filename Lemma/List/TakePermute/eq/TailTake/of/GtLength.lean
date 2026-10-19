@@ -1,7 +1,4 @@
 import Lemma.List.TakePermute.eq.RotateTake.of.GtLength
-import Lemma.List.TakeTake.eq.Take.of.Ge
-import Lemma.List.Rotate.eq.AppendDrop__Take.of.GeLength
-import Lemma.List.EqTakeAppend.of.Eq_Length
 open List
 
 

@@ -1,5 +1,4 @@
 import Lemma.Nat.Square.eq.Mul
-import Lemma.Nat.Mul
 import Lemma.Nat.MulMul.eq.Mul_Mul
 open Nat
 

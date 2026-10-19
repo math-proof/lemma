@@ -1,13 +1,9 @@
-import sympy.stats.stochastic_process_types
-import sympy.stats.stochastic_process
 import Lemma.Matrix.Any_And_DoeblinMinorizationPow.is.Nonempty.Aperiodic
 import Lemma.Matrix.Any_And_ContractingWith.of.DoeblinMinorization
 import Lemma.Matrix.Any_And_Stationary.of.RowStochastic
 import Lemma.Matrix.Stationary_Pow.of.Stationary
 import Lemma.Matrix.GetIterateSmatAsOperator.eq.ToLp1VecMulOfLp_Pow.of.Simplex
-import Lemma.Matrix.LeNormOfL1SubVecMulS.of.RowStochastic
 import Lemma.Matrix.Norm.eq.Sum_AbsOfLp
-import Lemma.Matrix.L1Norm.eq.One.of.StochasticVec
 open Matrix
 
 

@@ -1,6 +1,4 @@
 import sympy.stats.markov_samples
-import sympy.Basic
-import Lemma.Matrix.Sum_Mul.eq.One.of.StochasticVec.RowStochastic
 open Finset
 
 

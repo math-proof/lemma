@@ -1,6 +1,5 @@
 import Lemma.Real.Integral.Mul.eq.Div.gamma.wallis
 import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
-import sympy.Basic
 open Real
 
 

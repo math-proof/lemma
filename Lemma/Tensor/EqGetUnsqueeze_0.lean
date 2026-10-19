@@ -4,15 +4,11 @@ import Lemma.Tensor.EqLengthUnsqueeze_0'1
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Lemma.Tensor.GetCast.as.Get.of.Eq
 import Lemma.Vector.GetMap.eq.UFnGet
-import Lemma.Bool.EqCast.of.Eq
 import Lemma.Bool.EqCast.of.SEq
-import Lemma.Bool.SEq.is.Eq
-import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.Tensor.Unsqueeze.eq.TensorMap_FunGetData
 import Lemma.Vector.ArraySlice.as.GetCast_SplitAt_1.of.GtGet_0.GtLength_0.Eq_ProdTail.Eq_Prod
 import Lemma.Vector.Eq.is.All_EqGetS
 import Lemma.Vector.EqGetMapRange
-import Lemma.Vector.GetArraySlice.eq.Get_Add.of.Lt_Min_Sub
 import Lemma.Vector.GetCast.eq.Get.of.Eq
 open Bool Nat Vector Tensor
 

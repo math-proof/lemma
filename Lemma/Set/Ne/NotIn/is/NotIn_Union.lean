@@ -1,6 +1,5 @@
 import Lemma.Set.Ne.NotIn.of.NotIn_Union
 import sympy.sets.sets
-import sympy.Basic
 
 
 @[path]

@@ -1,6 +1,4 @@
 import Lemma.Int.Add.eq.Sub_Neg
-import Lemma.Nat.CoeAdd.eq.AddCoeS
-import Lemma.Int.EqToNat
 import Lemma.Nat.ToNatAdd.eq.Add
 open Int Nat
 

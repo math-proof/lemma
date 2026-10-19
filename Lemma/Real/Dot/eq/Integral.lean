@@ -1,5 +1,4 @@
 import sympy.integrals.integrals
-import sympy.Basic
 import Mathlib.LinearAlgebra.Matrix.ToLin
 import Mathlib.MeasureTheory.Integral.Bochner.ContinuousLinearMap
 import Mathlib.Topology.Algebra.Module.FiniteDimension

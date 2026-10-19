@@ -1,5 +1,3 @@
-import sympy.stats.markov_samples
-import sympy.Basic
 import Lemma.Real.Anchors.RobbinsMonroβ
 import Lemma.Real.Any_And_Ge_0_All_Le.of.Summable
 import Lemma.Random.Any_Ge_0AndAll_All_LeNormSub_MulNormSub

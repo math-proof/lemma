@@ -1,17 +1,9 @@
-import Lemma.Bool.EqCast.of.SEq
 import torch.Tensor.reshape
-import Lemma.Bool.SEq.is.SEqCast.of.Eq
-import Lemma.List.AppendAppend.eq.Append_Append
-import Lemma.List.Append.of.Eq
-import Lemma.List.TailTake.eq.TakeTail
 import Lemma.Tensor.Tensordot.as.Matmul.of.GtLengthS
 import Lemma.Tensor.GetReshape.as.Reshape.of.GtLength_0
 import Lemma.Tensor.GetMatmul.as.MatmulCastS_Get.of.Eq.Length.GtLength_0
-import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
 import Lemma.Tensor.GtLength.of.GtLength
-import Lemma.Tensor.SEqMatmulS.of.SEq.SEq
 import Lemma.Tensor.SEqReshapeS.of.Eq.Eq.Dvd
-import Lemma.Tensor.SEqGetS.of.SEq.GtLength
 open Tensor Bool List
 
 

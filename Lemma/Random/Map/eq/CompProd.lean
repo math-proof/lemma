@@ -1,5 +1,3 @@
-import sympy.stats.policy_trajectory
-import sympy.Basic
 import Lemma.Measure.MapComap_MapId.eq.Map.of.Measurable
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Measure Finset
 

@@ -1,5 +1,4 @@
 import sympy.stats.frozen_invariant_law
-import sympy.Basic
 import Lemma.Real.ActorBoxProjection.in.ActorBox.of.Ge_0
 import Lemma.Real.Dist.le.Dist.of.EuclideanVec
 

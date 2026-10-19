@@ -11,6 +11,7 @@ import sympy.core.numbers
 import sympy.core.power
 import sympy.vector.Basic
 import stdlib.List
+import sympy.core.function
 
 /-!
 # Shared trajectory model for the policy-gradient lemmas (standard MDP)
@@ -21,7 +22,7 @@ Lean model behind the sympy symbols used in `Tensor.*.policy_gradient_theorem`,
 * `s : ℕ → Ω → S` (states), `a : ℕ → Ω → A` (actions), `r : ℕ → Ω → ℝ` (rewards),
   with `S` and `A` finite;
 * `π` (the trainable weights) is a point `θ` of a real normed space `Θ`;
-* `Pr[a:π](a[t] | s[t])` is the policy `M.pol.prob θ (s t) (a t)`;
+* `Pr[a:π](a[t] | s[t])` is the policy `M.policy.prob θ (s t) (a t)`;
 * `Expectation[r, a:π](f)` is the Bochner integral `∫ ω, f ω ∂(M θ)`;
 * `Expectation[...](f | s[t] = x)` is the integral against Mathlib's conditional measure
   `(M θ)[| s t ⁻¹' {x}]`;
@@ -67,7 +68,7 @@ structure Env (S A : Type*) [MeasurableSpace S] [MeasurableSpace A] where
 /-- the model: an environment together with a policy -/
 structure Model (Θ S A : Type*) [MeasurableSpace S] [MeasurableSpace A] [Fintype A] where
   env : Env S A
-  pol : Policy Θ S A
+  policy : Policy Θ S A
 
 variable {Θ S A : Type*}
   [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S]
@@ -104,7 +105,7 @@ variable (M : Model Θ S A)
 /-- law of one stage `(r, s, a)` given its state `s`: sample `(s, a, r)` via
 `a ∼ π_θ(· | s)`, `r ∼ M.env.reward (s, a)`, then reorder to `(r, s, a)` -/
 noncomputable def stageK (θ : Θ) : Kernel S (ℝ × S × A) :=
-  (Kernel.deterministic id measurable_id ×ₖ (M.pol.kernel θ ⊗ₖ M.env.reward)).map
+  (Kernel.deterministic id measurable_id ×ₖ (M.policy.kernel θ ⊗ₖ M.env.reward)).map
     (fun z : S × A × ℝ ↦ (z.2.2, z.1, z.2.1))
 
 instance (θ : Θ) : IsMarkovKernel (M.stageK θ) := by

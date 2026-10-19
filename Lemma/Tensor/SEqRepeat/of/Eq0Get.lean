@@ -3,7 +3,6 @@ import torch.Tensor.repeat
 import torch.Tensor.prod
 import Lemma.List.EqProd_0.of.Eq0Get
 import Lemma.List.EqSet.of.EqGet
-import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 open Bool List Tensor Vector Nat

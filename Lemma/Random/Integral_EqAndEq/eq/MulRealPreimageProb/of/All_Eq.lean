@@ -1,9 +1,6 @@
-import sympy.stats.policy_trajectory
-import sympy.Basic
 import Lemma.Random.Integral_MulEq22.eq.MulProbIntegral.of.All_LeNorm.StronglyMeasurable
 import Lemma.Random.Integral_MulEqS.eq.MulRealPreimageSIntegral.of.All_LeNorm.StronglyMeasurable
 import Lemma.Real.Norm_1.le.One
-import Lemma.Real.StronglyMeasurable_Eq22
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random Real
 
 
@@ -25,7 +22,7 @@ private lemma main
   (u : A) :
 -- imply
   ∫ ω, (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) ∂(M θ) =
-    (M θ).real (s t ⁻¹' {x}) * M.pol.prob θ x u := by
+    (M θ).real (s t ⁻¹' {x}) * M.policy.prob θ x u := by
 -- proof
   have := M.env.reward_markov
   have h₃ : ∀ ω, (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) =

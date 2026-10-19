@@ -1,4 +1,3 @@
-import Lemma.AbsoluteValue.Norm.eq.UFn
 import Lemma.AbsoluteValue.IsNontrivial.is.Any_Lt1Norm
 open AbsoluteValue
 

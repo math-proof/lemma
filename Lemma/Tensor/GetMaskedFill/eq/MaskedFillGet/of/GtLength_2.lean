@@ -1,7 +1,6 @@
 import Lemma.Tensor.GetOfVector.eq.Get
 import Lemma.Tensor.GtLength.of.GtLength_0
 import Lemma.Tensor.LengthMaskedFill.eq.Length
-import Lemma.Vector.GetMap.eq.UFnGet
 open Tensor Vector
 
 

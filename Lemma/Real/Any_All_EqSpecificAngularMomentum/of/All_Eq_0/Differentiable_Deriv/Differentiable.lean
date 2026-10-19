@@ -1,7 +1,5 @@
 import Mathlib.Analysis.Calculus.MeanValue
 import Lemma.Real.Deriv_SpecificAngularMomentum.eq.Zero.of.Eq_0.DifferentiableAt_Deriv.DifferentiableAt
-import sympy.physics.vector.kinematics
-import sympy.Basic
 
 
 /--

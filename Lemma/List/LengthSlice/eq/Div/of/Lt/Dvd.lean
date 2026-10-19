@@ -1,6 +1,5 @@
 import Lemma.List.EqLengthSlice_CoeMul.of.Lt
 import Lemma.Nat.Any_Eq_Mul.of.Dvd
-import Lemma.Nat.EqDivMul.of.Ne_0
 import stdlib.Slice
 open Nat List
 

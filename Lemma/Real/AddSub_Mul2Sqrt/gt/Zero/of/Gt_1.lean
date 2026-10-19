@@ -2,7 +2,6 @@ import Lemma.Int.SquareSub.eq.SubAddSquareS_MulMul2
 import Lemma.Real.LtSqrtS.of.Lt.Gt_0
 import Lemma.Int.Sub.gt.Zero.is.Gt
 import Lemma.Nat.GtSquare_0.of.Gt_0
-import Lemma.Real.EqSquareSqrt.of.Gt_0
 import Lemma.Int.AddSub.eq.SubAdd
 open Int Real Nat
 

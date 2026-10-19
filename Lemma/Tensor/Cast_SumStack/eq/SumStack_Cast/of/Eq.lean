@@ -1,4 +1,3 @@
-import Lemma.Bool.EqCast.of.SEq
 import Lemma.Tensor.SumStack.as.SumStack_Cast.of.Eq
 open Bool Tensor
 

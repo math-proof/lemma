@@ -1,4 +1,3 @@
-import Lemma.Tensor.DataSum.eq.Sum_Data
 import Lemma.Tensor.DataSum.eq.Sum_DataSelect
 open Tensor
 

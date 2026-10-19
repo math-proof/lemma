@@ -1,5 +1,4 @@
 import Lemma.Real.Square.Tan.eq.Sub.Square.Sec
-import sympy.Basic
 open Real
 
 

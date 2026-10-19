@@ -1,4 +1,3 @@
-import Lemma.Tensor.OfVectorMapToVector.eq.Stack
 import Lemma.Tensor.Softmax.eq.OfVectorMap_FunSoftmax.of.GtLength
 open Tensor
 

@@ -1,9 +1,6 @@
 import Lemma.Tensor.DataSum_0.eq.SumSplitAtData
 import torch.Tensor.sum
 import Lemma.Tensor.Eq.is.EqDataS
-import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
-import Lemma.Vector.GetSum.eq.SumMapGet
-import Lemma.Vector.Head.eq.Get_0
 open Tensor Vector
 
 

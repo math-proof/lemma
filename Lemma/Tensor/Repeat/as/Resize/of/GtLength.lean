@@ -1,10 +1,5 @@
-import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import torch.Tensor.repeat
-import Lemma.List.LengthSet.eq.Length
-import Lemma.List.Set_0.eq.Cons_Tail.of.GtLength_0
-import Lemma.Nat.EqDivMul.of.Ne_0
 import Lemma.Tensor.Resize_0.as.AppendCast_Repeat_0.of.GtLength_0
-import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.GtLength_0
 import Lemma.Tensor.SEqAppend.of.Eq_0
 import Lemma.Tensor.GetRepeat.as.RepeatGet.of.GtGet_0.GtVal_0
 import Lemma.Tensor.GetResize.as.ResizeGet.of.GtGet_0.GtVal_0

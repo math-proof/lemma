@@ -1,5 +1,3 @@
-import sympy.stats.linear_td
-import sympy.Basic
 import Lemma.Random.LinearTD.MeasurableUncurryUpdate
 
 

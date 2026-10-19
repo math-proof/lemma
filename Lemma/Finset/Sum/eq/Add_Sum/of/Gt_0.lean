@@ -1,7 +1,6 @@
 import sympy.core.logic
 import sympy.sets.sets
 import Lemma.Nat.EqAddSub.of.Ge
-import Lemma.Nat.Add
 import Lemma.Nat.Add.is.Eq
 import Lemma.Nat.EqSubAdd
 open Nat

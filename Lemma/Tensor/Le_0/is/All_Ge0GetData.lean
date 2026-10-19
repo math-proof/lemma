@@ -1,5 +1,3 @@
-import Lemma.Tensor.EqData0'0
-import Lemma.Vector.EqGet0_0
 import Lemma.Vector.Le.is.All_Le
 import torch.Tensor
 open Tensor Vector

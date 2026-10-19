@@ -1,7 +1,6 @@
 import stdlib.SEq
 import Lemma.Vector.ValGetUnflatten.eq.ValArraySlice
 import Lemma.Vector.HEq.of.Val
-import Lemma.Nat.Le_SubMulS
 open Vector Nat
 
 

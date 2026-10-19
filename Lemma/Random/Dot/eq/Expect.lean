@@ -1,8 +1,4 @@
 import Lemma.Random.Expect_CondDot.eq.Dot_Expect_Cond
-import sympy.stats.joint_rv
-import sympy.stats.cond_expectation
-import sympy.stats.symbolic_multivariate_probability
-import sympy.matrices.expressions.matmul
 open Random
 
 

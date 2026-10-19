@@ -1,7 +1,5 @@
-import sympy.vector.Basic
 import Lemma.Vector.EqGet0_0
 import Lemma.Vector.Zero.eq.Replicate
-import Lemma.List.LengthRange.eq.Length
 open Vector
 
 

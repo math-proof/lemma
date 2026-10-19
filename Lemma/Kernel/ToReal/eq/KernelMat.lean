@@ -1,5 +1,4 @@
 import sympy.stats.markov_chain
-import sympy.Basic
 open MeasureTheory ProbabilityTheory
 
 

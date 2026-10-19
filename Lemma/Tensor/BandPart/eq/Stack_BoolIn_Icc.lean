@@ -1,6 +1,4 @@
 import Lemma.Tensor.BandPart.eq.Stack_BoolAnd_Dvd
-import Lemma.Tensor.Eq.is.All_EqGetS
-import Lemma.Tensor.EqGetStack
 open Tensor
 
 

@@ -1,5 +1,4 @@
 import sympy.stats.markov_samples
-import sympy.Basic
 
 
 @[path]

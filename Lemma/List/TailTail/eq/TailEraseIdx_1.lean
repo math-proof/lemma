@@ -1,5 +1,4 @@
 import Lemma.List.TailEraseIdx.eq.Drop_2
-import Lemma.List.TailTail.eq.Drop_2
 open List
 
 

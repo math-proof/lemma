@@ -1,9 +1,5 @@
 import Lemma.Tensor.EqMaskedFill.of.LtLength_2
-import Lemma.Tensor.Eq.is.All_EqGetS
-import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Tensor.EqData0'0
-import Lemma.Tensor.EqGetStack
-import Lemma.Tensor.GetMap.eq.MapGet
 import Lemma.Tensor.MapStack.eq.Stack_Map
 import Lemma.Tensor.MaskedFill.eq.Stack_MaskedFillGet.of.GtLength_2
 open Tensor

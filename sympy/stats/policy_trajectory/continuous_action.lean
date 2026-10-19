@@ -44,7 +44,7 @@ structure DensityPolicy (Θ S A : Type*) [ReferenceMeasure A] where
 (continuous-action counterpart of `Model`; the environment `Env S A` is unchanged). -/
 structure DensityModel (Θ S A : Type*) [MeasurableSpace S] [ReferenceMeasure A] where
   env : Env S A
-  pol : DensityPolicy Θ S A
+  policy : DensityPolicy Θ S A
 
 namespace DensityModel
 
@@ -57,8 +57,8 @@ noncomputable def rkd (M : DensityModel Θ S A) (x : S) (u : A) : ℝ :=
 /-- `Wkd θ k x = 𝔼[r[t+k] | s[t] = x]` with a density policy: one policy step (an integral over the actions) and one
 transition per `k` -/
 noncomputable def Wkd (M : DensityModel Θ S A) (θ : Θ) : ℕ → S → ℝ
-  | 0 => fun x => ∫ u, M.pol.prob θ x u * M.rkd x u ∂ReferenceMeasure.measure
-  | k + 1 => fun x => ∫ u, M.pol.prob θ x u * ∫ y, M.Wkd θ k y ∂(M.env.trans (x, u)) ∂ReferenceMeasure.measure
+  | 0 => fun x => ∫ u, M.policy.prob θ x u * M.rkd x u ∂ReferenceMeasure.measure
+  | k + 1 => fun x => ∫ u, M.policy.prob θ x u * ∫ y, M.Wkd θ k y ∂(M.env.trans (x, u)) ∂ReferenceMeasure.measure
 
 /-- state value with a density policy: `Vkd θ γ x = 𝔼[γ ** Stack[k](k) @ r[t:] | s[t] = x] = ∑' k, γ ^ k * Wkd θ k x` -/
 noncomputable def Vkd (M : DensityModel Θ S A) (θ : Θ) (γ : ℝ) (x : S) : ℝ :=
@@ -72,7 +72,7 @@ noncomputable def Qkd (M : DensityModel Θ S A) (θ : Θ) (γ : ℝ) (x : S) (u 
 /-- `P1kd θ p x y = Pr(s[t+1] = y | s[t] = x) = ∫ u, π_θ(u | x) * p(y | x, u) du`, the next-state density
 when `p x u` is a density of the transition `M.env.trans (x, u)` -/
 noncomputable def P1kd (M : DensityModel Θ S A) (θ : Θ) (p : S → A → S → ℝ) (x y : S) : ℝ :=
-  ∫ u, M.pol.prob θ x u * p x u y ∂ReferenceMeasure.measure
+  ∫ u, M.policy.prob θ x u * p x u y ∂ReferenceMeasure.measure
 
 end DensityModel
 

@@ -4,7 +4,7 @@ import Lemma.Tensor.EqMul1
 import Lemma.Tensor.GetDot.eq.Sum_MulGetS
 import Lemma.Tensor.GetEye.eq.Delta
 open Nat Tensor
-set_option maxHeartbeats 4000000
+set_option maxHeartbeats 1000000
 
 
 @[path]

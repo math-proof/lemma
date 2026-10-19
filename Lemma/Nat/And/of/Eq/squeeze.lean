@@ -1,4 +1,3 @@
-import sympy.Basic
 import Lemma.Nat.Eq.of.And.squeeze
 
 

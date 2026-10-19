@@ -1,8 +1,6 @@
 import Lemma.Int.FDiv.eq.FloorDiv
-import Lemma.Int.EqFloor.is.Le.Lt
 import Lemma.Rat.LeMul.is.Le_Div.of.Gt_0
 import Lemma.Int.DivInt.eq.Div
-import Lemma.Int.LtCoeS.is.Lt
 import Lemma.Rat.Gt0Div.of.Lt_0.Gt_0
 open Int Rat
 

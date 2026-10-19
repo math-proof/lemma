@@ -1,19 +1,13 @@
 import Lemma.Int.Any_Eq_Mul.of.FMod.eq.Zero
-import Lemma.Int.FMod.eq.Sub_MulFDiv
-import Lemma.Nat.Add
 import Lemma.Int.SubAdd.eq.Add_Sub
-import Lemma.Int.Sub.eq.Add_Neg
 import Lemma.Nat.Add.is.Eq
 import Lemma.Int.FDiv.eq.FloorDiv
 import Lemma.Int.CoeAdd.eq.AddCoeS
 import Lemma.Rat.DivAdd.eq.AddDivS
 import Lemma.Int.CoeMul.eq.MulCoeS
-import Lemma.Nat.EqDivMul.of.Ne_0
 import Lemma.Bool.Ne.is.NotEq
 import Lemma.Int.NeCoeS.of.Ne
 import Lemma.Int.FloorAdd.eq.AddFloor
-import Lemma.Nat.MulAdd.eq.AddMulS
-import Lemma.Int.Sub_Add.eq.SubSub
 import Lemma.Int.SubSub.eq.Neg
 open Bool Int Nat Rat
 

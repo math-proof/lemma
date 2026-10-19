@@ -1,4 +1,3 @@
-import Lemma.Tensor.DotDot.eq.Dot_Dot
 import torch.Tensor.permute
 import Lemma.Tensor.DotT.eq.RotaryMatrix'Sub
 import Lemma.Tensor.Dot_T.eq.Dot

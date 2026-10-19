@@ -1,6 +1,5 @@
 import Mathlib.MeasureTheory.Integral.ExpDecay
 import sympy.stats.frozen_invariant_law
-import sympy.Basic
 import Lemma.Real.Norm.le.Sum_Abs
 open Filter MeasureTheory
 

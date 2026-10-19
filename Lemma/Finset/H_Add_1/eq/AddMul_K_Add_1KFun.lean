@@ -1,5 +1,3 @@
-import sympy.concrete.continuant
-import sympy.Basic
 import Lemma.Finset.EqKHShift.et.EqHAddMulKKShift
 open Finset Continuant
 

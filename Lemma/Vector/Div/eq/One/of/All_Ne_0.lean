@@ -1,7 +1,4 @@
 import Lemma.Vector.Eq.is.All_EqGetS
-import Lemma.Vector.EqGet1_1
-import Lemma.Vector.GetDiv.eq.DivGetS
-import sympy.vector.vector
 open Vector
 
 

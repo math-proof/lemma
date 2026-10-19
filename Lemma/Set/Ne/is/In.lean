@@ -1,7 +1,5 @@
 import Lemma.Set.Ne.of.In
 import Lemma.Set.NotIn.of.Ne
-import sympy.functions.elementary.complexes
-import sympy.Basic
 
 
 @[path]

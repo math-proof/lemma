@@ -1,4 +1,3 @@
-import Lemma.Bool.SEq.is.Eq
 import Lemma.Nat.Div.eq.One.of.Ne_0
 import Lemma.Vector.SEqRepeat_1
 open Bool Nat Vector

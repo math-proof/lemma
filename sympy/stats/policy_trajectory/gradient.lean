@@ -35,7 +35,7 @@ noncomputable def Pn (M : Model Θ S A) (θ : Θ) (n : ℕ) (x y : S) : ℝ :=
 
 /-- `P1 θ x y = Pr(s[t+1] = y | s[t] = x) = ∑ u, π_θ(u | x) * Pr(s' = y | x, u)` -/
 noncomputable def P1 (M : Model Θ S A) (θ : Θ) (x y : S) : ℝ :=
-  ∑ u, M.pol.prob θ x u * (M.env.trans (x, u)).real {y}
+  ∑ u, M.policy.prob θ x u * (M.env.trans (x, u)).real {y}
 
 /-- time-free closed form of the state-value function: `Vc θ γ x = ∑' k, γ ^ k * 𝔼[r[t+k] | s[t] = x]` -/
 noncomputable def Vc (M : Model Θ S A) (θ : Θ) (γ : ℝ) (x : S) : ℝ :=

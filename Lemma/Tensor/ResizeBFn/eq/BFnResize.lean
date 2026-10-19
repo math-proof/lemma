@@ -1,5 +1,3 @@
-import Lemma.List.ProdSet.eq.MulProd_Mul_Prod.of.GtLength
-import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Vector.FlattenMap.eq.MapFlatten
 import Lemma.Vector.MapCast.as.Map.of.Eq
 import Lemma.Vector.MapMap.eq.Map_Comp

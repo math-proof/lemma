@@ -1,10 +1,6 @@
-import sympy.sets.stirling_partition
-import sympy.Basic
-import Lemma.Finset.Subset_Range.of.In_Conditionset
 import Lemma.Finset.NcardImageConditionset.eq.NcardImageImageConditionset
 import Lemma.Finset.SetOfIn_ImageConditionset_Add_1Add_1AndFinset.eq.J
 import Lemma.Finset.SetOfIn_ImageConditionsetAndInFinset.eq.ImageImageConditionset
-import Lemma.Finset.Injective.of.In_Conditionset
 import Lemma.Finset.FiniteParts
 import Lemma.Finset.EqCard.of.In_Parts
 open Finset Stirling.conditionset

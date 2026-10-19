@@ -1,6 +1,3 @@
-import sympy.stats.policy_trajectory
-import sympy.Basic
-import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
 import Lemma.Random.RealInterPreimage_Preimage.eq.MulRealPreimageProb.of.All_Eq
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 
@@ -25,7 +22,7 @@ private lemma main
   (h₁ : (M θ).real (s t ⁻¹' {x}) ≠ 0)
   (u : A) :
 -- imply
-  ((M θ)[|s t ⁻¹' {x}]).real (a t ⁻¹' {u}) = M.pol.prob θ x u := by
+  ((M θ)[|s t ⁻¹' {x}]).real (a t ⁻¹' {u}) = M.policy.prob θ x u := by
 -- proof
   classical
   rw [measureReal_def, cond_apply (Random.Measurable.of.All_Eq.snd.fst h₀ t (measurableSet_singleton x)), ENNReal.toReal_mul,

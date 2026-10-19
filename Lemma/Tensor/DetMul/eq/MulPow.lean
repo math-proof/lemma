@@ -1,15 +1,8 @@
 import Lemma.Tensor.DataMul.eq.MulData
 import Lemma.Tensor.DataMul.eq.Mul_Data
 import Lemma.Tensor.DetMul.eq.MulProd
-import Lemma.Tensor.Eq.is.All_EqGetS
-import Lemma.Tensor.Eq.is.EqDataS
-import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.GetMul.eq.MulGet
-import Lemma.Tensor.GetMul.eq.MulGetS
-import Lemma.Tensor.MulStack.eq.Stack_Mul
-import Lemma.Tensor.Prod_0.eq.Prod_Get
 import Lemma.Tensor.Pow.eq.TensorListPow
-import Lemma.Vector.Eq.is.All_EqGetS
 import Lemma.Vector.GetMul.eq.MulGet
 import Lemma.Vector.GetMul.eq.Mul_Get
 import torch.stack

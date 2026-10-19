@@ -1,44 +1,11 @@
-import Lemma.Tensor.EqSum0_0
-import Lemma.Nat.EqMul_0'0
-import Lemma.Tensor.EqMul_0'0
-import Lemma.Tensor.EqBmm_0'0
-import Lemma.Tensor.EqMatmul_0'0
 import Lemma.Tensor.EqTensordot_0'0
-import Lemma.Tensor.Cast_ResizeCast_0.eq.Zero
 import Lemma.Tensor.EqEinsum_0'0
-import Lemma.Tensor.EqCast_0'0.of.Eq
-import Lemma.Tensor.EqTensor0'0
 import torch.Tensor.sum
 import torch.Tensor.reshape
 import torch.Tensor.bmm
 import torch.Tensor.repeat
 import torch.Tensor.prod
 import torch.Tensor.permute
-import Lemma.Tensor.EqUnsqueeze0'0
-import Lemma.Vector.Flatten0.eq.Zero
-import Lemma.Vector.EqCast_0'0.of.Eq
-import Lemma.Vector.EqMap0_0.of.EqUFn_0
-import Lemma.Vector.Map₂.eq.Zero.of.BFn.eq.Zero
-import Lemma.Vector.Repeat0.eq.Zero
-import Lemma.Vector.Resize0.eq.Zero
-import Lemma.Vector.Transpose0.eq.Zero
-import Lemma.Vector.GetSlice0.eq.Zero
-import Lemma.Tensor.OfVector0.eq.Zero
-import Lemma.Tensor.Resize0.eq.Zero
-import Lemma.Tensor.Reshape0.eq.Zero
-import Lemma.Tensor.Select0.eq.Zero
-import Lemma.Tensor.Repeat0.eq.Zero
-import Lemma.Tensor.Rotate0.eq.Zero
-import Lemma.Tensor.PermuteHead0.eq.Zero
-import Lemma.Tensor.PermuteTail0.eq.Zero
-import Lemma.Tensor.Permute0.eq.Zero
-import Lemma.Tensor.Transpose0.eq.Zero
-import Lemma.Tensor.EqT0'0
-import Lemma.Tensor.ToVector0.eq.Zero
-import Lemma.Vector.EqAppend0S0
-import Lemma.List.Set_0.eq.Cons_Tail.of.GtLength_0
-import Lemma.List.SetAppend.eq.Append_Set.of.LeLength
-import sympy.matrices.expressions.matmul
 open Tensor Vector
 
 

@@ -1,5 +1,4 @@
 import sympy.core.logic
-import sympy.Basic
 
 @[path]
 private lemma left

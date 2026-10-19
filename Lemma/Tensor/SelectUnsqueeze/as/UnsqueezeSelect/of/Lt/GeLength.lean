@@ -1,4 +1,3 @@
-import Lemma.List.GetInsertIdx.eq.Get.of.Lt.GeLength
 import torch.Tensor.unsqueeze
 import Lemma.Tensor.SelectUnsqueeze.as.UnsqueezeSelect.of.Le
 open List Tensor

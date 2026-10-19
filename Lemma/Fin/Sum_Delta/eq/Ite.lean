@@ -1,5 +1,3 @@
-import sympy.matrices.expressions.permutation
-import Lemma.Nat.Delta.eq.Ite
 import Lemma.Fin.Sum_Delta.eq.One
 open Nat
 

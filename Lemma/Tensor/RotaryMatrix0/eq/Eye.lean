@@ -1,7 +1,6 @@
 import Lemma.Tensor.AppendHstackS.eq.Eye
 import Lemma.Tensor.Cos0.eq.One
 import Lemma.Tensor.RotaryMatrix.eq.AppendHstackSMulSEye
-import Lemma.Tensor.EqStack_0'0
 import Lemma.Tensor.EqStack_1'1
 import Lemma.Tensor.Sin0.eq.Zero
 open Tensor

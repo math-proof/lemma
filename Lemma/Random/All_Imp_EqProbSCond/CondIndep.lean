@@ -7,9 +7,7 @@ import Mathlib.Probability.Kernel.CondDistrib
 import Mathlib.MeasureTheory.Measure.Prod
 import Mathlib.MeasureTheory.Measure.WithDensity
 import Mathlib.MeasureTheory.Integral.Lebesgue.Map
-import sympy.stats.joint_rv
 import Lemma.Random.All_Eq_MulProbCond.of.PSpace_Joint
-import Lemma.Random.PSpace.PSpace.of.PSpace_Joint
 import Lemma.Random.Map.eq.WithDensityProb
 open ProbabilityTheory MeasureTheory Random
 

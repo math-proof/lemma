@@ -1,5 +1,4 @@
 import Lemma.List.GetSet.eq.Get.of.Ne.GtLength
-import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import torch.Tensor
 open List Tensor
 

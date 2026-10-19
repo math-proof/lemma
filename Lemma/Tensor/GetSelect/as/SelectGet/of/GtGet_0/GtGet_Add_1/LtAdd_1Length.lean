@@ -1,5 +1,3 @@
-import Lemma.Tensor.EqGetStack
-import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.LengthSelect.eq.Get_0.of.GtGet.GtLength.Gt_0
 import Lemma.Tensor.SEqGetS.of.SEq.GtLength
 import Lemma.Tensor.Select.as.Stack_Select.of.LtAdd_1Length

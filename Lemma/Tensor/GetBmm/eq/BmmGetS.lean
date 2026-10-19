@@ -4,17 +4,7 @@ import torch.Tensor.repeat
 import Lemma.Tensor.GetUnsqueeze.as.UnsqueezeGet.of.GtGet_0.GtLength_0
 import Lemma.Tensor.GetRepeat.as.RepeatGet.of.GtGet_0.GtLength_0
 import Lemma.Tensor.GetSum.as.SumGet.of.GtGet_0.Gt_0.GtLength
-import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
-import Lemma.Bool.Cast.of.SEq.Eq
-import Lemma.Bool.SEq.is.Eq
-import Lemma.Bool.SEq.is.EqCast.of.Eq
-import Lemma.Bool.SEq.is.SEqCast.of.Eq
-import Lemma.Fin.Eq_Fin
 import Lemma.List.InsertIdxAppend.eq.Append_Cons
-import Lemma.List.InsertIdxAppend.eq.Append_InsertIdx
-import Lemma.List.Slice.eq.Nil
-import Lemma.Nat.AddAdd.eq.Add_Add
-import Lemma.Nat.Mul.of.Eq
 import Lemma.Tensor.Repeat.of.Eq
 import Lemma.Tensor.Sum.of.Eq
 import Lemma.Tensor.Unsqueeze.of.Eq
@@ -22,7 +12,7 @@ import Lemma.Tensor.GetMul.eq.MulGetS.of.GtGet_0.GtLength_0
 import torch.Tensor.bmm
 import torch.Tensor.sum
 open Bool Fin List Nat Tensor
-set_option maxHeartbeats 500000
+set_option maxHeartbeats 250000
 
 
 @[path, fin, comm]

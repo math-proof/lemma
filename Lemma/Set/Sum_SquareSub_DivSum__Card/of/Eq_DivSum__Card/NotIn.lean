@@ -1,4 +1,3 @@
-import sympy.Basic
 import Lemma.Set.EqCard.of.NotIn
 
 open Set

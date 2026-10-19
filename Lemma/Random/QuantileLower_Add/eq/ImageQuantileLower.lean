@@ -1,5 +1,3 @@
-import sympy.stats.quantile
-import sympy.Basic
 import Lemma.Random.IsQuantileLower
 open MeasureTheory
 

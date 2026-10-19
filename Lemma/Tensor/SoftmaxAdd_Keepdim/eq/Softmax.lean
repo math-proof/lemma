@@ -1,33 +1,13 @@
-import Lemma.Real.NeExp_0
 import torch.Tensor.prod
-import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
-import Lemma.List.MulProdInsertIdxEraseIdx.eq.Prod.of.GtLength
 import Lemma.List.ProdDropInsertIdxEraseIdx.eq.ProdDrop.of.GtLength
-import Lemma.List.ProdInsertIdx.eq.Prod
 import Lemma.List.TakeInsertIdxEraseIdx.eq.Take
-import Lemma.Nat.Eq_Div.Eq_Mod.of.Eq_AddMul
-import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Rat.DivMulS.eq.Div.of.Ne_0
-import Lemma.Tensor.DataAdd.eq.AddDataS
-import Lemma.Tensor.DataDiv.eq.DivDataS
-import Lemma.Tensor.DataExp.eq.ExpData
 import Lemma.Tensor.DataKeepdim.as.FlattenMapSplitAtCast_Data
-import Lemma.Tensor.DataMul.eq.MulDataS
-import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Tensor.ExpAdd.eq.MulExpS
 import Lemma.Tensor.KeepdimExp.eq.ExpKeepdim
 import Lemma.Tensor.Softmax.eq.One.of.LeLength
 import Lemma.Tensor.SumMul_Keepdim.eq.MulSum
-import Lemma.Vector.Cast_Mul.eq.MulCastS.of.Eq
-import Lemma.Vector.ExpAdd.eq.MulExpS
-import Lemma.Vector.GetCast.eq.Get.of.Eq
-import Lemma.Vector.GetDiv.eq.DivGetS
-import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
-import Lemma.Vector.GetMul.eq.MulGetS
-import Lemma.Vector.GetRepeat.eq.Get_Mod
-import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.RepeatMul.eq.MulRepeatS
-import Lemma.Vector.SplitAtMul.eq.MulSplitAtS
 open Fin List Nat Rat Tensor Vector
 
 

@@ -1,5 +1,4 @@
 import sympy.stats.frozen_invariant_law
-import sympy.Basic
 import Lemma.Matrix.All_In_ActorBox.of.In_ActorBox.ForwardSolvesActorBoxEquation
 import Lemma.Matrix.All_StochasticVec.of.StochasticVec.Gt_0.All_GeneratorMatrix.ForwardSolvesStateEquation
 

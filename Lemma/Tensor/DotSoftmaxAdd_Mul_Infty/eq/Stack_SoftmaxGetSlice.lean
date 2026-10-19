@@ -1,9 +1,5 @@
-import Lemma.Nat.Sub.eq.Zero.of.Le
 import Lemma.Tensor.BandPart.of.Ge_Sub_1
 import Lemma.Tensor.DotSoftmaxAdd_Mul_Infty.eq.Stack_DotSoftmax
-import Lemma.Tensor.EqGetStack
-import Lemma.Tensor.Eq.is.All_EqGetS
-import Lemma.Tensor.XEq.of.Eq
 open Nat Tensor
 
 

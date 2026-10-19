@@ -1,7 +1,5 @@
 import Lemma.Real.ArealSpeed.eq.Div.of.Ne_0.EqAngularMomentum
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
-import sympy.physics.vector.kinematics
-import sympy.Basic
 
 
 /--

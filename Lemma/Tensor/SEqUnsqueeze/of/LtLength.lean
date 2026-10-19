@@ -1,14 +1,8 @@
 import Lemma.List.EqInsertIdx.of.LtLength
 import torch.Tensor.unsqueeze
 import Lemma.List.InsertIdx.ne.Nil.of.Ne_Nil
-import Lemma.Nat.Gt_0.of.Gt
 import Lemma.Tensor.GetUnsqueeze.as.UnsqueezeGet.of.GtGet_0.Gt_0.GtLength_0
-import Lemma.Tensor.HEq.of.SEqDataS.Eq
-import Lemma.Tensor.Length.eq.Get_0.of.Ne_Nil
-import Lemma.Tensor.LengthUnsqueeze.eq.Length.of.Gt_0
 import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.Ne_Nil
-import Lemma.Tensor.Unsqueeze.eq.TensorMap_FunGetData
-import Lemma.Vector.SEq.of.All_EqGetS.Eq
 open Tensor List Vector Nat
 
 

@@ -1,6 +1,5 @@
 import Lemma.Tensor.EqGet0_0
 import Lemma.Tensor.GetAdd.eq.AddGetS.of.GtLength_0
-import Lemma.Tensor.GtLength.of.GtLength_0
 import Lemma.Tensor.UFnSumStack.eq.SumStack_UFn.All_EqUFnAdd.EqUFn_0
 open Tensor
 

@@ -1,23 +1,12 @@
 import Lemma.Int.Lt.of.LtSquareS.Ge_0
 import Lemma.Int.Le0Mul.of.Ge_0.Ge_0
-import Lemma.Real.GeSqrt_0
-import Lemma.Nat.SquareAdd.eq.AddAddSquareS_MulMul2
 import Lemma.Nat.SquareMul.eq.MulSquareS
-import Lemma.Real.EqSquareSqrt.of.Ge_0
 import Lemma.Rat.Div.ge.Zero.of.Ge_0.Gt_0
 import Lemma.Nat.Mul_Add.eq.AddMulS
 import Lemma.Rat.DivAdd.eq.AddDivS
 import Lemma.Rat.DivMul.eq.MulDiv
 import Lemma.Int.Lt_Sub.is.LtAdd
-import Lemma.Int.Sub.gt.Zero.is.Lt
-import Lemma.Nat.Add
 import Lemma.Int.SubAdd.eq.Add_Sub
-import Lemma.Int.SquareSub.eq.SubAddSquareS_MulMul2
-import Lemma.Real.LtSqrtS.of.Lt.Gt_0
-import Lemma.Nat.GtSquare_0.of.Gt_0
-import Lemma.Nat.Mul
-import Lemma.Real.EqSquareSqrt.of.Gt_0
-import Lemma.Int.AddSub.eq.SubAdd
 import Lemma.Real.AddSub_Mul2Sqrt.gt.Zero.of.Gt_1
 open Nat Int Rat Real
 

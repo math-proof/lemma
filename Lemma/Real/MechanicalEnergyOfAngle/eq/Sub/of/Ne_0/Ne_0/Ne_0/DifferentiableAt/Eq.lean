@@ -1,6 +1,4 @@
 import Lemma.Real.DivSquareDeriv.eq.MulSquareSin.of.Ne_0.DifferentiableAt.Eq
-import sympy.physics.vector.kinematics
-import sympy.Basic
 
 
 /--

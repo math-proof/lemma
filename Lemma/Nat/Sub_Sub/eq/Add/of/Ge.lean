@@ -1,4 +1,3 @@
-import Lemma.Nat.EqSubAdd
 import Lemma.Nat.AddAdd.eq.Add_Add
 import Lemma.Nat.SubAdd.eq.Sub_Sub.of.Ge
 open Nat

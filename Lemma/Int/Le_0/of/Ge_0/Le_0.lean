@@ -1,4 +1,3 @@
-import Lemma.Nat.Le.is.Lt.ou.Eq
 import Lemma.Int.Le_0.of.Ge_0.Lt_0
 open Int Nat
 

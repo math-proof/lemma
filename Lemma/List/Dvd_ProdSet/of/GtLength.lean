@@ -1,5 +1,4 @@
 import Lemma.List.ProdSet.eq.MulProd_Mul_Prod.of.GtLength
-import Lemma.Nat.Dvd_Mul.of.Dvd
 import Lemma.Nat.Dvd_Mul
 open List Nat
 

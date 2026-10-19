@@ -1,14 +1,11 @@
 import Lemma.Tensor.DotDot.eq.Dot_Dot
 import torch.Tensor.permute
-import Lemma.Tensor.EqTT
 import Lemma.Tensor.RotaryMatrix'.eq.DotDot_RotaryMatrix
 import Lemma.Tensor.RotaryMatrixNeg.eq.TRotaryMatrix
 import Lemma.Tensor.TDot.eq.DotTS
-import sympy.functions.special.tensor_functions
-import sympy.matrices.expressions.special
 import torch.functions
 open Tensor
-set_option maxHeartbeats 8000000
+set_option maxHeartbeats 1000000
 
 
 /-- Interleaved analogue of `Tensor.RotaryMatrixNeg.eq.TRotaryMatrix`. -/

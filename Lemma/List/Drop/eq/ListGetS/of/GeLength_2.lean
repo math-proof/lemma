@@ -1,4 +1,3 @@
-import Lemma.List.Drop.eq.Cons_Drop_Add_1.of.GtLength
 import Lemma.List.Drop.eq.ListGet.of.GeLength_1
 import Lemma.List.Cons.is.Eq.Eq
 open List

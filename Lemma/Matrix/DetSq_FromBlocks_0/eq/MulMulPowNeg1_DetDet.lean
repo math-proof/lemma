@@ -1,5 +1,3 @@
-import sympy.matrices.block_swap
-import sympy.Basic
 import Lemma.Matrix.DetSq_FromBlocks.eq.MulPowNeg1_DetFromBlocks
 open Matrix Equiv Matrix.BlockSwap
 

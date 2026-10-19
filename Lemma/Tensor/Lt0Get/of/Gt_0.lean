@@ -1,7 +1,5 @@
 import Lemma.Tensor.EqGet0_0
-import Lemma.Tensor.GtLength
 import Lemma.Tensor.LtGetS.of.Lt
-import Lemma.Tensor.Length
 import torch.Tensor
 open Tensor
 

@@ -1,12 +1,7 @@
-import Lemma.Bool.Cast.of.SEq.Eq
 import torch.Tensor.permute
-import Lemma.Bool.SEq.is.Eq
 import Lemma.List.Swap.eq.Permute__Neg1.of.GtLength
-import Lemma.Nat.AddSub.eq.Sub_Sub.of.Ge.Ge
-import Lemma.Tensor.MapCast.as.Map.of.Eq
 import Lemma.Tensor.PermuteMap.eq.MapPermute
 import Lemma.Tensor.SEqT.of.LeLength_1
-import Lemma.Tensor.T.as.Permute__Neg1.of.GtLength_0
 open Bool List Nat Tensor
 
 

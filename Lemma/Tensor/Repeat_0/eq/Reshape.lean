@@ -2,11 +2,9 @@ import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import torch.Tensor.reshape
 import torch.Tensor.repeat
 import torch.Tensor.prod
-import Lemma.List.Prod.eq.Mul_ProdTail.of.GtLength_0
 import Lemma.List.ProdSet__Mul_Get.eq.Mul_Prod.of.GtLength
 import Lemma.List.Set_0.eq.Cons_Tail.of.GtLength_0
 import Lemma.Nat.MulDivMul.eq.Mul
-import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Vector.GetMap.eq.UFnGet

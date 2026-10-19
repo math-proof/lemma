@@ -3,7 +3,7 @@ import Lemma.Tensor.GetHstack.eq.Get.of.Lt
 import Lemma.Tensor.GetHstack.eq.Get_Sub.of.GtAdd.Ge
 import Lemma.Tensor.Stack.eq.AppendStackS
 open Tensor
-set_option maxHeartbeats 800000
+set_option maxHeartbeats 400000
 
 
 /--

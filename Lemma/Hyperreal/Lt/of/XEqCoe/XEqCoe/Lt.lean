@@ -1,6 +1,4 @@
-import Lemma.Hyperreal.Infinitesimal.is.All_LtAbs
 import Lemma.Hyperreal.InfinitesimalSub.of.XEq.NotInfinite
-import sympy.Basic
 open Hyperreal
 
 

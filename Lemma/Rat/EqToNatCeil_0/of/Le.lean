@@ -2,7 +2,6 @@ import Lemma.Nat.OfNat.eq.Cast
 import Lemma.Nat.LeCoeS.is.Le
 import Lemma.Int.Ge0Sub.is.Le
 import Lemma.Rat.Div.le.Zero.of.Le_0.Ge_0
-import Lemma.Int.LeCeil.is.Le
 import Lemma.Nat.LeCeil.is.Le
 import Lemma.Int.EqToNat_0.of.Le_0
 open Int Nat Rat

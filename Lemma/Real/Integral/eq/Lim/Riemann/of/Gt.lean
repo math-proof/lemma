@@ -1,6 +1,5 @@
 import Lemma.Real.Integral.eq.Mul.Lim.Riemann.of.Lt
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
-import sympy.Basic
 open intervalIntegral Finset Filter Set Real
 
 

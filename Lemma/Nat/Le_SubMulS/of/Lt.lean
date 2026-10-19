@@ -2,7 +2,6 @@ import Lemma.Nat.AddMul.le.Mul
 import Lemma.Nat.Le_Sub.of.LeAdd
 import Lemma.Nat.Add
 import Lemma.Nat.Mul
-import Lemma.Nat.AddMul.le.Mul.of.Lt
 open Nat
 
 

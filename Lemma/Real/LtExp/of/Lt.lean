@@ -1,6 +1,4 @@
 import Lemma.Real.LtExpS.is.Lt
-import sympy.functions.elementary.exponential
-import sympy.Basic
 open Real
 
 

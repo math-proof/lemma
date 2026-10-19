@@ -1,5 +1,4 @@
 import Lemma.Nat.AddMulAddMul.lt.MulMul.of.Lt.Lt.Lt
-import Lemma.Nat.AddMul.lt.Mul.of.Lt.Lt
 open Nat
 
 

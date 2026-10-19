@@ -1,4 +1,3 @@
-import Lemma.List.EqLengthGetSlicedIndices.of.LeAddS.Lt_Add
 import Lemma.List.EqLengthSlicedIndices.of.Le.Gt_0
 import Lemma.List.GetSlicedIndices.eq.Add.of.Lt.LeAddS.Lt_Add
 open List

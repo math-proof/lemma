@@ -1,19 +1,9 @@
 import Lemma.Bool.OrOr.is.Or_Or
-import Lemma.Int.EqToNat
 import Lemma.List.GetSlicedIndices.eq.AddMul.of.Gt_0.Gt_0.Lt.Lt
-import Lemma.List.LengthSlicedIndices.eq.ToNatCeilDivSub.of.Gt_0.Le.Lt
-import Lemma.Nat.CoeAdd.eq.AddCoeS
 import Lemma.Nat.CoeAdd_1.eq.AddCoe_1
-import Lemma.Nat.CoeMul.eq.MulCoeS
-import Lemma.Nat.EqAdd_Mul_DivSub1Sign_2
-import Lemma.Nat.Gt_0
-import Lemma.Nat.LeCoeS.is.Le
 import Lemma.Nat.Lt0Mul.of.Gt_0.Gt_0
-import Lemma.Nat.OfNat.eq.Cast
-import Lemma.Rat.EqCeilDivSubMul.of.Lt
 import Lemma.Vector.Get
 import Lemma.List.EqLengthSlice_Mul.of.Lt
-import sympy.core.logic
 import sympy.vector.vector
 open Bool Int List Nat Rat Vector
 

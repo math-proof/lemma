@@ -1,6 +1,4 @@
-import Lemma.Hyperreal.InfinitePos.is.Infinite.Gt_0
 import Lemma.Hyperreal.InfiniteInfty
-import Lemma.Hyperreal.GtInfty0
 open Hyperreal
 
 

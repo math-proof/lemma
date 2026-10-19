@@ -1,7 +1,5 @@
 import Mathlib.Probability.Moments.Variance
-import sympy.stats.variance
 import Lemma.Random.Var.eq.Integral
-import sympy.Basic
 open MeasureTheory ProbabilityTheory Random
 
 

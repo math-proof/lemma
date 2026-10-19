@@ -1,4 +1,3 @@
-import Lemma.Finset.LeSumS.of.All_Le
 import Lemma.Finset.Sum.ge.Zero.of.All_Ge_0
 import Lemma.Hyperreal.XEqAddS.of.XEq.XEq.Or_OrNotSInfinite
 import Lemma.Int.Le0Mul.of.Ge_0.Ge_0

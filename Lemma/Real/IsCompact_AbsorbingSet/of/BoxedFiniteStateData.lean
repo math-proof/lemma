@@ -1,7 +1,5 @@
 import Mathlib.Topology.Order.Compact
 import Mathlib.Analysis.Normed.Module.FiniteDimension
-import sympy.dynamics.actor_critic
-import sympy.Basic
 import Lemma.Real.IsCompact_ActorBox
 import Lemma.Matrix.IsCompact
 

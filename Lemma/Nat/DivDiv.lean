@@ -1,5 +1,4 @@
 import Lemma.Nat.DivDiv.eq.Div_Mul
-import Lemma.Nat.Mul
 open Nat
 
 

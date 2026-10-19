@@ -1,5 +1,4 @@
 import Lemma.Tensor.SoftmaxAdd_Mul_Infty.eq.Cast_Stack_Ite_Block
-import sympy.Basic
 open Tensor
 
 

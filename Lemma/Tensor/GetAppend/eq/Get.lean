@@ -1,16 +1,9 @@
 import torch.Tensor
 import Lemma.Nat.Lt_Add
 import Lemma.Vector.GetCast_Map.eq.UFnGet.of.Eq.Lt
-import Lemma.Bool.SEq.is.Eq
-import Lemma.Bool.SEq.of.SEq.SEq
 import Lemma.Vector.GetUnflatten.of.Eq.Lt.Eq.Eq
-import Lemma.Bool.EqCast.of.Eq
 import Lemma.Vector.GetUnflatten.as.ArraySliceAppend
-import Lemma.Vector.GetUnflatten.as.ArraySlice.of.Lt
-import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.Vector.SEqArraySliceS.of.Eq
-import Lemma.Nat.MulAdd.eq.AddMulS
-import Lemma.Nat.Le_SubMulS.of.Lt
 import Lemma.List.Prod.eq.Foldr
 open Vector List Bool Nat
 

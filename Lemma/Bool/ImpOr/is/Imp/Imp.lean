@@ -1,6 +1,5 @@
 import Lemma.Bool.Imp.is.OrNot
 import Lemma.Bool.And_Or.is.OrAndS
-import Lemma.Bool.AndOr.is.OrAndS
 import Lemma.Bool.OrOr.is.Or_Or
 import Lemma.Bool.OrAnd.is.AndOrS
 import Lemma.Bool.IffAndOr

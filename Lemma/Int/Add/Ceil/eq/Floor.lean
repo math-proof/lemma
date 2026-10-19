@@ -1,4 +1,3 @@
-import sympy.functions.elementary.integers
 import Lemma.Int.Ceil.eq.FloorDivSub_Sign
 open Int
 

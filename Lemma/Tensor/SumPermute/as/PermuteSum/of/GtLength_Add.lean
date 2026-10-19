@@ -4,16 +4,9 @@ import torch.Tensor.permute
 import Lemma.List.EraseIdxCons.eq.EraseIdx_Sub_1.of.Gt_0
 import Lemma.Nat.Lt.of.LtAdd
 import Lemma.List.PermuteCons.eq.Cons_Permute
-import Lemma.Tensor.SEqSumS.of.SEq
-import Lemma.Tensor.SEq.of.All_SEqGetS.Eq
-import Lemma.Bool.SEq.is.SEqCast.of.Eq
-import Lemma.List.EqPermute
 import Lemma.List.EraseIdxPermute.eq.Tail.of.GtLength
 import Lemma.List.Permute.eq.AppendRotateTake___Drop.of.GtLength_0
 import Lemma.Nat.EqAdd0
-import Lemma.Tensor.Permute.eq.Ite
-import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.Eq
-import Lemma.Tensor.SumCast.as.Sum.of.Eq
 import Lemma.Tensor.SumCast.as.Sum.of.Eq
 import Lemma.Tensor.SumPermuteHead.as.Sum_0.of.GtLength
 import torch.functions

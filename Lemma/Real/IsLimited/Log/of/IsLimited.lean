@@ -1,5 +1,4 @@
 import Lemma.Real.EqLog.of.IsLimited
-import sympy.series.limits
 open Real Set
 
 

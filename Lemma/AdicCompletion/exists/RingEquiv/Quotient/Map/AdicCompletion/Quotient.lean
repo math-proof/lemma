@@ -1,4 +1,3 @@
-import sympy.Basic
 import Mathlib
 import Lemma.AdicCompletion.Support.Exists
 

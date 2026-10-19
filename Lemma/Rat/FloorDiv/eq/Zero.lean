@@ -1,7 +1,4 @@
 import Lemma.Rat.FloorDiv.eq.Zero.of.Lt
-import Lemma.Int.EqFloor.is.Le.Lt
-import Lemma.Rat.Div.ge.Zero
-import Lemma.Rat.LtDiv.is.Lt_Mul.of.Gt_0
 import Lemma.Nat.Gt_0
 open Nat Rat Int
 

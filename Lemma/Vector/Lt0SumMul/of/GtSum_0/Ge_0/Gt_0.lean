@@ -1,10 +1,7 @@
 import Lemma.Finset.GtSumS.of.Any_Gt.All_Ge
 import Lemma.Nat.Lt0Mul.of.Gt_0.Gt_0
-import Lemma.Vector.EqGet0_0
-import Lemma.Vector.GetMul.eq.MulGetS
 import Lemma.Vector.Le0Mul.of.Ge_0.Ge_0
 import Lemma.Vector.Sum.eq.Sum_Get
-import sympy.vector.vector
 open Finset Nat Vector
 
 

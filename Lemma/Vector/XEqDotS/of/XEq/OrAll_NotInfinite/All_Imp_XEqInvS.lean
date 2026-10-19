@@ -1,5 +1,4 @@
 import Lemma.Hyperreal.XEqMulS.of.XEq.Imp_XEqInvS
-import Lemma.Nat.Mul
 import Lemma.Vector.Dot
 import Lemma.Vector.XEqSumS.of.XEq.OrAll_NotInfinite
 open Hyperreal Vector Nat

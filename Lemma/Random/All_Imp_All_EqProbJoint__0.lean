@@ -1,6 +1,4 @@
-import Lemma.Random.PSpace.PSpace.of.PSpace_Joint
 import Lemma.Random.All_EqIntegral_ProbJoint.of.PSpace_Joint
-import sympy.stats.joint_rv
 open Random
 
 

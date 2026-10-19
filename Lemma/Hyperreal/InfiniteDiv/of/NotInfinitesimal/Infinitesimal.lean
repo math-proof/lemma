@@ -1,7 +1,6 @@
 import Lemma.Hyperreal.InfiniteMul.of.NotInfinitesimal.Infinite
 import Lemma.Hyperreal.Infinitesimal.is.InfiniteInv
 import Lemma.Hyperreal.NotInfinite
-import Lemma.Rat.Div.eq.Mul_Inv
 open Hyperreal Rat
 
 

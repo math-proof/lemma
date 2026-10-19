@@ -1,5 +1,4 @@
 import Lemma.Bool.Bool.eq.Ite
-import sympy.Basic
 open Bool
 
 

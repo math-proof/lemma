@@ -1,4 +1,3 @@
-import sympy.vector.vector
 import Lemma.Vector.SEqArraySliceS.of.SEq.Eq.Eq
 open Vector
 

@@ -1,28 +1,9 @@
 import Lemma.Bool.Cast.of.SEq.Eq
-import Lemma.Bool.SEq.is.Eq
-import Lemma.Bool.SEq.is.SEqCast.of.Eq
-import Lemma.Nat.LtDiv.of.Lt_Mul
-import Lemma.Nat.LtMod.of.Lt_Mul
-import Lemma.Tensor.DataOfVector.eq.FlattenMapData
-import Lemma.Tensor.DataGet.eq.GetUnflattenData
-import Lemma.Tensor.DataResize.as.FlattenMapSplitAtData
-import Lemma.Vector.GetArraySlice.eq.Get_Add.of.Lt_Min_Sub
-import Lemma.Vector.GetUnflatten.eq.Get_AddMul
 import Lemma.Nat.EqMax.of.Lt
 import Lemma.Tensor.Einsum.as.Tensordot.of.GeLength_2.GeLength_2
 import Lemma.Tensor.Einsum.as.Tensordot.of.Get_SubLength.GeLength_2.GeLength_2
-import Lemma.Tensor.SEqResize.of.Eq_Get
-import Lemma.Tensor.Tensordot.of.SEq.SEq
-import Lemma.Tensor.GetToVector.eq.Get
-import Lemma.Tensor.Resize.as.OfVectorMapToVector.of.GtVal_0
-import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
-import Lemma.Vector.GetCast.eq.Get.of.Eq
-import Lemma.Vector.GetFlatten.eq.Get.of.Lt_Mul
-import Lemma.Vector.GetResize.eq.Ite_Get_Mod
-import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
-import Lemma.Vector.SEq.of.All_EqGetS.Eq
 open Bool Nat Tensor Vector
-set_option maxHeartbeats 500000
+set_option maxHeartbeats 250000
 
 
 @[path]

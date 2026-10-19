@@ -1,4 +1,3 @@
-import sympy.vector.Basic
 import Lemma.Vector.Zero.eq.Replicate
 
 

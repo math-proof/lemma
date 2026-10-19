@@ -1,4 +1,3 @@
-import Lemma.Set.In.is.Any_Eq_Get
 import Lemma.List.Any_Eq_GetCartesianProduct.of.All_LtGetS.Length
 import Lemma.List.Length.of.In_CartesianProduct
 import Lemma.Set.All_LtGetS.of.In_CartesianProduct

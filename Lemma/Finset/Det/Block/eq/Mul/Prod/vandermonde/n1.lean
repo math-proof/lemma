@@ -1,6 +1,5 @@
 import Mathlib.Data.Nat.Factorial.Basic
 import Lemma.Matrix.DetOfVecCons_FunPow.eq.MulMulPowSProd
-import sympy.Basic
 open Matrix
 
 

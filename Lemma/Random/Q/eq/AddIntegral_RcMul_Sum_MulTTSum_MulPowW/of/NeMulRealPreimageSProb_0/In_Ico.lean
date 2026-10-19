@@ -1,12 +1,7 @@
-import sympy.stats.policy_trajectory
-import sympy.functions.elementary.miscellaneous
-import sympy.stats.cond_expectation
-import sympy.Basic
 import Lemma.Random.Integral.eq.MulMulRealPreimageProbIntegral_MulEqAndEq.of.All_Eq
 import Lemma.Random.Integral_G.eq.TSum_MulPowIntegral_R_Add.of.In_Ico
 import Lemma.Random.Integral_MulEqAndEq.eq.MulMulRealPreimageProbIntegral_Rc.of.All_Eq
 import Lemma.Random.Integral_MulEqAndEq.eq.MulMulRealProbSum_MulTW.of.All_Eq
-import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
 import Lemma.Random.Summable_MulPowIntegral_R_Add.of.In_Ico
 import Lemma.Random.Summable_MulPowWRc.of.In_Ico
 import Lemma.Real.TSum_MulPowSum_Mul.eq.Sum_Mul_TSum_MulPow.of.All_Summable_MulPow
@@ -31,7 +26,7 @@ private lemma main
   (u : A)
   (h₀ : γ ∈ Set.Ico 0 1)
   (h₁ : ∀ t, (· t) = (r t, s t, a t))
-  (h₂ : (M θ).real (s t ⁻¹' {x}) * M.pol.prob θ x u ≠ 0) :
+  (h₂ : (M θ).real (s t ⁻¹' {x}) * M.policy.prob θ x u ≠ 0) :
 -- imply
   let Q (θ : Θ) (t : ℕ) (x : S) (u : A) : ℝ :=
     𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = x ∧ a t = u);

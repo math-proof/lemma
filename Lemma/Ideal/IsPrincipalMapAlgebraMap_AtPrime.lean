@@ -1,7 +1,7 @@
 import Mathlib
 import sympy.Basic
 open scoped nonZeroDivisors
-set_option maxHeartbeats 6400000
+set_option maxHeartbeats 800000
 set_option synthInstance.maxHeartbeats 1600000
 
 

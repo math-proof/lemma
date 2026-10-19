@@ -1,7 +1,4 @@
 import Lemma.Vector.DropReplicate.eq.Replicate
-import Lemma.Vector.EqGet0_0
-import Lemma.Vector.Zero.eq.Replicate
-import sympy.vector.vector
 open Vector
 
 

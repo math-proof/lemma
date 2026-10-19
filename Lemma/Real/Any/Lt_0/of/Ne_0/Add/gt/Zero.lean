@@ -1,5 +1,4 @@
 import Lemma.Real.Any.Lt_0.of.Add.gt.Zero
-import sympy.Basic
 open Real
 
 

@@ -1,5 +1,4 @@
 import sympy.stats.frozen_invariant_law
-import sympy.Basic
 import Lemma.Matrix.Sum_GetVecMul.eq.Zero.of.GeneratorMatrix
 open Matrix
 

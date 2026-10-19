@@ -1,4 +1,3 @@
-import Lemma.Vector.Head.eq.Get_0
 import Lemma.Vector.Sum.eq.Head
 open Vector
 

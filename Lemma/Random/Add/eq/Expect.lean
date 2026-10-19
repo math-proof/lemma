@@ -1,5 +1,4 @@
 import Mathlib.Probability.Independence.Integration
-import sympy.stats.joint_rv
 import sympy.stats.variance
 import sympy.Basic
 open MeasureTheory

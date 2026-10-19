@@ -1,15 +1,7 @@
-import Lemma.Tensor.SEqResize_0.of.Eq_Get_0.GtLength_0
 import Lemma.Tensor.GetResize_0.as.Get.of.GtLength_0
-import Lemma.Bool.SEq.is.SEqCast.of.Eq
-import Lemma.List.GetAppend.eq.Get.of.GtLength
-import Lemma.List.HeadD.eq.Get_0.of.GtLength_0
-import Lemma.List.TailAppend.eq.AppendTail.of.GtLength_0
 import Lemma.Nat.EqMax
-import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
-import Lemma.Tensor.GetToVector.eq.Get
 import Lemma.Tensor.SEqOfVectorS.of.SEq
 import Lemma.Tensor.SEqToVectorS.of.Eq
-import Lemma.Tensor.SEqToVectorS.of.SEq
 import Lemma.Vector.SEqMap₂S.of.All_Eq.SEq.SEq
 import sympy.matrices.expressions.matmul
 open Bool List Nat Tensor Vector

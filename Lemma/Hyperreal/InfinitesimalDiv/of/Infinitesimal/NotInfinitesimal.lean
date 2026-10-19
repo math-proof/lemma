@@ -1,5 +1,4 @@
 import Lemma.Hyperreal.NotInfinitesimal.is.Any_GeAbs
-import Lemma.Hyperreal.Infinitesimal.is.All_LtAbs
 import Lemma.Nat.Gt.of.Ge.Gt
 import Lemma.Nat.LeMulS.of.Le.Gt_0
 import Lemma.Rat.AbsDiv.eq.DivAbsS

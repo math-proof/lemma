@@ -1,8 +1,6 @@
 import Lemma.Int.Sub.lt.Zero.is.Lt
-import Lemma.Hyperreal.InfinitePos.is.All_Gt
 import Lemma.Hyperreal.Infinite.is.InfinitePos.ou.InfiniteNeg
 import Lemma.Hyperreal.Infinite.is.InfiniteSub
-import Lemma.Hyperreal.InfiniteNeg.is.Infinite.Lt_0
 open Hyperreal Int
 
 

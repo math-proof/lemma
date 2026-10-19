@@ -1,7 +1,5 @@
 import Lemma.Real.SinNeg.eq.NegSin
-import Lemma.Vector.GetNeg.eq.NegGet
 import Lemma.Vector.GetSin.eq.SinGet
-import sympy.vector.functions
 open Real Vector
 
 

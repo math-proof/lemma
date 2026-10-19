@@ -1,5 +1,4 @@
 import sympy.stats.iterates
-import sympy.Basic
 import Lemma.Measure.Measurable_FrestrictLe_PiLE
 open MeasureTheory Measure
 

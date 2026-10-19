@@ -1,6 +1,5 @@
 import Lemma.Nat.NotLt.is.Ge
 import Lemma.Real.LtExpS.is.Lt
-import sympy.functions.elementary.exponential
 open Real Nat
 
 

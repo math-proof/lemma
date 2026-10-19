@@ -2,12 +2,10 @@ import Mathlib.MeasureTheory.Measure.Count
 import Mathlib.MeasureTheory.Measure.Prod
 import Mathlib.MeasureTheory.Integral.Lebesgue.Countable
 import Mathlib.MeasureTheory.Measure.Decomposition.RadonNikodym
-import Lemma.Random.PSpace.PSpace.of.PSpace_Joint
 import Lemma.Random.PSpace_Joint_Joint.of.PSpace_Joint
 import Lemma.Random.PSpace_JointJoint.is.PSpace_Joint_Joint
 import Lemma.Measure.EqRnDeriv_Count
 import Lemma.Measure.Count.eq.ProdCountS
-import sympy.stats.joint_rv
 open MeasureTheory Measure Function Random
 
 

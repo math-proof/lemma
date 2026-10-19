@@ -1,5 +1,4 @@
 import Lemma.List.DropTakePermute.eq.RotateTakeDrop
-import Lemma.List.EqTake.of.LeLength
 open List
 
 

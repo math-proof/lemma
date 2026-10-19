@@ -1,10 +1,8 @@
 import torch.Tensor.Basic
 import torch.Tensor.reshape
 import Lemma.Vector.GetCast.eq.Get.of.Eq
-import Lemma.Nat.EqMulDiv.of.Dvd
 import Lemma.Vector.GetRepeat.eq.Get_Mod
 import Lemma.Nat.EqMod_1'0
-import Lemma.Vector.Head.eq.Get_0
 open Vector Nat
 
 

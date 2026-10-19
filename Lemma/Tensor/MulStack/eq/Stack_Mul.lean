@@ -1,7 +1,3 @@
-import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
-import Lemma.Nat.Mul
-import Lemma.Tensor.Eq.is.All_EqGetS
-import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.GetMul.eq.MulGetS
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 open Fin Nat Tensor Vector

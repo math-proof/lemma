@@ -1,4 +1,3 @@
-import sympy.Basic
 import Mathlib
 import Lemma.AdicCompletion.exists.RingEquiv.of.IsLocalization.AtPrime.of.IsMaximal
 import Lemma.Polynomial.IsSeparable.Pi.of.All_IsSeparable

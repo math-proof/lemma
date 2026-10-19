@@ -1,4 +1,3 @@
-import Lemma.Nat.Mul
 import Lemma.List.ProdSet__MulGet.eq.MulProd.of.GtLength
 open List Nat
 

@@ -1,6 +1,3 @@
-import sympy.concrete.expr_with_limits
-import sympy.sets.sets
-import sympy.Basic
 import Lemma.Real.LeMinimaS.of.All_Le
 
 

@@ -1,14 +1,10 @@
-import Lemma.List.ProdAppend.eq.MulProdS
 import torch.Tensor.prod
 import torch.Tensor.permute
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Tensor.MapData.eq.DataMap
 import Lemma.Tensor.RotateMap.eq.MapRotate
 import Lemma.Tensor.TensorMap.eq.MapTensor
-import Lemma.Vector.FlattenMap.eq.MapFlatten
-import Lemma.Vector.MapCast.as.Map.of.Eq
 import Lemma.Vector.MapMap.eq.Map_Comp
-import Lemma.Vector.SplitAtMap.eq.MapSplitAt
 open List Tensor Vector
 
 

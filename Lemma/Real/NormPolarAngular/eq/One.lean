@@ -1,6 +1,5 @@
 import Lemma.Real.Norm.eq.Sqrt
 import sympy.physics.vector.kinematics
-import sympy.Basic
 
 
 /-- Polar angular unit vector has length one: \(|\hat{\theta}|=1\). -/

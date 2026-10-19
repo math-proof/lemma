@@ -1,5 +1,4 @@
 import Lemma.Tensor.GetData.eq.GetDataGet.of.Lt
-import Lemma.Tensor.GtLength.of.GtLength_0
 import Lemma.Vector.Head.eq.Get_0
 open Tensor Vector
 

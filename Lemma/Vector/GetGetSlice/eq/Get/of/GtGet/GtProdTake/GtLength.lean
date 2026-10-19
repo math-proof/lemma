@@ -2,12 +2,6 @@ import Lemma.List.ProdTake.eq.DivProdTake.of.Ne_0.GtLength
 import Lemma.List.LengthSlice.eq.ProdTake.of.GtGet.GtLength
 import Lemma.List.Get.dvd.ProdTake.of.GtLength
 import Lemma.Vector.GetGetSlice.eq.Get.of.Lt.Lt.Dvd
-import Lemma.List.LengthSlice.eq.Div.of.Lt.Dvd
-import Lemma.Nat.Any_Eq_Mul.of.Dvd
-import Lemma.Nat.EqDivMul.of.Ne_0
-import Lemma.Nat.LtAddMul.of.Lt.Lt_Div.Dvd
-import Lemma.Vector.GetGetSlice.eq.Get
-import sympy.vector.vector
 open List Nat Vector
 
 

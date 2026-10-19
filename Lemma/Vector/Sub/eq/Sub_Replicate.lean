@@ -1,5 +1,4 @@
 import Lemma.Vector.GetSub.eq.SubGetS
-import sympy.vector.vector
 open Vector
 
 

@@ -1,17 +1,10 @@
-import Lemma.Bool.SEq.is.Eq
 import Lemma.Bool.SEq.is.EqCast.of.Eq
-import Lemma.List.EqPermute
-import Lemma.List.GetPermute.eq.Get.of.Gt
-import Lemma.List.Permute_0.eq.AppendRotateTake___Drop.of.GtLength_0
-import Lemma.Nat.Gt_0
 import Lemma.Tensor.Cast_Mul.eq.MulCastS.of.Eq
 import Lemma.Tensor.Eq.is.All_EqGetS.of.GtLength_0
 import Lemma.Tensor.GetMul.eq.MulGetS.of.GtGet_0.GtLength_0
 import Lemma.Tensor.GetPermute.as.PermuteGet.of.GtGet_0.LtAdd_1Length
-import Lemma.Tensor.Permute.eq.Ite
 import Lemma.Tensor.PermuteHeadMul.eq.MulPermuteHeadS
 import Lemma.Tensor.SEqMulS.of.SEq.SEq
-import Lemma.Tensor.SEqPermute
 open Bool List Nat Tensor
 
 

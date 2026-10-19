@@ -1,6 +1,5 @@
 import Mathlib.MeasureTheory.Integral.DominatedConvergence
 import Lemma.Random.Expect.eq.Lim
-import sympy.Basic
 open MeasureTheory Filter Topology Random
 
 

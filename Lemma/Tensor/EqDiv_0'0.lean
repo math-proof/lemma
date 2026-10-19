@@ -1,6 +1,3 @@
-import Lemma.Rat.EqDiv_0'0
-import Lemma.Tensor.Eq.is.EqDataS
-import Lemma.Tensor.EqData0'0
 import Lemma.Tensor.EqGet0_0
 import Lemma.Vector.EqDiv_0'0
 open Tensor Vector Rat

@@ -1,5 +1,4 @@
 import Lemma.List.LengthInsertIdx.eq.Add_Length_1.of.GeLength
-import Lemma.Nat.Add
 import stdlib.List
 open List Nat
 

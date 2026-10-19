@@ -1,11 +1,10 @@
-import sympy.Basic
 import Lemma.Tensor.DotSoftmaxAdd_Mul_Infty.eq.Stack_DotSoftmax
-import Lemma.Tensor.EqGetStack
-import Lemma.Tensor.XEq.is.All_XEqGetS
 import Mathlib.Analysis.SpecialFunctions.Exp
 open Tensor
-set_option maxHeartbeats 1000000
+set_option maxHeartbeats 500000
 
+
+attribute [local irreducible] List.prod
 
 @[path]
 private lemma scaled_dot_product_attention

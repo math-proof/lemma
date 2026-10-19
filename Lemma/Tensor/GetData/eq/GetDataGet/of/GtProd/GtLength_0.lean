@@ -1,10 +1,6 @@
-import Lemma.Nat.LtDiv.of.Lt_Mul
 import Lemma.List.ProdTake_1.eq.Get_0.of.GtLength_0
-import Lemma.List.Prod.eq.Mul_ProdTail.of.GtLength_0
 import Lemma.List.GtProdTail_0.of.GtProd_0
-import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Vector.GetSplitAt_1.eq.GetUnflattenCast
-import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import torch.Tensor
 open Vector List Tensor Nat
 

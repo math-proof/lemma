@@ -1,5 +1,3 @@
-import sympy.stats.policy_trajectory.gradient
-import sympy.Basic
 import Lemma.Random.EqSMulProb_FderivLog_Prob_Fderiv_FunProb.of.All_All_Differentiable_FunPolProb
 import Lemma.Random.Integral.eq.Sum_Sum_SMul
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model
@@ -17,17 +15,17 @@ private lemma main
   {a : ℕ → (ℕ → ℝ × S × A) → A}
 -- given
   (h₁ : ∀ t, (· t) = (r t, s t, a t))
-  (h₂ : ∀ x u, Differentiable ℝ (fun θ => M.pol.prob θ x u))
+  (h₂ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
   (θ : Θ)
   (t : ℕ)
   (g : S → A → ℝ) :
 -- imply
-  ∫ ω, g (s t ω) (a t ω) • fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' (s t ω) (a t ω))) θ
+  ∫ ω, g (s t ω) (a t ω) • fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω))) θ
     ∂(M θ) =
     ∑ y, (M θ).real (s t ⁻¹' {y}) •
-    ∑ u, g y u • fderiv ℝ (fun θ' => M.pol.prob θ' y u) θ := by
+    ∑ u, g y u • fderiv ℝ (fun θ' => M.policy.prob θ' y u) θ := by
 -- proof
-  rw [Random.Integral.eq.Sum_Sum_SMul (M := M) h₁ θ t (fun y u => g y u • fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' y u)) θ)]
+  rw [Random.Integral.eq.Sum_Sum_SMul (M := M) h₁ θ t (fun y u => g y u • fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' y u)) θ)]
   refine Finset.sum_congr rfl fun y _ => ?_
   rw [Finset.smul_sum]
   refine Finset.sum_congr rfl fun u _ => ?_

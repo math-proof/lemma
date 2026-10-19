@@ -8,7 +8,6 @@ import Lemma.Nat.NotLt.of.Ge
 import Lemma.Nat.Lt.ou.Eq.ou.Gt
 import Lemma.Nat.NotGt.of.Lt
 import Lemma.Nat.Ge.of.Gt
-import Lemma.Nat.Le.of.Lt
 open Bool Nat Int
 
 

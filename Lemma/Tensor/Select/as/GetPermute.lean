@@ -2,56 +2,33 @@ import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import torch.Tensor.prod
 import torch.Tensor.permute
 import Lemma.Int.OfNat.eq.Cast
-import Lemma.List.DropLast.eq.Take_SubLength_1
-import Lemma.List.EqPermute
-import Lemma.List.GetPermute__Neg.eq.Get
-import Lemma.List.LengthSlice_Mul.eq.ProdTake.of.GtGet.GtLength
 import Lemma.List.MulLengthSlice_Mul.eq.ProdEraseIdx.of.GtGet.GtLength
-import Lemma.List.Permute__Neg.eq.Append_AppendRotateDropTake
 import Lemma.List.Permute__Neg.eq.Rotate_SubLength_1.of.GtLength_0
 import Lemma.List.Prod.eq.Mul_ProdDropLast.of.GtLength_0
-import Lemma.List.ProdAppend.eq.MulProdS
 import Lemma.List.ProdDrop.eq.Get.of.GtLength_0
 import Lemma.List.ProdDropTake.eq.Get.of.GtLength
-import Lemma.List.ProdEraseIdx.eq.MulProdS
 import Lemma.List.ProdPermute.eq.Prod
 import Lemma.List.ProdRotate.eq.MulProdS.of.GtLength
-import Lemma.List.ProdRotate.eq.Prod
-import Lemma.List.ProdTake.eq.DivProdTake.of.Ne_0.GtLength
-import Lemma.List.ProdTake.eq.Mul_ProdTake.of.GtLength
-import Lemma.List.Rotate.eq.AppendDrop__Take
 import Lemma.List.TailPermute__Neg.eq.EraseIdx
-import Lemma.List.TakeTake.eq.Take.of.Ge
-import Lemma.Nat.Add
-import Lemma.Nat.AddAdd.eq.Add_Add
-import Lemma.Nat.AddMul.lt.Mul.of.Lt.Lt
 import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Nat.Div.eq.Zero.of.Lt
 import Lemma.Nat.DivAddMul.eq.Add_Div.of.Gt_0
 import Lemma.Nat.DivDiv.eq.Div_Mul
-import Lemma.Nat.EqMin.of.Le
-import Lemma.Nat.EqMod.of.Lt
 import Lemma.Nat.EqMod_1'0
 import Lemma.Nat.Eq_Div.Eq_Mod.of.Eq_AddMul
-import Lemma.Nat.Gt_0
-import Lemma.Nat.LtDiv.of.Lt_Mul
-import Lemma.Nat.Mul
-import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Nat.ToNatSub_Neg.eq.Add_1
-import Lemma.Tensor.DataCast.as.Data.of.Eq
 import Lemma.Tensor.DataGet.as.GetSplitAtData.of.GtLength_0
 import Lemma.Tensor.DataSelect.as.FlattenGetSliceSplitAtData
 import Lemma.Tensor.LengthPermute__Neg.eq.Get
 import Lemma.Tensor.Permute.eq.Ite
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
-import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Vector.GetGetSlice.eq.Get.of.GtGet.GtLength
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.GetTranspose.eq.Get
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 open Nat List Vector Bool Int Tensor Fin
-set_option maxHeartbeats 1000000
+set_option maxHeartbeats 500000
 
 
 @[path, cast]

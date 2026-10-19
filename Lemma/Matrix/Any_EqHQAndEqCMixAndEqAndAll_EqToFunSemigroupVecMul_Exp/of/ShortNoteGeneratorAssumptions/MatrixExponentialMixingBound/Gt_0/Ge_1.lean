@@ -4,8 +4,6 @@ import Mathlib.Analysis.Normed.Algebra.MatrixExponential
 import Mathlib.Analysis.Matrix.Normed
 import Mathlib.Topology.Algebra.Module.FiniteDimension
 import sympy.stats.frozen_invariant_law
-import sympy.Basic
-import Lemma.NormedSpace.HasDerivAtVecMul_Exp
 import Lemma.Matrix.RowStochastic_Exp.of.Ge_0.GeneratorMatrix
 import Lemma.NormedSpace.EqVecMul_Exp.of.EqVecMul_0
 import Lemma.NormedSpace.VecMul.eq.Zero.of.All_EqVecMul_Exp

@@ -5,7 +5,6 @@ import Lemma.Tensor.GetData.eq.HeadDataGet.of.Lt
 import Lemma.Tensor.GetDot.eq.Dot_GetT
 import Lemma.Tensor.XEq.is.All_XEqGetS.of.GtLength_0
 import Lemma.Tensor.XEqDotS.of.XEq.OrAll_NotInfinite.All_Imp_XEqInvS
-import Lemma.Vector.Head.eq.Get_0
 open Tensor Vector
 
 

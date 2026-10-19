@@ -1,5 +1,3 @@
-import sympy.functions.elementary.complexes
-import sympy.Basic
 import Lemma.Complex.AddDivNeg1'2DivMulISqrt3'2.eq.ExpMulDivMul2Pi3I
 import Lemma.Complex.PowPow_Div1'3'3.eq.Self
 import Lemma.Complex.SquarePow_Div1'2.eq.Self

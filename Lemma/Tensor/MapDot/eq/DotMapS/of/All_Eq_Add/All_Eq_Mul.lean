@@ -1,6 +1,4 @@
-import Lemma.Bool.SEq.is.Eq
 import torch.Tensor.reshape
-import Lemma.List.EqAppendTake__ListGet.of.GeLength_2
 import Lemma.Tensor.Dot.eq.TensorDotDataS
 import Lemma.Tensor.Einsum.as.SelectBmm.of.Eq_Get_SubLength.GeLength_2
 import Lemma.Tensor.Einsum.as.SelectBmm.of.GeLength_2
@@ -8,26 +6,13 @@ import Lemma.Tensor.Einsum.as.SelectBmm.of.GtGet_SubLength.GeLength_2
 import Lemma.Tensor.Einsum.as.SelectBmm.of.Gt_Get_SubLength.GeLength_2
 import Lemma.Tensor.Einsum.as.Tensordot.of.GeLength_2.GeLength_2
 import Lemma.Tensor.Einsum.eq.SumMulDataS
-import Lemma.Tensor.Eq.is.EqDataS
-import Lemma.Tensor.MapBmm.eq.BmmMapS.of.All_Eq_Add.All_Eq_Mul
 import Lemma.Tensor.MapDot.eq.DotMapS.of.All_Eq_Mul
-import Lemma.Tensor.MapCast.as.Map.of.Eq
 import Lemma.Tensor.MapMul.eq.MulMap.of.All_Eq_Mul
-import Lemma.Tensor.MapMul.eq.MulMapS.of.All_Eq_Mul
 import Lemma.Tensor.MapTensordot.eq.TensordotMapS.of.All_Eq_Add.All_Eq_Mul
-import Lemma.Tensor.ReshapeMap.eq.MapReshape.of.Dvd
-import Lemma.Tensor.ResizeMap.eq.MapResize
 import Lemma.Tensor.SelectMap.eq.MapSelect
-import Lemma.Tensor.SEqMapS.of.SEq
-import Lemma.Tensor.SumMap.eq.MapSum.of.All_EqUFnAdd
-import Lemma.Vector.Dot.eq.SumMul
-import Lemma.Vector.Eq.is.All_EqGetS
-import Lemma.Vector.GetMap.eq.UFnGet
-import Lemma.Vector.MapMul.eq.MulMapS.of.All_Eq_Mul
-import Lemma.Vector.MapSum.eq.SumMap.of.All_EqUFnAdd
 import torch.Tensor.bmm
 open Bool List Tensor Vector
-set_option maxHeartbeats 2000000
+set_option maxHeartbeats 1000000
 
 
 /-- `dot` of 1-d tensors commutes with a pointwise map `f`. -/

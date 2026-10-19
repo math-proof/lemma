@@ -1,24 +1,16 @@
-import Lemma.Fin.Sum.of.All_Eq
 import torch.Tensor.permute
-import Lemma.List.EqSwap_0'1
 import Lemma.Tensor.Div_KeepdimSum.eq.Div_Sum
 import Lemma.Tensor.Dot.eq.Sum_MulGetS
 import Lemma.Tensor.DotDiv.eq.DivDot
 import Lemma.Tensor.DotSoftmaxDivDot_T.eq.Stack_Dot_GetT
-import Lemma.Tensor.GetDiv.eq.DivGet
 import Lemma.Tensor.GetDot.eq.Dot_GetT
 import Lemma.Tensor.GetExp.eq.ExpGet
 import Lemma.Tensor.GetTCast_T.eq.Get
-import Lemma.Tensor.EqGetT
-import Lemma.Tensor.Mul
-import Lemma.Tensor.SEqDotS.of.SEq
 import Lemma.Tensor.SEqExpS.of.SEq
-import Lemma.Tensor.SEqSoftmaxS.of.SEq
-import Lemma.Tensor.SEqSumS.of.SEq
 import Lemma.Tensor.Softmax.eq.DivExp_KeepdimSumExp
 import torch.Tensor.sum
 open Fin List Tensor
-set_option maxHeartbeats 4000000
+set_option maxHeartbeats 1000000
 
 
 @[path]

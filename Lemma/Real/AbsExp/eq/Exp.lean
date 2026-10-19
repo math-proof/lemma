@@ -1,6 +1,5 @@
 import Lemma.Int.EqAbs.of.Gt_0
 import Lemma.Real.GtExp_0
-import sympy.functions.elementary.exponential
 open Int Real
 
 

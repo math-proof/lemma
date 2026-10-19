@@ -1,5 +1,4 @@
 import sympy.stats.policy_trajectory
-import sympy.Basic
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model
 
 
@@ -23,7 +22,7 @@ private lemma main
   have hs' : MeasurableSet {z : ℝ × S × A | z.1 ∉ Set.Icc (-M.env.R) M.env.R} :=
     (measurableSet_Icc.compl).preimage measurable_fst
   rw [Kernel.map_apply' _ (by fun_prop) _ hs']
-  show (Kernel.deterministic id measurable_id ×ₖ (M.pol.kernel θ ⊗ₖ M.env.reward)) y
+  show (Kernel.deterministic id measurable_id ×ₖ (M.policy.kernel θ ⊗ₖ M.env.reward)) y
     {z : S × A × ℝ | z.2.2 ∉ Set.Icc (-M.env.R) M.env.R} = 0
   rw [Kernel.prod_apply, Kernel.deterministic_apply, id, Measure.dirac_prod,
     Measure.map_apply measurable_prodMk_left hs, Kernel.compProd_apply (measurable_prodMk_left hs)]

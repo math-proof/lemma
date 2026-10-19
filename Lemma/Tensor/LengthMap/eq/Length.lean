@@ -1,5 +1,4 @@
 import torch.Tensor.Basic
-import sympy.Basic
 
 
 @[path, grind =]

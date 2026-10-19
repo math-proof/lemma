@@ -1,6 +1,5 @@
 import Lemma.List.Permute.eq.Append_AppendRotateTakeDrop
 import Lemma.List.EqTakeAppend.of.Eq_Length
-import Lemma.List.LengthTake.eq.Min_Length
 import Lemma.Nat.EqMin.of.Lt
 open List Nat
 

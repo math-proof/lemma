@@ -1,10 +1,7 @@
 import Batteries.Data.List.Lemmas
-import Lemma.List.Set.eq.AppendTake__Cons_Drop.of.GtLength
 import Lemma.List.DropSet.eq.Drop.of.Lt
 import Lemma.List.TakeSet.eq.SetTake.of.Lt
-import Lemma.List.TakeTake.eq.Take.of.Ge
 import Lemma.List.Slice.eq.DropTake
-import Lemma.List.LengthSet.eq.Length
 import Lemma.Nat.Lt.of.Lt.Lt
 import Lemma.Nat.Le.of.Lt
 import Lemma.Nat.NotLt.is.Ge

@@ -1,4 +1,3 @@
-import Lemma.Hyperreal.EqSt_0.of.Infinite
 import Lemma.Hyperreal.StDiv_AddAddSquareS.eq.One.of.StDiv.eq.One
 open Hyperreal
 

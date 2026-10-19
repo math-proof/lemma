@@ -1,5 +1,3 @@
-import sympy.stats.policy_trajectory.gradient
-import sympy.Basic
 import Lemma.Random.All_LeNorm_Abs.of.All_Eq_Joint
 import Lemma.Random.NormW.le.Abs_R
 import Lemma.Random.Vc.eq.TSum_MulPowIntegral.of.In_Ico

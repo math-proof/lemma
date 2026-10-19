@@ -1,5 +1,3 @@
-import sympy.functions.elementary.complexes
-import sympy.Basic
 import Lemma.Complex.PowPow_Div1'3'3.eq.Self
 open Complex
 

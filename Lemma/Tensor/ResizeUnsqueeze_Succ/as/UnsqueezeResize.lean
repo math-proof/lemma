@@ -1,15 +1,9 @@
-import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import torch.Tensor.unsqueeze
-import Lemma.List.LengthInsertIdx.eq.Add_Length_1.of.GeLength
 import Lemma.List.SetInsertIdx_Succ.eq.InsertIdxSet.of.GtLength
-import Lemma.Nat.EqMod.of.Lt
 import Lemma.Tensor.GetResize.as.ResizeGet.of.GtGet_0.GtVal_0
-import Lemma.Tensor.GetUnsqueeze.as.UnsqueezeGet.of.GtGet_0.GtLength_0
-import Lemma.Tensor.GetUnsqueeze.as.UnsqueezeGet.of.GtGet_0.Gt_0.GtLength_0
 import Lemma.Tensor.ResizeUnsqueeze.as.UnsqueezeResize_0.of.Gt_0
-import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.GtLength_0
 open Bool List Nat Tensor
-set_option maxHeartbeats 1000000
+set_option maxHeartbeats 500000
 
 
 @[path, comm, cast]

@@ -8,9 +8,6 @@ import Lemma.Int.AddSub.eq.SubAdd
 import Lemma.Nat.SubAdd.eq.AddSub.of.Ge
 import Lemma.Nat.SubMul.eq.MulSub_1
 import Lemma.Nat.Mul_Add.eq.AddMulS
-import Lemma.Nat.MulSub.eq.SubMulS
-import Lemma.Nat.AddAdd.eq.Add_Add
-import Lemma.Nat.Eq_Add.of.EqSub.Le
 import Lemma.Nat.Fib.eq.AddFibS.of.Ge_2
 open Nat Int
 

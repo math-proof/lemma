@@ -1,5 +1,4 @@
 import Lemma.Set.In_CartesianProduct.is.EqLengthS.All_LtGetS
-import Lemma.List.GetCons.eq.Get_Sub_1.of.Lt_Add_1.Gt_0
 open Set List
 
 

@@ -1,5 +1,3 @@
-import Lemma.Tensor.GtLength.of.GtLength_0
-import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.LengthData.eq.Mul_Prod.of.GtLength_0
 import Lemma.Nat.EqDivMul.of.Ne_0
 import Lemma.Nat.Ne_0

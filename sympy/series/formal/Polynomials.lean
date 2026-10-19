@@ -352,8 +352,8 @@ theorem mem_polynomialSubmodule (f : PowerSeries K) :
 /-! ## Rings (Noncommutative Rings)
 
 Definition 7.5.3 (def.alg.ring): A ring (also known as a noncommutative ring) is defined
-in the same way as a commutative ring, except that the commutativity of multiplication
-axiom is removed.
+in the same way as a commutative ring, except that commutativity of multiplication
+is not required.
 
 In Mathlib, this is captured by the `Ring` typeclass. Note that "noncommutative ring"
 does not imply that the ring is not commutative; it merely means that commutativity
@@ -369,44 +369,44 @@ section RingBasics
 
 variable {R : Type*} [Ring R]
 
-/-- **Associativity of addition** (Ring axiom):
+/-- **Associativity of addition**:
     `a + (b + c) = (a + b) + c` for all `a, b, c ∈ R`. -/
 theorem ring_add_assoc (a b c : R) : a + (b + c) = (a + b) + c := (add_assoc a b c).symm
 
-/-- **Commutativity of addition** (Ring axiom):
+/-- **Commutativity of addition**:
     `a + b = b + a` for all `a, b ∈ R`.
     Note: Addition is always commutative, even in noncommutative rings. -/
 theorem ring_add_comm (a b : R) : a + b = b + a := add_comm a b
 
-/-- **Neutrality of zero** (Ring axiom):
+/-- **Neutrality of zero**:
     `a + 0 = a` for all `a ∈ R`. -/
 theorem ring_add_zero (a : R) : a + 0 = a := add_zero a
 
-/-- **Neutrality of zero** (Ring axiom):
+/-- **Neutrality of zero**:
     `0 + a = a` for all `a ∈ R`. -/
 theorem ring_zero_add (a : R) : 0 + a = a := zero_add a
 
-/-- **Existence of additive inverse** (Ring axiom):
+/-- **Existence of additive inverse**:
     `a + (-a) = 0` for all `a ∈ R`. -/
 theorem ring_add_neg (a : R) : a + (-a) = 0 := add_neg_cancel a
 
-/-- **Associativity of multiplication** (Ring axiom):
+/-- **Associativity of multiplication**:
     `a * (b * c) = (a * b) * c` for all `a, b, c ∈ R`. -/
 theorem ring_mul_assoc (a b c : R) : a * (b * c) = (a * b) * c := (mul_assoc a b c).symm
 
-/-- **Left distributivity** (Ring axiom):
+/-- **Left distributivity**:
     `a * (b + c) = a * b + a * c` for all `a, b, c ∈ R`. -/
 theorem ring_left_distrib (a b c : R) : a * (b + c) = a * b + a * c := mul_add a b c
 
-/-- **Right distributivity** (Ring axiom):
+/-- **Right distributivity**:
     `(a + b) * c = a * c + b * c` for all `a, b, c ∈ R`. -/
 theorem ring_right_distrib (a b c : R) : (a + b) * c = a * c + b * c := add_mul a b c
 
-/-- **Neutrality of one** (Ring axiom):
+/-- **Neutrality of one**:
     `a * 1 = a` for all `a ∈ R`. -/
 theorem ring_mul_one (a : R) : a * 1 = a := mul_one a
 
-/-- **Neutrality of one** (Ring axiom):
+/-- **Neutrality of one**:
     `1 * a = a` for all `a ∈ R`. -/
 theorem ring_one_mul (a : R) : 1 * a = a := one_mul a
 
@@ -458,10 +458,10 @@ The source defines a K-algebra as a set A equipped with four maps:
 
 and two elements `0⃗ ∈ A` (zero) and `1⃗ ∈ A` (one), satisfying three properties:
 
-1. **A is a (noncommutative) ring**: The set A with ⊕, ⊖, ⊙, 0⃗, 1⃗ satisfies the ring axioms
+1. **A is a (noncommutative) ring**: The set A with ⊕, ⊖, ⊙, 0⃗, 1⃗ is a ring
    (same as commutative ring but without commutativity of multiplication).
 
-2. **A is a K-module**: The set A with ⊕, ⊖, ⇀, 0⃗ satisfies the module axioms.
+2. **A is a K-module**: The set A with ⊕, ⊖, ⇀, 0⃗ is a module.
 
 3. **Compatibility property** (equation 7.5.2):
    `λ ⇀ (a ⊙ b) = (λ ⇀ a) ⊙ b = a ⊙ (λ ⇀ b)` for all `λ ∈ K` and `a, b ∈ A`.
@@ -481,7 +481,7 @@ variable {A : Type*} [Ring A] [Algebra K A]
 
 /-! ### Property 1: A is a Ring
 
-A K-algebra A is automatically a ring. The ring axioms are satisfied.
+A K-algebra A is automatically a ring.
 Note: The source allows noncommutative rings; in Mathlib, `Ring A` captures this.
 For commutative algebras, we use `CommRing A`.
 -/
@@ -520,7 +520,7 @@ theorem kalg_one_mul (a : A) : 1 * a = a := one_mul a
 
 /-! ### Property 2: A is a K-Module
 
-A K-algebra A is automatically a K-module. The module axioms are satisfied.
+A K-algebra A is automatically a K-module.
 -/
 
 /-- A K-algebra is a K-module: scalar multiplication is associative.

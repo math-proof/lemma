@@ -1,5 +1,3 @@
-import sympy.stats.policy_trajectory
-import sympy.Basic
 import Lemma.Random.Integral.eq.Sum_SMul.of.All_LeNorm.StronglyMeasurable
 import Lemma.Real.LeNorm_Mul1.of.All_LeNorm
 import Lemma.Real.StronglyMeasurable_Eq22
@@ -23,7 +21,7 @@ private lemma main
   (u : A) :
 -- imply
   ∫ z, (if z.2.2 = u then (1:ℝ) else 0) * g z ∂(M.stageK θ x) =
-    M.pol.prob θ x u * ∫ ρ, g (ρ, x, u) ∂(M.env.reward (x, u)) := by
+    M.policy.prob θ x u * ∫ ρ, g (ρ, x, u) ∂(M.env.reward (x, u)) := by
 -- proof
   rw [Integral.eq.Sum_SMul.of.All_LeNorm.StronglyMeasurable (M := M) ((Real.StronglyMeasurable_Eq22 u).mul hg) (f := fun z => (if z.2.2 = u then (1:ℝ) else 0) * g z)
     (LeNorm_Mul1.of.All_LeNorm (p := (fun z : ℝ × S × A => z.2.2 = u)) hC) θ]

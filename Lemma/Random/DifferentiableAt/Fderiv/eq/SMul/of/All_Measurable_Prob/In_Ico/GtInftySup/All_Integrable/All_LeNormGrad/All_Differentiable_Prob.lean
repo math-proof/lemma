@@ -1,13 +1,7 @@
-import sympy.stats.policy_trajectory.continuous_action
-import sympy.Basic
-import sympy.vector.operators
-import sympy.concrete.sup
 import Mathlib.Analysis.Calculus.ParametricIntegral
-import Lemma.Random.HasFDerivAt.of.All_Measurable_Prob.In_Ico.GtInftySup.All_Integrable.All_LeNormGrad.All_Differentiable_Prob
 import Lemma.Random.GtInftySup.of.All_Measurable_Prob.In_Ico.GtInftySup.All_Integrable.All_LeNormGrad.All_Differentiable_Prob
 import Lemma.Random.Measurable_Vkd.of.All_Measurable_Prob
 import Lemma.Random.NormVkd.le.MulInvSub1Abs_R.of.In_Ico
-import Lemma.Real.StronglyMeasurable_Fderiv.of.All_DifferentiableAt.All_Measurable
 open MeasureTheory PolicyGradient Random Real
 
 
@@ -26,12 +20,12 @@ private lemma main
   {γ : ℝ}
   {g : S → A → ℝ}
 -- given
-  (h₀ : ∀ x u, Differentiable ℝ (fun θ => M.pol.prob θ x u))
-  (h₁ : ∀ θ x u, ‖∇[θ] M.pol.prob θ x u‖ ≤ g x u)
+  (h₀ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
+  (h₁ : ∀ θ x u, ‖∇[θ] M.policy.prob θ x u‖ ≤ g x u)
   (h₂ : ∀ x, Integrable (g x) ReferenceMeasure.measure)
   (h₃ : sup[x] ∫ u, g x u ∂ReferenceMeasure.measure < ∞)
   (h₄ : γ ∈ Set.Ico 0 1)
-  (h₅ : ∀ θ, Measurable (fun z : S × A => M.pol.prob θ z.1 z.2))
+  (h₅ : ∀ θ, Measurable (fun z : S × A => M.policy.prob θ z.1 z.2))
   (x : S)
   (u : A)
   (θ : Θ) :

@@ -1,8 +1,6 @@
 import Lemma.List.DropPermute.eq.RotateDrop
 import Lemma.List.DropDrop.eq.Drop_Add
 import Lemma.Nat.EqAdd_Sub.of.Ge
-import Lemma.List.Rotate.eq.AppendDrop__Take.of.GeLength
-import Lemma.List.EqDropAppend.of.Eq_Length
 import Lemma.List.TakeDrop.eq.ListGet.of.GtLength
 open List Nat
 

@@ -1,35 +1,27 @@
 import Lemma.List.ProdTail.eq.MulProdTakeTail
 import torch.Tensor.prod
 import Lemma.Nat.DivAdd.eq.AddDivS.of.Dvd
-import Lemma.Nat.EqAddMulDiv
 import Lemma.Nat.EqDivMul.of.Ne_0
 import Lemma.Nat.ModAddMul.eq.Mod
 import Lemma.Nat.ModMod.eq.Mod.of.Dvd
 import Lemma.Nat.Ne_0.of.GtMul
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.List.DropTail.eq.Drop
-import Lemma.List.HeadD.eq.Get_0.of.GtLength_0
-import Lemma.List.ProdSet.eq.MulProd_Mul_Prod.of.GtLength
-import Lemma.List.ProdTake.eq.Mul_ProdTakeTail.of.GtLength_0
 import Lemma.List.ProdTake.eq.Mul_ProdTakeTail.of.Gt_0.GtLength_0
 import Lemma.List.Set.eq.Cons_Set.of.GtLength_0
 import Lemma.List.TailSet.eq.SetTail.of.Gt_0
-import Lemma.Nat.EqSubAdd
-import Lemma.Nat.LtDiv.of.Lt_Mul
-import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Tensor.DataOfVector.eq.FlattenMapData
 import Lemma.Tensor.DataGet.as.GetSplitAtData.of.GtLength_0
 import Lemma.Tensor.DataResize.as.FlattenMapSplitAtData
 import Lemma.Tensor.GetToVector.eq.Get
 import Lemma.Tensor.Length.eq.Get_0
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
-import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Vector.GetFlatten.eq.Get.of.Lt_Mul
 import Lemma.Vector.GetResize.eq.Ite_Get_Mod
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 open Bool List Nat Tensor Vector
-set_option maxHeartbeats 1000000
+set_option maxHeartbeats 500000
 
 
 @[path, cast]

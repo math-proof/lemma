@@ -1,5 +1,4 @@
 import sympy.stats.policy_trajectory
-import sympy.Basic
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model
 
 
@@ -19,7 +18,7 @@ private lemma main
   (θ : Θ)
   (y : S) :
 -- imply
-  ∫ z, f z ∂(M.stageK θ y) = ∑ u, M.pol.prob θ y u • ∫ ρ, f (ρ, y, u) ∂(M.env.reward (y, u)) := by
+  ∫ z, f z ∂(M.stageK θ y) = ∑ u, M.policy.prob θ y u • ∫ ρ, f (ρ, y, u) ∂(M.env.reward (y, u)) := by
 -- proof
   have := M.env.reward_markov
   unfold Model.stageK
@@ -42,12 +41,12 @@ private lemma main
   congr 1
   funext u
   congr 1
-  show ((M.pol.measure θ y) {u}).toReal = _
+  show ((M.policy.measure θ y) {u}).toReal = _
   rw [Policy.measure]
   simp only [Measure.coe_finsetSum, Finset.sum_apply, Measure.smul_apply,
     Measure.dirac_apply' _ (measurableSet_singleton u), smul_eq_mul]
   rw [Finset.sum_eq_single u (fun b _ hb => by simp [hb]) (by simp)]
-  simp [M.pol.nonneg θ y u]
+  simp [M.policy.nonneg θ y u]
 
 
 -- created on 2026-10-07

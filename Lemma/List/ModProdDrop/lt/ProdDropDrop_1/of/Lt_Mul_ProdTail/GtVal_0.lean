@@ -1,4 +1,3 @@
-import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.Nat.LtMod.of.Gt_0
 import Lemma.List.Drop.eq.DropDrop__Sub.of.Ge
 import Lemma.List.Tail.eq.Drop_1

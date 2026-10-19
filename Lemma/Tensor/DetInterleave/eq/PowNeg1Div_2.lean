@@ -1,6 +1,6 @@
 import Lemma.Tensor.DetInterleave.eq.MulPowNeg1Sub_Det
 open Tensor
-set_option maxHeartbeats 800000
+set_option maxHeartbeats 400000
 
 
 @[path]

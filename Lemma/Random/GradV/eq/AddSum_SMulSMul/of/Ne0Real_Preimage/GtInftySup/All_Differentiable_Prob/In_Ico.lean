@@ -1,7 +1,3 @@
-import sympy.stats.policy_trajectory.gradient
-import sympy.vector.Basic
-import sympy.vector.operators
-import sympy.concrete.sup
 import Lemma.Random.Fderiv.eq.AddSum_SMulSMul.of.Ne0Real_Preimage.In_Ico.GtInftySup.All_Differentiable_Prob
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 
@@ -32,8 +28,8 @@ private lemma main
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
   (h₁ : ∀ t, (· t) = (r t, s t, a t))
-  (h₂ : ∀ x u, Differentiable ℝ (fun θ => M.pol.prob θ x u))
-  (h₃ : sup[θ, x, u] ‖∇[θ] M.pol.prob θ x u‖ < ∞)
+  (h₂ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
+  (h₃ : sup[θ, x, u] ‖∇[θ] M.policy.prob θ x u‖ < ∞)
   (h₄ : (M θ).real (s t ⁻¹' {x}) ≠ 0) :
 -- imply
   let Q (θ : Θ) (t : ℕ) (x : S) (u : A) : ℝ :=
@@ -41,7 +37,7 @@ private lemma main
   let V (θ : Θ) (t : ℕ) (x : S) : ℝ :=
     𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = x);
   ∇[θ] V θ t x =
-    ∑ u, Q θ t x u • ∇[θ] M.pol.prob θ x u +
+    ∑ u, Q θ t x u • ∇[θ] M.policy.prob θ x u +
       γ • ∑ y, M.P1 θ x y • ∇[θ] V θ (t + 1) y := by
 -- proof
   classical

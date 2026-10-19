@@ -1,5 +1,3 @@
-import sympy.stats.q_learning
-import sympy.Basic
 import Mathlib.Analysis.Normed.Lp.MeasurableSpace
 import Lemma.LpSpace.MeasurableHalfSq.of.Ge_1
 import Lemma.LpSpace.MeasurableHalfSq'.of.Ge_1

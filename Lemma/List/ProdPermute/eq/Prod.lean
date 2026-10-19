@@ -1,7 +1,4 @@
-import Lemma.Int.NegSucc.eq.NegCoeAdd_1
-import Lemma.List.AppendAppend.eq.Append_Append
 import Lemma.List.Append_DropTake.eq.Take.of.Ge
-import Lemma.List.ProdAppend.eq.MulProdS
 import Lemma.List.ProdPermute.eq.MulProd_ProdAppend
 import Lemma.List.ProdPermute__Neg.eq.MulProd_ProdAppend
 import Lemma.List.ProdRotate.eq.Prod

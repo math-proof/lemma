@@ -3,8 +3,6 @@ import torch.Tensor.permute
 import Lemma.Tensor.SEqPermuteTailPermuteHead.of.GtLength_1
 import Lemma.Tensor.SEqPermuteTail_1
 import Lemma.Tensor.SEqPermuteHead_1
-import Lemma.Bool.SEq.is.SEqCast.of.Eq
-import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.Tensor.PermuteTailCast.as.PermuteTail.of.Eq
 open List Tensor Bool
 

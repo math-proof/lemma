@@ -1,8 +1,6 @@
-import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.GetEye.eq.Delta
 import Lemma.Tensor.GetMul.eq.MulGetS
 import Lemma.Tensor.Mul
-import sympy.matrices.expressions.special
 import torch.eye
 open Tensor
 

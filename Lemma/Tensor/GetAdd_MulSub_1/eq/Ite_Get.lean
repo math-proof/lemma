@@ -12,7 +12,7 @@ import Lemma.Tensor.GetSub.eq.SubGetS
 import Lemma.Tensor.XEq.is.XEqDataS
 import Lemma.Vector.XEq.is.All_XEqGetS
 open Hyperreal Int Tensor Vector
-set_option maxHeartbeats 2000000
+set_option maxHeartbeats 1000000
 
 
 /--

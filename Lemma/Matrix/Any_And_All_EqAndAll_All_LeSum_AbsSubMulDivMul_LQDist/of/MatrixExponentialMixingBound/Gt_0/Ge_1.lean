@@ -1,5 +1,3 @@
-import sympy.stats.frozen_invariant_law
-import sympy.Basic
 import Lemma.Matrix.Nonempty_FrozenInvariantLawWitness.of.UniformExponentialMixing
 import Lemma.Matrix.Any_EqHQAndEqCMixAndEqAndAll_EqToFunSemigroupVecMul_Exp.of.ShortNoteGeneratorAssumptions.MatrixExponentialMixingBound.Gt_0.Ge_1
 

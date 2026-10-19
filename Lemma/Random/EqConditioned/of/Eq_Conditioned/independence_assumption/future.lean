@@ -1,5 +1,4 @@
 import Lemma.Random.IndepGetSlice.of.IndepGet
-import sympy.stats.joint_rv
 open ProbabilityTheory MeasureTheory Random
 
 

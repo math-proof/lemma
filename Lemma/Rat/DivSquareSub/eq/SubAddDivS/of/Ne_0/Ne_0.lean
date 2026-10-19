@@ -1,7 +1,6 @@
 import Lemma.Int.SquareSub.eq.SubAddSquareS_MulMul2
 import Lemma.Nat.EqDivMul.of.Ne_0
 import Lemma.Nat.Mul.ne.Zero.of.Ne_0.Ne_0
-import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Rat.DivAdd.eq.AddDivS
 import Lemma.Rat.DivSquare.eq.Div
 import Lemma.Rat.DivSub.eq.SubDivS

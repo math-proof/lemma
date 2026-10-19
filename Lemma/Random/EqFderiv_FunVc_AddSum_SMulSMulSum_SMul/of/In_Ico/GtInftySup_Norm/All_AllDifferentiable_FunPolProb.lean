@@ -1,7 +1,3 @@
-import sympy.stats.policy_trajectory.gradient
-import sympy.Basic
-import sympy.vector.operators
-import sympy.concrete.sup
 import Lemma.Random.Vc.eq.Sum_MulProbQc.of.In_Ico
 import Lemma.Random.DifferentiableAt.EqFderiv_FunQc_SMulSum_SMulTFderivVc.of.In_Ico.GtInftySup_Norm.All_All_Differentiable_FunProbPol
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
@@ -16,14 +12,14 @@ private lemma main
   {M : Model Θ S A}
   {γ : ℝ}
 -- given
-  (h₀ : ∀ x u, Differentiable ℝ (fun θ => M.pol.prob θ x u))
-  (h₁ : sup[θ, x, u] ‖∇[θ] M.pol.prob θ x u‖ < ∞)
+  (h₀ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
+  (h₁ : sup[θ, x, u] ‖∇[θ] M.policy.prob θ x u‖ < ∞)
   (h₂ : γ ∈ Set.Ico 0 1)
   (x : S)
   (θ : Θ) :
 -- imply
   fderiv ℝ (fun θ => M.Vc θ γ x) θ =
-    ∑ u, M.Qc θ γ x u • fderiv ℝ (fun θ => M.pol.prob θ x u) θ +
+    ∑ u, M.Qc θ γ x u • fderiv ℝ (fun θ => M.policy.prob θ x u) θ +
     γ • ∑ y, M.P1 θ x y • fderiv ℝ (fun θ => M.Vc θ γ y) θ := by
 -- proof
   have hQ := fun u => DifferentiableAt.EqFderiv_FunQc_SMulSum_SMulTFderivVc.of.In_Ico.GtInftySup_Norm.All_All_Differentiable_FunProbPol (M := M) h₀ h₁ h₂ x u θ

@@ -5,11 +5,8 @@ import Lemma.List.Div_Mul_ProdDrop.lt.ProdTakeDrop_1.of.Lt_Mul_ProdTail.GtVal_0
 import Lemma.List.ModProdDrop.lt.ProdDropDrop_1.of.Lt_Mul_ProdTail.GtVal_0
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop.of.Lt_ProdTake.Lt_ProdDrop
 import Lemma.Vector.Get.of.Eq.Lt
-import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.Nat.DivDiv.eq.Div_Mul
 import Lemma.Nat.MulDiv.eq.Sub_Mod
-import Lemma.Nat.Dvd_Mul
-import Lemma.Nat.Gt_0.of.GtMul
 import Lemma.List.ProdDrop.dvd.ProdTail.of.Gt_0
 import Lemma.Nat.DivAdd.eq.AddDivS.of.Dvd
 import Lemma.Nat.DivMul.eq.Mul_Div.of.Dvd
@@ -17,9 +14,7 @@ import Lemma.Nat.EqDivMul.of.Ne_0
 import Lemma.Nat.ModAdd.eq.Mod.of.Dvd
 import Lemma.Nat.AddAdd.eq.Add_Add
 import Lemma.Nat.Add.is.Eq
-import Lemma.Nat.SubAdd.eq.Add_Sub.of.Ge
 import Lemma.Nat.Ge_Mod
-import Lemma.Nat.Dvd_Mul.of.Dvd
 open Vector List Nat
 
 

@@ -3,12 +3,9 @@ import Lemma.List.DropTake.eq.TakeDrop
 import Lemma.List.EraseIdx.eq.Append_Drop_Add_1
 import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.GtLength
 import Lemma.List.Permute_0.eq.AppendRotateTake___Drop.of.GtLength_0
-import Lemma.List.Rotate.eq.AppendDrop__Take.of.GeLength
 import Lemma.List.Tail.eq.Drop_1
 import Lemma.List.TailAppend.eq.AppendTail.of.GtLength_0
 import Lemma.List.TakeAppend.eq.Take.of.GeLength
-import Lemma.List.TailTake.eq.TakeTail
-import Lemma.List.TakeTake.eq.Take.of.Ge
 import Lemma.Nat.EqMin.of.Lt
 open List Nat
 

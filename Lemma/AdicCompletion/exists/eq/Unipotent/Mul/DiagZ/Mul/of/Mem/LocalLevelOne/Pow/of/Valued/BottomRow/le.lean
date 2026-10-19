@@ -1,4 +1,3 @@
-import sympy.Basic
 import Mathlib
 import Lemma.AdicCompletion.Support.AdelicDock
 
@@ -19,7 +18,7 @@ private lemma main
   ∃ (x : v.adicCompletion F) (n : ℤ) (k : GL (Fin 2) (v.adicCompletion F)),
       k ∈ AdelicDock.localLevelOne (𝓞 F) F v (v.asIdeal ^ m) ∧
       g = unipotent F v x * diagZ F v (ϖ : v.adicCompletion F) hπ n * k ∧
-      Valued.v (g : Matrix (Fin 2) (Fin 2) (v.adicCompletion F)).det = WithZero.exp (-n) := by
+      Valued.v g.val.det = WithZero.exp (-n) := by
 -- proof
   have hBm : AdelicLevel.idealBound (𝓞 F) (v.asIdeal ^ m) v = WithZero.exp (-(m : ℤ)) :=
     AdelicLevel.idealBound_pow F v m
@@ -27,7 +26,7 @@ private lemma main
     rw [hBm, ← WithZero.exp_zero, WithZero.exp_lt_exp]
     omega
   obtain ⟨⟨x, n, k, hk, hg, hdet⟩⟩ := structure_lemma F v ϖ hπ hϖ m hB g
-    (by rwa [hBm]) (by rwa [hBm])
+    (hBm ▸ hc) (hBm ▸ hd)
   exact ⟨x, n, k, hk, hg, hdet⟩
 
 

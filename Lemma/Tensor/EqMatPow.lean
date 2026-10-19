@@ -1,5 +1,4 @@
 import sympy.matrices.expressions.matpow
-import sympy.concrete.products
 import Lemma.Tensor.EqMatProd
 open Tensor
 

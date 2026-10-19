@@ -1,6 +1,5 @@
 import Mathlib
 import Lemma.Int.FormallyEtale.of.Bijective
-import sympy.Basic
 open Int KaehlerDifferential
 open scoped TensorProduct
 

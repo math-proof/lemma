@@ -1,7 +1,3 @@
-import sympy.stats.frozen_invariant_law
-import sympy.Basic
-import Lemma.Real.Tendsto.of.Gt_0
-import Lemma.Matrix.Sum_AbsSub.le.MulMulCMixExpMulNeg2.of.Ge_0.StochasticVec.StochasticVec.In_ActorBox
 import Lemma.Matrix.Any_And_All_EqToFunSemigroup.of.In_ActorBox
 open Filter
 

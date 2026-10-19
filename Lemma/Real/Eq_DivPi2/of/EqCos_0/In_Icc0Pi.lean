@@ -1,10 +1,8 @@
 import Lemma.Real.Gt0Cos.of.In_Ioc
 import Lemma.Real.Lt0Cos.of.In_Ico
-import Lemma.Set.Ge.of.In_Icc
 import Lemma.Set.In_Icc.is.Le.Le
 import Lemma.Set.In_Ico.of.In_Icc.Lt
 import Lemma.Set.In_Ioc.of.In_Icc.Gt
-import Lemma.Set.Le.of.In_Icc
 open Real Set
 
 

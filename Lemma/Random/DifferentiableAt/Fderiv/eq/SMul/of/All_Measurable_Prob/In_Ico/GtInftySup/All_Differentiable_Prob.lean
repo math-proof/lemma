@@ -1,13 +1,7 @@
-import sympy.stats.policy_trajectory.continuous
-import sympy.Basic
-import sympy.vector.operators
-import sympy.concrete.sup
 import Mathlib.Analysis.Calculus.ParametricIntegral
-import Lemma.Random.HasFDerivAt.of.All_Measurable_Prob.In_Ico.GtInftySup.All_Differentiable_Prob
 import Lemma.Random.GtInftySup.of.All_Measurable_Prob.In_Ico.GtInftySup.All_Differentiable_Prob
 import Lemma.Random.Measurable_Vk.of.All_Measurable_Prob
 import Lemma.Random.NormVk.le.MulInvSub1Abs_R.of.In_Ico
-import Lemma.Real.StronglyMeasurable_Fderiv.of.All_DifferentiableAt.All_Measurable
 open MeasureTheory PolicyGradient Random Real
 
 
@@ -22,10 +16,10 @@ private lemma main
   {M : Model Θ S A}
   {γ : ℝ}
 -- given
-  (h₀ : ∀ x u, Differentiable ℝ (fun θ => M.pol.prob θ x u))
-  (h₁ : sup[θ, x, u] ‖∇[θ] M.pol.prob θ x u‖ < ∞)
+  (h₀ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
+  (h₁ : sup[θ, x, u] ‖∇[θ] M.policy.prob θ x u‖ < ∞)
   (h₂ : γ ∈ Set.Ico 0 1)
-  (h₃ : ∀ θ u, Measurable (fun x => M.pol.prob θ x u))
+  (h₃ : ∀ θ u, Measurable (fun x => M.policy.prob θ x u))
   (x : S)
   (u : A)
   (θ : Θ) :

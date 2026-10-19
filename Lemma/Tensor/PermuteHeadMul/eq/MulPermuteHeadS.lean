@@ -1,12 +1,5 @@
-import Lemma.List.ProdAppend.eq.MulProdS
 import torch.Tensor.permute
-import Lemma.Tensor.DataMul.eq.MulDataS
-import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Tensor.RotateMul.eq.MulRotateS
-import Lemma.Tensor.TensorMul.eq.MulTensorS
-import Lemma.Vector.Cast_Mul.eq.MulCastS.of.Eq
-import Lemma.Vector.FlattenMul.eq.MulFlattenS
-import Lemma.Vector.SplitAtMul.eq.MulSplitAtS
 open List Tensor Vector
 
 

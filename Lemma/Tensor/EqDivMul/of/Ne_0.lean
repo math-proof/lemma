@@ -4,7 +4,6 @@ import Lemma.Tensor.DataMul.eq.Mul_Data
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Tensor.EqData0'0
 import Lemma.Tensor.Mul.eq.Mul_GetData_0
-import Lemma.Vector.Eq.is.All_EqGetS
 import Lemma.Vector.EqDivMul.of.Ne_0
 import Lemma.Vector.EqGet0_0
 open Tensor Vector

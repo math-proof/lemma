@@ -1,5 +1,3 @@
-import sympy.functions.combinatorial.integer_factorials
-import sympy.Basic
 import Lemma.Finset.EvalAscPochhammer.eq.Sum_MulPowStirlingFirst
 open Finset
 

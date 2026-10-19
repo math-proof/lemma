@@ -1,15 +1,10 @@
-import Lemma.List.Drop.eq.Nil.of.LeLength
 import Lemma.List.DropPermute.eq.AppendRotateTakeDrop
 import Lemma.List.DropTake.eq.TakeDrop
 import Lemma.List.EqTake.of.LeLength
 import Lemma.List.Permute.of.Add.ge.SubLength_1
-import Lemma.List.Rotate.eq.AppendDrop__Take.of.GeLength
 import Lemma.List.TakeAppend.eq.Take.of.GeLength
 import Lemma.List.TakeDrop.eq.DropTake
-import Lemma.List.TakeTake.eq.Take.of.Ge
 import Lemma.List.TakeTake.eq.Take.of.Le
-import Lemma.Nat.Add
-import Lemma.Nat.AddAdd.eq.Add_Add
 import Lemma.Nat.EqMin.of.Ge
 import Lemma.Nat.EqMin.of.Le
 open List Nat

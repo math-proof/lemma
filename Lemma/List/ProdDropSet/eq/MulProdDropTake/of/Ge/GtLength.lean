@@ -2,9 +2,6 @@ import Lemma.List.DropDrop.eq.Drop_Add
 import Lemma.List.DropSet.eq.SetDrop.of.Ge
 import Lemma.List.ProdSet.eq.MulProd_Mul_Prod.of.GtLength
 import Lemma.List.TakeDrop.eq.DropTake
-import Lemma.Nat.AddAdd.eq.Add_Add
-import Lemma.Nat.EqAdd_Sub.of.Ge
-import Lemma.Nat.MulMul.eq.Mul_Mul
 open List Nat
 
 

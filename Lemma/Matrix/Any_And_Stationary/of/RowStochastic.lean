@@ -1,9 +1,7 @@
-import sympy.stats.stochastic_process
 import Lemma.Matrix.VecMul.Continuous
 import Lemma.Matrix.NormOfL1Sub.le.Div2Add
 import Lemma.Matrix.StochasticVecCesaroAverage
 import Lemma.Matrix.IsCompactSimplex
-import Lemma.Matrix.OfL1.eq.Sub
 open WithLp Matrix Metric Topology Function PiLp
 open scoped Matrix BigOperators Topology NNReal
 set_option maxHeartbeats 800000

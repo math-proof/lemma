@@ -1,6 +1,3 @@
-import sympy.stats.policy_trajectory.continuous
-import sympy.Basic
-import Lemma.Random.NormWk.le.Abs_R
 import Lemma.Random.Measurable_Wk.of.All_Measurable_Prob
 import Lemma.Random.Summable_MulPowWk.of.In_Ico
 open MeasureTheory PolicyGradient Random
@@ -18,12 +15,12 @@ private lemma main
   {M : Model Θ S A}
   {γ : ℝ}
 -- given
-  (h₀ : ∀ θ u, Measurable (fun x => M.pol.prob θ x u))
+  (h₀ : ∀ θ u, Measurable (fun x => M.policy.prob θ x u))
   (h₁ : γ ∈ Set.Ico 0 1)
   (θ : Θ)
   (x : S) :
 -- imply
-  M.Vk θ γ x = ∑ u, M.pol.prob θ x u * M.Qk θ γ x u := by
+  M.Vk θ γ x = ∑ u, M.policy.prob θ x u * M.Qk θ γ x u := by
 -- proof
   have := M.env.trans_markov
   have hb : ∀ k y, ‖γ ^ k * M.Wk θ k y‖ ≤ γ ^ k * |M.env.R| := fun k y => by
@@ -43,16 +40,16 @@ private lemma main
       (γ ^ k * |M.env.R|) (Filter.Eventually.of_forall (hb k))) hs
     simpa [integral_const_mul, Model.Vk] using h
   have hS : HasSum (fun k => γ ^ (k + 1) * M.Wk θ (k + 1) x)
-      (γ * ∑ u, M.pol.prob θ x u * ∫ y, M.Vk θ γ y ∂(M.env.trans (x, u))) := by
-    have h := (hasSum_sum (s := Finset.univ) fun u _ => ((hI u).mul_left (M.pol.prob θ x u))).mul_left γ
+      (γ * ∑ u, M.policy.prob θ x u * ∫ y, M.Vk θ γ y ∂(M.env.trans (x, u))) := by
+    have h := (hasSum_sum (s := Finset.univ) fun u _ => ((hI u).mul_left (M.policy.prob θ x u))).mul_left γ
     refine (show (fun k => γ ^ (k + 1) * M.Wk θ (k + 1) x) = _ from funext fun k => ?_) ▸ h
-    show γ ^ (k + 1) * ∑ u, M.pol.prob θ x u * ∫ y, M.Wk θ k y ∂(M.env.trans (x, u)) = _
+    show γ ^ (k + 1) * ∑ u, M.policy.prob θ x u * ∫ y, M.Wk θ k y ∂(M.env.trans (x, u)) = _
     rw [Finset.mul_sum, Finset.mul_sum, pow_succ]
     refine Finset.sum_congr rfl fun u _ => ?_
     ring
   unfold Model.Vk
   rw [(Summable_MulPowWk.of.In_Ico (M := M) h₁ θ x).tsum_eq_zero_add, hS.tsum_eq]
-  show (γ ^ 0 * ∑ u, M.pol.prob θ x u * M.rk x u) + _ = _
+  show (γ ^ 0 * ∑ u, M.policy.prob θ x u * M.rk x u) + _ = _
   unfold Model.Qk Model.Vk
   simp only [pow_zero, one_mul, Finset.mul_sum, ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun u _ => ?_

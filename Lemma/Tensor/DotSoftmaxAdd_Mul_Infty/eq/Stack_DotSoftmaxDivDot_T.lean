@@ -8,7 +8,7 @@ import Lemma.Tensor.GetTCast_T.eq.Get
 import Lemma.Tensor.MapBmm.eq.BmmMapS.of.All_Eq_Add.All_Eq_Mul
 import Lemma.Tensor.MapDiv.eq.DivMap.of.All_Eq_Div
 open Tensor
-set_option maxHeartbeats 2000000
+set_option maxHeartbeats 1000000
 
 
 @[path]

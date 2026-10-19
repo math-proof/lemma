@@ -3,10 +3,6 @@ import torch.Tensor.sum
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Vector.Sum.of.SEq
 import Lemma.Vector.GetCast.eq.Get.of.Eq
-import Lemma.Vector.GetSum.eq.SumMapGet
-import Lemma.Vector.GetUnflatten.eq.Get_AddMul
-import Lemma.Vector.Head.eq.Get_0
-import Lemma.Vector.SEq.of.All_EqGetS.Eq
 open Tensor Vector
 
 

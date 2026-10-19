@@ -3,7 +3,6 @@ import torch.Tensor.permute
 import Lemma.Tensor.CosSub.eq.AddMulS
 import Lemma.Tensor.DotAppendSHstackS.eq.AppendHstackSAddSDotS
 import Lemma.Tensor.DotMulSEye.eq.MulEye
-import Lemma.Tensor.Mul_Neg.eq.NegMul
 import Lemma.Tensor.NegMul.eq.MulNeg
 import Lemma.Tensor.NegMul_Stack.eq.Mul_Stack_Neg
 import Lemma.Tensor.RotaryMatrix.eq.AppendHstackSMulSEye

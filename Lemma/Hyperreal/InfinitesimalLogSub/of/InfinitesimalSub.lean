@@ -1,5 +1,4 @@
 import sympy.functions.elementary.exponential
-import sympy.series.limits
 import Lemma.Hyperreal.IsSt.is.Le0Mk.EqStdPart
 open Hyperreal
 

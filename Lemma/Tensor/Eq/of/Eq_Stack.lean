@@ -1,7 +1,6 @@
 import Lemma.Real.Grad.Sum_Exp.eq.Sum_Mul_Exp.of.All_DifferentiableAt
 import Mathlib.Analysis.SpecialFunctions.Log.Deriv
 import Mathlib.Data.Matrix.Mul
-import sympy.Basic
 
 
 /--

@@ -1,5 +1,3 @@
-import Lemma.Int.EqSign_1.of.Gt_0
-import Lemma.Int.Sign.eq.Neg1.of.Lt_0
 import Lemma.Int.GeSign.of.Lt_0
 import Lemma.Int.LeSign.of.Gt_0
 import Lemma.Int.LtCoeS.is.Lt
@@ -9,7 +7,6 @@ import Lemma.Nat.NotLt.is.Ge
 import Lemma.Rat.EqCeil_1.of.In_Ioc0'1
 import Lemma.Rat.Div.gt.Zero.of.Gt_0.Gt_0
 import Lemma.Rat.Div.gt.Zero.of.Lt_0.Lt_0
-import Lemma.Rat.LeDivS.of.Le.Gt_0
 import Lemma.Rat.LeDivS.of.Ge.Lt_0
 import Lemma.Rat.Div.eq.One.of.Gt_0
 import Lemma.Rat.Div.eq.One.of.Lt_0

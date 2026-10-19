@@ -1,7 +1,6 @@
 import Mathlib.Dynamics.OmegaLimit
 import Mathlib.Dynamics.Flow
 import sympy.dynamics.actor_critic
-import sympy.Basic
 import Lemma.Set.In_OmegaLimit.is.All_In_Closure_Image2_Ici
 open Filter Topology
 

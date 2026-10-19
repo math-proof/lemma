@@ -1,14 +1,14 @@
-import sympy.stats.discrete_hmm
 import Lemma.Measure.Measure.eq.Count.of.EqMeasureCount.EqMeasureCount
 import Lemma.Random.EqProbJoint.All_Eq_Mul_MulProbSCond.of.All_CondIndep.All_CondIndep.EqMeasureCount.EqMeasureCount.All_Measurable.All_Measurable
 import Lemma.Random.Prob.eq.Mul_ProbS.Prob.eq.Mul_MulProbS.of.CondIndep.CondIndep
 open MeasureTheory Random
+open IsDiscreteHMM
 
 
 @[path]
 private lemma main
   [MeasurableSpace Ω] [StandardBorelSpace Ω]
-  [ReferenceMeasure Y] [ReferenceMeasure X]
+  [CountableMeasure Y] [CountableMeasure X]
   [Countable Y] [MeasurableSingletonClass Y] [Countable X] [MeasurableSingletonClass X]
   {π : Measure Ω} [IsProbabilityMeasure π]
   {x : ℕ → Ω → X} {y : ℕ → Ω → Y} {«x.bvar» : ℕ → X} {«y.bvar» : ℕ → Y}
@@ -16,14 +16,11 @@ private lemma main
   (h : IsDiscreteHMM π x y)
   (t : ℕ) :
 -- imply
-  have : ∀ i j, SinglePSpace π (y i, y j) := fun i j => IsDiscreteHMM.singlePSpace_yy (x := x) i j
-  have : ∀ i, SinglePSpace π (y i) := fun i => IsDiscreteHMM.singlePSpace_y (x := x) i
   ℙ[π](x[:t + 1] = «x.bvar»[:t + 1] ∧ y[:t + 1] = «y.bvar»[:t + 1]) =
     ℙ[π]((x 0) = «x.bvar» 0 | (y 0) = «y.bvar» 0) * ℙ[π]((y 0) = «y.bvar» 0) *
       ∏ i ∈ Finset.Ico 1 (t + 1),
         ℙ[π]((y i) = «y.bvar» i | (y (i - 1)) = «y.bvar» (i - 1)) * ℙ[π]((x i) = «x.bvar» i | (y i) = «y.bvar» i) := by
 -- proof
-  intro _ _
   obtain ⟨h₀, h₁⟩ := Random.Prob.eq.Mul_ProbS.Prob.eq.Mul_MulProbS.of.CondIndep.CondIndep
     (xo := «x.bvar») h «y.bvar»
   induction t with
@@ -82,4 +79,4 @@ private lemma mdp
 
 
 -- created on 2020-12-17
--- updated on 2026-10-04
+-- updated on 2026-10-19

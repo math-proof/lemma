@@ -1,16 +1,10 @@
-import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.Eq
 import Lemma.Tensor.GetAppend.eq.Get.of.Lt
 import Lemma.Tensor.GetAppend.eq.Get_Sub.of.GtAdd.Ge
 import Lemma.Tensor.GetGetSlice.eq.Get.of.Lt_Min
 import Lemma.Tensor.GetGetSlice.eq.Get_Add.of.GtSubMin
-import Lemma.List.LengthSlice.eq.Min
-import Lemma.List.LengthSlice.eq.SubMin
-import Lemma.Bool.SEq.is.Eq
-import Lemma.Nat.NotLt.is.Ge
 import Lemma.Nat.Lt_Min.is.Lt.Lt
 import Lemma.Nat.EqAdd_Sub.of.Ge
 import Lemma.Nat.Le.of.Lt_Add_1
-import Lemma.Fin.Eq.of.Val
 open Tensor List Bool Nat Fin
 
 

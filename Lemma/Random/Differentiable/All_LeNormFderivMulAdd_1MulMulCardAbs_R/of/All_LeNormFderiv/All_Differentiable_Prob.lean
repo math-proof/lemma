@@ -1,10 +1,6 @@
-import sympy.stats.policy_trajectory.gradient
-import sympy.Basic
 import Lemma.Random.Integral_R.eq.Sum_MulRealWRc
 import Lemma.Random.Sum_Real.eq.One
 import Lemma.Random.Differentiable.All_LeNormFderiv_MulAdd_1_MulMulCard.of.All_LeNorm.StronglyMeasurable.All_LeNormFderiv.All_All_Differentiable_FunPolProb
-import Lemma.Random.NormClip.le.AbsR
-import Lemma.Random.StronglyMeasurableClip
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
 
 
@@ -22,8 +18,8 @@ private lemma main
   {a : ℕ → (ℕ → ℝ × S × A) → A}
 -- given
   (h₀ : ∀ t, (· t) = (r t, s t, a t))
-  (h₁ : ∀ x u, Differentiable ℝ (fun θ => M.pol.prob θ x u))
-  (h₂ : ∀ θ x u, ‖fderiv ℝ (fun θ => M.pol.prob θ x u) θ‖ ≤ Cp)
+  (h₁ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
+  (h₂ : ∀ θ x u, ‖fderiv ℝ (fun θ => M.policy.prob θ x u) θ‖ ≤ Cp)
   (t : ℕ) :
 -- imply
   Differentiable ℝ (fun θ => ∫ ω, r t ω ∂(M θ)) ∧

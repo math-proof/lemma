@@ -1,6 +1,3 @@
-import sympy.stats.hidden_markov_sequence
-import sympy.core.numbers
-import sympy.Basic
 import Lemma.Random.IsHiddenMarkovFac.of.All_Eq.IsHiddenMarkovPr
 open MeasureTheory
 open scoped ENNReal.ToRealCoe

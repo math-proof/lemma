@@ -6,7 +6,6 @@ import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Vector.Get
 import Lemma.Vector.GetTranspose.eq.Get
-import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
 open Tensor Vector Bool
 

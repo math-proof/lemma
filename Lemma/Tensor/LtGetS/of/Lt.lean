@@ -1,5 +1,4 @@
 import Lemma.Tensor.BFnGetS.of.BFn
-import Lemma.Tensor.GtLength
 import Lemma.Tensor.Lt.is.LtDataS
 open Tensor
 

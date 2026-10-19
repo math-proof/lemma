@@ -1,5 +1,4 @@
 import torch.nn.functional.relu
-import sympy.Basic
 
 
 @[path]

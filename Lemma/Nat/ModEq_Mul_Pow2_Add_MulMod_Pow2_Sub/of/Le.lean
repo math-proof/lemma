@@ -1,13 +1,11 @@
 import Lemma.Nat.Mul.of.Eq
 import Lemma.Nat.MulAdd.eq.AddMulS
 import Lemma.Nat.Pow_Add.eq.MulPowS
-import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.Nat.ModEq.of.Eq
 import Lemma.Nat.ModEq_Pow2_1
 import Lemma.Nat.EqMul1
 import Lemma.Nat.ModEq.of.ModEq.ModEq__AddMul
 import Lemma.Nat.EqAddMulDiv
-import Lemma.Nat.Mul
 import Lemma.Nat.MulMul.eq.Mul_Mul
 open Nat
 

@@ -1,5 +1,3 @@
-import sympy.core.mul
-import sympy.Basic
 import Lemma.Tensor.MaxLengthMulShape.eq.MaxMax
 open Tensor
 

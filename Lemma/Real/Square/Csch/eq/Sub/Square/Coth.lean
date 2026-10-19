@@ -1,8 +1,6 @@
 import Lemma.Real.Coth.eq.Div
 import Lemma.Real.Square.Cosh.eq.Add.Square.Sinh
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
-import sympy.functions.elementary.hyperbolic
-import sympy.Basic
 open Real
 
 

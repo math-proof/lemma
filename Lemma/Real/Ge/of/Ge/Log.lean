@@ -1,5 +1,4 @@
 import Lemma.Real.GeLog.of.Ge
-import sympy.Basic
 open Real
 
 

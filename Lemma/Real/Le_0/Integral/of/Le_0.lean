@@ -1,6 +1,4 @@
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
-import sympy.sets.sets
-import sympy.Basic
 import Lemma.Real.LeIntegral.of.All_Le
 
 

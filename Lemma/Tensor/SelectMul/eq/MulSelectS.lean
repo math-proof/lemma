@@ -1,13 +1,11 @@
-import Lemma.List.GetPermute__Neg.eq.Get
-import Lemma.List.Permute__Neg.eq.Cons_EraseIdx
-import Lemma.Tensor.Cast_Mul.eq.MulCastS.of.Eq
 import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
-import Lemma.Tensor.GetMul.eq.MulGetS.of.GtGet_0.GtLength_0
 import Lemma.Tensor.PermuteMul.eq.MulPermuteS__Neg
 import Lemma.Tensor.Select.as.GetPermute
 open List Tensor
-set_option maxHeartbeats 1000000
+set_option maxHeartbeats 500000
 
+
+attribute [local irreducible] List.prod
 
 @[path]
 private lemma main

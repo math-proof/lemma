@@ -1,5 +1,4 @@
 import sympy.stats.markov_reward_process
-import sympy.Basic
 import Lemma.Matrix.GeometricMixing.of.StochasticIrreducible.Aperiodic
 import Lemma.Matrix.Any_And_Stationary.of.StochasticIrreducible.Aperiodic
 open Matrix

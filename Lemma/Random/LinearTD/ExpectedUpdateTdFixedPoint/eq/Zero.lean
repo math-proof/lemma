@@ -1,6 +1,3 @@
-import sympy.stats.linear_td
-import sympy.Basic
-import sympy.matrices.dense
 import Lemma.Random.LinearTD.NegDefAsymmA
 import Lemma.Random.LinearTD.ExpectedUpdate.eq.ToLpAddMulVecA
 open Matrix

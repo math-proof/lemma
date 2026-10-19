@@ -1,6 +1,5 @@
 import Lemma.Real.Coth.eq.Div
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
-import sympy.Basic
 open Real
 
 

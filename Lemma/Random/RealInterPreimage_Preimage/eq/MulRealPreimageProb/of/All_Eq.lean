@@ -1,7 +1,4 @@
-import sympy.stats.policy_trajectory
-import sympy.Basic
 import Lemma.Random.Integral_EqAndEq.eq.MulRealPreimageProb.of.All_Eq
-import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 
 
@@ -22,7 +19,7 @@ private lemma main
   (x : S)
   (u : A) :
 -- imply
-  (M θ).real (s t ⁻¹' {x} ∩ a t ⁻¹' {u}) = (M θ).real (s t ⁻¹' {x}) * M.pol.prob θ x u := by
+  (M θ).real (s t ⁻¹' {x} ∩ a t ⁻¹' {u}) = (M θ).real (s t ⁻¹' {x}) * M.policy.prob θ x u := by
 -- proof
   rw [← Integral_EqAndEq.eq.MulRealPreimageProb.of.All_Eq (M := M) h₁ θ t x u, ← integral_indicator_one
     ((Random.Measurable.of.All_Eq.snd.fst h₁ t (measurableSet_singleton x)).inter (Random.Measurable.of.All_Eq.snd.snd h₁ t (measurableSet_singleton u)))]

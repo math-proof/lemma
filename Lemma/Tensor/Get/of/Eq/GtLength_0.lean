@@ -1,5 +1,4 @@
 import Lemma.Tensor.Eq.is.All_EqGetS.of.GtLength_0
-import Lemma.Tensor.GtLength.of.GtLength_0
 open Tensor
 
 

@@ -1,12 +1,7 @@
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import torch.Tensor.prod
 import torch.Tensor.permute
-import Lemma.List.Drop.eq.Nil.of.LeLength
-import Lemma.List.EqTake.of.LeLength
-import Lemma.List.ProdAppend.eq.MulProdS
-import Lemma.List.Rotate.eq.AppendDrop__Take
 import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
-import Lemma.Nat.EqMin.of.Ge
 import Lemma.Nat.Eq_Div.Eq_Mod.of.Eq_AddMul
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Lemma.Vector.GetCast.eq.Get.of.Eq

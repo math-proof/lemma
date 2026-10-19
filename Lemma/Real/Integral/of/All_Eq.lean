@@ -1,4 +1,3 @@
-import sympy.Basic
 import sympy.integrals.integrals
 import Mathlib.MeasureTheory.Integral.Bochner.Basic
 open MeasureTheory

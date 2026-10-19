@@ -1,4 +1,3 @@
-import sympy.Basic
 import Mathlib
 import Lemma.Polynomial.IsStandardEtale.AdjoinRoot.X.Pow.sub.C.of.Ne_0.IsUnit.IsUnit
 

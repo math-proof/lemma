@@ -1,18 +1,7 @@
-import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import torch.Tensor.permute
-import Lemma.Bool.SEqCast.of.Eq
-import Lemma.List.EqPermute
-import Lemma.List.GetPermute.eq.Get.of.Gt
 import Lemma.List.Permute.eq.AppendRotateTake___Drop.of.GtLength_0
-import Lemma.List.Permute_0.eq.AppendRotateTake___Drop.of.GtLength_0
-import Lemma.Nat.AddAdd
 import Lemma.Nat.EqAdd0
 import Lemma.Tensor.GetPermute.as.PermuteGet.of.GtGet_0.LtAdd_1Length
-import Lemma.Tensor.GetSoftmax.eq.SoftmaxGet.of.GtGet_0.Gt_0.GtLength
-import Lemma.Tensor.Permute.eq.Ite
-import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.GtLength_0
-import Lemma.Tensor.SEqPermute
-import Lemma.Tensor.SEqSoftmaxS.of.SEq
 import Lemma.Tensor.SoftmaxCast.as.Softmax.of.Eq
 import Lemma.Tensor.SoftmaxPermuteHead.as.PermuteHeadSoftmax.of.GtLength
 open Bool List Nat Tensor

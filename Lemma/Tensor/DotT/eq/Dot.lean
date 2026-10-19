@@ -1,37 +1,20 @@
 import Lemma.Bool.EqCastS.of.SEq.Eq
 import torch.Tensor.unsqueeze
 import torch.Tensor.permute
-import Lemma.Bool.SEq.is.Eq
-import Lemma.Bool.SEq.is.SEqCast.of.Eq
-import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
-import Lemma.Nat.Max
-import Lemma.Nat.Mul
 import Lemma.Tensor.Dot
 import Lemma.Tensor.Dot.eq.GetSumMul
 import Lemma.Tensor.Dot.eq.SelectSumMul
-import Lemma.Tensor.EqGetUnsqueeze_0
-import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
-import Lemma.Tensor.GetMul.eq.MulGetS
-import Lemma.Tensor.GetRepeat.as.RepeatGet.of.GtGet_0.GtVal_0
-import Lemma.Tensor.GetRepeat_0.as.Get_Mod_Get.of.GtMul_Get.GtLength_0
 import Lemma.Tensor.GetSum_2.eq.SumGet__1
 import Lemma.Tensor.ResizeT_1.eq.TResize_0
-import Lemma.Tensor.SEqMulS.of.SEq.SEq
-import Lemma.Tensor.SEqRepeatS.of.SEq.Val.Eq
-import Lemma.Tensor.SEqResizeS.of.SEq.Val.Eq
 import Lemma.Tensor.SEqSelectUnsqueeze.of.GeLength
-import Lemma.Tensor.SEqSumS.of.SEq
-import Lemma.Tensor.SEqTS.of.SEq
-import Lemma.Tensor.SEqUnsqueezeS.of.SEq
 import Lemma.Tensor.SelectCast.as.Select.of.Eq
 import Lemma.Tensor.SelectMul.eq.MulSelectS
 import Lemma.Tensor.SelectRepeat.as.RepeatSelect.of.Lt
 import Lemma.Tensor.SelectSum.as.SumSelect.of.Gt
 import Lemma.Tensor.SelectUnsqueeze.as.UnsqueezeSelect.of.Lt.GeLength
-import Lemma.Tensor.UnsqueezeCast.as.Unsqueeze.of.Eq
 import Lemma.Tensor.UnsqueezeUnsqueeze_0
 open Bool Nat Tensor
-set_option maxHeartbeats 1000000
+set_option maxHeartbeats 500000
 
 
 @[path]

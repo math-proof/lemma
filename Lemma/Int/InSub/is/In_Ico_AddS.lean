@@ -1,5 +1,3 @@
-import Lemma.Int.EqAddSub
-import Lemma.Int.EqSubAdd
 import Lemma.Int.In_Ico.is.InAdd
 import Lemma.Int.In_Ico.is.InSub
 open Int

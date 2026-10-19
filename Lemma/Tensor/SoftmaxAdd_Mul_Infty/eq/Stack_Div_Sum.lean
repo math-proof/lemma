@@ -1,40 +1,22 @@
-import Lemma.Hyperreal.Infinitesimal.is.All_LtAbs
-import Lemma.Tensor.DataExp.eq.ExpData
 import Lemma.Tensor.Div_KeepdimSum.eq.Div_Sum
-import Lemma.Tensor.EqData0'0
 import Lemma.Tensor.Ge_0.is.All_Le0GetData
 import Lemma.Tensor.DataMul.eq.MulDataS
-import Lemma.Tensor.EqHeadData
-import Lemma.Vector.Head.eq.Get_0
-import Lemma.Vector.GetMul.eq.MulGetS
-import Lemma.Tensor.GetMap.eq.MapGet
-import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.ExpAdd_MulInfty.eq.Mul_Stack_Bool.rect
 import Lemma.Tensor.Get.of.Eq
 import Lemma.Tensor.GeExp_0
-import Lemma.Tensor.GetData.eq.GetDataGet.of.Lt
 import Lemma.Tensor.GetDiv.eq.DivGetS
-import Lemma.Tensor.GetExp.eq.ExpGet
 import Lemma.Tensor.GetKeepdim.eq.KeepdimCast_Get.of.GtGet_0.Gt_0.GtLength
-import Lemma.Tensor.GetMap.eq.MapGet
-import Lemma.Tensor.GetMul.eq.MulGetS
 import Lemma.Tensor.GetSum.as.SumGet.of.GtGet_0.LtAdd_1Length
-import Lemma.Tensor.Le.is.LeDataS
 import Lemma.Tensor.Le0Get.of.Ge_0
 import Lemma.Tensor.Le0Mul.of.Ge_0.Ge_0
 import Lemma.Tensor.Le0Stack.of.All_Ge_0
 import Lemma.Tensor.Softmax.eq.DivExp_KeepdimSumExp
-import Lemma.Tensor.XEq.is.All_XEqGetS
 import Lemma.Tensor.XEqDivS_Sum_0.of.XEq.NotInfinitesimalSum.Ge_0
 import Lemma.Tensor.XEqGetS.of.XEq.GtLength
 import Lemma.Hyperreal.OfRealExp.eq.ExpOfReal
-import Lemma.Vector.EqGet0_0
-import Lemma.Vector.GetExp.eq.ExpGet
-import Lemma.Vector.GetMul.eq.MulGetS
-import Lemma.Vector.Sum.eq.Sum_Get
 import torch.Tensor.sum
 open Tensor Hyperreal
-set_option maxHeartbeats 4000000
+set_option maxHeartbeats 1000000
 
 
 private lemma ge_zero_mask

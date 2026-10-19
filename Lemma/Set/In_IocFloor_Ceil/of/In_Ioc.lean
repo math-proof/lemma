@@ -1,4 +1,3 @@
-import sympy.sets.sets
 import Lemma.Int.GeCeil
 import Lemma.Rat.LeFloor
 open Rat Int

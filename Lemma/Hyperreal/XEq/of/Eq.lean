@@ -1,5 +1,4 @@
 import sympy.core.relational
-import sympy.Basic
 
 
 @[path]

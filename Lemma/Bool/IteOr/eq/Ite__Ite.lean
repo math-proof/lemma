@@ -3,8 +3,6 @@ import Lemma.Bool.BFn_Ite__Ite.is.And.ou.OrAndS
 import Lemma.Bool.OrOr.is.Or_Or
 import Lemma.Bool.And_Or.is.OrAndS
 import Lemma.Bool.Or_And_Not.is.Or
-import Lemma.Bool.BFn_Ite.is.OrAndS
-import Lemma.Bool.NotOr.is.AndNotS
 open Bool
 
 

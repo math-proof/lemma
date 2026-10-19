@@ -1,5 +1,3 @@
-import Lemma.Nat.Mul
-import Lemma.Vector.GetMul.eq.MulGetS
 import sympy.vector.vector
 open Nat Vector
 

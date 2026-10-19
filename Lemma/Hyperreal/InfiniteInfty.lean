@@ -1,6 +1,5 @@
 import Lemma.Hyperreal.GtInfty0
 import Lemma.Hyperreal.Infinite.is.All_GtAbs
-import Lemma.Int.EqAbs.of.Gt_0
 open Hyperreal Int
 
 

@@ -3,14 +3,9 @@ import Lemma.Int.Le_Sub.is.LeAdd
 import Lemma.Nat.GtCoe_0.is.Gt_0
 import Lemma.Nat.LeInv_1.of.Gt_0
 import Lemma.Nat.Lt0Mul.of.Gt_0.Gt_0
-import Lemma.Nat.Mul
 import Lemma.Nat.MulMul.eq.Mul_Mul
-import Lemma.Rat.Div1.eq.Inv
-import Lemma.Rat.DivDiv.eq.Div_Mul
 import Lemma.Rat.DivNeg.eq.NegDiv
 import Lemma.Rat.DivSub.eq.SubDivS
-import Lemma.Rat.Div_Mul.eq.Inv.of.Ne_0
-import Lemma.Real.GtPi0
 import Lemma.Real.NePi0
 import Lemma.Set.EqCeil_0.of.In_Ioc
 import Lemma.Set.In.of.In.Subset

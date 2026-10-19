@@ -1,24 +1,12 @@
 import Lemma.Nat.Even.is.Mod_2.eq.Zero
 import Lemma.Tensor.Add
 import Lemma.Tensor.AddMulS.eq.SubMulS
-import Lemma.Tensor.DataAdd.eq.AddDataS
-import Lemma.Tensor.DataNeg.eq.NegData
 import Lemma.Tensor.Dot.eq.Stack_Sum_MulGetS
-import Lemma.Tensor.Eq.is.All_EqGetS
-import Lemma.Tensor.Eq.is.EqDataS
-import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.GetRotaryMatrix'.eq.Ite_IteS
-import Lemma.Tensor.Mul
-import Lemma.Tensor.NegMul.eq.MulNeg
-import Lemma.Tensor.Sub.eq.Add_Neg
-import Lemma.Vector.GetAdd.eq.AddGetS
-import Lemma.Vector.GetNeg.eq.NegGet
-import Lemma.Vector.GetSub.eq.SubGet
 import torch.functions
 import torch.stack
-import sympy.functions.elementary.integers
 open Tensor
-set_option maxHeartbeats 4000000
+set_option maxHeartbeats 1000000
 
 
 @[path]

@@ -1,5 +1,4 @@
 import Lemma.Rat.In_Icc.of.Gt_0
-import sympy.sets.sets
 open Rat
 
 

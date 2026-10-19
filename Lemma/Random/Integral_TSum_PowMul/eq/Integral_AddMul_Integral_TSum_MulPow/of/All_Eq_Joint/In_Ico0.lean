@@ -1,18 +1,8 @@
-import sympy.stats.policy_trajectory
-import sympy.functions.elementary.miscellaneous
-import sympy.stats.cond_expectation
-import sympy.Basic
 import Lemma.Random.Eq_0.of.EqReal_0
-import Lemma.Random.Integrable.of.Measurable
 import Lemma.Random.Integrable_Mul_R.of.Measurable
-import Lemma.Random.Integral.eq.MulRealPreimageSIntegral_MulEqS
-import Lemma.Random.Integral_MulEqS.eq.MulRealSum_MulProbSum_MulT
-import Lemma.Random.Integral_MulEqSR_Add.eq.MulRealPreimageSWRc
-import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
 import Lemma.Random.MulProbMulTV.eq.MulProbMulTTSum_MulPowW.of.Ne0Real_Preimage.In_Ico
 import Lemma.Random.TSum_MulPowW.eq.AddWMul_Sum_MulProbSum_MulTTSum_MulPowW.of.In_Ico
 import Lemma.Random.V.eq.Integral.of.Measurable
-import Lemma.Random.V.eq.TSum_MulPowWRc.of.Ne0Real_Preimage.In_Ico
 import Lemma.Real.Mul_AddMul_MulMul.eq.Add_Mul.of.Ne_0
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random Real
 

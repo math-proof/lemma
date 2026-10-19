@@ -1,6 +1,5 @@
 import Mathlib.MeasureTheory.Integral.Lebesgue.Countable
 import Lemma.Random.All_EqIntegral_ProbJoint.of.PSpace_Joint
-import sympy.stats.joint_rv
 open Random MeasureTheory Measure
 
 

@@ -1,10 +1,5 @@
-import Lemma.Bool.HEq.of.SEq
-import Lemma.Tensor.DataMul.eq.MulDataS
-import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Tensor.HeadDataSum.eq.SumData
-import Lemma.Tensor.SEqDataS.of.SEq
 import Lemma.Tensor.SEqResize_0.of.Eq_Get_0.GtLength_0
-import Lemma.Vector.Eq.is.All_EqGetS
 import Lemma.Vector.SEqMulS.of.SEq.SEq
 import sympy.matrices.expressions.matmul
 import torch.Tensor.sum

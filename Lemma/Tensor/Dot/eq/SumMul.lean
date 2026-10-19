@@ -1,13 +1,9 @@
-import Lemma.Bool.SEq.is.EqCast.of.Eq
 import torch.Tensor.unsqueeze
 import torch.Tensor.repeat
 import torch.Tensor.permute
-import Lemma.Bool.SEq.is.SEqCast.of.Eq
-import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.Tensor.Dot.eq.Bmm
 import Lemma.Tensor.SEqMulS.of.SEq.SEq
 import Lemma.Tensor.SEqRepeatS.of.SEq.Val.Eq
-import Lemma.Tensor.SEqResizeS.of.SEq.Val.Eq
 import Lemma.Tensor.SEqSumS.of.SEq.Eq
 import Lemma.Tensor.SEqTS.of.SEq
 import Lemma.Tensor.SEqUnsqueezeS.of.SEq.Eq

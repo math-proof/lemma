@@ -1,4 +1,3 @@
-import Lemma.Nat.Mod.eq.Sub_Mul_Div
 import Lemma.Int.Div.eq.FloorDiv.of.Gt_0
 open Int Nat
 

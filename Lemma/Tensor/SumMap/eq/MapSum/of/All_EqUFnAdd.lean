@@ -4,7 +4,6 @@ import Lemma.Vector.MapCast.as.Map.of.Eq
 import Lemma.Bool.EqCast.of.SEq
 import Lemma.Vector.MapAdd.eq.AddMap.of.All_EqUFnAdd
 import Lemma.Vector.GetMap.eq.UFnGet
-import Lemma.Vector.GetAdd.eq.AddGetS
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Tensor.MapData.eq.DataMap
 import Lemma.Vector.FlattenMap.eq.MapFlatten

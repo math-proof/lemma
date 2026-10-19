@@ -1,9 +1,4 @@
 import Lemma.Hyperreal.Infinitesimal.is.InfiniteInv
-import Lemma.Hyperreal.Infinite.is.All_GtAbs
-import Lemma.Hyperreal.Infinitesimal.is.All_LtAbs
-import Lemma.Nat.Gt.of.Gt.Gt
-import Lemma.Rat.GtInv_0.is.Gt_0
-import Lemma.Rat.LtInvS.is.Gt.of.Gt_0.Gt_0
 import Lemma.Rat.Eq_0.is.EqInv_0
 open Hyperreal Nat Rat
 

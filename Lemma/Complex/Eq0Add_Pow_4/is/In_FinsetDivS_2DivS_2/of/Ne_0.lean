@@ -2,11 +2,9 @@ import Lemma.Complex.Eq0Add_Pow_3.is.In_Finset_SubSAddMulS
 import Lemma.Complex.Eq_SquareAddMulSqrt.of.Eq0SubSquare_MulMul4.Ne_0
 import Lemma.Complex.Eq0Add_Mul_Square.is.In_FinsetDivS_Mul2.of.Ne_0
 import Lemma.Complex.PowMul.eq.MulPowS.of.Gt_0
-import Lemma.Int.SquareNeg.eq.Square
 import Lemma.Rat.DivAdd.eq.AddDivS
 import Lemma.Rat.DivSub.eq.SubDivS
 import Lemma.Rat.Ne_Div_2.of.Eq0AddSubSub_Pow_3.Ne_0
-import Lemma.Set.In_Finset.is.Or_OrEqS
 open Complex Int Rat Set
 
 

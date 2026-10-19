@@ -1,6 +1,5 @@
 import Lemma.List.LengthSlicedIndices.eq.ToNatCeilDivSub.of.Gt_0.Le.Lt
 import Lemma.Rat.EqToNatCeilDivSubMul.of.Lt
-import Lemma.Nat.Mul
 import stdlib.Slice
 open List Rat Nat
 

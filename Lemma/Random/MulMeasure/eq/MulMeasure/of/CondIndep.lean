@@ -1,10 +1,7 @@
 import Mathlib.Probability.Independence.Conditional
-import Lemma.Measure.Count.eq.ProdCountS
 import Lemma.Random.All_Imp_EqProbSCond.of.CondIndep
 import Lemma.Random.SinglePSpace.of.EqMeasureCount.Measurable
-import Lemma.Random.Prob.eq.Measure.of.Eq_Count
 import Lemma.Random.ProbCond.eq.Div.of.Eq_Count.Eq_Count
-import sympy.stats.joint_rv
 open ProbabilityTheory MeasureTheory Measure Random
 
 

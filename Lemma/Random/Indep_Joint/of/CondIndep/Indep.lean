@@ -1,6 +1,5 @@
 import Mathlib.Probability.ConditionalExpectation
 import Mathlib.Probability.Independence.Conditional
-import sympy.stats.joint_rv
 import Lemma.Random.IndepJoint.of.All_Eq_UFn_MulPreimageS
 open ProbabilityTheory MeasureTheory
 open scoped ProbabilityTheory

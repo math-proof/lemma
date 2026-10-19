@@ -1,13 +1,5 @@
-import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
-import Lemma.List.HeadD.eq.Get_0.of.GtLength_0
-import Lemma.List.TailAppend.eq.AppendTail.of.GtLength_0
 import Lemma.Tensor.Matmul.as.OfVectorMap₂_CastS_ToVector.of.Get_0.Length.GtLength_0
-import Lemma.Tensor.GetOfVector.eq.Get
-import Lemma.Tensor.GtLength.of.GtLength_0
-import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.SEqMatmulS.of.SEq.SEq
-import Lemma.Tensor.SEqGetS.of.SEq.GtLength
-import Lemma.Vector.GetCast.eq.Get.of.Eq
 open Bool List Tensor Vector
 
 

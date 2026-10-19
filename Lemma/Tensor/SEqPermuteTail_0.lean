@@ -8,7 +8,6 @@ import Lemma.Vector.Get
 import Lemma.Vector.GetMap.eq.UFnGet
 import Lemma.Vector.GetTranspose.eq.Get
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
-import Lemma.Vector.Head.eq.Get_0
 open Tensor Vector Bool
 
 

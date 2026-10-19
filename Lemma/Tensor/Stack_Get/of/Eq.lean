@@ -1,6 +1,5 @@
 import torch.Tensor.Basic
 import torch.stack
-import sympy.Basic
 
 
 @[path]

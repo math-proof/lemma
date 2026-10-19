@@ -1,9 +1,6 @@
 import Mathlib.Probability.Independence.Integration
-import sympy.stats.joint_rv
 import sympy.stats.variance
-import sympy.Basic
 import Lemma.Random.Expect.eq.Integral.Id
-import Lemma.Random.OfRV.eq.Integral.of.AEStronglyMeasurable_Map
 open MeasureTheory
 
 

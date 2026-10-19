@@ -1,6 +1,5 @@
 import Lemma.Vector.EqGetReplicate
 import Lemma.Vector.GetDrop.eq.Get_Add.of.Lt_Sub
-import sympy.vector.vector
 open Vector
 
 

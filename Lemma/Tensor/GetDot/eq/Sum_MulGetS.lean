@@ -3,16 +3,12 @@ import torch.Tensor.sum
 import torch.Tensor.unsqueeze
 import torch.Tensor.permute
 import Lemma.Tensor.DataMul.eq.MulData
-import Lemma.Tensor.Dot.eq.GetDotUnsqueeze_0
-import Lemma.Tensor.Dot.eq.SumMul__0
 import Lemma.Tensor.GetDot.eq.DotGet
 import Lemma.Tensor.GetDot.eq.DotGetS
-import Lemma.Tensor.GetMul.eq.MulGetS
 import Lemma.Tensor.EqGetT
 import Lemma.Tensor.Sum_0.eq.Sum_Get
-import Lemma.Vector.GetMap.eq.UFnGet
 open Fin Tensor Vector
-set_option maxHeartbeats 400000
+set_option maxHeartbeats 200000
 
 
 /--

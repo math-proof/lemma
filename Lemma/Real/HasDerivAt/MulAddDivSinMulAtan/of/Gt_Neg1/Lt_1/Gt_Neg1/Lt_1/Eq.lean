@@ -1,6 +1,5 @@
 import Lemma.Real.Gt_0Sub1MulCos.of.Gt_Neg1.Lt_1
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.ArctanDeriv
-import sympy.Basic
 
 
 /--

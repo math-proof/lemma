@@ -1,9 +1,5 @@
-import sympy.stats.q_learning
 import sympy.stats.lyapunov
-import sympy.vector.lp_space
-import sympy.Basic
 import Lemma.Random.MulPowCardη.lt.One
-import Lemma.Random.Gtμmin_0AndGeη_0AndLtη_1
 import Lemma.Random.NormSubOfLpExpectedUpdateTarget.le.MulηNormSub
 import Lemma.LpSpace.Norm.le.MulPow_NormOfLp.of.Ge_1
 import Lemma.LpSpace.NormOfLp.le.Norm.of.Ge_1

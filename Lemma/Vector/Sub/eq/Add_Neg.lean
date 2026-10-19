@@ -1,4 +1,3 @@
-import Lemma.Int.Sub.eq.Add_Neg
 import Lemma.Vector.GetAdd.eq.AddGet
 import Lemma.Vector.GetSub.eq.SubGet
 open Vector Int

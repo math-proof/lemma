@@ -1,6 +1,5 @@
 import Lemma.Nat.LtMod.of.Lt_Mul
 import Lemma.Nat.LtDiv.of.Lt_Mul
-import Lemma.Nat.AddMul.lt.Mul
 import Lemma.Vector.GetFlatten_AddMul.eq.Get
 open Nat Vector
 

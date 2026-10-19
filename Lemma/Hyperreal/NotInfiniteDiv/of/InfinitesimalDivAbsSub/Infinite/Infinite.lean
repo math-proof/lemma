@@ -1,8 +1,6 @@
-import Lemma.Hyperreal.EqSt.of.InfinitesimalSub
 import Lemma.Hyperreal.EqSt_0.of.Infinitesimal
 import Lemma.Hyperreal.Infinite.is.InfiniteAbs
 import Lemma.Hyperreal.Infinite.is.InfiniteSub
-import Lemma.Hyperreal.Infinite.is.InfinitesimalInv
 import Lemma.Hyperreal.Infinitesimal.is.InfinitesimalAbs
 import Lemma.Hyperreal.InfinitesimalAdd.of.Infinitesimal.Infinitesimal
 import Lemma.Hyperreal.InfinitesimalDiv.of.InfiniteDiv
@@ -12,9 +10,7 @@ import Lemma.Hyperreal.NotInfinitesimalAdd.of.Gt_0.Ge_0
 import Lemma.Hyperreal.StAbs.eq.AbsSt
 import Lemma.Hyperreal.StDiv.eq.DivStS.of.NotInfinite.NotInfinitesimal
 import Lemma.Int.EqAbs_0.is.Eq_0
-import Lemma.Int.GeAbs_0
 import Lemma.Nat.AddAdd
-import Lemma.Nat.AddAdd.eq.Add_Add
 import Lemma.Nat.Le0Add.of.Ge_0.Ge_0
 import Lemma.Rat.AbsDiv.eq.DivAbsS
 import Lemma.Rat.Div.eq.DivDivS.of.Ne_0

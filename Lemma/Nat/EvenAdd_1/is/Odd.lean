@@ -1,7 +1,5 @@
 import Lemma.Nat.Even.is.OddAdd_1
 import Lemma.Nat.Odd.is.NotEven
-import Lemma.Nat.NotOdd.is.Even
-import Lemma.Bool.Iff.is.IffNotS
 open Nat Bool
 
 

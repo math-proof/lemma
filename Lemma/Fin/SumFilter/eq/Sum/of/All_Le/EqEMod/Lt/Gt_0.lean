@@ -1,5 +1,3 @@
-import sympy.concrete.expr_with_limits
-import sympy.Basic
 import Lemma.Nat.LtAdd_Mul.of.Lt_DivSubAddSub1.Gt_0
 open Nat
 

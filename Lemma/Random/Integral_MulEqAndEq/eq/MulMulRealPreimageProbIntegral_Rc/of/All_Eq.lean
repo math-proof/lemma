@@ -1,13 +1,8 @@
-import sympy.stats.policy_trajectory
-import sympy.functions.elementary.miscellaneous
-import sympy.Basic
 import Lemma.Random.MEq_Clip.of.All_Eq
 import Lemma.Random.Integral_MulEq22.eq.MulProbIntegral.of.All_LeNorm.StronglyMeasurable
 import Lemma.Random.Integral_MulEqS.eq.MulRealPreimageSIntegral.of.All_LeNorm.StronglyMeasurable
 import Lemma.Random.NormClip.le.AbsR
 import Lemma.Random.StronglyMeasurableClip
-import Lemma.Real.LeNorm_Mul1.of.All_LeNorm
-import Lemma.Real.StronglyMeasurable_Eq22
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random Real
 
 
@@ -29,7 +24,7 @@ private lemma main
   (u : A) :
 -- imply
   ∫ ω, (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) * r t ω ∂(M θ) =
-    (M θ).real (s t ⁻¹' {x}) * M.pol.prob θ x u * ∫ ρ, clip (ρ, x, u).1 (-M.env.R) M.env.R ∂(M.env.reward (x, u)) := by
+    (M θ).real (s t ⁻¹' {x}) * M.policy.prob θ x u * ∫ ρ, clip (ρ, x, u).1 (-M.env.R) M.env.R ∂(M.env.reward (x, u)) := by
 -- proof
   have h₁ : ∫ ω, (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) * r t ω ∂(M θ) =
       ∫ ω, (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) * clip (ω t).1 (-M.env.R) M.env.R ∂(M θ) :=

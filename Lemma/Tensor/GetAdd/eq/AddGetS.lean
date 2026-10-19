@@ -1,5 +1,4 @@
 import Lemma.Tensor.Eq_Stack
-import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.AddStackS.eq.Stack_Add
 open Tensor
 

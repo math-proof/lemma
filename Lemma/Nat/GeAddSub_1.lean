@@ -1,4 +1,3 @@
-import sympy.functions.elementary.integers
 import Lemma.Nat.NotLe.is.Gt
 import Lemma.Nat.Le_Sub_1.of.Lt
 import Lemma.Nat.Lt_Add_1

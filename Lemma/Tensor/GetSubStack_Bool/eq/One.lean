@@ -1,13 +1,14 @@
 import Lemma.Int.Sub0.eq.Neg
 import Lemma.Nat.Sub.eq.Zero
 import Lemma.Tensor.EqGet1_1
-import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.GetSub.eq.SubGetS
 import torch.functions
 import torch.stack
 open Tensor Int Nat
-set_option maxHeartbeats 2000000
+set_option maxHeartbeats 1000000
 
+
+attribute [local irreducible] List.prod
 
 @[path]
 private lemma main
@@ -40,7 +41,6 @@ private lemma main
     simp [h]
     erw [Sub0.eq.Neg]
     rfl
-
 
 
 -- created on 2025-12-23

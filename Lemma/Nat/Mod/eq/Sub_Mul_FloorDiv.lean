@@ -1,7 +1,5 @@
-import Lemma.Nat.Mod.eq.Sub_Mul_Div
 import Lemma.Nat.Div.eq.FloorDiv
 import Lemma.Nat.SubNatNat.eq.Sub
-import Lemma.Nat.EqAddMul_Div
 open Nat
 
 

@@ -1,13 +1,7 @@
-import Lemma.Bool.SEq.is.EqCast.of.Eq
 import torch.Tensor.repeat
-import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
-import Lemma.List.ProdSet__Mul_Get.eq.MulProd_Mul_Prod.of.GtLength
-import Lemma.Tensor.DataNeg.eq.NegData
 import Lemma.Tensor.DataRepeat.as.FlattenMapSplitAtData
-import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
-import Lemma.Vector.GetNeg.eq.NegGet
 import Lemma.Vector.GetRepeat.eq.Get_Mod
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import Lemma.Vector.SplitAtNeg.eq.NegSplitAt

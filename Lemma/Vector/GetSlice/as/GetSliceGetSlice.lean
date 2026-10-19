@@ -1,19 +1,5 @@
-import Lemma.Vector.GtMin.of.GtLengthSlice
 import Lemma.List.LengthSlice.eq.Min
-import Lemma.List.LengthSlice.eq.Zero
-import Lemma.Int.EqToNat
-import Lemma.List.GetSlicedIndices.eq.AddMul.of.GtLength.Gt_0.Le.Lt
-import Lemma.List.LengthSlicedIndices.eq.ToNatCeilDivSub.of.Gt_0.Le.Lt
-import Lemma.Nat.EqAdd_Mul_DivSub1Sign_2
-import Lemma.Nat.Mul.lt.MulToNatCeilDivSub.of.GtSub.Gt_0.Lt
-import Lemma.Rat.Div.le.Zero.of.Le_0
-import Lemma.Rat.EqToNatCeil_0.of.Le
 import Lemma.Rat.LeToNatCeil_1.of.Le_Add
-import Lemma.Vector.GetIndices.eq.AddToNatAdd_Mul_DivSub1Sign_2.of.Gt_0
-import Lemma.Vector.SEq.of.All_EqGetS.Eq
-import Lemma.Vector.SEq.of.Eq_0.Eq_0
-import Lemma.Nat.Add_Mul.eq.Add_MulAddDiv
-import Lemma.Vector.LtGetSlicedIndices.of.GtLength.Gt_0.Le.Lt
 import Lemma.List.AddDiv.lt.LengthSlice.of.Gt_0
 open List Vector Int Nat Rat Slice
 

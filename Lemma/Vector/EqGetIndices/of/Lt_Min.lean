@@ -1,6 +1,5 @@
 import sympy.vector.vector
 import Lemma.List.LengthSlice.eq.Min
-import Lemma.Nat.EqAdd_Mul_DivSub1Sign_2
 import Lemma.List.EqGetSlicedIndices.of.Lt.Le.Gt_0
 open List Nat
 

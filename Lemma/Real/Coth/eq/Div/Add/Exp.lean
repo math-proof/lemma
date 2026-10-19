@@ -1,6 +1,5 @@
 import Lemma.Real.Tanh.eq.Div.Add.Exp
 import sympy.functions.elementary.hyperbolic
-import sympy.Basic
 open Real
 
 

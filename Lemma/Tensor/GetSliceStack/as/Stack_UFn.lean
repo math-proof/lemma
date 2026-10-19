@@ -1,5 +1,4 @@
 import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.Eq
-import Lemma.List.LengthSlice.eq.Min
 import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.GetGetSlice.eq.Get
 open Tensor List

@@ -1,4 +1,3 @@
-import Lemma.Rat.LtDivS.of.Lt.Gt_0
 import Lemma.Nat.Gt.of.Lt
 import Lemma.Set.Lt.of.LtUFn.In_Ico.In_Ico
 import Lemma.Real.Lt_Sqrt.is.LtSquare.of.Ge_0

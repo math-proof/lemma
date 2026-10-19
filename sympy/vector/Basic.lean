@@ -1,11 +1,14 @@
 import Mathlib.Data.Vector.MapLemmas
 import Mathlib.Topology.Algebra.InfiniteSum.Basic
 import Mathlib.Data.Matrix.Mul
+import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Lemma.Nat.EqMin_SubMulS
 import Lemma.Nat.EqAddMulDiv
 import Lemma.List.LengthRange.eq.Length
 import Lemma.List.Prod.eq.MulProdS
+import sympy.core.power
 open Nat Lean
+open scoped BigOperators
 
 
 class Dot (α : Type u) (β : Type v) (γ : outParam (Type w)) where
@@ -203,6 +206,23 @@ noncomputable instance (priority := 50) instDotNatArrowSMulProcess
     {E : Type*} {Ω : Type*} [TopologicalSpace E] [AddCommMonoid E] [SMul ℝ E] :
     Dot (ℕ → ℝ) (ℕ → Ω → E) (Ω → E) where
   dot f x := fun ω ↦ f @ (fun t ↦ x t ω)
+
+/-- Finite FinsetPow dot: `(γ ^ s) @ g = ∑ i ∈ s, γ^i * g i`. -/
+instance (priority := 100) instDotFinsetPow
+    [AddCommMonoid α] [HPow α ℕ α] [Mul α] :
+    Dot (FinsetPow α) (ℕ → α) α where
+  dot p g := ∑ i ∈ p.support, (p.base ^ i) * g i
+
+/-- Pointwise: `((γ ^ s) @ x) ω = (γ ^ s) @ (fun i ↦ x i ω)`. -/
+instance (priority := 100) instDotFinsetPowProcess
+    {Ω : Type*} [AddCommMonoid α] [HPow α ℕ α] [Mul α] :
+    Dot (FinsetPow α) (ℕ → Ω → α) (Ω → α) where
+  dot p x := fun ω ↦ p @ (fun i ↦ x i ω)
+
+@[simp]
+theorem FinsetPow.dot_eq [AddCommMonoid α] [HPow α ℕ α] [Mul α]
+    (γ : α) (s : Finset ℕ) (g : ℕ → α) :
+    (γ ^ s) @ g = ∑ i ∈ s, γ ^ i * g i := rfl
 
 /-- Outer product of two vectors: `(a @ᵒ b) i j = a i * b j`, i.e. `a @ᵒ b = Matrix.vecMulVec a b`. -/
 instance [Mul α] : OuterProd (m → α) (n → α) (Matrix m n α) where

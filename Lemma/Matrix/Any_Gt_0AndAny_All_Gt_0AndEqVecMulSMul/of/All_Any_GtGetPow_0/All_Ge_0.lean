@@ -1,6 +1,5 @@
 import Mathlib.LinearAlgebra.Matrix.DotProduct
 import Lemma.Matrix.Any_Gt_0AndAny_All_Gt_0AndEqMulVecSMul.of.All_Any_GtGetPow_0.All_Ge_0
-import sympy.Basic
 
 open Matrix
 open scoped Matrix

@@ -1,53 +1,23 @@
-import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import torch.Tensor.prod
 import Lemma.Finset.Sum.of.All_Eq.Eq
 import Lemma.List.DropEraseIdx.eq.AppendDropTake.of.Ge
-import Lemma.List.DropEraseIdx.eq.Drop.of.Le
 import Lemma.List.DropEraseIdx.eq.Drop.of.Lt
 import Lemma.List.EraseIdxEraseIdx.of.Gt.GtLength
 import Lemma.List.EraseIdxTake.eq.Take
-import Lemma.List.GetEraseIdx.eq.Get.of.Gt.GtLength
 import Lemma.List.GetEraseIdx.eq.Get.of.Lt.GtLength
-import Lemma.List.LengthSlice.eq.ProdTake.of.GtGet.GtLength
-import Lemma.List.MulLengthSlice.eq.ProdEraseIdx.of.GtGet.GtLength
 import Lemma.List.MulLengthSlice_Mul.eq.ProdEraseIdx.of.GtGet.GtLength
-import Lemma.List.ProdDrop.eq.MulProdSDrop.of.Le
 import Lemma.List.ProdDropTake.eq.MulProdDropTake.of.Gt.GtLength
-import Lemma.List.ProdEraseIdx.eq.MulProdS
 import Lemma.List.ProdEraseIdx.eq.MulProdS.of.Lt
-import Lemma.List.ProdTake.eq.MulProdTake.of.GtLength
-import Lemma.List.ProdTake.eq.Mul_ProdDropTake.of.Ge
-import Lemma.List.TakeEraseIdx.eq.EraseIdxTake.of.Le
 import Lemma.List.TakeEraseIdx.eq.Take.of.Gt
-import Lemma.List.TakeTake.eq.Take.of.Gt
-import Lemma.Nat.AddAdd
-import Lemma.Nat.AddAdd.eq.Add_Add
-import Lemma.Nat.AddMul.lt.Mul.of.Lt.Lt
-import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
-import Lemma.Nat.Div.eq.Zero.of.Lt
-import Lemma.Nat.DivAddMul.eq.Add_Div.of.Ne_0
-import Lemma.Nat.DivDiv.eq.Div_Mul
-import Lemma.Nat.DivMod_Mul.eq.ModDiv
-import Lemma.Nat.EqAddSub.of.Ge
-import Lemma.Nat.EqDivMul.of.Ne_0
-import Lemma.Nat.Eq_Div.Eq_Mod.of.Eq_AddMul
 import Lemma.Nat.Mod_Mul.eq.AddMul_Mod.of.Lt
-import Lemma.Nat.MulAdd.eq.AddMulS
-import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Nat.ValCast.eq.Val.of.Eq
 import Lemma.Tensor.DataSelect.as.FlattenGetSliceSplitAtData
 import Lemma.Tensor.DataSum.eq.Sum_DataSelect
-import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
-import Lemma.Vector.GetCast.eq.Get.of.Eq
-import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
-import Lemma.Vector.GetGetSlice.eq.Get.of.GtGet.GtLength
-import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.GetSum.eq.Sum_Get
-import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import Lemma.Vector.Sum.of.All_Eq.Eq
 import torch.Tensor.sum
 open Bool Finset List Nat Tensor Vector Fin
-set_option maxHeartbeats 500000
+set_option maxHeartbeats 250000
 
 
 @[path, comm]

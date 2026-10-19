@@ -1,5 +1,4 @@
 import stdlib.Slice
-import sympy.Basic
 
 
 @[path]

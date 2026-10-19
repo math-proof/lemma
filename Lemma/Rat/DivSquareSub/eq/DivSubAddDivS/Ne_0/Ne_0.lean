@@ -1,14 +1,11 @@
 import Lemma.Int.MulSubS.eq.SubAddSMulS
 import Lemma.Int.SquareSub
 import Lemma.Nat.Add
-import Lemma.Nat.Mul.ne.Zero.of.Ne_0.Ne_0
 import Lemma.Nat.Square.eq.Mul
 import Lemma.Rat.Div.eq.DivDivS.of.Ne_0
-import Lemma.Rat.Div.eq.One.of.Ne_0
 import Lemma.Rat.DivAdd.eq.AddDivS
 import Lemma.Rat.DivMulS.eq.Div.of.Ne_0
 import Lemma.Rat.DivSub.eq.SubDivS
-import Lemma.Rat.MulDivS.eq.DivMulS
 import Lemma.Rat.MulDivS.eq.One.of.Ne_0.Ne_0
 open Int Nat Rat
 

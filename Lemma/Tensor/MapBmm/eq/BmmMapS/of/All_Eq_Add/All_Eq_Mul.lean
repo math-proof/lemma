@@ -2,10 +2,6 @@ import Lemma.List.EraseIdxAppend.eq.Append_EraseIdx.of.LeLength
 import torch.Tensor.unsqueeze
 import torch.Tensor.repeat
 import torch.Tensor.permute
-import Lemma.List.InsertIdxAppend.eq.Append_InsertIdx
-import Lemma.List.InsertIdxAppend.eq.Append_InsertIdx.of.LeLength
-import Lemma.List.SwapAppend.eq.Append_Swap.of.LeLength.LeLength
-import Lemma.Tensor.MapCast.as.Map.of.Eq
 import Lemma.Tensor.MapMul.eq.MulMapS.of.All_Eq_Mul
 import Lemma.Tensor.RepeatMap.eq.MapRepeat
 import Lemma.Tensor.SumMap.eq.MapSum.of.All_EqUFnAdd

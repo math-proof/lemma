@@ -2,8 +2,6 @@ import Mathlib.MeasureTheory.Measure.Prod
 import Mathlib.MeasureTheory.Measure.WithDensity
 import Mathlib.MeasureTheory.Measure.Decomposition.Lebesgue
 import Mathlib.MeasureTheory.MeasurableSpace.Constructions
-import sympy.stats.joint_rv
-import Lemma.Random.PSpace.PSpace.of.PSpace_Joint
 import Lemma.Random.All_Eq_DivProbS
 open Random MeasureTheory
 

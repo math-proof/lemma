@@ -1,5 +1,4 @@
 import sympy.stats.policy_trajectory.gradient
-import sympy.Basic
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model
 
 
@@ -14,14 +13,14 @@ private lemma main
   (θ : Θ)
   (x : S)
   (u : A)
-  (h₀ : M.pol.prob θ x u = 0) :
+  (h₀ : M.policy.prob θ x u = 0) :
 -- imply
-  fderiv ℝ (fun θ' => M.pol.prob θ' x u) θ = 0 := by
+  fderiv ℝ (fun θ' => M.policy.prob θ' x u) θ = 0 := by
 -- proof
   refine IsLocalMin.fderiv_eq_zero (Filter.Eventually.of_forall fun θ' => ?_)
-  show M.pol.prob θ x u ≤ M.pol.prob θ' x u
+  show M.policy.prob θ x u ≤ M.policy.prob θ' x u
   rw [h₀]
-  exact M.pol.nonneg θ' x u
+  exact M.policy.nonneg θ' x u
 
 
 -- created on 2026-10-06

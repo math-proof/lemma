@@ -1,10 +1,7 @@
 import Lemma.Real.CosSub.eq.AddMulS
-import Lemma.Vector.GetAdd.eq.AddGetS
 import Lemma.Vector.GetCos.eq.CosGet
-import Lemma.Vector.GetMul.eq.MulGetS
 import Lemma.Vector.GetSin.eq.SinGet
 import Lemma.Vector.GetSub.eq.SubGetS
-import sympy.vector.functions
 open Real Vector
 
 

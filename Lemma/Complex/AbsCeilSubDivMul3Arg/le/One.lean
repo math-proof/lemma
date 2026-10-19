@@ -6,7 +6,6 @@ import Lemma.Nat.Lt0Mul.of.Gt_0.Gt_0
 import Lemma.Nat.LtMulS.of.Gt_0.Lt
 import Lemma.Real.GtPi0
 import Lemma.Set.InDiv.of.In_Ioc.Gt_0
-import Lemma.Set.In_Ioc.is.Lt.Le
 open Complex Int Nat Real Set
 
 

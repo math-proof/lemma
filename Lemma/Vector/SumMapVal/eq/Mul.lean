@@ -1,4 +1,3 @@
-import sympy.vector.vector
 import Lemma.Vector.MapVal.eq.Replicate
 open Vector
 

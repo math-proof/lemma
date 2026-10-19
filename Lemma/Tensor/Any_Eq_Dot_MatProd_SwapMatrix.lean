@@ -4,12 +4,10 @@ import Lemma.Tensor.Coe.is.Eq
 import Lemma.Tensor.DotAppendHstackS.eq.AppendDotS
 import Lemma.Tensor.DotDot.eq.Dot_Dot
 import Lemma.Tensor.EqDotDot_SwapMatrix
-import Lemma.Tensor.EqDot_Eye
-import Lemma.Tensor.EqMatProd
 import Lemma.Tensor.MatProd.eq.Dot
 import Lemma.Tensor.MatProd.eq.Eye
 open Tensor
-set_option maxHeartbeats 4000000
+set_option maxHeartbeats 1000000
 
 
 @[path]

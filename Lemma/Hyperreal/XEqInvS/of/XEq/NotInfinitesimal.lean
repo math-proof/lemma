@@ -3,10 +3,7 @@ import Lemma.Hyperreal.Infinite.is.InfinitesimalInv
 import Lemma.Hyperreal.InfinitesimalMul.of.Infinitesimal.NotInfinite
 import Lemma.Hyperreal.InfinitesimalSub.of.Infinitesimal.Infinitesimal
 import Lemma.Hyperreal.Infinitesimal.is.Infinitesimal.of.XEq
-import Lemma.Hyperreal.Infinitesimal.is.InfinitesimalNeg
 import Lemma.Hyperreal.Ne_0.of.NotInfinitesimal
-import Lemma.Hyperreal.XEq.is.OrAndS
-import Lemma.Rat.Eq_0.is.EqInv_0
 import Lemma.Rat.InvDiv.eq.Div
 open Hyperreal Rat
 

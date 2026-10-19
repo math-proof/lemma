@@ -1,5 +1,3 @@
-import sympy.stats.linear_td
-import sympy.Basic
 import Lemma.Random.LinearTD.Any_Ge_0AndAll_All_LeNormSubUpdate_MulNormSub
 
 

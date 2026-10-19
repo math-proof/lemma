@@ -2,20 +2,13 @@ import Lemma.Rat.DivNeg.eq.NegDiv
 import Lemma.Int.SquareNeg.eq.Square
 import Lemma.Rat.SquareDiv.eq.DivSquareS
 import Lemma.Nat.SquareMul.eq.MulSquareS
-import Lemma.Nat.Square.eq.Mul
-import Lemma.Nat.MulMul.eq.Mul_Mul
-import Lemma.Rat.DivMul.eq.Mul_Div
-import Lemma.Nat.Mul
 import Lemma.Nat.AddAdd
-import Lemma.Int.Sub.eq.Add_Neg
 import Lemma.Rat.SubDivS.eq.DivMul_Sub.of.Ne_0.Ne_0
 import Lemma.Nat.Ne.of.Gt
-import Lemma.Int.MulSub.eq.SubMulS
 import Lemma.Int.NegMul.eq.MulNeg
 import Lemma.Rat.DivMulS.eq.Div.of.Ne_0
 import Lemma.Nat.Sub.eq.AddNeg
 import Lemma.Nat.LeMulS.of.Gt_0.Le
-import Lemma.Int.Mul_Sub.eq.SubMulS
 import Lemma.Rat.EqMul_Div.of.Ne_0
 open Nat Int Rat
 

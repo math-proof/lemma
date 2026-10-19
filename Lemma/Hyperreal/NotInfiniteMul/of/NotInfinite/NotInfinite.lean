@@ -1,6 +1,5 @@
 import Lemma.Int.AbsMul.eq.MulAbsS
 import Lemma.Hyperreal.EqSquareSqrt.of.Gt_0
-import Lemma.Hyperreal.Infinite.is.All_GtAbs
 import Lemma.Hyperreal.NotInfinite.is.Any_LeAbs
 import Lemma.Nat.Gt.of.Gt.Gt
 import Lemma.Nat.Square.eq.Mul

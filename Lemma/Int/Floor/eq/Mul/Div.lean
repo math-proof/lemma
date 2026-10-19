@@ -1,4 +1,3 @@
-import sympy.functions.elementary.integers
 import Lemma.Int.FDiv.eq.FloorDiv
 open Int
 

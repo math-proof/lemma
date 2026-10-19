@@ -1,5 +1,4 @@
 import sympy.stats.q_learning
-import sympy.Basic
 import Lemma.Finset.AbsSubSup'.le.Sup'AbsSub.of.Nonempty
 open Finset
 

@@ -1,20 +1,15 @@
-import Lemma.Nat.Add
-import Lemma.Nat.Mul
 import Lemma.Tensor.AddAppendS.eq.AppendAddS
 import Lemma.Tensor.CosAppend.eq.AppendCosS
-import Lemma.Tensor.DataMul.eq.MulDataS
 import Lemma.Tensor.DataNeg.eq.NegData
 import Lemma.Tensor.DotAppendHstack.eq.AppendAddSDotS
 import Lemma.Tensor.DotMulEye.eq.Mul
 import Lemma.Tensor.RotaryMatrix.eq.AppendHstackSMulSEye
-import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Tensor.MulAppendS.eq.AppendMulS
 import Lemma.Tensor.NegStack.eq.Stack_Neg
 import Lemma.Tensor.SinAppend.eq.AppendSinS
-import Lemma.Vector.GetMul.eq.MulGetS
 import Lemma.Vector.GetNeg.eq.NegGet
 open Nat Tensor
-set_option maxHeartbeats 600000
+set_option maxHeartbeats 300000
 
 
 @[path]

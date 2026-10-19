@@ -1,7 +1,5 @@
 import Lemma.Set.CupIcoNeg_0.eq.IocNeg_0
 import Lemma.Int.ToNatNeg.eq.Neg.of.Lt_0
-import Lemma.Int.EqNegNeg
-import Lemma.Int.CoeCoe.eq.Coe
 open Set Int
 
 

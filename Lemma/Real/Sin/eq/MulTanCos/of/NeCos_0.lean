@@ -1,5 +1,4 @@
 import Lemma.Real.Tan.eq.Div
-import sympy.Basic
 open Real
 
 

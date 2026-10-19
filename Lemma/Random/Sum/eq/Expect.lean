@@ -1,6 +1,5 @@
 import Mathlib.MeasureTheory.Integral.Lebesgue.Countable
 import Lemma.Random.Integral.eq.Expect
-import sympy.Basic
 open MeasureTheory Random
 
 

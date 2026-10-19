@@ -1,4 +1,3 @@
-import sympy.vector.vector
 import Lemma.Vector.GetIndices.eq.Add
 import Lemma.Vector.GetMap.eq.UFnGet
 open Vector

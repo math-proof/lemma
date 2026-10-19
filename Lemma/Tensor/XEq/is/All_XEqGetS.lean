@@ -1,10 +1,7 @@
 import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
 import torch.Tensor.prod
-import Lemma.Fin.Eq_Fin.of.EqVal
-import Lemma.Nat.AddMul.lt.Mul
 import Lemma.Tensor.DataGet.eq.GetUnflattenData
 import Lemma.Tensor.XEq.is.XEqDataS
-import Lemma.Vector.GetUnflatten.eq.Get_AddMul
 import Lemma.Vector.XEq.is.All_XEqGetS
 open Fin Nat Tensor Vector
 

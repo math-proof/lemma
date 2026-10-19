@@ -11,7 +11,6 @@ private lemma main
 -- imply
   (A \ B) \ C = A \ B := by
 -- proof
-  -- Use the extensionality axiom to show that two sets are equal by showing they have the same elements.
   ext x
   constructor <;>
     intro ⟨_, h_NotIn⟩

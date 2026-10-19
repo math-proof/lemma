@@ -1,5 +1,4 @@
 import Lemma.Nat.EqSubAdd
-import Lemma.Nat.Add
 import Lemma.Nat.AddAdd.eq.Add_Add
 import Lemma.Nat.EqAddSub.of.Gt
 import Lemma.Nat.EqMod.of.Lt

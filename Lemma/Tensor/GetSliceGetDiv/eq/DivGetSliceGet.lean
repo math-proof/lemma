@@ -1,8 +1,9 @@
-import Lemma.Tensor.GetDiv.eq.DivGet
 import Lemma.Tensor.GetSliceDiv.eq.DivGetSlice
 open Tensor
-set_option maxHeartbeats 1000000
+set_option maxHeartbeats 500000
 
+
+attribute [local irreducible] List.prod
 
 /--
 | attributes | lemma |

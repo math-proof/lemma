@@ -6,7 +6,7 @@ import Lemma.Tensor.EqDot_0'0
 import Lemma.Tensor.EqDotEye
 import Lemma.Tensor.MatProd.eq.DotMatProd
 open Tensor
-set_option maxHeartbeats 2000000
+set_option maxHeartbeats 1000000
 
 
 @[path]

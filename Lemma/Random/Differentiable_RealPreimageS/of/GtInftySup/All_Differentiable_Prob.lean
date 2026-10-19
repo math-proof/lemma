@@ -1,12 +1,7 @@
-import sympy.stats.policy_trajectory.gradient
-import sympy.Basic
 import sympy.vector.operators
 import sympy.concrete.sup
-import Lemma.Real.Norm_Eq12.le.One
-import Lemma.Random.Pn.eq.Integral
 import Lemma.Random.RealPreimageS.eq.Sum_MulRealPn
 import Lemma.Random.Differentiable.All_LeNormFderiv_MulAdd_1_MulMulCard.of.All_LeNorm.StronglyMeasurable.All_LeNormFderiv.All_All_Differentiable_FunPolProb
-import Lemma.Real.StronglyMeasurable_Eq12
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random Real
 
 
@@ -22,15 +17,15 @@ private lemma main
   {a : ℕ → (ℕ → ℝ × S × A) → A}
 -- given
   (h₀ : ∀ t, (· t) = (r t, s t, a t))
-  (h₁ : ∀ x u, Differentiable ℝ (fun θ => M.pol.prob θ x u))
-  (h₂ : sup[θ, x, u] ‖∇[θ] M.pol.prob θ x u‖ < ∞)
+  (h₁ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
+  (h₂ : sup[θ, x, u] ‖∇[θ] M.policy.prob θ x u‖ < ∞)
   (t : ℕ)
   (y : S) :
 -- imply
   Differentiable ℝ (fun θ => (M θ).real (s t ⁻¹' {y})) := by
 -- proof
   obtain ⟨Cp, hCp⟩ := id h₂
-  have hC : ∀ θ x u, ‖fderiv ℝ (fun θ => M.pol.prob θ x u) θ‖ ≤ Cp := fun θ x u => by
+  have hC : ∀ θ x u, ‖fderiv ℝ (fun θ => M.policy.prob θ x u) θ‖ ≤ Cp := fun θ x u => by
     simpa [gradient, LinearIsometryEquiv.norm_map] using hCp ⟨(θ, x, u), rfl⟩
   have e : (fun θ => (M θ).real (s t ⁻¹' {y})) =
       fun θ => ∑ x, M.env.init.real {x} *

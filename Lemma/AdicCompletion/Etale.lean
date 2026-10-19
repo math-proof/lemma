@@ -1,6 +1,5 @@
 import Mathlib
 import Lemma.Int.FaithfullyFlat
-import sympy.Basic
 open Int
 open scoped TensorProduct
 

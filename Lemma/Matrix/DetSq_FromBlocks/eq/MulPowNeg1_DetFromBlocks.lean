@@ -1,5 +1,3 @@
-import sympy.matrices.block_swap
-import sympy.Basic
 import Lemma.Matrix.SignTau.eq.PowNeg1Mul
 open Matrix Equiv Matrix.BlockSwap
 

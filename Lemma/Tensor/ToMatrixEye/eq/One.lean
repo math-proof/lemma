@@ -1,8 +1,6 @@
 import Mathlib.Data.Matrix.Diagonal
 import Lemma.Nat.Delta.eq.Ite
 import Lemma.Tensor.GetEye.eq.Delta
-import sympy.matrices.dense
-import sympy.matrices.expressions.special
 import torch.eye
 open Nat Tensor
 

@@ -1,5 +1,3 @@
-import sympy.functions.combinatorial.numbers
-import sympy.Basic
 import Lemma.Finset.SetOfIn_ImageConditionset_Add_1Add_1AndFinset.eq.J
 open Finset
 

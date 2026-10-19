@@ -2,9 +2,7 @@ import Lemma.Nat.NotGt.of.Le
 import Lemma.Nat.LeAddS.of.Le.Le
 import Lemma.Int.AbsAdd.le.AddAbsS
 import Lemma.Hyperreal.Infinite.is.InfiniteNeg
-import Lemma.Hyperreal.Infinite.is.All_GtAbs
 import Lemma.Hyperreal.NotInfinite.is.Any_LeAbs
-import Lemma.Int.GeAbs_0
 import Lemma.Int.SubAbsS.le.AbsAdd
 import Lemma.Nat.Add
 import Lemma.Nat.Gt.of.Ge.Gt

@@ -1,5 +1,4 @@
 import torch.Tensor.permute
-import Lemma.Tensor.EqCast_0'0.of.Eq
 import Lemma.Tensor.Permute0.eq.Zero
 open Tensor
 

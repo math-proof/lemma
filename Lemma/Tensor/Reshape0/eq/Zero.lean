@@ -3,7 +3,6 @@ import Lemma.Tensor.EqData0'0
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Vector.Repeat0.eq.Zero
 import Lemma.Vector.EqCast_0'0.of.Eq
-import Lemma.Nat.EqMulDiv.of.Dvd
 open Tensor Vector
 
 

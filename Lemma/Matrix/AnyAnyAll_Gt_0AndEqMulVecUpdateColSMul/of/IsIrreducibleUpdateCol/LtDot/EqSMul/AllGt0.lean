@@ -1,8 +1,6 @@
 import Mathlib.LinearAlgebra.Matrix.Irreducible.Defs
-import Lemma.Matrix.Any_Gt_0AndAny_All_Gt_0AndEqMulVecSMul.of.All_Any_GtGetPow_0.All_Ge_0
 import Lemma.Matrix.Any_Gt_0AndAny_All_Gt_0AndEqVecMulSMul.of.All_Any_GtGetPow_0.All_Ge_0
 import Lemma.Matrix.Lt.of.MulVec.eq.SMul.LtDot.All_Eq.EqSMul.GtNeg1.GtNeg1.AllGt0.AllGt0
-import sympy.Basic
 
 open Matrix
 open scoped Matrix

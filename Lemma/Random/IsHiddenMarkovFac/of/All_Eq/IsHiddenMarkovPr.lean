@@ -1,5 +1,4 @@
 import sympy.stats.hidden_markov_sequence
-import sympy.Basic
 open MeasureTheory
 open scoped ENNReal.ToRealCoe
 

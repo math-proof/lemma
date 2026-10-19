@@ -1,5 +1,3 @@
-import sympy.stats.policy_trajectory
-import sympy.Basic
 import Lemma.Random.All_EqIntegral_MulGIntegral_MulGKf.of.All_LeNorm.StronglyMeasurable
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random Finset
 

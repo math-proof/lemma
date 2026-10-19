@@ -1,7 +1,3 @@
-import sympy.stats.policy_trajectory.gradient
-import sympy.Basic
-import sympy.vector.operators
-import sympy.concrete.sup
 import Lemma.Random.Differentiable_RealPreimageS.of.GtInftySup.All_Differentiable_Prob
 import Lemma.Random.V.eq.Vc.of.Ne0Real_Preimage.In_Ico
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
@@ -25,8 +21,8 @@ private lemma main
   (θ : Θ)
   (h₀ : γ ∈ Set.Ico 0 1)
   (h₁ : ∀ t, (· t) = (r t, s t, a t))
-  (h₂ : ∀ x u, Differentiable ℝ (fun θ => M.pol.prob θ x u))
-  (h₃ : sup[θ, x, u] ‖∇[θ] M.pol.prob θ x u‖ < ∞)
+  (h₂ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
+  (h₃ : sup[θ, x, u] ‖∇[θ] M.policy.prob θ x u‖ < ∞)
   (h₄ : (M θ).real (s t ⁻¹' {x}) ≠ 0) :
 -- imply
   let Vθ (θ : Θ) (t : ℕ) (x : S) : ℝ :=
@@ -35,7 +31,7 @@ private lemma main
 -- proof
   intro Vθ
   obtain ⟨Cp, hCp⟩ := id h₃
-  have hC : ∀ θ x u, ‖fderiv ℝ (fun θ => M.pol.prob θ x u) θ‖ ≤ Cp := fun θ x u => by
+  have hC : ∀ θ x u, ‖fderiv ℝ (fun θ => M.policy.prob θ x u) θ‖ ≤ Cp := fun θ x u => by
     simpa [gradient, LinearIsometryEquiv.norm_map] using hCp ⟨(θ, x, u), rfl⟩
   have hc : ContinuousAt (fun θ' => (M θ').real (s t ⁻¹' {x})) θ :=
     (Differentiable_RealPreimageS.of.GtInftySup.All_Differentiable_Prob (M := M) h₁ h₂ h₃ t x θ).continuousAt

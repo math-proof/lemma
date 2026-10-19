@@ -1,9 +1,5 @@
-import Lemma.Hyperreal.Infinitesimal.is.Infinitesimal.of.XEq
-import Lemma.Hyperreal.InfinitesimalDiv.of.Infinitesimal.NotInfinitesimal
-import Lemma.Hyperreal.XEq.is.OrAndS
 import Lemma.Hyperreal.XEqDivS.of.XEq.XEq.NotInfinitesimal
 import Lemma.Vector.GetDiv.eq.DivGet
-import Lemma.Vector.XEq.is.All_XEqGetS
 import Lemma.Vector.XEqSumS.of.XEq.OrAll_NotInfinite
 open Hyperreal Vector
 

@@ -2,8 +2,6 @@ import Lemma.Hyperreal.InfiniteNeg.is.All_Lt
 import Lemma.Hyperreal.InfiniteNeg.is.Infinite.Lt_0
 import Lemma.Hyperreal.InfinitePos.is.All_Gt
 import Lemma.Hyperreal.InfinitePos.is.Infinite.Gt_0
-import Lemma.Int.Abs.eq.Neg.of.Lt_0
-import Lemma.Int.EqAbs.of.Gt_0
 open Hyperreal Int
 
 

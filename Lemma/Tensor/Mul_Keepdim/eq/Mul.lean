@@ -1,18 +1,11 @@
-import Lemma.Bool.UFn.of.Eq
 import torch.Tensor.unsqueeze
 import torch.Tensor.prod
 import Lemma.Nat.EqMod_1'0
-import Lemma.Tensor.DataCast.as.Data.of.Eq
-import Lemma.Tensor.DataMul.eq.MulDataS
-import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Tensor.EqGetUnsqueeze_0
 import Lemma.Tensor.GetData.eq.GetDataGet.of.Lt
 import Lemma.Tensor.GetRepeat_0.as.Get_Mod_Get.of.GtMul_Get.GtLength_0
 import Lemma.Tensor.Mul.eq.Mul_GetData_0
-import Lemma.Vector.GetCast.eq.Get.of.Eq
-import Lemma.Vector.Head.eq.Get_0
 import Lemma.Vector.Mul.eq.Mul_Replicate
-import Lemma.Vector.EqGetReplicate
 import torch.functions
 open Bool Nat Tensor Vector
 

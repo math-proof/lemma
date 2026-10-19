@@ -1,5 +1,3 @@
-import Lemma.Nat.Lt_Sub.of.LtAdd
-import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.Select.as.Stack_Select.of.Eq.GtLength
 open Tensor Nat
 

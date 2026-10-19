@@ -1,18 +1,12 @@
 import sympy.stats.markov_reward_process
-import sympy.stats.iterates
-import sympy.stats.lyapunov
-import sympy.stats.step_size
-import sympy.Basic
 import Lemma.Random.AeTendsto.of.LyapunovFunction.Measurable.Measurable.LipschitzWith.Eq.Adapted.Any_Ge_0AndAeAll_LeNormMulMulSquare.All_MEqCondExp_0.Adapted.Any_Ge_0AndAeAll_LeNormMulMul.Iterates
 import Lemma.Random.AdaptedOnSamplePath.of.IteratesOfResidual
 import Lemma.Random.Measurable.of.AdaptedOnSamplePath
 import Lemma.Random.Any_Ge_0AndAll_LeNorm.of.Any_Ge_0AndAll_All_LeNormSub_MulNormSub.IteratesOfResidual
 import Lemma.Random.Any_Ge_0AndAll_LeNormSub_MulNormSub.of.Any_Ge_0AndAll_All_LeNormSub_MulNormSub.All_Eq_Sum_Sum_SMul
-import Lemma.Real.Any_Ge_0AndAll_All_LeNorm_MulAddNorm1.of.Any_Ge_0AndAll_All_LeNormSub_MulNormSub
 import Lemma.Real.Any_Ge_0AndAll_LeNorm_MulAddNorm1.of.Any_Ge_0AndAll_LeNormSub_MulNormSub
 import Lemma.Measure.Measurable_Apply_PiLE
 import Lemma.Measure.MEqCondExpIteratesUpdate.of.Measurable.Any_All_LeNorm.Measurable.Le
-import Lemma.Matrix.Sum_Mul.eq.One.of.StochasticVec.RowStochastic
 open Filter MeasureTheory ProbabilityTheory Finset Topology Preorder Iterates Real Measure Random
 
 

@@ -1,4 +1,3 @@
-import Lemma.Bool.EqCast.of.SEq
 import Lemma.Tensor.Sum.as.Sum_Cast.of.Eq
 import torch.Tensor.sum
 open Bool Tensor

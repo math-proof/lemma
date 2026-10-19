@@ -1,4 +1,3 @@
-import Lemma.Vector.GetDiv.eq.DivGetS
 import sympy.vector.vector
 open Vector
 

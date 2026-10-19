@@ -1,13 +1,9 @@
 import Lemma.Random.GradV.eq.AddSum_SMulSMul.of.Ne0Real_Preimage.GtInftySup.All_Differentiable_Prob.In_Ico
-import sympy.stats.cond_expectation
-import sympy.core.power
 import sympy.concrete.summations
 import Lemma.Random.ProbCond.eq.OfRealPol.of.Ne_0
 import Lemma.Random.ProbCond.eq.Div.of.Eq_Count.Eq_Count
 import Lemma.Random.SinglePSpace.of.EqMeasureCount.EqMeasureCount.Measurable.Measurable
 import Lemma.Random.RealPreimageSPreimageS_Add_1.eq.P1.of.Ne0Real_Preimage
-import Lemma.Random.Differentiable_RealPreimageS.of.GtInftySup.All_Differentiable_Prob
-import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Topology Random
 open scoped ENNReal.ToRealCoe
 
@@ -52,8 +48,8 @@ private lemma main
   (h₃ : (ReferenceMeasure.measure : Measure A) = Measure.count)
   (h₄ : ∀ θ t («s.bvar» : ℕ → S) («a.bvar» : ℕ → A), Q θ t («s.bvar» t) («a.bvar» t) = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «s.bvar» t ∧ a t = «a.bvar» t))
   (h₅ : ∀ θ t («s.bvar» : ℕ → S), V θ t («s.bvar» t) = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «s.bvar» t))
-  (h₆ : ∀ x u, Differentiable ℝ (fun θ => M.pol.prob θ x u))
-  (h₇ : sup[θ, x, u] ‖∇[θ] M.pol.prob θ x u‖ < ∞)
+  (h₆ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
+  (h₇ : sup[θ, x, u] ‖∇[θ] M.policy.prob θ x u‖ < ∞)
   (h₈ : (M θ).real (s t ⁻¹' {«s.bvar» t}) ≠ 0) :
 -- imply
   have hs : ∀ t, Measurable (s t) := Random.Measurable.of.All_Eq.snd.fst h₁
@@ -89,11 +85,11 @@ private lemma main
   classical
   beta_reduce
   set x := «s.bvar» t
-  have hπ : ∀ u, ∇[θ] (ℙ[M θ]((a t) = u | (s t) = x) : ℝ) = ∇[θ] M.pol.prob θ x u := by
+  have hπ : ∀ u, ∇[θ] (ℙ[M θ]((a t) = u | (s t) = x) : ℝ) = ∇[θ] M.policy.prob θ x u := by
     intro u
     refine Filter.EventuallyEq.gradient_eq ?_
     filter_upwards [(Differentiable_RealPreimageS.of.GtInftySup.All_Differentiable_Prob (M := M) h₁ h₆ h₇ t x θ).continuousAt.eventually_ne h₈] with θ' h
-    erw [ProbCond.eq.OfRealPol.of.Ne_0 h₁ h₂ h₃ (hP θ' t) h, ENNReal.toReal_ofReal (M.pol.nonneg θ' _ _)]
+    erw [ProbCond.eq.OfRealPol.of.Ne_0 h₁ h₂ h₃ (hP θ' t) h, ENNReal.toReal_ofReal (M.policy.nonneg θ' _ _)]
   simp only [s, a] at hπ
   simp_rw [hπ]
   rw [GradV.eq.AddSum_SMulSMul.of.Ne0Real_Preimage.GtInftySup.All_Differentiable_Prob.In_Ico h₀ h₁ h₆ h₇ h₈]

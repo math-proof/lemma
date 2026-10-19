@@ -1,5 +1,4 @@
 import Lemma.Nat.ValSub.eq.SubValS.of.Ge
-import Lemma.Nat.Ge.of.Gt
 open Nat
 
 

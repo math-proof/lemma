@@ -1,5 +1,4 @@
 import sympy.concrete.continuant
-import sympy.Basic
 open Continuant
 
 

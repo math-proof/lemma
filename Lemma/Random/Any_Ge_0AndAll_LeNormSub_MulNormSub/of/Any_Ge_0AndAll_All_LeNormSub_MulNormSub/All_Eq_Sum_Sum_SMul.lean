@@ -1,6 +1,4 @@
-import sympy.stats.stochastic_process_types
 import sympy.vector.euclidean
-import sympy.Basic
 import Lemma.Matrix.Sum_Mul.eq.One.of.StochasticVec.RowStochastic
 open Finset
 

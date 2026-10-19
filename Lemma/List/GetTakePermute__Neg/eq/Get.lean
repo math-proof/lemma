@@ -1,6 +1,5 @@
 import Lemma.List.Get.of.Eq.GtLength
 import Lemma.List.TakePermute__Neg.eq.ListGet
-import Lemma.Nat.Gt_0
 open List Nat
 
 

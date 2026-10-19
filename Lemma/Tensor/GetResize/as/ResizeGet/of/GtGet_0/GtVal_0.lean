@@ -13,25 +13,20 @@ import Lemma.List.ProdTake.eq.Mul_ProdTakeTail.of.Gt_0.GtLength_0
 import Lemma.List.ProdTake_1.eq.Get_0.of.GtLength_0
 import Lemma.List.ProdTake_1.eq.HeadD_1
 import Lemma.List.TailSet.eq.SetTail.of.Gt_0
-import Lemma.Nat.AddMul.lt.Mul.of.Lt.Lt
-import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.Nat.Ge_1.of.Gt_0
 import Lemma.Nat.Gt_0
-import Lemma.Nat.Mul
 import Lemma.Nat.MulMul
-import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Nat.Mul_Mul
 import Lemma.Tensor.GtLength.of.GtLength_0
 import Lemma.Tensor.LengthResize.eq.Length.of.GtVal_0
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
-import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Vector.GetCast_Map.eq.UFnGet.of.Eq.Lt
 import Lemma.Vector.GetFlatten.eq.Get.of.Lt_Mul
 import Lemma.Vector.GetResize.eq.Ite_Get_Mod
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 open Bool List Nat Tensor Vector
-set_option maxHeartbeats 1000000
+set_option maxHeartbeats 500000
 
 
 @[path, fin, cast, cast.fin]

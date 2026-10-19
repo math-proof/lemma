@@ -1,5 +1,3 @@
-import sympy.core.mul
-import sympy.Basic
 import Lemma.List.ZipWithLcm.assoc.of.EqLengthS.EqLengthS
 import Lemma.Tensor.Pad1ZipWithLcmPad1.eq.ZipWithLcmPad1.of.Le.LeMaxLength
 open List Tensor

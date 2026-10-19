@@ -1,35 +1,17 @@
-import Lemma.Bool.Cast.of.SEq.Eq
 import torch.Tensor.sum
 import torch.Tensor.unsqueeze
 import torch.Tensor.repeat
-import Lemma.Bool.SEq.is.Eq
-import Lemma.Bool.SEq.is.SEqCast.of.Eq
-import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.List.Ne_Nil.is.GeLength_1
 import Lemma.Tensor.Dot.eq.GetSumMul
 import Lemma.Tensor.Dot.eq.SelectSumMul
 import Lemma.Tensor.Dot.eq.SumMul
 import Lemma.Tensor.Dot.eq.SumMulResizeS_0
-import Lemma.Tensor.EqGetUnsqueeze_0
-import Lemma.Tensor.Get.of.Eq.GtLength_0
-import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
-import Lemma.Tensor.SEqGetS.of.SEq.GtLength
-import Lemma.Tensor.SEqMulS.of.SEq.SEq
-import Lemma.Tensor.GetMul.eq.MulGetS
-import Lemma.Tensor.GetRepeat.as.RepeatGet.of.GtGet_0.GtVal_0
-import Lemma.Tensor.GetRepeat_0.as.Get_Mod_Get.of.GtMul_Get.GtLength_0
-import Lemma.Tensor.GetResize.as.ResizeGet.of.GtGet_0.GtVal_0
 import Lemma.Tensor.GetSelect_1.as.Get.of.Lt.GtGet_0.GtLength_0
-import Lemma.Tensor.GetSum.as.SumGet.of.GtGet_0.Gt_0.GtLength
 import Lemma.Tensor.GetSum_2.eq.SumGet__1
-import Lemma.Tensor.GetUnsqueeze.as.UnsqueezeGet.of.GtGet_0.Gt_0.GtLength_0
-import Lemma.Tensor.GtLengthDot.of.LeLengthS.Ne_Nil
-import Lemma.Tensor.LengthGet.eq.Get_0.of.GtGet_0.GtLength_1
 import Lemma.Tensor.SEqRepeatS.of.SEq
-import Lemma.Tensor.SEqSumS.of.SEq
-import Lemma.Tensor.SEqUnsqueezeS.of.SEq
 open Bool List Tensor
-set_option maxHeartbeats 1000000
+set_option maxHeartbeats 500000
+attribute [local irreducible] List.prod
 
 
 @[path, fin]
@@ -72,6 +54,89 @@ private lemma main
     erw [Tensor.EqGetUnsqueeze_0.fin]
     erw [Tensor.EqGetUnsqueeze_0.nat.fin]
     rfl
+
+
+attribute [local semireducible] List.prod
+
+
+private lemma une_x
+  [Mul α] [Add α] [Zero α]
+  (X : Tensor α [n, k])
+  (i : Fin n)
+  (n' : ℕ) :
+  (((X.resize (⟨1, by decide⟩ : Fin 2) (k ⊔ n')).unsqueeze 1).get ⟨i, by simp; exact i.isLt⟩).get ⟨0, by
+    have hlenU := LengthGet.eq.Get_0.of.GtGet_0.GtLength_1
+      (s := (([n, k].set 1 (k ⊔ n')).insertIdx 1 1))
+      (by simp) i.isLt ((X.resize 1 (k ⊔ n')).unsqueeze 1)
+    simp [List.set, List.insertIdx] at hlenU
+    simp [hlenU]⟩
+    ≃
+  (X.get ⟨i, i.isLt⟩).resize (⟨0, by decide⟩ : Fin 1) (k ⊔ n') := by
+  have hlenU := LengthGet.eq.Get_0.of.GtGet_0.GtLength_1
+    (s := (([n, k].set 1 (k ⊔ n')).insertIdx 1 1))
+    (by simp) i.isLt ((X.resize 1 (k ⊔ n')).unsqueeze 1)
+  simp [List.set, List.insertIdx] at hlenU
+  apply (SEqGetS.of.SEq.GtLength (Nat.lt_of_lt_of_eq Nat.zero_lt_one hlenU.symm)
+    (GetUnsqueeze.as.UnsqueezeGet.of.GtGet_0.Gt_0.GtLength_0
+      (s := ([n, k].set 1 (k ⊔ n')))
+      (by simp) (by simp) i.isLt
+      (X.resize 1 (k ⊔ n')))).trans
+  simp
+  have hu0 := EqGetUnsqueeze_0.fin ((X.resize ⟨1, by simp⟩ (k ⊔ n')).get ⟨i, by simp; exact i.isLt⟩)
+  simp [GetElem.getElem] at hu0 ⊢
+  rw [hu0]
+  have hr := GetResize.as.ResizeGet.of.GtGet_0.GtVal_0
+    (s := [n, k]) (d := ⟨1, by simp⟩) (i := i.val)
+    (by simp) i.isLt X (k ⊔ n')
+  simpa [GetElem.getElem] using hr
+
+
+private lemma une_y
+  [Mul α] [Add α] [Zero α]
+  (Y : Tensor α [n'])
+  (i : Fin n)
+  (k : ℕ) :
+  ((((cast (congrArg (Tensor α) (by simp)) ((((Y.resize (⟨0, by decide⟩ : Fin 1) (k ⊔ n')).unsqueeze 0).unsqueeze 0).repeat ⟨0, by simp⟩ n) : Tensor α [n, 1, k ⊔ n'])).get ⟨i, by simp; exact i.isLt⟩).get ⟨0, by
+    have hlenC := LengthGet.eq.Get_0.of.GtGet_0.GtLength_1
+      (s := (([n, k].set 1 (k ⊔ n')).insertIdx 1 1))
+      (by simp) i.isLt
+      (cast (congrArg (Tensor α) (by simp)) ((((Y.resize 0 (k ⊔ n')).unsqueeze 0).unsqueeze 0).repeat ⟨0, by simp⟩ n))
+    simp [List.set, List.insertIdx] at hlenC
+    simp [hlenC]⟩)
+    ≃
+  Y.resize (⟨0, by decide⟩ : Fin 1) (k ⊔ n') := by
+  have hc := GetCast.as.Get.of.Eq.GtLength_0.fin
+    (s' := (([n, k].set 1 (k ⊔ n')).insertIdx 1 1))
+    (by simp) (by simp)
+    ((((Y.resize 0 (k ⊔ n')).unsqueeze 0).unsqueeze 0).repeat ⟨0, by simp⟩ n)
+    ⟨i, by simp⟩
+  have hlenC := LengthGet.eq.Get_0.of.GtGet_0.GtLength_1
+    (s := (([n, k].set 1 (k ⊔ n')).insertIdx 1 1))
+    (by simp) i.isLt
+    (cast (congrArg (Tensor α) (by simp)) ((((Y.resize 0 (k ⊔ n')).unsqueeze 0).unsqueeze 0).repeat ⟨0, by simp⟩ n))
+  simp [List.set, List.insertIdx] at hlenC
+  apply (SEqGetS.of.SEq.GtLength (Nat.lt_of_lt_of_eq Nat.zero_lt_one hlenC.symm) hc).trans
+  let Yuu := ((Y.resize 0 (k ⊔ n')).unsqueeze 0).unsqueeze 0
+  have hr0 := GetRepeat_0.as.Get_Mod_Get.of.GtMul_Get.GtLength_0.fin
+    (s := [1, 1, k ⊔ n']) (n := n) (i := i.val)
+    (by simp) (by simp) Yuu
+  simp [Nat.mod_one] at hr0
+  have hlenR := LengthGet.eq.Get_0.of.GtGet_0.GtLength_1
+    (s := [1, 1, k ⊔ n'].set 0 (n * [1, 1, k ⊔ n'][0]))
+    (by simp) (by simp; exact i.isLt) (Yuu.repeat ⟨0, by simp⟩ n)
+  simp [List.set] at hlenR
+  apply (SEqGetS.of.SEq.GtLength (Nat.lt_of_lt_of_eq Nat.zero_lt_one hlenR.symm) hr0).trans
+  simp [Yuu]
+  have hu1 := EqGetUnsqueeze_0.fin ((Y.resize 0 (k ⊔ n')).unsqueeze 0)
+  have hlenU1 := LengthGet.eq.Get_0.of.GtGet_0.GtLength_1
+    (s := (([n'].set 0 (k ⊔ n')).insertIdx 0 1).insertIdx 0 1)
+    (i := 0)
+    (by simp) (by simp)
+    (((Y.resize 0 (k ⊔ n')).unsqueeze 0).unsqueeze 0)
+  simp [List.set, List.insertIdx] at hlenU1
+  apply (SEqGetS.of.SEq.GtLength (Nat.lt_of_lt_of_eq Nat.zero_lt_one hlenU1.symm) (SEq.of.Eq hu1)).trans
+  apply SEq.of.Eq
+  apply EqGetUnsqueeze_0.fin
 
 
 @[path, fin]
@@ -124,57 +189,8 @@ private lemma une
   erw [GetMul.eq.MulGetS.fin]
   erw [GetMul.eq.MulGetS.fin]
   apply SEqMulS.of.SEq.SEq
-  ·
-    have hlenU := LengthGet.eq.Get_0.of.GtGet_0.GtLength_1
-      (s := (([n, k].set 1 (k ⊔ n')).insertIdx 1 1))
-      (by simp) i.isLt ((X.resize 1 (k ⊔ n')).unsqueeze 1)
-    simp [List.set, List.insertIdx] at hlenU
-    apply (SEqGetS.of.SEq.GtLength (Nat.lt_of_lt_of_eq Nat.zero_lt_one hlenU.symm)
-      (GetUnsqueeze.as.UnsqueezeGet.of.GtGet_0.Gt_0.GtLength_0
-        (s := ([n, k].set 1 (k ⊔ n')))
-        (by simp) (by simp) i.isLt
-        (X.resize 1 (k ⊔ n')))).trans
-    simp
-    have hu0 := EqGetUnsqueeze_0.fin ((X.resize ⟨1, by simp⟩ (k ⊔ n')).get ⟨i, by simp; exact i.isLt⟩)
-    simp [GetElem.getElem] at hu0 ⊢
-    rw [hu0]
-    have hr := GetResize.as.ResizeGet.of.GtGet_0.GtVal_0
-      (s := [n, k]) (d := ⟨1, by simp⟩) (i := i.val)
-      (by simp) i.isLt X (k ⊔ n')
-    simpa [GetElem.getElem] using hr
-  ·
-    have hc := GetCast.as.Get.of.Eq.GtLength_0.fin
-      (s' := (([n, k].set 1 (k ⊔ n')).insertIdx 1 1))
-      (by simp) (by simp)
-      ((((Y.resize 0 (k ⊔ n')).unsqueeze 0).unsqueeze 0).repeat ⟨0, by simp⟩ n)
-      ⟨i, by simp⟩
-    have hlenC := LengthGet.eq.Get_0.of.GtGet_0.GtLength_1
-      (s := (([n, k].set 1 (k ⊔ n')).insertIdx 1 1))
-      (by simp) i.isLt
-      (cast (congrArg (Tensor α) (by simp)) ((((Y.resize 0 (k ⊔ n')).unsqueeze 0).unsqueeze 0).repeat ⟨0, by simp⟩ n))
-    simp [List.set, List.insertIdx] at hlenC
-    apply (SEqGetS.of.SEq.GtLength (Nat.lt_of_lt_of_eq Nat.zero_lt_one hlenC.symm) hc).trans
-    let Yuu := ((Y.resize 0 (k ⊔ n')).unsqueeze 0).unsqueeze 0
-    have hr0 := GetRepeat_0.as.Get_Mod_Get.of.GtMul_Get.GtLength_0.fin
-      (s := [1, 1, k ⊔ n']) (n := n) (i := i.val)
-      (by simp) (by simp) Yuu
-    simp [Nat.mod_one] at hr0
-    have hlenR := LengthGet.eq.Get_0.of.GtGet_0.GtLength_1
-      (s := [1, 1, k ⊔ n'].set 0 (n * [1, 1, k ⊔ n'][0]))
-      (by simp) (by simp; exact i.isLt) (Yuu.repeat ⟨0, by simp⟩ n)
-    simp [List.set] at hlenR
-    apply (SEqGetS.of.SEq.GtLength (Nat.lt_of_lt_of_eq Nat.zero_lt_one hlenR.symm) hr0).trans
-    simp [Yuu]
-    have hu1 := EqGetUnsqueeze_0.fin ((Y.resize 0 (k ⊔ n')).unsqueeze 0)
-    have hlenU1 := LengthGet.eq.Get_0.of.GtGet_0.GtLength_1
-      (s := (([n'].set 0 (k ⊔ n')).insertIdx 0 1).insertIdx 0 1)
-      (i := 0)
-      (by simp) (by simp)
-      (((Y.resize 0 (k ⊔ n')).unsqueeze 0).unsqueeze 0)
-    simp [List.set, List.insertIdx] at hlenU1
-    apply (SEqGetS.of.SEq.GtLength (Nat.lt_of_lt_of_eq Nat.zero_lt_one hlenU1.symm) (SEq.of.Eq hu1)).trans
-    apply SEq.of.Eq
-    apply EqGetUnsqueeze_0.fin
+  · exact une_x X i n'
+  · exact une_y Y i k
 
 
 -- created on 2026-01-05

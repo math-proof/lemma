@@ -1,7 +1,6 @@
 import Lemma.Hyperreal.Infinite.of.Infinite.StDiv.ne.Zero
 import Lemma.Hyperreal.Infinitesimal.of.Infinitesimal.StDiv.ne.Zero
 import Lemma.Hyperreal.InfiniteMul.of.Infinite.Infinite
-import Lemma.Hyperreal.Infinitesimal.is.InfiniteInv
 import Lemma.Hyperreal.NotInfiniteInv.of.Infinite
 import Lemma.Hyperreal.Infinitesimal.of.InfinitesimalMul.NotInfinitesimal
 open Hyperreal

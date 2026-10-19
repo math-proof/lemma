@@ -1,7 +1,5 @@
 import Lemma.List.GetArraySlice.eq.Get_Add.of.GtLength
 import Lemma.List.LengthSlice.eq.SubMin_Length
-import Lemma.Nat.LtAdd.of.Lt_Sub
-import Lemma.Nat.Lt.of.Lt_Min
 open List Nat
 
 

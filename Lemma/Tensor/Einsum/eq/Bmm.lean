@@ -1,9 +1,4 @@
-import Lemma.Bool.EqCast.of.SEq
 import torch.Tensor.bmm
-import Lemma.Bool.SEq.is.SEqCast.of.Eq
-import Lemma.Bool.SEqCast.of.Eq
-import Lemma.Nat.EqMax
-import Lemma.Tensor.SEqResize.of.Eq_Get
 import Lemma.Tensor.Tensordot.eq.Bmm
 import Lemma.Tensor.SEqBmmS.of.SEq.SEq
 open Bool Nat Tensor

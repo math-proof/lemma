@@ -2,7 +2,6 @@ import Lemma.Nat.DivAddMul.eq.Add_Div.of.Ne_0
 import Lemma.Nat.EqAddMulDiv
 import Lemma.Nat.Div.of.Eq
 import Lemma.Nat.Mod.of.Eq
-import Lemma.Nat.Mul
 import Lemma.Nat.MulMul.eq.Mul_Mul
 open Nat
 

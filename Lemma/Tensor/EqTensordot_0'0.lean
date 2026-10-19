@@ -1,11 +1,5 @@
-import sympy.matrices.expressions.matmul
 import Lemma.Tensor.EqMatmul_0'0
-import Lemma.Tensor.EqCast_0'0.of.Eq
 import Lemma.Tensor.Reshape0.eq.Zero
-import Lemma.List.AppendAppend.eq.Append_Append
-import Lemma.List.Append.of.Eq
-import Lemma.List.ZipWith_Append.eq.AppendZipWithS
-import Lemma.List.ZipWith__Append.eq.AppendZipWithS
 open Tensor
 
 

@@ -1,5 +1,4 @@
 import Lemma.Bool.SEq.is.Eq
-import Lemma.Fin.Eq.of.Val
 import torch.Tensor
 open Bool Fin
 

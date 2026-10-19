@@ -1,6 +1,5 @@
 import Lemma.Vector.EqUnflattenFlatten
 import Lemma.Vector.GetUnflatten.eq.Get_AddMul.of.Lt.Lt
-import Lemma.Vector.Val.of.SEq
 open Vector
 
 

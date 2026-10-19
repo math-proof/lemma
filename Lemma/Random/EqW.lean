@@ -1,5 +1,3 @@
-import sympy.stats.policy_trajectory
-import sympy.Basic
 import Lemma.Random.W0.eq.Sum_MulProbIntegral.of.All_LeNorm.StronglyMeasurable
 import Lemma.Real.Norm.le.Sum_Norm
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random Real
@@ -21,7 +19,7 @@ private lemma main
 -- proof
   have := M.env.reward_markov
   rw [W0.eq.Sum_MulProbIntegral.of.All_LeNorm.StronglyMeasurable (M := M) (f := fun z => f z.2.1) ((StronglyMeasurable.of_discrete (f := f)).comp_measurable measurable_snd.fst) (fun z => Norm.le.Sum_Norm f z.2.1) θ y]
-  simp [← Finset.sum_mul, M.pol.sum_eq_one]
+  simp [← Finset.sum_mul, M.policy.sum_eq_one]
 
 
 -- created on 2026-10-07

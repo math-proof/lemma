@@ -1,7 +1,6 @@
 import sympy.functions.combinatorial.integer_factorials
 import Mathlib.RingTheory.Polynomial.Pochhammer
 import sympy.sets.sets
-import sympy.Basic
 
 
 @[path]

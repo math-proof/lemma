@@ -4,7 +4,6 @@ import Lemma.Bool.SEq.is.Eq
 import Lemma.List.Eq_Nil.is.EqLength_0
 import Lemma.Tensor.DataMul.eq.MulData
 import Lemma.Tensor.DataMul.eq.Mul_Data
-import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Vector.Eq.is.All_EqGetS
 import Lemma.Vector.GetMul.eq.MulGet
 import Lemma.Vector.GetMul.eq.Mul_Get

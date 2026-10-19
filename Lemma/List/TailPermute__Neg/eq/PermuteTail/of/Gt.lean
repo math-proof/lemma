@@ -1,10 +1,7 @@
 import Lemma.Int.SubSub
 import Lemma.List.Permute__Neg.eq.Append_AppendRotateDropTake
 import Lemma.List.TailAppend.eq.AppendTail.of.GtLength_0
-import Lemma.List.TailTake.eq.TakeTail
 import Lemma.List.TailTake.eq.TakeTail.of.Gt_0
-import Lemma.Nat.EqAddSub.of.Ge
-import Lemma.Nat.EqMin.of.Le
 open Int List Nat
 
 

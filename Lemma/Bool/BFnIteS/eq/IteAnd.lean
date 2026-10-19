@@ -1,4 +1,3 @@
-import sympy.core.logic
 import Lemma.Bool.Ite_Ite.eq.Ite__Ite
 import Lemma.Bool.BFn_Ite.eq.Ite_BFnS
 import Lemma.Bool.BFnIte.eq.Ite_BFnS

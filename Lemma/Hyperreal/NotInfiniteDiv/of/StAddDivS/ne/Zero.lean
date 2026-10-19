@@ -2,7 +2,6 @@ import Lemma.Hyperreal.EqSt_0.of.Infinite
 import Lemma.Hyperreal.Infinite.is.InfiniteAdd.of.NotInfinite
 import Lemma.Hyperreal.InfinitesimalDiv.of.InfiniteDiv
 import Lemma.Hyperreal.NotInfinite.of.Infinitesimal
-import Lemma.Nat.Add
 open Hyperreal Nat
 
 

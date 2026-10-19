@@ -1,11 +1,8 @@
 import Lemma.Nat.Lt.ou.Eq.ou.Gt
 import Lemma.Int.Sign.eq.Neg1.of.Lt_0
 import Lemma.Int.EqSign_1.of.Gt_0
-import Lemma.Int.FMod.eq.Sub_MulFDiv
-import Lemma.Nat.Sub.eq.AddNeg
 import Lemma.Nat.Add.is.Eq
 import Lemma.Int.FDiv1.eq.Neg1.of.Lt_0
-import Lemma.Int.SubNeg
 import Lemma.Int.Sub.is.Eq
 import Lemma.Int.FDivNeg1.eq.Neg1.of.Gt_0
 open Int Nat

@@ -1,5 +1,4 @@
 import Lemma.Vector.Dot.eq.SumMul
-import Lemma.Vector.EqCons_Tail
 open Vector
 
 

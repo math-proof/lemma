@@ -1,5 +1,4 @@
 import Lemma.Complex.Eq0Add_Mul_Square.is.In_FinsetDivS_Mul2.of.Ne_0
-import Lemma.Set.In_Finset.is.OrEqS
 open Complex Set
 
 

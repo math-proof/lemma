@@ -1,5 +1,3 @@
-import sympy.sets.stirling_partition
-import sympy.Basic
 import Lemma.Finset.NcardParts0'0.eq.One
 import Lemma.Finset.NcardParts0_Add_1.eq.Zero
 import Lemma.Finset.NcardParts_Add_1'0.eq.Zero

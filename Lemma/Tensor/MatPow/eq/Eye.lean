@@ -1,5 +1,4 @@
 import sympy.matrices.expressions.matpow
-import sympy.concrete.products
 
 
 @[path, subst 0]

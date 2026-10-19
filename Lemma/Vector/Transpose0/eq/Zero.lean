@@ -1,4 +1,3 @@
-import sympy.vector.Basic
 import Lemma.Vector.EqGet0_0
 open Vector
 

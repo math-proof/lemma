@@ -1,7 +1,5 @@
 import Lemma.Real.ArealSpeed.eq.Mul.of.Ne_0
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.IntegrationByParts
-import sympy.physics.vector.kinematics
-import sympy.Basic
 
 
 /--

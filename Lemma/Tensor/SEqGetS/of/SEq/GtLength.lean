@@ -1,4 +1,3 @@
-import Lemma.Tensor.Length.of.SEq
 import Lemma.Tensor.EqTFnS.of.Eq.GtLength
 open Tensor
 

@@ -1,5 +1,3 @@
-import Lemma.List.EqLengthSlice_Mul.of.Lt
-import Lemma.Nat.AddMul.lt.Mul.of.Lt.Lt
 import Lemma.Vector.GetGetSlice.eq.Get
 open List Nat Vector
 

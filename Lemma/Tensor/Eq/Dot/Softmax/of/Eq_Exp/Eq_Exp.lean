@@ -1,37 +1,26 @@
 import Lemma.Tensor.SoftmaxAdd_Mul_Infty.eq.Stack_Div_Sum
-import sympy.Basic
-import Lemma.Tensor.EqGetStack
-import Lemma.Tensor.Eq.is.All_EqGetS
-import Lemma.Tensor.GetExp.eq.ExpGet
-import Lemma.Tensor.GetMul.eq.MulGetS
 import Lemma.Tensor.GetDiv.eq.DivGet
-import Lemma.Tensor.Sum_0.eq.Sum_Get
-import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Tensor.MapStack.eq.Stack_Map
-import Lemma.Tensor.GetMap.eq.MapGet
-import Lemma.Tensor.GetDot.eq.DotGet
 import Lemma.Tensor.DotDiv.eq.DivDot
 import Lemma.Tensor.XEqDotS.of.XEq
-import Lemma.Tensor.XEqGetS.of.XEq.GtLength
-import Lemma.Tensor.XEq.is.All_XEqGetS.of.GtLength_0
 import Lemma.Tensor.XEq.of.Eq
 import Lemma.Tensor.MapExp.eq.ExpMap.of.All_EqUFnExp_ExpUFn
 import Lemma.Tensor.MapMul.eq.MulMapS.of.All_Eq_Mul
 import Lemma.Tensor.MapDiv.eq.DivMapS.of.All_Eq_Div
 import Lemma.Tensor.SumMap.eq.MapSum.of.All_EqUFnAdd
-import Lemma.Hyperreal.OfRealExp.eq.ExpOfReal
 open Tensor Hyperreal
-set_option maxHeartbeats 1000000
+set_option maxHeartbeats 500000
+set_option linter.defProp false
 
 
 private lemma coe_scalar (b : Bool) :
-    ((b.toNat : ℕ) : Tensor ℝ* []) = ((b.toNat : ℕ) : Tensor ℝ []).map Hyperreal.ofReal := by
+  ((b.toNat : ℕ) : Tensor ℝ* []) = ((b.toNat : ℕ) : Tensor ℝ []).map Hyperreal.ofReal := by
   apply Eq.of.EqDataS
   cases b <;> rfl
 
 
 private lemma coe_mask {n m : ℕ} (p : Fin n → Fin m → Bool) :
-    ([i < n] [j < m] (Bool.toNat (p i j)) : Tensor ℝ* [n, m]) = (([i < n] [j < m] (Bool.toNat (p i j)) : Tensor ℝ [n, m]) : Tensor ℝ* [n, m]) := by
+  ([i < n] [j < m] (Bool.toNat (p i j)) : Tensor ℝ* [n, m]) = (([i < n] [j < m] (Bool.toNat (p i j)) : Tensor ℝ [n, m]) : Tensor ℝ* [n, m]) := by
   rw [MapStack.eq.Stack_Map]
   congr 1
   funext i
@@ -40,7 +29,7 @@ private lemma coe_mask {n m : ℕ} (p : Fin n → Fin m → Bool) :
 
 
 private lemma row_cast {m : ℕ} (X Y : Tensor ℝ [m]) :
-    (exp (X : Tensor ℝ* [m]) * (Y : Tensor ℝ* [m])) / id (α := Tensor ℝ* []) ((exp (X : Tensor ℝ* [m]) * (Y : Tensor ℝ* [m])).sum 0) =
+  (exp (X : Tensor ℝ* [m]) * (Y : Tensor ℝ* [m])) / id (α := Tensor ℝ* []) ((exp (X : Tensor ℝ* [m]) * (Y : Tensor ℝ* [m])).sum 0) =
       ((exp X * Y / id (α := Tensor ℝ []) ((exp X * Y).sum 0) : Tensor ℝ [m]) : Tensor ℝ* [m]) := by
   have hmul : ∀ a b : ℝ, Hyperreal.ofReal (a * b) = Hyperreal.ofReal a * Hyperreal.ofReal b := fun a b => Hyperreal.coe_mul a b
   have hdiv : ∀ a b : ℝ, Hyperreal.ofReal (a / b) = Hyperreal.ofReal a / Hyperreal.ofReal b := fun a b => Hyperreal.coe_div a b
@@ -54,18 +43,35 @@ private lemma row_cast {m : ℕ} (X Y : Tensor ℝ [m]) :
   erw [hs]
   erw [MapMul.eq.MulMapS.of.All_Eq_Mul hmul (exp X) Y, hexp]
 
+private def get_dot_row
+  {n m d : ℕ}
+  (W : Tensor ℝ* [n, m])
+  (V : Tensor ℝ* [m, d])
+  (i : Fin n) :=
+  GetDot.eq.DotGet.fin W V i
+
+
+private lemma stack_div_dot_get
+  {n m d : ℕ}
+  (U : Fin n → Tensor ℝ* [m])
+  (S : Fin n → Tensor ℝ* [])
+  (V : Tensor ℝ* [m, d])
+  (i : Fin n) :
+  (([i < n] (U i / S i) : Tensor ℝ* [n, m]) @ V).get ⟨i, GtLengthDot.of.LeLengthS.Ne_Nil (by simp) (by simp) ([i < n] (U i / S i)) V i⟩ =
+    ([i < n] (((U i) @ V) / S i)).get ⟨i, by simp [Tensor.length]⟩ := by
+  rw [get_dot_row (W := [i < n] (U i / S i)) (V := V) i]
+  erw [EqGetStack.fin (fun i => U i / S i) i]
+  erw [EqGetStack.fin (fun i => ((U i) @ V) / S i) i]
+  exact DotDiv.eq.DivDot (U i) (S i) V
+
+
 private lemma stack_div_dot
   {n m d : ℕ}
   (U : Fin n → Tensor ℝ* [m])
   (S : Fin n → Tensor ℝ* [])
   (V : Tensor ℝ* [m, d]) :
-  (([i < n] (U i / S i) : Tensor ℝ* [n, m]) @ V) = [i < n] (((U i) @ V) / S i) := by
-  apply Eq.of.All_EqGetS.fin
-  intro i
-  erw [GetDot.eq.DotGet.fin]
-  erw [EqGetStack.fin (fun i => U i / S i) i]
-  erw [EqGetStack.fin (fun i => ((U i) @ V) / S i) i]
-  exact DotDiv.eq.DivDot (U i) (S i) V
+  (([i < n] (U i / S i) : Tensor ℝ* [n, m]) @ V) = [i < n] (((U i) @ V) / S i) :=
+  Eq.of.All_EqGetS.fin fun i => stack_div_dot_get U S V i
 
 
 /--
@@ -97,9 +103,10 @@ private lemma cross_attention
   intro A₀ Ξ A' V'
   have h_ne : ∀ i : Fin n, ∃ j : Fin n, (fun (i j : Fin n) => decide ¬(i.val < h ↔ j.val < h)) i j = true := by
     intro i
-    by_cases hi : i.val < h
-    · exact ⟨⟨h, h₁⟩, by simp [hi]⟩
-    · exact ⟨⟨0, by omega⟩, by simp; omega⟩
+    if hi : i.val < h then
+      exact ⟨⟨h, h₁⟩, by simp [hi]⟩
+    else
+      exact ⟨⟨0, by omega⟩, by simp; omega⟩
   have hmain : (A' + (Ξ - 1) * ∞).softmax ≈ [i < n] (exp A'[i] * Ξ[i] / id (α := Tensor ℝ* []) ((exp A'[i] * Ξ[i]).sum 0)) := SoftmaxAdd_Mul_Infty.eq.Stack_Div_Sum (fun (i j : Fin n) => decide ¬(i.val < h ↔ j.val < h)) A₀ h_ne
   let Ξ₀ : Tensor ℝ [n, n] := [i < n] [j < n] (Bool.toNat (decide ¬(i.val < h ↔ j.val < h)))
   have hΞ : Ξ = (Ξ₀ : Tensor ℝ* [n, n]) := coe_mask _
@@ -122,10 +129,7 @@ private lemma cross_attention
   intro i
   have hi : (i : ℕ) < n := i.isLt
   have hrow_i : ((A' + (Ξ - 1) * ∞).softmax).get ⟨i, by grind⟩ ≈ ((id (α := Tensor ℝ [n]) (exp A₀[i] * Ξ₀[i] / id (α := Tensor ℝ []) ((exp A₀[i] * Ξ₀[i]).sum 0)) : Tensor ℝ [n]) : Tensor ℝ* [n]) := by
-    have h0 := XEqGetS.of.XEq.GtLength.fin (i := i) (by grind) hmain
-    have h1 : ([i < n] (exp A'[i] * Ξ[i] / id (α := Tensor ℝ* []) ((exp A'[i] * Ξ[i]).sum 0))).get ⟨i, by grind⟩ = exp A'[i] * Ξ[i] / id (α := Tensor ℝ* []) ((exp A'[i] * Ξ[i]).sum 0) :=
-      EqGetStack.fin (fun i : Fin n => exp A'[i] * Ξ[i] / id (α := Tensor ℝ* []) ((exp A'[i] * Ξ[i]).sum 0)) i
-    exact h0.trans (Tensor.XEq.of.Eq (h1.trans (hrow i)))
+    exact (XEqGetS.of.XEq.GtLength.fin (i := i) (by grind) hmain).trans (Tensor.XEq.of.Eq ((EqGetStack.fin (fun i : Fin n => exp A'[i] * Ξ[i] / id (α := Tensor ℝ* []) ((exp A'[i] * Ξ[i]).sum 0)) i).trans (hrow i)))
   have hl : ((A' + (Ξ - 1) * ∞).softmax @ V').get i = ((A' + (Ξ - 1) * ∞).softmax.get ⟨i, by grind⟩) @ V' :=
     GetDot.eq.DotGet.fin _ V' i
   have hr : ([i < n] (((exp A'[i] * Ξ[i]) @ V') / id (α := Tensor ℝ* []) ((exp A'[i] * Ξ[i]).sum 0))).get i =

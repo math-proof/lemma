@@ -1,6 +1,4 @@
 import Lemma.Tensor.GetSelect.as.SelectGet.of.GtGet_0.GtGet_Add_1.LtAdd_1Length
-import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
-import Lemma.Tensor.LengthSelect.eq.Get_0.of.GtGet.GtLength.Gt_0
 open Tensor
 
 

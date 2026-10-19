@@ -1,7 +1,6 @@
 import Mathlib.Analysis.Normed.Lp.MeasurableSpace
 import Mathlib.Probability.Kernel.IonescuTulcea.Traj
 import sympy.stats.iterates
-import sympy.stats.markov_chain_trajectory
 import Lemma.Kernel.MapPartialTraj.eq.ComapLastPowKernelSub.of.Le
 open MeasureTheory ProbabilityTheory Finset Kernel Preorder Filtration
 

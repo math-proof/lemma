@@ -1,5 +1,4 @@
 import Lemma.Nat.Delta.eq.Ite
-import sympy.functions.special.tensor_functions
 open Nat
 
 

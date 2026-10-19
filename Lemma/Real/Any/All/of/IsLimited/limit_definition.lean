@@ -1,5 +1,4 @@
 import Lemma.Real.Any.All.of.Eq.limit_definition.Lim
-import sympy.series.limits
 open Real
 
 

@@ -3,8 +3,6 @@ import Mathlib.Analysis.Calculus.MeanValue
 import Mathlib.Analysis.Normed.Algebra.MatrixExponential
 import Mathlib.Analysis.Matrix.Normed
 import Mathlib.Topology.Algebra.Module.FiniteDimension
-import sympy.stats.generator_matrix
-import sympy.Basic
 import Lemma.NormedSpace.Exp.ge.Zero.of.All_Ge_0
 open NormedSpace
 

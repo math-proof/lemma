@@ -4,7 +4,6 @@ import Lemma.Int.Le0Sub.is.Ge
 import Lemma.Set.In_Icc.is.Le.Le
 import Lemma.Nat.Ge.of.Ge.Ge
 import Lemma.Nat.Eq.of.Le.Le
-import Lemma.Set.In_Icc.is.Le.Le
 open Set Nat Int
 
 

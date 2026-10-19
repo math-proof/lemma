@@ -3,7 +3,7 @@ import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.List.EqAppendTake__ListGet.of.GeLength_2
 import Lemma.Tensor.Tensordot.of.SEq.SEq
 open Bool List Tensor
-set_option maxHeartbeats 1000000
+set_option maxHeartbeats 500000
 
 
 @[path, cast]

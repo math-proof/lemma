@@ -3,10 +3,13 @@ import Mathlib
 
 open AdicCompletion
 
-axiom exists_monotone_modulus {B : Type*} [CommRing B] (𝔪 : Ideal B)
+theorem exists_monotone_modulus {B : Type*} [CommRing B] (𝔪 : Ideal B)
   {S : Type*} [CommRing S] (J : Ideal S) [IsAdicComplete J S] (ev : B →+* S)
   (hcont : ∀ k : ℕ, ∃ n : ℕ, 𝔪 ^ n ≤ (J ^ k).comap ev) :
-  ∃ N : ℕ → ℕ, Monotone N ∧ ∀ k, 𝔪 ^ N k ≤ (J ^ k).comap ev
+  ∃ N : ℕ → ℕ, Monotone N ∧ ∀ k, 𝔪 ^ N k ≤ (J ^ k).comap ev := by
+  choose n hn using hcont
+  refine ⟨fun k => (Finset.range (k + 1)).sup n, fun a b hab => Finset.sup_mono (Finset.range_mono (by omega)), fun k => ?_⟩
+  exact (Ideal.pow_le_pow_right (Finset.le_sup (f := n) (Finset.self_mem_range_succ k))).trans (hn k)
 
 /--
 [AdicCompletion_exists_ringHom_comp_algebraMap_eq_of_forall_exists_pow_le_comap](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AdicCompletion_exists_ringHom_comp_algebraMap_eq_of_forall_exists_pow_le_comap.lean)

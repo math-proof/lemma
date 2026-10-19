@@ -1,6 +1,4 @@
 import Lemma.Random.Expect.Grad.eq.Grad.Expect
-import sympy.stats.joint_rv
-import sympy.Basic
 open MeasureTheory Topology Random
 
 

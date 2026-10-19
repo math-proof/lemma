@@ -1,7 +1,5 @@
 import Mathlib.Analysis.ODE.Gronwall
 import Mathlib.Analysis.InnerProductSpace.Calculus
-import sympy.dynamics.actor_critic
-import sympy.Basic
 import Lemma.Real.All_LeSquareNormAddMulExpSquareNormMulDivSquareSSub1Exp.of.Gt_0.ForwardUniformCriticDriftBound.ForwardUniformCriticCoercive.ForwardSolvesCriticEquation
 import Lemma.Real.CriticBallEntryTime.ge.ZeroAndMulExpMulNegCriticBallEntryTimeSquare.le.SubSquareDivSquareS.of.IsValidCriticRadius
 

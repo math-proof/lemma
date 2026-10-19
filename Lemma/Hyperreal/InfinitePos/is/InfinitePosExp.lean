@@ -1,5 +1,4 @@
 import Lemma.Hyperreal.InfinitePos.is.All_Gt
-import Lemma.Int.EqAbs.of.Gt_0
 import Lemma.Nat.Gt.of.Gt.Ge
 import Lemma.Real.GtLog_0.of.Gt_1
 import Lemma.Real.LeCoeS.is.Le

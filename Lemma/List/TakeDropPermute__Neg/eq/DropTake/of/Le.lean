@@ -1,6 +1,4 @@
-import Lemma.List.DropTake.eq.TakeDrop
 import Lemma.List.TakeDropPermute__Neg.eq.DropTake
-import Lemma.Nat.EqSub_Sub.of.Ge
 import Lemma.Nat.SubAdd.eq.AddSub.of.Ge
 open List Nat
 

@@ -1,6 +1,5 @@
 import Lemma.Tensor.Div.eq.Div_GetData_0
 import Lemma.Tensor.DivStack.eq.Stack_Div
-import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.Eq_Stack
 open Tensor
 

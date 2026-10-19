@@ -1,6 +1,5 @@
 import Lemma.Hyperreal.Infinite.is.InfiniteAdd.of.NotInfinite
 import Lemma.Hyperreal.NotInfinite
-import Lemma.Nat.Add
 open Hyperreal Nat
 
 

@@ -1,4 +1,3 @@
-import sympy.Basic
 import sympy.integrals.integrals
 open MeasureTheory
 

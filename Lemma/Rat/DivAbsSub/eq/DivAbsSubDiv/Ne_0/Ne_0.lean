@@ -3,7 +3,6 @@ import Lemma.Int.MulSubS.eq.SubAddSMulS
 import Lemma.Nat.AddAdd
 import Lemma.Rat.AbsDiv.eq.DivAbsS
 import Lemma.Rat.Div.eq.DivDivS.of.Ne_0
-import Lemma.Rat.Div.eq.One.of.Ne_0
 import Lemma.Rat.DivAdd.eq.AddDivS
 import Lemma.Rat.DivMulS.eq.Div.of.Ne_0
 import Lemma.Rat.DivSub.eq.SubDivS

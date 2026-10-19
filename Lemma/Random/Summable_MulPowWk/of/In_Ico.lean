@@ -1,5 +1,3 @@
-import sympy.stats.policy_trajectory.continuous
-import sympy.Basic
 import Lemma.Random.NormWk.le.Abs_R
 open MeasureTheory PolicyGradient Random
 

@@ -1,6 +1,5 @@
 import Lemma.Vector.Drop0.eq.Zero
 import Lemma.Vector.Take0.eq.Zero
-import sympy.vector.vector
 open Vector
 
 

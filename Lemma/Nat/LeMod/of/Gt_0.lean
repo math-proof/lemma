@@ -1,4 +1,3 @@
-import sympy.functions.elementary.integers
 import Lemma.Nat.LtMod.of.Gt_0
 import Lemma.Nat.Le.of.Lt
 open Nat

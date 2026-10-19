@@ -1,15 +1,8 @@
-import Lemma.Bool.Cast.of.SEq.Eq
 import torch.Tensor.permute
-import Lemma.Bool.SEq.is.Eq
 import Lemma.List.EqSwap.of.LeLength_1
 import Lemma.List.Swap.eq.Permute__Neg1.of.GtLength
-import Lemma.Nat.AddSub.eq.Sub_Sub.of.Ge.Ge
-import Lemma.Tensor.Cast_Mul.eq.MulCastS.of.Eq
 import Lemma.Tensor.PermuteMul.eq.MulPermuteS__Neg.of.GtLength_Add
-import Lemma.Tensor.SEqMulS.of.SEq.SEq
-import Lemma.Tensor.SEqPermuteS.of.SEq.Eq.Eq.GtLength
 import Lemma.Tensor.SEqT.of.LeLength_1
-import Lemma.Tensor.T.as.Permute__Neg1.of.GtLength_0
 open Bool List Nat Tensor
 
 

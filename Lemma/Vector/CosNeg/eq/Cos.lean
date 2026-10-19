@@ -1,7 +1,5 @@
 import Lemma.Real.CosNeg.eq.Cos
 import Lemma.Vector.GetCos.eq.CosGet
-import Lemma.Vector.GetNeg.eq.NegGet
-import sympy.vector.functions
 open Real Vector
 
 

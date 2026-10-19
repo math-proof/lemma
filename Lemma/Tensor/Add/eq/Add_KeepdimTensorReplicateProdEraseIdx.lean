@@ -1,16 +1,9 @@
-import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
 import torch.Tensor.prod
-import Lemma.List.EqEraseIdx.of.LeLength
-import Lemma.List.MulProdInsertIdxEraseIdx.eq.Prod.of.GtLength
-import Lemma.List.ProdInsertIdx.eq.Prod
-import Lemma.Nat.MulMul.eq.Mul_Mul
-import Lemma.Nat.NotLt.is.Ge
 import Lemma.Tensor.DataAdd.eq.AddDataS
 import Lemma.Tensor.DataCast.as.Data.of.Eq
 import Lemma.Tensor.DataKeepdim.as.FlattenMapSplitAtCast_Data
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Tensor.Keepdim.eq.Cast.of.LeLength
-import Lemma.Vector.GetAdd.eq.AddGetS
 import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Vector.GetRepeat.eq.Get_Mod

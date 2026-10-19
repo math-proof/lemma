@@ -1,5 +1,3 @@
-import sympy.concrete.continuant
-import sympy.Basic
 import Lemma.Finset.All_GtH_0.et.GtH_Add_1_0
 open Finset Continuant
 

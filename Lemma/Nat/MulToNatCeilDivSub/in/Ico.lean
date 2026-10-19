@@ -1,4 +1,3 @@
-import Lemma.Nat.MulDiv.eq.Sub_Mod
 import Lemma.Nat.Mul_Div.ge.SubAdd_1.of.Gt_0
 import Lemma.Int.ToNatDiv.eq.DivToNat
 import Lemma.Nat.CoeSub.eq.SubCoeS.of.Gt

@@ -1,4 +1,3 @@
-import sympy.vector.Basic
 import Lemma.Random.CondIndep.of.All_Eq_Joint
 import Lemma.Random.CondIndep.of.All_CondIndep.All_MeasurableJoint
 open MeasureTheory ProbabilityTheory PolicyGradient Random

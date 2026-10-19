@@ -1,4 +1,3 @@
-import sympy.Basic
 import torch.Tensor.Basic
 
 

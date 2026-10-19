@@ -1,8 +1,6 @@
 import Lemma.Tensor.ArgMaxItemGetSoftmaxAdd_Mul_Infty.eq.Shift
-import sympy.concrete.expr_with_limits
-import sympy.Basic
 open Tensor
-set_option maxHeartbeats 1000000
+set_option maxHeartbeats 500000
 
 
 @[path]

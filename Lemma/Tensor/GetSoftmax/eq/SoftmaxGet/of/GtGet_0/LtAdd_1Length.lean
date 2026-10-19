@@ -1,8 +1,4 @@
-import Lemma.Bool.SEq.is.Eq
-import Lemma.Tensor.EqGetStack
-import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.LengthSoftmax.eq.Length
-import Lemma.Tensor.SEqGetS.of.SEq.GtLength
 import Lemma.Tensor.Softmax.as.Stack_Softmax.of.LtAdd_1Length
 open Tensor Bool
 

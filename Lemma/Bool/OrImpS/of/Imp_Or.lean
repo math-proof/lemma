@@ -1,5 +1,4 @@
 import Lemma.Bool.Imp.is.OrNot
-import Lemma.Bool.OrOr.is.Or_Or
 import Lemma.Bool.Or_Or
 open Bool
 

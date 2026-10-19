@@ -1,6 +1,4 @@
-import sympy.stats.joint_rv
 import sympy.stats.policy_trajectory.gradient
-import sympy.Basic
 import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
 import Lemma.Random.PSpace_Path.of.All_PSpace
 import Lemma.Random.OfRV.eq.Integral.of.AEStronglyMeasurable_Map
@@ -38,15 +36,15 @@ private lemma main
     PSpace_Path.of.All_PSpace ha
   have : PSpace (M θ) (AsPathRV.path r) :=
     PSpace_Path.of.All_PSpace hr
-  𝔼[s, a, r : M θ](∑' t, γ ^ t * r t) =
+  𝔼[r, s, a : M θ](∑' t, γ ^ t * r t) =
     ∫ ω, ∑' t, γ ^ t * r t ω ∂(M θ) := by
 -- proof
   intro _ _ _ _ _ _
   exact Random.OfRV.eq.Integral.of.AEStronglyMeasurable_Map
-    (f := fun p : (ℕ → S) × (ℕ → A) × (ℕ → ℝ) => ∑' t, γ ^ t * p.2.2 t)
+    (f := fun p : (ℕ → ℝ) × (ℕ → S) × (ℕ → A) => ∑' t, γ ^ t * p.1 t)
     (by
       refine (Measurable.tsum fun t => ?_).aestronglyMeasurable
-      exact ((measurable_pi_apply t).comp measurable_snd |>.comp measurable_snd).const_mul _)
+      exact ((measurable_pi_apply t).comp measurable_fst).const_mul _)
 
 
 -- created on 2026-09-28

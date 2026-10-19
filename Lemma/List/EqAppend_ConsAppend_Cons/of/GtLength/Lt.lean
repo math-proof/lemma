@@ -4,7 +4,6 @@ import Lemma.List.DropSwap.eq.Drop.of.Lt
 import Lemma.List.EqAppendTake__Drop
 import Lemma.List.DropDrop.eq.Drop_Add
 import Lemma.Nat.LeAdd_1.of.Lt
-import Lemma.Nat.EqAdd_Sub.of.Ge
 open List Nat
 
 

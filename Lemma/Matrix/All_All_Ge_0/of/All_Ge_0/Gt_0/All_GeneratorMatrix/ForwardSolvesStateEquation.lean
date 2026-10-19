@@ -2,9 +2,6 @@ import Mathlib.Analysis.Calculus.MeanValue
 import Mathlib.Analysis.Calculus.Deriv.Prod
 import Mathlib.Analysis.Calculus.Deriv.Slope
 import Mathlib.Algebra.Order.Group.PosPart
-import sympy.stats.generator_matrix
-import sympy.dynamics.actor_critic
-import sympy.Basic
 import Lemma.Matrix.Sum_GetVecMul.eq.Zero.of.GeneratorMatrix
 import Lemma.Matrix.All_LtSlope.of.LtMul_GetVecMul.Ge_0.Gt_0.All_GeneratorMatrix.ForwardSolvesStateEquation
 open Matrix Filter Topology

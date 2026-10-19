@@ -1,4 +1,3 @@
-import sympy.functions.elementary.integers
 import Lemma.Nat.EqAddMulDiv
 import Lemma.Nat.Sub.of.Eq
 import Lemma.Nat.EqSubAdd

@@ -1,5 +1,4 @@
 import Lemma.Fin.In_Ico.is.In_Ico_Min
-import Lemma.List.LengthSlice.eq.SubMin
 import Lemma.Tensor.GetGetSlice.eq.Get_Add.of.GtSubMin
 import Lemma.Tensor.Sum_0.eq.Sum_Get
 import torch.Tensor.sum

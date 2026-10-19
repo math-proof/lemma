@@ -1,8 +1,6 @@
 import Lemma.Bool.SEq.is.EqCast.of.Eq
 import torch.Tensor.unsqueeze
 import torch.Tensor.prod
-import Lemma.Bool.SEqCast.of.Eq
-import Lemma.List.ProdInsertIdx.eq.Prod
 import Lemma.Tensor.DataNeg.eq.NegData
 import Lemma.Tensor.DataUnsqueeze.as.Data
 import Lemma.Tensor.Eq.is.EqDataS

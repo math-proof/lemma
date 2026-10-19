@@ -1,7 +1,4 @@
 import Lemma.Vector.CosSub.eq.AddMulS
-import Lemma.Vector.GetAdd.eq.AddGetS
-import Lemma.Vector.GetMul.eq.MulGetS
-import sympy.vector.functions
 open Vector
 
 

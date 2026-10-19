@@ -1,8 +1,5 @@
 import sympy.integrals.integrals
-import sympy.vector.vector
 import torch.stack
-import Lemma.Tensor.Eq.is.All_EqGetS
-import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.GetAdd.eq.AddGetS
 import Lemma.Vector.FlattenMap.eq.MapFlatten
 import Mathlib.MeasureTheory.SpecificCodomains.Pi

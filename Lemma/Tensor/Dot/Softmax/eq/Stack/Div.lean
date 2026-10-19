@@ -1,13 +1,7 @@
 import Lemma.Tensor.BandPart.of.Ge_Sub_1
-import Lemma.Tensor.DotDiv.eq.DivDot
 import Lemma.Tensor.DotSoftmaxAdd_Mul_Infty.eq.Stack_DotSoftmaxDivDot_T
-import Lemma.Tensor.Div_KeepdimSum.eq.Div_Sum
-import Lemma.Tensor.Eq.is.All_EqGetS
-import Lemma.Tensor.EqGetStack
-import Lemma.Tensor.Softmax.eq.DivExp_KeepdimSumExp
-import Lemma.Tensor.XEq.of.Eq
 open Tensor
-set_option maxHeartbeats 400000
+set_option maxHeartbeats 200000
 
 
 private lemma softmax_dot

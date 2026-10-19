@@ -1,5 +1,3 @@
-import Lemma.List.DropTake.eq.TakeDrop
-import Lemma.List.TakeDrop.eq.DropTake
 import Lemma.List.TakeDropPermute__Neg.eq.DropTake
 open List
 

@@ -1,7 +1,3 @@
-import sympy.stats.policy_trajectory.gradient
-import sympy.Basic
-import Lemma.Random.NormClip.le.AbsR
-import Lemma.Random.StronglyMeasurableClip
 import Lemma.Random.TSum_MulPowW.eq.AddWMul_Sum_MulProbSum_MulTTSum_MulPowW.of.In_Ico
 import Lemma.Random.Vc.eq.TSum_MulPowIntegral.of.In_Ico
 import Lemma.Random.W0.eq.Sum_MulProbIntegral.of.All_LeNorm.StronglyMeasurable
@@ -21,14 +17,14 @@ private lemma main
   (θ : Θ)
   (x : S) :
 -- imply
-  M.Vc θ γ x = ∑ u, M.pol.prob θ x u * M.Qc θ γ x u := by
+  M.Vc θ γ x = ∑ u, M.policy.prob θ x u * M.Qc θ γ x u := by
 -- proof
   rw [Vc.eq.TSum_MulPowIntegral.of.In_Ico (M := M) θ x]
   unfold Model.Qc
   simp_rw [Vc.eq.TSum_MulPowIntegral.of.In_Ico (M := M)]
   rw [TSum_MulPowW.eq.AddWMul_Sum_MulProbSum_MulTTSum_MulPowW.of.In_Ico (M := M) h₀ θ x]
   change ∫ z, clip z.1 (-M.env.R) M.env.R ∂(M.stageK θ x) + _ =
-    ∑ u, M.pol.prob θ x u * (∫ ρ, clip ρ (-M.env.R) M.env.R ∂(M.env.reward (x, u)) + _)
+    ∑ u, M.policy.prob θ x u * (∫ ρ, clip ρ (-M.env.R) M.env.R ∂(M.env.reward (x, u)) + _)
   rw [W0.eq.Sum_MulProbIntegral.of.All_LeNorm.StronglyMeasurable (M := M)
     (Random.StronglyMeasurableClip (M := M)) (NormClip.le.AbsR (M := M)) θ x, Finset.mul_sum,
     ← Finset.sum_add_distrib]

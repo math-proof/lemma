@@ -3,13 +3,8 @@ import torch.Tensor.sum
 import torch.Tensor.unsqueeze
 import torch.Tensor.repeat
 import Lemma.Nat.EqMod_1'0
-import Lemma.Tensor.SelectCast.as.Select.of.Eq
-import Lemma.Bool.SEq.is.EqCast.of.Eq
-import Lemma.List.GtLengthInsertIdxEraseIdx.of.GtLength
-import Lemma.List.EqSetInsertIdxEraseIdx.of.GtLength
 import Lemma.Tensor.SelectRepeat.as.Select_Mod_Get.of.Lt_MulGet
 import Lemma.Tensor.SEqSelectUnsqueeze.of.GeLength
-import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.GtLength
 open Tensor List Bool Nat
 
 

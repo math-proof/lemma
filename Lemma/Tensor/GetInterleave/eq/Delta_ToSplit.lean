@@ -1,11 +1,8 @@
-import Lemma.Fin.OfSplit.eq.Ite_Mul2
-import Lemma.Fin.ToSplit.eq.Ite_Div_2
 import Lemma.Nat.Delta_OfSplit.eq.Delta_ToSplit
 import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.GetAppend.eq.Get.of.Lt
 import Lemma.Tensor.GetAppend.eq.Get_Sub.of.GtAdd.Ge
 import Lemma.Tensor.Interleave.eq.AppendStackS_Delta
-import sympy.functions.special.tensor_functions
 open Nat Tensor Fin
 
 

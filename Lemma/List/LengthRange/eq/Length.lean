@@ -1,4 +1,3 @@
-import Lemma.Int.EqToNat_0.of.Le_0
 import Lemma.Int.EqSub.is.Eq_Add
 import Lemma.Rat.EqToNatCeil_0.of.Le
 import Lemma.Rat.ToNatCeilDivNeg.eq.Zero

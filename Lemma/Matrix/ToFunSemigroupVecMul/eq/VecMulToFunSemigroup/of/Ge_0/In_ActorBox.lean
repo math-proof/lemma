@@ -2,8 +2,6 @@ import Mathlib.Analysis.Calculus.MeanValue
 import Mathlib.Analysis.Calculus.Deriv.Comp
 import Mathlib.Analysis.Calculus.FDeriv.Linear
 import Mathlib.Analysis.Calculus.TangentCone.Real
-import sympy.stats.frozen_invariant_law
-import sympy.Basic
 import Lemma.Matrix.HasDerivWithinAt.of.Ge_0.In_ActorBox
 open Matrix
 

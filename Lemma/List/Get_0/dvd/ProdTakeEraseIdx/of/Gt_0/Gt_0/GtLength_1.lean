@@ -1,8 +1,6 @@
 import Lemma.List.EqEraseIdx.of.LeLength
 import Lemma.List.GetEraseIdx.eq.Get.of.Gt.GtLength
 import Lemma.List.Get_0.dvd.ProdTake.of.Gt_0.GtLength_0
-import Lemma.List.ProdCons.eq.Mul_Prod
-import Lemma.List.Take.eq.Cons_TakeTail.of.Gt_0.GtLength_0
 open List
 
 

@@ -1,4 +1,3 @@
-import Lemma.Bool.SEq.is.Eq
 import torch.Tensor.reshape
 import Lemma.Tensor.Eq.is.All_EqGetS
 import Lemma.Tensor.EqGetStack

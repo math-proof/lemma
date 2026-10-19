@@ -1,5 +1,4 @@
 import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
-import Lemma.Nat.Mul
 import Lemma.Tensor.Eq.is.All_EqGetS
 import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.GetDiv.eq.DivGetS

@@ -1,11 +1,6 @@
 import Lemma.Hyperreal.GtCoe_0.is.Gt_0
-import Lemma.Tensor.EqData0'0
-import Lemma.Tensor.Lt.is.LtDataS
 import Lemma.Tensor.Lt0Map.of.Gt_0.All_GtUFn_0
-import Lemma.Tensor.MapData.eq.DataMap
-import Lemma.Vector.EqGet0_0
 import Lemma.Vector.GetMap.eq.UFnGet
-import Lemma.Vector.Lt.is.All_Lt
 import sympy.core.relational
 open Hyperreal Tensor Vector
 

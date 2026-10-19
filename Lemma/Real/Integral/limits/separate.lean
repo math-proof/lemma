@@ -1,5 +1,4 @@
 import sympy.integrals.integrals
-import sympy.Basic
 import Mathlib.MeasureTheory.Integral.Prod
 open MeasureTheory
 

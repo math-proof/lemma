@@ -12,7 +12,6 @@ import Lemma.Nat.SubSub
 import Lemma.Nat.CoeSub.eq.SubCoeS.of.Gt
 import Lemma.Nat.Gt.of.GtSub
 import Lemma.Rat.DivSub.eq.SubDivS
-import Lemma.Rat.Div.eq.One.of.Gt_0
 import Lemma.Rat.CeilSub_1.eq.SubCeil_1
 import Lemma.Nat.LeSub.is.Le_Add
 import Lemma.Nat.CoeAdd.eq.AddCoeS

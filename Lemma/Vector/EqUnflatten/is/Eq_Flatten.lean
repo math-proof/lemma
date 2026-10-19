@@ -1,4 +1,3 @@
-import Lemma.Vector.EqFlattenUnflatten
 import Lemma.Vector.EqUnflattenFlatten
 open Vector
 

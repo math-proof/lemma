@@ -1,18 +1,14 @@
-import Lemma.Bool.SEq.is.EqCast.of.Eq
 import torch.Tensor.unsqueeze
 import torch.Tensor.reshape
 import torch.Tensor.bmm
-import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.Tensor.Matmul.as.Bmm
 import Lemma.Tensor.ResizeUnsqueeze_Succ.as.UnsqueezeResize
-import Lemma.Tensor.SEqBmmS.of.SEq.SEq
 import Lemma.Tensor.SEqReshapeS.of.SEq.Eq.Dvd
 import Lemma.Tensor.SEqResize.of.Eq_Get
-import Lemma.Tensor.SEqResize_0.of.Eq_Get_0.GtLength_0
 import Lemma.Tensor.SEqSelectS.of.SEq
 import Lemma.Tensor.Unsqueeze.eq.Reshape
 open Bool Tensor
-set_option maxHeartbeats 500000
+set_option maxHeartbeats 250000
 
 
 @[path]

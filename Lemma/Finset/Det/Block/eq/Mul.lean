@@ -1,6 +1,4 @@
-import sympy.Basic
 import Mathlib.LinearAlgebra.Matrix.Block
-import sympy.matrices.block_swap
 import Lemma.Matrix.DetSq_FromBlocks0.eq.MulMulPowNeg1_DetDet
 import Lemma.Matrix.DetSq_FromBlocks_0.eq.MulMulPowNeg1_DetDet
 open Matrix

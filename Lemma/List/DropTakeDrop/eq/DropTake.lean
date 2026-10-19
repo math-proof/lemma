@@ -1,6 +1,5 @@
 import Lemma.List.DropTake.eq.TakeDrop
 import Lemma.List.TakeDrop.eq.DropTake
-import Lemma.Nat.Add
 import Lemma.Nat.AddAdd.eq.Add_Add
 open List Nat
 

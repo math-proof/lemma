@@ -1,7 +1,6 @@
 import Lemma.Nat.EqAdd0
 import Lemma.Vector.EqCons_Tail
 import Lemma.Vector.EqGet0_0
-import Lemma.Vector.Head.eq.Get_0
 import Lemma.Vector.SumCons.eq.Add_Sum
 open Nat Vector
 

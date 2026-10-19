@@ -1,5 +1,4 @@
 import torch.Tensor
-import Lemma.Nat.EqMin_SubMulS
 import Lemma.Vector.GetCast_Map.eq.UFnGet.of.Eq.Lt
 import Lemma.Bool.HEq.of.SEq
 import Lemma.Vector.GetSplitAt_1.as.ArraySlice.of.GtGet_0.GtLength_0

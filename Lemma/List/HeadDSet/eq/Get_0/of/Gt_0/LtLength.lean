@@ -1,6 +1,5 @@
 import Lemma.List.GetSet.eq.Get.of.Ne.GtLength
 import Lemma.List.LengthSet.eq.Length
-import Lemma.Nat.Ne.of.Gt
 import Lemma.List.HeadD.eq.Get_0.of.GtLength_0
 open List Nat
 

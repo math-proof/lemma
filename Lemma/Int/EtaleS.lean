@@ -1,6 +1,5 @@
 import Lemma.Int.FormallyEtale.of.Bijective
 import Mathlib
-import sympy.Basic
 open Int KaehlerDifferential
 
 

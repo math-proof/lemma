@@ -1,5 +1,3 @@
-import sympy.sets.stirling_partition
-import sympy.Basic
 import Lemma.Finset.SetOfIn_ImageConditionsetAndInFinset.eq.ImageImageConditionset
 open Finset
 

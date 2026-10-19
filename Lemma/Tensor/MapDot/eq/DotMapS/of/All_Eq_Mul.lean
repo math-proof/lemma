@@ -1,8 +1,6 @@
 import Lemma.Tensor.Einsum.eq.MulGetData_0
-import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Vector.Eq.is.All_EqGetS
 import Lemma.Vector.GetMap.eq.UFnGet
-import sympy.matrices.expressions.matmul
 open Tensor Vector
 
 

@@ -14,7 +14,7 @@ private partial def GradSugar.stripParen : Lean.TSyntax `term → Lean.MacroM (L
 Eta rule: if `body` is (after stripping parentheses) an application `F θ` whose argument is the
 bracket binder, or a bare name `F`, it elaborates to `gradient F θ` with **no** fresh binder, so
 outer instances (e.g. `PSpace (M θ) …`) stay in scope. Otherwise it elaborates to
-`gradient (fun θ ↦ body) θ` (open-term form). Multi-arg apps such as `M.pol.prob θ x u` do not
+`gradient (fun θ ↦ body) θ` (open-term form). Multi-arg apps such as `M.policy.prob θ x u` do not
 match the eta rule (outermost argument is not `θ`) and keep the lambda path.
 
 The point form `∇[θ = θ₀] body` is the same with evaluation point `θ₀` (elaborated outside any

@@ -1,13 +1,7 @@
-import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import torch.Tensor.unsqueeze
 import torch.Tensor.bmm
 import torch.Tensor.repeat
 import torch.Tensor.permute
-import Lemma.Bool.SEqCast.of.Eq
-import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
-import Lemma.List.InsertIdxAppend.eq.Append_Cons
-import Lemma.List.InsertIdxAppend.eq.Append_InsertIdx
-import Lemma.List.SwapAppend.eq.Append_Swap.of.LeLength.LeLength
 import Lemma.Tensor.Matmul.as.Bmm.of.Eq
 import Lemma.Tensor.Einsum.as.Tensordot.of.Get_SubLength.GeLength_2.GeLength_2
 import Lemma.Tensor.SEqMulS.of.SEq.SEq

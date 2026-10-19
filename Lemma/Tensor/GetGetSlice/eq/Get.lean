@@ -1,4 +1,3 @@
-import Lemma.List.LengthSlice.eq.Min
 import Lemma.Tensor.GetGetSlice.eq.Get.of.Lt_Min
 open Tensor List
 

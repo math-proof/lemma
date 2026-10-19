@@ -1,6 +1,4 @@
 import Lemma.Int.EqNeg0'0
-import Lemma.Vector.EqGet0_0
-import Lemma.Vector.GetNeg.eq.NegGet
 import sympy.vector.vector
 open Vector Int
 

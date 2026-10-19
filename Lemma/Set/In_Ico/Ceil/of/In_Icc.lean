@@ -1,5 +1,3 @@
-import sympy.sets.sets
-import Lemma.Set.In_Ico.is.Le.Lt
 import Lemma.Set.Lt.of.In_Ioc
 import Lemma.Set.Le.of.In_Ioc
 import Lemma.Int.GeCeil

@@ -1,9 +1,3 @@
-import Lemma.Bool.SEq.is.Eq
-import Lemma.List.EqCons_Tail.of.GtLength_0
-import Lemma.Nat.Lt_Sub.of.LtAdd
-import Lemma.Tensor.EqGet0_0
-import Lemma.Tensor.EqGetStack
-import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.GtLength_0
 import Lemma.Tensor.Softmax.as.Stack_Softmax.of.LtAdd_1Length
 import Lemma.Tensor.Softmax.eq.Zero.of.EqGet_0'0.GtLength_0
 open Bool Nat Tensor List

@@ -1,6 +1,4 @@
-import sympy.concrete.continuant
 import sympy.sets.sets
-import sympy.Basic
 import Lemma.Finset.K.gt.Zero.of.All_Imp_Gt_0.Gt_0
 open Finset Continuant
 

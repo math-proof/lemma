@@ -1,7 +1,6 @@
 import Mathlib.MeasureTheory.Integral.Lebesgue.Countable
 import Mathlib.MeasureTheory.Measure.WithDensity
 import sympy.stats.joint_rv
-import sympy.Basic
 import Lemma.Random.Map.eq.WithDensityProb
 open MeasureTheory
 

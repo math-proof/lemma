@@ -1,6 +1,5 @@
 import stdlib.SEq
 import Lemma.Vector.Eq.of.Val
-import Lemma.Bool.UFn.of.Eq
 open Vector Bool
 
 

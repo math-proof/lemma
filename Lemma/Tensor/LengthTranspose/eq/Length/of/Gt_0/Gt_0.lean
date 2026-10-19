@@ -1,8 +1,6 @@
 import Lemma.List.Permute.of.Eq.Val.Eq
 import torch.Tensor.permute
 import Lemma.List.EqSwap.of.OrLeSLength
-import Lemma.List.Swap
-import Lemma.List.Swap.eq.PermutePermute.of.Lt.GtLength
 import Lemma.Tensor.LengthCast.eq.Length.of.Eq
 import Lemma.Tensor.LengthPermute.eq.Length.of.Ge_0.GtVal_0
 import Lemma.Tensor.LengthPermute.eq.Length.of.Lt0Add.GtVal_0

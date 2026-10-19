@@ -2,9 +2,6 @@ import Mathlib.Analysis.Calculus.MeanValue
 import Mathlib.Analysis.Calculus.Deriv.Prod
 import Mathlib.Analysis.Calculus.Deriv.Slope
 import Mathlib.Algebra.Order.Group.PosPart
-import sympy.stats.generator_matrix
-import sympy.dynamics.actor_critic
-import sympy.Basic
 import Lemma.Matrix.All_All_Ge_0.of.All_Ge_0.Gt_0.All_GeneratorMatrix.ForwardSolvesStateEquation
 import Lemma.Matrix.All_EqSumSum.of.All_GeneratorMatrix.ForwardSolvesStateEquation
 import Lemma.Matrix.ForwardSolvesStateEquation_Sub.of.ForwardSolvesStateEquation.ForwardSolvesStateEquation

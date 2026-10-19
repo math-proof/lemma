@@ -1,4 +1,3 @@
-import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
 import torch.Tensor.prod
 import Lemma.List.Prod.eq.Foldr
 import Lemma.Tensor.DataOfVector.eq.FlattenMapData

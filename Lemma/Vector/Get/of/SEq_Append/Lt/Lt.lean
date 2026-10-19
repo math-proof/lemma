@@ -1,4 +1,3 @@
-import sympy.vector.vector
 import Lemma.Vector.Get.of.Val.Lt.Lt
 import Lemma.Vector.Val.of.SEq
 open Vector

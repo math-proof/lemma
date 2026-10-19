@@ -1,5 +1,4 @@
 import Lemma.Random.PSpace_JointJoint.is.PSpace_Joint_Joint
-import sympy.stats.joint_rv
 open Random
 
 

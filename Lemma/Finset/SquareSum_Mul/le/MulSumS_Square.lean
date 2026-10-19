@@ -1,13 +1,8 @@
 import sympy.core.logic
 import Lemma.Nat.Div.of.Eq
-import Lemma.Rat.SquareDiv.eq.DivSquareS
 import Lemma.Nat.Le.of.Gt_0.LeMulS
-import Lemma.Rat.EqMul_Div.of.Ne_0
 import Lemma.Real.Square.le.MulMul4.of.All_Le0Add_Mul_Square.Ge_0
-import Lemma.Finset.Sum_Square.ge.Zero
 import Lemma.Finset.Le0Add_MulSquare_SumSquare
-import Lemma.Nat.Mul
-import Lemma.Nat.MulMul.eq.Mul_Mul
 open Nat Finset Real Rat
 
 

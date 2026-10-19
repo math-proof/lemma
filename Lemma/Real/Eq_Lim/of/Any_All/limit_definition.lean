@@ -1,6 +1,4 @@
 import Lemma.Real.EqLim.is.All_Any_All_LtAbsSub
-import sympy.concrete.quantifier
-import sympy.series.limits
 open Real
 
 

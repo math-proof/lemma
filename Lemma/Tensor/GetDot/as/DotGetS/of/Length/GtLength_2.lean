@@ -1,11 +1,6 @@
-import Lemma.Bool.SEq.is.Eq
-import Lemma.List.EqCons_Tail.of.GtLength
-import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
 import Lemma.Tensor.GetEinsum.as.EinsumGetS.of.Length.GtLength_2
-import Lemma.Tensor.GtLengthEinsum.of.GeLengthS.GeLength_2
-import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 open Bool List Tensor
-set_option maxHeartbeats 500000
+set_option maxHeartbeats 250000
 
 
 @[path, fin]

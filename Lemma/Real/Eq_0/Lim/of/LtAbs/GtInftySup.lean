@@ -1,7 +1,6 @@
 import Lemma.Int.Lt.of.LtAbs
 import Lemma.Int.Gt.of.LtAbs
 import Lemma.Set.In.Icc.of.Lt.Gt
-import Lemma.Real.Eq_0.Lim.of.In_Icc.GtInftySup
 import Lemma.Real.Eq_0.Lim.of.In_Icc.GtInftySup.negative
 open Filter Topology
 

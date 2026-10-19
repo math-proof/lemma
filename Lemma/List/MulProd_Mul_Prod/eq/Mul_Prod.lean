@@ -2,7 +2,6 @@ import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Nat.MulMul
 import Lemma.List.ProdAppend.eq.MulProdS
 import Lemma.List.EqAppendTake__Drop
-import Lemma.Nat.Mul
 open List Nat
 
 

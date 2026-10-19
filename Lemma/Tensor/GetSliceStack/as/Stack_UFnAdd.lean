@@ -1,13 +1,9 @@
 import Lemma.Tensor.EqLengthStack
 import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.Eq
-import Lemma.Nat.CoeAdd.eq.AddCoeS
-import Lemma.List.EqLengthSlice
-import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.EqGetStack.of.Eq
 import Lemma.Vector.Map.of.All_Eq
 import Lemma.Tensor.GetToVector.eq.Get
 import Lemma.Tensor.GetTensorFlatten.eq.TensorGet
-import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Vector.GetValIndices.eq.Add.of.Lt
 import Lemma.Vector.Get
 open Tensor List Vector Nat

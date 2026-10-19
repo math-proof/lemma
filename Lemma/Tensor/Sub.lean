@@ -1,8 +1,3 @@
-import Lemma.Tensor.DataAdd.eq.AddDataS
-import Lemma.Tensor.DataNeg.eq.NegData
-import Lemma.Tensor.Eq.is.EqDataS
-import Lemma.Vector.GetAdd.eq.AddGetS
-import Lemma.Vector.GetNeg.eq.NegGet
 import Lemma.Vector.GetSub.eq.SubGet
 import torch.Tensor
 open Tensor Vector

@@ -1,14 +1,8 @@
 import Lemma.Tensor.SoftmaxAdd_Mul_Infty.eq.Cast_Stack_Ite_Block
 import Lemma.Hyperreal.XEqCoeLog.of.XEqCoe.Ne_0
-import Lemma.Tensor.XEqGetS.of.XEq.GtLength
-import Lemma.Tensor.XEq.is.XEqDataS
-import Lemma.Vector.XEq.is.All_XEqGetS
 import Lemma.Vector.GetLog.eq.LogGet
-import Lemma.Tensor.GetMap.eq.MapGet
-import Lemma.Tensor.EqGetStack
-import sympy.Basic
 open Tensor Hyperreal
-set_option maxHeartbeats 1000000
+set_option maxHeartbeats 500000
 
 private lemma log_scalar {X : Tensor ℝ* []} {r : ℝ} (h_r : r ≠ 0)
     (h : X ≈ (((r : ℝ) : Tensor ℝ []) : Tensor ℝ* [])) :

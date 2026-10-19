@@ -1,13 +1,4 @@
-import Lemma.Hyperreal.Infinitesimal.is.Infinitesimal.of.XEq
-import Lemma.Hyperreal.InfinitesimalAdd.of.Infinitesimal.Infinitesimal
-import Lemma.Hyperreal.InfinitesimalDiv.of.Infinitesimal.NotInfinitesimal
-import Lemma.Hyperreal.InfinitesimalMul.of.Infinitesimal.NotInfinite
-import Lemma.Hyperreal.Infinitesimal.of.InfinitesimalMul.NotInfinitesimal
-import Lemma.Hyperreal.Ne_0.of.NotInfinitesimal
-import Lemma.Hyperreal.XEq.is.OrAndS
-import Lemma.Hyperreal.XEqInvS.of.XEq.NotInfinitesimal
 import Lemma.Hyperreal.XEqMulS.of.XEq.XEq.Imp_XEqInvS.Imp_XEqInvS
-import Lemma.Rat.Div.eq.Mul_Inv
 open Hyperreal Rat
 
 

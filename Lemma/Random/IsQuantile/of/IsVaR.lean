@@ -1,5 +1,3 @@
-import sympy.stats.value_at_risk
-import sympy.Basic
 import Lemma.Random.IsVaR.is.LeRealLtAndLt_RealLe
 open MeasureTheory
 

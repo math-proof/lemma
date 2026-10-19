@@ -1,15 +1,11 @@
 import Mathlib.Data.Matrix.Mul
 import torch.Tensor.prod
 import Lemma.Tensor.Det.eq.DetToMatrix
-import Lemma.Tensor.Eq.is.EqDataS
-import Lemma.Tensor.EqGetStack
-import Lemma.Tensor.GetMul.eq.MulGetS
 import Lemma.Tensor.Mul
 import Lemma.Tensor.MulStack.eq.Stack_Mul
 import Lemma.Tensor.Prod_0.eq.Prod_Get
-import sympy.matrices.determinant
 open Tensor
-set_option maxHeartbeats 400000
+set_option maxHeartbeats 200000
 
 
 @[path]

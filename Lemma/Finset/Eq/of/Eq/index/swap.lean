@@ -1,6 +1,4 @@
-import sympy.tensor.index_of
 import sympy.sets.sets
-import sympy.Basic
 import Lemma.Nat.EqIndexGet.of.Lt.InjOnRange
 
 

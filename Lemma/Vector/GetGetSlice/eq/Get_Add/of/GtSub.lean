@@ -1,6 +1,4 @@
-import Lemma.List.EqLengthSlice
 import Lemma.List.LengthSlice.eq.SubMin
-import Lemma.Nat.EqAdd_Mul_DivSub1Sign_2
 import Lemma.Nat.LtAdd.of.Lt_Sub
 import Lemma.Nat.Lt.of.Lt_Min
 import Lemma.Vector.GetIndices.eq.Add.of.Lt

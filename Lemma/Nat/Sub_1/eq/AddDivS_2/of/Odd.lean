@@ -1,5 +1,3 @@
-import sympy.functions.elementary.integers
-import Lemma.Nat.Mul_2.eq.Add
 import Lemma.Nat.EvenSub_1.of.Odd
 import Lemma.Nat.Eq_AddDivS_2.of.Even
 import Lemma.Nat.Mul.of.Eq

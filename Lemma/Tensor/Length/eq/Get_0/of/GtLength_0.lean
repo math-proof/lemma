@@ -1,6 +1,5 @@
 import torch.Tensor.Basic
 import Lemma.Tensor.Length.eq.Get_0.of.Ne_Nil
-import Lemma.List.Ne_Nil.is.GtLength_0
 open Tensor List
 
 

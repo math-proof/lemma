@@ -3,27 +3,14 @@ import Lemma.Int.GtAbs_0.of.Lt_0
 import Lemma.Int.GtAbs_0.of.Gt_0
 import Lemma.Nat.Lt0Add.of.Gt_0.Gt_0
 import Lemma.Rat.DivAbsSub.eq.DivAbsSubDiv.Ne_0.Ne_0
-import Lemma.Hyperreal.EqSt_0.of.Infinitesimal
-import Lemma.Hyperreal.Infinite.is.InfiniteAdd.of.NotInfinite
-import Lemma.Hyperreal.Infinite.is.InfiniteSub
 import Lemma.Hyperreal.Infinite.of.InfiniteDiv.NotInfinitesimal
 import Lemma.Hyperreal.Infinite.of.InfinitesimalDiv.NotInfinitesimal
-import Lemma.Hyperreal.InfiniteMul.of.Infinite.Infinite
 import Lemma.Hyperreal.LeSt.of.Le.NotInfinite
-import Lemma.Hyperreal.Ne_0.of.Infinite
-import Lemma.Hyperreal.NotInfinite
-import Lemma.Hyperreal.NotInfinite.of.Infinitesimal
 import Lemma.Hyperreal.NotInfiniteDiv.of.InfinitesimalDivAbsSub.Infinite.Infinite
 import Lemma.Int.AbsSub
 import Lemma.Int.Gt0Add.of.Lt_0.Lt_0
-import Lemma.Int.Gt0Mul.of.Lt_0.Gt_0
-import Lemma.Nat.Add
-import Lemma.Nat.Le.of.Lt
-import Lemma.Nat.Ne.of.Lt
 import Lemma.Rat.DivSquareSub.eq.DivSubAddDivS.Ne_0.Ne_0
-import Lemma.Rat.Gt0Div.of.Gt_0.Lt_0
 import Lemma.Rat.Gt0Div.of.Lt_0
-import Lemma.Rat.Gt0Div.of.Lt_0.Gt_0
 open Hyperreal Int Nat Rat
 
 

@@ -1,13 +1,10 @@
-import Lemma.Bool.SEq.is.Eq
-import Lemma.Bool.SEqCast.of.Eq
 import Lemma.List.ConsLengthSlice.eq.List
 import Lemma.Tensor.DotRotaryMatrix.eq.AddMulSAppend
-import Lemma.Tensor.RotaryMatrix.eq.AppendHstackSMulSEye
 import Lemma.Tensor.SEq_Append
 import Lemma.Tensor.SEqAppendS.of.SEq.SEq
 import torch.functions
 open Bool List Tensor
-set_option maxHeartbeats 600000
+set_option maxHeartbeats 300000
 
 
 @[path]

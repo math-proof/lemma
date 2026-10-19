@@ -1,9 +1,6 @@
-import Lemma.Bool.SEq.is.Eq
 import Lemma.List.EraseIdx.eq.Cons_EraseIdxTail.of.GtLength_0
 import Lemma.List.EraseIdxTail.eq.TailEraseIdx.of.Lt_SubLength_1
-import Lemma.Nat.Lt_Sub.of.LtAdd
 import Lemma.Tensor.EqGet0_0
-import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.GtLength_0
 import Lemma.Tensor.SEq0S.of.Eq
 import Lemma.Tensor.Sum.as.Stack_Sum.of.GtLength

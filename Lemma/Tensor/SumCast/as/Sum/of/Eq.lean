@@ -1,5 +1,4 @@
 import stdlib.SEq
-import sympy.Basic
 import torch.Tensor.Basic
 import torch.Tensor.sum
 @[path, cast]

@@ -1,6 +1,4 @@
-import sympy.functions.elementary.complexes
 import Lemma.Set.IsReal.of.Le
-import sympy.Basic
 open scoped ComplexOrder
 
 

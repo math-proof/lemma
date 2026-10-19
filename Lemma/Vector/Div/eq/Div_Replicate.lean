@@ -1,6 +1,5 @@
 import sympy.vector.vector
 import Lemma.Vector.GetDiv.eq.DivGet
-import Lemma.Vector.GetDiv.eq.DivGetS
 import Lemma.Vector.EqGetReplicate
 open Vector
 

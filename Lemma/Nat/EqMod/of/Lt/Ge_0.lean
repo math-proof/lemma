@@ -1,4 +1,3 @@
-import sympy.functions.elementary.integers
 import Lemma.Nat.EqAddMulDiv
 import Lemma.Int.Mul.eq.Zero.of.OrAndSEq_0Ge_0
 import Lemma.Nat.Ge.of.Ge.Gt

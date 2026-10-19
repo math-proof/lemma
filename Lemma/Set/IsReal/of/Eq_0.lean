@@ -1,5 +1,4 @@
 import Lemma.Set.IsReal.of.Eq
-import sympy.Basic
 
 
 @[path]

@@ -1,11 +1,9 @@
 import Lemma.Complex.MulPowS_Inv3.eq.MulPow_Inv3Ite_1
 import Lemma.Complex.ArgPow_Inv.eq.DivArg
 import Lemma.Complex.EqArgExpMulI.of.In_Ioc
-import Lemma.Complex.ExpMulIDivMulNeg2Pi3.eq.Sub_MulI
 import Lemma.Complex.EqSquareSqrt
 import Lemma.Nat.Mul.eq.Zero.is.OrEqS_0
 import Lemma.Nat.Ne_0.Ne_0.of.Mul.ne.Zero
-import Lemma.Bool.NotOr.is.AndNotS
 open Bool Complex Nat
 
 

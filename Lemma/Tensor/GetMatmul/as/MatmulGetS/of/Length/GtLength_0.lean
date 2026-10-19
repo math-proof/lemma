@@ -1,15 +1,7 @@
-import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
-import Lemma.List.EqCons_Tail.of.GtLength_0
-import Lemma.List.TailSet_0.eq.Tail
-import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
 import Lemma.Tensor.GetMatmul.as.MatmulCastS_Get.of.Length.GtLength_0
-import Lemma.Tensor.GetResize_0.as.Get.of.GtLength_0
-import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
-import Lemma.Tensor.SEqGetS.of.SEq.GtLength
-import Lemma.Tensor.SEqMatmulS.of.SEq.SEq
 import Lemma.Tensor.SEqResizeS.of.SEq.Val.Eq
 open Bool List Tensor
-set_option maxHeartbeats 1000000
+set_option maxHeartbeats 500000
 
 
 @[path, fin, cast, cast.fin]

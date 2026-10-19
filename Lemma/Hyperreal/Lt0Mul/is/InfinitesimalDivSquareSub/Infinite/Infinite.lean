@@ -1,12 +1,6 @@
 import Lemma.Int.SquareNeg.eq.Square
 import Lemma.Int.SubNeg_Neg.eq.NegSub
 import Lemma.Hyperreal.Gt_0.of.Gt_0.InfinitesimalDivSquareSub.Infinite.Infinite
-import Lemma.Hyperreal.Infinite.is.InfiniteNeg
-import Lemma.Hyperreal.Ne_0.of.Infinite
-import Lemma.Int.GtNeg_0.of.Lt_0
-import Lemma.Int.Lt0Mul.of.Lt_0.Lt_0
-import Lemma.Nat.Lt0Mul.of.Gt_0.Gt_0
-import Lemma.Nat.Sub.eq.AddNeg
 open Hyperreal Int Nat
 
 

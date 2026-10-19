@@ -1,11 +1,7 @@
-import Lemma.Bool.SEq.is.EqCast.of.Eq
-import Lemma.List.EraseIdxEraseIdx.of.Gt.GtLength
-import Lemma.Nat.Div.of.Eq
 import Lemma.Tensor.SelectDiv.eq.DivSelectS
 import Lemma.Tensor.SelectExp.eq.ExpSelect
 import Lemma.Tensor.SelectKeepdim.eq.KeepdimCast_Select.of.Gt
 import Lemma.Tensor.SelectSum.as.SumSelect.of.Gt
-import Lemma.Tensor.Softmax.eq.DivExp_KeepdimSumExp
 import Lemma.Tensor.Softmax.eq.One.of.LeLength
 open Bool List Nat Tensor
 

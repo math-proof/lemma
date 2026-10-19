@@ -1,5 +1,3 @@
-import sympy.stats.policy_trajectory
-import sympy.Basic
 import Lemma.Random.Integral_EqAndEq.eq.MulRealPreimageProb.of.All_Eq
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 
@@ -23,7 +21,7 @@ private lemma main
   (φ : S → A → ℝ) :
 -- imply
   ∫ ω, (if (ω t).2.1 = x ∧ (ω t).2.2 = u then (1:ℝ) else 0) * φ (ω t).2.1 (ω t).2.2 ∂(M θ) =
-    (M θ).real (s t ⁻¹' {x}) * M.pol.prob θ x u * φ x u := by
+    (M θ).real (s t ⁻¹' {x}) * M.policy.prob θ x u * φ x u := by
 -- proof
   have h₂ : ∀ ω : ℕ → ℝ × S × A, (if (ω t).2.1 = x ∧ (ω t).2.2 = u then (1:ℝ) else 0) * φ (ω t).2.1 (ω t).2.2 =
       (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) * φ x u := by

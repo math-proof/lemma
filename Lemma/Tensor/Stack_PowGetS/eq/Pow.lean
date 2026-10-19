@@ -1,4 +1,3 @@
-import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Tensor.Eq_Stack
 import torch.functions
 import torch.stack

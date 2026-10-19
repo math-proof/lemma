@@ -2,7 +2,6 @@ import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import torch.Tensor.unsqueeze
 import Lemma.List.LengthInsertIdx.eq.Add1Length.of.GeLength
 import Lemma.List.LengthInsertIdx.eq.Length.of.LtLength
-import Lemma.Bool.UFn.of.Eq
 import Lemma.List.InsertIdxCons.eq.Cons_InsertIdx.of.Gt_0
 import Lemma.Nat.Ge_1.of.Gt_0
 open Tensor List Bool Nat

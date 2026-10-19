@@ -1,6 +1,5 @@
 import Lemma.List.InsertIdx.eq.Append_Cons.of.GeLength
 import Lemma.List.InsertIdxCons.eq.Cons_InsertIdx
-import Lemma.List.Set.eq.AppendTake__Cons_Drop.of.GtLength
 import Lemma.List.SetCons.eq.Cons_Set
 open List
 

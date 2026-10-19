@@ -1,12 +1,7 @@
 import torch.Tensor.permute
-import Lemma.Tensor.EqData0'0
-import Lemma.Tensor.Eq.is.EqDataS
-import Lemma.Vector.EqSplitAt0_0
 import Lemma.Vector.EqMap0_0.of.EqUFn_0
 import Lemma.Tensor.EqTensor0'0
 import Lemma.Tensor.Rotate0.eq.Zero
-import Lemma.Vector.Flatten0.eq.Zero
-import Lemma.Vector.EqCast_0'0.of.Eq
 open Tensor Vector
 
 

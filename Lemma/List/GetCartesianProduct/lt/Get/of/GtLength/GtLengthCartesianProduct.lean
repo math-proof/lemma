@@ -1,8 +1,5 @@
 import Lemma.List.CartesianProductCons.eq.FlatMap_FunMapCartesianProduct
 import Lemma.List.GetCons.eq.Get_Sub_1.of.Lt_Add_1.Gt_0
-import Lemma.Nat.Gt_0.of.Ne_0
-import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
-import Lemma.List.GetFlatten_AddMul.eq.Get.of.Lt.GtLength.All_EqLength
 import Lemma.List.LengthGetCartesianProduct.eq.Length.of.GtLengthCartesianProduct
 open List Nat Fin
 

@@ -1,7 +1,6 @@
 import Lemma.Tensor.DotSoftmaxAdd_Mul_Infty.eq.Cast_Stack_Sum_Ite_Mul
-import sympy.Basic
 open Tensor
-set_option maxHeartbeats 2000000
+set_option maxHeartbeats 1000000
 
 
 private lemma sc_ext {x y : ℝ} (h : x = y) : (x : Tensor ℝ []) = (y : Tensor ℝ []) := by rw [h]

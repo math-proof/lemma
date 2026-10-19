@@ -1,4 +1,3 @@
-import Lemma.Vector.GetUnflatten.eq.Get_AddMul
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import Lemma.Bool.EqCast.of.SEq
 import Lemma.Tensor.DataGet.eq.GetUnflattenData

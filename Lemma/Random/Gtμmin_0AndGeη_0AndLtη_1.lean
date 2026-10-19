@@ -1,5 +1,4 @@
 import sympy.stats.q_learning
-import sympy.Basic
 import Lemma.Matrix.All_Gt_0.of.Stationary.StochasticIrreducible
 open Finset
 

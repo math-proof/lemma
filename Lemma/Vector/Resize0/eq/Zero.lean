@@ -1,8 +1,6 @@
-import sympy.vector.Basic
 import Lemma.Vector.Repeat0.eq.Zero
 import Lemma.Vector.EqAppend0S0
 import Lemma.Vector.EqCast_0'0.of.Eq
-import Lemma.Nat.EqAddMulDiv
 open Vector
 
 

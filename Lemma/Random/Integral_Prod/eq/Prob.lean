@@ -3,9 +3,6 @@ import Mathlib.MeasureTheory.Integral.Lebesgue.Map
 import Mathlib.MeasureTheory.Measure.Count
 import Lemma.Random.All_EqIntegral_ProbJoint.of.PSpace_Joint
 import Lemma.Random.All_Eq_MulProbCond.of.PSpace_Joint
-import Lemma.Random.PSpace.PSpace.of.PSpace_Joint
-import sympy.stats.joint_rv
-import sympy.Basic
 open MeasureTheory Random
 
 

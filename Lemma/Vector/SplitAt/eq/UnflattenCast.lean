@@ -1,5 +1,4 @@
 import sympy.vector.vector
-import Lemma.List.Prod.eq.MulProdS
 open List
 
 

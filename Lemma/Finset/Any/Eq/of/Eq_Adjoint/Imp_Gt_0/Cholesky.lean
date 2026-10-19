@@ -1,5 +1,3 @@
-import sympy.matrices.cholesky
-import sympy.Basic
 import Lemma.Matrix.Any_Eq_0_And_All_Gt_0_And_Eq_Mul.of.PosDef
 open Matrix
 open scoped ComplexOrder

@@ -1,8 +1,6 @@
 import Lemma.Set.Le.of.In_Ioc
 import Lemma.Set.Lt.of.In_Ioc
 import Lemma.Real.GtPi0
-import sympy.functions.elementary.trigonometric
-import sympy.sets.sets
 open Set Real
 
 

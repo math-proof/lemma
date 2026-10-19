@@ -1,7 +1,3 @@
-import Lemma.List.Get.dvd.ProdTake.of.GtLength
-import Lemma.List.LengthSlice.eq.ProdTake.of.GtGet.GtLength
-import Lemma.List.ProdTake.eq.DivProdTake.of.Ne_0.GtLength
-import Lemma.Nat.LtAddMul.of.Lt.Lt_Div.Dvd
 import Lemma.Vector.GetGetSlice.eq.Get.of.GtGet.GtProdTake.GtLength
 open List Nat Vector
 

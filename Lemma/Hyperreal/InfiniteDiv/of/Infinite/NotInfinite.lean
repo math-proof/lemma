@@ -1,4 +1,3 @@
-import Lemma.Hyperreal.Infinite.is.All_GtAbs
 import Lemma.Hyperreal.NotInfinite.is.Any_LeAbs
 import Lemma.Nat.Gt.of.Gt.Ge
 import Lemma.Rat.AbsDiv.eq.DivAbsS

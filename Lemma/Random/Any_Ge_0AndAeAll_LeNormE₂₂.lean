@@ -1,10 +1,6 @@
-import sympy.stats.markov_samples
-import sympy.Basic
 import Mathlib.Algebra.Order.Field.GeomSum
 import Lemma.Random.G.eq.Sum_Sum_SMul
 import Lemma.Random.Any_Ge_0AndAll_All_LeNormG
-import Lemma.Random.Any_Ge_0AndAll_All_LeNormSub_MulNormSub
-import Lemma.Real.Any_Ge_0AndAll_All_LeNorm_MulAddNorm1.of.Any_Ge_0AndAll_All_LeNormSub_MulNormSub
 import Lemma.Matrix.Any_Gt_0AndLt_1AndGe_0AndAll_LeSum_AbsSubMul_Pow
 import Lemma.Matrix.GetPowKernelMatAugChainMarkov.eq.MulGetPowPSub_1P.of.Ge_1
 import Lemma.Random.AdaptedOnSamplePath.of.IteratesOfResidual

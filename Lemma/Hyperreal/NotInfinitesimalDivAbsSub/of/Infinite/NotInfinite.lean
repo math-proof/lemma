@@ -1,9 +1,6 @@
 import Lemma.Int.EqSubAdd
-import Lemma.Hyperreal.EqSt.of.InfinitesimalSub
-import Lemma.Hyperreal.EqSt_0.of.Infinitesimal
 import Lemma.Hyperreal.Eq_0.of.InfinitesimalAdd.Infinitesimal
 import Lemma.Hyperreal.Infinite.is.InfiniteAbs
-import Lemma.Hyperreal.Infinite.is.InfiniteAdd
 import Lemma.Hyperreal.Infinite.is.InfiniteSub
 import Lemma.Hyperreal.InfinitesimalDiv.of.NotInfinite.Infinite
 import Lemma.Hyperreal.Ne_0.of.Infinite

@@ -1,4 +1,3 @@
-import Lemma.Nat.Add
 import Lemma.Nat.ToNatSub_Neg.eq.Add1
 open Nat
 

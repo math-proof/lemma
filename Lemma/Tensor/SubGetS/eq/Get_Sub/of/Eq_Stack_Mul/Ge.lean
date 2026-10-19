@@ -3,7 +3,6 @@ import Lemma.Nat.CoeSub.eq.SubCoeS.of.Ge
 import Lemma.Nat.ValSub.eq.SubValS.of.Ge
 import Lemma.Tensor.DataMul.eq.MulData
 import Lemma.Tensor.DataSub.eq.SubDataS
-import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Tensor.EqGetStack
 import Lemma.Vector.GetMul.eq.MulGet
 import Lemma.Vector.GetSub.eq.SubGetS

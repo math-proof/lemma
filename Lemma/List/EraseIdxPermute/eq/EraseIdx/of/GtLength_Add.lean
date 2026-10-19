@@ -1,12 +1,9 @@
 import Lemma.List.DropTake.eq.TakeDrop
 import Lemma.List.EraseIdxAppend.eq.AppendEraseIdx.of.GtLength
-import Lemma.List.EraseIdxAppend.eq.Append_EraseIdx.of.LeLength
 import Lemma.List.EraseIdxRotate.eq.Append_EraseIdxTake.of.LeLength_Add.GeLength
 import Lemma.List.Permute.eq.Append_AppendRotateTakeDrop
 import Lemma.List.TakeDrop.eq.DropTake
-import Lemma.List.TakeTake.eq.Take.of.Ge
 import Lemma.Nat.EqMin.of.Le
-import Lemma.Nat.EqSubAdd
 open List Nat
 
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-set_option maxHeartbeats 1600000
+set_option maxHeartbeats 800000
 open scoped TensorProduct
 
 

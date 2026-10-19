@@ -1,5 +1,4 @@
 import sympy.stats.policy_trajectory.continuous_action
-import sympy.Basic
 import Mathlib.Probability.Kernel.MeasurableIntegral
 open MeasureTheory PolicyGradient
 

@@ -1,8 +1,6 @@
 import Lemma.Hyperreal.InfinitesimalLogSub.of.InfinitesimalSub
 import Lemma.Hyperreal.InfinitesimalSub.of.XEq.NotInfinite
 import Lemma.Hyperreal.XEq.of.InfinitesimalSub
-import Lemma.Hyperreal.Infinitesimal.is.InfinitesimalNeg
-import sympy.Basic
 open Hyperreal
 
 

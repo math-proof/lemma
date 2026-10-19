@@ -3,9 +3,7 @@ import Lemma.Int.AddSub.eq.Sub_Sub
 import Lemma.Int.SubSub
 import Lemma.Int.Mul_Sub.eq.SubMulS
 import Lemma.Int.SubCubeS.eq.MulSub__AddSquareS
-import Lemma.Nat.Mul
 import Lemma.Nat.MulMul.eq.Mul_Mul
-import Lemma.Int.Lt.is.Gt0Sub
 import Lemma.Int.Gt0Mul.of.Lt_0.Gt_0
 import Lemma.Int.Sub.gt.Zero.is.Lt
 import Lemma.Set.AddAddSquareS.lt.Div3'4.of.In_Ico0.In_Ico0

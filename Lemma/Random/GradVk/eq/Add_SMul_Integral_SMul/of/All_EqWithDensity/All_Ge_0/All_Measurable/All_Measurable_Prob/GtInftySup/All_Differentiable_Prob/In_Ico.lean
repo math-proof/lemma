@@ -1,15 +1,6 @@
-import sympy.stats.rv
-import sympy.stats.policy_trajectory.continuous
-import sympy.Basic
-import sympy.vector.operators
-import sympy.concrete.sup
 import sympy.concrete.summations
 import Mathlib.Analysis.InnerProductSpace.Dual
 import Lemma.Random.Fderiv.eq.AddSum_SMulSMul.of.All_Measurable_Prob.In_Ico.GtInftySup.All_Differentiable_Prob
-import Lemma.Random.HasFDerivAt.of.All_Measurable_Prob.In_Ico.GtInftySup.All_Differentiable_Prob
-import Lemma.Random.GtInftySup.of.All_Measurable_Prob.In_Ico.GtInftySup.All_Differentiable_Prob
-import Lemma.Random.Measurable_Vk.of.All_Measurable_Prob
-import Lemma.Real.StronglyMeasurable_Fderiv.of.All_DifferentiableAt.All_Measurable
 open MeasureTheory PolicyGradient Random Real
 
 
@@ -40,15 +31,15 @@ private lemma main
   {p : S → A → S → ℝ}
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
-  (h₁ : ∀ x u, Differentiable ℝ (fun θ => M.pol.prob θ x u))
-  (h₂ : sup[θ, x, u] ‖∇[θ] M.pol.prob θ x u‖ < ∞)
-  (h₃ : ∀ θ u, Measurable (fun x => M.pol.prob θ x u))
+  (h₁ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
+  (h₂ : sup[θ, x, u] ‖∇[θ] M.policy.prob θ x u‖ < ∞)
+  (h₃ : ∀ θ u, Measurable (fun x => M.policy.prob θ x u))
   (h₄ : ∀ x u, Measurable (p x u))
   (h₅ : ∀ x u y, p x u y ≥ 0)
   (h₆ : ∀ x u, M.env.trans (x, u) = (ReferenceMeasure.measure : Measure S).withDensity (fun y => ENNReal.ofReal (p x u y))) :
 -- imply
   ∇[θ] M.Vk θ γ («s.bvar» t) =
-    ∑ «a.bvar» t, M.Qk θ γ («s.bvar» t) («a.bvar» t) • ∇[θ] M.pol.prob θ («s.bvar» t) («a.bvar» t) +
+    ∑ «a.bvar» t, M.Qk θ γ («s.bvar» t) («a.bvar» t) • ∇[θ] M.policy.prob θ («s.bvar» t) («a.bvar» t) +
       γ • ∫ y, M.P1k θ p («s.bvar» t) y • ∇[θ] M.Vk θ γ y ∂ReferenceMeasure.measure := by
 -- proof
   set x := «s.bvar» t
@@ -72,14 +63,14 @@ private lemma main
     rw [h₆, integrable_withDensity_iff_integrable_smul' (h₄ x u).ennreal_ofReal
       (Filter.Eventually.of_forall fun y => ENNReal.ofReal_lt_top)] at hI
     simpa [ENNReal.toReal_ofReal (h₅ x u _)] using hI
-  have hsum : ∑ u, M.pol.prob θ x u • ∫ y, fderiv ℝ (fun θ => M.Vk θ γ y) θ ∂(M.env.trans (x, u)) =
+  have hsum : ∑ u, M.policy.prob θ x u • ∫ y, fderiv ℝ (fun θ => M.Vk θ γ y) θ ∂(M.env.trans (x, u)) =
       ∫ y, M.P1k θ p x y • fderiv ℝ (fun θ => M.Vk θ γ y) θ ∂ReferenceMeasure.measure := calc
-    _ = ∑ u, ∫ y, M.pol.prob θ x u • (p x u y • fderiv ℝ (fun θ => M.Vk θ γ y) θ) ∂ReferenceMeasure.measure :=
+    _ = ∑ u, ∫ y, M.policy.prob θ x u • (p x u y • fderiv ℝ (fun θ => M.Vk θ γ y) θ) ∂ReferenceMeasure.measure :=
       Finset.sum_congr rfl fun u _ => by rw [hd u, integral_smul]
-    _ = ∫ y, ∑ u, M.pol.prob θ x u • (p x u y • fderiv ℝ (fun θ => M.Vk θ γ y) θ) ∂ReferenceMeasure.measure := by
+    _ = ∫ y, ∑ u, M.policy.prob θ x u • (p x u y • fderiv ℝ (fun θ => M.Vk θ γ y) θ) ∂ReferenceMeasure.measure := by
       rw [integral_finsetSum]
       intro u _
-      apply Integrable.smul (M.pol.prob θ x u) (hi u)
+      apply Integrable.smul (M.policy.prob θ x u) (hi u)
     _ = _ := by
       congr 1
       funext y

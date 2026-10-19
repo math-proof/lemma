@@ -1,5 +1,3 @@
-import sympy.matrices.cholesky
-import sympy.Basic
 import Lemma.Matrix.GetMul_L.eq.AddSum_Mul_Star.of.All_All_Eq_0
 open Matrix
 open scoped ComplexOrder

@@ -1,20 +1,12 @@
 import Lemma.Vector.SEq.of.EqLength_0.EqLength_0
 import torch.Tensor.prod
-import Lemma.Nat.Gt_0.of.Ne_0
 import Lemma.Tensor.All_SEqDataSGet.of.All_SEqGetS.Eq
-import Lemma.Bool.IffEqS.of.Eq
-import Lemma.Nat.NotLt.is.Ge
-import Lemma.List.GetElem.eq.None.of.LeLength
 import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Tensor.Data.eq.FlattenMapRange
 import Lemma.Vector.GetVal.eq.Get.of.Lt
 import Lemma.Vector.GetFlatten_AddMul.eq.Get
-import Lemma.Nat.AddMul.lt.Mul
-import Lemma.Vector.EqGetRange
-import Lemma.List.Get.of.Eq.GtLength
 import Lemma.Tensor.HEq.of.SEqDataS.Eq
 import Lemma.Fin.Eq.of.Val
-import Lemma.Vector.Val.of.SEq
 import Lemma.Vector.SEq.of.Val
 open Tensor Vector List Bool Nat Fin
 

@@ -1,6 +1,4 @@
 import Lemma.List.Tail.eq.AppendTailTake__Drop.of.Gt_0
-import Lemma.List.TailTake.eq.TakeTail
-import Lemma.Nat.EqAddSub.of.Ge
 open List Nat
 
 

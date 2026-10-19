@@ -1,9 +1,7 @@
 import Lemma.Nat.Ite.eq.SubIte
 import Lemma.Nat.SubAdd.eq.Sub_Sub.of.Ge
 import Lemma.Nat.AddAdd.eq.Add_Add
-import Lemma.Nat.EqSubAdd
 import Lemma.Bool.BFnIte.is.Imp.Imp
-import Lemma.Nat.Add
 import Lemma.Nat.Sub_1.eq.AddDivS_2.of.Odd
 import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.Nat.Odd.is.NotEven

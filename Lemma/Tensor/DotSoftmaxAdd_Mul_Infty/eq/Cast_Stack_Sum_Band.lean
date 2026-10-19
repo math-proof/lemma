@@ -1,10 +1,8 @@
 import Lemma.Tensor.DotSoftmaxAdd_Mul_Infty.eq.Cast_Stack_Sum_Gather
-import sympy.concrete.expr_with_limits
 import Lemma.Fin.SumFilter.eq.Sum
-import Lemma.Nat.LtAdd_Mul.of.Lt_DivSubAddSub1.Gt_0
 import Lemma.Fin.SumFilter.eq.Sum.of.All_Le.EqEMod.Lt.Gt_0
 open Tensor
-set_option maxHeartbeats 2000000
+set_option maxHeartbeats 1000000
 
 
 /--

@@ -1,13 +1,9 @@
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import torch.Tensor.prod
 import Lemma.Vector.Eq.of.Val
-import sympy.core.mul
 import Lemma.Tensor.MulShape.assoc
-import Lemma.Vector.ValCast.eq.Val.of.Eq
 import Lemma.Vector.GetVal.eq.Get.of.Lt.Lt
 import Lemma.Tensor.ValDataMul.eq.Nil.of.EqProdMulShape_0
-import Lemma.Tensor.WrapFlatPad1LeftWrapFlat.eq.WrapFlatPad1.of.NeProdMulShapeMulShape_0.NeProdMulShape_0
-import Lemma.Tensor.WrapFlatPad1RightWrapFlat.eq.WrapFlatPad1.of.NeProdMulShapeMulShape_0.NeProdMulShape_0
 import Lemma.Tensor.WrapFlatPad1LeftWrapFlat.eq.WrapFlatPad1.of.NeProdMulShape_MulShape_0.NeProdMulShape_0
 import Lemma.Tensor.WrapFlatPad1RightWrapFlat.eq.WrapFlatPad1.of.NeProdMulShape_MulShape_0.NeProdMulShape_0
 import Lemma.Tensor.WrapFlatPad1Max_LengthMulShape.eq.WrapFlatPad1MaxMax

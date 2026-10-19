@@ -1,4 +1,3 @@
-import Lemma.List.EqSet.of.LeLength
 import Lemma.List.ProdAppend.eq.MulProdS
 import Lemma.List.SetAppend.eq.Append_Set.of.GtLength
 import Lemma.List.Take.eq.AppendTake.of.GtLength

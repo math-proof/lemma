@@ -1,5 +1,3 @@
-import sympy.functions.elementary.complexes
-import sympy.Basic
 import Lemma.Complex.SquareSqrt3.eq.Three
 open Complex
 

@@ -1,7 +1,5 @@
-import sympy.Basic
 import Mathlib
 import Lemma.AdicCompletion.Mem.NonZeroDivisors.AlgebraMap.of.Mem.NonZeroDivisors.of.LiesOver
-import Lemma.AdicCompletion.exists.RingEquiv.of.IsLocalization.AtPrime.of.IsMaximal
 
 /-!
 Port of FLT `Def_AdicCompletionGaloisAction` (MulSemiringAction on AdicCompletion),

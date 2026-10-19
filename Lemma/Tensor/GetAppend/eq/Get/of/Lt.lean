@@ -1,4 +1,3 @@
-import Lemma.Bool.SEq.is.Eq
 import Lemma.Tensor.GetAppend.eq.AppendGetS
 import Lemma.Tensor.GetAppend.eq.Get
 import Lemma.Tensor.SEqGetS.of.SEq.GtLength

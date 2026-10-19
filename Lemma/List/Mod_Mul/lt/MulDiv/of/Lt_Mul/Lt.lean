@@ -1,13 +1,9 @@
 import Lemma.List.DropSet.eq.Drop.of.Lt
 import Lemma.List.ProdDrop.eq.MulProdDrop_Add_1.of.GtLength
 import Lemma.List.ProdDrop.eq.MulProdSDrop.of.Le
-import Lemma.List.ProdDrop.eq.Mul_ProdDrop_Add_1.of.GtLength
 import Lemma.List.ProdDropEraseIdx.eq.ProdAppendDropTake.of.Ge
 import Lemma.List.TakeEraseIdx.eq.Take.of.Gt
-import Lemma.Nat.DivMulS.eq.Div.of.Ne_0
 import Lemma.Nat.Mod_Mul.lt.MulDiv.of.Lt_Mul.Lt
-import Lemma.Nat.MulMul
-import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Nat.Mul_Mul
 open List Nat
 

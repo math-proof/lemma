@@ -1,7 +1,6 @@
 import Mathlib.Algebra.Group.ForwardDiff
 import Mathlib.Data.Matrix.ColumnRowPartitioned
 import Mathlib.LinearAlgebra.Vandermonde
-import sympy.Basic
 import Lemma.Matrix.DetOfVecCons3_FunPow.eq.MulMulMul2Pow3PowSub1Prod
 open Matrix Finset Nat
 

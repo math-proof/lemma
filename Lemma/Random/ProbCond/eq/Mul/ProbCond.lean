@@ -2,10 +2,8 @@ import Mathlib.MeasureTheory.Measure.Count
 import Lemma.Measure.EqRnDeriv_Count
 import Lemma.Measure.Count.eq.ProdCountS
 import Lemma.Random.PSpace_Joint
-import Lemma.Random.PSpace_JointJoint.is.PSpace_Joint_Joint
 import Lemma.Random.PSpace_Joint_Joint.of.PSpace_Joint_Joint
 import Lemma.Random.PSpace.PSpace.of.PSpace_Joint
-import sympy.stats.joint_rv
 open MeasureTheory Measure Random
 
 

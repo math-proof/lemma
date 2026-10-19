@@ -1,6 +1,5 @@
 import Lemma.Nat.EqSubAdd
 import Lemma.Nat.EqDivMul.of.Ne_0
-import Lemma.Nat.EqAddMulDiv
 import Lemma.Nat.ModAddMul.eq.Mod
 import Lemma.Nat.Div.of.Eq
 import Lemma.Nat.EqMod.of.Lt.Ge_0

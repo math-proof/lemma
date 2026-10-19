@@ -1,4 +1,3 @@
-import Lemma.List.InsertIdxAppend.eq.Append_InsertIdx
 import Lemma.Tensor.LengthCast.eq.Length.of.Eq
 import Lemma.Tensor.LengthMul.eq.Length.of.GtLength_0
 import Lemma.Tensor.LengthRepeat.eq.Length.of.GtVal_0

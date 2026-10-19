@@ -1,37 +1,15 @@
-import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import torch.Tensor.unsqueeze
 import torch.Tensor.prod
 import torch.Tensor.permute
-import Lemma.Bool.SEqCast.of.Eq
-import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
-import Lemma.Fin.Eq_Fin.of.EqVal
 import Lemma.List.InsertIdxCons.eq.Cons_InsertIdx.of.Gt_0
-import Lemma.List.InsertIdx_Length.eq.Append_List
-import Lemma.List.LengthCons.eq.AddLength_1
 import Lemma.List.PermuteCons.eq.Cons_Permute.of.Ge
 import Lemma.List.PermuteInsertIdx.eq.InsertIdx.of.GtLength_0
-import Lemma.List.Permute__Neg.eq.AppendTake__RotateDrop.of.Val.eq.SubLength_1
 import Lemma.List.Permute__Neg1.eq.Swap.of.GtVal_0
-import Lemma.List.ProdAppend.eq.MulProdS
-import Lemma.List.ProdCons.eq.Mul_Prod
 import Lemma.List.ProdDropCons_Append_List.eq.MulGet.of.GtLength_0
-import Lemma.List.ProdInsertIdx.eq.Prod
 import Lemma.List.ProdPermute.eq.Prod
 import Lemma.List.ProdRotate.eq.MulProdS
-import Lemma.List.ProdRotate.eq.Prod
-import Lemma.List.Swap.eq.Permute__Neg1.of.GtLength
-import Lemma.Nat.EqMod.of.Lt
-import Lemma.Nat.Eq_Div.Eq_Mod.of.Eq_AddMul
 import Lemma.Tensor.DataUnsqueeze.as.Data
-import Lemma.Tensor.Permute.eq.Ite
-import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Lemma.Tensor.T.as.Permute__Neg1.of.GtLength_0
-import Lemma.Tensor.Unsqueeze.eq.TensorCast_Data
-import Lemma.Vector.GetCast.eq.Get.of.Eq
-import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
-import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
-import Lemma.Vector.GetTranspose.eq.Get
-import Lemma.Vector.SEq.of.All_EqGetS.Eq
 open Bool Fin List Nat Tensor Vector
 
 

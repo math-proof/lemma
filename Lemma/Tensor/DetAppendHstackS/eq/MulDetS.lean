@@ -1,13 +1,9 @@
 import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
 import Lemma.Tensor.Det.eq.DetToMatrix
 import Lemma.Tensor.EqGet0_0
-import Lemma.Tensor.GetAppend.eq.Get.of.Lt
-import Lemma.Tensor.GetAppend.eq.Get_Sub.of.GtAdd.Ge
 import Lemma.Tensor.GetHstack.eq.Get.of.Lt
 import Lemma.Tensor.GetHstack.eq.Get_Sub.of.GtAdd.Ge
 import Lemma.Tensor.Mul
-import sympy.matrices.dense
-import sympy.matrices.determinant
 open Tensor
 
 

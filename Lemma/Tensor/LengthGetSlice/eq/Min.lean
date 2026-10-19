@@ -1,5 +1,4 @@
 import torch.Tensor
-import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.List.LengthSlice.eq.Min
 open Tensor List
 

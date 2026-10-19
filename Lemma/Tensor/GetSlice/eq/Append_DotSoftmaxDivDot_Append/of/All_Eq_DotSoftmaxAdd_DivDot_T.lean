@@ -1,13 +1,12 @@
 import Lemma.Tensor.DotSoftmaxAdd_Mul_Infty.eq.Stack_DotSoftmaxDivDot_T
 import torch.Tensor.permute
-import Lemma.Tensor.GetSliceStack.as.Stack_UFnAdd.of.Eq
 import Lemma.Tensor.SEqAppendS.of.SEq.SEq
 import Lemma.Tensor.SEqGetSliceSStack.of.LengthSlice
 import Lemma.Tensor.Stack.eq.AppendStackS
 import Lemma.Tensor.TAppend.as.AppendTS
 import Lemma.Tensor.XEqAppendS.of.XEq.XEq
 open Tensor
-set_option maxHeartbeats 1000000
+set_option maxHeartbeats 500000
 
 
 @[path]

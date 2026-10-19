@@ -1,13 +1,5 @@
-import sympy.stats.markov_samples
-import sympy.stats.lyapunov
-import sympy.Basic
 import Lemma.Random.AeTendsto.of.LyapunovFunction.Measurable.Measurable.Eq
-import Lemma.Random.Any_Ge_0AndAll_All_LeNormSub_MulSumIco_Exp.of.Any_Ge_0AndAll_All_LeNormSub_MulNormSub.All_Ge_0.IteratesOfResidual
-import Lemma.Real.Anchors.RobbinsMonroβ
-import Lemma.Real.Anchors.StrictMonoTime
-import Lemma.Real.Any_And_Ge_0_All_Le.of.Summable
 import Lemma.Nat.Any_In_Ico.of.Eq_0.StrictMono
-import Lemma.Real.Anchors.Time0.eq.Zero
 open MeasureTheory Topology Real Filter Finset
 
 

@@ -1,6 +1,5 @@
 import stdlib.List
 import Lemma.List.Permute.eq.AppendRotateTake___Drop.of.EqVal_0
-import Lemma.Nat.EqAddSub.of.Ge
 open List Nat
 
 

@@ -1,5 +1,3 @@
-import sympy.stats.policy_trajectory.continuous_action
-import sympy.Basic
 import Lemma.Random.Measurable_Wkd.of.All_Measurable_Prob
 open MeasureTheory PolicyGradient Random
 
@@ -12,7 +10,7 @@ private lemma main
   [MeasurableSpace S] [ReferenceMeasure A]
   {M : DensityModel Θ S A}
 -- given
-  (h : ∀ θ, Measurable (fun z : S × A => M.pol.prob θ z.1 z.2))
+  (h : ∀ θ, Measurable (fun z : S × A => M.policy.prob θ z.1 z.2))
   (θ : Θ)
   (γ : ℝ) :
 -- imply

@@ -1,11 +1,9 @@
-import Lemma.Bool.SEq.is.Eq
 import Lemma.Tensor.Eq.is.All_EqGetS
-import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.GetSum.as.SumGet.of.GtGet_0.LtAdd_1Length
 import torch.stack
 import torch.Tensor.sum
 open Bool Tensor
-set_option maxHeartbeats 400000
+set_option maxHeartbeats 200000
 
 
 @[path]

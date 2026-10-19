@@ -1,7 +1,5 @@
 import sympy.vector.vector
 import Lemma.Nat.EqMin.of.Le
-import Lemma.Nat.Le_SubMulS
-import Lemma.Nat.Mul
 open Nat
 
 

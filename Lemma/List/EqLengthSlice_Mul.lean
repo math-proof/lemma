@@ -1,7 +1,6 @@
 import Lemma.Int.EqToNat
 import Lemma.Nat.CoeMul.eq.MulCoeS
 import Lemma.Nat.EqAdd_Mul_DivSub1Sign_2
-import Lemma.Nat.Mul
 import Lemma.Rat.EqToNatCeilDivSubMul.of.Lt
 open Int Nat Rat
 

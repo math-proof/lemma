@@ -1,4 +1,3 @@
-import sympy.functions.elementary.integers
 import Lemma.Bool.Iff.is.IffNotS
 import Lemma.Nat.NotOdd.is.Even
 open Bool Nat

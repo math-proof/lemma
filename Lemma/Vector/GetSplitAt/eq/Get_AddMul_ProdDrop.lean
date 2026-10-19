@@ -1,5 +1,4 @@
 import Lemma.Vector.GetUnflatten.eq.Get_AddMul
-import Lemma.List.Prod.eq.MulProdS
 import Lemma.List.AddMul_ProdDrop.lt.Prod
 import Lemma.Bool.HEq.of.SEq
 import Lemma.Vector.Eq.of.Eq_Cast.Eq

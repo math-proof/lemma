@@ -1,14 +1,8 @@
-import Lemma.List.EqLengthSlice_Mul.of.Lt
 import Lemma.Fin.Eq_Fin.of.EqVal
 import Lemma.Vector.GetIndices.eq.AddMul
 import Lemma.Vector.EqGetMapRange.of.Lt
 import Lemma.Rat.FloorDiv.eq.Zero
-import Lemma.Nat.CeilSub.eq.Sub_Floor
-import Lemma.Int.EqToNat
 import Lemma.Nat.AddMul.lt.Mul
-import Lemma.Nat.CoeMul.eq.MulCoeS
-import Lemma.Nat.CoeSub.eq.SubCoeS.of.Ge
-import Lemma.Nat.EqAdd_Mul_DivSub1Sign_2
 import Lemma.Nat.Gt_0.of.Ne_0
 import Lemma.Nat.Ne_0
 import Lemma.Rat.Div.le.Zero.of.Le_0

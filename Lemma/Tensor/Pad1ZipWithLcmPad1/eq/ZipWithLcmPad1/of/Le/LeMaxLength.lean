@@ -1,5 +1,3 @@
-import sympy.core.mul
-import sympy.Basic
 import Lemma.Tensor.Pad1.eq.AppendReplicateSub1Pad1.of.Le.Le_Length
 import Lemma.List.LengthZipWithLcm.eq.Length.of.EqLengthS
 import Lemma.List.ZipWithLcmReplicate1.eq.Replicate1

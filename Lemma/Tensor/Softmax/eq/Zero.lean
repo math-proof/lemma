@@ -3,7 +3,6 @@ import torch.Tensor.sum
 import torch.Tensor.unsqueeze
 import torch.Tensor.repeat
 import torch.Tensor.prod
-import Lemma.Tensor.EqData0'0
 import Lemma.Tensor.EqDiv_0'0
 import Lemma.Tensor.EqTensor0'0
 import Lemma.Tensor.Sum.eq.Zero

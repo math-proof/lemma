@@ -1,8 +1,6 @@
 import Lemma.List.EqGetCons
 import Lemma.Tensor.DataAppend.as.OfVectorMap₂_CastS_ToVector.of.GtLength_0
 import Lemma.Tensor.GetOfVector.eq.Get
-import Lemma.Tensor.GetToVector.eq.Get
-import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.GtLength_0
 import Lemma.Vector.GetMap₂.eq.BFnGetS
 open Tensor List Vector

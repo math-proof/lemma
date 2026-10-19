@@ -1,13 +1,10 @@
-import Lemma.Tensor.Eq.is.All_EqGetS
-import Lemma.Tensor.GetAppend.eq.Get.of.Lt
-import Lemma.Tensor.GetAppend.eq.Get_Sub.of.GtAdd.Ge
 import Lemma.Tensor.GetHstack.eq.Get.of.Lt
 import Lemma.Tensor.GetHstack.eq.Get_Sub.of.GtAdd.Ge
 import Lemma.Tensor.EqGetT
 import torch.Tensor.Basic
 import torch.Tensor.permute
 open Tensor
-set_option maxHeartbeats 4000000
+set_option maxHeartbeats 1000000
 
 
 /--

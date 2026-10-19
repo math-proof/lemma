@@ -1,5 +1,4 @@
 import Lemma.List.DropEraseIdx.eq.Drop.of.Le
-import Lemma.Nat.Le.of.Lt
 open List Nat
 
 

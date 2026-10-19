@@ -5,8 +5,6 @@ import Lemma.Vector.EqSplitAt0_0
 import Lemma.Vector.EqMap0_0.of.EqUFn_0
 import Lemma.Vector.Resize0.eq.Zero
 import Lemma.Vector.Flatten0.eq.Zero
-import Lemma.Vector.EqCast_0'0.of.Eq
-import Lemma.List.ProdSet.eq.MulProd_Mul_Prod.of.GtLength
 open Tensor Vector
 
 

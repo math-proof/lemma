@@ -4,14 +4,9 @@ import Lemma.Bool.AndAnd.is.And_And
 import Lemma.Nat.Gt.of.Ge.Gt
 import Lemma.Finset.AllIco.of.AllRange
 import Lemma.Finset.All_And.of.All.All
-import Lemma.Nat.Eq.of.Le.Le
-import Lemma.Finset.All.of.All.All_Imp
 import Lemma.Real.All_LeRoot_Sqrt.of.All_Ge_1
 import Lemma.Finset.LtSumS.of.Any_Lt.All_Le
 import Lemma.Finset.Sum.eq.Add_Sum.of.Gt_0
-import Lemma.Finset.Sum.of.All_Eq
-import Lemma.Real.Sqrt.eq.Root_2
-import Lemma.Int.SubAdd.eq.Add_Sub
 import Lemma.Int.CoeSub.eq.SubCoeS
 import Lemma.Nat.CoeSub.eq.SubCoeS.of.Ge
 import Lemma.Real.Sum_Sqrt.le.Mul_Sqrt.of.EqDivSum.All_Ge_1.Ne_0
@@ -20,7 +15,6 @@ import Lemma.Real.Pow1.eq.One
 import Lemma.Nat.SubNatNat.eq.Sub
 import Lemma.Real.SubAddSqrt.lt.Mul_SqrtDiv.of.Gt_1.Gt_1
 import Lemma.Finset.All_EqUFnS.of.All_Eq
-import Lemma.Nat.EqAdd0
 import Lemma.Nat.EqCast_0'0
 open Bool Finset Real Nat Int
 

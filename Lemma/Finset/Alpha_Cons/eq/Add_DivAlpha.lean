@@ -1,5 +1,4 @@
 import sympy.concrete.continued_fraction
-import sympy.Basic
 open Continuant
 
 

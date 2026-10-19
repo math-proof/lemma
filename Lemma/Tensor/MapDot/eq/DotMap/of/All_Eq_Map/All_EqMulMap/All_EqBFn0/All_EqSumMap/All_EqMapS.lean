@@ -8,13 +8,6 @@ import Lemma.Tensor.DotBFn.eq.BFnDot.of.GeLength_2.GeLength_2.All_EqBFn0.All_EqS
 import Lemma.Tensor.MapDot.eq.DotMap.of.All_EqBFn0.All_EqSumMap.All_EqMapS
 import Lemma.Tensor.MapDot.eq.DotMap.of.All_EqMulMap
 import Lemma.Tensor.Einsum.eq.MulGetData_0
-import Lemma.Tensor.GetMap.eq.MapGet
-import Lemma.Tensor.MapCast.as.MapBFn.of.Eq
-import Lemma.Tensor.RepeatBFn.eq.BFnRepeat
-import Lemma.Tensor.ResizeBFn.eq.BFnResize
-import Lemma.Tensor.SelectBFn.eq.BFnSelect
-import Lemma.Tensor.UnsqueezeBFn.eq.BFnUnsqueeze
-import Lemma.Vector.GetMap.eq.UFnGet
 import torch.Tensor.sum
 open Tensor Vector
 

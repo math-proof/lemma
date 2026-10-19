@@ -1,15 +1,6 @@
-import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import torch.Tensor.permute
-import Lemma.List.Drop.eq.Nil.of.LeLength
 import Lemma.List.EqPermutePermute__Neg.of.In_Ioo_Length
-import Lemma.List.EqPermute
-import Lemma.List.EqRotate_Length
-import Lemma.List.EqTake.of.LeLength
-import Lemma.List.Permute.eq.Append_AppendRotateTakeDrop
 import Lemma.List.Permute__Neg.eq.Rotate_SubLength_1.of.GtLength_0
-import Lemma.List.RotateRotate.eq.Rotate_Add
-import Lemma.Nat.EqAddSub.of.Ge
-import Lemma.Nat.EqAdd_Sub.of.Ge
 import Lemma.Nat.ToNatSub_Neg.eq.Add1
 import Lemma.Tensor.Permute.eq.Ite
 import Lemma.Tensor.PermuteHeadCast.as.PermuteHead.of.Eq

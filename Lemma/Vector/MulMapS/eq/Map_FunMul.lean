@@ -1,5 +1,3 @@
-import sympy.vector.vector
-import Lemma.Nat.Mul
 import Lemma.Vector.EqGetRange
 open Vector Nat
 

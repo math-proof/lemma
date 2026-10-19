@@ -1,5 +1,4 @@
 import sympy.vector.Basic
-import sympy.Basic
 
 
 @[path]

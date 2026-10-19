@@ -1,10 +1,7 @@
 import sympy.vector.vector
-import Lemma.Nat.CoeAdd.eq.AddCoeS
-import Lemma.Nat.EqAdd_Mul_DivSub1Sign_2
 import Lemma.Bool.OrOr.is.Or_Or
 import Lemma.List.EqLengthSlice
 import Lemma.List.GetSlicedIndices.eq.Add.of.Lt.LeAddS.Lt_Add
-import Lemma.Int.EqToNat
 open List Bool Int Nat
 
 

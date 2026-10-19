@@ -1,4 +1,6 @@
 import Mathlib.Algebra.Group.ForwardDiff
+import Mathlib.Data.Nat.Basic
+import stdlib.List
 
 /-- sympy `Difference(f(x), (x, n))`: the `n`-th forward difference with unit step, realized by Mathlib's `fwdDiff 1` iterated `n` times. -/
 abbrev Difference {M G : Type*} [AddCommMonoid M] [One M] [AddCommGroup G] (f : M → G) (n : ℕ) : M → G :=
@@ -54,7 +56,8 @@ macro_rules
     -- with `n` values, `Subst f x₀ : β` is applied to `n - 1` more: fix `β := _ → ⋯ → _` up front so the
     -- application elaborates before `f` does
     let mut β ← `(_)
-    for _ in vs[1:] do
+    -- avoid `vs[1:]` (parsed as open-slice once stdlib.List is imported)
+    for _ in vs.extract 1 vs.size do
       β ← `(_ → $β)
     `(«Subst» (β := $β) (fun $xs* ↦ $body) $vs*)
 
@@ -73,3 +76,89 @@ def Subst.unexpand : Lean.PrettyPrinter.Unexpander
         return ← `(Subst ($body | $bs∧*))
     `(Subst $f $vs*)
   | _ => throw ()
+
+
+/-!
+# Fun (py `sympy.tensor.indexed.Indexed`)
+
+Parameter-indexed map: `f[i]` is the index; juxta after is a normal call on the residual.
+For time-indexed trajectories `r : Fun ℕ (Ω → α)`, also `r[t:]` (open slice) via
+`Fun.getSliceFrom`, matching bare `ℕ → α` sequences.
+
+Notation `r[t:]` is elaborated below (needs `stdlib.List` for the shared open-slice syntax).
+Kept in this file so there is a single import for both the structure and the sugar.
+-/
+
+/-- Parameter-indexed map: `f[i]` is the index; juxta after is a normal call on the residual.
+For time-indexed trajectories `r : Fun ℕ (Ω → α)`, also `r[t:]` via
+`Fun.getSliceFrom`, matching bare `ℕ → α` sequences. -/
+structure Fun (ι : Type _) (α : Type _) where
+  toFun : ι → α
+
+namespace Fun
+
+instance : CoeFun (Fun ι α) (fun _ => ι → α) where
+  coe := toFun
+
+instance : GetElem (Fun ι α) ι α (fun _ _ => True) where
+  getElem f i _ := f.toFun i
+
+@[simp] theorem getElem_eq (f : Fun ι α) (i : ι) : f[i] = f.toFun i := rfl
+@[simp] theorem coe_eq (f : Fun ι α) (i : ι) : f i = f.toFun i := rfl
+
+/-- Open-ended path slice: `r[t:]` for `r : Fun ℕ α` is `k ↦ r.toFun (t + k)`,
+same shape as `Function.getSliceFrom` on bare sequences (so `@` / Dot keep working). -/
+def getSliceFrom (f : Fun ℕ α) (t : ℕ) : ℕ → α :=
+  fun k ↦ f.toFun (t + k)
+
+@[simp]
+theorem getSliceFrom_apply (f : Fun ℕ α) (t k : ℕ) :
+    getSliceFrom f t k = f.toFun (t + k) := rfl
+
+theorem getSliceFrom_def (f : Fun ℕ α) (t : ℕ) :
+    getSliceFrom f t = fun k ↦ f.toFun (t + k) := rfl
+
+end Fun
+
+open Lean Elab Term Meta in
+/-- `r[t:]` when `r : Fun ℕ _` → `Fun.getSliceFrom r t`.
+Otherwise `throwUnsupportedSyntax` so `stdlib.List`'s elaborator handles bare `ℕ → α` / lists. -/
+@[term_elab «term__[_:]»]
+def Fun.elabGetSliceFrom : TermElab := fun stx expectedType? =>
+  match stx with
+  | `($x[$start :]) => do
+    let saved ← saveState
+    let ty? ← try
+        let e ← withoutErrToSorry <| elabTerm x none
+        pure (some (← whnfR (← instantiateMVars (← inferType e))))
+      catch _ => pure none
+    saved.restore
+    let isFun := match ty? with
+      | some (.app (.app (.const n _) d) _) =>
+          n == ``Fun && d.isConstOf ``Nat
+      | _ => false
+    unless isFun do throwUnsupportedSyntax
+    elabTerm (← `(Fun.getSliceFrom $x ($start))) expectedType?
+  | _ => throwUnsupportedSyntax
+
+namespace Fun
+
+/-- Infoview: print `Fun.getSliceFrom r t` as `r[t:]`. -/
+@[app_unexpander getSliceFrom]
+def getSliceFrom.unexpand : Lean.PrettyPrinter.Unexpander
+  | `($_ $f $t) => `($f[$t :])
+  | `($_ $f $t $k) => `($f[$t :] $k)
+  | _ => throw ()
+
+@[simp]
+theorem getSliceFrom_apply_notation (f : Fun ℕ α) (t k : ℕ) :
+    f[t:] k = f.toFun (t + k) := rfl
+
+theorem getSliceFrom_def_notation (f : Fun ℕ α) (t : ℕ) :
+    f[t:] = fun k ↦ f.toFun (t + k) := rfl
+
+@[simp]
+theorem getSliceFrom_eq_function (f : Fun ℕ α) (t : ℕ) :
+    getSliceFrom f t = Function.getSliceFrom f.toFun t := rfl
+
+end Fun

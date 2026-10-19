@@ -1,5 +1,3 @@
-import sympy.stats.policy_trajectory
-import sympy.Basic
 import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
 import Lemma.Random.MEq_Clip.of.All_Eq
 import Lemma.Random.NormClip.le.AbsR

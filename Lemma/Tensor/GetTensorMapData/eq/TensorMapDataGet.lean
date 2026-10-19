@@ -1,16 +1,11 @@
 import Lemma.Tensor.LengthTensorMapData.eq.Length
 import torch.Tensor.prod
 import Lemma.Tensor.Eq.is.EqDataS
-import Lemma.List.ProdTake_1.eq.HeadD_1
 import Lemma.Tensor.ProdTake_1.eq.Length.of.GtLength_0
-import Lemma.Nat.Gt_0
 import Lemma.Vector.GetCast_Map.eq.UFnGet.of.Eq.Lt
 import Lemma.Vector.GetSplitAt_1.eq.GetUnflattenCast
 import Lemma.Bool.EqCast.of.SEq
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
-import Lemma.Vector.GetUnflatten.eq.Get_AddMul
-import Lemma.List.Prod.eq.MulProdS
-import Lemma.Vector.GetCast.eq.Get.of.Eq
 open Tensor List Nat Vector Bool
 
 

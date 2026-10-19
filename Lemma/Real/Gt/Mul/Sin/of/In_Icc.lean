@@ -1,6 +1,5 @@
 import Mathlib
 import Lemma.Real.GtSin.of.In_Icc
-import sympy.Basic
 open Set Real
 
 @[path]

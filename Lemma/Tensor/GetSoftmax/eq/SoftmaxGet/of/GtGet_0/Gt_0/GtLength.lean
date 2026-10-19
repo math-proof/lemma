@@ -1,6 +1,4 @@
 import Lemma.Tensor.GetSoftmax.eq.SoftmaxGet.of.GtGet_0.LtAdd_1Length
-import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
-import Lemma.Tensor.LengthSoftmax.eq.Length
 open Tensor
 
 

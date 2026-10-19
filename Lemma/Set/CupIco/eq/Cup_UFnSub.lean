@@ -3,8 +3,6 @@ import Lemma.Set.IffInS_Ico
 import Lemma.Set.Cup.eq.Cup_UFnNeg
 import Lemma.Int.Add.eq.Sub_Neg
 import Lemma.Set.In_Ico.is.InNeg_Ioc
-import Lemma.Set.Ioc.eq.Ico
-import Lemma.Int.EqNegNeg
 import Lemma.Set.CupIco.eq.Cup_UFnAdd
 open Set Int
 

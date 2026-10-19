@@ -1,5 +1,4 @@
 import Lemma.Real.Square.Cot.eq.Sub.Square.Csc
-import sympy.Basic
 open Real
 
 

@@ -1,12 +1,8 @@
 import Lemma.Tensor.Dot.eq.Stack_Sum_MulGetS
-import Lemma.Tensor.Eq.is.All_EqGetS
-import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.EqLength
-import Lemma.Tensor.GetAppend.eq.Get.of.Lt
-import Lemma.Tensor.GetAppend.eq.Get_Sub.of.GtAdd.Ge
 import Lemma.Tensor.Stack.eq.AppendStackS
 open Tensor
-set_option maxHeartbeats 400000
+set_option maxHeartbeats 200000
 
 
 @[path]

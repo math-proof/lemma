@@ -1,9 +1,6 @@
 import Lemma.Random.Prob.eq.Mul_ProbS.Prob.eq.Mul_MulProbS.of.CondIndep.CondIndep
-import sympy.stats.hidden_markov_sequence
-import sympy.core.numbers
-import sympy.stats.discrete_hmm
-import sympy.Basic
 open MeasureTheory
+open IsDiscreteHMM
 open scoped ENNReal.ToRealCoe
 
 
@@ -15,12 +12,10 @@ property `y (t + 1) ⟂ (x[:t + 1], y[:t]) | y t` give the one-step factorizatio
 @[path]
 private lemma main
   {Ω Y X : Type*} [MeasurableSpace Ω] [StandardBorelSpace Ω]
-  [ReferenceMeasure Y] [ReferenceMeasure X]
+  [CountableMeasure Y] [CountableMeasure X]
   [Countable Y] [MeasurableSingletonClass Y] [Countable X] [MeasurableSingletonClass X]
   {π : Measure Ω} [IsProbabilityMeasure π]
   {x : ℕ → Ω → X} {y : ℕ → Ω → Y} {xo : ℕ → X}
-  [∀ i, SinglePSpace π (y i)]
-  [∀ i j, SinglePSpace π (y i, y j)]
 -- given
   (h : IsDiscreteHMM π x y) :
 -- imply
@@ -35,3 +30,4 @@ private lemma main
 
 
 -- created on 2026-10-02
+-- updated on 2026-10-19

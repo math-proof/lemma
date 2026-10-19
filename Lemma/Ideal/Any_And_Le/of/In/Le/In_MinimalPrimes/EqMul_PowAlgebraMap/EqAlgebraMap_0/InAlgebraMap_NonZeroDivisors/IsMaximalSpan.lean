@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-set_option maxHeartbeats 4000000
+set_option maxHeartbeats 1000000
 open scoped TensorProduct nonZeroDivisors
 
 
@@ -78,7 +78,7 @@ private lemma φκ_mem
   obtain ⟨r, rfl⟩ := Ideal.mem_span_singleton'.mp ha
   rw [map_mul, hπκ, mul_zero]
 
-set_option maxHeartbeats 2000000 in
+set_option maxHeartbeats 1000000 in
 private noncomputable def φκ
   [CommRing R] (π : R) [Field κ] [Algebra R κ]
   (hπκ : algebraMap R κ π = 0) :
@@ -95,7 +95,7 @@ private lemma φB_mem
   rw [RingHom.comp_apply, map_mul, Ideal.Quotient.eq_zero_iff_mem]
   exact Ideal.mul_mem_left _ _ (Ideal.subset_span rfl)
 
-set_option maxHeartbeats 2000000 in
+set_option maxHeartbeats 1000000 in
 private noncomputable def φB
   [CommRing R] (π : R) [CommRing 𝒪] [Algebra R 𝒪] :
   R ⧸ Ideal.span {π} →+* 𝒪 ⧸ Ideal.span {algebraMap R 𝒪 π} :=
@@ -119,7 +119,7 @@ private lemma ρ_mem
   rw [mul_comm]
   apply one_tmul_algebraMap_mul hπκ t
 
-set_option maxHeartbeats 2000000 in
+set_option maxHeartbeats 1000000 in
 private noncomputable def ρ
   [CommRing R] (π : R) [CommRing 𝒪] [Algebra R 𝒪]
   [Field κ] [Algebra R κ]

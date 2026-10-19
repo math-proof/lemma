@@ -1,5 +1,4 @@
 import Lemma.Real.GeSin.of.Ge_0.quadratic
-import sympy.Basic
 open Real
 
 

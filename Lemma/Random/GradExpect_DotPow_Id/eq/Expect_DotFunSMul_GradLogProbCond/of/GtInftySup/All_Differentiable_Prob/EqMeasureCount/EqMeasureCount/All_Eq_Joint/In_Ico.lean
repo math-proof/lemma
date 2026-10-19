@@ -1,34 +1,10 @@
-import Lemma.Random.GradExpect_DotPow_Id.eq.AddExpect_Sum_SMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_Eq_Expect_CondDot.All_Eq_Expect_CondDot.EqMeasureCount.EqMeasureCount.All_Eq_Joint.In_Ico
-import Lemma.Real.Eq_0.Lim.of.LtAbs.GtInftySup
-import Lemma.Random.Integral.eq.Sum_SMul
-import Lemma.Random.NormQ.le.MulSub1Abs_R.of.In_Ico
-import Lemma.Random.Integral_SMul.eq.Sum_SMul.of.All_Differentiable_Prob
-import Lemma.Random.Sum_RealPreimageS.eq.One
-import Lemma.Random.Integrable_Fun
-import Lemma.Random.BddAbove_ImageNormFderiv.of.In_Ico.GtInftySup.All_Differentiable_Prob
 import Lemma.Random.Integral_SMulGetDotFderivLog.eq.Integral_SMulQFderiv.of.All_Eq_Joint.InIco0
 import Lemma.Random.Eq_SymmToDualTSum_SMulPow_Integral_SMulTSum_MulPow_FderivLogToRealProbCond.of.GtInftySup.All_Differentiable.AeAll_LeNormTSum_MulPow.All_Measurable.EqMeasureCount.EqMeasureCount.All_Eq_Joint.In_Ico0
-import Lemma.Random.ProbCond.eq.OfRealPol.of.Ne_0
-import Lemma.Random.SinglePSpace.of.EqMeasureCount.Measurable
-import Lemma.Measure.Count.eq.ProdCountS
-import Lemma.Measure.EqRnDeriv_Count
 import Mathlib.MeasureTheory.Constructions.Polish.Basic
 import Mathlib.Analysis.Calculus.Gradient.Basic
-import sympy.stats.variance
-import sympy.vector.Basic
-import sympy.vector.operators
-import sympy.concrete.sup
-import sympy.stats.cond_expectation
-import sympy.core.power
-import Lemma.Random.Differentiable_RealPreimageS.of.GtInftySup.All_Differentiable_Prob
-import Lemma.Random.GetTSum_SMul.of.In_Ico.GtInftySup.All_Differentiable_Prob
-import Lemma.Random.AeRealPreimageSS.ne.Zero
-import Lemma.Random.All_LeNorm_Abs.of.All_Eq_Joint
-import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
-import Lemma.Random.PSpace_Path.of.All_PSpace
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Filter Topology Random Real Measure Set
 open scoped ENNReal.ToRealCoe
-set_option maxHeartbeats 40000000
+set_option maxHeartbeats 625000
 
 
 private lemma expect_finset_smul_gradLogProb_eq_integral
@@ -44,10 +20,10 @@ private lemma expect_finset_smul_gradLogProb_eq_integral
   [PSpace (M θ) (AsPathRV.path s)]
   [PSpace (M θ) (AsPathRV.path a)] :
   𝔼[s, a : M θ](∑ t ∈ Finset.range n,
-      (γ ^ t * Q t (s t) (a t)) • ∇[θ] (Real.log (M.pol.prob θ (s t) (a t)))) =
+      (γ ^ t * Q t (s t) (a t)) • ∇[θ] (Real.log (M.policy.prob θ (s t) (a t)))) =
     ∫ ω, ∑ t ∈ Finset.range n,
       (γ ^ t * Q t (s t ω) (a t ω)) •
-        ∇[θ] (Real.log (M.pol.prob θ (s t ω) (a t ω))) ∂(M θ) := by
+        ∇[θ] (Real.log (M.policy.prob θ (s t ω) (a t ω))) ∂(M θ) := by
   rw [Expectation.ofRV, expectation_bochner]
   have hx : AEMeasurable (AsPathRV.path s, AsPathRV.path a) (M θ) :=
     PSpace.aemeasurable
@@ -56,7 +32,7 @@ private lemma expect_finset_smul_gradLogProb_eq_integral
     refine (Finset.stronglyMeasurable_fun_sum (Finset.range n) fun t _ => ?_).aestronglyMeasurable
     exact StronglyMeasurable.comp_measurable
       (f := fun q : S × A ↦
-        (γ ^ t * Q t q.1 q.2) • ∇[θ] (Real.log (M.pol.prob θ q.1 q.2)))
+        (γ ^ t * Q t q.1 q.2) • ∇[θ] (Real.log (M.policy.prob θ q.1 q.2)))
       StronglyMeasurable.of_discrete
       (show Measurable fun p : (ℕ → S) × (ℕ → A) ↦ (p.1 t, p.2 t) from
         ((measurable_pi_apply t).comp measurable_fst).prodMk
@@ -86,7 +62,7 @@ private lemma expect_gradV_eq_integral
   ·
     simp only [AsPathRV.path_process]
 
-/-- Ae equality: binder-equality ℙ-log-grad vs `M.pol.prob` log-grad. -/
+/-- Ae equality: binder-equality ℙ-log-grad vs `M.policy.prob` log-grad. -/
 private lemma gradLogProbCond_ae_eq_gradLogPol
   [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [CompleteSpace Θ]
   [ReferenceMeasure S] [MeasurableSingletonClass S] [Fintype S]
@@ -98,12 +74,12 @@ private lemma gradLogProbCond_ae_eq_gradLogPol
   (h₁ : ∀ t, (· t) = (r t, s t, a t))
   (hS : (ReferenceMeasure.measure : Measure S) = Measure.count)
   (hA : (ReferenceMeasure.measure : Measure A) = Measure.count)
-  (h₄ : ∀ x u, Differentiable ℝ (fun θ => M.pol.prob θ x u))
-  (h₅ : sup[θ, x, u] ‖∇[θ] M.pol.prob θ x u‖ < ∞)
+  (h₄ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
+  (h₅ : sup[θ, x, u] ‖∇[θ] M.policy.prob θ x u‖ < ∞)
   (hP : ∀ θ t, SinglePSpace (M θ) (a t, s t)) :
   ∀ t, ∀ᵐ ω ∂(M θ),
       ∇[θ] (ℙ[M θ]((a t) = (a t ω) | (s t) = (s t ω)) : ℝ).log =
-        ∇[θ] (Real.log (M.pol.prob θ (s t ω) (a t ω))) := by
+        ∇[θ] (Real.log (M.policy.prob θ (s t ω) (a t ω))) := by
   classical
   intro t
   filter_upwards [AeRealPreimageSS.ne.Zero (s := s) (M := M) θ] with ω hω
@@ -111,11 +87,11 @@ private lemma gradLogProbCond_ae_eq_gradLogPol
     (Differentiable_RealPreimageS.of.GtInftySup.All_Differentiable_Prob (M := M) h₁ h₄ h₅ t (s t ω) θ).continuousAt
   have hfd :
     fderiv ℝ (fun θ' => (ℙ[M θ']((a t) = (a t ω) | (s t) = (s t ω)) : ℝ).log) θ =
-      fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' (s t ω) (a t ω))) θ := by
+      fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω))) θ := by
     refine Filter.EventuallyEq.fderiv_eq ((hc.eventually_ne (hω t)).mono fun θ' h => ?_)
     beta_reduce
     rw [ProbCond.eq.OfRealPol.of.Ne_0 h₁ hS hA (hP θ' t) h,
-      ENNReal.toReal_ofReal (M.pol.nonneg θ' _ _)]
+      ENNReal.toReal_ofReal (M.policy.nonneg θ' _ _)]
   simp only [gradient]
   exact congrArg (InnerProductSpace.toDual ℝ Θ).symm hfd
 
@@ -198,8 +174,8 @@ private lemma main
   (h₁ : ∀ t, (· t) = (r t, s t, a t))
   (hS : (ReferenceMeasure.measure : Measure S) = Measure.count)
   (hA : (ReferenceMeasure.measure : Measure A) = Measure.count)
-  (h₂ : ∀ x u, Differentiable ℝ (fun θ => M.pol.prob θ x u))
-  (h₃ : sup[θ, x, u] ‖∇[θ] M.pol.prob θ x u‖ < ∞) :
+  (h₂ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
+  (h₃ : sup[θ, x, u] ‖∇[θ] M.policy.prob θ x u‖ < ∞) :
 -- imply
   have : ∀ θ t, SinglePSpace (M θ) (a t, s t) := fun _ t =>
     SinglePSpace.of.EqMeasureCount.Measurable ((Random.Measurable.of.All_Eq.snd.snd h₁ t).prodMk (Random.Measurable.of.All_Eq.snd.fst h₁ t)) (by
@@ -211,7 +187,7 @@ private lemma main
     PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.snd.snd h₁ t).aemeasurable⟩)
   have : ∀ θ, PSpace (M θ) (AsPathRV.path (r)) := fun θ =>
     PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.fst h₁ t).aemeasurable⟩)
-  ∇[θ] 𝔼[r: M θ]((γ ^ (id : ℕ → ℕ)) @ r) = 𝔼[s, a, r : M θ]((γ ^ (id : ℕ → ℕ)) @ fun t ↦ ((γ ^ (id : ℕ → ℕ)) @ r[t:]) • ∇[θ] (ℙ[M θ](a t | s t) : ℝ).log) := by
+  ∇[θ] 𝔼[r: M θ]((γ ^ (id : ℕ → ℕ)) @ r) = 𝔼[r, s, a : M θ]((γ ^ (id : ℕ → ℕ)) @ fun t ↦ ((γ ^ (id : ℕ → ℕ)) @ r[t:]) • ∇[θ] (ℙ[M θ](a t | s t) : ℝ).log) := by
 -- proof
   intro hP _ _ _
   classical
@@ -224,9 +200,9 @@ private lemma main
   have h₃o := h₃
   simp only [gradient, LinearIsometryEquiv.norm_map] at h₃
   have hfd : ∑' t, γ ^ t • fderiv ℝ (fun θ => ∫ ω, r t ω ∂(M θ)) θ =
-      ∑' t, γ ^ t • ∫ ω, ((γ ^ (id : ℕ → ℕ)) @ r[t:]) ω • fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' (s t ω) (a t ω))) θ ∂(M θ) := by
+      ∑' t, γ ^ t • ∫ ω, ((γ ^ (id : ℕ → ℕ)) @ r[t:]) ω • fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω))) θ ∂(M θ) := by
     obtain ⟨C, hC⟩ := id h₃
-    have hCb : ∀ θ x u, ‖fderiv ℝ (fun θ => M.pol.prob θ x u) θ‖ ≤ C := fun θ x u => hC ⟨(θ, x, u), rfl⟩
+    have hCb : ∀ θ x u, ‖fderiv ℝ (fun θ => M.policy.prob θ x u) θ‖ ≤ C := fun θ x u => hC ⟨(θ, x, u), rfl⟩
     classical
     let Qloc (θ : Θ) (t : ℕ) (x : S) (u : A) : ℝ :=
       𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = x ∧ a t = u)
@@ -265,7 +241,7 @@ private lemma main
                 ∑ t ∈ Finset.range n,
                   (γ ^ t * Qloc θ t (s t ω) (a t ω)) •
                     fderiv ℝ
-                      (fun θ' => Real.log (M.pol.prob θ' (s t ω) (a t ω)))
+                      (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω)))
                       θ ∂(M θ) +
               γ ^ n •
                 ∫ ω, fderiv ℝ (fun θ' => Vloc θ' n (s n ω)) θ ∂(M θ) := by
@@ -313,27 +289,27 @@ private lemma main
           (score := fun t x u => ∇[θ] (ℙ[M θ]((a t) = u | (s t) = x) : ℝ).log)
           (s := s) (a := a)
       have hscore_n : ∀ t, ∀ᵐ ω ∂(M θ),
-          ∇[θ] (Real.log (M.pol.prob θ (s t ω) (a t ω))) =
+          ∇[θ] (Real.log (M.policy.prob θ (s t ω) (a t ω))) =
             ∇[θ] (ℙ[M θ]((a t) = (a t ω) | (s t) = (s t ω)) : ℝ).log :=
         fun t => (gradLogProbCond_ae_eq_gradLogPol (M := M) (θ := θ) (r := r) (s := s) (a := a)
           h₁ hS hA h₂ h₃o hSP t).mono fun _ h => h.symm
       have hInt_pol_eq_P :
         ∫ ω, ∑ t ∈ Finset.range n,
               (γ ^ t * Qloc θ t (s t ω) (a t ω)) •
-                ∇[θ] (Real.log (M.pol.prob θ (s t ω) (a t ω))) ∂(M θ) =
+                ∇[θ] (Real.log (M.policy.prob θ (s t ω) (a t ω))) ∂(M θ) =
           ∫ ω, ∑ t ∈ Finset.range n,
               (γ ^ t * Qloc θ t (s t ω) (a t ω)) •
                 ∇[θ] (ℙ[M θ]((a t) = (a t ω) | (s t) = (s t ω)) : ℝ).log ∂(M θ) :=
         integral_finset_smul_score_eq_of_ae (M := M) (θ := θ) (γ := γ) (n := n)
           (Q := Qloc θ) (s := s) (a := a)
-          (score₁ := fun t x u => ∇[θ] (Real.log (M.pol.prob θ x u)))
+          (score₁ := fun t x u => ∇[θ] (Real.log (M.policy.prob θ x u)))
           (score₂ := fun t x u => ∇[θ] (ℙ[M θ]((a t) = u | (s t) = x) : ℝ).log)
           hscore_n
       have HInt :
         ∇[θ] (∫ ω, ((γ ^ (id : ℕ → ℕ)) @ r) ω ∂(M θ)) =
           ∫ ω, ∑ t ∈ Finset.range n,
               (γ ^ t * Qloc θ t (s t ω) (a t ω)) •
-                ∇[θ] (Real.log (M.pol.prob θ (s t ω) (a t ω))) ∂(M θ) +
+                ∇[θ] (Real.log (M.policy.prob θ (s t ω) (a t ω))) ∂(M θ) +
             γ ^ n • ∫ ω, ∇[θ] (Vloc θ n (s n ω)) ∂(M θ) :=
         (hE_L.symm.trans (H.trans (congrArg₂ (· + ·) hRQP (congrArg (γ ^ n • ·) hRVθ)))).trans
           (congrArg₂ (· + ·) hInt_pol_eq_P.symm rfl)
@@ -377,13 +353,13 @@ private lemma main
               ∑ t ∈ Finset.range n,
                 (γ ^ t * Qloc θ t (s t ω) (a t ω)) •
                   fderiv ℝ
-                    (fun θ' => Real.log (M.pol.prob θ' (s t ω) (a t ω))) θ)
+                    (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω))) θ)
             (M θ) :=
         integrable_finsetSum _ fun t _ =>
           Random.Integrable_Fun h₁ (M := M) θ t
             (fun y u =>
               (γ ^ t * Qloc θ t y u) •
-                fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' y u)) θ)
+                fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' y u)) θ)
       have hIntV :
           Integrable
             (fun ω ↦ fderiv ℝ (fun θ' => Vloc θ' n (s n ω)) θ) (M θ) :=
@@ -438,13 +414,13 @@ private lemma main
       rw [norm_smul, norm_pow, Real.norm_of_nonneg h₀.1]
     have hq : 0 ≤ (1 - γ)⁻¹ * |M.env.R| := mul_nonneg (inv_nonneg.2 (by linarith [h₀.2])) (abs_nonneg _)
     have h₁₂ : ∀ t, ‖∫ ω, Qloc θ t (s t ω) (a t ω) •
-        fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' (s t ω) (a t ω))) θ ∂(M θ)‖ ≤
+        fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω))) θ ∂(M θ)‖ ≤
         Fintype.card A * ((1 - γ)⁻¹ * |M.env.R| * max C 0) := by
       intro t
       rw [Integral_SMul.eq.Sum_SMul.of.All_Differentiable_Prob (M := M) h₁ h₂ θ t (fun y u => Qloc θ t y u)]
       calc
         _ ≤ ∑ y, ‖(M θ).real (s t ⁻¹' {y}) •
-            ∑ u, Qloc θ t y u • fderiv ℝ (fun θ' => M.pol.prob θ' y u) θ‖ :=
+            ∑ u, Qloc θ t y u • fderiv ℝ (fun θ' => M.policy.prob θ' y u) θ‖ :=
           norm_sum_le _ _
         _ ≤ ∑ y, (M θ).real (s t ⁻¹' {y}) * (Fintype.card A * ((1 - γ)⁻¹ * |M.env.R| * max C 0)) := by
           refine Finset.sum_le_sum fun y _ => ?_
@@ -460,19 +436,19 @@ private lemma main
             rw [Finset.sum_const, Finset.card_univ, nsmul_eq_mul]
         _ = _ := by rw [← Finset.sum_mul, Sum_RealPreimageS.eq.One h₁, one_mul]
     have h₁₃ : Summable (fun t => γ ^ t • ∫ ω, Qloc θ t (s t ω) (a t ω) •
-        fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' (s t ω) (a t ω))) θ ∂(M θ)) := by
+        fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω))) θ ∂(M θ)) := by
       have hs := (summable_geometric_of_lt_one h₀.1 h₀.2).mul_right
         (Fintype.card A * ((1 - γ)⁻¹ * |M.env.R| * max C 0))
       refine Summable.of_norm_bounded hs fun t => ?_
       rw [norm_smul, norm_pow, Real.norm_of_nonneg h₀.1]
       exact mul_le_mul_of_nonneg_left (h₁₂ t) (pow_nonneg h₀.1 t)
     have h₁₄ : ∀ n, ∫ ω, ∑ t ∈ Finset.range n, (γ ^ t * Qloc θ t (s t ω) (a t ω)) •
-        fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' (s t ω) (a t ω))) θ ∂(M θ) =
+        fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω))) θ ∂(M θ) =
         ∑ t ∈ Finset.range n, γ ^ t • ∫ ω, Qloc θ t (s t ω) (a t ω) •
-          fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' (s t ω) (a t ω))) θ ∂(M θ) := by
+          fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω))) θ ∂(M θ) := by
       intro n
       rw [integral_finsetSum _ fun t _ => Random.Integrable_Fun h₁ (M := M) θ t
-        (fun y u => (γ ^ t * Qloc θ t y u) • fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' y u)) θ)]
+        (fun y u => (γ ^ t * Qloc θ t y u) • fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' y u)) θ)]
       refine Finset.sum_congr rfl fun t _ => ?_
       simp_rw [mul_smul]
       exact integral_smul _ _
@@ -481,7 +457,7 @@ private lemma main
     have hQseries :
         ∑' t, γ ^ t • fderiv ℝ (fun θ => ∫ ω, r t ω ∂(M θ)) θ =
           ∑' t, γ ^ t • ∫ ω, Qloc θ t (s t ω) (a t ω) •
-            fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' (s t ω) (a t ω))) θ ∂(M θ) := by
+            fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω))) θ ∂(M θ) := by
       refine tendsto_nhds_unique (tendsto_const_nhds.congr fun n => ?_) h₁₅
       rw [h₇ n, h₁₄ n]
     rw [hQseries]
@@ -489,7 +465,7 @@ private lemma main
     exact (Integral_SMulGetDotFderivLog.eq.Integral_SMulQFderiv.of.All_Eq_Joint.InIco0 (M := M) (θ := θ) h₀ h₁).symm
   have hscore : ∀ t, ∀ᵐ ω ∂(M θ),
       fderiv ℝ (fun θ' => (ℙ[M θ']((a t) = (a t ω) | (s t) = (s t ω)) : ℝ).log) θ =
-        fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' (s t ω) (a t ω))) θ := by
+        fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω))) θ := by
     intro t
     filter_upwards [AeRealPreimageSS.ne.Zero (s := s) (M := M) θ] with ω hω
     have hc : ContinuousAt (fun θ' => (M θ').real (s t ⁻¹' {s t ω})) θ :=
@@ -497,7 +473,7 @@ private lemma main
     refine Filter.EventuallyEq.fderiv_eq ((hc.eventually_ne (hω t)).mono fun θ' h => ?_)
     beta_reduce
     rw [ProbCond.eq.OfRealPol.of.Ne_0 h₁ hS hA (hP θ' t) h,
-      ENNReal.toReal_ofReal (M.pol.nonneg θ' _ _)]
+      ENNReal.toReal_ofReal (M.policy.nonneg θ' _ _)]
   have hold : ∑' t, γ ^ t • fderiv ℝ (fun θ => ∫ ω, r t ω ∂(M θ)) θ =
       ∑' t, γ ^ t • ∫ ω, ((γ ^ (id : ℕ → ℕ)) @ r[t:]) ω •
           fderiv ℝ (fun θ' => (ℙ[M θ']((a t) = (a t ω) | (s t) = (s t ω)) : ℝ).log) θ ∂(M θ) := by

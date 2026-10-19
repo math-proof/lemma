@@ -1,7 +1,4 @@
-import sympy.concrete.continued_fraction
 import sympy.sets.sets
-import sympy.Basic
-import Lemma.Finset.All_GeK_0.et.GtK_Add_1_0.of.All_Gt_0
 import Lemma.Finset.Alpha_MapRange.eq.DivHK.of.All_Gt_0
 import Lemma.Finset.SubMulSHK.eq.PowNeg1_Add_1
 open Finset Continuant

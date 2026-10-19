@@ -1,4 +1,3 @@
-import Lemma.Nat.LeSub.is.Le_Add
 import Lemma.Rat.LeToNatCeil_1.of.Le_Add
 open Rat Nat
 

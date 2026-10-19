@@ -1,6 +1,5 @@
 import Lemma.Finset.Prod.eq.Prod_UFnNeg
 import Lemma.Real.EqLim.of.Eq
-import sympy.series.limits
 open Finset
 
 

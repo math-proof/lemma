@@ -1,6 +1,4 @@
 import Lemma.Set.Any.Eq.of.Eq_Card
-import sympy.sets.sets
-import sympy.Basic
 
 
 @[path]

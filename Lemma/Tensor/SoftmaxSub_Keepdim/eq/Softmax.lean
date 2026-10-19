@@ -1,4 +1,3 @@
-import Lemma.Int.Sub.eq.Add_Neg
 import Lemma.Tensor.KeepdimNeg.eq.NegKeepdim
 import Lemma.Tensor.SoftmaxAdd_Keepdim.eq.Softmax
 open Tensor Int

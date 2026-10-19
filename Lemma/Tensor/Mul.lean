@@ -1,7 +1,5 @@
-import Lemma.Nat.Mul
 import torch.Tensor.prod
 import Lemma.Tensor.Eq.is.EqDataS
-import Lemma.Vector.GetMul.eq.MulGetS
 import Lemma.Vector.Map₂.eq.Map.of.Eq_1
 import torch.Tensor.Basic
 open Tensor Vector

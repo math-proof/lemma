@@ -1,4 +1,3 @@
-import Lemma.Tensor.MapMaskedFill.eq.MaskedFillMap.of.EqUFn0'0
 import Lemma.Tensor.MapTril.eq.TrilMap.of.EqUFn0'0
 import Lemma.Tensor.MapTriu.eq.TriuMap.of.EqUFn0'0
 open Tensor

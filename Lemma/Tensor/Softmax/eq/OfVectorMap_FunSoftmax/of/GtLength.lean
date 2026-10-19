@@ -2,125 +2,63 @@ import Lemma.Finset.Sum.of.All_Eq.Eq
 import torch.Tensor.sum
 import torch.Tensor.prod
 import Lemma.List.Get.dvd.Mul_ProdTake.of.GtLength
-import Lemma.List.Get.dvd.ProdTake.of.GtLength
-import Lemma.List.LengthSlice.eq.Div.of.Lt.Dvd
-import Lemma.List.MulLengthSlice.eq.ProdEraseIdx.of.GtGet.GtLength
-import Lemma.List.MulProdInsertIdxEraseIdx.eq.Prod.of.GtLength
-import Lemma.List.Prod.eq.MulProdS
 import Lemma.List.ProdDrop.dvd.Prod
-import Lemma.List.ProdDrop.eq.Mul_ProdDrop_Add_1.of.GtLength
 import Lemma.List.ProdDropInsertIdxEraseIdx.eq.ProdDrop.of.GtLength
-import Lemma.List.ProdInsertIdx.eq.Prod
-import Lemma.List.ProdTake.eq.DivProdTake.of.Ne_0.GtLength
 import Lemma.List.TakeEraseIdx.eq.Take
 import Lemma.List.TakeInsertIdx.eq.Take
-import Lemma.Nat.AddAdd
-import Lemma.Nat.AddAdd.eq.Add_Add
-import Lemma.Nat.AddMul.lt.Mul.of.Lt.Lt
-import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
-import Lemma.Nat.Div.eq.AddMulDiv_Mul
-import Lemma.Nat.DivAddMul.eq.Add_Div.of.Ne_0
 import Lemma.Nat.DivMul.eq.Mul_Div.of.Dvd
-import Lemma.Nat.Div.of.Eq
-import Lemma.Nat.Eq_Div.Eq_Mod.of.Eq_AddMul
-import Lemma.Nat.LtMod.of.Ne_0
 import Lemma.Nat.ModMod.eq.Mod.of.Dvd
-import Lemma.Nat.MulAdd.eq.AddMulS
-import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Tensor.DataDiv.eq.DivDataS
 import Lemma.Tensor.DataExp.eq.ExpData
 import Lemma.Tensor.DataKeepdim.as.FlattenMapSplitAtCast_Data
 import Lemma.Tensor.DataSelect.as.FlattenGetSliceSplitAtData
 import Lemma.Tensor.DataSum.eq.Sum_DataSelect
-import Lemma.Tensor.Eq.is.EqDataS
-import Lemma.Vector.GetCast.eq.Get.of.Eq
-import Lemma.Vector.GetDiv.eq.DivGetS
 import Lemma.Vector.GetExp.eq.ExpGet
-import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
-import Lemma.Vector.GetMap.eq.UFnGet
-import Lemma.Vector.GetGetSlice.eq.Get.of.GtGet.GtLength
 import Lemma.Vector.GetRepeat.eq.Get_Mod
-import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.GetSum.eq.Sum_Get
 open Finset List Nat Tensor Vector Fin
-set_option maxHeartbeats 500000
+set_option maxHeartbeats 250000
 
 
-@[path]
-private lemma main
+private lemma main_erw
+  {n n' : ℕ}
+  (h : n = n')
+  (v : List.Vector α n)
+  (i : Fin n') :
+  (cast (congrArg (List.Vector α) h) v).get i = v.get ⟨(i : ℕ), by omega⟩ := by
+  subst h
+  rfl
+
+
+private lemma main_k
   [Exp α]
   {d : ℕ}
--- given
   (h : s.length > d)
-  (X : Tensor α (n :: s)) :
--- imply
-  X.softmax (d + 1) = Tensor.OfVector (X.toVector.map (·.softmax d)) := by
--- proof
-  obtain ⟨X⟩ := X
-  unfold Tensor.softmax Tensor.OfVector
-  simp
-  apply Eq.of.EqDataS
-  simp [DataDiv.eq.DivDataS]
-  ext t
-  have h_t := t.isLt
-  let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul h_t
-  let ⟨h_q_div, h_r_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qr
-  have h_q := q.isLt
-  have h_r := r.isLt
-  rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qr]
-  simp
-  repeat erw [GetDiv.eq.DivGetS.fin]
-  unfold Tensor.toVector
-  simp [DataExp.eq.ExpData]
-  rw [GetCast.eq.Get.of.Eq.fin (by simp)]
-  conv_rhs => erw [GetMap.eq.UFnGet.fin]
-  conv_rhs => erw [DataDiv.eq.DivDataS]
-  erw [GetDiv.eq.DivGetS.fin]
-  conv_rhs =>
-    erw [DataExp.eq.ExpData]
-    erw [GetExp.eq.ExpGet.fin]
-    rw [GetCast.eq.Get.of.Eq.fin (by simp)]
-  erw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
-  conv_lhs => erw [GetExp.eq.ExpGet.fin]
-  simp [← h_qr]
-  apply Div.of.Eq.left
-  rw [DataKeepdim.eq.Cast_FlattenMapSplitAtCast_Data (d := ⟨d + 1, by grind⟩)]
-  rw [DataKeepdim.eq.Cast_FlattenMapSplitAtCast_Data (d := ⟨d, by grind⟩)]
-  simp
-  have h_prod : (((s.eraseIdx d).insertIdx d 1).take d).prod * (s[d] * (((s.eraseIdx d).insertIdx d 1).drop d).prod) = s.prod := by
-    simp [Mul_Mul.eq.MulMul.comm]
-    apply MulProdInsertIdxEraseIdx.eq.Prod.of.GtLength
-  repeat rw [GetCast.eq.Get.of.Eq.fin (by grind)]
-  have h_lt : t < n * (((s.eraseIdx d).insertIdx d 1).take d).prod * (s[d] * (((s.eraseIdx d).insertIdx d 1).drop d).prod) := by
-    simp [Mul_Mul.eq.MulMul.comm]
-    simp [MulMul.eq.Mul_Mul]
-    rwa [MulProdInsertIdxEraseIdx.eq.Prod.of.GtLength]
-  let ⟨q', r', h_q'r'⟩ := Any_Eq_AddMul.of.Lt_Mul h_lt
-  let ⟨h_q'_div, h_r'_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_q'r'
-  have h_q' := q'.isLt
-  have h_r' := r'.isLt
-  have h_lt : r < (((s.eraseIdx d).insertIdx d 1).take d).prod * (s[d] * (((s.eraseIdx d).insertIdx d 1).drop d).prod) := by
-    simp [Mul_Mul.eq.MulMul.comm]
-    rwa [MulProdInsertIdxEraseIdx.eq.Prod.of.GtLength]
-  let ⟨qₐ, rₐ, h_qₐrₐ⟩ := Any_Eq_AddMul.of.Lt_Mul h_lt
-  let ⟨h_qₐ_div, h_rₐ_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qₐrₐ
-  have h_qₐ := qₐ.isLt
-  simp [TakeInsertIdx.eq.Take, TakeEraseIdx.eq.Take] at h_q' h_qₐ
-  have h_rₐ := rₐ.isLt
-  repeat erw [GetFlatten.eq.Get.of.Eq_AddMul.fin (by assumption)]
-  simp
-  conv_lhs => erw [GetMap.eq.UFnGet.fin]
-  repeat erw [GetRepeat.eq.Get_Mod.fin]
-  repeat erw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
-  simp [ProdDropInsertIdxEraseIdx.eq.ProdDrop.of.GtLength h] at ⊢ h_rₐ h_q'_div h_r'_mod h_qₐ_div h_rₐ_mod
-  rw [DataSum.eq.Sum_DataSelect (d := ⟨d + 1, by grind⟩)]
-  rw [DataSum.eq.Sum_DataSelect (d := ⟨d, by grind⟩)]
-  have h_prod : (s.eraseIdx d).prod = ((s.eraseIdx d).insertIdx d 1).prod := by
-    simp [ProdInsertIdx.eq.Prod]
-  repeat erw [GetCast.eq.Get.of.Eq.fin (by grind)]
-  repeat erw [GetSum.eq.Sum_Get.fin]
-  apply Sum.of.All_Eq.Eq (by simp)
-  intro k
+  (X : List.Vector α (n :: s).prod)
+  (t : Fin (n * s.prod))
+  (q : Fin n)
+  (r : Fin s.prod)
+  (q' : Fin (n * (((s.eraseIdx d).insertIdx d 1).take d).prod))
+  (r' : Fin (s[d] * (((s.eraseIdx d).insertIdx d 1).drop d).prod))
+  (qₐ : Fin ((((s.eraseIdx d).insertIdx d 1).take d).prod))
+  (rₐ : Fin (s[d] * (((s.eraseIdx d).insertIdx d 1).drop d).prod))
+  (h_q' : (q' : ℕ) < n * (s.take d).prod)
+  (h_qₐ : (qₐ : ℕ) < (s.take d).prod)
+  (h_q_div : (q : ℕ) = (t : ℕ) / s.prod)
+  (h_r_mod : (r : ℕ) = (t : ℕ) % s.prod)
+  (h_q'_div : (q' : ℕ) = (t : ℕ) / (s[d] * (s.drop (d + 1)).prod))
+  (h_r'_mod : (r' : ℕ) = (t : ℕ) % (s[d] * (s.drop (d + 1)).prod))
+  (h_qₐ_div : (qₐ : ℕ) = (r : ℕ) / (s[d] * (s.drop (d + 1)).prod))
+  (h_rₐ_mod : (rₐ : ℕ) = (r : ℕ) % (s[d] * (s.drop (d + 1)).prod))
+  (k : Fin s[d])
+  (hidxL : (q' : ℕ) * (s.drop (d + 1)).prod + (r' : ℕ) % (s.drop (d + 1)).prod <
+    ((exp (⟨X⟩ : Tensor α (n :: s))).select ⟨d + 1, Nat.succ_lt_succ h⟩ k).data.length)
+  (hidxR : (qₐ : ℕ) * (s.drop (d + 1)).prod + (rₐ : ℕ) % (s.drop (d + 1)).prod <
+    ((exp (⟨cast (by simp) ((X.splitAt 1).get ⟨(q : ℕ), by simp⟩)⟩ : Tensor α s)).select ⟨d, h⟩ k).data.length) :
+  ((exp (⟨X⟩ : Tensor α (n :: s))).select ⟨d + 1, Nat.succ_lt_succ h⟩ k).data.get
+    ⟨(q' : ℕ) * (s.drop (d + 1)).prod + (r' : ℕ) % (s.drop (d + 1)).prod, hidxL⟩ =
+    ((exp (⟨cast (by simp) ((X.splitAt 1).get ⟨(q : ℕ), by simp⟩)⟩ : Tensor α s)).select ⟨d, h⟩ k).data.get
+      ⟨(qₐ : ℕ) * (s.drop (d + 1)).prod + (rₐ : ℕ) % (s.drop (d + 1)).prod, hidxR⟩ := by
   have h_k := k.isLt
   rw [DataSelect.eq.Cast_FlattenGetSliceSplitAtData.simp]
   conv_rhs => rw [DataSelect.eq.Cast_FlattenGetSliceSplitAtData.simp]
@@ -189,6 +127,100 @@ private lemma main
     have := MulLengthSlice.eq.ProdEraseIdx.of.GtGet.GtLength.simp (by grind) (by grind) (s := n :: s) (d := d + 1) (i := k)
     simp at ⊢ this
     rw [this]
+
+
+private lemma main_keep
+  [Exp α]
+  {d : ℕ}
+  (h : s.length > d)
+  (X : List.Vector α (n :: s).prod)
+  (t : Fin (n * s.prod))
+  (q : Fin n)
+  (r : Fin s.prod)
+  (h_qr : (t : ℕ) = (q : ℕ) * s.prod + (r : ℕ)) :
+  ((exp (⟨X⟩ : Tensor α (n :: s))).sum (d + 1)).keepdim.data.get t =
+    ((exp (⟨cast (by grind) ((X.splitAt 1).get ⟨(q : ℕ), by grind⟩)⟩ : Tensor α s)).sum d).keepdim.data.get r := by
+  have h_t := t.isLt
+  let ⟨h_q_div, h_r_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qr
+  have h_q := q.isLt
+  have h_r := r.isLt
+  rw [DataKeepdim.eq.Cast_FlattenMapSplitAtCast_Data (d := ⟨d + 1, by grind⟩)]
+  rw [DataKeepdim.eq.Cast_FlattenMapSplitAtCast_Data (d := ⟨d, by grind⟩)]
+  simp
+  have h_prod : (((s.eraseIdx d).insertIdx d 1).take d).prod * (s[d] * (((s.eraseIdx d).insertIdx d 1).drop d).prod) = s.prod := by
+    simp [Mul_Mul.eq.MulMul.comm]
+    apply MulProdInsertIdxEraseIdx.eq.Prod.of.GtLength
+  repeat rw [GetCast.eq.Get.of.Eq.fin (by grind)]
+  have h_lt : t < n * (((s.eraseIdx d).insertIdx d 1).take d).prod * (s[d] * (((s.eraseIdx d).insertIdx d 1).drop d).prod) := by
+    simp [Mul_Mul.eq.MulMul.comm]
+    simp [MulMul.eq.Mul_Mul]
+    rwa [MulProdInsertIdxEraseIdx.eq.Prod.of.GtLength]
+  let ⟨q', r', h_q'r'⟩ := Any_Eq_AddMul.of.Lt_Mul h_lt
+  let ⟨h_q'_div, h_r'_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_q'r'
+  have h_q' := q'.isLt
+  have h_r' := r'.isLt
+  have h_lt : r < (((s.eraseIdx d).insertIdx d 1).take d).prod * (s[d] * (((s.eraseIdx d).insertIdx d 1).drop d).prod) := by
+    simp [Mul_Mul.eq.MulMul.comm]
+    rwa [MulProdInsertIdxEraseIdx.eq.Prod.of.GtLength]
+  let ⟨qₐ, rₐ, h_qₐrₐ⟩ := Any_Eq_AddMul.of.Lt_Mul h_lt
+  let ⟨h_qₐ_div, h_rₐ_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qₐrₐ
+  have h_qₐ := qₐ.isLt
+  simp [TakeInsertIdx.eq.Take, TakeEraseIdx.eq.Take] at h_q' h_qₐ
+  have h_rₐ := rₐ.isLt
+  repeat erw [GetFlatten.eq.Get.of.Eq_AddMul.fin (by assumption)]
+  simp
+  conv_lhs => erw [GetMap.eq.UFnGet.fin]
+  repeat erw [GetRepeat.eq.Get_Mod.fin]
+  repeat erw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
+  simp [ProdDropInsertIdxEraseIdx.eq.ProdDrop.of.GtLength h] at ⊢ h_rₐ h_q'_div h_r'_mod h_qₐ_div h_rₐ_mod
+  rw [DataSum.eq.Sum_DataSelect (d := ⟨d + 1, by grind⟩)]
+  rw [DataSum.eq.Sum_DataSelect (d := ⟨d, by grind⟩)]
+  have h_prod : (s.eraseIdx d).prod = ((s.eraseIdx d).insertIdx d 1).prod := by
+    simp [ProdInsertIdx.eq.Prod]
+  have hlen : ((n :: s).eraseIdx (d + 1)).prod = n * ((s.eraseIdx d).insertIdx d 1).prod := by
+    simp [h_prod]
+  conv_lhs => erw [main_erw hlen]
+  conv_rhs => erw [main_erw (by simp [h_prod])]
+  repeat erw [GetSum.eq.Sum_Get.fin]
+  apply Sum.of.All_Eq.Eq (by simp)
+  intro k
+  apply main_k h X t q r q' r' qₐ rₐ h_q' h_qₐ h_q_div h_r_mod h_q'_div h_r'_mod h_qₐ_div h_rₐ_mod k
+@[path]
+private lemma main
+  [Exp α]
+  {d : ℕ}
+-- given
+  (h : s.length > d)
+  (X : Tensor α (n :: s)) :
+-- imply
+  X.softmax (d + 1) = Tensor.OfVector (X.toVector.map (·.softmax d)) := by
+-- proof
+  obtain ⟨X⟩ := X
+  unfold Tensor.softmax Tensor.OfVector
+  simp
+  apply Eq.of.EqDataS
+  simp [DataDiv.eq.DivDataS]
+  ext t
+  have h_t := t.isLt
+  let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul h_t
+  rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qr]
+  simp
+  repeat erw [GetDiv.eq.DivGetS.fin]
+  unfold Tensor.toVector
+  simp [DataExp.eq.ExpData]
+  rw [GetCast.eq.Get.of.Eq.fin (by simp)]
+  conv_rhs => erw [GetMap.eq.UFnGet.fin]
+  conv_rhs => erw [DataDiv.eq.DivDataS]
+  erw [GetDiv.eq.DivGetS.fin]
+  conv_rhs =>
+    erw [DataExp.eq.ExpData]
+    erw [GetExp.eq.ExpGet.fin]
+    rw [GetCast.eq.Get.of.Eq.fin (by simp)]
+  erw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
+  conv_lhs => erw [GetExp.eq.ExpGet.fin]
+  simp [← h_qr]
+  apply Div.of.Eq.left
+  apply main_keep h X t q r h_qr
 
 
 -- created on 2025-11-29

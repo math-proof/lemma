@@ -1,15 +1,6 @@
-import sympy.stats.rv
-import sympy.stats.policy_trajectory.continuous_action
-import sympy.Basic
-import sympy.vector.operators
-import sympy.concrete.sup
 import Mathlib.Analysis.InnerProductSpace.Dual
 import Mathlib.MeasureTheory.Integral.Prod
 import Lemma.Random.Fderiv.eq.AddIntegral_SMulSMul.of.All_Measurable_Prob.In_Ico.GtInftySup.All_Integrable.All_LeNormGrad.All_Differentiable_Prob
-import Lemma.Random.HasFDerivAt.of.All_Measurable_Prob.In_Ico.GtInftySup.All_Integrable.All_LeNormGrad.All_Differentiable_Prob
-import Lemma.Random.GtInftySup.of.All_Measurable_Prob.In_Ico.GtInftySup.All_Integrable.All_LeNormGrad.All_Differentiable_Prob
-import Lemma.Random.Measurable_Vkd.of.All_Measurable_Prob
-import Lemma.Real.StronglyMeasurable_Fderiv.of.All_DifferentiableAt.All_Measurable
 open MeasureTheory PolicyGradient Random Real
 
 
@@ -44,17 +35,17 @@ private lemma main
   {p : S → A → S → ℝ}
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
-  (h₁ : ∀ x u, Differentiable ℝ (fun θ => M.pol.prob θ x u))
-  (h₂ : ∀ θ x u, ‖∇[θ] M.pol.prob θ x u‖ ≤ g x u)
+  (h₁ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
+  (h₂ : ∀ θ x u, ‖∇[θ] M.policy.prob θ x u‖ ≤ g x u)
   (h₃ : ∀ x, Integrable (g x) ReferenceMeasure.measure)
   (h₄ : sup[x] ∫ u, g x u ∂ReferenceMeasure.measure < ∞)
-  (h₅ : ∀ θ, Measurable (fun z : S × A => M.pol.prob θ z.1 z.2))
+  (h₅ : ∀ θ, Measurable (fun z : S × A => M.policy.prob θ z.1 z.2))
   (h₆ : ∀ x, Measurable (fun z : A × S => p x z.1 z.2))
   (h₇ : ∀ x u y, p x u y ≥ 0)
   (h₈ : ∀ x u, M.env.trans (x, u) = (ReferenceMeasure.measure : Measure S).withDensity (fun y => ENNReal.ofReal (p x u y))) :
 -- imply
   ∇[θ] M.Vkd θ γ («s.bvar» t) =
-    ∫ u, M.Qkd θ γ («s.bvar» t) u • ∇[θ] M.pol.prob θ («s.bvar» t) u ∂ReferenceMeasure.measure +
+    ∫ u, M.Qkd θ γ («s.bvar» t) u • ∇[θ] M.policy.prob θ («s.bvar» t) u ∂ReferenceMeasure.measure +
       γ • ∫ y, M.P1kd θ p («s.bvar» t) y • ∇[θ] M.Vkd θ γ y ∂ReferenceMeasure.measure := by
 -- proof
   set x := «s.bvar» t
@@ -68,9 +59,9 @@ private lemma main
     StronglyMeasurable_Fderiv.of.All_DifferentiableAt.All_Measurable
       (fun θ' => Measurable_Vkd.of.All_Measurable_Prob (M := M) h₅ θ' γ)
       (fun y => (HasFDerivAt.of.All_Measurable_Prob.In_Ico.GtInftySup.All_Integrable.All_LeNormGrad.All_Differentiable_Prob (M := M) h₁ h₂ h₃ h₄ h₀ h₅ y θ).differentiableAt)
-  have hπ : Integrable (M.pol.prob θ x) ReferenceMeasure.measure :=
-    Integrable.of_integral_ne_zero (by rw [M.pol.integral_eq_one θ x]; exact one_ne_zero)
-  have hπm : Measurable (M.pol.prob θ x) := (h₅ θ).comp measurable_prodMk_left
+  have hπ : Integrable (M.policy.prob θ x) ReferenceMeasure.measure :=
+    Integrable.of_integral_ne_zero (by rw [M.policy.integral_eq_one θ x]; exact one_ne_zero)
+  have hπm : Measurable (M.policy.prob θ x) := (h₅ θ).comp measurable_prodMk_left
   have hp : ∀ u, Measurable (p x u) := fun u => (h₆ x).comp measurable_prodMk_left
   have hd : ∀ u, ∫ y, fderiv ℝ (fun θ => M.Vkd θ γ y) θ ∂(M.env.trans (x, u)) =
       ∫ y, p x u y • fderiv ℝ (fun θ => M.Vkd θ γ y) θ ∂ReferenceMeasure.measure := fun u => by
@@ -83,15 +74,15 @@ private lemma main
     rw [h₈, integrable_withDensity_iff_integrable_smul' (hp u).ennreal_ofReal
       (Filter.Eventually.of_forall fun y => ENNReal.ofReal_lt_top)] at hI
     simpa [ENNReal.toReal_ofReal (h₇ x u _)] using hI
-  have hn : ∀ u, ∫ y, ‖M.pol.prob θ x u • (p x u y • fderiv ℝ (fun θ => M.Vkd θ γ y) θ)‖ ∂ReferenceMeasure.measure ≤
-      M.pol.prob θ x u * C := fun u => by
-    have e : ∫ y, ‖M.pol.prob θ x u • (p x u y • fderiv ℝ (fun θ => M.Vkd θ γ y) θ)‖ ∂ReferenceMeasure.measure =
-        ∫ y, M.pol.prob θ x u * ‖fderiv ℝ (fun θ => M.Vkd θ γ y) θ‖ ∂(M.env.trans (x, u)) := by
+  have hn : ∀ u, ∫ y, ‖M.policy.prob θ x u • (p x u y • fderiv ℝ (fun θ => M.Vkd θ γ y) θ)‖ ∂ReferenceMeasure.measure ≤
+      M.policy.prob θ x u * C := fun u => by
+    have e : ∫ y, ‖M.policy.prob θ x u • (p x u y • fderiv ℝ (fun θ => M.Vkd θ γ y) θ)‖ ∂ReferenceMeasure.measure =
+        ∫ y, M.policy.prob θ x u * ‖fderiv ℝ (fun θ => M.Vkd θ γ y) θ‖ ∂(M.env.trans (x, u)) := by
       rw [h₈, integral_withDensity_eq_integral_toReal_smul (hp u).ennreal_ofReal
         (Filter.Eventually.of_forall fun y => ENNReal.ofReal_lt_top)]
       congr 1
       funext y
-      rw [ENNReal.toReal_ofReal (h₇ x u y), norm_smul, norm_smul, Real.norm_of_nonneg (M.pol.nonneg θ x u),
+      rw [ENNReal.toReal_ofReal (h₇ x u y), norm_smul, norm_smul, Real.norm_of_nonneg (M.policy.nonneg θ x u),
         Real.norm_of_nonneg (h₇ x u y), smul_eq_mul]
       ring
     have h := norm_integral_le_of_norm_le_const (μ := M.env.trans (x, u)) (C := C)
@@ -99,32 +90,32 @@ private lemma main
         rw [norm_norm]
         exact hCb y)
     rw [e, integral_const_mul]
-    exact mul_le_mul_of_nonneg_left ((Real.le_norm_self _).trans (by simpa using h)) (M.pol.nonneg θ x u)
-  have hFm : StronglyMeasurable (fun z : A × S => M.pol.prob θ x z.1 • (p x z.1 z.2 • fderiv ℝ (fun θ => M.Vkd θ γ z.2) θ)) :=
+    exact mul_le_mul_of_nonneg_left ((Real.le_norm_self _).trans (by simpa using h)) (M.policy.nonneg θ x u)
+  have hFm : StronglyMeasurable (fun z : A × S => M.policy.prob θ x z.1 • (p x z.1 z.2 • fderiv ℝ (fun θ => M.Vkd θ γ z.2) θ)) :=
     (hπm.comp measurable_fst).stronglyMeasurable.smul ((h₆ x).stronglyMeasurable.smul (hgm.comp_measurable measurable_snd))
-  have hInt : Integrable (Function.uncurry fun u y => M.pol.prob θ x u • (p x u y • fderiv ℝ (fun θ => M.Vkd θ γ y) θ))
+  have hInt : Integrable (Function.uncurry fun u y => M.policy.prob θ x u • (p x u y • fderiv ℝ (fun θ => M.Vkd θ γ y) θ))
       ((ReferenceMeasure.measure : Measure A).prod (ReferenceMeasure.measure : Measure S)) :=
-    (integrable_prod_iff hFm.aestronglyMeasurable).2 ⟨Filter.Eventually.of_forall fun u => (hi u).smul (M.pol.prob θ x u),
+    (integrable_prod_iff hFm.aestronglyMeasurable).2 ⟨Filter.Eventually.of_forall fun u => (hi u).smul (M.policy.prob θ x u),
       (hπ.mul_const C).mono' (hFm.norm.integral_prod_right' (ν := (ReferenceMeasure.measure : Measure S))).aestronglyMeasurable
         (Filter.Eventually.of_forall fun u => by
           rw [Real.norm_of_nonneg (integral_nonneg fun _ => norm_nonneg _)]
           exact hn u)⟩
-  have hsum : ∫ u, M.pol.prob θ x u • ∫ y, fderiv ℝ (fun θ => M.Vkd θ γ y) θ ∂(M.env.trans (x, u)) ∂ReferenceMeasure.measure =
+  have hsum : ∫ u, M.policy.prob θ x u • ∫ y, fderiv ℝ (fun θ => M.Vkd θ γ y) θ ∂(M.env.trans (x, u)) ∂ReferenceMeasure.measure =
       ∫ y, M.P1kd θ p x y • fderiv ℝ (fun θ => M.Vkd θ γ y) θ ∂ReferenceMeasure.measure := calc
-    _ = ∫ u, ∫ y, M.pol.prob θ x u • (p x u y • fderiv ℝ (fun θ => M.Vkd θ γ y) θ) ∂ReferenceMeasure.measure ∂ReferenceMeasure.measure := by
+    _ = ∫ u, ∫ y, M.policy.prob θ x u • (p x u y • fderiv ℝ (fun θ => M.Vkd θ γ y) θ) ∂ReferenceMeasure.measure ∂ReferenceMeasure.measure := by
       congr 1
       funext u
       rw [hd u, integral_smul]
-    _ = ∫ y, ∫ u, M.pol.prob θ x u • (p x u y • fderiv ℝ (fun θ => M.Vkd θ γ y) θ) ∂ReferenceMeasure.measure ∂ReferenceMeasure.measure :=
+    _ = ∫ y, ∫ u, M.policy.prob θ x u • (p x u y • fderiv ℝ (fun θ => M.Vkd θ γ y) θ) ∂ReferenceMeasure.measure ∂ReferenceMeasure.measure :=
       integral_integral_swap hInt
     _ = _ := by
       congr 1
       funext y
       simp only [smul_smul, integral_smul_const, DensityModel.P1kd]
-  have hint₁ : (InnerProductSpace.toDual ℝ Θ).symm (∫ u, M.Qkd θ γ x u • fderiv ℝ (fun θ => M.pol.prob θ x u) θ ∂ReferenceMeasure.measure) =
-      ∫ u, (InnerProductSpace.toDual ℝ Θ).symm (M.Qkd θ γ x u • fderiv ℝ (fun θ => M.pol.prob θ x u) θ) ∂ReferenceMeasure.measure := by
+  have hint₁ : (InnerProductSpace.toDual ℝ Θ).symm (∫ u, M.Qkd θ γ x u • fderiv ℝ (fun θ => M.policy.prob θ x u) θ ∂ReferenceMeasure.measure) =
+      ∫ u, (InnerProductSpace.toDual ℝ Θ).symm (M.Qkd θ γ x u • fderiv ℝ (fun θ => M.policy.prob θ x u) θ) ∂ReferenceMeasure.measure := by
     have h := (InnerProductSpace.toDual ℝ Θ).symm.toContinuousLinearEquiv.integral_comp_comm
-      (μ := (ReferenceMeasure.measure : Measure A)) (fun u => M.Qkd θ γ x u • fderiv ℝ (fun θ => M.pol.prob θ x u) θ)
+      (μ := (ReferenceMeasure.measure : Measure A)) (fun u => M.Qkd θ γ x u • fderiv ℝ (fun θ => M.policy.prob θ x u) θ)
     simpa using h.symm
   have hint₂ : (InnerProductSpace.toDual ℝ Θ).symm (∫ y, M.P1kd θ p x y • fderiv ℝ (fun θ => M.Vkd θ γ y) θ ∂ReferenceMeasure.measure) =
       ∫ y, (InnerProductSpace.toDual ℝ Θ).symm (M.P1kd θ p x y • fderiv ℝ (fun θ => M.Vkd θ γ y) θ) ∂ReferenceMeasure.measure := by

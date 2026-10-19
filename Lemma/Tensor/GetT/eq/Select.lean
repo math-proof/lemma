@@ -1,11 +1,8 @@
 import Lemma.Bool.EqCast.of.SEq
 import torch.Tensor.permute
-import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.List.Swap.eq.Permute__Neg1.of.GtLength
 import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
-import Lemma.Tensor.GetPermuteTail.as.Select.of.GtGet.GtLength_0
 import Lemma.Tensor.GetPermute__Neg.as.Select.of.GtGet.GtLength_0
-import Lemma.Tensor.Permute__Neg.as.PermuteTail.of.Val.eq.SubLength_1
 import Lemma.Tensor.T.as.Permute__Neg1.of.GtLength_0
 open Bool List Tensor
 

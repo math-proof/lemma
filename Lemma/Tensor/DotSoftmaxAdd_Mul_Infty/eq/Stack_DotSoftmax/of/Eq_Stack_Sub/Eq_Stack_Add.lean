@@ -1,10 +1,6 @@
 import Lemma.Tensor.DotSoftmaxAdd_Mul_Infty.eq.Stack_DotSoftmax
-import Lemma.Tensor.EqGetStack
-import Lemma.Tensor.EqHeadData
-import Lemma.Tensor.XEq.of.Eq
-import Lemma.Vector.Head.eq.Get_0
 open Tensor
-set_option maxHeartbeats 4000000
+set_option maxHeartbeats 1000000
 
 
 @[path]

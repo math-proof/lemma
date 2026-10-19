@@ -1,6 +1,5 @@
 import Mathlib.Data.Fintype.Basic
 import Mathlib.Basic.Real.Basic
-import sympy.Basic
 import Lemma.Random.Any_LtAndEqSetOfLeSetOfLt
 open Random
 

@@ -1,6 +1,4 @@
 import Lemma.Finset.UFnSum.eq.Sum_UFn.All_EqUFnAdd.EqUFn_0
-import Lemma.Vector.EqGet0_0
-import Lemma.Vector.GetAdd.eq.AddGetS
 import sympy.vector.vector
 open Vector Finset
 

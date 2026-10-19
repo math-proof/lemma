@@ -1,6 +1,4 @@
 import Lemma.Set.Subset.Icc.of.Le
-import sympy.sets.sets
-import sympy.Basic
 open Set
 
 

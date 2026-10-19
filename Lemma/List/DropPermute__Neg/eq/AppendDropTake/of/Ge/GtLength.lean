@@ -1,5 +1,4 @@
 import Lemma.List.DropPermute__Neg.eq.AppendTakeDrop.of.GtLength_Add
-import Lemma.List.TakeDrop.eq.DropTake
 open List
 
 

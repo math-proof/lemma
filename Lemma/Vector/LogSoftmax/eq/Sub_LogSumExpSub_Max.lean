@@ -1,9 +1,6 @@
-import Lemma.Real.NeExp_0
-import Lemma.Vector.GetExp.eq.ExpGet
 import Lemma.Vector.EqLogExp
 import Lemma.Vector.LogDiv.eq.SubLogS.of.All_Ne_0.Ne_0
 import Lemma.Vector.NeSumExp_0
-import Lemma.Vector.Softmax.eq.Div_SumExp
 import Lemma.Vector.SoftmaxSub.eq.Softmax
 open Vector Real
 

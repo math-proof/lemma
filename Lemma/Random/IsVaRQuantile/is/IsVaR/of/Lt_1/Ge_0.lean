@@ -1,6 +1,3 @@
-import sympy.stats.value_at_risk
-import sympy.Basic
-import Lemma.Random.IsQuantile.of.IsVaR
 import Lemma.Random.IsCofinalFor.of.Lt_1.Ge_0
 open MeasureTheory
 

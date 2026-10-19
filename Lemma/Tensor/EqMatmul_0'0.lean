@@ -4,7 +4,6 @@ import Lemma.Tensor.Resize0.eq.Zero
 import Lemma.Tensor.ToVector0.eq.Zero
 import Lemma.Vector.Map₂.eq.Zero.of.BFn.eq.Zero
 import Lemma.Tensor.OfVector0.eq.Zero
-import Lemma.Tensor.EqCast_0'0.of.Eq
 open Tensor Vector
 
 

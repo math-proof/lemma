@@ -1,7 +1,4 @@
 import Mathlib.Topology.Order.MonotoneConvergence
-import sympy.series.limits
-import sympy.sets.sets
-import sympy.Basic
 import Lemma.Real.Lim.eq.Sup.of.Ge.Any_All_Le.monotone_convergence_theorem
 
 

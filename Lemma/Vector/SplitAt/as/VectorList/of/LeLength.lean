@@ -4,7 +4,6 @@ import Lemma.List.ProdDrop.eq.One.of.LeLength
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import Lemma.Vector.GetMap.eq.UFnGet
-import sympy.vector.vector
 open Fin List Vector
 
 

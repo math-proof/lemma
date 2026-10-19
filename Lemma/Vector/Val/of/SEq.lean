@@ -1,6 +1,5 @@
 import stdlib.SEq
 import sympy.vector.vector
-import sympy.Basic
 
 
 @[path]

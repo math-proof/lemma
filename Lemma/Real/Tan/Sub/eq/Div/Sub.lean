@@ -1,7 +1,5 @@
 import Lemma.Real.Tan.Add.eq.Div
-import sympy.functions.elementary.trigonometric
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Arctan
-import sympy.Basic
 
 
 @[path]

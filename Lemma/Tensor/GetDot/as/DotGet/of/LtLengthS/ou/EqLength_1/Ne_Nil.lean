@@ -1,7 +1,4 @@
-import Lemma.List.Ne_Nil.is.GeLength_1
 import Lemma.Tensor.GetDot.eq.DotGet.of.GtLengthS
-import Lemma.Tensor.GetDot.eq.DotGet.of.Ne_Nil
-import Lemma.Tensor.GtLengthDot.of.LeLengthS.Ne_Nil
 open List Tensor
 
 

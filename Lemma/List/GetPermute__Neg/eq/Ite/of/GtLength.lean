@@ -2,7 +2,6 @@ import Lemma.List.Permute.eq.Ite
 import Lemma.List.GetAppend.eq.Get.of.GtLength
 import Lemma.Nat.EqMin.of.Lt
 import Lemma.List.GetAppend.eq.Get_Sub_Length.of.GtLengthAppend.GeLength
-import Lemma.List.LengthSlice.eq.SubMin_Length
 import Lemma.List.LengthAppend.eq.AddLengthS
 import Lemma.List.LengthCons.eq.Add1Length
 import Lemma.List.Slice.eq.Nil

@@ -3,15 +3,11 @@ import torch.Tensor.permute
 import Lemma.Tensor.DotT.eq.RotaryMatrixSub
 import Lemma.Tensor.Dot_TInterleave.eq.Eye
 import Lemma.Tensor.EqDotEye
-import Lemma.Tensor.EqTT
-import Lemma.Tensor.RotaryMatrix'.eq.DotDot_RotaryMatrix
 import Lemma.Tensor.TDot.eq.DotTS
-import sympy.functions.special.tensor_functions
-import sympy.matrices.expressions.special
 import torch.eye
 import torch.functions
 open Tensor
-set_option maxHeartbeats 4000000
+set_option maxHeartbeats 1000000
 
 
 @[path]

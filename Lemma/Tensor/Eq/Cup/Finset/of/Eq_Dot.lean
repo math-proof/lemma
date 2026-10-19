@@ -1,5 +1,3 @@
-import sympy.matrices.expressions.permutation
-import sympy.vector.Basic
 import Lemma.Tensor.GetDot_SwapMatrix.eq.Get
 open Tensor
 

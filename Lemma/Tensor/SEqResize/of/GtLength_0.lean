@@ -1,10 +1,3 @@
-import Lemma.Bool.SEq.is.SEqCast.of.Eq
-import Lemma.List.EqCons_Tail.of.GtLength_0
-import Lemma.List.HeadD.eq.Get_0.of.GtLength_0
-import Lemma.Vector.GetMap.eq.UFnGet
-import Lemma.Tensor.GetOfVector.eq.Get
-import Lemma.Tensor.GetToVector.eq.Get
-import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.GtLength_0
 import Lemma.Tensor.Resize.as.OfVectorMapToVector.of.GtVal_0
 import Lemma.Tensor.SEqResizeS.of.SEq.Val.Eq
 import Lemma.Tensor.SEqResize_0.of.GtLength_0

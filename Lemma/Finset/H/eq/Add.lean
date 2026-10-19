@@ -1,6 +1,5 @@
 import sympy.concrete.continuant
 import sympy.sets.sets
-import sympy.Basic
 open Continuant
 
 

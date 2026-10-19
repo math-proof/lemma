@@ -1,5 +1,3 @@
-import sympy.functions.elementary.complexes
-import sympy.Basic
 import Lemma.Complex.PowAddDivNeg1'2DivMulISqrt3'2'3.eq.One
 open Complex
 

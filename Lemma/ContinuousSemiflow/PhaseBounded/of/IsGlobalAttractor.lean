@@ -1,5 +1,3 @@
-import sympy.dynamics.actor_critic
-import sympy.Basic
 import Lemma.Set.PhaseBounded.of.Subset.IsCompact
 
 

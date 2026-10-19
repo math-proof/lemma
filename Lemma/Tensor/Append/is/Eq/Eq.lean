@@ -4,8 +4,6 @@ import Lemma.Tensor.DataAppend.as.AppendDataS
 import Lemma.Tensor.DataAppend.as.FlattenMap₂_CastS_SplitAtData
 import Lemma.Bool.SEq.is.Eq
 import Lemma.Bool.SEq.of.SEq.SEq
-import Lemma.List.Eq.of.Append.Length
-import Lemma.Vector.Eq.is.ToList
 import Lemma.Vector.Eq.is.All_EqGetS
 import Lemma.Vector.Eq.of.Flatten
 import Lemma.Vector.EqFlattenSplitAt

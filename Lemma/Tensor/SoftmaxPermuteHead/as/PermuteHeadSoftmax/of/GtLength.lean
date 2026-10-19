@@ -1,26 +1,15 @@
 import Lemma.Tensor.SelectSoftmax.eq.SoftmaxSelect.of.Lt
 import torch.Tensor.permute
 import Lemma.Tensor.SEqPermuteHeadS.of.SEq
-import Lemma.Bool.SEq.is.SEqCast.of.Eq
-import Lemma.List.EraseIdxAppend.eq.Append_EraseIdx.of.LeLength
-import Lemma.List.EraseIdxTail.eq.TailEraseIdx.of.Lt_SubLength_1
-import Lemma.List.GetAppend.eq.Get.of.GtLength
-import Lemma.List.GetTake.eq.Get.of.GtLengthTake
-import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.GtLength
-import Lemma.Nat.EqAddSub.of.Ge
-import Lemma.Nat.EqAdd_Sub.of.Ge
-import Lemma.Nat.EqMin.of.Le
-import Lemma.Nat.Ge_1.of.Gt_0
 import Lemma.Tensor.GetPermuteHead.as.PermuteHeadSelect.of.GtGet_1.GtLength_1
 import Lemma.Tensor.GetSoftmax.eq.SoftmaxGet.of.GtGet_0.Gt_0.GtLength
 import Lemma.Tensor.GetSum_0.as.SumSelect.of.GtGet_0.GtLength_0
-import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.GtLength_0
 import Lemma.Tensor.SEqPermuteHead_1
 import Lemma.Tensor.SEqSoftmaxS.of.SEq
 import Lemma.Tensor.SEqSumS.of.SEq
 import torch.functions
 open Bool List Nat Tensor
-set_option maxHeartbeats 500000
+set_option maxHeartbeats 250000
 
 
 @[path]

@@ -1,9 +1,6 @@
-import Lemma.Tensor.DataAdd.eq.AddDataS
 import Lemma.Tensor.DataCos.eq.CosData
-import Lemma.Tensor.DataMul.eq.MulDataS
 import Lemma.Tensor.DataSin.eq.SinData
 import Lemma.Tensor.DataSub.eq.SubDataS
-import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Vector.CosSub.eq.AddMulS
 import torch.functions
 open Tensor Vector

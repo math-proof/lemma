@@ -1,5 +1,3 @@
-import sympy.stats.policy_trajectory.gradient
-import sympy.Basic
 import Lemma.Random.Fderiv_FunProbPol.eq.Zero.of.ProbPolEq0
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model
 
@@ -12,15 +10,15 @@ private lemma main
   [NormedAddCommGroup Θ] [NormedSpace ℝ Θ] [MeasurableSpace S] [MeasurableSpace A] [Fintype A]
   {M : Model Θ S A}
 -- given
-  (h₀ : ∀ x u, Differentiable ℝ (fun θ => M.pol.prob θ x u))
+  (h₀ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
   (θ : Θ)
   (x : S)
   (u : A) :
 -- imply
-  M.pol.prob θ x u • fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' x u)) θ =
-    fderiv ℝ (fun θ' => M.pol.prob θ' x u) θ := by
+  M.policy.prob θ x u • fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' x u)) θ =
+    fderiv ℝ (fun θ' => M.policy.prob θ' x u) θ := by
 -- proof
-  by_cases h : M.pol.prob θ x u = 0
+  by_cases h : M.policy.prob θ x u = 0
   · rw [h, zero_smul, Random.Fderiv_FunProbPol.eq.Zero.of.ProbPolEq0 (M := M) θ x u h]
   · rw [fderiv.log ((h₀ x u) θ) h, smul_smul, mul_inv_cancel₀ h, one_smul]
 

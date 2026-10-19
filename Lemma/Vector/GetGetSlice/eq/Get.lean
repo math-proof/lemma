@@ -1,9 +1,6 @@
 import Lemma.Nat.AddMul.lt.Mul.of.Lt.Lt
 import Lemma.List.LengthSlice.eq.Min
-import Lemma.List.EqLengthSlice_Mul
-import Lemma.Nat.AddMul.lt.Mul
 import Lemma.Vector.GetIndices.eq.AddMul
-import sympy.vector.vector
 open List Nat Vector
 
 

@@ -1,10 +1,8 @@
-import Lemma.Nat.Delta.eq.Ite
 import Lemma.Tensor.EqMul0_0
 import Lemma.Tensor.GetDot.eq.Sum_MulGetS
 import Lemma.Tensor.GetEye.eq.Delta
 import Lemma.Tensor.GetShiftMatrix.eq.DeltaModAdd_1
 import Lemma.Tensor.MatProd.eq.DotMatProd
-import Lemma.Tensor.Mul
 import sympy.matrices.expressions.matpow
 open Nat Tensor
 

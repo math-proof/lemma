@@ -1,7 +1,4 @@
 import Mathlib.Probability.Independence.Integration
-import sympy.stats.joint_rv
-import sympy.stats.variance
-import sympy.Basic
 import Lemma.Random.Var.eq.Integral
 import Lemma.Random.Cov.eq.Integral
 open MeasureTheory

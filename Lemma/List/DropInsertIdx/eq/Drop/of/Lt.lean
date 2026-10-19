@@ -1,12 +1,6 @@
-import Lemma.List.EqInsertIdx.of.LtLength
-import Lemma.List.Drop.eq.Nil.of.LeLength
 import Lemma.Nat.Le_Sub_1.of.Lt
 import Lemma.List.InsertIdx.eq.Append_InsertIdxDrop.of.Ge.GeLength
 import Lemma.List.DropAppend.eq.Drop.of.LeLength
-import Lemma.List.LengthTake.eq.Min_Length
-import Lemma.Nat.Ge_Min.of.Ge
-import Lemma.Nat.Ge.of.Gt
-import Lemma.Nat.EqMin.of.Le
 import Lemma.List.DropCons.eq.Drop_Sub_1.of.Gt_0
 import Lemma.Nat.SubAdd.eq.Add_Sub.of.Ge
 import Lemma.Nat.EqAdd_Sub.of.Gt

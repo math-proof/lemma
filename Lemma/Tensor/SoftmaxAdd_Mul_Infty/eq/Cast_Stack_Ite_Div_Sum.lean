@@ -1,25 +1,6 @@
 import Lemma.Tensor.SoftmaxAdd_Mul_Infty.eq.Cast_Stack_Div_Sum
-import Lemma.Tensor.EqGetStack
-import Lemma.Tensor.EqGetStack
-import Lemma.Tensor.Eq.is.All_EqGetS
-import Lemma.Tensor.GetExp.eq.ExpGet
-import Lemma.Tensor.GetMul.eq.MulGetS
-import Lemma.Tensor.GetDiv.eq.DivGet
-import Lemma.Tensor.Sum_0.eq.Sum_Get
-import Lemma.Tensor.Eq.is.EqDataS
-import Lemma.Tensor.MapStack.eq.Stack_Map
-import Lemma.Tensor.GetMap.eq.MapGet
-import Lemma.Tensor.XEqGetS.of.XEq.GtLength
-import Lemma.Tensor.XEq.is.All_XEqGetS.of.GtLength_0
-import Lemma.Tensor.XEq.of.Eq
-import Lemma.Tensor.MapExp.eq.ExpMap.of.All_EqUFnExp_ExpUFn
-import Lemma.Tensor.MapMul.eq.MulMapS.of.All_Eq_Mul
-import Lemma.Tensor.MapDiv.eq.DivMapS.of.All_Eq_Div
-import Lemma.Tensor.SumMap.eq.MapSum.of.All_EqUFnAdd
-import Lemma.Hyperreal.OfRealExp.eq.ExpOfReal
-import sympy.Basic
 open Tensor Hyperreal
-set_option maxHeartbeats 1000000
+set_option maxHeartbeats 500000
 
 private lemma sum_sc {m : ℕ} (h : Fin m → ℝ) : ((∑ k, h k : ℝ) : Tensor ℝ []) = ∑ k, ((h k : ℝ) : Tensor ℝ []) := by
   let φ : ℝ →+ Tensor ℝ [] := AddMonoidHom.mk' (fun x => (x : Tensor ℝ [])) (fun x y => by apply Eq.of.EqDataS; rfl)

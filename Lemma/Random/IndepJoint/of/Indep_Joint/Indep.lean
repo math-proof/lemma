@@ -1,5 +1,4 @@
 import Mathlib.Probability.Independence.Basic
-import sympy.stats.joint_rv
 import Lemma.Random.IndepJoint.of.Indep.Indep_Joint
 open ProbabilityTheory MeasureTheory Random
 

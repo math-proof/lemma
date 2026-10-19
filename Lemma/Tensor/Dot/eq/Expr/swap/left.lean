@@ -1,9 +1,5 @@
-import sympy.matrices.expressions.permutation
-import sympy.vector.Basic
 import Lemma.Tensor.DotDot.eq.Dot_Dot
 import Lemma.Tensor.DotGetSwapMatrix.eq.Get
-import Lemma.Tensor.Eq.is.All_EqGetS
-import Lemma.Tensor.GetDot.eq.DotGet
 open Tensor
 
 

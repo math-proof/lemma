@@ -1,5 +1,3 @@
-import sympy.stats.q_learning
-import sympy.Basic
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Lemma.Random.Gtμmin_0AndGeη_0AndLtη_1
 

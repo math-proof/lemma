@@ -1,5 +1,3 @@
-import sympy.stats.policy_trajectory.gradient
-import sympy.Basic
 import Lemma.Real.Norm_Eq12.le.One
 import Lemma.Random.Pn.eq.Integral
 import Lemma.Random.WAdd_1.eq.Sum_MulProbSum_MulTW.of.All_LeNorm.StronglyMeasurable
@@ -25,10 +23,10 @@ private lemma main
   (n : ℕ)
   (x y : S) :
 -- imply
-  M.Pn θ (n + 1) x y = ∑ u, M.pol.prob θ x u * ∑ y', (M.env.trans (x, u)).real {y'} * M.Pn θ n y' y := by
+  M.Pn θ (n + 1) x y = ∑ u, M.policy.prob θ x u * ∑ y', (M.env.trans (x, u)).real {y'} * M.Pn θ n y' y := by
 -- proof
   rw [Pn.eq.Integral (M := M) θ (n + 1) x y, WAdd_1.eq.Sum_MulProbSum_MulTW.of.All_LeNorm.StronglyMeasurable (M := M) (Real.StronglyMeasurable_Eq12 y) (Norm_Eq12.le.One y) θ n x]
-  refine Finset.sum_congr rfl fun u _ => congrArg (fun inner => M.pol.prob θ x u * inner) ?_
+  refine Finset.sum_congr rfl fun u _ => congrArg (fun inner => M.policy.prob θ x u * inner) ?_
   refine Finset.sum_congr rfl fun y' _ => by rw [pn_step (M := M) θ n y y']
 
 

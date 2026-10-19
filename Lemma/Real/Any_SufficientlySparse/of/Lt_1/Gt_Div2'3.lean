@@ -1,9 +1,6 @@
-import sympy.stats.step_size
-import sympy.Basic
 import Lemma.Real.Anchors.SumRangeT.le.SumRangeTime
 import Lemma.Real.RobbinsMonroInvPoly.of.Ge_1.Le_1.Gt_Div1'2
 import Lemma.Real.SumRangeInvPoly.le.DivSubPow.of.Lt_1.Ge_0
-import Lemma.Real.Anchors.Time0.eq.Zero
 open Real Finset
 
 

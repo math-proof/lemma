@@ -1,5 +1,4 @@
 import Lemma.Hyperreal.Infinite.is.InfiniteAdd.of.NotInfinite
-import Lemma.Hyperreal.Infinite.is.InfiniteNeg
 import Lemma.Int.Sub.eq.Add_Neg
 open Hyperreal Int
 

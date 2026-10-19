@@ -1,13 +1,7 @@
-import Lemma.Hyperreal.EqSt.of.InfinitesimalSub
 import Lemma.Hyperreal.Infinite.is.Infinite.of.XEq
-import Lemma.Hyperreal.Infinite.of.InfiniteDiv.NotInfinitesimal
 import Lemma.Hyperreal.Infinitesimal.is.Infinitesimal.of.XEq
-import Lemma.Hyperreal.InfinitesimalSub.of.Infinitesimal.Infinitesimal
 import Lemma.Hyperreal.InfinitesimalSub.of.StDiv.eq.One.NotInfinite
 import Lemma.Hyperreal.XEq.is.OrInfinitesimalSSub
-import Lemma.Hyperreal.StAdd.eq.AddStS.of.NotInfinite.NotInfinite
-import Lemma.Hyperreal.StDiv.eq.InvStInv
-import Lemma.Real.Eq_1.of.Add_Inv.eq.Two
 open Hyperreal Real
 
 

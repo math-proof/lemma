@@ -1,13 +1,7 @@
 import Lemma.Tensor.SoftmaxAdd_Mul_Infty.eq.Cast_Stack_Ite_Block
-import Lemma.Tensor.XEqGetS.of.XEq.GtLength
-import Lemma.Tensor.XEq.is.XEqDataS
-import Lemma.Vector.XEq.is.All_XEqGetS
-import Lemma.Tensor.GetMap.eq.MapGet
-import Lemma.Tensor.EqGetStack
 import torch.Tensor.item
-import sympy.Basic
 open Tensor
-set_option maxHeartbeats 1000000
+set_option maxHeartbeats 500000
 
 private lemma entry {n m : ℕ} (f : Fin n → Fin m → ℝ) (i : Fin n) (j : Fin m) :
     (((([i < n] [j < m] (((f i j : ℝ)) : Tensor ℝ []) : Tensor ℝ [n, m]) : Tensor ℝ* [n, m]).get ⟨i, by simp [Tensor.length]⟩).get ⟨j, by simp [Tensor.length]⟩ : Tensor ℝ* []) =

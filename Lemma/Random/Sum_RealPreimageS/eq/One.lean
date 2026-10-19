@@ -1,5 +1,3 @@
-import sympy.stats.policy_trajectory.gradient
-import sympy.Basic
 import Lemma.Random.Integral.eq.Sum_SMul
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model
 

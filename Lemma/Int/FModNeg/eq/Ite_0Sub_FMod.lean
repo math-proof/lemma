@@ -1,26 +1,13 @@
-import sympy.core.logic
 import Lemma.Int.Any_Eq_Mul.of.FMod.eq.Zero
 import Lemma.Int.Neg.is.Eq
 import Lemma.Int.NegMul.eq.MulNeg
 import Lemma.Int.FMod.eq.Zero.of.Any_Eq_Mul
 import Lemma.Int.Any_Eq_AddMul.of.EqFMod
-import Lemma.Bool.Ne.is.NotEq
-import Lemma.Int.FMod.eq.Sub_MulFDiv
-import Lemma.Int.FDiv.eq.FloorDiv
-import Lemma.Int.NegAdd.eq.SubNeg
-import Lemma.Int.CoeSub.eq.SubCoeS
-import Lemma.Rat.DivSub.eq.SubDivS
-import Lemma.Nat.EqDivMul.of.Ne_0
-import Lemma.Int.NeCoeS.of.Ne
-import Lemma.Int.Sub.eq.Add_Neg
 import Lemma.Int.FloorAdd.eq.Add_Floor
 import Lemma.Nat.MulAdd.eq.AddMulS
 import Lemma.Int.Sub_Add.eq.SubSub
 import Lemma.Int.Sub.is.Eq
-import Lemma.Rat.DivNeg.eq.NegDiv
 import Lemma.Int.FDivNegFMod.eq.Neg1.of.FMod.ne.Zero.Ne_0
-import Lemma.Int.DivInt.eq.Div
-import Lemma.Nat.Sub.of.Eq
 open Bool Int Nat Rat
 
 

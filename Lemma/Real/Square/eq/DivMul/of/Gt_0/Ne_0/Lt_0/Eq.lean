@@ -3,18 +3,13 @@ import Lemma.Real.Deriv.eq.Div_Mul_Square.of.Ne_0.Ne_0.EqAngularMomentum
 import Lemma.Real.DivPow.eq.DivMul.of.Ne_0.Ne_0.Ne_0.Ne_0.Eq
 import Lemma.Real.EqDivMulMul.of.Ne_0.Ne_0.EqDivMul.EqMulMul
 import Lemma.Real.EqDivSub1Square.of.Gt_Neg1.Lt_1.EqMul2AddDivDiv
-import Lemma.Real.Gt_0Sub1MulCos.of.Gt_Neg1.Lt_1
 import Lemma.Real.IntegralArealSpeed.eq.MulMul.of.Ne_0.Gt_Neg1.Lt_1.All_DifferentiableAt.ContinuousOn.Eq.All_Eq
-import Lemma.Real.InvKeplerOrbitReciprocalSigned.eq.Div.of.Ne_0.Ne_0.Ne_0.Eq.Eq
-import Lemma.Real.MechanicalEnergyOfAngle.eq.Sub.of.Ne_0.Ne_0.Ne_0.DifferentiableAt.Eq
 import Lemma.Real.Mul2.eq.AddDivDiv.of.Ne_0.Ne_0.Gt_Neg1.Lt_1.Eq.Eq.Eq.Eq
 import Lemma.Real.OrbitEccentricity.ge.Zero
 import Lemma.Real.OrbitEccentricity.lt.One.of.Gt_0.Ne_0.Ne_0.Lt_0
 import Lemma.Real.SemiLatusRectum.eq.Div.of.EqNegMulMul
 import Lemma.Real.Square.eq.Div.of.Ne_0.Ne_0.Ne_0.Ne_0.EqDivMulMul.EqMulSub1Square.EqDiv
 import Lemma.Real.SquareA.eq.MulSquareOrbitEccentricity.of.Ne_0.Ne_0.Ne_0.Ne_0.DifferentiableAt.Eq.Eq
-import sympy.physics.vector.kinematics
-import sympy.Basic
 open Real
 
 

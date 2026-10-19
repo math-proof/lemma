@@ -1,6 +1,5 @@
 import torch.Tensor.Basic
 import torch.Tensor.prod
-import Lemma.List.EqEraseIdx.of.LeLength
 import torch.functions
 open List
 

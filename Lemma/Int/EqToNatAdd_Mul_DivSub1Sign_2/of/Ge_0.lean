@@ -1,5 +1,4 @@
 import Lemma.Int.EqAdd_Mul_DivSub1Sign_2.of.Ge_0
-import Lemma.Int.EqToNat.of.Ge_0
 open Int Slice
 
 

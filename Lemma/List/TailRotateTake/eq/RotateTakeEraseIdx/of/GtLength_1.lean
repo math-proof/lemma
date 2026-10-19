@@ -1,4 +1,3 @@
-import Lemma.List.EraseIdx.eq.Append_Drop_Add_1
 import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.GtLength
 import Lemma.List.Rotate.eq.AppendDrop__Take.of.GeLength
 import Lemma.List.Tail.eq.Drop_1

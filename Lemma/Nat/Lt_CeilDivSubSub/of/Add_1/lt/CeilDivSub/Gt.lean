@@ -1,5 +1,4 @@
 import Lemma.Nat.Lt_CeilDivSub_Add.of.Add_1.lt.CeilDivSub
-import Lemma.Int.Sub_Add.eq.SubSub
 import Lemma.Nat.Add
 import Lemma.Nat.CoeSub.eq.SubCoeS.of.Gt
 open Nat Int

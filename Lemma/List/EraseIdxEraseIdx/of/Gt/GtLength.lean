@@ -1,5 +1,4 @@
 import Lemma.List.EraseIdxEraseIdx.of.Le.GtLength
-import Lemma.Nat.EqAddSub.of.Ge
 open List Nat
 
 

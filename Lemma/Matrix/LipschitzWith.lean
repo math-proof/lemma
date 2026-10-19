@@ -1,6 +1,4 @@
 import Mathlib.Topology.EMetricSpace.Lipschitz
-import sympy.stats.frozen_invariant_law
-import sympy.Basic
 import Lemma.Real.Norm.le.Sum_Abs
 import Lemma.Matrix.Sum_AbsSub.le.MulDivMulCMixLQHQDist
 

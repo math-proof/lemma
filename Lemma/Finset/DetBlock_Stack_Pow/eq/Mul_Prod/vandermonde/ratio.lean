@@ -1,6 +1,5 @@
 import Mathlib.Data.Nat.Factorial.Basic
 import Lemma.Matrix.DetOf.eq.MulPowSProdProd.of.Le
-import sympy.Basic
 open Matrix
 
 

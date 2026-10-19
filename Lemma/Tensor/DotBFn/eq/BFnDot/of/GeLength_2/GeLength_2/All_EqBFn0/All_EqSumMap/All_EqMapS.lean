@@ -1,20 +1,12 @@
-import Lemma.Bool.SEq.is.Eq
 import torch.Tensor.reshape
-import Lemma.Bool.SEqCast.of.Eq
-import Lemma.Bool.SEqUFnS.of.SEq
-import Lemma.List.EqAppendTake__ListGet.of.GeLength_2
-import Lemma.Tensor.MapCast.as.MapBFn.of.Eq
 import Lemma.Tensor.Einsum.as.Tensordot.of.GeLength_2.GeLength_2
 import Lemma.Tensor.MatmulBFn.eq.BFnMatmul.of.Length.All_EqBFn0.All_EqSumMap.All_EqMapS
-import Lemma.Tensor.ReshapeBFn.eq.BFnReshape.of.Dvd
-import Lemma.Tensor.ResizeBFn.eq.BFnResize
 import Lemma.Tensor.SEqTensordotS.of.SEq.SEq.Eq.Eq
 import Lemma.Tensor.Tensordot.as.Matmul.of.GeLengthS
 import Lemma.Tensor.Tensordot.as.Matmul.of.LtLengthS
-import Lemma.Tensor.Tensordot.eq.Matmul.of.Length
 import torch.Tensor.sum
 open Bool List Tensor
-set_option maxHeartbeats 1000000
+set_option maxHeartbeats 500000
 
 
 /-- `dot` commutes with a pointwise scalar binary operator `f` when both ranks are ≥ 2. -/

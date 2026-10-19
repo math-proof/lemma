@@ -1,5 +1,3 @@
-import sympy.vector.vector
-import Lemma.Bool.EqCast.of.Eq
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import Lemma.Nat.EqMin.of.Le
 import Lemma.Vector.EqGetRange.of.Lt

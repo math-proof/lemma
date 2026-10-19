@@ -1,5 +1,4 @@
 import torch.Tensor
-import sympy.Basic
 
 
 @[path]

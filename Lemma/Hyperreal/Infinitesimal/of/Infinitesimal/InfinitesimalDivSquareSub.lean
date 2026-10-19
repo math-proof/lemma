@@ -1,5 +1,4 @@
 import Lemma.Hyperreal.Infinite.of.InfinitesimalDiv.NotInfinitesimal
-import Lemma.Hyperreal.Infinitesimal.is.InfinitesimalPow
 import Lemma.Hyperreal.InfinitesimalSub.of.Infinitesimal.Infinitesimal
 import Lemma.Hyperreal.NotInfiniteAdd_Square.of.InfinitesimalDivSquare.Infinitesimal
 open Hyperreal

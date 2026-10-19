@@ -1,7 +1,5 @@
 import Mathlib.Dynamics.OmegaLimit
 import Mathlib.Dynamics.Flow
-import sympy.dynamics.actor_critic
-import sympy.Basic
 import Lemma.ContinuousSemiflow.OmegaLimitToFun.of.IsForwardInvariantToFun.IsClosed
 open Filter
 

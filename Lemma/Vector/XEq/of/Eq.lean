@@ -1,6 +1,5 @@
 import Lemma.Hyperreal.XEq.of.Eq
 import Lemma.Vector.XEq.is.All_XEqGetS
-import sympy.vector.vector
 
 
 @[path]

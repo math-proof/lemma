@@ -1,6 +1,5 @@
 import Lemma.Tensor.Dot.eq.Add.of.Eq_Mul.Eq_Mul.Eq_Block
 import Lemma.Tensor.EqDot.of.Eq_Mul.Eq_Mul.Eq_Block
-import sympy.Basic
 open Matrix
 
 

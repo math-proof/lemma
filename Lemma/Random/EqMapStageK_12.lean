@@ -1,5 +1,4 @@
 import sympy.stats.policy_trajectory
-import sympy.Basic
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model
 
 
@@ -21,9 +20,9 @@ private lemma main
   have h : (M.stageK θ).map (fun z => z.2.1) = Kernel.deterministic id measurable_id := by
     unfold Model.stageK
     rw [← Kernel.map_comp_right _ (by fun_prop) (by fun_prop)]
-    show (Kernel.deterministic id measurable_id ×ₖ (M.pol.kernel θ ⊗ₖ M.env.reward)).map Prod.fst = _
+    show (Kernel.deterministic id measurable_id ×ₖ (M.policy.kernel θ ⊗ₖ M.env.reward)).map Prod.fst = _
     rw [← Kernel.fst_eq]
-    exact Kernel.fst_prod (Kernel.deterministic (id : S → S) measurable_id) (M.pol.kernel θ ⊗ₖ M.env.reward)
+    exact Kernel.fst_prod (Kernel.deterministic (id : S → S) measurable_id) (M.policy.kernel θ ⊗ₖ M.env.reward)
   rw [h, Measure.deterministic_comp_eq_map, Measure.map_id]
 
 

@@ -1,6 +1,4 @@
 import Lemma.Real.LogMul.eq.AddLogS.of.Ne_0.Ne_0
-import Lemma.Vector.GetMul.eq.MulGetS
-import Lemma.Vector.GetAdd.eq.AddGetS
 import sympy.vector.functions
 open Real Vector
 

@@ -1,6 +1,3 @@
-import Lemma.Bool.SEq.is.EqCast.of.Eq
-import Lemma.List.EraseIdxEraseIdx.of.Gt.GtLength
-import Lemma.Nat.Div.of.Eq
 import Lemma.Tensor.SelectDiv.eq.DivSelectS
 import Lemma.Tensor.SelectExp.eq.ExpSelect
 import Lemma.Tensor.SelectKeepdim.eq.KeepdimCast_Select.of.Lt

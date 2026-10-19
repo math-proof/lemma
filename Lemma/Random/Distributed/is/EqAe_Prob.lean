@@ -1,5 +1,3 @@
-import sympy.stats.symbolic_probability
-import sympy.Basic
 import Lemma.Random.Map.eq.WithDensityProb
 open Random MeasureTheory
 

@@ -1,6 +1,4 @@
 import Lemma.Real.InvKeplerOrbitReciprocalSigned.eq.Div.of.Ne_0.Ne_0.Ne_0.Eq.Eq
-import sympy.physics.vector.kinematics
-import sympy.Basic
 open Real
 
 

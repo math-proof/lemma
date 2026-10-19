@@ -2,10 +2,6 @@ import Lemma.List.ProdTailSet.eq.Mul_ProdTail.LtLength_0.Gt_0
 import Lemma.Nat.AddMul.lt.Mul.of.Lt.Lt
 import Lemma.Nat.Lt.of.Lt.Le
 import Lemma.Nat.Le.of.Eq
-import Lemma.Nat.Mul
-import Lemma.Nat.MulMul.eq.Mul_Mul
-import Lemma.Nat.Mul.of.Eq
-import Lemma.List.ProdAppend.eq.MulProdS
 import Lemma.List.Prod.eq.Mul_ProdTail.of.GtLength_0
 open List Nat
 

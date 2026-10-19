@@ -3,7 +3,6 @@ import Lemma.Vector.EqHeadSplitAt_0
 import Lemma.Vector.GetMap.eq.UFnGet
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Vector.GetProd.eq.ProdMapGet
-import Lemma.Vector.Head.eq.Get_0
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import torch.Tensor
 open Bool Vector

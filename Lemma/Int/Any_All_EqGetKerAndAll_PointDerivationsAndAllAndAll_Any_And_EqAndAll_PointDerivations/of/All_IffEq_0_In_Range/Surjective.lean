@@ -2,7 +2,7 @@ import Mathlib
 import sympy.Basic
 import sympy.algebra.point_derivations
 open scoped TensorProduct
-set_option maxHeartbeats 4000000
+set_option maxHeartbeats 1000000
 
 
 /--

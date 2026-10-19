@@ -2,7 +2,6 @@ import Lemma.List.EraseIdx.eq.Append_Drop_Add_1
 import Lemma.List.Permute__Neg.eq.Append_AppendRotateDropTake
 import Lemma.List.TailAppend.eq.AppendTail.of.GtLength_0
 import Lemma.List.TailRotate.eq.Take.of.EqLength_Add_1
-import Lemma.List.TakeTake.eq.Take.of.Ge
 open List
 
 

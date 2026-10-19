@@ -1,6 +1,4 @@
-import sympy.stats.policy_trajectory
 import sympy.functions.elementary.miscellaneous
-import sympy.Basic
 import Lemma.Random.Map.eq.BindStageK.of.All_Eq_Joint
 import Lemma.Random.StageKSetOf1.eq.Zero
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random

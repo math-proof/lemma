@@ -1,14 +1,10 @@
-import Lemma.List.SetAppend.eq.Append_Set.of.GtLength
-import Lemma.List.Set_0.eq.Cons_Tail.of.GtLength_0
-import Lemma.List.TailAppend.eq.AppendTail.of.GtLength_0
-import Lemma.List.TailSet_0.eq.Tail
 import Lemma.Tensor.GetMatmul.as.MatmulCastS_Get.of.Eq.Length.GtLength_0
-import Lemma.Tensor.GtLength.of.GtLength_0
-import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.Matmul.as.MatmulResizeS.of.Length.GtLength_0
 open List Tensor
-set_option maxHeartbeats 1000000
+set_option maxHeartbeats 500000
 
+
+attribute [local irreducible] List.prod
 
 @[path, cast]
 private lemma main

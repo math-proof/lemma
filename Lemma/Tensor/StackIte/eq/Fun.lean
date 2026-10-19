@@ -1,5 +1,3 @@
-import sympy.tensor.stack_ite
-import sympy.Basic
 import Lemma.Tensor.EqStackIte.of.Lt
 open Tensor
 

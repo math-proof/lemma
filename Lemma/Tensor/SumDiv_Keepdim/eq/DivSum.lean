@@ -1,11 +1,6 @@
-import Lemma.Bool.SEq.is.EqCast.of.Eq
 import torch.Tensor.sum
-import Lemma.Bool.SEqCast.of.Eq
 import Lemma.Fin.DivSum.eq.Sum_Div.of.All_EqDivAdd.All_EqDiv0
 import Lemma.Fin.Sum.of.All_Eq
-import Lemma.List.EqEraseIdx.of.LeLength
-import Lemma.Nat.Div.of.Eq
-import Lemma.Nat.NotLt.is.Ge
 import Lemma.Tensor.DivAdd.eq.AddDivS
 import Lemma.Tensor.EqDiv0_0
 import Lemma.Tensor.EqSelectKeepdim

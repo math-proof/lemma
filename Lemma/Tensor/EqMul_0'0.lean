@@ -1,8 +1,5 @@
 import Lemma.Tensor.DataMul.eq.MulData
-import Lemma.Tensor.Eq.is.EqDataS
-import Lemma.Tensor.EqData0'0
 import Lemma.Tensor.Mul
-import Lemma.Vector.EqGet0_0
 import Lemma.Vector.GetMul.eq.MulGet
 import torch.Tensor
 open Tensor Vector

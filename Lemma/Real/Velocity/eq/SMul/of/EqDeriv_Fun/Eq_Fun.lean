@@ -1,7 +1,5 @@
 import Mathlib.Analysis.Calculus.Deriv.Basic
 import Lemma.Real.Velocity.eq.AddSMulSMul.of.DifferentiableAt.DifferentiableAt
-import sympy.physics.vector.kinematics
-import sympy.Basic
 
 
 /--

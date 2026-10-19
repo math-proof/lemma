@@ -1,6 +1,4 @@
-import sympy.functions.combinatorial.numbers
 import Lemma.Finset.Sum.Binom.eq.Mul.Stirling
-import sympy.Basic
 open Finset Nat
 
 

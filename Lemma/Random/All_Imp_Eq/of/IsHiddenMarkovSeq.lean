@@ -1,5 +1,4 @@
 import sympy.stats.hidden_markov_sequence
-import sympy.Basic
 
 
 /-- `P t` only depends on the prefix `ys 0, …, ys t`. -/

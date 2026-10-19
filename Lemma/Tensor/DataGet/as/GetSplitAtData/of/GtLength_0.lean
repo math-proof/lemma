@@ -1,9 +1,7 @@
 import stdlib.SEq
-import Lemma.List.ProdTake_1.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.DataGet.eq.GetUnflattenData
 import Lemma.Tensor.GtLength.of.GtLength_0
 import Lemma.Tensor.GtLengthSplitAtData.of.GtLength_0
-import Lemma.Vector.GetSplitAt_1.eq.GetUnflatten
 open Tensor List Vector
 
 

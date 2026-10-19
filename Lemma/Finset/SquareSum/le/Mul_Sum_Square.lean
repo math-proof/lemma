@@ -1,5 +1,4 @@
 import Lemma.Finset.SquareSum_Mul.le.MulSumS_Square
-import Lemma.Nat.Mul
 open Nat Finset
 
 

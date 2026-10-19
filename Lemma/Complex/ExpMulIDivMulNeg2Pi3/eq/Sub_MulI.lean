@@ -1,4 +1,3 @@
-import sympy.functions.elementary.trigonometric
 import Lemma.Complex.ExpMulI.eq.AddCos_MulISin
 
 

@@ -1,4 +1,3 @@
-import sympy.vector.vector
 import Lemma.Vector.Get_Add.eq.Get.of.Val.eq.ValAppend.Lt.LtAdd
 import Lemma.Vector.Val.of.SEq
 open Vector

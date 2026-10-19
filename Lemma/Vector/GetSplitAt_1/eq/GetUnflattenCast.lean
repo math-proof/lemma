@@ -2,7 +2,6 @@ import Lemma.List.Prod.eq.MulProdS
 import Lemma.Vector.GetSplitAt_1.eq.GetUnflatten
 import Lemma.Vector.GetUnflatten.eq.Get_AddMul
 import Lemma.Vector.GetCast.eq.Get.of.Eq
-import Lemma.List.Prod.eq.Foldr
 open List Vector
 
 

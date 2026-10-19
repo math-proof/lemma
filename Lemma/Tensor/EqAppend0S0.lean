@@ -1,4 +1,3 @@
-import Lemma.Bool.SEq.is.EqCast.of.Eq
 import Lemma.Tensor.DataAppend.as.AppendDataS
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Tensor.EqData0'0

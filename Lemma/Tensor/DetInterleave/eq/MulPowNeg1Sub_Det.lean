@@ -1,12 +1,9 @@
-import Lemma.Tensor.Delta.eq.Ite
 import Lemma.Tensor.DetShiftMatrix.eq.PowNeg1Sub
 import Lemma.Tensor.GetInterleave.eq.Delta_ToSplit
-import Lemma.Tensor.GetShiftMatrix.eq.DeltaShiftRow
 import Lemma.Tensor.EqMul1
 import Lemma.Tensor.ToMatrixDot.eq.MulToMatrixS
-import Lemma.Fin.ShiftRow.eq.Ite
 open Tensor
-set_option maxHeartbeats 800000
+set_option maxHeartbeats 400000
 
 
 private lemma get_shift_mul

@@ -1,14 +1,11 @@
 import Mathlib.MeasureTheory.Measure.WithDensity
-import sympy.stats.joint_rv
 import sympy.stats.cond_expectation
 import sympy.stats.symbolic_multivariate_probability
 import torch.stack
 import Lemma.Tensor.Eq.is.All_EqGetS
-import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.DataGet.eq.GetUnflattenData
 import Lemma.Vector.Eq.is.All_EqGetS
-import Lemma.Vector.GetUnflatten.eq.Get_AddMul
 open MeasureTheory Tensor Vector
 set_option maxHeartbeats 1000000
 

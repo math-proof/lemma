@@ -1,6 +1,3 @@
-import sympy.stats.policy_trajectory
-import sympy.functions.elementary.miscellaneous
-import sympy.Basic
 import Lemma.Random.NormW.le.Abs_R
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 

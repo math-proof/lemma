@@ -1,6 +1,3 @@
-import sympy.core.mul
-import sympy.Basic
-import Lemma.List.LengthZipWithLcm.eq.Length.of.EqLengthS
 import Lemma.Tensor.Pad1ZipWithLcmPad1.eq.ZipWithLcmPad1.of.Le.LeMaxLength
 import Lemma.Tensor.WrapFlatPad1Pad1.eq.WrapFlatPad1.of.EqLength.Le.Le_Length
 import Lemma.Tensor.WrapFlatWrapFlat.eq.WrapFlat.of.NeProd_0.Forall₂Dvd.Forall₂Dvd

@@ -1,4 +1,3 @@
-import Lemma.Hyperreal.InfinitesimalSub
 import Lemma.Hyperreal.Infinitesimal.of.Infinitesimal.InfinitesimalSub
 open Hyperreal
 

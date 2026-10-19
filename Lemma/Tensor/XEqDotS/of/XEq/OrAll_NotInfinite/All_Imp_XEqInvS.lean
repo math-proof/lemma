@@ -1,4 +1,3 @@
-import Lemma.Nat.Mul
 import Lemma.Tensor.Dot
 import Lemma.Tensor.Dot.eq.TensorDotDataS
 import Lemma.Tensor.Ge0Mul.is.Ge0MulDataS

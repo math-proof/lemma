@@ -1,6 +1,4 @@
 import Lemma.Real.SquareNormVelocity.eq.AddSquareS.of.DifferentiableAt.DifferentiableAt
-import sympy.physics.vector.kinematics
-import sympy.Basic
 
 
 /--

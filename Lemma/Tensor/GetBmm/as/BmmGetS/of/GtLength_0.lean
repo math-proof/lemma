@@ -1,7 +1,4 @@
-import Lemma.List.EqCons_Tail.of.GtLength_0
 import Lemma.Tensor.GetBmm.as.BmmGetS.of.Eq
-import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
-import Lemma.Tensor.LengthBmm.eq.Length
 import torch.Tensor.bmm
 open List Tensor
 

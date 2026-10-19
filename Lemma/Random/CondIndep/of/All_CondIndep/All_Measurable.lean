@@ -1,4 +1,3 @@
-import sympy.stats.joint_rv
 import sympy.stats.hidden_markov_sequence
 import Lemma.Measure.CondIndep.of.CondIndep.CondIndep.Le_M
 import Lemma.Measure.CondIndep.of.Le.Le.CondIndep.Le_M.Le_M.Le_M.Le_M

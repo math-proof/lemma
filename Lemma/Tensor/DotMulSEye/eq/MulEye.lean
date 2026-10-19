@@ -1,17 +1,11 @@
 import Lemma.Finset.MulSum.eq.Sum_Mul
 import torch.Tensor.prod
 import Lemma.Fin.Sum_MulDeltaS.eq.Delta
-import Lemma.Nat.Delta.eq.Ite
-import Lemma.Tensor.Eq.is.All_EqGetS
-import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Tensor.GetDot.eq.Sum_MulGetS
-import Lemma.Tensor.GetMul.eq.MulGetS
 import Lemma.Tensor.GetMulEye_Stack.eq.MulDelta
-import Lemma.Tensor.Mul
-import sympy.matrices.expressions.special
 import torch.eye
 open Finset Nat Tensor Fin
-set_option maxHeartbeats 800000
+set_option maxHeartbeats 400000
 
 
 /--

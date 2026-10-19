@@ -1,11 +1,5 @@
-import sympy.sets.stirling_partition
-import sympy.Basic
 import Mathlib.Data.Set.Card
 import Lemma.Finset.NcardParts_Add_1_Add_1.eq.AddNcardPartsMulAdd_1NcardParts
-import Lemma.Finset.NcardImageConditionset.eq.NcardImageImageConditionset
-import Lemma.Finset.SetOfIn_ImageConditionset_Add_1Add_1AndFinset.eq.J
-import Lemma.Finset.SetOfIn_ImageConditionsetAndInFinset.eq.ImageImageConditionset
-import Lemma.Finset.FiniteParts
 open Finset Function Stirling.conditionset
 
 

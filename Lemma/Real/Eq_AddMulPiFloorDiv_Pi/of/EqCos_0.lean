@@ -1,10 +1,6 @@
 import Lemma.Real.CosSub.eq.AddMulS
 import Lemma.Real.Eq_DivPi2.of.EqCos_0.In_Icc0Pi
-import Lemma.Real.GtPi0
-import Lemma.Set.Ge.of.In_Icc
-import Lemma.Set.In_Icc.is.Le.Le
 import Lemma.Set.Le.of.In_Ico
-import Lemma.Set.Lt.of.In_Ico
 import Lemma.Rat.Sub_Mul_FloorDiv.in.Ico.of.Gt_0
 open Real Set Rat
 

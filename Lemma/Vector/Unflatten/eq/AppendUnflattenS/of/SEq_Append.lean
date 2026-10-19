@@ -1,16 +1,12 @@
-import Lemma.Nat.AddMul.lt.Mul
 import Lemma.Vector.GetVal.eq.Get.of.Lt
 import Lemma.Nat.NotLt.is.Ge
 import Lemma.Vector.GetAppend.eq.Get.of.Lt
-import Lemma.Nat.AddMul.lt.Mul.of.Lt
 import Lemma.Vector.Get_AddMul.eq.GetUnflatten.of.Lt
 import Lemma.Vector.GetAppend.eq.Get_Sub.of.Lt_Add.Ge
-import Lemma.Vector.GetUnflatten.eq.Get_AddMul
 import Lemma.Vector.Get.of.SEq.Lt
 import Lemma.Nat.LtSub.is.Lt_Add.of.Ge
 import Lemma.Nat.MulAdd.eq.AddMulS
 import Lemma.Nat.SubAdd.eq.AddSub.of.Ge
-import Lemma.Nat.MulSub.eq.SubMulS
 open Vector Nat
 
 

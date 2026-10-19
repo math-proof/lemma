@@ -1,8 +1,6 @@
 import Lemma.Nat.Mul2.eq.Add
-import Lemma.Nat.Add
 import Lemma.Nat.Mul
 import Lemma.Nat.AddAdd
-import Lemma.Nat.AddAdd.eq.Add_Add
 import Lemma.Nat.Mul_Add.eq.AddMulS
 import Lemma.Rat.DivDiv.eq.Div_Mul
 import Lemma.Nat.LtMulS.of.Lt.Gt_0

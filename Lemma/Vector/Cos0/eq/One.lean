@@ -1,8 +1,5 @@
 import Lemma.Real.Cos0.eq.One
-import Lemma.Vector.EqGet0_0
-import Lemma.Vector.EqGet1_1
 import Lemma.Vector.GetCos.eq.CosGet
-import sympy.vector.functions
 open Real Vector
 
 

@@ -1,4 +1,3 @@
-import Lemma.Int.Div.eq.AddDiv___Mod
 import Lemma.Int.Div.lt.One.of.Gt_0
 import Lemma.Int.EqFloor.is.Le.Lt
 import Lemma.Int.GeDivS.of.Gt_0

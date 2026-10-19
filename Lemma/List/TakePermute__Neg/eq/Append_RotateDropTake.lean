@@ -1,6 +1,5 @@
 import Lemma.List.EqTakeAppend.of.Eq_Length
 import Lemma.List.Permute__Neg.eq.Append_AppendRotateDropTake
-import Lemma.List.TakeTake.eq.Take.of.Ge
 open List
 
 

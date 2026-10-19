@@ -383,8 +383,7 @@ There exists a Banach limit `L : (ℕ →ᵇ ℝ) →L[ℝ] ℝ` on bounded real
 pointwise nonnegative sequences, satisfies `L 1 = 1` for the constant-one sequence, is invariant
 under the left shift `g n = f (n+1)`, and extends ordinary limits in that `f n → l` implies `L f =
 l`. Source: S. Banach, Theorie des operations lineaires, 1932, definition of generalised limit; G.
-Lorentz, Acta Math. 80 (1948) 167-190; Lean formalizes ℓ∞ via `BoundedContinuousFunction ℕ ℝ` and
-real field `ℝ` with all four classical axioms.
+Lorentz, Acta Math. 80 (1948) 167-190; Lean formalizes ℓ∞ via `BoundedContinuousFunction ℕ ℝ`.
 -/
 public theorem banach_limit :
     ∃ L : BoundedContinuousFunction ℕ ℝ →L[ℝ] ℝ,

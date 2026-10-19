@@ -1,4 +1,3 @@
-import sympy.vector.Basic
 import Lemma.Nat.Div.eq.HDiv
 import Lemma.Rat.Div.eq.DivDivS.of.Ne_0
 import Lemma.Vector.GetDiv.eq.DivGetS

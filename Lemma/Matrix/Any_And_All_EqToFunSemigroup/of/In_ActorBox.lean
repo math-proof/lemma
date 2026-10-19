@@ -1,6 +1,4 @@
 import Mathlib.Topology.MetricSpace.Cauchy
-import sympy.stats.frozen_invariant_law
-import sympy.Basic
 import Lemma.Real.Norm.le.Sum_Abs
 import Lemma.Matrix.IsClosed
 import Lemma.Real.Tendsto.of.Gt_0

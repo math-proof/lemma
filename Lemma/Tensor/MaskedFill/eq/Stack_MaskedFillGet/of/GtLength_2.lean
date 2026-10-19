@@ -2,7 +2,6 @@ import Lemma.Tensor.Eq.is.All_EqGetS
 import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.GetMap.eq.MapGet
 import Lemma.Tensor.GetMaskedFill.eq.MaskedFillGet.of.GtLength_2
-import Lemma.Tensor.GtLength.of.GtLength_0
 open Tensor
 
 

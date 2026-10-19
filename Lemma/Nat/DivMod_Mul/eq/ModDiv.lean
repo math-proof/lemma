@@ -3,7 +3,6 @@ import Lemma.Nat.LtDiv.of.Lt_Mul
 import Lemma.Nat.LtMod.of.Ne_0
 import Lemma.Nat.ModDivMod_Mul.eq.ModDiv
 import Lemma.Nat.Mul.eq.Zero.is.OrEqS_0
-import Lemma.Nat.Mul
 open Nat
 
 

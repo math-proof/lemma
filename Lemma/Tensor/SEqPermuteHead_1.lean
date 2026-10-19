@@ -10,8 +10,6 @@ import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import Lemma.Vector.Get
-import Lemma.List.EqAppendTake__Drop
-import Lemma.List.ProdAppend.eq.MulProdS
 open List Vector Bool Tensor Fin
 
 

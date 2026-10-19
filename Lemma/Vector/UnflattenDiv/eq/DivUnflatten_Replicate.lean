@@ -1,8 +1,4 @@
-import sympy.vector.vector
 import Lemma.Vector.GetUnflatten.eq.Get_AddMul
-import Lemma.Vector.GetDiv.eq.DivGet
-import Lemma.Vector.GetDiv.eq.DivGetS
-import Lemma.Vector.EqGetReplicate
 import Lemma.Vector.Div.eq.Div_Replicate
 open Vector
 

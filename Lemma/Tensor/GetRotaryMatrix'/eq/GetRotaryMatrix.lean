@@ -1,19 +1,6 @@
-import Lemma.Bool.SEq.is.Eq
 import torch.Tensor.permute
-import Lemma.Bool.SEqCast.of.Eq
-import Lemma.Fin.ToSplit.eq.Ite_Div_2
-import Lemma.Nat.Delta.eq.Ite
-import Lemma.Tensor.EqMul0_0
-import Lemma.Tensor.EqMul_0'0
-import Lemma.Tensor.EqMul_1
-import Lemma.Tensor.EqMul1
-import Lemma.Tensor.GetDot.eq.Sum_MulGetS
-import Lemma.Tensor.GetInterleave.eq.Delta_ToSplit
-import Lemma.Tensor.GetTInterleave.eq.Delta_ToSplit
 import Lemma.Tensor.RotaryMatrix'.eq.DotDot_RotaryMatrix
 import Lemma.Tensor.SEqDotS.of.SEq
-import sympy.functions.special.tensor_functions
-import sympy.matrices.expressions.special
 import torch.functions
 open Bool Nat Tensor Fin
 

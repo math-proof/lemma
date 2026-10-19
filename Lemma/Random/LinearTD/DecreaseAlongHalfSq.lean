@@ -1,8 +1,5 @@
-import sympy.stats.linear_td
 import sympy.stats.lyapunov
 import sympy.vector.lp_space
-import sympy.Basic
-import sympy.core.singleton
 import Lemma.Matrix.PosDefAsymm.is.Any_All_Le_Dot_MulVec
 import Lemma.Random.LinearTD.NegDefAsymmA
 import Lemma.Random.LinearTD.ExpectedUpdate.eq.ToLpAddMulVecA

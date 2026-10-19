@@ -1,7 +1,6 @@
 import Lemma.Hyperreal.XEqAddS.of.XEq.XEq.NotAnd_EqSt_Neg1
 import Lemma.Hyperreal.XEqNegS.of.XEq
 import Lemma.Hyperreal.StNeg.eq.NegSt
-import Lemma.Rat.Div_Neg.eq.NegDiv
 open Hyperreal Rat
 
 

@@ -1,4 +1,3 @@
-import sympy.stats.stochastic_process
 import Lemma.Matrix.Simplex.sub.ClosedBall
 open Metric Matrix
 

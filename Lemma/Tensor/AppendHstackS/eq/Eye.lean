@@ -1,14 +1,10 @@
 import Lemma.Nat.Delta.eq.Ite
 import Lemma.Nat.EqCast_0'0
-import Lemma.Tensor.Eq.is.All_EqGetS
-import Lemma.Tensor.EqGet0_0
-import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.EqStack_0'0
-import Lemma.Tensor.GetAppend.eq.AppendGetS
 import Lemma.Tensor.Stack.eq.AppendStackS
 import Lemma.Tensor.Stack.eq.Eye
 open Nat Tensor
-set_option maxHeartbeats 400000
+set_option maxHeartbeats 200000
 
 
 private lemma delta_fin_nat

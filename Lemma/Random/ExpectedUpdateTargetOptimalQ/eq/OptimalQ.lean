@@ -1,5 +1,3 @@
-import sympy.stats.q_learning
-import sympy.Basic
 import Lemma.Random.ExpectedUpdateTarget.eq.ToLpAddMulSub
 import Lemma.Random.BellmanOpOfLpOptimalQ.eq.OfLpOptimalQ
 

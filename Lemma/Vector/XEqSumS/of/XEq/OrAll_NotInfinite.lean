@@ -1,7 +1,4 @@
-import sympy.core.relational
-import sympy.vector.vector
 import Lemma.Hyperreal.XEqSumS.of.All_XEq.OrAll_NotInfinite
-import Lemma.Vector.EqGet0_0
 import Lemma.Vector.Sum.eq.Sum_Get
 import Lemma.Vector.XEq.is.All_XEqGetS
 open Hyperreal Vector

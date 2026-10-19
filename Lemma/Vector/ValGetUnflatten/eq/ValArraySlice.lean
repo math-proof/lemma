@@ -1,5 +1,4 @@
 import sympy.vector.vector
-import Lemma.Nat.EqMin_SubMulS
 open Nat
 
 

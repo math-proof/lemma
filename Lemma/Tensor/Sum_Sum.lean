@@ -1,15 +1,11 @@
-import Lemma.Bool.SEq.is.Eq
 import Lemma.Tensor.EqStack_0'0
 import Lemma.Tensor.EqSum0_0
-import Lemma.Tensor.EqSumStack
 import Lemma.Tensor.SEqAddS.of.SEq.SEq
-import Lemma.Tensor.Sum.eq.Zero
-import Lemma.Tensor.SumStack.eq.AddSumSStack
 import Lemma.Tensor.SumStack.of.All_Eq
 import Lemma.Tensor.Sum_Add.eq.AddSumS
 import torch.Tensor.sum
 open Bool Tensor
-set_option maxHeartbeats 1000000
+set_option maxHeartbeats 500000
 
 
 @[path]

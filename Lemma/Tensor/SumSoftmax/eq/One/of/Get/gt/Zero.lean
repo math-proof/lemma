@@ -1,14 +1,8 @@
 import Lemma.Tensor.SEqSumS.of.SEq.Eq
 import torch.Tensor.permute
 import Lemma.Bool.Eq.of.SEq.SEq
-import Lemma.List.EraseIdxPermute.eq.EraseIdx.of.Ge
 import Lemma.List.GetPermute.eq.Get.of.Ge
-import Lemma.Nat.EqSub_Sub.of.Ge
-import Lemma.Fin.Eq_Fin.of.EqVal
-import Lemma.Nat.Gt_0
-import Lemma.Nat.Le_Sub_1
 import Lemma.Tensor.SEq1S.of.Eq
-import Lemma.Tensor.SEqSumS.of.SEq
 import Lemma.Tensor.Softmax.as.PermuteSoftmaxPermute.of.LtAdd_1Length
 import Lemma.Tensor.SumPermute.as.PermuteSum.of.Ge
 import Lemma.Tensor.SumSoftmax.eq.One.of.Get_SubLength_1.gt.Zero.GtLength_0

@@ -1,22 +1,6 @@
 import Lemma.Random.Grad.eq.Add_SMul_Sum_SMul.of.Ne0Real_Preimage.GtInftySup.All_Differentiable_Prob.All_Eq_Expect.All_Eq_Expect.EqMeasureCount.EqMeasureCount.In_Ico
-import Lemma.Random.ProbCond.eq.OfRealPol.of.Ne_0
-import Lemma.Random.ProbCond.eq.Div.of.Eq_Count.Eq_Count
-import Lemma.Random.SinglePSpace.of.EqMeasureCount.Measurable
-import Lemma.Random.SinglePSpace.of.EqMeasureCount.EqMeasureCount.Measurable.Measurable
-import Lemma.Measure.Count.eq.ProdCountS
-import sympy.stats.cond_expectation
-import sympy.core.power
-import sympy.vector.Basic
-import sympy.vector.operators
-import sympy.concrete.sup
-import Lemma.Random.Pn0.eq.Eq
 import Lemma.Random.PnAdd_1.eq.Sum_MulPnP1
-import Lemma.Random.RealPreimageSPreimageS_Add.eq.Pn.of.Ne0Real_Preimage
-import Lemma.Random.RealPreimageSPreimageS_Add_1.eq.P1.of.Ne0Real_Preimage
-import Lemma.Random.Differentiable_RealPreimageS.of.GtInftySup.All_Differentiable_Prob
 import Lemma.Random.RealPreimageS.ne.Zero.of.NePn_0.Ne0Real_Preimage
-import sympy.core.numbers
-import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Filter Topology Random Measure
 open scoped ENNReal.ToRealCoe
 
@@ -50,14 +34,14 @@ private lemma main
   (hA : (ReferenceMeasure.measure : Measure A) = Measure.count)
   (h₂ : ∀ θ t («s.bvar» : ℕ → S) («a.bvar» : ℕ → A), Q θ t («s.bvar» t) («a.bvar» t) = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «s.bvar» t ∧ a t = «a.bvar» t))
   (h₃ : ∀ θ t («s.bvar» : ℕ → S), V θ t («s.bvar» t) = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «s.bvar» t))
-  (h₄ : ∀ x u, Differentiable ℝ (fun θ => M.pol.prob θ x u))
-  (h₅ : sup[θ, x, u] ‖∇[θ] M.pol.prob θ x u‖ < ∞)
+  (h₄ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
+  (h₅ : sup[θ, x, u] ‖∇[θ] M.policy.prob θ x u‖ < ∞)
   (h₆ : (M θ).real (s 0 ⁻¹' {x}) ≠ 0)
   (n : ℕ) :
 -- imply
   ∇[θ] V θ 0 x =
     ∑ t ∈ Finset.range n, γ ^ t • ∑ y, ((M θ)[|s 0 ⁻¹' {x}]).real (s t ⁻¹' {y}) •
-        ∑ u, Q θ t y u • ∇[θ] M.pol.prob θ y u +
+        ∑ u, Q θ t y u • ∇[θ] M.policy.prob θ y u +
       γ ^ n • ∑ y, ((M θ)[|s 0 ⁻¹' {x}]).real (s n ⁻¹' {y}) • ∇[θ] V θ n y := by
 -- proof
   obtain rfl : r = fun t ω ↦ (ω t).1 := funext₂ fun t ω ↦ (congrArg (·.1) (congrFun (h₁ t) ω)).symm
@@ -92,7 +76,7 @@ private lemma main
   | zero => simp [Pn0.eq.Eq]
   | succ n ih =>
     have h₉ : ∀ y, M.Pn θ n x y • ∇[θ] Vloc θ n y =
-        M.Pn θ n x y • (∑ u, Qloc θ n y u • ∇[θ] M.pol.prob θ y u +
+        M.Pn θ n x y • (∑ u, Qloc θ n y u • ∇[θ] M.policy.prob θ y u +
           γ • ∑ z, M.P1 θ y z • ∇[θ] Vloc θ (n + 1) z) := by
       intro y
       if hy : M.Pn θ n x y = 0 then
@@ -107,14 +91,14 @@ private lemma main
           rw [hA, hS, Count.eq.ProdCountS]
         have hSingle : ∀ θ t, SinglePSpace (M θ) (a t, s t) := fun _ t =>
           SinglePSpace.of.EqMeasureCount.Measurable ((Random.Measurable.of.All_Eq.snd.snd h₁ t).prodMk (Random.Measurable.of.All_Eq.snd.fst h₁ t)) hμAS
-        have hπ : ∀ u, ∇[θ] (ℙ[M θ]((a n) = u | (s n) = y) : ℝ) = ∇[θ] M.pol.prob θ y u := by
+        have hπ : ∀ u, ∇[θ] (ℙ[M θ]((a n) = u | (s n) = y) : ℝ) = ∇[θ] M.policy.prob θ y u := by
           intro u
           have hc : ContinuousAt (fun θ' => (M θ').real (s n ⁻¹' {y})) θ :=
             (Differentiable_RealPreimageS.of.GtInftySup.All_Differentiable_Prob (M := M) h₁ h₄ h₅ n y θ).continuousAt
           refine Filter.EventuallyEq.gradient_eq ?_
           filter_upwards [hc.eventually_ne hP] with θ' h
           rw [ProbCond.eq.OfRealPol.of.Ne_0 h₁ hS hA (hSingle θ' n) h,
-            ENNReal.toReal_ofReal (M.pol.nonneg θ' _ _)]
+            ENNReal.toReal_ofReal (M.policy.nonneg θ' _ _)]
         simp_rw [hπ] at h
         rw [h]
         have hSs : ∀ θ t, SinglePSpace (M θ) (s (t + 1), s t) :=

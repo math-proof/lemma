@@ -1,17 +1,11 @@
-import Lemma.Finset.All.of.All.All_Imp
 import Lemma.Real.Sum_Sqrt.le.SqrtMul_Sum.of.All_Ge_0
 import Lemma.Nat.Mul.of.Eq
-import Lemma.Rat.EqMulDiv.of.Ne_0
 import Lemma.Nat.Mul_Mul
-import Lemma.Nat.Square.eq.Mul
-import Lemma.Nat.Mul
 import Lemma.Finset.Sum.ge.Zero.of.All_Ge_0
 import Lemma.Nat.Gt_0.of.Ne_0
 import Lemma.Rat.LeDivS.of.Le.Gt_0
 import Lemma.Nat.EqDivMul.of.Ne_0
-import Lemma.Real.EqSquareSqrt.of.Ge_0
 import Lemma.Real.SqrtMulSquareS.eq.Mul.of.Ge_0.Ge_0
-import Lemma.Real.GeSqrt_0
 open Nat Finset Real Rat
 
 

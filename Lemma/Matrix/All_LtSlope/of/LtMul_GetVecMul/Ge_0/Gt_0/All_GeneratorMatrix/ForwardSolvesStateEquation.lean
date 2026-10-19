@@ -2,9 +2,7 @@ import Mathlib.Analysis.Calculus.MeanValue
 import Mathlib.Analysis.Calculus.Deriv.Prod
 import Mathlib.Analysis.Calculus.Deriv.Slope
 import Mathlib.Algebra.Order.Group.PosPart
-import sympy.stats.generator_matrix
 import sympy.dynamics.actor_critic
-import sympy.Basic
 import Lemma.Matrix.NegGetVecMul.le.GetVecMul.of.Le_0.GeneratorMatrix
 import Lemma.Matrix.GetVecMul.ge.Zero.of.Ge_0.GeneratorMatrix
 open Matrix Topology

@@ -4,8 +4,6 @@ import Mathlib.Analysis.Normed.Algebra.MatrixExponential
 import Mathlib.Analysis.Matrix.Normed
 import Mathlib.Topology.Algebra.Module.FiniteDimension
 import Mathlib.Analysis.Calculus.Deriv.Prod
-import sympy.stats.generator_matrix
-import sympy.Basic
 import Lemma.NormedSpace.HasDerivAtVecMul_Exp
 import Lemma.Matrix.Sum_GetVecMul.eq.Zero.of.GeneratorMatrix
 open Matrix NormedSpace

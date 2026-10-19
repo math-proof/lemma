@@ -1,6 +1,4 @@
 import Lemma.Real.All_AddDerivDeriv.eq.DivMul.of.Ne_0
-import sympy.physics.vector.kinematics
-import sympy.Basic
 
 
 /--

@@ -1,5 +1,4 @@
 import sympy.core.mul
-import sympy.Basic
 
 
 @[path]

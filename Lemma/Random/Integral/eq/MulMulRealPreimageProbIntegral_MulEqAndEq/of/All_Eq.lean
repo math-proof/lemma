@@ -1,7 +1,4 @@
-import sympy.stats.policy_trajectory
-import sympy.Basic
 import Lemma.Random.Integral.eq.MulRealIntegral_MulIndicator1.of.MeasurableSet
-import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
 import Lemma.Random.RealInterPreimage_Preimage.eq.MulRealPreimageProb.of.All_Eq
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 
@@ -25,7 +22,7 @@ private lemma main
   (f : (ℕ → ℝ × S × A) → ℝ) :
 -- imply
   ∫ ω, f ω ∂(M θ)[|s t ⁻¹' {x} ∩ a t ⁻¹' {u}] =
-    ((M θ).real (s t ⁻¹' {x}) * M.pol.prob θ x u)⁻¹ *
+    ((M θ).real (s t ⁻¹' {x}) * M.policy.prob θ x u)⁻¹ *
       ∫ ω, (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) * f ω ∂(M θ) := by
 -- proof
   rw [Integral.eq.MulRealIntegral_MulIndicator1.of.MeasurableSet (M := M) ((Random.Measurable.of.All_Eq.snd.fst h₁ t (measurableSet_singleton x)).inter (Random.Measurable.of.All_Eq.snd.snd h₁ t (measurableSet_singleton u))) θ,

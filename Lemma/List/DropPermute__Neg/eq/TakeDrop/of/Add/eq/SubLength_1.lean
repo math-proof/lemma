@@ -1,4 +1,3 @@
-import Lemma.List.EqTake.of.LeLength
 import Lemma.List.TakeDropPermute__Neg.eq.TakeDrop.of.GtLength_Add
 open List
 

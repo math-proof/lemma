@@ -1,12 +1,8 @@
-import Lemma.Measure.Count.eq.ProdCountS
 import Lemma.Random.Measure.eq.Mul_MulDivS.of.Subset
 import Lemma.Random.MulMeasure.eq.MulMeasure.of.CondIndep
-import Lemma.Random.Prob.eq.Measure.of.Eq_Count
-import Lemma.Random.ProbCond.eq.Div.of.Eq_Count.Eq_Count
-import sympy.stats.hidden_markov_sequence
 import sympy.stats.discrete_hmm
-import sympy.Basic
 open MeasureTheory
+open IsDiscreteHMM
 
 
 /--
@@ -25,12 +21,10 @@ No non-vanishing assumption is needed: when a conditioning event is null, both s
 @[path]
 private lemma main
   {Ω Y X : Type*} [MeasurableSpace Ω] [StandardBorelSpace Ω]
-  [ReferenceMeasure Y] [ReferenceMeasure X]
+  [CountableMeasure Y] [CountableMeasure X]
   [Countable Y] [MeasurableSingletonClass Y] [Countable X] [MeasurableSingletonClass X]
   {π : Measure Ω} [IsProbabilityMeasure π]
   {x : ℕ → Ω → X} {y : ℕ → Ω → Y} {xo : ℕ → X}
-  [∀ i, SinglePSpace π (y i)]
-  [∀ i j, SinglePSpace π (y i, y j)]
 -- given
   (h : IsDiscreteHMM π x y)
   (ys : ℕ → Y) :
@@ -42,7 +36,12 @@ private lemma main
         (ℙ[π]((y (t + 1)) = ys (t + 1) | (y t) = ys t) *
           ℙ[π]((x (t + 1)) = xo (t + 1) | (y (t + 1)) = ys (t + 1))) := by
 -- proof
-  have ⟨hx, hy, hX, hY, h_emit, h_markov⟩ := h
+  have hx := h.measurable_x
+  have hy := h.measurable_y
+  have h_emit := h.emit
+  have h_markov := h.markov
+  have hX : (ReferenceMeasure.measure : Measure X) = Measure.count := CountableMeasure.measure_eq_count
+  have hY : (ReferenceMeasure.measure : Measure Y) = Measure.count := CountableMeasure.measure_eq_count
   have : Nonempty X := ⟨xo 0⟩
   have : Nonempty Y := ⟨ys 0⟩
   have hpair : ∀ m n : ℕ, ReferenceMeasure.measure (α := (Fin m → X) × (Fin n → Y)) = Measure.count := fun m n => by

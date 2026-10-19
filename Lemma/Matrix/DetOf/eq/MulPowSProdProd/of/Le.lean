@@ -1,7 +1,6 @@
 import Mathlib.Algebra.Group.ForwardDiff
 import Mathlib.Data.Matrix.ColumnRowPartitioned
 import Mathlib.LinearAlgebra.Vandermonde
-import sympy.Basic
 import Lemma.Matrix.MulOfPowAddOfPowNegChoose.eq.Zero
 import Lemma.Matrix.DetMulOfMulPowOfPowNegChoose.eq.MulMulPowPowSubProd
 import Lemma.Matrix.DetMulOfOfPowNegChoose.eq.MulPowProd.of.Le

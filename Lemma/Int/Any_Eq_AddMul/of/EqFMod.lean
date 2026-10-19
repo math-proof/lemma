@@ -1,6 +1,5 @@
 import Lemma.Int.FMod.eq.Sub_MulFDiv
 import Lemma.Int.EqSub.is.Eq_Add
-import Lemma.Nat.Add
 open Nat Int
 
 

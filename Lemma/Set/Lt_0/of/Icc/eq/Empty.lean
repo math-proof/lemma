@@ -1,6 +1,4 @@
 import Lemma.Set.Gt.of.Icc.eq.Empty
-import sympy.sets.sets
-import sympy.Basic
 
 
 @[path]

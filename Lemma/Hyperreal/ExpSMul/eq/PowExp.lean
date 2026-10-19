@@ -1,5 +1,4 @@
 import sympy.functions.elementary.exponential
-import sympy.Basic
 
 
 @[path, comm]

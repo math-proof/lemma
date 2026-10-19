@@ -1,16 +1,9 @@
-import Lemma.Int.NegSucc.eq.NegCoeAdd_1
 import Lemma.List.Permute__Neg.eq.Append_AppendRotateDropTake
 import Lemma.Nat.EqMin.of.Lt
 import Lemma.Nat.LtAdd.of.Lt_Sub
 import Lemma.List.ProdAppend.eq.MulProdS
-import Lemma.Bool.UFn.of.Eq
-import Lemma.List.AppendAppend.eq.Append_Append
-import Lemma.List.Append.of.Eq
-import Lemma.Nat.Sub_Add.eq.SubSub
 import Lemma.Nat.MinAddS.eq.AddMin
 import Lemma.Nat.Val.lt.Sub_1.of.Val.ne.Sub_1
-import Lemma.Nat.Add
-import Lemma.Nat.EqSubAdd
 open List Bool Nat Int
 
 

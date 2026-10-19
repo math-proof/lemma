@@ -1,7 +1,6 @@
 import Lemma.List.DropSet.eq.SetDrop.of.Ge
 import Lemma.List.GetDrop.eq.Get_Add.of.GtLength_Add
 import Lemma.List.ProdSet__Mul_Get.eq.Mul_Prod.of.GtLength
-import Lemma.Nat.EqAdd_Sub.of.Ge
 open List Nat
 
 

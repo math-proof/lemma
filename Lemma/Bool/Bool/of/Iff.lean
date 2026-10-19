@@ -1,6 +1,5 @@
 import Lemma.Bool.Imp.of.Iff
 import Lemma.Bool.Imp.is.Bool.eq.MulBoolS
-import Lemma.Nat.Mul
 open Bool Nat
 
 

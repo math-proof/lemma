@@ -1,5 +1,4 @@
 import Lemma.Finset.Card.eq.Add_CardSDiff
-import Lemma.Finset.CardUnion.eq.Add_CardSDiff
 open Finset
 
 

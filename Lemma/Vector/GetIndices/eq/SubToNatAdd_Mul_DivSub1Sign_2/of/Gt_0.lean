@@ -1,7 +1,6 @@
 import Lemma.Int.EqToNat
 import Lemma.Nat.EqAdd_Mul_DivSub1Sign_2
 import Lemma.Rat.LeToNatCeil_1.of.Ge_Sub
-import Lemma.List.LengthRange.eq.Length
 import sympy.vector.vector
 open Int Nat Rat Slice List
 

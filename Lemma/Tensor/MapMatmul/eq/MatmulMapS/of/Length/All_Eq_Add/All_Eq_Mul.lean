@@ -1,21 +1,12 @@
-import Lemma.Bool.SEq.is.Eq
 import torch.Tensor.bmm
-import Lemma.Bool.SEqCast.of.Eq
-import Lemma.List.SetAppend.eq.Append_Set.of.GtLength
-import Lemma.List.Set_0.eq.Cons_Tail.of.GtLength_0
-import Lemma.Tensor.Eq.is.All_EqGetS
-import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
-import Lemma.Tensor.GetMap.eq.MapGet
 import Lemma.Tensor.GetMatmul.as.MatmulGetS.of.Get_0.Length.GtLength_0
 import Lemma.Tensor.MapBmm.eq.BmmMapS.of.All_Eq_Add.All_Eq_Mul
-import Lemma.Tensor.MapCast.as.Map.of.Eq
 import Lemma.Tensor.Matmul.as.Bmm
 import Lemma.Tensor.Matmul.as.MatmulResizeS.of.Length.GtLength_0
 import Lemma.Tensor.ResizeMap.eq.MapResize
 import Lemma.Tensor.SEqMapS.of.SEq
-import Lemma.Tensor.SEqMatmulS.of.SEq.SEq
 open Bool List Tensor
-set_option maxHeartbeats 1000000
+set_option maxHeartbeats 500000
 
 
 /-- Equal-length-batch `matmul` commutes with a pointwise map `f`. -/

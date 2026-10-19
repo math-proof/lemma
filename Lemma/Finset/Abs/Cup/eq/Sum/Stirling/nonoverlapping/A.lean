@@ -1,5 +1,3 @@
-import sympy.functions.combinatorial.numbers
-import sympy.Basic
 import Mathlib.Data.Set.Card
 import Mathlib.Data.Set.Card.Arithmetic
 import Mathlib.Data.Fintype.Pi

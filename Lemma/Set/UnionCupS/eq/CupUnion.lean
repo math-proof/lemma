@@ -6,7 +6,6 @@ import Lemma.Set.UnionDiff_Inter
 import Lemma.Set.UnionUnion
 import Lemma.Set.EqUnion.of.Subset
 import Lemma.Set.Subset_Union.of.Subset
-import Lemma.Set.SubsetCupS.of.Subset
 open Set
 
 

@@ -1,7 +1,6 @@
 import Lemma.List.TakeDrop.eq.DropTake
 import Lemma.List.DropTake.eq.TakeDrop
 import Lemma.List.Drop.eq.Cons_Drop_Add_1.of.GtLength
-import Lemma.Nat.Add
 import Lemma.Nat.AddAdd.eq.Add_Add
 import Lemma.List.GetTake.eq.Get.of.GtLengthTake
 open List Nat

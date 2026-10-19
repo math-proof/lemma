@@ -1,4 +1,3 @@
-import Lemma.Nat.Mul
 import Lemma.Nat.MulDivMulS.eq.Mul_MulDiv
 open Nat
 

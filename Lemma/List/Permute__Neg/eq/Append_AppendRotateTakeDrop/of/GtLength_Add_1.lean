@@ -1,8 +1,6 @@
-import Lemma.List.DropTake.eq.TakeDrop
 import Lemma.List.Permute__Neg.eq.Append_AppendRotateDropTake
 import Lemma.List.TakeDrop.eq.DropTake
 import Lemma.List.TakeTake.eq.Take.of.Gt
-import Lemma.Nat.AddAdd.eq.Add_Add
 open List Nat
 
 

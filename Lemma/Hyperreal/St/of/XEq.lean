@@ -1,11 +1,7 @@
 import Lemma.Rat.Eq_Div.is.EqMul.of.Ne_0
 import Lemma.Hyperreal.EqSt_0.is.Infinite.ou.Infinitesimal
-import Lemma.Hyperreal.EqSt.of.InfinitesimalSub
-import Lemma.Hyperreal.EqSt_0.of.Infinite
-import Lemma.Hyperreal.EqSt_0.of.Infinitesimal
 import Lemma.Hyperreal.Infinite.is.Infinite.of.XEq
 import Lemma.Hyperreal.Infinitesimal.is.Infinitesimal.of.XEq
-import Lemma.Hyperreal.XEq.is.OrAndS
 import Lemma.Hyperreal.StDiv.eq.DivStS.of.NotInfinite.NotInfinitesimal
 open Hyperreal Rat
 

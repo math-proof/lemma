@@ -1,5 +1,4 @@
 import Lemma.List.ProdSet__MulGet.eq.MulProd
-import Lemma.Nat.Mul
 open List Nat
 
 

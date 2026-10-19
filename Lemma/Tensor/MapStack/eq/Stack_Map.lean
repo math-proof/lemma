@@ -1,5 +1,4 @@
 import Lemma.Tensor.Eq.is.All_EqGetS
-import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.GetMap.eq.MapGet
 import sympy.matrices.expressions.special

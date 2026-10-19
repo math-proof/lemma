@@ -1,5 +1,4 @@
 import sympy.stats.linear_td
-import sympy.Basic
 
 
 @[path]

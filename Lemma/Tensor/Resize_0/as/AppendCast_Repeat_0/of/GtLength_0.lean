@@ -6,26 +6,15 @@ import Lemma.List.EqSet.of.EqGet
 import Lemma.List.Set_0.eq.Cons_Tail.of.GtLength_0
 import Lemma.Nat.Div.eq.Zero.of.Lt
 import Lemma.Nat.DivMulS.eq.Div.of.Ne_0
-import Lemma.Nat.EqAddMulDiv
-import Lemma.Nat.EqMod.of.Lt
 import Lemma.Nat.EqMulDiv
-import Lemma.Nat.MulAdd.eq.AddMulS
 import Lemma.Nat.Ne_0.of.GtMul
 import Lemma.Tensor.DataRepeat.as.FlattenMapSplitAtData
-import Lemma.Tensor.Eq.is.EqDataS
-import Lemma.Tensor.EqData0'0
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
-import Lemma.Vector.EqGet0_0
-import Lemma.Vector.GetAppend.eq.Get.of.Lt
-import Lemma.Vector.GetAppend.eq.Get_Sub.of.Lt_Add.Ge
-import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Vector.GetFlatten.eq.Get.of.Lt_Mul
 import Lemma.Vector.GetMap.eq.UFnGet
-import Lemma.Vector.GetRepeat.eq.Get_Mod
 import Lemma.Vector.GetResize.eq.Ite_Get_Mod
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
-import Lemma.Vector.Head.eq.Get_0
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 open Bool List Nat Tensor Vector
 

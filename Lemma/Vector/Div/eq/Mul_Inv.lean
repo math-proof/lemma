@@ -1,7 +1,5 @@
-import sympy.vector.vector
 import Lemma.Vector.GetDiv.eq.DivGet
 import Lemma.Vector.GetMul.eq.MulGet
-import Lemma.Rat.Div.eq.Mul_Inv
 open Vector Rat
 
 

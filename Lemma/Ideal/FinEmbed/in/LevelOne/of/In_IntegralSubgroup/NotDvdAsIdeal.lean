@@ -1,6 +1,4 @@
 import Mathlib
-import sympy.Basic
-import Lemma.AdicCompletion.IsCompact.LocalLevelOne
 import Lemma.Ideal.Support.AdelicDockFinEmbed
 open NumberField IsDedekindDomain IsDedekindDomain.HeightOneSpectrum AdicCompletion Ideal
 

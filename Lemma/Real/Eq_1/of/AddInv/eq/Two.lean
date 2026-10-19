@@ -1,4 +1,3 @@
-import Lemma.Nat.Add
 import Lemma.Real.Eq_1.of.Add_Inv.eq.Two
 open Real Nat
 

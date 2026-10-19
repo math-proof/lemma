@@ -2,9 +2,6 @@ import Lemma.Hyperreal.NotInfinitesimalAdd.of.Ge_0.Gt_0
 import Lemma.Hyperreal.EqSt_0.of.Infinite
 import Lemma.Hyperreal.InfinitesimalSub.of.EqSt.NotInfinite
 import Lemma.Hyperreal.Infinite.is.InfinitePos.ou.InfiniteNeg
-import Lemma.Hyperreal.InfiniteNeg.is.Infinite.Lt_0
-import Lemma.Hyperreal.InfinitePos.is.Infinite.Gt_0
-import Lemma.Hyperreal.Ne_0.of.Infinite
 import Lemma.Nat.GtSquare_0.of.Ne_0
 import Lemma.Int.Gt0Mul.of.Lt_0.Gt_0
 import Lemma.Int.LtNeg_0.of.Gt_0
@@ -13,7 +10,7 @@ import Lemma.Nat.Mul
 import Lemma.Rat.Div.gt.Zero.of.Gt_0.Gt_0
 import Lemma.Rat.Div.gt.Zero.of.Lt_0.Lt_0
 open Hyperreal Int Rat Nat
-set_option maxHeartbeats 2000000
+set_option maxHeartbeats 1000000
 
 
 @[path]

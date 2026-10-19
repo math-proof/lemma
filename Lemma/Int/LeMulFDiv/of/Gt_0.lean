@@ -1,11 +1,8 @@
 import Lemma.Int.FDiv.eq.Ite__Ite__Ite__Ite__Ite
-import Lemma.Bool.Iff_True.of.Cond
 import Lemma.Nat.Lt.is.False.of.Gt
 import Lemma.Nat.Ge.is.True.of.Gt
 import Lemma.Nat.Eq.is.False.of.Gt
-import Lemma.Int.Sub.eq.Add_Neg
 import Lemma.Int.LeMulDiv.of.Ge_0
-import Lemma.Int.NegAdd.eq.SubNeg
 import Lemma.Int.NegMul.eq.MulNeg
 import Lemma.Int.LeNeg.of.Ge_Neg
 import Lemma.Int.GtNeg_0.of.Lt_0

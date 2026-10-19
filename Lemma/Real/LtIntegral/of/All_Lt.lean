@@ -1,7 +1,5 @@
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
 import sympy.integrals.integrals
-import sympy.sets.sets
-import sympy.Basic
 
 
 open MeasureTheory

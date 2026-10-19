@@ -1,6 +1,5 @@
 import Lemma.Tensor.Det.eq.DetToMatrix
 import Lemma.Tensor.DetAppendHstackS.eq.PowNeg1
-import Lemma.Tensor.Mul
 import Lemma.Tensor.SEqDotS.of.SEq
 import Lemma.Tensor.ToMatrixDot.eq.MulToMatrixS
 open Tensor

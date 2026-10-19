@@ -1,7 +1,6 @@
 import Lemma.Measure.Count.eq.ProdCountS
 import Lemma.Random.SinglePSpace.of.EqMeasureCount.Measurable
 import sympy.stats.joint_rv
-import sympy.Basic
 open MeasureTheory
 
 

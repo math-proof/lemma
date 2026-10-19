@@ -1,4 +1,3 @@
-import Lemma.Tensor.SEqStackS_UFnGet.of.Eq
 import Lemma.Tensor.Softmax.eq.Stack_Softmax.of.GtLength
 open Tensor
 

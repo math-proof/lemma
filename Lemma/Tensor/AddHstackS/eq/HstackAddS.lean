@@ -1,10 +1,8 @@
 import Lemma.Tensor.AddAppendS.eq.AppendAddS
-import Lemma.Tensor.Eq.is.All_EqGetS
-import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.GetAdd.eq.AddGetS
 import Lemma.Tensor.GetHstack.eq.AppendGetS
 open Tensor
-set_option maxHeartbeats 400000
+set_option maxHeartbeats 200000
 
 
 @[path, comm]

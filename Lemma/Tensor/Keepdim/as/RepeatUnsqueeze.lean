@@ -1,4 +1,3 @@
-import Lemma.List.GtLengthInsertIdxEraseIdx.of.GtLength
 import torch.Tensor.unsqueeze
 import torch.Tensor.repeat
 import Lemma.Bool.SEqCast.of.Eq

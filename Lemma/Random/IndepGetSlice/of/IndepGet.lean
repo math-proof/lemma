@@ -2,7 +2,6 @@ import Mathlib.Probability.Independence.Basic
 import Mathlib.Data.Fin.Tuple.Basic
 import Mathlib.MeasureTheory.MeasurableSpace.Prod
 import Lemma.Random.CondIndepJoint.of.Indep_Joint.Indep
-import sympy.stats.joint_rv
 open ProbabilityTheory MeasureTheory
 
 

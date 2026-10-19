@@ -1,9 +1,5 @@
-import sympy.stats.policy_trajectory
 import sympy.stats.cond_expectation
 import sympy.stats.hidden_markov_sequence
-import sympy.core.power
-import sympy.vector.Basic
-import sympy.Basic
 import Lemma.Random.MEq_Clip.of.All_Eq
 import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
 import Lemma.Random.NormClip.le.AbsR

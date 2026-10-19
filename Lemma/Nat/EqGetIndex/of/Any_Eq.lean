@@ -1,5 +1,4 @@
 import sympy.tensor.index_of
-import sympy.Basic
 open IndexOf
 
 

@@ -1,4 +1,3 @@
-import sympy.stats.stochastic_process_types
 import sympy.stats.stochastic_process
 open WithLp
 open scoped Matrix

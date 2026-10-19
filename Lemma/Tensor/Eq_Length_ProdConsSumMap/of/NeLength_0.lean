@@ -1,8 +1,5 @@
 import torch.Tensor
 import Lemma.List.LengthFlatten.eq.SumMap_FunLength
-import Lemma.List.ProdCons.eq.Mul_Prod
-import Lemma.Nat.Mul
-import Lemma.Nat.MulMul.eq.Mul_Mul
 open List Nat
 
 

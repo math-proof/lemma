@@ -1,5 +1,4 @@
 import Lemma.Nat.Sub_Add.eq.SubSub
-import Lemma.Nat.Add
 import Lemma.Nat.EqSubAdd
 open Nat
 

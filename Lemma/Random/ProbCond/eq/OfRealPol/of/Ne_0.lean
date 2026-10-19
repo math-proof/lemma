@@ -1,10 +1,6 @@
-import sympy.stats.joint_rv
-import sympy.stats.policy_trajectory
 import Lemma.Measure.Count.eq.ProdCountS
 import Lemma.Measure.EqRnDeriv_Count
-import sympy.Basic
 import Lemma.Random.Integral_EqAndEq.eq.MulRealPreimageProb.of.All_Eq
-import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 
 
@@ -30,7 +26,7 @@ private lemma main
   (hP : SinglePSpace (M θ) (a t, s t))
   (h : (M θ).real (s t ⁻¹' {x}) ≠ 0) :
 -- imply
-  ℙ[(M θ)]((a t) = u | (s t) = x) = ENNReal.ofReal (M.pol.prob θ x u) := by
+  ℙ[(M θ)]((a t) = u | (s t) = x) = ENNReal.ofReal (M.policy.prob θ x u) := by
 -- proof
   classical
   set π := M θ
@@ -51,7 +47,7 @@ private lemma main
     rw [hS, Measure.EqRnDeriv_Count]
     exact Measure.map_apply (Random.Measurable.of.All_Eq.snd.fst h₁ t) (measurableSet_singleton _)
   have hxu : π.real (s t ⁻¹' {x} ∩ a t ⁻¹' {u}) =
-      π.real (s t ⁻¹' {x}) * M.pol.prob θ x u := by
+      π.real (s t ⁻¹' {x}) * M.policy.prob θ x u := by
     rw [← Integral_EqAndEq.eq.MulRealPreimageProb.of.All_Eq (M := M) h₁ θ t x u]
     have hset : MeasurableSet (s t ⁻¹' {x} ∩ a t ⁻¹' {u}) :=
       (Random.Measurable.of.All_Eq.snd.fst h₁ t (measurableSet_singleton _)).inter (Random.Measurable.of.All_Eq.snd.snd h₁ t (measurableSet_singleton _))

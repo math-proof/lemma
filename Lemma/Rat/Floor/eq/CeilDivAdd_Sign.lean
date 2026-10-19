@@ -1,6 +1,4 @@
-import Lemma.Int.CoeSub.eq.SubCoeS
 import Lemma.Int.Ceil.eq.FloorDivSub_Sign
-import Lemma.Int.CoeAdd.eq.AddCoeS
 open Int
 
 

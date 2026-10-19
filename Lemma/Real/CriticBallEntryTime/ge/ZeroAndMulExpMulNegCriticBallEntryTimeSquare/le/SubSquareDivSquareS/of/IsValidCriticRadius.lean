@@ -1,6 +1,4 @@
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import sympy.dynamics.actor_critic
-import sympy.Basic
 import Lemma.Real.SubSquareDivSquareS.Gt_0.of.IsValidCriticRadius
 
 

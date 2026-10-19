@@ -4,7 +4,6 @@ import Mathlib.LinearAlgebra.Matrix.SchurComplement
 import Lemma.Tensor.Det.eq.DetToMatrix
 import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.Pow.eq.TensorListPow
-import sympy.matrices.dense
 import torch.stack
 open Tensor
 

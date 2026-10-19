@@ -1,10 +1,5 @@
 import Lemma.Tensor.BandPart.eq.Stack_BoolIn_Icc
-import Lemma.Tensor.EqData0'0
-import Lemma.Tensor.EqData1'1
-import Lemma.Tensor.Le.is.LeDataS
 import Lemma.Tensor.Le0Stack.of.All_Ge_0
-import Lemma.Vector.EqGet0_0
-import sympy.matrices.expressions.special
 open Tensor
 
 

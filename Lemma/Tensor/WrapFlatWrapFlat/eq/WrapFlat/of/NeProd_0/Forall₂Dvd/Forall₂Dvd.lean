@@ -1,5 +1,3 @@
-import sympy.core.mul
-import sympy.Basic
 import Lemma.Tensor.WrapFlat.eq.WrapFlatMod.of.EqLengthS
 open Tensor
 

@@ -1,10 +1,7 @@
-import Lemma.List.EqCons_Tail.of.GtLength_0
-import Lemma.Tensor.Get.of.Eq.GtLength_0
 import Lemma.Tensor.GetMatmul.as.MatmulGetS.of.Length.GtLength_0
-import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.Tensordot.eq.Matmul.of.Length
 open List Tensor
-set_option maxHeartbeats 1000000
+set_option maxHeartbeats 500000
 
 
 @[path, fin, cast, cast.fin]

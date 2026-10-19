@@ -1,4 +1,3 @@
-import Lemma.Bool.EqCast.of.SEq
 import Lemma.Tensor.SEqAppend.of.Eq_0
 open Tensor Bool
 

@@ -1,5 +1,3 @@
-import Lemma.List.AddMul_ProdDrop.lt.Prod.of.Lt_ProdTake.Lt_ProdDrop
-import Lemma.List.Prod.eq.MulProdS
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 open Vector List
 

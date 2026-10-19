@@ -1,8 +1,7 @@
-import Lemma.Bool.SEq.is.Eq
 import Lemma.Tensor.Append
 import Lemma.Tensor.GetAppend.as.AppendCastS_Get.of.GtLength_0
 open Bool Tensor
-set_option maxHeartbeats 500000
+set_option maxHeartbeats 250000
 
 
 @[path]

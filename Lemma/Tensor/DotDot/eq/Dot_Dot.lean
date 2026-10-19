@@ -2,22 +2,14 @@ import Lemma.Fin.MulSum.eq.Sum_Mul
 import torch.Tensor.sum
 import torch.Tensor.unsqueeze
 import torch.Tensor.permute
-import Lemma.Fin.Sum.of.All_Eq
 import Lemma.Fin.Sum_BFn
 import Lemma.Finset.Mul_Sum.eq.Sum_Mul
-import Lemma.Nat.MulMul.eq.Mul_Mul
-import Lemma.Tensor.Dot.eq.GetDotUnsqueeze_0
 import Lemma.Tensor.Dot.eq.Sum_MulGetS
-import Lemma.Tensor.EqGetUnsqueeze_0
-import Lemma.Tensor.GetDot.eq.DotGet
-import Lemma.Tensor.GetDot.eq.DotGetS
 import Lemma.Tensor.GetDotDot.eq.DotDotGet
 import Lemma.Tensor.GetDot_Dot.eq.Dot_Dot_GetT
-import Lemma.Tensor.Get.of.Eq
 import Lemma.Tensor.EqGetT
-import Lemma.Tensor.Mul
 open Tensor Fin
-set_option maxHeartbeats 1000000
+set_option maxHeartbeats 500000
 
 
 @[path]

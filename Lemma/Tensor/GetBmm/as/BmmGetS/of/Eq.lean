@@ -1,8 +1,5 @@
 import Lemma.Tensor.GetBmm.eq.BmmGetS
-import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
-import Lemma.Tensor.LengthBmm.eq.Length
 import Lemma.Tensor.SEqBmmS.of.SEq.SEq
-import Lemma.Tensor.SEqGetS.of.SEq.GtLength
 import torch.Tensor.bmm
 open Tensor
 

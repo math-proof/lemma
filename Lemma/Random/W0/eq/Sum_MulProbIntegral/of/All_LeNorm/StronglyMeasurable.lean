@@ -1,5 +1,3 @@
-import sympy.stats.policy_trajectory
-import sympy.Basic
 import Lemma.Random.Integral.eq.Sum_SMul.of.All_LeNorm.StronglyMeasurable
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 
@@ -19,7 +17,7 @@ private lemma main
   (θ : Θ)
   (x : S) :
 -- imply
-  ∫ z, f z ∂(M.stageK θ x) = ∑ u, M.pol.prob θ x u * ∫ ρ, f (ρ, x, u) ∂(M.env.reward (x, u)) := by
+  ∫ z, f z ∂(M.stageK θ x) = ∑ u, M.policy.prob θ x u * ∫ ρ, f (ρ, x, u) ∂(M.env.reward (x, u)) := by
 -- proof
   rw [Integral.eq.Sum_SMul.of.All_LeNorm.StronglyMeasurable (M := M) hf hC θ x]
   simp [smul_eq_mul]

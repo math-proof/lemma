@@ -1,5 +1,4 @@
 import sympy.stats.markov_chain_trajectory
-import sympy.Basic
 open MeasureTheory ProbabilityTheory Finset Kernel
 
 

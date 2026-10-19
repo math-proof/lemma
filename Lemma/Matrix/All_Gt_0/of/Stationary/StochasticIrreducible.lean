@@ -1,5 +1,3 @@
-import sympy.Basic
-import sympy.stats.stochastic_process_types
 import Lemma.Matrix.Stationary_Pow.of.Stationary
 open Matrix
 

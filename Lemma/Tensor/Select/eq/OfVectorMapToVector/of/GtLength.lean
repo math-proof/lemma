@@ -2,26 +2,19 @@ import Lemma.Bool.EqCast.of.SEq
 import torch.Tensor.prod
 import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.List.MulLengthSlice.eq.ProdEraseIdx.of.GtGet.GtLength
-import Lemma.List.Prod.eq.MulProdS
-import Lemma.List.LengthSlice.eq.ProdTake.of.GtGet.GtLength
-import Lemma.List.ProdDrop.eq.Mul_ProdDrop_Add_1.of.GtLength
-import Lemma.List.ProdTake_Add_1.eq.MulProdTake.of.GtLength
-import Lemma.Nat.AddAdd.eq.Add_Add
 import Lemma.Nat.Div.eq.AddMulDiv_Mul
 import Lemma.Nat.Eq_Div.Eq_Mod.of.Eq_AddMul
 import Lemma.Tensor.DataOfVector.eq.FlattenMapData
 import Lemma.Tensor.DataGet.eq.GetUnflattenData
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Tensor.GetToVector.eq.Get
-import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Vector.GetGetSlice.eq.Get.of.GtGet.GtLength
 import Lemma.Vector.GetMap.eq.UFnGet.of.Lt
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
-import Lemma.Vector.GetUnflatten.eq.Get_AddMul
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 open Bool Fin List Nat Tensor Vector
-set_option maxHeartbeats 800000
+set_option maxHeartbeats 400000
 
 
 @[path]

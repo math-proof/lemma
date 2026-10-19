@@ -2,7 +2,6 @@ import Lemma.Matrix.VecMul_SMul.eq.SMul_VecMul
 import Lemma.Matrix.VecMul_Broadcast.eq.FunMulSum
 import Lemma.Matrix.LeNormOfL1SubVecMulS.of.RowStochastic
 import Lemma.Matrix.OfL1.eq.SMul
-import Lemma.Matrix.OfL1.eq.Sub
 import Lemma.Real.Nndist.eq.NormOfL1Sub
 open WithLp Matrix Metric NNReal Real
 open scoped Matrix BigOperators Topology NNReal

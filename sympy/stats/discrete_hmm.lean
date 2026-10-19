@@ -6,16 +6,15 @@ open MeasureTheory
 
 
 /-- `x` (observations) and `y` (hidden labels) form a first-order hidden Markov model over discrete
-(counting-measure) spaces: every `x k`, `y k` is measurable, `X` and `Y` carry the counting measure,
+(counting-measure) spaces: every `x k`, `y k` is measurable, `X` and `Y` carry the counting measure
+(`[CountableMeasure X]` / `[CountableMeasure Y]`),
 `x (t + 1)` is independent of the past `(x[:t + 1], y[:t + 1])` given `y (t + 1)` (emission), and
 `y (t + 1)` is independent of `(x[:t + 1], y[:t])` given `y t` (first-order Markov property). -/
 class IsDiscreteHMM {Ω Y X : Type*} [MeasurableSpace Ω] [StandardBorelSpace Ω]
-    [ReferenceMeasure Y] [ReferenceMeasure X]
+    [CountableMeasure Y] [CountableMeasure X]
     (π : Measure Ω) [IsProbabilityMeasure π] (x : ℕ → Ω → X) (y : ℕ → Ω → Y) : Prop where
   measurable_x : ∀ k, Measurable (x k)
   measurable_y : ∀ k, Measurable (y k)
-  count_x : ReferenceMeasure.measure (α := X) = Measure.count
-  count_y : ReferenceMeasure.measure (α := Y) = Measure.count
   emit : ∀ t, ∀ _ : Measurable (y (t + 1)),
     x (t + 1) ⟂ᵢ[π] (x[:t + 1], y[:t + 1]) | y (t + 1)
   markov : ∀ t, ∀ _ : Measurable (y t),
@@ -23,22 +22,25 @@ class IsDiscreteHMM {Ω Y X : Type*} [MeasurableSpace Ω] [StandardBorelSpace Ω
 
 section
 variable {Ω Y X : Type*} [MeasurableSpace Ω] [StandardBorelSpace Ω]
-  [ReferenceMeasure Y] [ReferenceMeasure X] [Countable Y] [MeasurableSingletonClass Y]
-  [Countable X] [MeasurableSingletonClass X]
+  [CountableMeasure Y] [CountableMeasure X]
+  [Countable Y] [MeasurableSingletonClass Y] [Countable X] [MeasurableSingletonClass X]
   {π : Measure Ω} [IsProbabilityMeasure π] {x : ℕ → Ω → X} {y : ℕ → Ω → Y}
 
 omit [Countable X] [MeasurableSingletonClass X] in
 theorem IsDiscreteHMM.singlePSpace_y [h : IsDiscreteHMM π x y] (i : ℕ) : SinglePSpace π (y i) :=
-  Random.SinglePSpace.of.EqMeasureCount.Measurable (h.measurable_y i) h.count_y
+  Random.SinglePSpace.of.EqMeasureCount.Measurable (h.measurable_y i)
+    CountableMeasure.measure_eq_count
 
 instance [h : IsDiscreteHMM π x y] (i j : ℕ) : SinglePSpace π (x i, y j) :=
   Random.SinglePSpace.of.EqMeasureCount.EqMeasureCount.Measurable.Measurable
-    (h.measurable_x i) (h.measurable_y j) h.count_x h.count_y
+    (h.measurable_x i) (h.measurable_y j)
+    CountableMeasure.measure_eq_count CountableMeasure.measure_eq_count
 
 omit [Countable X] [MeasurableSingletonClass X] in
 theorem IsDiscreteHMM.singlePSpace_yy [h : IsDiscreteHMM π x y] (i j : ℕ) : SinglePSpace π (y i, y j) :=
   Random.SinglePSpace.of.EqMeasureCount.EqMeasureCount.Measurable.Measurable
-    (h.measurable_y i) (h.measurable_y j) h.count_y h.count_y
+    (h.measurable_y i) (h.measurable_y j)
+    CountableMeasure.measure_eq_count CountableMeasure.measure_eq_count
 
 omit [Countable Y] [MeasurableSingletonClass Y] in
 theorem IsDiscreteHMM.singlePSpace_x [h : IsDiscreteHMM π x y] (a b : ℤ) : SinglePSpace π x[a:b] :=
@@ -50,7 +52,8 @@ instance [h : IsDiscreteHMM π x y] (n m : ℤ) : SinglePSpace π (x[:n], y[:m])
 
 instance [h : IsDiscreteHMM π x y] (a b : ℤ) (j : ℕ) : SinglePSpace π (JointRandomSymbol x[a:b] (y j)) :=
   Random.SinglePSpace.of.EqMeasureCount.EqMeasureCount.Measurable.Measurable
-    (Measurable.of_eval fun _ => h.measurable_x _) (h.measurable_y j) rfl h.count_y
+    (Measurable.of_eval fun _ => h.measurable_x _) (h.measurable_y j) rfl
+    CountableMeasure.measure_eq_count
 end
 
 namespace IsDiscreteHMM

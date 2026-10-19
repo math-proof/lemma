@@ -1,6 +1,4 @@
 import Lemma.Real.Sup.eq.Neg.Inf
-import sympy.sets.sets
-import sympy.Basic
 
 
 @[path]

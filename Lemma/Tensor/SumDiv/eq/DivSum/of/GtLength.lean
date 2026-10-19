@@ -1,22 +1,11 @@
-import Lemma.Bool.EqCast.of.SEq
 import torch.Tensor.reshape
-import Lemma.Nat.Any_Eq_AddMul
 import Lemma.Nat.Div.eq.HDiv
 import Lemma.Tensor.DataDiv.eq.DivData
 import Lemma.Tensor.DataSum_0.as.SumSplitAtData
-import Lemma.Tensor.Div.eq.Div_Reshape
-import Lemma.Tensor.Eq.is.EqDataS
-import Lemma.Tensor.GetDiv.eq.DivGet
-import Lemma.Tensor.GetToVector.eq.Get
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Lemma.Tensor.Sum.as.OfVectorMapToVector.of.GtLength_0
-import Lemma.Tensor.Sum.eq.OfVectorMapToVector
 import Lemma.Tensor.ToVectorDiv.eq.DivToVector_Reshape
 import Lemma.Vector.CastSum.eq.DivCastSumSplitAt_1
-import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
-import Lemma.Vector.GetMap.eq.UFnGet
-import Lemma.Vector.MapMap.eq.Map_Comp
-import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import torch.Tensor.sum
 open Bool Nat Tensor Vector
 

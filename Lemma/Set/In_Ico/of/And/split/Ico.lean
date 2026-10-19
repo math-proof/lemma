@@ -1,4 +1,3 @@
-import sympy.sets.fancysets
 import Lemma.Int.In_Range.is.Mod.In_Range
 
 

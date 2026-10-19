@@ -1,6 +1,4 @@
-import Lemma.Nat.Gt_0.of.Gt
 import Lemma.Nat.Gt_0.of.GtMul
-import Lemma.Nat.Mul
 open Nat
 
 

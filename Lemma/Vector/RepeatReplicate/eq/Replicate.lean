@@ -1,5 +1,4 @@
 import Lemma.Vector.GetRepeat.eq.Get_Mod
-import sympy.vector.Basic
 open Vector
 
 

@@ -1,5 +1,4 @@
 import Lemma.Tensor.GetMap.eq.MapGet
-import Lemma.Tensor.LengthMap.eq.Length
 import torch.functions
 open Tensor
 

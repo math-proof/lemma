@@ -1,4 +1,3 @@
-import sympy.functions.elementary.integers
 import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.Nat.Ge.of.Gt
 open Nat

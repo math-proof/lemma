@@ -1,4 +1,3 @@
-import Lemma.Bool.BFn_Ite.is.Imp.Imp
 import Lemma.Bool.Imp.of.Cond
 import Lemma.Int.FDiv.eq.Ite__Ite__Ite__Ite__Ite
 open Bool Int

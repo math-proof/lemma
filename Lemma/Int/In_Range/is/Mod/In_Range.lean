@@ -1,14 +1,11 @@
-import sympy.sets.fancysets
 import Lemma.Int.Abs.eq.Neg.of.Lt_0
 import Lemma.Int.Any_Eq_Mul.of.Mod.eq.Zero
 import Lemma.Int.EqSign_1.of.Gt_0
-import Lemma.Int.EqToNat_0.of.Lt_0
 import Lemma.Int.In_Range.is.Any_Eq_AddMul
 import Lemma.Int.In_Range.is.Gt.Le
 import Lemma.Int.In_Range.is.Le.Lt
 import Lemma.Int.LtToNat.is.Lt.of.Ge_0
 import Lemma.Int.Mod.eq.Zero.of.ModAdd.eq.Mod.Ne_0
-import Lemma.Int.Sign.eq.Neg1.of.Lt_0
 open Int
 
 

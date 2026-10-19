@@ -1,4 +1,3 @@
-import Lemma.Nat.Mul
 import Lemma.Vector.Dot.eq.SumMul
 open Nat Vector
 

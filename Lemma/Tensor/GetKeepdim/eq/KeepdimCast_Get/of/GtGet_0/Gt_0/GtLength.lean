@@ -3,7 +3,6 @@ import torch.Tensor.unsqueeze
 import torch.Tensor.repeat
 import Lemma.List.GetEraseIdx.eq.Get.of.Gt.GtLength
 import Lemma.List.GetTail.eq.Get_Add_1.of.GtLengthTail
-import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.Keepdim.as.RepeatUnsqueeze
 import Lemma.Tensor.All_SEqGetS.of.SEq
 import Lemma.Tensor.RepeatCast.as.Repeat.of.Eq
@@ -13,17 +12,10 @@ import Lemma.List.TailInsertIdx.eq.InsertIdxTail.of.Gt_0.GtLength_0
 import Lemma.Tensor.GetRepeat.as.RepeatGet.of.GtGet_0.GtVal_0
 import Lemma.List.GetInsertIdx.eq.Get.of.Gt.GeLength
 import Lemma.Tensor.GetUnsqueeze.as.UnsqueezeGet.of.GtGet_0.Gt_0.GtLength_0
-import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.GtLength
-import Lemma.Nat.EqAddSub.of.Ge
-import Lemma.List.GtLengthInsertIdxEraseIdx.of.GtLength
 import Lemma.Bool.Eq.of.SEq.SEq
-import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.List.EqSetInsertIdxEraseIdx.of.Eq_Get.GtLength
-import Lemma.List.EqSetInsertIdxEraseIdx.of.GtLength
 import Lemma.List.TailSet.eq.SetTail.of.Gt_0
-import Lemma.Bool.SEq.of.SEq.SEq
 import Lemma.Tensor.UnsqueezeCast.as.Unsqueeze.of.Eq
-import Lemma.Tensor.RepeatCast.as.Repeat.of.Eq
 import Lemma.Tensor.SEqRepeatS.of.SEq.Val.Eq
 open Tensor List Nat Bool
 

@@ -1,7 +1,4 @@
 import Lemma.Real.Minima.eq.Neg.Maxima
-import sympy.concrete.expr_with_limits
-import sympy.sets.sets
-import sympy.Basic
 
 
 @[path]

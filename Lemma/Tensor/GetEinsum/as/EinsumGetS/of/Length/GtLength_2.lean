@@ -1,20 +1,13 @@
-import Lemma.Bool.SEq.is.SEqCast.of.Eq
-import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
-import Lemma.List.Cons_Append.eq.AppendCons
-import Lemma.List.EqAppendTake__ListGet.of.GeLength_2
 import Lemma.List.EqCons_Tail.of.GtLength
-import Lemma.List.EqCons_Tail.of.GtLength_0
 import Lemma.List.Take.eq.Cons_TailTake.of.Gt_0.GtLength_0
 import Lemma.Tensor.Einsum.as.Tensordot.of.GeLength_2.GeLength_2
-import Lemma.Tensor.Get.of.Eq.GtLength_0
-import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
 import Lemma.Tensor.GetResize.as.ResizeGet.of.GtGet_0.GtVal_0
 import Lemma.Tensor.GetTensordot.as.TensordotGetS.of.Length.GtLength_0
 import Lemma.Tensor.GtLengthEinsum.of.GeLengthS.GeLength_2
-import Lemma.Tensor.SEqResizeS.of.SEq.Val.Eq
 import Lemma.Tensor.SEqTensordotS.of.SEq.SEq.Eq.Eq
 open Bool List Tensor
-set_option maxHeartbeats 1000000
+set_option maxHeartbeats 500000
+attribute [local irreducible] List.prod
 
 
 @[path, fin, cast, cast.fin]

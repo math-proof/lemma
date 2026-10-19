@@ -1,6 +1,4 @@
 import sympy.stats.policy_trajectory.gradient
-import sympy.Basic
-import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
 import Lemma.Random.RealInterPreimage_Preimage.eq.MulRealPreimageProb.of.All_Eq
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
 
@@ -26,7 +24,7 @@ private lemma main
   (φ : S → A → E) :
 -- imply
   ∫ ω, φ (s t ω) (a t ω) ∂(M θ) =
-    ∑ y, ∑ u, ((M θ).real (s t ⁻¹' {y}) * M.pol.prob θ y u) • φ y u := by
+    ∑ y, ∑ u, ((M θ).real (s t ⁻¹' {y}) * M.policy.prob θ y u) • φ y u := by
 -- proof
   have hX : Measurable (fun ω : ℕ → ℝ × S × A => (s t ω, a t ω)) := (Random.Measurable.of.All_Eq.snd.fst h₁ t).prodMk (Random.Measurable.of.All_Eq.snd.snd h₁ t)
   have e := integral_map (μ := M θ) hX.aemeasurable

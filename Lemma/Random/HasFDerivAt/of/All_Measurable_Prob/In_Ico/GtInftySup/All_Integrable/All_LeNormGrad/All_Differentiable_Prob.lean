@@ -1,5 +1,3 @@
-import sympy.stats.policy_trajectory.continuous_action
-import sympy.Basic
 import sympy.vector.operators
 import sympy.concrete.sup
 import Mathlib.Analysis.Calculus.SmoothSeries
@@ -24,12 +22,12 @@ private lemma main
   {γ : ℝ}
   {g : S → A → ℝ}
 -- given
-  (h₀ : ∀ x u, Differentiable ℝ (fun θ => M.pol.prob θ x u))
-  (h₁ : ∀ θ x u, ‖∇[θ] M.pol.prob θ x u‖ ≤ g x u)
+  (h₀ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
+  (h₁ : ∀ θ x u, ‖∇[θ] M.policy.prob θ x u‖ ≤ g x u)
   (h₂ : ∀ x, Integrable (g x) ReferenceMeasure.measure)
   (h₃ : sup[x] ∫ u, g x u ∂ReferenceMeasure.measure < ∞)
   (h₄ : γ ∈ Set.Ico 0 1)
-  (h₅ : ∀ θ, Measurable (fun z : S × A => M.pol.prob θ z.1 z.2))
+  (h₅ : ∀ θ, Measurable (fun z : S × A => M.policy.prob θ z.1 z.2))
   (x : S)
   (θ : Θ) :
 -- imply
@@ -37,7 +35,7 @@ private lemma main
 -- proof
   obtain ⟨Cg, hCg⟩ := id h₃
   have hg : ∀ x, ∫ u, g x u ∂ReferenceMeasure.measure ≤ Cg := fun x => hCg ⟨x, rfl⟩
-  have hC : ∀ θ x u, ‖fderiv ℝ (fun θ => M.pol.prob θ x u) θ‖ ≤ g x u := fun θ x u => by
+  have hC : ∀ θ x u, ‖fderiv ℝ (fun θ => M.policy.prob θ x u) θ‖ ≤ g x u := fun θ x u => by
     simpa [gradient, LinearIsometryEquiv.norm_map] using h₁ θ x u
   have hW := fun k => Differentiable.All_LeNormFderivMulAdd_1MulAbs_R.of.All_LeIntegral.All_Integrable.All_LeNormFderiv.All_Differentiable_Prob.All_Measurable_Prob (M := M) h₅ h₀ hC h₂ hg k x
   apply hasFDerivAt_tsum (Summable_MulPowMulAdd_1.of.In_Ico h₄ (Cg * |M.env.R|))

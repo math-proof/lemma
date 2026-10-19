@@ -1,4 +1,3 @@
-import Lemma.Tensor.Length
 import Lemma.Tensor.LengthIte.eq.Length
 open Tensor
 

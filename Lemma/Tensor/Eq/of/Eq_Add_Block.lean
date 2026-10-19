@@ -1,5 +1,4 @@
 import Lemma.Tensor.ExpAdd_MulInfty.eq.Mul_Stack_Bool.rect
-import sympy.Basic
 open Tensor
 
 

@@ -1,8 +1,6 @@
 import Lemma.List.Drop.eq.DropDrop__Sub.of.Ge
 import Lemma.List.ProdDrop.dvd.Prod
 import Lemma.List.ProdTail.eq.MulProdTailTake.of.Gt_0
-import Lemma.List.Tail.eq.Drop_1
-import Lemma.Nat.Dvd_Mul
 open List Nat
 
 

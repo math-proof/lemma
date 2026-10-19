@@ -1,5 +1,4 @@
 import stdlib.SEq
-import sympy.Basic
 import sympy.vector.vector
 
 

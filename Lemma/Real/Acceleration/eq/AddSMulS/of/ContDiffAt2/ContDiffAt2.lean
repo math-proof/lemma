@@ -7,8 +7,6 @@ import Mathlib.Analysis.Calculus.Deriv.Mul
 import Lemma.Real.HasDerivAt_PolarAngular_SMulNegPolarRadial.of.DifferentiableAt
 import Lemma.Real.HasDerivAt_PolarRadial_SMulDeriv_PolarAngular.of.DifferentiableAt
 import Lemma.Real.Velocity.eq.AddSMulSMul.of.DifferentiableAt.DifferentiableAt
-import sympy.physics.vector.kinematics
-import sympy.Basic
 
 
 /--

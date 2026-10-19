@@ -1,7 +1,5 @@
 import Lemma.Real.Deriv.eq.Div_Mul_Square.of.Ne_0.Ne_0.EqAngularMomentum
 import Lemma.Real.MechanicalEnergy.eq.Add.of.DifferentiableAt.DifferentiableAt
-import sympy.physics.vector.kinematics
-import sympy.Basic
 
 
 /--

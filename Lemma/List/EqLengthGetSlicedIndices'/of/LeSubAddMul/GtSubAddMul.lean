@@ -1,6 +1,4 @@
-import Lemma.Int.SubSub
 import Lemma.List.LengthSlicedIndices'.eq.ToNatCeilDivSub.of.Gt_0.Le.Gt
-import Lemma.Nat.CoeSub.eq.SubCoeS.of.Ge
 import Lemma.Nat.Gt_0
 import Lemma.Rat.EqToNatCeilDivSubMul.of.Lt
 open Int List Nat Rat

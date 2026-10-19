@@ -7,6 +7,7 @@ import Mathlib.MeasureTheory.Function.ConditionalExpectation.Basic
 import Mathlib.Probability.Independence.Basic
 import Mathlib.Probability.Independence.Conditional
 import sympy.stats.symbolic_probability
+import sympy.core.function
 open MeasureTheory
 open scoped ProbabilityTheory
 
@@ -229,19 +230,20 @@ A binder `x` in `𝔼[x: π](…)` is turned into an `Ω → _` random variable 
 `Expectation.asRV` (`AsPathRV`). Ordinary RVs `x : Ω → α` stay themselves (reducible);
 a process `X : ℕ → Ω → α` flips to the path-valued RV `fun ω t ↦ X t ω`. That lets one write
 
-  `𝔼[s, a, r : M θ](∑' t, γ ^ t * r t)`
+  `𝔼[r, s, a : M θ](∑' t, γ ^ t * r t)`
 
 for the joint law of the three infinite-horizon processes (still a *finite* `JointRandomSymbol`
-of path RVs), with `s`, `a`, `r` bound in the body as values of type `ℕ → _`.
+of path RVs), with `r`, `s`, `a` bound in the body as values of type `ℕ → _`.
 -/
 
 /--
 Interpret a binder as an `Ω → α` random variable.
 
 * `Ω → α` — identity (ordinary RV);
-* `ℕ → Ω → α` — flip to the path `ω ↦ (t ↦ X t ω)` (process / infinite family of coordinates).
+* `ℕ → Ω → α` — flip to the path `ω ↦ (t ↦ X t ω)` (process / infinite family of coordinates);
+* `Fun ℕ (Ω → α)` — same flip via `toFun` (trajectory maps with `r[t]` / `r[t:]` sugar).
 
-The process instance is higher priority so it wins on the overlap
+The process / Fun instances are higher priority so they win on the overlap
 `ℕ → Ω → α = (ℕ → (Ω → α))`, which also matches the identity instance with domain `ℕ`.
 -/
 class AsPathRV (X : Type*) (Ω : outParam Type*) (α : outParam Type*) where
@@ -259,6 +261,12 @@ instance (priority := 1000) AsPathRV.process {Ω α : Type*} :
     AsPathRV (ℕ → Ω → α) Ω (ℕ → α) where
   path f := fun ω t ↦ f t ω
 
+/-- Process-style reading of `Fun ℕ (Ω → α)` so Expectation binders / AsPathRV.path work. -/
+@[reducible]
+instance (priority := 1000) AsPathRV.funProcess {Ω α : Type*} :
+    AsPathRV (Fun ℕ (Ω → α)) Ω (ℕ → α) where
+  path f := fun ω t ↦ f.toFun t ω
+
 /-- `AsPathRV.path` is the identity on an ordinary random variable. -/
 @[simp] theorem AsPathRV.path_function {Ω α : Type*} (f : Ω → α) :
     AsPathRV.path f = f :=
@@ -267,6 +275,11 @@ instance (priority := 1000) AsPathRV.process {Ω α : Type*} :
 /-- `AsPathRV.path` flips a process to its path-valued random variable. -/
 @[simp] theorem AsPathRV.path_process {Ω α : Type*} (X : ℕ → Ω → α) :
     AsPathRV.path X = fun ω t ↦ X t ω :=
+  rfl
+
+/-- `AsPathRV.path` flips a `Fun` process to its path-valued random variable. -/
+@[simp] theorem AsPathRV.path_fun {Ω α : Type*} (f : Fun ℕ (Ω → α)) :
+    AsPathRV.path f = fun ω t ↦ f.toFun t ω :=
   rfl
 
 /--
@@ -286,6 +299,10 @@ def Expectation.asRV {X : Type*} {Ω α : Type*} [AsPathRV X Ω α] (x : X) : Ω
 
 @[simp] theorem Expectation.asRV_process {Ω α : Type*} (X : ℕ → Ω → α) :
     Expectation.asRV X = fun ω t ↦ X t ω :=
+  rfl
+
+@[simp] theorem Expectation.asRV_fun {Ω α : Type*} (f : Fun ℕ (Ω → α)) :
+    Expectation.asRV f = fun ω t ↦ f.toFun t ω :=
   rfl
 
 /-- Left operand of the `⟂ᵢ` sugar: a process `X : ℕ → Ω → α` (e.g. a slice `r[t + 1:]`) becomes
@@ -476,7 +493,7 @@ Python-aligned surface form (cf. `Expectation[x ~ D](f, given=…)` in `../py/sy
   right-nested `JointRandomSymbol` (joint law). That is **not** the same as
   nested `𝔼[x: π](𝔼[y: π](…))` (product of marginals) unless independence.
   Process binders `ℕ → Ω → α` are read via `Expectation.asRV` as path RVs
-  `Ω → (ℕ → α)` (e.g. `𝔼[s, a, r : M θ](…)`); ordinary RVs stay definitionally themselves.
+  `Ω → (ℕ → α)` (e.g. `𝔼[r, s, a : M θ](…)`); ordinary RVs stay definitionally themselves.
 
 * **Scalar (integrate out completely):**
   `𝔼[x: π](f x)` → `Expectation.ofRV π (Expectation.asRV x) …`
@@ -608,11 +625,13 @@ Syntax sugar for pointwise evaluation of the canonical densities `prob` / `condP
   Several RAs: `ℙ[π](x = x0 | y, z, …)`; joint left: `ℙ[π](x = x0 ∧ w = w0 | y)`.
 
 **Inside `𝔼`:** RA forms whose heads are integrated binders already in scope
-(`ℙ[π](a t | s t)`, `ℙ[π](a | s)`, …) are rewritten to the scalar observation form
-`ℙ[π]((a₀ t) = (a t) | (s₀ t) = (s t))` with fresh aliases `a₀ := a` of the outer
+(`ℙ[π](a t | s t)`, `ℙ[π](a[t] | s[t])`, `ℙ[π](a | s)`, …) are rewritten to the
+scalar observation form `ℙ[π]((a₀ t) = (a t) | (s₀ t) = (s t))` (GetElem `a[t]` /
+`s[t]` becomes app on both sides of `=` after unpack) with fresh aliases `a₀ := a` of the outer
 processes taken before unpack. That is the same scalar as today's handwritten
-`let a₀ := a; let s₀ := s` pattern, so `(ℙ[M θ](a t | s t) : ℝ)` works under
-`𝔼[s, a, …]`. Outside `𝔼`, the same surface stays `probCondRA` (`Ω → ENNReal`).
+`let a₀ := a; let s₀ := s` pattern, so `(ℙ[M θ](a t | s t) : ℝ)` and
+`(ℙ[M θ](a[t] | s[t]) : ℝ)` work under `𝔼[s, a, …]`. Outside `𝔼`, the same
+surface stays `probCondRA` (`Ω → ENNReal`).
 
 Read `=` as “evaluated at” (like `x ↦ x0`), not as an event `{ω | x ω = x0}`.
 `∧` packs a joint point; `|` is conditioning (fixed `=` or random arguments).
@@ -638,7 +657,7 @@ partial def Probability.Macro.mkProd (ts : Array Syntax) : MacroM Term := do
     let tail ← Probability.Macro.mkProd rest.toArray
     `(($t, $tail))
 
-/-- RA slots are `term:51` (idents and applications like `a t`); observation forms keep
+/-- RA slots are `term:51` (idents, apps `a t`, and GetElem `a[t]`); observation forms keep
 `term:max "=" term:lead` so `x = x0` is never swallowed by the RA parsers. -/
 syntax:max "ℙ[" term "]" "(" term:51,+ ")" : term
 syntax:max "ℙ[" term "]" "(" term:51,+ "|" term:51,+ ")" : term
@@ -676,17 +695,35 @@ macro_rules
       let y ← Probability.Macro.mkJointRV ys
       `(Measure.condProbRA $π (JointRandomSymbol $x $y) $x0)
 
-/-- Head binder of an RA term: `a` or `a t` ↦ `a`; otherwise none. -/
+/-- Syntax kind of `a[t]` (GetElem). Not `Array.«term__[_:]»` (`a[t:]`). -/
+private def Expectation.Macro.isGetElemStx (e : Syntax) : Bool :=
+  e.getKind == `«term__[_]»
+
+/-- Head binder of an RA term: `a`, `a t`, or `a[t]` ↦ `a`; otherwise none. -/
 private def Expectation.Macro.raHead (e : Syntax) : Option Name :=
   if e.isIdent then
     some e.getId
   else if e.isOfKind ``Lean.Parser.Term.app then
     let fn := e[0]
     if fn.isIdent then some fn.getId else none
+  else if Expectation.Macro.isGetElemStx e then
+    let coll := e[0]
+    if coll.isIdent then some coll.getId else none
   else
     none
 
-/-- Replace the head binder of e by its alias when present. -/
+/-- `a[t]` → `a t` so observation RHS works after path unpack (no GetElem on bare `ℕ → α`). -/
+private def Expectation.Macro.getElemAsApp (e : Syntax) : MacroM Term := do
+  if Expectation.Macro.isGetElemStx e then
+    let coll : Term := ⟨e[0]⟩
+    let idx : Term := ⟨e[2]⟩
+    `($coll $idx)
+  else
+    pure ⟨e⟩
+
+/-- Replace the head binder of e by its alias when present (`a` / `a t` / `a[t]`).
+GetElem `a[t]` becomes app `a₀ t` (via `getElemAsApp`) so RA observation LHS
+does not keep GetElem after path unpack (`ℕ → α` has no usable GetElem vs Mathlib `P[X]`). -/
 private def Expectation.Macro.applyAlias (aliases : List (Name × Ident)) (e : Syntax) : MacroM Term := do
   if e.isIdent then
     match aliases.find? (fun p => p.1 == e.getId) with
@@ -700,6 +737,14 @@ private def Expectation.Macro.applyAlias (aliases : List (Name × Ident)) (e : S
       | none => pure ⟨e⟩
     else
       pure ⟨e⟩
+  else if Expectation.Macro.isGetElemStx e then
+    let coll := e[0]
+    if coll.isIdent then
+      match aliases.find? (fun p => p.1 == coll.getId) with
+      | some (_, a) => Expectation.Macro.getElemAsApp (e.setArg 0 a)
+      | none => Expectation.Macro.getElemAsApp e
+    else
+      Expectation.Macro.getElemAsApp e
   else
     pure ⟨e⟩
 
@@ -720,9 +765,9 @@ private partial def Expectation.Macro.desugarProbRA (aliases : List (Name × Ide
         if xsA.all (fun e => Expectation.Macro.isAliasable aliases e) &&
             ysA.all (fun e => Expectation.Macro.isAliasable aliases e) then
           let x ← xsA.mapM (Expectation.Macro.applyAlias aliases)
-          let x0 : Array Term := xsA.map fun e => ⟨e⟩
+          let x0 ← xsA.mapM Expectation.Macro.getElemAsApp
           let y ← ysA.mapM (Expectation.Macro.applyAlias aliases)
-          let y0 : Array Term := ysA.map fun e => ⟨e⟩
+          let y0 ← ysA.mapM Expectation.Macro.getElemAsApp
           `(ℙ[$π]($[$x:term = $x0:term]∧* | $[$y:term = $y0:term]∧*))
         else
           mapChildren s
@@ -730,7 +775,7 @@ private partial def Expectation.Macro.desugarProbRA (aliases : List (Name × Ide
         let xsA := xs.getElems
         if xsA.all (fun e => Expectation.Macro.isAliasable aliases e) then
           let x ← xsA.mapM (Expectation.Macro.applyAlias aliases)
-          let x0 : Array Term := xsA.map fun e => ⟨e⟩
+          let x0 ← xsA.mapM Expectation.Macro.getElemAsApp
           `(ℙ[$π]($[$x:term = $x0:term]∧* | $[$y:term = $y0:term]∧*))
         else
           mapChildren s
@@ -738,7 +783,7 @@ private partial def Expectation.Macro.desugarProbRA (aliases : List (Name × Ide
         let xsA := xs.getElems
         if xsA.all (fun e => Expectation.Macro.isAliasable aliases e) then
           let x ← xsA.mapM (Expectation.Macro.applyAlias aliases)
-          let x0 : Array Term := xsA.map fun e => ⟨e⟩
+          let x0 ← xsA.mapM Expectation.Macro.getElemAsApp
           `(ℙ[$π]($[$x:term = $x0:term]∧*))
         else
           mapChildren s
@@ -755,25 +800,25 @@ the whole term is an RV slot) and the left-hand side of each `=`
 (`ℙ[π](a t = u | s t = x)`). -/
 private partial def Expectation.Macro.bodyValueUse
     (stx : Syntax) (name : Name) (inRV : Bool := false) : MacroM Bool := do
-  let rec over (stxs : Array Syntax) (rv : Bool) : MacroM Bool :=
+  let rec goArgs (stxs : Array Syntax) (rv : Bool) : MacroM Bool :=
     stxs.foldlM (init := false) fun acc s => return acc || (← bodyValueUse s name rv)
   match stx with
-  | `(ℙ[$_]($xs:term,*)) => over xs (rv := true)
+  | `(ℙ[$_]($xs:term,*)) => goArgs xs (rv := true)
   | `(ℙ[$_]($xs:term,* | $ys:term,*)) =>
-      return (← over xs true) || (← over ys true)
+      return (← goArgs xs true) || (← goArgs ys true)
   | `(ℙ[$_]($xs:term,* | $[$y:term = $y0:term]∧*)) =>
-      return (← over xs true) || (← over y true) || (← over y0 false)
+      return (← goArgs xs true) || (← goArgs y true) || (← goArgs y0 false)
   | `(ℙ[$_]($[$x:term = $x0:term]∧* | $[$y:term = $y0:term]∧*)) =>
-      return (← over x true) || (← over x0 false) || (← over y true) || (← over y0 false)
+      return (← goArgs x true) || (← goArgs x0 false) || (← goArgs y true) || (← goArgs y0 false)
   | `(ℙ[$_]($[$x:term = $x0:term]∧* | $ys:term,*)) =>
-      return (← over x true) || (← over x0 false) || (← over ys true)
+      return (← goArgs x true) || (← goArgs x0 false) || (← goArgs ys true)
   | `(ℙ[$_]($[$x:term = $x0:term]∧*)) =>
-      return (← over x true) || (← over x0 false)
+      return (← goArgs x true) || (← goArgs x0 false)
   | _ =>
       if stx.isIdent then
         return !inRV && stx.getId == name
       else
-        over stx.getArgs inRV
+        goArgs stx.getArgs inRV
 
 open Lean.Elab.Term in
 /-- Rebind a binder unless it is already a local whose body occurrences are all `ℙ` random-variable

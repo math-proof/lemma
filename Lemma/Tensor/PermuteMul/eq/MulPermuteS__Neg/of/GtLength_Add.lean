@@ -1,34 +1,14 @@
-import Lemma.Bool.Cast.of.SEq.Eq
 import torch.Tensor.permute
-import Lemma.Bool.SEq.is.Eq
 import Lemma.Bool.SEq.is.EqCast.of.Eq
-import Lemma.List.EqPermute
-import Lemma.List.GetPermute__Neg.eq.Get_0.of.Gt
-import Lemma.List.Permute__Neg.eq.Append_AppendRotateDropTake
-import Lemma.List.Permute__Neg.eq.Cons_EraseIdx
 import Lemma.List.Rotate_SubLength_1.eq.Cons_DropLast.of.GtLength_0
-import Lemma.Nat.ToNatSub_Neg.eq.Add_1
 import Lemma.Tensor.Cast_Mul.eq.MulCastS.of.Eq
-import Lemma.Tensor.DataMul.eq.MulDataS
-import Lemma.Tensor.Eq.is.All_EqGetS.of.GtLength_0
-import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Tensor.GetMul.eq.MulGetS.of.GtGet_0.GtLength_0
 import Lemma.Tensor.GetPermute__Neg.as.Permute__Neg_Get.of.GtGet_0.LtAdd_1Length
-import Lemma.Tensor.LengthPermute__Neg.eq.Get_0.of.Gt
-import Lemma.Tensor.Permute.eq.Ite
 import Lemma.Tensor.PermuteTailMul.eq.MulPermuteTailS
-import Lemma.Tensor.SEqGetS.of.SEq.GtLength
 import Lemma.Tensor.SEqMulS.of.SEq.SEq
 import Lemma.Tensor.SEqPermuteS.of.SEq.Eq.Eq.GtLength
-import Lemma.Tensor.SEqPermute
-import Lemma.Tensor.TensorMul.eq.MulTensorS
-import Lemma.Vector.FlattenMul.eq.MulFlattenS
-import Lemma.Vector.GetCast.eq.Get.of.Eq
-import Lemma.Vector.GetMul.eq.MulGetS
-import Lemma.Vector.SEq.of.All_EqGetS.Eq
-import Lemma.Vector.SplitAtMul.eq.MulSplitAtS
 open Bool List Nat Tensor Vector
-set_option maxHeartbeats 500000
+set_option maxHeartbeats 250000
 
 
 @[path]

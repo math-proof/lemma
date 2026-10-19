@@ -1,5 +1,3 @@
-import Lemma.Int.Add.eq.Sub_Neg
-import Lemma.Int.EqNegNeg
 import Lemma.Tensor.DotT.eq.RotaryMatrixSub
 import Lemma.Tensor.RotaryMatrixNeg.eq.TRotaryMatrix
 open Int Tensor

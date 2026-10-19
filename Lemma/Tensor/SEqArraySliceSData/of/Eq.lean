@@ -1,7 +1,6 @@
 import stdlib.SEq
 import torch.Tensor.Basic
 import Lemma.Vector.HEq.of.Val
-import Lemma.Bool.IffEqS.of.Eq
 open Vector Bool
 
 

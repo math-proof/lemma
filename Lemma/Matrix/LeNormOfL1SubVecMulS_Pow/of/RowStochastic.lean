@@ -1,4 +1,3 @@
-import sympy.stats.stochastic_process_types
 import Lemma.Matrix.LeNormOfL1SubVecMulS.of.RowStochastic
 open Matrix
 open scoped Matrix

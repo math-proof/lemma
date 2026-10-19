@@ -1,5 +1,3 @@
-import Lemma.List.MulLengthSlice.eq.ProdEraseIdx.of.GtGet.GtLength
-import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Vector.FlattenMap.eq.MapFlatten
 import Lemma.Vector.MapCast.as.Map.of.Eq
 import Lemma.Vector.MapGetSlice.eq.GetSliceMap

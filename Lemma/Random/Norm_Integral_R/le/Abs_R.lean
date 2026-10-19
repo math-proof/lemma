@@ -1,5 +1,3 @@
-import sympy.stats.policy_trajectory
-import sympy.Basic
 import Lemma.Random.MEq_Clip.of.All_Eq
 import Lemma.Random.NormClip.le.AbsR
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random

@@ -1,6 +1,5 @@
 import Lemma.Finset.Insert_Ico.eq.Ico_Add_1
 import sympy.functions.combinatorial.factorials
-import sympy.Basic
 open Finset
 
 

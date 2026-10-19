@@ -1,5 +1,4 @@
 import Lemma.List.Eq.of.Append.Length
-import Lemma.List.EqTakeAppend
 open List
 
 

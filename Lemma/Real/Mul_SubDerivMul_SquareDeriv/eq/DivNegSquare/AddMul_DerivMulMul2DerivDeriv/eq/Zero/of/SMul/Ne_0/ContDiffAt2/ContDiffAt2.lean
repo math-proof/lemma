@@ -1,8 +1,6 @@
 import Mathlib.Analysis.Calculus.ContDiff.Basic
 import Lemma.Real.Acceleration.eq.AddSMulS.of.ContDiffAt2.ContDiffAt2
 import Lemma.Real.EqAndEq_0.of.AddSMulS.eq.SMul
-import sympy.physics.vector.kinematics
-import sympy.Basic
 
 
 /--

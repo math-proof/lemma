@@ -1,15 +1,10 @@
-import Lemma.Bool.SEq.is.Eq
 import torch.Tensor.permute
-import Lemma.Bool.SEqCast.of.Eq
 import Lemma.List.EqSwap_0'1
-import Lemma.Tensor.Eq.is.All_EqGetS
 import Lemma.Tensor.GetAppend.eq.Get.of.Lt
 import Lemma.Tensor.GetAppend.eq.Get_Sub.of.GtAdd.Ge
-import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
 import Lemma.Tensor.EqGetT
-import Lemma.Tensor.SEqGetS.of.SEq.GtLength
 open Bool List Tensor
-set_option maxHeartbeats 400000
+set_option maxHeartbeats 200000
 
 
 @[path]

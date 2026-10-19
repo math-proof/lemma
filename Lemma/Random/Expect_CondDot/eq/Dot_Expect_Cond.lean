@@ -1,12 +1,8 @@
 import Mathlib.MeasureTheory.Integral.Lebesgue.Add
 import Mathlib.MeasureTheory.Measure.WithDensity
-import sympy.stats.joint_rv
 import sympy.stats.cond_expectation
 import sympy.stats.symbolic_multivariate_probability
-import sympy.matrices.expressions.matmul
 import torch.Tensor.item
-import Lemma.Tensor.Eq.is.All_EqGetS
-import Lemma.Tensor.Eq.is.Item
 import Lemma.Tensor.GetData.eq.GetDataGet.of.Lt
 import Lemma.Tensor.GetDot.eq.Sum_MulGetS
 import Lemma.Tensor.ItemMul.eq.MulItemS

@@ -7,11 +7,9 @@ import Lemma.Int.Sub.eq.NegSub
 import Lemma.Tensor.MatPow.eq.Eye
 import Lemma.Tensor.EqMatPow
 import Lemma.Tensor.MatPow.eq.Inv
-import Lemma.Tensor.RotaryMatrix0.eq.Eye
 import Lemma.Tensor.RotaryMatrixNeg.eq.TRotaryMatrix
 import Lemma.Tensor.InvRotaryMatrix.eq.TRotaryMatrix
 import Lemma.Tensor.SubGetS.eq.Get_Sub.of.Eq_Stack_Mul.Ge
-import sympy.matrices.expressions.matpow
 open Fin Int Tensor
 
 

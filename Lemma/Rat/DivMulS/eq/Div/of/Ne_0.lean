@@ -1,4 +1,3 @@
-import Lemma.Nat.Mul
 import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Rat.Div.eq.Mul_Inv
 open Nat Rat

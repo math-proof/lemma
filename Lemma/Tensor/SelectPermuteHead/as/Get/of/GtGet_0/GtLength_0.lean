@@ -1,40 +1,24 @@
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import torch.Tensor.prod
 import torch.Tensor.permute
-import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Finset.Prod.eq.MulProdS
-import Lemma.List.Drop.eq.Nil.of.LeLength
 import Lemma.List.EraseIdxAppend.eq.AppendEraseIdx.of.GtLength
 import Lemma.List.EraseIdxRotate.eq.Append_EraseIdxTake.of.LeLength_Add.GeLength
 import Lemma.List.GetRotate.eq.Get_0.of.Gt_0.GeLength
 import Lemma.List.Get_0.dvd.Prod.of.GtLength_0
-import Lemma.List.LengthSlice.eq.ProdTake.of.GtGet.GtLength
 import Lemma.List.Prod.eq.MulProdTail.of.GtLength_0
 import Lemma.List.ProdRotate.eq.Prod
 import Lemma.List.ProdTail.eq.DivProd.of.GtLength_0.Gt_0
-import Lemma.List.ProdTake_1.eq.Get_0.of.GtLength_0
 import Lemma.List.TakeRotate.eq.Tail
-import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.Nat.EqDivAddMul.of.Lt
-import Lemma.Nat.EqMod.of.Lt
-import Lemma.Nat.Eq_Div.Eq_Mod.of.Eq_AddMul
-import Lemma.Nat.LtAddMul.of.Lt.Lt_Div.Dvd
 import Lemma.Tensor.DataGet.as.GetSplitAtData.of.GtLength_0
 import Lemma.Tensor.DataSelect.as.FlattenGetSliceSplitAtData
-import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
-import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Lemma.Tensor.SEqPermuteHeadS.of.Eq
 import Lemma.Tensor.SEqPermuteHead_1
 import Lemma.Tensor.SEqSelectS.of.SEq.Val.Val
 import Lemma.Tensor.Select_0.as.Get.of.GtGet_0.GtLength_0
-import Lemma.Vector.GetCast.eq.Get.of.Eq
-import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
-import Lemma.Vector.GetGetSlice.eq.Get.of.GtGet.GtLength
-import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
-import Lemma.Vector.GetTranspose.eq.Get
-import Lemma.Vector.SEq.of.All_EqGetS.Eq
 open Bool Fin Finset List Nat Tensor Vector
-set_option maxHeartbeats 400000
+set_option maxHeartbeats 200000
 
 
 @[path]

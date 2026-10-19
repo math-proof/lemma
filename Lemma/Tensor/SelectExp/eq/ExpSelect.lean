@@ -1,9 +1,7 @@
 import Lemma.Bool.Cast.of.SEq.Eq
-import Lemma.Bool.SEq.is.Eq
 import Lemma.List.MulLengthSlice_Mul.eq.ProdEraseIdx.of.GtGet.GtLength
 import Lemma.Tensor.DataExp.eq.ExpData
 import Lemma.Tensor.DataSelect.as.FlattenGetSliceSplitAtData
-import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Vector.ExpCast.as.Exp.of.Eq
 import Lemma.Vector.ExpFlatten.eq.FlattenExp
 import Lemma.Vector.ExpGetSlice.eq.GetSliceExp

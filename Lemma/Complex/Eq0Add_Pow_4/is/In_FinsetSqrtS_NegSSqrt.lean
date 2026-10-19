@@ -1,6 +1,4 @@
 import Lemma.Complex.Eq0Add_Mul_Square.is.In_FinsetDivS_Mul2.of.Ne_0
-import Lemma.Complex.EqSquare.is.In_FinsetSqrt_NegSqrt
-import Lemma.Set.In_Finset.is.OrEqS
 import Lemma.Set.In_Insert.is.Eq.ou.In
 open Complex Set
 

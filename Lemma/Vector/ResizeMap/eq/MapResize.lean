@@ -1,4 +1,3 @@
-import Lemma.Nat.LtMod.of.Lt_Mul
 import Lemma.Vector.Eq.is.All_EqGetS
 import Lemma.Vector.GetMap.eq.UFnGet
 import Lemma.Vector.GetResize.eq.Ite_Get_Mod

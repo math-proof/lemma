@@ -1,7 +1,5 @@
-import Lemma.Measure.EqRnDeriv_Count
 import Lemma.Measure.Count.eq.ProdCountS
 import Lemma.Random.Prob.eq.Measure.of.Eq_Count
-import sympy.stats.joint_rv
 open MeasureTheory Measure Random
 
 

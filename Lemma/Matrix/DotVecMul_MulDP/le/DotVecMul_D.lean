@@ -1,5 +1,3 @@
-import sympy.stats.markov_reward_process
-import sympy.Basic
 import Lemma.Matrix.Sum_Mul_SquareGetMulVecP.le.Sum_Mul_Square
 open Matrix Finset
 

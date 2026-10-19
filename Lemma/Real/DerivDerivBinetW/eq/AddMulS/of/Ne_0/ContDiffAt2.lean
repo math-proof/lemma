@@ -3,8 +3,6 @@ import Mathlib.Analysis.Calculus.Deriv.Basic
 import Mathlib.Analysis.Calculus.Deriv.Inv
 import Mathlib.Analysis.Calculus.Deriv.Mul
 import Lemma.Real.DerivBinetW.eq.MulNegPow.of.Ne_0.DifferentiableAt
-import sympy.physics.vector.kinematics
-import sympy.Basic
 
 open Filter Topology
 

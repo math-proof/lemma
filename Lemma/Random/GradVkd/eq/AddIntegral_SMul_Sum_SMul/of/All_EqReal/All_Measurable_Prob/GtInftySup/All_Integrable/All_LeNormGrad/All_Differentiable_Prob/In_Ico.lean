@@ -38,15 +38,15 @@ private lemma main
   {p : S → A → S → ℝ}
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
-  (h₁ : ∀ x u, Differentiable ℝ (fun θ => M.pol.prob θ x u))
-  (h₂ : ∀ θ x u, ‖∇[θ] M.pol.prob θ x u‖ ≤ g x u)
+  (h₁ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
+  (h₂ : ∀ θ x u, ‖∇[θ] M.policy.prob θ x u‖ ≤ g x u)
   (h₃ : ∀ x, Integrable (g x) ReferenceMeasure.measure)
   (h₄ : sup[x] ∫ u, g x u ∂ReferenceMeasure.measure < ∞)
-  (h₅ : ∀ θ x, Measurable (M.pol.prob θ x))
+  (h₅ : ∀ θ x, Measurable (M.policy.prob θ x))
   (h₆ : ∀ x u y, (M.env.trans (x, u)).real {y} = p x u y) :
 -- imply
   ∇[θ] M.Vkd θ γ («s.bvar» t) =
-    ∫ u, M.Qkd θ γ («s.bvar» t) u • ∇[θ] M.pol.prob θ («s.bvar» t) u ∂ReferenceMeasure.measure +
+    ∫ u, M.Qkd θ γ («s.bvar» t) u • ∇[θ] M.policy.prob θ («s.bvar» t) u ∂ReferenceMeasure.measure +
       γ • (∑ «s.bvar» (t + 1), M.P1kd θ p («s.bvar» t) («s.bvar» (t + 1)) • ∇[θ] M.Vkd θ γ («s.bvar» (t + 1))) := by
 -- proof
   let : ReferenceMeasure S := ReferenceMeasure.of Measure.count

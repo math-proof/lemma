@@ -1,13 +1,9 @@
-import Lemma.Bool.SEq.is.EqCast.of.Eq
 import torch.Tensor.unsqueeze
 import torch.Tensor.reshape
 import torch.Tensor.bmm
-import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.Tensor.GtLengthDot.of.LeLengthS.Ne_Nil
 import Lemma.Tensor.Matmul.as.Bmm
 import Lemma.Tensor.ResizeUnsqueeze.as.UnsqueezeResize
-import Lemma.Tensor.SEqBmmS.of.SEq.SEq
-import Lemma.Tensor.SEqGetS.of.SEq.GtLength
 import Lemma.Tensor.Select_0.as.Get.of.GtGet_0.GtLength_0
 import Lemma.Tensor.Unsqueeze.eq.Reshape
 open Bool Tensor

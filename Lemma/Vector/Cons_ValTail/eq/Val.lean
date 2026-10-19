@@ -1,5 +1,4 @@
 import Lemma.Vector.EqCons_Tail
-import Lemma.Vector.Head.eq.Get_0
 open Vector
 
 

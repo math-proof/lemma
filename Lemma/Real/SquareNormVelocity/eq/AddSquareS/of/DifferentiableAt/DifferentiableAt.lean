@@ -3,8 +3,6 @@ import Lemma.Real.Inner_PolarRadial_PolarAngular.eq.Zero
 import Lemma.Real.NormPolarAngular.eq.One
 import Lemma.Real.NormPolarRadial.eq.One
 import Lemma.Real.Velocity.eq.AddSMulSMul.of.DifferentiableAt.DifferentiableAt
-import sympy.physics.vector.kinematics
-import sympy.Basic
 
 
 /--

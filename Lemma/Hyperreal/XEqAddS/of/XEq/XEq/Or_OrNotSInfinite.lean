@@ -1,6 +1,4 @@
-import Lemma.Hyperreal.EqSt_0.of.Infinite
 import Lemma.Hyperreal.Gt0Mul.of.Or_EqSt_Neg1.Infinite
-import Lemma.Hyperreal.InfiniteDiv.of.Infinite.NotInfinite
 import Lemma.Hyperreal.XEqAddS.of.XEq.XEq.NotAnd_EqSt_Neg1
 open Hyperreal
 

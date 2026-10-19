@@ -1,6 +1,4 @@
 import Lemma.Vector.FlattenReplicateReplicate.eq.Replicate
-import Lemma.Vector.Zero.eq.Replicate
-import sympy.vector.vector
 open Vector
 
 

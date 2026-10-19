@@ -1,5 +1,4 @@
 import Lemma.Int.LtFMod.of.Gt_0
-import Lemma.Rat.LtDivS.of.Lt.Gt_0
 import Lemma.Int.LtCoeS.is.Lt
 import Lemma.Rat.Div.eq.One.of.Gt_0
 import Lemma.Int.GtFMod.of.Lt_0

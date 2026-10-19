@@ -1,6 +1,4 @@
-import sympy.vector.vector
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
-import Lemma.Vector.GetDiv.eq.DivGetS
 open Vector
 
 

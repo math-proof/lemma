@@ -1,31 +1,14 @@
 import Lemma.List.EqSwap_0'1
 import Lemma.Tensor.Add
 import Lemma.Tensor.AddMulS.eq.SubMulS
-import Lemma.Tensor.DataAdd.eq.AddDataS
-import Lemma.Tensor.DataNeg.eq.NegData
 import Lemma.Tensor.Dot.eq.Stack_Sum_MulGetS
-import Lemma.Tensor.Eq.is.All_EqGetS
-import Lemma.Tensor.Eq.is.EqDataS
-import Lemma.Tensor.EqGetStack
-import Lemma.Tensor.EqGetT
-import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
-import Lemma.Tensor.SEqGetS.of.SEq.GtLength
-import Lemma.Bool.SEq.is.Eq
-import Lemma.Bool.EqCast.of.SEq
-import Lemma.Bool.SEqCast.of.Eq
 import Lemma.Tensor.GetRotaryMatrix'.eq.Ite_IteS
-import Lemma.Tensor.Mul
-import Lemma.Tensor.NegMul.eq.MulNeg
-import Lemma.Tensor.Sub.eq.Add_Neg
-import Lemma.Vector.GetAdd.eq.AddGetS
-import Lemma.Vector.GetNeg.eq.NegGet
-import Lemma.Vector.GetSub.eq.SubGet
 import torch.Tensor.permute
 import torch.Tensor
 import torch.functions
 import torch.stack
 open Bool Tensor List
-set_option maxHeartbeats 8000000
+set_option maxHeartbeats 1000000
 
 
 @[path]

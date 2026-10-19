@@ -1,4 +1,3 @@
-import sympy.vector.vector
 import Lemma.Vector.GetTake.eq.Get.of.Lt_Min
 import Lemma.Vector.GetDrop.eq.Get_Add.of.Lt_Sub
 import Lemma.Nat.Lt.of.Lt_Min

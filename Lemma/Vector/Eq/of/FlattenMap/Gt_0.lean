@@ -1,4 +1,3 @@
-import sympy.vector.vector
 import Lemma.Vector.Length.of.FlattenMap.Gt_0
 import Lemma.Vector.Eq.of.FlattenMap.Length
 open Vector

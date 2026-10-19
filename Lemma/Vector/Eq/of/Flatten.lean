@@ -1,4 +1,3 @@
-import Lemma.Bool.UFn.of.Eq
 import Lemma.Vector.Eq.of.FlattenMap.Length
 open Vector Bool
 

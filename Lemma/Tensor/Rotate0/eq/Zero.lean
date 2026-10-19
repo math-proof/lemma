@@ -4,7 +4,6 @@ import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Vector.EqSplitAt0_0
 import Lemma.Vector.Transpose0.eq.Zero
 import Lemma.Vector.Flatten0.eq.Zero
-import Lemma.Vector.EqCast_0'0.of.Eq
 open Tensor Vector
 
 

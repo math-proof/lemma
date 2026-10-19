@@ -1,6 +1,5 @@
 import Lemma.Vector.GetExp.eq.ExpGet
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
-import sympy.vector.functions
 open Vector
 
 

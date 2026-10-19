@@ -1,11 +1,7 @@
 import Lemma.Int.EqNegToNatNeg.of.Lt_0
 import torch.Tensor.permute
-import Lemma.Int.EqToNat.of.Ge_0
-import Lemma.Tensor.Length.of.SEq
 import Lemma.Tensor.SEq.of.SEqPermuteS.Eq.GtLength.GtLength.Ge
 import Lemma.Tensor.SEq.of.SEqPermuteS.Eq.GtLength.GtLength.GtLength_Add
-import Lemma.Tensor.SEqPermuteS.of.Add.ge.SubLength_1
-import Lemma.Tensor.SEqPermuteS.of.SEq.Eq.Eq.GtLength
 import Lemma.Tensor.SEqPermuteS__Neg.of.Le
 open Tensor Int
 

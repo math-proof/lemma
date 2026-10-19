@@ -1,7 +1,5 @@
 import sympy.stats.variance
-import sympy.Basic
 import Lemma.Random.Expect.eq.Integral.Id
-import Lemma.Random.OfRV.eq.Integral.of.AEStronglyMeasurable_Map
 open MeasureTheory
 
 

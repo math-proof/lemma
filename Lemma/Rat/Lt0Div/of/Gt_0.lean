@@ -1,6 +1,5 @@
 import Lemma.Nat.GtCoe_0.is.Gt_0
 import Lemma.Rat.Div.gt.Zero.of.Div.gt.Zero
-import Lemma.Rat.Div.gt.Zero.of.Gt_0.Gt_0
 open Rat Nat
 
 

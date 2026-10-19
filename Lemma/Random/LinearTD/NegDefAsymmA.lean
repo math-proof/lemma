@@ -1,6 +1,3 @@
-import sympy.stats.linear_td
-import sympy.Basic
-import sympy.matrices.dense
 import Lemma.Matrix.NegDefAsymmK
 import Lemma.Random.LinearTD.NeMulVecX_0.of.Ne_0
 open Matrix

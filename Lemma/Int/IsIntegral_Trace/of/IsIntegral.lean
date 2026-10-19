@@ -1,7 +1,7 @@
 import Mathlib
 import sympy.Basic
 open Polynomial Matrix
-set_option maxHeartbeats 4000000
+set_option maxHeartbeats 1000000
 
 
 private lemma aeval_mulVec_of_mulVec_eq_smul

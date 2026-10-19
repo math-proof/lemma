@@ -1,8 +1,5 @@
-import Lemma.Bool.HEq.of.SEq
 import torch.Tensor.prod
 import Lemma.List.TakeCons.eq.Cons_Take
-import Lemma.Nat.AddMul.lt.Mul.of.Lt
-import Lemma.Nat.AddMul.lt.Mul.of.Lt.Lt
 import Lemma.Tensor.DataAdd.eq.AddDataS
 import Lemma.Tensor.DataAppend.as.AppendDataS
 import Lemma.Tensor.DataSum_0.eq.SumSplitAtData
@@ -10,8 +7,6 @@ import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Vector.GetAppend.eq.Get.of.Lt
 import Lemma.Vector.GetAppend.eq.Get_Sub.of.Lt_Add.Ge
 import Lemma.Vector.GetCast.eq.Get.of.Eq
-import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
-import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import Lemma.Vector.SumAppend.eq.AddSumS
 import torch.Tensor.sum
 open Bool List Nat Tensor Vector

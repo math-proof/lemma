@@ -1,6 +1,5 @@
 import stdlib.SEq
 import torch.Tensor
-import Lemma.List.EqPermute
 open List
 
 

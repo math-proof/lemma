@@ -1,5 +1,4 @@
 import Lemma.List.EqEraseIdx.of.LeLength
-import Lemma.List.Drop.eq.Nil.of.LeLength
 import Lemma.List.EraseIdx.eq.Append_Drop_Add_1
 import Lemma.List.DropAppend.eq.Drop.of.LeLength
 import Lemma.List.LengthTake.eq.Min_Length

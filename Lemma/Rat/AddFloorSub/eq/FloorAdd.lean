@@ -1,4 +1,3 @@
-import sympy.functions.elementary.integers
 import Lemma.Int.EqFloor.is.Le.Lt
 import Lemma.Set.Frac.in.Ico
 open Int Set

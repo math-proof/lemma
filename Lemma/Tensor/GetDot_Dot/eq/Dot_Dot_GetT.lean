@@ -1,10 +1,7 @@
-import Lemma.Bool.EqCast.of.SEq
 import torch.Tensor.permute
 import Lemma.Tensor.Dot
-import Lemma.Tensor.Eq.is.All_EqGetS
 import Lemma.Tensor.GetDot.eq.DotGet
 import Lemma.Tensor.GetDot.eq.DotGetS
-import Lemma.Tensor.GetSelect_1.as.Get.of.Lt.GtGet_0.GtLength_0
 import Lemma.Tensor.GetT.eq.Select
 open Bool Tensor
 

@@ -1,31 +1,17 @@
-import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import torch.Tensor.unsqueeze
 import torch.Tensor.prod
 import Lemma.Finset.Prod.eq.MulProdS
-import Lemma.List.DropInsertIdx.eq.Drop.of.Lt
 import Lemma.List.EraseIdxInsertIdx.eq.InsertIdxEraseIdx.of.Lt.GeLength
 import Lemma.List.GetInsertIdx.eq.Get.of.Lt.GeLength
-import Lemma.List.LengthSlice.eq.ProdTake.of.GtGet.GtLength
-import Lemma.List.MulLengthSlice.eq.ProdEraseIdx.of.GtGet.GtLength
-import Lemma.List.ProdInsertIdx.eq.Prod
-import Lemma.List.ProdTake.eq.MulProdTake.of.GtLength
-import Lemma.List.TakeInsertIdx.eq.InsertIdxTake.of.Lt.GeLength
-import Lemma.Nat.AddMul.lt.Mul.of.Lt.Lt
-import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
-import Lemma.Nat.Cast.eq.Fin.of.Lt.Eq
-import Lemma.Nat.EqAddSub.of.Ge
-import Lemma.Nat.EqDivMul.of.Ne_0
 import Lemma.Nat.EqValCast.of.Lt.Eq
 import Lemma.Nat.Eq_Div.Eq_Mod.of.Eq_AddMul
 import Lemma.Tensor.DataSelect.as.FlattenGetSliceSplitAtData
 import Lemma.Tensor.DataUnsqueeze.eq.Map_FunGetData
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
-import Lemma.Vector.EqGetRange
 import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Vector.GetGetSlice.eq.Get.of.GtGet.GtLength
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
-import Lemma.Vector.SEq.of.All_EqGetS.Eq
 open Nat Bool List Tensor Vector Finset Fin
 
 

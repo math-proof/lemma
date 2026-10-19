@@ -1,5 +1,4 @@
 import Lemma.Nat.LtAddS.is.Lt
-import Lemma.Nat.LtAddS.is.Lt
 import Lemma.Set.In_Ioo.is.Lt.Lt
 open Set Nat
 

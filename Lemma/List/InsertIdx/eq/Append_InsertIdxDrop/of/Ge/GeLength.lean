@@ -1,9 +1,4 @@
-import Lemma.List.EqAppendTake__Drop
-import Lemma.List.EqInsertIdx.of.LtLength
 import Lemma.List.InsertIdx.eq.Append_InsertIdxDrop.of.Gt
-import Lemma.List.InsertIdxAppend.eq.Append_InsertIdx.of.LeLength
-import Lemma.List.LengthTake.eq.Min_Length
-import Lemma.Nat.EqMin.of.Le
 import Lemma.Nat.Gt.is.Ge.Ne
 import Lemma.Nat.LtSubS.of.Lt.Le
 open List Nat

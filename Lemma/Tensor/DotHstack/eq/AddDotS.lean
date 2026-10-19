@@ -1,14 +1,9 @@
 import Lemma.Tensor.Dot.eq.Stack_Sum_MulGetS
-import Lemma.Tensor.Eq.is.All_EqGetS
-import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.GetAdd.eq.AddGetS
-import Lemma.Tensor.GetAppend.eq.AppendGetS
-import Lemma.Tensor.GetAppend.eq.Get
-import Lemma.Tensor.GetAppend.eq.Get_Sub.of.GtAdd.Ge
 import Lemma.Tensor.GetHstack.eq.Get.of.Lt
 import Lemma.Tensor.GetHstack.eq.Get_Sub.of.GtAdd.Ge
 open Tensor
-set_option maxHeartbeats 400000
+set_option maxHeartbeats 200000
 
 
 /--
@@ -49,9 +44,7 @@ private lemma mv
   have happ := GetAppend.eq.AppendGetS A' B' i
   simp only [id] at happ
   have hsplit : (A.hstack B)[i] = Ai ++ Bi := by
-    have h : A.hstack B = A' ++ B' := rfl
-    have h1 : (A.hstack B)[i] = (A' ++ B')[i] := congrArg (fun X : Tensor α [d, n + m] => X[i]) h
-    exact h1.trans (happ.trans (by simp [Ai, Bi, A', B', GetElem.getElem]))
+    exact happ.trans (by simp [Ai, Bi, A', B', GetElem.getElem])
   change ∑ p : Fin (n + m), (id (α := Tensor α []) (A.hstack B)[i][p]) * (id (α := Tensor α []) (x ++ y)[p]) = Add.add (∑ p : Fin n, (id (α := Tensor α []) Ai[p]) * (id (α := Tensor α []) x[p])) (∑ p : Fin m, (id (α := Tensor α []) Bi[p]) * (id (α := Tensor α []) y[p]))
   rw [hsplit]
   let f : Fin (n + m) → Tensor α [] := fun p => (id (α := Tensor α []) (Ai ++ Bi)[p]) * (id (α := Tensor α []) (x ++ y)[p])
@@ -97,49 +90,18 @@ private lemma mv
     rw [hY', hy']
 
 
-/--
-Matrix–matrix product of a column-block hstack with a row-block append.
--/
-@[path]
-private lemma main
+private lemma main_cell
   [Mul α] [AddCommMonoid α]
--- given
   (A : Tensor α [d, n])
   (B : Tensor α [d, m])
   (X : Tensor α [n, r])
-  (Y : Tensor α [m, r]) :
--- imply
-  (A.hstack B) @ (X ++ Y) = id (α := Tensor α [d, r]) (A @ X) + id (α := Tensor α [d, r]) (B @ Y) := by
--- proof
-  change id (α := Tensor α [d, r]) ((A.hstack B) @ (X ++ Y)) = id (α := Tensor α [d, r]) (A @ X) + id (α := Tensor α [d, r]) (B @ Y)
-  simp only [id]
-  have hAB := Dot.eq.Stack_Sum_MulGetS (A.hstack B) (X ++ Y)
-  have hA := Dot.eq.Stack_Sum_MulGetS A X
-  have hB := Dot.eq.Stack_Sum_MulGetS B Y
-  rw [hAB, hA, hB]
-  apply Eq.of.All_EqGetS.fin
-  intro i
-  have hrow := EqGetStack.fin (fun i : Fin d => [j < r] ∑ p : Fin (n + m), (id (α := Tensor α []) (A.hstack B)[i][p]) * (id (α := Tensor α []) (X ++ Y)[p][j])) i
-  rw [hrow]
-  have hadd := GetAdd.eq.AddGetS.fin
-    ([i < d] [j < r] ∑ p : Fin n, (id (α := Tensor α []) A[i][p]) * (id (α := Tensor α []) X[p][j]))
-    ([i < d] [j < r] ∑ p : Fin m, (id (α := Tensor α []) B[i][p]) * (id (α := Tensor α []) Y[p][j])) i
-  rw [hadd]
-  have hsumA := EqGetStack.fin (fun i : Fin d => [j < r] ∑ p : Fin n, (id (α := Tensor α []) A[i][p]) * (id (α := Tensor α []) X[p][j])) i
-  have hsumB := EqGetStack.fin (fun i : Fin d => [j < r] ∑ p : Fin m, (id (α := Tensor α []) B[i][p]) * (id (α := Tensor α []) Y[p][j])) i
-  rw [hsumA, hsumB]
-  apply Eq.of.All_EqGetS.fin
-  intro j
-  have hLj := EqGetStack.fin (fun j : Fin r => ∑ p : Fin (n + m), (id (α := Tensor α []) (A.hstack B)[i][p]) * (id (α := Tensor α []) (X ++ Y)[p][j])) j
-  have hAj := EqGetStack.fin
-    (fun j : Fin r => ∑ p : Fin n, (id (α := Tensor α []) A[i][p]) * (id (α := Tensor α []) X[p][j])) j
-  have hBj := EqGetStack.fin
-    (fun j : Fin r => ∑ p : Fin m, (id (α := Tensor α []) B[i][p]) * (id (α := Tensor α []) Y[p][j])) j
-  have haddj := GetAdd.eq.AddGetS.fin
-    ([j < r] ∑ p : Fin n, (id (α := Tensor α []) A[i][p]) * (id (α := Tensor α []) X[p][j]))
-    ([j < r] ∑ p : Fin m, (id (α := Tensor α []) B[i][p]) * (id (α := Tensor α []) Y[p][j])) j
-  rw [hLj]
-  erw [haddj, hAj, hBj]
+  (Y : Tensor α [m, r])
+  (i : Fin d)
+  (j : Fin r) :
+  ∑ p : Fin (n + m), (id (α := Tensor α []) (A.hstack B)[i][p]) * (id (α := Tensor α []) (X ++ Y)[p][j]) =
+    Add.add
+      (∑ p : Fin n, (id (α := Tensor α []) A[i][p]) * (id (α := Tensor α []) X[p][j]))
+      (∑ p : Fin m, (id (α := Tensor α []) B[i][p]) * (id (α := Tensor α []) Y[p][j])) := by
   let f : Fin (n + m) → Tensor α [] := fun p =>
     (id (α := Tensor α []) (A.hstack B)[i][p]) * (id (α := Tensor α []) (X ++ Y)[p][j])
   have hsum := Fintype.sum_equiv finSumFinEquiv (fun s : Fin n ⊕ Fin m => f (finSumFinEquiv s)) f (fun _ => rfl)
@@ -177,6 +139,67 @@ private lemma main
         (h₁ := Nat.add_lt_add_left p.isLt n) X Y
       simp at hY'
       simpa [GetElem.getElem, Fin.natAdd] using congrArg (fun t : Tensor α [r] => t.get ⟨(j : ℕ), j.isLt⟩) hY'
+
+
+private lemma main_row
+  [Mul α] [AddCommMonoid α]
+  (A : Tensor α [d, n])
+  (B : Tensor α [d, m])
+  (X : Tensor α [n, r])
+  (Y : Tensor α [m, r])
+  (i : Fin d) :
+  ([j < r] ∑ p : Fin (n + m), (id (α := Tensor α []) (A.hstack B)[i][p]) * (id (α := Tensor α []) (X ++ Y)[p][j])) =
+    Add.add
+      ([j < r] ∑ p : Fin n, (id (α := Tensor α []) A[i][p]) * (id (α := Tensor α []) X[p][j]))
+      ([j < r] ∑ p : Fin m, (id (α := Tensor α []) B[i][p]) * (id (α := Tensor α []) Y[p][j])) := by
+  apply Eq.of.All_EqGetS.fin
+  intro j
+  have hLj := EqGetStack.fin (fun j : Fin r => ∑ p : Fin (n + m), (id (α := Tensor α []) (A.hstack B)[i][p]) * (id (α := Tensor α []) (X ++ Y)[p][j])) j
+  rw [hLj]
+  have hAj := EqGetStack.fin
+    (fun j : Fin r => ∑ p : Fin n, (id (α := Tensor α []) A[i][p]) * (id (α := Tensor α []) X[p][j])) j
+  have hBj := EqGetStack.fin
+    (fun j : Fin r => ∑ p : Fin m, (id (α := Tensor α []) B[i][p]) * (id (α := Tensor α []) Y[p][j])) j
+  have haddj := GetAdd.eq.AddGetS.fin
+    ([j < r] ∑ p : Fin n, (id (α := Tensor α []) A[i][p]) * (id (α := Tensor α []) X[p][j]))
+    ([j < r] ∑ p : Fin m, (id (α := Tensor α []) B[i][p]) * (id (α := Tensor α []) Y[p][j])) j
+  erw [haddj]
+  erw [hAj, hBj]
+  apply main_cell A B X Y i j
+
+
+/--
+Matrix–matrix product of a column-block hstack with a row-block append.
+-/
+@[path]
+private lemma main
+  [Mul α] [AddCommMonoid α]
+-- given
+  (A : Tensor α [d, n])
+  (B : Tensor α [d, m])
+  (X : Tensor α [n, r])
+  (Y : Tensor α [m, r]) :
+-- imply
+  (A.hstack B) @ (X ++ Y) = id (α := Tensor α [d, r]) (A @ X) + id (α := Tensor α [d, r]) (B @ Y) := by
+-- proof
+  change id (α := Tensor α [d, r]) ((A.hstack B) @ (X ++ Y)) = id (α := Tensor α [d, r]) (A @ X) + id (α := Tensor α [d, r]) (B @ Y)
+  simp only [id]
+  have hAB := Dot.eq.Stack_Sum_MulGetS (A.hstack B) (X ++ Y)
+  have hA := Dot.eq.Stack_Sum_MulGetS A X
+  have hB := Dot.eq.Stack_Sum_MulGetS B Y
+  rw [hAB, hA, hB]
+  apply Eq.of.All_EqGetS.fin
+  intro i
+  have hrow := EqGetStack.fin (fun i : Fin d => [j < r] ∑ p : Fin (n + m), (id (α := Tensor α []) (A.hstack B)[i][p]) * (id (α := Tensor α []) (X ++ Y)[p][j])) i
+  rw [hrow]
+  have hadd := GetAdd.eq.AddGetS.fin
+    ([i < d] [j < r] ∑ p : Fin n, (id (α := Tensor α []) A[i][p]) * (id (α := Tensor α []) X[p][j]))
+    ([i < d] [j < r] ∑ p : Fin m, (id (α := Tensor α []) B[i][p]) * (id (α := Tensor α []) Y[p][j])) i
+  rw [hadd]
+  have hsumA := EqGetStack.fin (fun i : Fin d => [j < r] ∑ p : Fin n, (id (α := Tensor α []) A[i][p]) * (id (α := Tensor α []) X[p][j])) i
+  have hsumB := EqGetStack.fin (fun i : Fin d => [j < r] ∑ p : Fin m, (id (α := Tensor α []) B[i][p]) * (id (α := Tensor α []) Y[p][j])) i
+  rw [hsumA, hsumB]
+  apply main_row A B X Y i
 
 
 -- created on 2026-08-23

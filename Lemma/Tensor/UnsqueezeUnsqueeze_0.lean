@@ -1,6 +1,4 @@
-import Lemma.Bool.SEq.is.Eq
 import Lemma.Tensor.DataUnsqueeze.as.Data
-import Lemma.Tensor.Eq.is.EqDataS
 import torch.Tensor
 open Bool Tensor
 

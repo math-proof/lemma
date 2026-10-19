@@ -6,9 +6,6 @@ import Lemma.Nat.EqMin.of.Lt
 import Lemma.List.GetAppend.eq.Get_Sub_Length.of.GtLengthAppend.GeLength
 import Lemma.List.GetSlice.eq.Get_Add.of.GtLengthSlice
 import Lemma.Nat.SubAdd.eq.Add_Sub.of.Ge
-import Lemma.Nat.Add
-import Lemma.List.LengthSlice.eq.SubMin_Length
-import Lemma.Nat.EqMin.of.Le
 import Lemma.Nat.AddAdd.eq.Add_Add
 import Lemma.Nat.EqSubAdd
 import Lemma.Nat.LtSub.is.Lt_Add.of.Ge

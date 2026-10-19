@@ -1,15 +1,6 @@
 import Lemma.Measure.Measure.eq.Count.of.EqMeasureCount.EqMeasureCount
-import Lemma.Measure.EqRnDeriv_Count
-import Lemma.Random.PSpace_Joint
 import Lemma.Random.IsHiddenMarkovPr.of.CondIndep.CondIndep
-import Lemma.Random.Prob.eq.Measure.of.Eq_Count
-import Lemma.Random.ProbCond.eq.Div.of.Eq_Count.Eq_Count
-import Lemma.Random.SinglePSpace.of.All_Measurable.All_Measurable
-import Lemma.Random.SinglePSpace.of.EqMeasureCount.EqMeasureCount.Measurable.Measurable
-import Lemma.Random.SinglePSpace.of.EqMeasureCount.Measurable
 import Lemma.Random.Sum.eq.Prob
-import sympy.concrete.reduced
-import sympy.stats.discrete_hmm
 import Lemma.Real.Sum.eq.Sum
 import Lemma.Fin.IteSnoc.eq.Ite.of.Le
 import Lemma.Fin.Snoc_Last.eq.Last
@@ -23,7 +14,7 @@ open IsDiscreteHMM
 @[path]
 private lemma main
   [MeasurableSpace Ω] [StandardBorelSpace Ω]
-  [ReferenceMeasure Y] [ReferenceMeasure X]
+  [CountableMeasure Y] [CountableMeasure X]
   [Countable Y] [MeasurableSingletonClass Y] [Countable X] [MeasurableSingletonClass X]
   [Fintype Y] [DecidableEq Y]
   [NeZero (n : ℕ)]
@@ -49,24 +40,26 @@ private lemma main
   (∀ t, t + 1 < n → x' (t + 1) = (G + x' t).exp.sum.log + e (t + 1)) ∧
     ∀ «y.bvar», -(ℙ[π](y[:n] = «y.bvar»[:n] | x[:n] = «x.bvar»[:n]) : ℝ).log = (x' (n - 1)).exp.sum.log - s (n - 1) «y.bvar» := by
 -- proof
-  have ⟨hx, hy, hX, hY, h_emit, h_markov⟩ := h
+  have hx := h.measurable_x
+  have hy := h.measurable_y
+  have hX : (ReferenceMeasure.measure : Measure X) = Measure.count := CountableMeasure.measure_eq_count
+  have hY : (ReferenceMeasure.measure : Measure Y) = Measure.count := CountableMeasure.measure_eq_count
   intro hYX
   obtain ⟨m, rfl⟩ : ∃ m, n = m + 1 := ⟨n - 1, (Nat.succ_pred_eq_of_ne_zero (NeZero.ne n)).symm⟩
   simp only [Nat.add_sub_cancel]
   replace hYX : SinglePSpace π (y[:m + 1], x[:m + 1]) := hYX
   have : ∀ k : ℕ, SinglePSpace π (x[:k], y[:k]) := fun k => inferInstance
-  have : ∀ i, SinglePSpace π (y i) := fun i =>
-    Random.SinglePSpace.of.EqMeasureCount.Measurable (hy i) hY
-  have : ∀ i j, SinglePSpace π (y i, y j) := fun i j =>
-    Random.SinglePSpace.of.EqMeasureCount.EqMeasureCount.Measurable.Measurable (hy i) (hy j) hY hY
+  have : ∀ i, SinglePSpace π (y i) := fun i => IsDiscreteHMM.singlePSpace_y (x := x) i
+  have : ∀ i j, SinglePSpace π (y i, y j) := fun i j => IsDiscreteHMM.singlePSpace_yy (x := x) i j
   have hpos := h₁
   have h₃' : ∀ t a, e t a = (ℙ[π]((x t) = «x.bvar» t | (y t) = a) : ℝ).log := fun t a => by
     simpa using h₃ t (fun _ => a)
   have h₄' : ∀ i a b, G a b = (ℙ[π]((y (i + 1)) = a | (y i) = b) : ℝ).log := fun i a b => by
     simpa using h₄ i (fun k => if k = i + 1 then a else b)
   obtain ⟨P, hPdef⟩ : ∃ P : ℕ → (ℕ → Y) → ℝ, ∀ t «y.bvar», P t «y.bvar» = (ℙ[π](x[:t + 1] = «x.bvar»[:t + 1] ∧ y[:t + 1] = «y.bvar»[:t + 1]) : ℝ) := ⟨fun t «y.bvar» => (ℙ[π](x[:t + 1] = «x.bvar»[:t + 1] ∧ y[:t + 1] = «y.bvar»[:t + 1]) : ℝ), fun _ _ => rfl⟩
-  have hpair : ∀ k : ℕ, ReferenceMeasure.measure (α := (Fin k → X) × (Fin k → Y)) = Measure.count := fun k =>
-    Measure.Measure.eq.Count.of.EqMeasureCount.EqMeasureCount rfl rfl
+  have hpair : ∀ k : ℕ, ReferenceMeasure.measure (α := (Fin k → X) × (Fin k → Y)) = Measure.count := fun k => by
+    change (Measure.count : Measure (Fin k → X)).prod Measure.count = Measure.count
+    rw [← Measure.Count.eq.ProdCountS]
   have hQ : ∀ (ys : ℕ → Y) (k : ℕ), (ℙ[π](x[:(k : ℤ)] = «x.bvar»[:(k : ℤ)] ∧ y[:(k : ℤ)] = ys[:(k : ℤ)]) : ENNReal) =
       π {ω | (∀ i < k, x i ω = «x.bvar» i) ∧ ∀ i < k, y i ω = ys i} := by
     intro ys k
@@ -197,4 +190,4 @@ private lemma main
 
 
 -- created on 2018-12-21
--- updated on 2026-10-04
+-- updated on 2026-10-19

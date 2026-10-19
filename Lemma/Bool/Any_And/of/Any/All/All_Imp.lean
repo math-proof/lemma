@@ -1,4 +1,3 @@
-import sympy.concrete.quantifier
 import Lemma.Bool.Imp.of.AllSetOf
 import Lemma.Bool.Imp.of.Imp.Imp
 open Bool

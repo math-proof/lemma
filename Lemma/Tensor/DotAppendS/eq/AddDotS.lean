@@ -1,19 +1,7 @@
-import Lemma.Fin.Sum.of.All_Eq
 import torch.Tensor.sum
-import Lemma.Tensor.DataAppend.as.AppendDataS
 import Lemma.Tensor.Dot.eq.TensorDotDataS
 import Lemma.Tensor.DotHstack.eq.AddDotS
-import Lemma.Tensor.Eq.is.All_EqGetS
-import Lemma.Tensor.Eq.is.EqDataS
-import Lemma.Tensor.GetAdd.eq.AddGetS
-import Lemma.Tensor.GetAppend.eq.Get.of.Lt
-import Lemma.Tensor.GetAppend.eq.Get_Sub.of.GtAdd.Ge
-import Lemma.Tensor.GetDot.eq.Sum_MulGetS
-import Lemma.Vector.Dot.eq.SumMul
 import Lemma.Vector.DotAppendS.eq.AddDotS
-import Lemma.Vector.Eq.is.All_EqGetS
-import Lemma.Vector.SEqMulS.of.SEq.SEq
-import Lemma.Vector.Sum.of.SEq
 open Tensor Vector
 
 

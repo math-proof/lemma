@@ -1,5 +1,3 @@
-import sympy.core.mul
-import sympy.Basic
 import Lemma.Vector.ValCast.eq.Val.of.Eq
 open Tensor
 

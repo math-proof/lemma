@@ -6,7 +6,7 @@ import Lemma.Tensor.GetHstack.eq.Get.of.Lt
 import Lemma.Tensor.GetHstack.eq.Get_Sub.of.GtAdd.Ge
 import Lemma.Tensor.GetSwapMatrix.eq.Ite
 open Nat Tensor
-set_option maxHeartbeats 800000
+set_option maxHeartbeats 400000
 
 
 private lemma get_tl

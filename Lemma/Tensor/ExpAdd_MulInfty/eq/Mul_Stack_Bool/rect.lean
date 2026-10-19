@@ -16,7 +16,7 @@ import Lemma.Vector.GetExp.eq.ExpGet
 import Lemma.Vector.GetMul.eq.MulGet
 import Lemma.Vector.GetSub.eq.SubGetS
 open Hyperreal Tensor
-set_option maxHeartbeats 1000000
+set_option maxHeartbeats 500000
 
 
 @[path]

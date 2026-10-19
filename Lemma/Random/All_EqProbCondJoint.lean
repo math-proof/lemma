@@ -1,6 +1,5 @@
 import Lemma.Random.All_Eq_MulProbCond.of.PSpace_Joint
 import Lemma.Random.PSpace_JointJoint.is.PSpace_Joint_Joint
-import sympy.stats.joint_rv
 import Lemma.Random.Map.eq.WithDensityProb
 open Random MeasureTheory
 

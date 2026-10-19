@@ -1,8 +1,3 @@
-import sympy.stats.policy_trajectory
-import sympy.functions.elementary.miscellaneous
-import sympy.Basic
-import Lemma.Random.NormClip.le.AbsR
-import Lemma.Random.StronglyMeasurableClip
 import Lemma.Random.Summable_MulPowWRc.of.In_Ico
 import Lemma.Random.WAdd_1.eq.Sum_MulProbSum_MulTW.of.All_LeNorm.StronglyMeasurable
 import Lemma.Real.Summable_MulPowSum_Mul.of.All_Summable_MulPow
@@ -26,7 +21,7 @@ private lemma main
   (x : S) :
 -- imply
   ∑' k, γ ^ k * ∫ z, M.Kf θ (fun z ↦ clip z.1 (-M.env.R) M.env.R) k z ∂(M.stageK θ x) = ∫ z, M.Kf θ (fun z ↦ clip z.1 (-M.env.R) M.env.R) 0 z ∂(M.stageK θ x) +
-    γ * ∑ u, M.pol.prob θ x u * ∑ y, (M.env.trans (x, u)).real {y} * ∑' k, γ ^ k * ∫ z, M.Kf θ (fun z ↦ clip z.1 (-M.env.R) M.env.R) k z ∂(M.stageK θ y) := by
+    γ * ∑ u, M.policy.prob θ x u * ∑ y, (M.env.trans (x, u)).real {y} * ∑' k, γ ^ k * ∫ z, M.Kf θ (fun z ↦ clip z.1 (-M.env.R) M.env.R) k z ∂(M.stageK θ y) := by
 -- proof
   rw [(Summable_MulPowWRc.of.In_Ico (M := M) hγ θ x).tsum_eq_zero_add, pow_zero, one_mul]
   congr 1

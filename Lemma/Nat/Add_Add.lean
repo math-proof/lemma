@@ -1,4 +1,3 @@
-import Lemma.Nat.Add
 import Lemma.Nat.AddAdd.eq.Add_Add
 open Nat
 

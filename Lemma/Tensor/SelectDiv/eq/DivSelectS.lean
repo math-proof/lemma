@@ -1,10 +1,6 @@
 import Lemma.Bool.SEq.is.EqCast.of.Eq
-import Lemma.List.ProdTake.eq.DivProdTake.of.Ne_0.GtLength
-import Lemma.List.LengthSlice_Mul.eq.ProdTake.of.GtGet.GtLength
 import Lemma.List.MulLengthSlice_Mul.eq.ProdEraseIdx.of.GtGet.GtLength
-import Lemma.List.ProdTake.eq.MulProdTake.of.GtLength
 import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
-import Lemma.Nat.EqDivMul.of.Ne_0
 import Lemma.Nat.Ne_0
 import Lemma.Tensor.DataSelect.as.FlattenGetSliceSplitAtData
 import Lemma.Tensor.Eq.is.EqDataS

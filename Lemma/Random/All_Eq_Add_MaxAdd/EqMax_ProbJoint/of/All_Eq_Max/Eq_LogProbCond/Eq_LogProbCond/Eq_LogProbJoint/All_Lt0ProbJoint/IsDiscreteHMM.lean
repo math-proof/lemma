@@ -1,13 +1,6 @@
 import Lemma.Measure.Measure.eq.Count.of.EqMeasureCount.EqMeasureCount
 import Lemma.Random.IsHiddenMarkovPr.of.CondIndep.CondIndep
-import Lemma.Random.Prob.eq.Measure.of.Eq_Count
-import Lemma.Random.ProbCond.eq.Div.of.Eq_Count.Eq_Count
-import sympy.stats.discrete_hmm
-import sympy.stats.hidden_markov_sequence
 import sympy.concrete.max
-import sympy.concrete.reduced
-import sympy.core.numbers
-import sympy.Basic
 import Lemma.Finset.Max.eq.SupUniv
 import Lemma.Fin.IteSnoc.eq.Ite.of.Le
 import Lemma.Fin.Snoc_Last.eq.Last
@@ -23,7 +16,7 @@ open scoped ENNReal.ToRealCoe
 @[path]
 private lemma main
   [MeasurableSpace Ω] [StandardBorelSpace Ω]
-  [ReferenceMeasure Y] [ReferenceMeasure X]
+  [CountableMeasure Y] [CountableMeasure X]
   [Countable Y] [MeasurableSingletonClass Y] [Countable X] [MeasurableSingletonClass X]
   [Fintype Y] [DecidableEq Y] [Nonempty Y]
   [NeZero (n : ℕ)]
@@ -45,12 +38,14 @@ private lemma main
     max[«y.bvar» : Fin n → Y] (ℙ[π](x[:n] = «x.bvar»[:n] ∧ y[:n] = «y.bvar») : ℝ) =
       (x' (n - 1)).max.exp := by
 -- proof
-  have ⟨_, _, hX, hY, _, _⟩ := h₀
+  have hX : (ReferenceMeasure.measure : Measure X) = Measure.count := CountableMeasure.measure_eq_count
+  have hY : (ReferenceMeasure.measure : Measure Y) = Measure.count := CountableMeasure.measure_eq_count
   have : ∀ i, SinglePSpace π (y i) := fun i => IsDiscreteHMM.singlePSpace_y (x := x) i
   have : ∀ i j, SinglePSpace π (y i, y j) := fun i j => IsDiscreteHMM.singlePSpace_yy (x := x) i j
   have : ∀ k : ℕ, SinglePSpace π (x[:k], y[:k]) := fun k => inferInstance
-  have hpair : ∀ k : ℕ, ReferenceMeasure.measure (α := (Fin k → X) × (Fin k → Y)) = Measure.count := fun k =>
-    Measure.Measure.eq.Count.of.EqMeasureCount.EqMeasureCount rfl rfl
+  have hpair : ∀ k : ℕ, ReferenceMeasure.measure (α := (Fin k → X) × (Fin k → Y)) = Measure.count := fun k => by
+    change (Measure.count : Measure (Fin k → X)).prod Measure.count = Measure.count
+    rw [← Measure.Count.eq.ProdCountS]
   have hQ : ∀ (ys : ℕ → Y) (k : ℕ), (ℙ[π](x[:(k : ℤ)] = «x.bvar»[:(k : ℤ)] ∧ y[:(k : ℤ)] = ys[:(k : ℤ)]) : ENNReal) =
       π {ω | (∀ i < k, x i ω = «x.bvar» i) ∧ ∀ i < k, y i ω = ys i} := by
     intro ys k
@@ -143,4 +138,4 @@ private lemma main
 
 
 -- created on 2020-12-20
--- updated on 2025-04-20
+-- updated on 2026-10-19

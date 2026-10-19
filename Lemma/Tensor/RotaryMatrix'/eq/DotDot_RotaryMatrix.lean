@@ -1,21 +1,15 @@
-import Lemma.Fin.ToSplit.eq.Ite_Div_2
 import torch.Tensor.permute
-import Lemma.Nat.Delta.eq.Ite
-import Lemma.Tensor.Eq.is.All_EqGetS
 import Lemma.Tensor.EqMul0_0
 import Lemma.Tensor.EqMul_0'0
 import Lemma.Tensor.EqMul_1
 import Lemma.Tensor.EqMul1
 import Lemma.Tensor.GetDot.eq.Sum_MulGetS
-import Lemma.Tensor.GetInterleave.eq.Delta_ToSplit
 import Lemma.Tensor.GetTInterleave.eq.Delta_ToSplit
 import Lemma.Tensor.GetRotaryMatrix.eq.MulCos_Delta.of.Ge.Ge
 import Lemma.Tensor.GetRotaryMatrix.eq.MulCos_Delta.of.Lt.Lt
 import Lemma.Tensor.GetRotaryMatrix.eq.MulNegSin_Delta.of.Lt.Ge
 import Lemma.Tensor.GetRotaryMatrix.eq.MulSin_Delta.of.Ge.Lt
 import Lemma.Tensor.GetRotaryMatrix'.eq.Ite_IteS
-import sympy.functions.special.tensor_functions
-import sympy.matrices.expressions.special
 import torch.functions
 open Nat Tensor Fin
 

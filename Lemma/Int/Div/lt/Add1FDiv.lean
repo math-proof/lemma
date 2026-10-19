@@ -1,5 +1,4 @@
 import Lemma.Int.Div.eq.AddFDiv___FMod
-import Lemma.Nat.Add
 import Lemma.Nat.LtAddS.is.Lt
 import Lemma.Int.DivFMod.lt.One
 open Nat Int

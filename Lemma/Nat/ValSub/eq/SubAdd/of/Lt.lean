@@ -1,4 +1,3 @@
-import Lemma.Nat.Add
 import Lemma.Nat.Add_Sub.eq.SubAdd.of.Gt
 import Lemma.Nat.EqMod.of.Lt
 import Lemma.Nat.LtSub.is.Lt_Add.of.Ge

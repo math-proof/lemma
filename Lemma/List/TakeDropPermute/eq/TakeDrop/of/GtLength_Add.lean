@@ -1,5 +1,4 @@
 import Lemma.List.TakeDropPermute.eq.TakeDrop
-import Lemma.Nat.EqMin.of.Le
 open List Nat
 
 

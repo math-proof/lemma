@@ -1,5 +1,4 @@
 import sympy.stats.value_at_risk
-import sympy.Basic
 import Lemma.Random.RealLt_Inf'.eq.Zero
 open MeasureTheory
 

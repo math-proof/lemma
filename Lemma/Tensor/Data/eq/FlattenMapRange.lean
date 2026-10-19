@@ -1,11 +1,5 @@
 import torch.Tensor
 import Lemma.Vector.EqFlattenUnflatten
-import Lemma.Bool.UFn.of.Eq
-import Lemma.Nat.NotLt.is.Ge
-import Lemma.Vector.EqGetRange
-import Lemma.Nat.EqDivMul.of.Ne_0
-import Lemma.Nat.Ne.of.Gt
-import Lemma.Nat.NotLt.is.Ge
 import Lemma.Nat.Eq_0.of.Le_0
 import Lemma.Bool.EqCast.of.Eq
 import Lemma.Vector.ArraySlice.as.GetSplitAt_1.of.GtGet_0.GtLength_0.Eq_ProdTail

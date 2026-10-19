@@ -1,6 +1,4 @@
-import sympy.functions.special.tensor_functions
 import Lemma.Nat.Delta.eq.Ite
-import sympy.Basic
 
 
 @[path]

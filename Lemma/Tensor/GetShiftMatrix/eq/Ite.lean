@@ -1,7 +1,6 @@
 import Lemma.Tensor.Delta.eq.Ite
 import Lemma.Tensor.GetShiftMatrix.eq.DeltaShiftRow
 import Lemma.Fin.ShiftRow.eq.Ite
-import sympy.matrices.expressions.permutation
 open Tensor
 
 

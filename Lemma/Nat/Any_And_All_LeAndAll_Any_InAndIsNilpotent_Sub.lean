@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-set_option maxHeartbeats 4000000
+set_option maxHeartbeats 1000000
 open IntermediateField
 
 

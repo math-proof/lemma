@@ -1,5 +1,4 @@
 import Lemma.List.GetSlicedIndices.eq.AddMul.of.Lt.Gt_0.LeAddSMul.Lt_AddMul
-import Lemma.List.LengthSlicedIndices.eq.ToNatCeilDivSub.of.Gt_0.Le.Lt
 import Lemma.List.EqLengthGetSlicedIndices.of.LeAddS.Lt_Add
 open List
 

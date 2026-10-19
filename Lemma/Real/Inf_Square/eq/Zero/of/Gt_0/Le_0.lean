@@ -1,5 +1,3 @@
-import sympy.sets.sets
-import sympy.Basic
 import Lemma.Real.Inf_Square.eq.Zero.of.Gt_0.Lt_0
 import Lemma.Real.Inf_Square.eq.Square.of.Ge_0.Lt
 

@@ -1,9 +1,5 @@
-import Lemma.Tensor.DataMul.eq.MulDataS
 import Lemma.Tensor.Dot.eq.SumMul__0
-import Lemma.Tensor.Eq.is.EqDataS
-import Lemma.Tensor.HeadDataSum.eq.SumData
 import Lemma.Vector.Dot.eq.SumMul
-import Lemma.Vector.Eq.is.All_EqGetS
 open Tensor Vector
 
 

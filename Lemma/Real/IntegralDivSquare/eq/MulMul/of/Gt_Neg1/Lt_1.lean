@@ -1,7 +1,5 @@
-import Lemma.Real.Gt_0Sub1MulCos.of.Gt_Neg1.Lt_1
 import Lemma.Real.HasDerivAt.MulAddDivSinMulAtan.of.Gt_Neg1.Lt_1.Gt_Neg1.Lt_1.Eq
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
-import sympy.Basic
 open Real
 
 

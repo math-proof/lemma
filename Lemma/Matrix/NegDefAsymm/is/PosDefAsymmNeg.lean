@@ -1,5 +1,4 @@
 import Lemma.Matrix.PosDefAsymm.is.PosDefAdd_T
-import sympy.matrices.dense
 open scoped Matrix
 
 

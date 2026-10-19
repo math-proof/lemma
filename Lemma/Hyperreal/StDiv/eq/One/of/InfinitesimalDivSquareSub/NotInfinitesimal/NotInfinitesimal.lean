@@ -1,9 +1,6 @@
-import Lemma.Hyperreal.Ne_0.of.NotInfinitesimal
-import Lemma.Hyperreal.StDiv.eq.InvStInv
 import Lemma.Hyperreal.StDiv.eq.One.of.StDiv_AddAddSquareS.eq.One.Infinite.NotInfinitesimal.NotInfinitesimal
 import Lemma.Hyperreal.StDiv.eq.One.of.StDiv_AddAddSquareS.eq.One.NotInfinite.NotInfinite.NotInfinitesimal.NotInfinitesimal
 import Lemma.Nat.AddAdd
-import Lemma.Nat.Mul.ne.Zero.of.Ne_0.Ne_0
 import Lemma.Nat.MulMul
 open Hyperreal Nat
 

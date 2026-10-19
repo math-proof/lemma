@@ -1,4 +1,3 @@
-import Lemma.List.EqLengthGetSlicedIndices.of.Gt_0.LeAddMul.Lt_AddMul
 import Lemma.List.GetSlicedIndices.eq.AddMul.of.Lt.Gt_0.LeAddSMul.Lt_AddMul
 open List
 

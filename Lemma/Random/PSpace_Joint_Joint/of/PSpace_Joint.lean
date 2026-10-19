@@ -3,7 +3,6 @@ import Mathlib.MeasureTheory.Measure.Prod
 import Mathlib.MeasureTheory.Integral.Lebesgue.Countable
 import Mathlib.MeasureTheory.Measure.WithDensity
 import Lemma.Random.PSpace.PSpace.of.PSpace_Joint
-import sympy.stats.joint_rv
 open MeasureTheory Function Random
 open scoped Classical
 

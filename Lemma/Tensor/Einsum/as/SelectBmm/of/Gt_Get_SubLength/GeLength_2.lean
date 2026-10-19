@@ -1,19 +1,13 @@
-import Lemma.Bool.SEq.is.EqCast.of.Eq
 import torch.Tensor.reshape
-import Lemma.Bool.SEq.is.Eq
-import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
-import Lemma.List.Drop.eq.ListGet.of.GtLength_0
-import Lemma.List.EqAppendTake__ListGet.of.GeLength_2
-import Lemma.List.EraseIdx.eq.Append_Drop_Add_1
-import Lemma.List.EraseIdxAppend.eq.Append_EraseIdx.of.LeLength
 import Lemma.Nat.EqMax.of.Gt
 import Lemma.Tensor.SEqBmmS.of.SEq.SEq
 import Lemma.Tensor.SEqReshapeS.of.SEq.Eq.Dvd
 import Lemma.Tensor.SEqResize_0.of.Eq_Get_0.GtLength_0
+import Lemma.Tensor.SEqSelectS.of.SEq
 import sympy.matrices.expressions.matmul
 import torch.Tensor.bmm
 open Bool List Nat Tensor
-set_option maxHeartbeats 400000
+set_option maxHeartbeats 200000
 
 
 @[path, cast]
@@ -44,8 +38,8 @@ private lemma main
       grind
     ·
       simp
-      congr 1
       apply Eq.of.SEq
+      apply SEqSelectS.of.SEq
       apply SEqBmmS.of.SEq.SEq
       ·
         apply SEqReshapeS.of.SEq.Eq.Dvd
@@ -68,7 +62,6 @@ private lemma main
         ·
           rw [EqMax.of.Gt h_n]
   ·
-    congr
     simp [Tensor.matmul_shape]
     simp [show s ≠ [] by grind]
     rw [EraseIdxAppend.eq.Append_EraseIdx.of.LeLength (by grind)]

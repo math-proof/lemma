@@ -1,19 +1,10 @@
 import torch.Tensor
-import Lemma.List.EqPermute
 import Lemma.List.Permute.eq.AppendRotateTake___Drop.of.Gt_0.EqVal_0
 import Lemma.List.ProdPermute.eq.MulProd_ProdAppend.of.Gt_0
 import Lemma.List.Permute.eq.AppendTake__RotateDrop.of.Val.eq.SubLength_1.Le_0
-import Lemma.Nat.NotLt.is.Ge
 import Lemma.List.ProdPermute.eq.MulProd_ProdDrop.of.Le_0
 import Lemma.Bool.Cast.of.SEq.Eq
-import Lemma.List.Permute__Neg.eq.AppendTake__RotateDrop.of.Val.eq.SubLength_1
-import Lemma.Int.NegSucc.eq.NegCoeAdd_1
-import Lemma.Nat.Add
-import Lemma.List.Permute__Neg.eq.Append_AppendRotateDropTake
 import Lemma.Int.ToNatSubOfNat_NegSucc.eq.AddAdd1
-import Lemma.Nat.Mul.of.Eq
-import Lemma.Nat.MulMul.eq.Mul_Mul
-import Lemma.Nat.SubMin.eq.MinSubS
 import Lemma.Nat.Min.eq.Add_1
 open List Bool Int Nat
 

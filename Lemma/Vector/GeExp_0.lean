@@ -1,5 +1,4 @@
 import Lemma.Real.GeExp_0
-import Lemma.Vector.EqGet0_0
 import sympy.vector.functions
 open Real Vector
 

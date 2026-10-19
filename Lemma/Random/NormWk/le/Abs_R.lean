@@ -1,5 +1,3 @@
-import sympy.stats.policy_trajectory.continuous
-import sympy.Basic
 import Lemma.Random.NormRk.le.Abs_R
 open MeasureTheory PolicyGradient Random
 
@@ -18,12 +16,12 @@ private lemma main
 -- imply
   ‖M.Wk θ k x‖ ≤ |M.env.R| := by
 -- proof
-  have hπ : ∀ x {g : A → ℝ} {C : ℝ}, (∀ u, ‖g u‖ ≤ C) → ‖∑ u, M.pol.prob θ x u * g u‖ ≤ C := fun x g C h =>
-    calc _ ≤ ∑ u, ‖M.pol.prob θ x u * g u‖ := norm_sum_le _ _
-      _ ≤ ∑ u, M.pol.prob θ x u * C := Finset.sum_le_sum fun u _ => by
-          rw [norm_mul, Real.norm_of_nonneg (M.pol.nonneg θ x u)]
-          exact mul_le_mul_of_nonneg_left (h u) (M.pol.nonneg θ x u)
-      _ = C := by rw [← Finset.sum_mul, M.pol.sum_eq_one, one_mul]
+  have hπ : ∀ x {g : A → ℝ} {C : ℝ}, (∀ u, ‖g u‖ ≤ C) → ‖∑ u, M.policy.prob θ x u * g u‖ ≤ C := fun x g C h =>
+    calc _ ≤ ∑ u, ‖M.policy.prob θ x u * g u‖ := norm_sum_le _ _
+      _ ≤ ∑ u, M.policy.prob θ x u * C := Finset.sum_le_sum fun u _ => by
+          rw [norm_mul, Real.norm_of_nonneg (M.policy.nonneg θ x u)]
+          exact mul_le_mul_of_nonneg_left (h u) (M.policy.nonneg θ x u)
+      _ = C := by rw [← Finset.sum_mul, M.policy.sum_eq_one, one_mul]
   induction k generalizing x with
   | zero =>
     apply hπ x fun u => NormRk.le.Abs_R (M := M) x u

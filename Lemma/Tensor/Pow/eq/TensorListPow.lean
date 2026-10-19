@@ -1,4 +1,3 @@
-import Lemma.Tensor.Eq.is.EqDataS
 import torch.Tensor
 open Tensor
 

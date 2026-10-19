@@ -1,8 +1,9 @@
-import sympy.Basic
 import Mathlib
 import Lemma.AdicCompletion.Support.Exists
 
 open IsLocalRing AdicCompletion
+
+universe u
 
 /--
 [AdicCompletion_exists_algebra_moduleFinite_of_moduleFinite_of_isMaximal](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AdicCompletion_exists_algebra_moduleFinite_of_moduleFinite_of_isMaximal.lean)
@@ -10,7 +11,7 @@ open IsLocalRing AdicCompletion
 @[path]
 private lemma main
 -- given
-  [CommRing B] [IsNoetherianRing B] [CommRing C] [Algebra B C] [Module.Finite B C]
+  {B C : Type u} [CommRing B] [IsNoetherianRing B] [CommRing C] [Algebra B C] [Module.Finite B C]
   {𝔫 : Ideal C} [𝔫.IsMaximal] :
 -- imply
   Nonempty (Σ'

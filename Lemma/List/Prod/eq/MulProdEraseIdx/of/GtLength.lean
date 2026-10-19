@@ -1,5 +1,4 @@
 import Lemma.List.Prod.eq.Mul_ProdEraseIdx.of.GtLength
-import Lemma.Nat.Mul
 open List Nat
 
 

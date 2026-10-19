@@ -1,29 +1,11 @@
-import Lemma.Bool.Cast.of.SEq.Eq
 import torch.Tensor.permute
-import Lemma.Bool.SEq.is.Eq
 import Lemma.Bool.SEq.is.EqCast.of.Eq
-import Lemma.List.EqPermute
-import Lemma.List.GetPermute__Neg.eq.Get_0.of.Gt
-import Lemma.List.Permute__Neg.eq.Append_AppendRotateDropTake
-import Lemma.List.Permute__Neg.eq.Cons_EraseIdx
 import Lemma.List.Rotate_SubLength_1.eq.Cons_DropLast.of.GtLength_0
-import Lemma.Nat.ToNatSub_Neg.eq.Add_1
-import Lemma.Tensor.Eq.is.All_EqGetS.of.GtLength_0
-import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Tensor.GetMap.eq.MapGet
 import Lemma.Tensor.GetPermute__Neg.as.Permute__Neg_Get.of.GtGet_0.LtAdd_1Length
-import Lemma.Tensor.LengthPermute__Neg.eq.Get_0.of.Gt
 import Lemma.Tensor.MapCast.as.Map.of.Eq
-import Lemma.Tensor.MapData.eq.DataMap
-import Lemma.Tensor.Permute.eq.Ite
 import Lemma.Tensor.PermuteTailMap.eq.MapPermuteTail
-import Lemma.Tensor.SEqGetS.of.SEq.GtLength
-import Lemma.Tensor.SEqPermute
 import Lemma.Tensor.SEqPermuteS.of.SEq.Eq.Eq.GtLength
-import Lemma.Tensor.TensorMap.eq.MapTensor
-import Lemma.Vector.FlattenMap.eq.MapFlatten
-import Lemma.Vector.MapCast.as.Map.of.Eq
-import Lemma.Vector.SplitAtMap.eq.MapSplitAt
 open Bool List Nat Tensor Vector
 
 

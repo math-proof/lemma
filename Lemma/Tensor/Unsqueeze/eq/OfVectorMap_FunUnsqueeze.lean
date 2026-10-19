@@ -2,14 +2,10 @@ import Lemma.Bool.EqCast.of.HEq
 import torch.Tensor.unsqueeze
 import torch.Tensor.prod
 import Lemma.Fin.HEqFinS.of.Eq.Eq.Lt
-import Lemma.List.ProdInsertIdx.eq.Prod
-import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Nat.EqDivMul.of.Ne_0
 import Lemma.Nat.EqValCast.of.Lt.Eq
-import Lemma.Nat.Le_SubMulS.of.Lt
 import Lemma.Tensor.Unsqueeze.eq.TensorMap_FunGetData
 import Lemma.Vector.MapMap.eq.Map_Comp
-import Lemma.Vector.EqGetRange
 import Lemma.Vector.Get
 import Lemma.Vector.GetCast_Map.eq.UFnGet.of.Eq.Lt
 import Lemma.Vector.GetFlatten_AddMul.eq.Get.of.Lt.Lt

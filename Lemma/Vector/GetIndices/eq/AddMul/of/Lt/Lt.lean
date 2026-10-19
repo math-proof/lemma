@@ -1,6 +1,4 @@
-import Lemma.List.EqLengthSlice_Mul.of.Lt
 import Lemma.Vector.GetIndices.eq.AddMul
-import sympy.vector.vector
 open Vector List
 
 

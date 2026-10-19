@@ -1,9 +1,5 @@
-import sympy.stats.policy_trajectory.gradient
-import sympy.Basic
 import sympy.vector.operators
 import sympy.concrete.sup
-import Lemma.Random.Integral_R.eq.Sum_MulRealWRc
-import Lemma.Random.Sum_Real.eq.One
 import Lemma.Set.Summable_MulPowMulAdd_1.of.In_Ico
 import Lemma.Random.Differentiable.All_LeNormFderivMulAdd_1MulMulCardAbs_R.of.All_LeNormFderiv.All_Differentiable_Prob
 import Lemma.Random.NormW.le.Abs_R
@@ -35,15 +31,15 @@ private lemma main
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
   (h₁ : ∀ t, (· t) = (r t, s t, a t))
-  (h₂ : ∀ x u, Differentiable ℝ (fun θ => M.pol.prob θ x u))
-  (h₃ : sup[θ, x, u] ‖∇[θ] M.pol.prob θ x u‖ < ∞)
+  (h₂ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
+  (h₃ : sup[θ, x, u] ‖∇[θ] M.policy.prob θ x u‖ < ∞)
   (θ : Θ) :
 -- imply
   HasFDerivAt (fun θ => ∑' t, γ ^ t * ∫ ω, r t ω ∂(M θ))
     (∑' t, γ ^ t • fderiv ℝ (fun θ => ∫ ω, r t ω ∂(M θ)) θ) θ := by
 -- proof
   obtain ⟨Cp, hCp⟩ := id h₃
-  have hC : ∀ θ x u, ‖fderiv ℝ (fun θ => M.pol.prob θ x u) θ‖ ≤ Cp := fun θ x u => by
+  have hC : ∀ θ x u, ‖fderiv ℝ (fun θ => M.policy.prob θ x u) θ‖ ≤ Cp := fun θ x u => by
     simpa [gradient, LinearIsometryEquiv.norm_map] using hCp ⟨(θ, x, u), rfl⟩
   refine hasFDerivAt_tsum (x₀ := θ) (Summable_MulPowMulAdd_1.of.In_Ico h₀ (Fintype.card A * Cp * |M.env.R|))
     (fun t θ => ((Differentiable.All_LeNormFderivMulAdd_1MulMulCardAbs_R.of.All_LeNormFderiv.All_Differentiable_Prob (M := M) h₁ h₂ hC t).1 θ).hasFDerivAt.const_mul (γ ^ t))

@@ -1,11 +1,10 @@
 import Lemma.Tensor.GetGetSlice.eq.Get.of.Lt_Min
-import Lemma.List.LengthSlice.eq.Min
 import Lemma.Nat.Le.of.Lt_Add_1
 import Lemma.Nat.Lt.is.Le.Ne
 import Lemma.Nat.Lt_Min.is.Lt.Lt
 import Lemma.Tensor.Eq.is.All_EqGetS
 open Tensor List Nat
-set_option maxHeartbeats 500000
+set_option maxHeartbeats 250000
 
 
 /--

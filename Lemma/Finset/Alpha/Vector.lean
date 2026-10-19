@@ -1,6 +1,5 @@
 import sympy.concrete.continued_fraction
 import sympy.sets.sets
-import sympy.Basic
 open Continuant
 
 

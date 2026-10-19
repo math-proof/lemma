@@ -1,6 +1,4 @@
 import Mathlib.Algebra.Order.Group.PosPart
-import sympy.stats.generator_matrix
-import sympy.Basic
 import Lemma.Matrix.GetVecMul.ge.Zero.of.Eq_0.All_Ge_0.GeneratorMatrix
 open Matrix
 

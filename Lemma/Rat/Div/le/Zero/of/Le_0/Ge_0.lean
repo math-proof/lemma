@@ -1,4 +1,3 @@
-import Lemma.Nat.Le.is.Lt.ou.Eq
 import Lemma.Rat.Div.le.Zero.of.Le_0.Gt_0
 open Rat Nat
 

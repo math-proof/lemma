@@ -2,12 +2,8 @@ import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
 import torch.Tensor.permute
 import torch.linalg.inv
 import torch.functions
-import Lemma.Tensor.Dot.eq.Eye.of.Dot.eq.Eye
 import Lemma.Tensor.DotT_RotaryMatrix'.eq.Eye
-import Lemma.Tensor.Eq.is.ToMatrix
 import Lemma.Tensor.EqToMatrixStack
-import Lemma.Tensor.ToMatrixDot.eq.MulToMatrixS
-import Lemma.Tensor.ToMatrixEye.eq.One
 import Lemma.Tensor.ToMatrixT.eq.TToMatrix
 open Tensor
 

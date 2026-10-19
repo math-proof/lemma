@@ -1,4 +1,3 @@
-import Lemma.Nat.Delta.eq.Ite
 import Lemma.Tensor.GetShiftMatrix.eq.Ite
 open Nat Tensor
 

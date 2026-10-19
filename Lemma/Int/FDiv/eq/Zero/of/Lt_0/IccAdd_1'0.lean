@@ -1,9 +1,7 @@
 import Lemma.Int.FDiv.eq.FloorDiv
-import Lemma.Int.EqFloor.is.Le.Lt
 import Lemma.Rat.Div.ge.Zero.of.Le_0.Lt_0
 import Lemma.Set.Le.of.In_Icc
 import Lemma.Int.LeCoeS.is.Le
-import Lemma.Int.LtCoeS.is.Lt
 import Lemma.Rat.LtDiv.of.Gt.Lt_0
 import Lemma.Set.Ge.of.In_Icc
 import Lemma.Nat.Lt.of.LeAdd_1

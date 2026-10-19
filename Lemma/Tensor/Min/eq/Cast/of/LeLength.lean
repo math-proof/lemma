@@ -1,4 +1,3 @@
-import Lemma.List.EqEraseIdx.of.LeLength
 import torch.Tensor.prod
 import torch.functions
 open List

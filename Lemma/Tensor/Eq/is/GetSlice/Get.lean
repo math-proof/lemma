@@ -1,9 +1,5 @@
 import Lemma.Tensor.Slice.of.Eq
 import Lemma.Tensor.Get.of.Eq.Lt
-import Lemma.Tensor.Eq.is.All_EqGetS
-import Lemma.Tensor.GetGetSlice.eq.Get.of.Lt_Min
-import Lemma.List.LengthSlice.eq.Min
-import Lemma.Nat.Lt_Min.is.Lt.Lt
 open Tensor List Nat
 
 

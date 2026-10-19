@@ -1,4 +1,3 @@
-import sympy.Basic
 import Lemma.Rat.Div.lt.Zero.of.Lt_0
 import Lemma.Int.GeMulS.of.Le.Lt_0
 

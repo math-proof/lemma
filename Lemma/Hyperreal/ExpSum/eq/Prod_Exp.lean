@@ -1,5 +1,4 @@
 import sympy.functions.elementary.exponential
-import sympy.Basic
 
 /--
 [DecidableEq ι] is not required in Real.exp_sum

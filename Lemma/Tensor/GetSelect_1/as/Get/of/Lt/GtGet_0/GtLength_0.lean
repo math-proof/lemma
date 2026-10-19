@@ -1,22 +1,10 @@
 import Lemma.Tensor.Select.eq.OfVectorMapToVector.of.GtLength
-import Lemma.Tensor.GetToVector.eq.Get
 import Lemma.Vector.Get.of.Eq.Lt
 import Lemma.Tensor.DataGet.as.GetSplitAtData.of.GtLength_0
-import Lemma.Vector.EqUnflattenFlatten
-import Lemma.Tensor.DataOfVector.eq.FlattenMapData
 import Lemma.Tensor.Select_0.as.Get.of.GtGet_0.GtLength_0
-import Lemma.Bool.EqCast.of.SEq
-import Lemma.Bool.SEq.is.SEqCast.of.Eq
-import Lemma.List.ProdTake_1.eq.Get_0.of.GtLength_0
 import Lemma.List.ProdTake_1.eq.HeadD_1
-import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.LengthGet.eq.Get_0.of.GtGet_0.GtLength_1
 import Lemma.Tensor.LengthSelect.eq.Get_0.of.GtGet.GtLength.Gt_0
-import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
-import Lemma.Vector.GetCast.eq.Get.of.Eq
-import Lemma.Vector.GetMap.eq.UFnGet.of.Lt
-import Lemma.Vector.GetSplitAt_1.eq.GetUnflatten
-import Lemma.Vector.GetSplitAt_1.eq.GetUnflatten.of.Lt
 import Lemma.Vector.MapMap.eq.Map_Comp
 open List Tensor Vector Bool
 

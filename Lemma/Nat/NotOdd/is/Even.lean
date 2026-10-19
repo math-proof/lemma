@@ -1,4 +1,3 @@
-import sympy.functions.elementary.integers
 import Lemma.Nat.NotOdd.is.Mod_2.eq.Zero
 open Nat
 

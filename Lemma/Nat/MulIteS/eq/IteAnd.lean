@@ -1,4 +1,3 @@
-import Lemma.Bool.BFnIteS.eq.IteAnd
 import Lemma.Nat.Mul
 import Lemma.Bool.BFnIteS.eq.IteAnd.of.All_Eq
 open Nat Bool

@@ -1,7 +1,6 @@
 import Lemma.Bool.EqCast.of.SEq
 import torch.Tensor.permute
 import Lemma.Tensor.PermuteTail.as.Rotate.of.LeLength
-import Lemma.Nat.Sub.eq.Zero.of.Le
 open Bool Tensor Nat
 
 

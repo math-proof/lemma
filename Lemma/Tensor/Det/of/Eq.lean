@@ -1,5 +1,4 @@
 import sympy.matrices.determinant
-import sympy.Basic
 
 
 @[path]

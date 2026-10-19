@@ -3,7 +3,7 @@ import torch.Tensor.permute
 import Lemma.Tensor.EqGetT
 import Lemma.Tensor.GetShiftMatrix.eq.Ite
 open Nat Tensor
-set_option maxHeartbeats 1000000
+set_option maxHeartbeats 500000
 
 
 @[path]

@@ -4,8 +4,6 @@ import Mathlib.Analysis.Normed.Algebra.MatrixExponential
 import Mathlib.Analysis.Matrix.Normed
 import Mathlib.Topology.Algebra.Module.FiniteDimension
 import Mathlib.Analysis.Calculus.TangentCone.Real
-import sympy.stats.generator_matrix
-import sympy.Basic
 import Lemma.NormedSpace.HasDerivAtVecMul_Exp
 open Matrix NormedSpace
 

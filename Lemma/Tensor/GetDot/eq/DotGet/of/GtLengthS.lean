@@ -1,12 +1,6 @@
-import Lemma.Bool.SEqCast.of.Eq
-import Lemma.List.EqAppendTake__ListGet.of.GeLength_2
 import Lemma.List.EqAppendTake__ListGet.of.GtLength_0
 import Lemma.Tensor.GetDot.as.DotGet.of.GtLengthS
 import Lemma.Tensor.GetDot.eq.DotGet.of.Ne_Nil
-import Lemma.Tensor.GtLengthDot.of.LeLengthS.Ne_Nil
-import Lemma.Tensor.Length.of.SEq
-import Lemma.Tensor.SEqDotS.of.SEq
-import Lemma.Tensor.SEqGetS.of.SEq.GtLength
 open Bool List Tensor
 
 

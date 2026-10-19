@@ -1,4 +1,3 @@
-import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Tensor.Eq.of.All_EqDataSGetToVector
 open Tensor
 

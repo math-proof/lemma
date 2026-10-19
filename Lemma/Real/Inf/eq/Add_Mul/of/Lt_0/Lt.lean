@@ -1,5 +1,3 @@
-import sympy.sets.sets
-import sympy.Basic
 import Mathlib.Basic.Real.Pointwise
 import Lemma.Real.Inf.eq.Add
 import Lemma.Real.Inf.eq.Mul.Sup.of.Lt_0

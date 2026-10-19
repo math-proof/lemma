@@ -1,5 +1,4 @@
 import Lemma.Rat.Div_Mul.eq.Inv.of.Ne_0
-import Lemma.Rat.DivDiv.eq.Div_Mul
 open Rat
 
 

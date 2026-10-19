@@ -4,7 +4,6 @@ import Mathlib.LinearAlgebra.Vandermonde
 import Lemma.Tensor.Dot.eq.SumMul__0
 import torch.Tensor.sum
 import Lemma.Tensor.Sum.of.Eq
-import Lemma.Matrix.MulOfMulPowOfPowNegChoose.eq.MulOfChooseSumOf
 import Lemma.Matrix.MulOfPowNegChooseOfMulPow.eq.MulOfOfChooseSum
 open Matrix Tensor
 

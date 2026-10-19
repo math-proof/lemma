@@ -1,6 +1,5 @@
 import sympy.core.power
 import sympy.vector.Basic
-import sympy.Basic
 import stdlib.List
 import Mathlib.MeasureTheory.Constructions.Polish.Basic
 open MeasureTheory

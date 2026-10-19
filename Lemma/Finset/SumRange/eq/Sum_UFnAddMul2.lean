@@ -1,11 +1,7 @@
-import sympy.sets.fancysets
 import Lemma.Finset.SumRange.eq.Sum_UFnMul2.of.Even
 import Lemma.Finset.SumRange.eq.Sum_UFnAddMul2.of.Odd
 import Lemma.Bool.Cond.of.Imp.ImpNot
 import Lemma.Int.Odd.of.Ne_0
-import Lemma.Nat.Even.is.Mod_2.eq.Zero
-import Lemma.Nat.Odd.is.Mod_2.eq.One
-import Lemma.Nat.Even.is.OddAdd_1
 import Lemma.Nat.EvenAdd_1.is.Odd
 open Finset Nat Int Bool
 

@@ -1,5 +1,4 @@
 import sympy.stats.q_learning
-import sympy.Basic
 import Lemma.Matrix.PMRP.eq.MulPPi
 import Lemma.Random.Sum.eq.One.of.ProbabilityMeasure
 open Finset Matrix Random

@@ -2,8 +2,6 @@ import Lemma.Complex.ArgDiv.eq.Arg.of.Gt_0
 import Lemma.Complex.Eq0Add_Pow_3.is.In_Finset_AddSMulS.of.EqNeg_MulMul3.EqNeg_AddPowS_3
 import Lemma.Complex.Eq_Mul_Pow_SubCeilS.of.Pow_3
 import Lemma.Complex.EqSquareSqrt
-import Lemma.Complex.Mul_Conj.eq.One
-import Lemma.Complex.Pow_3.eq.One
 open Complex
 
 

@@ -1,7 +1,4 @@
-import Lemma.Vector.ValGetUnflatten.eq.ValArraySlice
 import torch.Tensor.prod
-import Lemma.Vector.EqUnflattenFlatten
-import Lemma.Vector.GetUnflatten.as.ArraySlice
 import Lemma.List.Prod.eq.Foldr
 import Lemma.Tensor.GetUnflattenDataStack.eq.Data
 import Lemma.Bool.SEq.is.Eq

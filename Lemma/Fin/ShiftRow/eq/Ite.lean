@@ -1,5 +1,4 @@
 import sympy.matrices.expressions.permutation
-import sympy.Basic
 
 
 @[path]

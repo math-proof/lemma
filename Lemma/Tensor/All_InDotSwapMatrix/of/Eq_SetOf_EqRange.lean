@@ -1,5 +1,4 @@
 import Lemma.Set.SetOfDotGetSwapMatrix.eq.Range
-import Lemma.Tensor.GetDot.eq.DotGet
 open Set Tensor
 
 

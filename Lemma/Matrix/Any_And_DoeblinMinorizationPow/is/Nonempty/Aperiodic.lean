@@ -1,4 +1,3 @@
-import sympy.stats.stochastic_process_types
 import Lemma.Matrix.Any_All_Gt_0.of.DoeblinMinorization
 import Lemma.Matrix.Any_All_Imp_Gt_0.of.Aperiodic.StochasticIrreducible
 import Mathlib.Algebra.GCDMonoid.Finset

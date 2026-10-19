@@ -1,5 +1,4 @@
 import Lemma.LpSpace.HalfSq.le.AddAddHalfSqInner_MulSub1HalfSqSub.of.All_Ne_0.Gt_2
-import Lemma.LpSpace.PowNorm.eq.Sum_PowAbs.of.Ge_1
 open Finset LpSpace Real Set Filter Topology
 
 

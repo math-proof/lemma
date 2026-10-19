@@ -1,4 +1,3 @@
-import Lemma.Bool.SEq.is.Eq
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 open Tensor Bool
 

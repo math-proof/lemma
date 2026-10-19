@@ -1,5 +1,4 @@
 import Lemma.Real.GtLog.of.Gt
-import sympy.Basic
 open Real
 
 

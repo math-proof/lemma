@@ -1,6 +1,4 @@
 import Lemma.Complex.Eq0Add_Pow_4.is.In_Ite_FinsetS
-import Lemma.Set.In_Finset.is.Or_OrEqS
-import Lemma.Set.In_Insert.is.Eq.ou.In
 open Complex Set
 
 

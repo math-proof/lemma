@@ -1,6 +1,3 @@
-import sympy.integrals.integrals
-import sympy.sets.sets
-import sympy.Basic
 import Lemma.Real.LtIntegral.of.All_Lt
 
 

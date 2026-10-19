@@ -1,5 +1,4 @@
 import sympy.stats.policy_trajectory.gradient
-import sympy.Basic
 import Lemma.Random.EqMapStageK_12
 import Lemma.Random.Map.eq.BindStageK
 import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq

@@ -6,7 +6,6 @@ import Lemma.Rat.CeilDivSub.eq.One.of.GeAdd.Gt_0
 import Lemma.Nat.LtCoeS.is.Lt
 import Lemma.Nat.LeSubS.of.Le
 import Lemma.Rat.DivSub.eq.SubDivS
-import Lemma.Rat.Div.eq.One.of.Gt_0
 import Lemma.Rat.CeilSub_1.eq.SubCeil_1
 import Lemma.Int.Sub_Add.eq.SubSub
 import Lemma.Nat.Sub_Add.eq.SubSub

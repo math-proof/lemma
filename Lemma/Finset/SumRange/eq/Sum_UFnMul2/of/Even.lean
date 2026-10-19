@@ -1,9 +1,5 @@
-import sympy.sets.fancysets
 import Lemma.Finset.SumSetOf_Even.eq.Sum_UFnMul2
 import Lemma.Int.In_Range.is.Mod.In_Range
-import Lemma.Int.EqSign_1.of.Gt_0
-import Lemma.Int.EqToNat_0.of.Lt_0
-import Lemma.Nat.Even.is.Mod_2.eq.Zero
 open Finset Nat Int
 
 

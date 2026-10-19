@@ -1,5 +1,4 @@
 import Lemma.List.ProdTailSet.eq.MulProdTail.LtLength_0.Gt_0
-import Lemma.Nat.Mul
 open List Nat
 
 

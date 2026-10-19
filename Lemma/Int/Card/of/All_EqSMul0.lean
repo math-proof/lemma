@@ -73,7 +73,7 @@ private lemma  natCard_hom_zmod_zmod
   exact natCard_torsion_eq hq hqm hm
 
 
-set_option maxHeartbeats 3200000 in
+set_option maxHeartbeats 800000 in
 @[path]
 private lemma main
   {X Y : Type} [AddCommGroup X] [Finite X] [AddCommGroup Y] [Finite Y] [IsAddCyclic Y]

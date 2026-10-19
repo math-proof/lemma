@@ -1,17 +1,92 @@
-import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import torch.Tensor.permute
 import Lemma.Tensor.PermuteCast.as.Permute.of.Eq
 import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
 import Lemma.Tensor.Get.of.Eq
-import Lemma.List.ProdAppend.eq.MulProdS
 import Lemma.Tensor.SEqPermute
-import Lemma.Tensor.Permute.eq.Ite
-import Lemma.Vector.Eq.of.Eq_Cast.Eq
 import Lemma.Tensor.Get.of.Data.as.FlattenTransposeSplitAt_1
 import Lemma.Tensor.PermuteTail.eq.CastRotate.of.LeLength
 open Tensor Vector List Bool
-set_option maxHeartbeats 4000000
+set_option maxHeartbeats 1000000
 
+
+private lemma main_rot
+  (X : Tensor α [m, n])
+  (i : Fin m)
+  (j : Fin n)
+  (hx : (i : ℕ) < X.length)
+  (hy : (j : ℕ) < (X.get ⟨(i : ℕ), hx⟩).length)
+  (h_swap : [n, m] = [m, n].permute 1 (-1))
+  (hi2 : (i : ℕ) < ((cast (congrArg (Tensor α) h_swap.symm) (X.rotate 1)).get j).length) :
+  ((cast (congrArg (Tensor α) h_swap.symm) (X.rotate 1)).get j).get ⟨(i : ℕ), hi2⟩ =
+    (X.get ⟨(i : ℕ), hx⟩).get ⟨(j : ℕ), hy⟩ := by
+  have := GetCast.eq.Cast_Get.of.Eq.GtLength_0.right.fin
+    (s' := [m, n].permute 1 (-1))
+    (by simp)
+    (by simpa)
+    (X.rotate 1)
+    ⟨j, by grind⟩
+  simp at this
+  erw [this]
+  have := GetCast.eq.Cast_Get.of.Eq.GtLength_0.right.fin
+    (s' := ([m, n].permute 1 (-1)).tail)
+    (by simp)
+    (by simp; grind)
+    ((X.rotate 1).get j)
+    ⟨i, by grind⟩
+  simp at this
+  conv_lhs => erw [this]
+  apply EqCast.of.SEq
+  apply SEq.of.Eq
+  unfold Tensor.rotate
+  simp
+  have h_cast := congrArg (List.Vector α) (MulProdS.eq.ProdAppend ([m, n].drop (1 % [m, n].length)) ([m, n].take (1 % [m, n].length)))
+  let data := cast h_cast (X.data.splitAt 1).transpose.flatten
+  have h_data : data = cast h_cast (X.data.splitAt 1).transpose.flatten := rfl
+  erw [← h_data]
+  let X' : Tensor α [n, m] := ⟨data⟩
+  have h_X' : X' = ⟨data⟩ := rfl
+  erw [← h_X']
+  apply Get.of.Data.as.FlattenTransposeSplitAt_1
+  simp [X']
+  apply Eq.of.Eq_Cast.Eq (by simp) h_data
+
+
+private lemma main_seq
+  (X : Tensor α [m, n])
+  (i : Fin m)
+  (j : Fin n)
+  (hj : (j : ℕ) < (X.permute 1 (-1)).length)
+  (hi : (i : ℕ) < ((X.permute 1 (-1)).get ⟨(j : ℕ), hj⟩).length)
+  (hx : (i : ℕ) < X.length)
+  (hy : (j : ℕ) < (X.get ⟨(i : ℕ), hx⟩).length)
+  (h_swap : [n, m] = [m, n].permute 1 (-1)) :
+  ((X.permute 1 (-1)).get ⟨(j : ℕ), hj⟩).get ⟨(i : ℕ), hi⟩ ≃
+    (X.get ⟨(i : ℕ), hx⟩).get ⟨(j : ℕ), hy⟩ := by
+  apply SEq.of.Eq
+  unfold Tensor.permute
+  simp
+  have := GetCast.eq.Cast_Get.of.Eq.GtLength_0.right.fin
+    (s' := [m, n].permute 1 (-1))
+    (by simp)
+    (by simpa)
+    (X.permuteTail 2)
+    ⟨j, by grind⟩
+  simp at this
+  erw [this]
+  have := GetCast.eq.Cast_Get.of.Eq.GtLength_0.right.fin
+    (s' := ([m, n].permute 1 (-1)).tail)
+    (by simp)
+    (by simp; grind)
+    ((X.permuteTail 2).get j)
+    ⟨i, by grind⟩
+  simp at this
+  erw [this]
+  apply EqCast.of.SEq
+  apply SEq.of.Eq
+  have := PermuteTail.eq.CastRotate.of.LeLength (n := 2) (X := X) (by simp)
+  simp at this
+  rw [this]
+  apply main_rot X i j hx hy h_swap
 
 @[path, fin, comm, fin.comm]
 private lemma main
@@ -36,7 +111,7 @@ private lemma main
     grind
   let X' := cast (congrArg (Tensor α) h_s) (X.permute ⟨1, by grind⟩ (-1))
   have h_swap : ([m, n].permute 0 0).permute ⟨1, by grind⟩ (-1) = [m, n].swap 0 1 := by
-    simp [List.Swap.eq.PermutePermute.of.Lt.GtLength]
+    simp [Swap.eq.PermutePermute.of.Lt.GtLength]
   have := GetCast.eq.Cast_Get.of.Eq.GtLength_0.right.fin
     (s' := [m, n].swap 0 1)
     (by simp)
@@ -74,61 +149,9 @@ private lemma main
   simp [X'] at this
   erw [this]
   apply SEqCast.of.SEq.Eq (by grind)
-  apply SEq.of.Eq
-  rw [Permute.eq.Ite X]
-  simp
-  have := GetCast.eq.Cast_Get.of.Eq.GtLength_0.right.fin
-    (s' := [m, n].permute 1 (-1))
-    (by simp)
-    (by simpa)
-    (X.permuteTail 2)
-    ⟨j, by grind⟩
-  simp at this
-  erw [this]
-  have := GetCast.eq.Cast_Get.of.Eq.GtLength_0.right.fin
-    (s' := ([m, n].permute 1 (-1)).tail)
-    (by simp)
-    (by simp; grind)
-    ((X.permuteTail 2).get j)
-    ⟨i, by grind⟩
-  simp at this
-  erw [this]
-  apply EqCast.of.SEq
-  apply SEq.of.Eq
-  have := PermuteTail.eq.CastRotate.of.LeLength (n := 2) (X := X) (by simp)
-  simp at this
-  rw [this]
-  have := GetCast.eq.Cast_Get.of.Eq.GtLength_0.right.fin
-    (s' := [m, n].permute 1 (-1))
-    (by simp)
-    (by simpa)
-    (X.rotate 1)
-    ⟨j, by grind⟩
-  simp at this
-  erw [this]
-  have := GetCast.eq.Cast_Get.of.Eq.GtLength_0.right.fin
-    (s' := ([m, n].permute 1 (-1)).tail)
-    (by simp)
-    (by simp; grind)
-    ((X.rotate 1).get j)
-    ⟨i, by grind⟩
-  simp at this
-  conv_lhs => erw [this]
-  apply EqCast.of.SEq
-  apply SEq.of.Eq
-  unfold Tensor.rotate
-  simp
-  have h_cast := congrArg (List.Vector α) (MulProdS.eq.ProdAppend ([m, n].drop (1 % [m, n].length)) ([m, n].take (1 % [m, n].length)))
-  let data := cast h_cast (X.data.splitAt 1).transpose.flatten
-  have h_data : data = cast h_cast (X.data.splitAt 1).transpose.flatten := rfl
-  erw [← h_data]
-  let X' : Tensor α [n, m] := ⟨data⟩
-  have h_X' : X' = ⟨data⟩ := rfl
-  erw [← h_X']
-  apply Get.of.Data.as.FlattenTransposeSplitAt_1
-  simp [X']
-  apply Eq.of.Eq_Cast.Eq (by simp) h_data
+  refine main_seq X i j ?_ ?_ ?_ ?_ ?_
+  exact (h_s.trans h_swap).symm
 
 
 -- created on 2025-07-13
--- updated on 2025-10-17
+-- updated on 2026-10-19

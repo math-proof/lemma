@@ -1,4 +1,3 @@
-import Lemma.Hyperreal.EqSt_0.of.Infinite
 import Lemma.Hyperreal.Infinite.of.Infinite.StDiv.ne.Zero
 import Lemma.Hyperreal.Infinitesimal.of.Infinitesimal.StDiv.ne.Zero
 import Lemma.Hyperreal.InfiniteMul.of.Infinite.Infinite

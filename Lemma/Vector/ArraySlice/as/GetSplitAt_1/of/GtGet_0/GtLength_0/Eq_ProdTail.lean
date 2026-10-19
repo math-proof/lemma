@@ -1,4 +1,3 @@
-import Lemma.List.ProdTake_1.eq.Get_0.of.GtLength_0
 import Lemma.Bool.SEq.of.SEq.SEq
 import Lemma.Vector.GetSplitAt_1.as.ArraySlice.of.GtGet_0.GtLength_0
 import Lemma.Vector.SEqArraySliceS.of.Eq.Eq

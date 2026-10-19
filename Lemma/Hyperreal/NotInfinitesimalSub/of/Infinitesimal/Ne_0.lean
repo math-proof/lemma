@@ -1,4 +1,3 @@
-import Lemma.Hyperreal.EqSt.of.InfinitesimalSub
 import Lemma.Hyperreal.EqSt_0.of.Infinitesimal
 open Hyperreal
 

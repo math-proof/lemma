@@ -1,5 +1,3 @@
-import sympy.sets.stirling_partition
-import sympy.Basic
 import Lemma.Finset.NcardImageConditionset.eq.NcardImageImageConditionset
 open Finset
 

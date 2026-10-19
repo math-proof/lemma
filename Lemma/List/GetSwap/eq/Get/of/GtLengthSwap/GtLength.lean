@@ -1,4 +1,3 @@
-import Lemma.List.Swap
 import Lemma.List.LengthSwap.eq.Length
 import Lemma.List.GetElemSwap.eq.SomeGet
 open List

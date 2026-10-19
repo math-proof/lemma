@@ -1,27 +1,15 @@
 import Lemma.Random.GradExpect_DotPow_Id.eq.Expect_DotFunSMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_Eq_Expect_CondDot.All_Eq_Expect_CondDot.EqMeasureCount.EqMeasureCount.All_Eq_Joint.In_Ico
-import Lemma.Random.ProbCond.eq.OfRealPol.of.Ne_0
-import Lemma.Random.SinglePSpace.of.EqMeasureCount.Measurable
-import Lemma.Measure.Count.eq.ProdCountS
-import Lemma.Measure.EqRnDeriv_Count
 import Mathlib.MeasureTheory.Constructions.Polish.Basic
 import Mathlib.Analysis.Calculus.Gradient.Basic
-import sympy.stats.variance
-import sympy.vector.Basic
-import sympy.vector.operators
-import sympy.concrete.sup
-import Lemma.Random.Differentiable_RealPreimageS.of.GtInftySup.All_Differentiable_Prob
-import Lemma.Random.AeRealPreimageSS.ne.Zero
-import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
-import Lemma.Random.PSpace_Path.of.All_PSpace
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Filter Topology Random Measure
 
 
 /--
-Turning the pointwise integral of the discounted weighted score into the `𝔼[s, a, r : M θ]` sugar.
+Turning the pointwise integral of the discounted weighted score into the `𝔼[r, s, a : M θ]` sugar.
 For a weight `X` (a function of the paths `s`, `a`, `r`) whose discounted tails
 `∑' k, γ ^ k * X[t + k]` are almost surely bounded by `B`, the `L`-image (Riesz representative) of
 `∑' t, γ ^ t • ∫ (∑' k, γ ^ k * X[t + k]) • d log π(a[t] | s[t])` equals
-`𝔼[s, a, r : M θ](∑' t, γ ^ t • ((γ ** Stack[k](k) @ X[t:]) • ∇ log π(a[t] | s[t])))`.
+`𝔼[r, s, a : M θ](∑' t, γ ^ t • ((γ ** Stack[k](k) @ X[t:]) • ∇ log π(a[t] | s[t])))`.
 Shared by `policy_gradient_theorem` (`X = r`) and `unbiased_advantage_estimate` (`X = ` advantage).
 -/
 @[path]
@@ -46,8 +34,8 @@ private lemma main
     X (fun j => s j ω) (fun j => a j ω) (fun j => r j ω) k)
   (h₃ : ∀ᵐ ω ∂(M θ), ∀ t,
     ‖∑' k, γ ^ k * X (fun j => s j ω) (fun j => a j ω) (fun j => r j ω) (t + k)‖ ≤ B)
-  (h₄ : ∀ x u, Differentiable ℝ (fun θ => M.pol.prob θ x u))
-  (h₅ : sup[θ, x, u] ‖∇[θ] M.pol.prob θ x u‖ < ∞) :
+  (h₄ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
+  (h₅ : sup[θ, x, u] ‖∇[θ] M.policy.prob θ x u‖ < ∞) :
 -- imply
   have : ∀ θ t, SinglePSpace (M θ) (a t, s t) := fun _ t =>
     SinglePSpace.of.EqMeasureCount.Measurable ((Random.Measurable.of.All_Eq.snd.snd h₁ t).prodMk (Random.Measurable.of.All_Eq.snd.fst h₁ t)) (by
@@ -73,7 +61,7 @@ private lemma main
     -- TODO(sympy 𝔼 patch): 𝔽((a₀ t) = … | (s₀ t) = …) with let a₀ := a; let s₀ := s
     let a₀ := a
     let s₀ := s
-    𝔼[s, a, r : M θ](
+    𝔼[r, s, a : M θ](
       ∑' t, γ ^ t •
         (((fun k : ℕ => γ ^ k) @ (fun k : ℕ => X s a r (t + k))) •
           ∇[θ] Real.log (ℙ[M θ]((a₀ t) = (a t) | (s₀ t) = (s t))).toReal)) := by
@@ -90,7 +78,7 @@ private lemma main
   have _ : BorelSpace Θ := ⟨rfl⟩
   have hscore : ∀ t, ∀ᵐ ω ∂(M θ),
       fderiv ℝ (fun θ' => Real.log (ℙ[M θ']((a t) = (a t ω) | (s t) = (s t ω))).toReal) θ =
-        fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' (s t ω) (a t ω))) θ := by
+        fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω))) θ := by
     intro t
     filter_upwards [AeRealPreimageSS.ne.Zero (s := s) (M := M) θ] with ω hω
     have hc : ContinuousAt (fun θ' => (M θ').real (s t ⁻¹' {s t ω})) θ :=
@@ -98,7 +86,7 @@ private lemma main
     refine Filter.EventuallyEq.fderiv_eq ((hc.eventually_ne (hω t)).mono fun θ' h => ?_)
     beta_reduce
     rw [ProbCond.eq.OfRealPol.of.Ne_0 h₁ hS hA (hP θ' t) h,
-      ENNReal.toReal_ofReal (M.pol.nonneg θ' _ _)]
+      ENNReal.toReal_ofReal (M.policy.nonneg θ' _ _)]
   let L : StrongDual ℝ Θ ≃L[ℝ] Θ := (InnerProductSpace.toDual ℝ Θ).symm.toContinuousLinearEquiv
   have hL : ∀ φ, (InnerProductSpace.toDual ℝ Θ).symm φ = L φ := fun _ => rfl
   let G : (ℕ → ℝ × S × A) → Θ := fun ω => ∑' t, γ ^ t • ((∑' k, γ ^ k * X (fun j => s j ω) (fun j => a j ω) (fun j => r j ω) (t + k)) •
@@ -111,14 +99,14 @@ private lemma main
         gradient (fun θ' => Real.log (ℙ[M θ']((a t) = p.2 | (s t) = p.1)).toReal) θ)).comp_measurable
           ((Random.Measurable.of.All_Eq.snd.fst h₁ t).prodMk (Random.Measurable.of.All_Eq.snd.snd h₁ t)))
   -- bound of the score at the realized pair
-  obtain ⟨Ms, hMs⟩ : ∃ Ms : ℝ, Ms = ∑ q : S × A, ‖fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' q.1 q.2)) θ‖ :=
+  obtain ⟨Ms, hMs⟩ : ∃ Ms : ℝ, Ms = ∑ q : S × A, ‖fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' q.1 q.2)) θ‖ :=
     ⟨_, rfl⟩
   have hsc : ∀ t, ∀ᵐ ω ∂(M θ),
       ‖gradient (fun θ' => Real.log (ℙ[M θ']((a t) = (a t ω) | (s t) = (s t ω))).toReal) θ‖ ≤ Ms := by
     intro t
     filter_upwards [hscore t] with ω hω
     rw [gradient, LinearIsometryEquiv.norm_map, hω, hMs]
-    exact Finset.single_le_sum (f := fun q : S × A => ‖fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' q.1 q.2)) θ‖)
+    exact Finset.single_le_sum (f := fun q : S × A => ‖fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' q.1 q.2)) θ‖)
       (fun _ _ => norm_nonneg _) (Finset.mem_univ (s t ω, a t ω))
   obtain ⟨K, hK⟩ : ∃ K : ℝ, K = B * Ms := ⟨_, rfl⟩
   have hFb : ∀ t, ∀ᵐ ω ∂(M θ),
@@ -145,26 +133,26 @@ private lemma main
   have hGsm : StronglyMeasurable G :=
     StronglyMeasurable.tsum (L := SummationFilter.unconditional ℕ) fun t =>
       (hg t).const_smul (γ ^ t)
-  -- reconstruct a trajectory from path values (s_path, a_path, r_path)
-  let fromPath := fun (p : (ℕ → S) × (ℕ → A) × (ℕ → ℝ)) =>
-    fun t => (p.2.2 t, p.1 t, p.2.1 t)
+  -- reconstruct a trajectory from path values (r_path, s_path, a_path)
+  let fromPath := fun (p : (ℕ → ℝ) × (ℕ → S) × (ℕ → A)) =>
+    fun t => (p.1 t, p.2.1 t, p.2.2 t)
   have fromPath_meas : Measurable fromPath :=
     Measurable.of_eval fun t =>
-      ((measurable_pi_apply t).comp (measurable_snd.comp measurable_snd)).prodMk
-        (((measurable_pi_apply t).comp measurable_fst).prodMk
-          ((measurable_pi_apply t).comp (measurable_fst.comp measurable_snd)))
+      ((measurable_pi_apply t).comp measurable_fst).prodMk
+        (((measurable_pi_apply t).comp (measurable_fst.comp measurable_snd)).prodMk
+          ((measurable_pi_apply t).comp (measurable_snd.comp measurable_snd)))
   -- path-binder form and G define the same Bochner integral
   have hpath :
     -- TODO(sympy 𝔼 patch): 𝔽((a₀ t) = … | (s₀ t) = …) with let a₀ := a; let s₀ := s
     let a₀ := a
     let s₀ := s
-    𝔼[s, a, r : M θ](
+    𝔼[r, s, a : M θ](
       ∑' t, γ ^ t •
         (((fun k : ℕ => γ ^ k) @ (fun k : ℕ => X s a r (t + k))) •
           ∇[θ] Real.log (ℙ[M θ]((a₀ t) = (a t) | (s₀ t) = (s t))).toReal)) =
       ∫ ω, G ω ∂(M θ) := by
     have hx : AEMeasurable
-      (AsPathRV.path s, AsPathRV.path a, AsPathRV.path r) (M θ) :=
+      (AsPathRV.path r, AsPathRV.path s, AsPathRV.path a) (M θ) :=
       PSpace.aemeasurable
     simp only [AsPathRV.path_process, Dot.dot]
     rw [Expectation.ofRV, expectation_bochner]

@@ -1,7 +1,5 @@
 import Lemma.Bool.SEq.is.Eq
 import Lemma.Vector.EqFlattenMapRange.of.All_EqGetUnflatten
-import Lemma.Vector.GetUnflatten.as.ArraySlice
-import sympy.vector.vector
 open Bool Vector
 
 

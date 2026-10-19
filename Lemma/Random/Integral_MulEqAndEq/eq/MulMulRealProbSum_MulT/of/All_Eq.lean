@@ -1,11 +1,7 @@
-import sympy.stats.policy_trajectory
-import sympy.Basic
 import Lemma.Random.EqW
 import Lemma.Random.Integral_Mul.eq.Integral_Mul_Kf.of.All_LeNorm.StronglyMeasurable.All_LeNorm.StronglyMeasurable
 import Lemma.Random.Integral_MulEq12AndEq22.eq.MulMulRealProb
 import Lemma.Random.Kf.eq.Sum_MulTW.of.All_LeNorm.StronglyMeasurable
-import Lemma.Real.Norm.le.Sum_Norm
-import Lemma.Real.Norm_1.le.One
 import Lemma.Real.StronglyMeasurable_Eq12AndEq22
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random Real
 
@@ -29,7 +25,7 @@ private lemma main
   (f : S → ℝ) :
 -- imply
   ∫ ω, (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) * f (s (t + 1) ω) ∂(M θ) =
-    (M θ).real (s t ⁻¹' {x}) * M.pol.prob θ x u * ∑ y, (M.env.trans (x, u)).real {y} * f y := by
+    (M θ).real (s t ⁻¹' {x}) * M.policy.prob θ x u * ∑ y, (M.env.trans (x, u)).real {y} * f y := by
 -- proof
   obtain rfl : s = fun t ω ↦ (ω t).2.1 := funext₂ fun t ω ↦ (congrArg (·.2.1) (congrFun (h₀ t) ω)).symm
   obtain rfl : a = fun t ω ↦ (ω t).2.2 := funext₂ fun t ω ↦ (congrArg (·.2.2) (congrFun (h₀ t) ω)).symm

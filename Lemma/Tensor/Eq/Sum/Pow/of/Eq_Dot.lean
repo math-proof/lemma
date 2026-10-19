@@ -1,5 +1,4 @@
 import Lemma.Tensor.GetDot_SwapMatrix.eq.Get
-import sympy.Basic
 open Tensor
 
 

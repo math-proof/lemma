@@ -1,5 +1,4 @@
 import Lemma.Real.Integral_Mul.eq.Integral.of.Gt_0
-import sympy.Basic
 open Real
 
 

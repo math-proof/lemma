@@ -1,5 +1,4 @@
 import sympy.sets.sets
-import sympy.Basic
 import Lemma.Finset.Alpha_MapRange.eq.DivHK.of.All_Imp_Gt_0.Gt_0
 open Finset Continuant
 

@@ -6,7 +6,6 @@ import Lemma.Bool.Eq_Ite.of.Cond.NotAnd.Eq
 import Lemma.Bool.IffAndSAnd
 import Lemma.Nat.Gt.Lt.is.False
 import Lemma.Bool.Iff_True.of.Cond
-import Lemma.Int.Sub.eq.Add_Neg
 import Lemma.Nat.Eq.is.False.of.Lt
 import Lemma.Nat.Gt.is.False.of.Lt
 import Lemma.Nat.Sub.eq.AddNeg

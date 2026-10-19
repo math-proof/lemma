@@ -1,6 +1,4 @@
 import Lemma.Real.HasDerivAtPolarRadial_PolarAngular
-import sympy.physics.vector.kinematics
-import sympy.Basic
 
 
 /-- Derivative form of \(d\hat{r}/d\theta=\hat{\theta}\). -/

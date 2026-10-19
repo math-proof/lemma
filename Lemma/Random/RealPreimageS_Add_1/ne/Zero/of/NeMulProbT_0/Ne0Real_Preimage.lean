@@ -1,8 +1,5 @@
-import sympy.stats.policy_trajectory
-import sympy.Basic
 import Lemma.Random.Integrable.of.Measurable
 import Lemma.Random.Integral_MulEqS.eq.MulRealSum_MulProbSum_MulT
-import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
 import Lemma.Random.T.ge.Zero
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 
@@ -25,23 +22,23 @@ private lemma main
   (y : S)
   (h₀ : ∀ t, (· t) = (r t, s t, a t))
   (hP : (M θ).real (s t ⁻¹' {x}) ≠ 0)
-  (hz : M.pol.prob θ x u * (M.env.trans (x, u)).real {y} ≠ 0) :
+  (hz : M.policy.prob θ x u * (M.env.trans (x, u)).real {y} ≠ 0) :
 -- imply
   (M θ).real (s (t + 1) ⁻¹' {y}) ≠ 0 := by
 -- proof
   have hE : ∫ ω, (if s t ω = x then (1:ℝ) else 0) * (if s (t + 1) ω = y then (1:ℝ) else 0) ∂(M θ) =
-      (M θ).real (s t ⁻¹' {x}) * ∑ u', M.pol.prob θ x u' * (M.env.trans (x, u')).real {y} := by
+      (M θ).real (s t ⁻¹' {x}) * ∑ u', M.policy.prob θ x u' * (M.env.trans (x, u')).real {y} := by
     refine (Integral_MulEqS.eq.MulRealSum_MulProbSum_MulT h₀ (M := M) θ t x (fun y' => if y' = y then (1:ℝ) else 0)).trans ?_
     congr 1
     refine Finset.sum_congr rfl (fun u' _ => ?_)
     congr 1
     simp
-  have hpos : 0 < (M θ).real (s t ⁻¹' {x}) * ∑ u', M.pol.prob θ x u' * (M.env.trans (x, u')).real {y} := by
+  have hpos : 0 < (M θ).real (s t ⁻¹' {x}) * ∑ u', M.policy.prob θ x u' * (M.env.trans (x, u')).real {y} := by
     refine mul_pos (lt_of_le_of_ne measureReal_nonneg (Ne.symm hP)) ?_
-    refine lt_of_lt_of_le (lt_of_le_of_ne (mul_nonneg (M.pol.nonneg θ x u) (T.ge.Zero (M := M) x u y))
+    refine lt_of_lt_of_le (lt_of_le_of_ne (mul_nonneg (M.policy.nonneg θ x u) (T.ge.Zero (M := M) x u y))
       (Ne.symm hz)) ?_
-    apply Finset.single_le_sum (f := fun u' => M.pol.prob θ x u' * (M.env.trans (x, u')).real {y})
-      (fun u' _ => mul_nonneg (M.pol.nonneg _ _ _) (T.ge.Zero (M := M) _ _ _)) (Finset.mem_univ u)
+    apply Finset.single_le_sum (f := fun u' => M.policy.prob θ x u' * (M.env.trans (x, u')).real {y})
+      (fun u' _ => mul_nonneg (M.policy.nonneg _ _ _) (T.ge.Zero (M := M) _ _ _)) (Finset.mem_univ u)
   have hle : ∫ ω, (if s t ω = x then (1:ℝ) else 0) * (if s (t + 1) ω = y then (1:ℝ) else 0) ∂(M θ) ≤
       (M θ).real (s (t + 1) ⁻¹' {y}) := by
     rw [← integral_indicator_one (Random.Measurable.of.All_Eq.snd.fst h₀ (t + 1) (measurableSet_singleton y))]

@@ -1,6 +1,3 @@
-import Lemma.Bool.SEq.is.EqCast.of.Eq
-import Lemma.Bool.SEq.is.SEqCast.of.Eq
-import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.List.EqAppendTake__ListGet.of.GeLength_2
 import Lemma.Nat.AddSub.eq.Sub_Sub.of.Ge.Ge
 import Lemma.Tensor.Tensordot.of.SEq.SEq

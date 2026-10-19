@@ -1,7 +1,5 @@
 import Mathlib.Analysis.SpecialFunctions.Sqrt
 import Lemma.Set.LeSquare.is.In.Icc
-import sympy.sets.sets
-import sympy.Basic
 
 
 @[path]

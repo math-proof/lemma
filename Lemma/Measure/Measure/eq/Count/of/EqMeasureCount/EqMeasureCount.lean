@@ -1,6 +1,5 @@
 import Lemma.Measure.Count.eq.ProdCountS
 import sympy.stats.rv
-import sympy.Basic
 open MeasureTheory
 
 

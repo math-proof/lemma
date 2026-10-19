@@ -1,22 +1,16 @@
 import Mathlib.GroupTheory.Perm.Fin
 import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
-import Lemma.Bool.SEq.is.Eq
 import Lemma.Nat.Delta.eq.Ite
 import Lemma.Tensor.EqGet0_0
-import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.Eq.is.All_EqGetS
-import Lemma.Tensor.GetAppend.eq.Get.of.Lt
-import Lemma.Tensor.GetAppend.eq.Get_Sub.of.GtAdd.Ge
 import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
 import Lemma.Tensor.GetEye.eq.Delta
 import Lemma.Tensor.GetHstack.eq.Get.of.Lt
 import Lemma.Tensor.GetHstack.eq.Get_Sub.of.GtAdd.Ge
-import Lemma.Tensor.SEqGetS.of.SEq.GtLength
 import sympy.matrices.determinant
-import sympy.matrices.expressions.special
 import torch.eye
 open Bool Equiv Nat Tensor
-set_option maxHeartbeats 800000
+set_option maxHeartbeats 400000
 
 
 private abbrev blockSwap (α : Type*) [AddMonoidWithOne α] [CharZero α] (m n : ℕ) : Tensor α [m + n, n + m] :=

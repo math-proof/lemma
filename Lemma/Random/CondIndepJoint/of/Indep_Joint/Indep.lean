@@ -1,6 +1,5 @@
 import Mathlib.Probability.Independence.Basic
 import Mathlib.MeasureTheory.MeasurableSpace.Prod
-import sympy.stats.joint_rv
 import Lemma.Random.IndepJoint.of.All_Eq_UFn_MulPreimageS
 open ProbabilityTheory MeasureTheory
 

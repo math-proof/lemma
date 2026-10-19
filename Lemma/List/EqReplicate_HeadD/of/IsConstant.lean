@@ -1,4 +1,3 @@
-import Lemma.List.IsConstantTail.of.IsConstant
 import Lemma.List.UFnGet_0.of.NeLength_0.All_UFn
 open List
 

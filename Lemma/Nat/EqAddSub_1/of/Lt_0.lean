@@ -1,5 +1,3 @@
-import sympy.functions.elementary.integers
-import Lemma.Nat.Eq.of.Le.Le
 import Lemma.Nat.GeAddSub_1
 import Lemma.Nat.GeAddSub_1.of.Lt_0
 open Nat

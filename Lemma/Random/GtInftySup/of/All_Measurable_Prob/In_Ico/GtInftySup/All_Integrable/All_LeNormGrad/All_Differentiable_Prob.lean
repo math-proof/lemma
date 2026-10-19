@@ -1,10 +1,4 @@
-import sympy.stats.policy_trajectory.continuous_action
-import sympy.Basic
-import sympy.vector.operators
-import sympy.concrete.sup
 import Lemma.Random.HasFDerivAt.of.All_Measurable_Prob.In_Ico.GtInftySup.All_Integrable.All_LeNormGrad.All_Differentiable_Prob
-import Lemma.Random.Differentiable.All_LeNormFderivMulAdd_1MulAbs_R.of.All_LeIntegral.All_Integrable.All_LeNormFderiv.All_Differentiable_Prob.All_Measurable_Prob
-import Lemma.Set.Summable_MulPowMulAdd_1.of.In_Ico
 open MeasureTheory PolicyGradient Random Set
 
 
@@ -22,18 +16,18 @@ private lemma main
   {γ : ℝ}
   {g : S → A → ℝ}
 -- given
-  (h₀ : ∀ x u, Differentiable ℝ (fun θ => M.pol.prob θ x u))
-  (h₁ : ∀ θ x u, ‖∇[θ] M.pol.prob θ x u‖ ≤ g x u)
+  (h₀ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
+  (h₁ : ∀ θ x u, ‖∇[θ] M.policy.prob θ x u‖ ≤ g x u)
   (h₂ : ∀ x, Integrable (g x) ReferenceMeasure.measure)
   (h₃ : sup[x] ∫ u, g x u ∂ReferenceMeasure.measure < ∞)
   (h₄ : γ ∈ Set.Ico 0 1)
-  (h₅ : ∀ θ, Measurable (fun z : S × A => M.pol.prob θ z.1 z.2)) :
+  (h₅ : ∀ θ, Measurable (fun z : S × A => M.policy.prob θ z.1 z.2)) :
 -- imply
   sup[θ, y] ‖∇[θ] M.Vkd θ γ y‖ < ∞ := by
 -- proof
   obtain ⟨Cg, hCg⟩ := id h₃
   have hg : ∀ x, ∫ u, g x u ∂ReferenceMeasure.measure ≤ Cg := fun x => hCg ⟨x, rfl⟩
-  have hC : ∀ θ x u, ‖fderiv ℝ (fun θ => M.pol.prob θ x u) θ‖ ≤ g x u := fun θ x u => by
+  have hC : ∀ θ x u, ‖fderiv ℝ (fun θ => M.policy.prob θ x u) θ‖ ≤ g x u := fun θ x u => by
     simpa [gradient, LinearIsometryEquiv.norm_map] using h₁ θ x u
   refine ⟨∑' k : ℕ, γ ^ k * ((k + 1) * (Cg * |M.env.R|)), ?_⟩
   rintro _ ⟨⟨θ, y⟩, rfl⟩

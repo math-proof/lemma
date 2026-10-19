@@ -1,5 +1,4 @@
 import Lemma.Real.LeLog.of.Le
-import sympy.Basic
 open Real
 
 

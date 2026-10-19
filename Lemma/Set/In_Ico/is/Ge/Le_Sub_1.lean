@@ -2,8 +2,6 @@ import Lemma.Nat.Lt_Add_1.of.Le
 import Lemma.Set.Ge.of.In_Ico
 import Lemma.Set.In_Ico.is.Le.Lt
 import Lemma.Set.Le_Sub_1.of.In_Ico
-import sympy.functions.elementary.integers
-import sympy.sets.sets
 open Set
 
 

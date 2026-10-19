@@ -1,6 +1,4 @@
-import sympy.concrete.continued_fraction
 import sympy.sets.sets
-import sympy.Basic
 import Lemma.Finset.Alpha_MapRange.eq.DivHK.of.All_Gt_0
 open Finset Continuant
 

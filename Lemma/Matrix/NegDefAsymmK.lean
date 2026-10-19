@@ -1,5 +1,3 @@
-import sympy.stats.markov_reward_process
-import sympy.Basic
 import sympy.matrices.dense
 import Lemma.Matrix.PosDefD
 import Lemma.Matrix.DotVecMul_MulDP.le.DotVecMul_D

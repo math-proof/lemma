@@ -1,5 +1,4 @@
 import Lemma.Hyperreal.EqSt
-import Lemma.Hyperreal.EqSt.of.InfinitesimalSub
 import Lemma.Hyperreal.EqSt_0.of.Infinite
 import Lemma.Hyperreal.InfiniteDiv.of.Infinite.NotInfinite
 import Lemma.Hyperreal.LeSt_0.of.Le_0

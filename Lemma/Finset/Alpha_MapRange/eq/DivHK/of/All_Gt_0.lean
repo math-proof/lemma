@@ -1,5 +1,3 @@
-import sympy.concrete.continued_fraction
-import sympy.Basic
 import Lemma.Finset.All_EqAlphaAppend_DivHK.of.All_Gt_0
 open Finset Continuant
 

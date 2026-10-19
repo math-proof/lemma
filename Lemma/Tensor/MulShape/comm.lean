@@ -1,5 +1,3 @@
-import sympy.core.mul
-import sympy.Basic
 import Lemma.List.ZipWithLcm.comm.of.EqLengthS
 open List Tensor
 

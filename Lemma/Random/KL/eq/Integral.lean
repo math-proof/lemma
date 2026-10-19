@@ -1,6 +1,5 @@
 import Mathlib.InformationTheory.KullbackLeibler.Basic
 import Lemma.Random.KL.eq.Expect
-import sympy.Basic
 open MeasureTheory InformationTheory Random
 
 

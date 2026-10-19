@@ -1,7 +1,3 @@
-import sympy.stats.policy_trajectory.gradient
-import sympy.Basic
-import Lemma.Random.Pn0.eq.Eq
-import Lemma.Random.PnAdd_1.eq.Sum_MulProbSum_MulTPn
 import Lemma.Random.Pn1.eq.P1
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
 
@@ -26,11 +22,11 @@ private lemma main
     simp [Pn0.eq.Eq]
   | succ n ih =>
     calc
-      _ = ∑ u, M.pol.prob θ x u * ∑ y', (M.env.trans (x, u)).real {y'} * M.Pn θ (n + 1) y' z :=
+      _ = ∑ u, M.policy.prob θ x u * ∑ y', (M.env.trans (x, u)).real {y'} * M.Pn θ (n + 1) y' z :=
         PnAdd_1.eq.Sum_MulProbSum_MulTPn (M := M) θ (n + 1) x z
-      _ = ∑ u, M.pol.prob θ x u * ∑ y', (M.env.trans (x, u)).real {y'} * ∑ y, M.Pn θ n y' y * M.P1 θ y z := by
+      _ = ∑ u, M.policy.prob θ x u * ∑ y', (M.env.trans (x, u)).real {y'} * ∑ y, M.Pn θ n y' y * M.P1 θ y z := by
         simp_rw [ih]
-      _ = ∑ y, (∑ u, M.pol.prob θ x u * ∑ y', (M.env.trans (x, u)).real {y'} * M.Pn θ n y' y) * M.P1 θ y z := by
+      _ = ∑ y, (∑ u, M.policy.prob θ x u * ∑ y', (M.env.trans (x, u)).real {y'} * M.Pn θ n y' y) * M.P1 θ y z := by
         simp only [Finset.mul_sum, Finset.sum_mul]
         conv_rhs => rw [Finset.sum_comm]
         refine Finset.sum_congr rfl fun u _ => ?_

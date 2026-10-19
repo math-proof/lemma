@@ -1,5 +1,3 @@
-import Lemma.Int.EqSign_1.of.Gt_0
-import Lemma.Int.In_Range.is.Le.Lt
 import Lemma.Int.In_Range.is.Mod.In_Range
 open Int
 

@@ -1,5 +1,4 @@
 import sympy.stats.quantile
-import sympy.Basic
 import Lemma.Random.AddRealLtRealGe.eq.One
 open MeasureTheory
 

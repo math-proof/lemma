@@ -1,7 +1,6 @@
 import torch.Tensor
 import Lemma.Bool.EqCast.of.SEq
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
-import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Vector.GetSplitAt_1.eq.GetUnflatten.of.Lt
 import Lemma.Vector.GetMap.eq.UFnGet
 import Lemma.Vector.EqUnflattenFlatten

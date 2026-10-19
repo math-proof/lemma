@@ -4,7 +4,6 @@ import torch.Tensor.bmm
 import torch.Tensor.select
 import Lemma.Tensor.Cast_ResizeCast_0.eq.Zero
 import Lemma.Tensor.EqBmm_0'0
-import Lemma.Tensor.EqCast_0'0.of.Eq
 import Lemma.Tensor.Select0.eq.Zero
 import Lemma.List.Set_0.eq.Cons_Tail.of.GtLength_0
 import Lemma.List.SetAppend.eq.Append_Set.of.LeLength

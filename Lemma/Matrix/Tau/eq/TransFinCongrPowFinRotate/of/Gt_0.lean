@@ -1,5 +1,3 @@
-import sympy.matrices.block_swap
-import sympy.Basic
 import Lemma.Fin.GetPowFinRotate_Add_1.eq.Add
 open Fin Equiv Matrix.BlockSwap
 

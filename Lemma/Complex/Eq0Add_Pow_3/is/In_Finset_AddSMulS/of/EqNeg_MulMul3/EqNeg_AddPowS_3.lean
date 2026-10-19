@@ -1,7 +1,5 @@
 import Lemma.Complex.Add_Conj.eq.Neg1
-import Lemma.Complex.Conj.eq.Square
 import Lemma.Complex.Mul_Conj.eq.One
-import Lemma.Complex.Pow_3.eq.One
 import Lemma.Int.EqSub.is.Eq_Add
 import Lemma.Int.Sub.eq.Zero.is.Eq
 import Lemma.Nat.Mul.eq.Zero.is.OrEqS_0

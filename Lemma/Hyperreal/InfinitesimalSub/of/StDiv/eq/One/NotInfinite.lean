@@ -1,15 +1,11 @@
 import Lemma.Hyperreal.Infinite.of.Infinite.StDiv.ne.Zero
 import Lemma.Hyperreal.Infinite.of.InfiniteDiv.NotInfinitesimal
-import Lemma.Hyperreal.Infinitesimal.is.All_LtAbs
 import Lemma.Hyperreal.Infinitesimal.of.Infinitesimal.StDiv.ne.Zero
 import Lemma.Hyperreal.InfinitesimalSub.of.EqSt.NotInfinite
 import Lemma.Hyperreal.InfinitesimalSub.of.Infinitesimal.Infinitesimal
 import Lemma.Hyperreal.Ne_0.of.NotInfinitesimal
-import Lemma.Hyperreal.NotInfinite.is.Any_LeAbs
 import Lemma.Int.GtAbs_0.of.Ne_0
-import Lemma.Rat.AbsDiv.eq.DivAbsS
 import Lemma.Rat.Lt0Div.of.Gt_0.Gt_0
-import Lemma.Rat.LtDiv.is.Lt_Mul.of.Gt_0
 import Lemma.Rat.SubDiv.eq.DivSub.of.Ne_0
 open Hyperreal Rat Int
 

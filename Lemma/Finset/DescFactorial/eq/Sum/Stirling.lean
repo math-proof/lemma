@@ -1,7 +1,5 @@
-import sympy.functions.combinatorial.integer_factorials
 import Mathlib.RingTheory.Polynomial.Pochhammer
 import sympy.sets.sets
-import sympy.Basic
 import Lemma.Finset.EvalDescPochhammer.eq.Sum_MulMulPowStirlingFirstPowNeg1Sub
 
 

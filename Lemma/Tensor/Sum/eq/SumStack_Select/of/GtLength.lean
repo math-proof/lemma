@@ -1,27 +1,13 @@
-import Lemma.Bool.EqCast.of.SEq
-import Lemma.Bool.SEq.is.Eq
-import Lemma.List.EqGetCons
-import Lemma.List.EraseIdx.eq.Cons_EraseIdxTail.of.GtLength_0
-import Lemma.List.EraseIdxTail.eq.TailEraseIdx.of.Lt_SubLength_1
 import Lemma.List.GetEraseIdx.eq.Get.of.Gt.GtLength
 import Lemma.List.GtGet.of.GtGetTail.GtLengthTail
-import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.GtLength
-import Lemma.Nat.Gt_0.of.Gt
-import Lemma.Nat.Lt_Sub.of.LtAdd
 import Lemma.Tensor.Cast_SumStack.eq.SumStack_Cast.of.Eq
 import Lemma.Tensor.EqGetStack.of.Lt
 import Lemma.Tensor.Stack.of.All_Eq
 import Lemma.Tensor.GetSelect.as.SelectGet.of.GtGet_0.GtGet_Add_1.LtAdd_1Length
-import Lemma.Tensor.GetSumStack.eq.SumStack_Get.of.GtLength_0
 import Lemma.Tensor.GtLength.of.GtLength
-import Lemma.Tensor.GtLength.of.GtLength_0
-import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.GtLength_0
 import Lemma.Tensor.SEqSumSStack.of.All_SEq.Eq.Eq
-import Lemma.Tensor.SEqSumSStack.of.All_SEq.Eq.Gt_0
 import Lemma.Tensor.Select_0.as.Get.of.GtLength_0
-import Lemma.Tensor.Sum.as.Stack_Sum.of.GtLength
 import Lemma.Tensor.Sum.eq.Zero.of.Eq0Get.GtLength
-import Lemma.Tensor.Sum.eq.Zero.of.EqGet_0'0.GtLength_0
 import Lemma.Tensor.Sum_0.as.SumStack_Get.of.GtLength_0
 import torch.Tensor.sum
 open Bool List Nat Tensor

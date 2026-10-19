@@ -1,4 +1,3 @@
-import Lemma.Bool.SEq.is.Eq
 import Lemma.Tensor.SEqMulS
 open Bool Tensor
 

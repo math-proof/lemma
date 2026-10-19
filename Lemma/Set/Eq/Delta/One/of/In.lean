@@ -1,7 +1,5 @@
 import Lemma.Nat.Delta.eq.Ite
 import Lemma.Set.In_Finset.is.OrEqS
-import sympy.functions.special.tensor_functions
-import sympy.Basic
 
 open Nat Set
 

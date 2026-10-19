@@ -1,7 +1,4 @@
-import Lemma.Bool.SEq.is.EqCast.of.Eq
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
-import Lemma.Bool.SEqCast.of.Eq
-import Lemma.List.EqEraseIdx.of.LeLength
 import Lemma.List.EqSetInsertIdxEraseIdx.of.GtLength
 import Lemma.Nat.NotLt.is.Ge
 import Lemma.Tensor.Keepdim.eq.Cast.of.LeLength

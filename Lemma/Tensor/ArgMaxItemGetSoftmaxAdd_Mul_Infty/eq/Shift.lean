@@ -1,10 +1,8 @@
 import Lemma.Tensor.ItemGetGetSoftmaxAdd_Mul_Infty.eq.Ite
 import Lemma.Hyperreal.Lt.of.XEqCoe.XEqCoe.Lt
-import sympy.concrete.expr_with_limits
-import sympy.Basic
 import Lemma.Set.EqArgMax.of.All_Lt.In
 open Tensor Hyperreal
-set_option maxHeartbeats 2000000
+set_option maxHeartbeats 1000000
 
 
 /--

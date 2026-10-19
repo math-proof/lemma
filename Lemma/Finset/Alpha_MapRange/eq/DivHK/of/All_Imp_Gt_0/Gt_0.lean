@@ -1,6 +1,3 @@
-import sympy.Basic
-import Lemma.Finset.Alpha_Cons.eq.Add_DivAlpha
-import Lemma.Finset.All_GeK_0.et.GtK_Add_1_0.of.All_Gt_0
 import Lemma.Finset.Alpha_MapRange.eq.DivHK.of.All_Gt_0
 import Lemma.Finset.All_Imp_EqK_EqH.of.All_Imp_Eq
 open Finset Continuant

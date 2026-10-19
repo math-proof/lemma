@@ -1,7 +1,5 @@
 import Lemma.Tensor.Ne.of.Lt.NeProd_0
 import Lemma.List.Lt0LengthSlice.of.Lt.Lt
-import Lemma.Nat.EqMin.of.Ge
-import Lemma.Nat.Ne.of.Gt
 import Lemma.Tensor.GtCoe_0.is.Gt_0
 import Lemma.Tensor.GtSumExp_0.of.Ne_0
 import Lemma.Tensor.EqDivMul.of.Ne_0
@@ -19,36 +17,23 @@ import Lemma.Tensor.GtExp_0
 import Lemma.Tensor.Lt0Get.of.Gt_0
 import Lemma.Tensor.Lt0SumGetBandPart
 import Lemma.Tensor.Lt0SumMul.of.GtSum_0.Ge_0.Gt_0
-import Lemma.Tensor.GtSumData_0.is.GtSum_0
-import Lemma.Hyperreal.Eq_0.of.Infinitesimal
-import Lemma.Vector.MapSum.eq.SumMap.of.All_EqUFnAdd
-import Lemma.Tensor.MapData.eq.DataMap
 import Lemma.Tensor.MapBandPart.eq.BandPartMap.of.EqUFn0'0
 import Lemma.Tensor.MapMul.eq.MulMapS.of.All_Eq_Mul
 import Lemma.Tensor.Eq1Coe1
-import Lemma.Tensor.GetMap.eq.MapGet
 import Lemma.Tensor.MapExp.eq.ExpMap.of.All_EqUFnExp_ExpUFn
 import Lemma.Tensor.Le0Get.of.Ge_0
 import Lemma.Tensor.Le0BandPart
-import Lemma.Tensor.Le0Stack.of.All_Ge_0
 import Lemma.Tensor.GeExp_0
 import Lemma.Tensor.Le0Mul.of.Ge_0.Ge_0
 import Lemma.Tensor.XEqDivS_Sum_0.of.XEq.NotInfinitesimalSum.Ge_0
 import Lemma.Tensor.Div_KeepdimSum.eq.Div_Sum
-import Lemma.Tensor.BandPart.eq.Stack_BoolIn_Icc
-import Lemma.Tensor.Get.of.Eq
-import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.ExpAdd_MulInfty.eq.Mul_Stack_Bool
 import Lemma.Tensor.GetDiv.eq.DivGetS
-import Lemma.Tensor.GetDot.eq.DotGet
 import Lemma.Tensor.GetKeepdim.eq.KeepdimCast_Get.of.GtGet_0.Gt_0.GtLength
-import Lemma.Tensor.GetSum.as.SumGet.of.GtGet_0.LtAdd_1Length
-import Lemma.Tensor.XEq.is.All_XEqGetS
-import Lemma.Tensor.Softmax.eq.DivExp_KeepdimSumExp
 import Lemma.Tensor.XEqGetS.of.XEq.GtLength
 import torch.Tensor.sum
 open Tensor Hyperreal
-set_option maxHeartbeats 4000000
+set_option maxHeartbeats 2000000
 
 
 @[path]

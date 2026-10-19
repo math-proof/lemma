@@ -9,8 +9,6 @@ import Lemma.Real.SemiLatusRectum.eq.Div.of.EqNegMulMul
 import Lemma.Real.Square.eq.Div.of.Ne_0.Ne_0.Ne_0.Ne_0.EqDivMulMul.EqMulSub1Square.EqDiv
 import Lemma.Real.Square.eq.MulSub1Square.of.Ge_0.Lt_1.EqMulSqrtSub1Square
 import Lemma.Real.SquareA.eq.MulSquareOrbitEccentricity.of.Ne_0.Ne_0.Ne_0.Ne_0.DifferentiableAt.Eq.Eq
-import sympy.physics.vector.kinematics
-import sympy.Basic
 open Real
 
 

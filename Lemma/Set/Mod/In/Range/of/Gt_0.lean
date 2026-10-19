@@ -1,6 +1,5 @@
 import Lemma.Finset.Lt.of.In_Ico
 import Lemma.Int.Mod.eq.Sub_Mul_FloorDiv
-import Lemma.Set.Ge.of.In_Ico
 import Lemma.Rat.Sub_Mul_FloorDiv.in.Ico.of.Gt_0
 open Finset Int Set Rat
 

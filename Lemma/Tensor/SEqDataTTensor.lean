@@ -1,26 +1,15 @@
-import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
 import torch.Tensor.prod
 import torch.Tensor.permute
-import Lemma.List.EqPermute
-import Lemma.List.LengthSlice.eq.Min
 import Lemma.List.Permute__Neg1.eq.Swap.of.GtVal_0
-import Lemma.List.LengthSlice.eq.One.of.Lt
 import Lemma.List.ProdPermute.eq.Prod
 import Lemma.List.TailPermute__Neg.eq.EraseIdx
-import Lemma.Nat.EqMod.of.Lt
-import Lemma.Tensor.DataSelect.as.FlattenGetSliceSplitAtData
 import Lemma.Tensor.GetData.eq.GetDataGet.of.GtProd.GtLength_0
 import Lemma.Tensor.GetPermuteTail.as.Select.of.GtGet.GtLength_0
 import Lemma.Tensor.SEqPermute
 import Lemma.Tensor.Permute__Neg.as.PermuteTail.of.Val.eq.SubLength_1
-import Lemma.Vector.GetCast.eq.Get.of.Eq
-import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Vector.GetGetSlice.eq.Get.of.Eq.Eq.Eq.Eq
-import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
-import Lemma.Vector.Head.eq.Get_0
-import Lemma.Vector.SEq.of.All_EqGetS.Eq
 open Fin List Nat Tensor Vector
-set_option maxHeartbeats 400000
+set_option maxHeartbeats 200000
 
 
 @[path, cast]

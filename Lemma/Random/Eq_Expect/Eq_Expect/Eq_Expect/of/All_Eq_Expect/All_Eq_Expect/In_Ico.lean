@@ -1,17 +1,8 @@
 import Lemma.Random.MEq_Expect_Cond.MEq_Expect_Cond.MEq_Expect_Cond.of.MEqExpectS.All_MEq_Expect_CondDot.All_MEq_Expect_CondDot.GtInftySup.In_Ico
 import Lemma.Random.MEqExpectS.of.All_Eq.In_Ico
-import Lemma.Random.MeasurableJoint.is.Measurable.Measurable
-import Lemma.Random.MEqCondExp_Integral.of.Integrable.Measurable
 import Lemma.Random.Eq.of.Ne_0.MEq
-import sympy.stats.policy_trajectory.gradient
 import sympy.stats.cond_expectation
-import sympy.core.power
-import sympy.vector.Basic
-import Lemma.Random.IntegrableDotPow_Id.of.All_Eq.In_Ico
-import Lemma.Random.MEq_Clip.of.All_Eq
 import Lemma.Random.Integrable.of.Measurable
-import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
-import Lemma.Random.NormClip.le.AbsR
 import Lemma.Random.StronglyMeasurableClip
 open MeasureTheory ProbabilityTheory PolicyGradient Random
 

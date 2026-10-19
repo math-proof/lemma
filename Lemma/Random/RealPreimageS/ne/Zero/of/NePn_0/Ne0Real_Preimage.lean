@@ -1,8 +1,5 @@
-import sympy.stats.policy_trajectory.gradient
-import sympy.Basic
 import Lemma.Random.Pn0.eq.Eq
 import Lemma.Random.PnAdd_1.eq.Sum_MulProbSum_MulTPn
-import Lemma.Random.RealPreimageS0.eq.Real
 import Lemma.Random.RealPreimageS.eq.Sum_MulRealPn
 import Lemma.Random.T.ge.Zero
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
@@ -23,7 +20,7 @@ private lemma Pn_nonneg
     · norm_num
   | succ n ih =>
     rw [PnAdd_1.eq.Sum_MulProbSum_MulTPn]
-    exact Finset.sum_nonneg fun u _ => mul_nonneg (M.pol.nonneg θ x u)
+    exact Finset.sum_nonneg fun u _ => mul_nonneg (M.policy.nonneg θ x u)
       (Finset.sum_nonneg fun y' _ => mul_nonneg (T.ge.Zero (M := M) x u y') (ih y'))
 
 /--

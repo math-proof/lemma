@@ -1,5 +1,3 @@
-import sympy.stats.joint_rv
-import sympy.Basic
 import Lemma.Random.OfRV.eq.Integral.of.AEStronglyMeasurable_Map
 open MeasureTheory
 

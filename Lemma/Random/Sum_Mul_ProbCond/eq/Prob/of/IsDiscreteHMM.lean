@@ -1,11 +1,7 @@
-import Lemma.Random.ProbCond.eq.Div.of.Eq_Count.Eq_Count
-import Lemma.Measure.Count.eq.ProdCountS
-import Lemma.Random.Prob.eq.Measure.of.Eq_Count
 import Lemma.Random.MulMeasure.eq.MulMeasure.of.CondIndep
 import Lemma.Random.Measure.eq.Mul_MulDivS.of.Subset
 import sympy.stats.discrete_hmm
 import sympy.concrete.summations
-import sympy.Basic
 open MeasureTheory
 open IsDiscreteHMM
 
@@ -28,7 +24,7 @@ once from the observed future, and obtains the forward-backward identity
 @[path]
 private lemma main
   {Ω Y X : Type*} [MeasurableSpace Ω] [StandardBorelSpace Ω]
-  [ReferenceMeasure Y] [ReferenceMeasure X]
+  [CountableMeasure Y] [CountableMeasure X]
   [MeasurableSingletonClass Y] [Countable X] [MeasurableSingletonClass X]
   [Fintype Y]
   {π : Measure Ω} [IsProbabilityMeasure π]
@@ -43,7 +39,12 @@ private lemma main
 -- proof
   obtain ⟨t, ht⟩ := t
   obtain ⟨m, rfl⟩ : ∃ m, n = m + 1 := ⟨n - 1, by omega⟩
-  have ⟨hx, hy, hX, hY, h_emit, h_markov⟩ := h
+  have hx := h.measurable_x
+  have hy := h.measurable_y
+  have h_emit := h.emit
+  have h_markov := h.markov
+  have hX : (ReferenceMeasure.measure : Measure X) = Measure.count := CountableMeasure.measure_eq_count
+  have hY : (ReferenceMeasure.measure : Measure Y) = Measure.count := CountableMeasure.measure_eq_count
   have : Nonempty X := ⟨«x.bvar» 0⟩
   obtain ⟨ω₀, -⟩ := nonempty_of_measure_ne_zero (μ := π) (s := Set.univ) (by simp)
   have : Nonempty Y := ⟨y 0 ω₀⟩

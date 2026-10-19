@@ -1,5 +1,4 @@
 import Lemma.Nat.EqMulDiv.of.Dvd
-import sympy.functions.elementary.integers
 open Nat
 
 

@@ -1,7 +1,3 @@
-import sympy.stats.policy_trajectory
-import sympy.functions.elementary.miscellaneous
-import sympy.stats.cond_expectation
-import sympy.Basic
 import Lemma.Random.RealPreimageS_Add_1.ne.Zero.of.NeMulProbT_0.Ne0Real_Preimage
 import Lemma.Random.V.eq.TSum_MulPowWRc.of.Ne0Real_Preimage.In_Ico
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
@@ -30,11 +26,11 @@ private lemma main
 -- imply
   let V (θ : Θ) (t : ℕ) (x : S) : ℝ :=
     𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = x);
-  M.pol.prob θ x u * ((M.env.trans (x, u)).real {y} * V θ (t + 1) y) =
-    M.pol.prob θ x u * ((M.env.trans (x, u)).real {y} * ∑' k, γ ^ k * ∫ z, M.Kf θ (fun z ↦ clip z.1 (-M.env.R) M.env.R) k z ∂(M.stageK θ y)) := by
+  M.policy.prob θ x u * ((M.env.trans (x, u)).real {y} * V θ (t + 1) y) =
+    M.policy.prob θ x u * ((M.env.trans (x, u)).real {y} * ∑' k, γ ^ k * ∫ z, M.Kf θ (fun z ↦ clip z.1 (-M.env.R) M.env.R) k z ∂(M.stageK θ y)) := by
 -- proof
   intro Vθ
-  if hz : M.pol.prob θ x u * (M.env.trans (x, u)).real {y} = 0 then
+  if hz : M.policy.prob θ x u * (M.env.trans (x, u)).real {y} = 0 then
     rw [← mul_assoc, ← mul_assoc, hz, zero_mul, zero_mul]
   else
     have hV : Vθ θ (t + 1) y = ∑' k, γ ^ k * ∫ z, M.Kf θ (fun z ↦ clip z.1 (-M.env.R) M.env.R) k z ∂(M.stageK θ y) :=

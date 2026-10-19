@@ -1,4 +1,3 @@
-import Lemma.Nat.EqAddMulDiv
 import Lemma.Nat.LtMod.of.Lt_Mul
 import Lemma.Vector.EqGet0_0
 import Lemma.Vector.GetAppend.eq.Get.of.Lt

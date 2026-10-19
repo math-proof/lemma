@@ -1,8 +1,5 @@
 import Lemma.Int.Mul_Neg.eq.NegMul
 import Lemma.Vector.GetMul.eq.MulGet
-import Lemma.Vector.GetMul.eq.MulGetS
-import Lemma.Vector.GetNeg.eq.NegGet
-import sympy.vector.vector
 open Int Vector
 
 

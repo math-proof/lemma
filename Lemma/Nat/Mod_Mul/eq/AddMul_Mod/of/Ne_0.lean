@@ -1,6 +1,5 @@
 import Lemma.Nat.LtMod.of.Ne_0
 import Lemma.Nat.Mod_Mul.eq.AddMul_Mod.of.Lt
-import Lemma.Nat.Mul
 open Nat
 
 

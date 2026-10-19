@@ -1,9 +1,6 @@
 import Lemma.Fin.EqOfSplitToSplit
 import Lemma.Fin.EqToSplitOfSplit
-import Lemma.Fin.OfSplit.eq.Ite_Mul2
-import Lemma.Fin.ToSplit.eq.Ite_Div_2
 import Lemma.Nat.Delta.eq.Ite
-import sympy.functions.special.tensor_functions
 open Nat Fin
 
 

@@ -1,16 +1,10 @@
 import Lemma.Fin.Sum_Delta.eq.Ite
 import torch.Tensor.prod
-import Lemma.Tensor.Det.eq.DetToMatrix
 import Lemma.Tensor.DetStack_Ite.eq.MulPowNeg1
-import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.GetMatPowShiftMatrix.eq.DeltaModAdd
 import Lemma.Tensor.GetSum.eq.Sum_Get.of.GtLength_0
-import Lemma.Tensor.Mul
-import Lemma.Tensor.Pow.eq.TensorListPow
 import Lemma.Tensor.Sub
 import Lemma.Tensor.ToMatrixDot.eq.MulToMatrixS
-import sympy.matrices.expressions.matpow
-import sympy.matrices.expressions.permutation
 import torch.stack
 open Tensor
 

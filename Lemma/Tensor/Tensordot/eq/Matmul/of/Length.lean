@@ -1,6 +1,4 @@
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
-import Lemma.List.AppendAppend.eq.Append_Append
-import Lemma.List.Append.of.Eq
 import sympy.matrices.expressions.matmul
 open Bool List
 

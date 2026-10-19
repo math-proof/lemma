@@ -1,19 +1,10 @@
 import Lemma.Vector.EqHeadSplitAt_0
 import torch.Tensor.prod
-import Lemma.Vector.GetMap₂.eq.BFnGetS
-import Lemma.Vector.Head.eq.Get_0
 import Lemma.Vector.Get.of.Eq.Lt
-import Lemma.Fin.Eq_Fin.of.EqVal
-import Lemma.Bool.SEq.is.SEqCast.of.Eq
-import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Tensor.DataAppend.as.AppendDataS
 import Lemma.Tensor.DataAppend.as.FlattenMap₂_CastS_SplitAtData
 import Lemma.Tensor.GetAppend.as.AppendCastS_Get.of.GtLength_0
 import Lemma.Tensor.GetAppend.eq.Get
-import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
-import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.Eq
-import Lemma.Tensor.SEqDataS.of.SEq
-import Lemma.Vector.SEq.of.All_EqGetS.Eq
 open Bool Fin Tensor Vector
 
 

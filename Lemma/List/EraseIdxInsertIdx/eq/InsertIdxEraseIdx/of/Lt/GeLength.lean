@@ -2,7 +2,6 @@ import Lemma.List.DropInsertIdx.eq.Drop.of.Lt
 import Lemma.List.EraseIdx.eq.Append_Drop_Add_1
 import Lemma.List.InsertIdxAppend.eq.AppendInsertIdx.of.GeLength
 import Lemma.List.TakeInsertIdx.eq.InsertIdxTake.of.Lt.GeLength
-import Lemma.Nat.EqAddSub.of.Ge
 open List Nat
 
 

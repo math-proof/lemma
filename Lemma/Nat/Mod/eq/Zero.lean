@@ -1,4 +1,3 @@
-import sympy.functions.elementary.integers
 import Lemma.Nat.ModAdd_Mul.eq.Mod
 import Lemma.Nat.EqMod0_0
 open Nat

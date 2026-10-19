@@ -1,6 +1,4 @@
 import Lemma.Real.Deriv_SpecificAngularMomentum.eq.Mul.of.DifferentiableAt_Deriv.DifferentiableAt
-import sympy.physics.vector.kinematics
-import sympy.Basic
 
 
 /--

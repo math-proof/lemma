@@ -1,6 +1,4 @@
 import Lemma.Real.MechanicalEnergyOfAngle.eq.Sub.of.Ne_0.Ne_0.Ne_0.DifferentiableAt.Eq
-import sympy.physics.vector.kinematics
-import sympy.Basic
 
 
 /--

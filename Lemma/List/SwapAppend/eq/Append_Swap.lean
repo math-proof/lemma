@@ -1,5 +1,4 @@
 import Lemma.Bool.IffEqS.of.Eq
-import Lemma.List.LengthSwap.eq.Length
 import Lemma.List.LengthAppend.eq.AddLengthS
 import Lemma.List.GetSwap.eq.Ite.of.GtLength.GtLength.GtLength
 import Lemma.List.GetAppend.eq.Get_Sub_Length.of.GtLengthAppend.GeLength

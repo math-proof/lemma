@@ -1,6 +1,5 @@
 import Lemma.Rat.Ge0SubSquare_MulMul4.of.All_Le0Add_Mul_Square.Gt_0
 import Lemma.Nat.Gt.is.Ge.Ne
-import Lemma.Rat.EqMul_Div.of.Ne_0
 open Rat Nat
 
 

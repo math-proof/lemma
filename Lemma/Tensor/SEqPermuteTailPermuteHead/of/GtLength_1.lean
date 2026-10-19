@@ -1,24 +1,18 @@
 import torch.Tensor.permute
-import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.GetTranspose.eq.Get
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Lemma.List.RotateRotate.eq.Rotate_Add
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
-import Lemma.List.ProdAppend.eq.MulProdS
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Vector.GetCast.eq.Get.of.Eq
-import Lemma.List.Rotate.eq.AppendDrop__Take.of.GeLength
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop.of.Lt_ProdTake.Lt_ProdDrop
 import Lemma.List.DropRotate.eq.Take.of.GeLength
 import Lemma.List.ProdRotate.eq.Prod
 import Lemma.List.ProdTake_1.eq.Get_0.of.GtLength_0
-import Lemma.Nat.AddMul.lt.Mul.of.Lt.Lt
 import Lemma.List.TakeRotate.eq.Drop.of.GeLength
 import Lemma.Nat.EqMod.of.Lt
-import Lemma.List.Rotate.eq.AppendDrop__Take
-import Lemma.Nat.Gt_0.of.Gt
 open Vector Tensor List Bool Nat Fin
 
 

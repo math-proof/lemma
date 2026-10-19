@@ -1,4 +1,3 @@
-import Lemma.List.Ne_Nil.is.GtLength_0
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 open Tensor List
 

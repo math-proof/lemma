@@ -1,5 +1,3 @@
-import sympy.core.mul
-import sympy.Basic
 import Lemma.Tensor.MulShape.comm
 import Lemma.Tensor.WrapFlatPad1LeftWrapFlat.eq.WrapFlatPad1.of.NeProdMulShapeMulShape_0.NeProdMulShape_0
 open Tensor

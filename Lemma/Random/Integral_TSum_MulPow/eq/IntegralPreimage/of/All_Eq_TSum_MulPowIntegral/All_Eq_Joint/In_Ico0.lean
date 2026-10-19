@@ -1,16 +1,6 @@
-import sympy.stats.policy_trajectory
-import sympy.functions.elementary.miscellaneous
-import sympy.stats.cond_expectation
-import sympy.Basic
 import Lemma.Random.Eq_0.of.EqReal_0
 import Lemma.Random.Integrable_MulEqAndEq.of.All_Eq
-import Lemma.Random.Integral.eq.MulRealPreimageSIntegral_MulEqS
-import Lemma.Random.Integral_EqAndEq.eq.MulRealPreimageProb.of.All_Eq
-import Lemma.Random.Integral_G.eq.TSum_MulPowIntegral_R_Add.of.In_Ico
-import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
-import Lemma.Random.NormClip.le.AbsR
 import Lemma.Random.Q.eq.AddIntegral_RcMul_Sum_MulTTSum_MulPowW.of.NeMulRealPreimageSProb_0.In_Ico
-import Lemma.Random.StronglyMeasurableClip
 import Lemma.Random.TSum_MulPowW.eq.AddWMul_Sum_MulProbSum_MulTTSum_MulPowW.of.In_Ico
 import Lemma.Random.V.eq.Integral.of.Measurable
 import Lemma.Random.V.eq.TSum_MulPowWRc.of.Ne0Real_Preimage.In_Ico
@@ -90,15 +80,15 @@ private lemma main
     simp_rw [integral_mul_const, Integral_EqAndEq.eq.MulRealPreimageProb.of.All_Eq h₁]
     rw [Finset.mul_sum]
     have h₄ : ∀ u, ((M θ).real (s t ⁻¹' {x}))⁻¹ *
-        ((M θ).real (s t ⁻¹' {x}) * M.pol.prob θ x u * Qloc x u) =
-        M.pol.prob θ x u * ((∫ ρ, clip (ρ, x, u).1 (-M.env.R) M.env.R ∂(M.env.reward (x, u))) +
+        ((M θ).real (s t ⁻¹' {x}) * M.policy.prob θ x u * Qloc x u) =
+        M.policy.prob θ x u * ((∫ ρ, clip (ρ, x, u).1 (-M.env.R) M.env.R ∂(M.env.reward (x, u))) +
           γ * ∑ y, (M.env.trans (x, u)).real {y} * ∑' k, γ ^ k * ∫ z, M.Kf θ (fun z ↦ clip z.1 (-M.env.R) M.env.R) k z ∂(M.stageK θ y)) := by
       intro u
       rw [mul_assoc, inv_mul_cancel_left₀ hP]
-      if hu : M.pol.prob θ x u = 0 then
+      if hu : M.policy.prob θ x u = 0 then
         simp [hu]
       else
-        refine congrArg (M.pol.prob θ x u * ·) ?_
+        refine congrArg (M.policy.prob θ x u * ·) ?_
         apply Q.eq.AddIntegral_RcMul_Sum_MulTTSum_MulPowW.of.NeMulRealPreimageSProb_0.In_Ico (M := M) θ t x u h₀ h₁ (mul_ne_zero hP hu)
     simp_rw [h₄]
     rw [TSum_MulPowW.eq.AddWMul_Sum_MulProbSum_MulTTSum_MulPowW.of.In_Ico (M := M) h₀ θ x]

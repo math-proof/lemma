@@ -1,5 +1,4 @@
 import sympy.stats.markov_samples
-import sympy.Basic
 import Lemma.Random.Measurable.of.AdaptedOnSamplePath
 import Lemma.Random.AdaptedOnSamplePath.of.IteratesOfResidual
 open MeasureTheory Iterates Random

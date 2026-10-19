@@ -1,5 +1,4 @@
 import Lemma.Tensor.DataGet.eq.Get.of.EqData_Flatten
-import Lemma.Vector.EqFlattenUnflatten
 open Tensor Vector
 
 

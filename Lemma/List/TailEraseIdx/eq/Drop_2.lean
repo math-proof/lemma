@@ -1,4 +1,3 @@
-import Lemma.List.Drop.eq.Nil.of.LeLength
 import Lemma.List.EqEraseIdx.of.LeLength
 import Lemma.List.EraseIdxTail.eq.TailEraseIdx.of.Lt_SubLength_1
 import Lemma.List.EraseIdx_0.eq.Tail

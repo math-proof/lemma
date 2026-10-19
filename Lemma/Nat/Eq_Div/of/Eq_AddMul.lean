@@ -5,7 +5,6 @@ import Lemma.Nat.Div.eq.FloorDiv
 import Lemma.Rat.DivAdd.eq.AddDivS
 import Lemma.Nat.Ne_0
 import Lemma.Nat.NeCoeS.of.Ne
-import Lemma.Nat.EqDivMul.of.Ne_0
 import Lemma.Nat.FloorAdd.eq.Add_Floor
 import Lemma.Rat.FloorDiv.eq.Zero
 import Lemma.Rat.FloorDivMod.eq.Zero

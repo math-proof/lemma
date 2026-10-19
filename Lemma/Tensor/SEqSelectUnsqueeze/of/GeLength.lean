@@ -6,8 +6,6 @@ import Lemma.Tensor.SEq.of.All_SEqGetS.Eq
 import Lemma.Tensor.Select.as.OfVectorMapToVector.of.GtVal_0
 import Lemma.Tensor.Select_0.as.Get.of.GtLength_0
 import Lemma.Tensor.ToVector.eq.MapRange_Get.of.GtLength_0
-import Lemma.Vector.GetMap.eq.UFnGet
-import Lemma.Bool.SEq.is.SEqCast.of.Eq
 open Tensor Vector Bool
 
 

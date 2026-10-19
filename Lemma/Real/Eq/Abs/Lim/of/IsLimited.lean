@@ -1,7 +1,6 @@
 import Lemma.Real.Eq.Lim.Abs.of.IsNegative
 import Lemma.Real.Eq.Lim.Abs.of.IsPositive
 import Lemma.Real.Eq_0.Lim.Abs.of.Eq_0
-import sympy.series.limits
 open Real
 
 

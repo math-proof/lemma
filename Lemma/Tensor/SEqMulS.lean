@@ -1,9 +1,7 @@
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import torch.Tensor.prod
 import Lemma.Vector.Eq.of.Val
-import sympy.core.mul
 import Lemma.Tensor.MulShape.comm
-import Lemma.Vector.ValCast.eq.Val.of.Eq
 import Lemma.Vector.GetVal.eq.Get.of.Lt.Lt
 import Lemma.Tensor.ValDataMul.eq.Nil.of.EqProdMulShape_0
 open Tensor Vector

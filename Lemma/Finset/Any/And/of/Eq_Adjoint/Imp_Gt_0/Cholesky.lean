@@ -1,5 +1,3 @@
-import sympy.matrices.cholesky
-import sympy.Basic
 import Lemma.Matrix.IsCholeskyRec_Mul_L.of.All_Gt_0.All_All_Eq_0
 import Lemma.Matrix.Any_Eq_0_And_All_Gt_0_And_Eq_Mul.of.PosDef
 open Matrix

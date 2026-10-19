@@ -1,5 +1,3 @@
-import Lemma.List.GetAppend.eq.Get.of.GtLength
-import Lemma.List.GetTake.eq.Get.of.GtLengthTake
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import torch.Tensor.Basic
 import torch.Tensor.permute

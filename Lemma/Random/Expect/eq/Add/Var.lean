@@ -1,6 +1,4 @@
-import sympy.stats.variance
 import Lemma.Random.Var.eq.Sub.Expect
-import sympy.Basic
 open MeasureTheory Random
 
 

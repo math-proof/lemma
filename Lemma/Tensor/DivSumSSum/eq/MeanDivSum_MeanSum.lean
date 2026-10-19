@@ -1,15 +1,10 @@
 import Lemma.Tensor.MeanDiv.eq.DivMean
 import Lemma.Tensor.Sum.eq.Zero
-import Lemma.Tensor.EqDiv0_0
-import Lemma.Bool.Ne.is.NotEq
-import Lemma.Nat.NeCoeS.of.Ne
 import Lemma.Tensor.Div.eq.DivDivS.of.Ne_0
-import Lemma.Tensor.DataDiv.eq.DivDataS
-import Lemma.Vector.GetDiv.eq.DivGetS
 import torch.Tensor.mean
 import torch.Tensor.sum
 open Tensor Vector Bool Nat
-set_option maxHeartbeats 500000
+set_option maxHeartbeats 250000
 
 
 /--

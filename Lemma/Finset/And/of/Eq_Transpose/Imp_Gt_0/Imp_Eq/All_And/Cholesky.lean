@@ -1,5 +1,3 @@
-import sympy.matrices.cholesky
-import sympy.Basic
 import Lemma.Matrix.Lt_Sum_SquareNorm.et.All_Eq_Sum_Mul_Star.of.All_And.All_Eq_Div.PosDef
 open Matrix
 

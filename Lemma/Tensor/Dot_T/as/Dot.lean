@@ -1,10 +1,7 @@
-import Lemma.Bool.SEq.is.Eq
 import torch.Tensor.permute
-import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.Tensor.DotT.eq.Dot
 import Lemma.Tensor.EqTT
 import Lemma.Tensor.SEqDotS.of.SEq
-import Lemma.Tensor.TCast.as.T.of.Eq
 open Bool Tensor
 
 

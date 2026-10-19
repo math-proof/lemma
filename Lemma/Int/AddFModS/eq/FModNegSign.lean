@@ -1,22 +1,11 @@
-import sympy.core.logic
-import Lemma.Bool.Ne.is.NotEq
 import Lemma.Int.FModNeg.eq.Ite_0Sub_FMod
 import Lemma.Int.FModNeg.eq.Zero.of.FMod.eq.Zero
 import Lemma.Int.FModSub.eq.FModNeg.of.FMod.eq.Zero
-import Lemma.Int.Any_Eq_AddMul.of.EqFMod
-import Lemma.Int.SubAdd.eq.Add_Sub
 import Lemma.Int.FModAddMul.eq.FMod
 import Lemma.Int.FModNegSign.eq.Sub_Sign
-import Lemma.Int.AddSub.eq.Sub_Sub
-import Lemma.Int.EqSub.is.Eq_Add
-import Lemma.Nat.Add
 import Lemma.Int.EqFMod.of.Ge0Mul_Add_Sign
-import Lemma.Int.Sub_Add.eq.SubSub
 import Lemma.Int.LeSign.of.Gt_0
 import Lemma.Set.MulSubS.le.Zero.of.In_Icc
-import Lemma.Nat.Mul
-import Lemma.Nat.Lt.is.Le.Ne
-import Lemma.Nat.NotLt.is.Ge
 import Lemma.Set.FMod.in.IccSign.of.FMod.ne.Zero.Gt_0
 import Lemma.Set.FMod.in.Icc_Sign.of.FMod.ne.Zero.Lt_0
 open Set Bool Int Nat

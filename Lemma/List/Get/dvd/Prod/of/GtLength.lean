@@ -1,6 +1,5 @@
 import Lemma.List.Get.dvd.ProdDrop.of.GtLength
 import Lemma.List.Prod.eq.MulProdS
-import Lemma.Nat.Dvd_Mul.of.Dvd
 open List Nat
 
 

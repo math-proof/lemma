@@ -1,5 +1,3 @@
-import sympy.functions.elementary.complexes
-import sympy.Basic
 import Lemma.Complex.Eq0Add_Pow_3.of.In_Finset_AddSMulS
 
 

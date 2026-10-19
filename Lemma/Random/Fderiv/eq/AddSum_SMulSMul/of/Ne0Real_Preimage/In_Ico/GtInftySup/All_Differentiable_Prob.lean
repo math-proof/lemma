@@ -1,13 +1,8 @@
-import sympy.stats.policy_trajectory.gradient
-import sympy.Basic
-import sympy.vector.operators
-import sympy.concrete.sup
 import Lemma.Random.EqFderiv_FunVc_AddSum_SMulSMulSum_SMul.of.In_Ico.GtInftySup_Norm.All_AllDifferentiable_FunPolProb
 import Lemma.Random.Fderiv_V.eq.Fderiv_Vc.of.Ne0Real_Preimage.In_Ico.GtInftySup.All_Differentiable_Prob
 import Lemma.Random.Fderiv_FunProbPol.eq.Zero.of.ProbPolEq0
 import Lemma.Random.Q.eq.AddIntegral_RcMul_Sum_MulTTSum_MulPowW.of.NeMulRealPreimageSProb_0.In_Ico
 import Lemma.Random.RealPreimageS_Add_1.ne.Zero.of.NeMulProbT_0.Ne0Real_Preimage
-import Lemma.Random.Vc.eq.TSum_MulPowIntegral.of.In_Ico
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
 
 
@@ -24,7 +19,7 @@ private lemma Q_eq_Qc
   (t : ℕ)
   (x : S)
   (u : A)
-  (hP : (M θ).real (s t ⁻¹' {x}) * M.pol.prob θ x u ≠ 0) :
+  (hP : (M θ).real (s t ⁻¹' {x}) * M.policy.prob θ x u ≠ 0) :
   let Q (θ : Θ) (t : ℕ) (x : S) (u : A) : ℝ :=
     𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = x ∧ a t = u);
   Q θ t x u = M.Qc θ γ x u := by
@@ -49,8 +44,8 @@ private lemma main
   (θ : Θ)
   (h₀ : γ ∈ Set.Ico 0 1)
   (h₁ : ∀ t, (· t) = (r t, s t, a t))
-  (h₂ : ∀ x u, Differentiable ℝ (fun θ => M.pol.prob θ x u))
-  (h₃ : sup[θ, x, u] ‖∇[θ] M.pol.prob θ x u‖ < ∞)
+  (h₂ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
+  (h₃ : sup[θ, x, u] ‖∇[θ] M.policy.prob θ x u‖ < ∞)
   (h₄ : (M θ).real (s t ⁻¹' {x}) ≠ 0) :
 -- imply
   let Q (θ : Θ) (t : ℕ) (x : S) (u : A) : ℝ :=
@@ -58,7 +53,7 @@ private lemma main
   let V (θ : Θ) (t : ℕ) (x : S) : ℝ :=
     𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = x);
   fderiv ℝ (fun θ' => V θ' t x) θ =
-    ∑ u, Q θ t x u • fderiv ℝ (fun θ' => M.pol.prob θ' x u) θ +
+    ∑ u, Q θ t x u • fderiv ℝ (fun θ' => M.policy.prob θ' x u) θ +
     γ • ∑ y, M.P1 θ x y • fderiv ℝ (fun θ' => V θ' (t + 1) y) θ := by
 -- proof
   intro Qθ Vθ
@@ -66,7 +61,7 @@ private lemma main
   congr 1
   ·
     refine Finset.sum_congr rfl fun u _ => ?_
-    if hu : M.pol.prob θ x u = 0 then
+    if hu : M.policy.prob θ x u = 0 then
       rw [Fderiv_FunProbPol.eq.Zero.of.ProbPolEq0 (M := M) θ x u hu, smul_zero, smul_zero]
     else
       have hQ : Qθ θ t x u = M.Qc θ γ x u :=

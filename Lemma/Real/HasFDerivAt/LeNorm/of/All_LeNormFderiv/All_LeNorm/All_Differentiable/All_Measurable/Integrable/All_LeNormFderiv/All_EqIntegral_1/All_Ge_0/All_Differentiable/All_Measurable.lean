@@ -1,6 +1,5 @@
 import Mathlib.Analysis.Calculus.ParametricIntegral
 import Mathlib.Analysis.Calculus.MeanValue
-import sympy.Basic
 import Lemma.Real.StronglyMeasurable_Fderiv.of.All_DifferentiableAt.All_Measurable
 open MeasureTheory Real
 

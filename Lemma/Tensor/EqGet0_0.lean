@@ -1,16 +1,10 @@
 import torch.Tensor
-import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Tensor.ProdTake_1.eq.Length.of.GtLength
 import Lemma.Vector.GetMap.eq.UFnGet.of.Lt
 import Lemma.Tensor.Length.eq.HeadD.of.GtLength_0
-import Lemma.Tensor.Eq.is.EqDataS
-import Lemma.Tensor.EqData0'0
 import Lemma.Bool.EqCast.of.SEq
 import Lemma.Vector.GetSplitAt_1.eq.GetUnflattenCast
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
-import Lemma.Vector.GetUnflatten.eq.Get_AddMul
-import Lemma.List.Prod.eq.MulProdS
-import Lemma.Vector.EqGet0_0
 open Tensor Vector Bool List
 
 

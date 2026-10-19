@@ -1,22 +1,9 @@
-import Lemma.Bool.SEq.is.SEqCast.of.Eq
-import Lemma.Bool.SEq.of.SEq.SEq
-import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.List.EqCons_Tail.of.Eq_Get_0.GtLength_0
 import Lemma.List.EraseIdxSet.eq.EraseIdx
 import Lemma.List.EraseIdxTail.eq.TailEraseIdx.of.Lt_SubLength_1
 import Lemma.List.GetEraseIdx.eq.Get.of.Gt.GtLength
-import Lemma.List.GetSet.eq.Get_0.of.Gt_0.GtLength_0
-import Lemma.List.GetTail.eq.Get_Add_1.of.Lt_SubLength_1
-import Lemma.List.HeadD.eq.Get_0.of.GtLength_0
 import Lemma.List.HeadDSet.eq.Get_0.of.Gt_0.LtLength
-import Lemma.List.TailSet.eq.SetTail.of.Gt_0
-import Lemma.Nat.EqSubAdd
-import Lemma.Nat.Gt_0.of.Gt
-import Lemma.Nat.Lt_Sub.of.LtAdd
-import Lemma.Tensor.GetOfVector.eq.Get
 import Lemma.Tensor.GetResize_0.as.Get.of.GtLength_0
-import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
-import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.Eq
 import Lemma.Tensor.SEqResizeS.of.SEq.Val.Eq
 import Lemma.Tensor.SEqSelectS.of.SEq
 import Lemma.Tensor.Select.as.OfVectorMapToVector.of.GtVal_0
@@ -24,7 +11,6 @@ import Lemma.Tensor.SelectCast.as.Select.of.Eq
 import Lemma.Tensor.Select_0.as.Get.of.GtGet_0.GtLength_0
 import Lemma.Tensor.ToVector.eq.MapRange_Get.of.GtLength_0
 import Lemma.Tensor.ToVectorResize.eq.Map_FunResizeGet.of.GtVal_0
-import Lemma.Vector.EqGetRange
 open Bool List Nat Tensor Vector
 
 

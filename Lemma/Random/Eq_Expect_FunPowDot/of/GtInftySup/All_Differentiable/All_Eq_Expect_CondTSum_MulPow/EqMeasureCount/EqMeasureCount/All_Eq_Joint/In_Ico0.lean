@@ -1,28 +1,10 @@
 import Lemma.Random.GradExpect_DotPow_Id.eq.Expect_DotFunSMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.EqMeasureCount.EqMeasureCount.All_Eq_Joint.In_Ico
-import Lemma.Random.Eq_SymmToDualTSum_SMulPow_Integral_SMulTSum_MulPow_FderivLogToRealProbCond.of.GtInftySup.All_Differentiable.AeAll_LeNormTSum_MulPow.All_Measurable.EqMeasureCount.EqMeasureCount.All_Eq_Joint.In_Ico0
-import Lemma.Real.Eq_0.Lim.of.LtAbs.GtInftySup
-import Lemma.Random.ProbCond.eq.OfRealPol.of.Ne_0
-import Lemma.Random.SinglePSpace.of.EqMeasureCount.Measurable
-import Lemma.Measure.Count.eq.ProdCountS
 import Mathlib.MeasureTheory.Constructions.Polish.Basic
 import Mathlib.Analysis.Calculus.Gradient.Basic
-import sympy.stats.variance
-import sympy.vector.Basic
-import sympy.vector.operators
-import sympy.concrete.sup
-import sympy.stats.cond_expectation
-import Lemma.Random.Differentiable_RealPreimageS.of.GtInftySup.All_Differentiable_Prob
-import Lemma.Random.All_And_LeNormExtDotPow_Id.of.All_Eq_Joint.In_Ico
 import Lemma.Random.NormV.le.MulSub1Abs_R.of.In_Ico
 import Lemma.Random.Integral_SMul.eq.Zero.of.All_Differentiable_Prob
-import Lemma.Random.Integrable_Fun
 import Lemma.Random.Integrable.of.In_Ico
-import Lemma.Random.AeRealPreimageSS.ne.Zero
-import Lemma.Random.BddAbove_ImageNormFderiv.of.In_Ico.GtInftySup.All_Differentiable_Prob
-import Lemma.Random.All_LeNorm_Abs.of.All_Eq_Joint
-import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
 import Lemma.Random.V.eq.Integral.of.Measurable
-import Lemma.Random.PSpace_Path.of.All_PSpace
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Filter Topology Random Real Measure
 open scoped ENNReal.ToRealCoe
 
@@ -59,8 +41,8 @@ private lemma main
   (hA : (ReferenceMeasure.measure : Measure A) = Measure.count)
   (h₂ : ∀ θ t x, ((M θ) (s t ⁻¹' {x}) ≠ 0) →
     V θ t x = 𝔼[r : M θ](∑' k, γ ^ k * r (t + k) | s t = x))
-  (h₃ : ∀ x u, Differentiable ℝ (fun θ => M.pol.prob θ x u))
-  (h₄ : sup[θ, x, u] ‖∇[θ] M.pol.prob θ x u‖ < ∞) :
+  (h₃ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
+  (h₄ : sup[θ, x, u] ‖∇[θ] M.policy.prob θ x u‖ < ∞) :
 -- imply
   have : ∀ θ t, SinglePSpace (M θ) (a t, s t) := fun _ t =>
     SinglePSpace.of.EqMeasureCount.Measurable ((Random.Measurable.of.All_Eq.snd.snd h₁ t).prodMk (Random.Measurable.of.All_Eq.snd.fst h₁ t)) (by
@@ -70,29 +52,18 @@ private lemma main
     ⟨(Random.Measurable.of.All_Eq.snd.fst h₁ t).aemeasurable⟩
   have ha : ∀ t, PSpace (M θ) (a t) := fun t =>
     ⟨(Random.Measurable.of.All_Eq.snd.snd h₁ t).aemeasurable⟩
-  have hr : ∀ t, PSpace (M θ) (r t) := fun t =>
-    ⟨(Random.Measurable.of.All_Eq.fst h₁ t).aemeasurable⟩
   have : PSpace (M θ) (AsPathRV.path (s)) :=
     PSpace_Path.of.All_PSpace hs
   have : PSpace (M θ) (AsPathRV.path (a)) :=
     PSpace_Path.of.All_PSpace ha
-  have : PSpace (M θ) (AsPathRV.path (r)) :=
-    PSpace_Path.of.All_PSpace hr
+  have : ∀ θ, PSpace (M θ) (AsPathRV.path (r)) := fun θ =>
+    PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.fst h₁ t).aemeasurable⟩)
   let : MeasurableSpace Θ := borel Θ
   have : BorelSpace Θ := ⟨rfl⟩
-  ∇[θ] (
-    have : PSpace (M θ) (AsPathRV.path (r)) :=
-      PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.fst h₁ t).aemeasurable⟩)
-    𝔼[r: M θ](((fun t : ℕ => γ ^ t) @ r))) =
-    -- TODO(sympy 𝔼 patch): 𝔽((a₀ t) = … | (s₀ t) = …) with let a₀ := a; let s₀ := s
-    let a₀ := a
-    let s₀ := s
-    𝔼[s, a, r : M θ](
-      ∑' t, γ ^ t •
-        (((fun k : ℕ => γ ^ k) @ (fun k : ℕ => r (t + k) + γ * V θ (t + k + 1) (s (t + k + 1)) - V θ (t + k) (s (t + k)))) •
-          ∇[θ] (ℙ[M θ]((a₀ t) = (a t) | (s₀ t) = (s t)) : ℝ).log)) := by
+  ∇[θ] 𝔼[r: M θ]((γ ^ (id : ℕ → ℕ)) @ r) =
+    𝔼[r, s, a : M θ]((γ ^ (id : ℕ → ℕ)) @ fun t ↦ ((γ ^ (id : ℕ → ℕ)) @ (fun k => r (t + k) + γ * V θ (t + k + 1) (s (t + k + 1)) - V θ (t + k) (s (t + k)))) • ∇[θ] (ℙ[M θ](a t | s t) : ℝ).log) := by
 -- proof
-  intro hP _ _ _ _ _ _
+  intro hP _ _ _ _ _
   classical
   obtain rfl : r = fun t ω ↦ (ω t).1 := funext₂ fun t ω ↦ (congrArg Prod.fst (congrFun (h₁ t) ω)).symm
   obtain rfl : s = fun t ω ↦ (ω t).2.1 := funext₂ fun t ω ↦ (congrArg (·.2.1) (congrFun (h₁ t) ω)).symm
@@ -114,7 +85,7 @@ private lemma main
     SinglePSpace.of.EqMeasureCount.Measurable (Random.Measurable.of.All_Eq.snd.fst h₁ t) hS
   have hscore : ∀ t, ∀ᵐ ω ∂(M θ),
       fderiv ℝ (fun θ' => (ℙ[M θ']((a t) = (a t ω) | (s t) = (s t ω)) : ℝ).log) θ =
-        fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' (s t ω) (a t ω))) θ := by
+        fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω))) θ := by
     intro t
     filter_upwards [AeRealPreimageSS.ne.Zero (s := s) (M := M) θ] with ω hω
     have hc : ContinuousAt (fun θ' => (M θ').real (s t ⁻¹' {s t ω})) θ :=
@@ -122,7 +93,7 @@ private lemma main
     refine Filter.EventuallyEq.fderiv_eq ((hc.eventually_ne (hω t)).mono fun θ' h => ?_)
     beta_reduce
     rw [ProbCond.eq.OfRealPol.of.Ne_0 h₁ hS hA (hP θ' t) h,
-      ENNReal.toReal_ofReal (M.pol.nonneg θ' _ _)]
+      ENNReal.toReal_ofReal (M.policy.nonneg θ' _ _)]
   let Vloc (θ : Θ) (t : ℕ) (x : S) : ℝ :=
     𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = x)
   have hVbd : ∀ t x, |Vloc θ t x| ≤ (1 - γ)⁻¹ * |M.env.R| := fun t x => by
@@ -134,13 +105,13 @@ private lemma main
   have hVr : ∀ θ' t x, ((M θ').real (s t ⁻¹' {x}) ≠ 0) → (V θ' t x = Vloc θ' t x) := fun θ' t x hp =>
     h₂ θ' t x fun h0 => hp ((measureReal_eq_zero_iff (measure_ne_top _ _)).2 h0)
   have key : ∑' t, γ ^ t • ∫ ω, (∑' k, γ ^ k * r (t + k) ω) •
-        fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' (s t ω) (a t ω))) θ ∂(M θ) =
+        fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω))) θ ∂(M θ) =
       ∑' t, γ ^ t • ∫ ω, (∑' k, γ ^ k * (r (t + k) ω + γ * V θ (t + k + 1) (s (t + k + 1) ω) -
-        V θ (t + k) (s (t + k) ω))) • fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' (s t ω) (a t ω))) θ ∂(M θ) := by
+        V θ (t + k) (s (t + k) ω))) • fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω))) θ ∂(M θ) := by
     have hVae : ∀ᵐ ω ∂(M θ), ∀ k, V θ k (s k ω) = Vloc θ k (s k ω) :=
       (AeRealPreimageSS.ne.Zero (s := s) (M := M) θ).mono fun ω h k => hVr θ k _ (h k)
     refine (?_ : _ = ∑' t, γ ^ t • ∫ ω, (∑' k, γ ^ k * (r (t + k) ω + γ * Vloc θ (t + k + 1) (s (t + k + 1) ω) -
-        Vloc θ (t + k) (s (t + k) ω))) • fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' (s t ω) (a t ω))) θ ∂(M θ)).trans ?_
+        Vloc θ (t + k) (s (t + k) ω))) • fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω))) θ ∂(M θ)).trans ?_
     swap
     ·
       refine tsum_congr fun t => ?_
@@ -187,15 +158,15 @@ private lemma main
     symm
     calc
       _ = ∫ ω, ((∑' k, γ ^ k * r (t + k) ω) - Vloc θ t (s t ω)) •
-          fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' (s t ω) (a t ω))) θ ∂(M θ) :=
+          fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω))) θ ∂(M θ) :=
         integral_congr_ae (h₉.mono fun ω h => by dsimp only; rw [h])
       _ = (∫ ω, (∑' k, γ ^ k * r (t + k) ω) •
-            fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' (s t ω) (a t ω))) θ ∂(M θ)) -
+            fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω))) θ ∂(M θ)) -
           ∫ ω, Vloc θ t (s t ω) •
-            fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' (s t ω) (a t ω))) θ ∂(M θ) := by
+            fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω))) θ ∂(M θ) := by
         simp_rw [sub_smul]
-        exact integral_sub (Integrable.of.In_Ico (M := M) h₀ h₁ θ t (fun y u => fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' y u)) θ))
-          (Integrable_Fun h₁ (M := M) θ t (fun y u => Vloc θ t y • fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' y u)) θ))
+        exact integral_sub (Integrable.of.In_Ico (M := M) h₀ h₁ θ t (fun y u => fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' y u)) θ))
+          (Integrable_Fun h₁ (M := M) θ t (fun y u => Vloc θ t y • fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' y u)) θ))
       _ = _ := by
         have h := Integral_SMul.eq.Zero.of.All_Differentiable_Prob (M := M) h₁ h₃ θ t (fun y => Vloc θ t y)
         beta_reduce at h
@@ -208,7 +179,7 @@ private lemma main
     have e1 : ∑' t, γ ^ t • ∫ ω, (∑' k, γ ^ k * r (t + k) ω) •
           fderiv ℝ (fun θ' => (ℙ[M θ']((a t) = (a t ω) | (s t) = (s t ω)) : ℝ).log) θ ∂(M θ) =
         ∑' t, γ ^ t • ∫ ω, (∑' k, γ ^ k * r (t + k) ω) •
-          fderiv ℝ (fun θ' => Real.log (M.pol.prob θ' (s t ω) (a t ω))) θ ∂(M θ) := by
+          fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω))) θ ∂(M θ) := by
       refine tsum_congr fun t => ?_
       congr 1
       refine integral_congr_ae ?_
@@ -237,17 +208,10 @@ private lemma main
       _ ≤ |M.env.R| + γ * B + B := by
         rw [norm_mul, Real.norm_of_nonneg h₀.1, Real.norm_eq_abs, Real.norm_eq_abs]
         exact add_le_add (add_le_add (hr _) (mul_le_mul_of_nonneg_left (hb _) h₀.1)) (hb _)
-  have hT : ∇[θ] (
-      have : PSpace (M θ) (AsPathRV.path (r)) :=
-        PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.fst h₁ t).aemeasurable⟩)
-      𝔼[r: M θ](((fun t : ℕ => γ ^ t) @ r))) =
-      -- TODO(sympy 𝔼 patch): 𝔽((a₀ t) = … | (s₀ t) = …) with let a₀ := a; let s₀ := s
-      let a₀ := a
-      let s₀ := s
-      𝔼[s, a, r : M θ](
-        ∑' t, γ ^ t •
-          (((fun k : ℕ => γ ^ k) @ (fun k : ℕ => r (t + k))) •
-            ∇[θ] (ℙ[M θ]((a₀ t) = (a t) | (s₀ t) = (s t)) : ℝ).log)) :=
+  have : ∀ θ, PSpace (M θ) (AsPathRV.path (r)) := fun θ =>
+    PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.fst h₁ t).aemeasurable⟩)
+  have hT : ∇[θ] 𝔼[r: M θ]((γ ^ (id : ℕ → ℕ)) @ r) =
+      𝔼[r, s, a : M θ]((γ ^ (id : ℕ → ℕ)) @ fun t ↦ ((γ ^ (id : ℕ → ℕ)) @ (fun k => r (t + k))) • ∇[θ] (ℙ[M θ](a t | s t) : ℝ).log) :=
     GradExpect_DotPow_Id.eq.Expect_DotFunSMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.EqMeasureCount.EqMeasureCount.All_Eq_Joint.In_Ico h₀ h₁ hS hA h₃ h₄
   have hRae : ∀ᵐ ω ∂(M θ), ∀ t, ‖∑' k, γ ^ k * r (t + k) ω‖ ≤ (1 - γ)⁻¹ * |M.env.R| := by
     filter_upwards [All_LeNorm_Abs.of.All_Eq_Joint h₁ (M := M) θ] with ω hr t
@@ -266,4 +230,4 @@ private lemma main
 
 
 -- created on 2023-04-13
--- updated on 2026-10-10
+-- updated on 2026-10-19

@@ -1,5 +1,4 @@
 import Lemma.Real.Grad.eq.Sum
-import sympy.Basic
 open Real
 
 

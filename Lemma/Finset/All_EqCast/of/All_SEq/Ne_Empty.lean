@@ -1,5 +1,4 @@
 import Lemma.Bool.EqCast.of.SEq
-import Lemma.Finset.Any_In.is.Ne_Empty
 import Lemma.Finset.Eq.of.All_SEq.Ne_Empty
 open Bool Finset
 

@@ -1,5 +1,3 @@
-import sympy.matrices.block_swap
-import sympy.Basic
 import Lemma.Matrix.Tau.eq.TransFinCongrPowFinRotate.of.Gt_0
 open Matrix Equiv Matrix.BlockSwap
 

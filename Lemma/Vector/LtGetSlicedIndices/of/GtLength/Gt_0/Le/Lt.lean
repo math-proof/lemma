@@ -1,6 +1,4 @@
 import Lemma.List.GetSlicedIndices.eq.AddMul.of.GtLength.Gt_0.Le.Lt
-import Lemma.List.LengthSlicedIndices.eq.ToNatCeilDivSub.of.Gt_0.Le.Lt
-import Lemma.Nat.MulToNatCeilDivSub.in.Ico
 open List Nat Slice
 
 

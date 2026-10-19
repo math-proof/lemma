@@ -1,5 +1,4 @@
 import sympy.sets.sets
-import sympy.Basic
 import Mathlib.Analysis.Real.Sqrt
 import Lemma.Real.EqInf.of.Lt
 

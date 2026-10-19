@@ -1,6 +1,3 @@
-import sympy.stats.markov_samples
-import sympy.stats.lyapunov
-import sympy.Basic
 import Lemma.Random.AeTendsto.of.LyapunovFunction.Measurable.Measurable.All_Eq_Sum_Sum_SMul.Eq.Any_Ge_0AndAll_All_LeNormSub_MulNormSub.MeasurableUncurry.IteratesOfResidual.SufficientlySparse
 import Lemma.Real.Any_SufficientlySparse.of.Lt_1.Gt_Div2'3
 open Filter MeasureTheory Topology Real Iterates Random

@@ -1,6 +1,5 @@
 import sympy.core.logic
 import Lemma.Bool.Cond.is.Bool.eq.One
-import Lemma.Bool.Imp.of.Imp.Imp
 import Lemma.Bool.Imp.is.Or_Not
 import Lemma.Bool.Bool.eq.Zero.of.Bool.ne.One
 import Lemma.Int.MulSub.eq.SubMulS

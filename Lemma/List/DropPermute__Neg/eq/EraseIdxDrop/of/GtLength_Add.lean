@@ -1,6 +1,5 @@
 import Lemma.List.DropPermute__Neg.eq.AppendTakeDrop.of.GtLength_Add
 import Lemma.List.EraseIdx.eq.Append_Drop_Add_1
-import Lemma.Nat.AddAdd.eq.Add_Add
 open List Nat
 
 

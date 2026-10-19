@@ -1,8 +1,5 @@
-import sympy.stats.policy_trajectory
-import sympy.Basic
 import Lemma.Random.Integral.eq.Sum_SMul.of.All_LeNorm.StronglyMeasurable
 import Lemma.Random.Kf.eq.Sum_MulTW.of.All_LeNorm.StronglyMeasurable
-import Lemma.Random.StronglyMeasurable_KfAndAll_LeNormKf.of.All_LeNorm.StronglyMeasurable
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 
 
@@ -24,7 +21,7 @@ private lemma main
   (x : S) :
 -- imply
   ∫ z, M.Kf θ f (j + 1) z ∂(M.stageK θ x) =
-    ∑ u, M.pol.prob θ x u * ∑ y, (M.env.trans (x, u)).real {y} * ∫ z, M.Kf θ f j z ∂(M.stageK θ y) := by
+    ∑ u, M.policy.prob θ x u * ∑ y, (M.env.trans (x, u)).real {y} * ∫ z, M.Kf θ f j z ∂(M.stageK θ y) := by
 -- proof
   have := M.env.reward_markov
   have h := StronglyMeasurable_KfAndAll_LeNormKf.of.All_LeNorm.StronglyMeasurable (M := M) hf hC θ (j + 1)

@@ -1,5 +1,4 @@
 import Lemma.Vector.GetFlatten_AddMul.eq.Get
-import Lemma.Nat.AddMul.lt.Mul
 open Vector Nat
 
 

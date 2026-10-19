@@ -1,13 +1,6 @@
-import sympy.stats.policy_trajectory.gradient
-import sympy.Basic
 import Lemma.Random.EqW
-import Lemma.Random.Kf.eq.Sum_MulTW.of.All_LeNorm.StronglyMeasurable
-import Lemma.Random.NormClip.le.AbsR
-import Lemma.Random.StronglyMeasurableClip
 import Lemma.Random.TSum_MulPowW.eq.AddWMul_Sum_MulProbSum_MulTTSum_MulPowW.of.In_Ico
 import Lemma.Random.Vc.eq.TSum_MulPowIntegral.of.In_Ico
-import Lemma.Random.WAdd_1.eq.Sum_MulProbSum_MulTW.of.All_LeNorm.StronglyMeasurable
-import Lemma.Real.Norm.le.Sum_Norm
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random Real
 
 
@@ -39,7 +32,7 @@ private lemma main
     rw [show M.Kf θ f 0 = f from funext fun w => rfl]
     exact w0 y
   have w1 : ∀ y, ∫ z, M.Kf θ f (0 + 1) z ∂(M.stageK θ y) =
-      ∑ u, M.pol.prob θ y u * ∑ y', (M.env.trans (y, u)).real {y'} * M.Vc θ γ y' := fun y => by
+      ∑ u, M.policy.prob θ y u * ∑ y', (M.env.trans (y, u)).real {y'} * M.Vc θ γ y' := fun y => by
     rw [WAdd_1.eq.Sum_MulProbSum_MulTW.of.All_LeNorm.StronglyMeasurable (M := M) hf hC θ 0 y]
     simp_rw [w0']
   have e1 := Kf.eq.Sum_MulTW.of.All_LeNorm.StronglyMeasurable (M := M) (Random.StronglyMeasurableClip (M := M)) (NormClip.le.AbsR (M := M)) θ 0 z
@@ -51,11 +44,11 @@ private lemma main
   rw [Finset.mul_sum, ← Finset.sum_add_distrib, ← Finset.sum_sub_distrib]
   refine Finset.sum_eq_zero fun y _ => ?_
   have hrec : M.Vc θ γ y = ∫ z, M.Kf θ (fun z ↦ clip z.1 (-M.env.R) M.env.R) 0 z ∂(M.stageK θ y) +
-      γ * ∑ u, M.pol.prob θ y u * ∑ y', (M.env.trans (y, u)).real {y'} * M.Vc θ γ y' := by
+      γ * ∑ u, M.policy.prob θ y u * ∑ y', (M.env.trans (y, u)).real {y'} * M.Vc θ γ y' := by
     rw [Vc.eq.TSum_MulPowIntegral.of.In_Ico (M := M) (γ := γ) θ y,
       TSum_MulPowW.eq.AddWMul_Sum_MulProbSum_MulTTSum_MulPowW.of.In_Ico (M := M) h₀ θ y]
     congr 2
-    refine Finset.sum_congr rfl fun u _ => congrArg (M.pol.prob θ y u * ·) ?_
+    refine Finset.sum_congr rfl fun u _ => congrArg (M.policy.prob θ y u * ·) ?_
     refine Finset.sum_congr rfl fun yInner _ => congrArg ((M.env.trans (y, u)).real {yInner} * ·) ?_
     simpa using (Vc.eq.TSum_MulPowIntegral.of.In_Ico (M := M) (γ := γ) θ yInner).symm
   rw [hrec]

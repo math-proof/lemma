@@ -1,5 +1,4 @@
 import Lemma.Int.Le0Mul.of.Lt_0.Le_0
-import Lemma.Nat.Ge.of.Gt
 open Nat Int
 
 

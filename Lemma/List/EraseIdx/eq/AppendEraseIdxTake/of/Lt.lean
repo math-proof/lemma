@@ -1,6 +1,5 @@
 import Lemma.List.EraseIdx.eq.AppendTakeEraseIdx.of.Le
 import Lemma.List.TakeEraseIdx.eq.EraseIdxTake.of.Le
-import Lemma.Nat.EqAddSub.of.Ge
 open List Nat
 
 

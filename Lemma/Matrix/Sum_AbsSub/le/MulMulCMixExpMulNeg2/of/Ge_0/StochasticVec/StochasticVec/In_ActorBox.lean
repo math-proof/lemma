@@ -1,5 +1,4 @@
 import sympy.stats.frozen_invariant_law
-import sympy.Basic
 import Lemma.Matrix.Sum_AbsSub.le.Two.of.StochasticVec.StochasticVec
 
 

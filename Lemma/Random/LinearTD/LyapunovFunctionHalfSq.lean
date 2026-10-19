@@ -1,6 +1,3 @@
-import sympy.stats.linear_td
-import sympy.stats.lyapunov
-import sympy.Basic
 import Lemma.LpSpace.LyapunovCandidateHalfSq.of.Ge_2
 import Lemma.Random.LinearTD.DecreaseAlongHalfSq
 open LpSpace

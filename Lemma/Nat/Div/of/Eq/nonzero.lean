@@ -1,5 +1,4 @@
 import Lemma.Nat.Div.of.Eq
-import sympy.Basic
 open Nat
 
 

@@ -4,7 +4,6 @@ import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.List.LengthSlice.eq.One.of.Lt
 import Lemma.List.MulLengthSlice.eq.ProdEraseIdx.of.GtGet.GtLength
 import Lemma.List.ProdTake_1.eq.Get_0.of.GtLength_0
-import Lemma.List.Prod.eq.MulProdS
 import Lemma.Nat.Div.eq.Zero.of.Lt
 import Lemma.Nat.Eq_Div.Eq_Mod.of.Eq_AddMul
 import Lemma.Tensor.DataGet.eq.GetUnflattenData
@@ -13,7 +12,6 @@ import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Vector.GetGetSlice.eq.Get.of.GtGet.GtLength
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
-import Lemma.Vector.GetUnflatten.eq.Get_AddMul
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 open Bool Fin List Nat Tensor Vector
 

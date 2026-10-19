@@ -1,6 +1,4 @@
-import Lemma.Tensor.Eq.is.EqDataS
 import torch.stack
-import Lemma.Nat.Mul
 import Lemma.Vector.FlattenMul.eq.MulFlattenS
 import Lemma.Vector.MulMapS.eq.Map_FunMul
 import Lemma.Vector.MapMap.eq.Map_Comp

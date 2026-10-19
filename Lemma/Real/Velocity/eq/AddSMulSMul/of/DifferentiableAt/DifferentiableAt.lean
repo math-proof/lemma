@@ -2,8 +2,6 @@ import Mathlib.Analysis.Calculus.Deriv.Basic
 import Mathlib.Analysis.Calculus.Deriv.Comp
 import Mathlib.Analysis.Calculus.Deriv.Mul
 import Lemma.Real.HasDerivAtPolarRadial_PolarAngular
-import sympy.physics.vector.kinematics
-import sympy.Basic
 
 
 /--

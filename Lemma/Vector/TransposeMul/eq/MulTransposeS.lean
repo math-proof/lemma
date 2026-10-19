@@ -1,6 +1,4 @@
-import Lemma.Vector.GetMul.eq.MulGetS
 import Lemma.Vector.GetTranspose.eq.Get
-import sympy.vector.vector
 open Vector
 
 

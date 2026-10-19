@@ -1,7 +1,3 @@
-import sympy.stats.policy_trajectory.gradient
-import sympy.Basic
-import sympy.vector.operators
-import sympy.concrete.sup
 import Lemma.Random.Differentiable_FunVc.of.InIco0.GtInftySup_Norm.All_All_Differentiable_FunPolProb
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
 
@@ -15,8 +11,8 @@ private lemma main
   {M : Model Θ S A}
   {γ : ℝ}
 -- given
-  (h₀ : ∀ x u, Differentiable ℝ (fun θ => M.pol.prob θ x u))
-  (h₁ : sup[θ, x, u] ‖∇[θ] M.pol.prob θ x u‖ < ∞)
+  (h₀ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
+  (h₁ : sup[θ, x, u] ‖∇[θ] M.policy.prob θ x u‖ < ∞)
   (h₂ : γ ∈ Set.Ico 0 1)
   (x : S)
   (u : A)
@@ -26,7 +22,7 @@ private lemma main
     fderiv ℝ (fun θ => M.Qc θ γ x u) θ = γ • ∑ y, (M.env.trans (x, u)).real {y} • fderiv ℝ (fun θ => M.Vc θ γ y) θ := by
 -- proof
   obtain ⟨Cp, hCp⟩ := id h₁
-  have hC : ∀ θ x u, ‖fderiv ℝ (fun θ => M.pol.prob θ x u) θ‖ ≤ Cp := fun θ x u => by
+  have hC : ∀ θ x u, ‖fderiv ℝ (fun θ => M.policy.prob θ x u) θ‖ ≤ Cp := fun θ x u => by
     simpa [gradient, LinearIsometryEquiv.norm_map] using hCp ⟨(θ, x, u), rfl⟩
   have hs : DifferentiableAt ℝ (fun θ => ∑ y, (M.env.trans (x, u)).real {y} * M.Vc θ γ y) θ :=
     DifferentiableAt.fun_sum fun y _ => ((Differentiable_FunVc.of.InIco0.GtInftySup_Norm.All_All_Differentiable_FunPolProb (M := M) h₀ h₁ h₂ y) θ).const_mul _

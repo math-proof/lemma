@@ -1,7 +1,6 @@
 import Lemma.Set.CupIco.eq.Cup_UFnSub
 import Lemma.Finset.Cup_Ioc.eq.IocNeg_0
 import Lemma.Int.AddSubNeg.eq.Neg
-import Lemma.Int.SubNeg
 import Lemma.Set.CupIco.eq.CupAnd
 import Lemma.Set.CupRange.eq.CupIco
 import Lemma.Int.EqToNat.of.Ge_0

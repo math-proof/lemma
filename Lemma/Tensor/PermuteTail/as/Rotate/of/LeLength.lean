@@ -5,15 +5,11 @@ import Lemma.Vector.GetTranspose.eq.Get
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
-import Lemma.List.Rotate.eq.AppendDrop__Take
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import Lemma.Vector.Get
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Vector.GetCast.eq.Get.of.Eq
-import Lemma.Nat.Sub.eq.Zero.of.Le
-import Lemma.Nat.EqMin.of.Ge
 import Lemma.Nat.Mod.eq.Sub
-import Lemma.List.ProdAppend.eq.MulProdS
 open Vector Nat Tensor Bool List Fin
 
 

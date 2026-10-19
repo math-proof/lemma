@@ -1,4 +1,3 @@
-import Lemma.List.DropTake.eq.TakeDrop
 import Lemma.List.TakeDropTake.eq.TakeDrop
 import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.Nat.EqSub_Sub.of.Ge

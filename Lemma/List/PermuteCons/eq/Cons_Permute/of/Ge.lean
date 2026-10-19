@@ -1,7 +1,5 @@
-import Lemma.List.Cons_Append.eq.AppendCons
 import Lemma.List.Permute__Neg.eq.Append_AppendRotateDropTake
 import Lemma.List.TakeCons.eq.Cons_Take
-import Lemma.List.TakeTake.eq.Take.of.Ge
 import Lemma.Nat.SubAdd.eq.AddSub.of.Ge
 open List Nat
 

@@ -1,9 +1,6 @@
-import Lemma.Nat.Add
-import Lemma.Nat.AddAdd.eq.Add_Add
 import Lemma.Nat.Add_Add
 import Lemma.Nat.EqDivMul.of.Ne_0
 import Lemma.Nat.Mul.ne.Zero.of.Ne_0.Ne_0
-import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Nat.Square.eq.Mul
 import Lemma.Rat.Div.eq.DivDivS.of.Ne_0
 import Lemma.Rat.Div1.eq.Inv

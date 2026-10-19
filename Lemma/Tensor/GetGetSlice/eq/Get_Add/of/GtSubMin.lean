@@ -1,16 +1,10 @@
 import torch.Tensor
 import Lemma.Vector.GetCast.eq.Get.of.Eq
-import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.List.LengthSlice.eq.SubMin
-import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Vector.GetSplitAt_1.eq.GetUnflatten.of.Lt
 import Lemma.Vector.EqUnflattenFlatten
 import Lemma.Vector.GetMap.eq.UFnGet.of.Lt
 import Lemma.Vector.GetIndices.eq.AddToNatAdd_Mul_DivSub1Sign_2.of.Gt_0
-import Lemma.Nat.EqAdd_Mul_DivSub1Sign_2
-import Lemma.Nat.Lt.of.Lt_Min
-import Lemma.Nat.LtAdd.of.Lt_Sub
-import Lemma.Fin.Eq.of.Val
 open Tensor Vector List Nat Fin
 
 

@@ -1,6 +1,4 @@
 import sympy.stats.iterates
-import sympy.stats.lyapunov
-import sympy.Basic
 import Mathlib.MeasureTheory.Measure.MeasureSpaceDef
 import Mathlib.Topology.EMetricSpace.Lipschitz
 import Lemma.Real.Any_And_Ge_0_All_LeInner.of.LyapunovCandidate

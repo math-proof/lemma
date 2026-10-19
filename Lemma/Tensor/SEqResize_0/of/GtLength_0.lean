@@ -1,12 +1,7 @@
-import Lemma.Bool.SEq.is.SEqCast.of.Eq
-import Lemma.List.EqCons_Tail.of.GtLength_0
-import Lemma.Nat.EqMod.of.Lt
-import Lemma.Nat.EqMulDiv
 import Lemma.Tensor.GetAppend.eq.Get.of.Lt
 import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
 import Lemma.Tensor.GetRepeat_0.as.Get_Mod_Get.of.GtMul_Get.GtLength_0
 import Lemma.Tensor.Resize_0.as.AppendCast_Repeat_0.of.GtLength_0
-import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.GtLength_0
 open Bool List Nat Tensor
 
 

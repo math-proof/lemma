@@ -1,15 +1,7 @@
 import Lemma.Tensor.GetSum_0.as.SumSelect.of.GtGet_0.GtLength_0
 import torch.Tensor.permute
 import Lemma.Tensor.GetPermuteHead.as.PermuteHeadSelect.of.GtGet_1.GtLength_1
-import Lemma.Bool.SEq.is.SEqCast.of.Eq
-import Lemma.List.EraseIdxAppend.eq.Append_EraseIdx.of.LeLength
-import Lemma.List.EraseIdxTail.eq.TailEraseIdx.of.Lt_SubLength_1
-import Lemma.List.GetAppend.eq.Get.of.GtLength
-import Lemma.List.GetTake.eq.Get.of.GtLengthTake
-import Lemma.Nat.EqAdd_Sub.of.Ge
-import Lemma.Nat.EqMin.of.Le
 import Lemma.Tensor.GetSum.as.SumGet.of.GtGet_0.Gt_0.GtLength
-import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.GtLength_0
 import Lemma.Tensor.SEqPermuteHead_1
 import Lemma.Tensor.SEqSumS.of.SEq
 import torch.Tensor.sum

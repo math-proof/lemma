@@ -1,12 +1,9 @@
-import sympy.stats.policy_trajectory.gradient
-import sympy.stats.cond_expectation
 import Lemma.Random.All_LeNorm_Abs.of.All_Eq_Joint
 import Lemma.Random.Integrable_Mul_R.of.Measurable
 import Lemma.Random.Integral.eq.MulMulRealPreimageProbIntegral_MulEqAndEq.of.All_Eq
 import Lemma.Random.Integral_G.eq.TSum_MulPowIntegral_R_Add.of.In_Ico
 import Lemma.Random.Integral_MulEqAndEq.eq.MulMulRealPreimageProbIntegral_Rc.of.All_Eq
 import Lemma.Random.Integral_MulEqAndEq.eq.MulMulRealProbSum_MulTW.of.All_Eq
-import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
 
 
@@ -22,9 +19,9 @@ private lemma E_ind_r
   (x : S)
   (u : A) :
   ∫ ω, (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) * r (t + k) ω ∂(M θ) =
-    ((M θ).real (s t ⁻¹' {x}) * M.pol.prob θ x u) *
+    ((M θ).real (s t ⁻¹' {x}) * M.policy.prob θ x u) *
     ∫ ω, r (t + k) ω ∂(M θ)[|s t ⁻¹' {x} ∩ a t ⁻¹' {u}] := by
-  if h : (M θ).real (s t ⁻¹' {x}) * M.pol.prob θ x u = 0 then
+  if h : (M θ).real (s t ⁻¹' {x}) * M.policy.prob θ x u = 0 then
     rw [h, zero_mul]
     cases k with
     | zero => rw [add_zero, Integral_MulEqAndEq.eq.MulMulRealPreimageProbIntegral_Rc.of.All_Eq h₁, h, zero_mul]
@@ -54,7 +51,7 @@ private lemma main
   let Q (θ : Θ) (t : ℕ) (x : S) (u : A) : ℝ :=
     𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = x ∧ a t = u);
   ∫ ω, (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) * ((γ ^ (id : ℕ → ℕ)) @ r[t:]) ω ∂(M θ) =
-    ((M θ).real (s t ⁻¹' {x}) * M.pol.prob θ x u) * Q θ t x u := by
+    ((M θ).real (s t ⁻¹' {x}) * M.policy.prob θ x u) * Q θ t x u := by
 -- proof
   set G := (γ ^ (id : ℕ → ℕ)) @ r[t:]
   obtain rfl : r = fun t ω ↦ (ω t).1 := funext₂ fun t ω ↦ (congrArg (·.1) (congrFun (h₁ t) ω)).symm
@@ -95,7 +92,7 @@ private lemma main
   refine (integral_congr_ae (Filter.Eventually.of_forall e)).trans ?_
   rw [← (hasSum_integral_of_summable_integral_norm hF hS).tsum_eq]
   have e2 : ∀ k, ∫ ω, (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) * (γ ^ k * r (t + k) ω) ∂(M θ) =
-      ((M θ).real (s t ⁻¹' {x}) * M.pol.prob θ x u) *
+      ((M θ).real (s t ⁻¹' {x}) * M.policy.prob θ x u) *
         (γ ^ k * ∫ ω, r (t + k) ω ∂(M θ)[|s t ⁻¹' {x} ∩ a t ⁻¹' {u}]) := fun k => by
     have e_mul : (fun ω => (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) * (γ ^ k * r (t + k) ω)) =
         fun ω => γ ^ k * ((if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) * r (t + k) ω) :=

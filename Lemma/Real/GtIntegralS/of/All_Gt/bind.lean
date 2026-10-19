@@ -1,5 +1,4 @@
 import Lemma.Real.LtIntegralS.of.All_Lt
-import sympy.Basic
 open Real
 
 

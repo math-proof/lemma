@@ -1,5 +1,4 @@
 import Lemma.Nat.ModAddMul.eq.Mod
-import Lemma.Nat.ModAdd_Mul.eq.Mod
 open Nat
 
 

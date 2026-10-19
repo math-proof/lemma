@@ -1,5 +1,3 @@
-import Lemma.Tensor.EqGetStack
-import Lemma.Tensor.Eq_Stack
 import Lemma.Tensor.Mul.eq.Mul_GetData_0
 import Lemma.Tensor.MulStack.eq.Stack_Mul
 open Tensor

@@ -1,10 +1,7 @@
 import Mathlib.GroupTheory.Perm.Sign
 import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
-import Lemma.Nat.Delta.eq.Ite
 import Lemma.Tensor.Det.eq.DetToMatrix
 import Lemma.Tensor.GetShiftMatrix.eq.Ite
-import sympy.matrices.dense
-import sympy.matrices.expressions.permutation
 open Equiv Tensor
 
 

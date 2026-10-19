@@ -1,13 +1,9 @@
 import sympy.concrete.products
-import sympy.matrices.expressions.permutation
-import sympy.vector.Basic
 import Lemma.Tensor.GetDot_SwapMatrix.eq.Get
 import Lemma.Tensor.DotDot.eq.Dot_Dot
 import Lemma.Tensor.EqDot_Eye
-import Lemma.Tensor.Eq.is.All_EqGetS
-import Lemma.Tensor.EqGetStack
 open Tensor
-set_option maxHeartbeats 4000000
+set_option maxHeartbeats 1000000
 
 
 @[path]

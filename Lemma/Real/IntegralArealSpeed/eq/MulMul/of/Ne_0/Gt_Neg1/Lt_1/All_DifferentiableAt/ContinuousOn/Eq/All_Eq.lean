@@ -1,9 +1,6 @@
-import Lemma.Real.Gt_0Sub1MulCos.of.Gt_Neg1.Lt_1
 import Lemma.Real.IntegralArealSpeed.eq.IntegralDivSquare.of.Ne_0.All_DifferentiableAt.ContinuousOn.Continuous.All_Eq
 import Lemma.Real.IntegralDivSquare.eq.MulMul.of.Gt_Neg1.Lt_1
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.Periodic
-import sympy.physics.vector.kinematics
-import sympy.Basic
 open Real
 
 

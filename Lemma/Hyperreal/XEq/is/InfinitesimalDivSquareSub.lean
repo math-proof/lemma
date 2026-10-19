@@ -1,20 +1,10 @@
-import Lemma.Hyperreal.EqSt.of.InfinitesimalSub
-import Lemma.Hyperreal.EqSt_0.of.Infinite
-import Lemma.Hyperreal.Infinitesimal.is.InfinitesimalPow
 import Lemma.Hyperreal.Infinitesimal.of.Infinitesimal.InfinitesimalDivSquareSub
-import Lemma.Hyperreal.InfinitesimalAdd.of.Infinitesimal.Infinitesimal
-import Lemma.Hyperreal.InfinitesimalDiv.of.Infinitesimal.NotInfinitesimal
 import Lemma.Hyperreal.InfinitesimalSub
 import Lemma.Hyperreal.InfinitesimalSub.of.EqSt.NotInfinite
-import Lemma.Hyperreal.InfinitesimalSub.of.Infinitesimal.Infinitesimal
 import Lemma.Hyperreal.NotInfiniteDiv_AddAddSquareS.of.StDiv.eq.One
 import Lemma.Hyperreal.Eq_0.of.InfinitesimalAdd.Infinitesimal
-import Lemma.Hyperreal.NotInfinitesimalSub.of.Infinitesimal.Ne_0
 import Lemma.Hyperreal.XEq.is.OrAndS
 import Lemma.Hyperreal.StDiv.eq.One.of.InfinitesimalDivSquareSub.NotInfinitesimal.NotInfinitesimal
-import Lemma.Hyperreal.StDiv_AddAddSquareS.eq.One.of.StDiv.eq.One
-import Lemma.Int.SquareSub
-import Lemma.Nat.AddAdd
 import Lemma.Rat.DivSquareSub.eq.Sub1DivAddS
 open Hyperreal Int Nat Rat
 

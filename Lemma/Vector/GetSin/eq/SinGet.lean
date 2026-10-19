@@ -1,5 +1,4 @@
 import sympy.vector.functions
-import sympy.Basic
 
 
 /--

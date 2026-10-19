@@ -1,5 +1,4 @@
 import Lemma.Finset.Prod.eq.MulProdS
-import sympy.Basic
 open Finset
 
 

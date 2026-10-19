@@ -1,6 +1,5 @@
 import Mathlib.Probability.Moments.Variance
 import Lemma.Random.Var.Sum.eq.Sum.Cov
-import sympy.Basic
 open MeasureTheory ProbabilityTheory Random
 
 

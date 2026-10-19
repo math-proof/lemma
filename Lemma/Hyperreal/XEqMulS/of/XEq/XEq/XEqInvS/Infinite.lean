@@ -1,21 +1,16 @@
 import Lemma.Rat.Eq_0.is.EqInv_0
-import Lemma.Hyperreal.EqSt.of.InfinitesimalSub
-import Lemma.Hyperreal.EqSt_0.of.Infinite
 import Lemma.Hyperreal.Eq_0.of.Infinitesimal
 import Lemma.Hyperreal.Infinite.is.Infinite.of.XEq
 import Lemma.Hyperreal.InfiniteMul.of.Infinite.Infinite
-import Lemma.Hyperreal.InfiniteMul.of.Infinite.NotInfinitesimal
 import Lemma.Hyperreal.Infinitesimal.is.InfiniteInv
 import Lemma.Hyperreal.Infinitesimal.is.Infinitesimal.of.XEq
 import Lemma.Hyperreal.Infinitesimal.of.InfinitesimalMul.NotInfinitesimal
 import Lemma.Hyperreal.InfinitesimalMul.of.Infinitesimal.NotInfinite
 import Lemma.Hyperreal.InfinitesimalSub.of.EqSt.NotInfinite
 import Lemma.Hyperreal.Ne_0.of.NotInfinitesimal
-import Lemma.Hyperreal.NotInfinite.of.Infinitesimal
 import Lemma.Hyperreal.NotInfiniteMul.of.NotInfinite.NotInfinite
 import Lemma.Hyperreal.StDiv.eq.InvStInv
 import Lemma.Hyperreal.StMul.eq.MulStS.of.NotInfinite.NotInfinite
-import Lemma.Hyperreal.XEq.is.OrAndS
 import Lemma.Nat.Mul.eq.Zero.is.OrEqS_0
 open Hyperreal Nat Rat
 

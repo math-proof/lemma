@@ -1,6 +1,4 @@
-import Lemma.Set.SubsetInter
 import Lemma.Set.SubsetInter.of.Subset
-import Lemma.Set.Inter
 import Lemma.Set.Subset_Inter.of.Subset.Subset
 open Set
 

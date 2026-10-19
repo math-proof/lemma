@@ -1,4 +1,3 @@
-import sympy.functions.elementary.integers
 import Lemma.Nat.Mul_2.eq.Add
 import Lemma.Nat.EqMulDiv.of.Dvd
 import Lemma.Nat.Even.is.Dvd2

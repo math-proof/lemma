@@ -1,5 +1,3 @@
-import sympy.stats.policy_trajectory
-import sympy.Basic
 import Lemma.Random.EqMapStageK_12
 import Lemma.Random.Map.eq.BindStageK
 import Lemma.Random.Map.eq.BindK

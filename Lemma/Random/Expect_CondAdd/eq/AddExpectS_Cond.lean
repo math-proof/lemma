@@ -1,6 +1,5 @@
 import Mathlib.MeasureTheory.Integral.Lebesgue.Add
 import Mathlib.MeasureTheory.Measure.WithDensity
-import sympy.stats.joint_rv
 import sympy.stats.cond_expectation
 import sympy.Basic
 open MeasureTheory

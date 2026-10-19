@@ -1,6 +1,5 @@
 import stdlib.List
 import Lemma.List.Drop.eq.Cons_Drop_Add_1.of.GtLength
-import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.List.Drop.eq.Nil
 open List Nat
 

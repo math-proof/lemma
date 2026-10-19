@@ -1,8 +1,6 @@
 import Lemma.Vector.Cons_ValTail.eq.Val
 import Lemma.Vector.Dot.eq.Add_Dot
 import Lemma.Vector.Dot.eq.Zero
-import Lemma.Vector.EqCons_Tail
-import Lemma.Vector.Sum.eq.Zero
 import Lemma.Vector.SumMapVal.eq.SumMap
 open Vector
 

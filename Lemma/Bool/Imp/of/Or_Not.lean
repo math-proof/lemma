@@ -1,5 +1,4 @@
 import Lemma.Bool.Imp.is.OrNot
-import sympy.Basic
 open Bool
 
 

@@ -1,7 +1,4 @@
-import Lemma.List.EqLengthSlice_Mul
 import Lemma.List.LengthSlice.eq.Div.of.Lt.Dvd
-import Lemma.Nat.AddMul.lt.Mul
-import Lemma.Nat.Any_Eq_Mul.of.Dvd
 import Lemma.Nat.LtAddMul.of.Lt.Lt_Div.Dvd
 import Lemma.Vector.GetGetSlice.eq.Get
 open List Nat Vector

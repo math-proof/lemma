@@ -2,7 +2,6 @@ import Lemma.Nat.EqAddMulDiv
 import Lemma.Nat.LtDiv.of.Lt_Mul
 import Lemma.Nat.LtMod.of.Gt_0
 import Lemma.Nat.Gt_0.of.GtMul
-import Lemma.Nat.Mul
 open Nat
 
 

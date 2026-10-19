@@ -1,5 +1,3 @@
-import sympy.sets.sets
-import sympy.Basic
 import Lemma.Real.Inf.eq.Neg.Sup
 
 

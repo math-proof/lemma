@@ -1,6 +1,5 @@
 import sympy.functions.combinatorial.integer_factorials
 import sympy.sets.sets
-import sympy.Basic
 
 
 @[path]

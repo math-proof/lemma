@@ -1,6 +1,5 @@
 import Lemma.Bool.Cast.of.SEq.Eq
 import torch.Tensor.prod
-import Lemma.List.ProdInsertIdx.eq.Prod
 import Lemma.Vector.SEqRepeat_Div
 import torch.Tensor.Basic
 import torch.Tensor.reshape

@@ -1,17 +1,9 @@
 import Lemma.Tensor.SoftmaxAdd_Mul_Infty.eq.Cast_Stack_Ite_Block
 import Lemma.Tensor.XEqDotS.of.XEq
-import Lemma.Tensor.XEqGetS.of.XEq.GtLength
-import Lemma.Tensor.GetMap.eq.MapGet
 import Lemma.Tensor.MapDot.eq.DotMapS.of.All_Eq_Add.All_Eq_Mul
 import Lemma.Tensor.Dot.eq.Stack_Sum_MulGetS
-import Lemma.Tensor.EqGetStack
-import Lemma.Tensor.XEq.of.Eq
-import Lemma.Tensor.GetDot.eq.DotGet
-import Lemma.Tensor.XEq.is.All_XEqGetS.of.GtLength_0
-import Lemma.Tensor.Eq.is.EqDataS
-import sympy.Basic
 open Tensor
-set_option maxHeartbeats 2000000
+set_option maxHeartbeats 1000000
 
 
 private lemma sum_sc {m : ℕ} (h : Fin m → ℝ) : ((∑ k, h k : ℝ) : Tensor ℝ []) = ∑ k, ((h k : ℝ) : Tensor ℝ []) := by

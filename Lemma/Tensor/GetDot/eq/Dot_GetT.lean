@@ -1,10 +1,6 @@
-import Lemma.Bool.SEq.is.Eq
 import torch.Tensor.permute
-import Lemma.Tensor.Dot
 import Lemma.Tensor.GetDot.eq.DotGet
-import Lemma.Tensor.SEqGetS.of.SEq.GtLength
 import Lemma.Tensor.DotT.eq.Dot
-import sympy.matrices.expressions.matmul
 open Bool Tensor
 
 

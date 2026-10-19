@@ -1,7 +1,5 @@
 import Lemma.Real.Inf.eq.Mul.of.Gt_0
 import Lemma.Real.Inf_Square.eq.Square.of.Le_0.Lt
-import sympy.sets.sets
-import sympy.Basic
 open Real
 
 

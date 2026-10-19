@@ -1,5 +1,4 @@
 import sympy.vector.functions
-import sympy.Basic
 
 
 @[path, fin, comm, fin.comm]

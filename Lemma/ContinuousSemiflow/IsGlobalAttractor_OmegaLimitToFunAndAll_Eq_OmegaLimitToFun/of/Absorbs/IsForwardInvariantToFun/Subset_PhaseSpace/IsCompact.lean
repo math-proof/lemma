@@ -1,7 +1,5 @@
 import Mathlib.Dynamics.OmegaLimit
 import Mathlib.Dynamics.Flow
-import sympy.dynamics.actor_critic
-import sympy.Basic
 import Lemma.ContinuousSemiflow.Eq.of.IsGlobalAttractor.IsGlobalAttractor
 import Lemma.ContinuousSemiflow.IsGlobalAttractor_OmegaLimitToFun.of.Absorbs.IsForwardInvariantToFun.Subset_PhaseSpace.IsCompact
 open Filter

@@ -1,4 +1,3 @@
-import Lemma.Int.GeAbs
 import Lemma.Int.LeAbs.is.LeNeg.Le
 import Lemma.Int.LeNegAbs
 import Lemma.Nat.Ge.of.Ge.Ge

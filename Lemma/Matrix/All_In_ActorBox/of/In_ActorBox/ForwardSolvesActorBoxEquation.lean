@@ -1,8 +1,6 @@
 import Mathlib.Analysis.Calculus.MeanValue
 import Mathlib.Analysis.SpecialFunctions.ExpDeriv
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
-import sympy.dynamics.actor_critic
-import sympy.Basic
 import Lemma.Real.All_EqMul_ScalarIntegratingFactor.of.Continuous.Continuous.All_HasDerivWithinAt
 
 

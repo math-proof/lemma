@@ -1,5 +1,3 @@
-import sympy.core.mul
-import sympy.Basic
 import Lemma.List.ZipWithLcm.comm.of.EqLengthS
 import Lemma.List.Forall₂DvdLeft_ZipWithLcm.of.EqLengthS
 open List

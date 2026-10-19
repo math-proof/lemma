@@ -1,12 +1,6 @@
 import Lemma.Random.Eq_Expect.Eq_Expect.Eq_Expect.of.All_Eq_Expect.All_Eq_Expect.In_Ico
 import Lemma.Random.NormV.le.MulSub1Abs_R.of.In_Ico
 import Lemma.Random.NormQ.le.MulSub1Abs_R.of.In_Ico
-import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
-import Lemma.Random.MEq_Clip.of.All_Eq
-import Lemma.Random.NormClip.le.AbsR
-import sympy.stats.policy_trajectory.gradient
-import sympy.stats.cond_expectation
-import sympy.Basic
 open MeasureTheory ProbabilityTheory PolicyGradient Random
 
 
