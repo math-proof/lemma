@@ -1,0 +1,25 @@
+import Mathlib
+import sympy.Basic
+import sympy.series.formal.WeightedSets
+open scoped BigOperators
+open PowerSeries Finset
+open WeightedSet DominoTilingsZ
+
+
+/--
+[restrict_tiling_right_proof_irrel_eq](https://github.com/facebookresearch/algebraic-combinatorics/blob/main/AlgebraicCombinatorics/WeightedSets.lean)
+-/
+@[path]
+private lemma main
+-- given
+  (n : ℕ)
+  (T : Tiling (Rectangle n 2))
+  (k : ℕ)
+  (hk1 hk2 : hasFault n T k) :
+-- imply
+  restrictTilingRight n T k hk1 = restrictTilingRight n T k hk2 := by
+-- proof
+  exact rfl
+
+
+-- created on 2026-10-20

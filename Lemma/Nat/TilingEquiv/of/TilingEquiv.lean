@@ -1,0 +1,23 @@
+import Mathlib
+import sympy.Basic
+import sympy.matrices.determinants.DominoTilings
+open DominoTilings
+open Domino DominoTiling
+open Finset
+
+
+/--
+[DominoTilings](https://github.com/facebookresearch/algebraic-combinatorics/blob/main/AlgebraicCombinatorics/Details/DominoTilings.lean)
+-/
+@[path]
+private lemma main
+  {T₁ T₂ : DominoTiling n m}
+-- given
+  (h : TilingEquiv T₁ T₂) :
+-- imply
+  TilingEquiv T₂ T₁ :=
+-- proof
+  h.symm
+
+
+-- created on 2026-10-20

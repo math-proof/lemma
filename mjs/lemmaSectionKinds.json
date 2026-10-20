@@ -1,23 +1,9 @@
 [
   {
-    "resolved": "Real",
-    "reason": "Mathlib `Real` is a structure",
+    "resolved": "Nat",
+    "reason": "Mathlib `Nat` is an inductive (not a class)",
     "kind": "data type",
-    "folder": "Real",
-    "decl": "structure"
-  },
-  {
-    "resolved": "Set",
-    "reason": "Mathlib `Set` is a def of a type former",
-    "kind": "data type",
-    "folder": "Set",
-    "decl": "def-type"
-  },
-  {
-    "resolved": null,
-    "reason": "no Mathlib constant whose last name component equals this folder",
-    "kind": "topic/unknown",
-    "folder": "Tensor",
-    "decl": "missing"
+    "folder": "Nat",
+    "decl": "inductive"
   }
 ]

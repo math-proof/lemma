@@ -1,0 +1,94 @@
+import Mathlib
+import sympy.Basic
+import sympy.matrices.determinants.DominoTilings
+open DominoTilings
+open Domino DominoTiling
+open Finset
+
+
+/--
+[DominoTilings](https://github.com/facebookresearch/algebraic-combinatorics/blob/main/AlgebraicCombinatorics/Details/DominoTilings.lean)
+-/
+@[path]
+private lemma main
+-- given
+  (x : (DominoTiling n 2) ⊕ (DominoTiling (n + 1) 2)) :
+-- imply
+  tiling_2_to_sum (tiling_2_from_sum x) = x := by
+-- proof
+  unfold tiling_2_to_sum tiling_2_from_sum
+  rcases x with T | T
+  · -- Horizontal case: x = inl T
+    rw [Sum.elim_inl]
+    -- prependHorizontalPair produces a tiling without vertical first column
+    have hv : ¬hasVerticalFirstColumn (prependHorizontalPair T) := by
+      intro ⟨d, hd_mem, hd_cells⟩
+      simp only [prependHorizontalPair, Finset.mem_insert, Finset.mem_image] at hd_mem
+      rcases hd_mem with rfl | rfl | ⟨d', _, rfl⟩
+      · -- d = horizontal_1_1: cells = {(1,1), (2,1)} ≠ {(1,1), (1,2)}
+        simp only [Domino.cells, horizontal_1_1] at hd_cells
+        have h1 : ((1, 1) : Cell) ∈ ({(1, 1), (1, 2)} : Finset Cell) := by
+          rw [← hd_cells]; exact Finset.mem_insert_self _ _
+        have h2 : ((2, 1) : Cell) ∈ ({(1, 1), (1, 2)} : Finset Cell) := by
+          rw [← hd_cells]; exact Finset.mem_insert_of_mem (Finset.mem_singleton_self _)
+        simp only [Finset.mem_insert, Finset.mem_singleton, Prod.mk.injEq] at h2
+        obtain ⟨h, _⟩ | ⟨h, _⟩ := h2 <;> omega
+      · -- d = horizontal_1_2: cells = {(1,2), (2,2)} ≠ {(1,1), (1,2)}
+        simp only [Domino.cells, horizontal_1_2] at hd_cells
+        have h2 : ((2, 2) : Cell) ∈ ({(1, 1), (1, 2)} : Finset Cell) := by
+          rw [← hd_cells]; exact Finset.mem_insert_of_mem (Finset.mem_singleton_self _)
+        simp only [Finset.mem_insert, Finset.mem_singleton, Prod.mk.injEq] at h2
+        obtain ⟨h, _⟩ | ⟨h, _⟩ := h2 <;> omega
+      · -- d = d'.shiftNat 2: cells have column ≥ 3
+        have hcols := domino_cells_col_ge_one T d' (by assumption)
+        simp only [Domino.cells, Domino.shiftNat_cell1, Domino.shiftNat_cell2] at hd_cells
+        have h1 : (d'.cell1.1 + 2, d'.cell1.2) ∈ ({(1, 1), (1, 2)} : Finset Cell) := by
+          rw [← hd_cells]; exact Finset.mem_insert_self _ _
+        simp only [Finset.mem_insert, Finset.mem_singleton, Prod.mk.injEq] at h1
+        obtain ⟨h, _⟩ | ⟨h, _⟩ := h1 <;> omega
+    simp only [dite_eq_right hv]
+    -- The chosen dominos must be horizontal_1_1 and horizontal_1_2 by uniqueness
+    have hpair := horizontalPair_of_not_hasVerticalFirstColumn (prependHorizontalPair T) hv
+    have hd1_spec := Classical.choose_spec hpair.1
+    have hd2_spec := Classical.choose_spec hpair.2
+    have hd1_eq : Classical.choose hpair.1 = horizontal_1_1 :=
+      horizontal_1_1_unique_in_prependHorizontalPair T _ hd1_spec.1 hd1_spec.2
+    have hd2_eq : Classical.choose hpair.2 = horizontal_1_2 :=
+      horizontal_1_2_unique_in_prependHorizontalPair T _ hd2_spec.1 hd2_spec.2
+    -- Now use the existing roundtrip lemma
+    simp only [hd1_eq, hd2_eq]
+    have hmem1 : horizontal_1_1 ∈ (prependHorizontalPair T).dominos := by
+      simp [prependHorizontalPair]
+    have hmem2 : horizontal_1_2 ∈ (prependHorizontalPair T).dominos := by
+      simp [prependHorizontalPair]
+    -- The Gen version with canonical dominos equals the non-Gen version
+    congr 1
+    conv_lhs => rw [show restrictAfterHorizontalPairGen (prependHorizontalPair T) horizontal_1_1
+      horizontal_1_2 hmem1 hmem2 rfl rfl = restrictAfterHorizontalPair (prependHorizontalPair T)
+      hmem1 hmem2 from rfl]
+    exact restrictAfterHorizontalPair_prependHorizontalPair T
+  · -- Vertical case: x = inr T
+    rw [Sum.elim_inr]
+    -- prependVertical produces a tiling with vertical first column
+    have hv : hasVerticalFirstColumn (prependVertical T) := by
+      use vertical_1_1
+      constructor
+      · simp [prependVertical, vertical_1_1]
+      · rfl
+    simp only [dite_eq_left hv]
+    -- The chosen domino must be vertical_1_1 by uniqueness
+    have hv_spec := Classical.choose_spec hv
+    have hv_eq : Classical.choose hv = vertical_1_1 :=
+      vertical_1_1_unique_in_prependVertical T _ hv_spec.1 hv_spec.2
+    simp only [hv_eq]
+    have hmem : vertical_1_1 ∈ (prependVertical T).dominos := by
+      simp [prependVertical]
+    -- The Gen version with canonical domino equals the non-Gen version
+    congr 1
+    conv_lhs => rw [show restrictAfterVerticalGen (prependVertical T) vertical_1_1
+      hmem rfl = restrictAfterVertical (prependVertical T) hmem from
+      restrictAfterVerticalGen_eq_restrictAfterVertical (prependVertical T) hmem]
+    exact restrictAfterVertical_prependVertical T
+
+
+-- created on 2026-10-20

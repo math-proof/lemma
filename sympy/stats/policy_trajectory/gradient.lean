@@ -37,14 +37,14 @@ noncomputable def Pn (M : Model Θ S A) (θ : Θ) (n : ℕ) (x y : S) : ℝ :=
 noncomputable def P1 (M : Model Θ S A) (θ : Θ) (x y : S) : ℝ :=
   ∑ u, M.policy.prob θ x u * (M.env.trans (x, u)).real {y}
 
-/-- time-free closed form of the state-value function: `Vc θ γ x = ∑' k, γ ^ k * 𝔼[r[t+k] | s[t] = x]` -/
+/-- time-free closed form of the state-value function: `Vc θ γ x = (γ ^ (id : ℕ → ℕ)) @ W` where `W k = 𝔼[r[t+k] | s[t] = x]` -/
 noncomputable def Vc (M : Model Θ S A) (θ : Θ) (γ : ℝ) (x : S) : ℝ :=
   let rc := fun w : ℝ × S × A => clip w.1 (-M.env.R) M.env.R
   let W (j : ℕ) : ℝ :=
     let z : ℝ × S × A → ℝ × S × A := id
     have : PSpace (M.stageK θ x) z := { aemeasurable := measurable_id.aemeasurable }
     𝔼[z : M.stageK θ x](M.Kf θ rc j z)
-  ∑' k, γ ^ k * W k
+  (γ ^ (id : ℕ → ℕ)) @ W
 
 /-- time-free closed form of the action-value function:
 `Qc θ γ x u = 𝔼[r | x, u] + γ * ∑ y, Pr(s' = y | x, u) * Vc θ γ y` -/
