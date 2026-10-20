@@ -16,5 +16,5 @@ private lemma main
   apply h₀.div h₁ h₂
 
 
--- created on 2026-10-11
+-- created on 2020-06-22
 -- updated on 2026-10-17

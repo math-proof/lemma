@@ -29,5 +29,5 @@ private lemma main
     _ = p ^ 3 := by ring
 
 
--- created on 2026-10-11
+-- created on 2021-03-07
 -- updated on 2026-10-17

@@ -24,5 +24,5 @@ private lemma main
     exact ⟨fun i hi => h i (by omega), h n (by omega), h (n + 1) (by omega)⟩
 
 
--- created on 2026-10-11
+-- created on 2019-05-06
 -- updated on 2026-10-17

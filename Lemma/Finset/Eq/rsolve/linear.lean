@@ -38,5 +38,5 @@ private lemma main
     rw [hhead, ← htail, add_assoc, ← Finset.sum_range_succ]
 
 
--- created on 2026-10-11
+-- created on 2020-10-07
 -- updated on 2026-10-17

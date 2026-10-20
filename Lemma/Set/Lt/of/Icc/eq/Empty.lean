@@ -13,5 +13,5 @@ private lemma main
   lt_of_not_ge (Set.Icc_eq_empty_iff.mp h₀)
 
 
--- created on 2026-10-11
+-- created on 2021-05-06
 -- updated on 2026-10-17

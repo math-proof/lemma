@@ -16,5 +16,5 @@ private lemma main
   rw [Real.sigmoid_neg, ← Real.log_mul hpos.ne' (sub_pos.mpr hlt).ne']
 
 
--- created on 2026-10-11
+-- created on 2023-05-24
 -- updated on 2026-10-17

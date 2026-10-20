@@ -29,5 +29,5 @@ private lemma main
     · exact ⟨d, by simp, i, hi, hp⟩
 
 
--- created on 2026-10-11
+-- created on 2019-02-10
 -- updated on 2026-10-17

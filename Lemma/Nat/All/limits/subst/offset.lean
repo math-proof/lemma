@@ -21,4 +21,4 @@ private lemma main
     rwa [sub_add_cancel] at h'
 
 
--- created on 2026-10-11
+-- created on 2018-12-20

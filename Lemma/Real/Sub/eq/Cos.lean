@@ -11,5 +11,5 @@ private lemma main
   rw [Real.cos_sub]
 
 
--- created on 2026-10-11
+-- created on 2023-06-01
 -- updated on 2026-10-17

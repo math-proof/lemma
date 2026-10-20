@@ -16,5 +16,5 @@ private lemma main
   · linarith [h₁.2]
 
 
--- created on 2026-10-11
+-- created on 2021-06-12
 -- updated on 2026-10-17

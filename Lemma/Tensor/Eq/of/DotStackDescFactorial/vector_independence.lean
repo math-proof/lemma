@@ -16,5 +16,5 @@ private lemma main
   Matrix.mulVec_injective_of_isUnit ((Matrix.isUnit_iff_isUnit_det A).2 (IsUnit.mk0 _ h₁)) h₀
 
 
--- created on 2026-10-11
+-- created on 2023-08-26
 -- updated on 2026-10-17

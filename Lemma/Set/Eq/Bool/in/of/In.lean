@@ -12,5 +12,5 @@ private lemma main
   decide_eq_true h₀
 
 
--- created on 2026-10-11
+-- created on 2020-11-03
 -- updated on 2026-10-17

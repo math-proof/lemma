@@ -18,5 +18,5 @@ private lemma main
     simpa [hp] using h₁ hp
 
 
--- created on 2026-10-11
+-- created on 2018-09-23
 -- updated on 2026-10-17

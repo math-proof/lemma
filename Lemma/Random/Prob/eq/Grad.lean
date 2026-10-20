@@ -20,5 +20,5 @@ private lemma main
   gaussianReal_apply_eq_integral μ h₀ s
 
 
--- created on 2026-10-11
+-- created on 2021-07-24
 -- updated on 2026-10-17

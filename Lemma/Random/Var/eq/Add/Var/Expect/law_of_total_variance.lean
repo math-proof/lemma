@@ -21,5 +21,5 @@ private lemma main
   (integral_condVar_add_variance_condExp (μ := π) h₀ h₁).symm.trans (add_comm _ _)
 
 
--- created on 2023-04-22
+-- created on 2023-04-09
 -- updated on 2026-10-17

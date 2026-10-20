@@ -15,5 +15,5 @@ private lemma main
   fun x hx => h₁ x ⟨le_trans h₀ hx.1, hx.2⟩
 
 
--- created on 2026-10-11
+-- created on 2019-05-15
 -- updated on 2026-10-17

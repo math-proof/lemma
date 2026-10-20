@@ -16,5 +16,5 @@ private lemma main
     simp [h, max_eq_left hneg]
 
 
--- created on 2026-10-11
+-- created on 2021-12-25
 -- updated on 2026-10-17

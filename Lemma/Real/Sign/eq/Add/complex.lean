@@ -16,5 +16,5 @@ private lemma main
   rwa [div_eq_iff h₂, mul_comm]
 
 
--- created on 2026-10-11
+-- created on 2023-05-25
 -- updated on 2026-10-17

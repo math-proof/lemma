@@ -28,5 +28,5 @@ private lemma main
     simp [hdiag, Real.exp_pos]
 
 
--- created on 2026-10-11
+-- created on 2021-12-16
 -- updated on 2026-10-17

@@ -12,5 +12,5 @@ private lemma main
   apply_ite Real.cot p a b
 
 
--- created on 2026-10-11
+-- created on 2022-01-20
 -- updated on 2026-10-17

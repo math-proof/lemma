@@ -13,4 +13,4 @@ private lemma main
   apply Set.inter_eq_left.mpr h
 
 
--- created on 2026-10-17
+-- created on 2020-11-20

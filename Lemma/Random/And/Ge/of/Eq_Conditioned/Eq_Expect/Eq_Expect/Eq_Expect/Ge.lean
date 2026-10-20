@@ -7,7 +7,7 @@ open Finset
 Myopic policy comparison: every mixture of action values is at most the best action.
 -/
 @[path]
-private lemma drift
+private lemma main
   [Fintype ι] [Nonempty ι]
   {π Q : ι → ℝ}
   {i : ι}
@@ -29,5 +29,5 @@ private lemma drift
     _ = Q i := by rw [h₁, one_mul]
 
 
--- created on 2026-10-11
+-- created on 2023-04-20
 -- updated on 2026-10-20

@@ -37,5 +37,5 @@ private lemma main
   simp [h₁, Finset.sum_const, Finset.card_univ]
 
 
--- created on 2026-10-11
+-- created on 2021-07-17
 -- updated on 2026-10-17

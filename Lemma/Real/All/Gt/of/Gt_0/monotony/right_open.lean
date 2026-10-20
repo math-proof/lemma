@@ -19,5 +19,5 @@ private lemma main
   apply h₁ y (Set.Ioo_subset_Ico_self hy)
 
 
--- created on 2026-10-11
+-- created on 2020-06-03
 -- updated on 2026-10-17

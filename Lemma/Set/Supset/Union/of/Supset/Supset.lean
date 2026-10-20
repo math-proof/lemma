@@ -13,5 +13,5 @@ private lemma main
   Set.union_subset_union h₀ h₁
 
 
--- created on 2021-06-28
+-- created on 2021-07-07
 -- updated on 2026-10-17

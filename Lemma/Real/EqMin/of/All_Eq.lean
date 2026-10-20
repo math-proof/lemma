@@ -17,5 +17,5 @@ private lemma main
   apply Set.image_congr h₀
 
 
--- created on 2026-10-11
+-- created on 2019-01-09
 -- updated on 2026-10-17

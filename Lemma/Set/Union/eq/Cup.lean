@@ -11,5 +11,5 @@ private lemma main
   simp [Fin.exists_fin_two]
 
 
--- created on 2026-10-11
+-- created on 2021-07-13
 -- updated on 2026-10-17

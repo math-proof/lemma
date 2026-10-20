@@ -21,5 +21,5 @@ private lemma main
   tendsto_integral_of_dominated_convergence bound h₀ h₁ h₂ h₃
 
 
--- created on 2023-04-16
+-- created on 2023-04-04
 -- updated on 2026-10-17

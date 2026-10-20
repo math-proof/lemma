@@ -16,5 +16,5 @@ private lemma main
   exact h₀ (σ k)
 
 
--- created on 2026-10-11
+-- created on 2020-11-04
 -- updated on 2026-10-17

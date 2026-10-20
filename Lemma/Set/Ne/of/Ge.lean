@@ -13,5 +13,5 @@ private lemma main
   (Finset.card_pos.mp h₀).ne_empty
 
 
--- created on 2026-10-11
+-- created on 2021-04-09
 -- updated on 2026-10-17

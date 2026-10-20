@@ -21,5 +21,5 @@ private lemma main
     simp [min_eq_right hnl, max_eq_right hk, max_eq_right hkl]
 
 
--- created on 2026-10-11
+-- created on 2021-12-25
 -- updated on 2026-10-17

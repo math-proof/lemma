@@ -20,5 +20,5 @@ private lemma main
   gaussianReal_add_gaussianReal_of_indepFun h₀ h₁ h₂
 
 
--- created on 2023-05-03
+-- created on 2021-07-25
 -- updated on 2026-10-17

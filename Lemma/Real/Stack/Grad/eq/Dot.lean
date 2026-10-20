@@ -21,5 +21,5 @@ private lemma main
   simp [ContinuousLinearMap.proj_apply]
 
 
--- created on 2026-10-11
+-- created on 2023-03-19
 -- updated on 2026-10-17

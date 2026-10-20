@@ -11,4 +11,4 @@ private lemma main
   simp [Real.csc]
 
 
--- created on 2026-10-17
+-- created on 2023-11-26

@@ -18,5 +18,5 @@ private lemma main
   simp [show i + (n - i) = n by omega]
 
 
--- created on 2026-10-11
+-- created on 2023-11-18
 -- updated on 2026-10-17

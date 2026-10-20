@@ -40,5 +40,5 @@ private lemma main
   simpa [Nat.add_comm, Nat.cast_sum] using hcast
 
 
--- created on 2026-10-11
+-- created on 2023-06-03
 -- updated on 2026-10-17

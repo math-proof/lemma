@@ -12,5 +12,5 @@ private lemma main
   linear_combination h * (x ^ 2 + y ^ 2)
 
 
--- created on 2026-10-11
+-- created on 2023-06-09
 -- updated on 2026-10-17

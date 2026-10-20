@@ -24,5 +24,5 @@ private lemma main
         (H := Finset.nonempty_Icc.2 (by omega)) (b := i) (f := f))
 
 
--- created on 2026-10-11
+-- created on 2020-12-18
 -- updated on 2026-10-17

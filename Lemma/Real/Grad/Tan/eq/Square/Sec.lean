@@ -12,5 +12,5 @@ private lemma main
   rw [Real.deriv_tan, Real.sec, div_pow, one_pow]
 
 
--- created on 2026-10-11
+-- created on 2023-11-26
 -- updated on 2026-10-17

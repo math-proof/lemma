@@ -26,5 +26,5 @@ private lemma main
   exact h₃.unique (hasFDerivAt_const 1 θ)
 
 
--- created on 2023-04-03
+-- created on 2023-03-26
 -- updated on 2026-10-17

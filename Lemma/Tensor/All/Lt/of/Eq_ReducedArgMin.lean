@@ -16,5 +16,5 @@ private lemma main
   exact lt_of_le_of_ne (h₀ k) (Ne.symm (h₁ k hk))
 
 
--- created on 2026-10-11
+-- created on 2023-11-05
 -- updated on 2026-10-17

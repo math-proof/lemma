@@ -14,5 +14,5 @@ private lemma main
   le_of_not_gt ((Set.Ico_eq_empty_iff).mp h)
 
 
--- created on 2021-06-23
+-- created on 2021-06-18
 -- updated on 2026-10-17

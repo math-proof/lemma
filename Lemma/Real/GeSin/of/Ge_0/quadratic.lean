@@ -104,5 +104,5 @@ private lemma main
     simpa [φ] using this
 
 
--- created on 2026-10-11
+-- created on 2023-10-03
 -- updated on 2026-10-17

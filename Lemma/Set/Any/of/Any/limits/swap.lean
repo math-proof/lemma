@@ -13,4 +13,4 @@ private lemma main
   exact ⟨x, hp, hq⟩
 
 
--- created on 2026-10-11
+-- created on 2020-09-05

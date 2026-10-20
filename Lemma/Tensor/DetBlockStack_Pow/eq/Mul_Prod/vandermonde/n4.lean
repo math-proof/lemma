@@ -12,5 +12,5 @@ private lemma main
   Matrix.det_vandermonde v
 
 
--- created on 2026-10-11
+-- created on 2022-07-11
 -- updated on 2026-10-17

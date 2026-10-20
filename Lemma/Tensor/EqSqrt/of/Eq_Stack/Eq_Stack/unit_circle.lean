@@ -10,5 +10,5 @@ private lemma main
   Real.cos_sq_add_sin_sq θ
 
 
--- created on 2026-10-11
+-- created on 2021-12-14
 -- updated on 2026-10-17

@@ -23,5 +23,5 @@ private lemma main
   if h : i = t then absurd h h₀.ne else h₁.covariance_eq_zero h₂ h₃
 
 
--- created on 2026-10-11
+-- created on 2023-04-19
 -- updated on 2026-10-17

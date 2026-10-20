@@ -4,10 +4,10 @@ import sympy.Basic
 
 /--
 Policy-gradient score of a finite action distribution has mean zero:
-`∑ ∂θ p_i(θ) = 0` whenever `p(θ)` stays on the simplex.
+∑ ∂θ p_i(θ) = 0 whenever p(θ) stays on the simplex.
 -/
 @[path]
-private lemma drift
+private lemma main
   {p : ℝ → ι → ℝ} [Fintype ι]
   {θ₀ : ℝ}
 -- given
@@ -22,5 +22,5 @@ private lemma drift
   apply hsum.deriv.symm.trans (hasDerivAt_const θ₀ (1 : ℝ)).deriv
 
 
--- created on 2026-10-11
+-- created on 2023-04-25
 -- updated on 2026-10-20

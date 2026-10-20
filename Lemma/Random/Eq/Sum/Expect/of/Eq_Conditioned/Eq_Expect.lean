@@ -34,5 +34,5 @@ private lemma main
     _ = (n.choose 2 : ℝ) * μ ^ 2 := mul_comm _ _
 
 
--- created on 2026-10-11
+-- created on 2023-10-12
 -- updated on 2026-10-17

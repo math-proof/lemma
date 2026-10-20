@@ -11,5 +11,5 @@ private lemma main
   add_pow x y m
 
 
--- created on 2026-10-11
+-- created on 2022-01-15
 -- updated on 2026-10-17

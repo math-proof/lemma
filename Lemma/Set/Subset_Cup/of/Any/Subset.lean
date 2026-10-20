@@ -15,5 +15,5 @@ private lemma main
   exact ⟨i, fun x hx => by simpa [Set.mem_singleton_iff.mp hx] using hi⟩
 
 
--- created on 2026-10-11
+-- created on 2023-06-01
 -- updated on 2026-10-17

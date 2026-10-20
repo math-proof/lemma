@@ -21,5 +21,5 @@ private lemma main
   exact (h₀ i hi).le_bot ⟨hai, ha⟩
 
 
--- created on 2026-10-11
+-- created on 2021-03-28
 -- updated on 2026-10-17

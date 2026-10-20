@@ -12,5 +12,5 @@ private lemma main
   subset_trans Set.inter_subset_left h
 
 
--- created on 2021-06-28
+-- created on 2021-07-05
 -- updated on 2026-10-17

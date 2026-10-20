@@ -20,5 +20,5 @@ private lemma main
     exact ⟨x (Fin.last n), h, rfl⟩
 
 
--- created on 2026-10-11
+-- created on 2020-08-04
 -- updated on 2026-10-17

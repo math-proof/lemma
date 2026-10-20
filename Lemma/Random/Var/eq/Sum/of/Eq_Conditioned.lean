@@ -23,5 +23,5 @@ private lemma main
       (fun i _ j _ hij => h₀ hij)
 
 
--- created on 2023-04-23
+-- created on 2023-04-19
 -- updated on 2026-10-17

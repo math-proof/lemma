@@ -20,5 +20,5 @@ private lemma main
   rw [((hF.comp x h₁).congr_of_eventuallyEq hfun).deriv]
 
 
--- created on 2026-10-11
+-- created on 2020-05-05
 -- updated on 2026-10-17

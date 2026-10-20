@@ -24,5 +24,5 @@ private lemma main
   rw [← add_sum_erase univ (fun j => covariance (x i) (x j) π) (mem_univ i), covariance_self (h₀ i).aemeasurable]
 
 
--- created on 2026-10-11
+-- created on 2023-04-19
 -- updated on 2026-10-17

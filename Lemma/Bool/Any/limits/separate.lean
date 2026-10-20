@@ -19,5 +19,5 @@ private lemma main
     exact ⟨i, hi, j, hj, hp⟩
 
 
--- created on 2026-10-11
+-- created on 2023-06-06
 -- updated on 2026-10-17

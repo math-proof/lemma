@@ -15,5 +15,5 @@ private lemma main
   exact h₀ k (Finset.mem_range.mp hk)
 
 
--- created on 2026-10-11
+-- created on 2023-11-05
 -- updated on 2026-10-17

@@ -38,5 +38,5 @@ private lemma main
   rw [← hstep, hsum (n + 1) x]
 
 
--- created on 2026-10-11
+-- created on 2023-06-03
 -- updated on 2026-10-17

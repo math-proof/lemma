@@ -19,5 +19,5 @@ private lemma main
   nlinarith [sq_nonneg (2 * a * x + b)]
 
 
--- created on 2026-10-11
+-- created on 2022-04-03
 -- updated on 2026-10-17

@@ -12,5 +12,5 @@ private lemma main
   (show A = ∅ ∧ B = ∅ by simpa using h₀).1
 
 
--- created on 2026-10-11
+-- created on 2021-05-13
 -- updated on 2026-10-17

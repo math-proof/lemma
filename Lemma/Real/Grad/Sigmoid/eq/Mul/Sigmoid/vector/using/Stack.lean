@@ -16,5 +16,5 @@ private lemma main
   ((Real.hasDerivAt_sigmoid (f x)).comp x h₀.hasDerivAt).deriv
 
 
--- created on 2026-10-11
+-- created on 2023-03-18
 -- updated on 2026-10-17

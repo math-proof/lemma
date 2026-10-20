@@ -13,5 +13,5 @@ private lemma main
   integral_pow n
 
 
--- created on 2026-10-11
+-- created on 2020-06-12
 -- updated on 2026-10-17

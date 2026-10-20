@@ -13,5 +13,5 @@ private lemma main
   simp [dotProduct, Matrix.mulVec, Finset.mul_sum, mul_assoc]
 
 
--- created on 2026-10-11
+-- created on 2022-03-15
 -- updated on 2026-10-17

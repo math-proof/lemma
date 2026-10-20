@@ -12,5 +12,5 @@ private lemma main
   apply GeSin.of.Ge_0.quadratic h₀.1
 
 
--- created on 2026-10-11
+-- created on 2023-10-03
 -- updated on 2026-10-17

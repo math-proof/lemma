@@ -4,10 +4,10 @@ open Finset
 
 
 /--
-An argmax action beats every policy mixture: if `i` maximises `Q`, then `∑ π a * Q a ≤ Q i`.
+An argmax action beats every policy mixture: if i maximises Q, then ∑ π a * Q a ≤ Q i.
 -/
 @[path]
-private lemma drift
+private lemma main
   [Fintype ι] [Nonempty ι]
   {π Q : ι → ℝ}
   {i : ι}
@@ -24,5 +24,5 @@ private lemma drift
     _ = Q i := by rw [← sum_mul, h₁, one_mul]
 
 
--- created on 2026-10-11
+-- created on 2023-04-24
 -- updated on 2026-10-20

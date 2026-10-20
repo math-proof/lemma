@@ -22,5 +22,5 @@ private lemma main
   · exact sub_ne_zero.mp (abs_pos.mp hx.1)
 
 
--- created on 2026-10-11
+-- created on 2023-10-15
 -- updated on 2026-10-12

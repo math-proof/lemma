@@ -17,5 +17,5 @@ private lemma main
   exact Real.mul_rpow h₀ h₁
 
 
--- created on 2026-10-11
+-- created on 2023-04-16
 -- updated on 2026-10-17
