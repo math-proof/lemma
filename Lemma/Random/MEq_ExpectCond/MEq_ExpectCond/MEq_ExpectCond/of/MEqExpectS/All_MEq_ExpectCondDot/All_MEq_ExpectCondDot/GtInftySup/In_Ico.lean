@@ -12,7 +12,7 @@ Bellman equations on general state / action spaces, stated with σ-algebra condi
 `Expectation.condSigma`), so no `Fintype`, `Countable` or `MeasurableSingletonClass` is needed on `S` or
 `A`; any `MeasurableSpace`, in particular any `ReferenceMeasure`, will do.
 `h₃`, `h₄` define the action / state values `Q`, `V` (π-a.e.) as the conditional expected discounted
-return `γ ** Stack[k](k) @ r[t:]` given `(s[t], a[t])`, resp. `s[t]`;
+return given `(s[t], a[t])`, resp. `s[t]`;
 `h₅` is the Markov property: given `(s[t], a[t], s[t+1])` the future return only depends on `s[t+1]`.
 The finite trajectory model (event conditioning `𝔼[… | s t = x]`) is
 `Random.Eq_Expect.Eq_Expect.Eq_Expect.of.All_Eq_Expect.All_Eq_Expect.In_Ico`.

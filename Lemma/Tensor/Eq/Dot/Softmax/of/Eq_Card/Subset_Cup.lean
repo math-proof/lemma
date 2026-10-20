@@ -3,7 +3,7 @@ open Tensor
 
 
 /--
-py: `softmax(Q @ K.T / sqrt(d_z) + (Stack[i:n](Bool(i ∈ ⋃ {d[j]})) - Ones(n, n)) * oo) @ V = softmax(Q @ Stack[j:m](K[d[j]]).T / sqrt(d_z)) @ Stack[j:m](V[d[j]])`
+py:
 in the hyperreal masked softmax, for logits \( A_{ij} \): the mask keeps exactly the \( m \) distinct columns \( d_j \), so
 \[
 \operatorname{softmax}(A + ([j \in \operatorname{im} d] - 1)\infty)\, V \approx

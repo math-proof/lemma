@@ -12,8 +12,8 @@ set_option maxHeartbeats 4000000
 
 
 /--
-`𝔼[∇ log π(a[t] | s[t]) • (γ ** Stack[k](k) @ r[t:])] =
-  𝔼[∇ log π(a[t] | s[t]) • 𝔼[(γ ** Stack[k](k) @ r[t:]) | s[t], a[t]]]`
+`𝔼[∇ log π(a[t] | s[t]) • (γ ** @ r[t:])] =
+  𝔼[∇ log π(a[t] | s[t]) • 𝔼[(γ ** @ r[t:]) | s[t], a[t]]]`
 (law of iterated expectation on `(s[t], a[t])`).
 -/
 @[path]

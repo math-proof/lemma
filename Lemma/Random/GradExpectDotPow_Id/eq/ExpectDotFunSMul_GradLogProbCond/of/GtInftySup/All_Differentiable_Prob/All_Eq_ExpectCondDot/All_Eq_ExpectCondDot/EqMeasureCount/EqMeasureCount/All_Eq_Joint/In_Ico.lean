@@ -1,4 +1,4 @@
-import Lemma.Random.GradExpect_DotPow_Id.eq.AddExpect_Sum_SMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_Eq_ExpectCondDot.All_Eq_ExpectCondDot.EqMeasureCount.EqMeasureCount.All_Eq_Joint.In_Ico
+import Lemma.Random.GradExpectDotPow_Id.eq.AddExpect_Sum_SMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_Eq_ExpectCondDot.All_Eq_ExpectCondDot.EqMeasureCount.EqMeasureCount.All_Eq_Joint.In_Ico
 import Lemma.Real.Eq_0.Lim.of.LtAbs.GtInftySup
 import Lemma.Random.BddAbove_ImageNormFderiv.of.In_Ico.GtInftySup.All_Differentiable_Prob
 import Mathlib.Analysis.Calculus.Gradient.Basic
@@ -249,7 +249,7 @@ private lemma fderiv_tsum_eq_integral_score
     obtain ⟨Cfd, hCfd⟩ := id h5fd
     have h8fd : ∀ θ x u, ‖fderiv ℝ (fun θ => M.policy.prob θ x u) θ‖ ≤ Cfd := fun θ x u => hCfd ⟨(θ, x, u), rfl⟩
     have h7grad :=
-      GradExpect_DotPow_Id.eq.AddExpect_Sum_SMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_Eq_ExpectCondDot.All_Eq_ExpectCondDot.EqMeasureCount.EqMeasureCount.All_Eq_Joint.In_Ico
+      GradExpectDotPow_Id.eq.AddExpect_Sum_SMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_Eq_ExpectCondDot.All_Eq_ExpectCondDot.EqMeasureCount.EqMeasureCount.All_Eq_Joint.In_Ico
         (θ := θ) h₀ h₁ hS hA h₂ h₃ h₄ h5n
     let Lgrad : StrongDual ℝ Θ ≃L[ℝ] Θ :=
       (InnerProductSpace.toDual ℝ Θ).symm.toContinuousLinearEquiv

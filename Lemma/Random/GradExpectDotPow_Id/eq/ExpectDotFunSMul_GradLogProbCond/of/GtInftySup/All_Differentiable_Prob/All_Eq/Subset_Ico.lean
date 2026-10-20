@@ -1,4 +1,4 @@
-import Lemma.Random.GradExpect_DotPow_Id.eq.ExpectDot_SMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_Eq_Joint.In_Icc.In_Ico
+import Lemma.Random.GradExpectDotPow_Id.eq.ExpectDot_SMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_Eq.In_Icc.In_Ico
 import sympy.core.function
 import Lemma.Real.MulSub1_Dot_FunDotPow_Range.eq.DotPow_Id.of.GtInftySup.Subset_Ico
 import Mathlib.MeasureTheory.Constructions.Polish.Basic
@@ -13,11 +13,9 @@ Generalized advantage estimation with the paper's weighted-average estimator (Sc
 with the temporal-difference residuals `δ[j] = r[j] + γ * V(s[j+1]) - V(s[j])` and `λ ∈ [0, 1)`, the
 exponentially weighted average of the `(k + 1)`-step advantage estimates
 `A[t] = (1 - λ) * ∑' k, λ ^ k * ∑ i ∈ range (k + 1), γ ^ i * δ[t + i]` gives
-`∇𝔼[γ ** Stack[t](t) @ r] = 𝔼[(γ ** Stack[t](t)) @ (A[t] • ∇ log π(a[t] | s[t]))]`.
-The proof rewrites `A[t]` pointwise into the closed form `(γ * λ) ** Stack[k](k) @ δ[t:]`
 (`Real.MulSub1_Dot_FunDotPow_Range.eq.DotPow_Id.of.GtInftySup.Subset_Ico`, the residuals being almost surely bounded since
 `V` is the value function, `AeNormSub.le.DeltaBound.of.In_Ico`) and applies
-`Random.GradExpect_DotPow_Id.eq.ExpectDot_SMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_Eq_Joint.In_Icc.In_Ico`.
+`Random.GradExpectDotPow_Id.eq.ExpectDot_SMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_Eq.In_Icc.In_Ico`.
 -/
 @[path]
 private lemma main
@@ -187,7 +185,7 @@ private lemma main
     funext ω
     exact congrArg (fun δ => Dot.dot ((γ * ℓ) ^ (id : ℕ → ℕ)) δ)
       (hδθ (fun j => s j ω) (fun j => r j ω) t).symm
-  refine (GradExpect_DotPow_Id.eq.ExpectDot_SMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_Eq_Joint.In_Icc.In_Ico
+  refine (GradExpectDotPow_Id.eq.ExpectDot_SMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_Eq.In_Icc.In_Ico
     (θ := θ) hγ hℓ h₁ h₂ h₃o).trans ?_
   symm
   -- V_θ[t] s[t:] i = V θ (t + i) ⟨fun _ => s (t + i)⟩

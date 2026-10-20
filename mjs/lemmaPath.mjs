@@ -1111,9 +1111,12 @@ function numberWord(d) {
 function sanitizePathSeg(seg) {
   // Cond token is ExpectCond (not Expect_Cond), including mid-segment (ExpectSMulExpect_Cond).
   seg = seg.replaceAll("Expect_Cond", "ExpectCond");
-  // Remaining Expect_* unary → CamelCase: Expect_Add → ExpectAdd. GradExpect_* / AddExpect_* / *_Expect untouched.
+  // Remaining Expect_* unary → CamelCase: Expect_Add → ExpectAdd. GradExpect_* -> GradExpect* (fuse). AddExpect_* / *_Expect untouched.
   if (seg.startsWith("Expect_"))
     seg = "Expect" + seg.slice("Expect_".length);
+  // GradExpect_DotPow_Id -> GradExpectDotPow_Id (Body: match ExpectDotPow_Id CamelCase)
+  if (seg.startsWith("GradExpect_"))
+    seg = "GradExpect" + seg.slice("GradExpect_".length);
   // a module component may not start with a digit (lake): `eq/0` → `eq/Zero`, `0OrP` → `ZeroOrP`, `-1` → `NegOne`;
   // digits after the first letter stay (`Gt_0`, `Div1'2`)
   const m = /^(-?)(\d+)(.*)$/s.exec(seg);
@@ -2016,18 +2019,18 @@ function preAlts(node, opts, canon) {
   const c = cls(node);
   const args = node.args || [];
   const A = (n) => (canon ? [nameExpr(n, opts)].filter(Boolean) : nameExprAlts(n, opts));
-  // GradExpect of Expect…: prefer GradExpect_DotPow_Id over GradExpectDotPow_Id
+  // GradExpect of Expect…: prefer GradExpectDotPow_Id over GradExpect_DotPow_Id (Body override)
   {
     const gb = gradientBody(node);
     if (gb) {
-      if (isExpectDotPowId(gb)) return canon ? ["GradExpect_DotPow_Id"] : uniq(["GradExpect_DotPow_Id", "GradExpectDotPow_Id", "GradExpect"]);
+      if (isExpectDotPowId(gb)) return canon ? ["GradExpectDotPow_Id"] : uniq(["GradExpectDotPow_Id", "GradExpect_DotPow_Id", "GradExpect"]);
       const x = A(gb);
       const ranked = [];
       for (const y of x) {
-        if (y.startsWith("Expect") && !y.startsWith("Expect_") && /[A-Z]/.test(y.slice(6, 7) || "")) {
-          ranked.push("GradExpect_" + y.slice("Expect".length));
-        }
         ranked.push("Grad" + y);
+        if (y.startsWith("Expect") && !y.startsWith("Expect_") && /[A-Z]/.test(y.slice(6, 7) || "")) {
+          ranked.push("GradExpect_" + y.slice("Expect".length)); // legacy snake
+        }
         ranked.push("Grad_" + y);
       }
       return ranked.length ? uniq(ranked) : ["Grad"];
@@ -2320,12 +2323,13 @@ function peelGuardForalls(node) {
 
 /**
  * Expect_Cond → ExpectCond (anywhere); other Expect_* unary prefix → CamelCase (Expect_Add → ExpectAdd).
- * GradExpect_* / AddExpect_* / *_Expect untouched (different prefixes).
+ * GradExpect_* -> GradExpect* (fuse, match ExpectDotPow_Id); AddExpect_* / *_Expect untouched.
  */
 function demoteExpectSnake(name) {
   if (!name) return name;
   name = name.replaceAll("Expect_Cond", "ExpectCond");
-  if (name.startsWith("Expect_")) return "Expect" + name.slice("Expect_".length);
+  if (name.startsWith("Expect_")) name = "Expect" + name.slice("Expect_".length);
+  if (name.startsWith("GradExpect_")) return "GradExpect" + name.slice("GradExpect_".length);
   return name;
 }
 
@@ -3179,11 +3183,12 @@ function nameExprBase(node, opts = {}) {
   {
     const gb = gradientBody(node);
     if (gb) {
-      if (isExpectDotPowId(gb)) return "GradExpect_DotPow_Id";
+      if (isExpectDotPowId(gb)) return "GradExpectDotPow_Id";
       const y = nameExpr(gb, opts);
       if (!y) return "Grad";
+      // Fuse Grad + ExpectAdd -> GradExpectAdd (not GradExpect_Add)
       if (y.startsWith("Expect") && !y.startsWith("Expect_") && /[A-Z]/.test(y.slice(6, 7) || "")) {
-        return "GradExpect_" + y.slice("Expect".length);
+        return "Grad" + y;
       }
       return joinHeadChild("Grad", y);
     }
@@ -3563,14 +3568,14 @@ function nameExprAltsBase(node, opts = {}) {
   {
     const gb = gradientBody(node);
     if (gb) {
-      if (isExpectDotPowId(gb)) return uniq(["GradExpect_DotPow_Id", "GradExpectDotPow_Id", "GradExpect"]);
+      if (isExpectDotPowId(gb)) return uniq(["GradExpectDotPow_Id", "GradExpect_DotPow_Id", "GradExpect"]);
       const x = nameExprAlts(gb, opts);
       const ranked = [];
       for (const y of x) {
-        if (y.startsWith("Expect") && !y.startsWith("Expect_") && /[A-Z]/.test(y.slice(6, 7) || "")) {
-          ranked.push("GradExpect_" + y.slice("Expect".length));
-        }
         ranked.push("Grad" + y);
+        if (y.startsWith("Expect") && !y.startsWith("Expect_") && /[A-Z]/.test(y.slice(6, 7) || "")) {
+          ranked.push("GradExpect_" + y.slice("Expect".length)); // legacy snake
+        }
         ranked.push("Grad_" + y);
       }
       return ranked.length ? uniq(ranked) : ["Grad"];

@@ -26,7 +26,7 @@ Lean model behind the sympy symbols used in `Tensor.*.policy_gradient_theorem`,
 * `Expectation[r, a:π](f)` is the Bochner integral `∫ ω, f ω ∂(M θ)`;
 * `Expectation[...](f | s[t] = x)` is the integral against Mathlib's conditional measure
   `(M θ)[| s t ⁻¹' {x}]`;
-* `γ ** Stack[k](k) @ r[t:]` / `(γ ^ (id : ℕ → ℕ)) @ r[t:]` is `∑' k, γ ^ k * r (t + k)`;
+* / `(γ ^ (id : ℕ → ℕ)) @ r[t:]` is `∑' k, γ ^ k * r (t + k)`;
 * `Derivative[π]` is `fderiv ℝ · θ`.
 
 The environment is a standard (time-homogeneous) MDP: `s 0 ∼ init`, `a t ∼ π_θ(· | s t)`,

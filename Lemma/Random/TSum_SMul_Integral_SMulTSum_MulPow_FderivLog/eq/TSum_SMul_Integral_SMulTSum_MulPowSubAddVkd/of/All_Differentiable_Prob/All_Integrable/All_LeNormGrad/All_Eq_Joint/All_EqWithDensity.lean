@@ -16,7 +16,7 @@ Baseline cancellation for continuous REINFORCE: replacing the discounted return
 `∑' k, γ ^ k * (r[t + k] + γ * Vkd(s[t + k + 1]) - Vkd(s[t + k]))` does not change the
 score-weighted path integral (telescoping + zero expected score).
 Continuous-action counterpart of the `key` step in
-`Random.GradExpect_DotPow_Id.eq.ExpectDotFunSMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_Eq.In_Ico.advantage`.
+`Random.GradExpectDotPow_Id.eq.ExpectDotFunSMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_Eq.In_Ico.advantage`.
 -/
 @[path]
 private lemma main

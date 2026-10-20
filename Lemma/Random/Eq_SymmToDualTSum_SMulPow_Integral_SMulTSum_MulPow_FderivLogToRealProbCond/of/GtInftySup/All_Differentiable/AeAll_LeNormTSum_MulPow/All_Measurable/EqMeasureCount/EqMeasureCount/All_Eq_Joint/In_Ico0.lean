@@ -1,4 +1,4 @@
-import Lemma.Random.GradExpect_DotPow_Id.eq.ExpectDotFunSMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_Eq_ExpectCondDot.All_Eq_ExpectCondDot.EqMeasureCount.EqMeasureCount.All_Eq_Joint.In_Ico
+import Lemma.Random.GradExpectDotPow_Id.eq.ExpectDotFunSMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_Eq_ExpectCondDot.All_Eq_ExpectCondDot.EqMeasureCount.EqMeasureCount.All_Eq_Joint.In_Ico
 import Mathlib.MeasureTheory.Constructions.Polish.Basic
 import Mathlib.Analysis.Calculus.Gradient.Basic
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Filter Topology Random Measure
@@ -9,7 +9,7 @@ Turning the pointwise integral of the discounted weighted score into the `𝔼[r
 For a weight `X` (a function of the paths `s`, `a`, `r`) whose discounted tails
 `∑' k, γ ^ k * X[t + k]` are almost surely bounded by `B`, the `L`-image (Riesz representative) of
 `∑' t, γ ^ t • ∫ (∑' k, γ ^ k * X[t + k]) • d log π(a[t] | s[t])` equals
-`𝔼[r, s, a : M θ](∑' t, γ ^ t • ((γ ** Stack[k](k) @ X[t:]) • ∇ log π(a[t] | s[t])))`.
+.
 Shared by `policy_gradient_theorem` (`X = r`) and `unbiased_advantage_estimate` (`X = ` advantage).
 -/
 @[path]

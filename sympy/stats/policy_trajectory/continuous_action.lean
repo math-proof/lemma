@@ -21,8 +21,8 @@ in the regular (kernel) sense; every finite action sum `∑ u, π_θ(u | x) * �
 
 * `rkd x u = 𝔼[r[t] | s[t] = x, a[t] = u]` (the reward clamped to `[-R, R]`, almost surely equal to it);
 * `Wkd θ k x = 𝔼[r[t+k] | s[t] = x]`;
-* `Vkd θ γ x = 𝔼[γ ** Stack[k](k) @ r[t:] | s[t] = x] = ∑' k, γ ^ k * Wkd θ k x`;
-* `Qkd θ γ x u = 𝔼[γ ** Stack[k](k) @ r[t:] | s[t] = x, a[t] = u] = rkd x u + γ * ∫ y, Vkd θ γ y ∂T(· | x, u)`;
+* ;
+* ;
 * `P1kd θ p x y = Pr(s[t+1] = y | s[t] = x) = ∫ u, π_θ(u | x) * p x u y du`, the density (w.r.t. the reference measure
   of `S`) of the next state when `p x u` is the density of `M.env.trans (x, u)`.
 
@@ -101,12 +101,12 @@ noncomputable def Wkd (M : DensityModel Θ S A) (θ : Θ) : ℕ → S → ℝ
   | 0 => fun x => ∫ u, M.policy.prob θ x u * M.rkd x u ∂ReferenceMeasure.measure
   | k + 1 => fun x => ∫ u, M.policy.prob θ x u * ∫ y, M.Wkd θ k y ∂(M.env.trans (x, u)) ∂ReferenceMeasure.measure
 
-/-- state value with a density policy: `Vkd θ γ x = 𝔼[γ ** Stack[k](k) @ r[t:] | s[t] = x] = ∑' k, γ ^ k * Wkd θ k x` -/
+/-- state value with a density policy: -/
 noncomputable def Vkd (M : DensityModel Θ S A) (θ : Θ) (γ : ℝ) (x : S) : ℝ :=
   ∑' k, γ ^ k * M.Wkd θ k x
 
 /-- action value with a density policy:
-`Qkd θ γ x u = 𝔼[γ ** Stack[k](k) @ r[t:] | s[t] = x, a[t] = u] = rkd x u + γ * ∫ y, Vkd θ γ y ∂T(· | x, u)` -/
+-/
 noncomputable def Qkd (M : DensityModel Θ S A) (θ : Θ) (γ : ℝ) (x : S) (u : A) : ℝ :=
   M.rkd x u + γ * ∫ y, M.Vkd θ γ y ∂(M.env.trans (x, u))
 

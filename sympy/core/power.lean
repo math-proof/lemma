@@ -5,7 +5,7 @@ notation:max x "³" => x ^ 3  -- cube
 notation:max x "⁴" => x ^ 4  -- tesseract
 
 /-- `γ ^ f` for an exponent sequence `f : ℕ → ℕ`: the sequence `k ↦ γ ^ f k`; e.g. the discount
-weights `γ ^ (id : ℕ → ℕ) = fun k ↦ γ ^ k` (sympy `γ ** Stack[k](k)`). -/
+weights `γ ^ (id : ℕ → ℕ) = fun k ↦ γ ^ k`. -/
 instance Function.instHPowNatSeq {α : Type u} [HPow α Nat α] : HPow α (Nat → Nat) (Nat → α) where
   hPow γ f := fun k ↦ γ ^ f k
 

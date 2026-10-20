@@ -1,4 +1,4 @@
-import Lemma.Random.GradExpect_DotPow_Id.eq.ExpectDotFunSMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_Eq.In_Ico
+import Lemma.Random.GradExpectDotPow_Id.eq.ExpectDotFunSMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_Eq.In_Ico
 import Lemma.Random.Eq_SymmToDualTSum_SMulPow_Integral_SMulTSum_MulPow_FderivLogToRealProbCond.of.GtInftySup.All_Differentiable.AeAll_LeNormTSum_MulPow.All_Measurable.EqMeasureCount.EqMeasureCount.All_Eq_Joint.In_Ico1
 import Mathlib.MeasureTheory.Constructions.Polish.Basic
 import Mathlib.Analysis.Calculus.Gradient.Basic
@@ -121,7 +121,7 @@ private lemma main
       𝔼[r, s, a : M θ]((γ ^ (id : ℕ → ℕ)) @ fun t ↦
         (((γ ^ (id : ℕ → ℕ)) @ (r[t:] + γ • V_θ[t + 1] s[t + 1:] - V_θ[t] s[t:])) •
           ∇[θ] (ℙ[M θ](a[t] | s[t]) : ℝ).log)) :=
-    GradExpect_DotPow_Id.eq.ExpectDotFunSMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_Eq.In_Ico.advantage
+    GradExpectDotPow_Id.eq.ExpectDotFunSMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_Eq.In_Ico.advantage
       h₀ h₂ h₃ h₄
   have hbaseexp : ∇[θ] 𝔼[r: M θ]((γ ^ (id : ℕ → ℕ)) @ r) =
       𝔼[r, s, a : M θ]((γ ^ (id : ℕ → ℕ)) @ fun t ↦ ((γ ^ (id : ℕ → ℕ)) @ (fun k => r (t + k) + γ * V θ (t + k + 1) ⟨fun _ => s (t + k + 1)⟩ - V θ (t + k) ⟨fun _ => s (t + k)⟩)) • ∇[θ] (ℙ[M θ](a[t] | s[t]) : ℝ).log) := by

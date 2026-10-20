@@ -6,7 +6,7 @@ open PolicyGradient Random
 
 /--
 Corollary of the Markov property `Random.CondIndep_Joint.of.All_EqJoint`: given `(s[t], a[t], s[t+1])` the
-conditional expectation of the future discounted return `γ ** Stack[k](k) @ r[t+1:]` only depends on `s[t+1]`
+conditional expectation of the future discounted return only depends on `s[t+1]`
 (by `Random.MEqExpectS.of.CondIndep.Integrable.MeasurableJoint.Measurable`).
 -/
 @[path]

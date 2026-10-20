@@ -157,8 +157,6 @@ private lemma integral_finset_smul_score_eq_of_ae
   exact congrArg ((γ ^ t * Q t (s t ω) (a t ω)) • ·) (hω t)
 
 /--
-Policy-gradient theorem (REINFORCE form), with the discounted return `γ ** Stack[t](t) @ r`:
-`∇𝔼[γ ** Stack[t](t) @ r] = 𝔼[(γ ^ (id : ℕ → ℕ)) @ (fun t ↦ (γ ** Stack[k](k) @ r[t:]) • ∇ log π(a[t] | s[t]))]`.
 `h₂`, `h₃`: `θ ↦ π_θ(u | x)` is differentiable with a uniformly bounded gradient
 (without them the statement is false). The bound on `∇V` over the reachable pairs
 `(t, x)` is not assumed: it follows from time-homogeneity and the finiteness of `S` (`Random.BddAbove_ImageNormFderiv.of.In_Ico.GtInftySup.All_Differentiable_Prob`). Densities are taken w.r.t. the counting measures (`CountableMeasure`), so
@@ -230,7 +228,7 @@ private lemma main
       fun _ _ _ => rfl
     -- inlined from former In_Ico1 (fderiv/CLM Q-score series)
     have h7grad :=
-      GradExpect_DotPow_Id.eq.AddExpect_Sum_SMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_Eq_ExpectCondDot.All_Eq_ExpectCondDot.EqMeasureCount.EqMeasureCount.All_Eq_Joint.In_Ico
+      GradExpectDotPow_Id.eq.AddExpect_Sum_SMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_Eq_ExpectCondDot.All_Eq_ExpectCondDot.EqMeasureCount.EqMeasureCount.All_Eq_Joint.In_Ico
         (θ := θ) h₀ h₁ hS hA hQ_expect hV_expect h₂ h₃o
     let Lgrad : StrongDual ℝ Θ ≃L[ℝ] Θ :=
       (InnerProductSpace.toDual ℝ Θ).symm.toContinuousLinearEquiv
@@ -610,10 +608,7 @@ private lemma main
 
 /--
 Unbiased advantage estimate: with the advantage
-`A[t] = γ ** Stack[k](k) @ (r[t:] + γ • V_θ[t + 1] s[t + 1:] - V_θ[t] s[t:])`,
-`∇𝔼[γ ** Stack[t](t) @ r] = 𝔼[∑' t, γ ^ t • A[t] • ∇ log π(a[t] | s[t])]`
 (rewards are bounded by the environment, so both series may be taken inside `𝔼`).
-Almost surely `A[t] = γ ** Stack[k](k) @ r[t:] - V(s[t])` (telescoping, using `|V| ≤ (1 - γ)⁻¹ |Rmax|`),
 and the baseline term `𝔼[V(s[t]) • ∇ log π(a[t] | s[t])]` vanishes (zero expected score).
 The bounds on `V` and `∇V` over the reachable pairs `ℙ(s[t] = x) ≠ 0` are not assumed: `|V|` is bounded
 by the reward bound (`NormV.le.MulSub1Abs_R.of.In_Ico`), and `∇V` by time-homogeneity and the finiteness of `S` (`Random.BddAbove_ImageNormFderiv.of.In_Ico.GtInftySup.All_Differentiable_Prob`).

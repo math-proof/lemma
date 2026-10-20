@@ -10,8 +10,8 @@ open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random 
 
 /--
 Bellman equation for the action value of the trajectory model:
-`γ ** Stack[k](k) @ 𝔼[r[t:] | s[t] = x, a[t] = u]
-  = 𝔼[γ * (γ ** Stack[k](k) @ 𝔼[r[t+1:] | s[t+1]]) + r[t] | s[t] = x, a[t] = u]`.
+`γ ** @ 𝔼[r[t:] | s[t] = x, a[t] = u]
+  = 𝔼[γ * (γ ** @ 𝔼[r[t+1:] | s[t+1]]) + r[t] | s[t] = x, a[t] = u]`.
 No history-independence hypothesis on the rewards is needed, since the environment of
 `PolicyGradient.Model` is a (Markov) MDP.
 Both sides are `0` when `s[t] = x ∧ a[t] = u` has probability `0`.

@@ -9,7 +9,7 @@ open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 
 
 /--
-`γ ** Stack[k](k) @ 𝔼[r[t:] | s[t] = x] = 𝔼_{a[t] ∼ π}[Q(s[t] = x, a[t]) | s[t] = x]`:
+:
 the discounted state value is the policy average of the action values `Q` given by `h₂` (the sympy `Q_def`).
 The discount factor is taken in `[0, 1)` (for `γ = 1` the Lean `tsum` of a divergent series is `0`
 and the identity fails).

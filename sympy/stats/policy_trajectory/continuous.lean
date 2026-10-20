@@ -17,8 +17,8 @@ regular (kernel) sense: they are the integrals against the transition kernel `M.
 
 * `rk x u = 𝔼[r[t] | s[t] = x, a[t] = u]` (the reward clamped to `[-R, R]`, almost surely equal to it);
 * `Wk θ k x = 𝔼[r[t+k] | s[t] = x]`;
-* `Vk θ γ x = 𝔼[γ ** Stack[k](k) @ r[t:] | s[t] = x] = ∑' k, γ ^ k * Wk θ k x`;
-* `Qk θ γ x u = 𝔼[γ ** Stack[k](k) @ r[t:] | s[t] = x, a[t] = u] = rk x u + γ * ∫ Vk θ γ y ∂T(· | x, u)`;
+* ;
+* ;
 * `P1k θ p x y = Pr(s[t+1] = y | s[t] = x)`, the density (w.r.t. a reference measure) of the next state
   when `p x u` is the density of `M.env.trans (x, u)`.
 
@@ -44,12 +44,12 @@ noncomputable def Wk (M : Model Θ S A) (θ : Θ) : ℕ → S → ℝ
   | 0 => fun x => ∑ u, M.policy.prob θ x u * M.rk x u
   | k + 1 => fun x => ∑ u, M.policy.prob θ x u * ∫ y, M.Wk θ k y ∂(M.env.trans (x, u))
 
-/-- state value on a general state space: `Vk θ γ x = 𝔼[γ ** Stack[k](k) @ r[t:] | s[t] = x] = ∑' k, γ ^ k * Wk θ k x` -/
+/-- state value on a general state space: -/
 noncomputable def Vk (M : Model Θ S A) (θ : Θ) (γ : ℝ) (x : S) : ℝ :=
   ∑' k, γ ^ k * M.Wk θ k x
 
 /-- action value on a general state space:
-`Qk θ γ x u = 𝔼[γ ** Stack[k](k) @ r[t:] | s[t] = x, a[t] = u] = rk x u + γ * ∫ y, Vk θ γ y ∂T(· | x, u)` -/
+-/
 noncomputable def Qk (M : Model Θ S A) (θ : Θ) (γ : ℝ) (x : S) (u : A) : ℝ :=
   M.rk x u + γ * ∫ y, M.Vk θ γ y ∂(M.env.trans (x, u))
 

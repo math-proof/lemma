@@ -11,7 +11,7 @@ Generalized advantage estimation (Schulman et al., arXiv 1506.02438, Eq. (16)):
 for bounded temporal-difference residuals δ and γ, ℓ ∈ [0, 1), the exponentially weighted average
 (1 - ℓ) * ∑' k, ℓ ^ k * ∑ i ∈ range (k + 1), γ ^ i * δ[t + i] of the k-step advantage estimates
 (∑ i ∈ range (k + 1), γ ^ i * δ[t + i] is the (k + 1)-step estimate) equals the closed form
-(γ * ℓ) ** Stack[i](i) @ δ[t:] = ∑' i, (γ * ℓ) ^ i * δ[t + i].
+(γ * ℓ) ** @ δ[t:] = ∑' i, (γ * ℓ) ^ i * δ[t + i].
 This connects the weighted average of k-step estimates with the closed form A[t] used in
 generalized_advantage_estimate of the policy gradient.
 -/

@@ -4,7 +4,7 @@ open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 
 /--
 The discounted conditional reward series of the trajectory model is summable for `γ ∈ [0, 1)`:
-`Summable (k ↦ γ ^ k * 𝔼[r[t + k] | B])`, so the sympy `γ ** Stack[k](k) @ 𝔼[r[t:] | B]` is a genuine sum.
+`Summable (k ↦ γ ^ k * 𝔼[r[t + k] | B])`, so the is a genuine sum.
 -/
 @[path]
 private lemma main

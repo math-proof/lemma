@@ -21,7 +21,7 @@ and the discrete-state/continuous-action
 versions. The reference measures of `S` and `A` are the counting measures (h₂, h₃), so the conditional probabilities are
 elementary: Pr(a[t] = u | s[t] = x) = π_θ(u | x) on reachable states and Pr(s[t+1] = y | s[t] = x) = P1 θ x y.
 h₄, h₅: Q, V are the action and state values, i.e. the conditional expectations of the discounted return
-`γ ** Stack[k](k) @ r[t:]` given `s[t] = x, a[t] = u` (resp. `s[t] = x`), as functions of the weights θ;
+given `s[t] = x, a[t] = u` (resp. `s[t] = x`), as functions of the weights θ;
 h₆, h₇: θ ↦ π_θ(u | x) is differentiable with a bounded gradient.
 The proof identifies Q and V with the local action and state values, then applies
 `Random.GradV.eq.AddSum_SMulSMul.of.Ne0Real_Preimage.GtInftySup.All_Differentiable_Prob.In_Ico`.

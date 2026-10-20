@@ -1,6 +1,6 @@
 import Mathlib.Tactic
 
-/-! py `Stack[i](Piecewise(...))` with n blocks: the piecewise chain and its identification with the block concatenation.
+/-! py with n blocks: the piecewise chain and its identification with the block concatenation.
 -/
 
 /-- py `Piecewise((X₀[i], i < n₀), (X₁[i - n₀], i < n₀ + n₁), …, (X_m[i - n₀ - … - n_{m-1}], True))`. -/
