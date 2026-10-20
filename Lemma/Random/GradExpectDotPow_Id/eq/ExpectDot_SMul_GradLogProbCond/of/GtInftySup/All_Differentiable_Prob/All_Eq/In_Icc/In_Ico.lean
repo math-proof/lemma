@@ -102,12 +102,95 @@ private lemma main
       ∫ ω, (r t ω + γ * M.Vc θ γ (s (t + 1) ω) - M.Vc θ γ (s t ω)) •
         fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω))) θ ∂(M θ) := by
     intro c hc' t
-    refine (integral_congr_ae ?_).trans
-      (Integral_SMul.of.In_Ico.In_Ico (M := M) h₀ h₂ θ hc' t (fun y u => fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' y u)) θ))
-    filter_upwards [hscore t, hδ] with ω h1 h2
-    rw [h1]
-    congr 1
-    exact tsum_congr fun k => by rw [h2 (t + k)]
+    let ψ : S → A → (Θ →L[ℝ] ℝ) := fun y u =>
+      fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' y u)) θ
+    trans ∫ ω, (∑' k, c ^ k * (r (t + k) ω + γ * M.Vc θ γ (s (t + k + 1) ω) -
+        M.Vc θ γ (s (t + k) ω))) • ψ (s t ω) (a t ω) ∂(M θ)
+    · refine integral_congr_ae ?_
+      filter_upwards [hscore t, hδ] with ω h1 h2
+      rw [h1]
+      congr 1
+      exact tsum_congr fun k => by rw [h2 (t + k)]
+    · have hE := Integral_SMul.of.In_Ico.In_Ico (M := M) h₀ h₂ hc' θ t ψ
+      let fromPath := fun (p : (ℕ → ℝ) × (ℕ → S) × (ℕ → A)) =>
+        fun n => (p.1 n, p.2.1 n, p.2.2 n)
+      have fromPath_meas : Measurable fromPath :=
+        Measurable.of_eval fun n =>
+          ((measurable_pi_apply n).comp measurable_fst).prodMk
+            (((measurable_pi_apply n).comp (measurable_fst.comp measurable_snd)).prodMk
+              ((measurable_pi_apply n).comp (measurable_snd.comp measurable_snd)))
+      have hδj : ∀ j, Measurable fun ω : ℕ → ℝ × S × A =>
+          r j ω + γ * M.Vc θ γ (s (j + 1) ω) - M.Vc θ γ (s j ω) := fun j =>
+        ((Random.Measurable.of.All_Eq.fst h₂ j).add
+          (((measurable_of_countable (M.Vc θ γ)).comp
+              (Random.Measurable.of.All_Eq.snd.fst h₂ (j + 1))).const_mul γ)).sub
+          ((measurable_of_countable (M.Vc θ γ)).comp (Random.Measurable.of.All_Eq.snd.fst h₂ j))
+      have hψω : StronglyMeasurable fun ω : ℕ → ℝ × S × A => ψ (s t ω) (a t ω) :=
+        (StronglyMeasurable.of_discrete (f := fun p : S × A => ψ p.1 p.2)).comp_measurable
+          ((Random.Measurable.of.All_Eq.snd.fst h₂ t).prodMk
+            (Random.Measurable.of.All_Eq.snd.snd h₂ t))
+      let δL : (ℕ → ℝ × S × A) → ℝ := fun ω =>
+        ∑' k, c ^ k * (r (t + k) ω + γ * M.Vc θ γ (s (t + k + 1) ω) - M.Vc θ γ (s (t + k) ω))
+      let ψt : (ℕ → ℝ × S × A) → (Θ →L[ℝ] ℝ) := fun ω => ψ (s t ω) (a t ω)
+      let Gleft : (ℕ → ℝ × S × A) → (Θ →L[ℝ] ℝ) := δL • ψt
+      have hGleft : StronglyMeasurable Gleft := by
+        convert ((Measurable.tsum (L := SummationFilter.unconditional ℕ) fun k =>
+          (hδj (t + k)).const_mul (c ^ k)).stronglyMeasurable).smul hψω
+      let δR : (ℕ → ℝ × S × A) → ℝ := fun ω =>
+        r t ω + γ * M.Vc θ γ (s (t + 1) ω) - M.Vc θ γ (s t ω)
+      let Gright : (ℕ → ℝ × S × A) → (Θ →L[ℝ] ℝ) := δR • ψt
+      have hGright : StronglyMeasurable Gright := by
+        convert (hδj t).stronglyMeasurable.smul hψω
+      have hL :
+          𝔼[r, s, a : M θ]((∑' k, c ^ k * (r (t + k) + γ * M.Vc θ γ (s (t + k + 1)) -
+              M.Vc θ γ (s (t + k)))) • ψ (s t) (a t)) =
+            ∫ ω, Gleft ω ∂(M θ) := by
+        have : PSpace (M θ) (AsPathRV.path s) :=
+          PSpace_Path.of.All_PSpace
+            (fun j => ⟨(Random.Measurable.of.All_Eq.snd.fst h₂ j).aemeasurable⟩)
+        have : PSpace (M θ) (AsPathRV.path a) :=
+          PSpace_Path.of.All_PSpace
+            (fun j => ⟨(Random.Measurable.of.All_Eq.snd.snd h₂ j).aemeasurable⟩)
+        have : ∀ θ', PSpace (M θ') (AsPathRV.path r) := fun _ =>
+          PSpace_Path.of.All_PSpace
+            (fun j => ⟨(Random.Measurable.of.All_Eq.fst h₂ j).aemeasurable⟩)
+        have hx : AEMeasurable
+            (AsPathRV.path r, AsPathRV.path s, AsPathRV.path a) (M θ) :=
+          PSpace.aemeasurable
+        simp only [AsPathRV.path_process]
+        rw [Expectation.ofRV, expectation_bochner]
+        refine (integral_map hx ?_).trans ?_
+        · exact (hGleft.comp_measurable fromPath_meas).aestronglyMeasurable.congr
+            (Filter.Eventually.of_forall fun p => by
+              simp only [Function.comp_apply, fromPath, Gleft, δL, ψt]
+              rfl)
+        · simp only [AsPathRV.path_process, JointRandomSymbol, Gleft, δL, ψt]
+          rfl
+      have hR :
+          𝔼[r, s, a : M θ]((r t + γ * M.Vc θ γ (s (t + 1)) - M.Vc θ γ (s t)) • ψ (s t) (a t)) =
+            ∫ ω, Gright ω ∂(M θ) := by
+        have : PSpace (M θ) (AsPathRV.path s) :=
+          PSpace_Path.of.All_PSpace
+            (fun j => ⟨(Random.Measurable.of.All_Eq.snd.fst h₂ j).aemeasurable⟩)
+        have : PSpace (M θ) (AsPathRV.path a) :=
+          PSpace_Path.of.All_PSpace
+            (fun j => ⟨(Random.Measurable.of.All_Eq.snd.snd h₂ j).aemeasurable⟩)
+        have : ∀ θ', PSpace (M θ') (AsPathRV.path r) := fun _ =>
+          PSpace_Path.of.All_PSpace
+            (fun j => ⟨(Random.Measurable.of.All_Eq.fst h₂ j).aemeasurable⟩)
+        have hx : AEMeasurable
+            (AsPathRV.path r, AsPathRV.path s, AsPathRV.path a) (M θ) :=
+          PSpace.aemeasurable
+        simp only [AsPathRV.path_process]
+        rw [Expectation.ofRV, expectation_bochner]
+        refine (integral_map hx ?_).trans ?_
+        · exact (hGright.comp_measurable fromPath_meas).aestronglyMeasurable.congr
+            (Filter.Eventually.of_forall fun p => by
+              simp only [Function.comp_apply, fromPath, Gright, δR, ψt]
+              rfl)
+        · simp only [AsPathRV.path_process, JointRandomSymbol, Gright, δR, ψt]
+          rfl
+      exact hL.symm.trans (hE.trans hR)
   have hmeas : ∀ k, Measurable fun ω : ℕ → ℝ × S × A =>
       (fun (s : ℕ → S) (_ : ℕ → A) (r : ℕ → ℝ) (k : ℕ) =>
           r k + γ * V θ (k + 1) ⟨fun _ => s (k + 1)⟩ - V θ k ⟨fun _ => s k⟩)
