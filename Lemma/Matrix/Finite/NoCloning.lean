@@ -21,7 +21,7 @@ private lemma no_cloning_two_state_eq
   (hlt : ‖⟪ψ, φ⟫_ℂ‖ < 1) :
 -- imply
   ¬ ∃ (U : (H ⊗[ℂ] H) ≃ₗᵢ[ℂ] (H ⊗[ℂ] H)),
-      U (ψ ⊗ₜ[ℂ] b) = ψ ⊗ₜ[ℂ] ψ ∧ U (φ ⊗ₜ[ℂ] b) = φ ⊗ₜ[ℂ] φ := by
+    U (ψ ⊗ₜ[ℂ] b) = ψ ⊗ₜ[ℂ] ψ ∧ U (φ ⊗ₜ[ℂ] b) = φ ⊗ₜ[ℂ] φ := by
 -- proof
   apply MathlibExt.QuantumInformation.Finite.NoCloning.no_cloning_two_state ψ φ b _hψ _hφ hb hpos hlt
 

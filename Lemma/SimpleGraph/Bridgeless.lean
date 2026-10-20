@@ -48,7 +48,7 @@ private lemma IsBridgeless_not_isBridge_eq
 -/
 @[path]
 private lemma isBridgeless_bot_eq
-  {G : SimpleGraph V} :
+  :
 -- imply
   (⊥ : SimpleGraph V).IsBridgeless := by
 -- proof

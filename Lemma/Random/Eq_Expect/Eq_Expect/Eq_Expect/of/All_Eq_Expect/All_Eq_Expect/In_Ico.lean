@@ -1,4 +1,4 @@
-import Lemma.Random.MEq_Expect_Cond.MEq_Expect_Cond.MEq_Expect_Cond.of.MEqExpectS.All_MEq_Expect_CondDot.All_MEq_Expect_CondDot.GtInftySup.In_Ico
+import Lemma.Random.MEq_ExpectCond.MEq_ExpectCond.MEq_ExpectCond.of.MEqExpectS.All_MEq_ExpectCondDot.All_MEq_ExpectCondDot.GtInftySup.In_Ico
 import Lemma.Random.MEqExpectS.of.All_Eq.In_Ico
 import Lemma.Random.Eq.of.Ne_0.MEq
 import sympy.stats.cond_expectation
@@ -102,7 +102,7 @@ private lemma main
       exact (show Measurable fun p : (S × A) × S ↦ (p.1.1, p.1.2, p.2) by fun_prop).comp
         (comap_measurable fun ω : ℕ → ℝ × S × A ↦ ((s t ω, a t ω), s (t + 1) ω))
   erw [hσ] at h₇
-  obtain ⟨h₈, h₉, h₁₀⟩ := MEq_Expect_Cond.MEq_Expect_Cond.MEq_Expect_Cond.of.MEqExpectS.All_MEq_Expect_CondDot.All_MEq_Expect_CondDot.GtInftySup.In_Ico
+  obtain ⟨h₈, h₉, h₁₀⟩ := MEq_ExpectCond.MEq_ExpectCond.MEq_ExpectCond.of.MEqExpectS.All_MEq_ExpectCondDot.All_MEq_ExpectCondDot.GtInftySup.In_Ico
     (π := M θ) (s := s) (a := a) (r := fun t ω ↦ clip (ω t).1 (-M.env.R) M.env.R) (t := t) h₀
     (fun t ↦ Random.MeasurableJoint.of.Measurable.Measurable (hrc t) (Random.MeasurableJoint.of.Measurable.Measurable (hs t) (ha t)))
     ⟨|M.env.R|, Set.forall_mem_range.2 fun ⟨t, ω⟩ ↦ hR t ω⟩ h₅ h₆ h₇

@@ -14,8 +14,8 @@ private lemma emultiplicity_maximalIdeal_map_eq_eq
   {I : Ideal R} :
 -- imply
   emultiplicity (IsLocalRing.maximalIdeal Rₚ)
-        (I.map (algebraMap R Rₚ)) =
-      emultiplicity p I := by
+    (I.map (algebraMap R Rₚ)) =
+    emultiplicity p I := by
 -- proof
   apply IsLocalization.AtPrime.emultiplicity_maximalIdeal_map_eq p I
 

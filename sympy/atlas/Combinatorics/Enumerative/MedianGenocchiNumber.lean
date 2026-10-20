@@ -13,8 +13,6 @@ open scoped BigOperators
 
 namespace MetaMathlibExt
 
-@[expose]
-
 /-- The Genocchi numbers, represented by the Bernoulli-number formula
 `G n = 2 * (1 - 2^n) * B n`. -/
 def genocchiNumberViaBernoulli (n : ℕ) : ℚ :=

@@ -20,8 +20,8 @@ namespace Chapter6
 
 theorem Sequence.lim_of_const (c:ℝ) :  ((fun (_:ℕ) ↦ c):Sequence).TendsTo c := by sorry
 
-instance Sequence.inst_pow: Pow Sequence ℕ where
-  pow a k := {
+instance Sequence.inst_npow : NPow Sequence where
+  npow k a := {
     m := a.m
     seq n := if n ≥ a.m then a n ^ k else 0
     vanish := by grind
@@ -29,12 +29,20 @@ instance Sequence.inst_pow: Pow Sequence ℕ where
 
 @[simp]
 lemma Sequence.pow_eval {a:Sequence} {k: ℕ} {n: ℤ} (hn : n ≥ a.m): (a ^ k) n = a n ^ k := by
-  rw [HPow.hPow, instHPow, Pow.pow, inst_pow]
-  grind
+  change (inst_npow.npow k a).seq n = a n ^ k
+  unfold inst_npow
+  simp [hn]
 
 @[simp]
 lemma Sequence.pow_one (a:Sequence) : a^1 = a := by
-  ext n; rfl; simp only [HPow.hPow, Pow.pow]; split_ifs with h; simp; simp [a.vanish n (by grind)]
+  ext n
+  · rfl
+  · by_cases h : n ≥ a.m
+    · have := pow_eval (a := a) (k := 1) h
+      simpa using this
+    · change (inst_npow.npow 1 a).seq n = a.seq n
+      unfold inst_npow
+      simp [h, a.vanish n (by grind)]
 
 lemma Sequence.pow_succ (a:Sequence) (k:ℕ): a^(k+1) = a^k * a := by
   ext x
@@ -63,7 +71,10 @@ theorem Sequence.lim_of_power_decay {k:ℕ} :
     rw [pow_succ]; convert lim_mul ih.1 ha' using 1; rw [ih.2]; grind
   have hlim : (lim a)^(k+1) = 0 := by
     rw [←(hpow k).2]; convert lim_harmonic.2; ext; rfl
-    simp only [HPow.hPow, Pow.pow, a]; split_ifs with h
+    change (inst_npow.npow (k + 1) a).seq _ = _
+    unfold inst_npow
+    simp only [a]
+    split_ifs with h
     · simp
       rw [←Real.rpow_natCast,←Real.rpow_mul (by positivity)]
       convert Real.rpow_one _; field_simp; push_cast; ring

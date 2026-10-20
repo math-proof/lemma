@@ -10,8 +10,7 @@ open Set Topology
 @[path]
 private lemma IsPreconnected_inter_frontier_nonempty_of_inter_compl_eq
   [TopologicalSpace α]
-  {s : Set α}
-  {A : Set α}
+  {s A : Set α}
 -- given
   (hs : IsPreconnected s)
   (hA : (s ∩ A).Nonempty)

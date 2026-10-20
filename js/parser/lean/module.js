@@ -48,6 +48,19 @@ function implyConclusionLatex(node, syntax) {
     return '\\begin{align*}\n' + rows.join('\\\\\n') + '\n\\end{align*}';
 }
 
+
+/**
+ * Imply LaTeX only: drop anonymous `have : T := ...` / `let : T := ...`
+ * (implicit `this`) — typeclass/context requirements, not the mathematical statement.
+ * Imply lean keeps them for inspection. Named binders stay in both.
+ * @param {any[]} imply
+ */
+function implyDisplayStmts(imply) {
+    // Anonymous have/let : T := ... (implicit this) are context only.
+    const shown = imply.filter((st) => !(st instanceof L.Lean_let && st.anonymous()));
+    return shown.length ? shown : imply;
+}
+
 /**
  * `align*` for imply statements that start with `have`/`let`: one row per statement, and a
  * `∧` chain written on several lines contributes one row per conjunct.
@@ -811,11 +824,12 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                     const proof0 = innerAssign.rhs;
                     const by = proof0 instanceof L.LeanBy? 'by' : proof0 instanceof L.LeanCalc ? 'calc' : '';
                     const implyLean = unindentTwo(imply.map((s) => strStmt(s)).join('\n'));
+                    const implyShown = implyDisplayStmts(imply);
                     let implyLatex;
-                    if (imply.length > 1 && imply[0] instanceof L.Lean_let)
-                        implyLatex = implyLetAlignLatex(imply, syntax);
+                    if (implyShown.length > 1 && implyShown[0] instanceof L.Lean_let)
+                        implyLatex = implyLetAlignLatex(implyShown, syntax);
                     else
-                        implyLatex = imply.map(st => implyConclusionLatex(st, syntax)).join('\n');
+                        implyLatex = implyShown.map(st => implyConclusionLatex(st, syntax)).join('\n');
                     const assignSuffix = ' :=' + (by ? ` ${by}` : '');
 
                     const implyOut = { lean: implyLean + assignSuffix, latex: implyLatex };
@@ -1154,11 +1168,12 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                         const imply = [...flatImplyStmts, assignment.lhs];
                         markRandomVarSequence(imply, flatRvNames);
                         const implyLean = unindentTwo(imply.map((s) => strStmt(s)).join('\n'));
+                        const implyShown = implyDisplayStmts(imply);
                         let implyLatex;
-                        if (imply.length > 1 && imply[0] instanceof L.Lean_let) {
-                            implyLatex = implyLetAlignLatex(imply, syntax);
+                        if (implyShown.length > 1 && implyShown[0] instanceof L.Lean_let) {
+                            implyLatex = implyLetAlignLatex(implyShown, syntax);
                         } else {
-                            implyLatex = imply
+                            implyLatex = implyShown
                                 .map((st) => implyConclusionLatex(st, syntax))
                                 .join('\n');
                         }

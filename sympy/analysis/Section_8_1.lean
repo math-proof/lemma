@@ -91,9 +91,14 @@ theorem CountablyInfinite.iff_image_inj {A:Type} (X: Set A) : CountablyInfinite 
     choose f hleft hright using Function.bijective_iff_has_inverse.mp hg
     refine ⟨ ⟨ Subtype.val ∘ f, ?_ ⟩, ?_ ⟩
     . intro x y hxy; apply hright.injective; simp_all [Subtype.val_inj]
-    ext; simp; constructor
-    . intro hx; use g ⟨ _, hx ⟩; simp [hleft _]
-    rintro ⟨ _, rfl ⟩; aesop
+    ext x; simp only [Set.mem_image, Set.mem_univ, true_and]
+    constructor
+    . intro hx
+      use g ⟨x, hx⟩
+      change (f (g ⟨x, hx⟩)).1 = x
+      rw [hleft]
+    rintro ⟨n, rfl⟩
+    exact (f n).2
   intro ⟨ f, hf ⟩
   have := Function.leftInverse_invFun (Function.Embedding.injective f)
   use (Function.invFun f) ∘ Subtype.val; split_ands
@@ -128,7 +133,8 @@ theorem Nat.min_eq_sInf {X : Set ℕ} (hX : X.Nonempty) : min X = sInf X := by
 open Classical in
 /-- Equivalence with Mathlib's {name}`Nat.find` method -/
 theorem Nat.min_eq_find {X : Set ℕ} (hX : X.Nonempty) : min X = Nat.find hX := by
-  symm; rw [Nat.find_eq_iff]; have := min_spec hX; grind
+  apply min_eq hX
+  exact ⟨Nat.find_spec hX, fun n hn => Nat.find_min' hX hn⟩
 
 /-- Proposition 8.1.5 -/
 theorem Nat.monotone_enum_of_infinite (X : Set ℕ) [Infinite X] : ∃! f : ℕ → X, Function.Bijective f ∧ StrictMono f := by
@@ -213,13 +219,26 @@ theorem Int.countablyInfinite : CountablyInfinite ℤ := by
   have h1 : CountablyInfinite {n:ℤ | n ≥ 0} := by
     rw [CountablyInfinite.iff_image_inj]
     use ⟨ (↑·:ℕ → ℤ), by intro _ _ _; simp_all ⟩
-    ext n; simp; refine ⟨ ?_, by aesop ⟩
-    . intro h; use n.toNat; simp [h]
+    ext n; simp only [Set.mem_setOf_eq, Set.mem_image, Set.mem_univ, true_and]
+    constructor
+    . intro h
+      use n.toNat
+      change (n.toNat : ℤ) = n
+      exact Int.toNat_of_nonneg h
+    rintro ⟨k, rfl⟩
+    exact Int.natCast_nonneg k
   have h2 : CountablyInfinite {n:ℤ | n ≤ 0} := by
     rw [CountablyInfinite.iff_image_inj]
     use ⟨ (-↑·:ℕ → ℤ), by intro _ _ _; simp_all ⟩
-    ext n; simp; refine ⟨ ?_, by aesop ⟩
-    intro h; use (-n).toNat; simp [h]
+    ext n; simp only [Set.mem_setOf_eq, Set.mem_image, Set.mem_univ, true_and]
+    constructor
+    . intro h
+      use (-n).toNat
+      change (-↑((-n).toNat)) = n
+      rw [Int.toNat_of_nonneg (neg_nonneg.mpr h)]
+      simp
+    rintro ⟨k, rfl⟩
+    exact neg_nonpos.mpr (Int.natCast_nonneg k)
   have : CountablyInfinite (.univ : Set ℤ) := by
     convert h1.union h2; ext; simp; omega
   rwa [←CountablyInfinite.equiv (.univ _)]

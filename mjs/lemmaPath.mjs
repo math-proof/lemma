@@ -114,7 +114,7 @@ const CLASS_TOKEN = {
   LeanIn: "In",
   LeanInf: "Inf",
   Lean_cdotp: "Dot", // x ⬝ᵥ y → Dot (FiniteMRP/DotVecMul_D)
-  LeanMatMul: "Dot", // A @ x (Dot.dot) → Dot (Random/Expect_Dot/eq/Dot_Expect, Random/Expect_CondDot/eq/Dot_Expect_Cond)
+  LeanMatMul: "Dot", // A @ x (Dot.dot) → Dot (Random/ExpectDot/eq/DotExpect, Random/ExpectCondDot/eq/DotExpectCond)
   Lean_subseteq: "Subset", // A ⊆ B → A/sub/B, Subset_B (Real/AbsorbingSet/sub/PhaseSpace, Random/Quantile/sub/QuantileLower)
 };
 
@@ -1109,6 +1109,11 @@ function numberWord(d) {
   return [...d].map((c) => NUM_WORD[+c]).join("");
 }
 function sanitizePathSeg(seg) {
+  // Cond token is ExpectCond (not Expect_Cond), including mid-segment (ExpectSMulExpect_Cond).
+  seg = seg.replaceAll("Expect_Cond", "ExpectCond");
+  // Remaining Expect_* unary → CamelCase: Expect_Add → ExpectAdd. GradExpect_* / AddExpect_* / *_Expect untouched.
+  if (seg.startsWith("Expect_"))
+    seg = "Expect" + seg.slice("Expect_".length);
   // a module component may not start with a digit (lake): `eq/0` → `eq/Zero`, `0OrP` → `ZeroOrP`, `-1` → `NegOne`;
   // digits after the first letter stay (`Gt_0`, `Div1'2`)
   const m = /^(-?)(\d+)(.*)$/s.exec(seg);
@@ -1528,8 +1533,12 @@ function meqFuse(side, condSigma = false) {
   if (!side) return "MEq";
   // intentional plural for equal Expect / equal condSigma sides
   if (side === "ExpectS" || side.startsWith("ExpectS_")) return "MEq" + side;
-  // underscored / ExpectCond* bodies: never camel-collapse past the infix
-  if (side.includes("_") || /^ExpectCond/.test(side)) return "MEq_" + side;
+  // ExpectCond* (CamelCase) → MEq_Expect_Cond* (MEq atom keeps underscore); legacy Expect_Cond* too
+  if (side === "ExpectCond") return "MEq_Expect_Cond";
+  if (side.startsWith("ExpectCond")) return "MEq_Expect_Cond" + side.slice("ExpectCond".length);
+  if (side === "Expect_Cond" || side.startsWith("Expect_Cond")) return "MEq_" + side;
+  // underscored bodies: never camel-collapse past the infix
+  if (side.includes("_")) return "MEq_" + side;
   if (side === "Expect") return condSigma ? "MEq_Expect" : "MEqExpect";
   if (/^Expect/.test(side)) return "MEq_" + side;
   // MEq + named id (Clip, …): snake — only here; Norm/Abs still camel-glue via joinHeadChild
@@ -1894,6 +1903,69 @@ function isGradLogProbCond(node) {
   return !!matchProbApp(obj);
 }
 
+/**
+ * Expect of `(lhs • GradLogProbCond)` — InIco0 / Body policy-gradient SMul forms.
+ * - `(γ^id) @ … • ∇log π(·|·)` → `ExpectSMul_GradLogProbCond` (G left implicit).
+ * - `𝔼[(γ^id) @ … | …] • ∇log π` → `ExpectSMulExpectCondDotPow_Id` (GradLog right omitted).
+ * ExpectCond stays CamelCase; never Expect_Cond / Expect_SMul.
+ */
+function expectSMulGradLogNames(node, canon) {
+  const u = unwrapParen(node);
+  if (cls(u) !== "LeanArgsSpaceSeparated" || (u.args || []).length !== 2) return [];
+  const head = u.args[0];
+  if (!(cls(head) === "LeanGetElem" && cls(head.args?.[0]) === "LeanToken" && head.args[0].text === "𝔼")) return [];
+  // Peel paren / indent / newline wrappers around multi-line • integrands (InIco0 RHS).
+  let body = u.args[1];
+  for (let i = 0; i < 10; i++) {
+    body = unwrapParen(body);
+    const c = cls(body);
+    if (
+      c === "LeanArgsNewLineSeparated" ||
+      c === "LeanStatements" ||
+      c === "LeanArgsIndented" ||
+      c === "LeanArgsCommaSeparated" ||
+      (c === "LeanArgsSpaceSeparated" && (body.args || []).length === 1)
+    ) {
+      const kids = (body.args || []).filter((a) => cls(a) !== "LeanLineComment");
+      if (kids.length === 1) {
+        body = kids[0];
+        continue;
+      }
+      if (c === "LeanArgsNewLineSeparated" || c === "LeanStatements" || c === "LeanArgsIndented") {
+        body = firstConclusion(body);
+        continue;
+      }
+    }
+    break;
+  }
+  if (cls(body) !== "Lean_bullet" || (body.args || []).length !== 2) return [];
+  const left = unwrapParen(body.args[0]);
+  const right = unwrapParen(body.args[1]);
+  if (!isGradLogProbCond(right)) return [];
+  // RHS: 𝔼[G | C] • GradLog → ExpectSMulExpectCondDotPow_Id (GradLog omitted)
+  const condBody = isExpectCondApp(left) ? expectCondBody(unwrapParen(left).args[1]) : null;
+  if (condBody && isDotPowIdApp(condBody)) {
+    return canon
+      ? ["ExpectSMulExpectCondDotPow_Id"]
+      : uniq(["ExpectSMulExpectCondDotPow_Id", "ExpectSMulExpectCond", "ExpectSMul"]);
+  }
+  {
+    const ln = nameExpr(left, {});
+    if (/^ExpectCondDotPow_Id$/.test(ln) || /^ExpectCondDot$/.test(ln)) {
+      return canon
+        ? ["ExpectSMulExpectCondDotPow_Id"]
+        : uniq(["ExpectSMulExpectCondDotPow_Id", "ExpectSMulExpectCond", "ExpectSMul"]);
+    }
+  }
+  // LHS: DotPow_Id • GradLog → ExpectSMul_GradLogProbCond (G left implicit)
+  if (isDotPowIdApp(left)) {
+    return canon
+      ? ["ExpectSMul_GradLogProbCond"]
+      : uniq(["ExpectSMul_GradLogProbCond", "ExpectSMul"]);
+  }
+  return [];
+}
+
 /** Expect of DotPow_Id @ fun of (adv bullet GradLogProbCond). */
 function expectDotFunSMulGradLogName(node) {
   const u = unwrapParen(node);
@@ -1921,8 +1993,8 @@ function expectDotFunSMulGradLogName(node) {
     if (isDotPowIdApp(x)) return true;
     return (x.args || []).some((a) => hasDotPow(a, d + 1));
   };
-  if (cls(adv) === "LeanMul" && hasDotPow(adv, 0)) return "Expect_DotFunMulFunPowDot_SMul_GradLogProbCond";
-  return "Expect_DotFunSMul_GradLogProbCond";
+  if (cls(adv) === "LeanMul" && hasDotPow(adv, 0)) return "ExpectDotFunMulFunPowDot_SMul_GradLogProbCond";
+  return "ExpectDotFunSMul_GradLogProbCond";
 }
 
 function gradientBody(node) {
@@ -2010,23 +2082,27 @@ function preAlts(node, opts, canon) {
     }
     // 𝔼[a : π](f a) → ExpectF (Random/GeExpect/of/Ge)
     if (cls(head) === "LeanGetElem" && cls(head.args?.[0]) === "LeanToken" && head.args[0].text === "𝔼" && args.length === 2) {
-      // policy-gradient Expect of DotPow_Id / DotFunSMul_GradLogProbCond
+      // policy-gradient Expect of DotPow_Id / DotFunSMul_GradLogProbCond / SMul_GradLogProbCond
       {
         const pg = expectDotFunSMulGradLogName(node);
-        if (pg) return canon ? [pg] : uniq([pg, "Expect_DotFunSMul_GradLogProbCond", "Expect_DotFunMulFunPowDot_SMul_GradLogProbCond"]);
-        if (isExpectDotPowId(node)) return canon ? ["Expect_DotPow_Id"] : uniq(["Expect_DotPow_Id", "ExpectDotPow_Id", "ExpectDot"]);
+        // Expect is unary → CamelCase fusion (ExpectAdd / ExpectDotPow_Id); never Expect_* snake
+        if (pg) return canon ? [pg] : uniq([pg, "ExpectDotFunSMul_GradLogProbCond", "ExpectDotFunMulFunPowDot_SMul_GradLogProbCond"]);
+        const smulPg = expectSMulGradLogNames(node, canon);
+        if (smulPg.length) return smulPg;
+        if (isExpectDotPowId(node)) return canon ? ["ExpectDotPow_Id"] : uniq(["ExpectDotPow_Id", "ExpectDot"]);
       }
-      // conditional 𝔼[a : π](X | C) / 𝔼[…](X | C0, C1) → Expect_Cond + X (Random/Expect_CondMul/eq/Mul_Expect_Cond,
-      // Random/Expect_CondDot/eq/Dot_Expect_Cond, Random/Expect_CondSum/eq/Sum_ExpectCond); C itself is not spelled
+      // conditional 𝔼[a : π](X | C) → ExpectCond* CamelCase (Body: ExpectCond, not Expect_Cond).
+      // Non-cond Expect stays CamelCase unary (ExpectAdd / ExpectMul) below.
       const body = expectCondBody(args[1]);
       if (body) {
         const x = A(body);
-        const cond = x.length ? x.flatMap((y) => ["Expect_Cond" + y, "ExpectCond" + y]) : ["Expect_Cond", "ExpectCond"];
-        // the body may be left out (Dot_Expect_Cond for `fun k => 𝔼[r : M θ](r (t + k) | …)`); keep it near the front (node caps)
-        return canon ? cond.slice(0, 1) : uniq([...cond.slice(0, 2), "Expect_Cond", "ExpectCond", "Expect", ...cond]);
+        const cond = x.length ? x.map((y) => "ExpectCond" + y) : ["ExpectCond"];
+        // body may be left out (DotExpectCond); keep bare ExpectCond near the front (node caps)
+        return canon ? cond.slice(0, 1) : uniq([...cond.slice(0, 2), "ExpectCond", "Expect", ...cond]);
       }
       const b = A(args[1]);
-      return b.length ? uniq(b.flatMap((y) => ["Expect" + y, "Expect_" + y])) : ["Expect"];
+      // unary Expect: CamelCase only (ExpectAdd); never Expect_Add
+      return b.length ? uniq(b.map((y) => "Expect" + y)) : ["Expect"];
     }
     // μ.real {ω | X ω ≤ t} → RealLe (Random/RealLe/le/RealLe, Random/AddRealLeRealGt/eq/One)
     if (cls(head) === "LeanProperty" && cls(head.args?.[1]) === "LeanToken" && /^(real|toReal)$/.test(head.args[1].text || "") && args.length === 2 && isSetBuilder(args[1])) {
@@ -2102,8 +2178,17 @@ function preAlts(node, opts, canon) {
       }
     }
     const b = A(core);
-    // in Random/, `∫ ω, f ω ∂μ` is an expectation: Random/Mul_Expect/eq/Expect_Mul, Random/Expect/le/ExpectAbs
-    const asExpect = (xs) => (!canon && opts.section === "Random" ? uniq([...xs, ...xs.map((x) => x.replace(/^Integral/, "Expect"))]) : xs);
+    // in Random/, `∫ ω, f ω ∂μ` is an expectation: Random/MulExpect/eq/ExpectMul, Random/Expect/le/ExpectAbs
+    // Expect unary CamelCase: Integral_Mul → ExpectMul (never Expect_Mul); IntegralMul → ExpectMul
+    const asExpect = (xs) => {
+      if (canon || opts.section !== "Random") return xs;
+      const extra = [];
+      for (const x of xs) {
+        if (x.startsWith("Integral_")) extra.push("Expect" + x.slice("Integral_".length));
+        else if (x.startsWith("Integral")) extra.push("Expect" + x.slice("Integral".length));
+      }
+      return uniq([...xs, ...extra]);
+    };
     if (b.length) return asExpect(uniq(b.flatMap((y) => ["Integral_" + y, "Integral" + y])));
     // hole integrand: the measure may carry the atom, ∫ x, f x ∂(κ ^ n) s → IntegralPow
     const part = cls(body) === "LeanArgsSpaceSeparated" ? (body.args || []).find((x) => cls(x) === "Lean_partial" || cls(x) === "LeanPartial") : null;
@@ -2188,6 +2273,9 @@ function postAlts(node, opts, alts, canon) {
       if (l || r) extra.push("SMul" + l + r);
       if (l && r) extra.push("SMul" + l + "_" + r);
     }
+    // omit one side: ExpectSMulExpectCondDotPow_Id / ExpectSMul_GradLogProbCond (InIco0)
+    for (const l of L) if (l) extra.push("SMul" + l);
+    for (const r of R) if (r) extra.push("SMul_" + r);
     return uniq([...alts, ...extra]);
   }
   return alts;
@@ -2230,10 +2318,21 @@ function peelGuardForalls(node) {
   return n;
 }
 
+/**
+ * Expect_Cond → ExpectCond (anywhere); other Expect_* unary prefix → CamelCase (Expect_Add → ExpectAdd).
+ * GradExpect_* / AddExpect_* / *_Expect untouched (different prefixes).
+ */
+function demoteExpectSnake(name) {
+  if (!name) return name;
+  name = name.replaceAll("Expect_Cond", "ExpectCond");
+  if (name.startsWith("Expect_")) return "Expect" + name.slice("Expect_".length);
+  return name;
+}
+
 function nameExprAlts(node, opts = {}) {
   if (!node) return [];
   const pre = preAlts(node, opts, false);
-  const alts = postAlts(node, opts, pre ?? nameExprAltsBase(node, opts), false);
+  const alts = postAlts(node, opts, pre ?? nameExprAltsBase(node, opts), false).map(demoteExpectSnake);
   return alts.length > NODE_ALT_CAP ? alts.slice(0, NODE_ALT_CAP) : alts;
 }
 
@@ -2241,7 +2340,7 @@ function nameExpr(node, opts = {}) {
   if (!node) return "";
   const pre = preAlts(node, opts, true);
   const base = pre ? pre[0] || "" : nameExprBase(node, opts);
-  return postAlts(node, opts, base ? [base] : [], true)[0] || "";
+  return demoteExpectSnake(postAlts(node, opts, base ? [base] : [], true)[0] || "");
 }
 
 function unwrapParen(node) {
@@ -2415,9 +2514,9 @@ function isExpectCondApp(node) {
   return !!expectCondBody(u.args[1]);
 }
 
-/** Bare Expect / Expect_Cond / ExpectCond heads (no integrand suffix). */
+/** Bare Expect / ExpectCond heads. Legacy Expect_Cond still matched. */
 function isBareExpectFamily(n) {
-  return n === "Expect" || n === "Expect_Cond" || n === "ExpectCond";
+  return n === "Expect" || n === "ExpectCond" || n === "Expect_Cond";
 }
 
 /** `JointRandomSymbol a b` including a right-nested chain, flattened, or null. */

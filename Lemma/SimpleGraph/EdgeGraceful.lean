@@ -19,7 +19,7 @@ private lemma inducedResidue_val_eq
   (hp : Fintype.card V ≠ 0) :
 -- imply
   (G.inducedResidue q label v).val =
-      G.incidentSum q label v % Fintype.card V := by
+    G.incidentSum q label v % Fintype.card V := by
 -- proof
   apply SimpleGraph.inducedResidue_val G q label v hp
 
@@ -32,11 +32,11 @@ private lemma isEdgeGraceful_iff_eq
   {G : SimpleGraph V} :
 -- imply
   G.IsEdgeGraceful ↔
-      ∃ (q : Nat) (eLabel : G.edgeSet ≃ Fin q)
-        (vLabel : V ≃ Fin (Fintype.card V)),
-        ∀ v, vLabel v = G.inducedResidue q eLabel v ∧
-          (Fintype.card V ≠ 0 →
-            (vLabel v).val = G.incidentSum q eLabel v % Fintype.card V) := by
+    ∃ (q : Nat) (eLabel : G.edgeSet ≃ Fin q)
+    (vLabel : V ≃ Fin (Fintype.card V)),
+    ∀ v, vLabel v = G.inducedResidue q eLabel v ∧
+    (Fintype.card V ≠ 0 →
+    (vLabel v).val = G.incidentSum q eLabel v % Fintype.card V) := by
 -- proof
   apply SimpleGraph.isEdgeGraceful_iff G
 

@@ -504,13 +504,22 @@ Python-aligned surface form (cf. `Expectation[x ~ D](f, given=…)` in `../py/sy
   `| y = y0 ∧ z = z0 ∧ …` (two or more conjuncts), which conditions on the joint random variable
   `JointRandomSymbol y (JointRandomSymbol z …)` at `(y0, z0, …)`, as in `ℙ[π](… | y = y0 ∧ z = z0)`.
 * **Scalar conditional given random argument(s) (no observation) = σ-algebra conditional expectation:**
-  `𝔼[x: π](f x | y)` / `𝔼[x, z: π](f | y t, (u, v), w (t + 1))` → `Expectation.condSigma …`
+  `𝔼[x: π](f x | y)` / `𝔼[x, z: π](f | y t, (u, v), w (t + 1))` / `𝔼[r: π](f | s[t], a[t])`
+  → `Expectation.condSigma …`
   `= π[fun ω ↦ f (x ω) | MeasurableSpace.comap y inferInstance]` (Mathlib `condExp`; no density, no
   atoms needed; defined up to `π`-a.e. equality, so compare with `=ᵐ[π]`).
   After `|` come arbitrary terms `Ω → _` (not only names) without a top-level `=` (that would be an
   observation): one is used bare, two or more are packed right-nested by `JointRandomSymbol`
-  (`y, z, w` ↦ `(y, (z, w))`; write `(y, z), w` for `((y, z), w)`). The conditioners are outside the
-  binder scope: in `𝔼[s: π](f (s t) | s t)` the `s t` after `|` is the random variable.
+  (`y, z, w` ↦ `(y, (z, w))`; write `(y, z), w` for `((y, z), w)`). GetElem `s[t]` is allowed
+  (`term:51`). The conditioners are outside the binder scope: in `𝔼[s: π](f (s t) | s t)` the
+  `s t` after `|` is the random variable.
+  **Nested under an outer random op that threads aliases** (today: any `𝔼[…]` elaborator
+  that calls `desugarProbRA`, including partial/`| ys` forms; the walker also descends into
+  arbitrary subterms such as `𝕍𝕒𝕣`/`ℂ𝕠𝕧`/`ℙ` applications): the same surface `| s[t], a[t]`
+  is rewritten (with outer aliases) to `| s₀ t = s t ∧ a₀ t = a t` → `Expectation.condEvent`,
+  matching handwritten `have s₀ := s; have a₀ := a` — so
+  `𝔼[s, a: π](𝔼[r: π](f | s[t], a[t]) • …)` (and the same nested `𝔼` under `𝕍𝕒𝕣`/`ℂ𝕠𝕧`/`ℙ`
+  in that body) needs no manual aliases.
   A binder is turned into `let x := «integ».…` inside the body, so `𝔼[x: π](f x)` reads `f` at the
   *value* of `x`. That rebinding is kept when `x` is not a local (a constant such as `reward`, or a
   name introduced by the notation) and when the body uses a local `x` as that value
@@ -624,14 +633,20 @@ Syntax sugar for pointwise evaluation of the canonical densities `prob` / `condP
   (= `fun ω ↦ Measure.condProb π (x, y) (x0, y ω)`), a random expression in `y`.
   Several RAs: `ℙ[π](x = x0 | y, z, …)`; joint left: `ℙ[π](x = x0 ∧ w = w0 | y)`.
 
-**Inside `𝔼`:** RA forms whose heads are integrated binders already in scope
-(`ℙ[π](a t | s t)`, `ℙ[π](a[t] | s[t])`, `ℙ[π](a | s)`, …) are rewritten to the
-scalar observation form `ℙ[π]((a₀ t) = (a t) | (s₀ t) = (s t))` (GetElem `a[t]` /
-`s[t]` becomes app on both sides of `=` after unpack) with fresh aliases `a₀ := a` of the outer
-processes taken before unpack. That is the same scalar as today's handwritten
-`let a₀ := a; let s₀ := s` pattern, so `(ℙ[M θ](a t | s t) : ℝ)` and
-`(ℙ[M θ](a[t] | s[t]) : ℝ)` work under `𝔼[s, a, …]`. Outside `𝔼`, the same
+**Inside an outer op that threads aliases** (today: `𝔼` binder elaborators via
+`desugarProbRA` / `mapChildren`; `𝕍𝕒𝕣`/`ℂ𝕠𝕧` are plain defs, so nested sugar under them
+is rewritten only when they sit in such an `𝔼` body): RA forms whose heads are integrated
+binders already in scope (`ℙ[π](a t | s t)`, `ℙ[π](a[t] | s[t])`, `ℙ[π](a | s)`, …) are
+rewritten to the scalar observation form `ℙ[π]((a₀ t) = (a t) | (s₀ t) = (s t))`
+(GetElem `a[t]` / `s[t]` becomes app on both sides of `=` after unpack) with fresh aliases
+`a₀ := a` of the outer processes taken before unpack. That is the same scalar as today's
+handwritten `let a₀ := a; let s₀ := s` pattern, so `(ℙ[M θ](a t | s t) : ℝ)` and
+`(ℙ[M θ](a[t] | s[t]) : ℝ)` work under `𝔼[s, a, …]`. Outside such an outer op, the same
 surface stays `probCondRA` (`Ω → ENNReal`).
+  Nested conditional expectations use the same alias check via `rewriteNestedExpectRA`:
+  `𝔼[r : π](f | s[t], a[t])` under any ancestor that passed aliases becomes
+  `𝔼[r : π](f | s₀ t = s t ∧ a₀ t = a t)` (`condEvent` / pointwise). Standalone
+  (no outer aliases) `| s[t], a[t]` still elaborates to `Expectation.condSigma`.
 
 Read `=` as “evaluated at” (like `x ↦ x0`), not as an event `{ω | x ω = x0}`.
 `∧` packs a joint point; `|` is conditioning (fixed `=` or random arguments).
@@ -767,41 +782,74 @@ private def Expectation.Macro.isAliasable (aliases : List (Name × Ident)) (e : 
   | some n => aliases.any (fun p => p.1 == n)
   | none => false
 
+/-- If `stx` is nested `𝔼[xs : π](b | ys,*)` whose conditioner heads are all in `aliases`,
+rewrite to the observation / `condEvent` form. Returns `none` when `stx` is not that
+RA-`𝔼` shape. Non-aliasable RA conditioners return the original node unchanged (caller
+still `mapChildren`s). Standalone (empty aliases) never reaches here. -/
+private def Expectation.Macro.rewriteNestedExpectRA
+    (aliases : List (Name × Ident)) (stx : Syntax) : MacroM (Option Syntax) := do
+  match stx with
+  | `(𝔼[$xs:ident,* : $π]($b:term | $ys:term,*)) =>
+      let ysA := ys.getElems
+      if !ysA.all (fun e => Expectation.Macro.isAliasable aliases e) then
+        -- Keep RA surface → `condSigma` after elab; descend via `mapChildren`.
+        return some stx
+      let y ← ysA.mapM (Expectation.Macro.applyAlias aliases)
+      let y0 ← ysA.mapM Expectation.Macro.getElemAsApp
+      match y.size with
+      | 0 => Macro.throwError "𝔼[…](… | …) requires at least one conditioning term"
+      | 1 =>
+          return some (← `(𝔼[$xs,* : $π]($b:term | $(y[0]!) = $(y0[0]!))))
+      | _ =>
+          let yHead := y[0]!
+          let y0Head := y0[0]!
+          let yRest := y.extract 1 y.size
+          let y0Rest := y0.extract 1 y0.size
+          return some (← `(𝔼[$xs,* : $π]($b:term | $yHead = $y0Head ∧ $[$yRest:term = $y0Rest:term]∧*)))
+  | _ => return none
+
+/-- Walk `stx` rewriting aliasable nested `ℙ` / `𝔼` RA sugar to observation form.
+Called from every `𝔼` elaborator that builds outer aliases (including partial forms);
+`mapChildren` descends into arbitrary operators (`𝕍𝕒𝕣`, `ℂ𝕠𝕧`, apps, …), so nested
+`𝔼[…](b | ys,*)` is rewritten whenever *some* ancestor threaded `aliases`. -/
 private partial def Expectation.Macro.desugarProbRA (aliases : List (Name × Ident)) (stx : Syntax) :
     MacroM Syntax := do
   if aliases.isEmpty then
     return stx
   let rec go (s : Syntax) : MacroM Syntax := do
-    match s with
-    | `(ℙ[$π]($xs:term,* | $ys:term,*)) =>
-        let xsA := xs.getElems
-        let ysA := ys.getElems
-        if xsA.all (fun e => Expectation.Macro.isAliasable aliases e) &&
-            ysA.all (fun e => Expectation.Macro.isAliasable aliases e) then
-          let x ← xsA.mapM (Expectation.Macro.applyAlias aliases)
-          let x0 ← xsA.mapM Expectation.Macro.getElemAsApp
-          let y ← ysA.mapM (Expectation.Macro.applyAlias aliases)
-          let y0 ← ysA.mapM Expectation.Macro.getElemAsApp
-          `(ℙ[$π]($[$x:term = $x0:term]∧* | $[$y:term = $y0:term]∧*))
-        else
-          mapChildren s
-    | `(ℙ[$π]($xs:term,* | $[$y:term = $y0:term]∧*)) =>
-        let xsA := xs.getElems
-        if xsA.all (fun e => Expectation.Macro.isAliasable aliases e) then
-          let x ← xsA.mapM (Expectation.Macro.applyAlias aliases)
-          let x0 ← xsA.mapM Expectation.Macro.getElemAsApp
-          `(ℙ[$π]($[$x:term = $x0:term]∧* | $[$y:term = $y0:term]∧*))
-        else
-          mapChildren s
-    | `(ℙ[$π]($xs:term,*)) =>
-        let xsA := xs.getElems
-        if xsA.all (fun e => Expectation.Macro.isAliasable aliases e) then
-          let x ← xsA.mapM (Expectation.Macro.applyAlias aliases)
-          let x0 ← xsA.mapM Expectation.Macro.getElemAsApp
-          `(ℙ[$π]($[$x:term = $x0:term]∧*))
-        else
-          mapChildren s
-    | _ => mapChildren s
+    if let some s' ← Expectation.Macro.rewriteNestedExpectRA aliases s then
+      mapChildren s'
+    else
+      match s with
+      | `(ℙ[$π]($xs:term,* | $ys:term,*)) =>
+          let xsA := xs.getElems
+          let ysA := ys.getElems
+          if xsA.all (fun e => Expectation.Macro.isAliasable aliases e) &&
+              ysA.all (fun e => Expectation.Macro.isAliasable aliases e) then
+            let x ← xsA.mapM (Expectation.Macro.applyAlias aliases)
+            let x0 ← xsA.mapM Expectation.Macro.getElemAsApp
+            let y ← ysA.mapM (Expectation.Macro.applyAlias aliases)
+            let y0 ← ysA.mapM Expectation.Macro.getElemAsApp
+            `(ℙ[$π]($[$x:term = $x0:term]∧* | $[$y:term = $y0:term]∧*))
+          else
+            mapChildren s
+      | `(ℙ[$π]($xs:term,* | $[$y:term = $y0:term]∧*)) =>
+          let xsA := xs.getElems
+          if xsA.all (fun e => Expectation.Macro.isAliasable aliases e) then
+            let x ← xsA.mapM (Expectation.Macro.applyAlias aliases)
+            let x0 ← xsA.mapM Expectation.Macro.getElemAsApp
+            `(ℙ[$π]($[$x:term = $x0:term]∧* | $[$y:term = $y0:term]∧*))
+          else
+            mapChildren s
+      | `(ℙ[$π]($xs:term,*)) =>
+          let xsA := xs.getElems
+          if xsA.all (fun e => Expectation.Macro.isAliasable aliases e) then
+            let x ← xsA.mapM (Expectation.Macro.applyAlias aliases)
+            let x0 ← xsA.mapM Expectation.Macro.getElemAsApp
+            `(ℙ[$π]($[$x:term = $x0:term]∧*))
+          else
+            mapChildren s
+      | _ => mapChildren s
   go stx
 where
   mapChildren (s : Syntax) : MacroM Syntax := do
@@ -871,7 +919,8 @@ private def Expectation.Macro.wrapAliases (aliases : List (Name × Ident)) (core
 
 open Lean.Elab.Term in
 /-- Elaborate one `𝔼` form. `build` receives the unpacked body.
-RA `ℙ` forms headed by in-scope binders are desugared to scalar observations first. -/
+Threads outer aliases through `desugarProbRA` so nested aliasable `ℙ` / `𝔼` RA sugar
+(anywhere under the body, including under `𝕍𝕒𝕣`/`ℂ𝕠𝕧`/`ℙ`) becomes observation form. -/
 private def Expectation.Macro.elabExpect (xs : Array Syntax) (body : Syntax)
     (build : Term → MacroM Term) : TermElabM Lean.Expr := do
   let aliases ← Expectation.Macro.mkOuterAliases xs
@@ -917,35 +966,44 @@ elab_rules : term
       let π ← Lean.Elab.liftMacroM <| Expectation.Macro.measure π
       let xs := xs.getElems
       let ys := ys.getElems
-      let maskX ← Expectation.Macro.rebindMask xs body
-      let maskY ← Expectation.Macro.rebindMask ys body
+      -- Same alias threading as `elabExpect` (partial forms previously skipped `desugarProbRA`).
+      let aliases ← Expectation.Macro.mkOuterAliases (xs ++ ys)
+      let body' ← Lean.Elab.liftMacroM <| Expectation.Macro.desugarProbRA aliases body
+      let maskX ← Expectation.Macro.rebindMask xs body'
+      let maskY ← Expectation.Macro.rebindMask ys body'
       let integ ← Lean.Elab.liftMacroM <| Expectation.Macro.mkRestJoint xs
       let free ← Lean.Elab.liftMacroM <| Expectation.Macro.mkRestJoint ys
       let nestX := mkIdent `«integ»
       let nestY := mkIdent `«rest»
-      let bodyY ← Lean.Elab.liftMacroM <| Expectation.Macro.unpackRest ys nestY body maskY
+      let bodyY ← Lean.Elab.liftMacroM <| Expectation.Macro.unpackRest ys nestY ⟨body'⟩ maskY
       let bodyXY ← Lean.Elab.liftMacroM <| Expectation.Macro.unpackRest xs nestX bodyY maskX
       let lam ← if maskX.any id then
           if maskY.any id then `(fun $nestX $nestY ↦ $bodyXY) else `(fun $nestX _ ↦ $bodyXY)
         else
           if maskY.any id then `(fun _ $nestY ↦ $bodyXY) else `(fun _ _ ↦ $bodyXY)
-      Lean.Elab.Term.elabTerm (← `(Expectation.partialRV_cond $π $integ $free $r $lam $r0)) none
+      let core ← `(Expectation.partialRV_cond $π $integ $free $r $lam $r0)
+      let wrapped ← Lean.Elab.liftMacroM <| Expectation.Macro.wrapAliases aliases core
+      Lean.Elab.Term.elabTerm wrapped none
   | `(𝔼[$xs:ident,* : $π:expectMeasure | $ys,*]($body)) => do
       let π ← Lean.Elab.liftMacroM <| Expectation.Macro.measure π
       let xs := xs.getElems
       let ys := ys.getElems
-      let maskX ← Expectation.Macro.rebindMask xs body
-      let maskY ← Expectation.Macro.rebindMask ys body
+      let aliases ← Expectation.Macro.mkOuterAliases (xs ++ ys)
+      let body' ← Lean.Elab.liftMacroM <| Expectation.Macro.desugarProbRA aliases body
+      let maskX ← Expectation.Macro.rebindMask xs body'
+      let maskY ← Expectation.Macro.rebindMask ys body'
       let integ ← Lean.Elab.liftMacroM <| Expectation.Macro.mkRestJoint xs
       let free ← Lean.Elab.liftMacroM <| Expectation.Macro.mkRestJoint ys
       let nestX := mkIdent `«integ»
       let nestY := mkIdent `«rest»
-      let bodyY ← Lean.Elab.liftMacroM <| Expectation.Macro.unpackRest ys nestY body maskY
+      let bodyY ← Lean.Elab.liftMacroM <| Expectation.Macro.unpackRest ys nestY ⟨body'⟩ maskY
       let bodyXY ← Lean.Elab.liftMacroM <| Expectation.Macro.unpackRest xs nestX bodyY maskX
       let lam ← if maskX.any id then
           if maskY.any id then `(fun $nestX $nestY ↦ $bodyXY) else `(fun $nestX _ ↦ $bodyXY)
         else
           if maskY.any id then `(fun _ $nestY ↦ $bodyXY) else `(fun _ _ ↦ $bodyXY)
-      Lean.Elab.Term.elabTerm (← `(Expectation.partialRV $π $integ $free $lam)) none
+      let core ← `(Expectation.partialRV $π $integ $free $lam)
+      let wrapped ← Lean.Elab.liftMacroM <| Expectation.Macro.wrapAliases aliases core
+      Lean.Elab.Term.elabTerm wrapped none
 
 

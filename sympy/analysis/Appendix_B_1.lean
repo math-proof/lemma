@@ -45,7 +45,7 @@ theorem Digit.inj (d d':Digit) : d = d' ↔ (d:ℕ) = d' := by grind
 theorem Digit.mk_eq_iff (d:Digit) {n:ℕ} (h: n < 10) : d = mk h ↔ (d:ℕ) = n := by
   convert Digit.inj d (mk h)
 theorem Digit.eq (n: Digit) : n = 0 ∨ n = 1 ∨ n = 2 ∨ n = 3 ∨ n = 4 ∨ n = 5 ∨ n = 6 ∨ n = 7 ∨ n = 8 ∨ n = 9 := by
-  fin_cases n <;> simp +decide
+  fin_cases n <;> simp +decide <;> tauto
 
 /-- Definition B.1.2 -/
 structure PosintDecimal where
@@ -90,7 +90,7 @@ theorem PosintDecimal.ten_eq_ten : (mk' 1 [0] (by decide):ℕ) = 10 := by
   decide
 
 theorem PosintDecimal.digit_eq {d:Digit} (h: d ≠ 0) : (mk' d [] h:ℕ) = d := by
-  simp [toNat, mk']
+  simp [toNat, mk', Finset.card_univ, Fintype.card_fin]
 
 theorem PosintDecimal.pos (p:PosintDecimal) : 0 < (p:ℕ) := by
   simp [toNat]

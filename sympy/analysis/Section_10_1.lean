@@ -121,8 +121,8 @@ theorem _root_.HasDerivWithinAt.of_comp {X Y: Set ℝ} {x₀ y₀ f'x₀ g'y₀:
   sorry
 
 /-- Exercise 10.1.5 -/
-theorem _root_.HasDerivWithinAt.of_pow (n:ℕ) (x₀:ℝ) : HasDerivWithinAt (fun x ↦ x^n)
-(n * x₀^((n:ℤ)-1)) .univ x₀ := by
+theorem _root_.HasDerivWithinAt.of_pow (n:ℕ) (x₀:ℝ) :
+    HasDerivWithinAt (fun x ↦ x^n) (n * x₀^((n:ℤ)-1)) .univ x₀ := by
   sorry
 
 /-- Exercise 10.1.6 -/

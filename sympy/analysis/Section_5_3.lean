@@ -169,9 +169,16 @@ noncomputable instance Real.add_inst : Add Real where
 /-- Definition 5.3.4 (Addition of reals) -/
 theorem Real.LIM_add {a b:ℕ → ℚ} (ha: (a:Sequence).IsCauchy) (hb: (b:Sequence).IsCauchy) :
   LIM a + LIM b = LIM (a + b) := by
-  simp_rw [LIM_def ha, LIM_def hb, LIM_def (Sequence.IsCauchy.add ha hb)]
-  convert Quotient.liftOn₂_mk _ _ _ _ using 1
-  simp [LIM]; grind
+  change Real.add_inst.add (LIM a) (LIM b) = LIM (a + b)
+  unfold Real.add_inst
+  dsimp only
+  rw [LIM_def ha, LIM_def hb, Quotient.liftOn₂_mk]
+  have hfun :
+      ((fun n : ℕ ↦ (CauchySequence.mk' ha).seq (n : ℤ)) +
+        fun n : ℕ ↦ (CauchySequence.mk' hb).seq (n : ℤ)) = a + b := by
+    ext n
+    simp [Sequence.eval_coe_at_int, Int.toNat_natCast]
+  rw [hfun]
 
 /-- Proposition 5.3.10 (Product of Cauchy sequences is Cauchy) -/
 theorem Sequence.IsCauchy.mul {a b:ℕ → ℚ}  (ha: (a:Sequence).IsCauchy) (hb: (b:Sequence).IsCauchy) :
@@ -209,9 +216,16 @@ noncomputable instance Real.mul_inst : Mul Real where
 
 theorem Real.LIM_mul {a b:ℕ → ℚ} (ha: (a:Sequence).IsCauchy) (hb: (b:Sequence).IsCauchy) :
   LIM a * LIM b = LIM (a * b) := by
-  simp_rw [LIM_def ha, LIM_def hb, LIM_def (Sequence.IsCauchy.mul ha hb)]
-  convert Quotient.liftOn₂_mk _ _ _ _ using 1
-  simp [LIM]; grind
+  change Real.mul_inst.mul (LIM a) (LIM b) = LIM (a * b)
+  unfold Real.mul_inst
+  dsimp only
+  rw [LIM_def ha, LIM_def hb, Quotient.liftOn₂_mk]
+  have hfun :
+      ((fun n : ℕ ↦ (CauchySequence.mk' ha).seq (n : ℤ)) *
+        fun n : ℕ ↦ (CauchySequence.mk' hb).seq (n : ℤ)) = a * b := by
+    ext n
+    simp [Sequence.eval_coe_at_int, Int.toNat_natCast]
+  rw [hfun]
 
 instance Real.instRatCast : RatCast Real where
   ratCast := fun q ↦

@@ -51,8 +51,8 @@ private lemma IsGHarmonic_witnesses_eq
   (h : IsGHarmonic G a) :
 -- imply
   ∃ (U : Fin n → Subgroup G) (g : Fin n → G),
-      (∀ i, (U i).index = a i) ∧
-        Set.PairwiseDisjoint Set.univ (fun i => g i • (↑(U i) : Set G)) := by
+    (∀ i, (U i).index = a i) ∧
+    Set.PairwiseDisjoint Set.univ (fun i => g i • (↑(U i) : Set G)) := by
 -- proof
   apply IsGHarmonic.witnesses h
 
@@ -66,10 +66,10 @@ private lemma isGHarmonic_iff_eq
   {a : Fin n → ℕ} :
 -- imply
   IsGHarmonic G a ↔
-      (∀ i, 0 < a i) ∧
-        ∃ (U : Fin n → Subgroup G) (g : Fin n → G),
-          (∀ i, (U i).index = a i) ∧
-            Set.PairwiseDisjoint Set.univ (fun i => g i • (↑(U i) : Set G)) := by
+    (∀ i, 0 < a i) ∧
+    ∃ (U : Fin n → Subgroup G) (g : Fin n → G),
+    (∀ i, (U i).index = a i) ∧
+    Set.PairwiseDisjoint Set.univ (fun i => g i • (↑(U i) : Set G)) := by
 -- proof
   apply isGHarmonic_iff a
 

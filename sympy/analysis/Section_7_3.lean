@@ -131,7 +131,9 @@ theorem Series.cauchy_criterion {s:Series} (hm: s.m = 1) (hs:s.nonneg) (hmono: �
     . simp [T, Series.partial, htm, hN]; convert hM 0; simp [S, Series.partial, hm]
     rw [Int.eq_natCast_toNat.mpr hN]; apply (Lemma_7_3_6 N.toNat).2.trans; grind
   intro ⟨ M, hM ⟩; use M; intro K'; obtain hK' | hK' := lt_or_ge K' 1
-  . simp [S, Series.partial, hm, hK']; convert hM (-1)
+  . simp [S, Series.partial, hm, hK']
+    convert hM (-1)
+    exact (partial_of_lt (s := t) (N := -1) (by rw [htm]; omega)).symm
   set K := (K'-1).toNat; have hK : K' = K + 1 := by rw [Int.toNat_of_nonneg (by linarith)]; abel
   calc
     _ ≤ S (2 ^ (K+1) - 1) := by
@@ -176,21 +178,47 @@ theorem Series.zeta_eq {q:ℝ} (hq: q > 1) : (mk' (m := 1) fun n ↦ 1 / (n:ℝ)
     convert (summable_one_div_nat_add_rpow 1 q).mpr hq using 4 with n
     rw [abs_of_nonneg]; positivity
   have tail (a: ℤ → ℝ) (L:ℝ) : Filter.atTop.Tendsto a (nhds L) ↔ Filter.atTop.Tendsto (fun n:ℕ ↦ a n) (nhds L) := by
-    convert Filter.tendsto_map'_iff (g:= fun n:ℕ ↦ (n:ℤ) )
-    simp
+    simp_rw [Metric.tendsto_atTop]
+    constructor
+    · intro h ε hε
+      obtain ⟨N, hN⟩ := h ε hε
+      refine ⟨N.toNat, ?_⟩
+      intro n hn
+      have hNn : N ≤ n := le_trans (Int.self_le_toNat N) (by exact_mod_cast hn)
+      simpa using hN n hNn
+    · intro h ε hε
+      obtain ⟨N, hN⟩ := h ε hε
+      refine ⟨N, ?_⟩
+      intro n hn
+      have hn0 : 0 ≤ n := le_trans (Nat.cast_nonneg N) hn
+      have : N ≤ n.toNat := (Int.le_toNat hn0).mpr hn
+      simpa [Int.toNat_of_nonneg hn0] using hN _ this
   unfold convergesTo
   rw [tail _ L]
   convert Summable.tendsto_sum_tsum_nat this with n
   simp [Series.partial]
   set e : ℕ ↪ ℤ := {
     toFun n := n+1
-    inj' _ _ _ := by grind
+    inj' := by
+      intro a b h
+      apply_fun (fun z : ℤ => z - 1) at h
+      simpa using h
   }
   convert Finset.sum_map _ e _ using 2 with n _ m hm
-  . ext x; simp [e]; constructor
-    . intro ⟨ _, _ ⟩; use (x-1).toNat; omega
-    grind
-  simp [e]
+  . ext x; simp only [Finset.mem_Icc, Finset.mem_map, Finset.mem_range, e]
+    constructor
+    . intro ⟨h1, h2⟩
+      refine ⟨(x - 1).toNat, ?_, ?_⟩
+      . omega
+      . change ((x - 1).toNat : ℤ) + 1 = x
+        rw [Int.toNat_of_nonneg (by omega)]
+        ring
+    · rintro ⟨k, hk, rfl⟩
+      change 1 ≤ (k : ℤ) + 1 ∧ (k : ℤ) + 1 ≤ n
+      omega
+  have hem : e m = (m : ℤ) + 1 := rfl
+  rw [hem]
+  simp [show (1 : ℤ) ≤ (m : ℤ) + 1 by omega]
 
 theorem Series.Basel_problem :  (mk' (m := 1) fun n ↦ 1 / (n:ℝ) ^ 2 : Series).sum = Real.pi ^ 2 / 6 := by
   have := zeta_eq (show 2 > 1 by norm_num)

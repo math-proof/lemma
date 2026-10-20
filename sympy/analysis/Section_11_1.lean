@@ -41,7 +41,8 @@ instance BoundedInterval.instEmpty : EmptyCollection BoundedInterval where
 
 @[simp]
 theorem BoundedInterval.coe_empty : ((∅ : BoundedInterval):Set ℝ) = ∅ := by
-  simp [toSet]
+  change Set.Ioo (0 : ℝ) 0 = ∅
+  exact Set.Ioo_eq_empty (lt_irrefl _)
 
 open Classical in
 /-- This is to make {name}`Finset`s of {name}`BoundedInterval`s work properly -/
@@ -205,8 +206,8 @@ noncomputable abbrev Partition.join {I J K:BoundedInterval} (P: Partition I) (Q:
     all_goals grind
   contains L hL := by
     simp at hL; obtain hLP | hLQ := hL
-    . apply (P.contains _ hLP).trans; simp [h, subset_iff]
-    apply (Q.contains _ hLQ).trans; simp [h, subset_iff]
+    . apply Set.Subset.trans ((subset_iff L I).mp (P.contains _ hLP)); simp [h]
+    apply Set.Subset.trans ((subset_iff L J).mp (Q.contains _ hLQ)); simp [h]
 }
 
 @[simp]
@@ -279,8 +280,7 @@ theorem Partition.sum_of_length  (I: BoundedInterval) (P: Partition I) :
         | Ioc a b => use (Icc b b), hK, Ioo a b; apply join_Ioo_Icc <;> order
         | Ico _ _ => simp at hI'
       simp [length_of_subsingleton, -Set.subsingleton_coe] at hsub
-      have hKI' := (K.Ioo_subset.trans hKI).trans I.subset_Icc
-      simp only [subset_iff] at hKI'
+      have hKI' := Set.Subset.trans (Set.Subset.trans K.Ioo_subset hKI) I.subset_Icc
       have hKb : K.b = I.b := by
         rw [le_antisymm_iff]; split_ands
         . apply csSup_le_csSup bddAbove_Icc (by simp [hsub]) at hKI'

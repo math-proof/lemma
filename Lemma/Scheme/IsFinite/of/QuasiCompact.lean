@@ -1,17 +1,18 @@
 import Mathlib
 import sympy.Basic
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-
-
-universe u
-
 set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
 
+
+universe u
+
 private lemma locallyQuasiFinite_of_formallyUnramified
-  {X Y : Scheme.{u}} (f : X ⟶ Y)
-  [FormallyUnramified f] [LocallyOfFiniteType f] : LocallyQuasiFinite f := by
+  {X Y : Scheme} (f : X ⟶ Y)
+  [FormallyUnramified f] [LocallyOfFiniteType f] :
+-- imply
+  LocallyQuasiFinite f := by
 -- proof
   rw [HasRingHomProperty.iff_appLE (P := @LocallyQuasiFinite)]
   intro U V e
@@ -21,13 +22,15 @@ private lemma locallyQuasiFinite_of_formallyUnramified
     HasRingHomProperty.appLE (P := @LocallyOfFiniteType) f inferInstance U V e
   algebraize [(f.appLE U V e).hom]
   rw [RingHom.QuasiFinite]
-  have : Algebra.EssFiniteType Γ(Y, U) Γ(X, V) :=
+  have : Algebra.EssFiniteType (Y.presheaf.obj (Opposite.op U)) (X.presheaf.obj (Opposite.op V)) :=
     Algebra.EssFiniteType.of_finiteType _ _
   infer_instance
 
 private lemma isFinite_of_etale
-  {k : Type u} [Field k] {X : Scheme.{u}}
-  (f : X ⟶ Spec (CommRingCat.of k)) [Etale f] [QuasiCompact f] : IsFinite f := by
+  {k : Type u} [Field k]
+  {X : Scheme} (f : X ⟶ Spec (CommRingCat.of k)) [Etale f] [QuasiCompact f] :
+-- imply
+  IsFinite f := by
 -- proof
   have hlqf : LocallyQuasiFinite f := locallyQuasiFinite_of_formallyUnramified f
   have hArt : IsLocallyArtinian (Spec (CommRingCat.of k)) :=
@@ -39,7 +42,8 @@ private lemma isFinite_of_etale
 -/
 @[path]
 private lemma main
-  {k : Type u} [Field k] {X : Scheme.{u}} {f : X ⟶ Spec (CommRingCat.of k)}
+  {k : Type u} [Field k]
+  {X : Scheme} {f : X ⟶ Spec (CommRingCat.of k)}
 -- given
   [SmoothOfRelativeDimension 0 f] [QuasiCompact f] :
 -- imply

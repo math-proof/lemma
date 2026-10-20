@@ -12,9 +12,9 @@ private lemma isCAT0FourPoint_iff_eq
   {X : Type u} [MetricSpace X] :
 -- imply
   IsCAT0FourPoint X ↔
-      ∀ x y z w : X,
-        dist x z ^ 2 + dist y w ^ 2 ≤
-          dist x y ^ 2 + dist y z ^ 2 + dist z w ^ 2 + dist w x ^ 2 := by
+    ∀ x y z w : X,
+    dist x z ^ 2 + dist y w ^ 2 ≤
+    dist x y ^ 2 + dist y z ^ 2 + dist z w ^ 2 + dist w x ^ 2 := by
 -- proof
   apply isCAT0FourPoint_iff
 

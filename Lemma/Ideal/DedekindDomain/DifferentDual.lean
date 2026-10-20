@@ -14,8 +14,8 @@ private lemma le_differentIdeal_iff_mul_dual_le_one_eq
   {I : Ideal B} :
 -- imply
   I ≤ differentIdeal A B ↔
-      (I : FractionalIdeal B⁰ L) * FractionalIdeal.dual A K
-          (1 : FractionalIdeal B⁰ L) ≤ 1 := by
+    (I : FractionalIdeal B⁰ L) * FractionalIdeal.dual A K
+    (1 : FractionalIdeal B⁰ L) ≤ 1 := by
 -- proof
   apply Ideal.le_differentIdeal_iff_mul_dual_le_one A K L B I
 

@@ -67,7 +67,8 @@ abbrev Function.mk_fn {X Y: Set} (f: X → Y) : Function X Y :=
 
 /-- Definition 3.3.1 -/
 theorem Function.eval {X Y: Set} (f: Function X Y) (x: X) (y: Y) : y = f x ↔ f.P x y := by
-  convert ((f.unique x).choose_iff y).symm
+  rw [← to_fn_eval]
+  exact ((f.unique x).choose_iff y).symm
 
 @[simp]
 theorem Function.eval_of {X Y: Set} (f: X → Y) (x:X) : (Function.mk_fn f) x = f x := by
@@ -80,7 +81,8 @@ theorem SetTheory.Set.P_3_3_3a_existsUnique (x: Nat) : ∃! y: Nat, P_3_3_3a x y
   apply ExistsUnique.intro ((x+1:ℕ):Nat)
   . simp [P_3_3_3a]
   intro y h
-  simpa [P_3_3_3a, Equiv.symm_apply_eq] using h
+  apply (nat_equiv_symm_inj y (((x + 1 : ℕ) : Nat))).mp
+  simpa [P_3_3_3a, nat_equiv_coe_of_coe] using h
 
 abbrev SetTheory.Set.f_3_3_3a : Function Nat Nat := Function.mk P_3_3_3a P_3_3_3a_existsUnique
 
@@ -111,7 +113,9 @@ theorem SetTheory.Set.P_3_3_3c_existsUnique (x: (Nat \ {(0:Object)}: Set)) :
     ∃! y: Nat, P_3_3_3c x y := by
   -- Some technical unpacking here due to the subtle distinctions between the `Object` type,
   -- sets converted to subtypes of `Object`, and subsets of those sets.
-  obtain ⟨ x, hx ⟩ := x; simp at hx; obtain ⟨ hx1, hx2 ⟩ := hx
+  obtain ⟨ x, hx ⟩ := x
+  rw [SetTheory.Set.mem_sdiff] at hx
+  obtain ⟨ hx1, hx2 ⟩ := hx
   set n := ((⟨ x, hx1 ⟩:Nat):ℕ)
   have : x = (n:Nat) := by simp [n]
   simp [P_3_3_3c, this, Object.ofnat_eq'] at hx2 ⊢
@@ -298,7 +302,7 @@ abbrev Function.inverse {X Y: Set} (f: Function X Y) (h: f.bijective) :
     intros
     apply existsUnique_of_exists_of_unique
     . aesop
-    intro _ _ hx hx'; simp at hx hx'
+    intro _ _ hx hx'
     rw [←hx'] at hx
     apply f.one_to_one_iff.mp h.1
     simp [hx]
@@ -429,7 +433,9 @@ theorem Function.glue {X Y Z:Set} (hXY: Disjoint X Y) (f: Function X Z) (g: Func
 
 open Classical in
 theorem Function.glue' {X Y Z:Set} (f: Function X Z) (g: Function Y Z)
-    (hfg : ∀ x : ((X ∩ Y): Set), f ⟨x.val, by aesop⟩ = g ⟨x.val, by aesop⟩)  :
+    (hfg : ∀ x : ((X ∩ Y): Set),
+      f ⟨x.val, ((SetTheory.Set.mem_inter x.val X Y).mp x.property).1⟩ =
+      g ⟨x.val, ((SetTheory.Set.mem_inter x.val X Y).mp x.property).2⟩)  :
     ∃! h: Function (X ∪ Y) Z, (h ○ Function.inclusion (SetTheory.Set.subset_union_left X Y) = f)
     ∧ (h ○ Function.inclusion (SetTheory.Set.subset_union_right X Y) = g) := by sorry
 

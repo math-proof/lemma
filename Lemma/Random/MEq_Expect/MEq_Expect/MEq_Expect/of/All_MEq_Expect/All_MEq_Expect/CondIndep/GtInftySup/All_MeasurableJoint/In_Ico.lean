@@ -1,4 +1,4 @@
-import Lemma.Random.MEq_Expect_Cond.MEq_Expect_Cond.MEq_Expect_Cond.of.MEqExpectS.All_MEq_Expect_CondDot.All_MEq_Expect_CondDot.GtInftySup.In_Ico
+import Lemma.Random.MEq_ExpectCond.MEq_ExpectCond.MEq_ExpectCond.of.MEqExpectS.All_MEq_ExpectCondDot.All_MEq_ExpectCondDot.GtInftySup.In_Ico
 import Lemma.Random.MEqExpectS.of.CondIndep.Integrable.MeasurableJoint.Measurable
 open MeasureTheory ProbabilityTheory
 
@@ -8,7 +8,7 @@ Bellman equations on general state / action spaces with the Markov property stat
 independence: given `s[t+1]`, the future reward path `r[t+1:]` is independent of `(s[t], a[t])`
 (`h₃ : r[t + 1:] ⟂ᵢ[π] (s t, a t) | s (t + 1)`, Mathlib's `CondIndepFun`, which needs `StandardBorelSpace Ω`).
 Corollary of
-`Random.MEq_Expect_Cond.MEq_Expect_Cond.MEq_Expect_Cond.of.MEqExpectS.All_MEq_Expect_CondDot.All_MEq_Expect_CondDot.GtInftySup.In_Ico`,
+`Random.MEq_ExpectCond.MEq_ExpectCond.MEq_ExpectCond.of.MEqExpectS.All_MEq_ExpectCondDot.All_MEq_ExpectCondDot.GtInftySup.In_Ico`,
 whose `h₅` (`𝔼[… | s t, a t, s (t + 1)] =ᵐ 𝔼[… | s (t + 1)]`) follows from conditional independence by
 `Random.MEqExpectS.of.CondIndep.Integrable.MeasurableJoint.Measurable`.
 -/
@@ -35,14 +35,13 @@ private lemma main
     V t (s t) =ᵐ[π] 𝔼[r, s: π](r t + γ * V (t + 1) (s (t + 1)) | s t) ∧
     Q t (s t) (a t) =ᵐ[π] 𝔼[r, s: π](r t + γ * V (t + 1) (s (t + 1)) | s t, a t) := by
 -- proof
-  apply Random.MEq_Expect_Cond.MEq_Expect_Cond.MEq_Expect_Cond.of.MEqExpectS.All_MEq_Expect_CondDot.All_MEq_Expect_CondDot.GtInftySup.In_Ico
+  apply Random.MEq_ExpectCond.MEq_ExpectCond.MEq_ExpectCond.of.MEqExpectS.All_MEq_ExpectCondDot.All_MEq_ExpectCondDot.GtInftySup.In_Ico
     h₀ h₁ h₂ h₄ h₅
   have hrm : ∀ n, Measurable (r n) := fun n ↦ (Random.Measurable.Measurable.of.MeasurableJoint (h₁ n)).1
   have hsm : ∀ n, Measurable (s n) := fun n ↦
     (Random.Measurable.Measurable.of.MeasurableJoint (Random.Measurable.Measurable.of.MeasurableJoint (h₁ n)).2).1
   have ham : ∀ n, Measurable (a n) := fun n ↦
     (Random.Measurable.Measurable.of.MeasurableJoint (Random.Measurable.Measurable.of.MeasurableJoint (h₁ n)).2).2
-  -- the reward path `r[t + 1:]` and the discounted return functional `γ ** Stack[k](k) @ ·`
   have hF : Measurable (Expectation.asRV r[t + 1:]) := Measurable.of_eval fun k ↦ hrm (t + 1 + k)
   have hg : Measurable fun p : ℕ → ℝ ↦ (γ ^ (id : ℕ → ℕ)) @ p :=
     Measurable.tsum fun k ↦ (measurable_pi_apply k).const_mul _

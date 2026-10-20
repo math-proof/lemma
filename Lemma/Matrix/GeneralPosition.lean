@@ -48,7 +48,6 @@ private lemma IsGeneralPosition_mono_eq
 private lemma Independent_isGeneralPosition_eq
   {k : Type u} [DivisionRing k]
   {V : Type v} [AddCommGroup V] [Module k V]
-  {P : Type w}
   {p : ι → ℙ k V}
   {d : ℕ}
 -- given

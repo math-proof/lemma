@@ -58,8 +58,8 @@ theorem SetTheory.Set.axiom_of_regularity {A:Set} (h: A ≠ ∅) :
   use ⟨x, h⟩
   intro S hS; specialize h' S hS
   rw [disjoint_iff, eq_empty_iff_forall_notMem]
-  contrapose! h'; simp at h'
-  aesop
+  intro z hz
+  exact h' ⟨z, ((Set.mem_inter z S A).mp hz).2, ((Set.mem_inter z S A).mp hz).1⟩
 
 /--
   Exercise 3.2.1.  The spirit of the exercise is to establish these results without using either

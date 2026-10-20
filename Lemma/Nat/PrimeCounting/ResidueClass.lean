@@ -23,8 +23,8 @@ private lemma primeCountingMod_eq_card_filter_range_eq
   {n q a : ℕ} :
 -- imply
   primeCountingMod n q a
-      = ((Finset.range (n + 1)).filter
-        fun p => Nat.Prime p ∧ Nat.ModEq q p a).card := by
+    = ((Finset.range (n + 1)).filter
+    fun p => Nat.Prime p ∧ Nat.ModEq q p a).card := by
 -- proof
   apply Nat.primeCountingMod_eq_card_filter_range n q a
 

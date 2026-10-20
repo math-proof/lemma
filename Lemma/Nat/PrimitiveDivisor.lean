@@ -52,8 +52,7 @@ private lemma IsPrimitiveDivisor_dvd_eq
 @[path]
 private lemma IsPrimitiveDivisor_not_dvd_of_lt_eq
   {a : ℕ → ℤ}
-  {m u : ℕ}
-  {s : ℕ}
+  {m u s : ℕ}
 -- given
   (h : IsPrimitiveDivisor a m u)
   (hs : 1 ≤ s)
@@ -139,8 +138,7 @@ private lemma IsPrimitivePrimeDivisor_dvd_eq
 @[path]
 private lemma IsPrimitivePrimeDivisor_not_dvd_of_lt_eq
   {a : ℕ → ℤ}
-  {m u : ℕ}
-  {s : ℕ}
+  {m u s : ℕ}
 -- given
   (h : IsPrimitivePrimeDivisor a m u)
   (hs : 1 ≤ s)
@@ -159,8 +157,8 @@ private lemma isPrimitivePrimeDivisor_iff_eq
   {m u : ℕ} :
 -- imply
   IsPrimitivePrimeDivisor a m u ↔
-      Nat.Prime u ∧ 1 ≤ m ∧ 2 ≤ u ∧ (u : ℤ) ∣ a m ∧
-        ∀ s : ℕ, 1 ≤ s → s < m → ¬ (u : ℤ) ∣ a s := by
+    Nat.Prime u ∧ 1 ≤ m ∧ 2 ≤ u ∧ (u : ℤ) ∣ a m ∧
+    ∀ s : ℕ, 1 ≤ s → s < m → ¬ (u : ℤ) ∣ a s := by
 -- proof
   apply IntegerSequence.isPrimitivePrimeDivisor_iff
 

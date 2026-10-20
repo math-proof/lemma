@@ -1,4 +1,4 @@
-import Lemma.Random.MEq_Expect_Cond.MEq_Expect_Cond.MEq_Expect_Cond.of.MEqExpectS.All_MEq_Expect_CondDot.All_MEq_Expect_CondDot.GtInftySup.In_Ico
+import Lemma.Random.MEq_ExpectCond.MEq_ExpectCond.MEq_ExpectCond.of.MEqExpectS.All_MEq_ExpectCondDot.All_MEq_ExpectCondDot.GtInftySup.In_Ico
 import Lemma.Random.MEqCondExp_Integral.of.Integrable.Measurable
 import Lemma.Random.Eq.of.Ne_0.MEq
 import sympy.stats.cond_expectation
@@ -10,7 +10,7 @@ Bellman equations with a finite state space and a general (e.g. continuous) acti
 `V` is the event-conditioned expected return `𝔼[… | s t = x]` (atoms of `s t`, as in
 `Random.Eq_Expect.Eq_Expect.Eq_Expect.of.All_Eq_Expect.All_Eq_Expect.In_Ico`);
 `Q` is the σ-algebra conditional expected return `𝔼[… | s t, a t]` (`=ᵐ[π]`, as in
-`Random.MEq_Expect_Cond.MEq_Expect_Cond.MEq_Expect_Cond.of.MEqExpectS.All_MEq_Expect_CondDot.All_MEq_Expect_CondDot.GtInftySup.In_Ico`).
+`Random.MEq_ExpectCond.MEq_ExpectCond.MEq_ExpectCond.of.MEqExpectS.All_MEq_ExpectCondDot.All_MEq_ExpectCondDot.GtInftySup.In_Ico`).
 The `V`-identities are read off on atoms of `s t` (`Random.MEqCondExp_Integral.of.Integrable.Measurable`,
 `Random.Eq.of.Ne_0.MEq`); the `Q`-identity stays almost sure. Both sides of an event identity are `0` on
 atoms of probability `0`.
@@ -74,7 +74,7 @@ private lemma main
     Filter.EventuallyEq.trans (Filter.Eventually.of_forall fun ω ↦ hV t (s t ω))
       (Random.MEqCondExp_Integral.of.Integrable.Measurable (hsm t) (hGi t)).symm
   obtain ⟨h₈, h₉, h₁₀⟩ :=
-    Random.MEq_Expect_Cond.MEq_Expect_Cond.MEq_Expect_Cond.of.MEqExpectS.All_MEq_Expect_CondDot.All_MEq_Expect_CondDot.GtInftySup.In_Ico
+    Random.MEq_ExpectCond.MEq_ExpectCond.MEq_ExpectCond.of.MEqExpectS.All_MEq_ExpectCondDot.All_MEq_ExpectCondDot.GtInftySup.In_Ico
       h₀ h₁ h₂ h₄ h₅ae h₆
   have hQi : Integrable (fun ω ↦ Q t (s t ω) (a t ω)) π := integrable_condExp.congr (h₄ t).symm
   have hri : Integrable (r t) π :=

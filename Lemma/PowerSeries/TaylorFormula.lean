@@ -13,11 +13,11 @@ private lemma taylorFormula_eq
   {f : PowerSeries R} :
 -- imply
   (fun d : Fin 2 →₀ ℕ =>
-      ((d 1).factorial : ℚ)⁻¹ •
-        coeff (d 0) (d⁄dX^[d 1] f)) =
-      MvPowerSeries.subst
-        (fun _ : Unit =>
-          MvPowerSeries.X (0 : Fin 2) + MvPowerSeries.X (1 : Fin 2)) f := by
+    ((d 1).factorial : ℚ)⁻¹ •
+    coeff (d 0) (d⁄dX^[d 1] f)) =
+    MvPowerSeries.subst
+    (fun _ : Unit =>
+    MvPowerSeries.X (0 : Fin 2) + MvPowerSeries.X (1 : Fin 2)) f := by
 -- proof
   apply PowerSeries.taylorFormula f
 

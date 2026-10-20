@@ -10,7 +10,6 @@ open SimpleGraph
 @[path]
 private lemma SameChromaticSymmetricFunction_refl_eq
   [Finite V]
-  {H : SimpleGraph W}
   {G : SimpleGraph V} :
 -- imply
   SameChromaticSymmetricFunction G G := by

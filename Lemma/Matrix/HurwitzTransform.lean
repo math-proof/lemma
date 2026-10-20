@@ -75,11 +75,11 @@ private lemma hurwitz_pred_half_le_of_odd_eq
   {i j : ℕ}
 -- given
   (h : ¬2 * j + 2 ≤ i)
-  (_ho : i % 2 ≠ 0) :
+  (ho : i % 2 ≠ 0) :
 -- imply
   (i - 1) / 2 ≤ j := by
 -- proof
-  apply MetaMathlibExt.hurwitz_pred_half_le_of_odd h _ho
+  apply MetaMathlibExt.hurwitz_pred_half_le_of_odd h ho
 
 /--
 [hurwitzTransform_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/HurwitzTransform.lean)

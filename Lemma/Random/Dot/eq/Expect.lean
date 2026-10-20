@@ -1,4 +1,4 @@
-import Lemma.Random.Expect_CondDot.eq.Dot_Expect_Cond
+import Lemma.Random.ExpectCondDot.eq.Dot_ExpectCond
 open Random
 
 
@@ -29,7 +29,7 @@ private lemma main
   A @ 𝔼[a: π](f a | s = «s.bvar») =
     𝔼[a: π](A @ f a | s = «s.bvar») :=
 -- proof
-  (Expect_CondDot.eq.Dot_Expect_Cond (A := A)
+  (ExpectCondDot.eq.Dot_ExpectCond (A := A)
     (hf := hf) («s.bvar» := «s.bvar»)).symm
 
 

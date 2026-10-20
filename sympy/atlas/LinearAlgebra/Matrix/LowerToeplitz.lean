@@ -2,8 +2,6 @@
 
 import Mathlib.Data.Matrix.Basic
 
-@[expose]
-
 namespace Matrix
 
 /-- Lower-triangular Toeplitz matrix over `ℕ × ℕ`: given a sequence `a`,

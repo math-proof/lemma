@@ -18,8 +18,6 @@ namespace SimpleGraph
 
 variable {V : Type*} [DecidableEq V] (G : SimpleGraph V)
 
-@[expose]
-
 /-- `SimplexVertex G` is the clique subtype: finsets of vertices that are cliques of `G`. -/
 def SimplexVertex := { s : Finset V // G.IsClique (↑s : Set V) }
 

@@ -1,22 +1,21 @@
 import Mathlib
 import sympy.Basic
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-
-
-universe u
-
 set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
+
+
+universe u
 
 /--
 [AlgebraicGeometry_IsPullback_surjective_residueFieldMap_of_isIso_residueFieldMap](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_IsPullback_surjective_residueFieldMap_of_isIso_residueFieldMap.lean)
 -/
 @[path]
 private lemma main
-    {P X T S : Scheme.{u}} {fst : P ⟶ X} {snd : P ⟶ T} {f : X ⟶ S} {g : T ⟶ S}
-    (H : IsPullback fst snd f g) (t : ↥P) [IsIso (f.residueFieldMap (fst.base t))] :
-    Function.Surjective (snd.residueFieldMap t).hom := by
+  {P X T S : (Scheme : Type (u + 1))} {fst : P ⟶ X} {snd : P ⟶ T} {f : X ⟶ S} {g : T ⟶ S}
+  (H : IsPullback fst snd f g) (t : ↥P) [IsIso (f.residueFieldMap (fst.base t))] :
+  Function.Surjective (snd.residueFieldMap t).hom := by
   classical
   let e := H.isoPullback
   let t₀ : ↥(pullback f g) := e.hom.base t
@@ -24,12 +23,14 @@ private lemma main
     show (e.hom ≫ pullback.fst f g).base t = _
     rw [H.isoPullback_hom_fst]
   have hsnd : snd = e.hom ≫ pullback.snd f g := (H.isoPullback_hom_snd).symm
-  let hiso : IsIso (f.residueFieldMap ((pullback.fst f g).base t₀)) := by rw [hfst]; infer_instance
+  let hiso : IsIso (f.residueFieldMap ((pullback.fst f g).base t₀)) := by
+    rw [hfst]
+    infer_instance
   suffices key : Function.Surjective ((pullback.snd f g).residueFieldMap t₀).hom by
     rw [hsnd, Scheme.residueFieldMap_comp]
     show Function.Surjective ((e.hom.residueFieldMap t).hom.comp ((pullback.snd f g).residueFieldMap t₀).hom)
     let _ : IsIso (e.hom.residueFieldMap t) := inferInstance
-    exact ((ConcreteCategory.bijective_of_isIso (e.hom.residueFieldMap t)).2).comp key
+    apply ((ConcreteCategory.bijective_of_isIso (e.hom.residueFieldMap t)).2).comp key
   let T₀ := Scheme.Pullback.Triplet.ofPoint t₀
   let _ : IsIso (f.residueFieldMap T₀.x) := hiso
   let _ : IsIso ((S.residueFieldCongr T₀.hx).inv ≫ f.residueFieldMap T₀.x) := inferInstance
@@ -46,13 +47,12 @@ private lemma main
     have h' : Spec.map (inv T₀.tensorInr ≫ T₀.tensorInr) = Spec.map T₀.tensorInr ≫ Spec.map (inv T₀.tensorInr) :=
       Spec.map_comp _ _
     rw [← h', h]
-    exact Spec.map_id _
+    apply Spec.map_id
   have hu : Spec.map ρ ≫ u = (pullback f g).fromSpecResidueField t₀ := by
     show Spec.map ρ ≫ (Spec.map (inv T₀.tensorInr) ≫ T₀.SpecTensorTo) = _
     rw [h1, Category.assoc, ← Category.assoc (Spec.map T₀.tensorInr), h2, Category.id_comp]
-    exact Scheme.Pullback.ofPointTensor_SpecTensorTo t₀
-  obtain ⟨⟨t', ψ⟩, hψ⟩ : ∃ q : Σ x : ↥(pullback f g), (pullback f g).residueField x ⟶ CommRingCat.of (T.residueField T₀.y),
-      Spec.map q.2 ≫ (pullback f g).fromSpecResidueField q.1 = u :=
+    apply Scheme.Pullback.ofPointTensor_SpecTensorTo t₀
+  obtain ⟨⟨t', ψ⟩, hψ⟩ : ∃ q : Σ x : ↥(pullback f g), (pullback f g).residueField x ⟶ CommRingCat.of (T.residueField T₀.y), Spec.map q.2 ≫ (pullback f g).fromSpecResidueField q.1 = u :=
     ⟨Scheme.SpecToEquivOfField _ _ u, (Scheme.SpecToEquivOfField _ _).left_inv u⟩
   have heq : (Scheme.SpecToEquivOfField _ (pullback f g)).symm ⟨t', ψ ≫ ρ⟩ =
       (Scheme.SpecToEquivOfField _ (pullback f g)).symm ⟨t₀, 𝟙 _⟩ := by
@@ -61,11 +61,11 @@ private lemma main
   have hinj := (Scheme.SpecToEquivOfField _ (pullback f g)).symm.injective heq
   rw [Scheme.SpecToEquivOfField_eq_iff] at hinj
   obtain ⟨e', he'⟩ := hinj
-  dsimp only at he'
+  dsimp at he'
   have hfun : ∀ w, ρ.hom (ψ.hom w) = ((pullback f g).residueFieldCongr e').hom.hom w := fun w => by
     have hw := congrArg (fun χ => χ.hom w) he'
     simp at hw
-    exact hw
+    apply hw
   intro z
   refine ⟨ψ.hom (((pullback f g).residueFieldCongr e').inv.hom z), ?_⟩
   show ρ.hom (ψ.hom _) = z

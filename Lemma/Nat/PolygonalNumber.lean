@@ -5,17 +5,6 @@ open Nat
 
 
 /--
-[two_choose_add](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PolygonalNumber.lean)
--/
-@[path]
-private lemma two_choose_add_eq
-  {n : ℕ} :
--- imply
-  2 * (Nat.choose n 2) + n = n ^ 2 := by
--- proof
-  apply Nat.two_choose_add n
-
-/--
 [polygonalNumber_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PolygonalNumber.lean)
 -/
 @[path]

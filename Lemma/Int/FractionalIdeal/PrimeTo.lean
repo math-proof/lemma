@@ -14,7 +14,7 @@ private lemma nonZeroDivisors_le_comap_algebraMap_atPrime_eq
   {p : Ideal A} [p.IsPrime] :
 -- imply
   A⁰ ≤ Submonoid.comap (algebraMap A (Localization.AtPrime p))
-      (Localization.AtPrime p)⁰ := by
+    (Localization.AtPrime p)⁰ := by
 -- proof
   apply FractionalIdeal.nonZeroDivisors_le_comap_algebraMap_atPrime p
 
@@ -58,7 +58,7 @@ private lemma IsPrimeTo_inv_unit_eq
   (hu : (u : FractionalIdeal A⁰ (FractionRing A)).IsPrimeTo J) :
 -- imply
   ((u⁻¹ : (FractionalIdeal A⁰ (FractionRing A))ˣ) :
-      FractionalIdeal A⁰ (FractionRing A)).IsPrimeTo J := by
+    FractionalIdeal A⁰ (FractionRing A)).IsPrimeTo J := by
 -- proof
   apply FractionalIdeal.IsPrimeTo.inv_unit hu
 
@@ -72,7 +72,7 @@ private lemma mem_unitsPrimeTo_iff_eq
   {u : (FractionalIdeal A⁰ (FractionRing A))ˣ} :
 -- imply
   u ∈ unitsPrimeTo J ↔
-      (u : FractionalIdeal A⁰ (FractionRing A)).IsPrimeTo J := by
+    (u : FractionalIdeal A⁰ (FractionRing A)).IsPrimeTo J := by
 -- proof
   apply FractionalIdeal.mem_unitsPrimeTo_iff
 

@@ -6,8 +6,6 @@ import Mathlib.Tactic.Order
 
 namespace MetaMathlibExt
 
-@[expose]
-
 /-- Toeplitz matrix, JIS VOL18/Felsner `felsner2.tex`, lines 271-283, Definition
 (Toeplitz matrix): a real `(n + 1)` by `(n + 1)` matrix `A = (aᵢⱼ)` is Toeplitz
 iff there exist real coefficients `c₋ₙ, …, cₙ` such that `aᵢⱼ = cᵢ₋ⱼ` for all

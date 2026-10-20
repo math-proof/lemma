@@ -3008,7 +3008,7 @@ theorem composeTilings_decomposeTiling (n : ℕ) (T : Tiling (Rectangle n 2)) :
             
             -- Show f zero_idx = k
             have hf0 : f zero_idx = k := by
-              simp only [f, zero_idx, ts', Fin.val_zero, ↓reduceDIte]
+              simp only [f, zero_idx, ts', ↓reduceDIte]
             
             -- Show f i.succ = g i for i : Fin j.val
             have hf_succ : ∀ i : Fin j.val, f i.succ = g i := by
@@ -3019,8 +3019,8 @@ theorem composeTilings_decomposeTiling (n : ℕ) (T : Tiling (Rectangle n 2)) :
             -- Now use Fin.sum_univ_succ on f
             have h_sum : ∑ i : Fin j.succ.val, f i = f zero_idx + ∑ i : Fin j.val, f i.succ := by
               have h := Fin.sum_univ_succ f
-              rw [show (0 : Fin j.succ.val) = zero_idx from Fin.ext rfl] at h
-              exact h
+              convert h using 2
+              exact congrArg f (Fin.ext rfl).symm
             
             calc ∑ i : Fin j.succ.val, (ts' ⟨i.val, Nat.lt_trans i.isLt j.succ.isLt⟩).1
                 = ∑ i : Fin j.succ.val, f i := rfl

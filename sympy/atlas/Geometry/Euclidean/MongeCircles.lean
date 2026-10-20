@@ -1,0 +1,81 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Geometry/Euclidean/MongeCircles.lean -/
+
+import Mathlib.Analysis.InnerProductSpace.PiL2
+import Mathlib.LinearAlgebra.AffineSpace.FiniteDimensional
+import Mathlib.Order.CompletePartialOrder
+
+namespace MetaMathlibExt
+
+/-- Algebraic identity behind Monge's three-circle theorem: for points `c₁`, `c₂`, `c₃` of a real
+vector space and pairwise distinct real weights `r₁`, `r₂`, `r₃` of any sign, the three points
+`(rᵢ - rⱼ)⁻¹ • (rᵢ • cⱼ - rⱼ • cᵢ)` are collinear.
+The circle reading needs positive weights: read as the radii of circles centered at the `cᵢ`,
+they make these points the external homothety centers of the circle pairs. For two weights of
+opposite sign the point is the internal similarity center of the circles of radii `|rᵢ|` and
+`|rⱼ|`; e.g. `r₁ = -1`, `r₂ = 2` gives `(3 : ℝ)⁻¹ • (c₂ + 2 • c₁)`. `monge_three_circles` is the
+statement for circles with positive radii in the plane. -/
+theorem monge_three_circles_general {V : Type*} [AddCommGroup V] [Module ℝ V] {c₁ c₂ c₃ : V}
+    {r₁ r₂ r₃ : ℝ} (h12 : r₁ ≠ r₂) (h23 : r₂ ≠ r₃) (h13 : r₁ ≠ r₃) :
+    Collinear ℝ ({(r₁ - r₂)⁻¹ • (r₁ • c₂ - r₂ • c₁),
+      (r₂ - r₃)⁻¹ • (r₂ • c₃ - r₃ • c₂),
+      (r₁ - r₃)⁻¹ • (r₁ • c₃ - r₃ • c₁)} : Set V) := by
+  have d12 : r₁ - r₂ ≠ 0 := sub_ne_zero.mpr h12
+  have d23 : r₂ - r₃ ≠ 0 := sub_ne_zero.mpr h23
+  have d13 : r₁ - r₃ ≠ 0 := sub_ne_zero.mpr h13
+  rcases eq_or_ne r₂ 0 with hr₂' | hr₂'
+  · have e : (r₁ - r₂)⁻¹ • (r₁ • c₂ - r₂ • c₁) = (r₂ - r₃)⁻¹ • (r₂ • c₃ - r₃ • c₂) := by
+      subst hr₂'
+      match_scalars <;> field_simp <;> ring
+    rw [e, Set.insert_eq_of_mem (Set.mem_insert _ _)]
+    exact collinear_pair ℝ _ _
+  · have hmem : (r₁ - r₃)⁻¹ • (r₁ • c₃ - r₃ • c₁) ∈
+        affineSpan ℝ ({(r₁ - r₂)⁻¹ • (r₁ • c₂ - r₂ • c₁),
+          (r₂ - r₃)⁻¹ • (r₂ • c₃ - r₃ • c₂)} : Set V) := by
+      rw [mem_affineSpan_pair_iff_exists_lineMap_eq]
+      refine ⟨r₁ * (r₂ - r₃) / (r₂ * (r₁ - r₃)), ?_⟩
+      rw [AffineMap.lineMap_apply]
+      simp only [vadd_eq_add, vsub_eq_sub]
+      match_scalars <;> field_simp <;> ring
+    have hcol : Collinear ℝ ({(r₁ - r₃)⁻¹ • (r₁ • c₃ - r₃ • c₁),
+        (r₁ - r₂)⁻¹ • (r₁ • c₂ - r₂ • c₁),
+        (r₂ - r₃)⁻¹ • (r₂ • c₃ - r₃ • c₂)} : Set V) :=
+      collinear_insert_of_mem_affineSpan_pair hmem
+    have hset : ({(r₁ - r₃)⁻¹ • (r₁ • c₃ - r₃ • c₁),
+        (r₁ - r₂)⁻¹ • (r₁ • c₂ - r₂ • c₁),
+        (r₂ - r₃)⁻¹ • (r₂ • c₃ - r₃ • c₂)} : Set V) =
+        {(r₁ - r₂)⁻¹ • (r₁ • c₂ - r₂ • c₁),
+        (r₂ - r₃)⁻¹ • (r₂ • c₃ - r₃ • c₂),
+        (r₁ - r₃)⁻¹ • (r₁ • c₃ - r₃ • c₁)} := by
+      ext x
+      simp only [Set.mem_insert_iff, Set.mem_singleton_iff]
+      tauto
+    rwa [hset] at hcol
+
+set_option linter.unusedVariables false in
+/-- Monge's theorem (three circles): three circles in the plane with positive, pairwise
+distinct radii and pairwise disjoint closed disks have collinear external homothety centers.
+Circles are center-radius pairs, and each external homothety center is the explicit
+externally-dividing ratio point on its center-line, well-defined by the distinct-radii
+hypotheses.
+Source: https://en.wikipedia.org/wiki/Monge%27s_theorem (statement monge-s1).
+The source's hypothesis is that no circle lies inside another; the pairwise disjointness of the
+closed disks (`hd12`, `hd23`, `hd13`) is stronger.
+Omitted source case: the source also treats two circles of equal radius, whose external
+tangents are parallel and meet at a point at infinity. The distinct-radii hypotheses `h12`,
+`h23`, `h13` exclude it, and the affine formula for the centers cannot express it.
+It follows from `monge_three_circles_general`; the positivity hypotheses `hr₁`, `hr₂`, `hr₃`
+and the disjointness hypotheses are unused and keep the `Wanted` statement's shape.
+Proves `Wanted` entry `monge_three_circles`.
+-/
+theorem monge_three_circles {c₁ c₂ c₃ : EuclideanSpace ℝ (Fin 2)} {r₁ r₂ r₃ : ℝ}
+    (hr₁ : 0 < r₁) (hr₂ : 0 < r₂) (hr₃ : 0 < r₃)
+    (h12 : r₁ ≠ r₂) (h23 : r₂ ≠ r₃) (h13 : r₁ ≠ r₃)
+    (hd12 : Disjoint (Metric.closedBall c₁ r₁) (Metric.closedBall c₂ r₂))
+    (hd23 : Disjoint (Metric.closedBall c₂ r₂) (Metric.closedBall c₃ r₃))
+    (hd13 : Disjoint (Metric.closedBall c₁ r₁) (Metric.closedBall c₃ r₃)) :
+    Collinear ℝ ({(r₁ - r₂)⁻¹ • (r₁ • c₂ - r₂ • c₁),
+      (r₂ - r₃)⁻¹ • (r₂ • c₃ - r₃ • c₂),
+      (r₁ - r₃)⁻¹ • (r₁ • c₃ - r₃ • c₁)} : Set (EuclideanSpace ℝ (Fin 2))) :=
+  monge_three_circles_general h12 h23 h13
+
+end MetaMathlibExt

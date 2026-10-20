@@ -32,7 +32,7 @@ theorem Series.root_test_pos {s : Series}
     set α := α'.toReal
     have hαα' : α' = α := by
       symm; apply coe_toReal
-      . contrapose! h; simp [h]; exact le_top
+      . contrapose! h; simp [h]
       contrapose! hpos; simp [hpos]
     rw [hαα'] at h hpos; norm_cast at h hpos
     set ε := (1-α)/2
@@ -122,7 +122,7 @@ theorem Series.ratio_ineq {c:ℤ → ℝ} (m:ℤ) (hpos: ∀ n ≥ m, c n > 0) :
   have hLpos : 0 ≤ L := by rw [hL'] at hL'pos; norm_cast at hL'pos
   apply le_of_forall_gt_imp_ge_of_dense
   intro y hy
-  by_cases hy' : y = ⊤; · simp [hy']; exact le_top
+  by_cases hy' : y = ⊤; · simp [hy']
   have : y = y.toReal := by symm; apply coe_toReal hy'; contrapose! hy; simp [hy]
   rw [this, hL', EReal.coe_lt_coe_iff] at hy
   set ε := y.toReal - L
@@ -156,7 +156,7 @@ theorem Series.ratio_ineq {c:ℤ → ℝ} (m:ℤ) (hpos: ∀ n ≥ m, c n > 0) :
   calc
     _ ≤ atTop.limsup (fun n:ℤ ↦ ((A^(1/(n:ℝ)) * (L+ε):ℝ):EReal)) := by
       apply limsup_le_limsup <;> try isBoundedDefault
-      unfold EventuallyLE; rw [eventually_atTop]
+      rw [eventually_atTop]
       use N
     _ ≤ (atTop.limsup (fun n:ℤ ↦ ((A^(1/(n:ℝ)):ℝ):EReal))) * (atTop.limsup (fun n:ℤ ↦ ((L+ε:ℝ):EReal))) := by
       convert EReal.limsup_mul_le _ _ _ _ with n
@@ -166,13 +166,17 @@ theorem Series.ratio_ineq {c:ℤ → ℝ} (m:ℤ) (hpos: ∀ n ≥ m, c n > 0) :
       . simp [-coe_add]
       simp [-coe_add]; grind
     _ = (L+ε:ℝ) := by
-      simp; convert one_mul _
-      apply Tendsto.limsup_eq
-      convert Tendsto.comp (f := fun n:ℤ ↦ (A ^ (n:ℝ)⁻¹)) (g := fun x:ℝ ↦ (x:EReal)) (y := nhds 1) _ _
-      . apply continuous_coe_real_ereal.tendsto'; norm_num
-      convert Tendsto.comp (f := fun n:ℤ ↦ (n:ℝ)⁻¹) (g := fun x:ℝ ↦ A^x) (y := nhds 0) _ _
-      . apply (continuous_const_rpow (by positivity)).tendsto'; simp
-      exact tendsto_inv_atTop_zero.comp tendsto_intCast_atTop_atTop
+      have hlim : atTop.Tendsto (fun n:ℤ ↦ (A ^ (n:ℝ)⁻¹ : ℝ)) (nhds 1) := by
+        convert ((continuous_const_rpow (show A ≠ 0 from hA.ne')).tendsto (0:ℝ)).comp
+            (tendsto_inv_atTop_zero.comp tendsto_intCast_atTop_atTop) using 1
+        · ext n
+          rfl
+        · simp
+      have hlim' : atTop.Tendsto (fun n:ℤ ↦ ((A ^ (n:ℝ)⁻¹ : ℝ) : EReal)) (nhds (1:EReal)) :=
+        (continuous_coe_real_ereal.tendsto (1:ℝ)).comp hlim
+      simp
+      rw [Tendsto.limsup_eq hlim']
+      simp
 
 /-- Corollary 7.5.3 (Ratio test, convergence). -/
 theorem Series.ratio_test_pos {s : Series} (hnon: ∀ n ≥ s.m, s.seq n ≠ 0)

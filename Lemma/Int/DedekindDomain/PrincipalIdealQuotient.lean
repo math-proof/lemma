@@ -14,7 +14,7 @@ private lemma IsDedekindDomain_isPrincipalIdealRing_quotient_eq
   (hI : I ≠ ⊥) :
 -- imply
   IsPrincipalIdealRing (A ⧸ I) where
-  principal J := by
+    principal J := by
 -- proof
   apply IsDedekindDomain.isPrincipalIdealRing_quotient I hI
 

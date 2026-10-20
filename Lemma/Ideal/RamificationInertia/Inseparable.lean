@@ -15,7 +15,7 @@ private lemma card_inertia_eq_ramificationIdxIn_mul_finInsepDegree_eq
   {P : Ideal B} [P.LiesOver p] [P.IsMaximal] :
 -- imply
   Nat.card (P.inertia G) =
-      ramificationIdxIn p B * Field.finInsepDegree (A ⧸ p) (B ⧸ P) := by
+    ramificationIdxIn p B * Field.finInsepDegree (A ⧸ p) (B ⧸ P) := by
 -- proof
   apply Ideal.card_inertia_eq_ramificationIdxIn_mul_finInsepDegree G P
 

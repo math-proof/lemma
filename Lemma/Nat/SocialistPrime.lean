@@ -48,8 +48,7 @@ private lemma IsSocialistPrime_pairwise_eq
 -/
 @[path]
 private lemma IsSocialistPrime_factorial_mod_ne_eq
-  {p : ℕ}
-  {a b : ℕ}
+  {p a b : ℕ}
 -- given
   (h : IsSocialistPrime p)
   (ha : a ∈ Set.Icc 2 (p - 1))

@@ -38,8 +38,7 @@ private lemma IsPrefixFree_injective_eq
 @[path]
 private lemma IsPrefixFree_eq_of_mem_nil_eq
   {code : α → List β}
-  {a₀ : α}
-  {a : α}
+  {a₀ a : α}
 -- given
   (h : IsPrefixFree code)
   (ha₀ : code a₀ = []) :

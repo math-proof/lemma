@@ -14,9 +14,10 @@ namespace Chapter7
 
 theorem Series.sum_eq_sum (b:ℕ → ℝ) {N:ℤ} (hN: N ≥ 0) : ∑ n ∈ .Icc 0 N, (if 0 ≤ n then b n.toNat else 0) = ∑ n ∈ .Iic N.toNat, b n := by
       convert Finset.sum_image (g := Int.ofNat) (by simp)
-      ext x; simp; constructor
-      . intro ⟨ _, _ ⟩; use x.toNat; omega
-      grind
+      · ext x; simp; constructor
+        . intro ⟨ _, _ ⟩; use x.toNat; omega
+        grind
+      · simp [Int.natCast_nonneg, Int.toNat_natCast]
 
 /-- Proposition 7.4.1 -/
 theorem Series.converges_of_permute_nonneg {a:ℕ → ℝ} (ha: (a:Series).nonneg) (hconv: (a:Series).converges)
@@ -51,9 +52,12 @@ theorem Series.converges_of_permute_nonneg {a:ℕ → ℝ} (ha: (a:Series).nonne
     by_cases hM : M ≥ 0
     swap
     . have hM' : M < 0 := by linarith
-      simp [T, Series.partial, hM']
-      convert le_ciSup (f := S) ?_ (-1)
-      simp [BddAbove, Set.Nonempty, upperBounds, hSBound]
+      have hbd : BddAbove (Set.range S) := by
+        obtain ⟨Q, hQ⟩ := hSBound
+        exact ⟨Q, by rintro _ ⟨n, rfl⟩; exact hQ n⟩
+      have hSneg : S (-1) = 0 := by
+        simpa [S] using Series.partial_of_lt (s := (a : Series)) (N := -1) (by simp : (-1 : ℤ) < (a : Series).m)
+      simpa [T, Series.partial, hM', hSneg] using le_ciSup hbd (-1)
     set Y := Finset.Iic M.toNat
     have hN : ∃ N, ∀ m ∈ Y, f m ≤ N := by
       use (Y.image f).sup id; intro m hm
@@ -74,9 +78,12 @@ theorem Series.converges_of_permute_nonneg {a:ℕ → ℝ} (ha: (a:Series).nonne
     by_cases hN : N ≥ 0
     swap
     . have hN' : N < 0 := by linarith
-      simp [S, Series.partial, hN']
-      convert le_ciSup (f := T) ?_ (-1)
-      simp [BddAbove, Set.Nonempty, upperBounds, hTbound]
+      have hbd : BddAbove (Set.range T) := by
+        obtain ⟨Q, hQ⟩ := hTbound
+        exact ⟨Q, by rintro _ ⟨n, rfl⟩; exact hQ n⟩
+      have hTneg : T (-1) = 0 := by
+        simpa [T] using Series.partial_of_lt (s := (af : Series)) (N := -1) (by simp : (-1 : ℤ) < (af : Series).m)
+      simpa [S, Series.partial, hN', hTneg] using le_ciSup hbd (-1)
     set X := Finset.Iic N.toNat
     have hM : ∃ M, ∀ n ∈ X, ∃ m, f m = n ∧ m ≤ M := by
       use (X.preimage f (Set.injOn_of_injective hf.1)).sup id
@@ -88,9 +95,10 @@ theorem Series.converges_of_permute_nonneg {a:ℕ → ℝ} (ha: (a:Series).nonne
     have sum_eq_sum (b:ℕ → ℝ) {N:ℤ} (hN: N ≥ 0)
       : ∑ n ∈ .Icc 0 N, (if 0 ≤ n then b n.toNat else 0) = ∑ n ∈ .Iic N.toNat, b n := by
       convert Finset.sum_image (g := Int.ofNat) (by simp)
-      ext x; simp; constructor
-      . intro ⟨ _, _ ⟩; use x.toNat; omega
-      grind
+      · ext x; simp; constructor
+        . intro ⟨ _, _ ⟩; use x.toNat; omega
+        grind
+      · simp [Int.natCast_nonneg, Int.toNat_natCast]
     calc
       _ = ∑ n ∈ X, a n := by simp [S, sum_eq_sum, hN, X]
       _ = ∑ n ∈ ((Finset.Iic M).filter (f · ∈ X)).image f, a n := by
@@ -175,9 +183,10 @@ theorem Series.absConverges_of_permute {a:ℕ → ℝ} (ha : (a:Series).absConve
       convert ha (N.toNat+1) _ q _ <;> try omega
       simp [hNpos]; rw [abs_of_nonneg (by positivity)]; symm
       convert Finset.sum_image (g := fun (n:ℕ) ↦ (n:ℤ)) (by simp) using 2
-      ext x; simp; constructor
-      . intro ⟨ _, _ ⟩; use x.toNat; omega
-      grind
+      · ext x; simp; constructor
+        . intro ⟨ _, _ ⟩; use x.toNat; omega
+        grind
+      · simp [Int.natCast_nonneg, Int.toNat_natCast]
   calc
     _ ≤ |(af:Series).partial M' - (a:Series).partial N| + |(a:Series).partial N - L'| := abs_sub_le _ _ _
     _ < |(af:Series).partial M' - (a:Series).partial N| + ε/2 := by gcongr

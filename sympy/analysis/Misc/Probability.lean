@@ -11,9 +11,14 @@ class FinitelyAdditive (A:Type*) [BooleanAlgebra A] where
 
 namespace FinitelyAdditive
 
-instance instFunLike (A:Type*) [BooleanAlgebra A] : FunLike (FinitelyAdditive A) A ℝ where
-  coe ℙ := ℙ.prob
-  coe_injective' f g h := by { cases f; cases g; congr }
+instance instFunLike (A:Type*) [BooleanAlgebra A] :
+    DFunLike (FinitelyAdditive A) A (fun _ => ℝ) :=
+  { coe := fun P => P.prob
+    coe_injective := by
+      intro f g h
+      cases f
+      cases g
+      congr }
 
 variable {A:Type*} [BooleanAlgebra A] (ℙ: FinitelyAdditive A)
          {A':Type*} [BooleanAlgebra A'] (ℙ': FinitelyAdditive A')

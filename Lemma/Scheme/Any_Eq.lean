@@ -1,40 +1,36 @@
 import Mathlib
 import sympy.Basic
-open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-
-
-universe u
-
+open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Opposite
 set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
+
+
+universe u
 
 /--
 [AlgebraicGeometry_Scheme_Hom_exists_comp_eq_of_isIntegralHom_of_surjective](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_Scheme_Hom_exists_comp_eq_of_isIntegralHom_of_surjective.lean)
 -/
 @[path]
 private lemma main
-    {X Y : Scheme.{0}} (f : X ⟶ Y) [IsIntegralHom f] [Surjective f]
-    (k : Type) [Field k] [IsAlgClosed k] (y : Spec (CommRingCat.of k) ⟶ Y) :
-    ∃ x : Spec (CommRingCat.of k) ⟶ X, x ≫ f = y := by
+  {X Y : (Scheme : Type 1)} (f : X ⟶ Y) [IsIntegralHom f] [Surjective f]
+  (k : Type) [Field k] [IsAlgClosed k] (y : Spec (CommRingCat.of k) ⟶ Y) :
+  ∃ x : Spec (CommRingCat.of k) ⟶ X, x ≫ f = y := by
   classical
-  let P : Scheme.{0} := pullback f y
+  let P : (Scheme : Type 1) := pullback f y
   let g : P ⟶ Spec (CommRingCat.of k) := pullback.snd f y
   let _ : IsIntegralHom g := inferInstance
   let _ : IsAffine P := isAffine_of_isAffineHom g
   obtain ⟨t⟩ : Nonempty ↥(Spec (CommRingCat.of k)) := inferInstance
   obtain ⟨x₀, hx₀⟩ := f.surjective (y t)
   obtain ⟨z, -, -⟩ := Scheme.Pullback.exists_preimage_pullback (f := f) (g := y) x₀ t hx₀
-  let A : CommRingCat := Γ(P, ⊤)
+  let A : CommRingCat := P.presheaf.obj (Opposite.op (⊤ : P.Opens))
   let φ : CommRingCat.of k ⟶ A := (Scheme.ΓSpecIso (CommRingCat.of k)).inv ≫ g.appTop
   have hφ : φ.hom.IsIntegral := by
-    have h := ((HasAffineProperty.iff_of_isAffine (P := @IsIntegralHom) (f := g)).mp inferInstance).2
-    have h' : (Scheme.ΓSpecIso (CommRingCat.of k)).inv.hom.IsIntegral :=
-      RingHom.isIntegral_of_surjective _
-        (ConcreteCategory.bijective_of_isIso (Scheme.ΓSpecIso (CommRingCat.of k)).inv).surjective
-    have h__af := RingHom.IsIntegral.trans _ _ h' h
-    simp only [φ, CommRingCat.hom_comp] at h__af
-    exact h__af
+    apply RingHom.IsIntegral.trans _ _
+      (RingHom.isIntegral_of_surjective _
+        (ConcreteCategory.bijective_of_isIso (Scheme.ΓSpecIso (CommRingCat.of k)).inv).surjective)
+      (((HasAffineProperty.iff_of_isAffine (P := @IsIntegralHom) (f := g)).mp inferInstance).2)
   let _ : Nontrivial A := PrimeSpectrum.nonempty_iff_nontrivial.mp ⟨P.isoSpec.hom z⟩
   obtain ⟨𝔪, h𝔪⟩ := Ideal.exists_maximal A
   let _ : Algebra k A := φ.hom.toAlgebra
@@ -48,7 +44,7 @@ private lemma main
   have hχ : φ ≫ CommRingCat.ofHom χ = 𝟙 _ := by
     ext a
     change ψ ((Ideal.Quotient.mk 𝔪) (φ.hom a)) = a
-    exact ψ.commutes a
+    apply ψ.commutes
   let x' : Spec (CommRingCat.of k) ⟶ P := Spec.map (CommRingCat.ofHom χ) ≫ P.isoSpec.inv
   have hx' : x' ≫ g = 𝟙 _ := by
     simp only [x', Category.assoc]

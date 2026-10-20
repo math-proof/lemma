@@ -1,0 +1,74 @@
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/DiscreteValuationRing/RamificationFiltration.lean -/
+
+import Mathlib.RingTheory.DiscreteValuationRing.Basic
+import sympy.atlas.RingTheory.RamificationInertia.Valuation
+/-!
+# Ramification-power identity for local DVR extensions
+
+Prerequisite for the corrected ATLAS NumberTheoryI N261 upper different-exponent bound
+(Theorem 12.27): for a torsion-free local homomorphism `A → B` of discrete valuation
+rings, the extended base maximal ideal is the `e`-th power of the target maximal ideal,
+where `e` is the (current unprimed) ramification index `Ideal.ramificationIdx`.
+
+This file states only that ideal identity plus an element-membership corollary. It does
+not state the different containment
+`span {(e : B)} * maximalIdeal B ^ (e - 1) ≤ differentIdeal A B`, let alone N261 itself.
+
+ATLAS source correspondence:
+[`v1/Atlas/NumberTheoryI/code/DifferentDiscriminant.lean` lines 1237-1324](https://github.com/facebookresearch/atlas-lean/blob/e8b31c5cb0bec89b487ce33fe525a2c0b0f8b9c6/v1/Atlas/NumberTheoryI/code/DifferentDiscriminant.lean#L1237-L1324).
+The source's exact wild equality `different_valuation_exact` (lines 1269--1276) is
+stated there without a completed proof and is false in general wild ramification;
+it is not formalized here. Source-to-API map: the source's local ramification
+exponent is mapped here to `IsDiscreteValuationRing.map_maximalIdeal_eq_pow_ramificationIdx`,
+while the upper different bound is deliberately deferred.
+
+## Main results
+
+* `IsDiscreteValuationRing.map_maximalIdeal_eq_pow_ramificationIdx`: the ideal identity.
+* `IsDiscreteValuationRing.algebraMap_mem_maximalIdeal_pow_ramificationIdx`:
+  the element-membership corollary.
+-/
+
+open IsLocalRing
+
+namespace IsDiscreteValuationRing
+
+variable {A B : Type*} [CommRing A] [IsDomain A] [IsDiscreteValuationRing A]
+  [CommRing B] [IsDomain B] [IsDiscreteValuationRing B]
+  [Algebra A B] [Module.IsTorsionFree A B] [IsLocalHom (algebraMap A B)]
+
+/-- The extended base maximal ideal is the `e`-th power of the target maximal ideal,
+where `e` is the unprimed ramification index. -/
+theorem map_maximalIdeal_eq_pow_ramificationIdx :
+    Ideal.map (algebraMap A B) (maximalIdeal A) =
+      maximalIdeal B ^ (maximalIdeal B).ramificationIdx A := by
+  have hA0 : maximalIdeal A ≠ ⊥ := not_a_field A
+  have hB0 : maximalIdeal B ≠ ⊥ := not_a_field B
+  have hmap : Ideal.map (algebraMap A B) (maximalIdeal A) ≠ ⊥ :=
+    Ideal.map_ne_bot_of_ne_bot hA0
+  obtain ⟨ϖ, hϖ⟩ := exists_irreducible B
+  obtain ⟨n, hn⟩ := ideal_eq_span_pow_irreducible hmap hϖ
+  have hspan : Ideal.span ({ϖ ^ n} : Set B) = maximalIdeal B ^ n := by
+    rw [← Ideal.span_singleton_pow, ← hϖ.maximalIdeal_eq]
+  have hBunit : ¬ IsUnit (maximalIdeal B) :=
+    (Ideal.prime_of_isPrime hB0 inferInstance).not_isUnit
+  have he : (maximalIdeal B).ramificationIdx A =
+      multiplicity (maximalIdeal B) (Ideal.map (algebraMap A B) (maximalIdeal A)) :=
+    Ideal.IsDedekindDomain.ramificationIdx_eq_multiplicity _ _ hmap
+  have hmult : multiplicity (maximalIdeal B)
+      (Ideal.map (algebraMap A B) (maximalIdeal A)) = n := by
+    rw [hn, hspan]
+    exact multiplicity_pow_self hB0 hBunit n
+  calc Ideal.map (algebraMap A B) (maximalIdeal A)
+      = maximalIdeal B ^ n := by rw [hn, hspan]
+    _ = maximalIdeal B ^ (maximalIdeal B).ramificationIdx A := by rw [he, hmult]
+
+/-- Element-membership corollary: images of elements of the base maximal ideal lie in
+the `e`-th power of the target maximal ideal. -/
+theorem algebraMap_mem_maximalIdeal_pow_ramificationIdx {x : A}
+    (hx : x ∈ maximalIdeal A) :
+    algebraMap A B x ∈ maximalIdeal B ^ (maximalIdeal B).ramificationIdx A := by
+  rw [← map_maximalIdeal_eq_pow_ramificationIdx]
+  exact Ideal.mem_map_of_mem _ hx
+
+end IsDiscreteValuationRing

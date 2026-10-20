@@ -493,7 +493,11 @@ export class LeanParenthesis extends LeanPairedGroup {
             return '%s';
         if (this.isLatexRedundantPrecedence() || this.isLatexJointTuple())
             return '%s';
-        if (String(arg).includes('\n') && !(arg instanceof L.LeanArgsIndented && arg.isMultilineApplication()))
+        if (
+            String(arg).includes('\n') &&
+            !(arg instanceof L.LeanArgsIndented && arg.isMultilineApplication()) &&
+            !this.latexParenRequired()
+        )
             // Multi-row content (e.g. `(by …)` tactic block rendering as `align*`):
             // `\mathord{\left(...\right)}` would stretch to the full block height.
             return '%s';
@@ -508,6 +512,9 @@ export class LeanParenthesis extends LeanPairedGroup {
      * - a `·` section `(· t)` / `(· + 1)`: the parentheses delimit the scope of the anonymous function.
      */
     latexParenRequired() {
+        // `𝔼[…](body)` / `ℙ[…](event)`: keep source parentheses for binder grouping
+        // (nested `𝔼`, compound `•` / `∇` bodies, multiline bodies, peelLatex, …).
+        if (this.isExpectBodyParen() || this.isProbEventParen()) return true;
         const arg = this.arg;
         if (arg instanceof L.LeanArgsCommaSeparated) return true;
         return LeanParenthesis.hasOwnCdot(arg);

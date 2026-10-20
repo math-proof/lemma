@@ -16,8 +16,6 @@ that every rising diagonal of this triangle is constant.
 
 namespace MetaMathlibExt
 
-@[expose]
-
 /-- The source's binary binomial interpolated triangle `BT(a₀,a₁,α,β;α,β)`. -/
 def IsBinaryBinomialInterpolatedTriangle
     (a : ℕ → ℕ → ℝ) (a₀ a₁ α β : ℝ) : Prop :=

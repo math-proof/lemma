@@ -6,20 +6,6 @@ open MathlibExt.LinearAlgebra.BilinearFormRankWanted
 
 
 /--
-[bilinRank_toMatrix_le](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/BilinearFormRank.lean)
--/
-@[path]
-private lemma bilinRank_toMatrix_le_eq
-  [Field K] [AddCommGroup V] [Module K V] [Fintype n₁] [DecidableEq n₁] [Fintype n₂] [DecidableEq n₂]
-  {b₁ : Module.Basis n₁ K V}
-  {b₂ : Module.Basis n₂ K V}
-  {B : LinearMap.BilinForm K V} :
--- imply
-  (toMatrix b₂ B).rank ≤ (toMatrix b₁ B).rank := by
--- proof
-  apply LinearMap.BilinForm.bilinRank_toMatrix_le b₁ b₂ B
-
-/--
 [rank_toMatrix_eq_rank_toMatrix](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/BilinearFormRank.lean)
 -/
 @[path]
