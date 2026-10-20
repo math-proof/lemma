@@ -18,7 +18,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(KL).apply(Random.KL.eq.Sum)
 
-    Eq << Real.Log.ge.Sub_.One.Inv.apply(Eq[1].find(Log).arg)
+    Eq << Real.Log.ge.Sub1Div1.of.Gt_0.apply(Eq[1].find(Log).arg)
 
     Eq << Nat.GeMul.of.Ge.apply(Eq[-1], Eq[1].find(Pr))
 

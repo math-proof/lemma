@@ -69,7 +69,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Equal).reversed
 
-    Eq << Real.Add_.SquareCos.SquareSin.eq.One.apply(t)
+    Eq << Real.AddSquareCosSquareSin.eq.One.apply(t)
 
     Eq << Bool.Any_And.of.Any.All.apply(Eq[-2], Eq[-1])
 

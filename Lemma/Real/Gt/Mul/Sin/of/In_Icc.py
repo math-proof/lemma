@@ -47,9 +47,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.expand()
 
-    Eq << Real.Mul_.Csc.Sin.eq.One.apply(x) * (2 * x)
+    Eq << Real.MulCscSin.eq.One.of.NeSin_0.apply(x) * (2 * x)
 
-    Eq << Real.Cos.eq.Mul_.Sin.Cot.apply(x) * x
+    Eq << Real.Cos.eq.MulCotSin.of.NeSin_0.apply(x) * x
 
     Eq << Eq[-3].subs(Eq[-2].reversed, Eq[-1])
 

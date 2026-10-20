@@ -78,7 +78,6 @@ from . import Min
 from . import Mul
 from . import LtAbs
 from . import Mod
-from . import Mul_CeilDiv
 from . import LtSub
 from . import Pow
 from . import Sign
@@ -103,3 +102,4 @@ from . import GeSub
 from . import LtSquare
 from . import GeSquare
 from . import GtMul
+from . import MulCeilDiv

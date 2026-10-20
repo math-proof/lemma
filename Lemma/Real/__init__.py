@@ -15,7 +15,6 @@ from . import Grad
 from . import GtSin
 from . import In
 from . import LeSin
-from . import Mul_
 from . import Mul
 from . import Sin
 from . import Sinh
@@ -54,7 +53,6 @@ from . import Eq_Arcsec
 from . import Eq_Arctan
 from . import ExpMulI
 from . import Gt_0
-from . import Add_
 from . import CosSub
 from . import Csc
 from . import Csch
@@ -218,3 +216,8 @@ from . import LimMul
 from . import Deriv
 from . import Eq_Lim
 from . import MulSub1_Dot_FunDotPow_Range
+from . import AddSquareCosSquareSin
+from . import MulCscSin
+from . import MulSecCos
+from . import MulCotTan
+from . import Ceil

@@ -13,7 +13,7 @@ def prove(Eq):
     x = Symbol(real=True)
     Eq << apply(x)
 
-    Eq << Real.Add_.SquareCos.SquareSin.eq.One.apply(x)
+    Eq << Real.AddSquareCosSquareSin.eq.One.apply(x)
 
     Eq << Nat.Le.of.Eq_Add.bounded.apply(Eq[1])
 

@@ -54,7 +54,7 @@ def prove(Eq):
 
     Eq << Bool.All.given.And.All.apply(Eq.plausible, cond=i.set, wrt=j)
 
-    Eq << Set.Inter.eq.Ite_.ExprCondPair_.Finset.In.ExprCondPairEmpty.apply(i, Range(1, n))
+    Eq << Set.Inter.eq.Ite_Singleton.apply(i, Range(1, n))
 
     Eq << Eq[-2].this.limits[1].subs(Eq[-1])
 

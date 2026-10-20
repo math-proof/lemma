@@ -37,7 +37,7 @@ def prove(Eq):
     Eq.Stirling1 = Eq.Stirling1.subs(Eq[-1].reversed)
 
     e = Symbol(etype=dtype.integer.set)
-    Eq << Set.Eq_Union_.Inter.SDiff.apply(s2, conditionset(e, Element({n}, e), s2))
+    Eq << Set.Eq_UnionInter.apply(s2, conditionset(e, Element({n}, e), s2))
 
     Eq.s2_abs = Eq[-1].apply(Finset.Card.of.Eq)
 

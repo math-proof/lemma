@@ -155,7 +155,7 @@ def prove(Eq):
 
     Eq.Sum_ge = Finset.GeSum.of.All_Ge.apply(Eq[-1])
 
-    Eq << Real.Sin.ge.Mul_Sub_.One.Div_Pi.quadratic.apply(Eq.gt_zero_eta.lhs)
+    Eq << Real.Sin.ge.Mul_Sub1Div_Pi.apply(Eq.gt_zero_eta.lhs)
 
     Eq << Eq[-1].this.rhs.apply(Nat.Mul_Add.eq.AddMulS)
 

@@ -1,6 +1,5 @@
 from . import Abs_Lt_Infty
 from . import Add
-from . import AddClip
 from . import AddIteS
 from . import All
 from . import AllIco
@@ -76,7 +75,6 @@ from . import Eq_Empty
 from . import Eq_Floor
 from . import Eq_Ite
 from . import Eq_Sum
-from . import Eq_Union_
 from . import Finset
 from . import Floor
 from . import FloorNegFrac
@@ -231,3 +229,4 @@ from . import Any_In_Ico
 from . import Any_In_Ioc
 from . import Any_In_Ioc_Add_1
 from . import EqSwapSwap
+from . import Eq_UnionInter

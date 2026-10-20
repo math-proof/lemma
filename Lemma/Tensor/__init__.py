@@ -49,7 +49,6 @@ from . import DotSoftmaxDivDot_T
 from . import DotStackS
 from . import DotT
 from . import DotT_RotaryMatrix
-from . import Dot_
 from . import Eq
 from . import EqAdd
 from . import EqAdjoint
