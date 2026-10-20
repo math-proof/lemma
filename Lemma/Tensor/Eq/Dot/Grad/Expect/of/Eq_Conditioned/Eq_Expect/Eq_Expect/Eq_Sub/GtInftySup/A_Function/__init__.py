@@ -29,7 +29,7 @@ def prove(Eq):
                 Equal((A[π] ^ γ)(s[t].bvar, a[t].bvar), (Q[π] ^ γ)(s[t].bvar, a[t].bvar) - (V[π] ^ γ)(s[t].bvar)),
                 Less(Sup[s[t].bvar, t](Abs(Derivative[π]((V[π] ^ γ)(s[t].bvar)))), oo))
 
-    Eq << Random.GradExpect_DotPow_Id.eq.ExpectDotFunSMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_Eq_ExpectCondDot.All_Eq_ExpectCondDot.EqMeasureCount.EqMeasureCount.All_Eq_Joint.In_Ico.apply(*Eq[:3], Eq[4])
+    Eq << Random.GradExpectDotPow_Id.eq.ExpectDotFunSMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_Eq_ExpectCondDot.All_Eq_ExpectCondDot.EqMeasureCount.EqMeasureCount.All_Eq_Joint.In_Ico.apply(*Eq[:3], Eq[4])
 
     Eq << Eq[-1].this.rhs.find(Expectation).simplify()
 
