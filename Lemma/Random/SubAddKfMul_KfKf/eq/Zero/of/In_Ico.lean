@@ -45,12 +45,12 @@ private lemma main
   refine Finset.sum_eq_zero fun y _ => ?_
   have hrec : M.Vc θ γ y = ∫ z, M.Kf θ (fun z ↦ clip z.1 (-M.env.R) M.env.R) 0 z ∂(M.stageK θ y) +
       γ * ∑ u, M.policy.prob θ y u * ∑ y', (M.env.trans (y, u)).real {y'} * M.Vc θ γ y' := by
-    rw [Vc.eq.TSum_MulPowIntegral.of.In_Ico (M := M) (γ := γ) θ y,
+    rw [Vc.eq.TSum_MulPowIntegral.of.In_Ico (M := M) h₀ θ y,
       TSum_MulPowW.eq.AddWMul_Sum_MulProbSum_MulTTSum_MulPowW.of.In_Ico (M := M) h₀ θ y]
     congr 2
     refine Finset.sum_congr rfl fun u _ => congrArg (M.policy.prob θ y u * ·) ?_
     refine Finset.sum_congr rfl fun yInner _ => congrArg ((M.env.trans (y, u)).real {yInner} * ·) ?_
-    simpa using (Vc.eq.TSum_MulPowIntegral.of.In_Ico (M := M) (γ := γ) θ yInner).symm
+    simpa using (Vc.eq.TSum_MulPowIntegral.of.In_Ico (M := M) h₀ θ yInner).symm
   rw [hrec]
   ring
 

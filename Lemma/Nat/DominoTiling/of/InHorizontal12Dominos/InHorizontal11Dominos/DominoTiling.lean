@@ -25,25 +25,35 @@ private lemma main
     ext d
     simp only [Finset.mem_insert, Finset.mem_image, Finset.mem_attach, true_and, Subtype.exists]
     constructor
-    · intro hd
-      rcases hd with rfl | rfl | ⟨d', hd'_mem, hd'_eq⟩
+    ·
+      intro hd
+      obtain rfl | rfl | ⟨d', hd'_mem, hd'_eq⟩ := hd
       · exact hh1
       · exact hh2
-      · obtain ⟨d'', hd''_erase, hd''_eq⟩ := hd'_mem
+      ·
+        obtain ⟨d'', hd''_erase, hd''_eq⟩ := hd'_mem
         have hd''_in := Finset.mem_of_mem_erase (Finset.mem_of_mem_erase hd''_erase)
         have hd''_ne1 := (Finset.mem_erase.mp (Finset.mem_of_mem_erase hd''_erase)).1
         have hd''_ne2 := (Finset.mem_erase.mp hd''_erase).1
         have hcols := other_dominos_col_ge_3
           ⟨dominos, dominos_in_rect, covers_all, pairwise_disjoint⟩ hh1 hh2 d'' hd''_in hd''_ne1 hd''_ne2
         rw [← hd'_eq, ← hd''_eq]
-        rw [Domino.shiftNat_shiftNeg]
-        exact hd''_in
-    · intro hd
+        rwa [Domino.shiftNat_shiftNeg]
+    ·
+      intro hd
       by_cases hne1 : d = horizontal_1_1
-      · left; exact hne1
-      · by_cases hne2 : d = horizontal_1_2
-        · right; left; exact hne2
-        · right; right
+      ·
+        left
+        exact hne1
+      ·
+        by_cases hne2 : d = horizontal_1_2
+        ·
+          right
+          left
+          exact hne2
+        ·
+          right
+          right
           have hd_erase : d ∈ (dominos.erase horizontal_1_1).erase horizontal_1_2 := 
             Finset.mem_erase.mpr ⟨hne2, Finset.mem_erase.mpr ⟨hne1, hd⟩⟩
           have hcols := other_dominos_col_ge_3

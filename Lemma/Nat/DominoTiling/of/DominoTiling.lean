@@ -16,31 +16,31 @@ private lemma main
 -- imply
   restrictAfterVertical (prependVertical T) (by simp [prependVertical, vertical_1_1]) = T := by
 -- proof
-  cases T with
-  | mk dominos dominos_in_rect covers_all pairwise_disjoint =>
+  cases T with | mk dominos dominos_in_rect covers_all pairwise_disjoint =>
     unfold prependVertical restrictAfterVertical
     congr 1
     ext d
     simp only [Finset.mem_image, Finset.mem_attach, true_and, Subtype.exists]
     constructor
-    · -- Forward: d is in the result of restrictAfterVertical (prependVertical T)
+    ·
+      -- Forward: d is in the result of restrictAfterVertical (prependVertical T)
       intro hd
       obtain ⟨d', hd'_erase, hd'_eq⟩ := hd
       have hd'_ne : d' ≠ vertical_1_1 := (Finset.mem_erase.mp hd'_erase).1
       have hd'_mem : d' ∈ insert vertical_1_1 (dominos.image (fun d => d.shiftNat 1)) :=
         Finset.mem_of_mem_erase hd'_erase
       rw [Finset.mem_insert] at hd'_mem
-      rcases hd'_mem with rfl | hd'_in_image
+      obtain rfl | hd'_in_image := hd'_mem
       · exact absurd rfl hd'_ne
-      · simp only [Finset.mem_image] at hd'_in_image
+      ·
+        simp only [Finset.mem_image] at hd'_in_image
         obtain ⟨d'', hd''_mem, hd''_eq⟩ := hd'_in_image
         have hcols := domino_cells_col_ge_one
           ⟨dominos, dominos_in_rect, covers_all, pairwise_disjoint⟩ d'' hd''_mem
         subst hd''_eq
-        rw [← hd'_eq]
-        -- Show (d''.shiftNat 1).shiftNeg 1 ... = d'' by extensionality
+        rw [← hd'_eq] -- Show (d''.shiftNat 1).shiftNeg 1 ... = d'' by extensionality
         have h_eq : (d''.shiftNat 1).shiftNeg 1
-            (domino_col_ge_two_of_ne_vertical (prependVertical ⟨dominos, dominos_in_rect, covers_all, pairwise_disjoint⟩)
+          (domino_col_ge_two_of_ne_vertical (prependVertical ⟨dominos, dominos_in_rect, covers_all, pairwise_disjoint⟩)
               (by simp [prependVertical, vertical_1_1])
               (d''.shiftNat 1)
               (Finset.mem_of_mem_erase hd'_erase)
@@ -49,16 +49,17 @@ private lemma main
               (by simp [prependVertical, vertical_1_1])
               (d''.shiftNat 1)
               (Finset.mem_of_mem_erase hd'_erase)
-              hd'_ne).2
-            = d'' := by
+              hd'_ne).2 = d'' := by
           apply Domino.ext
-          · simp only [Domino.shiftNeg, Domino.shiftNat]
+          ·
+            simp only [Domino.shiftNeg, Domino.shiftNat]
             simp only [Nat.add_sub_cancel]
-          · simp only [Domino.shiftNeg, Domino.shiftNat]
+          ·
+            simp only [Domino.shiftNeg, Domino.shiftNat]
             simp only [Nat.add_sub_cancel]
-        rw [h_eq]
-        exact hd''_mem
-    · -- Backward: d ∈ dominos → d is in the result
+        rwa [h_eq]
+    ·
+      -- Backward: d ∈ dominos → d is in the result
       intro hd
       have hcols := domino_cells_col_ge_one
         ⟨dominos, dominos_in_rect, covers_all, pairwise_disjoint⟩ d hd

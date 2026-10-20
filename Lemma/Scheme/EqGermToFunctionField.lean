@@ -29,8 +29,7 @@ private lemma main
     apply ((genericPoint_spec Y).mem_open_set_iff V.isOpen).mpr (by simpa using ‹Nonempty (V : (Scheme : Type (u + 1)))›)
   change (Iso.trans e₁ e₂).hom (Y.presheaf.germ V (genericPoint Y) _ t) = X.presheaf.germ ((TopologicalSpace.Opens.map f.base).obj V) (genericPoint X) _ (f.app V t)
   simp only [Iso.trans_hom, CommRingCat.comp_apply, e₁, e₂, asIso_hom]
-  have h1 : (Y.presheaf.stalkCongr (.of_eq hgen.symm)).hom (Y.presheaf.germ V (genericPoint Y) (((genericPoint_spec Y).mem_open_set_iff V.isOpen).mpr (by simpa using ‹Nonempty (V : (Scheme : Type (u + 1)))›)) t) =
-    Y.presheaf.germ V (f.base (genericPoint X)) hmem t := by
+  have h1 : (Y.presheaf.stalkCongr (.of_eq hgen.symm)).hom (Y.presheaf.germ V (genericPoint Y) (((genericPoint_spec Y).mem_open_set_iff V.isOpen).mpr (by simpa using ‹Nonempty (V : (Scheme : Type (u + 1)))›)) t) = Y.presheaf.germ V (f.base (genericPoint X)) hmem t := by
     simp only [TopCat.Presheaf.stalkCongr_hom]
     rw [← CommRingCat.comp_apply, TopCat.Presheaf.germ_stalkSpecializes]
   rw [h1, Scheme.Hom.germ_stalkMap_apply]

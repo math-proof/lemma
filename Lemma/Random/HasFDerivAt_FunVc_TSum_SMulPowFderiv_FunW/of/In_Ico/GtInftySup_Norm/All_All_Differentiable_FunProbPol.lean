@@ -34,7 +34,7 @@ private lemma main
     (fun k θ => by
       rw [norm_smul, norm_pow, Real.norm_of_nonneg h₂.1]
       exact mul_le_mul_of_nonneg_left ((hW k).2 θ) (pow_nonneg h₂.1 k))
-    (Summable_MulPowWRc.of.In_Ico (M := M) h₂ θ x) θ) (EventuallyEq.of_eq (funext fun θ => Vc.eq.TSum_MulPowIntegral.of.In_Ico (M := M) (γ := γ) θ x))
+    (Summable_MulPowWRc.of.In_Ico (M := M) h₂ θ x) θ) (EventuallyEq.of_eq (funext fun θ => Vc.eq.TSum_MulPowIntegral.of.In_Ico (M := M) h₂ θ x))
 
 
 -- created on 2026-10-06

@@ -4,6 +4,7 @@ import sympy.matrices.determinants.DominoTilings
 open DominoTilings
 open Domino DominoTiling
 open Finset
+set_option linter.unusedSimpArgs false
 
 
 /--
@@ -20,7 +21,7 @@ private lemma main
   d = horizontal_1_2 := by
 -- proof
   simp only [prependHorizontalPair, Finset.mem_insert, Finset.mem_image] at hd
-  rcases hd with rfl | rfl | ⟨d', _, rfl⟩
+  obtain rfl | rfl | ⟨d', _, rfl⟩ := hd
   · -- d = horizontal_1_1, but horizontal_1_1.cells = {(1,1), (2,1)} ≠ {(1,2), (2,2)}
     simp only [Domino.cells, horizontal_1_1] at hd_cells
     have h : ((1, 1) : Cell) ∈ ({(1, 2), (2, 2)} : Finset Cell) := by

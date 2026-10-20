@@ -27,7 +27,7 @@ private lemma main
   Vθ θ t x = M.Vc θ γ x := by
 -- proof
   intro Vθ
-  refine Eq.trans ?_ (Vc.eq.TSum_MulPowIntegral.of.In_Ico (M := M) (γ := γ) θ x).symm
+  refine Eq.trans ?_ (Vc.eq.TSum_MulPowIntegral.of.In_Ico (M := M) h₀ θ x).symm
   convert V.eq.TSum_MulPowWRc.of.Ne0Real_Preimage.In_Ico (M := M) θ t x h₀ h₁ h₂ using 1
 
 

@@ -4,6 +4,7 @@ import sympy.matrices.determinants.DominoTilings
 open DominoTilings
 open Domino DominoTiling
 open Finset
+set_option linter.unusedSimpArgs false
 
 
 /--
@@ -31,58 +32,106 @@ private lemma main
   have hd_top_covers_12 : (1, 2) ∈ d_top.cells := by
     simp only [Domino.cells, Finset.mem_insert, Finset.mem_singleton]
     obtain ⟨hr1, hr2⟩ | ⟨hr1, hr2⟩ := hd_top_rows
-    · left; ext; exact hd_top_col.symm; omega
-    · right; ext; exact hd_top_c2_col.symm; omega
+    ·
+      left
+      ext
+      exact hd_top_col.symm
+      omega
+    ·
+      right
+      ext
+      exact hd_top_c2_col.symm
+      omega
   have hd_ne_top : d ≠ d_top := by
     intro heq; subst heq
-    rcases hd_cov with hc | hc
-    · obtain ⟨hr1, hr2⟩ | ⟨hr1, hr2⟩ := hd_top_rows
-      · have : (1 : ℕ) = 2 := by rw [← hc] at hr1; exact hr1
+    obtain hc | hc := hd_cov
+    ·
+      rcases hd_top_rows with ⟨hr1, hr2⟩ | ⟨hr1, hr2⟩
+      ·
+        have : (1 : ℕ) = 2 := by rw [← hc] at hr1
+        exact hr1
         omega
-      · have : (1 : ℕ) = 3 := by rw [← hc] at hr1; exact hr1
+      ·
+        have : (1 : ℕ) = 3 := by rw [← hc] at hr1
+        exact hr1
         omega
-    · obtain ⟨hr1, hr2⟩ | ⟨hr1, hr2⟩ := hd_top_rows
-      · have : (1 : ℕ) = 3 := by rw [← hc] at hr2; exact hr2
+    ·
+      rcases hd_top_rows with ⟨hr1, hr2⟩ | ⟨hr1, hr2⟩
+      ·
+        have : (1 : ℕ) = 3 := by rw [← hc] at hr2
+        exact hr2
         omega
-      · have : (1 : ℕ) = 2 := by rw [← hc] at hr2; exact hr2
+      ·
+        have : (1 : ℕ) = 2 := by rw [← hc] at hr2
+        exact hr2
         omega
   have hd_not_12 : (1, 2) ∉ d.cells := by
     intro h12
     have := DominoTiling.cell_covered_unique T (1, 2) d d_top hd_mem hd_top_mem h12 hd_top_covers_12
     exact hd_ne_top this
   use d, hd_mem
-  rcases hd_cov with hc1 | hc2
-  · have hc1_eq : d.cell1 = (1, 1) := hc1.symm
+  obtain hc1 | hc2 := hd_cov
+  ·
+    have hc1_eq : d.cell1 = (1, 1) := hc1.symm
     obtain ⟨hcol, hrow⟩ | ⟨hrow, hcol⟩ := d.adjacent
-    · have hc2_col : d.cell2.1 = 1 := by rw [← hcol, hc1_eq]
-      rcases hrow with h | h
-      · have hc2_eq : d.cell2 = (1, 2) := by ext; exact hc2_col; rw [hc1_eq] at h; omega
+    ·
+      have hc2_col : d.cell2.1 = 1 := by rw [← hcol, hc1_eq]
+      obtain h | h := hrow
+      ·
+        have hc2_eq : d.cell2 = (1, 2) := by ext
+        exact hc2_col
+        rw [hc1_eq] at h
+        omega
         exfalso; apply hd_not_12; simp [Domino.cells, hc2_eq]
-      · have hc2_row : d.cell2.2 = 0 := by rw [hc1_eq] at h; omega
+      ·
+        have hc2_row : d.cell2.2 = 0 := by rw [hc1_eq] at h
+        omega
         have hge1 : d.cell2.2 ≥ 1 := hd_c2_in.2.2.1
         omega
-    · have hc2_row : d.cell2.2 = 1 := by rw [← hrow, hc1_eq]
-      rcases hcol with h | h
-      · have hc2_eq : d.cell2 = (2, 1) := by ext; rw [hc1_eq] at h; omega; exact hc2_row
+    ·
+      have hc2_row : d.cell2.2 = 1 := by rw [← hrow, hc1_eq]
+      obtain h | h := hcol
+      ·
+        have hc2_eq : d.cell2 = (2, 1) := by ext
+        rw [hc1_eq] at h
+        omega
+        exact hc2_row
         simp only [Domino.cells, hc1_eq, hc2_eq]
-      · have hc2_col : d.cell2.1 = 0 := by rw [hc1_eq] at h; omega
+      ·
+        have hc2_col : d.cell2.1 = 0 := by rw [hc1_eq] at h
+        omega
         have hge1 : d.cell2.1 ≥ 1 := hd_c2_in.1
         omega
-  · have hc2_eq : d.cell2 = (1, 1) := hc2.symm
+  ·
+    have hc2_eq : d.cell2 = (1, 1) := hc2.symm
     obtain ⟨hcol, hrow⟩ | ⟨hrow, hcol⟩ := d.adjacent
-    · have hc1_col : d.cell1.1 = 1 := by rw [hcol, hc2_eq]
-      rcases hrow with h | h
-      · have hc1_row : d.cell1.2 = 0 := by rw [hc2_eq] at h; omega
+    ·
+      have hc1_col : d.cell1.1 = 1 := by rw [hcol, hc2_eq]
+      obtain h | h := hrow
+      ·
+        have hc1_row : d.cell1.2 = 0 := by rw [hc2_eq] at h
+        omega
         have hge1 : d.cell1.2 ≥ 1 := hd_c1_in.2.2.1
         omega
-      · have hc1_eq : d.cell1 = (1, 2) := by ext; exact hc1_col; rw [hc2_eq] at h; omega
+      ·
+        have hc1_eq : d.cell1 = (1, 2) := by ext
+        exact hc1_col
+        rw [hc2_eq] at h
+        omega
         exfalso; apply hd_not_12; simp [Domino.cells, hc1_eq]
-    · have hc1_row : d.cell1.2 = 1 := by rw [hrow, hc2_eq]
-      rcases hcol with h | h
-      · have hc1_col : d.cell1.1 = 0 := by rw [hc2_eq] at h; omega
+    ·
+      have hc1_row : d.cell1.2 = 1 := by rw [hrow, hc2_eq]
+      obtain h | h := hcol
+      ·
+        have hc1_col : d.cell1.1 = 0 := by rw [hc2_eq] at h
+        omega
         have hge1 : d.cell1.1 ≥ 1 := hd_c1_in.1
         omega
-      · have hc1_eq' : d.cell1 = (2, 1) := by ext; rw [hc2_eq] at h; omega; exact hc1_row
+      ·
+        have hc1_eq' : d.cell1 = (2, 1) := by ext
+        rw [hc2_eq] at h
+        omega
+        exact hc1_row
         simp only [Domino.cells, hc1_eq', hc2_eq, Finset.pair_comm]
 
 

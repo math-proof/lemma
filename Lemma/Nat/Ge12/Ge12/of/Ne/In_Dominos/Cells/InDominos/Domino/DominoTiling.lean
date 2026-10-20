@@ -29,7 +29,8 @@ private lemma main
   have hv_11 : (1, 1) ∈ v.cells := by rw [hv_cells]; simp [vertical_1_1_cells]
   have hv_12 : (1, 2) ∈ v.cells := by rw [hv_cells]; simp [vertical_1_1_cells]
   constructor
-  · by_contra h
+  ·
+    by_contra h
     push Not at h
     have h1 : d.cell1.1 = 1 := by omega
     have hd_in := T.dominos_in_rect d hd
@@ -37,12 +38,15 @@ private lemma main
     have hc1_in_rect := hd_in hc1_in_d
     rw [mem_Rectangle] at hc1_in_rect
     have hrow_bound : d.cell1.2 = 1 ∨ d.cell1.2 = 2 := by omega
-    rcases hrow_bound with hr1 | hr2
-    · have heq : d.cell1 = (1, 1) := Prod.ext h1 hr1
+    obtain hr1 | hr2 := hrow_bound
+    ·
+      have heq : d.cell1 = (1, 1) := Prod.ext h1 hr1
       exact hdisj d.cell1 hc1_in_d (1, 1) hv_11 heq
-    · have heq : d.cell1 = (1, 2) := Prod.ext h1 hr2
+    ·
+      have heq : d.cell1 = (1, 2) := Prod.ext h1 hr2
       exact hdisj d.cell1 hc1_in_d (1, 2) hv_12 heq
-  · by_contra h
+  ·
+    by_contra h
     push Not at h
     have h2 : d.cell2.1 = 1 := by omega
     have hd_in := T.dominos_in_rect d hd
@@ -50,10 +54,12 @@ private lemma main
     have hc2_in_rect := hd_in hc2_in_d
     rw [mem_Rectangle] at hc2_in_rect
     have hrow_bound : d.cell2.2 = 1 ∨ d.cell2.2 = 2 := by omega
-    rcases hrow_bound with hr1 | hr2
-    · have heq : d.cell2 = (1, 1) := Prod.ext h2 hr1
+    obtain hr1 | hr2 := hrow_bound
+    ·
+      have heq : d.cell2 = (1, 1) := Prod.ext h2 hr1
       exact hdisj d.cell2 hc2_in_d (1, 1) hv_11 heq
-    · have heq : d.cell2 = (1, 2) := Prod.ext h2 hr2
+    ·
+      have heq : d.cell2 = (1, 2) := Prod.ext h2 hr2
       exact hdisj d.cell2 hc2_in_d (1, 2) hv_12 heq
 
 

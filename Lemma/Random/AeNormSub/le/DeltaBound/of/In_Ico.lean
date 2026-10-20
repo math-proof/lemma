@@ -6,7 +6,7 @@ open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Mode
 
 private lemma Vc_bdd [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A] (M : Model Θ S A) (θ : Θ) {γ : ℝ} (hγ : γ ∈ Set.Ico 0 1) (x : S) :
   ‖M.Vc θ γ x‖ ≤ (1 - γ)⁻¹ * |M.env.R| := by
-  rw [Vc.eq.TSum_MulPowIntegral.of.In_Ico (M := M) θ x]
+  rw [Vc.eq.TSum_MulPowIntegral.of.In_Ico (M := M) hγ θ x]
   refine tsum_of_norm_bounded ((hasSum_geometric_of_lt_one hγ.1 hγ.2).mul_right _) fun k => ?_
   rw [norm_mul, norm_pow, Real.norm_of_nonneg hγ.1]
   apply mul_le_mul_of_nonneg_left (NormW.le.Abs_R (M := M) θ k x) (pow_nonneg hγ.1 k)

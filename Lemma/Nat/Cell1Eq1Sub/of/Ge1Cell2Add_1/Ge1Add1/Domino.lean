@@ -14,10 +14,10 @@ private lemma main
 -- given
   (d : Domino)
   (k : ℕ)
-  (h1 : d.cell1.1 ≥ k + 1)
-  (h2 : d.cell2.1 ≥ k + 1) :
+  (h0 : d.cell1.1 ≥ k + 1)
+  (h1 : d.cell2.1 ≥ k + 1) :
 -- imply
-  (d.shiftNeg k h1 h2).cell1 = (d.cell1.1 - k, d.cell1.2) :=
+  (d.shiftNeg k h0 h1).cell1 = (d.cell1.1 - k, d.cell1.2) :=
 -- proof
   rfl
 

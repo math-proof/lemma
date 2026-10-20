@@ -11,7 +11,6 @@ open Finset
 -/
 @[path]
 private lemma main
-  {α β : Type*}
   [DecidableEq α]
   [DecidableEq β]
 -- given
@@ -26,12 +25,18 @@ private lemma main
   ext b
   simp only [Finset.mem_image, Finset.mem_insert, Finset.mem_erase]
   constructor
-  · rintro ⟨a, (rfl | ⟨hne, ha⟩), hab⟩
-    · refine ⟨v, hv, ?_⟩; rw [hf]; exact hab
+  ·
+    rintro ⟨a, (rfl | ⟨hne, ha⟩), hab⟩
+    ·
+      refine ⟨v, hv, ?_⟩
+      rwa [hf]
     · exact ⟨a, ha, hab⟩
-  · rintro ⟨a, ha, rfl⟩
+  ·
+    rintro ⟨a, ha, rfl⟩
     by_cases h : a = v
-    · subst h; exact ⟨w, Or.inl rfl, hf.symm⟩
+    ·
+      subst h
+      exact ⟨w, Or.inl rfl, hf.symm⟩
     · exact ⟨a, Or.inr ⟨h, ha⟩, rfl⟩
 
 

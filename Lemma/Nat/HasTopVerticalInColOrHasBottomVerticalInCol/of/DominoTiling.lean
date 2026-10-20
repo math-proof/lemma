@@ -39,11 +39,11 @@ private lemma main
   have hadj := d.adjacent
   obtain ⟨_, hrow_rel⟩ | ⟨_, hcol_rel⟩ := hadj
   · -- Vertical case: same column, adjacent rows
-    rcases hrow_rel with h1 | h2
+    obtain h1 | h2 := hrow_rel
     · -- cell1.2 + 1 = cell2.2: rows are (r, r+1) for some r
       -- With bounds 1 ≤ row ≤ 3, we have r ∈ {1, 2}
       have : d.cell1.2 = 1 ∨ d.cell1.2 = 2 := by omega
-      rcases this with h | h
+      obtain h | h := this
       · -- rows 1 and 2: bottom vertical
         right
         exact ⟨d, hd_mem, hd_vert, hd_col, Or.inl ⟨h, by omega⟩⟩
@@ -52,7 +52,7 @@ private lemma main
         exact ⟨d, hd_mem, hd_vert, hd_col, Or.inl ⟨by omega, by omega⟩⟩
     · -- cell2.2 + 1 = cell1.2
       have : d.cell2.2 = 1 ∨ d.cell2.2 = 2 := by omega
-      rcases this with h | h
+      obtain h | h := this
       · -- rows 2 and 1: bottom vertical
         right
         exact ⟨d, hd_mem, hd_vert, hd_col, Or.inr ⟨by omega, h⟩⟩
@@ -64,7 +64,7 @@ private lemma main
     -- This contradicts being horizontal (adjacent columns)
     exfalso
     unfold Domino.isVertical at hd_vert
-    rcases hcol_rel with h | h <;> omega
+    obtain h | h := hcol_rel <;> omega
 
 
 -- created on 2026-10-20

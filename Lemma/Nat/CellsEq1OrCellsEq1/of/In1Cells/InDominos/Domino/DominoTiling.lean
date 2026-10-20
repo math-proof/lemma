@@ -25,40 +25,50 @@ private lemma main
   rw [mem_Rectangle] at hc1_in hc2_in
   simp only [Domino.cells, Finset.mem_insert, Finset.mem_singleton] at hcov
   obtain ⟨hcol, hrow⟩ | ⟨hrow, hcol⟩ := d.adjacent
-  · left
-    rcases hcov with heq | heq
-    · have hc1_1 : d.cell1.1 = 1 := congrArg Prod.fst heq.symm
+  ·
+    left
+    obtain heq | heq := hcov
+    ·
+      have hc1_1 : d.cell1.1 = 1 := congrArg Prod.fst heq.symm
       have hc1_2 : d.cell1.2 = 1 := congrArg Prod.snd heq.symm
       have hc2_1 : d.cell2.1 = 1 := by omega
-      rcases hrow with h | h
-      · have hc2_2 : d.cell2.2 = 2 := by omega
+      obtain h | h := hrow
+      ·
+        have hc2_2 : d.cell2.2 = 2 := by omega
         have hc2 : d.cell2 = (1, 2) := Prod.ext hc2_1 hc2_2
         simp only [Domino.cells, heq.symm, hc2]
       · omega
-    · have hc2_1 : d.cell2.1 = 1 := congrArg Prod.fst heq.symm
+    ·
+      have hc2_1 : d.cell2.1 = 1 := congrArg Prod.fst heq.symm
       have hc2_2 : d.cell2.2 = 1 := congrArg Prod.snd heq.symm
       have hc1_1 : d.cell1.1 = 1 := by omega
-      rcases hrow with h | h
+      obtain h | h := hrow
       · omega
-      · have hc1_2 : d.cell1.2 = 2 := by omega
+      ·
+        have hc1_2 : d.cell1.2 = 2 := by omega
         have hc1 : d.cell1 = (1, 2) := Prod.ext hc1_1 hc1_2
         simp only [Domino.cells, hc1, heq.symm, Finset.pair_comm]
-  · right
-    rcases hcov with heq | heq
-    · have hc1_1 : d.cell1.1 = 1 := congrArg Prod.fst heq.symm
+  ·
+    right
+    obtain heq | heq := hcov
+    ·
+      have hc1_1 : d.cell1.1 = 1 := congrArg Prod.fst heq.symm
       have hc1_2 : d.cell1.2 = 1 := congrArg Prod.snd heq.symm
       have hc2_2 : d.cell2.2 = 1 := by omega
-      rcases hcol with h | h
-      · have hc2_1 : d.cell2.1 = 2 := by omega
+      obtain h | h := hcol
+      ·
+        have hc2_1 : d.cell2.1 = 2 := by omega
         have hc2 : d.cell2 = (2, 1) := Prod.ext hc2_1 hc2_2
         simp only [Domino.cells, heq.symm, hc2]
       · omega
-    · have hc2_1 : d.cell2.1 = 1 := congrArg Prod.fst heq.symm
+    ·
+      have hc2_1 : d.cell2.1 = 1 := congrArg Prod.fst heq.symm
       have hc2_2 : d.cell2.2 = 1 := congrArg Prod.snd heq.symm
       have hc1_2 : d.cell1.2 = 1 := by omega
-      rcases hcol with h | h
+      obtain h | h := hcol
       · omega
-      · have hc1_1 : d.cell1.1 = 2 := by omega
+      ·
+        have hc1_1 : d.cell1.1 = 2 := by omega
         have hc1 : d.cell1 = (2, 1) := Prod.ext hc1_1 hc1_2
         simp only [Domino.cells, hc1, heq.symm, Finset.pair_comm]
 

@@ -18,7 +18,7 @@ private lemma obj_eq
   simp_rw [Integral_R.eq.Sum_MulRealWRc (M := M) h₁ θ]
   rw [TSum_MulPowSum_Mul.eq.Sum_Mul_TSum_MulPow.of.All_Summable_MulPow _
     (fun x => Summable_MulPowWRc.of.In_Ico (M := M) hγ θ x)]
-  simp_rw [← Vc.eq.TSum_MulPowIntegral.of.In_Ico (M := M) θ]
+  simp_rw [← Vc.eq.TSum_MulPowIntegral.of.In_Ico (M := M) hγ θ]
 
 /--
 `∇ ∑' t, γ ^ t * 𝔼[r[t]] = ∑ x, Pr(s[0] = x) • ∇ Vc(x)`

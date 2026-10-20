@@ -19,9 +19,13 @@ private lemma main
 -- proof
   obtain ⟨d, hd_mem, hd_cells⟩ := hvert
   have hd_eq := eq_vertical_1_1_of_cells_eq d (by rw [hd_cells]; rfl)
-  rcases hd_eq with rfl | rfl
-  · left; exact hd_mem
-  · right; exact hd_mem
+  obtain rfl | rfl := hd_eq
+  ·
+    left
+    exact hd_mem
+  ·
+    right
+    exact hd_mem
 
 
 -- created on 2026-10-20

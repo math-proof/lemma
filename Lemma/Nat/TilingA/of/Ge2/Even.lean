@@ -4,19 +4,8 @@ import sympy.matrices.determinants.DominoTilings
 open DominoTilings
 open Domino DominoTiling
 open Finset
+set_option linter.unusedSimpArgs false
 
-
--- Private helpers (ported from sympy DominoTilings; file-local)
-
-private lemma middleDominos_mem (n i : ℕ) (hi : i < n / 2 - 1) :
-    ∃ d ∈ middleDominos n, d.cell1 = (2 * i + 2, 2) ∧ d.cell2 = (2 * i + 3, 2) := by
-  simp only [middleDominos, Finset.mem_map, Finset.mem_range]
-  refine ⟨_, ⟨i, hi, rfl⟩, rfl, rfl⟩
-
-private lemma basementDominos_mem (n i : ℕ) (hi : i < n / 2) :
-    ∃ d ∈ basementDominos n, d.cell1 = (2 * i + 1, 1) ∧ d.cell2 = (2 * i + 2, 1) := by
-  simp only [basementDominos, Finset.mem_map, Finset.mem_range]
-  refine ⟨_, ⟨i, hi, rfl⟩, rfl, rfl⟩
 
 /--
 [DominoTilings](https://github.com/facebookresearch/algebraic-combinatorics/blob/main/AlgebraicCombinatorics/Details/DominoTilings.lean)
@@ -35,7 +24,7 @@ private lemma main
   push Not
   intro _ _
   -- We need to find a domino that spans column k
-  rcases Nat.even_or_odd k with hk_even | hk_odd
+  obtain hk_even | hk_odd := Nat.even_or_odd k
   · -- k is even, so k = 2j for some j ≥ 1
     obtain ⟨j, hj⟩ := hk_even
     have hj_pos : j ≥ 1 := by omega

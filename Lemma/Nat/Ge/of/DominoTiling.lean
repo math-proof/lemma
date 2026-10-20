@@ -24,7 +24,7 @@ private lemma main
   have hcell1 : d.cell1 ∈ d.cells := by simp [Domino.cells]
   have hcell1_rect : d.cell1 ∈ Rectangle n 3 := h hcell1
   simp only [Rectangle, Finset.mem_map, Finset.mem_product, Finset.mem_range,
-             ← Function.Embedding.toFun_eq_coe] at hcell1_rect
+            ← Function.Embedding.toFun_eq_coe] at hcell1_rect
   obtain ⟨⟨x, y⟩, ⟨hx, hy⟩, hxy⟩ := hcell1_rect
   have hcell1_fst : d.cell1.1 = x + 1 := by
     have : (x + 1, y + 1) = d.cell1 := hxy

@@ -17,10 +17,12 @@ private lemma main
   d.isVertical ↔ ¬d.isHorizontal := by
 -- proof
   constructor
-  · intro hV hH
+  ·
+    intro hV hH
     exact d.not_isHorizontal_and_isVertical ⟨hH, hV⟩
-  · intro hNH
-    rcases d.isHorizontal_or_isVertical with hH | hV
+  ·
+    intro hNH
+    obtain hH | hV := d.isHorizontal_or_isVertical
     · exact absurd hH hNH
     · exact hV
 

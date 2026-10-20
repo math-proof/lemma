@@ -20,7 +20,7 @@ private lemma main
   d = vertical_1_1 := by
 -- proof
   simp only [prependVertical, Finset.mem_insert, Finset.mem_image] at hd
-  rcases hd with rfl | ⟨d', _, rfl⟩
+  obtain rfl | ⟨d', _, rfl⟩ := hd
   · rfl
   · -- d = d'.shiftNat 1, but shifted dominos have column ≥ 2
     have hcols := domino_cells_col_ge_one T d' (by assumption)

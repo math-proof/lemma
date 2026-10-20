@@ -17,7 +17,7 @@ private lemma main :
   simp only [DominoTiling.hasVerticalInCol, TilingC, Finset.mem_insert, Finset.mem_singleton,
     Domino.isVertical]
   intro ⟨d, hd_mem, hd_vert, hd_col⟩
-  rcases hd_mem with rfl | rfl | rfl <;> simp_all
+  obtain rfl | rfl | rfl := hd_mem <;> simp_all
 
 
 -- created on 2026-10-20

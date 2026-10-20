@@ -37,20 +37,25 @@ noncomputable def Pn (M : Model Θ S A) (θ : Θ) (n : ℕ) (x y : S) : ℝ :=
 noncomputable def P1 (M : Model Θ S A) (θ : Θ) (x y : S) : ℝ :=
   ∑ u, M.policy.prob θ x u * (M.env.trans (x, u)).real {y}
 
-/-- time-free closed form of the state-value function: `Vc θ γ x = (γ ^ (id : ℕ → ℕ)) @ W` where `W k = 𝔼[r[t+k] | s[t] = x]` -/
+/-- Textbook state value (time-free closed form), matching local `V` in Lemma/Random:
+`Vc θ γ x = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[0:] | s 0 = x)`,
+where `(r t ω, s t ω, _) = ω t` on the trajectory space. -/
 noncomputable def Vc (M : Model Θ S A) (θ : Θ) (γ : ℝ) (x : S) : ℝ :=
-  let rc := fun w : ℝ × S × A => clip w.1 (-M.env.R) M.env.R
-  let W (j : ℕ) : ℝ :=
-    let z : ℝ × S × A → ℝ × S × A := id
-    have : PSpace (M.stageK θ x) z := { aemeasurable := measurable_id.aemeasurable }
-    𝔼[z : M.stageK θ x](M.Kf θ rc j z)
-  (γ ^ (id : ℕ → ℕ)) @ W
+  let r : ℕ → (ℕ → ℝ × S × A) → ℝ := fun t ω => (ω t).1
+  let s : ℕ → (ℕ → ℝ × S × A) → S := fun t ω => (ω t).2.1
+  𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[0:] | s 0 = x)
 
 /-- time-free closed form of the action-value function:
-`Qc θ γ x u = 𝔼[r | x, u] + γ * ∑ y, Pr(s' = y | x, u) * Vc θ γ y` -/
+`Qc θ γ x u = 𝔼[ρ : reward(x,u)](clip ρ) + γ * 𝔼[y : trans(x,u)](Vc θ γ y)` -/
 noncomputable def Qc (M : Model Θ S A) (θ : Θ) (γ : ℝ) (x : S) (u : A) : ℝ :=
-  (∫ ρ, clip ρ (-M.env.R) M.env.R ∂(M.env.reward (x, u))) +
-    γ * ∑ y, (M.env.trans (x, u)).real {y} * M.Vc θ γ y
+  have := M.env.reward_markov
+  have := M.env.trans_markov
+  let ρ : ℝ → ℝ := id
+  have : PSpace (M.env.reward (x, u)) ρ := { aemeasurable := measurable_id.aemeasurable }
+  let y : S → S := id
+  have : PSpace (M.env.trans (x, u)) y := { aemeasurable := measurable_id.aemeasurable }
+  𝔼[ρ : M.env.reward (x, u)](clip ρ (-M.env.R) M.env.R) +
+    γ * 𝔼[y : M.env.trans (x, u)](M.Vc θ γ y)
 
 end Model
 

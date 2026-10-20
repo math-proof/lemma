@@ -16,17 +16,19 @@ private lemma main
 -- imply
   hasVerticalFirstColumn T ∨
       (∃ d₁ ∈ T.dominos, d₁.cells = ({(1, 1), (2, 1)} : Finset Cell)) ∧
-      (∃ d₂ ∈ T.dominos, d₂.cells = ({(1, 2), (2, 2)} : Finset Cell))
-  := by
+      (∃ d₂ ∈ T.dominos, d₂.cells = ({(1, 2), (2, 2)} : Finset Cell)) := by
 -- proof
   obtain ⟨d, hd_mem, hd_cov⟩ := exists_domino_covering_11 T
-  rcases domino_covering_11_cells T d hd_mem hd_cov with hvert | hhoriz
-  · left
+  obtain hvert | hhoriz := domino_covering_11_cells T d hd_mem hd_cov
+  ·
+    left
     exact ⟨d, hd_mem, hvert⟩
-  · right
+  ·
+    right
     constructor
     · exact ⟨d, hd_mem, hhoriz⟩
-    · obtain ⟨d', hd'_mem, hd'_ne, hd'_cov⟩ := exists_domino_covering_12_of_horizontal T d hd_mem hhoriz
+    ·
+      obtain ⟨d', hd'_mem, hd'_ne, hd'_cov⟩ := exists_domino_covering_12_of_horizontal T d hd_mem hhoriz
       exact ⟨d', hd'_mem, domino_covering_12_cells T d d' hd_mem hd'_mem hd'_ne hhoriz hd'_cov⟩
 
 

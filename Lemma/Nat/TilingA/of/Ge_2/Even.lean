@@ -21,18 +21,23 @@ private lemma main
   -- We show that leftWall is in the dominos and satisfies the property
   use leftWall
   constructor
-  · -- leftWall ∈ dominos
+  ·
+    -- leftWall ∈ dominos
     simp only [TilingA, Finset.mem_union, Finset.mem_singleton]
     left; left; left; right
     trivial
-  · -- leftWall.isVertical ∧ leftWall.cell1.1 = 1 ∧ ...
+  ·
+    -- leftWall.isVertical ∧ leftWall.cell1.1 = 1 ∧ ...
     constructor
-    · -- isVertical: cell1.1 = cell2.1 = 1
+    ·
+      -- isVertical: cell1.1 = cell2.1 = 1
       rfl
     constructor
-    · -- cell1.1 = 1
+    ·
+      -- cell1.1 = 1
       rfl
-    · -- rows condition: cell1.2 = 3 - 1 = 2 and cell2.2 = 3
+    ·
+      -- rows condition: cell1.2 = 3 - 1 = 2 and cell2.2 = 3
       left
       constructor <;> rfl
 

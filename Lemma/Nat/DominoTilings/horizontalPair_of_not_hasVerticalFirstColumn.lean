@@ -16,10 +16,9 @@ private lemma main
   (hnotvert : ¬hasVerticalFirstColumn T) :
 -- imply
   (∃ d₁ ∈ T.dominos, d₁.cells = ({(1, 1), (2, 1)} : Finset Cell)) ∧
-      (∃ d₂ ∈ T.dominos, d₂.cells = ({(1, 2), (2, 2)} : Finset Cell))
-  := by
+      (∃ d₂ ∈ T.dominos, d₂.cells = ({(1, 2), (2, 2)} : Finset Cell)) := by
 -- proof
-  rcases hasVerticalFirstColumn_or_horizontalPair T with hvert | hhoriz
+  obtain hvert | hhoriz := hasVerticalFirstColumn_or_horizontalPair T
   · exact absurd hvert hnotvert
   · exact hhoriz
 

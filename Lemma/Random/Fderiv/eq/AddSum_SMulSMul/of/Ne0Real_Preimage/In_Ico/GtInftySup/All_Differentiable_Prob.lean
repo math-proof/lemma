@@ -1,7 +1,9 @@
 import Lemma.Random.EqFderiv_FunVc_AddSum_SMulSMulSum_SMul.of.In_Ico.GtInftySup_Norm.All_AllDifferentiable_FunPolProb
 import Lemma.Random.Fderiv_V.eq.Fderiv_Vc.of.Ne0Real_Preimage.In_Ico.GtInftySup.All_Differentiable_Prob
 import Lemma.Random.Fderiv_FunProbPol.eq.Zero.of.ProbPolEq0
+import Lemma.Random.Integral.eq.Sum_MulRealEq
 import Lemma.Random.Q.eq.AddIntegral_RcMul_Sum_MulTTSum_MulPowW.of.NeMulRealPreimageSProb_0.In_Ico
+import Lemma.Random.Vc.eq.TSum_MulPowIntegral.of.In_Ico
 import Lemma.Random.RealPreimageS_Add_1.ne.Zero.of.NeMulProbT_0.Ne0Real_Preimage
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
 
@@ -24,8 +26,21 @@ private lemma Q_eq_Qc
     𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = x ∧ a t = u);
   Q θ t x u = M.Qc θ γ x u := by
   intro Qθ
-  simpa [Model.Qc, Vc.eq.TSum_MulPowIntegral.of.In_Ico (M := M), Expectation.asRV_process, Qθ] using
+  have h :=
     Q.eq.AddIntegral_RcMul_Sum_MulTTSum_MulPowW.of.NeMulRealPreimageSProb_0.In_Ico (M := M) θ t x u hγ h₁ hP
+  simp only [Qθ, Expectation.asRV_process] at h ⊢
+  unfold Model.Qc
+  simp only [Expectation.ofRV, expectation_real, Expectation.asRV_function, Measure.map_id]
+  simp_rw [Vc.eq.TSum_MulPowIntegral.of.In_Ico (M := M) hγ] at h ⊢
+  have := M.env.trans_markov
+  have : IsProbabilityMeasure (M.env.trans (x, u)) := inferInstance
+  have hE : ∫ y, ∑' k, γ ^ k * ∫ z, M.Kf θ (fun z ↦ clip z.1 (-M.env.R) M.env.R) k z ∂(M.stageK θ y)
+      ∂(M.env.trans (x, u)) =
+      ∑ y, (M.env.trans (x, u)).real {y} *
+        ∑' k, γ ^ k * ∫ z, M.Kf θ (fun z ↦ clip z.1 (-M.env.R) M.env.R) k z ∂(M.stageK θ y) := by
+    simpa using Integral.eq.Sum_MulRealEq (μ := M.env.trans (x, u)) (L := (id : S → S))
+      (fun y => ∑' k, γ ^ k * ∫ z, M.Kf θ (fun z ↦ clip z.1 (-M.env.R) M.env.R) k z ∂(M.stageK θ y))
+  simpa [hE] using h
 
 /--
 policy-gradient recursion for the model value functions on a reachable state

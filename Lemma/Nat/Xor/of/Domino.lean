@@ -16,7 +16,7 @@ private lemma main
 -- imply
   Xor d.isHorizontal d.isVertical := by
 -- proof
-  rcases d.isHorizontal_or_isVertical with hH | hV
+  obtain hH | hV := d.isHorizontal_or_isVertical
   · exact Or.inl ⟨hH, fun hV => d.not_isHorizontal_and_isVertical ⟨hH, hV⟩⟩
   · exact Or.inr ⟨hV, fun hH => d.not_isHorizontal_and_isVertical ⟨hH, hV⟩⟩
 

@@ -1,6 +1,6 @@
 import Mathlib
 import sympy.Basic
-open CategoryTheory AlgebraicGeometry
+open CategoryTheory AlgebraicGeometry TopologicalSpace
 set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
@@ -13,7 +13,7 @@ universe u
 -/
 @[path]
 private lemma main
-  {Y : (Scheme : Type (u + 1))} {ι : Type*} [Fintype ι] (Z : ι → Closeds Y) (hdisj : Pairwise fun i j => Disjoint (Z i) (Z j))
+  {Y : (Scheme : Type (u + 1))} [Fintype ι] (Z : ι → Closeds Y) (hdisj : Pairwise fun i j => Disjoint (Z i) (Z j))
   (J : Y.IdealSheafData) (hrad : J.radical = J) (hsupp : J.support = ⨆ i, Z i) :
   -- imply
   ∏ i, Scheme.IdealSheafData.vanishingIdeal (Z i) = J := by
@@ -33,9 +33,8 @@ private lemma main
     Closeds.ext (Scheme.IdealSheafData.coe_support_vanishingIdeal A)
   have key : ∀ s : Finset ι, ∏ i ∈ s, Scheme.IdealSheafData.vanishingIdeal (Z i) = Scheme.IdealSheafData.vanishingIdeal (s.sup Z) := by
     intro s
-    induction s using Finset.induction_on
-    ·
-      simp
+    apply Finset.induction_on (motive := fun s => ∏ i ∈ s, Scheme.IdealSheafData.vanishingIdeal (Z i) = Scheme.IdealSheafData.vanishingIdeal (s.sup Z)) s
+    · simp
     ·
       intro a s ha ih
       rw [Finset.prod_insert ha, ih, Finset.sup_insert, Scheme.IdealSheafData.vanishingIdeal_sup]
@@ -43,7 +42,9 @@ private lemma main
       apply hcop
       rw [hsuppV, hsuppV, Finset.disjoint_sup_right]
       intro i hi
-      apply hdisj (fun h => ha (h ▸ hi))
+      apply hdisj
+      intro h
+      apply ha (h ▸ hi)
   rw [key, Finset.sup_univ_eq_iSup, ← hsupp, Scheme.IdealSheafData.vanishingIdeal_support, hrad]
 
 

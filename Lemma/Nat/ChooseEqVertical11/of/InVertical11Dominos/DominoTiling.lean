@@ -18,11 +18,11 @@ private lemma main
 -- imply
   Classical.choose hv = vertical_1_1 := by
 -- proof
-  have hspec := Classical.choose_spec hv
-  -- The chosen domino has cells = vertical_1_1.cells, so it's either vertical_1_1 or vertical_1_1_flip
-  rcases eq_vertical_1_1_of_cells_eq _ hspec.2 with heq | heq
+  have hspec := Classical.choose_spec hv -- The chosen domino has cells = vertical_1_1.cells, so it's either vertical_1_1 or vertical_1_1_flip
+  obtain heq | heq := eq_vertical_1_1_of_cells_eq _ hspec.2
   · exact heq
-  · -- If it were vertical_1_1_flip, then vertical_1_1_flip ∈ T.dominos
+  ·
+    -- If it were vertical_1_1_flip, then vertical_1_1_flip ∈ T.dominos
     -- But vertical_1_1 ∈ T.dominos, so by disjointness, vertical_1_1_flip ∉ T.dominos
     exfalso
     rw [heq] at hspec

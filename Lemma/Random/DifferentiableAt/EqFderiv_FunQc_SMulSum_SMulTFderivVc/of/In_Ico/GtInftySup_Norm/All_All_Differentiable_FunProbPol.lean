@@ -1,4 +1,5 @@
 import Lemma.Random.Differentiable_FunVc.of.InIco0.GtInftySup_Norm.All_All_Differentiable_FunPolProb
+import Lemma.Random.Integral.eq.Sum_MulRealEq
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
 
 
@@ -24,10 +25,23 @@ private lemma main
   obtain ⟨Cp, hCp⟩ := id h₁
   have hC : ∀ θ x u, ‖fderiv ℝ (fun θ => M.policy.prob θ x u) θ‖ ≤ Cp := fun θ x u => by
     simpa [gradient, LinearIsometryEquiv.norm_map] using hCp ⟨(θ, x, u), rfl⟩
+  have := M.env.trans_markov
+  have := M.env.reward_markov
+  have hQc : (fun θ => M.Qc θ γ x u) = fun θ =>
+      (∫ ρ, clip ρ (-M.env.R) M.env.R ∂(M.env.reward (x, u))) +
+        γ * ∑ y, (M.env.trans (x, u)).real {y} * M.Vc θ γ y := by
+    funext θ'
+    unfold Model.Qc
+    simp only [Expectation.ofRV, expectation_real, Expectation.asRV_function, Measure.map_id]
+    have : IsProbabilityMeasure (M.env.trans (x, u)) := inferInstance
+    have hE : ∫ y, M.Vc θ' γ y ∂(M.env.trans (x, u)) =
+        ∑ y, (M.env.trans (x, u)).real {y} * M.Vc θ' γ y := by
+      simpa using Integral.eq.Sum_MulRealEq (μ := M.env.trans (x, u)) (L := (id : S → S)) (M.Vc θ' γ)
+    rw [hE]
   have hs : DifferentiableAt ℝ (fun θ => ∑ y, (M.env.trans (x, u)).real {y} * M.Vc θ γ y) θ :=
     DifferentiableAt.fun_sum fun y _ => ((Differentiable_FunVc.of.InIco0.GtInftySup_Norm.All_All_Differentiable_FunPolProb (M := M) h₀ h₁ h₂ y) θ).const_mul _
+  rw [hQc]
   refine ⟨(hs.const_mul γ).const_add _, ?_⟩
-  unfold Model.Qc
   rw [fderiv_const_add, fderiv_const_mul hs,
     fderiv_fun_sum fun y _ => ((Differentiable_FunVc.of.InIco0.GtInftySup_Norm.All_All_Differentiable_FunPolProb (M := M) h₀ h₁ h₂ y) θ).const_mul _]
   congr 1
@@ -35,3 +49,4 @@ private lemma main
 
 
 -- created on 2026-10-06
+-- updated on 2026-10-20

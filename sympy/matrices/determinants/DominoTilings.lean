@@ -2439,7 +2439,7 @@ theorem tiling_2_from_sum_injective :
 
 /-- For finsets with attach.image and double function application, the image under h is preserved
     when h (g (f x)) = h x. -/
-private theorem image_preserved_under_double_roundtrip' {α β γ : Type*} [DecidableEq α] [DecidableEq β] [DecidableEq γ]
+theorem image_preserved_under_double_roundtrip' {α β γ : Type*} [DecidableEq α] [DecidableEq β] [DecidableEq γ]
     (S : Finset α) (f : (x : α) → x ∈ S → β) (g : β → α) (h : α → γ)
     (hfgh : ∀ x (hx : x ∈ S), h (g (f x hx)) = h x) :
     ((S.attach.image (fun ⟨x, hx⟩ => f x hx)).image g).image h = S.image h := by
@@ -2452,7 +2452,7 @@ private theorem image_preserved_under_double_roundtrip' {α β γ : Type*} [Deci
     exact ⟨g (f x hx), ⟨f x hx, ⟨x, hx, rfl⟩, rfl⟩, hfgh x hx⟩
 
 /-- insert (h v) ((S.erase v).image h) = S.image h when v ∈ S -/
-private theorem insert_erase_image_eq' {α β : Type*} [DecidableEq α] [DecidableEq β]
+theorem insert_erase_image_eq' {α β : Type*} [DecidableEq α] [DecidableEq β]
     (S : Finset α) (v : α) (h : α → β) (hv : v ∈ S) :
     insert (h v) ((S.erase v).image h) = S.image h := by
   ext b
@@ -2467,7 +2467,7 @@ private theorem insert_erase_image_eq' {α β : Type*} [DecidableEq α] [Decidab
     · right; exact ⟨a, ⟨heq, ha⟩, rfl⟩
 
 /-- insert (h v1) (insert (h v2) (((S.erase v1).erase v2).image h)) = S.image h when v1, v2 ∈ S -/
-private theorem insert_insert_erase_erase_image_eq {α β : Type*} [DecidableEq α] [DecidableEq β]
+theorem insert_insert_erase_erase_image_eq {α β : Type*} [DecidableEq α] [DecidableEq β]
     (S : Finset α) (v1 v2 : α) (h : α → β) (hv1 : v1 ∈ S) (hv2 : v2 ∈ S) :
     insert (h v1) (insert (h v2) (((S.erase v1).erase v2).image h)) = S.image h := by
   ext b
@@ -4107,11 +4107,11 @@ theorem reflectCell3_involutive (c : Cell) (h1 : c.2 ≥ 1) (h2 : c.2 ≤ 3) :
   ext <;> omega
 
 /-- Helper lemma for nat subtraction injectivity. -/
-private theorem nat_sub_inj_4 {a b : ℕ} (ha : a ≤ 4) (hb : b ≤ 4) (h : 4 - a = 4 - b) : a = b := by
+theorem nat_sub_inj_4 {a b : ℕ} (ha : a ≤ 4) (hb : b ≤ 4) (h : 4 - a = 4 - b) : a = b := by
   omega
 
 /-- For a domino in Rectangle n 3, cell1 has row ≤ 3. -/
-private theorem domino_cell1_row_le' {n : ℕ} {d : Domino} (hd : d.cells ⊆ Rectangle n 3) :
+theorem domino_cell1_row_le' {n : ℕ} {d : Domino} (hd : d.cells ⊆ Rectangle n 3) :
     d.cell1.2 ≤ 3 := by
   have h : d.cell1 ∈ d.cells := by simp [Domino.cells]
   have h' := hd h
@@ -4119,7 +4119,7 @@ private theorem domino_cell1_row_le' {n : ℕ} {d : Domino} (hd : d.cells ⊆ Re
   exact h'.2.2.2
 
 /-- For a domino in Rectangle n 3, cell2 has row ≤ 3. -/
-private theorem domino_cell2_row_le' {n : ℕ} {d : Domino} (hd : d.cells ⊆ Rectangle n 3) :
+theorem domino_cell2_row_le' {n : ℕ} {d : Domino} (hd : d.cells ⊆ Rectangle n 3) :
     d.cell2.2 ≤ 3 := by
   have h : d.cell2 ∈ d.cells := by simp [Domino.cells]
   have h' := hd h
@@ -4127,7 +4127,7 @@ private theorem domino_cell2_row_le' {n : ℕ} {d : Domino} (hd : d.cells ⊆ Re
   exact h'.2.2.2
 
 /-- For a domino in Rectangle n 3, cell1 has row ≥ 1. -/
-private theorem domino_cell1_row_ge' {n : ℕ} {d : Domino} (hd : d.cells ⊆ Rectangle n 3) :
+theorem domino_cell1_row_ge' {n : ℕ} {d : Domino} (hd : d.cells ⊆ Rectangle n 3) :
     d.cell1.2 ≥ 1 := by
   have h : d.cell1 ∈ d.cells := by simp [Domino.cells]
   have h' := hd h
@@ -4135,7 +4135,7 @@ private theorem domino_cell1_row_ge' {n : ℕ} {d : Domino} (hd : d.cells ⊆ Re
   exact h'.2.2.1
 
 /-- For a domino in Rectangle n 3, cell2 has row ≥ 1. -/
-private theorem domino_cell2_row_ge' {n : ℕ} {d : Domino} (hd : d.cells ⊆ Rectangle n 3) :
+theorem domino_cell2_row_ge' {n : ℕ} {d : Domino} (hd : d.cells ⊆ Rectangle n 3) :
     d.cell2.2 ≥ 1 := by
   have h : d.cell2 ∈ d.cells := by simp [Domino.cells]
   have h' := hd h
@@ -4143,7 +4143,7 @@ private theorem domino_cell2_row_ge' {n : ℕ} {d : Domino} (hd : d.cells ⊆ Re
   exact h'.2.2.1
 
 /-- Reflect a domino in a height-3 rectangle. -/
-private def reflectDomino3 (d : Domino) (h1 : d.cell1.2 ≤ 3) (h2 : d.cell2.2 ≤ 3) : Domino where
+def reflectDomino3 (d : Domino) (h1 : d.cell1.2 ≤ 3) (h2 : d.cell2.2 ≤ 3) : Domino where
   cell1 := reflectCell3 d.cell1
   cell2 := reflectCell3 d.cell2
   distinct := by
@@ -4169,7 +4169,7 @@ private def reflectDomino3 (d : Domino) (h1 : d.cell1.2 ≤ 3) (h2 : d.cell2.2 �
       · exact hor
 
 /-- Injectivity lemma for reflectDomino3. -/
-private theorem reflectDomino3_injective {d1 d2 : Domino}
+theorem reflectDomino3_injective {d1 d2 : Domino}
     (h1a : d1.cell1.2 ≤ 3) (h1b : d1.cell2.2 ≤ 3)
     (h2a : d2.cell1.2 ≤ 3) (h2b : d2.cell2.2 ≤ 3)
     (heq : reflectDomino3 d1 h1a h1b = reflectDomino3 d2 h2a h2b) : d1 = d2 := by
@@ -4177,19 +4177,19 @@ private theorem reflectDomino3_injective {d1 d2 : Domino}
   ext <;> omega
 
 /-- Reflecting a cell in Rectangle n 3 stays in Rectangle n 3. -/
-private theorem reflectCell3_mem_Rectangle' {n : ℕ} {c : Cell} (hc : c ∈ Rectangle n 3) :
+theorem reflectCell3_mem_Rectangle' {n : ℕ} {c : Cell} (hc : c ∈ Rectangle n 3) :
     reflectCell3 c ∈ Rectangle n 3 := by
   rw [mem_Rectangle] at hc ⊢
   simp only [reflectCell3]
   omega
 
 /-- Reflecting a domino's cells gives the image under reflectCell3. -/
-private theorem reflectDomino3_cells {d : Domino} (h1 : d.cell1.2 ≤ 3) (h2 : d.cell2.2 ≤ 3) :
+theorem reflectDomino3_cells {d : Domino} (h1 : d.cell1.2 ≤ 3) (h2 : d.cell2.2 ≤ 3) :
     (reflectDomino3 d h1 h2).cells = d.cells.image reflectCell3 := by
   simp only [Domino.cells, reflectDomino3, Finset.image_insert, Finset.image_singleton]
 
 /-- Reflected domino stays in rectangle. -/
-private theorem reflectDomino3_cells_subset {n : ℕ} {d : Domino}
+theorem reflectDomino3_cells_subset {n : ℕ} {d : Domino}
     (hd : d.cells ⊆ Rectangle n 3) (h1 : d.cell1.2 ≤ 3) (h2 : d.cell2.2 ≤ 3) :
     (reflectDomino3 d h1 h2).cells ⊆ Rectangle n 3 := by
   intro c hc
@@ -4199,7 +4199,7 @@ private theorem reflectDomino3_cells_subset {n : ℕ} {d : Domino}
   exact reflectCell3_mem_Rectangle' (hd hc')
 
 /-- reflectCell3 is injective on Rectangle n 3. -/
-private theorem reflectCell3_injective_on_rect {n : ℕ} {c1 c2 : Cell}
+theorem reflectCell3_injective_on_rect {n : ℕ} {c1 c2 : Cell}
     (hc1 : c1 ∈ Rectangle n 3) (hc2 : c2 ∈ Rectangle n 3)
     (heq : reflectCell3 c1 = reflectCell3 c2) : c1 = c2 := by
   rw [mem_Rectangle] at hc1 hc2
@@ -4207,7 +4207,7 @@ private theorem reflectCell3_injective_on_rect {n : ℕ} {c1 c2 : Cell}
   ext <;> omega
 
 /-- reflectCell3 is surjective on Rectangle n 3. -/
-private theorem reflectCell3_surjective_on_rect {n : ℕ} {c : Cell}
+theorem reflectCell3_surjective_on_rect {n : ℕ} {c : Cell}
     (hc : c ∈ Rectangle n 3) : ∃ c' ∈ Rectangle n 3, reflectCell3 c' = c := by
   rw [mem_Rectangle] at hc
   use (c.1, 4 - c.2)
@@ -4293,12 +4293,12 @@ noncomputable def reflectTiling3 {n : ℕ} (T : DominoTiling n 3) : DominoTiling
     exact hdisj c1' hc1' c2' hc2' heq'
 
 /-- reflectDomino3 preserves minCol. -/
-private theorem reflectDomino3_minCol {d : Domino} (h1 : d.cell1.2 ≤ 3) (h2 : d.cell2.2 ≤ 3) :
+theorem reflectDomino3_minCol {d : Domino} (h1 : d.cell1.2 ≤ 3) (h2 : d.cell2.2 ≤ 3) :
     (reflectDomino3 d h1 h2).minCol = d.minCol := by
   simp only [Domino.minCol, reflectDomino3, reflectCell3]
 
 /-- reflectDomino3 preserves maxCol. -/
-private theorem reflectDomino3_maxCol {d : Domino} (h1 : d.cell1.2 ≤ 3) (h2 : d.cell2.2 ≤ 3) :
+theorem reflectDomino3_maxCol {d : Domino} (h1 : d.cell1.2 ≤ 3) (h2 : d.cell2.2 ≤ 3) :
     (reflectDomino3 d h1 h2).maxCol = d.maxCol := by
   simp only [Domino.maxCol, reflectDomino3, reflectCell3]
 
@@ -4633,25 +4633,25 @@ of height-3 rectangles are precisely:
 -/
 
 /-- Helper lemma: a domino from middleDominos. -/
-private theorem middleDominos_mem (n i : ℕ) (hi : i < n / 2 - 1) :
+theorem middleDominos_mem (n i : ℕ) (hi : i < n / 2 - 1) :
     ∃ d ∈ middleDominos n, d.cell1 = (2 * i + 2, 2) ∧ d.cell2 = (2 * i + 3, 2) := by
   simp only [middleDominos, Finset.mem_map, Finset.mem_range]
   refine ⟨_, ⟨i, hi, rfl⟩, rfl, rfl⟩
 
 /-- Helper lemma: a domino from basementDominos. -/
-private theorem basementDominos_mem (n i : ℕ) (hi : i < n / 2) :
+theorem basementDominos_mem (n i : ℕ) (hi : i < n / 2) :
     ∃ d ∈ basementDominos n, d.cell1 = (2 * i + 1, 1) ∧ d.cell2 = (2 * i + 2, 1) := by
   simp only [basementDominos, Finset.mem_map, Finset.mem_range]
   refine ⟨_, ⟨i, hi, rfl⟩, rfl, rfl⟩
 
 /-- Helper lemma: a domino from topDominos. -/
-private theorem topDominos_mem (n i : ℕ) (hi : i < n / 2 - 1) :
+theorem topDominos_mem (n i : ℕ) (hi : i < n / 2 - 1) :
     ∃ d ∈ topDominos n, d.cell1 = (2 * i + 2, 3) ∧ d.cell2 = (2 * i + 3, 3) := by
   simp only [topDominos, Finset.mem_map, Finset.mem_range]
   refine ⟨_, ⟨i, hi, rfl⟩, rfl, rfl⟩
 
 /-- For col in [1,n], there exists i < n/2 such that col ∈ {2i+1, 2i+2}. -/
-private theorem col_in_basement_range (n col : ℕ) (hn : Even n) (hcol_ge : col ≥ 1) (hcol_le : col ≤ n) :
+theorem col_in_basement_range (n col : ℕ) (hn : Even n) (hcol_ge : col ≥ 1) (hcol_le : col ≤ n) :
     ∃ i < n / 2, col = 2 * i + 1 ∨ col = 2 * i + 2 := by
   use (col - 1) / 2
   constructor
@@ -4664,7 +4664,7 @@ private theorem col_in_basement_range (n col : ℕ) (hn : Even n) (hcol_ge : col
     rcases hmod with hmod0 | hmod1 <;> [left; right] <;> omega
 
 /-- For col in [2,n-1], there exists i < n/2-1 such that col ∈ {2i+2, 2i+3}. -/
-private theorem col_in_middle_range (n col : ℕ) (hn : Even n) (hn_ge : n ≥ 2)
+theorem col_in_middle_range (n col : ℕ) (hn : Even n) (hn_ge : n ≥ 2)
     (hcol_ge : col ≥ 2) (hcol_le : col ≤ n - 1) :
     ∃ i < n / 2 - 1, col = 2 * i + 2 ∨ col = 2 * i + 3 := by
   use (col - 2) / 2
@@ -4678,7 +4678,7 @@ private theorem col_in_middle_range (n col : ℕ) (hn : Even n) (hn_ge : n ≥ 2
     rcases hmod with hmod0 | hmod1 <;> [left; right] <;> omega
 
 /-- Row 1 of the rectangle is covered by basement dominos in TilingA. -/
-private theorem TilingA_row1_covered (n col : ℕ) (hn : Even n) (hn_ge : n ≥ 2)
+theorem TilingA_row1_covered (n col : ℕ) (hn : Even n) (hn_ge : n ≥ 2)
     (hcol_ge : col ≥ 1) (hcol_le : col ≤ n) :
     ∃ d ∈ (TilingA n hn hn_ge).dominos, (col, 1) ∈ d.cells := by
   have ⟨i, hi, hcol_eq⟩ := col_in_basement_range n col hn hcol_ge hcol_le
@@ -4691,7 +4691,7 @@ private theorem TilingA_row1_covered (n col : ℕ) (hn : Even n) (hn_ge : n ≥ 
     rcases hcol_eq with rfl | rfl <;> simp
 
 /-- Row 2 of the rectangle is covered by leftWall, rightWall, or middleDominos in TilingA. -/
-private theorem TilingA_row2_covered (n col : ℕ) (hn : Even n) (hn_ge : n ≥ 2)
+theorem TilingA_row2_covered (n col : ℕ) (hn : Even n) (hn_ge : n ≥ 2)
     (hcol_ge : col ≥ 1) (hcol_le : col ≤ n) :
     ∃ d ∈ (TilingA n hn hn_ge).dominos, (col, 2) ∈ d.cells := by
   rcases Nat.eq_or_lt_of_le hcol_ge with rfl | hcol_gt1
@@ -4723,7 +4723,7 @@ private theorem TilingA_row2_covered (n col : ℕ) (hn : Even n) (hn_ge : n ≥ 
         rcases hcol_eq with rfl | rfl <;> simp
 
 /-- Row 3 of the rectangle is covered by leftWall, rightWall, or topDominos in TilingA. -/
-private theorem TilingA_row3_covered (n col : ℕ) (hn : Even n) (hn_ge : n ≥ 2)
+theorem TilingA_row3_covered (n col : ℕ) (hn : Even n) (hn_ge : n ≥ 2)
     (hcol_ge : col ≥ 1) (hcol_le : col ≤ n) :
     ∃ d ∈ (TilingA n hn hn_ge).dominos, (col, 3) ∈ d.cells := by
   rcases Nat.eq_or_lt_of_le hcol_ge with rfl | hcol_gt1
@@ -5032,7 +5032,7 @@ theorem base_case_basement (n : ℕ) (T : DominoTiling n 3)
     - {(2, 2), (3, 2)} (horizontal going right)
     - {(2, 1), (2, 2)} (vertical going down)
     - {(2, 2), (2, 3)} (vertical going up) -/
-private theorem domino_at_22_options (n : ℕ) (d : Domino)
+theorem domino_at_22_options (n : ℕ) (d : Domino)
     (h_in : d.cells ⊆ Rectangle n 3) (h_cov : (2, 2) ∈ d.cells)
     (h_not_12 : (1, 2) ∉ d.cells) :
     d.cells = {(2, 2), (3, 2)} ∨ d.cells = {(2, 1), (2, 2)} ∨ d.cells = {(2, 2), (2, 3)} := by
@@ -5074,7 +5074,7 @@ private theorem domino_at_22_options (n : ℕ) (d : Domino)
     doesn't cover (1, 3), then d.cells is one of:
     - {(2, 3), (3, 3)} (horizontal going right)
     - {(2, 2), (2, 3)} (vertical going down) -/
-private theorem domino_at_23_options (n : ℕ) (d : Domino)
+theorem domino_at_23_options (n : ℕ) (d : Domino)
     (h_in : d.cells ⊆ Rectangle n 3) (h_cov : (2, 3) ∈ d.cells)
     (h_not_13 : (1, 3) ∉ d.cells) :
     d.cells = {(2, 3), (3, 3)} ∨ d.cells = {(2, 2), (2, 3)} := by
@@ -5115,7 +5115,7 @@ private theorem domino_at_23_options (n : ℕ) (d : Domino)
         left; simp only [hc1_eq, hc2_eq, Finset.pair_comm]
 
 /-- Helper: If d.cells = {(1, 1), (2, 1)}, then d.maxCol = 2. -/
-private theorem maxCol_eq_2_of_cells_eq_11_21 (d : Domino) (h : d.cells = {(1, 1), (2, 1)}) :
+theorem maxCol_eq_2_of_cells_eq_11_21 (d : Domino) (h : d.cells = {(1, 1), (2, 1)}) :
     d.maxCol = 2 := by
   simp only [Domino.cells] at h
   have h1 : d.cell1 ∈ ({(1, 1), (2, 1)} : Finset Cell) := by rw [← h]; simp
@@ -5129,7 +5129,7 @@ private theorem maxCol_eq_2_of_cells_eq_11_21 (d : Domino) (h : d.cells = {(1, 1
   · exfalso; exact d.distinct (hc1.trans hc2.symm)
 
 /-- Helper: If d.cells = {(2, 2), (2, 3)}, then d.minCol = d.maxCol = 2. -/
-private theorem minCol_maxCol_eq_2_of_cells_eq_22_23 (d : Domino) (h : d.cells = {(2, 2), (2, 3)}) :
+theorem minCol_maxCol_eq_2_of_cells_eq_22_23 (d : Domino) (h : d.cells = {(2, 2), (2, 3)}) :
     d.minCol = 2 ∧ d.maxCol = 2 := by
   simp only [Domino.cells] at h
   have h1 : d.cell1 ∈ ({(2, 2), (2, 3)} : Finset Cell) := by rw [← h]; simp
@@ -5143,7 +5143,7 @@ private theorem minCol_maxCol_eq_2_of_cells_eq_22_23 (d : Domino) (h : d.cells =
   · exfalso; exact d.distinct (hc1.trans hc2.symm)
 
 /-- Helper: If d.cells = {(2, 1), (2, 2)}, then d.minCol = d.maxCol = 2. -/
-private theorem minCol_maxCol_eq_2_of_cells_eq_21_22 (d : Domino) (h : d.cells = {(2, 1), (2, 2)}) :
+theorem minCol_maxCol_eq_2_of_cells_eq_21_22 (d : Domino) (h : d.cells = {(2, 1), (2, 2)}) :
     d.minCol = 2 ∧ d.maxCol = 2 := by
   simp only [Domino.cells] at h
   have h1 : d.cell1 ∈ ({(2, 1), (2, 2)} : Finset Cell) := by rw [← h]; simp
@@ -5159,7 +5159,7 @@ private theorem minCol_maxCol_eq_2_of_cells_eq_21_22 (d : Domino) (h : d.cells =
 /-- If a domino d covers (c, 1), is contained in Rectangle n 3, and
     doesn't cover (c-1, 1) or (c, 2), then d.cells = {(c, 1), (c+1, 1)}.
     This is the "forced right" lemma for row 1. -/
-private theorem domino_at_c1_forced_right (n c : ℕ) (d : Domino)
+theorem domino_at_c1_forced_right (n c : ℕ) (d : Domino)
     (_hc_ge : c ≥ 1) (_hc_lt : c < n)
     (h_in : d.cells ⊆ Rectangle n 3) (h_cov : (c, 1) ∈ d.cells)
     (h_not_left : (c - 1, 1) ∉ d.cells) (h_not_up : (c, 2) ∉ d.cells) :
@@ -5217,7 +5217,7 @@ private theorem domino_at_c1_forced_right (n c : ℕ) (d : Domino)
     - {(c, 2), (c+1, 2)} (horizontal going right)
     - {(c, 1), (c, 2)} (vertical going down)
     - {(c, 2), (c, 3)} (vertical going up) -/
-private theorem domino_at_c2_options (n c : ℕ) (d : Domino)
+theorem domino_at_c2_options (n c : ℕ) (d : Domino)
     (_hc_ge : c ≥ 1) (_hc_lt : c < n)
     (h_in : d.cells ⊆ Rectangle n 3) (h_cov : (c, 2) ∈ d.cells)
     (h_not_left : (c - 1, 2) ∉ d.cells) :
@@ -5260,7 +5260,7 @@ private theorem domino_at_c2_options (n c : ℕ) (d : Domino)
     doesn't cover (c-1, 3), then d.cells is one of:
     - {(c, 3), (c+1, 3)} (horizontal going right)
     - {(c, 2), (c, 3)} (vertical going down) -/
-private theorem domino_at_c3_options (n c : ℕ) (d : Domino)
+theorem domino_at_c3_options (n c : ℕ) (d : Domino)
     (_hc_ge : c ≥ 1) (_hc_lt : c < n)
     (h_in : d.cells ⊆ Rectangle n 3) (h_cov : (c, 3) ∈ d.cells)
     (h_not_left : (c - 1, 3) ∉ d.cells) :
@@ -5302,7 +5302,7 @@ private theorem domino_at_c3_options (n c : ℕ) (d : Domino)
         left; simp only [hc1_eq, hc2_eq, Finset.pair_comm]
 
 /-- Helper: If d.cells = {(c, 2), (c, 3)}, then d.minCol = d.maxCol = c. -/
-private theorem minCol_maxCol_eq_c_of_cells_eq_c2_c3 (c : ℕ) (d : Domino) (h : d.cells = {(c, 2), (c, 3)}) :
+theorem minCol_maxCol_eq_c_of_cells_eq_c2_c3 (c : ℕ) (d : Domino) (h : d.cells = {(c, 2), (c, 3)}) :
     d.minCol = c ∧ d.maxCol = c := by
   simp only [Domino.cells] at h
   have h1 : d.cell1 ∈ ({(c, 2), (c, 3)} : Finset Cell) := by rw [← h]; simp
@@ -5316,7 +5316,7 @@ private theorem minCol_maxCol_eq_c_of_cells_eq_c2_c3 (c : ℕ) (d : Domino) (h :
   · exfalso; exact d.distinct (hc1.trans hc2.symm)
 
 /-- Helper: If d.cells = {(c, 1), (c, 2)}, then d.minCol = d.maxCol = c. -/
-private theorem minCol_maxCol_eq_c_of_cells_eq_c1_c2 (c : ℕ) (d : Domino) (h : d.cells = {(c, 1), (c, 2)}) :
+theorem minCol_maxCol_eq_c_of_cells_eq_c1_c2 (c : ℕ) (d : Domino) (h : d.cells = {(c, 1), (c, 2)}) :
     d.minCol = c ∧ d.maxCol = c := by
   simp only [Domino.cells] at h
   have h1 : d.cell1 ∈ ({(c, 1), (c, 2)} : Finset Cell) := by rw [← h]; simp
@@ -5330,7 +5330,7 @@ private theorem minCol_maxCol_eq_c_of_cells_eq_c1_c2 (c : ℕ) (d : Domino) (h :
   · exfalso; exact d.distinct (hc1.trans hc2.symm)
 
 /-- Helper: If d.cells = {(c, 1), (c+1, 1)}, then d.maxCol = c+1. -/
-private theorem maxCol_eq_c_add_1_of_cells_eq_c1_c_add_1_1 (c : ℕ) (d : Domino) (h : d.cells = {(c, 1), (c + 1, 1)}) :
+theorem maxCol_eq_c_add_1_of_cells_eq_c1_c_add_1_1 (c : ℕ) (d : Domino) (h : d.cells = {(c, 1), (c + 1, 1)}) :
     d.maxCol = c + 1 := by
   simp only [Domino.cells] at h
   have h1 : d.cell1 ∈ ({(c, 1), (c + 1, 1)} : Finset Cell) := by rw [← h]; simp
@@ -5794,7 +5794,7 @@ theorem faultfree_hasTopVerticalInCol_implies_n_ge_two (n : ℕ) (T : DominoTili
 
 /-- If a domino d has (n, 3) ∈ d.cells and d.cells ⊆ Rectangle n 3, then
     d.cells = {(n-1, 3), (n, 3)} or d.cells = {(n, 2), (n, 3)}. -/
-private theorem domino_at_n3_options (n : ℕ) (d : Domino)
+theorem domino_at_n3_options (n : ℕ) (d : Domino)
     (h_in : d.cells ⊆ Rectangle n 3) (h_cov : (n, 3) ∈ d.cells) :
     d.cells = {(n - 1, 3), (n, 3)} ∨ d.cells = {(n, 2), (n, 3)} := by
   simp only [Domino.cells, Finset.mem_insert, Finset.mem_singleton] at h_cov
@@ -5840,7 +5840,7 @@ private theorem domino_at_n3_options (n : ℕ) (d : Domino)
 
 /-- If a domino d has (n, 1) ∈ d.cells and d.cells ⊆ Rectangle n 3, then
     d.cells = {(n-1, 1), (n, 1)} or d.cells = {(n, 1), (n, 2)}. -/
-private theorem domino_at_n1_options (n : ℕ) (d : Domino)
+theorem domino_at_n1_options (n : ℕ) (d : Domino)
     (h_in : d.cells ⊆ Rectangle n 3) (h_cov : (n, 1) ∈ d.cells) :
     d.cells = {(n - 1, 1), (n, 1)} ∨ d.cells = {(n, 1), (n, 2)} := by
   simp only [Domino.cells, Finset.mem_insert, Finset.mem_singleton] at h_cov

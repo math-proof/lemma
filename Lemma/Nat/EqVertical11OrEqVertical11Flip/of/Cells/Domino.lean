@@ -5,6 +5,7 @@ open DominoTilings
 open Domino DominoTiling
 open Finset
 
+set_option linter.unusedSimpArgs false
 
 /--
 [DominoTilings](https://github.com/facebookresearch/algebraic-combinatorics/blob/main/AlgebraicCombinatorics/Details/DominoTilings.lean)

@@ -21,18 +21,24 @@ private lemma main
   unfold DominoTiling.hasBottomVerticalInCol
   use leftWallB
   constructor
-  · -- leftWallB ∈ (TilingB n hn hn_ge).dominos
+  ·
+    -- leftWallB ∈ (TilingB n hn hn_ge).dominos
     simp only [TilingB, Finset.mem_union, Finset.mem_singleton]
     left; left; left; right
     trivial
-  · constructor
-    · -- leftWallB.isVertical
+  ·
+    constructor
+    ·
+      -- leftWallB.isVertical
       unfold Domino.isVertical
       simp [leftWallB]
-    · constructor
-      · -- leftWallB.cell1.1 = 1
+    ·
+      constructor
+      ·
+        -- leftWallB.cell1.1 = 1
         simp [leftWallB]
-      · -- (leftWallB.cell1.2 = 1 ∧ leftWallB.cell2.2 = 2) ∨ (leftWallB.cell1.2 = 2 ∧ leftWallB.cell2.2 = 1)
+      ·
+        -- (leftWallB.cell1.2 = 1 ∧ leftWallB.cell2.2 = 2) ∨ (leftWallB.cell1.2 = 2 ∧ leftWallB.cell2.2 = 1)
         right
         simp [leftWallB]
 

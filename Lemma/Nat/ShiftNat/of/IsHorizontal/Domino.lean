@@ -18,10 +18,8 @@ private lemma main
 -- imply
   (d.shiftNat k).isHorizontal := by
 -- proof
-    simp only [isHorizontal, shiftNat_cell1, shiftNat_cell2] at h ⊢
-    exact h
-
-  end Domino
+  simp only [isHorizontal, shiftNat_cell1, shiftNat_cell2] at h ⊢
+  exact h
 
 
 -- created on 2026-10-20

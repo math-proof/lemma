@@ -18,7 +18,5 @@ private lemma main
 -- proof
   ⟨tiling_2_to_sum T, tiling_2_roundtrip_TilingEquiv T⟩
 
-end DominoTiling
-
 
 -- created on 2026-10-20

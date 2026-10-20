@@ -13,8 +13,8 @@ open Finset
 private lemma main
 -- given
   (c : Cell)
-  (h1 : c.2 ≥ 1)
-  (h2 : c.2 ≤ 3) :
+  (h0 : c.2 ≥ 1)
+  (h1 : c.2 ≤ 3) :
 -- imply
   reflectCell3 (reflectCell3 c) = c := by
 -- proof

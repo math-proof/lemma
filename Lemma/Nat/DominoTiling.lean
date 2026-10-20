@@ -4,6 +4,7 @@ import sympy.matrices.determinants.DominoTilings
 open DominoTilings
 open Domino DominoTiling
 open Finset
+set_option linter.unusedSimpArgs false
 
 
 /--
@@ -17,14 +18,14 @@ private lemma main
   tiling_2_to_sum (tiling_2_from_sum x) = x := by
 -- proof
   unfold tiling_2_to_sum tiling_2_from_sum
-  rcases x with T | T
+  obtain T | T := x
   · -- Horizontal case: x = inl T
     rw [Sum.elim_inl]
     -- prependHorizontalPair produces a tiling without vertical first column
     have hv : ¬hasVerticalFirstColumn (prependHorizontalPair T) := by
       intro ⟨d, hd_mem, hd_cells⟩
       simp only [prependHorizontalPair, Finset.mem_insert, Finset.mem_image] at hd_mem
-      rcases hd_mem with rfl | rfl | ⟨d', _, rfl⟩
+      obtain rfl | rfl | ⟨d', _, rfl⟩ := hd_mem
       · -- d = horizontal_1_1: cells = {(1,1), (2,1)} ≠ {(1,1), (1,2)}
         simp only [Domino.cells, horizontal_1_1] at hd_cells
         have h1 : ((1, 1) : Cell) ∈ ({(1, 1), (1, 2)} : Finset Cell) := by
