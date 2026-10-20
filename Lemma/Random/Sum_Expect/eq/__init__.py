@@ -1,1 +1,1 @@
-from . import Expect_Sum
+from . import ExpectSum

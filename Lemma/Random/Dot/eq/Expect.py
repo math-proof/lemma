@@ -39,7 +39,7 @@ def prove(Eq):
     Eq << apply(A @ Expectation(x[:n] | s))
 
 
-    Eq << Eq[0].this.rhs.apply(Random.Expect_Dot.eq.Dot_Expect)
+    Eq << Eq[0].this.rhs.apply(Random.ExpectDot.eq.Dot_Expect)
 
 
 

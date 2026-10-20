@@ -34,11 +34,11 @@ def prove(Eq):
 
     Eq.eq_var = Eq[-1].subs(Eq[-2])
 
-    Eq << Expectation(sample_mean).this.apply(Random.Expect_Mul.eq.Mul_Expect)
+    Eq << Expectation(sample_mean).this.apply(Random.ExpectMul.eq.Mul_Expect)
 
     Eq << Eq[-1].this.rhs.find(ReducedSum).apply(Vector.Sum.eq.Sum_Get, k)
 
-    Eq << Eq[-1].this.find(Expectation[Sum]).apply(Random.Expect_Sum.eq.Sum_Expect)
+    Eq << Eq[-1].this.find(Expectation[Sum]).apply(Random.ExpectSum.eq.Sum_Expect)
 
     Eq << Eq[-1].subs(Eq[1])
 

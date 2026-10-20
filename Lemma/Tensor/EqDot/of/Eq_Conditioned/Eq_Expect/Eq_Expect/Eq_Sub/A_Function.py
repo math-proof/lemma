@@ -35,43 +35,43 @@ def prove(Eq):
 
     Eq << Eq.hypothesis.subs(Eq[-1])
 
-    Eq << Eq[-1].this.rhs.find(Stack).apply(Random.Stack_Expect.eq.Expect_Stack)
+    Eq << Eq[-1].this.rhs.find(Stack).apply(Random.Stack_Expect.eq.ExpectStack)
 
     Eq << Eq[-1].this.rhs.apply(Random.Dot.eq.Expect)
 
     Eq << Eq[-1].this.rhs.find(MatMul).apply(Tensor.Dot.eq.Sum_MulGetS)
 
-    Eq << Eq[-1].this.rhs.find(Mul[Expectation]).apply(Random.Mul_Expect.eq.Expect_Mul)
+    Eq << Eq[-1].this.rhs.find(Mul[Expectation]).apply(Random.Mul_Expect.eq.ExpectMul)
 
     Eq << Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-1].this.find(Symbol * Pow).args[:2].apply(Real.MulPowS.eq.Pow_Add.of.Gt_0)
 
-    Eq << Eq[-1].this.rhs.find(Sum[~Expectation]).apply(Random.Expect_Add.eq.AddExpectS)
+    Eq << Eq[-1].this.rhs.find(Sum[~Expectation]).apply(Random.ExpectAdd.eq.AddExpectS)
 
     Eq << Eq[-1].this.rhs.find(Sum).apply(Finset.Sum_Add.eq.AddSumS)
 
-    Eq << Eq[-1].this.rhs.find(Expectation[Conditioned[Pow * Function]]).apply(Random.Expect_Mul.eq.Mul_Expect)
+    Eq << Eq[-1].this.rhs.find(Expectation[Conditioned[Pow * Function]]).apply(Random.ExpectMul.eq.Mul_Expect)
 
-    Eq << Eq[-1].this.rhs.apply(Random.Expect_Add.eq.AddExpectS)
+    Eq << Eq[-1].this.rhs.apply(Random.ExpectAdd.eq.AddExpectS)
 
-    Eq << Eq[-1].this.find(Expectation[-Sum]).apply(Random.Expect_Mul.eq.Mul_Expect)
+    Eq << Eq[-1].this.find(Expectation[-Sum]).apply(Random.ExpectMul.eq.Mul_Expect)
 
-    Eq << Eq[-1].this.find(Expectation[Sum[Expectation]]).apply(Random.Expect_Sum.eq.Sum_Expect)
+    Eq << Eq[-1].this.find(Expectation[Sum[Expectation]]).apply(Random.ExpectSum.eq.Sum_Expect)
 
     Eq << Eq[-1].this.find(Sum[~Expectation]).simplify()
 
     Eq << Eq[-1].this.find(Sum[~Expectation]).apply(Random.Expect.law_of_total_expectation)
 
-    Eq << Eq[-1].this.find(Sum[Expectation]).apply(Random.Sum_Expect.eq.Expect_Sum)
+    Eq << Eq[-1].this.find(Sum[Expectation]).apply(Random.Sum_Expect.eq.ExpectSum)
 
     Eq << Eq[-1].this.find(Expectation[~Sum]).apply(Tensor.Sum.eq.Dot)
 
-    Eq << Eq[-1].this.find(Expectation[MatMul]).apply(Random.Expect_Dot.eq.Dot_Expect)
+    Eq << Eq[-1].this.find(Expectation[MatMul]).apply(Random.ExpectDot.eq.Dot_Expect)
 
-    Eq << Eq[-1].this.find(Expectation[Sum]).apply(Random.Expect_Sum.eq.Sum_Expect)
+    Eq << Eq[-1].this.find(Expectation[Sum]).apply(Random.ExpectSum.eq.Sum_Expect)
 
-    Eq << Eq[-1].this.find(Sum[~Expectation]).apply(Random.Expect_Mul.eq.Mul_Expect)
+    Eq << Eq[-1].this.find(Sum[~Expectation]).apply(Random.ExpectMul.eq.Mul_Expect)
 
     Eq << Eq[-1].this.find(Sum[Mul[~Expectation]]).simplify()
 
@@ -79,9 +79,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Sum).apply(Finset.SumIco.eq.Sum_UFnAdd, -1)
 
-    Eq << Eq[-1].this.find(Expectation[Sum]).apply(Random.Expect_Sum.eq.Sum_Expect)
+    Eq << Eq[-1].this.find(Expectation[Sum]).apply(Random.ExpectSum.eq.Sum_Expect)
 
-    Eq << Eq[-1].this.find(Sum[~Expectation]).apply(Random.Expect_Mul.eq.Mul_Expect)
+    Eq << Eq[-1].this.find(Sum[~Expectation]).apply(Random.ExpectMul.eq.Mul_Expect)
 
     Eq << Eq[-1].this.find(-~Sum).apply(Finset.SumIco.eq.Add_SumIco.of.Lt)
 
@@ -89,7 +89,7 @@ def prove(Eq):
 
     Eq << Eq[-2].subs(Eq[-1])
 
-    Eq << Eq[-1].this.find(Expectation[MatMul]).apply(Random.Expect_Dot.eq.Dot_Expect)
+    Eq << Eq[-1].this.find(Expectation[MatMul]).apply(Random.ExpectDot.eq.Dot_Expect)
 
     Eq << Eq[-1].this.find(Expectation[Expectation]).apply(Random.Expect.law_of_total_expectation)
 

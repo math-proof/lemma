@@ -69,7 +69,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Add).apply(Nat.AddMulS.eq.Mul_Add)
 
-    Eq << Eq[-1].this.rhs.apply(Random.Expect_Mul.eq.Mul_Expect)
+    Eq << Eq[-1].this.rhs.apply(Random.ExpectMul.eq.Mul_Expect)
 
     Eq.ge = Eq.ge + Eq[-1]
 
@@ -117,7 +117,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.rhs.apply(Random.Expect.law_of_total_expectation), Eq[-1].this.rhs.apply(Random.Expect.law_of_total_expectation)
 
-    Eq <<= Eq[-2].this.rhs.apply(Random.Expect_Dot.eq.Dot_Expect), Eq[-1].this.rhs.apply(Random.Expect_Dot.eq.Dot_Expect)
+    Eq <<= Eq[-2].this.rhs.apply(Random.ExpectDot.eq.Dot_Expect), Eq[-1].this.rhs.apply(Random.ExpectDot.eq.Dot_Expect)
 
     Eq << Eq.ge_VF.subs(t, 0)
 

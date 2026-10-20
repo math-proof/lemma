@@ -21,9 +21,9 @@ def prove(Eq):
 
     Eq << Eq[0].this.find(Variance).apply(Random.Var.eq.Sub.Expect)
 
-    Eq << Eq[-1].this.lhs.apply(Random.Expect_Add.eq.AddExpectS)
+    Eq << Eq[-1].this.lhs.apply(Random.ExpectAdd.eq.AddExpectS)
 
-    Eq << Eq[-1].this.find(Expectation[Mul]).apply(Random.Expect_Mul.eq.Mul_Expect)
+    Eq << Eq[-1].this.find(Expectation[Mul]).apply(Random.ExpectMul.eq.Mul_Expect)
 
     Eq << Eq[-1].this.lhs.apply(Random.Expect.law_of_total_expectation)
 

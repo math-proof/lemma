@@ -32,9 +32,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.find(Mul).apply(Nat.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.lhs.apply(Random.Expect_Add.eq.AddExpectS)
+    Eq << Eq[-1].this.lhs.apply(Random.ExpectAdd.eq.AddExpectS)
 
-    Eq << Eq[-1].this.lhs.apply(Random.Expect_Mul.eq.Mul_Expect)
+    Eq << Eq[-1].this.lhs.apply(Random.ExpectMul.eq.Mul_Expect)
 
 
 if __name__ == '__main__':

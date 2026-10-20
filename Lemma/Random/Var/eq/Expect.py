@@ -33,11 +33,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.rhs.apply(Random.Expect_Add.eq.AddExpectS)
+    Eq << Eq[-1].this.rhs.apply(Random.ExpectAdd.eq.AddExpectS)
 
-    Eq << Eq[-1].this.find(Expectation[Conditioned[Mul[-1]]]).apply(Random.Expect_Mul.eq.Mul_Expect)
+    Eq << Eq[-1].this.find(Expectation[Conditioned[Mul[-1]]]).apply(Random.ExpectMul.eq.Mul_Expect)
 
-    Eq << Eq[-1].this.find(Expectation[Conditioned[Mul[-1]]]).apply(Random.Expect_Mul.eq.Mul_Expect)
+    Eq << Eq[-1].this.find(Expectation[Conditioned[Mul[-1]]]).apply(Random.ExpectMul.eq.Mul_Expect)
 
     Eq << Eq[-1] + Eq[2].reversed
 

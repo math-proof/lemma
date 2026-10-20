@@ -29,7 +29,7 @@ def prove(Eq):
                 Equal((A[π] ^ γ)(s[t].bvar, a[t].bvar), (Q[π] ^ γ)(s[t].bvar, a[t].bvar) - (V[π] ^ γ)(s[t].bvar)),
                 Less(Sup[s[t].bvar, t](Abs(Derivative[π]((V[π] ^ γ)(s[t].bvar)))), oo))
 
-    Eq << Random.GradExpect_DotPow_Id.eq.Expect_DotFunSMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_Eq_Expect_CondDot.All_Eq_Expect_CondDot.EqMeasureCount.EqMeasureCount.All_Eq_Joint.In_Ico.apply(*Eq[:3], Eq[4])
+    Eq << Random.GradExpect_DotPow_Id.eq.ExpectDotFunSMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_Eq_ExpectCondDot.All_Eq_ExpectCondDot.EqMeasureCount.EqMeasureCount.All_Eq_Joint.In_Ico.apply(*Eq[:3], Eq[4])
 
     Eq << Eq[-1].this.rhs.find(Expectation).simplify()
 
@@ -37,15 +37,15 @@ def prove(Eq):
 
     Eq << Eq.hypothesis.this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.rhs.find(Expectation).apply(Random.Expect_Add.eq.AddExpectS)
+    Eq << Eq[-1].this.rhs.find(Expectation).apply(Random.ExpectAdd.eq.AddExpectS)
 
-    Eq.hypothesis = Eq[-1].this.find(Expectation[Mul[NegativeOne]]).apply(Random.Expect_Mul.eq.Mul_Expect)
+    Eq.hypothesis = Eq[-1].this.find(Expectation[Mul[NegativeOne]]).apply(Random.ExpectMul.eq.Mul_Expect)
 
     Eq << Eq.hypothesis.rhs.find(-~Expectation).this.apply(Random.Expect.law_of_iterated_expectation, s[t])
 
-    Eq << Eq[-1].this.find(Expectation[~Expectation]).apply(Random.Expect_Mul.eq.Mul_Expect)
+    Eq << Eq[-1].this.find(Expectation[~Expectation]).apply(Random.ExpectMul.eq.Mul_Expect)
 
-    Eq << Eq[-1].this.find(Mul[~Expectation]).apply(Random.Expect_ConditionedGrad_LogProb.eq.Zero)
+    Eq << Eq[-1].this.find(Mul[~Expectation]).apply(Random.ExpectConditionedGrad_LogProb.eq.Zero)
 
     Eq << Eq.hypothesis.subs(Eq[-1])
 

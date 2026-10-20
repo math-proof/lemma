@@ -1,0 +1,120 @@
+from util import *
+
+
+@apply
+def apply(eq, Q_def, V_def, n=None):
+    from Lemma.Random.Eq_Expect.Eq_Expect.Eq_Expect.of.All_Eq_Expect.All_Eq_Expect.In_Ico import extract_QVA
+    s, a, r, [π], γ, t, Q_st_var, V_st_var = extract_QVA(eq, Q_def, V_def)
+    assert n >= 0
+    return Equal(γ ** Stack[t](t) @ Derivative[π](Expectation[r, a:π](r)),
+                 Expectation[a:π, s[:n]](Sum[t:n](γ ** t * Derivative[π](log(Pr[a:π](a[t].random_argument | s[t].random_argument))) * Q_st_var._subs(s[t].bvar, s[t])._subs(a[t].bvar, a[t]))) + \
+                 γ ** n * Expectation(Derivative[π](V_st_var._subs(s[t].bvar, s[n]))))
+
+
+
+
+@prove
+def prove(Eq):
+    from Lemma import Random, Real, Finset, Nat
+
+    b, D = Symbol(integer=True, positive=True)
+    s = Symbol(shape=(oo, b), real=True, random=True) # states / observation
+    a = Symbol(shape=(oo,), integer=True, random=True) # actions
+    r = Symbol(shape=(oo,), real=True, random=True) # rewards
+    π = Symbol(shape=(D,), real=True) # trainable weights for the agent
+    t = Symbol(integer=True) # time step counter
+    V, Q = Function(real=True, shape=()) # State-Value, Action-Value Function
+    γ = Symbol(domain=Interval(0, 1, right_open=True)) # Discount factor: penalty to uncertainty of future rewards; myopic for γ = 0; and far-sighted for γ = 1
+    n = Symbol(integer=True, nonnegative=True, given=False)
+    *Eq[-3:], Eq.hypothesis = apply(
+                Equal(r[t] | s[:t] & a[:t], r[t]), # history-irrelevant conditional independence assumption for rewards based on states and actions
+                Equal((Q[π] ^ γ)(s[t].bvar, a[t].bvar), γ ** Stack[t](t) @ Expectation[r[t:], a:π](r[t:] | s[t] & a[t])),
+                Equal((V[π] ^ γ)(s[t].bvar), γ ** Stack[t](t) @ Expectation[r[t:], a:π](r[t:] | s[t])), n)
+
+    Eq << Eq[2].subs(t, 0)
+
+    Eq << Eq[-1].subs(s[0].bvar, s[0])
+
+    Eq << Random.EqExpect.of.Eq.apply(Eq[-1])
+
+    Eq << Eq[-1].this.find(MatMul).apply(Random.Dot.eq.Expect)
+
+    Eq << Eq[-1].this.rhs.apply(Random.Expect.law_of_total_expectation)
+
+    Eq << Real.EqGrad.of.Eq.apply(Eq[-1], [π])
+
+    Eq << Eq[-1].this.lhs.apply(Random.Grad.Expect.eq.Expect.Grad).reversed
+
+    Eq << Eq[-1].this.rhs.apply(Random.Expect.eq.Integral_Mul_Prob)
+
+    Eq << Random.Zero.eq.AddSum_SMulPowSum_SMul_SMulPow_Sum_SMul.of.Real.ne.Zero.GtInftySup.All_Differentiable.All_Eq_ExpectCondDot.All_Eq_ExpectCondDot.EqMeasureCount.EqMeasureCount.All_Eq_Joint.In_Ico0.apply(*Eq[:3], n)
+
+    Eq << Eq[-2].subs(Eq[-1])
+
+    Eq << Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
+
+    Eq << Eq[-1].this.rhs.apply(Real.Integral_Add.eq.AddIntegralS)
+
+    Eq << Eq[-1].this.find(Mul[Sum]).apply(Finset.Mul_Sum.eq.Sum_Mul)
+
+    Eq << Eq[-1].this.find(Integral[Sum]).apply(Real.Integral.eq.Sum)
+
+    Eq << Eq[-1].this.find(Integral[Mul]).apply(Real.Integral.eq.Mul)
+
+    Eq << Eq[-1].this.find(Sum[~Integral[Mul]]).apply(Real.Integral.eq.Mul)
+
+    Eq << Eq[-1].this.find(Integral[~Mul[Integral]]).apply(Real.Mul_Integral.eq.Integral_Mul)
+
+    Eq << Eq[-1].this.find(Integral[~Mul[Integral]]).apply(Real.Mul_Integral.eq.Integral_Mul)
+
+    Eq << Eq[-1].this.find(Integral).apply(Real.Integral_UFnProd.eq.Integral)
+
+    Eq << Eq[-1].this.find(Sum[Mul[~Integral]]).apply(Real.Integral_UFnProd.eq.Integral)
+
+    Eq << Eq[-1].this.find(Integral).apply(Real.Integral.limits.pop.Slice)
+
+    Eq << Eq[-1].this.rhs.find(Sum)().find(Integral).apply(Real.Integral.limits.pop.Slice)
+
+    Eq << Eq[-1].this.find(Integral).apply(Real.Integral.limits.separate)
+
+    Eq << Eq[-1].this.find(Derivative * ~Integral).apply(Random.Integral_Prod.eq.Prob)
+
+    Eq << Eq[-1].this.find(Integral).apply(Random.Integral.eq.Expect)
+
+    Eq << Eq[-1].this.find(Integral).apply(Real.Integral.limits.separate)
+
+    Eq << Eq[-1].this.find(Integral[Pr * Product]).apply(Random.Integral_Prod.eq.Prob)
+
+    Eq << Eq[-1].this.find(Derivative[Pr]).apply(Real.Grad.eq.Mul.Grad.Log)
+
+    Eq << Eq[-1].this.find(Pr * ~Sum).apply(Random.Sum.eq.Expect)
+
+    Eq << Eq[-1].this.find(Integral).apply(Random.Integral.eq.Expect)
+
+    Eq << Eq[-1].this.find(Expectation[Expectation]).apply(Random.Expect.law_of_total_expectation)
+
+    Eq << Eq[-1].this.find(Sum[~Mul[Expectation]]).apply(Random.Mul_Expect.eq.ExpectMul)
+
+    Eq << Eq[-1].this.find(Sum[Expectation]).apply(Random.Sum_Expect.eq.ExpectSum)
+
+    Eq << Eq[-1].this.lhs.find(Expectation).apply(Random.ExpectDot.eq.Dot_Expect)
+
+    Eq << Eq[-1].this.lhs.apply(Real.Grad.Dot.eq.Dot.Grad)
+
+    # https://spinningup.openai.com/en/latest/spinningup/rl_intro.html# bellman-equations
+    # http://incompleteideas.net/book/bookdraft2017nov5.pdf (Page 47)
+    # https://lilianweng.github.io/posts/2018-04-08-policy-gradient/
+    # https://danieltakeshi.github.io/2017/04/02/notes-on-the-generalized-advantage-estimation-paper/
+    # https://spinningup.openai.com/en/latest/spinningup/rl_intro.html# id4
+    # https://huggingface.co/deep-rl-course/unit4/pg-theorem?fw=pt
+    # https://www.52coding.com.cn/tags/Reinforcement-Learning/
+    # TRPO
+    # https://arxiv.org/pdf/1502.05477.pdf
+
+
+
+
+if __name__ == '__main__':
+    run()
+# created on 2023-04-04
+# updated on 2023-04-12
