@@ -17,4 +17,4 @@ private lemma main
   apply h x hx y hy
 
 
--- created on 2026-10-11
+-- created on 2018-12-06

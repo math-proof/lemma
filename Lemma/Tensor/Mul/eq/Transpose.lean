@@ -13,5 +13,5 @@ private lemma main
   simp [Matrix.transpose_apply]
 
 
--- created on 2026-10-11
+-- created on 2023-03-18
 -- updated on 2026-10-17

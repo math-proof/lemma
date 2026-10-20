@@ -30,5 +30,5 @@ private lemma main
   simpa [y] using hinv
 
 
--- created on 2026-10-11
+-- created on 2020-10-28
 -- updated on 2026-10-17

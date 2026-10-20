@@ -786,5 +786,5 @@ private lemma advantage
     (hδθ (fun j => integ.2.1 j) (fun j => integ.1 j) t)
 
 
--- created on 2023-04-13
+-- created on 2023-04-07
 -- updated on 2026-10-20

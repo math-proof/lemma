@@ -13,5 +13,5 @@ private lemma main
   linarith [Finset.Ico_eq_empty_iff.mp h₀]
 
 
--- created on 2026-10-11
+-- created on 2021-06-19
 -- updated on 2026-10-17

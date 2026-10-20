@@ -13,5 +13,5 @@ private lemma main
   congr_arg (fun t : ℝ => Real.arccos t⁻¹) h₀
 
 
--- created on 2026-10-11
+-- created on 2022-01-23
 -- updated on 2026-10-17

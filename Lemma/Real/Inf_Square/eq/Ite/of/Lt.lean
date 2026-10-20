@@ -48,5 +48,5 @@ private lemma main
       simpa using Inf_Square.eq.Square.of.Le_0.Lt hM.le h₀
 
 
--- created on 2026-10-11
+-- created on 2019-12-21
 -- updated on 2026-10-17

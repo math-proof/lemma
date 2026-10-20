@@ -31,5 +31,5 @@ private lemma main
       (condExp_mul_of_aestronglyMeasurable_left h₃ (h₁.integrable_mul h₂) (h₂.integrable one_le_two)))
 
 
--- created on 2026-10-11
+-- created on 2023-04-09
 -- updated on 2026-10-17

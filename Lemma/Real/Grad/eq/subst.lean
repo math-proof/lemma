@@ -15,5 +15,5 @@ private lemma main
   deriv_comp x h₁ h₀
 
 
--- created on 2026-10-11
+-- created on 2021-09-28
 -- updated on 2026-10-17

@@ -16,5 +16,5 @@ private lemma main
   simpa [div_eq_mul_inv] using mul_lt_mul_of_neg_right h₁ (inv_lt_zero.mpr h₀)
 
 
--- created on 2026-10-11
+-- created on 2023-10-15
 -- updated on 2026-10-17

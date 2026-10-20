@@ -16,5 +16,5 @@ private lemma main
   exact ⟨⟨h₀.1, h₁⟩, h₂⟩
 
 
--- created on 2026-10-11
+-- created on 2023-08-20
 -- updated on 2026-10-17

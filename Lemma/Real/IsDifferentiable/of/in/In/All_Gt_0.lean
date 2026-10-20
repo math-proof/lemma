@@ -17,5 +17,5 @@ private lemma main
     differentiableAt_of_deriv_ne_zero (h₀ x₁ h₂).ne'⟩
 
 
--- created on 2026-10-11
+-- created on 2020-05-05
 -- updated on 2026-10-17

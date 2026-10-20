@@ -24,5 +24,5 @@ private lemma main
     _ = Q i := by rw [← sum_mul, h₁, one_mul]
 
 
--- created on 2026-10-11
+-- created on 2023-04-24
 -- updated on 2026-10-17

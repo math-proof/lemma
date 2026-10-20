@@ -20,5 +20,5 @@ private lemma main
     apply h₁ n x x ih
 
 
--- created on 2026-10-11
+-- created on 2019-04-17
 -- updated on 2026-10-17

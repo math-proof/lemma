@@ -18,5 +18,5 @@ private lemma main
     (h₀ i (Finset.mem_range.mp hi) j (Finset.mem_range.mp hj) hne)
 
 
--- created on 2026-10-11
+-- created on 2021-01-12
 -- updated on 2026-10-17

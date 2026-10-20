@@ -17,5 +17,5 @@ private lemma main
   linarith [Var.eq.Sub.Expect (π := π) (x := x) h₀ h₁]
 
 
--- created on 2023-04-19
+-- created on 2023-03-24
 -- updated on 2026-10-17

@@ -19,4 +19,4 @@ private lemma main
   rw [hfun, hslope.limUnder_eq, h.hasDerivAt.deriv]
 
 
--- created on 2026-10-12
+-- created on 2020-04-06

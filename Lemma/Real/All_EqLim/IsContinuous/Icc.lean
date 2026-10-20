@@ -16,5 +16,5 @@ private lemma main
   h₀ xi h₁
 
 
--- created on 2026-10-11
+-- created on 2020-05-01
 -- updated on 2026-10-17

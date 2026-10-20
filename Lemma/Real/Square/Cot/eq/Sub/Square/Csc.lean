@@ -17,5 +17,5 @@ private lemma main
   linarith [Real.sin_sq_add_cos_sq x]
 
 
--- created on 2023-11-26
+-- created on 2023-10-03
 -- updated on 2026-10-17

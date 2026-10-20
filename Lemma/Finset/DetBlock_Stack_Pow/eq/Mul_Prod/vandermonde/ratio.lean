@@ -19,5 +19,5 @@ private lemma main
   simpa [one_pow, one_mul, mul_one] using h
 
 
--- created on 2026-10-11
+-- created on 2021-11-25
 -- updated on 2026-10-17

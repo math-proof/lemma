@@ -17,5 +17,5 @@ private lemma main
   linarith [Real.cosh_sq_sub_sinh_sq x]
 
 
--- created on 2026-10-11
+-- created on 2023-11-26
 -- updated on 2026-10-17

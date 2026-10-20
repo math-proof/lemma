@@ -20,5 +20,5 @@ private lemma main
   simp [smul_eq_mul]
 
 
--- created on 2023-03-25
+-- created on 2023-03-26
 -- updated on 2026-10-17

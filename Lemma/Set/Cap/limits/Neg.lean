@@ -26,5 +26,5 @@ private lemma main
     simpa using h (-i) hneg
 
 
--- created on 2026-10-11
+-- created on 2021-01-23
 -- updated on 2026-10-17

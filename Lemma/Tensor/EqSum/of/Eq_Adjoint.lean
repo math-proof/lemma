@@ -16,5 +16,5 @@ private lemma main
   simpa [Matrix.conjTranspose_apply, starRingEnd_self_apply] using h
 
 
--- created on 2026-10-11
+-- created on 2023-05-25
 -- updated on 2026-10-17

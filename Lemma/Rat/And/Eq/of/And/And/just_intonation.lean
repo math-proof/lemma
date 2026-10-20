@@ -305,5 +305,5 @@ private lemma main
   · simp [hd6, hd7]
 
 
--- created on 2026-10-11
+-- created on 2018-11-24
 -- updated on 2026-10-17

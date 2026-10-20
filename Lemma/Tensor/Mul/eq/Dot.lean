@@ -13,5 +13,5 @@ private lemma main
   exact Matrix.mulVec_diagonal v x i
 
 
--- created on 2026-10-11
+-- created on 2023-04-07
 -- updated on 2026-10-17

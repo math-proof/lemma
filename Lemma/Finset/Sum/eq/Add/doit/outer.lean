@@ -11,5 +11,5 @@ private lemma main
   simp [Finset.sum_range_succ, add_assoc]
 
 
--- created on 2026-10-11
+-- created on 2020-03-13
 -- updated on 2026-10-17

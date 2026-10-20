@@ -15,5 +15,5 @@ private lemma main
   exact h₀ i j
 
 
--- created on 2026-10-11
+-- created on 2022-03-17
 -- updated on 2026-10-17

@@ -20,5 +20,5 @@ private lemma main
     simpa using Inf_Square.eq.Square.of.Ge_0.Lt (m := (0 : ℝ)) (M := M) le_rfl h₁
 
 
--- created on 2026-10-11
+-- created on 2019-08-15
 -- updated on 2026-10-17

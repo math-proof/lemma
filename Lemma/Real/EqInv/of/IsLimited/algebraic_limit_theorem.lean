@@ -16,5 +16,5 @@ private lemma main
   apply h₀.inv₀ h₁
 
 
--- created on 2026-10-11
+-- created on 2020-06-18
 -- updated on 2026-10-17

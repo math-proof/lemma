@@ -14,4 +14,4 @@ private lemma main
   apply GeLog.of.Ge h₀ h₁
 
 
--- created on 2026-10-17
+-- created on 2023-04-16

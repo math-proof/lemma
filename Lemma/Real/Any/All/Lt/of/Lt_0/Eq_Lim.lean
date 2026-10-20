@@ -22,5 +22,5 @@ private lemma main
   linarith
 
 
--- created on 2026-10-11
+-- created on 2020-05-14
 -- updated on 2026-10-17

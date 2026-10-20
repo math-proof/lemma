@@ -19,5 +19,5 @@ private lemma main
   simpa [Real.dist_eq] using h hx (by simpa [Real.dist_eq] using hxδ)
 
 
--- created on 2026-10-11
+-- created on 2020-06-23
 -- updated on 2026-10-17

@@ -22,5 +22,5 @@ private lemma main
   exact hne (hx.2.symm.trans hy.2)
 
 
--- created on 2026-10-11
+-- created on 2020-08-06
 -- updated on 2026-10-17

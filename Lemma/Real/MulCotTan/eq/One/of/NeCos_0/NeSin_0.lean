@@ -14,4 +14,4 @@ private lemma main
   simp [Real.cot_eq_cos_div_sin, Real.tan_eq_sin_div_cos, h₀, h₁]
 
 
--- created on 2026-10-17
+-- created on 2023-10-03

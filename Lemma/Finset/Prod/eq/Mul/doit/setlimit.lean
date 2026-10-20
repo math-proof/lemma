@@ -11,5 +11,5 @@ private lemma main
   simp [mul_assoc]
 
 
--- created on 2026-10-11
+-- created on 2020-03-02
 -- updated on 2026-10-17

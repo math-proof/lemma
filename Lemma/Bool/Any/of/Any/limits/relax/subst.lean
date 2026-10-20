@@ -14,5 +14,5 @@ private lemma main
   exact ⟨x, ⟨hx.1, le_of_lt hx.2⟩, hp⟩
 
 
--- created on 2026-10-11
+-- created on 2019-02-16
 -- updated on 2026-10-17

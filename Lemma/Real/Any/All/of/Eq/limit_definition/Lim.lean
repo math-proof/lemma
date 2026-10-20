@@ -20,4 +20,4 @@ private lemma main
   apply All_Any_All_LtAbsSub.of.EqLim f a h
 
 
--- created on 2026-10-11
+-- created on 2020-04-07

@@ -24,5 +24,5 @@ private lemma main
       exact ⟨i, Or.inr hx⟩
 
 
--- created on 2026-10-11
+-- created on 2021-02-10
 -- updated on 2026-10-17

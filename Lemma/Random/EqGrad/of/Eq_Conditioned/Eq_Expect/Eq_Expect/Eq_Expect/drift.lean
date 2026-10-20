@@ -22,5 +22,5 @@ private lemma main
   apply hsum.deriv.symm.trans (hasDerivAt_const θ₀ (1 : ℝ)).deriv
 
 
--- created on 2026-10-11
+-- created on 2023-04-25
 -- updated on 2026-10-17

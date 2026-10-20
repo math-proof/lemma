@@ -23,5 +23,5 @@ private lemma main
   rw [variance_eq_sub (MemLp.condExp one_le_two h₁), integral_condExp (μ := π) h₀]
 
 
--- created on 2026-10-11
+-- created on 2023-04-09
 -- updated on 2026-10-17

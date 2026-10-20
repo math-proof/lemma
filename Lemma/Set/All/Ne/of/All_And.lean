@@ -20,5 +20,5 @@ private lemma main
     exact h₁ j hj
 
 
--- created on 2026-10-11
+-- created on 2021-01-11
 -- updated on 2026-10-17

@@ -12,5 +12,5 @@ private lemma main
   Set.union_subset_union h₀ subset_rfl
 
 
--- created on 2026-10-11
+-- created on 2021-07-05
 -- updated on 2026-10-17

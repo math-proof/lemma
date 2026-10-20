@@ -20,5 +20,5 @@ private lemma main
     simpa using h (Sum.inr j)
 
 
--- created on 2026-10-11
+-- created on 2022-04-01
 -- updated on 2026-10-17

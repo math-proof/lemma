@@ -15,5 +15,5 @@ private lemma main
     rw [Finset.sum_range_succ, ih, Finset.sum_Ico_succ_top (show 1 ≤ n + 1 by omega)]
 
 
--- created on 2026-10-11
+-- created on 2023-03-28
 -- updated on 2026-10-17

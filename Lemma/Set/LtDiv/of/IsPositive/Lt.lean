@@ -15,5 +15,5 @@ private lemma main
   exact div_lt_div_of_pos_right h₁ h₀
 
 
--- created on 2026-10-11
+-- created on 2023-10-15
 -- updated on 2026-10-17

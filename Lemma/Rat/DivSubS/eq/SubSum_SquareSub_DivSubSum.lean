@@ -100,5 +100,5 @@ private lemma main
       simp [S, μ]
 
 
--- created on 2026-10-11
+-- created on 2019-11-27
 -- updated on 2026-10-17

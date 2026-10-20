@@ -19,5 +19,5 @@ private lemma main
   simp [hx0]
 
 
--- created on 2026-10-11
+-- created on 2023-10-14
 -- updated on 2026-10-12

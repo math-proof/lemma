@@ -26,5 +26,5 @@ private lemma main
     simpa [add_sub_cancel] using h (i + k) hi'
 
 
--- created on 2026-10-11
+-- created on 2023-07-02
 -- updated on 2026-10-17

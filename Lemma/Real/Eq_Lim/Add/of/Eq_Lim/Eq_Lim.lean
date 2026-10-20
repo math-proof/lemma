@@ -15,5 +15,5 @@ private lemma main
   apply h₀.add h₁
 
 
--- created on 2026-10-11
+-- created on 2020-05-04
 -- updated on 2026-10-17

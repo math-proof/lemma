@@ -23,5 +23,5 @@ private lemma main
     apply h₂ y (Set.Ioo_subset_Icc_self hy)
 
 
--- created on 2026-10-11
+-- created on 2023-10-03
 -- updated on 2026-10-17

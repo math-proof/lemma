@@ -12,5 +12,5 @@ private lemma main
   simpa using norm_add_sq_real x y
 
 
--- created on 2026-10-11
+-- created on 2023-06-24
 -- updated on 2026-10-17

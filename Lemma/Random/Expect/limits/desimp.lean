@@ -21,5 +21,5 @@ private lemma main
   simp only [Expectation.ofRV, expectation_real]
 
 
--- created on 2026-10-11
+-- created on 2023-04-24
 -- updated on 2026-10-17

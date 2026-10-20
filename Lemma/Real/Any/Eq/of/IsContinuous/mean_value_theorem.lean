@@ -18,5 +18,5 @@ private lemma main
   simpa [h1, mul_comm] using h
 
 
--- created on 2026-10-11
+-- created on 2020-06-15
 -- updated on 2026-10-17

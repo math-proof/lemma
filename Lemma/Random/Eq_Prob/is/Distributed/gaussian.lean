@@ -22,5 +22,5 @@ private lemma main
   rw [h₁, gaussianReal_of_var_ne_zero _ h₀]
 
 
--- created on 2026-10-11
+-- created on 2023-04-10
 -- updated on 2026-10-17

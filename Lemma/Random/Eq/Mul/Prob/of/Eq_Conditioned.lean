@@ -19,5 +19,5 @@ private lemma main
   rw [← cond_mul_eq_inter (h₁.preimage h₀), h₂, mul_comm]
 
 
--- created on 2021-08-02
+-- created on 2020-12-14
 -- updated on 2026-10-17

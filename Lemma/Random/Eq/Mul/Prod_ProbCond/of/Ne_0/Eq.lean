@@ -23,5 +23,5 @@ private lemma main
   field_simp [h₃]
 
 
--- created on 2026-10-11
+-- created on 2024-06-18
 -- updated on 2026-10-17

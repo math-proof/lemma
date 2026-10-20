@@ -19,5 +19,5 @@ private lemma main
   exact Int.add_mul_emod_self_right a (k : ℤ) d
 
 
--- created on 2026-10-11
+-- created on 2022-01-01
 -- updated on 2026-10-17
