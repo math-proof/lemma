@@ -1,4 +1,4 @@
-import Lemma.Random.Integral_SMulGetDotFderivLog.eq.Integral_SMulQFderiv.of.All_Eq_Joint.InIco0
+import Lemma.Random.Integral_SMul.of.In_Ico
 import Lemma.Random.Eq_SymmToDualTSum_SMulPow_Integral_SMulTSum_MulPow_FderivLogToRealProbCond.of.GtInftySup.All_Differentiable.AeAll_LeNormTSum_MulPow.All_Measurable.EqMeasureCount.EqMeasureCount.All_Eq_Joint.In_Ico0
 import sympy.core.function
 import Mathlib.MeasureTheory.Constructions.Polish.Basic
@@ -472,7 +472,7 @@ private lemma main
       rw [h₇ n, h₁₄ n]
     rw [hQseries]
     refine tsum_congr fun t => congrArg (fun z => γ ^ t • z) ?_
-    exact (Integral_SMulGetDotFderivLog.eq.Integral_SMulQFderiv.of.All_Eq_Joint.InIco0 (M := M) (θ := θ) h₀ h₁).symm
+    exact (Integral_SMul.of.In_Ico (M := M) h₀ h₁ θ t (fun x u => fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' x u)) θ)).symm
   have hscore : ∀ t, ∀ᵐ ω ∂(M θ),
       fderiv ℝ (fun θ' => (ℙ[M θ']((a t) = (a t ω) | (s t) = (s t ω)) : ℝ).log) θ =
         fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω))) θ := by

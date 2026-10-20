@@ -509,13 +509,16 @@ private theorem countOfWeight_zero : PositiveIntegers.countOfWeight positiveInte
 
 private theorem countOfWeight_pos (n : ℕ) (hn : 0 < n) :
     PositiveIntegers.countOfWeight positiveIntegers_isFiniteType n = 1 := by
-  simp only [WeightedSet.countOfWeight]
-  convert Finset.card_singleton (⟨n, hn⟩ : ℕ+)
-  ext x
-  simp only [Set.Finite.mem_toFinset, PositiveIntegers, Finset.mem_singleton]
-  refine ⟨fun hx => ?_, fun hx => ?_⟩
-  · exact Subtype.coe_injective hx
-  · exact congrArg Subtype.val hx
+  unfold WeightedSet.countOfWeight
+  let a : ℕ+ := ⟨n, hn⟩
+  have hset : {x : ℕ+ | PositiveIntegers.weight x = n} = {a} := by
+    ext x
+    simp only [PositiveIntegers, Set.mem_ofPred_eq, a]
+    exact ⟨fun hx => Subtype.ext hx, fun hx => hx ▸ rfl⟩
+  have hfin : ({a} : Set ℕ+).Finite := Set.finite_singleton a
+  have heq : (positiveIntegers_isFiniteType n).toFinset = hfin.toFinset :=
+    Set.Finite.toFinset_inj.mpr hset
+  rw [heq, Set.Finite.toFinset_singleton, Finset.card_singleton]
 
 /-- The generating function of positive integers is x + x² + x³ + ... = x/(1-x) -/
 theorem weightGenFun_positiveIntegers :
@@ -1419,7 +1422,7 @@ theorem countOfWeight_faultfreeHeight2_two :
     simp only [FaultfreeTilingsHeight2, Set.mem_ofPred_eq, Set.mem_singleton_iff]
     constructor
     · intro hn
-      simp only at hn
+      -- hn : weight ⟨n, T, hT⟩ = 2, i.e. n = 2 after unfolding
       subst hn
       have heq := faultfree_tiling_width2_unique T hT
       subst heq
@@ -1888,8 +1891,12 @@ def composeTilings (k : ℕ)
           intro ⟨hx1, hx2, hy1, hy2⟩
           -- Handle k = 0 case: rectangle is empty
           by_cases hk : k = 0
-          · subst hk
-            simp at hx2
+          · -- k = 0 ⇒ totalWidth = 0, so 1 ≤ x ≤ 0 is impossible
+            have htw : totalWidth = 0 := by
+              simp only [totalWidth]
+              subst hk
+              rfl
+            rw [htw] at hx2
             omega
           · -- k ≥ 1: use point_in_some_component
             have hk' : k ≥ 1 := Nat.one_le_iff_ne_zero.mpr hk
@@ -1995,8 +2002,8 @@ theorem composeTilings_prepend_width (m : ℕ) (first_width : ℕ)
     (composeTilings (m + 1) ts).1 = first_width + ∑ j : Fin m, (rest j).1 := by
   simp only [composeTilings, hts]
   rw [Fin.sum_univ_succ]
-  simp only [Fin.val_zero, dite_true, Fin.val_succ, Nat.add_one_ne_zero, dite_false,
-             Nat.add_sub_cancel]
+  -- `0 = 0` is propositionally True, not defeq True; use ↓reduceDIte
+  simp only [Fin.val_zero, ↓reduceDIte, Fin.val_succ, Nat.add_one_ne_zero, Nat.add_sub_cancel]
 /-- Helper lemma: When we compose with a prepended element, if the rest composes to 
     a specific width and tiling, then the total width equals first_width + rest_width. -/
 theorem composeTilings_prepend_width' (m : ℕ) (first_width rest_width : ℕ)
@@ -2825,30 +2832,34 @@ theorem composeTilings_decomposeTiling (n : ℕ) (T : Tiling (Rectangle n 2)) :
     match n with
     | 0 =>
       -- n = 0 case: decomposeTiling returns ⟨0, Fin.elim0⟩
-      have heq : decomposeTiling 0 T = ⟨0, Fin.elim0⟩ := by unfold decomposeTiling; rfl
-      rw [heq]
-      simp only [composeTilings, Sigma.mk.injEq]
-      refine ⟨rfl, ?_⟩
-      cases T with
-      | mk dominos pairwise_disjoint cover =>
-        congr 1
-        show composeTilings_dominos _ _ = dominos
-        have hT_empty : dominos = ∅ := by
-          have heq : Rectangle 0 2 = ∅ := Rectangle_zero_left 2
-          have hcover' : ⋃ d ∈ dominos, d.toShape = ∅ := by rw [cover]; exact heq
-          by_contra hne
-          have hne' : dominos.Nonempty := Set.nonempty_iff_ne_empty.mpr hne
-          obtain ⟨d, hd⟩ := hne'
-          have hsub : d.toShape ⊆ ∅ := by
-            calc d.toShape ⊆ ⋃ d' ∈ dominos, d'.toShape := Set.subset_biUnion_of_mem hd
-            _ = ∅ := hcover'
-          have hdne : d.toShape.Nonempty := Domino.toShape_nonempty d
-          exact Set.not_nonempty_empty (hdne.mono hsub)
-        rw [hT_empty]
-        ext x
-        simp only [composeTilings_dominos, Set.mem_iUnion, Set.mem_empty_iff_false, iff_false]
-        intro ⟨i, _⟩
-        exact i.elim0
+      have hdec : decomposeTiling 0 T = ⟨0, Fin.elim0⟩ := by unfold decomposeTiling; rfl
+      rw [hdec]
+      have hdom : (composeTilings 0 Fin.elim0).2.dominos = T.dominos := by
+        cases T with
+        | mk dominos pairwise_disjoint cover =>
+          have hT_empty : dominos = ∅ := by
+            have heqR : Rectangle 0 2 = ∅ := Rectangle_zero_left 2
+            have hcover' : ⋃ d ∈ dominos, d.toShape = ∅ := by rw [cover]; exact heqR
+            by_contra hne
+            have hne' : dominos.Nonempty := Set.nonempty_iff_ne_empty.mpr hne
+            obtain ⟨d, hd⟩ := hne'
+            have hsub : d.toShape ⊆ ∅ := by
+              calc d.toShape ⊆ ⋃ d' ∈ dominos, d'.toShape := Set.subset_biUnion_of_mem hd
+                _ = ∅ := hcover'
+            have hdne : d.toShape.Nonempty := Domino.toShape_nonempty d
+            exact Set.not_nonempty_empty (hdne.mono hsub)
+          simp only [composeTilings, hT_empty]
+          ext x
+          simp only [composeTilings_dominos, Set.mem_iUnion, Set.mem_empty_iff_false, iff_false]
+          intro ⟨i, _⟩
+          exact i.elim0
+      have hw : (composeTilings 0 Fin.elim0).1 = 0 := by
+        simp only [composeTilings, Finset.univ_eq_empty, Finset.sum_empty]
+      apply Sigma.ext hw
+      exact (eqRec_heq (φ := fun n => Tiling (Rectangle n 2)) hw (composeTilings 0 Fin.elim0).2).symm.trans
+        (heq_of_eq <| by
+          apply Tiling.ext
+          simpa [Tiling.subst_dominos hw] using hdom)
     | n' + 1 =>
       -- n = n' + 1 case
       -- decomposeTiling (n' + 1) T branches on whether faults exist
@@ -2902,8 +2913,14 @@ theorem composeTilings_decomposeTiling (n : ℕ) (T : Tiling (Rectangle n 2)) :
             if hi : i.val = 0 then ⟨k, ⟨left, left_ff⟩⟩ else ts_rest ⟨i.val - 1, by omega⟩)).1 = n' + 1 := by
           simp only [composeTilings]
           rw [Fin.sum_univ_succ]
-          simp only [Fin.val_zero, dite_true, Fin.val_succ, Nat.add_one_ne_zero, dite_false,
-                     Nat.add_sub_cancel]
+          simp only [Fin.val_zero, Fin.val_succ, ↓reduceDIte, Nat.add_sub_cancel]
+          have hsum : ∑ x : Fin m,
+              (if h : x.val + 1 = 0 then ⟨k, ⟨left, left_ff⟩⟩ else ts_rest ⟨x.val, by omega⟩).1
+              = ∑ i : Fin m, (ts_rest i).1 := by
+            refine Finset.sum_congr rfl ?_
+            intro x _
+            rw [dite_eq_right (Nat.add_one_ne_zero x.val)]
+          rw [hsum]
           have h := congrArg Sigma.fst ih_right
           simp only [composeTilings] at h
           rw [h]
@@ -2960,8 +2977,7 @@ theorem composeTilings_decomposeTiling (n : ℕ) (T : Tiling (Rectangle n 2)) :
             simp only [Domino.shiftNat_zero, Set.image_id']
             -- ts' 0 = ⟨k, ⟨left, left_ff⟩⟩
             have hts'0 : ts' 0 = ⟨k, ⟨left, left_ff⟩⟩ := by
-              simp only [ts']
-              simp only [Fin.val_zero, dite_true]
+              simp only [ts', Fin.val_zero, ↓reduceDIte]
             rw [hts'0]
           rw [hcomp0]
           
@@ -2992,8 +3008,7 @@ theorem composeTilings_decomposeTiling (n : ℕ) (T : Tiling (Rectangle n 2)) :
             
             -- Show f zero_idx = k
             have hf0 : f zero_idx = k := by
-              simp only [f, zero_idx, ts']
-              simp only [dite_true]
+              simp only [f, zero_idx, ts', Fin.val_zero, ↓reduceDIte]
             
             -- Show f i.succ = g i for i : Fin j.val
             have hf_succ : ∀ i : Fin j.val, f i.succ = g i := by
@@ -3004,7 +3019,8 @@ theorem composeTilings_decomposeTiling (n : ℕ) (T : Tiling (Rectangle n 2)) :
             -- Now use Fin.sum_univ_succ on f
             have h_sum : ∑ i : Fin j.succ.val, f i = f zero_idx + ∑ i : Fin j.val, f i.succ := by
               have h := Fin.sum_univ_succ f
-              convert h using 2
+              rw [show (0 : Fin j.succ.val) = zero_idx from Fin.ext rfl] at h
+              exact h
             
             calc ∑ i : Fin j.succ.val, (ts' ⟨i.val, Nat.lt_trans i.isLt j.succ.isLt⟩).1
                 = ∑ i : Fin j.succ.val, f i := rfl
@@ -3078,7 +3094,7 @@ theorem composeTilings_decomposeTiling (n : ℕ) (T : Tiling (Rectangle n 2)) :
         refine ⟨hwidth, ?_⟩
         -- Now need to show HEq (composeTilings (m + 1) ts').2 T
         -- We have: hwidth ▸ (composeTilings (m + 1) ts').2 = T
-        -- Use eqRec_heq_iff: (h ▸ a ≍ b) ↔ (a ≍ b)
+        -- Use eqRec_heq_iff_heq: (h ▸ a ≍ b) ↔ (a ≍ b)
         exact eqRec_heq_iff.mp (heq_of_eq htiling_eq)
       · -- No faults: T is faultfree
         have hff : isFaultfree (n' + 1) T := by
@@ -3094,17 +3110,8 @@ theorem composeTilings_decomposeTiling (n : ℕ) (T : Tiling (Rectangle n 2)) :
         rw [hdecomp]
         
         -- composeTilings 1 ts = ⟨(ts 0).1, (ts 0).2.val⟩ = ⟨n' + 1, T⟩
-        have hwidth := composeTilings_one_width (fun _ => ⟨n' + 1, ⟨T, hff⟩⟩)
-        have htiling := composeTilings_one_tiling (fun _ => ⟨n' + 1, ⟨T, hff⟩⟩)
-        -- Use Sigma.ext to prove equality of sigma types
-        apply Sigma.ext
-        · -- Width equality
-          simp only [composeTilings, Finset.univ_unique, Finset.sum_singleton, Fin.default_eq_zero]
-        · -- Tiling equality (as HEq)
-          simp only [heq_eq_eq]
-          apply Tiling.ext
-          rw [composeTilings_one_dominos]
-
+        apply Sigma.ext (composeTilings_one_width (fun _ => ⟨n' + 1, ⟨T, hff⟩⟩))
+        exact heq_of_eq (composeTilings_one_tiling (fun _ => ⟨n' + 1, ⟨T, hff⟩⟩))
 
 
 /-- Decomposing a faultfree tiling returns a singleton tuple containing the original tiling.
@@ -3192,10 +3199,16 @@ theorem decomposeTiling_composeTilings (k : ℕ)
     match k with
     | 0 =>
       -- k = 0: empty tuple, composed tiling has width 0
-      show decomposeTiling 0 _ = ⟨0, ts⟩
-      simp only [decomposeTiling, Sigma.mk.injEq, heq_eq_eq, true_and]
-      funext i
-      exact Fin.elim0 i
+      have hw : (composeTilings 0 ts).1 = 0 := by
+        simp only [composeTilings, Finset.univ_eq_empty, Finset.sum_empty]
+      rw [decomposeTiling_subst hw]
+      have hdec : decomposeTiling 0 (hw ▸ (composeTilings 0 ts).2) = ⟨0, Fin.elim0⟩ := by
+        unfold decomposeTiling
+        rfl
+      rw [hdec]
+      apply Sigma.ext
+      · rfl
+      · exact heq_of_eq (funext fun i => i.elim0)
     | 1 =>
       -- k = 1: single faultfree tiling
       -- The key insight: composeTilings 1 ts produces a Sigma pair where
@@ -3212,8 +3225,7 @@ theorem decomposeTiling_composeTilings (k : ℕ)
       -- The composed tiling equals ⟨(ts 0).1, (ts 0).2.val⟩
       have hpair : composeTilings 1 ts = ⟨(ts 0).1, (ts 0).2.val⟩ := by
         apply Sigma.ext hwidth
-        simp only [heq_eq_eq]
-        exact htiling
+        exact heq_of_eq htiling
       
       -- Rewrite the goal using this equality
       rw [hpair]
@@ -3556,6 +3568,7 @@ theorem decomposeTiling_composeTilings (k : ℕ)
         congr 1
         simp only [Fin.ext_iff]
         omega
+
 
 /-- The width of the composed tiling equals the sum of widths of the components.
     This follows from the definition of composeTilings as horizontal concatenation. -/

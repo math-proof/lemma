@@ -4019,7 +4019,17 @@ function extractSignature(lemma) {
   }
   if (!colon) return null;
   const indented = (colon.args || []).find((a) => cls(a) === "LeanArgsIndented");
-  const implyStmts = (colon.args || []).find((a) => cls(a) === "LeanStatements");
+  // Colon after `-- imply` comment leaves the conclusion as a bare expr under LeanColon
+  // (not LeanStatements). Without this, imply falls back to "Imply" and paths become
+  // Imply.of.Ne*_0 for trig Mul_/… lemmas (e.g. Cos/eq/Mul_/Sin/Cot.lean).
+  let implyStmts = (colon.args || []).find((a) => cls(a) === "LeanStatements");
+  if (!implyStmts) {
+    const bare = (colon.args || []).find((a) => {
+      const c = cls(a);
+      return c && c !== "LeanArgsIndented" && c !== "LeanArgsSpaceSeparated" && c !== "LeanLineComment";
+    });
+    if (bare) implyStmts = bare;
+  }
   const nls = (indented?.args || []).find((a) => cls(a) === "LeanArgsNewLineSeparated");
   return { colon, indented, nls, implyStmts };
 }

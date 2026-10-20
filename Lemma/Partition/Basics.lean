@@ -1322,5 +1322,506 @@ private lemma partition_X_mul_derivative_P_eq_S_mul_P :
 -- proof
   apply Nat.Partition.X_mul_derivative_P_eq_S_mul_P
 
+/-- [Basics](https://github.com/facebookresearch/algebraic-combinatorics/blob/main/AlgebraicCombinatorics/Partitions/Basics.lean) -/
+@[path]
+private lemma partition_filter_ne_zero_of_all_pos_eq
+-- given
+  (s : Multiset ℕ)
+  (h : ∀ x ∈ s, x > 0) :
+-- imply
+  s.filter (· ≠ 0) = s := by
+-- proof
+  rw [Multiset.filter_eq_self]
+  intro x hx
+  exact Nat.pos_iff_ne_zero.mp (h x hx)
+
+/-- [Basics](https://github.com/facebookresearch/algebraic-combinatorics/blob/main/AlgebraicCombinatorics/Partitions/Basics.lean) -/
+@[path]
+private lemma partition_sum_ge_card_of_all_pos
+-- given
+  (s : Multiset ℕ)
+  (h : ∀ x ∈ s, x > 0) :
+-- imply
+  s.sum ≥ s.card := by
+-- proof
+  induction s using Multiset.induction with
+  | empty =>
+    simp
+  | cons a t ih =>
+    simp only [Multiset.sum_cons, Multiset.card_cons]
+    have ha : a > 0 := h a (Multiset.mem_cons_self a t)
+    have ht : ∀ x ∈ t, x > 0 := fun x hx => h x (Multiset.mem_cons_of_mem hx)
+    have := ih ht
+    omega
+
+/-- [Basics](https://github.com/facebookresearch/algebraic-combinatorics/blob/main/AlgebraicCombinatorics/Partitions/Basics.lean) -/
+@[path]
+private lemma partition_sum_map_sub_one_eq
+-- given
+  (s : Multiset ℕ)
+  (h : ∀ x ∈ s, x > 1) :
+-- imply
+  (s.map (· - 1)).sum = s.sum - s.card := by
+-- proof
+  induction s using Multiset.induction with
+  | empty =>
+    simp
+  | cons a t ih =>
+    simp only [Multiset.map_cons, Multiset.sum_cons, Multiset.card_cons]
+    have ha : a > 1 := h a (Multiset.mem_cons_self a t)
+    have ht : ∀ x ∈ t, x > 1 := fun x hx => h x (Multiset.mem_cons_of_mem hx)
+    have htpos : ∀ x ∈ t, x > 0 := fun x hx => Nat.lt_trans Nat.zero_lt_one (ht x hx)
+    have htge : t.sum ≥ t.card := partition_sum_ge_card_of_all_pos t htpos
+    rw [ih ht]
+    omega
+
+/-- [Basics](https://github.com/facebookresearch/algebraic-combinatorics/blob/main/AlgebraicCombinatorics/Partitions/Basics.lean) -/
+@[path]
+private lemma partition_fold_max_le_of_all_le
+-- given
+  (s : Multiset ℕ)
+  (m : ℕ)
+  (h : ∀ i ∈ s, i ≤ m) :
+-- imply
+  s.fold max 0 ≤ m := by
+-- proof
+  induction s using Multiset.induction with
+  | empty =>
+    simp
+  | cons a t ih =>
+    simp only [Multiset.fold_cons_left]
+    exact max_le (h a (Multiset.mem_cons_self a t)) (ih fun i hi => h i (Multiset.mem_cons_of_mem hi))
+
+/-- [Basics](https://github.com/facebookresearch/algebraic-combinatorics/blob/main/AlgebraicCombinatorics/Partitions/Basics.lean) -/
+@[path]
+private lemma partition_fold_max_eq_sup
+-- given
+  (s : Multiset ℕ) :
+-- imply
+  s.fold max 0 = Multiset.sup s := by
+-- proof
+  induction s using Multiset.induction with
+  | empty =>
+    rfl
+  | cons a s ih =>
+    simp only [Multiset.fold_cons_left, Multiset.sup_cons, ih]
+
+/-- [Basics](https://github.com/facebookresearch/algebraic-combinatorics/blob/main/AlgebraicCombinatorics/Partitions/Basics.lean) -/
+@[path]
+private lemma partition_parts_empty_of_fold_max_zero
+-- given
+  (n : ℕ)
+  (p : Nat.Partition n)
+  (h : p.parts.fold max 0 = 0) :
+-- imply
+  p.parts = 0 := by
+-- proof
+  rw [partition_fold_max_eq_sup] at h
+  by_contra hne
+  have hne' : p.parts.card ≠ 0 := fun hc => hne (Multiset.card_eq_zero.mp hc)
+  rw [← Nat.pos_iff_ne_zero] at hne'
+  obtain ⟨x, hx⟩ := Multiset.card_pos_iff_exists_mem.mp hne'
+  have hle : x ≤ Multiset.sup p.parts := Multiset.le_sup hx
+  have hpos := p.parts_pos hx
+  omega
+
+/-- [Basics](https://github.com/facebookresearch/algebraic-combinatorics/blob/main/AlgebraicCombinatorics/Partitions/Basics.lean) -/
+@[path]
+private lemma partition_multiset_le_fold_max
+-- given
+  (m : Multiset ℕ)
+  (x : ℕ)
+  (hx : x ∈ m) :
+-- imply
+  x ≤ m.fold max 0 := by
+-- proof
+  apply Nat.Partition.fold_max_ge_of_mem m x hx
+
+/-- [Basics](https://github.com/facebookresearch/algebraic-combinatorics/blob/main/AlgebraicCombinatorics/Partitions/Basics.lean) -/
+@[path]
+private lemma partition_fold_max_mem_of_nonempty
+-- given
+  (m : Multiset ℕ)
+  (h : m ≠ 0) :
+-- imply
+  m.fold max 0 ∈ m := by
+-- proof
+  induction m using Multiset.induction with
+  | empty =>
+    contradiction
+  | cons a m' ih =>
+    simp only [Multiset.fold_cons_left, Multiset.mem_cons]
+    if hm' : m' = 0 then
+      simp [hm']
+    else
+      if ha : a ≥ m'.fold max 0 then
+        left
+        exact max_eq_left ha
+      else
+        push Not at ha
+        right
+        rw [max_eq_right (le_of_lt ha)]
+        exact ih hm'
+
+/-- [Basics](https://github.com/facebookresearch/algebraic-combinatorics/blob/main/AlgebraicCombinatorics/Partitions/Basics.lean) -/
+@[path]
+private lemma partition_map_sub_one_injective
+-- given
+  (s t : Multiset ℕ)
+  (hs : ∀ x ∈ s, x > 1)
+  (ht : ∀ x ∈ t, x > 1)
+  (h : s.map (· - 1) = t.map (· - 1)) :
+-- imply
+  s = t := by
+-- proof
+  have key : ∀ (m : Multiset ℕ), (∀ x ∈ m, x > 1) → (m.map (· - 1)).map (· + 1) = m := by
+    intro m hm
+    rw [Multiset.map_map]
+    conv_rhs => rw [← Multiset.map_id m]
+    apply Multiset.map_congr rfl
+    intro x hx
+    simp only [Function.comp_apply, id_eq]
+    have : x > 1 := hm x hx
+    omega
+  calc
+    _ = (s.map (· - 1)).map (· + 1) := (key s hs).symm
+    _ = (t.map (· - 1)).map (· + 1) := by rw [h]
+    _ = t := key t ht
+
+/-- [Basics](https://github.com/facebookresearch/algebraic-combinatorics/blob/main/AlgebraicCombinatorics/Partitions/Basics.lean) -/
+@[path]
+private lemma partition_fold_min_of_two_multiset_eq
+-- given
+  (a b n : ℕ)
+  (h : a + b ≤ n) :
+-- imply
+  ({a, b} : Multiset ℕ).fold min n = min a b := by
+-- proof
+  simp only [Multiset.insert_eq_cons, Multiset.fold_cons_left, Multiset.fold_singleton]
+  have ha : a ≤ n := by omega
+  have hb : b ≤ n := by omega
+  omega
+
+/-- [Basics](https://github.com/facebookresearch/algebraic-combinatorics/blob/main/AlgebraicCombinatorics/Partitions/Basics.lean) -/
+@[path]
+private lemma partition_partsWithOne_disjoint_partsWithoutOne
+-- given
+  (k n : ℕ) :
+-- imply
+  Disjoint (partsWithOne k n) (partsWithoutOne k n) := by
+-- proof
+  rw [Finset.disjoint_iff_ne]
+  intro p hp q hq heq
+  simp only [partsWithOne, partsWithoutOne, Finset.mem_filter, Finset.mem_univ, true_and] at hp hq
+  exact hq.2 (heq ▸ hp).2
+
+/-- [Basics](https://github.com/facebookresearch/algebraic-combinatorics/blob/main/AlgebraicCombinatorics/Partitions/Basics.lean) -/
+@[path]
+private lemma partition_partsWithOne_union_partsWithoutOne_eq
+-- given
+  (k n : ℕ) :
+-- imply
+  partsWithOne k n ∪ partsWithoutOne k n =
+    (Finset.univ : Finset (Nat.Partition n)).filter fun p => p.parts.card = k := by
+-- proof
+  ext p
+  simp only [partsWithOne, partsWithoutOne, Finset.mem_union, Finset.mem_filter,
+    Finset.mem_univ, true_and]
+  constructor
+  ·
+    intro h
+    obtain ⟨hk, _⟩ | ⟨hk, _⟩ := h
+    · exact hk
+    · exact hk
+  ·
+    intro hk'
+    if h : containsOne p then
+      left
+      exact ⟨hk', h⟩
+    else
+      right
+      exact ⟨hk', h⟩
+
+/-- [Basics](https://github.com/facebookresearch/algebraic-combinatorics/blob/main/AlgebraicCombinatorics/Partitions/Basics.lean) -/
+@[path]
+private lemma partition_removeOne_parts_eq
+-- given
+  (n : ℕ)
+  (p : Nat.Partition n)
+  (h : 1 ∈ p.parts) :
+-- imply
+  (removeOne p h).parts = p.parts.erase 1 := by
+-- proof
+  apply removeOne_parts
+
+/-- [Basics](https://github.com/facebookresearch/algebraic-combinatorics/blob/main/AlgebraicCombinatorics/Partitions/Basics.lean) -/
+@[path]
+private lemma partition_removeOne_parts_card_eq
+-- given
+  (n : ℕ)
+  (p : Nat.Partition n)
+  (h : 1 ∈ p.parts) :
+-- imply
+  (removeOne p h).parts.card = p.parts.card - 1 := by
+-- proof
+  apply removeOne_parts_card
+
+/-- [Basics](https://github.com/facebookresearch/algebraic-combinatorics/blob/main/AlgebraicCombinatorics/Partitions/Basics.lean) -/
+@[path]
+private lemma partition_addOne_parts_eq
+-- given
+  (n : ℕ)
+  (p : Nat.Partition n) :
+-- imply
+  (addOne p).parts = Multiset.cons 1 p.parts := by
+-- proof
+  apply addOne_parts
+
+/-- [Basics](https://github.com/facebookresearch/algebraic-combinatorics/blob/main/AlgebraicCombinatorics/Partitions/Basics.lean) -/
+@[path]
+private lemma partition_addOne_parts_card_eq
+-- given
+  (n : ℕ)
+  (p : Nat.Partition n) :
+-- imply
+  (addOne p).parts.card = p.parts.card + 1 := by
+-- proof
+  apply addOne_parts_card
+
+/-- [Basics](https://github.com/facebookresearch/algebraic-combinatorics/blob/main/AlgebraicCombinatorics/Partitions/Basics.lean) -/
+@[path]
+private lemma partition_addOne_containsOne
+-- given
+  (n : ℕ)
+  (p : Nat.Partition n) :
+-- imply
+  containsOne (addOne p) := by
+-- proof
+  apply addOne_containsOne
+
+/-- [Basics](https://github.com/facebookresearch/algebraic-combinatorics/blob/main/AlgebraicCombinatorics/Partitions/Basics.lean) -/
+@[path]
+private lemma partition_subtractOneFromEach_parts_eq
+-- given
+  (n k : ℕ)
+  (p : Nat.Partition n)
+  (hk : p.parts.card = k)
+  (h : ∀ x ∈ p.parts, x > 1) :
+-- imply
+  (subtractOneFromEach p hk h).parts = p.parts.map (· - 1) := by
+-- proof
+  apply subtractOneFromEach_parts
+
+/-- [Basics](https://github.com/facebookresearch/algebraic-combinatorics/blob/main/AlgebraicCombinatorics/Partitions/Basics.lean) -/
+@[path]
+private lemma partition_subtractOneFromEach_parts_card_eq
+-- given
+  (n k : ℕ)
+  (p : Nat.Partition n)
+  (hk : p.parts.card = k)
+  (h : ∀ x ∈ p.parts, x > 1) :
+-- imply
+  (subtractOneFromEach p hk h).parts.card = k := by
+-- proof
+  apply subtractOneFromEach_parts_card
+
+/-- [Basics](https://github.com/facebookresearch/algebraic-combinatorics/blob/main/AlgebraicCombinatorics/Partitions/Basics.lean) -/
+@[path]
+private lemma partition_addOneToEach_parts_eq
+-- given
+  (n k : ℕ)
+  (p : Nat.Partition n)
+  (hk : p.parts.card = k) :
+-- imply
+  (addOneToEach p hk).parts = p.parts.map (· + 1) := by
+-- proof
+  apply addOneToEach_parts
+
+/-- [Basics](https://github.com/facebookresearch/algebraic-combinatorics/blob/main/AlgebraicCombinatorics/Partitions/Basics.lean) -/
+@[path]
+private lemma partition_addOneToEach_parts_card_eq
+-- given
+  (n k : ℕ)
+  (p : Nat.Partition n)
+  (hk : p.parts.card = k) :
+-- imply
+  (addOneToEach p hk).parts.card = k := by
+-- proof
+  apply addOneToEach_parts_card
+
+/-- [Basics](https://github.com/facebookresearch/algebraic-combinatorics/blob/main/AlgebraicCombinatorics/Partitions/Basics.lean) -/
+@[path]
+private lemma partition_multiset_sum_sub_eq
+-- given
+  (s t : Multiset ℕ)
+  (h : t ≤ s) :
+-- imply
+  (s - t).sum = s.sum - t.sum := by
+-- proof
+  have hadd : s = (s - t) + t := (Multiset.sub_add_cancel h).symm
+  calc
+    _ = (s - t).sum + t.sum - t.sum := by omega
+    _ = ((s - t) + t).sum - t.sum := by rw [Multiset.sum_add]
+    _ = s.sum - t.sum := by rw [← hadd]
+
+/-- [Basics](https://github.com/facebookresearch/algebraic-combinatorics/blob/main/AlgebraicCombinatorics/Partitions/Basics.lean) -/
+@[path]
+private lemma partition_replicate_le_of_count_ge
+-- given
+  (s : Multiset ℕ)
+  (a j : ℕ)
+  (h : j ≤ s.count a) :
+-- imply
+  Multiset.replicate j a ≤ s := by
+-- proof
+  rw [Multiset.le_iff_count]
+  intro b
+  rw [Multiset.count_replicate]
+  split_ifs with hba
+  ·
+    subst hba
+    exact h
+  · exact Nat.zero_le _
+
+/-- [Basics](https://github.com/facebookresearch/algebraic-combinatorics/blob/main/AlgebraicCombinatorics/Partitions/Basics.lean) -/
+@[path]
+private lemma partition_sum_eq_sum_card_filter_ge
+-- given
+  (s : Finset α)
+  (f : α → ℕ)
+  (bound : ℕ)
+  (hbound : ∀ a ∈ s, f a ≤ bound) :
+-- imply
+  s.sum f = (Finset.range bound).sum (fun j => (s.filter (fun a => f a ≥ j + 1)).card) := by
+-- proof
+  have h1 : s.sum f = s.sum (fun a => ((Finset.range bound).filter (fun j => j < f a)).card) := by
+    apply Finset.sum_congr rfl
+    intro a ha
+    have hfa : f a ≤ bound := hbound a ha
+    have : (Finset.range bound).filter (fun j => j < f a) = Finset.range (f a) := by
+      ext j
+      simp only [Finset.mem_filter, Finset.mem_range]
+      constructor
+      ·
+        intro ⟨_, hj⟩
+        exact hj
+      ·
+        intro hj
+        exact ⟨Nat.lt_of_lt_of_le hj hfa, hj⟩
+    rw [this, Finset.card_range]
+  rw [h1]
+  rw [← Finset.card_sigma, ← Finset.card_sigma]
+  apply Finset.card_bij (fun (p : (a : α) × ℕ) _ => ⟨p.2, p.1⟩)
+  ·
+    intro ⟨a, j⟩ hp
+    simp only [Finset.mem_sigma, Finset.mem_filter, Finset.mem_range] at hp ⊢
+    obtain ⟨ha, hj_range, hj_lt⟩ := hp
+    exact ⟨hj_range, ha, Nat.lt_iff_add_one_le.mp hj_lt⟩
+  ·
+    intro ⟨a₁, j₁⟩ _ ⟨a₂, j₂⟩ _ heq
+    simp only [Sigma.mk.inj_iff, heq_eq_eq] at heq
+    obtain ⟨hj, ha⟩ := heq
+    simp only [Sigma.mk.inj_iff, heq_eq_eq]
+    exact ⟨ha, hj⟩
+  ·
+    intro ⟨j, a⟩ hp
+    simp only [Finset.mem_sigma, Finset.mem_filter, Finset.mem_range] at hp
+    obtain ⟨hj_range, ha, hge⟩ := hp
+    refine ⟨⟨a, j⟩, ?_, rfl⟩
+    simp only [Finset.mem_sigma, Finset.mem_filter, Finset.mem_range]
+    exact ⟨ha, hj_range, Nat.lt_of_succ_le hge⟩
+
+/-- [Basics](https://github.com/facebookresearch/algebraic-combinatorics/blob/main/AlgebraicCombinatorics/Partitions/Basics.lean) -/
+@[path]
+private lemma partition_count_le_of_partition
+-- given
+  (n d : ℕ)
+  (p : Nat.Partition n) :
+-- imply
+  p.parts.count d ≤ n := by
+-- proof
+  if hd : d = 0 then
+    have h0 : 0 ∉ p.parts := fun h => Nat.lt_irrefl 0 (p.parts_pos h)
+    rw [hd, Multiset.count_eq_zero.mpr h0]
+    exact Nat.zero_le n
+  else
+    have hpos : 0 < d := Nat.pos_of_ne_zero hd
+    have hrep : Multiset.replicate (p.parts.count d) d ≤ p.parts :=
+      Multiset.le_count_iff_replicate_le.mp le_rfl
+    have hle : p.parts.count d * d ≤ p.parts.sum := by
+      have hsum_rep : (Multiset.replicate (p.parts.count d) d).sum = p.parts.count d * d := by
+        simp [Multiset.sum_replicate]
+      rw [← hsum_rep]
+      obtain ⟨u, hu⟩ := Multiset.le_iff_exists_add.mp hrep
+      calc
+        _ ≤ (Multiset.replicate (p.parts.count d) d).sum + u.sum := Nat.le_add_right _ _
+        _ = p.parts.sum := by rw [← Multiset.sum_add, ← hu]
+    calc
+      _ ≤ p.parts.count d * d := Nat.le_mul_of_pos_right _ hpos
+      _ ≤ p.parts.sum := hle
+      _ = n := p.parts_sum
+
+/-- [Basics](https://github.com/facebookresearch/algebraic-combinatorics/blob/main/AlgebraicCombinatorics/Partitions/Basics.lean) -/
+@[path]
+private lemma partition_castPartition_parts
+-- given
+  (n m : ℕ)
+  (h : n = m)
+  (p : Nat.Partition n) :
+-- imply
+  (castPartition h p).parts = p.parts := by
+-- proof
+  apply castPartition_parts
+
+/-- [Basics](https://github.com/facebookresearch/algebraic-combinatorics/blob/main/AlgebraicCombinatorics/Partitions/Basics.lean) -/
+@[path]
+private lemma partition_smallerPartOf_spec
+-- given
+  (n : ℕ)
+  (p : Nat.Partition n)
+  (hp : p.parts.card = 2) :
+-- imply
+  let b := smallerPartOf p hp
+  1 ≤ b ∧ 2 * b ≤ n ∧ p.parts = {n - b, b} := by
+-- proof
+  apply smallerPartOf_spec
+
+/-- [Basics](https://github.com/facebookresearch/algebraic-combinatorics/blob/main/AlgebraicCombinatorics/Partitions/Basics.lean) -/
+@[path]
+private lemma partition_ofSmallerPart_parts
+-- given
+  (n b : ℕ)
+  (hb1 : 1 ≤ b)
+  (hb2 : 2 * b ≤ n) :
+-- imply
+  (ofSmallerPart n b hb1 hb2).parts = {n - b, b} := by
+-- proof
+  apply ofSmallerPart_parts
+
+/-- [Basics](https://github.com/facebookresearch/algebraic-combinatorics/blob/main/AlgebraicCombinatorics/Partitions/Basics.lean) -/
+@[path]
+private lemma partition_ofSmallerPart_parts_card
+-- given
+  (n b : ℕ)
+  (hb1 : 1 ≤ b)
+  (hb2 : 2 * b ≤ n) :
+-- imply
+  (ofSmallerPart n b hb1 hb2).parts.card = 2 := by
+-- proof
+  apply ofSmallerPart_parts_card
+
+/-- [Basics](https://github.com/facebookresearch/algebraic-combinatorics/blob/main/AlgebraicCombinatorics/Partitions/Basics.lean) -/
+@[path]
+private lemma partition_smallerPartOf_ofSmallerPart
+-- given
+  (n b : ℕ)
+  (hb1 : 1 ≤ b)
+  (hb2 : 2 * b ≤ n) :
+-- imply
+  smallerPartOf (ofSmallerPart n b hb1 hb2) (ofSmallerPart_parts_card n b hb1 hb2) = b := by
+-- proof
+  apply smallerPartOf_ofSmallerPart
+
 
 -- created on 2026-10-11
+-- updated on 2026-10-20

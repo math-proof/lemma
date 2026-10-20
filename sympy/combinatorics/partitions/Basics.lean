@@ -1013,19 +1013,19 @@ def addOneToEach {n k : ℕ} (p : Partition n) (hk : p.parts.card = k) : Partiti
     simp only [Multiset.sum_map_add, Multiset.map_id', Multiset.map_const', p.parts_sum, hk]
     simp [Multiset.sum_replicate])
 
-private theorem removeOne_parts {n : ℕ} (p : Partition n) (h : 1 ∈ p.parts) :
+theorem removeOne_parts {n : ℕ} (p : Partition n) (h : 1 ∈ p.parts) :
     (removeOne p h).parts = p.parts.erase 1 := by
   simp only [removeOne, Partition.ofSums]
   apply filter_ne_zero_of_all_pos
   intro x hx
   exact p.parts_pos (Multiset.erase_subset 1 p.parts hx)
 
-private theorem removeOne_parts_card {n : ℕ} (p : Partition n) (h : 1 ∈ p.parts) :
+theorem removeOne_parts_card {n : ℕ} (p : Partition n) (h : 1 ∈ p.parts) :
     (removeOne p h).parts.card = p.parts.card - 1 := by
   rw [removeOne_parts, Multiset.card_erase_of_mem h]
   simp only [Nat.pred_eq_sub_one]
 
-private theorem addOne_parts {n : ℕ} (p : Partition n) :
+theorem addOne_parts {n : ℕ} (p : Partition n) :
     (addOne p).parts = 1 ::ₘ p.parts := by
   simp only [addOne, Partition.ofSums]
   rw [Multiset.filter_cons_of_pos]
@@ -1035,12 +1035,12 @@ private theorem addOne_parts {n : ℕ} (p : Partition n) :
     exact p.parts_pos hx
   · decide
 
-private theorem addOne_parts_card {n : ℕ} (p : Partition n) :
+theorem addOne_parts_card {n : ℕ} (p : Partition n) :
     (addOne p).parts.card = p.parts.card + 1 := by
   rw [addOne_parts]
   simp only [Multiset.card_cons]
 
-private theorem addOne_containsOne {n : ℕ} (p : Partition n) : containsOne (addOne p) := by
+theorem addOne_containsOne {n : ℕ} (p : Partition n) : containsOne (addOne p) := by
   simp only [containsOne, addOne_parts, Multiset.mem_cons, true_or]
 
 /-- Helper lemma: map (· - 1) is injective on multisets where all elements > 1. -/
@@ -1060,7 +1060,7 @@ private theorem map_sub_one_injective {s t : Multiset ℕ} (hs : ∀ x ∈ s, x 
     _ = t := key t ht
 
 /-- Lemmas for subtractOneFromEach. -/
-private theorem subtractOneFromEach_parts {n k : ℕ} (p : Partition n) (hk : p.parts.card = k)
+theorem subtractOneFromEach_parts {n k : ℕ} (p : Partition n) (hk : p.parts.card = k)
     (h : ∀ x ∈ p.parts, x > 1) :
     (subtractOneFromEach p hk h).parts = p.parts.map (· - 1) := by
   simp only [subtractOneFromEach, Partition.ofSums]
@@ -1071,13 +1071,13 @@ private theorem subtractOneFromEach_parts {n k : ℕ} (p : Partition n) (hk : p.
   have : y > 1 := h y hy
   omega
 
-private theorem subtractOneFromEach_parts_card {n k : ℕ} (p : Partition n) (hk : p.parts.card = k)
+theorem subtractOneFromEach_parts_card {n k : ℕ} (p : Partition n) (hk : p.parts.card = k)
     (h : ∀ x ∈ p.parts, x > 1) :
     (subtractOneFromEach p hk h).parts.card = k := by
   rw [subtractOneFromEach_parts, Multiset.card_map, hk]
 
 /-- Lemmas for addOneToEach. -/
-private theorem addOneToEach_parts {n k : ℕ} (p : Partition n) (hk : p.parts.card = k) :
+theorem addOneToEach_parts {n k : ℕ} (p : Partition n) (hk : p.parts.card = k) :
     (addOneToEach p hk).parts = p.parts.map (· + 1) := by
   simp only [addOneToEach, Partition.ofSums]
   apply filter_ne_zero_of_all_pos
@@ -1087,17 +1087,17 @@ private theorem addOneToEach_parts {n k : ℕ} (p : Partition n) (hk : p.parts.c
   have : y > 0 := p.parts_pos hy
   omega
 
-private theorem addOneToEach_parts_card {n k : ℕ} (p : Partition n) (hk : p.parts.card = k) :
+theorem addOneToEach_parts_card {n k : ℕ} (p : Partition n) (hk : p.parts.card = k) :
     (addOneToEach p hk).parts.card = k := by
   rw [addOneToEach_parts, Multiset.card_map, hk]
 
 /-- Helper to cast partition when sizes are equal. -/
-private def castPartition {n m : ℕ} (h : n = m) (p : Partition n) : Partition m where
+def castPartition {n m : ℕ} (h : n = m) (p : Partition n) : Partition m where
   parts := p.parts
   parts_sum := by rw [← h]; exact p.parts_sum
   parts_pos := @p.parts_pos
 
-private theorem castPartition_parts {n m : ℕ} (h : n = m) (p : Partition n) :
+theorem castPartition_parts {n m : ℕ} (h : n = m) (p : Partition n) :
     (castPartition h p).parts = p.parts := rfl
 
 /-- Bijection: partsWithOne k n ↔ partitions of (n-1) into (k-1) parts. -/
@@ -1282,10 +1282,10 @@ private theorem fold_min_of_two_multiset (a b n : ℕ) (h : a + b ≤ n) :
   omega
 
 /-- Extract the smaller part from a partition into 2 parts. -/
-private def smallerPartOf {n : ℕ} (p : Partition n) (_ : p.parts.card = 2) : ℕ :=
+def smallerPartOf {n : ℕ} (p : Partition n) (_ : p.parts.card = 2) : ℕ :=
   p.parts.fold min n
 
-private theorem smallerPartOf_spec {n : ℕ} (p : Partition n) (hp : p.parts.card = 2) :
+theorem smallerPartOf_spec {n : ℕ} (p : Partition n) (hp : p.parts.card = 2) :
     let b := smallerPartOf p hp
     1 ≤ b ∧ 2 * b ≤ n ∧ p.parts = {n - b, b} := by
   obtain ⟨b, hb1, hb2, hparts⟩ := partition_two_parts_form p hp
@@ -1297,10 +1297,10 @@ private theorem smallerPartOf_spec {n : ℕ} (p : Partition n) (hp : p.parts.car
   exact ⟨hb1, hb2, trivial⟩
 
 /-- Construct a partition from a smaller part b. -/
-private def ofSmallerPart (n b : ℕ) (hb1 : 1 ≤ b) (hb2 : 2 * b ≤ n) : Partition n :=
+def ofSmallerPart (n b : ℕ) (hb1 : 1 ≤ b) (hb2 : 2 * b ≤ n) : Partition n :=
   Partition.ofSums n {n - b, b} (by simp; omega)
 
-private theorem ofSmallerPart_parts (n b : ℕ) (hb1 : 1 ≤ b) (hb2 : 2 * b ≤ n) :
+theorem ofSmallerPart_parts (n b : ℕ) (hb1 : 1 ≤ b) (hb2 : 2 * b ≤ n) :
     (ofSmallerPart n b hb1 hb2).parts = {n - b, b} := by
   simp only [ofSmallerPart, Partition.ofSums]
   have hnb_pos : n - b ≠ 0 := by omega
@@ -1310,12 +1310,12 @@ private theorem ofSmallerPart_parts (n b : ℕ) (hb1 : 1 ≤ b) (hb2 : 2 * b ≤
     Multiset.count_singleton]
   split_ifs with h1 h2 h3 h4 <;> simp_all
 
-private theorem ofSmallerPart_parts_card (n b : ℕ) (hb1 : 1 ≤ b) (hb2 : 2 * b ≤ n) :
+theorem ofSmallerPart_parts_card (n b : ℕ) (hb1 : 1 ≤ b) (hb2 : 2 * b ≤ n) :
     (ofSmallerPart n b hb1 hb2).parts.card = 2 := by
   rw [ofSmallerPart_parts]
   simp only [Multiset.insert_eq_cons, Multiset.card_cons, Multiset.card_singleton]
 
-private theorem smallerPartOf_ofSmallerPart (n b : ℕ) (hb1 : 1 ≤ b) (hb2 : 2 * b ≤ n) :
+theorem smallerPartOf_ofSmallerPart (n b : ℕ) (hb1 : 1 ≤ b) (hb2 : 2 * b ≤ n) :
     smallerPartOf (ofSmallerPart n b hb1 hb2) (ofSmallerPart_parts_card n b hb1 hb2) = b := by
   simp only [smallerPartOf, ofSmallerPart_parts]
   rw [fold_min_of_two_multiset _ _ _ (by omega)]
