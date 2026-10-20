@@ -40,11 +40,10 @@ private lemma main
         rwa [Domino.shiftNat_shiftNeg]
     ·
       intro hd
-      by_cases hne : d = vertical_1_1
-      ·
+      if hne : d = vertical_1_1 then
         left
         exact hne
-      ·
+      else
         right
         have hd_erase : d ∈ dominos.erase vertical_1_1 := Finset.mem_erase.mpr ⟨hne, hd⟩
         have hcols := domino_col_ge_two_of_ne_vertical

@@ -8,7 +8,7 @@ gradient of the Bellman equation for the closed-form value function
 -/
 @[path]
 private lemma main
-  [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [CompleteSpace Θ] [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A]
+  [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [CompleteSpace Θ] [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A] [DecidableEq S] [DecidableEq A]
   {M : Model Θ S A}
   {γ : ℝ}
 -- given
@@ -16,14 +16,19 @@ private lemma main
   (h₁ : sup[θ, x, u] ‖∇[θ] M.policy.prob θ x u‖ < ∞)
   (h₂ : γ ∈ Set.Ico 0 1)
   (x : S)
-  (θ : Θ) :
+  (θ : Θ)
+  (hP : ∀ θ y, (M θ).real ((fun ω : ℕ → ℝ × S × A ↦ (ω 0).2.1) ⁻¹' {y}) ≠ 0)
+  (hπ : ∀ θ u, (M θ).real ((fun ω : ℕ → ℝ × S × A ↦ (ω 0).2.1) ⁻¹' {x}) * M.policy.prob θ x u ≠ 0) :
 -- imply
   fderiv ℝ (fun θ => M.Vc θ γ x) θ =
     ∑ u, M.Qc θ γ x u • fderiv ℝ (fun θ => M.policy.prob θ x u) θ +
     γ • ∑ y, M.P1 θ x y • fderiv ℝ (fun θ => M.Vc θ γ y) θ := by
 -- proof
-  have hQ := fun u => DifferentiableAt.EqFderiv_FunQc_SMulSum_SMulTFderivVc.of.In_Ico.GtInftySup_Norm.All_All_Differentiable_FunProbPol (M := M) h₀ h₁ h₂ x u θ
-  rw [funext fun θ => Vc.eq.Sum_MulProbQc.of.In_Ico (M := M) h₂ θ x, fderiv_fun_sum fun u _ => ((h₀ x u) θ).fun_mul (hQ u).1]
+  have hQ := fun u =>
+    DifferentiableAt.EqFderiv_FunQc_SMulSum_SMulTFderivVc.of.In_Ico.GtInftySup_Norm.All_All_Differentiable_FunProbPol
+      (M := M) h₀ h₁ h₂ x u θ (fun θ y => hP θ y) (fun θ => hπ θ u)
+  rw [funext fun θ => Vc.eq.Sum_MulProbQc.of.In_Ico (M := M) h₂ θ x (hP θ x),
+    fderiv_fun_sum fun u _ => ((h₀ x u) θ).fun_mul (hQ u).1]
   simp_rw [fderiv_fun_mul ((h₀ _ _) θ) (hQ _).1, (hQ _).2]
   rw [Finset.sum_add_distrib, add_comm]
   congr 1
@@ -36,3 +41,4 @@ private lemma main
 
 
 -- created on 2026-10-06
+-- updated on 2026-10-20

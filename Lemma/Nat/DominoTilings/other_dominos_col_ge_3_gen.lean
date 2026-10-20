@@ -13,12 +13,11 @@ open Finset
 private lemma main
 -- given
   (T : DominoTiling (n + 2) 2)
-  (d1 d2 : Domino)
+  (d1 d2 d : Domino)
   (hd1 : d1 ∈ T.dominos)
   (hd2 : d2 ∈ T.dominos)
   (hd1_cells : d1.cells = ({(1, 1), (2, 1)} : Finset Cell))
   (hd2_cells : d2.cells = ({(1, 2), (2, 2)} : Finset Cell))
-  (d : Domino)
   (hd : d ∈ T.dominos)
   (hne1 : d ≠ d1)
   (hne2 : d ≠ d2) :
@@ -36,38 +35,40 @@ private lemma main
   have h22 : (2, 2) ∈ d2.cells := by rw [hd2_cells]; simp
   have hd_in := T.dominos_in_rect d hd
   constructor
-  · by_contra h
+  ·
+    by_contra h
     push Not at h
     have hc1_col : d.cell1.1 = 1 ∨ d.cell1.1 = 2 := by omega
     have hc1_in_d : d.cell1 ∈ d.cells := Finset.mem_insert_self _ _
     have hc1_in_rect := hd_in hc1_in_d
     rw [mem_Rectangle] at hc1_in_rect
     have hrow_bound : d.cell1.2 = 1 ∨ d.cell1.2 = 2 := by omega
-    rcases hc1_col with hcol1 | hcol2 <;> rcases hrow_bound with hr1 | hr2
-    · have heq : d.cell1 = (1, 1) := Prod.ext hcol1 hr1
-      exact hdisj1 d.cell1 hc1_in_d (1, 1) h11 heq
-    · have heq : d.cell1 = (1, 2) := Prod.ext hcol1 hr2
-      exact hdisj2 d.cell1 hc1_in_d (1, 2) h12 heq
-    · have heq : d.cell1 = (2, 1) := Prod.ext hcol2 hr1
-      exact hdisj1 d.cell1 hc1_in_d (2, 1) h21 heq
-    · have heq : d.cell1 = (2, 2) := Prod.ext hcol2 hr2
-      exact hdisj2 d.cell1 hc1_in_d (2, 2) h22 heq
-  · by_contra h
+    obtain hcol1 | hcol2 := hc1_col <;> obtain hr1 | hr2 := hrow_bound
+    ·
+      exact hdisj1 d.cell1 hc1_in_d (1, 1) h11 (Prod.ext hcol1 hr1)
+    ·
+      exact hdisj2 d.cell1 hc1_in_d (1, 2) h12 (Prod.ext hcol1 hr2)
+    ·
+      exact hdisj1 d.cell1 hc1_in_d (2, 1) h21 (Prod.ext hcol2 hr1)
+    ·
+      exact hdisj2 d.cell1 hc1_in_d (2, 2) h22 (Prod.ext hcol2 hr2)
+  ·
+    by_contra h
     push Not at h
     have hc2_col : d.cell2.1 = 1 ∨ d.cell2.1 = 2 := by omega
     have hc2_in_d : d.cell2 ∈ d.cells := Finset.mem_insert_of_mem (Finset.mem_singleton_self _)
     have hc2_in_rect := hd_in hc2_in_d
     rw [mem_Rectangle] at hc2_in_rect
     have hrow_bound : d.cell2.2 = 1 ∨ d.cell2.2 = 2 := by omega
-    rcases hc2_col with hcol1 | hcol2 <;> rcases hrow_bound with hr1 | hr2
-    · have heq : d.cell2 = (1, 1) := Prod.ext hcol1 hr1
-      exact hdisj1 d.cell2 hc2_in_d (1, 1) h11 heq
-    · have heq : d.cell2 = (1, 2) := Prod.ext hcol1 hr2
-      exact hdisj2 d.cell2 hc2_in_d (1, 2) h12 heq
-    · have heq : d.cell2 = (2, 1) := Prod.ext hcol2 hr1
-      exact hdisj1 d.cell2 hc2_in_d (2, 1) h21 heq
-    · have heq : d.cell2 = (2, 2) := Prod.ext hcol2 hr2
-      exact hdisj2 d.cell2 hc2_in_d (2, 2) h22 heq
+    obtain hcol1 | hcol2 := hc2_col <;> obtain hr1 | hr2 := hrow_bound
+    ·
+      exact hdisj1 d.cell2 hc2_in_d (1, 1) h11 (Prod.ext hcol1 hr1)
+    ·
+      exact hdisj2 d.cell2 hc2_in_d (1, 2) h12 (Prod.ext hcol1 hr2)
+    ·
+      exact hdisj1 d.cell2 hc2_in_d (2, 1) h21 (Prod.ext hcol2 hr1)
+    ·
+      exact hdisj2 d.cell2 hc2_in_d (2, 2) h22 (Prod.ext hcol2 hr2)
 
 
 -- created on 2026-10-20

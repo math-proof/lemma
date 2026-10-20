@@ -10,8 +10,8 @@ The `c`-discounted sum of residuals against a function of `(s[t], a[t])` reduces
 -/
 @[path]
 private lemma main
-  [CountableMeasure S] [MeasurableSingletonClass S] [Fintype S]
-  [CountableMeasure A] [MeasurableSingletonClass A] [Fintype A]
+  [CountableMeasure S] [MeasurableSingletonClass S] [Fintype S] [DecidableEq S]
+  [CountableMeasure A] [MeasurableSingletonClass A] [Fintype A] [DecidableEq A]
   [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E]
   {M : Model Θ S A}
   {γ c : ℝ}
@@ -24,7 +24,8 @@ private lemma main
   (h₂ : c ∈ Set.Ico 0 1)
   (θ : Θ)
   (t : ℕ)
-  (ψ : S → A → E) :
+  (ψ : S → A → E)
+  (hP : ∀ y, (M θ).real ((fun ω : ℕ → ℝ × S × A ↦ (ω 0).2.1) ⁻¹' {y}) ≠ 0) :
 -- imply
   have : PSpace (M θ) (AsPathRV.path s) :=
     PSpace_Path.of.All_PSpace
@@ -109,7 +110,7 @@ private lemma main
     obtain ⟨k', rfl⟩ := Nat.exists_eq_succ_of_ne_zero hk
     simp_rw [hF]
     rw [integral_smul]
-    have := Integral_SMul.eq.Zero.of.Le.In_Ico (M := M) t (t + k') h₀ h₁ (Nat.le_add_right t k') θ ψ
+    have := Integral_SMul.eq.Zero.of.Le.In_Ico (M := M) t (t + k') h₀ h₁ (Nat.le_add_right t k') θ ψ hP
     rw [show (fun ω => (r (t + k'.succ) ω + γ * M.Vc θ γ (s (t + k'.succ + 1) ω) -
         M.Vc θ γ (s (t + k'.succ) ω)) • ψ (s t ω) (a t ω)) = fun ω => (r (t + k' + 1) ω +
         γ * M.Vc θ γ (s (t + k' + 1 + 1) ω) - M.Vc θ γ (s (t + k' + 1) ω)) • ψ (s t ω) (a t ω)

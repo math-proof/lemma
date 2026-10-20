@@ -23,7 +23,8 @@ private lemma main
   (h₁ : ∀ t, (· t) = (r t, s t, a t))
   (h₂ : t ≤ n)
   (θ : Θ)
-  (ψ : S → A → E) :
+  (ψ : S → A → E)
+  (hP : ∀ y, (M θ).real ((fun ω : ℕ → ℝ × S × A ↦ (ω 0).2.1) ⁻¹' {y}) ≠ 0) :
 -- imply
   ∫ ω, (r (n + 1) ω + γ * M.Vc θ γ (s (n + 1 + 1) ω) - M.Vc θ γ (s (n + 1) ω)) •
     ψ (s t ω) (a t ω) ∂(M θ) = 0 := by
@@ -44,9 +45,9 @@ private lemma main
   rw [integral_finsetSum _ fun u _ => (hI x u).smul_const _]
   refine Finset.sum_eq_zero fun u _ => ?_
   rw [integral_smul_const,
-    Integral_MulEqAndEqGetSubAdd_Mul_VcVc.eq.Zero.of.Le.All_Eq.In_Ico (M := M) t n h₀ h₁ h₂ θ x u,
+    Integral_MulEqAndEqGetSubAdd_Mul_VcVc.eq.Zero.of.Le.All_Eq.In_Ico (M := M) t n h₀ h₁ h₂ θ x u hP,
     zero_smul]
 
 
 -- created on 2026-10-06
--- updated on 2026-10-11
+-- updated on 2026-10-20

@@ -23,7 +23,7 @@ on a reachable state, `∑' k, γ ^ k • ∇ 𝔼[r[t+k] | s[t] = x] = ∇ V(s[
 -/
 @[path]
 private lemma main
-  [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [CompleteSpace Θ] [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A] [DecidableEq S]
+  [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [CompleteSpace Θ] [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A] [DecidableEq S] [DecidableEq A]
   {M : Model Θ S A}
   {γ : ℝ}
   {r : ℕ → (ℕ → ℝ × S × A) → ℝ}
@@ -37,14 +37,12 @@ private lemma main
   (h₁ : ∀ t, (· t) = (r t, s t, a t))
   (h₂ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
   (h₃ : sup[θ, x, u] ‖∇[θ] M.policy.prob θ x u‖ < ∞)
-  (h₄ : (M θ).real (s t ⁻¹' {x}) ≠ 0) :
+  (h₄ : (M θ).real (s t ⁻¹' {x}) ≠ 0)
+  (h₅ : (M θ).real ((fun ω : ℕ → ℝ × S × A ↦ (ω 0).2.1) ⁻¹' {x}) ≠ 0) :
 -- imply
-  let V (θ : Θ) (t : ℕ) (x : S) : ℝ :=
-    𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = x);
   ∑' k, γ ^ k • fderiv ℝ (fun θ => ∫ ω, r (t + k) ω ∂(M θ)[|s t ⁻¹' {x}]) θ =
-    fderiv ℝ (fun θ => V θ t x) θ := by
+    fderiv ℝ (fun θ => M.V θ γ t x) θ := by
 -- proof
-  intro Vθ
   obtain ⟨Cp, hCp⟩ := id h₃
   have hC : ∀ θ x u, ‖fderiv ℝ (fun θ => M.policy.prob θ x u) θ‖ ≤ Cp := fun θ x u => by
     simpa [gradient, LinearIsometryEquiv.norm_map] using hCp ⟨(θ, x, u), rfl⟩
@@ -57,9 +55,9 @@ private lemma main
     filter_upwards [hc.eventually_ne h₄] with θ' h
     apply cond_r_W h₁ M θ' t k x h
   simp_rw [hk]
-  rw [Fderiv_V.eq.Fderiv_Vc.of.Ne0Real_Preimage.In_Ico.GtInftySup.All_Differentiable_Prob (M := M) t x θ h₀ h₁ h₂ h₃ h₄,
-    (HasFDerivAt_FunVc_TSum_SMulPowFderiv_FunW.of.In_Ico.GtInftySup_Norm.All_All_Differentiable_FunProbPol (M := M) h₂ h₃ h₀ x θ).fderiv]
+  rw [Fderiv_V.eq.Fderiv_Vc.of.Ne0Real_Preimage.In_Ico.GtInftySup.All_Differentiable_Prob (M := M) t x θ h₀ h₁ h₂ h₃ h₄ h₅,
+    (HasFDerivAt_FunVc_TSum_SMulPowFderiv_FunW.of.In_Ico.GtInftySup_Norm.All_All_Differentiable_FunProbPol (M := M) h₂ h₃ h₀ x θ h₅).fderiv]
 
 
 -- created on 2026-10-06
--- updated on 2026-10-12
+-- updated on 2026-10-20

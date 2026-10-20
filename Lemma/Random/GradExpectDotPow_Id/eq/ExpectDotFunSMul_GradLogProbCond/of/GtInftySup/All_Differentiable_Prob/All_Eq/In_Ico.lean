@@ -178,7 +178,9 @@ private lemma main
   (h₀ : γ ∈ Set.Ico 0 1)
   (h₁ : ∀ t, (· t) = (r t, s t, a t))
   (h₂ : ∀ s a, Differentiable ℝ (M.policy.prob · s a))
-  (h₃ : sup[θ, s, a] ‖∇[θ] M.policy.prob θ s a‖ < ∞) :
+  (h₃ : sup[θ, s, a] ‖∇[θ] M.policy.prob θ s a‖ < ∞)
+  (hP0 : ∀ θ x, (M θ).real ((fun ω : ℕ → ℝ × S × A ↦ (ω 0).2.1) ⁻¹' {x}) ≠ 0)
+  (hπ : ∀ θ y u, (M θ).real ((fun ω : ℕ → ℝ × S × A ↦ (ω 0).2.1) ⁻¹' {y}) * M.policy.prob θ y u ≠ 0) :
 -- imply
   have : ∀ θ t, SinglePSpace (M θ) (a t, s t) := fun _ t =>
     SinglePSpace.of.EqMeasureCount.Measurable ((Random.Measurable.of.All_Eq.snd.snd (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁ t).prodMk (Random.Measurable.of.All_Eq.snd.fst (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁ t)) (by
@@ -229,7 +231,7 @@ private lemma main
     -- inlined from former In_Ico1 (fderiv/CLM Q-score series)
     have h7grad :=
       GradExpectDotPow_Id.eq.AddExpect_Sum_SMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_Eq_ExpectCondDot.All_Eq_ExpectCondDot.EqMeasureCount.EqMeasureCount.All_Eq_Joint.In_Ico
-        (θ := θ) h₀ h₁ hS hA hQ_expect hV_expect h₂ h₃o
+        (θ := θ) h₀ h₁ hS hA hQ_expect hV_expect h₂ h₃o hP0 hπ
     let Lgrad : StrongDual ℝ Θ ≃L[ℝ] Θ :=
       (InnerProductSpace.toDual ℝ Θ).symm.toContinuousLinearEquiv
     have hLgrad : ∀ φ, (InnerProductSpace.toDual ℝ Θ).symm φ = Lgrad φ := fun _ => rfl
@@ -394,7 +396,7 @@ private lemma main
         refine Eq.trans (congrArg (fun z => γ ^ n • z) (Lgrad.integral_comp_comm _)) ?_
         exact (map_smul Lgrad (γ ^ n) _).symm
     obtain ⟨B, hB⟩ :=
-      BddAbove_ImageNormFderiv.of.In_Ico.GtInftySup.All_Differentiable_Prob (M := M) h₀ h₁ h₂ h₃o θ
+      BddAbove_ImageNormFderiv.of.In_Ico.GtInftySup.All_Differentiable_Prob (M := M) h₀ h₁ h₂ h₃o θ (hP0 θ)
     have h₉ : ∀ n, ‖∫ ω, fderiv ℝ (fun θ' => Vloc θ' n (s n ω)) θ ∂(M θ)‖ ≤ max B 0 := by
       intro n
       rw [Integral.eq.Sum_SMul h₁ (M := M) θ n (fun y => fderiv ℝ (fun θ' => Vloc θ' n y) θ)]
@@ -631,7 +633,9 @@ private lemma advantage
   (h₀ : γ ∈ Set.Ico 0 1)
   (h₁ : ∀ t, (· t) = (r t, s t, a t))
   (h₂ : ∀ s a, Differentiable ℝ (M.policy.prob · s a))
-  (h₃ : sup[θ, s, a] ‖∇[θ] M.policy.prob θ s a‖ < ∞) :
+  (h₃ : sup[θ, s, a] ‖∇[θ] M.policy.prob θ s a‖ < ∞)
+  (hP0 : ∀ θ x, (M θ).real ((fun ω : ℕ → ℝ × S × A ↦ (ω 0).2.1) ⁻¹' {x}) ≠ 0)
+  (hπ : ∀ θ y u, (M θ).real ((fun ω : ℕ → ℝ × S × A ↦ (ω 0).2.1) ⁻¹' {y}) * M.policy.prob θ y u ≠ 0) :
 -- imply
   have : ∀ θ t, SinglePSpace (M θ) (a t, s t) := fun _ t =>
     SinglePSpace.of.EqMeasureCount.Measurable ((Random.Measurable.of.All_Eq.snd.snd (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁ t).prodMk (Random.Measurable.of.All_Eq.snd.fst (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁ t)) (by
@@ -801,7 +805,7 @@ private lemma advantage
     PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.fst h₁ t).aemeasurable⟩)
   have hT : ∇[θ] 𝔼[r: M θ]((γ ^ (id : ℕ → ℕ)) @ r) =
       𝔼[r, s, a : M θ]((γ ^ (id : ℕ → ℕ)) @ fun t ↦ ((γ ^ (id : ℕ → ℕ)) @ (fun k => r (t + k))) • ∇[θ] (ℙ[M θ](a t | s t) : ℝ).log) :=
-    main h₀ h₁ h₂ h₃
+    main h₀ h₁ h₂ h₃ hP0 hπ
   have hRae : ∀ᵐ ω ∂(M θ), ∀ t, ‖∑' k, γ ^ k * r (t + k) ω‖ ≤ (1 - γ)⁻¹ * |M.env.R| := by
     filter_upwards [All_LeNorm_Abs.of.All_Eq_Joint h₁ (M := M) θ] with ω hr t
     refine tsum_of_norm_bounded ((hasSum_geometric_of_lt_one h₀.1 h₀.2).mul_right _) fun k => ?_

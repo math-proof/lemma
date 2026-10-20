@@ -8,7 +8,7 @@ Almost surely the `c`-discounted sums of temporal-difference residuals are bound
 -/
 @[path]
 private lemma main
-  [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A]
+  [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A] [DecidableEq S]
   {M : Model Θ S A}
   {γ c : ℝ}
   {r : ℕ → (ℕ → ℝ × S × A) → ℝ}

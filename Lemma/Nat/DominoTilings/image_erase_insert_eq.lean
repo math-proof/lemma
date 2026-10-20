@@ -30,14 +30,15 @@ private lemma main
     ·
       refine ⟨v, hv, ?_⟩
       rwa [hf]
-    · exact ⟨a, ha, hab⟩
+    ·
+      exact ⟨a, ha, hab⟩
   ·
     rintro ⟨a, ha, rfl⟩
-    by_cases h : a = v
-    ·
+    if h : a = v then
       subst h
       exact ⟨w, Or.inl rfl, hf.symm⟩
-    · exact ⟨a, Or.inr ⟨h, ha⟩, rfl⟩
+    else
+      exact ⟨a, Or.inr ⟨h, ha⟩, rfl⟩
 
 
 -- created on 2026-10-20

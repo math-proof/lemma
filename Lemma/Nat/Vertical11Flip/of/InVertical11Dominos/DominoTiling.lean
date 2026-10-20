@@ -23,8 +23,7 @@ private lemma main
   have hdisj := T.pairwise_disjoint vertical_1_1 hv vertical_1_1_flip hvf hne
   simp only [Finset.disjoint_iff_ne, Domino.cells, vertical_1_1, vertical_1_1_flip,
     Finset.mem_insert, Finset.mem_singleton] at hdisj
-  have h := hdisj (1, 1) (by left; rfl) (1, 1) (by right; rfl)
-  exact h rfl
+  exact hdisj (1, 1) (by left; rfl) (1, 1) (by right; rfl) rfl
 
 
 -- created on 2026-10-20

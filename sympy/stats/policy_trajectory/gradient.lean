@@ -11,7 +11,7 @@ import Mathlib.Analysis.Calculus.Gradient.Basic
 Definitions only (repo rule: `sympy/` holds definitions, theorems live in `Lemma/`):
 
 * `Pn θ n x y = Pr(s[t+n] = y | s[t] = x)` and `P1 θ x y = Pr(s[t+1] = y | s[t] = x)`;
-* the time-free closed forms `Vc`, `Qc` of the state / action value functions.
+* the state / action value functions `V`, `Q` and their time-free forms `Vc`, `Qc`.
 
 All facts about these (Chapman–Kolmogorov, differentiability of the stage expectation / `Vc`, `Qc`, the gradient of the
 Bellman equation, finite-sum forms of expectations, `V = Vc` on reachable states, …) live in
@@ -37,25 +37,30 @@ noncomputable def Pn (M : Model Θ S A) (θ : Θ) (n : ℕ) (x y : S) : ℝ :=
 noncomputable def P1 (M : Model Θ S A) (θ : Θ) (x y : S) : ℝ :=
   ∑ u, M.policy.prob θ x u * (M.env.trans (x, u)).real {y}
 
-/-- Textbook state value (time-free closed form), matching local `V` in Lemma/Random:
-`Vc θ γ x = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[0:] | s 0 = x)`,
+/-- State-value function:
+`V θ γ t s_t = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = s_t)`,
 where `(r t ω, s t ω, _) = ω t` on the trajectory space. -/
-noncomputable def Vc (M : Model Θ S A) (θ : Θ) (γ : ℝ) (x : S) : ℝ :=
+noncomputable def V (M : Model Θ S A) (θ : Θ) (γ : ℝ) (t : ℕ) (s_t : S) : ℝ :=
   let r : ℕ → (ℕ → ℝ × S × A) → ℝ := fun t ω => (ω t).1
   let s : ℕ → (ℕ → ℝ × S × A) → S := fun t ω => (ω t).2.1
-  𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[0:] | s 0 = x)
+  𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = s_t)
 
-/-- time-free closed form of the action-value function:
-`Qc θ γ x u = 𝔼[ρ : reward(x,u)](clip ρ) + γ * 𝔼[y : trans(x,u)](Vc θ γ y)` -/
+/-- Time-free closed form of the state-value function: `Vc θ γ x = V θ γ 0 x`. -/
+noncomputable def Vc (M : Model Θ S A) (θ : Θ) (γ : ℝ) (x : S) : ℝ :=
+  M.V θ γ 0 x
+
+/-- Action-value function:
+`Q θ γ t s_t a_t = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = s_t ∧ a t = a_t)`,
+where `(r t ω, s t ω, a t ω) = ω t` on the trajectory space. -/
+noncomputable def Q (M : Model Θ S A) (θ : Θ) (γ : ℝ) (t : ℕ) (s_t : S) (a_t : A) : ℝ :=
+  let r : ℕ → (ℕ → ℝ × S × A) → ℝ := fun t ω => (ω t).1
+  let s : ℕ → (ℕ → ℝ × S × A) → S := fun t ω => (ω t).2.1
+  let a : ℕ → (ℕ → ℝ × S × A) → A := fun t ω => (ω t).2.2
+  𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = s_t ∧ a t = a_t)
+
+/-- Time-free closed form of the action-value function: `Qc θ γ x u = Q θ γ 0 x u`. -/
 noncomputable def Qc (M : Model Θ S A) (θ : Θ) (γ : ℝ) (x : S) (u : A) : ℝ :=
-  have := M.env.reward_markov
-  have := M.env.trans_markov
-  let ρ : ℝ → ℝ := id
-  have : PSpace (M.env.reward (x, u)) ρ := { aemeasurable := measurable_id.aemeasurable }
-  let y : S → S := id
-  have : PSpace (M.env.trans (x, u)) y := { aemeasurable := measurable_id.aemeasurable }
-  𝔼[ρ : M.env.reward (x, u)](clip ρ (-M.env.R) M.env.R) +
-    γ * 𝔼[y : M.env.trans (x, u)](M.Vc θ γ y)
+  M.Q θ γ 0 x u
 
 end Model
 

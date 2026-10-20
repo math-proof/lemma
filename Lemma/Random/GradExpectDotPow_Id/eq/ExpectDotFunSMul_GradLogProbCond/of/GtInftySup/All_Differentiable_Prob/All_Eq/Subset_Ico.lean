@@ -32,7 +32,9 @@ private lemma main
   (h₀ : ({γ, ℓ} : Set ℝ) ⊆ Set.Ico 0 1)
   (h₁ : ∀ t, (· t) = (r t, s t, a t))
   (h₂ : ∀ s a, Differentiable ℝ (M.policy.prob · s a))
-  (h₃ : sup[θ, s, a] ‖∇[θ] M.policy.prob θ s a‖ < ∞) :
+  (h₃ : sup[θ, s, a] ‖∇[θ] M.policy.prob θ s a‖ < ∞)
+  (hP0 : ∀ θ x, (M θ).real ((fun ω : ℕ → ℝ × S × A ↦ (ω 0).2.1) ⁻¹' {x}) ≠ 0)
+  (hπ : ∀ θ y u, (M θ).real ((fun ω : ℕ → ℝ × S × A ↦ (ω 0).2.1) ⁻¹' {y}) * M.policy.prob θ y u ≠ 0) :
 -- imply
   have : ∀ θ t, SinglePSpace (M θ) (a t, s t) := fun _ t =>
     SinglePSpace.of.EqMeasureCount.Measurable ((Random.Measurable.of.All_Eq.snd.snd (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁ t).prodMk (Random.Measurable.of.All_Eq.snd.fst (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁ t)) (by
@@ -84,7 +86,10 @@ private lemma main
   -- almost surely the learned value is the time-free value function
   have hVc : ∀ᵐ ω ∂(M θ), ∀ k, V θ k ⟨fun _ => s k ω⟩ = M.Vc θ γ (s k ω) :=
     (AeRealPreimageSS.ne.Zero (s := s) (M := M) θ).mono fun ω h k =>
-      (hVr θ k _ (h k)).trans (Random.V.eq.Vc.of.Ne0Real_Preimage.In_Ico (M := M) θ k _ hγ h₁ (h k))
+      (hVr θ k _ (h k)).trans <| by
+        change M.V θ γ k (s k ω) = M.Vc θ γ (s k ω)
+        exact Random.V.eq.Vc.of.Ne0Real_Preimage.In_Ico (M := M) θ k (s k ω) hγ
+          (by simpa [s] using h k) (hP0 θ (s k ω))
   have hδ : ∀ᵐ ω ∂(M θ), ∀ j, r j ω + γ * V θ (j + 1) ⟨fun _ => s (j + 1) ω⟩ - V θ j ⟨fun _ => s j ω⟩ =
       r j ω + γ * M.Vc θ γ (s (j + 1) ω) - M.Vc θ γ (s j ω) :=
     hVc.mono fun ω h j => by rw [h j, h (j + 1)]
@@ -186,7 +191,7 @@ private lemma main
     exact congrArg (fun δ => Dot.dot ((γ * ℓ) ^ (id : ℕ → ℕ)) δ)
       (hδθ (fun j => s j ω) (fun j => r j ω) t).symm
   refine (GradExpectDotPow_Id.eq.ExpectDot_SMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_Eq.In_Icc.In_Ico
-    (θ := θ) hγ hℓ h₁ h₂ h₃o).trans ?_
+    (θ := θ) hγ hℓ h₁ h₂ h₃o hP0 hπ).trans ?_
   symm
   -- V_θ[t] s[t:] i = V θ (t + i) ⟨fun _ => s (t + i)⟩
   have hres : ∀ (s : ℕ → S) (t i : ℕ),

@@ -39,7 +39,8 @@ private lemma main
     -- and span columns 1-2. This means all cells in column 2 are covered by these dominos.
     -- Any domino with minCol = 2 would overlap with a column-1 domino, contradiction.
     -- So no domino spans columns 2-3, creating a fault at column 2.
-    have hfault : T.hasFaultAt 2 := by
+    refine hfree 2 (by omega) hn_ge_3 ?_
+    ·
       --
       refine ⟨by omega, hn_ge_3, ?_⟩
       intro d hd
@@ -55,18 +56,21 @@ private lemma main
       have hcol1_ge : d.cell1.1 ≥ 1 := hc1_in_rect.1
       have hcol2_ge : d.cell2.1 ≥ 1 := hc2_in_rect.1
       -- Case split on whether d touches column 1
-      by_cases hmin1 : d.minCol = 1
+      apply (Classical.em (d.minCol = 1)).elim
       ·
+        intro hmin1
         -- d touches column 1: it must be horizontal spanning 1-2
         -- First, find which cell is in column 1
         have hcov1 : ∃ y, (1, y) ∈ d.cells := by
           --
           unfold Domino.minCol at hmin1
-          by_cases h : d.cell1.1 ≤ d.cell2.1
+          apply (Classical.em (d.cell1.1 ≤ d.cell2.1)).elim
           ·
+            intro h
             simp only [min_eq_left h] at hmin1
             exact ⟨d.cell1.2, by simp [Domino.cells]; left; rw [← hmin1]⟩
           ·
+            intro h
             simp only [not_le] at h
             simp only [min_eq_right (le_of_lt h)] at hmin1
             exact ⟨d.cell2.2, by simp [Domino.cells]; right; rw [← hmin1]⟩
@@ -112,18 +116,21 @@ private lemma main
               simp only [hc2] at hadj
               omega
       ·
+        intro hmin1
         -- d.minCol ≠ 1, so d.minCol = 2 (since d.minCol ≤ 2 and d.minCol ≥ 1)
         have hmin2 : d.minCol = 2 := by unfold Domino.minCol at hmin hmin1; unfold Domino.minCol; omega
         -- d has a cell in column 2
         unfold Domino.minCol at hmin2
         have hcell2 : d.cell1.1 = 2 ∨ d.cell2.1 = 2 := by
           --
-          by_cases h : d.cell1.1 ≤ d.cell2.1
+          apply (Classical.em (d.cell1.1 ≤ d.cell2.1)).elim
           ·
+            intro h
             left
             simp only [min_eq_left h] at hmin2
             exact hmin2
           ·
+            intro h
             right
             simp only [not_le] at h
             simp only [min_eq_right (le_of_lt h)] at hmin2
@@ -164,11 +171,13 @@ private lemma main
           have hd'_cov1 : ∃ y, (1, y) ∈ d'.cells := by
             --
             unfold Domino.minCol at hd'_min_eq
-            by_cases h : d'.cell1.1 ≤ d'.cell2.1
+            apply (Classical.em (d'.cell1.1 ≤ d'.cell2.1)).elim
             ·
+              intro h
               simp only [min_eq_left h] at hd'_min_eq
               exact ⟨d'.cell1.2, by simp [Domino.cells]; left; rw [← hd'_min_eq]⟩
             ·
+              intro h
               simp only [not_le] at h
               simp only [min_eq_right (le_of_lt h)] at hd'_min_eq
               exact ⟨d'.cell2.2, by simp [Domino.cells]; right; rw [← hd'_min_eq]⟩
@@ -194,8 +203,7 @@ private lemma main
               have hd'c1 : d'.cell1 = (1, d.cell1.2) := hcov.symm
               have hd'c2_row : d'.cell2.2 = d.cell1.2 := by
                 --
-                have h1 : d'.cell1.2 = d.cell1.2 := by rw [hd'c1]
-                exact hrow_eq.symm.trans h1
+                exact hrow_eq.symm.trans (by rw [hd'c1] : d'.cell1.2 = d.cell1.2)
               have hd'c2_col : d'.cell2.1 = 2 := by
                 --
                 have h1 : d'.cell1.1 = 1 := by rw [hd'c1]
@@ -205,13 +213,15 @@ private lemma main
               have hd'c2_eq : d'.cell2 = d.cell1 := by
                 --
                 ext <;> [exact hd'c2_col.trans hc1_col.symm; exact hd'c2_row]
-              by_cases hdd' : d = d'
+              apply (Classical.em (d = d')).elim
               ·
+                intro hdd'
                 rw [hdd'] at hmin2
                 have : d'.minCol = 1 := hd'_min_eq
                 simp only [Domino.minCol] at this hmin2
                 omega
               ·
+                intro hdd'
                 have hd_cov : d.cell1 ∈ d.cells := by simp [Domino.cells]
                 have hd'_cov' : d.cell1 ∈ d'.cells := by simp [Domino.cells, hd'c2_eq]
                 have hdisj := T.pairwise_disjoint d hd d' hd'_mem hdd'
@@ -221,8 +231,7 @@ private lemma main
               have hd'c2 : d'.cell2 = (1, d.cell1.2) := hcov.symm
               have hd'c1_row : d'.cell1.2 = d.cell1.2 := by
                 --
-                have h2 : d'.cell2.2 = d.cell1.2 := by rw [hd'c2]
-                exact hrow_eq.trans h2
+                exact hrow_eq.trans (by rw [hd'c2] : d'.cell2.2 = d.cell1.2)
               have hd'c1_col : d'.cell1.1 = 2 := by
                 --
                 have h2 : d'.cell2.1 = 1 := by rw [hd'c2]
@@ -232,13 +241,15 @@ private lemma main
               have hd'c1_eq : d'.cell1 = d.cell1 := by
                 --
                 ext <;> [exact hd'c1_col.trans hc1_col.symm; exact hd'c1_row]
-              by_cases hdd' : d = d'
+              apply (Classical.em (d = d')).elim
               ·
+                intro hdd'
                 rw [hdd'] at hmin2
                 have : d'.minCol = 1 := hd'_min_eq
                 simp only [Domino.minCol] at this hmin2
                 omega
               ·
+                intro hdd'
                 have hd_cov : d.cell1 ∈ d.cells := by simp [Domino.cells]
                 have hd'_cov' : d.cell1 ∈ d'.cells := by simp [Domino.cells, hd'c1_eq]
                 have hdisj := T.pairwise_disjoint d hd d' hd'_mem hdd'
@@ -273,11 +284,13 @@ private lemma main
           have hd'_cov1 : ∃ y, (1, y) ∈ d'.cells := by
             --
             unfold Domino.minCol at hd'_min_eq
-            by_cases h : d'.cell1.1 ≤ d'.cell2.1
+            apply (Classical.em (d'.cell1.1 ≤ d'.cell2.1)).elim
             ·
+              intro h
               simp only [min_eq_left h] at hd'_min_eq
               exact ⟨d'.cell1.2, by simp [Domino.cells]; left; rw [← hd'_min_eq]⟩
             ·
+              intro h
               simp only [not_le] at h
               simp only [min_eq_right (le_of_lt h)] at hd'_min_eq
               exact ⟨d'.cell2.2, by simp [Domino.cells]; right; rw [← hd'_min_eq]⟩
@@ -303,8 +316,7 @@ private lemma main
               have hd'c1 : d'.cell1 = (1, d.cell2.2) := hcov.symm
               have hd'c2_row : d'.cell2.2 = d.cell2.2 := by
                 --
-                have h1 : d'.cell1.2 = d.cell2.2 := by rw [hd'c1]
-                exact hrow_eq.symm.trans h1
+                exact hrow_eq.symm.trans (by rw [hd'c1] : d'.cell1.2 = d.cell2.2)
               have hd'c2_col : d'.cell2.1 = 2 := by
                 --
                 have h1 : d'.cell1.1 = 1 := by rw [hd'c1]
@@ -314,13 +326,15 @@ private lemma main
               have hd'c2_eq : d'.cell2 = d.cell2 := by
                 --
                 ext <;> [exact hd'c2_col.trans hc2_col.symm; exact hd'c2_row]
-              by_cases hdd' : d = d'
+              apply (Classical.em (d = d')).elim
               ·
+                intro hdd'
                 rw [hdd'] at hmin2
                 have : d'.minCol = 1 := hd'_min_eq
                 simp only [Domino.minCol] at this hmin2
                 omega
               ·
+                intro hdd'
                 have hd_cov : d.cell2 ∈ d.cells := by simp [Domino.cells]
                 have hd'_cov' : d.cell2 ∈ d'.cells := by simp [Domino.cells, hd'c2_eq]
                 have hdisj := T.pairwise_disjoint d hd d' hd'_mem hdd'
@@ -330,8 +344,7 @@ private lemma main
               have hd'c2 : d'.cell2 = (1, d.cell2.2) := hcov.symm
               have hd'c1_row : d'.cell1.2 = d.cell2.2 := by
                 --
-                have h2 : d'.cell2.2 = d.cell2.2 := by rw [hd'c2]
-                exact hrow_eq.trans h2
+                exact hrow_eq.trans (by rw [hd'c2] : d'.cell2.2 = d.cell2.2)
               have hd'c1_col : d'.cell1.1 = 2 := by
                 --
                 have h2 : d'.cell2.1 = 1 := by rw [hd'c2]
@@ -341,19 +354,20 @@ private lemma main
               have hd'c1_eq : d'.cell1 = d.cell2 := by
                 --
                 ext <;> [exact hd'c1_col.trans hc2_col.symm; exact hd'c1_row]
-              by_cases hdd' : d = d'
+              apply (Classical.em (d = d')).elim
               ·
+                intro hdd'
                 rw [hdd'] at hmin2
                 have : d'.minCol = 1 := hd'_min_eq
                 simp only [Domino.minCol] at this hmin2
                 omega
               ·
+                intro hdd'
                 have hd_cov : d.cell2 ∈ d.cells := by simp [Domino.cells]
                 have hd'_cov' : d.cell2 ∈ d'.cells := by simp [Domino.cells, hd'c1_eq]
                 have hdisj := T.pairwise_disjoint d hd d' hd'_mem hdd'
                 rw [Finset.disjoint_iff_ne] at hdisj
                 exact absurd rfl (hdisj d.cell2 hd_cov d.cell2 hd'_cov')
-    exact hfree 2 (by omega) hn_ge_3 hfault
 
 
 -- created on 2026-10-20

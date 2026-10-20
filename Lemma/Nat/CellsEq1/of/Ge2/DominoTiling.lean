@@ -46,24 +46,20 @@ private lemma main
     intro heq; subst heq
     obtain hc | hc := hd_cov
     ·
-      rcases hd_top_rows with ⟨hr1, hr2⟩ | ⟨hr1, hr2⟩
+      obtain ⟨hr1, hr2⟩ | ⟨hr1, hr2⟩ := hd_top_rows
       ·
-        have : (1 : ℕ) = 2 := by rw [← hc] at hr1
-        exact hr1
+        have : (1 : ℕ) = 2 := by rwa [← hc] at hr1
         omega
       ·
-        have : (1 : ℕ) = 3 := by rw [← hc] at hr1
-        exact hr1
+        have : (1 : ℕ) = 3 := by rwa [← hc] at hr1
         omega
     ·
-      rcases hd_top_rows with ⟨hr1, hr2⟩ | ⟨hr1, hr2⟩
+      obtain ⟨hr1, hr2⟩ | ⟨hr1, hr2⟩ := hd_top_rows
       ·
-        have : (1 : ℕ) = 3 := by rw [← hc] at hr2
-        exact hr2
+        have : (1 : ℕ) = 3 := by rwa [← hc] at hr2
         omega
       ·
-        have : (1 : ℕ) = 2 := by rw [← hc] at hr2
-        exact hr2
+        have : (1 : ℕ) = 2 := by rwa [← hc] at hr2
         omega
   have hd_not_12 : (1, 2) ∉ d.cells := by
     intro h12
@@ -78,28 +74,20 @@ private lemma main
       have hc2_col : d.cell2.1 = 1 := by rw [← hcol, hc1_eq]
       obtain h | h := hrow
       ·
-        have hc2_eq : d.cell2 = (1, 2) := by ext
-        exact hc2_col
-        rw [hc1_eq] at h
-        omega
+        have hc2_eq : d.cell2 = (1, 2) := by ext; exact hc2_col; rw [hc1_eq] at h; omega
         exfalso; apply hd_not_12; simp [Domino.cells, hc2_eq]
       ·
-        have hc2_row : d.cell2.2 = 0 := by rw [hc1_eq] at h
-        omega
+        have hc2_row : d.cell2.2 = 0 := by rw [hc1_eq] at h; omega
         have hge1 : d.cell2.2 ≥ 1 := hd_c2_in.2.2.1
         omega
     ·
       have hc2_row : d.cell2.2 = 1 := by rw [← hrow, hc1_eq]
       obtain h | h := hcol
       ·
-        have hc2_eq : d.cell2 = (2, 1) := by ext
-        rw [hc1_eq] at h
-        omega
-        exact hc2_row
+        have hc2_eq : d.cell2 = (2, 1) := by ext; rw [hc1_eq] at h; omega; exact hc2_row
         simp only [Domino.cells, hc1_eq, hc2_eq]
       ·
-        have hc2_col : d.cell2.1 = 0 := by rw [hc1_eq] at h
-        omega
+        have hc2_col : d.cell2.1 = 0 := by rw [hc1_eq] at h; omega
         have hge1 : d.cell2.1 ≥ 1 := hd_c2_in.1
         omega
   ·
@@ -109,29 +97,21 @@ private lemma main
       have hc1_col : d.cell1.1 = 1 := by rw [hcol, hc2_eq]
       obtain h | h := hrow
       ·
-        have hc1_row : d.cell1.2 = 0 := by rw [hc2_eq] at h
-        omega
+        have hc1_row : d.cell1.2 = 0 := by rw [hc2_eq] at h; omega
         have hge1 : d.cell1.2 ≥ 1 := hd_c1_in.2.2.1
         omega
       ·
-        have hc1_eq : d.cell1 = (1, 2) := by ext
-        exact hc1_col
-        rw [hc2_eq] at h
-        omega
+        have hc1_eq : d.cell1 = (1, 2) := by ext; exact hc1_col; rw [hc2_eq] at h; omega
         exfalso; apply hd_not_12; simp [Domino.cells, hc1_eq]
     ·
       have hc1_row : d.cell1.2 = 1 := by rw [hrow, hc2_eq]
       obtain h | h := hcol
       ·
-        have hc1_col : d.cell1.1 = 0 := by rw [hc2_eq] at h
-        omega
+        have hc1_col : d.cell1.1 = 0 := by rw [hc2_eq] at h; omega
         have hge1 : d.cell1.1 ≥ 1 := hd_c1_in.1
         omega
       ·
-        have hc1_eq' : d.cell1 = (2, 1) := by ext
-        rw [hc2_eq] at h
-        omega
-        exact hc1_row
+        have hc1_eq' : d.cell1 = (2, 1) := by ext; rw [hc2_eq] at h; omega; exact hc1_row
         simp only [Domino.cells, hc1_eq', hc2_eq, Finset.pair_comm]
 
 

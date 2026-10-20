@@ -13,9 +13,9 @@ open Finset
 private lemma main
 -- given
   (d : Domino)
-  (k : ℕ)
   (hc1 : d.cell1.1 ≥ 1)
-  (hc2 : d.cell2.1 ≥ 1) :
+  (hc2 : d.cell2.1 ≥ 1)
+  (k : ℕ) :
 -- imply
   (d.shiftNat k).shiftNeg k (by simp [shiftNat]; omega) (by simp [shiftNat]; omega) = d := by
 -- proof

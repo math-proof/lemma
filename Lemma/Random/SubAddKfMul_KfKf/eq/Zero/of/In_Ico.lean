@@ -1,22 +1,24 @@
 import Lemma.Random.EqW
 import Lemma.Random.TSum_MulPowW.eq.AddWMul_Sum_MulProbSum_MulTTSum_MulPowW.of.In_Ico
-import Lemma.Random.Vc.eq.TSum_MulPowIntegral.of.In_Ico
+import Lemma.Random.Vc.eq.TSum_MulPowIntegral.of.Ne0Real_Preimage.In_Ico
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random Real
 
 
 /--
 Bellman identity for the kernel expectations: the one-step expected residual
-`Kf (fun z ↦ clip z.1 (-M.env.R) M.env.R) 1 z + γ * Kf (Vc ∘ state) 2 z - Kf (Vc ∘ state) 1 z` vanishes.
+`Kf (fun z ↦ clip z.1 (-M.env.R) M.env.R) 1 z + γ * Kf (Vc ∘ state) 2 z - Kf (Vc ∘ state) 1 z` vanishes
+when every state is reachable at time 0.
 -/
 @[path]
 private lemma main
-  [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A]
+  [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A] [DecidableEq S]
   {M : Model Θ S A}
   {γ : ℝ}
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
   (θ : Θ)
-  (z : ℝ × S × A) :
+  (z : ℝ × S × A)
+  (hP : ∀ y, (M θ).real ((fun ω : ℕ → ℝ × S × A ↦ (ω 0).2.1) ⁻¹' {y}) ≠ 0) :
 -- imply
   M.Kf θ (fun z ↦ clip z.1 (-M.env.R) M.env.R) 1 z + γ * M.Kf θ (fun w => M.Vc θ γ w.2.1) 2 z -
     M.Kf θ (fun w => M.Vc θ γ w.2.1) 1 z = 0 := by
@@ -45,15 +47,15 @@ private lemma main
   refine Finset.sum_eq_zero fun y _ => ?_
   have hrec : M.Vc θ γ y = ∫ z, M.Kf θ (fun z ↦ clip z.1 (-M.env.R) M.env.R) 0 z ∂(M.stageK θ y) +
       γ * ∑ u, M.policy.prob θ y u * ∑ y', (M.env.trans (y, u)).real {y'} * M.Vc θ γ y' := by
-    rw [Vc.eq.TSum_MulPowIntegral.of.In_Ico (M := M) h₀ θ y,
+    rw [Vc.eq.TSum_MulPowIntegral.of.Ne0Real_Preimage.In_Ico (M := M) h₀ θ y (hP y),
       TSum_MulPowW.eq.AddWMul_Sum_MulProbSum_MulTTSum_MulPowW.of.In_Ico (M := M) h₀ θ y]
     congr 2
     refine Finset.sum_congr rfl fun u _ => congrArg (M.policy.prob θ y u * ·) ?_
     refine Finset.sum_congr rfl fun yInner _ => congrArg ((M.env.trans (y, u)).real {yInner} * ·) ?_
-    simpa using (Vc.eq.TSum_MulPowIntegral.of.In_Ico (M := M) h₀ θ yInner).symm
+    simpa using (Vc.eq.TSum_MulPowIntegral.of.Ne0Real_Preimage.In_Ico (M := M) h₀ θ yInner (hP yInner)).symm
   rw [hrec]
   ring
 
 
 -- created on 2026-10-06
--- updated on 2026-10-12
+-- updated on 2026-10-20

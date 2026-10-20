@@ -1,22 +1,43 @@
 import Lemma.Random.All_LeNorm_Abs.of.All_Eq_Joint
 import Lemma.Random.NormW.le.Abs_R
-import Lemma.Random.Vc.eq.TSum_MulPowIntegral.of.In_Ico
+import Lemma.Random.Vc.eq.TSum_MulPowIntegral.of.Ne0Real_Preimage.In_Ico
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
 
 
-private lemma Vc_bdd [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A] (M : Model Θ S A) (θ : Θ) {γ : ℝ} (hγ : γ ∈ Set.Ico 0 1) (x : S) :
-  ‖M.Vc θ γ x‖ ≤ (1 - γ)⁻¹ * |M.env.R| := by
-  rw [Vc.eq.TSum_MulPowIntegral.of.In_Ico (M := M) hγ θ x]
-  refine tsum_of_norm_bounded ((hasSum_geometric_of_lt_one hγ.1 hγ.2).mul_right _) fun k => ?_
-  rw [norm_mul, norm_pow, Real.norm_of_nonneg hγ.1]
-  apply mul_le_mul_of_nonneg_left (NormW.le.Abs_R (M := M) θ k x) (pow_nonneg hγ.1 k)
+private lemma Vc_eq_zero_of_null
+    [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S]
+    [MeasurableSpace A] [Fintype A]
+    (M : Model Θ S A) (θ : Θ) (γ : ℝ) (x : S)
+    (hP : (M θ).real ((fun ω : ℕ → ℝ × S × A ↦ (ω 0).2.1) ⁻¹' {x}) = 0) :
+    M.Vc θ γ x = 0 := by
+  have hμ : (M θ) ((fun ω : ℕ → ℝ × S × A ↦ (ω 0).2.1) ⁻¹' {x}) = 0 := by
+    refine (measureReal_eq_zero_iff ?_).1 hP
+    exact measure_ne_top _ _
+  unfold Model.Vc Model.V Expectation.condEvent
+  have hcond :
+      ProbabilityTheory.cond (M θ) ((fun ω : ℕ → ℝ × S × A ↦ (ω 0).2.1) ⁻¹' {x}) = 0 :=
+    cond_eq_zero_of_meas_eq_zero hμ
+  simp only [hcond, Measure.map_zero, expectation_real, integral_zero_measure]
+
+private lemma Vc_bdd
+    [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S]
+    [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A] [DecidableEq S]
+    (M : Model Θ S A) (θ : Θ) {γ : ℝ} (hγ : γ ∈ Set.Ico 0 1) (x : S) :
+    ‖M.Vc θ γ x‖ ≤ (1 - γ)⁻¹ * |M.env.R| := by
+  by_cases hP : (M θ).real ((fun ω : ℕ → ℝ × S × A ↦ (ω 0).2.1) ⁻¹' {x}) = 0
+  · rw [Vc_eq_zero_of_null (M := M) θ γ x hP, norm_zero]
+    exact mul_nonneg (inv_nonneg.mpr (sub_nonneg.mpr (le_of_lt hγ.2))) (abs_nonneg _)
+  · rw [Vc.eq.TSum_MulPowIntegral.of.Ne0Real_Preimage.In_Ico (M := M) hγ θ x hP]
+    refine tsum_of_norm_bounded ((hasSum_geometric_of_lt_one hγ.1 hγ.2).mul_right _) fun k => ?_
+    rw [norm_mul, norm_pow, Real.norm_of_nonneg hγ.1]
+    apply mul_le_mul_of_nonneg_left (NormW.le.Abs_R (M := M) θ k x) (pow_nonneg hγ.1 k)
 
 /--
 Almost surely every temporal-difference residual `δ[j] = r[j] + γ * Vc(s[j+1]) - Vc(s[j])` is bounded by `(3 / (1 - γ) - 1) * |R|`.
 -/
 @[path]
 private lemma main
-  [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A]
+  [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A] [DecidableEq S]
   {M : Model Θ S A}
   {γ : ℝ}
   {r : ℕ → (ℕ → ℝ × S × A) → ℝ}
@@ -58,4 +79,4 @@ private lemma main
 
 
 -- created on 2026-10-06
--- updated on 2026-10-10
+-- updated on 2026-10-20

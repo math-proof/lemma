@@ -4,6 +4,7 @@ import sympy.matrices.determinants.DominoTilings
 open DominoTilings
 open Domino DominoTiling
 open Finset
+set_option linter.unusedSimpArgs false
 
 
 /--
@@ -26,13 +27,11 @@ private lemma main
   have hd'_not_11 : (1, 1) ∉ d'.cells := by
     intro h
     rw [Finset.disjoint_iff_ne] at hdisj
-    have h11_in_d : (1, 1) ∈ d.cells := by rw [hd_cells]; simp
-    exact hdisj (1, 1) h (1, 1) h11_in_d rfl
+    exact hdisj (1, 1) h (1, 1) (by simp [hd_cells] : (1, 1) ∈ d.cells) rfl
   have hd'_not_21 : (2, 1) ∉ d'.cells := by
     intro h
     rw [Finset.disjoint_iff_ne] at hdisj
-    have h21_in_d : (2, 1) ∈ d.cells := by rw [hd_cells]; simp
-    exact hdisj (2, 1) h (2, 1) h21_in_d rfl
+    exact hdisj (2, 1) h (2, 1) (by simp [hd_cells] : (2, 1) ∈ d.cells) rfl
   have hd'_in := T.dominos_in_rect d' hd'
   have hc1_in := hd'_in (Finset.mem_insert_self _ _)
   have hc2_in := hd'_in (Finset.mem_insert_of_mem (Finset.mem_singleton_self _))
@@ -47,14 +46,16 @@ private lemma main
       have hc1_2 : d'.cell1.2 = 2 := congrArg Prod.snd heq.symm
       have hc2_1 : d'.cell2.1 = 1 := by omega
       obtain h | h := hrow
-      · omega
+      ·
+        omega
       ·
         have hc2_2 : d'.cell2.2 = 1 := by omega
         have hc2 : d'.cell2 = (1, 1) := Prod.ext hc2_1 hc2_2
-        have h11_in_d' : (1, 1) ∈ d'.cells := by
+        refine absurd ?_ hd'_not_11
+        ·
           simp only [Domino.cells, Finset.mem_insert, Finset.mem_singleton]
-          right; exact hc2.symm
-        exact absurd h11_in_d' hd'_not_11
+          right
+          exact hc2.symm
     ·
       have hc2_1 : d'.cell2.1 = 1 := congrArg Prod.fst heq.symm
       have hc2_2 : d'.cell2.2 = 2 := congrArg Prod.snd heq.symm
@@ -63,11 +64,13 @@ private lemma main
       ·
         have hc1_2' : d'.cell1.2 = 1 := by omega
         have hc1 : d'.cell1 = (1, 1) := Prod.ext hc1_1 hc1_2'
-        have h11_in_d' : (1, 1) ∈ d'.cells := by
+        refine absurd ?_ hd'_not_11
+        ·
           simp only [Domino.cells, Finset.mem_insert, Finset.mem_singleton]
-          left; exact hc1.symm
-        exact absurd h11_in_d' hd'_not_11
-      · omega
+          left
+          exact hc1.symm
+      ·
+        omega
   ·
     -- d' is horizontal
     obtain heq | heq := hd'_cov
@@ -80,13 +83,15 @@ private lemma main
         have hc2_1 : d'.cell2.1 = 2 := by omega
         have hc2 : d'.cell2 = (2, 2) := Prod.ext hc2_1 hc2_2
         simp only [Domino.cells, heq.symm, hc2]
-      · omega
+      ·
+        omega
     ·
       have hc2_1 : d'.cell2.1 = 1 := congrArg Prod.fst heq.symm
       have hc2_2 : d'.cell2.2 = 2 := congrArg Prod.snd heq.symm
       have hc1_2 : d'.cell1.2 = 2 := by omega
       obtain h | h := hcol
-      · omega
+      ·
+        omega
       ·
         have hc1_1 : d'.cell1.1 = 2 := by omega
         have hc1 : d'.cell1 = (2, 2) := Prod.ext hc1_1 hc1_2

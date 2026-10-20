@@ -1,35 +1,34 @@
 import Mathlib
 import sympy.Basic
-open CategoryTheory CategoryTheory.Limits CategoryTheory.MorphismProperty AlgebraicGeometry TopologicalSpace Opposite IsLocalRing
-open scoped TensorProduct
-
-universe u
-
+open CategoryTheory AlgebraicGeometry
 set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
+
+
+universe u
 
 /--
 [AlgebraicGeometry_exists_comp_eq_of_forall_algEquiv_comp_eq](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_exists_comp_eq_of_forall_algEquiv_comp_eq.lean)
 -/
 @[path]
 private lemma main
-    {K L : Type u} [Field K] [Field L] [Algebra K L]
-    (hfix : ∀ x : L, (∀ σ : L ≃ₐ[K] L, σ x = x) → ∃ a : K, algebraMap K L a = x)
-    {Y : Scheme.{u}} (y : Spec (.of L) ⟶ Y)
-    (hy : ∀ σ : L ≃ₐ[K] L, Spec.map (CommRingCat.ofHom (σ : L →+* L)) ≫ y = y) :
-    ∃ y₀ : Spec (.of K) ⟶ Y, Spec.map (CommRingCat.ofHom (algebraMap K L)) ≫ y₀ = y := by
+  {K L : Type u} [Field K] [Field L] [Algebra K L]
+  (hfix : ∀ x : L, (∀ σ : AlgEquiv K L L, σ x = x) → ∃ a : K, algebraMap K L a = x)
+  {Y : (Scheme : Type (u + 1))} (y : Spec (.of L) ⟶ Y)
+  (hy : ∀ σ : AlgEquiv K L L, Spec.map (CommRingCat.ofHom (σ : RingHom L L)) ≫ y = y) :
+  -- imply
+  ∃ y₀ : Spec (.of K) ⟶ Y, Spec.map (CommRingCat.ofHom (algebraMap K L)) ≫ y₀ = y := by
+  -- proof
   classical
   obtain ⟨⟨x, ψ⟩, rfl⟩ := (Scheme.SpecToEquivOfField L Y).symm.surjective y
-  have hψ : ∀ σ : L ≃ₐ[K] L, ψ ≫ CommRingCat.ofHom (σ : L →+* L) = ψ := by
+  have hψ : ∀ σ : AlgEquiv K L L, ψ ≫ CommRingCat.ofHom (σ : RingHom L L) = ψ := by
     intro σ
-    have h : (Scheme.SpecToEquivOfField L Y).symm ⟨x, ψ ≫ CommRingCat.ofHom (σ : L →+* L)⟩ =
-        (Scheme.SpecToEquivOfField L Y).symm ⟨x, ψ⟩ := by
-      change Spec.map (ψ ≫ _) ≫ Y.fromSpecResidueField x =
-        Spec.map ψ ≫ Y.fromSpecResidueField x
+    have h : (Scheme.SpecToEquivOfField L Y).symm ⟨x, ψ ≫ CommRingCat.ofHom (σ : RingHom L L)⟩ = (Scheme.SpecToEquivOfField L Y).symm ⟨x, ψ⟩ := by
+      change Spec.map (ψ ≫ _) ≫ Y.fromSpecResidueField x = Spec.map ψ ≫ Y.fromSpecResidueField x
       rw [Spec.map_comp, Category.assoc]
-      exact hy σ
-    exact eq_of_heq (Sigma.mk.inj ((Scheme.SpecToEquivOfField L Y).symm.injective h)).2
+      apply hy σ
+    refine eq_of_heq (Sigma.mk.inj ((Scheme.SpecToEquivOfField L Y).symm.injective h)).2
   have hfix' : ∀ a, ∃ b : K, algebraMap K L b = ψ.hom a := fun a =>
     hfix _ fun σ => by
       have := congrArg (fun φ : Y.residueField x ⟶ CommRingCat.of L => φ.hom a) (hψ σ)
@@ -48,5 +47,6 @@ private lemma main
   refine ⟨Spec.map (CommRingCat.ofHom ψ₀) ≫ Y.fromSpecResidueField x, ?_⟩
   change _ = Spec.map ψ ≫ Y.fromSpecResidueField x
   rw [← hψ₀, Spec.map_comp, Category.assoc]
+
 
 -- created on 2026-10-20

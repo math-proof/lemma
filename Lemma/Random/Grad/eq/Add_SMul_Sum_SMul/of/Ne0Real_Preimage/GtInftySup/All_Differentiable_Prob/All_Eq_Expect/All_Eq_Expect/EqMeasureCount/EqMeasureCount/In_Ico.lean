@@ -50,7 +50,9 @@ private lemma main
   (h₅ : ∀ θ t («s.bvar» : ℕ → S), V θ t («s.bvar» t) = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «s.bvar» t))
   (h₆ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
   (h₇ : sup[θ, x, u] ‖∇[θ] M.policy.prob θ x u‖ < ∞)
-  (h₈ : (M θ).real (s t ⁻¹' {«s.bvar» t}) ≠ 0) :
+  (h₈ : (M θ).real (s t ⁻¹' {«s.bvar» t}) ≠ 0)
+  (hP : ∀ θ y, (M θ).real ((fun ω : ℕ → ℝ × S × A ↦ (ω 0).2.1) ⁻¹' {y}) ≠ 0)
+  (hπ : ∀ θ u, (M θ).real ((fun ω : ℕ → ℝ × S × A ↦ (ω 0).2.1) ⁻¹' {«s.bvar» t}) * M.policy.prob θ («s.bvar» t) u ≠ 0) :
 -- imply
   have hs : ∀ t, Measurable (s t) := Random.Measurable.of.All_Eq.snd.fst h₁
   have ha : ∀ t, Measurable (a t) := Random.Measurable.of.All_Eq.snd.snd h₁
@@ -72,7 +74,7 @@ private lemma main
   set r : ℕ → (ℕ → ℝ × S × A) → ℝ := fun t ω ↦ (ω t).1
   set s : ℕ → (ℕ → ℝ × S × A) → S := fun t ω ↦ (ω t).2.1
   set a : ℕ → (ℕ → ℝ × S × A) → A := fun t ω ↦ (ω t).2.2
-  intro hs ha hP hPs
+  intro hs ha hSPA hSPS
   let Qloc (θ : Θ) (t : ℕ) (x : S) (u : A) : ℝ :=
     𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = x ∧ a t = u)
   let Vloc (θ : Θ) (t : ℕ) (x : S) : ℝ :=
@@ -85,14 +87,14 @@ private lemma main
   classical
   beta_reduce
   set x := «s.bvar» t
-  have hπ : ∀ u, ∇[θ] (ℙ[M θ]((a t) = u | (s t) = x) : ℝ) = ∇[θ] M.policy.prob θ x u := by
+  have hπ_eq : ∀ u, ∇[θ] (ℙ[M θ]((a t) = u | (s t) = x) : ℝ) = ∇[θ] M.policy.prob θ x u := by
     intro u
     refine Filter.EventuallyEq.gradient_eq ?_
     filter_upwards [(Differentiable_RealPreimageS.of.GtInftySup.All_Differentiable_Prob (M := M) h₁ h₆ h₇ t x θ).continuousAt.eventually_ne h₈] with θ' h
-    erw [ProbCond.eq.OfRealPol.of.Ne_0 h₁ h₂ h₃ (hP θ' t) h, ENNReal.toReal_ofReal (M.policy.nonneg θ' _ _)]
-  simp only [s, a] at hπ
-  simp_rw [hπ]
-  rw [GradV.eq.AddSum_SMulSMul.of.Ne0Real_Preimage.GtInftySup.All_Differentiable_Prob.In_Ico h₀ h₁ h₆ h₇ h₈]
+    erw [ProbCond.eq.OfRealPol.of.Ne_0 h₁ h₂ h₃ (hSPA θ' t) h, ENNReal.toReal_ofReal (M.policy.nonneg θ' _ _)]
+  simp only [s, a] at hπ_eq
+  simp_rw [hπ_eq]
+  rw [GradV.eq.AddSum_SMulSMul.of.Ne0Real_Preimage.GtInftySup.All_Differentiable_Prob.In_Ico h₀ h₁ h₆ h₇ h₈ hP hπ]
   have hP1 : ∀ y, (ℙ[M θ]((s (t + 1)) = y | (s t) = x) : ℝ) = M.P1 θ x y := by
     intro y
     rw [ProbCond.eq.Div.of.Eq_Count.Eq_Count (π := M θ) (x := s (t + 1)) (y := s t) h₂ h₂ y x,
@@ -108,4 +110,4 @@ private lemma main
 
 
 -- created on 2023-03-30
--- updated on 2026-10-10
+-- updated on 2026-10-20

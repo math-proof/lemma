@@ -41,17 +41,15 @@ private lemma main
         rwa [Domino.shiftNat_shiftNeg]
     ·
       intro hd
-      by_cases hne1 : d = horizontal_1_1
-      ·
+      if hne1 : d = horizontal_1_1 then
         left
         exact hne1
-      ·
-        by_cases hne2 : d = horizontal_1_2
-        ·
+      else
+        if hne2 : d = horizontal_1_2 then
           right
           left
           exact hne2
-        ·
+        else
           right
           right
           have hd_erase : d ∈ (dominos.erase horizontal_1_1).erase horizontal_1_2 := 

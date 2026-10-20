@@ -1,54 +1,61 @@
 import Mathlib
 import sympy.Basic
-open CategoryTheory CategoryTheory.Limits CategoryTheory.MorphismProperty AlgebraicGeometry TopologicalSpace Opposite IsLocalRing
-open scoped TensorProduct
-
-universe u
-
+open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
+set_option linter.unusedVariables false
+
 
 /--
 [AlgebraicGeometry_exists_isAffineOpen_mem_forall_preimage_eq_of_finite_group](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_exists_isAffineOpen_mem_forall_preimage_eq_of_finite_group.lean)
 -/
 @[path]
 private lemma main
-    (A : Type) [CommRing A] (X : Scheme.{0}) (f : X ⟶ Spec (CommRingCat.of A)) [IsSeparated f]
-    (haff : ∀ S : Set X, S.Finite → ∃ U : X.Opens, IsAffineOpen U ∧ S ⊆ (U : Set X))
-    (G : Type) [Group G] [Finite G] (a : G →* Aut X) (ha : ∀ g : G, (a g).hom ≫ f = f) (x : X) :
-    ∃ U : X.Opens, IsAffineOpen U ∧ x ∈ U ∧ ∀ g : G, (a g).hom ⁻¹ᵁ U = U := by
+  (A : Type) [CommRing A] (X : (Scheme : Type 1)) (f : X ⟶ Spec (CommRingCat.of A)) [IsSeparated f]
+  (haff : ∀ S : Set X, S.Finite → ∃ U : X.Opens, IsAffineOpen U ∧ S ⊆ (U : Set X))
+  (G : Type) [Group G] [Finite G] (a : G →* Aut X) (ha : ∀ g : G, (a g).hom ≫ f = f) (x : X) :
+  -- imply
+  ∃ U : X.Opens, IsAffineOpen U ∧ x ∈ U ∧ ∀ g : G, ((TopologicalSpace.Opens.map ((a g).hom.base)).obj U) = U := by
+  -- proof
   classical
   let _ : Fintype G := Fintype.ofFinite G
   obtain ⟨V, hV, hSV⟩ := haff (Set.range fun g : G => (a g).hom.base x) (Set.finite_range _)
-  let _ : IsSeparated (terminal.from X) := by rw [← terminal.comp_from f]; infer_instance
+  let _ : IsSeparated (terminal.from X) := by
+    rw [← terminal.comp_from f]
+    infer_instance
   let _ : IsAffineHom (pullback.diagonal (terminal.from X)) := inferInstance
-  let W : G → X.Opens := fun g => (a g).hom ⁻¹ᵁ V
+  let W : G → X.Opens := fun g => ((TopologicalSpace.Opens.map ((a g).hom.base)).obj V)
   have hW : ∀ g, IsAffineOpen (W g) := fun g => hV.preimage_of_isIso (a g).hom
   have memU : ∀ y : X, y ∈ (⨅ g, W g) ↔ ∀ g, (a g).hom.base y ∈ V := by
     intro y
     rw [← Finset.inf_univ_eq_iInf, ← SetLike.mem_coe, TopologicalSpace.Opens.coe_finset_inf, Finset.inf_set_eq_iInter]
     simp only [Finset.mem_univ, Set.iInter_true, Set.mem_iInter, Function.comp_apply, SetLike.mem_coe]
-    exact Iff.rfl
+    apply Iff.rfl
   refine ⟨⨅ g, W g, IsAffineOpen.iInf hW, (memU x).2 fun g => hSV ⟨g, rfl⟩, fun g => ?_⟩
   ext y
-  show y ∈ (a g).hom ⁻¹ᵁ (⨅ h, W h) ↔ y ∈ ⨅ h, W h
-  rw [show (y ∈ (a g).hom ⁻¹ᵁ (⨅ h, W h)) ↔ (a g).hom.base y ∈ ⨅ h, W h from Iff.rfl, memU, memU]
+  show y ∈ ((TopologicalSpace.Opens.map ((a g).hom.base)).obj (⨅ h, W h)) ↔ y ∈ ⨅ h, W h
+  rw [show (y ∈ ((TopologicalSpace.Opens.map ((a g).hom.base)).obj (⨅ h, W h))) ↔ (a g).hom.base y ∈ ⨅ h, W h from Iff.rfl, memU, memU]
   constructor
-  · intro hy h
+  ·
+    intro hy h
     have := hy (h * g⁻¹)
     rw [map_mul, map_inv] at this
     have e : ((a h * (a g)⁻¹).hom.base) ((a g).hom.base y) = (a h).hom.base y := by
       show (((a g).hom ≫ (a h * (a g)⁻¹).hom).base) y = (a h).hom.base y
       congr 2
       rw [Aut.Aut_mul_def, Aut.Aut_inv_def, Iso.trans_hom, Iso.symm_hom, ← Category.assoc, Iso.hom_inv_id, Category.id_comp]
-    rw [e] at this; exact this
-  · intro hy h
+    rw [e] at this
+    apply this
+  ·
+    intro hy h
     have := hy (h * g)
     rw [map_mul] at this
-    have e : (a (h) * a g).hom.base y = (a h).hom.base ((a g).hom.base y) := by
+    have e : (a h * a g).hom.base y = (a h).hom.base ((a g).hom.base y) := by
       show ((a h * a g).hom.base) y = ((a g).hom ≫ (a h).hom).base y
       congr 2
-    rw [e] at this; exact this
+    rw [e] at this
+    apply this
+
 
 -- created on 2026-10-20

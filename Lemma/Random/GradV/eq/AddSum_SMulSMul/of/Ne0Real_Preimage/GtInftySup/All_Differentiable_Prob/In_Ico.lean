@@ -30,7 +30,9 @@ private lemma main
   (h₁ : ∀ t, (· t) = (r t, s t, a t))
   (h₂ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
   (h₃ : sup[θ, x, u] ‖∇[θ] M.policy.prob θ x u‖ < ∞)
-  (h₄ : (M θ).real (s t ⁻¹' {x}) ≠ 0) :
+  (h₄ : (M θ).real (s t ⁻¹' {x}) ≠ 0)
+  (hP : ∀ θ y, (M θ).real ((fun ω : ℕ → ℝ × S × A ↦ (ω 0).2.1) ⁻¹' {y}) ≠ 0)
+  (hπ : ∀ θ u, (M θ).real ((fun ω : ℕ → ℝ × S × A ↦ (ω 0).2.1) ⁻¹' {x}) * M.policy.prob θ x u ≠ 0) :
 -- imply
   let Q (θ : Θ) (t : ℕ) (x : S) (u : A) : ℝ :=
     𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = x ∧ a t = u);
@@ -43,8 +45,8 @@ private lemma main
   classical
   simpa [gradient, map_add, map_smul, map_sum] using
     congrArg (InnerProductSpace.toDual ℝ Θ).symm
-      (Fderiv.eq.AddSum_SMulSMul.of.Ne0Real_Preimage.In_Ico.GtInftySup.All_Differentiable_Prob t x θ h₀ h₁ h₂ h₃ h₄)
+      (Fderiv.eq.AddSum_SMulSMul.of.Ne0Real_Preimage.In_Ico.GtInftySup.All_Differentiable_Prob t x θ h₀ h₁ h₂ h₃ h₄ hP hπ)
 
 
 -- created on 2026-10-06
--- updated on 2026-10-10
+-- updated on 2026-10-20

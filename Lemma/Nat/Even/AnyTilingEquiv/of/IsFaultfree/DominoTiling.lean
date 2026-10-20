@@ -58,11 +58,9 @@ private lemma main
     simp only [Domino.cells, Finset.mem_insert, Finset.mem_singleton] at h_cell1'
     obtain h | h := h_cell1'
     ·
-      have h_mem : d₁.cell1 ∈ d₂.cells := by simp [Domino.cells, h]
-      exact h_disj d₁.cell1 h_cell1 d₁.cell1 h_mem rfl
+      exact h_disj d₁.cell1 h_cell1 d₁.cell1(by simp [Domino.cells, h] : d₁.cell1 ∈ d₂.cells) rfl
     ·
-      have h_mem : d₁.cell1 ∈ d₂.cells := by simp [Domino.cells, h]
-      exact h_disj d₁.cell1 h_cell1 d₁.cell1 h_mem rfl
+      exact h_disj d₁.cell1 h_cell1 d₁.cell1(by simp [Domino.cells, h] : d₁.cell1 ∈ d₂.cells) rfl
   have h_cells_inj_A : ∀ d₁ ∈ (TilingA n hn_even hn_ge).dominos,
       ∀ d₂ ∈ (TilingA n hn_even hn_ge).dominos, d₁.cells = d₂.cells → d₁ = d₂ := by
     intro d₁ hd₁ d₂ hd₂ h_eq
@@ -74,11 +72,9 @@ private lemma main
     simp only [Domino.cells, Finset.mem_insert, Finset.mem_singleton] at h_cell1'
     obtain h | h := h_cell1'
     ·
-      have h_mem : d₁.cell1 ∈ d₂.cells := by simp [Domino.cells, h]
-      exact h_disj d₁.cell1 h_cell1 d₁.cell1 h_mem rfl
+      exact h_disj d₁.cell1 h_cell1 d₁.cell1(by simp [Domino.cells, h] : d₁.cell1 ∈ d₂.cells) rfl
     ·
-      have h_mem : d₁.cell1 ∈ d₂.cells := by simp [Domino.cells, h]
-      exact h_disj d₁.cell1 h_cell1 d₁.cell1 h_mem rfl
+      exact h_disj d₁.cell1 h_cell1 d₁.cell1(by simp [Domino.cells, h] : d₁.cell1 ∈ d₂.cells) rfl
   -- Prove the backward direction: TilingA.dominos.image Domino.cells ⊆ T.dominos.image Domino.cells
   let A_cells := (TilingA n hn_even hn_ge).dominos.image Domino.cells
   have h_backward : A_cells ⊆ T.dominos.image Domino.cells := by
@@ -101,8 +97,9 @@ private lemma main
       have hd_cell2 : d.cell2 = (2 * j + 2, 1) := by
         --
         simp only [← Function.Embedding.toFun_eq_coe] at hd_eq; rw [← hd_eq]
-      by_cases hj : j < n / 2 - 1
+      apply (Classical.em (j < n / 2 - 1)).elim
       ·
+        intro hj
         -- j < n/2 - 1: use claim1 with i = j + 1
         have hi_pos : j + 1 ≥ 1 := by omega
         have hi_lt : j + 1 < n / 2 := by omega
@@ -116,6 +113,7 @@ private lemma main
         convert hd'_cells using 2
         all_goals (try simp [Domino.cells]; try omega)
       ·
+        intro hj
         -- j = n/2 - 1: last basement domino (n-1, 1) - (n, 1)
         have hj_eq : j = n / 2 - 1 := by omega
         have hd_c1 : d.cell1 = (n - 1, 1) := by
@@ -156,8 +154,9 @@ private lemma main
                   exact Prod.ext hd_lw_col.symm h1.symm
               have h_n1_3 : (n - 1, 3) = (1, 3) := by simp [hn2]
               have h_13_in_n3 : (1, 3) ∈ d_n3.cells := by rw [h_left, h_n1_3]; simp
-              by_cases heq : d_lw = d_n3
+              apply (Classical.em (d_lw = d_n3)).elim
               ·
+                intro heq
                 have hd_lw_cells : d_lw.cells = {(1, 2), (1, 3)} := by
                   --
                   simp only [Domino.cells]
@@ -175,6 +174,7 @@ private lemma main
                 have : (2, 3) ∈ ({(1, 3), (2, 3)} : Finset Cell) := by simp
                 rw [hd_lw_cells] at this; simp at this
               ·
+                intro heq
                 have h_disj := T.pairwise_disjoint d_lw hd_lw_mem d_n3 hd_n3_mem heq
                 rw [Finset.disjoint_iff_ne] at h_disj
                 exact h_disj (1, 3) h_13_in_lw (1, 3) h_13_in_n3 rfl
@@ -192,8 +192,9 @@ private lemma main
                 rw [hd_top_cells, h_top_c2, h_top_c1]
               have h_n1_3_in_top : (n - 1, 3) ∈ d_top.cells := by rw [hd_top_cells']; simp
               have h_n1_3_in_n3 : (n - 1, 3) ∈ d_n3.cells := by rw [h_left]; simp
-              by_cases heq : d_top = d_n3
+              apply (Classical.em (d_top = d_n3)).elim
               ·
+                intro heq
                 rw [heq, h_left] at hd_top_cells'
                 have h_n2 : (n - 2, 3) ∈ ({(n - 1, 3), (n, 3)} : Finset Cell) := by
                   --
@@ -209,6 +210,7 @@ private lemma main
                   obtain ⟨h2a, _⟩ := h2
                   omega
               ·
+                intro heq
                 have h_disj := T.pairwise_disjoint d_top hd_top_mem d_n3 hd_n3_mem heq
                 rw [Finset.disjoint_iff_ne] at h_disj
                 exact h_disj (n - 1, 3) h_n1_3_in_top (n - 1, 3) h_n1_3_in_n3 rfl
@@ -225,13 +227,15 @@ private lemma main
           ·
             exfalso
             have h_n2_in_n1 : (n, 2) ∈ d_n1.cells := by rw [h_right]; simp
-            by_cases heq : d_n1 = d_n3
+            apply (Classical.em (d_n1 = d_n3)).elim
             ·
+              intro heq
               rw [heq, hd_n3_cells] at h_right
               have h_n1 :
                 (n, 1) ∈ ({(n, 2), (n, 3)} : Finset Cell) := by rw [h_right]; simp
               simp at h_n1
             ·
+              intro heq
               have h_disj := T.pairwise_disjoint d_n1 hd_n1_mem d_n3 hd_n3_mem heq
               rw [Finset.disjoint_iff_ne] at h_disj
               exact h_disj (n, 2) h_n2_in_n1 (n, 2) h_n2_in_n3 rfl
@@ -287,8 +291,9 @@ private lemma main
                 exact Prod.ext hd_lw_col.symm h1.symm
             have h_n1_3 : (n - 1, 3) = (1, 3) := by simp [hn2]
             have h_13_in_n3 : (1, 3) ∈ d_n3.cells := by rw [h_left, h_n1_3]; simp
-            by_cases heq : d_lw = d_n3
+            apply (Classical.em (d_lw = d_n3)).elim
             ·
+              intro heq
               have hd_lw_cells : d_lw.cells = {(1, 2), (1, 3)} := by
                 --
                 simp only [Domino.cells]
@@ -306,6 +311,7 @@ private lemma main
               have : (2, 3) ∈ ({(1, 3), (2, 3)} : Finset Cell) := by simp
               rw [hd_lw_cells] at this; simp at this
             ·
+              intro heq
               have h_disj := T.pairwise_disjoint d_lw hd_lw_mem d_n3 hd_n3_mem heq
               rw [Finset.disjoint_iff_ne] at h_disj
               exact h_disj (1, 3) h_13_in_lw (1, 3) h_13_in_n3 rfl
@@ -323,8 +329,9 @@ private lemma main
               rw [hd_top_cells, h_top_c2, h_top_c1]
             have h_n1_3_in_top : (n - 1, 3) ∈ d_top.cells := by rw [hd_top_cells']; simp
             have h_n1_3_in_n3 : (n - 1, 3) ∈ d_n3.cells := by rw [h_left]; simp
-            by_cases heq : d_top = d_n3
+            apply (Classical.em (d_top = d_n3)).elim
             ·
+              intro heq
               rw [heq, h_left] at hd_top_cells'
               have h_n2 : (n - 2, 3) ∈ ({(n - 1, 3), (n, 3)} : Finset Cell) := by
                 --
@@ -340,6 +347,7 @@ private lemma main
                 obtain ⟨h2a, _⟩ := h2
                 omega
             ·
+              intro heq
               have h_disj := T.pairwise_disjoint d_top hd_top_mem d_n3 hd_n3_mem heq
               rw [Finset.disjoint_iff_ne] at h_disj
               exact h_disj (n - 1, 3) h_n1_3_in_top (n - 1, 3) h_n1_3_in_n3 rfl

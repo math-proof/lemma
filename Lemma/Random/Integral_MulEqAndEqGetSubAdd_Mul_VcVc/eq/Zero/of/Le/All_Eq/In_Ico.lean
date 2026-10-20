@@ -31,7 +31,8 @@ private lemma main
   (h₂ : t ≤ n)
   (θ : Θ)
   (x : S)
-  (u : A) :
+  (u : A)
+  (hP : ∀ y, (M θ).real ((fun ω : ℕ → ℝ × S × A ↦ (ω 0).2.1) ⁻¹' {y}) ≠ 0) :
 -- imply
   ∫ ω, (if s t ω = x ∧ a t ω = u then (1 : ℝ) else 0) * (r (n + 1) ω + γ * M.Vc θ γ (s (n + 1 + 1) ω) - M.Vc θ γ (s (n + 1) ω)) ∂(M θ) = 0 := by
 -- proof
@@ -69,7 +70,7 @@ private lemma main
     show _ * (clip (ω (n + 1)).1 (-M.env.R) M.env.R + γ * M.Vc θ γ (ω (n + 2)).2.1 - M.Vc θ γ (ω (n + 1)).2.1) = _
     ring
   have hz : ∀ ω : ℕ → ℝ × S × A, Gh (Preorder.frestrictLe n ω) * M.Kf θ (fun z ↦ clip z.1 (-M.env.R) M.env.R) 1 (ω n) + γ * (Gh (Preorder.frestrictLe n ω) * M.Kf θ f 2 (ω n)) - Gh (Preorder.frestrictLe n ω) * M.Kf θ f 1 (ω n) = 0 := fun ω => by
-    have := SubAddKfMul_KfKf.eq.Zero.of.In_Ico (M := M) h₀ θ (ω n)
+    have := SubAddKfMul_KfKf.eq.Zero.of.In_Ico (M := M) h₀ θ (ω n) hP
     calc
       _ = Gh (Preorder.frestrictLe n ω) * (M.Kf θ (fun z ↦ clip z.1 (-M.env.R) M.env.R) 1 (ω n) + γ * M.Kf θ f 2 (ω n) - M.Kf θ f 1 (ω n)) := by
         ring

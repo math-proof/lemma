@@ -22,9 +22,10 @@ private lemma main
       (n = 2 ∧ ¬T.hasVerticalInCol 1 ∧ ∃ h : n = 2,
         DominoTiling.TilingEquiv (h ▸ T) TilingC) := by
 -- proof
-  by_cases hvert : T.hasVerticalInCol 1
+  apply (Classical.em (T.hasVerticalInCol 1)).elim
   ·
     -- There is a vertical domino in column 1
+    intro hvert
     obtain htop | hbot := vertical_in_col1_trichotomy n T hvert
     ·
       -- Top vertical case: T is some A_n
@@ -32,11 +33,14 @@ private lemma main
       exact (faultfree_top_vertical_classification n T hfree htop).2
     ·
       -- Bottom vertical case: T is some B_n
-      right; left
+      right
+      left
       exact (faultfree_bottom_vertical_classification n T hfree hbot).2
   ·
     -- No vertical domino in column 1: T is equivalent to C and n = 2
-    right; right
+    intro hvert
+    right
+    right
     have hn2 : n = 2 := no_vertical_implies_n_eq_2 n T hfree hvert hn
     subst hn2
     exact ⟨rfl, hvert, rfl, faultfree_no_vertical_unique T hfree hvert⟩

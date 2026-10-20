@@ -28,7 +28,9 @@ private lemma main
   (h₁ : ℓ ∈ Set.Icc 0 1)
   (h₂ : ∀ t, (· t) = (r t, s t, a t))
   (h₃ : ∀ s a, Differentiable ℝ (M.policy.prob · s a))
-  (h₄ : sup[θ, s, a] ‖∇[θ] M.policy.prob θ s a‖ < ∞) :
+  (h₄ : sup[θ, s, a] ‖∇[θ] M.policy.prob θ s a‖ < ∞)
+  (hP0 : ∀ θ x, (M θ).real ((fun ω : ℕ → ℝ × S × A ↦ (ω 0).2.1) ⁻¹' {x}) ≠ 0)
+  (hπ : ∀ θ y u, (M θ).real ((fun ω : ℕ → ℝ × S × A ↦ (ω 0).2.1) ⁻¹' {y}) * M.policy.prob θ y u ≠ 0) :
 -- imply
   have : ∀ θ t, SinglePSpace (M θ) (a t, s t) := fun _ t =>
     SinglePSpace.of.EqMeasureCount.Measurable ((Random.Measurable.of.All_Eq.snd.snd (r := ⇑r) (s := ⇑s) (a := ⇑a) h₂ t).prodMk (Random.Measurable.of.All_Eq.snd.fst (r := ⇑r) (s := ⇑s) (a := ⇑a) h₂ t)) (by
@@ -82,7 +84,10 @@ private lemma main
   -- almost surely the learned value is the time-free value function
   have hVc : ∀ᵐ ω ∂(M θ), ∀ k, V θ k ⟨fun _ => s k ω⟩ = M.Vc θ γ (s k ω) :=
     (AeRealPreimageSS.ne.Zero (s := s) (M := M) θ).mono fun ω h k =>
-      (hVr θ k _ (h k)).trans (Random.V.eq.Vc.of.Ne0Real_Preimage.In_Ico (M := M) θ k _ h₀ h₂ (h k))
+      (hVr θ k _ (h k)).trans <| by
+        change M.V θ γ k (s k ω) = M.Vc θ γ (s k ω)
+        exact Random.V.eq.Vc.of.Ne0Real_Preimage.In_Ico (M := M) θ k (s k ω) h₀
+          (by simpa [s] using h k) (hP0 θ (s k ω))
   have hδ : ∀ᵐ ω ∂(M θ), ∀ j, r j ω + γ * V θ (j + 1) ⟨fun _ => s (j + 1) ω⟩ - V θ j ⟨fun _ => s j ω⟩ =
       r j ω + γ * M.Vc θ γ (s (j + 1) ω) - M.Vc θ γ (s j ω) :=
     hVc.mono fun ω h j => by rw [h j, h (j + 1)]
@@ -111,7 +116,7 @@ private lemma main
       rw [h1]
       congr 1
       exact tsum_congr fun k => by rw [h2 (t + k)]
-    · have hE := Integral_SMul.of.In_Ico.In_Ico (M := M) h₀ h₂ hc' θ t ψ
+    · have hE := Integral_SMul.of.In_Ico.In_Ico (M := M) h₀ h₂ hc' θ t ψ (hP0 θ)
       let fromPath := fun (p : (ℕ → ℝ) × (ℕ → S) × (ℕ → A)) =>
         fun n => (p.1 n, p.2.1 n, p.2.2 n)
       have fromPath_meas : Measurable fromPath :=
@@ -205,7 +210,7 @@ private lemma main
         (((γ ^ (id : ℕ → ℕ)) @ (r[t:] + γ • V_θ[t + 1] s[t + 1:] - V_θ[t] s[t:])) •
           ∇[θ] (ℙ[M θ](a[t] | s[t]) : ℝ).log)) :=
     GradExpectDotPow_Id.eq.ExpectDotFunSMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_Eq.In_Ico.advantage
-      h₀ h₂ h₃ h₄
+      h₀ h₂ h₃ h₄ hP0 hπ
   have hbaseexp : ∇[θ] 𝔼[r: M θ]((γ ^ (id : ℕ → ℕ)) @ r) =
       𝔼[r, s, a : M θ]((γ ^ (id : ℕ → ℕ)) @ fun t ↦ ((γ ^ (id : ℕ → ℕ)) @ (fun k => r (t + k) + γ * V θ (t + k + 1) ⟨fun _ => s (t + k + 1)⟩ - V θ (t + k) ⟨fun _ => s (t + k)⟩)) • ∇[θ] (ℙ[M θ](a[t] | s[t]) : ℝ).log) := by
     refine hbase.trans ?_
@@ -259,4 +264,4 @@ private lemma main
 
 
 -- created on 2026-10-01
--- updated on 2026-10-19
+-- updated on 2026-10-20

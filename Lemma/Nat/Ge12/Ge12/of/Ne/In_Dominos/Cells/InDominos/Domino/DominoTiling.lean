@@ -13,10 +13,9 @@ open Finset
 private lemma main
 -- given
   (T : DominoTiling (n + 1) 2)
-  (v : Domino)
+  (v d : Domino)
   (hv : v ∈ T.dominos)
   (hv_cells : v.cells = vertical_1_1.cells)
-  (d : Domino)
   (hd : d ∈ T.dominos)
   (hne : d ≠ v) :
 -- imply
@@ -40,11 +39,9 @@ private lemma main
     have hrow_bound : d.cell1.2 = 1 ∨ d.cell1.2 = 2 := by omega
     obtain hr1 | hr2 := hrow_bound
     ·
-      have heq : d.cell1 = (1, 1) := Prod.ext h1 hr1
-      exact hdisj d.cell1 hc1_in_d (1, 1) hv_11 heq
+      exact hdisj d.cell1 hc1_in_d (1, 1) hv_11 (Prod.ext h1 hr1)
     ·
-      have heq : d.cell1 = (1, 2) := Prod.ext h1 hr2
-      exact hdisj d.cell1 hc1_in_d (1, 2) hv_12 heq
+      exact hdisj d.cell1 hc1_in_d (1, 2) hv_12 (Prod.ext h1 hr2)
   ·
     by_contra h
     push Not at h
@@ -56,11 +53,9 @@ private lemma main
     have hrow_bound : d.cell2.2 = 1 ∨ d.cell2.2 = 2 := by omega
     obtain hr1 | hr2 := hrow_bound
     ·
-      have heq : d.cell2 = (1, 1) := Prod.ext h2 hr1
-      exact hdisj d.cell2 hc2_in_d (1, 1) hv_11 heq
+      exact hdisj d.cell2 hc2_in_d (1, 1) hv_11 (Prod.ext h2 hr1)
     ·
-      have heq : d.cell2 = (1, 2) := Prod.ext h2 hr2
-      exact hdisj d.cell2 hc2_in_d (1, 2) hv_12 heq
+      exact hdisj d.cell2 hc2_in_d (1, 2) hv_12 (Prod.ext h2 hr2)
 
 
 -- created on 2026-10-20

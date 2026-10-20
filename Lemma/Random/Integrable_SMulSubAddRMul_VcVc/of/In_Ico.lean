@@ -13,7 +13,7 @@ private lemma delta_meas [MeasurableSpace S] [MeasurableSingletonClass S] [Finty
 -/
 @[path]
 private lemma main
-  [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A]
+  [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A] [DecidableEq S]
   {M : Model Θ S A}
   {γ : ℝ}
   {E : Type*}

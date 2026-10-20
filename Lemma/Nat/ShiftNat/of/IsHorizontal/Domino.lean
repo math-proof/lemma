@@ -13,8 +13,8 @@ open Finset
 private lemma main
 -- given
   (d : Domino)
-  (k : ℕ)
-  (h : d.isHorizontal) :
+  (h : d.isHorizontal)
+  (k : ℕ) :
 -- imply
   (d.shiftNat k).isHorizontal := by
 -- proof

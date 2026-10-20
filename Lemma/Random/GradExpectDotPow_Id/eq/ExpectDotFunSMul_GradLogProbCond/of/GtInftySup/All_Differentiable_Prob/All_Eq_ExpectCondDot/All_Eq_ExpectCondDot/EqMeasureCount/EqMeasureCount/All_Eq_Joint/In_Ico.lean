@@ -210,7 +210,9 @@ private lemma fderiv_tsum_eq_integral_score
   (h₂ : ∀ θ t («s.bvar» : ℕ → S) («a.bvar» : ℕ → A), Q θ t («s.bvar» t) («a.bvar» t) = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «s.bvar» t ∧ a t = «a.bvar» t))
   (h₃ : ∀ θ t («s.bvar» : ℕ → S), V θ t («s.bvar» t) = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «s.bvar» t))
   (h₄ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
-  (h₅ : sup[θ, x, u] ‖∇[θ] M.policy.prob θ x u‖ < ∞) :
+  (h₅ : sup[θ, x, u] ‖∇[θ] M.policy.prob θ x u‖ < ∞)
+  (hP0 : ∀ θ x, (M θ).real ((fun ω : ℕ → ℝ × S × A ↦ (ω 0).2.1) ⁻¹' {x}) ≠ 0)
+  (hπ : ∀ θ y u, (M θ).real ((fun ω : ℕ → ℝ × S × A ↦ (ω 0).2.1) ⁻¹' {y}) * M.policy.prob θ y u ≠ 0) :
   ∑' t, γ ^ t • fderiv ℝ (fun θ => ∫ ω, r t ω ∂(M θ)) θ =
     ∑' t, γ ^ t • ∫ ω, Q θ t (s t ω) (a t ω) • fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω))) θ ∂(M θ) := by
   have : ∀ θ t, SinglePSpace (M θ) (a t, s t) := fun _ t =>
@@ -250,7 +252,7 @@ private lemma fderiv_tsum_eq_integral_score
     have h8fd : ∀ θ x u, ‖fderiv ℝ (fun θ => M.policy.prob θ x u) θ‖ ≤ Cfd := fun θ x u => hCfd ⟨(θ, x, u), rfl⟩
     have h7grad :=
       GradExpectDotPow_Id.eq.AddExpect_Sum_SMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_Eq_ExpectCondDot.All_Eq_ExpectCondDot.EqMeasureCount.EqMeasureCount.All_Eq_Joint.In_Ico
-        (θ := θ) h₀ h₁ hS hA h₂ h₃ h₄ h5n
+        (θ := θ) h₀ h₁ hS hA h₂ h₃ h₄ h5n hP0 hπ
     let Lgrad : StrongDual ℝ Θ ≃L[ℝ] Θ :=
       (InnerProductSpace.toDual ℝ Θ).symm.toContinuousLinearEquiv
     have hLgrad : ∀ φ, (InnerProductSpace.toDual ℝ Θ).symm φ = Lgrad φ := fun _ => rfl
@@ -416,7 +418,7 @@ private lemma fderiv_tsum_eq_integral_score
         refine Eq.trans (congrArg (fun z => γ ^ n • z) (Lgrad.integral_comp_comm _)) ?_
         exact (map_smul Lgrad (γ ^ n) _).symm
     classical
-    obtain ⟨B, hB⟩ := BddAbove_ImageNormFderiv.of.In_Ico.GtInftySup.All_Differentiable_Prob (M := M) h₀ h₁ h₄ h5n θ
+    obtain ⟨B, hB⟩ := BddAbove_ImageNormFderiv.of.In_Ico.GtInftySup.All_Differentiable_Prob (M := M) h₀ h₁ h₄ h5n θ (hP0 θ)
     have h₉ : ∀ n, ‖∫ ω, fderiv ℝ (fun θ' => Vloc θ' n (s n ω)) θ ∂(M θ)‖ ≤ max B 0 := by
       intro n
       rw [Integral.eq.Sum_SMul h₁ (M := M) θ n (fun y => fderiv ℝ (fun θ' => Vloc θ' n y) θ)]
@@ -513,7 +515,9 @@ private lemma main
   (h₂ : ∀ θ t («s.bvar» : ℕ → S) («a.bvar» : ℕ → A), Q θ t («s.bvar» t) («a.bvar» t) = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «s.bvar» t ∧ a t = «a.bvar» t))
   (h₃ : ∀ θ t («s.bvar» : ℕ → S), V θ t («s.bvar» t) = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «s.bvar» t))
   (h₄ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
-  (h₅ : sup[θ, x, u] ‖∇[θ] M.policy.prob θ x u‖ < ∞) :
+  (h₅ : sup[θ, x, u] ‖∇[θ] M.policy.prob θ x u‖ < ∞)
+  (hP0 : ∀ θ x, (M θ).real ((fun ω : ℕ → ℝ × S × A ↦ (ω 0).2.1) ⁻¹' {x}) ≠ 0)
+  (hπ : ∀ θ y u, (M θ).real ((fun ω : ℕ → ℝ × S × A ↦ (ω 0).2.1) ⁻¹' {y}) * M.policy.prob θ y u ≠ 0) :
 -- imply
   have : ∀ θ t, SinglePSpace (M θ) (a t, s t) := fun _ t =>
     SinglePSpace.of.EqMeasureCount.Measurable ((Random.Measurable.of.All_Eq.snd.snd h₁ t).prodMk (Random.Measurable.of.All_Eq.snd.fst h₁ t)) (by
@@ -542,7 +546,7 @@ private lemma main
     set s : ℕ → (ℕ → ℝ × S × A) → S := fun t ω ↦ (ω t).2.1
     set a : ℕ → (ℕ → ℝ × S × A) → A := fun t ω ↦ (ω t).2.2
     have hfd :=
-      fderiv_tsum_eq_integral_score (M := M) (θ := θ) (γ := γ) (Q := Q) (V := V) (r := r) (s := s) (a := a) h₀ h₁ hS hA h₂ h₃ h₄ h₅
+      fderiv_tsum_eq_integral_score (M := M) (θ := θ) (γ := γ) (Q := Q) (V := V) (r := r) (s := s) (a := a) h₀ h₁ hS hA h₂ h₃ h₄ h₅ hP0 hπ
     let Qloc (θ : Θ) (t : ℕ) (x : S) (u : A) : ℝ :=
       𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = x ∧ a t = u)
     let Vloc (θ : Θ) (t : ℕ) (x : S) : ℝ :=

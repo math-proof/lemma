@@ -13,8 +13,8 @@ open Finset
 private lemma main
 -- given
   (T : DominoTiling (n + 1) 2)
-  (hv : vertical_1_1 ∈ T.dominos)
   (d : Domino)
+  (hv : vertical_1_1 ∈ T.dominos)
   (hd : d ∈ T.dominos)
   (hne : d ≠ vertical_1_1) :
 -- imply
@@ -35,13 +35,9 @@ private lemma main
     have hrow_bound : d.cell1.2 = 1 ∨ d.cell1.2 = 2 := by omega
     obtain hr1 | hr2 := hrow_bound
     ·
-      have heq : d.cell1 = (1, 1) := Prod.ext h1 hr1
-      have hv_c1 : vertical_1_1.cell1 ∈ vertical_1_1.cells := Finset.mem_insert_self _ _
-      exact hdisj d.cell1 hc1_in_d vertical_1_1.cell1 hv_c1 (by simp [heq])
+      exact hdisj d.cell1 hc1_in_d vertical_1_1.cell1 (Finset.mem_insert_self _ _) (by simp [show d.cell1 = (1, 1) from Prod.ext h1 hr1])
     ·
-      have heq : d.cell1 = (1, 2) := Prod.ext h1 hr2
-      have hv_c2 : vertical_1_1.cell2 ∈ vertical_1_1.cells := Finset.mem_insert_of_mem (Finset.mem_singleton_self _)
-      exact hdisj d.cell1 hc1_in_d vertical_1_1.cell2 hv_c2 (by simp [heq])
+      exact hdisj d.cell1 hc1_in_d vertical_1_1.cell2 (Finset.mem_insert_of_mem (Finset.mem_singleton_self _)) (by simp [show d.cell1 = (1, 2) from Prod.ext h1 hr2])
   ·
     by_contra h
     push Not at h
@@ -53,13 +49,9 @@ private lemma main
     have hrow_bound : d.cell2.2 = 1 ∨ d.cell2.2 = 2 := by omega
     obtain hr1 | hr2 := hrow_bound
     ·
-      have heq : d.cell2 = (1, 1) := Prod.ext h2 hr1
-      have hv_c1 : vertical_1_1.cell1 ∈ vertical_1_1.cells := Finset.mem_insert_self _ _
-      exact hdisj d.cell2 hc2_in_d vertical_1_1.cell1 hv_c1 (by simp [heq])
+      exact hdisj d.cell2 hc2_in_d vertical_1_1.cell1 (Finset.mem_insert_self _ _) (by simp [show d.cell2 = (1, 1) from Prod.ext h2 hr1])
     ·
-      have heq : d.cell2 = (1, 2) := Prod.ext h2 hr2
-      have hv_c2 : vertical_1_1.cell2 ∈ vertical_1_1.cells := Finset.mem_insert_of_mem (Finset.mem_singleton_self _)
-      exact hdisj d.cell2 hc2_in_d vertical_1_1.cell2 hv_c2 (by simp [heq])
+      exact hdisj d.cell2 hc2_in_d vertical_1_1.cell2 (Finset.mem_insert_of_mem (Finset.mem_singleton_self _)) (by simp [show d.cell2 = (1, 2) from Prod.ext h2 hr2])
 
 
 -- created on 2026-10-20

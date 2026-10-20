@@ -14,9 +14,9 @@ private lemma main
 -- given
   (n : ℕ)
   (T : DominoTiling n 3)
+  (i : ℕ)
   (hfree : T.isFaultfree)
   (htop : T.hasTopVerticalInCol 1)
-  (i : ℕ)
   (hi_pos : i ≥ 1)
   (hi_lt : i < n / 2) :
 -- imply
@@ -115,8 +115,7 @@ private lemma main
       have hd_mid_not_12 : (1, 2) ∉ d_mid.cells := by
         --
         intro h12
-        have heq := T.cell_covered_unique (1, 2) d_mid d_top hd_mid_mem hd_top_mem h12 hd_top_covers_12
-        exact hd_mid_ne_top heq
+        exact hd_mid_ne_top (T.cell_covered_unique (1, 2) d_mid d_top hd_mid_mem hd_top_mem h12 hd_top_covers_12)
       -- The middle domino must be horizontal going right: {(2,2), (3,2)}
       -- (vertical would create fault at col 2, horizontal left blocked by top vertical at (1,2))
       have hd_mid_cells : d_mid.cells = {(2, 2), (3, 2)} := by
@@ -125,7 +124,8 @@ private lemma main
         have hd_mid_in_rect := T.dominos_in_rect d_mid hd_mid_mem
         have h_opts := domino_at_22_options n d_mid hd_mid_in_rect hd_mid_cov hd_mid_not_12
         obtain h_horiz | h_vert_down | h_vert_up := h_opts
-        · exact h_horiz
+        ·
+          exact h_horiz
         ·
           -- Case {(2, 1), (2, 2)}: d_mid covers (2, 1), but d_base also covers (2, 1)
           exfalso
@@ -139,12 +139,15 @@ private lemma main
           -- Case {(2, 2), (2, 3)}: Creates fault at column 2
           exfalso
           -- Show that no domino in T spans column 2
-          have hfault : T.hasFaultAt 2 := by
+          refine hfree 2 (by omega) (by omega) ?_
+          ·
             --
             constructor
-            · omega
+            ·
+              omega
             constructor
-            · omega
+            ·
+              omega
             intro d hd_mem' ⟨hmin, hmax⟩
             -- d spans column 2, so it has a cell in column 2 with maxCol ≥ 3
             -- The cells in column 2 are (2,1), (2,2), (2,3)
@@ -166,7 +169,8 @@ private lemma main
                   simp only [Domino.minCol, Domino.maxCol] at hmin hmax
                   have : d.cell1.1 = d.cell2.1 := hcol
                   omega
-                · exact hrow
+                ·
+                  exact hrow
               -- d is horizontal with minCol ≤ 2 < maxCol
               simp only [Domino.minCol, Domino.maxCol] at hmin hmax
               -- Since d is horizontal and adjacent, |cell1.1 - cell2.1| = 1
@@ -179,7 +183,8 @@ private lemma main
                   simp only [Domino.isHorizontal] at hd_horiz
                   -- hvert says columns are equal, but hmin ≤ 2 < hmax means columns differ
                   omega
-                · exact hcol
+                ·
+                  exact hcol
               have hc1_or_c2 : d.cell1.1 = 2 ∨ d.cell2.1 = 2 := by
                 --
                 obtain h | h := hadj
@@ -199,11 +204,9 @@ private lemma main
                   right; omega
               obtain hc1 | hc2 := hc1_or_c2
               ·
-                have heq : (2, d.cell1.2) = d.cell1 := by ext <;> simp [hc1]
-                exact ⟨d.cell1.2, by simp [Domino.cells, heq]⟩
+                exact ⟨d.cell1.2, by simp [Domino.cells, (show (2, d.cell1.2) = d.cell1 by ext <;> simp [hc1])]⟩
               ·
-                have heq : (2, d.cell2.2) = d.cell2 := by ext <;> simp [hc2]
-                exact ⟨d.cell2.2, by simp [Domino.cells, heq]⟩
+                exact ⟨d.cell2.2, by simp [Domino.cells, (show (2, d.cell2.2) = d.cell2 by ext <;> simp [hc2])]⟩
             obtain ⟨r, hr_in⟩ := hd_col2_cell
             -- (2, r) is in column 2, so r ∈ {1, 2, 3}
             have hd_in_rect := T.dominos_in_rect d hd_mem'
@@ -235,7 +238,6 @@ private lemma main
               have hmid_minmax := minCol_maxCol_eq_2_of_cells_eq_22_23 d_mid h_vert_up
               omega
           -- But T is faultfree
-          exact hfree 2 (by omega) (by omega) hfault
       -- Similarly for top domino covering (2, 3)
       have h23_in : (2, 3) ∈ Rectangle n 3 := by rw [mem_Rectangle]; omega
       obtain ⟨d_top', hd_top'_mem, hd_top'_cov⟩ := T.cell_covered (2, 3) h23_in
@@ -256,14 +258,17 @@ private lemma main
       have hd_top'_not_13 : (1, 3) ∉ d_top'.cells := by
         --
         intro h13
-        have heq := T.cell_covered_unique (1, 3) d_top' d_top hd_top'_mem hd_top_mem h13 hd_top_covers_13
-        exact hd_top'_ne_top heq
-      have hd_top'_cells : d_top'.cells = {(2, 3), (3, 3)} := by
+        exact hd_top'_ne_top (T.cell_covered_unique (1, 3) d_top' d_top hd_top'_mem hd_top_mem h13 hd_top_covers_13)
+      refine ⟨⟨d_base, hd_base_mem, hd_base_cells⟩,
+            ⟨d_mid, hd_mid_mem, hd_mid_cells⟩,
+            ⟨d_top', hd_top'_mem, ?_⟩⟩
+      ·
         --
         have hd_top'_in_rect := T.dominos_in_rect d_top' hd_top'_mem
         have h_opts := domino_at_23_options n d_top' hd_top'_in_rect hd_top'_cov hd_top'_not_13
         obtain h_horiz | h_vert := h_opts
-        · exact h_horiz
+        ·
+          exact h_horiz
         ·
           -- Case {(2, 2), (2, 3)}: d_top' covers (2, 2), but d_mid also covers (2, 2)
           -- So d_top' = d_mid, but d_mid.cells = {(2, 2), (3, 2)} ≠ {(2, 2), (2, 3)}
@@ -273,9 +278,6 @@ private lemma main
           rw [heq, hd_mid_cells] at h_vert
           have : (2, 3) ∈ ({(2, 2), (3, 2)} : Finset Cell) := by rw [h_vert]; simp
           simp at this
-      exact ⟨⟨d_base, hd_base_mem, hd_base_cells⟩,
-            ⟨d_mid, hd_mid_mem, hd_mid_cells⟩,
-            ⟨d_top', hd_top'_mem, hd_top'_cells⟩⟩
     ·
       -- Induction step: i > 1
       have hi_pred_pos : i - 1 ≥ 1 := by omega
@@ -367,7 +369,8 @@ private lemma main
       have hd_mid_cells : d_mid.cells = {(2*i, 2), (2*i + 1, 2)} := by
         --
         obtain h_horiz | h_vert_down | h_vert_up := h_mid_opts
-        · exact h_horiz
+        ·
+          exact h_horiz
         ·
           -- Case {(2i, 1), (2i, 2)}: d_mid covers (2i, 1), but d_base also covers (2i, 1)
           exfalso
@@ -383,12 +386,14 @@ private lemma main
           -- Case {(2i, 2), (2i, 3)}: Creates fault at column 2i
           exfalso
           -- Show that no domino in T spans column 2i
-          have hfault : T.hasFaultAt (2*i) := by
+          apply hfree (2*i) (by omega) (by omega)
             --
             constructor
-            · omega
+            ·
+              omega
             constructor
-            · omega
+            ·
+              omega
             intro d hd_mem' ⟨hmin, hmax⟩
             have hd_maxCol_ge : d.maxCol ≥ 2*i + 1 := by omega
             -- d has minCol ≤ 2i and maxCol ≥ 2i+1, so d is horizontal spanning columns 2i and 2i+1
@@ -402,7 +407,8 @@ private lemma main
                   simp only [Domino.minCol, Domino.maxCol] at hmin hmax
                   have : d.cell1.1 = d.cell2.1 := hcol
                   omega
-                · exact hrow
+                ·
+                  exact hrow
               simp only [Domino.minCol, Domino.maxCol] at hmin hmax
               have hadj : d.cell1.1 + 1 = d.cell2.1 ∨ d.cell2.1 + 1 = d.cell1.1 := by
                 --
@@ -411,7 +417,8 @@ private lemma main
                   exfalso
                   simp only [Domino.isHorizontal] at hd_horiz
                   omega
-                · exact hcol
+                ·
+                  exact hcol
               have hc1_or_c2 : d.cell1.1 = 2*i ∨ d.cell2.1 = 2*i := by
                 --
                 obtain h | h := hadj
@@ -429,11 +436,9 @@ private lemma main
                   right; omega
               obtain hc1 | hc2 := hc1_or_c2
               ·
-                have heq : (2*i, d.cell1.2) = d.cell1 := by ext <;> simp [hc1]
-                exact ⟨d.cell1.2, by simp [Domino.cells, heq]⟩
+                exact ⟨d.cell1.2, by simp [Domino.cells, (show (2*i, d.cell1.2) = d.cell1 by ext <;> simp [hc1])]⟩
               ·
-                have heq : (2*i, d.cell2.2) = d.cell2 := by ext <;> simp [hc2]
-                exact ⟨d.cell2.2, by simp [Domino.cells, heq]⟩
+                exact ⟨d.cell2.2, by simp [Domino.cells, (show (2*i, d.cell2.2) = d.cell2 by ext <;> simp [hc2])]⟩
             obtain ⟨r, hr_in⟩ := hd_col_cell
             have hd_in_rect := T.dominos_in_rect d hd_mem'
             have h_in_rect : (2*i, r) ∈ Rectangle n 3 := hd_in_rect hr_in
@@ -464,7 +469,6 @@ private lemma main
               have hmid_minmax := minCol_maxCol_eq_c_of_cells_eq_c2_c3 (2*i) d_mid h_vert_up
               omega
           -- But T is faultfree
-          exact hfree (2*i) (by omega) (by omega) hfault
       -- Now for the top domino covering (2i, 3)
       have h_cell_top_in : (2*i, 3) ∈ Rectangle n 3 := by rw [mem_Rectangle]; omega
       obtain ⟨d_top', hd_top'_mem, hd_top'_cov⟩ := T.cell_covered (2*i, 3) h_cell_top_in
@@ -481,10 +485,14 @@ private lemma main
       have hd_top'_in_rect := T.dominos_in_rect d_top' hd_top'_mem
       have h_top_opts := domino_at_c3_options n (2*i) d_top' hc_mid_ge hc_mid_lt 
         hd_top'_in_rect hd_top'_cov hd_top'_not_left
-      have hd_top'_cells : d_top'.cells = {(2*i, 3), (2*i + 1, 3)} := by
+      refine ⟨⟨d_base, hd_base_mem, hd_base_cells'⟩,
+            ⟨d_mid, hd_mid_mem, hd_mid_cells⟩,
+            ⟨d_top', hd_top'_mem, ?_⟩⟩
+      ·
         --
         obtain h_horiz | h_vert := h_top_opts
-        · exact h_horiz
+        ·
+          exact h_horiz
         ·
           -- Case {(2i, 2), (2i, 3)}: d_top' covers (2i, 2), but d_mid also covers (2i, 2)
           exfalso
@@ -495,9 +503,6 @@ private lemma main
             (2*i, 3) ∈ ({(2*i, 2), (2*i + 1, 2)} : Finset Cell) := by rw [h_vert]; simp
           simp only [Finset.mem_insert, Finset.mem_singleton, Prod.mk.injEq] at hmem
           obtain ⟨h1, h2⟩ | ⟨h1, h2⟩ := hmem <;> omega
-      exact ⟨⟨d_base, hd_base_mem, hd_base_cells'⟩,
-            ⟨d_mid, hd_mid_mem, hd_mid_cells⟩,
-            ⟨d_top', hd_top'_mem, hd_top'_cells⟩⟩
 
 
 -- created on 2026-10-20

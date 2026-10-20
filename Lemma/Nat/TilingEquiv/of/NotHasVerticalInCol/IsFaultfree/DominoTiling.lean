@@ -13,8 +13,8 @@ open Finset
 private lemma main
 -- given
   (T : DominoTiling 2 3)
-  (_ : T.isFaultfree)
-  (hno_vert : ¬T.hasVerticalInCol 1) :
+  (hno_vert : ¬T.hasVerticalInCol 1)
+  (_ : T.isFaultfree) :
 -- imply
   DominoTiling.TilingEquiv T TilingC := by
 -- proof
@@ -52,7 +52,7 @@ private lemma main
         have h_covered := T.covers_all
         rw [Finset.ext_iff] at h_covered
         have h_in_union : (1, d.cell1.2) ∈ T.dominos.biUnion Domino.cells := by
-          rw [h_covered]; exact h_cell_in_rect
+          rwa [h_covered]
         rw [Finset.mem_biUnion] at h_in_union
         obtain ⟨d', hd'_mem, hd'_covers⟩ := h_in_union -- d' covers (1, d.cell1.2), so d'.cell1 = (1, r) or d'.cell2 = (1, r) where r = d.cell1.2
         simp only [Domino.cells, Finset.mem_insert, Finset.mem_singleton] at hd'_covers -- d' is either vertical or horizontal
@@ -105,11 +105,11 @@ private lemma main
                 omega -- d' and d share cell d.cell1, contradicting pairwise disjoint
               have h_disj := T.pairwise_disjoint d' hd'_mem d hd hne
               rw [Finset.disjoint_iff_ne] at h_disj
-              have h_d1_in_d' : d.cell1 ∈ d'.cells := by
+              refine h_disj d.cell1 ?_ d.cell1 (Finset.mem_insert_self _ _) rfl
+              ·
                 simp only [Domino.cells, Finset.mem_insert, Finset.mem_singleton]
-                right; exact h_overlap.symm
-              have h_d1_in_d : d.cell1 ∈ d.cells := Finset.mem_insert_self _ _
-              exact h_disj d.cell1 h_d1_in_d' d.cell1 h_d1_in_d rfl
+                right
+                exact h_overlap.symm
             ·
               -- d'.cell2.1 + 1 = d'.cell1.1
               -- d'.cell1.1 = 1 (from hc1), so d'.cell2.1 = 0
@@ -142,10 +142,11 @@ private lemma main
                 omega
               have h_disj := T.pairwise_disjoint d' hd'_mem d hd hne
               rw [Finset.disjoint_iff_ne] at h_disj
-              have h_d1_in_d' : d.cell1 ∈ d'.cells := by
-                simp only [Domino.cells, Finset.mem_insert]; left; exact h_overlap.symm
-              have h_d1_in_d : d.cell1 ∈ d.cells := Finset.mem_insert_self _ _
-              exact h_disj d.cell1 h_d1_in_d' d.cell1 h_d1_in_d rfl
+              refine h_disj d.cell1 ?_ d.cell1 (Finset.mem_insert_self _ _) rfl
+              ·
+                simp only [Domino.cells, Finset.mem_insert]
+                left
+                exact h_overlap.symm
     ·
       -- Horizontal case
       exact hrow
@@ -169,7 +170,8 @@ private lemma main
     refine ⟨h1.2.2.1, h1.2.2.2, ?_⟩
     unfold Domino.cells
     obtain ⟨_, hadj⟩ | ⟨_, hadj⟩ := d.adjacent
-    · omega  -- vertical case contradicts h_horiz
+    ·
+      omega  -- vertical case contradicts h_horiz
     ·
       obtain hadj1 | hadj2 := hadj
       ·
@@ -214,7 +216,7 @@ private lemma main
       -- Cell (1, 1) is covered by some domino d in T
       have h11_in : (1, 1) ∈ Rectangle 2 3 := by rw [mem_Rectangle]; omega
       have h11_covered : (1, 1) ∈ T.dominos.biUnion Domino.cells := by
-        rw [T.covers_all]; exact h11_in
+        rwa [T.covers_all]
       rw [Finset.mem_biUnion] at h11_covered
       obtain ⟨d, hd_mem, hd_covers⟩ := h11_covered
       obtain ⟨r, _, _, hr_cells⟩ := h_cells_form d hd_mem
@@ -231,7 +233,7 @@ private lemma main
       -- x = {(1, 2), (2, 2)}
       have h12_in : (1, 2) ∈ Rectangle 2 3 := by rw [mem_Rectangle]; omega
       have h12_covered : (1, 2) ∈ T.dominos.biUnion Domino.cells := by
-        rw [T.covers_all]; exact h12_in
+        rwa [T.covers_all]
       rw [Finset.mem_biUnion] at h12_covered
       obtain ⟨d, hd_mem, hd_covers⟩ := h12_covered
       obtain ⟨r, _, _, hr_cells⟩ := h_cells_form d hd_mem
@@ -248,7 +250,7 @@ private lemma main
       -- x = {(1, 3), (2, 3)}
       have h13_in : (1, 3) ∈ Rectangle 2 3 := by rw [mem_Rectangle]; omega
       have h13_covered : (1, 3) ∈ T.dominos.biUnion Domino.cells := by
-        rw [T.covers_all]; exact h13_in
+        rwa [T.covers_all]
       rw [Finset.mem_biUnion] at h13_covered
       obtain ⟨d, hd_mem, hd_covers⟩ := h13_covered
       obtain ⟨r, _, _, hr_cells⟩ := h_cells_form d hd_mem
