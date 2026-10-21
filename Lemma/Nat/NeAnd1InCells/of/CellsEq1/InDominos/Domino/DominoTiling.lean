@@ -1,9 +1,11 @@
 import Mathlib
 import sympy.Basic
 import sympy.matrices.determinants.DominoTilings
+import Lemma.Nat.IffIn_RectangleGe1AndGe_1AndGe21AndGe_2
 open DominoTilings
 open Domino DominoTiling
 open Finset
+open Nat
 
 
 /--
@@ -19,7 +21,7 @@ private lemma main
 -- imply
   ∃ d' ∈ T.dominos, d' ≠ d ∧ (1, 2) ∈ d'.cells := by
 -- proof
-  have h12 : (1, 2) ∈ Rectangle (n + 2) 2 := by rw [mem_Rectangle]; omega
+  have h12 : (1, 2) ∈ Rectangle (n + 2) 2 := by rw [IffIn_RectangleGe1AndGe_1AndGe21AndGe_2]; omega
   rw [← T.covers_all] at h12
   simp only [Finset.mem_biUnion] at h12
   obtain ⟨d', hd'_mem, hd'_cov⟩ := h12

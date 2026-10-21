@@ -45,9 +45,9 @@ Guidelines and prompts for using LLMs to write and refactor Lean 4 proofs in thi
 ## Inter-agent communication
 This copy-paste path is for **Cursor-like** agents, who cannot talk to other agents. Do not claim you dispatched a job, and do not wait for a colleague that never receives the message.
 
-**Grok** bots can talk to colleagues. They skip this section: send the job to Mr. AgentName directly (do not give the user a paste prompt).
+**Grok** bots can talk to colleagues. They skip this section: send the job to @AgentName directly (do not give the user a paste prompt).
 
-When the user says to send this issue / problem / bug / job / task to **Mr. AgentName** (or “send to AgentName”):
+When the user says to send this issue / problem / bug / job / task to **@AgentName** (or “send to AgentName”):
 - Write a **self-contained prompt** for that agent (assignee, goal, paths, errors, constraints, follow this `AGENTS.md`).
 - Emit that prompt as **exactly one** fenced code block tagged `markdown` (opening line ` ```markdown `, closing ` ``` `). The chat UI must show **exactly one** clickable **copy** control for the whole prompt; the user clicks it instead of selecting text and pressing Ctrl+C.
 - **One clickable only:** do not nest other fenced blocks (` ```… `) inside that prompt — each inner fence can add another copy button and the user cannot tell which to use. Put Lean/shell examples inside the prompt as indented plain text (or prose), never as nested triple-backtick fences.

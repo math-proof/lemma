@@ -2,16 +2,17 @@ import Mathlib
 import sympy.Basic
 open CategoryTheory CategoryTheory.Limits CategoryTheory.MorphismProperty AlgebraicGeometry TopologicalSpace Opposite IsLocalRing
 open scoped TensorProduct MonoidalCategory
-
-universe u
-
 set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
 
-private lemma ringHom_existsUnique {κ : Type u} [Field κ] [IsAlgClosed κ] {k : Type u} [Field k] (j : κ →+* k)
-    {B : Type u} [CommRing B] (φ : κ →+* B) (hφ : φ.Finite) (ψ : B →+* k) (hψ : ψ.comp φ = j) :
-    ∃! χ : B →+* κ, χ.comp φ = RingHom.id κ ∧ j.comp χ = ψ := by
+
+universe u
+
+private lemma ringHom_existsUnique
+  {κ : Type u} [Field κ] [IsAlgClosed κ] {k : Type u} [Field k] (j : RingHom κ k)
+  {B : Type u} [CommRing B] (φ : RingHom κ B) (hφ : φ.Finite) (ψ : RingHom B k) (hψ : ψ.comp φ = j) :
+    ∃! χ : RingHom B κ, χ.comp φ = RingHom.id κ ∧ j.comp χ = ψ := by
   classical
   let _ : Algebra κ B := φ.toAlgebra
   let _ : Module.Finite κ B := hφ
@@ -21,12 +22,12 @@ private lemma ringHom_existsUnique {κ : Type u} [Field κ] [IsAlgClosed κ] {k 
   let _ : Module.Finite κ (B ⧸ I) := Module.Finite.quotient κ I
   let _ : Algebra.IsIntegral κ (B ⧸ I) := Algebra.IsIntegral.of_finite κ (B ⧸ I)
   have hbij := IsAlgClosed.algebraMap_bijective_of_isIntegral (k := κ) (K := B ⧸ I)
-  let ι : (B ⧸ I) ≃+* κ := (RingEquiv.ofBijective (algebraMap κ (B ⧸ I)) hbij).symm
+  let ι : RingEquiv (B ⧸ I) κ := (RingEquiv.ofBijective (algebraMap κ (B ⧸ I)) hbij).symm
   have hι : ∀ c : κ, ι (algebraMap κ (B ⧸ I) c) = c := fun c =>
     (RingEquiv.ofBijective (algebraMap κ (B ⧸ I)) hbij).symm_apply_apply c
   have hι' : ∀ y : B ⧸ I, algebraMap κ (B ⧸ I) (ι y) = y := fun y =>
     (RingEquiv.ofBijective (algebraMap κ (B ⧸ I)) hbij).apply_symm_apply y
-  let χ : B →+* κ := ι.toRingHom.comp (Ideal.Quotient.mk I)
+  let χ : RingHom B κ := ι.toRingHom.comp (Ideal.Quotient.mk I)
   have hφalg : ∀ c : κ, φ c = algebraMap κ B c := fun c => rfl
   have hχφ : χ.comp φ = RingHom.id κ := by
     ext c
@@ -38,32 +39,36 @@ private lemma ringHom_existsUnique {κ : Type u} [Field κ] [IsAlgClosed κ] {k 
     obtain ⟨c, hc⟩ := hbij.2 (Ideal.Quotient.mk I b)
     rw [← hc, hι]
     rw [← Ideal.Quotient.mk_algebraMap, ← hφalg, Ideal.Quotient.eq] at hc
-    have h3 : ψ (φ c) - ψ b = 0 := by rw [← map_sub]; exact hc
+    have h3 : ψ (φ c) - ψ b = 0 := by rwa [← map_sub]
     rw [← hψ, RingHom.comp_apply]
     exact (sub_eq_zero.mp h3)
   refine ⟨χ, ⟨hχφ, hjχ⟩, fun χ' hχ' => ?_⟩
   apply RingHom.ext
   intro b
   apply j.injective
-  have h1 : j (χ' b) = ψ b := by rw [← hχ'.2]; rfl
-  have h2 : j (χ b) = ψ b := by rw [← hjχ]; rfl
+  have h1 : j (χ' b) = ψ b := by
+    rw [← hχ'.2]
+    rfl
+  have h2 : j (χ b) = ψ b := by
+    rw [← hjχ]
+    rfl
   rw [h1, h2]
 /--
 [AlgebraicGeometry_existsUnique_section_comp_eq_of_isFinite_of_isAlgClosed](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_existsUnique_section_comp_eq_of_isFinite_of_isAlgClosed.lean)
 -/
 @[path]
 private lemma main
-    {κ : Type u} [Field κ] [IsAlgClosed κ] {k : Type u} [Field k] (j : κ →+* k)
-    {Z : Scheme.{u}} (g : Z ⟶ Spec (CommRingCat.of κ)) [IsFinite g]
+  {κ : Type u} [Field κ] [IsAlgClosed κ] {k : Type u} [Field k] (j : RingHom κ k)
+  {Z : (Scheme : Type (u + 1))} (g : Z ⟶ Spec (CommRingCat.of κ)) [IsFinite g]
     (x : Spec (CommRingCat.of k) ⟶ Z) (hx : x ≫ g = Spec.map (CommRingCat.ofHom j)) :
     ∃! z : Spec (CommRingCat.of κ) ⟶ Z, z ≫ g = 𝟙 _ ∧ Spec.map (CommRingCat.ofHom j) ≫ z = x := by
   classical
   let _ : IsAffineHom g := inferInstance
   let _ : IsAffine Z := isAffine_of_isAffineHom g
-  let eZ : Z ≅ Spec Γ(Z, ⊤) := Z.isoSpec
-  let φ' : CommRingCat.of κ ⟶ Γ(Z, ⊤) := Spec.preimage (eZ.inv ≫ g)
+  let eZ : Z ≅ Spec (Z.presheaf.obj (op ⊤)) := Z.isoSpec
+  let φ' : CommRingCat.of κ ⟶ (Z.presheaf.obj (op ⊤)) := Spec.preimage (eZ.inv ≫ g)
   have hφ' : Spec.map φ' = eZ.inv ≫ g := Spec.map_preimage _
-  let ψ' : Γ(Z, ⊤) ⟶ CommRingCat.of k := Spec.preimage (x ≫ eZ.hom)
+  let ψ' : (Z.presheaf.obj (op ⊤)) ⟶ CommRingCat.of k := Spec.preimage (x ≫ eZ.hom)
   have hψ' : Spec.map ψ' = x ≫ eZ.hom := Spec.map_preimage _
   have hcomp : φ' ≫ ψ' = CommRingCat.ofHom j := by
     apply Spec.map_injective
@@ -77,16 +82,18 @@ private lemma main
   ·
     rw [Category.assoc, ← hφ', ← Spec.map_comp]
     have : φ' ≫ CommRingCat.ofHom χ = 𝟙 _ := by
-      apply CommRingCat.hom_ext; rw [CommRingCat.hom_comp, CommRingCat.hom_ofHom, hχφ, CommRingCat.hom_id]
+      apply CommRingCat.hom_ext
+      rw [CommRingCat.hom_comp, CommRingCat.hom_ofHom, hχφ, CommRingCat.hom_id]
     rw [this, Spec.map_id]
   ·
     rw [← Category.assoc, ← Spec.map_comp]
     have : CommRingCat.ofHom χ ≫ CommRingCat.ofHom j = ψ' := by
-      apply CommRingCat.hom_ext; rw [CommRingCat.hom_comp, CommRingCat.hom_ofHom, CommRingCat.hom_ofHom, hjχ]
+      apply CommRingCat.hom_ext
+      rw [CommRingCat.hom_comp, CommRingCat.hom_ofHom, CommRingCat.hom_ofHom, hjχ]
     rw [this, hψ', Category.assoc, eZ.hom_inv_id, Category.comp_id]
   ·
     intro z' ⟨hz1, hz2⟩
-    let χ' : Γ(Z, ⊤) ⟶ CommRingCat.of κ := Spec.preimage (z' ≫ eZ.hom)
+    let χ' : (Z.presheaf.obj (op ⊤)) ⟶ CommRingCat.of κ := Spec.preimage (z' ≫ eZ.hom)
     have hχ' : Spec.map χ' = z' ≫ eZ.hom := Spec.map_preimage _
     have e1 : (CommRingCat.Hom.hom χ').comp (CommRingCat.Hom.hom φ') = RingHom.id κ := by
       rw [← CommRingCat.hom_comp]
@@ -102,5 +109,6 @@ private lemma main
     have := huniq (CommRingCat.Hom.hom χ') ⟨e1, e2⟩
     symm
     rw [Iso.comp_inv_eq, ← this, CommRingCat.ofHom_hom, hχ']
+
 
 -- created on 2026-10-20

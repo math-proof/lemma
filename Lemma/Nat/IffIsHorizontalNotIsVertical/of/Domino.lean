@@ -1,9 +1,12 @@
 import Mathlib
 import sympy.Basic
 import sympy.matrices.determinants.DominoTilings
+import Lemma.Nat.IsHorizontalOrIsVertical.of.Domino
+import Lemma.Nat.NotIsHorizontalAndIsVertical.of.Domino
 open DominoTilings
 open Domino DominoTiling
 open Finset
+open Nat
 
 
 /--
@@ -19,10 +22,10 @@ private lemma main
   constructor
   ·
     intro hH hV
-    exact d.not_isHorizontal_and_isVertical ⟨hH, hV⟩
+    exact NotIsHorizontalAndIsVertical.of.Domino d ⟨hH, hV⟩
   ·
     intro hNV
-    obtain hH | hV := d.isHorizontal_or_isVertical
+    obtain hH | hV := IsHorizontalOrIsVertical.of.Domino d
     · exact hH
     · exact absurd hV hNV
 

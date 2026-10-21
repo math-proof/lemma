@@ -2,20 +2,20 @@ import Mathlib
 import sympy.Basic
 open CategoryTheory CategoryTheory.Limits CategoryTheory.MorphismProperty AlgebraicGeometry TopologicalSpace Opposite IsLocalRing
 open scoped TensorProduct MonoidalCategory
-
-universe u
-
 set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
 
+
+universe u
+
 private lemma finrank_cotangentSpace_eq_of_isLocalization
-    {R A S : Type u} [CommRing R] [CommRing A] [CommRing S] [IsLocalRing S]
-    [Algebra R A] [Algebra A S] [Algebra R S] [IsScalarTower R A S]
-    (M : Submonoid A) [IsLocalization M S] [Nontrivial A]
-    (m : ℕ) [Algebra.IsStandardSmoothOfRelativeDimension m R A]
-    (hres : Function.Bijective (algebraMap R (IsLocalRing.ResidueField S))) :
-    Module.finrank (IsLocalRing.ResidueField S) (IsLocalRing.CotangentSpace S) = m := by
+  {R A S : Type u} [CommRing R] [CommRing A] [CommRing S] [IsLocalRing S]
+  [Algebra R A] [Algebra A S] [Algebra R S] [IsScalarTower R A S]
+  (M : Submonoid A) [IsLocalization M S] [Nontrivial A]
+  (m : ℕ) [Algebra.IsStandardSmoothOfRelativeDimension m R A]
+  (hres : Function.Bijective (algebraMap R (IsLocalRing.ResidueField S))) :
+  Module.finrank (IsLocalRing.ResidueField S) (IsLocalRing.CotangentSpace S) = m := by
   set κ := IsLocalRing.ResidueField S
   let _ : Algebra.IsStandardSmooth R A := Algebra.IsStandardSmoothOfRelativeDimension.isStandardSmooth m
   let _ : Algebra.FormallySmooth R A := Algebra.Smooth.formallySmooth
@@ -25,29 +25,33 @@ private lemma finrank_cotangentSpace_eq_of_isLocalization
   have hsurj : Function.Surjective (algebraMap S κ) := Ideal.Quotient.mk_surjective
   let _ : Algebra.FormallySmooth R κ :=
     Algebra.FormallySmooth.of_equiv (AlgEquiv.ofBijective (Algebra.ofId R κ) hres)
-  have hinj : Function.Injective (KaehlerDifferential.kerCotangentToTensor R S κ) :=
-    (Algebra.FormallySmooth.kerCotangentToTensor_injective_iff (R := R) (P := S) (A := κ) hsurj).mpr
-      inferInstance
-  let _ : Subsingleton (Ω[κ⁄R]) := KaehlerDifferential.subsingleton_of_surjective R κ hres.2
-  have hsurjK : Function.Surjective (KaehlerDifferential.kerCotangentToTensor R S κ) := fun y =>
-    (KaehlerDifferential.exact_kerCotangentToTensor_mapBaseChange R S κ hsurj y).mp (Subsingleton.elim _ _)
-  let e₁ : (RingHom.ker (algebraMap S κ)).Cotangent ≃ₗ[S] κ ⊗[S] Ω[S⁄R] :=
+  have hinj : Function.Injective (KaehlerDifferential.kerCotangentToTensor R S κ) := by
+    rw [Algebra.FormallySmooth.kerCotangentToTensor_injective_iff (R := R) (P := S) (A := κ) hsurj]
+    infer_instance
+  let _ : Subsingleton (KaehlerDifferential R κ) := KaehlerDifferential.subsingleton_of_surjective R κ hres.2
+  have hsurjK : Function.Surjective (KaehlerDifferential.kerCotangentToTensor R S κ) := by
+    intro y
+    apply Iff.mp (KaehlerDifferential.exact_kerCotangentToTensor_mapBaseChange R S κ hsurj y)
+    apply Subsingleton.elim
+  let e₁ : (RingHom.ker (algebraMap S κ)).Cotangent ≃ₗ[S] TensorProduct S κ (KaehlerDifferential R S) :=
     LinearEquiv.ofBijective _ ⟨hinj, hsurjK⟩
   have hker : IsLocalRing.maximalIdeal S = RingHom.ker (algebraMap S κ) := by
     rw [IsLocalRing.ResidueField.algebraMap_eq, IsLocalRing.ker_residue]
   let e₀ : IsLocalRing.CotangentSpace S ≃ₗ[S] (RingHom.ker (algebraMap S κ)).Cotangent :=
     Ideal.Cotangent.equivOfEq _ _ hker
-  let e : IsLocalRing.CotangentSpace S ≃ₗ[κ] κ ⊗[S] Ω[S⁄R] :=
+  let e : IsLocalRing.CotangentSpace S ≃ₗ[κ] TensorProduct S κ (KaehlerDifferential R S) :=
     (e₀.trans e₁).extendScalarsOfSurjective hsurj
-  let ebc : S ⊗[A] Ω[A⁄R] ≃ₗ[S] Ω[S⁄R] := KaehlerDifferential.tensorKaehlerEquivOfFormallyEtale R A S
-  let _ : Module.Free S (Ω[S⁄R]) := Module.Free.of_equiv ebc
-  have hA : Module.finrank A (Ω[A⁄R]) = m :=
+  let ebc : TensorProduct A S (KaehlerDifferential R A) ≃ₗ[S] KaehlerDifferential R S :=
+    KaehlerDifferential.tensorKaehlerEquivOfFormallyEtale R A S
+  let _ : Module.Free S (KaehlerDifferential R S) := Module.Free.of_equiv ebc
+  have hA : Module.finrank A (KaehlerDifferential R A) = m :=
     Module.finrank_eq_of_rank_eq (Algebra.IsStandardSmoothOfRelativeDimension.rank_kaehlerDifferential m)
-  have hS : Module.finrank S (Ω[S⁄R]) = m := by
+  have hS : Module.finrank S (KaehlerDifferential R S) = m := by
     rw [← ebc.finrank_eq, Module.finrank_baseChange, hA]
   rw [e.finrank_eq, Module.finrank_baseChange, hS]
-private lemma surjective_residueFieldMap_of_section {X Y : Scheme.{u}} (f : X ⟶ Y) (z : Y ⟶ X)
-    (hz : z ≫ f = 𝟙 Y) (y : Y) :
+private lemma surjective_residueFieldMap_of_section
+  {X Y : (Scheme : Type (u + 1))} (f : X ⟶ Y) (z : Y ⟶ X)
+  (hz : z ≫ f = 𝟙 Y) (y : Y) :
     Function.Surjective (f.residueFieldMap (z.base y)) := by
   have h1 : (z ≫ f).residueFieldMap y = f.residueFieldMap (z.base y) ≫ z.residueFieldMap y :=
     Scheme.residueFieldMap_comp z f y
@@ -68,9 +72,11 @@ private lemma surjective_residueFieldMap_of_section {X Y : Scheme.{u}} (f : X �
   rw [Iso.inv_hom_id_assoc]
   rfl
 private lemma surjective_evaluation_top_Spec_field (K : Type u) [Field K] (y : Spec (CommRingCat.of K)) :
-    Function.Surjective ((Spec (CommRingCat.of K)).evaluation ⊤ y trivial) := by
+  Function.Surjective ((Spec (CommRingCat.of K)).evaluation ⊤ y trivial) := by
   have hy : y.asIdeal = ⊥ := Ideal.eq_bot_of_prime _
-  let _ : y.asIdeal.IsMaximal := by rw [hy]; exact Ideal.bot_isMaximal
+  let _ : y.asIdeal.IsMaximal := by
+    rw [hy]
+    apply Ideal.bot_isMaximal
   have hs : Function.Surjective (algebraMap K y.asIdeal.ResidueField) :=
     Ideal.algebraMap_residueField_surjective _
   have key := Scheme.Spec.algebraMap_residueFieldIso_inv (CommRingCat.of K) y
@@ -78,25 +84,27 @@ private lemma surjective_evaluation_top_Spec_field (K : Type u) [Field K] (y : S
       (Spec (CommRingCat.of K)).presheaf.germ ⊤ y trivial ≫ (Spec (CommRingCat.of K)).residue y) := by
     rw [← key]
     simp only [CommRingCat.hom_comp, RingHom.coe_comp]
-    exact (Scheme.Spec.residueFieldIso (CommRingCat.of K) y).symm.commRingCatIsoToRingEquiv.surjective.comp hs
+    apply (Scheme.Spec.residueFieldIso (CommRingCat.of K) y).symm.commRingCatIsoToRingEquiv.surjective.comp hs
   intro c
   obtain ⟨a, ha⟩ := h1 c
   exact ⟨(Scheme.ΓSpecIso (CommRingCat.of K)).inv a, ha⟩
-private lemma helper_main {K : Type u} [Field K] {X : Scheme.{u}} (f : X ⟶ Spec (CommRingCat.of K)) (n : ℕ)
-    [SmoothOfRelativeDimension n f]
-    (z : Spec (CommRingCat.of K) ⟶ X) (hz : z ≫ f = 𝟙 (Spec (CommRingCat.of K))) :
-    Module.finrank
-        (IsLocalRing.ResidueField (X.presheaf.stalk (z.base (IsLocalRing.closedPoint K))))
-        (IsLocalRing.CotangentSpace (X.presheaf.stalk (z.base (IsLocalRing.closedPoint K)))) = n := by
+private lemma helper_main
+  {K : Type u} [Field K] {X : (Scheme : Type (u + 1))} (f : X ⟶ Spec (CommRingCat.of K)) (n : ℕ)
+  [SmoothOfRelativeDimension n f]
+  (z : Spec (CommRingCat.of K) ⟶ X) (hz : z ≫ f = 𝟙 (Spec (CommRingCat.of K))) :
+  Module.finrank
+    (IsLocalRing.ResidueField (X.presheaf.stalk (z.base (IsLocalRing.closedPoint K))))
+    (IsLocalRing.CotangentSpace (X.presheaf.stalk (z.base (IsLocalRing.closedPoint K)))) = n := by
   set x : X := z.base (IsLocalRing.closedPoint K) with hxdef
   obtain ⟨U, hU, V, hV, hxV, e, hstd⟩ :=
     SmoothOfRelativeDimension.exists_isStandardSmoothOfRelativeDimension (n := n) (f := f) x
   obtain rfl : U = ⊤ := by
-    refine eq_top_iff.mpr fun p _ => ?_
+    rw [eq_top_iff]
+    intro p _
     rw [Subsingleton.elim p (f.base x)]
-    exact e hxV
-  set R : Type u := ↥(Γ(Spec (CommRingCat.of K), (⊤ : (Spec (CommRingCat.of K)).Opens))) with hR
-  set A : Type u := ↥(Γ(X, V)) with hA
+    apply e hxV
+  set R : Type u := ↥((Spec (CommRingCat.of K)).presheaf.obj (op ⊤)) with hR
+  set A : Type u := ↥(X.presheaf.obj (op V)) with hA
   set S : Type u := ↥(X.presheaf.stalk x) with hS
   let φ : R →+* A := (f.appLE ⊤ V e).hom
   let algRA : Algebra R A := φ.toAlgebra
@@ -129,23 +137,25 @@ private lemma helper_main {K : Type u} [Field K] {X : Scheme.{u}} (f : X ⟶ Spe
         rw [← CommRingCat.comp_apply, Iso.hom_inv_id]
         rfl
       rw [hfac]
-      exact (RingHom.injective ((algebraMap R (IsLocalRing.ResidueField S)).comp ιK.inv.hom)).comp
+      apply (RingHom.injective ((algebraMap R (IsLocalRing.ResidueField S)).comp ιK.inv.hom)).comp
         ιK.commRingCatIsoToRingEquiv.injective
-    · rw [hcomp]
-      exact (surjective_residueFieldMap_of_section f z hz _).comp
+    ·
+      rw [hcomp]
+      apply (surjective_residueFieldMap_of_section f z hz _).comp
         (surjective_evaluation_top_Spec_field K (f.base x))
-  exact finrank_cotangentSpace_eq_of_isLocalization (hV.primeIdealOf ⟨x, hxV⟩).asIdeal.primeCompl n hres
+  refine finrank_cotangentSpace_eq_of_isLocalization (hV.primeIdealOf ⟨x, hxV⟩).asIdeal.primeCompl n hres
 /--
 [AlgebraicGeometry_finrank_cotangentSpace_eq_of_smoothOfRelativeDimension](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_finrank_cotangentSpace_eq_of_smoothOfRelativeDimension.lean)
 -/
 @[path]
 private lemma main
-    {K : Type u} [Field K] {X : Scheme.{u}} (f : X ⟶ Spec (CommRingCat.of K)) (n : ℕ)
-    [SmoothOfRelativeDimension n f]
-    (z : Spec (CommRingCat.of K) ⟶ X) (hz : z ≫ f = 𝟙 (Spec (CommRingCat.of K))) :
-    Module.finrank
-        (IsLocalRing.ResidueField (X.presheaf.stalk (z.base (IsLocalRing.closedPoint K))))
-        (IsLocalRing.CotangentSpace (X.presheaf.stalk (z.base (IsLocalRing.closedPoint K)))) = n :=
+  {K : Type u} [Field K] {X : (Scheme : Type (u + 1))} (f : X ⟶ Spec (CommRingCat.of K)) (n : ℕ)
+  [SmoothOfRelativeDimension n f]
+  (z : Spec (CommRingCat.of K) ⟶ X) (hz : z ≫ f = 𝟙 (Spec (CommRingCat.of K))) :
+  Module.finrank
+    (IsLocalRing.ResidueField (X.presheaf.stalk (z.base (IsLocalRing.closedPoint K))))
+    (IsLocalRing.CotangentSpace (X.presheaf.stalk (z.base (IsLocalRing.closedPoint K)))) = n :=
   helper_main f n z hz
+
 
 -- created on 2026-10-20

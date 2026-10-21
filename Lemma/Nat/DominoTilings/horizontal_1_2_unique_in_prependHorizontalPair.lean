@@ -1,9 +1,13 @@
 import Mathlib
 import sympy.Basic
 import sympy.matrices.determinants.DominoTilings
+import Lemma.Nat.Cell1Eq1Add.of.Domino
+import Lemma.Nat.Cell2Eq1Add.of.Domino
+import Lemma.Nat.Ge1.Ge1.of.InDominos.Domino.DominoTiling
 open DominoTilings
 open Domino DominoTiling
 open Finset
+open Nat
 set_option linter.unusedSimpArgs false
 
 
@@ -29,8 +33,8 @@ private lemma main
     simp at h
   · rfl
   · -- d = d'.shiftNat 2, but shifted dominos have column ≥ 3
-    have hcols := domino_cells_col_ge_one T d' (by assumption)
-    simp only [Domino.cells, Domino.shiftNat_cell1, Domino.shiftNat_cell2] at hd_cells
+    have hcols := Ge1.Ge1.of.InDominos.Domino.DominoTiling T d' (by assumption)
+    simp only [Domino.cells, Cell1Eq1Add.of.Domino, Cell2Eq1Add.of.Domino] at hd_cells
     have h : (d'.cell1.1 + 2, d'.cell1.2) ∈ ({(1, 2), (2, 2)} : Finset Cell) := by
       rw [← hd_cells]; exact Finset.mem_insert_self _ _
     simp only [Finset.mem_insert, Finset.mem_singleton, Prod.mk.injEq] at h

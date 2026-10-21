@@ -2,19 +2,20 @@ import Mathlib
 import sympy.Basic
 open CategoryTheory CategoryTheory.Limits CategoryTheory.MorphismProperty AlgebraicGeometry TopologicalSpace Opposite IsLocalRing
 open scoped TensorProduct MonoidalCategory
-
-universe u
-
 set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
+
+
+universe u
 
 variable {T' T : Type u} [CommRing T'] [CommRing T] (π : T' →+* T) (hπ : Function.Surjective π)
   (A : Type u) [CommRing A] [Algebra T' A]
 abbrev J : Ideal A := (RingHom.ker π).map (algebraMap T' A)
 private noncomputable def πbar : T →+* A ⧸ J π A :=
   (Ideal.Quotient.lift (RingHom.ker π) ((Ideal.Quotient.mk (J π A)).comp (algebraMap T' A)) (fun x hx => by
-      rw [RingHom.comp_apply, Ideal.Quotient.eq_zero_iff_mem]; exact Ideal.mem_map_of_mem _ hx)).comp
+      rw [RingHom.comp_apply, Ideal.Quotient.eq_zero_iff_mem]
+      apply Ideal.mem_map_of_mem _ hx)).comp
     (RingHom.quotientKerEquivOfSurjective hπ).symm.toRingHom
 private lemma πbar_apply (x : T') : πbar π hπ A (π x) = Ideal.Quotient.mk (J π A) (algebraMap T' A x) := by
   have : (RingHom.quotientKerEquivOfSurjective hπ).symm (π x) = Ideal.Quotient.mk _ x := by
@@ -22,29 +23,37 @@ private lemma πbar_apply (x : T') : πbar π hπ A (π x) = Ideal.Quotient.mk (
     rw [RingEquiv.apply_symm_apply, RingHom.quotientKerEquivOfSurjective_apply_mk]
   simp [πbar, this]
 private lemma isPushout_quotient :
-    IsPushout (CommRingCat.ofHom (algebraMap T' A)) (CommRingCat.ofHom π)
-      (CommRingCat.ofHom (Ideal.Quotient.mk (J π A))) (CommRingCat.ofHom (πbar π hπ A)) := by
+  IsPushout (CommRingCat.ofHom (algebraMap T' A)) (CommRingCat.ofHom π)
+    (CommRingCat.ofHom (Ideal.Quotient.mk (J π A))) (CommRingCat.ofHom (πbar π hπ A)) := by
   have w : CommSq (CommRingCat.ofHom (algebraMap T' A)) (CommRingCat.ofHom π)
-      (CommRingCat.ofHom (Ideal.Quotient.mk (J π A))) (CommRingCat.ofHom (πbar π hπ A)) :=
-    ⟨by ext x; simp [πbar_apply]⟩
+    (CommRingCat.ofHom (Ideal.Quotient.mk (J π A))) (CommRingCat.ofHom (πbar π hπ A)) :=
+    ⟨by
+      ext x
+      simp [πbar_apply]⟩
   refine IsPushout.of_isColimit' w (PushoutCocone.IsColimit.mk _ (fun s => ?_) (fun s => ?_) (fun s => ?_) ?_)
-  · have hker : J π A ≤ RingHom.ker s.inl.hom := by
+  ·
+    have hker : J π A ≤ RingHom.ker s.inl.hom := by
       rw [Ideal.map_le_iff_le_comap]
       intro x hx
       rw [Ideal.mem_comap, RingHom.mem_ker]
       have := CategoryTheory.congr_fun s.condition x
       simp only [CommRingCat.hom_comp, RingHom.coe_comp, Function.comp_apply, CommRingCat.hom_ofHom] at this
-      rw [this, (RingHom.mem_ker).mp hx, map_zero]
-    exact CommRingCat.ofHom (Ideal.Quotient.lift _ s.inl.hom fun a ha => hker ha)
-  · ext a; rfl
-  · ext t
+      rw [RingHom.mem_ker] at hx
+      rw [this, hx, map_zero]
+    refine CommRingCat.ofHom (Ideal.Quotient.lift _ s.inl.hom fun a ha => hker ha)
+  ·
+    ext a
+    rfl
+  ·
+    ext t
     obtain ⟨x, rfl⟩ := hπ t
     simp only [CommRingCat.hom_comp, RingHom.coe_comp, Function.comp_apply, CommRingCat.hom_ofHom, πbar_apply,
       Ideal.Quotient.lift_mk]
     have := CategoryTheory.congr_fun s.condition x
     simp only [CommRingCat.hom_comp, RingHom.coe_comp, Function.comp_apply, CommRingCat.hom_ofHom] at this
-    exact this
-  · intro s m hm₁ hm₂
+    apply this
+  ·
+    intro s m hm₁ hm₂
     ext a
     have := CategoryTheory.congr_fun hm₁ a
     simpa using this
@@ -53,24 +62,26 @@ private lemma isPushout_quotient :
 -/
 @[path]
 private lemma main
-    {T' T : Type u} [CommRing T'] [CommRing T] (π : T' →+* T) (hπ : Function.Surjective π)
-    (hker : IsNilpotent (RingHom.ker π))
-    {Z V : Scheme.{u}} (qZ : Z ⟶ Spec (CommRingCat.of T')) [IsAffine Z]
-    (gZ : V ⟶ Z) (fV : V ⟶ Spec (CommRingCat.of T)) (hgZ : IsPullback gZ fV qZ (Spec.map (CommRingCat.ofHom π)))
-    {Y U : Scheme.{u}} (q : Y ⟶ Spec (CommRingCat.of T')) [IsAffine Y] [Smooth q]
-    (g : U ⟶ Y) (fU : U ⟶ Spec (CommRingCat.of T)) (hg : IsPullback g fU q (Spec.map (CommRingCat.ofHom π)))
-    (h : V ⟶ U) (hh : h ≫ fU = fV) :
-    ∃ hZ : Z ⟶ Y, hZ ≫ q = qZ ∧ gZ ≫ hZ = h ≫ g := by
+  {T' T : Type u} [CommRing T'] [CommRing T] (π : T' →+* T) (hπ : Function.Surjective π)
+  (hker : IsNilpotent (RingHom.ker π))
+  {Z V : (Scheme : Type (u + 1))} (qZ : Z ⟶ Spec (CommRingCat.of T')) [IsAffine Z]
+  (gZ : V ⟶ Z) (fV : V ⟶ Spec (CommRingCat.of T)) (hgZ : IsPullback gZ fV qZ (Spec.map (CommRingCat.ofHom π)))
+  {Y U : (Scheme : Type (u + 1))} (q : Y ⟶ Spec (CommRingCat.of T')) [IsAffine Y] [Smooth q]
+  (g : U ⟶ Y) (fU : U ⟶ Spec (CommRingCat.of T)) (hg : IsPullback g fU q (Spec.map (CommRingCat.ofHom π)))
+  (h : V ⟶ U) (hh : h ≫ fU = fV) :
+  ∃ hZ : Z ⟶ Y, hZ ≫ q = qZ ∧ gZ ≫ hZ = h ≫ g := by
   obtain ⟨φq, hφq⟩ := Spec.map_surjective (Y.isoSpec.inv ≫ q)
   obtain ⟨φZ, hφZ⟩ := Spec.map_surjective (Z.isoSpec.inv ≫ qZ)
-  let A : Type u := Γ(Y, ⊤)
-  let B : Type u := Γ(Z, ⊤)
+  let A : Type u := Y.presheaf.obj (op ⊤)
+  let B : Type u := Z.presheaf.obj (op ⊤)
   let _ : Algebra T' A := φq.hom.toAlgebra
   let _ : Algebra T' B := φZ.hom.toAlgebra
   let _ : Smooth (Y.isoSpec.inv ≫ q) := inferInstance
-  let hsA : Algebra.FormallySmooth T' A := by
-    have : RingHom.Smooth φq.hom := (HasRingHomProperty.Spec_iff (P := @Smooth)).mp (hφq.symm ▸ inferInstance)
-    exact this.formallySmooth
+  let _ : Algebra.FormallySmooth T' A := by
+    have hsmooth : RingHom.Smooth φq.hom := by
+      rw [← HasRingHomProperty.Spec_iff (P := @Smooth)]
+      apply hφq.symm ▸ (inferInstance : Smooth (Y.isoSpec.inv ≫ q))
+    refine hsmooth.formallySmooth
   have hq1 : q = Y.isoSpec.hom ≫ Spec.map φq := by rw [hφq, Iso.hom_inv_id_assoc]
   have hqZ1 : qZ = Z.isoSpec.hom ≫ Spec.map φZ := by rw [hφZ, Iso.hom_inv_id_assoc]
   have hg₁ : IsPullback (g ≫ Y.isoSpec.hom) fU (Spec.map φq) (Spec.map (CommRingCat.ofHom π)) :=
@@ -99,8 +110,7 @@ private lemma main
     intro x
     have := congrArg (fun f : CommRingCat.of T ⟶ _ => f.hom (π x)) hχT
     simp only [CommRingCat.hom_comp, CommRingCat.hom_ofHom, RingHom.coe_comp, Function.comp_apply, πbar_apply] at this
-    rw [← Ideal.Quotient.mk_algebraMap, ← Ideal.Quotient.mk_algebraMap]
-    exact this
+    rwa [← Ideal.Quotient.mk_algebraMap, ← Ideal.Quotient.mk_algebraMap]
   let χa : (A ⧸ J π A) →ₐ[T'] (B ⧸ J π B) := { toRingHom := χ.hom, commutes' := hχlin }
   let g₀ : A →ₐ[T'] B ⧸ J π B := χa.comp (Ideal.Quotient.mkₐ T' (J π A))
   have hJ : IsNilpotent (J π B) := by
@@ -115,7 +125,7 @@ private lemma main
     have h1 : φq ≫ CommRingCat.ofHom ψ.toRingHom = φZ := by
       ext x
       change ψ (algebraMap T' A x) = algebraMap T' B x
-      exact ψ.commutes x
+      apply ψ.commutes x
     simp only [Category.assoc]
     rw [hq1, Y.isoSpec.inv_hom_id_assoc, ← Spec.map_comp, h1, ← hqZ1]
   ·
@@ -135,5 +145,6 @@ private lemma main
     have lhs' := congrArg (· ≫ Spec.map (CommRingCat.ofHom ψ.toRingHom)) lhs
     simp only [Category.assoc] at lhs'
     rw [rhs, lhs', ← Spec.map_comp, ← Spec.map_comp, h2]
+
 
 -- created on 2026-10-20

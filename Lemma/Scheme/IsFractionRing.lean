@@ -2,18 +2,18 @@ import Mathlib
 import sympy.Basic
 open CategoryTheory CategoryTheory.Limits CategoryTheory.MorphismProperty AlgebraicGeometry TopologicalSpace Opposite IsLocalRing
 open scoped TensorProduct MonoidalCategory
-
-universe u
-
 set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
 
+
+universe u
+
 private lemma isFractionRing_of_localization_iso
-    {R S R' S' : Type*} [CommRing R] [IsDomain R] [CommRing S] [IsDomain S]
-    [CommRing R'] [CommRing S'] [Nontrivial S'] [Algebra R R'] (M : Submonoid R) [IsLocalization M R']
-    (φ : R →+* S) (β : S →+* S') (hβ : Function.Injective β) (e : R' ≃+* S')
-    (he : ∀ r, e (algebraMap R R' r) = β (φ r)) :
+  {R S R' S' : Type*} [CommRing R] [IsDomain R] [CommRing S] [IsDomain S]
+  [CommRing R'] [CommRing S'] [Nontrivial S'] [Algebra R R'] (M : Submonoid R) [IsLocalization M R']
+  (φ : RingHom R S) (β : RingHom S S') (hβ : Function.Injective β) (e : RingEquiv R' S')
+  (he : ∀ r, e (algebraMap R R' r) = β (φ r)) :
     let _ : Algebra R (FractionRing S) := ((algebraMap S (FractionRing S)).comp φ).toAlgebra
     IsFractionRing R (FractionRing S) := by
   let _ : Algebra R (FractionRing S) := ((algebraMap S (FractionRing S)).comp φ).toAlgebra
@@ -30,9 +30,9 @@ private lemma isFractionRing_of_localization_iso
       apply e.injective
       rw [he, map_sub φ, hab, map_zero, map_zero]
     obtain ⟨m, hm⟩ := (IsLocalization.map_eq_zero_iff M R' (a - b)).mp h1
-    rcases mul_eq_zero.mp hm with h | h
-    · exact absurd h (hM0 m)
-    · exact h
+    obtain h | h := mul_eq_zero.mp hm
+    · apply absurd h (hM0 m)
+    · apply h
   have hkey : ∀ s : S, ∃ r : R, ∃ m : M, s * φ m = φ r := by
     intro s
     obtain ⟨⟨r, m⟩, hrm⟩ := IsLocalization.surj M (e.symm (β s))
@@ -64,16 +64,17 @@ private lemma isFractionRing_of_localization_iso
   refine ⟨r₁ * m₂, m₁ * r₂, ?_⟩
   rw [halg, halg, hs, ht', map_mul, map_mul, map_mul, map_mul, div_div_eq_mul_div, div_mul_eq_mul_div,
     div_div]
-private lemma exists_isLocalization_stalkSpecializes {X : Scheme.{u}} {x y : X} (h : x ⤳ y) :
+private lemma exists_isLocalization_stalkSpecializes
+  {X : (Scheme : Type (u + 1))} {x y : X} (h : x ⤳ y) :
     let _ : Algebra (X.presheaf.stalk y) (X.presheaf.stalk x) := (X.presheaf.stalkSpecializes h).hom.toAlgebra
     ∃ M : Submonoid (X.presheaf.stalk y), IsLocalization M (X.presheaf.stalk x) := by
   let iyx : Algebra (X.presheaf.stalk y) (X.presheaf.stalk x) := (X.presheaf.stalkSpecializes h).hom.toAlgebra
   obtain ⟨V, hV, hyV⟩ : ∃ V : X.Opens, IsAffineOpen V ∧ y ∈ V :=
     ⟨(X.affineCover.f (X.affineCover.idx y)).opensRange, isAffineOpen_opensRange _, X.affineCover.covers y⟩
   have hxV : x ∈ V := h.mem_open V.2 hyV
-  let ay : Algebra Γ(X, V) (X.presheaf.stalk y) := TopCat.Presheaf.algebra_section_stalk X.presheaf ⟨y, hyV⟩
-  let ax : Algebra Γ(X, V) (X.presheaf.stalk x) := TopCat.Presheaf.algebra_section_stalk X.presheaf ⟨x, hxV⟩
-  let _ : IsScalarTower Γ(X, V) (X.presheaf.stalk y) (X.presheaf.stalk x) := by
+  let ay : Algebra (X.presheaf.obj (op V)) (X.presheaf.stalk y) := TopCat.Presheaf.algebra_section_stalk X.presheaf ⟨y, hyV⟩
+  let ax : Algebra (X.presheaf.obj (op V)) (X.presheaf.stalk x) := TopCat.Presheaf.algebra_section_stalk X.presheaf ⟨x, hxV⟩
+  let _ : IsScalarTower (X.presheaf.obj (op V)) (X.presheaf.stalk y) (X.presheaf.stalk x) := by
     apply IsScalarTower.of_algebraMap_eq'
     show (X.presheaf.germ V x hxV).hom = (X.presheaf.stalkSpecializes h).hom.comp (X.presheaf.germ V y hyV).hom
     rw [← CommRingCat.hom_comp, TopCat.Presheaf.germ_stalkSpecializes]
@@ -83,19 +84,17 @@ private lemma exists_isLocalization_stalkSpecializes {X : Scheme.{u}} {x y : X} 
     hV.isLocalization_stalk ⟨x, hxV⟩
   have hle : hV.primeIdealOf ⟨x, hxV⟩ ≤ hV.primeIdealOf ⟨y, hyV⟩ := by
     rw [PrimeSpectrum.le_iff_specializes]
-    have h' : (⟨x, hxV⟩ : V) ⤳ ⟨y, hyV⟩ :=
-      (V.isOpenEmbedding'.isInducing.specializes_iff).mp
-        (show ((⟨x, hxV⟩ : V) : X) ⤳ ((⟨y, hyV⟩ : V) : X) from h)
-    exact h'.map hV.isoSpec.hom.base.hom.continuous
+    exact ((V.isOpenEmbedding'.isInducing.specializes_iff).mp
+      (show ((⟨x, hxV⟩ : V) : X) ⤳ ((⟨y, hyV⟩ : V) : X) from h)).map hV.isoSpec.hom.base.hom.continuous
   have hcompl : (hV.primeIdealOf ⟨y, hyV⟩).asIdeal.primeCompl ≤ (hV.primeIdealOf ⟨x, hxV⟩).asIdeal.primeCompl :=
     fun a ha hax => ha (hle hax)
-  exact ⟨_, IsLocalization.isLocalization_of_submonoid_le (X.presheaf.stalk y) (X.presheaf.stalk x) _ _ hcompl⟩
+  refine ⟨_, IsLocalization.isLocalization_of_submonoid_le (X.presheaf.stalk y) (X.presheaf.stalk x) _ _ hcompl⟩
 /--
 [AlgebraicGeometry_isFractionRing_stalk_fractionRing_stalk_of_isOpenImmersion_restrict](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_isFractionRing_stalk_fractionRing_stalk_of_isOpenImmersion_restrict.lean)
 -/
 @[path]
 private lemma main
-    {U W : Scheme.{u}} (v : U ⟶ W) (u : U)
+  {U W : (Scheme : Type (u + 1))} (v : U ⟶ W) (u : U)
     [IsDomain (U.presheaf.stalk u)] [IsDomain (W.presheaf.stalk (v.base u))]
     (U' : U.Opens) [IsOpenImmersion (U'.ι ≫ v)] (hU' : ∃ x : U, x ∈ U' ∧ x ⤳ u) :
     let _ : Algebra (W.presheaf.stalk (v.base u)) (FractionRing (U.presheaf.stalk u)) :=
@@ -112,8 +111,9 @@ private lemma main
       (IsOpenImmersion.iff_isIso_stalkMap.mp ‹IsOpenImmersion (U'.ι ≫ v)›).2 ⟨x, hx⟩
     let i2 : IsIso (U'.ι.stalkMap ⟨x, hx⟩) :=
       (IsOpenImmersion.iff_isIso_stalkMap.mp (inferInstance : IsOpenImmersion U'.ι)).2 ⟨x, hx⟩
-    have i3 : IsIso (v.stalkMap x ≫ U'.ι.stalkMap ⟨x, hx⟩) := by rw [← hc]; exact i1
-    exact @IsIso.of_isIso_comp_right _ _ _ _ _ (v.stalkMap x) (U'.ι.stalkMap ⟨x, hx⟩) i2 i3
+    have i3 : IsIso (v.stalkMap x ≫ U'.ι.stalkMap ⟨x, hx⟩) := by
+      rwa [← hc]
+    refine @IsIso.of_isIso_comp_right _ _ _ _ _ (v.stalkMap x) (U'.ι.stalkMap ⟨x, hx⟩) i2 i3
   let aW : Algebra (W.presheaf.stalk (v.base u)) (W.presheaf.stalk (v.base x)) :=
     (W.presheaf.stalkSpecializes hvxu).hom.toAlgebra
   let aU : Algebra (U.presheaf.stalk u) (U.presheaf.stalk x) := (U.presheaf.stalkSpecializes hxu).hom.toAlgebra
@@ -135,5 +135,6 @@ private lemma main
   show (W.presheaf.stalkSpecializes hvxu ≫ v.stalkMap x).hom r =
     (v.stalkMap u ≫ U.presheaf.stalkSpecializes hxu).hom r
   rw [Scheme.Hom.stalkSpecializes_stalkMap]
+
 
 -- created on 2026-10-20

@@ -1,5 +1,6 @@
 /**
- * `given-hyp-index`: numbered `-- given` hyps must start at h₀/h0 with no gaps.
+ * `given-hyp-index`: numbered `-- given` hyps must start at h₀/h0 with no gaps,
+ * and a higher index must not appear before lower ones (e.g. h₁ before h₀).
  * Run: `node mjs/lean/lint/givenHypIndex.test.mjs`
  */
 import { lintLean } from './index.mjs';
@@ -44,7 +45,7 @@ function warns(src) {
     const src = lemma('  (h₄ : True)\n  (h₅ : True) :');
     const w = warns(src);
     check('h₄/h₅ without h₀ warns', w.length === 1, `got ${w.length}`);
-    check('message mentions skip h₀', /skips `h₀`/.test(w[0]?.info || ''), w[0]?.info);
+    check('message mentions without prior h₀', /without a prior `h₀`/.test(w[0]?.info || ''), w[0]?.info);
     check('points at first numbered binder', w[0]?.line === 9, `line=${w[0]?.line}`);
 }
 
@@ -71,13 +72,29 @@ function warns(src) {
     // proof-local have h₀ must not count; given has only h₄
     const src = lemma('  (h₄ : True) :');
     const w = warns(src);
-    check('ignores proof have h₀; still warns on given h₄', w.length === 1 && /skips `h₀`/.test(w[0]?.info || ''), w[0]?.info);
+    check('ignores proof have h₀; still warns on given h₄', w.length === 1 && /without a prior `h₀`/.test(w[0]?.info || ''), w[0]?.info);
 }
 
 {
     const src = lemma('  (h₀ : True)\n  (h₁ : True)\n  (h₃ : True) :');
     const w = warns(src);
     check('gap h₀,h₁,h₃ warns missing h₂', w.length === 1 && /missing h₂/.test(w[0]?.info || ''), w[0]?.info);
+}
+
+{
+    // h₁ before h₀ later — Subset_Ico shape
+    const src = lemma('  (h₁ : True)\n  (h₀ : True)\n  (h₂ : True) :');
+    const w = warns(src);
+    check('h₁ before h₀ warns', w.length === 1, `got ${w.length}`);
+    check('order message without prior h₀', /without a prior `h₀`/.test(w[0]?.info || ''), w[0]?.info);
+    check('points at h₁ binder', w[0]?.line === 9, `line=${w[0]?.line}`);
+}
+
+{
+    // h₂ without prior h₁ (h₀ present earlier)
+    const src = lemma('  (h₀ : True)\n  (h₂ : True)\n  (h₁ : True) :');
+    const w = warns(src);
+    check('h₂ before h₁ warns missing prior', w.length === 1 && /without prior h₁/.test(w[0]?.info || ''), w[0]?.info);
 }
 
 if (failed) {

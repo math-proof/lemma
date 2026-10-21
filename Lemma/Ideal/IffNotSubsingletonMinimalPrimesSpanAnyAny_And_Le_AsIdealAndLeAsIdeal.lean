@@ -2,25 +2,24 @@ import Mathlib
 import sympy.Basic
 open CategoryTheory CategoryTheory.Limits CategoryTheory.MorphismProperty AlgebraicGeometry TopologicalSpace Opposite IsLocalRing
 open scoped TensorProduct MonoidalCategory
-
-universe u
-
 set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
+
+
+universe u
 
 /--
 [AlgebraicGeometry_not_subsingleton_minimalPrimes_span_germ_iff_exists_two_minimalPrimes_le_of_chart](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_not_subsingleton_minimalPrimes_span_germ_iff_exists_two_minimalPrimes_le_of_chart.lean)
 -/
 @[path]
 private lemma main
-    {R S : Type u} [CommRing R] [CommRing S] [Algebra R S] {X : Scheme.{u}}
-    (f : X ⟶ Spec (CommRingCat.of R)) (ι : Spec (CommRingCat.of S) ⟶ X) [IsOpenImmersion ι]
-    (hι : ι ≫ f = Spec.map (CommRingCat.ofHom (algebraMap R S))) (ϖ : R) (q : ↥(Spec (CommRingCat.of S))) :
-    ¬ ((Ideal.span {(X.presheaf.germ ⊤ (ι.base q) trivial).hom
-        (f.appTop.hom ((Scheme.ΓSpecIso (CommRingCat.of R)).inv.hom ϖ))} : Ideal (X.presheaf.stalk (ι.base q))).minimalPrimes).Subsingleton ↔
-    ∃ 𝔭 ∈ (Ideal.span {algebraMap R S ϖ}).minimalPrimes, ∃ 𝔭' ∈ (Ideal.span {algebraMap R S ϖ}).minimalPrimes,
-      𝔭 ≠ 𝔭' ∧ 𝔭 ≤ q.asIdeal ∧ 𝔭' ≤ q.asIdeal := by
+  {R S : Type u} [CommRing R] [CommRing S] [Algebra R S] {X : (Scheme : Type (u + 1))}
+  (f : X ⟶ Spec (CommRingCat.of R)) (ι : Spec (CommRingCat.of S) ⟶ X) [IsOpenImmersion ι]
+  (hι : ι ≫ f = Spec.map (CommRingCat.ofHom (algebraMap R S))) (ϖ : R) (q : ↥(Spec (CommRingCat.of S))) :
+  ¬ ((Ideal.span {(X.presheaf.germ ⊤ (ι.base q) trivial).hom
+    (f.appTop.hom ((Scheme.ΓSpecIso (CommRingCat.of R)).inv.hom ϖ))} : Ideal (X.presheaf.stalk (ι.base q))).minimalPrimes).Subsingleton ↔
+    ∃ 𝔭 ∈ (Ideal.span {algebraMap R S ϖ}).minimalPrimes, ∃ 𝔭' ∈ (Ideal.span {algebraMap R S ϖ}).minimalPrimes, 𝔭 ≠ 𝔭' ∧ 𝔭 ≤ q.asIdeal ∧ 𝔭' ≤ q.asIdeal := by
   classical
   let e₁ := (asIso (ι.stalkMap q)).commRingCatIsoToRingEquiv
   let e₂ := (Spec.stalkIso (CommRingCat.of S) q).commRingCatIsoToRingEquiv
@@ -51,7 +50,7 @@ private lemma main
     show e₂ (e₁ _) = _
     show (Spec.stalkIso (CommRingCat.of S) q).hom.hom ((ι.stalkMap q).hom _) = _
     rw [key₁, key₂]
-  set t := (X.presheaf.germ ⊤ (ι.base q) trivial).hom (f.appTop.hom ((Scheme.ΓSpecIso (CommRingCat.of R)).inv.hom ϖ)) with ht
+  set t := (X.presheaf.germ ⊤ (ι.base q) trivial).hom (f.appTop.hom ((Scheme.ΓSpecIso (CommRingCat.of R)).inv.hom ϖ))
   have htrans : (Ideal.span {e t}).minimalPrimes = Ideal.comap e.symm.toRingHom '' (Ideal.span {t}).minimalPrimes := by
     rw [← Ideal.comap_minimalPrimes_eq_of_surjective e.symm.surjective]
     congr 1
@@ -61,31 +60,33 @@ private lemma main
       (Ideal.span {algebraMap R S ϖ}).map (algebraMap S (Localization.AtPrime q.asIdeal)) := by
     rw [Ideal.map_span, Set.image_singleton]
   constructor
-  · intro hz
+  ·
+    intro hz
     have hns : ¬ ((Ideal.span {algebraMap S (Localization.AtPrime q.asIdeal) (algebraMap R S ϖ)}).minimalPrimes).Subsingleton := by
       intro hsub
       rw [← hkey, htrans] at hsub
       apply hz
       intro a ha b hb
-      exact Ideal.comap_injective_of_surjective _ e.symm.surjective (hsub ⟨a, ha, rfl⟩ ⟨b, hb, rfl⟩)
-    obtain ⟨P, hP, P', hP', hne⟩ : ∃ P ∈ (Ideal.span {algebraMap S (Localization.AtPrime q.asIdeal) (algebraMap R S ϖ)}).minimalPrimes,
-        ∃ P' ∈ (Ideal.span {algebraMap S (Localization.AtPrime q.asIdeal) (algebraMap R S ϖ)}).minimalPrimes, P ≠ P' := by
-      by_contra h; push Not at h; exact hns fun a ha b hb => h a ha b hb
-    have hunder : ∀ Q ∈ (Ideal.span {algebraMap S (Localization.AtPrime q.asIdeal) (algebraMap R S ϖ)}).minimalPrimes,
-        Q.under S ∈ (Ideal.span {algebraMap R S ϖ}).minimalPrimes := by
+      apply Ideal.comap_injective_of_surjective _ e.symm.surjective (hsub ⟨a, ha, rfl⟩ ⟨b, hb, rfl⟩)
+    obtain ⟨P, hP, P', hP', hne⟩ : ∃ P ∈ (Ideal.span {algebraMap S (Localization.AtPrime q.asIdeal) (algebraMap R S ϖ)}).minimalPrimes, ∃ P' ∈ (Ideal.span {algebraMap S (Localization.AtPrime q.asIdeal) (algebraMap R S ϖ)}).minimalPrimes, P ≠ P' := by
+      by_contra h
+      push Not at h
+      apply hns fun a ha b hb => h a ha b hb
+    have hunder : ∀ Q ∈ (Ideal.span {algebraMap S (Localization.AtPrime q.asIdeal) (algebraMap R S ϖ)}).minimalPrimes, Q.under S ∈ (Ideal.span {algebraMap R S ϖ}).minimalPrimes := by
       intro Q hQ
-      rw [hmap, IsLocalization.minimalPrimes_map q.asIdeal.primeCompl] at hQ
-      exact hQ
+      rwa [hmap, IsLocalization.minimalPrimes_map q.asIdeal.primeCompl] at hQ
     let _ := hP.1.1
     let _ := hP'.1.1
     refine ⟨P.under S, hunder P hP, P'.under S, hunder P' hP', fun heq => hne ?_, ?_, ?_⟩
     · rw [← IsLocalization.map_under q.asIdeal.primeCompl (Localization.AtPrime q.asIdeal) P,
         ← IsLocalization.map_under q.asIdeal.primeCompl (Localization.AtPrime q.asIdeal) P', heq]
-    · calc P.under S ≤ (IsLocalRing.maximalIdeal (Localization.AtPrime q.asIdeal)).under S :=
-            Ideal.comap_mono (IsLocalRing.le_maximalIdeal hP.1.1.ne_top)
+    ·
+      calc
+        _ ≤ (IsLocalRing.maximalIdeal (Localization.AtPrime q.asIdeal)).under S := Ideal.comap_mono (IsLocalRing.le_maximalIdeal hP.1.1.ne_top)
         _ = q.asIdeal := IsLocalization.AtPrime.under_maximalIdeal (Localization.AtPrime q.asIdeal) q.asIdeal
-    · calc P'.under S ≤ (IsLocalRing.maximalIdeal (Localization.AtPrime q.asIdeal)).under S :=
-            Ideal.comap_mono (IsLocalRing.le_maximalIdeal hP'.1.1.ne_top)
+    ·
+      calc
+        _ ≤ (IsLocalRing.maximalIdeal (Localization.AtPrime q.asIdeal)).under S := Ideal.comap_mono (IsLocalRing.le_maximalIdeal hP'.1.1.ne_top)
         _ = q.asIdeal := IsLocalization.AtPrime.under_maximalIdeal (Localization.AtPrime q.asIdeal) q.asIdeal
   ·
     rintro ⟨𝔭, h𝔭, 𝔭', h𝔭', hne, hle, hle'⟩ hsub
@@ -100,15 +101,17 @@ private lemma main
     have hP : P ∈ (Ideal.span {algebraMap S (Localization.AtPrime q.asIdeal) (algebraMap R S ϖ)}).minimalPrimes := by
       rw [hmap, IsLocalization.minimalPrimes_map q.asIdeal.primeCompl]
       change Ideal.under S P ∈ (Ideal.span {algebraMap R S ϖ}).minimalPrimes
-      rw [hPu]; exact h𝔭
+      rwa [hPu]
     have hP' : P' ∈ (Ideal.span {algebraMap S (Localization.AtPrime q.asIdeal) (algebraMap R S ϖ)}).minimalPrimes := by
       rw [hmap, IsLocalization.minimalPrimes_map q.asIdeal.primeCompl]
       change Ideal.under S P' ∈ (Ideal.span {algebraMap R S ϖ}).minimalPrimes
-      rw [hP'u]; exact h𝔭'
+      rwa [hP'u]
     have hPne : P ≠ P' := fun h => hne (by rw [← hPu, ← hP'u, h])
     rw [← hkey, htrans] at hP hP'
     obtain ⟨a, ha, haP⟩ := hP
     obtain ⟨b, hb, hbP⟩ := hP'
-    exact hPne (by rw [← haP, ← hbP, hsub ha hb])
+    apply hPne
+    rw [← haP, ← hbP, hsub ha hb]
+
 
 -- created on 2026-10-20

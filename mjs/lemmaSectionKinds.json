@@ -1,9 +1,86 @@
 [
   {
+    "resolved": "Fin",
+    "reason": "Mathlib `Fin` is a structure",
+    "kind": "data type",
+    "folder": "Fin",
+    "decl": "structure"
+  },
+  {
+    "resolved": "Polynomial",
+    "reason": "Mathlib `Polynomial` is a structure",
+    "kind": "data type",
+    "folder": "Polynomial",
+    "decl": "structure"
+  },
+  {
+    "resolved": "MvPolynomial",
+    "reason": "Mathlib `MvPolynomial` is a def of a type former",
+    "kind": "data type",
+    "folder": "MvPolynomial",
+    "decl": "def-type"
+  },
+  {
+    "resolved": "Submodule",
+    "reason": "Mathlib `Submodule` is a structure",
+    "kind": "data type",
+    "folder": "Submodule",
+    "decl": "structure"
+  },
+  {
+    "resolved": "Int",
+    "reason": "Mathlib `Int` is an inductive (not a class)",
+    "kind": "data type",
+    "folder": "Int",
+    "decl": "inductive"
+  },
+  {
+    "resolved": "Finset",
+    "reason": "Mathlib `Finset` is a structure",
+    "kind": "data type",
+    "folder": "Finset",
+    "decl": "structure"
+  },
+  {
+    "resolved": "Rat",
+    "reason": "Mathlib `Rat` is a structure",
+    "kind": "data type",
+    "folder": "Rat",
+    "decl": "structure"
+  },
+  {
     "resolved": "Nat",
     "reason": "Mathlib `Nat` is an inductive (not a class)",
     "kind": "data type",
     "folder": "Nat",
     "decl": "inductive"
+  },
+  {
+    "resolved": "Real",
+    "reason": "Mathlib `Real` is a structure",
+    "kind": "data type",
+    "folder": "Real",
+    "decl": "structure"
+  },
+  {
+    "resolved": "Set",
+    "reason": "Mathlib `Set` is a def of a type former",
+    "kind": "data type",
+    "folder": "Set",
+    "decl": "def-type"
+  },
+  {
+    "resolved": "Ideal",
+    "reason": "Mathlib `Ideal` is a def of a type former",
+    "kind": "data type",
+    "folder": "Ideal",
+    "decl": "def-type"
+  },
+  {
+    "resolved": "Matrix",
+    "reason": "Mathlib `Matrix` is a def of a type former",
+    "kind": "data type",
+    "folder": "Matrix",
+    "decl": "def-type"
   }
 ]

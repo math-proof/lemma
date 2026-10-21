@@ -1,9 +1,11 @@
 import Mathlib
 import sympy.Basic
 import sympy.matrices.determinants.DominoTilings
+import Lemma.Nat.CardEq2.of.Domino
 open DominoTilings
 open Domino DominoTiling
 open Finset
+open Nat
 
 
 /--
@@ -22,7 +24,7 @@ private lemma main
     have h : ∑ d ∈ T.dominos, d.cells.card = ∑ _ ∈ T.dominos, 2 := by
       apply Finset.sum_congr rfl
       intro d _
-      exact Domino.card_cells d
+      exact CardEq2.of.Domino d
     rw [h]
     simp [mul_comm]
   ·

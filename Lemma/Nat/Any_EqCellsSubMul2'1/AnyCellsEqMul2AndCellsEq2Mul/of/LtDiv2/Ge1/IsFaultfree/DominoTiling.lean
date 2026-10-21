@@ -1,9 +1,23 @@
 import Mathlib
 import sympy.Basic
 import sympy.matrices.determinants.DominoTilings
+import Lemma.Nat.AnyInCells.of.InRectangle.Cell.DominoTiling
+import Lemma.Nat.CellsEq1.of.Ge2.DominoTiling
+import Lemma.Nat.Eq.of.InCells.InCells.InDominos.InDominos.Domino.Cell.DominoTiling
+import Lemma.Nat.IffIn_RectangleGe1AndGe_1AndGe21AndGe_2
+import Lemma.Nat.DominoTilings.maxCol_eq_c_add_1_of_cells_eq_c1_c_add_1_1
+import Lemma.Nat.DominoTilings.minCol_maxCol_eq_2_of_cells_eq_22_23
+import Lemma.Nat.DominoTilings.minCol_maxCol_eq_c_of_cells_eq_c2_c3
+import Lemma.Nat.DominoTilings.maxCol_eq_2_of_cells_eq_11_21
+import Lemma.Nat.DominoTilings.domino_at_c1_forced_right
+import Lemma.Nat.DominoTilings.domino_at_22_options
+import Lemma.Nat.DominoTilings.domino_at_23_options
+import Lemma.Nat.DominoTilings.domino_at_c2_options
+import Lemma.Nat.DominoTilings.domino_at_c3_options
 open DominoTilings
 open Domino DominoTiling
 open Finset
+open Nat
 
 
 /--
@@ -60,8 +74,8 @@ private lemma main
       simp only [Nat.mul_one, Nat.reduceSubDiff]
       -- From hi_lt : 1 < n / 2, we get n ≥ 4
       have hn_ge_2 : n ≥ 2 := by omega
-      -- Get basement domino from base_case_basement
-      obtain ⟨d_base, hd_base_mem, hd_base_cells⟩ := base_case_basement n T htop hn_ge_2
+      -- Get basement domino from CellsEq1.of.Ge2.DominoTiling
+      obtain ⟨d_base, hd_base_mem, hd_base_cells⟩ := CellsEq1.of.Ge2.DominoTiling n T htop hn_ge_2
       -- Get the top vertical domino info
       obtain ⟨d_top, hd_top_mem, hd_top_vert, hd_top_col, hd_top_rows⟩ := htop
       -- The top vertical covers (1, 2) and (1, 3)
@@ -95,8 +109,8 @@ private lemma main
           exact hd_top_col.symm
           omega
       -- Cell (2, 2) must be covered by some domino d_mid
-      have h22_in : (2, 2) ∈ Rectangle n 3 := by rw [mem_Rectangle]; omega
-      obtain ⟨d_mid, hd_mid_mem, hd_mid_cov⟩ := T.cell_covered (2, 2) h22_in
+      have h22_in : (2, 2) ∈ Rectangle n 3 := by rw [IffIn_RectangleGe1AndGe_1AndGe21AndGe_2]; omega
+      obtain ⟨d_mid, hd_mid_mem, hd_mid_cov⟩ := AnyInCells.of.InRectangle.Cell.DominoTiling T (2, 2) h22_in
       -- d_mid doesn't cover (1, 2) (that's covered by d_top)
       have hd_mid_ne_top : d_mid ≠ d_top := by
         --
@@ -115,14 +129,14 @@ private lemma main
       have hd_mid_not_12 : (1, 2) ∉ d_mid.cells := by
         --
         intro h12
-        exact hd_mid_ne_top (T.cell_covered_unique (1, 2) d_mid d_top hd_mid_mem hd_top_mem h12 hd_top_covers_12)
+        exact hd_mid_ne_top (Eq.of.InCells.InCells.InDominos.InDominos.Domino.Cell.DominoTiling T (1, 2) d_mid d_top hd_mid_mem hd_top_mem h12 hd_top_covers_12)
       -- The middle domino must be horizontal going right: {(2,2), (3,2)}
       -- (vertical would create fault at col 2, horizontal left blocked by top vertical at (1,2))
       have hd_mid_cells : d_mid.cells = {(2, 2), (3, 2)} := by
         --
         have hn_ge_3 : n ≥ 3 := by omega
         have hd_mid_in_rect := T.dominos_in_rect d_mid hd_mid_mem
-        have h_opts := domino_at_22_options n d_mid hd_mid_in_rect hd_mid_cov hd_mid_not_12
+        have h_opts := _root_.Nat.DominoTilings.domino_at_22_options n d_mid hd_mid_in_rect hd_mid_cov hd_mid_not_12
         obtain h_horiz | h_vert_down | h_vert_up := h_opts
         ·
           exact h_horiz
@@ -131,7 +145,7 @@ private lemma main
           exfalso
           have h21_in_mid : (2, 1) ∈ d_mid.cells := by rw [h_vert_down]; simp
           have h21_in_base : (2, 1) ∈ d_base.cells := by rw [hd_base_cells]; simp
-          have heq := T.cell_covered_unique (2, 1) d_mid d_base hd_mid_mem hd_base_mem h21_in_mid h21_in_base
+          have heq := Eq.of.InCells.InCells.InDominos.InDominos.Domino.Cell.DominoTiling T (2, 1) d_mid d_base hd_mid_mem hd_base_mem h21_in_mid h21_in_base
           rw [heq, hd_base_cells] at h_vert_down
           have : (2, 2) ∈ ({(1, 1), (2, 1)} : Finset Cell) := by rw [h_vert_down]; simp
           simp at this
@@ -211,36 +225,36 @@ private lemma main
             -- (2, r) is in column 2, so r ∈ {1, 2, 3}
             have hd_in_rect := T.dominos_in_rect d hd_mem'
             have h2r_in_rect : (2, r) ∈ Rectangle n 3 := hd_in_rect hr_in
-            rw [mem_Rectangle] at h2r_in_rect
+            rw [IffIn_RectangleGe1AndGe_1AndGe21AndGe_2] at h2r_in_rect
             have hr_range : r = 1 ∨ r = 2 ∨ r = 3 := by omega
             obtain hr1 | hr2 | hr3 := hr_range
             ·
               -- (2, 1) is covered by d_base
               subst hr1
-              have heq := T.cell_covered_unique (2, 1) d d_base hd_mem' hd_base_mem hr_in
+              have heq := Eq.of.InCells.InCells.InDominos.InDominos.Domino.Cell.DominoTiling T (2, 1) d d_base hd_mem' hd_base_mem hr_in
                 (by rw [hd_base_cells]; simp)
               rw [heq] at hd_maxCol_ge_3
-              have hbase_max : d_base.maxCol = 2 := maxCol_eq_2_of_cells_eq_11_21 d_base hd_base_cells
+              have hbase_max : d_base.maxCol = 2 := _root_.Nat.DominoTilings.maxCol_eq_2_of_cells_eq_11_21 d_base hd_base_cells
               omega
             ·
               -- (2, 2) is covered by d_mid
               subst hr2
-              have heq := T.cell_covered_unique (2, 2) d d_mid hd_mem' hd_mid_mem hr_in hd_mid_cov
+              have heq := Eq.of.InCells.InCells.InDominos.InDominos.Domino.Cell.DominoTiling T (2, 2) d d_mid hd_mem' hd_mid_mem hr_in hd_mid_cov
               rw [heq] at hd_maxCol_ge_3
-              have hmid_minmax := minCol_maxCol_eq_2_of_cells_eq_22_23 d_mid h_vert_up
+              have hmid_minmax := _root_.Nat.DominoTilings.minCol_maxCol_eq_2_of_cells_eq_22_23 d_mid h_vert_up
               omega
             ·
               -- (2, 3) is covered by d_mid (since d_mid = {(2,2), (2,3)})
               subst hr3
               have h23_in_mid : (2, 3) ∈ d_mid.cells := by rw [h_vert_up]; simp
-              have heq := T.cell_covered_unique (2, 3) d d_mid hd_mem' hd_mid_mem hr_in h23_in_mid
+              have heq := Eq.of.InCells.InCells.InDominos.InDominos.Domino.Cell.DominoTiling T (2, 3) d d_mid hd_mem' hd_mid_mem hr_in h23_in_mid
               rw [heq] at hd_maxCol_ge_3
-              have hmid_minmax := minCol_maxCol_eq_2_of_cells_eq_22_23 d_mid h_vert_up
+              have hmid_minmax := _root_.Nat.DominoTilings.minCol_maxCol_eq_2_of_cells_eq_22_23 d_mid h_vert_up
               omega
           -- But T is faultfree
       -- Similarly for top domino covering (2, 3)
-      have h23_in : (2, 3) ∈ Rectangle n 3 := by rw [mem_Rectangle]; omega
-      obtain ⟨d_top', hd_top'_mem, hd_top'_cov⟩ := T.cell_covered (2, 3) h23_in
+      have h23_in : (2, 3) ∈ Rectangle n 3 := by rw [IffIn_RectangleGe1AndGe_1AndGe21AndGe_2]; omega
+      obtain ⟨d_top', hd_top'_mem, hd_top'_cov⟩ := AnyInCells.of.InRectangle.Cell.DominoTiling T (2, 3) h23_in
       have hd_top'_ne_top : d_top' ≠ d_top := by
         --
         intro heq
@@ -258,14 +272,14 @@ private lemma main
       have hd_top'_not_13 : (1, 3) ∉ d_top'.cells := by
         --
         intro h13
-        exact hd_top'_ne_top (T.cell_covered_unique (1, 3) d_top' d_top hd_top'_mem hd_top_mem h13 hd_top_covers_13)
+        exact hd_top'_ne_top (Eq.of.InCells.InCells.InDominos.InDominos.Domino.Cell.DominoTiling T (1, 3) d_top' d_top hd_top'_mem hd_top_mem h13 hd_top_covers_13)
       refine ⟨⟨d_base, hd_base_mem, hd_base_cells⟩,
             ⟨d_mid, hd_mid_mem, hd_mid_cells⟩,
             ⟨d_top', hd_top'_mem, ?_⟩⟩
       ·
         --
         have hd_top'_in_rect := T.dominos_in_rect d_top' hd_top'_mem
-        have h_opts := domino_at_23_options n d_top' hd_top'_in_rect hd_top'_cov hd_top'_not_13
+        have h_opts := _root_.Nat.DominoTilings.domino_at_23_options n d_top' hd_top'_in_rect hd_top'_cov hd_top'_not_13
         obtain h_horiz | h_vert := h_opts
         ·
           exact h_horiz
@@ -274,7 +288,7 @@ private lemma main
           -- So d_top' = d_mid, but d_mid.cells = {(2, 2), (3, 2)} ≠ {(2, 2), (2, 3)}
           exfalso
           have h22_in_top' : (2, 2) ∈ d_top'.cells := by rw [h_vert]; simp
-          have heq := T.cell_covered_unique (2, 2) d_top' d_mid hd_top'_mem hd_mid_mem h22_in_top' hd_mid_cov
+          have heq := Eq.of.InCells.InCells.InDominos.InDominos.Domino.Cell.DominoTiling T (2, 2) d_top' d_mid hd_top'_mem hd_mid_mem h22_in_top' hd_mid_cov
           rw [heq, hd_mid_cells] at h_vert
           have : (2, 3) ∈ ({(2, 2), (3, 2)} : Finset Cell) := by rw [h_vert]; simp
           simp at this
@@ -310,14 +324,14 @@ private lemma main
         simp only [h_sub_add] at hd_top_prev_cells
         exact hd_top_prev_cells
       -- Cell (2i-1, 1) must be covered by some domino d_base
-      have h_cell_base_in : (2*i - 1, 1) ∈ Rectangle n 3 := by rw [mem_Rectangle]; omega
-      obtain ⟨d_base, hd_base_mem, hd_base_cov⟩ := T.cell_covered (2*i - 1, 1) h_cell_base_in
+      have h_cell_base_in : (2*i - 1, 1) ∈ Rectangle n 3 := by rw [IffIn_RectangleGe1AndGe_1AndGe21AndGe_2]; omega
+      obtain ⟨d_base, hd_base_mem, hd_base_cov⟩ := AnyInCells.of.InRectangle.Cell.DominoTiling T (2*i - 1, 1) h_cell_base_in
       -- d_base can't cover (2i-2, 1) - that's in d_base_prev
       have hd_base_not_left : (2*i - 2, 1) ∉ d_base.cells := by
         --
         intro h_in_base
         have h_in_prev : (2*i - 2, 1) ∈ d_base_prev.cells := by rw [hprev_base_simp]; simp
-        have heq := T.cell_covered_unique (2*i - 2, 1) d_base d_base_prev hd_base_mem hd_base_prev_mem h_in_base h_in_prev
+        have heq := Eq.of.InCells.InCells.InDominos.InDominos.Domino.Cell.DominoTiling T (2*i - 2, 1) d_base d_base_prev hd_base_mem hd_base_prev_mem h_in_base h_in_prev
         rw [heq, hprev_base_simp] at hd_base_cov
         simp only [Finset.mem_insert, Finset.mem_singleton, Prod.mk.injEq] at hd_base_cov
         obtain ⟨h1, _⟩ | ⟨h1, _⟩ := hd_base_cov <;> omega
@@ -326,11 +340,11 @@ private lemma main
         --
         intro h_in_base
         have h_in_prev : (2*i - 1, 2) ∈ d_mid_prev.cells := by rw [hprev_mid_simp]; simp
-        have heq := T.cell_covered_unique (2*i - 1, 2) d_base d_mid_prev hd_base_mem hd_mid_prev_mem h_in_base h_in_prev
+        have heq := Eq.of.InCells.InCells.InDominos.InDominos.Domino.Cell.DominoTiling T (2*i - 1, 2) d_base d_mid_prev hd_base_mem hd_mid_prev_mem h_in_base h_in_prev
         rw [heq, hprev_mid_simp] at hd_base_cov
         simp only [Finset.mem_insert, Finset.mem_singleton, Prod.mk.injEq] at hd_base_cov
         obtain ⟨h1, h2⟩ | ⟨h1, h2⟩ := hd_base_cov <;> omega
-      -- By domino_at_c1_forced_right, d_base must go right
+      -- By _root_.Nat.DominoTilings.domino_at_c1_forced_right, d_base must go right
       have hd_base_in_rect := T.dominos_in_rect d_base hd_base_mem
       have hc_ge : 2*i - 1 ≥ 1 := by omega
       have hc_lt : 2*i - 1 < n := by omega
@@ -340,7 +354,7 @@ private lemma main
         --
         simp only [Nat.sub_sub]; exact hd_base_not_left
       have hd_base_not_up' : (2*i - 1, 2) ∉ d_base.cells := hd_base_not_up
-      have hd_base_cells := domino_at_c1_forced_right n (2*i - 1) d_base hc_ge hc_lt 
+      have hd_base_cells := _root_.Nat.DominoTilings.domino_at_c1_forced_right n (2*i - 1) d_base hc_ge hc_lt 
         hd_base_in_rect hd_base_cov' hd_base_not_left' hd_base_not_up'
       -- Convert back to the form we need
       have hd_base_cells' : d_base.cells = {(2*i - 1, 1), (2*i, 1)} := by
@@ -348,23 +362,23 @@ private lemma main
         simp only [Nat.sub_add_cancel (by omega : 2*i ≥ 1)] at hd_base_cells
         exact hd_base_cells
       -- Now for the middle domino covering (2i, 2)
-      have h_cell_mid_in : (2*i, 2) ∈ Rectangle n 3 := by rw [mem_Rectangle]; omega
-      obtain ⟨d_mid, hd_mid_mem, hd_mid_cov⟩ := T.cell_covered (2*i, 2) h_cell_mid_in
+      have h_cell_mid_in : (2*i, 2) ∈ Rectangle n 3 := by rw [IffIn_RectangleGe1AndGe_1AndGe21AndGe_2]; omega
+      obtain ⟨d_mid, hd_mid_mem, hd_mid_cov⟩ := AnyInCells.of.InRectangle.Cell.DominoTiling T (2*i, 2) h_cell_mid_in
       -- d_mid can't cover (2i-1, 2) - that's in d_mid_prev
       have hd_mid_not_left : (2*i - 1, 2) ∉ d_mid.cells := by
         --
         intro h_in_mid
         have h_in_prev : (2*i - 1, 2) ∈ d_mid_prev.cells := by rw [hprev_mid_simp]; simp
-        have heq := T.cell_covered_unique (2*i - 1, 2) d_mid d_mid_prev hd_mid_mem hd_mid_prev_mem h_in_mid h_in_prev
+        have heq := Eq.of.InCells.InCells.InDominos.InDominos.Domino.Cell.DominoTiling T (2*i - 1, 2) d_mid d_mid_prev hd_mid_mem hd_mid_prev_mem h_in_mid h_in_prev
         rw [heq, hprev_mid_simp] at hd_mid_cov
         simp only [Finset.mem_insert, Finset.mem_singleton, Prod.mk.injEq] at hd_mid_cov
         obtain ⟨h1, h2⟩ | ⟨h1, h2⟩ := hd_mid_cov <;> omega
-      -- Use domino_at_c2_options to classify d_mid
+      -- Use _root_.Nat.DominoTilings.domino_at_c2_options to classify d_mid
       have hd_mid_in_rect := T.dominos_in_rect d_mid hd_mid_mem
       have hc_mid_ge : 2*i ≥ 1 := by omega
       have hc_mid_lt : 2*i < n := by omega
       have hd_mid_not_left' : (2*i - 1, 2) ∉ d_mid.cells := hd_mid_not_left
-      have h_mid_opts := domino_at_c2_options n (2*i) d_mid hc_mid_ge hc_mid_lt 
+      have h_mid_opts := _root_.Nat.DominoTilings.domino_at_c2_options n (2*i) d_mid hc_mid_ge hc_mid_lt 
         hd_mid_in_rect hd_mid_cov hd_mid_not_left'
       have hd_mid_cells : d_mid.cells = {(2*i, 2), (2*i + 1, 2)} := by
         --
@@ -376,7 +390,7 @@ private lemma main
           exfalso
           have h_in_mid : (2*i, 1) ∈ d_mid.cells := by rw [h_vert_down]; simp
           have h_in_base : (2*i, 1) ∈ d_base.cells := by rw [hd_base_cells']; simp
-          have heq := T.cell_covered_unique (2*i, 1) d_mid d_base hd_mid_mem hd_base_mem h_in_mid h_in_base
+          have heq := Eq.of.InCells.InCells.InDominos.InDominos.Domino.Cell.DominoTiling T (2*i, 1) d_mid d_base hd_mid_mem hd_base_mem h_in_mid h_in_base
           rw [heq, hd_base_cells'] at h_vert_down
           have hmem :
             (2*i, 2) ∈ ({(2*i - 1, 1), (2*i, 1)} : Finset Cell) := by rw [h_vert_down]; simp
@@ -386,7 +400,8 @@ private lemma main
           -- Case {(2i, 2), (2i, 3)}: Creates fault at column 2i
           exfalso
           -- Show that no domino in T spans column 2i
-          apply hfree (2*i) (by omega) (by omega)
+          refine hfree (2*i) (by omega) (by omega) ?_
+          ·
             --
             constructor
             ·
@@ -442,48 +457,48 @@ private lemma main
             obtain ⟨r, hr_in⟩ := hd_col_cell
             have hd_in_rect := T.dominos_in_rect d hd_mem'
             have h_in_rect : (2*i, r) ∈ Rectangle n 3 := hd_in_rect hr_in
-            rw [mem_Rectangle] at h_in_rect
+            rw [IffIn_RectangleGe1AndGe_1AndGe21AndGe_2] at h_in_rect
             have hr_range : r = 1 ∨ r = 2 ∨ r = 3 := by omega
             obtain hr1 | hr2 | hr3 := hr_range
             ·
               -- (2i, 1) is covered by d_base
               subst hr1
-              have heq := T.cell_covered_unique (2*i, 1) d d_base hd_mem' hd_base_mem hr_in
+              have heq := Eq.of.InCells.InCells.InDominos.InDominos.Domino.Cell.DominoTiling T (2*i, 1) d d_base hd_mem' hd_base_mem hr_in
                 (by rw [hd_base_cells']; simp)
               rw [heq] at hd_maxCol_ge
-              have hbase_max := maxCol_eq_c_add_1_of_cells_eq_c1_c_add_1_1 (2*i - 1) d_base hd_base_cells
+              have hbase_max := _root_.Nat.DominoTilings.maxCol_eq_c_add_1_of_cells_eq_c1_c_add_1_1 (2*i - 1) d_base hd_base_cells
               omega
             ·
               -- (2i, 2) is covered by d_mid
               subst hr2
-              have heq := T.cell_covered_unique (2*i, 2) d d_mid hd_mem' hd_mid_mem hr_in hd_mid_cov
+              have heq := Eq.of.InCells.InCells.InDominos.InDominos.Domino.Cell.DominoTiling T (2*i, 2) d d_mid hd_mem' hd_mid_mem hr_in hd_mid_cov
               rw [heq] at hd_maxCol_ge
-              have hmid_minmax := minCol_maxCol_eq_c_of_cells_eq_c2_c3 (2*i) d_mid h_vert_up
+              have hmid_minmax := _root_.Nat.DominoTilings.minCol_maxCol_eq_c_of_cells_eq_c2_c3 (2*i) d_mid h_vert_up
               omega
             ·
               -- (2i, 3) is covered by d_mid (since d_mid = {(2i, 2), (2i, 3)})
               subst hr3
               have h_in_mid : (2*i, 3) ∈ d_mid.cells := by rw [h_vert_up]; simp
-              have heq := T.cell_covered_unique (2*i, 3) d d_mid hd_mem' hd_mid_mem hr_in h_in_mid
+              have heq := Eq.of.InCells.InCells.InDominos.InDominos.Domino.Cell.DominoTiling T (2*i, 3) d d_mid hd_mem' hd_mid_mem hr_in h_in_mid
               rw [heq] at hd_maxCol_ge
-              have hmid_minmax := minCol_maxCol_eq_c_of_cells_eq_c2_c3 (2*i) d_mid h_vert_up
+              have hmid_minmax := _root_.Nat.DominoTilings.minCol_maxCol_eq_c_of_cells_eq_c2_c3 (2*i) d_mid h_vert_up
               omega
           -- But T is faultfree
       -- Now for the top domino covering (2i, 3)
-      have h_cell_top_in : (2*i, 3) ∈ Rectangle n 3 := by rw [mem_Rectangle]; omega
-      obtain ⟨d_top', hd_top'_mem, hd_top'_cov⟩ := T.cell_covered (2*i, 3) h_cell_top_in
+      have h_cell_top_in : (2*i, 3) ∈ Rectangle n 3 := by rw [IffIn_RectangleGe1AndGe_1AndGe21AndGe_2]; omega
+      obtain ⟨d_top', hd_top'_mem, hd_top'_cov⟩ := AnyInCells.of.InRectangle.Cell.DominoTiling T (2*i, 3) h_cell_top_in
       -- d_top' can't cover (2i-1, 3) - that's in d_top_prev
       have hd_top'_not_left : (2*i - 1, 3) ∉ d_top'.cells := by
         --
         intro h_in_top'
         have h_in_prev : (2*i - 1, 3) ∈ d_top_prev.cells := by rw [hprev_top_simp]; simp
-        have heq := T.cell_covered_unique (2*i - 1, 3) d_top' d_top_prev hd_top'_mem hd_top_prev_mem h_in_top' h_in_prev
+        have heq := Eq.of.InCells.InCells.InDominos.InDominos.Domino.Cell.DominoTiling T (2*i - 1, 3) d_top' d_top_prev hd_top'_mem hd_top_prev_mem h_in_top' h_in_prev
         rw [heq, hprev_top_simp] at hd_top'_cov
         simp only [Finset.mem_insert, Finset.mem_singleton, Prod.mk.injEq] at hd_top'_cov
         obtain ⟨h1, h2⟩ | ⟨h1, h2⟩ := hd_top'_cov <;> omega
-      -- Use domino_at_c3_options to classify d_top'
+      -- Use _root_.Nat.DominoTilings.domino_at_c3_options to classify d_top'
       have hd_top'_in_rect := T.dominos_in_rect d_top' hd_top'_mem
-      have h_top_opts := domino_at_c3_options n (2*i) d_top' hc_mid_ge hc_mid_lt 
+      have h_top_opts := _root_.Nat.DominoTilings.domino_at_c3_options n (2*i) d_top' hc_mid_ge hc_mid_lt 
         hd_top'_in_rect hd_top'_cov hd_top'_not_left
       refine ⟨⟨d_base, hd_base_mem, hd_base_cells'⟩,
             ⟨d_mid, hd_mid_mem, hd_mid_cells⟩,
@@ -497,7 +512,7 @@ private lemma main
           -- Case {(2i, 2), (2i, 3)}: d_top' covers (2i, 2), but d_mid also covers (2i, 2)
           exfalso
           have h_in_top' : (2*i, 2) ∈ d_top'.cells := by rw [h_vert]; simp
-          have heq := T.cell_covered_unique (2*i, 2) d_top' d_mid hd_top'_mem hd_mid_mem h_in_top' hd_mid_cov
+          have heq := Eq.of.InCells.InCells.InDominos.InDominos.Domino.Cell.DominoTiling T (2*i, 2) d_top' d_mid hd_top'_mem hd_mid_mem h_in_top' hd_mid_cov
           rw [heq, hd_mid_cells] at h_vert
           have hmem :
             (2*i, 3) ∈ ({(2*i, 2), (2*i + 1, 2)} : Finset Cell) := by rw [h_vert]; simp

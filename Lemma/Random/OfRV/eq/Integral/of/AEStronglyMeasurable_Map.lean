@@ -8,14 +8,15 @@ Change of variables: Expectation.ofRV of an observable equals the Bochner integr
 -/
 @[path]
 private lemma main
+  {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E]
   [MeasurableSpace Ω] [MeasurableSpace α]
-  {π : Measure Ω} {x : Ω → α} [PSpace π x] {f : α → ℝ}
+  {π : Measure Ω} {x : Ω → α} [PSpace π x] {f : α → E}
 -- given
   (hf : AEStronglyMeasurable f (π.map x)) :
 -- imply
   Expectation.ofRV π x f = ∫ ω, f (x ω) ∂π := by
 -- proof
-  simp only [Expectation.ofRV, expectation_real]
+  simp only [Expectation.ofRV]
   apply integral_map PSpace.aemeasurable hf
 
 

@@ -2,26 +2,28 @@ import Mathlib
 import sympy.Basic
 open CategoryTheory CategoryTheory.Limits CategoryTheory.MorphismProperty AlgebraicGeometry TopologicalSpace Opposite IsLocalRing
 open scoped TensorProduct MonoidalCategory
-
-universe u
-
 set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
 
-private lemma map_maximalIdeal_of_iso {R S : CommRingCat.{u}} [IsLocalRing R] [IsLocalRing S] (e : R ≅ S) :
-    (IsLocalRing.maximalIdeal R).map e.hom.hom = IsLocalRing.maximalIdeal S := by
+
+universe u
+
+private lemma map_maximalIdeal_of_iso {R S : (CommRingCat : Type (u + 1))} [IsLocalRing R] [IsLocalRing S] (e : R ≅ S) :
+  (IsLocalRing.maximalIdeal R).map e.hom.hom = IsLocalRing.maximalIdeal S := by
   have hsurj : Function.Surjective e.hom.hom := e.commRingCatIsoToRingEquiv.surjective
   have hcomap : (IsLocalRing.maximalIdeal S).comap e.hom.hom = IsLocalRing.maximalIdeal R := by
     ext r
     simp only [Ideal.mem_comap, IsLocalRing.mem_maximalIdeal, mem_nonunits_iff, not_iff_not]
     constructor
-    · intro hu
+    ·
+      intro hu
       have := hu.map e.inv.hom
       rwa [← CommRingCat.comp_apply, Iso.hom_inv_id, CommRingCat.id_apply] at this
     · exact fun hu ↦ hu.map _
   rw [← hcomap, Ideal.map_comap_of_surjective _ hsurj]
-private lemma map_stalk_eq {R₁ S₁ R₂ S₂ : CommRingCat.{u}} [IsLocalRing R₁] [IsLocalRing R₂]
+private lemma map_stalk_eq
+  {R₁ S₁ R₂ S₂ : (CommRingCat : Type (u + 1))} [IsLocalRing R₁] [IsLocalRing R₂]
     (u : R₁ ⟶ S₁) (v : R₂ ⟶ S₂) (eL : R₁ ≅ R₂) (eR : S₁ ≅ S₂) (h : eL.hom ≫ v ≫ eR.inv = u) :
     (IsLocalRing.maximalIdeal R₁).map u.hom =
       ((IsLocalRing.maximalIdeal R₂).map v.hom).map eR.inv.hom := by
@@ -39,7 +41,7 @@ private lemma ε_eq_comp : (ε εA εB : A ⊗[k] B →ₐ[k] k) =
   · simp [ε]
   · simp [ε]
 private lemma ker_ε :
-    RingHom.ker (ε εA εB : A ⊗[k] B →ₐ[k] k) =
+  RingHom.ker (ε εA εB : A ⊗[k] B →ₐ[k] k) =
       (RingHom.ker εA).map (Algebra.TensorProduct.includeLeft : A →ₐ[k] A ⊗[k] B) ⊔
         (RingHom.ker εB).map (Algebra.TensorProduct.includeRight : B →ₐ[k] A ⊗[k] B) := by
   rw [← Algebra.TensorProduct.map_ker εA εB (εA_surjective εA) (εB_surjective εB)]
@@ -48,50 +50,57 @@ private lemma ker_ε :
   rw [ε_eq_comp]
   change Algebra.TensorProduct.lmul' k (Algebra.TensorProduct.map εA εB t) = 0 ↔ _
   constructor
-  · intro h
+  ·
+    intro h
     have key : ∀ w : k ⊗[k] k, Algebra.TensorProduct.lmul' k (S := k) w =
         Algebra.TensorProduct.lid k k w := by
       intro w
-      induction w using TensorProduct.induction_on with
-      | zero => simp
-      | tmul a b => simp [Algebra.TensorProduct.lmul'_apply_tmul, Algebra.TensorProduct.lid_tmul]
-      | add u v hu hv => simp [map_add, hu, hv]
-    have hinj : Function.Injective (Algebra.TensorProduct.lmul' k (S := k) : k ⊗[k] k → k) := by
-      intro u v huv
-      rw [key, key] at huv
-      exact (Algebra.TensorProduct.lid k k).injective huv
-    exact hinj (by rw [h, map_zero])
-  · intro h
+      refine TensorProduct.inductionOn w ?_ ?_
+      ·
+        intro a b
+        simp [Algebra.TensorProduct.lmul'_apply_tmul, Algebra.TensorProduct.lid_tmul]
+      ·
+        intro u v hu hv
+        simp [map_add, hu, hv]
+    suffices hinj : Function.Injective (Algebra.TensorProduct.lmul' k (S := k) : k ⊗[k] k → k) by
+      apply hinj
+      rw [h, map_zero]
+    intro u v huv
+    rw [key, key] at huv
+    apply (Algebra.TensorProduct.lid k k).injective huv
+  ·
+    intro h
     change (Algebra.TensorProduct.map εA εB) t = 0 at h
     rw [h, map_zero]
-instance isMaximal_ker_ε : (RingHom.ker (ε εA εB : A ⊗[k] B →ₐ[k] k)).IsMaximal :=
+private lemma isMaximal_ker_ε : (RingHom.ker (ε εA εB : A ⊗[k] B →ₐ[k] k)).IsMaximal :=
   RingHom.ker_isMaximal_of_surjective _ fun c ↦ ⟨algebraMap k _ c, AlgHom.commutes _ c⟩
 private noncomputable def qpt : PrimeSpectrum (A ⊗[k] B) :=
+  let _ : (RingHom.ker (ε εA εB : A ⊗[k] B →ₐ[k] k)).IsMaximal := isMaximal_ker_ε εA εB
   ⟨RingHom.ker (ε εA εB : A ⊗[k] B →ₐ[k] k), inferInstance⟩
 private lemma comap_includeLeft_ker :
-    (RingHom.ker (ε εA εB : A ⊗[k] B →ₐ[k] k)).comap
-      (Algebra.TensorProduct.includeLeftRingHom : A →+* A ⊗[k] B) = RingHom.ker εA := by
+  (RingHom.ker (ε εA εB : A ⊗[k] B →ₐ[k] k)).comap
+    (Algebra.TensorProduct.includeLeftRingHom : A →+* A ⊗[k] B) = RingHom.ker εA := by
   ext a
   simp [RingHom.mem_ker, ε, Algebra.TensorProduct.includeLeftRingHom_apply]
 private lemma comap_includeRight_ker :
-    (RingHom.ker (ε εA εB : A ⊗[k] B →ₐ[k] k)).comap
-      ((Algebra.TensorProduct.includeRight : B →ₐ[k] A ⊗[k] B).toRingHom) = RingHom.ker εB := by
+  (RingHom.ker (ε εA εB : A ⊗[k] B →ₐ[k] k)).comap
+    ((Algebra.TensorProduct.includeRight : B →ₐ[k] A ⊗[k] B).toRingHom) = RingHom.ker εB := by
   ext b
   simp [RingHom.mem_ker, ε]
-noncomputable abbrev p₁ : Spec (CommRingCat.of (A ⊗[k] B)) ⟶ Spec (CommRingCat.of A) :=
+private noncomputable abbrev p₁ : Spec (CommRingCat.of (A ⊗[k] B)) ⟶ Spec (CommRingCat.of A) :=
   Spec.map (CommRingCat.ofHom (Algebra.TensorProduct.includeLeftRingHom : A →+* A ⊗[k] B))
-noncomputable abbrev p₂ : Spec (CommRingCat.of (A ⊗[k] B)) ⟶ Spec (CommRingCat.of B) :=
+private noncomputable abbrev p₂ : Spec (CommRingCat.of (A ⊗[k] B)) ⟶ Spec (CommRingCat.of B) :=
   Spec.map (CommRingCat.ofHom (R := B) (S := A ⊗[k] B)
     (Algebra.TensorProduct.includeRight : B →ₐ[k] A ⊗[k] B).toRingHom)
 set_option backward.isDefEq.respectTransparency false in
 private lemma maximalIdeal_stalk_eq :
-    IsLocalRing.maximalIdeal ((Spec (CommRingCat.of (A ⊗[k] B))).presheaf.stalk (qpt εA εB)) =
+  IsLocalRing.maximalIdeal ((Spec (CommRingCat.of (A ⊗[k] B))).presheaf.stalk (qpt εA εB)) =
       (IsLocalRing.maximalIdeal ((Spec (CommRingCat.of A)).presheaf.stalk (p₁ (k := k) (A := A) (B := B)
           (qpt εA εB)))).map ((p₁ (k := k) (A := A) (B := B)).stalkMap (qpt εA εB)).hom ⊔
       (IsLocalRing.maximalIdeal ((Spec (CommRingCat.of B)).presheaf.stalk (p₂ (k := k) (A := A) (B := B)
           (qpt εA εB)))).map ((p₂ (k := k) (A := A) (B := B)).stalkMap (qpt εA εB)).hom := by
   set q := qpt εA εB with hq
-  set T : CommRingCat.{u} := CommRingCat.of (A ⊗[k] B) with hT
+  set T : (CommRingCat : Type (u + 1)) := CommRingCat.of (A ⊗[k] B) with hT
   set f₁ : CommRingCat.of A ⟶ T := CommRingCat.ofHom Algebra.TensorProduct.includeLeftRingHom with hf₁
   set f₂ : CommRingCat.of B ⟶ T := CommRingCat.ofHom (R := B) (S := A ⊗[k] B)
     (Algebra.TensorProduct.includeRight : B →ₐ[k] A ⊗[k] B).toRingHom with hf₂
@@ -99,7 +108,7 @@ private lemma maximalIdeal_stalk_eq :
   have h₂ := Scheme.localRingHom_comp_stalkIso f₂ q
   change IsLocalRing.maximalIdeal ((Spec T).presheaf.stalk q) =
     (IsLocalRing.maximalIdeal ((Spec (CommRingCat.of A)).presheaf.stalk (q.comap f₁.hom))).map
-        ((Spec.map f₁).stalkMap q).hom ⊔
+      ((Spec.map f₁).stalkMap q).hom ⊔
       (IsLocalRing.maximalIdeal ((Spec (CommRingCat.of B)).presheaf.stalk (q.comap f₂.hom))).map
         ((Spec.map f₂).stalkMap q).hom
   rw [map_stalk_eq _ _ _ _ h₁, map_stalk_eq _ _ _ _ h₂]
@@ -109,7 +118,7 @@ private lemma maximalIdeal_stalk_eq :
   rw [hT, ← Localization.AtPrime.map_eq_maximalIdeal]
   have hcore : q.asIdeal.map (algebraMap (A ⊗[k] B) (Localization.AtPrime q.asIdeal)) =
       (IsLocalRing.maximalIdeal (Localization.AtPrime (q.comap f₁.hom).asIdeal)).map
-          (Localization.localRingHom (q.comap f₁.hom).asIdeal q.asIdeal f₁.hom rfl) ⊔
+        (Localization.localRingHom (q.comap f₁.hom).asIdeal q.asIdeal f₁.hom rfl) ⊔
         (IsLocalRing.maximalIdeal (Localization.AtPrime (q.comap f₂.hom).asIdeal)).map
           (Localization.localRingHom (q.comap f₂.hom).asIdeal q.asIdeal f₂.hom rfl) := by
     rw [← Localization.AtPrime.map_eq_maximalIdeal, ← Localization.AtPrime.map_eq_maximalIdeal,
@@ -130,12 +139,13 @@ private lemma maximalIdeal_stalk_eq :
       rfl
     rw [e₁, e₂, ← Ideal.map_sup]
     congr 1
-    exact ker_ε εA εB
+    apply ker_ε εA εB
   rw [hcore, Ideal.map_sup]
   rfl
 variable {k : Type u} [Field k] {A B : Type u} [CommRing A] [CommRing B] [Algebra k A] [Algebra k B]
   (εA : A →ₐ[k] k) (εB : B →ₐ[k] k)
-private lemma transport {P₀ S₀ X₁ X₂ : CommRingCat.{u}} [IsLocalRing P₀] [IsLocalRing S₀] [IsLocalRing X₁]
+private lemma transport
+  {P₀ S₀ X₁ X₂ : (CommRingCat : Type (u + 1))} [IsLocalRing P₀] [IsLocalRing S₀] [IsLocalRing X₁]
     [IsLocalRing X₂] (θ : P₀ ⟶ S₀) [IsIso θ] (u₁ : X₁ ⟶ P₀) (u₂ : X₂ ⟶ P₀)
     (h : IsLocalRing.maximalIdeal S₀ = (IsLocalRing.maximalIdeal X₁).map (u₁ ≫ θ).hom ⊔
         (IsLocalRing.maximalIdeal X₂).map (u₂ ≫ θ).hom) :
@@ -150,7 +160,7 @@ private lemma transport {P₀ S₀ X₁ X₂ : CommRingCat.{u}} [IsLocalRing P�
     ← Ideal.map_sup, Ideal.comap_map_of_bijective _ hbij]
 set_option backward.isDefEq.respectTransparency false in
 private lemma spec_case
-    (hx : Spec.map (CommRingCat.ofHom εA.toRingHom) ≫
+  (hx : Spec.map (CommRingCat.ofHom εA.toRingHom) ≫
         Spec.map (CommRingCat.ofHom (algebraMap k A)) = 𝟙 _)
     (hy : Spec.map (CommRingCat.ofHom εB.toRingHom) ≫
         Spec.map (CommRingCat.ofHom (algebraMap k B)) = 𝟙 _) :
@@ -210,8 +220,7 @@ private lemma spec_case
   have hσpt : σ (IsLocalRing.closedPoint k) = qpt εA εB := by
     apply PrimeSpectrum.ext
     change Ideal.comap (ε εA εB : A ⊗[k] B →ₐ[k] k).toRingHom (IsLocalRing.closedPoint k).asIdeal = _
-    rw [show (IsLocalRing.closedPoint k).asIdeal = ⊥ from
-      (IsLocalRing.isField_iff_maximalIdeal_eq.mp (Field.toIsField k)), ← RingHom.ker_eq_comap_bot]
+    rw [show (IsLocalRing.closedPoint k).asIdeal = ⊥ from (IsLocalRing.isField_iff_maximalIdeal_eq.mp (Field.toIsField k)), ← RingHom.ker_eq_comap_bot]
     rfl
   have hz : pullback.lift x y (hx.trans hy.symm) (IsLocalRing.closedPoint k) = ι (qpt εA εB) := by
     rw [← hσι, Scheme.Hom.comp_apply, hσpt]
@@ -222,9 +231,10 @@ private lemma spec_case
     Scheme.Hom.stalkMap_congr_hom _ _ hι₁, Scheme.Hom.stalkMap_congr_hom _ _ hι₂,
     CommRingCat.hom_comp, CommRingCat.hom_comp, ← Ideal.map_map, ← Ideal.map_map,
     map_maximalIdeal_of_iso, map_maximalIdeal_of_iso]
-  exact maximalIdeal_stalk_eq εA εB
+  apply maximalIdeal_stalk_eq εA εB
 set_option backward.isDefEq.respectTransparency false in
-private lemma helper_main {k : Type u} [Field k] {X Y : Scheme.{u}}
+private lemma helper_main
+  {k : Type u} [Field k] {X Y : (Scheme : Type (u + 1))}
     (fX : X ⟶ Spec (CommRingCat.of k)) (fY : Y ⟶ Spec (CommRingCat.of k))
     (x : Spec (CommRingCat.of k) ⟶ X) (hx : x ≫ fX = 𝟙 _)
     (y : Spec (CommRingCat.of k) ⟶ Y) (hy : y ≫ fY = 𝟙 _) :
@@ -250,8 +260,8 @@ private lemma helper_main {k : Type u} [Field k] {X Y : Scheme.{u}}
   replace hV : IsAffineOpen V := hV
   replace hxU : x (IsLocalRing.closedPoint k) ∈ U := hxU
   replace hyV : y (IsLocalRing.closedPoint k) ∈ V := hyV
-  let iU : Spec Γ(X, U) ⟶ X := hU.isoSpec.inv ≫ U.ι
-  let iV : Spec Γ(Y, V) ⟶ Y := hV.isoSpec.inv ≫ V.ι
+  let iU : Spec (X.presheaf.obj (op U)) ⟶ X := hU.isoSpec.inv ≫ U.ι
+  let iV : Spec (Y.presheaf.obj (op V)) ⟶ Y := hV.isoSpec.inv ≫ V.ι
   let _ : IsOpenImmersion iU := IsOpenImmersion.comp _ _
   let _ : IsOpenImmersion iV := IsOpenImmersion.comp _ _
   obtain ⟨ψA, hψA⟩ := Spec.map_surjective (iU ≫ fX)
@@ -262,18 +272,18 @@ private lemma helper_main {k : Type u} [Field k] {X Y : Scheme.{u}}
     have : Set.range iU = (U : Set X) := by
       change Set.range (hU.isoSpec.inv ≫ U.ι) = _
       rw [Scheme.Hom.comp_base, TopCat.coe_comp, Set.range_comp,
-        Set.range_eq_univ.mpr (by exact (hU.isoSpec.inv).surjective), Set.image_univ, Scheme.Opens.range_ι]
-    rw [this]; exact hxU
+        Set.range_eq_univ.mpr ((hU.isoSpec.inv).surjective), Set.image_univ, Scheme.Opens.range_ι]
+    rwa [this]
   have hyr : Set.range y ⊆ Set.range iV := by
     rintro _ ⟨p, rfl⟩
     obtain rfl : IsLocalRing.closedPoint k = p := Subsingleton.elim _ _
     have : Set.range iV = (V : Set Y) := by
       change Set.range (hV.isoSpec.inv ≫ V.ι) = _
       rw [Scheme.Hom.comp_base, TopCat.coe_comp, Set.range_comp,
-        Set.range_eq_univ.mpr (by exact (hV.isoSpec.inv).surjective), Set.image_univ, Scheme.Opens.range_ι]
-    rw [this]; exact hyV
-  let x' : Spec (CommRingCat.of k) ⟶ Spec Γ(X, U) := IsOpenImmersion.lift iU x hxr
-  let y' : Spec (CommRingCat.of k) ⟶ Spec Γ(Y, V) := IsOpenImmersion.lift iV y hyr
+        Set.range_eq_univ.mpr ((hV.isoSpec.inv).surjective), Set.image_univ, Scheme.Opens.range_ι]
+    rwa [this]
+  let x' : Spec (CommRingCat.of k) ⟶ Spec (X.presheaf.obj (op U)) := IsOpenImmersion.lift iU x hxr
+  let y' : Spec (CommRingCat.of k) ⟶ Spec (Y.presheaf.obj (op V)) := IsOpenImmersion.lift iV y hyr
   have hx' : x' ≫ iU = x := IsOpenImmersion.lift_fac _ _ _
   have hy' : y' ≫ iV = y := IsOpenImmersion.lift_fac _ _ _
   obtain ⟨χA, hχA⟩ := Spec.map_surjective x'
@@ -282,20 +292,20 @@ private lemma helper_main {k : Type u} [Field k] {X Y : Scheme.{u}}
     rw [← Spec.map_eq_id, Spec.map_comp, hχA, hψA, ← Category.assoc, hx', hx]
   have hψχB : ψB ≫ χB = 𝟙 _ := by
     rw [← Spec.map_eq_id, Spec.map_comp, hχB, hψB, ← Category.assoc, hy', hy]
-  let _ : Algebra k Γ(X, U) := ψA.hom.toAlgebra
-  let _ : Algebra k Γ(Y, V) := ψB.hom.toAlgebra
-  let εA : Γ(X, U) →ₐ[k] k :=
-    { χA.hom with
-      commutes' := fun c ↦ by
-        change χA.hom (ψA.hom c) = c
-        rw [← CommRingCat.comp_apply, hψχA]; rfl }
-  let εB : Γ(Y, V) →ₐ[k] k :=
-    { χB.hom with
-      commutes' := fun c ↦ by
-        change χB.hom (ψB.hom c) = c
-        rw [← CommRingCat.comp_apply, hψχB]; rfl }
-  let fX₀ := Spec.map (CommRingCat.ofHom (algebraMap k Γ(X, U)))
-  let fY₀ := Spec.map (CommRingCat.ofHom (algebraMap k Γ(Y, V)))
+  let _ : Algebra k (X.presheaf.obj (op U)) := ψA.hom.toAlgebra
+  let _ : Algebra k (Y.presheaf.obj (op V)) := ψB.hom.toAlgebra
+  let εA : (X.presheaf.obj (op U)) →ₐ[k] k :=
+    χA.hom.toAlgHom (fun c => by
+      change χA.hom (ψA.hom c) = c
+      rw [← CommRingCat.comp_apply, hψχA]
+      rfl)
+  let εB : (Y.presheaf.obj (op V)) →ₐ[k] k :=
+    χB.hom.toAlgHom (fun c => by
+      change χB.hom (ψB.hom c) = c
+      rw [← CommRingCat.comp_apply, hψχB]
+      rfl)
+  let fX₀ := Spec.map (CommRingCat.ofHom (algebraMap k (X.presheaf.obj (op U))))
+  let fY₀ := Spec.map (CommRingCat.ofHom (algebraMap k (Y.presheaf.obj (op V))))
   let x₀ := Spec.map (CommRingCat.ofHom εA.toRingHom)
   let y₀ := Spec.map (CommRingCat.ofHom εB.toRingHom)
   have hψA' : fX₀ = iU ≫ fX := hψA
@@ -333,13 +343,13 @@ private lemma helper_main {k : Type u} [Field k] {X Y : Scheme.{u}}
     map_maximalIdeal_of_iso, map_maximalIdeal_of_iso]
   erw [map_maximalIdeal_of_iso (asIso (iU.stalkMap ((pullback.fst fX₀ fY₀) z₀))),
     map_maximalIdeal_of_iso (asIso (iV.stalkMap ((pullback.snd fX₀ fY₀) z₀)))]
-  exact haff
+  apply haff
 /--
 [AlgebraicGeometry_maximalIdeal_stalk_pullback_eq_map_stalkMap_fst_sup_map_stalkMap_snd_of_section](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_maximalIdeal_stalk_pullback_eq_map_stalkMap_fst_sup_map_stalkMap_snd_of_section.lean)
 -/
 @[path]
 private lemma main
-    {k : Type u} [Field k] {X Y : Scheme.{u}}
+  {k : Type u} [Field k] {X Y : (Scheme : Type (u + 1))}
     (fX : X ⟶ Spec (CommRingCat.of k)) (fY : Y ⟶ Spec (CommRingCat.of k))
     (x : Spec (CommRingCat.of k) ⟶ X) (hx : x ≫ fX = 𝟙 _)
     (y : Spec (CommRingCat.of k) ⟶ Y) (hy : y ≫ fY = 𝟙 _) :
@@ -356,5 +366,6 @@ private lemma main
         ((Limits.pullback.snd fX fY).stalkMap
           (Limits.pullback.lift x y (hx.trans hy.symm) (IsLocalRing.closedPoint k))).hom :=
   helper_main fX fY x hx y hy
+
 
 -- created on 2026-10-20

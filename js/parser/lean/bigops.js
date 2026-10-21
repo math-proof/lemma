@@ -422,33 +422,71 @@ export class Lean_int extends LeanBigOperator {
         const s = this.scope;
         if (s instanceof L.LeanArgsIndented && s.rhs instanceof L.LeanArgsNewLineSeparated) {
             const rest = s.rhs.args.filter((a) => !(a instanceof L.LeanCaret));
-            return rest.length === 1 && rest[0] instanceof L.Lean_partial ? rest[0] : null;
-        }
-        if (s instanceof L.LeanArgsSpaceSeparated) {
-            for (let i = s.args.length - 1; i >= 0; i--) {
-                if (s.args[i] instanceof L.LeanCaret) continue;
-                return s.args[i] instanceof L.Lean_partial ? s.args[i] : null;
+            if (rest.length === 1 && rest[0] instanceof L.Lean_partial) return rest[0];
+            // Integrand line may trail with partial under Indented.lhs.
+            const lhsPartial = Lean_int.trailingPartial(s.lhs);
+            if (lhsPartial) return lhsPartial;
+            if (rest.length) {
+                const rhsPartial = Lean_int.trailingPartial(rest[rest.length - 1]);
+                if (rhsPartial) return rhsPartial;
             }
             return null;
         }
-        if (s != null && s.rhs instanceof L.LeanArgsSpaceSeparated) {
-            const args = s.rhs.args;
-            for (let i = args.length - 1; i >= 0; i--) {
-                if (args[i] instanceof L.LeanCaret) continue;
-                return args[i] instanceof L.Lean_partial ? args[i] : null;
+        // Binder newline then `f partial-mu` on the next line (NewLineSeparated).
+        if (s instanceof L.LeanArgsNewLineSeparated) {
+            for (let i = s.args.length - 1; i >= 0; i--) {
+                if (s.args[i] instanceof L.LeanCaret) continue;
+                return Lean_int.trailingPartial(s.args[i]);
             }
+            return null;
+        }
+        if (s instanceof L.LeanArgsSpaceSeparated) {
+            return Lean_int.trailingPartial(s);
+        }
+        if (s != null && s.rhs instanceof L.LeanArgsSpaceSeparated) {
+            return Lean_int.trailingPartial(s);
         }
         if (s instanceof Lean_int) {
             const innerPartial = s.measurePartial();
             if (!innerPartial) return null;
             const a = innerPartial.arg;
             if (a instanceof L.LeanArgsSpaceSeparated) {
-                for (let i = a.args.length - 1; i >= 0; i--) {
-                    if (a.args[i] instanceof L.LeanCaret) continue;
-                    return a.args[i] instanceof L.Lean_partial ? a.args[i] : null;
-                }
+                return Lean_int.trailingPartial(a);
             }
             return null;
+        }
+        // Nested ∑/∏/•/… under the integrand (right-spine walk).
+        return Lean_int.trailingPartial(s);
+    }
+
+    /**
+     * Trailing measure partial along the integrand right spine.
+     * Walks SpaceSeparated / NewLineSeparated tails, binary rhs, Indented, and big-op scope
+     * so `∫ ω, ∑ t, f • ∇ … ∂μ` still finds `∂μ` nested under ∑ / •.
+     */
+    static trailingPartial(node) {
+        if (node == null || node instanceof L.LeanCaret) return null;
+        if (node instanceof L.Lean_partial) return node;
+        if (node instanceof L.LeanArgsSpaceSeparated ||
+            node instanceof L.LeanArgsNewLineSeparated ||
+            node instanceof L.LeanArgsCommaNewLineSeparated) {
+            for (let i = node.args.length - 1; i >= 0; i--) {
+                if (node.args[i] instanceof L.LeanCaret) continue;
+                return Lean_int.trailingPartial(node.args[i]);
+            }
+            return null;
+        }
+        if (node instanceof L.LeanArgsIndented) {
+            return Lean_int.trailingPartial(node.rhs) || Lean_int.trailingPartial(node.lhs);
+        }
+        // Binary / relational: measure trails on the rhs spine (`f • ∇ … ∂μ`).
+        if (node.rhs != null) {
+            const fromRhs = Lean_int.trailingPartial(node.rhs);
+            if (fromRhs) return fromRhs;
+        }
+        // Nested big-op body (`∑` / `∏` / …) may hold the integral measure.
+        if (node.scope != null) {
+            return Lean_int.trailingPartial(node.scope);
         }
         return null;
     }
@@ -458,12 +496,18 @@ export class Lean_int extends LeanBigOperator {
         if (this.scope instanceof L.LeanArgsIndented && this.scope.rhs instanceof L.LeanArgsNewLineSeparated &&
             this.scope.rhs.args.includes(partial))
             return this.scope.lhs.toLatex(syntax);
+        // Indented with partial trailing the lhs line: strip from lhs, keep rhs lines.
+        if (this.scope instanceof L.LeanArgsIndented && Lean_int.trailingPartial(this.scope.lhs) === partial) {
+            const lhs = this.stripPartialLatex(this.scope.lhs, partial, syntax);
+            const rhs = this.scope.rhs ? this.scope.rhs.toLatex(syntax) : '';
+            return rhs ? `${lhs}${this.scope.sep()}${rhs}` : lhs;
+        }
         if (this.scope instanceof L.LeanArgsSpaceSeparated) {
             const args = this.scope.args
                 .filter((a) => a !== partial && !(a instanceof L.LeanCaret));
             return args.map((a) => `{${a.toLatex(syntax)}}`).join('\\ ');
         }
-        // Binary operator scope (e.g. `c • f x ∂μ`): partial is in scope.rhs
+        // Binary operator scope (e.g. `c • f x partial-mu`): partial is in scope.rhs
         if (this.scope != null && this.scope.rhs instanceof L.LeanArgsSpaceSeparated &&
             this.scope.rhs.args.includes(partial)) {
             const filteredRhs = this.scope.rhs.args
@@ -473,44 +517,97 @@ export class Lean_int extends LeanBigOperator {
             const op = this.scope.command ?? this.scope.operator;
             return `${lhsLatex} ${op} ${rhsLatex}`;
         }
+        // Binder newline then `f partial-mu`: strip trailing partial from last line.
+        if (this.scope instanceof L.LeanArgsNewLineSeparated) {
+            const parts = [];
+            for (const a of this.scope.args) {
+                if (a instanceof L.LeanCaret) continue;
+                if (a === partial) continue;
+                const stripped = this.stripPartialLatex(a, partial, syntax);
+                if (stripped != null && stripped !== '') parts.push(stripped);
+            }
+            if (parts.length <= 1) return parts[0] ?? '';
+            const stmt = parts.map((p) => `&{${p}}&& `).join('\\\\\n');
+            return `\\begin{aligned}\n${stmt}\n\\end{aligned}`;
+        }
+        // Deep nesting (e.g. ∫ ∑ … • ∇ … ∂μ): drop partial from its SpaceSeparated parent.
+        const parent = partial.parent;
+        if (parent instanceof L.LeanArgsSpaceSeparated) {
+            const idx = parent.args.indexOf(partial);
+            if (idx >= 0) {
+                const removed = parent.args.splice(idx, 1)[0];
+                try {
+                    return this.scope ? this.scope.toLatex(syntax) : '';
+                } finally {
+                    parent.args.splice(idx, 0, removed);
+                }
+            }
+        }
         return this.scope.toLatex(syntax);
+    }
+
+    /** Drop a trailing measure partial from a SpaceSeparated / binary-rhs group for integrand latex. */
+    stripPartialLatex(node, partial, syntax) {
+        if (node instanceof L.LeanArgsSpaceSeparated && node.args.includes(partial)) {
+            const args = node.args.filter((a) => a !== partial && !(a instanceof L.LeanCaret));
+            return args.map((a) => `{${a.toLatex(syntax)}}`).join('\\ ');
+        }
+        if (node != null && node.rhs instanceof L.LeanArgsSpaceSeparated &&
+            node.rhs.args.includes(partial)) {
+            const filteredRhs = node.rhs.args
+                .filter((a) => a !== partial && !(a instanceof L.LeanCaret));
+            const lhsLatex = node.lhs.toLatex(syntax);
+            const rhsLatex = filteredRhs.map((a) => `{${a.toLatex(syntax)}}`).join('\\ ');
+            const op = node.command ?? node.operator;
+            return `${lhsLatex} ${op} ${rhsLatex}`;
+        }
+        return node.toLatex(syntax);
     }
 
     latexFormat() {
         const op = this.superscript
             ? `\\int^{${this.superscript}}`
             : '\\int';
-        const diff = this.measurePartial() ? '\\partial' : '\\mathrm{d}';
+        const partial = this.measurePartial();
+        const v = this.binderVar();
+        const hasBinder = v && !(v instanceof L.LeanCaret);
+        const diff = partial ? '\\partial' : '\\mathrm{d}';
         const tail = `{\\color{blue}${diff}}{%s}`;
         const dom = this.intDomain();
+        // Domain forms keep limits + differential (binder or measure).
         if (dom instanceof L.LeanUpto) return `${op}\\limits_{%s}^{%s} %s\\, ${tail}`;
         if (dom != null) return `${op}\\limits_{%s} %s\\, ${tail}`;
-        // Lean integral with binder and partial measure: keep binder before integrand.
-        const v = this.binderVar();
-        if (this.measurePartial() && v && !(v instanceof L.LeanCaret))
-            return `${op} {%s},\\, %s\\, ${tail}`;
-        return `${op} %s\\, ${tail}`;
+        // No domain: show binder as subscript; measure is the only trailing differential.
+        if (hasBinder) {
+            if (partial) return `${op}_{%s} %s\\, {\\color{blue}\\partial}{%s}`;
+            return `${op}_{%s} %s`;
+        }
+        if (partial) return `${op} %s\\, ${tail}`;
+        return `${op} %s`;
     }
 
     latexArgs(syntax) {
         const partial = this.measurePartial();
         const body = this.integrandLatex(syntax, partial);
         const v = this.binderVar();
-        // With partial measure, the measure is the differential; with plain dx, the binder is.
-        // When both a binder and partial measure are present (and no in-domain), keep Lean order.
-        const tail = partial
-            ? partial.arg.toLatex(syntax)
-            : v && !(v instanceof L.LeanCaret)
-                ? v.toLatex(syntax)
-                : '';
+        const hasBinder = v && !(v instanceof L.LeanCaret);
+        const measureTail = partial ? partial.arg.toLatex(syntax) : '';
+        const binderTail = hasBinder ? v.toLatex(syntax) : '';
         const dom = this.intDomain();
         if (dom instanceof L.LeanUpto) {
+            const tail = partial ? measureTail : binderTail;
             return [dom.lhs.toLatex(syntax), dom.rhs.toLatex(syntax), body, tail];
         }
-        if (dom != null) return [dom.toLatex(syntax), body, tail];
-        if (partial && v && !(v instanceof L.LeanCaret))
-            return [v.toLatex(syntax), body, tail];
-        return [body, tail];
+        if (dom != null) {
+            const tail = partial ? measureTail : binderTail;
+            return [dom.toLatex(syntax), body, tail];
+        }
+        if (hasBinder) {
+            if (partial) return [v.toLatex(syntax), body, measureTail];
+            return [v.toLatex(syntax), body];
+        }
+        if (partial) return [body, measureTail];
+        return [body];
     }
 }
 

@@ -4,8 +4,9 @@
             <span class=green>/--</span><br>
             <div class=lemma-comment :class=class_comment tabindex=1000 @keydown=keydown_comment @click.left.stop=click_select_comment>
                 <template v-if="markdownComment && !commentEditMode">
-                    <!-- Plain green text (PHP used <pre class=green>); markdown AST is also mounted for rich docstrings. -->
-                    <pre class="green Consolas lemma-comment-text" v-clipboard :data-clipboard-text=comment>{{ comment }}</pre>
+                    <!-- Docstring HTML from MarkdownParser (tables etc.). Avoid the Vue AST component
+                         tree here: leftover MarkdownCaret + async SFCs left /-- ... -/ blank. -->
+                    <div class="green lemma-comment-markdown" v-clipboard :data-clipboard-text=comment v-html="markdownComment.html"></div>
                     <input type=hidden :name="`lemma[${index}][comment]`" :value=comment />
                 </template>
                 <textarea v-else :ref="$refs.commentTextarea" class=green :name="`lemma[${index}][comment]`" :value=comment :rows=comment_rows :cols=comment_cols @keydown=keydown_textarea @input=inputComment></textarea>
@@ -70,7 +71,6 @@
 <script setup>
 import Vue from "../js/vue.js";
 import renderLean from "./renderLean.vue";
-import markdown from "./markdown.vue";
 import MarkdownParser from "../js/parser/markdown.js";
 
 console.log('import lemma.vue');
@@ -310,9 +310,12 @@ ${latex}
         },
 
         async Escape(code, indices) {
+            // Read CM value before clearing `insert`: that unmounts `<renderLean>`
+            // (v-if) and drops the leaf in `this.renderLean`.
+            var leaf = getitem(this.renderLean, ...indices);
+            var lean = leaf && leaf.editor ? leaf.editor.getValue() : code.lean;
             delete code.insert;
-            var lean = getitem(this.renderLean, ...indices).editor.getValue();
-            if (code.lean != lean) {
+            if (lean != null && code.lean != lean) {
                 code.lean = lean;
                 var data = await form_post('php/request/latex.php', {lean});
                 if (data) {
@@ -419,8 +422,9 @@ ${latex}
                 break;
             case 'Escape':
                 var {index, given, imply} = this;
-                var leanCode = target.tagName == 'TEXTAREA'? target.parentElement.parentElement: target;
-                var div = leanCode.parentElement;
+                // After Insert, focus is inside CodeMirror; `target` is a CM node.
+                // `currentTarget` is the given/imply host that owns @keydown.
+                var div = event.currentTarget;
                 var i = div.getAttribute('index');
                 if (i == null) {
                     if (target.tagName == 'SPAN')
@@ -431,7 +435,7 @@ ${latex}
                     await this.Escape(given[i], [index, 'given', i]);
                 else
                     break;
-                leanCode.remove();
+                // Vue `v-if=…insert` removes the editor; do not leanCode.remove().
                 break;
             case 'Delete':
                 var {index, given} = this;
@@ -770,5 +774,18 @@ textarea{
 textarea:focus {
 	outline: none;
 	caret-color: rgb(127, 0, 85);
+}
+
+.lemma-comment-markdown {
+    font-family: Consolas, monospace;
+    white-space: normal;
+}
+.lemma-comment-markdown :deep(table) {
+    border-collapse: collapse;
+    margin: 0.25em 0;
+}
+.lemma-comment-markdown :deep(td),
+.lemma-comment-markdown :deep(th) {
+    padding: 0.2em 0.6em;
 }
 </style>

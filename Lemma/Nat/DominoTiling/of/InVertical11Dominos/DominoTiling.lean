@@ -1,9 +1,12 @@
 import Mathlib
 import sympy.Basic
 import sympy.matrices.determinants.DominoTilings
+import Lemma.Nat.EqShiftNat.of.Ge1Add1.Ge1Add1.Domino
+import Lemma.Nat.Ge12.Ge12.of.NeVertical11.In_Dominos.InVertical11Dominos.Domino.DominoTiling
 open DominoTilings
 open Domino DominoTiling
 open Finset
+open Nat
 
 
 /--
@@ -32,12 +35,12 @@ private lemma main
         obtain ⟨d'', hd''_erase, hd''_eq⟩ := hd'_mem
         have hd''_in := Finset.mem_of_mem_erase hd''_erase
         have hd''_ne := (Finset.mem_erase.mp hd''_erase).1
-        have hcols := domino_col_ge_two_of_ne_vertical
-          ⟨dominos, dominos_in_rect, covers_all, pairwise_disjoint⟩ hv d'' hd''_in hd''_ne
+        have hcols := Ge12.Ge12.of.NeVertical11.In_Dominos.InVertical11Dominos.Domino.DominoTiling
+          ⟨dominos, dominos_in_rect, covers_all, pairwise_disjoint⟩ d'' hv hd''_in hd''_ne
         -- d' = d''.shiftNeg 1 ..., d = d'.shiftNat 1
         -- So d = (d''.shiftNeg 1 ...).shiftNat 1 = d''
         rw [← hd'_eq, ← hd''_eq]
-        rwa [Domino.shiftNat_shiftNeg]
+        rwa [EqShiftNat.of.Ge1Add1.Ge1Add1.Domino]
     ·
       intro hd
       if hne : d = vertical_1_1 then
@@ -46,12 +49,12 @@ private lemma main
       else
         right
         have hd_erase : d ∈ dominos.erase vertical_1_1 := Finset.mem_erase.mpr ⟨hne, hd⟩
-        have hcols := domino_col_ge_two_of_ne_vertical
-          ⟨dominos, dominos_in_rect, covers_all, pairwise_disjoint⟩ hv d hd hne
+        have hcols := Ge12.Ge12.of.NeVertical11.In_Dominos.InVertical11Dominos.Domino.DominoTiling
+          ⟨dominos, dominos_in_rect, covers_all, pairwise_disjoint⟩ d hv hd hne
         use d.shiftNeg 1 hcols.1 hcols.2
         constructor
         · use d, hd_erase
-        · exact Domino.shiftNat_shiftNeg d 1 hcols.1 hcols.2
+        · exact EqShiftNat.of.Ge1Add1.Ge1Add1.Domino d 1 hcols.1 hcols.2
 
 
 -- created on 2026-10-20

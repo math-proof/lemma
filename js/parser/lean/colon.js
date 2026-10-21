@@ -58,6 +58,17 @@ export class LeanColon extends LeanBinary {
             if (!(caret instanceof L.LeanCaret) && indent > this.indent && leanIsInfixContinue(next)) {
                 return caret;
             }
+            // `sup[θ, t]\n  ‖∇[θ] x‖ < ∞` — limits ops need their body on the next line, same as
+            // a same-line `sup[θ, t] ‖∇[θ] x‖ < ∞` (ArgsSpaceSeparated then relational). Without
+            // this, paren.arg becomes ArgsIndented and given-html drops/mis-zips the binder.
+            if (
+                !(caret instanceof L.LeanCaret) && indent > this.indent &&
+                caret instanceof L.LeanGetElem
+            ) {
+                const {base, indices} = caret.collectGetElemChain();
+                if (L.LeanGetElem.limitsOperator(base, indices))
+                    return caret;
+            }
             if (caret instanceof L.LeanCaret && indent >= this.indent) {
                 if (indent === this.indent) indent = this.indent + 2;
                 caret.indent = indent;

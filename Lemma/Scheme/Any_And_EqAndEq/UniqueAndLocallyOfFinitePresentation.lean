@@ -2,17 +2,18 @@ import Mathlib
 import sympy.Basic
 open CategoryTheory CategoryTheory.Limits CategoryTheory.MorphismProperty AlgebraicGeometry TopologicalSpace Opposite IsLocalRing
 open scoped TensorProduct MonoidalCategory
-
-universe u
-
 set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
 
-private lemma single {B X Y : Scheme.{u}} (πX : X ⟶ B) (πY : Y ⟶ B) [IsSeparated πY] (a b : X ⟶ Y)
-    (ha : a ≫ πY = πX) (hb : b ≫ πY = πX) :
-    ∃ (E : Scheme.{u}) (m : E ⟶ X), IsClosedImmersion m ∧ m ≫ a = m ≫ b ∧
-      (∀ (T : Scheme.{u}) (g : T ⟶ X), g ≫ a = g ≫ b → ∃! g' : T ⟶ E, g' ≫ m = g) ∧
+
+universe u
+
+private lemma single
+  {B X Y : (Scheme : Type (u + 1))} (πX : X ⟶ B) (πY : Y ⟶ B) [IsSeparated πY] (a b : X ⟶ Y)
+  (ha : a ≫ πY = πX) (hb : b ≫ πY = πX) :
+    ∃ (E : (Scheme : Type (u + 1))) (m : E ⟶ X), IsClosedImmersion m ∧ m ≫ a = m ≫ b ∧
+      (∀ (T : (Scheme : Type (u + 1))) (g : T ⟶ X), g ≫ a = g ≫ b → ∃! g' : T ⟶ E, g' ≫ m = g) ∧
       (LocallyOfFinitePresentation (pullback.diagonal πY) → LocallyOfFinitePresentation m) := by
   have hab : a ≫ πY = b ≫ πY := ha.trans hb.symm
   have key : pullback.fst (pullback.lift a b hab) (pullback.diagonal πY) ≫ a =
@@ -23,7 +24,8 @@ private lemma single {B X Y : Scheme.{u}} (πX : X ⟶ B) (πY : Y ⟶ B) [IsSep
       Category.comp_id] at h1 h2
     rw [h1, h2]
   refine ⟨pullback (pullback.lift a b hab) (pullback.diagonal πY), pullback.fst _ _, inferInstance, key, ?_, ?_⟩
-  · intro T g hg
+  ·
+    intro T g hg
     have hc : g ≫ pullback.lift a b hab = (g ≫ a) ≫ pullback.diagonal πY := by
       apply pullback.hom_ext
       · simp only [Category.assoc, pullback.lift_fst, pullback.diagonal_fst, Category.comp_id]
@@ -31,20 +33,20 @@ private lemma single {B X Y : Scheme.{u}} (πX : X ⟶ B) (πY : Y ⟶ B) [IsSep
     refine ⟨pullback.lift g (g ≫ a) hc, pullback.lift_fst _ _ _, ?_⟩
     intro g' hg'
     apply pullback.hom_ext
-    · rw [pullback.lift_fst]; exact hg'
-    · rw [pullback.lift_snd]
+    · rwa [pullback.lift_fst]
+    ·
+      rw [pullback.lift_snd]
       have h1 := congrArg (· ≫ pullback.fst πY πY)
         (pullback.condition (f := pullback.lift a b hab) (g := pullback.diagonal πY))
       simp only [Category.assoc, pullback.lift_fst, pullback.diagonal_fst, Category.comp_id] at h1
       rw [← hg', Category.assoc, h1]
-  · intro hΔ
+  ·
+    intro hΔ
     let _ := hΔ
     infer_instance
-private lemma finN {B Y : Scheme.{u}} (πY : Y ⟶ B) [IsSeparated πY] (n : ℕ) :
-    ∀ (X : Scheme.{u}) (πX : X ⟶ B) (a b : Fin n → (X ⟶ Y)) (_ : ∀ i, a i ≫ πY = πX) (_ : ∀ i, b i ≫ πY = πX),
-    ∃ (E : Scheme.{u}) (m : E ⟶ X), IsClosedImmersion m ∧ (∀ i, m ≫ a i = m ≫ b i) ∧
-      (∀ (T : Scheme.{u}) (g : T ⟶ X), (∀ i, g ≫ a i = g ≫ b i) → ∃! g' : T ⟶ E, g' ≫ m = g) ∧
-      (LocallyOfFinitePresentation (pullback.diagonal πY) → LocallyOfFinitePresentation m) := by
+private lemma finN
+  {B Y : (Scheme : Type (u + 1))} (πY : Y ⟶ B) [IsSeparated πY] (n : ℕ) :
+    ∀ (X : (Scheme : Type (u + 1))) (πX : X ⟶ B) (a b : Fin n → (X ⟶ Y)) (_ : ∀ i, a i ≫ πY = πX) (_ : ∀ i, b i ≫ πY = πX), ∃ (E : (Scheme : Type (u + 1))) (m : E ⟶ X), IsClosedImmersion m ∧ (∀ i, m ≫ a i = m ≫ b i) ∧ (∀ (T : (Scheme : Type (u + 1))) (g : T ⟶ X), (∀ i, g ≫ a i = g ≫ b i) → ∃! g' : T ⟶ E, g' ≫ m = g) ∧ (LocallyOfFinitePresentation (pullback.diagonal πY) → LocallyOfFinitePresentation m) := by
   induction n with
   | zero =>
     intro X πX a b ha hb
@@ -59,11 +61,13 @@ private lemma finN {B Y : Scheme.{u}} (πY : Y ⟶ B) [IsSeparated πY] (n : ℕ
       (by rw [Category.assoc, ha]) (by rw [Category.assoc, hb])
     let _ := hm''
     refine ⟨E, m'' ≫ m', inferInstance, ?_, ?_, ?_⟩
-    · intro i
+    ·
+      intro i
       refine Fin.cases ?_ (fun j => ?_) i
       · simpa only [Category.assoc] using heq''
       · rw [Category.assoc, Category.assoc, heq' j]
-    · intro T g hg
+    ·
+      intro T g hg
       obtain ⟨g', hg', hu'⟩ := huniv' T g (fun i => hg i.succ)
       obtain ⟨g'', hg'', hu''⟩ := huniv'' T g'
         (by rw [← Category.assoc, ← Category.assoc, hg', hg 0])
@@ -71,9 +75,9 @@ private lemma finN {B Y : Scheme.{u}} (πY : Y ⟶ B) [IsSeparated πY] (n : ℕ
       apply hu''
       apply hu'
       show (l ≫ m'') ≫ m' = g
-      rw [Category.assoc]
-      exact hl
-    · intro hΔ
+      rwa [Category.assoc]
+    ·
+      intro hΔ
       let _ := hlfp' hΔ
       let _ := hlfp'' hΔ
       infer_instance
@@ -82,17 +86,18 @@ private lemma finN {B Y : Scheme.{u}} (πY : Y ⟶ B) [IsSeparated πY] (n : ℕ
 -/
 @[path]
 private lemma main
-    {B X Y : Scheme.{u}} (πX : X ⟶ B) (πY : Y ⟶ B) (hY : IsSeparated πY)
+  {B X Y : (Scheme : Type (u + 1))} (πX : X ⟶ B) (πY : Y ⟶ B) (hY : IsSeparated πY)
     {ι : Type v} [Fintype ι] (a b : ι → (X ⟶ Y))
     (ha : ∀ i, a i ≫ πY = πX) (hb : ∀ i, b i ≫ πY = πX) :
-    ∃ (E : Scheme.{u}) (m : E ⟶ X), IsClosedImmersion m ∧
+    ∃ (E : (Scheme : Type (u + 1))) (m : E ⟶ X), IsClosedImmersion m ∧
       (∀ i, m ≫ a i = m ≫ b i) ∧
-      (∀ (T : Scheme.{u}) (g : T ⟶ X), (∀ i, g ≫ a i = g ≫ b i) → ∃! g' : T ⟶ E, g' ≫ m = g) ∧
+      (∀ (T : (Scheme : Type (u + 1))) (g : T ⟶ X), (∀ i, g ≫ a i = g ≫ b i) → ∃! g' : T ⟶ E, g' ≫ m = g) ∧
       (LocallyOfFinitePresentation (pullback.diagonal πY) → LocallyOfFinitePresentation m) := by
   let _ := hY
   obtain ⟨E, m, h1, h2, h3, h4⟩ := finN πY (Fintype.card ι) X πX
     (fun j => a ((Fintype.equivFin ι).symm j)) (fun j => b ((Fintype.equivFin ι).symm j)) (fun j => ha _) (fun j => hb _)
   refine ⟨E, m, h1, fun i => ?_, fun T g hg => h3 T g (fun j => hg _), h4⟩
   simpa only [Equiv.symm_apply_apply] using h2 (Fintype.equivFin ι i)
+
 
 -- created on 2026-10-20

@@ -1,10 +1,13 @@
 import Mathlib
 import sympy.Basic
+set_option maxHeartbeats 999999
+set_option linter.unusedVariables false
 
 
 private lemma isNoetherianRing_of_isAdicComplete_of_quotient
-    (R : Type) [CommRing R] (ϖ : R) (hc : IsAdicComplete (Ideal.span {ϖ}) R)
-    (hN : IsNoetherianRing (R ⧸ Ideal.span {ϖ})) : IsNoetherianRing R := by
+  (R : Type) [CommRing R] (ϖ : R) (hc : IsAdicComplete (Ideal.span {ϖ}) R)
+  (hN : IsNoetherianRing (R ⧸ Ideal.span {ϖ})) :
+  IsNoetherianRing R := by
   classical
   obtain ⟨I, hI⟩ : ∃ I : Ideal R, Ideal.span {ϖ} = I := ⟨_, rfl⟩
   rw [hI] at hc hN
@@ -30,13 +33,19 @@ private lemma isNoetherianRing_of_isAdicComplete_of_quotient
     ext y
     simp only [Set.mem_image, Set.mem_range, Finset.mem_coe]
     constructor
-    · rintro ⟨_, ⟨s, rfl⟩, rfl⟩; rw [hgmk]; exact s.2
-    · intro hy; exact ⟨g ⟨y, hy⟩, ⟨⟨y, hy⟩, rfl⟩, hgmk ⟨y, hy⟩⟩
-  have hPGI : P ≤ G ⊔ I := by
-    calc P ≤ (P.map mk).comap mk := Ideal.le_comap_map
-      _ = (G.map mk).comap mk := by rw [hmapG]
-      _ = G ⊔ I := by
-        rw [Ideal.comap_map_of_surjective _ Ideal.Quotient.mk_surjective, ← RingHom.ker_eq_comap_bot, Ideal.mk_ker]
+    ·
+      rintro ⟨_, ⟨s, rfl⟩, rfl⟩
+      rw [hgmk]
+      apply s.2
+    ·
+      intro hy
+      exact ⟨g ⟨y, hy⟩, ⟨⟨y, hy⟩, rfl⟩, hgmk ⟨y, hy⟩⟩
+  have hPGI : P ≤ G ⊔ I := calc
+    _ ≤ (P.map mk).comap mk := Ideal.le_comap_map
+    _ = (G.map mk).comap mk := by
+      rw [hmapG]
+    _ = G ⊔ I := by
+      rw [Ideal.comap_map_of_surjective _ Ideal.Quotient.mk_surjective, ← RingHom.ker_eq_comap_bot, Ideal.mk_ker]
   have hstep0 : ∀ x ∈ P, ∃ (c : ↥S → R) (x' : R), x = (∑ i, c i * g i) + ϖ * x' := by
     intro x hx
     obtain ⟨y, hy, z, hz, rfl⟩ := Submodule.mem_sup.1 (hPGI hx)
@@ -51,24 +60,27 @@ private lemma isNoetherianRing_of_isAdicComplete_of_quotient
     rw [hPeq]
     refine Submodule.FG.sup ⟨Finset.univ.image g, ?_⟩ ⟨{ϖ}, ?_⟩
     · rw [Finset.coe_image, Finset.coe_univ, Set.image_univ]
-    · rw [Finset.coe_singleton]; exact hI
+    ·
+      rwa [Finset.coe_singleton]
   else
     have hstep : ∀ x : ↥P, ∃ (c : ↥S → R) (x' : ↥P), x.1 = (∑ i, c i * g i) + ϖ * x'.1 := by
       intro x
       obtain ⟨c, x', hx'⟩ := hstep0 x x.2
       have hx'P : x' ∈ P := by
         have hmem : ϖ * x' ∈ P := by
-          have : ϖ * x' = x - ∑ i, c i * g i := by rw [hx']; ring
+          have : ϖ * x' = x - ∑ i, c i * g i := by
+            rw [hx']
+            ring
           rw [this]
-          exact P.sub_mem x.2 (P.sum_mem fun i _ => P.mul_mem_left _ (hgP i))
-        exact ((hP.mem_or_mem hmem).resolve_left hϖ)
-      exact ⟨c, ⟨x', hx'P⟩, hx'⟩
+          refine P.sub_mem x.2 (P.sum_mem fun i _ => P.mul_mem_left _ (hgP i))
+        refine ((hP.mem_or_mem hmem).resolve_left hϖ)
+      refine ⟨c, ⟨x', hx'P⟩, hx'⟩
     choose cf nx hnx using hstep
     suffices hPG : P ≤ G by
       rw [le_antisymm hPG hGP]
       exact ⟨Finset.univ.image g, by rw [Finset.coe_image, Finset.coe_univ, Set.image_univ]⟩
     intro p hp
-    let sq : ℕ → ↥P := fun k => nx^[k] ⟨p, hp⟩
+    let sq : ℕ → ↥P := fun k => Nat.iterate nx k ⟨p, hp⟩
     have sq_zero : sq 0 = ⟨p, hp⟩ := rfl
     have sq_succ : ∀ k, sq (k + 1) = nx (sq k) := fun k => Function.iterate_succ_apply' nx k _
     let A : ↥S → ℕ → R := fun i k => ∑ j ∈ Finset.range k, ϖ ^ j * cf (sq j) i
@@ -92,8 +104,7 @@ private lemma isNoetherianRing_of_isAdicComplete_of_quotient
         rw [← Finset.sum_range_add_sum_Ico _ hmn]; ring
       rw [this]
       refine Submodule.neg_mem _ (Submodule.sum_mem _ fun j hj => ?_)
-      have hmj : m ≤ j := (Finset.mem_Ico.1 hj).1
-      exact Ideal.mul_mem_right _ _ (Ideal.pow_le_pow_right hmj (Ideal.pow_mem_pow (hI ▸ Ideal.subset_span rfl) j))
+      refine Ideal.mul_mem_right _ _ (Ideal.pow_le_pow_right (Finset.mem_Ico.1 hj).1 (Ideal.pow_mem_pow (hI ▸ Ideal.subset_span (Set.mem_singleton ϖ)) j))
     have hL : ∀ i : ↥S, ∃ L : R, ∀ n, A i n ≡ L [SMOD (I ^ n • ⊤ : Submodule R R)] :=
       fun i => hc.toIsPrecomplete.prec' (A i) (hA i)
     choose L hLspec using hL
@@ -109,15 +120,15 @@ private lemma isNoetherianRing_of_isAdicComplete_of_quotient
         (Ideal.sum_mem _ fun i _ => Ideal.mul_mem_right _ _ ?_)
       have := hLspec i n
       rw [SModEq.sub_mem, hpow] at this
-      exact this
+      apply this
     rw [sub_eq_zero] at hzero
     rw [hzero, hG]
     exact Ideal.sum_mem _ fun i _ => Ideal.mul_mem_left _ _ (Ideal.subset_span ⟨i, rfl⟩)
 private lemma exists_mvPolynomial_sub_mem_pow
-    (𝒪 : Type) [CommRing 𝒪] (R : Type) [CommRing R] [Algebra 𝒪 R] (ϖ : 𝒪) {m : ℕ} (x : Fin m → R)
-    (hgen : Algebra.adjoin 𝒪 (Set.range fun i => Ideal.Quotient.mk (Ideal.span {algebraMap 𝒪 R ϖ}) (x i)) = ⊤)
-    (k : ℕ) (r : R) :
-    ∃ P : MvPolynomial (Fin m) 𝒪, r - MvPolynomial.aeval x P ∈ Ideal.span {algebraMap 𝒪 R ϖ} ^ k := by
+  (𝒪 : Type) [CommRing 𝒪] (R : Type) [CommRing R] [Algebra 𝒪 R] (ϖ : 𝒪) {m : ℕ} (x : Fin m → R)
+  (hgen : Algebra.adjoin 𝒪 (Set.range fun i => Ideal.Quotient.mk (Ideal.span {algebraMap 𝒪 R ϖ}) (x i)) = ⊤)
+  (k : ℕ) (r : R) :
+  ∃ P : MvPolynomial (Fin m) 𝒪, r - MvPolynomial.aeval x P ∈ Ideal.span {algebraMap 𝒪 R ϖ} ^ k := by
   classical
   set ϖ' := algebraMap 𝒪 R ϖ with hϖ'
   let I : Ideal R := Ideal.span {ϖ'}
@@ -143,12 +154,12 @@ private lemma exists_mvPolynomial_sub_mem_pow
     rw [this, pow_succ, Ideal.span_singleton_pow, mul_comm (s - MvPolynomial.aeval x Q)]
     exact Ideal.mul_mem_mul (Ideal.mem_span_singleton_self _) hQ
 private lemma exists_repr_of_forall_exists_repr_add_mul
-    (R : Type) [CommRing R] (ϖ : R) (hc : IsAdicComplete (Ideal.span {ϖ}) R) (A : Subring R)
-    (hAclosed : ∀ (f : ℕ → R) (L : R), (∀ n, f n ∈ A) →
-      (∀ n, f n ≡ L [SMOD (Ideal.span {ϖ} ^ n • ⊤ : Submodule R R)]) → L ∈ A)
-    (hϖA : ϖ ∈ A) {d : ℕ} (μ : Fin d → R)
-    (hstep : ∀ r : R, ∃ (c : Fin d → R) (r' : R), (∀ j, c j ∈ A) ∧ r = (∑ j, c j * μ j) + ϖ * r') (r : R) :
-    ∃ a : Fin d → R, (∀ j, a j ∈ A) ∧ r = ∑ j, a j * μ j := by
+  (R : Type) [CommRing R] (ϖ : R) (hc : IsAdicComplete (Ideal.span {ϖ}) R) (A : Subring R)
+  (hAclosed : ∀ (f : ℕ → R) (L : R), (∀ n, f n ∈ A) →
+    (∀ n, f n ≡ L [SMOD (Ideal.span {ϖ} ^ n • ⊤ : Submodule R R)]) → L ∈ A)
+  (hϖA : ϖ ∈ A) {d : ℕ} (μ : Fin d → R)
+  (hstep : ∀ r : R, ∃ (c : Fin d → R) (r' : R), (∀ j, c j ∈ A) ∧ r = (∑ j, c j * μ j) + ϖ * r') (r : R) :
+  ∃ a : Fin d → R, (∀ j, a j ∈ A) ∧ r = ∑ j, a j * μ j := by
   classical
   obtain ⟨I, hI⟩ : ∃ I : Ideal R, Ideal.span {ϖ} = I := ⟨_, rfl⟩
   rw [hI] at hc hAclosed
@@ -157,7 +168,7 @@ private lemma exists_repr_of_forall_exists_repr_add_mul
     rw [SModEq.sub_mem, hpow]
   have hϖn : ∀ n : ℕ, ϖ ^ n ∈ I ^ n := fun n => Ideal.pow_mem_pow (hI ▸ Ideal.subset_span rfl) n
   choose cf nx hcf hnx using hstep
-  let sq : ℕ → R := fun k => nx^[k] r
+  let sq : ℕ → R := fun k => Nat.iterate nx k r
   have sq_zero : sq 0 = r := rfl
   have sq_succ : ∀ k, sq (k + 1) = nx (sq k) := fun k => Function.iterate_succ_apply' nx k _
   let S : Fin d → ℕ → R := fun j k => ∑ i ∈ Finset.range k, ϖ ^ i * cf (sq i) j
@@ -199,7 +210,7 @@ private lemma exists_repr_of_forall_exists_repr_add_mul
     rw [e]
     refine Ideal.add_mem _ (Ideal.mul_mem_right _ _ (hϖn n)) (Ideal.sum_mem _ fun j _ => Ideal.mul_mem_right _ _ ?_)
     exact (smodR n _ _).1 (ha j n)
-  exact (sub_eq_zero.1 hzero)
+  refine (sub_eq_zero.mp hzero)
 /--
 [AlgebraicGeometry_AdmissibleAlgebra_fixedPoints_isAdicComplete_and_finite_and_finiteType](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_AdmissibleAlgebra_fixedPoints_isAdicComplete_and_finite_and_finiteType.lean)
 -/
@@ -214,11 +225,11 @@ private lemma main
   (hRtf : ∀ x : R, algebraMap 𝒪 R π * x = 0 → x = 0)
   (hRft : Algebra.FiniteType 𝒪 (R ⧸ Ideal.span {algebraMap 𝒪 R π})) :
 -- imply
-  IsAdicComplete (Ideal.span {algebraMap 𝒪 (↥(FixedPoints.subalgebra 𝒪 R G)) π}) ↥(FixedPoints.subalgebra 𝒪 R G) ∧
-    Module.Finite ↥(FixedPoints.subalgebra 𝒪 R G) R ∧
-    Algebra.FiniteType 𝒪 (↥(FixedPoints.subalgebra 𝒪 R G) ⧸ Ideal.span {algebraMap 𝒪 (↥(FixedPoints.subalgebra 𝒪 R G)) π}) ∧
-    (∀ k : ℕ, ∀ x : ↥(FixedPoints.subalgebra 𝒪 R G),
-      (x : R) ∈ Ideal.span {(algebraMap 𝒪 R π) ^ k} → x ∈ Ideal.span {(algebraMap 𝒪 (↥(FixedPoints.subalgebra 𝒪 R G)) π) ^ k}) := by
+  IsAdicComplete (Ideal.span {algebraMap 𝒪 ((FixedPoints.subalgebra 𝒪 R G)) π}) (FixedPoints.subalgebra 𝒪 R G) ∧
+    Module.Finite (FixedPoints.subalgebra 𝒪 R G) R ∧
+    Algebra.FiniteType 𝒪 ((FixedPoints.subalgebra 𝒪 R G) ⧸ Ideal.span {algebraMap 𝒪 ((FixedPoints.subalgebra 𝒪 R G)) π}) ∧
+    (∀ k : ℕ, ∀ x : (FixedPoints.subalgebra 𝒪 R G),
+      (x : R) ∈ Ideal.span {(algebraMap 𝒪 R π) ^ k} → x ∈ Ideal.span {(algebraMap 𝒪 ((FixedPoints.subalgebra 𝒪 R G)) π) ^ k}) := by
 -- proof
   classical
   set A := FixedPoints.subalgebra 𝒪 R G with hA
@@ -226,14 +237,17 @@ private lemma main
   have hreg : ∀ (k : ℕ) (y : R), ϖ ^ k * y = 0 → y = 0 := by
     intro k
     induction k with
-    | zero => intro y hy; simpa using hy
+    | zero =>
+      intro y hy
+      simpa using hy
     | succ k ih =>
       intro y hy
       apply ih
       apply hRtf
-      rw [← mul_assoc, ← pow_succ']; exact hy
+      rw [← mul_assoc, ← pow_succ']
+      apply hy
   have hgϖ : ∀ g : G, g • ϖ = ϖ := fun g => by rw [hϖ, Algebra.algebraMap_eq_smul_one, smul_comm, smul_one]
-  have hAtors : ∀ k : ℕ, ∀ x : ↥A, (x : R) ∈ Ideal.span {ϖ ^ k} → x ∈ Ideal.span {(algebraMap 𝒪 (↥A) π) ^ k} := by
+  have hAtors : ∀ k : ℕ, ∀ x : ↥A, (x : R) ∈ Ideal.span {ϖ ^ k} → x ∈ Ideal.span {(algebraMap 𝒪 ↥A π) ^ k} := by
     intro k x hx
     obtain ⟨c, hc⟩ := Ideal.mem_span_singleton'.1 hx
     have hcA : c ∈ A := by
@@ -241,22 +255,26 @@ private lemma main
       show g • c = c
       have h1 : g • (x : R) = x := x.2 g
       rw [← hc, smul_mul', smul_pow', hgϖ] at h1
-      have h2 : ϖ ^ k * (g • c - c) = 0 := by rw [mul_sub, mul_comm, mul_comm (ϖ ^ k), h1, sub_self]
-      exact sub_eq_zero.1 (hreg k _ h2)
+      refine sub_eq_zero.mp (hreg k _ ?_)
+      rw [mul_sub, mul_comm, mul_comm (ϖ ^ k), h1, sub_self]
     refine Ideal.mem_span_singleton'.2 ⟨⟨c, hcA⟩, Subtype.ext ?_⟩
-    show c * ((algebraMap 𝒪 (↥A) π : ↥A) : R) ^ k = x
+    show c * ((algebraMap 𝒪 ↥A π : ↥A) : R) ^ k = x
     rw [← hc]; rfl
   let hRc' : IsAdicComplete (Ideal.span {ϖ}) R := hRc
-  set ϖA : ↥A := algebraMap 𝒪 (↥A) π with hϖA
+  set ϖA : ↥A := algebraMap 𝒪 ↥A π with hϖA
   have memA : ∀ (n : ℕ) (x : ↥A), x ∈ Ideal.span {ϖA} ^ n ↔ (x : R) ∈ Ideal.span {ϖ} ^ n := by
     intro n x
     rw [Ideal.span_singleton_pow, Ideal.span_singleton_pow]
     constructor
-    · intro hx
+    ·
+      intro hx
       obtain ⟨c, hc⟩ := Ideal.mem_span_singleton'.1 hx
       refine Ideal.mem_span_singleton'.2 ⟨(c : R), ?_⟩
-      rw [← hc]; rfl
-    · intro hx; exact hAtors n x hx
+      rw [← hc]
+      rfl
+    ·
+      intro hx
+      apply hAtors n x hx
   have smodA : ∀ (n : ℕ) (x y : ↥A), x ≡ y [SMOD (Ideal.span {ϖA} ^ n • ⊤ : Submodule ↥A ↥A)] ↔ x - y ∈ Ideal.span {ϖA} ^ n := by
     intro n x y; rw [SModEq.sub_mem]; simp
   have smodR : ∀ (n : ℕ) (x y : R), x ≡ y [SMOD (Ideal.span {ϖ} ^ n • ⊤ : Submodule R R)] ↔ x - y ∈ Ideal.span {ϖ} ^ n := by
@@ -273,7 +291,7 @@ private lemma main
     rw [Ideal.span_singleton_pow] at hy ⊢
     obtain ⟨c, rfl⟩ := Ideal.mem_span_singleton'.1 hy
     rw [smul_mul', smul_pow', hgϖ]
-    exact Ideal.mem_span_singleton'.2 ⟨g • c, rfl⟩
+    refine Ideal.mem_span_singleton'.2 ⟨g • c, rfl⟩
   have hP : IsPrecomplete (Ideal.span {ϖA}) ↥A := ⟨fun {f} hf => by
     obtain ⟨L, hL⟩ := IsPrecomplete.prec' (I := Ideal.span {ϖ}) (fun n => (f n : R)) (fun {m n} hmn => by
       rw [smodR]
@@ -321,9 +339,13 @@ private lemma main
   have hgen : Algebra.adjoin 𝒪 (Set.range fun i => Ideal.Quotient.mk (Ideal.span {algebraMap 𝒪 R π}) (x i)) = ⊤ := by
     have : (Set.range fun i => Ideal.Quotient.mk (Ideal.span {algebraMap 𝒪 R π}) (x i)) = t := by
       rw [← hemb]; ext y; constructor
-      · rintro ⟨i, rfl⟩; exact ⟨i, (hx i).symm⟩
-      · rintro ⟨i, rfl⟩; exact ⟨i, hx i⟩
-    rw [this]; exact ht
+      ·
+        rintro ⟨i, rfl⟩
+        exact ⟨i, (hx i).symm⟩
+      ·
+        rintro ⟨i, rfl⟩
+        exact ⟨i, hx i⟩
+    rwa [this]
   let C : Set R := Set.range fun p : (Σ i : Fin m, Fin ((prodXSubSMul G R (x i)).natDegree + 1)) =>
     (prodXSubSMul G R (x p.1)).coeff p.2
   let S₀ : Subalgebra 𝒪 R := Algebra.adjoin 𝒪 C
@@ -332,22 +354,22 @@ private lemma main
     show (prodXSubSMul G R (x i)).coeff n ∈ A
     rw [hA]; intro g; exact prodXSubSMul.coeff G R (x i) g n
   have hS₀A : S₀ ≤ A := Algebra.adjoin_le hCA
-  have hint : ∀ i, IsIntegral (↥S₀) (x i) := by
+  have hint : ∀ i, IsIntegral ↥S₀ (x i) := by
     intro i
-    have hl : prodXSubSMul G R (x i) ∈ Polynomial.lifts (algebraMap (↥S₀) R) := by
+    have hl : prodXSubSMul G R (x i) ∈ Polynomial.lifts (algebraMap ↥S₀ R) := by
       rw [Polynomial.lifts_iff_coeff_lifts]
       intro n
       if hn : n ≤ (prodXSubSMul G R (x i)).natDegree then
         have hc : (prodXSubSMul G R (x i)).coeff n ∈ S₀ :=
           Algebra.subset_adjoin ⟨⟨i, ⟨n, Nat.lt_succ_of_le hn⟩⟩, rfl⟩
-        exact ⟨⟨_, hc⟩, rfl⟩
+        refine ⟨⟨_, hc⟩, rfl⟩
       else
         refine ⟨0, ?_⟩
         rw [map_zero, Polynomial.coeff_eq_zero_of_natDegree_lt (not_le.1 hn)]
     obtain ⟨q, hq, -, hqm⟩ := Polynomial.lifts_and_natDegree_eq_and_monic hl (prodXSubSMul.monic G R (x i))
     refine ⟨q, hqm, ?_⟩
     rw [← Polynomial.eval_map, hq]; exact prodXSubSMul.eval G R (x i)
-  have hNfg : (Subalgebra.toSubmodule (Algebra.adjoin (↥S₀) (Set.range x))).FG :=
+  have hNfg : (Subalgebra.toSubmodule (Algebra.adjoin ↥S₀ (Set.range x))).FG :=
     fg_adjoin_of_finite (Set.finite_range x) (by rintro _ ⟨i, rfl⟩; exact hint i)
   obtain ⟨T, hT⟩ := hNfg
   obtain ⟨d, μe, hμ⟩ := T.finite_toSet.fin_embedding
@@ -356,19 +378,23 @@ private lemma main
     obtain ⟨P, hP⟩ := exists_mvPolynomial_sub_mem_pow 𝒪 R π x hgen 1 r
     rw [pow_one] at hP
     obtain ⟨r', hr'⟩ := Ideal.mem_span_singleton'.1 hP
-    have hmem : MvPolynomial.aeval x P ∈ Submodule.span (↥S₀) (Set.range μe) := by
-      rw [hμ, hT, Subalgebra.mem_toSubmodule, ← MvPolynomial.aeval_map_algebraMap (↥S₀) x P,
+    have hmem : MvPolynomial.aeval x P ∈ Submodule.span ↥S₀ (Set.range μe) := by
+      rw [hμ, hT, Subalgebra.mem_toSubmodule, ← MvPolynomial.aeval_map_algebraMap ↥S₀ x P,
         Algebra.adjoin_range_eq_range_aeval]
       exact ⟨_, rfl⟩
-    obtain ⟨c, hc⟩ := (Submodule.mem_span_range_iff_exists_fun (↥S₀)).1 hmem
+    obtain ⟨c, hc⟩ := (Submodule.mem_span_range_iff_exists_fun ↥S₀).1 hmem
     refine ⟨fun j => (c j : R), r', fun j => ?_, ?_⟩
-    · rw [Subalgebra.mem_toSubring]; exact hS₀A (c j).2
-    · have : (∑ j, (c j : R) * μe j) = MvPolynomial.aeval x P := by
-        rw [← hc]; rfl
+    ·
+      rw [Subalgebra.mem_toSubring]
+      apply hS₀A (c j).2
+    ·
+      have : (∑ j, (c j : R) * μe j) = MvPolynomial.aeval x P := by
+        rw [← hc]
+        rfl
       rw [this, mul_comm, hr']; ring
   have hϖA : ϖ ∈ A.toSubring := by rw [Subalgebra.mem_toSubring, hϖ]; exact A.algebraMap_mem π
   have hrep := exists_repr_of_forall_exists_repr_add_mul R ϖ hRc' A.toSubring hAclosed hϖA μe hstep
-  have hfinAR : Module.Finite (↥A) R := by
+  have hfinAR : Module.Finite ↥A R := by
     rw [Module.finite_def]
     refine ⟨Finset.univ.image μe, ?_⟩
     rw [eq_top_iff]
@@ -389,7 +415,7 @@ private lemma main
   have hφ : ∀ a : ↥A, φ (Ideal.Quotient.mk J a) = Ideal.Quotient.mk (Ideal.span {ϖ}) (a : R) := fun a => Ideal.quotientMap_mk
   let _ : Algebra (↥A ⧸ J) (R ⧸ Ideal.span {ϖ}) := φ.toAlgebra
   let _ : IsScalarTower 𝒪 (↥A ⧸ J) (R ⧸ Ideal.span {ϖ}) := IsScalarTower.of_algebraMap_eq (fun c => by
-    show Ideal.Quotient.mk (Ideal.span {ϖ}) (algebraMap 𝒪 R c) = φ (Ideal.Quotient.mk J (algebraMap 𝒪 (↥A) c))
+    show Ideal.Quotient.mk (Ideal.span {ϖ}) (algebraMap 𝒪 R c) = φ (Ideal.Quotient.mk J (algebraMap 𝒪 ↥A c))
     rw [hφ]; rfl)
   have hinj : Function.Injective φ := by
     intro u v huv
@@ -402,7 +428,7 @@ private lemma main
   have hfin' : (⊤ : Submodule (↥A ⧸ J) (R ⧸ Ideal.span {ϖ})).FG := by
     rw [← Module.finite_def]
     let _ := hfinAR
-    let f : R →ₛₗ[(Ideal.Quotient.mk J : ↥A →+* ↥A ⧸ J)] (R ⧸ Ideal.span {ϖ}) :=
+    let f : LinearMap (Ideal.Quotient.mk J) R (R ⧸ Ideal.span {ϖ}) :=
       { toFun := Ideal.Quotient.mk (Ideal.span {ϖ})
         map_add' := fun u v => map_add _ u v
         map_smul' := fun a r => by
@@ -410,7 +436,7 @@ private lemma main
           rw [hφ, map_mul] }
     exact Module.Finite.of_surjective f Ideal.Quotient.mk_surjective
   have hAT := fg_of_fg_of_fg 𝒪 (↥A ⧸ J) (R ⧸ Ideal.span {ϖ}) hRft.out hfin' hinj
-  exact ⟨hAT⟩
+  refine ⟨hAT⟩
 
 
 -- created on 2026-10-20

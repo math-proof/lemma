@@ -1,9 +1,12 @@
 import Mathlib
 import sympy.Basic
 import sympy.matrices.determinants.DominoTilings
+import Lemma.Nat.Ge1.Ge1.of.InDominos.Domino.DominoTiling
+import Lemma.Nat.IffIn_RectangleGe1AndGe_1AndGe21AndGe_2
 open DominoTilings
 open Domino DominoTiling
 open Finset
+open Nat
 set_option linter.unusedSimpArgs false
 
 
@@ -25,14 +28,14 @@ private lemma main
 -- proof
   have hdisj1 := T.pairwise_disjoint d hd horizontal_1_1 hh1 hne1
   have hdisj2 := T.pairwise_disjoint d hd horizontal_1_2 hh2 hne2
-  have h := domino_cells_col_ge_one T d hd
+  have h := Ge1.Ge1.of.InDominos.Domino.DominoTiling T d hd
   constructor
   ·
     by_contra hlt
     push Not at hlt
     have hd_in_rect := T.dominos_in_rect d hd
     have hc1_in_rect := hd_in_rect (Finset.mem_insert_self _ _)
-    rw [mem_Rectangle] at hc1_in_rect
+    rw [IffIn_RectangleGe1AndGe_1AndGe21AndGe_2] at hc1_in_rect
     have hrow : d.cell1.2 = 1 ∨ d.cell1.2 = 2 := by omega
     obtain hr1 | hr2 := hrow
     ·
@@ -64,7 +67,7 @@ private lemma main
     push Not at hlt
     have hd_in_rect := T.dominos_in_rect d hd
     have hc2_in_rect := hd_in_rect (Finset.mem_insert_of_mem (Finset.mem_singleton_self _))
-    rw [mem_Rectangle] at hc2_in_rect
+    rw [IffIn_RectangleGe1AndGe_1AndGe21AndGe_2] at hc2_in_rect
     have hrow : d.cell2.2 = 1 ∨ d.cell2.2 = 2 := by omega
     obtain hr1 | hr2 := hrow
     ·

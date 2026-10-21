@@ -1,9 +1,13 @@
 import Mathlib
 import sympy.Basic
 import sympy.matrices.determinants.DominoTilings
+import Lemma.Nat.EqDomino.of.Ge1.Ge1.Domino
+import Lemma.Nat.Ge1.Ge1.of.InDominos.Domino.DominoTiling
+import Lemma.Nat.Ge12.Ge12.of.NeVertical11.In_Dominos.InVertical11Dominos.Domino.DominoTiling
 open DominoTilings
 open Domino DominoTiling
 open Finset
+open Nat
 
 
 /--
@@ -35,19 +39,19 @@ private lemma main
       ·
         simp only [Finset.mem_image] at hd'_in_image
         obtain ⟨d'', hd''_mem, hd''_eq⟩ := hd'_in_image
-        have hcols := domino_cells_col_ge_one
+        have hcols := Ge1.Ge1.of.InDominos.Domino.DominoTiling
           ⟨dominos, dominos_in_rect, covers_all, pairwise_disjoint⟩ d'' hd''_mem
         subst hd''_eq
         rw [← hd'_eq] -- Show (d''.shiftNat 1).shiftNeg 1 ... = d'' by extensionality
         have h_eq : (d''.shiftNat 1).shiftNeg 1
-          (domino_col_ge_two_of_ne_vertical (prependVertical ⟨dominos, dominos_in_rect, covers_all, pairwise_disjoint⟩)
-              (by simp [prependVertical, vertical_1_1])
+          (Ge12.Ge12.of.NeVertical11.In_Dominos.InVertical11Dominos.Domino.DominoTiling (prependVertical ⟨dominos, dominos_in_rect, covers_all, pairwise_disjoint⟩)
               (d''.shiftNat 1)
+              (by simp [prependVertical, vertical_1_1])
               (Finset.mem_of_mem_erase hd'_erase)
               hd'_ne).1
-            (domino_col_ge_two_of_ne_vertical (prependVertical ⟨dominos, dominos_in_rect, covers_all, pairwise_disjoint⟩)
-              (by simp [prependVertical, vertical_1_1])
+            (Ge12.Ge12.of.NeVertical11.In_Dominos.InVertical11Dominos.Domino.DominoTiling (prependVertical ⟨dominos, dominos_in_rect, covers_all, pairwise_disjoint⟩)
               (d''.shiftNat 1)
+              (by simp [prependVertical, vertical_1_1])
               (Finset.mem_of_mem_erase hd'_erase)
               hd'_ne).2 = d'' := by
           apply Domino.ext
@@ -61,7 +65,7 @@ private lemma main
     ·
       -- Backward: d ∈ dominos → d is in the result
       intro hd
-      have hcols := domino_cells_col_ge_one
+      have hcols := Ge1.Ge1.of.InDominos.Domino.DominoTiling
         ⟨dominos, dominos_in_rect, covers_all, pairwise_disjoint⟩ d hd
       have hne : d.shiftNat 1 ≠ vertical_1_1 := by
         intro h
@@ -75,7 +79,7 @@ private lemma main
       have hmem'' : d.shiftNat 1 ∈ (insert vertical_1_1 (dominos.image (fun d => d.shiftNat 1))).erase vertical_1_1 :=
         Finset.mem_erase.mpr ⟨hne, hmem'⟩
       use d.shiftNat 1, hmem''
-      exact Domino.shiftNeg_shiftNat d 1 hcols.1 hcols.2
+      exact EqDomino.of.Ge1.Ge1.Domino d hcols.1 hcols.2 1
 
 
 -- created on 2026-10-20

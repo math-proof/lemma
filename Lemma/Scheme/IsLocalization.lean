@@ -1,98 +1,127 @@
 import Mathlib
 import sympy.Basic
-open CategoryTheory AlgebraicGeometry
-
-
-universe u
-
+open CategoryTheory AlgebraicGeometry Opposite
 set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
+
+
+universe u
 
 /--
 [AlgebraicGeometry_IsAffineOpen_isLocalization_primeCompl_of_isPreimmersion_of_forall_specializes](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_IsAffineOpen_isLocalization_primeCompl_of_isPreimmersion_of_forall_specializes.lean)
 -/
 @[path]
 private lemma main
-    {X : Scheme.{u}} [IsReduced X] {V : X.Opens} (hV : IsAffineOpen V)
-    (x : X) (hxV : x ∈ V) (hmax : ∀ y : X, y ⤳ x → y = x)
-    (F : Type u) [Field F] (φ : Spec (CommRingCat.of F) ⟶ X) [IsPreimmersion φ]
-    (hφx : φ.base (IsLocalRing.closedPoint F) = x)
-    [Algebra Γ(X, V) F]
-    (hφ : Spec.map (CommRingCat.ofHom (algebraMap Γ(X, V) F)) ≫ hV.fromSpec = φ) :
-    IsLocalization (hV.primeIdealOf ⟨x, hxV⟩).asIdeal.primeCompl F := by
+  {X : (Scheme : Type (u + 1))} [IsReduced X]
+  {V : X.Opens}
+  (x : X)
+  (F : Type u) [Field F] [Algebra (X.presheaf.obj (op V)) F]
+  (φ : Spec (CommRingCat.of F) ⟶ X) [IsPreimmersion φ]
+  -- given
+  (hV : IsAffineOpen V)
+  (hxV : x ∈ V)
+  (hmax : ∀ y : X, y ⤳ x → y = x)
+  (hφx : φ.base (IsLocalRing.closedPoint F) = x)
+  (hφ : Spec.map (CommRingCat.ofHom (algebraMap (X.presheaf.obj (op V)) F)) ≫ hV.fromSpec = φ) :
+  -- imply
+  IsLocalization (hV.primeIdealOf ⟨x, hxV⟩).asIdeal.primeCompl F := by
+  -- proof
   classical
-  have hpt : hV.fromSpec.base ((Spec.map (CommRingCat.ofHom (algebraMap Γ(X, V) F))).base (IsLocalRing.closedPoint F)) = x := by
-    rw [← hφx, ← hφ]; rfl
+  have hpt : hV.fromSpec.base ((Spec.map (CommRingCat.ofHom (algebraMap (X.presheaf.obj (op V)) F))).base
+      (IsLocalRing.closedPoint F)) = x := by
+    rw [← hφx, ← hφ]
+    rfl
   have h𝔭 : hV.primeIdealOf ⟨x, hxV⟩ =
-      (Spec.map (CommRingCat.ofHom (algebraMap Γ(X, V) F))).base (IsLocalRing.closedPoint F) := by
+      (Spec.map (CommRingCat.ofHom (algebraMap (X.presheaf.obj (op V)) F))).base (IsLocalRing.closedPoint F) := by
     apply hV.fromSpec.isOpenEmbedding.injective
     rw [hpt]
-    exact hV.fromSpec_primeIdealOf ⟨x, hxV⟩
-  have hmem : ∀ s : Γ(X, V), s ∈ (hV.primeIdealOf ⟨x, hxV⟩).asIdeal ↔ algebraMap Γ(X, V) F s = 0 := by
+    apply hV.fromSpec_primeIdealOf ⟨x, hxV⟩
+  have hmem : ∀ s : X.presheaf.obj (op V), s ∈ (hV.primeIdealOf ⟨x, hxV⟩).asIdeal ↔
+      algebraMap (X.presheaf.obj (op V)) F s = 0 := by
     intro s
     rw [h𝔭]
-    change algebraMap Γ(X, V) F s ∈ IsLocalRing.maximalIdeal F ↔ _
+    change algebraMap (X.presheaf.obj (op V)) F s ∈ IsLocalRing.maximalIdeal F ↔ _
     rw [IsLocalRing.mem_maximalIdeal, mem_nonunits_iff, isUnit_iff_ne_zero, not_not]
-  let _ : IsPreimmersion (Spec.map (CommRingCat.ofHom (algebraMap Γ(X, V) F)) ≫ hV.fromSpec) := by
-    rw [hφ]; infer_instance
-  have hpre : IsPreimmersion (Spec.map (CommRingCat.ofHom (algebraMap Γ(X, V) F))) :=
+  let _ : IsPreimmersion (Spec.map (CommRingCat.ofHom (algebraMap (X.presheaf.obj (op V)) F)) ≫ hV.fromSpec) := by
+    rw [hφ]
+    infer_instance
+  have hpre : IsPreimmersion (Spec.map (CommRingCat.ofHom (algebraMap (X.presheaf.obj (op V)) F))) :=
     IsPreimmersion.of_comp _ hV.fromSpec
-  have hsos : (algebraMap Γ(X, V) F).SurjectiveOnStalks :=
+  have hsos : (algebraMap (X.presheaf.obj (op V)) F).SurjectiveOnStalks :=
     ((IsPreimmersion.SpecMap_iff _).mp hpre).2
   set 𝔭 := hV.primeIdealOf ⟨x, hxV⟩ with h𝔭def
-  have hkill : ∀ d ∈ 𝔭.asIdeal, ∃ c : 𝔭.asIdeal.primeCompl, (c : Γ(X, V)) * d = 0 := by
+  have hkill : ∀ d ∈ 𝔭.asIdeal, ∃ c : 𝔭.asIdeal.primeCompl, (c : X.presheaf.obj (op V)) * d = 0 := by
     intro d hd
     set L := Localization.AtPrime 𝔭.asIdeal with hL
     have huniq : ∀ Q : Ideal L, Q.IsPrime → Q = IsLocalRing.maximalIdeal L := by
       intro Q hQ
-      let q : PrimeSpectrum Γ(X, V) := ⟨Q.comap (algebraMap Γ(X, V) L), Ideal.IsPrime.comap _⟩
+      let q : PrimeSpectrum (X.presheaf.obj (op V)) := ⟨Q.comap (algebraMap (X.presheaf.obj (op V)) L), Ideal.IsPrime.comap _⟩
       have hq𝔭 : q ≤ 𝔭 := by
         intro s hs
         by_contra hs'
-        have hu : IsUnit (algebraMap Γ(X, V) L s) := IsLocalization.map_units L (⟨s, hs'⟩ : 𝔭.asIdeal.primeCompl)
-        exact hQ.ne_top (Ideal.eq_top_of_isUnit_mem Q hs hu)
+        apply hQ.ne_top (Ideal.eq_top_of_isUnit_mem Q hs
+          (IsLocalization.map_units L (⟨s, hs'⟩ : 𝔭.asIdeal.primeCompl)))
       have hfx : hV.fromSpec.base 𝔭 = x := hV.fromSpec_primeIdealOf ⟨x, hxV⟩
       have hspec : hV.fromSpec.base q ⤳ x := by
         rw [← hfx]
-        exact ((PrimeSpectrum.le_iff_specializes q 𝔭).mp hq𝔭).map hV.fromSpec.base.hom.continuous
+        apply ((PrimeSpectrum.le_iff_specializes q 𝔭).mp hq𝔭).map hV.fromSpec.base.hom.continuous
       have hqx : q = 𝔭 := by
         apply hV.fromSpec.isOpenEmbedding.injective
         rw [hmax _ hspec, hfx]
       apply le_antisymm (IsLocalRing.le_maximalIdeal hQ.ne_top)
       rw [← Localization.AtPrime.map_eq_maximalIdeal, Ideal.map_le_iff_le_comap]
       intro s hs
-      have hs' : s ∈ q.asIdeal := by rw [hqx]; exact hs
-      exact hs'
+      have hs' : s ∈ q.asIdeal := by
+        rw [hqx]
+        apply hs
+      refine hs'
     have hmax0 : IsLocalRing.maximalIdeal L = ⊥ := by
       rw [eq_bot_iff]
       intro m hm
       have : m ∈ nilradical L := by
         rw [nilradical_eq_sInf, Submodule.mem_sInf]
         intro J hJ
-        rw [huniq J hJ]; exact hm
+        rw [huniq J hJ]
+        apply hm
       rw [mem_nilradical] at this
-      exact this.eq_zero
-    have : algebraMap Γ(X, V) L d = 0 := by
+      apply this.eq_zero
+    have : algebraMap (X.presheaf.obj (op V)) L d = 0 := by
       rw [← Ideal.mem_bot, ← hmax0, ← Localization.AtPrime.map_eq_maximalIdeal]
-      exact Ideal.mem_map_of_mem _ hd
+      apply Ideal.mem_map_of_mem _ hd
     obtain ⟨c, hc⟩ := (IsLocalization.map_eq_zero_iff 𝔭.asIdeal.primeCompl L d).mp this
-    exact ⟨c, hc⟩
-  constructor; constructor
-  · rintro ⟨s, hs⟩
+    refine ⟨c, hc⟩
+  constructor
+  constructor
+  ·
+    intro s
     rw [isUnit_iff_ne_zero]
-    exact fun h => hs ((hmem s).mpr h)
-  · intro z
+    intro h
+    apply s.property ((hmem s.val).mpr h)
+  ·
+    intro z
     obtain ⟨a, r, c, hc, hr, e⟩ := (RingHom.surjectiveOnStalks_iff_forall_maximal'.mp hsos) ⊥ Ideal.bot_isMaximal z
-    have hc0 : c ≠ 0 := fun h => hc (h ▸ Submodule.zero_mem _)
-    have hr𝔭 : r ∉ 𝔭.asIdeal := fun h => hr (by rw [(hmem r).mp h]; exact Submodule.zero_mem _)
+    have hc0 : c ≠ 0 := by
+      intro h
+      apply hc
+      rw [h]
+      apply Submodule.zero_mem
+    have hr𝔭 : r ∉ 𝔭.asIdeal := by
+      intro h
+      apply hr
+      rw [(hmem r).mp h]
+      apply Submodule.zero_mem
     refine ⟨(a, ⟨r, hr𝔭⟩), ?_⟩
-    show z * algebraMap Γ(X, V) F r = algebraMap Γ(X, V) F a
-    have e' : c * (algebraMap Γ(X, V) F r * z) = c * algebraMap Γ(X, V) F a := by rwa [mul_assoc] at e
+    change z * algebraMap (X.presheaf.obj (op V)) F r = algebraMap (X.presheaf.obj (op V)) F a
+    have e' : c * (algebraMap (X.presheaf.obj (op V)) F r * z) = c * algebraMap (X.presheaf.obj (op V)) F a := by
+      rwa [mul_assoc] at e
     have e'' := mul_left_cancel₀ hc0 e'
-    rw [mul_comm]; exact e''
-  · intro a b hab
-    have : a - b ∈ 𝔭.asIdeal := by rw [hmem, map_sub, hab, sub_self]
+    rw [mul_comm]
+    apply e''
+  ·
+    intro a b hab
+    have : a - b ∈ 𝔭.asIdeal := by
+      rw [hmem, map_sub, hab, sub_self]
     obtain ⟨c, hc⟩ := hkill _ this
     refine ⟨c, ?_⟩
     rw [← sub_eq_zero, ← mul_sub, hc]

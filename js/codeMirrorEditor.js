@@ -1028,19 +1028,40 @@ with _t as (
   ) as jt
   where 
     jt.latex like binary "${hint}%"
+),
+_longer as (
+  select 1 as yes from _t
+  where char_length(latex) > char_length("${hint}")
+  limit 1
 )
--- Lean-style: exact latex abbr returns only that unicode so CM auto-inserts
--- even when longer aliases share the prefix (\\u amid \\union, ...).
+-- Exact with no longer aliases, or abbr already >= 2 chars (\pi amid \pilcrow):
+-- unicode only so CM auto-inserts. Single-letter exacts with longer aliases
+-- (\p amid \pi) stay ambiguous so typing can continue.
 select 
   unicode
 from 
   _t
 where 
   latex = binary "${hint}"
+  and (
+    not exists (select 1 from _longer)
+    or char_length("${hint}") >= 2
+  )
+union all
+select 
+  unicode
+from 
+  _t
+where 
+  latex = binary "${hint}"
+  and exists (select 1 from _longer)
+  and char_length("${hint}") < 2
 union all
 select 
   CASE
-    WHEN (SELECT COUNT(*) FROM _t) > 1 THEN 
+    WHEN (SELECT COUNT(*) FROM _t) > 1 or (
+      exists (select 1 from _longer) and char_length("${hint}") < 2
+    ) THEN 
       concat('\\\\', _t.latex)
     ELSE 
       unicode
@@ -1049,8 +1070,12 @@ from
   _t
 where
   latex != binary "${hint}"
-  and not exists (
-    select 1 from _t e where e.latex = binary "${hint}"
+  and (
+    not exists (select 1 from _t e where e.latex = binary "${hint}")
+    or (
+      exists (select 1 from _longer)
+      and char_length("${hint}") < 2
+    )
   )
 order by char_length(unicode)`;
 							} else if (m = prefix.match(/^[A-Za-z_]+$/)) {

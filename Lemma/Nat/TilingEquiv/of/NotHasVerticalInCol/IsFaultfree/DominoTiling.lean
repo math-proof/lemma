@@ -1,9 +1,11 @@
 import Mathlib
 import sympy.Basic
 import sympy.matrices.determinants.DominoTilings
+import Lemma.Nat.IffIn_RectangleGe1AndGe_1AndGe21AndGe_2
 open DominoTilings
 open Domino DominoTiling
 open Finset
+open Nat
 
 
 /--
@@ -29,7 +31,7 @@ private lemma main
       exfalso -- d is vertical, so both cells are in the same column
       have hv : d.isVertical := hcol -- Get column bounds from rectangle membership
       have h1 : d.cell1 ∈ Rectangle 2 3 := h_in_rect (Finset.mem_insert_self _ _)
-      rw [mem_Rectangle] at h1 -- Column must be 1 or 2
+      rw [IffIn_RectangleGe1AndGe_1AndGe21AndGe_2] at h1 -- Column must be 1 or 2
       have hcol_bounds : d.cell1.1 = 1 ∨ d.cell1.1 = 2 := by omega
       obtain hc | hc := hcol_bounds
       ·
@@ -45,10 +47,10 @@ private lemma main
         -- But (2, r) is already covered by d - contradiction with pairwise disjoint!
         have h2 : d.cell2 ∈ Rectangle 2 3 :=
           h_in_rect (Finset.mem_insert_of_mem (Finset.mem_singleton_self _))
-        rw [mem_Rectangle] at h2 -- d.cell1 = (2, r) for some r ∈ {1, 2, 3}
+        rw [IffIn_RectangleGe1AndGe_1AndGe21AndGe_2] at h2 -- d.cell1 = (2, r) for some r ∈ {1, 2, 3}
         have hr_bounds : d.cell1.2 ≥ 1 ∧ d.cell1.2 ≤ 3 := ⟨h1.2.2.1, h1.2.2.2⟩ -- Cell (1, d.cell1.2) is in the rectangle and must be covered
         have h_cell_in_rect : (1, d.cell1.2) ∈ Rectangle 2 3 := by
-          rw [mem_Rectangle]; omega -- Find the domino d' that covers (1, d.cell1.2)
+          rw [IffIn_RectangleGe1AndGe_1AndGe21AndGe_2]; omega -- Find the domino d' that covers (1, d.cell1.2)
         have h_covered := T.covers_all
         rw [Finset.ext_iff] at h_covered
         have h_in_union : (1, d.cell1.2) ∈ T.dominos.biUnion Domino.cells := by
@@ -90,7 +92,7 @@ private lemma main
             have hd'_in_rect := T.dominos_in_rect d' hd'_mem
             have hd'2_in : d'.cell2 ∈ Rectangle 2 3 :=
               hd'_in_rect (Finset.mem_insert_of_mem (Finset.mem_singleton_self _))
-            rw [mem_Rectangle] at hd'2_in
+            rw [IffIn_RectangleGe1AndGe_1AndGe21AndGe_2] at hd'2_in
             have hd'1_col : d'.cell1.1 = 1 := (congrArg Prod.fst hc1).symm
             obtain hadj | hadj := hcol_adj'
             ·
@@ -123,7 +125,7 @@ private lemma main
             have hd'_in_rect := T.dominos_in_rect d' hd'_mem
             have hd'1_in : d'.cell1 ∈ Rectangle 2 3 :=
               hd'_in_rect (Finset.mem_insert_self _ _)
-            rw [mem_Rectangle] at hd'1_in
+            rw [IffIn_RectangleGe1AndGe_1AndGe21AndGe_2] at hd'1_in
             have hd'2_col : d'.cell2.1 = 1 := (congrArg Prod.fst hc2).symm
             obtain hadj | hadj := hcol_adj'
             ·
@@ -165,7 +167,7 @@ private lemma main
     unfold Domino.isHorizontal at h_horiz
     have h1 := h_in_rect (Finset.mem_insert_self _ _)
     have h2 := h_in_rect (Finset.mem_insert_of_mem (Finset.mem_singleton_self _))
-    rw [mem_Rectangle] at h1 h2
+    rw [IffIn_RectangleGe1AndGe_1AndGe21AndGe_2] at h1 h2
     use d.cell1.2
     refine ⟨h1.2.2.1, h1.2.2.2, ?_⟩
     unfold Domino.cells
@@ -214,7 +216,7 @@ private lemma main
     ·
       -- x = {(1, 1), (2, 1)}
       -- Cell (1, 1) is covered by some domino d in T
-      have h11_in : (1, 1) ∈ Rectangle 2 3 := by rw [mem_Rectangle]; omega
+      have h11_in : (1, 1) ∈ Rectangle 2 3 := by rw [IffIn_RectangleGe1AndGe_1AndGe21AndGe_2]; omega
       have h11_covered : (1, 1) ∈ T.dominos.biUnion Domino.cells := by
         rwa [T.covers_all]
       rw [Finset.mem_biUnion] at h11_covered
@@ -231,7 +233,7 @@ private lemma main
         exact ⟨d, hd_mem, hr_cells⟩
     ·
       -- x = {(1, 2), (2, 2)}
-      have h12_in : (1, 2) ∈ Rectangle 2 3 := by rw [mem_Rectangle]; omega
+      have h12_in : (1, 2) ∈ Rectangle 2 3 := by rw [IffIn_RectangleGe1AndGe_1AndGe21AndGe_2]; omega
       have h12_covered : (1, 2) ∈ T.dominos.biUnion Domino.cells := by
         rwa [T.covers_all]
       rw [Finset.mem_biUnion] at h12_covered
@@ -248,7 +250,7 @@ private lemma main
         exact ⟨d, hd_mem, hr_cells⟩
     ·
       -- x = {(1, 3), (2, 3)}
-      have h13_in : (1, 3) ∈ Rectangle 2 3 := by rw [mem_Rectangle]; omega
+      have h13_in : (1, 3) ∈ Rectangle 2 3 := by rw [IffIn_RectangleGe1AndGe_1AndGe21AndGe_2]; omega
       have h13_covered : (1, 3) ∈ T.dominos.biUnion Domino.cells := by
         rwa [T.covers_all]
       rw [Finset.mem_biUnion] at h13_covered

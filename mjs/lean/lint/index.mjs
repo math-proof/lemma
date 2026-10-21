@@ -62,8 +62,10 @@ export const RULES = {
     'given-prop-first': Q.propFirst,
     // not an AGENTS.md rule (user request): the page typesets only the first run of `given` propositions
     'given-prop-consecutive': null,
-    // not an AGENTS.md rule: numbered `h₀`/`h0`… in `-- given` must start at 0 with no gaps
+    // not an AGENTS.md rule: numbered `h₀`/`h0`… in `-- given` must start at 0 with no gaps, and lower indices must appear earlier
     'given-hyp-index': null,
+    // not an AGENTS.md rule: drop redundant `({…} : Set _)` on the LHS of ⊆/⊂/∈/… in `-- given`
+    'redundant-set-ascription': null,
     'binder-combine': Q.combine,
     'section-imply': Q.imply,
     'section-proof': Q.proof,

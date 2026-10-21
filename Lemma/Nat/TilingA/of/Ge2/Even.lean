@@ -1,9 +1,12 @@
 import Mathlib
 import sympy.Basic
 import sympy.matrices.determinants.DominoTilings
+import Lemma.Nat.DominoTilings.basementDominos_mem
+import Lemma.Nat.DominoTilings.middleDominos_mem
 open DominoTilings
 open Domino DominoTiling
 open Finset
+open Nat
 set_option linter.unusedSimpArgs false
 
 
@@ -35,7 +38,7 @@ private lemma main
       have : j < n / 2 := by omega
       omega
     -- The middle domino at index j-1 spans columns 2j to 2j+1
-    obtain ⟨d, hd_mem, hd1, hd2⟩ := middleDominos_mem n (j - 1) hj_bound
+    obtain ⟨d, hd_mem, hd1, hd2⟩ := _root_.Nat.DominoTilings.middleDominos_mem n (j - 1) hj_bound
     use d
     constructor
     · -- Show this domino is in the tiling
@@ -61,7 +64,7 @@ private lemma main
       have : 2 * j + 1 < n := by omega
       omega
     -- The basement domino at index j spans columns (2j+1) to (2j+2)
-    obtain ⟨d, hd_mem, hd1, hd2⟩ := basementDominos_mem n j hj_bound
+    obtain ⟨d, hd_mem, hd1, hd2⟩ := _root_.Nat.DominoTilings.basementDominos_mem n j hj_bound
     use d
     constructor
     · -- Show this domino is in the tiling

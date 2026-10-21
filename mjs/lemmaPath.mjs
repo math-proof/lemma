@@ -1969,6 +1969,194 @@ function expectSMulGradLogNames(node, canon) {
   return [];
 }
 
+
+/**
+ * Body Eq_SymmToDual In_Ico0 imply stem (LHS fused; not SymmToDual/eq/ExpectTSum_SMul).
+ * Shared by the remigrated NeProb leaf and the legacy EqMeasureCount sister In_Ico1.
+ */
+const EQ_SYMM_TO_DUAL_TSUM_BODY =
+  "Eq_SymmToDualTSum_SMulPow_Integral_SMulTSum_MulPow_FderivLogToRealProbCond";
+
+/**
+ * `(InnerProductSpace.toDual …).symm (∑' … • ∫ … • fderiv … log ℙ(·|·).toReal) = 𝔼[…](… • ∇ log …)`.
+ * Clean Expect RHS (In_Ico0); legacy In_Ico1 with let/TODO scaffolding may not match — leave its #1 alone.
+ */
+function isEqSymmToDualTSumGradLogShape(implyStmts) {
+  let u = unwrapParen(implyStmts);
+  while (u && (cls(u) === "LeanStatements" || cls(u) === "LeanArgsNewLineSeparated")) u = firstConclusion(u);
+  u = unwrapParen(u);
+  if (cls(u) !== "LeanEq" || (u.args || []).length !== 2) return false;
+  const left = unwrapParen(u.args[0]);
+  let right = unwrapParen(u.args[1]);
+  while (right && (cls(right) === "LeanStatements" || cls(right) === "LeanArgsNewLineSeparated")) {
+    right = firstConclusion(right);
+    right = unwrapParen(right);
+  }
+  // RHS must be a clean Expect (𝔼[…](…)); noisy let/TODO scaffolding → not this Body override
+  if (!(cls(right) === "LeanArgsSpaceSeparated" && cls(right.args?.[0]) === "LeanGetElem"
+      && cls(right.args[0].args?.[0]) === "LeanToken" && right.args[0].args[0].text === "𝔼")) {
+    return false;
+  }
+  let hasSymm = false, hasToDual = false, hasFderiv = false, hasLog = false;
+  (function walk(n) {
+    if (!n || typeof n !== "object") return;
+    if (cls(n) === "LeanProperty" && cls(n.args?.[1]) === "LeanToken") {
+      const prop = n.args[1].text || "";
+      if (prop === "symm") hasSymm = true;
+      if (prop === "toDual") hasToDual = true;
+      if (prop === "log") hasLog = true;
+    }
+    if (cls(n) === "LeanToken") {
+      const tx = n.text || "";
+      if (tx === "fderiv") hasFderiv = true;
+      if (tx === "symm") hasSymm = true;
+      if (tx === "toDual") hasToDual = true;
+    }
+    for (const a of n.args || []) walk(a);
+  })(left);
+  return hasSymm && hasToDual && hasFderiv && hasLog;
+}
+
+function eqSymmToDualTSumBodyName(implyStmts) {
+  return isEqSymmToDualTSumGradLogShape(implyStmts) ? EQ_SYMM_TO_DUAL_TSUM_BODY : "";
+}
+
+/**
+ * Body: 𝔼[(γ^id) @ fun ... (... • ∇log π)] = ∫ ((γ^id) @ fun ... (... • ∇log π)) ∂μ
+ * Prefer ExpectDot/eq/Integral_Dot_FunSMul_GradLogProbCond —
+ * not ExpectFunPowDot / Integral_Ext_FunPowDot / Integral_ExtDot.
+ * of-tail: Ae_GtInftySup + All_Measurable; NeProb stays Lean h2 (no Diff/NeProb cluster).
+ * (FunPowDot / ExtDot / AeGtInftySup / All_MeasurableFun remain alts.)
+ */
+const EXPECT_DOT_EQ_INTEGRAL_EXT_DOT = "ExpectDot/eq/Integral_Dot_FunSMul_GradLogProbCond";
+
+/** Peel statement wrappers / have / indent scaffolding. */
+function peelStmt(node) {
+  let u = node;
+  for (let i = 0; i < 14; i++) {
+    u = unwrapParen(u);
+    const c = cls(u);
+    if (
+      c === "LeanArgsIndented" ||
+      c === "LeanStatements" ||
+      c === "LeanArgsNewLineSeparated" ||
+      c === "LeanArgsCommaSeparated"
+    ) {
+      const kids = (u.args || []).filter((a) => cls(a) !== "LeanLineComment");
+      if (kids.length === 1) {
+        u = kids[0];
+        continue;
+      }
+      if (c === "LeanArgsIndented" || c === "LeanStatements" || c === "LeanArgsNewLineSeparated") {
+        u = firstConclusion(u);
+        continue;
+      }
+    }
+    if (c === "LeanArgsSpaceSeparated" && (u.args || []).length === 1) {
+      u = u.args[0];
+      continue;
+    }
+    break;
+  }
+  return unwrapParen(u);
+}
+
+/** Peel statement wrappers / have scaffolding to a top-level `A = B`. */
+function peelImplyEq(implyStmts) {
+  const u = peelStmt(implyStmts);
+  if (cls(u) !== "LeanEq" || (u.args || []).length !== 2) return null;
+  return u;
+}
+
+function isExpectAppNode(node) {
+  const u = unwrapParen(node);
+  return cls(u) === "LeanArgsSpaceSeparated"
+    && cls(u.args?.[0]) === "LeanGetElem"
+    && cls(u.args[0].args?.[0]) === "LeanToken"
+    && u.args[0].args[0].text === "𝔼";
+}
+
+function isIntegralAppNode(node) {
+  const u = unwrapParen(node);
+  if (cls(u) === "Lean_int") return true;
+  if (cls(u) === "LeanArgsSpaceSeparated" && cls(u.args?.[0]) === "Lean_int") return true;
+  return false;
+}
+
+/**
+ * GradLogProbCond in either sugar:
+ * - nabla (pi.log) / isGradLogProbCond
+ * - flat nabla Real.log (P).toReal (this ExpectDot=Integral ExtDot leaf)
+ */
+function hasGradLogProbInTree(node) {
+  let found = false;
+  (function walk(n, d) {
+    if (!n || typeof n !== "object" || found || d > 16) return;
+    if (isGradLogProbCond(n)) { found = true; return; }
+    if (cls(n) === "LeanArgsSpaceSeparated" && (n.args || []).length >= 2) {
+      const gb = gradientBody(n);
+      if (gb) {
+        let hasLog = false, hasProb = false;
+        (function w2(x, e) {
+          if (!x || typeof x !== "object" || e > 10) return;
+          if (cls(x) === "LeanToken" && x.text === "log") hasLog = true;
+          if (cls(x) === "LeanProperty" && cls(x.args?.[1]) === "LeanToken" && x.args[1].text === "log") hasLog = true;
+          if (matchProbApp(x)) hasProb = true;
+          for (const a of x.args || []) w2(a, e + 1);
+        })(gb, 0);
+        if (hasLog && hasProb) { found = true; return; }
+      }
+    }
+    for (const a of n.args || []) walk(a, d + 1);
+  })(node, 0);
+  return found;
+}
+
+/** DotPow / FunPowDot integrand whose tree contains GradLog ProbCond. */
+function isDotPowWithGradLog(node) {
+  const u = peelStmt(node);
+  if (!(isFunPowDotApp(u) || isDotPowIdApp(u))) return false;
+  return hasGradLogProbInTree(u);
+}
+
+/**
+ * Expect[...](FunPowDot/DotPow with GradLog) = Integral(Dot/FunSMul GradLog).
+ * Body rejects ExpectFunPowDot / Integral_ExtDot naming for this leaf.
+ */
+function isExpectDotEqIntegralExtDotShape(implyStmts) {
+  const eq = peelImplyEq(implyStmts);
+  if (!eq) return false;
+  const left = peelStmt(eq.args[0]);
+  const right = peelStmt(eq.args[1]);
+  if (!isExpectAppNode(left) || !isIntegralAppNode(right)) return false;
+  const expectBody = peelStmt(left.args[1]);
+  let intNode = peelStmt(right);
+  if (cls(intNode) === "LeanArgsSpaceSeparated" && cls(intNode.args?.[0]) === "Lean_int") {
+    intNode = peelStmt(intNode.args[0]);
+  }
+  let intBody = intNode.args?.[intNode.args.length - 1];
+  if (cls(intBody) === "LeanArgsSpaceSeparated") {
+    const bs = (intBody.args || []).filter((x) => cls(x) !== "Lean_partial" && cls(x) !== "LeanPartial");
+    if (bs.length === 1) intBody = bs[0];
+    else if (bs.length >= 1) {
+      const head = peelStmt(bs[0]);
+      if (isFunPowDotApp(head) || isDotPowIdApp(head)) intBody = head;
+    }
+  }
+  intBody = peelStmt(intBody);
+  let intCore = intBody;
+  if (cls(intCore) === "LeanArgsSpaceSeparated" && (intCore.args || []).length >= 2) {
+    const head = peelStmt(intCore.args[0]);
+    if (isFunPowDotApp(head) || isDotPowIdApp(head)) intCore = head;
+  }
+  return isDotPowWithGradLog(expectBody) && isDotPowWithGradLog(intCore);
+}
+
+function expectDotEqIntegralExtDotBodyName(implyStmts) {
+  return isExpectDotEqIntegralExtDotShape(implyStmts) ? EXPECT_DOT_EQ_INTEGRAL_EXT_DOT : "";
+}
+
+
 /** Expect of DotPow_Id @ fun of (adv bullet GradLogProbCond). */
 function expectDotFunSMulGradLogName(node) {
   const u = unwrapParen(node);
@@ -1996,8 +2184,10 @@ function expectDotFunSMulGradLogName(node) {
     if (isDotPowIdApp(x)) return true;
     return (x.args || []).some((a) => hasDotPow(a, d + 1));
   };
-  if (cls(adv) === "LeanMul" && hasDotPow(adv, 0)) return "ExpectDotFunMulFunPowDot_SMul_GradLogProbCond";
-  return "ExpectDotFunSMul_GradLogProbCond";
+  // Body: ExpectDot_FunSMul_ (underscore after ExpectDot) for Mul+DotPow and plain DotPow adv
+  // (Subset_Ico and In_Icc/In_Ico siblings). Long MulFunPowDot stays as alt only.
+  if (cls(adv) === "LeanMul" && hasDotPow(adv, 0)) return "ExpectDot_FunSMul_GradLogProbCond";
+  return "ExpectDot_FunSMul_GradLogProbCond";
 }
 
 function gradientBody(node) {
@@ -2019,6 +2209,10 @@ function preAlts(node, opts, canon) {
   const c = cls(node);
   const args = node.args || [];
   const A = (n) => (canon ? [nameExpr(n, opts)].filter(Boolean) : nameExprAlts(n, opts));
+  // IsPolicyTrajectory path atom (Body override: not All_Eq; All_Eq remains alt for legacy)
+  if (opts.asGiven && c === "LeanArgsSpaceSeparated" && cls(args[0]) === "LeanToken" && args[0].text === "IsPolicyTrajectory") {
+    return canon ? ["IsPolicyTrajectory"] : uniq(["IsPolicyTrajectory", "All_Eq"]);
+  }
   // GradExpect of Expect…: prefer GradExpectDotPow_Id over GradExpect_DotPow_Id (Body override)
   {
     const gb = gradientBody(node);
@@ -2089,7 +2283,13 @@ function preAlts(node, opts, canon) {
       {
         const pg = expectDotFunSMulGradLogName(node);
         // Expect is unary → CamelCase fusion (ExpectAdd / ExpectDotPow_Id); never Expect_* snake
-        if (pg) return canon ? [pg] : uniq([pg, "ExpectDotFunSMul_GradLogProbCond", "ExpectDotFunMulFunPowDot_SMul_GradLogProbCond"]);
+        if (pg) {
+          // FunSMul is Body canon for Subset_Ico and In_Icc/In_Ico siblings.
+          // Do not enumerate shorter ExpectDot_SMul (byBestToWorst would steal #1).
+          const fun = "ExpectDot_FunSMul_GradLogProbCond";
+          const legacy = ["ExpectDotFunSMul_GradLogProbCond", "ExpectDotFunMulFunPowDot_SMul_GradLogProbCond"];
+          return canon ? [pg] : uniq([pg, fun, ...legacy]);
+        }
         const smulPg = expectSMulGradLogNames(node, canon);
         if (smulPg.length) return smulPg;
         if (isExpectDotPowId(node)) return canon ? ["ExpectDotPow_Id"] : uniq(["ExpectDotPow_Id", "ExpectDot"]);
@@ -2556,10 +2756,15 @@ function isRvTerm(node) {
   return false;
 }
 
-/** Pair / triple (or nested `JointRandomSymbol`) of random variables. */
+/** Pair / triple (or nested `JointRandomSymbol`) of random variables.
+ * Prefer RV_NAMES hits; fall back to single-variable sides so `⇀`-typed binders
+ * (In_Ico0 remigration) still yield Eq_Joint / All_Eq_Joint like `→` binders.
+ */
 function isJointRvTuple(node) {
   const parts = commaParts(node) || jrsParts(node);
-  return !!parts && parts.every((p) => isRvTerm(p));
+  if (!parts || parts.length < 2) return false;
+  if (parts.every((p) => isRvTerm(p))) return true;
+  return parts.every((p) => isRvTerm(p) || isSingleVarSide(p));
 }
 
 /**
@@ -2902,6 +3107,59 @@ function bvarAllLt0ProbJointName(typeNode) {
   const ev = matchProbApp(rhs);
   return ev && nameProbEvent(ev) === "ProbS" && isBvarSliceJointEvent(ev) ? "All_Lt0ProbJoint" : "";
 }
+
+/**
+ * `∀ θ («s.bvar») («a.bvar»), ℙ[…](…) ≠ 0` (and plain-binder variants): Body / GradExpect Subset_Ico
+ * prefers `All_NeProb_0` over the ae-stripped `NeProbS_0` (sibling Random/All_NeProb_0).
+ * Legacy `NeProbS_0` / `All_NeProbS_0` stay alts. Returns "" when the body is not Prob ≠ 0.
+ */
+function allNeProb0GivenName(typeNode) {
+  let u = unwrapParen(typeNode);
+  if (cls(u) !== "Lean_forall") return "";
+  let body = unwrapParen(u.args[u.args.length - 1]);
+  while (cls(body) === "Lean_forall") body = unwrapParen(body.args[body.args.length - 1]);
+  while (cls(body) === "Lean_rightarrow") body = unwrapParen(body.args[body.args.length - 1]);
+  // multiline given body may be LeanArgsNewLineSeparated / LeanStatements
+  while (cls(body) === "LeanArgsNewLineSeparated" || cls(body) === "LeanStatements") {
+    const kids = (body.args || []).filter((a) => cls(a) !== "LeanLineComment");
+    body = unwrapParen(kids[kids.length - 1] || kids[0]);
+  }
+  if (cls(body) !== "Lean_ne" && cls(body) !== "LeanNe") return "";
+  const right = unwrapParen(body.args?.[1]);
+  if (cls(right) !== "LeanToken" || right.text !== "0") return "";
+  let left = unwrapParen(body.args?.[0]);
+  if (cls(left) === "LeanColon") left = unwrapParen(left.args[0]);
+  return matchProbApp(left) ? "All_NeProb_0" : "";
+}
+
+/**
+ * `∀ …, Differentiable ℝ (fun θ => (ℙ(…|…) : ℝ))` (GradExpect Subset_Ico): Body prefers
+ * `All_Differentiable_Prob` (siblings under Random/…/All_Differentiable_Prob/). Bare
+ * `All_Differentiable` / `Differentiable_ProbCond` stay alts.
+ */
+function allDifferentiableGivenName(typeNode) {
+  let u = unwrapParen(typeNode);
+  if (cls(u) !== "Lean_forall") return "";
+  let body = unwrapParen(u.args[u.args.length - 1]);
+  while (cls(body) === "Lean_forall") body = unwrapParen(body.args[body.args.length - 1]);
+  while (cls(body) === "Lean_rightarrow") body = unwrapParen(body.args[body.args.length - 1]);
+  while (cls(body) === "LeanArgsNewLineSeparated" || cls(body) === "LeanStatements") {
+    const kids = (body.args || []).filter((a) => cls(a) !== "LeanLineComment");
+    body = unwrapParen(kids[kids.length - 1] || kids[0]);
+  }
+  if (cls(body) !== "LeanArgsSpaceSeparated") return "";
+  const head = body.args?.[0];
+  if (cls(head) !== "LeanToken" || head.text !== "Differentiable") return "";
+  // Prefer All_Differentiable_Prob when the Differentiable subject mentions ℙ / Prob*
+  let hasProb = false;
+  (function walk(n) {
+    if (!n || typeof n !== "object" || hasProb) return;
+    if (matchProbApp(n)) { hasProb = true; return; }
+    for (const a of n.args || []) walk(a);
+  })(body);
+  return hasProb ? "All_Differentiable_Prob" : "All_Differentiable";
+}
+
 
 /**
  * Viterbi shape: a `max[«y.bvar» : Fin n → Y]` big operator over the joint probability of bvar-valued x/y slices.
@@ -4329,7 +4587,25 @@ export function suggest(filePath, lemmaName, options = {}) {
     return res;
   };
   setRvNames(sig.indented);
-  const implyAltsA = implyAltsOf(sig, nameOpts);
+  let implyAltsA = implyAltsOf(sig, nameOpts);
+  // Body: Eq_SymmToDual In_Ico0 keeps the long fused LHS stem (not SymmToDual/eq/ExpectTSum_SMul).
+  {
+    const bodySymm = eqSymmToDualTSumBodyName(sig.implyStmts);
+    if (bodySymm) {
+      implyAltsA = uniq([bodySymm, ...implyAltsA]);
+      implyAltsA.preferred = bodySymm;
+    }
+  }
+  // Body: Expect of discounted Fun•∇log = ∫ Dot FunSMul ∇log
+  // → ExpectDot/eq/Integral_Dot_FunSMul_GradLogProbCond
+  // (not ExpectFunPowDot / Integral_Ext_FunPowDot / Integral_ExtDot).
+  {
+    const bodyExpectDot = expectDotEqIntegralExtDotBodyName(sig.implyStmts);
+    if (bodyExpectDot) {
+      implyAltsA = uniq([bodyExpectDot, ...implyAltsA]);
+      implyAltsA.preferred = bodyExpectDot;
+    }
+  }
   // Canonical rendering (nameExpr) first when it is among the alternatives.
   // (an alternative differing only by the ' between adjacent numbers — Neg1'0 vs Neg10 — is the canonical one)
   const undig = (x) => sanitizeRelPath(x || "").replace(/(\d)'(?=\d)/g, "$1");
@@ -4412,13 +4688,17 @@ export function suggest(filePath, lemmaName, options = {}) {
     if (cls(h) === "LeanArgsSpaceSeparated") h = h.args?.[0];
     return cls(h) === "LeanToken" ? h.text : "";
   };
+  // Body ExpectDot=Integral Dot FunSMul leaf: keep All_Measurable in of-tail (prefer over All_MeasurableFun);
+  // Ae_GtInftySup (underscore) preferred over fused AeGtInftySup; NeProb stays Lean-h₂ (no Diff/NeProb cluster).
+  const expectDotIntegralExtDotShape = isExpectDotEqIntegralExtDotShape(sig.implyStmts);
   const hyps = extractGivens(sig.nls).map((h, idx) => {
     h = { ...h, idx };
     const t = unwrapParen(h.typeNode);
     const structLike = cls(t) === "LeanToken" || (cls(t) === "LeanArgsSpaceSeparated" && cls(t.args?.[0]) === "LeanToken");
     const usedInConcl = (h.names || [h.name]).some((n) => conclTokenSet.has(n));
-    if (h.prop && structLike && conclNames.has(h.name)) return { ...h, prop: false };
-    if (h.prop && structLike && dataHeads.has(typeHead(t))) return { ...h, prop: false };
+    // IsPolicyTrajectory / other Is* stay givens even when used as h.stage_eq in imply scaffolding
+    if (h.prop && structLike && conclNames.has(h.name) && !/^Is[A-Z]/.test(typeHead(t))) return { ...h, prop: false };
+    if (h.prop && structLike && dataHeads.has(typeHead(t)) && !/^Is[A-Z]/.test(typeHead(t))) return { ...h, prop: false };
     // `(w : EuclideanVec d)` used in the conclusion: EuclideanVec is a type abbreviation, so w is a value
     // (kept as an optional given: ActorBox/Dist/le/Dist/of/EuclideanVec spells it)
     if (h.prop && structLike && sympyDecls().typeAbbrevs.has(typeHead(t)) && usedInConcl) return { ...h, optional: true, canonSkip: true };
@@ -4436,6 +4716,11 @@ export function suggest(filePath, lemmaName, options = {}) {
         // joint `Measurable (r, s, a)` may be omitted from Bellman / Expect paths (kept as optional alt)
         const jn = nameExpr(h.typeNode, { ...nameOpts, asGiven: true }) || "";
         if (/MeasurableJoint/.test(jn)) return { ...h, optional: true, canonSkip: true };
+        // Body ExpectDot=∫Dot FunSMul GradLog: keep ∀ Measurable (fun …) as All_Measurable in of-tail
+        // (optional so cart still accepts omitting it; not canonSkip).
+        if (expectDotIntegralExtDotShape && /MeasurableFun|Measurable/.test(jn)) {
+          return { ...h, optional: true };
+        }
         return { ...h, optional: true };
       }
     }
@@ -4450,18 +4735,26 @@ export function suggest(filePath, lemmaName, options = {}) {
   // Generate ALL given name alternatives (reverse order for path); pass-B (Greek) renderings appended
   const hmmShape = isHmmNegLogCondShape(sig.implyStmts);
   const logJointFns = logProbJointFnNames(hyps.filter((h) => h.prop).map((h) => h.typeNode));
-  const givenAltLists = [...hyps.filter((h) => h.prop)].reverse().map((h) => {
+  let givenAltLists = [...hyps.filter((h) => h.prop)].reverse().map((h) => {
     const b = passB?.givens?.[h.idx];
     const altsA = nameExprAlts(h.typeNode, { ...nameOpts, asGiven: true }).filter(Boolean);
     const nameA = nameExpr(h.typeNode, { ...nameOpts, asGiven: true }) || "Given";
     const lt0Joint = bvarAllLt0ProbJointName(h.typeNode); // All_Lt0ProbJoint, ranked first for this shape
+    // Body: All_NeProb_0 / All_Differentiable_Prob beat ae-stripped NeProbS_0 / Differentiable_ProbCond
+    const neProb0 = allNeProb0GivenName(h.typeNode);
+    const allDiff = allDifferentiableGivenName(h.typeNode);
+    const bodyPrefer = lt0Joint || neProb0 || allDiff || null;
+    const bodyLegacy = [
+      ...(neProb0 ? ["NeProbS_0", "All_NeProbS_0", "NeProb_0"] : []),
+      ...(allDiff ? ["All_Differentiable", "Differentiable_ProbCond", "All_Differentiable_ProbCond", "Differentiable"] : []),
+    ];
     // max over the log joint probability (`x' t a = max[«y.bvar» …] s t …`): All_Eq_Max replaces GetMax
     const maxLog = maxLogProbJointGiven(h.typeNode, logJointFns);
     const allAlts = maxLog
       ? uniq([maxLog.name, ...[...altsA, ...(b?.alts || [])].filter((x) => !/GetMax/.test(x))])
-      : uniq([...(lt0Joint ? [lt0Joint] : []), ...altsA, ...(b?.alts || [])]);
-    const rawName = maxLog?.name || lt0Joint || nameA;
-    const rawNameB = maxLog?.name || lt0Joint || (b ? pickCanon(b.alts, b.name) : null);
+      : uniq([...(bodyPrefer ? [bodyPrefer] : []), ...altsA, ...bodyLegacy, ...(b?.alts || [])]);
+    const rawName = maxLog?.name || bodyPrefer || nameA;
+    const rawNameB = maxLog?.name || bodyPrefer || (b ? pickCanon(b.alts, b.name) : null);
     return {
       binder: h.name,
       optional: !!h.optional,
@@ -4482,6 +4775,54 @@ export function suggest(filePath, lemmaName, options = {}) {
     name: nameExpr(h.typeNode, { ...nameOpts, asGiven: true }) || "Given",
     chain: classChain(h.typeNode),
   }));
+  // of-tail is plain reverse(Lean givens), except:
+  // Body GradExpect FunSMul: Lean h₂ NeProb / h₃ Diff → path Diff before NeProb (plain reverse).
+  // Body Eq_SymmToDual In_Ico0: Lean puts NeProb earlier than Diff; still cluster
+  // All_Differentiable_Prob/All_NeProb_0 like FunSMul (NeProb immediately after Diff in the path).
+  // Body ExpectDot=∫Dot FunSMul: NeProb stays Lean h₂ — do NOT cluster next to Diff (keeps
+  // …/Diff/Ae_GtInftySup/All_Measurable/All_NeProb_0/IsPolicyTrajectory/In_Ico0).
+  if (!expectDotIntegralExtDotShape) {
+    const isNe = (g) => (g.alts || []).includes("All_NeProb_0") || g.name === "All_NeProb_0";
+    const isDiffProb = (g) => (g.alts || []).includes("All_Differentiable_Prob") || g.name === "All_Differentiable_Prob";
+    const iDiff = givenAltLists.findIndex(isDiffProb);
+    const iNe = givenAltLists.findIndex(isNe);
+    if (iDiff >= 0 && iNe >= 0 && iNe !== iDiff + 1) {
+      const [ne] = givenAltLists.splice(iNe, 1);
+      const iDiff2 = givenAltLists.findIndex(isDiffProb);
+      givenAltLists.splice(iDiff2 + 1, 0, ne);
+    }
+  }
+  // Body ExpectDot leaf: prefer All_Measurable over All_MeasurableFun; Ae_GtInftySup over AeGtInftySup.
+  if (expectDotIntegralExtDotShape) {
+    for (const g of givenAltLists) {
+      const alts = g.alts || [];
+      if (alts.some((a) => /MeasurableFun/.test(a)) || /MeasurableFun/.test(g.name || "")) {
+        const preferred = (g.name || "").replace(/MeasurableFun/g, "Measurable");
+        const mapped = alts.map((a) => a.replace(/MeasurableFun/g, "Measurable"));
+        g.alts = uniq(["All_Measurable", preferred, ...mapped, ...alts].filter(Boolean));
+        g.name = preferred.includes("Measurable") && !/MeasurableFun/.test(preferred) ? preferred : "All_Measurable";
+        if (g.nameB) g.nameB = String(g.nameB).replace(/MeasurableFun/g, "Measurable");
+      }
+      if (alts.includes("AeGtInftySup") || g.name === "AeGtInftySup" || alts.includes("Ae_GtInftySup")) {
+        g.alts = uniq(["Ae_GtInftySup", "AeGtInftySup", ...alts]);
+        g.name = "Ae_GtInftySup";
+        if (g.nameB) g.nameB = "Ae_GtInftySup";
+      }
+    }
+  }
+  // Body: keep In_Ico0 / In_Ico1 leaf suffix when the file is already filed under that name
+  // (Ico 0 1 otherwise prefers bare In_Ico; sisters disambiguate with 0/1).
+  {
+    const curLeaf = String(relCurrent).replace(/\\/g, "/").replace(/\.lean$/, "").split("/").pop() || "";
+    if (/^In_Ico[01]$/.test(curLeaf)) {
+      for (const g of givenAltLists) {
+        if (!(g.alts || []).some((a) => /^In_?Ico/.test(a))) continue;
+        g.alts = uniq([curLeaf, ...(g.alts || [])]);
+        g.name = curLeaf;
+        if (g.nameB) g.nameB = curLeaf;
+      }
+    }
+  }
   // Instance hyps precede the `-- given` block, so in (reverse-order) paths they come last.
   // Canonical: explicit givens only; instance hyps only when there are no explicit givens.
   const canonGivenLists = givenAltLists.filter((g) => !g.canonSkip); // instance hyps are optional, never canonical
@@ -4631,7 +4972,7 @@ export function suggest(filePath, lemmaName, options = {}) {
     sectionScore: picked.score,
     sectionTokens: picked.tokens,
     imply: { name: implyPath, chain: implyChain },
-    givensLeanOrder: hyps.map((h) => ({ binder: h.name, prop: h.prop, name: maxLogProbJointGiven(h.typeNode, logJointFns)?.name || bvarAllLt0ProbJointName(h.typeNode) || nameExpr(h.typeNode, { ...nameOpts, asGiven: true }) })),
+    givensLeanOrder: hyps.map((h) => ({ binder: h.name, prop: h.prop, name: maxLogProbJointGiven(h.typeNode, logJointFns)?.name || bvarAllLt0ProbJointName(h.typeNode) || allNeProb0GivenName(h.typeNode) || allDifferentiableGivenName(h.typeNode) || nameExpr(h.typeNode, { ...nameOpts, asGiven: true }) })),
     givensPathOrder: givenNames,
     warnings: [],
   };

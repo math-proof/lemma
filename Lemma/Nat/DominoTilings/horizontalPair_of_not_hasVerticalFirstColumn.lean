@@ -1,9 +1,11 @@
 import Mathlib
 import sympy.Basic
 import sympy.matrices.determinants.DominoTilings
+import Lemma.Nat.DominoTilings.hasVerticalFirstColumn_or_horizontalPair
 open DominoTilings
 open Domino DominoTiling
 open Finset
+open Nat
 
 
 /--
@@ -18,7 +20,7 @@ private lemma main
   (∃ d₁ ∈ T.dominos, d₁.cells = ({(1, 1), (2, 1)} : Finset Cell)) ∧
       (∃ d₂ ∈ T.dominos, d₂.cells = ({(1, 2), (2, 2)} : Finset Cell)) := by
 -- proof
-  obtain hvert | hhoriz := hasVerticalFirstColumn_or_horizontalPair T
+  obtain hvert | hhoriz := DominoTilings.hasVerticalFirstColumn_or_horizontalPair T
   · exact absurd hvert hnotvert
   · exact hhoriz
 

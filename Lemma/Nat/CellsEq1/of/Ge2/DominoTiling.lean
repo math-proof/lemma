@@ -1,9 +1,13 @@
 import Mathlib
 import sympy.Basic
 import sympy.matrices.determinants.DominoTilings
+import Lemma.Nat.AnyInCells.of.InRectangle.Cell.DominoTiling
+import Lemma.Nat.Eq.of.InCells.InCells.InDominos.InDominos.Domino.Cell.DominoTiling
+import Lemma.Nat.IffIn_RectangleGe1AndGe_1AndGe21AndGe_2
 open DominoTilings
 open Domino DominoTiling
 open Finset
+open Nat
 set_option linter.unusedSimpArgs false
 
 
@@ -20,13 +24,13 @@ private lemma main
 -- imply
   ∃ d ∈ T.dominos, d.cells = {(1, 1), (2, 1)} := by
 -- proof
-  have h11_in : (1, 1) ∈ Rectangle n 3 := by rw [mem_Rectangle]; omega
-  obtain ⟨d, hd_mem, hd_cov⟩ := T.cell_covered (1, 1) h11_in
+  have h11_in : (1, 1) ∈ Rectangle n 3 := by rw [IffIn_RectangleGe1AndGe_1AndGe21AndGe_2]; omega
+  obtain ⟨d, hd_mem, hd_cov⟩ := AnyInCells.of.InRectangle.Cell.DominoTiling T (1, 1) h11_in
   obtain ⟨d_top, hd_top_mem, hd_top_vert, hd_top_col, hd_top_rows⟩ := htop
   have hd_in_rect := T.dominos_in_rect d hd_mem
   have hd_c1_in : d.cell1 ∈ Rectangle n 3 := hd_in_rect (by simp [Domino.cells])
   have hd_c2_in : d.cell2 ∈ Rectangle n 3 := hd_in_rect (by simp [Domino.cells])
-  rw [mem_Rectangle] at hd_c1_in hd_c2_in
+  rw [IffIn_RectangleGe1AndGe_1AndGe21AndGe_2] at hd_c1_in hd_c2_in
   simp only [Domino.cells, Finset.mem_insert, Finset.mem_singleton] at hd_cov
   have hd_top_c2_col : d_top.cell2.1 = 1 := hd_top_vert.symm.trans hd_top_col
   have hd_top_covers_12 : (1, 2) ∈ d_top.cells := by
@@ -63,7 +67,7 @@ private lemma main
         omega
   have hd_not_12 : (1, 2) ∉ d.cells := by
     intro h12
-    have := DominoTiling.cell_covered_unique T (1, 2) d d_top hd_mem hd_top_mem h12 hd_top_covers_12
+    have := Eq.of.InCells.InCells.InDominos.InDominos.Domino.Cell.DominoTiling T (1, 2) d d_top hd_mem hd_top_mem h12 hd_top_covers_12
     exact hd_ne_top this
   use d, hd_mem
   obtain hc1 | hc2 := hd_cov

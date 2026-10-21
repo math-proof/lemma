@@ -1,9 +1,14 @@
 import Mathlib
 import sympy.Basic
 import sympy.matrices.determinants.DominoTilings
+import Lemma.Nat.AnyInCells.of.InRectangle.Cell.DominoTiling
+import Lemma.Nat.CardEqMul
+import Lemma.Nat.CardEqMul2CardDominos.of.DominoTiling
+import Lemma.Nat.IffIn_RectangleGe1AndGe_1AndGe21AndGe_2
 open DominoTilings
 open Domino DominoTiling
 open Finset
+open Nat
 
 
 /--
@@ -27,8 +32,8 @@ private lemma main
     have hn1 : n = 1 := by omega
     -- n = 1: No valid tiling exists (3 cells can't be covered by dominos)
     exfalso
-    have h := T.card_eq_twice_dominos
-    simp only [card_Rectangle, hn1] at h
+    have h := CardEqMul2CardDominos.of.DominoTiling T
+    simp only [CardEqMul, hn1] at h
     omega
   · exact hn_eq  -- n = 2
   ·
@@ -52,7 +57,7 @@ private lemma main
       have hd_in_rect := T.dominos_in_rect d hd
       have hc1_in_rect : d.cell1 ∈ Rectangle n 3 := hd_in_rect (by simp [Domino.cells])
       have hc2_in_rect : d.cell2 ∈ Rectangle n 3 := hd_in_rect (by simp [Domino.cells])
-      rw [mem_Rectangle] at hc1_in_rect hc2_in_rect
+      rw [IffIn_RectangleGe1AndGe_1AndGe21AndGe_2] at hc1_in_rect hc2_in_rect
       have hcol1_ge : d.cell1.1 ≥ 1 := hc1_in_rect.1
       have hcol2_ge : d.cell2.1 ≥ 1 := hc2_in_rect.1
       -- Case split on whether d touches column 1
@@ -145,10 +150,10 @@ private lemma main
           -- The cell (1, d.cell1.2) is in the rectangle and covered by some domino d'
           have h1r : (1, d.cell1.2) ∈ Rectangle n 3 := by
             --
-            rw [mem_Rectangle]
+            rw [IffIn_RectangleGe1AndGe_1AndGe21AndGe_2]
             exact ⟨le_refl 1, by omega, hc1_in_rect.2.2.1, hc1_in_rect.2.2.2⟩
           -- Find the domino d' that covers (1, d.cell1.2)
-          obtain ⟨d', hd'_mem, hd'_cov⟩ := T.cell_covered (1, d.cell1.2) h1r
+          obtain ⟨d', hd'_mem, hd'_cov⟩ := AnyInCells.of.InRectangle.Cell.DominoTiling T (1, d.cell1.2) h1r
           have hd'_min_le : d'.minCol ≤ 1 := by
             --
             unfold Domino.minCol
@@ -163,7 +168,7 @@ private lemma main
           have hd'_in_rect := T.dominos_in_rect d' hd'_mem
           have hd'_c1_in : d'.cell1 ∈ Rectangle n 3 := hd'_in_rect (by simp [Domino.cells])
           have hd'_c2_in : d'.cell2 ∈ Rectangle n 3 := hd'_in_rect (by simp [Domino.cells])
-          rw [mem_Rectangle] at hd'_c1_in hd'_c2_in
+          rw [IffIn_RectangleGe1AndGe_1AndGe21AndGe_2] at hd'_c1_in hd'_c2_in
           have hd'_col1_ge : d'.cell1.1 ≥ 1 := hd'_c1_in.1
           have hd'_col2_ge : d'.cell2.1 ≥ 1 := hd'_c2_in.1
           have hd'_min_eq :
@@ -259,9 +264,9 @@ private lemma main
           -- d.cell2 is in column 2 (similar argument)
           have h1r : (1, d.cell2.2) ∈ Rectangle n 3 := by
             --
-            rw [mem_Rectangle]
+            rw [IffIn_RectangleGe1AndGe_1AndGe21AndGe_2]
             exact ⟨le_refl 1, by omega, hc2_in_rect.2.2.1, hc2_in_rect.2.2.2⟩
-          obtain ⟨d', hd'_mem, hd'_cov⟩ := T.cell_covered (1, d.cell2.2) h1r
+          obtain ⟨d', hd'_mem, hd'_cov⟩ := AnyInCells.of.InRectangle.Cell.DominoTiling T (1, d.cell2.2) h1r
           have hd'_min_le : d'.minCol ≤ 1 := by
             --
             unfold Domino.minCol
@@ -276,7 +281,7 @@ private lemma main
           have hd'_in_rect := T.dominos_in_rect d' hd'_mem
           have hd'_c1_in : d'.cell1 ∈ Rectangle n 3 := hd'_in_rect (by simp [Domino.cells])
           have hd'_c2_in : d'.cell2 ∈ Rectangle n 3 := hd'_in_rect (by simp [Domino.cells])
-          rw [mem_Rectangle] at hd'_c1_in hd'_c2_in
+          rw [IffIn_RectangleGe1AndGe_1AndGe21AndGe_2] at hd'_c1_in hd'_c2_in
           have hd'_col1_ge : d'.cell1.1 ≥ 1 := hd'_c1_in.1
           have hd'_col2_ge : d'.cell2.1 ≥ 1 := hd'_c2_in.1
           have hd'_min_eq :

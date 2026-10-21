@@ -1,9 +1,11 @@
 import Mathlib
 import sympy.Basic
 import sympy.matrices.determinants.DominoTilings
+import Lemma.Nat.DominoTilings.tiling_2_to_sum_from_sum
 open DominoTilings
 open Domino DominoTiling
 open Finset
+open Nat
 
 
 /--
@@ -15,8 +17,8 @@ private lemma main :
   Function.Injective (@tiling_2_from_sum n) :=
 -- proof
   fun x y h => by
-  have hx := tiling_2_to_sum_from_sum x
-  have hy := tiling_2_to_sum_from_sum y
+  have hx := _root_.Nat.DominoTilings.tiling_2_to_sum_from_sum x
+  have hy := _root_.Nat.DominoTilings.tiling_2_to_sum_from_sum y
   rw [h] at hx
   exact hx.symm.trans hy
 

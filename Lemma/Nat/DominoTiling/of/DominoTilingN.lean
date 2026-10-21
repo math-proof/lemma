@@ -1,9 +1,13 @@
 import Mathlib
 import sympy.Basic
 import sympy.matrices.determinants.DominoTilings
+import Lemma.Nat.EqDomino.of.Ge1.Ge1.Domino
+import Lemma.Nat.Ge1.Ge1.of.InDominos.Domino.DominoTiling
+import Lemma.Nat.Ge13.Ge13.of.Ne_Horizontal12.Ne_Horizontal11.In_Dominos.InHorizontal12Dominos.InHorizontal11Dominos.Domino.DominoTiling
 open DominoTilings
 open Domino DominoTiling
 open Finset
+open Nat
 
 
 /--
@@ -42,21 +46,21 @@ private lemma main
         ·
           simp only [Finset.mem_image] at hd'_in_image
           obtain ⟨d'', hd''_mem, hd''_eq⟩ := hd'_in_image
-          have hcols := domino_cells_col_ge_one
+          have hcols := Ge1.Ge1.of.InDominos.Domino.DominoTiling
             ⟨dominos, dominos_in_rect, covers_all, pairwise_disjoint⟩ d'' hd''_mem
           subst hd''_eq
           rw [← hd'_eq] -- Show (d''.shiftNat 2).shiftNeg 2 ... = d''
           have h_eq : (d''.shiftNat 2).shiftNeg 2
-            (other_dominos_col_ge_3 (prependHorizontalPair ⟨dominos, dominos_in_rect, covers_all, pairwise_disjoint⟩)
+            (Ge13.Ge13.of.Ne_Horizontal12.Ne_Horizontal11.In_Dominos.InHorizontal12Dominos.InHorizontal11Dominos.Domino.DominoTiling (prependHorizontalPair ⟨dominos, dominos_in_rect, covers_all, pairwise_disjoint⟩)
+                (d''.shiftNat 2)
                 (by simp [prependHorizontalPair, horizontal_1_1])
                 (by simp [prependHorizontalPair, horizontal_1_2])
-                (d''.shiftNat 2)
                 (Finset.mem_of_mem_erase (Finset.mem_of_mem_erase hd'_erase))
                 hd'_ne1 hd'_ne2).1
-              (other_dominos_col_ge_3 (prependHorizontalPair ⟨dominos, dominos_in_rect, covers_all, pairwise_disjoint⟩)
+              (Ge13.Ge13.of.Ne_Horizontal12.Ne_Horizontal11.In_Dominos.InHorizontal12Dominos.InHorizontal11Dominos.Domino.DominoTiling (prependHorizontalPair ⟨dominos, dominos_in_rect, covers_all, pairwise_disjoint⟩)
+                (d''.shiftNat 2)
                 (by simp [prependHorizontalPair, horizontal_1_1])
                 (by simp [prependHorizontalPair, horizontal_1_2])
-                (d''.shiftNat 2)
                 (Finset.mem_of_mem_erase (Finset.mem_of_mem_erase hd'_erase))
                 hd'_ne1 hd'_ne2).2 = d'' := by
             apply Domino.ext
@@ -70,7 +74,7 @@ private lemma main
     ·
       -- Backward: d ∈ dominos → d is in the result
       intro hd
-      have hcols := domino_cells_col_ge_one
+      have hcols := Ge1.Ge1.of.InDominos.Domino.DominoTiling
         ⟨dominos, dominos_in_rect, covers_all, pairwise_disjoint⟩ d hd
       have hne1 : d.shiftNat 2 ≠ horizontal_1_1 := by
         intro h
@@ -91,7 +95,7 @@ private lemma main
       have hmem2 : d.shiftNat 2 ∈ ((insert horizontal_1_1 (insert horizontal_1_2 (dominos.image (fun d => d.shiftNat 2)))).erase horizontal_1_1).erase horizontal_1_2 :=
         Finset.mem_erase.mpr ⟨hne2, hmem1⟩
       use d.shiftNat 2, hmem2
-      exact Domino.shiftNeg_shiftNat d 2 hcols.1 hcols.2
+      exact EqDomino.of.Ge1.Ge1.Domino d hcols.1 hcols.2 2
 
 
 -- created on 2026-10-20

@@ -1130,6 +1130,9 @@ export class LeanArgsNewLineSeparated extends LeanMultipleLine(LeanArgs) {
         if (parent instanceof LeanArgsIndented) {
             const gp = parent.parent;
             if (gp instanceof L.LeanQuantifier) return 51;
+            // `∫ ω, f\n    ∂μ = g` — relational after a measure continuation must close the
+            // integral (`(∫ … ∂μ) = g`), not bind inside the newline list (stack 47 < Eq 50).
+            if (gp instanceof L.Lean_int) return L.LeanRelational.input_priority + 1;
             if (gp instanceof L.LeanCalc) return L.LeanAssign.input_priority - 1;
         }
         return 47;
@@ -1245,6 +1248,8 @@ export class LeanArgsIndented extends LeanBinary {
     get stack_priority() {
         if (this.parent instanceof L.LeanCalc) return 17;
         if (this.parent instanceof L.LeanQuantifier) return L.LeanRelational.input_priority + 1;
+        // Same as quantifier: measure continuation under `∫` must not trap `=` / relations.
+        if (this.parent instanceof L.Lean_int) return L.LeanRelational.input_priority + 1;
         return 47;
     }
 

@@ -1,10 +1,15 @@
 import Mathlib
 import sympy.Basic
 open scoped WithZero Classical
+set_option maxHeartbeats 999999
+set_option synthInstance.maxHeartbeats 800000
+set_option backward.isDefEq.respectTransparency false
 
+
+universe u
 
 private def lSpace
-  {K F : Type*} [Field K] [Field F] [Algebra K F]
+  {K F : Type u} [Field K] [Field F] [Algebra K F]
   (V : Set (Valuation F ℤᵐ⁰))
     (hK : ∀ v ∈ V, ∀ c : K, c ≠ 0 → v (algebraMap K F c) = 1)
     (m : Multiset (Valuation F ℤᵐ⁰)) : Submodule K F where
@@ -16,15 +21,16 @@ private def lSpace
     if hc : c = 0 then
       simp [hc]
     else
-      rw [hK v hv c hc, one_mul]; exact hg v hv
+      rw [hK v hv c hc, one_mul]
+      apply hg v hv
 private lemma mem_lSpace_iff
-  {K F : Type*} [Field K] [Field F] [Algebra K F]
+  {K F : Type u} [Field K] [Field F] [Algebra K F]
   (V : Set (Valuation F ℤᵐ⁰))
     (hK : ∀ v ∈ V, ∀ c : K, c ≠ 0 → v (algebraMap K F c) = 1)
     (m : Multiset (Valuation F ℤᵐ⁰)) (g : F) :
     g ∈ lSpace V hK m ↔ ∀ v ∈ V, v g ≤ WithZero.exp ((m.count v : ℕ) : ℤ) := Iff.rfl
 private lemma lSpace_zero_le
-  {K F : Type*} [Field K] [Field F] [Algebra K F]
+  {K F : Type u} [Field K] [Field F] [Algebra K F]
   (V : Set (Valuation F ℤᵐ⁰))
     (hK : ∀ v ∈ V, ∀ c : K, c ≠ 0 → v (algebraMap K F c) = 1)
     (hconst : ∀ f : F, (∀ v ∈ V, v f ≤ 1) → f ∈ Set.range (algebraMap K F)) :
@@ -32,22 +38,20 @@ private lemma lSpace_zero_le
   intro g hg
   obtain ⟨c, rfl⟩ := hconst g (fun v hv => by simpa using hg v hv)
   rw [Algebra.algebraMap_eq_smul_one]
-  exact Submodule.smul_mem _ c (Submodule.subset_span rfl)
+  apply Submodule.smul_mem _ c (Submodule.subset_span (Set.mem_singleton (1 : F)))
 private lemma lSpace_cons_le
-  {K F : Type*} [Field K] [Field F] [Algebra K F]
+  {K F : Type u} [Field K] [Field F] [Algebra K F]
   (V : Set (Valuation F ℤᵐ⁰))
     (hK : ∀ v ∈ V, ∀ c : K, c ≠ 0 → v (algebraMap K F c) = 1)
     (hres : ∀ v ∈ V, ∀ f : F, v f = 1 → ∃ c : K, v (f - algebraMap K F c) < 1)
     (m : Multiset (Valuation F ℤᵐ⁰)) (v₀ : Valuation F ℤᵐ⁰) :
-    lSpace V hK (v₀ ::ₘ m) = lSpace V hK m ∨
-      ∃ g₀ ∈ lSpace V hK (v₀ ::ₘ m), lSpace V hK (v₀ ::ₘ m) = lSpace V hK m ⊔ Submodule.span K {g₀} := by
+    lSpace V hK (Multiset.cons v₀ m) = lSpace V hK m ∨
+      ∃ g₀ ∈ lSpace V hK (Multiset.cons v₀ m), lSpace V hK (Multiset.cons v₀ m) = lSpace V hK m ⊔ Submodule.span K {g₀} := by
   classical
-  have hle : lSpace V hK m ≤ lSpace V hK (v₀ ::ₘ m) := fun g hg v hv =>
-    (hg v hv).trans (by
-      rw [WithZero.exp_le_exp]
-      exact_mod_cast Multiset.count_le_count_cons v v₀ m)
-  if heq : lSpace V hK (v₀ ::ₘ m) ≤ lSpace V hK m then
-    exact Or.inl (le_antisymm heq hle)
+  have hle : lSpace V hK m ≤ lSpace V hK (Multiset.cons v₀ m) := fun g hg v hv =>
+    (hg v hv).trans (by rw [WithZero.exp_le_exp]; exact_mod_cast Multiset.count_le_count_cons v v₀ m)
+  if heq : lSpace V hK (Multiset.cons v₀ m) ≤ lSpace V hK m then
+    apply Or.inl (le_antisymm heq hle)
   else
     right
     obtain ⟨g₀, hg₀, hg₀'⟩ := Set.not_subset.1 heq
@@ -61,20 +65,28 @@ private lemma lSpace_cons_le
       have := hg₀ v hv
       rwa [Multiset.count_cons_of_ne hne] at this
     set n : ℤ := ((m.count v₀ : ℕ) : ℤ) with hn
-    have hcount : (((v₀ ::ₘ m).count v₀ : ℕ) : ℤ) = n + 1 := by
-      rw [Multiset.count_cons_self]; push_cast; rw [hn]
+    have hcount : (((Multiset.cons v₀ m).count v₀ : ℕ) : ℤ) = n + 1 := by
+      rw [Multiset.count_cons_self]
+      push_cast
+      rw [hn]
     have hg₀v : v₀ g₀ = WithZero.exp (n + 1) := by
       apply le_antisymm
-      · have := hg₀ v₀ hv₀; rwa [hcount] at this
-      · by_contra hlt
+      ·
+        have := hg₀ v₀ hv₀
+        rwa [hcount] at this
+      ·
+        by_contra hlt
         push Not at hlt
         apply hg₀'
         intro v hv
         if hvv : v = v₀ then
           subst hvv
           obtain h0 | h0 := eq_or_ne (v g₀) 0
-          · rw [h0]; exact zero_le
-          · rw [← WithZero.exp_log h0] at hlt ⊢
+          ·
+            rw [h0]
+            apply zero_le
+          ·
+            rw [← WithZero.exp_log h0] at hlt ⊢
             rw [WithZero.exp_lt_exp] at hlt
             rw [WithZero.exp_le_exp]
             omega
@@ -82,29 +94,37 @@ private lemma lSpace_cons_le
           have := hg₀ v hv
           rwa [Multiset.count_cons_of_ne hvv] at this
     if hgm : g ∈ lSpace V hK m then
-      exact Submodule.mem_sup_left hgm
+      apply Submodule.mem_sup_left hgm
     else
       have hgv : v₀ g = WithZero.exp (n + 1) := by
         apply le_antisymm
-        · have := hg v₀ hv₀; rwa [hcount] at this
-        · by_contra hlt
+        ·
+          have := hg v₀ hv₀
+          rwa [hcount] at this
+        ·
+          by_contra hlt
           push Not at hlt
           apply hgm
           intro v hv
           if hvv : v = v₀ then
             subst hvv
             obtain h0 | h0 := eq_or_ne (v g) 0
-            · rw [h0]; exact zero_le
-            · rw [← WithZero.exp_log h0] at hlt ⊢
+            ·
+              rw [h0]
+              apply zero_le
+            ·
+              rw [← WithZero.exp_log h0] at hlt ⊢
               rw [WithZero.exp_lt_exp] at hlt
               rw [WithZero.exp_le_exp]
               omega
           else
             have := hg v hv
             rwa [Multiset.count_cons_of_ne hvv] at this
-      have hg₀ne : g₀ ≠ 0 := fun h => by rw [h, map_zero] at hg₀v; exact WithZero.exp_ne_zero hg₀v.symm
+      have hg₀ne : g₀ ≠ 0 := fun h => by
+        rw [h, map_zero] at hg₀v
+        apply WithZero.exp_ne_zero hg₀v.symm
       have hquot : v₀ (g / g₀) = 1 := by
-        rw [map_div₀, hgv, hg₀v, div_self (WithZero.exp_ne_zero)]
+        rw [map_div₀, hgv, hg₀v, div_self WithZero.exp_ne_zero]
       obtain ⟨c, hc⟩ := hres v₀ hv₀ (g / g₀) hquot
       have hdiff : g - c • g₀ ∈ lSpace V hK m := by
         intro v hv
@@ -115,14 +135,20 @@ private lemma lSpace_cons_le
           rw [hmul, map_mul, hg₀v]
           have hlt : v (g / g₀ - algebraMap K F c) ≤ WithZero.exp (-1 : ℤ) := by
             obtain h0 | h0 := eq_or_ne (v (g / g₀ - algebraMap K F c)) 0
-            · rw [h0]; exact zero_le
-            · rw [← WithZero.exp_log h0] at hc ⊢
+            ·
+              rw [h0]
+              apply zero_le
+            ·
+              rw [← WithZero.exp_log h0] at hc ⊢
               rw [← WithZero.exp_zero, WithZero.exp_lt_exp] at hc
               rw [WithZero.exp_le_exp]
               omega
-          calc v (g / g₀ - algebraMap K F c) * WithZero.exp (n + 1)
-            ≤ WithZero.exp (-1 : ℤ) * WithZero.exp (n + 1) := mul_le_mul_left hlt _
-            _ = WithZero.exp n := by rw [← WithZero.exp_add]; congr 1; ring
+          calc
+            _ ≤ WithZero.exp (-1 : ℤ) * WithZero.exp (n + 1) := mul_le_mul_left hlt _
+            _ = WithZero.exp n := by
+              rw [← WithZero.exp_add]
+              congr 1
+              ring
         else
           have h1 := hg v hv
           have h2 := hg₀ v hv
@@ -132,13 +158,14 @@ private lemma lSpace_cons_le
           if hc0 : c = 0 then
             simp [hc0]
           else
-            rw [hK v hv c hc0, one_mul]; exact h2
+            rw [hK v hv c hc0, one_mul]
+            apply h2
       have : g = (g - c • g₀) + c • g₀ := by abel
       rw [this]
-      exact Submodule.add_mem _ (Submodule.mem_sup_left hdiff)
-        (Submodule.mem_sup_right (Submodule.smul_mem _ c (Submodule.subset_span rfl)))
+      apply Submodule.add_mem _ (Submodule.mem_sup_left hdiff)
+        (Submodule.mem_sup_right (Submodule.smul_mem _ c (Submodule.subset_span (Set.mem_singleton g₀))))
 private lemma finite_and_finrank_lSpace_le
-  {K F : Type*} [Field K] [Field F] [Algebra K F]
+  {K F : Type u} [Field K] [Field F] [Algebra K F]
   (V : Set (Valuation F ℤᵐ⁰))
     (hK : ∀ v ∈ V, ∀ c : K, c ≠ 0 → v (algebraMap K F c) = 1)
     (hres : ∀ v ∈ V, ∀ f : F, v f = 1 → ∃ c : K, v (f - algebraMap K F c) < 1)
@@ -151,61 +178,63 @@ private lemma finite_and_finrank_lSpace_le
     let _ : Module.Finite K (Submodule.span K {(1 : F)}) := inferInstance
     refine ⟨Module.Finite.of_injective (Submodule.inclusion hle) (Submodule.inclusion_injective hle), ?_⟩
     rw [Multiset.card_zero, zero_add]
-    exact (Submodule.finrank_mono hle).trans ((finrank_span_le_card ({(1 : F)} : Set F)).trans (by simp))
+    apply (Submodule.finrank_mono hle).trans ((finrank_span_le_card ({(1 : F)} : Set F)).trans (by simp))
   | cons v₀ m ih =>
     obtain ⟨hfin, hrank⟩ := ih
     obtain h | ⟨g₀, -, h⟩ := lSpace_cons_le V hK hres m v₀
-    · rw [h, Multiset.card_cons]
-      exact ⟨hfin, hrank.trans (by omega)⟩
-    · rw [h, Multiset.card_cons]
+    ·
+      rw [h, Multiset.card_cons]
+      refine ⟨hfin, hrank.trans (by omega)⟩
+    ·
+      rw [h, Multiset.card_cons]
       let _ := hfin
       let _ : Module.Finite K (Submodule.span K {g₀}) := inferInstance
       refine ⟨inferInstance, ?_⟩
-      calc Module.finrank K ↥(lSpace V hK m ⊔ Submodule.span K {g₀})
-        ≤ Module.finrank K (lSpace V hK m) + Module.finrank K (Submodule.span K {g₀}) :=
-            Submodule.finrank_add_le_finrank_add_finrank _ _
-        _ ≤ (Multiset.card m + 1) + 1 := add_le_add hrank
-          ((finrank_span_le_card ({g₀} : Set F)).trans (by simp))
+      calc
+        _ ≤ Module.finrank K (lSpace V hK m) + Module.finrank K (Submodule.span K {g₀}) := Submodule.finrank_add_le_finrank_add_finrank _ _
+        _ ≤ (Multiset.card m + 1) + 1 := add_le_add hrank ((finrank_span_le_card ({g₀} : Set F)).trans (by simp))
 private lemma lSpace_mono
-  {K F : Type*} [Field K] [Field F] [Algebra K F]
+  {K F : Type u} [Field K] [Field F] [Algebra K F]
   (V : Set (Valuation F ℤᵐ⁰))
     (hK : ∀ v ∈ V, ∀ c : K, c ≠ 0 → v (algebraMap K F c) = 1)
     {m m' : Multiset (Valuation F ℤᵐ⁰)} (h : m ≤ m') : lSpace V hK m ≤ lSpace V hK m' := fun g hg v hv =>
-  (hg v hv).trans (by
-    rw [WithZero.exp_le_exp]
-    exact_mod_cast Multiset.count_le_of_le v h)
+  (hg v hv).trans (by rw [WithZero.exp_le_exp]; exact_mod_cast Multiset.count_le_of_le v h)
 private lemma mul_mem_lSpace
-  {K F : Type*} [Field K] [Field F] [Algebra K F]
+  {K F : Type u} [Field K] [Field F] [Algebra K F]
   (V : Set (Valuation F ℤᵐ⁰))
     (hK : ∀ v ∈ V, ∀ c : K, c ≠ 0 → v (algebraMap K F c) = 1)
     {m m' : Multiset (Valuation F ℤᵐ⁰)} {g g' : F} (hg : g ∈ lSpace V hK m) (hg' : g' ∈ lSpace V hK m') :
     g * g' ∈ lSpace V hK (m + m') := fun v hv => by
   rw [map_mul, Multiset.count_add, Nat.cast_add, WithZero.exp_add]
-  exact mul_le_mul' (hg v hv) (hg' v hv)
+  apply mul_le_mul' (hg v hv) (hg' v hv)
 private lemma pow_mem_lSpace
-  {K F : Type*} [Field K] [Field F] [Algebra K F]
+  {K F : Type u} [Field K] [Field F] [Algebra K F]
   (V : Set (Valuation F ℤᵐ⁰))
     (hK : ∀ v ∈ V, ∀ c : K, c ≠ 0 → v (algebraMap K F c) = 1)
     {m : Multiset (Valuation F ℤᵐ⁰)} {g : F} (hg : g ∈ lSpace V hK m) (i : ℕ) :
     g ^ i ∈ lSpace V hK (i • m) := by
   induction i with
-  | zero => intro v hv; simp
+  | zero =>
+    intro v hv
+    simp
   | succ i ih =>
     rw [pow_succ, succ_nsmul]
-    exact mul_mem_lSpace V hK ih hg
+    apply mul_mem_lSpace V hK ih hg
 private lemma exists_mem_lSpace
-  {K F : Type*} [Field K] [Field F] [Algebra K F]
+  {K F : Type u} [Field K] [Field F] [Algebra K F]
   (V : Set (Valuation F ℤᵐ⁰))
     (hK : ∀ v ∈ V, ∀ c : K, c ≠ 0 → v (algebraMap K F c) = 1)
     (hfin : ∀ f : F, f ≠ 0 → {v ∈ V | 1 < v f}.Finite) (g : F) :
     ∃ m : Multiset (Valuation F ℤᵐ⁰), g ∈ lSpace V hK m := by
   if hg : g = 0 then
-    exact ⟨0, fun v hv => by simp [hg]⟩
+    refine ⟨0, fun v hv => by simp [hg]⟩
   else
     refine ⟨∑ w ∈ (hfin g hg).toFinset, (WithZero.log (w g)).toNat • ({w} : Multiset (Valuation F ℤᵐ⁰)),
       fun v hv => ?_⟩
     if hlt : 1 < v g then
-      have hvS : v ∈ (hfin g hg).toFinset := by rw [Set.Finite.mem_toFinset]; exact ⟨hv, hlt⟩
+      have hvS : v ∈ (hfin g hg).toFinset := by
+        rw [Set.Finite.mem_toFinset]
+        refine ⟨hv, hlt⟩
       have hcount : (WithZero.log (v g)).toNat ≤
           Multiset.count v (∑ w ∈ (hfin g hg).toFinset, (WithZero.log (w g)).toNat • ({w} : Multiset _)) := by
         have hle : (WithZero.log (v g)).toNat • ({v} : Multiset (Valuation F ℤᵐ⁰)) ≤
@@ -215,10 +244,14 @@ private lemma exists_mem_lSpace
         have := Multiset.count_le_of_le v hle
         rwa [Multiset.count_nsmul, Multiset.count_singleton_self, mul_one] at this
       have h0 : v g ≠ 0 := ne_of_gt (lt_trans zero_lt_one hlt)
-      calc v g = WithZero.exp (WithZero.log (v g)) := (WithZero.exp_log h0).symm
+      calc
+        _ = WithZero.exp (WithZero.log (v g)) := (WithZero.exp_log h0).symm
         _ ≤ WithZero.exp (((WithZero.log (v g)).toNat : ℕ) : ℤ) := by
-          rw [WithZero.exp_le_exp]; exact Int.self_le_toNat _
-        _ ≤ _ := by rw [WithZero.exp_le_exp]; exact_mod_cast hcount
+          rw [WithZero.exp_le_exp]
+          apply Int.self_le_toNat _
+        _ ≤ _ := by
+          rw [WithZero.exp_le_exp]
+          exact_mod_cast hcount
     else
       push Not at hlt
       refine hlt.trans ?_
@@ -227,7 +260,7 @@ private lemma exists_mem_lSpace
       rw [h1, WithZero.exp_le_exp]
       positivity
 private lemma linearIndependent_pow_of_transcendental
-  {K F : Type*} [Field K] [Field F] [Algebra K F]
+  {K F : Type u} [Field K] [Field F] [Algebra K F]
   {f : F} (htr : Transcendental K f) (k : ℕ) :
     LinearIndependent K (fun i : Fin k => f ^ (i : ℕ)) := by
   rw [Fintype.linearIndependent_iff]
@@ -238,11 +271,10 @@ private lemma linearIndependent_pow_of_transcendental
   have hp0 := (transcendental_iff.1 htr) _ hp
   have hcoeff := congrArg (fun p : Polynomial K => p.coeff (i : ℕ)) hp0
   simp only [Polynomial.finsetSum_coeff, Polynomial.coeff_monomial, Polynomial.coeff_zero] at hcoeff
-  rw [Finset.sum_eq_single i (fun j _ hji => if_neg (fun h => hji (Fin.ext h))) (fun h => absurd (Finset.mem_univ i) h),
-    if_pos rfl] at hcoeff
-  exact hcoeff
+  rw [Finset.sum_eq_single i (fun j _ hji => ite_eq_right (fun h => hji (Fin.ext h))) (fun h => absurd (Finset.mem_univ i) h), ite_eq_left rfl] at hcoeff
+  apply hcoeff
 private lemma v_le_one_of_isIntegral
-  {K F : Type*} [Field K] [Field F] [Algebra K F]
+  {K F : Type u} [Field K] [Field F] [Algebra K F]
   (V : Set (Valuation F ℤᵐ⁰))
     (hK : ∀ v ∈ V, ∀ c : K, c ≠ 0 → v (algebraMap K F c) = 1)
     {v : Valuation F ℤᵐ⁰} (hv : v ∈ V) {f : F} (hf : IsIntegral K f) : v f ≤ 1 := by
@@ -251,18 +283,18 @@ private lemma v_le_one_of_isIntegral
     if hc : c = 0 then
       simp [hc]
     else
-      exact (hK v hv c hc).le
+      apply (hK v hv c hc).le
   let φ : K →+* v.integer := (algebraMap K F).codRestrict v.integer.toSubsemiring hmem
   have hint : IsIntegral v.integer f := by
     obtain ⟨p, hp, hpf⟩ := hf
     refine ⟨p.map φ, hp.map φ, ?_⟩
     rw [Polynomial.eval₂_map]
-    have hcomp : (algebraMap (↥v.integer) F).comp φ = algebraMap K F := RingHom.ext fun _ => rfl
+    have hcomp : (algebraMap ↥v.integer F).comp φ = algebraMap K F := RingHom.ext fun _ => rfl
     rw [hcomp]
-    exact hpf
-  exact (Valuation.integer.integers v).mem_of_integral hint
+    apply hpf
+  refine (Valuation.integer.integers v).mem_of_integral hint
 private lemma transcendental_and_finiteDimensional
-  {K F : Type*} [Field K] [Field F] [Algebra K F]
+  {K F : Type u} [Field K] [Field F] [Algebra K F]
   (V : Set (Valuation F ℤᵐ⁰))
     (hK : ∀ v ∈ V, ∀ c : K, c ≠ 0 → v (algebraMap K F c) = 1)
     (hres : ∀ v ∈ V, ∀ f : F, v f = 1 → ∃ c : K, v (f - algebraMap K F c) < 1)
@@ -272,7 +304,7 @@ private lemma transcendental_and_finiteDimensional
     Transcendental K f ∧ FiniteDimensional ↥(IntermediateField.adjoin K ({f} : Set F)) F := by
   have htr : Transcendental K f := by
     intro halg
-    exact hf (hconst f fun v hv => v_le_one_of_isIntegral V hK hv halg.isIntegral)
+    apply hf (hconst f fun v hv => v_le_one_of_isIntegral V hK hv halg.isIntegral)
   refine ⟨htr, ?_⟩
   obtain ⟨mf, hmf⟩ := exists_mem_lSpace V hK hfin f
   set d := Multiset.card mf with hd
@@ -291,14 +323,13 @@ private lemma transcendental_and_finiteDimensional
         lSpace_mono V hK (nsmul_le_nsmul_left (bot_le (a := mf)) (Nat.lt_succ_iff.1 p.1.2)) (pow_mem_lSpace V hK hmf p.1)
       have h2 : (p.2 : F) ∈ lSpace V hK ms :=
         lSpace_mono V hK (Finset.single_le_sum (f := m) (fun w _ => bot_le) p.2.2) (hm p.2)
-      exact mul_mem_lSpace V hK h1 h2
+      refine mul_mem_lSpace V hK h1 h2
     have hb : LinearIndependent K
       (fun i : Fin (k + 1) => (⟨f, hfmem⟩ : ↥(IntermediateField.adjoin K ({f} : Set F))) ^ (i : ℕ)) := by
       apply LinearIndependent.of_comp ((IntermediateField.adjoin K ({f} : Set F)).val.toLinearMap)
-      exact linearIndependent_pow_of_transcendental htr (k + 1)
+      apply linearIndependent_pow_of_transcendental htr (k + 1)
     have hli : LinearIndependent K (fun p : Fin (k + 1) × ↥s => f ^ (p.1 : ℕ) * (p.2 : F)) := by
-      have := linearIndependent_smul hb hs
-      exact this
+      apply linearIndependent_smul hb hs
     have hli' : LinearIndependent K
       (fun p : Fin (k + 1) × ↥s => (⟨f ^ (p.1 : ℕ) * (p.2 : F), hmem p⟩ : ↥(lSpace V hK (k • mf + ms)))) :=
       LinearIndependent.of_comp (lSpace V hK (k • mf + ms)).subtype hli
@@ -310,14 +341,14 @@ private lemma transcendental_and_finiteDimensional
     have : (k + 1) * s.card ≤ k * d + C + 1 := hcard.trans hLrank
     rw [hk] at this
     nlinarith
-  exact Module.rank_lt_aleph0_iff.1 (hrank.trans_lt (Cardinal.natCast_lt_aleph0))
+  refine Module.rank_lt_aleph0_iff.1 (hrank.trans_lt Cardinal.natCast_lt_aleph0)
 
 /--
 [AlgebraicCurve_transcendental_and_finiteDimensional_adjoin_of_valuations](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicCurve_transcendental_and_finiteDimensional_adjoin_of_valuations.lean)
 -/
 @[path]
 private lemma main
-  {K F : Type*} [Field K] [Field F] [Algebra K F]
+  {K F : Type u} [Field K] [Field F] [Algebra K F]
   {V : Set (Valuation F ℤᵐ⁰)} {f : F}
 -- given
   (hK : ∀ v ∈ V, ∀ c : K, c ≠ 0 → v (algebraMap K F c) = 1)

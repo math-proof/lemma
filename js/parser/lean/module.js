@@ -229,7 +229,9 @@ function extractAttribute(attr) {
 /**
  * `(hS : StochasticIrreducible P)` / `(h₁ : Measurable Y)` — a hypothesis-named binder whose
  * type is a predicate application (capitalized head, not a known type former). `isProp` cannot
- * see the declaration of such predicates, so the naming convention decides.
+ * see the declaration of such predicates, so naming / `IsFoo` decides.
+ * Also: any `Is[A-Z]…` head (`IsPolicyTrajectory`, `IsEmpty`, …) counts as Prop regardless of
+ * the binder name.
  * @param {Lean} name
  * @param {Lean} type
  */
@@ -241,6 +243,10 @@ function looksLikeClassHypothesis(name, type) {
     // Well-known Prop-valued predicates: a hypothesis whatever the binder is called
     // (`(mono : Monotone t)`, `(f_mono : Monotone f)`).
     if (/^(Monotone|Antitone|StrictMono|StrictAnti|MonotoneOn|AntitoneOn|StrictMonoOn|StrictAntiOn|Summable|HasSum|Continuous|ContinuousOn|ContinuousAt|Differentiable|DifferentiableOn|DifferentiableAt|HasDerivAt|Integrable|IntegrableOn|Measurable|AEMeasurable|StronglyMeasurable|AEStronglyMeasurable|Injective|Surjective|Bijective|Tendsto|Nonempty|Convex|ConvexOn|ConcaveOn|IsCompact|IsOpen|IsClosed|Pairwise|Irreducible|Prime|Even|Odd|Squarefree|Coprime|IsUnit)$/.test(head.text))
+        return true;
+    // Mathlib-style `IsFoo` predicates are Prop (`IsPolicyTrajectory`, `IsEmpty`, …),
+    // whatever the binder is called — not only the few `Is*` names on the whitelist above.
+    if (/^Is[A-Z]/.test(head.text))
         return true;
     // Otherwise rely on the naming convention: `h`, `h₁`, `hf`, `hmono`, `hμ`, …
     if (!/^h/u.test(name.text)) return false;

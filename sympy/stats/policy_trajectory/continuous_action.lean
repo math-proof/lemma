@@ -3,6 +3,9 @@ import sympy.stats.rv
 import Mathlib.Analysis.Calculus.Gradient.Basic
 import Mathlib.Probability.Kernel.WithDensity
 import sympy.functions.elementary.miscellaneous
+import Lemma.Random.SinglePSpace.of.Eq_WithDensity.Measurable.AEMeasurable
+import Lemma.Random.SinglePSpace.of.AEMeasurable.Distributed
+import Mathlib.MeasureTheory.Measure.Decomposition.RadonNikodym
 
 /-!
 # Closed-form value functions of the policy-gradient model with continuous states and continuous actions
@@ -169,6 +172,150 @@ def traj.unexpand : Lean.PrettyPrinter.Unexpander
   | `($_ $M $θ) => `($M $θ)
   | _ => throw ()
 
+set_option linter.unusedVariables false in
+/-- State coordinate at time `t` on a trajectory `ω : ℕ → ℝ × S × A`
+(`ω t = (r t, s t, a t)`). Dot notation: `M.stateAt t`. -/
+def stateAt (M : DensityModel Θ S A) (t : ℕ) : (ℕ → ℝ × S × A) → S :=
+  fun ω ↦ (ω t).2.1
+
+set_option linter.unusedVariables false in
+/-- Action coordinate at time `t` on a trajectory. Dot notation: `M.actionAt t`. -/
+def actionAt (M : DensityModel Θ S A) (t : ℕ) : (ℕ → ℝ × S × A) → A :=
+  fun ω ↦ (ω t).2.2
+
+set_option linter.unusedVariables false in
+/-- Reward coordinate at time `t` on a trajectory. Dot notation: `M.rewardAt t`. -/
+def rewardAt (M : DensityModel Θ S A) (t : ℕ) : (ℕ → ℝ × S × A) → ℝ :=
+  fun ω ↦ (ω t).1
+
 end DensityModel
+
+/-! ### `IsPolicyTrajectory` for continuous-action density models
+
+Bundles `stage_eq` (same content as lemma `h₁ : ∀ t, (· t) = (r t, s t, a t)`).
+For `ℙ[M θ](a[t] | s[t])` to elaborate one needs `[ReferenceMeasure S]` as well as
+`[ReferenceMeasure A]`, plus absolute continuity of the state / joint action-state
+marginals w.r.t. the reference measures (not implied by `Env` alone: `init` / `trans`
+may be singular w.r.t. `ReferenceMeasure` on `S`). Package those as
+`[AbsContStateMarginal M s]` and `[AbsContJointAS M a s]`; scoped `SinglePSpace`
+instances under `namespace IsPolicyTrajectory` then mirror the discrete
+`CountableMeasure` helpers. The joint abs.continuity follows from the policy density
+factorization once `map (s t) ≪ ref_S` (proved in Random lemmas via `stageK`); the
+class keeps the hypothesis explicit so `sympy/` stays free of that dependency. -/
+
+variable {Θ S A : Type*} [MeasurableSpace S] [ReferenceMeasure A]
+
+/-- Stage coordinates `(r[t], s[t], a[t])` match the trajectory point `ω t` for every `t`. -/
+class DensityModel.IsPolicyTrajectory (M : DensityModel Θ S A)
+    (r : ℕ ⇀ (ℕ → ℝ × S × A) → ℝ)
+    (s : ℕ ⇀ (ℕ → ℝ × S × A) → S)
+    (a : ℕ ⇀ (ℕ → ℝ × S × A) → A) : Prop where
+  /-- Same as lemma `h₁`: the stage map is the joint `(r t, s t, a t)`. -/
+  stage_eq : ∀ t, (· t) = (r t, s t, a t)
+
+namespace DensityModel.IsPolicyTrajectory
+
+variable {M : DensityModel Θ S A}
+  {r : ℕ ⇀ (ℕ → ℝ × S × A) → ℝ}
+  {s : ℕ ⇀ (ℕ → ℝ × S × A) → S}
+  {a : ℕ ⇀ (ℕ → ℝ × S × A) → A}
+
+/-- Canonical projections form an `IsPolicyTrajectory` (`stage_eq` by `rfl`). -/
+instance instCanonical (M : DensityModel Θ S A) :
+    DensityModel.IsPolicyTrajectory M ⟨M.rewardAt⟩ ⟨M.stateAt⟩ ⟨M.actionAt⟩ where
+  stage_eq t := by
+    funext ω
+    rfl
+
+/-- `s t` is measurable: rewrite via `stage_eq` to `(ω t).2.1`. -/
+theorem measurable_s [h : DensityModel.IsPolicyTrajectory M r s a] (t : ℕ) :
+    Measurable (s t) := by
+  have : s t = fun ω : ℕ → ℝ × S × A ↦ (ω t).2.1 :=
+    funext fun ω ↦ (congrArg (fun z : ℝ × S × A ↦ z.2.1) (congrFun (h.stage_eq t) ω)).symm
+  rw [this]
+  exact measurable_fst.comp <| measurable_snd.comp <|
+    (measurable_pi_apply (X := fun _ : ℕ ↦ ℝ × S × A) t)
+
+/-- `a t` is measurable: rewrite via `stage_eq` to `(ω t).2.2`. -/
+theorem measurable_a [h : DensityModel.IsPolicyTrajectory M r s a] (t : ℕ) :
+    Measurable (a t) := by
+  have : a t = fun ω : ℕ → ℝ × S × A ↦ (ω t).2.2 :=
+    funext fun ω ↦ (congrArg (fun z : ℝ × S × A ↦ z.2.2) (congrFun (h.stage_eq t) ω)).symm
+  rw [this]
+  exact measurable_snd.comp <| measurable_snd.comp <|
+    (measurable_pi_apply (X := fun _ : ℕ ↦ ℝ × S × A) t)
+
+/-- `r t` is measurable: rewrite via `stage_eq` to `(ω t).1`. -/
+theorem measurable_r [h : DensityModel.IsPolicyTrajectory M r s a] (t : ℕ) :
+    Measurable (r t) := by
+  have : r t = fun ω : ℕ → ℝ × S × A ↦ (ω t).1 :=
+    funext fun ω ↦ (congrArg Prod.fst (congrFun (h.stage_eq t) ω)).symm
+  rw [this]
+  exact measurable_fst.comp (measurable_pi_apply (X := fun _ : ℕ ↦ ℝ × S × A) t)
+
+end DensityModel.IsPolicyTrajectory
+
+section DensityModelIsPolicyTrajectorySinglePSpace
+variable {Θ S A : Type*} [ReferenceMeasure S] [ReferenceMeasure A]
+
+/-- Absolute continuity of every state marginal `law(s[t])` w.r.t. `ReferenceMeasure` on `S`. -/
+class DensityModel.AbsContStateMarginal (M : DensityModel Θ S A)
+    (s : ℕ ⇀ (ℕ → ℝ × S × A) → S) : Prop where
+  map_s_ac : ∀ θ t, (M θ).map (s t) ≪ (ReferenceMeasure.measure : Measure S)
+
+/-- Absolute continuity of every joint law `law(a[t], s[t])` w.r.t. the product reference
+measure on `A × S`. Together with `AbsContStateMarginal`, enables `SinglePSpace` for
+`(a t, s t)` so `ℙ[M θ](a[t] | s[t])` elaborates. -/
+class DensityModel.AbsContJointAS (M : DensityModel Θ S A)
+    (a : ℕ ⇀ (ℕ → ℝ × S × A) → A)
+    (s : ℕ ⇀ (ℕ → ℝ × S × A) → S) : Prop where
+  map_as_ac : ∀ θ t,
+    (M θ).map (fun ω => (a t ω, s t ω)) ≪
+      ((ReferenceMeasure.measure : Measure A).prod (ReferenceMeasure.measure : Measure S))
+
+variable {M : DensityModel Θ S A}
+  {r : ℕ ⇀ (ℕ → ℝ × S × A) → ℝ}
+  {s : ℕ ⇀ (ℕ → ℝ × S × A) → S}
+  {a : ℕ ⇀ (ℕ → ℝ × S × A) → A}
+
+/-- Under `[IsPolicyTrajectory]` and `[AbsContStateMarginal]`, `s t` is a `SinglePSpace` RV. -/
+theorem DensityModel.IsPolicyTrajectory.singlePSpace_s
+    [h : DensityModel.IsPolicyTrajectory M r s a]
+    [hac : DensityModel.AbsContStateMarginal M s] (θ : Θ) (t : ℕ) :
+    SinglePSpace (M θ) (s t) := by
+  have hx : AEMeasurable (s t) (M θ) := (h.measurable_s t).aemeasurable
+  let ρ : S → ENNReal := ((M θ).map (s t)).rnDeriv ReferenceMeasure.measure
+  refine {
+    toIsProbabilityMeasure := inferInstance
+    aemeasurable := hx
+    exists_distribution := ⟨ρ, ⟨Measure.measurable_rnDeriv _ _⟩, ?_⟩
+  }
+  exact (Measure.withDensity_rnDeriv_eq _ _ (hac.map_s_ac θ t)).symm
+
+/-- Under `[IsPolicyTrajectory]` and `[AbsContJointAS]`, `(a t, s t)` is a `SinglePSpace` RV. -/
+theorem DensityModel.IsPolicyTrajectory.singlePSpace_as
+    [h : DensityModel.IsPolicyTrajectory M r s a]
+    [haj : DensityModel.AbsContJointAS M a s] (θ : Θ) (t : ℕ) :
+    SinglePSpace (M θ) (a t, s t) := by
+  have hxy : AEMeasurable (a t, s t) (M θ) :=
+    (h.measurable_a t).aemeasurable.prodMk (h.measurable_s t).aemeasurable
+  have hacc : (M θ).map (a t, s t) ≪
+      ((ReferenceMeasure.measure : Measure A).prod (ReferenceMeasure.measure : Measure S)) := by
+    change (M θ).map (fun ω => (a t ω, s t ω)) ≪ _
+    exact haj.map_as_ac θ t
+  exact Random.SinglePSpace.of.Eq_WithDensity.Measurable.AEMeasurable hxy
+    (Measure.measurable_rnDeriv _ _)
+    (Measure.withDensity_rnDeriv_eq _ _ hacc).symm
+
+end DensityModelIsPolicyTrajectorySinglePSpace
+
+namespace DensityModel.IsPolicyTrajectory
+-- `r` is often absent from the conclusion, so these are scoped (HMM / discrete Model pattern):
+-- after `open DensityModel.IsPolicyTrajectory`, Lean finds `h` from the local
+-- `[IsPolicyTrajectory …]` / `[AbsCont…]` binders.
+-- `singlePSpace_as` supplies `(a t, s t)` for `ℙ[M θ](a[t] | s[t])`.
+set_option synthInstance.checkSynthOrder false in
+attribute [scoped instance] singlePSpace_s singlePSpace_as
+end DensityModel.IsPolicyTrajectory
 
 end PolicyGradient

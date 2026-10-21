@@ -2,37 +2,37 @@ import Mathlib
 import sympy.Basic
 open CategoryTheory CategoryTheory.Limits CategoryTheory.MorphismProperty AlgebraicGeometry TopologicalSpace Opposite IsLocalRing
 open scoped TensorProduct MonoidalCategory
-
-universe u
-
 set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
 
-private lemma exists_algHom_of_perfectField (K : Type u) [Field K] [PerfectField K]
-    (S : Type u) [CommRing S] [Algebra K S] [Algebra.FiniteType K S]
-    (p : Ideal S) (hp : p ≠ ⊤) :
-    ∃ (K' : Type u) (_ : Field K') (_ : Algebra K K') (_ : FiniteDimensional K K')
-      (_ : Algebra.IsSeparable K K') (_ : S →ₐ[K] K'), True := by
+
+universe u
+
+private lemma exists_algHom_of_perfectField
+  (K : Type u) [Field K] [PerfectField K]
+  (S : Type u) [CommRing S] [Algebra K S] [Algebra.FiniteType K S]
+  (p : Ideal S) (hp : p ≠ ⊤) :
+  ∃ (K' : Type u) (_ : Field K') (_ : Algebra K K') (_ : FiniteDimensional K K') (_ : Algebra.IsSeparable K K') (_ : S →ₐ[K] K'), True := by
   obtain ⟨M, hM, -⟩ := Ideal.exists_le_maximal p hp
   let _ : Field (S ⧸ M) := Ideal.Quotient.field M
   let _ : Algebra.FiniteType K (S ⧸ M) := inferInstance
   let _ : Module.Finite K (S ⧸ M) := finite_of_finite_type_of_isJacobsonRing K (S ⧸ M)
   let _ : Algebra.IsAlgebraic K (S ⧸ M) := Algebra.IsAlgebraic.of_finite K (S ⧸ M)
   let _ : Algebra.IsSeparable K (S ⧸ M) := Algebra.IsAlgebraic.isSeparable_of_perfectField
-  exact ⟨S ⧸ M, inferInstance, inferInstance, inferInstance, inferInstance,
-    Ideal.Quotient.mkₐ K M, trivial⟩
-private lemma exists_eval_ne_zero {K : Type u} [Field K] [Infinite K] {n : ℕ}
-    {h : MvPolynomial (Fin n) K} (hh : h ≠ 0) :
-    ∃ a : Fin n → K, MvPolynomial.eval a h ≠ 0 := by
+  exact ⟨S ⧸ M, inferInstance, inferInstance, inferInstance, inferInstance, Ideal.Quotient.mkₐ K M, trivial⟩
+private lemma exists_eval_ne_zero
+  {K : Type u} [Field K] [Infinite K] {n : ℕ}
+  {h : MvPolynomial (Fin n) K} (hh : h ≠ 0) :
+  ∃ a : Fin n → K, MvPolynomial.eval a h ≠ 0 := by
   by_contra! H
   exact hh (MvPolynomial.funext fun a => by simpa using H a)
-private lemma exists_isMaximal_isSeparable_of_etale (K : Type u) [Field K] [Infinite K] (n : ℕ)
-    (Sf : Type u) [CommRing Sf] [Algebra K Sf]
-    [Algebra (MvPolynomial (Fin n) K) Sf] [IsScalarTower K (MvPolynomial (Fin n) K) Sf]
-    [Algebra.Etale (MvPolynomial (Fin n) K) Sf] (Q₀ : Ideal Sf) [Q₀.IsPrime] :
-    ∃ (M : Ideal Sf) (_ : M.IsMaximal),
-      FiniteDimensional K (Sf ⧸ M) ∧ Algebra.IsSeparable K (Sf ⧸ M) := by
+private lemma exists_isMaximal_isSeparable_of_etale
+  (K : Type u) [Field K] [Infinite K] (n : ℕ)
+  (Sf : Type u) [CommRing Sf] [Algebra K Sf]
+  [Algebra (MvPolynomial (Fin n) K) Sf] [IsScalarTower K (MvPolynomial (Fin n) K) Sf]
+  [Algebra.Etale (MvPolynomial (Fin n) K) Sf] (Q₀ : Ideal Sf) [Q₀.IsPrime] :
+  ∃ (M : Ideal Sf) (_ : M.IsMaximal), FiniteDimensional K (Sf ⧸ M) ∧ Algebra.IsSeparable K (Sf ⧸ M) := by
   classical
   let _ : Module.Flat (MvPolynomial (Fin n) K) Sf := inferInstance
   let _ : Algebra.HasGoingDown (MvPolynomial (Fin n) K) Sf := Algebra.HasGoingDown.of_flat
@@ -64,7 +64,7 @@ private lemma exists_isMaximal_isSeparable_of_etale (K : Type u) [Field K] [Infi
     have : Q.asIdeal.comap (algebraMap (MvPolynomial (Fin n) K) Sf) = m := by
       simpa [PrimeSpectrum.ext_iff] using hQ
     rw [← this]
-    exact Ideal.comap_mono hQM
+    apply Ideal.comap_mono hQM
   let _ : Field (Sf ⧸ M) := Ideal.Quotient.field M
   refine ⟨M, hM, ?_, ?_⟩
   ·
@@ -72,7 +72,7 @@ private lemma exists_isMaximal_isSeparable_of_etale (K : Type u) [Field K] [Infi
     let _ : Algebra.FiniteType (MvPolynomial (Fin n) K) Sf := inferInstance
     let _ : Algebra.FiniteType K Sf := Algebra.FiniteType.trans (S := (MvPolynomial (Fin n) K)) inferInstance inferInstance
     let _ : Algebra.FiniteType K (Sf ⧸ M) := inferInstance
-    exact finite_of_finite_type_of_isJacobsonRing K (Sf ⧸ M)
+    apply finite_of_finite_type_of_isJacobsonRing K (Sf ⧸ M)
   ·
     let κ := (MvPolynomial (Fin n) K) ⧸ m
     let _ : Field κ := Ideal.Quotient.field m
@@ -94,30 +94,32 @@ private lemma exists_isMaximal_isSeparable_of_etale (K : Type u) [Field K] [Infi
     let _ : Algebra.FiniteType κ (Sf ⧸ M) :=
       Algebra.FiniteType.of_restrictScalars_finiteType (MvPolynomial (Fin n) K) κ (Sf ⧸ M)
     let _ : Algebra.EssFiniteType κ (Sf ⧸ M) := inferInstance
-    let _ : Algebra.IsSeparable κ (Sf ⧸ M) :=
-      (Algebra.FormallyUnramified.iff_isSeparable κ (Sf ⧸ M)).mp inferInstance
+    let _ : Algebra.IsSeparable κ (Sf ⧸ M) := by
+      rw [← Algebra.FormallyUnramified.iff_isSeparable κ (Sf ⧸ M)]
+      infer_instance
     let e : κ ≃ₐ[K] K := Ideal.quotientKerAlgEquivOfSurjective hev
     let _ : Algebra.IsSeparable K κ :=
       Algebra.IsSeparable.of_algHom K K e.toAlgHom
-    exact Algebra.IsSeparable.trans K κ (Sf ⧸ M)
-private lemma exists_algHom_of_smooth (K : Type u) [Field K]
-    (S : Type u) [CommRing S] [Algebra K S] [Algebra.Smooth K S]
-    (p : Ideal S) [p.IsPrime] :
-    ∃ (K' : Type u) (_ : Field K') (_ : Algebra K K') (_ : FiniteDimensional K K')
-      (_ : Algebra.IsSeparable K K') (_ : S →ₐ[K] K'), True := by
+    apply Algebra.IsSeparable.trans K κ (Sf ⧸ M)
+private lemma exists_algHom_of_smooth
+  (K : Type u) [Field K]
+  (S : Type u) [CommRing S] [Algebra K S] [Algebra.Smooth K S]
+  (p : Ideal S) [p.IsPrime] :
+  ∃ (K' : Type u) (_ : Field K') (_ : Algebra K K') (_ : FiniteDimensional K K') (_ : Algebra.IsSeparable K K') (_ : S →ₐ[K] K'), True := by
   classical
   cases finite_or_infinite K with
   | inl hfin =>
     let _ : PerfectField K := inferInstance
-    exact exists_algHom_of_perfectField K S p (Ideal.IsPrime.ne_top ‹_›)
+    apply exists_algHom_of_perfectField K S p (Ideal.IsPrime.ne_top ‹_›)
   | inr hinf =>
-    obtain ⟨f, hfp, n, _inst, htower, hstd⟩ :=
+    obtain ⟨f, hfp, n, instMv, htower, hstd⟩ :=
       Algebra.IsSmoothAt.exists_isStandardEtale_mvPolynomial (R := K) (S := S) (p := p)
+    let _ := instMv
     let _ := htower
     let _ := hstd
     let hp' : (Ideal.map (algebraMap S (Localization.Away f)) p).IsPrime :=
       IsLocalization.isPrime_of_isPrime_disjoint (.powers f) _ _ ‹_›
-        ((Ideal.disjoint_powers_iff_notMem_of_isPrime _).mpr hfp)
+        (Iff.mpr (Ideal.disjoint_powers_iff_notMem_of_isPrime _) hfp)
     obtain ⟨M, hM, hfinM, hsepM⟩ := exists_isMaximal_isSeparable_of_etale K n
       (Localization.Away f) (Ideal.map (algebraMap S (Localization.Away f)) p)
     let _ : Field (Localization.Away f ⧸ M) := Ideal.Quotient.field M
@@ -128,11 +130,9 @@ private lemma exists_algHom_of_smooth (K : Type u) [Field K]
 -/
 @[path]
 private lemma main
-    (K : Type u) [Field K] {V : Scheme.{u}} (g : V ⟶ Spec (CommRingCat.of K)) [Smooth g]
-    [Nonempty V] :
-    ∃ (K' : Type u) (_ : Field K') (_ : Algebra K K') (_ : FiniteDimensional K K')
-      (_ : Algebra.IsSeparable K K') (P : Spec (CommRingCat.of K') ⟶ V),
-      P ≫ g = Spec.map (CommRingCat.ofHom (algebraMap K K')) := by
+  (K : Type u) [Field K] {V : (Scheme : Type (u + 1))} (g : V ⟶ Spec (CommRingCat.of K)) [Smooth g]
+  [Nonempty V] :
+  ∃ (K' : Type u) (_ : Field K') (_ : Algebra K K') (_ : FiniteDimensional K K') (_ : Algebra.IsSeparable K K') (P : Spec (CommRingCat.of K') ⟶ V), P ≫ g = Spec.map (CommRingCat.ofHom (algebraMap K K')) := by
   classical
   obtain ⟨v⟩ := ‹Nonempty V›
   obtain ⟨_, ⟨U, hU, rfl⟩, hvU, -⟩ :=
@@ -141,17 +141,19 @@ private lemma main
   have hsm : Smooth (Spec.map ψ) := by rw [hψ]; infer_instance
   rw [HasRingHomProperty.Spec_iff (P := @Smooth)] at hsm
   algebraize [ψ.hom]
-  obtain ⟨x, -⟩ : ∃ x : Spec Γ(V, U), hU.fromSpec.base x = v := by
-    have : v ∈ Set.range hU.fromSpec.base := by rw [hU.range_fromSpec]; exact hvU
-    exact this
+  obtain ⟨x, -⟩ : ∃ x : Spec (V.presheaf.obj (op U)), hU.fromSpec.base x = v := by
+    have : v ∈ Set.range hU.fromSpec.base := by
+      rwa [hU.range_fromSpec]
+    apply this
   obtain ⟨K', _, _, _, _, χ, -⟩ :=
-    exists_algHom_of_smooth K Γ(V, U) x.asIdeal
+    exists_algHom_of_smooth K (V.presheaf.obj (op U)) x.asIdeal
   refine ⟨K', inferInstance, inferInstance, inferInstance, inferInstance,
     Spec.map (CommRingCat.ofHom χ.toRingHom) ≫ hU.fromSpec, ?_⟩
   rw [Category.assoc, ← hψ, ← Spec.map_comp]
   congr 1
   ext1
   change χ.toRingHom.comp ψ.hom = algebraMap K K'
-  exact χ.comp_algebraMap
+  apply χ.comp_algebraMap
+
 
 -- created on 2026-10-20

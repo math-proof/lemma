@@ -2,39 +2,37 @@ import Mathlib
 import sympy.Basic
 open CategoryTheory CategoryTheory.Limits CategoryTheory.MorphismProperty AlgebraicGeometry TopologicalSpace Opposite IsLocalRing
 open scoped TensorProduct MonoidalCategory
-
-universe u
-
 set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
+
+
+universe u
 
 /--
 [AlgebraicGeometry_exists_iso_pullback_residue_of_iso_pullback](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_exists_iso_pullback_residue_of_iso_pullback.lean)
 -/
 @[path]
 private lemma main
-    {A A₁ : Type u} [CommRing A] [IsLocalRing A] [CommRing A₁] [IsLocalRing A₁]
-    (ι₁ : A₁ →+* A) [IsLocalHom ι₁] (hres₁ : Function.Surjective ((IsLocalRing.residue A).comp ι₁))
-    {X X₁ : Scheme.{u}} (toBase : X ⟶ Spec (CommRingCat.of A)) (f₁ : X₁ ⟶ Spec (CommRingCat.of A₁))
-    (e₁ : X ≅ pullback f₁ (Spec.map (CommRingCat.ofHom ι₁)))
-    (he₁ : e₁.hom ≫ pullback.snd f₁ (Spec.map (CommRingCat.ofHom ι₁)) = toBase) :
-    ∃ ρ : pullback toBase (Spec.map (CommRingCat.ofHom (IsLocalRing.residue A))) ≅
-        pullback f₁ (Spec.map (CommRingCat.ofHom (IsLocalRing.residue A₁))),
-      ρ.hom ≫ pullback.fst f₁ (Spec.map (CommRingCat.ofHom (IsLocalRing.residue A₁))) =
-        pullback.fst toBase (Spec.map (CommRingCat.ofHom (IsLocalRing.residue A))) ≫
-          e₁.hom ≫ pullback.fst f₁ (Spec.map (CommRingCat.ofHom ι₁)) := by
+  {A A₁ : Type u} [CommRing A] [IsLocalRing A] [CommRing A₁] [IsLocalRing A₁]
+  (ι₁ : RingHom A₁ A) [IsLocalHom ι₁] (hres₁ : Function.Surjective ((IsLocalRing.residue A).comp ι₁))
+  {X X₁ : (Scheme : Type (u + 1))} (toBase : X ⟶ Spec (CommRingCat.of A)) (f₁ : X₁ ⟶ Spec (CommRingCat.of A₁))
+  (e₁ : X ≅ pullback f₁ (Spec.map (CommRingCat.ofHom ι₁)))
+  (he₁ : e₁.hom ≫ pullback.snd f₁ (Spec.map (CommRingCat.ofHom ι₁)) = toBase) :
+    ∃ ρ : pullback toBase (Spec.map (CommRingCat.ofHom (IsLocalRing.residue A))) ≅ pullback f₁ (Spec.map (CommRingCat.ofHom (IsLocalRing.residue A₁))), ρ.hom ≫ pullback.fst f₁ (Spec.map (CommRingCat.ofHom (IsLocalRing.residue A₁))) = pullback.fst toBase (Spec.map (CommRingCat.ofHom (IsLocalRing.residue A))) ≫ e₁.hom ≫ pullback.fst f₁ (Spec.map (CommRingCat.ofHom ι₁)) := by
   have hκcomp : (IsLocalRing.ResidueField.map ι₁).comp (IsLocalRing.residue A₁) = (IsLocalRing.residue A).comp ι₁ :=
     IsLocalRing.ResidueField.map_comp_residue ι₁
   have hbij : Function.Bijective (IsLocalRing.ResidueField.map ι₁) := by
     refine ⟨(IsLocalRing.ResidueField.map ι₁).injective, ?_⟩
-    have h : Function.Surjective ((IsLocalRing.ResidueField.map ι₁).comp (IsLocalRing.residue A₁)) := by rw [hκcomp]; exact hres₁
+    have h : Function.Surjective ((IsLocalRing.ResidueField.map ι₁).comp (IsLocalRing.residue A₁)) := by rwa [hκcomp]
     rw [RingHom.coe_comp] at h
-    exact Function.Surjective.of_comp h
+    apply Function.Surjective.of_comp h
   have hε1 : (RingEquiv.ofBijective (IsLocalRing.ResidueField.map ι₁) hbij).symm.toRingHom.comp (IsLocalRing.ResidueField.map ι₁) = RingHom.id _ := by
-    ext x; exact (RingEquiv.ofBijective (IsLocalRing.ResidueField.map ι₁) hbij).symm_apply_apply x
+    ext x
+    apply (RingEquiv.ofBijective (IsLocalRing.ResidueField.map ι₁) hbij).symm_apply_apply x
   have hε2 : (IsLocalRing.ResidueField.map ι₁).comp (RingEquiv.ofBijective (IsLocalRing.ResidueField.map ι₁) hbij).symm.toRingHom = RingHom.id _ := by
-    ext x; exact (RingEquiv.ofBijective (IsLocalRing.ResidueField.map ι₁) hbij).apply_symm_apply x
+    ext x
+    apply (RingEquiv.ofBijective (IsLocalRing.ResidueField.map ι₁) hbij).apply_symm_apply x
   have hκ1 : (Spec.map (CommRingCat.ofHom (IsLocalRing.ResidueField.map ι₁))) ≫ (Spec.map (CommRingCat.ofHom (IsLocalRing.residue A₁))) = (Spec.map (CommRingCat.ofHom (IsLocalRing.residue A))) ≫ (Spec.map (CommRingCat.ofHom ι₁)) := by
     rw [← Spec.map_comp, ← Spec.map_comp, ← CommRingCat.ofHom_comp, ← CommRingCat.ofHom_comp, hκcomp]
   have hκ2 : (Spec.map (CommRingCat.ofHom (IsLocalRing.ResidueField.map ι₁))) ≫ (Spec.map (CommRingCat.ofHom (RingEquiv.ofBijective (IsLocalRing.ResidueField.map ι₁) hbij).symm.toRingHom)) = 𝟙 _ := by
@@ -45,12 +43,12 @@ private lemma main
     rw [← Spec.map_comp, ← Spec.map_comp, ← CommRingCat.ofHom_comp, ← CommRingCat.ofHom_comp, ← hκcomp,
       ← RingHom.comp_assoc, hε1, RingHom.id_comp]
   have wF : (pullback.fst toBase (Spec.map (CommRingCat.ofHom (IsLocalRing.residue A))) ≫ e₁.hom ≫ pullback.fst f₁ (Spec.map (CommRingCat.ofHom ι₁))) ≫ f₁ =
-      (pullback.snd toBase (Spec.map (CommRingCat.ofHom (IsLocalRing.residue A))) ≫ (Spec.map (CommRingCat.ofHom (IsLocalRing.ResidueField.map ι₁)))) ≫ (Spec.map (CommRingCat.ofHom (IsLocalRing.residue A₁))) := by
-    calc (pullback.fst toBase (Spec.map (CommRingCat.ofHom (IsLocalRing.residue A))) ≫ e₁.hom ≫ pullback.fst f₁ (Spec.map (CommRingCat.ofHom ι₁))) ≫ f₁
-        = pullback.fst toBase (Spec.map (CommRingCat.ofHom (IsLocalRing.residue A))) ≫ e₁.hom ≫ (pullback.fst f₁ (Spec.map (CommRingCat.ofHom ι₁)) ≫ f₁) := by
-          simp only [Category.assoc]
+      (pullback.snd toBase (Spec.map (CommRingCat.ofHom (IsLocalRing.residue A))) ≫ (Spec.map (CommRingCat.ofHom (IsLocalRing.ResidueField.map ι₁)))) ≫ (Spec.map (CommRingCat.ofHom (IsLocalRing.residue A₁))) := calc
+      _ = pullback.fst toBase (Spec.map (CommRingCat.ofHom (IsLocalRing.residue A))) ≫ e₁.hom ≫ (pullback.fst f₁ (Spec.map (CommRingCat.ofHom ι₁)) ≫ f₁) := by
+        simp only [Category.assoc]
       _ = pullback.fst toBase (Spec.map (CommRingCat.ofHom (IsLocalRing.residue A))) ≫ (e₁.hom ≫ pullback.snd f₁ (Spec.map (CommRingCat.ofHom ι₁))) ≫ (Spec.map (CommRingCat.ofHom ι₁)) := by
-          rw [pullback.condition]; simp only [Category.assoc]
+        rw [pullback.condition]
+        simp only [Category.assoc]
       _ = (pullback.fst toBase (Spec.map (CommRingCat.ofHom (IsLocalRing.residue A))) ≫ toBase) ≫ (Spec.map (CommRingCat.ofHom ι₁)) := by rw [he₁, Category.assoc]
       _ = pullback.snd toBase (Spec.map (CommRingCat.ofHom (IsLocalRing.residue A))) ≫ ((Spec.map (CommRingCat.ofHom (IsLocalRing.residue A))) ≫ (Spec.map (CommRingCat.ofHom ι₁))) := by rw [pullback.condition, Category.assoc]
       _ = (pullback.snd toBase (Spec.map (CommRingCat.ofHom (IsLocalRing.residue A))) ≫ (Spec.map (CommRingCat.ofHom (IsLocalRing.ResidueField.map ι₁)))) ≫ (Spec.map (CommRingCat.ofHom (IsLocalRing.residue A₁))) := by rw [← hκ1, Category.assoc]
@@ -66,10 +64,9 @@ private lemma main
       (pullback.snd f₁ (Spec.map (CommRingCat.ofHom (IsLocalRing.residue A₁))) ≫ (Spec.map (CommRingCat.ofHom (RingEquiv.ofBijective (IsLocalRing.ResidueField.map ι₁) hbij).symm.toRingHom))) wG, ?_, ?_⟩, ?_⟩
   ·
     apply pullback.hom_ext
-    · rw [Category.id_comp, Category.assoc, pullback.lift_fst]
-      have hFG0 : pullback.lift (pullback.fst toBase (Spec.map (CommRingCat.ofHom (IsLocalRing.residue A))) ≫ e₁.hom ≫ pullback.fst f₁ (Spec.map (CommRingCat.ofHom ι₁))) (pullback.snd toBase (Spec.map (CommRingCat.ofHom (IsLocalRing.residue A))) ≫ (Spec.map (CommRingCat.ofHom (IsLocalRing.ResidueField.map ι₁)))) wF ≫
-          pullback.lift (pullback.fst f₁ (Spec.map (CommRingCat.ofHom (IsLocalRing.residue A₁)))) (pullback.snd f₁ (Spec.map (CommRingCat.ofHom (IsLocalRing.residue A₁))) ≫ (Spec.map (CommRingCat.ofHom (RingEquiv.ofBijective (IsLocalRing.ResidueField.map ι₁) hbij).symm.toRingHom)) ≫ (Spec.map (CommRingCat.ofHom (IsLocalRing.residue A)))) wG0 =
-          pullback.fst toBase (Spec.map (CommRingCat.ofHom (IsLocalRing.residue A))) ≫ e₁.hom := by
+    ·
+      rw [Category.id_comp, Category.assoc, pullback.lift_fst]
+      have hFG0 : pullback.lift (pullback.fst toBase (Spec.map (CommRingCat.ofHom (IsLocalRing.residue A))) ≫ e₁.hom ≫ pullback.fst f₁ (Spec.map (CommRingCat.ofHom ι₁))) (pullback.snd toBase (Spec.map (CommRingCat.ofHom (IsLocalRing.residue A))) ≫ (Spec.map (CommRingCat.ofHom (IsLocalRing.ResidueField.map ι₁)))) wF ≫ pullback.lift (pullback.fst f₁ (Spec.map (CommRingCat.ofHom (IsLocalRing.residue A₁)))) (pullback.snd f₁ (Spec.map (CommRingCat.ofHom (IsLocalRing.residue A₁))) ≫ (Spec.map (CommRingCat.ofHom (RingEquiv.ofBijective (IsLocalRing.ResidueField.map ι₁) hbij).symm.toRingHom)) ≫ (Spec.map (CommRingCat.ofHom (IsLocalRing.residue A)))) wG0 = pullback.fst toBase (Spec.map (CommRingCat.ofHom (IsLocalRing.residue A))) ≫ e₁.hom := by
         apply pullback.hom_ext
         · rw [Category.assoc, pullback.lift_fst, pullback.lift_fst, Category.assoc]
         · rw [Category.assoc, pullback.lift_snd, ← Category.assoc, pullback.lift_snd, Category.assoc,
@@ -84,6 +81,7 @@ private lemma main
     · rw [Category.id_comp, Category.assoc, pullback.lift_snd, ← Category.assoc, pullback.lift_snd,
         Category.assoc, hκ3, Category.comp_id]
   ·
-    exact pullback.lift_fst _ _ _
+    apply pullback.lift_fst _ _ _
+
 
 -- created on 2026-10-20

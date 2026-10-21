@@ -1,9 +1,11 @@
 import Mathlib
 import sympy.Basic
 import sympy.matrices.determinants.DominoTilings
+import Lemma.Nat.IffIn_RectangleGe1AndGe_1AndGe21AndGe_2
 open DominoTilings
 open Domino DominoTiling
 open Finset
+open Nat
 set_option linter.unusedSimpArgs false
 
 
@@ -35,7 +37,7 @@ private lemma main
   have hd'_in := T.dominos_in_rect d' hd'
   have hc1_in := hd'_in (Finset.mem_insert_self _ _)
   have hc2_in := hd'_in (Finset.mem_insert_of_mem (Finset.mem_singleton_self _))
-  rw [mem_Rectangle] at hc1_in hc2_in
+  rw [IffIn_RectangleGe1AndGe_1AndGe21AndGe_2] at hc1_in hc2_in
   simp only [Domino.cells, Finset.mem_insert, Finset.mem_singleton] at hd'_cov
   obtain ⟨hcol, hrow⟩ | ⟨hrow, hcol⟩ := d'.adjacent
   ·

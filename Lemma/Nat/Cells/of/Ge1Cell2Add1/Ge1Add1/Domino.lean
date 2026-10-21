@@ -1,9 +1,11 @@
 import Mathlib
 import sympy.Basic
 import sympy.matrices.determinants.DominoTilings
+import Lemma.Nat.EqShiftNat.of.Ge1Add1.Ge1Add1.Domino
 open DominoTilings
 open Domino DominoTiling
 open Finset
+open Nat
 
 
 /--
@@ -19,7 +21,7 @@ private lemma main
 -- imply
   ((d.shiftNeg k h0 h1).shiftNat k).cells = d.cells := by
 -- proof
-  rw [shiftNat_shiftNeg]
+  rw [EqShiftNat.of.Ge1Add1.Ge1Add1.Domino]
 
 
 -- created on 2026-10-20

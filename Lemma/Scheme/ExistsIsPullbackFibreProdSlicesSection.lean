@@ -2,47 +2,43 @@ import Mathlib
 import sympy.Basic
 open CategoryTheory CategoryTheory.Limits CategoryTheory.MorphismProperty AlgebraicGeometry TopologicalSpace Opposite IsLocalRing
 open scoped TensorProduct MonoidalCategory
-
-universe u
-
 set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
+
+
+universe u
 
 /--
 [AlgebraicGeometry_exists_isPullback_fibre_prod_and_slices_of_section](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_exists_isPullback_fibre_prod_and_slices_of_section.lean)
 -/
 @[path]
 private lemma main
-    {S K : Type u} [CommRing S] [CommRing K] (r : S →+* K)
-    {A : Scheme.{u}} (f : A ⟶ Spec (CommRingCat.of S)) [IsSeparated f]
+  {S K : Type u} [CommRing S] [CommRing K] (r : RingHom S K)
+  {A : (Scheme : Type (u + 1))} (f : A ⟶ Spec (CommRingCat.of S)) [IsSeparated f]
     (e : Spec (CommRingCat.of S) ⟶ A) (he : e ≫ f = 𝟙 _)
-    {AK : Scheme.{u}} (aK : AK ⟶ A) (xK : AK ⟶ Spec (CommRingCat.of K))
+    {AK : (Scheme : Type (u + 1))} (aK : AK ⟶ A) (xK : AK ⟶ Spec (CommRingCat.of K))
     (haK : IsPullback aK xK f (Spec.map (CommRingCat.ofHom r))) :
-    ∃ (p₁ p₂ : pullback (pullback.fst f f ≫ f) (Spec.map (CommRingCat.ofHom r)) ⟶ AK)
-      (eK : Spec (CommRingCat.of K) ⟶ AK)
-      (iX iY : AK ⟶ pullback (pullback.fst f f ≫ f) (Spec.map (CommRingCat.ofHom r))),
-      p₁ ≫ aK = pullback.fst (pullback.fst f f ≫ f) (Spec.map (CommRingCat.ofHom r)) ≫ pullback.fst f f ∧
+    ∃ (p₁ p₂ : pullback (pullback.fst f f ≫ f) (Spec.map (CommRingCat.ofHom r)) ⟶ AK) (eK : Spec (CommRingCat.of K) ⟶ AK) (iX iY : AK ⟶ pullback (pullback.fst f f ≫ f) (Spec.map (CommRingCat.ofHom r))), p₁ ≫ aK = pullback.fst (pullback.fst f f ≫ f) (Spec.map (CommRingCat.ofHom r)) ≫ pullback.fst f f ∧
       p₁ ≫ xK = pullback.snd (pullback.fst f f ≫ f) (Spec.map (CommRingCat.ofHom r)) ∧
       p₂ ≫ aK = pullback.fst (pullback.fst f f ≫ f) (Spec.map (CommRingCat.ofHom r)) ≫ pullback.snd f f ∧
       p₂ ≫ xK = pullback.snd (pullback.fst f f ≫ f) (Spec.map (CommRingCat.ofHom r)) ∧
       IsPullback p₁ p₂ xK xK ∧
       eK ≫ aK = Spec.map (CommRingCat.ofHom r) ≫ e ∧ eK ≫ xK = 𝟙 _ ∧
       IsClosedImmersion iX ∧ iX ≫ p₁ = 𝟙 AK ∧ iX ≫ p₂ = xK ≫ eK ∧
-      iX ≫ pullback.fst (pullback.fst f f ≫ f) (Spec.map (CommRingCat.ofHom r))
-        = aK ≫ pullback.lift (𝟙 A) (f ≫ e) (by rw [Category.id_comp, Category.assoc, he, Category.comp_id]) ∧
+      iX ≫ pullback.fst (pullback.fst f f ≫ f) (Spec.map (CommRingCat.ofHom r)) = aK ≫ pullback.lift (𝟙 A) (f ≫ e) (by rw [Category.id_comp, Category.assoc, he, Category.comp_id]) ∧
       IsClosedImmersion iY ∧ iY ≫ p₁ = xK ≫ eK ∧ iY ≫ p₂ = 𝟙 AK ∧
-      iY ≫ pullback.fst (pullback.fst f f ≫ f) (Spec.map (CommRingCat.ofHom r))
-        = aK ≫ pullback.lift (f ≫ e) (𝟙 A) (by rw [Category.id_comp, Category.assoc, he, Category.comp_id]) := by
+      iY ≫ pullback.fst (pullback.fst f f ≫ f) (Spec.map (CommRingCat.ofHom r)) = aK ≫ pullback.lift (f ≫ e) (𝟙 A) (by rw [Category.id_comp, Category.assoc, he, Category.comp_id]) := by
   let σ : Spec (CommRingCat.of K) ⟶ Spec (CommRingCat.of S) := Spec.map (CommRingCat.ofHom r)
   let qP : pullback f f ⟶ Spec (CommRingCat.of S) := pullback.fst f f ≫ f
   let πP := pullback.fst qP σ
   let πK := pullback.snd qP σ
-  have hσ : Spec.map (CommRingCat.ofHom r) = σ := rfl
   have w₁ : (πP ≫ pullback.fst f f) ≫ f = πK ≫ σ := by
-    rw [Category.assoc]; exact pullback.condition
+    rw [Category.assoc]
+    apply pullback.condition
   have w₂ : (πP ≫ pullback.snd f f) ≫ f = πK ≫ σ := by
-    rw [Category.assoc, ← pullback.condition]; exact pullback.condition
+    rw [Category.assoc, ← pullback.condition]
+    apply pullback.condition
   let p₁ : pullback qP σ ⟶ AK := haK.lift (πP ≫ pullback.fst f f) πK w₁
   let p₂ : pullback qP σ ⟶ AK := haK.lift (πP ≫ pullback.snd f f) πK w₂
   have hp₁a : p₁ ≫ aK = πP ≫ pullback.fst f f := haK.lift_fst _ _ _
@@ -52,13 +48,13 @@ private lemma main
   have hL : IsPullback πP p₁ (pullback.fst f f) aK := by
     refine (IsPullback.paste_vert_iff haK hp₁a.symm).mp ?_
     rw [hp₁x]
-    exact IsPullback.of_hasPullback qP σ
+    apply IsPullback.of_hasPullback qP σ
   have hM : IsPullback (πP ≫ pullback.snd f f) p₁ f (aK ≫ f) :=
     IsPullback.paste_horiz hL (IsPullback.of_hasPullback f f).flip
   have hP : IsPullback p₁ p₂ xK xK := by
     have hM' : IsPullback (p₂ ≫ aK) p₁ f (xK ≫ Spec.map (CommRingCat.ofHom r)) := by
-      rw [hp₂a, ← haK.w]; exact hM
-    exact ((IsPullback.paste_horiz_iff haK (by rw [hp₁x, hp₂x])).mp hM').flip
+      rwa [hp₂a, ← haK.w]
+    refine ((IsPullback.paste_horiz_iff haK (by rw [hp₁x, hp₂x])).mp hM').flip
   let _ : IsSeparated xK := MorphismProperty.of_isPullback haK inferInstance
   let _ : IsSeparated p₁ := MorphismProperty.of_isPullback hP.flip inferInstance
   let _ : IsSeparated p₂ := MorphismProperty.of_isPullback hP inferInstance
@@ -76,25 +72,28 @@ private lemma main
   have hiY₁ : iY ≫ p₁ = xK ≫ eK := hP.lift_fst _ _ _
   have hiY₂ : iY ≫ p₂ = 𝟙 AK := hP.lift_snd _ _ _
   have hiXc : IsClosedImmersion iX := by
-    let _ : IsClosedImmersion (iX ≫ p₁) := by rw [hiX₁]; infer_instance
-    exact IsClosedImmersion.of_comp iX p₁
+    let _ : IsClosedImmersion (iX ≫ p₁) := by
+      rw [hiX₁]
+      infer_instance
+    apply IsClosedImmersion.of_comp iX p₁
   have hiYc : IsClosedImmersion iY := by
-    let _ : IsClosedImmersion (iY ≫ p₂) := by rw [hiY₂]; infer_instance
-    exact IsClosedImmersion.of_comp iY p₂
-  have hslX : iX ≫ πP = aK ≫ pullback.lift (𝟙 A) (f ≫ e)
-      (by rw [Category.id_comp, Category.assoc, he, Category.comp_id]) := by
+    let _ : IsClosedImmersion (iY ≫ p₂) := by
+      rw [hiY₂]
+      infer_instance
+    apply IsClosedImmersion.of_comp iY p₂
+  have hslX : iX ≫ πP = aK ≫ pullback.lift (𝟙 A) (f ≫ e) (by rw [Category.id_comp, Category.assoc, he, Category.comp_id]) := by
     apply pullback.hom_ext
     · rw [Category.assoc, Category.assoc, pullback.lift_fst, Category.comp_id, ← hp₁a, ← Category.assoc, hiX₁,
         Category.id_comp]
     · rw [Category.assoc, Category.assoc, pullback.lift_snd, ← hp₂a, ← Category.assoc, hiX₂, Category.assoc, heKa,
         ← Category.assoc, ← haK.w, Category.assoc]
-  have hslY : iY ≫ πP = aK ≫ pullback.lift (f ≫ e) (𝟙 A)
-      (by rw [Category.id_comp, Category.assoc, he, Category.comp_id]) := by
+  have hslY : iY ≫ πP = aK ≫ pullback.lift (f ≫ e) (𝟙 A) (by rw [Category.id_comp, Category.assoc, he, Category.comp_id]) := by
     apply pullback.hom_ext
     · rw [Category.assoc, Category.assoc, pullback.lift_fst, ← hp₁a, ← Category.assoc, hiY₁, Category.assoc, heKa,
         ← Category.assoc, ← haK.w, Category.assoc]
     · rw [Category.assoc, Category.assoc, pullback.lift_snd, Category.comp_id, ← hp₂a, ← Category.assoc, hiY₂,
         Category.id_comp]
-  exact ⟨p₁, p₂, eK, iX, iY, hp₁a, hp₁x, hp₂a, hp₂x, hP, heKa, heKx, hiXc, hiX₁, hiX₂, hslX, hiYc, hiY₁, hiY₂, hslY⟩
+  refine ⟨p₁, p₂, eK, iX, iY, hp₁a, hp₁x, hp₂a, hp₂x, hP, heKa, heKx, hiXc, hiX₁, hiX₂, hslX, hiYc, hiY₁, hiY₂, hslY⟩
+
 
 -- created on 2026-10-20

@@ -1,9 +1,12 @@
 import Mathlib
 import sympy.Basic
 import sympy.matrices.determinants.DominoTilings
+import Lemma.Nat.EqShiftNat.of.Ge1Add1.Ge1Add1.Domino
+import Lemma.Nat.Ge13.Ge13.of.Ne_Horizontal12.Ne_Horizontal11.In_Dominos.InHorizontal12Dominos.InHorizontal11Dominos.Domino.DominoTiling
 open DominoTilings
 open Domino DominoTiling
 open Finset
+open Nat
 
 
 /--
@@ -35,10 +38,10 @@ private lemma main
         have hd''_in := Finset.mem_of_mem_erase (Finset.mem_of_mem_erase hd''_erase)
         have hd''_ne1 := (Finset.mem_erase.mp (Finset.mem_of_mem_erase hd''_erase)).1
         have hd''_ne2 := (Finset.mem_erase.mp hd''_erase).1
-        have hcols := other_dominos_col_ge_3
-          ⟨dominos, dominos_in_rect, covers_all, pairwise_disjoint⟩ hh1 hh2 d'' hd''_in hd''_ne1 hd''_ne2
+        have hcols := Ge13.Ge13.of.Ne_Horizontal12.Ne_Horizontal11.In_Dominos.InHorizontal12Dominos.InHorizontal11Dominos.Domino.DominoTiling
+          ⟨dominos, dominos_in_rect, covers_all, pairwise_disjoint⟩ d'' hh1 hh2 hd''_in hd''_ne1 hd''_ne2
         rw [← hd'_eq, ← hd''_eq]
-        rwa [Domino.shiftNat_shiftNeg]
+        rwa [EqShiftNat.of.Ge1Add1.Ge1Add1.Domino]
     ·
       intro hd
       if hne1 : d = horizontal_1_1 then
@@ -54,12 +57,12 @@ private lemma main
           right
           have hd_erase : d ∈ (dominos.erase horizontal_1_1).erase horizontal_1_2 := 
             Finset.mem_erase.mpr ⟨hne2, Finset.mem_erase.mpr ⟨hne1, hd⟩⟩
-          have hcols := other_dominos_col_ge_3
-            ⟨dominos, dominos_in_rect, covers_all, pairwise_disjoint⟩ hh1 hh2 d hd hne1 hne2
+          have hcols := Ge13.Ge13.of.Ne_Horizontal12.Ne_Horizontal11.In_Dominos.InHorizontal12Dominos.InHorizontal11Dominos.Domino.DominoTiling
+            ⟨dominos, dominos_in_rect, covers_all, pairwise_disjoint⟩ d hh1 hh2 hd hne1 hne2
           use d.shiftNeg 2 (by omega) (by omega)
           constructor
           · use d, hd_erase
-          · exact Domino.shiftNat_shiftNeg d 2 (by omega) (by omega)
+          · exact EqShiftNat.of.Ge1Add1.Ge1Add1.Domino d 2 (by omega) (by omega)
 
 
 -- created on 2026-10-20

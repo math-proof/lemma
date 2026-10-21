@@ -112,5 +112,6 @@ export const tactics = [
     'try',
     'unfold',
     'use',
+    'wlog',
     'zify',
 ];

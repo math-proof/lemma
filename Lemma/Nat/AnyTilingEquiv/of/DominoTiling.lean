@@ -1,9 +1,11 @@
 import Mathlib
 import sympy.Basic
 import sympy.matrices.determinants.DominoTilings
+import Lemma.Nat.DominoTilings.tiling_2_roundtrip_TilingEquiv
 open DominoTilings
 open Domino DominoTiling
 open Finset
+open Nat
 
 
 /--
@@ -16,7 +18,7 @@ private lemma main
 -- imply
   ∃ x, TilingEquiv (tiling_2_from_sum x) T :=
 -- proof
-  ⟨tiling_2_to_sum T, tiling_2_roundtrip_TilingEquiv T⟩
+  ⟨tiling_2_to_sum T, _root_.Nat.DominoTilings.tiling_2_roundtrip_TilingEquiv T⟩
 
 
 -- created on 2026-10-20

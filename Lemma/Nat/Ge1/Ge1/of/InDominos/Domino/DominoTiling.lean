@@ -1,9 +1,11 @@
 import Mathlib
 import sympy.Basic
 import sympy.matrices.determinants.DominoTilings
+import Lemma.Nat.IffIn_RectangleGe1AndGe_1AndGe21AndGe_2
 open DominoTilings
 open Domino DominoTiling
 open Finset
+open Nat
 
 
 /--
@@ -23,7 +25,7 @@ private lemma main
   have hc2 : d.cell2 ∈ d.cells := Finset.mem_insert_of_mem (Finset.mem_singleton_self _)
   have h1 := h hc1
   have h2 := h hc2
-  rw [mem_Rectangle] at h1 h2
+  rw [IffIn_RectangleGe1AndGe_1AndGe21AndGe_2] at h1 h2
   exact ⟨h1.1, h2.1⟩
 
 

@@ -4,6 +4,7 @@ import sympy.matrices.determinants.DominoTilings
 open DominoTilings
 open Domino DominoTiling
 open Finset
+open Nat
 
 
 /--
@@ -11,66 +12,59 @@ open Finset
 -/
 @[path]
 private lemma main
-  {n : ℕ}
 -- given
+  {n : ℕ}
   (T : DominoTiling n 3) :
 -- imply
   reflectTiling3 (reflectTiling3 T) = T := by
 -- proof
-  -- Two DominoTilings are equal iff their dominos are equal (proof irrelevance for the rest)
   have h_dominos : (reflectTiling3 (reflectTiling3 T)).dominos = T.dominos := by
     ext d
     constructor
     ·
-      -- d ∈ (reflectTiling3 (reflectTiling3 T)).dominos → d ∈ T.dominos
       intro hd
-      rw [reflectTiling3] at hd
-      simp only [Finset.mem_map, Finset.mem_attach, true_and, Subtype.exists,
+      simp only [reflectTiling3, Finset.mem_map, Finset.mem_attach, true_and, Subtype.exists,
         ← Function.Embedding.toFun_eq_coe] at hd
-      obtain ⟨d', hd', heq⟩ := hd
-      rw [reflectTiling3] at hd'
-      simp only [Finset.mem_map, Finset.mem_attach, true_and, Subtype.exists,
-        ← Function.Embedding.toFun_eq_coe] at hd'
-      obtain ⟨d'', hd'', heq'⟩ := hd'
-      subst heq heq'
+      obtain ⟨d', ⟨d'', hd'', rfl⟩, rfl⟩ := hd
       have hd''_rect := T.dominos_in_rect d'' hd''
-      have hge1 := domino_cell1_row_ge' hd''_rect
-      have hge2 := domino_cell2_row_ge' hd''_rect
-      have hle1 := domino_cell1_row_le' hd''_rect
-      have hle2 := domino_cell2_row_le' hd''_rect
-      have h1' : (reflectDomino3 d'' hle1 hle2).cell1.2 ≤ 3 := by
-        simp only [reflectDomino3, reflectCell3]; omega
-      have h2' : (reflectDomino3 d'' hle1 hle2).cell2.2 ≤ 3 := by
-        simp only [reflectDomino3, reflectCell3]; omega
-      have hinv : reflectDomino3 (reflectDomino3 d'' hle1 hle2) h1' h2' = d'' := by
-        ext <;> simp only [reflectDomino3, reflectCell3] <;> omega
-      rwa [hinv]
+      have hc1 := hd''_rect (mem_insert_self _ _)
+      have hc2 := hd''_rect (mem_insert_of_mem (mem_singleton_self _))
+      rw [mem_Rectangle] at hc1 hc2
+      convert hd''
+      apply Domino.ext
+      ·
+        change reflectCell3 (reflectCell3 d''.cell1) = d''.cell1
+        simp only [reflectCell3]
+        exact Prod.ext rfl (Nat.sub_sub_self (by omega : d''.cell1.2 ≤ 4))
+      ·
+        change reflectCell3 (reflectCell3 d''.cell2) = d''.cell2
+        simp only [reflectCell3]
+        exact Prod.ext rfl (Nat.sub_sub_self (by omega : d''.cell2.2 ≤ 4))
     ·
-      -- d ∈ T.dominos → d ∈ (reflectTiling3 (reflectTiling3 T)).dominos
       intro hd
       have hd_rect := T.dominos_in_rect d hd
-      have hge1 := domino_cell1_row_ge' hd_rect
-      have hge2 := domino_cell2_row_ge' hd_rect
-      have hle1 := domino_cell1_row_le' hd_rect
-      have hle2 := domino_cell2_row_le' hd_rect
-      rw [reflectTiling3]
-      simp only [Finset.mem_map, Finset.mem_attach, true_and, Subtype.exists,
+      have hc1 := hd_rect (mem_insert_self _ _)
+      have hc2 := hd_rect (mem_insert_of_mem (mem_singleton_self _))
+      rw [mem_Rectangle] at hc1 hc2
+      simp only [reflectTiling3, Finset.mem_map, Finset.mem_attach, true_and, Subtype.exists,
         ← Function.Embedding.toFun_eq_coe]
-      refine ⟨reflectDomino3 d hle1 hle2, ?_, ?_⟩
+      refine ⟨_, ⟨d, hd, rfl⟩, ?_⟩
       ·
-        rw [reflectTiling3]
-        simp only [Finset.mem_map, Finset.mem_attach, true_and, Subtype.exists,
-          ← Function.Embedding.toFun_eq_coe]
-        exact ⟨d, hd, rfl⟩
-      · ext <;> simp only [reflectDomino3, reflectCell3] <;> omega
-  -- Now use h_dominos to conclude equality
+        apply Domino.ext
+        ·
+          change reflectCell3 (reflectCell3 d.cell1) = d.cell1
+          simp only [reflectCell3]
+          exact Prod.ext rfl (Nat.sub_sub_self (by omega : d.cell1.2 ≤ 4))
+        ·
+          change reflectCell3 (reflectCell3 d.cell2) = d.cell2
+          simp only [reflectCell3]
+          exact Prod.ext rfl (Nat.sub_sub_self (by omega : d.cell2.2 ≤ 4))
   cases T with
   | mk dominos dominos_in_rect covers_all pairwise_disjoint =>
-    have h : (reflectTiling3 (reflectTiling3 { dominos, dominos_in_rect, covers_all, pairwise_disjoint })).dominos = dominos := h_dominos
-    cases hT : reflectTiling3 (reflectTiling3 { dominos, dominos_in_rect, covers_all, pairwise_disjoint }) with
+    cases hT : reflectTiling3 (reflectTiling3 ⟨dominos, dominos_in_rect, covers_all, pairwise_disjoint⟩) with
     | mk dominos' dominos_in_rect' covers_all' pairwise_disjoint' =>
-      rw [hT] at h
-      simp only at h
+      have h := h_dominos
+      simp only [hT] at h
       subst h
       rfl
 

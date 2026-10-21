@@ -4,7 +4,7 @@ import sympy.matrices.determinants.DominoTilings
 open DominoTilings
 open Domino DominoTiling
 open Finset
-set_option linter.unusedSimpArgs false
+open Nat
 
 
 /--
@@ -49,8 +49,7 @@ private lemma main
             Finset.mem_range, ← Function.Embedding.toFun_eq_coe]
           left; left; left; left
           exact ⟨i, hi, rfl⟩
-        · -- reflectDomino3 gives the right result
-          simp only [reflectDomino3, reflectCell3, d']
+        · rfl
       · -- d = leftWallB (reflected from leftWall)
         refine ⟨leftWall, ?_, ?_⟩
         ·
@@ -58,7 +57,7 @@ private lemma main
           left; left; left; right; trivial
         ·
           subst hleft
-          simp only [reflectDomino3, reflectCell3, leftWall, leftWallB]
+          rfl
       · -- d = rightWallB n (reflected from rightWall n)
         refine ⟨rightWall n, ?_, ?_⟩
         ·
@@ -66,7 +65,7 @@ private lemma main
           left; left; right; trivial
         ·
           subst hright
-          simp only [reflectDomino3, reflectCell3, rightWall, rightWallB]
+          rfl
       · -- d ∈ middleDominos n (unchanged by reflection since row 2 is fixed)
         simp only [middleDominos, Finset.mem_map, Finset.mem_range,
           ← Function.Embedding.toFun_eq_coe] at hmid
@@ -80,7 +79,7 @@ private lemma main
             Finset.mem_range, ← Function.Embedding.toFun_eq_coe]
           left; right
           exact ⟨i, hi, rfl⟩
-        · simp only [reflectDomino3, reflectCell3, d']
+        · rfl
       · -- d ∈ bottomDominosB n (reflected from topDominos)
         simp only [bottomDominosB, Finset.mem_map, Finset.mem_range,
           ← Function.Embedding.toFun_eq_coe] at hbot
@@ -94,7 +93,7 @@ private lemma main
             Finset.mem_range, ← Function.Embedding.toFun_eq_coe]
           right
           exact ⟨i, hi, rfl⟩
-        · simp only [reflectDomino3, reflectCell3, d']
+        · rfl
     · -- d ∈ (reflectTiling3 TilingA).dominos → d ∈ TilingB.dominos
       intro hd
       simp only [Finset.mem_map, Finset.mem_attach, true_and, Subtype.exists,
@@ -110,17 +109,14 @@ private lemma main
         left; left; left; left
         simp only [basementDominosB, Finset.mem_map, Finset.mem_range, ← Function.Embedding.toFun_eq_coe]
         use i, hi
-        simp only [reflectDomino3, reflectCell3] at hd'_eq
         exact hd'_eq
       · -- d' = leftWall → d = leftWallB
         left; left; left; right
         subst hleft
-        simp only [reflectDomino3, reflectCell3, leftWall, leftWallB] at hd'_eq ⊢
         exact hd'_eq.symm
       · -- d' = rightWall n → d = rightWallB n
         left; left; right
         subst hright
-        simp only [reflectDomino3, reflectCell3, rightWall, rightWallB] at hd'_eq ⊢
         exact hd'_eq.symm
       · -- d' ∈ middleDominos n → d ∈ middleDominos n
         simp only [middleDominos, Finset.mem_map, Finset.mem_range,
@@ -129,7 +125,6 @@ private lemma main
         left; right
         simp only [middleDominos, Finset.mem_map, Finset.mem_range, ← Function.Embedding.toFun_eq_coe]
         use i, hi
-        simp only [reflectDomino3, reflectCell3] at hd'_eq
         exact hd'_eq
       · -- d' ∈ topDominos n → d ∈ bottomDominosB n
         simp only [topDominos, Finset.mem_map, Finset.mem_range,
@@ -138,7 +133,6 @@ private lemma main
         right
         simp only [bottomDominosB, Finset.mem_map, Finset.mem_range, ← Function.Embedding.toFun_eq_coe]
         use i, hi
-        simp only [reflectDomino3, reflectCell3] at hd'_eq
         exact hd'_eq
   -- Now conclude equality of the DominoTiling structures
   cases hB : TilingB n hn hn_ge
@@ -146,6 +140,16 @@ private lemma main
   simp only [DominoTiling.mk.injEq]
   simp only [hB, hR] at h_dominos
   exact h_dominos
+
+/-!
+## Main Classification Theorem
+
+Proposition prop.gf.weighted-set.domino.Rn3.ABC states that the faultfree domino tilings
+of height-3 rectangles are precisely:
+- A_2, A_4, A_6, A_8, ... (tilings with vertical domino in top of column 1)
+- B_2, B_4, B_6, B_8, ... (tilings with vertical domino in bottom of column 1)
+- C (the unique tiling with no vertical domino in column 1)
+-/
 
 
 -- created on 2026-10-20

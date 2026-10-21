@@ -137,7 +137,7 @@ export class LeanTactic extends LeanSyntax {
         // Term-level `(by tac : T)`: the `:` is a type ascription outside the `by`. Not for
         // `by_cases h : p`, whose `:` is its own syntax: `fun ω ↦ by by_cases h : ω ∈ s <;> simp [h]`
         // must keep `h : ω ∈ s` inside the tactic, or `<;> simp` is torn off the line in the echo.
-        if (this.parent instanceof LeanBy && this.tacticName !== 'by_cases') return L.LeanColon.input_priority;
+        if (this.parent instanceof LeanBy && this.tacticName !== 'by_cases' && this.tacticName !== 'wlog') return L.LeanColon.input_priority;
         if (this.tacticName === 'obtain') return L.LeanAssign.input_priority - 1;
         return L.LeanAssign.input_priority;
     }

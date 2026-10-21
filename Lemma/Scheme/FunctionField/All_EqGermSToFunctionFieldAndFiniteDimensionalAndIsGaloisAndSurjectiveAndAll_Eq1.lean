@@ -2,34 +2,38 @@ import Mathlib
 import sympy.Basic
 open CategoryTheory CategoryTheory.Limits CategoryTheory.MorphismProperty AlgebraicGeometry TopologicalSpace Opposite IsLocalRing
 open scoped TensorProduct MonoidalCategory
-
-universe u
-
 set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
 
-variable {C D X : Scheme.{u}}
+
+universe u
+
+variable {C D X : (Scheme : Type (u + 1))}
 variable [IrreducibleSpace C] [IrreducibleSpace D] [IrreducibleSpace X]
 private noncomputable def ffPull (f : C ⟶ X) (hf : f (genericPoint C) = genericPoint X) :
-    X.functionField ⟶ C.functionField :=
+  X.functionField ⟶ C.functionField :=
   X.presheaf.stalkSpecializes (specializes_of_eq hf) ≫ f.stalkMap (genericPoint C)
 @[reassoc]
-private lemma germ_ffPull (f : C ⟶ X) (hf : f (genericPoint C) = genericPoint X)
-    (V : X.Opens) (hV : genericPoint X ∈ V) (hV' : genericPoint C ∈ f ⁻¹ᵁ V) :
+private lemma germ_ffPull
+  (f : C ⟶ X) (hf : f (genericPoint C) = genericPoint X)
+  (V : X.Opens) (hV : genericPoint X ∈ V) (hV' : genericPoint C ∈ ((TopologicalSpace.Opens.map f.base).obj V)) :
     X.presheaf.germ V (genericPoint X) hV ≫ ffPull f hf =
-      f.app V ≫ C.presheaf.germ (f ⁻¹ᵁ V) (genericPoint C) hV' := by
+      f.app V ≫ C.presheaf.germ (((TopologicalSpace.Opens.map f.base).obj V)) (genericPoint C) hV' := by
   simp only [ffPull, TopCat.Presheaf.germ_stalkSpecializes_assoc, Scheme.Hom.germ_stalkMap]
-private lemma ffPull_germ_apply (f : C ⟶ X) (hf : f (genericPoint C) = genericPoint X)
-    (V : X.Opens) (hV : Nonempty V) (hV' : Nonempty (f ⁻¹ᵁ V)) (s : Γ(X, V)) :
+private lemma ffPull_germ_apply
+  (f : C ⟶ X) (hf : f (genericPoint C) = genericPoint X)
+  (V : X.Opens) (hV : Nonempty V) (hV' : Nonempty (((TopologicalSpace.Opens.map f.base).obj V))) (s : (X.presheaf.obj (op V))) :
     ffPull f hf (X.germToFunctionField V s) =
-      C.germToFunctionField (f ⁻¹ᵁ V) (f.app V s) := by
+      C.germToFunctionField (((TopologicalSpace.Opens.map f.base).obj V)) (f.app V s) := by
   change (X.germToFunctionField V ≫ ffPull f hf) s =
-    (f.app V ≫ C.germToFunctionField (f ⁻¹ᵁ V)) s
+    (f.app V ≫ C.germToFunctionField (((TopologicalSpace.Opens.map f.base).obj V))) s
   rw [Scheme.germToFunctionField, germ_ffPull]
-private lemma ffPull_congr {f f' : C ⟶ X} (e : f = f') (hf : f (genericPoint C) = genericPoint X)
-    (hf' : f' (genericPoint C) = genericPoint X) : ffPull f hf = ffPull f' hf' := by
-  subst e; rfl
+private lemma ffPull_congr
+  {f f' : C ⟶ X} (e : f = f') (hf : f (genericPoint C) = genericPoint X)
+  (hf' : f' (genericPoint C) = genericPoint X) : ffPull f hf = ffPull f' hf' := by
+  subst e
+  rfl
 private lemma ffPull_id : ffPull (𝟙 C) rfl = 𝟙 C.functionField := by
   apply TopCat.Presheaf.stalk_hom_ext
   intro U hU
@@ -37,53 +41,52 @@ private lemma ffPull_id : ffPull (𝟙 C) rfl = 𝟙 C.functionField := by
   simp only [Scheme.Hom.id_app, Category.comp_id]
   erw [Category.id_comp]
   rfl
-private lemma ffPull_comp (f : C ⟶ D) (g : D ⟶ X) (hf : f (genericPoint C) = genericPoint D)
-    (hg : g (genericPoint D) = genericPoint X) (hfg : (f ≫ g) (genericPoint C) = genericPoint X) :
+private lemma ffPull_comp
+  (f : C ⟶ D) (g : D ⟶ X) (hf : f (genericPoint C) = genericPoint D)
+  (hg : g (genericPoint D) = genericPoint X) (hfg : (f ≫ g) (genericPoint C) = genericPoint X) :
     ffPull (f ≫ g) hfg = ffPull g hg ≫ ffPull f hf := by
   apply TopCat.Presheaf.stalk_hom_ext
   intro U hU
-  have hU' : genericPoint D ∈ g ⁻¹ᵁ U := by
-    change g (genericPoint D) ∈ U; rwa [hg]
-  have hU'' : genericPoint C ∈ f ⁻¹ᵁ g ⁻¹ᵁ U := by
-    change f (genericPoint C) ∈ g ⁻¹ᵁ U; rwa [hf]
+  have hU' : genericPoint D ∈ ((TopologicalSpace.Opens.map g.base).obj U) := by
+    change g (genericPoint D) ∈ U
+    rwa [hg]
+  have hU'' : genericPoint C ∈ ((TopologicalSpace.Opens.map f.base).obj ((TopologicalSpace.Opens.map g.base).obj U)) := by
+    change f (genericPoint C) ∈ ((TopologicalSpace.Opens.map g.base).obj U)
+    rwa [hf]
   rw [germ_ffPull _ _ U hU hU'', germ_ffPull_assoc _ _ U hU hU', germ_ffPull _ _ _ hU' hU'']
   simp
-variable [IrreducibleSpace C]
 private noncomputable def pullAut (e : Aut C) : C.functionField ⟶ C.functionField :=
   ffPull e.hom (genericPoint_eq_of_isOpenImmersion e.hom)
 private lemma pullAut_one : pullAut (1 : Aut C) = 𝟙 C.functionField := ffPull_id
 private lemma pullAut_mul (e₁ e₂ : Aut C) : pullAut (e₁ * e₂) = pullAut e₁ ≫ pullAut e₂ :=
   ffPull_comp _ _ _ _ _
 private lemma pullAut_mul_apply (e₁ e₂ : Aut C) (x : C.functionField) :
-    pullAut (e₁ * e₂) x = pullAut e₂ (pullAut e₁ x) := by
+  pullAut (e₁ * e₂) x = pullAut e₂ (pullAut e₁ x) := by
   rw [pullAut_mul, CommRingCat.comp_apply]
 private lemma pullAut_one_apply (x : C.functionField) : pullAut (1 : Aut C) x = x := by
   rw [pullAut_one, CommRingCat.id_apply]
-private lemma pullAut_germ_apply (e : Aut C) (U : C.Opens) (hU : Nonempty U)
-    (hU' : Nonempty (e.hom ⁻¹ᵁ U)) (s : Γ(C, U)) :
-    pullAut e (C.germToFunctionField U s) = C.germToFunctionField (e.hom ⁻¹ᵁ U) (e.hom.app U s) :=
+private lemma pullAut_germ_apply
+  (e : Aut C) (U : C.Opens) (hU : Nonempty U)
+  (hU' : Nonempty (((TopologicalSpace.Opens.map e.hom.base).obj U))) (s : (C.presheaf.obj (op U))) :
+    pullAut e (C.germToFunctionField U s) = C.germToFunctionField (((TopologicalSpace.Opens.map e.hom.base).obj U)) (e.hom.app U s) :=
   ffPull_germ_apply _ _ _ hU hU' _
 /--
 [AlgebraicGeometry_exists_isGalois_functionField_of_quotient_of_finite](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_exists_isGalois_functionField_of_quotient_of_finite.lean)
 -/
 @[path]
 private lemma main
-    {B : Type} [CommRing B]
-    {C X : Scheme.{0}} [IsIntegral C] [IsIntegral X]
+  {B : Type} [CommRing B]
+    {C X : (Scheme : Type 1)} [IsIntegral C] [IsIntegral X]
     (πC : C ⟶ Spec (CommRingCat.of B)) [IsSeparated πC]
     (G : Type) [Group G] [Finite G] (ρ : G →* Aut C) (hρ : ∀ g : G, (ρ g).hom ≫ πC = πC)
     (π : C ⟶ X) [IsFinite π] (hπ : ∀ g : G, (ρ g).hom ≫ π = π)
     (hsurj : Function.Surjective π.base)
     (hsec : ∀ V : X.Opens, Function.Injective (π.app V))
     (hinv : ∀ V : X.Opens, Set.range (π.app V) =
-      {s | ∀ g : G, (ρ g).hom.appLE (π ⁻¹ᵁ V) (π ⁻¹ᵁ V) (by rw [← Scheme.Hom.comp_preimage, hπ g]) s = s}) :
-    ∃ (_ : Algebra X.functionField C.functionField)
-      (θ : G →* (C.functionField ≃ₐ[X.functionField] C.functionField)),
-      (∀ (V : X.Opens) [Nonempty (V : Scheme.{0})] [Nonempty ((π ⁻¹ᵁ V : C.Opens) : Scheme.{0})] (f : Γ(X, V)),
-        algebraMap X.functionField C.functionField (X.germToFunctionField V f) =
-          C.germToFunctionField (π ⁻¹ᵁ V) (π.app V f)) ∧
-      (∀ (g : G) (U : C.Opens) [Nonempty (U : Scheme.{0})] [Nonempty (((ρ g).inv ⁻¹ᵁ U : C.Opens) : Scheme.{0})] (f : Γ(C, U)),
-        θ g (C.germToFunctionField U f) = C.germToFunctionField ((ρ g).inv ⁻¹ᵁ U) ((ρ g).inv.app U f)) ∧
+      {s | ∀ g : G, (ρ g).hom.appLE (((TopologicalSpace.Opens.map π.base).obj V)) (((TopologicalSpace.Opens.map π.base).obj V)) (by rw [← Scheme.Hom.comp_preimage, hπ g]) s = s}) :
+    ∃ (_ : Algebra X.functionField C.functionField) (θ : G →* (C.functionField ≃ₐ[X.functionField] C.functionField)), (∀ (V : X.Opens) [Nonempty (V : (Scheme : Type 1))] [Nonempty ((((TopologicalSpace.Opens.map π.base).obj V) : C.Opens) : (Scheme : Type 1))] (f : (X.presheaf.obj (op V))), algebraMap X.functionField C.functionField (X.germToFunctionField V f) =
+          C.germToFunctionField (((TopologicalSpace.Opens.map π.base).obj V)) (π.app V f)) ∧
+      (∀ (g : G) (U : C.Opens) [Nonempty (U : (Scheme : Type 1))] [Nonempty ((((TopologicalSpace.Opens.map (ρ g).inv.base).obj U) : C.Opens) : (Scheme : Type 1))] (f : (C.presheaf.obj (op U))), θ g (C.germToFunctionField U f) = C.germToFunctionField (((TopologicalSpace.Opens.map (ρ g).inv.base).obj U)) ((ρ g).inv.app U f)) ∧
       FiniteDimensional X.functionField C.functionField ∧ IsGalois X.functionField C.functionField ∧
       Function.Surjective θ ∧ (∀ g : G, θ g = 1 ↔ ρ g = 1) := by
   classical
@@ -108,23 +111,38 @@ private lemma main
   have Θ_φ : ∀ (g : G) (y : X.functionField), Θ g (φ y) = φ y := by
     intro g y
     have hc : φ ≫ pullAut (ρ g⁻¹) = φ := by
-      rw [pullAut, ← ffPull_comp (ρ g⁻¹).hom π _ hgen (by rw [hπ]; exact hgen)]
-      exact ffPull_congr (hπ _) _ _
+      have hfg : ((ρ g⁻¹).hom ≫ π) (genericPoint C) = genericPoint X := by
+        rw [hπ]
+        apply hgen
+      rw [pullAut, ← ffPull_comp (ρ g⁻¹).hom π _ hgen hfg]
+      apply ffPull_congr (hπ _) _ _
     change (φ ≫ pullAut (ρ g⁻¹)) y = φ y
     rw [hc]
   let θa : G → (C.functionField →ₐ[X.functionField] C.functionField) := fun g =>
-    { (Θ g).hom with
-      commutes' := fun y => Θ_φ g y }
+    AlgHom.mk (Θ g).hom (fun y => by
+      rw [alg_def]
+      apply Θ_φ)
   have θa_apply : ∀ g x, θa g x = Θ g x := fun _ _ => rfl
+  have θa_inv_left : ∀ g, (θa g).comp (θa g⁻¹) = AlgHom.id X.functionField C.functionField := by
+    intro g
+    ext x
+    simp [θa_apply, ← Θ_mul, Θ_one]
+  have θa_inv_right : ∀ g, (θa g⁻¹).comp (θa g) = AlgHom.id X.functionField C.functionField := by
+    intro g
+    ext x
+    simp [θa_apply, ← Θ_mul, Θ_one]
   let θ₁ : G → (C.functionField ≃ₐ[X.functionField] C.functionField) := fun g =>
-    AlgEquiv.ofAlgHom (θa g) (θa g⁻¹)
-      (by ext x; simp [θa_apply, ← Θ_mul, Θ_one])
-      (by ext x; simp [θa_apply, ← Θ_mul, Θ_one])
+    AlgEquiv.ofAlgHom (θa g) (θa g⁻¹) (θa_inv_left g) (θa_inv_right g)
   have θ₁_apply : ∀ g x, θ₁ g x = Θ g x := fun _ _ => rfl
+  have θ_map_one : θ₁ 1 = 1 := by
+    ext x
+    simp [θ₁_apply, Θ_one]
+  have θ_map_mul : ∀ g h, θ₁ (g * h) = θ₁ g * θ₁ h := by
+    intro g h
+    ext x
+    simp [θ₁_apply, Θ_mul, AlgEquiv.mul_apply]
   let θ : G →* (C.functionField ≃ₐ[X.functionField] C.functionField) :=
-    { toFun := θ₁
-      map_one' := by ext x; simp [θ₁_apply, Θ_one]
-      map_mul' := by intro g h; ext x; simp [θ₁_apply, Θ_mul, AlgEquiv.mul_apply] }
+    MonoidHom.mk θ₁ θ_map_one θ_map_mul
   have θ_apply : ∀ g x, θ g x = Θ g x := fun _ _ => rfl
   have key : ∀ x : C.functionField, (∀ g : G, Θ g x = x) → x ∈ Set.range φ := by
     obtain ⟨x₀⟩ := (inferInstance : Nonempty X)
@@ -132,22 +150,24 @@ private lemma main
       X.isBasis_affineOpens.exists_subset_of_mem_open (Set.mem_univ x₀) isOpen_univ
     change IsAffineOpen V at hV
     let hVne : Nonempty V := ⟨⟨x₀, hx₀V⟩⟩
-    let hUne : Nonempty (π ⁻¹ᵁ V) := by
+    let hUne : Nonempty (((TopologicalSpace.Opens.map π.base).obj V)) := by
       obtain ⟨c, hc⟩ := hsurj x₀
-      exact ⟨⟨c, show π c ∈ V by rw [hc]; exact hx₀V⟩⟩
-    have hU : IsAffineOpen (π ⁻¹ᵁ V) := hV.preimage π
+      refine ⟨⟨c, ?_⟩⟩
+      rw [hc]
+      apply hx₀V
+    have hU : IsAffineOpen (((TopologicalSpace.Opens.map π.base).obj V)) := hV.preimage π
     let _ := functionField_isFractionRing_of_isAffineOpen X V hV
-    let _ := functionField_isFractionRing_of_isAffineOpen C (π ⁻¹ᵁ V) hU
-    set U : C.Opens := π ⁻¹ᵁ V with hUdef
-    let ιU : Γ(C, U) →+* C.functionField := algebraMap Γ(C, U) C.functionField
+    let _ := functionField_isFractionRing_of_isAffineOpen C (((TopologicalSpace.Opens.map π.base).obj V)) hU
+    set U : C.Opens := ((TopologicalSpace.Opens.map π.base).obj V) with hUdef
+    let ιU : (C.presheaf.obj (op U)) →+* C.functionField := algebraMap (C.presheaf.obj (op U)) C.functionField
     have ιU_def : ιU = (C.germToFunctionField U).hom := rfl
     have ιU_inj : Function.Injective ιU := C.germToFunctionField_injective U
-    let α : G → (Γ(C, U) →+* Γ(C, U)) := fun g =>
+    let α : G → ((C.presheaf.obj (op U)) →+* (C.presheaf.obj (op U))) := fun g =>
       ((ρ g).hom.appLE U U (by rw [hUdef, ← Scheme.Hom.comp_preimage, hπ g])).hom
-    have compat : ∀ (g : G) (s : Γ(C, U)), ιU (α g s) = pullAut (ρ g) (ιU s) := by
+    have compat : ∀ (g : G) (s : (C.presheaf.obj (op U))), ιU (α g s) = pullAut (ρ g) (ιU s) := by
       intro g s
-      have hUne' : Nonempty ((ρ g).hom ⁻¹ᵁ U) := by
-        rw [hUdef, ← Scheme.Hom.comp_preimage, hπ g]; exact hUne
+      have hUne' : Nonempty (((TopologicalSpace.Opens.map (ρ g).hom.base).obj U)) := by
+        rwa [hUdef, ← Scheme.Hom.comp_preimage, hπ g]
       rw [ιU_def, pullAut_germ_apply (ρ g) U hUne hUne' s]
       simp only [α, Scheme.Hom.appLE, CommRingCat.comp_apply]
       exact TopCat.Presheaf.germ_res_apply C.presheaf (homOfLE _) _ _ _
@@ -158,19 +178,19 @@ private lemma main
       have := hx g⁻¹
       simp only [Θ, inv_inv] at this
       exact this
-    obtain ⟨a, b, hb, hxab⟩ := IsFractionRing.div_surjective (A := Γ(C, U)) x
+    obtain ⟨a, b, hb, hxab⟩ := IsFractionRing.div_surjective (A := (C.presheaf.obj (op U))) x
     change ιU a / ιU b = x at hxab
     have hb0 : ιU b ≠ 0 := by
       intro h
       exact nonZeroDivisors.ne_zero hb (ιU_inj (h.trans (map_zero ιU).symm))
-    let P : Γ(C, U) := ∏ g ∈ Finset.univ.erase 1, α g b
-    let N₀ : Γ(C, U) := ∏ g, α g b
-    let c₀ : Γ(C, U) := a * P
+    let P : (C.presheaf.obj (op U)) := ∏ g ∈ Finset.univ.erase 1, α g b
+    let N₀ : (C.presheaf.obj (op U)) := ∏ g, α g b
+    let c₀ : (C.presheaf.obj (op U)) := a * P
     have hN₀ : N₀ = b * P := by
       have := Finset.mul_prod_erase Finset.univ (fun g => α g b) (Finset.mem_univ (1 : G))
       beta_reduce at this
       rw [α_one] at this
-      exact this.symm
+      apply this.symm
     have hιN : ιU N₀ = ∏ g, pullAut (ρ g) (ιU b) := by
       simp only [N₀, map_prod, compat]
     have hpull_inj : ∀ g : G, Function.Injective (pullAut (C := C) (ρ g)) := fun g =>
@@ -182,7 +202,8 @@ private lemma main
       rw [compat]
       exact (map_ne_zero (pullAut (ρ g)).hom).mpr hb0
     have hN0 : ιU N₀ ≠ 0 := by
-      rw [hN₀, map_mul]; exact mul_ne_zero hb0 hP0
+      rw [hN₀, map_mul]
+      apply mul_ne_zero hb0 hP0
     have hNinv : ∀ h : G, pullAut (ρ h) (ιU N₀) = ιU N₀ := by
       intro h
       rw [hιN, map_prod]
@@ -198,9 +219,9 @@ private lemma main
     have hc₀ : ∀ g, α g c₀ = c₀ := fun g => ιU_inj (by rw [compat, hcinv])
     have hN₀' : ∀ g, α g N₀ = N₀ := fun g => ιU_inj (by rw [compat, hNinv])
     have hc₀mem : c₀ ∈ Set.range (π.app V) := by
-      rw [hinv V]; exact hc₀
+      rwa [hinv V]
     have hN₀mem : N₀ ∈ Set.range (π.app V) := by
-      rw [hinv V]; exact hN₀'
+      rwa [hinv V]
     obtain ⟨c₁, hc₁⟩ := hc₀mem
     obtain ⟨N₁, hN₁⟩ := hN₀mem
     refine ⟨X.germToFunctionField V c₁ / X.germToFunctionField V N₁, ?_⟩
@@ -221,7 +242,7 @@ private lemma main
       x ∈ FixedPoints.subfield G C.functionField ↔ x ∈ Set.range φ := by
     intro x
     rw [← range_iff]
-    exact Iff.rfl
+    apply Iff.rfl
   have hfd : FiniteDimensional X.functionField C.functionField := by
     obtain ⟨s, hs⟩ := Module.finite_def.mp
       (inferInstance : Module.Finite (FixedPoints.subfield G C.functionField) C.functionField)
@@ -229,8 +250,9 @@ private lemma main
     rw [eq_top_iff]
     rintro x -
     have hx : x ∈ Submodule.span (FixedPoints.subfield G C.functionField)
-        (s : Set C.functionField) := by
-      rw [hs]; exact Submodule.mem_top
+      (s : Set C.functionField) := by
+      rw [hs]
+      apply Submodule.mem_top
     induction hx using Submodule.span_induction with
     | mem y hy => exact Submodule.subset_span hy
     | zero => exact Submodule.zero_mem _
@@ -266,7 +288,8 @@ private lemma main
   have hker : ∀ g : G, θ g = 1 ↔ ρ g = 1 := by
     intro g
     constructor
-    · intro hθ
+    ·
+      intro hθ
       have hΘ : ∀ x, pullAut (ρ g⁻¹) x = x := fun x => by
         rw [← θ_apply, hθ, AlgEquiv.one_apply]
       suffices h : (ρ g⁻¹).hom = 𝟙 C by
@@ -277,25 +300,24 @@ private lemma main
       have he : e.hom (genericPoint C) = genericPoint C := genericPoint_eq_of_isOpenImmersion e.hom
       have he' : e.hom (genericPoint C) = (𝟙 C : C ⟶ C) (genericPoint C) := he
       have hS : C.presheaf.stalkSpecializes (specializes_of_eq he.symm) ≫
-          C.presheaf.stalkSpecializes (specializes_of_eq he) = 𝟙 _ := by
+        C.presheaf.stalkSpecializes (specializes_of_eq he) = 𝟙 _ := by
         rw [TopCat.Presheaf.stalkSpecializes_comp]
         exact TopCat.Presheaf.stalkSpecializes_refl _ _
       have hM : e.hom.stalkMap (genericPoint C) =
           C.presheaf.stalkSpecializes (specializes_of_eq he.symm) := by
         have h2 : C.presheaf.stalkSpecializes (specializes_of_eq he) ≫
-            e.hom.stalkMap (genericPoint C) = 𝟙 _ := hP
-        calc e.hom.stalkMap (genericPoint C)
-            = (C.presheaf.stalkSpecializes (specializes_of_eq he.symm) ≫
-                C.presheaf.stalkSpecializes (specializes_of_eq he)) ≫
-                e.hom.stalkMap (genericPoint C) := by rw [hS, Category.id_comp]
+          e.hom.stalkMap (genericPoint C) = 𝟙 _ := hP
+        calc
+          _ = (C.presheaf.stalkSpecializes (specializes_of_eq he.symm) ≫ C.presheaf.stalkSpecializes (specializes_of_eq he)) ≫ e.hom.stalkMap (genericPoint C) := by
+            rw [hS, Category.id_comp]
           _ = C.presheaf.stalkSpecializes (specializes_of_eq he.symm) := by
-                rw [Category.assoc, h2, Category.comp_id]
+            rw [Category.assoc, h2, Category.comp_id]
       have H : e.hom.stalkMap (genericPoint C) =
           C.presheaf.stalkSpecializes (Inseparable.of_eq he'.symm).specializes ≫
             (𝟙 C : C ⟶ C).stalkMap (genericPoint C) := by
         rw [Scheme.Hom.stalkMap_id]
         erw [Category.comp_id]
-        exact hM
+        apply hM
       obtain ⟨U, hηU, hUeq⟩ := spread_out_unique_of_isGermInjective e.hom (𝟙 C) he' H
       have hdense : Dense (U : Set C) := by
         rw [dense_iff_closure_eq]
@@ -305,19 +327,23 @@ private lemma main
         exact closure_mono (Set.singleton_subset_iff.mpr hηU)
       let _ : IsDominant U.ι := Opens.isDominant_ι hdense
       exact ext_of_isDominant_of_isSeparated πC (by rw [hρ, Category.id_comp]) U.ι hUeq
-    · intro hρg
+    ·
+      intro hρg
       ext x
       rw [θ_apply, AlgEquiv.one_apply]
       change pullAut (ρ g⁻¹) x = x
       rw [map_inv, hρg, inv_one, pullAut_one_apply]
   refine ⟨alg, θ, ?_, ?_, hfd, hgal, hsurjθ, hker⟩
-  · intro V hV hV' f
+  ·
+    intro V hV hV' f
     rw [alg_def]
-    exact ffPull_germ_apply π hgen V hV hV' f
-  · intro g U hU hU' f
+    apply ffPull_germ_apply π hgen V hV hV' f
+  ·
+    intro g U hU hU' f
     rw [θ_apply]
     change pullAut (ρ g⁻¹) _ = _
     rw [map_inv]
-    exact pullAut_germ_apply (ρ g)⁻¹ U hU hU' f
+    apply pullAut_germ_apply (ρ g)⁻¹ U hU hU' f
+
 
 -- created on 2026-10-20

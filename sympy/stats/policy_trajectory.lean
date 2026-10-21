@@ -12,6 +12,8 @@ import sympy.core.power
 import sympy.vector.Basic
 import stdlib.List
 import sympy.core.function
+import Lemma.Random.SinglePSpace.of.EqMeasureCount.Measurable
+import Lemma.Random.SinglePSpace.of.EqMeasureCount.EqMeasureCount.Measurable.Measurable
 
 /-!
 # Shared trajectory model for the policy-gradient lemmas (standard MDP)
@@ -34,8 +36,13 @@ The environment is a standard (time-homogeneous) MDP: `s 0 ∼ init`, `a t ∼ �
 The stage process `ω t = (r t ω, s t ω, a t ω)` (reward first, then the state-action pair, the order of the
 joint random variable `(r t, s t, a t)`) is a time-homogeneous Markov chain on `ℝ × S × A` with kernel
 `M.K θ`; its law `M.traj θ` is Mathlib's Ionescu-Tulcea measure `Kernel.trajMeasure` on `ℕ → ℝ × S × A`.
-There are no global coordinate functions: lemmas bind `{r s a}` and assume `h₁ : ∀ t, (· t) = (r t, s t, a t)`
-(the joint random variable of `Function.coeProdPi3R`). State / action values are introduced locally in lemmas as
+Canonical path projections `M.stateAt t`, `M.actionAt t`, `M.rewardAt t` extract the coordinates of
+`ω t = (r t ω, s t ω, a t ω)` (internal helpers; under `[CountableMeasure S]` / `[CountableMeasure A]`
+they also carry `SinglePSpace`). For **public** Random lemmas prefer the HMM-style class
+`IsPolicyTrajectory M r s a` (`stage_eq` = today's `h₁`) so hyps can use `s[0]` /
+`(ℙ[M θ](s[0] = x) : ℝ) ≠ 0` with no `hPs0` and no public `M.stateAt 0`. Lemmas may still bind
+`{r s a}` with `h₁ : ∀ t, (· t) = (r t, s t, a t)` (the joint random variable of
+`Function.coeProdPi3R`), or take `[IsPolicyTrajectory M r s a]` instead. State / action values are introduced locally in lemmas as
 `V`: `𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = x)` and
 `Q`: `𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = x ∧ a t = u)`.
 Clamped rewards are local `rc z := clip z.1 (-M.env.R) M.env.R` (a.s. equal to the raw reward).
@@ -155,6 +162,191 @@ def traj.unexpand : Lean.PrettyPrinter.Unexpander
   | `($_ $M $θ) => `($M $θ)
   | _ => throw ()
 
+set_option linter.unusedVariables false in
+/-- State coordinate at time `t` on a trajectory `ω : ℕ → ℝ × S × A`
+(`ω t = (r t, s t, a t)`). Dot notation: `M.stateAt t`.
+Explicit `M` (unused) so field notation works; `variable (M)` would drop it. -/
+def stateAt (M : Model Θ S A) (t : ℕ) : (ℕ → ℝ × S × A) → S :=
+  fun ω ↦ (ω t).2.1
+
+set_option linter.unusedVariables false in
+/-- Action coordinate at time `t` on a trajectory. Dot notation: `M.actionAt t`. -/
+def actionAt (M : Model Θ S A) (t : ℕ) : (ℕ → ℝ × S × A) → A :=
+  fun ω ↦ (ω t).2.2
+
+set_option linter.unusedVariables false in
+/-- Reward coordinate at time `t` on a trajectory. Dot notation: `M.rewardAt t`.
+No `SinglePSpace` instance: rewards live in `ℝ` (typically Lebesgue / not `CountableMeasure`). -/
+def rewardAt (M : Model Θ S A) (t : ℕ) : (ℕ → ℝ × S × A) → ℝ :=
+  fun ω ↦ (ω t).1
+
+-- SinglePSpace instances for path projections. Binders follow `test_pspace_section.lean`:
+-- `[CountableMeasure _]` supplies `MeasurableSpace` (no diamond with the outer section).
+-- Separate sections so `stateAt` needs only `[CountableMeasure S]` and `actionAt` only `[CountableMeasure A]`.
+section StateAtSinglePSpace
+variable {Θ S A : Type*}
+  [CountableMeasure S] [MeasurableSingletonClass S] [Fintype S]
+  [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A]
+  (M : Model Θ S A)
+
+/-- Under `[CountableMeasure S]`, `M.stateAt t` is a `SinglePSpace` random variable on `M θ`. -/
+instance stateAt.singlePSpace (θ : Θ) (t : ℕ) :
+    SinglePSpace (M θ) (M.stateAt t) :=
+  Random.SinglePSpace.of.EqMeasureCount.Measurable
+    (measurable_fst.comp <| measurable_snd.comp <|
+      (measurable_pi_apply (X := fun _ : ℕ ↦ ℝ × S × A) t))
+    CountableMeasure.measure_eq_count
+end StateAtSinglePSpace
+
+section ActionAtSinglePSpace
+variable {Θ S A : Type*}
+  [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S]
+  [CountableMeasure A] [MeasurableSingletonClass A] [Fintype A]
+  (M : Model Θ S A)
+
+/-- Under `[CountableMeasure A]`, `M.actionAt t` is a `SinglePSpace` random variable on `M θ`. -/
+instance actionAt.singlePSpace (θ : Θ) (t : ℕ) :
+    SinglePSpace (M θ) (M.actionAt t) :=
+  Random.SinglePSpace.of.EqMeasureCount.Measurable
+    (measurable_snd.comp <| measurable_snd.comp <|
+      (measurable_pi_apply (X := fun _ : ℕ ↦ ℝ × S × A) t))
+    CountableMeasure.measure_eq_count
+end ActionAtSinglePSpace
+
 end Model
+
+/-! ### `IsPolicyTrajectory` (HMM-style public path RVs)
+
+Bundles the stage equality `∀ t, (· t) = (r t, s t, a t)` (same content as lemma `h₁`) so Random
+public signatures can keep Fun binders `r` / `s` / `a` and write `(ℙ[M θ](s[0] = x) : ℝ)` without an
+extra `hPs0` or a public `M.stateAt 0`. Measurability of `s t` / `a t` is recovered from `stage_eq` by
+rewriting to the canonical pi-projections. -/
+
+variable {Θ S A : Type*}
+  [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S]
+  [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A]
+
+/-- Stage coordinates `(r[t], s[t], a[t])` match the trajectory point `ω t` for every `t`
+(the binder that used to be written `h₁ : ∀ t, (· t) = (r t, s t, a t)`).
+
+Under `[CountableMeasure S]` / `[CountableMeasure A]`, instances below give
+`SinglePSpace (M θ) (s t)` / `(a t)` (and the joint `(s t, a t)`), so
+`(ℙ[M θ](s[0] = x) : ℝ)` elaborates from `[IsPolicyTrajectory M r s a]` alone. -/
+class IsPolicyTrajectory (M : Model Θ S A)
+    (r : ℕ ⇀ (ℕ → ℝ × S × A) → ℝ)
+    (s : ℕ ⇀ (ℕ → ℝ × S × A) → S)
+    (a : ℕ ⇀ (ℕ → ℝ × S × A) → A) : Prop where
+  /-- Same as lemma `h₁`: the stage map is the joint `(r t, s t, a t)`. -/
+  stage_eq : ∀ t, (· t) = (r t, s t, a t)
+
+namespace IsPolicyTrajectory
+
+variable {M : Model Θ S A}
+  {r : ℕ ⇀ (ℕ → ℝ × S × A) → ℝ}
+  {s : ℕ ⇀ (ℕ → ℝ × S × A) → S}
+  {a : ℕ ⇀ (ℕ → ℝ × S × A) → A}
+
+/-- Canonical projections form an `IsPolicyTrajectory` (`stage_eq` by `rfl`). -/
+instance instCanonical (M : Model Θ S A) :
+    IsPolicyTrajectory M ⟨M.rewardAt⟩ ⟨M.stateAt⟩ ⟨M.actionAt⟩ where
+  stage_eq t := by
+    funext ω
+    rfl
+
+omit [MeasurableSingletonClass S] [Fintype S] [MeasurableSingletonClass A] in
+/-- `s t` is measurable: rewrite via `stage_eq` to `(ω t).2.1`. -/
+theorem measurable_s [h : IsPolicyTrajectory M r s a] (t : ℕ) : Measurable (s t) := by
+  have : s t = fun ω : ℕ → ℝ × S × A ↦ (ω t).2.1 :=
+    funext fun ω ↦ (congrArg (fun z : ℝ × S × A ↦ z.2.1) (congrFun (h.stage_eq t) ω)).symm
+  rw [this]
+  exact measurable_fst.comp <| measurable_snd.comp <|
+    (measurable_pi_apply (X := fun _ : ℕ ↦ ℝ × S × A) t)
+
+omit [MeasurableSingletonClass S] [Fintype S] [MeasurableSingletonClass A] in
+/-- `a t` is measurable: rewrite via `stage_eq` to `(ω t).2.2`. -/
+theorem measurable_a [h : IsPolicyTrajectory M r s a] (t : ℕ) : Measurable (a t) := by
+  have : a t = fun ω : ℕ → ℝ × S × A ↦ (ω t).2.2 :=
+    funext fun ω ↦ (congrArg (fun z : ℝ × S × A ↦ z.2.2) (congrFun (h.stage_eq t) ω)).symm
+  rw [this]
+  exact measurable_snd.comp <| measurable_snd.comp <|
+    (measurable_pi_apply (X := fun _ : ℕ ↦ ℝ × S × A) t)
+
+omit [MeasurableSingletonClass S] [Fintype S] [MeasurableSingletonClass A] in
+/-- `r t` is measurable: rewrite via `stage_eq` to `(ω t).1`. -/
+theorem measurable_r [h : IsPolicyTrajectory M r s a] (t : ℕ) : Measurable (r t) := by
+  have : r t = fun ω : ℕ → ℝ × S × A ↦ (ω t).1 :=
+    funext fun ω ↦ (congrArg Prod.fst (congrFun (h.stage_eq t) ω)).symm
+  rw [this]
+  exact measurable_fst.comp (measurable_pi_apply (X := fun _ : ℕ ↦ ℝ × S × A) t)
+
+end IsPolicyTrajectory
+
+-- SinglePSpace from IsPolicyTrajectory. Separate sections so state needs only
+-- `[CountableMeasure S]` and action only `[CountableMeasure A]` (same diamond avoidance as stateAt).
+section IsPolicyTrajectoryState
+variable {Θ S A : Type*}
+  [CountableMeasure S] [MeasurableSingletonClass S] [Fintype S]
+  [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A]
+  {M : Model Θ S A}
+  {r : ℕ ⇀ (ℕ → ℝ × S × A) → ℝ}
+  {s : ℕ ⇀ (ℕ → ℝ × S × A) → S}
+  {a : ℕ ⇀ (ℕ → ℝ × S × A) → A}
+
+omit [MeasurableSingletonClass A] in
+/-- Under `[IsPolicyTrajectory M r s a]` and `[CountableMeasure S]`, `s t` is a `SinglePSpace` RV on `M θ`. -/
+theorem IsPolicyTrajectory.singlePSpace_s [h : IsPolicyTrajectory M r s a] (θ : Θ) (t : ℕ) :
+    SinglePSpace (M θ) (s t) :=
+  Random.SinglePSpace.of.EqMeasureCount.Measurable (h.measurable_s t)
+    CountableMeasure.measure_eq_count
+
+end IsPolicyTrajectoryState
+
+section IsPolicyTrajectoryAction
+variable {Θ S A : Type*}
+  [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S]
+  [CountableMeasure A] [MeasurableSingletonClass A] [Fintype A]
+  {M : Model Θ S A}
+  {r : ℕ ⇀ (ℕ → ℝ × S × A) → ℝ}
+  {s : ℕ ⇀ (ℕ → ℝ × S × A) → S}
+  {a : ℕ ⇀ (ℕ → ℝ × S × A) → A}
+
+/-- Under `[IsPolicyTrajectory M r s a]` and `[CountableMeasure A]`, `a t` is a `SinglePSpace` RV on `M θ`. -/
+theorem IsPolicyTrajectory.singlePSpace_a [h : IsPolicyTrajectory M r s a] (θ : Θ) (t : ℕ) :
+    SinglePSpace (M θ) (a t) :=
+  Random.SinglePSpace.of.EqMeasureCount.Measurable (h.measurable_a t)
+    CountableMeasure.measure_eq_count
+
+end IsPolicyTrajectoryAction
+
+section IsPolicyTrajectoryJoint
+variable {Θ S A : Type*}
+  [CountableMeasure S] [MeasurableSingletonClass S] [Fintype S]
+  [CountableMeasure A] [MeasurableSingletonClass A] [Fintype A]
+  {M : Model Θ S A}
+  {r : ℕ ⇀ (ℕ → ℝ × S × A) → ℝ}
+  {s : ℕ ⇀ (ℕ → ℝ × S × A) → S}
+  {a : ℕ ⇀ (ℕ → ℝ × S × A) → A}
+
+/-- Joint `(s t, a t)`. Scoped: `r` is not in the conclusion (HMM-style). -/
+theorem IsPolicyTrajectory.singlePSpace_sa [h : IsPolicyTrajectory M r s a] (θ : Θ) (t : ℕ) :
+    SinglePSpace (M θ) (s t, a t) :=
+  Random.SinglePSpace.of.EqMeasureCount.EqMeasureCount.Measurable.Measurable
+    (h.measurable_s t) (h.measurable_a t)
+    CountableMeasure.measure_eq_count CountableMeasure.measure_eq_count
+
+/-- Joint `(a t, s t)` (order used by some Random condProb / Grad lemmas). Scoped. -/
+theorem IsPolicyTrajectory.singlePSpace_as [h : IsPolicyTrajectory M r s a] (θ : Θ) (t : ℕ) :
+    SinglePSpace (M θ) (a t, s t) :=
+  Random.SinglePSpace.of.EqMeasureCount.EqMeasureCount.Measurable.Measurable
+    (h.measurable_a t) (h.measurable_s t)
+    CountableMeasure.measure_eq_count CountableMeasure.measure_eq_count
+end IsPolicyTrajectoryJoint
+
+namespace IsPolicyTrajectory
+-- `r` is often absent from the conclusion, so these are scoped (HMM `singlePSpace_y` pattern):
+-- after `open IsPolicyTrajectory`, Lean finds `h` from the local `[IsPolicyTrajectory …]` binder.
+set_option synthInstance.checkSynthOrder false in
+attribute [scoped instance] singlePSpace_s singlePSpace_a singlePSpace_sa singlePSpace_as
+end IsPolicyTrajectory
 
 end PolicyGradient

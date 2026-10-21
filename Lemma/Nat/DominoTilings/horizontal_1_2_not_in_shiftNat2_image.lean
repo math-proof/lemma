@@ -1,9 +1,11 @@
 import Mathlib
 import sympy.Basic
 import sympy.matrices.determinants.DominoTilings
+import Lemma.Nat.Cell1Eq1Add.of.Domino
 open DominoTilings
 open Domino DominoTiling
 open Finset
+open Nat
 
 
 /--
@@ -20,7 +22,7 @@ private lemma main
   simp only [Finset.mem_image, not_exists, not_and]
   intro d hd h
   have h1 := congrArg Domino.cell1 h
-  simp only [Domino.shiftNat_cell1, horizontal_1_2_cell1, Prod.mk.injEq] at h1
+  simp only [Cell1Eq1Add.of.Domino, horizontal_1_2_cell1, Prod.mk.injEq] at h1
   have hd_pos := (hS d hd).1
   omega
 

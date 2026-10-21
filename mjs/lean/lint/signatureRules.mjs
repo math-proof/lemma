@@ -31,6 +31,51 @@ function hypLabel(i, preferSub) {
     return preferSub ? `h${SUB_OF[i]}` : `h${i}`;
 }
 
+
+/** `⊆` / `⊂` / `⊇` / `⊃` / `∈` / `∉` — relations whose LHS may be a set literal. */
+const SET_REL = /[⊆⊂⊇⊃∈∉]/;
+
+/**
+ * Find `({…} : Set _)` wrapping a brace set-literal on the LHS of a set relation.
+ * Returns `{ start, ascription }` into `type`, or null.
+ * Conservative: no nested `{` inside the literal; `Set` must be a bare token.
+ */
+function findRedundantSetAscription(type) {
+    for (let i = 0; i < type.length; i++) {
+        if (type[i] !== '(') continue;
+        let j = i + 1;
+        while (j < type.length && /\s/.test(type[j])) j++;
+        if (type[j] !== '{') continue;
+        const openBrace = j;
+        const closeBrace = type.indexOf('}', openBrace + 1);
+        if (closeBrace < 0) continue;
+        if (type.slice(openBrace + 1, closeBrace).includes('{')) continue;
+        j = closeBrace + 1;
+        while (j < type.length && /\s/.test(type[j])) j++;
+        if (type[j] !== ':') continue;
+        j++;
+        while (j < type.length && /\s/.test(type[j])) j++;
+        if (!type.startsWith('Set', j)) continue;
+        const after = type[j + 3] ?? '';
+        if (/[\p{L}\p{N}_]/u.test(after)) continue; // e.g. Setoid
+        let depth = 0;
+        let k = i;
+        for (; k < type.length; k++) {
+            if (type[k] === '(') depth++;
+            else if (type[k] === ')') {
+                depth--;
+                if (depth === 0) break;
+            }
+        }
+        if (depth !== 0) continue;
+        let r = k + 1;
+        while (r < type.length && /\s/.test(type[r])) r++;
+        if (!SET_REL.test(type[r] ?? '')) continue;
+        return { start: i, ascription: type.slice(i, k + 1) };
+    }
+    return null;
+}
+
 export function signatureRules(ctx) {
     const { P, decls } = ctx;
     for (const d of decls) {
@@ -208,7 +253,7 @@ export function signatureRules(ctx) {
             }
         }
 
-        // ---- given: numbered hyps h₀… / h0… start at 0 with no gaps (descriptive hG/hr OK alongside) ----------
+        // ---- given: numbered hyps h₀… / h0… start at 0, no gaps, lower index earlier (descriptive hG/hr OK) ----
         if (given != null && gg.length) {
             const numbered = [];
             let preferSub = false;
@@ -222,29 +267,50 @@ export function signatureRules(ctx) {
                 }
             }
             if (numbered.length) {
-                const byIdx = new Map();
-                for (const h of numbered) if (!byIdx.has(h.idx)) byIdx.set(h.idx, h);
-                const idxs = [...byIdx.keys()].sort((a, b) => a - b);
-                const min = idxs[0];
-                const max = idxs[idxs.length - 1];
-                if (min > 0) {
-                    const h = byIdx.get(min);
-                    const have = idxs.map((i) => hypLabel(i, preferSub)).join(', ');
-                    ctx.warn('given-hyp-index', h.line + 1, h.col + 1,
-                        `numbered given hyp \`${h.name}\` skips \`${hypLabel(0, preferSub)}\` (have ${have}; renumber from \`${hypLabel(0, preferSub)}\`)`);
-                } else {
-                    const missing = [];
-                    for (let i = 0; i <= max; i++) if (!byIdx.has(i)) missing.push(i);
-                    if (missing.length) {
-                        const firstMiss = missing[0];
-                        const after = idxs.find((i) => i > firstMiss);
-                        const h = byIdx.get(after);
-                        const have = idxs.map((i) => hypLabel(i, preferSub)).join(', ');
-                        const miss = missing.map((i) => hypLabel(i, preferSub)).join(', ');
-                        ctx.warn('given-hyp-index', h.line + 1, h.col + 1,
-                            `gap in numbered given hyps: have ${have} but missing ${miss}`);
+                const allIdxs = [...new Set(numbered.map((h) => h.idx))].sort((a, b) => a - b);
+                const have = allIdxs.map((i) => hypLabel(i, preferSub)).join(', ');
+                const seen = new Set();
+                let warned = false;
+                for (const h of numbered) {
+                    if (!warned) {
+                        const missingBefore = [];
+                        for (let i = 0; i < h.idx; i++) if (!seen.has(i)) missingBefore.push(i);
+                        if (missingBefore.length) {
+                            // source order: h₁ before any h₀, or h₂ without prior h₀/h₁, etc.
+                            if (!seen.has(0)) {
+                                ctx.warn('given-hyp-index', h.line + 1, h.col + 1,
+                                    `\`${h.name}\` appears without a prior \`${hypLabel(0, preferSub)}\` (have ${have}; put \`${hypLabel(0, preferSub)}\` first among numbered given hyps)`);
+                            } else {
+                                const miss = missingBefore.map((i) => hypLabel(i, preferSub)).join(', ');
+                                ctx.warn('given-hyp-index', h.line + 1, h.col + 1,
+                                    `gap in numbered given hyps: \`${h.name}\` appears without prior ${miss} (have ${have} but missing ${miss})`);
+                            }
+                            warned = true;
+                        }
                     }
+                    seen.add(h.idx);
                 }
+            }
+        }
+
+
+        // ---- given: drop redundant `({…} : Set _)` on the LHS of ⊆/⊂/∈/… ---------------------------------
+        if (given != null && gg.length) {
+            for (const g of gg) {
+                if (g.kind !== 'explicit' || !g.type) continue;
+                const hit = findRedundantSetAscription(g.type);
+                if (!hit) continue;
+                let col = g.col + 1;
+                const lineText = P.code[g.line] ?? '';
+                const at = lineText.indexOf('({');
+                if (at >= 0) col = at + 1;
+                const lit = (hit.ascription.match(/\{[^{}]*\}/) || ['{…}'])[0];
+                ctx.warn(
+                    'redundant-set-ascription',
+                    g.line + 1,
+                    col,
+                    `redundant \`${hit.ascription}\` on the LHS of a set relation: drop the \`: Set _\` ascription and write \`${lit}\``,
+                );
             }
         }
 

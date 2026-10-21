@@ -1,9 +1,19 @@
 import Mathlib
 import sympy.Basic
 import sympy.matrices.determinants.DominoTilings
+import Lemma.Nat.Even.of.IsFaultfree.DominoTiling
+import Lemma.Nat.CardEqMul
+import Lemma.Nat.CardEqMul2CardDominos.of.DominoTiling
+import Lemma.Nat.IffIn_RectangleGe1AndGe_1AndGe21AndGe_2
+import Lemma.Nat.AnyInCells.of.InRectangle.Cell.DominoTiling
+import Lemma.Nat.Any_EqCellsSubMul2'1.AnyCellsEqMul2AndCellsEq2Mul.of.LtDiv2.Ge1.IsFaultfree.DominoTiling
+import Lemma.Nat.DominoTilings.faultfree_hasTopVerticalInCol_implies_n_ge_two
+import Lemma.Nat.DominoTilings.domino_at_n1_options
+import Lemma.Nat.DominoTilings.domino_at_n3_options
 open DominoTilings
 open Domino DominoTiling
 open Finset
+open Nat
 
 
 /--
@@ -19,8 +29,8 @@ private lemma main
 -- imply
   Even n ∧ ∃ (hn : Even n) (hn_ge : n ≥ 2), DominoTiling.TilingEquiv T (TilingA n hn hn_ge) := by
 -- proof
-  have hn_even := claim2_n_even n T hfree htop
-  have hn_ge := faultfree_hasTopVerticalInCol_implies_n_ge_two n T hfree htop
+  have hn_even := Even.of.IsFaultfree.DominoTiling n T hfree htop
+  have hn_ge := _root_.Nat.DominoTilings.faultfree_hasTopVerticalInCol_implies_n_ge_two n T hfree htop
   refine ⟨hn_even, hn_even, hn_ge, ?_⟩
   -- The uniqueness proof: TilingEquiv T (TilingA n hn_even hn_ge)
   -- TilingEquiv means T.dominos.image Domino.cells = TilingA.dominos.image Domino.cells
@@ -28,9 +38,9 @@ private lemma main
   -- exact cell ordering within each domino.
   unfold DominoTiling.TilingEquiv
   -- Both tilings cover the same rectangle, so they have the same number of dominos
-  have h_card_T := T.card_eq_twice_dominos
-  have h_card_A := (TilingA n hn_even hn_ge).card_eq_twice_dominos
-  simp only [card_Rectangle] at h_card_T h_card_A
+  have h_card_T := CardEqMul2CardDominos.of.DominoTiling T
+  have h_card_A := CardEqMul2CardDominos.of.DominoTiling (TilingA n hn_even hn_ge)
+  simp only [CardEqMul] at h_card_T h_card_A
   have h_card_eq : T.dominos.card = (TilingA n hn_even hn_ge).dominos.card := by omega
   -- Both tilings cover the same cells (the rectangle), so their cell images are equal
   -- We show this by showing each covers all cells of the rectangle
@@ -58,9 +68,9 @@ private lemma main
     simp only [Domino.cells, Finset.mem_insert, Finset.mem_singleton] at h_cell1'
     obtain h | h := h_cell1'
     ·
-      exact h_disj d₁.cell1 h_cell1 d₁.cell1(by simp [Domino.cells, h] : d₁.cell1 ∈ d₂.cells) rfl
+      exact h_disj d₁.cell1 h_cell1 d₁.cell1 (by simp [Domino.cells, h] : d₁.cell1 ∈ d₂.cells) rfl
     ·
-      exact h_disj d₁.cell1 h_cell1 d₁.cell1(by simp [Domino.cells, h] : d₁.cell1 ∈ d₂.cells) rfl
+      exact h_disj d₁.cell1 h_cell1 d₁.cell1 (by simp [Domino.cells, h] : d₁.cell1 ∈ d₂.cells) rfl
   have h_cells_inj_A : ∀ d₁ ∈ (TilingA n hn_even hn_ge).dominos,
       ∀ d₂ ∈ (TilingA n hn_even hn_ge).dominos, d₁.cells = d₂.cells → d₁ = d₂ := by
     intro d₁ hd₁ d₂ hd₂ h_eq
@@ -72,9 +82,9 @@ private lemma main
     simp only [Domino.cells, Finset.mem_insert, Finset.mem_singleton] at h_cell1'
     obtain h | h := h_cell1'
     ·
-      exact h_disj d₁.cell1 h_cell1 d₁.cell1(by simp [Domino.cells, h] : d₁.cell1 ∈ d₂.cells) rfl
+      exact h_disj d₁.cell1 h_cell1 d₁.cell1 (by simp [Domino.cells, h] : d₁.cell1 ∈ d₂.cells) rfl
     ·
-      exact h_disj d₁.cell1 h_cell1 d₁.cell1(by simp [Domino.cells, h] : d₁.cell1 ∈ d₂.cells) rfl
+      exact h_disj d₁.cell1 h_cell1 d₁.cell1 (by simp [Domino.cells, h] : d₁.cell1 ∈ d₂.cells) rfl
   -- Prove the backward direction: TilingA.dominos.image Domino.cells ⊆ T.dominos.image Domino.cells
   let A_cells := (TilingA n hn_even hn_ge).dominos.image Domino.cells
   have h_backward : A_cells ⊆ T.dominos.image Domino.cells := by
@@ -104,7 +114,7 @@ private lemma main
         have hi_pos : j + 1 ≥ 1 := by omega
         have hi_lt : j + 1 < n / 2 := by omega
         obtain ⟨⟨d', hd'_mem, hd'_cells⟩, _, _⟩ :=
-          claim1_basement_middle_top n T hfree htop (j + 1) hi_pos hi_lt
+          Any_EqCellsSubMul2'1.AnyCellsEqMul2AndCellsEq2Mul.of.LtDiv2.Ge1.IsFaultfree.DominoTiling n T (j + 1) hfree htop hi_pos hi_lt
         use d', hd'_mem
         rw [← hd_cells]
         simp only [Domino.cells, hd_cell1, hd_cell2]
@@ -128,10 +138,10 @@ private lemma main
           obtain ⟨k, hk⟩ := hn_even; subst hk
           have hkk : (k + k) / 2 = k := by omega
           simp only [hkk]; ext <;> omega
-        have hn3_in_rect : (n, 3) ∈ Rectangle n 3 := by rw [mem_Rectangle]; omega
-        obtain ⟨d_n3, hd_n3_mem, hd_n3_cov⟩ := T.cell_covered (n, 3) hn3_in_rect
+        have hn3_in_rect : (n, 3) ∈ Rectangle n 3 := by rw [IffIn_RectangleGe1AndGe_1AndGe21AndGe_2]; omega
+        obtain ⟨d_n3, hd_n3_mem, hd_n3_cov⟩ := AnyInCells.of.InRectangle.Cell.DominoTiling T (n, 3) hn3_in_rect
         have hd_n3_in_rect := T.dominos_in_rect d_n3 hd_n3_mem
-        have h_n3_opts := domino_at_n3_options n d_n3 hd_n3_in_rect hd_n3_cov
+        have h_n3_opts := _root_.Nat.DominoTilings.domino_at_n3_options n d_n3 hd_n3_in_rect hd_n3_cov
         have hd_n3_cells := show d_n3.cells = {(n, 2), (n, 3)} by
           --
           obtain h_left | h_right := h_n3_opts
@@ -182,7 +192,7 @@ private lemma main
               have hi_pos : n / 2 - 2 + 1 ≥ 1 := by omega
               have hi_lt : n / 2 - 2 + 1 < n / 2 := by omega
               obtain ⟨_, _, ⟨d_top, hd_top_mem, hd_top_cells⟩⟩ :=
-                claim1_basement_middle_top n T hfree htop (n / 2 - 2 + 1) hi_pos hi_lt
+                Any_EqCellsSubMul2'1.AnyCellsEqMul2AndCellsEq2Mul.of.LtDiv2.Ge1.IsFaultfree.DominoTiling n T (n / 2 - 2 + 1) hfree htop hi_pos hi_lt
               have h_top_c1 :
                 2 * (n / 2 - 2 + 1) = n - 2 := by obtain ⟨k, hk⟩ := hn_even; omega
               have h_top_c2 :
@@ -216,10 +226,10 @@ private lemma main
                 exact h_disj (n - 1, 3) h_n1_3_in_top (n - 1, 3) h_n1_3_in_n3 rfl
           · exact h_right
         have h_n2_in_n3 : (n, 2) ∈ d_n3.cells := by rw [hd_n3_cells]; simp
-        have hn1_in_rect : (n, 1) ∈ Rectangle n 3 := by rw [mem_Rectangle]; omega
-        obtain ⟨d_n1, hd_n1_mem, hd_n1_cov⟩ := T.cell_covered (n, 1) hn1_in_rect
+        have hn1_in_rect : (n, 1) ∈ Rectangle n 3 := by rw [IffIn_RectangleGe1AndGe_1AndGe21AndGe_2]; omega
+        obtain ⟨d_n1, hd_n1_mem, hd_n1_cov⟩ := AnyInCells.of.InRectangle.Cell.DominoTiling T (n, 1) hn1_in_rect
         have hd_n1_in_rect := T.dominos_in_rect d_n1 hd_n1_mem
-        have h_n1_opts := domino_at_n1_options n d_n1 hd_n1_in_rect hd_n1_cov
+        have h_n1_opts := _root_.Nat.DominoTilings.domino_at_n1_options n d_n1 hd_n1_in_rect hd_n1_cov
         have hd_n1_cells : d_n1.cells = {(n - 1, 1), (n, 1)} := by
           --
           obtain h_left | h_right := h_n1_opts
@@ -265,10 +275,10 @@ private lemma main
       simp only [rightWall] at hd
       have hd_c1 : d.cell1 = (n, 2) := by simp [hd]
       have hd_c2 : d.cell2 = (n, 3) := by simp [hd]
-      have hn3_in_rect : (n, 3) ∈ Rectangle n 3 := by rw [mem_Rectangle]; omega
-      obtain ⟨d_n3, hd_n3_mem, hd_n3_cov⟩ := T.cell_covered (n, 3) hn3_in_rect
+      have hn3_in_rect : (n, 3) ∈ Rectangle n 3 := by rw [IffIn_RectangleGe1AndGe_1AndGe21AndGe_2]; omega
+      obtain ⟨d_n3, hd_n3_mem, hd_n3_cov⟩ := AnyInCells.of.InRectangle.Cell.DominoTiling T (n, 3) hn3_in_rect
       have hd_n3_in_rect := T.dominos_in_rect d_n3 hd_n3_mem
-      have h_n3_opts := domino_at_n3_options n d_n3 hd_n3_in_rect hd_n3_cov
+      have h_n3_opts := _root_.Nat.DominoTilings.domino_at_n3_options n d_n3 hd_n3_in_rect hd_n3_cov
       have hd_n3_cells := show d_n3.cells = {(n, 2), (n, 3)} by
         --
         obtain h_left | h_right := h_n3_opts
@@ -319,7 +329,7 @@ private lemma main
             have hi_pos : n / 2 - 2 + 1 ≥ 1 := by omega
             have hi_lt : n / 2 - 2 + 1 < n / 2 := by omega
             obtain ⟨_, _, ⟨d_top, hd_top_mem, hd_top_cells⟩⟩ :=
-              claim1_basement_middle_top n T hfree htop (n / 2 - 2 + 1) hi_pos hi_lt
+              Any_EqCellsSubMul2'1.AnyCellsEqMul2AndCellsEq2Mul.of.LtDiv2.Ge1.IsFaultfree.DominoTiling n T (n / 2 - 2 + 1) hfree htop hi_pos hi_lt
             have h_top_c1 :
               2 * (n / 2 - 2 + 1) = n - 2 := by obtain ⟨k, hk⟩ := hn_even; omega
             have h_top_c2 :
@@ -369,7 +379,7 @@ private lemma main
       have hi_pos : j + 1 ≥ 1 := by omega
       have hi_lt : j + 1 < n / 2 := by omega
       obtain ⟨_, ⟨d', hd'_mem, hd'_cells⟩, _⟩ :=
-        claim1_basement_middle_top n T hfree htop (j + 1) hi_pos hi_lt
+        Any_EqCellsSubMul2'1.AnyCellsEqMul2AndCellsEq2Mul.of.LtDiv2.Ge1.IsFaultfree.DominoTiling n T (j + 1) hfree htop hi_pos hi_lt
       use d', hd'_mem
       rw [← hd_cells]
       simp only [Domino.cells, hd_cell1, hd_cell2]
@@ -389,7 +399,7 @@ private lemma main
       have hi_pos : j + 1 ≥ 1 := by omega
       have hi_lt : j + 1 < n / 2 := by omega
       obtain ⟨_, _, ⟨d', hd'_mem, hd'_cells⟩⟩ :=
-        claim1_basement_middle_top n T hfree htop (j + 1) hi_pos hi_lt
+        Any_EqCellsSubMul2'1.AnyCellsEqMul2AndCellsEq2Mul.of.LtDiv2.Ge1.IsFaultfree.DominoTiling n T (j + 1) hfree htop hi_pos hi_lt
       use d', hd'_mem
       rw [← hd_cells]
       simp only [Domino.cells, hd_cell1, hd_cell2]

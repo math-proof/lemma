@@ -1,9 +1,12 @@
 import Mathlib
 import sympy.Basic
 import sympy.matrices.determinants.DominoTilings
+import Lemma.Nat.DominoTilings.vertical_1_1_cells
+import Lemma.Nat.DominoTilings.vertical_1_1_flip_cells
 open DominoTilings
 open Domino DominoTiling
 open Finset
+open Nat
 
 
 /--
@@ -14,7 +17,7 @@ private lemma main :
 -- imply
   vertical_1_1_flip.cells = vertical_1_1.cells := by
 -- proof
-  simp only [vertical_1_1_flip_cells, vertical_1_1_cells, Finset.pair_comm]
+  simp only [_root_.Nat.DominoTilings.vertical_1_1_flip_cells, DominoTilings.vertical_1_1_cells, Finset.pair_comm]
 
 
 -- created on 2026-10-20

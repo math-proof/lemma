@@ -1,6 +1,8 @@
 <template>
 	<div :class=self.kwargs.class>
-		<component v-for="arg of self.args" :is=self.components[arg.func] v-bind=arg.bind />
+		<template v-for="arg of self.args" :key="arg">
+			<component v-if="self.components[arg.func]" :is=self.components[arg.func] v-bind=arg.bind />
+		</template>
 	</div>
 </template>
 

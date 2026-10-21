@@ -1,9 +1,11 @@
 import Mathlib
 import sympy.Basic
 import sympy.matrices.determinants.DominoTilings
+import Lemma.Nat.DominoTilings.reflectTiling3_dominos_minCol_maxCol
 open DominoTilings
 open Domino DominoTiling
 open Finset
+open Nat
 
 
 /--
@@ -27,7 +29,7 @@ private lemma main
     · exact hfault.2.1
     ·
       intro d hd -- Get the corresponding reflected domino
-      obtain ⟨d', hd'_mem, hd'_min, hd'_max⟩ := reflectTiling3_dominos_minCol_maxCol T d hd -- d' doesn't span column k (since there's a fault)
+      obtain ⟨d', hd'_mem, hd'_min, hd'_max⟩ := _root_.Nat.DominoTilings.reflectTiling3_dominos_minCol_maxCol T d hd -- d' doesn't span column k (since there's a fault)
       have hd'_no_span := hfault.2.2 d' hd'_mem -- But d has the same minCol and maxCol as d'
       rwa [← hd'_min, ← hd'_max]
 

@@ -1,9 +1,11 @@
 import Mathlib
 import sympy.Basic
 import sympy.matrices.determinants.DominoTilings
+import Lemma.Nat.IffIn_RectangleGe1AndGe_1AndGe21AndGe_2
 open DominoTilings
 open Domino DominoTiling
 open Finset
+open Nat
 
 
 /--
@@ -17,7 +19,7 @@ private lemma main
   ∃ d ∈ T.dominos, (1, 1) ∈ d.cells := by
 -- proof
   have h11 : (1, 1) ∈ Rectangle (n + 1) 2 := by
-    rw [mem_Rectangle]
+    rw [IffIn_RectangleGe1AndGe_1AndGe21AndGe_2]
     omega
   rw [← T.covers_all] at h11
   simp only [Finset.mem_biUnion] at h11
