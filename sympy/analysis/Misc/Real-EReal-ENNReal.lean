@@ -335,7 +335,7 @@ lemma EReal.tsum_le_coe_tsum_of_forall_le {f : ℕ → EReal} {g : ℕ → ℝ}
 
 /-- Coercion from ℝ to EReal commutes with tsum for nonneg summable sequences.
     For nonneg g with Summable g: ↑(∑' n, g n : ℝ) = ∑' n, ↑(g n) : EReal -/
-lemma EReal.coe_tsum_of_nonneg {g : ℕ → ℝ} (hg_nn : ∀ n, 0 ≤ g n) (_hg_sum : Summable g) :
+lemma EReal.coe_tsum_of_nonneg {g : ℕ → ℝ} (hg_nn : ∀ n, 0 ≤ g n) (hg_sum : Summable g) :
     (↑(∑' n, g n) : EReal) = ∑' n, (g n : EReal) := by
   -- Route through ENNReal using ofReal_tsum_of_nonneg
   let g' : ℕ → ENNReal := fun n => ENNReal.ofReal (g n)
