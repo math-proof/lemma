@@ -1,0 +1,23 @@
+import Mathlib
+import sympy.Basic
+import sympy.analysis.Section_5_3
+open Chapter5 hiding Real
+open Chapter5.Sequence
+
+
+/--
+[Sequence.mul_equiv_right](https://github.com/teorth/analysis/blob/main/Analysis/Section_5_3.lean)
+-/
+@[path]
+private lemma main
+  {b b' a : ℕ → ℚ}
+-- given
+  (ha : (a:Sequence).IsCauchy)
+  (hbb': Equiv b b') :
+-- imply
+  Equiv (a * b) (a * b') :=
+-- proof
+  Chapter5.Sequence.mul_equiv_right a ha hbb'
+
+
+-- created on 2026-10-22
