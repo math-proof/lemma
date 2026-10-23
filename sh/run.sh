@@ -815,50 +815,63 @@ if [ -n "$diskModuleList" ]; then
   echo "UPDATE lemma SET meta = JSON_SET(IFNULL(meta, '{}'), '\$.error', CAST('[]' AS JSON)) WHERE user = '$user' AND module IN ($diskModuleList);" >> sql/test.sql
 fi
 
+# Scope diagnostics to requested modules (and never count sympy in totals):
+# folder walks (`sh/run.sh ENNReal`) would otherwise pick up dep sympy sorry/
+# warnings and look dirty when Lemma/<Folder> itself is green.
+diag_in_scope() {
+  local m=${1#Lemma.}
+  [[ "$m" == sympy || "$m" == sympy.* ]] && return 1
+  module_included "$m"
+}
+
 echo "plausible:"
 
-sorryModules=($(grep -P "^warning: (\./)*[\w'!₀-₉/]+\.lean:\d+:\d+: declaration uses \`sorry\`" Lemma/test.log | sed -E 's#^warning: ([.]/)*##' | sed -E "s/\.lean:[0-9]+:[0-9]+: declaration uses \`sorry\`//" | sed 's#/#.#g' | sort -u))
-for module in ${sorryModules[*]}; do
+sorryModules=()
+while IFS= read -r module; do
+  [ -z "$module" ] && continue
+  diag_in_scope "$module" || continue
+  sorryModules+=("$module")
   echo "${module//.//}.lean"
   module=${module#Lemma.}
-  if [[ $module =~ ^sympy ]]; then
-    continue
-  fi
   cat >> sql/test.sql << EOF
 UPDATE lemma set meta = JSON_SET(IFNULL(meta, '{}'), '\$.error', CAST('[{"code": "", "file": "", "info": "declaration uses ''sorry''", "line": 0, "type": "warning"}]' AS JSON)) where user = '$user' and module = "$module";
 EOF
-done
+done < <(grep -P "^warning: (\./)*[\w'!₀-₉/]+\.lean:\d+:\d+: declaration uses \`sorry\`" Lemma/test.log | sed -E 's#^warning: ([.]/)*##' | sed -E "s/\.lean:[0-9]+:[0-9]+: declaration uses \`sorry\`//" | sed 's#/#.#g' | sort -u)
 
 echo "failed:"
 
-failingModules=($(awk '/Some required (targets|builds) logged failures:/{flag=1;next}/^[^-]/{flag=0}flag' Lemma/test.log | sed 's/^- //'))
-for module in ${failingModules[*]}; do
+failingModules=()
+while IFS= read -r module; do
+  [ -z "$module" ] && continue
+  diag_in_scope "$module" || continue
+  failingModules+=("$module")
   echo "${module//.//}.lean"
   module=${module#Lemma.}
-  if [[ $module =~ ^sympy ]]; then
-    continue
-  fi
   cat >> sql/test.sql << EOF
 UPDATE lemma set meta = JSON_SET(IFNULL(meta, '{}'), '\$.error', CAST('[{"code": "", "file": "", "info": "", "line": 0, "type": "error"}]' AS JSON)) where user = '$user' and module = "$module";
 EOF
-done
+done < <(awk '/Some required (targets|builds) logged failures:/{flag=1;next}/^[^-]/{flag=0}flag' Lemma/test.log | sed 's/^- //')
 
 # Non-sorry Lean diagnostics with a .lean path: `warning:` (deprecations,
 # linters, …) and `info:` (e.g. "Try this:" tactic suggestions). Excludes
 # sorry (counted under plausible) and non-file noise (`info: stderr:`,
 # crashpad, lake package notes). Must run before mysql | tee overwrites the log.
 echo "warning:"
-warningFiles=($(
+warningFiles=()
+while IFS= read -r f; do
+  [ -z "$f" ] && continue
+  mod=${f%.lean}
+  mod=${mod//\//.}
+  diag_in_scope "$mod" || continue
+  warningFiles+=("$f")
+  echo "$f"
+done < <(
   {
     grep -P "^(warning|info): (\./)*[\w'!₀-₉/]+\.lean:\d+:\d+:" Lemma/test.log || true
   } | grep -vP "^warning: .*declaration uses \`sorry\`" \
     | sed -E 's/^(warning|info): ([.]\/)?//; s/\.lean:[0-9]+:[0-9]+:.*/.lean/' \
     | sort -u
-))
-for f in ${warningFiles[*]}; do
-  echo "$f"
-done
-
+)
 MYSQL_PORT=${MYSQL_PORT:-3306}
 # Create a temporary config file with .cnf extension
 tempConfigPath=$(mktemp)

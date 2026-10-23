@@ -71,7 +71,7 @@ def EuclideanSpace'.prod_equiv (d₁ d₂:ℕ) : EuclideanSpace' (d₁ + d₂) �
       simp only [this]
   right_inv x := by
     ext ⟨i, hi⟩
-    · simp [dif_pos hi]
+    · simp [dite_eq_left hi]
     · simp [show ¬(i + d₁ < d₁) by omega]
 
 def EuclideanSpace'.prod {d₁ d₂:ℕ} (E₁: Set (EuclideanSpace' d₁)) (E₂: Set (EuclideanSpace' d₂)) : Set (EuclideanSpace' (d₁+d₂)) := (EuclideanSpace'.prod_equiv d₁ d₂).symm '' (E₁ ×ˢ E₂)
@@ -116,9 +116,9 @@ theorem ENNReal.upward_continuous {x y:ℕ → ENNReal} (hx: Monotone x) (hy: Mo
       have := hx hn.1
       order
     have : atTop.Tendsto (fun n ↦ x n * y ny) (nhds ⊤) := by
-      convert Tendsto.comp (g := fun z ↦ z * y ny) _ hx_lim
-      convert (ENNReal.continuous_mul_const hyn').tendsto ⊤
-      rw [top_mul]; order
+      have h := ((ENNReal.continuous_mul_const hyn').tendsto ⊤).comp hx_lim
+      rw [top_mul hny.ne'] at h
+      exact h
     apply tendsto_nhds_top_mono this
     simp [EventuallyLE, eventually_atTop]
     use ny; intro n hn
@@ -126,10 +126,10 @@ theorem ENNReal.upward_continuous {x y:ℕ → ENNReal} (hx: Monotone x) (hy: Mo
   obtain rfl | hy₀' := eq_top_or_lt_top y₀
   . rw [mul_top (by order)]
     have : atTop.Tendsto (fun n ↦ x nx * y n) (nhds ⊤) := by
-      convert Tendsto.comp (g := fun z ↦ (x nx) * z) _ hy_lim
-      convert (ENNReal.continuous_const_mul _).tendsto ⊤
-      . rw [mul_top]; order
-      specialize hx_lt nx; order
+      have hxnx : x nx ≠ ⊤ := (lt_of_le_of_lt (hx_lt nx) hx₀').ne
+      have h := ((ENNReal.continuous_const_mul hxnx).tendsto ⊤).comp hy_lim
+      rw [mul_top hnx.ne'] at h
+      exact h
     apply tendsto_nhds_top_mono this
     simp [EventuallyLE, eventually_atTop]
     use nx; intro n hn
@@ -171,7 +171,7 @@ theorem ENNReal.tsum_of_tsum (x: ℕ → ℕ → ENNReal) : ∑' p:ℕ × ℕ, x
       _ ≤ _ := by apply ENNReal.tsum_le_tsum; intros; apply ENNReal.sum_le_tsum
   apply le_of_tendsto' (tendsto_nat_tsum _); intro N
   apply le_of_tendsto' (f := fun M ↦ ∑ n ∈ .range N, ∑ m ∈ .range M, x n m) (x := atTop)
-  . apply tendsto_finset_sum; intros; apply tendsto_nat_tsum
+  . apply tendsto_finsetSum; intros; apply tendsto_nat_tsum
   intro M; calc
     _ = ∑ p ∈ .range N ×ˢ .range M, x p.1 p.2 := by symm; apply Finset.sum_product
     _ ≤ _ := ENNReal.sum_le_tsum _

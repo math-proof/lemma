@@ -14,7 +14,7 @@ that are not specific to measure theory but are used throughout the formalizatio
 lemma max_div_two (x : ℝ) : max x 0 / 2 = max (x / 2) 0 := by
   by_cases hx : 0 ≤ x
   · simp [max_eq_left hx, max_eq_left (div_nonneg hx (by norm_num : (0:ℝ) < 2).le)]
-  · push_neg at hx
+  · push Not at hx
     simp [max_eq_right (le_of_lt hx), max_eq_right (by linarith : x / 2 ≤ 0)]
 
 /-- The square root function is subadditive: {lean}`√(x + y) ≤ √x + √y` for non-negative reals.
@@ -76,7 +76,7 @@ lemma EReal.le_of_forall_pos_le_add' {a b : EReal}
   by_cases hb : b = ⊤
   · subst hb; exact le_top
   · by_contra ha_gt
-    push_neg at ha_gt
+    push Not at ha_gt
     -- a > b and b ≠ ⊤
     induction a using EReal.rec with
     | bot => simp at ha_gt
@@ -290,7 +290,7 @@ lemma EReal.tsum_add_le_of_nonneg_pointwise {f g h : ℕ → ℝ}
     If 0 ≤ f n ≤ ↑(g n) for all n, where g n ≥ 0 and g summable, then ∑' f ≤ ↑(∑' g).
     Routes through ENNReal where tsum comparison is unconditional. -/
 lemma EReal.tsum_le_coe_tsum_of_forall_le {f : ℕ → EReal} {g : ℕ → ℝ}
-    (hf_nn : ∀ n, 0 ≤ f n) (hg_nn : ∀ n, 0 ≤ g n) (hg_sum : Summable g)
+    (hf_nn : ∀ n, 0 ≤ f n) (hg_nn : ∀ n, 0 ≤ g n) (_hg_sum : Summable g)
     (h_le : ∀ n, f n ≤ (g n : EReal)) :
     ∑' n, f n ≤ (∑' n, g n : EReal) := by
   -- Define ENNReal version of g
@@ -335,7 +335,7 @@ lemma EReal.tsum_le_coe_tsum_of_forall_le {f : ℕ → EReal} {g : ℕ → ℝ}
 
 /-- Coercion from ℝ to EReal commutes with tsum for nonneg summable sequences.
     For nonneg g with Summable g: ↑(∑' n, g n : ℝ) = ∑' n, ↑(g n) : EReal -/
-lemma EReal.coe_tsum_of_nonneg {g : ℕ → ℝ} (hg_nn : ∀ n, 0 ≤ g n) (hg_sum : Summable g) :
+lemma EReal.coe_tsum_of_nonneg {g : ℕ → ℝ} (hg_nn : ∀ n, 0 ≤ g n) (_hg_sum : Summable g) :
     (↑(∑' n, g n) : EReal) = ∑' n, (g n : EReal) := by
   -- Route through ENNReal using ofReal_tsum_of_nonneg
   let g' : ℕ → ENNReal := fun n => ENNReal.ofReal (g n)
