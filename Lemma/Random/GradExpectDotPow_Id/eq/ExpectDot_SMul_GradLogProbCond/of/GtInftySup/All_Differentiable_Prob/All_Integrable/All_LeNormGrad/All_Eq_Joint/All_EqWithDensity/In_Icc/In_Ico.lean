@@ -129,7 +129,7 @@ private lemma main
     congr 1
     congr 1
     refine tsum_congr fun k => ?_
-    have hk : t + k + 1 = t + 1 + k := by omega
+    have hk : t + 1 + k = t + k + 1 := by omega
     simp only [Pi.add_apply, Pi.sub_apply, Pi.smul_apply, smul_eq_mul, V_θ,
       Function.getSliceFrom_apply, hk]
   -- Dot sugar ↔ path tsum sugar
@@ -195,9 +195,9 @@ private lemma main
   congr 1
   congr 1
   refine tsum_congr fun k => ?_
-  have hk : t + k + 1 = t + 1 + k := by omega
+  have hk : t + 1 + k = t + k + 1 := by omega
   simp only [Pi.add_apply, Pi.sub_apply, Pi.smul_apply, smul_eq_mul, V_θ,
-    Function.getSliceFrom_apply, hk]
+    Fun.getSliceFrom_apply, hk]
 
 
 -- created on 2026-10-20

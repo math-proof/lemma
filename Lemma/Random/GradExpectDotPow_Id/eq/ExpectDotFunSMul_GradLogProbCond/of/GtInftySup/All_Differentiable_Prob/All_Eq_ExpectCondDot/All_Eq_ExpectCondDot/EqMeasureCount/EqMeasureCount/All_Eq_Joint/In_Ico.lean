@@ -12,8 +12,8 @@ set_option maxHeartbeats 625000
 -- Path-binder form of the discounted Q-score integral.
 lemma expect_smul_grad_eq_integral
   [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [CompleteSpace Θ]
-  [ReferenceMeasure S] [MeasurableSingletonClass S] [Fintype S]
-  [ReferenceMeasure A] [MeasurableSingletonClass A] [Fintype A]
+  [CountableMeasure S] [MeasurableSingletonClass S] [Fintype S]
+  [CountableMeasure A] [MeasurableSingletonClass A] [Fintype A]
   {M : Model Θ S A} {θ : Θ} {γ : ℝ}
   {Q : ℕ → S → A → ℝ}
   {r : ℕ → (ℕ → ℝ × S × A) → ℝ}
@@ -49,8 +49,8 @@ lemma expect_smul_grad_eq_integral
 /-- Path-binder finset Q-score Expect = observation integral. -/
 private lemma expect_finset_smul_gradLogProb_eq_integral
   [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [CompleteSpace Θ]
-  [ReferenceMeasure S] [MeasurableSingletonClass S] [Fintype S]
-  [ReferenceMeasure A] [MeasurableSingletonClass A] [Fintype A]
+  [CountableMeasure S] [MeasurableSingletonClass S] [Fintype S]
+  [CountableMeasure A] [MeasurableSingletonClass A] [Fintype A]
   {M : Model Θ S A} {θ : Θ} {γ : ℝ} {n : ℕ}
   {Q : ℕ → S → A → ℝ}
   {r : ℕ → (ℕ → ℝ × S × A) → ℝ}
@@ -83,8 +83,8 @@ private lemma expect_finset_smul_gradLogProb_eq_integral
 /-- Path-binder V-gradient Expect = observation integral. -/
 private lemma expect_gradV_eq_integral
   [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [CompleteSpace Θ]
-  [ReferenceMeasure S] [MeasurableSingletonClass S] [Fintype S]
-  [ReferenceMeasure A] [MeasurableSingletonClass A] [Fintype A]
+  [CountableMeasure S] [MeasurableSingletonClass S] [Fintype S]
+  [CountableMeasure A] [MeasurableSingletonClass A] [Fintype A]
   {M : Model Θ S A} {θ : Θ} {n : ℕ}
   {V : Θ → S → ℝ}
   {s : ℕ → (ℕ → ℝ × S × A) → S}
@@ -105,15 +105,13 @@ private lemma expect_gradV_eq_integral
 /-- Ae equality: binder-equality ℙ-log-grad vs `M.policy.prob` log-grad. -/
 private lemma gradLogProbCond_ae_eq_gradLogPol
   [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [CompleteSpace Θ]
-  [ReferenceMeasure S] [MeasurableSingletonClass S] [Fintype S]
-  [ReferenceMeasure A] [MeasurableSingletonClass A] [Fintype A]
+  [CountableMeasure S] [MeasurableSingletonClass S] [Fintype S]
+  [CountableMeasure A] [MeasurableSingletonClass A] [Fintype A]
   {M : Model Θ S A} {θ : Θ}
   {r : ℕ → (ℕ → ℝ × S × A) → ℝ}
   {s : ℕ → (ℕ → ℝ × S × A) → S}
   {a : ℕ → (ℕ → ℝ × S × A) → A}
   (h₁ : ∀ t, (· t) = (r t, s t, a t))
-  (hS : (ReferenceMeasure.measure : Measure S) = Measure.count)
-  (hA : (ReferenceMeasure.measure : Measure A) = Measure.count)
   (h₄ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
   (h₅ : sup[θ, x, u] ‖∇[θ] M.policy.prob θ x u‖ < ∞)
   (hP : ∀ θ t, SinglePSpace (M θ) (a t, s t)) :
@@ -130,7 +128,7 @@ private lemma gradLogProbCond_ae_eq_gradLogPol
       fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω))) θ := by
     refine Filter.EventuallyEq.fderiv_eq ((hc.eventually_ne (hω t)).mono fun θ' h => ?_)
     beta_reduce
-    rw [ProbCond.eq.OfRealPol.of.Ne_0 h₁ hS hA (hP θ' t) h,
+    rw [ProbCond.eq.OfRealPol.of.Ne_0 h₁ (hP θ' t) h,
       ENNReal.toReal_ofReal (M.policy.nonneg θ' _ _)]
   simp only [gradient]
   exact congrArg (InnerProductSpace.toDual ℝ Θ).symm hfd
@@ -139,8 +137,8 @@ private lemma gradLogProbCond_ae_eq_gradLogPol
 /-- Path-binder finset Expect of an arbitrary score = observation integral (ℙ-free). -/
 private lemma expect_finset_smul_score_eq_integral
   [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [CompleteSpace Θ]
-  [ReferenceMeasure S] [MeasurableSingletonClass S] [Fintype S]
-  [ReferenceMeasure A] [MeasurableSingletonClass A] [Fintype A]
+  [CountableMeasure S] [MeasurableSingletonClass S] [Fintype S]
+  [CountableMeasure A] [MeasurableSingletonClass A] [Fintype A]
   {M : Model Θ S A} {θ : Θ} {γ : ℝ} {n : ℕ}
   {Q : ℕ → S → A → ℝ}
   {score : ℕ → S → A → Θ}
@@ -170,8 +168,8 @@ private lemma expect_finset_smul_score_eq_integral
 /-- Ae pointwise score equality lifts to finset-smul observation integrals. -/
 private lemma integral_finset_smul_score_eq_of_ae
   [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [CompleteSpace Θ]
-  [ReferenceMeasure S] [MeasurableSingletonClass S] [Fintype S]
-  [ReferenceMeasure A] [MeasurableSingletonClass A] [Fintype A]
+  [CountableMeasure S] [MeasurableSingletonClass S] [Fintype S]
+  [CountableMeasure A] [MeasurableSingletonClass A] [Fintype A]
   {M : Model Θ S A} {θ : Θ} {γ : ℝ} {n : ℕ}
   {Q : ℕ → S → A → ℝ}
   {score₁ score₂ : ℕ → S → A → Θ}
@@ -193,8 +191,8 @@ private lemma integral_finset_smul_score_eq_of_ae
 /-- The discounted score integral for `fderiv`, split out so elaboration has its own heartbeat budget. -/
 private lemma fderiv_tsum_eq_integral_score
   [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [CompleteSpace Θ]
-  [ReferenceMeasure S] [MeasurableSingletonClass S] [Fintype S]
-  [ReferenceMeasure A] [MeasurableSingletonClass A] [Fintype A]
+  [CountableMeasure S] [MeasurableSingletonClass S] [Fintype S]
+  [CountableMeasure A] [MeasurableSingletonClass A] [Fintype A]
   {M : Model Θ S A}
   {θ : Θ}
   {γ : ℝ}
@@ -205,8 +203,6 @@ private lemma fderiv_tsum_eq_integral_score
   {a : ℕ → (ℕ → ℝ × S × A) → A}
   (h₀ : γ ∈ Set.Ico 0 1)
   (h₁ : ∀ t, (· t) = (r t, s t, a t))
-  (hS : (ReferenceMeasure.measure : Measure S) = Measure.count)
-  (hA : (ReferenceMeasure.measure : Measure A) = Measure.count)
   (h₂ : ∀ θ t («s.bvar» : ℕ → S) («a.bvar» : ℕ → A), Q θ t («s.bvar» t) («a.bvar» t) = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «s.bvar» t ∧ a t = «a.bvar» t))
   (h₃ : ∀ θ t («s.bvar» : ℕ → S), V θ t («s.bvar» t) = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «s.bvar» t))
   (h₄ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
@@ -216,9 +212,7 @@ private lemma fderiv_tsum_eq_integral_score
   ∑' t, γ ^ t • fderiv ℝ (fun θ => ∫ ω, r t ω ∂(M θ)) θ =
     ∑' t, γ ^ t • ∫ ω, Q θ t (s t ω) (a t ω) • fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω))) θ ∂(M θ) := by
   have : ∀ θ t, SinglePSpace (M θ) (a t, s t) := fun _ t =>
-    SinglePSpace.of.EqMeasureCount.Measurable ((Random.Measurable.of.All_Eq.snd.snd h₁ t).prodMk (Random.Measurable.of.All_Eq.snd.fst h₁ t)) (by
-      show (ReferenceMeasure.measure : Measure A).prod (ReferenceMeasure.measure : Measure S) = _
-      rw [hA, hS, Count.eq.ProdCountS])
+    SinglePSpace.of.Measurable.Measurable (Random.Measurable.of.All_Eq.snd.snd h₁ t) (Random.Measurable.of.All_Eq.snd.fst h₁ t)
   have : ∀ θ, PSpace (M θ) (AsPathRV.path (r)) := fun _ ↦
     PSpace_Path.of.All_PSpace (fun t ↦ ⟨(Random.Measurable.of.All_Eq.fst h₁ t).aemeasurable⟩)
   have : ∀ θ, PSpace (M θ) (AsPathRV.path (s)) := fun _ ↦
@@ -252,7 +246,7 @@ private lemma fderiv_tsum_eq_integral_score
     have h8fd : ∀ θ x u, ‖fderiv ℝ (fun θ => M.policy.prob θ x u) θ‖ ≤ Cfd := fun θ x u => hCfd ⟨(θ, x, u), rfl⟩
     have h7grad :=
       GradExpectDotPow_Id.eq.AddExpect_Sum_SMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_Eq_ExpectCondDot.All_Eq_ExpectCondDot.EqMeasureCount.EqMeasureCount.All_Eq_Joint.In_Ico
-        (θ := θ) h₀ h₁ hS hA h₂ h₃ h₄ h5n hP0 hπ
+        (θ := θ) h₀ h₁ h₂ h₃ h₄ h5n hP0 hπ
     let Lgrad : StrongDual ℝ Θ ≃L[ℝ] Θ :=
       (InnerProductSpace.toDual ℝ Θ).symm.toContinuousLinearEquiv
     have hLgrad : ∀ φ, (InnerProductSpace.toDual ℝ Θ).symm φ = Lgrad φ := fun _ => rfl
@@ -304,11 +298,8 @@ private lemma fderiv_tsum_eq_integral_score
           (V := fun θ' => Vloc θ' n) (s := s)
       -- GradExpect RHS is ℙ-score Expect; unwrap then bridge ae to pol for fderiv goal
       have hSP : ∀ θ' t', SinglePSpace (M θ') (a t', s t') := fun θ' t' =>
-        SinglePSpace.of.EqMeasureCount.Measurable
-          ((Random.Measurable.of.All_Eq.snd.snd h₁ t').prodMk (Random.Measurable.of.All_Eq.snd.fst h₁ t'))
-          (by
-            show (ReferenceMeasure.measure : Measure A).prod (ReferenceMeasure.measure : Measure S) = _
-            rw [hA, hS, Count.eq.ProdCountS])
+        SinglePSpace.of.Measurable.Measurable
+          (Random.Measurable.of.All_Eq.snd.snd h₁ t') (Random.Measurable.of.All_Eq.snd.fst h₁ t')
       have : ∀ t, SinglePSpace (M θ) (a t, s t) := fun t => hSP θ t
       have hRQP :
         𝔼[s, a : M θ](∑ t ∈ Finset.range n,
@@ -325,7 +316,7 @@ private lemma fderiv_tsum_eq_integral_score
           ∇[θ] (Real.log (M.policy.prob θ (s t ω) (a t ω))) =
             ∇[θ] (ℙ[M θ]((a t) = (a t ω) | (s t) = (s t ω)) : ℝ).log :=
         fun t => (gradLogProbCond_ae_eq_gradLogPol (M := M) (θ := θ) (r := r) (s := s) (a := a)
-          h₁ hS hA h₄ h₅ hSP t).mono fun _ h => h.symm
+          h₁ h₄ h₅ hSP t).mono fun _ h => h.symm
       have hInt_pol_eq_P :
         ∫ ω, ∑ t ∈ Finset.range n,
               (γ ^ t * Qloc θ t (s t ω) (a t ω)) •
@@ -497,8 +488,8 @@ The score uses binder sugar `ℙ[M θ](a t | s t)` (option B: scalar `condProb` 
 @[path]
 private lemma main
   [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [CompleteSpace Θ]
-  [ReferenceMeasure S] [MeasurableSingletonClass S] [Fintype S]
-  [ReferenceMeasure A] [MeasurableSingletonClass A] [Fintype A]
+  [CountableMeasure S] [MeasurableSingletonClass S] [Fintype S]
+  [CountableMeasure A] [MeasurableSingletonClass A] [Fintype A]
   {M : Model Θ S A}
   {θ : Θ}
   {γ : ℝ}
@@ -510,8 +501,6 @@ private lemma main
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
   (h₁ : ∀ t, (· t) = (r t, s t, a t))
-  (hS : (ReferenceMeasure.measure : Measure S) = Measure.count)
-  (hA : (ReferenceMeasure.measure : Measure A) = Measure.count)
   (h₂ : ∀ θ t («s.bvar» : ℕ → S) («a.bvar» : ℕ → A), Q θ t («s.bvar» t) («a.bvar» t) = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «s.bvar» t ∧ a t = «a.bvar» t))
   (h₃ : ∀ θ t («s.bvar» : ℕ → S), V θ t («s.bvar» t) = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «s.bvar» t))
   (h₄ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
@@ -522,7 +511,7 @@ private lemma main
   have : ∀ θ t, SinglePSpace (M θ) (a t, s t) := fun _ t =>
     SinglePSpace.of.EqMeasureCount.Measurable ((Random.Measurable.of.All_Eq.snd.snd h₁ t).prodMk (Random.Measurable.of.All_Eq.snd.fst h₁ t)) (by
       show (ReferenceMeasure.measure : Measure A).prod (ReferenceMeasure.measure : Measure S) = _
-      rw [hA, hS, Count.eq.ProdCountS])
+      rw [CountableMeasure.measure_eq_count, CountableMeasure.measure_eq_count, Count.eq.ProdCountS])
   have : PSpace (M θ) (AsPathRV.path (s)) :=
     PSpace_Path.of.All_PSpace (fun t ↦ ⟨(Random.Measurable.of.All_Eq.snd.fst h₁ t).aemeasurable⟩)
   have : PSpace (M θ) (AsPathRV.path (a)) :=
@@ -546,7 +535,7 @@ private lemma main
     set s : ℕ → (ℕ → ℝ × S × A) → S := fun t ω ↦ (ω t).2.1
     set a : ℕ → (ℕ → ℝ × S × A) → A := fun t ω ↦ (ω t).2.2
     have hfd :=
-      fderiv_tsum_eq_integral_score (M := M) (θ := θ) (γ := γ) (Q := Q) (V := V) (r := r) (s := s) (a := a) h₀ h₁ hS hA h₂ h₃ h₄ h₅ hP0 hπ
+      fderiv_tsum_eq_integral_score (M := M) (θ := θ) (γ := γ) (Q := Q) (V := V) (r := r) (s := s) (a := a) h₀ h₁ h₂ h₃ h₄ h₅ hP0 hπ
     let Qloc (θ : Θ) (t : ℕ) (x : S) (u : A) : ℝ :=
       𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = x ∧ a t = u)
     let Vloc (θ : Θ) (t : ℕ) (x : S) : ℝ :=
@@ -744,7 +733,7 @@ private lemma main
       ∇[θ] (ℙ[M θ]((a t) = (a t ω) | (s t) = (s t ω)) : ℝ).log =
         ∇[θ] (Real.log (M.policy.prob θ (s t ω) (a t ω))) :=
     gradLogProbCond_ae_eq_gradLogPol (M := M) (θ := θ) (r := r) (s := s) (a := a)
-      h₁ hS hA h₄ h₅ hP
+      h₁ h₄ h₅ hP
   have hIntPol :
     𝔼[s, a : M θ]((γ ^ (id : ℕ → ℕ)) @ fun t ↦
         Q θ t (s t) (a t) • ∇[θ] (Real.log (M.policy.prob θ (s t) (a t)))) =

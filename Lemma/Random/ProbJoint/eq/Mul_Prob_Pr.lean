@@ -4,7 +4,7 @@ open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 
 /--
 Joint law of state and action in the trajectory model:
-`Pr(s[t] = x, a[t] = u) = Pr(s[t] = x) * Pr[a:π](a[t] = u | s[t] = x)`.
+`ℙ(s[t] = x, a[t] = u) = ℙ(s[t] = x) * Pr[a:π](a[t] = u | s[t] = x)`.
 -/
 @[path]
 private lemma main

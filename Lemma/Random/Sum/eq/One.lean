@@ -6,7 +6,7 @@ open MeasureTheory
 
 
 /--
-Total probability: summing the point density `Pr(x)` of a (discrete) random variable over
+Total probability: summing the point density `ℙ(x)` of a (discrete) random variable over
 all values gives `1` — the law `π.map x` is a probability measure, and its density sums to
 one against the counting reference measure.
 

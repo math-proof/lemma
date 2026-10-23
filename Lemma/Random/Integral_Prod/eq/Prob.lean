@@ -219,7 +219,7 @@ Chapman–Kolmogorov marginalization of a Markov chain: integrating the initial
 density times the product of one-step transition densities over the first `n`
 states yields the marginal density of the `n`-th state:
 
-  ∫ Pr(s₀ = u₀) · ∏_{t<n} Pr(s_{t+1} = u_{t+1} | s_t = u_t) du₀…du_{n-1} = Pr(sₙ = v)
+  ∫ ℙ(s₀ = u₀) · ∏_{t<n} ℙ(s_{t+1} = u_{t+1} | s_t = u_t) du₀…du_{n-1} = ℙ(sₙ = v)
 
 Python: Random.Integral_Prod.eq.Prob.
 -/

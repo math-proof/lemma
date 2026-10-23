@@ -1,28 +1,26 @@
 import Lemma.Measure.Count.eq.ProdCountS
 import Lemma.Measure.EqRnDeriv_Count
 import Lemma.Random.Integral_EqAndEq.eq.MulRealPreimageProb.of.All_Eq
-open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
+open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random Measure
 
 
 /--
 Bridge between the `ℙ` binder sugar and the policy of a policy-gradient model:
 with counting reference measures on the finite state / action spaces, the canonical
 conditional density `ℙ[M θ](a[t] = u | s[t] = x)` of the trajectory law equals the policy
-probability `π_θ(u | x)` at every reachable state `x` (`Pr(s[t] = x) ≠ 0`).
+probability `π_θ(u | x)` at every reachable state `x` (`ℙ(s[t] = x) ≠ 0`).
 -/
 @[path]
 private lemma main
-  [ReferenceMeasure S] [MeasurableSingletonClass S] [Fintype S]
-  [ReferenceMeasure A] [MeasurableSingletonClass A] [Fintype A]
+  [CountableMeasure S] [MeasurableSingletonClass S] [Fintype S]
+  [CountableMeasure A] [MeasurableSingletonClass A] [Fintype A]
   {M : Model Θ S A}
   {θ : Θ} {t : ℕ} {x : S} {u : A}
   {r : ℕ → (ℕ → ℝ × S × A) → ℝ}
   {s : ℕ → (ℕ → ℝ × S × A) → S}
   {a : ℕ → (ℕ → ℝ × S × A) → A}
 -- given
-  (h₁ : ∀ t, (· t) = (r t, s t, a t))
-  (hS : (ReferenceMeasure.measure : Measure S) = Measure.count)
-  (hA : (ReferenceMeasure.measure : Measure A) = Measure.count)
+  (h₀ : ∀ t, (· t) = (r t, s t, a t))
   (hP : SinglePSpace (M θ) (a t, s t))
   (h : (M θ).real (s t ⁻¹' {x}) ≠ 0) :
 -- imply
@@ -32,25 +30,25 @@ private lemma main
   set π := M θ
   have hAS : (ReferenceMeasure.measure : Measure (A × S)) = Measure.count := by
     show (ReferenceMeasure.measure : Measure A).prod (ReferenceMeasure.measure : Measure S) = _
-    rw [hA, hS, Measure.Count.eq.ProdCountS]
+    rw [CountableMeasure.measure_eq_count, CountableMeasure.measure_eq_count, Count.eq.ProdCountS]
   have hxy : Measurable (a t, s t) :=
-    (Random.Measurable.of.All_Eq.snd.snd h₁ t).prodMk (Random.Measurable.of.All_Eq.snd.fst h₁ t)
+    (Random.Measurable.of.All_Eq.snd.snd h₀ t).prodMk (Random.Measurable.of.All_Eq.snd.fst h₀ t)
   have hnum : π.prob (a t, s t) (u, x) =
       π (s t ⁻¹' {x} ∩ a t ⁻¹' {u}) := by
     unfold Measure.prob
-    rw [hAS, Measure.EqRnDeriv_Count, Measure.map_apply hxy (measurableSet_singleton _)]
+    rw [hAS, EqRnDeriv_Count, Measure.map_apply hxy (measurableSet_singleton _)]
     congr 1
     ext ω
     simp [JointRandomSymbol, and_comm]
   have hden : (π.map (fun ω ↦ ((a t, s t) ω).2)).rnDeriv
       ReferenceMeasure.measure x = π (s t ⁻¹' {x}) := by
-    rw [hS, Measure.EqRnDeriv_Count]
-    exact Measure.map_apply (Random.Measurable.of.All_Eq.snd.fst h₁ t) (measurableSet_singleton _)
+    rw [CountableMeasure.measure_eq_count (α := S), EqRnDeriv_Count]
+    exact Measure.map_apply (Random.Measurable.of.All_Eq.snd.fst h₀ t) (measurableSet_singleton _)
   have hxu : π.real (s t ⁻¹' {x} ∩ a t ⁻¹' {u}) =
       π.real (s t ⁻¹' {x}) * M.policy.prob θ x u := by
-    rw [← Integral_EqAndEq.eq.MulRealPreimageProb.of.All_Eq (M := M) h₁ θ t x u]
+    rw [← Integral_EqAndEq.eq.MulRealPreimageProb.of.All_Eq (M := M) h₀ θ t x u]
     have hset : MeasurableSet (s t ⁻¹' {x} ∩ a t ⁻¹' {u}) :=
-      (Random.Measurable.of.All_Eq.snd.fst h₁ t (measurableSet_singleton _)).inter (Random.Measurable.of.All_Eq.snd.snd h₁ t (measurableSet_singleton _))
+      (Random.Measurable.of.All_Eq.snd.fst h₀ t (measurableSet_singleton _)).inter (Random.Measurable.of.All_Eq.snd.snd h₀ t (measurableSet_singleton _))
     rw [← integral_indicator_one hset]
     congr 1
     ext ω
@@ -68,3 +66,4 @@ private lemma main
 
 
 -- created on 2026-09-27
+-- updated on 2026-10-23

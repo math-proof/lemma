@@ -3,7 +3,7 @@ open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 
 
 /--
-`Pr(s[t] = x ∧ a[t] = u) = Pr(s[t] = x) * π_θ(u | x)`.
+`ℙ(s[t] = x ∧ a[t] = u) = ℙ(s[t] = x) * π_θ(u | x)`.
 -/
 @[path]
 private lemma main

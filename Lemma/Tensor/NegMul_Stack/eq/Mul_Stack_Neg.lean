@@ -23,7 +23,7 @@ private lemma main
 
 
 @[path, comm]
-private lemma Fun
+private lemma «fun»
   [Mul α] [HasDistribNeg α]
 -- given
   (X : Tensor α (n :: s))

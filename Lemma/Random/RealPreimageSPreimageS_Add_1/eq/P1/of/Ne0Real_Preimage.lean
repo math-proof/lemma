@@ -4,7 +4,7 @@ open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Mode
 
 
 /--
-On a reachable state (`Pr(s[t] = x) ≠ 0`), `Pr(s[t+1] = y | s[t] = x) = P1 θ x y`.
+On a reachable state (`ℙ(s[t] = x) ≠ 0`), `ℙ(s[t+1] = y | s[t] = x) = P1 θ x y`.
 -/
 @[path]
 private lemma main

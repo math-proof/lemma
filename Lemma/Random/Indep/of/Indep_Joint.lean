@@ -8,8 +8,8 @@ open ProbabilityTheory MeasureTheory
 If a random variable `x` is independent of a joint random variable `(y, z)`, then it is
 independent of the first component `y`. In sympy this is the lemma
 `Random.Indep.of.Indep_Joint`, written as `Equal(x | y & z, x) → Equal(x | y, x)`: the
-conditional `Pr(x | y & z) = Pr(x)` (independence of `x` from the pair) entails the
-marginal conditional `Pr(x | y) = Pr(x)`.
+conditional `ℙ(x | y & z) = ℙ(x)` (independence of `x` from the pair) entails the
+marginal conditional `ℙ(x | y) = ℙ(x)`.
 
 The proof is a direct application of `IndepFun.comp`: independence of `x` from `(y, z)`
 is preserved under post-composing the second argument with the measurable projection

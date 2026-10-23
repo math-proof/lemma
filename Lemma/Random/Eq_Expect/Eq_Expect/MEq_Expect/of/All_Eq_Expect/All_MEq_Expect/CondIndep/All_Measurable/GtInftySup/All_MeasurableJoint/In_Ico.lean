@@ -11,7 +11,7 @@ Corollary of
 `Random.Eq_Expect.Eq_Expect.MEq_Expect.of.Expect.All_Eq_Expect.All_MEq_Expect.All_Measurable.GtInftySup.All_MeasurableJoint.In_Ico`,
 whose `h₆` (`𝔼[… | s t, a t, s (t + 1)] =ᵐ 𝔼[… | s (t + 1)]`) follows from conditional independence by
 `Random.MEqExpectS.of.CondIndep.Integrable.MeasurableJoint.Measurable`
-(as in `Random.MEq_Expect.MEq_Expect.MEq_Expect.of.All_MEq_Expect.All_MEq_Expect.CondIndep.GtInftySup.All_MeasurableJoint.In_Ico`).
+(as in `Random.MEq_Expect.MEq_Expect.MEq_Expect.of.All_MEq_Expect.All_MEq_Expect.CondIndep_Joint.GtInftySup.All_MeasurableJoint.In_Ico`).
 -/
 @[path]
 private lemma main

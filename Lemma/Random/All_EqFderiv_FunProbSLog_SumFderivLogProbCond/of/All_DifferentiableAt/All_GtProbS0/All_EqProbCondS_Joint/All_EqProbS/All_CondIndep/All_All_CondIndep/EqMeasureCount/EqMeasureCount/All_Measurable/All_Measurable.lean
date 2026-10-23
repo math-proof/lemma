@@ -1,43 +1,36 @@
 import Mathlib.Analysis.SpecialFunctions.Log.Deriv
 import Lemma.Random.ProbJoint.eq.Mul_Prod_MulProbSCond.of.IsDiscreteHMM
-open MeasureTheory
+open MeasureTheory Random
 open scoped ENNReal.ToRealCoe
 
 
 /--
 Policy gradient theorem (log-derivative trick) for a Markov decision process with weights `θ`.
 Let `s i` be the states and `a i` the actions (discrete, counting reference measures) under the
-trajectory law `π θ`, where the weights `θ` only enter through the policy `Pr(a[t] | s[t])`: the initial
-law `Pr(s[0])` and the transition law `Pr(s[t + 1] | s[t] ∧ a[t])` do not depend on `θ` (`hinit`,
+trajectory law `π θ`, where the weights `θ` only enter through the policy `ℙ(a[t] | s[t])`: the initial
+law `ℙ(s[0])` and the transition law `ℙ(s[t + 1] | s[t] ∧ a[t])` do not depend on `θ` (`hinit`,
 `htr`).  The Markov property says that the action depends on the history only through the current
 state (`hpol`) and the next state only through the current state and action (`htrans`).  If the
 trajectory has nonzero probability, then
 
-  `∇[θ] log Pr(s[:T + 1] = sv[:T + 1] ∧ a[:T] = av[:T]) = ∑ t < T, ∇[θ] log Pr(a[t] = av[t] | s[t] = sv[t])`.
+  `∇[θ] log ℙ(s[:T + 1] = sv[:T + 1] ∧ a[:T] = av[:T]) = ∑ t < T, ∇[θ] log ℙ(a[t] = av[t] | s[t] = sv[t])`.
 
-The factorization `Pr(s[:T + 1], a[:T]) = C * ∏ t < T, Pr(a[t] | s[t])`, with `C` independent of `θ`, is
+The factorization `ℙ(s[:T + 1], a[:T]) = C * ∏ t < T, ℙ(a[t] | s[t])`, with `C` independent of `θ`, is
 derived (`Random.ProbJoint.eq.Mul_Prod_MulProbSCond.of.IsDiscreteHMM.mdp`), not assumed.
 
 Python: Tensor.Eq.of.Ne_0.Eq.Eq.Eq.policy_gradient_theorem.
 -/
 @[path]
 private lemma policy_gradient_theorem
-  {E Ω S A : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
+  [NormedAddCommGroup E] [NormedSpace ℝ E]
   [MeasurableSpace Ω] [StandardBorelSpace Ω]
-  [ReferenceMeasure S] [ReferenceMeasure A]
+  [CountableMeasure S] [CountableMeasure A]
   [Countable S] [MeasurableSingletonClass S] [Countable A] [MeasurableSingletonClass A]
-  {T : ℕ}
-  {π : E → Measure Ω} [∀ θ, IsProbabilityMeasure (π θ)]
-  {s : ℕ → Ω → S} {a : ℕ → Ω → A} {sv : ℕ → S} {av : ℕ → A}
-  [∀ θ i, SinglePSpace (π θ) (s i)]
-  [∀ θ i j, SinglePSpace (π θ) (a i, s j)]
-  [∀ θ i, SinglePSpace (π θ) (s (i + 1), s i, a i)]
-  [∀ θ n, SinglePSpace (π θ) (s[:n + 1], a[:n])]
+  {π : E → Measure Ω} {s : ℕ → Ω → S} {a : ℕ → Ω → A} [∀ θ, IsProbabilityMeasure (π θ)] [∀ θ i, SinglePSpace (π θ) (s i)] [∀ θ i j, SinglePSpace (π θ) (a i, s j)] [∀ θ i, SinglePSpace (π θ) (s (i + 1), s i, a i)] [∀ θ n, SinglePSpace (π θ) (s[:n + 1], a[:n])]
+  {T : ℕ} {sv : ℕ → S} {av : ℕ → A}
 -- given
   (hs : ∀ k, Measurable (s k))
   (ha : ∀ k, Measurable (a k))
-  (hS : ReferenceMeasure.measure (α := S) = Measure.count)
-  (hA : ReferenceMeasure.measure (α := A) = Measure.count)
   (hpol : ∀ θ t, ∀ _ : Measurable (s t),
     a t ⟂ᵢ[π θ] (s[:t], a[:t]) | s t)
   (htrans : ∀ θ t, ∀ _ : Measurable (s t, a t),
@@ -58,8 +51,8 @@ private lemma policy_gradient_theorem
     ⟨_, rfl⟩
   have hfac : ∀ θ, (ℙ[π θ](s[:T + 1] = sv[:T + 1] ∧ a[:T] = av[:T]) : ℝ) = C * ∏ t ∈ Finset.range T, p θ t := by
     intro θ
-    have h := Random.ProbJoint.eq.Mul_Prod_MulProbSCond.of.IsDiscreteHMM.mdp (π := π θ)
-      («s.bvar» := sv) («a.bvar» := av) hs ha hS hA (hpol θ) (htrans θ) T
+    have h := ProbJoint.eq.Mul_Prod_MulProbSCond.of.IsDiscreteHMM.mdp (π := π θ)
+      («s.bvar» := sv) («a.bvar» := av) hs ha (hpol θ) (htrans θ) T
     rw [h, ENNReal.toReal_mul, ENNReal.toReal_prod]
     simp only [ENNReal.toReal_mul]
     rw [Finset.prod_mul_distrib, hC, hinit θ θ₀, mul_assoc]
@@ -71,9 +64,8 @@ private lemma policy_gradient_theorem
   have hCnn : 0 ≤ C := by
     rw [hC]
     exact mul_nonneg ENNReal.toReal_nonneg (Finset.prod_nonneg fun _ _ => ENNReal.toReal_nonneg)
-  have hpnn : ∀ θ t, 0 ≤ p θ t := fun θ t => by
-    rw [hp]
-    exact ENNReal.toReal_nonneg
+  have hpnn : ∀ θ t, 0 ≤ p θ t := fun θ t =>
+    hp θ t ▸ ENNReal.toReal_nonneg
   have hCpos : 0 < C := by
     refine lt_of_le_of_ne hCnn fun h => ?_
     have := hne θ₀
@@ -98,4 +90,4 @@ private lemma policy_gradient_theorem
 
 
 -- created on 2023-03-22
--- updated on 2023-03-28
+-- updated on 2026-10-23

@@ -6,7 +6,7 @@ open MeasureTheory PolicyGradient Random
 
 /--
 Policy-gradient recursion with a discrete (finite) state space and a continuous action space:
-∇V(s[t] = s.bvar[t]) = ∫ u, Q(s.bvar[t], u) • ∇π(u | s.bvar[t]) du + γ • ∑ s.bvar[t+1], Pr(s[t+1] = s.bvar[t+1] | s[t] = s.bvar[t]) • ∇V(s[t+1] = s.bvar[t+1]),
+∇V(s[t] = s.bvar[t]) = ∫ u, Q(s.bvar[t], u) • ∇π(u | s.bvar[t]) du + γ • ∑ s.bvar[t+1], ℙ(s[t+1] = s.bvar[t+1] | s[t] = s.bvar[t]) • ∇V(s[t+1] = s.bvar[t+1]),
 the fourth case next to the discrete/discrete
 `Random.Grad.eq.Add_SMul_Sum_SMul.of.Ne0Real_Preimage.GtInftySup.All_Differentiable_Prob.All_Eq_Expect.All_Eq_Expect.EqMeasureCount.EqMeasureCount.In_Ico`,
 the continuous-state/discrete-action
@@ -16,7 +16,7 @@ and the continuous/continuous
 versions. It is the corollary of the latter for the counting measure on the finite state space `S` (as in the
 discrete version, whose state sums are integrals against `Measure.count`): the next-state integral becomes the finite sum
 `∑ s.bvar[t+1]`, and the transition density becomes the transition probability mass function `p x u y = T({y} | x, u)`
-(h₆), so `P1kd θ p x y = ∫ u, π_θ(u | x) * T({y} | x, u) du = Pr(s[t+1] = y | s[t] = x)`.
+(h₆), so `P1kd θ p x y = ∫ u, π_θ(u | x) * T({y} | x, u) du = ℙ(s[t+1] = y | s[t] = x)`.
 On a finite state space with measurable singletons every function of the state is measurable, so the hypotheses of the
 continuous-state version simplify: joint measurability of the policy becomes measurability in the action (h₅), and the
 nonnegativity, measurability and density hypotheses on `p` all follow from h₆.

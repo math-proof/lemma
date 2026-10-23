@@ -1,4 +1,3 @@
-import Lemma.Measure.Measure.eq.Count.of.EqMeasureCount.EqMeasureCount
 import Lemma.Random.EqProbJoint.All_Eq_Mul_MulProbSCond.of.All_CondIndep.All_CondIndep.EqMeasureCount.EqMeasureCount.All_Measurable.All_Measurable
 import Lemma.Random.Prob.eq.Mul_ProbS.Prob.eq.Mul_MulProbS.of.CondIndep.CondIndep
 open MeasureTheory Random
@@ -21,8 +20,9 @@ private lemma main
       ∏ i ∈ Finset.Ico 1 (t + 1),
         ℙ[π]((y i) = «y.bvar» i | (y (i - 1)) = «y.bvar» (i - 1)) * ℙ[π]((x i) = «x.bvar» i | (y i) = «y.bvar» i) := by
 -- proof
-  obtain ⟨h₀, h₁⟩ := Random.Prob.eq.Mul_ProbS.Prob.eq.Mul_MulProbS.of.CondIndep.CondIndep
-    (xo := «x.bvar») h «y.bvar»
+  obtain ⟨h₀, h₁⟩ := Prob.eq.Mul_ProbS.Prob.eq.Mul_MulProbS.of.CondIndep.CondIndep
+    («x.bvar» := «x.bvar») h «y.bvar»
+  simp only [fun_getElem] at h₀ h₁
   induction t with
   | zero =>
     simpa using h₀
@@ -32,19 +32,16 @@ private lemma main
     rw [ih]
     ring
 
-
 @[path]
 private lemma mdp
   [MeasurableSpace Ω] [StandardBorelSpace Ω]
-  [ReferenceMeasure S] [ReferenceMeasure A]
+  [CountableMeasure S] [CountableMeasure A]
   [Countable S] [MeasurableSingletonClass S] [Countable A] [MeasurableSingletonClass A]
   {π : Measure Ω} [IsProbabilityMeasure π]
   {s : ℕ → Ω → S} {a : ℕ → Ω → A} {«s.bvar» : ℕ → S} {«a.bvar» : ℕ → A}
 -- given
   (hs : ∀ k, Measurable (s k))
   (ha : ∀ k, Measurable (a k))
-  (hS : ReferenceMeasure.measure (α := S) = Measure.count)
-  (hA : ReferenceMeasure.measure (α := A) = Measure.count)
   (hpol : ∀ t, ∀ _ : Measurable (s t),
     a t ⟂ᵢ[π] (s[:t], a[:t]) | s t)
   (htrans : ∀ t, ∀ _ : Measurable (s t, a t),
@@ -52,22 +49,21 @@ private lemma mdp
   (t : ℕ) :
 -- imply
   have : ∀ i, SinglePSpace π (s i) := fun i =>
-    Random.SinglePSpace.of.EqMeasureCount.Measurable (hs i) hS
+    SinglePSpace.of.EqMeasureCount.Measurable (hs i) CountableMeasure.measure_eq_count
   have : ∀ i j, SinglePSpace π (a i, s j) := fun i j =>
-    Random.SinglePSpace.of.EqMeasureCount.EqMeasureCount.Measurable.Measurable (ha i) (hs j) hA hS
+    SinglePSpace.of.Measurable.Measurable (ha i) (hs j)
   have : ∀ i, SinglePSpace π (s (i + 1), s i, a i) := fun i =>
-    Random.SinglePSpace.of.EqMeasureCount.EqMeasureCount.Measurable.Measurable (hs (i + 1)) ((hs i).prodMk (ha i)) hS
-      (Measure.Measure.eq.Count.of.EqMeasureCount.EqMeasureCount hS hA)
-  have : ∀ n, SinglePSpace π (s[:n + 1], a[:n]) := fun _n =>
-    Random.SinglePSpace.of.All_Measurable.All_Measurable hs ha
+    SinglePSpace.of.Measurable.Measurable (hs (i + 1)) ((hs i).prodMk (ha i))
+  have : ∀ n, SinglePSpace π (s[:n + 1], a[:n]) := fun _ =>
+    SinglePSpace.of.All_Measurable.All_Measurable hs ha
   ℙ[π](s[:t + 1] = «s.bvar»[:t + 1] ∧ a[:t] = «a.bvar»[:t]) =
     ℙ[π]((s 0) = «s.bvar» 0) *
       ∏ i ∈ Finset.range t,
         ℙ[π]((a i) = «a.bvar» i | (s i) = «s.bvar» i) * ℙ[π]((s (i + 1)) = «s.bvar» (i + 1) | (s i) = «s.bvar» i ∧ (a i) = «a.bvar» i) := by
 -- proof
   intro _ _ _ _
-  obtain ⟨h₀, h₁⟩ := Random.EqProbJoint.All_Eq_Mul_MulProbSCond.of.All_CondIndep.All_CondIndep.EqMeasureCount.EqMeasureCount.All_Measurable.All_Measurable
-    («s.bvar» := «s.bvar») («a.bvar» := «a.bvar») hs ha hS hA hpol htrans
+  obtain ⟨h₀, h₁⟩ := EqProbJoint.All_Eq_Mul_MulProbSCond.of.All_CondIndep.All_CondIndep.EqMeasureCount.EqMeasureCount.All_Measurable.All_Measurable
+    («s.bvar» := «s.bvar») («a.bvar» := «a.bvar») hs ha hpol htrans
   induction t with
   | zero =>
     simpa using h₀
@@ -79,4 +75,4 @@ private lemma mdp
 
 
 -- created on 2020-12-17
--- updated on 2026-10-19
+-- updated on 2026-10-23

@@ -6,7 +6,7 @@ open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Nat Ran
 
 
 /--
-`𝔼[1{s[t] = x} * g(ω[t])] = Pr(s[t] = x) * ∫ z, g z ∂(stageK θ x)` for a bounded strongly measurable `g`.
+`𝔼[1{s[t] = x} * g(ω[t])] = ℙ(s[t] = x) * ∫ z, g z ∂(stageK θ x)` for a bounded strongly measurable `g`.
 -/
 @[path]
 private lemma main

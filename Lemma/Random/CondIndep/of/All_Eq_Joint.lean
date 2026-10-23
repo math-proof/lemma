@@ -15,7 +15,7 @@ history `(r, s, a)[:n]`. It is built into the Ionescu-Tulcea construction of `M 
 the last stage, the action and reward are drawn from `M.stageK θ (s n)` and the next state from
 `M.env.trans (s n, a n)`. This is the hypothesis `h₁` of `Random.CondIndep.of.All_CondIndep.All_MeasurableJoint`.
 Proof: the state `s n` is discrete, so it suffices that, for measurable `E` and `H`,
-`Pr(s n = y, (a n, r n, s (n + 1)) ∈ E, (r, s, a)[:n] ∈ H) = Pr(s n = y, (r, s, a)[:n] ∈ H) * c(y, E)`;
+`ℙ(s n = y, (a n, r n, s (n + 1)) ∈ E, (r, s, a)[:n] ∈ H) = ℙ(s n = y, (r, s, a)[:n] ∈ H) * c(y, E)`;
 summing over the next state `s (n + 1) = y'` this follows from the one-step kernel identities
 `Random.Integral_Mul.eq.Integral_Mul_Integral.of.All_LeNorm.StronglyMeasurable.All_LeNorm.StronglyMeasurable`.
 -/
@@ -112,7 +112,7 @@ private lemma main
   have hsm : Measurable (fun ω : ℕ → ℝ × S × A ↦ (ω n).2.1) := (measurable_pi_apply n).snd.fst
   have hXm : Measurable (fun ω : ℕ → ℝ × S × A ↦ ((ω n).2.2, (ω n).1, (ω (n + 1)).2.1)) :=
     (measurable_pi_apply n).snd.snd.prodMk ((measurable_pi_apply n).fst.prodMk (measurable_pi_apply (n + 1)).snd.fst)
-  -- `φ w = Pr((a, r, s') ∈ E)` for the action and reward of the stage `w` and the next state `s' ∼ T(w)`
+  -- `φ w = ℙ((a, r, s') ∈ E)` for the action and reward of the stage `w` and the next state `s' ∼ T(w)`
   have hK : ∀ y (E : Set (A × ℝ × S)) (H : Set (Fin n → ℝ × S × A)), MeasurableSet E → MeasurableSet H →
       (M θ).real ((fun ω ↦ (ω n).2.1) ⁻¹' {y} ∩ ((fun ω ↦ ((ω n).2.2, (ω n).1, (ω (n + 1)).2.1)) ⁻¹' E ∩ (fun ω (i : Fin n) ↦ ω i) ⁻¹' H)) =
         (M θ).real ((fun ω ↦ (ω n).2.1) ⁻¹' {y} ∩ (fun ω (i : Fin n) ↦ ω i) ⁻¹' H) *

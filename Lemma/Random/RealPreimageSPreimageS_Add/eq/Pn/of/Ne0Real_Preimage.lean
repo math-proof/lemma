@@ -24,7 +24,7 @@ private lemma real_inter
   by_cases h1 : s t ω = x <;> by_cases h2 : s t' ω = y <;> simp [Set.indicator, h1, h2]
 
 /--
-On a reachable state (`Pr(s[t] = x) ≠ 0`), `Pr(s[t+n] = y | s[t] = x) = Pn θ n x y` (time-homogeneous `n`-step transition).
+On a reachable state (`ℙ(s[t] = x) ≠ 0`), `ℙ(s[t+n] = y | s[t] = x) = Pn θ n x y` (time-homogeneous `n`-step transition).
 -/
 @[path]
 private lemma main

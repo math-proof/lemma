@@ -1,7 +1,7 @@
 import Lemma.Random.GradExpectDotPow_Id.eq.ExpectDot_FunSMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_NeProb_0.IsPolicyTrajectory.In_Ico
 import Lemma.Random.Eq_SymmToDualTSum_SMulPow_Integral_SMulTSum_MulPow_FderivLogToRealProbCond.of.GtInftySup.All_Differentiable.AeAll_LeNormTSum_MulPow.All_Measurable.EqMeasureCount.EqMeasureCount.All_Eq_Joint.In_Ico1
 import Lemma.Random.ProbCond.eq.OfRealPol.of.Ne_0
-import Lemma.Random.ProbCond.eq.Div.of.Eq_Count.Eq_Count
+import Lemma.Random.ProbCond.eq.Div.of.SinglePSpace
 import Mathlib.MeasureTheory.Constructions.Polish.Basic
 import Mathlib.Analysis.Calculus.Gradient.Basic
 import Lemma.Random.AeAll_LeNorm_TSum_MulPowSubAddRMul_VcVcMulSub1DeltaBound.of.In_Ico.In_Ico
@@ -84,8 +84,7 @@ private lemma main
     have hD : ℙ[M θ](a[0] = «a.bvar»[0] | s[0] = «s.bvar»[0]) =
         (M θ) ((a 0) ⁻¹' {«a.bvar»[0]} ∩ (s 0) ⁻¹' {«s.bvar»[0]}) /
           (M θ) ((s 0) ⁻¹' {«s.bvar»[0]}) :=
-      ProbCond.eq.Div.of.Eq_Count.Eq_Count («π» := M θ) (x := a 0) (y := s 0)
-        CountableMeasure.measure_eq_count CountableMeasure.measure_eq_count
+      ProbCond.eq.Div.of.SinglePSpace inferInstance («π» := M θ) (x := a 0) (y := s 0)
         «a.bvar»[0] «s.bvar»[0]
     have hs0 : (M θ) ((s 0) ⁻¹' {«s.bvar»[0]}) ≠ 0 := by
       have hne : (M θ) ((a 0) ⁻¹' {«a.bvar»[0]} ∩ (s 0) ⁻¹' {«s.bvar»[0]}) ≠ 0 := by
@@ -133,8 +132,7 @@ private lemma main
   -- bridge conditional-ℙ hyps to policy.prob facts expected by In_Icc.In_Ico
   have h_pol_eq : ∀ θ' x u, (ℙ[M θ']((a 0) = u | (s 0) = x) : ℝ) = M.policy.prob θ' x u := by
     intro θ' x u
-    erw [ProbCond.eq.OfRealPol.of.Ne_0 h₂.stage_eq CountableMeasure.measure_eq_count
-      CountableMeasure.measure_eq_count (hP θ' 0) (hP0raw θ' x),
+    erw [ProbCond.eq.OfRealPol.of.Ne_0 h₂.stage_eq (hP θ' 0) (hP0raw θ' x),
       ENNReal.toReal_ofReal (M.policy.nonneg θ' x u)]
   have hDiffPol : ∀ x u, Differentiable ℝ (M.policy.prob · x u) := by
     intro x u
@@ -167,8 +165,7 @@ private lemma main
     rw [← h_pol_eq θ' y u]
     refine ENNReal.toReal_ne_zero.mpr ⟨hcond, ?_⟩
     have hOF : ℙ[M θ']((a 0) = u | (s 0) = y) = ENNReal.ofReal (M.policy.prob θ' y u) :=
-      ProbCond.eq.OfRealPol.of.Ne_0 h₂.stage_eq CountableMeasure.measure_eq_count
-        CountableMeasure.measure_eq_count (hP θ' 0) (hP0raw θ' y)
+      ProbCond.eq.OfRealPol.of.Ne_0 h₂.stage_eq (hP θ' 0) (hP0raw θ' y)
     rw [hOF]
     apply ENNReal.ofReal_ne_top
   have hc : γ * ℓ ∈ Set.Ico 0 1 :=
@@ -182,7 +179,7 @@ private lemma main
       (Differentiable_RealPreimageS.of.GtInftySup.All_Differentiable_Prob (M := M) h₂.stage_eq hDiffPol hSupPol t (s t ω) θ).continuousAt
     refine Filter.EventuallyEq.fderiv_eq ((hc.eventually_ne (hω t)).mono fun θ' h => ?_)
     beta_reduce
-    rw [ProbCond.eq.OfRealPol.of.Ne_0 h₂.stage_eq CountableMeasure.measure_eq_count CountableMeasure.measure_eq_count (hP θ' t) h,
+    rw [ProbCond.eq.OfRealPol.of.Ne_0 h₂.stage_eq (hP θ' t) h,
       ENNReal.toReal_ofReal (M.policy.nonneg θ' _ _)]
   have hpR : Measurable (fun ω t ↦ r t ω) := Measurable.of_eval (Random.Measurable.of.All_Eq.fst h₂.stage_eq)
   have hfG : ∀ t, Measurable (fun integ : ℕ → ℝ ↦ ∑' k, γ ^ k * integ (t + k)) := fun t =>
@@ -333,10 +330,10 @@ private lemma main
     simp only [Function.getSliceFrom_apply, Pi.add_apply, Pi.sub_apply, Pi.smul_apply, smul_eq_mul, hk]
   have hA₁ := Eq_SymmToDualTSum_SMulPow_Integral_SMulTSum_MulPow_FderivLogToRealProbCond.of.GtInftySup.All_Differentiable.AeAll_LeNormTSum_MulPow.All_Measurable.EqMeasureCount.EqMeasureCount.All_Eq_Joint.In_Ico1
     (X := fun s _ r k => r k + γ * M.V θ γ (k + 1) (s (k + 1)) - M.V θ γ k (s k)) (c := γ)
-    h₀ h₂.stage_eq CountableMeasure.measure_eq_count CountableMeasure.measure_eq_count hmeas (hbd γ h₀) hDiffPol hSupPol
+    h₀ h₂.stage_eq hmeas (hbd γ h₀) hDiffPol hSupPol
   have hA₂ := Eq_SymmToDualTSum_SMulPow_Integral_SMulTSum_MulPow_FderivLogToRealProbCond.of.GtInftySup.All_Differentiable.AeAll_LeNormTSum_MulPow.All_Measurable.EqMeasureCount.EqMeasureCount.All_Eq_Joint.In_Ico1
     (X := fun s _ r k => r k + γ * M.V θ γ (k + 1) (s (k + 1)) - M.V θ γ k (s k)) (c := γ * ℓ)
-    h₀ h₂.stage_eq CountableMeasure.measure_eq_count CountableMeasure.measure_eq_count hmeas (hbd (γ * ℓ) hc) hDiffPol hSupPol
+    h₀ h₂.stage_eq hmeas (hbd (γ * ℓ) hc) hDiffPol hSupPol
   -- hsplit lands on left-assoc r[t:] + A - B (same shape as flatter imply)
   have hsplit :
     ∇[θ] 𝔼[r: M θ]((γ ^ (id : ℕ → ℕ)) @ r) =
@@ -365,4 +362,5 @@ private lemma main
     simp only [Function.getSliceFrom_apply, hk, Pi.smul_apply, smul_eq_mul]
 
 
--- created on 2026-10-21
+-- created on 2026-10-01
+-- updated on 2026-10-21

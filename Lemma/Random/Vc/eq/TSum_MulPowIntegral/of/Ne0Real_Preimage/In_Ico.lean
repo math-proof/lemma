@@ -4,7 +4,7 @@ open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Mode
 
 
 /--
-On a state reachable at time 0 (Pr(s[0] = y) ≠ 0), the time-free value equals the
+On a state reachable at time 0 (ℙ(s[0] = y) ≠ 0), the time-free value equals the
 kernel series:
 Vc θ γ y = ∑' k, γ ^ k * ∫ z, Kf θ (clip ·.1) k z ∂(stageK θ y).
 -/

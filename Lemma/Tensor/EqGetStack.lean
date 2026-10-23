@@ -29,7 +29,7 @@ private lemma main
 
 
 @[path, fin]
-private lemma Fun
+private lemma «fun»
 -- given
   (f : ℕ → Tensor α s)
   (i : Fin n) :

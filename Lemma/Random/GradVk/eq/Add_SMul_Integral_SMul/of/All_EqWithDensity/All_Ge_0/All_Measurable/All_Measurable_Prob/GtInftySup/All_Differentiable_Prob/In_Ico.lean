@@ -6,13 +6,13 @@ open MeasureTheory PolicyGradient Random Real
 
 /--
 Policy-gradient recursion on a continuous state space (actions stay finite):
-∇V(s[t] = s.bvar[t]) = ∑ a.bvar[t], Q(s.bvar[t], a.bvar[t]) • ∇π(a.bvar[t] | s.bvar[t]) + γ • ∫ y, Pr(s[t+1] = y | s[t] = s.bvar[t]) • ∇V(s[t+1] = y) dy,
+∇V(s[t] = s.bvar[t]) = ∑ a.bvar[t], Q(s.bvar[t], a.bvar[t]) • ∇π(a.bvar[t] | s.bvar[t]) + γ • ∫ y, ℙ(s[t+1] = y | s[t] = s.bvar[t]) • ∇V(s[t+1] = y) dy,
 the gradient of the Bellman equations of extract_QVA; the next-state sum of the discrete version
 `Random.Grad.eq.Add_SMul_Sum_SMul.of.Ne0Real_Preimage.GtInftySup.All_Differentiable_Prob.All_Eq_Expect.All_Eq_Expect.EqMeasureCount.EqMeasureCount.In_Ico`
 becomes an integral against the reference measure of `S` (e.g. Lebesgue measure on `ℝ^b`).
-Since `Pr(s[t] = x) = 0` for a continuous state, the values `V = Vk`, `Q = Qk` are the regular (kernel) conditional
+Since `ℙ(s[t] = x) = 0` for a continuous state, the values `V = Vk`, `Q = Qk` are the regular (kernel) conditional
 expectations of the discounted return given `s[t] = x` (resp. `s[t] = x, a[t] = u`),
-see `sympy.stats.policy_trajectory.continuous`; `Pr(s[t+1] = y | s[t] = x) = P1k θ p x y = ∑ u, π_θ(u | x) * p x u y`.
+see `sympy.stats.policy_trajectory.continuous`; `ℙ(s[t+1] = y | s[t] = x) = P1k θ p x y = ∑ u, π_θ(u | x) * p x u y`.
 h₁, h₂: θ ↦ π_θ(u | x) is differentiable with a bounded gradient (as in the discrete version);
 h₃: x ↦ π_θ(u | x) is measurable; h₄, h₅, h₆: `p x u` is a (measurable, nonnegative) density of the transition
 `T(· | x, u)` w.r.t. the reference measure. `Θ` is finite-dimensional (the weights `π` have shape `(D,)`).

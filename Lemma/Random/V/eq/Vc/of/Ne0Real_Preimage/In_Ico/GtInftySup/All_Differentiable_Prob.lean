@@ -4,7 +4,7 @@ open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Mode
 
 
 /--
-On a reachable state (`Pr(s[t] = x) ≠ 0` and `Pr(s[0] = x) ≠ 0` at `θ`), near `θ`:
+On a reachable state (`ℙ(s[t] = x) ≠ 0` and `ℙ(s[0] = x) ≠ 0` at `θ`), near `θ`:
 `M.V θ' γ t x = M.Vc θ' γ x`.
 -/
 @[path]

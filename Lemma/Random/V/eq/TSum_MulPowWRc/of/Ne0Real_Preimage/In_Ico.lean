@@ -5,7 +5,7 @@ open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 
 
 /--
-On a reachable state (`Pr(s[t] = x) ≠ 0`): `V θ γ t x = ∑' k, γ ^ k * W θ (fun z ↦ clip z.1 (-M.env.R) M.env.R) k x`.
+On a reachable state (`ℙ(s[t] = x) ≠ 0`): `V θ γ t x = ∑' k, γ ^ k * W θ (fun z ↦ clip z.1 (-M.env.R) M.env.R) k x`.
 -/
 @[path]
 private lemma main

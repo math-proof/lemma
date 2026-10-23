@@ -5,7 +5,7 @@ open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 
 
 /--
-Reachability: if `Pr(s[t] = x) ≠ 0` and `π_θ(u | x) * T(x, u, y) ≠ 0` then `Pr(s[t+1] = y) ≠ 0`.
+Reachability: if `ℙ(s[t] = x) ≠ 0` and `π_θ(u | x) * T(x, u, y) ≠ 0` then `ℙ(s[t+1] = y) ≠ 0`.
 -/
 @[path]
 private lemma main

@@ -8,7 +8,7 @@ open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Mode
 
 
 /--
-State marginal of the trajectory model: `Pr(s[t] = y) = ∑ x, init {x} * Pn θ t x y`.
+State marginal of the trajectory model: `ℙ(s[t] = y) = ∑ x, init {x} * Pn θ t x y`.
 -/
 @[path]
 private lemma main

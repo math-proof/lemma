@@ -1,41 +1,43 @@
 import Lemma.Random.MulMeasure.eq.MulMeasure.of.CondIndep
 import Lemma.Random.Measure.eq.Mul_MulDivS.of.Subset
+import Lemma.Random.ProbCond.eq.Div.of.SinglePSpace
 import sympy.stats.discrete_hmm
 import sympy.concrete.summations
-open MeasureTheory
+open MeasureTheory Random
 open IsDiscreteHMM
+open Fun
 
 
 /--
 Likelihood of an observed sequence in a hidden Markov model, cut at any time `t`.
-Let `x` (observations) and `y` (hidden states) form a discrete HMM `IsDiscreteHMM π x y` with finitely many
+Let `x` (observations) and `y` (hidden states) form a discrete HMM `IsDiscreteHMM π (⇑x) (⇑y)` with finitely many
 states, let `«x.bvar»` be a fixed observed sequence and let `n` be the number of time steps.  Splitting the
 observations at any time `t : Fin n` into the past `x[:t + 1]` and the future `x[t + 1:n]`, the likelihood is the sum over
-the hidden state `«y.bvar» t` at the cut of the forward probability
-`ℙ(x[:t + 1] = «x.bvar»[:t + 1] ∧ y t = «y.bvar» t)` times the backward probability
-`ℙ(x[t + 1:n] = «x.bvar»[t + 1:n] | y t = «y.bvar» t)`; in particular it does not depend on the cut.
+the hidden state `«y.bvar»[t]` at the cut of the forward probability
+`ℙ(x[:t + 1] = «x.bvar»[:t + 1] ∧ y[t] = «y.bvar»[t])` times the backward probability
+`ℙ(x[t + 1:n] = «x.bvar»[t + 1:n] | y[t] = «y.bvar»[t])`; in particular it does not depend on the cut.
 
 No positivity assumption is needed: a conditional probability given a null event is `0` (division in `ENNReal`),
 and then both sides vanish.  The proof derives the one-step factorizations from the emission and Markov conditional
 independences of the HMM (for sets of sample paths), runs the forward recursion once from the observed prefix and
 once from the observed future, and obtains the forward-backward identity
-`ℙ(x[:n] = «x.bvar»[:n] ∧ y t = «y.bvar» t) = α t «y.bvar» t * β t «y.bvar» t` along the way.
+`ℙ(x[:n] = «x.bvar»[:n] ∧ y[t] = «y.bvar»[t]) = α t «y.bvar»[t] * β t «y.bvar»[t]` along the way.
 -/
 @[path]
 private lemma main
-  {Ω Y X : Type*} [MeasurableSpace Ω] [StandardBorelSpace Ω]
+  [MeasurableSpace Ω] [StandardBorelSpace Ω]
   [CountableMeasure Y] [CountableMeasure X]
   [MeasurableSingletonClass Y] [Countable X] [MeasurableSingletonClass X]
   [Fintype Y]
   {π : Measure Ω} [IsProbabilityMeasure π]
-  {x : ℕ → Ω → X} {y : ℕ → Ω → Y} {«x.bvar» : ℕ → X}
+  {x : ℕ ⇀ Ω → X} {y : ℕ ⇀ Ω → Y} {«x.bvar» : ℕ ⇀ X}
   {n : ℕ}
 -- given
-  (h : IsDiscreteHMM π x y)
+  (h : IsDiscreteHMM π (⇑x) (⇑y))
   (t : Fin n) :
 -- imply
-  ∑ «y.bvar» t, ℙ[π](x[:t + 1] = «x.bvar»[:t + 1] ∧ (y t) = «y.bvar» t) *
-      ℙ[π](x[t + 1:n] = «x.bvar»[t + 1:n] | (y t) = «y.bvar» t) = ℙ[π](x[:n] = «x.bvar»[:n]) := by
+  ∑ «y.bvar»[t], ℙ[π](x[:t + 1] = «x.bvar»[:t + 1] ∧ y[t] = «y.bvar»[t]) *
+      ℙ[π](x[t + 1:n] = «x.bvar»[t + 1:n] | y[t] = «y.bvar»[t]) = ℙ[π](x[:n] = «x.bvar»[:n]) := by
 -- proof
   obtain ⟨t, ht⟩ := t
   obtain ⟨m, rfl⟩ : ∃ m, n = m + 1 := ⟨n - 1, by omega⟩
@@ -67,8 +69,12 @@ private lemma main
     rw [hEv]
     simp only [Set.mem_ofPred_eq, Set.mem_preimage]
     refine hp _ _ _ _ (fun i hi => ?_) (fun i hi => ?_)
-    · simp [hi, JointRandomSymbol]; rfl
-    · simp [hi, JointRandomSymbol]; rfl
+    ·
+      simp [hi, JointRandomSymbol]
+      rfl
+    ·
+      simp [hi, JointRandomSymbol]
+      rfl
   have hmeas : ∀ (p : (ℕ → X) → (ℕ → Y) → Prop) (a b : ℕ), Dep p a b → MeasurableSet (Ev p) := by
     intro p a b hp
     obtain ⟨S, hS⟩ := hrep p a b hp
@@ -82,19 +88,21 @@ private lemma main
       ext ω
       simp
     rw [e, measure_biUnion S.to_countable]
-    · intro v _ w _ hvw
+    ·
+      intro v _ w _ hvw
       refine Set.disjoint_left.2 fun ω hv hw => hvw ?_
       have h1 : K ω = v := hv.2
       have h2 : K ω = w := hw.2
       rw [← h1, ← h2]
-    · intro v _
+    ·
+      intro v _
       exact hE.inter (hK (measurableSet_singleton v))
   have hemit : ∀ (s : ℕ) (p : (ℕ → X) → (ℕ → Y) → Prop), Dep p (s + 1) (s + 1) → ∀ (u : X) (w : Y),
       π (x (s + 1) ⁻¹' {u} ∩ Ev p ∩ y (s + 1) ⁻¹' {w}) * π (y (s + 1) ⁻¹' {w}) =
         π (x (s + 1) ⁻¹' {u} ∩ y (s + 1) ⁻¹' {w}) * π (Ev p ∩ y (s + 1) ⁻¹' {w}) := by
     intro s p hp u w
     obtain ⟨S, hS⟩ := hrep p _ _ hp
-    have hpt := fun v => Random.MulMeasure.eq.MulMeasure.of.CondIndep (hx (s + 1)) (hJ (s + 1) (s + 1)) (hy (s + 1)) hX (hpair _ _) hY
+    have hpt := fun v => MulMeasure.eq.MulMeasure.of.CondIndep (hx (s + 1)) (hJ (s + 1) (s + 1)) (hy (s + 1))
       (h_emit s (hy (s + 1))) u v w
     have hm1 : MeasurableSet (x (s + 1) ⁻¹' {u} ∩ y (s + 1) ⁻¹' {w}) :=
       (hx _ (measurableSet_singleton u)).inter (hy _ (measurableSet_singleton w))
@@ -103,14 +111,13 @@ private lemma main
       ← ENNReal.tsum_mul_right, ← ENNReal.tsum_mul_left]
     refine tsum_congr fun v => ?_
     have := hpt v
-    rw [Set.inter_right_comm, Set.inter_comm (y (s + 1) ⁻¹' {w})]
-    exact this
+    rwa [Set.inter_right_comm, Set.inter_comm (y (s + 1) ⁻¹' {w})]
   have hmark : ∀ (s : ℕ) (p : (ℕ → X) → (ℕ → Y) → Prop), Dep p (s + 1) s → ∀ (c b : Y),
       π (y (s + 1) ⁻¹' {c} ∩ Ev p ∩ y s ⁻¹' {b}) * π (y s ⁻¹' {b}) =
         π (y (s + 1) ⁻¹' {c} ∩ y s ⁻¹' {b}) * π (Ev p ∩ y s ⁻¹' {b}) := by
     intro s p hp c b
     obtain ⟨S, hS⟩ := hrep p _ _ hp
-    have hpt := fun v => Random.MulMeasure.eq.MulMeasure.of.CondIndep (hy (s + 1)) (hJ (s + 1) s) (hy s) hY (hpair _ _) hY
+    have hpt := fun v => MulMeasure.eq.MulMeasure.of.CondIndep (hy (s + 1)) (hJ (s + 1) s) (hy s)
       (h_markov s (hy s)) c v b
     have hm1 : MeasurableSet (y (s + 1) ⁻¹' {c} ∩ y s ⁻¹' {b}) :=
       (hy _ (measurableSet_singleton c)).inter (hy _ (measurableSet_singleton b))
@@ -119,8 +126,7 @@ private lemma main
       ← ENNReal.tsum_mul_right, ← ENNReal.tsum_mul_left]
     refine tsum_congr fun v => ?_
     have := hpt v
-    rw [Set.inter_right_comm, Set.inter_comm (y s ⁻¹' {b})]
-    exact this
+    rwa [Set.inter_right_comm, Set.inter_comm (y s ⁻¹' {b})]
   have hDepMono : ∀ (p : (ℕ → X) → (ℕ → Y) → Prop) (a b a' b' : ℕ), Dep p a b → a ≤ a' → b ≤ b' → Dep p a' b' := by
     intro p a b a' b' hp ha hb
     rw [hDep] at hp ⊢
@@ -142,25 +148,28 @@ private lemma main
       ext ω
       simp only [hEv, Set.mem_inter_iff, Set.mem_ofPred_eq, Set.mem_preimage, Set.mem_singleton_iff]
       constructor
-      · rintro ⟨h1, h2⟩
+      ·
+        rintro ⟨h1, h2⟩
         refine ⟨?_, h2⟩
         rwa [← h2, Function.update_eq_self] at h1
-      · rintro ⟨h1, h2⟩
+      ·
+        rintro ⟨h1, h2⟩
         refine ⟨?_, h2⟩
         rwa [← h2, Function.update_eq_self]
     have hd2 : Dep (fun f g => Q f (Function.update g s b)) (s + 1) s := by
       rw [hDep]
       intro f f' g g' hf hg
       refine hQ' f f' _ _ hf (fun i hi => ?_)
-      rcases Nat.lt_succ_iff_lt_or_eq.1 hi with h | rfl
-      · rw [Function.update_of_ne h.ne, Function.update_of_ne h.ne]
+      obtain h | rfl := Nat.lt_succ_iff_lt_or_eq.1 hi
+      ·
+        rw [Function.update_of_ne h.ne, Function.update_of_ne h.ne]
         exact hg i h
       · simp
     have h₁ := hemit s _ hd1 («x.bvar» (s + 1)) c
     have h₂ := hmark s _ hd2 c b
     rw [e1] at h₁
     rw [Set.inter_assoc, e2] at h₂
-    exact Random.Measure.eq.Mul_MulDivS.of.Subset (C := Ev Q ∩ y s ⁻¹' {b}) (E := x (s + 1) ⁻¹' {«x.bvar» (s + 1)})
+    exact Measure.eq.Mul_MulDivS.of.Subset (C := Ev Q ∩ y s ⁻¹' {b}) (E := x (s + 1) ⁻¹' {«x.bvar» (s + 1)})
       (F := y (s + 1) ⁻¹' {c}) (G := y s ⁻¹' {b}) Set.inter_subset_right h₁ h₂
   have hEvy : ∀ (Q : (ℕ → X) → (ℕ → Y) → Prop) (s : ℕ) (b : Y), Ev (fun f g => Q f g ∧ g s = b) = Ev Q ∩ y s ⁻¹' {b} := by
     intro Q s b
@@ -173,7 +182,8 @@ private lemma main
       simp
     conv_lhs => rw [e]
     rw [measure_iUnion, tsum_fintype]
-    · intro b b' hbb'
+    ·
+      intro b b' hbb'
       refine Set.disjoint_left.2 fun ω hb hb' => hbb' ?_
       have h1 : y s ω = b := hb.2
       have h2 : y s ω = b' := hb'.2
@@ -206,8 +216,8 @@ private lemma main
     induction k with
     | zero =>
       intro b
-      by_cases hb : b = a
-      · subst hb
+      if hb : b = a then
+        subst hb
         have e1 : Ev (fun f g => (∀ i ≤ t + 0, f i = «x.bvar» i) ∧ g t = b) ∩ y (t + 0) ⁻¹' {b} =
             Ev (fun f g => (∀ i ≤ t, f i = «x.bvar» i) ∧ g t = b) := by
           ext ω
@@ -218,10 +228,12 @@ private lemma main
           simp only [hEv, Set.mem_inter_iff, Set.mem_ofPred_eq, Set.mem_preimage, Set.mem_singleton_iff, add_zero]
           constructor
           · exact fun h => h.2
-          · intro h
+          ·
+            intro h
             exact ⟨⟨fun i h1 h2 => absurd h1 (by omega), h⟩, h⟩
         rw [e1, e2]
-      · have e1 : Ev (fun f g => (∀ i ≤ t + 0, f i = «x.bvar» i) ∧ g t = a) ∩ y (t + 0) ⁻¹' {b} = ∅ := by
+      else
+        have e1 : Ev (fun f g => (∀ i ≤ t + 0, f i = «x.bvar» i) ∧ g t = a) ∩ y (t + 0) ⁻¹' {b} = ∅ := by
           ext ω
           simp only [hEv, Set.mem_inter_iff, Set.mem_ofPred_eq, Set.mem_preimage, Set.mem_singleton_iff, add_zero,
             Set.mem_empty_iff_false, iff_false]
@@ -250,24 +262,30 @@ private lemma main
       have rA := hrec (t + k) _ (fun f g => (∀ i ≤ t + k + 1, f i = «x.bvar» i) ∧ g t = a) hdA
         (fun f g => by
           constructor
-          · rintro ⟨h1, h2⟩
+          ·
+            rintro ⟨h1, h2⟩
             exact ⟨⟨fun i hi => h1 i (by omega), h2⟩, h1 _ (by omega)⟩
-          · rintro ⟨⟨h1, h2⟩, h3⟩
+          ·
+            rintro ⟨⟨h1, h2⟩, h3⟩
             refine ⟨fun i hi => ?_, h2⟩
-            by_cases hi' : i ≤ t + k
-            · exact h1 i hi'
-            · obtain rfl : i = t + k + 1 := by omega
+            if hi' : i ≤ t + k then
+              exact h1 i hi'
+            else
+              obtain rfl : i = t + k + 1 := by omega
               exact h3) c
       have rN := hrec (t + k) _ (fun f g => (∀ i, t < i → i ≤ t + k + 1 → f i = «x.bvar» i) ∧ g t = a) hdN
         (fun f g => by
           constructor
-          · rintro ⟨h1, h2⟩
+          ·
+            rintro ⟨h1, h2⟩
             exact ⟨⟨fun i h3 hi => h1 i h3 (by omega), h2⟩, h1 _ (by omega) (by omega)⟩
-          · rintro ⟨⟨h1, h2⟩, h3⟩
+          ·
+            rintro ⟨⟨h1, h2⟩, h3⟩
             refine ⟨fun i h4 hi => ?_, h2⟩
-            by_cases hi' : i ≤ t + k
-            · exact h1 i h4 hi'
-            · obtain rfl : i = t + k + 1 := by omega
+            if hi' : i ≤ t + k then
+              exact h1 i h4 hi'
+            else
+              obtain rfl : i = t + k + 1 := by omega
               exact h3) c
       rw [show t + (k + 1) = t + k + 1 from rfl, rA, rN, Finset.sum_mul, Finset.mul_sum]
       refine Finset.sum_congr rfl fun b _ => ?_
@@ -275,54 +293,60 @@ private lemma main
   have hpair' : ∀ N : ℕ, ReferenceMeasure.measure (α := (Fin N → X) × Y) = Measure.count := fun N => by
     show (Measure.count : Measure (Fin N → X)).prod (ReferenceMeasure.measure (α := Y)) = Measure.count
     rw [hY, ← Measure.Count.eq.ProdCountS]
-  have hP1 : ∀ (n j : ℕ) (a : Y), ℙ[π](x[:n + 1] = «x.bvar»[:n + 1] ∧ (y j) = a) =
+  have hP1 : ∀ (n j : ℕ) (a : Y), ℙ[π](x[:n + 1] = «x.bvar»[:n + 1] ∧ y[j] = a) =
       π (Ev (fun f g => ∀ i ≤ n, f i = «x.bvar» i) ∩ y j ⁻¹' {a}) := by
     intro n j a
-    rw [Random.Prob.eq.Measure.of.Eq_Count (hpair' _)]
+    rw [Prob.eq.Measure.of.Eq_Count (hpair' _)]
     congr 1
     ext ω
     simp only [hEv, Set.mem_preimage, Set.mem_singleton_iff, Set.mem_inter_iff, Set.mem_ofPred_eq, JointRandomSymbol,
       Prod.mk.injEq, funext_iff]
     constructor
-    · rintro ⟨h1, h2⟩
+    ·
+      rintro ⟨h1, h2⟩
       exact ⟨fun i hi => h1 ⟨i, by simpa using Nat.lt_succ_of_le hi⟩, h2⟩
-    · rintro ⟨h1, h2⟩
+    ·
+      rintro ⟨h1, h2⟩
       exact ⟨fun i => h1 i (by have := i.2; simp at this; omega), h2⟩
   have hP3 : ∀ n : ℕ, ℙ[π](x[:n + 1] = «x.bvar»[:n + 1]) = π (Ev (fun f g => ∀ i ≤ n, f i = «x.bvar» i)) := by
     intro n
-    rw [Random.Prob.eq.Measure.of.Eq_Count rfl]
+    rw [Prob.eq.Measure.of.Eq_Count rfl]
     congr 1
     ext ω
     simp only [hEv, Set.mem_preimage, Set.mem_singleton_iff, Set.mem_ofPred_eq, funext_iff]
     constructor
-    · intro h1 i hi
+    ·
+      intro h1 i hi
       exact h1 ⟨i, by simpa using Nat.lt_succ_of_le hi⟩
-    · intro h1 i
+    ·
+      intro h1 i
       exact h1 i (by have := i.2; simp at this; omega)
-  have hP2 : ∀ (t m : ℕ) (a : Y), ℙ[π](x[t + 1:m + 1] = «x.bvar»[t + 1:m + 1] | (y t) = a) =
+  have hP2 : ∀ (t m : ℕ) (a : Y), ℙ[π](x[t + 1:m + 1] = «x.bvar»[t + 1:m + 1] | y[t] = a) =
       π (Ev (fun f g => ∀ i, t < i → i ≤ m → f i = «x.bvar» i) ∩ y t ⁻¹' {a}) / π (y t ⁻¹' {a}) := by
     intro t m a
-    rw [Random.ProbCond.eq.Div.of.Eq_Count.Eq_Count rfl hY]
+    rw [ProbCond.eq.Div.of.SinglePSpace inferInstance]
     congr 2
     ext ω
     simp only [hEv, Set.mem_preimage, Set.mem_singleton_iff, Set.mem_inter_iff, Set.mem_ofPred_eq, funext_iff]
     constructor
-    · rintro ⟨h1, h2⟩
+    ·
+      rintro ⟨h1, h2⟩
       refine ⟨fun i hi1 hi2 => ?_, h2⟩
       have := h1 ⟨i - (t + 1), by show i - (t + 1) < m + 1 - (t + 1); omega⟩
       have e : i - (t + 1) + (t + 1) = i := by omega
       change x (i - (t + 1) + (t + 1)) ω = «x.bvar» (i - (t + 1) + (t + 1)) at this
       rwa [e] at this
-    · rintro ⟨h1, h2⟩
+    ·
+      rintro ⟨h1, h2⟩
       refine ⟨fun j => h1 (j.val + (t + 1)) (by omega) (by have := j.2; change j.val < m + 1 - (t + 1) at this; omega), h2⟩
-  have hPcond : ∀ (i j : ℕ) (u : X) (b : Y), ℙ[π]((x i) = u | (y j) = b) =
+  have hPcond : ∀ (i j : ℕ) (u : X) (b : Y), ℙ[π](x[i] = u | y[j] = b) =
       π (x i ⁻¹' {u} ∩ y j ⁻¹' {b}) / π (y j ⁻¹' {b}) :=
-    fun i j u b => Random.ProbCond.eq.Div.of.Eq_Count.Eq_Count hX hY u b
-  have hPcondy : ∀ (i j : ℕ) (c b : Y), ℙ[π]((y i) = c | (y j) = b) =
+    fun i j u b => ProbCond.eq.Div.of.SinglePSpace inferInstance u b
+  have hPcondy : ∀ (i j : ℕ) (c b : Y), ℙ[π](y[i] = c | y[j] = b) =
       π (y i ⁻¹' {c} ∩ y j ⁻¹' {b}) / π (y j ⁻¹' {b}) :=
-    fun i j c b => Random.ProbCond.eq.Div.of.Eq_Count.Eq_Count hY hY c b
-  have hPy : ∀ (j : ℕ) (b : Y), ℙ[π]((y j) = b) = π (y j ⁻¹' {b}) :=
-    fun j b => Random.Prob.eq.Measure.of.Eq_Count hY b
+    fun i j c b => ProbCond.eq.Div.of.SinglePSpace inferInstance c b
+  have hPy : ∀ (j : ℕ) (b : Y), ℙ[π](y[j] = b) = π (y j ⁻¹' {b}) :=
+    fun j b => Prob.eq.Measure.of.Eq_Count hY b
   have hdA : ∀ (t : ℕ) (a : Y) (k : ℕ),
       Dep (fun f g => (∀ i ≤ t + k, f i = «x.bvar» i) ∧ g t = a) (t + k + 1) (t + k + 1) := by
     intro t a k
@@ -350,26 +374,29 @@ private lemma main
   have hsumN : ∀ (t : ℕ) (a : Y) (k : ℕ), π (Ev (fun f g => (∀ i, t < i → i ≤ t + k → f i = «x.bvar» i) ∧ g t = a)) =
       ∑ b, π (Ev (fun f g => (∀ i, t < i → i ≤ t + k → f i = «x.bvar» i) ∧ g t = a) ∩ y (t + k) ⁻¹' {b}) := fun t a k =>
     hpart (t + k) _ (fun b => (hmeas _ _ _ (hdN t a k)).inter (hy _ (measurableSet_singleton b)))
-  have hfwd : ∀ (t : ℕ) (a : Y), ℙ[π](x[:t + 1 + 1] = «x.bvar»[:t + 1 + 1] ∧ (y (t + 1)) = a) =
-      ∑ «y.bvar», ℙ[π](x[:t + 1] = «x.bvar»[:t + 1] ∧ (y t) = «y.bvar») * ℙ[π]((y (t + 1)) = a | (y t) = «y.bvar») *
-        ℙ[π]((x (t + 1)) = «x.bvar» (t + 1) | (y (t + 1)) = a) := by
+  have hfwd : ∀ (t : ℕ) (a : Y), ℙ[π](x[:t + 1 + 1] = «x.bvar»[:t + 1 + 1] ∧ y[t + 1] = a) =
+      ∑ «y.bvar», ℙ[π](x[:t + 1] = «x.bvar»[:t + 1] ∧ y[t] = «y.bvar») * ℙ[π](y[t + 1] = a | y[t] = «y.bvar») *
+        ℙ[π](x[t + 1] = «x.bvar»[t + 1] | y[t + 1] = a) := by
     intro t a
     refine (hP1 (t + 1) (t + 1) a).trans ?_
     rw [hrec t (fun f (_ : ℕ → Y) => ∀ i ≤ t, f i = «x.bvar» i) _ (hDepMono _ _ _ _ _ (hdM t) le_rfl le_rfl)
       (fun f g => by
         constructor
-        · intro h1
+        ·
+          intro h1
           exact ⟨fun i hi => h1 i (by omega), h1 _ le_rfl⟩
-        · rintro ⟨h1, h2⟩ i hi
-          by_cases hi' : i ≤ t
-          · exact h1 i hi'
-          · obtain rfl : i = t + 1 := by omega
+        ·
+          rintro ⟨h1, h2⟩ i hi
+          if hi' : i ≤ t then
+            exact h1 i hi'
+          else
+            obtain rfl : i = t + 1 := by omega
             exact h2)]
     refine Finset.sum_congr rfl fun b _ => ?_
     rw [hP1, hPcondy, hPcond, hψ, mul_assoc]
-  have hfb : ∀ (t : ℕ), t ≤ m → ∀ a, ℙ[π](x[:m + 1] = «x.bvar»[:m + 1] ∧ (y t) = a) =
-      ℙ[π](x[:t + 1] = «x.bvar»[:t + 1] ∧ (y t) = a) *
-        ℙ[π](x[t + 1:m + 1] = «x.bvar»[t + 1:m + 1] | (y t) = a) := by
+  have hfb : ∀ (t : ℕ), t ≤ m → ∀ a, ℙ[π](x[:m + 1] = «x.bvar»[:m + 1] ∧ y[t] = a) =
+      ℙ[π](x[:t + 1] = «x.bvar»[:t + 1] ∧ y[t] = a) *
+        ℙ[π](x[t + 1:m + 1] = «x.bvar»[t + 1:m + 1] | y[t] = a) := by
     intro t ht a
     obtain ⟨k, rfl⟩ := Nat.exists_eq_add_of_le ht
     rw [hP1, hP1, hP2]
@@ -382,19 +409,20 @@ private lemma main
           π (Ev (fun f g => (∀ i, t < i → i ≤ t + k → f i = «x.bvar» i) ∧ g t = a)) := by
       rw [hsumA, hsumN, Finset.sum_mul, Finset.mul_sum]
       exact Finset.sum_congr rfl fun b _ => hinv t a k b
-    by_cases hP : π (y t ⁻¹' {a}) = 0
-    · have h1 : π (Ev (fun f g => (∀ i ≤ t + k, f i = «x.bvar» i) ∧ g t = a)) = 0 := by
-        refine measure_mono_null (fun ω hω => ?_) hP
-        rw [hEv] at hω
-        exact hω.2
+    if hP : π (y t ⁻¹' {a}) = 0 then
+      have h1 : π (Ev (fun f g => (∀ i ≤ t + k, f i = «x.bvar» i) ∧ g t = a)) = 0 := by
+        refine measure_mono_null (fun ω hω => by
+          simp [hEv] at hω
+          exact hω.2) hP
       have h2 : π (Ev (fun f g => (∀ i, t < i → i ≤ t + k → f i = «x.bvar» i) ∧ g t = a)) = 0 := by
-        refine measure_mono_null (fun ω hω => ?_) hP
-        rw [hEv] at hω
-        exact hω.2
+        refine measure_mono_null (fun ω hω => by
+          simp [hEv] at hω
+          exact hω.2) hP
       rw [h1, h2, hP]
       simp
-    · rw [← mul_div_assoc]
-      exact (ENNReal.eq_div_iff hP (measure_ne_top _ _)).2 (by rw [mul_comm]; exact hs)
+    else
+      rw [← mul_div_assoc]
+      exact (ENNReal.eq_div_iff hP (measure_ne_top _ _)).2 (by rwa [mul_comm])
   replace ht : t ≤ m := by omega
   refine (Finset.sum_congr rfl fun a _ => (hfb t ht a).symm).trans ?_
   push_cast

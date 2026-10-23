@@ -6,7 +6,7 @@ open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Mode
 
 
 /--
-For a differentiable policy with bounded gradient, `θ ↦ Pr(s[t] = y)` is differentiable.
+For a differentiable policy with bounded gradient, `θ ↦ ℙ(s[t] = y)` is differentiable.
 -/
 @[path]
 private lemma main

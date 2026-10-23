@@ -3,12 +3,12 @@ open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 
 
 /--
-Policy-gradient recursion for the model value functions on a reachable state x (h₄ : Pr(s[t] = x) ≠ 0):
+Policy-gradient recursion for the model value functions on a reachable state x (h₄ : ℙ(s[t] = x) ≠ 0):
 ∇V(t, x) = ∑ u, Q(t, x, u) • ∇π(u | x) + γ • ∑ y, P1(x, y) • ∇V(t+1, y),
 where V and Q are the local state / action values
 `𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = x)` and
 `𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = x ∧ a t = u)`,
-P1 θ x y = Pr(s[t+1] = y | s[t] = x),
+P1 θ x y = ℙ(s[t+1] = y | s[t] = x),
 and θ ↦ π_θ(u | x) is differentiable (h₂) with a bounded gradient (h₃).
 Gradient (Riesz representative) form of `Random.Fderiv.eq.AddSum_SMulSMul.of.Ne0Real_Preimage.In_Ico.GtInftySup.All_Differentiable_Prob`.
 -/

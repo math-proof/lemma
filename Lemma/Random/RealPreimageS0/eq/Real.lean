@@ -6,7 +6,7 @@ open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Mode
 
 
 /--
-The law of `s[0]` under the trajectory model is the initial distribution: `Pr(s[0] = x) = init {x}`.
+The law of `s[0]` under the trajectory model is the initial distribution: `ℙ(s[0] = x) = init {x}`.
 -/
 @[path]
 private lemma main

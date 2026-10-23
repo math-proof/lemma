@@ -6,7 +6,7 @@ open MeasureTheory PolicyGradient Random Real
 
 /--
 Policy-gradient recursion with a continuous state space and a continuous action space:
-∇V(s[t] = s.bvar[t]) = ∫ u, Q(s.bvar[t], u) • ∇π(u | s.bvar[t]) du + γ • ∫ y, Pr(s[t+1] = y | s[t] = s.bvar[t]) • ∇V(s[t+1] = y) dy,
+∇V(s[t] = s.bvar[t]) = ∫ u, Q(s.bvar[t], u) • ∇π(u | s.bvar[t]) du + γ • ∫ y, ℙ(s[t+1] = y | s[t] = s.bvar[t]) • ∇V(s[t+1] = y) dy,
 the gradient of the Bellman equations of extract_QVA; both the action sum and the next-state sum of the discrete version
 `Random.Grad.eq.Add_SMul_Sum_SMul.of.Ne0Real_Preimage.GtInftySup.All_Differentiable_Prob.All_Eq_Expect.All_Eq_Expect.EqMeasureCount.EqMeasureCount.In_Ico`
 become integrals against the reference measures of `A` and `S` (e.g. Lebesgue measures on `ℝ^m`, `ℝ^b`).
@@ -15,7 +15,7 @@ Continuous-action counterpart of
 The policy `π_θ(u | x)` is a probability density w.r.t. the reference measure of `A` (`DensityPolicy`); `V = Vkd`, `Q = Qkd`
 are the regular (kernel) conditional expectations of the discounted return given `s[t] = x`
 (resp. `s[t] = x, a[t] = u`), see `sympy.stats.policy_trajectory.continuous_action`;
-`Pr(s[t+1] = y | s[t] = x) = P1kd θ p x y = ∫ u, π_θ(u | x) * p x u y du`.
+`ℙ(s[t+1] = y | s[t] = x) = P1kd θ p x y = ∫ u, π_θ(u | x) * p x u y du`.
 h₁: θ ↦ π_θ(u | x) is differentiable; h₂, h₃, h₄: its gradient is dominated by `g x u`, where `g x` is integrable over
 the actions uniformly in the state (this replaces `sup ‖∇π‖ < ∞` of the finite-action version, where `∑ u` is
 integration against the counting measure); h₅: (x, u) ↦ π_θ(u | x) is jointly measurable; h₆, h₇, h₈: `p x u` is a

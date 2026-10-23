@@ -4,7 +4,7 @@ open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 
 
 /--
-`𝔼[f | s[t] = x] = Pr(s[t] = x)⁻¹ * 𝔼[1{s[t] = x} * f]`.
+`𝔼[f | s[t] = x] = ℙ(s[t] = x)⁻¹ * 𝔼[1{s[t] = x} * f]`.
 -/
 @[path]
 private lemma main

@@ -8,7 +8,7 @@ open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random 
 
 
 /--
-`𝔼[1{s[t] = x} * r[t+j]] = Pr(s[t] = x) * W θ (fun z ↦ clip z.1 (-M.env.R) M.env.R) j x`.
+`𝔼[1{s[t] = x} * r[t+j]] = ℙ(s[t] = x) * W θ (fun z ↦ clip z.1 (-M.env.R) M.env.R) j x`.
 -/
 @[path]
 private lemma main

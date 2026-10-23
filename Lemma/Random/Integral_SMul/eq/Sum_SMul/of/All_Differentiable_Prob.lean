@@ -4,7 +4,7 @@ open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Mode
 
 
 /--
-`𝔼[g(s[t], a[t]) • ∇ log π(a[t] | s[t])] = ∑ y, Pr(s[t] = y) • ∑ u, g y u • ∇ π(u | y)`
+`𝔼[g(s[t], a[t]) • ∇ log π(a[t] | s[t])] = ∑ y, ℙ(s[t] = y) • ∑ u, g y u • ∇ π(u | y)`
 -/
 @[path]
 private lemma main

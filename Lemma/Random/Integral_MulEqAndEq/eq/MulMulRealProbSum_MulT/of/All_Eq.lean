@@ -7,7 +7,7 @@ open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random 
 
 
 /--
-`𝔼[1{s[t] = x ∧ a[t] = u} * f(s[t+1])] = Pr(s[t] = x) * π_θ(u | x) * ∑ y, T(x, u, y) * f y`.
+`𝔼[1{s[t] = x ∧ a[t] = u} * f(s[t+1])] = ℙ(s[t] = x) * π_θ(u | x) * ∑ y, T(x, u, y) * f y`.
 -/
 @[path]
 private lemma main

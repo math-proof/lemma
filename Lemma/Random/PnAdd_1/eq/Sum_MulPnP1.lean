@@ -3,7 +3,7 @@ open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Mode
 
 
 /--
-Chapman–Kolmogorov: `Pr(s[n+1] = z | s[0] = x) = ∑ y, Pr(s[n] = y | s[0] = x) * Pr(s[1] = z | s[0] = y)`
+Chapman–Kolmogorov: `ℙ(s[n+1] = z | s[0] = x) = ∑ y, ℙ(s[n] = y | s[0] = x) * ℙ(s[1] = z | s[0] = y)`
 -/
 @[path]
 private lemma main

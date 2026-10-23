@@ -1,6 +1,6 @@
 import Lemma.Random.OfRV.eq.Integral.of.AEStronglyMeasurable_Map
 import Lemma.Random.ProbCond.eq.OfRealPol.of.Ne_0
-import Lemma.Random.ProbCond.eq.Div.of.Eq_Count.Eq_Count
+import Lemma.Random.ProbCond.eq.Div.of.SinglePSpace
 import Lemma.Random.Differentiable_RealPreimageS.of.GtInftySup.All_Differentiable_Prob
 import Lemma.Random.AeRealPreimageSS.ne.Zero
 import Lemma.Random.PSpace_Path.of.All_PSpace

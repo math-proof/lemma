@@ -13,7 +13,7 @@ private lemma w0 [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [M
 
 
 /--
-`𝔼[1{s[t] = x} * f(s[t+1])] = Pr(s[t] = x) * ∑ u, π_θ(u | x) * ∑ y, T(x, u, y) * f y`.
+`𝔼[1{s[t] = x} * f(s[t+1])] = ℙ(s[t] = x) * ∑ u, π_θ(u | x) * ∑ y, T(x, u, y) * f y`.
 -/
 @[path]
 private lemma main

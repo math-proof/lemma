@@ -88,8 +88,7 @@ private lemma main
     have hD : ℙ[M θ](a[0] = «a.bvar»[0] | s[0] = «s.bvar»[0]) =
         (M θ) ((a 0) ⁻¹' {«a.bvar»[0]} ∩ (s 0) ⁻¹' {«s.bvar»[0]}) /
           (M θ) ((s 0) ⁻¹' {«s.bvar»[0]}) :=
-      ProbCond.eq.Div.of.Eq_Count.Eq_Count («π» := M θ) (x := a 0) (y := s 0)
-        CountableMeasure.measure_eq_count CountableMeasure.measure_eq_count
+      ProbCond.eq.Div.of.SinglePSpace inferInstance («π» := M θ) (x := a 0) (y := s 0)
         «a.bvar»[0] «s.bvar»[0]
     have hs0 : (M θ) ((s 0) ⁻¹' {«s.bvar»[0]}) ≠ 0 := by
       have hne : (M θ) ((a 0) ⁻¹' {«a.bvar»[0]} ∩ (s 0) ⁻¹' {«s.bvar»[0]}) ≠ 0 := by
@@ -141,8 +140,7 @@ private lemma main
   -- bridge conditional-ℙ hyps to policy.prob facts expected by In_Icc.In_Ico
   have h_pol_eq : ∀ θ' x u, (ℙ[M θ']((a 0) = u | (s 0) = x) : ℝ) = M.policy.prob θ' x u := by
     intro θ' x u
-    erw [ProbCond.eq.OfRealPol.of.Ne_0 h₁.stage_eq CountableMeasure.measure_eq_count
-      CountableMeasure.measure_eq_count (hP θ' 0) (hP0raw θ' x),
+    erw [ProbCond.eq.OfRealPol.of.Ne_0 h₁.stage_eq (hP θ' 0) (hP0raw θ' x),
       ENNReal.toReal_ofReal (M.policy.nonneg θ' x u)]
   have hπraw : ∀ θ' y u, (M θ').real ((s 0) ⁻¹' {y}) * M.policy.prob θ' y u ≠ 0 := by
     intro θ' y u
@@ -159,8 +157,7 @@ private lemma main
     rw [← h_pol_eq θ' y u]
     refine ENNReal.toReal_ne_zero.mpr ⟨hcond, ?_⟩
     have hOF : ℙ[M θ']((a 0) = u | (s 0) = y) = ENNReal.ofReal (M.policy.prob θ' y u) :=
-      ProbCond.eq.OfRealPol.of.Ne_0 h₁.stage_eq CountableMeasure.measure_eq_count
-        CountableMeasure.measure_eq_count (hP θ' 0) (hP0raw θ' y)
+      ProbCond.eq.OfRealPol.of.Ne_0 h₁.stage_eq (hP θ' 0) (hP0raw θ' y)
     rw [hOF]
     apply ENNReal.ofReal_ne_top
   have hpR : Measurable (fun ω t ↦ r t ω) := Measurable.of_eval (Random.Measurable.of.All_Eq.fst h₁.stage_eq)

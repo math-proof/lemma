@@ -24,7 +24,7 @@ private lemma obj_eq
   rw [← Vc.eq.TSum_MulPowIntegral.of.Ne0Real_Preimage.In_Ico (M := M) hγ θ x (hP x)]
 
 /--
-`∇ ∑' t, γ ^ t * 𝔼[r[t]] = ∑ x, Pr(s[0] = x) • ∇ Vc(x)`
+`∇ ∑' t, γ ^ t * 𝔼[r[t]] = ∑ x, ℙ(s[0] = x) • ∇ Vc(x)`
 -/
 @[path]
 private lemma main

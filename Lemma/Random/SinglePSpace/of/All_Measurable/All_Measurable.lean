@@ -1,4 +1,4 @@
-import Lemma.Random.SinglePSpace.of.EqMeasureCount.EqMeasureCount.Measurable.Measurable
+import Lemma.Random.SinglePSpace.of.Measurable.Measurable
 import sympy.stats.hidden_markov_sequence
 open MeasureTheory
 
@@ -23,8 +23,8 @@ private lemma main
 -- imply
   SinglePSpace π (x[:n], y[:m]) := by
 -- proof
-  apply Random.SinglePSpace.of.EqMeasureCount.EqMeasureCount.Measurable.Measurable
-    (Measurable.of_eval fun _ => hx _) (Measurable.of_eval fun _ => hy _) rfl rfl
+  apply Random.SinglePSpace.of.Measurable.Measurable
+    (Measurable.of_eval fun _ => hx _) (Measurable.of_eval fun _ => hy _)
 
 
 -- created on 2026-10-03

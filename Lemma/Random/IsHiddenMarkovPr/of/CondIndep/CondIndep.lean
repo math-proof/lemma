@@ -23,7 +23,8 @@ private lemma main
 -- proof
   intro ys
   obtain ⟨h₀, h₁⟩ := Random.Prob.eq.Mul_ProbS.Prob.eq.Mul_MulProbS.of.CondIndep.CondIndep
-    (xo := xo) h ys
+    («x.bvar» := xo) h ys
+  simp only [fun_getElem] at h₀ h₁
   refine ⟨?_, fun t => ?_⟩
   · rw [h₀, ENNReal.toReal_mul]
   · rw [h₁ t, ENNReal.toReal_mul, ENNReal.toReal_mul]

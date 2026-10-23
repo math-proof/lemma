@@ -7,14 +7,14 @@ import Lemma.Random.Integrable_Fun
 import Lemma.Random.GetTSum_SMul.of.In_Ico.GtInftySup.All_Differentiable_Prob
 import Lemma.Random.BddAbove_ImageNormFderiv.of.In_Ico.GtInftySup.All_Differentiable_Prob
 import Lemma.Random.ProbCond.eq.OfRealPol.of.Ne_0
-import Lemma.Random.ProbCond.eq.Div.of.Eq_Count.Eq_Count
+import Lemma.Random.ProbCond.eq.Div.of.SinglePSpace
 import Mathlib.MeasureTheory.Constructions.Polish.Basic
 import Mathlib.Analysis.Calculus.Gradient.Basic
 import Lemma.Random.NormV.le.MulSub1Abs_R.of.In_Ico
 import Lemma.Random.Integral_SMul.eq.Zero.of.All_Differentiable_Prob
 import Lemma.Random.Integrable.of.In_Ico
 import Lemma.Random.V.eq.Integral.of.Measurable
-import Lemma.Random.ExpectSum_SMulMulPow_GradLog.eq.Integral_Sum_SMul.of.IsPolicyTrajectory
+import Lemma.Random.ExpectSum_SMulMulPow.eq.Integral_Sum_SMul_GradLogProbCond.of.IsPolicyTrajectory
 open scoped ENNReal.ToRealCoe
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Filter Topology Random Real Measure Set
 open IsPolicyTrajectory
@@ -54,8 +54,6 @@ private lemma gradLogProbCond_ae_eq_gradLogPol
   {s : ℕ → (ℕ → ℝ × S × A) → S}
   {a : ℕ → (ℕ → ℝ × S × A) → A}
   (h₁ : ∀ t, (· t) = (r t, s t, a t))
-  (hS : (ReferenceMeasure.measure : Measure S) = Measure.count)
-  (hA : (ReferenceMeasure.measure : Measure A) = Measure.count)
   (h₄ : ∀ s a, Differentiable ℝ (M.policy.prob · s a))
   (h₅ : sup[θ, x, u] ‖∇[θ] M.policy.prob θ x u‖ < ∞)
   (hP : ∀ θ t, SinglePSpace (M θ) (a t, s t)) :
@@ -72,7 +70,7 @@ private lemma gradLogProbCond_ae_eq_gradLogPol
       fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω))) θ := by
     refine Filter.EventuallyEq.fderiv_eq ((hc.eventually_ne (hω t)).mono fun θ' h => ?_)
     beta_reduce
-    rw [ProbCond.eq.OfRealPol.of.Ne_0 h₁ hS hA (hP θ' t) h,
+    rw [ProbCond.eq.OfRealPol.of.Ne_0 h₁ (hP θ' t) h,
       ENNReal.toReal_ofReal (M.policy.nonneg θ' _ _)]
   simp only [gradient]
   exact congrArg (InnerProductSpace.toDual ℝ Θ).symm hfd
@@ -206,8 +204,7 @@ private lemma main
     have hD : ℙ[M θ](a[0] = «a.bvar»[0] | s[0] = «s.bvar»[0]) =
         (M θ) ((a 0) ⁻¹' {«a.bvar»[0]} ∩ (s 0) ⁻¹' {«s.bvar»[0]}) /
           (M θ) ((s 0) ⁻¹' {«s.bvar»[0]}) :=
-      ProbCond.eq.Div.of.Eq_Count.Eq_Count («π» := M θ) (x := a 0) (y := s 0)
-        CountableMeasure.measure_eq_count CountableMeasure.measure_eq_count
+      ProbCond.eq.Div.of.SinglePSpace inferInstance («π» := M θ) (x := a 0) (y := s 0)
         «a.bvar»[0] «s.bvar»[0]
     have hs0 : (M θ) ((s 0) ⁻¹' {«s.bvar»[0]}) ≠ 0 := by
       have hne : (M θ) ((a 0) ⁻¹' {«a.bvar»[0]} ∩ (s 0) ⁻¹' {«s.bvar»[0]}) ≠ 0 := by
@@ -248,13 +245,10 @@ private lemma main
   set a : ℕ → (ℕ → ℝ × S × A) → A := fun t ω ↦ (ω t).2.2
   let _ : MeasurableSpace Θ := borel Θ
   have _ : BorelSpace Θ := ⟨rfl⟩
-  have hS : (ReferenceMeasure.measure : Measure S) = Measure.count := CountableMeasure.measure_eq_count
-  have hA : (ReferenceMeasure.measure : Measure A) = Measure.count := CountableMeasure.measure_eq_count
   -- bridge conditional-ℙ hyps to policy.prob facts expected by legacy body
   have h_pol_eq : ∀ θ' x u, (ℙ[M θ']((a 0) = u | (s 0) = x) : ℝ) = M.policy.prob θ' x u := by
     intro θ' x u
-    erw [ProbCond.eq.OfRealPol.of.Ne_0 h₁.stage_eq CountableMeasure.measure_eq_count
-      CountableMeasure.measure_eq_count (hP θ' 0) (hP0raw θ' x),
+    erw [ProbCond.eq.OfRealPol.of.Ne_0 h₁.stage_eq (hP θ' 0) (hP0raw θ' x),
       ENNReal.toReal_ofReal (M.policy.nonneg θ' x u)]
   have hDiffPol : ∀ x u, Differentiable ℝ (M.policy.prob · x u) := by
     intro x u
@@ -285,8 +279,7 @@ private lemma main
     rw [← h_pol_eq θ' y u]
     refine ENNReal.toReal_ne_zero.mpr ⟨hcond, ?_⟩
     have hOF : ℙ[M θ']((a 0) = u | (s 0) = y) = ENNReal.ofReal (M.policy.prob θ' y u) :=
-      ProbCond.eq.OfRealPol.of.Ne_0 h₁.stage_eq CountableMeasure.measure_eq_count
-        CountableMeasure.measure_eq_count (hP θ' 0) (hP0raw θ' y)
+      ProbCond.eq.OfRealPol.of.Ne_0 h₁.stage_eq (hP θ' 0) (hP0raw θ' y)
     rw [hOF]
     apply ENNReal.ofReal_ne_top
   -- shadow legacy All_Eq / Diff / Sup / hP0 / hπ names for the rest of the body
@@ -318,7 +311,7 @@ private lemma main
     -- inlined from former In_Ico1 (fderiv/CLM Q-score series)
     have h7grad :=
       GradExpectDotPow_Id.eq.AddExpect_Sum_SMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_Eq_ExpectCondDot.All_Eq_ExpectCondDot.EqMeasureCount.EqMeasureCount.All_Eq_Joint.In_Ico
-        (θ := θ) h₀ h₁ hS hA hQ_expect hV_expect h₂ h₃o hP0 hπ
+        (θ := θ) h₀ h₁ hQ_expect hV_expect h₂ h₃o hP0 hπ
     let Lgrad : StrongDual ℝ Θ ≃L[ℝ] Θ :=
       (InnerProductSpace.toDual ℝ Θ).symm.toContinuousLinearEquiv
     have hLgrad : ∀ φ, (InnerProductSpace.toDual ℝ Θ).symm φ = Lgrad φ := fun _ => rfl
@@ -371,7 +364,7 @@ private lemma main
       -- GradExpect RHS is P-score Expect; unwrap then bridge ae to pol for fderiv goal
       have hmeasEq : (ReferenceMeasure.measure : Measure A).prod (ReferenceMeasure.measure : Measure S) =
         Measure.count := by
-        rw [hA, hS, Count.eq.ProdCountS]
+        rw [CountableMeasure.measure_eq_count, CountableMeasure.measure_eq_count, Count.eq.ProdCountS]
       have hSP : ∀ θ' t', SinglePSpace (M θ') (a t', s t') := fun θ' t' =>
         SinglePSpace.of.EqMeasureCount.Measurable
           ((Random.Measurable.of.All_Eq.snd.snd h₁ t').prodMk (Random.Measurable.of.All_Eq.snd.fst h₁ t'))
@@ -392,7 +385,7 @@ private lemma main
           ∇[θ] (Real.log (M.policy.prob θ (s t ω) (a t ω))) =
             ∇[θ] (ℙ[M θ]((a t) = (a t ω) | (s t) = (s t ω)) : ℝ).log :=
         fun t => (gradLogProbCond_ae_eq_gradLogPol (M := M) (θ := θ) (r := r) (s := s) (a := a)
-          h₁ hS hA h₂ h₃o hSP t).mono fun _ h => h.symm
+          h₁ h₂ h₃o hSP t).mono fun _ h => h.symm
       have hInt_pol_eq_P :
         ∫ ω, ∑ t ∈ Finset.range n,
               (γ ^ t * Qloc θ t (s t ω) (a t ω)) •
@@ -635,7 +628,7 @@ private lemma main
       (Differentiable_RealPreimageS.of.GtInftySup.All_Differentiable_Prob (M := M) h₁ h₂ h₃o t (s t ω) θ).continuousAt
     refine Filter.EventuallyEq.fderiv_eq ((hc.eventually_ne (hω t)).mono fun θ' h => ?_)
     beta_reduce
-    rw [ProbCond.eq.OfRealPol.of.Ne_0 h₁ hS hA (hP θ' t) h,
+    rw [ProbCond.eq.OfRealPol.of.Ne_0 h₁ (hP θ' t) h,
       ENNReal.toReal_ofReal (M.policy.nonneg θ' _ _)]
   have hold : ∑' t, γ ^ t • fderiv ℝ (fun θ => ∫ ω, r t ω ∂(M θ)) θ =
       ∑' t, γ ^ t • ∫ ω, ((γ ^ (id : ℕ → ℕ)) @ r[t:]) ω •
@@ -682,13 +675,13 @@ private lemma main
     _ _ _ _ _ _ _ _ _ _ _ _ M θ γ (fun r _ _ k => r k) ⟨r⟩ ⟨s⟩ ⟨a⟩ h₀ h₁pol h₂ne
     (fun k => Random.Measurable.of.All_Eq.fst h₁ k) hA_sup h₃diff h₄sup
   have hL2GradDot :
-      (InnerProductSpace.toDual ℝ Θ).symm
-          (∑' t, γ ^ t • ∫ ω,
-            ((γ ^ (id : ℕ → ℕ)) @ r[t:]) ω •
-              fderiv ℝ (fun θ' => (ℙ[M θ']((a t) = (a t ω) | (s t) = (s t ω)) : ℝ).log) θ ∂(M θ)) =
-        ((γ ^ (id : ℕ → ℕ)) @ fun t ↦ ∫ ω,
-          ((γ ^ (id : ℕ → ℕ)) @ (fun k : ℕ => r (t + k) ω)) •
-            ∇[θ] Real.log (ℙ[M θ]((a t) = (a t ω) | (s t) = (s t ω))).toReal ∂(M θ)) := by
+    (InnerProductSpace.toDual ℝ Θ).symm
+      (∑' t, γ ^ t • ∫ ω,
+        ((γ ^ (id : ℕ → ℕ)) @ r[t:]) ω •
+          fderiv ℝ (fun θ' => (ℙ[M θ']((a t) = (a t ω) | (s t) = (s t ω)) : ℝ).log) θ ∂(M θ)) =
+      ((γ ^ (id : ℕ → ℕ)) @ fun t ↦ ∫ ω,
+        ((γ ^ (id : ℕ → ℕ)) @ (fun k : ℕ => r (t + k) ω)) •
+          ∇[θ] Real.log (ℙ[M θ]((a t) = (a t ω) | (s t) = (s t ω))).toReal ∂(M θ)) := by
     simp only [Dot.dot, Function.hPow_apply, id_eq, Function.getSliceFrom_apply, gradient]
     rw [hL, L.map_tsum]
     refine tsum_congr fun t => ?_
@@ -742,13 +735,13 @@ private lemma main
         integral_mono_ae (hint t).norm (integrable_const _) (hFb t)
       _ = γ ^ t * (Bret * Ms) := by simp
   have hSwap :
-      ((γ ^ (id : ℕ → ℕ)) @ fun t ↦ ∫ ω,
-        ((γ ^ (id : ℕ → ℕ)) @ (fun k : ℕ => r (t + k) ω)) •
-          ∇[θ] Real.log (ℙ[M θ]((a t) = (a t ω) | (s t) = (s t ω))).toReal ∂(M θ)) =
-      ∫ ω,
-        ((γ ^ (id : ℕ → ℕ)) @ fun t ↦
-          ((γ ^ (id : ℕ → ℕ)) @ (fun k : ℕ => r (t + k) ω)) •
-            ∇[θ] Real.log (ℙ[M θ]((a t) = (a t ω) | (s t) = (s t ω))).toReal) ∂(M θ) := by
+    ((γ ^ (id : ℕ → ℕ)) @ fun t ↦ ∫ ω,
+      ((γ ^ (id : ℕ → ℕ)) @ (fun k : ℕ => r (t + k) ω)) •
+      ∇[θ] Real.log (ℙ[M θ]((a t) = (a t ω) | (s t) = (s t ω))).toReal ∂(M θ)) =
+    ∫ ω,
+      ((γ ^ (id : ℕ → ℕ)) @ fun t ↦
+      ((γ ^ (id : ℕ → ℕ)) @ (fun k : ℕ => r (t + k) ω)) •
+        ∇[θ] Real.log (ℙ[M θ]((a t) = (a t ω) | (s t) = (s t ω))).toReal) ∂(M θ) := by
     have hLHS :
       (γ ^ (id : ℕ → ℕ)) @ (fun t ↦ ∫ ω,
           ((γ ^ (id : ℕ → ℕ)) @ (fun k : ℕ => r (t + k) ω)) •
@@ -870,8 +863,7 @@ private lemma advantage
     have hD : ℙ[M θ](a[0] = «a.bvar»[0] | s[0] = «s.bvar»[0]) =
         (M θ) ((a 0) ⁻¹' {«a.bvar»[0]} ∩ (s 0) ⁻¹' {«s.bvar»[0]}) /
           (M θ) ((s 0) ⁻¹' {«s.bvar»[0]}) :=
-      ProbCond.eq.Div.of.Eq_Count.Eq_Count («π» := M θ) (x := a 0) (y := s 0)
-        CountableMeasure.measure_eq_count CountableMeasure.measure_eq_count
+      ProbCond.eq.Div.of.SinglePSpace inferInstance («π» := M θ) (x := a 0) (y := s 0)
         «a.bvar»[0] «s.bvar»[0]
     have hs0 : (M θ) ((s 0) ⁻¹' {«s.bvar»[0]}) ≠ 0 := by
       have hne : (M θ) ((a 0) ⁻¹' {«a.bvar»[0]} ∩ (s 0) ⁻¹' {«s.bvar»[0]}) ≠ 0 := by
@@ -912,13 +904,10 @@ private lemma advantage
   set a : ℕ → (ℕ → ℝ × S × A) → A := fun t ω ↦ (ω t).2.2
   let _ : MeasurableSpace Θ := borel Θ
   have _ : BorelSpace Θ := ⟨rfl⟩
-  have hS : (ReferenceMeasure.measure : Measure S) = Measure.count := CountableMeasure.measure_eq_count
-  have hA : (ReferenceMeasure.measure : Measure A) = Measure.count := CountableMeasure.measure_eq_count
   -- bridge conditional-ℙ hyps to policy.prob facts expected by legacy body
   have h_pol_eq : ∀ θ' x u, (ℙ[M θ']((a 0) = u | (s 0) = x) : ℝ) = M.policy.prob θ' x u := by
     intro θ' x u
-    erw [ProbCond.eq.OfRealPol.of.Ne_0 h₁.stage_eq CountableMeasure.measure_eq_count
-      CountableMeasure.measure_eq_count (hP θ' 0) (hP0raw θ' x),
+    erw [ProbCond.eq.OfRealPol.of.Ne_0 h₁.stage_eq (hP θ' 0) (hP0raw θ' x),
       ENNReal.toReal_ofReal (M.policy.nonneg θ' x u)]
   have hDiffPol : ∀ x u, Differentiable ℝ (M.policy.prob · x u) := by
     intro x u
@@ -949,8 +938,7 @@ private lemma advantage
     rw [← h_pol_eq θ' y u]
     refine ENNReal.toReal_ne_zero.mpr ⟨hcond, ?_⟩
     have hOF : ℙ[M θ']((a 0) = u | (s 0) = y) = ENNReal.ofReal (M.policy.prob θ' y u) :=
-      ProbCond.eq.OfRealPol.of.Ne_0 h₁.stage_eq CountableMeasure.measure_eq_count
-        CountableMeasure.measure_eq_count (hP θ' 0) (hP0raw θ' y)
+      ProbCond.eq.OfRealPol.of.Ne_0 h₁.stage_eq (hP θ' 0) (hP0raw θ' y)
     rw [hOF]
     apply ENNReal.ofReal_ne_top
   -- shadow legacy All_Eq / Diff / Sup / hP0 / hπ names for the rest of the body
@@ -969,7 +957,8 @@ private lemma advantage
         ∇[θ] (ℙ[M θ]((a t) = p.2 | (s t) = p.1) : ℝ).log)).comp_measurable
           ((Random.Measurable.of.All_Eq.snd.fst h₁ t).prodMk (Random.Measurable.of.All_Eq.snd.snd h₁ t)))).const_smul (γ ^ t)).aestronglyMeasurable.aemeasurable⟩
   have hPs : ∀ θ t, SinglePSpace (M θ) (s t) := fun _ t =>
-    SinglePSpace.of.EqMeasureCount.Measurable (Random.Measurable.of.All_Eq.snd.fst h₁ t) hS
+    SinglePSpace.of.EqMeasureCount.Measurable (Random.Measurable.of.All_Eq.snd.fst h₁ t)
+      CountableMeasure.measure_eq_count
   have hscore : ∀ t, ∀ᵐ ω ∂(M θ),
       fderiv ℝ (fun θ' => (ℙ[M θ']((a t) = (a t ω) | (s t) = (s t ω)) : ℝ).log) θ =
         fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω))) θ := by
@@ -979,7 +968,7 @@ private lemma advantage
       (Differentiable_RealPreimageS.of.GtInftySup.All_Differentiable_Prob (M := M) h₁ h₂ h₃ t (s t ω) θ).continuousAt
     refine Filter.EventuallyEq.fderiv_eq ((hc.eventually_ne (hω t)).mono fun θ' h => ?_)
     beta_reduce
-    rw [ProbCond.eq.OfRealPol.of.Ne_0 h₁ hS hA (hP θ' t) h,
+    rw [ProbCond.eq.OfRealPol.of.Ne_0 h₁ (hP θ' t) h,
       ENNReal.toReal_ofReal (M.policy.nonneg θ' _ _)]
   let Vloc (θ : Θ) (t : ℕ) (x : S) : ℝ :=
     𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = x)
@@ -1109,13 +1098,13 @@ private lemma advantage
     _ _ _ _ _ _ _ _ _ _ _ _ M θ γ (fun r _ _ k => r k) ⟨r⟩ ⟨s⟩ ⟨a⟩ h₀ h₁pol h₂ne
     (fun k => Random.Measurable.of.All_Eq.fst h₁ k) hRae_sup h₃diff h₄sup
   have hL2GradRDot :
-      (InnerProductSpace.toDual ℝ Θ).symm
-          (∑' t, γ ^ t • ∫ ω,
-            (∑' k, γ ^ k * r (t + k) ω) •
-              fderiv ℝ (fun θ' => (ℙ[M θ']((a t) = (a t ω) | (s t) = (s t ω)) : ℝ).log) θ ∂(M θ)) =
-        ((γ ^ (id : ℕ → ℕ)) @ fun t ↦ ∫ ω,
-          ((γ ^ (id : ℕ → ℕ)) @ (fun k : ℕ => r (t + k) ω)) •
-            ∇[θ] Real.log (ℙ[M θ]((a t) = (a t ω) | (s t) = (s t ω))).toReal ∂(M θ)) := by
+    (InnerProductSpace.toDual ℝ Θ).symm
+      (∑' t, γ ^ t • ∫ ω,
+        (∑' k, γ ^ k * r (t + k) ω) •
+          fderiv ℝ (fun θ' => (ℙ[M θ']((a t) = (a t ω) | (s t) = (s t ω)) : ℝ).log) θ ∂(M θ)) =
+      ((γ ^ (id : ℕ → ℕ)) @ fun t ↦ ∫ ω,
+        ((γ ^ (id : ℕ → ℕ)) @ (fun k : ℕ => r (t + k) ω)) •
+          ∇[θ] Real.log (ℙ[M θ]((a t) = (a t ω) | (s t) = (s t ω))).toReal ∂(M θ)) := by
     let L : StrongDual ℝ Θ ≃L[ℝ] Θ := (InnerProductSpace.toDual ℝ Θ).symm.toContinuousLinearEquiv
     have hL : ∀ φ, (InnerProductSpace.toDual ℝ Θ).symm φ = L φ := fun _ => rfl
     have hdot : ∀ t ω, (∑' k, γ ^ k * r (t + k) ω) =
@@ -1175,13 +1164,13 @@ private lemma advantage
         integral_mono_ae (hintR t).norm (integrable_const _) (hFbR t)
       _ = γ ^ t * (BretR * MsR) := by simp
   have hSwapR :
-      ((γ ^ (id : ℕ → ℕ)) @ fun t ↦ ∫ ω,
-        ((γ ^ (id : ℕ → ℕ)) @ (fun k : ℕ => r (t + k) ω)) •
-          ∇[θ] Real.log (ℙ[M θ]((a t) = (a t ω) | (s t) = (s t ω))).toReal ∂(M θ)) =
-      ∫ ω,
-        ((γ ^ (id : ℕ → ℕ)) @ fun t ↦
-          ((γ ^ (id : ℕ → ℕ)) @ (fun k : ℕ => r (t + k) ω)) •
-            ∇[θ] Real.log (ℙ[M θ]((a t) = (a t ω) | (s t) = (s t ω))).toReal) ∂(M θ) := by
+    ((γ ^ (id : ℕ → ℕ)) @ fun t ↦ ∫ ω,
+      ((γ ^ (id : ℕ → ℕ)) @ (fun k : ℕ => r (t + k) ω)) •
+      ∇[θ] Real.log (ℙ[M θ]((a t) = (a t ω) | (s t) = (s t ω))).toReal ∂(M θ)) =
+    ∫ ω,
+      ((γ ^ (id : ℕ → ℕ)) @ fun t ↦
+      ((γ ^ (id : ℕ → ℕ)) @ (fun k : ℕ => r (t + k) ω)) •
+        ∇[θ] Real.log (ℙ[M θ]((a t) = (a t ω) | (s t) = (s t ω))).toReal) ∂(M θ) := by
     have hLHS :
       (γ ^ (id : ℕ → ℕ)) @ (fun t ↦ ∫ ω,
           ((γ ^ (id : ℕ → ℕ)) @ (fun k : ℕ => r (t + k) ω)) •
@@ -1221,16 +1210,16 @@ private lemma advantage
       ((measurable_of_countable (fun x : S => M.V θ γ k x)).comp (Random.Measurable.of.All_Eq.snd.fst h₁ k)))
     hAdv_sup h₃diff h₄sup
   have hL2GradAdvDot :
-      (InnerProductSpace.toDual ℝ Θ).symm
-          (∑' t, γ ^ t • ∫ ω,
-            (∑' k, γ ^ k * (r (t + k) ω + γ * M.V θ γ (t + k + 1) (s (t + k + 1) ω) -
-              M.V θ γ (t + k) (s (t + k) ω))) •
-              fderiv ℝ (fun θ' => (ℙ[M θ']((a t) = (a t ω) | (s t) = (s t ω)) : ℝ).log) θ ∂(M θ)) =
-        ((γ ^ (id : ℕ → ℕ)) @ fun t ↦ ∫ ω,
-          ((γ ^ (id : ℕ → ℕ)) @ (fun k : ℕ =>
-            r (t + k) ω + γ * M.V θ γ (t + k + 1) (s (t + k + 1) ω) -
-              M.V θ γ (t + k) (s (t + k) ω))) •
-            ∇[θ] Real.log (ℙ[M θ]((a t) = (a t ω) | (s t) = (s t ω))).toReal ∂(M θ)) := by
+    (InnerProductSpace.toDual ℝ Θ).symm
+      (∑' t, γ ^ t • ∫ ω,
+        (∑' k, γ ^ k * (r (t + k) ω + γ * M.V θ γ (t + k + 1) (s (t + k + 1) ω) -
+          M.V θ γ (t + k) (s (t + k) ω))) •
+          fderiv ℝ (fun θ' => (ℙ[M θ']((a t) = (a t ω) | (s t) = (s t ω)) : ℝ).log) θ ∂(M θ)) =
+      ((γ ^ (id : ℕ → ℕ)) @ fun t ↦ ∫ ω,
+        ((γ ^ (id : ℕ → ℕ)) @ (fun k : ℕ =>
+          r (t + k) ω + γ * M.V θ γ (t + k + 1) (s (t + k + 1) ω) -
+            M.V θ γ (t + k) (s (t + k) ω))) •
+          ∇[θ] Real.log (ℙ[M θ]((a t) = (a t ω) | (s t) = (s t ω))).toReal ∂(M θ)) := by
     let L : StrongDual ℝ Θ ≃L[ℝ] Θ := (InnerProductSpace.toDual ℝ Θ).symm.toContinuousLinearEquiv
     have hL : ∀ φ, (InnerProductSpace.toDual ℝ Θ).symm φ = L φ := fun _ => rfl
     have hdot : ∀ t ω,
@@ -1299,13 +1288,13 @@ private lemma advantage
         integral_mono_ae (hintA t).norm (integrable_const _) (hFbA t)
       _ = γ ^ t * (BretA * MsA) := by simp
   have hSwapA :
-      ((γ ^ (id : ℕ → ℕ)) @ fun t ↦ ∫ ω,
-        ((γ ^ (id : ℕ → ℕ)) @ (fun k : ℕ => r (t + k) ω + γ * M.V θ γ (t + k + 1) (s (t + k + 1) ω) - M.V θ γ (t + k) (s (t + k) ω))) •
-          ∇[θ] Real.log (ℙ[M θ]((a t) = (a t ω) | (s t) = (s t ω))).toReal ∂(M θ)) =
-      ∫ ω,
-        ((γ ^ (id : ℕ → ℕ)) @ fun t ↦
-          ((γ ^ (id : ℕ → ℕ)) @ (fun k : ℕ => r (t + k) ω + γ * M.V θ γ (t + k + 1) (s (t + k + 1) ω) - M.V θ γ (t + k) (s (t + k) ω))) •
-            ∇[θ] Real.log (ℙ[M θ]((a t) = (a t ω) | (s t) = (s t ω))).toReal) ∂(M θ) := by
+    ((γ ^ (id : ℕ → ℕ)) @ fun t ↦ ∫ ω,
+      ((γ ^ (id : ℕ → ℕ)) @ (fun k : ℕ => r (t + k) ω + γ * M.V θ γ (t + k + 1) (s (t + k + 1) ω) - M.V θ γ (t + k) (s (t + k) ω))) •
+      ∇[θ] Real.log (ℙ[M θ]((a t) = (a t ω) | (s t) = (s t ω))).toReal ∂(M θ)) =
+    ∫ ω,
+      ((γ ^ (id : ℕ → ℕ)) @ fun t ↦
+      ((γ ^ (id : ℕ → ℕ)) @ (fun k : ℕ => r (t + k) ω + γ * M.V θ γ (t + k + 1) (s (t + k + 1) ω) - M.V θ γ (t + k) (s (t + k) ω))) •
+        ∇[θ] Real.log (ℙ[M θ]((a t) = (a t ω) | (s t) = (s t ω))).toReal) ∂(M θ) := by
     have hLHS :
       (γ ^ (id : ℕ → ℕ)) @ (fun t ↦ ∫ ω,
           ((γ ^ (id : ℕ → ℕ)) @ (fun k : ℕ => r (t + k) ω + γ * M.V θ γ (t + k + 1) (s (t + k + 1) ω) - M.V θ γ (t + k) (s (t + k) ω))) •

@@ -30,7 +30,7 @@ private lemma E_ind_r
     rw [Integral.eq.MulMulRealPreimageProbIntegral_MulEqAndEq.of.All_Eq h₁, mul_inv_cancel_left₀ h]
 
 /--
-`𝔼[1{s[t] = x ∧ a[t] = u} * G[t]] = Pr(s[t] = x) * π_θ(u | x) * Q θ γ t x u`.
+`𝔼[1{s[t] = x ∧ a[t] = u} * G[t]] = ℙ(s[t] = x) * π_θ(u | x) * Q θ γ t x u`.
 -/
 @[path]
 private lemma main

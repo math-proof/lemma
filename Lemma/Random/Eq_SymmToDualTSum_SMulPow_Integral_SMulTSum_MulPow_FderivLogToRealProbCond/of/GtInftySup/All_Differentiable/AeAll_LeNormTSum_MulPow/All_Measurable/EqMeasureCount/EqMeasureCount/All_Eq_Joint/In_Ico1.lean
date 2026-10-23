@@ -14,8 +14,8 @@ open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Filter 
 @[path]
 private lemma main
   [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [CompleteSpace Θ]
-  [ReferenceMeasure S] [MeasurableSingletonClass S] [Fintype S]
-  [ReferenceMeasure A] [MeasurableSingletonClass A] [Fintype A]
+  [CountableMeasure S] [MeasurableSingletonClass S] [Fintype S]
+  [CountableMeasure A] [MeasurableSingletonClass A] [Fintype A]
   {M : Model Θ S A}
   {θ : Θ}
   {γ c : ℝ}
@@ -27,8 +27,6 @@ private lemma main
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
   (h₁ : ∀ t, (· t) = (r t, s t, a t))
-  (hS : (ReferenceMeasure.measure : Measure S) = Measure.count)
-  (hA : (ReferenceMeasure.measure : Measure A) = Measure.count)
   (h₂ : ∀ k, Measurable fun ω : ℕ → ℝ × S × A =>
     X (fun j => s j ω) (fun j => a j ω) (fun j => r j ω) k)
   (h₃ : ∀ᵐ ω ∂(M θ), ∀ t,
@@ -39,18 +37,18 @@ private lemma main
   have : ∀ θ t, SinglePSpace (M θ) (a t, s t) := fun _ t =>
     SinglePSpace.of.EqMeasureCount.Measurable ((Random.Measurable.of.All_Eq.snd.snd h₁ t).prodMk (Random.Measurable.of.All_Eq.snd.fst h₁ t)) (by
       show (ReferenceMeasure.measure : Measure A).prod (ReferenceMeasure.measure : Measure S) = _
-      rw [hA, hS, Count.eq.ProdCountS])
+      rw [CountableMeasure.measure_eq_count, CountableMeasure.measure_eq_count, Count.eq.ProdCountS])
   have hs : ∀ t, PSpace (M θ) (s t) := fun t =>
     ⟨(Random.Measurable.of.All_Eq.snd.fst h₁ t).aemeasurable⟩
   have ha : ∀ t, PSpace (M θ) (a t) := fun t =>
     ⟨(Random.Measurable.of.All_Eq.snd.snd h₁ t).aemeasurable⟩
   have hr : ∀ t, PSpace (M θ) (r t) := fun t =>
     ⟨(Random.Measurable.of.All_Eq.fst h₁ t).aemeasurable⟩
-  have : PSpace (M θ) (AsPathRV.path (s)) :=
+  have : PSpace (M θ) (AsPathRV.path s) :=
     PSpace_Path.of.All_PSpace hs
-  have : PSpace (M θ) (AsPathRV.path (a)) :=
+  have : PSpace (M θ) (AsPathRV.path a) :=
     PSpace_Path.of.All_PSpace ha
-  have : PSpace (M θ) (AsPathRV.path (r)) :=
+  have : PSpace (M θ) (AsPathRV.path r) :=
     PSpace_Path.of.All_PSpace hr
   let : MeasurableSpace Θ := borel Θ
   have : BorelSpace Θ := ⟨rfl⟩
@@ -84,7 +82,7 @@ private lemma main
       (Differentiable_RealPreimageS.of.GtInftySup.All_Differentiable_Prob (M := M) h₁ h₄ h₅ t (s t ω) θ).continuousAt
     refine Filter.EventuallyEq.fderiv_eq ((hc.eventually_ne (hω t)).mono fun θ' h => ?_)
     beta_reduce
-    rw [ProbCond.eq.OfRealPol.of.Ne_0 h₁ hS hA (hP θ' t) h,
+    rw [ProbCond.eq.OfRealPol.of.Ne_0 h₁ (hP θ' t) h,
       ENNReal.toReal_ofReal (M.policy.nonneg θ' _ _)]
   let L : StrongDual ℝ Θ ≃L[ℝ] Θ := (InnerProductSpace.toDual ℝ Θ).symm.toContinuousLinearEquiv
   have hL : ∀ φ, (InnerProductSpace.toDual ℝ Θ).symm φ = L φ := fun _ => rfl
@@ -125,7 +123,9 @@ private lemma main
         gradient (fun θ' => Real.log (ℙ[M θ']((a t) = (a t ω) | (s t) = (s t ω))).toReal) θ)‖ ∂(M θ) := by
     refine Summable.of_nonneg_of_le (fun t => integral_nonneg fun _ => norm_nonneg _) (fun t => ?_)
       ((summable_geometric_of_lt_one h₀.1 h₀.2).mul_right K)
-    calc _ ≤ ∫ _, γ ^ t * K ∂(M θ) := integral_mono_ae (hint t).norm (integrable_const _) (hFb t)
+    calc
+      _ ≤ ∫ _, γ ^ t * K ∂(M θ) :=
+        integral_mono_ae (hint t).norm (integrable_const _) (hFb t)
       _ = γ ^ t * K := by simp
   have hGsm : StronglyMeasurable G :=
     StronglyMeasurable.tsum (L := SummationFilter.unconditional ℕ) fun t =>
@@ -169,4 +169,4 @@ private lemma main
 
 
 -- created on 2026-10-01
--- updated on 2026-10-10
+-- updated on 2026-10-23

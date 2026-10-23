@@ -9,7 +9,7 @@ open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random 
 
 
 /--
-`𝔼[1{s[t] = x ∧ a[t] = u} * r[t+j+1]] = Pr(s[t] = x) * π_θ(u | x) * ∑ y, T(x, u, y) * W θ (fun z ↦ clip z.1 (-M.env.R) M.env.R) j y`.
+`𝔼[1{s[t] = x ∧ a[t] = u} * r[t+j+1]] = ℙ(s[t] = x) * π_θ(u | x) * ∑ y, T(x, u, y) * W θ (fun z ↦ clip z.1 (-M.env.R) M.env.R) j y`.
 -/
 @[path]
 private lemma main

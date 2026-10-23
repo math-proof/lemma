@@ -4,7 +4,7 @@ open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 
 /--
 In the trajectory model the conditional law of the action `a[t]` given the state `s[t] = x` is the policy:
-`Pr(a[t] = u | s[t] = x) = Pr[a:π](a[t] = u | s[t] = x)` whenever `s[t] = x` has positive probability.
+`ℙ(a[t] = u | s[t] = x) = Pr[a:π](a[t] = u | s[t] = x)` whenever `s[t] = x` has positive probability.
 -/
 @[path]
 private lemma main

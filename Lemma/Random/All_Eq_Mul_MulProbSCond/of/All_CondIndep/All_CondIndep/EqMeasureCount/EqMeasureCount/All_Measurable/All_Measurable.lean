@@ -1,46 +1,43 @@
 import Lemma.Random.EqProbJoint.All_Eq_Mul_MulProbSCond.of.All_CondIndep.All_CondIndep.EqMeasureCount.EqMeasureCount.All_Measurable.All_Measurable
-open MeasureTheory
+open MeasureTheory Random
 
 
 /--
 One-step factorization of the prefix probabilities of a Markov decision process: the probability of the prefix
-extended by one step is the probability of the prefix times `Pr(a[t] | s[t]) * Pr(s[t+1] | s[t] ∧ a[t])`.
+extended by one step is the probability of the prefix times `ℙ(a[t] | s[t]) * ℙ(s[t+1] | s[t] ∧ a[t])`.
 This is the right component of `Random.EqProbJoint.All_Eq_Mul_MulProbSCond…`.
 -/
 @[path]
 private lemma main
   [MeasurableSpace Ω] [StandardBorelSpace Ω]
-  [ReferenceMeasure S] [ReferenceMeasure A]
+  [CountableMeasure S] [CountableMeasure A]
   [Countable S] [MeasurableSingletonClass S] [Countable A] [MeasurableSingletonClass A]
   {π : Measure Ω} [IsProbabilityMeasure π]
   {s : ℕ → Ω → S} {a : ℕ → Ω → A} {«s.bvar» : ℕ → S} {«a.bvar» : ℕ → A}
 -- given
   (hs : ∀ k, Measurable (s k))
   (ha : ∀ k, Measurable (a k))
-  (hS : ReferenceMeasure.measure (α := S) = Measure.count)
-  (hA : ReferenceMeasure.measure (α := A) = Measure.count)
   (hpol : ∀ t, ∀ _ : Measurable (s t),
     a t ⟂ᵢ[π] (s[:t], a[:t]) | s t)
   (htrans : ∀ t, ∀ _ : Measurable (s t, a t),
     s (t + 1) ⟂ᵢ[π] (s[:t], a[:t]) | (s t, a t)) :
 -- imply
   have : ∀ i, SinglePSpace π (s i) := fun i =>
-    Random.SinglePSpace.of.EqMeasureCount.Measurable (hs i) hS
+    SinglePSpace.of.EqMeasureCount.Measurable (hs i) CountableMeasure.measure_eq_count
   have : ∀ i j, SinglePSpace π (a i, s j) := fun i j =>
-    Random.SinglePSpace.of.EqMeasureCount.EqMeasureCount.Measurable.Measurable (ha i) (hs j) hA hS
+    SinglePSpace.of.Measurable.Measurable (ha i) (hs j)
   have : ∀ i, SinglePSpace π (s (i + 1), s i, a i) := fun i =>
-    Random.SinglePSpace.of.EqMeasureCount.EqMeasureCount.Measurable.Measurable (hs (i + 1)) ((hs i).prodMk (ha i)) hS (by
-      change (ReferenceMeasure.measure (α := S)).prod ReferenceMeasure.measure = Measure.count
-      rw [hS, hA, ← Measure.Count.eq.ProdCountS])
-  have : ∀ n, SinglePSpace π (s[:n + 1], a[:n]) := fun n =>
-    Random.SinglePSpace.of.All_Measurable.All_Measurable hs ha
+    SinglePSpace.of.Measurable.Measurable (hs (i + 1)) ((hs i).prodMk (ha i))
+  have : ∀ n, SinglePSpace π (s[:n + 1], a[:n]) := fun _ =>
+    SinglePSpace.of.All_Measurable.All_Measurable hs ha
   ∀ t : ℕ, ℙ[π](s[:t + 1 + 1] = «s.bvar»[:t + 1 + 1] ∧ a[:t + 1] = «a.bvar»[:t + 1]) =
     ℙ[π](s[:t + 1] = «s.bvar»[:t + 1] ∧ a[:t] = «a.bvar»[:t]) *
       (ℙ[π]((a t) = «a.bvar» t | (s t) = «s.bvar» t) *
         ℙ[π]((s (t + 1)) = «s.bvar» (t + 1) | (s t) = «s.bvar» t ∧ (a t) = «a.bvar» t)) := by
 -- proof
   intro _ _ _ _
-  exact (Random.EqProbJoint.All_Eq_Mul_MulProbSCond.of.All_CondIndep.All_CondIndep.EqMeasureCount.EqMeasureCount.All_Measurable.All_Measurable hs ha hS hA hpol htrans).2
+  exact (EqProbJoint.All_Eq_Mul_MulProbSCond.of.All_CondIndep.All_CondIndep.EqMeasureCount.EqMeasureCount.All_Measurable.All_Measurable hs ha hpol htrans).2
 
 
 -- created on 2026-10-04
+-- updated on 2026-10-23

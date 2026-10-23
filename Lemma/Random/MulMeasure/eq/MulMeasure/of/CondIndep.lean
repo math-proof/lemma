@@ -1,7 +1,7 @@
 import Mathlib.Probability.Independence.Conditional
 import Lemma.Random.All_Imp_EqProbSCond.of.CondIndep
 import Lemma.Random.SinglePSpace.of.EqMeasureCount.Measurable
-import Lemma.Random.ProbCond.eq.Div.of.Eq_Count.Eq_Count
+import Lemma.Random.ProbCond.eq.Div.of.SinglePSpace
 open ProbabilityTheory MeasureTheory Measure Random
 
 
@@ -15,7 +15,7 @@ so no non-vanishing assumption is needed.
 @[path]
 private lemma main
   [MeasurableSpace Ω] [StandardBorelSpace Ω]
-  [ReferenceMeasure α] [ReferenceMeasure β] [ReferenceMeasure γ]
+  [CountableMeasure α] [CountableMeasure β] [CountableMeasure γ]
   [StandardBorelSpace α] [Nonempty α] [Countable α] [MeasurableSingletonClass α]
   [StandardBorelSpace β] [Nonempty β] [Countable β] [MeasurableSingletonClass β]
   [Countable γ] [MeasurableSingletonClass γ]
@@ -23,9 +23,6 @@ private lemma main
   {x : Ω → α} {y : Ω → β} {z : Ω → γ}
 -- given
   (hx : Measurable x) (hy : Measurable y) (hz : Measurable z)
-  (hα : ReferenceMeasure.measure (α := α) = Measure.count)
-  (hβ : ReferenceMeasure.measure (α := β) = Measure.count)
-  (hγ : ReferenceMeasure.measure (α := γ) = Measure.count)
   (hCI : x ⟂ᵢ[π] y | z)
   (u : α)
   (v : β)
@@ -34,15 +31,18 @@ private lemma main
   π (x ⁻¹' {u} ∩ y ⁻¹' {v} ∩ z ⁻¹' {w}) * π (z ⁻¹' {w}) =
     π (x ⁻¹' {u} ∩ z ⁻¹' {w}) * π (y ⁻¹' {v} ∩ z ⁻¹' {w}) := by
 -- proof
-  have hβγ : ReferenceMeasure.measure (α := β × γ) = Measure.count := by
-    change (ReferenceMeasure.measure (α := β)).prod ReferenceMeasure.measure = Measure.count
-    rw [hβ, hγ, ← Count.eq.ProdCountS]
-  have hαβγ : ReferenceMeasure.measure (α := α × (β × γ)) = Measure.count := by
-    change (ReferenceMeasure.measure (α := α)).prod ReferenceMeasure.measure = Measure.count
-    rw [hα, hβγ, ← Count.eq.ProdCountS]
-  have hαγ : ReferenceMeasure.measure (α := α × γ) = Measure.count := by
-    change (ReferenceMeasure.measure (α := α)).prod ReferenceMeasure.measure = Measure.count
-    rw [hα, hγ, ← Count.eq.ProdCountS]
+  have hα : ReferenceMeasure.measure (α := α) = Measure.count :=
+    CountableMeasure.measure_eq_count
+  have hβ : ReferenceMeasure.measure (α := β) = Measure.count :=
+    CountableMeasure.measure_eq_count
+  have hγ : ReferenceMeasure.measure (α := γ) = Measure.count :=
+    CountableMeasure.measure_eq_count
+  have hβγ : ReferenceMeasure.measure (α := β × γ) = Measure.count :=
+    CountableMeasure.measure_eq_count
+  have hαβγ : ReferenceMeasure.measure (α := α × (β × γ)) = Measure.count :=
+    CountableMeasure.measure_eq_count
+  have hαγ : ReferenceMeasure.measure (α := α × γ) = Measure.count :=
+    CountableMeasure.measure_eq_count
   have hPxyz : SinglePSpace π (x, y, z) :=
     SinglePSpace.of.EqMeasureCount.Measurable (hx.prodMk (hy.prodMk hz)) hαβγ
   have hPyz : SinglePSpace π (y, z) :=
@@ -55,8 +55,17 @@ private lemma main
   have e₁ : ((y, z)) ⁻¹' {(v, w)} = y ⁻¹' {v} ∩ z ⁻¹' {w} := by
     ext ω
     simp [JointRandomSymbol, Prod.ext_iff]
-  rw [Prob.eq.Measure.of.Eq_Count hβγ, ProbCond.eq.Div.of.Eq_Count.Eq_Count hα hβγ,
-    ProbCond.eq.Div.of.Eq_Count.Eq_Count hα hγ, e₁, ← Set.inter_assoc] at h
+  have hdiv₁ :
+    ℙ[π](x = u | (y, z) = (v, w)) =
+      π (x ⁻¹' {u} ∩ (y, z) ⁻¹' {(v, w)}) / π ((y, z) ⁻¹' {(v, w)}) := by
+    have : SinglePSpace π (x, show Ω → β × γ from (y, z)) :=
+      SinglePSpace.of.EqMeasureCount.Measurable (hx.prodMk (hy.prodMk hz)) hαβγ
+    exact ProbCond.eq.Div.of.SinglePSpace inferInstance u (v, w)
+  have hdiv₂ :
+    ℙ[π](x = u | z = w) = π (x ⁻¹' {u} ∩ z ⁻¹' {w}) / π (z ⁻¹' {w}) := by
+    have := hPxz
+    exact ProbCond.eq.Div.of.SinglePSpace inferInstance u w
+  rw [Prob.eq.Measure.of.Eq_Count hβγ, hdiv₁, hdiv₂, e₁, ← Set.inter_assoc] at h
   if hB : π (y ⁻¹' {v} ∩ z ⁻¹' {w}) = 0 then
     have hT : π (x ⁻¹' {u} ∩ y ⁻¹' {v} ∩ z ⁻¹' {w}) = 0 := by
       apply measure_mono_null _ hB
@@ -77,3 +86,4 @@ private lemma main
 
 
 -- created on 2026-10-02
+-- updated on 2026-10-23

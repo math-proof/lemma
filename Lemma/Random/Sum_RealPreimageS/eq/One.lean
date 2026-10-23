@@ -3,7 +3,7 @@ open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Mode
 
 
 /--
-The state marginal sums to `1`: `∑ y, Pr(s[t] = y) = 1`.
+The state marginal sums to `1`: `∑ y, ℙ(s[t] = y) = 1`.
 -/
 @[path]
 private lemma main

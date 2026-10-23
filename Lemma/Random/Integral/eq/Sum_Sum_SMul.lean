@@ -4,7 +4,7 @@ open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Mode
 
 
 /--
-`𝔼[φ(s[t], a[t])] = ∑ y, ∑ u, (Pr(s[t] = y) * π_θ(u | y)) • φ y u` under the trajectory model.
+`𝔼[φ(s[t], a[t])] = ∑ y, ∑ u, (ℙ(s[t] = y) * π_θ(u | y)) • φ y u` under the trajectory model.
 -/
 @[path]
 private lemma main

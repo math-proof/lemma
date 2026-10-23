@@ -1,6 +1,7 @@
 import Mathlib.MeasureTheory.Measure.Count
 import Mathlib.MeasureTheory.Measure.WithDensity
 import Mathlib.MeasureTheory.Measure.Typeclasses.Probability
+import Lemma.Measure.Count.eq.ProdCountS
 open MeasureTheory
 
 
@@ -79,6 +80,16 @@ noncomputable instance {n : ℕ} {α : Type*} [MeasurableSpace α] [Countable α
   measure := (Measure.count : Measure (Fin n → α))
   toSigmaFinite := inferInstance
   measure_eq_count := rfl
+
+/-- Product of counting reference measures is again counting (`ReferenceMeasure.prod`). -/
+noncomputable instance instCountableMeasureProd
+    [CountableMeasure α] [CountableMeasure β]
+    [Countable α] [MeasurableSingletonClass α] [Countable β] [MeasurableSingletonClass β] :
+    CountableMeasure (α × β) where
+  measure_eq_count := by
+    change (ReferenceMeasure.measure : Measure α).prod ReferenceMeasure.measure = Measure.count
+    rw [CountableMeasure.measure_eq_count, CountableMeasure.measure_eq_count,
+      Measure.Count.eq.ProdCountS]
 
 
 /--
