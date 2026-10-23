@@ -1,5 +1,92 @@
 source sh/utility.sh
 
+# ---------------------------------------------------------------------------
+# Keep MySQL callee hierarchy in sync with the filesystem rename.
+# Same UPDATEs as mjs/lean/renameLemma.mjs → updateAxiomModuleRow.
+# Reverse edges on /?callee= come from lemma.imports (JSON), not meta.callee.
+# Idempotent: a second pass (or Node calling updateAxiomModuleRow after us)
+# affects 0 rows and is not an error.
+# ---------------------------------------------------------------------------
+sql_quote() {
+  # SQL string literal: wrap in '…' and double any embedded single quotes.
+  local s=$1
+  s=${s//\'/\'\'}
+  printf "'%s'" "$s"
+}
+
+update_axiom_module_row() {
+  local old_mod=$1
+  local new_mod=$2
+  local project_user host port database
+  local candidates cand u p login_user login_pass
+  local old_q new_q user_q lemma_old_q lemma_new_q
+  local out module_rows import_rows
+
+  if ! command -v mysql >/dev/null 2>&1; then
+    echo "warning: mysql client not found; skipped axiom.lemma hierarchy update" >&2
+    return 0
+  fi
+
+  # Project user = LEAN_PROJECT_USER, else basename of the repo (parent of sh/),
+  # matching mjs/run.mjs (`LEAN_PROJECT_USER || path.basename(REPO_ROOT)`).
+  _sh_dir=$(CDPATH= cd -- "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+  _repo_root=$(CDPATH= cd -- "$_sh_dir/.." && pwd)
+  project_user=${LEAN_PROJECT_USER:-$(basename "$_repo_root")}
+  host=${MYSQL_HOST:-127.0.0.1}
+  port=${MYSQL_PORT:-3306}
+  database=axiom
+
+  candidates=()
+  if [ -n "${MYSQL_HOST:-}" ] && [ -n "${MYSQL_PWD+x}" ]; then
+    candidates+=("${MYSQL_USER:-${USER:-prod}}:${MYSQL_PWD}")
+  fi
+  candidates+=("prod:prod" "user:user")
+
+  login_user= login_pass=
+  for cand in "${candidates[@]}"; do
+    u=${cand%%:*}
+    p=${cand#*:}
+    if MYSQL_PWD="$p" mysql -h"$host" -P"$port" -u"$u" -D"$database" -N -e "SELECT 1" >/dev/null 2>&1; then
+      login_user=$u
+      login_pass=$p
+      break
+    fi
+  done
+
+  if [ -z "$login_user" ]; then
+    echo "warning: could not connect to MySQL ($host/$database); skipped axiom.lemma hierarchy update" >&2
+    return 0
+  fi
+
+  old_q=$(sql_quote "$old_mod")
+  new_q=$(sql_quote "$new_mod")
+  user_q=$(sql_quote "$project_user")
+  lemma_old_q=$(sql_quote "Lemma.$old_mod")
+  lemma_new_q=$(sql_quote "Lemma.$new_mod")
+
+  echo "MySQL axiom.lemma: user=$project_user module $old_mod -> $new_mod (login $login_user@$host)"
+
+  out=$(MYSQL_PWD="$login_pass" mysql -h"$host" -P"$port" -u"$login_user" -D"$database" -N -e "
+UPDATE lemma SET module = ${new_q} WHERE user = ${user_q} AND module = ${old_q};
+SELECT ROW_COUNT();
+UPDATE lemma SET imports = JSON_REPLACE(
+  imports,
+  JSON_UNQUOTE(JSON_SEARCH(imports, 'one', ${lemma_old_q})),
+  ${lemma_new_q}
+) WHERE user = ${user_q} AND JSON_CONTAINS(imports, JSON_QUOTE(${lemma_old_q}));
+SELECT ROW_COUNT();
+" 2>&1) || {
+    echo "warning: MySQL hierarchy update failed:" >&2
+    echo "$out" >&2
+    return 0
+  }
+
+  module_rows=$(printf '%s\n' "$out" | sed -n '1p')
+  import_rows=$(printf '%s\n' "$out" | sed -n '2p')
+  echo "MySQL rows affected: module=$module_rows imports=$import_rows"
+}
+
+
 src=$(normalize $1)
 echo src = $src
 
@@ -221,10 +308,18 @@ if [ $package_dst != $package_src ]; then
   done
 
   if [ $lemmaNameSrcOrig == $lemmaNameDstOrig ]; then
-    echo "lemmaNameSrcOrig == lemmaNameDstOrig, no need to rename"
-    exit
+    echo "lemmaNameSrcOrig == lemmaNameDstOrig, no need to rename short names"
+  else
+    # xargs: unmatched single quote; by default quotes are special to xargs unless you use the -0 option
+    find Lemma sympy -type f -name "*.lean" -not -name "*.echo.lean" -print0 | xargs -0 grep -lZE "open( [[:alnum:]_.]+)* $package_dst\b" | xargs -0 sed -i -E "s/([^.]\b|^)$lemmaNameSrc$submodule/\1$lemmaNameDst\2/g"
   fi
+else
+  # same package: rewrite short names under `open <package>`
+  # xargs: unmatched single quote; by default quotes are special to xargs unless you use the -0 option
+  find Lemma sympy -type f -name "*.lean" -not -name "*.echo.lean" -print0 | xargs -0 grep -lZE "open( [[:alnum:]_.]+)* $package_dst\b" | xargs -0 sed -i -E "s/([^.]\b|^)$lemmaNameSrc$submodule/\1$lemmaNameDst\2/g"
 fi
 
-# xargs: unmatched single quote; by default quotes are special to xargs unless you use the -0 option
-find Lemma sympy -type f -name "*.lean" -not -name "*.echo.lean" -print0 | xargs -0 grep -lZE "open( [[:alnum:]_.]+)* $package_dst\b" | xargs -0 sed -i -E "s/([^.]\b|^)$lemmaNameSrc$submodule/\1$lemmaNameDst\2/g"
+# Module path on disk / in imports is the real destination (parent module when merging a sublemma).
+# Matches Node renameLemma when new_ has no lowercase sublemma suffix; for sublemma merges,
+# Lean imports already point at real_dst, so hierarchy must follow real_dst (not the @path suffix).
+update_axiom_module_row "$src" "$real_dst"
