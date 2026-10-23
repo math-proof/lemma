@@ -64,7 +64,7 @@ private lemma residueFieldMapAlgHom_injective_eq
   [CommRing A] [IsDomain A] [IsDiscreteValuationRing A] [CommRing B] [IsDomain B] [IsDiscreteValuationRing B] [CommRing C] [IsDomain C] [IsDiscreteValuationRing C] [CommRing D] [IsDomain D] [IsDiscreteValuationRing D] [Algebra A B] [Algebra A C] [Algebra A D] [Module.Finite A B] [Module.Finite A C] [Module.Finite A D] [IsLocalHom (algebraMap A B)] [IsLocalHom (algebraMap A C)] [IsLocalHom (algebraMap A D)] [Algebra.FormallyUnramified A B] :
 -- imply
   Function.Injective
-    (residueFieldMapAlgHom (A := by
+    (residueFieldMapAlgHom (A := A) (B := B) (C := C)) := by
 -- proof
   apply DVRResidue.residueFieldMapAlgHom_injective
 

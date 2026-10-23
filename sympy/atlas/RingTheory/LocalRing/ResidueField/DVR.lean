@@ -128,7 +128,7 @@ theorem isLocalHom_of_isDiscreteValuationRing (f : B →ₐ[A] C) :
     have : Algebra.IsIntegral K C := inferInstance
     have hne_comap :
         Ideal.comap (algebraMap K C) (IsLocalRing.maximalIdeal C) ≠ ⊥ :=
-      Ideal.IsIntegral.comap_ne_bot K (IsDiscreteValuationRing.not_a_field C)
+      Ideal.IsIntegral.under_ne_bot K (IsDiscreteValuationRing.not_a_field C)
     obtain ⟨k, hk_mem, hk_ne⟩ :=
       (Ideal.comap (algebraMap K C) (IsLocalRing.maximalIdeal C)).ne_bot_iff.mp
         hne_comap

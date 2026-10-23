@@ -44,7 +44,7 @@ private lemma main
     intro x hx
     have hex : ∃ k : ℕ, x ∉ I ^ k := by
       by_contra h
-      push_neg at h
+      push Not at h
       exact hx (hsep x h)
     have hk₀ : x ∉ I ^ Nat.find hex := Nat.find_spec hex
     have hk₀pos : Nat.find hex ≠ 0 := by
