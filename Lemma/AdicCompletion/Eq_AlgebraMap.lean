@@ -1,16 +1,22 @@
 import Mathlib
 import sympy.Basic
-open CategoryTheory CategoryTheory.Limits CategoryTheory.MorphismProperty AlgebraicGeometry TopologicalSpace Opposite IsLocalRing
-open scoped TensorProduct MonoidalCategory
-
-universe u
-
 set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
 
-private lemma evalA_factorPow {R : Type*} [CommRing R] (I : Ideal R) {m n : ℕ} (hle : m ≤ n) (z : AdicCompletion I R) :
-    Ideal.Quotient.factorPow I hle (AdicCompletion.evalₐ I n z) = AdicCompletion.evalₐ I m z := by
+
+universe u
+
+private lemma evalA_factorPow
+  [CommRing R]
+  {I : Ideal R}
+  {m n : ℕ}
+  {z : AdicCompletion I R}
+  -- given
+  (hle : m ≤ n) :
+  -- imply
+  Ideal.Quotient.factorPow I hle (AdicCompletion.evalₐ I n z) = AdicCompletion.evalₐ I m z := by
+  -- proof
   have hn : (I ^ n • ⊤ : Ideal R) ≤ I ^ n := le_of_eq (Ideal.mul_top _)
   have hm : (I ^ m • ⊤ : Ideal R) ≤ I ^ m := le_of_eq (Ideal.mul_top _)
   rw [← AdicCompletion.factor_eval_eq_evalₐ I z hn, ← AdicCompletion.factor_eval_eq_evalₐ I z hm]
@@ -23,19 +29,24 @@ private lemma evalA_factorPow {R : Type*} [CommRing R] (I : Ideal R) {m n : ℕ}
   change Ideal.Quotient.factorPow I hle (Ideal.Quotient.factor hn (Ideal.Quotient.mk (I ^ n • ⊤) s)) =
     Ideal.Quotient.factor hm (Ideal.Quotient.mk (I ^ m • ⊤) s)
   rw [Ideal.Quotient.factor_mk, Ideal.Quotient.factor_mk]
-  simp [Ideal.Quotient.factorPow, Ideal.Quotient.factor_mk]
+  simp [Ideal.Quotient.factor_mk]
 /--
 [Ideal_exists_ringEquiv_adicCompletion_quotient_of_mem_minimalPrimes_of_isDomain_adicCompletion](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Ideal_exists_ringEquiv_adicCompletion_quotient_of_mem_minimalPrimes_of_isDomain_adicCompletion.lean)
 -/
 @[path]
 private lemma main
-    (S : Type) [CommRing S] [IsNoetherianRing S]
-    (𝔮 : Ideal S) (h𝔮 : 𝔮 ∈ minimalPrimes S)
-    (x : Ideal S) [x.IsMaximal] (hle : 𝔮 ≤ x)
-    (hdom : IsDomain (AdicCompletion x S)) :
-    ∃ e : AdicCompletion (x.map (Ideal.Quotient.mk 𝔮)) (S ⧸ 𝔮) ≃+* AdicCompletion x S,
-      ∀ s : S, e (algebraMap (S ⧸ 𝔮) (AdicCompletion (x.map (Ideal.Quotient.mk 𝔮)) (S ⧸ 𝔮)) (Ideal.Quotient.mk 𝔮 s)) =
-        algebraMap S (AdicCompletion x S) s := by
+  {S : Type} [CommRing S] [IsNoetherianRing S]
+  {x : Ideal S} [x.IsMaximal]
+  {𝔮 : Ideal S}
+  -- given
+  (h𝔮 : 𝔮 ∈ minimalPrimes S)
+  (hle : 𝔮 ≤ x)
+  (hdom : IsDomain (AdicCompletion x S)) :
+  -- imply
+  ∃ e : AdicCompletion (x.map (Ideal.Quotient.mk 𝔮)) (S ⧸ 𝔮) ≃+* AdicCompletion x S,
+    ∀ s : S, e (algebraMap (S ⧸ 𝔮) (AdicCompletion (x.map (Ideal.Quotient.mk 𝔮)) (S ⧸ 𝔮)) (Ideal.Quotient.mk 𝔮 s)) =
+      algebraMap S (AdicCompletion x S) s := by
+  -- proof
   classical
   let _ := hdom
   have hkerP : ∀ a : S, algebraMap S (AdicCompletion x S) a = 0 ↔ ∀ n : ℕ, a ∈ x ^ n := by
@@ -54,21 +65,26 @@ private lemma main
         rw [Ideal.smul_eq_mul, Ideal.mul_top]
         have : Ideal.map (algebraMap S (Localization.AtPrime x)) (x ^ n) ≤ (IsLocalRing.maximalIdeal (Localization.AtPrime x)) ^ n := by
           rw [Ideal.map_pow, Localization.AtPrime.map_eq_maximalIdeal]
-        exact this (Ideal.mem_map_of_mem _ (ha n))
+        apply this (Ideal.mem_map_of_mem _ (ha n))
       have hK := Ideal.iInf_pow_smul_eq_bot_of_le_jacobson (M := Localization.AtPrime x) (IsLocalRing.maximalIdeal (Localization.AtPrime x))
         (by rw [IsLocalRing.jacobson_eq_maximalIdeal ⊥ bot_ne_top])
       rw [hK] at hmem
-      exact hmem
+      apply hmem
     obtain ⟨⟨s, hs⟩, hsa⟩ := (IsLocalization.map_eq_zero_iff x.primeCompl (Localization.AtPrime x) a).mp hloc
-    have : s * a ∈ 𝔮 := by rw [hsa]; exact zero_mem _
-    exact ((h𝔮.1.1).mem_or_mem this).resolve_left (fun h => hs (hle h))
+    have : s * a ∈ 𝔮 := by
+      rw [hsa]
+      apply zero_mem
+    apply ((h𝔮.1.1).mem_or_mem this).resolve_left (fun h => hs (hle h))
   have hqx : ∀ n : ℕ, 𝔮 ≤ x ^ n := by
     have hPprime : (RingHom.ker (algebraMap S (AdicCompletion x S))).IsPrime := RingHom.ker_isPrime _
     have hPle' : RingHom.ker (algebraMap S (AdicCompletion x S)) ≤ 𝔮 := fun a ha => hPle a ((hkerP a).mp ha)
     have heq : RingHom.ker (algebraMap S (AdicCompletion x S)) = 𝔮 :=
       le_antisymm hPle' (h𝔮.2 ⟨hPprime, bot_le⟩ hPle')
     intro n a ha
-    exact (hkerP a).mp (by rw [← RingHom.mem_ker, heq]; exact ha) n
+    apply (hkerP a).mp _ n
+    ·
+      rw [← RingHom.mem_ker, heq]
+      apply ha
   set mq : S →+* S ⧸ 𝔮 := Ideal.Quotient.mk 𝔮 with hmq
   set xq : Ideal (S ⧸ 𝔮) := x.map (Ideal.Quotient.mk 𝔮) with hxq
   have hpow : ∀ n : ℕ, xq ^ n = (x ^ n).map mq := fun n => by rw [hxq, hmq, Ideal.map_pow]
@@ -82,7 +98,8 @@ private lemma main
     have : (Ideal.Quotient.mk (Ideal.map mq (x ^ n))) (mq s) = DoubleQuot.quotQuotMk 𝔮 (x ^ n) s := rfl
     rw [this, DoubleQuot.quotQuotEquivQuotSup_quotQuotMk, Ideal.quotEquivOfEq_mk]
   have hτsymm : ∀ (n : ℕ) (s : S), (τ n).symm (Ideal.Quotient.mk (x ^ n) s) = Ideal.Quotient.mk (xq ^ n) (mq s) := by
-    intro n s; rw [← hτ n s, RingEquiv.symm_apply_apply]
+    intro n s
+    rw [← hτ n s, RingEquiv.symm_apply_apply]
   have hsurjS : ∀ (n : ℕ) (t : S ⧸ x ^ n), ∃ s : S, Ideal.Quotient.mk (x ^ n) s = t := fun n t => Ideal.Quotient.mk_surjective t
   have hsurjQ : ∀ (n : ℕ) (t : (S ⧸ 𝔮) ⧸ xq ^ n), ∃ s : S, Ideal.Quotient.mk (xq ^ n) (mq s) = t := by
     intro n t
@@ -95,7 +112,8 @@ private lemma main
     ext z
     obtain ⟨s, hs⟩ := hsurjS n (AdicCompletion.evalₐ x n z)
     have hm : AdicCompletion.evalₐ x m z = Ideal.Quotient.mk (x ^ m) s := by
-      rw [← evalA_factorPow x hle z, ← hs]; simp [Ideal.Quotient.factorPow, Ideal.Quotient.factor_mk]
+      rw [← evalA_factorPow (I := x) hle (z := z), ← hs]
+      simp [Ideal.Quotient.factor_mk]
     show Ideal.Quotient.factorPow xq hle ((τ n).symm (AdicCompletion.evalₐ x n z)) = (τ m).symm (AdicCompletion.evalₐ x m z)
     rw [← hs, hm, hτsymm, hτsymm]
     simp [Ideal.Quotient.factorPow, Ideal.Quotient.factor_mk]
@@ -106,7 +124,8 @@ private lemma main
     ext z
     obtain ⟨s, hs⟩ := hsurjQ n (AdicCompletion.evalₐ xq n z)
     have hm : AdicCompletion.evalₐ xq m z = Ideal.Quotient.mk (xq ^ m) (mq s) := by
-      rw [← evalA_factorPow xq hle z, ← hs]; simp [Ideal.Quotient.factorPow, Ideal.Quotient.factor_mk]
+      rw [← evalA_factorPow (I := xq) hle (z := z), ← hs]
+      simp [Ideal.Quotient.factorPow, Ideal.Quotient.factor_mk]
     show Ideal.Quotient.factorPow x hle ((τ n) (AdicCompletion.evalₐ xq n z)) = (τ m) (AdicCompletion.evalₐ xq m z)
     rw [← hs, hm, hτ, hτ]
     simp [Ideal.Quotient.factorPow, Ideal.Quotient.factor_mk]
@@ -139,5 +158,6 @@ private lemma main
   rw [show algebraMap (S ⧸ 𝔮) (AdicCompletion xq (S ⧸ 𝔮)) (mq s) = AdicCompletion.of xq (S ⧸ 𝔮) (mq s) from rfl,
     show algebraMap S (AdicCompletion x S) s = AdicCompletion.of x S s from rfl,
     AdicCompletion.evalₐ_of, AdicCompletion.evalₐ_of, hτ]
+
 
 -- created on 2026-10-20

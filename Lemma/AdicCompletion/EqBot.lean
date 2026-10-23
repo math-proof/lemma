@@ -1,22 +1,24 @@
 import Mathlib
 import sympy.Basic
 open CategoryTheory CategoryTheory.Limits CategoryTheory.MorphismProperty AlgebraicGeometry TopologicalSpace Opposite IsLocalRing
-open scoped TensorProduct MonoidalCategory
-
-universe u
-
 set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
+
+
+universe u
 
 /--
 [IsLocalRing_eq_bot_of_lt_of_ne_maximalIdeal_of_ringKrullDim_le_two](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_IsLocalRing_eq_bot_of_lt_of_ne_maximalIdeal_of_ringKrullDim_le_two.lean)
 -/
 @[path]
 private lemma main
-    {B : Type u} [CommRing B] [IsDomain B] [IsLocalRing B] [IsNoetherianRing B]
-    {R : Type v} [CommRing R] (e : AdicCompletion (maximalIdeal B) B ≃+* R) (hR : ringKrullDim R ≤ 2) :
-    ∀ 𝔭 𝔮 : Ideal B, 𝔭.IsPrime → 𝔮.IsPrime → 𝔮 ≠ maximalIdeal B → 𝔭 < 𝔮 → 𝔭 = ⊥ := by
+  {B : Type u} [CommRing B] [IsDomain B] [IsLocalRing B] [IsNoetherianRing B]
+  {R : Type v} [CommRing R]
+  (e : AdicCompletion (maximalIdeal B) B ≃+* R) (hR : ringKrullDim R ≤ 2) :
+  -- imply
+  ∀ 𝔭 𝔮 : Ideal B, 𝔭.IsPrime → 𝔮.IsPrime → 𝔮 ≠ maximalIdeal B → 𝔭 < 𝔮 → 𝔭 = ⊥ := by
+  -- proof
   intro 𝔭 𝔮 h𝔭 h𝔮 h𝔮m hlt
   by_contra h0
   set S := AdicCompletion (maximalIdeal B) B with hSdef
@@ -54,21 +56,21 @@ private lemma main
   have h₀₁ : Q₀ < Q₁ := lt_of_le_of_ne hQ₀₁ (fun h => h0 (by rw [← hu₁, ← h, hu₀]))
   have h₁₂ : Q₁ < Q₂ := lt_of_le_of_ne hQ₁₂ (fun h => hlt.ne (by rw [← hu₁, h, hu₂]))
   have h₂₃ : Q₂ < Q₃ := lt_of_le_of_ne hQ₂₃ (fun h => h𝔮m (by rw [← hu₂, h, hunder₃]))
-  let c : LTSeries (PrimeSpectrum S) :=
-    { length := 3
-      toFun := fun i => match i with
-        | ⟨0, _⟩ => ⟨Q₀, hQ₀p⟩
-        | ⟨1, _⟩ => ⟨Q₁, hQ₁p⟩
-        | ⟨2, _⟩ => ⟨Q₂, hQ₂p⟩
-        | ⟨_ + 3, _⟩ => ⟨Q₃, inferInstance⟩
-      step := by
-        intro i
-        fin_cases i
-        · exact h₀₁
-        · exact h₁₂
-        · exact h₂₃ }
-  have h3 : (3 : WithBot ℕ∞) ≤ ringKrullDim S := Order.LTSeries.length_le_krullDim c
-  have : (3 : WithBot ℕ∞) ≤ 2 := h3.trans hS
-  exact absurd this (by decide)
+  let toFun : Fin 4 → PrimeSpectrum S := fun i => match i with
+    | ⟨0, _⟩ => ⟨Q₀, hQ₀p⟩
+    | ⟨1, _⟩ => ⟨Q₁, hQ₁p⟩
+    | ⟨2, _⟩ => ⟨Q₂, hQ₂p⟩
+    | ⟨_ + 3, _⟩ => ⟨Q₃, inferInstance⟩
+  have hstep : ∀ i : Fin 3, toFun i.castSucc < toFun i.succ := by
+    intro i
+    fin_cases i
+    · apply h₀₁
+    · apply h₁₂
+    · apply h₂₃
+  let c : LTSeries (PrimeSpectrum S) := { length := 3, toFun := toFun, step := hstep }
+  have h3 : (3 : WithBot ENat) ≤ ringKrullDim S := Order.LTSeries.length_le_krullDim c
+  have : (3 : WithBot ENat) ≤ 2 := h3.trans hS
+  apply absurd this (by decide)
+
 
 -- created on 2026-10-20

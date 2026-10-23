@@ -54,7 +54,7 @@ private lemma helper_main
     let _ : (P'.comap φ).IsPrime := Ideal.comap_isPrime φ P'
     rcases eq_or_ne (P'.comap φ) Q with heq | hne'
     · exact hne (huniq P' hP' heq)
-    · haveI : P.LiesOver Q := ⟨rfl⟩
+    · have : P.LiesOver Q := ⟨rfl⟩
       obtain ⟨P'', hP''le, hP''prime, hP''over⟩ :=
         Ideal.exists_ideal_le_liesOver_of_le (p := P'.comap φ) (q := Q) P hle
       have hunder : P''.comap φ = P'.comap φ := hP''over.over.symm
