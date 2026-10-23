@@ -85,3 +85,4 @@ from . import Eq_Sub_MulMul
 from . import EqIntegralAndAll_EqCovariance
 from . import GradExpectDotPow_Id
 from . import HasLawAdd
+from . import ArgMax_ProbCond

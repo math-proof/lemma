@@ -3,7 +3,6 @@ from . import of
 from . import Mul
 from . import Sum
 from . import ArgMin
-from . import ArgMax
 from . import Expect
 from . import Lim
 from . import given
