@@ -38,13 +38,10 @@ while [ $# -gt 0 ]; do
       exit 1
       ;;
     *)
-      # Bare `Real` → `Real.*` (same as -Modules 'Real.*').
+      # Bare `Real` stays bare: module_included matches `Real` or `Real.<rest>`
+      # only (not `RealFoo` / `BooleanFunctions` when asking for `Bool`).
       # Dotted names / globs stay as given (exact or user-supplied pattern).
-      pat="$1"
-      if [[ "$pat" != *'*'* && "$pat" != *.* ]]; then
-        pat="${pat}.*"
-      fi
-      MODULES+=("$pat")
+      MODULES+=("$1")
       shift
       ;;
   esac
@@ -76,11 +73,17 @@ json_array() {
 }
 
 # When `-Modules` is supplied, keep only files whose dotted module name matches.
+# Bare section names (no `.` / `*`) match that section only: `Bool` → `Bool` or
+# `Bool.*`, not `BooleanFunctions.*`. Globs / dotted patterns use bash `==`.
 module_included() {
   local module=$1 m
   if [ ${#MODULES[@]} -eq 0 ]; then return 0; fi
   for m in "${MODULES[@]}"; do
-    [[ "$module" == $m ]] && return 0
+    if [[ "$m" == *'*'* || "$m" == *.* ]]; then
+      [[ "$module" == $m ]] && return 0
+    else
+      [[ "$module" == "$m" || "$module" == "$m".* ]] && return 0
+    fi
   done
   return 1
 }
